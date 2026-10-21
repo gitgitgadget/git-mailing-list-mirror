@@ -1,123 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.197
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792609876;
-	b=qKkn/FojyuJ0GdBHqv+94qFKsOovpRf3OtC6Ao85+8cPg7VSlS3bNhfqVjVgt9X/fEhz
-	 aQqIywE1antFEH9b4lqlu4sa5WLmnkUf9UmUCA3EWFIHV/euFSbbJNsOHuVZ431qJWEP8
-	 ujW0kK9gRREb/4J9qm3IO8hm7lhjyFRPM4znYshcpAcpAFHj01PQu/tWlp0iES43zjnFf
-	 Ulwjiaa374Og8CaCdThkuACynU3oy+Qo7HwR6I7PEm4CxOBV50qTulesyyOxy+SKsx24o
-	 xDygAcD4kXXYCmtd/uq3nAFtawThOYtfz6oHunzLxjsOoFau8m/ZQ0V+M9E8LhJctlQ==
+	t=1792613028;
+	b=ZerTXId1WfdU+wK4adSrf+c12+P+/FzX7BEYtAfxiaoXF/gZAIt4IVzajaGft7VEnAYw
+	 8hk8aZ6YK/axQiGmdUmTSQ0oY7XSF4Q0174l+msavrrYfjhGol6wIaOXyNyEnyHQZ8aHD
+	 bCyUTecPopo1wzyb0sBnE952Q0UKgWlf6LoWB6f/4Bx8GcrS/5k0geqwneHs0oneiBN2p
+	 gZPnUpH6eAlNDJ9IamR7sxUoE9pOnZ1eq7tp9rnqZVsOqUHNCx4WKkPyX2Ok5pmp5ex2Q
+	 yIxMsYetls0kZ+YChL5fWDs/Kdt1b4MmPjaR1/Tccd5IOQJgb8MaKw3fPW6Z+Izws0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792609876;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=AhNRXTX2gmpxIMjTU1P44DAUyrBoDEvxlu+2kdnVowM=;
-	b=o8X0J+uJMCMcGMiIZdI8bW4+ZfcV3PMWliEYCIjoQR5Jk6rOEOCsBHt9PhbjKfPssGmy
-	 quf00ukhnLsxWGOc+bwn7NfhteKnQvEx1L3opp1iOD99GP+HZdZrndqgtXz0W4Lo42VK5
-	 eN46ZByJBACtIAxWiO5QIDphheod5Y2zLB79v5d7U23zrneln6XhKWQhp0/Dg1w79AFdI
-	 Rj3DCIcmQdjIWUPRYxEklhLnvjJBOBO/wBhaNccRhB5f2SxQg9mbSU5uZY1VHvHC8JSih
-	 gfvx047ZnjyGsbBUb0e9tom1se09GkOTIGrp8TokmU4s5YOtDMN7OTJAzh+e9+3ozow==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792613028;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:X-Mailer:
+	 Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=/wR7ga0VxJ2SW0lnOGn9VS8aMi5ubieHH7c12Q9NwtE=;
+	b=A0cfHGt0y8YimZhvao0e1sk5wEY4Gqx+L5Jft5Z/dDoyqTGepoj+XcOap+FWR/SaCul6
+	 xUKglMeaMpvmGXJZPyY3cBGZ9R1TktEksb5qqwrmfwLqN4b5ZFvQtYMDhKaVQEC+GIiNm
+	 Gd2HaP5VAgAOHtXU3+AuzJ58AF1ylpzR+JdLgky+c9qOtFRjmOQ3ibfh8CCsfNNm1rRH9
+	 PLBel0raO3YjFT1QI2CoV250HxliYJmJRRLKbeVHyyLwvkT3pcri5IW6pyhUXnLZHqHi8
+	 BF3UD0Tn2HCxHBu6r2mQfCzebcO9FMmT+2N+nHPjrJmuxjjwdFdrvkz0wT8nsepjJrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ip17ZLNE;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=a3a6vH2W;
-	arc=none smtp.remote-ip=202.12.124.159
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--emilyshaffer.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b="o8mIoiG/";
+	arc=none smtp.remote-ip=74.125.82.197
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EB3606A31B
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 19:11:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0EB3606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A93606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 20:03:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29A93606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--emilyshaffer.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ip17ZLNE;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=a3a6vH2W
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3FE267A00E2
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 15:11:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 21 Oct 2026 15:11:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792609874; x=1792696274; bh=AhNRXTX2gm
-	pxIMjTU1P44DAUyrBoDEvxlu+2kdnVowM=; b=ip17ZLNEPPe/IQUuuJB3s2bhIr
-	xRpSYYNafBfX8CiKa0Zpng+3hFturF1/BwJl86p/l5tUfyftZAO/cc15A6Q4B0jn
-	5SbyJQxn1Pqtu7CKjRM0okUrPq86BVdxmkNryNV9/JN23UDC1p0RVELiNAlIek7w
-	ehA4XFnqdL96HNd6h+scCaZimzyLJjlxQ07VAQqox8FeWHACeS8ZAUXGehRksUls
-	xx3Od4tY2y9eeWrJcAzm0Ek3Eo7rF28p7eRO5D3EgqDYWEw8nMRpcF7ycqq2/eZ9
-	Tm2tvDiMAbRU7FYOfIb+tTc1pSi1t6LPYGhBdSDLjZ/xKrBE7ydL3dSa0SOA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792609874; x=1792696274; bh=AhNRXTX2gmpxIMjTU1P44DAUyrBoDEvxlu+
-	2kdnVowM=; b=a3a6vH2WuzF7qniVLh/TuclhDVJgqud9P6NfgMSOBOe6Qbo4Bvg
-	lUl/AdAfGiOlVnfHYJhtJkSjRMC+9so0y6YZtVE6MEKMJyr3rEd6oupJ8ddY8pi7
-	PnvwjQPAgkTzQS+7TJPqd73zz8LzIWCLdGXeQ4kT6HPf+xMmbB4XU50eSjGE43/y
-	W7LPmTQAArxDsakkjLO03UpNGS2nID9wYQ3e56KpMadiGjqA0LKbyNiU5MNdAypn
-	G5+xDzuKKtYpSVrPKl2FUpJhJbVP4hrfUCeFNViJBlfX3DuMlcc2gfYQweQXbxA3
-	Pq1yvtYRrmB6tjWM12a37qgKk4O3ejg7fBA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792609874; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:DHpyxv0aNao6dpwWNzVNJGwt1tvIS+2idx/d1kCRAmBy9Sf
-	DJQt9iInW1sJlvYPcYFN+pluam8YG0iSfC4eg5cR4swTZhNKoHzvJGhDXMyxzx1B
-	dhnANhvh4lotDrl8cfhxtQKiNFzhlFGZ2c3eW2El5hUuhdAY0E+DlCdlY+hDo+hR
-	m+jYSPUetlPUhHGvQIjTCYAHxFl/nYjPGrLkJusPnzCce6kqpBhykumm7VJUW4v8
-	pqpBO0IddGXuMASf4PrYLMrtDjbyYp2bbwDoVB6ocgDCd1Q+W//Un8Sh3OxTh97i
-	eq1jBZVW3hMKOPr9JeVVZWoyAb8hX1RAXyuZYVA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:UpkDx4bkvjakH0m2eLQFcaO1JIyhOU2LAQ2WA1SsLso=:Pwr/EvckzQRi8VqIsQCTgCy+u57sLN4gW7AAHiYrHqg=;
-X-ME-Sender: <xms:Ug7ZavzgKDjf2gYtCvXL48uOK9hsdpiDqkLbxRu9a-gTtfaXv573-A>
-    <xme:Ug7ZavuNndzapx7uE4nreRHPPF4bcnZjmzrnuD7LRPOwUUJO87chyYtnJfiuuNBGi
-    _OYhu1rjTwomVF_QNTGwxju6cAcNmruOLXAs1_EKgc9oV2eSqS0dQ>
-X-ME-Received: <xmr:Ug7Zapxl9u0fgmuOocboM_oE9F-b64Sv237qdvjOrKBtUvv_awRFp8CI3k7sRpqAR661GZU8BeYj373-jimRlwpVna5-neMLT7NT>
-X-ME-Proxy-Cause: dmFkZTEll5c5lZCIjYwRJN5EtV4EPxJSm0o5Nf9k9fTmArp5ztZNda4x77h2zndqKYa83W
-    37HBL1p1qnJbSV+T5JdzPnzF4kav7Rgnw+k8yB3n05CEKxumCnCKjLH1kJbnXkL6YPLrK8
-    7eimOHdELjhuGgEoj2PEeKuGg7Yr3YZQOAe6Cyvznww7MPqFaIVYmDqu4Hll0WUWLRCZec
-    5G5pS19GLUm6bFJ94p2wGOV9XWLivIrmk9tKlgfmw5bAPA/qPTPgL8OiqqwnINGiQELhwq
-    be09ZPChXvC104lXeEAEFsi26izXoi2l7U4uqyJVBRT1ArQQb/txXf9G6viedfTCzkr9lV
-    xJbOwwbQMEKKnPuL8TdOC7eMHcJfPifw8vKneUac9/ijxy2HriFPnYmoRJo+CJWmKtUp88
-    /ni44ASkpQMBNzI3DVf2n4iV1Xx/MIgc7/hZJFj4KQtzkF3a8IzYr7wdBsp6oikfhZZ/pJ
-    UbunbsQ2BSRtG5G8TWRb6pMGpKN/OtvE8UYxiGlZU2m5dkslV0f3zZBeicVqTds2+XEL7W
-    e5NUWRF0FNNtcqlBSRC784f+O5YP0XbTvxLlw1xyVXaXLFVxqSTKM0NR/EkgfegqBQYT+P
-    9YOqgk+022iDmSebf2MEIjoeBNI4vXrgjbro0e7DDsx1euQLx0bsTBY8wgGQ
-X-ME-Proxy: <xmx:Ug7ZaqA6eQvLlCRmiuUMBHtwpmCKXlSrAUJC9RJaZQXOqTuYAOFalA>
-    <xmx:Ug7ZavfU-SfSNvGxYPPsyoFtyno6I2vg4Gtrxu6If0eEBC6Pwz835Q>
-    <xmx:Ug7ZaskNcg5aZ4_hidhgR28zM87p-FxMGnEtJX9WRRhvdVoI-jBE6Q>
-    <xmx:Ug7ZauF4DKFH8TUccgjojnf8dPBgh0jFq01ULbvyoQuAn10AgbtVnQ>
-    <xmx:Ug7ZauUD34aXz1_VSyDnmJvLSTh1f5qChS3noS7L8-VD-7RU9WnT5BCh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 15:11:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Nakul V S via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Nakul V S
- <vsnakul@gmail.com>
-Subject: Re: [PATCH] sequencer: refuse to revert shallow boundary commits by
- default
-In-Reply-To: <7179f371-a709-476f-8e94-807d7b62ce6e@gmail.com> (Phillip Wood's
-	message of "Wed, 21 Oct 2026 16:20:42 +0100")
-References: <pull.2273.git.1792577381142.gitgitgadget@gmail.com>
-	<7179f371-a709-476f-8e94-807d7b62ce6e@gmail.com>
-Date: Wed, 21 Oct 2026 12:11:13 -0700
-Message-ID: <xmqqqzhina26.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=o8mIoiG/
+Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-30c0d568830so2543705eec.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 13:03:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1792613027; x=1793217827; darn=vger.kernel.org;
+        h=content-type:cc:to:from:subject:message-id:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=/wR7ga0VxJ2SW0lnOGn9VS8aMi5ubieHH7c12Q9NwtE=;
+        b=o8mIoiG//l1zYzqbYYEwAx23FEmzbPCgrGxEE6FBAXYz139IuBBPaCL//rv5f44iDk
+         EwBGZkEvtGFUuRyA0Z4/YmJ0zv7X1olHBUIdnz4YLFd4Ng9DlDRV3nKQYaA15cs7hMUf
+         CXUp7lJDE2NIqmHd0OSj2ERKAX2/OpTQgHR8PgcqJVAQvSiNuhx609dIwROEeJihMB7j
+         LNTHRzGM86tKvw4rXBZeyngCTjKAUouS/HF/CDqCPvvhkUi7543pDKaqlff90NAPBwq2
+         ZPk4rMbWCQ2pcrcsEPUhGuej1tiXC1NUkYCCcAFueTAP0Bo9hQGhin8IyRMju/yf9arV
+         ejbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792613027; x=1793217827;
+        h=content-type:cc:to:from:subject:message-id:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/wR7ga0VxJ2SW0lnOGn9VS8aMi5ubieHH7c12Q9NwtE=;
+        b=lEN/mQeLs2+663+VDvJGYuIhD/q9QKLl6cIlD+PTjdCnFcucq5bhNswGMrnE/x/yPq
+         swqfdCd+upBgzCNNPKkQdMMoL7K8YyV6EYbDDskah1D7nwyn3JThxjPTB3i+QLe9BeSv
+         CneUUI0AHZa1a0tilsOGEr/mNvdFgdHvC3Y90TvgXUMHf2R9HuMGaJMx24TJEW830ryx
+         dNlgeypx1darXDUr61OO/A6gFrm6WH5LOqsFBSxZinmKoke+mBWwksfF3TOm12xk9ICg
+         Grl+yzyZrciv0EmDik7xaJDOQYLDGDkDhe6hfz0nWuMz+K/O2kf3Uw1aM2Fdck8FySRg
+         o85w==
+X-Gm-Message-State: AFq9FYKixyG9BBt6QDSRS0buOTtR3JK/ezMjCPOr+uwnFui/OJiiYYTS
+	5sTBj9ihnqTNC0rm2EVXfrDjQtJY82iarSoEwCFLNhj1WX2uDfkVLbHYF/vGytWVA1diaJqZtRu
+	2iNTMeJsSogcwVnHNRQw389wXNVDHwa5ITZTzwXWIuPQNcAQZcNsO/LNpnvP3RYm06WZiGmDYJ2
+	5AhGyONaR9nyi3qJlVIitvUYbit2a5GHjZlnnD0u3z3U8r/rjvV9BbcaOe7IHAhzOk
+X-Received: from dybvk1.prod.google.com ([2002:a05:7301:53c1:b0:356:dbeb:82ad])
+ (user=emilyshaffer job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:7301:90a:b0:368:6a59:f3a5 with SMTP id 5a478bee46e88-3686a5a02f1mr1142960eec.18.1792613026613;
+ Wed, 21 Oct 2026 13:03:46 -0700 (PDT)
+Date: Wed, 21 Oct 2026 13:03:41 -0700
+In-Reply-To: <summit-2026.94e33e9ddf234334.06@ttaylorr.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,44 +76,198 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.0.307.g5fe7bd680c-goog
+Message-ID: <20261021200341.378978-1-emilyshaffer@google.com>
+Subject: [PATCH] Documentation: propose community voting process
+From: Emily Shaffer <emilyshaffer@google.com>
+To: git@vger.kernel.org
+Cc: Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Not all discussions can be settled by community consensus. For truly
+contentious decisions we need a way to democratically make a decision
+that represents the majority will of the project. This doc outlines the
+methodology we use in the rare case where we need to vote to make a
+decision.
 
-> Hi Nakul
->
-> On 21/10/2026 11:09, Nakul V S via GitGitGadget wrote:
->> From: Nakul V S <vsnakul@gmail.com>
->> 
->> When a repository is cloned with --depth=1, Git records the boundary
->> commit in .git/shallow and rewrites its parent links via the graft
->> mechanism, making it appear as a root commit. Reverting such a commit
->> will therefore delete all tracked files, which is almost always
->> unintended by the user.
->> 
->> Add a check in do_pick_commit() that detects when the target commit is
->> a shallow boundary (nr_parent < 0 in the commit graft) and refuses the
->> operation by default. A new --allow-shallow-boundary flag is provided
->> for the rare cases where the user genuinely intends this behavior.
->
-> Thanks for working on this, it is a useful and timely improvement as 
-> there was some discussion about improving the behavior of git with 
-> regard to shallow boundaries at the recent git merge conference. I 
-> wonder if it would be better to refuse to cherry-pick and rebase a 
-> shallow boundary commit as well. Do you know of a sensible use for 
-> reverting a shallow boundary or is the new option added out of caution 
-> in case someone wants it?
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+---
+Hi folks,
 
-Very good point.
+Thanks for your patience with this taking much longer than I expected or
+wanted it to.
 
-The next natural question is where the modification should go if we
-want to make sure we protect these shallow boundaries not just from
-revert but also from "cherry-pick", "rebase", and possibly "commit
---amend".  Is sequencer.c:do_pick_commit() the right place to cover
-all of them?  If not, would it make sense to have a helper function
-that different code paths to protect shallow boundaries from these
-operations can call, and add the first call to that helper funcion
-to the location this patch adds new code to?
+As we discussed in the Contributor Summit this past September[1], there's
+interest in taking a formal community vote to decide whether and how to accept
+AI contributions. The topic is of course a very contentious one, and I don't
+think that we're going to come to general consensus the way we have on most
+other concerns in the past.
 
-Thanks.
+With this patch I'm trying to outline only the process for collecting the vote,
+NOT a proposal for the AI contribution policy itself. I'm interested in making
+sure that the Git community is able to be heard fairly, and that we don't end
+up dealing with tampering during the voting process (e.g. non-contributors
+dogpiling to shift the vote one way or another
+
+I expect the approval of the voting process itself to be fairly non-contentious
+(or else I haven't managed to write a fair process!) so for approving the
+voting process, I suggest we use a similar approach to the one we did with the
+Code of Conduct back in 2019[2][3]: discussing the process itself, ultimately
+coming to general consensus, and collecting a list of Acked-by: to put onto the
+commit outlining the voting process. And by the way, I do think that we should
+check in the voting process; it seems likely to me that we will want to revise
+the AI policy again given the pace of development, and it may be useful for
+other discussions that we've had trouble resolving in the past.
+
+BTW, there are some parts of this proposal that I still don't have a good
+answer for, so look for my self-review immediately to follow, highlighting open
+questions.
+
+[1]: https://lore.kernel.org/git/summit-2026.94e33e9ddf234334.06@ttaylorr.com/
+[2]: https://lore.kernel.org/git/20190924064454.GA30419@sigill.intra.peff.net/
+[3]: https://github.com/git/git/commit/5cdf2301d4a8b439f89fd2cdfed13736ccd64a30 
+
+---
+
+ Documentation/CommunityVoting.adoc | 100 +++++++++++++++++++++++++++++
+ Documentation/DecisionMaking.adoc  |   6 ++
+ Documentation/Makefile             |   1 +
+ 3 files changed, 107 insertions(+)
+ create mode 100644 Documentation/CommunityVoting.adoc
+
+diff --git a/Documentation/CommunityVoting.adoc b/Documentation/CommunityVoting.adoc
+new file mode 100644
+index 0000000000..155acc9777
+--- /dev/null
++++ b/Documentation/CommunityVoting.adoc
+@@ -0,0 +1,100 @@
++Voting in the Git Project
++=========================
++
++For the most part, technical concerns in Git should be resolved by community
++consensus - either on the mailing list or in one of the annual-ish Contributor
++Summits. Voting should be used as a last resort when the community really and
++truly cannot come to a compromise on a policy decision. As such, the initiation
++of a vote should be generally agreed on by the mailto:git@sfconservancy.org[Git
++PLC] or primary maintainer.
++
++The voting discussion should be held to a single (huge) thread, to make it easy
++to refer back to the decision process when looking at the successful proposal
++after the process concludes. The thread may be structured like so:
++
++--------
++Formal vote: Commit subject line style guide
++  Re: Formal vote: Commit subject line style guide
++  ...
++  [PROPOSAL] Require emojis in commit subjects
++    Re: [PROPOSAL] Require emojis in commit subjects
++    [PROPOSAL v2] Require emojis in commit subjects
++      Re: [PROPOSAL v2] Require emojis in commit subjects
++      ...
++          [PROPOSAL v4] Require emojis in commit subjects
++  [PROPOSAL] Require Camel Case In Commit Subjects
++    Re: [PROPOSAL] Require Camel Case In Commit Subjects
++    [PROPOSAL v2] Require Camel Case In Commit Subjects
++  [PROPOSAL] forbid capitalization in commit subjects
++  ...
++--------
++
++A formal vote has three phases:
++
++1. Proposal collection and refinement
++2. Voting window
++3. Implementation
++
++Phase 1: Proposal collection and refinement
++-------------------------------------------
++
++Proposals should be formatted as a patch to Git's documentation, for easier
++review and implementation once landed. Anyone who is eligible to vote is
++eligible to submit a proposal. To avoid noise on the final ballot, a proposal
++will only be added to the ballot if it has been seconded by another eligible
++voter, indicated by a `Seconded-by:` footer in the patch's commit message.
++
++After the first draft of the proposal has been sent, the community is
++encouraged to discuss and polish the proposal, just like any other code review.
++Keep in mind that these proposals still need to be voted on, so it is likely
++counterproductive to use the discussion period to try to completely change the
++nature of the proposal or the mind of the author.
++
++This phase should last around 4 weeks in order to provide plenty of time for
++community members to write proposals and respond to feedback, and make space
++for contributors' individual timezone and availability differences. The
++maintainer or PLC member who sends the kickoff message should also include the
++closing date for proposal collection.
++
++It may also be useful to invite expert feedback during this time, e.g. from
++Software Freedom Conservancy's legal counsel, depending on the topic under
++consideration.
++
++Phase 2: Voting window
++----------------------
++
++The final version of each seconded proposal will be collected into a ballot at
++the end of Phase 1. When the ballot is prepared, eligible voters will be able
++to vote by mail for two weeks, to make space for contributors' individual
++timezone and availability differences. During this time the proposals may no
++longer be altered; the ballot should refer to a specific version of the
++proposal (e.g. `[PROPOSAL v4] Require emojis in commit subjects`) and any later
++version of the proposal will be ignored.
++
++Votes will be decided using <mechanism TBD>.
++
++Phase 3: Implementation
++-----------------------
++
++When the voting window ends, the winning proposal should be merged to `main`
++without delay by the maintainer. The commit message should be appended to
++include a link to the top of the voting discussion thread so that the
++discussion can be revisited by history divers in the future, as well as a brief
++summary of the result of the vote (% in favor out of total number of
++proposals).
++
++Voting Eligibility
++------------------
++
++Votes are welcome from contributors who have authored a commit which has been
++merged to next, or who have provided 2 or more code reviews, and who have not
++been banned from participation in the project. All eligible contributor votes
++are weighed equally, regardless of the overall number of contributions they
++have landed.
++
++To prevent dogpiling, contributions are only eligible for a given vote if they
++landed before the beginning of the voting process (the kickoff email mentioned
++above). That is, the code reviews must have been sent or the patch must have
++been accepted before the initial email is sent. The intention is to ensure the
++mailing list isn't spammed with low-quality reviews during the voting process
++solely to increase the number of eligible voters on one side of the issue.
+diff --git a/Documentation/DecisionMaking.adoc b/Documentation/DecisionMaking.adoc
+index b43c472ae5..c08fb7abd5 100644
+--- a/Documentation/DecisionMaking.adoc
++++ b/Documentation/DecisionMaking.adoc
+@@ -72,3 +72,9 @@ We prefer that "official" discussion happens on the list so that the full
+ community has opportunity to engage in discussion. This also means that the
+ mailing list archives contain a more-or-less complete history of project
+ discussions and decisions.
++
++Formal Voting
++-------------
++When a decision cannot be reached by general consensus or compromise, a formal
++vote may be called. See link:CommunityVoting.adoc[Community Voting] for details
++of this process.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index f8dea4b395..314b8dc8f5 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -113,6 +113,7 @@ SP_ARTICLES += $(API_DOCS)
+ 
+ TECH_DOCS += BreakingChanges
+ TECH_DOCS += DecisionMaking
++TECH_DOCS += CommunityVoting
+ TECH_DOCS += ReviewingGuidelines
+ TECH_DOCS += MyFirstContribution
+ TECH_DOCS += MyFirstObjectWalk
+-- 
+2.56.0.rc1.315.gc6ed9934b7-goog
+
