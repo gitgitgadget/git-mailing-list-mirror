@@ -1,93 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792543918;
-	b=PDDjqloUA6/pKWgtAqrKz6tHpBT60cGifM0ULFzGb5cUYvN8SfWOv9SKScwhVPaB1myL
-	 CHKNuM32CJef/NnPhK/kbUNadgxi85oVlDk0j+S2zNhMXljdNsTcv0gJWh43pXGGIJ2Md
-	 RYBgvW909+xp0PIshaKLxMVh6H1sVwfDaR292bnEZshcw15bPZoFMS4EhpKidZg8Isaya
-	 2c69dfObBLT7LZ/hvcLB70LMO5ctmTSXNVFB9Bhu4V1Xp2+Sri4cpYaMIJB5tBITVtqX3
-	 8gvkom8xiXFsiB/Cy9yjYr/BjC/9W9FZukPKhKwAZEEdTQI1KjjyeuNKqyhrrXTiMLg==
+	t=1792549345;
+	b=GzgV75uQ286in5mlzFEZQtAzk5Q0YqEre6BMvsztH7QehfAXSlGvxawlJFErFlcwf2Be
+	 B8LfdzQ6DTnJHevEZGPoRji0EVotS5okG6iFAxsyqOqvqGDHvo5BKy9/nJaMJ8BzCuV4x
+	 PG9iQuHVuVngcr+k7xvo/+oTnMHG1AH7QGN3axtQXQwJWjMKiTfYw6oi25hhmfDXsn0Xs
+	 uedMB17Wm30TVj9nromoq0O1sNZcReU6EFDfuY0Fj3ZzNfe1lMSBavw5k3f59OwgPTWWs
+	 W5UgCAS43469wUPxYQ4kNHH93A/NwKsPReIRgdMpP5yC49ZqRjBDRAJgKR8L82dfLdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792543918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792549345;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:
-	 X-Mail-Abuse-Inquiries:From:To:Subject:Content-Transfer-Encoding:Date:
-	 MIME-Version:Content-Type;
-	bh=ELYiLcMRVeD6VIrIXm90flpFszJZs1cFNbizKV+2WPs=;
-	b=2m9Ka7851gMa3oZcGZcU2VkKpYu05EqJVwGfduPnE5pIL8mIQxBKSETn0CS8/NwU8wKm
-	 ox0mtJ0I5omyJKjmvRytqV9kzBEEbsFFGeaxn9rTrxR10DE/YW4CmoY9mfVY5rQIXxfE1
-	 tq7DUA8M2H1cip2gjBk0acdh92wd8vqDFnkY9yItj6AV8T5XT9+E1KsXcbg2vj42uIBoh
-	 JpWVEgeuAD0nIzCOV5lite/BmYMqsPafJw1gpDLolE9bT2V5Ys4HISl+M9HMH3SwdKnSx
-	 u2clf0gszpkDH0IqkE6osHaMcigT4XShG51GdURZcXIDOlJ2qrMriyT9ffbrid5508g==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=33fCz+KZ0GeyzH1W39CRJ+NN/paMKi5jdV6Jfq+7KZ4=;
+	b=lBmJ7in0S7gpIxfFYm5pwd6y5VNVYSIcD1WxgugBK0mFGfNdSehghRZMu6HOc+fnyZ7p
+	 IwP6llGK0jgD3fR14AdRCEaKKrznDrVER+KIU0y9f+UwuIoA63mwmEew1tMaNSLZv0UxV
+	 WzO5oFFriRJ3seH3cjHK5Wg7UJ+WKSrwQwV7vOU3XVq7H5EJPyrsnSoZiH+hbEliccBck
+	 Ute50xz0EhWseUgE8LPUrDl432PA7mLHjqsIM2ckZMDRH52VlmyvvS7bobRwmI2/rioge
+	 JhoAk7QD9ZmGLyGQIkfS+YN60J8Eyf4jMw18fp8K9ZUFRrCeh5VJXrT9sKLKzVtuOsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=persistiqoffice3.pro;
-	spf=pass smtp.mailfrom=persistiqoffice3.pro;
-	dkim=pass header.d=persistiqoffice3.pro header.i=@persistiqoffice3.pro header.a=rsa-sha256 header.s=google header.b=TKSfvKdV;
-	arc=none smtp.remote-ip=209.85.219.50
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=agiFGvg9;
+	arc=none smtp.remote-ip=209.85.128.45
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6B2606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 00:51:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3E6B2606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=persistiqoffice3.pro
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=persistiqoffice3.pro
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89681606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 02:22:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 89681606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=persistiqoffice3.pro header.i=@persistiqoffice3.pro header.a=rsa-sha256 header.s=google header.b=TKSfvKdV
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-917aca1aee5so2555156d6.2
-        for <git@vger.kernel.org>; Tue, 20 Oct 2026 17:51:57 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=agiFGvg9
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a018dc1f98so1438415e9.3
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 19:22:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=persistiqoffice3.pro; s=google; t=1792543917; x=1793148717; darn=vger.kernel.org;
-        h=content-type:mime-version:date:content-transfer-encoding:subject:to
-         :from:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ELYiLcMRVeD6VIrIXm90flpFszJZs1cFNbizKV+2WPs=;
-        b=TKSfvKdVeoueFQXm96r+T94e9b0v7QYA7v4UCA5Ezc/hY40JdU2vz2IdSGY1jHvY1y
-         eIbGygdL/pvsOj4LOFy399C0QeYRYOrT9Qt9qFH/y6EE6Vo/N8thZBvTlEz425JP4H7D
-         dGPxM2wQ+UsDyavrv1R+/x8kh1+XCzCSvYO/H4qyYbc/yDGNYvtWHYYu1tAmGZp+4haz
-         6H41W31UZi8yUdgoRmi6nxxmV5iegRL9A7ZQKkLAjenlsh+g4tOFEUYXo4gunvO8AZcw
-         ppBTrVs849N4R5JWyrmd9NIyYm7pjKZADxL3hnZl1tggkRQFMWPCez9y0LlwWafogE2G
-         1pow==
+        d=gmail.com; s=20251104; t=1792549344; x=1793154144; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=33fCz+KZ0GeyzH1W39CRJ+NN/paMKi5jdV6Jfq+7KZ4=;
+        b=agiFGvg9Su/rCLV4JnI1ZNI6HTewdpav1s73NFEUO39dA+VKCV1oiQCwcCbGICwOeh
+         Kca9+NfcfBpuzxK+reekyjNWIJ9Fw1HtuxOgyeMNoyZzddhfRBNfx/GGOc2JGXcBat3h
+         gkWl0jtpOo1Vtj7alvjxvpLZqQroiy0vZtowtW0YSzgx20iyKH/lCfDFPf6dqD3ETofL
+         u8JUpumzBMBw2qoiWEo74VxJ0Ss07aLQ1l5xbKevWbCA9pjyJGTY5uZNChJliUEMn7RL
+         tiFjiQKk7wh9iDUUYv0VV7H1UND+iHvnrgxQs94mIPcH+JcHJTXYZPwswsrG1IY1JejD
+         5sSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792543917; x=1793148717;
-        h=content-type:mime-version:date:content-transfer-encoding:subject:to
-         :from:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1792549344; x=1793154144;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ELYiLcMRVeD6VIrIXm90flpFszJZs1cFNbizKV+2WPs=;
-        b=GifwXJt/k+WJal5WDUUsvxPeFjPfpjoXCZLUCA9P6y3Y6Vq8pqG9o32/+7OOWgupX+
-         iCuDyxT1sGbXg/CFPwgxweh++loBS57gNY59UJw41vuJWzTbSGtxXkadFTgTW16ToNR6
-         /VVO2XEXu2h9MUU680CS+DJZ0dWlqw6r4pc5d7/Q3lejiHvtbDVFPeJ/BxTl/0gZf4fe
-         JjZQrh/kWP6FlKKfUpHFVY1N0HFCK/klrF+JI5TPugiGyMbfqovvPIsZPvxNH0lsUzrL
-         dasG+GFMkqGF4Af5diOGTxQYGPuj06Vnz/bsOp40iTp8digFYwKLrEtsluie+MmGRGWS
-         uTvA==
-X-Gm-Message-State: AFq9FYIaHGKTM05THCqMWZ7qxKqcjKJ2QcCqi9MWUkoa7hSgImHoaINd
-	ofIx3jGUs6lg2vvtPttfG94DWlqkghMj7U2qMs2pi+hvh2swwGqYxAHCmhLDhwv7q1M3Q+IPInD
-	D/RDMyw==
-X-Gm-Gg: AYBFou0d4z26w0f5QpOLyztbXZltZE6/yiOGJYCxmIq93KGGn48nw/fCDMOgQqWvrnA
-	kIgakwCa0X7GZXM7sj4Cu3Ob2VHjOMbV0jy5Zy2PmFLfhwFVqe8nGVol4m+m13uSGzqZwp7sqXd
-	HADquroQ3ocJ7HYSdIq4XBwt2d2iKyU5+jsd81HMWmRCoG7q2cO/iNjZbRyTiXFZ0mlAk6nCOee
-	JAlRq4ERwsYWuVjNYsp1vu54RgFf/q2RYMrG6rGm1NHcRB8A06E3hw/3cXTTHpJUaSgbN/iO5QL
-	eRtqeVdegb8xT8A8oYXAnTS1aK2xu7FUfpvJdcM1Nkxbj16cw3vIp6PtfRqri3Oq7XwBVW75Eu3
-	X5NWM+aXxJ0iixBhCt7WEhN9rOdD/QQ1YZcGndPwC5yFRutjCcIfkbTlMDk6nGM+2ZhcYApbAHb
-	SRGcrYqzBvfuIZZ80g1SAPHBo45T/rm4JSy47oDiqFCct0ky7EaU42WJAoNT1lXZ1Iquf4FVkIn
-	jHk4bo1kunNoP6AR1H40I/4qWLORi7+Ib99xgJGvlxr4Xbgk5f5VllU4tGhkSs77+diQcI9wOHZ
-	tM5sGsv/BDBLbn1lIywynogt352q2vuU7P4bA1R2+lUngUjDJs7UB1mOMwPwjHLiB3hV1SOaNfU
-	6oz9LBr/Gh+0=
-X-Received: by 2002:ad4:5c8c:0:b0:917:97df:6e30 with SMTP id 6a1803df08f44-91c12eb7cdfmr9748596d6.16.1792543917050;
-        Tue, 20 Oct 2026 17:51:57 -0700 (PDT)
-Received: from 01a15bf1-81aa-7c92-95db-5dba6bda628d.local (ec2-3-234-252-59.compute-1.amazonaws.com. [3.234.252.59])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c10a45336sm12017626d6.3.2026.10.20.17.51.56
-        for <git@vger.kernel.org>
+        bh=33fCz+KZ0GeyzH1W39CRJ+NN/paMKi5jdV6Jfq+7KZ4=;
+        b=FmwtvdX/CFFP1s5Pnw/boWR+lmj7a0es4fqnMpuWbYmBCyTWR+ss8y07PEiERoisPr
+         zdres8A7s5hzjLQXByAAu6BhzPPMkBaLVAHsdza1Z2e1OH8QuNrJAUFI6JURB2pJQ0ba
+         cIz1OMtdLL3fThRq46/IGcSqzjWI/3rHnpmFHrcB6OY4Hv3KWNdsJUjPAUUALhl88SHg
+         ADV4y5N+1DihIXpYtP5FIQ6vL0yutsp2FlwsOzi5Ilccs9uCHu8ono998o/CbhXG03N2
+         KitNLq0UUGPsha+1AqqOqiTvejX8CxpJL4EZXfmMwcBdJjVsdjfpfBPfHjgFp99w7HXa
+         XbNw==
+X-Gm-Message-State: AFq9FYJUFX5Uen2O7SYms5xScIN1vFPzRcXttcOy0lhAhfI64bo1LN7P
+	zcs9cf7bgUd7qlL1fMbFh0CoOW5/o/inFkZKhy1tLueNULHz5jbk6u8Z29IM2V3Z
+X-Gm-Gg: AYBFou2uZRuBrxNMhQeQ46vWDAHP8XNTuLIXT6gWiLEO7Ycov6m1SNoh6fkt2N5uqh8
+	Z656IIfc/OWHYdVgiMEIQ7z7V7Sp/xe6uoRiWHX4zlPsf53rCsVdX9p/09xSKH21uPmcKRkBlZl
+	iDq8TRRSDRfmi44S4matBhPE4j0mPfiDpQOt7xExe05U1o5uohhuZ40/76lh+6UZkVz2vnLA+/5
+	bpyzt+2SN19Wx7DgtP/RsV6FPuWa+KtxVgAf+U1IkZT+aI5CiqwbTsbSlbKgaPqfEONrxpwipN1
+	Mgf42G5n2tqp+phiMBZFb/UjsCV3w1CiZu6ArhucOEU4qHQOzh2ofaenFG9DEVZPyZi84oiPV4X
+	i42hit9fr/A6gPclxuFINTBBjUCrd68VPtL7Gcanq9uqo3de1DobiNVwReYFEMtbUtjFVarqQxZ
+	z5tFA3xHURrdlhJpUAH2ewioGb6ejIHX+P4ODWJlsR+yox3X9zV6mt8cq8ek6ZPP8cxU+E+jGX5
+	ydDAyiZ6jRDbyMkfEKhlfoGcZoWvCubVxOrFgWg0JMc5FOPRbLvGn5WRRl2zJ4aI8CJMEh5etej
+	yx1Ypm7tLR8ox06KpP2B+7UwOWCqHD6Oht04VgIHbSDKHXEfV6KU0+FAYaOrQAw=
+X-Received: by 2002:a05:600c:4e86:b0:49c:fa20:cbfc with SMTP id 5b1f17b1804b1-4a1fdd3946emr9648225e9.19.1792549343644;
+        Tue, 20 Oct 2026 19:22:23 -0700 (PDT)
+Received: from HP ([105.163.157.65])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1fcd2eff9sm19513185e9.4.2026.10.20.19.22.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 17:51:56 -0700 (PDT)
-Message-ID: <01a15bf1-81aa-7c92-95db-5dba6bda628d@persistiqoffice3.pro>
-X-Mail-Abuse-Inquiries:
- https://app.instantly.ai/privacy/report-abuse/01a15bf1-81aa-7c92-95db-5dba6bda628d
-From: Sean James <sean.james@persistiqoffice3.pro>
+        Tue, 20 Oct 2026 19:22:23 -0700 (PDT)
+From: Tanga Joris <tangajoris@gmail.com>
 To: git@vger.kernel.org
-Subject: Git SCM new clients
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 21 Oct 2026 00:51:56 +0000
+Cc: christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	Tanga Joris <tangajoris@gmail.com>
+Subject: [Outreachy PATCH] checkout: use Q_() for the "... and %d more" message
+Date: Wed, 21 Oct 2026 05:21:56 +0300
+Message-ID: <20261021022156.119947-1-tangajoris@gmail.com>
+X-Mailer: git-send-email 2.56.0.215.g47fdf2208c.dirty
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,23 +93,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi
+When leaving orphaned commits behind, "git checkout" ends the list
+with " ... and %d more." using a plain _(), so translators are unable
+to give the correct plural form of the count. Use Q_() so gettext can
+pick it. English string output stays the same.
 
-I came across Git SCM online and wanted to reach out because we're =
-working with other software systems that are offering version controls.=
-=E2=80=8D
+Signed-off-by: Tanga Joris <tangajoris@gmail.com>
+---
+The count here is always 2 or more, because when only one commit is
+left over, the suggest_reattach() function lists it instead of printing
+this message. I still used Q_() because some languages, like Polish,
+use different words for 2-4 and for 5 or more.
 
-I=E2=80=99m currently working with a few software systems on =
-campaigns that are getting their sales teams meetings with warm leads every=
- month. We=E2=80=99re targeting people who need version controls using =
-personalized email sequences.=C2=A0
+ builtin/checkout.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-If I could help you connect with =
-potential clients like this, would that be helpful to you?=E2=80=8D
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 2d575a4f57..49239f029f 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1085,7 +1085,9 @@ static void suggest_reattach(struct commit *commit, struct rev_info *revs)
+ 		if (more == 1)
+ 			describe_one_orphan(&sb, last);
+ 		else
+-			strbuf_addf(&sb, _(" ... and %d more.\n"), more);
++			strbuf_addf(&sb, Q_(" ... and %d more.\n",
++					    " ... and %d more.\n",
++					    more), more);
+ 	}
+ 
+ 	fprintf(stderr,
+-- 
+2.43.0
 
-Thanks
--Sean
-
-P.S: let me know if irrelevant.
