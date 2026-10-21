@@ -1,98 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792620252;
-	b=aguVyuHwKxIbzHCEZjVt+fsp54sWJD82xeKydcSkCD4QfPNrLzdCCR99SrXyEVKZBfcf
-	 V2PFGXP3wAwJkgjajXWXtlQbDQj6uERM6Lvupb4wt3LHtjXwHY/+sAuu/BQxlmd7KSKGb
-	 DeU1ES3IpugprkGWu03lGEP6SBlgNptfukpRhNHtRZPR2SpGdWQz5q4odNmen2OaM5KKL
-	 XWaMsMVaVTYHAsPVTPKCp0E6sx+8fNEIAFqA2BSWJHvMf6evKQN8ob/ShDI5E3sMhNoe/
-	 A6fUZxsXlRPTOnP30Bw0HLkcHShdYLxScNNp5xxlS47C3UuXRYjN8UVAWyD23lSjcBw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792620252;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=RUVdXE01mCOs3s8MWeVAqzHmzi/b7ij48PKYziQHee0=;
-	b=ow7LmaHzDAO90lhkKy5waSKU6+DTwFXkquRfF0aCnSgHxD2T55edM2KM6K2pJHWuydp1
-	 ua7DxFwg4xFowgRGZqKeD+In69c6BtYF9UlSiGRamReRAXNbzp241LoHxdAZH5Vx2shMQ
-	 gOZL7mvAqhhZCeTLto3Co+tUHc1racZe91D3dgiir573la+oEFWNFxR4ldlftXsN7y4x9
-	 RyoOezzR+hg2uKw96YuqZ8VxjzqjGY6woaZpXGxEmekPWINR64fiYplwQLJCWfzeJ5bxK
-	 LQDXkclIRvAfJAdUWINU8RcC755zDTd9SCPHH6yM58wboqH7ZEjsKO8G1eEaqoKC2Rg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=F+0oeoMD;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792620421;
+	b=2zPjsiV2w0qxvTwQ3k6jKyB3wZz2pdmZnIq2uF23uVcRUGePLTDs7bLJLWEv0EfXrNUM
+	 zliF1U56Pz35gr0Vw/xBfmciMAHOSAsmp+F+qlk9+P4opZzd4T5Hzbld1YMg5a6HlpEVQ
+	 fuCsW4z1ELVYaG+7FCEt7xKbB6g/Le5oRw7ZuCkIWbLCyKzvGIqJraA/JN+ZeNl3j2+9/
+	 ztDqRYXgSQn0L5V4xrAuqlR+8y6A8YJKb/ybIOBaAoAm+kXXbsyWnsgCNxmXI58mE0rBp
+	 m8PDLtmPjLLUih3vayxJKB10dQaafjtCofs16OiFNCbSqBsnpzRchfSa/H2hF4BxkcQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792620421;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=cBJIam4y5Q/CTwyN+Z+UabcpF9kl4K35Glgdi6J8USw=;
+	b=vGrU1QBGUOmlw/lDnIaaILX1D5EqFz1HciJY1LtWix64ccKsji33xFrpkq5Ws/wTiL4z
+	 +lRSp/Esux7ctCwF6Ig1L8GgRQVnmfa9ps03CbVuWRYKU3Z4mzu0vVDUL7YZfAnkZp6mk
+	 x/pmLkaR/DSbmFnaDUFSDCFzpBKuIti7OArkJjcgAWOoOInqtclUBdSTNZTjwzwlzicTn
+	 R8b3lx2LN4o430AczcDc4dcPv4wseAU9yE8pMttcAuFiOAKQ55m8HhoQhjhQ8rWpF4HGf
+	 BHCAsKmbR/KATN51fdBJ43XXXjUE9E+pu8/daPtnqRU+OS5JWpq1RbQgBK+GdKGPFGg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ZKn5Qu4q;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=IiHIbFrz;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0ED9606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 22:04:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B0ED9606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13A8606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 22:07:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D13A8606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=F+0oeoMD
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c4677aad67bso132663666b.0
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 15:04:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792620250; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WU4LAX0GGxWJ1M9uQfsvEInjgtc4P5HuRS6EW6Oi+OEFoLAW/tWpjOKxD4wOw+1P8I
-         23gkKs4qS6ruhvErImSdsUrJTtMR9ZyrdS0d7r8iepWxZz6K9K/46sfCAi5bUcXtOXiB
-         HN5D3Odungf1Y49eYLLk/IAudP0yDGapNxhgBbUMq0fIEMotT+6lNMiAEWXbwNVTh6xp
-         xZ+ODpy9wFuibqHEVMgoNqlT2pYdYRI2hkyp3R+p0C17dnNNx/ngElNQW06+CmNumNvc
-         OKQpDwfiFyoT1C7C+rl0evCPyE3F6VQtDkIkQEHGmr9Q8CG5KySKUSvbpaQNZhtrgSvS
-         t6jA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=RUVdXE01mCOs3s8MWeVAqzHmzi/b7ij48PKYziQHee0=;
-        fh=GV+q3+xoptdzTjdo/fAURyeoLF5hkow4oLuqL90b9Bg=;
-        b=s9tDwWNg/4++pO1z8N+P9GEvFEyWEm0CNT7bi1tT62SvhbYUqFY+Iy2xbqaRILnGYZ
-         +TFgOnGaSwGhN7HmdaDxX7csF9onXglN6Plv3eMc37eIT1V6SOdD2bvWZeHDnvsqTocw
-         8cszm3Qz/ppXDIfdZIIePeHwZT37rzJYzeaB31qxT/zI67+qRtHpzEtJX3aN40gjQbbM
-         3JNydu5ttG2c6f7BnXQXo/xS8FIEkVRKlWQh+vE9yGqBLydT9+qtlW5ZIQ0lfv0nCQh6
-         iL7eWdmWO+BBBDIk+A6BlN/r/M2oBcpFGh2y3cVpWHgTayHnCFWfmgUscH+trN8Mms48
-         S4hA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792620250; x=1793225050; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RUVdXE01mCOs3s8MWeVAqzHmzi/b7ij48PKYziQHee0=;
-        b=F+0oeoMDhjzH1DvUXkqOpwkTZdZq435B3W35QEMvd93TfzDmg7AFWHydl+QOPAtLnB
-         zJ0IrcNyBvuf+ij8I+6Zv3tMy3muVcft/vMtMfKF61kZqOsEjzSA3+6LcEE1fLcJpKIf
-         QwmlvJ0O3tWdAV8IF3o0oAQBj1wO4/tFNzRIWMU67+VByXXg+YuQ5E3U7Zxo9qmQ4gSn
-         Yu1grUKFQpRPdK+7PmpdC2Z/SgwLUGj4j0DD7/L6pFgXwRzsGnecvust9FtSVgmhaTeX
-         9ruGkD2HJLMhyb62925ZYdkQy5C9/MSckIMqzIXHtP++4Xqj7WRJiXuHHp4g4ArWwDpl
-         /Hyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792620250; x=1793225050;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=RUVdXE01mCOs3s8MWeVAqzHmzi/b7ij48PKYziQHee0=;
-        b=P94c7CelAlQ/BpdSDriOdwlbgHYR04Pf+dO8aulfW0NfCGHtbjk4qzMBo/3DBPMseB
-         xZSeEvyTjCi4fcj8+teDVzLWtB09KZ1X6hjow3SnfBk/doQTXxZJ0WYxsH2BtUalbJl9
-         yc7jh4wVAHTFFJY1GRuUB4zfUTlB0sL1F5l7BwHRBVeawUIYyT7VITptYXnAZXU5Tqc2
-         KlVeUBioC2UGeMWozicrSp6qFeMfVapC2w6LmyTeg7NRy1lR7r/bwMlvg5vUhQRy6r3o
-         AFzrQtFMNaoYgtYpxoZ06mtsjJ9+K1E0LME9+x/Uw/sHd+UTfoORcw9fzgrYwx0rf8PF
-         hb5Q==
-X-Gm-Message-State: AFq9FYK9K6nEx7eRVyInhaGdP1rnWCpVZ29pDWwImcQqwy8eBRh4HkRr
-	L61x5os8xdJFt0NpO2mQiWIDYFWRD7AQaNMm9U18ZDBmcFbPb0MW1kaYjZuqtaDAiE62SeFGC6Z
-	A53vH4zSFJrhTMQlvI4P1iWeyw7X8T6g=
-X-Gm-Gg: AYBFou33Do5rJDDdkx5qdLHb1jnL8roVpfcLWhTjWRof8yy4PnQxNTsdvsHHLVtxqkf
-	L3qY+iDtPSlKtSCq1sy3yLFU9Rmjo5EQqZ06cRyH9O+9VqvCsF6aI8aCSUpInbMxPQHdGT/9gje
-	eBUWQjmekG5unlxjKTL8RDHfQfIRiFsP5BhCDwNSMgI4Pj09qbfXJ78XTCqLPOnX8Bl6l0H8lOu
-	L61fiJnu4166InG3zJGPBvNC1C9vQxmBDMtPABjTZ+ovXXDP4+fnl/YXRbJvYgJdOL7UwRKdoa+
-	WWkqKXx0xuQu1SA7HOxSbSsYj6vBH5YOsMe+KVRbn6oRy8mDPME/XWgw3zyzkpba/yz4mXk82cf
-	7LV+jnbAdVCdl8OFEEAUeY6W321JdSyVoZ94w4LXmrhK3/IFs3ytlYEnybHMT4WjHOVYu2g==
-X-Received: by 2002:a17:907:c499:b0:c2e:4c59:a3ab with SMTP id
- a640c23a62f3a-c4679b54464mr300734466b.48.1792620249844; Wed, 21 Oct 2026
- 15:04:09 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ZKn5Qu4q;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=IiHIbFrz
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2E3887A0106
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 18:07:00 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 21 Oct 2026 18:07:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792620419; x=1792706819; bh=cBJIam4y5Q
+	/CTwyN+Z+UabcpF9kl4K35Glgdi6J8USw=; b=ZKn5Qu4q8ZK4S+1za8DL7xghDS
+	IA7EidkH/H8Tm+Kw5eoaLeHURxW2+2cjdiu3pyn2SXwYOrRBk7oN97xHMZD2QD0N
+	/8avqW0DU1OEo08Y4j1aG/n9h9yeBPpfFCoKSzUmV24SYx8WkLN309DOI68jpIdi
+	Zjnp8rju0M+1VoWciYi4ne3vjnUvSLoEiv9gCWemslZ0kcglS65qml7Kc3fihqWu
+	x3DN5Vbp/zz9JxhnOZnpzcbjZwMMOb5liHTGUSWjekYxJVTcMxhW3n17PTjguC9U
+	9HRTou/VZeRg848MugPVs6nqm3pBRDUCT0cSRTzws7e5UzdIMgXMqgUgd/Dg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792620419; x=1792706819; bh=cBJIam4y5Q/CTwyN+Z+UabcpF9kl4K35Glg
+	di6J8USw=; b=IiHIbFrzRmmyATMG5NsdKivzzjueGzowe4q+q0F92TCvvKCYEDn
+	U9UfnrvWfU6oF0+v7LmaZoAmQ5KOxWACACBPX/tLeI/wYb1+ISa2M+njKvvVXsL8
+	D8xtgoLYYMloi4ZiD+oze8MLyhqkQvaR94UC7djx4JyoRqMfARf6+GYS7GD7vMpF
+	KXz/rnv/btjvztCmVgDqoArPaIB8E3ZOsHH1V8lHyuZ1GdXZD2FXdU3Sk6+v0WMZ
+	0PaT6RA2BXXkjO5FA2kydMLsIykLO7Mt6Anhz1P4CN7qw/pKubVhxSEKnF0a5BIi
+	zFLb0iFJ/5xIxTqFbccF3176KjiI9YlECIg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792620419; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:f55Xoo1rT9/8c/yHTmkJ4kq5LhvNUdmPTA2wNExyuBtFqIP
+	kZwjNjhtrNFVcoIpcUNYHDkJN5kSt9stK3ziGJPkNHlg5MHeEB8q4ojbBqV9N2RO
+	52v1Hck1UWRkndrHgwdIN0beDTHSg5GdQJ682fW7iTBkCwFhWohRV/QF4F+gVUDL
+	ujj/J7EztxkpXaCeBi0kenew7gECZqhdt6i27q4wfP4b/IiLTFkCJIByBUqHZhV0
+	c4golBYXyK0onB1Otzt7+t5KjNxJHgKQi5IXuz6arGr38CxGSpnRJ7av5puBZM/9
+	lCCYh8NZZrGJVf0jklPle6VaI/M9/d1fISwdr6Q==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:qUADBAlo30FJu+wIMBmgAYiQcWcvM0S8+1ZnfZbmAFQ=:SS7jS8lHXgfRqqGoSv4RPYia6gORa3XaBYIY6ZUldFg=;
+X-ME-Sender: <xms:gzfZamXNq6YDSzdhdpRdy3rxDVHSe-hT5bjIG5UkncFLmpLtuuVa5g>
+    <xme:gzfZaqApnfJWvKLGc__oVC1KMTpBYGw_-XfxvyLolUPZsWVZEsB0xF2PK5dtG8loQ
+    BG6spSeo6TtsgyuN7d8ls0tqKEUTNDZqHgmkobOmlPm4JlrQpqw>
+X-ME-Received: <xmr:gzfZanyBTtR97eBaKPB1m0IiM1zb-i5H4btftZD8p3F7iPk7jnZZyHIE2JWhkj3WnKppWGdr2bpTe0kxABg9bw3onNrgB4pLFAZR>
+X-ME-Proxy-Cause: dmFkZTFbXOHPylcM7GcEGZTa/5ll+ZLVPqwU9NuRB6e+XKm7SXhVNrVRDoGEh+NKtQhP8S
+    4QAuSXqPSNvtXwzvVXNYzeBmnwhFFZmJ1GZIxEM61rla198jNFIeY+5EU7eWikV9VL0o9L
+    DpHM2/lwE8ziev5s16fR6CHZmbai1rwaXEYCYvwAOXwd5h97giIQFsrxzBM005pqroXkNK
+    VoQmzFAcwQlCYcHreTRElT6slri2I2I9on8B9HA3cZqt3cN/6awfKchxLJ22tiaAaULmAT
+    /4SJ9iTv3LrtbpISN3WtLIhy2ckCiv+qhBkcUpyYwbO0mwXTPICnSjvCqvzzGGm9GOhoTz
+    HzQKFK7K+N5eWRcbtGh1DIc5eTm4TkocpM1Ou/tO5Z32sU1VjHroabVBrsSE1bvdtJ3Eh7
+    NVSgzPOgS2n3/L9WQhY1rjd/eV6cDVrJoQnm37Qe6PG4IQWXLiGyPwFnUMKonJ/4xI4j8J
+    igRM0f72KDNY5z+rldBbutAblko7hZ4LKvAnYbu1/e8lrTsZayzvYF60S4wp4xhZCYanXH
+    jzlZbDOtlDXVCEyd4rlOd/HuroerK0ycqjJ6CfNyY3qSNaveg/b89LOxJ2kxCrUVq/m7MW
+    ST9E3fa6wMMWNr2xXW7SR8WiP2GihY6NCvJuA5Ua+GOPNNz7xSt3KBMjL9yw
+X-ME-Proxy: <xmx:gzfZanAN3bzRKjC72qzyMoree6dn-6XWNd0Q-ZtPUyHAcbsV2WgutA>
+    <xmx:gzfZakbU0vHDMnZ1HWI6mq4m0p-dXtP91E3ft39nf53clv0dWqdIeA>
+    <xmx:gzfZavjGlNCX0KM_lvstF8dr_uN-_WD7kYNGWksJsgdj9zwD7CAVfg>
+    <xmx:gzfZam6RjmSgJm5mFIjpDTLL9mdJz8eADUSAjDiIKzFyg3LgmfXfzA>
+    <xmx:gzfZalv8I3NOSch_Kd71_LEOnUCgAc7Uf9L6zoXko5Igtco7c_DBBrI1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Oct 2026 18:06:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Emily Shaffer <emilyshaffer@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Documentation: propose community voting process
+In-Reply-To: <20261021200341.378978-1-emilyshaffer@google.com> (Emily
+	Shaffer's message of "Wed, 21 Oct 2026 13:03:41 -0700")
+References: <20261021200341.378978-1-emilyshaffer@google.com>
+Date: Wed, 21 Oct 2026 15:06:58 -0700
+Message-ID: <xmqqfqxylnct.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,33 +123,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2260.git.1792299301663.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2260.git.1792299301663.gitgitgadget@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 21 Oct 2026 23:03:57 +0100
-X-Gm-Features: AclHuK-h4b2A3dJKPUsYHilYvXMVIZa2AGjX2X52O4mdWgz2zQi2DYOnezMr5Lk
-Message-ID: <CAPSxiM-Kx1=s45W_cocO+wrcaTaH7qSdqAFBwqJ0rwFAB+k06Q@mail.gmail.com>
-Subject: Re: [PATCH] [Outreachy PATCH] t0001: avoid pipes in test scripts
-To: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Srujith A Poojary <poojarysrujith@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-> index f1d227f271..e835afee68 100755
-> --- a/t/t0001-init.sh
-> +++ b/t/t0001-init.sh
-> @@ -678,7 +678,7 @@ test_expect_success 'default ref format' '
->                 sane_unset GIT_DEFAULT_REF_STORAGE_FORMAT &&
->                 git init refformat
->         ) &&
-> -       git version --build-options | sed -ne "s/^default-ref-storage-format: //p" >expect &&
-> +       git version --build-options >build-options && sed -ne "s/^default-ref-storage-format: //p" build-options >expect &&
-We can put this in two lines, something like this:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-               git version --build-options >build-options &&
-               sed -ne "s/^default-ref-storage-format: //p"
-build-options >expect &&
+Emily Shaffer <emilyshaffer@google.com> writes:
 
->         git -C refformat rev-parse --show-ref-storage-format >actual &&
+> +Voting in the Git Project
+> +=========================
+> +
+> +For the most part, technical concerns in Git should be resolved by community
+> +consensus - either on the mailing list or in one of the annual-ish Contributor
+> +Summits. Voting should be used as a last resort when the community really and
+> +truly cannot come to a compromise on a policy decision. As such, the initiation
+> +of a vote should be generally agreed on by the mailto:git@sfconservancy.org[Git
+> +PLC] or primary maintainer.
 
-Thanks for the patch.
+Nicely described.  I particularly like that this prevents us from
+putting technical decisions to a vote, reserving voting strictly for
+policy decisions.
+
+
+> +Phase 2: Voting window
+> +----------------------
+> +
+> +The final version of each seconded proposal will be collected into a ballot at
+> +the end of Phase 1. When the ballot is prepared, eligible voters will be able
+> +to vote by mail for two weeks, to make space for contributors' individual
+> +timezone and availability differences. During this time the proposals may no
+> +longer be altered; the ballot should refer to a specific version of the
+> +proposal (e.g. `[PROPOSAL v4] Require emojis in commit subjects`) and any later
+> +version of the proposal will be ignored.
+
+Or any earlier ones for that matter.  Perhaps there should be a way
+to uniquely identify the version.  By the time the proposal is so
+solidified, it is likely to be in my tree, so we can use the commit
+object name that adds such a proposal document (or the blob ID).
+
+Then we can tell people that
+
+    $ git fetch https://git.kernel.org/pub/scm/git/git.git/ seen
+    $ git cat-file blob $BLOB_OBJECT_NAME
+
+would give them the exact thing they are voting on.
+
+I presume that this can be used for multiple-choice votes easily,
+and can be adjusted for a proposal with multiple things to vote on
+independently (i.e., "allow emojis in commit titles?" and "require
+CamelCase in commit titles?" can be asked at the same time and
+voters can give answers to each question separately).
+
+
+> +Votes will be decided using <mechanism TBD>.
+> +
+> +Phase 3: Implementation
+> +-----------------------
+> +
+> +When the voting window ends, the winning proposal should be merged to `main`
+> +without delay by the maintainer. The commit message should be appended to
+> +include a link to the top of the voting discussion thread so that the
+> +discussion can be revisited by history divers in the future, as well as a brief
+> +summary of the result of the vote (% in favor out of total number of
+> +proposals).
+
+Do you mean "number of votes"?  Or are we envisioning that there
+will be N competing proposals and we vote to find out which one is
+the most favored?
+
+> +Voting Eligibility
+> +------------------
+> +
+> +Votes are welcome from contributors who have authored a commit which has been
+> +merged to next, or who have provided 2 or more code reviews, and who have not
+> +been banned from participation in the project. All eligible contributor votes
+> +are weighed equally, regardless of the overall number of contributions they
+> +have landed.
+
+That is a fairly low bar to cross, especially the code review count,
+as it will not be easy to define and enforce some rule that rejects
+a response to a patch that only says "thanks, I like the feature
+this proposes" without reading any parts of the message.  
+
+As it is hard to track patches that as in 'next' a few release
+cycles ago without graduating in the end and the authors of such a
+patch should have the same voting power as those whose patch is in
+'next' in the current cycle, I would suggest strongly against using
+'next' as a yardstick.
+
+I would have expected to see something like "two or more topics that
+appear in any released versions" instead.  Note that I said "topics"
+here and not "commits", so your topic that consists of 17-patch
+still counts as one.
+
+> +To prevent dogpiling, contributions are only eligible for a given vote if they
+> +landed before the beginning of the voting process (the kickoff email mentioned
+> +above). That is, the code reviews must have been sent or the patch must have
+> +been accepted before the initial email is sent. The intention is to ensure the
+> +mailing list isn't spammed with low-quality reviews during the voting process
+> +solely to increase the number of eligible voters on one side of the issue.
+
+Hopefully the "in released versions" criteria makes the above a
+non-issue.
