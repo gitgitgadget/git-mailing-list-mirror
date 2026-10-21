@@ -1,99 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792572861;
-	b=b27DfUAGaLmv+oSlogMoVelJiCmJNpwZjSPub3gEi82PjiJN/YpH06pxh4zMlpbNDGjq
-	 ff77TA2rK1JQVyifPHQ5Fqm4SATNLp/+zpEXIcLa/O2vpR0Zi2k89hMmlCB6jfckVellB
-	 j20yNb4H9nCOSNgOluzerdTQbUYOdmvaLzYQkkPofoPkHKoBjyZcwXfTgBQ0StLY/zbgR
-	 uJ9dhbiBPjJIW20fdD9CUCqWARr/qs4tRrdZUiHZXGrpDR2gaEPwAIlM2wyytGxr7CNRE
-	 B6tnqMS4V++7byYoPIaUH+zvOCLMj0pyd7LjZBctsWQclVFCNAHrO9sWVDiz2VxKj1g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792572861;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.54
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792573456;
+	b=NfdkJYKww3U5m7IFUGiUWDDN2lFMIJgiunzhU2h3MMy6dKOyd/JVBXcWTlOAXk+J3WCo
+	 D7EDgoASX2utfvsvGi1vXzGcqfDZItfVP441g7z2x7A958lxEFAYH5WLdGoUTziB48BCe
+	 oJdTVvTA3DF00jgHjZ8q/26/vS2vOISLDgbqPH2i+SyfiBdVz4EaGCvXgyaGmlDoJBN9F
+	 6k4SxVhrkvlHNbeTEl4/4WMmvyQX44UtVVauMoDXwgf8TH7H5ovqq4AM8DdxWKpejKqZh
+	 kxRn7IkAxJ6q0Xww7ENN6oHqToNFODa6jg6PlRl1g4Lplyv700keDBDyWOUloJIlvkg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792573456;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=ptfOWMRMcCbLGcSze3/oxRLukCmlUi9FhTdjSo8bin4=;
-	b=bqOWGoDJmAMRMn5RjPcRPdTkMQepb0r4aXTYoAmz3c5zgOVRiFt/vltQ97q8katW5YPP
-	 sM+oX9WMN41LF3H5t5sES9sW0PGJRctUjr0LIHsSaMDvbpZgZeLkOAzDhh17DSq5aocyF
-	 lMJ6LP+I6JqsK7OhWZx/NUrCcMp0WzMp2c/+pyEcX2XzHPdbfaMvhOh+MF/Gy1HMswuxs
-	 lq/dbaVx9FjSEoCKOucEstp/HEeb6w8HPdgcGxvEPax+091rUqICkNfSpryol6MV16xwH
-	 T/Ds/U6OFbGvWKykKyL90/SSeBp0zSIqWuujSVGEeL1vztrgh5jJxrFZmHszjlKwfqg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=8ee1Yy9Qua5SIns2VUqjJNgeQAFYnihwL5OW9PlE3+E=;
+	b=eF+gbwK3ayATZvmjmrZd06btjkViDq/LpX/NF+sNV2DR4fm/xxAbmbkWoEYFOAnq97uH
+	 GhXRJsSX79/NeVcmD3QqZ+lCtMYLm7uMpGgdFk+BoAATmwtldvHHaqLiOOuhmkQKovYTr
+	 lUj9dvwL8d09F0PUEVZ+htq27uNz8VcQE1pF/sDegRK618IfCEpMwdUWBftwc42QjtHt3
+	 Dn9ecfKtSVWEWUKPnejPYyKwAdivvRJWi2p9foNpn7izYz7cHTE9Y2aitn0eaRt67LUYW
+	 ZT96LOLkVmYYeGNmyn1vRnrE96cJkFPWiRMplGD9/4yBqAAehtEg+tAMKRuWJtf/MCg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="lZfDI/JO";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=XXMTU9U+;
+	arc=none smtp.remote-ip=209.85.221.54
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FBF606A321
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 08:54:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E0FBF606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5F5606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 09:04:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB5F5606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=lZfDI/JO
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6b40fc523faso340039a12.3
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 01:54:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792572859; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ZRRgifd8EI/TMwNiNMX1sv/CeFxXjXHJnoeGi1dn21az/ePbktEAeUaKa29U+frVO8
-         PV4kepilsvAvhowznDR7whyHkSAO7EjJAyYHn2wRBEtpi3Maud52bM364ABl+0WQ8Pc6
-         Bes1658+R1qcsNL+lNiIjolqFCSbz+vYf07wZFBwo1vsCNzicGUk4hgkFVep6lHObCfk
-         xaftuxlTGsFDauCWz+ZeJitUpabZmpu5EDSBqrFKgjdP4J1eoG6dMu4MBlLhuC4dz21p
-         JGB0n5iO9Dr8INAt/c71CyWd5o34L+8ROCovcnaMVb7GlQEHx+anWzdiXscMDt93n7/9
-         xOZw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=ptfOWMRMcCbLGcSze3/oxRLukCmlUi9FhTdjSo8bin4=;
-        fh=3lue+IHY1TPVS+JDqZExGSLj2iXTS2jEizh9HC34A9M=;
-        b=RdT3FQcBHKVk2uFyZzz50gsCgcVoXcjmw8HUTZ4+DRPuLAWpx4oAnltUBQ297C8QrY
-         tko9+cTKReat8jw+GCFbAD1so7k+rN8W4Rs9/7O5DMeyviCm1NpwQfB6zzE54ufgQ4AE
-         StEOBuFbeoRts7xXUFoszMij93ebDktki2nyduXuJrNWfyjqqqVxbEoKi3ziZ7+LJsOl
-         CfzIWa7yziY0nj8vcBmiWhYCsgdsRQG5tS80aUI4l3k6ymjy3zb60RMUMkYT1/9FrlDg
-         cqKB0mDFpBLaNTBuiq3ToSexk/f/tvkMX4+wZPKDCBd2E77orVDpkjbsgESA4jNGmyDu
-         VEyw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=XXMTU9U+
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-48dc202a60eso187176f8f.3
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 02:04:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792572859; x=1793177659; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ptfOWMRMcCbLGcSze3/oxRLukCmlUi9FhTdjSo8bin4=;
-        b=lZfDI/JO+MrBTiC9KdoZOUA0ekB+hRv305TVqDNQ7TDp9ehuljpBkg91i8GAjdY0qb
-         Sh8uL2yHfkaBMdMsx0enlZmFzwGs6bnucJIPnM7qJQ85Z/QRbM2dIl6aBPm7FQC7SsYM
-         vchUZ6Uz454p5Q1vjSFtfSJzuwIeYO8DnqG7eecc4+JvXpPk19FSzljYtkEqHJj7g1Rx
-         NqJ1BqhNDebibEFfuxxtDLx4XR8CZgMk6wS5FUqf6xSuUiOW/8N/yOkpGVT6sQjGvScc
-         RiXsv8JspazW/pij4iLt8t5SnUAmDz3f+MXBBg3oCBIJF4lJGyO3lVvHiCluq3MtVER7
-         XB9A==
+        d=gmail.com; s=20251104; t=1792573454; x=1793178254; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=8ee1Yy9Qua5SIns2VUqjJNgeQAFYnihwL5OW9PlE3+E=;
+        b=XXMTU9U+2JQQfYDfcfFUio/sQwGSy8ZVOTq5nVFd2MOp70Etfu6vfXFiOnIuWdUnWG
+         R+i3SGVrTYdGzt1enhbq/1KnSe+C8K03QVdWrU4j9wXrovKLpEGsQOVAtf9Zl5wdy235
+         864ng+NWkRMFMAosioudHC42wcHEAM0dU49+fc1HwgoIAYHg8KBEkkVSRaDfnrUYPifo
+         2q6xMK158Eh33Jr4ogVPU4jY5khcl5UXSNmnmLvb3Mco6LhBj6/cHCIJuEHzssM8kT9z
+         XkxUR86JBOVrjPg6CkCo55++7frSXbCbMRumKpXkgAJ57fmkXv9VUj4Vj2nzHEx3mAXx
+         VZWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792572859; x=1793177659;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ptfOWMRMcCbLGcSze3/oxRLukCmlUi9FhTdjSo8bin4=;
-        b=C2OOeeAcEHvO0E7gnFZ0dw1GZ7vitzHRFmPZVWV0dz9wnifDyLcA+aLA6HlJ54z0iT
-         b7LzxWMEYE8CdlkHuVgESnWvXFD9JagETluZ65vjNm6itr5x0D3hClGMWC/QUBBHelRk
-         +cs7+MKnoeESaD1eJxmC6zNdJ1FgB5y78tMM2yPmqlC++BifIDOtLIJilvQfKbGWC1kg
-         S+pV92s6KfVFPnQktcbANwtAdUKM9BmSePXGGTXJfyaXJrfFLfC/5B0Vh4UKrgo/svRZ
-         xyYv3c5/w80cdSH/weJHYif3BvPRlMgGznc0eIOevoNYbl4Pn4KnSWpA3CuGqWuvHYNW
-         MSMA==
-X-Forwarded-Encrypted: i=1; AKwUvBw77hh2/Q5nIBwJ8O5I6I3g6xZaE1t6D60qH1b05J+yQnt5dAwIBmjspDe9opDN+PeRq94=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKW2j9VAEwbke8IZxrEGszEo1AyckZOTEQPufdlJFayrb3W/SrR
-	umXF7WslTp/YIVynI44LYTorUXw2KpzuyzAjHl/6rKEJuxJMT6AGvixy/9/D6gLI0msQ2+UTCt9
-	DY3spA1FiNjZQJufxZEtP7HsUF/ZEQvHfRg==
-X-Gm-Gg: AYBFou2MKjxtQaqd31bnebSAll2iHRhfKIRbml13hSyw4ST3ZaymRfr8uWm+e8JRLMK
-	Fg6c5EQ/g1WkDeIB0VsGCaumjtRj5luymdcRif8zlHG3FSDQovQ6fYTJFPj3o6sCq3ksadkmMnN
-	B0yF/Lm5fQz6Fl91pO2VbQwk27ExHJNp+9Xn0lfnYGJPqm6gmodbD8DwFMlaXngU3Jpwjh9Hf+k
-	gok3MUQwcwZx6Nc7mJWTKzoOgAE3sKk07IyvWbzP2pEUBQfzRib41kLfNLJvBlJNKWceMRNr+NA
-	+3FmM6ZyPFJIcs9L0d+WqZX/FwjP2mirskwdtZyWszUvanp3OtVmRldvYbD84syOzNr0wfk7BRL
-	57KWd6vuKp+xFMnewCeiM16Oqklr/ITuHBkjt
-X-Received: by 2002:a05:6402:248b:b0:6b2:2337:9852 with SMTP id
- 4fb4d7f45d1cf-6b408edd031mr863172a12.32.1792572859299; Wed, 21 Oct 2026
- 01:54:19 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792573454; x=1793178254;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=8ee1Yy9Qua5SIns2VUqjJNgeQAFYnihwL5OW9PlE3+E=;
+        b=SzSa02SplCd+DIk7nCs31tD2R3iW3uzanvzZom7PAwuP7QuNrQp/9911eD5nVqOwY0
+         5XMA2kF3HDSYMFm8J19I9HWNocd+lBbwbSSTZBs7ydiptbGTE33sNxVMeW2YtB+5nIyB
+         UrS7EvhfP8CocK9YIIj2Yk4IUtU0G6VHS/wy+YXq7r+fkHUSNspXXO6xKW+9ruTG0DwP
+         c/Ku7xuWMajotmQ85jzIw3u7RN4pAtWMq83mfGj9gjm96OOsgALoW6vATckUPvCuWCzy
+         klPqIuRLNJNq5s1rAi68Bhxb4pr/TDR1YZy9CrSC9n1SYDN3/MXE0uj8HlhCxaIZUcYh
+         GdJg==
+X-Gm-Message-State: AFq9FYIFh6fM6LPtbv47IvV47DKwV/4VK7QVyxYPg0lpo+fJVUFULZpF
+	GFjHJn9ZWr7Xi5pbRvAJOGenqq1MmKd+8EcooInnVWl3E2LzKWkVbv+o
+X-Gm-Gg: AYBFou1dwSS7PYLouE4jQa8q/u3ueeMWlJ2yF2tZYbIcm4Y02KvqQLzV2+A+aaboI/R
+	spDwIgLsVKvH8ZB9Wk8fpkFJr7Z5QqkRY7HLlRpjTp042vOq41psZe+u+mWsO5Rs/45esjE7ZZb
+	Gz+Tkt8JNiXNK7sUEDFe0ig6rd8IO5MV72RP90IneWRxopu5XaoaDvM0vkyvLDfaYz6JPnmctYZ
+	XPe5qburygP4xR5DOuNx4AvIrMWcYyw+Ze6irK/+dTPO+QuogCrKmZK7RTxFr3XAbREBH8tnw5C
+	RKPv7kevRAFPPbcr6mPmOF6HpVkvEfYJOLzefBPsD49OHpxIzLjw1TqahMTh52WZh9NipaY7ogQ
+	JWg6ZvGhFIJa2/bsraYtJTi0PeFJCDcdVJ7hb+dXv+B/f5Tl1XZXX48ZSdnsITcQSoLqt9imqT1
+	v5AJsrybwr8rSKwZuev5ZDGnZOYKcgOWry0JDI0BCEBtOxBwHrLW14EeimdXzZXYVJnMeSAGkoN
+	Ztc97PcnnnIVH4I5AmIZCkxzhuOMQGyNUbs2Vf+1MRBuvTgeuI/kTvOeGuXa8wtzgejyqgXDRO9
+	kDeu7ZYHi2Qzabe/rbuvI1MkIw==
+X-Received: by 2002:a5d:4848:0:b0:48d:ef0e:b791 with SMTP id ffacd0b85a97d-48e264f518dmr1876673f8f.54.1792573453926;
+        Wed, 21 Oct 2026 02:04:13 -0700 (PDT)
+Received: from DESKTOP-0SUCFI3.localdomain ([129.0.81.233])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e2584afe1sm4466126f8f.56.2026.10.21.02.04.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2026 02:04:13 -0700 (PDT)
+From: kerylefondji7@gmail.com
+To: Muritala Mudi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>,
+	Siddharth Asthana <siddharthasthana31@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [Outreachy] Microproject: use Q_() in builtin/checkout.c
+Date: Wed, 21 Oct 2026 10:04:08 +0100
+Message-ID: <20261021090408.835-1-kerylefondji7@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <CAO=0-S64w=n47n6yfYoKJie2aFi+T88Sp_qPmFe2RW0xWEwcdQ@mail.gmail.com>
+References: <CAO=0-S64w=n47n6yfYoKJie2aFi+T88Sp_qPmFe2RW0xWEwcdQ@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,28 +99,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
- <pull.2456.v2.git.git.1792566469.gitgitgadget@gmail.com> <b170b1f6d33d42b9441585fa8877a9e24d8d37a9.1792566469.git.gitgitgadget@gmail.com>
- <ath21xI1yLScKpuh@pks.im>
-In-Reply-To: <ath21xI1yLScKpuh@pks.im>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Wed, 21 Oct 2026 10:53:43 +0200
-X-Gm-Features: AclHuK_u1gwU90AvISGkLTSVIKYoBFCzhRmlTbXoy4Ye7Fa__-AKdM2lkOxLoSE
-Message-ID: <CAHwyqnW9yRPabz2VCN27RoEw_kCmvGuKQwd-btuMK3vHJVnc8A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] imap-send: avoid leaking the tunnel command
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-> >               imap->buf.sock.fd[0] = tunnel.out;
-> >               imap->buf.sock.fd[1] = tunnel.in;
-> > +             child_process_clear(&tunnel);
->
-> This change plugs the memory leak, but the bigger question to me is why
-> we never call `finish_command()` on the child process at all. Is there a
-> reason for that?
+Hi Mudi,
 
-Yeah, that's curious. I'll take a look at handling this better.
+Welcome to the Git community!
 
+It's great that you are taking the time to ask these questions on
+the list first before preparing your patch.  As a fellow newcomer
+working on a microproject, I found that discussing things before
+coding saves a lot of time!
 
-Harald
+Regarding your questions based on what I've learned so far:
+
+About Q_(): Yes, converting to Q_() is good practice for
+internationalization. Even if the English text seems to focus on
+plural, other languages have different plural rules, so using Q_()
+gives translators the right structure.
+
+About keeping the scope small: As a beginner, keeping the patch
+simple and limited (like starting with builtin/checkout.c) makes it
+much easier to review and test without getting mixed up in multiple
+files at once.
+
+Also, Junio C. Hamano recently shared an update about how we should
+approach review discussions before sending new versions (v2, etc.)
+in MyFirstContribution. You might find it very useful for your workflow:
+
+https://lore.kernel.org/git/xmqqa4o94e0r.fsf@gitster.g/
+
+Good luck with your contribution!
+
+Best regards,
+
+Keryle
