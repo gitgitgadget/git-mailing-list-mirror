@@ -1,99 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.43
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792617993;
-	b=kxFE9yi+pQzPCPfvM+9FRurof9BSh8VPYZA6oy9zHs0dxt5Vth+XUytjtXQm+2EN9dEU
-	 GPtSgDBb9mWl1d1KqjUHUDZXpFI36AwaLfB4y3ljtESCze73rJwfcgatMY16FQDueoJT1
-	 s3zb3ZVH9ScLckHxDyI26Xc9LGcWcNUQ8fKofRM80wu58kSvMSuE8HXaStKZMd2jmYCDF
-	 FQnxsp5L/sqIRH3PFEKnHKzPAgaMepC+Uoixwzyi1+jd0DPxvkoAhTiwfCfOVV8m6LVPB
-	 xG8dgJMSH7pZ5Lbj87kE7IKStQx4MkLkQlZAtSyHGZk6TzZau8qR46l6LQ4z7EAp3cA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792617993;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.43
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792618522;
+	b=lUUYYMhe1qsenqlxbw9nU4JUoz3xXUsxPV89UfXKpKXcHb07z4ISiQ+Ocqlj8I+g4WiZ
+	 ATjunacmKazCSg/kuAwZ+795UNWntrqDbfLMc5FFlnIpx0w2G7JrTc09j/t5BneH79QrN
+	 KMS9Qh+8hVaS9zw66978DHD1y7NDcKimrzXJJEqG+ZpwuZ7Bck4vAMQBXtaG1y+mlO+u/
+	 FCvcTmyLfLmmK/iWg7/50eQSz3ha8I1kaKtM4td0Hr1drEOcS+ADTk9AEl5DR5LkyuOp7
+	 Tj09M+/dlXOo8xaX1ZIWEejk50LhTBQp1VjNWyocIXezzrhyLrGESinEfobUL0Zp8Kw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792618522;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
-	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=LOcMUC0KCrD2L2mJsisl3qnb5exuBC3EjgvyVNvcXus=;
-	b=NsFRItYR33mqnFksWjuEEnVRMJR8CXnAeADiHw8QXTcJNXWv3l6H+zDCDBV6nDlSqRqO
-	 2uWW9uS7DlqDScljPIITBAhtE2t9u0dnldnBzLNVrhyVsc0p5pUTPb7Qihu/i0vF0sQFy
-	 4t4w6HTuPgB4YkLXxWA78sxhwKHyap68wGw8RoCyC8z/kDtDYz8N+4abf/hibzcmowMgs
-	 vQpkMFoxccziVVko5oXUZ7aV3o+c36zFuVkbcDjZX57ZNhWHaRM8tx+IFsfFVb98t/kks
-	 gnA7WjdDOXeFbgefsvCQNPdFYvrw5Xo8Oy1L+AvmqB5B5vNVubj39PYnh7I3IYs/75Q==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=iaOUvhuNLg7dudJfZURF2MklWU8+9J3BkBky4x67Daw=;
+	b=mHrLJb/kY4FVBHNP7CYcOC8C0QrrjYDBoMSSV7C5tlVCrX9g01pCIeh31gpN4qGjykRd
+	 W81gyuN2oQNM4wPzmCcJIcInb52FZpZD7F61EmuZl722IcNLfiihysqxvJqiXlSbL9I/z
+	 3Da5jbDS/w3IsaNM+qopqdWshQ3eYbR+VobIjh4ZYhCSKBslmiMr8MPwNElac9tAA9+kF
+	 lPWtmLGwmRYLY9yOaNPZdoXoCIezthNffrdMKFkWy/yuJrlZwVdQDA8m2j/8OlM9YaL5j
+	 5e3DzUK2KegT6lRX2moIevMMDu4pxLgvXFKF990sFL8jnJW+WBcDJRQoMN75+edsMzA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=JAYReQTu;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.43
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Wc76AEdw;
+	arc=none smtp.remote-ip=209.85.160.43
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EECE606A31A
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 21:26:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7EECE606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E60606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 21:35:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 16E60606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=JAYReQTu
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-91b54d1e9cdso9919306d6.1
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 14:26:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792617991; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Wyzja9SzJC1iyM4bvB6B2bWXVsqhfp+yfEOLDU+rga2hJeJKmhXy+S0XlWyjOHPUSg
-         u9rc5vA3Eg60+AOSR/qzsdV9FZVYNrxpqxTP+xsPueGTqnNWqp6i9ufW5fee0XT3k0I3
-         NEzqxnE0WrbjhKIirkzOv6pQTpufMg58Rhy3KLyZR2+eUgd5TlYwJC+wNFyMCe4QGmFL
-         7EVcAX+8XX3lqWu+GJM2GLC8T2UVk9VykXStBryAOUpPp1LMMKtmRCmqtRV4SHYqplzy
-         oobMhbaMWIl92WxpDRNY0/5wRS65dBwsLvzXHL7cpPQvvEncZbZUE58a7tn7peEwc1a1
-         1kZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=LOcMUC0KCrD2L2mJsisl3qnb5exuBC3EjgvyVNvcXus=;
-        fh=lHey586lqR/iK38PVUaxWbUNGN+1GrGoWUJJ41G/OHg=;
-        b=Nh4qYuC0Q2N9/cVwASjod2O5GWR+1qHFsnMXZSM/NE4Zmhlv090LFR8RuQZIOrR2ro
-         qa1+vjeg1Ns9sP3yyzaF1ufVBohJYZAIII84IFe0XWYRyfXJIGosmvkSBE4FNDhfzygX
-         pvff/JKVQuj3BEj5+KiLi2/GvGRPTMXa2GQXh0KmWfEsXMATM9K3/r5Ba5nWmTpu1+rP
-         lY4x2TsjlimzUBTpHlhVAu8cs7W6qkSZlnfema+43fr4JKUfIO3dvow42aeUaqw3AQDl
-         x66MvxRlGt5mxelS8i0b1cdmYBpqIu6GUXMJFFw/kTDg+X3aJFxu7oY2+NhLBC325O96
-         EeWQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Wc76AEdw
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-4a77761ff8aso597363fac.2
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 14:35:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792617991; x=1793222791; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LOcMUC0KCrD2L2mJsisl3qnb5exuBC3EjgvyVNvcXus=;
-        b=JAYReQTuqt7q0oOYbbQkRXUZ5MW3oiGTtKpm/M301ECVX6EAxXaGZq1e8MeD0zMSKN
-         PSHOkIuJ2jvdE8G4dVffymf7mNi4yVVjJd27dD2OKEenMmcI/I+ZjliKJEx/qvT/mDgy
-         fWarelV1ZuJUFlpBnMT79mH5Ihuth4IbcgWHr20EHPI2WJGaoaFteeGL7C5cSBJAPIMo
-         dnDqTRIZw9vN2Y4suZ936M3ZFxQ+gnojLfbP/60klXlkpXp28+ufpKdsa3CrgR820MWI
-         W8Cv8X2w+T/z+btb0bsYYO6CfgGT19tB5jtvRf7pYYPXnf0VJsFsvMnFVOhinbXOU9YN
-         lzww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792617991; x=1793222791;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1792618521; x=1793223321; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=LOcMUC0KCrD2L2mJsisl3qnb5exuBC3EjgvyVNvcXus=;
-        b=xiJfkbRR5CbVllo+PAPaXUOlHBcAYAsEgW+FW+CCfq52NOKUjEUUni8cRkZQqYmVTV
-         bJE+wJ01SlVlIOJ/J1ziyZs3l8L8U6x23peKQEn/wipzB2I+y0FQ2Zh1Ec9p/VFZ5yJz
-         6kzNOlNw3ytLAuSMe3ljd9CiJvZTK1DddKXQQ3DxKFMFYR8E9FwJDWGAAu12F7Zt47sr
-         N+VD9eikJUWGvW3r+pxdVH5Z2lw6dUtQzEOCaq+fsjOxxRYX2WP5uAm5MRUrT2T07190
-         9zXls9qIze/XpmckC2BvGaOkoiazuFvR77BDifSk4DP2mlNFV0ZtEJueDjyLqhVlTWpC
-         qTtA==
-X-Gm-Message-State: AFq9FYL9O9YmjyTpDCHS1SxLLReyaRSe1cVAnRrPnhdfQbxrf7ajggMu
-	gNFfXQdeZar4mVLaCf5I2yALzfAN8KsvepecfcGjneczi6DkdHPXlp2PAnDnHIHbUXnINTSDB45
-	vsWjbUV41mlYzRp5rp9+sg2qRKtFzJ8Q+ICDEES3IDuGH4y8=
-X-Gm-Gg: AYBFou1mbpb2aFDmQ9VXQjpMFY/Vtyd5GSyx7LU4Ru+Uxvi0QAGcn1ugrJvBMnUk+Q8
-	M0k8BmT8vaGACiUa0ZrWIyqwU4Jq5CKhjaVuSIVCRTmQSk+fd5yIs0VgYE2jqe3KpfZqQTJEFTw
-	vSM71BMD9ICdTBsMPZHX+vXFkGVxCtQj79kuU0A8q3jXq5ByUyxl4GKgB8zClbRGKqGxMbfCtTM
-	CRh5YbU1GB8Ywvk/Cv8VO1WAVQRdTkmGsrumSfVJUwfIGGpyb0QE0ZoT2yxdgcYjvyK5GsnicrV
-	BLB+YqSdm7RgSZkv2oDcJHZoNoR6lUQ1XQ7vwTbwtOh9ykRrn7NSG/tAJhEtZwpu6iPnoL7FiNl
-	v7tYZm3q2lHrTiHFzraJMi3p7umRdUBJKw3tlXrOaPIlxfe6vWm4hQ6OFa16oxmLLcfw4yFLjQc
-	o3FqVtNYd+lnDzAzxgsAcYt/udXzXTCg4Qgiz8DcUKsKQUycwJm88fjogYDtHhP94Wikmm+k4=
-X-Received: by 2002:a05:6214:4348:b0:919:5ac7:5c7c with SMTP id
- 6a1803df08f44-91c12ef30d3mr53673146d6.37.1792617991313; Wed, 21 Oct 2026
- 14:26:31 -0700 (PDT)
+        bh=iaOUvhuNLg7dudJfZURF2MklWU8+9J3BkBky4x67Daw=;
+        b=Wc76AEdwMFdZcHuqYbvvFxs+yKBMDTKW8AgWb11CWIRF4uXuDxO22iBAZ81NW8xG0M
+         mTcQmW51d2qj6JCjYpBJAGgZe7YutDdSmhnFvU6FEvkuC8gJoFsQWuikha4pJcZcMT+u
+         VRl3pQoqiBkHizVul/mBz5zTereKjX0Hv2UknhqvHHJUqj/swNaJkpFq4YvOlZ80Nt/V
+         3YAAYbxZanqF4ta0zvTWCJkjRykoozJB+dpBXJRwi5qU0Mlbz8nwOMagPUwLrfmFV5rz
+         v/2ucqNvNsP2nH7BFyx2tO6Cc8kQHo/adfI+/s5E7mF5frh4W0/I5JRSMcZGybfwDIu2
+         Nhuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792618521; x=1793223321;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=iaOUvhuNLg7dudJfZURF2MklWU8+9J3BkBky4x67Daw=;
+        b=Q7vhck+PwVBJd3holeefQsKFO294m/Shj3MJX6cNvXu95020UxgCr2r0eESbkWCKdb
+         mPljvGbn1tH1CHh0j1XoRVTTcWb3jkP08DwbRv6/C0oLnib5NeLH9meAbge6gqKxvhIq
+         uWdm7R3+Xyeb77XvktbYNpHPll9S8/59TvMDslkdiFnWcKE2A8VrYjrCefrUQIoj++pi
+         QcRzTRYii2kh+K0+AMdaqvN9VnEJUFYGobTOLQIp3PRGU6E4CVoSRMh1MMeswK5I6fKE
+         Tr3MZzGSYnhawR7Rm3MRrNK9DoyfRPEqUaYhJbIhZXS/JMTd48sBoU0ggz3q1g1g96q5
+         SLHg==
+X-Gm-Message-State: AFq9FYLZi3rPdztyVT6qN39oyH3IXkOask23ee1XhFpNVTx9lWG4IDT/
+	WRTc707VDgIY1MwYTxx8hs3kmdY1MIedX+ZuvL6U1QF24AidDyBDeaEEAjOjRw==
+X-Gm-Gg: AYBFou07y/Oqttjmpso2imeWsiS37wxjEOUOrntM1Z+UgDHW5CiCVAzzKDbA+TYkcti
+	+RirXtaLVaAujfmyaW9psjrgYu8VgUwflgXhO6nqBQPSo/duVMvdcgL+QOG2g8pMYhdTfVoM0ng
+	nE2RZuxwsYqmDNBcJ+NkykiAWrnVgvcG/9G8yLrw8GV8rF5o93SMO/IJYYbgLuhXo41W9XJtC/d
+	TEmexUjSzxMOs7yvVLQPI8RdN/lz+6fxtET/Ur7atBSHCQ9PdeZT+aRCmvebInDpZY+tZVcvvGg
+	tPjKoaCB5r+XkrTk1sr3sBK04RB+tgbJ50IEMDueE00MH21u6CaxPveKyYe76HfUx7uyheSuBIu
+	WBrJVGAB/cii5VJt2PUmYSc/KRmfLJ5YheOiJsGBcJy/LJ3jO1brISykXWddGZgur1uEpdR2DEO
+	QgHsHxK6LcF5IFuxb0Ou8SyupzvFpsMxO2g8FvUJKRFwqDZaVxEfvxoh91wMl7Y66DyuqEAACga
+	KZljh3KeOM91bA7RL2dOZ5MZLU2BpzIMw9EBwbWi7RKwNuJWhA4XsfiXyM=
+X-Received: by 2002:a05:6808:3091:b0:4f4:4eef:52cc with SMTP id 5614622812f47-553596ffeddmr2902114b6e.43.1792618520920;
+        Wed, 21 Oct 2026 14:35:20 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.201.57])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-552b583fd57sm2850011b6e.8.2026.10.21.14.35.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2026 14:35:19 -0700 (PDT)
+Message-Id: <pull.2268.v2.git.1792618518.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2268.git.1792458904027.gitgitgadget@gmail.com>
+References: <pull.2268.git.1792458904027.gitgitgadget@gmail.com>
+From: "tsukasa-ino via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 21 Oct 2026 21:35:15 +0000
+Subject: [PATCH v2 0/3] checkout: finish switch when tracking config cannot be written
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,27 +95,79 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-From: Wasswa Edson <edsonwasswa54@gmail.com>
-Date: Thu, 22 Oct 2026 00:26:18 +0300
-X-Gm-Features: AclHuK_MEA5_Mgks01ZHFz2V00Umk-NdEuzKuuDILpBoBRXTJrXnDumbvcEgpkU
-Message-ID: <CA+ew3JuQ89JPdzYVffcvmPQ07Phrnj-9mgpLMtF7rEin1MwopA@mail.gmail.com>
-Subject: Internship Tasks phase0
 To: git@vger.kernel.org
-Cc: majordomo@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    tsukasa-ino <inoue.tsukasa.4@gmail.com>
 
-I=E2=80=99ve completed the build-and-test setup for Phase 0. I built Git fr=
-om
-source in Ubuntu on WSL2, and ./git --version reports git version
-2.56.GIT. just like the doc on outreachy website
+When the tracking config cannot be written (for example, because
+.git/config.lock exists), git switch -c and checkout -b stop halfway. The
+worktree, the index and the new branch ref are already updated, but HEAD
+stays on the old branch, and the changes are left staged. The hint printed
+at that point was also wrong: it suggested origin/refs/heads/.
 
-I also ran the two relevant baseline test suites.
-t5710-promisor-remote-capability.sh passed all 33 tests, while
-t0410-partial-clone.sh passed 36 tests with 3 skipped because the
-required TTY and web server prerequisites were unavailable on my PC.
-Neither suite reported any failures.
+1/3 strips refs/heads/ from the hint. 2/3 makes setup_tracking() return an
+error instead of calling exit(). No behavior change yet. 3/3 makes switch
+and checkout finish the switch and exit with status 0, as push -u, clone and
+fetch already do. git branch still fails.
 
-I=E2=80=99ve recorded the environment details and test outputs locally.
-Best
-Edson
+Changes since v1:
+
+ * 1/3: the test now compares the whole hint message, as suggested by Harald
+   Nordgren. It also checks that the command in the hint works once the lock
+   is removed, as suggested by Junio
+   (https://lore.kernel.org/git/xmqq7bjcup46.fsf@gitster.g/).
+ * 2/3 and 3/3 are new. They implement the direction agreed on the bug
+   report thread (https://lore.kernel.org/git/xmqqecdjsryk.fsf@gitster.g/).
+
+Making the switch fully atomic, so that a failure undoes the worktree, the
+index, the ref and the config, is left for a separate topic.
+
+tsukasa inoue (3):
+  branch: strip refs/heads/ from the --set-upstream-to hint
+  branch: return an error from setup_tracking()
+  checkout: finish switching when the tracking config cannot be written
+
+ branch.c                  | 43 +++++++++++++++++++++++----------------
+ branch.h                  | 21 +++++++++++--------
+ builtin/branch.c          | 17 +++++++++++-----
+ builtin/checkout.c        |  6 ++++++
+ t/t2027-checkout-track.sh | 20 ++++++++++++++++++
+ t/t2060-switch.sh         | 20 ++++++++++++++++++
+ t/t3200-branch.sh         | 38 ++++++++++++++++++++++++++++++++++
+ 7 files changed, 135 insertions(+), 30 deletions(-)
+
+
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2268%2FtsukasaI%2Ffix%2Fbranch-upstream-hint-shortname-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2268/tsukasaI/fix/branch-upstream-hint-shortname-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2268
+
+Range-diff vs v1:
+
+ 1:  14eac9118e ! 1:  e705918378 branch: strip refs/heads/ from the --set-upstream-to hint
+     @@ t/t3200-branch.sh: test_expect_success '--set-upstream-to fails on locked config
+      +	>.git/config.lock &&
+      +	test_must_fail git -c core.configLockTimeout=0 \
+      +		branch --set-upstream-to=hintremote/hintbranch hint-local 2>err &&
+     -+	test_grep "git branch --set-upstream-to=hintremote/hintbranch\$" err &&
+     -+	test_grep ! "refs/heads/" err
+     ++	cat >expect <<-\EOF &&
+     ++	hint:
+     ++	hint: After fixing the error cause you may try to fix up
+     ++	hint: the remote tracking information by invoking:
+     ++	hint:   git branch --set-upstream-to=hintremote/hintbranch
+     ++	EOF
+     ++	grep "^hint:" err >actual &&
+     ++	test_cmp expect actual &&
+     ++	rm -f .git/config.lock &&
+     ++	git branch --set-upstream-to=hintremote/hintbranch hint-local &&
+     ++	test_cmp_config hintremote branch.hint-local.remote &&
+     ++	test_cmp_config refs/heads/hintbranch branch.hint-local.merge
+      +'
+      +
+       test_expect_success 'use --set-upstream-to modify HEAD' '
+ -:  ---------- > 2:  4d2cbaf170 branch: return an error from setup_tracking()
+ -:  ---------- > 3:  be94ac75bf checkout: finish switching when the tracking config cannot be written
+
+-- 
+gitgitgadget
