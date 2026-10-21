@@ -1,124 +1,122 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792609360;
-	b=2C1WG1qQbESNuVXpqyMQSQzm7jai6yHanyl1V/17qq4PCthZe/5m6XD+k+LIY0tb79ws
-	 40kI6j+aTyAoVRl8Oc5niMWrlrQNX2TC2u7Mr4TtsvRwHRSJ4s6RQRghtSam8jU2h6Gdy
-	 AdD3ZwJWYQyYio9Cv/ahRcSedLYwmTZ7//eiSIku/E+G56tVL5RJbijo+k7apl/fKlMI3
-	 cPwE5RB6tkWMHtL9pr0soFmARAEqjzZhh7sYiwjkcq6q5Hj6lwAsyAGht5NnaXpMWuiEI
-	 tCo9m+dFSKhv/jjoAMkZcSo45BtiP7q+V4UXaL1IenHJvm0sWBXPNgYHad566qV9CkA==
+	t=1792609876;
+	b=qKkn/FojyuJ0GdBHqv+94qFKsOovpRf3OtC6Ao85+8cPg7VSlS3bNhfqVjVgt9X/fEhz
+	 aQqIywE1antFEH9b4lqlu4sa5WLmnkUf9UmUCA3EWFIHV/euFSbbJNsOHuVZ431qJWEP8
+	 ujW0kK9gRREb/4J9qm3IO8hm7lhjyFRPM4znYshcpAcpAFHj01PQu/tWlp0iES43zjnFf
+	 Ulwjiaa374Og8CaCdThkuACynU3oy+Qo7HwR6I7PEm4CxOBV50qTulesyyOxy+SKsx24o
+	 xDygAcD4kXXYCmtd/uq3nAFtawThOYtfz6oHunzLxjsOoFau8m/ZQ0V+M9E8LhJctlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792609360;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792609876;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=UgA9qEsGLn+zroT8nRzasPK4qGVHQw8zbAiV5phA4qs=;
-	b=eUqOEqgLohq8wW2lqtjlGo392y3w5pqB3Q4G84Ys6efRMBv9YmHVKrNcawr5bAPnyUaM
-	 XVlCQ9OiFgi1GE1kMxGy0dnzYw0ka296dxPRtsJXLdlI+/KHkDp8qNqeTeSGq3yZQXWWj
-	 UoQkERlysr8qR0QgJHhCFu6HSOHyQGZYD6IwRj3fUvXWgNPthDSDUyFRpycmvaGGH95H1
-	 DaWy/JHX1d9pjkeYJYuwpIPaFmHuG//oh+xC0aDYV7/HLcpQd9P5pDqHPOOKaTREmOgEC
-	 WgUyUSzCJNR4QhwW3f4OvC01KG5sjV6tpBrAvrGQGXwWOOL9ZnwKo6p+xs+5r3bv1mg==
+	bh=AhNRXTX2gmpxIMjTU1P44DAUyrBoDEvxlu+2kdnVowM=;
+	b=o8X0J+uJMCMcGMiIZdI8bW4+ZfcV3PMWliEYCIjoQR5Jk6rOEOCsBHt9PhbjKfPssGmy
+	 quf00ukhnLsxWGOc+bwn7NfhteKnQvEx1L3opp1iOD99GP+HZdZrndqgtXz0W4Lo42VK5
+	 eN46ZByJBACtIAxWiO5QIDphheod5Y2zLB79v5d7U23zrneln6XhKWQhp0/Dg1w79AFdI
+	 Rj3DCIcmQdjIWUPRYxEklhLnvjJBOBO/wBhaNccRhB5f2SxQg9mbSU5uZY1VHvHC8JSih
+	 gfvx047ZnjyGsbBUb0e9tom1se09GkOTIGrp8TokmU4s5YOtDMN7OTJAzh+e9+3ozow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=pNidVjTs;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LMhLaPoT;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ip17ZLNE;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=a3a6vH2W;
 	arc=none smtp.remote-ip=202.12.124.159
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B835606A31D
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 19:02:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B835606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EB3606A31B
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 19:11:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0EB3606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=pNidVjTs;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LMhLaPoT
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ip17ZLNE;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=a3a6vH2W
 Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 486227A00A1
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 15:02:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 21 Oct 2026 15:02:39 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3FE267A00E2
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 15:11:15 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 21 Oct 2026 15:11:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792609358; x=1792695758; bh=UgA9qEsGLn
-	+zroT8nRzasPK4qGVHQw8zbAiV5phA4qs=; b=pNidVjTsB43hdHypjHjNMVq6Mo
-	zO7rJK937tS7mvfrGO8EL04wsBgeWilPHeHnJvLnXUK79ItrnqbonvOmIaEKlRAE
-	owphQf38BJPKcfZ9a3d/IRqR7ieipzBppDfOK0RjdPsNirBRIFddgKOg3TgA8vEk
-	TE3yejQ5jSKRt1xSDBMdWw/JXL/MIo75VAN7Tilc4Mn+oDH+I2f5v/DuM2nxgNHQ
-	mQq7QOJ62L/93fJiaIyglth66+8o1TRjazFOs7k9tRUVv1hpq/GUdz8zYv7OL31s
-	zMjh9vm4hkMGfOahqhE6E1k0Zf6y4seMyXGKkMO4xbafHF3dUGbudZ5Z9lxQ==
+	:subject:to:to; s=fm1; t=1792609874; x=1792696274; bh=AhNRXTX2gm
+	pxIMjTU1P44DAUyrBoDEvxlu+2kdnVowM=; b=ip17ZLNEPPe/IQUuuJB3s2bhIr
+	xRpSYYNafBfX8CiKa0Zpng+3hFturF1/BwJl86p/l5tUfyftZAO/cc15A6Q4B0jn
+	5SbyJQxn1Pqtu7CKjRM0okUrPq86BVdxmkNryNV9/JN23UDC1p0RVELiNAlIek7w
+	ehA4XFnqdL96HNd6h+scCaZimzyLJjlxQ07VAQqox8FeWHACeS8ZAUXGehRksUls
+	xx3Od4tY2y9eeWrJcAzm0Ek3Eo7rF28p7eRO5D3EgqDYWEw8nMRpcF7ycqq2/eZ9
+	Tm2tvDiMAbRU7FYOfIb+tTc1pSi1t6LPYGhBdSDLjZ/xKrBE7ydL3dSa0SOA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792609358; x=1792695758; bh=UgA9qEsGLn+zroT8nRzasPK4qGVHQw8zbAi
-	V5phA4qs=; b=LMhLaPoTeunYZSszi+KAhRyu7cXAqubRm2QVFYxEmflEZC3C1WJ
-	acBdICwhQv5N/zOauH7cHAUmz4yl3YcvUjylLV8hzneJC96Dqy+/7qgd0NtM/CM6
-	Pft7B+9OVbbeCYoq3orb7TjCdaY6wGO9Gqic7RUxA4jt2stQC+aL9CdKch8AQUkA
-	S9C3xBNsq4CyXunkdnCyio91U2y43Tq7qqFSI0MB8zH+ilN3tsb/9G3KTmqLIVOK
-	0t3SpIIVlbNyTy2HuOL8r1M6tGnDyp20e3o7olJ9PDXPIV4PNBIVI3ONt9ww+2OR
-	JCGggr5099UNIHztQJrPL7YxcpjAo0ZqJuQ==
+	1792609874; x=1792696274; bh=AhNRXTX2gmpxIMjTU1P44DAUyrBoDEvxlu+
+	2kdnVowM=; b=a3a6vH2WuzF7qniVLh/TuclhDVJgqud9P6NfgMSOBOe6Qbo4Bvg
+	lUl/AdAfGiOlVnfHYJhtJkSjRMC+9so0y6YZtVE6MEKMJyr3rEd6oupJ8ddY8pi7
+	PnvwjQPAgkTzQS+7TJPqd73zz8LzIWCLdGXeQ4kT6HPf+xMmbB4XU50eSjGE43/y
+	W7LPmTQAArxDsakkjLO03UpNGS2nID9wYQ3e56KpMadiGjqA0LKbyNiU5MNdAypn
+	G5+xDzuKKtYpSVrPKl2FUpJhJbVP4hrfUCeFNViJBlfX3DuMlcc2gfYQweQXbxA3
+	Pq1yvtYRrmB6tjWM12a37qgKk4O3ejg7fBA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792609358; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1792609874; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:khlwYgUCeM4BfRwECQOgW4imiZ47KUAzkTULWORDlZE9Jhe
-	tCMz1E9T4NhWhpOfmdojazEPP49qP5uUEkTHsKOPm+aMq0slaDCBLHq+7HfVLfU7
-	pT4oOxcZz7rBdgmV4/AiWtW/kIj3n/jtZ/rNoxW8llEjAmasSpESGQ8z37tmADaT
-	AFdyG01I/HJBjbaJ62XAhnbDuadkMtgSDtPLUmQ6OL9/W3L9mEE50o6d0q7bPLAo
-	JtxDYFUD+6tB+WbTUFNIEzYWkijyjAPuwfAIRbnOCm5wePNYiLp3guAGw5F3HBh3
-	nkxlMWGC5MbH425iVcc/j8MPLZNKiS3rnLyYiQg==;
+	s=fm1:rsa-sha256:DHpyxv0aNao6dpwWNzVNJGwt1tvIS+2idx/d1kCRAmBy9Sf
+	DJQt9iInW1sJlvYPcYFN+pluam8YG0iSfC4eg5cR4swTZhNKoHzvJGhDXMyxzx1B
+	dhnANhvh4lotDrl8cfhxtQKiNFzhlFGZ2c3eW2El5hUuhdAY0E+DlCdlY+hDo+hR
+	m+jYSPUetlPUhHGvQIjTCYAHxFl/nYjPGrLkJusPnzCce6kqpBhykumm7VJUW4v8
+	pqpBO0IddGXuMASf4PrYLMrtDjbyYp2bbwDoVB6ocgDCd1Q+W//Un8Sh3OxTh97i
+	eq1jBZVW3hMKOPr9JeVVZWoyAb8hX1RAXyuZYVA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:PRRrJGzPbVXB3inpiKag4zUkN8CHKUQa2tZD+3876Rc=:TSIlcpnLYoR/e5fEW/wcXKmpk72OkZw6gxcRWI4jn2w=;
-X-ME-Sender: <xms:TgzZanNwfMkC_CV4rNKllxqxcCfzGS2EMlw9ebh8cFZuyZxwfAZq6g>
-    <xme:TgzZatydOLhQNPwhcsIseF29-akDQvJYKAr3KDwWAAzcZkGJ6FM1gtcs-FY1IYG6t
-    9t2AmrjfMvCMZZUl9EtTCxDYPSdrSECD2w1RUgYBsQpggtL4f9QZQ>
-X-ME-Received: <xmr:TgzZahoYEGWZavmStbWrmAe_8E5UUwmjNyjjVUr4HEqdmgLlS8XWyFGGwEPBOGvFwvlFo-pY2glPbAew-u0TnVCjAtyvr5txSXE6>
-X-ME-Proxy-Cause: dmFkZTFt072HP+Kf5h/k/aXJpPQbK/bhV2svp2GXMIfgG8x1T3u+fGroBtDqq/ySVhaH7u
-    auMMEDc5JLmYBzsybo92PHfHmM5EHEN+RqM936gROQ5SghyANAN1LmAyOMfUcxcBolyucF
-    EBwtQ+FoGXA+RNwxKwe8R6dIdnxpUikdE4E6/1ef5NzNSKbhv2kuh0g5eoZ2RVtXiFdAQJ
-    N7zIeTyNqBdj+v4Nq+8+Zf9DS6GSpvaWtEJtpEMMGeEI4037Wki9naRFRZWLRuVdFK9YlL
-    hxJTUwnmskFZeDsowABvfvgCBHkJkBxKjrNy2cHuzjDpMZ24IBsxhOzCIgazX54edfe6oq
-    w3L/KPMx600K7tD1KLKc8FQ78qgkAb/klxVEjt8I6lyY2a3uEjY3XNlRQo6EgjOdf5MiTd
-    E24Qf2yyZE4CXXjXunTfzA8ZBqND//SYBJKgbQ3srU9sF2bY0ALDR2yAk9xgaGsFqXgmon
-    U3PTnJK58Q9ORiBHDQNHy0kw/C1iICVFnZ7V0wVrQ7N+aU39O6kU5zMSxvGJ0hJ3hYAa0/
-    fDZumF+8T/m6ttB5Lo3rk1kA6Jq9emYk8hHOwPwQmHXh59dPRN0UmmPjfIViKVnlmpvqbu
-    IEE+8HmQ/e4GSXWswuGlRIxoliX9AKs/UR/DfWSQSpD03kRv1H5VFoTRMO8A
-X-ME-Proxy: <xmx:TgzZalPcJ3QPO2LKtZ_UW9OAiaGSHqbE9ABR9MmhxiBcYooSm2FnHQ>
-    <xmx:TgzZatf3-aFPqEAVQY3nMSm2Q-mOhNpdL_3EPCFjJK80Kr4ZMcNQ-A>
-    <xmx:TgzZajWCTKPhlwdyNOIcXsoYudOZreNkXUvGBZt46_kNXppaXIr9Iw>
-    <xmx:TgzZamAcBA2OszUkw8PW_MDcfnr8o6QqPnpJZh4FZoilLmxCea_7MA>
-    <xmx:TgzZanDn4xiDtbiqUNUjIUf2CPzegPxhQRtEE-hz8Atzcfq8_2auw9AO>
+Message-Instance: m=1; h=sha256:UpkDx4bkvjakH0m2eLQFcaO1JIyhOU2LAQ2WA1SsLso=:Pwr/EvckzQRi8VqIsQCTgCy+u57sLN4gW7AAHiYrHqg=;
+X-ME-Sender: <xms:Ug7ZavzgKDjf2gYtCvXL48uOK9hsdpiDqkLbxRu9a-gTtfaXv573-A>
+    <xme:Ug7ZavuNndzapx7uE4nreRHPPF4bcnZjmzrnuD7LRPOwUUJO87chyYtnJfiuuNBGi
+    _OYhu1rjTwomVF_QNTGwxju6cAcNmruOLXAs1_EKgc9oV2eSqS0dQ>
+X-ME-Received: <xmr:Ug7Zapxl9u0fgmuOocboM_oE9F-b64Sv237qdvjOrKBtUvv_awRFp8CI3k7sRpqAR661GZU8BeYj373-jimRlwpVna5-neMLT7NT>
+X-ME-Proxy-Cause: dmFkZTEll5c5lZCIjYwRJN5EtV4EPxJSm0o5Nf9k9fTmArp5ztZNda4x77h2zndqKYa83W
+    37HBL1p1qnJbSV+T5JdzPnzF4kav7Rgnw+k8yB3n05CEKxumCnCKjLH1kJbnXkL6YPLrK8
+    7eimOHdELjhuGgEoj2PEeKuGg7Yr3YZQOAe6Cyvznww7MPqFaIVYmDqu4Hll0WUWLRCZec
+    5G5pS19GLUm6bFJ94p2wGOV9XWLivIrmk9tKlgfmw5bAPA/qPTPgL8OiqqwnINGiQELhwq
+    be09ZPChXvC104lXeEAEFsi26izXoi2l7U4uqyJVBRT1ArQQb/txXf9G6viedfTCzkr9lV
+    xJbOwwbQMEKKnPuL8TdOC7eMHcJfPifw8vKneUac9/ijxy2HriFPnYmoRJo+CJWmKtUp88
+    /ni44ASkpQMBNzI3DVf2n4iV1Xx/MIgc7/hZJFj4KQtzkF3a8IzYr7wdBsp6oikfhZZ/pJ
+    UbunbsQ2BSRtG5G8TWRb6pMGpKN/OtvE8UYxiGlZU2m5dkslV0f3zZBeicVqTds2+XEL7W
+    e5NUWRF0FNNtcqlBSRC784f+O5YP0XbTvxLlw1xyVXaXLFVxqSTKM0NR/EkgfegqBQYT+P
+    9YOqgk+022iDmSebf2MEIjoeBNI4vXrgjbro0e7DDsx1euQLx0bsTBY8wgGQ
+X-ME-Proxy: <xmx:Ug7ZaqA6eQvLlCRmiuUMBHtwpmCKXlSrAUJC9RJaZQXOqTuYAOFalA>
+    <xmx:Ug7ZavfU-SfSNvGxYPPsyoFtyno6I2vg4Gtrxu6If0eEBC6Pwz835Q>
+    <xmx:Ug7ZaskNcg5aZ4_hidhgR28zM87p-FxMGnEtJX9WRRhvdVoI-jBE6Q>
+    <xmx:Ug7ZauF4DKFH8TUccgjojnf8dPBgh0jFq01ULbvyoQuAn10AgbtVnQ>
+    <xmx:Ug7ZauUD34aXz1_VSyDnmJvLSTh1f5qChS3noS7L8-VD-7RU9WnT5BCh>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 15:02:38 -0400 (EDT)
+ 21 Oct 2026 15:11:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <ttaylorr@openai.com>,  git@vger.kernel.org,  Jeff King
- <peff@peff.net>,  Elijah Newren <newren@gmail.com>,  Jonathan Tan
- <jonathantanmy@fastmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe
- <l.s.r@web.de>,  Derrick
- Stolee <stolee@gmail.com>,  Ted Nyman <tnyman@openai.com>,  Daniel Reynaud
- <dreynaud@openai.com>,  Aaron Friel <friel@openai.com>
-Subject: Re: [PATCH] negotiator/skipping.c: parse parents before queueing
-In-Reply-To: <athgd6Ya12zRdIR_@pks.im> (Patrick Steinhardt's message of "Wed,
-	21 Oct 2026 08:49:27 +0200")
-References: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
-	<athgd6Ya12zRdIR_@pks.im>
-Date: Wed, 21 Oct 2026 12:02:37 -0700
-Message-ID: <xmqqv76unagi.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Nakul V S via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Nakul V S
+ <vsnakul@gmail.com>
+Subject: Re: [PATCH] sequencer: refuse to revert shallow boundary commits by
+ default
+In-Reply-To: <7179f371-a709-476f-8e94-807d7b62ce6e@gmail.com> (Phillip Wood's
+	message of "Wed, 21 Oct 2026 16:20:42 +0100")
+References: <pull.2273.git.1792577381142.gitgitgadget@gmail.com>
+	<7179f371-a709-476f-8e94-807d7b62ce6e@gmail.com>
+Date: Wed, 21 Oct 2026 12:11:13 -0700
+Message-ID: <xmqqqzhina26.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -131,33 +129,41 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On Mon, Oct 19, 2026 at 03:17:07PM -0500, Taylor Blau wrote:
->> diff --git a/negotiator/skipping.c b/negotiator/skipping.c
->> index db90fa77b53..ed6e88b59b4 100644
->> --- a/negotiator/skipping.c
->> +++ b/negotiator/skipping.c
->> @@ -151,6 +151,9 @@ static int push_parent(struct data *data, struct entry *entry,
->>  parent_found:
->>  		;
->>  	} else {
->> +		/* Parse the parent before using its date to order the queue. */
->> +		if (repo_parse_commit(the_repository, to_push))
->> +			return 0;
->>  		parent_entry = rev_list_push(data, to_push, 0);
->>  	}
+> Hi Nakul
 >
-> Why do you parse the commit in `push_parent()` instead of parsing it in
-> `rev_list_push()`? The latter would also cover the other two callsites
-> that call it, and to me it's not clear why they wouldn't want to parse
-> the commits before adding it to the queue.
+> On 21/10/2026 11:09, Nakul V S via GitGitGadget wrote:
+>> From: Nakul V S <vsnakul@gmail.com>
+>> 
+>> When a repository is cloned with --depth=1, Git records the boundary
+>> commit in .git/shallow and rewrites its parent links via the graft
+>> mechanism, making it appear as a root commit. Reverting such a commit
+>> will therefore delete all tracked files, which is almost always
+>> unintended by the user.
+>> 
+>> Add a check in do_pick_commit() that detects when the target commit is
+>> a shallow boundary (nr_parent < 0 in the commit graft) and refuses the
+>> operation by default. A new --allow-shallow-boundary flag is provided
+>> for the rare cases where the user genuinely intends this behavior.
 >
-> Doing so in `rev_list_push()` would also bring it in line with the
-> default negotiator.
->
-> There's also another call to `repo_parse_commit()` in `get_rev()`. Once
-> we start parsing the commit in `rev_list_push()` we could drop that call
-> as we'd know that every commit in the queue is parsed already.
+> Thanks for working on this, it is a useful and timely improvement as 
+> there was some discussion about improving the behavior of git with 
+> regard to shallow boundaries at the recent git merge conference. I 
+> wonder if it would be better to refuse to cherry-pick and rebase a 
+> shallow boundary commit as well. Do you know of a sensible use for 
+> reverting a shallow boundary or is the new option added out of caution 
+> in case someone wants it?
 
-Thanks for noticing this.
+Very good point.
+
+The next natural question is where the modification should go if we
+want to make sure we protect these shallow boundaries not just from
+revert but also from "cherry-pick", "rebase", and possibly "commit
+--amend".  Is sequencer.c:do_pick_commit() the right place to cover
+all of them?  If not, would it make sense to have a helper function
+that different code paths to protect shallow boundaries from these
+operations can call, and add the first call to that helper funcion
+to the location this patch adds new code to?
+
+Thanks.
