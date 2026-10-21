@@ -1,94 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.51
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792556252;
-	b=bnej7El3ruGr+kXH3UOTXnuBXeZaxAai2p/NxBl1z6YDllmV2m+jJDkgRT+SxscfUhDR
-	 lHOtLOyQDg/E5HiV7+Mzh4GkCY7wsZRrWtChb2/BWAV/zHR7KbORsoNSsK+oLNQtTiL9X
-	 Hy/Dn30CLsz9TeyY3P6ewtS+SIaCNgmi8q0ocvuwFZHE7t4cgFghojgoEW+RCgqUgtUwl
-	 lTmXS7FRkD0l2GmZy2YS9SjQtTPl32Q47kpj9Q29CnzDoH11nIFjkx5tG4l/Z6JctGRKT
-	 TkNM5evU1TP+5fdwYMtnBdFiKr9U+a/0eK5B88QF+EEFNRhRarjM6fJ4xPBF2R1AxjQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792556252;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792556319;
+	b=zmExaWglNNkBOYcabQr3LetVbH32ELth71Hj03OcqpNePCRH2+9Hf8XFnrCfX8xM/sj1
+	 ucdZgoPuRkCf0MS5m4x55J9Vibrn8V/vnXM3VLoySKzbXUBSJckis1ENgkQ5Wo64o+QyN
+	 S9jk4lIaTQ0kfxX4jYxVaNEQ4Yp7U5B2keiXka4GV8T7Br0yufrhH5Xl4YGPd3l3nzu5Y
+	 gifcx9PDAxXfL4kn7S0z+fJMI/Wpwijk7oxU087ntvihFJJsC7Z/HCsLKwvva78KlbltG
+	 IoJ9nB9Qxhh80aFnE5srK3PpBKeeATQVFZzIJ1qlTe066zhoJ1usAsWUN1cAmXst4/A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792556319;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=JNYq49Bs6zTTHEPSexhDpZx2drihiZMO7rw3GdBUEKg=;
-	b=clcW/2OW0awVl02f4UimpSmNK+fWwQw5rShdrFIfVllVGlMhGvVEIDOrxxB2pD6AO727
-	 uekDRnH66D74m3plMR7rRqQTMM9wXgCkjyVkO5FgQZ5XXPJktzFDoD8sjPk9kAJTBp7kv
-	 KltXgq/xqjnSSBKbcto7akK6IluDhzv8qyDpwErUu/NdLMDjkQ4GgzOtHzqcvVN6zDdnj
-	 wRrQd/rmTMQlWA/nUAWZgCiksw7PibzztYQ1yqQbZyDMkKiYjCdNjdDSTeeoDYzkxhf0q
-	 EvhriQVZy+WAfEZFzdKMV5dTs9LQLHFI4rZxINoKqZFAkVnUI79fVihrqD9Iq1XAXIQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nortesoftware.dev;
-	spf=pass smtp.mailfrom=nortesoftware.dev;
-	dkim=pass header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=GfPSsaRd;
-	arc=none smtp.remote-ip=209.85.210.51
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
+	bh=ypRCpJ7i2cc9ny8jkT4RL61NofFAj35po5vAgSE92BA=;
+	b=RFsCAmkn7ERsZgzKKV4JAwlhPi3QWKzyBDLNt+4KGpwL+s2xFdd33Ag23Y7SMqa0MVLJ
+	 94Lm5ou8HUtGNwoWU5Tvz2DSkwJotRgFwnv8ppF14GfdXLI9mwisA31HRTADac4VJoJU0
+	 e2XXLdSeRtOtVHCzDvetbDly6oBHZbMEnRMB17Cv9TNNOTUBNTp1npb8ReyLPtIDxCTZS
+	 9Fgd+iHRQllzKWotRT/8tpKAnusDl7kewlhBvhwmk3Dv1BGn+sFAjgEArK56fJLevyjGS
+	 cGV05QUOz3WPa2vpvTSjdGJcqRvEVB6CamUqAr+7bwJ5Cx5MFhySeuh/v4PTy+885+Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YmqLV0n0;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.44
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562F4606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 04:17:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 562F4606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nortesoftware.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nortesoftware.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FB6606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 04:18:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 13FB6606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=GfPSsaRd
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-823e4047037so244608a34.2
-        for <git@vger.kernel.org>; Tue, 20 Oct 2026 21:17:32 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YmqLV0n0
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6aa8d04fcddso665870a12.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 21:18:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792556317; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qqzSraF5H4bW7GHFgL5yPsTQw3nb2xHhk7hBwAp+oR8JSo3XogXA4mpE82dJghLegq
+         ZFjqPHxjXAtmzFJ+1CBuU9EgNFvPMzoNUJyA4tbmEohW9SLGjl/cXS1eRuON7PfYAMtP
+         N+r4wg/gvcr/29eIfJcGR1DhTX3nxUuOI2WCypW2FUpTqfB7dD80pagae62boLRQnYDS
+         aSEjPCGDoQw6v9uSg64p+kMWs0PMbMIgg5WpPpqMeSWDrtDmIp0cAfuUSHuIYPSf/Kva
+         rN6z0TccAZOysGKz1N5pP1s4kKX6BFhRP3rZr3lEQx4n5+akSBgXLP+j4W2dbK/5DH7X
+         Vx0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=ypRCpJ7i2cc9ny8jkT4RL61NofFAj35po5vAgSE92BA=;
+        fh=3c7kCPPMsY5iFdD5z6xAHpYJz++xBXV79sKzLXGfiLw=;
+        b=CtBT26GVevL0O/cEyG76SO0HMgLyhVwyB3l+KEGc2YJtNwvCzBG/vjxo9NtuOOxP6G
+         /dD+ICXQHIenxCHeCm/I8dKGfiu6eCZwWBtnc+OrG1PuZyX6SRa7jGEZb1k02bkhlzRp
+         nGFT2s8nrfDf+vql25n2AvkpjKea3JNDRORYkqCnIpdeMdMyosGhzYMQcxCpciZOQkn0
+         pt4PwLBcJfjb9544SR5xG108qiyN5bhnYBCT33KRmqyg15vUac2fuFkhiW6kCn3mtaC7
+         xG3xYHdFxqL1AjfSiEvKtB2+m8ds/rLe5p3k9i3iDulLANj4xGPj5p88eC7Bjy+24HJU
+         7nGg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nortesoftware.dev; s=google; t=1792556251; x=1793161051; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=JNYq49Bs6zTTHEPSexhDpZx2drihiZMO7rw3GdBUEKg=;
-        b=GfPSsaRdvU8OXRy30zYJT9bREhz8OSuwwZfcRRvbG/177kJskfcdQgFQSF4+SgV52D
-         /iECaJm4aSBO+9/utgThbdZxpdS/WHwLwKPumzcbtWPNOWigG8zM9nH71mjGMLOWJbap
-         ZEtaIfO4avl+4E2DYsxL1lu5e2Xh1Eubgv6XCmATxRf4Q2ITyW7r5KO2gWzlIEAdjnAL
-         ZPqu7RgkggcMFuX97h3l7cQS+P8Oqbacs9KtezOJmByNfVwdWcu5LAIc1cecd6dNZAyd
-         7rfxlaDsaHm20DzX/H8WBEqh/USqpNGPXAf4u3T/YAJQ/Z7/NYoLpDAL1gQRRinlsXxq
-         y2Ng==
+        d=gmail.com; s=20251104; t=1792556317; x=1793161117; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ypRCpJ7i2cc9ny8jkT4RL61NofFAj35po5vAgSE92BA=;
+        b=YmqLV0n0jECrdXM1mMSRi8sEvhrLJESYjRbn1gYt9yyrgpGhjxa7Gh+iHNvq9HU82l
+         tu0uJfTh0jEpl9qaYNISdeTdSmFanfX7a8dDTJQ6khb4P8lUvZqa2T6rGH0tOr6eZi76
+         fL60l+iDxRezEuR/nLQY0RChGEbwbZzx+6EYAv+h3SLixIlO0lGLmVqMVduQtJ0KzXbL
+         K4qzXvU6DsUOozm4mX3+zMXbMtrA453SDTwmcQisn2JbsJJ6AgZhwZb//FLA+Rx6TBkl
+         OcIPFGWGo+30svc6YFuwaNEUiZxfEqbVR3w3+0ctFB2KmD6pR1Zlje9zqlgUBEKkRf97
+         SbOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792556251; x=1793161051;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=JNYq49Bs6zTTHEPSexhDpZx2drihiZMO7rw3GdBUEKg=;
-        b=Mg0cu/du2cF6XbZNPOS12+xVSGh8EM3+xR7q8wpwqXb3nYO1ps0aJX21FFPxiR9QO+
-         7Z7KBSHCyjDvT1S5QmPFH8KEls6LkNAaBGMzpYxB8DpHn+Lo12IxQ7g8epUcA7U9XBBY
-         UR3ek011LGL17E01mnlHvTI4hESMhwnw75egys89BZdnAfKlWQWjpvMEthi+VdC1UjYb
-         msqgh7aGPkRwLvnlFulGslafmWL6Gwg5zcShmxdtahxWJ/4JaECwjWyJ8M8TI91OWWzW
-         N9H2X2dr+t43xdHhmhcC+VLu1+b+8qH8/Ru7aOU4bgiA/cs5KMWyouyeROIgKgE/lLDb
-         s6Xw==
-X-Gm-Message-State: AFq9FYLjOCaWaZLfzYtb0yyt1UTEQ4X1iDXPL2A/AlOZ6hIBXfYpr/By
-	+6StCZmJJX8JpTlqMWYly8wHxiOvPCn0VN4l2J87vIOCAxYDVK1wQdB57SJGyYlwLVN/rFOgaSM
-	NUHLipw==
-X-Gm-Gg: AYBFou1/xfbUOV5U2DueZ/lvVQVTLwsFh/Y9mvaEFWDW1N6Fcxi8EQqEnDyfdtn0bo0
-	C2xk80OMh1YDwBGR7iELCEyNoBDKKEG64mHYxjwE1WO6JZP9onXi8ROBbO4ekT4bq4xNQ1AgKXg
-	NceRXONTIP8rFIvghMPr4DLBu9F1QgFcnpqfAbYJOEdWxDFoLKV4bH3Aw+nlrHVfiQjAgS+o3fU
-	yhI6reIkzBlA7HDP4c/Npj6KPkTi/qkLeJIOMJSDKki77ImItII0M4Yn8CD0bl9cYiuvJZI6j56
-	RVDEuk923JZ9h1uU8ZiTFnKQ3/1mh0A+KPyO6qRhDhmvt+ITUK6XrMvI5lZhOfhrCg3wHB/5kyp
-	SWtCHii6ritOYreVFcL1CJCYvZ0tzQyPtm7gyu8K6g3/xZ2lG4tcYpIH71Zvut18FVGqmLG5Kws
-	wRvaSLbd1NjaRO35U09rhiT8WAyX4q89c5i6R2IfpGUhqtCnzHRK7e+n8lOxJQQ+hsgOWhmleWQ
-	488e/6K53CTTHCx2O9iZscjSYv53Ms0eK+lUcDV+yzF5j9zafBmyXwmSGOck32bpCStU2nqxMhm
-	3mmc6FEADCPGgvm9K5XvTmEsGulOs11TgMn9NQ403/h819fL0z/JO3YuL8W1CCw=
-X-Received: by 2002:a05:6830:2304:b0:80c:d34f:5f65 with SMTP id 46e09a7af769-84d0a00a684mr467623a34.30.1792556250992;
-        Tue, 20 Oct 2026 21:17:30 -0700 (PDT)
-Received: from nortesoftware.dev ([189.150.78.131])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-84cbc7d9b1asm1286453a34.8.2026.10.20.21.17.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 21:17:30 -0700 (PDT)
-From: =?UTF-8?q?Christian=20No=C3=A9=20Ramos=20L=C3=B3pez?= <chris@nortesoftware.dev>
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH] gpg-interface: fail when the ssh revocation file is missing
-Date: Wed, 21 Oct 2026 00:17:20 -0400
-Message-ID: <20261021041720.572035-1-chris@nortesoftware.dev>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <ec4de165-c7d1-43d9-979b-08c1cb67022d@gmail.com>
-References: <ec4de165-c7d1-43d9-979b-08c1cb67022d@gmail.com>
+        d=1e100.net; s=20260707; t=1792556317; x=1793161117;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ypRCpJ7i2cc9ny8jkT4RL61NofFAj35po5vAgSE92BA=;
+        b=qx4uawfzyznrzq0loy4dT2R/c2XQmlB7yjS2oX3x8h57yk7Jg9LNr4kxKWd98KNZlq
+         8H/GuG9bYldRk7uIFtydYO/vc4UIGGcju/rz/7X80wsFblgMfTSnk62RArdpboFJPqJ3
+         vtCr5vkl9Ytz5VrMfdLvs6vk9VtEKqQFhjAJZ5XmxRUmft+Ha1PuWt3s9oWhFEVD7srL
+         60bRFGnvWoEFY/gK3b2ZkqnR2VwKAnrwxwnPgIaTsPfocAMT51TQ3o+mGnN0stDyGQlR
+         HtdTcayE1lU+Zgh5YRzFltdNsNBulsFLOqNjqaAAm0mAjgDJHqmAoJzxPgcnX21PCjs+
+         BbfA==
+X-Gm-Message-State: AFq9FYKiAUTcQzmoxLm4MQ/ZMiQvHNYGcL/eX7WhKJ+MfFISXcj8ZGLt
+	o0ye0pa55n+Byl/DK0G93YqvXfxRaElGN4lWKmUTNXwTlnrjRNqjwX1khqS3KK2tZ+aaDMt8+X6
+	qDONnTlEk4e5o5xsUsMljUrwDqwC+e4ERoqcIIIUY3A==
+X-Gm-Gg: AYBFou1oaU1Qhj+drlvNWE1LIWs997tpHJ4I8l2DfLTPr0o0XJ2fzGifjU/0YtQYgg4
+	0dYq1Xs9MkiRzkz4ucVL7mWNSCSwX9FFnVgDku31OuU/3qnEigdsOzkBOILBVPXuWrnAhSXI99S
+	d9xnf1G9EmC7S8utw/Mo3F0H7CshoU1DrVykjIss3UiGTSVJ9LArm8RHxfV1qmyHrNxEoUBFPkR
+	fn2+oZS7dHzoZD/G7mL2ubyrm3eIUmFCRkrOYBPHF9muDnkBSFI1O4dkGVPS50ElCQFwj9mnDnq
+	a+S835lm80quJBkM9Ent4IfK/La2tANcXqZAchXqXPv5mKI/rlYZBRABjmyEQA7/bX8VxNOeA5n
+	BTbEbbfzXNCijG0DhGKNJ89fa4MHitow+MDOTOhCU7bdE8A/tdEcfeMKNkYI76QBS0Hs=
+X-Received: by 2002:a05:6402:4607:b0:6ac:7d58:dbed with SMTP id
+ 4fb4d7f45d1cf-6b408e86ac9mr359440a12.3.1792556317271; Tue, 20 Oct 2026
+ 21:18:37 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,128 +99,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Muritala Mudi <ibnmuhyideen95@gmail.com>
+Date: Wed, 21 Oct 2026 05:18:25 +0100
+X-Gm-Features: AclHuK_1J8dvFqu27tT3FC-KpkPnsx2sWUvC5YK1Vhvz8ZoGwVUIRfGYluiM3oE
+Message-ID: <CAO=0-S64w=n47n6yfYoKJie2aFi+T88Sp_qPmFe2RW0xWEwcdQ@mail.gmail.com>
+Subject: [Outreachy] Microproject: use Q_() in builtin/checkout.c
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>, usmanakinyemi202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-When gpg.ssh.revocationFile names a file that does not exist, Git
-warns and runs ssh-keygen without it, so a signature made with a key
-listed in the intended revocation file verifies as good. A revocation
-file that exists but cannot be read already makes ssh-keygen refuse,
-and the signature shows as bad; sshd likewise refuses all public key
-authentication when its RevokedKeys file is not readable.
+Hi Usman, Christian and Siddharth,
 
-Fail the verification in the same way when the file is missing, and
-turn the warning into an error so that the reason is shown. Users who
-want verification to go on without the file when it is absent can
-prefix the path with ":(optional)", which makes Git treat the variable
-as unset if the file does not exist.
+Thank you Usman for the welcome. I took some time to look into the
+microproject I want to work
+on and one that got my interest is the Q_() pluralization
+microproject. I will like to work on builtin/checkout.c.
+I searched the list archive and I didn't see anyone working on this file yet.
 
-A setup whose configured path is wrong now fails to verify where it
-used to warn; until now its signatures were verified without any
-revocation check.
+I noticed two places that can get improved with Q_():
 
-gpg.ssh.revocationFile had no tests. Add tests for a revoked key, with
-and without ":(optional)", and for a missing file, with and without
-the prefix.
+Line 1088, " ... and %d more.\n": this is at the end of the warning
+Git shows when someone leaves
+a detached HEAD and so commits might be left behind.
+Git lists up to four commits and then shows this line for the rest.
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Christian Noé Ramos López <chris@nortesoftware.dev>
----
-With or without this patch, a local `:(optional)` value naming a
-missing file drops a gpg.ssh.revocationFile set in the global config.
-That is existing `:(optional)` behavior, not introduced here.
+Line 1492, "only one reference expected, %d given.": this appears when
+more than one
+reference is given before --, e.g. git checkout a b --.
+In both cases the number is always 2 or more, so in English the plural
+is always shown.
+But for languages like Polish, which have different plural forms for
+2-4 and for 5 and above,
+it will be inconsistent to use the same form for all cases.
 
- Documentation/config/gpg.adoc |  3 +++
- gpg-interface.c               | 15 ++++++---------
- t/t7528-signed-commit-ssh.sh  | 28 ++++++++++++++++++++++++++++
- 3 files changed, 37 insertions(+), 9 deletions(-)
+In po/pl.po, the first message currently has only one translation slot.
+So using Q_() can let have proper translation.
 
-diff --git a/Documentation/config/gpg.adoc b/Documentation/config/gpg.adoc
-index 240e46c05..cce49d53e 100644
---- a/Documentation/config/gpg.adoc
-+++ b/Documentation/config/gpg.adoc
-@@ -83,3 +83,6 @@ gpg.ssh.revocationFile::
- 	See ssh-keygen(1) for details.
- 	If a public key is found in this file then it will always be treated
- 	as having trust level "never" and signatures will show as invalid.
-+	If the file does not exist, signature verification fails, unless
-+	the path is prefixed with `:(optional)` (see the `pathname` type in
-+	linkgit:git-config[1]).
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 60c315fba..ddbb29e78 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -533,6 +533,9 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 		 * we still call check-novalidate to display the signature info
- 		 */
- 		ret = -1;
-+	} else if (ssh_revocation_file && !file_exists(ssh_revocation_file)) {
-+		ret = error(_("ssh signing revocation file configured but not found: %s"),
-+			    ssh_revocation_file);
- 	} else {
- 		/* Check every principal we found (one per line) */
- 		const char *next;
-@@ -576,15 +579,9 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 				     verify_time.buf,
- 				     NULL);
- 
--			if (ssh_revocation_file) {
--				if (file_exists(ssh_revocation_file)) {
--					strvec_pushl(&ssh_keygen.args, "-r",
--						     ssh_revocation_file, NULL);
--				} else {
--					warning(_("ssh signing revocation file configured but not found: %s"),
--						ssh_revocation_file);
--				}
--			}
-+			if (ssh_revocation_file)
-+				strvec_pushl(&ssh_keygen.args, "-r",
-+					     ssh_revocation_file, NULL);
- 
- 			sigchain_push(SIGPIPE, SIG_IGN);
- 			ret = pipe_command(&ssh_keygen, sigc->payload, sigc->payload_len,
-diff --git a/t/t7528-signed-commit-ssh.sh b/t/t7528-signed-commit-ssh.sh
-index 991678264..080ebf9db 100755
---- a/t/t7528-signed-commit-ssh.sh
-+++ b/t/t7528-signed-commit-ssh.sh
-@@ -211,6 +211,34 @@ test_expect_success GPGSSH 'verify-commit exits failure with high minTrustLevel'
- 	test_must_fail git verify-commit eighth-signed-alt
- '
- 
-+test_expect_success GPGSSH 'verify-commit exits failure on revoked signing key' '
-+	test_when_finished "rm -f revoked_keys" &&
-+	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	cp "${GPGSSH_KEY_PRIMARY}.pub" revoked_keys &&
-+	test_config gpg.ssh.revocationFile "$(pwd)/revoked_keys" &&
-+	test_must_fail git verify-commit sixth-signed 2>actual &&
-+	test_grep ! "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
-+	test_config gpg.ssh.revocationFile ":(optional)$(pwd)/revoked_keys" &&
-+	test_must_fail git verify-commit sixth-signed 2>actual &&
-+	test_grep ! "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
-+'
-+
-+test_expect_success GPGSSH 'verify-commit exits failure on missing revocation file' '
-+	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	test_config gpg.ssh.revocationFile "$(pwd)/no-such-file" &&
-+	test_must_fail git verify-commit sixth-signed 2>actual &&
-+	test_grep "revocation file configured but not found" actual &&
-+	test_grep ! "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
-+'
-+
-+test_expect_success GPGSSH 'verify-commit ignores missing optional revocation file' '
-+	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	test_config gpg.ssh.revocationFile ":(optional)$(pwd)/no-such-file" &&
-+	git verify-commit sixth-signed 2>actual &&
-+	test_grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
-+	test_grep ! "revocation file" actual
-+'
-+
- test_expect_success GPGSSH 'verify signatures with --raw' '
- 	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
- 	(
+I noticed that line 1405 in builtin/checkout.c has the same issue.
+The same message also appears in builtin/worktree.c at lines 812 and 951.
 
-base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
--- 
-2.47.3
+So I have two questions:
 
+1. Is it OK to convert these messages to Q_(), even though English
+will always show the plural?
+2. Should I also include line 1405 in the patch, which will mean
+changing the same message in builtin/worktree.c
+as well, or should I keep the patch just limited to the first two
+messages for now
+
+Regards,
+Mudi
