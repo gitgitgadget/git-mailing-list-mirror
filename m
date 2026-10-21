@@ -1,124 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792613923;
-	b=OVcbVA8dWWslFJ5rWIWUYs5WUkTNDsqc6spysVr5KxEsOnSPeev6AtvtkyIr0IXRlx2i
-	 SPHrk80MxlojHE44qP4cUuNLscRFYVhRNCaF470ml0szFkGwCqTBdUB2VXisJc/Nb97Jz
-	 60lCuChhVjhpGjgoKnnAorqjzBkTUHheHOuMncF0m/9A71v+s4ru8AjTRiaqH3KNJqKPa
-	 dB+gt5LcL64+700Ge/gKyRJ5vsTDhUPShOHzeXszdTCSapfbKzapCcREs8ikyQihjCUIV
-	 5wh7GlMpW39h+9kLYDcpw61iGth/59JIYHsKZauhTB81y8Ija7eYUn3xTwSy7E+1E8g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792613923;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=Yw0h72g3YWy+tEYPxghDKlsjLIedKMP7EeMshX4nbMg=;
-	b=Q7uYkNvbA/xQcCp9e9U+2pMyK6w8Kom5rN9C0dCfA/XjSTZkHsSQuAlfeLHgeUiBnRb4
-	 0n6U5CH1bb5IpNR0PSxJqreo7TOREiGtuMZGI64dLGGWq39h1kOVZEY1uUxEr7VwClQg5
-	 9egAiyRlkoIrzMBJawg2zJQN/L+t4Cvel0a6kebtfruwGsRHlXL8Vwp2FNgA0JZ5XX+Mh
-	 oIMj7HYC6Y5pYz0xBEFVCMUi4CKmwbQ0l76nhZXZmUaPR+DSL+pw9VaHjdb487UiKtv0B
-	 71ZRyCg5K8PV7dDjopUg0C7lOK46dxyhqDFznJrw9YbiwruG3w2gK7sPNcPsqB8aaOg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=j0DWFKX9;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=RuZe2kv3;
-	arc=none smtp.remote-ip=202.12.124.159
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.46
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792614813;
+	b=fY3atS14oV52NPKawNllwgwFjpizPYeKk2fZzTX6DbC3UzHWvJmOhnVNY2g7ULHW200Y
+	 NugtOfQnabRcJ589Rm9hIEzibYlDIaJT66Y2YQfmbewdZTM/w3uTnLQtSwaUR8BGALAQ7
+	 VWLF7+PcNxw7obM40dtsyIXqN7Sn4uydnVKWwm/4ueAazykheDagDs3d31np7rk2LPSQb
+	 34Da+3HtXSdh/jDgQ58zASSrL3szNHzYff1I51BjP0YQOyecX6FM89KaMNI0uHDwASFKY
+	 4n6nQTS4mbbAl5ETfDRpaWcHGf0DrGxPkAv2CbRhawvpYoE33OwaK3NwKzLVppza1Nw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792614813;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=mHNq0Izuo1exU24dW/P+PnVqOjQXaB7o2Rx4ltACKws=;
+	b=ytdeeiu6y7p8mn/X/YQ9JczW8cRSK8VWJH7Pacfft9Z/ATF3fLNvwMLSR/58BOr7XBY3
+	 3BPxQgJR/TQdB33xkj8UnF5eBY4Np9wFMp9or14wbbXVKFcGjZ6hbrN8hvgxLDKxH7OZk
+	 0MtuDqP1V5Zk7GK/mfNQ1/qeaR+JmJwmSqpdTGxj2evUxvvD3/739PJKfLkusVzb5+oii
+	 kJCA0k7MgeeDSb+JBR9tAjKj3aBISEfmtgHt1IGynzB8kxzp/moM9i4MvZPXsTU/dwtbv
+	 iHAvnw/7QSWakAl9f29plMCo/oJMdS4oEXkNP+SHAkVNxnqtQsiY8s+XRrnT95b/CEA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=TjaDghNr;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.46
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3251606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 20:18:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C3251606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2D6606A31A
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 20:33:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF2D6606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=j0DWFKX9;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=RuZe2kv3
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 24EBE7A0078
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 16:18:42 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 21 Oct 2026 16:18:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792613921; x=1792700321; bh=Yw0h72g3YW
-	y+tEYPxghDKlsjLIedKMP7EeMshX4nbMg=; b=j0DWFKX9jovaQBWQqUknDqsVFo
-	o9tfJlujk9UOqd1bSXmZwj660rahAUuD8YLf1JDiGx6b4GJ2TVXR8v0A9EHSl1FC
-	KBRwxMemdoghqVbG+oI/U5G0XFkkW7HFXGsuiOE9d7EK87ClhPzZsE+TjAuieKYG
-	0r++TkgjhFuhuf9bN/K3041PnsVODTouNhuaeUi6An8EpVnXLVMxIlL2AP6hsOQz
-	Ps1nbBARnmPRnShlMl/4PBTevQWthIT7DHyvwM6q1ZY7quqA4aC7MwBPkH0OxwXS
-	LDK4csiD2KvNnxccvRzz5gpSMUSPcc5Didz/dPRLMNxRhbzf82PhhpVJyVSA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792613921; x=1792700321; bh=Yw0h72g3YWy+tEYPxghDKlsjLIedKMP7EeM
-	shX4nbMg=; b=RuZe2kv36T6rlHPnXyctzMUX1j3XCOXY+3kgejSqkZQ2VyLHJqp
-	aty11blNSWfKyGno4xulzeqNxxWG/CZVqsYGRHecxmS1JcCFzQnCpdTlUMazLco3
-	EQfOYcyFMfxIhHtHM4mAJAHPLHPZkrxmzkpCokGz3rHHPSSA4ZJtrmM8L8cch7q2
-	qbZp7Yt6OZG4tNitemusBjWuYl4/gxbxLeLIts0i7mxQu9KX+Jq4v2i6ga9EQ7gU
-	x2Vuk/53fkHPjTzFVpxuPKI4zntRTcJcJSIG85HGbES0qTIBL/2I/2mToDQSjvsN
-	kL+tBC5Uu9TaPaEnqEuCEIZwDYbFE9PcNDg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792613921; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:LcsUR30oikTZQPnJpPRC6ybKcUb0JeC+r0twBi+fS6u9HIJ
-	RbHo5FhHELHP9AuXfpzbKIKBq+eDZSASEz4SQ8sEET5VdMPRwRZLcCQSYwWDWul/
-	f33kJs7nUKbwefFaZkdnH5PMTilcwIpAizzFZnftOApbAIxjl3yvCQx2N/oqVPiD
-	nyi74KlgSjTQUwAPVpJwwO1Fo47WQVx2+c5UMUfaiUoIdE2L+169RR66YClRP3cJ
-	1vOFBA4NYscvJmiAC/M13mx+QVnl0qcZunMHWat/13M+njdyki/rSylVGPQwuktC
-	t/Ok5Ty+Jh9UIsdfIfAtwHHdccJDgJ7fYOgZsVg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Jl9vZiD/05i15wV9RhXVpfpQ4Cw9Q124GcB4djbJ53I=:8U1NgVZsdLk4j9R7ikeuq/+Exa0B6knKdcWcVhS1lxI=;
-X-ME-Sender: <xms:IR7Zalywg8U0CTSJltKUv53j4rwhvXCNdSpl7T-utOmPTJk7N5rbMA>
-    <xme:IR7ZasKlgeHxovsSjYs7gepi_hdyl9t94aVO9YGkmFe4ChVMZb-6J_qn2gIB8KaGc
-    ihW97KuW7vwmY2S7EymEkOKVz2eU2-Am-eKDS0LqH4CS4GfxMAp6XOD>
-X-ME-Received: <xmr:IR7ZanpyCi21brFuUUKXDKtfxEAU_JYEYpG0ke4lHuitrjshOtdUza9WaA-3KTJKXmO1Oc1KeLIpuC0HD9q4tRjZN7XIYYcBUYhe>
-X-ME-Proxy-Cause: dmFkZTGAV5hwNSnBDgHygtKv5oZreUvvZLkdHGpJwd04qmFrxDSJQv9Z/gCHNcPTN7xacP
-    zKiXYb2UvK9fkJqopQ+N1eMiyVZ0EKXyumLSoq9GaSPOHGglRZE5HEtlNfBY26BgctLMrj
-    WLCWIhMZKQrsF1HsuP/P+/LNdi8Y+ZivAJ3kx6051EIOCVIz8xXlo4PwOGfxB4uGLE5RoK
-    004EEt6vA8L/tISSx9xjqqNqI+B2oQ54YNgsFY/vW38/nP6R2w9vgN1e/KQpjOwNO4JT9i
-    Ga5eKuaecqmaqsjBsrRTVRyYrzJTp+QIbaaj0fR6KX3GfqRbE8RcPR2zwaFN7Jb4gGabH4
-    CgGNZHUsRtxDR6ag1k6qeqTKuHY+E3kpNY8olpXky3ckwer6CNWjfHAN91n2AOctlUI0UQ
-    42kEyUypq5VU+4MApRgaUOk6ZGEkqQztA9OwUmpoTfHEpcLKKyuYOypIJ1Knli0xvTW3mT
-    /ukkPChzskapKmlwGbI2W/be5c25j/+BqjpFarl9LXcLG2iaJO81jOxuf5cj7jwAvuU5i7
-    wEseC18hpcWKWvGduzRgaHmgn2zBHBCE3ONPhORRSDIwCrtNgxQVon+ypWTSKp7IR+MQGK
-    ocL3SuITP/O65b9gMdk6ysoKGnkpNrjdvbtr1aZeneNYlsPZ8dFvEieySSHA
-X-ME-Proxy: <xmx:IR7ZajKEZWqKhlB8OVoRIINhYLcdqv5oq6TA1qQjTYdwSHVbkg9qIg>
-    <xmx:IR7ZakTyK_FoJeGndWX_bR3q6EyZXw1tm8fXhryEo4CaPdcwIOQY2Q>
-    <xmx:IR7ZaquYC36l2to1Xvpr-xQXPfezr97OSbTxm2tycI6Qxd_fxZAk2g>
-    <xmx:IR7Zatbq9nNLAlRJoND2jfpfyIK36ZeRd2alGVKU0RrhbJWvHZaaaw>
-    <xmx:IR7ZalKj3IGS3f5yps6hc7STYUsnUl7_rhsxiwEBqJ3bIW-mC1syUfx_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 16:18:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristofer Karlsson <krka@spotify.com>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 5/6] connected: add incremental connectivity check
- via rev-list
-In-Reply-To: <d76dae801b3303ef4271f71c7b3999c10cac8556.1792581744.git.gitgitgadget@gmail.com>
-	(Kristofer Karlsson via GitGitGadget's message of "Wed, 21 Oct 2026
-	11:22:23 +0000")
-References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
-	<pull.2211.v4.git.1792581744.gitgitgadget@gmail.com>
-	<d76dae801b3303ef4271f71c7b3999c10cac8556.1792581744.git.gitgitgadget@gmail.com>
-Date: Wed, 21 Oct 2026 13:18:40 -0700
-Message-ID: <xmqqecdin6xr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=TjaDghNr
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-6de1fd5f572so533847eaf.3
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 13:33:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792614812; cv=none;
+        d=google.com; s=arc-20260327;
+        b=bQhwD3AYX9IR1/TfB+BgqA9/f/NaRtUCkysI22pdVCPBWMeDM4vJcDWQy1aLJvamAq
+         13GYBYErpMEiDV6bHD2QrdcutIZ0rixCM/Bo1OJfHbYwxEY7EukO3FQ8VC1CgiYob4lJ
+         /55bbPuw8XR9WcbPKs2zUkc0jDwIuj7C7FxbBv7qChaVV69Ab+WzmFx2saY4SWyYxM0x
+         gvsQzW2dlJvcA87Lxp4WlPHBeAC+s5e/ZAlzumtlH5WCeEbPLi6pz6USiiWOQPtAJGvt
+         bJLqvcR7Q0+uat6Rn9RTVGwsiFXfAaQe5TzOt0cQ2kPjRNOM5AfmYKkyhOmFivzdJTNV
+         euFw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=mHNq0Izuo1exU24dW/P+PnVqOjQXaB7o2Rx4ltACKws=;
+        fh=8/LjS1uJ58dEL5DQauw5WUcHah9WtaFwABlDy1dweIQ=;
+        b=goaGXpBWteeW1+S/kaqdUEHfyDW1YvEFvNfj77s7rLTFIrmPL5ZVVoDlEgkAlzXCpd
+         +zTqpHEBgDFCRPgfD13sGtzdXfYiTDJYPiUSj3koKAWlbIyNaFEOlWvhQIQDzAdmFZvA
+         g113Q5f9ToQrSTCpK7hfWt4LNezSArYbkyZNZIZS2LtFXQQ/lxKV8l8LAEN2lwVzv9Y2
+         VvlhBzIvtCQi14PUBSZCNmDArGdy84dttccqcTmjl/UjriW7fSdenMcq6Fy0vGIEDWk/
+         oXF/JEV4rrhRPuDghnbJwJ9Mu3oGACjtpZs8dY+P9hOfuN/LsDN154Zf3bOYduk8NJ33
+         Oj/g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792614812; x=1793219612; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mHNq0Izuo1exU24dW/P+PnVqOjQXaB7o2Rx4ltACKws=;
+        b=TjaDghNrtkyLAxhO+8FNGMJTZTU3mQCVYT5eUdZLKx6njEY0EapzmlWwfvsgMch4Qt
+         oD81guV4W7UtWBiQERZXOTO+6a8um5o/Y1ro02kwxWvtUtJCRi9TFInxZlKoI+ayAMYl
+         c5+kPDL3nWk054xNI48MA4Kv2Bp1Qel8LH6fGFxpWUeYLecvcZLYoe+HrXOZ82I6HI5r
+         xXG75xun7iF9YshcqyYX1TLfsGvrI+GGmCDOU7/MZpjuGRvsra6r2xa1orKqy9JvQrmP
+         3sFoxyvhaU/7GhnfJwCLRL/hCaj94TdUSr1mEc38rmb11qov50PjTMcjcn7CUFZTewcW
+         mgnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792614812; x=1793219612;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mHNq0Izuo1exU24dW/P+PnVqOjQXaB7o2Rx4ltACKws=;
+        b=kk8Cqo6nTQ1sQz4xkJregDKB4jrJQD7KwQKjPci2x0E9hCkC/BORJQ4OQgxOXpOVET
+         dfoTqiZ5veIOcNXFuZ/T1tS1pYxXaokru2bC34psgNJoMZA2iw2GKLUiFgP4Dn090R4o
+         LUdkSosWuYevFqUDZeQ3rFwua6E2CUHasIR79TjUKZvt0M0AU3qzfKbeH4m1/tuxIHiV
+         Hykgy3xDx2WhExN67bTWOK/qJWe/GPUghjZVVxb49zpAsLwtJX98VRoOAL2gqvgfXVO2
+         KyepWYClLHrFhBAPn3OECXJ5z0bVSn6oJ5nJO2NF8t4iVzl1DWJsuG0xe1diGYRYYwR4
+         PHRA==
+X-Forwarded-Encrypted: i=1; AKwUvByLhKoe+HaVhUzEwQyJuQhd0xMF8sc3iGMAbpjHHHaVB30EBhe57g/K1aNlsjJSA6maUk0=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIJaMRRZqUmn2wsfP+Fn+M1wtKC+xaAO619oUjksBp4IsuQt/bi
+	cOwqY/L3CQmmC8lq8v8U38Gd4ZlfUPofzZJh+1hLgb7Lzmu0DE5lKylPxesM27L713mu8mCtqxA
+	PVRlXl1zPpLSFNIZP8gAwdoIgE/Fml0I=
+X-Gm-Gg: AYBFou1AELuLi4LhBYCcYeWTy4lBJ5FWQylAiQJmrs05/6qsqkx1+6sbaGuTY4wvecI
+	jKOFmBGrcEkl8apSx4RQtm+QyupwWEid/ZPJczav+/1aGb6LfXquAcfE4IBmhPBwn9OMoNTtrAb
+	u2k19hp21ZdIaUbCwlooixuz27S32xvDO/YoS0gbUQ20xsiV/KXRsJYwnfW8wHwry9pl4Uf6fj5
+	3WLLx3zVzz9JAYvbPT3Urqyozv9Wsky+QLvX6eQyTDP0q1qHLv3mq6EL1+wjqogDqYh/NQlI/y9
+	dQ2DzvYlXsVrW+2CdXfbj0v7GC44MZ80Yqr5iYyH3XxwrNIog1XT9bDjL+13k6q2epxOyUGlF5O
+	8dQpUyCqcTN0TqWLAiHTqNBZrGjUzFCSJz/Lw9uyASZysXhjoZFgwq2+pzbgczmXud6mfVOa1yX
+	ZLS/2emQeqLtVCwMMaeTOmpMyMOfe8+A/jilZZlAkP0sB7xuCibzJB9Cg=
+X-Received: by 2002:a05:6820:1789:b0:6d7:a13d:fd7b with SMTP id
+ 006d021491bc7-7093fcba6dbmr1673278eaf.28.1792614811901; Wed, 21 Oct 2026
+ 13:33:31 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,93 +104,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAO=0-S64w=n47n6yfYoKJie2aFi+T88Sp_qPmFe2RW0xWEwcdQ@mail.gmail.com>
+ <20261021110616.Wxkhc%taahol@utu.fi>
+In-Reply-To: <20261021110616.Wxkhc%taahol@utu.fi>
+From: Tanga Joris <tangajoris@gmail.com>
+Date: Wed, 21 Oct 2026 23:32:54 +0300
+X-Gm-Features: AclHuK93D3qHH4-r8HPRmHHtf5Qty9tH-mJp-KbLdf5U96NR2_ITVQSf2OHRCPQ
+Message-ID: <CAKrRMNrrsa2iwb-0D=FfzNAwyLTJtLbVEN69vu7sBRWOKheZ_A@mail.gmail.com>
+Subject: Re: [Outreachy] Microproject: use Q_() in builtin/checkout.c
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: Muritala Mudi <ibnmuhyideen95@gmail.com>, git@vger.kernel.org, 
+	christian.couder@gmail.com, Siddharth Asthana <siddharthasthana31@gmail.com>, 
+	usmanakinyemi202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, 21 Oct 2026 at 14:13, Tuomas Ahola <taahol@utu.fi> wrote:
+> You can reply to [1], giving a review on the patch. Perhaps you could even
+> nudge the author to take care of line 1492, too, whilst you can write and
+> submit patches for the other cases you had found.
 
-> -static void parse_connectivity_check(struct repository *repo UNUSED,
-> +static void parse_connectivity_check(struct repository *repo,
->  				     const char *arg,
->  				     struct connectivity_check *check)
->  {
->  	if (!strcmp(arg, "full"))
->  		check->mode = CONNECTIVITY_CHECK_FULL;
-> +	else if (!strcmp(arg, "incremental"))
-> +		check->mode = CONNECTIVITY_CHECK_INCREMENTAL;
->  	else
->  		die(_("unknown --connectivity-check mode '%s'"), arg);
-> +
-> +	if (check->mode != CONNECTIVITY_CHECK_FULL)
-> +		repo->fetch_if_missing = 0;
->  }
+Tuomas, thank you for pointing to my patch. I'd be happy to take
+care of line 1492 in v2 of my patch. Mudi, as Tuomas suggested,
+line 1405 and the similar messages in builtin/worktree.c are yours,
+and reviews of my patch are welcome:)
 
-This assumes that everybody that is different from full want to
-avoid lazy fetching.  It may be true right now as you have only full
-and incremental, but it somehow feels like a trap waiting to bite
-future developers.
-
-> @@ -992,6 +999,29 @@ int cmd_rev_list(int argc,
->  
->  	prepare_maximal_independent(&revs);
->  
-> +	/*
-> +	 * Without a boundary of negative revisions, as in a clone or a
-> +	 * push into an empty repository, every incoming commit is new.
-> +	 * The incremental check would still work, but it would verify
-> +	 * the whole object graph like the full check, with extra
-> +	 * per-commit overhead on top, so use the full check.
-> +	 */
-> +	if (!revs.limited)
-> +		connectivity_check.mode = CONNECTIVITY_CHECK_FULL;
-> +
-> +	if (connectivity_check.mode == CONNECTIVITY_CHECK_INCREMENTAL) {
-> +		struct commit *commit;
-> +		struct commit_list *new_commits = NULL;
-> +
-> +		while ((commit = get_revision(&revs)) != NULL)
-> +			commit_list_insert(commit, &new_commits);
-> +
-> +		if (verify_commits_incremental(repo, &new_commits,
-> +					       revs.exclude_promisor_objects))
-> +			die(_("connectivity check failed"));
-> +		commit_list_free(new_commits);
-> +	}
-> +
-
-We only call verify_commits_incremental() when check.mode says INCREMENTAL,
-which makes sense.
-
-> +static int verify_blob(struct repository *repo,
-> +		       const struct object_id *oid,
-> +		       struct verify_state *vs)
-> +{
-> +	int type;
-> +
-> +	if (oidset_contains(&vs->trusted_blobs, oid))
-> +		return 0;
-> +
-> +	vs->blobs_checked++;
-> +	type = odb_read_object_info(repo->objects, oid, NULL);
-
-I wonder if this needs to be _extended() kind that passes a flag bit
-to avoid fetching from promisors.  repo->fetch_if_missing that is
-set does prevent lazy fetching, but I wonder if it is better to be
-more explicit.
-
-> +int verify_commits_incremental(struct repository *repo,
-> +			       struct commit_list **commits,
-> +			       int exclude_promisor_objects)
-> +{
-> +	struct verify_state vs = { 0 };
-> +	struct commit_list *iter;
-> +	unsigned nr_before;
-> +	int ret = 0;
-> +
-> +	if (repo->fetch_if_missing)
-> +		BUG("verify_commits_incremental must not be called "
-> +		    "with fetch_if_missing set");
-
-And we make sure that the caller flipped the bit before they decide
-to call us, which makes sense.
-
+Thanks,
+Tanga
