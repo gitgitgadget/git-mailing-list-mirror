@@ -1,91 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.230.203
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792603570;
-	b=4v/w0qdTQxVyMUSxeJ71WwKvDCFQbGblY936WSeUPkB96G6RppXrOhwg7l+huvAKxbOz
-	 cyh4rWLUxPT7CTyj2sQqw7nCU4LEKkYkvvOeSnlRm2Lnj0t5Qys2zHa+D9N0YXusIwrq3
-	 UJH8dzuSIhiik+Kh/b4UGesBTRLD+KBOI297voHgror6Pz2OovpS85YnIdVTnOPD9XOWS
-	 68D6qBT0NiQUYuLxUC0ysxvyjW/66iRmWaDGQukYEOzmOVbbnCiTQepTam/3VTqSAbbO7
-	 97bDA+4N3HszwiZtHwXL0aiiKrjh592PfkfanDpfLc3Ddb+Imz5SeZxTqZVilJqJqEg==
+	t=1792604038;
+	b=yG8UrB/AL9WTy6PP7PMc7IP6ARNWEwP2vtQOgAxiLeftKxIslCxCgoPXgahNzZUpR8pE
+	 yADPwePBKcyEgVp390oulosUcF1kfgSSCZq9opU0uWMuPxo8PQqmRgdfcIacy7Gsn7dpb
+	 EkrK0mqzlSv6/sTDgC2F4Db24jk3ufxdxAVR6KX2e4+kgUF5vTLOx/mTl9n67z+U7aLNx
+	 0cE5/mtUoQIfLc+8Dq3GjVol8feG3XLUL+6mf6PUE9iOtQ3qSXas0a2cwlz371Gbln0YL
+	 8lgVtLzBvaTNRdDAqHbcO48jaCi1u5WOG57NCZOIB64p9NLojj3XtRsGp21z9i44vMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792603570;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792604038;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=zSXQR98bnaEr1r6UttuCJhq0FSSU0soGDYzSA9IFopI=;
-	b=t82zxxd8FEm4Zowv92XmsSTT4M/FDA39pkLtQhWuEomqGS4DY23cjJGYUMCcfR5VM/Pt
-	 j0bA4DJd5ZjbpQA+WyNyOHyNz29wa2v+bHN3YtsK7c6n4uam1H7i/QODQPywJWZ0O0GFZ
-	 dGj0PAGMU/+PILhJqOqr6Y2y13QC1nYnuofPPvwtcbWNmNMMEyremDwW4zZ4C8HDrExR1
-	 +ix+4AoOLJqbDj3e7mvgev4m9KP5aoVGzg81JPm5LfDx5EpoBCfo/VCK0qPGpHX6Y93GT
-	 FVUKSEtNkwfM2poaUqucXsb7LMZqdaY+6sJlusuiosnAkbcxa8ZeZXEf2EcMYzrj50g==
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=ATnFPkbuUiTqK6O/SIxdtvUBkaQIucPum/SMYpWi8yw=;
+	b=AYlWqmURk6dgYTrZdHHUV2UfVPsyeKGNzC3fXWuTBORvbahDbzTcXcfXaX8+9uM0xx+V
+	 ja9lXPOwyFLy/xY8h/InleoEq3NwvRaHnPiyo2jcRtb2al24oXoh9SZRC8KRWX+w6uras
+	 F6XtoTJuiNEkUCaxbhdK40Qfw0qtxK/HoNP6x5h7sTmH77Jub6+f6C35cyW1d9Hv19G/W
+	 CKW4H4kj3m/JrulcDJcBZ8k/JN0rltp1JZEF2xAPnXWJ1/19EzwLPkT5qqCicZBXfmOp7
+	 16DbWMDHgNEHDhA28QRcXL/+9kwa3fyqpQbjcyTYjpa4Re43flyobLf84q2OqVVoaTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Qy4Sj40Z;
-	arc=none smtp.remote-ip=209.85.221.43
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	dmarc=pass header.from=jaspermayone.com;
+	spf=pass smtp.mailfrom=singlefeather.com;
+	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=a6PQ96Wx;
+	arc=none smtp.remote-ip=74.125.230.203
+Received: from mail-qk2-f11.google.com (mail-qk2-f11.google.com [74.125.230.203])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5DE606A31F
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 17:26:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1B5DE606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED154606A328
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 17:33:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ED154606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jaspermayone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=singlefeather.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Qy4Sj40Z
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48afbd2c386so745821f8f.3
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:26:09 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=a6PQ96Wx
+Received: by mail-qk2-f11.google.com with SMTP id af79cd13be357-93e490d7b48so31285285a.0
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:33:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792603568; x=1793208368; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=zSXQR98bnaEr1r6UttuCJhq0FSSU0soGDYzSA9IFopI=;
-        b=Qy4Sj40ZUG+Ap89dVfvA91YOGO97MNTKbMn2G4ByQCRUwKi3T2L8RLqMBcNAsXaSEB
-         4WqdnkyhqSBruun6AoJ9Zc+rVs71NsW1lRy7ohLWWhCPzcpnyrPnQXtlA1vyTM9m/R0c
-         GMsPzZZf7Sc67ZpJEpzwHuQO/0j1APyNtuhqIa/p0xgQJprWvbUeUEPMAvdrpgzZOCpQ
-         keFrzDCMhRSDP8W+5UJRnKfu8s7MEeTi/zUuXC9CwfmwdMf26uyS8PiAi5BMk0yKSPuL
-         EsinejF4pUaStupgyuG2WaMUmf5PIrYGMRzNxq7byysyDBhQsE30mJ5OjCP5buvpnbjY
-         pIrg==
+        d=jaspermayone.com; s=google; t=1792604037; x=1793208837; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ATnFPkbuUiTqK6O/SIxdtvUBkaQIucPum/SMYpWi8yw=;
+        b=a6PQ96Wx2yuVSMWYaFVFWLuzAHB49t5fHbuVsslEMBTPcpGl+AbZe7MLOd2sQZ8XlO
+         r1q4tVagl9/nv75kha9ds5wPXUW1xO2K2hyvLXHHFzrYoQ0vDqCyKy0waDO7K8WPZ5v8
+         wTW/mRGyDC9mhQvhZcjxHKwRXOvdNRK2LWHicWizatcoDxjy72nSXI1WvvaKWeQxxqTh
+         VECSQBU6ljqtQGzSdtiZfkDyfOEBBAKIxjwaR+fkcyXMbxtdBG3xiXLhCr0FVWdyH0cJ
+         QE0llR6i3QuQ+QNLvtcHnF2I3gV4/uuZn+xqWJzsm4j4ns6O+5k6kcBdr+j8m5FaWLyS
+         fZwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792603568; x=1793208368;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=zSXQR98bnaEr1r6UttuCJhq0FSSU0soGDYzSA9IFopI=;
-        b=2djbsK4EFa5W+Fs9YBMlc6lwTkoEkx+90PwLnVCG/iDBonKaycZmrEGVOBIm8d5jNC
-         +V2nSMCOwu4I2xli0cY851Ht9NtVh6gXENzPmf4njnnpSJaBqJsdCHRt4qJedCNy7krt
-         FNuefmu0I+bgyi6uZxhsXAlcYtWu+j2ikZHinTUeqhguSpkU2liRP/tFE41RILfS1pCY
-         XMjcGOVlQqeUMM/EZMK2IlS/wi8Y3tIOaKnXDLv/pm0WSeJ5Tn3s1dIS/aYjMqsGH3xO
-         RnrRM3EBppXx3W3zBBtwcbKRkUN5yrKSHzq05BZgu5ZGKT+/PQoTj805gfJHtzpx2YhY
-         tOLA==
-X-Gm-Message-State: AFq9FYLXPURq19EU48fDLkGNKyG5GAToETAKsPaUvM3bFqPULpf5M97h
-	YO0N6ViWHeC0UL/0eGtJv5WrFpKyRSSA3+rbVyKJjkC+gvoT66on4IltdKjE+Z20BNA=
-X-Gm-Gg: AYBFou3kFOnR98qZuzJNTa5G0/9/nea7grmojQ3gfjPHXjAJzIiI4NqPmHnCT7r8ZOi
-	/GdzNTaqysO8HYdT0P0YgFHEBIWXNKmqo5AFiE1qXEG1G8cjqxhiC1TmFah7DAx/gB/anx9Vn/H
-	pd7Chj9DlePjrq9G7Pru3WqnVVqr8VVanwyTgrqk3wtNAohs8FW6eqONxGYgtWO0/WHOkMpUBnx
-	1XzHAyVmo0ExooCj2z7ubFWmrsKoYFIl8dhqWxXjSU0XoTmECIn/RWnizYzI68wjNSxhvUsYWoI
-	182DxkA8uvNTDkaPCvG/FqZs+zXXAzKUWw+3rMmxVYMK7qKVI0BbQaeVNONqxEeMz7Aae9Jl7Y/
-	Hw2RLMrEdyQdvNWn90mE5kXd3XJ4DzHB4E6lggTGXvJG0IYnSw517gmkDULAT7t2Pd0xyE2o8+K
-	Xl7BDzSIA8Svet/zE9f4WhUmUm+W1oynsgDhl+g6xyeViWJcnTMR1X2syZ0nJZIfllthBbegl8M
-	Mm9Elk4CAJrTrtxKIPlPjbYXgPXdbK+gEyOuRs5ySnDhKe0M7Tk2xr9I1LW6DvoLDo9XGpCDRNT
-	Cf8chcZVtgKlwQ==
-X-Received: by 2002:a05:6000:2ac9:b0:487:27f6:a4e9 with SMTP id ffacd0b85a97d-48e264e8e4cmr4768462f8f.57.1792603568194;
-        Wed, 21 Oct 2026 10:26:08 -0700 (PDT)
-Received: from zito.localdomain ([102.90.98.139])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e254efb2csm7214727f8f.2.2026.10.21.10.26.06
+        d=1e100.net; s=20260707; t=1792604037; x=1793208837;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ATnFPkbuUiTqK6O/SIxdtvUBkaQIucPum/SMYpWi8yw=;
+        b=MJf8KWGVQD4rzchWq8XK6FKIDhZRjfxdxSlPNIQTq9RublW360DBP/Ku7AanX5ckub
+         h/K2LS8QmiJJTkaGAMASM+DRAdrbKpDPjuLwR36E9BjWZII1F9nL46VpFDvzFrM2170k
+         5VcDN49pzv/TS10VEfa9sqSP/1T/TGr6ejZ6E5A03IzOyEVDMD+KtZA43VL1viCGNxGr
+         glrGDS9x/Nh0+j9jboqjQRiCewS3mngCrvSz4a2B1KUscEJW5VLE1KbP6k16ru8Fulz1
+         aTDJxhkD/dI9JblmzTUpgAhGbbPBkkjewucsNU7P8eySVx8ZLripYjCCyrXAlB2ay6TM
+         asdA==
+X-Gm-Message-State: AFq9FYLXF1UD1DBI2kJPpA3xdlc3z7+uAsyMZj41jAT4r4snC6o9p8m6
+	rVMB+i89ERgDILI5ZBkcWf0HJcOL1eqBSPMF0fxw50HQnMaSdxg+Hg8Rl6BuJ0URsYm8Oqx551B
+	azB9XuWI0N18M8wI239dYc45lmhyxt3SAdtue/fhheicxlAUgv5dOUsfYy+T2wMmhW4m3KHL2G5
+	12V7bszmXphgxtXEJ3Yk0uUVVDjUck9UzMz3uPQowQGzuZfH4i7kxu6PUAaPxBmJtLqXAUxgIr1
+	c2sFn4HgAm6x0CKACgfMRoioymnWwahafeDywtulKhWLRU2
+X-Gm-Gg: AYBFou3/5kIBxnhFb2/pCayv935utaH0kyH0MWEMpBPpbY4drenBzI2BPgxbSHw4/nN
+	VSE2ZQ6qcLGoKDEPrJdeiNFdBui0rCt8YPZUJ1lIiQpLBGrbU+Io27lJAq8VTbcT6TlmivG32Xe
+	v5o+mhtJVvmWoUV/nnG1LYfjILARf1vW/plWY89rDl7a1SctDuq4sMNX2FnXzYTAxiW6moVo99T
+	j5CcCb/IfwIp6jEX3jdYPtkhB5Zovv4XX4KW2GWWm49DKOAzae86SvL7WcvuyShjYG6HLDGPNux
+	Dpqw9gRid4kSCaShOIad+JGlkawQHSojFtYbotQ9LqIzkHBPd42DG9H/HbM5oGwLS9dvtR9rtnz
+	PKBbidrdCaPz85wfuz+VFkB8tzmNlLtctQC8M7ZHGSzmYC9/EQP3jt9oiO6KZRYopyy9At7Nd3i
+	SpDeCudi3DLIYQunXdMn+z1T6VlThBTv/sF4whx1oqw737I5EJTT2uhXglUfVUUizS30F6i+8FA
+	aNtDjQ19N8Zv+BVDnkRtmMSjVj/OdpxjLXYDDT5R0cGFpfykGodPOXXT3mdfGln2lGQbws9U+GM
+	/Cxxi8qIaYi/YWrjEI4NN+ROUP4U1prcpsfl+sZhJLwZHCR2x6adyrZJ3uFvSWpYo5ORJgbhJwY
+	Lb7V6es/P35MVy+JFa/+ZtTkT2oTSkSWI1JEyf7IYOwjZPqM79ByXcXe0Gzt4B7ZqiKVjDKIEaT
+	MxzFvAjQdF8YwX+BIG9vuYYo55ZAjz9fVoQQBRU9EKEjJJoNRcxEm1V+//iJISn/EQe3ddQw==
+X-Received: by 2002:a05:620a:6011:b0:93f:11ee:ba1a with SMTP id af79cd13be357-93f57f91849mr520100985a.48.1792604036594;
+        Wed, 21 Oct 2026 10:33:56 -0700 (PDT)
+Received: from remus.wildebeest-stargazer.ts.net ([69.43.66.31])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c10b71583sm30001186d6.15.2026.10.21.10.33.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2026 10:26:07 -0700 (PDT)
-From: Azuama Odinaka Maximus <azuama69@gmail.com>
+        Wed, 21 Oct 2026 10:33:56 -0700 (PDT)
+From: Jasper Mayone <me@jaspermayone.com>
 To: git@vger.kernel.org
-Cc: Azuama Odinaka Maximus <azuama69@gmail.com>
-Subject: [PATCH v2] rev-list: skip --grep argument in early scan
-Date: Wed, 21 Oct 2026 18:24:57 +0100
-Message-ID: <20261021172458.6373-1-azuama69@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261021151253.3689-1-azuama69@gmail.com>
-References: <20261021151253.3689-1-azuama69@gmail.com>
+Cc: gitster@pobox.com,
+	haraldnordgren@gmail.com,
+	sunshine@sunshineco.com,
+	ben.knoble@gmail.com,
+	Jasper Mayone <me@jaspermayone.com>
+Subject: [RFC PATCH 0/1] worktree list: add --merged and --no-merged
+Date: Wed, 21 Oct 2026 13:33:36 -0400
+Message-ID: <20261021173350.67854-1-me@jaspermayone.com>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,52 +102,66 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The early option scan in rev-list does not account for options
-that take a separate argument. As a result, a pattern passed to
---grep can be mistaken for another option.
+I keep one worktree per topic. When a topic lands, its branch stays
+checked out in that worktree, so "git branch --delete-merged" skips
+it, and there is no direct way to ask which worktrees are done. In
+the --delete-merged squash thread [1] I said I would send an RFC for
+this. Here it is.
 
-Skip the argument to --grep so that it is not interpreted as an
-option during the early scan.
----
- builtin/rev-list.c          |  2 ++
- t/t6022-rev-list-missing.sh | 11 +++++++++++
- 2 files changed, 13 insertions(+)
+This patch teaches "git worktree list" the --merged and --no-merged
+filters that "git branch", "git tag" and "git for-each-ref" already
+have, applied to the HEAD of each worktree:
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 0faa833fac..453d82d25c 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -771,6 +771,8 @@ int cmd_rev_list(int argc,
- 			revs.exclude_promisor_objects = 1;
- 		} else if (skip_prefix(arg, "--missing=", &arg)) {
- 			parse_missing_action_value(repo, arg);
-+		} else if (!strcmp(arg, "--grep")) {
-+			i++;
- 		} else if (!strcmp(arg, "--missing-only")) {
- 			arg_missing_only = 1;
- 		} else if (!strcmp(arg, "-z")) {
-diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
-index 1bd2c3bc4f..180e6ac766 100755
---- a/t/t6022-rev-list-missing.sh
-+++ b/t/t6022-rev-list-missing.sh
-@@ -215,6 +215,17 @@ do
- 	'
- done
- 
-+test_expect_success "--grep accepts a pattern beginning with --" '
-+	git rev-list --grep=--missing-only --max-count=1 HEAD >expect &&
-+	git rev-list --grep --missing-only --max-count=1 HEAD >actual &&
-+	test_cmp expect actual
-+'
-+test_expect_success "--grep does not trigger --exclude-promisor-objects in early scan" '
-+    git rev-list --grep=--exclude-promisor-objects --missing=print HEAD >expect &&
-+    git rev-list --grep --exclude-promisor-objects --missing=print HEAD >actual &&
-+    test_cmp expect actual
-+'
-+
- test_expect_success "--missing-only requires --missing=print or --missing=print-info" '
- 	test_must_fail git rev-list --missing-only --objects HEAD 2>err &&
- 	test_grep "requires --missing=print" err
+    $ git worktree list --merged origin/main
+    /src/proj            1a2b3c4 [main]
+    /src/proj-topic-a    5d6e7f8 [topic-a]
+    /src/proj-fix-b      9a8b7c6 (detached HEAD)
+
+It only lists. Removing stays a separate step with "git worktree
+remove", which already refuses a dirty or locked worktree and the
+main worktree, so a script can do:
+
+    git worktree list --porcelain --merged origin/main |
+    sed -n "s/^worktree //p" |
+    while read -r wt; do git worktree remove "$wt"; done
+
+The test is strict reachability, the same as "git branch --merged".
+A worktree whose topic was squash or rebase merged upstream is not
+listed. If Harald's "has this landed" check ends up as a helper, a
+later option could use it here too, but I kept that out of this RFC.
+
+Questions for the list:
+
+ 1. The main worktree is filtered like any other, so it is usually
+    listed. "git branch --merged" also lists the current branch, so
+    I kept that. Should it be left out instead?
+
+ 2. The commit defaults to HEAD, like the ref filters. For cleanup,
+    each worktree's branch upstream would often be the more useful
+    default, but that is a different meaning for the same option
+    name. Is HEAD the right default?
+
+ 3. I reused struct ref_filter and OPT_MERGED from ref-filter.h, so
+    the parsing, the default and the error messages match the other
+    commands. It only needs the two commit lists. Is that acceptable,
+    or would you prefer a small local option callback? If the reuse
+    is fine, --contains and --points-at could follow the same way.
+
+ 4. Is a later "git worktree remove --merged <commit>" (with
+    --dry-run) wanted, or should removal stay in scripts?
+
+[1] https://lore.kernel.org/git/pull.2425.v3.git.git.1792585717.gitgitgadget@gmail.com/
+
+Jasper Mayone (1):
+  worktree list: add --merged and --no-merged
+
+ Documentation/git-worktree.adoc |  24 +++++-
+ builtin/worktree.c              |  80 +++++++++++++++++++-
+ t/t2402-worktree-list.sh        | 125 ++++++++++++++++++++++++++++++++
+ 3 files changed, 226 insertions(+), 3 deletions(-)
+
+
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
 -- 
-2.53.0
+2.56.0
 
