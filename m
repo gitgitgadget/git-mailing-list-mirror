@@ -1,98 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.42
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792566354;
-	b=OOFuZvPRceyfGXV+mOhBs2OMQW5npVLOJ+XD/1NRkmuWkfTrmmMfpR78GohgA53NU8qG
-	 mpC2Nw1VBPTq+Kqi87oriZ+LOGKjbERRX99zf5+E/LiHvK5pNEVPe/quvQ3/leTrbvX3M
-	 jlXjOTVUfNicRYS9MuOhD/6F1musE6UQYuOsHTOyPkRVPB96GTZZ3XihemBl/TbF5YbmM
-	 o4VjuF4Ouhon6jUvjC5DlLsOyNCYW25kTcf5un3LAhaCvrzVH55RYe33In4rYVX9gvsS/
-	 oVZ4Cb8/KRvIi2CIg2wDo7cSawjgAmN2NdIAiizZA9QmYK2Q0wf6WFUrZks08q8dprQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792566354;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.54
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792566473;
+	b=IJfG9igH8kOTqoe5r2Nb4CknI7kfy6DxiX9FcPHwXR4gx4wjq8iI1vZODgZJ+0sZ1LJJ
+	 Dhs+L8JD/T9v7QPj52qw5e+o5xLYGOBjBFXIWJZFGCrod+IqMrC4A9d/qtJ5GV7a9u2jQ
+	 btaPGvL5BekF0Jkm5VXK123HBCV5eOg5P3Qtw+LwwIvEPyXOKh0oPBvAxkOl//lTTlhEs
+	 YBGdzqyVFw5pSReGMbBNs4KanwDjwDmWfHW7tYzfwqmQO1Txz7KA8t41vnDFu8tbDj7K7
+	 q/2eJm2gPXpmKzpk9YYVRBCwGQJYCJGWIedYXixg4KuF5X6U8KJuMHIobajfE3yy5dA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792566473;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=TF3+eJTbvFIGKnpvXlr5AhmAW7zlnFWzLFyYOa9iPGk=;
-	b=PB8e41/PkvDVCen5T90QVDzGoTvoy3vVDacL9TwpP42sHkNp/L3wpkJTi2969yaU1z0F
-	 86hOmHHZk8MkANpAee54dHbH0rOXKBu8Kh6imdJBjzj4gvzdTVaZpY5LY3SqUzyiBZy6I
-	 on29CeNyBc6N454wEBo68vbDxNgeTqMFncG03d+eCpkl6asptymsbggPjXMzGwn9A/1xZ
-	 ca/P8793x0inV2kDWyRji6meI62fYqxOoC/t3itN5bZihuijqMeIrFPglT3SXvfrjH6Xj
-	 RDoaMakHPoj/f4nsYwi2uUg9VuWMLKkiJPJBqSbQWR/e8MJ69NsNh1cy8I8lrUu0R2Q==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=49uA2F2F/DuxHlliR4TTmWO406yX/zucnfHj7MZYanE=;
+	b=q+uaGxGt6YZbT94517dt1MbRCS2LtkzMRhCoMkhuv7m864W3J6tI7pp8q6v2rupCHtku
+	 C+D8PmYndAEjBj/5kG16DpX+SVEQHBfF2IUGND/SOl8HRXonJPgZtWSr5BM+cMV6GzyoJ
+	 +SprZi6fBmj8xd8i0efgiCE2bNlxoBU7U1H4FSVnyx1a6ZMuBRxe+7sOg0z7Y+b7vTec8
+	 NK2JxCSL1Bzjq5JtUKTrI6nnd7u+Md1Pix6rKZx6QKYH00ogwAqZUVe7pQaydMcuc97KK
+	 7+3AOKrD9brP5XuUbvfwiBHn5MYt/fdWBckhQrn1UR/gNAmJpUF3Auwv/3ScuZZ2ZvQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=PWhged50;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.42
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="fwHgk/Mn";
+	arc=none smtp.remote-ip=209.85.160.54
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5365606A31C
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:05:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5365606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69123606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:07:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 69123606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=PWhged50
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6b1aa2848d2so311404a12.3
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 00:05:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792566352; cv=none;
-        d=google.com; s=arc-20260327;
-        b=khU5+4vZID8BH6/XzusQ7Y7LoDMlp+2p0Emg/OMqndWd5x6tIXU2JPL01AQXjuRmsI
-         IAoAHBsbinK97zto+lE3/RZPYJ7xDt1WV2L7ovEuEXgRm2YcfYrD+pbSU59AQVTkjB0a
-         gwb9KAntebeqxRWBFmFUenwiNjEj9KiKnasmsCCAj1/8E24RQtgm/D8qqmsouGGaCM2W
-         XSGjLrzDics9oTn195OiYuQxulaNHeMHD02oaZ40rV7DPjbTW0p7O1Xwz1jsJhtANhG6
-         zQINmAcGhS8fYVaI65IgcaKVQQrofCGtcCaif9zKTFoeJ4/4HvvgKq9DKQE1Jy4BVu4U
-         cF7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=TF3+eJTbvFIGKnpvXlr5AhmAW7zlnFWzLFyYOa9iPGk=;
-        fh=cPmF+JSQEONHpuiVJ6kO193FH48HlEv0pA06XT5cXeA=;
-        b=UPYfiUKKqMHaUahWbxi3S6LwJl7GiZN4WdhKZV1yOIZNkJBuLRFboVhRHWFjcRzjtT
-         t1oIN9pQbPx06GvDbCGcfK+Rsz/uY0P6u2VB8KgW9vdThTAPk1SogxXlTRuMHejBPMGy
-         ddYdyh0Ayo6DXYapKQ1UgeVt/buwJLRA4w1IauZA39Oj25pIUzFH0wsRQsMhq6H5S7Qo
-         mN16r7R/zuU7doPNO2miNfEb0+4tRlJg2ph1SHxM0fMsEDwIXf6qsiy8oC1MgxiFdH+5
-         29H3JGXQCEfDK6YZLj0A6t1BJ+agpOjelaRvGe1qtIDZ05aziBAEqycyGdzMkgWHd5M/
-         TVKw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fwHgk/Mn
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-4a71d0c4233so184473fac.0
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 00:07:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792566352; x=1793171152; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TF3+eJTbvFIGKnpvXlr5AhmAW7zlnFWzLFyYOa9iPGk=;
-        b=PWhged50rwmMOk3GLj0FnJSnel2dVnrv0rvbXThYakArCdn6utzDqJ8a+4b+XnKrGc
-         JjQFL3Ol6ilYKkxfXypZC6RLdelC4ZXMWi6m/0u3Qd9L6cHY0QC3WIBjmCK19i5JIkVN
-         r7ulBpU9rP8Zt5zsRa6D4DRcwuwOGW42ABQgLZRH4jQ+/e10YDIWwgPM0VAySTaOb/9v
-         m+SjdkFnay9xrD6tlSGrClkc7zwOSmY0aybZhZt1Fy7bZo9dneyYnKGjtej/u+JywfR+
-         ue5UiLX+TXEgedQJ3eTdKgwKtBQTfTOFyHvmVSxNAgNboA1FS0MqG3BV24KNSDcP3WGt
-         eCpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792566352; x=1793171152;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1792566472; x=1793171272; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=TF3+eJTbvFIGKnpvXlr5AhmAW7zlnFWzLFyYOa9iPGk=;
-        b=hd+UpLyq47C2WccyQdna6UTEGVJFSboHQQel/FhugQX2/aiyYpxdSaEzInJNvbEjXJ
-         SqGsU3ccJ0nso65iZfnK+lzl7c2Z+okFkDi5OUq/qkd8oi5PcO/eST8DPbpn7CVxbnpa
-         qVGlXw+lAm9485y8mqeUxvY1aqBz+Pc68cV0e3TICupdnrQphgTxPApT2hwVvbt2+mLS
-         pobTJe36SrI4v3/wBRn2LbmyuoIOghz0hkiyq+YI7lnRo1X7GUpN4EqM0eOtOIOJYG2I
-         xE4xNJyxraXEqfA05rVrAPS5AoWniRiFWGIhUILCItx6/K4fRFN/gGXUVvO52krOe4/T
-         IheQ==
-X-Gm-Message-State: AFq9FYJibVHpo0RUF7jM5hk+StB6ET0bV6pPApkDzgMN7t9yUtok+uT/
-	/lyuetlCHZHYqSbfrvjaPpQMmzyPLna32b/lmyT0Z/2fUuHuxEXP1ICcHMej5v/9uJwk7mr7f4x
-	b1p7w0AHeZe1A+1+UjYT5ClFXBQhv9Uk=
-X-Gm-Gg: AYBFou18Xs5IQx9y3sANOoqcrP557SVQODp0+pdKMKpSaFapkCFxEz/7agduXsRr4bj
-	tQsUIhgC7KN1XFfT7N/SkLV7RTUFANbpWbTLOZIy3xf5WGfY2l+b8wAV3jm2YWclSWh7ICbHxki
-	6ExolWxxCftpsvxS/WlOr34Tz4gGO/FlX/bZrshm8ifLX23SEpFthLN5ghoxliAf8cuARuOEy11
-	1oS8YNnYyodNIXFmF3C5Oks/TYMlYxgjSq0Hc4RX2mfbjrYuH168NbNJ3Mw2VYldQgXf6g2Pn+C
-	NJOIIPGnaPgkYDZCVbKKV3B0mu2BuzDXXAik+Gn5lhoWCvlN3RdwuiJOs5J3JypOIADTgt8JViI
-	ENvdNqxWP1InnPlf4iMZRIR3tzppDQi0fsnFv
-X-Received: by 2002:a05:6402:4493:b0:6b1:8818:1090 with SMTP id
- 4fb4d7f45d1cf-6b408ead3a2mr639691a12.22.1792566352052; Wed, 21 Oct 2026
- 00:05:52 -0700 (PDT)
+        bh=49uA2F2F/DuxHlliR4TTmWO406yX/zucnfHj7MZYanE=;
+        b=fwHgk/MnUq53OCU6PMnskcMrnZLMa0JsU1CGRtF0Y3QB7uiSnAtVVIEg+mWBcipOsc
+         7onK3SPrSPYIFZNM1CRgwQZdWn83+Gsdg7G2xZ8Bb2hgwguXora+q6cJCxCrLYccsQMd
+         2lsFUgSIj7+T8/2klJmYiC4Tm6dPMyuhn6+8f3c+Il0mxzf8rSjFTGx7U2aBv4s81Xtf
+         NIGtKCDiflqUhPdHLc0MiuiNzaMa6ECdCq2hLgkZH3smR0G/ssxeebl5VHIfy35D2seQ
+         nawgDq3KT3PJf5CpK+i4oN8dDTTcTD/PJWnNGjN/OdGrCFHWeGL/LTNR+kXDImf1zPSv
+         ZB2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792566472; x=1793171272;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=49uA2F2F/DuxHlliR4TTmWO406yX/zucnfHj7MZYanE=;
+        b=W/I26OANYWFL3F8xgl2YefdhFoJDXjVCMyPSqP+4Z9+m0i9jfL2dPgmTrX6EGIWf3r
+         5r6d7YWUvSeH52rkKqKVpkhFxg3pfqzPFwTa1mD0ySw/N4/4r5Hae3yk6zy7pNHXM1rs
+         lW3FUT5O54meUT0klyLtG6//fHhlGNj0v093/LbWfoTUalvInj8VeHBGNJSyZD19C5RT
+         C6sU40nVvXqPi282ETgL44Sq3WLe29CwQhupugoXbuurEF1kjI/u3yW1gLsHX0RT134U
+         QBjrct8oS9UzaqQuoWfbuOX+urz9GuIDY9EJEK65RhhJRjZuKyw/AmlCXb61FYp87LUb
+         o0vg==
+X-Gm-Message-State: AFq9FYKQE6HKBpzCxNJF31zSMOgnxzorezq2QKSaTde2zOxoDJmFx+uL
+	TOfUlU4F6H9aplW/8rMMNqjMV6OFZtl+aIdBmHtU6zU5N0puDiJANgZ9mQjQmA==
+X-Gm-Gg: AYBFou1aB410w0Rp5bY/hzU6wxusvphhttDRoSEAgiUqGSBTivDdvGguHtEiFPCz/JO
+	r9pOdBPcKglYeAndDg4XKyB0TVFtv6pNIBzO/IqkNdlEQeUTp9I2/7R1N72dB2EiHpI84MermN8
+	uR/IS+i4N6bGpXTm2QCa6XbS6SdrJVrCiHEIrGE+1l2gcT1Kh/tVM1S2LfyCWOIOkaEjhaUeb44
+	aD8zk/sw8I3mrLtxLlr7eEQchI+BglCNVl1RpvBuc7uKPgM1jBLFAhziWTPXvc25zMTNcbMKurl
+	NAQDJUqWAOpspTnwgIAoZ1YFrOPrnjnFFut5DKpeCfp+O+sUQDz+nJskYtXmRB4MnpbwRyWlv2q
+	+YHw5M4ijDkaYThajSiGIP3V/+/dw8uuc9LQPEEc5DIjj2jx1iIENwNX+gVDBPrkmBy9X84SGLQ
+	OGurgt2a4bkBEgPZ9fJoGX66k064hLybPpcCqV+ju6lIsFoPxLKpiyXKBfoK3EMSocYUtpOLWxe
+	ub9qJeTF4lFla3XTOUUiVW70QLXpjIjpEJ2ugOu486B+QI2ZwLlGVfp3JY=
+X-Received: by 2002:a05:6870:318b:b0:49d:c9b9:7509 with SMTP id 586e51a60fabf-4a7dc1b087amr593360fac.13.1792566472265;
+        Wed, 21 Oct 2026 00:07:52 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.200.81])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4a7d611b409sm1465442fac.4.2026.10.21.00.07.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2026 00:07:50 -0700 (PDT)
+Message-Id: <pull.2456.v2.git.git.1792566469.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
+References: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 21 Oct 2026 07:07:47 +0000
+Subject: [PATCH v2 0/2] Fix imap-send with reordered message headers
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,55 +95,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2268.git.1792458904027.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2268.git.1792458904027.gitgitgadget@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Wed, 21 Oct 2026 09:05:12 +0200
-X-Gm-Features: AclHuK_u714CfZFMDxuA8CAF9OcwsdVzQHMvu9zpt9Z3RCW0cTh4z8fOgd7fTMQ
-Message-ID: <CAHwyqnU-eQBPTht3eHJceyWMehtQ2GAyEyZ8ObmVru0Y9EVkdQ@mail.gmail.com>
-Subject: Re: [PATCH] branch: strip refs/heads/ from the --set-upstream-to hint
-To: tsukasa-ino via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, tsukasa inoue <inoue.tsukasa.4@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
-> When git switch fails to write the tracking config, it prints a hint
-> with the command to set the upstream by hand. For example, if
-> .git/config.lock exists:
->
->     error: could not lock config file .git/config: File exists
->     error: unable to write upstream branch configuration
->     hint:
->     hint: After fixing the error cause you may try to fix up
->     hint: the remote tracking information by invoking:
->     hint:   git branch --set-upstream-to=origin/refs/heads/feat
->
-> The hint says origin/refs/heads/feat, but the correct name is
-> origin/feat. Running the command as printed fails, because the full
-> ref name is not a valid remote-tracking branch name here.
+git imap-send rejected patches sent with git send-email, such as ones
+fetched from lore with b4, because it expected Date before Subject.
 
-Very nice find!
+Changes in v2:
 
-> +test_expect_success '--set-upstream-to hint uses short remote-tracking branch name on locked config' '
-> +       test_when_finished "git branch -D hint-local" &&
-> +       test_when_finished "git update-ref -d refs/remotes/hintremote/hintbranch" &&
-> +       test_config remote.hintremote.url . &&
-> +       test_config remote.hintremote.fetch "+refs/heads/*:refs/remotes/hintremote/*" &&
-> +       git update-ref refs/remotes/hintremote/hintbranch HEAD &&
-> +       git branch hint-local &&
-> +       test_when_finished "rm -f .git/config.lock" &&
-> +       >.git/config.lock &&
-> +       test_must_fail git -c core.configLockTimeout=0 \
-> +               branch --set-upstream-to=hintremote/hintbranch hint-local 2>err &&
-> +       test_grep "git branch --set-upstream-to=hintremote/hintbranch\$" err &&
-> +       test_grep ! "refs/heads/" err
-> +'
+ * Case insensitive header match according to RFC 822/2822/5322.
 
-Would be good to test the full multiline hint message. After all, it's
-the point of the topic.
+Harald Nordgren (2):
+  imap-send: avoid leaking the tunnel command
+  imap-send: accept messages with Subject before Date
 
-Right now, you are asserting that the correct form
-'hintremote/hintbranch' works, but we want to make sure that the hint
-actually gives that.
+ imap-send.c           | 38 ++++++++++++++++++--------------------
+ t/t9001-send-email.sh | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+), 20 deletions(-)
 
 
-Harald
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2456%2FHaraldNordgren%2Ffix%2Fimap-send-header-order-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2456/HaraldNordgren/fix/imap-send-header-order-v2
+Pull-Request: https://github.com/git/git/pull/2456
+
+Range-diff vs v1:
+
+ 1:  0784c16134 = 1:  b170b1f6d3 imap-send: avoid leaking the tunnel command
+ 2:  94129fb718 ! 2:  c42827a122 imap-send: accept messages with Subject before Date
+     @@ Commit message
+          and git send-email writes Subject before Date.
+      
+          Accept the three headers in any order within the header block of each
+     -    message. The copy that git send-email --imap-sent-folder pipes to
+     +    message, and match their names case insensitively as RFC 5322
+     +    specifies. The copy that git send-email --imap-sent-folder pipes to
+          imap-send then passes the same check, so the special case added for it
+          in 04133f5bc4 (send-email: add ability to send a copy of sent emails to
+          an IMAP folder, 2025-08-12) is no longer needed.
+     @@ imap-send.c: static void wrap_in_html(struct strbuf *msg)
+      +	bool from = false, date = false, subject = false;
+      +
+      +	while ((line = strchr(line, '\n')) && *++line != '\n') {
+     -+		if (starts_with(line, "From: "))
+     ++		if (istarts_with(line, "From: "))
+      +			from = true;
+     -+		else if (starts_with(line, "Date: "))
+     ++		else if (istarts_with(line, "Date: "))
+      +			date = true;
+     -+		else if (starts_with(line, "Subject: "))
+     ++		else if (istarts_with(line, "Subject: "))
+      +			subject = true;
+      +	}
+      +	return from && date && subject;
+
+-- 
+gitgitgadget
