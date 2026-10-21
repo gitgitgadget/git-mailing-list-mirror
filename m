@@ -1,98 +1,115 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.172
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792588732;
-	b=h7uBU2hGd2zXtCbKvwBUxVxdIeNK5UAshtdjUj1jqEwW30Y+zO5YeIvPvYgSeOoq51S+
-	 w0Fe932PQ/YoTlSaql/AJADevigA83dglGKHBgLXL0eoaFLmlpNRj08+/XcI/4Aef3qzb
-	 XMpCeuaDWxtQO6kTBQBERyiu5Aclo3LgoxMVKN3dzh9c81zXQ6flPuPKDZZaajTAJeTDT
-	 lIFgbs3hM9WjBrBDyXv9o8S9g5uWRRNdUbyhySkKRmALIsLmPQP1FlBHWscDjcsWArKd0
-	 mxXE6UrRO4xMXOaucd9KpkY67zcnE0blxKOFq+k2zIcN1NLrM/mz0qSCQ8hvx8/Q0uQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792588732;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
-	 X-Gm-Features:Message-ID:Subject:To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=WbnkL3Onw7rn0zoIvjam6GYPk0MesakcyJhgWulguug=;
-	b=Bpen7R7uelZ3AA1JvFNL2CLmJSnxE3UNXrTctPrO5xwx9jle/hHjiWaPwYxkFEBjX0ri
-	 W/HWfBP+TxayW//GAWok1uO3T0Qzn3pdmOoc5PRyS7xm5yJSvm8hwlTtIz3FSz/QN1Rqn
-	 jqci1YChXy3RCSqNzrusxUJq/WF611J3/zZzWX3idfdyDwCflJmKw1cOESunLWuimXjqb
-	 H/pktX4nhLZbCngkEAtD6U9YVV3HhEutzNX9umJYCw+Izyu9BrSGzG14TYA6eLrlnXxQb
-	 RiTqpiSf8cjcLTRn3EXhfYLTCL8hOP4bMNjYdt4tNNGdEo0Bt7mFKpv51ncs8isOFwQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CLzgRiX4;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.172
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792590915;
+	b=MtDRBRC7z7H10ludd0NaBDcDqF5Slz6efmJ/PKW+LPMFYrTaztjm2PYFyuvysybt1Ry1
+	 GZOpg6VkALfTl8dvdj8bY4o0pRm8jLgBXHnzbmM+7mSzbvHRwI6hF+JvsIqIDYaE/DEhX
+	 TgWoSRJiXgk71ioR71RaC2ICLWXbDKTkpWV8Al3Nrms7TqeQXfvuTiEJ1CfMBmU9MVUKt
+	 oIjrJ96GcDptDmSRI94yRQVegCPGId1u1jFf2WsMXHfQtismMRyO+ia/vVVdO+U5vN2a+
+	 KyoZOdJdEcszB7oJyHFGdqJbIorAYv3oVoDd1e9HKMecI68l+xYLJRlMBDsQo+cekyw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792590915;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key;
+	bh=6SzBSmuXDxaNfY9rXN3A/XqY7ruePvKsCRc4aIttZvI=;
+	b=hwrLTQN+LfbaDohACm4BG5O5N46UTwgMVyllaRdnEefesdbtzNdTsvNfW0X/wjKdZ/g2
+	 SNjojINt4uuNgGJc6ceF6I16+7qGO83C9/TOFQ/g4R9/MabPkD4iXrgz4t+aBV8JpoXIu
+	 TGao7T7DYbM9wQy1dbg4CV/EDKd146VUqrcDDe6NbN+g9azHB6xFzVGh1vW8bHLvY8PJX
+	 RVvqNJ4VFkUqSMUh77jZb73IbbHsX8O7WFepnYbVsSHzIElbwlvPkLJi4hhU6iuftu5Uq
+	 ctbf0wroAl21R3KbRryVL0dtkuwwWgw7xP8K1U3eeFbxcceAv7N9hcnIUi5aV3XJShg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=GqNP31dx;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bc5rSv0U;
+	arc=none smtp.remote-ip=202.12.124.156
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F710606A321
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 13:18:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4F710606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12071606A31A
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 13:55:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12071606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CLzgRiX4
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2e8f2c3ad6bso4474025ad.1
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 06:18:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792588732; cv=none;
-        d=google.com; s=arc-20260327;
-        b=p6MUltJnxxTI32+WJ54bSg9RClXkFw++j6LbGqVgXpIfT0WV1yoTHjFUUEsSMMW60m
-         FCD4hcaxpolxnX3SomctQBxII+v7cRME7++3NYHukkpPGj//PaUF1BTWDrTlDeLTs1ct
-         FHikQSA4u58rb7Av68dMpFyeIYWMcU0ajNOxgMilnKUubC1AHkINIBXlfoMl204U5WqZ
-         d9tv9GCUejH0GnYooKMJKbs+j9mFda9lpZ+8zDAtP6Um8bagLjajMHP08NQayHfLpVwh
-         QkDMPtK9syEEwbGD+ciR+a9kzHX6D6QTnRcsOVy5jeUgHLZhT0RQbg/xUMZghBOi5+1T
-         BRcA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=WbnkL3Onw7rn0zoIvjam6GYPk0MesakcyJhgWulguug=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=auAX7cgFDDteJIvgeOHz2jwxiz7Q25dSTiAeg72HT7ITFBwk29wNtoQXVp0jpcup30
-         4FPOWfZv4Ux6GFdsX5OU83iUPhd5T1jCutY42bdJNa8ZM4wJxhH+l2ATlplcUFDA2ffQ
-         oBOICV+Rbo5b0ltYsBr/hY79qZFvJjbwwLI5KpXC7xsGiY1Eb/g97sZnQoU7xXm1nQB2
-         KT/f7J6blJt1tk94jzcoxyo7huUv7lx5WralMbOh+X1XMmqPpEbzoUxj+XBV0naOPEEc
-         3eaQ6MITul/eJCfl8jUVAP1xBoGWonxKXXM4r+rItJqnERECmgsmxwKTb+LYl2ZM5Yvi
-         Yx0w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792588732; x=1793193532; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=WbnkL3Onw7rn0zoIvjam6GYPk0MesakcyJhgWulguug=;
-        b=CLzgRiX4UlLGdIGRSFqvatmF1mJdETMwnJlZsj27HKh4mnwJ97j4UggrEli2uQqirh
-         s5/aeSVj1HgT5Off1bwzb8mlkiaFBjMkzChpezkj6If1/JoV1eedi6LuhMNGcCK7OuPz
-         UwPtOXnFlyFFoyzdDeogz4/s24AQ+8+Vj34zh2gFYT6/iJnZbMCe/WO+PyCHyP6NTmoP
-         Z65luzvvy6QgqStfTRY16cbtnZJ8LkqH9yXWsrvGxCiNENOvO50I5CCSqlb05LOWFLdq
-         Y/2WHJ39VtZNNT1q3L4728M8OWz/b2QxAJx4/7Y/yafl2fRvERHHBO4C95G/BY7qHDis
-         3LRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792588732; x=1793193532;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=WbnkL3Onw7rn0zoIvjam6GYPk0MesakcyJhgWulguug=;
-        b=1KkVapQowPEtRCfbBBFGBZkx9833OaWq7MblZWjtiYbGv0IIdOMKjHF+OOntR1aFG5
-         vdxHLQ8ZD/LOsrAjUV1CdGf7u3XziPv0ac5XQT8cGbGyMr2f1CE9+LnrkhZqekhkChsP
-         XScht76XrUxRvA750AGNQq7tSnIfhNEnQUo24w+cGYjZWzYwzNI1r+WuccrOUhLRYq/H
-         4Kdc2et9i31ukhgHY5jvrN8QnHXA1ARCA06j4MmWqgsyFFAb50x8InH0QBfqCl6yTdW5
-         NTktiwX8EP4d9u8m203EvnLIk0MntWX6KHLj+n19Bk8nT0uyko/7l3VgeHMB5yW4JUOq
-         9phA==
-X-Gm-Message-State: AFq9FYIb9OAxjdW9AKstC5QOadHbYTYDDep6bervNNmlwKVseHJW66yr
-	zELwi27GblAWO60CwLMm9NCrggIA6uxANxTmyI2qLyaq6CfRYPWWDhuCigq/Ig6JUr2UCfRcQKM
-	c+QtNEWju4njnWhO5CyGRHUdY9orjswFN4eFrAyY=
-X-Gm-Gg: AYBFou2FG2kT8WQf6fUk9i4u533auNVOqBlbDBzyQGqSSqf/g9YYqZS8xhKSbGuFSFJ
-	SuBq7xE+ePLoLDxCGX2XgtLvKer7Bkcy6C9VaYsQEaYPqqgWz1zCxRromkD/3Qnobsh5F2An3o3
-	XaLDH9IPjWj0IgDWp+i5+5lxyh/qXEZSg0Ju8HLpYVBCk8tgaEddhi9NidmQzSTLNjNpZ8ow/d1
-	+zP0K9ow0V+vAWsfUvm6jp6uGbCM1ShhW46BQ4z4HttXNMoqzs39JwKnYsglokNwV6m+DZQ+AjT
-	vh71deiJ2W4saIaGu6D+nEMRiNYSAHLweJP6FSKOVGQ1mHLhu+aqlNfwPhQ5n3rWmPzT62a4hxf
-	5Hdw3NqW8fBNy/hR6nDd1LeaGh7wCJf78UvZKoyVAmoHCyhGeof69yl1eQ31mMWPYw3i0cA==
-X-Received: by 2002:a17:903:458b:b0:2e2:b624:54b7 with SMTP id
- d9443c01a7336-2ea439f4ae1mr17810055ad.17.1792588731580; Wed, 21 Oct 2026
- 06:18:51 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=GqNP31dx;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bc5rSv0U
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 75CAE7A0084
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 09:55:14 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Wed, 21 Oct 2026 09:55:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm2; t=1792590914; x=1792677314; bh=6S
+	zBSmuXDxaNfY9rXN3A/XqY7ruePvKsCRc4aIttZvI=; b=GqNP31dxZiMEHgDsEt
+	H3pc/QZ5MWAA1JLmS4V/jW/h2ZNxQMiQv+zDKxF6mE6FD1pvbCviOdxUJjisCHWk
+	ITtU0/pd+AoCAY30c2fr5/b1p2mRMVygMF+5gizLi8bqebYbHaYbYJj+6pEKL+tZ
+	UO8HvnQKL5+H0opwjW1ZLLgVWRApI+PUK3VBuHyEJkfvFJXpuRi1r8a6c83bb2rc
+	wnDCijcUhspXQwMNUswkTM0Asr98WXNi5h+DtblG5PyrGFHEK3h2/ATGCdbylTrR
+	utRNqmpxYSCsjNWIEXeJ9YVahxJWr07wuchWMMVUtnI49ersr1NCOe9N5VtJt/ek
+	yrng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1792590914; x=1792677314; bh=6SzBSmuXDxaNfY9rXN3A/XqY7rue
+	PvKsCRc4aIttZvI=; b=bc5rSv0UuNHj3tRvDIRBjFoNAydEmqRPYrkNgVB2w4XN
+	ifYK9H0wdEshhkZj9SAZVoez4+crP4GAxoGt3O+c1MuQOvYQISpxq4ADLiEM8GJ8
+	I4As2+FYVLAq1dPTfIhHd0aI7eZhgt5Rl0ZZNBxNB8bQcdqZw4l0xt8O/nEBnn3v
+	t6yW4oOL9WJJiktZjg+hOfXSyk8BMgNna982ADXFrZ/hNux7hmWBdQFAt9vjMZI+
+	849RsrKxbWSK1JgtLko9g3VcWIQzBT+RB3EcvkjCLMo7jN10My8HkKDu91D5UENx
+	SA2sPMBgAeYocjhID43PFXWQcWg+qCe/kQ7KvHb0mQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792590914; d=fastmail.com;
+	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:LMLEwOGBW0hWCwxRp+J1O6q5sr24dhL1tt2nznPNT4ZJvyr
+	qwqc5VIdvJQfCzn6DGU9ATXMiMhwRtcJ+k2nr9OSkUnnLt8brdrZWXMxNw8xOly6
+	s1FXrLwzE8KH7eOalK3fOIrzDqAvcRCM3I/4lCjRMOAQRrIr+N5FVkuMWsCrHKFy
+	+2lSlygjoZ3orDID40MKcAGl7DShclObwQueHAAGieCxvktdQh7sz5jvF6xmwits
+	gBxClFK17uJ77GbH01MT7uTdaEANowGSVCCzEbOx92EQqtBj5gCtvlLZp0GBOnlJ
+	zKB3FTqGsf3TstyYaHjVC883Okc6CUyADlsbAHw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=10;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,message-id,mime-version,subject,to;
+Message-Instance: m=1; h=sha256:Z0colc7Pp6JEc7yrcvTsZ3vfgN61ITqrmvgt2uqBsZI=:oeu4g6wJiAC19EkMBh60Plj4JUUJu3+WwyseHyl9Fh8=;
+X-ME-Sender: <xms:QsTYanTuO9cijbcVZRSNwILv6OSQEvGPUy6DE3brD3e-adcKNNRd8w>
+    <xme:QsTYauxeRMAIuu_Sed7ldo6luooUyMef30EZS9l1Y0OtcCqyY4FYj700M5LgIvS_H
+    djS1JKz6-BQfTiajtpGVd26E1FVcwAnYU82Ij77dV6ZQZOgIqCJWMfz>
+X-ME-Received: <xmr:QsTYaqdoPaigl5IjuWqFk3U8xFRv9szs2YZ_ItZetmvF1G__6PRg16DLgBbpLrpefmU9oNYHjT9gwkWL1vg3ObwKhBVf>
+X-ME-Proxy-Cause: dmFkZTE+g0yXbCwZXQ6WP/efPQNHSyXIMxPirWqMMIwK3eKRZBmkgbvNt/JvsVyQ+a4lnI
+    BQc+ttHSdsO90jgDyxc9TKAE8sSngDPh/CjyZos34NumEVE28hNsCT2U2/dkybh7eBmpUO
+    TY7LF6W/4BuqMaPPdp6XdGugrux9l/b5gPoXhlwJRu4Q/MFGLZCQH1g1EW7RxB1JH02Lao
+    RKHmNbNpbjHsmFJjBn0dwEEBoOGycjKMq3WvqkMg/WoEFekt1FcVMJ5mjDgJDx/8f7Mgal
+    kIOmnfJcVCH4lDy7D1DgzO+v4ePTkRv6KoVf9GX8DSUBtEkhN57dp8YLtPgRYnTwCtP0U1
+    nksObLjKhEZd6XPSh5PZTLiEb+G1JtkMFZf9zdLKksYN815VOQ/dimzTvAvkC91ykZ/coE
+    jyNdzBVMEXrNZnc+25wq3VaOheVqGV7FO7Xyvlv2YyYrK7tuLyXJ2B0wTjLnPsBvUn1GYR
+    j326h0g9krNjQ0MeVeT3AtlP2nR3glLBEhBbqObZs8a5QsGp8jCYUUFGSh5bP8Mdacm1pb
+    pcFVdZhFe15NL1FqlD5m/deMa9EEiMffjsrSKtke50H+FvpkbvU7dU62rJYi2sssL/wfwL
+    47k65UXNjFRZHb42/vTyTcD8U/ebN9FFEcOB9VLV6XVkF7IPS84qJ/m8Cx8Q
+X-ME-Proxy: <xmx:QsTYaiLi-UG84CVQbsOzO4iE6QZWx-riLMZmb5NYnupW6-d2z5iRgw>
+    <xmx:QsTYajFSrnVqjiSgraQw8HQCkPfj_0OM1S-wokXMOaQ2gn1joGlSYA>
+    <xmx:QsTYakrw1Jk5o4uLQCBRgy8NNpTpKTHavJ1fV8n9v9EIJk3oHW14ag>
+    <xmx:QsTYakR-WVvJetfAckjvMiSJHvDOSnKrFjAqLaT_0skhIdelMxhyzQ>
+    <xmx:QsTYaqpGjROBE3GKbEGoZLpqTU41rfCkRrNCkga-VA32HqCTxZYOpSyM>
+Feedback-ID: id2564aa6:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Oct 2026 09:55:14 -0400 (EDT)
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+Subject: [PATCH 0/3] repo: add degree-of-concern reporting to structure
+Date: Wed, 21 Oct 2026 09:55:04 -0400
+Message-Id: <20261021-b4-repo-structure-concern-v1-0-e3010552292c@fastmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,35 +119,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-From: Azuama Odinaka Maximus <azuama69@gmail.com>
-Date: Wed, 21 Oct 2026 14:18:40 +0100
-X-Gm-Features: AclHuK85PblmI4gdUS-oexwBBmctjQsl0dieZXgiNyGs2kI1L2lyWqryjaB4OAA
-Message-ID: <CAPki72GYsid5DqaP8urq-gVrNEvMZM+sXUaNjir-VXc+qokMfw@mail.gmail.com>
-Subject: [Outreachy] Git command argument parsing micro-project
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMMQ7CMAxA0atUnrGUBIhUroIYqOuAGZLKTiqkq
+ ncnwPiG/zcwVmGDy7CB8iomJXf4wwD0vOcHo8zdEFyI3vkRpxMqLwWtaqPalJFKJtaMyc8xxWO
+ IbjxD7xflJO/f+3r729r0YqrfIez7Byfk/Xl9AAAA
+X-Change-ID: 20261019-b4-repo-structure-concern-f1d6f6326095
 To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2599;
+ i=markchucarroll@fastmail.com; h=from:subject:message-id;
+ bh=oeu4g6wJiAC19EkMBh60Plj4JUUJu3+WwyseHyl9Fh8=;
+ b=owGbwMvMwCUWOPFJle/8tn2Mp9WSGLJuHLG39ysOyjspfeBUe8E+Dm3Orri/PRoRU1x3Xuudp
+ fqzNelMRykLgxgXg6yYIsv/fwKNr1geSPgFvfsEM4eVCWQIAxenAEyk7zIjw5/2jol7TAQ3zI3W
+ 0J51s/nH6QX/k9U5FQVealZOz926Mo3hvwtn5JaDJy5MODHD56NgZ2S6SnmPw8fPoQcfVl7kOhb
+ HwQwA
+X-Developer-Key: i=markchucarroll@fastmail.com; a=openpgp;
+ fpr=FFFE1081EA04E0184E52EEF25191E47A4D9F86BE
 
-Hello Git community,
+"git repo structure" computes a set of statistics that are useful for
+diagnosing performance issues in a git repository. But for a typical
+user who hasn't encountered any issues yet, it can be difficult to
+interpret the data - when should a value be considered concerning?
 
-My name is Azuama Odinaka Maximus, and I am an Outreachy applicant
-interested in the project =E2=80=9CImprove how command arguments and option=
-s
-are scanned and parsed.=E2=80=9D
+This patchset introduces a feature to "git repo structure" that reports
+on how concerning certain measures of storage structure  are for a
+repository.  In table mode, concern is displayed as a column containing
+a number of stars indicating the degree of concern; in line or nul mode,
+concerns are displayed as additional lines with a numeric value.
 
-I am a beginner in C and am learning to contribute to Git by studying
-its codebase, reproducing issues, and writing tests.
+To select defaults for the thresholds where a value becomes concern,
+a (hopefully) representative selection of repositories were analyzed.
+Based on empirical exploration of the data, the measurement that seemed
+closest to accurately assessing when a repository's structure becomes
+concerning was based on the base 2 logarithm of the value. Across all of
+the sample repositories, for all of the measurements, the point at which
+things become problematic was when a base 2 logarithm of a value was
+more than 1 standard deviation from the mean of the log_2 values in
+the sample set.  Based on this, the concern threshold was set for each
+of the measures.
 
-I have prepared a small patch for builtin/rev-list.c to prevent the
-early option scan from interpreting the argument to --grep as another
-option. I also added a regression test in t/t6022-rev-list-missing.sh.
-The relevant test suite passes locally.
+While this seems like a reasonable approach for setting default
+thresholds, it's obviously still very ad-hoc. It's likely that over
+time, the default values will evolve; and in the short term, projects
+may want to set their own thresholds. So this patchset includes support
+for configuring the thresholds on a per-reposiry basis.
 
-I would appreciate feedback on whether this is an appropriate
-micro-project contribution and whether the fix should be improved to
-handle this class of argument-parsing issues more generally.
+Overview of the change:
 
-Thank you for your time and for supporting Outreachy applicants.
+* The first commit adds the command-line option "--concern", and creates the basic implementation of concern reporting.
+* The next commit adds configurability for the concern thresholds.
+* The final commit update the documentation for the command and
+  configuration options.
 
-Best regards,
-Azuama Odinaka Maximus
+Signed-off-by: Mark C. Chu-Carroll <markchucarroll@fastmail.com>
+---
+Mark C. Chu-Carroll (3):
+      repo: add level of concern reporting
+      repo: make concern thresholds configurable
+      repo: add documentation for level-of-concern.
+
+ Documentation/config/repo.adoc |  60 ++++++++
+ Documentation/git-repo.adoc    |  27 +++-
+ builtin/repo.c                 | 335 ++++++++++++++++++++++++++++++++++++++---
+ t/t1901-repo-structure.sh      | 134 +++++++++++++++++
+ 4 files changed, 535 insertions(+), 21 deletions(-)
+
+
+---
+base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
+change-id: 20261019-b4-repo-structure-concern-f1d6f6326095
+
