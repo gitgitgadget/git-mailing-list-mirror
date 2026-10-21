@@ -1,94 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.36
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792551840;
-	b=koCdg7bsRZ40yH21F7hXYItEQFher1UGrbVCHUCgpjQb7EquQcwBrD7e0Cfk9N/3+gTF
-	 IKQytr8zPrQn02RK6Dh59xTZdAjmHvSrSg7k3izuKUR0Mm9zLytO9ZEeMahLQ8LVO37lj
-	 h0aBbXV2XEj2BMk3MsnEemmJxQ4Hn3j5W3aak4fFVYUrfkTHvn17ohRYKCR0TXOqq0zIL
-	 XMpsBlFPDK9xbMpwS/oh9XB2zS5cC2sTeWUgc/G51dI0y02sdCGqougTERDBhgHUXRCpY
-	 jNyjq63QucKaL6L1lMuq2cCo74xwGLZrGOWZ7n700to6eX956YRe6tNyzJI2Fydk4DA==
+	t=1792552554;
+	b=MrxxheQF61f+XbDK2jsHaJu1JFKhV/fgaLtS8R9EdmGXcVu0EPbu/jblgTQ9Su/Y+TxJ
+	 ZC2EJejmaCytfRyKirhO+9DckzlEkgTQCOHNQCrdOx0vp09MMgPCMgK/KP1VVIrhgQLXN
+	 4B+5c/2GDN8/+AsaIs9Y7gdJKJp4j4Z+KxNbOoMUQTGld655x6e//+JnrHUAsv4f1iAF8
+	 g4uq0dsOkSIfVA/m8v1mp30uy127Z3WVVQhH+/2iEw3ht4HhjTucdsKirIclKnskamYjK
+	 dzXCC5avGdSsbVExy2jBtKe3h7DEEdYmqbHGbFgbZlur5xDOrfCjydT9efyq+LM6Yfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792551840;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=iTcpw+HC3xn+6p/EnTNEp+cl3M1KaV8AMpnc2OAmq64=;
-	b=YQzfAM/1/iBNsjRoXyH3XLzMWjKLaHPBeJx8rG8N3+DZiIbPd8x6IBnk38o8vydAdh9i
-	 PuRjTykSzV6teWHxxjZJa394eCyG7hZz14AQiwUF+a0VvXYz/GDS4oAIISb0GaON/ax59
-	 CetXMMLPTB/UdL3H3FsjG4zro3w++2UMEOqIKWGTeK2NV4jbDsycAiNPeQ3TOlqkz6sMG
-	 nnqPJZd67ldQTfw+9mbfMfzvrpxt0guGwYWyHr1fDUDBDo3nfQqWAbt7tPCajpuwVAqjJ
-	 UPjkndX3zZf/M8BSNTK5yo3jY5qqRGqLUTmgrzkTKqGIuBTPnNXCN4Dz4Xh3jPgeBJg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792552554;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:Received:
+	 X-Gm-Message-State:X-Received:MIME-Version:From:Date:
+	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:
+	 Content-Type:X-CMAE-Envelope;
+	bh=8Jhkmwr7kCf+QWyWmoMtjL0SdVzWN2dMO5qs8ecK8Q8=;
+	b=KcDJFHibC+WHtYmnpcL+MG8q8fBYc2+KVydry9lW27ESyCgWwip0ROTIhQ3GH5RUKZsv
+	 99YAJEDXjrd6EwyOOkCfr2ILmbTLfx/st6EPHXClZBLbx39ARsZKMUPLk+bleS61vOnfN
+	 Z1xi2JzjnArf3xgK3TkEXOMLIDftBVkSKoYHl9S2w5GeQ1mzVO2kACOz97AN6xmyGfVhD
+	 OyZsiFeQCod6EteKmx3HEKzbSrofdok5l+HnUshW9YurZ4gEece8HeOJZmztuMgMlZQA+
+	 dnXwWkL1543KnlXsUILEkRAECWY7tthGw8J7LGQhhGqJ0KIeahVuAce+O4RW4w5yu6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nortesoftware.dev;
-	spf=pass smtp.mailfrom=nortesoftware.dev;
-	dkim=pass header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=OvCc3ETh;
-	arc=none smtp.remote-ip=209.85.210.51
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=parmet.com;
+	spf=pass smtp.mailfrom=parmet.com;
+	arc=none smtp.remote-ip=44.202.169.36
+Received: from omta037.useast.a.cloudfilter.net (omta037.useast.a.cloudfilter.net [44.202.169.36])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1260C606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:03:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1260C606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nortesoftware.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nortesoftware.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=OvCc3ETh
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-844a8bf7e25so215663a34.1
-        for <git@vger.kernel.org>; Tue, 20 Oct 2026 20:03:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nortesoftware.dev; s=google; t=1792551839; x=1793156639; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=iTcpw+HC3xn+6p/EnTNEp+cl3M1KaV8AMpnc2OAmq64=;
-        b=OvCc3ETht5cwjvJ/zfSuhWS0Vho9q3JMcCLIU8OF7RlD0D17Vo9A8ZeX7nXaugrFVR
-         JBduRrJrMmqU+H/VmROLCpiJBik6VKvE38Y+g7dqdur3btzsT8Kib3o+JysLax6DIQbI
-         zcL5GVdWeH2hYBZ1AlUl+YRnbge7thHpF0DNkqHH/IfUm1dKrNXrZ4XcAgWUrudNMsMe
-         D+ES7+66QamOLPCWKTk+ZMGM2VzO1QzPQ9r+dO2z0iWQkT0xrXbC5ZBz+y3biv9WkrfD
-         lT4K0JM5U8lAOQiEZlUMrOn5r9O018UMsMsIf7PjY1OUa1ITJrgzXdO2mrznpZ9mPFuV
-         4aJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792551839; x=1793156639;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=iTcpw+HC3xn+6p/EnTNEp+cl3M1KaV8AMpnc2OAmq64=;
-        b=dMupxX3A6m0odV1SAiMhe3EUQ+aqF/yK6o7DHBomkgCpS7G5BGWmH1F/DUZz7Rnbph
-         a4LNyc8Cpk2WKtMU5gjJjkdEVQxk2uYl6AHnGvXwZs55Yk9nH0xinm5lrg2zYNHW62yj
-         6stGzVqUloPTn10ILXeFK4ddqzpQnnB3lcjEDeNMfk8E9hUHTdAq3Rr6cbx+1yB6/B1b
-         WC3uj79yLNUQ+4e7g0IgfVc3vFHyQE9mbk8u+VCCE+DfbQ33AApjhqoFcpdZ5bJxZP0l
-         RoE6CXc6GpIasG+6Ja6Q0854vbAa2MHICMaQcMkUmz3I0FTbdawj3j3sIu3oxYd8m7bs
-         6uIg==
-X-Gm-Message-State: AFq9FYLTgajivsrmJVQUm+b2NLbVJTRvfeE1C5ePVsoq53YO7muC9Wup
-	rHrgtq6YjsffybiXTGHsdSNj0/BUvnL3uGRW6MFNH2RhnSS33+OGZ7NrAWK6RLI0Ji8RcxH2vkx
-	YE98iZQ==
-X-Gm-Gg: AYBFou2aLxGVvGMi5M7HdipjaaoXKTVT6Zl2wDVU7cr+Ati7mqGLbQvqKQle6sjvYt1
-	k6XMYPgfKWcS8K2NdNR4PWwH+5H8WRONiDy3oPlSQw88K5YA8IN1AtyJ5OJ2oqpes/ysr+rYZ4u
-	IK0sHf7kyzu6vD1xEGRkAhEX/8DXsiabegF5L4l68YYu03aczbtOsWafZwYXSgU0WddDZr/JaBj
-	uczzKN3byoBAzkxDxRjS+B7MSJ1UVmdSITPb1641wcSLXhQXcaknR4Cbo4QXLUai3EYDuEbNwVp
-	4nS3yV70qXBE+HIcRtcoXFTP0jD30LAYQoj+vAUzk6yE5g7mUyGQ8Ba4EpY/MrZzt+52z4nUfAk
-	WXWfC2IpyLXMUaMs6jHzKS+uaEPoqkB1S0OR5WFyOabCO8KAez4Ev8ECvSdmHRhaYC8IOG6oGdb
-	2nD1c4GscmGBCMi0FVGFfIgpwNXGZaGBmBcEVmSx9T27PklbOnDEbPlDBFO+4U9iattNaOLd1Vf
-	t5DJtsujaP6qgUSj0tuy5r44fg+zcfM0STNbCRS1eNvTcU1AjQRl95DGXBzYQgq1fAP6Ll7EcYK
-	IzOgrNflwHDM0LunW6CUKyKRZBb4c9UHQ9Bjkkp2fD0jsyD8J8SDxJcP+dXV9a9c
-X-Received: by 2002:a05:6830:438e:b0:822:b35a:a2d3 with SMTP id 46e09a7af769-84d085019dfmr433292a34.9.1792551838883;
-        Tue, 20 Oct 2026 20:03:58 -0700 (PDT)
-Received: from debian.localdomain ([189.150.78.131])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-84cbc7d9afcsm1176819a34.6.2026.10.20.20.03.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 20:03:58 -0700 (PDT)
-From: =?UTF-8?q?Christian=20No=C3=A9=20Ramos=20L=C3=B3pez?= <chris@nortesoftware.dev>
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH] doc: gpg: say which date SSH key lifetimes are checked against
-Date: Tue, 20 Oct 2026 23:03:47 -0400
-Message-ID: <20261021030347.565306-1-chris@nortesoftware.dev>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <ec4de165-c7d1-43d9-979b-08c1cb67022d@gmail.com>
-References: <ec4de165-c7d1-43d9-979b-08c1cb67022d@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94E760A380F
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:15:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A94E760A380F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=parmet.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=parmet.com
+Received: from eig-obgw-6007b.ext.cloudfilter.net ([10.0.30.166])
+	by cmsmtp with ESMTPS
+	id JANnx1OTGJFmFJMnrxRggE; Wed, 21 Oct 2026 03:15:47 +0000
+Received: from mail-vk1-f177.google.com ([209.85.221.177])
+	by cmsmtp with ESMTPSA
+	id JMnpxqc2PgKkdJMnqxRDed; Wed, 21 Oct 2026 03:15:47 +0000
+Authentication-Results: parmet.com; auth=pass (PLAIN)
+ smtp.auth=andrew@parmet.com
+X-Authority-Analysis: v=2.4 cv=a9cw9VSF c=1 sm=1 tr=0 ts=6ad82e63
+ a=1Gtpy36QMqX7GAVeZi4eNA==:117 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
+ a=oVcKi2cZ8e-OidIuZFQA:9 a=QEXdDO2ut3YA:10
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-5eadadf23e5so163919e0c.2
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 20:15:46 -0700 (PDT)
+X-Gm-Message-State: AFq9FYJxuZQ8Ev5IDwlZTSuSl+Qxl0vaarHflvyhrc4gh1WI1EwtODi4
+	28YiHsGnVwmDoaJiGvdeYVXOcNI06V2r9cwI/PhE+v4e+dUH0U7HPhRFxxF6FDZFWML0TBRnOlw
+	dPfdOZAm6KQDSVy+rlDWTQAY3s4iUIeA=
+X-Received: by 2002:a05:6122:1d41:b0:5e9:721c:72a8 with SMTP id
+ 71dfb90a1353d-5eaeba12f6cmr317285e0c.0.1792552545135; Tue, 20 Oct 2026
+ 20:15:45 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,58 +58,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Andrew Parmet <andrew@parmet.com>
+Date: Tue, 20 Oct 2026 23:15:08 -0400
+X-Gmail-Original-Message-ID: <CADudEQNrfiP0VdYvxpWxNKZV=yXtc4LkSXPsmD++Bj8VRpXuQQ@mail.gmail.com>
+X-Gm-Features: AclHuK9vRNwa1NqZSLpxdKb_NH9KVSZzMrQVGgayHZwJYOHv-0Tc-n2z9Z-zmn0
+Message-ID: <CADudEQNrfiP0VdYvxpWxNKZV=yXtc4LkSXPsmD++Bj8VRpXuQQ@mail.gmail.com>
+Subject: Partial-clone merge requests a locally created blob from the remote
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-CMAE-Envelope: MS4xfCHtkmlgo/EU5+AjxO8kJSpdI0aPLpomPwoCx418dQUKCeSOm97kywjJYw1OwCs3dxHN8RwzcCQINT2KiEMljF0UH5bpqsRwh9o+RIh8RV/XNlWJObbD
+ 59JR6cYfSqEQqZ+MtSXtgweQMRKJdoI5pESWoO/UAadC9yNgUjnj/vDHkmcvXF8XBu2Bk/vowtJX4UX4aCtv0ttJh75PTTMyz9c=
 
-The description of gpg.ssh.allowedSignersFile says that Git marks a
-signature as valid if the signing key was valid at the time of the
-signature's creation. An SSH signature does not record when it was
-made, though. When verifying a commit or a tag, Git passes the
-committer or tagger date to ssh-keygen with -Overify-time, so the
-valid-after and valid-before options of a key are checked against a
-date that whoever creates the commit or tag can set to any value.
+Hello,
 
-Say which date is used, and that it is not evidence of when the
-signature was made. The same holds for the creation time in a GPG
-signature, which comes from the signer's clock, so say that too.
-Since whoever holds the key chooses the date, also say that a key
-lifetime is only safe as long as the key has never leaked.
+I have a large repository where I have set up partial clones.
+Occasionally a merge fails with:
 
-While at it, fix the spelling of "OpenSSH" in the same paragraph.
+    fatal: remote error: upload-pack: not our ref <object-id>
+    fatal: could not fetch <another-object-id> from promisor remote
 
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Christian Noé Ramos López <chris@nortesoftware.dev>
+The rejected object appears to be a blob created locally by the merge
+itself. After restoring the worktree to its pre-merge state and
+retrying the merge, it succeeds.
+
+With some help from an LLM, I reduced this to a minimal reproducer
+below. The same script succeeds when I remove `--filter=blob:none`:
+
 ---
- Documentation/config/gpg.adoc | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config/gpg.adoc b/Documentation/config/gpg.adoc
-index 240e46c05..714dd1457 100644
---- a/Documentation/config/gpg.adoc
-+++ b/Documentation/config/gpg.adoc
-@@ -70,10 +70,15 @@ A repository that only allows signed commits can store the file
- in the repository itself using a path relative to the top-level of the working tree.
- This way only committers with an already valid key can add or change keys in the keyring.
- +
--Since OpensSSH 8.8 this file allows specifying a key lifetime using valid-after &
--valid-before options. Git will mark signatures as valid if the signing key was
--valid at the time of the signature's creation. This allows users to change a
--signing key without invalidating all previously made signatures.
-+Since OpenSSH 8.8 this file allows specifying a key lifetime using valid-after &
-+valid-before options. When verifying a commit or a tag, Git checks that lifetime
-+against the committer or tagger date recorded in the commit or tag. This allows
-+users to change a signing key without invalidating all previously made
-+signatures. That date is chosen by whoever creates the commit or tag, so it is
-+not evidence of when the signature was made; the same is true of the creation
-+time in a GPG signature, which is set by the signer's clock. Relying on a key
-+lifetime is therefore only safe as long as the signing key has never leaked;
-+once it has, valid-after and valid-before guarantee nothing.
- +
- Using a SSH CA key with the cert-authority option
- (see ssh-keygen(1) "CERTIFICATES") is also valid.
+#!/bin/sh
+# Run with: sh /tmp/reproduce-promisor-merge.sh
+# Optional: REPRO_GIT=/path/to/git (and GIT_EXEC_PATH for a separate install).
+# Creates local temporary repositories only; retains them for inspection.
+# Expected: a clean merge. Affected Git: "not our ref", then exit 128.
+set -eu
 
-base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
--- 
-2.47.3
+git() { command "${REPRO_GIT:-git}" "$@"; }
+export GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null
+export GIT_AUTHOR_NAME=Reproducer GIT_AUTHOR_EMAIL=repro@example.invalid
+export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 
+root=$(mktemp -d "${TMPDIR:-/tmp}/git-promisor-repro.XXXXXX")
+printf 'Repositories retained in: %s\n' "$root"
+cd "$root"
+
+# With these contents, the local edit and merged result have blob IDs starting
+# with 6c. They share a loose-object directory, exposing its stale cache.
+contents() { printf '%s 31\n1\n2\n3\n4\n5\n6\n7\n8\n%s 31\n' "$1" "$2"; }
+
+git init -q --object-format=sha1 -b main server
+git -C server config uploadpack.allowFilter true
+git -C server config uploadpack.allowAnySHA1InWant true
+contents top bottom > server/file.txt
+git -C server add file.txt
+git -C server commit -qm base
+
+# --no-local makes this local clone use the transport and honor blob filtering.
+git clone -q --no-local --filter=blob:none server client
+git -C client switch -qc topic
+contents ours bottom > client/file.txt
+git -C client commit -qam ours
+
+# The upstream edit is at the opposite end, so it merges without conflicts.
+# new.txt leaves a genuinely missing blob for the checkout fetch to obtain.
+contents top theirs > server/file.txt
+printf 'upstream only\n' > server/new.txt
+git -C server add .
+git -C server commit -qm theirs
+git -C client fetch -q origin
+
+# The bug requests the locally created merge result from the server, which
+# cannot have it. That rejects the batch also containing the new.txt blob.
+export GIT_TRACE_PACKET="$root/packets.log"
+git -C client merge --no-edit origin/main
+
+---
+
+Is this a bug in git itself?
+
+Thanks,
+Andrew Parmet
