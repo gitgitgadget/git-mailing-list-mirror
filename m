@@ -1,123 +1,121 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792602974;
-	b=k9oB4Dd6fWD4ciHu3J4x5/SOPSho2z3Vx8MD2V8l2Jjw1ZsAhMHg+f4zAX0vzvkBhC1x
-	 SUAyotvOxPz9DcrGAc7HWdh2jYStvGdYvfGmx+xvLZtUpoVljZAHbLy0QqrqmaHhTDrNw
-	 SvulM9sui6uD8/iUc6fMnB3L6TCauUxVZXFVpDrw0wMpSnHpkmhsY2pf0xJiwXfBt2zQP
-	 xPpTMt0KSIEhQC4AtaISzr1OoxCZ42mFW737WKB1ghD3ubMD5HYM202hhm8jRYLRwtz6Q
-	 C8OGG7IwXKi5maf7VIhcLOvxi21Qf/S69V5jr4xXWVsme+xKsM6cN1tgBKyHhW7BOkg==
+	t=1792603182;
+	b=zJSnHnaI3bqm5rrjfZi2+vinLem9qYK8J3fmbYYQICsamvl/csrn7BXS2qushPFsLSXe
+	 CZYBvBngAg9NiVeDuAlpTRhS97LZkS4uJf5DEqqMm2Fr6ycCKRg/yJMWHsbAC342ViOGr
+	 bzjkFiHFeiF2zkL/uRjlhDL6QNulv8RTaLJlADR3YxhrJ9asUCPrpuDxrrAg6tFT6otcf
+	 xnIqfpK6y5AjJNiYlHyo+Pu18GYREWh5LLiHBGXKuaJAN7+LqBWUo7OkFB28SUH7EJlSI
+	 s8XotnftklOKA+sFjskgltB6U4YVulXxoM1RJaf9YAsjMpkYb/fW70TOx+PKSnnh51g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792602974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792603182;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=2ndAB8mFv2RRHKuCbokLrjORJQVvrjfRO5Tnor2sLhM=;
-	b=DxTVoF5aIp90OGueztwSYFkn2BtgPHRWQxQeerAeYUCI0BcXO6z+r8MUAFVNoInzHzXj
-	 ZRLxT48TA+BIgmSFZrIEv8Hsi94cm+usXtiZIcU9D1piGHZcsIzaw828jqgn3m9JoldM0
-	 /YtKp9jRPZ7JcYLpzceldxp3l6+puciwUf1aaQJndA9sDm7yU6/9pqor+sa4jL4TnA/st
-	 h/Y9ZschmQgChvG3glds7I+w8Y/jEPL8Dh6n7s1bbqqg+n8xX/vGR5d6ZlcKFKehyi/g4
-	 L3GA2tprT7N8cNpDMwwKwYzle6btDLeWI3J6i/TYKBdJsu/kO7d64DtHQhv/DZU+B9w==
+	bh=OQEPziaRa61k8Y8WGD/haQ1/evkCynUVKvZb0RQuDtQ=;
+	b=HHuxp0Wg7rwZUa9e5JfJbTDY/HXx0VqKAd18aP0reVwsf3whBSKmCr3qGLrfCDFV3ItK
+	 v3ZNH4x7ifbvZKU/D3TbPOPTS0AZN0z/3MZr+1ppT90aPnRFPto5EgONt9T4lPQ6z47N/
+	 fJNPIvbFc/EydzLMy9MuQih5wVOrIDN8bTkt+h4fTnv9evh4DpaFBrf64e42monawxpJd
+	 rnhGkL8VxGzhLdaxnheut6jG1b7Ve0hr6NTVnbV848Jjj7udHsqToiy9d9dtcSqpnovE+
+	 ctxbiQ3tn4JzH+O0RbYc1akrOuY1I0fLjrKdHS99URL9gtJZy12IKRxSnc+m3SsClGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=c8GqNflp;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=vKNLvHoo;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=MMhGgRWj;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=WyIMh0OF;
 	arc=none smtp.remote-ip=202.12.124.144
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FC6606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 17:16:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2FC6606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FAF606A326
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 17:19:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1FAF606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=c8GqNflp;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=vKNLvHoo
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2A2491D00115
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 13:16:13 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 21 Oct 2026 13:16:13 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=MMhGgRWj;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=WyIMh0OF
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 23D941D0013F
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 13:19:41 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Wed, 21 Oct 2026 13:19:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792602972; x=1792689372; bh=2ndAB8mFv2
-	RRHKuCbokLrjORJQVvrjfRO5Tnor2sLhM=; b=c8GqNflpsO/qSJf3vIWg3QXsyw
-	OxE89jj+rMTjtXYgI8X1PeUY6D4KQE0injefSfrXRyyXp6VRZp0Qqv/vZPMB5DNS
-	4b+TOK+r5A94WokjhEMISLE2TMBUYfCqBaqlfg81t0E/A38NfeORVk1z/gtzuenK
-	5NP49l7MyqCZEevCJ1j2sSZSktFhC69odHrjIuTiJsZZpryeBiDvn45zp0u9Vc7w
-	VCcjdWmg/A/Aei0Fx+e1Hq7Iw3Co7BHtVV72tFFEfRVjmsXTx4gD76qHW365AixE
-	f73Pa8XonmKDpJb0+ch6MuCRGO3SWQJybe7TFR6jFolA7DYDGk8Wppm6NnBQ==
+	:subject:to:to; s=fm1; t=1792603180; x=1792689580; bh=OQEPziaRa6
+	1k8Y8WGD/haQ1/evkCynUVKvZb0RQuDtQ=; b=MMhGgRWj0Dsnho0xbXsfa3jCCs
+	Uv+5/qxqRJOSJ7GtqMsvGJNB86TojfaN1q1zxHNfcui/GHUz9oBocyhacQDcdZAw
+	M1uMUT/XrN5Nk1Lcg+ivpYtgpOJypQUkEggPDz7auENOKN+Eg657EBgC6dl52Alw
+	6V+orckPSqwca92fM6+nxzrzS8Tid6eyDzoW28uc31vFq+3QmUkJQPSrV4NNa3GR
+	e9XZC67Vzx97BsvHbBGlGTRF2heNdUeEoFUdoiX7nkpNJiH0LUuKTjaaDXi/tElG
+	b8ZMSnmToOUnEoG6dVtlYtRlKoPOAiaRF67oGpDf/iCJSIGo7RakNTeS/A/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792602972; x=1792689372; bh=2ndAB8mFv2RRHKuCbokLrjORJQVvrjfRO5T
-	nor2sLhM=; b=vKNLvHoo6BKqPSDiAR07LKyYQrbzHZF2I6W0sCvXaL7XfNbi1Zd
-	W+tWolDzERmC6vls/K0FtoO0GCM/o0xpVaPrkWPheTNMx8YYVvJ9rTaOrfImRBy6
-	KuFZPf1Pg4cEE0I1EY+U+q04xLjR2a/Hk6cg3wgNBT/jcsqZF3ylshCLj13OLfdz
-	9ZhO2fU87KmWPjvgLEEq/5Qo7OpHAV4NTExOzCT+ZK6nWAIAkjFld5XP0GgdaqSt
-	N0pVEDrvbzHnGylNeFr+iYsTW8vU+QTYQvkcxYXo9gcU6SEOTb7QVTmrzebAJ4n/
-	G+NoD1AbotXjWq8HtmtZhSzmLuxge2EyYMg==
+	1792603180; x=1792689580; bh=OQEPziaRa61k8Y8WGD/haQ1/evkCynUVKvZ
+	b0RQuDtQ=; b=WyIMh0OFwmR9Mj9nnMxQNzZonzsBJG/L5YUu1CTXKH60/e9i4e8
+	BXr2v840dPRaxjXDXrdB8jam4DAQgWmPuJjB5QG+y3T3WRNRQWojCDwgimrsijb1
+	9JgL5SBeLhPu3/4m5mFlNwq7r+VpKypgeSLZE9jklJ78pcUaNdzHCWDf5GADr51t
+	ch5wqmEQ2hbn9TrsH6t+wvFJA5C3JAiyMiQnwM5XhRERhEis2OORPg23e0jUiS0+
+	XMo6uWSPl/5XGqDefH7Vj9xiCwdhTrhffZZ01GthLiVOT1CnqVJAR4OtZlMQvjdf
+	T2STS7BQhLnBNBDosNpsWZcqqytTsKdy+lg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792602972; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1792603180; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:knE5I67ZuzR3BDjE1/ipYCygRU0eb3+IV8iTOZCU4lJJJs9
-	KFeLIle//4eRN+uMkTba+N/i0HJqnZuTJ8eBxJ7UL6pJQv4kVUBv3HroHiupBP8O
-	tj0VgWykdWpDdvYw97h8x1g6gYpsONR+5jseCkZbH2+Ubt+s3FLMyhUCW8cnUJNL
-	AHiLXku3F8bSfSKHfgZ1OjtEXu7/HqL+sxSSZi6Z/KxiWAQYLAfe13LtNOZGYa0X
-	v3r/Ud5vcYNb5WbfKPhU6y43CpZ06CdojvDdTpgXYJ8f1eZVdsT7LCEaqyhsvf84
-	lyckEkp4i9lekAajFjLjok/6Wz9R/7ysUDg3Yjg==;
+	s=fm1:rsa-sha256:j/8Nt/5FuPa5mPiV4PPRlQkJ6cDw28cTeIAKGTGuAisFzDf
+	awAXYELVVZZXQC+/fUTysL1n/2+1gJjS8gYiWGGE4rFQddSxYbHj/U72+luYEFht
+	CwYbLzrAk+fCLdDHV4P0IGJ6M0oHTPY07CJpDrkhqRD6e3lIryzbNbkSNcoTJOxv
+	BRBuUFHr6EAzKq9uBR4c50ez1HrDRCbLEVmcG19B1TSnMUhZYf0FqK23J3p9r2IE
+	tgs/j3B4yKGNPJronz/Dnn2OA483D9IOKoTqZtUB0PCWZ+eEP8KTWw2F8+YfECBM
+	QJ5wMeKFpIOsNy/bfZbjhokHcuGf4T/4mtEdzIg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:t3Y2Php0k4swLDSKOZR0xspEoN7XR7bf5FBFPdIzvdU=:ihH2ETRMXRzghqkBm96E8lvX5gf4xhFdrSAVl1+Vrfw=;
-X-ME-Sender: <xms:XPPYaneo1ag3nhqRP5LquYbbzXkbUHkJcYHUw6c0cfoHhZbA9rWFuA>
-    <xme:XPPYakNlNrukdnyRa5Wd4lAYTJbwRZhwcMeyWysiq1I9onEAFLQK_Li_-Ii7h4IMv
-    9haM_OCq2A4hlhoLGPfkGBX_dZ76ThB977mZuDCnHgYWuC4ZCNi15c>
-X-ME-Received: <xmr:XPPYalhd0XbfdOibnK8-FVK-kgIldP3y7ppLJZpA4Pl29oed5ng4bZOVZt5dLUr3OHKws8RIRw1R4RvJXzDfRNtGukOQRFJ9Xgs_>
-X-ME-Proxy-Cause: dmFkZTEFPrE6gYOLu9uGSeZ9IrqA/7ZdbRsZ8znAQwQIf2e1JCJl4kq0NfIEvnqEFa6onn
-    Ni4KXzBT7ISyIVu91jdCcbfJAr1wkhu2bTIQIqD84KfW64kq9TPImJ7d4gzwY2fGF92rEi
-    ThLsG8ZXkD1teDdIctjAtEKQKWXELfbgI0mGKybiEhr+sBMdWohU6fSXYSiL/N4V7M4dti
-    aiwFFPPYMvNq6hT3Xuj4s87+c06TJ8IGeq3gt5y0bYB5JHf42vvJRVzU91rf7zfNiISnjV
-    i7xG1HDUeCDdQbJSzgAcKyXK3FCRDe1rJ0eNGdu1uCzvSus/BxRGNGQ9EHe8KFeUcv9dbx
-    D9OFShhBDPuwkwQ2OpqmfX7cUbaBspSlTrN7DeK1cDaD8UwHDaKPV5HsyrzJhaepAF+nve
-    VK8Idja4prqvWmpV4QjEEw0B7jY9qwh4HsBryT7Ph+s8B3rdZ9zksIqS2F8iaBUQQlP9km
-    oD02OJqUQ59Q4mNkgFlfbtCI+crCB7ORQnA2F1Y6Dszw9ahffCG4UutIqyvy4DA86AEeJ2
-    uxzb8b5Sj9rQ30swp6Gn3n3/kcsHD2cfh3OJw5FDXli4UFP9mIWKWze1+rXaEHe3DP/vFU
-    ByGpiFxXmFvJGl6gDmCVNGDkAhq5NRV+zEkiq5tpJROmdy/W6xXgXPHIBCSQ
-X-ME-Proxy: <xmx:XPPYan3cQedUOzaF0IMV31evs7TMXKOIcL4b-xb3vlLj02xDB74mxA>
-    <xmx:XPPYavhkoPk36E3GAyuMCy75hJJjLm5pHLTdk9Jk1fMlXVhJ1rK5BA>
-    <xmx:XPPYancbONeNhOP-ZL4dECemNvKACOAyACeM2Ap2EvR223khTNcieg>
-    <xmx:XPPYaimvLxeqYb6bIcm0XFSfxKSN1PUVSgU5J_QMz2UA6FI3YyJzYQ>
-    <xmx:XPPYapChdZ1RGXkQB7ABMZdVWpKmgvypX541AAYOLDceALo-n9LXnaez>
+Message-Instance: m=1; h=sha256:+E/PJ/tDfKpCscy2bmrCcJ1pEQ0lrG06AW/ZnlTejsc=:LsIIVlm8iEU63tzNsUS1zqiUMs75KQ4jK+LoxNK7aDg=;
+X-ME-Sender: <xms:LPTYaphNtA6SZvCz9ma3kumLqaH7YCdaxzBzlwpLrwTGopnZR2_mWQ>
+    <xme:LPTYausHSyc7voBWTeFIHKMv-tTM7vRfeGPpkb9q8U2GasqOZojPcU-wMMw96mIzr
+    KPs6rnKiNnY6H7Tj9B4ZqRwMfiZMdPiIXIjgoVUizY8lGG2Pc7TA6s>
+X-ME-Received: <xmr:LPTYanRVaILSNlOSltmPYNZU0dA41xB9U4Ig33m2vWa5ry8BqJzHJB9WELC_wzwDcTnKj2g6Q1sfdawvcAip5iI7WotWcPELfmfL>
+X-ME-Proxy-Cause: dmFkZTE7t/4Zsget9VKVoqQo6RUw4wlZbtWfaxNJrk3fsGwIcDP0WXKl/igPtx91uNPxxh
+    WbQG8GeCdExcItcnaObEj1AYuTooqWTtJN+q/2RvIGwYHUD9aBtZnHxj5MrVdLimbTiDVP
+    oGdPDjas1npO4cvSvyIWXXJzFrWTA5kp6s5OifWw0OLAVW9B8t2HZvZ72dF65Yu3KUlUCA
+    +h3Vj62CIjFE/m4Ru5yz+6sHyGVLaXBtDbypVBoeWO14EhYFr2LV88mvresiGWfDgiHM+i
+    yaKBRaaxuz6Qnb4f0sgj0UK3uoNkA2ZmegSgAgdUulg7n1Im2wLRi9WuyYjReXKWMeD7Xu
+    yL/ArtaxR0JcOIHTUI67BVLFpVGZw4ZzizHds/PlZcMQhr43eCvkAE+R81/P7uY3IDFfJJ
+    iOCKWaUnHYyXJgoho18p9V4KxJXiT7jqTcMCwfIWz9aOzB9FU9mrxNnfBIcTrgabD4jjSq
+    NvxiIVMPf4FUVIrOn29TN2muXF9I+KQWMN4ASck9DDq02ruVVl4nju613nKmEPO0WhXNQ+
+    UGzEdllBe0NkGJFMVvWIMQaWDSW///RxinSYxF8pEfR9S9Y7GALoEjF/TOLTz+BPalWsQA
+    BWusH1u9Ubp9HJ2RqcgrGDbqtWusfYTfwQWaXJZ4UPGg2DNKOyR2jv9yaYRg
+X-ME-Proxy: <xmx:LPTYai36b_QTJ2xM0iDtz8rjV68tp_oGpf7R7eVpWQ1KlP_uYvpldw>
+    <xmx:LPTYastOyMkXuq68tAdz3wM9kR0JbrZaZbfl8IAYdKMTd8kuhCtycA>
+    <xmx:LPTYaojpoBzzAz6wBLO9v3wQK_af_iXDxE0R8nBexBPuiLmpBzVKVQ>
+    <xmx:LPTYat9cQI_D-N0YFrgp50KtgcPnxksFx5KWT17JMKociQaT-sY-Bw>
+    <xmx:LPTYau3AnB-3cUoLk91Bp0aTEFfl1M52LmTDFGqcUKGcJzSyvOfVzHVy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 13:16:12 -0400 (EDT)
+ 21 Oct 2026 13:19:39 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Julia Evans <julia@jvns.ca>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/2] doc: add new Git tutorial for beginners
-In-Reply-To: <xmqqjyncuqwk.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	20 Oct 2026 12:13:15 -0700")
-References: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
-	<41dca2e8e0c5fadb8ad9ed8707029356e56cc540.1791315422.git.gitgitgadget@gmail.com>
-	<xmqqzew8wb3g.fsf@gitster.g>
-	<CD1E58AB-4884-4433-9AB8-460FE9A882FC@jvns.ca>
-	<xmqqh5igw7l2.fsf@gitster.g> <xmqq1p9kw6qu.fsf@gitster.g>
-	<xmqqjyncuqwk.fsf@gitster.g>
-Date: Wed, 21 Oct 2026 10:16:10 -0700
-Message-ID: <xmqqwlrbotyd.fsf@gitster.g>
+To: "Theodore Tso" <tytso@mit.edu>
+Cc: Steven Rostedt <rostedt@goodmis.org>,  git@vger.kernel.org,  LKML
+ <linux-kernel@vger.kernel.org>,  Jonas Rebmann <kernel@schlaraffenlan.de>,
+  Ricardo =?utf-8?Q?B=2E_Marli=C3=A8re_=28SUSE=29?= <ricardo@marliere.net>
+Subject: Re: FYI, git output messages are being used by other tooling
+In-Reply-To: <ate61iEAj4HDIvzY@mit.edu> (Theodore Tso's message of "Tue, 20
+	Oct 2026 15:09:20 -0400")
+References: <20261020141011.0015d172@gandalf.local.home>
+	<xmqq8q3sw75e.fsf@gitster.g> <ate61iEAj4HDIvzY@mit.edu>
+Date: Wed, 21 Oct 2026 10:19:38 -0700
+Message-ID: <xmqqse1zotsl.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -130,20 +128,18 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Theodore Tso" <tytso@mit.edu> writes:
 
-> ... indeed, that is how I caught a handful of mistakes over the
-> course of this project that I suspect I otherwise wouldn't have
-> found.  Once found, however, such a mistake is easier to
-> correct.
+> A structured output that contained the result of the "git bisect
+> good|bad", and the first bad commit if it has been found, would be
+> certainly be a more reliable way for automated git bisection harneses
+> to rely upon.  It'd be great if that was something that was in git
+> 3.0.
 
-Sorry, but re-reading my previous message, I realize my preference
-was not very clear.  The last sentence there should have ended
-with "easier to correct with the ATX-style prefix format."
-
-I do not have a strong preference either way myself.  However, this
-is practically a brand-new document.  If you think it would be
-easier to adopt and stay consistent with the prefix format, I am
-happy to go with that direction.
+I am afraid that anything we propose today would be too late for the
+3.0 breaking changes list, but a new optional feature does not have
+to wait for 3.0 at all ;-) I do not know if the format to do so
+should be .jsonl or .yaml or what, but I agree that machine-readable
+status output would be a helpful addition for automation.
 
 Thanks.
