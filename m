@@ -1,95 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792577822;
-	b=pWxT9KdEM8nH1rupqqUN7/xpsOhufcMRfZayv7E2esJhGwF/YcLjkIobYvXBIJiXtXVi
-	 5rD3vhdTQBydkTRCJyahnAJd/thDZ3fxaVFiUuGTqQNPVSJw8uZEvAfUdGE4svbSJRjsQ
-	 rzrwpM/Q7CLoES+T/eizax7vTiHnXDDt1/Q7HkKr+DnNhKopCrQhDmteB1OLRnjJwaulO
-	 oUjXonfKuD+MKx87hjzMiUrvkt+mjliPJlwbXrlp+fantfXseL5+GRlEigCLVjcspiwoH
-	 JQk35LWYtyJ3VWPbu6t4cA1o+HBfZnqdZZ0oBz1vJlxN5Wjn4TeFFagwfjasq+OBnlw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792577822;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
-	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
-	bh=s3Fj8YjPSTupXjt++Rpzf/NllSuxV3tkJe41ws9RWGQ=;
-	b=efalYuIMnha7gRzUnrpRh+ZdydjlCZr+vIYu0p0BgQQ+HCHx16oqa0XKfmpJShYZsnPH
-	 KUj7NPmNr8ABrEuiZOk1uOLfuxeNGU/vDRDz6rgeCgzxjYZSoqV/FGHQTItuZwKUqW/Fe
-	 EcwrEsY82H3AYeBcRz31Vhjx5avm9KYHxegpbo4ewdUfztIhTl1G0++ehzF/XsUCmZuZQ
-	 aoh6Pi79SSMsDn05zrOp/kfSoHyXHxq4UU0vvO3IwBBIp3KoBQIXRlv3GtdOScBBvZ28n
-	 4/7AeWX3ZiojlBWjSzKgtNi6lKU28qDxJSM91ayDufdcXfemJYLHsa9TeJgi8qQyQAg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=AFLHt23S;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.44
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792577879;
+	b=EZlWWL/oYJ8vCGIaO62ffGfONGRu6Zg3Sjg2tkuRoQb6z3JjYdMZvdQGWfPvdGVtnEvF
+	 +IcSEmbgeEB7o4C9lbfic6HwYplH+B3y69eQDoOb6EFjLlDi33gpyw9sc3Jkdidgpi3Lb
+	 /OJocBfV97VUr7omFo8Zs8sz6q3gvk4lMlvqY0sz9rSqxehs0aVeEebKHxoKckGgUW3Nd
+	 j8FU053hIaiKC586ytbhMOcYbh6PedWa5CWsiLluO4L2PGGKm4pb4AGTdiegGzsdDoN39
+	 /2pz44JK/N/HXPT6Ha2JoW1at2Ues24Spq62AXKIRbgPjn3uFLU4Ph6UhZ/rszjAYng==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792577879;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=VYaO0Uxzy0egRW0HjCwKD3xVImhwm6uwwWaqWtnm+mg=;
+	b=ncOSqeTzTedB81Bgy7qXjcsOeJqdG2lgyFvQIkXWLniVg4dmp/KKLBNpZNVAK7mOpv6g
+	 SS+NATd9doRgzLql6sIs35V6UJqWEMueuaLHbqqLQ0HnBdrBladru/NZizooYGI6zcCBP
+	 9GGT2CilSdWefe+4RPbAulmDyxWfA5V1txpwtphPyjqSJMYARLskwSe9XgtnLjeLUKr1x
+	 hfDRrXNy6mol8tSHq6bxeEfdZtHM3eaZz+/6zUOZtmd5r452RY6xGmVUNot7Ee8Z7m7oj
+	 dOHiDO73OXuPsJ0dapRdDtMe6NVnqp2qkDUV8kJiWPNocDpsEVQ47Ft1d95Uu+/+5eQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=FNanT0Ww;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LFJIoA7I;
+	arc=none smtp.remote-ip=202.12.124.151
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA8E606A31B
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:17:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6BA8E606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118A9606A31A
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:17:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 118A9606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=AFLHt23S
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-499f20c7054so324789fac.0
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:17:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792577821; cv=none;
-        d=google.com; s=arc-20260327;
-        b=FC6BlEHcvEpDcPG40qpNrkW7D62JNQ5jjh0voQwRAh7XuglHgqZbOLGKB5x1YzUylU
-         B+efb+mALg+plp2X7jWcS0xpX6E69oR3l7/zIk+J6mjkMzJCQYYL3uDsL9vCrpYExIIb
-         TjhZe7cCVmuYdSmHQigJnacSyb99A0rb9PvG/0s1Z/WLcE9we7y1rmUI276K+Vbb/E7T
-         YZasC7WofTmFWbCTlVWWCyJtel7/A7xTDuJzwI3JkmEuZT3gUnHNJGNkuSBHO3YVdvfe
-         NDmoNLj9kl2Cx6o0BtuG1o3kqiAmPgbuxsZbcDflfJkGwVHadpmp7mfxZPp6p8zvmfQU
-         yMYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=s3Fj8YjPSTupXjt++Rpzf/NllSuxV3tkJe41ws9RWGQ=;
-        fh=vZuVgrM2LTXIgjvGDmtDKG97BDUBBwkhOkEbhTFC0+A=;
-        b=TGq4BzaVkluTUnrpBWR5Ch57AX79vQoIS+B0EAYHE3y7NEkyB6JqTI40HDGe9LW/yK
-         aXmizJ7swN30MQwQd1ubxJSyVjsXbuFbGiQCY8oo3VdvefCDX60D3/ojgbk7K+1cOxxo
-         0BDCYCuKrvM+dEJ6DjpAGj1Apq9njUtHLEv46VQcInjyhe+cCO6I4p7g4gF5s7yHrLRE
-         dmlM4e+Ul3PJId4mYes/bvXpYyZO81/+IBvsBrkzo345mvh3pT2xOZ03DAXKLNJk3q4V
-         +mf2h0DQVNc8A8BXn308M5mBRytm+FAQq/EeieBJ261kuIGuxj52AuLse8prLI+QzXvt
-         zOlQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792577821; x=1793182621; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=s3Fj8YjPSTupXjt++Rpzf/NllSuxV3tkJe41ws9RWGQ=;
-        b=AFLHt23SaoD8GZPhUl+oXa6dKBY6Tx2gjP4aMDiM1MyRlg3RXQw7wAB3xEXvoGQzDl
-         VFUTH7B0q2DqxpQhqCwbnbzWlAFMHD9Rezzwzactv4p6/w/+j8lhln5sWdoFCIIj/a55
-         XNpYi+f9smer++fQ535ulU1UhMuelubO+DYEaGvdR9rH7ckQqf3WZsiWwa0Ejat1Tld1
-         tOrScj6eSVwCR+oE1SeY+tJQNRVj5Uz8FaHFA4kf4QyhvKmNDQZzTt4o1paF5fpV2V7A
-         Umt6F3JY/o5rABruAO3cbywlXr1ki53e0uP1Oo0NhQ8AW1VjdAHRyHiR6fUmYVYDJaiR
-         wyLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792577821; x=1793182621;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=s3Fj8YjPSTupXjt++Rpzf/NllSuxV3tkJe41ws9RWGQ=;
-        b=etx6lR7z2/FitK90AT+6a/7mWqIk+DVLWqp5ThWJ6o1UPuoE2kCctHAa2yK1ydbF/v
-         LiA+auL1n76LjMbig+c8Kli8PKw9fOSbFtyngwEA8DGCQXmk5FyMyhuu9KOiWrFNLX/m
-         n9MDKgo7Bc5Gt7PJ1ntYpoQrOPQ3KXRA+FRYJxzHOxez+Tiwebfk0/bZEz/6Wpi2F1Wd
-         LZVTYhFHkLBIfLxyEcUKJNyTDyQGneURUUSYcVpkMMo9wTUDAq4VedUP+M56JKYxz/VV
-         aDlF25IF26QiXJRsfLimOaYfPxT73UEpn2tU9+UP8+ab3NgGRIgw1+xg2A+W9FD3cbbU
-         8S1g==
-X-Gm-Message-State: AFq9FYJsHftjCe+yw2pnRX1RoeKeRAwl8Y+F+hundnH1orgvjxyoNZjQ
-	DIU2P6vSOlSPRhPNNH4awezdxeJNZGn9vkbFdOpDrMqzTd1CKjBufn3/TpHtx/mr+LUoUqsBOBi
-	bjwZh/D7VFZbHzw3xmkskrZseDI/whVKPY0O2
-X-Gm-Gg: AYBFou0C8AIvWRG+9bg5nbFjxFH0q0QLFDVa+T/lESygux6FW0mTUB+iTgMDoW39cyl
-	HPomwdIjd51H9jwTFiLlc25cn3Jf44R9pEK2FKIOueVALUcFcOBwYPyzni9AO01KTMHaDV5Cl6E
-	bAFIOwnFYp4+burBd3N9qOJRrf3rcX3YeiJkbXgtN4BS/t4t+hOpOxMCL3+nrPa7KEal/8xTpiG
-	cgfuVt5WV/9vps13otPZXhFZfrK20rk7Jn5xV97rrXjYQhuWrFZ+wIdcZDygPXb6B1PfLbNdD9Q
-	RnhBSbrvxqVLzBZckQZW2mFWcT7vUacNlBAp5+z4vsdCumlpueTfivJr4ahtqnHJjmwkqtIzg8I
-	57b5QassXYxnXLF6xJOjAw8xcK9eSmKxNkM0OUA1aEHdHiXwbpGqs5A98TGwBs+0=
-X-Received: by 2002:a05:6870:334d:b0:48f:e107:3179 with SMTP id
- 586e51a60fabf-4a7dc27e1a4mr878756fac.44.1792577821133; Wed, 21 Oct 2026
- 03:17:01 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=FNanT0Ww;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LFJIoA7I
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 662561D00138
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 06:17:58 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 21 Oct 2026 06:17:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1792577878; x=1792664278; bh=VYaO0Uxzy0
+	egRW0HjCwKD3xVImhwm6uwwWaqWtnm+mg=; b=FNanT0WwVoRPuAuWaZCaEDzqPr
+	6CdxIu20ID9hF8R2FaVuBddgVWoCgfmKNO/DCrRUPnrBya07pHTIYHNPnUdJ4Opf
+	FOFYltmIqYhZ/BQzI1x5iBZfPGGk78rwvJHAUitDNUXBUwIMKG2tC7V0+z3dubp/
+	BEV28vg2RRZgopziVC74Zh1ifGhhyOmLESv7Pb23O2OTycBaY1cGsrGOr02Pxt0g
+	XKYawN5BqPuDwYX6uwGDwDW1OxXDvmVIoqrBbF/WWkYWL0NmSiQ5wPVjcxEEFyd2
+	D0eWGTlZKuVjsnHSt2SRYDwVE3XcJVyXFw9B4GNBVyoTYRPbJaqrQVmk5sFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792577878; x=1792664278; bh=VYaO0Uxzy0egRW0HjCwKD3xVImhwm6uwwWa
+	qWtnm+mg=; b=LFJIoA7Ixv09F2gxui91r8ldnMC/XbEQXl5DlP2KHNuIpCQ5NWi
+	AQV+SDzk/CBR4XsNJrLrHVTQ4WlBL0bKHWsrYJz1mIjzHB9VxET89IEl0kJm1CD1
+	0pUxc5GE4QQRkWNINw8/O2ijpSx4zpMexKDnuHOvFY/3GoN7t5/rYX4SVAILZQB3
+	F2VAaHpHRz16qs1VsP0xATFShZf97+5EtpCXOouIk+IKacLQrxMRTsh7TcuAZVIl
+	4gV+OMkXVk7SjIms9q4sM3Wzxu1T+aDjVYbVTuQadrRymZF3HIZNhmBijTLAIrcx
+	sPi0jmn7qlzMqfq9KFrF/V+nAP80CbvNnRA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792577878; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:iuqmTPaWhEkohvSqPxPK1aH1G4hTL4TJ6MesVuP/sTZ/zUb
+	4mfF0yffeNwOh+ooZm8/dcbSZshsE0WVgewZy0sBVpVCrOZJg+bGU6vpE77gHJ6U
+	vIZ4qzSQF4KAC867Fpwi2pFDzf4k4Z/a3GTr775gGdIvVaECHJr5s++YdA9na+mB
+	PE2ibI6x5kKSegmjGecezcnD4JoplEG571SDlWBGRmOOXmzE1yxzW6VyGy9/XZss
+	QePfmcEH6e9NxkS6ee5cAQDm9qeT9UwrmQ0RMJ0JOsTOvDjvYqDR4U4MlXu31GWN
+	hXpe6HneehX+kfBisV4mcHp96ZaQUNiOfeWuslA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:DnJh7adzdi6o/Dwe8XaqQtAToGqrPC1G4i4wx9TXHNc=:xRhbBfB+BoRyehtcuCOQIKo9kxSHDgEVWqmINQHRD28=;
+X-ME-Sender: <xms:VpHYasIy8Xu5rhwRUBtPfTa9SPtmyg2R4oq6HMAfCeMijgplQCeEIw>
+    <xme:VpHYaiKIuFj9kh965NO58OT4r9Qcfour2aHm_kNLvgSb8SIk0GitsfajHSiBWUjBG
+    _fbYsmm3kKbp24Fdg8x7t6wXo-H1jmcmHhtpmh7kjyVDBOnL9r0Fa0>
+X-ME-Received: <xmr:VpHYaqV4gcDjSYxZzyccxt-9zBSQvBoMFfWIXtDVcZl4aDTrv0nr3Q>
+X-ME-Proxy-Cause: dmFkZTGVV6pk4l08PaZw37lvuXro1NwnZPvJvQRrGmIKTSq1ZJdB5dsbKl/SKrCJDTcqTn
+    ygRnG22qb+uh5522DlnjviSBrq2jdrG4OY36qOzRK2gwrcfkOMkyCBTbUXsC2ivSMSVjNK
+    xar9M5jcfY6hrhVx0NB3+JzParc5L2/P/yA8S7IXCBqN4+uKu+LwaH3NiXOOSLjCTb4Bzo
+    Fkt5ptP1igSC+aQlHE6USXWwIMKEsGGBwaJ5XuSdDOeHfwTV4qP9TWx92adEnwGgeHa0Bh
+    pU9umJRiZ96yrXlF+VzFUn1h+Ts70cfY2rY+NDHpWHoZ/m1andUJYJ6MfDIRytIa6+hxP4
+    V823D9MZeXz/eOTNRFGlUpeZdi9bdatiQq4XEKLqapsdOKFjTVpcT/87oN60gLkSmEZe7d
+    aW2babeNRIMeU630GvjXoFgz23n7PFIK7aBozN5nzIaGVK08umrP3ZqnILzbFl+O2vMqCW
+    2Xu39tFzC30IST3QqHYvqwaEA+QuZFKaR1I0ycWhA8i/vmfD5n7C1H4qUzoj8CNCDcr2UF
+    C/6MoSDQ9hwE0rWIr+a8snAYG08LqwhP3Bt2MLeniFVgOR5It3b46PNOq9vQzs+pUZBMia
+    4qpPBpLgV4+aRRs3mQyThlnvgyzH8zJqzj2rwoDOIOn3FmLSPQoNazkQF6fw
+X-ME-Proxy: <xmx:VpHYakjler-jzOQJzGkghdiyFEzmR0niPugBzHcYoCFsPnno6xKEgA>
+    <xmx:VpHYal_NeKmLXgb1yaSwZ0HZVno9s26W51oE6EcMjsVHQGMwLM3c3w>
+    <xmx:VpHYauC2HgTngoK5VyC9q_7S1cvyTwW0CypsXDwngA24nvxSD4TQCw>
+    <xmx:VpHYaiLQdQsFD2Yy0Gy4uLVmvSv-uAesd48H3xq0u8aCBx0qCcUqvw>
+    <xmx:VpHYavjJcAT2PVRDfqMnSHLse4AShZpVeJGEW7cvs_A0C0ADPdvamV4C>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Oct 2026 06:17:57 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 87f2280d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Oct 2026 10:17:55 +0000 (UTC)
+Date: Wed, 21 Oct 2026 12:17:52 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/4] odb/source-files: only reload alternates when the
+ file has changed
+Message-ID: <atiRUOns9G_j3TVq@pks.im>
+References: <20261020-pks-odb-files-reload-alternates-v1-0-d9e156323836@pks.im>
+ <20261020-pks-odb-files-reload-alternates-v1-4-d9e156323836@pks.im>
+ <xmqq33u0uoqp.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,115 +125,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-From: Masaya Kazama <miyaokamiyao@gmail.com>
-Date: Wed, 21 Oct 2026 19:16:48 +0900
-X-Gm-Features: AclHuK9_B4m4fDrrbhzYFe1msweJnkcG_9_o-vdiCwx9eT7EpD0BG3H7QOCGmvE
-Message-ID: <CAEdWB0ChxOZUszwDVqWY3jdvGpNtV9NRTG8_X1-f2PX9QnJQTw@mail.gmail.com>
-Subject: maintenance: stale maintenance.lock after the detached child is
- killed silently disables auto-maintenance (more likely since 2.55)
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>, 
-	Derrick Stolee <stolee@gmail.com>, =?UTF-8?B?5YiY6ZKf5Y2a?= <liuzhongbo.gg@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq33u0uoqp.fsf@gitster.g>
 
-[Resending as plain text; the first attempt was rejected by vger for
-containing an HTML part. Sorry for the duplicate to those on Cc.]
+On Tue, Oct 20, 2026 at 12:59:58PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > +	if (!validity || !stat_validity_check(validity, path)) {
+> > +		int fd = open(path, O_RDONLY);
+> > +		if (fd < 0) {
+> > +			warn_on_fopen_errors(path);
+> > +			if (validity)
+> > +				stat_validity_clear(validity);
+> > +		} else {
+> > +			if (validity)
+> > +				stat_validity_update(validity, fd);
+> > +			if (strbuf_read(&buf, fd, 1024) < 0)
+> > +				warning_errno(_("unable to read alternates file '%s'"),
+> > +					      path);
+> > +			else
+> > +				parse_alternates(buf.buf, '\n', object_dir, out);
+> > +			close(fd);
+> 
+> When we update validity and then fail to strbuf_read(), say due to a
+> transient I/O error or something that was caused by somebody else
+> mucking with our alternates list at the same time, we warn, but do
+> not roll back the validity update even though we failed to parse.  I
+> wonder if it is safer to run the validity update only after
+> successfully read the alternates file, and if the extra safety is
+> worth it?
 
-Hi,
+Good question. I doubt that the extra safety would really be worth it in
+the general case as it's rather unlikely that we can open the path but
+then not read from it. But that doesn't feel like a good-enough argument
+to be sloppy, because "unlikely" doesn't mean "impossible".
 
-Since 6e95b07e5f (builtin/maintenance: fix locking with "--detach",
-2026-05-13), the detached "git maintenance" child owns
-objects/maintenance.lock until its background tasks finish. If that
-child is killed in a way that skips the tempfile cleanup (SIGKILL,
-power loss), the lock stays forever. Every later
-"git maintenance run --auto" then finds the lock and returns without
-running anything and without any message, so auto-maintenance stops
-for good and nobody notices.
+So we could do something like this instead:
 
-The stale lock itself was reported in 2024 [1], where Stolee called it
-"unfortunately a common occurrence". What is new is that 6e95b07e5f
-extends the window in which the lock is held from the foreground phase
-to the whole background run, so a kill during the (possibly long)
-background tasks now leaves the lock behind. Before 6e95b07e5f the
-parent removed the lock when it exited right after daemonizing.
+	if (!validity || !stat_validity_check(validity, path)) {
+		bool successful = false;
+		int fd;
 
-Reproduction (git 2.56.0 on macOS; same FIFO trick as Taylor's test in
-the "fix locking with --detach" discussion [2]):
+		fd = open(path, O_RDONLY);
+		if (fd < 0) {
+			warn_on_fopen_errors(path);
+		} else if (strbuf_read(&buf, fd, 1024) < 0) {
+			warning_errno(_("unable to read alternates file '%s'"),
+				      path);
+		} else {
+			parse_alternates(buf.buf, '\n', object_dir, out);
+			successful = true;
+		}
 
-    git init -q repro && cd repro
-    git commit -q --allow-empty -m base
-    git config maintenance.auto false
-    git remote add origin /does/not/exist
-    git config remote.origin.uploadpack \
-        "echo \$PPID >\"$PWD/fetch.pid\" && cat \"$PWD/fifo\""
-    mkfifo fifo
+		if (validity) {
+			if (successful)
+				stat_validity_update(validity, fd);
+			else
+				stat_validity_clear(validity);
+		}
 
-    git maintenance run --task=prefetch --detach
-    while ! test -s fetch.pid; do sleep 0.1; done
-    daemon=$(ps -o ppid= -p "$(cat fetch.pid)" | tr -d ' ')
+		if (fd >= 0)
+			close(fd);
+	}
 
-    kill -9 "$daemon"
-    : >fifo
-    ls .git/objects/maintenance.lock      # still there
+I've queued that change locally for now.
 
-    GIT_TRACE2_EVENT="$PWD/trace" \
-        git -c maintenance.loose-objects.auto=1 \
-        maintenance run --auto --task=loose-objects
-    grep -c '"region_enter".*"category":"maintenance"' trace   # 0
+Thanks!
 
-    git maintenance run --no-quiet --task=pack-refs
-    # warning: lock file '.git/objects/maintenance' exists,
-    #          skipping maintenance
-
-After "rm .git/objects/maintenance.lock" the same --auto run enters one
-maintenance region. With Apple Git 2.50.1 (before 6e95b07e5f) the lock
-is already gone while the detached child runs, so killing it leaves
-nothing behind.
-
-How I hit it: in one large partial clone (blob:none, ~425 branches)
-the lock was created on 2026-06-30, a few minutes after I upgraded to
-2.55.0, and stayed until I found it on 2026-10-21. I do not know what
-killed the detached child; no git crash reports exist for that day.
-During those four months a GUI tool fetched the repository every
-minute; the pack count grew to 3,550 and the packs to 13.9 GB. Almost
-all of it was duplication: "count-objects -v" reported 94 million
-in-pack entries, but only 1.46 million remained after a manual
-"git maintenance run", which brought the packs down to 0.68 GB (GitHub
-reports about 0.4 GB for the repository). The commit-graph stayed at
-its April state, which made "git log --topo-order" over all refs take
-seconds. Two other repositories on the same machine had the same stale
-lock, created on 2026-09-29 and 2026-10-04; both are regular
-(non-partial) clones, so partial clone is not a condition; it likely
-made the packs pile up faster, since every promisor fetch is kept as a
-pack. Other projects report the same symptom, e.g. [3] (auto gc
-"silently disabled for a week") and [4].
-
-A note on core.lockfilePid: it cannot simply be used to detect a stale
-maintenance.lock. With 2.56.0 and core.lockfilePid=true, while the
-detached child is alive, maintenance~pid.lock contains the pid of the
-parent, which has already exited. A liveness check based on that file
-would treat a live lock as stale.
-
-Some options, roughly from least to most work (I have not tried to
-implement any of them):
-
- - When "maintenance run --auto" skips because of the lock, leave a
-   trace that a user can find later (for example like the gc.log that
-   a daemonized "git gc --auto" leaves), instead of returning silently.
-
- - Record the pid and hostname of the actual holder (the detached
-   child) and ignore the lock when that process is gone on the same
-   host, like lock_repo_for_gc() does for gc.pid.
-
- - Use an OS-level lock that is released when the process dies, as
-   suggested in [1].
-
-Thanks,
-miyaoka
-
-[1]
-https://lore.kernel.org/git/CAN477tHJnVnOKfUsG5G9QAVdzYvmUuC8A8Vxt8mtHB23fd=hAQ@mail.gmail.com/
-[2]
-https://lore.kernel.org/git/20260511201049.GB22912@coredump.intra.peff.net/
-[3] https://github.com/craigoley/remudero/pull/9555
-[4] https://github.com/solidDoWant/vault-sync/pull/115
+Patrick
