@@ -1,88 +1,107 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.52
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792591437;
-	b=MeW5pKCXeDW/WPZiLUzXsWZkL8lujPGrszSEm+Xvj2r1xTnuecH3/1fjTdgK02t3ggoc
-	 dAE1ExkCrRhjcaVLhiCOVBHZ0QZv1G3Nf21mGZ5mAXEPTNgTaZ0NLudRM8AlYKnXwoh0U
-	 0thUqePZPO4AmEVAmP2fc5WBm9a8Jnpcm10/Ql9QdI7w6WIURRuYenFowcLiNGLZfkIT4
-	 a/Dzd1DrvrzZ/QCTcYTG1MZCu3zBI6WjhjZxxg/zlw1GcleCWJCkdbKLX9UcAX2MULVb9
-	 V2JCoYGdwBckDAO2yJbdmVnqnWID5eh4E5jdJo2Q9aTNweKPGeyqjEpiMKinX7p8iwg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792591437;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.41
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792592600;
+	b=3+CH3ebvShV5pNliOb+VITYWT3eNuoSX1owV9DLrjjf+W0tVOc+FABRwn0PWKSfcGOod
+	 UtQZ1nP9mDyDZn94DjzMXrVJaPHsCq18f5EEAE0Ui19WCddDOyCdrN1zkTCCCMJ0nUyrQ
+	 ma+f03R6Q8WUIEyxHCdFU8GceHilHNMkDko0vH07wPwZN/x78Zba0emG6vKc6d7oS/BCw
+	 6A2J5NgYXSEiBU3Zttxv1AuEl9mh9Al/C+VUp/etfC6WNQC7ggO7WHw722VuKL/u/vl3b
+	 +6HBzNCCfEodPzA8NSVzl61alGsuZZQfAvM9oXSXufPincu8qEZFHUe9LYz+SdtzlIQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792592600;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=o9srrQcCEXZkyzbzpXsLVPEzLa+z1EVTxvUK/CN93B0=;
-	b=MFFCTTsbRVXzMLmPN8FEn0GVY47HaD5EinsecQ+z9VshQmjoGxT4PQsnuZJ+Cyt3oxEz
-	 s9jrSVpo5qihhJ3wN/tCD6mlpbwZ4tMJUkVdPc0AY1olyIamz1RhfpJ5K419a3fF60ljV
-	 Zv85lKSfQ7yiU0ZWySrAwmgiPlmqxEcKAvsUhlIm/g6HPbCHoAbp71aenZyij31p8Dkf3
-	 A4AHA1kze5v15g0FtFll+DURcqsqgf7QHeDU56bzlkHKloJUz/b2WHkWgoZ9E9TZ2BpnC
-	 oS/sdKtunBWYLVN9gQiVWwLTNXbI5yjyjZBsXyv8+pJ0GEJWuo8E7L/ozNf5ITqsANg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 Received:From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Content-Type;
+	bh=rgbjqUjgri3y4Qotxqo2hzqfIjUvTE3IQoCcnnZRUrA=;
+	b=i/YmKvtfpBxD/y2Z28hy+aq8r/il20T7oEIoVE0JN7902SvNXkiuSe6IUDxDqQwvSaeo
+	 Xd4Hm+/SmLJJXDgG0EkFeIRNtuw6uLNwPwJnwbKnKtuxHOuX95T8jTh4wq9pLWZGYD1bw
+	 yqVOxbkaVOYK2u3IfCeKFOIFMmt6aOufbkKD4hFuglZxszpH5ZyBZNp/k8816ylgHLN5w
+	 Iw6JpU0rIF00IhfO2pDazKoUgA0COBP7Uyl6EIg12yZqx+uBzg/WB0ENyWOBhCyvXfRTN
+	 qG+odZfGtSxCCQ+PNuncCu9mqda2auvhILgstxu8UxverNuYKYlKmS9pP5XpcrYV8GA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=f1wJmlUE;
-	arc=none smtp.remote-ip=209.85.221.52
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ZGPZ4YjL;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.41
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07BF606A31E
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 14:03:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B07BF606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7AA606A330
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 14:23:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5C7AA606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=f1wJmlUE
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-48e0d885929so615093f8f.3
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:03:56 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ZGPZ4YjL
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-7c2f48f3a96so275628137.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:23:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792592599; cv=none;
+        d=google.com; s=arc-20260327;
+        b=VxDDemJKTjFdR6PUuva9U13pIHjGiGb0wbRBTEFgp4A/x/Ixolh5FfrKiLnkt48sT8
+         H6RK2CIYhseuMpMcYtKxm4X75NhFFzkZqhzBERx3Fb/3Qj55YxULFHAwOhWt7bTDCiIV
+         eeJQcy3irWt3lKChVs5n5bz044OpOqW2fkjDDo12Jybq87bf/F2vJHsAJfrFou7Jsu3e
+         eAjfSz/4EdCNnQTEgsqyuPBTl28UlC7LjUsDEpDfUkarEQYzh/Xa16CwJaw9aQiFhJR0
+         BS2O6tLJ0Yc4QDXp+FOK/khicx8rjtNeSpkNpmvBB/6iJ6dnRYowm071rumSbcxeYwED
+         aOPw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=rgbjqUjgri3y4Qotxqo2hzqfIjUvTE3IQoCcnnZRUrA=;
+        fh=Z+Sx2DP6/m1H3+192xv1TB2SL9klwG+vT7lxmms8F+k=;
+        b=GneonWbbz7Qoqu4yNV1pcqbirIo8h0eMV71BI3bHGzYLfmxZRdIay7RJN0u9PLCZs0
+         +rpcKxQfuSYpl8yhZsUJHlqnQg1wEc7etW2WyaNcXfB1555age3YZKuyt3/ddNgPSBgH
+         /AQPCNSa8k7iRvzt7Q5bdIZQAaSNt+5Ok+u+NrPPswLzCgn25qykEkXzBGYtD1KCym+p
+         voZYW6v2f6JplWSjF36cDa1X/UAFONm7qJ7AC4BIjAjAiDKxbN4g69+jSa0ZvdEU6SOl
+         Fta2VoVrsqFQGPiSdGuiqjbN4dkTjwAfn1rwnfFcgPMky0iWfUo6aX7xURvqFptRvlbe
+         m/Sg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792591435; x=1793196235; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=o9srrQcCEXZkyzbzpXsLVPEzLa+z1EVTxvUK/CN93B0=;
-        b=f1wJmlUE+7YPk3AjOZHYQM1Cog+q3lfQqvq1wnV65lLsANuyOLn1NLMxyWQNX1Q9r/
-         bWE84W7NK5VnJkvtAjy9qXWJGyZ3inwgstHLZZQmpLnl0PSMCRGtUmOY7gyOkUuqdujl
-         8xoWsSua+3hCzVjoWzeBpTXUG2NYEO38lRIgufBWXBAncnCV/Tf6WKWfB3RUn3Ltg4Ow
-         +3cISM0l2Do0VD2kppAqmP9JhMwYeoYruQsh74j2WZRrvDHWanBorPSzj2N7J5jL2Pks
-         FveakK1ltJ6Qp7ZzkonMcXXPbj1s2BHBHNwU3vTwTlhTKCy9G1WCmmUmWB5zWt2cLjo4
-         73DQ==
+        d=gmail.com; s=20251104; t=1792592599; x=1793197399; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rgbjqUjgri3y4Qotxqo2hzqfIjUvTE3IQoCcnnZRUrA=;
+        b=ZGPZ4YjLsHfXtEZ3j+K5tbV5Zf9tTLwirIExujqyha2JKw4i+LEivVflYm8fqRazXz
+         Zgn9HwtUQDU8I6n/zi1TTvEg05pT+RBWRrNS4+GL39JqnNL+NDD5vwU/uW5HTADOwrfq
+         ptLKdDVOY500JQVeiCyE1Sf26IBEfcaNxzOIZO2e8/+COognoGiqWMpyrgv8E3GgPup7
+         Eo5Xz6SYTkoGAvxnTjr/z+4jvbq74HMX5dxsDqMyxsGlY7xGt6+cUb9Xt1o93In68tBf
+         G0uFhfo9AL+qeI5ZW/G2HDWRqipLmVnw0JxSlEeTeJOmUdziBkdq14sQe9I2KqZqwsEh
+         Du3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792591435; x=1793196235;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=o9srrQcCEXZkyzbzpXsLVPEzLa+z1EVTxvUK/CN93B0=;
-        b=dugiak9hDQ/kUSkZAgvYj8wQE/9wUEVyKb2q0dpxO15fLsLuYgbas/ztEo+hJX2za0
-         +30OXd8eRp91Mgl/+GTMCnrLGSidieOOqiu40kLrAMwrc/jIz5omXzWqqC0djkJcCeUn
-         kPTIPTmuT5JrLuDDSZeZXQPjJzOnue1bg0vMEKxiE5HegD9Zmo2FYnvMBp//VxqEYFQl
-         bwPo1wPLkdZC0FktQrXcbZUgIJkaXbWG7zx/N+I9UL45uXCouP95HyUMVpaxZECMr2Hd
-         8d7xEmOowfQQPJPGP0t5A1JrqsFn9EFNwOyeobmmhgNj71jpCrdIUdAqs5kmWEWx1KTW
-         RN6A==
-X-Forwarded-Encrypted: i=1; AKwUvBzjpiQCy4RVnLbmNdY1p63M57vKE6kRvmxJVtGwgh+NyhH8Hvdg6djDtei0388rCWS+y8c=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKWJKbasIBTrnMFfRP5S38Akij+OnOTXluQiT19GIe9fZctAu4o
-	XU5Egej5+nZSgFXZMcVpEhDwDN5JajuBPeB7A5B7ThkN/FBZYSxMWFps
-X-Gm-Gg: AYBFou2ELAvb5pOToG7NyFurKpsmLvMHcnJPhqs4aplCXdpReic+5dk0OSZE6bg5cIE
-	yADMqU+m8/2f+qDU/3gS8C9h3dx32YXp9+6hVk/oxYWOMHpjzxXuZ6HbXM8XFTfNE9AgU3T1LdI
-	F3uMgWDmMwt0miywKVL+jal4xjjOK7+RwOZG2IEiRj01/Dcjf2WQX4xQNpQe8g+BieZnD6kOvgu
-	3rRuEDc8X1D101AkI+z3X0RHPl8GdlcGLnbbmcObH/wU+IFmi4NwL3P8e17DesZiU8wYSX+atJ9
-	HPgh8+RfpfIbuHZ8p2mn5McuckqGGWzW3XAv47yfJjq+6u6DrZiVFx0q7As7rWTHChMfPElU/je
-	90Ztt4qVlwvouPYTUCEdUg48IGGbtmT0SHX6BKUizA2tbzQi0ZVHTkIbOUz28sOm7zLxps54Vox
-	WdiinbNqRqNuKwVeisH8w19O+vVKurXRIh9jiP6WRWvELz+uTSsSrQuza9zgLHva6VzHCvGnfrL
-	0SG3gfmuUJzjA/ig5ZsW5M39seDrkeVlaJUGVEhhscIdqqZH2xq2Keh2bSztQn8AysyUf7KHQn2
-	Ia1811pcRxGDfd1b4ThyCs4tJu39saylhA==
-X-Received: by 2002:a05:600c:8b10:b0:4a1:fe55:88ef with SMTP id 5b1f17b1804b1-4a1fe558af6mr44957475e9.20.1792591434784;
-        Wed, 21 Oct 2026 07:03:54 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e25841fe4sm5996914f8f.53.2026.10.21.07.03.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Oct 2026 07:03:53 -0700 (PDT)
-Message-ID: <43b81ed2-6cc2-409b-be39-fa5b0911f532@gmail.com>
-Date: Wed, 21 Oct 2026 15:03:52 +0100
+        d=1e100.net; s=20260707; t=1792592599; x=1793197399;
+        h=content-type:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rgbjqUjgri3y4Qotxqo2hzqfIjUvTE3IQoCcnnZRUrA=;
+        b=ThCPTtUU0GjocccIphQ4IRUoOv52wXvfUZfsogO1tLO9O9ja0CifHUqp2q2v72jXxq
+         zcwnmbK9NoO5BmX5Qw0nvvF8AlZuIm8Ex7WkucJ9YqD+6EJcEyXRBVB9GR7jwxE5k8Ex
+         3kxUKihCUp5Ng2GSF6kyHDlmr99OfFlN2BDvAAAtMMCLI+hKZJDAbYnYgv+vey9Zs4RZ
+         BpZ9jfcuwOFuJRV3nzuLkAPy35KihZ6Kjlzn4R5GLNB6xBAVIvvV2rrIbh0pnV8ERxru
+         BZJvLf7kZ+H79yiQXIQdJY67jGwbTrfN6qwmiH8eI1E0lcNWG0WoU1sKz19UkaRstVV9
+         OkMQ==
+X-Forwarded-Encrypted: i=1; AKwUvByPpbtPLJNJciUa6Yaj4PIk4pPzJnINJaOui2vTEcZY4RE6pFJAG2ps+EtgjYjcSfpyxJE=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJCILqkq9acuGTMNTWbcP/algO1U6+8jW12ic6cZDrZgJ5aq2iz
+	RwR6A4nnz+yqE7xBHPkm+UbASZhGtPme7qzpw/AnGSIVdoxZS8isRxworLcEfMrM1oz4lNv9Tf3
+	14J28IylPey0Wm5Z/iEr4BcbBTRdC1cuwRg==
+X-Gm-Gg: AYBFou2n87/BWQbkBdwf0U4wvIBlAQc9wRfP2LH503ordWyZgXa095b2aPG8kb6QFjG
+	S9my5AAMCZ3HyKCLP4bP6bL3owaXBvzQMxnmwSLV3F9nKKnl/g9mp9uYMS11QVi0x2n6U8jD2Vz
+	rM+Em1VoeRRwSEdn/FP3iw8foakyvA7BYK/f9clO4JSvAAyAjoIcfAA4rbaVEDDnH5TO666CR0J
+	PxbVorRbNivwDO5QbqPvTI9eEdAIpcUaRTpLJD81FMh50g20bET8Jcg1ByyoRa+M96lKjKZAOUM
+	6LA/kS8jJGOja7R8SO4sCQLTCWhEVzJnEp+1kBknAzzUaXb1S+HFls082RsOcRiG3pBND9ROS98
+	+27DSRxqmk1pi0f2ZAEXGQksunVfxpb8i5lDXPjkrBn8/ixBQL1TWgEl/hTo5wuW6EavFqzTttI
+	9hFlkrpWGOGNHlgOrC/ZenmMHrZTM=
+X-Received: by 2002:a05:6102:d87:b0:7c1:bc57:c7f5 with SMTP id
+ ada2fe7eead31-7cc92669e24mr700336137.12.1792592599154; Wed, 21 Oct 2026
+ 07:23:19 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 21 Oct 2026 10:23:17 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 21 Oct 2026 10:23:17 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20261021-b4-pks-odb-extension-v2-5-8cf11b65eda8@pks.im>
+References: <20261021-b4-pks-odb-extension-v2-0-8cf11b65eda8@pks.im> <20261021-b4-pks-odb-extension-v2-5-8cf11b65eda8@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,116 +111,140 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/2] worktree: reap ephemeral branches created by
- "worktree add"
-To: Jason Newton <nevion@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Cc: Jason Newton via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
- <pull.2317.v2.git.git.1792512249.gitgitgadget@gmail.com>
- <6e2acdc5e2578da4e915fd2ac541a776349fb23e.1792512249.git.gitgitgadget@gmail.com>
- <CAPig+cRsSN9gY405MGsCQzLuxzBKcfHo2Oc8Z4WB-U3BGd6m_Q@mail.gmail.com>
- <CAGou9MgdF_xA+e8YYn8ud8TUSmY3j_q9jbUTy2wLibTz1ObJ7A@mail.gmail.com>
- <CAPig+cRCaSmEULP1JpW3fjiJDR0Lee78puq+KRaXiD9ciX3fvg@mail.gmail.com>
- <CAGou9MirKucUdx8eM-BfqO9sZrDrckwpp9sYDnDVfiqkdZ8wdw@mail.gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAGou9MirKucUdx8eM-BfqO9sZrDrckwpp9sYDnDVfiqkdZ8wdw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Date: Wed, 21 Oct 2026 10:23:17 -0400
+X-Gm-Features: AclHuK-1_wzRKlyBUbooorSK7973R_kCz6xsP7qkHpg78VkjwE_ngLOCsqU2bFI
+Message-ID: <CAOLa=ZRzu_7No085hEHnULo0L50y=ntx3MSkb-VbcywChdOPZA@mail.gmail.com>
+Subject: Re: [PATCH v2 5/7] builtin/init: introduce handling of object storage format
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000019a16e065e5a7dc6"
 
-On 21/10/2026 09:28, Jason Newton wrote:
-> Please focus on reviewing, I use mixed but you shouldn't assume which
-> parts are and are not llms.
-> 
-> What you don't realize by working in a silo for a long time is your
-> communication skills to external parties gets reduced with jargon and
-> nitpicking ; I have the llms both assume you're wrong and right while
-> seeing the undesirable behaviors your stances have to the one that I
-> know is correct.  You seem overly sensitive to the usage so far. I
-> have no tollerance left to give - so stay on point. You should
-> consider several harnesses chose not to even go through PRs and work
-> around the functionality like grok build did, patching it in
-> externally which is kind of nuts - and replicated.  I think it's
-> something you should think about the nature of quite a bit.
-> 
-> As I mentioned, detached IOWs sucks and you shouldn't have bothered
-> mentioning it because it fails hard, though it was noted and evaluated
-> in earnest for a bad idea - want to go back to the long but more
-> neutral form?
+--00000000000019a16e065e5a7dc6
+Content-Type: text/plain; charset="UTF-8"
 
-I'm afraid this messages falls far short of the standard of constructive 
-discussion that is expected on this list. It is perfectly possible to 
-disagree with someone without attacking them or telling them what they 
-should or should not be doing.
+Patrick Steinhardt <ps@pks.im> writes:
 
-It is clear that you do not like the current behavior of "git worktree 
-add", but replying with a generic list of the differences between a 
-branch checkout and a detached HEAD and then attacking the reviewer does 
-not explain what problem you are trying to solve and is not going to 
-convince anyone that this patch is a good idea.
+> While the object storage format extension can already be configured
+> manually via git-config(1), this isn't exactly an ergonomic way of doing
+> so. For the reference storage format extension, users have a host of
+> options available to them.
+>
+> Introduce the equivalent options for the object storage format.
 
-Thanks
+[snip]
 
-Phillip
-> -Jason
-> 
-> 
-> On Wed, Oct 21, 2026 at 1:07 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
->>
->> On Wed, Oct 21, 2026 at 3:40 AM Jason Newton <nevion@gmail.com> wrote:>
->>> --detach and an ephemeral branch differ while the worktree exists.
->>>
->>> --detach leaves HEAD with no branch, so status, push, rename,
->>> upstream, and symbolic-ref have nothing to name. An ephemeral
->>> branch is a normal refs/heads/ ref for the life of the worktree.
->>> Commits go on it, and another ref can point at them before
->>> "worktree remove" deletes that branch.
->>>
->>> Deleting the branch that "worktree add <path>" creates today
->>> would change the default, so this has to be opt-in. That opt-in
->>> is not --detach: the worktree stays on a branch until removal.
->>>
->>> These worktrees might be minutes or they might go on for months;
->>> either way they should be easy to use and not require flags to assist
->>>   in the majority of common case behaviors, moreover detached feels
->>> ike a degraded halfway state, frequently allowing a gotcha to strike or
->>>   a loss of a safety like a gc based reap.
->>>
->>> "git worktree remove" does not delete whatever branch a worktree
->>> has checked out. It deletes a branch only when this "git worktree
->>> add" created it by DWIM (the final component of <path>) and recorded
->>> that in worktrees/<id>/owned-branch.
->>>
->>> A branch named with -b/-B, a branch that already existed, and a
->>> detached HEAD are not owned and are not removed. A worktree created
->>> by an older Git has no marker, so removing it still leaves its
->>> branch in place.
->>>
->>> "Unconditional" in the commit means that this one owned branch is
->>> deleted even if it has unmerged commits. --keep-branch turns that
->>> off. "git branch <name> <tip>" before removal keeps the commits on
->>> an ordinary branch; only the owned ref is deleted.
->>>
->>> The call that changes is "git worktree add <path>" with no branch,
->>> followed by "git worktree remove". A caller who wants that branch
->>> to outlive the worktree already has a spelling this series does not
->>> touch: "git worktree add -b <name> <path>", or "git worktree add
->>> <path> <existing>". --detach still creates no branch, so it is not
->>> the same state while the worktree exists.
->>>
->>> Ownership is written only when the worktree is created, so I'll confirm
->>> an older worktree still has no marker after an upgrade.  The branch stays.
->>> Upgrading does not mark a worktree you already have so no upgrade
->>> headaches are expected.
->>
->> Feeding a reviewer's comments into an agent and pasting its
->> LLM-generated response into an email is not a good way to convince
->> project stakeholders that the submission has value. If you can't
->> explain its value in concrete terms in your own words, then you're
->> going to have a hard time eliciting any responses or additional
->> reviewer feedback.
-> 
+> diff --git a/setup.c b/setup.c
+> index 98140a7641..3d74f8eeed 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -2466,7 +2466,8 @@ void initialize_repository_version(struct repository *repo,
+>  	 */
+>  	if (hash_algo != GIT_HASH_SHA1_LEGACY ||
+>  	    ref_storage_format != REF_STORAGE_FORMAT_FILES ||
+> -	    repo->ref_storage_payload)
+> +	    repo->ref_storage_payload ||
+> +	    strcmp(repo->object_storage_format, "files"))
+>  		target_version = GIT_REPO_VERSION_READ;
+>
 
+Okay so this is what also sets the 'core.repositoryformatversion'
+config. I was specifically looking for that.
+
+Does this mean that even for the files odb with a payload we need v1 of
+'core.repositoryformatversion'?
+
+>  	if (hash_algo != GIT_HASH_SHA1_LEGACY && hash_algo != GIT_HASH_UNKNOWN)
+> @@ -2490,6 +2491,12 @@ void initialize_repository_version(struct repository *repo,
+>  		repo_config_set_gently(repo, "extensions.refstorage", NULL);
+>  	}
+>
+> +	if (strcmp(repo->object_storage_format, "files"))
+> +		repo_config_set(repo, "extensions.objectstorage",
+> +				repo->object_storage_format);
+> +	else if (reinit)
+> +		repo_config_set_gently(repo, "extensions.objectstorage", NULL);
+> +
+
+So this handled reinitializing the same repo. If there was a previously
+set object storage format, we unset it gently.
+
+But, we already catch and error out if the extension before and after
+reinit differ, so this `else` block is not needed, no? Removing it
+passes all the tests in this patch.
+
+>  	if (reinit) {
+>  		struct strbuf config = STRBUF_INIT;
+>  		struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
+> @@ -2726,6 +2733,7 @@ static void separate_git_dir(struct repository *repo,
+>  struct default_format_config {
+>  	int hash;
+>  	enum ref_storage_format ref_storage_format;
+> +	char *object_storage_format;
+>  };
+>
+>  static int read_default_format_config(const char *key, const char *value,
+
+[snip]
+
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index d080ab04a8..0da14e8f70 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -898,6 +898,168 @@ test_expect_success DEFAULT_REPO_FORMAT 'GIT_OBJECT_STORAGE_FORMAT overrides ext
+
+[snip]
+
+> +
+> +test_expect_success 'init with --object-storage-format=files://<relative-path>' '
+> +	test_when_finished "rm -rf objformat" &&
+> +	git init --object-storage-format=files://objs objformat &&
+> +	echo files://objs >expect &&
+> +	git -C objformat config get extensions.objectstorage >actual &&
+> +	test_cmp expect actual &&
+> +	echo 1 >expect &&
+>
+
+Okay what I asked before is expected, files with payload is v1. Makes
+sense.
+
+> +	git -C objformat config get core.repositoryformatversion >actual &&
+> +	test_cmp expect actual &&
+> +	git -C objformat rev-parse --show-object-storage-format >actual &&
+> +	echo files://objs >expect &&
+> +	test_cmp expect actual &&
+> +	test_path_is_dir objformat/.git/objects &&
+> +	test_path_is_dir objformat/.git/objs &&
+> +	test_commit -C objformat A &&
+> +	git -C objformat rev-parse --verify HEAD &&
+> +	test_path_is_missing objformat/.git/objects/pack &&
+> +	test_path_is_dir objformat/.git/objs/pack
+
+Super nit: some newlines in between would help improve readability of a
+few of these denser tests.
+
+> +'
+> +
+
+[snip]
+
+Nice. I like the extensive testing done here.
+
+--00000000000019a16e065e5a7dc6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d267f0c5ebe64300_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1yWXl0TVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN0cyQy85UTdKZjMzeFNUUHRCbTcxa1NlYTVYbXByNQp2VXQxV29vMmRX
+OXVDTlBVNUVDT1JwVEFnUVV5NDEyUnhZZkRybWZCWjBJMjkydno0eEFvQ2lrVlNqUG9wajdSCmZy
+NzdEUVlyTlg5SUlTWGc2U0ZkOFlHQmhiT0loN0N3K2NHTUJRV29JWXMxSzQvbGpRVS83RHJRdzVQ
+bU5tb3kKT01kaVpzSVFlQ3JmRmRkdW4yeTlSQzd2bGQ0WXhWb1lRZFJmekd4LzRpQjlOckpZUU9O
+TWZzM2Uwd1AyOUZvRApEUjZKL3lSWTJ1THhvV25Oc2tIYWhKTk9rVHVGcGVnMkJWODcvYWFSSVU4
+ZjBkaVBOMFFrbU5xNGtGb3A0Zkg1CitoaFo2U1ZUNHNqNkhFVDI4bjhkT2FscGZCTXdEbVRqMDUv
+RkgreEJxZituUUQ4blpMV2wxOGE4ZDY1RmZnZU0KMDQ4ZkZWdXAwMlRad2ZlMmJoTnJFbUhQZ0dx
+THVTUlRqYW4wc1p5bEYrU2dZS2xza0c5aEdPdEFDVGEwTDNlNwpNUStxSGlXWXRlSUtsWi9kK015
+S21NZ0NsMThpVGloQmw4REp1VmUxQUl4aFpZTHpBUi9qYURkUG9paWhnVjBMClJWWjVBalhxcm5p
+ZEREQkFLL29reldWZlNvTjhSdzhuK2VVRlJlOD0KPWxiSS8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000019a16e065e5a7dc6--
