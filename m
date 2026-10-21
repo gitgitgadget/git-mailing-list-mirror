@@ -1,122 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792562824;
-	b=qx2qq14eP9rMrjsZhyg3dKAoxOH+yqNbFMRhCWRIP3f80rxu/gmM1llUyz84KpE9S4QS
-	 9IjwRwjEIxluT8efqkO0A8OhBZ0tqnT76Bb0fmruhLlTTbLpgezMiUcCHq2IbHKtzn0Cp
-	 JrjRl3l1ZUb3vZdcTuFmuNqcgn85Bx7Imz4Xy2YHoIu6oChw7LBtwZ2Tm8DffdsP6k11z
-	 MVdrR4adyC817tWfjTdtG3Zbnma7ZTT7BWg/VtOfXtb4UUAME5AdnBN3EBF4nCuwr18ar
-	 FG7+9MLyNpNahGmZl85Dzms/Ed9+JchHxVuyxiSuA384ykkXEjYk4WMljFmdOuPSGbA==
+	t=1792564388;
+	b=hg2L7FMlhlY3ca7IOaWH77a4lSt/YvYWvpk7c1XDQCVjbsb920Al5Was2NaluixEFPke
+	 t3igMM477d8Dw5CyW/S1a3/Bp81538yhdfmX5mbR9WphqyJdqsFFquSoObPweLW8rIFYW
+	 M2uxqBkiappUZQfHIUxxMLMK+rsmu+z2jEH0GxaLt8/aNJ741jbKd8W/3/KCS7fSox4OP
+	 1yRKfRGx9WZw0UIw8XnbqaKRoJU9n2WQ+J62Ycji2Fc+JuFXKhuemMYDJKlBYSn2pLoAA
+	 J3FsOLfnAp4dpta7gF7vLjZM8FMTeMlJs2jf9qbzI/7gFVe1pkArk0M0sWP9U4zsx2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792562824;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=cTxkidzFTSzQ1Nyzt6k3RLFpda5Zrg3uWg6x4dv5PtI=;
-	b=RxmDo/XMIuVKscTamgGJEYLgqTgrM3JVxTcJ/H2g37md2nIN225YTIGxLvGfiFluwRLv
-	 +RgEmCOH/+VmJrNuHMGZ/RhbXAR691JuvRELlxFt+WHPtM1qk8ik6hhnat38bn9e5l+jm
-	 aZA5L9srDrhcHfuPJQZ77RMrbqAtztS1kXn6A+oUQYQGlJbrVE+F5Qy8bk8gh+CwLHSd0
-	 dI7KMjPPhZAf0HfqJmOn1r4ho0bWaTfuSwMGYRcHC8NAbRhXN+t9vS06+2XbLJnlmesTf
-	 TMcq9esEv8fF6NnhcySLOL0ipzAwDsy+psh3MsJTrYW5J+A+f4n9ZK8E1u/kbmyF5dQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792564388;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=+HuHBfO6JE9om0ifylNtkoFCSWtZfkC00TqL8C+Y700=;
+	b=Ft8lH1r9ZzNz9lqTthSxKuF1/Y/bKkb0IfXOsWiKtKKfWDhIyT4afbaZhhy7LqpiHrgL
+	 sbbeBV3vDaEXpB0UjDM9L1FdWM7uya+ujrC6RFoHZRpG5r0WcCJo68F1GSzT7wDQ7tL2R
+	 sbFlAye/qum62aaM6yR5X4bycTkBqReriJXT79OqJJ/goaHGqQM0YlJL5Z61ZN3QCLYUl
+	 TnGVgYfjo7ljcMWbYbllA4s8Rs1Aph/NtozChtV0bLKKBvr2QL0vYjO8r8tW2xzyxpGIh
+	 JDs79biNMxq36DcMAdDX+O+KcMVurmowD2hvxoNXi12H5NwkJtlW0Y0ujNxnaotljag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b="DPQn/kWd";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Y1xoDf9k;
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=cxVlPRFW;
+	arc=none smtp.remote-ip=209.85.221.43
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6FF606A32E
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 06:07:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9A6FF606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F96606A31B
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 06:33:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 72F96606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DPQn/kWd;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Y1xoDf9k
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id C4C53EC01F5
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 02:07:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 21 Oct 2026 02:07:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792562822; x=1792649222; bh=cTxkidzFTS
-	zQ1Nyzt6k3RLFpda5Zrg3uWg6x4dv5PtI=; b=DPQn/kWd2A/HXLYMPHGw08wDoQ
-	sKFPUhOThEWACRUVX30YROb4hE70eWkFOT3HnfHP4bhcgL4RpilPGG+6AHY0sn1u
-	nw6SbkpBH4CQmpsp+WFwVdGBDfd4+kd40ztvvT39LMLrsoLyWOR8WFWBYL9AXcKr
-	FcIfrwxIYsNRc454l+9BCC/dog7djIVR2e8qPp+yCqon89wrgwWDAGMQFs/fR9/x
-	WZhFDpZq0bu8KxI+5qpfofpKqm6RssF9KTBPZfDlXGjsIUiCcMuTCN197EUdUeDi
-	WHr/80PX8UYBD69k9u4QqJUfiQz/A0zwWRXxN0DbJNEIBR78yNbbLbeAxQwA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792562822; x=1792649222; bh=cTxkidzFTSzQ1Nyzt6k3RLFpda5Zrg3uWg6
-	x4dv5PtI=; b=Y1xoDf9kgx/hE7YF6/kpvqU12f3zs8m2FejzevrOEyz19gw6+Ae
-	+GS6NNjE9yI3CPiF6856UBQAlyPxmZ8KSRLWjfBVxqztYIeXzD+BEc3vQdvIU5Pk
-	wIGFr8dvDofhEpe472kNEaQxnaMZMiCXHY0dsSDHfM+M2HEHvtEO+zALVRqJPoez
-	JNcmpc3wotkgPeFaXlmwphR3DAdLyBwmBiV3lwcMGskg16WiNiz+zMH9PtCaWZH9
-	W6v2I+jqh9qNIsY/GJTQbsg60tSt9ZwTWCGBFa1p9LnnbPCdasfESYk7curOLo+H
-	A/qcs4i62d0n2UdxVdWPkFyyjlSYyuT8ddQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792562822; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:CwWRgz1YlptNsu99UOiafMSrdD/A3Sdj1mX7of0T4ghNMxZ
-	8z6uycfdqUfayV+igNhaDbEqDgKHta5b3b2/YLCFe6G3+Dk/2uUJurbLZDgKHV1E
-	JlJVRXtfEKHUy6LwsnuldeJ9SGrpjooJu7RINEi5A2otCXNVFOuBLOKf4zESa561
-	BG7bDDVgw8iEo5riXvjYe7so44eRMEQLzZef40C75m+rb+AAboeF5Sz1FCfpq1mz
-	PxI/zRpzmSjpgh2lklLA4/zq9p0uiNSvmRdeP12J/Mf5R3BAXbNT6USIrgCNysBO
-	oeaPJ6z/kJk/tU+iYTfaCeJnwGjCQwRuuGZ21SQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:U3pDaMX+/SLGM/IqwKD4ZmDwg+ZQjRkCOLC+h1FQlSI=:xVqEJ1kfXUwjpgqS4x6eh9dTKG2DBVn6uyP6zX463hc=;
-X-ME-Sender: <xms:hlbYatwXJ6DKEYChcj-Mr9tU5zdNPimlc9xI1CZ08YlK1T5PLw-Zrw>
-    <xme:hlbYakSRE3qRDSL66iOVFaG8bsrNDj9I5vMljhXyMnNe7ugTQFHeyinGeSRJ1Cc8A
-    TqPV0MbSkW7I7U01ZmtZeDEOxwKZs1yTe6Yko26a9UYg2Erzxwy-g>
-X-ME-Received: <xmr:hlbYasX_cd9I7GdvV_l3AxDYBthq0uiGtiM_bIW9NGcZ9UJkQezz65zfkAlTxw7r-hatAxwsrBvZpCKFBNjK2FEPdhIZVqf8JZQI>
-X-ME-Proxy-Cause: dmFkZTGh0knN8UzaiuV9cQjPr+gdyYaUDN+rPBr1PP0+wfwfFqJDxVrE9uThlaUJt1TCw7
-    uLLZ70wqMCGiWxykmC2Xnhf/hApwWSGrfS84KLXFGaIdzzhV3vwJrApddNBzzQDKMaacS4
-    i8Qer6OI2VN0J3k/puNurop7K+FaIkClk2oEwJe8WG+zU35SZD8dNiWx54yzNfxvyxxHQK
-    bmVxJ1aqG1PTvX3j/w+t5Txvhmui9jIPJNgCavzxfcly+vS+pxzs5zCrC9/hv4WN+vhZyq
-    NV9GWlSN3qKzD6F+5NiLEy3Z3cX+wMSW5o5+DJhsDJ6nXpPXYo2t4o2n3vK7iSptpjcxTQ
-    corlbpkH4h+6j9I9I2LP4G7JMMMSUr1/VRnwzLeO/Pl96TaKhGvCpKnCore9OLGpdOXh+u
-    MyoTsR3apt+FzH0jAMx+YOCntdUdTeh5cZWZelyllOfioLiZZdwc/7ZJLHsR+f1AqnHyvX
-    ks1DLaIq/dd1EpniVV6t8lKAoDAufSZAp8RUCcl8gwEFewJrK7cARPmqMbjJARHOzCqLlT
-    o8s/dOvBtK6wYNXImpo7GcoqRO6KleuIfFemIYjKHsBvMxBkxlK5Dv9EE/Lx55Hn6H7FiY
-    6+QLATWa+tTA7Ve6wr2fq1PlNuw5DUaG4coUhGyRzbpUzuwADm45UiVlx0Fg
-X-ME-Proxy: <xmx:hlbYaubyEAjLhoUQ81-NTbxj1JhhZOpfJulJOooeEFESXV5QZf6N9w>
-    <xmx:hlbYaq1Fu7a7FzE7ZpnZZhdQQuLGfYykWzHKPzJyWAsdQ4wzz0hmOA>
-    <xmx:hlbYaohmaJ4-aUC49g0Lq0PHFaZCRFDkHmDBfc0B6KWffJNuSZocDg>
-    <xmx:hlbYambr3Dtb4WvcZgTwe1mSe-SjQAMxHjHZXZk8HAgn2v3qLDOb4Q>
-    <xmx:hlbYam2cXCC9l4PGjv-CDRi_j7B6yfwJbF_9G64a0DlAD1P51a0GDTp8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 02:07:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?B?6YeN55Sw5LiA6IGW?=
- <kazumasa.shigeta@kanamei.com>
-Subject: Re: [PATCH v3 1/7] stash: use an enum for create status
-In-Reply-To: <9e27bcd676ee763ed499fb337b1497f3fe2405b2.1792509606.git.phillip.wood@dunelm.org.uk>
-	(Phillip Wood's message of "Tue, 20 Oct 2026 16:20:36 +0100")
-References: <cover.1791218125.git.phillip.wood@dunelm.org.uk>
-	<cover.1792509606.git.phillip.wood@dunelm.org.uk>
-	<9e27bcd676ee763ed499fb337b1497f3fe2405b2.1792509606.git.phillip.wood@dunelm.org.uk>
-Date: Tue, 20 Oct 2026 23:07:00 -0700
-Message-ID: <xmqq5wyvsi2j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=cxVlPRFW
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48c5358fc28so317051f8f.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 23:33:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792564385; x=1793169185; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+HuHBfO6JE9om0ifylNtkoFCSWtZfkC00TqL8C+Y700=;
+        b=cxVlPRFWcFMwbxiNW6Ux3CK8Fer18Dtk4esvgNNWdTa6uFAsSEP15/KUpd3fovpeBJ
+         +5yb6kmZMMdGzVk5xxTe+r/iafqUrAfRfbMqGeqyNPn+HwATTvYA1JvP6I7bBDwDIj7E
+         fHBcwVCXF8ADYoIP/1ZpKmHrgFksVMaZiENI3LJ7hCHtqJfWLjGSlCQ3F8y5S7yOYhCv
+         owaNDxY3LskR9evKNXUHzg0bUGLd5v8PZGya4vrcvrVjZYX4FwFe4XUO458/MJBwGspJ
+         aLJjzP1zmTK5w94WepU6FIqLsfao1MDnkPPcFj4jIraRmVLYu26B+O/+88gxnGOyeUV0
+         uROQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792564385; x=1793169185;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=+HuHBfO6JE9om0ifylNtkoFCSWtZfkC00TqL8C+Y700=;
+        b=cgd83Vt9F5RpJ37n19OQrgC5ozYXqcDP6pMqinOskNrWa5Jc7XeMTOOYe+UickBp3W
+         c6DnznFTzbiecLbEBQFPoHlpLpuD0dV+H0PSujrspOjNz8+LNKjP06SP/Lg2wvC/Toof
+         U8Ds03AgUw2JlxTTqXfYpJmYMtNK6+nnnEHQL/+NLOPiHuq45dKBc1EZKyVGZuOg0Xgl
+         FZfVeLhK9ZO2Xn5nKWfdMJQS2nDFD57VcyIJZ72tYbKm4N5Nl1gyQs2w6TpYhjkc1hfI
+         WQhXcBTTqI2U2ZCOYPZWam4tVF92VFA/Ge+ngOxTcQml5NaHi5yq5MURwggu9OEmhyqZ
+         SVgw==
+X-Gm-Message-State: AFq9FYJ8M9QA9JXBtARyz8tQeuCxSgoREUK3jwClN9j9hpfchkjS8slh
+	NITs1H5EXT4JZIXHbRFSSvyuLFg81TNN8NxYcRz0+iT18ySBPIXhfUyGALMMFA==
+X-Gm-Gg: AYBFou3z6N8lcxy+ZEbxUIqS/0VAkepKs8rf+ccIv56EB0Q8toOYJBcR2rMT+qQF9wq
+	gCtDtZPVrl+iLYkzOnaoeOIZSUYPNW9bEjoE1C7k/6ML7LCF1Qv08nLChZXSSQyAmT1hp44y5aI
+	z8YWkxgtJc1UjQQpioToQHX2SmD9l1cd36QpvrNLOMIUxWcMK3gT7n+O0uDbcRcAy5geppR405j
+	h+4GPJ22fCBu0pEjNOHP5Um6Trr/+ei/HQRYNyfuRujkh7OoovhvzxqVwGEIxhWVNqJu0M1b79f
+	iQceHNlIwmu7Qw86fgAcfW0CDdL54hcgbToAWslZwtCkfxwB78zfx2ebZQUxbz1owiKrANwSBuw
+	PVe25dhBqDDxqmg/RHk+GcsX1tJvktiSMCODDG083z6m7MFjW/rEsnJkxhOpKd/REVX7maKuesz
+	K0YAJitxJju4sOY3+KxqrgTszDW/9spXgQy1bNx/c7HqOjUGExfrzU5Vx2sE0HF0lZXt8uzPVAE
+	vV7A1eXYxxxir5iHarhgHJuQo+BcfL2BEQaJ/0gbuW/6tscIbAe62FEdh8gkdqlK7psUNb8GMPl
+	i5DrXaY6Xt4Z4UtUnkDtQNkFNa9oy84NeDZKrlp+nXtpF6h5x2zXvCytggFxqxblJSbW95ypKlF
+	kMmYSm/0Fx8oUW5FHI4mH6jPk4a8HPDERMG3xriMYTOuzQ+JV+pzACSAYaZyCVGuwuw==
+X-Received: by 2002:a05:6000:4b1b:b0:48e:2448:ea23 with SMTP id ffacd0b85a97d-48e264e5bf4mr1849997f8f.55.1792564383899;
+        Tue, 20 Oct 2026 23:33:03 -0700 (PDT)
+Received: from christian--20230123--2G7D3 ([62.35.114.108])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e2581eedesm3130790f8f.14.2026.10.20.23.33.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2026 23:33:03 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH 00/13] SHA-1/SHA-256 interoperability, part 3: pack index v3
+Date: Wed, 21 Oct 2026 08:32:32 +0200
+Message-ID: <20261021063245.2917625-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.56.0.215.g47fdf2208c
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,121 +100,1145 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+This series is the next part of brian m. carlson's SHA-1/SHA-256
+interoperability work.
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> Change the return type of do_create_stash() to an enum in preparation
-> for adding a separate value for "there are no changes to stash" in a
-> future commit. There is a small change to behavior here which fixes
-> an anomaly with the exit status of create_stash(). That function calls
-> check_changes() without refreshing the index and exits 0 if there are
-> no changes. However, because it does not refresh the index, that check
-> is unreliable which means do_create_stash() can return 1 when there
-> aren't any changes, and then create_stash() exits 1 rather than 0.
-> This commit fixes that anomaly.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  builtin/stash.c | 83 ++++++++++++++++++++++++++++---------------------
->  1 file changed, 47 insertions(+), 36 deletions(-)
+(Sorry it took more time than I expected.)
 
-The patch makes it look more scary larger than it actually is.
+It adds support for reading and writing pack index v3, which stores
+object IDs in both the main and the compatibility hash
+algorithms. Interoperability needs it so that packed objects can be
+mapped between algorithms, the same way the loose object map already
+does for loose objects.
 
-> +enum create_result {
-> +	CREATE_ERROR = -1,
-> +	CREATE_SUCCESS,
-> +	/* No changes were stashed */
-> +	CREATE_EMPTY,
-> +};
+## Base
 
-SUCCESS immediatly following ERROR that is explicitly defined to be
-(-1) may qualify as explicitly defined to be 0, but personally I
-probably prefer to be extra explicit here, like
+This MR targets `master` at 47fdf2208c (The 7th batch, 2026-10-19).
 
-	CREATE_ERROR = -1,
-	CREATE_SUCCESS = 0,
+## Origin of the patches
 
-even though this is not worth rerolling the series for.
+Patches 1-9 and 11-12 are the first 11 commits of brian's
+`sha256-interop-part-2` branch (https://github.com/bk2204/git.git,
+b175380036), which brian suggested for upstreaming [1].
 
-> +static enum create_result stash_staged(struct stash_info *info,
-> +				  struct strbuf *out_patch, int quiet)
->  {
-> -	int ret = 0;
-> +	enum create_result ret = 0;
+Patch 10 is a new patch I inserted to validate pack index v3
+tables.
 
-Not CREATE_SUCCESS?  This can be returned if various checks in the
-function assigns different values to this variable, right?
+Patch 13, which copies pack index v3 documentation, comes from his
+full `sha256-interop` branch.
 
-> +static enum create_result stash_patch(struct stash_info *info,
-> +		const struct pathspec *ps, struct strbuf *out_patch, int quiet,
-> +		struct interactive_options *interactive_opts)
->  {
-> -	int ret = 0;
-> +	enum create_result ret = 0;
+All patches except patch 10 are authored by brian.
 
-CREATE_SUCCESS?
+[1]: https://lore.kernel.org/git/asV1oB_avuEbgRVe@fruit.crustytoothpaste.net/
 
-> +static enum create_result do_create_stash(const struct pathspec *ps,
-> +		struct strbuf *stash_msg_buf, int include_untracked,
-> +		int patch_mode, struct interactive_options *interactive_opts,
-> +		int only_staged, struct stash_info *info, struct strbuf *patch,
-> +		int quiet)
->  {
-> -	int ret = 0;
-> +	enum create_result ret = 0;
+## Previous work and naming of this series
 
-CREATE_SUCCESS?
+Previously, brian sent the following to the mailing list:
 
->  	if (patch_mode) {
->  		ret = stash_patch(info, ps, patch, quiet, interactive_opts);
-> -		if (ret < 0) {
-> +		if (ret == CREATE_ERROR) {
->  			if (!quiet)
->  				fprintf_ln(stderr, _("Cannot save the current "
->  						     "worktree state"));
->  			goto done;
-> -		} else if (ret > 0) {
-> +		} else if (ret != CREATE_SUCCESS) {
->  			goto done;
->  		}
+ - A patch series called `bc/sha1-256-interop-01` merged at 98401c10fc
+   (Merge branch 'bc/sha1-256-interop-01', 2025-10-22).
 
-I wonder if switch/case is easier to read for these users of these
-enum return values.  Some check explicitly against CREATE_ERROR
-(like the one above), some treat anything other than CREATE_SUCCESS
-as undesirable, etc.
+ - A patch series called `bc/sha1-256-interop-02` merged at 8194f1795b
+   (Merge branch 'bc/sha1-256-interop-02', 2026-03-12).
 
->  	} else if (only_staged) {
->  		ret = stash_staged(info, patch, quiet);
-> -		if (ret < 0) {
-> +		if (ret == CREATE_ERROR) {
->  			if (!quiet)
->  				fprintf_ln(stderr, _("Cannot save the current "
->  						     "staged state"));
->  			goto done;
-> -		} else if (ret > 0) {
-> +		} else if (ret != CREATE_SUCCESS) {
->  			goto done;
->  		}
->  	} else {
+So this series is called "part 3" even though it comes mostly from
+brian's `sha256-interop-part-2` branch.
 
-Ditto.
+## Overview of the patches
 
-> @@ -1660,12 +1667,13 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
->  
->  	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
->  			      NULL, 0);
-> -	if (!ret)
-> +	if (ret == CREATE_SUCCESS)
->  		printf_ln("%s", oid_to_hex(&info.w_commit));
->  
->  	free_stash_info(&info);
->  	strbuf_release(&stash_msg_buf);
-> -	return ret;
-> +	/* Do not return an error if there are no changes */
-> +	return ret == CREATE_ERROR ? -1 : 0;
->  }
+ - Patches 1-5 add `odb_map_oid()` and `odb_write_oid_map()`, backed
+   by two new `struct odb_source` callbacks, `map_oid()` and
+   `write_oid_map()`, which the "files", "loose" and "packed" backends
+   implement.
 
-Ditto.
+ - Patches 6-12 implement pack index v3 writing (pack-write,
+   index-pack) and reading (packfile), and use it to look up compat
+   object IDs in packs.
+
+ - Patch 13 copies the pack index v3 format documentation into
+   `gitformat-pack(5)`.
+
+## Changes compared to brian's branch
+
+My `Signed-off-by: ...` was added only to the changed patches. AI
+assistance (mostly Claude Opus 5.5) was used.
+
+ - Patches 1 and 4 are adapted to `ps/odb-files-alternates`. There is
+   now a single `odb->source`, so `odb_map_oid()` and
+   `odb_write_oid_map()` just dispatch to it. The files backend checks
+   each of its object directories in turn (main directory first, then
+   alternates) and writes mappings into the main directory, like it
+   does for objects. The `read_alternates` callbacks are dropped, as
+   the topic removed them.
+
+ - In patch 4, the commit message was improved to describe how the
+   "files" backend looks up and writes mappings.
+
+ - In patch 4, the `odb/source.h` comments about the flags of the
+   `map_oid()` and `write_oid_map()` callbacks have been fixed. They
+   wrongly said the flags were unused.
+
+ - In patch 6, the `QSORT()` that was added to
+   `builtin/pack-objects.c` is dropped. It sorted `to_pack.nr_objects`
+   entries while only the first `nr_written` were set, and it was
+   redundant anyway, as `write_idx_file()` always sorts the array by
+   object ID before returning. The comment of `write_idx_file()` and
+   the commit message now say so.
+
+ - In patch 6, when asked to reject duplicate objects (`--strict`),
+   the v3 writer now looks for them in the arrays sorted by object ID,
+   where duplicates are adjacent: it compares main object IDs in the
+   array sorted by main object ID, and compatibility object IDs in the
+   array sorted by compatibility object ID. (Previously, the main
+   object IDs were only compared between entries that are next to each
+   other in pack order, so without a compatibility algorithm, a pack
+   containing objects A, B, A, B was accepted. With a compatibility
+   algorithm, the check over the array sorted by compatibility object
+   ID compared main object IDs, so it did not detect two different
+   objects with the same compatibility object ID.)
+
+ - In patch 7, `index-pack` no longer passes `OBJ_MAP_WRITE` when
+   recording the compat object IDs it computes, so they stay in memory
+   as the commit message and the code comment say, like in brian's
+   full `sha256-interop` branch.
+
+ - In patches 7 and 8, the compat hash contexts are initialized with
+   `git_hash_init()` instead of the raw `init_fn()` callback, as since
+   9e396aa553 (hash: check ctx->active flag in all wrapper functions,
+   2026-07-07), `git_hash_update()` refuses contexts that were not
+   initialized that way. Without this,
+   `git index-pack --index-version=3` and adding a large file both hit
+   a `BUG()` in a repository with a compatibility algorithm.
+
+ - Patch 7 adds a test to t5308 to check that `index-pack --strict`
+   rejects duplicate objects when writing a v3 index.
+
+ - Patches 7, 8, 11 and 12 now also add tests to t1016 for the
+   problems fixed in them, which were not covered before. They use a
+   new small `create_compat_repo()` helper introduced in patch 7.
+
+ - In patch 9, a few fixes have been implemented:
+
+  - `bsearch_pack_v3()` now reports an object as not found, instead of
+    dividing by zero, when looking it up in an algorithm for which a
+    v3 index has no data.
+  
+  - The `munmap()` calls on errors in `load_idx()` are removed, as the
+    caller already unmaps the file, like for older index versions.
+
+  - The main algorithm is retrieved from the hash size instead of the
+    repository, so that it works without a repository, for example in
+    the fuzzer.
+
+ - Patch 10 is new. It validates pack index v3 tables, mostly in
+   `load_idx()`:
+
+  - The header length, the trailer offset, the format entries and the
+    position of all tables are checked against the file size.
+  
+  - Duplicate formats and invalid short name lengths are rejected.
+
+  - When building the reverse index from a v3 index, the 8-byte
+    offsets are now checked to lie within the index.
+
+  - The positions read from the order maps are also checked against
+    the number of objects when they are used: an invalid one now makes
+    Git die() with a "corrupt index?" error, or makes a lookup report
+    the object as not found, instead of reading outside the index. A
+    test for this is added to t5313.
+
+ - In patch 11, mapping now skips packs that don't have a v3 index,
+   and `nth_packed_object_id_algop()` fails instead of returning bytes
+   from the wrong table when an index cannot provide the requested
+   mapping. Previously, in a compat repo, a packed object whose
+   mapping was not in the loose object map got a wrong compat object
+   ID.
+
+ - In patch 12, looking up objects by an abbreviated compatibility
+   object ID now reads the object IDs, and the offsets, at the
+   positions of the table sorted by that algorithm, through
+   `nth_packed_object_id_algop()` and a new
+   `nth_packed_object_offset_algop()`. (Previously the main object ID
+   at that position was compared against the compat prefix, so such
+   lookups returned wrong or missing results.)
+
+ - In patch 12, the compatibility algorithm is also skipped for packs
+   with an index older than v3, which only store main object IDs. So
+   when looking up a prefix in any algorithm, the callback no longer
+   fires twice for the same object in such packs.
+
+ - Patch 13 now says that a v3 index has 1 or 2 object formats (both
+   the reader and the writer accept a single one), and it points to
+   the hash function transition document for the "Loose objects and
+   unreachable objects" section, which this document doesn't have.
+
+Patches 2, 3 and 5 are unchanged.
+
+## Things not yet implemented
+
+ - The test suite can't run with `GIT_TEST_DEFAULT_HASH=sha256:sha1`
+   yet, because accepting `<algo>:<compat>` in `GIT_DEFAULT_HASH`
+   comes later in brian's series.
+
+ - Index v3 is not yet automatically selected in compat repos, and
+   `show-index` can't read v3 yet. Both come later in brian's series.
+
+ - In a compat repo, `git index-pack` can only compute the compat
+   object ID of a commit, tree or tag if the objects it references
+   already have a mapping. As packs usually list commits before their
+   trees and parents, indexing a pack that brings new objects, for
+   example from a fetch, fails with "unable to map tree … in commit
+   object". brian's full `sha256-interop` branch handles this in later
+   commits, starting with "builtin/index-pack: map straggling
+   objects", by converting such objects after the whole pack has been
+   read, in dependency order.
+
+ - Resolving an abbreviated compatibility object ID only works with
+   commands like `git cat-file` or
+   `git rev-parse --output-object-format=<compat>`, not with a plain
+   `git rev-parse`, and the packed `find_abbrev_len()` callback
+   doesn't handle compatibility object IDs yet.
+
+ - A multi-pack-index only stores main object IDs, so abbreviated
+   compatibility object IDs of objects in packs covered by a
+   multi-pack-index are not found. The t1016 test for abbreviated
+   compatibility object IDs therefore disables
+   `GIT_TEST_MULTI_PACK_INDEX`.
+
+ - In the "files" backend, `odb_map_oid()` doesn't re-read
+   info/alternates before retrying. `read_object_info()` doesn't
+   either on master, but Patrick's "PATCH 0/4 odb/files: reload
+   alternates on retry again" series [2] restores that for
+   it. `odb_map_oid()` should follow the same logic once that series
+   is merged. I have started working on this.
+
+ - No protocol support yet.
+
+[2] https://lore.kernel.org/git/20261020-pks-odb-files-reload-alternates-v1-0-d9e156323836@pks.im/
+
+## Range-diff against brian's original work
+
+This is a range-diff against brian's 11 original commits from
+sha256-interop-part-2 (4e1f77f06a … f60e1e2c0d, unchanged, on their
+original base 6de20f6092), plus a cherry-pick of his doc commit
+9bb11ea744, now 6afaf2ff9e.
+
+ 1:  4e1f77f06a !  1:  1f24f793f0 loose: allow looking up in object map with source
+    @@ Commit message
+         future.
+     
+         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    +    Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## loose.c ##
+     @@ loose.c: int repo_add_loose_object_map(struct odb_source_loose *loose,
+    @@ loose.c: int repo_add_loose_object_map(struct odb_source_loose *loose,
+      			      const struct git_hash_algo *to,
+      			      struct object_id *dest)
+      {
+    - 	struct odb_source *source;
+    + 	struct odb_source_files *files = odb_source_files_downcast(repo->objects->source);
+     -	kh_oid_map_t *map;
+     -	khiter_t pos;
+      
+    - 	for (source = repo->objects->sources; source; source = source->next) {
+    - 		struct odb_source_files *files = odb_source_files_downcast(source);
+    --		struct loose_object_map *loose_map = files->loose->map;
+    + 	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+    +-		struct loose_object_map *loose_map = dir->loose->map;
+     -		if (!loose_map)
+     +		int ret;
+     +
+    -+		if (!files->loose)
+    ++		if (!dir->loose)
+      			continue;
+     -		map = (to == repo->compat_hash_algo) ?
+     -			loose_map->to_compat :
+    @@ loose.c: int repo_add_loose_object_map(struct odb_source_loose *loose,
+     -			oidcpy(dest, kh_value(map, pos));
+     -			return 0;
+     -		}
+    -+		ret = source_loose_object_map_oid(files->loose, src, to, dest);
+    ++		ret = source_loose_object_map_oid(dir->loose, src, to, dest);
+     +		if (ret != -1)
+     +			return ret;
+      	}
+ 2:  b36496537a =  2:  631576f0bd loose: rename repo_add_loose_object_map
+ 3:  cb123eb81b =  3:  939e9c3730 loose: add a flag to control whether we write mapped OIDs
+ 4:  4b74282d13 !  4:  7899e6bdeb odb: implement interoperability functions
+    @@ Metadata
+      ## Commit message ##
+         odb: implement interoperability functions
+     
+    -    An object database running with a compatibility algorithm needs a way to
+    -    map object IDs from one algorithm to another and to write mappings into
+    -    the repository.  Add these functions and implement them for our loose
+    -    and packed backends so that we can use them in the future.
+    +    An object database running with a compatibility algorithm needs a way
+    +    to map object IDs from one algorithm to another and to write mappings
+    +    into the repository.  Add these functions and implement them for the
+    +    "files" backend and for the "loose" and "packed" sources it is made of,
+    +    so that we can use them in the future.
+     
+    -    Note that the packed backends don't write any information, since that
+    +    Like when reading objects, the "files" backend looks up mappings in all
+    +    of its object directories. It starts with the main one and continues
+    +    with alternates, which is what the loose object map code already does.
+    +
+    +    If a mapping is not found in a directory, the loose object map of that
+    +    directory is reloaded and checked again, as another process may have
+    +    written new mappings in the meantime. New mappings are only written
+    +    into the main object directory, which is also where new objects are
+    +    written.
+    +
+    +    Note that the "packed" sources don't write any information, since that
+         will be written when we index the pack, and they don't currently read
+         any information, since we don't yet have support for pack index v3,
+         which we'll need to read this properly.  This functionality will come
+         in a future commit.
+     
+         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    +    Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## odb.c ##
+     @@ odb.c: int odb_count_objects(struct object_database *odb,
+    @@ odb.c: int odb_count_objects(struct object_database *odb,
+     +		struct object_id *dest,
+     +		enum odb_map_oid_flags flags)
+     +{
+    -+	struct odb_source *source;
+    -+	int ret;
+    -+
+    -+	odb_prepare_alternates(odb, NULL);
+    -+	for (source = odb->sources; source; source = source->next) {
+    -+		ret = odb_source_map_oid(source, src, to, dest, flags);
+    -+		if (ret != -1)
+    -+			return ret;
+    -+	}
+    -+	return -1;
+    ++	return odb_source_map_oid(odb->source, src, to, dest, flags);
+     +}
+     +
+     +int odb_write_oid_map(struct object_database *odb,
+    @@ odb.c: int odb_count_objects(struct object_database *odb,
+     +		      const struct object_id *compat_oid,
+     +		      enum odb_write_oid_map_flags flags)
+     +{
+    -+	struct odb_source *source;
+    -+
+    -+	odb_prepare_alternates(odb, NULL);
+    -+	for (source = odb->sources; source; source = source->next)
+    -+		if (!odb_source_write_oid_map(source, oid, compat_oid, flags))
+    -+			return 0;
+    -+	return -1;
+    ++	return odb_source_write_oid_map(odb->source, oid, compat_oid, flags);
+     +}
+    ++
+      /*
+       * Return the slot of the most-significant bit set in "val". There are various
+       * ways to do this quickly with fls() or __builtin_clzl(), but speed is
+    @@ odb/source-files.c
+      #include "object-file.h"
+      #include "odb.h"
+      #include "odb/source.h"
+    -@@ odb/source-files.c: static int odb_source_files_fsck(struct odb_source *source,
+    - 	return ret;
+    +@@ odb/source-files.c: struct odb_files_dir *odb_source_files_find_dir(struct object_database *odb, con
+    + 	return dir;
+      }
+      
+     +static int odb_source_files_map_oid(struct odb_source *source,
+    @@ odb/source-files.c: static int odb_source_files_fsck(struct odb_source *source,
+     +				    enum odb_map_oid_flags flags)
+     +{
+     +	struct odb_source_files *files = odb_source_files_downcast(source);
+    -+	int ret;
+    -+	ret = odb_source_map_oid(&files->loose->base, src, to, dest, flags);
+    -+	if (ret != -1)
+    -+		return ret;
+    -+	ret = odb_source_map_oid(&files->packed->base, src, to, dest, flags);
+    -+	if (ret != -1)
+    -+		return ret;
+    -+	return odb_source_map_oid(&files->loose->base, src, to, dest, flags | ODB_MAP_OID_RELOAD);
+    ++
+    ++	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+    ++		int ret;
+    ++
+    ++		ret = odb_source_map_oid(&dir->loose->base, src, to, dest, flags);
+    ++		if (ret != -1)
+    ++			return ret;
+    ++		ret = odb_source_map_oid(&dir->packed->base, src, to, dest, flags);
+    ++		if (ret != -1)
+    ++			return ret;
+    ++		ret = odb_source_map_oid(&dir->loose->base, src, to, dest,
+    ++					 flags | ODB_MAP_OID_RELOAD);
+    ++		if (ret != -1)
+    ++			return ret;
+    ++	}
+    ++
+    ++	return -1;
+     +}
+     +
+     +static inline int odb_source_files_write_oid_map(struct odb_source *source,
+    @@ odb/source-files.c: static int odb_source_files_fsck(struct odb_source *source,
+     +						 enum odb_write_oid_map_flags flags)
+     +{
+     +	struct odb_source_files *files = odb_source_files_downcast(source);
+    -+	return odb_source_write_oid_map(&files->loose->base, oid, compat_oid, flags);
+    ++	return odb_source_write_oid_map(&files->dirs->loose->base, oid, compat_oid, flags);
+     +}
+     +
+      struct odb_source_files *odb_source_files_new(struct object_database *odb,
+    - 					      const char *path,
+    - 					      bool local)
+    + 					      enum odb_new_flags flags)
+    + {
+     @@ odb/source-files.c: struct odb_source_files *odb_source_files_new(struct object_database *odb,
+    + 	files->base.write_object = odb_source_files_write_object;
+      	files->base.write_object_stream = odb_source_files_write_object_stream;
+      	files->base.begin_transaction = odb_source_files_begin_transaction;
+    - 	files->base.read_alternates = odb_source_files_read_alternates;
+     +	files->base.map_oid = odb_source_files_map_oid;
+     +	files->base.write_oid_map = odb_source_files_write_oid_map;
+      	files->base.optimize = odb_source_files_optimize;
+    @@ odb/source-loose.c: static void odb_source_loose_reparent(const char *old_cwd,
+     +	 * let's reload the map to see if the object has appeared.
+     +	 */
+     +	if (flags & ODB_MAP_OID_RELOAD)
+    -+		repo_read_loose_object_map(source->odb->repo);
+    ++		loose_object_map_load(loose);
+     +	return source_loose_object_map_oid(loose, src, to, dest);
+     +}
+     +
+    @@ odb/source-loose.c: static void odb_source_loose_reparent(const char *old_cwd,
+      {
+      	struct odb_source_loose *loose = odb_source_loose_downcast(source);
+     @@ odb/source-loose.c: struct odb_source_loose *odb_source_loose_new(struct object_database *odb,
+    + 	loose->base.write_object = odb_source_loose_write_object;
+      	loose->base.write_object_stream = odb_source_loose_write_object_stream;
+      	loose->base.begin_transaction = odb_source_loose_begin_transaction;
+    - 	loose->base.read_alternates = odb_source_loose_read_alternates;
+     +	loose->base.map_oid = odb_source_loose_map_oid;
+     +	loose->base.write_oid_map = odb_source_loose_write_oid_map;
+      
+    @@ odb/source-packed.c: static void odb_source_packed_close(struct odb_source *sour
+      {
+      	struct odb_source_packed *packed = odb_source_packed_downcast(source);
+     @@ odb/source-packed.c: struct odb_source_packed *odb_source_packed_new(struct object_database *odb,
+    + 	packed->base.write_object = odb_source_packed_write_object;
+      	packed->base.write_object_stream = odb_source_packed_write_object_stream;
+      	packed->base.begin_transaction = odb_source_packed_begin_transaction;
+    - 	packed->base.read_alternates = odb_source_packed_read_alternates;
+     +	packed->base.map_oid = odb_source_packed_map_oid;
+     +	packed->base.write_oid_map = odb_source_packed_write_oid_map;
+      
+    @@ odb/source.h: struct odb_source {
+     +	/*
+     +	 * This callback is expected to provide the mapping of an object from
+     +	 * the algorithm specified in src to the algorithm specified in to,
+    -+	 * leaving the result in dest.  flags is required, but so far unused; it
+    -+	 * should be set to 0.
+    ++	 * leaving the result in dest.  flags is a combination of `enum
+    ++	 * odb_map_oid_flags` values: with ODB_MAP_OID_RELOAD, the source should
+    ++	 * reload its mapping data before the lookup, as another process may
+    ++	 * have written new mappings in the meantime.
+     +	 *
+     +	 * The algo field in src must point to a valid algorithm (specifically,
+     +	 * it must not be zero).  to must likewise point to a valid algorithm;
+    @@ odb/source.h: struct odb_source {
+     +
+     +	/*
+     +	 * This callback is expected to write a mapping of an object between oid
+    -+	 * and compat_oid. flags is required, but so far unused; it should be
+    -+	 * set to 0.
+    ++	 * and compat_oid.  flags is a combination of `enum
+    ++	 * odb_write_oid_map_flags` values: with ODB_WRITE_OID_MAP_WRITE, the
+    ++	 * mapping should be persisted to disk; otherwise it may only be kept in
+    ++	 * memory.
+     +	 *
+     +	 * The algo fields in oid and compat_oid must point to valid algorithms
+     +	 * (specifically, they must not be zero).
+ 5:  c5781631c6 =  5:  8ff4e00039 object-file-convert: implement mapping in terms of object DB
+ 6:  885edd8636 !  6:  8c60ab8177 pack-write: add support for pack index v3
+    @@ Commit message
+         doing so will break the tests.  In a future commit, once we can read it,
+         we'll enable it by default when a compatibility algorithm is enabled.
+     
+    -    Since we're not sorting the array unconditionally in write_idx_file, be
+    -    sure to sort it where necessary.
+    +    Index v3 needs the objects both in pack order and sorted by object ID,
+    +    so when writing a v3 index, sort copies of the array instead of the
+    +    array itself.  Callers, like the bitmap code in pack-objects, rely on
+    +    the array being sorted by object ID when write_idx_file() returns,
+    +    though, so sort it before returning in that case too.
+     
+    -    Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    +    When asked to reject duplicate objects using `--strict`, look for them
+    +    in the arrays sorted by object ID, where duplicates are adjacent.
+     
+    - ## builtin/pack-objects.c ##
+    -@@
+    -  */
+    - static struct packing_data to_pack;
+    - 
+    -+static int oid_compare(const void *_a, const void *_b)
+    -+{
+    -+	struct pack_idx_entry *a = *(struct pack_idx_entry **)_a;
+    -+	struct pack_idx_entry *b = *(struct pack_idx_entry **)_b;
+    -+	return oidcmp(&a->oid, &b->oid);
+    -+}
+    -+
+    - static inline struct object_entry *oe_delta(
+    - 		const struct packing_data *pack,
+    - 		const struct object_entry *e)
+    -@@ builtin/pack-objects.c: static void write_pack_file(void)
+    - 			if (write_bitmap_index) {
+    - 				size_t tmpname_len = tmpname.len;
+    - 
+    -+				QSORT(written_list, to_pack.nr_objects, oid_compare);
+    -+
+    - 				strbuf_addstr(&tmpname, "bitmap");
+    - 				stop_progress(&progress_state);
+    - 
+    +    Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    +    Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## pack-write.c ##
+     @@ pack-write.c: void reset_pack_idx_option(struct pack_idx_option *opts)
+    @@ pack-write.c: static int need_large_offset(off_t offset, const struct pack_idx_o
+     - * The *sha1 contains the pack content SHA1 hash.
+     - * The objects array passed in will be sorted by SHA1 on exit.
+     + * The *hash contains the pack content hash.
+    -+ * The objects array passed in should be in pack order and may be sorted (or
+    -+ * not) on return.
+    ++ * The objects array passed in should be in pack order and will be sorted by
+    ++ * object ID on return.
+       */
+      const char *write_idx_file(struct repository *repo,
+      			   const char *index_name, struct pack_idx_entry **objects,
+    @@ pack-write.c: const char *write_idx_file(struct repository *repo,
+     +		for (i = 0; i < nr_objects; i++) {
+     +			struct pack_idx_entry *obj = *list++;
+     +			hashwrite(f, obj->oid.hash, short_name_len[0]);
+    ++			if ((opts->flags & WRITE_IDX_STRICT) &&
+    ++			    (i && oideq(&list[-2]->oid, &obj->oid)))
+    ++				die("The same object %s appears twice in the pack",
+    ++				    oid_to_hex(&obj->oid));
+     +		}
+     +	} else {
+     +		/*
+    @@ pack-write.c: const char *write_idx_file(struct repository *repo,
+      	for (i = 0; i < nr_objects; i++) {
+      		struct pack_idx_entry *obj = *list++;
+      		if (index_version < 2)
+    -@@ pack-write.c: const char *write_idx_file(struct repository *repo,
+    + 			hashwrite_be32(f, obj->offset);
+    + 		hashwrite(f, obj->oid.hash, repo->hash_algo->rawsz);
+    +-		if ((opts->flags & WRITE_IDX_STRICT) &&
+    ++		if ((opts->flags & WRITE_IDX_STRICT) && index_version < 3 &&
+    + 		    (i && oideq(&list[-2]->oid, &obj->oid)))
+    + 			die("The same object %s appears twice in the pack",
+      			    oid_to_hex(&obj->oid));
+      	}
+      
+    @@ pack-write.c: const char *write_idx_file(struct repository *repo,
+     +			struct pack_idx_entry *obj = *list++;
+     +			hashwrite(f, obj->compat_oid.hash, short_name_len[1]);
+     +			if ((opts->flags & WRITE_IDX_STRICT) &&
+    -+			    (i && oideq(&list[-2]->oid, &obj->oid)))
+    ++			    (i && oideq(&list[-2]->compat_oid, &obj->compat_oid)))
+     +				die("The same object %s appears twice in the pack",
+     +				    oid_to_hex(&obj->compat_oid));
+     +		}
+    @@ pack-write.c: const char *write_idx_file(struct repository *repo,
+     +		for (i = 0; i < nr_objects; i++) {
+     +			struct pack_idx_entry *obj = *list++;
+     +			hashwrite(f, obj->compat_oid.hash, compat->rawsz);
+    -+			if ((opts->flags & WRITE_IDX_STRICT) &&
+    -+			    (i && oideq(&list[-2]->oid, &obj->oid)))
+    -+				die("The same object %s appears twice in the pack",
+    -+				    oid_to_hex(&obj->compat_oid));
+     +		}
+     +
+     +		/* write the sorted-to-pack index */
+ 7:  fe70d52c3a !  7:  3afadc93f4 builtin: populate pack index v3 fields when indexing
+    @@ Commit message
+         and release the mutex between the conversion and writing to the map
+         because hashing may be slow.
+     
+    +    Add a test in t1016 to check that index-pack can write a v3 index in a
+    +    repository with a compatibility algorithm, and a test that it rejects
+    +    packs with duplicate objects when writing a v3 index with `--strict`.
+    +
+    +    Also add a create_compat_repo() helper in t1016 to refactor common
+    +    code.
+    +
+         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    +    Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## builtin/index-pack.c ##
+     @@
+    @@ builtin/index-pack.c: static void *unpack_entry_data(off_t offset, size_t size,
+      		git_hash_update(&c, hdr, hdrlen);
+     -	} else
+     +		if (compat && compat_oid) {
+    -+			compat->init_fn(&c_compat);
+    ++			git_hash_init(&c_compat, compat);
+     +			if (type == OBJ_BLOB)
+    -+				compat->update_fn(&c_compat, hdr, hdrlen);
+    ++				git_hash_update(&c_compat, hdr, hdrlen);
+     +		}
+     +	} else {
+      		oid = NULL;
+    @@ builtin/index-pack.c: static void *unpack_entry_data(off_t offset, size_t size,
+     +		}
+     +		git_hash_final_oid(compat_oid, &c_compat);
+     +		repo_lock();
+    -+		odb_write_oid_map(the_repository->objects, oid, compat_oid, OBJ_MAP_WRITE);
+    ++		odb_write_oid_map(the_repository->objects, oid, compat_oid, 0);
+     +		repo_unlock();
+     +	}
+      	return buf == fixed_buf ? NULL : buf;
+    @@ builtin/index-pack.c: static struct base_data *resolve_delta(struct object_entry
+     +		repo_lock();
+     +		odb_write_oid_map(the_repository->objects,
+     +				  &delta_obj->idx.oid,
+    -+				  &delta_obj->idx.compat_oid,
+    -+				  OBJ_MAP_WRITE);
+    ++				  &delta_obj->idx.compat_oid, 0);
+     +		repo_unlock();
+     +		strbuf_release(&outbuf);
+     +	}
+    @@ builtin/pack-objects.c: static int option_parse_index_version(const struct optio
+      		die(_("unsupported index version %s"), val);
+      	if (*c == ',' && c[1])
+      		popts->off32_limit = strtoul(c+1, &c, 0);
+    +
+    + ## t/t1016-compatObjectFormat.sh ##
+    +@@ t/t1016-compatObjectFormat.sh: compat_hash () {
+    + 	esac
+    + }
+    + 
+    ++create_compat_repo () {
+    ++	local hash="$1"
+    ++	local repo="$2"
+    ++
+    ++	git init --object-format="$hash" "$repo" &&
+    ++	git -C "$repo" config set core.repositoryformatversion 1 &&
+    ++	git -C "$repo" config set extensions.compatObjectFormat $(compat_hash "$hash")
+    ++}
+    ++
+    + hello_oid () {
+    + 	case "$1" in
+    + 	"sha1")
+    +@@ t/t1016-compatObjectFormat.sh: do
+    + 		for repo in alt borrow
+    + 		do
+    + 			test_when_finished "rm -rf $repo" &&
+    +-			git init --object-format=$hash $repo &&
+    +-			git -C $repo config set core.repositoryformatversion 1 &&
+    +-			git -C $repo config set extensions.compatObjectFormat $(compat_hash $hash) || exit 1
+    ++			create_compat_repo $hash $repo || exit 1
+    + 		done &&
+    + 
+    + 		git -C alt commit --allow-empty --message A &&
+    +@@ t/t1016-compatObjectFormat.sh: do
+    + 		git -C borrow rev-parse --output-object-format=$(compat_hash $hash) "$oid" >actual &&
+    + 		test_cmp expect actual
+    + 	'
+    ++
+    ++	test_expect_success 'index-pack writes pack index v3' '
+    ++		test_when_finished "rm -rf v3-repo v3.idx" &&
+    ++		create_compat_repo $hash v3-repo &&
+    ++		echo content >v3-repo/file &&
+    ++		git -C v3-repo add file &&
+    ++		git -C v3-repo commit --message A &&
+    ++		git -C v3-repo commit --allow-empty --message B &&
+    ++		git -C v3-repo repack -a -d &&
+    ++		pack=$(echo v3-repo/.git/objects/pack/pack-*.pack) &&
+    ++		git -C v3-repo index-pack --index-version=3 \
+    ++			-o "$(pwd)/v3.idx" "$(pwd)/$pack" &&
+    ++		echo "ff 74 4f 63 00 00 00 03 " >expect &&
+    ++		test_copy_bytes 8 <v3.idx | test-tool hexdump >actual &&
+    ++		test_cmp expect actual
+    ++	'
+    + done
+    + cd "$base"
+    + 
+    +
+    + ## t/t5308-pack-detect-duplicates.sh ##
+    +@@ t/t5308-pack-detect-duplicates.sh: test_expect_success 'index-pack can reject packs with duplicates' '
+    + 	test_expect_code 1 git cat-file -e $LO_SHA1
+    + '
+    + 
+    ++test_expect_success 'index-pack can reject packs with duplicates with index v3' '
+    ++	clear_packs &&
+    ++	create_pack dups.pack 2 &&
+    ++	test_must_fail git index-pack --strict --index-version=3 --stdin <dups.pack &&
+    ++	test_expect_code 1 git cat-file -e $LO_SHA1
+    ++'
+    ++
+    + test_done
+ 8:  cb593fd7dd !  8:  2ce1bc21cb object-file: handle compatibility algorithm
+    @@ Commit message
+         the main algorithm or we will incorrectly store the null OID in the
+         index we create.  Do so here to avoid corrupting the repository.
+     
+    +    Add a test that adds a large file in a repository with a compatibility
+    +    algorithm.
+    +
+         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    +    Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## object-file.c ##
+     @@ object-file.c: static int hash_stream(struct odb_stream *stream,
+    @@ object-file.c: static int odb_transaction_files_write_object_stream(struct odb_t
+      	git_hash_init(&ctx, transaction->base.source->odb->repo->hash_algo);
+      	git_hash_update(&ctx, obuf, header_len);
+     +	if (compat) {
+    -+		compat->init_fn(&compat_ctx);
+    ++		git_hash_init(&compat_ctx, compat);
+     +		git_hash_update(&compat_ctx, obuf, header_len);
+     +	}
+      
+    @@ object-file.c: static int odb_transaction_files_write_object_stream(struct odb_t
+      		ALLOC_GROW(state->written,
+      			   state->nr_written + 1,
+      			   state->alloc_written);
+    +
+    + ## t/t1016-compatObjectFormat.sh ##
+    +@@ t/t1016-compatObjectFormat.sh: do
+    + 		test_copy_bytes 8 <v3.idx | test-tool hexdump >actual &&
+    + 		test_cmp expect actual
+    + 	'
+    ++
+    ++	test_expect_success 'add a large file streamed into a pack' '
+    ++		test_when_finished "rm -rf large-repo" &&
+    ++		create_compat_repo $hash large-repo &&
+    ++		git -C large-repo config set core.bigFileThreshold 1k &&
+    ++		test-tool genrandom large 5000 >large-repo/large &&
+    ++		git -C large-repo add large &&
+    ++		ls large-repo/.git/objects/pack/pack-*.pack &&
+    ++		git -C large-repo hash-object large >expect &&
+    ++		git -C large-repo rev-parse :large >actual &&
+    ++		test_cmp expect actual &&
+    ++		git -C large-repo cat-file blob :large >actual &&
+    ++		test_cmp large-repo/large actual
+    ++	'
+    + done
+    + cd "$base"
+    + 
+ 9:  c401efada9 !  9:  ff2042e48e packfile: add support for reading pack index v3
+    @@ Commit message
+         larger.  We can then use it when finding the offset into the file, since
+         it will be generic over both v2 and v3 indices.
+     
+    +    A v3 index may contain data for only one hash algorithm, so just fail if
+    +    we look up an object ID in an algorithm for which the index has no data.
+    +
+         In the pack revindex, we use the order map for the algorithm in question
+         to look up the proper offset into the pack index, since we're iterating
+         over objects in the offset table, which is sorted by object ID, not pack
+    @@ Commit message
+         formats can't represent the SHA-1 values.
+     
+         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    +    Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## builtin/index-pack.c ##
+     @@ builtin/index-pack.c: static void read_idx_option(struct pack_idx_option *opts, const char *pack_name)
+    @@ packfile.c: int load_idx(const char *path, const unsigned int hashsz, void *idx_
+      			return error("pack too large for current definition of off_t in %s", path);
+      		p->crc_offset = st_add(8 + 4 * 256, st_mult(nr, hashsz));
+     +	} else if (version == 3) {
+    -+		uint32_t hdrlen, num_formats, trailer_offset;
+    ++		uint32_t hdrlen, num_formats, trailer_offset, main_algo;
+     +		const uint32_t *q = index;
+     +		int i;
+     +
+     +		hdrlen = ntohl(*q++);
+    -+		if (idx_size < hdrlen) {
+    -+			munmap(idx_map, idx_size);
+    ++		if (idx_size < hdrlen)
+     +			return error("v3 index has truncated header");
+    -+		}
+     +
+     +		nr = ntohl(*q++);
+     +		num_formats = ntohl(*q++);
+    -+		if (num_formats < 1 || num_formats > ARRAY_SIZE(p->formats)) {
+    -+			munmap(idx_map, idx_size);
+    ++		if (num_formats < 1 || num_formats > ARRAY_SIZE(p->formats))
+     +			return error("too many formats for v3 index");
+    -+		}
+     +		memset(p->formats, 0, sizeof(p->formats));
+     +		for (i = 0; i < num_formats; i++) {
+     +			uint32_t format_id = ntohl(*q++);
+     +			uint32_t format = hash_algo_by_id(format_id);
+     +			struct packed_git_format *pfp;
+     +
+    -+			if (format == GIT_HASH_UNKNOWN) {
+    -+				munmap(idx_map, idx_size);
+    ++			if (format == GIT_HASH_UNKNOWN)
+     +				return error("v3 index with unknown format_id 0x%08x", format_id);
+    -+			}
+     +			/*
+     +			 * We store at the value of the constant minus 1 to
+     +			 * avoid having to store a useless entry at offset 0.
+    @@ packfile.c: int load_idx(const char *path, const unsigned int hashsz, void *idx_
+     +			if (!i)
+     +				p->crc_offset = pfp->order_map_offset + nr * 4;
+     +		}
+    -+		if (!p->formats[p->repo->hash_algo - hash_algos - 1].data_offset) {
+    -+			munmap(idx_map, idx_size);
+    ++		main_algo = hash_algo_by_length(hashsz);
+    ++		if (main_algo == GIT_HASH_UNKNOWN ||
+    ++		    !p->formats[main_algo - 1].data_offset)
+     +			return error("v3 index with missing data for this repository's algorithm");
+    -+		}
+     +		trailer_offset = get_be64(q);
+    -+		if (trailer_offset + 2 * hashsz != idx_size) {
+    -+			munmap(idx_map, idx_size);
+    ++		if (trailer_offset + 2 * hashsz != idx_size)
+     +			return error("v3 index with bad size\n");
+    -+		}
+      	}
+      
+      	p->index_version = version;
+    @@ packfile.c: void *unpack_entry(struct repository *r, struct packed_git *p, off_t
+     +	const struct packed_git_format *pfp = &p->formats[algo - 1];
+     +	const unsigned char *data = p->index_data;
+     +
+    ++	/* This index has no data for the algorithm of the object ID. */
+    ++	if (!pfp->data_offset) {
+    ++		if (result)
+    ++			*result = 0;
+    ++		return 0;
+    ++	}
+    ++
+     +	return bsearch_hash_v3(oid->hash, data + pfp->full_oid_offset,
+     +			       (const uint32_t *)(data + pfp->order_map_offset),
+     +			       data + pfp->data_offset,
+ -:  ---------- > 10:  993aab4f13 packfile: validate pack index v3 tables
+10:  cbfbb56596 ! 11:  e752ca18ea loose: map object IDs using pack index v3
+    @@ Commit message
+         In order to do so, let's add a variant of nth_packed_object_id that
+         handles an arbitrary hash algorithm.
+     
+    +    Only pack index v3 stores object IDs in more than one algorithm, so
+    +    skip packs with an older index when mapping.
+    +
+    +    Also make the new variant fail when the index cannot provide the
+    +    requested object ID, for example because it has no data for one of the
+    +    algorithms.
+    +
+    +    Add a test in t1016 to check that packed objects are mapped using a v3
+    +    index, but not using a v2 index, when the loose object map has no entry
+    +    for them.
+    +
+         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    +    Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## odb/source-packed.c ##
+     @@ odb/source-packed.c: static void odb_source_packed_close(struct odb_source *source)
+    @@ odb/source-packed.c: static void odb_source_packed_close(struct odb_source *sour
+     +
+     +		if (open_pack_index(p) || !p->num_objects)
+     +			continue;
+    ++		/* Only v3 indices store object IDs in both algorithms. */
+    ++		if (p->index_version < 3)
+    ++			continue;
+     +		if (!bsearch_pack(src, p, &off))
+     +			continue;
+    -+		return nth_packed_object_id_algop(dest, p, off, src_algo, to);
+    ++		if (nth_packed_object_id_algop(dest, p, off, src_algo, to))
+    ++			continue;
+    ++		return 0;
+     +	}
+      	return -1;
+      }
+    @@ packfile.c: int bsearch_pack(const struct object_id *oid, const struct packed_gi
+      		if (open_pack_index(p))
+      			return -1;
+     @@ packfile.c: int nth_packed_object_id(struct object_id *oid,
+    + 	}
+    + 	if (n >= p->num_objects)
+    + 		return -1;
+    ++	if (p->index_version < 3 && (src != dest || dest != p->repo->hash_algo))
+    ++		return -1; /* older indices only store main object IDs */
+      	if (p->index_version == 1) {
+      		index += 4 * 256;
+      		oidread(oid, index + st_add(st_mult(hashsz + 4, n), 4),
+    @@ packfile.c: int nth_packed_object_id(struct object_id *oid,
+     +		int algo = hash_algo_by_ptr(dest);
+      		const struct packed_git_format *pfp = &p->formats[algo-1];
+     -		oidread(oid, index + pfp->full_oid_offset + (hashsz * n), p->repo->hash_algo);
+    -+		uint32_t pack_order_idx = nth_packed_object_pack_order_algop(p, n, src);
+    ++		uint32_t pack_order_idx;
+    ++
+    ++		if (!pfp->data_offset ||
+    ++		    !p->formats[hash_algo_by_ptr(src) - 1].data_offset)
+    ++			return -1; /* no data for one of the algorithms */
+    ++		pack_order_idx = nth_packed_object_pack_order_algop(p, n, src);
+     +		oidread(oid, index + st_add(pfp->full_oid_offset, st_mult(hashsz, pack_order_idx)), dest);
+      	}
+      	return 0;
+    @@ packfile.h: int bsearch_pack(const struct object_id *oid, const struct packed_gi
+      /*
+       * Return the offset of the nth object within the specified packfile.
+       * The index must already be opened.
+    +
+    + ## t/t1016-compatObjectFormat.sh ##
+    +@@ t/t1016-compatObjectFormat.sh: do
+    + 		git -C large-repo cat-file blob :large >actual &&
+    + 		test_cmp large-repo/large actual
+    + 	'
+    ++
+    ++	test_expect_success 'packed objects are only mapped using pack index v3' '
+    ++		test_when_finished "rm -rf map-repo v3.idx loose-object-idx" &&
+    ++		create_compat_repo $hash map-repo &&
+    ++		echo content >map-repo/file &&
+    ++		git -C map-repo add file &&
+    ++		git -C map-repo commit --message A &&
+    ++		oid=$(git -C map-repo rev-parse HEAD) &&
+    ++		git -C map-repo rev-parse --output-object-format=$(compat_hash $hash) "$oid" >expect &&
+    ++		git -C map-repo repack -a -d &&
+    ++		pack=$(echo map-repo/.git/objects/pack/pack-*.pack) &&
+    ++		git -C map-repo index-pack --index-version=3 \
+    ++			-o "$(pwd)/v3.idx" "$(pwd)/$pack" &&
+    ++		mv map-repo/.git/objects/loose-object-idx loose-object-idx &&
+    ++
+    ++		# A v2 index only has object IDs in the main algorithm, so it
+    ++		# must not provide a mapping.
+    ++		git -C map-repo rev-parse --output-object-format=$(compat_hash $hash) "$oid" >actual &&
+    ++		! test_cmp expect actual &&
+    ++		test $(wc -c <actual) -ne $(($(test_oid --hash=$(compat_hash $hash) hexsz) + 1)) &&
+    ++
+    ++		# A v3 index provides it.
+    ++		rm -f "${pack%.pack}.idx" "${pack%.pack}.rev" &&
+    ++		mv v3.idx "${pack%.pack}.idx" &&
+    ++		git -C map-repo rev-parse --output-object-format=$(compat_hash $hash) "$oid" >actual &&
+    ++		test_cmp expect actual
+    ++	'
+    + done
+    + cd "$base"
+    + 
+11:  f60e1e2c0d ! 12:  8554ad4221 packfile: allow looking up compat object IDs in packs
+    @@ Commit message
+         it is easier to understand as two statements.  The compiler will
+         optimize it appropriately.
+     
+    +    When looking up an object ID, we find positions in the table sorted by
+    +    that object ID's algorithm. So read the object IDs there for that
+    +    algorithm with nth_packed_object_id_algop(), and add
+    +    nth_packed_object_offset_algop() to get their offsets.
+    +
+    +    Skip the compatibility algorithm for packs with an index older than v3,
+    +    as these only store object IDs in the main algorithm.
+    +
+    +    Add a test that looks up an abbreviated compatibility object ID of a
+    +    packed object.
+    +
+         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    +    Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## odb/source-packed.c ##
+     @@ odb/source-packed.c: static int for_each_prefixed_object_in_pack(
+    @@ odb/source-packed.c: static int for_each_prefixed_object_in_pack(
+     +		    (!p->repo->compat_hash_algo ||
+     +		     algop != p->repo->compat_hash_algo))
+     +			continue;
+    -+
+    ++		if (p->index_version < 3 && algop != p->repo->hash_algo)
+    ++			continue;
+     +
+     +		oidcpy(&wanted, opts->prefix);
+     +		wanted.algo = algo;
+    @@ odb/source-packed.c: static int for_each_prefixed_object_in_pack(
+     +		for (i = first; i < num; i++) {
+     +			struct object_id oid;
+     +
+    -+			nth_packed_object_id(&oid, p, i);
+    -+			if (!match_hash(len, opts->prefix->hash, oid.hash))
+    ++			if (nth_packed_object_id_algop(&oid, p, i, algop, algop) ||
+    ++			    !match_hash(len, opts->prefix->hash, oid.hash))
+     +				break;
+     +
+     +			if (data->request) {
+     +				struct object_info oi = *data->request;
+    -+				off_t offset = nth_packed_object_offset(p, i);
+    ++				off_t offset = nth_packed_object_offset_algop(p, i, algop);
+     +
+     +				ret = packed_object_info(source, p, offset, &oi);
+     +				if (ret)
+    @@ odb/source-packed.c: static int for_each_prefixed_object_in_pack(
+      		}
+      	}
+      
+    +
+    + ## packfile.c ##
+    +@@ packfile.c: void check_pack_index_ptr(const struct packed_git *p, const void *vptr)
+    + }
+    + 
+    + off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
+    ++{
+    ++	return nth_packed_object_offset_algop(p, n, p->repo->hash_algo);
+    ++}
+    ++
+    ++off_t nth_packed_object_offset_algop(const struct packed_git *p, uint32_t n,
+    ++				     const struct git_hash_algo *algop)
+    + {
+    + 	const unsigned char *index = p->index_data;
+    + 	const unsigned int hashsz = p->repo->hash_algo->rawsz;
+    ++
+    ++	if (p->index_version < 3 && algop != p->repo->hash_algo)
+    ++		BUG("pack index v%d only stores main object IDs",
+    ++		    p->index_version);
+    ++
+    + 	if (p->index_version == 1) {
+    + 		index += 4 * 256;
+    + 		return ntohl(*((uint32_t *)(index + st_mult(hashsz + 4, n))));
+    + 	} else {
+    + 		uint32_t off;
+    + 		if (p->index_version == 3)
+    +-			n = nth_packed_object_pack_order_algop(p, n, p->repo->hash_algo);
+    ++			n = nth_packed_object_pack_order_algop(p, n, algop);
+    + 		index += st_add(p->crc_offset, st_mult(p->num_objects, 4));
+    + 		off = ntohl(*((uint32_t *)(index + st_mult(4, n))));
+    + 		if (!(off & 0x80000000))
+    +
+    + ## packfile.h ##
+    +@@ packfile.h: int nth_packed_object_id_algop(struct object_id *, struct packed_git *,
+    +  */
+    + off_t nth_packed_object_offset(const struct packed_git *, uint32_t n);
+    + 
+    ++/*
+    ++ * The same as nth_packed_object_offset, but the nth object is counted in
+    ++ * algop. For indices older than v3, algop must be the main algorithm.
+    ++ */
+    ++off_t nth_packed_object_offset_algop(const struct packed_git *, uint32_t n,
+    ++				     const struct git_hash_algo *algop);
+    ++
+    + /*
+    +  * Return the index into pack order of the nth object within the specified
+    +  * packfile.  The index must already be opened and it must be a v3 index.
+    +
+    + ## t/t1016-compatObjectFormat.sh ##
+    +@@ t/t1016-compatObjectFormat.sh: do
+    + 		git -C map-repo rev-parse --output-object-format=$(compat_hash $hash) "$oid" >actual &&
+    + 		test_cmp expect actual
+    + 	'
+    ++
+    ++	test_expect_success 'abbreviated compat object IDs are found using pack index v3' '
+    ++		test_when_finished "rm -rf abbrev-repo v3.idx" &&
+    ++		create_compat_repo $hash abbrev-repo &&
+    ++		echo content >abbrev-repo/file &&
+    ++		git -C abbrev-repo add file &&
+    ++		git -C abbrev-repo commit --message A &&
+    ++		compat_oid=$(git -C abbrev-repo rev-parse --output-object-format=$(compat_hash $hash) HEAD) &&
+    ++		abbrev=$(echo $compat_oid | cut -c 1-12) &&
+    ++
+    ++		# A multi-pack-index only stores object IDs in the main
+    ++		# algorithm.
+    ++		GIT_TEST_MULTI_PACK_INDEX=0 git -C abbrev-repo repack -a -d &&
+    ++		pack=$(echo abbrev-repo/.git/objects/pack/pack-*.pack) &&
+    ++		git -C abbrev-repo index-pack --index-version=3 \
+    ++			-o "$(pwd)/v3.idx" "$(pwd)/$pack" &&
+    ++		rm abbrev-repo/.git/objects/loose-object-idx &&
+    ++
+    ++		# A v2 index only has object IDs in the main algorithm.
+    ++		test_must_fail git -C abbrev-repo cat-file -t $abbrev &&
+    ++
+    ++		rm -f "${pack%.pack}.idx" "${pack%.pack}.rev" &&
+    ++		mv v3.idx "${pack%.pack}.idx" &&
+    ++		echo commit >expect &&
+    ++		git -C abbrev-repo cat-file -t $abbrev >actual &&
+    ++		test_cmp expect actual &&
+    ++		echo $compat_oid >expect &&
+    ++		git -C abbrev-repo rev-parse --output-object-format=$(compat_hash $hash) $abbrev >actual &&
+    ++		test_cmp expect actual
+    ++	'
+    + done
+    + cd "$base"
+    + 
+12:  6afaf2ff9e ! 13:  12be689e9d doc: move pack index v3 documentation
+    @@ Commit message
+         compatibility.
+     
+         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    +    Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## Documentation/gitformat-pack.adoc ##
+     @@ Documentation/gitformat-pack.adoc: Pack file entry: <+
+    @@ Documentation/gitformat-pack.adoc: Pack file entry: <+
+     +    * 4-byte length of the header section, including the signature and
+     +      version number
+     +    * 4-byte number of objects contained in the pack
+    -+    * 4-byte number of object formats in this pack index: 2
+    ++    * 4-byte number of object formats in this pack index: 1 or 2
+     +    * For each object format:
+     +      ** 4-byte format identifier (e.g., 'sha1' for SHA-1)
+     +      ** 4-byte length in bytes of shortened object names. This is the
+    @@ Documentation/gitformat-pack.adoc: Pack file entry: <+
+     +    * 8-byte offset to the trailer from the beginning of this file.
+     +    * Zero or more additional key/value pairs (4-byte key, 4-byte
+     +      value). Only one key is supported: 'PSRC'. See the "Loose objects
+    -+      and unreachable objects" section for supported values and how this
+    -+      is used.  All other keys are reserved. Readers must ignore
+    ++      and unreachable objects" section of the hash function transition
+    ++      document (`Documentation/technical/hash-function-transition.adoc`)
+    ++      for supported values and how this is used.  All other keys are reserved. Readers must ignore
+     +      unrecognized keys.
+     +  - Zero or more NUL bytes. This can optionally be used to improve the
+     +    alignment of the full object name table below.
+
+
+Christian Couder (1):
+  packfile: validate pack index v3 tables
+
+brian m. carlson (12):
+  loose: allow looking up in object map with source
+  loose: rename repo_add_loose_object_map
+  loose: add a flag to control whether we write mapped OIDs
+  odb: implement interoperability functions
+  object-file-convert: implement mapping in terms of object DB
+  pack-write: add support for pack index v3
+  builtin: populate pack index v3 fields when indexing
+  object-file: handle compatibility algorithm
+  packfile: add support for reading pack index v3
+  loose: map object IDs using pack index v3
+  packfile: allow looking up compat object IDs in packs
+  doc: move pack index v3 documentation
+
+ Documentation/gitformat-pack.adoc |  75 +++++++++
+ builtin/index-pack.c              | 107 +++++++++++-
+ builtin/pack-objects.c            |   8 +-
+ hash-lookup.c                     |  50 +++++-
+ hash-lookup.h                     |  19 ++-
+ loose.c                           |  50 ++++--
+ loose.h                           |  15 +-
+ object-file-convert.c             |  14 +-
+ object-file.c                     |  18 +-
+ odb.c                             |  17 ++
+ odb.h                             |  24 +++
+ odb/source-files.c                |  38 +++++
+ odb/source-loose.c                |  31 +++-
+ odb/source-packed.c               | 124 ++++++++++----
+ odb/source.h                      |  65 ++++++++
+ pack-check.c                      |   4 +-
+ pack-revindex.c                   |  24 ++-
+ pack-write.c                      | 263 ++++++++++++++++++++++++++----
+ pack.h                            |   2 +
+ packfile.c                        | 185 +++++++++++++++++++--
+ packfile.h                        |  33 ++++
+ t/t1016-compatObjectFormat.sh     | 100 +++++++++++-
+ t/t5302-pack-index.sh             |  71 ++++----
+ t/t5308-pack-detect-duplicates.sh |   7 +
+ t/t5313-pack-bounds-checks.sh     |  17 ++
+ 25 files changed, 1193 insertions(+), 168 deletions(-)
+
+-- 
+2.56.0.215.g47fdf2208c
+
