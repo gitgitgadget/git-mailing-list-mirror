@@ -1,120 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.150
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792569610;
-	b=yF+JuXqwJ+DSRyO5QaeNW9xq5Bo5KXktqEKGwPSsPCI5jjSCmr2Neeqmk/QYTrc89ovl
-	 hKMS3du+XiIv+AHvi4ntVKdio7uXlfia4v1EslFN5ZnboUL83fUt7Z09SnzJJn0ORswMQ
-	 ts5jFx/m3VHvO/1YWCsMmtDJEi/bxHxH4W5Os8mjXWg3KD7OG3a0X0YjH1gzVbeJbrmzi
-	 DDcXx8sy1BnCgcHfHdFDWd4PSgFX/coqrc4ACsdH08YBPQgwLscxhDIZOJoajmlN3cYms
-	 mwhcYjsKN+2RcbfYA3ycNqk9+95A+uYZtA5fzJvVxRwIp9x5YKpAq0oMj5jP+KbhiyA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792569610;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=WzG/TUhf3qqOu7UICQb95KkRJsC7uay75b133WBgWTw=;
-	b=kpnr4m9dWcEau0Q6/lNfgd+d/kAfLWUO4OBRhWAghvLqWA76vumQvx1w8w6w5AmwtBwC
-	 DqOqFRJvB9GLIYayKO+tUmA8q89zvDfRk+kO+ztOBJRjKt0Fnw+U7UlecJ9+8ZYPOfoVW
-	 BWRVcex5I7nfVK864cObuzcXhFcZu6ZZxzCmyRzzGgzWaNqjVXYULzjEBcUNocM2arOKc
-	 IEjyFnVSnYvhHk2izMvjiIpliq7wuIY4wt886V3Xxr86MSTbuUhytTSE+bVm0XncdvzPS
-	 lOOSL1bJT1C9Lei/M7eP9PZWRbRKOziZNzfbeMTuFkgTelh6BcQrploKjFO7V50TFzg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=LnCb0klU;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=doXTRBde;
-	arc=none smtp.remote-ip=202.12.124.150
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.172
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792570022;
+	b=zNLW/dWFvAMY9aFNb2C31deU8xKQmfPIz3wEqqpCSjr+/DXRuDZLY+8E1FEt2Pc95wL1
+	 Kgjrs91ZMpEcDXnl0tfAk8fg/gWttDPsLbHSOJmAR+7sZ9FFFZJ1MfEJVALh/dWN6BLON
+	 TpmouoKUTUTQLM+yZuY1XipAH0jdZBily5VP7mEH1C23Jct+vjWFRH90c3nE0cuIDP/2L
+	 R8cJLuJdwURYjxW/FiGddrhCn/ey0iKfdiCQArj373bb5skBR4okA9qG9LZKFOr9OPsyA
+	 rpCI4D4YggxIh5QK2sD2U3WgP3y79sOumgUKx0G7qcVhbwBxIJym/FeCiUxkQnnJxHg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792570022;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=EJIE3BOr4wku7wexdxMtba1FSxj3nti1Q4vslJFLan8=;
+	b=09d/BTM5gGsI+1SF3tlBDug8J1Hjr5pe9qt2Lwf2OW26YVvTlWu4lbTSngCZMICSG7y4
+	 h7FPn0ddmm8GP3Wypb4IevdzVRXnExEozGjfNBlWPF3O7XwWqBqnp0n4lsSN/fxB2xfrE
+	 erdJqh9PnO6KWaU+cRDYUq7uMVUy+HuWc8jdK5X4+7bvxILxdPact4C+Ksfv/PtbRqWTH
+	 tVh5abZtSJ28WiIKWwO6J6CCCDwc/piUlXH9kdTe6E1WacaVbQYNG+26vxbDFg9tGjHbC
+	 HWVF39GcNrJgX3t6w5SxHmw9uzQ1uhGvZkcGCXCe+vWhUxFZFaSIDxkeW90uiHHr8wQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=fail header.from=sunshineco.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.172
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87007606A31C
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 08:00:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87007606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=LnCb0klU;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=doXTRBde
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id AAE7B1D00110
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 04:00:08 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 21 Oct 2026 04:00:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792569608; x=1792656008; bh=WzG/TUhf3q
-	qOu7UICQb95KkRJsC7uay75b133WBgWTw=; b=LnCb0klUmdnqN83aGow7vwYypA
-	KoEXE8+YwyhZMEt/WrChZfw6SE13QTxH/kbLOts9zhaMKO9h3OXHcMHantraTk5G
-	TLcNUk+HeF/ITBy2uLUUYoeRKGY3nlkJqBjGYUyrlMXDtP+TDK9doCAMjkQp091g
-	Vn/FEXlplzy/OtbyMPW5NfoIzp0sa5ri1hRh7QGFafn7i5yDHbrjhOEp3MTYMPgP
-	K3baV/q+tYHmD0OOlbWpoC7JeI+28ablrnjmMqaCJmijs9jS7cWhXC6qH1J4B10X
-	0BzwzG3LvFFT6Iyb3kODMdRU0NQAcaXUZj7x1dS0AGzZyotF1o5YKaaHlfMw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792569608; x=1792656008; bh=WzG/TUhf3qqOu7UICQb95KkRJsC7uay75b1
-	33WBgWTw=; b=doXTRBdepVSjBuPaa4uvCx6f11b0mEuybFaAzzo6BH/PH8+fQgu
-	yVuD0DuJ+36nwT0SjkyJxe7oRjKLCHZxDPLGCam1zHevenWwQqYkNKv/raXMKRSh
-	qJvyEq3L4CEk2bOy4jJFtGdzSGKHavG6OGMwNPIt7mVud6NHhm4zZjF1X+lNKnOE
-	wviR4MtwFTYSjZZOTEwsrDKK2hlZ37UKCoW4DXtZuZvpbCUovNCZumCh7zPmVsGu
-	QqTjJ823pUK8jHJfmUNrCKt/W6SNkaR/jjr3/IQn6hr7DSdO1oqqFiFApfYmxKR6
-	gKrTmWnoZWB3pERqPbxQda6k61N2NstjTMw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792569608; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Sboap8AqXF5TZfTHokgJJCZbK7JonvO4QYHttSKHo5895ba
-	Pk69sAs/4q8nevVMAhhH5QycrakAb2m9BlOklT2sY/3r2ZZJUhKG7nug7xsC/X2N
-	ry8jeptiHvbUMxlg1lJ0NiiV8falc4d5645ZZqB8uN1olF92pxxBF9Uar7mPNNgK
-	gOjQVN3luLngIIeToAf2oeUD2rxx6OCVelf0Bp34SGxrME0oH3SdOtLmi5Ubb0Oe
-	pPMq3UIEft/uTEvjcFB/218EinKUya2Fvl/wmNc7nJF1OZJQd/bYVPF3U8Rb459j
-	syr8zMQOjsOx7yUGU77q4NBpe8VtXOxmcWC5M7A==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:N5XYFGVhZhUUcliDqnbIXpPyCsy7DBffSgFySJvaUpY=:WzG/TUhf3qqOu7UICQb95KkRJsC7uay75b133WBgWTw=;
-X-ME-Sender: <xms:CHHYajV5elVgFL0SsWXjNnwH6dOXProPyil2Wy2oTVOFJN9W3eEVAg>
-    <xme:CHHYavR6WBgR0K3p7w0mEsKHgWw-QAHZyuz9GYH4CFYTrCQQ4MznwWeIn8qO4py30
-    sbRXo5yRq4vg7ZSVLEYSPdwuQmrchpsD4btSBRw84kl2xpzEz3pU2I>
-X-ME-Received: <xmr:CHHYapPs1hX9Tag30tXc-u8a0QqfZV3gzPowjyYCqlK-Ly_JYzEuvw>
-X-ME-Proxy-Cause: dmFkZTFfQgUndaswgKJxgB8s/UbcR2uPoIc/2BvTEq+IDRoAEdugbaFraYyQ1mgrZzP1PX
-    wRi+CY38vDBZIz0y4lCNoxSCHe4TP0RiBjJU6fDj/s/BdTj6bDqfzVmHFUafOmxLBY6TS6
-    zo0lh1OXCcTsPAi+cQtUuw1JfADmKImCZcztOgjyHLWpGIF2cXoZPol+uYXkd5M573vLCM
-    zwJXjtZqNk9HHgu+apxshug8BiujfrBEgWMsI8nK2xDKIUBmjJq+FXqm1Iv5JFBqqs4sGj
-    rmvJj5nn/CVbz9I5TLPmlfnvc4obHXGwZWYpOaKxsjGp1H9sdRbov4y9UVuitVriSyfuJo
-    tkB2V/GYnwdTCn3cIpPs17tJA8ysAzuKBS3vH6on4xelo7Hnl24VCvDmruODE77rfW7t0f
-    ev0uyTNwCQzNooyRmiHv6C3tjHdcS/CY/Gk9hT0B1nAFx3MR1z28Jmyah625A38ZFXn4NI
-    UI12pVG5PWiBe1DIY2Btdym1ROUNRjS847UJw89LzDBwGBij6nRvmlG56Mrch5rrMTX0G0
-    wR2n3sDFa6IxixwRytdN0hUcTBjPPQaNt8jH4tpU1LkSCSCzgOHyqs9ZbneF42aUcikB60
-    2NzuCPMrYQof3ToJRo170ePXt847TRc3HMlOmBrDCPHAb9lJmi9xPbNC2y5Q
-X-ME-Proxy: <xmx:CHHYalQ8gNoS9sSab-4fYYK2zF2CFYsMrkBMfnxZ50Dsmrae1lup7g>
-    <xmx:CHHYavj2shpWvRuFcxoV6YSGlkzSoT9oKHm2Zw1b1CHWeR5SxmwdPQ>
-    <xmx:CHHYam8W5nNbX0Jhl-1RE4ZtLxxP3OLsc7iOyj9LcndbaYq36Btouw>
-    <xmx:CHHYauG9ew8z7qKGFkMUVzOvBZFtiEseF2L9HP_9jIxm26HWJ5Wv1Q>
-    <xmx:CHHYaojeLTq2hYSa531eYvIF6vEAOqbB36_BDMgJRiojbCzg7VQYtWuo>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 04:00:07 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id df594128 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Oct 2026 08:00:06 +0000 (UTC)
-Date: Wed, 21 Oct 2026 10:00:03 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Cynthia Uche <herroyalpriestess@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com
-Subject: Re: [Outreachy PATCH] t2104: avoid suppressing git's exit code
-Message-ID: <athxA6S50czDEUYj@pks.im>
-References: <20261021033723.5265-1-herroyalpriestess@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2B0606A338
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 08:07:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9D2B0606A338
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-3667e94418bso40732eec.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 01:07:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792570021; cv=none;
+        d=google.com; s=arc-20260327;
+        b=dzXpx3GtfKRDGoIH0ssw2WxvLjIrOclr4DLkuMFPCkRpVs76uRJryn5ozz3CTeRGJP
+         n6yyXIH5gjiotFjM6SqvQfPQTSKoMdd4pscYLGxnWyi6auUNkfvzEEi7g3STIe9rQ4vu
+         SLW2WaRBjRjbZnY3KjgDbsXPQza9giXNrqh3Y4CktE7Fx9r196mkkSeqYW8+z0IHkD1f
+         oX7dqTnvzqbK3jo55+9UnfTig2daCEkaPtr8F97cNLr/nhRkcihbPPHctojbRQOrWjPv
+         9CGWADp8JCld22PmiwxyjTIPu/N9wytWEObKf9L5AMkS1FguUDdTWttnqNJ6tTsjVB/j
+         iMJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=EJIE3BOr4wku7wexdxMtba1FSxj3nti1Q4vslJFLan8=;
+        fh=DwCley9EIYw05zxru2ia30lc8AiawXZr5w2Vb2ryVDU=;
+        b=jDoCdI+vNc8e65K6brf4mQhfuWviyWcLOwp1RePUMutN9JUzlY0eWGt1ZOQJz65U5+
+         lulnHqvAmpVRnHMtbgxz/w6Phb71ofhYUFAfibVwUIya/hoBWYQ18650MxrRSXwNJWQm
+         TjHrM+MyFIF/KH3Jppx/t/eXounE9qxsepFbn9M+cDZnTEWRRt5iEpjxAD8p1GFoXGB9
+         xmtOt63FF24KQ/54WkXKrwCI7JlvAzYCnV4rgDlq7p2Hc74c8qP0G/ekF1Svgj6dltL2
+         2xxJG5kTUi10piSPPrbAkHXHkl89+vcNSe31UH77J0eSLgiB1jVNScmrZXSPrkIVMksa
+         wrJg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792570021; x=1793174821;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=EJIE3BOr4wku7wexdxMtba1FSxj3nti1Q4vslJFLan8=;
+        b=az2K4SpqZY4ay4UlURlTM/0IyEK9B1yQ35sTlooazsFeGHQX0ktvWga0EETZ4O+tfS
+         pBVgUL8w8+kAiZY+MRqofa2AGtmMbfoemADo0eYhN3SIAwxfCfnAlwDn1B7G/MfnbdnH
+         Txrc0XENhoirNs3XCGzIqUG5BtoPlfd94+vvMooZM1isvtsvECHTogtOLRlA3MH03ghx
+         neO0mhKCZAhoDD4aZg9OwYr2SFucQNx2B2QxsdTle8KcxvdsFG200n8nJ9P9KBoPW4K7
+         VG58Y/mr4mdFl2T9nE/rC549HYmMgpJeH9LEco1fyfaxpZwx5LawOrwl+nayFmF3tTX8
+         h23g==
+X-Forwarded-Encrypted: i=1; AKwUvBxw23leQIIdQQo6I9GUEBrejiAFIda8PwzH7+NLHquDNQm+CaqqH7c6vG2GoBwLK/8htTE=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKTbnEj0axklXxCflSXHUfmdDgcoR1hSRbenRQMFP0cedEZTBBh
+	jSU8xxDs2PvFYoi0sYGpMSuxZtO00fQhGyOlPUbhmkfMeeiUPaomUA3XYWw8Qoq5kT168LfMwdX
+	CsZTXasrIMNFK7Uf4nSFabi2ISxWwc8Wj2g==
+X-Gm-Gg: AYBFou32h6FnR9ce/sR50borgfKjeo+kilZ2Car/ZHDoekjy9eSgBaCiq9gzpu2Vur5
+	MrDzELGCBRyZJn+Nx4GmyErs6ucF351EQugsQFpsfm6I4tdbVjWyHVg+ckNfkbmynR8onefVGT3
+	3fwg/gjA43lWCrorZst9BOo5lbmwsrK040EOKQTry7WsZDLyko6dGs/FPBuzYcldsVx9nPLknS8
+	mDahcHQ+eH7SwVpNyQEFZN2ZpPUGilD6VMSUFMM3iBc/4qvZlxV41FdKEofAsojbeG7cMTY6LuZ
+	Y84KxBt5AVPzfPWE9rMx8gUI882B3adphys6jPdbNkmJKkNoQzmbcPvnA+b8Wr69VphLaHyWGOZ
+	oAhhLuX9qccaz+PwBGtbXuWpslv/EWxXGrTgQajjS5hrC8JCx64kz9Qm72UvNXIMoF25OpJU=
+X-Received: by 2002:a05:7301:6196:10b0:367:2bed:e7a5 with SMTP id
+ 5a478bee46e88-3674d54de76mr3612064eec.2.1792570020681; Wed, 21 Oct 2026
+ 01:07:00 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,15 +89,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261021033723.5265-1-herroyalpriestess@gmail.com>
+References: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
+ <pull.2317.v2.git.git.1792512249.gitgitgadget@gmail.com> <6e2acdc5e2578da4e915fd2ac541a776349fb23e.1792512249.git.gitgitgadget@gmail.com>
+ <CAPig+cRsSN9gY405MGsCQzLuxzBKcfHo2Oc8Z4WB-U3BGd6m_Q@mail.gmail.com> <CAGou9MgdF_xA+e8YYn8ud8TUSmY3j_q9jbUTy2wLibTz1ObJ7A@mail.gmail.com>
+In-Reply-To: <CAGou9MgdF_xA+e8YYn8ud8TUSmY3j_q9jbUTy2wLibTz1ObJ7A@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 21 Oct 2026 04:06:48 -0400
+X-Gm-Features: AclHuK9--7cVbYT5SC2uGwFVaSFr4xOBCsZzTm0taHvEPTXYduyvKxRnW-DJqw4
+Message-ID: <CAPig+cRCaSmEULP1JpW3fjiJDR0Lee78puq+KRaXiD9ciX3fvg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] worktree: reap ephemeral branches created by
+ "worktree add"
+To: Jason Newton <nevion@gmail.com>
+Cc: Jason Newton via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 21, 2026 at 04:37:23AM +0100, Cynthia Uche wrote:
-> The exit code of the upstream command in a pipeline is lost, so a
-> crash in 'git ls-files' would go unnoticed. Write the output to a
-> file and compare that instead.
+On Wed, Oct 21, 2026 at 3:40=E2=80=AFAM Jason Newton <nevion@gmail.com> wro=
+te:>
+> --detach and an ephemeral branch differ while the worktree exists.
+>
+> --detach leaves HEAD with no branch, so status, push, rename,
+> upstream, and symbolic-ref have nothing to name. An ephemeral
+> branch is a normal refs/heads/ ref for the life of the worktree.
+> Commits go on it, and another ref can point at them before
+> "worktree remove" deletes that branch.
+>
+> Deleting the branch that "worktree add <path>" creates today
+> would change the default, so this has to be opt-in. That opt-in
+> is not --detach: the worktree stays on a branch until removal.
+>
+> These worktrees might be minutes or they might go on for months;
+> either way they should be easy to use and not require flags to assist
+>  in the majority of common case behaviors, moreover detached feels
+> ike a degraded halfway state, frequently allowing a gotcha to strike or
+>  a loss of a safety like a gc based reap.
+>
+> "git worktree remove" does not delete whatever branch a worktree
+> has checked out. It deletes a branch only when this "git worktree
+> add" created it by DWIM (the final component of <path>) and recorded
+> that in worktrees/<id>/owned-branch.
+>
+> A branch named with -b/-B, a branch that already existed, and a
+> detached HEAD are not owned and are not removed. A worktree created
+> by an older Git has no marker, so removing it still leaves its
+> branch in place.
+>
+> "Unconditional" in the commit means that this one owned branch is
+> deleted even if it has unmerged commits. --keep-branch turns that
+> off. "git branch <name> <tip>" before removal keeps the commits on
+> an ordinary branch; only the owned ref is deleted.
+>
+> The call that changes is "git worktree add <path>" with no branch,
+> followed by "git worktree remove". A caller who wants that branch
+> to outlive the worktree already has a spelling this series does not
+> touch: "git worktree add -b <name> <path>", or "git worktree add
+> <path> <existing>". --detach still creates no branch, so it is not
+> the same state while the worktree exists.
+>
+> Ownership is written only when the worktree is created, so I'll confirm
+> an older worktree still has no marker after an upgrade.  The branch stays=
+.
+> Upgrading does not mark a worktree you already have so no upgrade
+> headaches are expected.
 
-Makes sense, and the patch looks obviously good to me, too. Thanks!
-
-Patrick
+Feeding a reviewer's comments into an agent and pasting its
+LLM-generated response into an email is not a good way to convince
+project stakeholders that the submission has value. If you can't
+explain its value in concrete terms in your own words, then you're
+going to have a hard time eliciting any responses or additional
+reviewer feedback.
