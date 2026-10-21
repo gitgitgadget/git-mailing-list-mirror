@@ -1,118 +1,120 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792620421;
-	b=2zPjsiV2w0qxvTwQ3k6jKyB3wZz2pdmZnIq2uF23uVcRUGePLTDs7bLJLWEv0EfXrNUM
-	 zliF1U56Pz35gr0Vw/xBfmciMAHOSAsmp+F+qlk9+P4opZzd4T5Hzbld1YMg5a6HlpEVQ
-	 fuCsW4z1ELVYaG+7FCEt7xKbB6g/Le5oRw7ZuCkIWbLCyKzvGIqJraA/JN+ZeNl3j2+9/
-	 ztDqRYXgSQn0L5V4xrAuqlR+8y6A8YJKb/ybIOBaAoAm+kXXbsyWnsgCNxmXI58mE0rBp
-	 m8PDLtmPjLLUih3vayxJKB10dQaafjtCofs16OiFNCbSqBsnpzRchfSa/H2hF4BxkcQ==
+	t=1792620763;
+	b=xcDVTUkfmnhbIkRlUrgXHU4wyLDNOP7gNsHDZWdQG4785iybI/V4/+hlt6ukmHXDwjQJ
+	 Ptld3fPxnoVRNbmk18u1ffTu4miN5Rq0FD00xslIMiARHX3k5kyBCWzd7M0y8US1vm4yQ
+	 ZI3Wu5ymrCRW6eo96tBw/t5cfsXWqcwX0zRcz17ndCO0cnIwmpUweh+3Xcx+3sPK3vhcl
+	 tLKB3251UIU406EzzB2CXSXkCV2AqC1zhZY/1CMLkMaorOiA1dVwa3bBOEpnuDnovR0yx
+	 ZkcYx4u0DVNOKxguA4hF/gOGfJi5HpvzipjSLIwwfSwyfi2DfMtn73W6POR/hhT/OAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792620421;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792620763;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=cBJIam4y5Q/CTwyN+Z+UabcpF9kl4K35Glgdi6J8USw=;
-	b=vGrU1QBGUOmlw/lDnIaaILX1D5EqFz1HciJY1LtWix64ccKsji33xFrpkq5Ws/wTiL4z
-	 +lRSp/Esux7ctCwF6Ig1L8GgRQVnmfa9ps03CbVuWRYKU3Z4mzu0vVDUL7YZfAnkZp6mk
-	 x/pmLkaR/DSbmFnaDUFSDCFzpBKuIti7OArkJjcgAWOoOInqtclUBdSTNZTjwzwlzicTn
-	 R8b3lx2LN4o430AczcDc4dcPv4wseAU9yE8pMttcAuFiOAKQ55m8HhoQhjhQ8rWpF4HGf
-	 BHCAsKmbR/KATN51fdBJ43XXXjUE9E+pu8/daPtnqRU+OS5JWpq1RbQgBK+GdKGPFGg==
+	bh=TfS3oxzwx5IsDBe1LrYRS/k7Og3GFxmM6u4BAFYxT0Q=;
+	b=I3ndKuiJiHhMjC4RV51uWx9swC++uCWbp4M6hg95Rt+IrX/u2qFeW7mIWbippvAw6f+e
+	 6DwxJwYxhxTQQvm9WQdCZvWyE/D9O04mGQq6ZdjBoGqQ9RmS47ZPvEM9o9FO68ROecQxQ
+	 8REyTX5IDVhtqNdmt8cxZ0YGTpOehLI0cCylywq7ujSIlUEo9+Y5l3qe1zrGzI7sxFiWe
+	 wWpZmU0ngM9kM6cwFipE1YIACq4b20WLMZP1y+z5/NT/w0IUG/LkPqLhg+Mp8+1DUKkh8
+	 l1cMrgKZsEXqfw0GDv0XsjuNrQ+BZn9CqSR/0bPnA0msur3pKCqZNiC5u5kCvVpsJDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ZKn5Qu4q;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=IiHIbFrz;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=XL6DINQz;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=SFKaXPMP;
 	arc=none smtp.remote-ip=202.12.124.153
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13A8606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 22:07:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D13A8606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81053606A31A
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 22:12:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81053606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ZKn5Qu4q;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=IiHIbFrz
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2E3887A0106
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 18:07:00 -0400 (EDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=XL6DINQz;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=SFKaXPMP
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DFFFA7A0081
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 18:12:41 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 21 Oct 2026 18:07:00 -0400
+  by phl-compute-12.internal (MEProxy); Wed, 21 Oct 2026 18:12:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792620419; x=1792706819; bh=cBJIam4y5Q
-	/CTwyN+Z+UabcpF9kl4K35Glgdi6J8USw=; b=ZKn5Qu4q8ZK4S+1za8DL7xghDS
-	IA7EidkH/H8Tm+Kw5eoaLeHURxW2+2cjdiu3pyn2SXwYOrRBk7oN97xHMZD2QD0N
-	/8avqW0DU1OEo08Y4j1aG/n9h9yeBPpfFCoKSzUmV24SYx8WkLN309DOI68jpIdi
-	Zjnp8rju0M+1VoWciYi4ne3vjnUvSLoEiv9gCWemslZ0kcglS65qml7Kc3fihqWu
-	x3DN5Vbp/zz9JxhnOZnpzcbjZwMMOb5liHTGUSWjekYxJVTcMxhW3n17PTjguC9U
-	9HRTou/VZeRg848MugPVs6nqm3pBRDUCT0cSRTzws7e5UzdIMgXMqgUgd/Dg==
+	:subject:to:to; s=fm1; t=1792620761; x=1792707161; bh=TfS3oxzwx5
+	IsDBe1LrYRS/k7Og3GFxmM6u4BAFYxT0Q=; b=XL6DINQz1rZYjiyplaanPh4Lre
+	9RBX88M0cffk6p8nFNMfzHutSILdIaYBpAOnsv6cXt9O0aaG5sbMFwgW2sNBSuVg
+	TqQXXaToSfep5C4JWPDkRhr1l7cZCXFm9ao4N/Snb45g5lQNZYOn2jTIRB+KAWds
+	3jEFTgNJk8SnZbM7VfO/jb2J3ezaOEJI+4YYxTKAI3NU950E0lMTtcuIJBkaRWDf
+	p4u3rxOqgkRnAAzD/Xu9McQXM8pAlhCb/KAJXAMXT1L3nnKkJkAcObR/UlsDECNB
+	axWJge/PO7c+BzezeCHdt8tYKBo9+4TmHPfDa0VUUGSjVinIqgHEhj1najjg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792620419; x=1792706819; bh=cBJIam4y5Q/CTwyN+Z+UabcpF9kl4K35Glg
-	di6J8USw=; b=IiHIbFrzRmmyATMG5NsdKivzzjueGzowe4q+q0F92TCvvKCYEDn
-	U9UfnrvWfU6oF0+v7LmaZoAmQ5KOxWACACBPX/tLeI/wYb1+ISa2M+njKvvVXsL8
-	D8xtgoLYYMloi4ZiD+oze8MLyhqkQvaR94UC7djx4JyoRqMfARf6+GYS7GD7vMpF
-	KXz/rnv/btjvztCmVgDqoArPaIB8E3ZOsHH1V8lHyuZ1GdXZD2FXdU3Sk6+v0WMZ
-	0PaT6RA2BXXkjO5FA2kydMLsIykLO7Mt6Anhz1P4CN7qw/pKubVhxSEKnF0a5BIi
-	zFLb0iFJ/5xIxTqFbccF3176KjiI9YlECIg==
+	1792620761; x=1792707161; bh=TfS3oxzwx5IsDBe1LrYRS/k7Og3GFxmM6u4
+	BAFYxT0Q=; b=SFKaXPMP1aTC0+1xSWHGealZCc0u7pGYsiQYQ4qZAoE1f8Q6GkE
+	dQDCKeYiIEgQKCiuWUCHc26h5lDH3sOEyWiEYtBpUU01qsg6SFUoQ5vmoCD1XFxf
+	ml2n6aGRatr/wiJyPLxJi567vFZf05Fmm1WxLf/bZFA2yUwzK9UoVf9aamNEivHh
+	MyrT1vQQuOpXk6BLBiKsb6nN7M5wgjymUbdO7SXW6mZCa6oJgdIBZNserH6JyfOX
+	1fxYFf5Ds1N9i3FONtilJkPHCEMD3vWbEcQaBjTvhQizQ2xnPfANGjbKST2wqyeh
+	zPz+Jp9DMU2xH3DIsq/Nm7HK+wTlZKIK0Bw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792620419; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1792620761; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:f55Xoo1rT9/8c/yHTmkJ4kq5LhvNUdmPTA2wNExyuBtFqIP
-	kZwjNjhtrNFVcoIpcUNYHDkJN5kSt9stK3ziGJPkNHlg5MHeEB8q4ojbBqV9N2RO
-	52v1Hck1UWRkndrHgwdIN0beDTHSg5GdQJ682fW7iTBkCwFhWohRV/QF4F+gVUDL
-	ujj/J7EztxkpXaCeBi0kenew7gECZqhdt6i27q4wfP4b/IiLTFkCJIByBUqHZhV0
-	c4golBYXyK0onB1Otzt7+t5KjNxJHgKQi5IXuz6arGr38CxGSpnRJ7av5puBZM/9
-	lCCYh8NZZrGJVf0jklPle6VaI/M9/d1fISwdr6Q==;
+	s=fm1:rsa-sha256:mNjdnpJvwHPxUgM1v20rnXsbNjqosrSb2vWPKZfjEeWClyE
+	AEPZEeBt4CA3hhMeb+nvOIZD5mv2sFz4qlUhw7/gUMlsO8qoMPULHbaEtrv6+gKJ
+	k9LOyjHlgL5bYJef0MWUN6AT9Zh5Ph8cdFqbMyXjeeHmbyVDPj0X8fL0iQFkNDCN
+	tOKmtSEEBFsriLdPKBJyUKD1bebl43nz5ztIA5mAXaB3u5yLP+JBLU9jjtM0s7dW
+	lQM5ODso9Mwa2N9nS8WMfjDDKupQaTTi5DdII7bAWyOW72nR7zuP9GFXzJ8EKeIJ
+	P9P+L+Wwk61MdiUnkMsYwRlgEE6EfeCGGcnggmg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:qUADBAlo30FJu+wIMBmgAYiQcWcvM0S8+1ZnfZbmAFQ=:SS7jS8lHXgfRqqGoSv4RPYia6gORa3XaBYIY6ZUldFg=;
-X-ME-Sender: <xms:gzfZamXNq6YDSzdhdpRdy3rxDVHSe-hT5bjIG5UkncFLmpLtuuVa5g>
-    <xme:gzfZaqApnfJWvKLGc__oVC1KMTpBYGw_-XfxvyLolUPZsWVZEsB0xF2PK5dtG8loQ
-    BG6spSeo6TtsgyuN7d8ls0tqKEUTNDZqHgmkobOmlPm4JlrQpqw>
-X-ME-Received: <xmr:gzfZanyBTtR97eBaKPB1m0IiM1zb-i5H4btftZD8p3F7iPk7jnZZyHIE2JWhkj3WnKppWGdr2bpTe0kxABg9bw3onNrgB4pLFAZR>
-X-ME-Proxy-Cause: dmFkZTFbXOHPylcM7GcEGZTa/5ll+ZLVPqwU9NuRB6e+XKm7SXhVNrVRDoGEh+NKtQhP8S
-    4QAuSXqPSNvtXwzvVXNYzeBmnwhFFZmJ1GZIxEM61rla198jNFIeY+5EU7eWikV9VL0o9L
-    DpHM2/lwE8ziev5s16fR6CHZmbai1rwaXEYCYvwAOXwd5h97giIQFsrxzBM005pqroXkNK
-    VoQmzFAcwQlCYcHreTRElT6slri2I2I9on8B9HA3cZqt3cN/6awfKchxLJ22tiaAaULmAT
-    /4SJ9iTv3LrtbpISN3WtLIhy2ckCiv+qhBkcUpyYwbO0mwXTPICnSjvCqvzzGGm9GOhoTz
-    HzQKFK7K+N5eWRcbtGh1DIc5eTm4TkocpM1Ou/tO5Z32sU1VjHroabVBrsSE1bvdtJ3Eh7
-    NVSgzPOgS2n3/L9WQhY1rjd/eV6cDVrJoQnm37Qe6PG4IQWXLiGyPwFnUMKonJ/4xI4j8J
-    igRM0f72KDNY5z+rldBbutAblko7hZ4LKvAnYbu1/e8lrTsZayzvYF60S4wp4xhZCYanXH
-    jzlZbDOtlDXVCEyd4rlOd/HuroerK0ycqjJ6CfNyY3qSNaveg/b89LOxJ2kxCrUVq/m7MW
-    ST9E3fa6wMMWNr2xXW7SR8WiP2GihY6NCvJuA5Ua+GOPNNz7xSt3KBMjL9yw
-X-ME-Proxy: <xmx:gzfZanAN3bzRKjC72qzyMoree6dn-6XWNd0Q-ZtPUyHAcbsV2WgutA>
-    <xmx:gzfZakbU0vHDMnZ1HWI6mq4m0p-dXtP91E3ft39nf53clv0dWqdIeA>
-    <xmx:gzfZavjGlNCX0KM_lvstF8dr_uN-_WD7kYNGWksJsgdj9zwD7CAVfg>
-    <xmx:gzfZam6RjmSgJm5mFIjpDTLL9mdJz8eADUSAjDiIKzFyg3LgmfXfzA>
-    <xmx:gzfZalv8I3NOSch_Kd71_LEOnUCgAc7Uf9L6zoXko5Igtco7c_DBBrI1>
+Message-Instance: m=1; h=sha256:N3OWlmaKVHeLN/aWCPaXPI0JOQmx2G1SLYfZIvj343A=:lmBjbJxzQadD7xOfO4yrXpYuVuSGVvZmipmPBuNv+tM=;
+X-ME-Sender: <xms:2TjZapXImfV8BnViJtf9cvXRDTBuMY1iB42hp0RN-TIUjL70LYAAtQ>
+    <xme:2TjZatSGfdOBDsgvh2KfkyW-mr21WskNHpRIGmC-rL31S_bgwfGdZ1hMO3DIWTAtC
+    aMg3szLWEWekyko8GIA5e8PrD9Qu0phi_0A39vrlM7w8uJhrWjl0w>
+X-ME-Received: <xmr:2TjZavM6yD92UZg4d_8BNvZBEZ48heY9JmMP9l7VlNYJvdB1rVBSAfbrI4Xp_zxPHmlA6uNePYopxKXoQhsFo6fC-Wg8BhJLN_2b>
+X-ME-Proxy-Cause: dmFkZTFgRITw2eoUTgQdWn4LxUmKCwGbDtMAnfuCJz7FowV9CRciy01lVZy/Q62hrDsQ6b
+    i50yaiXafYh6m3Aar3uzQ3pXaaHOxOKR3JDi8XdxEHPanRo1wGdAViUJSr4qEwfux9nxIN
+    DVzoTOxbdGPJi3n2cRx7wK6yiOmZF/xIfvc7hOwbJ34wkHAndgqyYTjMH+RmoKJQ5UyDzU
+    hjWRLhLKF+76C+K26QK9PThcNyr1YNGttB5BV3M55LtfAGt84Y9/vKkhg1qOinOyhwPBRQ
+    3cVacDV39AVHg7moVsKDebyHOb7/SngaJaYXRIA7oR/sVGwTQJnuq/ysw5T46btZ3cwILE
+    cSPvUgikcij1NzHfx0B69By6JYdT2l5wPiiL/6KNgr6QQjKJTK7Doa3TO7LudCPR6qteps
+    Cem0Qu1PbJJva4zeoaa3s9IIDGf8K53KBv9lsXQYaxJaoCzwOKOSt9OsgkABVAkB9v8hP9
+    UJCkOUzdtc3iD+sjMn1oz59/0FZnbqylsTx6kofGiTGE/TeLvL3HfIJeGoD3rARt5S/YFZ
+    /YpQbJzjrpd16wlp1KSeHbZCqOLKNxNFWHmnUBf9at0lGNH+uN56oq29z9pMDeH6+RE/29
+    705btHHp0QRdLbilPUBpDB3DjWdx7g4jqZuHSFgeVaNz50femDEjKZ5V67Yg
+X-ME-Proxy: <xmx:2TjZajTbKAPXYATKMNg_MRyRH3hpwxSGk9S0pXxL8jL06A8HaG5Ifw>
+    <xmx:2TjZaljcu58GKbsmvqBRzPu4mi7r3MN6wEcwIOu8BmcfUuKI9xCdbg>
+    <xmx:2TjZak8ARMtDpgVn8NfHU9J_NXhCRdU7Y6RMaZGe-W_sYag4uG3gYQ>
+    <xmx:2TjZakGSF33Cz9vU9EFi8vHZpUMv8bldwhum3Nb97McNk4aJXW-AAg>
+    <xmx:2TjZan1LSbzUIZBqhxnfL7o7KiMFYDS07pZ3S3PrApPwdZqafzA7DKOU>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 18:06:59 -0400 (EDT)
+ 21 Oct 2026 18:12:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Emily Shaffer <emilyshaffer@google.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] Documentation: propose community voting process
-In-Reply-To: <20261021200341.378978-1-emilyshaffer@google.com> (Emily
-	Shaffer's message of "Wed, 21 Oct 2026 13:03:41 -0700")
-References: <20261021200341.378978-1-emilyshaffer@google.com>
-Date: Wed, 21 Oct 2026 15:06:58 -0700
-Message-ID: <xmqqfqxylnct.fsf@gitster.g>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Jasper Mayone <me@jaspermayone.com>,  git@vger.kernel.org,
+  sunshine@sunshineco.com,  ben.knoble@gmail.com
+Subject: Re: [RFC PATCH 0/1] worktree list: add --merged and --no-merged
+In-Reply-To: <CAHwyqnXC6--wTx0Mkj9r-9oj4R6ndubjzcucym8y3Hs9CKYfVw@mail.gmail.com>
+	(Harald Nordgren's message of "Wed, 21 Oct 2026 23:36:25 +0200")
+References: <20261021173350.67854-1-me@jaspermayone.com>
+	<CAHwyqnXC6--wTx0Mkj9r-9oj4R6ndubjzcucym8y3Hs9CKYfVw@mail.gmail.com>
+Date: Wed, 21 Oct 2026 15:12:39 -0700
+Message-ID: <xmqqbj8mln3c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -125,102 +127,24 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+> I wonder if we should relax (or allow relaxing) the requirements on
+> worktree branches overall?
+>
+> I noticed that I can't check out a branch that is checked out in
+> another worktree. Which seems a bit ridiculous because two regular
+> repos of the same upstream would never enforce that.
 
-> +Voting in the Git Project
-> +=========================
-> +
-> +For the most part, technical concerns in Git should be resolved by community
-> +consensus - either on the mailing list or in one of the annual-ish Contributor
-> +Summits. Voting should be used as a last resort when the community really and
-> +truly cannot come to a compromise on a policy decision. As such, the initiation
-> +of a vote should be generally agreed on by the mailto:git@sfconservancy.org[Git
-> +PLC] or primary maintainer.
+Because your repository updating what commit your 'main' points at
+would not affect my repository if they track the same upstream.
 
-Nicely described.  I particularly like that this prevents us from
-putting technical decisions to a vote, reserving voting strictly for
-policy decisions.
+Worktrees are different.  If you allow your two worktrees to check
+out the same 'main', and one of them makes a commit on top, you know
+what happens, right?
 
+> AI loves worktress, so I suspect we'll see more of these discussions
+> in the future.
 
-> +Phase 2: Voting window
-> +----------------------
-> +
-> +The final version of each seconded proposal will be collected into a ballot at
-> +the end of Phase 1. When the ballot is prepared, eligible voters will be able
-> +to vote by mail for two weeks, to make space for contributors' individual
-> +timezone and availability differences. During this time the proposals may no
-> +longer be altered; the ballot should refer to a specific version of the
-> +proposal (e.g. `[PROPOSAL v4] Require emojis in commit subjects`) and any later
-> +version of the proposal will be ignored.
-
-Or any earlier ones for that matter.  Perhaps there should be a way
-to uniquely identify the version.  By the time the proposal is so
-solidified, it is likely to be in my tree, so we can use the commit
-object name that adds such a proposal document (or the blob ID).
-
-Then we can tell people that
-
-    $ git fetch https://git.kernel.org/pub/scm/git/git.git/ seen
-    $ git cat-file blob $BLOB_OBJECT_NAME
-
-would give them the exact thing they are voting on.
-
-I presume that this can be used for multiple-choice votes easily,
-and can be adjusted for a proposal with multiple things to vote on
-independently (i.e., "allow emojis in commit titles?" and "require
-CamelCase in commit titles?" can be asked at the same time and
-voters can give answers to each question separately).
-
-
-> +Votes will be decided using <mechanism TBD>.
-> +
-> +Phase 3: Implementation
-> +-----------------------
-> +
-> +When the voting window ends, the winning proposal should be merged to `main`
-> +without delay by the maintainer. The commit message should be appended to
-> +include a link to the top of the voting discussion thread so that the
-> +discussion can be revisited by history divers in the future, as well as a brief
-> +summary of the result of the vote (% in favor out of total number of
-> +proposals).
-
-Do you mean "number of votes"?  Or are we envisioning that there
-will be N competing proposals and we vote to find out which one is
-the most favored?
-
-> +Voting Eligibility
-> +------------------
-> +
-> +Votes are welcome from contributors who have authored a commit which has been
-> +merged to next, or who have provided 2 or more code reviews, and who have not
-> +been banned from participation in the project. All eligible contributor votes
-> +are weighed equally, regardless of the overall number of contributions they
-> +have landed.
-
-That is a fairly low bar to cross, especially the code review count,
-as it will not be easy to define and enforce some rule that rejects
-a response to a patch that only says "thanks, I like the feature
-this proposes" without reading any parts of the message.  
-
-As it is hard to track patches that as in 'next' a few release
-cycles ago without graduating in the end and the authors of such a
-patch should have the same voting power as those whose patch is in
-'next' in the current cycle, I would suggest strongly against using
-'next' as a yardstick.
-
-I would have expected to see something like "two or more topics that
-appear in any released versions" instead.  Note that I said "topics"
-here and not "commits", so your topic that consists of 17-patch
-still counts as one.
-
-> +To prevent dogpiling, contributions are only eligible for a given vote if they
-> +landed before the beginning of the voting process (the kickoff email mentioned
-> +above). That is, the code reviews must have been sent or the patch must have
-> +been accepted before the initial email is sent. The intention is to ensure the
-> +mailing list isn't spammed with low-quality reviews during the voting process
-> +solely to increase the number of eligible voters on one side of the issue.
-
-Hopefully the "in released versions" criteria makes the above a
-non-issue.
+I think that was asked and answered already.  "worktree add -d" is
+your friend.
