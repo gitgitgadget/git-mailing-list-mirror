@@ -1,99 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.45
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792566979;
-	b=TVTzwkcfi4PNh0qnt3Zn3b1Y09v8V4acfgZ75Ww592j7iKXkm7XhxVGSMFL6ChxGxwrA
-	 KQNfFRb4B/4gffdh+i1ePWr2CVg9d+ouQjg0qPKZOh9UywMwnnuziMlujZkCNnZCja5dn
-	 FPwhY/XjppomLcwtYlsdZ0pVnZm4N5fyBm+O18Sl0jOpw3WQaHiSsnmbn4B2xoflg2VF8
-	 PW1xGsle1FAeKb+H2mDcZm3OowD0jNymxff5rqsDI1o30OaRHFIT+06jGuD9fNlc/GM+Q
-	 UG+IstPgzFaBVSXpipHM2UAuPcgrFzaxjYk87mV/ji9vYRWQuBuZn+P2uvbTpVdV56A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792566979;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.52
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792567065;
+	b=QeSs15u1RWvb9JVh2ElKssEtfxWa07l/ToTKfv1JQ6HE5u7G3r1ZEIbpjB1ATnuImVJI
+	 LSU6IrINI5wjTSX+Bm72hOSFATtb0HBzI/4t7UegkSWejK5vGrY/TeNHU/EUdyJBUOEHq
+	 Va804CIsdHzwxVp93wlPZG1NJyW/U7fRMNBZlct8wypbybi10szCC4lWKeEG+gb8IXgQO
+	 w0CbSqY5mPsJysnkReuhjbqYMUuY0nB3yNHhRlv3txWGxbokhpRv7h6M5I5D/scIIsJqR
+	 DCA/LiHX8iDMsOdU/ANDOpd64tJGgqLa25az8ZtOaixcNhgUfpaI7hs5siP6ABQ1HTw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792567065;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Content-Type:Content-Transfer-Encoding;
-	bh=fDZzr7pksZDlAhWYEgR23BqQA1MfW/XW5FBBbi9I/vw=;
-	b=W7+L6maUKl5R4jB9lFQDb+x2zdf39yFhaei/IkN9gpVNBwMjfDM4NFe5xRs32dvjDe4m
-	 YgintGEWspGTd58z6Y3KCccz84I5DrawOE+Cs95AGRB1XsWZJZZ1Kbhm7izD85FPIsBuZ
-	 Yc4F8BjnsRwWPpmD00YTCRFnESGqdMS3FFoW+kAc60FOlEjGrzTvpXz8dTb4ZIr7DgyMi
-	 V9yRGf+11UIJQrLZ/3icqvo+5ivMQ87LMYyeNG8xxSiY6bFBnRuv3fl7fI7nhbuCvl0XE
-	 Vv3H7BxSiWwZK3khIK0hImMMJMME7p3TtdflTrB37oPH9WPHs+Hu7ztIYSL1YBv4Ukg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=lce1l7tJnwk9f6heC+dQjv8qa8VJ6DHb3yDBVcGMO2E=;
+	b=VeZ9cO7xJY2Zgy3Zc9chOki8J1DNqUzCYOsRNJUwBeZXkzAvht2nHmrVuoCXbfgGL2vx
+	 pcV3GIwrpbhqFjnEQJ3UADe5dBZYC3hIsy/2sKh+wWw85qjEDEJ03sseLShsa3xjRsb8Z
+	 UoMAvzPYE17URavLfTV+Jp8dfCNN9PmK0frNGeEwVThYWITMKftWW9byJ3Ccp7hyj5p+e
+	 1ZflUqh1l0gmE+qQ2rC6Q13+blW8IFf0R52gJ/RGQ/Gvhz24pZbSMJLpwiDi9z4ExunjS
+	 I1x3LP+5LKNW9EcNKP5hVD+yHY0FtEYnU3MTcphELGhuSLp9stj4IbVmVGtEoV/hlsw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fuXbBufx;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.45
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=A0Prtzy7;
+	arc=none smtp.remote-ip=209.85.210.52
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B158F606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:16:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B158F606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72324606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:17:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 72324606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fuXbBufx
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-91b9e758c50so5574936d6.1
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 00:16:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792566977; cv=none;
-        d=google.com; s=arc-20260327;
-        b=UkySvp0A1Djf/iG0xeJ4RA4AMqbznHmT5ECf6OWS/eiUyvISRAjuoKlkN37w9/+AGp
-         PQdG8zqMNyjOLaaRh/bVO97X/LyTikqmgHenxV09TcUexH9zIOW/VulPkFX6S0iMxJWn
-         r4AQVlMieAmdYr609lFevU0LFVXSxeX5ST2VVOxeI6oU6FirtgR+uDPekT6PLLEKLsSi
-         BA4r4+fJNj6NoAWxicWaFnI6MjRIP2bMAQYm0lQCwtCynRzBlsiPusd/+YIHwpIHvhyZ
-         V0Z6ImB+LBcR0aq+/fiifZFaZngRq7JiQxwtcOZ/nW9TxrXE9dZrZyofEE3dwqTCrYVF
-         ZFXg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=fDZzr7pksZDlAhWYEgR23BqQA1MfW/XW5FBBbi9I/vw=;
-        fh=yFg+p8Dz2kfC0z9vrfeBe5BOed3vQ8qFKoyrckDZ8KI=;
-        b=TO0pcDj6VgOjlj4LH5Kin6U+4YbuPtj4jylFI8vgNYaJ4lYEhj+WVqJ9bTCSwhms2V
-         +cWKvSGtP+9gSPHAf+5mE5Jxu3Ti2TSmTgtV1ye2JsL1NkKHJg2iqQ/+ZsJ301V2Zipk
-         pVlXd/yuG1Av703Lied4MKnLVJfMBixC/ytxgvpZDA9TK7FlL9OIwkEUZcx5qvbuXyMK
-         gM7lO9Cn+7SywP+u5o3UHe+tukJ7GVgCQtMV1a6z22qYL+YB3HU6KhNU8fgCbwivBOa6
-         a+TPnzf/TezqTqhOIYYYby1rL9ffDAJ6wdH2xPZCA91RTB8CBRm/m/33Yr44jOzj1Lnb
-         UBng==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=A0Prtzy7
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-844a8bf7e25so319950a34.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 00:17:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792566977; x=1793171777; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=fDZzr7pksZDlAhWYEgR23BqQA1MfW/XW5FBBbi9I/vw=;
-        b=fuXbBufxh3/hllRSb25seT+W8T0K6FSbFAZ7sVuiMRN9zvmvcMRypBlinA4P+PM5zQ
-         Ez5H4zTzWYFUCpj/wLJq5M5sKyPRjEl74nSGJ2wwqjiJnpsfgoiaw+E+UYRAUjzcFpMX
-         XWiklsjtv2l/vlnJGb/XrV50A2xL2ANwQAS7OqNj2B8+Pj/RsWfhLDMMzgrjaZikIMZm
-         6G9He3Ixi8owMVyg6/+3CXOyyl29MdyH2pVBtYfQ+ktMaeHR/W/rrljc32mywC2SRSCE
-         kh+kewV6l55UIucXkE6Wypmp9G6u4ZJDhuGAJE37PuFy+h9KGV0NTlGugKaB1VT7ORjA
-         RHAg==
+        d=gmail.com; s=20251104; t=1792567064; x=1793171864; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=lce1l7tJnwk9f6heC+dQjv8qa8VJ6DHb3yDBVcGMO2E=;
+        b=A0Prtzy7jNPNLg1GbjfFbtmrPEncI6/lmwVr6EbNCSEa/b+6d8Tu0MRbForDqPb2aG
+         QwnkSTTPhvyBrEpFViTflphERX9LbbJlQwrC/0cRIylg64MKdmr3zNpzV6PzY6Wa6hvz
+         KGP1OFmQxXV8/Ntx3uZmNKrTmU+QbSIGq/EBikqWkC/w1cnJXfNPVXWic5JDk0D9qzae
+         QhpQPYpI3AyoLSRb9XLTFIsBJyin7wTet5/TemSLFOeMdkzLEmiXdofgC0oJTeCrp9KO
+         httrQfaZZytquZX3QzwEJSmM/XWVTPX+ufBIoeIzIprBFSLoBVn4wX+DVkeE1QhUhKB1
+         G8TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792566977; x=1793171777;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=fDZzr7pksZDlAhWYEgR23BqQA1MfW/XW5FBBbi9I/vw=;
-        b=VVB/zpdJhkoMjgQdnQQsrTarETmHZmHWwl6c1G86Tuqso9SeskGuZXWJUssXWpzLyd
-         TOJXhYOjHYlUWF30vJD2uLv+wX4wN05eQSF/FBEMcqGSctsDg0Fqq/xQRfOiIZe45rPU
-         QBStWaMCEXyyu3mKvGpENOkERGGRRbsDuPknGFVJht73JF+Cu9YhS/FR1GR5c2llOi5z
-         KIzKEGLmhGgKqkqZfJ1o7zSqror/BhAQaLQimoa5WNOTA1paXofGqab7zar5xuO8O0UO
-         wokcT704lFzArf2/tI9AtTEItZC/r31IOCi7vsoBSwsL9NHWp4GNcHr97wn01GFac/Tp
-         cHQA==
-X-Forwarded-Encrypted: i=1; AKwUvBxa8mSZKhek/yflu4abnaDXXuFVAE1IXA9pSMq/PfWAefYiYuJbn2+0oC4QakuN9RZdmfY=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJMnPHfvffdKBo70K4EBnf+ywYNgxq5a0VW6OOP9tlzw/Lkungt
-	590SX94qxkc2WcQLZ/btNJEds3SeyXGWdYgoGj8O+Vmg+l+CFRGtDvONWlyC6ZGvT6ngaN6Qqlz
-	W0CWIWrCT4Sf55r4QDGSvDcrBF/3BwA7ExF9nFUE=
-X-Gm-Gg: AYBFou3MutcCol2mtxx/23Qw2ERpbAqLos6wBhnZBXU9NUjIlF9SHVWq3lyNwYBxJb4
-	sSi0rh70x2H2tt/WZ3dE3Eq87HW7DeRkQa20U/gm8+vKoIUOS0yhIFo6Qfe3jDG85FYoI7tE+0o
-	w+4qxP0akJhU+XWKcQg2TVrOtlGpdj8/FoBUc4GMjiOn4tdKKAisfaH503gDoeQsxMrztfg54qL
-	w3I5fs2kyf4UsqJrW+cBACewvuXQ7wLHC9szJ8q6gRqC1NW1S4z7R8n6ijVv8HCId7ZQMUoUF7g
-	13llONTBgx1SbjdnU1HMQLO4BtEsxHkdByc7UxwhBWhInKUuaF8eC4zKnFMJN16mP8Q965cjgB7
-	yPmgo/KSa7fM0I8cBsmsFDb4WgY0L+8JsYgndJmaw85ePOonteXiunbwDYGTuVs7fWZ4=
-X-Received: by 2002:ad4:5aa7:0:b0:91b:82a6:d30a with SMTP id
- 6a1803df08f44-91c12f57cc2mr16721866d6.26.1792566977417; Wed, 21 Oct 2026
- 00:16:17 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792567064; x=1793171864;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=lce1l7tJnwk9f6heC+dQjv8qa8VJ6DHb3yDBVcGMO2E=;
+        b=SJpVwLL81HPLDH2SY0ulp2TB1+yyLA9PC4CmYUw7gOVCr/rrNou8foLmo36plvMwyq
+         X0sh3zCH821YdeeZRWM+NVIB1CYnHNxVe4fC9q/3STRva6c7zJebZFbkVLGI6m3bhK9t
+         kpBpkXnaOIxd/sSizWU+nh0goanuB/bgDtWRTIqSyczkb40qjbcKxlwBsQduvDtD1heV
+         PBcfDVdggXJgV9DJDMTa3LsRuVQKoyowYWEs1mCTenQCieMYcL8ybbrHD4h+xCVVCO4r
+         PQqd35MhYThxnHSNXTqk3LDjptUJdRAV5HQl0NtqHZd+lk60ehylRKsZ+fJAVEmET0a8
+         MeNw==
+X-Gm-Message-State: AFq9FYIcbNyYhGByZqLp9AslfIP/jEy/UPgHVxRZY9Q4UD0hnuSTwPZr
+	/BVV1+gVVoc6Ajad5hvXszP+lF7JAylLtjPRuCwKy16AXYBoNsFnjazEzbcMnQ==
+X-Gm-Gg: AYBFou1MgkGc4XofxenLsm6R1LmWQoank346pe4DzjFMBVrKwMQObKQWo33XJ1vDcne
+	fIqUXQ9zTZ0CLmcfxc8+G33RZXQjRFTOqeyKgJNMJsoGxx9aDi7yAtG4g3VT/Hho1CNM/+m/w31
+	/fYq5plg2iNkd0KummWR1mQ5dkNvDWwtcmuVkoeB75etHaHT12Sjm7bZlDxXSdBl9MDAb4umiXH
+	Y2TeOed55Zaa/m+VXriFEATU6PhGz3dCwF1v9OqXTN7XUW4zVrmsRjOOgq8TGf8KlqnMI97q2aO
+	cjRF6d/FZyOGq1e9n4fqv1v4bJ+2eOOMc76uG3Egg9n0laXX7x8d6efLx5LAs4bAUHdEu7bs7Sw
+	7oKOeHzyfoqWitQoLoFcqtSMhc7bQHFJgJzmhAMCGErrfooptv0/1Skq5o1rMs4oyq6elyOR5RK
+	eoxtD7MLJGRS26D67cnlbT4FmgJjlfZM5ayoqWkqcAd4LfEyaHiwZhyIj+bL6LH/dgaCtZ8TcRq
+	gwVfYuuRlq3RpopNMkf2POhi5wQTMkVH8hpW6fdrb9vwdKFI4y3H4+0wPBq
+X-Received: by 2002:a05:6808:220a:b0:544:1bec:8daf with SMTP id 5614622812f47-5535d4d7803mr692597b6e.37.1792567064083;
+        Wed, 21 Oct 2026 00:17:44 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.140.214])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-552b87ce630sm1317397b6e.15.2026.10.21.00.17.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2026 00:17:42 -0700 (PDT)
+Message-Id: <pull.2317.v3.git.git.1792567061.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
+References: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
+From: "Jason Newton via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 21 Oct 2026 07:17:37 +0000
+Subject: [PATCH v3 0/4] worktree: copy-on-write creation and ephemeral branches
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,183 +95,137 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
- <pull.2317.v2.git.git.1792512249.gitgitgadget@gmail.com> <83841020f43f9f8989371117075ebf089888d619.1792512249.git.gitgitgadget@gmail.com>
- <atfbDXhTUmPtv5pE@fruit.crustytoothpaste.net>
-In-Reply-To: <atfbDXhTUmPtv5pE@fruit.crustytoothpaste.net>
-From: Jason Newton <nevion@gmail.com>
-Date: Wed, 21 Oct 2026 00:15:50 -0700
-X-Gm-Features: AclHuK-HtwjrYSTC4DhUlb3jb1wJk4tywJoJj6E_e8vl7-KJBfuKs3Oe9VIuPT0
-Message-ID: <CAGou9MhkmSZs3ViSj6qqkZY6LLLQQ+5RzjLG5EhM-AXx+d7h=A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] worktree: add --reflink for copy-on-write worktree creation
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Jason Newton via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Jason Newton <nevion@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Jason Newton <nevion@gmail.com>
 
-Brian,
+When many worktrees share one repository -- for example a fleet of agents
+each needing an isolated checkout -- "git worktree add" is costly at scale.
+Objects are shared via the common directory, but the working tree is not:
+each add rewrites every tracked file, so N worktrees cost N full checkouts
+of disk and I/O. A branch created only to back one of those worktrees is
+also left behind when the worktree is removed.
 
-macOS cp has no --reflink=3Dalways. The clone option is -c, which is
-clonefile(2). t/t2400-worktree-add.sh already probes that way. The
-REFLINK prerequisite runs "cp -c" when the MACOS prerequisite is set,
-and "cp --reflink=3Dalways" otherwise. The test that depends on REFLINK
-is "--reflink carries untracked files and reconciles changes".
+Patch 1 adds "git worktree add --reflink". On a copy-on-write filesystem it
+populates the new worktree by reflinking the current worktree's files and
+index, then "git reset --hard" rewrites only the paths that differ from .
+reflink_file() in copy.c uses FICLONE (Linux), clonefile() (macOS), and ReFS
+block cloning (FSCTL_DUPLICATE_EXTENTS_TO_FILE, as Git LFS does). Elsewhere
+it is probed up front and falls back to a normal checkout. worktree.reflink
+(true/false/auto) sets the default; --no-reflink overrides.
 
-That is in 042485f0e9cd8cf1765b811ea7334247aec44971. The pull request
-CI for that commit is the APFS run:
+Uncommitted edits to tracked files in the source do not leak into the new
+worktree. The copied index is refreshed before reset, and because every
+reflinked file is a new inode the refresh re-validates by content. Only
+untracked files are carried over. The option stays opt-in for that reason:
+it copies the source's untracked and ignored files, which a plain checkout
+does not.
 
-https://github.com/git/git/pull/2317
-https://github.com/git/git/actions/runs/39502233266
+For many worktrees at one commit, the series does not share a branch.
+git-worktree(1) shows a single update-ref transaction that creates a ref per
+worktree (or a detached HEAD). A shared branch still lets a stale index in
+one worktree silently revert a commit made in another.
 
-All four macos-14 jobs succeeded. The runners were macOS 14.8.9
-(23J631), image macos-14-arm64 20260831.0302.1. "print test failures"
-was skipped on each job, which is the step that runs only when a test
-script fails.
+Patch 2 treats a branch that "git worktree add " created itself as owned by
+that worktree. "git worktree remove" deletes it. Branches named with -b/-B,
+or that already existed, are left alone. --keep-branch keeps an owned
+branch.
 
-osx-clang:
-https://github.com/git/git/actions/runs/39502233266/job/118902393415
-t2400-worktree-add.sh ok, 55208 ms
+Changes since v1:
 
-osx-gcc:
-https://github.com/git/git/actions/runs/39502233266/job/118902393588
-t2400-worktree-add.sh ok, 45173 ms
+ * Dropped the patch that allowed one branch to be checked out in several
+   worktrees. Documented the per-ref / detached-HEAD pattern instead (brian
+   m. carlson, Junio).
+ * Explained, in the commit message and the manual, why a dirty source
+   worktree does not leak tracked content (brian m. carlson).
+ * Added the ReFS block-cloning arm (brian m. carlson).
+ * Noted overlayfs as a supported setup when the lower filesystem supports
+   reflinks (brian m. carlson).
+ * Kept --reflink opt-in. A whole-tree reflink is not invisible: it carries
+   untracked files, and cloning every file can be slower than checkout when
+   the files are small (Junio; qub1n on the ReFS work).
+ * Rebased onto 47fdf2208c ("The 7th batch"). reflink_file() now takes a
+   repository argument, matching copy_file().
+ * Added ephemeral-branch reaping for the auto-named branch that "worktree
+   add " creates.
 
-osx-meson:
-https://github.com/git/git/actions/runs/39502233266/job/118902393644
+ReFS measurements (32 GiB Dev Drive, Windows build 26300). The USB disk
+itself would not format as ReFS, so the volume is a Dev Drive VHD on an NTFS
+partition of that disk. NTFS rejects the clone ioctl (win32 error 1 there,
+error 50 on C:) and falls back to a full write.
 
-osx-reftable:
-https://github.com/git/git/actions/runs/39502233266/job/118902393664
+The clone shares the source clusters and does not flush. Four thousand
+clones of one 8 MiB file, 31.3 GiB of logical names, were read back
+unbuffered and SHA-256'd in full: 4000 of 4000 matched the source. The
+source was then overwritten with a different pattern. A read-only
+FlushFileBuffers failed with win32 error 5; a writable reopen succeeded.
+After that flush, 4000 of 4000 clones still hashed to the original contents
+and none hashed to the new source. While the clones were created the
+free-space counter fell to about 1 GiB, then returned to 28.38 GiB with the
+clones still present. The backing VHD did not grow. Deleting the clones
+freed nothing further.
 
-The macOS evidence is those jobs.
+Jason Newton (4):
+  worktree: add --reflink for copy-on-write worktree creation
+  worktree: reap ephemeral branches created by "worktree add"
+  worktree: disable reflink on Windows
+  worktree: keep the reflink probe referenced on Windows
 
-Reflink is disabled on Windows in "worktree: disable reflink on
-Windows" (91806975a6909265b1325206ef2f33a169393920). The pull request
-head is 876fb541a8e1d43731bb72ddbbf1c49da8760775, which keeps that
-disable and leaves the filesystem probe compiled so the mingw build
-does not fail with -Werror=3Dunused-function. The CI run linked above
-is the previous tip, 042485f. The warning names the build from the
-git-lfs report,
-Windows 11 build 26200. A later note on that report reproduced the
-zero-fill on build 26200.9448 with git-lfs 3.6.1. No fixed build is
-identified, so every Windows version refuses the ioctl and falls back
-to a regular checkout. "git worktree add --reflink" and
-worktree.reflink=3Dtrue warn with "Windows build 26200".
-worktree.reflink=3Dauto stays silent. t2400 checks that warning under
-MINGW.
-
-On the git-lfs report, the failure mode is real and documented here:
-
-https://github.com/git-lfs/git-lfs/issues/6312
-https://github.com/git-lfs/git-lfs/pull/6323
-
-FSCTL_DUPLICATE_EXTENTS_TO_FILE can publish zeros when the source
-data is still cached. FlushFileBuffers on the read-only handle a
-checkout uses fails with ERROR_ACCESS_DENIED (win32 5). The change in
-6323 reopens the source writable, flushes, and skips that flush when
-the volume does not advertise FILE_SUPPORTS_BLOCK_REFCOUNTING.
-
-The numbers below are from the ioctl path before that disable, on
-this machine, Windows build 26300.9457. The read-only flush failed
-with win32 5, the same error the git-lfs report describes. The clones
-kept the original bytes.
-
-NTFS rejects the ioctl: win32 1 on a USB NTFS partition, win32 50 on
-C:. The fallback there is a normal write. The USB disk would not
-format as ReFS. The ReFS volume was a 32 GiB Dev Drive, stored as a
-VHD on that disk, with block refcounting set. The clone path did not
-flush.
-
-Content check, every clone, unbuffered SHA-256:
-
-4000 files, 8,388,608 bytes each
-(33,554,432,000 bytes, 31.25 GiB of clone names).
-Created with FSCTL_DUPLICATE_EXTENTS_TO_FILE only.
-
-Source before rewrite:
-106640827aa82610080b1e4c676e2028230b841fa4642faaa292046833950714
-Pass 1: old=3D4000 new=3D0 other=3D0 errors=3D0
-
-Source rewritten to a different pattern, still no flush:
-e58408ac406d407257cd3a2474b8bba7b615e76bd4ce03e8ec3df9b42a02bc89
-Pass 2: old=3D4000 new=3D0 other=3D0 errors=3D0
-
-FlushFileBuffers on the read-only handle: FAIL win32=3D5
-Reopen writable and flush: OK
-Source hash stayed on the rewritten pattern.
-Pass 3, after that flush: old=3D4000 new=3D0 other=3D0 errors=3D0
-
-All 4000 clones still hashed to the original source. After they
-settled, free space was 30,462,386,176 bytes and the backing VHD was
-still 4,164,943,872 bytes. The volume stayed Healthy. Deleting the
-clones freed nothing further.
-
-This is one Windows build, alongside the version described in
-git-lfs #6312.
+ Documentation/config/worktree.adoc |  12 ++
+ Documentation/git-worktree.adoc    |  75 ++++++-
+ builtin/branch.c                   |  28 +++
+ builtin/worktree.c                 | 315 ++++++++++++++++++++++++++++-
+ copy.c                             |  83 ++++++++
+ copy.h                             |  14 ++
+ t/t2400-worktree-add.sh            | 166 +++++++++++++++
+ t/t3200-branch.sh                  |   2 +-
+ t/t3400-rebase.sh                  |   2 +-
+ t/t5516-fetch-push.sh              |   2 +-
+ 10 files changed, 690 insertions(+), 9 deletions(-)
 
 
-On Tue, Oct 20, 2026 at 2:20=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2026-10-20 at 16:04:08, Jason Newton via GitGitGadget wrote:
-> > Creating many worktrees from the same base -- for example to run a
-> > fleet of automated agents in parallel -- is expensive today: every
-> > "git worktree add" materializes the entire working tree by writing
-> > each tracked file out from the object store. The objects are shared
-> > via the common directory, but the working tree is not: N worktrees
-> > mean N full checkouts on disk and N times the file I/O.
-> >
-> > Add a "--reflink" option that, on a copy-on-write filesystem, populates
-> > the new worktree by reflinking the current worktree's files and index
-> > instead. The subsequent "git reset --hard" then only rewrites the
-> > paths that actually differ between the current worktree and
-> > <commit-ish>; everything else (including untracked files such as build
-> > outputs) keeps sharing storage with the source until modified.
-> >
-> > A new reflink_file() helper in copy.c clones every regular file. There
-> > is no size cutoff.
-> >
-> > On Linux it uses the FICLONE ioctl. That is the primitive btrfs, XFS
-> > and bcachefs implement, and the one overlayfs forwards when the lower
-> > filesystem can clone. This path has been tested on btrfs.
-> >
-> > On macOS it uses clonefile(), the APFS primitive. That path is
-> > implemented and has not been run here.
-> >
-> > On Windows it uses ReFS block cloning,
-> > FSCTL_DUPLICATE_EXTENTS_TO_FILE, as Git LFS does. The destination is
-> > sized to the source, extents are cloned in chunks of at most 1GiB, and
-> > the tail is rounded up to a cluster (64K, then 4K) and cloned; Windows
-> > ignores the range past EOF. The tail is not byte-copied, and small
-> > files are not skipped. That path is implemented and has not been run
-> > on ReFS. A volume that rejects the control code, including NTFS, fails
-> > the probe.
->
-> That functionality is defective; see
-> https://github.com/git-lfs/git-lfs/issues/6312.  We should not implement
-> this on Windows because there's no reasonable way to avoid corruption.
-> It's quite shocking that that bug exists, but it does.  Unless we can
-> guarantee a fixed version of Windows (which does not exist yet), we
-> should skip reflinking there.
->
-> I'd also like to see us limit this to platforms where it _has_ been
-> manually tested or is guaranteed to be automatically tested in CI.  That
-> means we should make sure this runs in CI on APFS for macOS (see below).
->
-> > +# Reflinks are only available on copy-on-write filesystems (btrfs, XFS=
-,
-> > +# bcachefs, APFS, ...). Where they are unavailable, --reflink transpar=
-ently
-> > +# falls back to a regular checkout, which the test above already cover=
-s.
-> > +test_lazy_prereq REFLINK '
-> > +     echo probe >reflink-src &&
-> > +     cp --reflink=3Dalways reflink-src reflink-dst 2>/dev/null
-> > +'
->
-> Does this work properly on macOS?  That is, does the macOS `cp` binary
-> contain support for `--reflink=3Dalways`?  If not, we won't be testing
-> this case properly on macOS.
-> --
-> brian m. carlson (they/them)
-> Toronto, Ontario, CA
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2317%2Fnevion%2Fworktree-reflink-cow-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2317/nevion/worktree-reflink-cow-v3
+Pull-Request: https://github.com/git/git/pull/2317
+
+Range-diff vs v2:
+
+ 1:  83841020f4 ! 1:  a163f737af worktree: add --reflink for copy-on-write worktree creation
+     @@ Commit message
+          and bcachefs implement, and the one overlayfs forwards when the lower
+          filesystem can clone. This path has been tested on btrfs.
+      
+     -    On macOS it uses clonefile(), the APFS primitive. That path is
+     -    implemented and has not been run here.
+     +    On macOS it uses clonefile(), the APFS primitive. The t2400
+     +    REFLINK prerequisite probes that with "cp -c", because BSD cp has no
+     +    --reflink=always, so the macOS CI jobs exercise this path on APFS.
+      
+          On Windows it uses ReFS block cloning,
+          FSCTL_DUPLICATE_EXTENTS_TO_FILE, as Git LFS does. The destination is
+     @@ t/t2400-worktree-add.sh: test_expect_success 'relative worktree sets extension c
+      +# Reflinks are only available on copy-on-write filesystems (btrfs, XFS,
+      +# bcachefs, APFS, ...). Where they are unavailable, --reflink transparently
+      +# falls back to a regular checkout, which the test above already covers.
+     ++#
+     ++# GNU cp probes with --reflink=always. macOS cp has no such option; -c
+     ++# is clonefile(2), which is what the APFS CI jobs exercise.
+      +test_lazy_prereq REFLINK '
+      +	echo probe >reflink-src &&
+     -+	cp --reflink=always reflink-src reflink-dst 2>/dev/null
+     ++	if test_have_prereq MACOS
+     ++	then
+     ++		cp -c reflink-src reflink-dst 2>/dev/null
+     ++	else
+     ++		cp --reflink=always reflink-src reflink-dst 2>/dev/null
+     ++	fi
+      +'
+      +
+      +test_expect_success REFLINK '--reflink carries untracked files and reconciles changes' '
+ 2:  6e2acdc5e2 = 2:  042485f0e9 worktree: reap ephemeral branches created by "worktree add"
+ -:  ---------- > 3:  91806975a6 worktree: disable reflink on Windows
+ -:  ---------- > 4:  876fb541a8 worktree: keep the reflink probe referenced on Windows
+
+-- 
+gitgitgadget
