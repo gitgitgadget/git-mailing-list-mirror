@@ -1,118 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792553824;
-	b=4G9qHlQDoQ2Tb/dfzdYqWlhEMuso2ks6Y8E5Ns++mmVIS/1D4a8xJGec3tlzP86w99uA
-	 2jr6jOym3vaSvYlXBuP7JNCyKAY/OgxMi7XuClMVx4zPABwBSg19vEXU5ENp2SZR2+Qp0
-	 znMbFIFMRZtKtAL7/L9yBm7WnM2VwXvf7BQcC9OemwQgicfH9dyWdyrkSsUZFSs7Ax5Ql
-	 Fwx32Asi2LHWlW1qek/qlQfXBsYydqgjuInXD+JTULMnuNoIs+bz6ic9J9DkSNfj5nfEe
-	 uAITOYQfMvr3u+ABcwUdJkyJ74SoXAMK85cqAe5go0nt7ummcUw0jzYrBUa6A8ZwWGw==
+	t=1792553928;
+	b=BoOraTxPds5Dl2AfdV4b2izYSYelnLGIhMVAC2H2941rUkpAvGcfH2pXsEEpOs98pLfE
+	 tJgVZbWemnZSWFX16CYX+5h5w369C9v6Hfx1LNcOTaCoa6ozF9LH7anQyrNiwcx4C0zJC
+	 YTb3rMy+gm2ewONSvnTGyEf6QrEDjDNiLQ1kOnbZLbe/aRwF5t+8uBfXm/zJMiRgGwBef
+	 a9QHUozsao09IWyoFUQ11G2F9MLr/9vSVAp7vj0/8rReE5OLel76BjJSi2TTQ6Y1VAIfm
+	 tepzDSounfVMLt948BLGQ51McBdhdVTn3yUP7tMBAJdgQVy+BN5NLcqUzxVxHy/VRzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792553824;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=a4p5YcRTbFd6iBBTtlGAwcMrnGh8sXFrl6i0flXolr0=;
-	b=SxeV5zxWeg739MW7QHuL1cL0ZcgmbHL+adnbousVkHNNN5RfdhvnScuAn0bgfFykTgjR
-	 VZdrsJsZkfBNIQX+Hb3QbZtDFEGgNWk7bepiwi259XyuhunN/7rzkcakb2u2eT/0II3Cs
-	 Tqfho9VRI5j25+i2nKmRp8JWUekugmHnC28Ro5PHx9Iqm2bZNUtjsSDhm/VFEMf+ec6KW
-	 xfqYW9YbU2FrWC+/yWkWJ34JFLrddTF8ILu3uye+lLROuF8U53wTOIyoeCvBb04pbUhEd
-	 YTsP+RPh1CFur9k03oMAgBauOnJfm5qjENECJ2UrSlM1GPKRqeU7FJXYYCdq5YbFI5Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792553928;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=aQWxtREw1svnhLh7N5bhcusQxt4kXbmshZwxCqFOL6s=;
+	b=Ge8rY/YjKd7VN3WrJcRRLd32ENeMRcvLB2b1JuAcxBjNiD9tEKVMbunjoWsm3UZV8Y+7
+	 qBtQEcEz2i2NV2zsOlcAexZB5OAtAed2TGOwhw3yiJbg7imB//QbIHKWk6EzA1Ww7iWA2
+	 Lwf/lcH3miymgBWP/Xa3tWO+8paipaBjFEIGbVnp6JbajK+clhMIkYzmHWVx7c7orPwQ7
+	 b7jE2MIUePUYx+JOGvusQnML+U8mE8af9UBtLRv0Q8ZagOCOXCJoM1qs3KfgWo3jJVK3a
+	 z8ldFip1inCjhrYNs8VjPBCFzw1+cEDbvjlrAZHPaofuXvo52qCMGHTOyJToKGpb68A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ANtxSwjZ;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JrOKYJSC;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FQO1w5+8;
+	arc=none smtp.remote-ip=209.85.221.46
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D64606A31B
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:37:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2D64606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4952606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:38:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B4952606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ANtxSwjZ;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JrOKYJSC
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id D6E80EC00A0
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 23:37:02 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 20 Oct 2026 23:37:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792553822; x=1792640222; bh=a4p5YcRTbF
-	d6iBBTtlGAwcMrnGh8sXFrl6i0flXolr0=; b=ANtxSwjZM4hcnyWBw+1fg/8EG5
-	G/zDcHs81hW6ZjwA+2EPolx85+NKkGhJAurcqHMKlZA/aLprVxBadDVSsVQP56ln
-	sJYKcs9EkmoBjuaSZasQAnmaegn19ffdWvY/QJEocQxrWGLrqCbZrIB9O4MkTy8U
-	C5MerGxQ9/SXAYIM5WtiiOErtXH4vlsqSKsKmajqsQNgodFRwoBh07MseB5UloRC
-	qtR9R2EKQmHmPIRfC2c1p3VbSJuFei1Xxqqsfm6RYuL+uJCTcBtVKtHZu9R/y8E8
-	jpDIMVRxl0m3tnykY64fmOaeemoWJgQtIJhWecAHfTrT1jpvMfgYo31l23lw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792553822; x=1792640222; bh=a4p5YcRTbFd6iBBTtlGAwcMrnGh8sXFrl6i
-	0flXolr0=; b=JrOKYJSCUKirIsY23W/pSO5vndLCPU898NggZIbaDpLUnSKqxx/
-	NrirvCtJ4NzHgdTwwSIDpIELmi8pp0bgT1YMkry+fRO2SeduwUmtmkC1BhdKZrE2
-	ED1jjK3qi9Z6MW/DXzWuRorov2cEz4LlpQsa4AfZB05CZJZYcMrQvmO4VqI1l4IP
-	si7x9/r/iFl7qBnmYtQ8rp5T6+shqDyjMAZT3uuFDsi8blESOqyb2PvbJngGCHee
-	BGNKYSVo++dIblFGMvFgGvQfaK64elOl1ghIKeHsgyz0KdJh9j5QklXl31WSFniB
-	zgyx8Sa+TVl6BiAD8W5tbMorw7a2/X8ALyA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792553822; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:cQHTUVZQz5yO9N4DHGolFh70coxlv+324X0tSlpbcACG8h8
-	r1pPCjND7MAwUHStY5kCfhsJPf5NMOcesr518ocnrer5/pth4b41YaXW4ZhQr8Z+
-	gqTAKAg1zplglizc2qnrd8MbI1xt4IOpxNOrzk100xNpjG3hzNgUuD9if4j8Wzee
-	fm3Daz85a5FXhye/gIbuKkCs0lA2EQ+BPvBSXNXXGj+2LWEhp1CH3uf3cF+27UqZ
-	RdUoYe2MNMeSmyIjGIRDuCpfyxctQAcL/ibLy9mE5FrkpbFtXwQ2psanj6i9T67B
-	Piqx79XiauRz88QCcDwc/lZqajhIUpn7Pj+xj9A==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=11;
-	hn=content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:IEYl5Az6f4stJ+NTqxbPbn/FnSC4eDyoIo/1O4Ppblw=:5tf7VVX8r2T2pEGM/KJgLEPY8iXwl8sFoyqu7zMIUSQ=;
-X-ME-Sender: <xms:XjPYar1Ns7VwkzjmR8ALgz0I9Rz8dc7IHcpWd-c8LYoJG8dP83RzVg>
-    <xme:XjPYagGH_92qVz2WjXK4uBZfTtrkhsV800hYl8zLrP1QvuGcVeKZWpqXmj3eLdVoX
-    tEa9XOBEmrRke2rR7QOAcdRRWzq7OqrqaTDqb7aPNx2-OEMUtxk3v8>
-X-ME-Received: <xmr:XjPYaphXTKAAgaZcOC_L44Zz3QyjKLXDlwsf4T-78Op4aXoqyJ7LNk9jZm8-jPi0MET8hrGO1fHiRV9dvUPnJuolM6NiujBL0LoD>
-X-ME-Proxy-Cause: dmFkZTEoMajsdGkLGZ2sed6cZfLqxslnEHN9GYbwh2+vyHhVMKLEcM6HHiCHPcQnNgh/BD
-    ZpwuSBeq3okv8DBsNVJmltz6enzeg91AeofCrl7tXRpdNOOe5BSSO5Ufs/u4GC9uQqJlxT
-    q50MluvSbwA8xO9z3nTQM2TjRpQO6+O+uPr0oVEifjLrSOdyH2lxU1l2ZUrdjt9JCULfyZ
-    hrr0viSFT7Bsd8t/OsCIeT8r9o9AeKgPG7a/wFWTLuoM85k55Q5xzGlMhVJXfJ+nuuPZVG
-    NCLai0IjBVAElgg6CGmQNWh7g1NulgLKKHXbwSLYC45nJCF1/RrgjUKslyqH49AlOF+pQo
-    3VcqWGKxCbXQz+BjhJ4xT9u+6OpRueUv1xz5eE+jViExweYPzmgwr9vF9LAfI4oZwX5pTe
-    5me+Vz9Rme7JJp0jgAU0tZXoHFZviJ6HkLG4sbqqk3tSsXH/MybamQEvQgxGlT3Kc6XjPs
-    1MKn4I6A72x5BQDjqJgmcj8jxokwz6Sv6yiNlLFUQzrlf1tS47aU6oAWHHsAJeZrGh+S49
-    HelfGy7wPf3aedpAsZ1AeUTEmbSeyoFP1m7f9HYK7mhXC/ash7nOK3iaMIHsTkISQAxVmn
-    NySgv8I0RPsn7RJ1qCbCsBuPD6I8HdL8zBcJtfMAnEQ6Geq+hs8aZou+CgUg
-X-ME-Proxy: <xmx:XjPYar8kLo-HU4FPq4wtftItBHnAi0SMUSVz3PLtTbfUsBz5WJqFZw>
-    <xmx:XjPYagq9g9c91m00GvcASftXpSoiOjqB3aHYqX5j9A1neuGVjR5sPw>
-    <xmx:XjPYaq9kvq3iIMbDDxZo1SR1tPWQn6NEhGrSx3SfJi6hxqcZVDzf_g>
-    <xmx:XjPYakXLbnfTQXSk7gWqFGzPDeoXrm7-Y_Rz6oWl2S5MTvZzs2lJfg>
-    <xmx:XjPYanP-ulFHfeGz26aa-EBd2rzLAMMWOBkthg_D2BxPTNB7H9kcbj_R>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Oct 2026 23:37:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FQO1w5+8
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48afcfc4bf5so205894f8f.1
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 20:38:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792553926; x=1793158726; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=aQWxtREw1svnhLh7N5bhcusQxt4kXbmshZwxCqFOL6s=;
+        b=FQO1w5+84vdoMqCSLNb9yNVCwEZYSJPHsMlhRR89qHb6BDY6hdjQeD0sXDBKkU3ljZ
+         CaoTRBfHR9LF70w94F72nj2Ajm9ku10YnS7rx58GQ95xO9056XZmfsPcRCfSigYzYpyL
+         neko6z6UQQD4juzVma8NHKCNqQbpgcEWdRlCSjdXOK7xmUGxL7wGDHuzhHRdvT9gPl87
+         NrSwXN9o+D0KHbxuMnpAk4dNcp6T2rKMWsWx2LQh/5uHyvg2n0HsOgbvqf/PcOtx4hHF
+         rl+9glGv8DBEiuGcOhMSP+cxOIsdM7hfaDwVNX8rWcOS1Q9Xod4fXfPB07PExPwKKHDA
+         5YFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792553926; x=1793158726;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=aQWxtREw1svnhLh7N5bhcusQxt4kXbmshZwxCqFOL6s=;
+        b=NJS3PuIsPuqvHi4tyatpBjoqoeaEpJxLECRJmWajecSzss7ybsBEnvPGjrhSc1O+b6
+         EhAHaZMdsQx2t4aIWyArAGqo7MPGr4PPVoPjWdA8KpqDEqhxlYSj5LzJR1VqZNdxROPf
+         VHs8kCZVJDmJHq8vzB6epmMav/+JJ0lSiLoFZW3fIDWVL+41gHr9/qSJlzhMXiPJE/Lj
+         OAIVwVpvd70wWlLdIiuySfPwp4HIwpid3km6aJD6xlKW6nQpJnIyzdRbqgXxSy5w1YBm
+         yYud9D5AjMCUASxA6s+CLKiqFcMp5EfhNHxR6hKiqhhxfcXOIGCBdEcl+AEsr9GPiApP
+         aJaw==
+X-Gm-Message-State: AFq9FYKQ7R0SQOKbpOABebIlN2TvN4Z+gMjpxqSSkFFV7WWxEz7IyLhV
+	xqucXHxgV+HbymiSWEXbk6/Tfkz7XTqxqPiHZJST7KPHgyQgp/fo/MjPhJ0C/zdzG9AOSQ==
+X-Gm-Gg: AYBFou0tMWhmx8lP7Lbx5Mxb+zUEi/o73o4d8T9Wo1N7qrwGCKRN3U2DAE2MEGvEXky
+	/JPxndFU63w1uAb3c4BBRUPXPIHPSaR/XLPJQFYZTw44zmWmVFj/NegOOWIpF+4o3phKHVhhqns
+	kr6WFYHBFJopkaNOOpnAw/3zL2IxIKbKMdtBSIIeZKfbR7ObS4uH59/mbqDJgatkTDeHlCPlMhy
+	F83MagdGgVYEemV+XlOsOaFAYYfM3OZML7YiE+4YLXGUSjlkCzJJnYUt+xY3K8RVvLpg6BbZOlL
+	El31wgWVNyscPwXkuFQJMRo3JJwQPoKtbKyKN07ePfMck4Gjc6sPY6KDDpw/BOvqyK/0mHjwxt+
+	qwVRU8C6CffdLOCbvgq67siSBZ+9hOuRxgnbYtaAnJCqST5mpyS55we6GYn/gY6/BCUfm2y3vZ2
+	LvbpZX4cWrgWJaHSESK1fuKEP77P2d7ZllS/mxQop6dXZ/UtPVdsRV9o5UVyVnXpe1OxDez9uZr
+	rvLmpPz+207SsevMjr/QDIn/2G/60aW0XDBqIUP/yneeYFYTECx/rT6LrR2jf+DHaJXaSSBe0W7
+	xDE=
+X-Received: by 2002:a05:6000:3106:b0:48d:f14a:9179 with SMTP id ffacd0b85a97d-48e264afb68mr1138026f8f.48.1792553925836;
+        Tue, 20 Oct 2026 20:38:45 -0700 (PDT)
+Received: from GODS-GIFT.localdomain ([197.211.58.194])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e25828c6dsm2683305f8f.24.2026.10.20.20.38.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2026 20:38:45 -0700 (PDT)
+From: Cynthia Uche <herroyalpriestess@gmail.com>
 To: git@vger.kernel.org
-Subject: [PATCH v5] github-ci: update macos jobs to macos-15
-In-Reply-To: <xmqqfqy5clgz.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	16 Oct 2026 15:46:36 -0700")
-References: <xmqqfqy5clgz.fsf@gitster.g>
-Date: Tue, 20 Oct 2026 20:37:00 -0700
-Message-ID: <xmqqa4o7sp0j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	Cynthia Uche <herroyalpriestess@gmail.com>
+Subject: [Outreachy PATCH] t2104: avoid suppressing git's exit code
+Date: Wed, 21 Oct 2026 04:37:23 +0100
+Message-ID: <20261021033723.5265-1-herroyalpriestess@gmail.com>
+X-Mailer: git-send-email 2.56.GIT
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -122,49 +95,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-GitHub from <no-reply@github.com> address keeps sending
+The exit code of the upstream command in a pipeline is lost, so a
+crash in 'git ls-files' would go unnoticed. Write the output to a
+file and compare that instead.
 
-  Subject: [Action Required] macOS 14 hosted runner image is closing down
-
-and suggests to update to either macos-latest (macos-26) or
-macos-15.  Use macos-15 for two of the four osx-* jobs, and
-macos-26 for the other two jobs.  Use explicit version number
-"26" instead of "latest" so that we can more easily tell the
-differences and similarities between github-ci and gitlab-ci
-and compare their outcome on the same commit when needed.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Cynthia Uche <herroyalpriestess@gmail.com>
 ---
- .github/workflows/main.yml | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t2104-update-index-skip-worktree.sh | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index b229739be8..f37834326f 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -349,16 +349,16 @@ jobs:
-         vector:
-           - jobname: osx-clang
-             cc: clang
--            pool: macos-14
-+            pool: macos-15
-           - jobname: osx-reftable
-             cc: clang
--            pool: macos-14
-+            pool: macos-26
-           - jobname: osx-gcc
-             cc: gcc-13
--            pool: macos-14
-+            pool: macos-26
-           - jobname: osx-meson
-             cc: clang
--            pool: macos-14
-+            pool: macos-15
-     env:
-       CC: ${{matrix.vector.cc}}
-       CC_PACKAGE: ${{matrix.vector.cc_package}}
+diff --git a/t/t2104-update-index-skip-worktree.sh b/t/t2104-update-index-skip-worktree.sh
+index 7a0778ed98..68a4339e24 100755
+--- a/t/t2104-update-index-skip-worktree.sh
++++ b/t/t2104-update-index-skip-worktree.sh
+@@ -34,7 +34,8 @@ test_expect_success 'setup' '
+ 	mkdir sub &&
+ 	touch ./1 ./2 sub/1 sub/2 &&
+ 	git add 1 2 sub/1 sub/2 &&
+-	git ls-files -t | test_cmp expect.full -
++	git ls-files -t >actual &&
++	test_cmp expect.full actual
+ '
+ 
+ test_expect_success 'index is at version 2' '
+@@ -43,7 +44,8 @@ test_expect_success 'index is at version 2' '
+ 
+ test_expect_success 'update-index --skip-worktree' '
+ 	git update-index --skip-worktree 1 sub/1 &&
+-	git ls-files -t | test_cmp expect.skip -
++	git ls-files -t >actual &&
++	test_cmp expect.skip actual
+ '
+ 
+ test_expect_success 'index is at version 3 after having some skip-worktree entries' '
+@@ -51,12 +53,14 @@ test_expect_success 'index is at version 3 after having some skip-worktree entri
+ '
+ 
+ test_expect_success 'ls-files -t' '
+-	git ls-files -t | test_cmp expect.skip -
++	git ls-files -t >actual &&
++	test_cmp expect.skip actual
+ '
+ 
+ test_expect_success 'update-index --no-skip-worktree' '
+ 	git update-index --no-skip-worktree 1 sub/1 &&
+-	git ls-files -t | test_cmp expect.full -
++	git ls-files -t >actual &&
++	test_cmp expect.full actual
+ '
+ 
+ test_expect_success 'index version is back to 2 when there is no skip-worktree entry' '
 -- 
-2.56.0-321-ga7e4057184
+2.56.GIT
 
