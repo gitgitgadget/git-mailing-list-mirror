@@ -1,103 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.53
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792691077;
-	b=Hc76DlgbKNOd3bVgRqvmFvTyygWmr5aQBiLC9gdDtrw5xk9bNPh3+oL0ghXiu5CAXNqP
-	 XWyWQUp9Zg936Q0GhbI3Y1lKb+q58eJ+YgLXoI3hKC80SqJW3Qv7whKMPqX8u8QnNz5B6
-	 Z4st16MyJ8RefY+9CKSeTeE4242lolQDz25Fr3G2mt8caOQj3bH0kqMrcWSP5jxsuHsav
-	 upv5hB4gj+88TNfnv7ZLm6372C0J2LuGDkuSJvWr1eQ7gb6mVJfGTPUgIRonPLx7PeRf3
-	 HEZG6LdNuiI3RFO/dMNGrl0dzJdYWF9+56e+ykSSxAeK1NIT5mrrXXkseksXl17jyhw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792691077;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792691088;
+	b=GMsBNoPmr4U5VGxMlbR9hBBPXsJy0VCsGJ9Ylo5gwT4ruTnyyjbe+J9o2rkMFAfHMAIm
+	 JkONQXruFlrbZkXOSZNTbxUTUJPBaH8xRxJxfrYt6ASkDflJpk7lk1GHHamk7fvsmjOq4
+	 pryYdB3T3ByY54Hb+TB7rD/5QDKhR2vVGyE9sFJrAsedFy7Nb9CzrHD4YClgJ/tsUloP2
+	 1NzYacvmKhAbdiku5vkHgUqpbr5i7xmZRjUrcaW8uwHH3I+ZJWyhHWzidD7EHWWDCJnVH
+	 t5p1pyBqMOVD8Q50ou0U9wl6PNgoBrL+rA9zzmmzu66OYDSuLlNzSLRsDbEuOCXs1jQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792691088;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=/+RhVMv/uTJGMFNvR/ZTNifWtezTBDOFzfbDRZzk9D0=;
-	b=2hdV+MzxiPnLwWjf23EXNUDMt5vpgeJ8OBFmNQR/SP/LrGTWAF17yPWvpuuNCW+UHQgo
-	 moSfDsOHvzefGLzjiNHN2soWrisrkpY8C9WmHXHjxbMUURolKHvXTxzsTovdMuwe4bQEE
-	 vWJ7M5qGcYoMQvS9iNZNyQgpTAp/aahgKbnqnFta+8Uo1Gf+IxdKdgNBNV7ToUq3PLnvW
-	 +JwNobD1iH3y1azDlNOROhn8HqUcxGJ93N2hk9dDIEXz+3fX1hieRl3QlmhIt+Ahj8xhy
-	 f+k1pLr9qus82NMuNozV+p2jFaQwZLeBmTELsGwMeCdPqS0JtKelIU5GzM+Cz0heezg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=jaspermayone.com;
-	spf=pass smtp.mailfrom=singlefeather.com;
-	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=cdDGVmBm;
-	arc=none smtp.remote-ip=209.85.210.53
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=TwaaLUJsXwZMTF+OgFsPFOlwTsMckJXtuef+utPu8kk=;
+	b=eWaCLtdGwwU4odenCHWe4xoKLv2ao9tV9bWyvvGvENzt+PRI6ydnQQ1QlupFWgMbCx1h
+	 xuiBkfWskmSttYSfA+eQ9C32fz+YdZOZbhdx9jdUY4mvkr4DT8MwpgnrtdcK2sUpjMV5A
+	 8iw1QEurMpG8VKJ14gPCYOI7tqGWhHWt7JJRJ/BKkPJRcvoldztKrAhIXfSBxHGWSt7rY
+	 OLUWwUmVLqDyEoQk9GLhYj3JBBMWr0EdUMuAi2LXfNfH4okqiBAsuNnl9DxwS3BC8bCfz
+	 qiIFbbq8/XurUNbL1eLW1bN5DRKo9POlulK4xL0Lblq4ypzZQDdw1ZdvgF1LPa/5SSA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=OpeQRjGf;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.44
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FD1606A319
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 17:44:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 23FD1606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jaspermayone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=singlefeather.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED47A606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 17:44:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ED47A606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=cdDGVmBm
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-8451a619da7so4289a34.1
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 10:44:36 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=OpeQRjGf
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6b3dd83e779so3717607a12.1
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 10:44:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792691086; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ZK9K7OXCWrjHDZhxqxFWvEr53bXsckE89iEWwVvUpUrRl2fS2+Eitf68QQ6fKiOEtb
+         8Dt7vNMLF5+GIl9IRIJBKua1yI6CaASvmndQmebFp93cOoBJ2QNpTOvHgJ2P6+YUXcxN
+         HsLIRDAEuChS2wBGK6RgDRoO5j3/MQZ2MUZy3sg8HSj1+/irqtDKdUHYUpJbqPATY/Xf
+         O+ZDDJGRXhKIurJTovSgV0J4TOUWvT4IjlZ2DpGNUvvc4cWo5U+L9JWhEIXsZQVyfo9b
+         sxgfcfv2SOcER7Yt9yh5IRCEuEg0INr0/hqP6BXoLHnVeE7P5GzDE8uiI1m8VlONL63b
+         4aFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=TwaaLUJsXwZMTF+OgFsPFOlwTsMckJXtuef+utPu8kk=;
+        fh=J/ni60HWp3CEm4ACjDCZBuBseRlnsGzufd9Y2NlYPJg=;
+        b=nQrNb9SN+JsHlHLloC8Mi2RCHtxB628v3EQbrRizPq3/DFKVEIH6/NcnKwK1yU5tUJ
+         kiqT55VrVyfywxeSAy7Dd6Bzsp2zKISW0MaSSRvF0PN8yvUqSuCMJrha9tGbIaMQs9H2
+         v0+ju5C6FOupY8EE5U9dnLQZb9lxXtBOUsW2Vw+64wMPwcSBEnU7jQWlwwYB6jDfQUjq
+         82nBqGNqlXOQlzyC/8CXCdGaDARVuJs0WV82uNSxyOWKWZ1uHQraAnnA9t0fVLlztCag
+         nJuqpjJOkEkdoIVA0lD+vfuwnHWo9bqrhRD2VY6KgSL49tN/GQrD1gTRVATTW7XH3leJ
+         hL+g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jaspermayone.com; s=google; t=1792691076; x=1793295876; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/+RhVMv/uTJGMFNvR/ZTNifWtezTBDOFzfbDRZzk9D0=;
-        b=cdDGVmBmBoYk1W5fv3/L6fzBtu/h/3D/ngj6Pnn0XAZ26z7hTyAhj4ZUO+lxiUPpC+
-         68BGRkUUgyvAf5loyOgezY0o+94QayiMWW7BGFPQTlqK2RyMZtVYU0DE7n7CKWw9BwTc
-         Z9ZKAikWPA64XdVERdCo0DatPN4prWl7aKKgbkkjyk8vCtzGPhpsWUdWYZpeTMGYuJsm
-         a93Iv+2eWL5YIvSZsNW23N4nEl8yRBWHMBiAHaHO3m0ElA5uwoXgR0K9bYB+9PpfSeMR
-         RSDzinMAukT/+ldnoPFs7NP/dU4Qmu35bviEiT6sUQ1+/fUYMYbWXsHgqM1tAGYq2RYy
-         +dMQ==
+        d=gmail.com; s=20251104; t=1792691086; x=1793295886; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TwaaLUJsXwZMTF+OgFsPFOlwTsMckJXtuef+utPu8kk=;
+        b=OpeQRjGfc4LwM9v50OOHjV4RCJd9xZiwl8+geafCHPCbAOv3o2prjNVLy01ULFoZp1
+         0ihrMSiLFMQQjW9NdlVGlbxdPv2D2sCQfJoSqc+YoRgerjGCVlXr91PuMffA3uJd3Cuc
+         CLXY2XkHI8QSwjjNW09/M4URDzH7XBXHD++w42xWX1+4bKbGknW90tCPMpzOGcLMCvnV
+         VHhUzkzBWxtC7YxXcWL3sa7DKw8/6A1Kkyyw8tlKazF+1w9xQwDUFxAWb1BV1U5BKJ4Q
+         7O1toRGYlVg6R6GncajP2MQdI9GDlX6mD/EdWgksxJJbqfGFg6gxo6c4qwBcqCbbXto1
+         iwkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792691076; x=1793295876;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=/+RhVMv/uTJGMFNvR/ZTNifWtezTBDOFzfbDRZzk9D0=;
-        b=Z7aySm2wCmeCsf9nIdHK883NoycT9+sJqRoCkUxXqj47k2DN1vkErP7KkXhQEv0/iH
-         liMca1AFGYU2GDxU9kw/6jt6mNxdSHzDgnkB/IVFO10CC85lOhnQb2dULHMBrtObBk5f
-         UZgMb0q1wuboE31AUjHu8fK+3GAY9tQFXQaJvRkHwB6Ug/AK7VzhIts/k08dwDra18xW
-         xebkzYmGPLl8jYSllgCw4j6VaMjZurTbghDLR3CoXaJVnLYPzXBZxSR18m/3ZbjVh9bd
-         TB4b7Rhwkt9UW0ttXXp+srJtpi135se74ORHlECZu/YL0HyWFvTAjeHRa9tmYCbaR2xf
-         iYLQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzts5+mr/lVHTArJKQuxbLF+rIkk0bKJkA/2XYWnz+URjD7egi4dXWZA2t9J0eJb9OjBN0=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJKCmQ48LSewo1VQDPO3Ik/h5jJGCncTAmEHXXe63kDnrL5INrD
-	FE/rl7NPZW8MeAbQFg2sGl++ItCuFersiRcVDQv6SCW/XbT4fLWRgpdAD+aieLqW6WQFQmsxJ4G
-	BD8fMHVc64GyxKmu+Ecnz0f6wp3Ft5LCTdmhYbBzdGsBurtU90v3HNDjuqRVpu8SlMHIe1rEOMf
-	rsj2Vtj7A6gKD76GI/2Dvqe8LTfdvMPfQ=
-X-Gm-Gg: AYBFou0LupOxCuXa51lgptERNpPtfPZU8LxW0B4kFQUqeEf2GxGKl+ky4R1qwOjSdKI
-	gCVTibm5ygvdSWQa5smz5fXkiBloyy6Gtgk6+bWwA6K8+eQCpChoIi0jdugzAURkgSN1j374L5R
-	iBLH5sqDQiIFIDRvyHV+Q6AzKCdeX6GqlV22RgNO+D+sp3O09tM1+OQ3oUzJz0WXVf2gKvKMrM1
-	yeq2QVxBPlsoI5i722QcwGofprVeF65GKYh/HCJurSAht56Ae7yF5LQFW/zbFn2TAPMao/v4x6/
-	1hOOKBzy8/kcVNII4/Q2nH232TMx9jcJy5EsxR/Iu6bSAT6ptAagzTGHozgbvLmRzZhaPxwzNvE
-	L+M+RGoDfSJHbE3/Qrf0dq439A+yWMYCWVu1VXly8SQYFSQ567eW/oxnQR6IotoCgTUduorKPHP
-	ao5rjKmesmaajEf6NfGpAexYJMPxN0yx18e8mBw2jKohDoR8SIvLd79tSkCURVZq6PkNDvOh3Lf
-	rMbSP8OtpIkBXporbfS3YP7KHq1sJMgYEzh8UsOWmiaN+2WMeyiWQwj5G9deZs43bu7KBZiuJuq
-	eagy1JeT2gG8hMiskYgsy0NMyhg8tQATKPLh1F4PFJt3cVn3St+WLsKVA+OdwyYnebP5tzrl2Hf
-	WzBZpKrp/nDEn8jPFx5Xpu+uT4vdpCse1S8LqlEQmBd6oBzFgprCFVrVNremTLXpy9T8ecdGuhq
-	42v8EMLhlXq+/+59vKFv/WCeYEZ8p9siB/XvmwuSiBQ0mkX/W920hlNTRtlBtcP9FvEfslaEp1I
-	+iobnnblLUfddtcnPJeaZQl
-X-Received: by 2002:a05:6830:3495:b0:806:9a8d:4b9b with SMTP id 46e09a7af769-84d0890bfcemr4895425a34.15.1792691075979;
-        Thu, 22 Oct 2026 10:44:35 -0700 (PDT)
-Received: from remus.wildebeest-stargazer.ts.net ([69.43.66.31])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-84f7703d288sm377794a34.4.2026.10.22.10.44.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 10:44:35 -0700 (PDT)
-From: Jasper Mayone <me@jaspermayone.com>
-To: haraldnordgren@gmail.com
-Cc: gitster@pobox.com,
-	gitgitgadget@gmail.com,
-	git@vger.kernel.org,
-	kristofferhaugsbakk@fastmail.com,
-	ben.knoble@gmail.com,
-	phillip.wood123@gmail.com,
-	Jasper Mayone <me@jaspermayone.com>
-Subject: Re: [PATCH v3 0/3] branch: let --delete-merged find squash merged branches
-Date: Thu, 22 Oct 2026 13:44:29 -0400
-Message-ID: <20261022174429.81186-1-me@jaspermayone.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <CAHwyqnUWab7AhqJtWkPQzw_dh+OwxiZxt2+1TTC-r+VPx+20Tg@mail.gmail.com>
-References: <CAHwyqnUWab7AhqJtWkPQzw_dh+OwxiZxt2+1TTC-r+VPx+20Tg@mail.gmail.com>
+        d=1e100.net; s=20260707; t=1792691086; x=1793295886;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=TwaaLUJsXwZMTF+OgFsPFOlwTsMckJXtuef+utPu8kk=;
+        b=t/U0TK3+2ttVPbgiJWyYThwAGmiI4fHe3ZZV9uwUuawno0C6tIlk7mtFqTlWjelZKf
+         qqK8TUL1IKNcD3wK/kXDEQJcp1MwX2dkkToikpoRGVZT047/KEUXXFQXqhx+BaSu2Ax/
+         XH3jXho6eKAz7XYuSJSTiN/95HgiKBX9EjzewU3xjUeUTHAKVYI38Uy/RIVxfqe1eRb6
+         G70Cqz1z5Wz4K92hsSFKkkEgC0pb4uCsGhiQ+B3Bdnk9alrs2IP0kZ62IZgwmdcjKoi0
+         J+Hf6sqiPfJ6R6H8PWl7k1YcHFvuN+BRuvs7Z3eLa9pmBmoSGEZ9iw9ufnJqQQmYAe7C
+         GkgA==
+X-Forwarded-Encrypted: i=1; AKwUvBzHFL2OwjqMZ5Pub6MNHXhIzIDL+noUfFEsBsY0SnkHm+gfJI9ToxUduh1ShQHQ5xvuGF8=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKsIhJxxopLA7DJ81JxFQ81PXTgoXG91Y3Dpu4MkGKs/OkHZUIX
+	Zq3jxeoXspWsCkdpngmMQFDiuXGZ5sG1JPfFY1bQgwtH/Sagvb6nBf0EQsELSVR/Pl0QQqH68TN
+	HfWSWkJNIOHhR6WA1FxXp4DDo5qcbEpw=
+X-Gm-Gg: AYBFou0cdk+q4Kb/L8m0cVyICm6PfOYiEfOixBSL1kh2cGKZUB/SYULicQHyAqVhF+a
+	EW5UygTwgdCtmHYPMRAjl7HyB3JxKnT/avmuPDthLmnisDS4riG6RCHMFJDBMGcSk0yXwuxOsoF
+	4ku8roNRsk42i6LgVH+LjKXF/2yfDyRdWxSMZFj2tnP8JRvKjSN/JyMGgnkDx+g9d++9V4S6qiG
+	/t7Esb0PxBlWV8l/yErLDYxStnWDMeWs4QnMxXpZApOUJh9MMSZ6dEftEKuiE1OFHvSnQLjRPb9
+	24m8wni1kDI/nXUySa+VgBts3dR54inrhhl4Qmr57uZD7fAGd6q7qd7UaMczw0Bj25QKAUgdrWu
+	F2spJXHsUmTdQBhiXmCmNdMmfjb8aaArbI8fk
+X-Received: by 2002:a05:6402:3456:b0:6ac:c1fc:8a98 with SMTP id
+ 4fb4d7f45d1cf-6b432c34e61mr129231a12.42.1792691086133; Thu, 22 Oct 2026
+ 10:44:46 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -107,42 +103,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+ <pull.2425.v3.git.git.1792585717.gitgitgadget@gmail.com> <xmqqjynajndt.fsf@gitster.g>
+ <CAHwyqnXcdgzRnFgFhTfhQFFOgDxUUKoPf2sGViBTiXMK1aNttw@mail.gmail.com> <xmqqa4o5itkc.fsf@gitster.g>
+In-Reply-To: <xmqqa4o5itkc.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Thu, 22 Oct 2026 19:44:08 +0200
+X-Gm-Features: AclHuK-KM5jNgwnMrmDy3YZa3WLXwq1-JH7qKEBKI_Q4-6bwoGdvMUSA3BjDL4Y
+Message-ID: <CAHwyqnUpheti76YJSn4h___fNZr52PzPQq0pQvA8KNyuoanxGQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] branch: let --delete-merged find squash merged branches
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Jasper Mayone <me@jaspermayone.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+> I would avoid a negative-sounding word like "irrelevant".  Your work
+> is almost always relevant, at least to you.
 
-> I'm leaning toward `--delete-merged[=<level>]`. But it's good that you
-> are pointing this out. It's tempting to unify it like that.
+Yes :-D
 
-The value of --delete-merged is already taken by the upstream
-<pattern>, and it is required. So "--delete-merged=squashed" already
-means "branches whose upstream is a ref called squashed" today, and
-it cannot also carry a level without breaking that.
+> Another point is that different kinds of detection should probably
+> form subset-superset relationships, rather than a Venn diagram, to
+> make them easy to understand and useful.
 
-> I like `integrated` a lot.
+> When you specify --delete-foo=squashed,rebased, do you expect that a
+> branch that would be removed by --delete-merged (i.e., merged as
+> identical commits) would be kept because it was not squash-merged
+> or rebased onto the upstream?  I doubt users would want to make such
+> a distinction.
 
-+1 from a user who lands most work with "Squash and merge". It is the
-word our documentation already uses, and it does not say how the work
-got there, which fits every level of the ladder.
+Very important point regarding the design.
 
-Since the value slot holds the pattern, the level needs its own place.
-One shape that keeps each command line simple:
+> I do not personally care about the distinction between rebasing and
+> squash-merging, but users probably do.  I suspect they expect that a
+> mode catching squash-merged branches would also recognize a branch
+> that was straight cherry-picked (or rebased) upstream.
+>
+> Perhaps the options could be structured like this to be as easy to
+> understand as possible:
+>
+>     --delete-foo=merged      Same as --delete-merged.
+>     --delete-foo=rebased     Above, plus rebased.
+>     --delete-foo=squashed    Above, plus squash-merged.
+>
+> Would this be a clearer way to present the feature to users?
 
-    git branch --delete-merged <pattern>       # strict, as today
-    git branch --delete-integrated <pattern>   # rebased and squashed too
+Yes, but we can do better on naming, something in this direction?
 
-with a config variable if someone wants the middle step of Junio's
-ladder (merged, then rebased, then squashed) as the meaning of
---delete-integrated.
+     --delete-foo=match-hash     #Same as --delete-merged.
+     --delete-foo=match-commits  #Above, plus rebased.
+     --delete-foo=match-content  #Above, plus squash-merged.
 
-On the false positive: Ben's "npm update" case, Junio's new test and
-my case are the same thing. The upstream commit has the right contents
-but was written by someone else. The squash and rebase buttons keep
-the author of the pull request on the upstream commit, so requiring
-that the landing commit's author also authored a commit on the branch
-would reject all three. Work that a maintainer applied with "git am"
-would still count, because "git am" keeps the author too. I have not
-measured this, so take it as an idea to try.
+This comes to mind
+(https://git-scm.com/docs/git-push#Documentation/git-push.txt-pushdefault),
+different `push.default` options can overlap or subsume each other,
+and it's also clear that only one will be used at a time.
 
-Thanks,
-Jasper
+
+Harald
