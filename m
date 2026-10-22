@@ -1,85 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.52
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792666928;
-	b=dW7ae1/p6YQZhO16x0PkSZMNMsJGxzENdyYyEqLvkp1ho9GWUIiF2QkKcWeJhrJnPQwH
-	 VGmeTM1ZbBfh3D0QuZFK378fp9fJXaecP/UDlW8eBoEm3w6UOtV2SfmVJCF3M1gKT0rYN
-	 lcgzoF/0IB8vJsj0oDlwllT7C5BlKg2g4SrCYTe4jO7JXwf267AibjnygXkcVxLT0RdAW
-	 Rd+DRJ924djIAv6rAYs0/37jhBNkMxGb98q0vrB2a2Dyz5awcvgwkQDHCggeOAhK4p/dF
-	 mDeT5IcOquElTY4zOSpEUcgvQOLwGCo5+AhECnmyh/OR7Rk6SJP5vCNjOifRI6f3C8A==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792666928;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.52
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792666939;
+	b=BUNNoSePAMhtnZwvKEdjGdTTW+NKp0o2vbx6U0qsb2hr5Vd269tQvRpWUBUlQszEPa60
+	 ZDFVpdHyZ85VYNe/TsE1fHkYJ+l2heoJkuxpA2vg/lK4CkFYvt2MD6Y2T2nAhHCv2sf9/
+	 8aU/MVw13ogJsvYxJYpHx1VBpN0bcjXLvq+f6QFNMT2ZXAzhVnvClKUrlpOYWsdq383Ir
+	 j5nKdkPUlqMTIAYT58phX+b4HYyr8nhaEPPQz0OfLsaldO3OxKv9XGTHOfjJRbeH2CHPC
+	 8xn2P+zSLuoCj0YaAAxGq4iewb4K3N9Z/JfGfF8q7bEaccTVrzGqpTaHQFVOfR1qHag==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792666939;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 References:In-Reply-To:To:Cc:X-Mailer;
-	bh=EjF2ZkJ7x2jvfc1x8KPJL8XuA/pkMBLZL1w9YWMTqyM=;
-	b=0zmZtz4LDJuXqH53KKGw9D/Uuo4IOu9hoL4gF8bNzyc9FaSVC7+9IajHYBzOg8EkvdQs
-	 AJOee193vlIj/LsSwEAHcwJlmBj+qXfd46LbKg8sX+QN1NgfPjfqPnLQYemBbD+jiQ2Za
-	 euuYqLrvkp+6UIpi5OHw/GI0p9lBoP2QvtVUKHaxOWfgLKSEpPid1Y0xH/W4tnSeQ96oP
-	 YQKASH8liZhIPB3S+w/Rej+5n5WC8TGPmp5CTtFPflaDS1eLJLBSMib5ucw19adJVQFfU
-	 1bZEtTl6i3wQ7dNQhwe+EXvB5VqDnLAHW4E3rX+mdkIKyRbytI6q3uCtkfk6GgnVbAA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Content-Type;
+	bh=6FSaX+LF/Q2PB1KL0yWe6rrGdksUwWu6c9jbCFFJLx0=;
+	b=tUeobcyWjABGrOOQcPyJjTXROfI4sgUw9dwNP+UKJ7nbaVBBBblZNwb7on3Ea+gGt9ZA
+	 uPYMpC4LyzTB6jKgb9lHl7oLrl/huKVMZAjkX9oPy0qqarMX0bFNFJYvzahcciTuUr38h
+	 7Xp+L8Bo5QNbXgmH1Trk6POucKVUJjlTryh9dDuubJF6+uQ4Htkbjqx9clKNHvLC7Pf8a
+	 2xMhGe8NpMZ8oRerixBa0zOqW8WEYXhhjl3pZD1SFFDFvXesi+9tcEiUJFt+5ZXvGzu2+
+	 GLUIfqqq8hlplJ9Xj5hNPfuFo0rn6z+pK/dpnV1P9PxuV4gcY+TEYNNPrdbeTXQounw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ABULZX+8;
-	arc=none smtp.remote-ip=74.125.82.52
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ZJCalG9r;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.52
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184A7606A31F
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 11:02:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 184A7606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D95606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 11:02:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D2D95606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ABULZX+8
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-14fc585291cso309244c88.1
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 04:02:07 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ZJCalG9r
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-91b54d1e9cdso13784726d6.1
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 04:02:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792666938; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Q8LYzX/Jd0T+iv2aBM1Yx6mtRLCi0pc2aayiwxtl8HLcvJ+EbqQ011XDtuh9R5mTn6
+         QC3TPCa2ltAThlOrOw1twf38qoWHCvHJk9lptB462AV+LRSID56ZDvKDTEAlZN/5nXJH
+         OjmG3ISqMrJpt2ZVK1FnK/+Y8lyRRD1sc43nyT7smvzeFCsSjVTVY5rJNGNzp2O2sxvJ
+         Zn6UBvcpkYLs0W5p8qgeu3yLVVv7ZKzHU1QeDGgiklXBzldpTdN/dfMSF5VkVtxkwfe8
+         2LZM3jfI3PhkDVW15qXOhyJFLW2Qnu4k/m3xcb7GEEiLLouan7vy47gc4FGsZRRRDmlO
+         Tirw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=6FSaX+LF/Q2PB1KL0yWe6rrGdksUwWu6c9jbCFFJLx0=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=Y2YM1hXZ72+YRWSx3paR6IMOyk4N5/nOZjNZl2lIFgNC1zsRvV8ZvzL5u/YgwD0Wa+
+         Skk9FNL6dJSAq5A97WY/oJaTZu9qRfoAaG5V6oKhmNKow1r8XjsyPnbopiO0WBkb4ATd
+         pZGcUc3MeZ06TxpVGLD2Y97CtklnHz48UbH7UqXoZktpM8gW1wYOpokZ4AfoayL6A1Zi
+         vs7lqm1EOD0QVnve6tkVkDzcw50xBqjGJ/P60dVq/N9Xja1ZoSUK/R+V8NYIRow/s0zg
+         KhaWPG1XrJisuMwaDUBRXcqLfy+Ujc7/WJrZBzVdGp4zuyReuPfNUjgHN+ahe5CriLOR
+         W4Hg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792666927; x=1793271727; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=EjF2ZkJ7x2jvfc1x8KPJL8XuA/pkMBLZL1w9YWMTqyM=;
-        b=ABULZX+8e96J1z1NThxm+yotwukocULOg7govvjeUhba40MWZ2/ibZFVcdqerzdkVR
-         Ws7pJw8moIa8ECbZVirL2OgyIBLN1CUVoUpVfj1MO3K6T29YlHzn1L4ObVE++w/W3H45
-         tTugBFYQuFZJcbzFulWZ2uTT2365LN+8JkbH4lMO1RO6wiPFxXgpDXXbbNmGm98lvl2G
-         f9Y0zP9nliE9VyaFWAibzrd7dHlZdnVvQM5+vsky/r5XUryd0yomofN20t7sBBbzmQCW
-         Uxm9sJqexmvS/g9NOoTwhb60K/EoGlTCVOQLkDEEsrwXt67xa/HVfBqc54wEwU0S4WRb
-         dETg==
+        d=gmail.com; s=20251104; t=1792666938; x=1793271738; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=6FSaX+LF/Q2PB1KL0yWe6rrGdksUwWu6c9jbCFFJLx0=;
+        b=ZJCalG9rWuY3YltYDTM5AmDyjKf9YKpWkLzGDbOWVnODZ54EFkVSH9oet2TC9UmOEC
+         DZMh3Sin5RGTVV9GPwGELaSPWgNFRiXKZUWnkzcVaX24ZB99IULerfCPgIb3MTklruKt
+         3cmePqsf8PIQyRPQLN6ZA8utDO02K3cvi/zVybi3pbDKwfm1+vvmCM0nh7b3esb6/iJo
+         m755lzhJ6Tt+5ejQUZv1gvZqYWdfug9lbN/tIGV3zIEeeldHh7L9jr6nmD/2Du1Lo9q8
+         5uPg6WRRHhoyP/e0Vdfn5Y8RihboBFp5Gt+1xw3EfnQ2qoDXeyW6ggUWvkaCbDbXY56O
+         fQrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792666927; x=1793271727;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
+        d=1e100.net; s=20260707; t=1792666938; x=1793271738;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=EjF2ZkJ7x2jvfc1x8KPJL8XuA/pkMBLZL1w9YWMTqyM=;
-        b=D/zeiIv4mWXVSwXuFFoQtFNRqen7WTh7lqEXHR/0a7ElkBpnr5Y++Sy1A2GBjeBXF8
-         Qun7kcWOMMSwVKs4X25MEF6rpIG1UhhCpWDLYZ3Sw6y7CgJvYeA+B4bwSX1uPrbBntG9
-         slLFLN2oS77PmLxT32Bxxf/wGYRM6CExmbpaoLFnDqz5vlMzj1Y9SNKhy/kPIhypztXW
-         FN+uXCpGFgzwB5Ah3ymiN73l4czXjPOmIxNaD8rXTqczQYeg8Vy+85+4OPEjoIG2BTZL
-         oDR9HfTKSjsNsnBrZCy3y2iLrdJ4pd7z6kedoQow0dvW1hELBWJikhvpR4VV2NXqY9Qa
-         15+A==
-X-Gm-Message-State: AFq9FYKo/EiL9hGHzDFCRKlUb98/S/B5OMJRROaZkf3x76iiVkI58YdT
-	iuW1Aji4elmAPqxvA93TZj2Xr3OQLQqyTWWvAFHQ8P8x4p+nn8vI2xhDwcDtKQ==
-X-Gm-Gg: AYBFou2/81hR97lvjjt7V3OtMo/UmE2A8rogC6CODb0uTH1l3t0ZS9O+6hQY3ctaMzr
-	t3ARU2Ts6GgTix9R8R7WC6dqwf4xMNqpmq8NLjYatQJi9JYfzRkhvAI2LOlobNxdV07KHTAkH7J
-	0dg4BBYzGAV7b8v4V/PigzLG406N2CrLP9hadgitz9If38DszERvaS7dKhsYi3NFWLcdOQ7N6f7
-	w2JKoihUy9t7iELsa/NGMnULr0xNYEomXy7/OvJzZVRtzBC/DzqGyLTljXufrmVeTlIzXsZ1rGg
-	l1DrISAcc/ktptyaMfOlvdhtwsoEeOICtTiH8t3EwMJnFEtyeDAk8xh4tarMOr7G/jmuTiCeZj5
-	5Qpwp4gAWdd+wUhQo7yOyaSURcZwyn72WFycclBLTPmYHxV4JQGOVfH2R0lih1hPawtVI7cFojD
-	3YwXy9Cv4t0sxvEK7gnxVvx5hikCDGGhOVgGEuqPLbdKwZCo/pAOd5D4h4voqx4qH7qBh5a11ps
-	gUGbygv5gEcq9BOYFoFOS7OqOHJAwFwRnVA141p2gyOs5XR6icLcWO0NMwF7yBb
-X-Received: by 2002:a05:701b:2405:b0:174:7d98:fe9b with SMTP id a92af1059eb24-190a50ef6a2mr5922518c88.22.1792666926888;
-        Thu, 22 Oct 2026 04:02:06 -0700 (PDT)
-Received: from [127.0.1.1] ([115.108.41.154])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-368ca914bb8sm6277428eec.5.2026.10.22.04.02.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 04:02:06 -0700 (PDT)
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Date: Thu, 22 Oct 2026 16:31:58 +0530
-Subject: [PATCH 2/2] unit-tests: ignore --long-tests
+        bh=6FSaX+LF/Q2PB1KL0yWe6rrGdksUwWu6c9jbCFFJLx0=;
+        b=aNnd3WP+fHu8o3QtzMc0Y8/4A8xYEixIbkJdsVe/b47QxYS5dTTgIrLTEcZofay8DR
+         ashCCEmJ4hz+3hNhnMpuSlXtdWbeXMJ8CfILVwVvUtPe1569unMW/su0hjO5rTsGnY8u
+         e0YXBDoYvUnUhyYwW9YmnmiBATkIw52qfor9IDwOgeXMkWzYi7dv/OtFr0P6y3ZnZbxy
+         rpA5rKWI87GC0cYu/HMj+R5zzKLQyUvNWJNiDnfbSGUeNuvAEZi1EF5E0YcuuXyquSa+
+         bBFYm5w1RLGcKx36uDsSOA66KOHRrAJEngxdVkJmZ04I/x5Z+Oyg8g0xclvkj2bMpf5O
+         FyQw==
+X-Gm-Message-State: AFq9FYKBPERE6gN4TG+2VhCYdVg/4fb0DrFfqmPtgHj+9VzFNT5nAsFD
+	m5qS/9YXzyQ6acNFEIRMOSvzmgy1uONv2ggtCVlL8dQw0brrdieTOES+0/1VxlCMMxqtNMe2HWf
+	jma+hNNlEVHxUd1YsxVuPxWjIL3r2JJNaLPimwvGmPlxN
+X-Gm-Gg: AYBFou1cgZeprg9MiHhec0IBGnJkmyziTYWO6SvwuH/ibRuEOJXM1qGD0TTHsUpsYld
+	MDPWs/F+Qli2Aw26hgz5D7AozwXQhGred6MXA7EqEufLziRSvky48nH1Z9xUnro/zlx4rwH22Ws
+	m2ShZQS1HlaZ/N8UGiJmW1FzFokZ/GlWfdIWqIrZKE5xd/5fy7hP3APm2PGYwSzqi8ctyorv+rY
+	wRXsrxZTxbprrGoXpGGLmzHLnPhWOgQtvHbc1KH58UIYLVC9YUEbjld4zpJE92qv7RBCIw/VuAR
+	PXgMGLcQGEMCpkXw2LJETM+NO9QXOipI13YeZi6/FE/i9UYseuOzX2MA+3P7iGKcez2ujJNWHv3
+	lVp3PKPTeF1zKWpcChbEEnViKwRMiZUtOtsK/T+RMho8u5r8MYAEaQmFWqIoyj5diYcGP0Do0de
+	/x40VYuIm6aWMnXoqTzQw5cnaNq2o9Q53wuerbRpu65QlyAhd3Aw==
+X-Received: by 2002:a05:6214:419c:b0:91b:5d3b:7abd with SMTP id
+ 6a1803df08f44-91c12f38f26mr80206396d6.57.1792666937695; Thu, 22 Oct 2026
+ 04:02:17 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -89,45 +100,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261022-ks-unit-tests-ignore-long-tests-v1-2-554a590d418b@gmail.com>
-References: <20261022-ks-unit-tests-ignore-long-tests-v1-0-554a590d418b@gmail.com>
-In-Reply-To: <20261022-ks-unit-tests-ignore-long-tests-v1-0-554a590d418b@gmail.com>
-To: Git mailing list <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>
-X-Mailer: b4 0.13.0
+From: Wasswa Edson <edsonwasswa54@gmail.com>
+Date: Thu, 22 Oct 2026 14:02:04 +0300
+X-Gm-Features: AclHuK_87Yi42x4MgqYDn5gasP8fxix6xYXtA0NKdb-9SNRedz3U7sYa_SwyV6I
+Message-ID: <CA+ew3JtPJuVNC0PR_wY=8Wxp4-JpJ0wCPvm+a=BdJ33QaMpJMQ@mail.gmail.com>
+Subject: [Outreachy PATCH] doc: clarify promisor remote fetch ordering
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-In the same spirit as 9faf3963b6 (t: introduce compatibility options to
-clar-based tests, 2024-12-13), we should ignore -l / --long-tests passed
-to our clar tests. It may be passed along while manually running tests
-via a command as follows:
+From fe5f35b00eafa1eb2756178445d3e88c4e9d6787 Mon Sep 17 00:00:00 2001
+From: Edson <edsonwasswa54@gmail.com>
+Date: Thu, 22 Oct 2026 13:09:21 +0300
+Subject: [PATCH] doc: clarify promisor remote fetch ordering
 
-  $ meson test -v --test-args='-ilx'
-
-So, ignore -l / --long-tests in our clar tests.
-
-This does not show up as a problem while running our CI as we enable
-the expensive prerequiiste via the GIT_TEST_LONG env variable.
-
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Signed-off-by: Edson <edsonwasswa54@gmail.com>
 ---
- t/unit-tests/unit-test.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/technical/partial-clone.adoc | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/t/unit-tests/unit-test.c b/t/unit-tests/unit-test.c
-index d066c8a4c8..06ffd0f5bb 100644
---- a/t/unit-tests/unit-test.c
-+++ b/t/unit-tests/unit-test.c
-@@ -28,6 +28,7 @@ int cmd_main(int argc, const char **argv)
- 		 */
- 		OPT_NOOP_NOARG('d', "debug"),
- 		OPT_NOOP_NOARG(0, "github-workflow-markup"),
-+		OPT_NOOP_NOARG('l', "long-tests"),
- 		OPT_NOOP_NOARG(0, "no-bin-wrappers"),
- 		OPT_NOOP_ARG(0, "no-chain-lint"),
- 		OPT_NOOP_ARG(0, "root"),
+diff --git a/Documentation/technical/partial-clone.adoc
+b/Documentation/technical/partial-clone.adoc
+index 18718a3840..a1104930fb 100644
+--- a/Documentation/technical/partial-clone.adoc
++++ b/Documentation/technical/partial-clone.adoc
+@@ -196,6 +196,11 @@ filtered `git-fetch` commands from the central server.
 
--- 
-2.56.0.99.g5a7d1e8045.dirty
+ When fetching objects, promisor remotes are tried one after the other
+ until all the objects have been fetched.
++When a server advertises promisor remotes via the protocol v2
++"promisor-remote" capability and the client accepts them (see
++linkgit:gitprotocol-v2[5]), those accepted remotes are tried first.
++After trying the accepted remotes, Git then tries the other configured
++promisor remotes as described below.
 
+ Remotes that are considered "promisor" remotes are those specified by
+ the following configuration variables:
+--
+2.53.0
