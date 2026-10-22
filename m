@@ -1,91 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792704575;
-	b=GnlXgU/PiuqLswVD8pdSGNBB5E8Iz8eWD9rUj+5kFqi2k80xMky/dy9pWROzYulz3bRT
-	 tcf9Og9j6zOFugK4TcCkmCdGKltK3b/yrykI6OWGMHhC1Upd+fYQMsAPllv/BU4TfmL2f
-	 yah0M5dwCJI9HvBX82hM19CaOCBW3eu9kcUdVQ9+KRGU+WTy1zWcyxDU8nXwEc91Iix7y
-	 spOBqyQzBLXltM7z7sXqpwhv7erITmHB6HXAXCojvPW/bBgK+PToWBCVCcP9L+8dAsDUA
-	 rPlLbeKhoKWkxsePiBHmlSRU9vyh5zG0+bLi5oOD3TE5C+sDNjwXPhK/Ca2TN0bfcOw==
+	t=1792704584;
+	b=HscWJYWWg/CA9o596ZQjyW96Bt3seaLzVIWPgRhXRUGWz6Mb+R+n6dOrnqdM7lUtBFPs
+	 lfsBxH4o0hNKDB3T4sM78S0GYZtFkXTOoUPm0UlV7v2+y0Fxq62/fs3lLiIjQuRE7AvS6
+	 9ptVqtGIyt16tN41PGMvHZGeDlKVBdCjxnLLF/QFP1JkGF96eqeUXQlziVDis6GV0zjA9
+	 kQHAhALrwRKjRHY3umT5uPHrf1WaRsFE+jq5esJKwbqHZYLwNaYHMqD/pDD915RWM1ErM
+	 /BezUaz6JpNlvQKo+GkqoPuHb4bppj+jwjfAPuDTA1c2xr8s1c+CnIz14kmg811leKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792704575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792704584;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=Kl3GVBtaLHcipTM1lmRypkANn8+glxtyxmfD5YqSP+E=;
-	b=bqedr+IyGjLqqhXlc6tEvx9U2gUnA7oKoLkoqxYN90VL9HsWZQqIgdWvD+coTFkiICxS
-	 vx+x+/t/VVXUtjVsgBvA6z6Nxda10Mrmnnp4O49kWI2gxlsyuj+tbNmgGOQrpsy8IjvPZ
-	 YKeK3Xmt2hnTpvSwWZl6KZ3bh2ZVxuE/nUWlaMSFEz5brrPr1bPT9JtMocJeQfHASrF6m
-	 8vIKJx8+BYE3HHb7a9p8D4JuvDQGpnyX0aHKCkyn91FS4ob9BUZ3g9JgNydr0vVyw05rp
-	 xRDky0Ysn3CY7APpCmuCNLriPTcQhqR81M+NYu8Bl8fAvcjs2AFAnR8vhGzm0L+4j7A==
+	bh=4jZ4GbEHN3vG7cBJ6o7vqqdGq81aDlL4sieOfv4h+TA=;
+	b=mQY3OLvu/skKeKbfu4v3+vCuVU+BIdHwFfvKIKE3R8QworxdlOEfg7CCiVj2BZ4BtTJh
+	 1KO1z0UPVlWE9Cfiuorv4SICD88LOWSOUAkuKup6BsRb1hELPwRKCNoM5tNgWIqlw5QgI
+	 ADQSvhXkyUIr9cwSnz6V2BUUZvKvH7NkjrTfrCOH2EjF3pmykVipckG/bYnET8CAVPsjJ
+	 5C3oN3fb0S/1JSPrsKFaRGNP/rgMC8uIGscXEnKTh5Z4cn3VB4zO7yCgjkTfpQgq+UpDd
+	 X5tCRfvL1SBueDwL3A1jeFoZBIeZ3N9SYTfzjiQo4zzBIw+gpHuUJ+HZIvZRGVvykeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=eHkIRspP;
-	arc=none smtp.remote-ip=209.85.221.46
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=XAl5jBxk;
+	arc=none smtp.remote-ip=209.85.221.52
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA76606A31D
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 21:29:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4FA76606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66251606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 21:29:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 66251606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=eHkIRspP
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48afbd2c386so113248f8f.3
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 14:29:35 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=XAl5jBxk
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-48c4be28b82so179873f8f.2
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 14:29:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792704574; x=1793309374; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792704583; x=1793309383; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Kl3GVBtaLHcipTM1lmRypkANn8+glxtyxmfD5YqSP+E=;
-        b=eHkIRspP1Tyyggz65g7nKdRZWsGl19Re2nisx9Er2vvheiwQjPdgEy5NIDjpxKDRHT
-         j+CriS9u0aaBp+kPKMvMPG0W62af5QXxQ7UgBb6tJ7g8er9izP7Dy+89lmHlCeac8eib
-         QCPRox34cmOL01tXq9WKjkjmffFKu3ljkf5Gx3JK61oKBEmenMgnLqfXq0U08/HPGTqf
-         AGaxmfGgvRb12JMKACQSygUEtlqI20NxUYYLBrNaeP1usZHGtsqVq/Xq1hZE5HH2zYG8
-         4WdvcnEQTxWfsw7MLTv9WTkcx8CmJEVcZ9BwwIOIPdJNNf5Uj9d2ITGJu2JVqMVIZ7VI
-         prug==
+        bh=4jZ4GbEHN3vG7cBJ6o7vqqdGq81aDlL4sieOfv4h+TA=;
+        b=XAl5jBxktRQu8LwTr+ezL9XLhGMJi0FpfyzMXYQGnWzLsjJjqC6u7kSri9oKsiGdMG
+         OJD6SqYKJK+4rcZ/boEGe1gjPJRcSQq2DzfLf4p0u9WWOuHpoaiItG2jpP3/G9nFRozH
+         Nc2g9RCwnYXxs6P3xRvhzsbZZrvtbYvGcwM6iuSGa7dy90YGy6CiihtCQI0sEdAgnScd
+         bSpS8mY2N0TYKxhWoK+jVdDENPwicGUvW2uYXkLpZdWheS6/qw/hln5PYoCmIto+T1/b
+         G+vACuY/08UpqmVKSj37/hABOpLhMQ4LXEXTSZ2oA9jQQ2L4dhskDU/N1S61pJuyH2Bf
+         GvHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792704574; x=1793309374;
+        d=1e100.net; s=20260707; t=1792704583; x=1793309383;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Kl3GVBtaLHcipTM1lmRypkANn8+glxtyxmfD5YqSP+E=;
-        b=tk9q1cRPRcBvqN2+XtXvjxBcyoMUlXgNZtI70mAlyTdeTTSnPttIOdKYesDffET731
-         Syn4n2Ol5pYRsTtOksrtjklpbVA2GbYxz7ShL4jOcgQaxxQzh+XSPjCj/uV45qR36LMS
-         fLrnw+24TXLjHtdXkrNFxyluLzd8A0diP4VvZiF8fNUfLzA5srIPIa7ji8Z+ExcAreCT
-         FQoMkxcdDMGLyocq8AOBdcbd42HeM+CphffHjzNUnH1uJNs6IZBGG6pmgTolzE0UHa+1
-         EFZoRTHZRym1Ou0vr7TNZNrWM9+ttSnRN4KM8GufGxcqJyScwoy2TiPM3Ljs8OGaILXd
-         dy8Q==
-X-Gm-Message-State: AFq9FYJIJICiQwC/1xLDElHKkC8PTOMi3o8PbL2VMFETUqBpFomRnHFP
-	x1B2cN34SXt5LYuozUyLzufx+49bux7xcMoDJ/5ASZ8GHhC/V+b6M4MWPIvprctw
-X-Gm-Gg: AYBFou317tkhTQjphbgz0BFinXfb3Iif5id5z89Yy2IukvxRyvTJxMl+9HGEzRbwYk0
-	8RGlW3JyNvvYsdeNOUQpEIhiM8M4G5h7NdzqFRtzUHIQhmrX0bcGQUSAWHSDqI+Kcmnpe1bx8wc
-	CX2cGVocCZCc/IcCofW/xSVtk38Be7h+LRml5+jY8Ou66E/Z1+Qk2uD1UDxxkQw+nEMrVuFmf0u
-	161M8XBgbc14F7LJglqyf4lfzHGzGbIEldANwucr/MU/zg9F7B2NQv7NKrvp5/xNocRWceNuT2h
-	w1oEGV/oed+UpJ/0lMBAWZpnB0fqVRk4TDm0bA2YpUFRpOekz9lvBFkNEYek/X1pVgJ8dWE2p+F
-	9ek3rQkVzc7+6xJWopnXeugM1UufayGrwTSsMgPnwoI+PdfwjdZI0ESEmBXWXdaV6MO9zSazdmB
-	Sr9LCTGY5rqbTVBOMxK14idC7cKNiiCF60VL56g1I8oeRxOzk9qEAZrfVm1iQ//lLGPnP54rfKl
-	2Qv2Nj4ESrOtKhA4R5oKsqX1HLnsVI6bd31uzs2GvOgInJsMNFOm4E8bFis0pen+1VRTTDaiHFD
-	aZR72auOVWn3ISsf8aZ7eRwjNGZ4w6XPIVTngMkSWpCotrFu
-X-Received: by 2002:a5d:5d86:0:b0:48c:7037:aee9 with SMTP id ffacd0b85a97d-48e385a7452mr156824f8f.50.1792704573388;
-        Thu, 22 Oct 2026 14:29:33 -0700 (PDT)
+        bh=4jZ4GbEHN3vG7cBJ6o7vqqdGq81aDlL4sieOfv4h+TA=;
+        b=zD9kZx8dwJN0lLcwsu1J9V5WzY/CYMVS4RfmHfw+HM3IEc2n7ROoeyAd8SrsDMHPk5
+         1L8Xf/scSbqJSCe9D0jk7Jlh1EgcgzI5s0QgGM3Xi0zNQb5xv9pwkco2nGVSq6hgWvPK
+         pEGOz0F8XgVjSJqzLlbyvhZ+7jB+xw9n3H8BSgvYe728qIdtuFguuTqBkdRVy5qdK184
+         o0ss5GtzZqNpD+St+vmROWNs7pKkAUcAaZJDYv+jrpaf9RVP6yiP0hxM3gQaqqYvsOr0
+         ZBqQnEfAd3BP2x/XIAD2b181gXctjeJrV9jizvXqnXm30f+aO5oUUfQ3FuKibl9roAkM
+         dtMg==
+X-Gm-Message-State: AFq9FYK8SI1MTMn9vGDA/L7AEYPMDvQggnmXlNK+LMeOPoW9RmD4QgKT
+	+pF8Zwv2Z6TiEijww7svae402ghIxesDWn6XGChvPmTYwk9hglDDBDRyluFL+RmD
+X-Gm-Gg: AYBFou1pv5FI8yec2aFXsK8quOy/eqKOBBOArkc4R7lEcCd2Apy1cP4W8hnZ9qc+7+C
+	G58jPzMMrd2T5aNi++nxjZ9hy1HNqOdXKtP6ffyXpsN29alpBBOgaCDEkkgk0YJg85goedaY5QZ
+	26bSj/W8rRfEyz9kZ+L9ew4xQ4R9PwkOblw6Ek9yu/YuWmf6NCgbg9hFS3LpKsnnX48rAxM3PXJ
+	guB4T1gj3ryW2D9Dk8MRkcYe9G5kH/r3s954/txG/3F/nMx49SkZIedCeuX0myurCLOUySN45xP
+	sfp4J2LHhFGee2n6ycwOVfiwAqPxXOh79zBVN9xX8v5zkibH/JfojrHw5LCFSTf1PssoeGsFEBd
+	6bEU2+nLw51J3b3Ava6yT1KJctws2tfwkUMwp7OduN6pU/tjl5ngn5Ja6axzNWeRD3jhNoORefH
+	VleVH1XHfJGNve0Xv3VjZBqPeOD4Ff9Viekm+BwYV+ochn2hJ2GDj3+L6w315MSJRr9SDDI4LDu
+	RvgAtJ+x0DRrmSb6Mzq+KzloaTGiaLV68ZDyn5xz2fSzkEQUKwF3poLgK1oc0AmmJECmPFPTk/3
+	zaeLMXBSlkox9KAGhiIXwo0UPU25SOgfeHdW2ihRFQcApIVJ
+X-Received: by 2002:a05:6000:29d4:b0:48e:2f7e:bdbb with SMTP id ffacd0b85a97d-48e385ab359mr79575f8f.50.1792704582727;
+        Thu, 22 Oct 2026 14:29:42 -0700 (PDT)
 Received: from u.ad.analog.com (sgyl-40-b2-v4wan-169439-cust3365.vm6.cable.virginm.net. [92.234.157.38])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e38044e8fsm739355f8f.31.2026.10.22.14.29.32
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e38044e8fsm739355f8f.31.2026.10.22.14.29.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 14:29:32 -0700 (PDT)
+        Thu, 22 Oct 2026 14:29:42 -0700 (PDT)
 From: Andy Koppe <andy.koppe@gmail.com>
 To: git@vger.kernel.org
 Cc: Andy Koppe <andy.koppe@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Julia Evans <julia@jvns.ca>
-Subject: [PATCH 1/5] doc: glossary: add root ref and clarify pseudorefs
-Date: Thu, 22 Oct 2026 22:28:49 +0100
-Message-ID: <20261022212903.177261-2-andy.koppe@gmail.com>
+Subject: [PATCH 2/5] doc: glossary: update per-worktree refs
+Date: Thu, 22 Oct 2026 22:28:50 +0100
+Message-ID: <20261022212903.177261-3-andy.koppe@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261022212903.177261-1-andy.koppe@gmail.com>
 References: <20261022212903.177261-1-andy.koppe@gmail.com>
@@ -100,130 +100,56 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The glossary describes refs in the root of the ref hierarchy, but does
-not actually name them "root refs", even though the term is used
-elsewhere, for example by "git for-each-ref --include-root-refs". It
-also defines pseudorefs as refs, yet is_root_ref() deliberately excludes
-them, as they are not stored or handled by the ref backends.
+The "per-worktree ref" entry says that these are only HEAD and refs
+under "refs/bisect/", but that has been out of date since a9be29c981
+(sequencer: make refs generated by the `label` command worktree-local,
+2018-04-25). All root refs are per-worktree, as are refs under
+"refs/worktree/" and "refs/rewritten/". Pseudorefs are specific to each
+worktree too.
 
-Add a "root ref" entry, moving the naming rules and the list of
-irregular root refs there from the "ref" entry. State that pseudorefs
-are not root refs, and refer to gitrevisions(7) for descriptions of
-commonly used root refs and pseudorefs.
-
-Reword the "pseudoref" entry so that it no longer calls them refs, add
-git-for-each-ref(1) as another example of how they are not proper refs,
-and explain that using a pseudoref containing multiple object IDs yields
-the first one.
+Bring the list up to date, and refer to git-worktree(1) for how to
+access per-worktree refs of other worktrees. In the "worktree" entry,
+describe HEAD as a per-worktree ref and MERGE_HEAD as a pseudoref,
+rather than listing them separately from per-worktree refs.
 
 Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
 ---
- Documentation/glossary-content.adoc | 68 +++++++++++++++++------------
- 1 file changed, 41 insertions(+), 27 deletions(-)
+ Documentation/glossary-content.adoc | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/glossary-content.adoc b/Documentation/glossary-content.adoc
-index 52301a56dd..b2c582254b 100644
+index b2c582254b..eff6d23215 100644
 --- a/Documentation/glossary-content.adoc
 +++ b/Documentation/glossary-content.adoc
-@@ -500,9 +500,10 @@ exclude;;
- 	unusual refs.
+@@ -494,10 +494,16 @@ exclude;;
+ 	interface than the <<def_plumbing,plumbing>>.
+ 
+ [[def_per_worktree_ref]]per-worktree ref::
+-	Refs that are per-<<def_worktree,worktree>>, rather than
+-	global.  This is presently only <<def_HEAD,HEAD>> and any refs
+-	that start with `refs/bisect/`, but might later include other
+-	unusual refs.
++	A <<def_ref,ref>> that is specific to a <<def_worktree,worktree>>,
++	rather than shared between all worktrees. All
++	<<def_root_ref,root refs>>, such as <<def_HEAD,HEAD>>, are
++	per-worktree, as are refs that start with `refs/bisect/`,
++	`refs/worktree/` or `refs/rewritten/`.
+++
++<<def_pseudoref,Pseudorefs>> are also specific to each worktree.
+++
++See "REFS" in linkgit:git-worktree[1] for how to access the
++per-worktree refs of other worktrees.
  
  [[def_pseudoref]]pseudoref::
--	A ref that has different semantics than normal refs. These refs can be
--	read via normal Git commands, but cannot be written to by commands like
--	linkgit:git-update-ref[1].
-+	A name that can be used like a <<def_ref,ref>> to refer to
-+	<<def_object,objects>>, but that is not stored in the same way as refs.
-+	For example, pseudorefs cannot be written by linkgit:git-update-ref[1]
-+	or listed by linkgit:git-for-each-ref[1].
- +
- The following pseudorefs are known to Git:
- 
-@@ -512,6 +513,9 @@ The following pseudorefs are known to Git:
- 
-  - `MERGE_HEAD` is written by linkgit:git-merge[1] when resolving merge
-    conflicts. It contains all commit IDs which are being merged.
-++
-+When a pseudoref contains more than one object ID, using it to refer to an
-+object yields the first one.
- 
- [[def_pull]]pull::
- 	Pulling a <<def_branch,branch>> means to <<def_fetch,fetch>> it and
-@@ -562,33 +566,12 @@ The following pseudorefs are known to Git:
- +
- The ref namespace is hierarchical.
- Ref names must either start with `refs/` or be located in the root of
--the hierarchy. For the latter, their name must follow these rules:
--+
----
-- - The name consists of only upper-case characters or underscores.
--
-- - The name ends with "`_HEAD`" or is equal to "`HEAD`".
----
--+
--There are some irregular refs in the root of the hierarchy that do not
--match these rules. The following list is exhaustive and shall not be
--extended in the future:
--+
----
-- - `AUTO_MERGE`
--
-- - `BISECT_EXPECTED_REV`
--
-- - `NOTES_MERGE_PARTIAL`
--
-- - `NOTES_MERGE_REF`
--
-- - `MERGE_AUTOSTASH`
----
-+the hierarchy, in which case they must follow the naming rules for
-+<<def_root_ref,root refs>>.
- +
- Different subhierarchies are used for different purposes. For example,
- the `refs/heads/` hierarchy is used to represent local branches whereas
--the `refs/tags/` hierarchy is used to represent local tags..
-+the `refs/tags/` hierarchy is used to represent local tags.
- +
- See also "REFERENCES" in linkgit:gitdatamodel[7].
- 
-@@ -640,6 +623,37 @@ format. See linkgit:git-reflog[1] for details.
- 	To throw away part of the development, i.e. to assign the
- 	<<def_head,head>> to an earlier <<def_revision,revision>>.
- 
-+[[def_root_ref]]root ref::
-+	A <<def_ref,ref>> located in the root of the ref hierarchy, outside
-+	`refs/`. Root ref names must follow these rules:
-++
-+--
-+ - The name consists of only upper-case characters or underscores.
-+
-+ - The name ends with "`_HEAD`" or is equal to "`HEAD`".
-+--
-++
-+The following irregular root refs are exceptions to these rules. This
-+list is exhaustive and shall not be extended in future:
-++
-+--
-+ - `AUTO_MERGE`
-+
-+ - `BISECT_EXPECTED_REV`
-+
-+ - `NOTES_MERGE_PARTIAL`
-+
-+ - `NOTES_MERGE_REF`
-+
-+ - `MERGE_AUTOSTASH`
-+--
-++
-+<<def_pseudoref,Pseudorefs>> are not considered root refs, even though
-+they follow the naming rules.
-++
-+See linkgit:gitrevisions[7] for descriptions of commonly used root refs
-+and pseudorefs.
-+
- [[def_SCM]]SCM::
- 	Source code management (tool).
- 
+ 	A name that can be used like a <<def_ref,ref>> to refer to
+@@ -788,5 +794,5 @@ and pseudorefs.
+ 	"working tree" and repository metadata, most of which are
+ 	shared among other worktrees of a single repository, and
+ 	some of which are maintained separately per worktree
+-	(e.g. the index, HEAD and pseudorefs like MERGE_HEAD,
+-	per-worktree refs and per-worktree configuration file).
++	(e.g. the index, per-worktree refs such as HEAD, pseudorefs
++	such as MERGE_HEAD, and the per-worktree configuration file).
 -- 
 2.56.0
 
