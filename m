@@ -1,99 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.50
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792666443;
-	b=FCI0+LuqMMDbqv14uzqLE1cVrFlGpSKLsRQ7tc7uUqQHNopcX/g2j9EXmnTh7n/EzSRZ
-	 QvxRKPs3/Ku474gGzM7ieQMkCqHH8zU2YI+VZbnRGXGeioy0YZQPuDCQLeoSx/qkoD3+q
-	 3sXOHHKHTuPBb+vlUCpP/Yp+yQQpGhMPmuv0sVj2UkRmCh0t1VjvOfSwG6YK4cbEyv0m0
-	 0JpaLce+IuwuXk00HJ6qfUwCEUruqYoUzT8mwD8Ca3OP9w4x2+fPPIkt6pruNk2sIbLTv
-	 8d/JYF01gH20eTyE3BkP5wa6EGq/bO+2NGIR//GRd/Hl7JfrmqHkFKWpy5yrlOn+LiA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792666443;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792666616;
+	b=Fs8tt328acUkIaRG/xooB5Lm5cJHg5R+IfaFcXcJoOryMdjOLddHitrZ4kH97MLk9qfa
+	 TmqaBEhwo1JFJUYJ+EjT915tdQDgrDcNiKp/MZGb7T1tZsgdOOlvV1i+ViG1wAJVIMCjX
+	 Ky/Y6sLIMpd4WyTrap1ITlKoESvwl6hQjzLQXwz6BDkw+lQy1xuVQMyLrZU56XIdWj9T4
+	 CRFlaU7Cwl2tc0s/kbGqo2c4qwJGFuvqLjvQHsqb0t8zkBwfhxErMIdRWvxPXO4PbkzR8
+	 6UyFqd9dTMakrsQSgKIjyQgttD6gXbtI3mJLnz81x4+hdbrNY2ANW3yrv1NRPg3s+eQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792666616;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=XGGbNmJUTG2ySprTgTanBBVNlUigaWGuFjz4xZQvpXE=;
-	b=d+qSfsJ1ema4ft7h0JMz4ikDluUKAZjQ4LsAvpe3X3EYWJGwgXb82OIQwCi+bSDbGOz5
-	 HZADebLWsxPZKuAFbgTfB7GoJVLrio7boJ21CxLYlKSWlQMDsV4MjdpxrHT/uC4Wjg3S+
-	 FOk33LUZfgDUAFNUsK7tj6q1WRUrpGuiw1xiqn5bS/nwCAM1dF/NiC/MV2XAJBYz9kjEm
-	 PdTOHNSvTBlyBept2BjJ/71KvdtbQq/vtLbpP+YRrQxLMtsA38vAGoAfThn/V/xwsKiGs
-	 CSimwA+CTfyx2p49xvU1nGnTCxowc8y67aIRO65B7lgWkBthwJqzBn4GK03mSORifyQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=qDCk/FYl30ddy6A3LXnxe0gu/F6NXB9tTdbASM87FKI=;
+	b=pXsUfsvZRANvJ4/sqsMbRBWHMTIcRvPXJMQW5vpdBPa56/nlmiVPdNM9wetSqpMesApd
+	 U3FO7I8N3zNc80bOlnxUm8qc43640VpYTKl3dhZEy0wNtcCKJ/4Jr7r+QqarHp2u+ZYNN
+	 nwLNHXIa8CW0xzZPfkfs30jSUat4y39oXhIWZtf647TMMKIVSAVYaQrlKm0Cp8m8g5FtG
+	 t939RyLIZjHzY9lexqWJonUtkXXqxl1ZpTCP50pRRW+7q2DHJqNvJZusNKM1Lg0CCT3V7
+	 OSuVH6g8lTOcTQ18sqKEk8mHfY5a3VZeIpmi3JmXKTc565gzuK1UHj1CfvH/Pm2/luA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=TAPXDov1;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.50
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=k7ridImy;
+	arc=none smtp.remote-ip=209.85.128.49
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430F6606A31A
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 10:54:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 430F6606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70104606A320
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 10:56:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 70104606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=TAPXDov1
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-91b9e758c50so12212916d6.1
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 03:54:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792666442; cv=none;
-        d=google.com; s=arc-20260327;
-        b=M8IJ18ij/KdbZX4aqi8d2TlswyNEQ+WtrZ2kLm54cDfV6OrJ5whxe0C2Fw0yhqS7d3
-         L4cztsC08nHRdQCamCLjRs2ezHDM0rYMco0Q+Ep41NxbKN/k3GDQbI7RmrtfxtWL2IPh
-         OjadYzUQ+jKB2i2lO2Fd7Rgzuk2fF7VKw+7YZRd9f+DK/MC7imY3BhLaewnFX6X3NXV4
-         /mkYPXzd3RYziGh5udTPH15t9RL2wXQt9hOuCZGpip/yVr8rpDJWJpPV3GAP/OYlevBm
-         k8DkaEHG3BTkvf/isSIS31C46IazctiAzVVzQKPFVDvYgN5kobYoZdoNHDNk2taz06Xd
-         X80g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=XGGbNmJUTG2ySprTgTanBBVNlUigaWGuFjz4xZQvpXE=;
-        fh=AkU2g5erGhc3F0ZPV7h+0K4d6mWoSpe+4EjTk91+B10=;
-        b=KelTYctutZKFQDirdfireyrlwpfUFfjx6CESJw5Js5tGtlOPc2S3VU4H2HjUb7XW0r
-         JE/908rWH2u4NsbS4Hw79OdjB0V9PMmRztd1tdr4Bc8P4RgSbKrXXwfRFzZCsBxlPT/7
-         s7mMrxnhv1sdZe+EKyQgbMwGU8up7KX8EJ7xRxUHUzf7cgkYadVH6N2bMlNEp8VnWT+R
-         WHjdkhI1LRELZ8GezjZrzV6Pl00eygzD09u6rQy0k51ly8JdHpMJk73lz7lQk3jJ2b2Q
-         wgCNEBRUorurYqMEuWd9u0VACQTHTOtOOzbQzKXsbOiXu8ruEmmCleuQfB/QuQNzIphe
-         hQSA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=k7ridImy
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a2072b9832so2868065e9.1
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 03:56:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792666442; x=1793271242; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=XGGbNmJUTG2ySprTgTanBBVNlUigaWGuFjz4xZQvpXE=;
-        b=TAPXDov1IJgDl52xU2ekmoLfXU4DRHrZBfbijJTD+uw5PSlnjHkcC/FEg8abHBvfEp
-         qqsBNItuxcPPny3iAiVe3noF5PxMxUlahBKLL8N6RIQSc21qirCWrr8HjexiMF9qa0lO
-         vYp+9V7z4J4sN64DeXuOdyhiBS9eOnI025ZQ0UH2zNEpdQI9VcA6MaDOuyBeNDObk1uS
-         +/SrbBlvFGfcFmmMLL8v8NN021lOzecLYnKnRI2J8tUXK+L1RjZu40GqdShpm7POOKGs
-         XmSYJ5//7KleqZRJr8L6FsKEhlf6IhcmI9YhzNILg0ZhaysFZiPrGJly9wN4xkIZ4d5w
-         uY5w==
+        d=gmail.com; s=20251104; t=1792666615; x=1793271415; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qDCk/FYl30ddy6A3LXnxe0gu/F6NXB9tTdbASM87FKI=;
+        b=k7ridImyb0qJ1OnuSgVYJ0XPPV/6+YLOAcQEgXgMrofqWAY1c6Mj19G5kjpXyg9rp5
+         vctB7EgIZpStzZRbviGLJMIuIff7cksZ3aGb/dAiXOy+XK8ESSgg7XZz0uRn4KmL6XZZ
+         xhrx92HHbyqBwlaJ8bZQR7kGTESaacl5PnOLerCllp5WvDIPVOUWz8iE5m5OkSVifZah
+         u5VvPjfdeGaV9DC/QgWgZyDCKoM4hAQ4QYjrLzKnCIx6CQH3zT+WHaCQhuvXPyna3Bxt
+         TbyPq5JWDoEdeEasH+wkiXLVFS8IWVuLdgW/XVt8/BIBJfOvjajVjL94Jw0c6CK7fLBN
+         JNuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792666442; x=1793271242;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XGGbNmJUTG2ySprTgTanBBVNlUigaWGuFjz4xZQvpXE=;
-        b=aMifr+eIoEreK+2qt2FvGBilCLcGRkLXipD2vgdWFlLzJ/QfTDiUsk9DI6Jo59+gOI
-         P6JgGXioAsnFDiithWDKmekx9qOOWUdUaOZg3zFv/GWIyVTvPMiCVMfRJVvIFWTeEBnB
-         23PyLgGUFlKhe8scs6LPBOBYcmTzJscUso0iZQo3naugQJzqVTMEtbCW/4JaU7TRtBso
-         ulx5ZuypNI/NWe9IHK2nKjSfcalyfUt/FB8sljPKzpKlIykIeuTOAnNQfJ2wEHsk1gZr
-         5WG0i3cEHFbWEFk7v1pJ2ggC76U2M4iCAb0Fkrz6UKhI0vKthaqMsMiRzXDwNTISjf1h
-         GZtA==
-X-Gm-Message-State: AFq9FYLeK46t5RfWr36xevqvcyU+D6hnwwVY9mUNd5CjJxeSU8acz7A+
-	P4rNaEFAPeQJbm0TF7X1c5koBBzQeLjUDEEE73ZgJZq/0xwKbGYO0hnB45q9rhZkqxk3Qd8gqPU
-	zA+5LpI3hkFwgtPdE7Ply5x5JECIrGP0=
-X-Gm-Gg: AYBFou3RAYvLgC32IpxJUhCqscNUlsh47IBrBC70DdFIb1itFJho4rrhzybDRBiqlua
-	IbSEB/Rl2f+XHtSNGkhl6PwTd8y03glk8qY4d3RJIbW70uJwbXaocaq3yGxKlaZKZ2VXCkRmIXV
-	BFPIZOkZiDkotiWOE6SMdwFzv+x1HHpZRwJLmnUh5FoLYlmjK7d4nZ39qPHplqD48/ZCTKsjTdi
-	AS34NCuIN5z6VMijSwR5KwKnq17HHEpFfViz2j7FGEB7rWCDmKIkkWL33oTlgMlHxS87m0wo1OI
-	WGW2AiGpTSsok69dYTtveZPbrW/hEDip5YIxKQ7Lw9B5Q8sk0EdkXoukkf7eXt8/HU6OPBEOFxc
-	gfggplhHva4XEDkztrrk2fhTXZJCP8ZD5ZFhGVZhU8mbygZJZphvfzEuMi8Zv8lmk8jJba64=
-X-Received: by 2002:a05:6214:21ef:b0:91b:9c08:fc6b with SMTP id
- 6a1803df08f44-91c2337db3dmr33210976d6.16.1792666442163; Thu, 22 Oct 2026
- 03:54:02 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792666615; x=1793271415;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=qDCk/FYl30ddy6A3LXnxe0gu/F6NXB9tTdbASM87FKI=;
+        b=OePWH+WGL50L22bsw9TJAy/VniVnYsjJERd2Fo7GLMuUZxIqnWjnP36Dl8jhdsr1M+
+         AGGfrjrodnRy+nhhhzmw2lPJ1K3L/cVBETGhPvo+xQZFJECaOhny3Ipb4HU1dCbcgNtw
+         bjwvsXgUUAP7sglr7nBI4LPRCaxdx/APaPfArY7ykPFEXMwh023A4XHml+4W21ino8mo
+         +6vfQupgHUmI1rbKeCqE8t2BZ0POVQEcLhIPu7iCeDWjAyRYeoQqnxrqNXuiOyY4v+/C
+         iOlxvfi0DqY30vAIpA6YaG3stDjefYFFL6KYFwsLKBClC1XGGXbvk9vVyplKuBsX9Onn
+         8tUA==
+X-Gm-Message-State: AFq9FYLyBuaGBWqdidG6gH3vmPXkgPQxxMbAaD7yC49Xi1Jwl5NQhK9z
+	8rZa5YtCye7kVtTUMcFcRfaAUFly5fwTV0TVLDIQd58x/axx6+FLEuplN5rGEgFhwNMCHA==
+X-Gm-Gg: AYBFou3HaFwJckW0W28/LNkmN0sJUi+AdRsQkPIBP3KD6mboWthk6byyqp2pHqD/bdz
+	7+CYUl3p8TwVdv6QkOfNIybVoq45BokWDjGgOzpFM+eln2tpDcN+XXbxzZaNoObovtsLUVBEhr7
+	Z8DMhbwEOs+dyLzCn0d853UcNu3do+IECB3iUdg17/6U3tqM/Z/Go/JOl1PfCvCTBbnicPzde5o
+	yFTBa2Jz0MYhnU8NCNFSZCDiJxIdL2irMbaEOQLOtju01SiWQQM0PRTvapHeOf6tAylTDo4LthJ
+	o6USVOD7CFURuJmwGjsOwss7eCrl23rC2lCCwTw3Y7RZgmC/fTJqEIxz3kIHzi8M/9Wu4jxEIvx
+	GZvbpb/RqLSZr22fw5AlQveLxLQ4NavWFIfENSx/vULFBlYMrgYyXG+kmfoQEWdxtGh7PwaFc4l
+	NOH6LsCnRxyxzxmU74BmWGnQImli7FkG1UZ/4loWegVLjI3z23qSzFdJ7NLaHBlogBU6Irl0G4V
+	leqV3UWALQcfmFN/kWU/4tDpGpyQzk9kxYq0TRzaVJoU2K5/r0eTEo8vuOlF9Xwmo1ZzJkwyCRF
+	KMkmuKDCYp1G90IdvG9k5MgARGEXUIfVHdaGe9n0SZ7cS6hHkbigcZiVH7AAHzmxbDgIuJrWB4u
+	RQcgG9SNRlm+bEbqJKFsBawiyWPOYtNEM6RgX/++BpiWhyd3ew4mwk5U3VFKrPva4KdgL6zFwXJ
+	DnVw==
+X-Received: by 2002:a05:600c:34d6:b0:4a2:bbd:ea3a with SMTP id 5b1f17b1804b1-4a20bbdea84mr12963505e9.6.1792666614520;
+        Thu, 22 Oct 2026 03:56:54 -0700 (PDT)
+Received: from localhost.localdomain ([102.88.167.156])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1fcd2eff9sm112279575e9.4.2026.10.22.03.56.52
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 22 Oct 2026 03:56:53 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: usmanakinyemi202@gmail.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	okhuomonajayi54@gmail.com
+Subject: [Outreachy PATCH v2] checkout: pass the repository to unique_tracking_name()
+Date: Thu, 22 Oct 2026 11:56:41 +0100
+Message-ID: <20261022105641.68963-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261017225326.7827-1-okhuomonajayi54@gmail.com>
+References: <20261017225326.7827-1-okhuomonajayi54@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,86 +101,144 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2260.git.1792299301663.gitgitgadget@gmail.com> <pull.2260.v2.git.1792666211685.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2260.v2.git.1792666211685.gitgitgadget@gmail.com>
-From: Srujith Poojary <poojarysrujith@gmail.com>
-Date: Thu, 22 Oct 2026 16:23:50 +0530
-X-Gm-Features: AclHuK9MYTX7PiW4D65WatCoBwpt1TB9ECiNQ-LqJEW2Prrx_g9fXFctlHhJ1Ao
-Message-ID: <CABh_KWhtBBKGn1RMQxqBLLpDh5hMEJwCe_2jCW=nru_wNYFQRg@mail.gmail.com>
-Subject: Re: [PATCH v2] [Outreachy PATCH] t0001: avoid pipes in test scripts
-To: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Usman,
+unique_tracking_name() uses the_repository to read the
+"checkout.defaultRemote" configuration and look up the object
+ID of a remote-tracking branch.
 
-Thanks for the suggestion! I have updated the script to split the
-command into two separate lines as recommended and resolved a trailing
-whitespace issue.
-I've submitted v2 of the patch to the mailing list via GitGitGadget.
+Pass the repository to unique_tracking_name() and through
+tracking_name_data so check_tracking_name() can use it for
+the object lookup. Update the three callers to pass
+the_repository.
 
-Best regards,
-Srujith
+This removes the need for USE_THE_REPOSITORY_VARIABLE in
+checkout.c. for_each_remote() still uses the global repository;
+leave that for a separate change.
 
-On Thu, Oct 22, 2026 at 4:20=E2=80=AFPM Srujith A Poojary via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Srujith Poojary <poojarysrujith@gmail.com>
->
-> Avoid piping output from git version directly into sed to ensure
->
-> that any command failure is properly caught by test scripts.
->
-> Signed-off-by: Srujith Poojary <poojarysrujith@gmail.com>
-> ---
->     [Outreachy PATCH] t0001: avoid pipes in test scripts
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2260%2F=
-poojarysrujith%2Fmicroproject-init-pipe-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2260/pooja=
-rysrujith/microproject-init-pipe-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2260
->
-> Range-diff vs v1:
->
->  1:  92ecaec2cd ! 1:  7d118290ce [Outreachy PATCH] t0001: avoid pipes in =
-test scripts
->      @@ t/t0001-init.sh: test_expect_success 'default ref format' '
->                 git init refformat
->         ) &&
->       - git version --build-options | sed -ne "s/^default-ref-storage-for=
-mat: //p" >expect &&
->      -+ git version --build-options >build-options && sed -ne "s/^default=
--ref-storage-format: //p" build-options >expect &&
->      ++ git version --build-options >build-options &&
->      ++         sed -ne "s/^default-ref-storage-format: //p" build-option=
-s >expect &&
->         git -C refformat rev-parse --show-ref-storage-format >actual &&
->         test_cmp expect actual
->        '
->
->
->  t/t0001-init.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-> index f1d227f271..02217a9bf8 100755
-> --- a/t/t0001-init.sh
-> +++ b/t/t0001-init.sh
-> @@ -678,7 +678,8 @@ test_expect_success 'default ref format' '
->                 sane_unset GIT_DEFAULT_REF_STORAGE_FORMAT &&
->                 git init refformat
->         ) &&
-> -       git version --build-options | sed -ne "s/^default-ref-storage-for=
-mat: //p" >expect &&
-> +       git version --build-options >build-options &&
-> +               sed -ne "s/^default-ref-storage-format: //p" build-option=
-s >expect &&
->         git -C refformat rev-parse --show-ref-storage-format >actual &&
->         test_cmp expect actual
->  '
->
-> base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
-> --
-> gitgitgadget
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+Changes since v1:
+- Rewrote the commit message to name the function and say what was
+  there, what changed and why, as suggested by Usman. No code changes.
+
+ builtin/checkout.c |  3 ++-
+ builtin/worktree.c |  6 ++++--
+ checkout.c         | 11 ++++++-----
+ checkout.h         |  4 +++-
+ 4 files changed, 15 insertions(+), 9 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 2d575a4f57..bad49368b9 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1389,7 +1389,8 @@ static char *parse_remote_branch(const char *arg,
+ 	int num_matches = 0;
+ 	struct string_list matched_remote_names = STRING_LIST_INIT_DUP;
+ 
+-	char *remote = unique_tracking_name(arg, rev, &num_matches,
++	char *remote = unique_tracking_name(the_repository, arg, rev,
++					    &num_matches,
+ 					    &matched_remote_names);
+ 
+ 	if (remote && could_be_checkout_paths) {
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 77ecd0f71f..203456bd23 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -802,7 +802,8 @@ static char *dwim_branch(const struct add_opts *opts, const char *path, char **n
+ 		int num_matches = 0;
+ 		struct string_list matched_remote_names = STRING_LIST_INIT_DUP;
+ 
+-		remote = unique_tracking_name(*new_branch, &oid, &num_matches,
++		remote = unique_tracking_name(the_repository, *new_branch,
++					      &oid, &num_matches,
+ 					      &matched_remote_names);
+ 		if (!remote && num_matches > 1) {
+ 			if (!opts->quiet &&
+@@ -938,7 +939,8 @@ static int add(int ac, const char **av, const char *prefix,
+ 			int num_matches = 0;
+ 			struct string_list matched_remote_names = STRING_LIST_INIT_DUP;
+ 
+-			remote = unique_tracking_name(branch, &oid, &num_matches,
++			remote = unique_tracking_name(the_repository, branch,
++						      &oid, &num_matches,
+ 						      &matched_remote_names);
+ 			if (remote) {
+ 				new_branch = branch;
+diff --git a/checkout.c b/checkout.c
+index a0d0229435..f0fb40d48e 100644
+--- a/checkout.c
++++ b/checkout.c
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "object-name.h"
+ #include "remote.h"
+@@ -11,6 +9,7 @@
+ #include "string-list.h"
+ 
+ struct tracking_name_data {
++	struct repository *repo;
+ 	/* const */ char *src_ref;
+ 	char *dst_ref;
+ 	struct object_id *dst_oid;
+@@ -30,7 +29,7 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
+ 	memset(&query, 0, sizeof(struct refspec_item));
+ 	query.src = cb->src_ref;
+ 	if (remote_find_tracking(remote, &query) ||
+-	    repo_get_oid(the_repository, query.dst, cb->dst_oid)) {
++	    repo_get_oid(cb->repo, query.dst, cb->dst_oid)) {
+ 		free(query.dst);
+ 		return 0;
+ 	}
+@@ -51,17 +50,19 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
+ 	return 0;
+ }
+ 
+-char *unique_tracking_name(const char *name, struct object_id *oid,
++char *unique_tracking_name(struct repository *repo,
++			   const char *name, struct object_id *oid,
+ 			   int *dwim_remotes_matched,
+ 			   struct string_list *dwim_remote_names)
+ {
+ 	struct tracking_name_data cb_data = TRACKING_NAME_DATA_INIT;
+ 	const char *default_remote = NULL;
+ 
+-	if (!repo_config_get_string_tmp(the_repository,
++	if (!repo_config_get_string_tmp(repo,
+ 					"checkout.defaultremote",
+ 					&default_remote))
+ 		cb_data.default_remote = default_remote;
++	cb_data.repo = repo;
+ 	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
+ 	cb_data.dst_oid = oid;
+ 	cb_data.remote_names = dwim_remote_names;
+diff --git a/checkout.h b/checkout.h
+index 0b185a0fc9..25fe7dfb7c 100644
+--- a/checkout.h
++++ b/checkout.h
+@@ -3,6 +3,7 @@
+ 
+ #include "hash.h"
+ 
++struct repository;
+ struct string_list;
+ 
+ /*
+@@ -10,7 +11,8 @@ struct string_list;
+  * tracking branch.  Return the name of the remote if such a branch
+  * exists, NULL otherwise.
+  */
+-char *unique_tracking_name(const char *name,
++char *unique_tracking_name(struct repository *repo,
++			   const char *name,
+ 			   struct object_id *oid,
+ 			   int *dwim_remotes_matched,
+ 			   struct string_list *dwim_remote_names);
+
+base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
+-- 
+2.56.0
+
