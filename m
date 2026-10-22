@@ -1,99 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792630193;
-	b=Rodt7nuBAcRPfTGLff83tQkpU7fIom2LlfmF5T5MHxS0xSVCJOnwuLYUBTl0H7klHcy3
-	 7RqAAesuwfAYPy8EPaybXGn8hVZsjlWlcLi7GV6z2hoODX7RWs3y0Y8U/X+tPfCqDNoRy
-	 4CAdi7MOTqIKI9dPHgHdcwxduKiVGRyGVOQ0iP5DlbBdqLJti5lqNrNaP/8kkIR1YSLI6
-	 MPe5xU7vZLSFvC9XpLaoMTNUyHVp3GRxBGalrHmvZYuWUzfQXpvY5BEZcmTvT+XRIYwBt
-	 iB901x1XzzEjkY3UAAS8MUL0t1oyH9hVLt4onw9mYzJo36uzK/E1O6lNGThb8WQEBHA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792630193;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792632176;
+	b=q0JqY2aouDTjDriq2uk0xQ+az3EDP2t1zwnqrqH8gngelytmK0Jm5QgcZtfYIhemgmg5
+	 FIfGQejThqy6Ebb7WYplqxhtgL/6wixhZRZAt8QjV9oewz7P0ynEkP54Nqs+yMjzSrxZm
+	 H2mS0ZVo9RyUzQIgdYzSqgptKx/bRPkTO1TVRovIVagwb6ewmTU2mJ+E+8ODpag/2zpBb
+	 Uc/yurW7yOsiZO2/3YnWQdPxzOihN20ipi1SAaorD4sfseIrhwkUI3msLAeIUGx40mPiE
+	 4Zw+8IW2Z6kTApp7umdqzffhQmNygtIi64ts37kmtkoUxyyPknqpcFVnUPR0c3CUpgQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792632176;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=unSXXtZ3MKtIPKO90+N4EQxTmjms9/JBuDYM7yCCGBg=;
-	b=qN6LT3kFXC5vEDSzCPrCIP94iv6z3ClFIeKTcZy4Y4JAmLrVn8ofHUlguxLW9tm/9s0H
-	 daziMamsSDqsjoGfRZNCTWwhRbxAXgGrADwTz9xmWyl9ZVPgtNP2ovEADzFMq1jZvFoIm
-	 Qp0lwA4raOYiQD+HWsC73rA/r/lhF7j4rg1+kfyix+skvI8CHGH34XVm+NJMM47poz1CB
-	 q55Mf01dtrBDu1XBvKNRoqQSv5FP4kBNcZdHGMFFSKtj0ayoG7HhNBItWA8+2eg6MmqRZ
-	 4HTLlkLnVZ7aRR8Whbz39VhoPxXBzUmh1LmAfKCprIGOJooyOTJlJL6EC2EyNGY0N5Q==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=G66UoZUqMc0GqdoRhq+8fuqVLsk9mPLrrGuwj1TVpA8=;
+	b=AnlIq7lxAF0a//JfZ3kaoMbykBIfunG+Kodf2m3r72MRTpADDXRa9NExntW5UFse1eO+
+	 fNcWC+VD7Oxi8PiAVTlLeAQgcJDCR1GizraHPZ8sQWnkEXFcFgWsVjpv9Cwg6mc43PF1F
+	 mmgXD8Y369N7qk7UVLZYwWS3gOcwZ+U8hboe9aN1iMvv8tF3GPRMDu/6yNW/gwg6U+a+l
+	 6Dn7MG4XP+HCmwzB68AfGIOx1C6D05Ba4dJv2W3uabiVpcOGtwKd9x5Dqpv/3maawvC6y
+	 lNsODCWKioCD7LyV84ntXVrn2mB2PofSefpFBSTg6zhhgcw4UKliVyr5Rc2w1W6sA3g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fieOWrbV;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=G5RelDCz;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01B8606A319
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 00:49:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B01B8606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766E5606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 01:22:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 766E5606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fieOWrbV
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a2069b9710so1145655e9.2
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 17:49:52 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=G5RelDCz
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6b4213059d4so118388a12.2
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 18:22:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792632175; cv=none;
+        d=google.com; s=arc-20260327;
+        b=J980BVMqZJbJPlBdTHZwc7iycbEbe+cg0OLltHPluHOSbNpNsM8YQ5CdoqLZVWKt0Z
+         pybFMPZRxQsKHvIiKdbMdvmThjxpcR+CdrUbFwp/No8etIVaxQFVC9j+Cz5kxA2J6AXS
+         7lYkEHdqFYGzhWuAvZaoRPBAxY5X3g4n2gr5hcPKVy73T1/lewzz/Amp+7/TdvqX1UEG
+         jE/oIuozolL0aq9c/AxFpPtT8ppMKPVQphev0GLvQAh6U0kzNCE3/99bxo4SrwzWY3G3
+         l2vsQbHhFZLqAPmAH+K619pWLx26MXcJr0t7MgUX4VT/QocKoHw1/1RLfsyab38zGBg6
+         n3lQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=G66UoZUqMc0GqdoRhq+8fuqVLsk9mPLrrGuwj1TVpA8=;
+        fh=hIzMqH9vtF6hTCMPH1CwC4iasS4kLBtDt9YK+UGWA84=;
+        b=qf2qB13TIVy1jMSuXqGZrOtIArv5y6TsjPcpRzUk7SVibXfH6qWHStbEgMBnxb4PFC
+         YKEKjte1eveNHJ0zH2UrWsUlVC6Ln0iGlWNdyJNa/+Q+bsPBwKGLydi/d5C6iZqhvONV
+         EeD2y0iLsw38sYR8sZx4tjAQfZbR28mHWzzJgYjdrwH1FmcSVxbiMnb4HtkUV3rWZvOS
+         C/Nnjl61VK5hRMxvwCz6EumxwgZEBYBdusR0oykwUBcbDi4PhjZ2VTag4knMQNv9b4cR
+         3YOTh8HepdhHIR/oO8iYEoLUVbI4NEv1ftEW3xusIFCQ6c7/IMtmDNR1u2GUgrRoH6qU
+         CHLQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792630191; x=1793234991; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=unSXXtZ3MKtIPKO90+N4EQxTmjms9/JBuDYM7yCCGBg=;
-        b=fieOWrbV399d83YmtDzIio6q4q9UvgvByBY46/NCYLLn7Maw4izLKP8VoFJj2bpsHw
-         FEbwR382ozqXVinCFYD3QzfUy88Y0lDMHbfARYSM+qZBBSAmiZeRiepJ+q7OlHmOVrfW
-         cqwTxS58eP+hxaD+GIeCKi/yJgco++1byMbAnPlzUcurR+90/xsxDUHF/gLa09YCZf0z
-         kjRfm2o5szSxeOpa8Uy5O8otqwaf3Zj0i6qn5d6qbmQv1KNMK9Y269vd0AtSIiw71iDu
-         rXi+TEMfof1Wkg6szFBZxmoclppj+Jtn1aoWdHsIBTqaUHPivqhPdzaFOGE5wGp8ISIy
-         ZwgQ==
+        d=gmail.com; s=20251104; t=1792632175; x=1793236975; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=G66UoZUqMc0GqdoRhq+8fuqVLsk9mPLrrGuwj1TVpA8=;
+        b=G5RelDCz25ZnaCZwZdMHAD01NkqJSyB1auKfv+Bvk+I3D6wTlDsbXW/539OHcs7wZy
+         sRxharc276l0yHkcJra6uyyk6DmGfetLFqQMxkfhOyPvUMlUIpUPT04rQcnuebyfrzfK
+         YhxowrM9unx18Cd/PSlMvlCQXd1g6BBHPDNWY3Jq5MGUscycibcIv2eSEkN34GYqDD5E
+         C/HiNeagVXQU9FUPGNjR8/9jJX1maSyDJ8gF/FAZPt3G0/ZCAtmM7xmQ2b8cSYiw0exu
+         QvYJH5l5V8+bsxPoV456gTiJxqBd9BJcNwLJYH/Nf76YzIp+lTwzduY941kwwjdax9fg
+         FXIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792630191; x=1793234991;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=unSXXtZ3MKtIPKO90+N4EQxTmjms9/JBuDYM7yCCGBg=;
-        b=kORm1ObhlpRCPkPCdVjS8aWe+dji5LfuEkCYkbg8ro77Z6GOVl7MIYlvOzAJF5sIUK
-         EYgrewWIO6Y7ir3x05tI9CrqGRlb2UAMAVb9SXGHRAdWcjwwIHWlViVrPZmcxUkm8tkd
-         q/TPCnmzkWRC4z2vixbSxG7CGX1V84PiCbgDHFUo+BLGmsc6X7BWUTmc9uk8ZEB40F4W
-         WUMlorhrMZHKzq1ajP0Ud6voANQsg8XhcOIYaa7Su4hdSMbR1AeRD5yT32zKxL4SX7YS
-         69gK+i1YrGiYKIqwrBbfn/UvnBv/e3HkZmA94RgH0oQEC6oy/K/ZVZMpU85qHwFeIIlh
-         DSwg==
-X-Gm-Message-State: AFq9FYJUNJraMpFCcUS3L5IR0uZmSSm2P5BiI2ujybDEma60umjkGgp6
-	5mg4s7fqtQz2kcU0mj5FoCH6XxUbA0B9YNg5ioqNsEcg+WgHelAxCrJkjY9elO2F
-X-Gm-Gg: AYBFou32PtpKlyRy5ob+C/zisTV2jIOaVkOJEM0zPQBt9oFd3PBSDS1k2AEIas1rYWB
-	pcsay8hDnlduAxDNMamVL6Ob2J7DR9l0zM88QImXHOoTlcML1l9ui4FM0oUhLtonfwbO6ZDjzgB
-	fQtiTE+cJhgcgEQQBRr9B4IY8IajrAOxv5OoqHqsKRZ5YvYozIB6/606W7eszIgTOFOaqtsx607
-	XPIOCZ8gVeS+QWxf2NEyr1wBRpHK7aSr+ajtetLjc5HfVnxRVYai7ont7ZLss3TC/Ijqq1DZ/3x
-	hBeajIAJWyj/IdtxsKoo6biX72KjeperNpTP+npDpNv/LwkLmwZKPkwyI2wdlHzGHotzJieZqYT
-	RJkLj2kFS8p4SFzwt3cLNKytcW/Bc/XTaey+QNw+VIfycLUBTj67XdAiazl6mUOCM9ObSn3gguf
-	U3WIVk+O9BWUKf1negnB5O4YWD/T5v/diZtpbUPw6PttceHVfCFOM5+2Wmf0Dh22KFhM3F6u8U/
-	bvftOAnCqLIy3ArlujAJsTVOuQh609ECZyKv0KWQl7T5XqICF8IdeI29Y+zjus88dTSGQTrZwnj
-	fpjX913wdNvIlViswZh4ZqhHm6ccmrTNdA4KdNX7Txusj1Z35ytDMB/TipOyjfm9ok62I3lwqd1
-	ZJbC9sKA=
-X-Received: by 2002:a05:600c:3114:b0:4a2:4ba:43ff with SMTP id 5b1f17b1804b1-4a204ba4471mr16932935e9.35.1792630190971;
-        Wed, 21 Oct 2026 17:49:50 -0700 (PDT)
-Received: from HP ([105.163.157.65])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e258213cesm8814675f8f.11.2026.10.21.17.49.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2026 17:49:49 -0700 (PDT)
-From: Tanga Joris <tangajoris@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	usmanakinyemi202@gmail.com,
-	taahol@utu.fi,
-	ibnmuhyideen95@gmail.com,
-	Tanga Joris <tangajoris@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [Outreachy PATCH v2] checkout: use Q_() for messages with counts
-Date: Thu, 22 Oct 2026 03:48:34 +0300
-Message-ID: <20261022004834.246892-1-tangajoris@gmail.com>
-X-Mailer: git-send-email 2.56.0.216.gd573d5a65f
-In-Reply-To: <20261021022156.119947-1-tangajoris@gmail.com>
-References: <20261021022156.119947-1-tangajoris@gmail.com>
+        d=1e100.net; s=20260707; t=1792632175; x=1793236975;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=G66UoZUqMc0GqdoRhq+8fuqVLsk9mPLrrGuwj1TVpA8=;
+        b=zp6ra6J/TYR1YgiwmarZ6W1ZmKb92mnSa7bsD7Q1sO1pmsFcoXIhSKIBR6aAiKcWJw
+         TAsmgZszBQHO28SCB5ufhB/supfFoZVAo8Uy1VbcRNgW3DyXMn917n45qIAHbThEgU1f
+         /qY78w/HzzHzL1ZsCHSZN9cluX5dfgFoPknhIxjmiE28ox/ccR7R04Rl7TrTCGJxL8Ez
+         Xl3+mEzGkPXcmaUuhbxG5AeWwwCO8kVGlBPBh9rXcZUopanYepBWAkSU+zlrTQF+UFK3
+         wLx61FqLgzWQz0I2ZWWZ3Eo+jJjWQIBPggiwTFRt1QbR4R5YKhpVAT8CK2jTosK1HM5o
+         2L2w==
+X-Gm-Message-State: AFq9FYLc/nqmRzevXu/sRMVbRLd4oNm2Kl/oN+Yx2flCKs52XnNhbH/0
+	m6ev30XVj/4zmYAnT5knoOo2bKMu9LcWCanyF7ze/wVd3IS0lZ5w2YTf3DZZyp7SwyTOJ0Rm/er
+	uVQQVG8iLaYZuvpvznrjNDDDeQjnLfSw=
+X-Gm-Gg: AYBFou0HYaVYDfcQ/SFlWW5l/D5INzKqN5GmTIcFovpPWWemjoqbVBp4qnPoEA+eToV
+	T2BsLhK7gSSK2pFD04oY2OleUxEmkKHJaDc55g7YO+AMRnhS6/QoQ3gNl1jbIQvobmbzXglnlFm
+	9K+Y0lv3hYIumKNDM5RMHP0WgeA3gEbvrY5Q2dzY2TiKmFWcnvfOHbeABLYKYLh2IO2d3AwLci4
+	XncNI/87KTbWGZESowHqkfQWcVqYJ+tBnzZeDOEPtKlJDPk/r+JKooWZUO/or3nLKUeMMy5i9KL
+	m3L8vsvpo2Ahs6SYryPKNlsa1+IkSNB5hOSqFaafOxaqKfKH8rN4LG6Ly36mr/1E53YX55orPf+
+	8hy6yvqY2qgyBFpmEOP4koceA/pQaA/YVS4j+
+X-Received: by 2002:a05:6402:450a:b0:6a9:a362:4646 with SMTP id
+ 4fb4d7f45d1cf-6b408ea5dd1mr3082546a12.14.1792632174744; Wed, 21 Oct 2026
+ 18:22:54 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,79 +102,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261021033723.5265-1-herroyalpriestess@gmail.com> <athxA6S50czDEUYj@pks.im>
+In-Reply-To: <athxA6S50czDEUYj@pks.im>
+From: Priestess <herroyalpriestess@gmail.com>
+Date: Thu, 22 Oct 2026 02:22:43 +0100
+X-Gm-Features: AclHuK8dMwqFdbzcMUNWPnONpVWqwqh-WPaXf34Kwp0VXoCsPaw9IEtIVmldkXk
+Message-ID: <CAOcE0wLUZP+HG_X+C72U4vT4eYp=F9XK79aBdAiArYODxcYeAA@mail.gmail.com>
+Subject: Re: [Outreachy PATCH] t2104: avoid suppressing git's exit code
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, 
+	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com, 
+	kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Two messages in builtin/checkout.c show a count but are
-marked with a plain _(), so translators can only give a
-single form for them:
+> Makes sense, and the patch looks obviously good to me, too. Thanks!
 
-- " ... and %d more." at the end of the list of orphaned
-  commits left behind when leaving a detached HEAD, and
-
-- "only one reference expected, %d given." when more than
-  one reference is given before "--".
-
-Use Q_() for both. Translators of a language that phrases
-"2 more" and "3 more" the same way now have to translate
-these messages twice. At that cost, however, we help
-translators of languages that need to phrase "2 more",
-"3 more", and "5 more" differently.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Tanga Joris <tangajoris@gmail.com>
----
-Changes since v1:
- - Replaced the last sentence of the log message with
-   a better explanation of the trade-off.
- - Also converted "only one reference expected, %d given.",
-   as discussed by Tuomas in Mudi's thread.
-
-Interdiff against v1:
-  diff --git a/builtin/checkout.c b/builtin/checkout.c
-  index 49239f029f..91b7c52396 100644
-  --- a/builtin/checkout.c
-  +++ b/builtin/checkout.c
-  @@ -1491,7 +1491,9 @@ static int parse_branchname_arg(int argc, const char **argv,
-   	else if (dash_dash_pos == 1)
-   		has_dash_dash = 1; /* case (3) or (1) */
-   	else if (dash_dash_pos >= 2)
-  -		die(_("only one reference expected, %d given."), dash_dash_pos);
-  +		die(Q_("only one reference expected, %d given.",
-  +		       "only one reference expected, %d given.",
-  +		       dash_dash_pos), dash_dash_pos);
-   	opts->count_checkout_paths = !opts->quiet && !has_dash_dash;
-   
-   	if (!strcmp(arg, "-"))
-
- builtin/checkout.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 2d575a4f57..91b7c52396 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1085,7 +1085,9 @@ static void suggest_reattach(struct commit *commit, struct rev_info *revs)
- 		if (more == 1)
- 			describe_one_orphan(&sb, last);
- 		else
--			strbuf_addf(&sb, _(" ... and %d more.\n"), more);
-+			strbuf_addf(&sb, Q_(" ... and %d more.\n",
-+					    " ... and %d more.\n",
-+					    more), more);
- 	}
- 
- 	fprintf(stderr,
-@@ -1489,7 +1491,9 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	else if (dash_dash_pos == 1)
- 		has_dash_dash = 1; /* case (3) or (1) */
- 	else if (dash_dash_pos >= 2)
--		die(_("only one reference expected, %d given."), dash_dash_pos);
-+		die(Q_("only one reference expected, %d given.",
-+		       "only one reference expected, %d given.",
-+		       dash_dash_pos), dash_dash_pos);
- 	opts->count_checkout_paths = !opts->quiet && !has_dash_dash;
- 
- 	if (!strcmp(arg, "-"))
--- 
-2.43.0
-
+Thanks for the review, Patrick.
