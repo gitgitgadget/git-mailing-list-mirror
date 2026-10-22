@@ -1,96 +1,127 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792685476;
-	b=PJeCkQYptciBZIeywR1lC3/+VgGuDueKCkfGMxlYrm652AhvzljgZ1hQ4a1anpc4kPZH
-	 K7KVphZQDx0vDeShKFQWl8mJg6asbjuO2f0erhgzCheHuNzuu8a9/K7NUVgCBo72VCXIr
-	 55QPr6T8MX+E0VcHSbe2kEfX5d/G4ksc/beYLolWRjAQ1B8XNY07103/gO2ZnVdf+CN1Q
-	 JaGm2rFOMMeOcsvEeWlOUi4ON7GnbTqH20z/hHOJpcu3vDeMjpqEHc2xIUZbZ1ouukT60
-	 2i2PiUoNAyXcMX5cVPZDDmL5EUI36+Nm1XWPVJr8bdF/y9CAcJHPT+XKMLRDk7e8i+Q==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792685476;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=3FqVM+gtNMiqLU4WqwVKq2DPngPe/OZNN4G7Mkfn0L8=;
-	b=3l+irXl1JtUC9Ye20CW2EeUZpK5pKbdoEeOFbgOnFOLe8DhhP3SX3n/89x2fZ5SVH7wl
-	 w09Ou+jW+UQsgztESVB9QLg6f6a/NLdo+0K97h/vG3ToTNME95GR6vB+98Yj/oF78dE1B
-	 lgzNycA+ZM6MbpK+MdZkNe2CAVfsp5hQ4XdQYt+uJZ19Y0TrP6lB/xF7W9xd94OnsDmVA
-	 n/npwk83TML6TdgoUoMf0TKm+1YbIVjJ739b7j+J3AFLxvJEuuygwoIzrwe5CQfkZe04d
-	 DMs5yBBYDx+fNBLtN7Lge8RURSrqQwrqmm7jk4Od5KJXSYCRLi/qJGNSkZlK3FK2chQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=spotify.com;
-	spf=pass smtp.mailfrom=spotify.com;
-	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=kKbT0eBV;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.44
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792686806;
+	b=FBFY2Fm9iD7l1xH5Dhr16kkAP29uxxXrk/EN9jS2MpyVhBJ8khbcPoZVnmh8FXIA7MnX
+	 /H4RsYFo2TvV0TnqFWLEaLnzjGuTPB95mfdTKFFo/KEBfMJwWhoH6HmeTIf0PtRdgsZGW
+	 64Ldeeq2zLm10ue0TjM8KpeHvq3WeIiXtHE9xxUyGnmuSlDMNk7n/0GbkIIQwtJcOtPLI
+	 25fa7OD0rnjbEuRQDQhLuASLu9ILO31z8oob1ie53Q3S4da2y3pDqijXs7udpw1zpyX7A
+	 WIJPsrJqCd3i19ZBkPbTEUT4E55PhWSyiXN3OlcaPv08pmjXW7ogM6JJFiJlZI9FUyQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792686806;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=UuXYF7mopCaCkb9RE3Ohvkr+Xd7gsruXGABwT225QbA=;
+	b=JiXC0N9m9QcNoLUzknLbhNrXSgV3pz7jhz29vPhWBwOTqmp0vrVGWj8vcTy1aJ35VdUU
+	 FpoiffQP/UZarC2vrrnSyIHiynY73tLFVdgVeUfbLGrhzp7gDhlytH2UO1OkvBFLXZaSd
+	 ozEkiKSezY4XfGiNdCbO8fdtSQgFPC2LEBi97jkAeppIiqtKeO/N0CNdN9quvnVgdQiho
+	 dhWVB5wRhYv85TmwdWaLtwHPaiA2rhhtQ7ljw3H504ZTHm7iA+JcfTqTSTtA5vLZNOBX2
+	 YfGr0g1b0Z6WJKrnNdI8OcHW0s08GzS7F+yEAcpmH4+NclmWnXSLj9m5tcn9uerfs4w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=BPoGRY4c;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZKzWnAOf;
+	arc=none smtp.remote-ip=202.12.124.148
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6547F606A319
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 16:11:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6547F606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66354606A324
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 16:33:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 66354606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=kKbT0eBV
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-679aeeddc6bso61978d50.2
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 09:11:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792685474; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PfWtR+P4Y3FoR5MsA3/lxfg/erBKr/L7dD7UlM24aGMPxkEyK3VRh8YD0kWB5FXJFf
-         1HaSz3bWUoM5IX4gtfTMH+DZ/1pbN9fCxW1SPocePYHQo/4RoaFZyQrsesWlpORW/p/B
-         WAy/+ZEyqu+K68f74T+bzeheXdxgpkAgV6RFQ4HjhjZyOrNP5bA6Piu/j4X4KecnjvJY
-         ZBpuKYmLGTYAYSwE86E+OolJ3+GRVuaq97ID3bplVMGhHhaSFgpasrWPp1tx07oiQZ6a
-         TbbR50O1GqfWXWAZO8wPzs6iAuxzd2dKmr7bhVPALcpvz+/A/DOJd3rliumY9g5ZnoTl
-         P8Mg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=3FqVM+gtNMiqLU4WqwVKq2DPngPe/OZNN4G7Mkfn0L8=;
-        fh=7dI4c2pNGDaBKyXWxC/LC5DIrrYPij/oz6noN/4if5A=;
-        b=Z2ZVdp75eJ53NXX9Mdy3GyEJOLW/E8iPXElCPXIW4oWG+voNGFBMtho0VHeisLwSZb
-         R10s7SnjmYgin1wQx5+tT6FI4ttl8e4Q7Wdzl6teumDcdvFv/YDklOU2VK4fldnZot89
-         0pZxN1xansHg99cPsB/6l4prN9uXLQliRfdCKjgkSbDl1PxwrJfy3rwxKT2UGR8TO6c1
-         5cCahBVZU/PXwN1Q5VGif9oXDpXiuIrEoozFWYHzln8SgfawTacMIhu/0Cd+l6TpjJ3T
-         iaWA6Ij+LZCGblqziMFmC6Th6lf35rddiqGJGwE0oCwLKQ4bFPPVMYKAnML/uyFljm0e
-         QXgA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1792685474; x=1793290274; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3FqVM+gtNMiqLU4WqwVKq2DPngPe/OZNN4G7Mkfn0L8=;
-        b=kKbT0eBV7YLCoZRiJU/eb0Xwi0xieFL+bYkNHgjrMPFT+rE3yhRq1Ky2XPrOoQ0u7T
-         UevWIxEkxDfyA4jy5drtouPniBdw64bx7k3Uf7olyqWnOz+4FdtAQKS28Tn6Sx85syIa
-         q370UoqLdbF3WEUY1mPvfdCbeuSKOZ4hu9q4w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792685474; x=1793290274;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=3FqVM+gtNMiqLU4WqwVKq2DPngPe/OZNN4G7Mkfn0L8=;
-        b=k73WwIhx/HTNLArcvp9YTdaYgd6owT0Tdnnk5Fgf0yENZsZI9olFvc2/ye1nbD9Xh1
-         PXHm8/YJLu7pITq3MT58T+yMqyCkH9Sb8Nv5Xmj2oN1UF4kKaoVO4emflptCrylP5sJ8
-         Sl1dpy5UwHR3mFZCjnKwahWkseVi/2Y0ir3AC/AtD17Pn0G3AxBUz/vmg4yLP4dFP4Gh
-         hm8HmLC0rPN5mwb9UwabSl2SsMT6a7GCdOkXniO/X9u1x6Rv9vUTvD+kWQi8pLRQiOK0
-         5AwHWl/rOK1kgEovQth8vut3b+gLETPduDnH3W/oxLo3rhzC/CcXbP90gak7QyrcSgCS
-         ncqw==
-X-Forwarded-Encrypted: i=1; AKwUvBwX/H/q+xhHSo8Yr5PFcMDVRwPCkeFcMiRK9/c4BnhtSBX927ZAtmvRDGjBhxkn0sK5FKc=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIUhWNVR1wViIeBluWzzeXlBMP6xC5w53T92VDxN8DnyxkALa8l
-	Lo0PiE565qCaYwBzXoW//NvubsRTm74M5Cv67ELutqkhig89R+KNwubDJ/1MpDCe91uuhLE3F8d
-	/CPESLSNOr3SWUdbqS7aBCwgAsTMQ9u+9rLc2+WJayA==
-X-Gm-Gg: AYBFou2gGqy91ptUdSHc7qLyMLy/+gnZWMqexGNOOGx/Bie14l8g8ssc3lJBa+Zhgd+
-	5oyyX/2BW5GVB6YR+kiJja5/HFE3WEyiNj5S2a8TF2WjZcXOL+R1V9BReP3uHB4QPI1W/nUYBXZ
-	kJC5dHhCn5oYzlJK6P0H1DrAyQJA4kEyEQO3ZXXh0ecatr6rLbvCWjQD2zw2graSY8dvJ/P2FnJ
-	F1UGIsIUpTMNun/dR0k0/owPB6+2tQJILzOgOW1pFeT7iDqVrlvpvVzbKTllUCGqiaDGsN99HBm
-	LapiQ3+jQmNaXY+VbSNMghDsQXeIUZ+qBkp/VRuS/Np4zqo7siS4BhAmmf80EZUScpBTEr8Bhxj
-	8sFsSZRy8+RVoAULF8A7Orx0UjWxJ6H5V+MnsNA==
-X-Received: by 2002:a05:690e:1917:b0:679:c29f:5989 with SMTP id
- 956f58d0204a3-67a0e45bc42mr2412141d50.35.1792685474282; Thu, 22 Oct 2026
- 09:11:14 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=BPoGRY4c;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZKzWnAOf
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id A1D791D001C3
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 12:33:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 22 Oct 2026 12:33:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792686805; x=1792773205; bh=UuXYF7mopC
+	aCkb9RE3Ohvkr+Xd7gsruXGABwT225QbA=; b=BPoGRY4cTy34ZtfHQ2wd7hwppz
+	qp734qvvsUN0O5z9TKSEoV+JM872J4LLQmxlLdVSpnQH1wIyqyN/GsKibH1FJfGj
+	8UpYAzHdYpSYvXeJwSwYm8grwAQlKawzIFhSWb7QsSsthqhfJYxL9zxZAmg6OSIp
+	gWJE9piMHkYjfjic9NkaU02XW6bFLCglFWKSku6cZMuDO2hsd4C7vm8lJe2xiNgp
+	Vm1hvXzaUuGjqiOG0VFB6mymhbGg+cqYO4RDdv3bJBu8GtjbWJASJEhK+wEAwHk3
+	D+Fx+T529JDAbLXKpZumV9AJKfCqKLDo811okXiDjETidmyR1s+gvVeRTOSg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792686805; x=1792773205; bh=UuXYF7mopCaCkb9RE3Ohvkr+Xd7gsruXGAB
+	wT225QbA=; b=ZKzWnAOfuCGEhdefyImNmqHwKLvOySicZN3V6wgo2RS8PqhBpZg
+	jw/WW3oy/SZewSlRXdyaWbEGr2wvv+3VGduhrKgjP1jvoUteSdqCLoSC5guV9dFB
+	GUUB/KA8h208yYbpwAYp64PukzpcZrPjuCgP4ruZsw44YTuzQIkyE/y/kAjUmEBW
+	QQSh29wYldYzytbmw69u/mZky5HCWLIFjdu2OIXrO3F+ogs2dVLq3LKFdV9KUKk5
+	OUc5p8LNDlxpjL0bJOryCS9o0PrOCywP/AE7D4IyxLeSiEWateO3DsmR6yZrVriM
+	jJm0AlPftIJmzec9Rh/kAwJVzD3/FP97KZQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792686805; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:n08E2MxVhslS3lIsI/aPDff8qZ0dxRzwye85lpzipgxahvT
+	yHdSklHd3anI9Ohp/8wv7Li4iujErGX28B/Q8PXqcnew47N2CULQZ1uDOK16iCOD
+	O83MtBbr2NOcv+HVuGV164vx2MVQFK+2mLP/MEnbZ83UHjXTfzNpAIn/qOEpHEIE
+	zoDKc/Pfq/4rBfllvyT1qoOcKckwQ5N1jizOS239onLaTXHvjTZe0srm6PpdUC1n
+	AaqL3tCMysBNgpVra55vaJ7WjKhhwqcfrsa3vWkaFHjJxNyunAiZe25+Z96Fi3XT
+	35XgFtB+ivop92SQuvP9OuTFp2BHYmDFbwJtSRQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:nG03Cms1wZ6Vd/ovuWfm2KZyi4xXTswXTB+NNhzOnZ0=:r25C/EYMsx34Hp+wACIcuuWxHJ2OiRXyG11rb9rII4k=;
+X-ME-Sender: <xms:1TraathhkvC01LCWKbPYz3jD8JVN_gntB5jn1_KUKe_185JEP3ERZw>
+    <xme:1TraahG0xAMHDpmjjtLtXOo_auIrzV5UIGp6JPY_MVf4KUpDYDM915vSd5uYUbygm
+    b729e20M0XX4kOplaPpOBgApK8y4B4z8fw1guaB3wobXRoIcbzitQ>
+X-ME-Received: <xmr:1TraajSvwKXTYpVkMc52-RJbSdgjspGDO2eycClYf4SbO3V53bbgyYGS-A-7akLKuRVoI5Se02FVfKmQRjAhP9I9dfjlix77wWWw>
+X-ME-Proxy-Cause: dmFkZTGmAEtuFbnhQuQ3znrTK6USROxy4zUkB4pCNMrCPIac/zcIqgp2GLArwp+X6pMj+Q
+    hqD9l+LbmAlQVgje84gbFqko98FC4NiM3a8yNB/mFWZ1Jrz3JAdUx3Zca9c/zlXUJ0cErt
+    w6AI9SsD+Dp2mENmHSteBuFtxxylt4dzSmHZHLoo6ZDzHOY0Lg9wOzdUzb5HfDGTCz8jmG
+    vNN6BtJm1sAW0baCbT5HvSTQg+9h/gK1KXSyM6x/I0kmUBlxEyqIygTqwqIhNQpRnxVR6R
+    nO4//31iNmJ8kQ7OwyWDkq/QhFQIhHa2+9WSb3DcTA8gJiSgXpgKaIOKncXpPKGglIB6c/
+    J8hBnLSO3qNwBtIGFY7So01Tv5N0U7UT+dwQIuzXI1zvZgUMJljdT3G1cHzuM8ePa2swsO
+    PBfgprCscfeJZF2vD4D4qy6I8HClAe63a7DCc6Ggr/4F8URU2RjoXr/1of3W3qTdEjOfxI
+    bd+Z8w/uqStnhPvPSQroWMPZwtNdIxxSL+RUEKSHdhdNslwKvG9vctznhqASMmTJD+6gdS
+    6Q5CBE9+j4bEfju5c8jKNmfQ8mR7Vu2ZtUKlYeuty1RWn4DREgmSjhoPRkFwnXA76FDo8w
+    iszGM8yxI/8ctVOXXbAwQNwQkwy1yrTAz/h59KqQYY593rDIzr3cdFpSUZ7Q
+X-ME-Proxy: <xmx:1TraauxuTMEH3Y1tzlKYuzXtWgTRzisdV-tZP2DkzIMw-qMO1cHJsQ>
+    <xmx:1TraavfQAQtE3IpNGR3BoYHMB5KJ78uU77kl4L5V3ZMkxdlXxf-hHA>
+    <xmx:1TraahPh7wcxh6KpekC3-Rd557Ch9BLPj7KYsaY4Yxn2UXofvtwh7w>
+    <xmx:1Traaqs3oV_59yiKyrjj4eARqraAgh457nhSBhxNiKOhrcRo_MxEhA>
+    <xmx:1TraaukdWPjsY47HJ7Y6Hh0Ur8obicJ1X2Ki5LsdsLoqFE5JZjQ32mCM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Oct 2026 12:33:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>,  Jasper
+ Mayone <me@jaspermayone.com>
+Subject: Re: [PATCH v3 0/3] branch: let --delete-merged find squash merged
+ branches
+In-Reply-To: <CAHwyqnXcdgzRnFgFhTfhQFFOgDxUUKoPf2sGViBTiXMK1aNttw@mail.gmail.com>
+	(Harald Nordgren's message of "Thu, 22 Oct 2026 09:18:40 +0200")
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+	<pull.2425.v3.git.git.1792585717.gitgitgadget@gmail.com>
+	<xmqqjynajndt.fsf@gitster.g>
+	<CAHwyqnXcdgzRnFgFhTfhQFFOgDxUUKoPf2sGViBTiXMK1aNttw@mail.gmail.com>
+Date: Thu, 22 Oct 2026 09:33:23 -0700
+Message-ID: <xmqqa4o5itkc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,64 +131,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
- <pull.2211.v4.git.1792581744.gitgitgadget@gmail.com> <d76dae801b3303ef4271f71c7b3999c10cac8556.1792581744.git.gitgitgadget@gmail.com>
- <xmqqecdin6xr.fsf@gitster.g> <CAL71e4Pe_NRxeu9_+pnp=pBOk3SBNyePUbT5DDtDhd1bJpwJng@mail.gmail.com>
- <xmqq4iedkd2u.fsf@gitster.g>
-In-Reply-To: <xmqq4iedkd2u.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Thu, 22 Oct 2026 18:11:01 +0200
-X-Gm-Features: AclHuK_Ln3cnUkfPl1u7nteI6IbS5T6h9B5QdOysQp5jjyNqgxh9G5n_aL39wH8
-Message-ID: <CAL71e4Ngsxv=JU_qzVGVyHPZiB2Qzvjn22NeVQAtZOdCr2vyXQ@mail.gmail.com>
-Subject: Re: [PATCH v4 5/6] connected: add incremental connectivity check via rev-list
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Thu, 22 Oct 2026 at 16:46, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Kristofer Karlsson <krka@spotify.com> writes:
->
-> > Yes, and an earlier internal prototype (that I never sent) did
-> > this. ...
-> > But even then, the revision walk around the verifier and the full
-> > check would still depend on fetch_if_missing, so the verifier alone
-> > would not let us drop it.
->
-> As use of _extended there in new code will certainly be a way to
-> avoid making things worse, the above in distilled form should be in
-> the proposed commit log message to help future readers who may
-> wonder why these new code paths are written to rely on the
-> fetch_if_missing flag.
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-Ah, I was not aware fetch_if_missing is something we want to
-move away from, but now I see it's mentioned in the docs.
+> So do we go with `--delete-irrelevant` or
+> `--delete-irrelevant=squashed,rebased` to give us two levels here? I'd
+> rather do the former.
 
-I looked into the code more after your pointers and I think it's
-indeed doable (and not too messy, just a bit more code) to
-use odb_read_object_info_extended() instead and completely stop
-touching repo->fetch_if_missing. It's still being touched by
-the rest of the rev-list code, but at least this series no longer
-makes it worse. The full check is unaffected, since
-check_connected() already passes --exclude-promisor-objects in a
-partial clone, which clears the flag as before.
+Two comments.
 
-To check it, I ran rev-list --connectivity-check=incremental by hand
-in a partial clone, deliberately omitting --exclude-promisor-objects,
-on commits that reference a promised blob and a promised tree. Both
-were reported as missing and neither was fetched. I did not turn
-that into a test, since check_connected() never invokes rev-list
-that way, and the existing tests all pass.
+* Naming
 
-This ends up nicer than what I had -- I can also get rid of the
-BUG() guard for checking that flag state.
+I would avoid a negative-sounding word like "irrelevant".  Your work
+is almost always relevant, at least to you.
 
-So, I think my plan is to squash this change into v5.
+The purpose of the new feature is to find branches that the user no
+longer needs to keep because they have been practically merged.
+Perhaps --delete-integrated?  I do not know.  The naming matters,
+and I hope somebody watching from the sidelines can suggest a better
+alternative.
 
-Do you still want me to include this reasoning in the commit,
-or is that now unnecessary given that it would no longer touch
-fetch_if_missing?
+For lack of a better alternative that I can suggest, I will use
+"--delete-foo" for the remainder of this message.
 
-Thanks, this really helped improve the patch,
-Kristofer
+* Option value
+
+Another point is that different kinds of detection should probably
+form subset-superset relationships, rather than a Venn diagram, to
+make them easy to understand and useful.
+
+When you specify --delete-foo=squashed,rebased, do you expect that a
+branch that would be removed by --delete-merged (i.e., merged as
+identical commits) would be kept because it was not squash-merged
+or rebased onto the upstream?  I doubt users would want to make such
+a distinction.
+
+I do not personally care about the distinction between rebasing and
+squash-merging, but users probably do.  I suspect they expect that a
+mode catching squash-merged branches would also recognize a branch
+that was straight cherry-picked (or rebased) upstream.
+
+Perhaps the options could be structured like this to be as easy to
+understand as possible:
+
+    --delete-foo=merged      Same as --delete-merged.
+    --delete-foo=rebased     Above, plus rebased.
+    --delete-foo=squashed    Above, plus squash-merged.
+
+Would this be a clearer way to present the feature to users?
+
+Thanks.
