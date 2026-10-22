@@ -1,59 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792696543;
-	b=uvB9J3Em3LHDBTpG7NMILkHla6rTXUb9EZrHANdc8WUdyT5NOZNZbt2RxWPYBvC8+1Bu
-	 4RNKdG50hOFHbYS+M0SxZBuhj4qK5SQkbOoLzUaP6ofd479AK8E0YHeGreFimtexeDtvE
-	 6LJS6OCW45oZNsWrE8f/3QQaCSKQ8Cz2JMou83TZgZS3VsdsQ7lt/iUoaTuBChH6l7d67
-	 EOS1X2VylG3Q3CzSUSwiOMY4ySMGo+IYbPRTfowPAOYyFtDu8s18l1tvQYPnd3XkB8aPR
-	 dfHJ4Zvbc9vYf8ykYlb848soL6WBeCK1drIfrRbOk2SekbW5alzB+iHaH6QNV83IzOQ==
+	t=1792697419;
+	b=mrdFCel4BQq0G2SAUHvalXVt3CzIQ4XSP2meefd95/Tpn2qx/L4wHwx2MllODxOl1Bgg
+	 mxigYnij/MheSOOdvg95go8fj6JMnHi81Jrg1phrL7oIhzee/45FT2NLIELpDdbJYkJwp
+	 YPWDL+zLFtRichwdr9eGseAjbsktCku83AYhPN79U//SxL8HLEd+swe4MO9MQE/Wo+e3Z
+	 roSLaguunKMXivk0tG0N5XA2isIAsgu+zpKrOIA2i0T2GYMIpVTDSaxxPARRBUbkmnLBt
+	 OBaUllW76Ci+4kkVwiL1AUbwjbqx6cUO6huMRml/H0exdFe/S0N27oe71Q5wqQZyEog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792696543;
-	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Date:From:To:
-	 Subject:MIME-Version:Content-Type:Message-ID:X-Provags-ID:X-Spam-Flag:
-	 UI-OutboundReport;
-	bh=ROczLhR0XplhisLMRdLU6OdZtVW9fMEBfaFT6Hra7k0=;
-	b=v/KxiqgL0tT+aj+RQJsZhS8Z/We3bS7fpNHkPLMdR++rlbzixzqKyFIJEDFdtaLIPEjb
-	 KoRbDvdWjaaFvyxp8iZvnIvFdCJBi0+WrwdNB+svUsjJBRH9sXjEy4atPWIWi9tJyXKwP
-	 28rJiRAb9pNszdCg11XK2NNJDW01tHVHK5RP6BiID5ulngpWYYIyfK5otO1uv/UnDNAzN
-	 Ip7H5RYw/OzTDmK/m5FbsoI6gpw7NGF71ye70agAiVxad0Bk4I3NQnFEMtFJv9vJ9nz/U
-	 t5C1THFyB1F3iguWmmCLFj4rBwjYu4C5Lx15iK4a57GkXCWFXSdl+gYvLfCnloLFJZg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792697419;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=scHHkc9m7Au94MQGn6/ug7dm7hwen4k6IqJAgn1twLQ=;
+	b=kE42JeMb6h/Kb7qn9YOWAGPkDeoYuH4ZbvjQKDWacWx1lm0Axd2RI7lR/aUfJWjcfTr1
+	 KgMV3oD3Y/Jb9GqMRyA9DZ9NICUDzoeUqFgzmc9wL6tsE+uoAFGOTga6/UZEsIdq2aNkA
+	 T5dYsWybpIA4Wy2Uiq9s/f3cBdRWVziaT3fByO3fEcBPu6EeQ+RypETDQjLcSg1JHIVfh
+	 gi19z9/snY0Ypido126ocuZefA6LVNet+kc6cmBOSY+y1LUoLNV1WxhMH3gXwhFH65moL
+	 hTc63cQgp35vq2rv+2pxgeUkT8m+4eaMgpS5GseLaOKiCd/UIO+TAKwm+QwA2UvSuMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmx.de;
-	spf=pass smtp.mailfrom=gmx.de;
-	dkim=pass header.d=gmx.de header.i=johannes.schindelin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=PEwnkXr3;
-	arc=none smtp.remote-ip=212.227.15.19
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=AzYk2UjC;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=pDG72thc;
+	arc=none smtp.remote-ip=202.12.124.158
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A409D606A323
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 19:15:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A409D606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5B7606A31F
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 19:30:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5B5B7606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=PEwnkXr3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1792696540; x=1793301340;
-	i=johannes.schindelin@gmx.de;
-	bh=ROczLhR0XplhisLMRdLU6OdZtVW9fMEBfaFT6Hra7k0=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
-	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
-	 message-id:mime-version:reply-to:subject:to;
-	b=PEwnkXr3bQnaJ/ezy7keJkWK7BVrW6lv+uruY8NNOpjDgvW6O7WvYIWw0FQVW6fx
-	 s2KOrf88t0Ai6hslu0/5bNuKvktxwba1hJbaf3KFq5LL3TsWYL/oIWmiUz0kZEXtH
-	 bIPek3h8VnDsHbPE65BsevYrZV3FVIQATIhTtZKirpJdEnIuhyI92ZbZZz5roC+jo
-	 CWUKCGf/EAaW+LBcQTdOztAyJwlTghEglBk5ytgmzRtmB+Za2CErbLRM2wm7JexNB
-	 7G0kDxGb4TKucZc3lUQEer0Bp+eb2rkZFbnUBzdnTe0Tvaxb6dDgv55r4ZwHflZoL
-	 ElWpHZQ9UL7bycWvNQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MKKZ3-1x0wbb1lZX-00UldU; Thu, 22
- Oct 2026 21:15:40 +0200
-Date: Thu, 22 Oct 2026 21:15:39 +0200 (CEST)
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.56.0(3)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=AzYk2UjC;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=pDG72thc
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A90917A01E4
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 15:30:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 22 Oct 2026 15:30:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792697418; x=1792783818; bh=scHHkc9m7A
+	u94MQGn6/ug7dm7hwen4k6IqJAgn1twLQ=; b=AzYk2UjCjfaJ+2uCdD8JPJLQSv
+	9a6qsoXI1ppkHRkHv7PNzXlpxxcIjkF9qYzl0dfFhsO6B1qOK8Cs4BOtKzent/mt
+	BjKBUuS0KdXODg0wkEe1E9rI2QlwZAj6FxkANeCilNyhjwZUrOY+z4uXRpG58ygP
+	TFoNpgjY4jkIfzudGqDkHOjldXk7sZ2aci1k6aolb0Q6tGO+OjNVtgBxUvi0zE5z
+	FGM4lXjKAWsdwsrc8sgO4wuA8wqeXPqXTCZhpoLLp3juuDTDmz5kDKCoRoPpO4nM
+	D6P/K3WRBkREGzFWokvu9x03IYYH0f/9IGKdsFQMdJXKFL64aD15Jj60s5Iw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792697418; x=1792783818; bh=scHHkc9m7Au94MQGn6/ug7dm7hwen4k6IqJ
+	Agn1twLQ=; b=pDG72thckHjTqdzUM6KZAKINDFOCjg0nUNHLNxd/3AdK9CdhcC8
+	jVdaatQnc8ix/cFLvbOzeo4/GfhTKT6FrqB2WZuaPhIi7JlIk/S1gRKaaBuRigEV
+	//LHmfQ+gIWbu4sM9e7cpHL2MFlmlFVM3+pPbteMgaueMga/0wNDKlRGa5U2fXQH
+	t/5p5TEycT/213ifh2yce/pWelBKg7M+O+QOoznLSkslfkXOyF6xmaqwsnqvyp1O
+	TiPdG96bALGjX2AEY8Hpb4sbKPeas1PYU+ZCW3xQSBWpV4jBY/4FpIaNMuQ70smF
+	hZ6Ggc5KlepwJ60bqcgknjTAEeMBQCFeX7Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792697418; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:Ca6fCFdeAZIwofhUVE2u+PE7wmZwqgrmKTJ1K8HHvh/m4SZ
+	ifSbZoWU3tzRfKGrrgFH6CV72Gm9LX12oGlasuyjCdjRuS1d1jYjEFDGS6sIAhHK
+	RB0pFqC940M+1KRCp2Xv19XQNmINmqHgexIlRA1rwCTskBk0s/a0V6iYrEv06/q1
+	ulBS0zlogL1xppPAt9lVzModmaUxb+PYnK9GX9w3IXhaBNiFOPSRrGtiWXKKGdxj
+	iCo6JdA/0TiYXBHuIiigVItbh/seSw4EUwexp5aCkXkLGXYHLFTc43jxEFsLTOuk
+	TtzkXelMZO1gf1SFl+pwoF+ZVp5kLUnj8yVi9OQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:v6WTgIOLeID0OyxQzAxcDLgxA4vpXcG0q6OGU9iBXrM=:xqeyqWfSRVzgsc8V5w88C0Gr9czwVxs/BG57Qfdxjhw=;
+X-ME-Sender: <xms:SmTaam3gW4xxrHt5LbTBH46qbj8lv1jNWPZpGHMqGeXVBAMlzL_KTg>
+    <xme:SmTaarWACrhyEzUR4Qtifrl1wuQKSKB8CRRaC2zL8Tg5rOlztaHAcbBlOSH2ekck_
+    xtasy3Gms-j0JSa_plxKEcLGpOXrPJNCAzZ4KImGF4e1hcIwDGaJw>
+X-ME-Received: <xmr:SmTaahJHO1QWkvhjd3pke-XuUTTRqINEtUFgK3qnWIsGt3hEs_gALmjHooYM2Qon1c2uogDrgzGFPl7Z5s-Z7Pi8w0ZNjmOdLpgY>
+X-ME-Proxy-Cause: dmFkZTFdGu3U8GNPKSjo6nVcxRCq+7Qwgc1bZGN5oRHNlC+RIy6Zr5gbvdqvF4PT36tRxU
+    mCFS8izhMzna4IDyXmvIAzVdu2OaRmxbBhkJ167rDwPupQxJxPj1cpncDIrIoRqTo6KtHz
+    j4E8VScj7zn3cCWc+EA2b5HrBMJ0Je8HBHytf5gt1RtdUVfFcYn1SzaurM7VJeHAqWqiAQ
+    ygZdHml3Ih1lTu2Gwmg0x6/X9p+qt5gl88b6GWhmQ97vlyqxF9s5LgG4i4a3lfJTKxWT4h
+    GwSsV3/Q+icaPJr7IhSphq+gy7rOx8f852+uMwcnEz9YyJl4SeBuhxSO+34nVrUoDv8frp
+    asIFurZZCVZ7OPzkOyn34hCCfJsDWHP8OjF9ISEHCpl9flskBx7A2tntDhWzVQ/FrnqaaM
+    z/TANIaHjh2hR9gMUrAtTPlgnnHGqTjtSX7vaqgiAWRdDdH0FtDN9BJnHrNMiBxH4Xqn2b
+    OHTQmGpl99e5iGRsw94WbYj+YQJCMfa4ZbAMk7zxyJeE8P1HuqNddjWavPg6meth5nkZ+B
+    nT9FP8rv3R2wFrdG7+lyRY3G7J8+JBlvFAi+gBfAOCqydGpmE90CBXGgBfIEduUQn50fkF
+    +/5sCUd+hHFJKFQyTxWyCZ0cq+C3d+gtCjLtlJ3675pNuIt8qJcwgybeMzzw
+X-ME-Proxy: <xmx:SmTaat3cXs6Y21UlcgMYN2eL6Dzbz_sBWnQQjOHd6n67t6AOU0y8lg>
+    <xmx:SmTaan5sQ6L3dOfbqPGm5NnqkSbaA1qF18VakO9hrirYmd8m9pC0Ew>
+    <xmx:SmTaam_Fo0QnLu6Vx8n2tffEqDn7ZI2Y_CpASCxrrHOHS9hRRQLTcQ>
+    <xmx:SmTaauUlSxU745WsFC9AxvWxRMM3M-IDjL79TaOBI7rU0sCUgNvoyA>
+    <xmx:SmTaanL6goDdHEhU8vvHlXz1mre0d2hEi_j9z2BDaaehzZUGwkKjQD9y>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Oct 2026 15:30:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org,  usmanakinyemi202@gmail.com,
+  christian.couder@gmail.com,  siddharthasthana31@gmail.com,
+  kaartic.sivaraam@gmail.com
+Subject: Re: [Outreachy PATCH v2] checkout: pass the repository to
+ unique_tracking_name()
+In-Reply-To: <xmqqo6clfu19.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	22 Oct 2026 11:51:30 -0700")
+References: <20261017225326.7827-1-okhuomonajayi54@gmail.com>
+	<20261022105641.68963-1-okhuomonajayi54@gmail.com>
+	<xmqqo6clfu19.fsf@gitster.g>
+Date: Thu, 22 Oct 2026 12:30:16 -0700
+Message-ID: <xmqq33txfs8n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -63,137 +128,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Message-ID: <1MIdiZ-1xPjYn1zYD-005wYg@mail.gmx.net>
-X-Provags-ID: V03:K1:a95VOIgH5A4Q5etSE0N0+Oaqe5uOyR/c0H1jduPgu0AJpD85Tw2
- fkYGCrgKmOS2l16VF+BZ1OdgwM/hHvR7t5F9N5avJv/7R1s+jWvH8+Ime9M1SfrvffgKVMV
- RrwOQQyxz6lmWJ/uFweNAapzZLVZmZ5sGKPb9OLfSxQoG0aDT2lJsVuSkqeISxUtMac0/KE
- DSFMHPIaA1QXqQ1wQL+bw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ER0lpNKjnAY=;AWZxCx3dWmC6C1hH4fgqeWqbgXA
- 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
- XEBhCitAxf5hdU/YErWG7ENl9sg==
+Content-Type: text/plain
 
-Dear Git users,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I hereby announce that Git for Windows 2.56.0(3) is available from:
+> Replace the last sentence with something like:
+>
+>     The callers still cannot call unique_tracking_name() with an
+>     arbitrary repository parameter other than the_repository, until
+>     the call in unique_tracking_name() to for_each_remote(), which
+>     only works with the_repository, is updated to take an arbitrary
+>     repository instance.
+>
+> perhaps?
+>
+> And explained that way, it becomes dubious if we chose a good place
+> to stop.  The updated unique_tracking_name() gives an illusion that
+> callers now can pass an arbitrary repository to it and expect it to
+> work correctly with the given repository, but it does not.
+>
+> So, I dunno.
 
-    https://gitforwindows.org/
+I think we need to improve the situation by doing something like the
+attached patch.  We already have similar provisions in environment.h
+(to clarify that have_git_dir() and friends only work with
+'the_repository'), hash.h ('the_hash_algo'), hex.h (get_hash_hex(),
+get_oid_hex(), etc.), path.h (GIT_PATH_FUNC() macro) and
+repository.h ('the_repository' itself).
 
-Changes since Git for Windows v2.56.0(2) (October 5th 2026):
+As we pass a 'struct repository' pointer to more functions, making
+sure they do not call functions that still work only with
+'the_repository' will become more important.
 
-This is a security fix release, addressing the eMudhra Intermediate CA
-Compromise. It also addresses Git LFS' CVE-2026-105803 by upgrading to
-v3.8.1.
+I suspect that in remote.h, there may be more symbols that need to
+be hidden when 'USE_THE_REPOSITORY_VARIABLE' is not defined, to
+ensure functions written without the macro can truly work with
+an arbitrary repository instance.  The attached patch is just to
+illustrate the direction.
 
-New Features
+This is totally outside your topic and meant for more senior
+developers who help polish the foundation of the codebase.
 
-  * Comes with OpenSSH v10.6.P1.
-  * Comes with cURL v8.23.0.
-  * Comes with Git LFS v3.8.1.
+Thanks.
 
-Git-2.56.0.3-64-bit.exe | dc6d3db061999136e139f31376c5582a9ed6f36a4ea12f15e54ad7fa2bfc0bf2
-PortableGit-2.56.0.3-64-bit.7z.exe | 4fc27b779829a36df77911e3f4dea09c66c790dd6c5f7dfa3b6a5479f1fe354f
-MinGit-2.56.0.3-64-bit.zip | 2e5619966e588fde5f8122c5557cad50c0fbafcaed736689f40ec1dfb1d78ea7
-MinGit-2.56.0.3-32-bit.zip | eaf8d826a2ff4440db847078424b282d09f9ac9d03524faab8189c279455926d
-MinGit-2.56.0.3-busybox-64-bit.zip | ab4aabd3b8b1c2610725f4b48312511b5e4ff7af99f6e0ae1aa286ea19faaf85
-MinGit-2.56.0.3-busybox-32-bit.zip | 356374ce00e5facf75b3f14eb60529e6ec692ed92a9f71288e3509743bbc7236
-Git-2.56.0.3-64-bit.tar.bz2 | 2460cdc329f9061e0682672eb9995da9da1da0ffb9761494c7abb3559ecbc40e
 
-Ciao,
-Johannes
+ remote.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git i/remote.h w/remote.h
+index bfa5218c6e..eb7d4481eb 100644
+--- i/remote.h
++++ w/remote.h
+@@ -145,8 +145,10 @@ int remote_is_configured(struct remote *remote, int in_repo);
+ 
+ typedef int each_remote_fn(struct remote *remote, void *priv);
+ 
++#ifdef USE_THE_REPOSITORY_VARIABLE
+ /* iterate through struct remotes */
+ int for_each_remote(each_remote_fn fn, void *priv);
++#endif
+ 
+ int remote_has_url(struct remote *remote, const char *url);
+ struct strvec *push_url_of_remote(struct remote *remote);
