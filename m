@@ -1,97 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792709373;
-	b=0F/ORfitHp3G2HQnRN2ZaNU9X/m0LUmWgq9/gY7YBq+d7ZkNGVdN0hqYslczS5ubxdA9
-	 Gmw52Ei1SubT/FffJs13zJ0xyerqaOKhJka7DUJuhqwjqf+5IUuqFE+2M267tojzgGt1L
-	 AgEv4LWnmQL6XSPr29Zu682Eblu9yfpcMhhOaQWCTWxQyfphmDY90DU6+hccLUuCa4e5J
-	 aIdn2WLA317ECCnd5c/0jTW0ZWUcTDub+g88aJakGr6+QYPi5vwdxOv+1yY4jDCaiha+S
-	 1OwwgHqVavllBFJcLZ4BgFZ5yXG7UjT/HwjtzHr1aPbj4jCLbihjwciGZgIkIE6RZxg==
+	t=1792709467;
+	b=Jqwf1kTmm3pLlpJGjMKakpDEfwT91bjZLtv6+76nmkxeBXbZh5UhGV7gKOEFnAt4UmqM
+	 zwKEnS8u/Lo5mgrdODQUB8S9bjXI2cW3rM7FNdyCx34oauGwIUOgz7fPoZTGOvxkDI6vZ
+	 2OzJeGmdBD5hZzMLDmUR7BRyjoY2WKWjh6oSFVZJEYfnCohFLodLgyUvyhRmWdfx3gosu
+	 VoWzbuLNJTaXFZ041Yd96CPq2sePrGNW260QQHpe5y3MG+89jpZPm/dbStCAuAbJnoios
+	 U0slm+v1x8tV+pq2gBTaJmVYhIIQME2TyjbJerpIlE2HpLESbdpcLV5DDeN+blym+gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792709373;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=HJIHD1iSROUotaJ0IVXF0RKuPKwOlHk52FeEyjqjhW0=;
-	b=PMAsq2B3zJaRR27CqB3lnWxYjB7CyJ09ydtYuDcB5qtrOUll5kKnGvYJ1N2NR0BgtONo
-	 1qymdWlVUyKdl3kE9Mn/ICwUR89OigmCRpM9yKgi+k+EqA77C9k68PVqwEYf+kdGtiU4o
-	 ViCRiP7bk/tBKiH+zHeyA6l+sfkWDcTtLlgkhVhalqK2YvztBbN/Kvdi7d2p9u9p3nHUY
-	 PhRiawCeIOGMgelkidhr13koRqe3AfiqebTV/Y4Jy0zJQSersUfnUoXVSFSIYcpOwPebw
-	 qzi09DJWKuajfg9BLRJ9DSrnt2xzoS6OhVTJdRoKi4qsQWWTJiiUEEQ9BnFTRbWhpew==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792709467;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=zHdo0U00ihwOnZq61hnkc9vfuwwaXAjKMH+XMd2FifE=;
+	b=zMEX8OYPrFmdiV1aP9SlLZAD46A2IrplzvKjyCTMFS7dpcb59RKJoLuUo7fTkTiGl1ph
+	 MbRGEECuZC+vHOA4XCRWgpW/iTKySsQiLfJdtAf2TUFb4zcyDKykMU4GvXh/fWuTbMPsZ
+	 OvqekZXZc0CKOHH57YtUF3HetiOnQq+KCHpCPxDpGhQEHhcJCDMWaP/RRqhGKPVOUg/kX
+	 7/pyB0ZnXHNINa4QO2v2rXjNvPE81nMg3QGwcVxNa7dqfWkLS5eq7G2I4nh0cRmus4oMl
+	 rcJia0Ge5Gcj4tWNtJGjUUarqI5c4UNUSld1inGoe4PVvMW898JgYNfKckUksRPoHVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=openai.com;
-	spf=pass smtp.mailfrom=openai.com;
-	dkim=pass header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=dOYJ0wBd;
-	arc=none smtp.remote-ip=209.85.161.41
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=crustytoothpaste.net;
+	spf=pass smtp.mailfrom=crustytoothpaste.net;
+	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=BcOu0kCn;
+	arc=none smtp.remote-ip=172.105.7.114
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7146D606A319
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 22:49:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7146D606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5515C60A2605
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 22:51:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5515C60A2605
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=dOYJ0wBd
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-6aa9606ddadso216139eaf.0
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 15:49:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1792709372; x=1793314172; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=HJIHD1iSROUotaJ0IVXF0RKuPKwOlHk52FeEyjqjhW0=;
-        b=dOYJ0wBdUuxH2oytcR6uz6rI9ujem69Qzoy9soyTOKrqnc8aQjPhjnRMv4qf9qKUkd
-         wSP5eqZbAq2gG8NtOYxrn7MUSHrzJkMM9nX7GSdGalY6roHweBz0aosdM3dD1t8t5l/z
-         Uu6wbG1F+EmjutQhKq9j4Xz+hgsVk1PpRdHgQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792709372; x=1793314172;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=HJIHD1iSROUotaJ0IVXF0RKuPKwOlHk52FeEyjqjhW0=;
-        b=Czpda57kABC0//2WHxnU+JgVlvXBhbmPT8mywUfUpG+Sdggk4Laq/nGVTUsQIA/BL7
-         s3PSEx3/55694CCLmSWApTbK3BfAXEYA08SHfzzIjIM4tShDMkPYttyEIeE9v4QEpRln
-         OoWu0hJrBnjQNJizbBKwtwu2HsQwqs7HcMFW4Fxs0Bizabk4eVSUsKyTm2aOdGK5H337
-         9y3f5TAPIFgxA4j7px3QOdYd8S0jCzzBqeUJnWWZVf7OPA7RFtPmLJlGGAB5N4nq5Wum
-         qFdlEVJ07lQ/Oo5+4uiWZbnsy82ja0BMyUNOoy0nW2lO++gqXLfAj7DE2+JKp2ltHY3N
-         EmaA==
-X-Forwarded-Encrypted: i=1; AKwUvBxwv19adCbIZHKQF6iDHZOwWxzAmcKCfIXVl9hQC9Rx4C/BZ9kiUE/23JDxmgxBBo3rNMc=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKtZ6I1cNu9aLqbR6sePAE0s/HakFm20nMKXVKnDhF0V2gVZbWZ
-	IPIJ0H4DTfxyIBqsOH0Gk5mjo1v7KrgFMvXAJxpsDcTyRiLENWlQB5vkOKjYb9qXoWo=
-X-Gm-Gg: AYBFou3KxzmHdZrZKc5+fKSRZpO6ot3p1n5uaQFJb6XImhRlXn+bBO9GbivPJUWmG1P
-	ohGUQB1ph7vis3+KT/EKlW4EyNJ6hdgvrSWM/QrwZAjHbe/WV1QMovIIWH8+scsNxJPuMYSdaWv
-	eRW29NOzXaZo5NI76InccHl4QrJXeXOq+UcFLX+Oeq+8LNzGjF1Ng4j3lba58jvanOxLeFO1S6q
-	776tYyDQ45RM0pHIzVMHUJgN7OpwvwEwrtyi0xzBjMz4doeOzcYHOI2x7C9bmIh2OLc3bvAGrSY
-	jhE2WWHD5Zd88eltEbGhgkUoVqp8lXNzAIAmFeRcOmrzdEPnM0EoXejA4uiwYo/yP3pM/vChLfP
-	N5zc+Qasu8kgl5fBSwLDiFVPBBrhwnAWEIaP+t6Z1hGXwGJudpBfjOkQDnT7Mi6jRhPORl9BEKi
-	KeSm1h1Sg8qCxuC7cWgqslMWEWVnKQvvxo+dku4CRTbchPvNCb1Dl85YsmhFYcRUQhN+oTjyK7U
-	vBX0Pc7HiT3QfW70ON5fyIIfakOU90/G6AU39i25ZhOZ1GG+UwWUOdcHl8SOHsnodYlX+LmfF4c
-	P2xrv3JPZdVPqKzI+bsGOjA4FKwbO5VBhTuVC+HEvuofKvcLzxZVlW3QoRatytPO/VfD2yw=
-X-Received: by 2002:a05:6820:1c93:b0:6de:1788:c3ca with SMTP id 006d021491bc7-70b88b0b150mr533157eaf.81.1792709372354;
-        Thu, 22 Oct 2026 15:49:32 -0700 (PDT)
-Received: from com-79390 (vpn-centralus-04.tradc-corp.com. [20.80.83.168])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-70b8b2088e4sm434833eaf.4.2026.10.22.15.49.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 15:49:31 -0700 (PDT)
-Date: Thu, 22 Oct 2026 17:49:28 -0500
-From: Taylor Blau <ttaylorr@openai.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Jonathan Tan <jonathantanmy@fastmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Derrick Stolee <stolee@gmail.com>, Ted Nyman <tnyman@openai.com>,
-	Daniel Reynaud <dreynaud@openai.com>,
-	Aaron Friel <friel@openai.com>
-Subject: Re: [PATCH] negotiator/skipping.c: parse parents before queueing
-Message-ID: <atqS-JB5ayn_ixmG@com-79390>
-References: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
- <athgd6Ya12zRdIR_@pks.im>
- <atp0Q5dFHQHAZAov@com-79390>
- <xmqq1p9he7cr.fsf@gitster.g>
+	dkim=pass (3072-bit key, unprotected) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=BcOu0kCn
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1792709465;
+	bh=K4IgBBGTvaQ0vluIVTDFHSmBmhqngSyYjIZJHYtTI8w=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=BcOu0kCnR/3F/xwFRRMu37YLjnLSVHoBSfe6NXxYFVKW6Gf1OYZJi9/Q2PNdTUxSY
+	 nDJ3y7Xu9QsJCEFz2t2+Fe+sHcceT5WNXbufkKOyDmSU+l2XglShoVc40FNhg09Gda
+	 hvn+BYIJ2zHCYGnFBrtpfG99cP12nT91jBCT5XO4VGleyU17ixJiamIUGjwjVbGPfV
+	 GrPMqI8M3gPfnaZawNy9NK2PBWO2VcMbXJztJN4Mz9+uqG+jU0qw5ZLN1IsMjv4nVf
+	 06LNor4fkDBvFbz2Wu2paR1qzBJWh8u+nnpclFb2nw3Pu5B1UpYLCyP+S2ARBlzV3J
+	 cBL4AGyADixG5XXtNDUW/Qk0AsXB1xnjTWp278EheA5dqdsfwNNSlRzjVvhwhA1akY
+	 KjKQ/EViIeWRd3zOo1qxdAJTqxgdZnfDUBWYjGuoPKKWUvlRp4AFfB9BK/TMjxCYbl
+	 996czIm+moT0WBAGvkrAqUDLdTWULYsrIQ0xy2H2khEKBgkNMSh
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b44d:c6f6:4e4b:66bf])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5632C2006B;
+	Thu, 22 Oct 2026 22:51:05 +0000 (UTC)
+Date: Thu, 22 Oct 2026 22:51:04 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Documentation: propose community voting process
+Message-ID: <atqTWKaRQfvH0Xbm@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+References: <20261021200341.378978-1-emilyshaffer@google.com>
+ <3fe1dc57-5bb2-4e12-8876-a4969e5201cb@app.fastmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -101,18 +74,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="nTMr4xys6uYVOVQM"
+Content-Disposition: inline
+In-Reply-To: <3fe1dc57-5bb2-4e12-8876-a4969e5201cb@app.fastmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
+
+--nTMr4xys6uYVOVQM
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq1p9he7cr.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 22, 2026 at 02:46:44PM -0700, Junio C Hamano wrote:
-> I wondered if we can avoid pipes, but the best I could come up with
-> was this:
->
->     sed -n '/.*fetch> have /{s///p;x;/./q;H;}' trace >actual
+On 2026-10-22 at 07:29:26, Kristoffer Haugsbakk wrote:
+> On Wed, Oct 21, 2026, at 22:03, Emily Shaffer wrote:
+> > As we discussed in the Contributor Summit this past September[1], there=
+'s
+> > interest in taking a formal community vote to decide whether and how to=
+ accept
+> > AI contributions. The topic is of course a very contentious one, and I =
+don't
+> > think that we're going to come to general consensus the way we have on =
+most
+> > other concerns in the past.
+>=20
+> The vote will pass. Those who work on Git at least once a month work for
+> tech companies. Those tech companies are now AI companies. The votes
+> will happen to drift towards agreement with their management.
 
-Yeah, I wondered something similar, but figured that writing it out
-would be fairly inscrutable. Seems like it was ;-).
+I do usually work on Git at least once a month and I do work for a tech
+company, although I sent my first patch while I was in university.
+Despite what some people might believe, I don't parrot my employer's
+company line from my personal account.  Even when I'm speaking for my
+employer, I don't speak in ways that I don't personally believe in
+because I'm a person of integrity.  To the contrary, I think most people
+who know me know that I'm a person who calls it as they see it.
 
-Thanks,
-Taylor
+I think anyone who was at the Contributor Summit or has read my emails
+to the list knows how I feel about LLMs and how I vote as a contributor
+will not be influenced by my employer.  I do think, though, that this is
+a reason that votes should be secret because that prevents people from
+having to prove their votes to others.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+Speaking for myself only
+
+--nTMr4xys6uYVOVQM
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8Fgmrak1gJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ9ttipUCR1tk6aF+whXIaoaYe2mRNYRTannz1Echnq1S
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAALEtAP4w3rAoBQKja19djhscjMZIBEFp
+mUjJ/IW+L7i6b7xpFwEAncLQW/4cTPPvWv6q870FGa61JYYGm980qLSyzdLD4gM=
+=DrMx
+-----END PGP SIGNATURE-----
+
+--nTMr4xys6uYVOVQM--
