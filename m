@@ -1,98 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.174
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792654497;
-	b=r1V6VOIhOPU9a5ZVZpsYNyrpFFfgdd8D505vmzCBlbtYNUFJE8vtj5uj4IwmTffmQvtf
-	 EH+sr3IbFRiAfaZ89WN0fpew/oxAYvteHVB/M1pn2O1Y8UL0FXlpDE45h5ccof8SOfBLP
-	 xy/pzIOUsw3iDE4PYoyIretN7j4pG9LKYl6WfBBhHYtSNi76y07pi/pZHXhr59zo8cSeo
-	 PhIPzCS78vtmMpOaeTuEhlC080KT2Op1u+i8E+52PXAgQR5QuX2FmUfr8w+XnGnt8EYTM
-	 vHDlS0Z1Mzvz+csCr3Ys7bvFnwSSsCoKKcup8JweEwrY4MdYVnVJ1vohEev2TTqC+fA==
+	t=1792658155;
+	b=COsz05HaQtXuwlm/g+VeDp9PkOAheeujX3t+4Qt8tnm7ODPKTI40eS51kM5m1hC03z8D
+	 coCFFHmikTa23YMox1nGdppViNUvOZiDb9nl5KsnmMnxkpePmcR72IqRtluy8iEaN4dJw
+	 KlAYq5r0gAdMc6cCnRgWfdq897OK4n4tARo8KTSA0Io2zo9yEGlXonK5blkBVWZf1OVNp
+	 wQYOcNql0MnJCZWJBkOdWqBN/7wdpED9AnBLvLWdV4xxODTZ6w46iFrWDeiR1WJlG6r0h
+	 i3ffiD9DMfETGcWp2EFcm+sRtTKhJ2Ly+Uhp0J6nbnyaYeKvY7uv99lE6CKBCOncnFg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792654497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792658155;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=jMKg02mRFgIj7e2qgtW7u/27/Pg5EJ8ynPxSReV8AtM=;
-	b=S4eFZZAjCyArBAs/cZhTWTuZrFPWLAk9WYjAlK96O3e34Re85+y8BDNebPYsXJmKp3mt
-	 RaOJFKGtaLeflSFp8FvhfJYRhssq7hzZs29D7VxmTfI/7lPH0WWYztgb8vRCQEqeLLLsH
-	 CAFOVivL0RBWmlhWBFObE4+Hih9gRPAtZW8DH18EdJJ/Zjn947FomwZ0GXP85nN564Qdc
-	 hj0G+1lCl2zA3guBJTn4UyZW7jOP1oYb9pVmWOhDM35r0CK4glzshlJJSmgtdxKYxVOQ6
-	 lLfJqoZSMIJX2DILxfGcYjjdJ+oKsKHRpLw9wjUjVD4JZmroAgLnBU2yaRp9m9j7XlA==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=YDZNG+xuNo5zSDo0iQzTi/eZgqBPUxb1qTSZpp5iouY=;
+	b=NA5gdic8T76xucEfx0ErwS6ZPeJOmgbyjEZd4SoMNG6z0EuG/EIAcKFoh81+/+wJoMlr
+	 cqsVN+TQbI1WgdVkca++WOe6qXjqgYTDg53t6Z8DB30ea9BrrPt0hnN1obJGabIYuETtj
+	 aHAnOY15+3DvmM3DwVt3KplEX1h6C8fp+qpkEp83XxYrCsjdwaVRUAHKQK2DfBQnzGDRq
+	 AYnLwjX0vVoHHIkW6KjHm9Df52W0cnJcWkeKAEeUrg9KFFSzSFPRByMkdDmMQvDBjLT8a
+	 z+eICTE1kfQmZzMh+3FtwF7eZGRIFKkRzyX09epxE1hKXIGev+SahFKloPysAGyKKGw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=W0wVVhDE;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.48
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=CMXa047z;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.174
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387F4606A319
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 07:34:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 387F4606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAD7606A31B
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 08:35:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFAD7606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=W0wVVhDE
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-c263415982eso205662966b.0
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 00:34:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792654495; cv=none;
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=CMXa047z
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-8ab3d3c5761so14338597b3.1
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 01:35:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792658154; cv=none;
         d=google.com; s=arc-20260327;
-        b=eC3Pji5kuV5fU3YIXZHYrSjxsup1cPUVmc2OyxohD6A3kaISC0Y2MIG9cVbZNwLy4s
-         qd53+DQWIywya+GpRLZ05Ky+dAHWCfbUjfd5obO6qlnsv4BbKHmKyeHKZU73IgmHvtgb
-         LXT7IZunbcB61tTWuJZ9xadeD4nmUl9qpd1ynGol5qj5PZz/GK3z9EP93sn0cMHTzLLx
-         PBSv05srCo6B6FKP+EgBgfzlOo0WmArf7oR3Ta8NhTh+ozfNK6DNwecKdUQKHOyZZBmW
-         E22DN7O2lXxfTPFDl8G1Q786P70+OGVu2bJCjPdTbB+cHbmS2vK/rKvCEKzuVaeXDlNs
-         1L2w==
+        b=CPWceDxx6FDNBY1x0XJuPrbSpkUqygE+HByNDpI4rOEP16NZCIE0uCuioOlryLPEfl
+         jS0rs3P6LleLm8B9OBlc8Wp8c83Nq5RWm25kqcp7M+VtUlCIwhp7a3grS/ZF5eFHfJDB
+         E6wU6/ib6QHwjKYpHbcIVogomih189gRugYiaRoaYDQkjMkghHh9D6JYuW07WGhcKBo7
+         1HGJQu/9d+aEJj5bztsNjV6mav1To8QkEGGD0gHFEmL+qWu1/AFiIlmBPERHftXE+M71
+         exNXmP0/erGvNTZ9LmAGxTPcU2G+K+4qsgf6Mlh5qpupBj2uUbCmaZNX1MuCM2Fbjck4
+         t6gQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=jMKg02mRFgIj7e2qgtW7u/27/Pg5EJ8ynPxSReV8AtM=;
-        fh=JXIpQgBVun+ctsGSYUnU8qCVjz4VkXrPEukwcg2j8M8=;
-        b=is+sHPN867NKBYfSFuYTGecJBu319vHAPgPDFRzJmIfumJwQTkUYIEkah4+6bMuwqZ
-         9ui+nT+aulRnQBsXHLHR9E16dC366khhvcg/B8WXMYGwbwS9u98P8YgU4cOCmrF+6MXF
-         2iAjMi07zpiQ+vqeInv3OSRQI0TiPwvqngxtd6pNbidCG4vsGY9WCHb3Equ28aIGMde3
-         0DvhZLFcJSylZE1ThQfdIBkPP9aHdv8gfh6CfyenLWRdvEprP/Dv3HgM9DZEu29gzVXm
-         xMskzXnWAX9XwffVYG9DEmsqinoyhvHAj0xT0ySsRGkYSQPoRoBc2K9BkR5aBDC34/2b
-         F2ig==;
+        bh=YDZNG+xuNo5zSDo0iQzTi/eZgqBPUxb1qTSZpp5iouY=;
+        fh=uyXpz0agA+jdQeicW+9yumIW/U55+LrgKZV9dYVkLvI=;
+        b=BAGhWphzSFozg4CYd+PHeVilPoVeR3Wxu/tswm4l24xlij8ByUlJHVSWFL1WgiRu/l
+         u1hXg3+hucp/+AZYzY4cliG1BltAVnaLkbwrMF30q4BmmHmd+dXGfDpPpL2cISd4LxpC
+         dCtkslmMKLQQbJdGdYcK1VbS1GRfljHoYhIgYNNzMU5lwy78tsRPevcTLsXyagxPJda5
+         YuT4wJLP5TI9QGWQCrBMihF7RB8pGUbtXNK/R9VgPco5C79lW0cmbqsWijrGdMo6/AFi
+         0HECSD7ccgclGLc3ltKlRRcY7FrUjcS//4zhP0TMud+CLzUqZwD17U8+e+JkbAKD8XWR
+         Rauw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792654495; x=1793259295; darn=vger.kernel.org;
+        d=spotify.com; s=google; t=1792658154; x=1793262954; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=jMKg02mRFgIj7e2qgtW7u/27/Pg5EJ8ynPxSReV8AtM=;
-        b=W0wVVhDEMVpqfW+E9O9nLqC3sH1O+/x2iKI1BwJ5URn4wV3WcGCB8DpI4u3FVgje1Y
-         vwLCttuHQMi2tC4oU+/aDQ26ovL0MWqhw3gfPOLUWsY+84Sp8twteki89lP5JXPL7hxf
-         qgQKZCXJf2R1j5QC3R7CKpcEcTfQdaVj6vJiocVc6Ak1qeBzWwbWQ6XEIkVrtaVpbUNp
-         GY5l9Gi1e2MKLowk20qCRaKzsTlk3yPKtMLXjI6JnvHgWCbte3cqhewzJC1MspRry4/B
-         VXkriX5tNLKchbQw7zc10edMNr8s15Oc1OEI1Fih2BOfbS/Ap6JdgZn5sYVAw0pXPaFx
-         61VQ==
+        bh=YDZNG+xuNo5zSDo0iQzTi/eZgqBPUxb1qTSZpp5iouY=;
+        b=CMXa047zbdW6yN2ZqklOf/oLlgqV1ttFKNKmIaqt9v4XVRWYq0mwu+2PRc3HpeneWM
+         MVOfC/JO0Jvc6OTMnUdxP8oXMLamsA8ECSe54obSyFhEpSOJ86FQPZfOGILT1LCsi+YQ
+         TmWbhUmCzxfMfdGruNXztrZSc008q89Wsnlbk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792654495; x=1793259295;
+        d=1e100.net; s=20260707; t=1792658154; x=1793262954;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=jMKg02mRFgIj7e2qgtW7u/27/Pg5EJ8ynPxSReV8AtM=;
-        b=ut33BypNRuEKzanQiWOz2hhjVMD2Nfp+ZKXz8Z2k+yLWMavU1DC3qVED6HJmyGLqEs
-         j7oKnYOd+IHlSkmjfPFlFIP/WcdTBnM3EmCpdkt19rH8Vve/TmKfnde91lsGrUpwNVEQ
-         UbS4IylDyTc45/iDc8dCLu/7DPwCAfwJ2oEaKVBn8rnhwdG5IiXqXhM952qlGW0KcN0E
-         A0qv55ZveKqyow9q8pxOTCkTTvzWKb6OcUWi6MNMqIH7XDuXkMJ9OH2srxYAVYE14Sij
-         p0e2dIF7ltu+H33ZLrEy5F8HnkVYSDW1aTC4x6Q4wh024/l3sfcSdxlj9SUXecByy4if
-         8dNA==
-X-Gm-Message-State: AFq9FYJNi0znHWHu4WFiy8xcO2zpKb1zMTehXIDX1qm5hPykQQRemDhP
-	4TDx11UI1Ljciwgdtvl3ZZ6niwSSCvpwQSSnbhz1NTj5yMmfSxi0w9H53W9my2YAzz/bRnBxrAJ
-	H1ADjZPph5j5V7dNguxbVZ5OPUKiaMHs=
-X-Gm-Gg: AYBFou1jt1QY8XwqTW/Hvtnyjg+rLC/wCs5DWNEobY2EPJ9MZ6QJ7UqjBqiHTlxXKuA
-	z2Ni7vSSH5YDaiCvA2uhPYD3EWOhZT4N4amMRqRXoGxDyvc6klJkEzg4ZLbf8JLsGogUvtfv+0y
-	EtGbuVV8e5CYGBMNZqUkl/ug1nlw74K+LDjnsFkQJGNhlv3Teeyg90ycCst37MirG0vp00OGIb3
-	vp7U2FwjMy3k+LLtNjDqOkO/lPe01ui9dOHO+z5cRdV1cYFsBjwl8i9WR4WCzeVa4OOeKhSo/JT
-	HGnjoPLhDvwet4KL28Sn+m0etskyyF9APjvooxvvxhgGK8RiFBEnAP5NWFhF6oZFUGeBzbPx0wF
-	wY7rE/NTzJFwlqaO2Bu90e1PklczjR0DLFC5azWf0VwihRmsRG72jM88i3/v0W2X4fW7aKQ==
-X-Received: by 2002:a17:907:d78a:b0:c40:80eb:c543 with SMTP id
- a640c23a62f3a-c46791748b3mr378243666b.4.1792654495591; Thu, 22 Oct 2026
- 00:34:55 -0700 (PDT)
+        bh=YDZNG+xuNo5zSDo0iQzTi/eZgqBPUxb1qTSZpp5iouY=;
+        b=bCkgD+2Lymg0Fp7SeBKZv9j6NF86afHxX66Zak5ggiOklLhi7WA4Qe2Rnv+oaKrCkz
+         tZ+NCIALFKkdci26ntM0iGBrFB5hcDTmxtj8n+at4BkwjIkABUhkQBW3rq+B36erjKub
+         vu74tNVhWUClYAJs11bS0LvgPBzhtxbqgxuUXaYsIFwwinGKFd1wTNSf/g9ilQstcbmr
+         iJiTFPn8I1cp5wrib0z9nrc4MUK9irCWrofWagO5STSidUhei3CtMF4sqWVHhw8VSMsF
+         pZNJK0kmCsJn3I5YwE7d6j42wBTNwMZX2dFs5rna2wSMmV0pNBq8p5RUfhv2EIrjgEUI
+         XcQg==
+X-Forwarded-Encrypted: i=1; AKwUvBz3pF7pJWqPTyh3oA/k/a1qlDbXJ11BPrlanfSM1xPmqYKzyLayvGcjKBjrObSZmtkLoRM=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKtjIOnvZFRGdpL5SkrPxLJ4pLHYyN4iMDgEddHR3rwyWJJzdJ0
+	ynW0HFH1sbZSSv5J8hAQMZJd4snkNnstnt+6gCLF8n1Kovz/9RwRpPMWkUDbryBDPpHtJ4C8xC5
+	4B+wcTU+OPVIjsA4M1g4KQW/hZj/bCiZve7X3QPqGrQ==
+X-Gm-Gg: AYBFou2v40caa3vTVJX7ieecLQYtZZPWXzr6BFc2XdWgNwCSs+qnZ5B8ICQwMw3veZF
+	ERUSpCTRnwyJrWgF6NKMkqTogHDZmAlJG/XDJ+Ta5j8oOcHDCE9PBAl1mQ7i6hF9yr7Gk3WSkQG
+	qEv9RaRMr8F1K33snVO1EzC4Qn+WxVzxZJjfF8YV4DYie67+mWV1x31qp6TnF2UqLL5p453WU3a
+	I0T5IpClcv7nz+O0MNiHO94WEcYPTlU96ehsKQC3Xd5LiWmD4mgYE+lmb6YpExK0lxtGC5P8OKU
+	chmTz6G68SRgvStnvfWGYveKGZLl/5GgcrOj6v+WqTZ8mtYLpTeMAmJUnD0jRtOiuCoUQs7BUzC
+	KxNVq6uN2STp7t3stHSlkux8/wOKY9aDGrAbZYQ==
+X-Received: by 2002:a05:690e:4184:b0:677:c92e:eee4 with SMTP id
+ 956f58d0204a3-67a0e53103cmr2964638d50.86.1792658153760; Thu, 22 Oct 2026
+ 01:35:53 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,23 +100,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2259.git.1792125111461.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2259.git.1792125111461.gitgitgadget@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Thu, 22 Oct 2026 08:34:43 +0100
-X-Gm-Features: AclHuK_OUQr5z2phyFVOkp1HGpzUkt1l-zddoqyfRCwTxkKugZRQ0NnH1pzYegY
-Message-ID: <CAPSxiM_gCkW3gvgF-ebK64bUS5za9CQgTFLAn-PnHS12o4afbA@mail.gmail.com>
-Subject: Re: [PATCH] [Outreachy PATCH] t2403: modernize test for directory existence
-To: Shashank S via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
-	Shashank S <shashu8660@gmail.com>
+References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
+ <pull.2211.v4.git.1792581744.gitgitgadget@gmail.com> <d76dae801b3303ef4271f71c7b3999c10cac8556.1792581744.git.gitgitgadget@gmail.com>
+ <xmqqecdin6xr.fsf@gitster.g> <CAL71e4Pe_NRxeu9_+pnp=pBOk3SBNyePUbT5DDtDhd1bJpwJng@mail.gmail.com>
+In-Reply-To: <CAL71e4Pe_NRxeu9_+pnp=pBOk3SBNyePUbT5DDtDhd1bJpwJng@mail.gmail.com>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Thu, 22 Oct 2026 10:35:41 +0200
+X-Gm-Features: AclHuK8-hbjRaByufSM7xPmsV0p5uGwSIkkBiE0-raw0SVMfanZXX9Wc3-h54Qg
+Message-ID: <CAL71e4MepqPJOqUQxoNc_8Q6PaWZwQX45tGZ2z4+iqGnNCDAEw@mail.gmail.com>
+Subject: Re: [PATCH v4 5/6] connected: add incremental connectivity check via rev-list
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
 
-> --
-> gitgitgadget
+On Thu, 22 Oct 2026 at 09:00, Kristofer Karlsson <krka@spotify.com> wrote:
+>
+> On Wed, 21 Oct 2026 at 22:18, Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > I wonder if this needs to be _extended() kind that passes a flag bit
+> > to avoid fetching from promisors.  repo->fetch_if_missing that is
+> > set does prevent lazy fetching, but I wonder if it is better to be
+> > more explicit.
+>
+> Yes, and an earlier internal prototype (that I never sent) did
+> this. Blob and tree reads are easy to switch to
+> odb_read_object_info_extended() with OBJECT_INFO_SKIP_FETCH_OBJECT,
+> but parsing the parent commits goes through
+> repo_parse_commit_gently(), which has no such flag.  That would
+> need a no-fetch flag passed down through commit parsing, which I
+> think is not too bad on its own.
 
-Looks good to me.
-
-Thanks
+Sorry, I think I was wrong about this part -- commit parsing
+never fetches.  I think this means my initial problems were
+partly to die().  I will re-explore this and see if eliminating
+fetch_if_missing = 0 is less work than I first thought.
