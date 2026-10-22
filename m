@@ -1,128 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792684604;
-	b=XxeS+PvNqEu31TVgLjNoJ6noyNegEIqV3XJn3NhRYGIq4AcInAlMRTsbOhQUDeQwyjrJ
-	 mBgpj4TRqJxz64su3CgzUmRaTyE9gPDq1WWFtAPyXvsJIFubQvc4NvsJjvIxLCy9XzUif
-	 zBNLmnGNxUALBnOvu2RynXSD1Fe10rqyv7G/WzArDDKfn22kdfYe+UdWEj4ORmhcKA0Qc
-	 NbR3B5z1pGYRO3LM1jWs7OGA9Dqu0XbONnoLXVmYd6g4oDimuHU5vYSdZrSxrCOoWk7Zr
-	 OPneqcDp2iUVknJs7DRO3NwNdTCi1EDAj3pOnhuN8/jDEjnNUXskXaFlBD5MqGwcWWw==
+	t=1792684659;
+	b=AGiGowyVhtkENQSdxrEE1c+zb0TnCnJa2oWroVBqe5YK38TGWwRJVo5giwE6S6RYOHzp
+	 +1itz2Zj/TFGuziFo1RvcTzw6i11MbFzt6n6TUV8TJ4EYt6Ic5yD8O7ybgVsvxMMwMOf0
+	 +uV1rf4Nh2VHFs51TDfFI8sO4FHHMdxHAND2SG2w35e21Q67uUqAKUE3B1IPKye8kbgww
+	 nOAUdxITb7lYm+KHK7y4cnLQVsVfTnOp4S2nc8iw9SrlsCG8hw7WJ+ec0QiqvE6qK6yBv
+	 9lAxHORmAEA36sSR4mDCK374Wkd42xAa/oRCpu+qqvyp30g8XUni+vNyD8+wZySVd3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792684604;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=XMQL4RvIQPIV4EbPsQKBedzBwR4pIx44ibA1bKUzA44=;
-	b=m+MxdKggGeACUToxklIUHNjrEzIi7NLBamMRCXFHY9T08XD7vwzazeDIm3W8TYMAbD1R
-	 xyPonRMC63HOStZUPqBIlNHIfpDopYxcE5NzSeL+ewi9YRjUd6h7hfVyhYruADiLIA9rL
-	 7AuJyWHqbkv13xPw0REwY1QIK2ElmMLXv5uytJ5p1lxDCujNXITHSpHvFR+yZMRdbDwgw
-	 IBoUOQeOJpDrbDR9yqCxcIxd6p+cg6VOLSd9GefK8m4cHV52r/RA+FHPagaAxK2yDEPSl
-	 3tMtqAGsGsVo5CCuzRBqjxwSTbRekS6li/Eri2+KKjtjGyBLyIfBnV5xrSdLZD6RUiw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792684659;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Reply-To:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=IUDlMewJTaj53BGFWAcgcRszBgediaKg/xVZJjMI9W8=;
+	b=LBpU0+3gl4um8wysZiuS3gubHTaDVHI+hXMvS8ff5itiRUhTiOHdkAohZ4ii2APYU3Oj
+	 WK8IsW5vAngiw0bemKjbgkE08dnZSTNP7z7GLP1dxwoFjkvModqlrJiDfR9Gk9CptbuHs
+	 CWWPfUjAk5xqY/6ZNUKW1WKcstwV6v/8XCmDEtBm85qmBjW7RF+3ro1i8nXJGunvGIdQ/
+	 pJtpW2thVPPdlkaTQOnjrW9NMf0Dp+88v4UnZSr6Smsw4wYQLOMW9CFiEtqhDl/qLj0XQ
+	 LvZRWDPjhpk6dAIxkwLH+0ks2+REArrqUkB3xiebRIZXu4Hc1dY5WTtPKxWpAZhxJAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b="o+uG/ez0";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=GsdKHgYn;
-	arc=none smtp.remote-ip=202.12.124.157
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=UK2vNe4p;
+	arc=none smtp.remote-ip=209.85.221.41
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD58606A319
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 15:56:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8BD58606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC36B606A328
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 15:57:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EC36B606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=o+uG/ez0;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=GsdKHgYn
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9A34F7A0145
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 11:56:42 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 22 Oct 2026 11:56:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1792684602;
-	 x=1792771002; bh=XMQL4RvIQPIV4EbPsQKBedzBwR4pIx44ibA1bKUzA44=; b=
-	o+uG/ez0Ekch4tL9+zZZiPNudPkzt/K/9b5S52tQBNJZixl63Wps3T7Tx/y2UAOW
-	FGh/swzYLhJ6MMMmeEHFMZEBX1FCNa/WeycGI2mDeoHXcZQWUAMoqL622rbaVFba
-	usBesy2CX4sjb3RcYrL4wXlHo8O3oU85IcQSlxoAPxC+ovSLCxLy/yFpGDP2u05p
-	d9znDh7IcclzuwWSmZKIUzZj6cQ+WJkdzNtG99KyXUWEVr56AbHYb0JKaNIWtCtZ
-	m7Tkg312eTdZFuEZ/2TY37YxeovMc1VFEwBmzNpuRFtlX6tYBh6nX12oNKH/FnKW
-	Xt2w6nKknP6b97k0wqwJ7g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792684602; x=
-	1792771002; bh=XMQL4RvIQPIV4EbPsQKBedzBwR4pIx44ibA1bKUzA44=; b=G
-	sdKHgYnhRzoyE5TYyec5eBDqi4WypFaUtMfFUER43QvXKsMxDdH58OKYpca0tHJV
-	pXrhO8EkgeSLig7NXLnw9iZgBsDaV4S0wxFrQ0hNtzYOWplKnHxFfteuEwhzkrtx
-	gyjcxTbaTDzIFiq+vjA/gJ7zSgCsRxqzphVsUdtYLYdnDtv3yZcID4oS24c+Qf49
-	3yPcQCrtV0QD054dfqKkbIXYWOTvli9xOdMM6TiONMkgh2bVt1MehB116UJVPU7s
-	91F789Ccx+Lgc5V5yMXEBPhjRUV1e3wiZnSPEGUrzWGsFU//LJMgkyu8sTEwSBr5
-	hW2ImQw153Fv7j6n7jhsQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792684602; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:DUQYXjV1fQj4S4NuJottbXx0V4nrKguQx1UbpRdT+y/kyvk
-	pL59DE+cWBP4pKnhGGfqCVRAn9MY/tBys/Q/KnnD9MBJl6pySz0AhucQiY98baju
-	xJZFEpfJ0JLhCrKQmZ23Jic80bXZCLv8bBNgrHV2SxXVkFO+4yD+OiHmSOZ0H5Oe
-	iA7I+0nER1DcjkB3XDCYYqfIvpMZpCVTROahNVXvk/Oxz6G8/gweYvE14jYbS/Kg
-	RJBb9pqocmauhabDF+4RUxg7/gPt2279G0kYlRp7Fxbj2B/I/xHoAqVcLeFz8GIk
-	o9aRLcN8vOkzOF1TH3DaTl3iW/DPX81ddN+iGQQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to,
-	user-agent;
-Message-Instance: m=1; h=sha256:aMo3GcWRSWatyhJ4IOiEVRZm60k3z5bGEnd3yNpUqx0=:Bjoba6aBMNa1yeTIoCXrHkPhHvyPS6V5DbmlIEO1kOI=;
-X-ME-Sender: <xms:OTLaamEvVd4CLstZ24Jcsx47zIhXBtImz-mJDXsy01uATdXHGLBtAQ>
-    <xme:OTLaao1844P6DuxJvWBzMuhmVDQjSlcrpoL4XxE74HhtzZF2MfAgorEEMxP_jfxa5
-    xCEbxCaiKdODXA_mHrJYoaGcDWnsiuhCNYS5ua0ZbPD4boRI9gcsHo>
-X-ME-Received: <xmr:OTLaagNz1NbVgkaWuoTKLPva2ro8bE-9HmW84BaKFkvC5928tAKW4RV_B6Cx1qCUmKP7Vvq_th_G1tWWHdhTmG7qtpTtJ7GhX5Nw>
-X-ME-Proxy-Cause: dmFkZTECaEB884wY68UbCf0TyGiMGR0n1QMDaGWAX5FxhZczo3PbDwj9OBNHvTCrRe0iIN
-    rM3CZU3+ocp6LQEKXi4/b9Nn3choQu4rErHRRsmnmjvNYGJ4YTrKETliGYsicMSQNom/xr
-    x9QIkSY4gjySBPZN8YVZjMIkss/rHjMx8zmIg3eiLTnvOSQ/byE1Uu1DSssvOdLZVcXiVU
-    w4g/20ihx+yxmz65363FAz2UE1nvBfY8amwcFwMKmE8zxqFLu0vNQYiKa/INNXw8OtOWlQ
-    G21xLrbLu7sfDbLsGPVFaXnfeYgNUG5rtD9uhKp05MLdEJH9lKhOLA899Afeex2j5QS3lZ
-    s2w2fl3AE16D7RPdtHGOV/O+I5ZTTigUAH3R4r1/RUF6XxQmTjcyYap2aowDwZRFAWyCiO
-    YF6ta80GRiJFO79AwuzHFcDbn1ObcE9Oq5hwsFjCR+kPAW0QjUph5WlMP1EWx/fQv7lWl6
-    cHx3Y3CVkqawNsPnCu9ojcrlechcA9oNjKdKSUMQKmzh1HTxpITdhZk/heV0+eS5VsVI5f
-    ONlC5PV787dxLgKTuesgdgYigeZWYFJgPM497M++6p8KAlp3CffEu8WygijuCRkwx9WMNU
-    8rDk9UqN5wmVbP5PW30TPyplpKEaZOLmSmMbYADkKvGLXhEwl6h+LWbTi89A
-X-ME-Proxy: <xmx:OTLaav4DivyKvI784Njkq9M41M_XXOgYARIeAKbUCMAsxuovRiHlIA>
-    <xmx:OTLaai0vu87AoZwqbv973lFYqgmdZY1wzX9pGMs0U4kuB6j7TThz4A>
-    <xmx:OTLaaozFAq33l6hlkk7zlhf6_HYRFovVWiyzFyPBJalhhMGgGy4LbA>
-    <xmx:OTLaaks_ffVni78L8zzpZvo3GS2IApCKXKysET3qwJOKfiSBquE89g>
-    <xmx:OjLaatLW8YwXei6vYwJyrDL-RkulUpZP632DAbcpTTXmrOULEn5MXdu7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Oct 2026 11:56:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian =?utf-8?Q?No=C3=A9?= Ramos =?utf-8?Q?L=C3=B3pez?=
- <chris@nortesoftware.dev>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>,
-  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2] gpg-interface: fail when the ssh revocation file is
- missing
-In-Reply-To: <20261022054607.766255-1-chris@nortesoftware.dev> ("Christian
- =?utf-8?Q?No=C3=A9?=
-	Ramos =?utf-8?Q?L=C3=B3pez=22's?= message of "Thu, 22 Oct 2026 01:46:07
- -0400")
-References: <xmqqa4o6oq1y.fsf@gitster.g>
-	<20261022054607.766255-1-chris@nortesoftware.dev>
-Date: Thu, 22 Oct 2026 08:56:39 -0700
-Message-ID: <xmqqh5idiv9k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=UK2vNe4p
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-48b001cd92bso1160894f8f.2
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 08:57:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792684657; x=1793289457; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=IUDlMewJTaj53BGFWAcgcRszBgediaKg/xVZJjMI9W8=;
+        b=UK2vNe4paOjAGX7wZqGFGT422PmPewC8Ke7O24xR+ZBRl6sBOibAuwn/p79PPKJwNY
+         QwYf2/uAfFzOvJ+MvOoMnMgnZ4tE3zh5mdhtOKBBQ/dMs4I5s/6t2tbBfrzPoKvrH+Sx
+         PqHUzWkiqEB1Wtg468SJ0Ove7mzXG7iw/0fy3OubSb8tAalRoNegPKXuPxbUgwBBsCbf
+         JudPxdATyobHrh/nSta7jL1xY8LeorFbzGxPabeermx/wHIhPKSh1X9WZjHYioH395GL
+         KpztBlGG51EcCQeTdno4DRkXC/rxhAZtYFU3PnHpN9kfNE9whsq6fCLvJiS41qVMGZNE
+         C3NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792684657; x=1793289457;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=IUDlMewJTaj53BGFWAcgcRszBgediaKg/xVZJjMI9W8=;
+        b=wBUpJedu4rclSYN2RwR2TyKAlcXVksxCB/jmmbwSabLpMCaz/99NJGFrCPD33j8XMd
+         4zTNolIjDImTtnS/MFfTG6L3hposM6TqyLePenICZMnEC2BKHh9j/0gtSEVtTOLCa/NS
+         7VaKTnVS5Bv8xbTvWiAr7Mg1sJGuJj2FJYGlwGYnpKfdEI/otk91wgQN62opWdDoGMMd
+         I3v/TnzzZuZsTnqzQE3xGIUccConrOdax4eHZi+ostqP3EeuFAFLgTQRdsAN1alnhJIR
+         QS/VYuUr2UON80Ww50a2yAH1T2ZAycp9qXN/CBNiPu6sH2vHK99XOV4B75as4C0NTgFN
+         grBQ==
+X-Gm-Message-State: AFq9FYJGHzqjviVfvMfFDOwwKITmMaApe1BusELoQqxjUjIclGJsF3uX
+	rhyGnHXo2gxL8Iv8pcZZw7u1g8D4IJQ78OiiBB+AgDGTjMQdLGU/unmJ
+X-Gm-Gg: AYBFou1leHUxtazww+Hps/c9VoBNg/J8IC6F7dvQf/wJ5Oh0zZwu3YJgTk9D7+jV1r4
+	Ro6kJ5YTbZ+v1NJOInAHeak+HE6i5t641F099EdYddoEiZYqWgTZRSLujauA/Nf6spm3S08dvx8
+	qD5SdNnYHwYMASkAPj7nfB9enGf5vhqQ9WTiobZeic29KgQBLyZHnu1EzUfv67zYBjSWI42zAMc
+	Qu2C0cnaXWd/+IIoq9qz5N4Nl38tjnJ9FckLXseQ5yazUWavlNL+J6oXk2KlsNEf5QBDDboDy+i
+	WZFric8Gat6XoLdW4uPx8rua701XNEsIKvxL4TnQl/GdVBGnHNS1QSc+yVJnoduqvaU8IKG5HVN
+	GGVakxTrxDiJbHovtrfDSs8HsKYIFxLaU+VFrC6ikEv7KGHbng8KPkZXhPeetsGfq0gqEp5QWtG
+	xy3wuRnXBVthfgbjT80Zb6+Reb2NVxeWa2tI3Eok8g3rpkL52XjA+BDeYKdYkwbd+vknN7RC0dU
+	NSWfBkiRMes2bzmA6RIjkVR9ud9+4P7PCZ0KCecfowQpwY5dqcZJlPPQ3X2YKQGLArbM+rUA0BP
+	qsfJApZF6WjHgQhWJ6ztNG0dN+SxhA0uWQ==
+X-Received: by 2002:adf:e74b:0:b0:48d:f7c0:97c0 with SMTP id ffacd0b85a97d-48e264de434mr9831370f8f.50.1792684657065;
+        Thu, 22 Oct 2026 08:57:37 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e25828e54sm13859204f8f.27.2026.10.22.08.57.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Oct 2026 08:57:36 -0700 (PDT)
+Message-ID: <7ffce2cb-07de-4bd3-a9b4-81fd27b920f5@gmail.com>
+Date: Thu, 22 Oct 2026 16:57:32 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -132,28 +91,119 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/7] stash: use an enum for create status
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, =?UTF-8?B?6YeN55Sw5LiA6IGW?=
+ <kazumasa.shigeta@kanamei.com>
+References: <cover.1791218125.git.phillip.wood@dunelm.org.uk>
+ <cover.1792509606.git.phillip.wood@dunelm.org.uk>
+ <9e27bcd676ee763ed499fb337b1497f3fe2405b2.1792509606.git.phillip.wood@dunelm.org.uk>
+ <xmqq5wyvsi2j.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqq5wyvsi2j.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Christian Noé Ramos López <chris@nortesoftware.dev> writes:
+On 21/10/2026 07:07, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> +enum create_result {
+>> +	CREATE_ERROR = -1,
+>> +	CREATE_SUCCESS,
+>> +	/* No changes were stashed */
+>> +	CREATE_EMPTY,
+>> +};
+> 
+> SUCCESS immediatly following ERROR that is explicitly defined to be
+> (-1) may qualify as explicitly defined to be 0, but personally I
+> probably prefer to be extra explicit here, like
+> 
+> 	CREATE_ERROR = -1,
+> 	CREATE_SUCCESS = 0,
+> 
+> even though this is not worth rerolling the series for.
 
-> When gpg.ssh.revocationFile names a file that does not exist, Git
-> warns and runs ssh-keygen without it, so a signature made with a key
-> listed in the intended revocation file verifies as good. A revocation
-> ...
-> gpg.ssh.revocationFile had no tests. Add tests for a revoked key, with
-> and without ":(optional)", and for a missing file, with and without
-> the prefix.
->
-> Suggested-by: Patrick Steinhardt <ps@pks.im>
-> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Christian Noé Ramos López <chris@nortesoftware.dev>
-> ---
+I can do that, though we really shouldn't be relying on the value for 
+any of the member other than CREATE_ERROR which we want to match the 
+return value of error(...).
 
-Can you stick to the expected flow: (1) send v1 (2) get review
-comments on v1 (3) respond to these review messages and then (4)
-send v2 AS A DIRECT REPLY TO v1?
+> 
+>> +static enum create_result stash_staged(struct stash_info *info,
+>> +				  struct strbuf *out_patch, int quiet)
+>>   {
+>> -	int ret = 0;
+>> +	enum create_result ret = 0;
+> 
+> Not CREATE_SUCCESS?  This can be returned if various checks in the
+> function assigns different values to this variable, right?
 
-Sending the reroll as a response to v1 is important for automation
-on the receiving end.  Thanks.
+Yes, I forgot to convert the initializer when I changed the type, will fix.
+
+>>   	if (patch_mode) {
+>>   		ret = stash_patch(info, ps, patch, quiet, interactive_opts);
+>> -		if (ret < 0) {
+>> +		if (ret == CREATE_ERROR) {
+>>   			if (!quiet)
+>>   				fprintf_ln(stderr, _("Cannot save the current "
+>>   						     "worktree state"));
+>>   			goto done;
+>> -		} else if (ret > 0) {
+>> +		} else if (ret != CREATE_SUCCESS) {
+>>   			goto done;
+>>   		}
+> 
+> I wonder if switch/case is easier to read for these users of these
+> enum return values.  Some check explicitly against CREATE_ERROR
+> (like the one above), some treat anything other than CREATE_SUCCESS
+> as undesirable, etc.
+
+I've had a play with this and I think the enum is better here
+
+>>   	} else if (only_staged) {
+>>   		ret = stash_staged(info, patch, quiet);
+>> -		if (ret < 0) {
+>> +		if (ret == CREATE_ERROR) {
+>>   			if (!quiet)
+>>   				fprintf_ln(stderr, _("Cannot save the current "
+>>   						     "staged state"));
+>>   			goto done;
+>> -		} else if (ret > 0) {
+>> +		} else if (ret != CREATE_SUCCESS) {
+>>   			goto done;
+>>   		}
+>>   	} else {
+> 
+> Ditto.
+
+and here
+
+> 
+>> @@ -1660,12 +1667,13 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
+>>   
+>>   	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
+>>   			      NULL, 0);
+>> -	if (!ret)
+>> +	if (ret == CREATE_SUCCESS)
+>>   		printf_ln("%s", oid_to_hex(&info.w_commit));
+>>   
+>>   	free_stash_info(&info);
+>>   	strbuf_release(&stash_msg_buf);
+>> -	return ret;
+>> +	/* Do not return an error if there are no changes */
+>> +	return ret == CREATE_ERROR ? -1 : 0;
+>>   }
+> 
+> Ditto.
+
+but here we're checking for a single value, so using a switch seems like 
+overkill.
+
+I'll try and push out a new version tomorrow
+
+Thanks
+
+Phillip
+
