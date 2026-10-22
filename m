@@ -1,120 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792698551;
-	b=mKvRxItc5jX/bqcvnNQPFjkyX7aYe400ykR32nilbn2iOeWVNx3xMqFp4onieGlqYD+s
-	 yseTiHgRMbfTzCKdSHqZuNW1D/qQMpKGRAR8s6Hy5ZlRizQPBMvnE8xffJQ77VFK8eYLj
-	 9WVcO2b1qs4pPetfRreucBXRUGyRH2FxnPMYAG3a1Ydyl5ji3vQeL3s0w4eRso7sEl88h
-	 fESGTBSIUZafTputi8bdPWkg6Tfb4imMc8u1nvUYH6gSc7KQ0AMUdeBZ6aR4PR7mJ0yj8
-	 ojz5urD9ygKm4uFsSETpVV3nLkioxpgn3XwCQL3t/OqVxz8wiUPajxWKvFYyqQhr6eg==
+	t=1792701520;
+	b=uFF14QB2lgL7xRE6Dp529b8zxJaT+tqH/s3ZAmqeKUmObKib/6sOOn4e8ixbqmhPbF6Y
+	 ppuRRjt+fy0yZlUD226Brsdlu7gcOdD7HrSF6Dt67HYv6yX2qolzBuJCxtcMrC/Bp8il8
+	 D6ylnJtWByneyw8dqQ0XTLZF2fo0nz4WKi2IkT6oCebWjEXPzFyA4w4PuKzgg2qjHeyFX
+	 LSQyLzQG6tQlS5kLdRyJUoODMhxc+CGa3GxUm3YUHP+b3BQvY36Y8OV7gCsqjMQaW9FFG
+	 2hbRPqEPdSGYNrI3DkOambAF5RbnlIojJvuiTDELcP4sCl97PJYXPifLcyrJDiDPubw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792698551;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=4Cb8LJMJm+HGckkGFOTCNkCoBaxmgtxghaUEALchVk8=;
-	b=ibxnwsjmMK3YoePzqsKAw5HQnmpBm040j+NmkMPAYslnjllLILG/7w9je8IjmPno65FR
-	 Cq/ZoZCJS9B6tkfFmh6X9jaduyOnghr4s038jWjn7jdgg/xvwerMWnBUMdNYTLdVBdS6E
-	 c3bEEovP+BgLs2YNlGW+8sruYoTAR9YJJLvPcM88oG0+rQ2ODUKtULXj1tkgM7YhP9g5g
-	 5XUVdGogFSEEMx74C8eKL7saOkAB5duWvjuYpnj95BYt0iPgEL/kyrEjfr0dIOX/gg5Sw
-	 9B45j7o1G14Kg4jWJsoCJ831rdr9ixMvc6c2jG7raNq0r0iRxwFSQ6b2CiEH9/MwR2g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792701520;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=RkXTaieQfvwByEwiEJCObX7fsMD/HTm9dSmze9IBwbw=;
+	b=4G562D6qgVP+mRKrFs/puyHKl9p9uCa6GxwERzF12JimcUCeGYPLmnI8EDO0ugjPIniY
+	 S5hzrywmR88zL+28L10/YalKt1x5yw5Myz29tRkomqbU9d142+rT+jijO4oVA2QnWpjmF
+	 Nar6QuyJfDc9SrMvNrt1x4gFRGhZtBreKan2dPKEdAQdNy4OdPK0TEnYHwGJQvtvHw2g/
+	 V0Zi416isWYH3GHSHZnvqJYpk6TBU+JIIME8/O+bJZdgD8ffymvB9ssG6TtrKDc8HCA2b
+	 nRpwSQz4UfX2/5cLi7Cq87NJT7V4NkEisrzrLMh+zA2CV7fm0iHYS/3tjmjOdT6L2kQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=k9GteMFP;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=B2ZSLFkW;
-	arc=none smtp.remote-ip=202.12.124.144
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=openai.com;
+	spf=pass smtp.mailfrom=openai.com;
+	dkim=pass header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=Xnlyvhlr;
+	arc=none smtp.remote-ip=209.85.160.180
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87628606A31F
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 19:49:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87628606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8503D606A31A
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 20:38:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8503D606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=k9GteMFP;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=B2ZSLFkW
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id D0CEB1D001B7
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 15:49:09 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 22 Oct 2026 15:49:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792698549; x=1792784949; bh=4Cb8LJMJm+
-	HGckkGFOTCNkCoBaxmgtxghaUEALchVk8=; b=k9GteMFP6RAhgdBMYMSI71m/G9
-	T6z0WeOL333+FNLsQn7lMRuZ26xcJnKpphZUw4l1EReZdHYN1WF8LPyB0tLbCv0J
-	cOqz22XQYtHmt3duU4+ZnRbwEWSpTpQxrelEv3UIBac7/C7inhtAhBP0DW4G2ZBC
-	7QTM2y2r5gTAD5aRBpNg4kRDnDKe1HZxbqq4dAd+4Dz4SwrPoVHmBqMAF3tEQ577
-	QuTCOSp840ACwTPZO2pBlzVHtjA+NgwxL6hQ7Y9IgqoX7JFd05T+yfstGJ89haqu
-	KGMVbHIxdwETmfqnpiC/xiDuYnuPyaIlejIYkTl9Ukr4sg6qnDHmfMZokuFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792698549; x=1792784949; bh=4Cb8LJMJm+HGckkGFOTCNkCoBaxmgtxghaU
-	EALchVk8=; b=B2ZSLFkWzXtfn88+hpc2TiVfFIpSw99Hwwokh1YsPag6b3bcC7a
-	Fj5KJmXGUO4IBekmd1KekMAbS73OSNX4kO+P37YZRZi2/6pLC+C3/3dDVCFwDctf
-	atV/qDnAYaq/K6Ue8tYtDLZP3OM0KqWDT5U+9+h3BRtyWghDIeM7wcjwhKrNWrtc
-	TQP40zllQrPkGZfz43RIX3VC4oMEUKLUeky/b2umx5z8h+w/+bNDjpsImCKwwCx8
-	lxGQgIUwqIjE5YoD5TY0G2vCPaTw8tk7k9djWn40zrKBYcERCqi/N46slIuc0+xV
-	T1erd2Oyi6vJJqBJeDLBltSpq+4Pj3AZ5dQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792698549; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:UAW2xku+3NZo0no4LhxoFTLUPGksrRdoIwpRwWnzFzaEE5f
-	TgDtqSRIgcBJRXIwg+LrkMfvQTX1OKjb25guJELUXII1OfesOBfNnws3qHL8frnn
-	3tzOdf/GgIFW48+krs4fBqbrPx3U7ahkDwdzzeXgiS9YCNBKCLUf5pPWXyMRR4Tp
-	+PWfzoJ+7f+fx9OhpDc90aXEjRTHf0Crpyh6BHQkHX2TSFx64D6YCTbjPRkY3cn9
-	mDVDjMWbGoMOu2oYtzPVJJrthgCDF0SJALulcYOnIy3w7Z+it4kiok3Z5VzNCj+q
-	qRNkUbL/eHj42adT/Dk1sgHmLyuDCGBIpsKNglg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:CimdWzMfE5horUApvkC7UjoKAFqbWDiQQOngexS0Po0=:K3NRDt1hP4l4Xer9+hdLMmkiiXjI+LSux4Jdwe0ObKE=;
-X-ME-Sender: <xms:tWjaamSUQDOV3VTTGb1rhiX8310RgFJsZ9ylcXPkYD-xdqawQU5yAA>
-    <xme:tWjaaizHL78bha9JS8-WtWpeaifoqQeMy6PPSNhrkSuJCnrVWaHZiy4YW3ZsCBnN7
-    T9ZkjmszFq2s93-3MTb_R31OWdDbeVHP11bKdabV7ggibg3oJJW0Hs>
-X-ME-Received: <xmr:tWjaao1jw4Y0j9WJDLKSCNK0vlkVqrD1OmxJmpSgBjAlJGP8cYPvy2x2ubo_kH_61Cpy3amgH8hrWHvVRqvJCBZEC6ABXk-q7ksA>
-X-ME-Proxy-Cause: dmFkZTEAaSve3Eesui2XgKMbokQ+PuIn6okuqfW6ysEvvLngf2NpqEr+owfj4Wo0U68DvF
-    xTHgZz8jNi/nQgMfSkV0vIocD5lUjxvhW82LksguiuCfev0O1Rn2WbEKggglzYFsMRhkci
-    whQ3KflCmkB0HjwIB6aoz2Zx7SOX6iea5cwYc9Ds058iJiEfVBb5mhTXc3NE9Jt1eRGD1k
-    ID9HsV3Mh1vQny4nErXaHXoTXROGsxB5k1yJAQ7BQYLrrpTDZHD8CM745cbj0Lktuw6fdQ
-    XD1PSCCxhl0djhwrObOMaMlQ8TgX71PTQAuE05wbn6NQnnb8+E1rhsi8cU9edH1wgLe2Vw
-    XcdTD9IplD2oFyvxNWP97vDEV4jS3fB9gzC6CrRAOcU+Puu0d4RclgFZtjS5kOBgN0JACt
-    WaXnNWZUNh/b0dJMjAWLQcg03XHvq4jqYWTCz0Sagl9/M6RCZEbDj8bp+Ik1DUzHBJjCo/
-    CIyuJmQ0a7Ff8/vf6IO7a6GDt0SQ+gp+t889D28GmrxnFGdUOK+tiqxbQ8e91aW03vd/2k
-    6hoO3yTxHaNHKuSfMCoutOGHkfWDYS+CqbwrO+3OEIgaKobgt511XavDy5uOavPuJ0P/jm
-    OyfDYJv60khWP6XiCsYvG1Ekduy1TWyhGT9iQwSY1+BC7ePTWfh/ZByx2q2Q
-X-ME-Proxy: <xmx:tWjaag4fvtFVzlvwjbVK3suIM_MY2VW9z2mkzklydXac5PBcq2xohA>
-    <xmx:tWjaarUCA5DRg6uRJvR9QNrynAi7Tb9uf_fVkRjDSEk1xSE7-U1dmA>
-    <xmx:tWjaavASKcmuwGTMbFASiMQX-VWBRSZP6HvPRus4Ux9bqD0BMh1gbQ>
-    <xmx:tWjaaq7Dq6odb7DUq6KruHneqlVPqsa37dy1NYljGqm8cs5Xp9ngBw>
-    <xmx:tWjaagWchBxphajNFaoI6eakuGsWRYKKWMU2vwuejLytRVWtoQYz--wl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Oct 2026 15:49:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ammaar Bakshi via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Ammaar Bakshi <the.ammaar.ic@gmail.com>
-Subject: Re: [PATCH] difftool: translate "combined diff formats" error message
-In-Reply-To: <pull.2447.git.git.1792219239440.gitgitgadget@gmail.com> (Ammaar
-	Bakshi via GitGitGadget's message of "Sat, 17 Oct 2026 06:40:39
-	+0000")
-References: <pull.2447.git.git.1792219239440.gitgitgadget@gmail.com>
-Date: Thu, 22 Oct 2026 12:49:07 -0700
-Message-ID: <xmqqy0bpecss.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key, unprotected) header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=Xnlyvhlr
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-5364648ae07so1589301cf.1
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 13:38:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1792701519; x=1793306319; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=RkXTaieQfvwByEwiEJCObX7fsMD/HTm9dSmze9IBwbw=;
+        b=Xnlyvhlrn+VgsSQ2UVfUW3qEirYeVT0bX4A5fnBSVuUB8JF6fzgRsZrObPSjnGsLwm
+         eMnjjeMBjb+5n0Xz1V137JSOQ7NrvOrX/P+vQmUw816LaOipiQ0EGJdAtqBZavRXslOi
+         rB7NAJC0UK7+uezWm9KVyoByDX6tFfhuXkhZI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792701519; x=1793306319;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=RkXTaieQfvwByEwiEJCObX7fsMD/HTm9dSmze9IBwbw=;
+        b=d/+6CT1xu2vDdwSPZNRmzIpcEi99T+FIu/xQ/ZOfFc+fmwvfux/BrSt76sosgQwEnM
+         VILRldTotzWP8g28u5DfzxU3xwjmqUZQ8lH8W7zfDbCupE6Bmq7zD885t32IIYmZby2+
+         oMKE2oItxbDzq9CtZki/LfVHs08RwymDhvAT0vuF1hMDQU4Vyv46tn05h5zUmnszcQjD
+         WSGdWV4oY0OQb+KROxnH4fIzEJr1WbJwLCtuoI1S5l4qiaZagdiBETLahC6Py2J472Eg
+         TIE5SRueWqxAmkaN8pGz5+oiX2WtI2Nex0wn6qG+95BFJNXw/rvbQxRFGkFApVgTuWPj
+         pf2g==
+X-Gm-Message-State: AFq9FYLJCIG5HN1PaX0upZs8Z42Vu0PUMW2x9D41iFPORhbCnHewPN8L
+	uKiA8zQ68T7NkYaZYw7PLiMhh721sJNg9hKbJ1DN1Wyb7UaGyIJ41hLTXudbv9gmii8=
+X-Gm-Gg: AYBFou3cs2DJUsdd+M/4Vms0nAurXxgTj0KAsLjNLYJqmJONyNoAHK3fEjtg0UbCBWH
+	aOl+a135qSKeZHQgBqoL/piSWIrWisCnlav097yCX9GndDYYd9oIe2gxQIIYKSO/61+lp2OQpCk
+	GuRuBUBpt/6iQVY1qxyisoMhCs8lIpQxpxWn5vaUyjqtviZINvaKOfxyHI1avAwXSpDvQz2AXRK
+	uhmsJbARP0HuZuVLQg/aR0gP15rktvYzvf2o3x0/HVAht71wvWRAKBi7uFwnyy1fOKreo5+223I
+	MJYuPNdyD+o1+gJOZOniedHHxx2K7iVoFqfsGRBTyId55iHckrb6N9q6HnpvRcHICTe1/Jurf3d
+	xyBwba8uImoLmuwzf1LGm+3GYVqNnn3NGO0Gf2UEaR+p66dn4z8GLMpq8OOWvD5vMZx5zk60hln
+	bMD/KHi500E3If9UL/COKuCyDnZjGjEg/LcEzmnbkTV9tHsiPU/aYQs/GViPn44sY4/2b4YA+ht
+	QTjgRa0Voz9FGr42Ae26VGgmXfMwU6hHEvocKxocTlLPdd4jB6wK1oVbG19OrRH/X3YBHZlgpC3
+	8TSP3XrKAVFXr5L1sPLTa3HqUO4cLzNWNCiCbGajnyi5pjz6lmgRVio39inRQ6Ut84ZnfQGpwu9
+	i6mxWZVChaK/IPQc=
+X-Received: by 2002:a05:622a:5c6:b0:535:922:1001 with SMTP id d75a77b69052e-536c264072dmr801231cf.49.1792701519210;
+        Thu, 22 Oct 2026 13:38:39 -0700 (PDT)
+Received: from com-79390 (vpn-centralus-04.tradc-corp.com. [20.80.83.168])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-536c17b37a4sm1806611cf.8.2026.10.22.13.38.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Oct 2026 13:38:38 -0700 (PDT)
+Date: Thu, 22 Oct 2026 15:38:27 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+	Jonathan Tan <jonathantanmy@fastmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Derrick Stolee <stolee@gmail.com>, Ted Nyman <tnyman@openai.com>,
+	Daniel Reynaud <dreynaud@openai.com>,
+	Aaron Friel <friel@openai.com>
+Subject: Re: [PATCH] negotiator/skipping.c: parse parents before queueing
+Message-ID: <atp0Q5dFHQHAZAov@com-79390>
+References: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
+ <athgd6Ya12zRdIR_@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,61 +99,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <athgd6Ya12zRdIR_@pks.im>
 
-"Ammaar Bakshi via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Oct 21, 2026 at 08:49:27AM +0200, Patrick Steinhardt wrote:
+> On Mon, Oct 19, 2026 at 03:17:07PM -0500, Taylor Blau wrote:
+> > diff --git a/negotiator/skipping.c b/negotiator/skipping.c
+> > index db90fa77b53..ed6e88b59b4 100644
+> > --- a/negotiator/skipping.c
+> > +++ b/negotiator/skipping.c
+> > @@ -151,6 +151,9 @@ static int push_parent(struct data *data, struct entry *entry,
+> >  parent_found:
+> >  		;
+> >  	} else {
+> > +		/* Parse the parent before using its date to order the queue. */
+> > +		if (repo_parse_commit(the_repository, to_push))
+> > +			return 0;
+> >  		parent_entry = rev_list_push(data, to_push, 0);
+> >  	}
+>
+> Why do you parse the commit in `push_parent()` instead of parsing it in
+> `rev_list_push()`? The latter would also cover the other two callsites
+> that call it, and to me it's not clear why they wouldn't want to parse
+> the commits before adding it to the queue.
+>
+> Doing so in `rev_list_push()` would also bring it in line with the
+> default negotiator.
 
-> From: AMMAAR-IC <the.ammaar.ic@gmail.com>
->
-> The error shown when "git difftool --dir-diff" is given a combined
-> diff format ('-c' or '--cc') is wrapped in N_(), which only marks the
-> string for extraction by xgettext and does nothing at runtime. As the
-> string is passed straight to die(), users always see it in English,
-> even though it already has translations in the po files.
->
-> Use _() instead, and adjust the indentation of the continuation lines
-> to match.
->
-> Signed-off-by: AMMAAR-IC <the.ammaar.ic@gmail.com>
+I originally wrote it this way because the skipping negotiator's version
+of `rev_list_push()` returns a pointer to an 'entry' struct, whereas the
+default negotiator's simply returns void. But the only caller that needs
+to learn to handle a NULL return value from that function is simply
+`push_parent()` itself, since the other two callers already disregard
+the return value.
 
-The name that appears on the "From:" header in your email, "Ammaar
-Bakshi <the.ammaar.ic@gmail.com>", somehow looks more real than the
-handle-looking "AMMAAR-IC".
+I agree that performing the parse in `rev_list_push()` makes more sense
+from both an ergonomic and consistency perspective, so I have moved it
+there for the next round.
 
-Please consult Documentation/SubmittingPatches and specifically look
-for [[dco]] and [[real-name]].
+> There's also another call to `repo_parse_commit()` in `get_rev()`. Once
+> we start parsing the commit in `rev_list_push()` we could drop that call
+> as we'd know that every commit in the queue is parsed already.
 
-The patch text may look like an improvement but without a proper
-authorship and sign-off, we cannot use the change in our project.
+That makes sense. The commit struct comes from the queue, and we know
+that the queue always has fully-parsed commits, so there is no need to
+re-parse it (even though the second and subsequent calls are noops).
+I've removed it.
 
-Thanks.
+> > +	sed -n "s/.*fetch> have //p" trace >haves &&
+> > +	sed -n "1,2p" haves >actual &&
+>
+> Nit: `head -n2 haves >actual`
 
-> ---
->     difftool: translate "combined diff formats" error message
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2447%2FAmmaarBakshi%2Fdifftool-i18n-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2447/AmmaarBakshi/difftool-i18n-v1
-> Pull-Request: https://github.com/git/git/pull/2447
->
->  builtin/difftool.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/difftool.c b/builtin/difftool.c
-> index bc7b2ea443..13b3d3ce47 100644
-> --- a/builtin/difftool.c
-> +++ b/builtin/difftool.c
-> @@ -450,9 +450,9 @@ static int run_dir_diff(struct repository *repo,
->  		const char *src_path, *dst_path;
->  
->  		if (starts_with(info.buf, "::"))
-> -			die(N_("combined diff formats ('-c' and '--cc') are "
-> -			       "not supported in\n"
-> -			       "directory diff mode ('-d' and '--dir-diff')."));
-> +			die(_("combined diff formats ('-c' and '--cc') are "
-> +			      "not supported in\n"
-> +			      "directory diff mode ('-d' and '--dir-diff')."));
->  
->  		if (parse_index_info(repo, info.buf, &lmode, &rmode, &loid, &roid, &status))
->  			break;
->
-> base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+Thanks, I realized when responding here that we don't even need the
+'haves' intermediate file, so we can replace this and the above line
+with:
+
+    sed -n "s/.*fetch> have //p" trace | head -n 2 >actual &&
+
+Thanks for reviewing!
+
+Thanks,
+Taylor
