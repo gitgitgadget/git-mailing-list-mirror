@@ -1,70 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.11
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792676479;
-	b=BW3wKDiTSBnxvNNMfcgdbyFORH4wD7V0p6piPYRenerZMdFH+WzIASjFtpeeBKQv8uVj
-	 XX12tszoy/vLGhHZ7d3JKwhyaKN7zHa1UGS2JOgLpz0ZIXXAh+hKJqoK43tGd3JJmUhzU
-	 xTuOwmEsQhWKXqxS1h15Yw/YQ9MAKRKRHHwlaQkXxB0c/CfboV59jmrrV/gEx0MXWoaGC
-	 xP3+tdUqHznDCxUIyFoNwMQE9Esnxvx2YhFiaqDkAtabF2lH166XW4DThV64HVKRwPSNQ
-	 ss1HepqI57DyMm0k3ynCnEdZx+FiIdchtzNrns6a72dW7blX07afy8gNRTWCFp6RcWw==
+	t=1792676653;
+	b=AbzWqd7TBFlMNzlCwa8nn4mDreWkPW3KVUMDc+xHBvdEHxyVt4yN66pLNEkN3a9LAwXZ
+	 gUXO/B8dyGQWnul5G+eLGjxvefwJU2DcLplE7mjf5HiYOn0ek1fyPke+kvH4oSZXuKglm
+	 PeQpbvae15NTdnrLv1vSySpYb45ul75qZ0uJMxvX4XQ6JaT9D9TRrxfYfOArZk3qWy+/4
+	 HVC8VFqGQqOb4ckHeKmwUDVu/M6xSqUCSWCPHqIQgG6moCrzYgXCsIcreS6x94U9aEuME
+	 S93CTypOMIIB5cdCYWmYd59PDBIEpct2n2Xbw/7KP4Zij9k4T81yA4g0mhVnZKDcFlQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792676479;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=PH6jaKyienXOuqCXnCy6Kzm2NS67BhGEA83ECbSemCM=;
-	b=mJpFBRIvnXdIfTjOnXd6EhiVuKBrVGeA3GimEb+BY6MeDn2laihajjSRoDKafTRzFiAF
-	 fRLXgvK63G2njD8spDa5IrIOCYmTLoip+QBNsWM4mUwbDSoW5NV+VAbs+5pPOAjlEorE5
-	 AwwZMhXk1UmiWNu1lUMeWmCEXUrrNHOynnRFZDQsSADlFi7ONiyH3/20XtNgG30h6Bcf0
-	 FMk894hW/M14NJGp2QJpicJ0yzQ1IMZdnpiJwX2zMyIdHKFKytfc3YGrf9F3rKr6Ni3DN
-	 gBNwPg/1vGeiGlnmjhnm2ccJ71GtUzyN+6Tfyqa/bRj/R7jlewoDqI0KOsq56BnBD5Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792676653;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=wR54twEgXToWS93jAQ/MyUkhfuXjX38TM7h9Wx1TF/g=;
+	b=GAEP3LMYs4V04eyMsOL4WjCpt6t+LvIBr+4pxegtvBMm4HNHIECQEs7eyUNgcJZnE4Bf
+	 ceQJ35XKY7lHt6bwddMBWmjXTQ1mSdTN4TJs77zMEeqW2cPg/SnvNhTzYcNQgVWDeIHJj
+	 oFEUhwqaljwqvvf8X+YJCBY6PcXnQOwunAGJBRoc0SVvYzm0Pssqnjh3Qf0mFML2+PW2+
+	 Fsq8Ihp/dA+H8ZsiAHLmMG4cRGJaTcRO3ZMuuRiHfQAvAiCcvP6UHQm58c+2mJwyf3xy1
+	 6dXlT/K56X+OP8Hl15KCExnxACxATE6EhipGCm5u91Icy2hsbc0zyWtXbdM+RG5/ZWA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=collabora.com;
-	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=adrian.ratiu@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=ZWPrR3NC;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.11
-Received: from sender6-op-o11.zoho.com (sender6-op-o11.zoho.com [165.173.180.11])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=aYKUbmGE;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87E7606A31F
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 13:41:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D87E7606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5787660A4AC5
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 13:44:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5787660A4AC5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=ZWPrR3NC
-ARC-Seal: i=1; a=rsa-sha256; t=1792676467; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=gbvBHM6hjAjH9AUVqDXKitl0/clGRKalVkOgNFH0WR0BKEq+1S4XDo1JbgwzTXXBVbtCuWndhB72eA8p/Q4/8Qq8tYdNnRe1tU35r18G7hEtreLzfdlOqc/tdomP1bMHhAnHuRdqVpDN59SlAk6QHTi+TWU8bwM6NL3E13PJKNY=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1792676467; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=PH6jaKyienXOuqCXnCy6Kzm2NS67BhGEA83ECbSemCM=; 
-	b=UleFXbFfzw9Tr0j44/94TmoBg/mhwjIpFyc26mkZiMHFpR+LeCP4nO2vjMl9DSi3L3nCWcxP7Dp0xEh37nAQmBImqk6b5khC7BkdxxaLnFwClYGTlzNwGW1QAJTVrv73euQW8GQyR66KG3+ZiFnbxrwvqHZP4rdOm1GKMCgJ2sU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1792676467;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=PH6jaKyienXOuqCXnCy6Kzm2NS67BhGEA83ECbSemCM=;
-	b=ZWPrR3NCztOo5pElLcIX2nveT6+nD4cKjAKpIwK7x1eWrfagjtEuMGJLTqjzSnSs
-	IrmmKiG24XrU2IqHZDc7QKZ7lnVx5VhBWUvYP+rlGTx3kP8F8uvMuJCFp/h122fiSuO
-	mMVv1FtnmqR/LDzujZ5WEYJ/5RApBAeV9sgod1fY=
-Received: by smtp.zohomail.com with SMTPS id 1792676463703542.3314697449159;
-	Thu, 22 Oct 2026 06:41:03 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Emily Shaffer
- <nasamuffin@google.com>, Thomas Bachem <mail@thomasbachem.com>
-Subject: Re: [PATCH 1/2] hook: honor hook.<event>.enabled for the hookdir hook
-In-Reply-To: <xmqqbj8nosq1.fsf@gitster.g>
-References: <pull.2272.git.1792520353.gitgitgadget@gmail.com>
- <1a7d060fae0decbe7dda63ec4ab57e32e0205df0.1792520353.git.gitgitgadget@gmail.com>
- <xmqqzew8us4s.fsf@gitster.g> <877bjc2im5.fsf@collabora.com>
- <xmqqbj8nosq1.fsf@gitster.g>
-Date: Thu, 22 Oct 2026 16:40:59 +0300
-Message-ID: <874ied3las.fsf@collabora.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=aYKUbmGE
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6b2237b596cso2906548a12.0
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 06:44:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792676652; cv=none;
+        d=google.com; s=arc-20260327;
+        b=nTAE4vn86MONi//6qNGkg1Tzl4tOoSrHHI3RQ3Pgo/mP9DPRzXIsHC9xa21KliLN0n
+         WzHc62I0fVdqVMnDBdj/IaUCcS+xa4moZSt4ZWuI9yFaeVTpFf8TVpKY1L//VAaqXZh+
+         8fSNuAD7nY8NdocK+Ah+DdgQiOUg0YUQKx92vvIQFFv5DPbpO5VHLk1Lugqa0NQ9lsS8
+         mPkYTgtibQftq4glPDLbMZvO2cuxpDDON28I7+rpCYw3MuRQAby+tR7nx/BEIT+eFtG/
+         7+mgOZ2bjVHfbNaunmL5kB5YT5vF8CME5OgbkB5g2Z2LKlVdr3ZHy2NnLR1Ip/znhbwN
+         3REA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=wR54twEgXToWS93jAQ/MyUkhfuXjX38TM7h9Wx1TF/g=;
+        fh=QcmfM2CiA8aRiiQ23/JY0KmpQABZ2hZBR2bMmuErFT4=;
+        b=jy1OTh61G712E7S756jHOOnTAzwL3fD8LnroVIdlp30LQzU+O4JkvD2jrtqJzC55BC
+         FImNRjSMRmCxIGfc0gUc+fixQMw/Qp9Ni02T5yejsUryJ3SG1xWkWy7mjwolx1DGMyb5
+         rEjrUIkuE6TQg9ojO7y91xMFCbe365w7l9Eu546EFTvibqisMBd659xXZAoCy3btEVFP
+         H7zBu9LN4O8CFhM407OWbrE3JUlPTDsedVSkr7JsNJNRgsuslT2lmbDmEzuoXghnKrr6
+         gpNNEuaC2ruwt+m+QZTC0IkMomwdgkWclhAqXxZ+BehzPypVscInm1GKIwq7rHDprzW+
+         O/Uw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792676652; x=1793281452; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wR54twEgXToWS93jAQ/MyUkhfuXjX38TM7h9Wx1TF/g=;
+        b=aYKUbmGEJ5IYAZNd3gsqOBpqe7IkrYIK7DIlP4kawpCtIAPl6SNTSBhVv6xToMq+RV
+         P1aoKVVJM9Mwz49EBJIXPkeiT6tb1iEP9vyWJ9ZSPSXztlIv+pfBveCsA+UeQ5yf2O5s
+         mekrVgRatvesdjxOiJOw9ok1xjI93chnnxdjQbG9BZwfad4HUvlDnBi72VvW1E4hU6mp
+         EiOvKJMC+JBQUVlV69u44bbmwvmJGaro6XuoukEvlkFFboKe+QYox6wWWYjGtYkKAx6e
+         ZMzPH7qOQXbEYP98loBhkyF+qR773BTtn0dKD801onTrbcfSpNHfMhSC5N6TYiM4IiG7
+         122g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792676652; x=1793281452;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=wR54twEgXToWS93jAQ/MyUkhfuXjX38TM7h9Wx1TF/g=;
+        b=OzNM0Lo1GHOnHjCDEDRbxLzOT3AbzxGCeIJJgvmo29E01OI7ZNzbqixYl3LwZYmsBs
+         NhkQJNcxXatgjsW35r0iSdSaiBXAsWMTTr1TL7j1DbdB3tGQYk/G5E58tuItjJ6LBZhm
+         accSE0ikp2WgHVMELmjfZVnzQodTuSqXHqH0YyMRC6DDT6oTamUSMjNZZfsFd0C1gcXg
+         I9ickZko9+6YqWE0eGsC/wHsc7cguXoTFVNIyv/oisJI24MdB1RSalqkAZkF9nZVdbN/
+         AE0ZorakTL9PunOndkXcIlj9uPB4ZhF2qrOyOPYsj1Y7AA7g2Gc/XxYJmz/413I/gUyR
+         uL6A==
+X-Forwarded-Encrypted: i=1; AKwUvBxlOjAgF0A8GLD7vp2Sjpe1MzrRygpDsYnA1x26VSTnBixBEQouaNVA06l9+BttW6i8zwE=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLtbDQ0ayimqw6+GUi21y7mUrbAlWYtrPJvHP6qAGKPSbSxfqat
+	iIbq6rQ4vgXgS1kxzBpdYX9W13XwrgYrtHS7bsLMbiGdZPHDPV6GBoJVJoS5LMbqqottypoj34y
+	SmdRkfxpKLxC9GKsRej65VxktTxLNtu8xxKA5
+X-Gm-Gg: AYBFou3MsQx+R66Xj+F4SwALgOuieQVtjL+FwL8SrKa9xl+5Gr7Kea6LVOHVF/KZPUs
+	8suQT97wm131mHk6RFUEK+B6uGFLVCxcCLfF1/E1DineOnUyT2lL0wDu9A1oaRfdDMhLDmkz3qE
+	VZECxXaMpRjmGQT008UHeeEFL9f9080ce3PWlRznx38HvinwrTfWx1YzyfMG208g+DCOR2W3lBE
+	nyos7R58qhDKe3mQO1ezYtzFbHqXkb+zCpwLhYc7nTXvDSjAkVXvj3G46dgo6jT1OoXzP3j1LO/
+	cXo9p4msv3GYASodUJnP4QIUA/x4cysM8v29MPP30YH8IEHL1OUE2aT289Uv4YljS6lnfKTMcsw
+	jYmgzwopNPtHA0HFqSxJdr4SNihabMgQQpBdj7PTg+ac3aZMz6PUEnxzpBg==
+X-Received: by 2002:a05:6402:550b:b0:6b3:cbdb:bd93 with SMTP id
+ 4fb4d7f45d1cf-6b408ed1f2dmr4730629a12.29.1792676651469; Thu, 22 Oct 2026
+ 06:44:11 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -74,60 +103,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <a8561fb7c2da446e7f7acc7e2a443991@donquinleone.com> <CALnO6CAsCvJRywkw0WpO1nEhL+yU2-r_4Z2AHdJch1m=NK8=TA@mail.gmail.com>
+In-Reply-To: <CALnO6CAsCvJRywkw0WpO1nEhL+yU2-r_4Z2AHdJch1m=NK8=TA@mail.gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Thu, 22 Oct 2026 15:43:34 +0200
+X-Gm-Features: AclHuK8EScUDRi1WgjYMbkTKkAH19G1PiNlOOxuH13Ghx8WaoccwnnI94YM4mK8
+Message-ID: <CAHwyqnWi3MCvAw-sNrn6k3ht1tpUfmNg18BAvEThKthen5Dwmw@mail.gmail.com>
+Subject: Re: [RFC] branch: delete gone-upstream branches only when proven
+ merged into a named ref
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: DonQuinleone <don@donquinleone.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 21 Oct 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
->> However, having said that, I don't have a strong opinion and am ok
->> either way, so if others think it's a good idea, we could accept this
->> patch instead of fixing the doc. :)
+> Ah, but the manual seems to contradict my (personal) "natural" reading
+> of the command: "--delete-merged" actually deletes branches whose tip
+> is reachable from their upstream (when that upstream matches the given
+> pattern). So, phooey. In this case, if "topic@{upstream}" was
+> "origin/master", though, "--delete-merged=origin/*" would work, no?
+> Incidentally, I find it a shame that GitHub's documentation encourages
+> a triangular workflow (whether or not there is a fork remote involved)
+> without talking about how to configure Git to help you: fork or not,
+> if you push to a topic branch but merge to another, it's extremely
+> handy to use push.default=current or some variant so that
 >
-> I am undecided if we should treat it as a backward incompatible
-> change or if we should just label this change as a "bugfix".
+> - @{upstream} is the place you'll merge
+> - @{push} is the place you push
 >
-> The additional documentation in question said
+> and suddenly "git pull [--rebase]" does the right thing, "git status"
+> (esp. with the new "status.compareBranches") can tell you where you
+> are relative to both places of interest, etc.
 >
->     hook.<event>.enabled::
->        Switch to enable or disable all hooks for the `<event>` hook event.
->        When set to `false`, no hooks fire for that event, regardless of any
->        per-hook `hook.<friendly-name>.enabled` settings. Defaults to `true`.
->        See linkgit:git-hook[1].
->
-> which talks about "hook.<friendly-name>.enabled" setting, hinting
-> that this is also about the hooks that can be controlled by that
-> other setting, which was added by 1ecce722cd (hook: allow disabling
-> config hooks, 2026-02-19), which added "diable" specifically for
-> "config hooks", and the documentation from that addition says:
->
->     hook.<friendly-name>.enabled::
-> 	Whether the hook `hook.<name>` is enabled. Defaults to `true`.
-> 	Set to `false` to disable the hook without removing its
-> 	configuration. This is particularly useful when a hook is defined
-> 	in a system or global config file and needs to be disabled for a
-> 	specific repository. See linkgit:git-hook[1].
->
-> mentioning "removing its configuration", and "defined in ... config
-> file", to me, it is very clear that this configuration variable is
-> only about the hooks defined in the configuration system.
->
-> Which tempts me to say that the change being discussed is a backward
-> incompatible breakage, rather than a bugfix.
->
-> But casual end-users would of course do not know how the feature
-> evolved, and may not read the documentation of the feature they use
-> carefully enough.  So I dunno.  Perhaps changing the behaviour at
-> the same time updating the documentation to make it clear these
-> cover all kinds of hooks, not just the configuration-defined ones,
-> may be sufficient.
+> IOW, "git push -u origin topic" makes upstream configuration very odd
+> in the GitHub-ish workflow!
 
-Agreed, let's keep it simple.
+Fully agree!
 
-@Thomas, can you please send a v2 to update the documentation to make it
-clear that disabling the hook event disables both the config-defined
-hooks and the hookdir hooks for that event?
+I would say most workflows are triangular on the underlying level,
+even if the developer is not aware of it. If you work with GitHub PRs
+or GitLab's MR, then you are engaging in a triangular workflow.
 
-Just a short mention like you specified in hook.h, to avoid any
-ambiguity.
+I picked up some important tricks for visualizing the triangular on
+this mailing list. But most of our users are not on the mailing list.
+But what we can and should do is to make git itself clearer, so they
+have a chance of intuiting it. I think for example that
 
-Many thanks,
-Adrian
+    push.default=current
+
+should likely be the default. And many people would have a better time with
+
+    branch.autosetupmerge=inherit
+
+which gives you upstream/master as @{u} from the beginning, and then
+you likely never abandon that if you are a regular GitHub user.
+
+This is also why I feel strongly about this as default
+(https://lore.kernel.org/git/pull.2458.git.git.1792437798463.gitgitgadget@gmail.com/):
+
+    status.comparebranches=@{upstream} @{push}
+
+because it's confusing to switch tracking away from your "own branch"
+to upstream/master, if that means losing the waypoint of how things
+compare against @{push}.
+
+
+Harald
