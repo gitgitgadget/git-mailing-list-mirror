@@ -1,92 +1,128 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792683336;
-	b=4Ftyye8pre9r3Dt4I807W7hlociQq2xZHE86m5igPShaaLMhr9MWRwehCoD+UezGWywt
-	 8sWBaAjAB8jjYNfES3x700j2cYiKZ6pbiG3AaJkD7amS/d9ylNmYDo4Sujvh5OgE2LTHz
-	 L5Amzq9B1A93gcq1neJFwVdImoXaIeoqhz1FTOzBOi+vCB3rolFjTkkLoU6V2uIr8wfmB
-	 O+naILw6K7vEfWEqZdzdzo7dCfTvyUDszPIAokmloY8egpZzpVvOcVRnMgKYxwqG18HKT
-	 T8PiKTOmN46UPoO7kgrqJFccOx+nhRFYx/rWWZg766hYmRFMWZthPXC/kWrbpCx32dQ==
+	t=1792684604;
+	b=XxeS+PvNqEu31TVgLjNoJ6noyNegEIqV3XJn3NhRYGIq4AcInAlMRTsbOhQUDeQwyjrJ
+	 mBgpj4TRqJxz64su3CgzUmRaTyE9gPDq1WWFtAPyXvsJIFubQvc4NvsJjvIxLCy9XzUif
+	 zBNLmnGNxUALBnOvu2RynXSD1Fe10rqyv7G/WzArDDKfn22kdfYe+UdWEj4ORmhcKA0Qc
+	 NbR3B5z1pGYRO3LM1jWs7OGA9Dqu0XbONnoLXVmYd6g4oDimuHU5vYSdZrSxrCOoWk7Zr
+	 OPneqcDp2iUVknJs7DRO3NwNdTCi1EDAj3pOnhuN8/jDEjnNUXskXaFlBD5MqGwcWWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792683336;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=S/40eBDXFPMDIWtN6unsvAZ6sHJNVwWisxgHIn5OUhU=;
-	b=c0AwVP5rltkYtTsXtlH7IoxuvSY0cxzyqc29K/3VzP4trqoDuDj4HUBawCjeJilXj9Jl
-	 zJC2xh8NyjYJwnay1Vt5YufL6xuHv5BNm3rC8q0pAUEhRjK8JqIv8pL39n0zufaaClufy
-	 HyxpMDgMUcMZd45KMktnQZQpJRbLGVkm7qZ2af9c+FHh/dAH6VByYaBzraYzhG6K9I8us
-	 yhrvPIcgK6qFmwbEnQyn5XOFrqByh7dZYPd7OdiTbSVnx8GzeJCVLULiK1vZZh9Rzpabi
-	 J6nZ84fh4W6z17jjP1ZVRbYTS0xIMr/e9qgCQSLaNlEG+AeP4NDRhfOrUnyccJUaYGQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792684604;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=XMQL4RvIQPIV4EbPsQKBedzBwR4pIx44ibA1bKUzA44=;
+	b=m+MxdKggGeACUToxklIUHNjrEzIi7NLBamMRCXFHY9T08XD7vwzazeDIm3W8TYMAbD1R
+	 xyPonRMC63HOStZUPqBIlNHIfpDopYxcE5NzSeL+ewi9YRjUd6h7hfVyhYruADiLIA9rL
+	 7AuJyWHqbkv13xPw0REwY1QIK2ElmMLXv5uytJ5p1lxDCujNXITHSpHvFR+yZMRdbDwgw
+	 IBoUOQeOJpDrbDR9yqCxcIxd6p+cg6VOLSd9GefK8m4cHV52r/RA+FHPagaAxK2yDEPSl
+	 3tMtqAGsGsVo5CCuzRBqjxwSTbRekS6li/Eri2+KKjtjGyBLyIfBnV5xrSdLZD6RUiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=F80BJlEZ;
-	arc=none smtp.remote-ip=209.85.161.49
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b="o+uG/ez0";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=GsdKHgYn;
+	arc=none smtp.remote-ip=202.12.124.157
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66B8606A31A
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 15:35:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C66B8606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD58606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 15:56:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8BD58606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=F80BJlEZ
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-6e560e00a86so1163129eaf.1
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 08:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792683335; x=1793288135; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=S/40eBDXFPMDIWtN6unsvAZ6sHJNVwWisxgHIn5OUhU=;
-        b=F80BJlEZHAoBjnDDBfcnStKqgFhcRK/8E9BhIpdaUYB20H+I2SxFTnReFwBX0/6z44
-         rkn/lB4WbOyKdqWwRYdtu66q9bnUMGiBiWvrIG4erUUp051SXTetgBLClQvReshEpRrf
-         ogALWC4JvzQI9CEC3sXVrRjqqOXxv1AWzOXIvH74J2bARPqr+8l4F1eWoSZgRAfFeTrY
-         aRR8iizM3iTFVebLBBbi7FTWBVksDIP5Dq9/vn8+zLFn5e25xhjYnqwCztLnbuuqhlZ9
-         tOatO/BmP6sZVAGyI4pH1CS01WMKFpRwBrGVE11ikUNCM1lQpoEr1MPc3ayqqZnDbJA6
-         jLgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792683335; x=1793288135;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=S/40eBDXFPMDIWtN6unsvAZ6sHJNVwWisxgHIn5OUhU=;
-        b=Th48YPkVOacUZ0jQ70n9LhEmV+zGUVI4X42d/vk3/xoh7ClWtgeAJH8vfJJxlV+kzD
-         NVg0JILidgGjOE2+nvIy+ATRCvkNUoP/Wi5xayiu2DWDHWAHc/09NmiaC4k6JQJpRK9s
-         9zKpjlh0OF0jWgz4XI3PqUbfFfnjEqjjPFE/bpBQZkk6Id5gvFJ3PyX14G+aXQu25ecv
-         rVIjJ4Z2r2JYh6vY4bS1u5hwb0NQL/gWtR79MPaTnNrGIjHeg/uxjx5pXcJzBywsPk7W
-         zleMSzq8AFWWwsQOss1g0SOzClKo7GlD6TL9OYzQe/PpqQEjsB+vydbDaskZ7d2UmeOB
-         oj1g==
-X-Forwarded-Encrypted: i=1; AKwUvBwlIWRrBG6xw5zmw3yQfoGrrWZMW6iUjXuUqgJ0TOhqDVWe6tPFkhV10P2TBry8SsiBLeY=@vger.kernel.org
-X-Gm-Message-State: AFq9FYL2jKh+PSImnXM8OVNUDgVVJXKrpQT90CD7FN4Qj9EduC3gMTqQ
-	9orp2rcS5fChFX+YeVEs0bl0Gmf7vv0cLwTEHmKdz164Ih2hzv6zQ++ZNCRshg==
-X-Gm-Gg: AYBFou1hz57aN7SZpt70SLOxe+nTX2secWd5K60mUdrYO47kb8OTzht38uazasz8LLz
-	AAabtOE60vzaB1xGPJV999M32Pegq7NxvN48yfc6AfSAT5ewQ1j8kxqNwhrfkwQ2Bq7G1xiKBmI
-	6F1VSQS7MDHmy/YCV89fmdc83MRp3cf3GWVBcuDD7r87//UNeMnGHuo861Oe+CGNQyZEohqWv8H
-	IEAVeMnY1RamCxQGeFJVtAPNcI6IbJVabtyUnR9wUR66hqoJ9OmSw+CR+VP9vIytaGv0UHk/Dgq
-	KToMgv5N0w2+wTrjE2sadu1lb3iyeobWec5RYuzbe3Dj2vq+VP8GoAaaABVy3lrvMAAjI3bvhSD
-	D2Y3zi0yoD7UfQOrytqdp/ot7YhrFg686obmmTmnYBRFDytwKLf9cTvIbiuNjJ/AN8rksYKmD5a
-	QyrTaGVTLiWndHZGthDJ+qXKa7wBRSPT5uM6n8TQQFwnD/BZxfAV6Vcsaqw1lvheKM7GDbnhZb9
-	jAMpEJOQYlzyJtXKj1RZdHkO82M/wxxcW5Mc8ePQBlD5KXSym+zY701JGo7zmCSO8LiZF7XcTpn
-	6fM/
-X-Received: by 2002:a05:6820:151a:b0:6e2:3d8b:a01c with SMTP id 006d021491bc7-7093fcb38famr3553991eaf.19.1792683334690;
-        Thu, 22 Oct 2026 08:35:34 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-84f78202a99sm28413a34.19.2026.10.22.08.35.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 08:35:34 -0700 (PDT)
-Date: Thu, 22 Oct 2026 10:35:31 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] Documentation: propose community voting process
-Message-ID: <atokQ8nPx2StLq_O@denethor>
-References: <20261021200341.378978-1-emilyshaffer@google.com>
- <xmqqfqxylnct.fsf@gitster.g>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=o+uG/ez0;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=GsdKHgYn
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9A34F7A0145
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 11:56:42 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 22 Oct 2026 11:56:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1792684602;
+	 x=1792771002; bh=XMQL4RvIQPIV4EbPsQKBedzBwR4pIx44ibA1bKUzA44=; b=
+	o+uG/ez0Ekch4tL9+zZZiPNudPkzt/K/9b5S52tQBNJZixl63Wps3T7Tx/y2UAOW
+	FGh/swzYLhJ6MMMmeEHFMZEBX1FCNa/WeycGI2mDeoHXcZQWUAMoqL622rbaVFba
+	usBesy2CX4sjb3RcYrL4wXlHo8O3oU85IcQSlxoAPxC+ovSLCxLy/yFpGDP2u05p
+	d9znDh7IcclzuwWSmZKIUzZj6cQ+WJkdzNtG99KyXUWEVr56AbHYb0JKaNIWtCtZ
+	m7Tkg312eTdZFuEZ/2TY37YxeovMc1VFEwBmzNpuRFtlX6tYBh6nX12oNKH/FnKW
+	Xt2w6nKknP6b97k0wqwJ7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792684602; x=
+	1792771002; bh=XMQL4RvIQPIV4EbPsQKBedzBwR4pIx44ibA1bKUzA44=; b=G
+	sdKHgYnhRzoyE5TYyec5eBDqi4WypFaUtMfFUER43QvXKsMxDdH58OKYpca0tHJV
+	pXrhO8EkgeSLig7NXLnw9iZgBsDaV4S0wxFrQ0hNtzYOWplKnHxFfteuEwhzkrtx
+	gyjcxTbaTDzIFiq+vjA/gJ7zSgCsRxqzphVsUdtYLYdnDtv3yZcID4oS24c+Qf49
+	3yPcQCrtV0QD054dfqKkbIXYWOTvli9xOdMM6TiONMkgh2bVt1MehB116UJVPU7s
+	91F789Ccx+Lgc5V5yMXEBPhjRUV1e3wiZnSPEGUrzWGsFU//LJMgkyu8sTEwSBr5
+	hW2ImQw153Fv7j6n7jhsQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792684602; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:DUQYXjV1fQj4S4NuJottbXx0V4nrKguQx1UbpRdT+y/kyvk
+	pL59DE+cWBP4pKnhGGfqCVRAn9MY/tBys/Q/KnnD9MBJl6pySz0AhucQiY98baju
+	xJZFEpfJ0JLhCrKQmZ23Jic80bXZCLv8bBNgrHV2SxXVkFO+4yD+OiHmSOZ0H5Oe
+	iA7I+0nER1DcjkB3XDCYYqfIvpMZpCVTROahNVXvk/Oxz6G8/gweYvE14jYbS/Kg
+	RJBb9pqocmauhabDF+4RUxg7/gPt2279G0kYlRp7Fxbj2B/I/xHoAqVcLeFz8GIk
+	o9aRLcN8vOkzOF1TH3DaTl3iW/DPX81ddN+iGQQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:aMo3GcWRSWatyhJ4IOiEVRZm60k3z5bGEnd3yNpUqx0=:Bjoba6aBMNa1yeTIoCXrHkPhHvyPS6V5DbmlIEO1kOI=;
+X-ME-Sender: <xms:OTLaamEvVd4CLstZ24Jcsx47zIhXBtImz-mJDXsy01uATdXHGLBtAQ>
+    <xme:OTLaao1844P6DuxJvWBzMuhmVDQjSlcrpoL4XxE74HhtzZF2MfAgorEEMxP_jfxa5
+    xCEbxCaiKdODXA_mHrJYoaGcDWnsiuhCNYS5ua0ZbPD4boRI9gcsHo>
+X-ME-Received: <xmr:OTLaagNz1NbVgkaWuoTKLPva2ro8bE-9HmW84BaKFkvC5928tAKW4RV_B6Cx1qCUmKP7Vvq_th_G1tWWHdhTmG7qtpTtJ7GhX5Nw>
+X-ME-Proxy-Cause: dmFkZTECaEB884wY68UbCf0TyGiMGR0n1QMDaGWAX5FxhZczo3PbDwj9OBNHvTCrRe0iIN
+    rM3CZU3+ocp6LQEKXi4/b9Nn3choQu4rErHRRsmnmjvNYGJ4YTrKETliGYsicMSQNom/xr
+    x9QIkSY4gjySBPZN8YVZjMIkss/rHjMx8zmIg3eiLTnvOSQ/byE1Uu1DSssvOdLZVcXiVU
+    w4g/20ihx+yxmz65363FAz2UE1nvBfY8amwcFwMKmE8zxqFLu0vNQYiKa/INNXw8OtOWlQ
+    G21xLrbLu7sfDbLsGPVFaXnfeYgNUG5rtD9uhKp05MLdEJH9lKhOLA899Afeex2j5QS3lZ
+    s2w2fl3AE16D7RPdtHGOV/O+I5ZTTigUAH3R4r1/RUF6XxQmTjcyYap2aowDwZRFAWyCiO
+    YF6ta80GRiJFO79AwuzHFcDbn1ObcE9Oq5hwsFjCR+kPAW0QjUph5WlMP1EWx/fQv7lWl6
+    cHx3Y3CVkqawNsPnCu9ojcrlechcA9oNjKdKSUMQKmzh1HTxpITdhZk/heV0+eS5VsVI5f
+    ONlC5PV787dxLgKTuesgdgYigeZWYFJgPM497M++6p8KAlp3CffEu8WygijuCRkwx9WMNU
+    8rDk9UqN5wmVbP5PW30TPyplpKEaZOLmSmMbYADkKvGLXhEwl6h+LWbTi89A
+X-ME-Proxy: <xmx:OTLaav4DivyKvI784Njkq9M41M_XXOgYARIeAKbUCMAsxuovRiHlIA>
+    <xmx:OTLaai0vu87AoZwqbv973lFYqgmdZY1wzX9pGMs0U4kuB6j7TThz4A>
+    <xmx:OTLaaozFAq33l6hlkk7zlhf6_HYRFovVWiyzFyPBJalhhMGgGy4LbA>
+    <xmx:OTLaaks_ffVni78L8zzpZvo3GS2IApCKXKysET3qwJOKfiSBquE89g>
+    <xmx:OjLaatLW8YwXei6vYwJyrDL-RkulUpZP632DAbcpTTXmrOULEn5MXdu7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Oct 2026 11:56:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian =?utf-8?Q?No=C3=A9?= Ramos =?utf-8?Q?L=C3=B3pez?=
+ <chris@nortesoftware.dev>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2] gpg-interface: fail when the ssh revocation file is
+ missing
+In-Reply-To: <20261022054607.766255-1-chris@nortesoftware.dev> ("Christian
+ =?utf-8?Q?No=C3=A9?=
+	Ramos =?utf-8?Q?L=C3=B3pez=22's?= message of "Thu, 22 Oct 2026 01:46:07
+ -0400")
+References: <xmqqa4o6oq1y.fsf@gitster.g>
+	<20261022054607.766255-1-chris@nortesoftware.dev>
+Date: Thu, 22 Oct 2026 08:56:39 -0700
+Message-ID: <xmqqh5idiv9k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,54 +132,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfqxylnct.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 26/10/21 03:06PM, Junio C Hamano wrote:
-> Emily Shaffer <emilyshaffer@google.com> writes:
-> > +Voting Eligibility
-> > +------------------
-> > +
-> > +Votes are welcome from contributors who have authored a commit which has been
-> > +merged to next, or who have provided 2 or more code reviews, and who have not
-> > +been banned from participation in the project. All eligible contributor votes
-> > +are weighed equally, regardless of the overall number of contributions they
-> > +have landed.
-> 
-> That is a fairly low bar to cross, especially the code review count,
-> as it will not be easy to define and enforce some rule that rejects
-> a response to a patch that only says "thanks, I like the feature
-> this proposes" without reading any parts of the message.  
+Christian Noé Ramos López <chris@nortesoftware.dev> writes:
 
-I also agree that the proposed eligibility requirements here seem quite
-too low. From my point of view, ideally eligible voters would primarily
-consist of individuals in the community that have both a vested and
-current interest in the project. If an individual submitted a handful of
-patches 15 years ago, but have not been involved in the community since,
-should they still be eligible to vote? Maybe it would be worth
-discussing whether contributions must have come from one of last X
-releases in order to be considered eligible?
+> When gpg.ssh.revocationFile names a file that does not exist, Git
+> warns and runs ssh-keygen without it, so a signature made with a key
+> listed in the intended revocation file verifies as good. A revocation
+> ...
+> gpg.ssh.revocationFile had no tests. Add tests for a revoked key, with
+> and without ":(optional)", and for a missing file, with and without
+> the prefix.
+>
+> Suggested-by: Patrick Steinhardt <ps@pks.im>
+> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Christian Noé Ramos López <chris@nortesoftware.dev>
+> ---
 
-At the same time, if the requirements are too restrictive, the eligible
-pool of voters may be significantly biased towards the most active
-contributors which tend to work on Git for tech companies. That is not
-to say this would inherrently effect how these individuals would vote,
-but I worry it may not be entirely reflective of wider community
-sentiment.
+Can you stick to the expected flow: (1) send v1 (2) get review
+comments on v1 (3) respond to these review messages and then (4)
+send v2 AS A DIRECT REPLY TO v1?
 
-> As it is hard to track patches that as in 'next' a few release
-> cycles ago without graduating in the end and the authors of such a
-> patch should have the same voting power as those whose patch is in
-> 'next' in the current cycle, I would suggest strongly against using
-> 'next' as a yardstick.
-> 
-> I would have expected to see something like "two or more topics that
-> appear in any released versions" instead.  Note that I said "topics"
-> here and not "commits", so your topic that consists of 17-patch
-> still counts as one.
-
-I agree that counting topics in released versions seems better than an
-commits in next.
-
--Justin
+Sending the reroll as a response to v1 is important for automation
+on the receiving end.  Thanks.
