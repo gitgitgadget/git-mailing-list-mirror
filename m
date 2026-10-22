@@ -1,100 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.48
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792635444;
-	b=t7g1m04QHP1jPA6Um1Haj8UArnZZGmiMGchpKGs6+sxxwxKCAP+TYTaEG4ijqXuV1GpE
-	 HnqDoZ2kXsvFvJpJClYbCbdP1FrT1ILmFCcKF15ZUcQy593uBWe61KQd+5YbhukzJjeq8
-	 Ow3HVkSfbkNDj6QZk1ZFYl80o4RAa7vAdJw2HhFNLUwDsFsWRDxGLx+0q0toys5LZ2aQA
-	 PrRKwxFxEbq5TQqAWXulhUx/4mXfj7Yi0/re1LlXZBjmgCMsmmtzsn3bgimFQC8eQtsC9
-	 pxoCLfudgFZcdttPDI6dHWaK7L27eadEhLJuX1hocJ6Ui2FwX6CSpfxTibF0NBm61vA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792635444;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.175
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792637500;
+	b=xhWgkXhZCvDJ6cOXQSMVMsZKoGyUWbSbwlv1pEkWSGYoj7C1x2TGVFXwkOe5TLM3w0ex
+	 tikV8cQ4RILvCa7j2IG2Zpg1YFWF0mAHSyjO2aqpqYYpdjp66ngdNfS8eqGNGP/qtKN2I
+	 Jn692xUxrJjWI4iYAUKvwJnO4fYPeFatBLMC9Cxeafc0kojbBM6IDAQXTQfA2D1ownhqX
+	 sE/f9IMHZKS8HXP3mRVd0EkAsYjDX1nz+/uU8p3VHf8zSyyqVBc2AI5GQE0Cnh0uL57tM
+	 k5w+5Kug+41uwiz2OLylrwQWe0uWNEXfs2ugysw02/pIHM30Th90MPnYBfTdWo49Ryw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792637500;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=izhJMzAgtuAm0z2KDZK9IkKGS7FhPtRLUdb++ZPXC4c=;
-	b=gDG4htAejNoS8bVeAUUxRoneTuEK7lyyXNyQo0tOOzx5N7bo70mpd0Xege7jbBTR+Pqq
-	 2cQ7Zkp61Q4dW1QRD6jUpLrkoE4mgC6CNlH6eEuVYzK+vw8+JKurxYXAeQo+2AG134+38
-	 fpSOP8Zbk9AYHGZHLYqh/Hhs578c/cB3lX22RAertT+GwebaRWRunv4Yg9pF/4BxO2S1E
-	 rsKTyqypEGGyjmZhYxVXGuxsgKtirJbSebvL4xSMH7DdiU1owdll/5os9j7RtcYT67Te4
-	 dzRkian8GdBUtJEsptW6DHa0IKR/EwTQimoc1Tvehxp4UkHFq2kt6xv4P3SRxl+GeJw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=bQjWlS+zoIgLZBYXu2UTP8g+cWSR4hoKBrfhZB3npOg=;
+	b=tswtpOzunEQ1pYzZToUgeo5/FCcgnVUJvUJU3W105+77HIZRVWiwPVX67adz8aHB9U0G
+	 cTa7sN+7B3yAZ4fZw7kQFakv5kGjOnQ3us+hTxh3IiFm9Tr+3UXHTbVtpy9oEk8sdldHa
+	 KbUpPsDH7htXsxDe1p9F3cry9sMvcG82pA1QOfaJyfw33Sa2HN0NECAopE49kGX1cHFSi
+	 cMkgw+DXbmlvSS4I9pGwdBqX9mBg0kTx/yJY4ier5+YKm7qbHcFoWqtjkwsYlu1QXRDlD
+	 MdtZDmUMHfcaB6GhGvunkG2TnZxcoAeTohz3FgCKLNe53rqjJ9VBKrpFGQNvAJEdyyA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=g0m4AmcW;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.48
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=IyNlPDmv;
+	arc=none smtp.remote-ip=209.85.210.175
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0570A606A31A
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 02:17:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0570A606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AC6606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 02:51:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7AC6606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=g0m4AmcW
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-91c1f774e6cso847236d6.2
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 19:17:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792635443; cv=none;
-        d=google.com; s=arc-20260327;
-        b=qY627RVz0WoxEF4Kzw3HlBS5XjJy4LODfP+/icO05BgnPL/5tL3UersdkwMCaPRGEe
-         JNFPdLhLqXb5OLoiXLXWEv0UAWQERMLVqvRghy0D+UrsE0c0Rl0M02/RZ3cWf3f+5nwl
-         G0CFnIetUtRRgkajKNrvRPmkhm/E4vA8HJmAEKnGdQGRMyAuPlBeRJ5E1qtfHaJ7N/WN
-         prn0J2eX6BACIjp6kvM6qCYU8qqADQBK9mP/41TDezL0zcV22fZiNmTjr0Ie9K6shexV
-         zECh2j/fkhK1+/Fuf29OQntOM8Uug8OoWv6GRJPt/5E1wDBH9U38Sp6KTu4Qm1S3y1sb
-         fX8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=izhJMzAgtuAm0z2KDZK9IkKGS7FhPtRLUdb++ZPXC4c=;
-        fh=Bf501TvqQawoPyKpevdMZy9mnNV4Q2oC25/+bUqpfS8=;
-        b=GUOeizkFEC+hpbq2e0oWSx0pnH0LhIvAjxEb0FjAWg+1ApYg9+rAg3IzjhV1Zzd/42
-         HZj3uZq+IxNx10T10qLaCBrnWAHU1Cc+/zEMO8TLGTmEuTWcmuE9H7K1kZ3xzFGIi7zf
-         JpTFYQcE0EPQfRCmjNXJJZiKmaB5OvyapxL6sspv0cfUnvBTMfNW5wqH6xEd2efjSEeO
-         UkbH2fPqTfsX6MTUcZWoJGRTg79Q17QOGBG02OJdnI10mrJQF0XTGSZ61KZ+ELqs/tmd
-         p+2KDo0SpzWS3xNrR1Sri6RWHLu9Khj3id8S3C2wzOsQlqGbqK5o5mQ+0o74L/37Azjr
-         PTNA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=IyNlPDmv
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-8a070781f63so611363b3a.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 19:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792635443; x=1793240243; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=izhJMzAgtuAm0z2KDZK9IkKGS7FhPtRLUdb++ZPXC4c=;
-        b=g0m4AmcWvM/slQWwD3A8oLEcfqU0q4RY3Qp2rCnjXkgqBBVBakLF1hxx9c4/zw22Wi
-         gLshq7wk0GeOYXw12jGI4M5ItwShJsHkYruwwpZFH37E09Gksp43KVjgl3x3+2WmvN0J
-         UCh4ewT86spTXHMTADazErEIgxKjxI1tYg2B4CQrIFGgmcKjk4C+QLZ5ExpaMdBJopQM
-         aCxRLPKNHJF72echGwbRgpGaVnpSRuy6Fs9xgaWYxH73rDfzNnxWcMYMwZ2+TcvuZfMs
-         Za00gAbAg7wPtq0k0H6whFySGglv8C+BhbO9UhpdUpQc+fguCd/hIpQGbO03Kv6oV71v
-         bsSA==
+        d=gmail.com; s=20251104; t=1792637499; x=1793242299; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=bQjWlS+zoIgLZBYXu2UTP8g+cWSR4hoKBrfhZB3npOg=;
+        b=IyNlPDmvqQh6UNb6oyFftR4bVsaXCGIC98DFgICv7d3q0pC0y9wwNtclXmecX1uazA
+         fUfDrPu3iPJP4ipbMRgFA82m+iGmy2gwP2k5lGhqkHMeIa1rLhFtl9Azb/Lq+lMps9mQ
+         uYeEJD/yh1Ox9vtcb3J/B2gwabP+dor2TdItnGmNyybW1zF2YcAgHxO35ayUQOVBIK9s
+         A51CTsOzH0sAu0CAZnWaCPBbJa+jcOL8VPR3GsCOCBdw/CKX+kQbo2xXsrScKde8dh2N
+         Sp2kikflua/vWXfSiQCJZaY3ibFb85KLPWXmn+RUj6lyVeYzc0ewVx/N6gpi2tMjvq7L
+         nXGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792635443; x=1793240243;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=izhJMzAgtuAm0z2KDZK9IkKGS7FhPtRLUdb++ZPXC4c=;
-        b=DtjZVX4iiVI8tCmMXXy6djFciCAud0cCRrEi67x3WtHa3N/R1Y8sWO9nFJR8wG/4J/
-         c5EZGV1u3O6qH7TmemnVbxegFsguW6+eCFaW6VklJFpOPu7f9PAOyoC2y+IK/kXJi+zd
-         Ykx6MR4ZaVuns1Z9xU4oUpXTVO8Ay7adKPMOeL4Qom0dhmI6sjVMB7aZYcC122L7z0Sq
-         6To6IYGYiMMRvI2fSllovMvbYQTfZciX6lEDr4ouo9b9wzoVMj53at0pnTT8pHDKcoJl
-         7vF327oSdDoGDhK7y6x1EnkDZo3lc0rtfWO5sPeR4eY2oP2RDrsxlb30GHpcXCLVLfG5
-         pldQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxB1KHRoGhYJ7WEQGP1jLvahzYGUwBCUXFrtc0b5/fGRqq0dEAFJ4tWd27PGWj96VTepyo=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLDyX9q0IEYMkJYlVyPg90NTeisC0KXXXl4eKqCXapDtE0laRtS
-	ceY35Ok8oTSBwJFUq6JdKYnzovxXYNyjVf0G0VCVZUIh3HHTaszetD81/GPnPKKVA/dUWmMlh9V
-	K6MYTEhP16+LwpKEm8nCPoVbX1QLgK3I=
-X-Gm-Gg: AYBFou2E5TWXM2achGwicqNRMVzhBWNjcMFfJ9Rt41MDQQLANDdWhOwScx36M942u0q
-	TrkW5E6T9xrVMxfgVcikte+G7UlK/yILOpx6jiAqMm/a27s4CgoCmzwbooUXTH+vRFzU2bw/L+l
-	G+CyBm3z7vYCqP8DOVz4Jxllx04Aw9wPARWImvVG68P9vrLlkXr1UO0mDdYsJ0w9ZTW+uhnMJV/
-	qRA9ZdqlnHpGu56q+gWQc/ePEUdMb3Z4KzxaQK9ko1fs09fMiQ813QCbI4UmC/hkvaoNflNgwwK
-	xkco474rz5lKggc7yorepNsq5xkXiXxFmANnocz/JQ42VmEHJEjujc8aeU3LtzyPnH1P/5i8KRp
-	r52QLQhmqfmEFnotbCoN+tSYgsnbNQYTPUHs=
-X-Received: by 2002:a05:620a:6493:b0:939:9ef4:79eb with SMTP id
- af79cd13be357-93f57ff1ff9mr843820585a.6.1792635442824; Wed, 21 Oct 2026
- 19:17:22 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792637499; x=1793242299;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=bQjWlS+zoIgLZBYXu2UTP8g+cWSR4hoKBrfhZB3npOg=;
+        b=1NGXxDCIkZooMbSdvNFZMCoA5Dlk+QioxkiV4nQCoBaYvYqyPqXxwgU+VOGAlOKf22
+         hxLDjmafT9hhla0R9MNuNXTT/XWouapXkWHlKxk9PBrNlx83qKYBj8KzccsMEj8m/rda
+         SJQJaMOBQiPyMPsQfFF6Cz+8DRMobh7y32poLm+x9ge6XIQjlmWuB/AV3Ra2ZnL9Y3um
+         sS63Hia0KcMAYR4uJ1hIVQgbDH10JMNm4P/kDcIO7Z+a/E2DZioAHT7vDyiFG8KLWQWh
+         1VTEbA7uYyVgihE6zxPMPUu3IyR2phWu8WlqXpdIWtlBe1DmmyEHlhA+5xhhkq79l6B0
+         7AYQ==
+X-Gm-Message-State: AFq9FYKqBRMD/LSQDHQEr7xpOS7hGV7YT+7eYDIPdT/t2zsQNdptqSVA
+	WVxVnULc492+zi/Fb82On6aMqP1l8J/Z5UxSsw6MIFdyVKKVZXtkhrmyCdIXWg==
+X-Gm-Gg: AYBFou333jMTypxzdGD7uKXQwTVuRJ8SFpVxGn1x/Eku4d9zH8Zo6C0gHJmFgVIC2ec
+	bqjjtMQONriBzjK4qenrCe66VGpwEHpIEaKxSQZsYQgzAeLh+1nVOcU+8Rnkah3DgYrrhO3g49F
+	p5xKQP/ubqCe6UPdx0Ge8HdTApvScB53OVj0qDzyrQhTVwekT3bysadfVpKQXKJAGn2dXIBpt3z
+	+sWt+cUBSAJtPD9Sy6UpTevxlDOxuyZi5tD7eGnxdLrzOCSLoVZ66cJHpVrTHCdl6sfdK/i6mnj
+	VazwdNG3vkXl5dg22svruI6HKq8GIEnj2hkvdSKjjj6AXpnR0PehvriSf+fctmXrd2RKAKnUO+h
+	xJMkA/Kj9lnDS1pmunrKNrTz59nLxR+uKYhSsYvS7v2B3iWiOuBTXGl1rBeBr8t0D+Nx537aLBB
+	kBSjGVNRq0TPW7VPdpN5GpXEuV9m2Wqs+ZVvta3IO8gvj+rf4GK39M0WDvmBf0+JFTK19y+G8Cs
+	VjoHEEZ8GS3Vxl77DZwLLoHiP9ZNSn5FGS/aGgDMtW1hJL3dkTEpa3Mbg==
+X-Received: by 2002:a05:6a00:180f:b0:899:465d:c8ff with SMTP id d2e1a72fcca58-8a089d05d6dmr3064418b3a.13.1792637498960;
+        Wed, 21 Oct 2026 19:51:38 -0700 (PDT)
+Received: from [127.0.0.1] ([52.157.2.246])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a0895c060asm1482116b3a.22.2026.10.21.19.51.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2026 19:51:37 -0700 (PDT)
+Message-Id: <pull.2275.git.1792637495.gitgitgadget@gmail.com>
+From: "tsukasa-ino via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 22 Oct 2026 02:51:33 +0000
+Subject: [PATCH 0/2] checkout: finish switch when tracking config cannot be written
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,85 +92,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2268.git.1792458904027.gitgitgadget@gmail.com>
- <pull.2268.v2.git.1792618518.gitgitgadget@gmail.com> <xmqq7bjalmpt.fsf@gitster.g>
-In-Reply-To: <xmqq7bjalmpt.fsf@gitster.g>
-From: =?UTF-8?B?5LqV5LiK5Y+4?= <inoue.tsukasa.4@gmail.com>
-Date: Thu, 22 Oct 2026 11:17:12 +0900
-X-Gm-Features: AclHuK83JZSjc7iu1yhuZNwlVu5Iu1gP4IIfvoNbX5KernF5uB_aaePTD0jxNFU
-Message-ID: <CAP8tz2KOXHLjc5V1o1tZZWSsgOjVrp-ekH7H5KszBGK+hRqwrg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] checkout: finish switch when tracking config
- cannot be written
-To: Junio C Hamano <gitster@pobox.com>
-Cc: tsukasa-ino via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Harald Nordgren <haraldnordgren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    tsukasa-ino <inoue.tsukasa.4@gmail.com>
 
-> I am not sure if these two should be part of the same topic as the
-> first one, or they should be treated separately.  IOW, if the way
-> these two patches implement the fix proves to be contentious, does
-> it make sense to hold the change in 1/3 until 2&3/3 are resolved
-> (and vice versa), or can they be treated as two separate issues?
+When the tracking config cannot be written (for example, because
+.git/config.lock exists), git switch -c and checkout -b stop halfway. The
+worktree, the index and the new branch ref are already updated, but HEAD
+stays on the old branch, and the changes are left staged.
 
-Thanks for the question. I checked whether the patches can be split.
+ * 1/2 makes setup_tracking() return an error instead of calling exit(). No
+   behavior change yet.
+ * 2/2 makes switch and checkout finish the switch and exit with status 0,
+   as push -u, clone and fetch already do. git branch still fails.
 
-- 2/3 applies without 1/3.
-- 3/3 conflicts with 1/3 only in t3200, because its new test is placed
-  right after the one added by 1/3. The code does not depend on 1/3. The
-  hint sentence in the 3/3 commit message assumes the corrected hint, but
-  that is only a wording dependency.
+These patches were first sent as part of v2 of a series that also fixed the
+hint
+(https://lore.kernel.org/git/pull.2268.v2.git.1792618518.gitgitgadget@gmail.com/).
+Junio asked whether they can be treated separately from the hint fix
+(https://lore.kernel.org/git/xmqq7bjalmpt.fsf@gitster.g/), and I replied
+that they can
+(https://lore.kernel.org/git/CAP8tz2KOXHLjc5V1o1tZZWSsgOjVrp-ekH7H5KszBGK+hRqwrg@mail.gmail.com/).
+The direction was agreed in the bug report thread
+(https://lore.kernel.org/git/xmqqecdjsryk.fsf@gitster.g/).
 
-So 1/3 can be taken on its own. 2/3 and 3/3 can be discussed separately,
-and changes to them do not need to hold up 1/3. I will resend 2/3 and 3/3
-as a separate series on top of the current master, so that 1/3 can be
-applied first.
+Making the switch fully atomic, so that a failure undoes the worktree, the
+index, the ref and the config, is left for a separate topic.
 
-2026=E5=B9=B410=E6=9C=8822=E6=97=A5(=E6=9C=A8) 7:20 Junio C Hamano <gitster=
-@pobox.com>:
->
-> "tsukasa-ino via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > When the tracking config cannot be written (for example, because
-> > .git/config.lock exists), git switch -c and checkout -b stop halfway. T=
-he
-> > worktree, the index and the new branch ref are already updated, but HEA=
-D
-> > stays on the old branch, and the changes are left staged. The hint prin=
-ted
-> > at that point was also wrong: it suggested origin/refs/heads/.
-> >
-> > 1/3 strips refs/heads/ from the hint. 2/3 makes setup_tracking() return=
- an
-> > error instead of calling exit(). No behavior change yet. 3/3 makes swit=
-ch
-> > and checkout finish the switch and exit with status 0, as push -u, clon=
-e and
-> > fetch already do. git branch still fails.
-> >
-> > Changes since v1:
-> >
-> >  * 1/3: the test now compares the whole hint message, as suggested by H=
-arald
-> >    Nordgren. It also checks that the command in the hint works once the=
- lock
-> >    is removed, as suggested by Junio
-> >    (https://lore.kernel.org/git/xmqq7bjcup46.fsf@gitster.g/).
->
-> OK.
->
-> >  * 2/3 and 3/3 are new. They implement the direction agreed on the bug
-> >    report thread (https://lore.kernel.org/git/xmqqecdjsryk.fsf@gitster.=
-g/).
->
-> I am not sure if these two should be part of the same topic as the
-> first one, or they should be treated separately.  IOW, if the way
-> these two patches implement the fix proves to be contentious, does
-> it make sense to hold the change in 1/3 until 2&3/3 are resolved
-> (and vice versa), or can they be treated as two separate issues?
->
-> > Making the switch fully atomic, so that a failure undoes the worktree, =
-the
-> > index, the ref and the config, is left for a separate topic.
->
-> Sensible.
+tsukasa inoue (2):
+  branch: return an error from setup_tracking()
+  checkout: finish switching when the tracking config cannot be written
+
+ branch.c                  | 35 +++++++++++++++++++++--------------
+ branch.h                  | 21 +++++++++++++--------
+ builtin/branch.c          | 17 ++++++++++++-----
+ builtin/checkout.c        |  6 ++++++
+ t/t2027-checkout-track.sh | 20 ++++++++++++++++++++
+ t/t2060-switch.sh         | 20 ++++++++++++++++++++
+ t/t3200-branch.sh         | 13 +++++++++++++
+ 7 files changed, 105 insertions(+), 27 deletions(-)
+
+
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2275%2FtsukasaI%2Ffix%2Fcheckout-tracking-config-failure-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2275/tsukasaI/fix/checkout-tracking-config-failure-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2275
+-- 
+gitgitgadget
