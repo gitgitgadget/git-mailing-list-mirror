@@ -1,100 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.178
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792673981;
-	b=IVOLaNTiHLwJzpk3HV+yenaPJoKkbW+D1/kgO18FnmaqADYjwJtiTfwyKk0Wd293sA9u
-	 ryYC4zafJ9bvweEJVeoJG4D0Kx3Exnz5gkFR2JvCKfAKAZpMzUk74VUjXK0kBjdPbSYZB
-	 /bt2PCZ+6a2enRiWAwJAMBrPkl9oLw2NO5wkRmOfruHdMcJKNPsCNoAhNvLUEFXqMQQun
-	 +iAvKAy/3yof9pnadIRRG5GNsMX/m34DqxviqJjrYI9IcnGIJTbwg8JGwJ+PBrKxDcqf4
-	 r45j6Ru2OOw/4zctrQ2rMioyOBqIz5x09AZ1a6WT0IvxLbCRJI/+YLgH907YZEZFBNw==
+	t=1792674904;
+	b=ae18hFlcLyEcEDs/ZbMzRFOp1k0U1uXCOKqwhPCKGHEK8DQDEC13SzRErLMXL43nLZo5
+	 dTMIlWGZ8vxUqukERq4g55m5/37xM9RQl8Cf+PSxnR8PsH2qE7ahjPWxXyOmvEihfxsyg
+	 wjUYnfYIkiC+qA2+bRJZTOjiRnjgfkSiFp6Y66p8hot3AMcDmBHUv0wxVCiKBaiwMxzaj
+	 9k6BTvAyToad9fjvsb0N4LB23AFB+wdJi+BCtEZtFg72P+vhfEveohve72CuFogR/YJQ1
+	 qRJ8obuCOQHqzqEKoF4jEqIaOM7uu0BAbNghxJt6HyCvfzpLjE8bRPunbVWtakSMDlQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792673981;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792674904;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=lK86BFcQ32/VvsgNxuKFvKBdMQltTYEIeKxalhOFohM=;
-	b=M+pTpsZIjiHR6kdnNNJgsYHuJjadxIzLLJnGvtyhOzZqKiRZLSdO74iNbakcjsj5r1wa
-	 4T+vDFw5Pc709ZI/4rOLG/BuiidTpxwVJZCT8TV82g3kpomGsKbAZm7htVhbXuzVaWfo1
-	 AA2iQISRKQMK1B6MV6Q9WstekHo4F6Kz+sLg3WTcAYGR8byA53vjSQJXMo04uO1OEjnAB
-	 8P0EWFszLykJIxorJcEou+BiELli9UDEqQZwQfe0wZ6CQIxRi0XbWYCdN2o9PtAmg87+f
-	 U71uYtBkBzMP7CG0cVuzhwerFjSDppp3xYlLoSaAVVaXpeFAh8LrGB+wQcMpguIXG8A==
+	bh=cjUsqgZZth1eqxAlntKd6CdIpuBHJp2+yqm8vzlTK2U=;
+	b=Uw4L+//kfLLCtRhKHdmgMAvOT/jsQnON+C5pnsXvaidHVfMf9Pid9jWPKmkb0xxF/byc
+	 yIu9EC8AF7SvJX+xTphqwx9X5VLNTFGb1kGyh5Uxpwt0rE4HQkqUwotKF/DTh6DBveniC
+	 qJGJLzLXCYOdQKJb1iSBAw91GahJ0fbxZb9PWDJBaDvN4g+7EraCKtAnPnIH1CY8cEYX4
+	 Jpp5Gvcm4/beDTv2SdGLP8mWab65sF8+zRLf+yJyI7TR5nNVQjVLLsXSFtFx7GlrorEkE
+	 1207VsXrrzhUrqSG8xqkj3+JY/8dpr7pUXaAKzwIxxXRKn5f3w1F89cDnGEDi5wlf2A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=IGzV3CTD;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.43
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ltjRArp4;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.178
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D98606A31A
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 12:59:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 35D98606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FFE606A31E
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 13:15:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 51FFE606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=IGzV3CTD
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-3ab752f6244so1427299a91.2
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 05:59:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792673980; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ltjRArp4
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2e940d5d2beso7296445ad.0
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 06:15:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792674904; cv=none;
         d=google.com; s=arc-20260327;
-        b=FexDE3Q1tzoOLzcJHiH7X+VosBT6ADxIsBRzUOxx+yTSeUJ4Bxsw42tCXpdBuV7pg1
-         8R7nd49wsuKvsjbW8t3KiRNUks3EBYJRXT1hLrcJ8akwDU++LYMaBoDjmqL2SeZb1/vY
-         bSj71lP/NjHRYmuFcD/3ymiMbZey9XzcXR1pIIAdR7rQ9+ISGKW8gP6uOfoI4WT1239K
-         WHDT8TSXTJLL6w52oVU/576VTaceXq5X63d3MjTXt8qZIGmpuW1FQJUCF6RnjFyNgGew
-         Hp3JkeRhhLuGblJla5/rfAHeB3vlwn5KrtKlX4TMT5unoMav0P1Vmn/hcy2Fs4H7tbHK
-         YPpA==
+        b=Pxi9pKDESo16gIHtWLU5nOU9ucXNFcFwZYehmmbs1BnYPprROACsQV6eYaedaDDNMU
+         HHYDzqlJXITBfENr+JItPYbg++bt9Iyy4ZhE2VXkoZHyHj2eCmg/4ir4YCUIGojE9bdy
+         LSddLrE7TkMKo8MuCOAo4Ukt/cPNG5Foxpmw/HBNKfl0tOKSMgjSVZw0gwX2Qgals68F
+         4m+2tMNDduXyC5B8L2zHCE4KRCZ8bEGNp8wAfqQrOp26bPD4lmO48h3hmJoJFn/ep6a/
+         cdjY3nRF7ObygKwRUUzqN22y9ZmF/sfPw9PtsmlHwRHZO708PwacskRHWUQ4RVrWMU1r
+         ZXFw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=lK86BFcQ32/VvsgNxuKFvKBdMQltTYEIeKxalhOFohM=;
-        fh=OXrnopiBLOS4qZx9exbteBMWlhav61Ygp11xop9DB9s=;
-        b=O20Y73GfuENOE2TxyZIlxGN/+xZRAkNebnUG0aSI3kzPtEoiI7czKvP5cW8jjANvNf
-         lNwWmGw9r8pV6QsDMQdSD9085UhfHM1ocZZY1UfEYcb/SiwBpvqph0R+NB2BKsGZ1d0b
-         BsZTRCg/L45H7LIhwsBe/lv7nVJ1fHMdYwqKa7zZbdaGk4vbMzPj1SFz+KXmvB5dCVS7
-         PvNbwl69px1//Ooy+24BHDALMk/KMsLQgSt7zq13qelRM25GQr/6Rig6CGLwBCrRU0fw
-         Jt8fxAU2Gxb75wXQui+/pjMzu/BQv2bYYfI1GGkVyACiIV0gZ9Cm0uejxqDRfR9GxVJw
-         WkTw==;
+        bh=cjUsqgZZth1eqxAlntKd6CdIpuBHJp2+yqm8vzlTK2U=;
+        fh=XFzWQYBXScgxool/pwAxjUJoclOVldXyKbEJT+x+pf4=;
+        b=c5yjgkU8S7BFRoUUjut5hiApeZ2JwijJP6qq7tmAtcSRBGJzvZns8PJpxIOOhnGDSa
+         0uHqYmbFx6O84E7n2yuxYOeM5AaOV5+Dr40riT6avl2nSC52/YixZ75accmsQIvfZWMm
+         +i0ocqhD6YL2BW/a2GP2SDrBzt1UPllLfWoGv105tM3DFL6yRbriTitePoQWppK3uwCa
+         joC+9etUe1q6JnVeFYl/0IKkojrIaEdfQ3CBjoBSgFfjPUlCeijk3WqalcQ3Q4zCRA96
+         VRxRpTxYmH++IW/MIFhguTBY8ngCrVRDvS05ML84joi4z8wrSF+xOyMJ7TvG+rhJs9W4
+         iyYg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792673980; x=1793278780; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792674904; x=1793279704; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=lK86BFcQ32/VvsgNxuKFvKBdMQltTYEIeKxalhOFohM=;
-        b=IGzV3CTDexuznqJNf5RRc/OW4hfwhMsXYRI4WprgQuJnEiET4am3+PFkxdCcP20lcV
-         H1t5FG9g77PIw0bFdOpa5yK2CgSe2jZ3JXexU9RY0WsWPGtoypsvPqGGjpTSyglJ+CSk
-         VXfMartprVj3mL43y4bewqi16bScWYpqp7Ec0u1+swFYDuliXRh4JFOeWGSKnctPoCVa
-         jBHOOIT+VFTPoFymmJWbiYC4cenGDIS38fFTNv2zPk1HxpcpfjgCJJS02TcA6CXzuXyA
-         VWKZHDhkM4nOpEicbVdhP34pbD2i+7+cyF1dYIRM1o36biUaNQ0Q/1hCysYLRwfYMMn3
-         agzQ==
+        bh=cjUsqgZZth1eqxAlntKd6CdIpuBHJp2+yqm8vzlTK2U=;
+        b=ltjRArp4BbfkAfM1VhEGfIpAHoskyxl1CLg2RDh/FrhdimYHtiEVjEebnzqdwdnfEl
+         tDAXTay0yPMBHWVhgIQTtz+5EKsbfi84X6llM9rp+mIPolG8MA3E+ENGa83C+2rIa88n
+         eGR+7V/fAOEFYpj25y0/AftAkeedX8VpuAXc0GFpbxnxtwiIkk0qxC8aUgtixwSGiYex
+         iFoJOVGkma0BF9ioleTRe0W2h2ut7j4IvxDITeSib/rP0Z77vZx8kOLxGy6ZGWbWS+4V
+         fRaqKLI0GuU4ISrf58BYLcy32ohpBKE2oImRApER3A6K/mHWhVNQCVO2GTSDKjPritfd
+         7g+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792673980; x=1793278780;
+        d=1e100.net; s=20260707; t=1792674904; x=1793279704;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=lK86BFcQ32/VvsgNxuKFvKBdMQltTYEIeKxalhOFohM=;
-        b=AcCqABrX7iQYayZUpUmk21OZ1dv3xof9p5gM/8picaX+kHmlm4syo6WOIB46h8itso
-         xlVZL40UPs/YOuXMDd7N/AmuJk1yQQgY8EVAmGnkzMnLOlvoyebGyQb9i22ANiQAkBWY
-         F2XQZ7TF+arB7SwnK0EbU5Q6H5r4e601zvPQeZmQlSc4xisL6qdhNQ3EScvKD7Vym3DU
-         n8qeKa0oJDAXI9GYP+23Fc0PPVa8Mp49G9NUL75IL5kIrxPZ6MuxF/BrPdzBCNHBZTM0
-         MVYmOVcLmfRvTQpdkgGYGz4oSdE7ljNHSxUkDGKIMFveBQzoYpw+VbmNitO4qdvAgjOU
-         Of0w==
-X-Gm-Message-State: AFq9FYKJ2oyB8GvJNtmkig2UX81DsJbA3gWUDUOTs75AVi5Whbm7WPe6
-	09q7c8o/SdMd0ehKkvx4u2NIyAuimdJ4XTdkSZ/DnbbkF0Owutv+f2HQbmEtCUhKXfyA/LpS88m
-	NcCiCXAF3IpNiw8Na2ljxCi8bS0zFFss=
-X-Gm-Gg: AYBFou064ZYel9+bGDU4CvyiQ6JOtYdJL+JD15WbWkGIQMKUhpepmV0t/yA6kBkJZ8X
-	lHlOIdXxjMq+MDwXZUk7k5J76ntp6qOqDc7HB77M4aF+q+R4hHtMvnfJZnhgIfgit2g9EG9fhzs
-	/PwCA8tQ/cIlXMgTDhsPiyiGYvpHyxZqcOZW+KuEGYPTFAwEwnh8ZPZAxO2w3xIi3DhxQslHeb7
-	8FErmeIRkt19+ZUpZRYy+hyCEcOJP0fim/w2m6fIO+3dcfWBzQ+u0X3iGV+TAMR3Ldv9+L46eJX
-	tqSgsoyCBMjqMqxTAFo9xN5P7gIkuHnEKEAHZSf25vvMTonojraCgzqRe5WkjKdzlLcsfN2bVLQ
-	lhMEqEgJ+pfjcVV1pXYBIAFgxNqJsqoeu/64yrzYOGuvuB06+GDjgszXMK+czqMJ5AVbSzrriut
-	WLzJnEqww+2jQ2F1bo0+hhlXp1kxm4I9h/6q1yd28EFT7mTHrjclvCUGvyvhUhlilijA==
-X-Received: by 2002:a17:90b:2710:b0:3ac:ffb8:183b with SMTP id
- 98e67ed59e1d1-3ad8708f0bbmr4076111a91.51.1792673980525; Thu, 22 Oct 2026
- 05:59:40 -0700 (PDT)
+        bh=cjUsqgZZth1eqxAlntKd6CdIpuBHJp2+yqm8vzlTK2U=;
+        b=FvVwhq1BKbHYZDCeQlLrrE24VJZejb3i/9G81OcRlGJbLoNoftR0yOMRGDGgbc880t
+         k/oGJmJl7dBv+l9veyLrK55JFVhxlSmv8NvUpGtjZtI3Ne4eAdk/NTvcqO3y/pw4HViI
+         JLRIMkW5sP4HNwEg+IPbvwlvP9qbZG91R2OFpWwzZ0X9rrEmfUemMrny92JNRr0wtKs4
+         d/KUkKEyy4n5ZCcjTkFAJPCkfls3ptzU+RWztZUp+hoaeTEkOVKrhCFEMFFrU/LjR/AM
+         KIhhURX4rDCJWDOaJPnErYObUanVWLBQfiskh1J211UovAPMkkErXxla1L7LX0odC3tQ
+         IQDw==
+X-Gm-Message-State: AFq9FYJ1aQb4DzSiFcSvapj3Z6zUyJ3lvScGp9AZZihyB6Pix+CucWcq
+	s0FRQf5cBd4N6EhbQKbIL0qudenUVAOGraVlchVlI1Sh8k5/MuvenKWxgRLsPLDiWshQGFM+Hjr
+	GhAoS22Yt06jTSxKch1o4lo14FyFBIsw=
+X-Gm-Gg: AYBFou1CmiylDcDnvydCQiMEpMa6gfSHMesMXC8u7FHlGMohM8u3tsLkIou33DrQd8S
+	emnFGf0liT1uoqekycHLGgJeGTFqy4ovvlDYmXf3IfLiOjuZ6W/gHIyJ6A3TYZ1oeEG3ADoE8j2
+	oLTg+xU08oJkCQ940/Zp99H9CufBNSUjU6uqzlrGxrvRgFcl0KOFyEln9SOqx7BUBgKwOHF0SsW
+	RMU1xzdKWBAHkTEQVDoD29jHcP0rnvHPY+8e6MPSTs0dXeN4GrwAfR5Ja9S/GyxP/7EfumSxQyW
+	2yY+dbnNLlYZgRRcPo3uo1H0rzmkCWymcqXqjxXDkO410KpjXccSlQ/uaN32DnIZWxRpq7f89u5
+	zkyIm3uLUrAnt4qFrjU+ua+XJJ/3/ukAS5WBmJOmY4sTOm3b6Ds0u1NrKb6uwUvAlBsCayvskSb
+	0dTwbCZ2FguegmuueIP/P83OOUbPSjEmhKv4SC3TC00h8wQdSH2Fm+cmA7GWXy5WaJ/Q==
+X-Received: by 2002:a17:902:c949:b0:2e9:9a19:c54 with SMTP id
+ d9443c01a7336-2ea4402a230mr34787075ad.50.1792674903567; Thu, 22 Oct 2026
+ 06:15:03 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,50 +104,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com> <pull.2425.v3.git.git.1792585717.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2425.v3.git.git.1792585717.gitgitgadget@gmail.com>
+References: <atHZ0gV5Pz80l3ho@pks.im> <35E6B235-6370-4F94-A0B1-4B6A941D8C47@gmail.com>
+ <atcEqHErXaGiMu4J@pks.im>
+In-Reply-To: <atcEqHErXaGiMu4J@pks.im>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 22 Oct 2026 08:59:28 -0400
-X-Gm-Features: AclHuK94JLzmO3M_37_Qbri7psmr1fIMKLUUNmeO2qJ_mtCAtD4K91B1CmUmgt8
-Message-ID: <CALnO6CCpjhGoc+MOikVqtfRr2CJV-ayuLGZhEmwLXHEGML7yAw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] branch: let --delete-merged find squash merged branches
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Jasper Mayone <me@jaspermayone.com>, Harald Nordgren <haraldnordgren@gmail.com>
+Date: Thu, 22 Oct 2026 09:14:52 -0400
+X-Gm-Features: AclHuK_i7d2FKd6xBhDYvIAbnwuA1IdbGlSSn4kQuA7-ike-3HYwmOXteYVcXAg
+Message-ID: <CALnO6CCUfja_AxYjbz9xpZgoibbdvy6C4utDDQk9ONhjiOYYzg@mail.gmail.com>
+Subject: Re: [PATCH 5/5] completion: drop "stash save" completion altogether
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	=?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 21, 2026 at 8:28=E2=80=AFAM Harald Nordgren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Tue, Oct 20, 2026 at 2:05=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> Branches merged on GitHub with "Squash and merge" or "Rebase and merge" a=
-re
-> never deleted by git branch --delete-merged, because their tips are not
-> reachable from the upstream. This treats such a branch as merged when som=
-e
-> upstream commit contains all of its changes, and names that commit in the
-> output:
->
-> Deleted branch topic (was 1a2b3c4, landed as 9f8e7d6).
->
->
-> This series finds the first upstream commit since the fork point that has
-> the branch's version of every file the branch changed, comparing only obj=
-ect
-> ids. With --squashed, a file that upstream also changed counts when mergi=
+> On Mon, Oct 19, 2026 at 04:01:15PM -0400, Ben Knoble wrote:
+> >
+> > > Le 16 oct. 2026 =C3=A0 04:01, Patrick Steinhardt <ps@pks.im> a =C3=A9=
+crit :
+> > >
+> > > =EF=BB=BFOn Mon, Oct 12, 2026 at 01:48:31PM -0400, D. Ben Knoble wrot=
+e:
+> > >> It's been deprecated since fd2ebf14db (stash: mark "git stash save"
+> > >> deprecated in the man page, 2017-10-22) and the previous commit remo=
+ved
+> > >> further documentation suggesting to use it.
+> > >>
+> > >> Since we recommend push instead, stop completing for "save" and remo=
+ve a
+> > >> special case in completion code.
+> > >
+> > > This is the only part I'm a bit torn on. I think it's reasonable to n=
+ot
+> > > autocomplete the "save" command, but if the user manually types it,
+> > > should we really stop autocompleting its options altogether?
+> > >
+> > > Maybe the answer is "yes". After all, as you mentioned in the precedi=
 ng
-> the branch's version into upstream's leaves it unchanged. Timed on my clo=
-ne
-> with 65 branches, this takes 0.5s.
+> > > commit, the command is deprecated since 2017 already! And after almos=
+t
+> > > 10 years I think it's fair to start giving users more nudges into the
+> > > direction of using "push" instead.
+> > >
+> > > One note though: the command _will_ be completed in the case where yo=
+u
+> > > have GIT_COMPLETION_SHOW_ALL set
+> >
+> > I should definitely mention SHOW_ALL; I=E2=80=99m not actually sure
+> > what happens for =C2=AB git stash save --<TAB> =C2=BB with this patch,
+> > so I=E2=80=99ll double-check. I actually wonder if it will complete opt=
+ions.
+> >
+> > Would that satisfy you if so ?
+>
+> Probably depends on the outcome of your tests, but ultimately I think
+> I'd be fine with either of the options. But if we stop autocompleting we
+> should definitely mention SHOW_ALL.
 
-> Harald Nordgren (3):
->   branch: move the deleteMerged opt-out check into a helper
->   branch: let --delete-merged find rebase merged branches
->   branch: add --squashed to find squash merged branches
+Here's what my testing showed (all Zsh):
 
-I hope you'll have a moment to consider my reply in
-<https://lore.kernel.org/git/CALnO6CAsCvJRywkw0WpO1nEhL+yU2-r_4Z2AHdJch1m=
-=3DNK8=3DTA@mail.gmail.com/T/#m5244d4a2781578b3058c4cef272a2014291ab85e>
-wrt the CLI. Perhaps a modifier in --delete-merged's value would be
-better than another --option that modifies how it behaves?
+- with SHOW_ALL, "git stash <tab>" lists "save" as an option; "git
+stash save --<tab>" completes options
+- without SHOW_ALL, "git stash <tab>" does not list "save"; "git stash
+sa<tab>" does not complete "save"; "git stash save --<tab>" completes
+options
+
+I'll update the commit locally to reflect this. Thoughts?
+
+--=20
+D. Ben Knoble
