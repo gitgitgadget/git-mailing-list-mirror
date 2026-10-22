@@ -1,95 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.49
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792704081;
-	b=vn641Nm06Gr+HgbTQ4FX9Gi7byjILmGvsAc4MhShADeU//T5GgkjELTrXC88GftHAVz+
-	 QDJe9qNhPJGWKO83qoz4HzTMskoEDLRmoJvUymK0xe2vUxFLpY1pfsBpDR3dpO0lDinCR
-	 LgH7o390sOF6BmWA0zSqOi2/aKrDL41dUukn4yO/KlIncMstJUUhITShL/8EZCzwTb5FT
-	 V8mCZcbIVWTRNWVOOqBqrg/lSJld6Nh4yiPIvCZ2ZVV52/u400k7FiYg9MiNuoPAiV8eH
-	 NIRnakTpvuyvfa3OGZ04YfhiUDDsfVFyQxMq4S1t+6zKG3ed5wBcIW0j3aOEbFv+yNQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792704081;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.179
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792704220;
+	b=ykpiKIwBvcShI0AqyV5hDiXfehcuPT3GBe8z63TmqJSTCqOJaC1oyF8hmzdK7JcmsMtw
+	 BpxZm3Rpk7xbaDifEF/Ky2zBX9myLiNhSmgitikgQZX3DSi4ng3gi68cQj+qxHgaup07/
+	 E7/bqqVWG9asbmvCsJSZy4s5eKZJBDFEIt320U2c5i4D9H4BIXLr0SgTQcxxvu8RTBVBP
+	 tJPtBoUNSwQRAXIi7us8K7vlk9Ayiw3KDFRn4Qvd5s0avB1zhEtTCRBhTr0xIocX23iBl
+	 K/3bgsm9SI+u+juLAmbQvhcmyfs5Dtyp/81Nmh4EYn3crhdNZ/wc97HFr5qSsdmt/tQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792704220;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:
-	 X-Google-Original-From:Date:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=YDCUPNxhOzODv/OwDKb7mPV0YF9jHqHfSjWXJu3Vl0Q=;
-	b=CiOSv+ZRxMCJuxTYGUGOQYf5++W3Gr/6Pwa/GrZ7dFbLfaRJKLpXjUL9e/oMaAlBMJ4P
-	 EJunKYm90h9VSq5rpkMyn/uXBl7efqiTGM8S2EKlmZ0PBMzyv+0Oo3PqhRRBLgMrSxNal
-	 sBP2x6VhluBkLvrKQTmdimMy98cT92vbMh4nFZCSGBDDykxtAs1saZSkCEY+NhiiCBNGQ
-	 t+Xc3vHMmKVWOe0JcSW8EBIwGm95gp8xwzvHm2K/kJ/8MAG4Ddtfl8PyLoKth6mAgEhJH
-	 bMgCF00+fhCPcuW9giqwSymVPtqkkp6PTx8TFegUFiaN287kFbG9KjpO+VvtSwWpUHg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=openai.com;
-	spf=pass smtp.mailfrom=openai.com;
-	dkim=pass header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=P7Y2JCvg;
-	arc=none smtp.remote-ip=209.85.161.49
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=baXcvPyQaT+LNNuQIJsEeRRhvcNrI6NKJ2l6T8BMVZM=;
+	b=5DxDhZSpLh68wLcYElvIHAfLErsMBpW/mqnr9lvQft4DEo6eVTbeUdqaXknhf1NIr1JI
+	 ZRzkVS+KXJdnSDBip5k0LcT7e6ZmBlPr6wXbQ2wddeAmSxRkDXNOE8VvadvXoQ+k1Hj7N
+	 2ogMCASBNV+4/ZuwC0ZiwNUYvG03pDTARRxKotpxo02zPNR5ppm/WLJQW0FqFFiaNVgHc
+	 HJVFqDIEmRnoMxbwsPMMj5DHVOc3zV8XPNyVrfkob27AT/4OmaS0q4/0x/Cn11IlBtsci
+	 Ybap+OpKN2Krmq7LhdojR73gr3+0felqidlgKxeRyYdthzslqxSSu8/MYmKz/IJCa+g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=A1QysMft;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.179
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5D2606A31D
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 21:21:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA5D2606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF53606A31B
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 21:23:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DBF53606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=P7Y2JCvg
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-70094949641so206869eaf.0
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 14:21:20 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=A1QysMft
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-8b0d126f631so2715287b3.2
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 14:23:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792704219; cv=none;
+        d=google.com; s=arc-20260327;
+        b=iYBsW7ryeOGGVi7aKi63IdgnV7f7UTTHQ7EpBBqKIHrbsaaujs0AKaF6d2656edn86
+         LVjAgMGSGkzvp72qBaX0mDqupZixh1DsJELuUb5WoR11gZk/ct+IQnUAiI7rRzdte0q4
+         HNOC85hzlo/wx776nOCYgwsh7jKmqrJKSZ70EJPL7J+dLelwaL7oh/hcLoOAnpaXZkCb
+         9dOheIAMpjTZtSpdkfSFy2SD9YPothny6NSnGNOJM268fn9bD21cjHzgXUh8W5tlv7sh
+         /Bd2HgoAdWwSckuDP9Gt1xxWKGxDux7EfQPLeylLRQY6CQy88BNIZR5NsAWMYqcU+nu2
+         fuLw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=baXcvPyQaT+LNNuQIJsEeRRhvcNrI6NKJ2l6T8BMVZM=;
+        fh=XDtuIuVWfMV6CNxiJIW9hxI0PpQ0rpxcGfC9oO9wyhA=;
+        b=gSN3kw9Q6tf3qTBBNN9wJpHYTE9nZGKqk5rMgkuBK9acvwQ6exXi9QEAE27OpZCiQi
+         ioWyONNjCJf0Elv0W/8W4hQ22hKYbTWPXyZky4rqoqgovjjVUlAQB31SMBx45Pg/r5sK
+         Fil9jrYg8FQW8PXq+AfDp2JylFsrMfQVh5o8/hlbrBfvHKeie0UqkYob4Qnnf3DRnEt5
+         Pqde5+dRYQAsXk7TZRZUvKWENVR8TH2mAmk9A9kQLNPoJSgS7GohzNwjpt+e4lPwe8vr
+         JwR1O8Ibioh0fUkEjhnm6gG4GfHRid+iK5ZxIyphqDZCbyPiihUHBQvQTPuVhSE8Yejz
+         fdIg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1792704079; x=1793308879; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1792704219; x=1793309019; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=YDCUPNxhOzODv/OwDKb7mPV0YF9jHqHfSjWXJu3Vl0Q=;
-        b=P7Y2JCvggTpRXBZf73OZwO/viLWnvWwsYg/GmhEvIm/AaR4jpUXhECAHKQUJaEvsiQ
-         CWKvm0CNDuoO42yuMmZXz+GYWvGnLelOOoSdKUOw+sIWxR0OVQkJ/8ujsk8k+yK10MGW
-         Ppyxxp6g8gwfEiwIIjPERB5HSgjbRBFW8WpfI=
+        bh=baXcvPyQaT+LNNuQIJsEeRRhvcNrI6NKJ2l6T8BMVZM=;
+        b=A1QysMfthbFPq5EMjNQwCp4UrLRJmzzYIuFIQQ9gCoGOzjhmVIe2jbOReLqFHp1jZr
+         njUPv8MaxA+vyfNl5t7Inssiblr0ZYQBqp+ANIflY6OqOTkLT6RFR6WbCFk/qX1VnURD
+         I2TRo7m/CNcw43hEucwNOxUlfIUcL0NIV/wnc01gzZgRaLJN9jov4IdEWkJSWtRUtqIJ
+         tUb3XeArMX39z8LH15wzna3ccZBHpM5mg+wrjo230KIIVr8Xpy2WwJE6BE7FL8kSjD+t
+         sI91+4fIlbHtAzyMTYuM8pB6oNyRoITNOf3JPTT22H2kiwOeB83hGkOAuEA7YF9UwVR0
+         LN3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792704079; x=1793308879;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:x-gm-gg
+        d=1e100.net; s=20260707; t=1792704219; x=1793309019;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=YDCUPNxhOzODv/OwDKb7mPV0YF9jHqHfSjWXJu3Vl0Q=;
-        b=gz45p+5zET7Nb+ULzWa87iExBsCukqLs4KNspyuhZQ0QQaWB+2DtQBXWplBGpef9B0
-         nshwz1qIWpC7IbCzRsx/sl7KoT4/VTz2/PBmLbnztYZkoSLi631XR8vsH34WRK1Y5Tal
-         2DB4Bmc9e3NAi4ncUYmgDsdTLZMQl49mUICkac0dVuMFGx5IVVzQbShq0vFwoURXfZg8
-         90qCNZ49fB9rMNREWv1nicxLj0hjZqj6dRHXtCLCHFgChU2USecFp8XOYyXgONmJ7P45
-         PtqVhGs+upDI8WLxJdI+XQGGxsTiPaSUZdj7Gx43FO3OtNpGGtyhtV6oz9Ogg+11Jy/H
-         zZWg==
-X-Gm-Message-State: AFq9FYIq5F88opG51fNLgfB9RgE3yA5MqZ3CZe4nB22pFxQSESqI5Ytb
-	lxnvNqx7mEgAW0gzPYXHJPndUL3mwcYamfUcRV/EYY3AGOIGqbzZQraL+Z0CiipwvM+q1SbR1m2
-	CrCKVHoo=
-X-Gm-Gg: AYBFou2mb+YLOI2STm8mbrzhjA17+jga6q1k8PX6l4nK5KUFvauZwkox7LURB6sYQgR
-	G8L2gNHxvDHARZQlXKezoH0Qx/tsQ4FOcw4QahIx6vh/CRinxgKfTdLiUcFQSwo+IHBF+0o+YkC
-	eX4IKQJC4cKmhotFgvf2lLgP+ghfMuJuiqjua3q6oPDp+tqLSW9rKK8DnfNT16r7/svU8/fZ0H6
-	eCfk0hMwZ1gMv5olvh/JP0+H1Qh2vOuz3IWo6mGYM46fU0FctEbBk9oEtlhvyBJK75J2z+xxwQ0
-	RfJJYW8UUGNsXemXsHU483KC93juURD+uQagkz79w53rlgLh+rbHBV5nt8xCIZPjRf7v0iUxujO
-	+bPR6atxPRkvWHPz1SiBNyHZX4SBMvvxfTKNvhmUoK2ajdAKJMfHHGYm7IFz0WMWxeGfsb1BrOb
-	59xq57xfxZDNSYq0DYzLzen4OE7ILzBGArbma7UpkbhfBL6p/+mg+pSJziaY/EtJAk0zxxjutJ6
-	CDimpHk1638lTCyvJikdXx/7g13cW98+iMoNhKEVtuDaTyqCL8eGPnODzMgMHDwME7fHVsr+5gM
-	/VLC38yGFRpj72PfF4JgR1wl0f3QOrEYi0LRveBMM1qaY5IWF1qb76JG7RGXdoJP
-X-Received: by 2002:a05:6820:230c:b0:6f9:f85:aea4 with SMTP id 006d021491bc7-70b88a9f83dmr284095eaf.33.1792704079585;
-        Thu, 22 Oct 2026 14:21:19 -0700 (PDT)
-Received: from com-79390 (vpn-centralus-04.tradc-corp.com. [20.80.83.168])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-70b8afa2941sm297132eaf.2.2026.10.22.14.21.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 14:21:19 -0700 (PDT)
-From: Taylor Blau <ttaylorr@openai.com>
-X-Google-Original-From: Taylor Blau <me@ttaylorr.com>
-Date: Thu, 22 Oct 2026 16:21:13 -0500
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
-	Jonathan Tan <jonathantanmy@fastmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Derrick Stolee <stolee@gmail.com>, Ted Nyman <tnyman@openai.com>,
-	Daniel Reynaud <dreynaud@openai.com>,
-	Aaron Friel <friel@openai.com>
-Subject: [PATCH v2] negotiator/skipping.c: parse parents before queueing
-Message-ID: <9e9ae442333b5e2ccc0905c44c2c3e16c49481a7.1792704069.git.me@ttaylorr.com>
-References: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
+        bh=baXcvPyQaT+LNNuQIJsEeRRhvcNrI6NKJ2l6T8BMVZM=;
+        b=MGbr1FmhZzjx8MBc3hWz2R+I2dNGj+GwcS+wneF0iHD0A5cBuouXFoYXmXr4kdUbiZ
+         ZDac9eITf3+NI29Bmk7yYaDcfFPnueei18NjB9pgxTfGlDnOTmsTazfKETM34wdZKoh8
+         oNYnjhLfj6rrXoRd0/t1cMX3EcQyfVPuO7+y/Lu5MTdrsbpTE96tWT2mY3johtBSlBiO
+         2IWQT2b8F8i0a7T3oEChHfvY/4zXCI5X3aK9vmGILQTHc+tvm3UykxJG/ixJCAZh5nGK
+         Su2O5jus/m/3KX06bVLtqtSsjTJw4uocHz5/q4TagW79AXK30cu/pceZKoN3uEOHZl1g
+         at0w==
+X-Gm-Message-State: AFq9FYKT10mimFtvgtFyYfyyrvpbMGX6wiOlCG+GlWju0sA3Vl84oxbW
+	/+qtFHQk9hP5MNgltnZCArvdf2/N6Qbvb08Tjjuc77+2IR83V//apfRhsq6yGE6c34KdkuvbdGh
+	hpOIfT7Zg+B3ZZ3onWoIXq0F45BqRnoE=
+X-Gm-Gg: AYBFou3BONf7eWwQfQyPqp80UuN/1qMhNbWTvFmSlv+UWpZG5YNB7AX/1EZTLKUAFKI
+	zY6oOHtGFE5fz/WVuUvfiagbNiAwnXlAspwGfYWXOjACpCOMr9JXMZZTdLi7W7WMXbmDTgfYJjX
+	5gYlY8+ZRzPEhVKrRhORCUWAf//G52JyYzNBtGRy7Z6myEcqupffnx9AZOfKY+QbGeMQz9OidUI
+	FmkTgZ4s8yjIO7jJZK61d2MZrY5nvd38a9Z/y4qlT85Uv1tVeEZUIOvVhsk9gh8zPaFSMC5WBu6
+	YBa76pYNYrApd09/IzjfvmAkMXdD7UoZKNAeLuBWEG8ut2YF7BAJebliTszl/zV+NNpsyBjkkU/
+	hBqUmI3qpUkOlknpBUYeUUSknqupmmZlTXw8XipKqe+DW+jPi+QrJjbBNOhhJob5uA9pL9YUl/J
+	8Zhgt90QzUZ65SW1BZadJRRS8X1xMal44njCbucICr0PfxNLR7gDHi1LtASMxpWySRdlQFJwZw6
+	40UFWzJ19oYusjM5VJVLAI=
+X-Received: by 2002:a05:690c:7001:b0:8b0:a4c4:1b16 with SMTP id
+ 00721157ae682-8b157ba29e3mr3210737b3.1.1792704218792; Thu, 22 Oct 2026
+ 14:23:38 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,209 +105,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
+References: <20261017225326.7827-1-okhuomonajayi54@gmail.com>
+ <20261022105641.68963-1-okhuomonajayi54@gmail.com> <xmqqo6clfu19.fsf@gitster.g>
+In-Reply-To: <xmqqo6clfu19.fsf@gitster.g>
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Date: Thu, 22 Oct 2026 22:23:27 +0100
+X-Gm-Features: AclHuK-OTuX1KydQcxo37L7XUHyUyKrO9EIYoEnWo071FtK-RflWgDaYMj5Yxu0
+Message-ID: <CAFpMFfAhONvaXUVHhkXr9KV-G5hKT2kLi4pa4qZMpVZQUWgBxg@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v2] checkout: pass the repository to unique_tracking_name()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, usmanakinyemi202@gmail.com, 
+	christian.couder@gmail.com, siddharthasthana31@gmail.com, 
+	kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Taylor Blau <ttaylorr@openai.com>
+On Thu, Oct 22, 2026 at 7:51=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> The mention of for_each_remote() feels weirdly abrupt.  Many other
+> things still rely on the the_repository global variable, but
+> there must be a reason why for_each_remote() is singled out in the
+> context of this patch.  What is it?
 
-The skipping negotiator sorts its queue by commit date, but callers
-which push commits onto that queue, such as `push_parent()`, can add a
-parent before parsing it. When an unparsed commit enters the queue, its
-date is still zero, so old ref tips may sort ahead of it.
 
-For example, suppose a topic branch is one commit ahead of master.
-Skipping offers the topic tip and skips master's tip. Master's parent
-then waits behind old ref tips. With enough old refs, negotiation can
-end before we offer that recent common ancestor.
+Thanks for the review.
 
-Parse each unseen parent before adding it to the queue, so the queue
-uses its actual date. If parsing fails, leave the parent out of the
-queue.
+You are right. I mentioned for_each_remote() because
+unique_tracking_name() calls it to go through the remotes, and it
+still reads them from the_repository. So the new repository
+parameter is not used everywhere yet, and a caller passing a
+different repository would not get the right result.
 
-Since the sole caller of `prio_queue_put()` ensures that commits are
-fully parsed before pushing them onto the queue, we can avoid a noop
-call to `repo_parse_commit()` within `get_rev()`.
+I will look into this more closely before sending anything else.
 
-Note that unlike the default negotiator, the skipping negotiator's
-version of `rev_list_push()` returns a pointer to an 'entry' struct. As
-a consequence, callers must be prepared to handle a NULL return value.
-The caller in `push_parent()` gains a NULL-ness check, and the remaining
-two callers continue to ignore the return value from `rev_list_push()`.
-
-Signed-off-by: Taylor Blau <ttaylorr@openai.com>
----
- negotiator/skipping.c                |  8 +++++--
- t/t5552-skipping-fetch-negotiator.sh | 32 ++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+), 2 deletions(-)
-
-diff --git a/negotiator/skipping.c b/negotiator/skipping.c
-index db90fa77b53..0ae5f28d353 100644
---- a/negotiator/skipping.c
-+++ b/negotiator/skipping.c
-@@ -66,6 +66,9 @@ static struct entry *rev_list_push(struct data *data, struct commit *commit, int
- 	struct entry *entry;
- 	commit->object.flags |= mark | SEEN;
- 
-+	if (repo_parse_commit(the_repository, commit))
-+		return NULL;
-+
- 	CALLOC_ARRAY(entry, 1);
- 	entry->commit = commit;
- 	prio_queue_put(&data->rev_list, entry);
-@@ -125,7 +128,7 @@ static void mark_common(struct data *data, struct commit *seen_commit)
-  * entry has the correct flags and ttl.
-  *
-  * This function returns 1 if an entry was found or created, and 0 otherwise
-- * (because the entry for this commit had already been popped).
-+ * (because the commit could not be parsed or its entry had already been popped).
-  */
- static int push_parent(struct data *data, struct entry *entry,
- 		       struct commit *to_push)
-@@ -152,6 +155,8 @@ static int push_parent(struct data *data, struct entry *entry,
- 		;
- 	} else {
- 		parent_entry = rev_list_push(data, to_push, 0);
-+		if (!parent_entry)
-+			return 0;
- 	}
- 
- 	if (entry->commit->object.flags & (COMMON | ADVERTISED)) {
-@@ -194,7 +199,6 @@ static const struct object_id *get_rev(struct data *data)
- 		if (!(commit->object.flags & COMMON) && !entry->ttl)
- 			to_send = commit;
- 
--		repo_parse_commit(the_repository, commit);
- 		for (p = commit->parents; p; p = p->next)
- 			parent_pushed |= push_parent(data, entry, p->item);
- 
-diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
-index 96e224168eb..7479424ca94 100755
---- a/t/t5552-skipping-fetch-negotiator.sh
-+++ b/t/t5552-skipping-fetch-negotiator.sh
-@@ -223,4 +223,36 @@ test_expect_success 'do not send "have" with ancestors of commits that server AC
- 	have_sent b2.c1 b2.c0
- '
- 
-+test_expect_success 'recent ancestors are sent before old ref tips' '
-+	rm -rf server client trace &&
-+	git init server &&
-+	test_tick=2000000000 &&
-+	test_commit -C server --no-tag base &&
-+	test_commit -C server --no-tag parent &&
-+	test_commit -C server --no-tag main &&
-+	git clone server client &&
-+	test_commit -C server --no-tag to_fetch &&
-+
-+	git -C client checkout -b topic &&
-+	test_commit -C client --no-tag topic &&
-+
-+	# These old tips have known dates, but the recent parent has no ref.
-+	# Without parsing parents before queueing them, its date is zero and
-+	# all of these tips are sent first, delaying it past the first batch.
-+	for i in $(test_seq 32)
-+	do
-+		old=$(echo "old $i" |
-+			GIT_AUTHOR_DATE="1000000000 +0000" \
-+			GIT_COMMITTER_DATE="1000000000 +0000" \
-+			git -C client commit-tree HEAD^{tree}) &&
-+		git -C client update-ref refs/heads/old-$i "$old" || return 1
-+	done &&
-+
-+	test_config -C client fetch.negotiationalgorithm skipping &&
-+	trace_fetch client origin &&
-+	git -C client rev-parse HEAD HEAD~2 >expect &&
-+	sed -n "s/.*fetch> have //p" trace | head -n 2 >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-
-Range-diff against v1:
-1:  cfb16d16d8c ! 1:  9e9ae442333 negotiator/skipping.c: parse parents before queueing
-    @@ Metadata
-      ## Commit message ##
-         negotiator/skipping.c: parse parents before queueing
-     
-    -    The skipping negotiator sorts its queue by commit date, but
-    -    `push_parent()` can add a parent before parsing it. Its date is still
-    -    zero, so old ref tips go ahead of it.
-    +    The skipping negotiator sorts its queue by commit date, but callers
-    +    which push commits onto that queue, such as `push_parent()`, can add a
-    +    parent before parsing it. When an unparsed commit enters the queue, its
-    +    date is still zero, so old ref tips may sort ahead of it.
-     
-         For example, suppose a topic branch is one commit ahead of master.
-         Skipping offers the topic tip and skips master's tip. Master's parent
-    @@ Commit message
-         uses its actual date. If parsing fails, leave the parent out of the
-         queue.
-     
-    +    Since the sole caller of `prio_queue_put()` ensures that commits are
-    +    fully parsed before pushing them onto the queue, we can avoid a noop
-    +    call to `repo_parse_commit()` within `get_rev()`.
-    +
-    +    Note that unlike the default negotiator, the skipping negotiator's
-    +    version of `rev_list_push()` returns a pointer to an 'entry' struct. As
-    +    a consequence, callers must be prepared to handle a NULL return value.
-    +    The caller in `push_parent()` gains a NULL-ness check, and the remaining
-    +    two callers continue to ignore the return value from `rev_list_push()`.
-    +
-         Signed-off-by: Taylor Blau <ttaylorr@openai.com>
-    -    Signed-off-by: Taylor Blau <me@ttaylorr.com>
-     
-      ## negotiator/skipping.c ##
-    +@@ negotiator/skipping.c: static struct entry *rev_list_push(struct data *data, struct commit *commit, int
-    + 	struct entry *entry;
-    + 	commit->object.flags |= mark | SEEN;
-    + 
-    ++	if (repo_parse_commit(the_repository, commit))
-    ++		return NULL;
-    ++
-    + 	CALLOC_ARRAY(entry, 1);
-    + 	entry->commit = commit;
-    + 	prio_queue_put(&data->rev_list, entry);
-     @@ negotiator/skipping.c: static void mark_common(struct data *data, struct commit *seen_commit)
-       * entry has the correct flags and ttl.
-       *
-    @@ negotiator/skipping.c: static void mark_common(struct data *data, struct commit
-      static int push_parent(struct data *data, struct entry *entry,
-      		       struct commit *to_push)
-     @@ negotiator/skipping.c: static int push_parent(struct data *data, struct entry *entry,
-    - parent_found:
-      		;
-      	} else {
-    -+		/* Parse the parent before using its date to order the queue. */
-    -+		if (repo_parse_commit(the_repository, to_push))
-    -+			return 0;
-      		parent_entry = rev_list_push(data, to_push, 0);
-    ++		if (!parent_entry)
-    ++			return 0;
-      	}
-      
-    + 	if (entry->commit->object.flags & (COMMON | ADVERTISED)) {
-    +@@ negotiator/skipping.c: static const struct object_id *get_rev(struct data *data)
-    + 		if (!(commit->object.flags & COMMON) && !entry->ttl)
-    + 			to_send = commit;
-    + 
-    +-		repo_parse_commit(the_repository, commit);
-    + 		for (p = commit->parents; p; p = p->next)
-    + 			parent_pushed |= push_parent(data, entry, p->item);
-    + 
-     
-      ## t/t5552-skipping-fetch-negotiator.sh ##
-     @@ t/t5552-skipping-fetch-negotiator.sh: test_expect_success 'do not send "have" with ancestors of commits that server AC
-    @@ t/t5552-skipping-fetch-negotiator.sh: test_expect_success 'do not send "have" wi
-     +	test_config -C client fetch.negotiationalgorithm skipping &&
-     +	trace_fetch client origin &&
-     +	git -C client rev-parse HEAD HEAD~2 >expect &&
-    -+	sed -n "s/.*fetch> have //p" trace >haves &&
-    -+	sed -n "1,2p" haves >actual &&
-    ++	sed -n "s/.*fetch> have //p" trace | head -n 2 >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-
-base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
--- 
-2.56.0.187.g9e9ae442333
+Thanks,
+Okhuomon
