@@ -1,95 +1,65 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.180
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792701520;
-	b=uFF14QB2lgL7xRE6Dp529b8zxJaT+tqH/s3ZAmqeKUmObKib/6sOOn4e8ixbqmhPbF6Y
-	 ppuRRjt+fy0yZlUD226Brsdlu7gcOdD7HrSF6Dt67HYv6yX2qolzBuJCxtcMrC/Bp8il8
-	 D6ylnJtWByneyw8dqQ0XTLZF2fo0nz4WKi2IkT6oCebWjEXPzFyA4w4PuKzgg2qjHeyFX
-	 LSQyLzQG6tQlS5kLdRyJUoODMhxc+CGa3GxUm3YUHP+b3BQvY36Y8OV7gCsqjMQaW9FFG
-	 2hbRPqEPdSGYNrI3DkOambAF5RbnlIojJvuiTDELcP4sCl97PJYXPifLcyrJDiDPubw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792701520;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=RkXTaieQfvwByEwiEJCObX7fsMD/HTm9dSmze9IBwbw=;
-	b=4G562D6qgVP+mRKrFs/puyHKl9p9uCa6GxwERzF12JimcUCeGYPLmnI8EDO0ugjPIniY
-	 S5hzrywmR88zL+28L10/YalKt1x5yw5Myz29tRkomqbU9d142+rT+jijO4oVA2QnWpjmF
-	 Nar6QuyJfDc9SrMvNrt1x4gFRGhZtBreKan2dPKEdAQdNy4OdPK0TEnYHwGJQvtvHw2g/
-	 V0Zi416isWYH3GHSHZnvqJYpk6TBU+JIIME8/O+bJZdgD8ffymvB9ssG6TtrKDc8HCA2b
-	 nRpwSQz4UfX2/5cLi7Cq87NJT7V4NkEisrzrLMh+zA2CV7fm0iHYS/3tjmjOdT6L2kQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=openai.com;
-	spf=pass smtp.mailfrom=openai.com;
-	dkim=pass header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=Xnlyvhlr;
-	arc=none smtp.remote-ip=209.85.160.180
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.106
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792701937;
+	b=IhSIbhTfKomZMsqXqFr0IC6EXEfL2DsWLCbEFqOogCtywC52ah52JwAW35sQ86h+tBvC
+	 VWfGUQx5blAu1Kte8mp4U6ExifNOKCkNP4f/VKiZQ70wbiYbOhD82RFAK5/NnugE2u/Io
+	 ImkdqGN1nslcPK45mT1qVnBN1zTPHNRuwge2LCRif/H5O+maXmyb1Zefuj1gvO1fQzJc1
+	 Ih7/pMaLY+H6uE4cfubSeMDZ1HcqesbwErwX3iFlcaoxr8SOYbSyE37aIlA/UXUWGjQod
+	 MYb79/ficZX1eIAGaraknO/IUWZKVsoBO/vBKXVDc5tAjdYQVUkSyRd5BtlcdqPO39Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792701937;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
+	 X-Zoho-Virus-Status:X-Zoho-AV-Stamp:X-ZohoMailClient;
+	bh=hbxPyRGszq12hOs55lwihU4JWHw8VP+gegTqvCUw6t0=;
+	b=zVFcDjRjsGArHk+o4J3xtxhCFkH3gWAcmbWkrrx75W/CM3u+va2E7s83JF3392Ig03L2
+	 +7LFANFmRXJHWQ55CVJtdfTl2roy9+sl1+M/Ii8OXw5IrWOPW2rjRWXVh12ZMvnwt6gKk
+	 EtbybW6w2sBzHzLK2CtMwB6OG1Zja8v07c5So9JD6tTDkXrmwg+sec/sng1cWGyCsZcDl
+	 3XxGkWWk9Vp3lbweOksy71biS2fax+s5CQVdReHQy9eh7Wp6e2p35Rx58wDhTuHFtdb28
+	 SG+l/tdJ8lk81X12QI0DXOodZSsbTkCQ0+AF9/cuholwzvm1vEl7PSaDtRnGk4YWJPA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=collabora.com;
+	spf=pass smtp.mailfrom=collabora.com;
+	dkim=pass header.d=collabora.com header.i=vmiklos@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=KHT808S1;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.106
+Received: from sender5-pp-e106.zoho.com (sender5-pp-e106.zoho.com [165.173.182.106])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8503D606A31A
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 20:38:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8503D606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD872606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 20:45:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CD872606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=Xnlyvhlr
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-5364648ae07so1589301cf.1
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 13:38:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1792701519; x=1793306319; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=RkXTaieQfvwByEwiEJCObX7fsMD/HTm9dSmze9IBwbw=;
-        b=Xnlyvhlrn+VgsSQ2UVfUW3qEirYeVT0bX4A5fnBSVuUB8JF6fzgRsZrObPSjnGsLwm
-         eMnjjeMBjb+5n0Xz1V137JSOQ7NrvOrX/P+vQmUw816LaOipiQ0EGJdAtqBZavRXslOi
-         rB7NAJC0UK7+uezWm9KVyoByDX6tFfhuXkhZI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792701519; x=1793306319;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RkXTaieQfvwByEwiEJCObX7fsMD/HTm9dSmze9IBwbw=;
-        b=d/+6CT1xu2vDdwSPZNRmzIpcEi99T+FIu/xQ/ZOfFc+fmwvfux/BrSt76sosgQwEnM
-         VILRldTotzWP8g28u5DfzxU3xwjmqUZQ8lH8W7zfDbCupE6Bmq7zD885t32IIYmZby2+
-         oMKE2oItxbDzq9CtZki/LfVHs08RwymDhvAT0vuF1hMDQU4Vyv46tn05h5zUmnszcQjD
-         WSGdWV4oY0OQb+KROxnH4fIzEJr1WbJwLCtuoI1S5l4qiaZagdiBETLahC6Py2J472Eg
-         TIE5SRueWqxAmkaN8pGz5+oiX2WtI2Nex0wn6qG+95BFJNXw/rvbQxRFGkFApVgTuWPj
-         pf2g==
-X-Gm-Message-State: AFq9FYLJCIG5HN1PaX0upZs8Z42Vu0PUMW2x9D41iFPORhbCnHewPN8L
-	uKiA8zQ68T7NkYaZYw7PLiMhh721sJNg9hKbJ1DN1Wyb7UaGyIJ41hLTXudbv9gmii8=
-X-Gm-Gg: AYBFou3cs2DJUsdd+M/4Vms0nAurXxgTj0KAsLjNLYJqmJONyNoAHK3fEjtg0UbCBWH
-	aOl+a135qSKeZHQgBqoL/piSWIrWisCnlav097yCX9GndDYYd9oIe2gxQIIYKSO/61+lp2OQpCk
-	GuRuBUBpt/6iQVY1qxyisoMhCs8lIpQxpxWn5vaUyjqtviZINvaKOfxyHI1avAwXSpDvQz2AXRK
-	uhmsJbARP0HuZuVLQg/aR0gP15rktvYzvf2o3x0/HVAht71wvWRAKBi7uFwnyy1fOKreo5+223I
-	MJYuPNdyD+o1+gJOZOniedHHxx2K7iVoFqfsGRBTyId55iHckrb6N9q6HnpvRcHICTe1/Jurf3d
-	xyBwba8uImoLmuwzf1LGm+3GYVqNnn3NGO0Gf2UEaR+p66dn4z8GLMpq8OOWvD5vMZx5zk60hln
-	bMD/KHi500E3If9UL/COKuCyDnZjGjEg/LcEzmnbkTV9tHsiPU/aYQs/GViPn44sY4/2b4YA+ht
-	QTjgRa0Voz9FGr42Ae26VGgmXfMwU6hHEvocKxocTlLPdd4jB6wK1oVbG19OrRH/X3YBHZlgpC3
-	8TSP3XrKAVFXr5L1sPLTa3HqUO4cLzNWNCiCbGajnyi5pjz6lmgRVio39inRQ6Ut84ZnfQGpwu9
-	i6mxWZVChaK/IPQc=
-X-Received: by 2002:a05:622a:5c6:b0:535:922:1001 with SMTP id d75a77b69052e-536c264072dmr801231cf.49.1792701519210;
-        Thu, 22 Oct 2026 13:38:39 -0700 (PDT)
-Received: from com-79390 (vpn-centralus-04.tradc-corp.com. [20.80.83.168])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-536c17b37a4sm1806611cf.8.2026.10.22.13.38.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 13:38:38 -0700 (PDT)
-Date: Thu, 22 Oct 2026 15:38:27 -0500
-From: Taylor Blau <ttaylorr@openai.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Jonathan Tan <jonathantanmy@fastmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Derrick Stolee <stolee@gmail.com>, Ted Nyman <tnyman@openai.com>,
-	Daniel Reynaud <dreynaud@openai.com>,
-	Aaron Friel <friel@openai.com>
-Subject: Re: [PATCH] negotiator/skipping.c: parse parents before queueing
-Message-ID: <atp0Q5dFHQHAZAov@com-79390>
-References: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
- <athgd6Ya12zRdIR_@pks.im>
+	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=vmiklos@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=KHT808S1
+ARC-Seal: i=1; a=rsa-sha256; t=1792701928; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=MCunvWKWv4gTc+4muFSeuJxoii7aaO+8Hjjo08HAJ8RB0jPHNq/g7DjjgZ3+Mq4vBioksmCk5amZ9j1PKOj2XaN/qCogmXLnnAJCVcOWqnl1FhQsQvpdafGExCmxXf2Iqwk73G9lCihqJhquEpp48pofl2MmjZz7Rt1TUjO0BLA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1792701928; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=hbxPyRGszq12hOs55lwihU4JWHw8VP+gegTqvCUw6t0=; 
+	b=aB+xlTZ2tGiWWxlv2Yz4IyCHlJ9Y8IrqzY0HTaBYRgYuCWKWCASr3takHW3Ieaew8Cnub74Wc8qHoCjHtWLV3g3uonw4nSxFwJ+DYIc3n+yHTs+CimJXc5/VjVHrXOj5a3BG9zGWnYuijkFcHG5Dn3vFjiaO1gBlFLSWbdoSI9I=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
+	dmarc=pass header.from=<vmiklos@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1792701928;
+	s=zohomail; d=collabora.com; i=vmiklos@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=hbxPyRGszq12hOs55lwihU4JWHw8VP+gegTqvCUw6t0=;
+	b=KHT808S1nmWvD7Im351m5c3KbKB87MuqW5YooRoRxVgSCmK1HNHNFRRwGKlvAMnk
+	MxSz8XQpvDhpfEOIP9QFirJhfmSbor/nEo1iNSjH0Tzynw+xsNJIwI8F4rCraQiV0xa
+	lxU6lIKPSTKdBJGXDkZKTvX7qd0wDQ2tSkNmrRqI=
+Received: by smtp.zohomail.com with SMTPS id 1792701925667659.2231402033653;
+	Thu, 22 Oct 2026 13:45:25 -0700 (PDT)
+Date: Thu, 22 Oct 2026 22:45:19 +0200
+From: Miklos Vajna <vmiklos@collabora.com>
+To: gitster@pobox.com
+Cc: szeder.dev@gmail.com, ps@pks.im, git@vger.kernel.org
+Subject: [PATCH v3 0/4] log: speed up --follow following renames for
+ non-linear history
+Message-ID: <cover.1792701579.git.vmiklos@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -101,64 +71,63 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <athgd6Ya12zRdIR_@pks.im>
+In-Reply-To: <atW0ctTe-lNq08A-@collabora.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/292.682.56
+X-ZohoMailClient: External
 
-On Wed, Oct 21, 2026 at 08:49:27AM +0200, Patrick Steinhardt wrote:
-> On Mon, Oct 19, 2026 at 03:17:07PM -0500, Taylor Blau wrote:
-> > diff --git a/negotiator/skipping.c b/negotiator/skipping.c
-> > index db90fa77b53..ed6e88b59b4 100644
-> > --- a/negotiator/skipping.c
-> > +++ b/negotiator/skipping.c
-> > @@ -151,6 +151,9 @@ static int push_parent(struct data *data, struct entry *entry,
-> >  parent_found:
-> >  		;
-> >  	} else {
-> > +		/* Parse the parent before using its date to order the queue. */
-> > +		if (repo_parse_commit(the_repository, to_push))
-> > +			return 0;
-> >  		parent_entry = rev_list_push(data, to_push, 0);
-> >  	}
->
-> Why do you parse the commit in `push_parent()` instead of parsing it in
-> `rev_list_push()`? The latter would also cover the other two callsites
-> that call it, and to me it's not clear why they wouldn't want to parse
-> the commits before adding it to the queue.
->
-> Doing so in `rev_list_push()` would also bring it in line with the
-> default negotiator.
+Hi Junio,
 
-I originally wrote it this way because the skipping negotiator's version
-of `rev_list_push()` returns a pointer to an 'entry' struct, whereas the
-default negotiator's simply returns void. But the only caller that needs
-to learn to handle a NULL return value from that function is simply
-`push_parent()` itself, since the other two callers already disregard
-the return value.
+On Mon, Oct 19, 2026 at 08:11:05AM +0200, Miklos Vajna <vmiklos@collabora.com> wrote:
+> This leads to a larger patch: should I extract the "rethink the
+> approach" and the new tests to separate patches or it doesn't matter?
 
-I agree that performing the parse in `rev_list_push()` makes more sense
-from both an ergonomic and consistency perspective, so I have moved it
-there for the next round.
-
-> There's also another call to `repo_parse_commit()` in `get_rev()`. Once
-> we start parsing the commit in `rev_list_push()` we could drop that call
-> as we'd know that every commit in the queue is parsed already.
-
-That makes sense. The commit struct comes from the queue, and we know
-that the queue always has fully-parsed commits, so there is no need to
-re-parse it (even though the second and subsequent calls are noops).
-I've removed it.
-
-> > +	sed -n "s/.*fetch> have //p" trace >haves &&
-> > +	sed -n "1,2p" haves >actual &&
->
-> Nit: `head -n2 haves >actual`
-
-Thanks, I realized when responding here that we don't even need the
-'haves' intermediate file, so we can replace this and the above line
-with:
-
-    sed -n "s/.*fetch> have //p" trace | head -n 2 >actual &&
-
-Thanks for reviewing!
+Here is a series where I split the changes into 4 patches: add more
+tests, a refactor, then your suggestion to start over (with one more
+test) and finally the speedup.
 
 Thanks,
-Taylor
+
+Miklos
+
+Miklos Vajna (4):
+  t4219: test more --follow cases across merges
+  log: extract showing the remerge/combined diff of a merge commit
+  log: simplify --follow following renames for non-linear history
+  log: speed up --follow following renames for non-linear history
+
+ log-tree.c                  | 201 +++++++++++++++++++++++++-----------
+ t/t4219-log-follow-merge.sh | 128 +++++++++++++++++++++++
+ 2 files changed, 271 insertions(+), 58 deletions(-)
+
+Interdiff against v2:
+diff --git a/t/t4219-log-follow-merge.sh b/t/t4219-log-follow-merge.sh
+index 9616ac64ed..c8474ed151 100755
+--- a/t/t4219-log-follow-merge.sh
++++ b/t/t4219-log-follow-merge.sh
+@@ -144,6 +144,22 @@ do
+ 	'
+ done
+ 
++test_expect_success '--follow follows renames through a fork with -m' '
++	git -C diamond log --follow -m --pretty=tformat:%s path >log &&
++	grep "^[A-Z]: " log | sort >actual &&
++	cat >expect <<-\EOF &&
++	A: add path0
++	B: modify path0 on upper
++	C: modify path0 on lower
++	M: merge with rename to path
++	M: merge with rename to path
++	X: rename path0 to path1
++	Y: rename path0 to path2
++	Z: modify path
++	EOF
++	test_cmp expect actual
++'
++
+ # Build a merge that takes the renamed path from the second parent, while the
+ # first parent only has the old path. $2 decides which side is committed first,
+ # which decides the walk order.
+-- 
+2.56.0
+
