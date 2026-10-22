@@ -1,85 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.175
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792666924;
-	b=Evjs5HFPIxmh9F/ckw8ljylWRnahSZXrBZOh24vvsVEfLlIrrveaKlQOh5GpdDsfbflG
-	 pSOaDPvS1E/fYxeHEkybMB1YVL8a2Sfl1TuYSMg6dT1u0iLp2vleihQ0pTfSHRjApgM/+
-	 kzJYWQllKWIqyjxxmaWWGgVQw4lf+8sTxH9J52iEuXdrjXRfmawlc2HmUq60/X6gopdf+
-	 LsZAU5Fdrq1YhPbVR0Ff/GvlZxdyz8EM67vavsEnKPtoC7KyNwQgUdN3OPkF9FZE+Q7Pm
-	 watiLrzdtkk7DlPODK4XLge6qTnB+UceAHgFKLnvnWH5t7u9mU5MFCpSBwfTWpPyLbw==
+	t=1792666926;
+	b=UScM775X4eOot0xQCpqj21cBTy3m8XG3tcvKt5E0sbtwkHoGiv4lmm9KbI21hxvtWRXE
+	 l+ZZ5uLGPFiqWEjXISFXRNa81kdCPC984HQ7jUCh57CGnfZT8hsg+tchG8FXit9RsdnXQ
+	 YJFcC/gZ9L1ArJ+MnJluCkwVAWds1ILn8MNo//KCcAbbYvENQn2KEDCFtp1tKeKNOK34R
+	 mk6WQij0rb0XZ9dirtFEJMofE2i0qoCD0f62zbvpjDyxjb2cfYa22Q1+hzrqyqISO+R5H
+	 Je/WHqspmpBiezTDS0+fWvXwObR4086qKwy+PkGenmCzCPYdGi4JLFzzQfZ326GtyTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792666924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792666926;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
-	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-B4-Tracking:To:Cc:X-Mailer;
-	bh=Uw6im7uzm/XFO3yQqlqg5rkQfHmeNJy/cZTGemRUWAE=;
-	b=soGGP6SBQ0DLxb2F1pY2g9Q/rLVx77MDJKpMZRF5YYkzi3qUd0Y9Z06DdODi3eNBHgWT
-	 wdAdn1G8xr+KRwK0ztLub+pkjzpGZ28mitJ7Y4e+hUbqK94DLZNasv11AzWbBY2Mu7pal
-	 sbL0ry9+8f0rGzPNA42SdDyRDF3utYJh0oktERV6PE8G+16CER6h77x7bD37xf5AoDlvE
-	 fwDd1ppGT+xwKvUGeKLsX26MrAJ9tyiVkjkE9dMMgte8dEraowMrwkSLCOYWF/FqX9LsA
-	 oFfwFzMvg/9a+bhGlaTf3+DnFJ7zFAUyjxPnVX7TWbvbF5/weRp3AZ8zZHpCZEUGXgQ==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 References:In-Reply-To:To:Cc:X-Mailer;
+	bh=tNWQ/GrFI/ofyDwUB7rSsOnN1dbZ7MfmZyTTWrBuPuU=;
+	b=oDbEjG0uRVffZB9qhQutRi9KwVP2fEORwNVZ6Kx0e68rK62AXqQG6V5dlA99cL4HErU/
+	 CWRWVsFe+IDLEFVhTiIYF/sjaWeDo6kZdBz1QcM6S12x9T36hBB4UXkgc1+e+mSqW7VdI
+	 OzXyuoJUl56vSFc8IHUwo1ZCVoBZdrNxB7Tyy0uth80Mig8AfRL1L/mkRbzKkqcbA0kFP
+	 bQCw7Q6kXfafN/F4D5nNRHW2E0Dw30eHtI6DYnd7bXzFTbRhmqe0GhpZhdeIkZVEv3ceX
+	 6dOS0+rmIIR2KD0Vxn5A5fNAVrbAHbOsb9Rf0wv8ziIIpdzaKmMqNo6rc9ADAissisw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="qm/4+Dfy";
-	arc=none smtp.remote-ip=74.125.82.180
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=QRXEhVtW;
+	arc=none smtp.remote-ip=74.125.82.175
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C28606A31A
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 11:02:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81C28606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA67606A321
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 11:02:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3EA67606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=qm/4+Dfy
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-35f036b17easo1299936eec.1
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 04:02:04 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=QRXEhVtW
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-35f036b17easo1300021eec.1
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 04:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792666923; x=1793271723; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Uw6im7uzm/XFO3yQqlqg5rkQfHmeNJy/cZTGemRUWAE=;
-        b=qm/4+DfyZF4gnx7tJEjPZjFZGiG/1kTM2rLio5YDISNc0mTDgz4u4D9YZZC4K5cxdv
-         +bL14Vu5PNsR/oeHlfYL3F4oyQvP+DHKft/oKQGfs0DS6szyVYOKCS8dZJqVMZbQ9bbL
-         SdTl2JO9SdzKN1du19PEQOjUnsfz8F3aCOV5BD4JfJotxe1cH0S2PKmcce9PsDbw7ogL
-         XTg5QLwA2I2qE8GW4h484aDYoacXmZJNyUZLIfdssFHCmlDBEZG34vQILN1coCRjkB/8
-         8F1IWxOGqh602iXDpyaYPzG1pC6GjI9xGhvGJ6hfuu2tIOZyE73DPbBfJqdkTkIaT0rf
-         Rk+w==
+        d=gmail.com; s=20251104; t=1792666925; x=1793271725; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tNWQ/GrFI/ofyDwUB7rSsOnN1dbZ7MfmZyTTWrBuPuU=;
+        b=QRXEhVtWo1olz1SnFBegrr2jGKvebbj5n55210Et0xQLL0Mrt+hYjoE6xBjI6xL2Jh
+         mL13oi7BGGQ33mHOeQb3h+qf42iEIX9fUK95A2t/8Fq4x9EqCSoywaVH1vRJFe3kk5+t
+         8WcsMumGWstuCv2HrRo1dgDhd+th1jnDlFSIuOkjwUxZcNgLKJqXtU+NZscmkbAIRrf6
+         7SYFoC6Hlb4Olpct6be25bTYZA03Z/9KLTkHYiDiQDbiz7kgwzS7zCwrspUWsygNj3D7
+         t5efJ70GHeCOnQVLDAIfovliAL+IrG7yA946h+V71K1nuNjvmOrzFFpMmIjE6AhgRcZP
+         axQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792666923; x=1793271723;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Uw6im7uzm/XFO3yQqlqg5rkQfHmeNJy/cZTGemRUWAE=;
-        b=bGoPQd7hs4un5cj+0yifc8OnVSscnKHe6As645+iZRAnEBSCiPXiPHi3+3h33L5C9j
-         o1mTKtfFgKXJE6PUNxMoLefbWjL5vGMS+YcEJoyhCdxb7FAFfQHhj42MgKB2pu4wFXro
-         xySDc+SECfdZIWfnWu8n3uRHBlevowXJJT/aZfxu/dWCGJK5XhsbQBHDAV+c9loIuwok
-         EliVO/7LTX8UO7cz8TONomKTDfzDxwNC/fVs7rNjm1wQmGinmSTfvt/is9kaIRhIjdLe
-         xq8dbmKc9+P/GECEH3FcbJ9y7I8W/TWuvXGdDx4Vcm36NO/0vliMA0nQiWpHX0rDnT0H
-         Nbng==
-X-Gm-Message-State: AFq9FYJhiPsRc2swvcfsIMm/D071znonbZP9P8/NqlhvUxkQOgNFM/3Z
-	RAXQyQL7Nj5myctpVmNpyrm1rkonIWwJf6/9/BCB7h15E308mPNYCJg/sGp0JQ==
-X-Gm-Gg: AYBFou0vvkKlpQQurd02y3PbMuWP3CrvSdlVhHVae5Xllf99vmVI3DE2paHAPPtzE3d
-	ZNpsiRaSMtL0C5n6g2uEkXVcKTdznbKCXIK1nrB8mTe3BGnAa+c6/6CNuQk7BG9MPZKvbP1jz9y
-	cY33+GL/+y79ZksrZLIxipXnFAy3hvSxeq5OCNLxUtMcvPz2GnHpsEPeiVSsoVhuxQBsJ2ACUgs
-	iTj5NwOw82wzI5hzUo8DlMjDj3ZYPGswflrqG7M67RtckUoJOoXX8SJj8nAx80d0TVGveGaD3SU
-	EpKUwyqXPA095yYk14hNg4w/PEkwPYAuD9UHYHRhnhQ7soEYSanX0hx62JgMEQnOYWxzuB3tRx9
-	9+Prcn7aGl8bkrBHVrUsH+ReGAChOMn8J5e9XBXcwUCTivWWlT7wYglQ3o1PFnYMwba1Yj3aPZW
-	hU9v8/DGwWS1VTDqnnITw47gbhjXCMtSz/wpTpZuAElDShBdH5BswgMHKfbbzkXBlkYOgVxkon/
-	5OySOxRy4cA1EB8oVg8Fn8M6MiraTbmEVsZAUaDtmtpWD4SewF9+PFjmSNyR0cX
-X-Received: by 2002:a05:693c:42c3:b0:35f:2349:a574 with SMTP id 5a478bee46e88-367508e2009mr6359141eec.40.1792666923220;
-        Thu, 22 Oct 2026 04:02:03 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792666925; x=1793271725;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tNWQ/GrFI/ofyDwUB7rSsOnN1dbZ7MfmZyTTWrBuPuU=;
+        b=jzyEnOuksXnLIN1kalOg8webV/RdssnCFgaYk2t61Jgd7eOjm4M6IlyraSG2+/ExTk
+         1cFeAAoisc2MuAbevbRx3lVzmaFb3WMu5Vrx0HgpWs1Di2xyLwbCGCNqs2xWmCfVyGfs
+         n7vAbk1i/ae1cwnvcGQw6Z1b4mzctiyNChxLtTJeGiRZSJao0xT9uWzQwhM2q2sQ8epQ
+         eqR6TJxJcyCg4rvoQai3fPWIrBfiZ3J8ZZy9i/pDaM2qg+QUMkZxNLMlApey+htUOFEk
+         MES0KaN+jjuPqdHS+seRHOfABe9WdzqKS1HguVLX8n1qtt8JmPwmML9/TfvFC8sHr2O7
+         mYuw==
+X-Gm-Message-State: AFq9FYLBV1O5S9GX16xpsxMVNg9QE5IOLkGVWP0V8Ry27lOxmCq3jNlx
+	XalsRQIYiWhW2YOISKjlNvBmtAyUWLQWQEWTxf4QO+jR3JFUGRF517zuENbOIQ==
+X-Gm-Gg: AYBFou0UYgCzkzbCO1m5sDFNSAMNC+M7mbJ83L2f+IDilImMCuxaLeSyc40/D02PYEL
+	l+gnnYtryIRbQGOiV2RAEd5MnI4g8JnHchyDfzlLMKZWPODZBuje6MKEPdpJ2psxmeGdwHzLGvW
+	7fM3NJHoWLManx3rkGfmNPnxsu7H4CB2J31hIV4i7fVdtaE91D8b6p1s8tnH7U1TytlZ8Sd5IJU
+	r45ue5eYL9tO3aFkIG6z7YOt7VJymuZwOzo3s2ZRSC4Fu8PDe3X3+lnN0JMU26uOlFR7A9+rraV
+	es4hsSNHOuVrxDI7w+woq3zdJ2pw0DyWJQh5S8D1wcE9EVTjEY2UTmNpcUvWfXcW+nEg3UiWa1A
+	M31gsa3VWq8XC12L17pQSMOWoOWg82rXmlo/qO0ofdm4VTTWAi39v9eFOjsnuvQfiSKxxpIgOBS
+	gtlj/oRsI0RhzIfAoEMovfonD9FayaaKYDlGSiHWzUWw7KVoeDElE1jSe3F4L1CAwxs6liRgYzx
+	X90qKoqZ8eRuNEbbxCjZnnRUE9ppzVbf1SMJMHsyD1Ltgtr87bB6LimXJQNo+6D
+X-Received: by 2002:a05:693c:864e:10b0:351:7444:8bfd with SMTP id 5a478bee46e88-367508e2cfemr7088006eec.39.1792666925090;
+        Thu, 22 Oct 2026 04:02:05 -0700 (PDT)
 Received: from [127.0.1.1] ([115.108.41.154])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-368ca914bb8sm6277428eec.5.2026.10.22.04.02.01
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-368ca914bb8sm6277428eec.5.2026.10.22.04.02.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 04:02:02 -0700 (PDT)
+        Thu, 22 Oct 2026 04:02:04 -0700 (PDT)
 From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: [PATCH 0/2] Make our clar tests ignore the long-tests argument
-Date: Thu, 22 Oct 2026 16:31:56 +0530
-Message-Id: <20261022-ks-unit-tests-ignore-long-tests-v1-0-554a590d418b@gmail.com>
+Date: Thu, 22 Oct 2026 16:31:57 +0530
+Subject: [PATCH 1/2] unit-tests: reshuffle NOOP arguments to maintain order
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,78 +90,55 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIACXt2WoC/y2NQQqDMBAAvyJ7dmGTglW/UjyUdo2LsinZKIL4d
- 4P0OHOYOcA4CRv01QGJNzGJWsDVFXymtwZG+RYGT75x5B3OhqtKxsyWDSVoTIxL1PA33fjw9Gy
- 5c0RQKr/Eo+z34TWc5wUXhbsmcQAAAA==
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261022-ks-unit-tests-ignore-long-tests-v1-1-554a590d418b@gmail.com>
+References: <20261022-ks-unit-tests-ignore-long-tests-v1-0-554a590d418b@gmail.com>
+In-Reply-To: <20261022-ks-unit-tests-ignore-long-tests-v1-0-554a590d418b@gmail.com>
 To: Git mailing list <git@vger.kernel.org>
 Cc: Patrick Steinhardt <ps@pks.im>
 X-Mailer: b4 0.13.0
 
-This is a small patch to fix a hiccup I hit while trying to run
-our test using the following incantation:
+Ever since 9faf3963b6 (t: introduce compatibility options to
+clar-based tests, 2024-12-13), our clar tests have a few NOOP
+arguments in order to accept the same arguments that our integration
+tests accept. This makes it easy to pass in test arguments when both
+unit and integration tests are run together such as via:
 
-  $ meson test -v --test-args='-ilx'
+  $ meson test -v --test-args='-ix'
 
-  ...
+On a quick scan, the order of the NOOP arguments seem to be
+alphabetical. That is only until you notice that 'with-dashes'
+appears out of order.
 
-  Summary of Failures:
-
-     2/1063 unit-tests                                     FAIL            0.16s   (exit status 129 or signal 1 SIGHUP)
-
-  Ok:                 1061
-  Expected Fail:      0
-  Fail:               1
-  Unexpected Pass:    0
-  Skipped:            1
-  Timeout:            0
-
-  Full log written to /path/to/testlog.txt
-
-On some exploration, we find the following which shows us what's wrong:
-
-  2/1063 unit-tests RUNNING       
-  >>> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MALLOC_PERTURB_=103 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 /me/git-1/build/t/unit-tests -ilx
-  ――――――――――――――――――――――――――――――――――――――――――――――― ✀  ――――――――――――――――――――――――――――――――――――――――――――――――
-  error: unknown switch `l'
-  usage: unit-test [<options>]
-
-      -i, --[no-]immediate  immediately exit upon the first failed test
-      -r, --[no-]run suite[::test]
-                            run only test suite or individual test <suite[::test]>
-      --[no-]exclude <suite>
-                            exclude test suite <suite>
-
-  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  2/1063 unit-tests FAIL            0.01s   (exit status 129 or signal 1 SIGHUP)
-
-So, the '-l' switch that's passed to unit-tests is the problem.
-
-On searching for how these were handled before, I stumbled across
-9faf3963b6 (t: introduce compatibility options to clar-based tests,
-2024-12-13) which handled this by adding such arguments as NOOP
-arguments to t/unit-tests/unit-test.c. So, this patch does the same
-to make unit-test ignore the '-l' passed to it.
-
-The CI pipeline passes:
-
- - GitHub: https://github.com/sivaraam/git/actions/runs/39756087806
-   (a couple of MacOS ones didn't run owing to the lack of a runner)
-
- - GitLab: https://gitlab.com/gitlab-org/git/-/pipelines/2975804623
+Fix this by moving it into its appropriate place thus ensuring
+they are in alphabetical order. This makes it easy for future
+patches to not worry about where to place a NOOP argument
+that is not yet in the list.
 
 Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 ---
-Kaartic Sivaraam (2):
-      unit-tests: reshuffle NOOP arguments to maintain order
-      unit-tests: ignore --long-tests
+ t/unit-tests/unit-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- t/unit-tests/unit-test.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+diff --git a/t/unit-tests/unit-test.c b/t/unit-tests/unit-test.c
+index 752fb38fb3..d066c8a4c8 100644
+--- a/t/unit-tests/unit-test.c
++++ b/t/unit-tests/unit-test.c
+@@ -33,12 +33,12 @@ int cmd_main(int argc, const char **argv)
+ 		OPT_NOOP_ARG(0, "root"),
+ 		OPT_NOOP_ARG(0, "stress"),
+ 		OPT_NOOP_NOARG(0, "tee"),
+-		OPT_NOOP_NOARG(0, "with-dashes"),
+ 		OPT_NOOP_ARG(0, "valgrind"),
+ 		OPT_NOOP_ARG(0, "valgrind-only"),
+ 		OPT_NOOP_NOARG('v', "verbose"),
+ 		OPT_NOOP_NOARG('V', "verbose-log"),
+ 		OPT_NOOP_ARG(0, "verbose-only"),
++		OPT_NOOP_NOARG(0, "with-dashes"),
+ 		OPT_NOOP_NOARG('x', NULL),
+ 		OPT_END(),
+ 	};
 
-${range_diff}
----
-base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
-change-id: 20261021-ks-unit-tests-ignore-long-tests-9f32078e9100
-${prerequisites}
+-- 
+2.56.0.99.g5a7d1e8045.dirty
 
