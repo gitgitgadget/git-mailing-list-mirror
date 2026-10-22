@@ -1,118 +1,124 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792690504;
-	b=L41UiNfujVE0e9qpWBmeke1SG5zZbadhdg0LMdeKyPm4XPy05xt5Ze1uRQDIa65EbIrF
-	 0OIy0spmlsSJ1VpeU0sj7fIpTl7pvH+oy2x5SohhSl9XPfaJ7haNTr4PpS0wCfrZskf2Q
-	 rqiLIKTfpvzH2Zj9JojyyetDGf4H8vjfMIsqsQr81fY7lfYAZdS+D/QzMsUQhR/maVS9c
-	 v6GGFJJg78WMnUEWj1P+T2XVIv9GLH6jKyMaOq9HYATt3qTyiiqdv7CP0rrEqKgVt8d3a
-	 ta3pko04T82Jv/FC0LvJtqrzR6UZpkTjvAbI7iZXtdejck1njhjEq+qLbCx1+LNQZAA==
+	t=1792690894;
+	b=nLMHeS7dXScIctP0zGlBLpBGde57mc1wJ50q6CEInDS3wvuGiTKgzQEmOAeR9PNPeaP1
+	 2JaaWarURc0pCWB+b3XhcYJkcGwKfCOUS8dL0ewIiYs+BfSsX0X4nTodAyYQv17WiUefN
+	 Tt4Mt9W7DzKtmBOtID/0QomytSwWBRGXqmJXr9I0VEVuC31mw5Omniw+TNRSZc+8Hd0W2
+	 UZSt6s+sfPyEIb9Bz8HFP0/vn5l1/YPon7mfV+cPWsaMBE/CPH47cMhdOK6eHZdHeb1X3
+	 AqexQ+m5Vt31opWCRXHGM3dmedFJn7g4qu5r57/tOxG2DfxiZ36kiZKKUWDD5EmUedQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792690504;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792690894;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=eWiTGATAPNC/Qi3Y+bUjTOlQafXK47Sey2o50dEPmBA=;
-	b=WpH6+07bTypNwKVqNd/+Eo5K74SRWDY0YEktuoEGltBSIgz+lHNc7U7YN/i1mJ4zu8FK
-	 ZqR0+rM8dWoAqw0KKkt6cQ4Rp6jPOh+8Bb6XdZ7o1n/ZmQqrhAzIlMTnHJPYEEqT3lENQ
-	 Qdsedl/OqRxgv1JjRSgP0KSOhvHtnwXQzwok4Q+u+IHYApsAjXV9rnCyayGuvKwKt0DjC
-	 drYBB18Dzby3O5mvUFM0IjjFx7BmWILZSEORGuCqEQJ/p0WyedUunJ3BfkYoDchK6Josf
-	 qBHGf6aq9E+OSbSangYk/aJBgRmKNPr4jZT6CLsxfiuqnXLQfePeH05lsFPj+NNellA==
+	bh=EUuE49qtaV6FIc4hwZLbdvfMGlwGSxF1qB9KPFRZ3gA=;
+	b=WhGEeB8DskGEtYQizAvpe8vfXueIIPWObEufZRwF+ZQmcylYG8o8gMtd9HPn/Rr4pXDN
+	 oIlUmNCF/NwgA2WLBEnL915QS87v9faAmO8XALwOWBjtX8nbZ38tnDB+KoMEBIf9kBr4e
+	 flDthmyaMET2+QC8AL5YczF41ey+91GT23vf5YLXDxcptKvFf2SshsPcTpDn8I/eNEd0V
+	 /nyuHVLMta0A0yeXew60cTEMiyWfTDTzJrMUX9c2z/1yUyvVj/BsurLI3A+sHLRMhgpqU
+	 SUjSHB5/9qfLiEpilKCqN905zIbm9pNjvNR/BwT4NhJBhMVUthB7CfsUl33134srnXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=o4nDik4T;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="evu/UOXO";
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=f9tLX6DF;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZiaoxrVB;
 	arc=none smtp.remote-ip=202.12.124.154
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21253606B78A
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 17:35:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21253606B78A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2CC606A31B
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 17:41:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D2CC606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=o4nDik4T;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=evu/UOXO
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 76EB17A01CD
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 13:35:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 22 Oct 2026 13:35:03 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=f9tLX6DF;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZiaoxrVB
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 69BCB7A013C
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 13:41:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 22 Oct 2026 13:41:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792690503; x=1792776903; bh=eWiTGATAPN
-	C/Qi3Y+bUjTOlQafXK47Sey2o50dEPmBA=; b=o4nDik4T2SOMHwsyMO5zQEzzo0
-	nb6E4FDd6Iba00myLr+0rHk2lHS/J1AQ50kMQkx4vnAEMQ63/mnH1Gd72Rcw8GJw
-	KVXiCdkfoOGJrrT9DpSkvDTnCUU0fTRRw6MKQuR8v8SfU7343nF64tlNAE3a7o+A
-	1oT8Ebn4lGhwSy/dLbmo8FLcN0Djeq6SXFFScXc8YGyRV1h2bothiYLxt34+DEQo
-	NGJ/wjkg7iJXzj9UMWCqUR/vHlrPN1RnePASXDGGGcsUAXZszaRk45h+jCdGguPF
-	WshbBgbudz379zsYDdaASP+qo9N/1xEyaS9OqXrFwfP1KSTdyqe51yHegOFQ==
+	:subject:to:to; s=fm1; t=1792690891; x=1792777291; bh=EUuE49qtaV
+	6FIc4hwZLbdvfMGlwGSxF1qB9KPFRZ3gA=; b=f9tLX6DFWWhAyx+pUrM54kecs2
+	cZrX9YusWX5NdSFJUpFAW4AYA+8qKfn6YpxKkApaAWY4L09asT3LJlA4DgrIh+N/
+	Q92nlLib3gTzsAxoElYl9eHiFGrZURIFu3IhhsZZZ0WcYupHzJ3N9xPqAdapnFF8
+	r7LU8ysyCPnIgvdB8Kfd81amC3MWSIQTnaeXZlCHOc9GkVGol29n5EQCqVEOKLxZ
+	NLX5py/igQ2rCfAAHYxdVb4uv7/CYgDRubgqSQ7TB9X7URyf2UUqLPLqGeUbTV92
+	q1lQR0q7M9ssHf0e5KoNDLNcrli7+9cKcqld4GJY1beoT0kKlShLcN82jruw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792690503; x=1792776903; bh=eWiTGATAPNC/Qi3Y+bUjTOlQafXK47Sey2o
-	50dEPmBA=; b=evu/UOXO9KxXhJN34L9ji1dw5EruITnYxAwMA89k6L9B4Tt8vxy
-	Dgw1tRVcUBgXJ1yoRQ4g4xUzwxnRwUreWu9X2H7M1sjqc3c25w7c1X+brOOa+XKa
-	CNDVQNfpuF8y0BLS1wIqg3B81SvV952M1PgNpXcf/8hEViZ6yEcQfuKmH8gXHLKu
-	9Qa/Mbt0r0dYHtjRKf6WgsjSZR+mwpYZ783KgdECL8HixS3lcnYQruWyGTZp7dVy
-	pZRsgg3tX3fjeJsXCv2fv7fuSW/IciejbU6ZgUeQ3xa9qnxDb77JcSEh1BissGTQ
-	cEBJWqRFzgydCfmWcGjARZhkEKpeE0JF9QQ==
+	1792690891; x=1792777291; bh=EUuE49qtaV6FIc4hwZLbdvfMGlwGSxF1qB9
+	KPFRZ3gA=; b=ZiaoxrVBBj/k4tdjSSY5T3nJtHuY0XPDajLHgp3vFGMjsAcdzOX
+	2Ogpk5YvD1KFJTAs/2ilA1iO2pfqtoiPU+HmXHmzkrvAnU12s/l42tUcMLggz9Gd
+	u3xNVEQVhYa0/3xbJjRKr/pvH9FVVLgI3yJkjpxPWDARqYuXl7vLAuqyat3wP2f7
+	XyLCdSsI2uNIL63ZP7uPAAJmnroh5nRhUvB2gxUYHrsVmLWAy7SXF+17VzjoAIBs
+	rGn+TGlWM+eQFtbeX/FUzCimsmmR7Vtr8A4biW9Zhwmsu50s7bJ2kWIFXG2BAcsm
+	tdbwTZA5SmBNUe8q+/HtSsyEFdFh4cIcy0w==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792690503; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1792690891; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:dEjb+GreCmnXRcvW6ja3hKLLkub0x0a74YAv7an5S0Q384+
-	PEtDdU6O398WwtEt31lNlCqh/f775Wvqr3w7HBpCDYXB/2+EF4ZeY6hf4ewDwfJs
-	BASItWjcwH0sajB4tCi+fLyvivhIfo4TJsqAR0/ZDUu2hC3VLtNjCMMdbLZUoXfM
-	k88yx0Tc1BvdbADiykVC+5rcBK+rk8UXyEiJkm5TUsy5hxiQwYsWZsTDclzvupG6
-	SCC3dLn9N6HJo884stZ96oxmaUJ0Q488sIuCSRdG/H8B8J8SY/CISoF4vYO4h8G1
-	WvrO2xGuCoPnDtAGmvCkgsoYqTOJreCMdccjhmQ==;
+	s=fm1:rsa-sha256:JLC/YtJe1lknzbSe7gNwZmO+iPRUcdMdafFQl2ND1/C1ERJ
+	eaXSADGC8UOQBIopnBVrJReeTNI72fv2m1OXe8Bv2jmNkrsm7qDS1Sws9FitOPfI
+	EgGFnoZRdZWS6ALGS+SRn8h1jzp/aBFeL5MfqCtkGcvr8WPFgAzFaso+oMpjgjlo
+	cd3e8j9X7TaHiwLJV+WHVRSy94oKUkd6vSkdg/sM2dAsxDSSFs9X91LWHQa8SMDr
+	d6i82+AR9qzDGq0R85M1FW8yOJJTtB3Bljd1dUlaKv0Z/IweLAIwh/+SIdKz+LCu
+	ZWCmzHVxBJM9CPKnHh4StCOgtBlyPbd/VZAbIqw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:BtUWKCh39dYLJzrYsYtBV6AmS5nqVHPI5s0td/qHjNU=:5P+l6yxjAbsfbqYH93bmbYY61wpNRRzvfc6wIBp8Afc=;
-X-ME-Sender: <xms:R0naakw3HVyUzUiDsEf20-BNHhmpptXE_HmUj9SAerjLFu190wUs1w>
-    <xme:R0naavSTXb3fw-lFCF2t9G7wHz-IUE4z1vEiJVpv1nsOSdlhkXkRtoUL2VbfQzRFc
-    niya7EolYfKl2wRSQfUPCxuPbP0fs1aYykRI_I-wEeFreghRAivM4U>
-X-ME-Received: <xmr:R0naarVEnx5VvxRUfk_CMqYinRW73sMR6s8Fxq0SM42ScDyZClh_2SHf4GTXFEnlGrfjHk_38uil8idLmYeVPi8Ep0U5IM0X3kNt>
-X-ME-Proxy-Cause: dmFkZTGyKiKLkuIk8fxXofd3qDEBXwmSdJXrGT5pZyi6J6xb2/DhzjPh0uVaa6qVd/xI7F
-    pZAYxdUvdzYNgiaSGiBPRUN3Wu2V64lUKbuX8p/BQCsG3zdX0RO0ZoUUwnN1l4EOtv69fX
-    hPT2l5CB0vvBVN6m50ze4tWT2gm5L/7KN+FZKaDuSffnJ+q1mbbjDqgliLC+cFkpiGSOVx
-    rSPEBsXNMSSIZRqju8oZOFpgjzkWaK+X6hbd0PLbnm0wc+8LVaKpNfMOFaqgEvu4wf26ob
-    MieGfDOUq+EIe/+uBZf82uFrnaTnep2shCJzqt2SW6httgN8w5QwO/LuGYIfRE5DaCr/YN
-    Su4Imgz8qTDQZkn/dwILvDPtnUz3KSA0iS1f4ydZTSXMqaE5T49yzr2fRTq6VXlD4HCjad
-    6ApDA1i0spT4dvhH/Rh5uV6piHrOG3kt23eRZlWA2EgAIfB8y2FOuMdQAr5yPqNnO+ZA1n
-    0OFC3Vz0QgE2dheTVHFCSBz8JjGVvzb0/icSyoJHpHAvJtWe1SRZsqAH3/NzZQainbXjNG
-    uM90Ye0chhLfVz5jxTwRzrzWVO4oQVQXqFeur5DG1psAXF/G+36HIuqXMQPqcD7NJH35TL
-    SkwUrOFUyYxCFofwL+5klxoH4b17zmA6EpKdlUyI5ATfqWR2CGzOKYfioz8Q
-X-ME-Proxy: <xmx:R0naahbthkfTTz7HcmQL6agNlLKPIdacXZPGIlTNvtjUJOlokeNqxg>
-    <xmx:R0naah3s_f6uowy4WpZCmw7yYl1qMpD2x1j0A6S6BcqJ4XiMPGVzbA>
-    <xmx:R0naajjkkdPTCtQ4owH0QuIF_H7215uYiYp0BhjdEK9IA2qUA64wBA>
-    <xmx:R0naalaPs6Oth0qY8kKicM1krJvbb47tXu51poP3dn4d_NuvqOXPvA>
-    <xmx:R0naai1_br9p3F-a0wT1wfT8nqgB0eSjDSeZMtK1UNYhoQxNGfU-SlLv>
+Message-Instance: m=1; h=sha256:3q4ExWRk1xUCDst4m/j6PeDpSJ/0LcQadyhEaodD3mw=:p4V1TDyZ+IRbw9Ms6h/WmN/84HKDWUZCYpq3+nmO2iQ=;
+X-ME-Sender: <xms:y0raaiCZoX5uI0tXytLwvq_-XsDzOsEL2Bbo59z-xTFLKWvPI5LHEQ>
+    <xme:y0raatNgkJLHWsxT91oNptcxxRUeKxn_JHKHp9HRHZgxR0wxcDn93tjzW7DtynmII
+    pAkbqh9KPUP67eMBXPxUKRuBnE6Oa8tTswAFizcBSPS6NklNI4PQOM>
+X-ME-Received: <xmr:y0raajygr6JC4o45B58Ia64TK8k1BiS-loMohuTAyfiYat-mneiGzVOj0kY1CjBzGwPCA0y1-lLaQlMD3d0tI5m2Gbc4AteBRjpQ>
+X-ME-Proxy-Cause: dmFkZTFmEwxukPnUwr1Kt9GCg2ppfw/VrsZZ9b9RJrzuM7wrjrnkSprQc554y4iLbUT77m
+    oX3CSBuEQDY/faq2V6JAEcCytmrLpBvi0XRKWmP8MjXHQBhfmMWJWrJ4stEVn8ZND5cdTM
+    JuLWpfyg15flocG2gJ646HEKMRxKEHNkblALgAnz2Q6prpIBiqJjHpyBH1b1aBnhcgoouj
+    ZeSyvZZCNmCAeft68lWJSwgCug30xF7FEk3po//TKI/pikxYDlEa4kV8UZnGveJ7kam461
+    hyXGXxbg2s1zVk76zBScTxNSS6YuA3LYMRdk//HiF4bhTFIry9NNrt524Gs7Je0ByXPkZP
+    5rCcRhsb0pEHTHb++UuYtfMvdS1yN9GU5BPy1zX29Z6hE5fsCatRXmEW2tem/yFeUUc8/3
+    N/df6LrFqhcJrnw7NKO1qPO1OYhMWxg2NWimC3Klp5qwF2j9AtDN1bcW/tj/zojib6PtBi
+    3A2r486sofrTSxKxYg2XCpffyWFRcArTXttwOWWim/+UirzBc1lq/3qYVbDlFOp08VKPS9
+    C1Zl0Zm17wkM7qhvL2jzwllfPaarKYuRGH3OLyJZqzk438uJEB5nmz4lhuSHIjdFMRYrzP
+    bCdiDeNodfSxsJq5iQSUU559ywigKMM7NeJX0vtbWZXVVD3PVYzQJJyakX1g
+X-ME-Proxy: <xmx:y0raalWBWiB_TDEHolTJsk_AeBKRovgQIUVWxWSIMps9QlZj7HlwLg>
+    <xmx:y0raatPK8XrQTZXit9X6aJBr2RbjEMxISZmYMdNcmmVryp1J_-Mt4w>
+    <xmx:y0raavDoGRilCY6frL9LKNsc_l7DjgrW45wc4MnVdJ1b-Fz_36pG_A>
+    <xmx:y0raaieMHPtsb8qkf4C-j-uw2mKwI5fq_3jBghlkKvgNLHpQJXE-0g>
+    <xmx:y0raalf_eJRGxDDEFkQh5ND_I8mdgHl_BLVQSss9bbk_FIhry0lBJPbX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Oct 2026 13:35:01 -0400 (EDT)
+ 22 Oct 2026 13:41:30 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Wasswa Edson <edsonwasswa54@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [Outreachy PATCH] doc: clarify promisor remote fetch ordering
-In-Reply-To: <CA+ew3JtPJuVNC0PR_wY=8Wxp4-JpJ0wCPvm+a=BdJ33QaMpJMQ@mail.gmail.com>
-	(Wasswa Edson's message of "Thu, 22 Oct 2026 14:02:04 +0300")
-References: <CA+ew3JtPJuVNC0PR_wY=8Wxp4-JpJ0wCPvm+a=BdJ33QaMpJMQ@mail.gmail.com>
-Date: Thu, 22 Oct 2026 10:35:00 -0700
-Message-ID: <xmqq5wythc57.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: kerylefondji7@gmail.com,  phillip.wood@dunelm.org.uk,
+  git@vger.kernel.org,  christian.couder@gmail.com,
+  siddharthasthana31@gmail.com
+Subject: Re: [PATCH v4 1/1] archive-zip: refactor 'path too long' error
+ message to use Q_()
+In-Reply-To: <57e076d3-cfea-475d-b68d-a9f36746db35@gmail.com> (Phillip Wood's
+	message of "Thu, 22 Oct 2026 15:29:30 +0100")
+References: <xmqqmrs92y4c.fsf@gitster.g>
+	<20261020183908.861-1-kerylefondji7@gmail.com>
+	<20261020183908.861-2-kerylefondji7@gmail.com>
+	<57e076d3-cfea-475d-b68d-a9f36746db35@gmail.com>
+Date: Thu, 22 Oct 2026 10:41:29 -0700
+Message-ID: <xmqq1p9hhbue.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -125,52 +131,47 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Wasswa Edson <edsonwasswa54@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> From fe5f35b00eafa1eb2756178445d3e88c4e9d6787 Mon Sep 17 00:00:00 2001
-> From: Edson <edsonwasswa54@gmail.com>
-> Date: Thu, 22 Oct 2026 13:09:21 +0300
-> Subject: [PATCH] doc: clarify promisor remote fetch ordering
-
-None of the above should be included in the e-mailed patch.  Your
-MUA would record your name in the "From:" header, the commit title
-in the "Subject:" header, and the date when the public first saw
-this contribution from you in the "Date:" header, which should
-become the author date recorded in the project history.
-
-On the other hand, there needs to be an explanation to convince
-the project that it should want this change before your sign-off.
-
-> Signed-off-by: Edson <edsonwasswa54@gmail.com>
-
-See Documentation/SubmittingPatches [[dco]] and [[real-name]].
-
-> diff --git a/Documentation/technical/partial-clone.adoc
-> b/Documentation/technical/partial-clone.adoc
-> index 18718a3840..a1104930fb 100644
-> --- a/Documentation/technical/partial-clone.adoc
-> +++ b/Documentation/technical/partial-clone.adoc
-> @@ -196,6 +196,11 @@ filtered `git-fetch` commands from the central server.
+> Hi Keryle
 >
->  When fetching objects, promisor remotes are tried one after the other
->  until all the objects have been fetched.
-> +When a server advertises promisor remotes via the protocol v2
-> +"promisor-remote" capability and the client accepts them (see
-> +linkgit:gitprotocol-v2[5]), those accepted remotes are tried first.
-> +After trying the accepted remotes, Git then tries the other configured
-> +promisor remotes as described below.
+> On 20/10/2026 19:39, kerylefondji7@gmail.com wrote:
+>> 
+>> diff --git a/archive-zip.c b/archive-zip.c
+>> index 6f73ca6d58..5ab3ba786f 100644
+>> --- a/archive-zip.c
+>> +++ b/archive-zip.c
+>> @@ -328,8 +328,10 @@ static int write_zip_entry(struct archiver_args *args,
+>>   	}
+>>   
+>>   	if (pathlen > 0xffff) {
+>> -		return error(_("path too long (%d chars, SHA1: %s): %s"),
+>> -				(int)pathlen, oid_to_hex(oid), path);
+>> +	 return error(Q_("path too long (%d char, SHA1: %s): %s",
+>> +	  "path too long (%d chars, SHA1: %s): %s",
+>> +	 pathlen),
+>> +		(int)pathlen, oid_to_hex(oid), path);
+>
+> The indentation is still messed up. If you look at the deleted lines you can see that
+> we've lost a level of indentation inside the "if" block and the function arguments no
+> longer line up. It should look like
+>
+> 	if (pathlen > 0xffff) {
+> 		return error(Q_("path too long (%d char, SHA1: %s): %s",
+> 				"path too long (%d chars, SHA1: %s): %s",
+> 				pathlen),
+> 			     (int)pathlen, oid_to_hex(oid), path);
+> 	}
+>
+> Thanks
 
-Just fact checking.
+Thanks.  Just in case Keryle is reading the message in a terminal or
+webmail app with variable width fonts, the easiest way to see what
+is wrong in the posted patch is to visit
 
-I thought that a remote Git server cannot arbitrarily inject,
-advertise, or force a brand-new, untrusted promisor remote config
-onto a client during a protocol exchange (such as a standard git
-fetch or git clone) if the client doesn't already have it configured
-locally.  But the above description makes it sound as if the server
-can advertise a remote repository that the client does not know or
-care about and direct the client to go there first.  Is that true
-(yes, I am wondering if there is a security implication around
-here)?
+  https://lore.kernel.org/git/57e076d3-cfea-475d-b68d-a9f36746db35@gmail.com/
 
-Thanks.
-
+which should show the patch in fixed-width font and even uses real
+tab chars properly (so you can click-hold on the left end of a line
+and move your mouse right to highlight the indentation to tell the
+difference between a run of spaces and a tab).
