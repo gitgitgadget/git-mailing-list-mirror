@@ -1,123 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=157.230.60.252
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792668647;
-	b=eeqm6ugJYLCXxqHXyy/+AVvqjh3wegAGz+DuknyIhI+2AKND8GNlmLK86jQA3A8q2X+Q
-	 s0FN6w1ONZsuHgNNEQFG9mjNdgCfK0VVpLpqKq49oyTazg/t3ywd5wJ/KDIsXgORM9va4
-	 QhYeHupk8rhaQY9yiERb/dCT/Av++P2oRUWjk5VCpWvZL9toZH2oZQqNcwpBArZhQHAnE
-	 +7WMELv0QFW1LLGLY6GzUJP9TLbTxBKsK8tq2WlmrnwuazezjIn9TuoLlvXP+Vp79WKi2
-	 nZ6MVpLNDwnkTAnUnlKwyOiUP1dt+1mBuk7ZS2jHR2Pzw7uoVOdQ2IZ6m2DVCRTbaxQ==
+	t=1792670910;
+	b=tYV9qiWBfKhw4WIK74bw757F7tXHibk4W++1sqHL3jZLzF1G04VgBGZ+T5LpAo4L67cM
+	 5TFV/kn2j4hEe3QVi428JiaAXU/+Khbi4jQbZdRHBrbCSZ7NqH8y4xtz86gofG2AtOsrm
+	 tWhXkdYJa8wNyhN9UsTKbPM1QajJHgTDuoEc+Biq91oPx6A/DSrFgLnwZg4m9w0a09Fyg
+	 GXUQ8WHVaEVs8yOI6t3JyfuXrjs5aNRrjJTqRqXSVx4Dr/ILKEDu1r1v9pIhAJJ+HE5dC
+	 03+JZMXxv61EHJwqC+82bwDm6xBjjEEYg7w3/P27lBjJHDEmtKiEVRffOSgmhtYVRyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792668647;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=jCiJaZAtXmZqm6f9GQ3JZR7dzUx99StF8bW9w8uTNM4=;
-	b=p/MAPE5QlXG7tubrzgJf8dX6cq3kg7sMRbpSBbEMpzZYtwEwv8ewKxUDnLJdpX/pkaNY
-	 aB51F7biCjRFmdkzGsOUMTL6eZfyDrrficeCdmudVItjbifQO0Y8e+1RKApUjdq63dmnz
-	 pyXIm4tYlMOoBjh1I+JM03hDfZnOXRhHvRwNciVZSll6CA/9sY6ZI6RNurmVWuByGlzpM
-	 Ly5nEXTuJVn8o/sJ44+nnlq1421Lfg8kBF8ig3Chvp63tHkISJjOdfUbta0M9IYZi5ydG
-	 tN+Y+18toKZpECf9ugaNhiCQ+IWGgSBWFLM1vjgN3VGnOzXIFcqssJZw2eQSSlILOGw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792670910;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=IwMshZIUMwOA5WaPedIdHpB/t9lUWr8oNqbxPR+RldA=;
+	b=WrQDKF8QUnpVJ+7cvDcIdg7ZxCmceEnUGDzMWVGGi8vXr9bQdFIdbD8Hm/v8xTUNlcBJ
+	 kJNWtFp18wt3a/Ya4idvHLyc3ZpnWb111sqPWttEgiZnk5SOSQROOfdJnoLD+sCvtDYMY
+	 6h3foGYv7gW5JG56F1AVusOdAj2RB5MrjvUYEI4S95+SaQKcU+J61Ob5uaeX6qWVyQTzE
+	 eI6cv4Y1vmc8b8M7PB6AiHqFz2eie+Aqx7N5IgS2p7QDseq3nCB6fKeDaFevwFJcvU37r
+	 MEgT4/SKUhEkbUAL2wI2uOM8gMJgbI0dQyoR9EcIt9x6+EkvVR/qNWy05jBK9PXpbow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OEtG6kC5;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QruafGDW;
-	arc=none smtp.remote-ip=202.12.124.151
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	dmarc=pass header.from=lfurio.us;
+	spf=pass smtp.mailfrom=lfurio.us;
+	dkim=pass header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=K4zUt6YS;
+	arc=none smtp.remote-ip=157.230.60.252
+Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F96B606A31A
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 11:30:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F96B606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38EF606A31A
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 12:08:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F38EF606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OEtG6kC5;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QruafGDW
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id ECB2F1D0016A
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 07:30:45 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 22 Oct 2026 07:30:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792668645; x=1792755045; bh=jCiJaZAtXm
-	Zqm6f9GQ3JZR7dzUx99StF8bW9w8uTNM4=; b=OEtG6kC5H/P28ovmy+W4MthRZm
-	uz33le66DBlRISyukJvXxd1cP6+AWyBggJm5XlWMwZ+BqKlDpIYAf83QfQP7p6Ub
-	us9rPpbiaJmLp8IRafP1ZmuM/X/P3rxCrVflQw8d8cPSCTqRBWQIDocnTc8kSDqQ
-	M2rpkiUgUkaSjF2MgkML/Xmh6X6RnMcjC+BpdzQrAYDYYBRflAoalk+1vNwFCfiX
-	2fQM9CENhXCNahb7242hVYhtwAp/vG+buzFql7UTrCgirZ+Vy68t/TIlGEOoLZHR
-	wh+J9hQuayV+Bx7fNHsoh+z3Yk0lDTwDsgEFPAoTrfnmMuCTEa+LII44xL2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792668645; x=1792755045; bh=jCiJaZAtXmZqm6f9GQ3JZR7dzUx99StF8bW
-	9w8uTNM4=; b=QruafGDWCNZF1oi6kBLfoDtv8i0LUV0thDC+//inNTNslpeuwQ1
-	T9vIlPsIwUw3Ur56L2Mgeye7PeSTp8l93ACt4bApFfTtpihHrAjg8xaweBy6FVVP
-	uMDTCaRowjlzUhhh3F2uXnr2bgqVi2/SYiNY/BXNX93Taq4THhm8GKF4lao2snOM
-	oG62v7akwZxcIUUb2PZMfpCTQ8XJh8cCYyLps6+GPQ0AZYLafDbLcxEvLTdPWWHR
-	Zo4JDW0d9uUzwNA23Vkrxp/QkBHWtTW3aMjIUZsf6NZPaOzkrUofkH9vWWb28N9o
-	vhWf4Uf4ZO+OjZja/6s/IytZBj+16XB1hCw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792668645; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:SHKHkbu1uQ4xMKDvzbo6+2RMjwvFIwJ5JLWXuyoHLPo6qjA
-	tVU/bUndY0K164c3O7FIP6ID8zS39OkNsWYFMUHVLfHgl5FUpwjx5cwhLUChAKye
-	vpBW7am+g5X6rwXq9/AcAtxhdtAWCiq5oViNS5TDJ3fKA+XoEqOfAmLsi/+RvQMy
-	ZtMb+LE6mFREpw88V2pVUdrJ6MyFA9boum0etRezkI1XskIagTlpmJZDLtt1GlL3
-	MmYgTQa64rLoctYq1k4K19a6Pl5otDirAhpu25LY7a+uJFvpMkHUU5QzA69iUhT8
-	P2/WbuxmvqadhNtpWlLRqxs1fkIlsKiRYG7zg2w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:jlvo69ZZD79bw9VpzsZZdbRKN+Ci++GPE9QLc/dntHA=:M0BAqZjZ5yEcpKklXOaoIxWWembJ5tyZSLnKspHamF8=;
-X-ME-Sender: <xms:5fPZaubiWcoELOqSnY7pyGJpK5EKq72TpcSfROoGWQRwR-qYtYHAvw>
-    <xme:5fPZalGBmYHR0O0IJVl9TYnV-mzJUmsz_yZrDdc2Iemh9Wqr6_z97Zhx-sLPJj8aQ
-    EI0kgtgBb6EOC0MC8E0n_Q8o45YDo9UB5Ls0If7lpfs9HgAKoc8YA>
-X-ME-Received: <xmr:5fPZaiww-tVXNkEohebNj5oJ3FitW1H7ExYPn_mtRei-EcZbpB1_AHSitvE_yA84VHwQMw>
-X-ME-Proxy-Cause: dmFkZTFoGq8TjXfYTuSbnG1c2MfHGBmY9NzAZdEnwndJN0djhFPN6Pe0xcUKZOmQsDuvgW
-    AHq0z0zXqdpBpY9lCJMNgyNoqzeoMSUzN5jopN2REPvxgYrG8S/Oaua62lh06B1m1tPV/8
-    pJGVd/fsJXmJyL75hbjih/9gAXT3dGAG/G4l+7aB3cWZVoTS3inlqVQ4FKOdaHSfFLQK2z
-    1SW4MnPH6aJsgN7+QRWNW4fT/xfP0l/PMnH1pQj1y6LhANIYc8C7uCuhyaatlHtyzjnJBC
-    Gguzj8MflXL6KPdkJWmvbSA2A68lF2M0Uw5QiPb1yrRBlnYNoX382hNlbyA63ML8x2+QZq
-    gKR3y7hm1Gb6odO9rKluCrHkKLEFVW2MkJHgZZVM5qU91FZAD2vPCHB2l/QCNhIDVkuQBY
-    GPOpZOK73QMK3j38icuqFrdCnXqUC78jKgARcej8J6ZppjGxcMhLqiBPiGTj99xpKCBJGn
-    XdnzcfUrgEpU4lBwKkhtZPE+xlT81O+LHQb9tQIpS1y8Fbaf36TGLqnpmNfQGwz1+eHvdr
-    8bvgrkXZXTIucuXtpJ0ZkoZszz1CxqragSRSa3G3GBlKWtnCSXPwT3cEpJOQ+qNqJ2IkKZ
-    lfJBIrcEcg9BxBRNfW1RhlTOc9ea0jXLUBpo4UHcd8wpKWqODc2p2CqkljPQ
-X-ME-Proxy: <xmx:5fPZanl6S1dAcLtyhyaLI-xod_usHudDRS_DmZyuf7x8iYYDIvVc9Q>
-    <xmx:5fPZarmqLTcrpl1dly-rdnN-D0vIkddWsax6SqybM45TwfgajcHrnQ>
-    <xmx:5fPZapwFkOWUJQwjhc2JwepH3GvsDpaNN7iqGkmNczu2FNMZ1_HQTw>
-    <xmx:5fPZagoCNaW1lq0hd4kvA7Z1cmaCOekLWi2TI9gJQuxtKhYgxJXtng>
-    <xmx:5fPZah-QWV2XlpPoNc1m07b02-VwZirGYNFkAngTbVxfCIPL68UysWaj>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Oct 2026 07:30:43 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 62031590 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Oct 2026 11:30:42 +0000 (UTC)
-Date: Thu, 22 Oct 2026 13:30:39 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Joy via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-	"Kristoffer Haugsbakk@imap.fastmail.com>" <kristofferhaugsbakk@fastmail.com>,
-	"Christian Couder>" <christian.couder@gmail.com>,
-	"Usman Akinyemi@imap.fastmail.com>" <usmanakinyemi202@gmail.com>,
-	Joie Joie <soniqjjj@gmail.com>
-Subject: Re: [PATCH v2 0/2] config: move pack size limit into repo config
-Message-ID: <atnz38iLy6_wotH9@pks.im>
-References: <pull.2271.git.1792522587065.gitgitgadget@gmail.com>
- <pull.2271.v2.git.1792662432.gitgitgadget@gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=K4zUt6YS
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
+	t=1792670903; bh=4Qdc4z+mYAwscH+QYTOhr35R/qOnYXPAfpMtjnF3Gew=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=K4zUt6YSLDXmcQSYkIAfBcSOTj4jIepYAcxpv3n42PSM40reCjiy227oMwDUCZJq5
+	 wlDW+rDVceIMYsDqwg2R+OwRd9SrHm2ON9D6DPpfo0EL2JS6sUwN5DidbPYjYaXVhj
+	 aHYIw9VlS6a4Ko5ZLIzEEbwmhjOzfB/STX/bcTRw=
+Received: by mail.normalmode.org (Postfix) with ESMTPSA id E5EE762D5A;
+	Thu, 22 Oct 2026 12:08:22 +0000 (UTC)
+From: Matt Hunter <m@lfurio.us>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Harald Nordgren <haraldnordgren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] init: show absolute path of (re)initialized repository
+Date: Thu, 22 Oct 2026 08:06:32 -0400
+Message-ID: <20261022120749.3567828-1-m@lfurio.us>
+X-Mailer: git-send-email 2.56.0.257.gf7497c7d27
+In-Reply-To: <20261020053932.1274210-1-m@lfurio.us>
+References: <20261020053932.1274210-1-m@lfurio.us>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,27 +61,124 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2271.v2.git.1792662432.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 22, 2026 at 09:47:10AM +0000, Joy via GitGitGadget wrote:
-> Changes since v1
-> ================
-> 
-> Thanks to Patrick Steinhardt for reviewing the first version and suggesting
-> the initialization cleanup.
-> 
-> Following his feedback, I've:
-> 
->  * Added a preparatory patch to simplify how repository configuration values
->    are initialized.
->  * Reworked the main commit message to explain the existing problem before
->    describing the change.
->  * Removed the need to explicitly initialize the new pack size limit field
->    to zero.
+Since 20e38cba3926 (setup: split up concerns of `init_db()`,
+2026-09-10), git-init produces the message:
 
-I've got two more small nits on the first patch that you probably want
-to address, but other than that this looks as expected to me. Thanks!
+    Initialized empty Git repository in .git/
 
-Patrick
+instead of the previous
+
+    Initialized empty Git repository in /full/path/to/repo/.git/
+
+Prior to 20e38cba3926, the code producing this message was in function
+init_db (renamed at the time to create_repository).  In that context,
+the git_dir variable was updated by 'git_dir = repo_get_git_dir(repo);'
+earlier in the function, to set the value used in printf.
+
+None of the discussion [1] around the original patch indicates that this
+change was intentional, so address the regression by similarly using
+repo_get_git_dir in this code's new location.
+
+1: https://lore.kernel.org/git/20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im/
+
+Signed-off-by: Matt Hunter <m@lfurio.us>
+---
+
+ Changes in v2:
+    - len type is updated to size_t
+    - added a regression test (changed my mind on this)
+    - some text is stripped from the patch message
+    - Link to v1: https://patch.msgid.link/20261020053932.1274210-1-m@lfurio.us
+
+ builtin/init-db.c | 7 ++++---
+ t/t0001-init.sh   | 6 ++++++
+ 2 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 374ed3a74706..9612d2b8bfca 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -248,18 +248,19 @@ int cmd_init_db(int argc,
+ 	create_object_database(the_repository, NULL);
+ 
+ 	if (!quiet) {
+-		int len = strlen(git_dir);
++		const char *full_git_dir = repo_get_git_dir(the_repository);
++		size_t len = strlen(full_git_dir);
+ 
+ 		if (reinit)
+ 			printf(repo_settings_get_shared_repository(the_repository)
+ 			       ? _("Reinitialized existing shared Git repository in %s%s\n")
+ 			       : _("Reinitialized existing Git repository in %s%s\n"),
+-			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
++			       full_git_dir, len && full_git_dir[len-1] != '/' ? "/" : "");
+ 		else
+ 			printf(repo_settings_get_shared_repository(the_repository)
+ 			       ? _("Initialized empty shared Git repository in %s%s\n")
+ 			       : _("Initialized empty Git repository in %s%s\n"),
+-			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
++			       full_git_dir, len && full_git_dir[len-1] != '/' ? "/" : "");
+ 	}
+ 
+ 	free(template_dir_to_free);
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index f1d227f27167..fbf8a0e41dad 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -1000,4 +1000,10 @@ test_expect_success 'init honors GIT_OBJECT_DIRECTORY' '
+ 	test_path_is_dir custom-odb/info
+ '
+ 
++test_expect_success 'init shows absolute path to gitdir' '
++	expect="$(pwd)/init-path" &&
++	git init init-path >actual &&
++	test_grep "$expect" actual
++'
++
+ test_done
+
+Range-diff against v1:
+1:  c0869122d3fb ! 1:  49d220d97aa8 init: show absolute path of (re)initialized repository
+    @@ Commit message
+         change was intentional, so address the regression by similarly using
+         repo_get_git_dir in this code's new location.
+     
+    -    In this case, git_dir is referencing owned memory that is later freed,
+    -    so declare a new variable to hold the used string.
+    -
+         1: https://lore.kernel.org/git/20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im/
+     
+         Signed-off-by: Matt Hunter <m@lfurio.us>
+    @@ builtin/init-db.c: int cmd_init_db(int argc,
+      	if (!quiet) {
+     -		int len = strlen(git_dir);
+     +		const char *full_git_dir = repo_get_git_dir(the_repository);
+    -+		int len = strlen(full_git_dir);
+    ++		size_t len = strlen(full_git_dir);
+      
+      		if (reinit)
+      			printf(repo_settings_get_shared_repository(the_repository)
+    @@ builtin/init-db.c: int cmd_init_db(int argc,
+      	}
+      
+      	free(template_dir_to_free);
+    +
+    + ## t/t0001-init.sh ##
+    +@@ t/t0001-init.sh: test_expect_success 'init honors GIT_OBJECT_DIRECTORY' '
+    + 	test_path_is_dir custom-odb/info
+    + '
+    + 
+    ++test_expect_success 'init shows absolute path to gitdir' '
+    ++	expect="$(pwd)/init-path" &&
+    ++	git init init-path >actual &&
+    ++	test_grep "$expect" actual
+    ++'
+    ++
+    + test_done
+
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+-- 
+2.56.0.257.gf7497c7d27
+
