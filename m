@@ -1,119 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.153
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792673074;
-	b=16QQg+N+u7KmvX8z53/sHhF499MWMXmnrlyNTWcl8woLaHf3fosojvvfJwJBe7y5Xg/c
-	 n57X8EC+HnnFRqVsrN1Go7cLt27MppaoJ+bs0HNb00z/v/GU+zKZH9uFBUVbuigY3MtPm
-	 LDVS8DHJMGrpXHlN2V9PDijeSyCunWRlSetNo0EarqwpZenCsl7teMMyKHuhOAQ3iITUn
-	 5N4xBWOkt7tscBHSE/c9MDcYCHj9sPAOBMWgDHm21WKWnigxCwMKlqBdJdH+JMzG4DIWI
-	 dzZ34mzeukgfqkDwHJfaakVtXAp8sm+Z8nSR4qwF1S5jJRU0s4Q2DAbbIcVmvCaSgyw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792673074;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=lPWgxiHx6jkoQ8OqpchTkIGLPW9MVr9pKizd6LzzOl0=;
-	b=I7DcC309PWiz6V0/Ihm20GuNKHzFZQw3l1IlWr798njV+oVIX0j3lmCDWPOiBKhBPFj7
-	 FCscVb5lAJWdDCKyXeXNM9TO6O+axpVV29tucRGnkajBOUFn6KnC6WqsTgIoWjsKLfFm7
-	 Uy3SavHnYVaki8TUG0/Bo/PC1607yKKiOP5S7Pvaup0nokNk52Smc/pS/fxPTSE66KF8H
-	 VnhSR7OhDnzE6ScqE7mSmkit1jlIVUFkgcj1SuWbtQM1vM4PR3STgfnnUzyPotzfcVLTP
-	 f5sesZGxaaYufM5eVfqY9jVc7cRg8nFsmBGODNKScD9YBdbWa7xGOWJavS04aBcbBVA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b="b0aaTe/T";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ST17mPZH;
-	arc=none smtp.remote-ip=103.168.172.153
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.178
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792673195;
+	b=K4XM/+DP7Kh/kyPLomVvVOF49ocaVB9JqjDwOzqwmQILHCHwBMCtdQT8dvh9rncgpVD9
+	 ZWpmvnvA+DW71BJ4CfxnZBFrN5+3Y2T6qOAh8eEFlxvsU0fZD4G8IvNI1R8t29hesqkYB
+	 15v3jPVKI+ToZ3FodnXYh1U2AGAgZB9nzSrdkhoyOGquD6QMnXJVfK3+qTnTrR+w/MolI
+	 Xu0NTDFw6EgC/EL+rxLWcNrPw/4E8dAnodnBxF0s3B1xA160HTDJM3RzS4NmfyoVxJT0S
+	 HQeLczXfJ+nhC6o5PAQ2WO6nNgiiAR3qn4x+vQgdrx9UH2trOkoxFbt3Uv3/qVHosHw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792673195;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=uJVv1mrKv2CGpeFoezod/AzVK9KCSqwSDaxPmS0pIHQ=;
+	b=YkakEFPdfgd9b2MkALrtTkOJn1uxVO52o6G12FrPguqMFVhmflYcVyBKvHXz6AyMvNhf
+	 dWdgejBrkU6DDmgnBnCMBBqoFrEPN10I1Lu0jdAGVYSpKCAOTcQdTlU4Sd+1rGbQZwBxB
+	 KVo7QS1s+zObmPkHl4CdpOqdlPEksid7ZOTi4rEmhXQDIhHz11t+6TjBKH7fqInlq/fQd
+	 LyXq1NVXUU5a6OhrRs1pJCc97LDe/zfMXe5OryI8tjFqijlsbVt3J9/xx7/rx74bqQLWD
+	 +m5FQ2cfAcWDSrqdi724WRSaNM1+zjYmRcyxlepj/QRkHe/Xm7zkBc3OwslUkhDvz0Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=shbx4tBY;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.178
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AED2606A330
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 12:44:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2AED2606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BD3606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 12:46:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 07BD3606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=b0aaTe/T;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ST17mPZH
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 675B51400128
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 08:44:33 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 22 Oct 2026 08:44:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792673073; x=1792759473; bh=lPWgxiHx6j
-	koQ8OqpchTkIGLPW9MVr9pKizd6LzzOl0=; b=b0aaTe/TCyw0ZgHAfe1sTH1Gfd
-	c8JNZu0ENMkbGBo3ZM5AvHJf+kKD+oNuHEjGPjXMQ2oB3XKzAneo+rJDMRoeCne2
-	Gygi48kAEXqitwQ0pY0pgAMDKZY8pdpFk12JcZYzPNPsiNYDoNk+8ltQR2zTt2/F
-	mg0mMo9VsZQonElTpt9bOR2+0dkoRhjXWf5T6UEXXnuVGKmV2VOKoqhXolsQE6IT
-	DHyHob2ToEENoXh7muUxrB3GDV8bCvnoTeWltf+vIWpOB8WW77mGQzIlKtpQY53q
-	gk9elbeX6FhJ/43L9Tu00dw+Z3XW8gCz5Eso4cv0c7ike9zj0qyz5eg6HN0Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792673073; x=1792759473; bh=lPWgxiHx6jkoQ8OqpchTkIGLPW9MVr9pKiz
-	d6LzzOl0=; b=ST17mPZHSUsF50cIbIG7/c81u3quHmCMSnUeMULoffX50qFKqM7
-	GSPfOyR2sRSW/kfJgupWOdIadRSqidPBy9GDZI2YbRIegwFfr8phFo65rxv5pCzk
-	0+SkGgJUHzDhhJLsRbM6++xhKzuXjk7ySLS+AnlHivUn6m3cBVdUexUc4ke1sydl
-	ygCXWGMRCjDSW0g/xCaZH/AfpVTTknfuQJoCeUdNrYcerfmNHToYIj6f5ZFbty/k
-	w/CNRAuQOnTMKeraZq3jvYofOpuqSWr16dFmf+uewyy4dRHXmTVBD2LUlypJgyZX
-	HsgvJhAgaHrkT+fK4XTi1YhI8+36jpfLuJg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792673073; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:fZTuXLEdHcGgOLCeeZdh1ny/Mewf7FPXHftcaNN2Qpdo+c4
-	10cJ0wNv/o+LuzevVb1+EACseDfrQ/SQ3gA9sl4t/J01OeIuuhj1Rk6pRyGr6m3Z
-	ChARXqW1ie9Rr7eYn09uOkJBCgRVmgSuJQ51ToxpEjMVfTmMGqbvpMmkKMZETKSe
-	PkyD1htGJuFSfn/MhpdrkRqE5dVFwXCp6lm9c1Jcd3psAH0m+c5IAqViD8LNPLNx
-	sEdD1OtfI0+gzPNiE8Kw/SezjC8DOCEBppkRJ7FXrRjCmdFbbS3Hjt744eB1zXJl
-	t+gDWeuPf5oa32cQId4nu1mhYMfwHxNwQrInqhA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:Mi9Q9KJQzvU5Im5PBnLy6ahR2CWtmDR0XrMdqF1tQaw=:4hN4mJnL/+pquqbY2HodG6hiMkBf77pM5CMFdqYARX8=;
-X-ME-Sender: <xms:MQXaagjq0CM6S5FoIrA6odYkWVp4ysaTbfjbSSL04N78fymrbBqqCA>
-    <xme:MQXaagfNaFM9shK2kJWbC0unyPumNinrv0_fU5FSSfzuNosJJVWAKe9WTGL90Z-41
-    LFI_ux-dn6Tk7H7fkHrJFx0BoR92nMnC-Ucu342znNDldNY8HBAui0>
-X-ME-Received: <xmr:MQXaaleexfQOe735tQp2bOZbH77fzSnp8yRs5BF7_fkghQt1ydplu_260aA4y9x2Q6UldQ>
-X-ME-Proxy-Cause: dmFkZTFXWuPDR0wYwnVtbNvukBv7L02dp1eZ0ETYOmPShUWLIu5pWsphkIjsyGxW5haHlW
-    MkjUjhxfUYgaLMbAuCkuHTKNigcAbHcAJG3t8bIBQn/dJnL3t8NjGAxJmelHrBFdb7aoq+
-    fbcjfJ3zDFk45a6P1DBllnr7GYJwr9AriGh0R4ElNr2Ir8ipErkYl3PNmsbFawSVr6mAct
-    XkfI9RiQSGZ4bWcE8ZmzCLEENXy++SEpJmrt+vuYivCWUcHuLeUYSK+S22cEmQGAd7mfJA
-    Lo3469qts8xoGh16y2SIPHT0Znfo+InzHPwxsvwTwd523sH7UxRbIeVmKiCT+Icub6STro
-    LXIS+xBkskYiT7Hl50dM4bGWOu70LcR3j2zeI8jhNyOyIyoq/bb19cXrM5tM9jkoqv7MV9
-    3D/oTSP8RV3w65X6PqerFbPX5vgdsPWTlpJRcBgD9N4iZPPPUl5nakdUJoktY2eR1skFVS
-    Z3UsinZQsr65R31EPxnLO3ydtviPsHlQ/JC1cJepd1Z481BDOIN6N2X2nS9IOpybEZfI2N
-    CjgReqEERE7YTVnjbL5f1gh/lKKqUb9JIsLvdmtDrSDrf9ZOWFvsxN8o5VlELUzsSOOT83
-    n3x0LpCCcU1UNATl5SeqTxaPLuXFp0XHomtGJgSH9eGUGb6QQOJQRyG3hE5A
-X-ME-Proxy: <xmx:MQXaaq8YZReQVUrx51te2l650yQYAueNJVQsPRoehH7oOt9zsBewlQ>
-    <xmx:MQXaahk47reK0ENjGtejMw5XVTX3XyEWd32I-ui7wtXBtSk72br7iQ>
-    <xmx:MQXaas_Zccaw3geoqtK2058X1tesj8v36Pw17stI4wRDzK8tvIDypQ>
-    <xmx:MQXaavnA0IJM1OjHC_H_AOQw8DuZ3HY4EiwZNvPmdgrM6DrDA3AAHQ>
-    <xmx:MQXaagrgw0YDzwDc1zPxm9iLAwmRdHqvja6HmAN-yfjUCwEROjPqeudZ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Oct 2026 08:44:32 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a0e6eee6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Oct 2026 12:44:29 +0000 (UTC)
-Date: Thu, 22 Oct 2026 14:44:26 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] Documentation: propose community voting process
-Message-ID: <atoFKhUaM3b38n-b@pks.im>
-References: <20261021200341.378978-1-emilyshaffer@google.com>
- <3fe1dc57-5bb2-4e12-8876-a4969e5201cb@app.fastmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=shbx4tBY
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2e946155442so14955335ad.3
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 05:46:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792673194; cv=none;
+        d=google.com; s=arc-20260327;
+        b=nzqBJQGd0ORdLszs6FL21GXy4ItrqtJ+cg+RlF3NMufg4uc52A/N5glvVGEO0BC2fn
+         CyJLJjFJ8KVqthxedf4AYXw1/+RhaezHl3Qy9yjMqCcOD05qZbhJJS1LY/BKne/V/7r3
+         gGBS4mkOgrxNTa/QTXTuDo5yQIeNpIZmmlPL0nICCtU1rCU7WJMNZmfER66APpi6amZg
+         GYgc9MRIjGdvGHjjgSCLOZRLUoek8TN0kdqfwtmhYk73YbNzYIxkYANF4Evo8FnC5tzX
+         SvqF1QdUPY5mGvH71Bq1653WUkO8sNlqzYCf3ylJl1NXL4dpUnNVpE4J/MPyMTxNWT+x
+         eRsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=uJVv1mrKv2CGpeFoezod/AzVK9KCSqwSDaxPmS0pIHQ=;
+        fh=fO6pv7++hJjYDCNhVhEjNs3nD9/3bOotda8HnHaqFzc=;
+        b=Y7hLqZAYbXOSHCtWqS+cH4ljbAD3X8Ch/qRzI48R3sKbPSPR1VGjHNHHh8+0fMSq0N
+         d2Sn64Hg86H4Hdyw60Ok5aoc1s1NfdGu6w8pLBPHF6Vt6S1i1zReazkscgHW0Yd+1Tr6
+         KgBt19gRyAqWsnY3wNprjUYFzWrZPI0YtkszQf79P04E6o/OJsvAcxwkENtpHEn/Y8Qf
+         in9JshHtb47TYWPufiMridVVYds+LNLCW6SPC4ECTHngcnv208i5GXROIga5TMM9c1Kp
+         LzrJL8qVBH338hMblKGdfXBNe7cervEbwVxMJM/UdHgZDnxwz/cM1k/X2pOQO3RBIk0g
+         0KqQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792673194; x=1793277994; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=uJVv1mrKv2CGpeFoezod/AzVK9KCSqwSDaxPmS0pIHQ=;
+        b=shbx4tBYRea1AXNpH1v9X/ln2GA3fiBQWKul560+BpQg41BEAt5wcZ3PpftJONN/hc
+         Ltfewa5JL//pVs+SInsgixAAMwdX12ra8foBF3I+UVnD9CFahvq1POfU2qrIP1J4AaiM
+         O7EFitcULHDBcDYKtF5VUwoiNX4IvZ86SFhKq9qgWjCB+LHfnoDj97YLp7LjfJ5P//vI
+         G7kxAoqDynwQAgQiJefDT794nA117tdeEsU6qHFoRqaD0T8AFMZPzXcblEWA+Bm/mwMj
+         lyRG45YeBiVuNptY9d6YBTmW0isD8VWO6+g1+HYNdtnPoE9izh5DeowavhMV5SLPZiW/
+         fB1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792673194; x=1793277994;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=uJVv1mrKv2CGpeFoezod/AzVK9KCSqwSDaxPmS0pIHQ=;
+        b=ruhENdDOiUQMq9PfhblsJehzg5IZYHtulroSiF1fedh0frjUDVIYrlHCwAJN6RfMVS
+         2cZvTc7pOedr6fsxi1VGkTLRcbduTIKhkjuy3pzV6ceTqnv/B+ganTUzqMZdb+sNTWZh
+         oRA1ep/usJHidjNcAY3U2LbHqyg2g5gAkMjVOugrCzGHI8O8VdRD2yMhDtWJiZ2njJMg
+         S+Ya8dNlRo1Kf6zQ40HzKUlq6Qp8JIi5ph0I4wb77LagInsprNoC3Q/w9xfZ+ejTKCQe
+         loBT++dwt1NP+IGbn/LGoYIwIgdDkgDQbz/lRQ2bcd+P61CrCMM6VxGgMwO27GkzovfC
+         ajpA==
+X-Gm-Message-State: AFq9FYJs5iWk/4qVNDZK7z1JT9JGI/4mCTkB6yjyR7G45InrZ5hr/H3q
+	5oR1ZiJKJrhoZKuJ+YfPSiyu1OQB7rgvogv3dfrbO/kz7KvGuKX+S4MlfTMw+rSiblyE/8SIN9V
+	JhlBCy3wRiLAldY4eDU+dzPPTUXmyBGM=
+X-Gm-Gg: AYBFou2pLAAF+R5LoxEmNC6a2KE4anuW+HiaV7awNjqG58U8A4QrrjgXYktJ267gbBS
+	Jol6gaM+Hrt1erAbXDtDD4FxKyv2HG0CXgE+ZmlZezBf6mP/C78RngZOlKibe/aLcLPL5pkEzDu
+	g+9l/Ku57eH69bLWnmF+pwZ6KXFZR04nOzo4XSSCC2BGQn+3xQ6mhX1fXyKIYm3dr2pqQrOfUql
+	7rac74gwEssuTetsux+I6yI1ZcO+WvbtUYjji+ecqThj2MMfdrB97BWKTTw/pjqIBOJVylqiHjH
+	mB8J2gafEnGHnub+fXwGdiAFWPZ9Pcder6ils3jtX+PVGqg8swdyiSkJ+9hU7uQ7MMNSSFb9+z1
+	8676di41nLSrZ66PEMLpls8NdhVprqKOtF854pnTg/ubweQevL9Or8AdbaLNdZyInEdfZkYYMou
+	mDgScY8z2oAiWJpbzEbPUro+9EK2VHY1CSmiKydDT5BUEb0WwZ3iRn8EnJcUZ7bod/ig==
+X-Received: by 2002:a17:902:ccca:b0:2dd:c053:a6f1 with SMTP id
+ d9443c01a7336-2ea43ca61c6mr38550405ad.35.1792673194183; Thu, 22 Oct 2026
+ 05:46:34 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,30 +104,151 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3fe1dc57-5bb2-4e12-8876-a4969e5201cb@app.fastmail.com>
+References: <a8561fb7c2da446e7f7acc7e2a443991@donquinleone.com>
+In-Reply-To: <a8561fb7c2da446e7f7acc7e2a443991@donquinleone.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 22 Oct 2026 08:46:22 -0400
+X-Gm-Features: AclHuK8PiCRhqaiQfg7tl4omisSmGMp3y_ZnpK7_lAgEh-tptLCtwkp-FiosJb0
+Message-ID: <CALnO6CAsCvJRywkw0WpO1nEhL+yU2-r_4Z2AHdJch1m=NK8=TA@mail.gmail.com>
+Subject: Re: [RFC] branch: delete gone-upstream branches only when proven
+ merged into a named ref
+To: DonQuinleone <don@donquinleone.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Harald Nordgren <haraldnordgren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 22, 2026 at 09:29:26AM +0200, Kristoffer Haugsbakk wrote:
-> On Wed, Oct 21, 2026, at 22:03, Emily Shaffer wrote:
-[snip]
-> > As we discussed in the Contributor Summit this past September[1], there's
-> > interest in taking a formal community vote to decide whether and how to accept
-> > AI contributions. The topic is of course a very contentious one, and I don't
-> > think that we're going to come to general consensus the way we have on most
-> > other concerns in the past.
-> 
-> The vote will pass. Those who work on Git at least once a month work for
-> tech companies. Those tech companies are now AI companies. The votes
-> will happen to drift towards agreement with their management.
+On Fri, Oct 16, 2026 at 8:41=E2=80=AFPM DonQuinleone <don@donquinleone.com>=
+ wrote:
+>
+> Hi all,
+>
+> This is my first time posting to the list, so good to meet everyone,
+> and thanks in advance for bearing with me.
+>
+> I've just noticed that "git branch --delete-merged" is now available,
+> and that it never deletes a topic in the workflow that hosting
+> services (e.g. GitHub) encourage. Before writing a patch, I wanted to
+> ask how the list might consider closing that gap.
+>
+> In that workflow, the topic tracks and pushes to a branch of its own
+> name; when the pull request is merged with a merge commit, the server
+> deletes that branch. With master as of c51408889:
+>
+>   $ git push -u origin topic
+>        ... merged on the server, and origin's topic deleted ...
+>
+>   $ git fetch origin
+>   $ git branch --dry-run --delete-merged 'origin/*'
+>        ... spared, as pushing would update the upstream ...
+>
+>   $ git fetch --prune origin
+>   $ git branch -vv
+>   * master 61e9886 [origin/master: behind 2] base
+>     topic  87d0c48 [origin/topic: gone] topic work
+>   $ git branch --dry-run --delete-merged 'origin/*'
+>        ... skipped, because the upstream is gone ...
+>   $ git merge-base --is-ancestor topic origin/master && echo merged
+>   merged
+>
+> So the branch is provably merged, but at no point in this workflow
+> will --delete-merged remove it. A script reproducing this is at the
+> bottom.
+>
+> From reading back through the archives, this is deliberate. When v7
+> of the series fell back to the remote's default branch for a gone
+> upstream, Junio wrote [1]:
+>
+> > If the upstream itself is gone, removing anything based on some other
+> > criteria cannot by definition a "safety check".
 
-That's not exactly what I observe myself -- I work for one of these
-companies, but I still am highly sceptical of the technology, and I know
-others are, as well.
+Hm. I had a hard time following the "--delete-merged" series, so this
+may come out of ignorance, but: we are asking Git to delete things
+merged into "origin/*"; I'm not sure why we'd need to consult
+"topic@{upstream}" to see that "topic" is merged into "origin/master"
+here, since there's a merge commit with "topic" as one of the
+parents?!
 
-But I agree with the sentiment. It's part of the reason why I strongly
-feel like the vote needs to be secret, so that voters feel free to voice
-their honest opinion even if it was different to their employer's
-stance. I don't want anyone to fear any kind of retribution.
+Ah, but the manual seems to contradict my (personal) "natural" reading
+of the command: "--delete-merged" actually deletes branches whose tip
+is reachable from their upstream (when that upstream matches the given
+pattern). So, phooey. In this case, if "topic@{upstream}" was
+"origin/master", though, "--delete-merged=3Dorigin/*" would work, no?
+Incidentally, I find it a shame that GitHub's documentation encourages
+a triangular workflow (whether or not there is a fork remote involved)
+without talking about how to configure Git to help you: fork or not,
+if you push to a topic branch but merge to another, it's extremely
+handy to use push.default=3Dcurrent or some variant so that
 
-Patrick
+- @{upstream} is the place you'll merge
+- @{push} is the place you push
+
+and suddenly "git pull [--rebase]" does the right thing, "git status"
+(esp. with the new "status.compareBranches") can tell you where you
+are relative to both places of interest, etc.
+
+IOW, "git push -u origin topic" makes upstream configuration very odd
+in the GitHub-ish workflow!
+
+> I agree that a vanished upstream proves nothing, so I would like to
+> propose separating selection from proof:
+>
+> "Upstream gone" may select a candidate, but it is never proof. The
+> only proof is that the branch tip is reachable from a ref the user
+> names explicitly, so nothing is inferred: neither HEAD, nor the
+> remote's default branch.
+
+I'll refrain from commenting on whether we want to make
+"--delete-merged" delete a branch here or whether we need an
+additional mechanism for including topics whose upstream disappeared,
+but Git's CLI is already a bit notorious, so whatever interface we
+design should be composable.
+
+> I can see two possible shapes.
+>
+> (A) A modifier on --delete-merged:
+>
+>   $ git branch --delete-merged 'origin/*' --into origin/master
+>
+> Branches whose upstream matches the pattern but no longer exists would
+> become candidates, and would be deleted only if their tip is reachable
+> from the named commit. check_branch_commit() would be handed that
+> commit in place of HEAD, as suggested on v7 [1]. Branches whose
+> upstream still exists would be judged exactly as today, and the
+> worktree, stacked-branch and deleteMerged=3Dfalse exclusions would still
+> apply.
+
+A standalone modifier for another option makes the interface (IMO)
+complex; now we have to explain that "--into" only makes sense in some
+contexts (and add code to bail out).
+
+I would much rather see more --option=3Dvalue,value,value syntaxes, like
+
+     git branch --delete-merged=3D'origin/*,into:origin/master'
+
+If we gain another form, we don't need new --options. We would also be
+able to say "--delete-merged=3Dinto:origin" and DWIM without any
+upstream configuration (or, with push.default=3Dsimple, even when
+upstream is just the place one pushed to).
+
+> (B) Composable filters on -d:
+>
+>   $ git branch --upstream-gone --merged=3Dorigin/master      # preview
+>   $ git branch -d --upstream-gone --merged=3Dorigin/master   # delete
+>
+> --upstream-gone would be useful on its own for listing (today the
+> usual approach is to grep "git branch -vv" for ": gone]"). But it
+> turns -d into a second bulk-delete mode beside --delete-merged, and
+> --merged defaults to HEAD when it comes last, so a forgotten argument
+> would quietly bring back HEAD as the proxy.
+
+In a world where we didn't have --delete-merged, this would have been
+the natural fit, I think. Imagine:
+
+    git branch -d --merged-upstream=3D<pat>
+    git branch -d --merged-into=3D<pat>
+
+etc. Or even "--merged=3Dupstream:<pat>,into:<pat>". Then we could also
+take some of the "--list" filters and make them apply to "-d". In the
+ambiguous case of a ref named, say, "--contains", we could use "--" to
+separate options from named branches to delete.
