@@ -1,100 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.179
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792673314;
-	b=WeISuNUQS8yo7QUx7cmuVUQyS3F3PjUWfYZ9S3vrbTtoYtOKh0E30fWU4tATkYJ+JVNw
-	 6umxl2TDPm3QG0Dc6X0l9Sh7Ny7r8ioqRNkXe+wfLD8x/dqjhArMdtesD3bylPOxjePBO
-	 shVlHg+0ERkL9SiBtlEGh66SJkzhhP5bcVaiaYaEYWtY2wXVnF3U+d9DdIZ8XDdSbblch
-	 oEO0n3LiM+VRZT7WczXc5dr3com1tPz/hfVbf/jVpYUopUk7nyGqj64hyMBIxrc+qA3RL
-	 dFWFGl7Xm9tnB956IEgNUaYzObTgUE1EKEV58LJtnzOgUXePbURZJn/7THco1+5hH+Q==
+	t=1792673762;
+	b=YymK1cdR/zTevExMdNmR9Cs6Hwntn6Vut4KGRFOdv688u5xpC4+gpxKUnh2Q2P7H23G6
+	 heGNpcI/4xhgq5RqvXN6kq1/NuouKsQimWFGZruUM0g4cotamRrib28Ha4Bfr+z25bI3r
+	 zYxDaevThEljRxCDl0bs4kkHdbAopSPNURoBVnLZPqHn7o6M89RXkVSvjCZ+aWpDHUWOZ
+	 no11t/4V3cD69DzherTjSjIadMryZUayYeZ6815WBWE9GL1am9PqfEoMn+iZygp626w+3
+	 ciUWp566gnx3NDeWoSsTrepfDFliAwVX2wCXijsa4DHHoOEnKEaSTzifGrOuuVoMAVQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792673314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792673762;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=03JjpGkD3aas2Uyg2Pc6B1U7hA4KgjSs9ZqIg4XIgWk=;
-	b=tX34w2j06RYRFJKpYsSNIML/FWjqGF7frEc8o9MgDN7YZROEHwjktv3+YcyA9UVt8Rj6
-	 WTuvGZH6hzBLqprcNijeLLhdpRZYs4qwP3el/FWBiBPpO2SazCre52mH+wM7pN9/CH5cI
-	 je60FbFT+Akac9AfDSd4cEhvcMD54DdUIpW7xTq74ZPZnmF/0viQRnpI2Edv0YzPowK2E
-	 J+SXdfTdbZtr5BQhyzCwyHgLFa8p5sbqpIkMNfrP6Lp+0i6SCgNmCewsC35x5R/3zZYnG
-	 9gMN1I+vXmE2VJ49VL5xMNg6sUMMrlyGkxq7qIkkXw142krwbj9ry3lemYnNVPgYTTQ==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=ejH3+0hlVE5D/iuM5LRfw++9ql+AUQWS8H9cyzHwSNw=;
+	b=NluanU+LLll7T5gjUC2BdRd5xDGftvZEGLEtwrh/AsjIJ8Zg7tKZgSvTjsxX3g/4mGHI
+	 plG6yMLRMPvsnU6Q7bn6WvRWcEVtcNiw+/0pRTKPjPQHj2RDOxKYiH9k7JAy6zv/MF9uK
+	 qU40MQUrglaeFx0fq0pD07lOT3jvyuTNglRCw6ARkiN7z3q8kGJE5qds1TkpMzSbkstuF
+	 4JMx8kPam/PlJ5mLV+byD6PnR6XAlJ93hS5bN7E7F8t3fqyqhc8oE8hFUFvXemftRvnNE
+	 P8E/C7kxQQ9Gct/cbLPHEWEWaAdPSoGnfI5YEKEaq8w/7bN6jAfry/c/lwe7njae3Pw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=qhSxhdb4;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.169
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=dh77MQ0W;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.179
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC09606A319
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 12:48:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8CC09606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7514606A31B
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 12:56:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7514606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=qhSxhdb4
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2e9f6a16aedso10595665ad.2
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 05:48:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792673314; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=dh77MQ0W
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-8a058315c79so819266b3a.3
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 05:56:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792673761; cv=none;
         d=google.com; s=arc-20260327;
-        b=gmqo8N/0pyo5PZnYUIu2lbANHQ4nOtoRPT6vNoF6QnZuR8v87y7ydbJ+2rzpGIgf10
-         D4q5sqzF6IkHgAgd4QhQQvMN/QLutNe7nFNTP/XB69ikI30WDnJAq0Q39eEWqTQeiZN4
-         SXCAXC5SNmDZWcn6YVPZGGQ3BDBes9GbmY1qhSf6PXs1YOQ/nP1tZQx6HU3soeUNRs4s
-         9Ikg+DniJOJrsHzmQV+rGQJFrVRsFt5iSpVrmBUFLaJaCGbbMKx9a53bOjgsj5K8ClZ6
-         qJ1MbbIvmEo8jegkCJMb9XcN9hKNMxNLtBGbOom8M0Wmn65bS9EzPBI3zIxAQzbdUY1W
-         aB7A==
+        b=BYxS+z+/54lacEtD78QJAsglWiDmbijsXa/CdY5rq0iZ4Yf1e4TdtzMmzkhpJeYjlU
+         IB5fn7LLC9vkRPYfe/unTvTaqJbXR5ufq2cE9cwjW+g5Dyjyn2YOpXaxSZwWts2nmpK5
+         7lN4OGO/uHB8SAkVoYKNTQg8xq4q37wpAGn2NFMk2E3NiN4Fp7SzaJUltBNLzpPU8AnJ
+         ipPra/x358sh8gft/9NDNSMLIOgXGEdKOg0Qrd7lSUZK+O16WXNa7Jdv8yW21TjF3Ct4
+         M/5v3EwXHj06i+eibe6jox3zw/h704FGDJWL7JLJRHqJ/180vMuAZC2AfnFZb+Avo9yf
+         mNeQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=03JjpGkD3aas2Uyg2Pc6B1U7hA4KgjSs9ZqIg4XIgWk=;
-        fh=C8x1jbBNU+DKOqoqrXxOAn87PXmNIVITM0I9/YsGSr4=;
-        b=ljBDu2Vu0DL7jRXrSNb8CrTpAZ18Rsue/dLjW9Y3SoX6vOFW28eBNYa3LDZRB23uCU
-         1HhuWwdllUkiJ+b3QDIwrptOjcJLDQBCkFGqU1nJNzRzEwbgL5XRXYb+QTSek9ahxQGd
-         ykzPJHDH/BZ9QnYrcAB09SDZGOiIVhM4gfWF/sOpEL1aKvBe0diAESGVs8axerPZOvwh
-         +LvIc8xY5y6loKSbb2el5H//kauHSjHenAfnyr/Vjd53f+MjynhuPUG97sC8n36yqR3T
-         uqryd8t3SR5AZAdsayNS6ipKFCaDRjXSM57RKja2y0m7ElBSXE/VdDWx//OOZ8mPHted
-         Cssg==;
+        bh=ejH3+0hlVE5D/iuM5LRfw++9ql+AUQWS8H9cyzHwSNw=;
+        fh=9CXoHcS+eRKCIvZA5DyYbrosCOmZ9TdAG9rI6gHtt2Q=;
+        b=HpVz2ZVR8PtE67PDnMz7COblu0Lr3+ZkVa6LaOZYnB3UEEaUaC+yfQx59bRvow2TnQ
+         fp1kHLsxORvfsOsAAbSyEP66p0wm7rDx7GdLlgWy3s6QdHxbU+GRx3r13zOdzIQRkKhS
+         /GxoJ/aPY0pbDOHxXdI3xDrO8u2yFUXYYx+UtlIPYplLqJ2WVTDNPbbKzbWXJRqSz/p4
+         6y+OFn8X16n4bkMD61UyWuAEmamCCBRpS47jlZNvECa8T6r9eKQiT7kL+k26xeG8uLJe
+         ayw5ScthoEp5hS1RqNdxRI9Zs895jCu/+sLg9RlB+qRVaMpXyoUok0WU0BODa/QSiBQX
+         TuLA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792673314; x=1793278114; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792673761; x=1793278561; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=03JjpGkD3aas2Uyg2Pc6B1U7hA4KgjSs9ZqIg4XIgWk=;
-        b=qhSxhdb4YB/cic3f1kGFLWJDFCpBILVjl3CV0lmm7g78VyYHPf24lNfWo49/5Xl3kP
-         wGnGCxzFRMpV9NZpA8ca4thqpM9zj8Z7V8CfjRU/nMka162trFyK4vsFrnxqoaKbbEKF
-         QTWFdWO48f82o9elQRI1y84joqd/FsFZS90A7wWw1pxo8vu0fXWLfqbt+KItW8i42ghg
-         sdXS004hnfWdZP1EwZZGTY8vaqMLmCPWDfTjEsw4ncoyeN5ZRuoKVZzNi417MyJz9VvY
-         vp93SdrrVtilxkXkW1UMzEr8MbK32gCQnDdL7euCMckGOEes5R7eLMHny/gaH5d10deg
-         hO6g==
+        bh=ejH3+0hlVE5D/iuM5LRfw++9ql+AUQWS8H9cyzHwSNw=;
+        b=dh77MQ0WLVbFShCP+2vr+CINw5aViA1cRWDbr1WBOh4iNB2iFs/AYixkMwD1xOaoYw
+         qAJ+ZZ5GMSXLC6+YHimBTdsn8UfulZ6R+mBhf/FCuVH49t99UDA3aX/lERyh+OqWZl6T
+         K0PoHDzw4dmyEtV8kTOl7cFFRyQ6a/PQYcqq1zJp7AW0q4b5D2Rqcf6oySzMqlxxVFuM
+         HecUkLBw7C1HOWxUDRPTo5JAl4KIXaXuF1oT7TgqpBRywxL+/aKROuzQfpwH8yJ1MOCv
+         kUxOwItWzjPGfyE+1hvFxzixaBw7oRAMF6M0pgu2soKwb7JA4VKgIqH+rXT6htfjxbRB
+         vtFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792673314; x=1793278114;
+        d=1e100.net; s=20260707; t=1792673761; x=1793278561;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=03JjpGkD3aas2Uyg2Pc6B1U7hA4KgjSs9ZqIg4XIgWk=;
-        b=BA+hbx8EbB7/MwrZRiXolfiky2igP8GwAJqbi/aGcj5KtE6WaEqIJ2yKIbkpGQf4Ig
-         BmQWuCM9FBPrzmspOBIXxs7bZve00AVtsL5QvH0ZB6vBs+85AekYGABcipn5bLInUfIi
-         yy+qCInL66XnNgusmTNaRCz4OjmRuTII42rp0TtXqi2Qjinn+Wl5gc3feNG/j/8E7+NH
-         Yu0AHi3ajAA079s8amALSd2+6MU2sn6aerlhJRXvO1YL/uJRuX7OhXogV3CdyK35fJFu
-         4E3SfsuFrlEaVe9CHkC0yC21ZN14YwOcM+1eCHGBEFhdUS2VaRXjY7hQ2dwiiAfYclIg
-         3XuQ==
-X-Gm-Message-State: AFq9FYJGWOmje/+iUUsZhN+sX7SATJnrJVLEr5Qab0qMspXoc+ZJqPIz
-	gs4o/WW0G2uWgdgiwMgIzGJ0IfaCGXIrZxK1ZWlRdeDx+dxtu4ugirm86D10Z9o3WzmOSg3mkxo
-	wNVXEbGL2UmfnL5qpHV05GFveU1HAwOoPKw==
-X-Gm-Gg: AYBFou3nCo5snqfbYrg+rwq1BJxwrbde7BNM3zZRgq5qwwBUhfDTQWS19IJrYqYJSp7
-	ESS++PvRB1IPGCg3VMCALBTd0tspw4VMtuEUoMpoGO2D3YEcg+sj/zuxWIsQjoYo0nkogsNu6bv
-	x4UkpeSzhBT1SZQI5SkvAza2YZn3aepJZcuFjVOHJwFRqWfYWdxxHX12m7VDjrL9MEp7SjCz4XC
-	f9AbGxNT21lljOzXlgu3u1tf7yK1j7XBC0VlJ5JW4oP+pXMRFG0tTiTcFj1AOa912okAL+Vx6bt
-	HQ4calJasVu7YajjVwCLrY4cR/XOeqvUZnyImtJdC8oZZq3Arcc7+9zABpvPUigEZulEkCRboxN
-	U993Q9G4Xgx/8Jkjiz6oa7OXOY0XkfEcHxj3mA4Zmf+JeGmMBFRqWDIqINCWWl51mP2UEeWc7Yb
-	aZIOrnzDp4lfzVRc+5sDnK4EMkMqhYMcpIQyBwxvvTBtVQNQDr0rLiv881DHZZThItQA==
-X-Received: by 2002:a17:903:182:b0:2e8:21ee:f196 with SMTP id
- d9443c01a7336-2ea43e259bcmr44923665ad.29.1792673313713; Thu, 22 Oct 2026
- 05:48:33 -0700 (PDT)
+        bh=ejH3+0hlVE5D/iuM5LRfw++9ql+AUQWS8H9cyzHwSNw=;
+        b=sFgAAZOJ6u68abxpykAw1Acr/csEQi3KO3aOQ2B9h48Xs02aYieI+RYMc5iRd5H2Yt
+         MNAIyzlgHN9Nc+cSG9FsWXg2VRFb4YfP84hg7cRQwY7P3qvwZR/lpD5JFLw62+/3XRq4
+         +WT11T7aPoGCLC/VjpkWgRLAhM1XEidyyYw3ZOYac2dqI1C3puf/Ii+mMcj1qkdGeoCW
+         dzZvv3xjg9d/AeYNbNweAXV6WUECNbxdxAWyYKiyq8BUf4ZYL8olCzKlzZHAsH6wpKLz
+         WftnLMpHCF65oXD9YaA4iCRnYEWyN3OteK7/aS2gzOHeBnoBz7K1kM/u18dYjKijhfjC
+         1+Hw==
+X-Forwarded-Encrypted: i=1; AKwUvBza+o2fhiLUXPHs5H9Pb3KQ4dCIU6tW4b1mKUGS91qyGUoZlVt/hs9uvHpPYdEZRYYPdrA=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJCly22a8WUk7TtB9fVHsPRUQvshmMxz252l1SG0mNRPoN2onA/
+	bx2czi/YNLt6pVpPw2Jk2I4va7g03xlrNvwAnUKF+cqwTjc/8h9zS/fSw6Go0YoXGrKLwNoS226
+	RPwN/kRpx6odgR9LE7tzeZCEKS41sNnQ=
+X-Gm-Gg: AYBFou0R10oPx4BP5IKpbzOvhLv4pZNxDBDXVKQXRTZq/wg84ckOeL97ArGR+GhakeQ
+	SXLPGZESd5vFYvveKCtlvBf9Treob3frBT6Vm692+AHjQOuOfkASjAvFl0Iy6YFO0oJFz1fBiIl
+	vNBXKv16hEQs2QUgW952Mi8YK5Rdm3zIPDeKUg7M24vN+LV/KseNCRS0/H7o6n8OiaXYRNaFbjL
+	BjIW5lYfzIoV5ADTdLPynafE45weP15X+GGabq0ECfEFCl80T7a0uEm7yw5LITAA9Rnk90CifWp
+	C7x2vAOj4p2MjWwB9y5fcmw5QBlgH1e3kljr3AZZhMhgDo/DdvokWawtuiYwi6UJiT5rzdGlj5G
+	uMe6z3w9Ng483HmYVE+lfwZSKBCHJi5grG45J815XJM41g0waEfmewwCDr0CdtwRH76lvtcg0AD
+	KyJj9dzVrQrcK6vAkUkUXTZPHKmPv1q+9lya3hmOxbsQB+fBZHRGaF4/oBXTwcqZ7A2g==
+X-Received: by 2002:a05:6a00:3c8d:b0:87d:dc3c:1b5e with SMTP id
+ d2e1a72fcca58-8a089d05d4bmr3927959b3a.26.1792673761176; Thu, 22 Oct 2026
+ 05:56:01 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,54 +105,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CAP8tz2JPXzq=Skokn4OtH8t6c3b+p1Wny1iX6AhXReUGvsBhuw@mail.gmail.com>
- <CALnO6CCFfd3VcZkFGmc6kYHqEwsafa7UbOg-6cN0jEfsipQm5Q@mail.gmail.com> <CAP8tz2+CQcQyTdj3YFpEaiVh=hVoK5Xo8WFxGZNMJoCCM-u=hQ@mail.gmail.com>
-In-Reply-To: <CAP8tz2+CQcQyTdj3YFpEaiVh=hVoK5Xo8WFxGZNMJoCCM-u=hQ@mail.gmail.com>
+References: <pull.2425.v3.git.git.1792585717.gitgitgadget@gmail.com>
+ <20261021173503.70887-1-me@jaspermayone.com> <CAHwyqnWnp0W17TXbXgLQPaGuwasqndgoPHV1CL3mBpfGFYadtw@mail.gmail.com>
+In-Reply-To: <CAHwyqnWnp0W17TXbXgLQPaGuwasqndgoPHV1CL3mBpfGFYadtw@mail.gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 22 Oct 2026 08:48:19 -0400
-X-Gm-Features: AclHuK-PXnKLFzEdLI2QvSjcVwcfCa8iUZ8nnH0VoloWgrqnLMOLo0VHqadOSm0
-Message-ID: <CALnO6CB=tmTrNKcWOanb79Bm9gPT5H_dntNGRJGp6iEYHe_aBg@mail.gmail.com>
-Subject: Re: switch/checkout stops halfway when it fails to write tracking config
-To: =?UTF-8?B?5LqV5LiK5Y+4?= <inoue.tsukasa.4@gmail.com>
-Cc: git@vger.kernel.org
+Date: Thu, 22 Oct 2026 08:55:49 -0400
+X-Gm-Features: AclHuK8NGU3ZcexFfrRGEsXveEZ-pHkujv4drDdV4sc3_TiXJOqimiTmtR2D2cs
+Message-ID: <CALnO6CC0+t3PTVXC=TohzpqzgeOK4t9bKzGP-43uD1bbA4dPOg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] branch: let --delete-merged find squash merged branches
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Jasper Mayone <me@jaspermayone.com>, gitster@pobox.com, git@vger.kernel.org, 
+	kristofferhaugsbakk@fastmail.com, phillip.wood123@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 20, 2026 at 11:09=E2=80=AFAM =E4=BA=95=E4=B8=8A=E5=8F=B8 <inoue=
-.tsukasa.4@gmail.com> wrote:
+On Wed, Oct 21, 2026 at 2:52=E2=80=AFPM Harald Nordgren
+<haraldnordgren@gmail.com> wrote:
+> My branch being pruned because someone else did the same thing would
+> indeed feel weird. And it could be stopped by doing an author check.
 >
-> > I can see where create_branch() is called prior to setting up HEAD,
-> > but I'm mildly confused about the index/wt updates prior to either! It
-> > seems to me that should be one of the last steps, hm. Unfortunately,
-> > I'm having a hard time finding the responsible code outside of the
-> > "merge" case (which probably has a similar issue).
->
->
-> - merge_working_tree() updates the worktree and the index. It is called
->   from switch_branches() on every branch switch, not only with -m,
->   because do_merge starts at 1.
+> But I question if it=E2=80=99s realistic at all. The code has to be exact=
+ly
+> the same, and I don=E2=80=99t think I have ever seen that happen, I would=
+ call
+> this an extremely rare edge case.
 
-Ah, thanks, I think that's what I overlooked. I wonder if it's a royal
-pain to make that step and the index step come later in the sequence?
-But that is more of a band-aid than a proper atomicity fix.
+I have seen this happen when 2 PRs contain the same "npm update"
+commits and are rebased onto main: whoever gets there first wins. If
+the commits contained additional changes, then the later-rebased
+commit loses some changes because they were handled prior, but (when
+doing so via GitHub) the commit message is unchanged. I find this a
+bit confusing, tbh!
 
-> - The "merge" here is not -m. It is the 2-way merge in unpack_trees().
->   -m only adds an autostash step for when that 2-way merge fails.
-> - The order is: update the worktree, create the ref, write the tracking
->   config (which fails), then update HEAD. As you noticed, the worktree
->   and index are updated before the ref and HEAD, so a failure later
->   leaves those changes in place.
-> - As you guessed, the -m case has the same problem. I tried
->   "git switch -m -c y origin/main" with the lock present (v2.56.0 plus
->   my hint patch, which only changes the hint text). It stops in the same
->   place. If local changes conflict, HEAD stays on main, the file is left
->   conflicted, and the changes remain in the stash.
-> - Running the same command again in that conflicted state stops with
->   "a branch named 'y' already exists". Switching to the existing branch
->   y stops with "you need to resolve your current index first"
->   (checkout.c:887 in v2.56.0). Neither run changes the state.
-
-[trimmed repeated quoted content]
+But, I will say it is rare. Perhaps not "extremely" :)
 
 --=20
 D. Ben Knoble
