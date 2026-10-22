@@ -1,101 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.45
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792622683;
-	b=YFfuCWfh9S0OzpprK0u3YMYdI/gmN0W0RcMETD7hqLrVQ5EaNdrtaWa3l+g9DUez4ktC
-	 GZQwx4dgdy3rAtvHt0gE9AJ/3+oS2QE4JpCXX18kaA9emGhy5piu1Xvi0qV0KtE1FLW7f
-	 Xj4jPk7oAt0pxWgEiuTURzXwgX3TcM3CMfg028zxZvLT+aYviLFzBayXidBxS5ayFXQnS
-	 zDsSILpduFTU/rJIzC/WnCpN+ptATRbjUMgXUjacJl7+75odcSKG3L0813AGGWPZ+LKzP
-	 phtkzY1e5IeoQws4APgQiuI/v520A2YwpSMWUtb3ps7qlk8mPVBo+ZFZF0Tnh8teyAA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792622683;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792630193;
+	b=Rodt7nuBAcRPfTGLff83tQkpU7fIom2LlfmF5T5MHxS0xSVCJOnwuLYUBTl0H7klHcy3
+	 7RqAAesuwfAYPy8EPaybXGn8hVZsjlWlcLi7GV6z2hoODX7RWs3y0Y8U/X+tPfCqDNoRy
+	 4CAdi7MOTqIKI9dPHgHdcwxduKiVGRyGVOQ0iP5DlbBdqLJti5lqNrNaP/8kkIR1YSLI6
+	 MPe5xU7vZLSFvC9XpLaoMTNUyHVp3GRxBGalrHmvZYuWUzfQXpvY5BEZcmTvT+XRIYwBt
+	 iB901x1XzzEjkY3UAAS8MUL0t1oyH9hVLt4onw9mYzJo36uzK/E1O6lNGThb8WQEBHA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792630193;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=nJPyjbpiznu3EUQHNRLuYh08XRBetKFsy3EFNI/36KM=;
-	b=piG10/cyUK9JaVH5j7L8ptbubXGjgb0FtmnwiC6JQCqyprJx7SfTDPYatxYq0kc2OMhc
-	 4z7NWCOrHiVv8rrPTtdtNZ75QnmQNsVlzDw9U1iY9AMII26xZFT77xejSZoArgp/9T1GE
-	 cnZbPYWbnD28ezhIP16L/0xzZyTHTjd73EPiZ7k8U7rmFYfYERenR9c2xIN6B5Ipbin8T
-	 Pwt38AxFi7LCiwXeAGsKrb5ZZu38zAcBOhwUL2aHeWQEf5Xp1M0mkmBhIuxFXcgJKIfvE
-	 N7p+dgwBqcAJWn1XgZICrvmx3qw8KQSc+lcNJc9H9TNnZfrlZMQ39M+TjOAzgzHZoUw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=unSXXtZ3MKtIPKO90+N4EQxTmjms9/JBuDYM7yCCGBg=;
+	b=qN6LT3kFXC5vEDSzCPrCIP94iv6z3ClFIeKTcZy4Y4JAmLrVn8ofHUlguxLW9tm/9s0H
+	 daziMamsSDqsjoGfRZNCTWwhRbxAXgGrADwTz9xmWyl9ZVPgtNP2ovEADzFMq1jZvFoIm
+	 Qp0lwA4raOYiQD+HWsC73rA/r/lhF7j4rg1+kfyix+skvI8CHGH34XVm+NJMM47poz1CB
+	 q55Mf01dtrBDu1XBvKNRoqQSv5FP4kBNcZdHGMFFSKtj0ayoG7HhNBItWA8+2eg6MmqRZ
+	 4HTLlkLnVZ7aRR8Whbz39VhoPxXBzUmh1LmAfKCprIGOJooyOTJlJL6EC2EyNGY0N5Q==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=D0OE4LGe;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.45
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fieOWrbV;
+	arc=none smtp.remote-ip=209.85.128.50
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531AB606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 22:44:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 531AB606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01B8606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 00:49:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B01B8606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=D0OE4LGe
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-917ad52d7b6so12608886d6.2
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 15:44:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792622682; cv=none;
-        d=google.com; s=arc-20260327;
-        b=nBlnTg2DUBJRyWarVzrtN2Fk9UmOGmqXACWeep542Qgl2eS6ZdK7fbk1EkkHmMBRBz
-         MyCpU2aWRw8JawZ2/x0vzxRLS78GwUrPyYdPvccx6JampV2Ln1uNIdqvymQu6fF6V+r5
-         xC+TL+J0O9qIqjkfizZwwEKSBjaOvPgN+M0wNp4+WMQrhwqJUmB0XjbJIQdHZSTRhSML
-         s3HnF12VLTlBEm2RaM7meTqEmTZ6bOeITRy6MjfTECyg8V6PGH2iuD31CejyKtfZUAOq
-         NI6z/FCMcXVDIi0Y0LM8Ofl1roA7vNxB/q7TBIrtlyIo6CzZ+CB1/4PNRpToIK0nk4J3
-         eH/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nJPyjbpiznu3EUQHNRLuYh08XRBetKFsy3EFNI/36KM=;
-        fh=yM0e0w1Af58QVHM7nbZeV7Tows79IxTOt5CYk2r3qvU=;
-        b=SsnFWW5LRHP0aGzXggmc3ADAIWTnunDoDhYrjIiCo2H/O4Yw62QO7qTg2OX9J88gyC
-         cgJOzLYaZiJ6B95Et/B1ctI3T5HvCAzRQt0avgh1qPGVZvCHlc26/e87CyTIEv4AWCHL
-         YAoUbxlwJcIobj/cq2cv6ssNn5S5VhDVRyyH1dnUHU6X6wmeAYwDZ6FiH5B4Kh7CC/lR
-         ph+3iT0Wp69od8OERAhVr2d0oO67HdRgZ4fZkVOYgTd7GCoP4PRCBopJaI5orMoD2A5D
-         FNeLSGwjXdMdlMJt53gDRRrGtUFsuTzZiMMx+89FQVdGf7lT/4HaoP6wkJQKCoruYb2W
-         Mnxg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fieOWrbV
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a2069b9710so1145655e9.2
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 17:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792622682; x=1793227482; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=nJPyjbpiznu3EUQHNRLuYh08XRBetKFsy3EFNI/36KM=;
-        b=D0OE4LGeHorDHariN8KTWBSEQdj4XdOO+K1TlTOt7LMbo6OUhocDAGfUtwWPgufCGg
-         UdtDV0+g7KY+/Ef2r3fVn+A1DfwuL6/NRqgT2eoVeT7QTXIgJ/M9j5CbGyhXeC3ZavBJ
-         UNDaGfYynth7eiO8ZcWa8MQxfXPi8235hSphhzG1NwZ/RTr+KmynSlhtMx8kiU7Xj2eJ
-         1ITK5M/qx2TajhtLDBnMUr7kyOLbZzYvMmUxoE32OMn609OWGYJ8z0Uwf27OaS2Wbwsu
-         OVM1Uw/9e+U6p3PQ134b6urXcpex7H7fOtnTEsNTWTGo4QEtgO4dZfsL2NdRW1MH3kGr
-         A/RA==
+        d=gmail.com; s=20251104; t=1792630191; x=1793234991; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=unSXXtZ3MKtIPKO90+N4EQxTmjms9/JBuDYM7yCCGBg=;
+        b=fieOWrbV399d83YmtDzIio6q4q9UvgvByBY46/NCYLLn7Maw4izLKP8VoFJj2bpsHw
+         FEbwR382ozqXVinCFYD3QzfUy88Y0lDMHbfARYSM+qZBBSAmiZeRiepJ+q7OlHmOVrfW
+         cqwTxS58eP+hxaD+GIeCKi/yJgco++1byMbAnPlzUcurR+90/xsxDUHF/gLa09YCZf0z
+         kjRfm2o5szSxeOpa8Uy5O8otqwaf3Zj0i6qn5d6qbmQv1KNMK9Y269vd0AtSIiw71iDu
+         rXi+TEMfof1Wkg6szFBZxmoclppj+Jtn1aoWdHsIBTqaUHPivqhPdzaFOGE5wGp8ISIy
+         ZwgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792622682; x=1793227482;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=nJPyjbpiznu3EUQHNRLuYh08XRBetKFsy3EFNI/36KM=;
-        b=aw4M3h+sX6ESPLHZTYHJR0NdJZtxsGO30thnb50InXivEFS2nIFKn7z/2UvF1ETh7b
-         PmOd5Lkzj906WLtc2l9wIFyKRiz1ofRHPwfgiWDfojwX0239iB7w0jWa6pf1g63djhK9
-         rrvWzPJi1IC/BZpJuHaBQR4yn/F6U52mWj0nPLaUDGlERmSY12jnhjuI5RiFNwDmTLAp
-         Et2qPAhJunzNinrfDZouJAJeEqwDFVFlJrI2M4RjDoQah5+55FWR7tsK4Cr1NViR/ToS
-         A/8iaGnD6W1R6YbWsc3lyhQGotg1q0HBg2i4p/d+sMjYplX+dMnlNiDNp8469uXfqi1h
-         T+5w==
-X-Forwarded-Encrypted: i=1; AKwUvBx8cFQXWWp9FvdCCpNwHFbeNgmRylOrEkE8iU6L9j6GguOgoqUqdoOnMDNgfM5N5hFIl4I=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJfrDKHPm8grSroXkOaDLe2+CdWVj7EYasLtYwHuaxDicZBVxzR
-	RTT8qU2votFzNFobsvdQTYGTlPTPgP12HtmmE0d2vZVCbNkG0EgcEfmQ5fB7bwhmP/Lwak5xx7b
-	RzgXPEh0Zbq1rsNAKH1IxCTdAVBUqXmD+hV8S
-X-Gm-Gg: AYBFou0cJAMkUGtU0HM6hnVZF4NOT2l+pdHZr7E1/WzdZZD+XSrl1yRXWjYiG0q78AX
-	S6XF67TzPnA5PEFvkQiOrT7/DIVYglKZEo3Nk9uHY+o/LQ10Sk6titEyAQTNV2TolNaa9v5hwfW
-	qJ1HX4xhhE5nwaDyvP477JF6yJ45Be27EHMjdeLUc9fETuZDFuiwNjaZq6TqG+T2vgyl31ABLBq
-	zkjZUdDkdPAUk2PZ4U07qQllldLGqDbjJW4GWu0gvMB/DwPp8h6h9Li5E4hkOWhSbzQChdi1/TE
-	2wcVERcb1fLWSZqnaeUcsnrkOXNPlHckEVepfjgDO8CKLdHQ75FpYZKS7YtR/mYwe0e7sYj/g9F
-	/joT9svxe9YOYOpuf0XY2q5MDSKVKZbyOFJKcUdg8dsKqLVIWwmKdwreffx0b245X1xMkqJUkbP
-	lCVShvfvAmY0kf
-X-Received: by 2002:a05:6214:1308:b0:91b:ec1d:1746 with SMTP id
- 6a1803df08f44-91c12f32ad5mr61727456d6.55.1792622682212; Wed, 21 Oct 2026
- 15:44:42 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792630191; x=1793234991;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=unSXXtZ3MKtIPKO90+N4EQxTmjms9/JBuDYM7yCCGBg=;
+        b=kORm1ObhlpRCPkPCdVjS8aWe+dji5LfuEkCYkbg8ro77Z6GOVl7MIYlvOzAJF5sIUK
+         EYgrewWIO6Y7ir3x05tI9CrqGRlb2UAMAVb9SXGHRAdWcjwwIHWlViVrPZmcxUkm8tkd
+         q/TPCnmzkWRC4z2vixbSxG7CGX1V84PiCbgDHFUo+BLGmsc6X7BWUTmc9uk8ZEB40F4W
+         WUMlorhrMZHKzq1ajP0Ud6voANQsg8XhcOIYaa7Su4hdSMbR1AeRD5yT32zKxL4SX7YS
+         69gK+i1YrGiYKIqwrBbfn/UvnBv/e3HkZmA94RgH0oQEC6oy/K/ZVZMpU85qHwFeIIlh
+         DSwg==
+X-Gm-Message-State: AFq9FYJUNJraMpFCcUS3L5IR0uZmSSm2P5BiI2ujybDEma60umjkGgp6
+	5mg4s7fqtQz2kcU0mj5FoCH6XxUbA0B9YNg5ioqNsEcg+WgHelAxCrJkjY9elO2F
+X-Gm-Gg: AYBFou32PtpKlyRy5ob+C/zisTV2jIOaVkOJEM0zPQBt9oFd3PBSDS1k2AEIas1rYWB
+	pcsay8hDnlduAxDNMamVL6Ob2J7DR9l0zM88QImXHOoTlcML1l9ui4FM0oUhLtonfwbO6ZDjzgB
+	fQtiTE+cJhgcgEQQBRr9B4IY8IajrAOxv5OoqHqsKRZ5YvYozIB6/606W7eszIgTOFOaqtsx607
+	XPIOCZ8gVeS+QWxf2NEyr1wBRpHK7aSr+ajtetLjc5HfVnxRVYai7ont7ZLss3TC/Ijqq1DZ/3x
+	hBeajIAJWyj/IdtxsKoo6biX72KjeperNpTP+npDpNv/LwkLmwZKPkwyI2wdlHzGHotzJieZqYT
+	RJkLj2kFS8p4SFzwt3cLNKytcW/Bc/XTaey+QNw+VIfycLUBTj67XdAiazl6mUOCM9ObSn3gguf
+	U3WIVk+O9BWUKf1negnB5O4YWD/T5v/diZtpbUPw6PttceHVfCFOM5+2Wmf0Dh22KFhM3F6u8U/
+	bvftOAnCqLIy3ArlujAJsTVOuQh609ECZyKv0KWQl7T5XqICF8IdeI29Y+zjus88dTSGQTrZwnj
+	fpjX913wdNvIlViswZh4ZqhHm6ccmrTNdA4KdNX7Txusj1Z35ytDMB/TipOyjfm9ok62I3lwqd1
+	ZJbC9sKA=
+X-Received: by 2002:a05:600c:3114:b0:4a2:4ba:43ff with SMTP id 5b1f17b1804b1-4a204ba4471mr16932935e9.35.1792630190971;
+        Wed, 21 Oct 2026 17:49:50 -0700 (PDT)
+Received: from HP ([105.163.157.65])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e258213cesm8814675f8f.11.2026.10.21.17.49.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2026 17:49:49 -0700 (PDT)
+From: Tanga Joris <tangajoris@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	usmanakinyemi202@gmail.com,
+	taahol@utu.fi,
+	ibnmuhyideen95@gmail.com,
+	Tanga Joris <tangajoris@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [Outreachy PATCH v2] checkout: use Q_() for messages with counts
+Date: Thu, 22 Oct 2026 03:48:34 +0300
+Message-ID: <20261022004834.246892-1-tangajoris@gmail.com>
+X-Mailer: git-send-email 2.56.0.216.gd573d5a65f
+In-Reply-To: <20261021022156.119947-1-tangajoris@gmail.com>
+References: <20261021022156.119947-1-tangajoris@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,142 +103,79 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
- <pull.2317.v2.git.git.1792512249.gitgitgadget@gmail.com> <6e2acdc5e2578da4e915fd2ac541a776349fb23e.1792512249.git.gitgitgadget@gmail.com>
- <CAPig+cRsSN9gY405MGsCQzLuxzBKcfHo2Oc8Z4WB-U3BGd6m_Q@mail.gmail.com>
- <CAGou9MgdF_xA+e8YYn8ud8TUSmY3j_q9jbUTy2wLibTz1ObJ7A@mail.gmail.com>
- <CAPig+cRCaSmEULP1JpW3fjiJDR0Lee78puq+KRaXiD9ciX3fvg@mail.gmail.com>
- <CAGou9MirKucUdx8eM-BfqO9sZrDrckwpp9sYDnDVfiqkdZ8wdw@mail.gmail.com> <43b81ed2-6cc2-409b-be39-fa5b0911f532@gmail.com>
-In-Reply-To: <43b81ed2-6cc2-409b-be39-fa5b0911f532@gmail.com>
-From: Jason Newton <nevion@gmail.com>
-Date: Wed, 21 Oct 2026 15:44:15 -0700
-X-Gm-Features: AclHuK8ruJsPD2GEb7hNG1OAuI24q19GaWgW9ZiWQ1pg7WM1hxu_c-mWjcykPp4
-Message-ID: <CAGou9MjGsTNnxYh8+zJXE1V8xCfkdknHqO0kaF=FBGztJfCdVw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] worktree: reap ephemeral branches created by
- "worktree add"
-To: phillip.wood@dunelm.org.uk
-Cc: Eric Sunshine <sunshine@sunshineco.com>, 
-	Jason Newton via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Just matching energy levels of Eric's messaging, I did not make the
-first move but I will defend my position using the same energy he
-brought to the table.
+Two messages in builtin/checkout.c show a count but are
+marked with a plain _(), so translators can only give a
+single form for them:
 
-The detached-based workflow does not satisfy user expectations - my
-framing there is no user would like that that didn't explicitly want
-detached, which I'm not sure has a use case.  At face value it does
-not seem a worth while suggestion, sometimes it's worth doing a
-cleaner thing even if you have 60% of a technical solution that can be
-leveraged to overlapping ends.
+- " ... and %d more." at the end of the list of orphaned
+  commits left behind when leaving a detached HEAD, and
 
-I do understand the usecase of short and long term worktrees which
-behave like branches though, and that's the common user expectation.
-The current behavior of can't checkout the same branch more than once
-is also not user expected behavior.
+- "only one reference expected, %d given." when more than
+  one reference is given before "--".
 
--Jason
+Use Q_() for both. Translators of a language that phrases
+"2 more" and "3 more" the same way now have to translate
+these messages twice. At that cost, however, we help
+translators of languages that need to phrase "2 more",
+"3 more", and "5 more" differently.
 
-On Wed, Oct 21, 2026 at 7:03=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> On 21/10/2026 09:28, Jason Newton wrote:
-> > Please focus on reviewing, I use mixed but you shouldn't assume which
-> > parts are and are not llms.
-> >
-> > What you don't realize by working in a silo for a long time is your
-> > communication skills to external parties gets reduced with jargon and
-> > nitpicking ; I have the llms both assume you're wrong and right while
-> > seeing the undesirable behaviors your stances have to the one that I
-> > know is correct.  You seem overly sensitive to the usage so far. I
-> > have no tollerance left to give - so stay on point. You should
-> > consider several harnesses chose not to even go through PRs and work
-> > around the functionality like grok build did, patching it in
-> > externally which is kind of nuts - and replicated.  I think it's
-> > something you should think about the nature of quite a bit.
-> >
-> > As I mentioned, detached IOWs sucks and you shouldn't have bothered
-> > mentioning it because it fails hard, though it was noted and evaluated
-> > in earnest for a bad idea - want to go back to the long but more
-> > neutral form?
->
-> I'm afraid this messages falls far short of the standard of constructive
-> discussion that is expected on this list. It is perfectly possible to
-> disagree with someone without attacking them or telling them what they
-> should or should not be doing.
->
-> It is clear that you do not like the current behavior of "git worktree
-> add", but replying with a generic list of the differences between a
-> branch checkout and a detached HEAD and then attacking the reviewer does
-> not explain what problem you are trying to solve and is not going to
-> convince anyone that this patch is a good idea.
->
-> Thanks
->
-> Phillip
-> > -Jason
-> >
-> >
-> > On Wed, Oct 21, 2026 at 1:07=E2=80=AFAM Eric Sunshine <sunshine@sunshin=
-eco.com> wrote:
-> >>
-> >> On Wed, Oct 21, 2026 at 3:40=E2=80=AFAM Jason Newton <nevion@gmail.com=
-> wrote:>
-> >>> --detach and an ephemeral branch differ while the worktree exists.
-> >>>
-> >>> --detach leaves HEAD with no branch, so status, push, rename,
-> >>> upstream, and symbolic-ref have nothing to name. An ephemeral
-> >>> branch is a normal refs/heads/ ref for the life of the worktree.
-> >>> Commits go on it, and another ref can point at them before
-> >>> "worktree remove" deletes that branch.
-> >>>
-> >>> Deleting the branch that "worktree add <path>" creates today
-> >>> would change the default, so this has to be opt-in. That opt-in
-> >>> is not --detach: the worktree stays on a branch until removal.
-> >>>
-> >>> These worktrees might be minutes or they might go on for months;
-> >>> either way they should be easy to use and not require flags to assist
-> >>>   in the majority of common case behaviors, moreover detached feels
-> >>> ike a degraded halfway state, frequently allowing a gotcha to strike =
-or
-> >>>   a loss of a safety like a gc based reap.
-> >>>
-> >>> "git worktree remove" does not delete whatever branch a worktree
-> >>> has checked out. It deletes a branch only when this "git worktree
-> >>> add" created it by DWIM (the final component of <path>) and recorded
-> >>> that in worktrees/<id>/owned-branch.
-> >>>
-> >>> A branch named with -b/-B, a branch that already existed, and a
-> >>> detached HEAD are not owned and are not removed. A worktree created
-> >>> by an older Git has no marker, so removing it still leaves its
-> >>> branch in place.
-> >>>
-> >>> "Unconditional" in the commit means that this one owned branch is
-> >>> deleted even if it has unmerged commits. --keep-branch turns that
-> >>> off. "git branch <name> <tip>" before removal keeps the commits on
-> >>> an ordinary branch; only the owned ref is deleted.
-> >>>
-> >>> The call that changes is "git worktree add <path>" with no branch,
-> >>> followed by "git worktree remove". A caller who wants that branch
-> >>> to outlive the worktree already has a spelling this series does not
-> >>> touch: "git worktree add -b <name> <path>", or "git worktree add
-> >>> <path> <existing>". --detach still creates no branch, so it is not
-> >>> the same state while the worktree exists.
-> >>>
-> >>> Ownership is written only when the worktree is created, so I'll confi=
-rm
-> >>> an older worktree still has no marker after an upgrade.  The branch s=
-tays.
-> >>> Upgrading does not mark a worktree you already have so no upgrade
-> >>> headaches are expected.
-> >>
-> >> Feeding a reviewer's comments into an agent and pasting its
-> >> LLM-generated response into an email is not a good way to convince
-> >> project stakeholders that the submission has value. If you can't
-> >> explain its value in concrete terms in your own words, then you're
-> >> going to have a hard time eliciting any responses or additional
-> >> reviewer feedback.
-> >
->
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Tanga Joris <tangajoris@gmail.com>
+---
+Changes since v1:
+ - Replaced the last sentence of the log message with
+   a better explanation of the trade-off.
+ - Also converted "only one reference expected, %d given.",
+   as discussed by Tuomas in Mudi's thread.
+
+Interdiff against v1:
+  diff --git a/builtin/checkout.c b/builtin/checkout.c
+  index 49239f029f..91b7c52396 100644
+  --- a/builtin/checkout.c
+  +++ b/builtin/checkout.c
+  @@ -1491,7 +1491,9 @@ static int parse_branchname_arg(int argc, const char **argv,
+   	else if (dash_dash_pos == 1)
+   		has_dash_dash = 1; /* case (3) or (1) */
+   	else if (dash_dash_pos >= 2)
+  -		die(_("only one reference expected, %d given."), dash_dash_pos);
+  +		die(Q_("only one reference expected, %d given.",
+  +		       "only one reference expected, %d given.",
+  +		       dash_dash_pos), dash_dash_pos);
+   	opts->count_checkout_paths = !opts->quiet && !has_dash_dash;
+   
+   	if (!strcmp(arg, "-"))
+
+ builtin/checkout.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 2d575a4f57..91b7c52396 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1085,7 +1085,9 @@ static void suggest_reattach(struct commit *commit, struct rev_info *revs)
+ 		if (more == 1)
+ 			describe_one_orphan(&sb, last);
+ 		else
+-			strbuf_addf(&sb, _(" ... and %d more.\n"), more);
++			strbuf_addf(&sb, Q_(" ... and %d more.\n",
++					    " ... and %d more.\n",
++					    more), more);
+ 	}
+ 
+ 	fprintf(stderr,
+@@ -1489,7 +1491,9 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	else if (dash_dash_pos == 1)
+ 		has_dash_dash = 1; /* case (3) or (1) */
+ 	else if (dash_dash_pos >= 2)
+-		die(_("only one reference expected, %d given."), dash_dash_pos);
++		die(Q_("only one reference expected, %d given.",
++		       "only one reference expected, %d given.",
++		       dash_dash_pos), dash_dash_pos);
+ 	opts->count_checkout_paths = !opts->quiet && !has_dash_dash;
+ 
+ 	if (!strcmp(arg, "-"))
+-- 
+2.43.0
+
