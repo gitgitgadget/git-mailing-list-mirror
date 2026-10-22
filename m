@@ -1,94 +1,125 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792704586;
-	b=jnjVnlp4856et3lAjc7cU5s1G+3/ABWEA6TL1LsQMP6PIzimq9N2s+QqRMt9i1iclbGd
-	 Ri2GeiDUTHTOcnbMssyfN3JN/M7WlV2+JZn8gKVYtZIeoc28GTnQd2WwrsvWZpFrn+ueu
-	 zAfTYwTmyorJWM8piumxzhT9BYq1LjNWA9pLkW1K0dCOY6TRRhNkNhX6WfjHIztLXp9e8
-	 vMXXuefrrxelXH/SrKhskURHcFACPnnDVDWNe3typw7MM0MCEk6f5F1kvASgq5eHEG1jF
-	 xGxkdq6viPmOoIgKC4D4TQp1RwrXpP7GTlMPlTlpjR8QBv2FsKMrFrgoCDaDjBn62WQ==
+	t=1792705607;
+	b=gCDPC6boD4tXcbLDdHLwfjDEiOU4rTEunSoXnHcID9QrHUw+j1x67qySUzgxD5LMIMYZ
+	 R1fI6WShWqM7UOQEzOichzShlu0uiozS9dCPmI+iP+9kySoyVBk6+rWpe+c1gxNmxb2ur
+	 Ombc4sEcTKElTW8w4aPaQ/yAAtZBJiysovbZlz2joqPEP9tZfsNIIGjNorG21QJIEZxnj
+	 VfUG41fgbWVYtZaf8+3whBQnv2xbLbMTbqchpuT30xt/KTNoQOS8RbcM35yvEx536KOZT
+	 xlMwKq5RSJr4og7e7cOAyms7NuMJsBMULbHUgaQhx4H1+7mKG/U63aCft5DV6yrBhAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792704586;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=M6XVBns5NqJeydZN3vvGDhgWGZnONGrrbQBZmJyLaok=;
-	b=dnKSlR5A4cTehH/zRk6dEAY1q2juLAMH2bTuCCNuByQJOlgP3djnqHKh7RAUvQffc4RU
-	 +ilN0Y7gsI7oBHJ7OqwqcWp7gmq7AJLysK40IMtrvXJUp0GK/wYjmMcAthboW7AKO5u/K
-	 ZkzxJjhvpl/LE9ydAHt9Qaa+bxcI4OAeHtKQkuYBrM+Qrg+axwb3yOSnCmT9XTpCB0393
-	 84xSlwqQnmJtxn10bmjf2RRAeWMv6z2F1d3M77oAbgjegshUBIvZJUJllmcViwAVoqqQG
-	 M7kOcyXKTXXBGtI9ni8PkOfcnivsVeXz8gDDJFSuq+XpoJIuid3AQ4phK7feErswAhg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792705607;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=qr9OomgWEZpsHqweNOXrzSAgZSrtHiQO01YW9q6Rrdk=;
+	b=Q70YT0Y/xRME1efxTeRdiFrl8az4Txcp9a2EEPuU8APXuZ6/gqrqotTIiCchsvlrE4H9
+	 U0NWvebervUvtqerwI8+Jfz0i5MoM0i3y66sUdbPdV7sV0qrNCEqNQmlVjYiMraooZNxO
+	 fuLUuqkLfozHDMVovYeYF6Wnm0e5JtUZHGZSXsZVCIKwn7kM4cMgp02kcq8fwUyEIFtFP
+	 SWZ99ZnQQnnnEqsdiqm7nIExosjKl+zuNln9YtyPeCoZaVOLsW793HcoiYrwTlu9dm1d+
+	 7a2KFxyiNOeZh9JGsy96s0TxgeFzAnfMaIGfowFhYu7vnnwjXYaCMhldOvCgto5qylQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=mN9+XH6K;
-	arc=none smtp.remote-ip=209.85.128.47
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=W4PaMyTR;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=yk3MXwNv;
+	arc=none smtp.remote-ip=202.12.124.159
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EA9606A325
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 21:29:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92EA9606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B89B606A31B
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 21:46:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5B89B606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=mN9+XH6K
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4956869750eso1511315e9.2
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 14:29:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792704584; x=1793309384; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=M6XVBns5NqJeydZN3vvGDhgWGZnONGrrbQBZmJyLaok=;
-        b=mN9+XH6KtSBLiEwQt6YA/oOja6sM4Xu6ZCPfBytQAX76JGow/P+c0KW7q6wZtj8vD2
-         8l9bK5Lys7puNTV+3HBegQQ9gHgtRXngsZxvbVDthpO2tRKbn92ZRlT0G9JartCGdMKv
-         XwUjJyKZfxg1QrfyBqjbea8+wGwWfCVODN0lZmnOksvqAkeEdfgEsc+wQs/x9UaflT2m
-         Rbd8IA/+22ccVvbdYyjB/HzhBBaKHS9LLMq4NNfzn+PB+O0VwD3JVDhZSWl+ZsBXQcpQ
-         dBpW3Tj+SWAa0FoYn0zcWMS8t5I52p77qPZJMSdmYtLNg7yXxnK8AwklxnPkxkN9nLmp
-         PcfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792704584; x=1793309384;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=M6XVBns5NqJeydZN3vvGDhgWGZnONGrrbQBZmJyLaok=;
-        b=G2vJzYNnA6wh6xX6xtUGD5YGQRCG7FH7pFTYcZE/HBoN2hICjbK5dIYVKzeTojQ8H6
-         GHWeCEODze3Wp/R0Ic9aG3NZMqVC//VRJDBKLHDh9TehzYdBCk7t18Q+MQ7MBfq1nIQO
-         1TvzWI9eCjU7Wca2XmmfiD/8Og+t35OjYK8hJGmzPYt/PoxXeYWG0W7P5gfbFmCc4URl
-         4RvVjJTeyrb/Tjzpw8Cg0FD40dgtMR/12NvD5VioP41UuGd88m7NihWVKDA3PuFb06LW
-         /1zutLkz+f6II8+bizW315CrXGBmPrE1HCJPS4gM0lwTQVJwj7Otf250b7RIBXrKA63K
-         HxIw==
-X-Gm-Message-State: AFq9FYJFgosapVP+iWLi3dQX0+MYjr5HhnJ0fdMBnYj3F5TAPfyC42M/
-	Y0vmwH6EiT/+nn75AXaLcHFJumpaoFY+Uw72Z5ZrW4CRMsW3zdlaS+nE2BK7ERAy
-X-Gm-Gg: AYBFou0tuYbkXv1tuLWs6XpCv5ahPxwgJg89mjfzl0DcKW3gMAO1WxJRNepzGd3TXww
-	ju7NjflX+wXjLAUZKzO9URfss5yXuVvVWEJUR3XS8OMiHjIZXBfGYEnVvMFTGzaAveB8rcBjhbf
-	rkeyqBxujEj+n9M3vyWF1fSWIoLI8FOGc13Vmy0WqzUiPiDsxgEo4joCEK2ayymUzdvev5gT72e
-	u1IczKfdPuLG9pn+t4iGFvDidZJjkKWt3doYG/7dSU3g8ZqAHPxO8W52DBqj1x9Min6068dBI1v
-	oB/X5iEuAzxK2s8QPuhwJhEHXXK9Bvj8uvZu7TO/3tTjeTbvvhsMHSk+tTLpQ49GfwAdVq38v9k
-	VSBRnfugR5fdocVKyWBmtGfAsomSq1sR4d1G8HKmOANlAUhbBpAT+s/2QzoQCEfr35KdEaWAcsk
-	3c9jBXvDuprKK9+pFTyXkQQWRTv9eKN8Dvs6tEUUPz7yg2wQ9/cF6GrsS2SulwZKOkNd3yabSsI
-	3DAl2Wu7VyDT+448lAzPdx7G1k9lBPNPlfbOTcvUbosVjCQ8A8x5acAVC+NvB1T3H9arYpH8w4z
-	oVf87TQ9nnQHZTkStvq8BVJJOWSxHkA8M8+YVCilArYvaO0H
-X-Received: by 2002:a05:600c:83c9:b0:4a1:e46d:1bd4 with SMTP id 5b1f17b1804b1-4a211ef7badmr3850895e9.29.1792704583871;
-        Thu, 22 Oct 2026 14:29:43 -0700 (PDT)
-Received: from u.ad.analog.com (sgyl-40-b2-v4wan-169439-cust3365.vm6.cable.virginm.net. [92.234.157.38])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e38044e8fsm739355f8f.31.2026.10.22.14.29.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 14:29:43 -0700 (PDT)
-From: Andy Koppe <andy.koppe@gmail.com>
-To: git@vger.kernel.org
-Cc: Andy Koppe <andy.koppe@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Julia Evans <julia@jvns.ca>
-Subject: [PATCH 3/5] doc: stop calling root refs pseudorefs
-Date: Thu, 22 Oct 2026 22:28:51 +0100
-Message-ID: <20261022212903.177261-4-andy.koppe@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261022212903.177261-1-andy.koppe@gmail.com>
-References: <20261022212903.177261-1-andy.koppe@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=W4PaMyTR;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=yk3MXwNv
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7187F7A00E7
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 17:46:46 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 22 Oct 2026 17:46:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792705606; x=1792792006; bh=qr9OomgWEZ
+	psHqweNOXrzSAgZSrtHiQO01YW9q6Rrdk=; b=W4PaMyTRuwRd5wbGwCkURA6Nt/
+	zZ9WRiF59l6CaOTivNJKB3fqqtW5l3ouHC7ygn01mkjxeqby628yP5NW0iRKUCLj
+	FksyNPvlDfmuHs0dVSY9MYMyuxge5nw0b+B/bvH0GQs56Ede+lM2JWn0fme/mGxJ
+	wBxlIKOOTmzI0+klOpuVjFeMfY9VwR4X/oEbTf5bWBE9FkKO4c994cNMYA2QwNi4
+	c2RW60gmenEg6cCwGY8rW92qSfWBO2+QRZrW8woCQio3rR4R8byk9CP+CnikVQdw
+	9V+QrhZ+MPr3NP6IxnYQtNoNAJs0HV4Ir8zRRvmJuKGblhtvno2pBgN5SKhQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792705606; x=1792792006; bh=qr9OomgWEZpsHqweNOXrzSAgZSrtHiQO01Y
+	W9q6Rrdk=; b=yk3MXwNvCW83CJSDJXJM4QUMd+I/7lMcE/Au+uSJ8E35ncOyWJH
+	QhR1pySfsboN8SOCeMtq2MHF1tzOMiBhsuFnoNZ4jcwB9r0i8MvSjEe+1JK2wyXr
+	O0Hd2akDSyGX2KYdlo3gJEYQuNoGu7UEtUvWI2g/jOCqjSZceYx0UnYG1+MA0otk
+	rS37e27WbDBf/ot4D/2F80NQriBCApOkE1XC39y/zkrNc6Ed9/R46HLIKWf7pmLa
+	rEsO3094CGyBm7w/j7JZH0e2w08ar8DVkihHgz3KZU6CiENxbLYcP4ONfUzQhqAp
+	otdOBiPpPL+qDqwBleuBS44tzkMtByaqyRQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792705606; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:e4TjJ8wvsfCvp52HCrNRtAoWBLGkNI+eE5AsmdEtwKXaQMv
+	nyb+Kbo1g80yEV9jC8ZtDKV/3Lilz6TU1mfGYT04fDXQI9dLdMMVnXcqtUac/uB6
+	WGKKJ2YusUF0D3tFbBBnWap3nuCif6X9zLlaJdse21+uiXZJ1IrG3uOuaYop5e0N
+	uAMkATecyBP9S2RrHMnjDSDK4OcvtyiFJCTVpeDmckzRRYSbiQM84UqQsdUWOy3e
+	9+WTLJMPrulbUjwwGtZMIIvTvwf0z1MZ8J6M4GNWs6di433K5GQVdIfkjPF1e651
+	l5d0k96sU03b6fH20hNilbP37PZuDycNlrMhzOw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:DCAA1H1xHTcPDBImfw8DACt+fcnRJsb+hegONf1wf2o=:LFLkXt+f1y/kRGp1fTAY9miGNDv0pHSj+H7laC9DAQ8=;
+X-ME-Sender: <xms:RYTaaicFJz9PnKyCZYNArhfZInKdXsEOMXG6BF1gziDP3Rnph2Iu2w>
+    <xme:RYTaaoCmY0GzvJtxzaBW2k8ikKMVTPabdVpiM1_fDIhwxeZpFySHh3fa4E9T2KG61
+    2LP1-Pe_SVZvdtDDTBLiJEYUpY-jascxEnfYWvxLNuZwIS-AUInkA>
+X-ME-Received: <xmr:RYTaau4dVqVS5AxD-NNaV_aQcFK2PGM01cNwhHB0Gj--C3eXTEXZ3ur-TRkx_sP80_M46bd5fOBvL29NYBQyok4oXSZZCInv2hEp>
+X-ME-Proxy-Cause: dmFkZTGMPMa3wip3GPabI/n5kAF41vkvxd9UfEuNTRru8o7pUgXLYt2QajAy9JrsmeFywD
+    Fwp3uIaj0Mqt8ZjgsOp16VZMgjR5E7S/cXiBlM5Gj+mlXbFyhyV+CrVkOGQG4Mjh33C4me
+    yUJMldM1iir4hzoWHbWaeVrvp57XpL+BQvgemmFhQ4zmqP/0E/Pl+IJKX79OlSFMCsw266
+    IWxIvTkq01JhGsrhItdBsZGKDtIys6OzA9mcNsgKLwxt0XEmGoMrJA3JF6JAMq8OUSsdBn
+    9CQgUV71hWX1cGV/z//TDfNZAIjppY3HG9dlcicCbVvXwSJZxpdT/ISESI9xzGU7Ze7JBK
+    2SCy6ysUcAEkuoymXvCAIU9jPF0pGHoIepYFlpXnQq+f9A7TSxUhB1KYjADCCyZDxtA9uU
+    KVZtq/S8ctvw0Wzjho+CZa5h1FnEODDP+/rKwmjW+ExUKRryR914ZSPfupXZlm4qXyeTXk
+    0WuB5o9GMbhnaMlhdx85OucRJQM57wSLIgUsVf2clYzpW2jAhnBxd7g5Fv2eHc3u+dvCE8
+    06CBV2njRJgNZFbyXE4Cz2eIYapNoCANz9ViinkG6mqmCd7bce0hw/8wO17dkqKtAZKuAn
+    dReuc9TEWMG8g/Bg09Am2RULmV3ekst9OW8iY/hEtJrK0M1O8sMAnjCYjE0Q
+X-ME-Proxy: <xmx:RYTaapfPpPKOXYXhlc4iq1ZiMz3GSgQOnBVK1x8Lj6iFMRuXn5j8fg>
+    <xmx:RYTaasujbPq3Vt8q2vnSmRgE5VouagHa0DCtDIstnrwmmE_EPI7mbw>
+    <xmx:RYTaahnxjG_Lm-flW8fAt9bYkupLpU-KbAcdfRkXvkZJ_fVD398j-g>
+    <xmx:RYTaanQrRNrBATlOfwI2rYkALkRE04WPrYI9utxcrVX-pxNNowjMRg>
+    <xmx:RoTaagQ6-4OQAeCL7km8xa4fvgImb0Xn0oCXgt4bugCNrOjbeu9TvW5B>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Oct 2026 17:46:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <ttaylorr@openai.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Jeff King
+ <peff@peff.net>,  Elijah Newren <newren@gmail.com>,  Jonathan Tan
+ <jonathantanmy@fastmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe
+ <l.s.r@web.de>,  Derrick
+ Stolee <stolee@gmail.com>,  Ted Nyman <tnyman@openai.com>,  Daniel Reynaud
+ <dreynaud@openai.com>,  Aaron Friel <friel@openai.com>
+Subject: Re: [PATCH] negotiator/skipping.c: parse parents before queueing
+In-Reply-To: <atp0Q5dFHQHAZAov@com-79390> (Taylor Blau's message of "Thu, 22
+	Oct 2026 15:38:27 -0500")
+References: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
+	<athgd6Ya12zRdIR_@pks.im> <atp0Q5dFHQHAZAov@com-79390>
+Date: Thu, 22 Oct 2026 14:46:44 -0700
+Message-ID: <xmqq1p9he7cr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,149 +129,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Several manual pages still use "pseudoref" in its old sense of any ref
-outside of "refs/", which the glossary now calls a root ref. Pseudorefs
-have since been restricted to FETCH_HEAD and MERGE_HEAD, which are not
-considered root refs.
+Taylor Blau <ttaylorr@openai.com> writes:
 
-Replace "pseudoref" with "root ref" in those pages, giving HEAD and
-ORIG_HEAD as examples. In git-worktree(1), say that both root refs and
-pseudorefs are per-worktree, and drop the description of them as being
-directly under $GIT_DIR, because that does not apply to the reftable
-backend.
+> Thanks, I realized when responding here that we don't even need the
+> 'haves' intermediate file, so we can replace this and the above line
+> with:
+>
+>     sed -n "s/.*fetch> have //p" trace | head -n 2 >actual &&
 
-In git-ls-remote(1), describe --refs as omitting refs outside "refs/",
-since that is what it actually checks. In the example, refer to HEAD,
-which is the only root ref that git-upload-pack(1) advertises. While
-there, correct "symbolics" to "symbolic refs".
+Looks good enough.  Thanks.
 
-In git-update-ref(1), drop the incorrect mention of ORIG_HEAD. HEAD is
-the only root ref that gets a reflog by default. Also restructure the
-sentence to make it easier to parse.
+I wondered if we can avoid pipes, but the best I could come up with
+was this:
 
-In the description of core.logAllRefUpdates, correct the claim that
-"always" only applies to refs under "refs/". It applies to root refs
-too.
+    sed -n '/.*fetch> have /{s///p;x;/./q;H;}' trace >actual
 
-Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
----
- Documentation/config/core.adoc          |  2 +-
- Documentation/for-each-ref-options.adoc |  2 +-
- Documentation/git-ls-remote.adoc        |  4 ++--
- Documentation/git-update-ref.adoc       | 13 ++++++-------
- Documentation/git-worktree.adoc         |  9 ++++-----
- Documentation/rev-list-options.adoc     |  4 ++--
- 6 files changed, 16 insertions(+), 18 deletions(-)
-
-diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
-index bdc74d291c..8f8fe36a58 100644
---- a/Documentation/config/core.adoc
-+++ b/Documentation/config/core.adoc
-@@ -376,7 +376,7 @@ core.logAllRefUpdates::
- 	`refs/heads/`), remote refs (i.e. under `refs/remotes/`),
- 	note refs (i.e. under `refs/notes/`), and the symbolic ref `HEAD`.
- 	If it is set to `always`, then a missing reflog is automatically
--	created for any ref under `refs/`.
-+	created for any ref, including root refs such as `ORIG_HEAD`.
- +
- This information can be used to determine what commit
- was the tip of a branch "2 days ago".
-diff --git a/Documentation/for-each-ref-options.adoc b/Documentation/for-each-ref-options.adoc
-index 54e2fa95c2..2b6d4ede0b 100644
---- a/Documentation/for-each-ref-options.adoc
-+++ b/Documentation/for-each-ref-options.adoc
-@@ -73,7 +73,7 @@ TAB %(refname)`.
- 	using the same rules as _<pattern>_ above.
- 
- `--include-root-refs`::
--	List root refs (`HEAD` and pseudorefs) apart from regular refs.
-+	Also list root refs, such as `HEAD` or `ORIG_HEAD`.
- 
- `--start-after=<marker>`::
-     Allows paginating the output by skipping references up to and including the
-diff --git a/Documentation/git-ls-remote.adoc b/Documentation/git-ls-remote.adoc
-index d71c4ab3e2..7ce7df3149 100644
---- a/Documentation/git-ls-remote.adoc
-+++ b/Documentation/git-ls-remote.adoc
-@@ -35,7 +35,7 @@ OPTIONS
- 	with other git subcommands.
- 
- --refs::
--	Do not show peeled tags or pseudorefs like `HEAD` in the output.
-+	Do not show peeled tags or refs outside `refs/`.
- 
- -q::
- --quiet::
-@@ -118,7 +118,7 @@ line shows the name of the object the tag points at.
- EXAMPLES
- --------
- 
--* List all references (including symbolics and pseudorefs), peeling
-+* List all references (including `HEAD` and symbolic refs), peeling
-   tags:
- +
- ----
-diff --git a/Documentation/git-update-ref.adoc b/Documentation/git-update-ref.adoc
-index 37a5019a8b..c775334230 100644
---- a/Documentation/git-update-ref.adoc
-+++ b/Documentation/git-update-ref.adoc
-@@ -163,13 +163,12 @@ still see a subset of the modifications.
- 
- LOGGING UPDATES
- ---------------
--If config parameter "core.logAllRefUpdates" is true and the ref is one
--under "refs/heads/", "refs/remotes/", "refs/notes/", or a pseudoref
--like HEAD or ORIG_HEAD; or the file "$GIT_DIR/logs/<ref>" exists then
--`git update-ref` will append a line to the log file
--"$GIT_DIR/logs/<ref>" (dereferencing all symbolic refs before creating
--the log name) describing the change in ref value.  Log lines are
--formatted as:
-+If config parameter "core.logAllRefUpdates" is true and the ref is
-+HEAD or one under "refs/heads/", "refs/remotes/" or "refs/notes/", or
-+if the file "$GIT_DIR/logs/<ref>" exists, then `git update-ref` will
-+append a line to the log file "$GIT_DIR/logs/<ref>" (dereferencing all
-+symbolic refs before creating the log name) describing the change in
-+ref value.  Log lines are formatted as:
- 
-     oldsha1 SP newsha1 SP committer LF
- 
-diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
-index e6e77252ab..f0eb6d4137 100644
---- a/Documentation/git-worktree.adoc
-+++ b/Documentation/git-worktree.adoc
-@@ -303,11 +303,10 @@ but others are specific to an individual worktree. One example is `HEAD`,
- which is different for each worktree. This section is about the sharing
- rules and how to access refs of one worktree from another.
- 
--In general, all pseudo refs are per-worktree and all refs starting with
--`refs/` are shared. Pseudo refs are ones like `HEAD` which are directly
--under `$GIT_DIR` instead of inside `$GIT_DIR/refs`. There are exceptions,
--however: refs inside `refs/bisect`, `refs/worktree` and `refs/rewritten` are
--not shared.
-+In general, all root refs and pseudorefs are per-worktree and all refs
-+starting with `refs/` are shared. There are exceptions, however: refs
-+inside `refs/bisect`, `refs/worktree` and `refs/rewritten` are not
-+shared.
- 
- Refs that are per-worktree can still be accessed from another worktree via
- two special paths, `main-worktree` and `worktrees`. The former gives
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index bd9f345690..822604278a 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -350,8 +350,8 @@ Under `--pretty=reference`, this information will not be shown at all.
- 
- `--merge`::
- 	Show commits touching conflicted paths in the range `HEAD...<other>`,
--	where `<other>` is the first existing pseudoref in `MERGE_HEAD`,
--	`CHERRY_PICK_HEAD`, `REVERT_HEAD` or `REBASE_HEAD`. Only works
-+	where `<other>` is the first of `MERGE_HEAD`, `CHERRY_PICK_HEAD`,
-+	`REVERT_HEAD` or `REBASE_HEAD` that exists. Only works
- 	when the index has unmerged entries. This option can be used to show
- 	relevant commits when resolving conflicts from a 3-way merge.
- 
--- 
-2.56.0
+which is not exactly readable.  Even folks on process/fork starved
+platforms would not appreciate it X-<.
 
