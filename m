@@ -1,127 +1,129 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792648161;
-	b=Jn+sZ1dfyaPjrau4cSLHVT5sRbqj2XG6rSdZKUx8cFbG/p10b6QuZvtWoY747aDZs+LZ
-	 6Zc3+ikPC1SUf9Ki+kdseD9e2r5NF8EwajvHV+bWV/PkgYsyDbzOhs4xVhh+z69PjEjy9
-	 GYcB8vwFV1m1609pCpVtnBkQRPd2Yc1h1Lua5L4eE5KU7HhESBcFMH6qfDQd3FcN5HDxf
-	 ZNeV3bYTZKoVJf3Qbur13i4LJ91xTZ66kOdVBGtTmKVSM0UejFGJcA/NW6BEjMGus8BBy
-	 fQOk+umh7gY3CARN1xk4ti2c+rvG4pck40TZXVpvDsYFtajQmgOgK1YfydVQzRovybQ==
+	t=1792648458;
+	b=MFUKfhIPFPgITPHAtL584HAM1bm+89CeEDZcKhC4EAvnQ1H646Zhgius2munIKnruNd5
+	 wxpSZux2ATS6IuinddAupjXUN59cVzAwTXd7wnWyBsd51q6F6YerA4tGky7eve/FP2MOZ
+	 5sbAUiT20uKPRYJpL1cwGNvxceL/x7AxagLnxRAkgxauPqR3+NOM1dMRRSqC4tgYUesa3
+	 YZjKhypmSkPLtJOD0905t4RSTW19aagf06Hwu02I5q1/A71u+vu7GkZXJsCtfI5dN1epi
+	 bFCDPz8P6p5oQbkOIoZBKqG8VNf0jHNIKyBqjKA2T0EVuwPrcYdAFyMFUvL1Ybqotlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792648161;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792648458;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=z0gtRtzEjDmJhjMksW6xU2lmh4A4G1ecgsW1dZjKZro=;
-	b=5CwVOPB1MF07c4kuq1+wQGCpSk1Hcg6F6HmJ2yP5hrW0m2bWVUUhuK/WY+vo1ET9d5gw
-	 vyPj0mR+kywH7nP6Ow7Ubj8XcbQ1t1Fy0IblOPoZ3dJnFY9DkcGTV3mlc6q996bQxYr4c
-	 gIp2amcr/yPwdux1xlIosESsc2NtS/1+u2EhfcwpgK8qkMNiLDepWVy61JcVV4aDsod9V
-	 A0DtLInCsYGeI0cNSWnASJCGsZraiQA3EBAp8b5N0dIylroiMg+iuBMJR5kxX3wTYwzBr
-	 WBiXhHsjxNcxKDX4oYsgUeczLQUG/bv1nM07BpxloLiBzG3fl8dUPbU6RGbY5ZafVuQ==
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=6qxjHWzAs4Nt2rAsn3DXCfcskk1iXlF8vcmWE21NVhU=;
+	b=kcSHd0l0XbJtOc+bRo8+Z4Zxd3ZvCNC5aPimmBy/gLT8R12PHErHItnO/bZcwY3Is77n
+	 +Gy1z/IdW4LPYkSyw20qTT4IGAbAcxDW/hc0ki55Fwe2bh0m5lmKAFgtgUMcOrVDhlRM3
+	 JgZzbtiJSA5s6AsxwH0SAEMvXKtoq5+LjK4sWm8dXvlURKdS1wvJV+B6nVSdTYVccz0hz
+	 JHzXE0VR60NInSzj/giio/cbln0bFXPonobl7gkVCKswmgzfQR3ZIX8xPSKyYxAdH5xH+
+	 KU8vJrX46z2fvPl859u9fsKpnGAw8gwus2LtcEMusrqrCO9Y4WwV2Jfh36YFEmWzPOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=MSH8BSjc;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ShdC299T;
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=GIbr0DaS;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="daU4/Gmq";
 	arc=none smtp.remote-ip=202.12.124.154
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2B7606A31A
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 05:49:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1E2B7606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264CD606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 05:54:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 264CD606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=MSH8BSjc;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ShdC299T
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2F35C7A00DB
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 01:49:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 22 Oct 2026 01:49:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792648159; x=1792734559; bh=z0gtRtzEjD
-	mJhjMksW6xU2lmh4A4G1ecgsW1dZjKZro=; b=MSH8BSjcheQWtLLoHyOVha37rZ
-	m8TAIlpueLRr3nS6xcKbWj6CxjLsqhynG1RCQ68ksJeXw1RiUlZBB1ZxS9vzFvIK
-	SWdh/wlgDG2SaplUj6sJMGs+CIOS+LnjqwYKDM4fw6ewSHD4DdEqO4uKP7BYY3g6
-	yTlXlut4hucJpnvl1pH6gydeNMka7tJlHPF1X0Azk9azifdejb0nymqMwl0KGZdH
-	f2k4rRzQUm2tHQCypQLleYz1xt+AjyFFfdskK97u/TO0FQZMnh1dtypq8JBs5qqv
-	R7pTJdUGGVShI6KGiwOnAx6OrpF1IraBPzFDd8CzImhZmDlyVXlb341uQjQA==
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=GIbr0DaS;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=daU4/Gmq
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1CA1F7A0081
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 01:54:16 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Thu, 22 Oct 2026 01:54:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792648455;
+	 x=1792734855; bh=6qxjHWzAs4Nt2rAsn3DXCfcskk1iXlF8vcmWE21NVhU=; b=
+	GIbr0DaS3Qux3McFoyta3mzEqjdDi2OEOTGMKqFAxyPS1AwCsiBi5bb3Q4JJlvef
+	vs9LroP6CnKRh9W89mYgExd5cXX0Th7bHg9TCXHry3nB8ZMNEYGRcmFAna9su8M4
+	okbQJjtliw3pKViQRvZZtvk1ns8wTbzZ/ijgEMwXse/CHH/RA2P2VsSDQa23P05j
+	irs5zi//PaazVOjYzBcHn1j/BQM33Hyb6I0lJX0RIj5mSoZf7Uqn9oCwYOQTJhan
+	KaI/VxMYNyMwrrS3FhhLRzC7sLyKNiEX22zIDlb7mjJxeqk2QWhoNtnLeDBKRtRK
+	+yWVtHe/oFvoZ9YiCXh++g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792648159; x=1792734559; bh=z0gtRtzEjDmJhjMksW6xU2lmh4A4G1ecgsW
-	1dZjKZro=; b=ShdC299TIPez9epAVe0FZ4EbOfEP8LR38xCIEcGHaRG+eiL7kzL
-	gX9JvmHM+6g81i24FsJ1rFEHAnVgs4+S7GdLXptQCWVywvpE3yuqE8BEEekxJH/j
-	bofiEJUidF2+N/dZ0UA4kFkOulmv8A3qyI91xuIl3cVgBLeXJG9FD/XO9jcIPyYo
-	FfZbzmuWu2xaFi7z4NRyFTobelTNmN7MNVmbnO16TSpCOTUDHvSM2OzASsFNUwhh
-	bVXJcA+Z8mAxtprirZ0eIB8L6gMf1YaCLtlInR7iDtA7L9CMRrcI0GLv5BgaoXJR
-	XClAo8v1t8cFIkikmOA5PTUK4YpsHAjV7pA==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792648455; x=
+	1792734855; bh=6qxjHWzAs4Nt2rAsn3DXCfcskk1iXlF8vcmWE21NVhU=; b=d
+	aU4/GmqLJzg1eVf8tJ1AGjfHkK2KI1DLrYZE15litoB8X1kKvaYTV0dOK5qTfkIa
+	xkDrDu4RMG7NabPQdR7KJeBj6xp1p0jw62CnDrArQfTMHXphkHbS7K7v0K7GBgOt
+	hRjURWo6jlnkMNJDvzHPhfFV93TBRlL88/EKb4hniYbxLamJ46OFhAoxAZC7ewtL
+	6fBZZkXy2x3EW1w9a/myleSYQ418VGm84nLWLvHkHkN9uHkfylYJoXfCTB99yXm/
+	StZBe42MKNimaGJxa+S/1wl+l85SK7usfTXpi6eAUD2RrJu2iCRJM4h7nL7dtqbm
+	CkB7vb1+SsPMuA/7TTUqw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792648159; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792648455; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:BfXk9ijKq0hvFfnHzJ1EHbwdXuG3cKCrkQ8Kpp3iDcXlQq2
-	X+hnMOIm6yFXEkfBcEod4OqWEYBeXWr8S5JWttYIxnlTh0q/L6unJjfsqHb+FUg2
-	9H3JspXVc1m1bPBLoChlC09YIRtqQCk2DBT6EcHS+DkpWkpTZUfCnQK4Te61Yc7y
-	8k0AeMbdFMXn/khWpuAdzYwLGXUc6NstsHXWwZnSYAF0sg41dJSKMB2pjig2vRHZ
-	9VV25h/t99VN1zrHZj8zaUh3iQiZrT95fnuEsXo0ZFmFUhd5CsPU5hLBgwdoz8wT
-	8uzhb95rI52lVnfwfRCKZ0amyFB2sZ/dFcl1eCQ==;
+	s=fm2:rsa-sha256:Gajothrkw9/Uz7+6GZP1/0o7QJTT9MweaSodduPcJT868uf
+	pNueDz5KgDIykyVy/lxppLOW0/W22P1OO7ec3N3Sydqgta3kxZ3yG+LT5xwGISUK
+	GY+hGXWj0fDSnPG7KPvh5YPAb8iL9dW2XgWyrjdYTHvchefCSO4uIKw/Obciym5b
+	Qs2JOrnN5TbHaFEe7aiPPkLKehLCM60DaA5ruxd8SMMUNES20UagA4Y4h59x5qL3
+	6+aAONgB7QRCjx5FMiJjqY85U6fwwlrELBQ0mC4s01tztSGPh315c/36I8SpE+Md
+	x0jE+9af6tjVAfUXKTGRTD9n/mls92VAkOgX/6Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:kruvh8oG+Vtk7N30itDtZRkYeu25hEXYRTXYFZJYhic=:dzTFUKDk5IssjngbzWQJ1B8KdycAKZp8Hp0+PhobioQ=;
-X-ME-Sender: <xms:36PZana-v1JU8Gnn7Z1Bk6-6al7gLZUMMypQ4ZwJ1VrZ8l56Bcqpeg>
-    <xme:36PZalcX8_dveXF-x7kxcVPhSygz37ypnO8e8Z3V7P1XNCVSqGG084WALzU3hdxB-
-    zSizgJbPVHsD2WgLhdNrlmRCrlts7Zv9OatAERKMHD1aKF9GSTY7tJX>
-X-ME-Received: <xmr:36PZagLYOYNuLnOLPfua9CPYdyCRJPSHjiOBwC-ZGYYs804G8FHFYUqv8FHYCN8vdNQExRYbYHMtCNbgZgkY3giC_xgNYZ5Y-7ZA>
-X-ME-Proxy-Cause: dmFkZTGkedrRIi5Z1B3zVi5z+7n5lndU2o/fFfOw0GdgmiRK1dc6rMcmdPpvBvtvRszh5A
-    zhYnsFD6GVv9cF1xc/99TGD9naOncSfirnLIlTW6ZoprHxfxo4gy5/yGp3B/RuYW3oayPi
-    WpRGfDDmjwtyU8dsPQtTPRYatF7s41SMq8qTbss6+Q6v4tV/PLNHuYTesMf1rPpTPSmE5k
-    pd2oDMy+h+zQpcRCWkbhKiUa1/lCAfMx/p+3qM3NjRRg69dsDsAP14C2T7rU+sNk/+3dVs
-    fMYFZMx6ILfi/PftavXXLGu2Bm7gwhkA0nAPlv5ZS2l0qHHTl+CHaZvymq905zPxfxEYqT
-    NeIKNEJsXYOBIhB77FaQMmqWJZTk7WEwYT4K7z5Gbhq71rkdwUyBLCY5YOiLf3CsetbSG3
-    JCsz6Md4hB3ANE0CHk4tBN0DS9nig2m5AiyxUZsnFOLPXWSHnisUOWMuIkkFXEOIzhJhXl
-    XUyhWCzdv13zMVvvl0hF382/NHRY+oqHXPXAYcYMytJfezJOzSZgXjj1G95HwJv327vSix
-    LRUUusMxlCb9jMPDBjV2EslSL/KZuKCpJkjJ5p6+BQLVVRw7Z3fQUQDDKTsSVGynVd+BI1
-    tBYebF6IIzQKjzADi1Djlc6/0FfY9/vYyv6iVF2o4Q0qrVs9fqoWrZASb8iQ
-X-ME-Proxy: <xmx:36PZaqLicyqJ0QxoXPjvRhYpEFcnZxiRNtnj8pZinzbJE97GuBx6RA>
-    <xmx:36PZanWZi8JGNVzUpRVB4Yn4nhDRA0n6WKox1cedtZru44jiJx1ZAA>
-    <xmx:36PZarly4w8gRXFMqg9aj91RCBAPXlbgmD4Zj17Dp9pvH7jRAxYtMQ>
-    <xmx:36PZallfOdCYaKJySbWD-PXnpJ0sqeGYAFukTZ_swuMBFXTrHzTfYQ>
-    <xmx:36PZapcBU_3hNKvU1G7CP1ZbI319GK0wjxrxHZScc_7SzqhLtFnFihTG>
-Feedback-ID: if26b431b:Fastmail
+	action=mi-m=1; hc=13;
+	hn=cc,content-disposition,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:PUuT0zxD5zNEErnhoMIZgvf2F4FY5/TQ5zMj8+2LlTM=:wwoew9Jvm60imL7EOnAvNCMQ/r8qGSLObOzwH2NE7mA=;
+X-ME-Sender: <xms:B6XZatvAkVmgpN4o95-FRaRR_CjbyUjLQHRWu1V9_psSAsSKpEBdtg>
+    <xme:B6XZatefZi0a_H_dxhZ8ZqDLgIpR3xG2XfxOvg1t9JamlaHugrf4buJ5FBOAggUx0
+    oKVLCAIXVf2iXHk0rMIB2xFzs930HT0q8DocUhUOpaeAn1OnXQr>
+X-ME-Received: <xmr:B6XZalxGa8JEOMRhZlchhHUV75tl0ULvCd4JUSgFvjSvsVueXih38k5r124HH4AQ7RYQfQ>
+X-ME-Proxy-Cause: dmFkZTEoDD+bow3nuErYeYZtxLvwG+GQ1I+ay3gzkl06v8Qki4nEYMbwf5Ub03EEQJx4oD
+    hAwBtkNw461ejorNiuo1wulU6BjwFMrMO5anQJe/v6uBAqbXZR/vGrT5hCiFXkV0K24Bei
+    CUIqS4rjxyKK7OS+KOfdcTBk9y6tMKRDQZqBweDI+FYdvfbOjTDmArOv2VZZqAsdhCSKDw
+    a2zlOQlpXurTruMYqn0VcyM8/mw0mN2bqherZdD4lR76PS1R4Y0JjGP62QgTvBLozit2dZ
+    rv5KYqiIQH5SZElh1p+g2t0GahE+PBzfTcd/3aQgeOEWKF9WnPHHAbWNEQ9quUqiIRL1Vx
+    NrTnbKJvxtR0qYJI9P1gO9Whncz8b6s4z7G780mlD0PeWOkw5Du4QJHYXAc4R8O5SmFv6F
+    FlavkFgm9ApBEpygWoJ3t1aVPSVBLn8UyKGI2TkJVKxMwicXyAl77JzBlV00yRMXCr6013
+    KMdHN0a9ZH1kiWdyB3gAwK1oK+fJ4bofGuQcNZECV2fg5JvNdWfsOi1ysuTEdl1OXVdFYw
+    A/NowX5/EvwzTFsm7C14kq9DFjGjbN2EyCFOLXaAED6r24uFsFNteQma5z5ClB0pKV54Nc
+    opjq8up1GCAhGxEs35iVnsROixbBiZKJCEynIG03uNk+YLpSo8VAPD1AjlUg
+X-ME-Proxy: <xmx:B6XZajGr06b_55G7vYHzCi_F6-deBu4qOqrGpfzLvKVdqUmJm92Ajw>
+    <xmx:B6XZapwfWzC64n1ZPYG3qbPfOvtFV9mJ8B6lTZMVO6ewddRLsOx6hw>
+    <xmx:B6XZakvrmC_pDrD4wn0OjjCFNKrpewxD0ouFOscvy7GPQAa8CdfLRA>
+    <xmx:B6XZam2kkCIKD8E_65A6bo3WMR8_HN_2WLAYnJQ8i7Uu5hVEzzw2gg>
+    <xmx:B6XZapR3p6HeK4nAr4s5_ysd8xTRlaj6bMaCC9lJ0G0sofiqhvddatQw>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Oct 2026 01:49:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-  "D. Ben Knoble" <ben.knoble@gmail.com>,
-  Phillip Wood <phillip.wood123@gmail.com>,
-  Jasper Mayone <me@jaspermayone.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v3 0/3] branch: let --delete-merged find squash merged
- branches
-In-Reply-To: <pull.2425.v3.git.git.1792585717.gitgitgadget@gmail.com> (Harald
-	Nordgren via GitGitGadget's message of "Wed, 21 Oct 2026 12:28:34
-	+0000")
-References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
-	<pull.2425.v3.git.git.1792585717.gitgitgadget@gmail.com>
-Date: Wed, 21 Oct 2026 22:49:18 -0700
-Message-ID: <xmqqjynajndt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 22 Oct 2026 01:54:15 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4fccf7d4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Oct 2026 05:54:12 +0000 (UTC)
+Date: Thu, 22 Oct 2026 07:54:09 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/5] doc: move BreakingChanges to a manpage
+Message-ID: <atmk9Q4MRK2JRTlr@pks.im>
+References: <CV_gitbrchanges7_please.d1c@m5gid.xyz>
+ <V2_CV_gitbrchanges7_please.dc4@m5gid.xyz>
+ <612b6065-9043-425c-83a7-2cfdbe140c4a@app.fastmail.com>
+ <CALnO6CBuKKF=nCObFCK0coCDqbK=OJTWEshEtj6NaVV6XpWGuw@mail.gmail.com>
+ <xmqq5wyvq9p8.fsf@gitster.g>
+ <ab05a3c1-9da7-498a-a9bc-d586414ad0ec@app.fastmail.com>
+ <xmqqy0bqlqez.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -131,79 +133,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqy0bqlqez.fsf@gitster.g>
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Oct 21, 2026 at 02:00:52PM -0700, Junio C Hamano wrote:
+> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+> 
+> > On Wed, Oct 21, 2026, at 18:50, Junio C Hamano wrote:
+> >> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+> >>
+> >>>> Is there any interest in continuing this series?
+> >>>
+> >>> For myself, I favor making more of Git's documentation accessible to folks.
+> >>
+> >> I do not know about "manual pages", but making this available from
+> >> "git help" would be good.  It raises a huge question about what to
+> >> do when Git 3.0 comes, though.  Are we going to change every section
+> >> and rewrite them to say "we used to do this differently before 3.0"?
+> >
+> > See me and Patrick’s subthread: <ar0OicAaDipYx-xU@pks.im>
+> >
+> > You could transform it into a section at the end for “what happened in 3.0” then introduce it with
+> >
+> >     These things changed in 3.0. They are written in the future tense
+> >     [?] is reading about what will happen coming from version 2.98 to
+> >     3.0.
+> >
+> > Then you wouldn’t need to change any of the rest of the text.
+> 
+> The rewriting effort is not a major concern.  Rather, the question
+> is whether keeping such a historical document is worth it.  Do you
+> still care about what the major issues were when we transitioned
+> from Git 1.x to 2.0, for example?
 
-> This series finds the first upstream commit since the fork point that has
-> the branch's version of every file the branch changed, comparing only object
-> ids. With --squashed, a file that upstream also changed counts when merging
-> the branch's version into upstream's leaves it unchanged. Timed on my clone
-> with 65 branches, this takes 0.5s.
+Probably not two decades later, but at least for the next couple of
+years I'd assume. It's likely that upgrades jump multiple versions at a
+time, for example because the user upgraded from one LTS release to the
+next one. So they may or may not land on Git 3.0 directly, but it's more
+likely to assume that they'l land on 3.x where x != 0. And these users
+would still want to learn about what has changed in the major release.
 
-It would be very surprising for the unsuspecting users to loosen the
-behaviour of "--delete-merged" like this series does.  As requested
-elsewhere [*], do not change the behaviour of the "--delete-merged"
-when no other "please make it looser" option requests otherwise.
+So I'd say that it makes sense to keep it until at least all of our
+supported distributions have upgraded to Git 3.0 already.
 
- * https://lore.kernel.org/git/20261019044005.99247-1-me@jaspermayone.com/
-
-The attached new test illustrates the extent of damage.  We add a
-file on a private branch while the upstream adds two files, one of
-which has an identical contents to our file, under author identity
-different from ours.  If we run "--delete-merged" in our repository,
-we should not lose our branch that we never pushed, or asked them to
-pull, or anything.  But when applied on top of this series, we do.
-
-With the following applied on top of the series, with all changes to
-builtin/branch.c reverted, it passes.  Of course, later tests that
-assumes the looser criteria is used without an explicit opt-in will
-fail with your code changes reverted, but that is to be expected.
-
- t/t3200-branch.sh | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
-
-diff --git c/t/t3200-branch.sh w/t/t3200-branch.sh
-index f3980106fa..adbcf937b5 100755
---- c/t/t3200-branch.sh
-+++ w/t/t3200-branch.sh
-@@ -1925,6 +1925,39 @@ check_branches () {
- 	test_cmp expect actual
- }
- 
-+test_expect_success '--delete-merged does not delete unrelated branches' '
-+	setup_repo_for_delete_merged &&
-+	(
-+		cd repo &&
-+		git checkout -b unrelated-topic --track origin/next &&
-+		test_write_lines 1 2 3 4 >file &&
-+		test_write_lines 5 6 7 >elif &&
-+		git add file elif &&
-+		git commit -m "add file and elif" &&
-+		git push origin unrelated-topic &&
-+		git checkout --detach
-+	) &&
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		test_write_lines 1 2 3 4 >file &&
-+		git add file &&
-+		git commit --author="unrelated user <uu@example.com>" \
-+			-m "unrelated commit adding an identical file" &&
-+		git checkout main
-+	) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+		git branch --delete-merged origin/next >actual 2>&1 &&
-+		test_must_be_empty actual &&
-+		check_branches <<-\EOF
-+		main
-+		unrelated-topic
-+		EOF
-+	)
-+'
-+
- test_expect_success '--delete-merged keeps cloned main without explicit push configuration' '
- 	setup_repo_for_delete_merged &&
- 	(
+Patrick
