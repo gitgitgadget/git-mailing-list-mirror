@@ -1,88 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792663310;
-	b=G6yukAUHMoGhwsTtuAilaw9QxafMKgSLdo0dGN4fiB53LwYgNi8InswUvSxFgUSMPjS3
-	 TvHWAYEfv/yprFbX2+tOrZIurJHIHrn1ASyHkcHlQ/pRWxJvgKcEJEFgalGflTB0oMRUN
-	 9IyK51dl8nWQQarq6Y3wKUs1EBjvk1aDd9dJM+cUxjVD3l6HT6bk1gMaCgoBu4gd24O7Z
-	 hQgk3Re4INA1rE2MNfATrdYeKKokmQncY0Z3QrkJA4byMgv6dws+hoBpZZ49b494l1oYj
-	 qQgESy0qLPEwnEFOR84qwrqbpgd3ID0XFDJRHfB8TQJLt0XAhn0SJevylo7204nrVnA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792663310;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792663689;
+	b=kthE4e3VUUS0xShpdxCEQOYsozGBQDdtRi9hoOcg6Q0AhVsI4A8L/H7q3cld40ovrBSz
+	 sUpbvqPVYw9nNr6wS9uLNWrrULCMmRh6RW1dUKLwSsrGokrryg4/R2Vm8p8+hBFVea4ZC
+	 30NsL/X35iCmVAw6vmfBwFoAa48HFbgK8/1yoGOSs56fqGVOvicOOvHwnush7B5xll1qk
+	 2eSLVHgLcpd19f1UVYVMzs48ygzuP38hmmmvjjfa94RIF/Pq69E729lgnBdZtTXqOAZ32
+	 EzVWb/1TErKGpOi7OxOOFakYThLHjXzMRM+vHHNuNh3ka/6NpSKla23uj2bXL0UYnxA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792663689;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=YyFfc4Lgt/geZER9WdJ1qu78uRRn8J3ELhxdu1Yrq5A=;
-	b=QW0RiGb8X7C/baHWhiNpCbzsKxUQ+Gcsx04tdH/Bd1WPsofR65vian9bG1GxSbpa8hr1
-	 D285l4nasspw+vAuBSLxIKv1O5bQc+Rn8WkXujnZnbP2QqTBCFUuksAXH9RyRf7jGX4+E
-	 jVPkrp+BCB6rmf1DtuN2HZ7E83YIYuwbMBg1dxIw+JOGCpw69kjcRGmRe2Kj+3EyhiQq+
-	 Pr/05gmqxaXN4iZwFFkcmJftkmohIKZj8ql1GNZCTsa5Etd3NpP8YjbgqXc7ai7O7LMfJ
-	 3iky7zjeEZWPERu98du0BQ2GJZy/Ah/C5/UjNi8Fm9BEQg8W0rVSF2CZ2DlCJPrJRUA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=LdYr/U9z7Zko2iuA3SMxnNWV9g4tdQ7OyMXS+9yUJCU=;
+	b=EKMVklWZnuzeqRhQyrPG3PL0ox+QDDWoqGoDTOPedWgMKQseZi5lPzACZ5dUiLHLiAmm
+	 SrjC/e7kC8UI2pgzBWtPn3YrjNx7BgZfvBcrK2CKfPzh1ep5F0AyzfJLmXb+7jS4jP2x5
+	 PgbvWA4B34hoS81x+GcjkGI9K7VJLIA1EwbkvCIurtdElCmxfZGqOO6iTzfvGkOtsnHFn
+	 zlgp050l2aNrceLqKJVhlxEfHI0p2e/C+0hdZe/76cTitHmXepLd1PLLG38TcSTjlQ794
+	 kHY9UtmY6QPy74ukHI3GhfCxDBFE41xpma33RgBYt4phKAHXQsKBBIlBlXJvoK1DhjQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=rY6YqQCV;
-	arc=none smtp.remote-ip=209.85.128.43
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=XciWEdfj;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2FA606A319
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 10:01:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F2FA606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321B6606A31D
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 10:08:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 321B6606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=rY6YqQCV
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a209a7fd1bso1814165e9.1
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 03:01:49 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=XciWEdfj
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c169ae1cb26so121116466b.1
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 03:08:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792663687; cv=none;
+        d=google.com; s=arc-20260327;
+        b=liyFZLv92UDxPtnutiE8MSALhNqoGSgVw0IdsL6D0togYfvC3UVJR5mdHXlisLG0al
+         rzyMKaQqykgKB/BqJuV0JVVUeaDjHtCxNfYSjk/eAbM6/iFQS0WY2/lfJSbRLr/VEdwL
+         aVeZOpabvVajQhuT3Px2Lk7zyKAue2GpH/XjqHDRSkrHQrdgKpsRPaNyB2kXOVU6R/Ao
+         V/e1fyM6Fb+U5w16m+Tjur5iNiEpGI3fIbVWp3uq7z4eOGmbwjZZkjDDaAoGQwmSri+l
+         PXefVD1nyPV3sZFlFk4muwHuYqywjfKdOlh3ZYzrPIQXE8H9kpbMCtZP0wfUeCEOgiUS
+         H63g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=LdYr/U9z7Zko2iuA3SMxnNWV9g4tdQ7OyMXS+9yUJCU=;
+        fh=/d2VJR5ocNeYO2aOV+S4fbh62XnlNNo6OlqVnr7mibw=;
+        b=MqkmHK85gPRv8hYT30q4fAbu7QsV6SDd04cVYtRpzMobnJIjYl8xRmdaHE1cPsOv9V
+         GVHN5AzYru/ka24B9HNXAOQWu2KHTf241x2ul48NPlSSAsrFt2RcZD/mIbZF47Jeb2Dp
+         Z5GfkBZcMZz2tGKB9PCK22JDO0lyhSFKXe/NMw3qiKi+adiSRhO+3VRhddbpsQwn1eAO
+         8O/i8MK2Rl7GXwzxEuiguWcOFWGhKN+og1OHLEt3X3rX4z3IxkHT3QPsf6hjc2gGOdgF
+         /oh9PwEpp0GJPTP0z7+2qVz2vReR6zD04iG6meVnSmTmQ10lIrJqg951lHQiA7E8e6zp
+         HywA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792663308; x=1793268108; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=YyFfc4Lgt/geZER9WdJ1qu78uRRn8J3ELhxdu1Yrq5A=;
-        b=rY6YqQCVP++4vBT/WWNMKtS9Csm3PRSqvmdhS7u62nFsZJvjFfy4a4kgl2wzf0eM6r
-         LEG6AUXRrXyQ4xl7kkSPNPu7yHgpCiDQYmWwR+P7s4G4KoNqOOnUv3kpTiQ/HLbx412D
-         AYf5mzE3wLE2IK7r3Qn6yH0jdlBsnW6dA2P8IMN7Bn8IC+LmJkTQWtgnpncRagkSDnvC
-         1OrHUrnB/DFC22o5zlQJGyIJatKAZ3s43bPS2shwIFascT1WKDeboUlUSVsSdcaPvtZF
-         WJ0vVULM/WNrovR35VqawMkMNOblXLr8x2CJzuNJUC4tuvqi2/kSXAj4uw9sEvxmA/B5
-         UrWA==
+        d=gmail.com; s=20251104; t=1792663687; x=1793268487; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=LdYr/U9z7Zko2iuA3SMxnNWV9g4tdQ7OyMXS+9yUJCU=;
+        b=XciWEdfjm9T5McJYhZ2h15VGs28kSH6mfSowYN1dT3c795kTTlWpWo6tMP6AAVbo2Z
+         D1DHZcqj/XCVNhAelmfMtH9YPyHyR/nRhJojm3Duy4yjOnUH/DWy9j3aa6ZNltfQfeVQ
+         Bep9jVn04jc/LzbFnG6F6FQeREu0PYTiw+BEHtttKdBRSGOVTIBfxM80n2HWgWNJRbft
+         mY/N9cJ0fAKAO3feD/2EwiFpyQIe5jrvkINFmZHOLUl2r9doKeI0DQ83ijfOpbUeZhQa
+         CUpdfgDl31UXfQkfg1aMvx0obThP223zS6llFi/YVwOaOcjEi0jjNDyh/fK1+ZoLw/FS
+         1CrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792663308; x=1793268108;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=YyFfc4Lgt/geZER9WdJ1qu78uRRn8J3ELhxdu1Yrq5A=;
-        b=SVAznT9ViU5+6s4+D6n2aprdNolMPwuCVZ93kmTWQebPAX3lK9bHLlusTjRZIPL0NF
-         BlYTfGzEXAKB9LQSFHa4MlbFxxWZhMWLQ6WpyIA04gq2W3VnKdPpxJJV9b5BNWuDFGc+
-         xLUdoa9srmpyXpuPazocMTMZLhAhIwT3cCqaPbeAnRgO/L1hGV6huCyNtlq8YdhoHbeV
-         HE+S1j4kn0u/wVL9Wz/EL8QIoTyck9C7EVGPTLA5ue1wdRRCBBQHxL0OtJUIrr93QQXJ
-         6qypgUD+Ys+dG5GkDL25IaQhIBIQgoygJkA48n1458/1aSQJjmW1torG7uuMEBdZ4moZ
-         pQcg==
-X-Forwarded-Encrypted: i=1; AKwUvBxfe39jkBTdL7P1K+8j1XaPyyMOGezuPxXHvzL05BQYB/aqtwp9RoihlHOYmWNIH2Fq0ss=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKwX0wgDK6RV/d6hyyXgn/kcd+3cANlbRre+G0YIbrAznFMNZPR
-	FODO5PixF7EiJoDDtn7FRK6NeADMYNBAv04cuE1cI2t6mzdE5lgaQeQ/
-X-Gm-Gg: AYBFou3Hl6oDtUGFN/yyqdtivkxxkEjWRdMaDe+NHN2aARV9q8CSbGfwxjjwYYKopsv
-	8gzqt8u/5LFv54Vdk7AZ4YQM9xMDsBYv875YR1zNV65zLIC710utamov67/lcqAwGshvF6ZuioL
-	GDz9ln5K/BdYvBbLtwPQgJdmwMcSdL85TIpcHqCGW8zrptFLgxY95Em4DIliA+FAkreuRLauZqv
-	TKivCOEooESi7x9BWTLkgYNeHNYqzHP335aCZWcKCtH8/wusKJS7Uvw4JNrEN6t5eNsJwzdIC+T
-	vzPSRv61FdUqJ58d0kxOm4g1H3EJdL/msq9plz1bYACsDsBkkTPSDsIsAdbIu+W/dZJxkn5yPrN
-	H0QpCZhlvJwQUn4QcetbJu839kM5oHVFLDJb7bHLeAjJ36FfrGU06fMoT5wfvEW8eD958TGgI33
-	nZYLmduLGnjozTx5kFfbeMLpK9FY+qUGIEs42dVnDpFXzbJqCwa3dxEq8bWZQNCNDBnf9blOAEG
-	2WuObrfFcsYbaBW1pQ4Wgoh48TfZWNde1AOmMHD1Qe3VJrWnJVX0wis+1QtgbHy7NK6Ot9yUFia
-	C1kvDo0mPlXR8mNuuhBjNy/xTfyhb5PLkg==
-X-Received: by 2002:a05:600c:a204:b0:4a1:e9c2:6c84 with SMTP id 5b1f17b1804b1-4a1fdd2c140mr61831975e9.18.1792663307623;
-        Thu, 22 Oct 2026 03:01:47 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a207b29276sm68614695e9.6.2026.10.22.03.01.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Oct 2026 03:01:47 -0700 (PDT)
-Message-ID: <b36dcec9-ad9c-4ddd-b3e1-e246d2fc093e@gmail.com>
-Date: Thu, 22 Oct 2026 11:01:44 +0100
+        d=1e100.net; s=20260707; t=1792663687; x=1793268487;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LdYr/U9z7Zko2iuA3SMxnNWV9g4tdQ7OyMXS+9yUJCU=;
+        b=EmkrIvmygDxCKEjex6zhdyNx7ZeTKy3Qo8yj6zra4qgf+HZpccTChUBWcMkcGXC1kt
+         RbY5gnbN4hx3vbpJdCge+Stq9zov5edZXRsMj64LuPyXZUps7Ik8M4FRQjvfJKjkd95N
+         Z1tseGco6mbV3rdTLqi67tJTSQBrOZgV2bM2sdfZXeOCau8Fp6k4plIFfbY6FgJxPerC
+         ajsQep+WXqo6IUrxJZfqj5kTgBPURpwQTdoM2Tei2NI2dG5We+DsaJwjxJ0Xro39ndmA
+         cuYfMx3aGx4yXEQz+5YpUdXVTRTNsvZqhstbiE7FY8quxynmPemk+aOLncMkqp6bHfzb
+         iOWA==
+X-Gm-Message-State: AFq9FYKeafHh0sxFmvOAvlfYGwbf2kcdfwmydHu1qQ9PBnAoGMOkx/Ww
+	fy4dO+NPB2g9EbllFC/hvBZMN7Cqxj+1EW+rm0Pvr7E6jSoLRRouc70yxo33VpNpAEMI+wPWvq+
+	N0SOJ706R3KcNICdUI5UIB3Et5Z2Ho3U=
+X-Gm-Gg: AYBFou2jmYM/xxHHCrpC5f6kOJgSFOwJQvN1AgC+Xris3HQlOV5u/ROnQo6E3YvhdKX
+	NEEnHhCLtjI76K+mRBOiGTSIho+Uhm7yvXCqOLaDMgtfb12BMq5eSpv9wghjMnU+RIb2pM0OwMv
+	+m8TAXDw+fV8ngwAtr5fmCOuJB53XNI2bdvzSRj8SKWx5vacAG+cL9la5SQawwdM6A1RZ9SslaR
+	QuUPghdgsU6lp1IXTM5M2YEgszShLbqucSDDiy8InARgpPiQUj3ddcPmlOxvZ7XDChcy4JGZ7ei
+	ITuep4wal/GMFVkc3jYUZ6o6EWizzWNlG2au6NuQLWuZzLRkD1mpCdSZYGx9niZ1Xfv5HbiF7fb
+	6AzJN0CSsfCefSjJzmp6Hh+JO4izK49iufP+FZIrM21IKMUEfpXq8liPBB8M8VWF0xy3R
+X-Received: by 2002:a17:907:d22:b0:c26:1cfd:4244 with SMTP id
+ a640c23a62f3a-c468d794de5mr224551066b.11.1792663687538; Thu, 22 Oct 2026
+ 03:08:07 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,124 +103,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] Documentation: propose community voting process
-To: Emily Shaffer <nasamuffin@google.com>, git@vger.kernel.org
-References: <summit-2026.94e33e9ddf234334.06@ttaylorr.com>
- <20261021200341.378978-1-emilyshaffer@google.com>
- <CAJoAoZnhc6Tjm9m9dmTA6UD18HzkxAv2_ifB5x74ectqX8YieA@mail.gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAJoAoZnhc6Tjm9m9dmTA6UD18HzkxAv2_ifB5x74ectqX8YieA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <pull.2274.git.1792582249420.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2274.git.1792582249420.gitgitgadget@gmail.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Thu, 22 Oct 2026 11:07:54 +0100
+X-Gm-Features: AclHuK-IXPzD9dpW6AuybZnqkv6wjBURz_-r88GijNq1HUY8mab-70qdDdSI8c0
+Message-ID: <CAPSxiM9SuRiRA6Xixp_zx=fFf_a6S8Mp327FP82Pg7mJdzQ3Kw@mail.gmail.com>
+Subject: Re: [PATCH] t3429: use test_path_is_file helper
+To: Joy via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "Christian Couder>" <christian.couder@gmail.com>, 
+	Joy Gundu <soniqjjj@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Emily
-
-Thanks for working on this
-
-On 21/10/2026 21:05, Emily Shaffer wrote:
-> On Wed, Oct 21, 2026 at 1:03 PM Emily Shaffer <emilyshaffer@google.com> wrote:
->>
->> +Voting Eligibility
->> +------------------
->> +
->> +Votes are welcome from contributors who have authored a commit which has been
->> +merged to next, or who have provided 2 or more code reviews, and who have not
->> +been banned from participation in the project. All eligible contributor votes
->> +are weighed equally, regardless of the overall number of contributions they
->> +have landed.
->> +
->> +To prevent dogpiling, contributions are only eligible for a given vote if they
->> +landed before the beginning of the voting process (the kickoff email mentioned
->> +above). That is, the code reviews must have been sent or the patch must have
->> +been accepted before the initial email is sent. The intention is to ensure the
->> +mailing list isn't spammed with low-quality reviews during the voting process
->> +solely to increase the number of eligible voters on one side of the issue.
-> 
-> The specifics of this eligibility rule can change a little. I'm trying
-> to figure a balance between a few principles:
-> * Not all contributions are code (e.g. community moderation is
-> contribution but a moderator may never send a patch). I think in the
-> Git project we have less issue with that, because we don't have a
-> community moderator unless we're counting the mods in the low-traffic
-> Discord, and I believe all of those mods have code or review
-> contributions anyways.
-
-I agree we want to include those who contribute more widely, but I think 
-restricting the criteria to contributions on the mailing list where the 
-development of git takes place and the impact of any decision will be 
-felt the most is a reasonable place to draw the line. I'm not sure how 
-easy it is going to be to count reviews - does posting "LGTM" count or 
-do we want a more substantial contribution? Should verified bug reports 
-count? - that's also a useful contribution to the project. I agree with 
-Junio that we should count patch series, rather than individual patches 
-and I think it would be easier to measure when they're merged to master 
-rather than next.
-
-> * Avoiding dogpiling. This is my biggest fear, Git is a very
-> well-known project and there will be a lot of big opinions on the open
-> internet once people know we're voting on this policy. I want us to
-> measure the opinions of those who participate in the project, not the
-> opinions of random passers-by.
-
-I agree this is important. Before a vote is proposed it is likely that 
-there will be some (possibly contentious) discussion on the list so I 
-wonder if we should require that eligible contributions are made at 
-least a month before the first draft of a proposal is posted. Junio's 
-suggestion that we restrict eligibility to released code has a similar 
-effect but I'm not sure how that would work for non code contributions.
-I also think it would be sensible to restrict eligibility to the current 
-set of active contributors, who will have to live with the consequences 
-of the decision, by requiring eligible contributions to have been made 
-in the previous two years. I have historic contributions in a couple of 
-projects that I'm not active in anymore and I would not expect to be 
-able to influence an decisions those projects make now.
-
-> * Easy (scriptable) eligibility determination. If we start to explore
-> other types of contribution, like user support in non-mailing-list
-> platforms, it becomes really difficult to send a ballot to everyone
-> who's supposed to get one.
-
-I think this is tricky even for mailing list contributions, as I said 
-above what constitutes a useful review? I'm afraid I don't have any 
-useful suggestions. (It would be interesting to see if an LLM can 
-usefully classify the emails on the list but I don't think we want to be 
-using an LLM determining eligibility to vote on a proposal about whether 
-to accept AI!)
-
-Thanks
-
-Phillip
->> diff --git a/Documentation/DecisionMaking.adoc b/Documentation/DecisionMaking.adoc
->> index b43c472ae5..c08fb7abd5 100644
->> --- a/Documentation/DecisionMaking.adoc
->> +++ b/Documentation/DecisionMaking.adoc
->> @@ -72,3 +72,9 @@ We prefer that "official" discussion happens on the list so that the full
->>   community has opportunity to engage in discussion. This also means that the
->>   mailing list archives contain a more-or-less complete history of project
->>   discussions and decisions.
->> +
->> +Formal Voting
->> +-------------
->> +When a decision cannot be reached by general consensus or compromise, a formal
->> +vote may be called. See link:CommunityVoting.adoc[Community Voting] for details
->> +of this process.
->> diff --git a/Documentation/Makefile b/Documentation/Makefile
->> index f8dea4b395..314b8dc8f5 100644
->> --- a/Documentation/Makefile
->> +++ b/Documentation/Makefile
->> @@ -113,6 +113,7 @@ SP_ARTICLES += $(API_DOCS)
->>
->>   TECH_DOCS += BreakingChanges
->>   TECH_DOCS += DecisionMaking
->> +TECH_DOCS += CommunityVoting
->>   TECH_DOCS += ReviewingGuidelines
->>   TECH_DOCS += MyFirstContribution
->>   TECH_DOCS += MyFirstObjectWalk
->> --
->> 2.56.0.rc1.315.gc6ed9934b7-goog
->>
-> 
-
+On Wed, Oct 21, 2026 at 12:30=E2=80=AFPM Joy via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Joy Gundu <soniqjjj@gmail.com>
+>
+> Signed-off-by: Joy Gundu <soniqjjj@gmail.com>
+> ---
+>     t3429: use test_path_is_file helper
+>
+>     Replace test -e F with test_path_is_file F in t3429-rebase-edit-todo.=
+sh
+>     to use Git's semantic test helper and provide better diagnostics on
+Why is the commit message down after the dashes, isn't is supposed to
+be at the top?
+>         todo=3D.git/rebase-merge/git-rebase-todo &&
+>         git rebase HEAD~1 -x "echo exec touch F >>$todo" &&
+> -       test -e F
+> +       test_path_is_file F
+This is wrong, the initial patch is testing whether "F" exists, not whether
+it is a file. The appropriate function to use here is test_patch_exists.
+>  '
+>
+>  test_expect_success 'rebase exec with an empty list does not exec anythi=
+ng' '
+>
+> base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
+> --
+> gitgitgadget
