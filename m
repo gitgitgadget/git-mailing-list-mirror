@@ -1,95 +1,127 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792647977;
-	b=nN+S14EB8Rs4wqHebY277/tEiuR0I3fsfQ8HG6p/NH0MXQxUFQ/Sme2pYLXBbmM4/t0o
-	 981LOh5u+HK+YXzEgBm3nzi+pnoBdkaZcFmG97j95UyUafMsYZ3Kn+YDRzAo44YFGKriy
-	 fcjJNFx2RIOZZgBUjUAPoxXLFajBQwzPt7Vg0MD9VXot7QVDlUIiuvTVMfsoVkhFY8Tvh
-	 Caewz4c7jY7meN6SXZ8E2JXPAWja3H3o9Oh+d0/Rc1R7ARncRZfFFM4duZBnoI2zmn1yJ
-	 B0GiXggry4+09+egrAjrmEzUUFXwLxdhLgca9SugT/JffMc6EsbmyhZ6Z2xHEW6uiZw==
+	t=1792648161;
+	b=Jn+sZ1dfyaPjrau4cSLHVT5sRbqj2XG6rSdZKUx8cFbG/p10b6QuZvtWoY747aDZs+LZ
+	 6Zc3+ikPC1SUf9Ki+kdseD9e2r5NF8EwajvHV+bWV/PkgYsyDbzOhs4xVhh+z69PjEjy9
+	 GYcB8vwFV1m1609pCpVtnBkQRPd2Yc1h1Lua5L4eE5KU7HhESBcFMH6qfDQd3FcN5HDxf
+	 ZNeV3bYTZKoVJf3Qbur13i4LJ91xTZ66kOdVBGtTmKVSM0UejFGJcA/NW6BEjMGus8BBy
+	 fQOk+umh7gY3CARN1xk4ti2c+rvG4pck40TZXVpvDsYFtajQmgOgK1YfydVQzRovybQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792647977;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=7+LF5Pv00YuHQkM6uNHChKmEhE2HLhk19aSLNW82f00=;
-	b=BsG7oF/VGtZsa7cWxmKhabPXk7tWktoKhb7msRGcdlevOeuz1O4EwFfXxK38zBupnIee
-	 W35ksLBvAvyiCurSO/0c4FlyVYgJOm8f3d/zOG7bYgmhMHm+OackVgteIiHy3DR8quEPA
-	 FTpa1REE2Hf6nNxUiZAYS2PDhaHwRx8kBUOWTsg/7yB5DxfJLpfhta+IXINUdVs0zmfGe
-	 7nN7uJeWaGyVTgx7jAJYdlQfoR5E3p3V5AnuxI1yyNbl6w9NzrP45LNIqJ4Osk3B0KE8n
-	 KhqlPNRqA0RzNh4B30pRhbYYARu5yEO0f9O0rW/99bYYPcYRuYRt902/CvSzE1TZhEw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792648161;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=z0gtRtzEjDmJhjMksW6xU2lmh4A4G1ecgsW1dZjKZro=;
+	b=5CwVOPB1MF07c4kuq1+wQGCpSk1Hcg6F6HmJ2yP5hrW0m2bWVUUhuK/WY+vo1ET9d5gw
+	 vyPj0mR+kywH7nP6Ow7Ubj8XcbQ1t1Fy0IblOPoZ3dJnFY9DkcGTV3mlc6q996bQxYr4c
+	 gIp2amcr/yPwdux1xlIosESsc2NtS/1+u2EhfcwpgK8qkMNiLDepWVy61JcVV4aDsod9V
+	 A0DtLInCsYGeI0cNSWnASJCGsZraiQA3EBAp8b5N0dIylroiMg+iuBMJR5kxX3wTYwzBr
+	 WBiXhHsjxNcxKDX4oYsgUeczLQUG/bv1nM07BpxloLiBzG3fl8dUPbU6RGbY5ZafVuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nortesoftware.dev;
-	spf=pass smtp.mailfrom=nortesoftware.dev;
-	dkim=pass header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=Nzo8Far2;
-	arc=none smtp.remote-ip=209.85.210.48
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=MSH8BSjc;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ShdC299T;
+	arc=none smtp.remote-ip=202.12.124.154
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AE0606A31D
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 05:46:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1AE0606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nortesoftware.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nortesoftware.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2B7606A31A
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 05:49:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1E2B7606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=Nzo8Far2
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-81ae6aefdceso1445557a34.0
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 22:46:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nortesoftware.dev; s=google; t=1792647976; x=1793252776; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=7+LF5Pv00YuHQkM6uNHChKmEhE2HLhk19aSLNW82f00=;
-        b=Nzo8Far2X1OPtI+5BfpKlvEMl1b4PtnC6C2bSmtwdwKNBjyzzpfDSqS6BlhpEDOxKl
-         flhY8z7lNqJ1aXb3qr6c/Hlc0x51FHw/ZWFc4T3+s1HncbN7qGTQaOt1+dIsPiAT5h/r
-         HlyLy+ozLzoZx6hDgf/iSGPF3x0Z2IT85bnD7s5l/QaaX/p8BTUV54VKC4WMxCGOKD/V
-         rlyAcdU3eSInOMi4sy1sXc2spb9x7lO9X6r0mXEkCsb1hYq4bTDMLlckN19r2Y6CUOpg
-         OMgMC1RcNDmFCU3JT17xGArPNnxazvE+b9WBzzwhdZolvb1knzs7h5OX2CcCwfbyUhPW
-         hN3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792647976; x=1793252776;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7+LF5Pv00YuHQkM6uNHChKmEhE2HLhk19aSLNW82f00=;
-        b=pL29bH90UIgPFGB/RIugrTLEkhjz1fgY5v4q5UZ8TGnJhsGntBTshhuDoE7jzLltkB
-         qDXfHZGLxgjKJUuTD5leuOqQp5l9S/LXIjwY2N5q/Q7QmO/U8SZYpesTdeL3lbnjKdGu
-         1y7qiN+b2Ld0PIGwnILm/B4e1MYvt4LsMlRJ+QNXYzSS3QD+SkAz9cQlZSTtzmORPOTl
-         /LUnc6vyyuww2vtd8IHE5ygcedRqa6pUB6FH6DB35OWKsEv960dpWBCa44/q/pqbhi+e
-         r1dSpL+37Ep5Z+6TCVqdv7dv1x40g1mU+WvA2Y2D0eN86zT/lBU0in9aOcIJTT5gTnWV
-         gJrw==
-X-Gm-Message-State: AFq9FYJrsjfB0nLqx8gy/QQpkaeUly1Bzzdc6XUL0fANPlJVho4+PZxX
-	d0MezhF50RfMtIo32iTzKUW/iT+H8KNGfHfGMgi8iaryG2bgiYKvnxPoW2v/PX679dYLaXuDaxI
-	BJ4QLSw==
-X-Gm-Gg: AYBFou1SfaQnu8PzhC+nRKHwRUfq8638PXdfeNF8Gg8jQqRI9Vgh+dR0Sp1JQ8gZUSy
-	JmxEQ70mJpSYNujWZ80Qf/Ez42ooIkIB2BRF4WVkOWxPYFFDwFosiwvF3guOuwyFfvD+T68ytAl
-	VBgfH9ERAmPbJz45p1D/FioZmmbfKrT6o0ZZlCRSNlxg9NLIZOpkAEkB9aRci4fHC69A7cz48VO
-	L2M7gScW+4yleFpynVY+PUAE9vcCOu+AXMERfxx5BL5ogj4XoaWrdf/mQOV9BI286j3okOayDnv
-	hTJGbJmEFHpZxqmPX797iK7XHpIMXGW7QJ+hhjYpgBLEiGofHzq/RTJMMn6WXZF0WilKyRFWapP
-	5j56ZiKs5HZIRSXHOJuIHtYesfB1XJLmlomEJh/g0Lf35x1SYNqYrpCbWrrgEvXvP1BXOGuEQE1
-	r/rjxUGUwoz3M7qFss6QG7pYpjzx5btIgCXeK51fsMTULaGYOn4RihcCwCC5U8/mZ52gmstl3Ob
-	jYl3eTRpMR0CGKRXCKDC1glacnFGNU8cP+ZLmLFGGEDECoKt/M6B0Gg/F4jeucOzo5xAh9hNqbp
-	HYp+bubpiDmdX6FnH6gIr6jE4Q3o1jTr2S2RN8tjYTarCzwa9o20MbXtRwDaJ+I=
-X-Received: by 2002:a05:6830:2aa0:b0:822:b35a:a2c5 with SMTP id 46e09a7af769-84d063deab5mr3133701a34.1.1792647975560;
-        Wed, 21 Oct 2026 22:46:15 -0700 (PDT)
-Received: from nortesoftware.dev ([189.129.139.54])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-84cbd2d453bsm4267063a34.17.2026.10.21.22.46.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2026 22:46:15 -0700 (PDT)
-From: =?UTF-8?q?Christian=20No=C3=A9=20Ramos=20L=C3=B3pez?= <chris@nortesoftware.dev>
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] gpg-interface: fail when the ssh revocation file is missing
-Date: Thu, 22 Oct 2026 01:46:07 -0400
-Message-ID: <20261022054607.766255-1-chris@nortesoftware.dev>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <xmqqa4o6oq1y.fsf@gitster.g>
-References: <xmqqa4o6oq1y.fsf@gitster.g>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=MSH8BSjc;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ShdC299T
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2F35C7A00DB
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 01:49:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 22 Oct 2026 01:49:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792648159; x=1792734559; bh=z0gtRtzEjD
+	mJhjMksW6xU2lmh4A4G1ecgsW1dZjKZro=; b=MSH8BSjcheQWtLLoHyOVha37rZ
+	m8TAIlpueLRr3nS6xcKbWj6CxjLsqhynG1RCQ68ksJeXw1RiUlZBB1ZxS9vzFvIK
+	SWdh/wlgDG2SaplUj6sJMGs+CIOS+LnjqwYKDM4fw6ewSHD4DdEqO4uKP7BYY3g6
+	yTlXlut4hucJpnvl1pH6gydeNMka7tJlHPF1X0Azk9azifdejb0nymqMwl0KGZdH
+	f2k4rRzQUm2tHQCypQLleYz1xt+AjyFFfdskK97u/TO0FQZMnh1dtypq8JBs5qqv
+	R7pTJdUGGVShI6KGiwOnAx6OrpF1IraBPzFDd8CzImhZmDlyVXlb341uQjQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792648159; x=1792734559; bh=z0gtRtzEjDmJhjMksW6xU2lmh4A4G1ecgsW
+	1dZjKZro=; b=ShdC299TIPez9epAVe0FZ4EbOfEP8LR38xCIEcGHaRG+eiL7kzL
+	gX9JvmHM+6g81i24FsJ1rFEHAnVgs4+S7GdLXptQCWVywvpE3yuqE8BEEekxJH/j
+	bofiEJUidF2+N/dZ0UA4kFkOulmv8A3qyI91xuIl3cVgBLeXJG9FD/XO9jcIPyYo
+	FfZbzmuWu2xaFi7z4NRyFTobelTNmN7MNVmbnO16TSpCOTUDHvSM2OzASsFNUwhh
+	bVXJcA+Z8mAxtprirZ0eIB8L6gMf1YaCLtlInR7iDtA7L9CMRrcI0GLv5BgaoXJR
+	XClAo8v1t8cFIkikmOA5PTUK4YpsHAjV7pA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792648159; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:BfXk9ijKq0hvFfnHzJ1EHbwdXuG3cKCrkQ8Kpp3iDcXlQq2
+	X+hnMOIm6yFXEkfBcEod4OqWEYBeXWr8S5JWttYIxnlTh0q/L6unJjfsqHb+FUg2
+	9H3JspXVc1m1bPBLoChlC09YIRtqQCk2DBT6EcHS+DkpWkpTZUfCnQK4Te61Yc7y
+	8k0AeMbdFMXn/khWpuAdzYwLGXUc6NstsHXWwZnSYAF0sg41dJSKMB2pjig2vRHZ
+	9VV25h/t99VN1zrHZj8zaUh3iQiZrT95fnuEsXo0ZFmFUhd5CsPU5hLBgwdoz8wT
+	8uzhb95rI52lVnfwfRCKZ0amyFB2sZ/dFcl1eCQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:kruvh8oG+Vtk7N30itDtZRkYeu25hEXYRTXYFZJYhic=:dzTFUKDk5IssjngbzWQJ1B8KdycAKZp8Hp0+PhobioQ=;
+X-ME-Sender: <xms:36PZana-v1JU8Gnn7Z1Bk6-6al7gLZUMMypQ4ZwJ1VrZ8l56Bcqpeg>
+    <xme:36PZalcX8_dveXF-x7kxcVPhSygz37ypnO8e8Z3V7P1XNCVSqGG084WALzU3hdxB-
+    zSizgJbPVHsD2WgLhdNrlmRCrlts7Zv9OatAERKMHD1aKF9GSTY7tJX>
+X-ME-Received: <xmr:36PZagLYOYNuLnOLPfua9CPYdyCRJPSHjiOBwC-ZGYYs804G8FHFYUqv8FHYCN8vdNQExRYbYHMtCNbgZgkY3giC_xgNYZ5Y-7ZA>
+X-ME-Proxy-Cause: dmFkZTGkedrRIi5Z1B3zVi5z+7n5lndU2o/fFfOw0GdgmiRK1dc6rMcmdPpvBvtvRszh5A
+    zhYnsFD6GVv9cF1xc/99TGD9naOncSfirnLIlTW6ZoprHxfxo4gy5/yGp3B/RuYW3oayPi
+    WpRGfDDmjwtyU8dsPQtTPRYatF7s41SMq8qTbss6+Q6v4tV/PLNHuYTesMf1rPpTPSmE5k
+    pd2oDMy+h+zQpcRCWkbhKiUa1/lCAfMx/p+3qM3NjRRg69dsDsAP14C2T7rU+sNk/+3dVs
+    fMYFZMx6ILfi/PftavXXLGu2Bm7gwhkA0nAPlv5ZS2l0qHHTl+CHaZvymq905zPxfxEYqT
+    NeIKNEJsXYOBIhB77FaQMmqWJZTk7WEwYT4K7z5Gbhq71rkdwUyBLCY5YOiLf3CsetbSG3
+    JCsz6Md4hB3ANE0CHk4tBN0DS9nig2m5AiyxUZsnFOLPXWSHnisUOWMuIkkFXEOIzhJhXl
+    XUyhWCzdv13zMVvvl0hF382/NHRY+oqHXPXAYcYMytJfezJOzSZgXjj1G95HwJv327vSix
+    LRUUusMxlCb9jMPDBjV2EslSL/KZuKCpJkjJ5p6+BQLVVRw7Z3fQUQDDKTsSVGynVd+BI1
+    tBYebF6IIzQKjzADi1Djlc6/0FfY9/vYyv6iVF2o4Q0qrVs9fqoWrZASb8iQ
+X-ME-Proxy: <xmx:36PZaqLicyqJ0QxoXPjvRhYpEFcnZxiRNtnj8pZinzbJE97GuBx6RA>
+    <xmx:36PZanWZi8JGNVzUpRVB4Yn4nhDRA0n6WKox1cedtZru44jiJx1ZAA>
+    <xmx:36PZarly4w8gRXFMqg9aj91RCBAPXlbgmD4Zj17Dp9pvH7jRAxYtMQ>
+    <xmx:36PZallfOdCYaKJySbWD-PXnpJ0sqeGYAFukTZ_swuMBFXTrHzTfYQ>
+    <xmx:36PZapcBU_3hNKvU1G7CP1ZbI319GK0wjxrxHZScc_7SzqhLtFnFihTG>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Oct 2026 01:49:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+  "D. Ben Knoble" <ben.knoble@gmail.com>,
+  Phillip Wood <phillip.wood123@gmail.com>,
+  Jasper Mayone <me@jaspermayone.com>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v3 0/3] branch: let --delete-merged find squash merged
+ branches
+In-Reply-To: <pull.2425.v3.git.git.1792585717.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Wed, 21 Oct 2026 12:28:34
+	+0000")
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+	<pull.2425.v3.git.git.1792585717.gitgitgadget@gmail.com>
+Date: Wed, 21 Oct 2026 22:49:18 -0700
+Message-ID: <xmqqjynajndt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,173 +131,79 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-When gpg.ssh.revocationFile names a file that does not exist, Git
-warns and runs ssh-keygen without it, so a signature made with a key
-listed in the intended revocation file verifies as good. A revocation
-file that exists but cannot be read already makes ssh-keygen refuse,
-and the signature shows as bad; sshd likewise refuses all public key
-authentication when its RevokedKeys file is not readable.
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Fail the verification when the file is missing too, and turn the
-warning into an error so that the reason is shown. Do it in the block
-that already fails a key that is not in the allowed signers file, so
-that a key that is in it still gets its signature info shown, and %G?
-gives "U" for both. While at it, reword the comment in that block,
-which read as if check-novalidate were to be called again later.
+> This series finds the first upstream commit since the fork point that has
+> the branch's version of every file the branch changed, comparing only object
+> ids. With --squashed, a file that upstream also changed counts when merging
+> the branch's version into upstream's leaves it unchanged. Timed on my clone
+> with 65 branches, this takes 0.5s.
 
-Users who want verification to go on without the file when it is
-absent can prefix the path with ":(optional)", which makes Git treat
-the variable as unset if the file does not exist.
+It would be very surprising for the unsuspecting users to loosen the
+behaviour of "--delete-merged" like this series does.  As requested
+elsewhere [*], do not change the behaviour of the "--delete-merged"
+when no other "please make it looser" option requests otherwise.
 
-A setup whose configured path is wrong now fails to verify where it
-used to warn; until now its signatures were verified without any
-revocation check.
+ * https://lore.kernel.org/git/20261019044005.99247-1-me@jaspermayone.com/
 
-gpg.ssh.revocationFile had no tests. Add tests for a revoked key, with
-and without ":(optional)", and for a missing file, with and without
-the prefix.
+The attached new test illustrates the extent of damage.  We add a
+file on a private branch while the upstream adds two files, one of
+which has an identical contents to our file, under author identity
+different from ours.  If we run "--delete-merged" in our repository,
+we should not lose our branch that we never pushed, or asked them to
+pull, or anything.  But when applied on top of this series, we do.
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Christian Noé Ramos López <chris@nortesoftware.dev>
----
-Changes since v1: the missing-file check moves into the block that
-fails an unknown key, and that block's comment is reworded. With the
-file missing, a known key now gets the error and then its signature
-info, and %G? gives U instead of v1's B; an unknown key now gets the
-error too. The missing-file test checks that the signature info is
-shown.
+With the following applied on top of the series, with all changes to
+builtin/branch.c reverted, it passes.  Of course, later tests that
+assumes the looser criteria is used without an explicit opt-in will
+fail with your code changes reverted, but that is to be expected.
 
-With or without this patch, a local `:(optional)` value naming a
-missing file drops a gpg.ssh.revocationFile set in the global config.
-That is existing `:(optional)` behavior, not introduced here.
+ t/t3200-branch.sh | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
- Documentation/config/gpg.adoc |  3 +++
- gpg-interface.c               | 30 +++++++++++++-----------------
- t/t7528-signed-commit-ssh.sh  | 29 +++++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+), 17 deletions(-)
-
-diff --git a/Documentation/config/gpg.adoc b/Documentation/config/gpg.adoc
-index 240e46c05..cce49d53e 100644
---- a/Documentation/config/gpg.adoc
-+++ b/Documentation/config/gpg.adoc
-@@ -83,3 +83,6 @@ gpg.ssh.revocationFile::
- 	See ssh-keygen(1) for details.
- 	If a public key is found in this file then it will always be treated
- 	as having trust level "never" and signatures will show as invalid.
-+	If the file does not exist, signature verification fails, unless
-+	the path is prefixed with `:(optional)` (see the `pathname` type in
-+	linkgit:git-config[1]).
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 60c315fba..f36ba8dd0 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -466,6 +466,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 	struct child_process ssh_keygen = CHILD_PROCESS_INIT;
- 	struct tempfile *buffer_file;
- 	int ret = -1;
-+	int revocation_file_missing;
- 	const char *line;
- 	char *principal;
- 	struct strbuf ssh_principals_out = STRBUF_INIT;
-@@ -513,11 +514,17 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 		error(_("ssh-keygen -Y find-principals/verify is needed for ssh signature verification (available in openssh version 8.2p1+)"));
- 		goto out;
- 	}
--	if (ret || !ssh_principals_out.len) {
-+	revocation_file_missing = ssh_revocation_file &&
-+				  !file_exists(ssh_revocation_file);
-+	if (ret || !ssh_principals_out.len || revocation_file_missing) {
- 		/*
--		 * We did not find a matching principal in the allowedSigners
--		 * Check without validation
-+		 * We did not find a matching principal in the allowedSigners,
-+		 * or the revocation file is missing. Either way we fail, and
-+		 * check without validation only to display the signature info.
- 		 */
-+		if (revocation_file_missing)
-+			error(_("ssh signing revocation file configured but not found: %s"),
-+			      ssh_revocation_file);
- 		child_process_init(&ssh_keygen);
- 		strvec_pushl(&ssh_keygen.args, fmt->program,
- 			     "-Y", "check-novalidate",
-@@ -527,11 +534,6 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 			     NULL);
- 		pipe_command(&ssh_keygen, sigc->payload, sigc->payload_len,
- 				   &ssh_keygen_out, 0, &ssh_keygen_err, 0);
--
--		/*
--		 * Fail on unknown keys
--		 * we still call check-novalidate to display the signature info
--		 */
- 		ret = -1;
- 	} else {
- 		/* Check every principal we found (one per line) */
-@@ -576,15 +578,9 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 				     verify_time.buf,
- 				     NULL);
+diff --git c/t/t3200-branch.sh w/t/t3200-branch.sh
+index f3980106fa..adbcf937b5 100755
+--- c/t/t3200-branch.sh
++++ w/t/t3200-branch.sh
+@@ -1925,6 +1925,39 @@ check_branches () {
+ 	test_cmp expect actual
+ }
  
--			if (ssh_revocation_file) {
--				if (file_exists(ssh_revocation_file)) {
--					strvec_pushl(&ssh_keygen.args, "-r",
--						     ssh_revocation_file, NULL);
--				} else {
--					warning(_("ssh signing revocation file configured but not found: %s"),
--						ssh_revocation_file);
--				}
--			}
-+			if (ssh_revocation_file)
-+				strvec_pushl(&ssh_keygen.args, "-r",
-+					     ssh_revocation_file, NULL);
- 
- 			sigchain_push(SIGPIPE, SIG_IGN);
- 			ret = pipe_command(&ssh_keygen, sigc->payload, sigc->payload_len,
-diff --git a/t/t7528-signed-commit-ssh.sh b/t/t7528-signed-commit-ssh.sh
-index 991678264..d67f9b489 100755
---- a/t/t7528-signed-commit-ssh.sh
-+++ b/t/t7528-signed-commit-ssh.sh
-@@ -211,6 +211,35 @@ test_expect_success GPGSSH 'verify-commit exits failure with high minTrustLevel'
- 	test_must_fail git verify-commit eighth-signed-alt
- '
- 
-+test_expect_success GPGSSH 'verify-commit exits failure on revoked signing key' '
-+	test_when_finished "rm -f revoked_keys" &&
-+	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	cp "${GPGSSH_KEY_PRIMARY}.pub" revoked_keys &&
-+	test_config gpg.ssh.revocationFile "$(pwd)/revoked_keys" &&
-+	test_must_fail git verify-commit sixth-signed 2>actual &&
-+	test_grep ! "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
-+	test_config gpg.ssh.revocationFile ":(optional)$(pwd)/revoked_keys" &&
-+	test_must_fail git verify-commit sixth-signed 2>actual &&
-+	test_grep ! "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
++test_expect_success '--delete-merged does not delete unrelated branches' '
++	setup_repo_for_delete_merged &&
++	(
++		cd repo &&
++		git checkout -b unrelated-topic --track origin/next &&
++		test_write_lines 1 2 3 4 >file &&
++		test_write_lines 5 6 7 >elif &&
++		git add file elif &&
++		git commit -m "add file and elif" &&
++		git push origin unrelated-topic &&
++		git checkout --detach
++	) &&
++	(
++		cd upstream &&
++		git checkout next &&
++		test_write_lines 1 2 3 4 >file &&
++		git add file &&
++		git commit --author="unrelated user <uu@example.com>" \
++			-m "unrelated commit adding an identical file" &&
++		git checkout main
++	) &&
++	(
++		cd repo &&
++		git fetch origin &&
++		git branch --delete-merged origin/next >actual 2>&1 &&
++		test_must_be_empty actual &&
++		check_branches <<-\EOF
++		main
++		unrelated-topic
++		EOF
++	)
 +'
 +
-+test_expect_success GPGSSH 'verify-commit exits failure on missing revocation file' '
-+	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	test_config gpg.ssh.revocationFile "$(pwd)/no-such-file" &&
-+	test_must_fail git verify-commit sixth-signed 2>actual &&
-+	test_grep "revocation file configured but not found" actual &&
-+	test_grep "${GPGSSH_GOOD_SIGNATURE_UNTRUSTED}" actual &&
-+	test_grep ! "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
-+'
-+
-+test_expect_success GPGSSH 'verify-commit ignores missing optional revocation file' '
-+	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	test_config gpg.ssh.revocationFile ":(optional)$(pwd)/no-such-file" &&
-+	git verify-commit sixth-signed 2>actual &&
-+	test_grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
-+	test_grep ! "revocation file" actual
-+'
-+
- test_expect_success GPGSSH 'verify signatures with --raw' '
- 	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
+ test_expect_success '--delete-merged keeps cloned main without explicit push configuration' '
+ 	setup_repo_for_delete_merged &&
  	(
-
-base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
--- 
-2.47.3
-
