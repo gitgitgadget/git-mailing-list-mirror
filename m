@@ -1,98 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792662079;
-	b=jKfx8So9INVlBKmVwYYHAhCuHywVQXl84rmD+xjNhB6gQmGd43N2JNnK6q7iLyQbL7ky
-	 rzSoPEunyiJ9SsFL6B+xih0T1B2YbGC9jat6eJCI1Fi+tIpx6un3zhS2OTFcqC13Yi+do
-	 P1biBUjcNJzvAPygtGFF62r1V7aByVl69nV11DMJoxkdP+U2ST+BInCvIZgV4IEP0k91l
-	 gJ8TNYkNaKJWAXT94sQ4NcgXtRkrdfr/xVXDax7TFrDpDbhvCdIGojpXiCDnttGjaxtcs
-	 FViPDUK4NWM87SeFF8KkN6pc6M4kRQ+O0wYtPnQKr+gTrSA5XrZx3G/RiX7UGYYxzDw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792662079;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.180
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792662436;
+	b=eGEK8uqo97PxH1NB5bNkpm6xqJ70EJfs9bYnyVexZvzLm6j8M7pmb4XYTmQH9Lb3LHy+
+	 oa14+0a87blyM9qJtSx1pc7TFNUQBz9+YdH4YReb2bi79DLyFSavhhpkUeO4efpFUjmbr
+	 LHfWAWAOdSnuRXEeyYyOrCNuNPiNvys0zrFeie2iTizjd/1NX73VZiJYUD+iftN4dyBgW
+	 qbWJJlndwFxI5m/CIhn8VvKHySm6ThqoyvbYc1JggDjtBXpacHsYurvbDfQq/4n8ydDRL
+	 dEZI5eENWFP3PVPLctow+SM4XI2Etf4/eCzFmEpkc5RyHIfA15gk1P80MQJxt83KguQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792662436;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=QxbA9lpOZ0Ax/Dy7NPpN7GztB+PeiW3FHLOqd3SP6KI=;
-	b=fkBjUXpw9ytook4J0dkz4PFKJfLi1ergUQF0xTUN92bvCUwsrP5GxyP7SCdEo8k92cEz
-	 5G8tSub7+/WB+q0oLg4+dToRc5lW/Ol57tmkHWZdOX3bcMYkbxdFMch9QfOejfTQXroVj
-	 lwckIOw3D6i/Fy2tINJXwSn+a0BtKuush1nWWScrLsr0GAJ13SzB0mB+t87G4qlfVGEmK
-	 635TnxdBr8Y2mk8iz96GxmboHal0PiVLJMzJju6ii7a5JVXwYD24RN0rUJEo5kXohhabM
-	 HlKM3Xex7oOmq7kAdIaPHfJDmcmmz5kkgGGqGV1tqJCOj6F/jcsmxkVwAMlb3UP42RA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=9q11YqtnuZai/AUgbMmLnVNwWFeyd5o7rtmYPoLdPVI=;
+	b=zUjYNgZYwGC5bkHzQnFukjrsRJ7dgrpMTpLkQsOErFmsfkA8M27EJiBAl4GMJGx1XV0Y
+	 cF15+130rlW8SS0xyQ9Ts2Q0MF3FnXb4xMt90sozt2aultBb7QaDb/hsd5dAF8AOerXQw
+	 L7HO/cegM9ipFjS0THZC5O0sdI2pow3xGG3iA/Z+vwK0SnBYOkWeSzJo3ruCMxs5gvgzK
+	 SPxIFYRb9uQzRfWS+Bnh2Qa89aKxdWS/Oujqs6vUcmFL4syqPAoG45P+6q6aYK623BBU/
+	 kLpfw7SXZwZJDjQdBcnu0EKxO92rJ/WRDBg24jNH7/ho1FJdD6E8UYoCThkBW+k6Fqg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=VDVTiMDG;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=qdoZ5Rqn;
+	arc=none smtp.remote-ip=74.125.82.180
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610EA606A31B
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 09:41:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 610EA606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C510B606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 09:47:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C510B606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=VDVTiMDG
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6b413b0a974so1650310a12.2
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 02:41:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792662078; cv=none;
-        d=google.com; s=arc-20260327;
-        b=VWuOxYnDBnYNw02ZcR+5RhL/HPvsQa9iA8MwOg/UMaJtxrcarxBaYM5xbvtjYbMq8A
-         C6JtY3aOiP0MHOvtE+FZI4COSFzR9J29ktWsEkNijnLQ7U/SnV9wUiwbrr6BxyMElgHG
-         FBXId6OODV5FBxai+DDLT3CVPl8+2OOWeycjWM8mZ8THjo2eM5aYn7oEonYEVQ3xfgc6
-         seV+7xmKCRKKg2V1nFL55cw1CtWXn4u49yA27rk9FYBJ3aBH2nTLn0QtEIzS62R356ZN
-         plzSvamll0COtlBiHxDWMlNxvC3ejoydNirbZHFJxD4BzDe+mmPWlv2YY4Q5cUp+R0Pe
-         zYnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=QxbA9lpOZ0Ax/Dy7NPpN7GztB+PeiW3FHLOqd3SP6KI=;
-        fh=xEwNemFXS4bNjoQJ/u99Eqj9SfdLR39dP7gdi9L7gCU=;
-        b=Ea+8myr2NbwqQTJssJHli7iNW5McNc3MfkYf71weeYtRELnrNMjC2eDre8Q7R0OQnX
-         ZPNa7uYA4NJVZe1bc6loytyDK/JGI4wJmh+MObz2RfZRUetlPMY5ZebKSo+d2AudETnQ
-         VwpKbj5ZvKf9xHO8o0TPMfK0vjNOYesW80/8vPJfrfzBmusRGqAtplK67YKIuxiffeKK
-         0Y/Mf1JZh75XrO7u5Ombs1KL8Y7ZaWlmJkGD9HDNwVBC75dJL9oPfsKZmdq1kNdUVDCX
-         qzdGW/mzQUn8b2MQ0DefFZHeY0TqaEKLKF/NLFsSszWxyoffg39AjMEVskGeiFEl4FVy
-         fLtg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=qdoZ5Rqn
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-35943f55c06so948055eec.0
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 02:47:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792662078; x=1793266878; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=QxbA9lpOZ0Ax/Dy7NPpN7GztB+PeiW3FHLOqd3SP6KI=;
-        b=VDVTiMDGAJd+nY5QGNps7Y2UuWNk+45XK8cm1VJHccD/zwp/LTylGzF6Ab9ZuVL2Ct
-         7J1+GxtvVZKu6YhHgHZeHa+aYz0etIHEoTYrXn5r08FooaodMnnpda8oUT1JaFu5EAK7
-         zHyjr52ZHvv8suZ9/Axg6kcOP04lexf3/p3wdJR+P1s3F5GnT/0ZDkj7bQpzZbwU6cKK
-         nLCOHsD70K15xGdzB8obkO1CNQgnbuyW4TLmaESjiOnFen6JY142O8XgxqnXdBZHF3zh
-         mtFMkqe9HHBpSRn/OV31/xcLEc5/GrP+amJZGg5U8yjk1FvxMxF2oHmG2DTWECj9/yI7
-         hD5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792662078; x=1793266878;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1792662435; x=1793267235; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=QxbA9lpOZ0Ax/Dy7NPpN7GztB+PeiW3FHLOqd3SP6KI=;
-        b=yfih5DrzBSGu+dffci8Ht9Xtl5pMpYhhwuZG0KzMrWBoGVXyyYblhBdlkC0fiogclw
-         pTsRu/IyAxrdyhyavwInOJyiqeKj/hZKRKDhEZQtDZV1OE0cXk+tvO9l1cyFHMad3xd4
-         RwOyS6JvVK3XxKFesaHfe6jvauzdI7WifiZEaSO6Dggp4rCRfDM6vscZ4nXpy+63TZOc
-         yfAgAUconZ1rDQdzasBUImOZ82e471pvWYAGEsOiFANDwWuBxtwfqd2ZEmyP0LAHZOYb
-         xsaUrpLiXag8wdk1b5GHtcGioS2Q6o+AHe5tbZ61gw7x5TH+OzfQZ3aMh7ZGpxXSJ8Pd
-         0Fqg==
-X-Gm-Message-State: AFq9FYJeBfmKsyqcgZKq6Y1cnSRZ8UiIBIVY6fdbGBIy0s5VEHRBdbhT
-	ssLf71JvyCAWcGfoX3+Ok5EVdc7kosEVIIgs5pHXrTmO8WSYxiV+CvDQQN33MTSBMmltFFuCnni
-	nNBMbDMOzH4ArqWttCZbkuHtPSB+DOKFBeHRL02rVFw==
-X-Gm-Gg: AYBFou3L13A66Ojam8d0MfryE9hI9UKx5bV7motgzAMQDa2I0FPoZf+6faAUg5hwmaE
-	ak7vI1kGa2LLXaKrYelsEY0OdMHUWDVs8qsJgcY77zeRkjACythLKyABBMcgnTPlfik8lOrvtvl
-	Zq+pelwac5eQi+CzM7D7EPK7So7ORUVbQbmTBJcrGV0Z+0eXxSWUW0Z/k5niqtFFCQnDzSYijt8
-	LPOCK9BLnGzuAu5pflnllQXOpCu16Bd9Owm/B18FwMyawXZI2n3wAdXAnCMEjeHBkvgfSvRkBoA
-	OabKe0FtDeNliM8Ae12pQnLQXKFiCHyO/LsKJmWXc0NbgeatEw6UGzd//HFGI7VRmwu7anbgq/+
-	oqH2p4jM92Z/yH2DaZnkyObf3aiLXTh3LGZU75OjSzLvMRxbSa+rU6UUoMvAA/be32Rla8w==
-X-Received: by 2002:a17:907:6d24:b0:c3f:cf2a:76a8 with SMTP id
- a640c23a62f3a-c4679697562mr455458866b.28.1792662077522; Thu, 22 Oct 2026
- 02:41:17 -0700 (PDT)
+        bh=9q11YqtnuZai/AUgbMmLnVNwWFeyd5o7rtmYPoLdPVI=;
+        b=qdoZ5Rqn9VCIp/hZc2Q0XK0m0iEl0PcMMXW4shSinapupLoqdJGP30sxEe82kizLjq
+         /FIHFApgYrIl0rN9jCqtbmTyryDklYLPnOZNt8KvU0LAaucMkN9O2ieX76GBfCuc+DCG
+         fgIR7Tyurs20JcgD5z/UtRqXmGDRoMGu/IR2QYzTKAMPMSIIssh5qi9IpMWlFzxkPTwc
+         MbrTp1DZxJ3JqdGvobo4lNZ3OUPzdvjA4g6KzKAtgC7PQXZpOVYTzNNZENjIzLKZVpj1
+         2crD+BrslOIvWNi/XpBqzh1RKWj+zn/IOCe5665NqQqHa9K5P6G103TwaH4S6ShArGX/
+         9AGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792662435; x=1793267235;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9q11YqtnuZai/AUgbMmLnVNwWFeyd5o7rtmYPoLdPVI=;
+        b=aJ55CcijfjFyOIkbbX7hAwn48CkhTRTWBmsgs+uAVrRp1qNgSDs2aGt3TkOO8FQ8bq
+         wDTgWsjzFP+Gt/8hBfjPVvstnSAAgihuizaE975kQhRePWa37GXI6CbftEJeDCzniUlh
+         p5CbXvvl42UzICeAFZ4flRhUAy6AspdyAxeX23LSWPKo//rTsY9ft+koRiw/9Dp6P6VC
+         HscmHN3CaAE0Rm7nyj5VQ9P7JNh5dqXFQ7EuQa8/06SBqwNblDmcdM0Tmj2N4BhQs+jn
+         0m+0Fo0nmhXII/ZxfBwbEtZE1L3jeCpfE92k6ZFtRDBsEJxLZqQR13oCc+Wgh7TGeLyL
+         6l/g==
+X-Gm-Message-State: AFq9FYLIe1vLFv9zzxYVDdM5/8j/od4/Q4LqyrsCygWuvX90RGvwOtDk
+	CQHMWI/RJKgEQB7OJAAU0i5zOYYRlKk+hYJwMtpv9Eyl7WMEqhMdedwkPcJSng==
+X-Gm-Gg: AYBFou2Z5sJsB/FUcbp7ixupVRieZi2CyxjKsjxxVlypnhdOeNLTut+ZH+rquNpa6HC
+	hBnMsJ3dh2fCDgSDI27/Vu4WW6nWpqZHQ11pcWjMLB/RZephq8s2e18+QW0v8zkpg7Ol2Y0csE2
+	RJ8RUw/twzC+POTN3QPxcTsQQe5UI3C5Ac7buRq+PJwc3DPYlNJ3oekvkgBoLKRKRcm7yGwMogV
+	Zax8c924tkZpkMOSqfaMmhKTdSqCbas2oOVN/S6PuuRv57bJMa5yf6ZS2Y9g4X5L9RBve3cYo7L
+	2ZbrKPK/0unfsv7BqnCYCmLR2aQH5ZxsWdMUxkygW1kSsEUemtVPHWXSuMfKoh81HTgAuSkFioJ
+	H4Ky8hBUTBzYUij8/+bTYv0lMlsL5gf3WJFmfcdIWmvI38fAzs2e2ILpO8V/ztdAKmB0c6WSQS1
+	FTrcZjjmw6Grw6icWiwSt53IGGKZ7YtT80Tolg3jlD1yDn5TdoqBnSEQPaaDNzD29pp7T4QyxKo
+	C0SSiTXup1DlbwUkTtVlIaEIfgVxnSXF/OH6RqDsWweoPI1ulEIMAVDtq/m
+X-Received: by 2002:a05:693c:20c5:20b0:343:5f5f:eef0 with SMTP id 5a478bee46e88-368b0d402f2mr2463931eec.21.1792662433812;
+        Thu, 22 Oct 2026 02:47:13 -0700 (PDT)
+Received: from [127.0.0.1] ([172.182.245.141])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36741e71eaesm31068176eec.26.2026.10.22.02.47.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Oct 2026 02:47:13 -0700 (PDT)
+Message-Id: <pull.2271.v2.git.1792662432.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2271.git.1792522587065.gitgitgadget@gmail.com>
+References: <pull.2271.git.1792522587065.gitgitgadget@gmail.com>
+From: "Joy via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 22 Oct 2026 09:47:10 +0000
+Subject: [PATCH v2 0/2] config: move pack size limit into repo config
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,35 +95,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261017225326.7827-1-okhuomonajayi54@gmail.com>
-In-Reply-To: <20261017225326.7827-1-okhuomonajayi54@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Thu, 22 Oct 2026 10:41:04 +0100
-X-Gm-Features: AclHuK9W7zj_c4RxV7hI1pTB24FOhSkq7SjaZ5zd9LMYnxIXUhOr2f90jisf3I8
-Message-ID: <CAPSxiM9fCTEoQDv09fX_NZCcLRXYaaCdWXPxDT7JZ+LCwT1YQA@mail.gmail.com>
-Subject: Re: [Outreachy PATCH] checkout: use repository parameter in unique_tracking_name
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, 
-	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: "Patrick Steinhardt>" <ps@pks.im>,
+    "Kristoffer Haugsbakk>" <kristofferhaugsbakk@fastmail.com>,
+    "Christian Couder>" <christian.couder@gmail.com>,
+    "Usman Akinyemi>" <usmanakinyemi202@gmail.com>,
+    Joie Joie <soniqjjj@gmail.com>,
+    Joy <soniqjjj@gmail.com>
 
->
-> The function uses the_repository to read configuration and look up
-Which function ? You have left the reader of the commit message to wonder
-what function ?
-> the object ID of a tracking reference.
->
-> Pass the repository to unique_tracking_name() and through
-> tracking_name_data. Callers pass the_repository for now.
-You could be more descriptive more about the patches, someone should be able to
-go through the commit and sort get the whole idea of the patch, what
-was present,
-What changes and why ?
+This series moves pack.packsizelimit from a standalone global variable into
+struct repo_config_values, as part of the ongoing effort to reduce Git's
+reliance on global state and make its code easier to reuse as a library.
 
-Otherwise, the changes look good to me.
+The series includes two patches:
 
->
-> This removes the need for USE_THE_REPOSITORY_VARIABLE in checkout.c.
->
+ 1. Update repo_config_values_init() to use memset() for
+    zero-initialization, while keeping the defaults that require explicit
+    values.
+ 2. Move the pack size limit into repo_config_values and update the relevant
+    code to read it from there.
 
-Thanks.
+
+Changes since v1
+================
+
+Thanks to Patrick Steinhardt for reviewing the first version and suggesting
+the initialization cleanup.
+
+Following his feedback, I've:
+
+ * Added a preparatory patch to simplify how repository configuration values
+   are initialized.
+ * Reworked the main commit message to explain the existing problem before
+   describing the change.
+ * Removed the need to explicitly initialize the new pack size limit field
+   to zero.
+
+
+Testing
+=======
+
+I built Git and ran the relevant configuration and pack-object tests:
+
+ * make -j2 — passed.
+ * t1300-config.sh — 518 successful tests.
+ * t5300-pack-object.sh — 63 passed, 2 skipped, 0 failed.
+
+Both test runs reported permission errors during cleanup after the tests had
+completed.
+
+Joy Gundu (2):
+  repo: zero-initialize configuration values
+  config: move pack size limit into repo config
+
+ builtin/pack-objects.c |  2 +-
+ environment.c          | 17 +++--------------
+ environment.h          |  3 +--
+ object-file.c          |  6 ++++--
+ 4 files changed, 9 insertions(+), 19 deletions(-)
+
+
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2271%2FJoiejoie1%2Foutreachy%2Fglobal-state-mini-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2271/Joiejoie1/outreachy/global-state-mini-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2271
+
+Range-diff vs v1:
+
+ -:  ---------- > 1:  df93a2a86c repo: zero-initialize configuration values
+ 1:  e3e36c3459 ! 2:  05ae50b5da config: move pack size limit into repo config
+     @@ Metadata
+       ## Commit message ##
+          config: move pack size limit into repo config
+      
+     -    Store the pack.packsizelimit value in repository configuration
+     -    rather than keeping it in a standalone global variable for the repository.
+     +    The pack size limit is currently stored in a standalone global
+     +    variable, even though it is repository configuration.
+      
+     -    Update the configuration parser and pack-writing code to read
+     -    the value from repo_config_values rather than a global variable.
+     +    Move the value into repo_config_values and update the configuration
+     +    parser and pack-writing code to read it from the repository's
+     +    configuration values.
+      
+     -    This change removes one piece of global configuration state from Git
+     -    and helps make Git code easier to reuse as a library component.
+     +    This removes one piece of global configuration state and helps
+     +    make Git code easier to reuse as a library component.
+      
+          Signed-off-by: Joy Gundu <soniqjjj@gmail.com>
+      
+     @@ environment.c: int git_default_config(const char *var, const char *value,
+       		return 0;
+       	}
+       
+     -@@ environment.c: void repo_config_values_init(struct repo_config_values *cfg)
+     - 	cfg->check_stat = 1;
+     - 	cfg->zlib_compression_level = Z_BEST_SPEED;
+     - 	cfg->pack_compression_level = Z_DEFAULT_COMPRESSION;
+     -+	cfg->pack_size_limit = 0;
+     - 	cfg->precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+     - 	cfg->core_sparse_checkout_cone = 0;
+     - 	cfg->warn_on_object_refname_ambiguity = 1;
+      
+       ## environment.h ##
+      @@ environment.h: struct repo_config_values {
+
+-- 
+gitgitgadget
