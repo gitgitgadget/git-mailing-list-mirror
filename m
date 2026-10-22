@@ -1,64 +1,65 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.12
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792701963;
-	b=qlU6m72IBz77SC0GYV+6ZfTrwATwb73M0V1Tu+VjfM7mIRgYE6uq9B1UsVqwkOLSlhlk
-	 24FmdSVzJtrscGdRv/nAguijTF+ti+uee7FT9UmWx0GndEcPeBYvca9nJRNaAniqBKdoM
-	 GGw2BUf34TZaXr3V0jCrhJX+1iR3TsI8oJXlu8Pji7mxD2h/I7Rwam1yMljxvvrkhZTTH
-	 EL/RkMs+qJPaIZduGSzngWSIrxL4D99V88ZFRgLFlgM0VBghT/Fkgei085gEZdX+f/w/z
-	 WjZfXC/SZ4ixX6/h9SfiF+5IYqszt4Dn6KBE71FKzlZjGcDsPXsmNQw97aVfgxQWt1A==
+	t=1792701987;
+	b=xznH/E+JLTjMgklKGAQWy784wCaZZrt+VrXqLdc7SNJk2OafzrU3nwtB4yobcjNPZPdi
+	 vF9HEBZssw7GSLUYArnScaUr2flymjr5/WxLZsHVQp46kfRWCy9En1U8r+vkVNDEzldBr
+	 6J/xzLl3rVTbJAAp/Av7xbc5n9q6LSDMWFpueLDPjzSJBWhCQasAgZFnyMngX3SQyL15Q
+	 OAkvlK07hYp7iTa1giIfEswgCJG2gJ13eAA/PpTUJGWyCXFh6+4LwvHzcU3q1+b0RB8X+
+	 wGEtMKWeSFkPoe9fvqLA0Cg7wZGn9BEMq7JAoNUdT6TjumtIf83EmhH69oY1hCUXvrw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792701963;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792701987;
 	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
 	 Message-ID:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
 	 X-Zoho-Virus-Status:X-Zoho-AV-Stamp:X-ZohoMailClient;
-	bh=sYUuJIOi0Comm7VnXbt8BvIwOfv/SeFhqTW1aakSuQ4=;
-	b=E1DQoLoIMqZ8wbDp9QjS/ArhJB65nI+LFFRZRGUQCiEeyNt6b0zyNLNs+YpHp9KcFAO7
-	 URs+/tZY2U3JOqV8ivMyg0m5AH2aOMzcgiKqCRpuYyAjsOjLjnfljQIXGU67zJPOfDA8M
-	 ivTFnLS8AVk5heNz99EUOWwNgs86uUvJ13bM5TlN2p73/ZyvFnEOpQG9KEVw6lo3xoOFo
-	 50toUKAEqdp8w6wkxNYiZqjJEcd2SuMx+f0+FeivTHbbhuSpYfPIE4DL+xRsEQ0Etgc1B
-	 1ViMikLPr/rv2IjGtmVJnWN7QDcdIFkIaFVNOpG31u2NLtonfAn8biRIbWMN5pwHCww==
+	bh=xgJYyKEMwSNOZHo0M4xDgbkPObTNq+gThO0M/CVG7OA=;
+	b=uMA18jLeP0q0cM1fgZ0VyTCJyTJIo17sH54Ax/QwFBkypEn7Dsz0K6NW+cHmtBvnz4e3
+	 KgbGz6jeBAbmZdlUjE0HXW+vqDfDXm+WzUg9kCoHQ7ZAjuIW13mGVRDsmoFd6kphWAzJM
+	 W9VO0rXcOB4zcjY777g1Td9UEUbfXpz6vuDwU6vU7vJovUXq3T4FISwDRMq6lOmHCPLnq
+	 UTtZ7r1EnHS3rajJe3BSrsRA2sALN/TzmfufHhCXuOL/B3S7R7SnZrY7TS5hjrwW86Znq
+	 9WDM7941tFAM80k4I6IAU4WZ8wY6VWNRh//aW0F5aC7eNZzIPsTPkDeE5C3Ck9bpisw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=collabora.com;
 	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=vmiklos@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=Ngv8L1KO;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
-Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
+	dkim=pass header.d=collabora.com header.i=vmiklos@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=UxJDZnym;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.12
+Received: from sender6-op-o12.zoho.com (sender6-op-o12.zoho.com [165.173.180.12])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849FC606A319
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 20:46:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 849FC606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E79D606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 20:46:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E79D606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=vmiklos@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=Ngv8L1KO
-ARC-Seal: i=1; a=rsa-sha256; t=1792701954; cv=none; 
+	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=vmiklos@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=UxJDZnym
+ARC-Seal: i=1; a=rsa-sha256; t=1792701978; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=cYdjjpFouaIzCLk/nS5kAo7Ibgfx65G3NWzxxrLg9wLu+neTzuJJ0FUGysCwOy1rTu03BSFVsxrHoj4BJxo66WwLyEyTpO8hRKPrBq9IwZtUBla5fob0m66T3pDqb1I+B4d7Lk12PfK1Oph8EYP9QaApoFj/XRRa6CgPRxU1JX0=
+	b=Ubng4gsa0ov5U38dRg4GnLeCUOUFYL1yj2+veZh+MOzb+0GqIUoi/AUaGrqVbUcqmrgRMy9QyzvH4qJ03veo2ArJizKlL8UTFJaffd2jUySWuthPmwJ2FQamcR5p/piJ4K53NEGULHv9ugP0AEUKwoXj5tIt95RlPA9IXgS8fWk=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1792701954; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=sYUuJIOi0Comm7VnXbt8BvIwOfv/SeFhqTW1aakSuQ4=; 
-	b=fNfQi9OgPlRJ6pWCF1usnNqDg1/quZf3TquTX4/n3C21jKJyCM3WY2doGGlXSs56hWnt6Bs2YI4bqJXHbcg+fV+8fuqysy6W5CYOXlg+CNiZafupM1Pt4eQ/+viBfgHGh82neytA+kJC2wJqvAXEfpjNESGJvFasshc6MZ5VOAI=
+	t=1792701978; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=xgJYyKEMwSNOZHo0M4xDgbkPObTNq+gThO0M/CVG7OA=; 
+	b=U6ncu6jfe+9PkMBeDcwhQ38cIt240pcdTptJYVTGHh7nrK9kGZJ4qmY0Sudi0OIQSOEma4vhwjjX1G4mQdeK2judOkFMJAfU0O8haF/6fggts3wbPs94OH4tlADFTut7+ID108yeIs1O8RSnY8QcbA1BFfgZyrftHDnedI01Tf0=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
 	dmarc=pass header.from=<vmiklos@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1792701954;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1792701978;
 	s=zohomail; d=collabora.com; i=vmiklos@collabora.com;
 	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=sYUuJIOi0Comm7VnXbt8BvIwOfv/SeFhqTW1aakSuQ4=;
-	b=Ngv8L1KOjUlbpm0fyAscVPPx7p/k2wBB9/dG8myvO3lZnXqeWjJRgqwd1u3jwwIR
-	ni/ADFcr++cHKWl5KHSgFsPVUXGjrJ4el1LCT0ttpoXvAzWTN87rgpJCMf8v19Djgl5
-	MxJov9S6J14VTzoKcrM1201TDnKlMqxJ4fEZiIPU=
-Received: by smtp.zohomail.com with SMTPS id 1792701952570835.3199616441486;
-	Thu, 22 Oct 2026 13:45:52 -0700 (PDT)
-Date: Thu, 22 Oct 2026 22:45:48 +0200
+	bh=xgJYyKEMwSNOZHo0M4xDgbkPObTNq+gThO0M/CVG7OA=;
+	b=UxJDZnym5mnrCgS6NG+lrTHEDtssMJGoxo043fAymr0bxwlal0wLhPlMrWNY1mKy
+	WJxAItZzEbJVR6MQ7CojnFzXVcYW9Ky67vl0oqV8nlJU6uYAd/dcVptKwchvYYqmAcA
+	/c/5DRxjpvszeTZWXd5A2ffWqn3Uk60Ih90RxmmU=
+Received: by smtp.zohomail.com with SMTPS id 1792701977435728.2994532176023;
+	Thu, 22 Oct 2026 13:46:17 -0700 (PDT)
+Date: Thu, 22 Oct 2026 22:46:13 +0200
 From: Miklos Vajna <vmiklos@collabora.com>
 To: gitster@pobox.com
 Cc: szeder.dev@gmail.com, ps@pks.im, git@vger.kernel.org
-Subject: [PATCH v3 1/4] t4219: test more --follow cases across merges
-Message-ID: <704c6df3ff82ae6a686200fd6df09c41b39619ce.1792701579.git.vmiklos@collabora.com>
+Subject: [PATCH v3 2/4] log: extract showing the remerge/combined diff of a
+ merge commit
+Message-ID: <2e734ef5a07f3d92eabee6864d3968b90a8ad7f1.1792701579.git.vmiklos@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -75,142 +76,69 @@ X-Zoho-Virus-Status: 1
 X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/292.682.56
 X-ZohoMailClient: External
 
-A later commit in this series will speed up 'git log --follow' for
-merge commits. Add tests for cases which already work, but had no
-test coverage, so it's easy to break them while optimizing:
-
-- --follow through a fork with renames on both sides, with -c, --cc
-  and --remerge-diff
-- a --no-ff merge taking a rename from the second parent, in both commit
-  orders, since the result could depend on the walk order
-- a merge keeping the path, while the other side renamed it
+No functional changes intended. A later commit in this series will also
+call log_tree_merge_diff() after the parent loop of log_tree_diff(), so
+extract that code to a function to avoid duplicating it.
 
 Signed-off-by: Miklos Vajna <vmiklos@collabora.com>
 ---
- t/t4219-log-follow-merge.sh | 112 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 112 insertions(+)
+ log-tree.c | 36 ++++++++++++++++++++++--------------
+ 1 file changed, 22 insertions(+), 14 deletions(-)
 
-diff --git a/t/t4219-log-follow-merge.sh b/t/t4219-log-follow-merge.sh
-index e370f82955..9616ac64ed 100755
---- a/t/t4219-log-follow-merge.sh
-+++ b/t/t4219-log-follow-merge.sh
-@@ -126,4 +126,116 @@ test_expect_success '--follow follows renames through a fork in a single history
- 	test_cmp expect actual.sorted
- '
+diff --git a/log-tree.c b/log-tree.c
+index 83a3c4bf9b..b4c97b86f5 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -1180,6 +1180,26 @@ static void propagate_follow_pathspec_to_parent(struct rev_info *opt,
+ 	diff_free(&diff_opts);
+ }
  
-+for opt in -c --cc --remerge-diff
-+do
-+	test_expect_success "--follow follows renames through a fork with $opt" '
-+		git -C diamond log --follow $opt --pretty=tformat:%s path >log &&
-+		grep "^[A-Z]: " log | sort >actual &&
-+		cat >expect <<-\EOF &&
-+		A: add path0
-+		B: modify path0 on upper
-+		C: modify path0 on lower
-+		M: merge with rename to path
-+		X: rename path0 to path1
-+		Y: rename path0 to path2
-+		Z: modify path
-+		EOF
-+		test_cmp expect actual
-+	'
-+done
++/* Show the remerge or combined diff of a merge commit */
++static int log_tree_merge_diff(struct rev_info *opt, struct commit *commit,
++			       struct commit_list *parents,
++			       struct object_id *oid)
++{
++	int octopus = (parents->next->next != NULL);
 +
-+# Build a merge that takes the renamed path from the second parent, while the
-+# first parent only has the old path. $2 decides which side is committed first,
-+# which decides the walk order.
-+setup_rename_on_second_parent () {
-+	git init $1 &&
-+	printf "line 1\nline 2\nline 3\nline 4\nline 5\n" >$1/old &&
-+	git -C $1 add old &&
-+	test_tick &&
-+	git -C $1 commit -m "A: add old" &&
-+	printf "line 1\nline 2\nline 3 modified\nline 4\nline 5\n" >$1/old &&
-+	test_tick &&
-+	git -C $1 commit -am "B: modify old" &&
-+	git -C $1 branch topic &&
-+
-+	if test "$2" = topic-first
-+	then
-+		git -C $1 checkout topic &&
-+		git -C $1 mv old new &&
-+		test_tick &&
-+		git -C $1 commit -m "R: rename old to new" &&
-+		git -C $1 checkout master
-+	fi &&
-+
-+	echo other >$1/other &&
-+	git -C $1 add other &&
-+	test_tick &&
-+	git -C $1 commit -m "M: unrelated change on master" &&
-+
-+	if test "$2" = master-first
-+	then
-+		git -C $1 checkout topic &&
-+		git -C $1 mv old new &&
-+		test_tick &&
-+		git -C $1 commit -m "R: rename old to new" &&
-+		git -C $1 checkout master
-+	fi &&
-+
-+	test_tick &&
-+	git -C $1 merge --no-ff -m "merge topic" topic
++	if (opt->remerge_diff) {
++		if (octopus) {
++			show_log(opt);
++			fprintf(opt->diffopt.file,
++				"diff: warning: Skipping remerge-diff "
++				"for octopus merges.\n");
++			return 1;
++		}
++		return do_remerge_diff(opt, parents, oid);
++	}
++	return do_diff_combined(opt, commit);
 +}
 +
-+test_expect_success 'setup merge taking a rename from the second parent' '
-+	setup_rename_on_second_parent rename-master-first master-first &&
-+	setup_rename_on_second_parent rename-topic-first topic-first
-+'
-+
-+for order in master-first topic-first
-+do
-+	test_expect_success "--follow follows a rename from the second parent ($order)" '
-+		git -C rename-$order log --follow --pretty=tformat:%s new >actual &&
-+		cat >expect <<-\EOF &&
-+		R: rename old to new
-+		B: modify old
-+		A: add old
-+		EOF
-+		test_cmp expect actual
-+	'
-+done
-+
-+test_expect_success 'setup merge keeping the path, other side renamed it' '
-+	git init keep &&
-+	printf "line 1\nline 2\nline 3\nline 4\nline 5\n" >keep/F &&
-+	git -C keep add F &&
-+	test_tick &&
-+	git -C keep commit -m "O: add F" &&
-+	git -C keep branch B &&
-+	printf "line 1\nline 2\nline 3 A\nline 4\nline 5\n" >keep/F &&
-+	test_tick &&
-+	git -C keep commit -am "A1: update F in place" &&
-+
-+	git -C keep checkout B &&
-+	git -C keep mv F G &&
-+	test_tick &&
-+	git -C keep commit -m "B1: rename F to G" &&
-+	printf "line 1\nline 2\nline 3\nline 4 B\nline 5\n" >keep/G &&
-+	test_tick &&
-+	git -C keep commit -am "B2: update G" &&
-+
-+	git -C keep checkout master &&
-+	test_tick &&
-+	git -C keep merge -s ours -m "M: merge B, keep F, drop G" B
-+'
-+
-+test_expect_success '--follow follows a rename on the side the merge did not take' '
-+	git -C keep log --follow --pretty=tformat:%s F >actual &&
-+	cat >expect <<-\EOF &&
-+	B2: update G
-+	B1: rename F to G
-+	A1: update F in place
-+	O: add F
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
+ /*
+  * Show the diff of a commit.
+  *
+@@ -1220,20 +1240,8 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+ 	}
+ 
+ 	if (is_merge) {
+-		int octopus = (parents->next->next != NULL);
+-
+-		if (opt->remerge_diff) {
+-			if (octopus) {
+-				show_log(opt);
+-				fprintf(opt->diffopt.file,
+-					"diff: warning: Skipping remerge-diff "
+-					"for octopus merges.\n");
+-				return 1;
+-			}
+-			return do_remerge_diff(opt, parents, oid);
+-		}
+-		if (opt->combine_merges)
+-			return do_diff_combined(opt, commit);
++		if (opt->remerge_diff || opt->combine_merges)
++			return log_tree_merge_diff(opt, commit, parents, oid);
+ 		if (opt->separate_merges) {
+ 			if (!opt->first_parent_merges) {
+ 				/* Show parent info for multiple diffs */
 -- 
 2.56.0
 
