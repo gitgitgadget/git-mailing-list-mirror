@@ -1,87 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792684659;
-	b=AGiGowyVhtkENQSdxrEE1c+zb0TnCnJa2oWroVBqe5YK38TGWwRJVo5giwE6S6RYOHzp
-	 +1itz2Zj/TFGuziFo1RvcTzw6i11MbFzt6n6TUV8TJ4EYt6Ic5yD8O7ybgVsvxMMwMOf0
-	 +uV1rf4Nh2VHFs51TDfFI8sO4FHHMdxHAND2SG2w35e21Q67uUqAKUE3B1IPKye8kbgww
-	 nOAUdxITb7lYm+KHK7y4cnLQVsVfTnOp4S2nc8iw9SrlsCG8hw7WJ+ec0QiqvE6qK6yBv
-	 9lAxHORmAEA36sSR4mDCK374Wkd42xAa/oRCpu+qqvyp30g8XUni+vNyD8+wZySVd3g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792684659;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792685476;
+	b=PJeCkQYptciBZIeywR1lC3/+VgGuDueKCkfGMxlYrm652AhvzljgZ1hQ4a1anpc4kPZH
+	 K7KVphZQDx0vDeShKFQWl8mJg6asbjuO2f0erhgzCheHuNzuu8a9/K7NUVgCBo72VCXIr
+	 55QPr6T8MX+E0VcHSbe2kEfX5d/G4ksc/beYLolWRjAQ1B8XNY07103/gO2ZnVdf+CN1Q
+	 JaGm2rFOMMeOcsvEeWlOUi4ON7GnbTqH20z/hHOJpcu3vDeMjpqEHc2xIUZbZ1ouukT60
+	 2i2PiUoNAyXcMX5cVPZDDmL5EUI36+Nm1XWPVJr8bdF/y9CAcJHPT+XKMLRDk7e8i+Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792685476;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Reply-To:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=IUDlMewJTaj53BGFWAcgcRszBgediaKg/xVZJjMI9W8=;
-	b=LBpU0+3gl4um8wysZiuS3gubHTaDVHI+hXMvS8ff5itiRUhTiOHdkAohZ4ii2APYU3Oj
-	 WK8IsW5vAngiw0bemKjbgkE08dnZSTNP7z7GLP1dxwoFjkvModqlrJiDfR9Gk9CptbuHs
-	 CWWPfUjAk5xqY/6ZNUKW1WKcstwV6v/8XCmDEtBm85qmBjW7RF+3ro1i8nXJGunvGIdQ/
-	 pJtpW2thVPPdlkaTQOnjrW9NMf0Dp+88v4UnZSr6Smsw4wYQLOMW9CFiEtqhDl/qLj0XQ
-	 LvZRWDPjhpk6dAIxkwLH+0ks2+REArrqUkB3xiebRIZXu4Hc1dY5WTtPKxWpAZhxJAQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=UK2vNe4p;
-	arc=none smtp.remote-ip=209.85.221.41
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=3FqVM+gtNMiqLU4WqwVKq2DPngPe/OZNN4G7Mkfn0L8=;
+	b=3l+irXl1JtUC9Ye20CW2EeUZpK5pKbdoEeOFbgOnFOLe8DhhP3SX3n/89x2fZ5SVH7wl
+	 w09Ou+jW+UQsgztESVB9QLg6f6a/NLdo+0K97h/vG3ToTNME95GR6vB+98Yj/oF78dE1B
+	 lgzNycA+ZM6MbpK+MdZkNe2CAVfsp5hQ4XdQYt+uJZ19Y0TrP6lB/xF7W9xd94OnsDmVA
+	 n/npwk83TML6TdgoUoMf0TKm+1YbIVjJ739b7j+J3AFLxvJEuuygwoIzrwe5CQfkZe04d
+	 DMs5yBBYDx+fNBLtN7Lge8RURSrqQwrqmm7jk4Od5KJXSYCRLi/qJGNSkZlK3FK2chQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=kKbT0eBV;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.44
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC36B606A328
-	for <git@vger.kernel.org>; Thu, 22 Oct 2026 15:57:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EC36B606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6547F606A319
+	for <git@vger.kernel.org>; Thu, 22 Oct 2026 16:11:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6547F606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=UK2vNe4p
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-48b001cd92bso1160894f8f.2
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 08:57:38 -0700 (PDT)
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=kKbT0eBV
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-679aeeddc6bso61978d50.2
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 09:11:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792685474; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PfWtR+P4Y3FoR5MsA3/lxfg/erBKr/L7dD7UlM24aGMPxkEyK3VRh8YD0kWB5FXJFf
+         1HaSz3bWUoM5IX4gtfTMH+DZ/1pbN9fCxW1SPocePYHQo/4RoaFZyQrsesWlpORW/p/B
+         WAy/+ZEyqu+K68f74T+bzeheXdxgpkAgV6RFQ4HjhjZyOrNP5bA6Piu/j4X4KecnjvJY
+         ZBpuKYmLGTYAYSwE86E+OolJ3+GRVuaq97ID3bplVMGhHhaSFgpasrWPp1tx07oiQZ6a
+         TbbR50O1GqfWXWAZO8wPzs6iAuxzd2dKmr7bhVPALcpvz+/A/DOJd3rliumY9g5ZnoTl
+         P8Mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=3FqVM+gtNMiqLU4WqwVKq2DPngPe/OZNN4G7Mkfn0L8=;
+        fh=7dI4c2pNGDaBKyXWxC/LC5DIrrYPij/oz6noN/4if5A=;
+        b=Z2ZVdp75eJ53NXX9Mdy3GyEJOLW/E8iPXElCPXIW4oWG+voNGFBMtho0VHeisLwSZb
+         R10s7SnjmYgin1wQx5+tT6FI4ttl8e4Q7Wdzl6teumDcdvFv/YDklOU2VK4fldnZot89
+         0pZxN1xansHg99cPsB/6l4prN9uXLQliRfdCKjgkSbDl1PxwrJfy3rwxKT2UGR8TO6c1
+         5cCahBVZU/PXwN1Q5VGif9oXDpXiuIrEoozFWYHzln8SgfawTacMIhu/0Cd+l6TpjJ3T
+         iaWA6Ij+LZCGblqziMFmC6Th6lf35rddiqGJGwE0oCwLKQ4bFPPVMYKAnML/uyFljm0e
+         QXgA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792684657; x=1793289457; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=IUDlMewJTaj53BGFWAcgcRszBgediaKg/xVZJjMI9W8=;
-        b=UK2vNe4paOjAGX7wZqGFGT422PmPewC8Ke7O24xR+ZBRl6sBOibAuwn/p79PPKJwNY
-         QwYf2/uAfFzOvJ+MvOoMnMgnZ4tE3zh5mdhtOKBBQ/dMs4I5s/6t2tbBfrzPoKvrH+Sx
-         PqHUzWkiqEB1Wtg468SJ0Ove7mzXG7iw/0fy3OubSb8tAalRoNegPKXuPxbUgwBBsCbf
-         JudPxdATyobHrh/nSta7jL1xY8LeorFbzGxPabeermx/wHIhPKSh1X9WZjHYioH395GL
-         KpztBlGG51EcCQeTdno4DRkXC/rxhAZtYFU3PnHpN9kfNE9whsq6fCLvJiS41qVMGZNE
-         C3NA==
+        d=spotify.com; s=google; t=1792685474; x=1793290274; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3FqVM+gtNMiqLU4WqwVKq2DPngPe/OZNN4G7Mkfn0L8=;
+        b=kKbT0eBV7YLCoZRiJU/eb0Xwi0xieFL+bYkNHgjrMPFT+rE3yhRq1Ky2XPrOoQ0u7T
+         UevWIxEkxDfyA4jy5drtouPniBdw64bx7k3Uf7olyqWnOz+4FdtAQKS28Tn6Sx85syIa
+         q370UoqLdbF3WEUY1mPvfdCbeuSKOZ4hu9q4w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792684657; x=1793289457;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1792685474; x=1793290274;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=IUDlMewJTaj53BGFWAcgcRszBgediaKg/xVZJjMI9W8=;
-        b=wBUpJedu4rclSYN2RwR2TyKAlcXVksxCB/jmmbwSabLpMCaz/99NJGFrCPD33j8XMd
-         4zTNolIjDImTtnS/MFfTG6L3hposM6TqyLePenICZMnEC2BKHh9j/0gtSEVtTOLCa/NS
-         7VaKTnVS5Bv8xbTvWiAr7Mg1sJGuJj2FJYGlwGYnpKfdEI/otk91wgQN62opWdDoGMMd
-         I3v/TnzzZuZsTnqzQE3xGIUccConrOdax4eHZi+ostqP3EeuFAFLgTQRdsAN1alnhJIR
-         QS/VYuUr2UON80Ww50a2yAH1T2ZAycp9qXN/CBNiPu6sH2vHK99XOV4B75as4C0NTgFN
-         grBQ==
-X-Gm-Message-State: AFq9FYJGHzqjviVfvMfFDOwwKITmMaApe1BusELoQqxjUjIclGJsF3uX
-	rhyGnHXo2gxL8Iv8pcZZw7u1g8D4IJQ78OiiBB+AgDGTjMQdLGU/unmJ
-X-Gm-Gg: AYBFou1leHUxtazww+Hps/c9VoBNg/J8IC6F7dvQf/wJ5Oh0zZwu3YJgTk9D7+jV1r4
-	Ro6kJ5YTbZ+v1NJOInAHeak+HE6i5t641F099EdYddoEiZYqWgTZRSLujauA/Nf6spm3S08dvx8
-	qD5SdNnYHwYMASkAPj7nfB9enGf5vhqQ9WTiobZeic29KgQBLyZHnu1EzUfv67zYBjSWI42zAMc
-	Qu2C0cnaXWd/+IIoq9qz5N4Nl38tjnJ9FckLXseQ5yazUWavlNL+J6oXk2KlsNEf5QBDDboDy+i
-	WZFric8Gat6XoLdW4uPx8rua701XNEsIKvxL4TnQl/GdVBGnHNS1QSc+yVJnoduqvaU8IKG5HVN
-	GGVakxTrxDiJbHovtrfDSs8HsKYIFxLaU+VFrC6ikEv7KGHbng8KPkZXhPeetsGfq0gqEp5QWtG
-	xy3wuRnXBVthfgbjT80Zb6+Reb2NVxeWa2tI3Eok8g3rpkL52XjA+BDeYKdYkwbd+vknN7RC0dU
-	NSWfBkiRMes2bzmA6RIjkVR9ud9+4P7PCZ0KCecfowQpwY5dqcZJlPPQ3X2YKQGLArbM+rUA0BP
-	qsfJApZF6WjHgQhWJ6ztNG0dN+SxhA0uWQ==
-X-Received: by 2002:adf:e74b:0:b0:48d:f7c0:97c0 with SMTP id ffacd0b85a97d-48e264de434mr9831370f8f.50.1792684657065;
-        Thu, 22 Oct 2026 08:57:37 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e25828e54sm13859204f8f.27.2026.10.22.08.57.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Oct 2026 08:57:36 -0700 (PDT)
-Message-ID: <7ffce2cb-07de-4bd3-a9b4-81fd27b920f5@gmail.com>
-Date: Thu, 22 Oct 2026 16:57:32 +0100
+        bh=3FqVM+gtNMiqLU4WqwVKq2DPngPe/OZNN4G7Mkfn0L8=;
+        b=k73WwIhx/HTNLArcvp9YTdaYgd6owT0Tdnnk5Fgf0yENZsZI9olFvc2/ye1nbD9Xh1
+         PXHm8/YJLu7pITq3MT58T+yMqyCkH9Sb8Nv5Xmj2oN1UF4kKaoVO4emflptCrylP5sJ8
+         Sl1dpy5UwHR3mFZCjnKwahWkseVi/2Y0ir3AC/AtD17Pn0G3AxBUz/vmg4yLP4dFP4Gh
+         hm8HmLC0rPN5mwb9UwabSl2SsMT6a7GCdOkXniO/X9u1x6Rv9vUTvD+kWQi8pLRQiOK0
+         5AwHWl/rOK1kgEovQth8vut3b+gLETPduDnH3W/oxLo3rhzC/CcXbP90gak7QyrcSgCS
+         ncqw==
+X-Forwarded-Encrypted: i=1; AKwUvBwX/H/q+xhHSo8Yr5PFcMDVRwPCkeFcMiRK9/c4BnhtSBX927ZAtmvRDGjBhxkn0sK5FKc=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIUhWNVR1wViIeBluWzzeXlBMP6xC5w53T92VDxN8DnyxkALa8l
+	Lo0PiE565qCaYwBzXoW//NvubsRTm74M5Cv67ELutqkhig89R+KNwubDJ/1MpDCe91uuhLE3F8d
+	/CPESLSNOr3SWUdbqS7aBCwgAsTMQ9u+9rLc2+WJayA==
+X-Gm-Gg: AYBFou2gGqy91ptUdSHc7qLyMLy/+gnZWMqexGNOOGx/Bie14l8g8ssc3lJBa+Zhgd+
+	5oyyX/2BW5GVB6YR+kiJja5/HFE3WEyiNj5S2a8TF2WjZcXOL+R1V9BReP3uHB4QPI1W/nUYBXZ
+	kJC5dHhCn5oYzlJK6P0H1DrAyQJA4kEyEQO3ZXXh0ecatr6rLbvCWjQD2zw2graSY8dvJ/P2FnJ
+	F1UGIsIUpTMNun/dR0k0/owPB6+2tQJILzOgOW1pFeT7iDqVrlvpvVzbKTllUCGqiaDGsN99HBm
+	LapiQ3+jQmNaXY+VbSNMghDsQXeIUZ+qBkp/VRuS/Np4zqo7siS4BhAmmf80EZUScpBTEr8Bhxj
+	8sFsSZRy8+RVoAULF8A7Orx0UjWxJ6H5V+MnsNA==
+X-Received: by 2002:a05:690e:1917:b0:679:c29f:5989 with SMTP id
+ 956f58d0204a3-67a0e45bc42mr2412141d50.35.1792685474282; Thu, 22 Oct 2026
+ 09:11:14 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,119 +100,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 1/7] stash: use an enum for create status
+References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
+ <pull.2211.v4.git.1792581744.gitgitgadget@gmail.com> <d76dae801b3303ef4271f71c7b3999c10cac8556.1792581744.git.gitgitgadget@gmail.com>
+ <xmqqecdin6xr.fsf@gitster.g> <CAL71e4Pe_NRxeu9_+pnp=pBOk3SBNyePUbT5DDtDhd1bJpwJng@mail.gmail.com>
+ <xmqq4iedkd2u.fsf@gitster.g>
+In-Reply-To: <xmqq4iedkd2u.fsf@gitster.g>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Thu, 22 Oct 2026 18:11:01 +0200
+X-Gm-Features: AclHuK_Ln3cnUkfPl1u7nteI6IbS5T6h9B5QdOysQp5jjyNqgxh9G5n_aL39wH8
+Message-ID: <CAL71e4Ngsxv=JU_qzVGVyHPZiB2Qzvjn22NeVQAtZOdCr2vyXQ@mail.gmail.com>
+Subject: Re: [PATCH v4 5/6] connected: add incremental connectivity check via rev-list
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, =?UTF-8?B?6YeN55Sw5LiA6IGW?=
- <kazumasa.shigeta@kanamei.com>
-References: <cover.1791218125.git.phillip.wood@dunelm.org.uk>
- <cover.1792509606.git.phillip.wood@dunelm.org.uk>
- <9e27bcd676ee763ed499fb337b1497f3fe2405b2.1792509606.git.phillip.wood@dunelm.org.uk>
- <xmqq5wyvsi2j.fsf@gitster.g>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqq5wyvsi2j.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 
-On 21/10/2026 07:07, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> +enum create_result {
->> +	CREATE_ERROR = -1,
->> +	CREATE_SUCCESS,
->> +	/* No changes were stashed */
->> +	CREATE_EMPTY,
->> +};
-> 
-> SUCCESS immediatly following ERROR that is explicitly defined to be
-> (-1) may qualify as explicitly defined to be 0, but personally I
-> probably prefer to be extra explicit here, like
-> 
-> 	CREATE_ERROR = -1,
-> 	CREATE_SUCCESS = 0,
-> 
-> even though this is not worth rerolling the series for.
+On Thu, 22 Oct 2026 at 16:46, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Kristofer Karlsson <krka@spotify.com> writes:
+>
+> > Yes, and an earlier internal prototype (that I never sent) did
+> > this. ...
+> > But even then, the revision walk around the verifier and the full
+> > check would still depend on fetch_if_missing, so the verifier alone
+> > would not let us drop it.
+>
+> As use of _extended there in new code will certainly be a way to
+> avoid making things worse, the above in distilled form should be in
+> the proposed commit log message to help future readers who may
+> wonder why these new code paths are written to rely on the
+> fetch_if_missing flag.
 
-I can do that, though we really shouldn't be relying on the value for 
-any of the member other than CREATE_ERROR which we want to match the 
-return value of error(...).
+Ah, I was not aware fetch_if_missing is something we want to
+move away from, but now I see it's mentioned in the docs.
 
-> 
->> +static enum create_result stash_staged(struct stash_info *info,
->> +				  struct strbuf *out_patch, int quiet)
->>   {
->> -	int ret = 0;
->> +	enum create_result ret = 0;
-> 
-> Not CREATE_SUCCESS?  This can be returned if various checks in the
-> function assigns different values to this variable, right?
+I looked into the code more after your pointers and I think it's
+indeed doable (and not too messy, just a bit more code) to
+use odb_read_object_info_extended() instead and completely stop
+touching repo->fetch_if_missing. It's still being touched by
+the rest of the rev-list code, but at least this series no longer
+makes it worse. The full check is unaffected, since
+check_connected() already passes --exclude-promisor-objects in a
+partial clone, which clears the flag as before.
 
-Yes, I forgot to convert the initializer when I changed the type, will fix.
+To check it, I ran rev-list --connectivity-check=incremental by hand
+in a partial clone, deliberately omitting --exclude-promisor-objects,
+on commits that reference a promised blob and a promised tree. Both
+were reported as missing and neither was fetched. I did not turn
+that into a test, since check_connected() never invokes rev-list
+that way, and the existing tests all pass.
 
->>   	if (patch_mode) {
->>   		ret = stash_patch(info, ps, patch, quiet, interactive_opts);
->> -		if (ret < 0) {
->> +		if (ret == CREATE_ERROR) {
->>   			if (!quiet)
->>   				fprintf_ln(stderr, _("Cannot save the current "
->>   						     "worktree state"));
->>   			goto done;
->> -		} else if (ret > 0) {
->> +		} else if (ret != CREATE_SUCCESS) {
->>   			goto done;
->>   		}
-> 
-> I wonder if switch/case is easier to read for these users of these
-> enum return values.  Some check explicitly against CREATE_ERROR
-> (like the one above), some treat anything other than CREATE_SUCCESS
-> as undesirable, etc.
+This ends up nicer than what I had -- I can also get rid of the
+BUG() guard for checking that flag state.
 
-I've had a play with this and I think the enum is better here
+So, I think my plan is to squash this change into v5.
 
->>   	} else if (only_staged) {
->>   		ret = stash_staged(info, patch, quiet);
->> -		if (ret < 0) {
->> +		if (ret == CREATE_ERROR) {
->>   			if (!quiet)
->>   				fprintf_ln(stderr, _("Cannot save the current "
->>   						     "staged state"));
->>   			goto done;
->> -		} else if (ret > 0) {
->> +		} else if (ret != CREATE_SUCCESS) {
->>   			goto done;
->>   		}
->>   	} else {
-> 
-> Ditto.
+Do you still want me to include this reasoning in the commit,
+or is that now unnecessary given that it would no longer touch
+fetch_if_missing?
 
-and here
-
-> 
->> @@ -1660,12 +1667,13 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
->>   
->>   	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
->>   			      NULL, 0);
->> -	if (!ret)
->> +	if (ret == CREATE_SUCCESS)
->>   		printf_ln("%s", oid_to_hex(&info.w_commit));
->>   
->>   	free_stash_info(&info);
->>   	strbuf_release(&stash_msg_buf);
->> -	return ret;
->> +	/* Do not return an error if there are no changes */
->> +	return ret == CREATE_ERROR ? -1 : 0;
->>   }
-> 
-> Ditto.
-
-but here we're checking for a single value, so using a switch seems like 
-overkill.
-
-I'll try and push out a new version tomorrow
-
-Thanks
-
-Phillip
-
+Thanks, this really helped improve the patch,
+Kristofer
