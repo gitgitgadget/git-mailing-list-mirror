@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792778494;
-	b=yvuT9dFXNhh5mcTA4JoZAuOM04kQEbBw8dyUPGC23RgXzMjz+P3ZGwXA0Bh7YcTkmzUG
-	 1FRliuPnQx+BsL5UL/yHDT/p9+9wTDJqzdTt2wzL78hnsFq/MmuQgPWLYgy3+27s+HnJo
-	 3CU0gwb5lMMi928QqUx4UNhsAgNUBcKWlzrPq4Sf0KWJy+SYbEq0J41UmGITjYvb5UPd1
-	 yLnOn0jaGalRSloABaxaqxwuJ6E7ft1fIDkQZ9HxLa9s3yKUFsy3XVnaayXSRIHvvFbBF
-	 qQZGaWg0tS0wv9sODhLE13BputV/kGupMN6JmHa7FPy6QTfRlEv+CBk8W/aDV97Ljng==
+	t=1792778713;
+	b=XaF0ILcnhAuOJw8wlphn91JX+hvkVz+F3FC3eDBrxAsB6icFYQfF0xUwgfPpgUDr7ySB
+	 7jZrwbFt93nfdMiQ2JFQSMx6/n/yD+o0aFUzD9ftI+pd/9lSMmDA/+duJ8ByvlItZxwcg
+	 zU0KkQtTmW8j/jg2l0sgfxg5hJNvJW6HDRdRSw3pCOBfIwxVYGcO0W9cPx9/YnRIiJwsp
+	 96/EZPg7Ckt3Ggquowc5VCDjtsSDtnPb3jmw1pA34VxaXP6bl/Qi2mJqn65I1t2jGD8QE
+	 cI+7ka7DLlQjfmZDBb3XICuQgHB12DKLX5D4snFL/ohzSxDD+DVv5P+VPO8fVk8Zhqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792778494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792778713;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:
 	 Content-Transfer-Encoding:From:Mime-Version:Subject:Date:Message-Id:
 	 References:Cc:In-Reply-To:To:X-Mailer;
-	bh=fN+8VQZTj7h/ATzAcbg9os9WimON625yJM217AAtd+8=;
-	b=znVYGF/ycLWctsbVNKIbQ7fLVZiG2H/H9rvo2iYIJClg3u2yXx5tOIYtWnPbUiupsX+D
-	 cOQUTrsEL5Yg5z3EA6WSYYNSu1dBnpysskFOj4716tQc14+jBBmGysIPSIdMhyfj+sl6F
-	 8BbQwADrkwYUPb4xM7ZtHvfUYQe/oViUSvdwNhQ0VU2CLSsKcSfB0A3Rj67IYq6pwBQ1U
-	 cURpGIOR7DH2AyL/LPJBQtTtm6nT8ggFa9Yps0QmAo2zfCeAswsI2F0aVp0/lK6F8RQOK
-	 ju4fSyZRMf8YP7+0H6RbeB3smajjyS8CcsThB2GcBjkEUFmyWt09Ct7/CMf0Bv4yEZQ==
+	bh=V4nWN55YOvn7upM79v/Fc1tAVpnv3ctfjripJJUOeuQ=;
+	b=N8d0UiyCHQv7ogDzNgFVdR9Muy31AFaHRC+75Q6jULEccsFFGX+U/c+WHAu91/m/gT8m
+	 33wkMkPJmLSXvLXAFsr/YkgowUr2w+d7GLdy4D3JfQbsY/lYzyeFM0ALjo8voH2u3radh
+	 K8fpu3WIVdRR8KKJhB3rcsGBaL8BQJi1wRcrPt6XB/WJCFg4IPSe/1DzmGTCIXRiCyjQZ
+	 yq956ExhgsjupBNXF4DIBvzjUoMncD3gFA5dz2BH4VucQFd3xdgt55+lFx5QTDp7J5ucm
+	 EeUSPLo7/KKkvOiE0DNsGbjRNLSSb/cQHQMJLRMUIWRIFizBtoF+XKD7WkmnVdpun3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="MJ1v3u/8";
-	arc=none smtp.remote-ip=209.85.128.170
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Yb74GrLU;
+	arc=none smtp.remote-ip=74.125.224.45
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EB2606A31B
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 18:01:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B6EB2606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B30606A32D
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 18:05:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20B30606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=MJ1v3u/8
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-8b0dba37a7fso10321757b3.0
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 11:01:33 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Yb74GrLU
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-675617e81f9so1164396d50.3
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 11:05:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792778493; x=1793383293; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792778712; x=1793383512; darn=vger.kernel.org;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:content-type:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=fN+8VQZTj7h/ATzAcbg9os9WimON625yJM217AAtd+8=;
-        b=MJ1v3u/82DCWhQHi5WIJJCDuGSUFbAFUQAabAKI+5vxePsqteUcvhp6FMrtJo+gqg5
-         tID16qFVg01mSb8OhrjqAcONeBm03+LP34vH1CZb6xVAQwc58tYtM7i5d7PGmjxk+tQV
-         tqBrksX8wfshj6UO9fS3inmWNuUxCNKX2vvVqN+6VOGqqPI0T5mWMnXODNfBIIdxLgx1
-         LFJ+/VbxEx0E2uizQJ0zOk2MNB2qUy4FbcJK/WumetyRznYb4moNv2nm6ULLq/+TeYoJ
-         XSqlcAjODcFoMrKe+Isy/eGdFjD+hPYIi2vGuuK/sHQElsXzOXVuMUleq2ceOWqpRBNh
-         57fw==
+        bh=V4nWN55YOvn7upM79v/Fc1tAVpnv3ctfjripJJUOeuQ=;
+        b=Yb74GrLUWs/p1c0MxOEvb+TVpKIkX0zmI/fDh7ErOFylpCuLLPriYDJiSeIV4R3p9s
+         jDt+Ijm8gP85aes7TjnM8Sis32XqoBJFbbEttmZyz0FR8eQBuZf4aWfJqtafobGvuKsF
+         If4LQ3RaIQqFGYoCzy9jHy2l3kP5I+u1pBImg+dkGvwZaarkhWVMLZu3VBmeSm6bjbDl
+         8Ni+Rr+1C0e0UEBXLjizu0tzdDzIJiBGlQa/A05tSL4N3qtT24ED5XjFVotbCyi4+zLO
+         vv6KMJV8ijkb4hSM9FQX/pVWtwynj2xZm+pyvp/4PRW7xCPF6MZRq9+d5WwSh/uYa0qM
+         HpNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792778493; x=1793383293;
+        d=1e100.net; s=20260707; t=1792778712; x=1793383512;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:content-type:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=fN+8VQZTj7h/ATzAcbg9os9WimON625yJM217AAtd+8=;
-        b=Ii2BTVoCKj+uVGCODSCuYhYVQZzjhpyvtZoA70WQi5WY/+dT1nnbv5XFARJYJvDWi2
-         uPCHRVpAUtcm/zFOnvLZrDKUnPkhEz7Cj+vE/wNZqoJA1F1F2nsKvcxi0b2097uMAN07
-         ohYoy4aAk6Ns5/OP/f+lwZDa2VZwkEFKVp/83V8flUCTVYWi5cDUZh/N9IRk3vTE6+7+
-         4l7LY8aRoIr95xpnVPPTXuuc55WU527fs4RVZLzCqUoyK/cgU988lXFvSE92MUUD65xM
-         VDAuacSI3p8+YHXEwKSW8Qt2g9Yykfv8ZZCIhdLGNnxKOKcpnPATUI3+0lbEmB0C2ADO
-         ApfQ==
-X-Gm-Message-State: AFq9FYIBIFpb6JSduYS0cmLPJUI2kJfqxx/fl/AmOq9ESR8SBQlB6dXv
-	Cne0H6q0xxFNUmmmx9ZEa0HUnZUkiv9Rnhb2zZUnngBrr+tgIKtEjjZSLzCCnMJ3
-X-Gm-Gg: AYBFou1wkKZLhSRKtGOEcxQldU6xbqW1heLSbG2wqzznQOztylvRHee+Cw7i2axOCXl
-	On7Gkfn8+wXXXhJTrlxB7MvD3/OctfpxbfQ4pzIEVPdLQDqAHNqhW8eClp1cIMdtxfJ2QFiPDn3
-	s5puUpA0+kSmVyIqOWpOrXkBVGLbaEfwoLuNAINYfJxALIoWGUUUrvO3ARUIjrXA2Fal7CDpe4S
-	8hekB2NLVJd+/iykzBgqUXpm+4p1S2CcRZ7t0yfS/ZEak1xeivJR3s0lxp5WDtFI/Naq7+UAOUv
-	Q0rKUm9IfC2eUvBoy/15cYE4VmKVc7bWh2g2qEIgkmAkwMC7k9fSwBFXKAQfBN3NNl+LQz22+gZ
-	j3n1h92I1r73gm4WLxQQ5KIAUDTNLzMqqPYTrJvt5vXJk5hQAqQDdw3tdzEhQN4+oKvM5VvKoWE
-	eJWlxmvQoYk5pMMpUkIu7vVzQFWVL5AOpDcx8U0c3lrsErI5rR898mqvqNjCpXbxApFb/OxmCnW
-	Ha7Zcy86U/vquEemedoZ8Jz8DvQE9+Y4xqIjWa7KaYm2wkBNnkyo/WSr9tPmgsW4x/Jae40SnIT
-	ToHJT40dzihoyXOorK/XwosPH4WJgz0mh52/XBVcVgiWB4yEB7jogWaVaMjeJlJdKOjbrU+6pYX
-	DBY1CmfI5LFo/DI89UzkthV29ig==
-X-Received: by 2002:a05:690c:c1c7:20b0:8b1:e7c:cde6 with SMTP id 00721157ae682-8b157dbd737mr15817117b3.14.1792778492285;
-        Fri, 23 Oct 2026 11:01:32 -0700 (PDT)
+        bh=V4nWN55YOvn7upM79v/Fc1tAVpnv3ctfjripJJUOeuQ=;
+        b=P6xlTk8snbDkfKr05omqcsDM5OpscPFpG3yDf6U/K1tSmXGZhULKfhXIK2iCJMTAOD
+         ygTR/FtpW6MUHcCseP1Vu9wD2cGinbZyLw/GAb+ffFBlj+EJWGNhBXTB0QYvSivSohpc
+         IIpBKm06GCqzjbyIYt7FmEjda62IB9YObXAnYnHb1vIsPI/XK3ion0eMQ5lDso0W1XXB
+         90GFdrZKJ7Y5F5zFDJLYr6PUOsr4LgWJ94eZaZ/Zcvr+Dp6FK6B14VFSNsiQjhOx4Xpb
+         K3YgMib34u0bGCfxpkTVJr3jULJX+31ogSF1GM18Qke4VU2U8PfHvcvapwVCXRQYB2aA
+         2o/g==
+X-Gm-Message-State: AFq9FYKP8x21jRLjuLbKuHqhumPj/TuPz7EUPpBoyhOZ6xaSJxqjwGlJ
+	798C7onIgGXT4oyqn1ffFPf/+s2DZk/ahYPv+3mHOHSkAVAZif0X10EB
+X-Gm-Gg: AYBFou1h3J75S+xhgUIO0emAz55rhZ44WKFsX/v9wAVGItaLnpe1HOa3TbvYr/VmQT1
+	XuIIRJmIdYZXhtgQLX7CxubSDefJt8Ib2XmrcCdJgE8PoEnAqTK9QVMZELqCnt+8W12WQqKlr0o
+	Cn7WGPSkRd3IX0qxC9iIq8z5qNcEXFTCNeGd+HU8OcbIRKTwIY03JXxgkItfVWsoebs2LwpU1Cz
+	3AoWok2f7JyGgk0i9j/gBLMs+00wq95+648I/LmprMo+Zg/T0PHgZcMdmho6VPxGxsHBnK1j0Jf
+	XejqXvv574tY5S31dGT4jenA3VheNNWzKwvw+1F4kYXQu2rPnYiacExn8HDO1G5KLRJCXIWQ+5L
+	+9N6VuEe6uCUy+hw2OrqYJwQxyr3MZ94xOhU+Ix2+JQUi0YYDy40Yb0NnEee0GhPQyiMpLhRicb
+	Vjoc0YY1AuJV+1yAJqgVCcWU03oWYIdcKsFD1cOTS0oen+nEeZZ5I9NdAypL5liCbU9qlWW5bIP
+	dz49/++pK/qyM1pSWp+gIwJt7e3cvlJp02cC4y+peWbtorz5/Ev9APuRDFK2751tKA5tIgMFIM8
+	OR6o3ej7ue4yeTgUiaE+438+cOsY3xC8pjf3AjV1qFcEO17vxir1PDwgeSlLv47vQ5ipFyVRNvr
+	PO1FqpYU99CfiNAxxLQnU7cx2WVdmXzN2yiZOoC43zYv+iXo=
+X-Received: by 2002:a05:690e:4853:b0:677:f374:1764 with SMTP id 956f58d0204a3-67a35bfa42dmr1850055d50.45.1792778711691;
+        Fri, 23 Oct 2026 11:05:11 -0700 (PDT)
 Received: from smtpclient.apple ([2605:a601:9d17:3000:1d:477:fbde:1358])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b163f201f5sm2954017b3.45.2026.10.23.11.01.31
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67a42f3911fsm290500d50.21.2026.10.23.11.05.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 11:01:31 -0700 (PDT)
+        Fri, 23 Oct 2026 11:05:11 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 From: Ben Knoble <ben.knoble@gmail.com>
@@ -91,379 +91,330 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v3 0/2] doc: add new git tutorial
-Date: Fri, 23 Oct 2026 14:01:19 -0400
-Message-Id: <F2555C10-8453-4196-9D07-02870D19199D@gmail.com>
-References: <pull.2248.v3.git.1792768625.gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Tuomas Ahola <taahol@utu.fi>,
- Julia Evans <julia@jvns.ca>
-In-Reply-To: <pull.2248.v3.git.1792768625.gitgitgadget@gmail.com>
-To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH] ci: pin actions in the main workflow to full commit IDs
+Date: Fri, 23 Oct 2026 14:05:00 -0400
+Message-Id: <CA205F3D-2071-48D5-9986-5FF3F4AB8F68@gmail.com>
+References: <a178dde02a80324d4cb52781d542ee575cbb68a1.1792773333.git.ttaylorr@openai.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Patrick Steinhardt <ps@pks.im>
+In-Reply-To: <a178dde02a80324d4cb52781d542ee575cbb68a1.1792773333.git.ttaylorr@openai.com>
+To: Taylor Blau <ttaylorr@openai.com>
 X-Mailer: iPhone Mail (23D8133)
 
 
-> Le 23 oct. 2026 =C3=A0 11:17, Julia Evans via GitGitGadget <gitgitgadget@g=
-mail.com> a =C3=A9crit :
+> Le 23 oct. 2026 =C3=A0 12:41, Taylor Blau <ttaylorr@openai.com> a =C3=A9cr=
+it :
 >=20
-> =EF=BB=BFSo far we've gotten 112 comments from 30ish beta testers who have=
- tried to
-> learn Git for the first using this tutorial. Most of them were able to
-> finish it successfully. By far the most common piece of feedback was that
-> people want to learn more about collaboration and branching. I've written a=
+> =EF=BB=BFSome forks are hosted by organizations that restrict which GitHub=
 
-> draft of a tutorial on branching, but this is already quite a lot of words=
+> Actions may run, including requiring actions to be pinned to full
+> commit IDs. Our main CI workflow refers to actions by version tags or
+> branches, which prevents it from running under such a policy.
 
-> so definitely we can't cover it in this series.
+Yep. This is becoming de facto security standard.
+
+Perhaps we should say so? =C2=AB Pinned commit IDs prevent attacks
+on CI and any secrets stored therein by compromised action suppliers =C2=BB
+or something?
+
+> Pin those actions to full commit IDs, retaining the version names in
+> comments to make future updates easier to review.
 >=20
-> I don't know if it's possible to get this merged quickly, but if it were I=
-
-> think it would be amazing since people are so eager for a tutorial on
-> branching. If we spend a huge amount of time revising this I think there's=
- a
-> real risk I'll run out of funding before we have time to write about
-> branching. Ideally I think it would be great if we could merge a "good
-> enough" version and then have a way on the website for users to give
-> feedback on it, so that we can later incorporate that feedback and
-> iteratively make it better over time.
+> Signed-off-by: Taylor Blau <ttaylorr@openai.com>
+> ---
+> This is based on a merge of 'ps/ci-housekeeping-and-modernizations'
+> and 'jk/http-curl-strip-creds'. The latter is needed for the HTTP
+> auth tests to pass with the curl versions in current CI.
 >=20
-> Thanks to Paula, Agavi, Ken Wells, Michael / Chgowiz, Ishmaeel, and all 20=
-
-> or so other test readers.
+> .github/workflows/main.yml | 64 +++++++++++++++++++-------------------
+> 1 file changed, 32 insertions(+), 32 deletions(-)
 >=20
-> changes in v3: (v2 was the "first" real version since v1 was a WIP)
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index fe8155772ab..ba0b5ffb634 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -65,7 +65,7 @@ jobs:
+>           echo "skip_concurrent=3D$skip_concurrent" >>$GITHUB_OUTPUT
+>       - name: skip if the commit or tree was already tested
+>         id: skip-if-redundant
+> -        uses: actions/github-script@v9
+> +        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da=
+1b3 # v9
+>         if: steps.check-ref.outputs.enabled =3D=3D 'yes'
+>         with:
+>           github-token: ${{secrets.GITHUB_TOKEN}}
+> @@ -114,8 +114,8 @@ jobs:
+>       group: windows-build-${{ github.ref }}
+>       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=3D=
+ 'yes' }}
+>     steps:
+> -    - uses: actions/checkout@v6
+> -    - uses: git-for-windows/setup-git-for-windows-sdk@v2
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+> +    - uses: git-for-windows/setup-git-for-windows-sdk@aed153d1258c311b680=
+b81584a72a1a4807401f0 # v2
+>     - name: Install GCC-compatible Rust target
+>       shell: bash
+>       run: |
+> @@ -149,7 +149,7 @@ jobs:
+>     - name: zip up tracked files
+>       run: git archive -o artifacts/tracked.tar.gz HEAD
+>     - name: upload tracked files and build artifacts
+> -      uses: actions/upload-artifact@v7
+> +      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6=
+a0a # v7
+>       with:
+>         name: windows-artifacts
+>         path: artifacts
+> @@ -166,14 +166,14 @@ jobs:
+>       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=3D=
+ 'yes' }}
+>     steps:
+>     - name: download tracked files and build artifacts
+> -      uses: actions/download-artifact@v8
+> +      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a54=
+61e7c # v8
+>       with:
+>         name: windows-artifacts
+>         path: ${{github.workspace}}
+>     - name: extract tracked files and build artifacts
+>       shell: bash
+>       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+> -    - uses: git-for-windows/setup-git-for-windows-sdk@v2
+> +    - uses: git-for-windows/setup-git-for-windows-sdk@aed153d1258c311b680=
+b81584a72a1a4807401f0 # v2
+>     - name: test
+>       shell: bash
+>       run: . /etc/profile && ci/run-test-slice.sh $((${{matrix.nr}} + 1)) 1=
+0
+> @@ -183,7 +183,7 @@ jobs:
+>       run: ci/print-test-failures.sh
+>     - name: Upload failed tests' directories
+>       if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
+> -      uses: actions/upload-artifact@v7
+> +      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6=
+a0a # v7
+>       with:
+>         name: failed-tests-windows-${{ matrix.nr }}
+>         path: ${{env.FAILED_TEST_ARTIFACTS}}
+> @@ -199,20 +199,20 @@ jobs:
+>       group: vs-build-${{ github.ref }}
+>       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=3D=
+ 'yes' }}
+>     steps:
+> -    - uses: actions/checkout@v6
+> -    - uses: git-for-windows/setup-git-for-windows-sdk@v2
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+> +    - uses: git-for-windows/setup-git-for-windows-sdk@aed153d1258c311b680=
+b81584a72a1a4807401f0 # v2
+>     - name: initialize vcpkg
+> -      uses: actions/checkout@v6
+> +      uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+>       with:
+>         repository: 'microsoft/vcpkg'
+>         path: 'compat/vcbuild/vcpkg'
+>     - name: download vcpkg artifacts
+> -      uses: git-for-windows/get-azure-pipelines-artifact@v0
+> +      uses: git-for-windows/get-azure-pipelines-artifact@2e424b98e1251b72=
+5d6064c5f1a9f854a33e5b88 # v0
+>       with:
+>         repository: git/git
+>         definitionId: 9
+>     - name: add msbuild to PATH
+> -      uses: microsoft/setup-msbuild@v3
+> +      uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0a=
+f57 # v3
+>     - name: copy dlls to root
+>       shell: cmd
+>       run: compat\vcbuild\vcpkg_copy_dlls.bat release
+> @@ -234,7 +234,7 @@ jobs:
+>     - name: zip up tracked files
+>       run: git archive -o artifacts/tracked.tar.gz HEAD
+>     - name: upload tracked files and build artifacts
+> -      uses: actions/upload-artifact@v7
+> +      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6=
+a0a # v7
+>       with:
+>         name: vs-artifacts
+>         path: artifacts
+> @@ -250,9 +250,9 @@ jobs:
+>       group: vs-test-${{ matrix.nr }}-${{ github.ref }}
+>       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=3D=
+ 'yes' }}
+>     steps:
+> -    - uses: git-for-windows/setup-git-for-windows-sdk@v2
+> +    - uses: git-for-windows/setup-git-for-windows-sdk@aed153d1258c311b680=
+b81584a72a1a4807401f0 # v2
+>     - name: download tracked files and build artifacts
+> -      uses: actions/download-artifact@v8
+> +      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a54=
+61e7c # v8
+>       with:
+>         name: vs-artifacts
+>         path: ${{github.workspace}}
+> @@ -270,7 +270,7 @@ jobs:
+>       run: ci/print-test-failures.sh
+>     - name: Upload failed tests' directories
+>       if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
+> -      uses: actions/upload-artifact@v7
+> +      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6=
+a0a # v7
+>       with:
+>         name: failed-tests-windows-vs-${{ matrix.nr }}
+>         path: ${{env.FAILED_TEST_ARTIFACTS}}
+> @@ -284,8 +284,8 @@ jobs:
+>       group: windows-meson-build-${{ github.ref }}
+>       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=3D=
+ 'yes' }}
+>     steps:
+> -    - uses: actions/checkout@v6
+> -    - uses: actions/setup-python@v6
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+> +    - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1=
+ # v6
+>     - name: Set up dependencies
+>       shell: pwsh
+>       run: pip install meson ninja
+> @@ -296,7 +296,7 @@ jobs:
+>       shell: pwsh
+>       run: meson compile -C build
+>     - name: Upload build artifacts
+> -      uses: actions/upload-artifact@v7
+> +      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6=
+a0a # v7
+>       with:
+>         name: windows-meson-artifacts
+>         path: build
+> @@ -312,13 +312,13 @@ jobs:
+>       group: windows-meson-test-${{ matrix.nr }}-${{ github.ref }}
+>       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=3D=
+ 'yes' }}
+>     steps:
+> -    - uses: actions/checkout@v6
+> -    - uses: actions/setup-python@v6
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+> +    - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1=
+ # v6
+>     - name: Set up dependencies
+>       shell: pwsh
+>       run: pip install meson ninja
+>     - name: Download build artifacts
+> -      uses: actions/download-artifact@v8
+> +      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a54=
+61e7c # v8
+>       with:
+>         name: windows-meson-artifacts
+>         path: build
+> @@ -331,7 +331,7 @@ jobs:
+>       run: ci/print-test-failures.sh
+>     - name: Upload failed tests' directories
+>       if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
+> -      uses: actions/upload-artifact@v7
+> +      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6=
+a0a # v7
+>       with:
+>         name: failed-tests-windows-meson-${{ matrix.nr }}
+>         path: ${{env.FAILED_TEST_ARTIFACTS}}
+> @@ -367,7 +367,7 @@ jobs:
+>       TEST_OUTPUT_DIRECTORY: ${{github.workspace}}/t
+>     runs-on: ${{matrix.vector.pool}}
+>     steps:
+> -    - uses: actions/checkout@v6
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+>     - run: ci/install-dependencies.sh
+>     - run: ci/run-build-and-tests.sh
+>     - name: print test failures
+> @@ -375,7 +375,7 @@ jobs:
+>       run: ci/print-test-failures.sh
+>     - name: Upload failed tests' directories
+>       if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
+> -      uses: actions/upload-artifact@v7
+> +      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6=
+a0a # v7
+>       with:
+>         name: failed-tests-${{matrix.vector.jobname}}
+>         path: ${{env.FAILED_TEST_ARTIFACTS}}
+> @@ -388,7 +388,7 @@ jobs:
+>       CI_JOB_IMAGE: ubuntu-latest
+>     runs-on: ubuntu-latest
+>     steps:
+> -    - uses: actions/checkout@v6
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+>     - run: ci/install-dependencies.sh
+>     - run: ci/run-build-and-minimal-fuzzers.sh
+>   dockerized:
+> @@ -464,7 +464,7 @@ jobs:
+>         else
+>           apt-get -q update && apt-get -q -y install git
+>         fi
+> -    - uses: actions/checkout@v6
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+>     - run: ci/install-dependencies.sh
+>     - run: useradd builder --create-home
+>     - run: chown -R builder .
+> @@ -474,7 +474,7 @@ jobs:
+>       run: sudo --preserve-env --set-home --user=3Dbuilder ci/print-test-f=
+ailures.sh
+>     - name: Upload failed tests' directories
+>       if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
+> -      uses: actions/upload-artifact@v7
+> +      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6=
+a0a # v7
+>       with:
+>         name: failed-tests-${{matrix.vector.jobname}}
+>         path: ${{env.FAILED_TEST_ARTIFACTS}}
+> @@ -489,7 +489,7 @@ jobs:
+>       group: static-analysis-${{ github.ref }}
+>       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=3D=
+ 'yes' }}
+>     steps:
+> -    - uses: actions/checkout@v6
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+>     - run: ci/install-dependencies.sh
+>     - run: ci/run-static-analysis.sh
+>     - run: ci/check-directional-formatting.bash
+> @@ -505,7 +505,7 @@ jobs:
+>       group: rust-analysis-${{ github.ref }}
+>       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=3D=
+ 'yes' }}
+>     steps:
+> -    - uses: actions/checkout@v6
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+>     - run: ci/install-dependencies.sh
+>     - run: ci/run-rust-checks.sh
+>   sparse:
+> @@ -519,7 +519,7 @@ jobs:
+>       group: sparse-${{ github.ref }}
+>       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=3D=
+ 'yes' }}
+>     steps:
+> -    - uses: actions/checkout@v6
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+>     - name: Install other dependencies
+>       run: ci/install-dependencies.sh
+>     - run: make sparse
+> @@ -535,6 +535,6 @@ jobs:
+>       CI_JOB_IMAGE: ubuntu-latest
+>     runs-on: ubuntu-latest
+>     steps:
+> -    - uses: actions/checkout@v6
+> +    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v=
+6
+>     - run: ci/install-dependencies.sh
+>     - run: ci/test-documentation.sh
 >=20
-> * Say that the tutorial supports any version above 2.23.0, when git switch=
-
->   was introduced, since the next part of the tutorial on branches will use=
-
->   git switch
-> * Mention that on Windows the tutorial will work best in Git Bash for and
->   it might need adapting for PowerShell. (thanks to Ben)
-> * Add a warning about how Git can dump you into vi, how to handle that
->   situation, and how to write a longer commit message. I tried to strike a=
-
->   balance between lightly suggesting that it might be good to write longer=
-
->   commit messages, while making it clear that you can just use -m"" if
->   you're not ready to navigate the world of editor configuration. I don't
->   think we can use Pro Git here though since it's a bit outdated. (thanks
->   to Ben)
-
-I noticed some discussion in Discord about the main text being out of date,=20=
-
-but while the appendix makes copious references to editors
-that have fallen out of style I think it also covers common cases
-like VS Code and so on.
-
-> * Add Helped-by: Ben ...
-> * Add output of "ls ~/.ssh/*.pub" (thanks to a test reader)
-> * Suggest cat ~/.ssh/whatever.pub to make it clearer how to copy the
->   contents of the file. One of the test readers said this was unclear as
->   well. (thanks to Junio)
-> * Mention that the public key might not be called ed25519.pub (thanks to
->   Junio)
-> * Add a short section on the importance of git status
-> * Fixed the formatting around the headings. Kept it in the same style
->   because I had issues with the docs linter when using =3D=3D DESCRIPTION
->   (thanks to Junio)
-> * explain what --set-upstream does (thanks to Ben)
-> * A few other small phrasing fixes from test readers
->=20
-> non-changes in v3:
->=20
-> * didn't use git config set since the tutorial claims to be compatible wit=
-h
->   Git 2.23.0
-> * kept using the term "folders" since my impression is that Mac OS and
->   Windows use the term "folder" and those operating systems are more
->   popular than Linux. I don't think any test readers were confused by this=
-
->   term, though "directories" might be fine too.
-> * leave git init instead of git init myproject so that folks can use the
->   same process when setting up Git in an existing project
->=20
-> Julia Evans (2):
->  doc: remove gittutorial
->  doc: add new Git tutorial for beginners
->=20
-> Documentation/gittutorial.adoc | 1035 ++++++++++++++++++--------------
-> 1 file changed, 573 insertions(+), 462 deletions(-)
->=20
->=20
-> base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2248%2Fj=
-vns%2Fgit-tutorial-v3
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2248/jvns/g=
-it-tutorial-v3
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2248
-
-The range-diff below looks fine to me! A few small nits, but I don=E2=80=99t=
-
-want to hold things up.
-
-> Range-diff vs v2:
->=20
-> 1:  42035aa84a =3D 1:  8c0366e996 doc: remove gittutorial
-> 2:  6532e60e30 ! 2:  d8ea142af6 doc: add new Git tutorial for beginners
->     @@ Commit message
->=20
->          Some design choices:
->=20
->     +    - Only use commands present in 2.23.0 (when `git switch` as intro=
-duced),
->     +      to support older versions of Git.
->          - Introduce a much smaller set of commands than the old tutorial,=
- to
->            keep the tutorial quick (doable in an hour). Some users found i=
-t to be
->            very fast and some wanted to stop early (after step 7) so this s=
-eems
->     @@ Commit message
->            policy if applicable since the "easiest way" may not be the bes=
-t), and
->            giving some instructions for how to translate an HTTPS URL to a=
-n SSH
->            URL.
->     +    - Warn people about how `vi` is the default text editor and give s=
-ome
->     +      instructions for how to escape
->=20
->          At least 20 people have successfully completed it, and feedback w=
-as
->          incorporated from problems the testers ran into.
->=20
->     +    Helped-by: D. Ben Knoble <ben.knoble@gmail.com>
->          Co-authored-by: Marie Claire LeBlanc Flanagan <hello@marieflanaga=
-n.com>
->          Signed-off-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan=
-.com>
->          Signed-off-by: Julia Evans <julia@jvns.ca>
->     @@ Documentation/gittutorial.adoc (new)
->      +1. Git to be installed. You might already have it installed,
->      +   and if not there are directions at https://git-scm.com/install/
->      +2. A terminal to use. On Windows, you can use Git Bash which comes
->     -+   when you install Git.
->     ++   when you install Git. For Windows this tutorial will assume you'r=
-e
->     ++   using Git Bash and if not you might need to adjust some commands l=
-ike
->     ++   `ls` and `cat`.
->      +
->      +You can check if Git is installed by running this in your terminal:
->      +
->     @@ Documentation/gittutorial.adoc (new)
->      +------------------------------------------------
->      +
->      +The exact version isn't too important: this tutorial is designed to w=
-ork
->     -+with any version of Git after 2.0.
->     ++with any version of Git after 2.23.0.
->      +
->      +[[step_2]]
->      +Step 2: Introduce yourself to Git
->     @@ Documentation/gittutorial.adoc (new)
->      +but we're not covering that here.
->      +
->      +Step 3: Create an empty folder and 1 file
->     -+------------------------------------------
->     ++-----------------------------------------
->      +
->     -+In your terminal, create an empty folder and change directories into=
- it.
->     ++In your terminal, create an empty folder and move into it.
->      +Later on you could follow the same steps in this tutorial to take an=
-
->      +existing project and start managing it with Git, but we're going to u=
-se
->      +an empty project so that everyone following this tutorial has the ex=
-act
->      +same files.
->      +
->     -+For example, run these commands to make a folder called `myproject`
->     ++For example, run these commands to make a folder called `myproject`:=
-
->      +
->      +------------------------------------------------
->      +$ mkdir myproject
->     @@ Documentation/gittutorial.adoc (new)
->      +
->      +You've now stored the first version of your project in Git!
->      +
->     ++`git status` is very important
->     ++------------------------------
->     ++
->     ++`git status` shows you the current state of your Git repository.
->     ++It can give a huge amount of different information that takes
->     ++practice to interpret, so this tutorial has several examples of
->     ++how to interpret the output of `git status` in different situations.=
-
->     ++
->     ++It's often useful to run `git status` before and after running a Git=
-
->     ++command to see how it changed things.
->     ++
->      +Step 6: Make a change
->      +---------------------
->      +
->     @@ -1,2 +1,2 @@
->      +$ git add example.txt
->      +----------
->      +
->     -+Then you can run `git commit` to commit it.
->     ++Then you can run `git commit` to commit it (though see the warning i=
-n
->     ++the next section!).
->     ++
->     ++Warning about terminal text editors
->     ++-----------------------------------
->     ++
->     ++If you run `git commit` without any arguments, Git will open a
->     ++text editor in the terminal for you to use to edit your commit messa=
-ge.
->     ++This lets you write a longer commit message with more details.
->     ++By default, Git uses the `vi` text editor, which is extremely diffic=
-ult
-
-Personally, I=E2=80=99d drop =C2=AB extremely =C2=BB here to avoid casting a=
- judgement?
-
->     ++to use if you're not used to it.
->     ++
->     ++Some signs that you're trapped in `vi`: suddenly typing doesn't work=
-
->     ++anymore, and there are tilde `~` characters on the left of the scree=
-n.
-
-Perhaps =C2=AB bottom-left =C2=BB; they aren=E2=80=99t in the rows with text=
-,
-for example.
-
->     ++
->     ++If Git opens `vi` and you'd rather use a different editor, you can
->     ++handle it like this:
->     ++
->     ++1. Quit by typing `Escape`, then `:q!` and then `Enter`
-
-I never know if I=E2=80=99m over-indexing on this, but: perhaps
-=C2=AB press the Escape key, type =E2=80=A6, and press Enter =C2=BB? One pro=
-bably
-does not want to type the word Escape ;)
-
-Ideally we=E2=80=99d recommend :cquit!, too, to exit with an error
-in case the user accidentally edited the buffer and managed to write it,
-in which case they may create a commit and the recovery may be confusing.
-But POSIX doesn=E2=80=99t require that of vi/ex even though most distros
-ship Vim as the implementation. So :q! will have to do.=20
-
->     ++2. Run `git config --global core.editor YOUR_PREFERRED_EDITOR`
-
-This is probably ok for now. Long term I encourage folks to set
-EDITOR and/or VISUAL environment variables, so all
-programs know what to do, but shell configuration is way
-off-topic here :)
-
->     ++   to configure which editor to use. For example, `nano` is availabl=
-e
->     ++   on a lot of systems and has basic instructions on the screen for h=
-ow
->     ++   to use it.
->     ++3. Run `git commit` again
->     ++
->     ++If you don't want to set up a text editor yet, you can also just use=
-
->     ++`git commit -m"your message"` like we did earlier in this tutorial.
->      +
->      +Step 8: Make a change and throw it away
->      +---------------------------------------
->     @@ -1,2 +1,2 @@
->      +This "working tree clean" message means that there haven't been any
->      +changes since your last commit.
->      +
->     -+Now make a change to your code, and run `git status` again. Like las=
-t
->     ++Now make a change to `README.md`, and run `git status` again. Like l=
-ast
->      +time, you should see a message like this:
->      +
->      +------------------------------------------------
->     @@ -1,2 +1,2 @@
->      +source Git forge software to your server.
->      +
->      +Step 10: Create an SSH key (if needed)
->     -+-------------------------------------
->     ++--------------------------------------
->      +
->      +For Git to upload changes to another Git repository, it needs a way t=
-o
->      +login to that repository. One of the most popular ways to do this is=
-
->     @@ -1,2 +1,2 @@
->      +$ ls ~/.ssh/*.pub
->      +-------------------------------------------
->      +
->     -+That will output something like
->     ++That will output something like this. The exact filename depends on t=
-he type
->     ++of key. The important thing is that you're looking for a filename th=
-at
->     ++ends in `.pub` ("pub" stands for "public"):
->      +
->      +-------------------------------------------
->      +/home/alice/.ssh/id_ed25519.pub
->      +-------------------------------------------
->      +
->     -+Copy the contents of that file to your clipboard. It's important tha=
-t
->     -+the filename ends in `.pub` ("pub" stands for "public").
->     ++Copy the contents of that file to your clipboard. One way to do that=
- is
->     ++to run this command (replacing the filename with the right filename)=
-,
->     ++and then copy the output.
->     ++
->     ++-------------------------------------------
->     ++cat /home/alice/.ssh/id_ed25519.pub
->     ++-------------------------------------------
->      +
->      +Then login to your account on the Git host you chose and paste the S=
-SH
->      +key into the appropriate place. Depending on the Git host, it's like=
-ly
->     @@ -1,2 +1,2 @@
->      +-------------------------------------------
->      +
->      +[[step_14]]
->     -+Step 14: push your changes
->     ++Step 14: Push your changes
->      +--------------------------
->      +
->      +Finally, we're ready to send the information in your local Git repos=
-itory
->     @@ -1,2 +1,2 @@
->      +You should be able to fix this by redoing <<step_12,Step 12>>.
->      +Then <<step_14,Step 14>> should work.
->      +
->     -+MORE USEFUL GIT COMMANDS
->     ++More useful Git commands
->      +------------------------
->      +
->      +We're not going to cover collaboration at all in this tutorial, but h=
-ere are a
->     @@ -1,2 +1,2 @@
->      +  If you see a commit with `git log` that you want more details abou=
-t,
->      +  you can run `git show COMMIT_ID` to see what changes that made sin=
-ce
->      +  the previous commit (linkgit:git-show[1])
->     -+
->     -+SEE ALSO
->     -+--------
->     -+linkgit:git-help[1],
->     ++* To get a list of common Git commands, run `git help` (linkgit:git-=
-help[1])
->      +
->      +GIT
->      +---
->=20
+> base-commit: d46921825429c74931372567941eaf98d4483210
 > --
-> gitgitgadget
+> 2.56.0.187.g9e9ae442333
+>=20
