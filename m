@@ -1,118 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792759841;
-	b=nLhiddC+Mr5ZaQTxQcy6EAb3DLIGm/EqhqmqrY9JdLYQVL5EIO7316ulSwStrTvfBVYH
-	 sr64g/VN3Mx3K2pzaV7lXAhUTBKiUlTIHft3u386HVum36IHS5oeWpPMD8xkGE+QCBsvT
-	 WyTsCHgqo15lsuTkcKl13IR+p9CssJuuZC4MMHX2hpjN8Hu6mcFmYweQwWQGeUOzYybWC
-	 7m2xTyUXxD+ufZL2tFAomt5eo5nVTypmo36XbKoKvok4rXdv4nLsXbx/59bVIcYcgZgFC
-	 eNRlQQomkm52kXlcw+Bqf0BzVv1fMDxMy5BQ3tV+78W8jOWhfH00EhgaUCkHXU2HSaA==
+	t=1792759843;
+	b=hxPlO51+y/Oppd8498coGQzqC3R0uRzBuZpYF94CU7dNXsnth5MHYLNt1aqx5ePdVxWi
+	 uCBnue5IkbU6oZa8h/3+GjnXZDbZlFVstI2llwQyDxazcZma9MZRX0AvMLuCarGRPjyNV
+	 EqDLIWuoUZ1mI5NdfCdwXUJq5y7BKwYKLGjoCOfjkOFiYhiCrqX3YwpQqY6w5mP0Ig0FM
+	 wM43V7V8QnnBQbEVd4bj9A625owuE4v2JKSc7APNk8vlODWRjXBPSXyIoKTDf4ey3zrsr
+	 NoiycVg7pOtoJTmKjaTj+zEH9J7Eo/sns4m/IZILxuANxpt/N9N1HQLAkNUu4mcnchg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792759841;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792759843;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=NMJXcRiZ6tncck4G3wdDqWlDn0TchiNmmfeF1W3IISQ=;
-	b=wi9M5HL+PdfwLyVnXN0zQdJryMNgEcLXrhty5+s0xlz/E/+uCx7EPK9eb7KAEHB52TUY
-	 p5A+/OQEhFMgxr0LvGvuuMZcrKDN71tYZ4eDHbYpV+0iyrXjaW/takB2iAX5SdPYTWNWS
-	 mn/j68IUWM8X1tNZshRwdNOMSvgdIiaTXN29p01u8E2LJNlLfXgmk+hiqgITXCaymFsnu
-	 gprcjWr4NJiWDxCbGGTkuDcyzE1nW2DmhnOCHSXGj1L1w58Ryuu2iw7QpMP44FFcO1wcr
-	 nzoqgbk+pY/6pyP63WfiR8r5+MI5HMdZFXPgTQ2E9yPk0dA0/BKcUOJvGEDlxaAIpOA==
+	bh=HOmv8gKq9gRuzveIPQY643lgfXMgVz4+qNetOC4PSnc=;
+	b=mcP3Z8FnSNxv7pnk8SFWb2VU7xRQ6NUnldngcIaRAaNHtBn4EgUgtlaaETPebN/Vjqt/
+	 KeVWEyp8DZZezTTd5xvwoGvQ2+kocxcrhDc61yOwuXRSXmJD8Iswwb39cXrjXFDMay4RA
+	 mJbHq67fFgoqEo8PbbhXOOwbrz7HjgWMAWqWJ9hpKWAVM8PoeBJhhQ/dHWngvbMWnrH8k
+	 /+9ODnbqVRrOZIRKTA1dPBlN5UyQyhylMc6JXJNwon0nc1F3HcxpTSxpSATPL9VLpvz0w
+	 1IQWrkSBy3V/x2yrr83prcUz2o6HCt4tZTuoQdK+pRPElV0uwEVyxhh8CZxtVrcR/Eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=udwNAsoW;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=XG0HAWkC;
-	arc=none smtp.remote-ip=202.12.124.151
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=DkHR4V+r;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=D4XQlgbk;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03965606A332
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 12:50:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 03965606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D38606A335
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 12:50:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 03D38606A335
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=udwNAsoW;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=XG0HAWkC
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=DkHR4V+r;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=D4XQlgbk
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6CF551D0020A
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 08:50:40 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 519527A024D
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 08:50:42 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 23 Oct 2026 08:50:40 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 23 Oct 2026 08:50:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792759840;
-	 x=1792846240; bh=NMJXcRiZ6tncck4G3wdDqWlDn0TchiNmmfeF1W3IISQ=; b=
-	udwNAsoWcdfxhl2mwsl7cHBBc7iyD3n3KwuakF9ziVWCpbCk9mZPqkh1W9y1LVaA
-	qHlDZvwjZhNMg+Lgz/ua2KqRwp3xaGGwP+UhxthEec0ABsO5cNMRtgwzdPA4XDGi
-	SI3jsVF6u3rAdFnqY3DNujqO1toEiWSuU1ImJdJbbX8BFRciUKiiskA2FtehZtjI
-	vmRfPx3lWnGmHuNmaNO/qZ/eQTOr9I2+i27W1ivRTDciQfvIk3vbsQ0vVxYor+VC
-	SnoOnG4LgoJwbA4CXiQ+OqAQAaRS/fqUUey6IWgK3mfBUZTw/eCqjglYur11PGB8
-	IQw9pzo3Sl+HR+BB291lig==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792759842;
+	 x=1792846242; bh=HOmv8gKq9gRuzveIPQY643lgfXMgVz4+qNetOC4PSnc=; b=
+	DkHR4V+ryd5RPzN+GmccsU7rdzTe5UEK1o7WUQnlXi+iP49UXNQ8+Tp5ySnhvYwa
+	87KKImjuBIltk85zPk7rDBQEFFEb0SjGbG0CineTPfjh8ymZXTWFSEgK5rymSaxy
+	vL33rrwZZhhO87o/kGWCJ3aRVCcq4hyP/XL6OBcsOUq/VSnM6o4lE4UKmGnJV2+a
+	IajUxF5XqkXYBCi+mN1V/t6DlkrRQ4c5s/Xf89x+2DYDWaOMqENN4o5EExabt0qj
+	yJrn1CB8qa/W3f81zg10gni8piK2Pm0qTCrSZBrFSU1azj8/4Y4ScnizeMi4V3fZ
+	orHd68H21O/+13xUJyT3/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792759840; x=
-	1792846240; bh=NMJXcRiZ6tncck4G3wdDqWlDn0TchiNmmfeF1W3IISQ=; b=X
-	G0HAWkCkheiTmQp/hOjN0WKJXnJ7TnjLjKtNqdVYLUb9CtKw93REkQXJUWEs3ZKQ
-	V4Vh8BbqECAmQfUQc+Ps5jwGfXOoko7epuOSfNaKajlsAVd42ZfZhNM61u0h8YgF
-	RqQfELJ3cNtCUGtlRnTniQLepq+P8K9Hix5LbJehPp8PeGcXyr6yiuU0gi2eS74B
-	YyAD1plxO4dyOeH5/lNo9no94sMS5SAgm/Hic+c10KF4e0zrRpcFOEVLSszz3uLk
-	BwEu+/zIJnVb7uCeeqr1bpwQUDqdFkn76BZAH2QNEFaDRmDxR6SUb0LPjgSmT312
-	z0uu2sBkqMnGJXVkRFByA==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792759842; x=
+	1792846242; bh=HOmv8gKq9gRuzveIPQY643lgfXMgVz4+qNetOC4PSnc=; b=D
+	4XQlgbki7OpS1cOR8AHiREAm3AWwqc00Ohrs9FsIkHcsrUws87KZYRyLDv4pYfNq
+	YJeDp/1PCfZx6froafjfUF5GDakIkxnBISR3Ix4u+U96dvpyloEHqRgOueu13DJC
+	R5vcCXmv3FrIPYLq7pTDwuzPxrCiSrXp+8hkHcW3BtF/qE8etCbUESeOF3PfvcGR
+	gAAzH/gk2jGVuUIO888w05NlRj/4LzBujuciBiKcNuzpSi5Vv2yaytsDaHvwYKZv
+	NyZvtevfzU21j3hbhdso1SgCupvy9bVpa2IcJBexHWNoozaynCNH+lpTuLGBmxsf
+	48pKDY/yM7PpzISaFsnsg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792759840; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792759842; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:mHVp6ZKtjV1hBmmmsM5Rw0NinrCG0/Rorbemnb9iYDUJ7ow
-	PEC1zI6NrTQYm4SS9JPh9dJyrjIQ90EBiwRnLxWHC0RAYpolpyKw7PgwPYxKDVLa
-	fw/4jbAfSbf0kG7vTna/B6ElDS2JpHfvceQWYlMNcM8o1P8NLqBRStVSulSr+KRi
-	B/wjfoigz9J0yHxxIx2NWLn70JjKzsRQs8l8QrCyPRJIdgGSH2IXfCwWSoASHrPk
-	lzkf21sBA4xwHi/5w9Wj3j3fEhIo2501MFVgP3Ly0jcMC/0WXMF/kuMc5Md09kh+
-	gcuTR3LJ5ncPr0obyyGAtRYwMb4BDTyV4Akanew==;
+	s=fm2:rsa-sha256:iTMK1fl88/AcZHTpIajRc6IiShjGRZNber1i/cUf9otsxFJ
+	mpsdw9IpqIpjOXGlJC6HOy1rgJ8SZmRe0BbQ4IodcIfucvyhaHn+kRtwDCN0cos2
+	5jMvv/KkUMFmfqdaHvUi/IHvevofO4GRUSCQoXFmsl6Jma+QqFiRZ8mk6Zn9+kYf
+	ThyyAmd0Tf6X4GRBU+rWNVoAsGDpfMSP6o7U8uvoU7QR9ieFv8lDSENqHyg644cw
+	rj8qlM2rwcRXch+JtYQQisZA+3uq13dOhyhBuFLdR7T6fk0xXEnMlbSUM1R5R2Tm
+	93Zu54ZssTinopLZlR8CGywO1C6JHcbIl+ToR2A==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:JWs0y+EF8MiQQhUMRXdbP+/xg2wC3IYk4QZ5Sy+waxY=:SRYplToW8AizyA1/blO0x4DQgiOrEqjQr4aD5YiyEgk=;
-X-ME-Sender: <xms:IFjbavURCj-8C9Kxbhn9ak763SZzegzP5lW2lBvZN5S4mh9Hqj10kA>
-    <xme:IFjbaujX543EMdwqJyIkReYm8i7FoJzN-mYjr_blHBplkR3TtCU5az7dhZekGX22q
-    Cc9RUV97oIGZdKRx7_5ubvzfKYfC8IlKEtK293nT_w2owpVEsgYrA>
-X-ME-Received: <xmr:IFjbahDJs21DJZBgNap9aItwOjdH1r7Sv_2N6vnxnuJ7t7-Hrunq7hr3H9lXxGaeEngf4A>
-X-ME-Proxy-Cause: dmFkZTEULBe8RAlpP2ZtTbAoqQi0+Zd71ZU/8ok9/tQcmFVCK7qn/P6h7sYuEz98YdD6zb
-    EGwUeqTCkWcm60BLl2bU8LGFB1KUQ24d7Cb4+EJYvuK/p1YZRP4+zT0njrM2HM3z+eq2mw
-    vaPBpZMRUO0aXLsMYeWb6MsGZ9qOI0yBLwhI9NC0QQXz2V7Zuaodkt7pYFmMkFN0uMQXGy
-    0/PqA0kteTjct1G0s5dVsPIx6KnQEdjxCk5ssypQibFMIixOA1dQPhKUAVSkvh69JhiZPK
-    myQVfwho2v2r+R7p8DHNbLL4TFqbSnt5vFWBwzmYfgm9ffWnfFvAD6pGCqOkR+l+e88QdX
-    2xctWTTBHcAjMTJfqN69u73diBOeG4eXN7swk7zDq/XJsgSQzvUwyXt7Gi2e98pC5YNtt5
-    MOAmWrvBdUjyS64b5mg79S6uiX+pCbFgRglV10ZJPF27kzZPbg8ylw1nd27KwFhod/DSFb
-    PXE/7UPh+3pQJB+sYCDlNLO9QB3baOgohJWaoeQlhzQAoAMxv7QOkJJOppKy21MVLblrre
-    E/CywqB6km5N3n+Kysd3FcgQ84ScnOh966xcC3f6Z9L3PULaRzqVMcaL9T+NUFKsBRTpLF
-    OX+9sxD0X+1L6vcHPCmJ78ZBDE9ZsgpS+xlc2hcnxZmkF7FxkR7gojSHsUZQ
-X-ME-Proxy: <xmx:IFjbavd8Zt91S564kgnPE71jXF-cN5KDrgb00YccgbyUsK9uWNnxEQ>
-    <xmx:IFjbapcUwjnDX7Xy_JquMsXLkApY-4wjwzVek1BwT23eakCKd8fXxA>
-    <xmx:IFjbajhbAaUpNMSRmqUMXwBCRorBV4yR7uqz4hHm1pHsb9FrP9ODtA>
-    <xmx:IFjbalQwJzAQMIyale0pcKNLgEFwgJoCO-1Ac-4GJX5rL6JSC9XMVA>
-    <xmx:IFjbain43yeOadZDqLWV833N2BZ8wp8Ayh8Woz0gwZ2DGbcXMF8D2kBm>
+Message-Instance: m=1; h=sha256:kVl1MSs7eu4XRwJescmOSlmvxWMFpaTzNX0D3nEzYnA=:a3CTJlVhQi5W8zflEl5SNVzBRgECy8jZDTuGYg2hjEg=;
+X-ME-Sender: <xms:IljbatsWU0gjvJrCYCNkICA3i7_NMsU1sa24vftxAWDTswp1cDhXoQ>
+    <xme:IljbataRbRRTehMQNAJ5G8tCf2S7cz9Bg0gR3Gh2WM4NAbLAGUofZO0aumQlKlrND
+    lbJczaQqFreulw65xW325FsEDgBvVJWZzeWAcZuiUU7PSY5I5zfQw>
+X-ME-Received: <xmr:IljbambHF6VQRqxVA5feVROAu-IpP76W4V4e8dZnH8QNMk9zAv-aYU8qG44C9BH-ja3hOw>
+X-ME-Proxy-Cause: dmFkZTEZWmY0Qmse88D2CTZhoi8Qx0ylXXKu6tAIs+BgXtqVGgxd/BqeTscGyUMn+xFilD
+    dbRwCxMug0rRp6s2RoHecdj9ea5hmWM3L0vQAhPjkBlnRMmj4SG+wUEhQrwSSuqtYxqSMC
+    m0DRlT9dFvfAw6sGkgKQCvfsTOB64d/ziRgeOvb//JwOSbc/YIHWTXEF+8OhqYrYvtRrzq
+    zE7xBm+kNci6V80J9kphE1a+aIP4j5lXX++BQuYnY6ASX3lpSXvU862yeG9TYukAXi3HGA
+    UpXkLszIvdbN24fmOyyIJRzRCJfv7/ZJ3cqGbKu2PvQsXxJGlHHRMZ823g3aWBbaY1FNSi
+    lwFl1UPR69AKyGHXDSSxWs4Y+s9AvGbIH9P8khwbvhdRW8Lw3RkZKN5uqnDQjayWP1tOvn
+    UvTKIs6lxudhDoAjeJ00rtPNnCc/gSpgUOu68Ev6znc67ENB++PmuI/Ya+UGE2z8TKE3Zm
+    JwGH7WQ4LOrNClCwO3qQwqiFwGGdZGbAMqgqqbmPPlvp7+gFNsRLoHLoUrsQXB1IrrTa28
+    UucjOGJJi8EK4uN5KTzIkw7DZpk5J7f7tYtO2zasgbYm3zuMIpiQmAOwhfYYIacWDMyxAN
+    SM/jZ1n5+3sPkToT+Oap189eQojdneJFtsC9P6gz7m4eok8QxHA+LrxQBo/g
+X-ME-Proxy: <xmx:IljbapULw1a7H_OJKI_74FTbD6LlTtaFbF8HFQx1a64fStWohCqKYw>
+    <xmx:Iljbat3B9LF4U6EcdnbJpp2mFQbO9oYqRCkhG3Pc8UZpsdHpDcI83w>
+    <xmx:IljbagYGysqVixf30MsxgELiqfSzFd9vvytxneVeeLGGx4vhjw2u4A>
+    <xmx:Iljbagr-9KmAyw5Hr3sU1y7FbM6Tr4eET-jIBvCss4qNhWp1wYWjFw>
+    <xmx:IljbakdqFQ-iiZxC46lGc435QvC5Og2ZMOkS2xxzu6v-mArFabfMg-u7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 23 Oct 2026 08:50:39 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 23 Oct 2026 08:50:41 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c75d2ac3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 0e4b69bb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 23 Oct 2026 12:50:38 +0000 (UTC)
+	Fri, 23 Oct 2026 12:50:41 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 23 Oct 2026 14:50:18 +0200
-Subject: [PATCH 1/7] rerere: stop using `the_repository` in `rerere_path()`
+Date: Fri, 23 Oct 2026 14:50:19 +0200
+Subject: [PATCH 2/7] rerere: stop using `the_repository` in internal
+ helpers
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,325 +125,261 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261023-pks-rerere-wo-the-repository-v1-1-b6ac0c2e4b81@pks.im>
+Message-Id: <20261023-pks-rerere-wo-the-repository-v1-2-b6ac0c2e4b81@pks.im>
 References: <20261023-pks-rerere-wo-the-repository-v1-0-b6ac0c2e4b81@pks.im>
 In-Reply-To: <20261023-pks-rerere-wo-the-repository-v1-0-b6ac0c2e4b81@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-The function `rerere_path()` computes paths of rerere cache entries
-contained in the "rr-cache" directory of `the_repository`. This makes us
-implicitly depend on global state.
-
-Add a repository parameter so that callers can specify which repository
-to compute the path for. Adjust the internal helpers that call it to
-pass down the repository they already have available in their contexts.
+Most of the static helpers in "rerere.c" still rely on `the_repository`
+even though their callers already have a `struct repository` available.
+Thread the repository through those helpers so that we can get rid of
+references to that global variable.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/rerere.c |  6 +++--
- rerere.c         | 82 +++++++++++++++++++++++++++++---------------------------
- rerere.h         |  3 ++-
- 3 files changed, 48 insertions(+), 43 deletions(-)
+ rerere.c | 69 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 35 insertions(+), 34 deletions(-)
 
-diff --git a/builtin/rerere.c b/builtin/rerere.c
-index ca69505283..e900e302c3 100644
---- a/builtin/rerere.c
-+++ b/builtin/rerere.c
-@@ -129,8 +129,10 @@ int cmd_rerere(int argc,
- 		for (size_t i = 0; i < merge_rr.nr; i++) {
- 			const char *path = merge_rr.items[i].string;
- 			const struct rerere_id *id = merge_rr.items[i].util;
--			if (diff_two(rerere_path(&buf, id, "preimage"), path, path, path))
--				die(_("unable to generate diff for '%s'"), rerere_path(&buf, id, NULL));
-+			if (diff_two(rerere_path(the_repository, &buf, id, "preimage"),
-+				     path, path, path))
-+				die(_("unable to generate diff for '%s'"),
-+				    rerere_path(the_repository, &buf, id, NULL));
- 		}
- 
- 		strbuf_release(&buf);
 diff --git a/rerere.c b/rerere.c
-index 7fc32f2cf0..356111838c 100644
+index 356111838c..c568bd5e89 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -95,17 +95,18 @@ static void assign_variant(struct rerere_id *id)
- 	id->variant = variant;
+@@ -129,13 +129,13 @@ static int is_rr_file(const char *name, const char *filename, int *variant)
+ 	return 1;
  }
  
--const char *rerere_path(struct strbuf *buf, const struct rerere_id *id, const char *file)
-+const char *rerere_path(struct repository *repo,
-+			struct strbuf *buf, const struct rerere_id *id, const char *file)
+-static void scan_rerere_dir(struct rerere_dir *rr_dir)
++static void scan_rerere_dir(struct repository *r, struct rerere_dir *rr_dir)
  {
- 	if (!file)
--		return repo_git_path_replace(the_repository, buf, "rr-cache/%s",
-+		return repo_git_path_replace(repo, buf, "rr-cache/%s",
- 					     rerere_id_hex(id));
+ 	struct dirent *de;
+ 	char *path;
+ 	DIR *dir;
  
- 	if (id->variant <= 0)
--		return repo_git_path_replace(the_repository, buf, "rr-cache/%s/%s",
-+		return repo_git_path_replace(repo, buf, "rr-cache/%s/%s",
- 					     rerere_id_hex(id), file);
- 
--	return repo_git_path_replace(the_repository, buf, "rr-cache/%s/%s.%d",
-+	return repo_git_path_replace(repo, buf, "rr-cache/%s/%s.%d",
- 				     rerere_id_hex(id), file, id->variant);
+-	path = repo_git_path(the_repository, "rr-cache/%s", rr_dir->name);
++	path = repo_git_path(r, "rr-cache/%s", rr_dir->name);
+ 	dir = opendir(path);
+ 	free(path);
+ 	if (!dir)
+@@ -154,7 +154,7 @@ static void scan_rerere_dir(struct rerere_dir *rr_dir)
+ 	closedir(dir);
  }
  
-@@ -609,8 +610,8 @@ static int try_merge(struct index_state *istate,
- 	mmfile_t base = {NULL, 0}, other = {NULL, 0};
- 	struct strbuf buf = STRBUF_INIT;
+-static struct rerere_dir *find_rerere_dir(const char *hex)
++static struct rerere_dir *find_rerere_dir(struct repository *r, const char *hex)
+ {
+ 	struct rerere_dir *rr_dir;
  
--	if (read_mmfile(&base, rerere_path(&buf, id, "preimage")) ||
--	    read_mmfile(&other, rerere_path(&buf, id, "postimage"))) {
-+	if (read_mmfile(&base, rerere_path(istate->repo, &buf, id, "preimage")) ||
-+	    read_mmfile(&other, rerere_path(istate->repo, &buf, id, "postimage"))) {
- 		ret = LL_MERGE_CONFLICT;
- 	} else {
- 		/*
-@@ -650,8 +651,8 @@ static int merge(struct index_state *istate, const struct rerere_id *id, const c
- 	 * Normalize the conflicts in path and write it out to
- 	 * "thisimage" temporary file.
- 	 */
--	if ((handle_file(istate, path, NULL, rerere_path(&buf, id, "thisimage")) < 0) ||
--	    read_mmfile(&cur, rerere_path(&buf, id, "thisimage"))) {
-+	if ((handle_file(istate, path, NULL, rerere_path(istate->repo, &buf, id, "thisimage")) < 0) ||
-+	    read_mmfile(&cur, rerere_path(istate->repo, &buf, id, "thisimage"))) {
- 		ret = 1;
- 		goto out;
+@@ -166,7 +166,7 @@ static struct rerere_dir *find_rerere_dir(const char *hex)
+ 		rr_dir->status_alloc = 0;
+ 		strmap_put(&rerere_dirs, hex, rr_dir);
+ 
+-		scan_rerere_dir(rr_dir);
++		scan_rerere_dir(r, rr_dir);
  	}
-@@ -664,9 +665,9 @@ static int merge(struct index_state *istate, const struct rerere_id *id, const c
- 	 * A successful replay of recorded resolution.
- 	 * Mark that "postimage" was used to help gc.
- 	 */
--	if (utime(rerere_path(&buf, id, "postimage"), NULL) < 0)
-+	if (utime(rerere_path(istate->repo, &buf, id, "postimage"), NULL) < 0)
- 		warning_errno(_("failed utime() on '%s'"),
--			      rerere_path(&buf, id, "postimage"));
-+			      rerere_path(istate->repo, &buf, id, "postimage"));
- 
- 	/* Update "path" with the resolution */
- 	f = fopen(path, "w");
-@@ -705,11 +706,11 @@ static void update_paths(struct repository *r, struct string_list *update)
- 		die(_("unable to write new index file"));
+ 	return rr_dir;
+ }
+@@ -181,17 +181,17 @@ static int has_rerere_resolution(const struct rerere_id *id)
+ 	return ((id->collection->status[variant] & both) == both);
  }
  
--static void remove_variant(struct rerere_id *id)
-+static void remove_variant(struct repository *r, struct rerere_id *id)
+-static struct rerere_id *new_rerere_id_hex(char *hex)
++static struct rerere_id *new_rerere_id_hex(struct repository *r, char *hex)
  {
- 	struct strbuf buf = STRBUF_INIT;
--	unlink_or_warn(rerere_path(&buf, id, "postimage"));
--	unlink_or_warn(rerere_path(&buf, id, "preimage"));
-+	unlink_or_warn(rerere_path(r, &buf, id, "postimage"));
-+	unlink_or_warn(rerere_path(r, &buf, id, "preimage"));
- 	id->collection->status[id->variant] = 0;
- 	strbuf_release(&buf);
+ 	struct rerere_id *id = xmalloc(sizeof(*id));
+-	id->collection = find_rerere_dir(hex);
++	id->collection = find_rerere_dir(r, hex);
+ 	id->variant = -1; /* not known yet */
+ 	return id;
  }
-@@ -743,7 +744,7 @@ static void do_rerere_one_path(struct index_state *istate,
- 			const int had_postimage =
- 				id->collection->status[variant] & RR_HAS_POSTIMAGE;
- 			const char *postimage =
--				rerere_path(&buf, id, "postimage");
-+				rerere_path(istate->repo, &buf, id, "postimage");
  
- 			if (copy_file(the_repository,
- 				      postimage,
-@@ -784,7 +785,7 @@ static void do_rerere_one_path(struct index_state *istate,
- 		 * cleanly, there is no point maintaining our own variant.
- 		 */
- 		if (0 <= id->variant && id->variant != variant)
--			remove_variant(id);
-+			remove_variant(istate->repo, id);
+-static struct rerere_id *new_rerere_id(unsigned char *hash)
++static struct rerere_id *new_rerere_id(struct repository *r, unsigned char *hash)
+ {
+-	return new_rerere_id_hex(hash_to_hex(hash));
++	return new_rerere_id_hex(r, hash_to_hex(hash));
+ }
  
- 		if (rerere_autoupdate)
- 			string_list_insert(update, path);
-@@ -802,10 +803,10 @@ static void do_rerere_one_path(struct index_state *istate,
+ /*
+@@ -213,7 +213,7 @@ static void read_rr(struct repository *r, struct string_list *rr)
+ 		unsigned char hash[GIT_MAX_RAWSZ];
+ 		struct rerere_id *id;
+ 		int variant;
+-		const unsigned hexsz = the_hash_algo->hexsz;
++		const unsigned hexsz = r->hash_algo->hexsz;
  
- 	variant = id->variant;
- 	if (handle_file(istate, path, NULL,
--			rerere_path(&buf, id, "preimage")) < 0)
-+			rerere_path(istate->repo, &buf, id, "preimage")) < 0)
- 		goto out;
- 	if (id->collection->status[variant] & RR_HAS_POSTIMAGE) {
--		const char *path = rerere_path(&buf, id, "postimage");
-+		const char *path = rerere_path(istate->repo, &buf, id, "postimage");
- 		if (unlink(path))
- 			die_errno(_("cannot unlink stray '%s'"), path);
- 		id->collection->status[variant] &= ~RR_HAS_POSTIMAGE;
-@@ -846,7 +847,7 @@ static int do_plain_rerere(struct repository *r,
- 		 */
- 		ret = handle_file(r->index, path, hash, NULL);
- 		if (ret != 0 && string_list_has_string(rr, path)) {
--			remove_variant(string_list_lookup(rr, path)->util);
-+			remove_variant(r, string_list_lookup(rr, path)->util);
- 			string_list_remove(rr, path, 1);
+ 		/* There has to be the hash, tab, path and then NUL */
+ 		if (buf.len < hexsz + 2 || get_hash_hex(buf.buf, hash))
+@@ -231,7 +231,7 @@ static void read_rr(struct repository *r, struct string_list *rr)
+ 		if (*(path++) != '\t')
+ 			die(_("corrupt MERGE_RR"));
+ 		buf.buf[hexsz] = '\0';
+-		id = new_rerere_id_hex(buf.buf);
++		id = new_rerere_id_hex(r, buf.buf);
+ 		id->variant = variant;
+ 		/*
+ 		 * make sure id->collection->status has enough space
+@@ -411,13 +411,14 @@ static int handle_conflict(struct strbuf *out, struct rerere_io *io,
+  * Return 1 if conflict hunks are found, 0 if there are no conflict
+  * hunks and -1 if an error occurred.
+  */
+-static int handle_path(unsigned char *hash, struct rerere_io *io, int marker_size)
++static int handle_path(struct repository *r,
++		       unsigned char *hash, struct rerere_io *io, int marker_size)
+ {
+ 	struct git_hash_ctx ctx;
+ 	struct strbuf buf = STRBUF_INIT, out = STRBUF_INIT;
+ 	int has_conflicts = 0;
+ 	if (hash)
+-		git_hash_init(&ctx, the_hash_algo);
++		git_hash_init(&ctx, r->hash_algo);
+ 
+ 	while (!io->getline(&buf, io)) {
+ 		if (is_conflict_marker_line(buf.buf, buf.len, marker_size) == '<') {
+@@ -466,7 +467,7 @@ static int handle_file(struct index_state *istate,
  		}
+ 	}
+ 
+-	has_conflicts = handle_path(hash, (struct rerere_io *)&io, marker_size);
++	has_conflicts = handle_path(istate->repo, hash, (struct rerere_io *)&io, marker_size);
+ 
+ 	fclose(io.input);
+ 	if (io.io.wrerror)
+@@ -746,7 +747,7 @@ static void do_rerere_one_path(struct index_state *istate,
+ 			const char *postimage =
+ 				rerere_path(istate->repo, &buf, id, "postimage");
+ 
+-			if (copy_file(the_repository,
++			if (copy_file(istate->repo,
+ 				      postimage,
+ 				      path, 0666)) {
+ 				if (!had_postimage)
+@@ -853,11 +854,11 @@ static int do_plain_rerere(struct repository *r,
  		if (ret < 1)
-@@ -856,7 +857,7 @@ static int do_plain_rerere(struct repository *r,
+ 			continue;
+ 
+-		id = new_rerere_id(hash);
++		id = new_rerere_id(r, hash);
  		string_list_insert(rr, path)->util = id;
  
  		/* Ensure that the directory exists. */
--		safe_create_dir_in_gitdir(the_repository, rerere_path(&buf, id, NULL));
-+		safe_create_dir_in_gitdir(the_repository, rerere_path(r, &buf, id, NULL));
+-		safe_create_dir_in_gitdir(the_repository, rerere_path(r, &buf, id, NULL));
++		safe_create_dir_in_gitdir(r, rerere_path(r, &buf, id, NULL));
  	}
  
  	for (i = 0; i < rr->nr; i++)
-@@ -1091,8 +1092,8 @@ static int rerere_forget_one_path(struct index_state *istate,
- 		if (!has_rerere_resolution(id))
+@@ -872,18 +873,17 @@ static int do_plain_rerere(struct repository *r,
+ 	return write_rr(rr, fd);
+ }
+ 
+-static void git_rerere_config(void)
++static void git_rerere_config(struct repository *r)
+ {
+-	repo_config_get_bool(the_repository, "rerere.enabled", &rerere_enabled);
+-	repo_config_get_bool(the_repository, "rerere.autoupdate", &rerere_autoupdate);
+-	repo_config_get_int(the_repository, "rerere.locktimeout",
+-			    &rerere_lock_timeout_ms);
+-	repo_config(the_repository, git_default_config, NULL);
++	repo_config_get_bool(r, "rerere.enabled", &rerere_enabled);
++	repo_config_get_bool(r, "rerere.autoupdate", &rerere_autoupdate);
++	repo_config_get_int(r, "rerere.locktimeout", &rerere_lock_timeout_ms);
++	repo_config(r, git_default_config, NULL);
+ }
+ 
+ static GIT_PATH_FUNC(git_path_rr_cache, "rr-cache")
+ 
+-static int is_rerere_enabled(void)
++static int is_rerere_enabled(struct repository *r)
+ {
+ 	int rr_cache_exists;
+ 
+@@ -895,7 +895,7 @@ static int is_rerere_enabled(void)
+ 		return rr_cache_exists;
+ 
+ 	if (!rr_cache_exists &&
+-	    safe_create_dir_in_gitdir(the_repository, git_path_rr_cache()))
++	    safe_create_dir_in_gitdir(r, git_path_rr_cache()))
+ 		die(_("could not create directory '%s'"), git_path_rr_cache());
+ 	return 1;
+ }
+@@ -904,8 +904,8 @@ int setup_rerere(struct repository *r, struct string_list *merge_rr, int flags)
+ {
+ 	int fd;
+ 
+-	git_rerere_config();
+-	if (!is_rerere_enabled())
++	git_rerere_config(r);
++	if (!is_rerere_enabled(r))
+ 		return -1;
+ 
+ 	if (flags & (RERERE_AUTOUPDATE|RERERE_NOAUTOUPDATE))
+@@ -1017,7 +1017,7 @@ static int handle_cache(struct index_state *istate,
+ 			break;
+ 		i = ce_stage(ce) - 1;
+ 		if (!mmfile[i].ptr) {
+-			mmfile[i].ptr = odb_read_object(the_repository->objects,
++			mmfile[i].ptr = odb_read_object(istate->repo->objects,
+ 							&ce->oid, &type, &size);
+ 			if (!mmfile[i].ptr)
+ 				die(_("unable to read %s"),
+@@ -1053,7 +1053,8 @@ static int handle_cache(struct index_state *istate,
+ 	 * Grab the conflict ID and optionally write the original
+ 	 * contents with conflict markers out.
+ 	 */
+-	has_conflicts = handle_path(hash, (struct rerere_io *)&io, marker_size);
++	has_conflicts = handle_path(istate->repo, hash,
++				    (struct rerere_io *)&io, marker_size);
+ 	strbuf_release(&io.input);
+ 	if (io.io.output)
+ 		fclose(io.io.output);
+@@ -1080,7 +1081,7 @@ static int rerere_forget_one_path(struct index_state *istate,
+ 		return error(_("could not parse conflict hunks in '%s'"), path);
+ 
+ 	/* Nuke the recorded resolution for the conflict */
+-	id = new_rerere_id(hash);
++	id = new_rerere_id(istate->repo, hash);
+ 
+ 	for (id->variant = 0;
+ 	     id->variant < id->collection->status_nr;
+@@ -1295,7 +1296,7 @@ bool rerere_gc_needed(struct repository *r, size_t limit)
+ 		    !is_rr_cache_dirname(e->d_name))
  			continue;
  
--		handle_cache(istate, path, hash, rerere_path(&buf, id, "thisimage"));
--		if (read_mmfile(&cur, rerere_path(&buf, id, "thisimage"))) {
-+		handle_cache(istate, path, hash, rerere_path(istate->repo, &buf, id, "thisimage"));
-+		if (read_mmfile(&cur, rerere_path(istate->repo, &buf, id, "thisimage"))) {
- 			error(_("failed to update conflicted state in '%s'"), path);
- 			goto fail_exit;
- 		}
-@@ -1108,7 +1109,7 @@ static int rerere_forget_one_path(struct index_state *istate,
- 		goto fail_exit;
- 	}
- 
--	filename = rerere_path(&buf, id, "postimage");
-+	filename = rerere_path(istate->repo, &buf, id, "postimage");
- 	if (unlink(filename)) {
- 		if (errno == ENOENT)
- 			error(_("no remembered resolution for '%s'"), path);
-@@ -1122,7 +1123,7 @@ static int rerere_forget_one_path(struct index_state *istate,
- 	 * conflict in the working tree, run us again to record
- 	 * the postimage.
- 	 */
--	handle_cache(istate, path, hash, rerere_path(&buf, id, "preimage"));
-+	handle_cache(istate, path, hash, rerere_path(istate->repo, &buf, id, "preimage"));
- 	fprintf_ln(stderr, _("Updated preimage for '%s'"), path);
- 
- 	/*
-@@ -1181,25 +1182,25 @@ int rerere_forget(struct repository *r, struct pathspec *pathspec)
-  * Garbage collection support
-  */
- 
--static timestamp_t rerere_created_at(struct rerere_id *id)
-+static timestamp_t rerere_created_at(struct repository *r, struct rerere_id *id)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct stat st;
- 	timestamp_t ret;
- 
--	ret = stat(rerere_path(&buf, id, "preimage"), &st) ? (time_t) 0 : st.st_mtime;
-+	ret = stat(rerere_path(r, &buf, id, "preimage"), &st) ? (time_t) 0 : st.st_mtime;
- 
- 	strbuf_release(&buf);
- 	return ret;
- }
- 
--static timestamp_t rerere_last_used_at(struct rerere_id *id)
-+static timestamp_t rerere_last_used_at(struct repository *r, struct rerere_id *id)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct stat st;
- 	timestamp_t ret;
- 
--	ret = stat(rerere_path(&buf, id, "postimage"), &st) ? (time_t) 0 : st.st_mtime;
-+	ret = stat(rerere_path(r, &buf, id, "postimage"), &st) ? (time_t) 0 : st.st_mtime;
- 
- 	strbuf_release(&buf);
- 	return ret;
-@@ -1208,11 +1209,11 @@ static timestamp_t rerere_last_used_at(struct rerere_id *id)
- /*
-  * Remove the recorded resolution for a given conflict ID
-  */
--static void unlink_rr_item(struct rerere_id *id)
-+static void unlink_rr_item(struct repository *r, struct rerere_id *id)
- {
- 	struct strbuf buf = STRBUF_INIT;
--	unlink_or_warn(rerere_path(&buf, id, "thisimage"));
--	remove_variant(id);
-+	unlink_or_warn(rerere_path(r, &buf, id, "thisimage"));
-+	remove_variant(r, id);
- 	id->collection->status[id->variant] = 0;
- 	strbuf_release(&buf);
- }
-@@ -1231,18 +1232,19 @@ static void rerere_gc_cutoffs(struct repository *r,
- 		*cutoff_noresolve = now - 15 * 86400;
- }
- 
--static bool rerere_id_is_stale(struct rerere_id *id,
-+static bool rerere_id_is_stale(struct repository *r,
-+			       struct rerere_id *id,
- 			       timestamp_t cutoff_resolve,
- 			       timestamp_t cutoff_noresolve)
- {
- 	timestamp_t then;
- 	timestamp_t cutoff;
- 
--	then = rerere_last_used_at(id);
-+	then = rerere_last_used_at(r, id);
- 	if (then) {
- 		cutoff = cutoff_resolve;
- 	} else {
--		then = rerere_created_at(id);
-+		then = rerere_created_at(r, id);
- 		if (!then)
- 			return false;
- 		cutoff = cutoff_noresolve;
-@@ -1251,11 +1253,11 @@ static bool rerere_id_is_stale(struct rerere_id *id,
- 	return then < cutoff;
- }
- 
--static void prune_one(struct rerere_id *id,
-+static void prune_one(struct repository *r, struct rerere_id *id,
- 		      timestamp_t cutoff_resolve, timestamp_t cutoff_noresolve)
- {
--	if (rerere_id_is_stale(id, cutoff_resolve, cutoff_noresolve))
--		unlink_rr_item(id);
-+	if (rerere_id_is_stale(r, id, cutoff_resolve, cutoff_noresolve))
-+		unlink_rr_item(r, id);
- }
- 
- /* Does the basename in "path" look plausibly like an rr-cache entry? */
-@@ -1297,7 +1299,7 @@ bool rerere_gc_needed(struct repository *r, size_t limit)
+-		id.collection = find_rerere_dir(e->d_name);
++		id.collection = find_rerere_dir(r, e->d_name);
  		for (id.variant = 0;
  		     id.variant < id.collection->status_nr;
  		     id.variant++) {
--			if (rerere_id_is_stale(&id, cutoff_resolve,
-+			if (rerere_id_is_stale(r, &id, cutoff_resolve,
- 					       cutoff_noresolve)) {
- 				count += 256;
- 				if (count >= limit) {
-@@ -1349,7 +1351,7 @@ void rerere_gc(struct repository *r, struct string_list *rr, int flags)
+@@ -1332,8 +1333,8 @@ void rerere_gc(struct repository *r, struct string_list *rr, int flags)
+ 		return;
+ 
+ 	rerere_gc_cutoffs(r, &cutoff_resolve, &cutoff_noresolve);
+-	repo_config(the_repository, git_default_config, NULL);
+-	dir = opendir(repo_git_path_replace(the_repository, &buf, "rr-cache"));
++	repo_config(r, git_default_config, NULL);
++	dir = opendir(repo_git_path_replace(r, &buf, "rr-cache"));
+ 	if (!dir)
+ 		die_errno(_("unable to open rr-cache directory"));
+ 	/* Collect stale conflict IDs ... */
+@@ -1345,7 +1346,7 @@ void rerere_gc(struct repository *r, struct string_list *rr, int flags)
+ 		if (!is_rr_cache_dirname(e->d_name))
+ 			continue; /* or should we remove e->d_name? */
+ 
+-		rr_dir = find_rerere_dir(e->d_name);
++		rr_dir = find_rerere_dir(r, e->d_name);
+ 
+ 		now_empty = 1;
  		for (id.variant = 0, id.collection = rr_dir;
- 		     id.variant < id.collection->status_nr;
- 		     id.variant++) {
--			prune_one(&id, cutoff_resolve, cutoff_noresolve);
-+			prune_one(r, &id, cutoff_resolve, cutoff_noresolve);
- 			if (id.collection->status[id.variant])
- 				now_empty = 0;
- 		}
-@@ -1387,8 +1389,8 @@ void rerere_clear(struct repository *r, struct string_list *merge_rr)
- 		struct strbuf buf = STRBUF_INIT;
+@@ -1362,7 +1363,7 @@ void rerere_gc(struct repository *r, struct string_list *rr, int flags)
  
- 		if (!has_rerere_resolution(id)) {
--			unlink_rr_item(id);
--			rmdir(rerere_path(&buf, id, NULL));
-+			unlink_rr_item(r, id);
-+			rmdir(rerere_path(r, &buf, id, NULL));
- 		}
+ 	/* ... and then remove the empty directories */
+ 	for (i = 0; i < to_remove.nr; i++)
+-		rmdir(repo_git_path_replace(the_repository, &buf,
++		rmdir(repo_git_path_replace(r, &buf,
+ 					    "rr-cache/%s", to_remove.items[i].string));
  
- 		strbuf_release(&buf);
-diff --git a/rerere.h b/rerere.h
-index 1182ee3fb1..ee8d97917d 100644
---- a/rerere.h
-+++ b/rerere.h
-@@ -34,7 +34,8 @@ int repo_rerere(struct repository *, int);
-  * path to that filesystem entity.  With "file" specified with NULL,
-  * return the path to the directory that houses these files.
-  */
--const char *rerere_path(struct strbuf *buf, const struct rerere_id *,
-+const char *rerere_path(struct repository *,
-+			struct strbuf *buf, const struct rerere_id *,
- 			const char *file);
- int rerere_forget(struct repository *, struct pathspec *);
- int rerere_remaining(struct repository *, struct string_list *);
+ 	string_list_clear(&to_remove, 0);
 
 -- 
 2.56.0.307.g5fe7bd680c.dirty
