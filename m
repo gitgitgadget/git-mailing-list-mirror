@@ -1,117 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792756168;
-	b=G2dMN9/hbjvT/m6VY2KyP6sKffVK8xJAEMlqSsnhJ/b8Thdmk4271x8RU4/keQPp4npu
-	 lYzvUSIKmfpa8FBng7d1A30BfYkq/BGVUZIKZa9TF5P6f4xDeGEWMu9wOrosM5Ht+fTqr
-	 njo4s9VurerK7ph1L8CzOFW3SbodFLA2KGQewsFPsTwugyo+wS+e3c/PH88A7Df0/kWUH
-	 WJCPCmcMETWxnklbF2BN+fRx0CyybAEvIR4+QqypAbD5AvuZ+uVukuw5PmkFjSZN5Opzk
-	 OeiIt0naS+IlFYpwq1y+kTjZ/9Gl5hmV0ipJ9QSVJ6iVtfftNCEpYnBDzIvcGdWAk7g==
+	t=1792756171;
+	b=H3TUl59JOjBjCZELlVOqDHZA3IVyAqGLBqcBvVNHktOwjmFyU9My0EXibGBlIFaXEHpv
+	 27v6clpqy1N3SZtdFRPlIp2p5Q0UU0ncddl8Njz4xJCU+6wCMyFqKGtpdhMdXlCIz0ObD
+	 wszk9BKDMjw2T0ligpRF4vi2ZuEEKi9hXtw50nsNUhqkYcfDO13LucogJFf0VBiDJeo5S
+	 j5FJRyJ7yL7Ip9/XuNM4BZ4aeao3nnMbo/x+CsT+RV/XM92j8pRwR/p1ApiXEBwfOoYyR
+	 /HK7jeFKwwLodeMj1Ptu23uQnkTiIm1XCV1aBXUptHR/92sNjcvN3x3pfJp88IML0BQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792756168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792756171;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=dRBgK+UqIr2sTjzMxfZKzu05UZAPPB2KLgECIHmA0ok=;
-	b=WyAZKF2TUiTGvjGkJr/sjNVQzQqIYzaqNZmZIXhjXGiOIY3/bZ7fokFGLdbzlRvMAWsq
-	 SHTEZS94hZCbcGNdmOuCp7pMTEWtPgc2oJpfPc8OFSJQOqP+Gw6HkBREjLwdB32ltJWS5
-	 KZ9hDY00KErv1hWDzbyrtD9VwdFhME8K4N9VZKe2shEP+k9ZwBMvGVY+Q2vNTjhh2TeDx
-	 gpT5KlK1NOIoB1ObRE+FJdx/fFWX7sRhdc2bLNS4K2bD341rb2aEXn3cZ+c37Wl5ICIBJ
-	 CsC21jsSvLuadMJBwSXFqTXqow0taAKYiW8fWi3zpvnXsupcIdDZbtcTV4AOr2gdLCQ==
+	bh=sXAGyylrGDzYXy1aJC93hZSs22dGUL2g4N+jcDqe14Q=;
+	b=gf858kP3njB1OXSVVbhulFPFKUvt2bgRxum3fwGlxglf8Uc09G/yNoMPh9yoU4M5VKR1
+	 cIVBiU7srCfoV9eLLNJ2xwU5PsMIi2Deo9IXqHAC0FnTj/qhyN6EJCdvy1oH2dd8o3KJ+
+	 Zc+sjMH7itR1uCeyfeDDuiGz5Lyi61eWRuvAQUhcfQOOCISYScY+BmoJdAmUNXvNkeYOo
+	 OIxsyXGtZkoXPgDo6s0xJY5Cbs8MC3IjOr6ELv7TsPh7tUiIpru/AnQ4QjT+TKs2hxYyF
+	 GMTWWQ5z5/I8kN7lkGMUgrL6jd88IcT0rQu052tuUMRSpR0kIcbW49ofhdDVkTOnHmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=n0Vo86EB;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="wOT6n/nA";
-	arc=none smtp.remote-ip=103.168.172.144
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b="KK/BKbGt";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="NdRBE/vF";
+	arc=none smtp.remote-ip=103.168.172.159
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12810606A337
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 11:49:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12810606A337
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF240606A327
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 11:49:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DF240606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=n0Vo86EB;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=wOT6n/nA
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 65326EC01D1
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 07:49:27 -0400 (EDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=KK/BKbGt;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=NdRBE/vF
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 29A6B14000F0
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 07:49:30 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Fri, 23 Oct 2026 07:49:27 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 23 Oct 2026 07:49:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792756167;
-	 x=1792842567; bh=dRBgK+UqIr2sTjzMxfZKzu05UZAPPB2KLgECIHmA0ok=; b=
-	n0Vo86EBoyZWYpjhAKLBzJRYh1ZbqzvRCbYmfTmI6cE5eMRKMfaZsJOm6/LgbmgF
-	cABLThtIISR6RmgNYrowc0ILNXCDGQhiEZRV1Qso0OCEuSSGKqvEfPgnM5L1bu8O
-	OGJXn7wxYmv+k6gg5LHSoxRv7W3royGsTX41GmM659on0rIzL6D52zqKFFPzXWqu
-	0LjZsYSiKI3ExREgINVtkqhikgGbexSwG065YqFrKDzI4vIefRPuq/1NYVJT/uJm
-	Qp4YMLUh3HwXlW15ixTQi7guOebi6kHOvDFpog0x3bBCLaERhFUDuMdpWEWi2rXx
-	tcPanLxxau3XfnQVpsSCfQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792756170;
+	 x=1792842570; bh=sXAGyylrGDzYXy1aJC93hZSs22dGUL2g4N+jcDqe14Q=; b=
+	KK/BKbGtnqXUv0+k3cbtX5BRzufhx5H8asUEHWLAhIPz7R/sPegMTnCV1fO4HYhP
+	TDhVjVTeXsS/OlTk128ai1tohmyZDB14yS6dHRtZZBs3uZSVXurA4rx+5gWfFCia
+	af38711ibZ/ORZ4UIeMaR+5sMKGLfgVTcIo3BU2LXm1NpcdlvakKxcOHBBdo/i81
+	ngS/9xYPuSJV2YDNFwZbFs3wGRcUReN6zuKR+1go979SuFxo+arGUneZxhCYJngB
+	C2omd9yS/XdcWWY/eO4bl5rMHX0T9SxgvR+w7HAOZGUW7AtLaycE1CYLB37Yeauv
+	S3sBa2TJqHt6sabSX6amAA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792756167; x=
-	1792842567; bh=dRBgK+UqIr2sTjzMxfZKzu05UZAPPB2KLgECIHmA0ok=; b=w
-	OT6n/nAnb0A2j0DMIC8DES+VHFUHFi5xk713HmeSlxRyUeXymGYqYT0D49wK2Xks
-	xy41ioEPT+w8RV9EN51xZYHEnjyyMJGutjeI2hxz/03DCy3HXna0h9iCwsRNUV+N
-	apfJqwsRL4UyKhkga1An/hs6cpEejNHWb8i72vHcz/I+9z+uJJN1LSHtgm1aj9QL
-	rCXsdGghP4g5hzhALAbKgmzaOVh9H2hTQBvwMdCQe2JZ40C+X6DEP18MUwwAHAWd
-	8pRp3PZ5m/5ocVcucUHYCR0YW4wcnnsXkQOAhyXo/NpNAETT7BXIZWVBsOblZsBH
-	aEsEawvx/X5EplDnKmejQ==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792756170; x=
+	1792842570; bh=sXAGyylrGDzYXy1aJC93hZSs22dGUL2g4N+jcDqe14Q=; b=N
+	dRBE/vFNz5eyD8pVTXBF9+Q3tZf2WXPldjvGHwdGPot4/SbJNDavA3LIu//9KkY0
+	tzkadgGe11lVVlMHLhV7bzEoQx8lyYuGy5dW6Iqv2cLTt1d6k+wnHIONaNA29GCY
+	6o/qZSX8OMptEWgTrfH3/4P8Wuh7FsDtk4ZxKjToS31cfFdxmFw6XPBF0oqQQZbO
+	ArMLEF3VBZNDB7HAEM4Rb1Ssnqn/2ha7GHsiTnqxDHoG75NMBsVcfNkZownSqzZH
+	e3a+JxknRoGl3ls4teqrqxAYOvtM8mzIxsafxklZG92BaI5QLsOQko2ygvuy6+ck
+	BztNbEYDN1Ueist4GPzew==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792756167; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792756170; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:bTxXR5ipao1gNsFmRO0iXcOWermD/UQb+fG9GgZaQJ7w0Vt
-	fn0MdEWJcpOURMlVNhH5RNZqk9pyp4T9saXl0CpXVIYfhfr2xP/ivnqaRLZw9VhR
-	tVcAVpSh079WMjqKEGkoDd4d/YxJWDpufmojk/lvKVYzdUOsdfK86didZnquhpdg
-	ZfTncThL2tPSHI/nwp5vBCZc6qDAMdP2+tjiS/Mtaa8OGBYJHBgPwVLneQ3kFWBI
-	wUwzP3PrGrlbEt01XmOX7cG/lELD+JIx2aNXZ9zoWq/EXarwWbQWkxAiKrvbE8Ln
-	jDqMeNrPqRg7rvCOp2czzn38edaj83lxpztGs7Q==;
+	s=fm2:rsa-sha256:B0IXSp3CCyJwOHoui3FDSguLFXR0/j14rG6AXhvat3IPV1p
+	7s/EYeuHoUxIkRY4TVlXlH1wgqSNzq1aED8OqbguttwXp66LhGalF3jY1WSMrU9d
+	VvCrxgniqGYCfZnQ4HI++9De/OlCzbSinVuaVCQcaMy8b+y0ExiA/sC8kiLydi0U
+	ECSnLaWQQlAlCCSuTM8zo/X6U1ntQBIAEi7j3DiOHS50X9tpb21V2SI2wFb17oUS
+	mXPi0byl9jJ+VdHX2ru88xXhT0Qa5qch2eeo8gyHrP4PUNSTmly/A+VEZEDGMUFq
+	0sPNqTadO4pNSFfQ8rFFtozUDe1i7Q0PqWgbj9A==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:0IUzpJrwzKa+9tePo+ZQIHO8hXiIOYF1QScPvv1qQow=:GOxu0stS/rJsIob2NbjBNhkdRqqzjXkX+EgYSz7R46g=;
-X-ME-Sender: <xms:x0nbagaPiXHBrCT_JiVuKs7uzLFdwnc82seE7oUqi6xizVydpuhOpw>
-    <xme:x0nbahbpLNSE5R3wdRX41YffWzy4Wa_j999qDKGjxvrFpWqiWsZ3wEPA5LSnWDW3f
-    ghwOhpcjcjT45m8Pt-CCXOn4KqM8aQVsMCrF2qOoC_SvGYfba6VWwE>
-X-ME-Received: <xmr:x0nbaon4Gdm_JllfL6PM56ZNHTAuoF7bCiEdb7eKlXeJgYmDpWDfMAKi03v2O3Mwfrw4zw>
+Message-Instance: m=1; h=sha256:chZ0isE4O/2XKtIwXPKH9qv9NF15u9OGWNRZcdo9k1k=:cnULn0e0p8+xNtYciEXbtyVrOFdVAPO8OCUtKSAD/v8=;
+X-ME-Sender: <xms:yknbaqC_GbhELSfFOCgIk6VrJe8qx8135ARzKopoQ2kr10pFmGKl1g>
+    <xme:yknbaqj2M8Xyyc5ybtqiR4DtU05_Ltle_lEbDJ_iEhep1c07twdm1S0FZKmL3klF7
+    WKGSr8ArgOETXLFEaKw_qaKsBHfN0YgvICzZbdCiJ1okW4mgYriOQ>
+X-ME-Received: <xmr:yknbarPr4-2XVhbyPL4351awbaj5bblzp5nIwHwe-w2Fid7YhOsp3bgVffZNmCDZz7c7Qw>
 X-ME-Proxy-Cause: dmFkZTG0+hTO+i6gMx2nVhgf75DkCE1cTt5MaS7zW1lcYP+Rtj9tZnDxzJFmwNUv7xIeFf
     pq00VhSt35RIBrEctxEBpEoN1WAdHAyzZxJpjxxR5jr7PtrISGHynyftfiUGGvyMi5UU81
     VDfcqG7TD1ZL1HjC9e+v1QSHzDDF0WmiZLwGJmjNDj1Um6RpRoLNDl31SYJ1C3FmFei4fA
     Wf+h2HH22/lslJXbXX6Kw17T5UYX/uKBinBzam/dkd89JikzU4X5/r3f/Hcw1+14lRRCb5
-    IwvHBJkMXVWCT9c35EPAdsKZhlNTZNJrjBEowMV0M9iEHP91FDkgj83CRwzVxUUBq4/ktU
-    dynt8VGdidnDFtsX+Y2Jt7FS1cx1F26OROGJ+7Njb9wySOe6UgD8sCVjmwysZGapSvVVmn
-    2l1P+RqiYQwnH058Ka4S222DZ9jPMZl63UvuJa7Yd8b4X/IV12DdJyWbbpraDV4bAcHx3H
-    vDOIMIK6M38s0nVkL2o2oNM+r9GACbHvliPstkP0i2O483EbZ8AIXGho1pHWoveBy39YSt
-    7YG7Gzsot8OFHaQRhsStUmiAQEJ5I6FL0KYYmS3BN/Omtq1NpQ7NErTjUPEbcaRQCOU811
-    wYwn5TTgENahgdbMJFPPcBMzt1atsQ0IkhVpSDA2HBoncC9zw0qhbc/16kSw
-X-ME-Proxy: <xmx:x0nbalwxgNnnPHKrBpdpqUThZ6nuR4XLVTPS_ANmcVuoTru1kcxdRQ>
-    <xmx:x0nbauMphPrs8aZVdwNgPnpRR8hsiBEj-peXAZ4KtfXxsXJzz1nPSQ>
-    <xmx:x0nbahSzw3ykoPHMY-VAL9BV4mvG3zf8Poj3Bh4-FUWidtxL6eRFZw>
-    <xmx:x0nbakbqOzy91BODhVtKoEDPrF9DilNhgK46CJJnqQTgENuBvaRNvQ>
-    <xmx:x0nbamKKk1kaOnJMsDoi55JS3PSxNdsKfz0A7PHlUHwoU6w14m5oavP2>
+    IwvHBJkMXVWCT9c35EPAdsKZhlNTZNJrjBEowMV0M9iEHP91FDkgj83CRwzVxUUBq4/kPa
+    eBewmRXe2gJri65AI3QVotWS5Oj02PJvwt2Y+7/TYjNz1OsRkG2/zEf+m9aaGxnVWyl+uo
+    eFXoG0tSqnoCbsKjZk7GvJ4vvRFXyc3Mm1BxOMlWNA8ZVuND2RymcFR77OAcR/2SrwVK16
+    lhoo0WPajR5Gv4xL8h6rX533j1IxfHC2xY0QsEWAcfXZFE5oVZHLeQCxqmIrOXS5z4yl5w
+    9tD4XmoSQLJvZa6QD9D/rVH7i13yDj8C50F3MLVLJ8S+U9OxsK5VuWtWA1eRNH7K1TW0p2
+    paYbYMS5Ei5srveiXC4HwpqfJjaeO9Z4SjXUsiIzSA8Euh3jiBPMIbTUJOow
+X-ME-Proxy: <xmx:yknbaj52rLqXu0OPopWJ54vOm8IscjZnDyFnQiYzFbmN0bt9quP8mg>
+    <xmx:yknbah2KmByXgbF-5v2cA6A0nWD_TAQwNYtD7dzFDuZIfQoBIpze6A>
+    <xmx:yknbasbHXE8hcYB6RW7pjKGgTbqkkV68sy6i_sGrqWYdNkDhWvD6DA>
+    <xmx:yknbahCmGeCGC18Qf6BlpeSBSX7i7RnOiV0uja29C8mSWT6pX10nuQ>
+    <xmx:yknbapy0q-vGifNb0tU9WnlfoGCTMZ5gm7CekzWeOcLiAN12GH78Fo_f>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Oct 2026 07:49:26 -0400 (EDT)
+ 23 Oct 2026 07:49:29 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 44a0232b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 23 Oct 2026 11:49:26 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id c2f36ac1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 23 Oct 2026 11:49:28 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 23 Oct 2026 13:49:11 +0200
-Subject: [PATCH v3 2/7] setup: introduce object storage extension
+Date: Fri, 23 Oct 2026 13:49:12 +0200
+Subject: [PATCH v3 3/7] setup: allow overriding object storage format via
+ environment
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,458 +124,125 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261023-b4-pks-odb-extension-v3-2-b1bb30a006db@pks.im>
+Message-Id: <20261023-b4-pks-odb-extension-v3-3-b1bb30a006db@pks.im>
 References: <20261023-b4-pks-odb-extension-v3-0-b1bb30a006db@pks.im>
 In-Reply-To: <20261023-b4-pks-odb-extension-v3-0-b1bb30a006db@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-Introduce a new "extensions.objectStorage" extension that allows the
-user to configure the primary object database source of a repository.
-The value is a URI in the format "<schema>[://<payload>]", mirroring
-the format used by "extensions.refStorage":
-
-  - The schema identifies the backend that shall be used. For now the
-    only supported schema is "files", which is the existing object
-    database backed by loose objects and packfiles.
-
-  - The payload can be passed to configure the backend, and its
-    interpretation is backend-specific. For the "files" backend, it
-    allows you to configure a different location for the ".git/objects"
-    directory.
-
-Eventually, this mechanism will be used to support alternative backends.
+The ref storage format configured via "extensions.refStorage" can be
+overridden with the GIT_REF_STORAGE_FORMAT environment variable.
+Introduce the GIT_OBJECT_STORAGE_FORMAT environment variable that
+overrides "extensions.objectStorage" in the same way.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/config/extensions.adoc     | 23 +++++++++++++++++++
- Documentation/object-storage-format.adoc |  6 +++++
- odb.c                                    | 39 +++++++++++++++++++++++++++++++-
- odb.h                                    | 12 ++++++++++
- odb/source-files.c                       |  7 ++++++
- odb/source-files.h                       |  1 +
- odb/source.c                             | 14 +++++++++++-
- odb/source.h                             |  5 +++-
- repository.c                             | 10 ++++++++
- repository.h                             | 18 +++++++++++++++
- setup.c                                  | 19 ++++++++++++++++
- setup.h                                  |  3 +++
- t/t0001-init.sh                          | 30 ++++++++++++++++++++++++
- t/unit-tests/u-odb-inmemory.c            |  1 +
- 14 files changed, 185 insertions(+), 3 deletions(-)
+ Documentation/git.adoc |  5 +++++
+ environment.h          |  1 +
+ setup.c                | 16 ++++++++++++++++
+ t/t0001-init.sh        | 26 ++++++++++++++++++++++++++
+ 4 files changed, 48 insertions(+)
 
-diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
-index be6678bb5b..4f3a66a454 100644
---- a/Documentation/config/extensions.adoc
-+++ b/Documentation/config/extensions.adoc
-@@ -56,6 +56,29 @@ preciousObjects:::
- For historical reasons, this extension is respected regardless of the
- `core.repositoryFormatVersion` setting.
+diff --git a/Documentation/git.adoc b/Documentation/git.adoc
+index 3abb4701c3..34812131bb 100644
+--- a/Documentation/git.adoc
++++ b/Documentation/git.adoc
+@@ -609,6 +609,11 @@ double-quotes and respecting backslash escapes. E.g., the value
+ `GIT_REFERENCE_BACKEND`::
+ 	Deprecated alias of `GIT_REF_STORAGE_FORMAT`.
  
-+objectStorage:::
-+	Specify the object storage format and a corresponding payload. The
-+	value can be either a format name or a URI:
-++
-+--
-+* A format name alone (e.g., `files`).
++`GIT_OBJECT_STORAGE_FORMAT`::
++	Specify which object storage format to use along with its URI.
++	See `extensions.objectStorage` option in linkgit:git-config[1] for more
++	details. Overrides the config variable when used.
 +
-+* A URI format `<format>://<payload>` explicitly specifies both the
-+  format and payload (e.g., `files:///foo/bar`).
-+
-+Supported formats are:
-+
-+include::../object-storage-format.adoc[]
-+
-+--
-++
-+Note that this setting should only be set by linkgit:git-init[1] or
-+linkgit:git-clone[1]. Trying to change it after initialization will make
-+preexisting objects inaccessible.
-++
-+NOTE: This extension is still considered EXPERIMENTAL and may be subject to
-+change.
-+
- refStorage:::
- 	Specify the ref storage format and a corresponding payload. The value
- 	can be either a format name or a URI:
-diff --git a/Documentation/object-storage-format.adoc b/Documentation/object-storage-format.adoc
-new file mode 100644
-index 0000000000..4c4aef6dda
---- /dev/null
-+++ b/Documentation/object-storage-format.adoc
-@@ -0,0 +1,6 @@
-+`files[://<path>]`;; for loose objects and packfiles. This is the default.
-++
-+The optional payload can be passed to specify an alternative filesystem path
-+where the objects will be stored. Relative paths are resolved relative to the
-+`$GIT_COMMON_DIR`. Defaults to `$GIT_COMMON_DIR/objects` when no payload is
-+provided. The payload is ignored when `GIT_OBJECT_DIRECTORY` is set.
-diff --git a/odb.c b/odb.c
-index 98c5c862f5..0649622bc6 100644
---- a/odb.c
-+++ b/odb.c
-@@ -27,6 +27,42 @@
- #include "trace2.h"
- #include "write-or-die.h"
- 
-+static const char * const object_storage_name_by_format[] = {
-+	[OBJECT_STORAGE_FORMAT_UNKNOWN] = "unknown",
-+	[OBJECT_STORAGE_FORMAT_FILES] = "files",
-+};
-+
-+enum object_storage_format object_storage_format_by_name(const char *name)
-+{
-+	for (size_t i = 0; i < ARRAY_SIZE(object_storage_name_by_format); i++)
-+		if (!strcmp(object_storage_name_by_format[i], name))
-+			return i;
-+	return OBJECT_STORAGE_FORMAT_UNKNOWN;
-+}
-+
-+enum object_storage_format object_storage_format_by_uri(const char *uri, char **payload)
-+{
-+	enum object_storage_format format;
-+	const char *schema_end;
-+	char *name;
-+
-+	schema_end = strstr(uri, "://");
-+	if (!schema_end) {
-+		name = xstrdup(uri);
-+		if (payload)
-+			*payload = NULL;
-+	} else {
-+		name = xstrndup(uri, schema_end - uri);
-+		if (payload)
-+			*payload = *(schema_end + 3) ? xstrdup(schema_end + 3) : NULL;
-+	}
-+
-+	format = object_storage_format_by_name(name);
-+
-+	free(name);
-+	return format;
-+}
-+
- int odb_mkstemp(struct object_database *odb,
- 		struct strbuf *temp_filename, const char *pattern)
- {
-@@ -757,7 +793,8 @@ struct object_database *odb_new(struct repository *repo,
- 	o->repo = repo;
- 	pthread_mutex_init(&o->replace_mutex, NULL);
- 
--	o->source = odb_source_new(o, flags);
-+	o->source = odb_source_new(o, repo->object_storage_format,
-+				   repo->object_storage_payload, flags);
- 	o->inmemory_objects = &odb_source_inmemory_new(o)->base;
- 
- 	return o;
-diff --git a/odb.h b/odb.h
-index 0ccc47ee73..cb0505334a 100644
---- a/odb.h
-+++ b/odb.h
-@@ -6,6 +6,7 @@
- #include "oid-array.h"
- #include "oidset.h"
- #include "oidmap.h"
-+#include "repository.h"
- #include "string-list.h"
- #include "thread-utils.h"
- 
-@@ -26,6 +27,17 @@ struct strvec;
-  */
- char *compute_alternate_path(const char *path, struct strbuf *err);
- 
-+/*
-+ * Parse the given URI in the format "<schema>[://<payload>]" and return the
-+ * object storage format identified by the schema. If `payload` is non-NULL it
-+ * will be set to a newly allocated copy of the payload, or NULL if the URI has
-+ * no or an empty payload. Returns `OBJECT_STORAGE_FORMAT_UNKNOWN` for unknown
-+ * schemas.
-+ */
-+enum object_storage_format object_storage_format_by_uri(const char *uri, char **payload);
-+
-+enum object_storage_format object_storage_format_by_name(const char *name);
-+
- /*
-  * The object database encapsulates access to objects in a repository. It
-  * manages the object source as well as auxiliary data structures required to
-diff --git a/odb/source-files.c b/odb/source-files.c
-index 455f409db0..4a7cbbfd9b 100644
---- a/odb/source-files.c
-+++ b/odb/source-files.c
-@@ -1235,6 +1235,7 @@ struct odb_files_dir *odb_source_files_find_dir(struct object_database *odb, con
- }
- 
- struct odb_source_files *odb_source_files_new(struct object_database *odb,
-+					      const char *payload,
- 					      enum odb_new_flags flags)
- {
- 	struct odb_source_files *files;
-@@ -1245,6 +1246,12 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
- 		object_dir = xstrdup_or_null(getenv(DB_ENVIRONMENT));
- 		alternates = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
- 	}
-+	if (!object_dir && payload) {
-+		if (is_absolute_path(payload))
-+			object_dir = xstrdup(payload);
-+		else
-+			object_dir = xstrfmt("%s/%s", odb->repo->commondir, payload);
-+	}
- 	if (!object_dir)
- 		object_dir = xstrfmt("%s/objects", odb->repo->commondir);
- 
-diff --git a/odb/source-files.h b/odb/source-files.h
-index 837e890304..71e8db84ff 100644
---- a/odb/source-files.h
-+++ b/odb/source-files.h
-@@ -70,6 +70,7 @@ struct odb_source_files {
- 
- /* Allocate and initialize a new object source. */
- struct odb_source_files *odb_source_files_new(struct object_database *odb,
-+					      const char *payload,
- 					      enum odb_new_flags flags);
+ Git Commits
+ ~~~~~~~~~~~
+ `GIT_AUTHOR_NAME`::
+diff --git a/environment.h b/environment.h
+index b336459e90..c26ef92b52 100644
+--- a/environment.h
++++ b/environment.h
+@@ -45,6 +45,7 @@
+ #define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
+ #define GIT_REFERENCE_BACKEND_ENVIRONMENT "GIT_REFERENCE_BACKEND"
+ #define GIT_REF_STORAGE_FORMAT_ENVIRONMENT "GIT_REF_STORAGE_FORMAT"
++#define GIT_OBJECT_STORAGE_FORMAT_ENVIRONMENT "GIT_OBJECT_STORAGE_FORMAT"
  
  /*
-diff --git a/odb/source.c b/odb/source.c
-index b25ef14df8..a2a6d97ccd 100644
---- a/odb/source.c
-+++ b/odb/source.c
-@@ -24,9 +24,21 @@ const char *odb_source_type_to_name(enum odb_source_type type)
- }
- 
- struct odb_source *odb_source_new(struct object_database *odb,
-+				  enum object_storage_format format,
-+				  const char *payload,
- 				  enum odb_new_flags flags)
- {
--	return &odb_source_files_new(odb, flags)->base;
-+	struct odb_source *source;
-+
-+	switch (format) {
-+	case OBJECT_STORAGE_FORMAT_FILES:
-+		source = &odb_source_files_new(odb, payload, flags)->base;
-+		break;
-+	default:
-+		BUG("unknown object storage format");
-+	}
-+
-+	return source;
- }
- 
- void odb_source_init(struct odb_source *source,
-diff --git a/odb/source.h b/odb/source.h
-index 1867347dfc..1ab3208888 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -304,9 +304,12 @@ struct odb_source {
- 
- /*
-  * Allocate and initialize a new source for the given object database. The path
-- * of the source is derived from repository paths.
-+ * of the source is derived from repository paths or from the object storage
-+ * format.
-  */
- struct odb_source *odb_source_new(struct object_database *odb,
-+				  enum object_storage_format format,
-+				  const char *payload,
- 				  enum odb_new_flags flags);
- 
- /*
-diff --git a/repository.c b/repository.c
-index 970d181828..77ecf6b604 100644
---- a/repository.c
-+++ b/repository.c
-@@ -217,6 +217,15 @@ void repo_set_ref_storage_format(struct repository *repo,
- 	repo->ref_storage_payload = xstrdup_or_null(payload);
- }
- 
-+void repo_set_object_storage_format(struct repository *repo,
-+				    enum object_storage_format format,
-+				    const char *payload)
-+{
-+	repo->object_storage_format = format;
-+	free(repo->object_storage_payload);
-+	repo->object_storage_payload = xstrdup_or_null(payload);
-+}
-+
- /*
-  * Attempt to resolve and set the provided 'gitdir' for repository 'repo'.
-  * Return 0 upon success and a non-zero value upon failure.
-@@ -382,6 +391,7 @@ void repo_clear(struct repository *repo)
- 	free(repo->worktree);
- 	free(repo->submodule_prefix);
- 	free(repo->ref_storage_payload);
-+	free(repo->object_storage_payload);
- 
- 	odb_free(repo->objects);
- 
-diff --git a/repository.h b/repository.h
-index 2a348012e8..8c4437762e 100644
---- a/repository.h
-+++ b/repository.h
-@@ -22,6 +22,11 @@ enum ref_storage_format {
- 	REF_STORAGE_FORMAT_REFTABLE,
- };
- 
-+enum object_storage_format {
-+	OBJECT_STORAGE_FORMAT_UNKNOWN,
-+	OBJECT_STORAGE_FORMAT_FILES,
-+};
-+
- #ifdef WITH_BREAKING_CHANGES /* Git 3.0 */
- # define REF_STORAGE_FORMAT_DEFAULT REF_STORAGE_FORMAT_REFTABLE
- #else
-@@ -178,6 +183,16 @@ struct repository {
- 	 */
- 	char *ref_storage_payload;
- 
-+	/* Repository's object storage format, as serialized on disk. */
-+	enum object_storage_format object_storage_format;
-+
-+	/*
-+	 * Object storage information as needed for the backend. This contains
-+	 * only the payload from the object storage format URI without the
-+	 * schema.
-+	 */
-+	char *object_storage_payload;
-+
- 	/* A unique-id for tracing purposes. */
- 	int trace2_repo_id;
- 
-@@ -255,6 +270,9 @@ void repo_set_compat_hash_algo(struct repository *repo, uint32_t compat_algo);
- void repo_set_ref_storage_format(struct repository *repo,
- 				 enum ref_storage_format format,
- 				 const char *payload);
-+void repo_set_object_storage_format(struct repository *repo,
-+				    enum object_storage_format format,
-+				    const char *payload);
- void initialize_repository(struct repository *repo);
- RESULT_MUST_BE_USED
- int repo_init(struct repository *r, const char *gitdir, const char *worktree);
+  * Environment variable used to propagate the --no-advice global option to the
 diff --git a/setup.c b/setup.c
-index 3ee19f3e3c..249bd67876 100644
+index 249bd67876..70aa90a9cb 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -686,6 +686,20 @@ static enum extension_result handle_extension(const char *var,
- 			return error(_("invalid value for '%s': '%s'"),
- 				     "extensions.refstorage", value);
- 		data->ref_storage_format = format;
-+		return EXTENSION_OK;
-+	} else if (!strcmp(ext, "objectstorage")) {
-+		enum object_storage_format format;
-+
-+		if (!value)
-+			return config_error_nonbool(var);
-+
-+		FREE_AND_NULL(data->object_storage_payload);
-+		format = object_storage_format_by_uri(value, &data->object_storage_payload);
-+		if (format == OBJECT_STORAGE_FORMAT_UNKNOWN)
-+			return error(_("invalid value for '%s': '%s'"),
-+				     "extensions.objectstorage", value);
-+		data->object_storage_format = format;
-+
- 		return EXTENSION_OK;
- 	} else if (!strcmp(ext, "relativeworktrees")) {
- 		data->relative_worktrees = git_config_bool(var, value);
-@@ -694,6 +708,7 @@ static enum extension_result handle_extension(const char *var,
- 		data->submodule_path_cfg = git_config_bool(var, value);
- 		return EXTENSION_OK;
- 	}
-+
- 	return EXTENSION_UNKNOWN;
- }
+@@ -2079,6 +2079,7 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
  
-@@ -864,6 +879,7 @@ void clear_repository_format(struct repository_format *format)
- 	free(format->work_tree);
- 	free(format->partial_clone);
- 	free(format->ref_storage_payload);
-+	free(format->object_storage_payload);
- 	init_repository_format(format);
- }
+ 		if (startup_info->have_repository) {
+ 			struct strbuf err = STRBUF_INIT;
++			const char *object_storage_uri;
+ 			const char *ref_backend_uri;
  
-@@ -1786,6 +1802,9 @@ int apply_repository_format(struct repository *repo,
- 	repo_set_ref_storage_format(repo,
- 				    format->ref_storage_format,
- 				    format->ref_storage_payload);
-+	repo_set_object_storage_format(repo,
-+				       format->object_storage_format,
-+				       format->object_storage_payload);
- 	repo->repository_format_worktree_config =
- 		format->worktree_config;
- 	repo->repository_format_submodule_path_cfg =
-diff --git a/setup.h b/setup.h
-index 7a3efe5e48..a4afa8910e 100644
---- a/setup.h
-+++ b/setup.h
-@@ -190,6 +190,8 @@ struct repository_format {
- 	int compat_hash_algo;
- 	enum ref_storage_format ref_storage_format;
- 	char *ref_storage_payload;
-+	enum object_storage_format object_storage_format;
-+	char *object_storage_payload;
- 	int sparse_index;
- 	char *work_tree;
- 	struct string_list unknown_extensions;
-@@ -207,6 +209,7 @@ struct repository_format {
- 	.is_bare = -1, \
- 	.hash_algo = GIT_HASH_DEFAULT, \
- 	.ref_storage_format = REF_STORAGE_FORMAT_FILES, \
-+	.object_storage_format = OBJECT_STORAGE_FORMAT_FILES, \
- 	.unknown_extensions = STRING_LIST_INIT_DUP, \
- 	.v1_only_extensions = STRING_LIST_INIT_DUP, \
- }
+ 			/*
+@@ -2097,6 +2098,21 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+ 					die(_("unknown ref storage format: '%s'"), ref_backend_uri);
+ 			}
+ 
++			/*
++			 * Likewise, the GIT_OBJECT_STORAGE_FORMAT environment
++			 * variable should override the repository config for
++			 * 'extensions.objectStorage'.
++			 */
++			object_storage_uri = getenv(GIT_OBJECT_STORAGE_FORMAT_ENVIRONMENT);
++			if (object_storage_uri) {
++				FREE_AND_NULL(discovery.format.object_storage_payload);
++				discovery.format.object_storage_format =
++					object_storage_format_by_uri(object_storage_uri,
++								     &discovery.format.object_storage_payload);
++				if (discovery.format.object_storage_format == OBJECT_STORAGE_FORMAT_UNKNOWN)
++					die(_("unknown object storage format: '%s'"), object_storage_uri);
++			}
++
+ 			if (apply_repository_format(repo, &discovery.format,
+ 						    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+ 				die("%s", err.buf);
 diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index f1d227f271..c7c464d3a2 100755
+index c7c464d3a2..5e7c25e42c 100755
 --- a/t/t0001-init.sh
 +++ b/t/t0001-init.sh
-@@ -839,6 +839,36 @@ test_expect_success 'init with --ref-storage-format=garbage' '
- 	test_cmp expect err
+@@ -869,6 +869,32 @@ test_expect_success DEFAULT_REPO_FORMAT 'extensions.objectStorage with unknown b
+ 	test_grep "invalid value for ${SQ}extensions.objectstorage${SQ}: ${SQ}garbage://payload${SQ}" err
  '
  
-+test_expect_success DEFAULT_REPO_FORMAT 'extensions.objectStorage is not allowed with repo version 0' '
++test_expect_success DEFAULT_REPO_FORMAT 'GIT_OBJECT_STORAGE_FORMAT overrides extensions.objectStorage' '
 +	test_when_finished "rm -rf objstorage" &&
 +	git init objstorage &&
-+	git -C objstorage config set extensions.objectStorage files &&
-+	test_must_fail git -C objstorage rev-parse 2>err &&
-+	test_grep "repo version is 0, but v1-only extension found" err
-+'
++	(
++		cd objstorage &&
++		git config set core.repositoryformatversion 1 &&
++		git config set extensions.objectStorage files://objs &&
++		mkdir .git/objs .git/other &&
 +
-+test_expect_success DEFAULT_REPO_FORMAT 'extensions.objectStorage with files backend' '
-+	test_when_finished "rm -rf objstorage" &&
-+	git init objstorage &&
-+	git -C objstorage config set core.repositoryformatversion 1 &&
-+	git -C objstorage config set extensions.objectStorage files &&
-+	test_commit -C objstorage A &&
-+	git -C objstorage rev-parse --verify HEAD
-+'
++		echo content >file &&
++		oid=$(git hash-object -w file) &&
++		test_path_is_file .git/objs/$(test_oid_to_path "$oid") &&
++		git cat-file -e "$oid" &&
 +
-+test_expect_success DEFAULT_REPO_FORMAT 'extensions.objectStorage with unknown backend' '
-+	test_when_finished "rm -rf objstorage" &&
-+	git init objstorage &&
-+	git -C objstorage config set core.repositoryformatversion 1 &&
-+	git -C objstorage config set extensions.objectStorage garbage &&
-+	test_must_fail git -C objstorage rev-parse 2>err &&
-+	test_grep "invalid value for ${SQ}extensions.objectstorage${SQ}: ${SQ}garbage${SQ}" err &&
++		test_must_fail env GIT_OBJECT_STORAGE_FORMAT=files://other git cat-file -e "$oid" &&
++		GIT_OBJECT_STORAGE_FORMAT=files://other git hash-object -w file &&
++		test_path_is_file .git/other/$(test_oid_to_path "$oid") &&
 +
-+	git config --file objstorage/.git/config extensions.objectStorage garbage://payload &&
-+	test_must_fail git -C objstorage rev-parse 2>err &&
-+	test_grep "invalid value for ${SQ}extensions.objectstorage${SQ}: ${SQ}garbage://payload${SQ}" err
++		cat >expect <<-EOF &&
++		fatal: unknown object storage format: ${SQ}garbage${SQ}
++		EOF
++		test_must_fail env GIT_OBJECT_STORAGE_FORMAT=garbage git rev-parse 2>err &&
++		test_cmp expect err
++	)
 +'
 +
  test_expect_success MINGW 'core.hidedotfiles = false' '
  	git config --global core.hidedotfiles false &&
  	rm -rf newdir &&
-diff --git a/t/unit-tests/u-odb-inmemory.c b/t/unit-tests/u-odb-inmemory.c
-index a8da278c68..c4412949c1 100644
---- a/t/unit-tests/u-odb-inmemory.c
-+++ b/t/unit-tests/u-odb-inmemory.c
-@@ -12,6 +12,7 @@
- 
- static struct repository repo = {
- 	.hash_algo = &hash_algos[GIT_HASH_SHA1],
-+	.object_storage_format = OBJECT_STORAGE_FORMAT_FILES,
- };
- static struct object_database *odb;
- 
 
 -- 
 2.56.0.307.g5fe7bd680c.dirty
