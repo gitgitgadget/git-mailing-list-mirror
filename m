@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.178
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792761124;
-	b=GquJLwBMfntnkAOAb1PCGb+RVmWYV6yq2KeJZuhzZSAiu756fYitLhaI9qGyR48fsWZN
-	 NJUYsXCnSrd4DWr+L4Xsa6lna8t4oKOjeaSGCnQIvdBWORjQq8MjaBzb9IG/2sh09qKSR
-	 /R1Ao7VOt+xUB4Ksl/Qj0NH5Js6bB7HFHGYgUaFgEsF8YPhFVpPLFP0GOrgK1WGFEF8a0
-	 QU56N+cbwZ1UkhQYQRyBnVY6wX5txBCLyzzDRZmWcCTzxiQVeIcygv0H6P8/HuP0W9aja
-	 Rd+hJzP2D7PJvZOBKcIkv2A1R/ZMotsBwYp6NCJg2HsHRcA6gdnF6rvKKE2hfbezYeg==
+	t=1792761130;
+	b=0/1nP0yjZhIqNy+oq88ZIrY5zSb2OquJW3pcJYQK4piIWW3XDDseiCZBkxV3HZzSF53e
+	 UwXZ51h8t/8XyTGFeXnId1Tg+3ZR8w5JYro5xZYw5j2rVm8CqZouxrWW2NjhKD4CyeKV2
+	 iUFtJ2/EtTKsHqdYq8V/GMr0UD3lqcXHkhLdxIV06+NA/v6RwnXPRxWFssvJ1TDksz4ll
+	 +M8AZLQax5cKfpaioqY85KDco0L8YnY4Yjuu866z+t39iyUyC+Kk2Bm4wfY513FXAYjJ1
+	 qQ5XMQYuyUjwx9GHcC0R7OoKI74uLolYgGS0zqWYteAuL+w01iLGVYtiPHnX3FIDxdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792761124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792761130;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=4IfS119Ck+vK2hgQMAw1dkOTERIuFBJV2Wof0vsKVSA=;
-	b=Tyo+8/kVbMZuPHyX3EBIpchYOPySXXN2mKqALqk5sU9RsQDhj0LDdSaFqurFDTIMY/qH
-	 ZQJCqa15NVvJa2hPUCR5qscNmt5AWbV1TNEhEA9mdzQL+VTZzLkRsvp9/o+OT0hBqlOYQ
-	 k26g3hUjwzh1kqZjXuytYGQ4YmqvfbS35N6J+kUoxW389MI/k1HgdOH0VjCC/ZHsPXUM5
-	 gPlVQVgS42p+t/bZZltBMnerqAc1n8xN81uO7T06boTEQ1yXqy90mthzDkJplFXVQgw/n
-	 JLghJDTohFzYnyIJoYTKV/+avnVR9DnnKV89xeuxjbgfcpzl1Cy9HuzvSRqJ4kWtksA==
+	bh=mVhfNlPmnwCIf6sTIvIxseX7Z8fURhLIa+M9mizGm4E=;
+	b=iChJoNcCxhyxIpHyZOk6GMgUYDoQIoIoFyxasiCjqcAw1nPedRsIKgIyRJduE+nMXfM5
+	 1WfcylNR3VFnLVQMepFitjria+pC8SWUjhIApOvQ9P0//WVynpY/enLO/F539fADdh3LZ
+	 ExItnKMnR89oxfPtzz8tYu4ewb25njiB4fev8Arl3l6xFmABSIlxXKR4VEtAVH6+QKspp
+	 NHbO3L0muA3JKH4Fi1E8fNNgDMMVe+M6oxHfk1N5sSK2VXCwk4goTqFyShwJ+CT7OEqno
+	 WdoIc1RUcOKYPzv6KUMmu4iVRrmhSyNb61/KWAb/oibeEMBPOJjt7ZNNI9E0qzngaow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=OamfKK4a;
-	arc=none smtp.remote-ip=209.85.128.173
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CwRxANTX;
+	arc=none smtp.remote-ip=209.85.128.178
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C03606A327
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 13:12:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 63C03606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9CF606A31A
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 13:12:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4A9CF606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=OamfKK4a
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-8b05bf699easo8369217b3.2
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 06:12:04 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CwRxANTX
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-8ab432273c5so7384677b3.3
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 06:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792761123; x=1793365923; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792761129; x=1793365929; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=4IfS119Ck+vK2hgQMAw1dkOTERIuFBJV2Wof0vsKVSA=;
-        b=OamfKK4alf2JIVjTSm9P9wkWmUmq/BSANolp+nQg9gWYGUsmZG1j7VMyHv/yYvrJSt
-         0YFfnsUOkkdkI5CBcQSZ+HzgUr/vr4stKwM47AZcuRFHdplsx4rm0phtPrfvZOwAA6Mo
-         rl5O5XmBhsmHJwN5etXGIqnylW/yfz6Rl4Xwu3Ync+w/PauvWkat0HP/1fKYJACV0DJO
-         JMwbiIdLCHSRA0oqzFK/atzgyqttIpA8Eqkrpu+ewqj+wL3kcVdfyC8VALUurJTws+ae
-         7BMTp8LPMwEhXSe6yiqxHuuz01EKD/Gea6ZjmrjlKPd9EYZ2CvpZkz+LtpxTUodNTUVD
-         hdKg==
+        bh=mVhfNlPmnwCIf6sTIvIxseX7Z8fURhLIa+M9mizGm4E=;
+        b=CwRxANTXxVzZxn5esqN0ExjbKd727dfwzwkdc++37lB8RPCUY48yhm111D9XEqS0Sv
+         3nyBuXY2k+3v3qDTCaCAhmSDVeoM+X3DvKY3LOA6GN96r7CAOi7q/h/Zqt5urEcpmH42
+         QdAzzhvvFI/sukNhMwpDKnJHystItnUtxwM0EsKLllxAJYAPwcvdJP9pACcB7Tskxjei
+         rMmKBWASarIE1aR52WZxXypm/wqq7vzL8C8rGfyn2F+aZwVW6is4KXsWJgqieXkTMU8H
+         tj56p7kpEis/hVfeBlwMhh5/4+XhTzwPf4hchxs4fGjESFu1EMugtZTMoemx/G4goBuf
+         ArNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792761123; x=1793365923;
+        d=1e100.net; s=20260707; t=1792761129; x=1793365929;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4IfS119Ck+vK2hgQMAw1dkOTERIuFBJV2Wof0vsKVSA=;
-        b=ZqWyTTH7pW2acpQ9UtOw6f+BnmyWeTCLPMrK4kee7H+VuQ48adUzIMIllx107lucyE
-         CByRuwldvQMKUViCRSh9pTM2yXeUfcjjZ8tWPmgk2VeKnzuB6Qk7Gv4dYw8fvqK7pGFt
-         ar+Qy46xrf1tQSiGDzVFzfK7ASWSmWcsV2R+qy2NvqenmZ0enHDVQAtxZDlfNzMrZh3t
-         JtBUk02G5IwSHUHIg8ULjEikMZvOrlKrVQGW3NU+wsTPyc/vSCbNH+vqun8OgIrxRIM8
-         Wram46WgcQ/gabNl7/gELKelj7i2suY3byawsUt5MXDobLTb7Zghh6qwQuREcCyTznJq
-         DTHQ==
-X-Gm-Message-State: AFq9FYJka2jc66cji20w3k3uyPo+zhlMd3Yk1UQQB7bLd73HYQ1BQF3d
-	VdZ21Twi1Rjpxx1GjY970jLwjCN2pKmPSYDhb+AlY/x2mQMj5hFZySVvTT+ShXcl
-X-Gm-Gg: AYBFou2dSngKsBH1oXN26Ey7hWl7Ay1e4DahYA0DrUD0F4oLPDEz5yvQIVcxAvE16N3
-	p9/nYS6yaulZPL58qIWE9AY0NVVF2/tFEyTkEbyeaGoRH7MoTPwKRyOdxl5Kq9Jrhre7UW7/oHn
-	x9IdOe+TWDWS2+smfW+ZnQkioiyGsuPTkw60TPWNBRVfsoarDkuYxuIUisvWCGaVqI6Jb2uQiZp
-	4+IEQ55sK0BLW+4sopW+Ibx0dWtZs5bxAEGfpWuDC2X+xXLxBvTah3KK5N3fLwvgOCkA8sQJjxM
-	EFZcTTSjKNCD8Ba6gopEYSs4eg9Vwq+uAGJNNS8vMsu/n6uAeJG/zb86ldhPtCe5abIBom4oLuo
-	PqvQotgMT+GNz9NnexUxV+EFxd4SLiBg17ACB58k7dNLz8C1D/JMSAOLSoH5Ccr7pO4kFihd2h1
-	1Awc6EMe/SF/TY3Rjr4IiwabTuZazbZFrkyDBAWjwicj9bp7OYKDqWvUI08j10sVNRIQ/O3B+G3
-	1CtgIOs7Dlq1OXAABc5y36/PaPKPMriijznwUpY3jwVHNjStJVmn1PJgPw=
-X-Received: by 2002:a05:690c:f81:b0:897:697e:52a0 with SMTP id 00721157ae682-8b157e80a62mr18216467b3.55.1792761123145;
-        Fri, 23 Oct 2026 06:12:03 -0700 (PDT)
+        bh=mVhfNlPmnwCIf6sTIvIxseX7Z8fURhLIa+M9mizGm4E=;
+        b=eph3+F70WizT80sbvD4T8OjcRrYdUdxwgqY7qwr0YlD6YyX/6Jh1YvNZOaU/eyB/8V
+         LPJPnSx4snxanQg1Zv0czVtGq6Hbig3djj5pV+SvChg3WQ/exskBcYrLFmOR0IYkIF4b
+         /nLF1WVufzwGSJrDdUaxUxJJrbkcRJBmMn2I72K6q8+LKjAxHu6vVAsgwA0zkZZ8gCUb
+         OF7cWbc+yaNwO1yIergV4yRJaKTb5PR6tLOkfZ22AN4R0KEWg4mbu5MK6wERw5ZgsoZF
+         /9RAf1Nr3Er8yIZ/AgJbVRUjA4tA0l/ruqYs5QBil0CsriYCNPDHz3L0RFbc2KgF+HU1
+         wpNA==
+X-Gm-Message-State: AFq9FYL2sh8kxpLZP7gp9n2yOktj9E2NM7DgYLa4DIJ7EKj63XoqX9N8
+	mqyCiBGsCzYj13oa03uMxn19MdvDNsiCDO73V5m4PhJ8iW12NkfDMYTKqZ7SX5z1
+X-Gm-Gg: AYBFou1fgGP+18yZPG6w6fbWB2hlodW+GSj1xExxxXY3dE/ljBDJJUQz4Snyswf48Sp
+	AOfOSb0DDtbJF6ggN0RE7QbsZ+vT/IDctUInClc7KfqdyWiVE24rhbFCYP4qKhhhM++upPUNF+R
+	vz51d72LJuF8/cHu9rB5XNq0Jhc2W91tjzXIVJZFoEHF9FNdvrSkRo7KZZiowmVCiahx4qfLwXY
+	e4kQZieYOpGk2lkXJoQ2jWEw5jXVae2UdwAtg7/ySxuvjH5qHAa6bsqGfw4vNRT8jxJJwORU/Qu
+	6JoYKyOaQqvvAVhmIKLK9yuYQPI+6vqayHT4jaV2xWGiJQoGgsoEEsRd8rSUbDhDPJF/VeEXtZz
+	qgyU4VT1NwEarGkkfrQX4kpmj+idBMfG7w1EgASX7PKfu7GJfgpF4nXR/du0JIexyNjm+9XuN4j
+	QXu6osPZe19XwZY2Dy4LXZooJO6nOyhtVgrvWUopHvwL8FbBfZBv0S11tohk9kI5LRdreBCBTWn
+	5THkk4Wfrbheu0HhUUuJY0hqxfOifnPoa+xDKxrEDXVfaMwb8lMDX1Y91A=
+X-Received: by 2002:a05:690c:e151:10b0:8b1:ce5:be3a with SMTP id 00721157ae682-8b157e9b43cmr12578517b3.37.1792761129141;
+        Fri, 23 Oct 2026 06:12:09 -0700 (PDT)
 Received: from [127.0.0.1] ([52.188.86.148])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b156164114sm13114917b3.30.2026.10.23.06.12.02
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b156120c30sm13095157b3.22.2026.10.23.06.12.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 06:12:02 -0700 (PDT)
-Message-Id: <e25824c21d0dbc6161da81cae84cd755fc0e6fec.1792761119.git.gitgitgadget@gmail.com>
+        Fri, 23 Oct 2026 06:12:08 -0700 (PDT)
+Message-Id: <7ef572bc05d96fea05289191c6738751b704fbfb.1792761119.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2211.v5.git.1792761119.gitgitgadget@gmail.com>
 References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
 	<pull.2211.v5.git.1792761119.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 23 Oct 2026 13:11:54 +0000
-Subject: [PATCH v5 1/6] Documentation: describe connectivity checking
+Date: Fri, 23 Oct 2026 13:11:57 +0000
+Subject: [PATCH v5 4/6] connected: add transfer.connectivityCheck config
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -102,159 +102,180 @@ Cc: Kristofer Karlsson <krka@spotify.com>,
 
 From: Kristofer Karlsson <krka@spotify.com>
 
-Add Documentation/technical/connectivity-check.adoc describing
-the connectivity invariant and the full connectivity check.
+Add the transfer.connectivityCheck configuration option to choose
+the algorithm used for the connectivity check.  For now the only
+accepted value is "full", which is the existing behavior and the
+default.  Unknown values fall back to "full" with a warning, so
+that configuration written for a newer version of Git does not
+break fetches and pushes; "full" is always a correct check.
 
+check_connected() now always tells its rev-list subprocess which
+algorithm to use with an internal --connectivity-check=<mode>
+option, which so far only accepts "full".  Passing the mode
+explicitly means rev-list knows it is running a connectivity
+check, so later optimizations can be limited to that case.
+
+This prepares for an incremental check added in the next commit.
+
+Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 ---
- Documentation/Makefile                        |   1 +
- .../technical/connectivity-check.adoc         | 112 ++++++++++++++++++
- Documentation/technical/meson.build           |   1 +
- 3 files changed, 114 insertions(+)
- create mode 100644 Documentation/technical/connectivity-check.adoc
+ Documentation/config/transfer.adoc  | 16 ++++++++++++++++
+ Documentation/rev-list-options.adoc |  5 +++++
+ builtin/rev-list.c                  | 22 ++++++++++++++++++++++
+ connected.c                         | 26 ++++++++++++++++++++++++++
+ 4 files changed, 69 insertions(+)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index f8dea4b395..1747f4a00b 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -122,6 +122,7 @@ TECH_DOCS += technical/bitmap-format
- TECH_DOCS += technical/build-systems
- TECH_DOCS += technical/bundle-uri
- TECH_DOCS += technical/commit-graph
-+TECH_DOCS += technical/connectivity-check
- TECH_DOCS += technical/directory-rename-detection
- TECH_DOCS += technical/hash-function-transition
- TECH_DOCS += technical/large-object-promisors
-diff --git a/Documentation/technical/connectivity-check.adoc b/Documentation/technical/connectivity-check.adoc
-new file mode 100644
-index 0000000000..a112d5be3e
---- /dev/null
-+++ b/Documentation/technical/connectivity-check.adoc
-@@ -0,0 +1,112 @@
-+Connectivity checking
-+=====================
+diff --git a/Documentation/config/transfer.adoc b/Documentation/config/transfer.adoc
+index f1ce50f4a6..811456f1bf 100644
+--- a/Documentation/config/transfer.adoc
++++ b/Documentation/config/transfer.adoc
+@@ -1,3 +1,19 @@
++transfer.connectivityCheck::
++	Choose which algorithm to use for the connectivity check
++	performed during object transfer operations such as
++	linkgit:git-fetch[1] and linkgit:git-receive-pack[1].
++	The connectivity check verifies that all objects reachable
++	from the incoming tips are available locally or, in a partial
++	clone, promised by a promisor remote.
++	The variants are as follows:
+++
++--
++`full` (default);;
++	Walk the full object closure of the boundary commits.
++--
+++
++Unknown values are treated as `full`, with a warning.
 +
-+After receiving new objects via fetch, push (receive-pack), clone,
-+or bundle, Git verifies that the new reference tips do not leave
-+the repository in a state where reachable objects are missing.
-+This verification is called the connectivity check.
+ transfer.credentialsInUrl::
+ 	A configured URL can contain plaintext credentials in the form
+ 	`<protocol>://<user>:<password>@<domain>/<path>`. You may want
+diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
+index bd9f345690..3979a142a5 100644
+--- a/Documentation/rev-list-options.adoc
++++ b/Documentation/rev-list-options.adoc
+@@ -1102,6 +1102,11 @@ It is an error to use `--missing-only` without `--missing=print` or
+ 	stronger than `--missing=allow-promisor` because it limits the
+ 	traversal, rather than just silencing errors about missing
+ 	objects.
 +
-+Connectivity invariant
-+----------------------
++`--connectivity-check=full`::
++	(For internal use only.)  Used by `check_connected()` to
++	select the connectivity check algorithm; see
++	`transfer.connectivityCheck` in linkgit:git-config[1].
+ endif::git-rev-list[]
+ 
+ `--no-walk[=(sorted|unsorted)]`::
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 0faa833fac..619855f4e4 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -29,6 +29,23 @@
+ #include "quote.h"
+ #include "strbuf.h"
+ 
++enum connectivity_check_mode {
++	CONNECTIVITY_CHECK_FULL,
++};
 +
-+A repository is connected when every object reachable from its
-+references is available locally (with exceptions noted below).
-+The reverse does not hold: objects that exist in the object
-+database but are not reachable from any reference may be
-+incomplete or lack a connected closure.
++struct connectivity_check {
++	enum connectivity_check_mode mode;
++};
 +
-+The connectivity check maintains this invariant when references
-+are updated.  It trusts that all objects reachable from existing
-+reference tips are already fully connected and verifies that the
-+new reference tips do not introduce references to unavailable
-+objects.  Verification is permitted to stop when it reaches
-+objects already reachable from existing references, since their
-+closure is already connected.  These trusted references include
-+local references and references from alternate object stores.
++static void parse_connectivity_check(const char *arg,
++				     struct connectivity_check *check)
++{
++	if (!strcmp(arg, "full"))
++		check->mode = CONNECTIVITY_CHECK_FULL;
++	else
++		die(_("unknown --connectivity-check mode '%s'"), arg);
++}
 +
-+Without this check, a truncated or corrupted transfer could leave
-+a repository in a state where later history walks encounter
-+missing objects.
+ struct rev_list_info {
+ 	struct rev_info *revs;
+ 	int flags;
+@@ -727,6 +744,7 @@ int cmd_rev_list(int argc,
+ 	int bisect_find_all = 0;
+ 	int use_bitmap_index = 0;
+ 	int filter_provided_objects = 0;
++	struct connectivity_check connectivity_check = { 0 };
+ 	const char *show_progress = NULL;
+ 	int ret = 0;
+ 
+@@ -769,6 +787,8 @@ int cmd_rev_list(int argc,
+ 		if (!strcmp(arg, "--exclude-promisor-objects")) {
+ 			repo->fetch_if_missing = 0;
+ 			revs.exclude_promisor_objects = 1;
++		} else if (skip_prefix(arg, "--connectivity-check=", &arg)) {
++			parse_connectivity_check(arg, &connectivity_check);
+ 		} else if (skip_prefix(arg, "--missing=", &arg)) {
+ 			parse_missing_action_value(repo, arg);
+ 		} else if (!strcmp(arg, "--missing-only")) {
+@@ -848,6 +868,8 @@ int cmd_rev_list(int argc,
+ 
+ 		if (!strcmp(arg, "--exclude-promisor-objects"))
+ 			continue; /* already handled above */
++		if (starts_with(arg, "--connectivity-check="))
++			continue; /* already handled above */
+ 		if (skip_prefix(arg, "--missing=", &arg))
+ 			continue; /* already handled above */
+ 
+diff --git a/connected.c b/connected.c
+index 34045f1032..0147b7d3b3 100644
+--- a/connected.c
++++ b/connected.c
+@@ -1,4 +1,5 @@
+ #include "git-compat-util.h"
++#include "config.h"
+ #include "gettext.h"
+ #include "hex.h"
+ #include "odb.h"
+@@ -66,6 +67,27 @@ static int check_connected_promisor(struct repository *repo,
+ 	return 1;
+ }
+ 
++/*
++ * Fills in the --connectivity-check mode to pass to rev-list.
++ */
++static void connectivity_check_mode(struct repository *repo,
++				    struct strbuf *mode)
++{
++	const char *algorithm = NULL;
 +
-+Exceptions
-+~~~~~~~~~~
++	if (repo_config_get_string_tmp(repo,
++				       "transfer.connectivitycheck",
++				       &algorithm))
++		algorithm = "full";
++	if (!strcasecmp(algorithm, "full"))
++		strbuf_addstr(mode, "full");
++	else {
++		warning(_("unknown transfer.connectivityCheck algorithm '%s', "
++			  "using 'full'"), algorithm);
++		strbuf_addstr(mode, "full");
++	}
++}
 +
-+Gitlink entries (submodule references) are excluded from
-+connectivity checking.  Their target objects belong to a separate
-+repository.
-+
-+In partial clones, objects promised by a promisor remote are
-+accepted as connected without requiring local existence.  The
-+check excludes promisor objects from traversal so that it does
-+not trigger on-demand fetches for them.
-+
-+Full connectivity check
-+-----------------------
-+
-+The full connectivity check runs a `rev-list` subprocess, feeding
-+the new reference tips via stdin.  A normal invocation is roughly:
-+
-+    git rev-list --objects --stdin --not --all --quiet
-+        --alternate-refs [--exclude-promisor-objects]
-+
-+In a partial clone, objects received from a promisor remote do
-+not need to be checked: anything they reference is promised by
-+that remote and can be fetched on demand.  So if every new tip is
-+found in a promisor packfile, `rev-list` is not run at all.
-+Otherwise it runs with `--exclude-promisor-objects`, so that the
-+traversal stops at promisor objects instead of fetching them.
-+
-+Consider the following graph after a fetch, where all reference
-+tips point directly to commits.  For simplicity, only local
-+references appear on the already-connected side; alternate refs
-+play the same role.  N3 is a merge commit:
-+
-+            /-------------L2
-+           /
-+    C1---B1---C2---B2-----L1
-+          \         \
-+           N1        N3---T2
-+            \       /
-+             N2-----------T1
-+
-+    L1, L2:         local refs
-+    T1, T2:         incoming tips (new refs)
-+    N1, N2, N3:     incoming commits (N3 is a merge)
-+    B1, B2:         boundary commits (already connected)
-+    C1, C2:         already connected (but not boundary)
-+
-+The incoming set is the commits reachable from the incoming
-+tips but not from the already-connected side.  Boundary commits
-+are the already-connected commits at the edge of that set.  Here
-+B1 is an ancestor of B2, which happens when incoming branches
-+fork at different depths in the existing history.
-+
-+The `--not --all` arguments establish the trust boundary: the
-+incoming set is the commits reachable from the new tips but not
-+from any existing reference.
-+
-+The traversal then walks the trees of the boundary commits and
-+marks those objects uninteresting.  Trees of incoming commits
-+are then walked, stopping at objects already marked as
-+uninteresting.  The cost of marking boundary trees uninteresting
-+dominates when the boundary commits have large trees, even when
-+the incoming changes are small.
-+
-+Deepening fetches
-+~~~~~~~~~~~~~~~~~
-+
-+For deepening fetches (where the shallow boundary moves), the
-+full check omits `--not --all`.  There is no existing-reference
-+boundary at which the walk can stop.  Instead, traversal follows
-+the effective shallow boundary supplied for the deepened
-+repository.  The new content may be below the old shallow
-+boundary even when the tips themselves have not changed.
-+
-+Non-commit tips
-+~~~~~~~~~~~~~~~
-+
-+When a new reference points to a non-commit object, such as a
-+tag, tree, or blob, that object is not part of the commit walk.
-+These non-commit tips are verified during the tree and blob
-+traversal that follows the commit walk within the same rev-list
-+invocation.
-diff --git a/Documentation/technical/meson.build b/Documentation/technical/meson.build
-index 9ce11d5e48..c439a7a072 100644
---- a/Documentation/technical/meson.build
-+++ b/Documentation/technical/meson.build
-@@ -11,6 +11,7 @@ articles = [
-   'build-systems.adoc',
-   'bundle-uri.adoc',
-   'commit-graph.adoc',
-+  'connectivity-check.adoc',
-   'directory-rename-detection.adoc',
-   'hash-function-transition.adoc',
-   'large-object-promisors.adoc',
+ /*
+  * If we feed all the commits we want to verify to this command
+  *
+@@ -84,6 +106,7 @@ int check_connected(struct repository *repo,
+ 	struct child_process rev_list = CHILD_PROCESS_INIT;
+ 	FILE *rev_list_in;
+ 	struct check_connected_options defaults = CHECK_CONNECTED_INIT;
++	struct strbuf mode = STRBUF_INIT;
+ 	const struct object_id *oid;
+ 	int err = 0;
+ 	struct packed_git *new_pack = NULL;
+@@ -133,6 +156,9 @@ int check_connected(struct repository *repo,
+ 	if (opt->progress)
+ 		strvec_pushf(&rev_list.args, "--progress=%s",
+ 			     _("Checking connectivity"));
++	connectivity_check_mode(repo, &mode);
++	strvec_pushf(&rev_list.args, "--connectivity-check=%s", mode.buf);
++	strbuf_release(&mode);
+ 
+ 	rev_list.git_cmd = 1;
+ 	if (opt->env)
 -- 
 gitgitgadget
 
