@@ -1,91 +1,127 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792734996;
-	b=BNQwOgtQ9BbQWZKmdNv1XLQSZe2Idpol2daJMLkna4ezgifxYtCChYf8HZqDPvlSN569
-	 HLYuHajoAFG9MmwveLuqmZlJTy39d1lxxDmqvTYBvokVHZbzSunx/gQN7zGvwv/aqgZVt
-	 yI6FBqHLsKE8UKDV7MTKApY0s/dYW+ztR5ve33Otxb1qlgJcRNR9/jUxjQisouyr5lGOM
-	 VRFlhhjwUZRPaVruuU+pkeRbLRkjbOKd8wIUrtiR5MAWqbq/PmQXsx1jETrqsUxScrG+d
-	 MydErbthPrHeyzP4fTB0FhnJskCrQwjwfMARQPQ9ppRbXO4ynU7hNfXgWg3zkSR3D0A==
+	t=1792736477;
+	b=cfATUNNTPWtOuI4cN+Qv95aE4d2bNyo8kefjY+H/zn3uVQSafCbh5DUEj0thQtUabZE0
+	 wzwsPLeF9d8nUHVNhv+ybXQ+/4W0bdESKgBtynS/kmebim3yGx30JfokAwOfF+Cv+t1a1
+	 qy+aNcVI1Yo8NNITVGfVznnGDXfXlR9T4GO8UaW8sBPkm+zR6uGniDm9xbHmnNNoJx2jI
+	 OIHM0Rt+u1kYR+NP9efoqY6l7xyP/AKHuv9oTewefNHK7jhhZeOhi+KtbIZ3vvAqYLaiS
+	 kQjuu2SOwFQtIS8yDbBoewzh0Ndf9dtw/JSjrZ+edasYE4AzTngQpFxxYqQjnKj0FzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792734996;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=hkfIHZQWuMldMzbFWTwr4pLpGkj4uey/onj+IEAxXy8=;
-	b=aOhq1F5/YkrgevCmQUrTgmkPpaYdzJxYaDWnAd5Cv5Cs9sMZFU05dRFYYhCo01PGChDg
-	 CkuEy5ax6saaRFzD6qVyublSn3mgoIMJxuSVkzfpD/mFwdSAl0p4rolQFv19cVBxKsKBJ
-	 nD9sMkTQVo0xD5t2wKA5EDRIqgBGLp6x4OElzpzhGYN5GApP0GUwyuQlfa9++W8+BOJWx
-	 caGl3WQ5GzEIfUqWg6KK+mmmJ6U9+wRv5sdelrPO7DwFlNrv8CJSER7ZB0MRFzFSQbiOc
-	 kPgTftJEKO8thQ4zjW8ob64gM5dISAnsF7Q4sH2nGX5EbuE2cymDQ66M7hkuuQN57Nw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792736477;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=xdS/d3gAogEsLQf5DQFtvmELaSq7I6QsXA/f2QCAETI=;
+	b=xn+s+0PEVMoKgorrfC5mYcuXuyyANxpLDVFMvMqafZr/VfauSXVgV25ypVqCN7rw6Fyk
+	 /VoCFAEZlvXm4bI3mYKkNiSmB/naRLLDHcmdqs4OqKOItXTA9wWblx6KopO/qSrYgjdkB
+	 th5ByUeUuCEY/eoQQx7DoJr8ofH85lN/I3OwVAqK+Wb3oyHk9+7A37mhRuii6V9ShItc/
+	 XVbkftlhYM7ifLt13caX+hGmluk9uNJhtzKeSYTbphrqzcxG9aNQOZifZH8uLHu1iI1wL
+	 MdUXexEeE9hXo4teN7HooJFtj25YNmnTld/N2wzXAUSGEDuxrI+0UBq/i6X+mCBffYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hzzcoRs3;
-	arc=none smtp.remote-ip=209.85.219.53
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b="VhnKwp/r";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QZLVY8SG;
+	arc=none smtp.remote-ip=103.168.172.157
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125D4606A31A
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 05:56:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 125D4606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6FA606A31A
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 06:21:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1E6FA606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hzzcoRs3
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-91b813ac020so9114946d6.3
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 22:56:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792734995; x=1793339795; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=hkfIHZQWuMldMzbFWTwr4pLpGkj4uey/onj+IEAxXy8=;
-        b=hzzcoRs31hkQGTE1e5va/ZjDUX8ycnTPOeS8oZKrBvXJoIBMPFQlYANqKaRTE12KSi
-         eLrAMYVTlMorHBwMtvslxYjomOVK/NwPPTqMixLEgElQ6PZDeLvX+nBM9WwRHvFf6SBk
-         nAzXKHLUJ02oitvjUCJMG5pyu6GtnCSMTojUh/NXIDv1DjavcehHqm7M2iT6cvkIcuHk
-         kxlcIG1nZ0Tl80jI0YtIXKNkKycFMVBViHBqvcS443VUsMU3u6JamWDaK8N9hi+0XlxE
-         51OddolekMrG86OYVRoIEQ8cP5TRmkFKvzm+/nYSFTDJiCSEakaszkVUFACxLo5SxFku
-         aM+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792734995; x=1793339795;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hkfIHZQWuMldMzbFWTwr4pLpGkj4uey/onj+IEAxXy8=;
-        b=df3BAcOl0/NMh8fVYJz9G9k4PdVbOTbeHxjiEdy/Mf3E2jOpFLYX0H8VyJLeM14k77
-         r35DNfWigtwv42DUSM7947hvzknfH6Im6zzdtQcze0+1sSqoOUTZkhhcJlg+A+5yeqVM
-         dmXXiU1VqycKd39sI+1nvyS+H2DNvs7yqJnKrZViKvV8hUzjpZQ5ay6r52g4Ye6jA9NR
-         QcgVRwyAmcPW9aMq2HUvKcdbadEE6Z3sENrVcJEwg4Sau2We1KYoQ0OFNjZ8OxkYW50x
-         67ZmN2Zb+VXeJPf0D4vHAdqO2Y6fOis+qHVPOKiDrA0dyNCE5cMnSj2JgJijjw/9Js3Y
-         IT5Q==
-X-Gm-Message-State: AFq9FYJ3+ozpjY+9DU5h0m5uVonzwFI6yWeJSqcFZ+LwJ/zMjh/qH3Pu
-	C/VIT+shSPAIZcuAnM0uatWL5N5I7Noe6siXnh15ycGC2Em3MnMnJzqcYCURd27X
-X-Gm-Gg: AYBFou3r7ImOtC0HrHoIK85noE2T3Xr90qLl+jlIbFwYvO1AOrxeV/WQZz3XDx499QG
-	hdr0GY7gZnxwn48NZAyOFiznKXtF5JOso8fZGKVGrP9BIj926KvovmslhaaVO7wo49NGZnaDPTv
-	R/bZfVHP0+GtNo7DfZ0kW5mFCqf5H01N4G9KSo/VLPEZcYHZYki2Cyem5IZFG592yFWv0E5pw2Q
-	Oely4qRWzGN5UKPWlC5L1veYV9KUJOwqzkr6NZYNrXY3MNjPxJzeQ8ek+kRnai3U9PDiwk4bG4T
-	Ic3yaj15sWqkHmeI1SodxkpZ+eh+nAOEFE98XQ+gZRp8tAXFVjZRw4XvB4doL/JEqJ/2V/ASHeI
-	vawMhchUI3uoYmD6n0uWo6DBN8YLzqjbdZd4aqxG2wtzTilubhYN2GJ8rHlr4O+KlTzf0v6NOsS
-	o2FRtMW+VT8VpGSLU2H6gZcwpAv9jbDLIRm2QQd3tfcMpEoyjBz1viPP1Gw5MaXOzo1dvewew4S
-	SE0ewJ/tO3X8gLBOBDm4i4Bumf7Bx9d0DEDHnwY2rPmKqCYecDWwD5ATpM=
-X-Received: by 2002:a05:6214:19c4:b0:91b:b26a:9783 with SMTP id 6a1803df08f44-91c3ac6db6amr12395386d6.55.1792734994681;
-        Thu, 22 Oct 2026 22:56:34 -0700 (PDT)
-Received: from [127.0.0.1] ([20.115.62.68])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c396e33a6sm11935706d6.16.2026.10.22.22.56.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 22:56:34 -0700 (PDT)
-Message-Id: <pull.2276.v2.git.1792734993812.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
-References: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
-From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 23 Oct 2026 05:56:33 +0000
-Subject: [PATCH v2] diff-delta: use safe integer arithmetic
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=VhnKwp/r;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QZLVY8SG
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1CA081400137
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 02:21:16 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Fri, 23 Oct 2026 02:21:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792736476;
+	 x=1792822876; bh=xdS/d3gAogEsLQf5DQFtvmELaSq7I6QsXA/f2QCAETI=; b=
+	VhnKwp/rWN7y5FBCDDHfINT8cNC1tv1JfYty2PvlipPmz3O3SFcvjR3bj2OmIlCh
+	kRakvyg00N7z/BzHRXk1SrGKdrB4R5osz+xNC2exee9RX625D2LFXzz9U8NxeiRa
+	ze9YLL4fD/kNbp5O7r9t8Skx84gPod66JhmgXSI321o6ff0Fz/+mhZkkJ11wNqKY
+	0WNQaNFarQvfziNNt1dVoxb6EmlWgHPO6MuAcKByGVaHletUgQKhW9bPKw6w8vEv
+	sRWN5BY/kshlt/sL9bdxCBJpviIshndnahzO+IHIWlHoiZPO4O9fRVcS8jIzAziX
+	RhCVOOUcOe9N/w6CowSygQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792736476; x=
+	1792822876; bh=xdS/d3gAogEsLQf5DQFtvmELaSq7I6QsXA/f2QCAETI=; b=Q
+	ZLVY8SGgnRUIS/7fdDauwA6k1pnDIXCAfQPRpuNJRNKfBn9vvusgJNiXBubkq2BH
+	Z00ZDHSPH80hrPdWDm9t2n5+MqVCOfCoXroulR2plr/hzb3PClyh6DCqV3iCEguH
+	bz/4jKCAsrNW3ek+iGrnZ77182LJrGIwPBfh1ZV5tufFcz9gvPMz1eLy6f6Rzj9z
+	bDXDXzWSFo0AF0ABLX5GxYDHM8XtSHBRIiOSRohBMPVk3vghyHQG8Js8y3+SKvOA
+	+Th/oa3GbUoLMujpifwqYEcpQhpReWJEYAydOdue+Z665jBtDBsVblydLtwu6J7J
+	QqEFaDQyaTxozwJIGnNXw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792736476; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:OPR78ZW50ViXcp6xqEigvj2HLSUShAvocHK6wjA0fGim3sN
+	msQMdqXQBOI7oWrf26MfF46g93mHcvs7WrAt6asKcghYsO12akRomiNyh+QijYaq
+	MI2adQ3usXlcxy2cC8zCkMfvSUICoeXSLT6II+l3gz0s+h3qRJoWjqjlQDY4wNP3
+	TxKRDoASqT+ARcAtZcD4cb+IoK/quqIjk0++nPPfiDLTkzTrsNf8qxH6WPvkbjjo
+	4gjgkRYVbHT8tWCPRzL1IxTedNEQ3Qtq3msR4F1fxUvnxRgY1QmDeYoX8h0JEHT/
+	WXH/uPpA5ZtgLlbLkSRJl7r0yDoDkHvrz1H38Rg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-disposition,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:pP7jYFDIei7UPwC+S3qR78/7vX3ZLWFXIg4OPFCdvsk=:K5J6o+xNscJICqPWIWdMEwEIKFdomcqJ0ExWKaLIQPg=;
+X-ME-Sender: <xms:3PzaamECl4ji_OtmekMWmUhqiuES92sGAjNqItVCOfvCBB_omBadkw>
+    <xme:3PzaauMPCD-joPgS5-eergyo2obMTdOb-7Xqnwtwn59AjIF_F8LP90eGcivZt31hA
+    O60sa1nOqJfwKGtWw4H2Y7Pp2JLD6G1CKv3Wns3HC8wIWN3felLO-Q>
+X-ME-Received: <xmr:3PzaaodICzf7xishCvTljwuMmF0ljIfnQVJMN9jnt1ZsO5lOZ6USrtNPwBATAOE-TzTHxA>
+X-ME-Proxy-Cause: dmFkZTFdb7k+le7C7dN6xonIuqrk05JAQx0Oe2Yw6SovV2LEmeGwr8nGZjMGQ8kV4D7Bxu
+    g1E3yt84RqAzgIEr6IFXOD/oxjzYTd1+TfAJeWA/VskBPfr91EH+GZK2S7j4a6EoGE8uLC
+    59qt1+ZmJyWKd0xec2dwjuTukD9uPyH9t6HMocvqFqHCdh4ljenvskWOPXLWyM15ltae8m
+    k93I9uKO4bo4QB6mp19rzKRB95Jy/1ZLCj2MDdQ4dnpdyUkMVf4wqsd22Jp5+9kEW+HeUl
+    BTocF07VpTpfxCKDD0Zr4jP8PxZItHCRYEuBD0KuBzhB0F7cR5UfZG9b1Yvi9P+UOPJGp3
+    avPZJeh1cOGYGDJZ9ysl5QKuV9AlbbLB+PYVTjElnYK/D0I0dOWy0qaC7D2hIMIV8h/KAe
+    CvAwDIye2qPvCsf7hac09Sffv9s+XUKFCU0Yx1fa/fScLi4lZjz2tpWqecWmrYkT8l75oD
+    yROQSdANcz55BhrU4tz47n+QJU2/RSve23BG3hzGD4GbDicWWZ4/zJWZvRVSnTIQ06lMVl
+    PkWZW2QG8xJrX36S9pRPbXXlYNGqU559wb+JNs+efs7NX4QVxAGbQDlwdwkBrClvMky/jU
+    5U+awzra69WxyToJhoOeNfN5+R4ezJUMNuOKlR3SI4D5JqP0pWfRoMfkgDDg
+X-ME-Proxy: <xmx:3PzaartVDAfQzKbGzyF-fDzxmNDLBpQ7WW-sWSHRtRKcMYy4F4sYpA>
+    <xmx:3Pzaapk_wHwCFlrkBsU_VN7rybDGoSGS0IwlKxiX7DWeYeD3qTLgAg>
+    <xmx:3PzaatzjBiqEtWVw6TEXTy88IgXY0hjU9eDJTUC8YIEKZM-Fk75Hqw>
+    <xmx:3PzaarP0r0I99wflXirbdAhWQy8CqY-bvVB2plULnm4zUcD3LL1_qQ>
+    <xmx:3Pzaak-axzVb0j6aSeB6ae_jMZ2wrx7LV9UUXOVVUt4G2CZDPEVN6ra8>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 23 Oct 2026 02:21:14 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ee2e0c85 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 23 Oct 2026 06:21:13 +0000 (UTC)
+Date: Fri, 23 Oct 2026 08:21:10 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 5/5] completion: drop "stash save" completion altogether
+Message-ID: <atr81upZrCofQACJ@pks.im>
+References: <atHZ0gV5Pz80l3ho@pks.im>
+ <35E6B235-6370-4F94-A0B1-4B6A941D8C47@gmail.com>
+ <atcEqHErXaGiMu4J@pks.im>
+ <CALnO6CCUfja_AxYjbz9xpZgoibbdvy6C4utDDQk9ONhjiOYYzg@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,75 +131,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Srujith A Poojary <poojarysrujith@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALnO6CCUfja_AxYjbz9xpZgoibbdvy6C4utDDQk9ONhjiOYYzg@mail.gmail.com>
 
-From: Srujith A Poojary <poojarysrujith@gmail.com>
+On Thu, Oct 22, 2026 at 09:14:52AM -0400, D. Ben Knoble wrote:
+> On Tue, Oct 20, 2026 at 2:05 AM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > On Mon, Oct 19, 2026 at 04:01:15PM -0400, Ben Knoble wrote:
+> > >
+> > > > Le 16 oct. 2026 à 04:01, Patrick Steinhardt <ps@pks.im> a écrit :
+> > > >
+> > > > ﻿On Mon, Oct 12, 2026 at 01:48:31PM -0400, D. Ben Knoble wrote:
+> > > >> It's been deprecated since fd2ebf14db (stash: mark "git stash save"
+> > > >> deprecated in the man page, 2017-10-22) and the previous commit removed
+> > > >> further documentation suggesting to use it.
+> > > >>
+> > > >> Since we recommend push instead, stop completing for "save" and remove a
+> > > >> special case in completion code.
+> > > >
+> > > > This is the only part I'm a bit torn on. I think it's reasonable to not
+> > > > autocomplete the "save" command, but if the user manually types it,
+> > > > should we really stop autocompleting its options altogether?
+> > > >
+> > > > Maybe the answer is "yes". After all, as you mentioned in the preceding
+> > > > commit, the command is deprecated since 2017 already! And after almost
+> > > > 10 years I think it's fair to start giving users more nudges into the
+> > > > direction of using "push" instead.
+> > > >
+> > > > One note though: the command _will_ be completed in the case where you
+> > > > have GIT_COMPLETION_SHOW_ALL set
+> > >
+> > > I should definitely mention SHOW_ALL; I’m not actually sure
+> > > what happens for « git stash save --<TAB> » with this patch,
+> > > so I’ll double-check. I actually wonder if it will complete options.
+> > >
+> > > Would that satisfy you if so ?
+> >
+> > Probably depends on the outcome of your tests, but ultimately I think
+> > I'd be fine with either of the options. But if we stop autocompleting we
+> > should definitely mention SHOW_ALL.
+> 
+> Here's what my testing showed (all Zsh):
+> 
+> - with SHOW_ALL, "git stash <tab>" lists "save" as an option; "git
+> stash save --<tab>" completes options
+> - without SHOW_ALL, "git stash <tab>" does not list "save"; "git stash
+> sa<tab>" does not complete "save"; "git stash save --<tab>" completes
+> options
+> 
+> I'll update the commit locally to reflect this. Thoughts?
 
-Replace manual multiplication and addition in create_delta_index()
-with safe integer helpers (st_mult, st_add, st_add3) to prevent
-overflows.
+We could of course add logic to explicitly stop completing options for
+the deprecated subcommand. But I doubt it's worth it? So I think this is
+good enough.
 
-Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
----
-    [Outreachy PATCH] diff-delta: use safe integer arithmetic
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2276%2Fpoojarysrujith%2Fc-refactor-target-name-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2276/poojarysrujith/c-refactor-target-name-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2276
-
-Range-diff vs v1:
-
- 1:  a0aafe63a7 ! 1:  14ffd630ca [Outreachy PATCH] diff-delta: use safe integer arithmetic
-     @@ Metadata
-      Author: Srujith A Poojary <poojarysrujith@gmail.com>
-      
-       ## Commit message ##
-     -    [Outreachy PATCH] diff-delta: use safe integer arithmetic
-     +    diff-delta: use safe integer arithmetic
-      
-          Replace manual multiplication and addition in create_delta_index()
-          with safe integer helpers (st_mult, st_add, st_add3) to prevent
-     -    overflows while preserving NULL returns on failure.
-     +    overflows.
-      
-          Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
-      
-
-
- diff-delta.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/diff-delta.c b/diff-delta.c
-index 7cbedeb507..45df070ab9 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -162,8 +162,8 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
- 	hmask = hsize - 1;
- 
- 	/* allocate lookup index */
--	memsize = sizeof(*hash) * hsize +
--		  sizeof(*entry) * entries;
-+	memsize = st_add(st_mult(sizeof(*hash), hsize),
-+				st_mult(sizeof(*entry), entries));
- 	mem = malloc(memsize);
- 	if (!mem)
- 		return NULL;
-@@ -258,9 +258,9 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
- 	 * Now create the packed index in array form
- 	 * rather than linked lists.
- 	 */
--	memsize = sizeof(*index)
--		+ sizeof(*packed_hash) * (hsize+1)
--		+ sizeof(*packed_entry) * entries;
-+	memsize = st_add3(sizeof(*index),
-+			st_mult(sizeof(*packed_hash), hsize + 1),
-+			st_mult(sizeof(*packed_entry), entries));
- 	mem = malloc(memsize);
- 	if (!mem) {
- 		free(hash);
-
-base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
--- 
-gitgitgadget
+Patrick
