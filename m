@@ -1,118 +1,118 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792759849;
-	b=2QOW7NwMn1nsKUjDwdskC8dGbPhUDtV+5noV/801Kb6AYA2GOmzjQbHfFq0XovBA7l19
-	 hlqns6kvk3X9+riq4OxyFJfOSXV7NOAQzRtE9+3DE38MPRhA9C7qGTao7ga3bpXJiTXXR
-	 rgsTEwjBmGv901iFe4na2r4ibpJp1n2UVpz2GITAFkiDi19l0XyMwZSV6ma94lieZolCI
-	 8lL4MLcIQAwoZN5Hv70CYnZffJ840pClRMbjVfh9X+W+OgGQMEiyaatWxFagx021lX6Fd
-	 ZJBz4L5KydCrMnrARBkNP8UQHfFb0a0EYja9lyQNeiCmks3ok9aeNBdwqVOGzsAU3sA==
+	t=1792759852;
+	b=OQmFgwapn8zQltwVA0ZkbofLbbobeCIEz20q+ufG1RGohm9vTGObKowqjoR64SvUNtw6
+	 jiT0O/w5F517bokSFNZf/CH/EWy03yvkLWwQch65+Ro5fLAE/BsweQZZa9RrY21J7oI6A
+	 BIkyETnYm0AwJCyYxCRJ0iJ39Pno92t8QwMsW9rw/HwWrNm3X354X4SxT2lGBVT3EcqeT
+	 +UBPrp6PJQqMh37wTU5RLCzL9lzGX8gzqmZb4QvYqJow3t34tRjVrgPzOusWi/6hrcWa/
+	 HqhXFo86tVVxkI5haZ4kcal8DiZIG6FHDsSt+fdNubMvO0DA16oxx/gTH9ofXiRgitA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792759849;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792759852;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=v29RY3EOhVCiqiqE74sLlyixq8JPz163h/P7/V3tMk4=;
-	b=ilx/EXq6rD0TzmFn5JG8QhgfL0N8nr/JLU7BIfJRoeY20dVZlGI+EEIdo4CeW/wWqoUP
-	 N2sl1XPONbIHI+/zfzs4+z8teMUje1rAd3LgPVRNjPyT2sbaEOK7r7g/iJynAVN9iyaR4
-	 xi3mBxCxLhewGRUEcnTrwIb2mV/4eW9QkQTzVcoh7F6H3C3VXVWPeiWoVAf1jyVpb3YbH
-	 9zlzJqlpYxMMh4sXCycncxE50jCgDqgv/W30Cu3BEZu6nUhGi+FF5s2+pHDB1gw04GXRr
-	 Bo0dEMJwi8C18bGZoxaBRZYOURVrRV4b+9G4FnvfXnrMugz5UxXzS6WsyOW6B8iu7zA==
+	bh=cS8YrSHKHw5KBusXGrjVurB+9u+xcJmT5myKaPFryl4=;
+	b=LEdPMIPJVT9KpIkdIhHSzVQcx1IX3UavWHX0UPrEYT7qGzdVaOWTS1LivRfxZglsIoz6
+	 oBeCU6/84LK7oHFW4OJtgjRjBZX6aYpFp/LHVcYnSDfHsz0dt8HSy8Pcm5Wi125URWxcd
+	 loIN/c7R5N+VN06abgJNVvN8zcu8+QZ7gsuHjGwXJrP6pIWNcRASoFw9AevW+zrIIXQ+X
+	 o2rcjHCUPiRxiI5St+NWQO6QDgW6+4yUBQy68JHXc00AbzwqWZ8+ojhBXnzJlRJfugJUt
+	 aI0P43mcWQdvTvhZWgHg/ABKScPrTIHHELLXRjZN7lFOhfxwIqMBxhfLG+PbuwQ6uqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b="aaYK08/t";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Rx2L9wOe;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b="LZ7RK/cH";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=O5pL45Js;
 	arc=none smtp.remote-ip=202.12.124.151
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36D9606A31D
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 12:50:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B36D9606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52BF606A328
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 12:50:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B52BF606A328
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=aaYK08/t;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Rx2L9wOe
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1B8181D00045
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 08:50:48 -0400 (EDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=LZ7RK/cH;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=O5pL45Js
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 09A0A1D00154
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 08:50:51 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 23 Oct 2026 08:50:48 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 23 Oct 2026 08:50:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792759847;
-	 x=1792846247; bh=v29RY3EOhVCiqiqE74sLlyixq8JPz163h/P7/V3tMk4=; b=
-	aaYK08/tzt3YiYPqgduiANe2qVRtyswSXRbcc+CVlhXkiTSwZ+FC0cvlrf6q1UUN
-	gGLvrjIIrR1BgCFTQHFFrxdanfHcWewRSR8OXnRloe3VhXJvThRyxiC3FJt+6jyJ
-	YXPUB8vIUXUgOup7f/zw5IuOmp7NPYN1JIB9li7kwH8AcqRDpu8E5yOjJJEZxxWO
-	MedrXKlxAe90YEEcPKy7CUW+SWZ88YtmJHg24nRfnHWwgAqlzprwafnHcYTNWl2P
-	ATU/ZKCoh+VBpSrM+2HR/O1PyNt8rYB4BW6cUIxGHW9itt0yLw8LbbCNz+iVqFRl
-	mW8ShwBbWFxjVscC8WHNRg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792759850;
+	 x=1792846250; bh=cS8YrSHKHw5KBusXGrjVurB+9u+xcJmT5myKaPFryl4=; b=
+	LZ7RK/cHY70qkZAbNvRPXb1Dladkhc9QgWhGcPbFzH03ND7DtGsljEheP7nlcJ+J
+	uiUhYN4vr1mSWkUvDOTYTbTpy8t9WhzJUzNOrEG3yP7nu4qxrkjFBbjUaHZbcUU2
+	0hJqXpmwnyAQGtTynJY9CWUi+izf4G0P7FWfGDEHUMyu5co/Jhmy8rZyFOitI6ny
+	8jvlSgJK9rCz3d6yTRDQRrb14UrBMZPtb6vVSwGI7+RDBRethjsT6yBaG64emQUv
+	2ArcYfX+HO32ywHgScquDT/iY6WNZz0snwpemtl5KVqbob7UZf4Jw40/wy2yqjWm
+	U761zPq6grjKrgnj6727cw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792759847; x=
-	1792846247; bh=v29RY3EOhVCiqiqE74sLlyixq8JPz163h/P7/V3tMk4=; b=R
-	x2L9wOejG6nXXlbEp/43PxQqst0fbYocN248tvVFWNZFHwGLOPDd76MCnHMs9xRJ
-	I2p+J5sZaTVjpMqjHTQWm95JVaeODdRnMRV1QChREr1N6XmhVXSJqxa7LelKOVqp
-	kHRtHoUu0L3WVm22WvJ4iqrU/D0u0jg91oINZWEcQWYnaYcaOvwfFV7UfO7M2RG3
-	Mjqsk4JGgu6roHCXp0+dIiYzprBIUU1AEmK24zf+IDebJLZdVy2geyV/gTL0bvnG
-	iE8lnPoGbAs9HydN/sQr0O+fDrpPjJHB6EG+xdNlSrdJcpwD0t2yjizvxObuf+9Q
-	fd6fiiifMjZSZFWjbgA/Q==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792759850; x=
+	1792846250; bh=cS8YrSHKHw5KBusXGrjVurB+9u+xcJmT5myKaPFryl4=; b=O
+	5pL45JsiAwKm204WO4va+Dsyx6SeMZxSmLgzdevmM7XxjeM0KPlcY1+2sZRVDD5f
+	TZ9FzASfYvLqYAaIFHdh9naU2J8dgSKotH40m93EgNzN2CtuVs9K7kNdYi4ZPPZy
+	yoSURLt6UWnN5dRSptBzA3kSxE7Lo3x/vf+BVw33Jsi4EWS29RO4sjfqqKwlXQw4
+	ks1RJq9jMJlR4czTSHYSf+6hUpIRTD9hmqeTAWkZpvgRIFoYSGABufgG8YWQ9730
+	SLYe04eOem9dvWuW03IzdG+l5RIHfYGGMnwqM5RuVs/KUmta5vuBU2mBZ4G/tl61
+	QAj8LAlHUFEA6TCluPlzQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792759847; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792759850; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:IjkbSWGexm6YioqvMjBDR9v9Uz19FDPofd1KUki3Q7EiO5i
-	sXTqAJ6sR/j/j+lNeWioecE5hDlgbGR2soFStDFDuCx2pSuWI1ARlo1MVQIQZMR2
-	F8jK66YCS5heJuMmun7qMPyr/ryHu1nhXvWwobhln4eb/0zVyfuBkHNrcKdw/Hbn
-	dOn/dSDDpd/N0UdVJfQ0A46dQNRnVuGO+0Z0y2iZvb5rZ5eWvT0izBdHhX0WgpZw
-	yZOzNfOagCpSTelMSaFFgRrhY5Ge+qWldnNisyTAj0d5gN5Zs8S1Puxhlr3tfZoy
-	SsXTAV1nz0Kq9coXh0UgqCkOXnPKOfkbawV6hbQ==;
+	s=fm2:rsa-sha256:FkzAr4qEgdliahO80ydG0FqlusfPsRhDF5NQRiOUHEU/RFa
+	9lwgRpWM55obmvsvFkr9N/1XEYJeiNSJTqPpxO0DMuvaBnuZ1MPyxi28cARuxT1k
+	rvGZYEnXdUqYgB5nshADIO9xrpOv48ZR+aHJ5EJ401v6B2yEgYkvGmiIe9vDdvGg
+	I0za6UKczj09K+VU8WzuNwIXNHaN6NhYXRnArRsQIAr6JK8tcxB3V61k5FBLT+wC
+	BpvWwEg7wiSGSM9lZ8kncHxfFfal9OVlcw0lQA76CwGKRNsnbt3aM2JnGMOPaOla
+	E00i6wx5jIKeMBGURbJr75UI2HhTkGJl7XX8Lrw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:VFaiHWSAYcaAldn/CaQoMLHZO0NSDMQ0MzRypvX3gJ8=:HsiKGWTf9eBpKWij40Otc0UqKu0/fm4uMTJgMny1riM=;
-X-ME-Sender: <xms:J1jbaqrbvqRJ9fd24v-LxemzPy764XTxcjogtLnbmoGWl-3kK-7-ug>
-    <xme:J1jbavlX9jEhACpc_Ssu_rGqcPgaIpqvyfJ5NpnvmFSS1NiMARuko3lEOctyZT6LF
-    1mojV6iH9nJbqgVcc5TPnV-s_1xVhypsPu8XwjkEDvnmgyGDGOWSAU>
-X-ME-Received: <xmr:J1jbak2WmxzpQlC7zGwJnaII4WVkHAwLXtDPDh9Pz22KPKeehKMaZftUW61n5M7VfI3Pmg>
+Message-Instance: m=1; h=sha256:rXdtjOSEDmTXG98of8mfkBTjefmSOx+u4dqGJH63mjE=:mjlymnNEklf5/IWG/eUtFpwiupa+qS7uvWd1x0WmeAM=;
+X-ME-Sender: <xms:KljbagSKwv_LiN_xZXp5q2PQwgjCBDbBl7JyUZg7Mer4Mq2xr500sA>
+    <xme:KljbaktwJAgVQ6Q5eGTdh-uN_MUsr8UvpB-Hoc0RoKKXiO9CxRX51FWAZqLm0_7IB
+    BrXjOHUQzyOoXfOhE9OgNLpBsw5J9pJRIBLQR4bu8gpSWS5vZLU>
+X-ME-Received: <xmr:KljbajedrT9ejmDSA9dqvRPbWBQwQR3UrEh_Ov0_lZ_mG95rw7G6xuLUABPZR0N0HYKGvQ>
 X-ME-Proxy-Cause: dmFkZTGqNuAd1/xXSkVpjRGwpg8ruCWl6SmqOphFYTWvsnIwKxkcEYhnMN2aeMunw78weI
     hd3WZPzhRTxd3w/shofImYxiwLdJ0byPH6NZx/1Cn2ueSoP/lmw8nDe013bC/eIEbp9Snb
     6yo16Dcj5aY0LE0tZwWYQ/lJ8H93jdbTIkZy/xVdf4BYvhi1Sh2VWHoopSIJlhN7evHEE9
     HMRPknYvfUUkrGNA+VvBsjBQwm9t/3En9rtyVpnQZUVWETWV7HHQtzJS+YNZ33BrW6ong7
-    t4EF79vc+lyYhgbrBnt+bMwq3ZpiLhOl3NHQTApCD7jBa2nV7FteS8HSCEptRNT5AjJ9t+
-    NUEC76lPHIFnVfAHPqRnRMvK7Ng3u7G6EDSPakqCqYIBvQx83zOZBg83brQ6BFZ8CwugnQ
-    J1GB6qC0ccQpC2WczAY6PVuSS4nwyZtCq5hN3n2XevcPyBpFre0TU7j8bSQZeazSF1Pj84
-    xYCI56/knMNiG8t+x6gsN6SEiieyFVCGvwBQ8bdwIeiQ0jZm/JwP4jCBHoaabY8qIeDLRn
-    hw00egjjZNXfZ+QKqnMkGYgRvLHQt6wWVBySMPoweh0DjA55QsSy1TH8CyMz4X4D+oPksF
-    80tsiwn6ZLAIvMxe5jZ3FkSAI6BSFH7A4OIahXQC6tUjeTiOsufwVkfm6brQ
-X-ME-Proxy: <xmx:J1jbavCtubTmPF4kYTSXekcnF9_fN9qE6xF0xghykhk8cD3LXQQ8KQ>
-    <xmx:J1jbapykud_UXwvTM6nRLyiWwiAJmhp4VpXYgOSWLCm1DGbXZxszQQ>
-    <xmx:J1jbalkratVWxTx_iCiHcI-EDqZUgdOHL4rrchLM3UM9oSAKWk7jvQ>
-    <xmx:J1jbamF0MXSmtKNhsw026P4IfisGDNG3xVeJD66pyEUUz_jcC9FndA>
-    <xmx:J1jbamJZNYn0vEYJ_EtrSnf4xH6OwUgrQ2wMU0zPaUbk4BzrQX6Ei1ob>
+    t4EF79vc+lyYhgbrBnt+bMwq3ZpiLhOl3NHQTApCD7jBa2nV7FteS8HSCEptRNT5AjJ9Fs
+    1+KgnIVnBJaNqC7E4LBp6eZDmN+B3TNAG1L6+BdoTwyPkEsD48ypL4iVreMcvlAQSDDUwf
+    2ULuj3suTSOr+fh9i2EKZS9HHwMZUOTXWG+UjJZKvtoDNEdhZ9lGqpxjDpqKJdvGmG7xYo
+    WZ6KyVqYGMR8EXpf3XXXIiAnjE3jzCEk2HE4JJJskIothl6j5JZRP749FokBCK69niHxpP
+    5SWjoQQC9QgjBTIJRmJw/39b+cZXK9tjNnsL69u+TNZunwWq54eDy0bSDkOFCWxuG+dfZc
+    BStEoFzQA4XCcDlm5Ysf7n8U78NWgQdXNeMDtnK3O45rMa6307+JB9gVUN+A
+X-ME-Proxy: <xmx:KljbapLbVCGgzCbhkvCKkvjYewDWAjDAZ51G89zvQj3AWGuWXVEuxA>
+    <xmx:KljbapaeIxZeRQaXHZ18A3Lgyj2msGijlb_iQ9kbleR_QXBTgyGSPA>
+    <xmx:Kljbass2mHUwywDoenoikCCZg0JaFC4pa7spEiLw4U1h-DNTPCOt2g>
+    <xmx:Kljbauu_LG8HfXc7kdRxm6q9QVVCNDis0tp2SHw27-Yl6uJ90HD3HA>
+    <xmx:KljbaoQzX8CmsgiSDe-zz09-m7sf8B2wpA8SciPSjg_q14HWegmSY04y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 23 Oct 2026 08:50:47 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 23 Oct 2026 08:50:50 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8472074b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 57e0420f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 23 Oct 2026 12:50:46 +0000 (UTC)
+	Fri, 23 Oct 2026 12:50:49 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 23 Oct 2026 14:50:21 +0200
-Subject: [PATCH 4/7] rerere: cache result of `is_rerere_enabled()`
+Date: Fri, 23 Oct 2026 14:50:22 +0200
+Subject: [PATCH 5/7] rerere: stop using `the_repository`
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,141 +124,121 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261023-pks-rerere-wo-the-repository-v1-4-b6ac0c2e4b81@pks.im>
+Message-Id: <20261023-pks-rerere-wo-the-repository-v1-5-b6ac0c2e4b81@pks.im>
 References: <20261023-pks-rerere-wo-the-repository-v1-0-b6ac0c2e4b81@pks.im>
 In-Reply-To: <20261023-pks-rerere-wo-the-repository-v1-0-b6ac0c2e4b81@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-The function `setup_rerere()` reads the rerere configuration and then
-figures out whether the rerere cache is enabled after all, either
-because it has been explicitly enabled or because it's implicitly
-enabled and ".git/rr-cache" exists. Whether the cache is enabled will
-not change in a single process though, so it does not make sense to
-reevaluate these conditions every single time `setup_rerere()` is
-called.
+There's only a couple of trivial function calls left that implicitly
+make us depend on `the_repository`. Refactor those to instead use their
+variants that allow us to make the dependency explicit.
 
-Adapt the function to instead cache the status of the rerere cache via
-a new `struct repository::rerere_cache_enabled` member. This allows us
-to get rid of the `GIT_PATH_FUNC()`, which caches the path to the rerere
-cache directory. But now that we already cache the enabled state in the
-first place it becomes moot to cache the path, as well.
+Note that this requires us to make `get_hash_hex_algop()` public.
+
+With these changes, "rerere.c" no longer depends on `the_repository`, so
+drop `USE_THE_REPOSITORY_VARIABLE`. Despite that, we still carry some
+global state in this file that will tie a specific rerere cache to the
+first repository used to populate it. This will be fixed in subsequent
+commits.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- repository.c |  1 +
- repository.h |  6 ++++++
- rerere.c     | 43 +++++++++++++++++++++++--------------------
- 3 files changed, 30 insertions(+), 20 deletions(-)
+ hex.c    |  4 ++--
+ hex.h    |  3 +++
+ rerere.c | 14 +++++++-------
+ 3 files changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/repository.c b/repository.c
-index e584d6c405..f51699a6dd 100644
---- a/repository.c
-+++ b/repository.c
-@@ -76,6 +76,7 @@ void initialize_repository(struct repository *repo)
- 	repo->bare_cfg = -1;
- 	repo->fetch_if_missing = 1;
- 	repo_config_values_init(&repo->config_values_private_);
-+	repo->rerere_cache_enabled = -1;
+diff --git a/hex.c b/hex.c
+index f02832140d..4b7793bb8a 100644
+--- a/hex.c
++++ b/hex.c
+@@ -5,8 +5,8 @@
+ #include "hex.h"
+ #include "strbuf.h"
  
- 	/*
- 	 * When a command runs inside a repository, it learns what
-diff --git a/repository.h b/repository.h
-index 91b1f57db7..86795b6946 100644
---- a/repository.h
-+++ b/repository.h
-@@ -185,6 +185,12 @@ struct repository {
- 	/* True if commit-graph has been disabled within this process. */
- 	int commit_graph_disabled;
+-static int get_hash_hex_algop(const char *hex, unsigned char *hash,
+-			      const struct git_hash_algo *algop)
++int get_hash_hex_algop(const char *hex, unsigned char *hash,
++		       const struct git_hash_algo *algop)
+ {
+ 	for (size_t i = 0; i < algop->rawsz; i++) {
+ 		int val = hex2chr(hex);
+diff --git a/hex.h b/hex.h
+index f15c7e2220..50a0088065 100644
+--- a/hex.h
++++ b/hex.h
+@@ -59,6 +59,9 @@ int parse_oid_hex_algop_impl(const char *hex, struct object_id *oid, const char
+ int get_oid_hex_any(const char *hex, struct object_id *oid);
+ int parse_oid_hex_any(const char *hex, struct object_id *oid, const char **end);
  
-+	/*
-+	 * Indicates whether the rerere-cache has been enabled. -1 (the default
-+	 * value) causes us to perform auto-detection via ".git/rr-cache".
-+	 */
-+	int rerere_cache_enabled;
++int get_hash_hex_algop(const char *hex, unsigned char *hash,
++		       const struct git_hash_algo *algop);
 +
- 	/*
- 	 * Controls whether the repository should lazily fetch missing
- 	 * objects from promisor remotes. Defaults to 1.
+ #ifdef USE_THE_REPOSITORY_VARIABLE
+ 
+ /* Like get_oid_hex_algop, but for `the_hash_algo`. */
 diff --git a/rerere.c b/rerere.c
-index 56b6ef547b..8fa921fc8f 100644
+index 8fa921fc8f..366797ab7e 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -27,9 +27,6 @@
- #define THREE_STAGED 2
- void *RERERE_RESOLVED = &RERERE_RESOLVED;
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
  
--/* if rerere_enabled == -1, fall back to detection of .git/rr-cache */
--static int rerere_enabled = -1;
--
- /* automatically update cleanly resolved paths to the index */
- static int rerere_autoupdate;
+ #include "git-compat-util.h"
+@@ -188,7 +187,7 @@ static struct rerere_id *new_rerere_id_hex(struct repository *r, char *hex)
  
-@@ -873,40 +870,46 @@ static int do_plain_rerere(struct repository *r,
- 	return write_rr(rr, fd);
+ static struct rerere_id *new_rerere_id(struct repository *r, unsigned char *hash)
+ {
+-	return new_rerere_id_hex(r, hash_to_hex(hash));
++	return new_rerere_id_hex(r, hash_to_hex_algop(hash, r->hash_algo));
  }
  
--static void git_rerere_config(struct repository *r)
--{
--	repo_config_get_bool(r, "rerere.enabled", &rerere_enabled);
--	repo_config_get_bool(r, "rerere.autoupdate", &rerere_autoupdate);
--	repo_config_get_int(r, "rerere.locktimeout", &rerere_lock_timeout_ms);
--}
--
--static GIT_PATH_FUNC(git_path_rr_cache, "rr-cache")
--
- static int is_rerere_enabled(struct repository *r)
- {
- 	int rr_cache_exists;
-+	char *dir;
+ /*
+@@ -213,7 +212,8 @@ static void read_rr(struct repository *r, struct string_list *rr)
+ 		const unsigned hexsz = r->hash_algo->hexsz;
  
--	if (!rerere_enabled)
-+	if (r->rerere_cache_enabled != -1)
-+		return r->rerere_cache_enabled;
-+
-+	repo_config_get_bool(r, "rerere.enabled", &r->rerere_cache_enabled);
-+	if (!r->rerere_cache_enabled)
- 		return 0;
+ 		/* There has to be the hash, tab, path and then NUL */
+-		if (buf.len < hexsz + 2 || get_hash_hex(buf.buf, hash))
++		if (buf.len < hexsz + 2 ||
++		    get_hash_hex_algop(buf.buf, hash, r->hash_algo))
+ 			die(_("corrupt MERGE_RR"));
  
--	rr_cache_exists = is_directory(git_path_rr_cache());
--	if (rerere_enabled < 0)
--		return rr_cache_exists;
-+	dir = repo_git_path(r, "rr-cache");
-+
-+	rr_cache_exists = is_directory(dir);
-+	if (r->rerere_cache_enabled < 0) {
-+		r->rerere_cache_enabled = rr_cache_exists;
-+		goto out;
-+	}
- 
- 	if (!rr_cache_exists &&
--	    safe_create_dir_in_gitdir(r, git_path_rr_cache()))
--		die(_("could not create directory '%s'"), git_path_rr_cache());
--	return 1;
-+	    safe_create_dir_in_gitdir(r, dir))
-+		die(_("could not create directory '%s'"), dir);
-+	r->rerere_cache_enabled = 1;
-+
-+out:
-+	free(dir);
-+	return r->rerere_cache_enabled;
+ 		if (buf.buf[hexsz] != '.') {
+@@ -1264,11 +1264,11 @@ static void prune_one(struct repository *r, struct rerere_id *id,
  }
  
- int setup_rerere(struct repository *r, struct string_list *merge_rr, int flags)
+ /* Does the basename in "path" look plausibly like an rr-cache entry? */
+-static int is_rr_cache_dirname(const char *path)
++static int is_rr_cache_dirname(struct repository *r, const char *path)
  {
- 	int fd;
+ 	struct object_id oid;
+ 	const char *end;
+-	return !parse_oid_hex(path, &oid, &end) && !*end;
++	return !parse_oid_hex_algop(path, &oid, &end, r->hash_algo) && !*end;
+ }
  
--	git_rerere_config(r);
- 	if (!is_rerere_enabled(r))
- 		return -1;
+ bool rerere_gc_needed(struct repository *r, size_t limit)
+@@ -1295,7 +1295,7 @@ bool rerere_gc_needed(struct repository *r, size_t limit)
+ 		 * use for estimating the number of loose objects.
+ 		 */
+ 		if (!starts_with(e->d_name, "17") ||
+-		    !is_rr_cache_dirname(e->d_name))
++		    !is_rr_cache_dirname(r, e->d_name))
+ 			continue;
  
-+	repo_config_get_bool(r, "rerere.autoupdate", &rerere_autoupdate);
-+	repo_config_get_int(r, "rerere.locktimeout", &rerere_lock_timeout_ms);
-+
- 	if (flags & (RERERE_AUTOUPDATE|RERERE_NOAUTOUPDATE))
- 		rerere_autoupdate = !!(flags & RERERE_AUTOUPDATE);
- 	if ((flags & RERERE_READONLY) && (flags & RERERE_NOWAIT))
+ 		id.collection = find_rerere_dir(r, e->d_name);
+@@ -1345,7 +1345,7 @@ void rerere_gc(struct repository *r, struct string_list *rr, int flags)
+ 		struct rerere_id id;
+ 		int now_empty;
+ 
+-		if (!is_rr_cache_dirname(e->d_name))
++		if (!is_rr_cache_dirname(r, e->d_name))
+ 			continue; /* or should we remove e->d_name? */
+ 
+ 		rr_dir = find_rerere_dir(r, e->d_name);
 
 -- 
 2.56.0.307.g5fe7bd680c.dirty
