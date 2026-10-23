@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.178
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792761125;
-	b=I9cd0WncQzBV/s24GQCl0sf84ppmQb+2pNxNDsVURLVq2sQsmjcSBVVxfaLH9CCvNoOl
-	 6Gs2mc0oItd0qLCBboJ2o9Xwmx50pOz4NdO2F/bfPqNf9Ds8cSseMLiYWXGA47My7XDP4
-	 h6/iH88qGrY7BRPQ+KIQW40QWs07hMUhih++D06pBBMH0Hg+5rR9LBAWoGQEQp9r7quWZ
-	 8rIG+Cfg5FPvwN5w1LliCi9JcJEene4SzEBR3Unv7u+HtHbPC1saPD8+tgun6qbBtOKuz
-	 nA+m9oZLfyKwSPhpTqyGwEqKcj6G0Nv0aNEngw+7wJ+LvlJUoezuzUH7KjoE/p5KQ+w==
+	t=1792761132;
+	b=U0H6qNUg/SjL3rN/UoQAUmtT6tOKLfCqRdR5pBgrH3rEv5l9joAAWJHklP0jcHlhDFXf
+	 KeNWUTjXH0WmiIIvn1G+G45jA+0sRly3OTEqTAyIlMRhEKGexa0qpTFL3N/kIzZyvtden
+	 Q2KshjePDvi1ByxnLvIp90f7cI1eLzvgoQFvlRxH0inznkidiioqLRlQ3O1bGL6gx3U0+
+	 tpzCOLksseUt2TPNCzJQ4b5htPJ1rJebb9R2yLhySwFe9XP5FJttayMcdFrf6ieQwBg9B
+	 XonXOgvt2NFom1GyDriF4R27Z8bqhNOyTCdy23XgPPIvOgIl/prajABX3gEW1pwIfLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792761125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792761132;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=9/SoSFwXY3w0jifx5GDQGkcEBD7pUsbS3N3CpluRPso=;
-	b=dZwZSw88pMb6YkbilyiFNR6GpRKqD7rNTP0zvy9fxDu4MGL86vgSoHjFGXSHsUKEqcxE
-	 /ejqHk1em9KOpvHheCRPZPUXsbJ/iuRy3fGGmXXJa3Yda8Dy89C5jzHNDxosoDdUjdADS
-	 Hf0wgWH8SAKkaHssc4fxmLXHOhuzPyovKfyMsDWzX25NBeUXTaGS0ggtQtw5KybcEsDnx
-	 Ji/g3UKCF7TwBgeMRLhpwzmjWL/3s9TEaQQ1o55wmg0oIY8fI2KIGuiaWj3wd/VKA+8OX
-	 DTknrWSBZDDDfKxUZ0T4h3Obe13YBxMq+rLPVMhZJqB3JkR9cjGIjan+OjWN/QDVmqw==
+	bh=coPWA0cNh7+XWk0i2tSI2f88qqlS4t4jn7vIQm5Hrdc=;
+	b=wKSzGDmX/J5xUENW3kstRdzMW531Gdku6AD3/LJ8WexFF27dv/IRmcVkhqg7tGdojXyf
+	 +QIqdxNXAD77419Co6Nv6wA9XgBdOy3CTSzhygX9PoxoXMitJd0XLpZOnDO2HshKqkrgj
+	 XJ2cIvEyq1QnEHprh64RMV8yMK/NTYOcT7fK+3x1ptNTV6g59Lfs3ysBJG1sKbFvCikwb
+	 2BDGamR0FtXc7cPXgdD3pgGyjNyFSm4i9Ls/i0J+BVFiooGh3/w1XpHY8V9+k5YxSAIX6
+	 UwjjF8Br6REvorp8LFSYxkA9sIaRpTg/9tIHDDsJy+n86my8ct7BlFPmNSCV5VNkh5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=MTNYQzzt;
-	arc=none smtp.remote-ip=74.125.224.47
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Fp+eaRU4;
+	arc=none smtp.remote-ip=209.85.128.178
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E29606A328
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 13:12:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 26E29606A328
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF66606A326
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 13:12:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7CF66606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=MTNYQzzt
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-676804a3a22so893134d50.1
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 06:12:05 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Fp+eaRU4
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-8b125371596so15397877b3.0
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 06:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792761124; x=1793365924; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792761131; x=1793365931; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=9/SoSFwXY3w0jifx5GDQGkcEBD7pUsbS3N3CpluRPso=;
-        b=MTNYQzzt23gS2fZVbBOcOhRTSRiMfgr+vhXpWdYkfwSTM3nw3hUEadQHYQvLY5c/HD
-         +fNUZhi7pW9zKv2K7O6lzqXCkBs5wxj895qdY6jM3TQp/owsOyd3hbKeWJ8zDxnVAxXm
-         5JCww8SinIRNE80PGfgH6RlD99f1x/Gw0sG95SJ8SruUcgJoT6aCcfwR9EdRHRh/fiL7
-         Z/5rSAvco43rT7TZO8IfDVTLylKgpqt+XEbqNHRIoRgUS9ssRhfaFia6M2SVA+OGq4O4
-         NYJsTFIhzwnTxBevge9WWSd/wIKJP6DL5F2IAmbRi9+6NBE39KDStFpxSWYz0BjpK/UJ
-         2SYg==
+        bh=coPWA0cNh7+XWk0i2tSI2f88qqlS4t4jn7vIQm5Hrdc=;
+        b=Fp+eaRU4IFzueYaLnyI0bK5jYSjGPluemTZqTg4xx0X4XVJWbjSf62je8JfjjTHezr
+         8v8AHay8dQ5yG6A3YDsSWEOf9vw1gg8WZHZjdTzf/pgnSjQm4G4ijMHucKIzVpyQw2HL
+         HrTMQlDVImDsF22ejU10pvWJiFfx8R0AAHi6v/KVE3UQYp+lE99j1jSKbI4/qBK2S27J
+         lJ8YuC5XkZ5qYuc4amuIxl+lAM/ukvwYixUlxKO3Doed9FrV/WkbO0k3AEoGW4tS7DNH
+         BZ3Mf1WBif+EZpg5YBRUnjxxySfrWxTHNeN6pl09FA4vA/YIgwXAZnkisJ1MFrxxlD9s
+         Wwow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792761124; x=1793365924;
+        d=1e100.net; s=20260707; t=1792761131; x=1793365931;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=9/SoSFwXY3w0jifx5GDQGkcEBD7pUsbS3N3CpluRPso=;
-        b=oQ5CJuBpcV/VB6bA7FZt/toMd0a35FHYYDXPhns/kjkYt6VILZSf/9geyDLIbvTBRI
-         kfOjlCjDpurnWbWKf66Yw5PAm6RR9pHiXsBCFP5m4mfJyjTNZekMM7eSQl+5xfBRbFna
-         Si4afw21BOKtsge4j0RtkdO1Vk+I8tIOI17rzRzcCbOAIiiJEtKIM4rHslv72tuCUEqX
-         FW9fiEBtfiSjEBTDt/SLfIVxsjmgcyjdU8iey7EchuJk2SoTAr23J/gcirfA+1QeYsD9
-         CqDjjsodCUpKc0NittkJ1NvYrlzt8kSRycXanFbBidJpgXOTU3jJL5eCfwsAycQD0k6L
-         jWAw==
-X-Gm-Message-State: AFq9FYJKN4+RJXxte2pW3Yea3FaX6+8/WzChagyptd/c8ZqGSSnmnxkX
-	4KIdyiYpDy190rgjYeiIKPKq+hpABZvObGe+snsbDSRwRG2RqcRwz1CryO9+6+mk
-X-Gm-Gg: AYBFou2nS3gSPh/0WKyqNe7qk156thNh7zcpc2fzCeLo++CoE5EMThi3LWShGPqb6rA
-	DRWAt9TFl1DhFc1h1x0dqsixlp+3JKbkjQg/yL3ABi4Pd9F75taf4QDsv8Av2NEjPuij9c6nl91
-	TRIB1TlnXntgZLsFFdw5h7frXzAt8E+b9hNuqDuK7bUbft0T6YewPNHtx1kNOvCcJ9vphvwyQ/1
-	zAQZ2FH6yy2E3NFrjyG1meK23+w3dEY9QnTMsNrzQ0DT2RvfT92WnBhZlGQD3MaNb/o4xnHUxX7
-	C5vctUZOz4Lt1K6zvuWUhe/PxrN/nx7vhELvruONTzrbAvYTcvBfumBnKWw+iCe1WFetfPqz9Uv
-	/dPCYrz7uoLhMdxT/vR5rK3GhAPEERBya5JifeMeb8m+MdBzGaVMJXdrVHVcUFlkd5Ilv/yrrJm
-	D0q4UI0L54B5pz+OlwVbxp6aQP1B/t+Pr0OOVbvSy074sW7kKOc64lR02m+Hgk0Sbk83TwylY+u
-	YoqQCANUkMs9OQCzng6t8a0v1yey5A567hgbSxDia9A/t4ksc3JJ6kvnCM=
-X-Received: by 2002:a05:690e:4081:b0:679:42b4:affd with SMTP id 956f58d0204a3-67a35bb8c75mr1718361d50.21.1792761124202;
-        Fri, 23 Oct 2026 06:12:04 -0700 (PDT)
+        bh=coPWA0cNh7+XWk0i2tSI2f88qqlS4t4jn7vIQm5Hrdc=;
+        b=eFGjxb4Auo9i5jhN+//t5CFCpb4wqF3AbKzkMiIf2jaXBBuVVz0Tk8kierhZBxogOp
+         8TyEfFKv6x3aiCA3FZ5thlbR0tp0h0MN7yORIq0lm9QuzYebpSs/1qOS+h67xANvXm8s
+         9xgFV8RrYMXM+52sSRBupOdIdQ+GzMUzuoPl7x12YkQzZTVLhHYK13lOjbT1Q55ZbAm1
+         kT76uiVbMIje3o4Wc6O+QKzQuuJ8SAuvnMBy41rIYP39r2rMYEnCFIK71IlxK/0YaAM/
+         xMO4W0PZaCGLofqHixrtEoRcuZjeQWfOXqavpz3DYZvwBEEydR7hFBjD8Le7XJ/XxKbw
+         k5rw==
+X-Gm-Message-State: AFq9FYLpNANDqs9nPr/hZc0pLyWbnJKtt0djt+6WL5k0GMzftB5YHLuE
+	v+dnodIo8km+Eajlc0IFFET7mrWOdClAtVLKFdIjDRFyfpzBbtzwCdEzttg0iCyD
+X-Gm-Gg: AYBFou1HdYnluvZyLioXxP9H42Lk0yTay2L1lTvJ5QS6aWABppVHhdNI9Dix6n0yfIJ
+	Az1nrre2QdAiy/mExVm3hxlqXgGZPsvFSzkZwmgkbFaSAy1WMpyzVGVgXQT6p6jl5EEZHYZFxye
+	Yla+z2G/UP35tAMmnOwGw10b4YS96i22rkG8g7/vt+1DnuqodmQkEQ0+FIuphXlNStdxSvexUJ6
+	XiGwpc37kbT362DV1Njm1QQ0jh67cNnxIlIrgBmzLdByKK98q+T82fi+HnWVnQq7VR4w32TXNTl
+	U4ZsINpiqQAFyhalu/Ww9CaXyyyi2YteVtmZgu2k7JvOOQzhdW1vpl42FGURC9qLBvxguXkj3L4
+	aDaBcHQ4htKdmd0JLbZqHViufsDlTw5f1fXyEpG2+nZVdpSVXq/yE20ffAmtrN5HiO186KIR/Tp
+	8yl2LheQa11hvtz642oAOjMzE6RdrjDVWOllTx6NLKGujPotaLLxF2f4uNUFFvWIMWDiq/fRhb+
+	PQld+k4vtGRJSx5QbakHMiX9uaKxp+Y64x5ttHk1aCMB/tUJYWDUn2K/qtT
+X-Received: by 2002:a05:690c:399:b0:8b0:d206:16c1 with SMTP id 00721157ae682-8b157eb3782mr16720897b3.24.1792761131470;
+        Fri, 23 Oct 2026 06:12:11 -0700 (PDT)
 Received: from [127.0.0.1] ([52.188.86.148])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67a33dbac4asm1309080d50.0.2026.10.23.06.12.03
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b1560cc3b8sm12806217b3.15.2026.10.23.06.12.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 06:12:03 -0700 (PDT)
-Message-Id: <427b7315a5167f4b5546a08c851a4aa222fcc2f6.1792761119.git.gitgitgadget@gmail.com>
+        Fri, 23 Oct 2026 06:12:10 -0700 (PDT)
+Message-Id: <98f67caa04bfe5b389846e99b069aeb8de221ecd.1792761119.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2211.v5.git.1792761119.gitgitgadget@gmail.com>
 References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
 	<pull.2211.v5.git.1792761119.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 23 Oct 2026 13:11:55 +0000
-Subject: [PATCH v5 2/6] p5413: add perf tests for connectivity check
+Date: Fri, 23 Oct 2026 13:11:59 +0000
+Subject: [PATCH v5 6/6] connected: add "auto" connectivity check mode
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -102,159 +102,243 @@ Cc: Kristofer Karlsson <krka@spotify.com>,
 
 From: Kristofer Karlsson <krka@spotify.com>
 
-Add benchmarks for the rev-list connectivity check.  Each fixture
-varies one dimension: total tree size, incoming commit count, or
-files changed per commit.
+The incremental connectivity check pays a per-commit cost.  For
+every incoming commit it reads the new trees along the changed
+paths, and the trees at the same paths in its parents to compare
+against.  A parent tree is often read again even though an earlier
+commit already read it: on git.git, about a third of the tree reads
+for 2000 incoming commits are such re-reads.  The full check
+instead pays a mostly fixed cost for walking the boundary trees,
+so with many incoming commits the incremental check becomes the
+slower one (see the previous commit).  Users who mostly
+receive small pushes but occasionally a large one should not have
+to choose between the two.
 
+Add an "auto" value for transfer.connectivityCheck that picks the
+mode based on the incoming history.  When the revision walk is
+limited, which is the case whenever the receiving repository has
+references, the incoming commit list is already computed by
+limit_list(), so counting it is cheap.  "auto" then uses the
+incremental check for up to 1000 incoming commits, and the full
+check above that.
+
+The cutoff is a fixed constant based on the p5413 fixture in the
+previous commit, where breakeven is between 500 and 3000 commits.
+It is conservative for repositories with large trees, where the
+fixed cost of the full check is higher.  Measured on real
+repositories (rev-list against a single boundary commit, mean
+of at least 10 runs):
+
+    repository   files  commits    full  incr.  full/incr
+    internal A    556K     1000   1.71s  0.61s    2.8x
+    internal A    556K     4000   2.78s  2.83s    1.0x
+    internal B    288K     1000   1.78s  0.88s    2.0x
+    linux          95K      598   0.33s  0.12s    2.7x
+    linux          95K     1728   0.56s  0.35s    1.6x
+    git           4.9K      984   0.22s  0.27s    0.8x
+
+With small trees incremental can be slower within the cutoff,
+but both modes are fast enough there (0.22s vs 0.27s for git
+above) that the difference does not matter in practice.
+
+No single cutoff is optimal for every repository, so it can be set
+with "auto=<cutoff>"; plain "auto" uses 1000.  A malformed cutoff
+is treated like any other unknown value: it falls back to "full"
+with a warning.
+
+Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 ---
- ...enerate-repo-p5413-connectivity-check.perl | 44 ++++++++++
- t/perf/p5413-connectivity-check.sh            | 85 +++++++++++++++++++
- 2 files changed, 129 insertions(+)
- create mode 100644 t/perf/generate-repo-p5413-connectivity-check.perl
- create mode 100755 t/perf/p5413-connectivity-check.sh
+ Documentation/config/transfer.adoc  |  6 ++++++
+ Documentation/rev-list-options.adoc |  2 +-
+ builtin/rev-list.c                  | 28 ++++++++++++++++++++++++++--
+ connected.c                         |  9 ++++++++-
+ t/t5413-connectivity-check.sh       | 25 +++++++++++++++++++++++--
+ 5 files changed, 64 insertions(+), 6 deletions(-)
 
-diff --git a/t/perf/generate-repo-p5413-connectivity-check.perl b/t/perf/generate-repo-p5413-connectivity-check.perl
-new file mode 100644
-index 0000000000..bfa25f60fc
---- /dev/null
-+++ b/t/perf/generate-repo-p5413-connectivity-check.perl
-@@ -0,0 +1,44 @@
-+#!/usr/bin/perl
-+#
-+# Generate a fast-import stream for p5413 connectivity check benchmarks.
-+#
-+# Usage: generate-repo-p5413-connectivity-check.perl
-+#            <dirs> <files_per_dir> <commits> [<hot_dirs>] [<files_per_commit>]
-+#
-+# Creates one initial commit with dirs*files_per_dir files, then
-+# <commits> additional commits each modifying <files_per_commit>
-+# files in directories chosen round-robin from 1..<hot_dirs>.
+diff --git a/Documentation/config/transfer.adoc b/Documentation/config/transfer.adoc
+index cba7597a58..f77b25ff8b 100644
+--- a/Documentation/config/transfer.adoc
++++ b/Documentation/config/transfer.adoc
+@@ -18,6 +18,12 @@ transfer.connectivityCheck::
+ 	than `full` when there are many incoming commits.
+ 	Falls back to `full` for clones, pushes into an empty
+ 	repository and deepening fetches.
++`auto`;;
++`auto=<cutoff>`;;
++	Choose between `full` and `incremental` with a heuristic.
++	Currently `incremental` is used when there are at most
++	_<cutoff>_ incoming commits (1000 by default), and `full`
++	otherwise.  The heuristic may change in future versions.
+ --
+ +
+ Unknown values are treated as `full`, with a warning.
+diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
+index 2023ad5f75..285fb3809f 100644
+--- a/Documentation/rev-list-options.adoc
++++ b/Documentation/rev-list-options.adoc
+@@ -1103,7 +1103,7 @@ It is an error to use `--missing-only` without `--missing=print` or
+ 	traversal, rather than just silencing errors about missing
+ 	objects.
+ 
+-`--connectivity-check=(full|incremental)`::
++`--connectivity-check=(full|incremental|auto[=<cutoff>])`::
+ 	(For internal use only.)  Used by `check_connected()` to
+ 	select the connectivity check algorithm; see
+ 	`transfer.connectivityCheck` in linkgit:git-config[1].
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index c07ad6e30c..071a0e3cb5 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -29,23 +29,35 @@
+ #include "quote.h"
+ #include "strbuf.h"
+ #include "tree-verify.h"
++#include "parse.h"
 +
-+use strict;
-+use warnings;
++#define INCREMENTAL_MAX_COMMITS 1000
+ 
+ enum connectivity_check_mode {
+ 	CONNECTIVITY_CHECK_FULL,
+ 	CONNECTIVITY_CHECK_INCREMENTAL,
++	CONNECTIVITY_CHECK_AUTO,
+ };
+ 
+ struct connectivity_check {
+ 	enum connectivity_check_mode mode;
++	unsigned long max_commits;
+ };
+ 
+ static void parse_connectivity_check(const char *arg,
+ 				     struct connectivity_check *check)
+ {
++	const char *cutoff;
 +
-+my ($nd, $nf, $nc, $hot, $fpc) = @ARGV;
-+$hot = $nd if !$hot || $hot > $nd;
-+$fpc = 1   if !$fpc;
-+
-+sub data {
-+	printf "data %d\n%s\n", length($_[0]), $_[0];
-+}
-+
-+# Initial tree: one commit with nd*nf files.
-+printf "commit refs/heads/main\n";
-+printf "committer perf <perf\@test.com> now\n";
-+data("initial");
-+for my $d (1..$nd) {
-+	for my $f (1..$nf) {
-+		printf "M 100644 inline d-%04d/f-%03d\n", $d, $f;
-+		data(sprintf "%03d%03d", $d, $f);
-+	}
-+}
-+
-+# Subsequent commits (auto-chained by fast-import).
-+for my $i (1..$nc) {
-+	printf "commit refs/heads/main\n";
-+	printf "committer perf <perf\@test.com> now\n";
-+	data(sprintf "change-%03d", $i);
-+	for my $j (0..$fpc-1) {
-+		my $d = (($i + $j) % $hot) + 1;
-+		printf "M 100644 inline d-%04d/f-001\n", $d;
-+		data(sprintf "c%d-%d", $i, $j);
-+	}
-+}
-diff --git a/t/perf/p5413-connectivity-check.sh b/t/perf/p5413-connectivity-check.sh
-new file mode 100755
-index 0000000000..9e968d0106
---- /dev/null
-+++ b/t/perf/p5413-connectivity-check.sh
-@@ -0,0 +1,85 @@
-+#!/bin/sh
-+
-+test_description='performance of connectivity check
-+
-+Benchmark the rev-list connectivity check, avoiding pack transfer
-+noise.
-+
-+Each repository has a flat tree of many directories with 100 files
-+in each.  Three axes are scaled independently: tree size, commit
-+count, and files changed per commit.'
-+
-+. ./perf-lib.sh
-+
-+test_perf_fresh_repo
-+
-+generate="$TEST_DIRECTORY/perf/generate-repo-p5413-connectivity-check.perl"
-+
-+# $1=dirs  $2=files_per_dir  $3=commits  $4=hot_dirs (optional, default=all)
-+# $5=files_per_commit (optional, default=1)
-+test_perf_conn () {
-+	local nd="$1" nf="$2" nc="$3" hot="${4:-$1}" fpc="${5:-1}"
-+	local total=$(($nd * $nf))
-+	local name="repo-${nd}d-${nf}f-${nc}c-${hot}h-${fpc}fpc"
-+	local label="${total} files, ${nc} commits"
-+	if test "$hot" -lt "$nd"
-+	then
-+		label="$label (${hot} hot dirs)"
-+	fi
-+	if test "$fpc" -gt 1
-+	then
-+		label="$label (${fpc} files/commit)"
-+	fi
-+
-+	test_expect_success PERL "setup $label" '
-+		if test -d '"$name"'
-+		then
-+			true
+ 	if (!strcmp(arg, "full"))
+ 		check->mode = CONNECTIVITY_CHECK_FULL;
+ 	else if (!strcmp(arg, "incremental"))
+ 		check->mode = CONNECTIVITY_CHECK_INCREMENTAL;
++	else if (!strcmp(arg, "auto"))
++		check->mode = CONNECTIVITY_CHECK_AUTO;
++	else if (skip_prefix(arg, "auto=", &cutoff) &&
++		 git_parse_ulong(cutoff, &check->max_commits))
++		check->mode = CONNECTIVITY_CHECK_AUTO;
+ 	else
+ 		die(_("unknown --connectivity-check mode '%s'"), arg);
+ }
+@@ -748,7 +760,9 @@ int cmd_rev_list(int argc,
+ 	int bisect_find_all = 0;
+ 	int use_bitmap_index = 0;
+ 	int filter_provided_objects = 0;
+-	struct connectivity_check connectivity_check = { 0 };
++	struct connectivity_check connectivity_check = {
++		.max_commits = INCREMENTAL_MAX_COMMITS,
++	};
+ 	const char *show_progress = NULL;
+ 	int ret = 0;
+ 
+@@ -1001,9 +1015,19 @@ int cmd_rev_list(int argc,
+ 	 * The incremental check would still work, but it would verify
+ 	 * the whole object graph like the full check, with extra
+ 	 * per-commit overhead on top, so use the full check.
++	 *
++	 * Otherwise the walk is limited, and revs.commits already holds
++	 * all incoming commits, so counting them for "auto" is cheap.
+ 	 */
+-	if (!revs.limited)
++	if (!revs.limited) {
+ 		connectivity_check.mode = CONNECTIVITY_CHECK_FULL;
++	} else if (connectivity_check.mode == CONNECTIVITY_CHECK_AUTO) {
++		if (commit_list_count(revs.commits) <=
++		    connectivity_check.max_commits)
++			connectivity_check.mode = CONNECTIVITY_CHECK_INCREMENTAL;
 +		else
-+			git init '"$name"' &&
-+			"$PERL_PATH" '"$generate"' '"$nd"' '"$nf"' '"$nc"' '"$hot"' '"$fpc"' |
-+			git -C '"$name"' fast-import --date-format=now --quiet &&
-+			(
-+				cd '"$name"' &&
-+				git rev-parse main~'"$nc"' >../'"${name}"'_old &&
-+				git rev-parse main >../'"${name}"'_new &&
-+				git update-ref refs/heads/main \
-+					$(cat ../'"${name}"'_old) &&
-+				git repack -ad &&
-+				git config gc.auto 0
-+			)
-+		fi
++			connectivity_check.mode = CONNECTIVITY_CHECK_FULL;
++	}
+ 
+ 	if (connectivity_check.mode == CONNECTIVITY_CHECK_INCREMENTAL) {
+ 		struct commit *commit;
+diff --git a/connected.c b/connected.c
+index c032987410..8ceaa45644 100644
+--- a/connected.c
++++ b/connected.c
+@@ -3,6 +3,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "odb.h"
++#include "parse.h"
+ #include "run-command.h"
+ #include "sigchain.h"
+ #include "connected.h"
+@@ -74,7 +75,8 @@ static void connectivity_check_mode(struct repository *repo,
+ 				    struct check_connected_options *opt,
+ 				    struct strbuf *mode)
+ {
+-	const char *algorithm = NULL;
++	const char *algorithm = NULL, *cutoff;
++	unsigned long max_commits;
+ 
+ 	/*
+ 	 * Deepening fetches do not have the usual boundary of
+@@ -93,6 +95,11 @@ static void connectivity_check_mode(struct repository *repo,
+ 		strbuf_addstr(mode, "full");
+ 	else if (!strcasecmp(algorithm, "incremental"))
+ 		strbuf_addstr(mode, "incremental");
++	else if (!strcasecmp(algorithm, "auto"))
++		strbuf_addstr(mode, "auto");
++	else if (skip_iprefix(algorithm, "auto=", &cutoff) &&
++		 git_parse_ulong(cutoff, &max_commits))
++		strbuf_addf(mode, "auto=%lu", max_commits);
+ 	else {
+ 		warning(_("unknown transfer.connectivityCheck algorithm '%s', "
+ 			  "using 'full'"), algorithm);
+diff --git a/t/t5413-connectivity-check.sh b/t/t5413-connectivity-check.sh
+index 109ad17cff..60edf99b63 100755
+--- a/t/t5413-connectivity-check.sh
++++ b/t/t5413-connectivity-check.sh
+@@ -725,7 +725,7 @@ test_expect_success 'unknown transfer.connectivityCheck falls back to full' '
+ 	test_when_finished "rm -rf dst" &&
+ 	git init --bare dst &&
+ 	git -C dst fetch ../src base:refs/heads/main &&
+-	for value in bogus
++	for value in bogus auto= auto=x
+ 	do
+ 		set_connectivity_check dst "$value" &&
+ 		run_traced git -C dst fetch ../src main &&
+@@ -753,7 +753,7 @@ test_expect_success 'fetch uses incremental when configured' '
+ 	expect_mode incremental
+ '
+ 
+-for mode in incremental
++for mode in incremental auto
+ do
+ 	test_expect_success "push with $mode into an empty repository uses full" '
+ 		test_when_finished "rm -rf dst" &&
+@@ -771,4 +771,25 @@ do
+ 	'
+ done
+ 
++for value in auto auto=1
++do
++	test_expect_success "push with $value uses incremental up to the cutoff" '
++		test_when_finished "rm -rf dst" &&
++		git init --bare dst &&
++		git -C src push ../dst base:refs/heads/main &&
++		set_connectivity_check dst $value &&
++		run_traced git -C src push ../dst main &&
++		expect_mode incremental
 +	'
++done
 +
-+	test_perf "$label" --prereq PERL '
-+		cat '"${name}"'_new |
-+		git -C '"$name"' rev-list \
-+			--objects --stdin --not --all --quiet \
-+			--exclude-promisor-objects
-+	'
-+}
++test_expect_success 'push with auto uses full above the cutoff' '
++	test_when_finished "rm -rf dst" &&
++	git init --bare dst &&
++	git -C src push ../dst base:refs/heads/main &&
++	set_connectivity_check dst auto=0 &&
++	run_traced git -C src push ../dst main &&
++	expect_mode full
++'
 +
-+# Scaling tree size (10 commits, 10 files/commit).
-+test_perf_conn   50 100 10   50 10
-+test_perf_conn  500 100 10  500 10
-+test_perf_conn 2000 100 10 2000 10
-+test_perf_conn 8000 100 10 8000 10
-+
-+# Scaling commit count (200K files, 10 files/commit).
-+test_perf_conn 2000 100    1 2000 10
-+test_perf_conn 2000 100   10 2000 10
-+test_perf_conn 2000 100  100 2000 10
-+test_perf_conn 2000 100   500 2000 10
-+test_perf_conn 2000 100  3000 2000 10
-+test_perf_conn 2000 100  5000 2000 10
-+test_perf_conn 2000 100 10000 2000 10
-+
-+# Scaling files per commit (200K files, 10 commits).
-+test_perf_conn 2000 100 10 2000   1
-+test_perf_conn 2000 100 10 2000  10
-+test_perf_conn 2000 100 10 2000  100
-+test_perf_conn 2000 100 10 2000  500
-+test_perf_conn 2000 100 10 2000 1000
-+test_perf_conn 2000 100 10 2000 2000
-+
-+test_done
+ test_done
 -- 
 gitgitgadget
-
