@@ -1,87 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792768203;
-	b=hPuNkVfJBeNXnbhjmEhelH6/JIzMHVOi1msA9ccRKnscqIQNOoK3LcYBEtgY/NSO5v4q
-	 NOUBFg9g/YWxq/PfQ72DkJKxqpB0OREj+h22svYz0rcCFR9QoO0oRsQaLUqE+2gprBY3r
-	 UnjNMDVZZ3wctHI3ePJkwo5JbqykvRDEVQ0qEwo0R2C4efg3dF/3M6Y7uVWDoK22Xtm/D
-	 +PNnBpHnCOF26yJwq14jf1qv4y7mDaN17ZIZKybdiojEYPFaQLbFP1ZLPN/B1wjVn6faK
-	 CkITI8Ek66gVMZQe75JWqvTUbeWeWUfuYaI13uA8mj2gaDhQqfmfAz7DbUn9U3spNqA==
+	t=1792768551;
+	b=OOCSuwONlDzHMkzKfls7C6llE5rHe49Enq0sN1lxJfuAiv+4J4otp+ttsYWgi8TlOo7h
+	 +hRzUajO2Wymm/YHDgYCSqCQLuR3YRgcecWhP/N8P5o8+WddsowKiqXWusjOeb+c+gzhu
+	 sQhrXoxjX4MbXrZgQ6ZVR4Us/DSEF6ZdK/c9GvYi1s+KrgIoAUiyFoiV5SxjU/KByzztq
+	 oNKP2zKSz55kKFFOQbtdmiJwd2B46cnZ/QNMobZWrYnva9OTf/yu6eB1fPNgLEF64ZS6B
+	 C459KYb6lFi2gkBa1T6e26oK13OtqdAywFpHHVI+/2mi83X9EC16rrNgcLXmkgnK3ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792768203;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792768551;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:
-	 References:Content-Language:In-Reply-To:Content-Type:
+	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=GG3OwegKccbohF9tUBkMXiguRoaoSonBtMz4JNCz4Gc=;
-	b=igMZmyU4mF7OA3bI9dEilVvZvDfTLajXq+1C2IKmnA73DcgRy/Z0uEa3n+MRBOIO2hko
-	 gBm7fVDJBwvij9tPgi57tU3D6bnwIcpzYWZfFM/Cl7N3ySQA0xu6DTLuZLDfKZtjcf/wV
-	 hCHq+79QLF8sFRIu0mMp9x8303Nc3SuiPadr62cvr5A6lPAL5bDxyTzgQ7487YAh0RD68
-	 H+JGJFODa4Y8tBSntTLkOncJrjQHtYG7Ifzax5InXGuydO3c5Y5WZ8utRHstnWjmTT3Po
-	 nZCtJFlKPvBl3PgLvR+e2s0bFCNsnDPo1A8xFViSPKpJCBwg4rJabPOMWw6pHeij/hA==
+	bh=Af1SD3SxXi2kUvYl6rKFKxxZFV1FxlkvfAOMYzsHl88=;
+	b=ZRQ/+vlTaKosD+dNt9O57F303rcmvq19sIWiU1qq09ccwxI/gsB1JQnCQuNcKAlu3FTb
+	 QxlLiMVgKrvWpBbUAPCvXQgiGQI4TNZWusgbHCGxsWkspmyxqg96y5ShXtXRkyneV3fQn
+	 xS+Vfosb3QNBmIeOIZFGCUZjKRVIuD4nvEiMygCztwWVPVoUs0S+ZGd0bGAVbPHbzHlro
+	 8YwDYo1Q2rmHa7YebB5hkxosujcBrNC/ujhrb9LbLWaSfgC30j9RMMutP+KwO0m7McS8Q
+	 MtlIV8ezGXRkcnwjNL4J6SeZHM2fpyxxUnPHoD75dyq7w5uL5b+mTql+5tUiA2dCIfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Z12KUiHv;
-	arc=none smtp.remote-ip=209.85.128.47
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=PcHcpWd6;
+	arc=none smtp.remote-ip=209.85.221.46
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF18606DB1E
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 15:10:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DAF18606DB1E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAAC606A327
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 15:15:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8AAAC606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Z12KUiHv
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a1e477fe16so7884795e9.1
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 08:10:02 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=PcHcpWd6
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48dee593f18so709640f8f.3
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 08:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792768201; x=1793373001; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=GG3OwegKccbohF9tUBkMXiguRoaoSonBtMz4JNCz4Gc=;
-        b=Z12KUiHvENCV18yIaxX3Gp9RgAOYJwGKQPnRgwlPdtcwM7uWZQ9Sv/Qe3NC/+3lrvl
-         /eKQ7X6KuPIdt011kKDpyFv45jLCDo9dmfl3Zvpda578Og0WNgRkWnmhjMpiuRFXwIEb
-         8lFvj/kPaI23//DmVTEyVnLnOjTQVgVc/7NVLkQO5oZIzR4R7L+5lhGk1n796c0Edd1U
-         NB/SKFni7KfrrbmIT5/+YW65HnqPKzz/yq+x2Q3zykcROkQQ7PON3F85KzAowC+a5t8T
-         GM7O+cryFSBVO0rL/G/ZH5XLqwI5xb0spC/agAspmXOXrGWLBQ6S1NIbQ4BCZ+Wr3DSt
-         8fgA==
+        d=gmail.com; s=20251104; t=1792768549; x=1793373349; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=Af1SD3SxXi2kUvYl6rKFKxxZFV1FxlkvfAOMYzsHl88=;
+        b=PcHcpWd6cO8soHvK0YIloqGC703f7lGg164i+2qtkklQE40lHAr+5H/4sQyGFZRxWj
+         eYwZ77Vjc02fEtkOirdh1y1XNtwBFBI/0K1or+I5eisCeK5CYubsUNULxkVCthcma4HV
+         Qj5syFgTl0M7ls0zWOBjq5nTRaaCz8ciSQXnV9icdXcOrf33KXJodo7GsnR1QRpO3VXV
+         CqxzvfAlVOHOiiI9Ka7m0BIYRIepAFYXDYGieZ7Vf3ZiAoibmu2+mj8QyRwETQxGxl23
+         zGjAQARtE/bKRQhihFBkjPk9DK3CuzN1C42pdXhrosTVW2EzuQITy9ti3azudhISqbHR
+         9aQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792768201; x=1793373001;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=GG3OwegKccbohF9tUBkMXiguRoaoSonBtMz4JNCz4Gc=;
-        b=s+4P2OlpZSxu2k7qmGNQYECrL7QxAaBxiffSnHeWvzr4AEETOUXnpZrlfwxzjLT04b
-         OXjyOYoXHnoxPMMxNaeSLC0MOMdXRV8gEGMv1s1iD1B0ZqXEoa9sKRyBA1olJ/D2zGc0
-         vFgwO4FPoIFW8pXplTL81xK8jjWMuLMUB6IMCEprgDZTyoGltPvZcrtGqegVadY9nDln
-         cKspsxpdUzZO11jHf9M+uLpf3fjxT3sQwNfVuVw4EJG4t7/Nu61qEZKQMreYushQE99l
-         J3+MVZhIGaiXuxa1hzFl9oBTUOU8JmjG0ILJozZQvjvQ3oScnlEZj1IiM30fJtlkI1Wr
-         Si3A==
-X-Forwarded-Encrypted: i=1; AKwUvBxOAgoVBO+3xVFjFckqzHOg1CzkJWDxada15Q9evjbhjyATHlR1E0XuzcbPeEtOcv3xoz8=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIv/P+s+SGfBpk1SGSjmREKV9JzQrfNtuqJ2f3bFOTYiKr/w8NF
-	EimksfMxkzBzk0odvHi2uWaaEulhMsLcvEgmUONSR6fqdhnXDCy/Om2l
-X-Gm-Gg: AYBFou2prs7gZNon4Zv5X8X0iDxshL+2j99KVJIPS2kzfB1DJxHmPlnq12Bq3uEk8y/
-	erI/iSBuVzGS6daOAWqMrvRAeA2YZ4QonBViPJOf+5Yhvexsljo0PDGrz5NlxdhUjsSDI8MIi0X
-	xa4+oVi7bBrpMfcmUAfuPy70v8gSsZqD7U95VYOXermaLC0hZvyZsEBnac3kE2QAmdd98JkSsAi
-	uXcGxYAX1A/zbeYX6o29cWDeFgOvIejLOJDM2qUvWpB1FNMUw7iJTHFHRiJbslXOF8u5Gt9nhyQ
-	GY1Ptj6VdC45HKXR9Zl25os7Z5IWcv3qqZQ5s8A6XkkZiM+rFZ2+F6ypq+tTeILJfOQq6DFa96T
-	2qGIqVp5UCiSsWTR7ivlALeVd2c2FrZPIEU70QGnLz4NI/XtSiww6y24YGbC6l5R9JFXQ85NIBy
-	gK0idAOWkUYrEqD392wkMeH3ji6Lr72YlC3y9Cl0jCwLeeNadfYcPm7JMeA7fno2ixq7kQhCaBn
-	lA1WQDTpmdn0ICL1+gGsCrz2Vdpw3reKFcVi6wyNLJVLGOp+Y8pgg3rVTYZed+kZo/IcDZkUaAi
-	nloouwkYVTv1cIR0pPDeYnmqcDRWl6XajQ==
-X-Received: by 2002:a05:600c:34cb:b0:4a2:167a:c946 with SMTP id 5b1f17b1804b1-4a2167acdc4mr31604835e9.13.1792768201243;
-        Fri, 23 Oct 2026 08:10:01 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792768549; x=1793373349;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Af1SD3SxXi2kUvYl6rKFKxxZFV1FxlkvfAOMYzsHl88=;
+        b=zj06CGgSWDQHJBitXMuCTz0SiGp5ZBIEUEKn3pVE7K6Kkd9y+CuPrxWX7kNDH9OMrd
+         Za6G/P7UiLjofPIe2wana+GgZQQi7aNTbc+MkzpCRj6p2y+Tks3DyJFC30tVWRaEPyD3
+         YepNpvvXHMR5hkHI+ZohB+OKJTF42tsuEor6r2VbKphZyYDZzTj+hfN+E2xNNjTtuGaz
+         Lkytg23twKHogKDhZ2tdhGmxXXsnpD45KxzOMgXm3F4l3FB2mFtlLZbT2lPXU/8oS66c
+         Byfod6N4kWaAzXiRIDLc/vUEysZPE3iM0xKEG/bRUnUhHtkpH1cQWlo+igNcVlQWW09F
+         MtJg==
+X-Forwarded-Encrypted: i=1; AKwUvBwDt+RC09HFhv+giWUwlFY57jWWZtDx+e5hhfQZxgVufsUcLXFjVhkeNGtuHArc2ahHS1U=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLyKGTzOpyZZh6xhWHtMDxBYwkMAtyLfERh07DtTc1V/vXBYWv9
+	unafU42L+SR/qMo40rNg/+a3DXC4DEIYth1qGmBzjEPytVbKTbv1JTYG
+X-Gm-Gg: AYBFou1Hf11gQ945LjF0dJ3h7vjbQZ1aX/2rGbSMATRwSTno0MNL+Q3AB8JWRIp7PpV
+	eOuIvJgkF4Nyn/0eTkw9kZ8l+E0sB0NfplffooXkCo/7H4PN/Yode8QSVYFqU4RguvDCRm1T3OA
+	W+INx4Y5oSQOU9D9Sh2Ws8i+RT5Q9mssRfQkNFgA2dYvhjDt4fvmtuXic9OUvuStn1XosYgFG4M
+	rN5mFt07QiaIwG/XqXGrhoSQzBTk4SUMGOC5GdifhtmQf0NX1lfCD+s0hQIUILpdeEhEWZiIJFF
+	gDwndBdZcSbzQyjR7tk6DJ/bgd93LYuz8mHyMo42WIrr6Au/SKl03MMqh0sfWCpW93jFHSWf78N
+	z5gG1hDAW1GUoXZNSOcj3Z7MTh6u98lgZbgZS95WHopy+7dgvxhiEMZOqxoeKDDaNujvnTAbZIH
+	G1oEWylIuKJ4WeIegJH1m+QRqReW76xSTrOUWPXBAoVM7gDslRd1CwG2aqFsrxfyo70qU45mE4U
+	9kMVL7Ae4YRxBchtVDu+wxbc8am7GtBLT3RmOZ4CwSVJSr6jonKr3reMAXCD1NbC/DGGgc2L5xq
+	isCnPDv7UQH92eakREtvlBZK5ebtL/ib4A==
+X-Received: by 2002:a05:6000:184e:b0:48e:1421:ed49 with SMTP id ffacd0b85a97d-48e385896dbmr4220851f8f.18.1792768548805;
+        Fri, 23 Oct 2026 08:15:48 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a2958bf25dsm14291685e9.2.2026.10.23.08.10.00
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3d40459dsm369026f8f.28.2026.10.23.08.15.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Oct 2026 08:10:00 -0700 (PDT)
-Message-ID: <8b75a831-f8b7-4e8d-9dbf-0f7fca5e7bc7@gmail.com>
-Date: Fri, 23 Oct 2026 16:09:59 +0100
+        Fri, 23 Oct 2026 08:15:48 -0700 (PDT)
+Message-ID: <fe3d651a-d1af-47a7-9b7b-a4ff242ca303@gmail.com>
+Date: Fri, 23 Oct 2026 16:15:47 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,50 +93,72 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 1/1] archive-zip: refactor 'path too long' error
- message to use Q_()
-To: kerylefondji7@gmail.com, gitster@pobox.com
-Cc: christian.couder@gmail.com, siddharthasthana31@gmail.com,
+Subject: Re: [PATCH v2] diff-delta: use safe integer arithmetic
+To: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
-References: <xmqq1p9hhbue.fsf@gitster.g>
- <20261023120358.8061-1-kerylefondji7@gmail.com>
- <20261023120358.8061-2-kerylefondji7@gmail.com>
+Cc: Srujith A Poojary <poojarysrujith@gmail.com>
+References: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
+ <pull.2276.v2.git.1792734993812.gitgitgadget@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20261023120358.8061-2-kerylefondji7@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.2276.v2.git.1792734993812.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Keryle
+Hi Srujith
 
-On 23/10/2026 13:03, kerylefondji7@gmail.com wrote:
+On 23/10/2026 06:56, Srujith A Poojary via GitGitGadget wrote:
+> From: Srujith A Poojary <poojarysrujith@gmail.com>
 > 
-> diff --git a/archive-zip.c b/archive-zip.c
-> index 5ab3ba786f..160efd878f 100644
-> --- a/archive-zip.c
-> +++ b/archive-zip.c
-> @@ -328,10 +328,10 @@ static int write_zip_entry(struct archiver_args *args,
->   	}
->   
->   	if (pathlen > 0xffff) {
-> -	 return error(Q_("path too long (%d char, SHA1: %s): %s",
-> -	  "path too long (%d chars, SHA1: %s): %s",
-> -	 pathlen),
-> -		(int)pathlen, oid_to_hex(oid), path);
-> +		return error(Q_("path too long (%d char, SHA1: %s): %s",
-> +				"path too long (%d chars, SHA1: %s): %s",
-> +				pathlen),
-> +			     (int)pathlen, oid_to_hex(oid), path);
+> Replace manual multiplication and addition in create_delta_index()
+> with safe integer helpers (st_mult, st_add, st_add3) to prevent
+> overflows.
 
-The indentation looks good, but this does not apply to master. When you 
-get feedback about a patch, you should send an amended patch that 
-applies to master, not a fix that applies on top of the patch you 
-previously sent. If a patch series contains more than one patch, you can 
-use "git rebase -i" to prepare the new version. If there is a single 
-patch like this series you can use "git commit --amend".
+Sounds like a good idea
+
+> diff --git a/diff-delta.c b/diff-delta.c
+> index 7cbedeb507..45df070ab9 100644
+> --- a/diff-delta.c
+> +++ b/diff-delta.c
+> @@ -162,8 +162,8 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
+>   	hmask = hsize - 1;
+>   
+>   	/* allocate lookup index */
+> -	memsize = sizeof(*hash) * hsize +
+> -		  sizeof(*entry) * entries;
+> +	memsize = st_add(st_mult(sizeof(*hash), hsize),
+> +				st_mult(sizeof(*entry), entries));
+
+The alignment is off here, see 
+https://github.com/gitgitgadget/git/actions/runs/39906906057/job/120260845179?pr=2276 
+for a suggested fix from clang-format. I think you should be able to use 
+"git clang-format HEAD^" to fix it.
+  >   	mem = malloc(memsize);
+>   	if (!mem)
+>   		return NULL;
+> @@ -258,9 +258,9 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
+>   	 * Now create the packed index in array form
+>   	 * rather than linked lists.
+>   	 */
+> -	memsize = sizeof(*index)
+> -		+ sizeof(*packed_hash) * (hsize+1)
+> -		+ sizeof(*packed_entry) * entries;
+> +	memsize = st_add3(sizeof(*index),
+> +			st_mult(sizeof(*packed_hash), hsize + 1),
+
+What are the bounds of hsize? Can adding one to it overflow? The 
+alignment is off here as well, all the arguments to st_add3() should be 
+aligned.
 
 Thanks
 
 Phillip
+
+> +			st_mult(sizeof(*packed_entry), entries));
+>   	mem = malloc(memsize);
+>   	if (!mem) {
+>   		free(hash);
+> 
+> base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
 
