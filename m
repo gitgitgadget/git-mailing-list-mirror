@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792740395;
-	b=GlbYQuMb7q1KigoYAfdDRLToFg+hGJJd1km+cdEVpcBIfsMRDWm4hCsxW+Hq+nGvOS3v
-	 8qsWJuC7hndMDS81fb3gBQYJAb60xoAK8ZwYTmmJfqBSyzbVYvqk95kJT1wDrhaYV1MWd
-	 vpNd2zcMCwvdH1go0vQlLXaqC1USvmqCliMBPKqJtMXsTJ+kUB/48MNSYVX62JSf6wUyS
-	 6FH/Oz6yNiiWBXfgpeL4AdUHkBTijy8TqXrbVvItnchu+FEX/5fU/dFC6yic0Wk8Gl8K0
-	 G/cd2DyzgnzsREFnytHtH7tR9mFXuFamsPa6hIw9bnZKjYf/3scST8FFmzRcOYQhlhw==
+	t=1792740397;
+	b=Uy/rmko33lN3Ggi6INzVeSeMu3gIWPc2QiAq0MLi1Lc62G+fKiYg2oTfEludYoURwC61
+	 hvhICblmzmRl6GIC+i/h8bdepJhHvSCeK9tfXVthONc7YY+u2aNbsi3B/C09moN39fRC7
+	 MUp+2JOiJ/tgO6S/nLtxwlwEviApEAKDetHW5wKaTVhZvrBtJjfer4G6DnnFsGZ6Sq1r0
+	 K2ea2bWgZZpuAPr8RcAw5+bJTL/bCNrchCNrufh0Luh5704Z9gNUf2tv3NiFDaWrwmNGf
+	 ZzjPwFMgyjhntWg3r8JKiPvd+35k1xNLFTK+wtfl5oVYZ/HAHrC/x+spoU/mizG164Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792740395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792740397;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=TTfSrTJiay6nATm3Ar848tgTtkXAk8lVaf34rPkcYL0=;
-	b=WI5exqtGvQ0w+xfkE6WgdG+SHu1uv9isaYFAsQZodulFZcvTY/p+SGTMmJYs6HBiErrI
-	 rY9PGO6RxYDnljMBMbF+YioClGFUKnZZYURoEVv+c2/y9dfg8p07FECcpyTXqPWHLunWh
-	 9nAwxYCWg4ek43sHBEYH45x+A2uEyqmpf2ATLTDrm9JvuJefdftdWjaQ9hGOBGJRfvKws
-	 484EzxNKl6H+pDsEsYfsSlWPAYja171ZTZjLzq/POyEFLGw5Fg6kaBG+XeHz8T3dBOAnl
-	 REkhl69z6haKD6EZkltGELaQBI9TqA3y1TXctubeuXPVzbifwS7cDhZNB9GM7NfmpYA==
+	bh=tVQya4zBBvRCPfkBD4JKIVbm04JtEbk7i/yiZVqyOOs=;
+	b=Xgjcet5ZrSg4TGTjxcy4gi6C5gL/2WuDX0TNDTOQPNoEHjmGX1FZyGAyIpqFKT7lTOTB
+	 VCYs7sfvhPkcfN5LemGA9mOjMcp0YWfSTdjfRmgtOGaq0Bdv7Mzt8Ahtx6WDn+ldLg7l7
+	 ybV1TG2kVweP5AT5reuHP42+HYMJ3KZOGdHnWibBiZfWqPe4ZZhBpTCvefDJUpE06a4sm
+	 zXNgwjV4EASSUsp1QEnm0JP4rFARRomipQJ03/Zylm0lPqSXUg6M2GQT5Tmh0olvTylA3
+	 1pdx0R+tDLTlliOi420qc6tZXruhHwOId16Hft0ko599nLJ6jcxV4oFWqESATptVeMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WOWzx2l5;
-	arc=none smtp.remote-ip=209.85.221.41
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=an6JUQH7;
+	arc=none smtp.remote-ip=209.85.221.46
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3F6606A335
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 07:26:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3B3F6606A335
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A481A606A32C
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 07:26:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A481A606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WOWzx2l5
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-48e0d1da913so368937f8f.1
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 00:26:35 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=an6JUQH7
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48e10a70540so293140f8f.1
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 00:26:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792740394; x=1793345194; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792740395; x=1793345195; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=TTfSrTJiay6nATm3Ar848tgTtkXAk8lVaf34rPkcYL0=;
-        b=WOWzx2l57VC8LHoRZIdESO7i9ldhcYylqn2j1kGxw0NTaX8E73K0Etx820EvKtJgcy
-         54/n+Mgh+Ydt2YCFbATOqQ1Fv4IM5FITzTyMadCkLaF6xXe0a+tzZQFqZIKJVI7V/kU+
-         SW+W6IAtnm+Ojd8r8nhERWfZ26IuEruyitA0f9QtmjF6Iyq5aScfsQwla0ztISaO+MxJ
-         MUtzy83r/YmVDgcelJBLIWknvg7s5SKdBWetORRAOFUBx8Nez4tOWAc06TVPSYZZa+NM
-         vM4N+FPtVQKhczEiFnVMu3RkszlZZKEHANpM5QZEv/8biQ/1rmKY85ju8eWND1//Nyd2
-         ff3g==
+        bh=tVQya4zBBvRCPfkBD4JKIVbm04JtEbk7i/yiZVqyOOs=;
+        b=an6JUQH77W0skWMuH66wv8jI0VRUgUDKNSCnZvqEuxXUkxCqMrS+hppwWpBht5ViR8
+         DFDTbzolvBoyg951VB4hNK/Cqa9C3JAOSMYhVR06JbLflkK+WvJDeCtQtNmqByXsy6bs
+         9QMB1ssS+Vv6oAwegug5/cvaHLUNwNsY7RRw1zFAOANu9+s5sh5iZ3q4k6w4LtEO4vFO
+         gaTg6ZWDUA53PLL3p81ahEsQWTw2YB1KnCVqziEozAo20ajQqHiX59EnljK5INz+kEtS
+         vkk6YBe86IvgiNwfHjzILxJhDI4KNaBI3iLdoiDFIatRER8dyso7F13Dhhz7MpIb0w0Q
+         5JUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792740394; x=1793345194;
+        d=1e100.net; s=20260707; t=1792740395; x=1793345195;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=TTfSrTJiay6nATm3Ar848tgTtkXAk8lVaf34rPkcYL0=;
-        b=T5opvXvhAfFVavGu5VuD0hfCnHSqSWPTXDXJH8kki0xmdfIGkZr9U/R4Znl0I7itLd
-         hFgyyvJYo1HcWPM22H7AIr76BUjVPsqUw64DydV5y50it7S6ih4EkpjxjbJOYgjGk1iV
-         FfUAgtNGu3itjjjClS1i/Plr9nGOPJMKsEhHZ/u9F6dpMapz81plE3T+sWGlczaRPvet
-         zp8qq92k71A77Ztj8tjcnkxwYGT9rfJFGDbr9um2t4iKHte/8Vyb5BPG/eC8UesCuzQh
-         dGOZ0APPHJmucS5BjLIEkzlw8wJktFHXe3CCNVv1y9BTkqfZKJWNLDqk7G9KBlNlt6vi
-         ySAA==
-X-Gm-Message-State: AFq9FYIi8o59dwZuyPy0xyTk7EBblQTg3p/i9QldKxURdkE99j3/WjYc
-	+j+raaGXBlfhTYpDY0ZZKWDLngMHid5ltAWBxYiKUQy9r+ifmBlpT3IiNfB9Ew==
-X-Gm-Gg: AYBFou0SDhCWQkshMOLH34P1wi86r1ne2G9sU4d7scO1ast30WA1RIrPLjwro5GbJut
-	0mU5XfbVGdbL7Vlphpr1J5vmf2lzxnMWF/AvlYrMOIcECIeU82SH+S0+7IGMaQTAufFJ7OI0s6o
-	zz+kKvqbNtu+haF7Yw4m8qXSNA+IjY0Zm6R4oVb1caLIhkm5B7WVkBNMaOo+RXbZfyrs65IALuk
-	EZ9WoC9vEovWu7VWDguNJh0qNrUvHJVpVwfZRd+9EhXqnmcnvMZeOmnY2vw2PSGMafqZrF8zUyr
-	T2R+7so1ShYiIJSG7OLMrMCQGbW6Ud0BCfIRFKThwc8y92MMBflTXvk6m+tyllzTmDA/ykdLtOe
-	jT8gQ0bJtByS103vVvUQzE5cVdiFyWCMRvL4bwoskvjcdTnZeY8gIuSZGFCwT7q0v7e1WMzzDfM
-	WZrsC6YBpqV3e3sUsRQLnFPcgjlnzI9bflxXzAuyYxiYiGYem158xep6bKN8d7hUEtG9UgZiaCg
-	bEoJ/MoDSJBch92qtN0ul89jfbBOZ9Et++iAflvTycHVXlGNzaEEnXw1Mqa05+92RZzEvbvrykb
-	0DE52WmvJ6RhtwqZ8x6sqrRCj4Yqg60Wttwt6MVVJywpUSeTk822q1vzDTYRkEsVJP0PLY+Mokv
-	cyukhaKSC3kYh3uKix8JlBzE2dg+FfuQQzTiUXCMkPf7VLly9LnS6J6MDI4DKUJsNpg==
-X-Received: by 2002:a05:6000:41c8:b0:48d:f9dd:e3e0 with SMTP id ffacd0b85a97d-48e38588df7mr1852108f8f.4.1792740393560;
-        Fri, 23 Oct 2026 00:26:33 -0700 (PDT)
+        bh=tVQya4zBBvRCPfkBD4JKIVbm04JtEbk7i/yiZVqyOOs=;
+        b=UuvuQD5CHCxCOSh+mFZtonzJspcTcz/0Iy3P9lHpVS47w27Xq8x79W+1NuRecTiTYN
+         xdoMnnrCddCLCFl6PMHot3JdBHzWIcPvdYJ/WTYRiA8XiEpnuNQFskCXV0QQ5LBZBthk
+         wYHMcKPygRDgbrbZ64ch/lBlov86e+JX6ma0xoLOF2a2hEVqQjpMfYAMDlNwcbW0PLDd
+         J/PAcuZ+HtfL+DBkT7a9X+yJg2IEK9DjQBRIH+KUuct13u646AvAxe1npiQ0ufqKKbfk
+         4aUOdHw9aj+X6SAJP/kUI47XoiXeTHQgZ0M2VAZeyjhxmXccDhVIsV3nHYcZxuIUXZMR
+         ss2Q==
+X-Gm-Message-State: AFq9FYJU6DSBNEdYWCD7TWFgtvVbaKW+iYu9u84HNzMexUMvsiLeHPgz
+	CVJ0GqyxUbFUmYs12V+XXcFZS4uyfplYO4pH4zO/KrA4McWF1wqB9UQcsafcEw==
+X-Gm-Gg: AYBFou37yFTxbMnSMfTQ2igZ+vYVx7F6BeZlvZa14y7Lp69Q6a+Ue0GOv24JJMpFdMH
+	4XYzs/wbqYJPQY3j8XPEfIzWvXwKQG20aR9oTyyG61euvTrT9vTuZu9o28oe0Floshmos4saF5E
+	/OErIQ/RaaRBhAXOyVijI2jaGH2sAeV8eVd8nUxqt6wJoSpJShsUz4Z7v15wG/p4FLfgXRitkZo
+	rOgT5GVBkjQ8hoSZZBMMgw44MZNntu1XvMmA9ZTPi2hBsfBftzCTTpH7Cph+uB+922vuZHro/Ad
+	SAxQox+uQHKtR1QRPqB1F27crFYye+XLw7P7lRqkh7jHf1XEb3PuWdtqkHNEtsHhRydMJgGBOFI
+	sFXSL81cjNhzA2PrEkSRSzPEeMtQl5kKKv0lAIHduSD0Uy4fGaFVN8d+oKTvHHzrQys2XnYGrW4
+	/JN1bTfWoghzS2BoSKDOb39AR9gTOP4g+mwkbgdxffs1OIZPMCEijfXZ9fPfr12dRxFrWnALXXb
+	XBYqxm/G9mUHRmEO6dFbvOmXjJ7CoF1WRe27GHDzsbbNh5fd1JtTafQR+QvlZZw7007IhvKOBVf
+	snFDk5XVyogolsIpcLo/HYHNXJ4x9sMhPc83Ydtxr7Zx5vdtahqhO3fXTO3saQCTfGjYbzN5RFW
+	zP0q+teRwNfKhjoQrSt/F/FhBg3Kri02HZKXibIsCqweKCF3Arb3CvVkunpE4Qs0f+g==
+X-Received: by 2002:a05:6000:1608:b0:48d:c178:f6e9 with SMTP id ffacd0b85a97d-48e38588c6amr1464834f8f.20.1792740394882;
+        Fri, 23 Oct 2026 00:26:34 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e38055da4sm3228024f8f.43.2026.10.23.00.26.32
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e38055da4sm3228024f8f.43.2026.10.23.00.26.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 00:26:32 -0700 (PDT)
+        Fri, 23 Oct 2026 00:26:34 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -87,9 +87,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 11/13] loose: map object IDs using pack index v3
-Date: Fri, 23 Oct 2026 09:25:56 +0200
-Message-ID: <20261023072559.3204273-12-christian.couder@gmail.com>
+Subject: [PATCH v2 12/13] packfile: allow looking up compat object IDs in packs
+Date: Fri, 23 Oct 2026 09:25:57 +0200
+Message-ID: <20261023072559.3204273-13-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.56.0.215.g47fdf2208c
 In-Reply-To: <20261023072559.3204273-1-christian.couder@gmail.com>
 References: <20261023072559.3204273-1-christian.couder@gmail.com>
@@ -106,184 +106,228 @@ Content-Transfer-Encoding: 8bit
 
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 
-Right now, we can only map an object if it exists in the loose object
-map.  However, we have a perfectly good way to look up packed objects,
-which is the pack index.  Let's use that to look up any packed objects
-if they're not in the loose object map.
+Now that we have the ability to store compatibility object IDs in pack
+index v3, we also want to be able to look up these object IDs.  Our
+disambiguation code can work with a particular hash algorithm or with
+any hash algorithm, the most notable instance of the latter case being
+when git rev-parse is invoked with --output-object-format.
 
-In order to do so, let's add a variant of nth_packed_object_id that
-handles an arbitrary hash algorithm.
+We already handle the single algorithm case just fine, but we don't
+gracefully handle resolving an object ID in any algorithm.  Solve this
+by iterating through the algorithms and, if the algorithm is both one of
+the desired ones and one our repository supports, then try looking up
+the object IDs for that algorithm.  Use an intermediate variable so that
+we can pass the correct algorithm in the object ID's algo member, which
+will cause the correct tables to be looked up.
 
-Only pack index v3 stores object IDs in more than one algorithm, so
-skip packs with an older index when mapping.
+Write this check as two if statements because the logic is complex and
+it is easier to understand as two statements.  The compiler will
+optimize it appropriately.
 
-Also make the new variant fail when the index cannot provide the
-requested object ID, for example because it has no data for one of the
-algorithms.
+When looking up an object ID, we find positions in the table sorted by
+that object ID's algorithm. So read the object IDs there for that
+algorithm with nth_packed_object_id_algop(), and add
+nth_packed_object_offset_algop() to get their offsets.
 
-Add a test in t1016 to check that packed objects are mapped using a v3
-index, but not using a v2 index, when the loose object map has no entry
-for them.
+Skip the compatibility algorithm for packs with an index older than v3,
+as these only store object IDs in the main algorithm.
+
+Add a test that looks up an abbreviated compatibility object ID of a
+packed object.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 Signed-off-by: Christian Couder <christian.couder@gmail.com>
 ---
- odb/source-packed.c           | 30 ++++++++++++++++++++++++++----
- packfile.c                    | 28 +++++++++++++++++++++++-----
- packfile.h                    |  8 ++++++++
- t/t1016-compatObjectFormat.sh | 27 +++++++++++++++++++++++++++
- 4 files changed, 84 insertions(+), 9 deletions(-)
+ odb/source-packed.c           | 83 +++++++++++++++++++++++------------
+ packfile.c                    | 13 +++++-
+ packfile.h                    |  7 +++
+ t/t1016-compatObjectFormat.sh | 30 +++++++++++++
+ 4 files changed, 104 insertions(+), 29 deletions(-)
 
 diff --git a/odb/source-packed.c b/odb/source-packed.c
-index ee1edfdb2b..4ecc2de818 100644
+index 4ecc2de818..8b16e8da29 100644
 --- a/odb/source-packed.c
 +++ b/odb/source-packed.c
-@@ -863,12 +863,34 @@ static void odb_source_packed_close(struct odb_source *source)
- 	packed->midx = NULL;
- }
+@@ -295,37 +295,64 @@ static int for_each_prefixed_object_in_pack(
+ 	int len = opts->prefix_hex_len > p->repo->hash_algo->hexsz ?
+ 		p->repo->hash_algo->hexsz : opts->prefix_hex_len;
+ 	int ret;
++	struct object_id wanted;
  
--static int odb_source_packed_map_oid(struct odb_source *source UNUSED,
--				     const struct object_id *src UNUSED,
--				     const struct git_hash_algo *to UNUSED,
--				     struct object_id *dest UNUSED,
-+static int odb_source_packed_map_oid(struct odb_source *source,
-+				     const struct object_id *src,
-+				     const struct git_hash_algo *to,
-+				     struct object_id *dest,
- 				     enum odb_map_oid_flags flags UNUSED)
- {
-+	struct odb_source_packed *packed = odb_source_packed_downcast(source);
-+	struct repository *repo = packed->base.odb->repo;
-+	struct packfile_list_entry *e;
+ 	num = p->num_objects;
+-	bsearch_pack(opts->prefix, p, &first);
+ 
+-	/*
+-	 * At this point, "first" is the location of the lowest object
+-	 * with an object name that could match "bin_pfx".  See if we have
+-	 * 0, 1 or more objects that actually match(es).
+-	 */
+-	for (i = first; i < num; i++) {
+-		struct object_id oid;
+-
+-		nth_packed_object_id(&oid, p, i);
+-		if (!match_hash(len, opts->prefix->hash, oid.hash))
+-			break;
+-
+-		if (data->request) {
+-			struct object_info oi = *data->request;
+-			off_t offset = nth_packed_object_offset(p, i);
+-
+-			ret = packed_object_info(source, p, offset, &oi);
+-			if (ret)
+-				goto out;
+-
+-			ret = data->cb(&oid, &oi, data->cb_data);
+-			if (ret)
+-				goto out;
+-		} else {
+-			ret = data->cb(&oid, NULL, data->cb_data);
+-			if (ret)
+-				goto out;
++	for (uint32_t algo = 1; algo < GIT_HASH_NALGOS; algo++) {
++		const struct git_hash_algo *algop = &hash_algos[algo];
 +
-+	for (e = packfile_store_get_packs(packed); e; e = e->next) {
-+		struct packed_git *p = e->pack;
-+		uint32_t off;
-+		const struct git_hash_algo *src_algo = src->algo ?
-+						       &hash_algos[src->algo] :
-+						       repo->hash_algo;
++		/*
++		 * Skip this algorithm unless it's the desired one or we've
++		 * asked for any algorithm.
++		 */
++		if (opts->prefix->algo != GIT_HASH_UNKNOWN &&
++		    opts->prefix->algo != algo)
++			continue;
++		/*
++		 * Skip this algorithm unless it's the main algorithm or we have
++		 * a compatibility algorithm and it's that algorithm.
++		 */
++		if (algop != p->repo->hash_algo &&
++		    (!p->repo->compat_hash_algo ||
++		     algop != p->repo->compat_hash_algo))
++			continue;
++		if (p->index_version < 3 && algop != p->repo->hash_algo)
++			continue;
 +
-+		if (open_pack_index(p) || !p->num_objects)
-+			continue;
-+		/* Only v3 indices store object IDs in both algorithms. */
-+		if (p->index_version < 3)
-+			continue;
-+		if (!bsearch_pack(src, p, &off))
-+			continue;
-+		if (nth_packed_object_id_algop(dest, p, off, src_algo, to))
-+			continue;
-+		return 0;
-+	}
- 	return -1;
- }
++		oidcpy(&wanted, opts->prefix);
++		wanted.algo = algo;
++
++		bsearch_pack(&wanted, p, &first);
++
++		/*
++		 * At this point, "first" is the location of the lowest object
++		 * with an object name that could match "bin_pfx".  See if we have
++		 * 0, 1 or more objects that actually match(es).
++		 */
++		for (i = first; i < num; i++) {
++			struct object_id oid;
++
++			if (nth_packed_object_id_algop(&oid, p, i, algop, algop) ||
++			    !match_hash(len, opts->prefix->hash, oid.hash))
++				break;
++
++			if (data->request) {
++				struct object_info oi = *data->request;
++				off_t offset = nth_packed_object_offset_algop(p, i, algop);
++
++				ret = packed_object_info(source, p, offset, &oi);
++				if (ret)
++					goto out;
++
++				ret = data->cb(&oid, &oi, data->cb_data);
++				if (ret)
++					goto out;
++			} else {
++				ret = data->cb(&oid, NULL, data->cb_data);
++				if (ret)
++					goto out;
++			}
+ 		}
+ 	}
  
 diff --git a/packfile.c b/packfile.c
-index f6e2db45d5..3bfd427c6c 100644
+index 3bfd427c6c..3f3eb27e42 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1861,9 +1861,19 @@ int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32
- int nth_packed_object_id(struct object_id *oid,
- 			 struct packed_git *p,
- 			 uint32_t n)
+@@ -1919,16 +1919,27 @@ void check_pack_index_ptr(const struct packed_git *p, const void *vptr)
+ }
+ 
+ off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
 +{
-+	return nth_packed_object_id_algop(oid, p, n, p->repo->hash_algo,
-+					  p->repo->hash_algo);
++	return nth_packed_object_offset_algop(p, n, p->repo->hash_algo);
 +}
 +
-+int nth_packed_object_id_algop(struct object_id *oid,
-+			       struct packed_git *p,
-+			       uint32_t n,
-+			       const struct git_hash_algo *src,
-+			       const struct git_hash_algo *dest)
++off_t nth_packed_object_offset_algop(const struct packed_git *p, uint32_t n,
++				     const struct git_hash_algo *algop)
  {
  	const unsigned char *index = p->index_data;
--	const unsigned int hashsz = p->repo->hash_algo->rawsz;
-+	const unsigned int hashsz = dest->rawsz;
- 	if (!index) {
- 		if (open_pack_index(p))
- 			return -1;
-@@ -1871,17 +1881,25 @@ int nth_packed_object_id(struct object_id *oid,
- 	}
- 	if (n >= p->num_objects)
- 		return -1;
-+	if (p->index_version < 3 && (src != dest || dest != p->repo->hash_algo))
-+		return -1; /* older indices only store main object IDs */
+ 	const unsigned int hashsz = p->repo->hash_algo->rawsz;
++
++	if (p->index_version < 3 && algop != p->repo->hash_algo)
++		BUG("pack index v%d only stores main object IDs",
++		    p->index_version);
++
  	if (p->index_version == 1) {
  		index += 4 * 256;
- 		oidread(oid, index + st_add(st_mult(hashsz + 4, n), 4),
--			p->repo->hash_algo);
-+			dest);
- 	} else if (p->index_version == 2) {
- 		index += 4 * 256 + 8;
--		oidread(oid, index + st_mult(hashsz, n), p->repo->hash_algo);
-+		oidread(oid, index + st_mult(hashsz, n), dest);
+ 		return ntohl(*((uint32_t *)(index + st_mult(hashsz + 4, n))));
  	} else {
--		int algo = hash_algo_by_ptr(p->repo->hash_algo);
-+		int algo = hash_algo_by_ptr(dest);
- 		const struct packed_git_format *pfp = &p->formats[algo-1];
--		oidread(oid, index + pfp->full_oid_offset + (hashsz * n), p->repo->hash_algo);
-+		uint32_t pack_order_idx;
-+
-+		if (!pfp->data_offset ||
-+		    !p->formats[hash_algo_by_ptr(src) - 1].data_offset)
-+			return -1; /* no data for one of the algorithms */
-+		pack_order_idx = nth_packed_object_pack_order_algop(p, n, src);
-+		oidread(oid, index + st_add(pfp->full_oid_offset, st_mult(hashsz, pack_order_idx)), dest);
- 	}
- 	return 0;
- }
+ 		uint32_t off;
+ 		if (p->index_version == 3)
+-			n = nth_packed_object_pack_order_algop(p, n, p->repo->hash_algo);
++			n = nth_packed_object_pack_order_algop(p, n, algop);
+ 		index += st_add(p->crc_offset, st_mult(p->num_objects, 4));
+ 		off = ntohl(*((uint32_t *)(index + st_mult(4, n))));
+ 		if (!(off & 0x80000000))
 diff --git a/packfile.h b/packfile.h
-index 22278cc6c6..73452b2a43 100644
+index 73452b2a43..40760295ee 100644
 --- a/packfile.h
 +++ b/packfile.h
-@@ -289,6 +289,14 @@ int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32
+@@ -303,6 +303,13 @@ int nth_packed_object_id_algop(struct object_id *, struct packed_git *,
   */
- int nth_packed_object_id(struct object_id *, struct packed_git *, uint32_t n);
+ off_t nth_packed_object_offset(const struct packed_git *, uint32_t n);
  
 +/*
-+ * The same as nth_packed_object_id, but the nth object is counted in src
-+ * and the object ID looked up is in dest.
++ * The same as nth_packed_object_offset, but the nth object is counted in
++ * algop. For indices older than v3, algop must be the main algorithm.
 + */
-+int nth_packed_object_id_algop(struct object_id *, struct packed_git *,
-+			       uint32_t n, const struct git_hash_algo *src,
-+			       const struct git_hash_algo *dest);
++off_t nth_packed_object_offset_algop(const struct packed_git *, uint32_t n,
++				     const struct git_hash_algo *algop);
 +
  /*
-  * Return the offset of the nth object within the specified packfile.
-  * The index must already be opened.
+  * Return the index into pack order of the nth object within the specified
+  * packfile.  The index must already be opened and it must be a v3 index.
 diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
-index af9532aa1f..030d6000b5 100755
+index 030d6000b5..97a299f088 100755
 --- a/t/t1016-compatObjectFormat.sh
 +++ b/t/t1016-compatObjectFormat.sh
-@@ -242,6 +242,33 @@ do
- 		git -C large-repo cat-file blob :large >actual &&
- 		test_cmp large-repo/large actual
+@@ -269,6 +269,36 @@ do
+ 		git -C map-repo rev-parse --output-object-format=$(compat_hash $hash) "$oid" >actual &&
+ 		test_cmp expect actual
  	'
 +
-+	test_expect_success 'packed objects are only mapped using pack index v3' '
-+		test_when_finished "rm -rf map-repo v3.idx loose-object-idx" &&
-+		create_compat_repo $hash map-repo &&
-+		echo content >map-repo/file &&
-+		git -C map-repo add file &&
-+		git -C map-repo commit --message A &&
-+		oid=$(git -C map-repo rev-parse HEAD) &&
-+		git -C map-repo rev-parse --output-object-format=$(compat_hash $hash) "$oid" >expect &&
-+		git -C map-repo repack -a -d &&
-+		pack=$(echo map-repo/.git/objects/pack/pack-*.pack) &&
-+		git -C map-repo index-pack --index-version=3 \
++	test_expect_success 'abbreviated compat object IDs are found using pack index v3' '
++		test_when_finished "rm -rf abbrev-repo v3.idx" &&
++		create_compat_repo $hash abbrev-repo &&
++		echo content >abbrev-repo/file &&
++		git -C abbrev-repo add file &&
++		git -C abbrev-repo commit --message A &&
++		compat_oid=$(git -C abbrev-repo rev-parse --output-object-format=$(compat_hash $hash) HEAD) &&
++		abbrev=$(echo $compat_oid | cut -c 1-12) &&
++
++		# A multi-pack-index only stores object IDs in the main
++		# algorithm.
++		GIT_TEST_MULTI_PACK_INDEX=0 git -C abbrev-repo repack -a -d &&
++		pack=$(echo abbrev-repo/.git/objects/pack/pack-*.pack) &&
++		git -C abbrev-repo index-pack --index-version=3 \
 +			-o "$(pwd)/v3.idx" "$(pwd)/$pack" &&
-+		mv map-repo/.git/objects/loose-object-idx loose-object-idx &&
++		rm abbrev-repo/.git/objects/loose-object-idx &&
 +
-+		# A v2 index only has object IDs in the main algorithm, so it
-+		# must not provide a mapping.
-+		git -C map-repo rev-parse --output-object-format=$(compat_hash $hash) "$oid" >actual &&
-+		! test_cmp expect actual &&
-+		test $(wc -c <actual) -ne $(($(test_oid --hash=$(compat_hash $hash) hexsz) + 1)) &&
++		# A v2 index only has object IDs in the main algorithm.
++		test_must_fail git -C abbrev-repo cat-file -t $abbrev &&
 +
-+		# A v3 index provides it.
 +		rm -f "${pack%.pack}.idx" "${pack%.pack}.rev" &&
 +		mv v3.idx "${pack%.pack}.idx" &&
-+		git -C map-repo rev-parse --output-object-format=$(compat_hash $hash) "$oid" >actual &&
++		echo commit >expect &&
++		git -C abbrev-repo cat-file -t $abbrev >actual &&
++		test_cmp expect actual &&
++		echo $compat_oid >expect &&
++		git -C abbrev-repo rev-parse --output-object-format=$(compat_hash $hash) $abbrev >actual &&
 +		test_cmp expect actual
 +	'
  done
