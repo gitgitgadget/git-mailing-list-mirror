@@ -1,112 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792761683;
-	b=o7XnKxZAq31f11G2d35NkNWAPURWni92u1eMpuAQwG2qVLtBzG7fgfVh8+qnZ5QLlcNc
-	 7xjBO4Wr7D3hKyIr4kS0DcNvllRskeFY2FX0zNGdyZniYoJzoa9m9j1ZTroc5a+eb8rX0
-	 7zRPMhHS7CEotTOvtoC89ikLjdx5mwElygwzCheeJ1HfjPKkuKU40de54UgBp2zhsThAp
-	 yhDu8l2+zrvtYQ6mS2pmd/EDVtm6YcQs7Mq6oFZuDJasydrLRWZsU7igAbg0JqWP3zK6S
-	 1ulG2Fz0lQefwBdv9TglXEYKtLalOtOlpRpBsC9tUJFU4d5RywUkWfbaIHD7f7UWCtg==
+	t=1792762076;
+	b=wSAqY4MPsH9tMFm1AiVF5GELhlhOd24mFBWNBZEKCgH3K9ym7N2dm//lTVaAITBFuN+q
+	 s4atOKmW4bisjt6dn5/r8M/ROfbjs0Fi/3oANkGMU2EFW7wMGZ2FGbWnljPUajgqY1grV
+	 xfQKDyf/zjH/73D5e64MoUNb2KOybVbGH6pomrczjo9AhM+E0llqi7x3AOIpLHIja4T+9
+	 i7DU1UIzsjFhwCcLWk/7YQ/QG+uwlXP4WbyjZpdZZ/B67jpjbdeo6EmwF8JD4Q+OBTtfY
+	 brGymN/6KKXZ9zLpjMsJD2tYP/RGDQozhlVR28yZbZTXPCZCpzy94YFCB0WE1R5bM4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792761683;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Content-Transfer-Encoding:Message-Id:References:To:X-Mailer;
-	bh=k8AyR8ixJnRKu52/kyUZijzRrD4+6LqHnICUyaQmZp0=;
-	b=raivmO19kdFnA7x4i0t81eF7HBzWD07a7/HKb8BCgDyF89rl/FgvG1pebUdZdOab4q6O
-	 fI12NXgmCNutL8cV7urQccu+yrSYvZ3GwrfC6hFhI1L+007H6vAnVaxmVFdGmEbCNrqtf
-	 5ymN38VFttXPiCupm9WNJJxllcmclrqJyrIBAUilsqJKux17qUUdpZD/mk6Mc1jLd2pI0
-	 ELHzR3cpBTanrmbZd/Ye2QKUReUL6rl7UjD7xZirWpROOUk7xAtEeOA2c/La203dbb+20
-	 T2MGX5BGMhj1L2R6TWjvkRFJ/9TDbeW7YJRC3EkhbwBAHczBE/3iCTXrs4SY8Q4Q59Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792762076;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=x0zZMYkKZGs6fp2M3DYiGrPPpRIqkI/gdrj8KL2OlJ4=;
+	b=hIdECN+Tt5jN25EUDH4cy5Z03sBm55hqwnuUz7zTauNFsSRWrO9ugk6v65oZl5MHrevC
+	 gDivh8FLXzV0z9rLafMetnfid8JeKxXLR3XI38K2pLLQaFFyqevgeL9/P8mwXQZHRGP/V
+	 IHph7hGfbcho9VJiyE6QFoK4VxKZIvmkO3qUal3J5YCly0pVjArUM/uUSnbsb/eCyyxLK
+	 T3FJ8sbZO9Q082d2Ofiq7H92fVyW3XhgmDqUYrVhqU0P9ZRile4Q3M2bUKk43z9aAPdb1
+	 tY/jb3Kw77dtm3A+qam9MVVKmXwQn2C0xrQdbBE65jeOnZtOsnEtxe+ooDaj+HHClCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=jvns.ca;
-	spf=pass smtp.mailfrom=jvns.ca;
-	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=IJJX8sxU;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=eH6gh9Iy;
-	arc=none smtp.remote-ip=202.12.124.151
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FLnmpCDW;
+	arc=none smtp.remote-ip=209.85.128.176
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FCD606A31A
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 13:21:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02FCD606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BD6606A31A
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 13:27:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E6BD6606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=IJJX8sxU;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=eH6gh9Iy
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4E6661D001C1
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 09:21:22 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 23 Oct 2026 09:21:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792761682;
-	 x=1792848082; bh=k8AyR8ixJnRKu52/kyUZijzRrD4+6LqHnICUyaQmZp0=; b=
-	IJJX8sxUcI+BwerWQSbhAGGV9a9M8tCfp22Sb00r8MS+PB5EplLC4ihS2GLjDI7J
-	m9aG+huJOJpHshHmK7AwWqKQLkVg9aRh0F22J+v/fMcPSdmYPpz1uijKu1u6pXRL
-	VDlMlBEVN4c9NnawdBd62F3qLNgn7p7PyT8+Icdg+N7PBk4gV0rznYS5vC3fVYt2
-	iMVyGRotBtD8Xf8mqsDJAUUKmktODuSW0EnWyWVHvtJRNPepa90HkQedrmhOGtRT
-	t7f4Ro+pXYqtSniBCp8ACd6+2SeFQI7rnDeFyI5h9ho+YDWKb89B7B6UPMijcKvy
-	cqmNu764KS88cntCngquEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792761682; x=
-	1792848082; bh=k8AyR8ixJnRKu52/kyUZijzRrD4+6LqHnICUyaQmZp0=; b=e
-	H6gh9IyTPWeeeVLsvYqz6o5/av8n/T4Dp9duajyyrOGbUEn0+SwW/mYTQ8Hv6Nvc
-	3xy4G8WZZe1BI0thz7NXx22jrKVg2vHYTC0u9ezGGeXzAIynpC7dNWTpGcXfUfeM
-	qEwKW/ylPOI5ayaqMr8YAOaoD1O8LuOspUCoVcLiN0NYheNoSmZC4qehf+KpMmY5
-	s3H/qmmShh5gnLWulNTO2mdtkqaOsWEJoDLjE1nx/Nx84Nq/x5EOL6L2WjrEnryf
-	RpiCiwxw/mbeQMKNDWRj4ggxQ0YB+efhCs+lYSLLo83zn/OqH3d02kV4mp0nyLj9
-	Cbk8iNjGc2LSH8bFwpnSQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792761682; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:qISvnJ3LMsEUjq6pGIb2lpGgjAlbq2HO+0fvgIQKdC3xcmw
-	DOsNXfB7RkWsTD8uNrtadyEFdclbhLBSaXNGwBY9Ys0ZUqr0tZBaKCQ3vIl80+RD
-	7VeyNWCLu/DKq7oSCNBuKGLUoGU8hrJF+BCexBqK+BzCg0axJ50WSnmdbf1yrzUu
-	JONRr8ded5zW0nY6NiCIBT7sxjgdk6+TEhS2w7SB1MgJJD+1yGYxZuoM88daomQ2
-	vXrI29pLfQHGZyQWX38i6bN2iQqxkbH58lZ2ysDCqW9OPqtBAhh/uglwCcAzKk6F
-	mEGrWHUiam5j1uG4HibZ8wa1JkSCbeyYk9bzOcg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:q6NT6LlZG55Qdiz9nQi+pjDoHb8htg6lrIasZ0vCWfY=:deGmu7PnK+5DBY7JgZjDQuR1P4a9XkvRZF1KwABnqAg=;
-X-ME-Sender: <xms:UV_basR-DWnIX4BpgftgJXODn5Vu2GUvDBhLj43Vc_jR8pH3afR6mQ>
-    <xme:UV_bagzSgRKd9cwGfZE5I_1R4zgqSzq897cnRe6uycCwgCsiaGZ2vCHVBNMVXOL4Y
-    zurBJv1h3v0Q8fm4X0ZG80VEbFrGnpYiruHWrYMD9RN9K4ekKXBvxE>
-X-ME-Received: <xmr:UV_bau1E9_wjgwmlVGIbIS6ygNfflVwWYrF6KjyV9NsrID-YQAycI3hQaul4tYif2alVlipL76MPHZBAdS8QzpNG81Kj27PGfACVY-hIOcPgHt5Dkp_k>
-X-ME-Proxy-Cause: dmFkZTE/xSHHe1R87P16AXrQj6p36dT+vprU8ZL7ZOvfP/WgqB3QqRNw/T8Z1JovIYKqyJ
-    wFR4NWvHAF0drdOWD6ZBTsJ90uQh0WhCbXod1df1bztEz+ZagmRmR0bg/GlkG4TLuaUJZA
-    k+OmIJu5d5KAWF8eD2RACaxiq79eOkKUOXfpjW81ULdc6yboe5kkeOffNY2f9Q61VAUhTV
-    StoqlvHdwa4j/nbIPtUltrGZvoXqiEwO+SiD6rluEQUKNCJBCfy2zSgpvussSC+IHfyaWE
-    +ZkRK+TKnAZmn8ADbIMb7nGdaDkRT8R/CSXXPydzATJXsye7Ask8PUi6pB57DEXdRrlbXL
-    ZpseU41ewFauROiRVxo/jsQfOnw0JR+MkR3jlYxsMHppfyfC1TtQOpkb9bsMjxGf2Lvh95
-    qUKG/cNhCRGaAjGwAu/XXDQZeF4GNoLmWoYsKul9fGkBRkUHDhUL6xEHmi7ER5TbiAMbrL
-    zndKWJ3YJNdIRrD+oXcU9E6dcfxZUOIEAjakNdJFeEIAaT3N/DMnpSA7V6uuzqfmim+yF8
-    YBSOGz2yv6gyUEZhJ2PlKGi7NkCw6Dh8iGlcWcZfouLPeXNQbrxlKuscPuiEwdt7z9f4zs
-    GmyYccyKcDsWtnaXxmYN1lIzDiA2939uHJuZyJokL3Oc23pA19p1PsO09T2A
-X-ME-Proxy: <xmx:UV_bau5U0cazHSqFVXcBIAqxPfULbP3C6SYNykQ2_NNlVlTb3xLMAA>
-    <xmx:UV_bahUzGBYdC4BFduv4lheqrPOOsIOQNNsaHkOSX_DAXySjRXGVJA>
-    <xmx:UV_batDrJMKYWY_F9AJX7bK4U31UoktXNsD8kVhtB8AXG2JTX0Zabg>
-    <xmx:UV_bag5bQCGZnikHynMASXQaSHKc_FLIGksklGuOdcP0f8BvU6BIHw>
-    <xmx:Ul_baji4lOaC2erwuZOSnl92rZqj3QEEbe1RKDcdlMzns6C2kY-UiCF9>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Oct 2026 09:21:21 -0400 (EDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FLnmpCDW
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-8b09e07e149so7990287b3.1
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 06:27:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792762075; x=1793366875; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=x0zZMYkKZGs6fp2M3DYiGrPPpRIqkI/gdrj8KL2OlJ4=;
+        b=FLnmpCDWYaHHcqt3+k2phRbT6Ro7arVqJTAqwAXUIwpJ5sw8wloq2/Bjc12Nrw+wp5
+         PxoGjtEkBdQgp2wnA66Daa4zg7aNgiPqvtCW/L99knQ/3gJUhTrRZDXpc2eLetfLxuhH
+         yLCz0cY0F6B0ZAY/ZJIuMeUr8rrwxOwhfVXkE4oyXifC6Tut8VfuOHChJDrtqamIpu5A
+         kGPvd2hzUL62RkS4Sno+/ZBCYbtfNDD4lIqOWXnZuu56wiKpu/o2YxxGZ3Bdsize1epT
+         itt7ER3mrew0KFZnZCCfQ0mvcts8yjC0JmCYZdk8hA3rOu+UaH/qIJwC+klstBXD/7Ct
+         G/Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792762075; x=1793366875;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=x0zZMYkKZGs6fp2M3DYiGrPPpRIqkI/gdrj8KL2OlJ4=;
+        b=PBdRpdqdGK45U5SUSuteKAXbkGBKq0rTiPTtotHgyKXH7oKp/8fn4hB0U2Bt9Wom3d
+         3I2We/i+HhJI5uW0chPw5cwzGXZJng08O8TX+KzRMt+iQArDdPMmARxRjyJ2qUp5x6Nh
+         7/wRwEerBBSpfO9zFZ6Dkh2yGWtTX55F7meKK8ed8im1yGeTdWthmzF0027eRwbv1b4G
+         N2f8+5gb81uqPnOy8qYX8tU6rXs0UckN2Wqz19BQtdx650adZ9fKs80nuSZLwOxhgIjw
+         QKylHod8h3SjGNK+Mv1BiSpyRg6/O6+ubp9CxAOcvzHoBIuOir3lXVg+OKydpnsmQeKO
+         9U/Q==
+X-Gm-Message-State: AFq9FYKFOCuV97kipR8K90fUHOorzCGTgXKaV3cdDh4QKr/zLLEQIocn
+	MLbW3chEfqg4O7eAv0Nk8JfVPc1bbGuqJpfEbLnT6LNSiqdlEC4QfOwf38oWLX1u
+X-Gm-Gg: AYBFou2ALymRpDqSGe34wg2T/MF0u4vlYtUwslYUtot3U1kxuqqQWpprtrkfd4KFx4o
+	SVjCoVwikRzECABmY06qMwKhk/V+mIFWNPmiONhNwbht/9FRcDHQnTq6mwGWFSqhtrIjIKpluZg
+	AegmhnH8lVLxdmi/SVd0EzoEaGznaeLsSwuJibt41hokGBqe4yMc1U2C80CNLTStTIxMlvG4fdO
+	eZHBPwWJiKWCszI4EgUFfD0hdiUjaBKYW85vEeOSFAwQC7aDQ3fUrmWReRtPLaBFP0q65TniRj7
+	dK9aDeifx9prnvPFqAx/E/Cm3Xaot2s9U3vGOeEn1qK62tguVVE8J1G943EyXvV2kbRYqceqPOI
+	20r4pi4/ctHlYCs4qXCX6qsmPyC9hG7HPfprOuAiL+md5QjXdw5HIFJrWmQ9w4aNHXW33I8U8dK
+	ZrAE6kQKugRjyW1YaNy/ql6kGMmwip1VBvuMlQFgUiXRzAldOE/cg5cnd5YdtAz2JTlndIpDLR7
+	OakA8JvRpzCbr7hOgoUANI+X8fYtiPWSs4+6Pfi7fskuA2XJxgxZSphfBc/2sPIrvQlbW3yziZ4
+	lyFaSRMu52cNTV3eEy/m0Y9fzi0zVDVf/0OIAA402WLKtf2BoH0VsR2/4cn7dFvEX/DXMrhxJBw
+	K7ZY=
+X-Received: by 2002:a05:690c:dc5:b0:8a2:496:1985 with SMTP id 00721157ae682-8b157d50be0mr16197707b3.54.1792762074786;
+        Fri, 23 Oct 2026 06:27:54 -0700 (PDT)
+Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9d17:3000::3])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b156183032sm12898647b3.34.2026.10.23.06.27.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Oct 2026 06:27:54 -0700 (PDT)
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 0/5] stash completion miscellany
+Date: Fri, 23 Oct 2026 09:20:50 -0400
+Message-ID: <cover.1792761643.git.ben.knoble@gmail.com>
+X-Mailer: git-send-email 2.56.0.237.g5414b88716.dirty
+In-Reply-To: <cover.1791827304.git.ben.knoble@gmail.com>
+References: <cover.1791827304.git.ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -115,98 +97,133 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.700.51.1.1\))
-Subject: Re: [PATCH 0/5] root refs vs pseudorefs
-From: Julia Evans <julia@jvns.ca>
-In-Reply-To: <20261022212903.177261-1-andy.koppe@gmail.com>
-Date: Fri, 23 Oct 2026 09:21:11 -0400
-Cc: git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>,
- Karthik Nayak <karthik.188@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <93D20D7C-E19B-4A41-AC10-4AFC8330E844@jvns.ca>
-References: <20261022212903.177261-1-andy.koppe@gmail.com>
-To: Andy Koppe <andy.koppe@gmail.com>
-X-Mailer: Apple Mail (2.3864.700.51.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Hi all,
 
+This short patch series takes care of a few paper cuts in stash
+completion. The first patch is a small code cleanup I noticed a while
+back while working on bfc1b34859 (completion: add stash import, export,
+2026-02-07), I think. The next 2 take care of a problem I've been having
+with Zsh's completion of stashes (cf. Unix & Linux SE [1]).
 
-> On Oct 22, 2026, at 5:28=E2=80=AFPM, Andy Koppe <andy.koppe@gmail.com> =
-wrote:
->=20
-> Since 993d57eded (refs: pseudorefs are no refs, 2024-05-15), the term
-> "pseudoref" has been restricted to FETCH_HEAD and MERGE_HEAD, which =
-are
-> not stored in the ref backends, while other refs outside of "refs/",
-> such as HEAD and ORIG_HEAD, are called root refs. However, a fair =
-number
-> of docs, comments, messages and tests still use "pseudoref" in its old
-> sense. And while the glossary describes the rules for refs in the root
-> of the hierarchy, it does not explicitly define the term, even though
-> "git for-each-ref --include-root-refs" uses it.
->=20
-> This series adds a "root ref" entry to the glossary and clarifies the
-> "pseudoref" entry, and then replaces the outdated uses of "pseudoref" =
-in
-> docs, code and tests. While at it, it also updates the long outdated
-> glossary entry for per-worktree refs, and fixes a few inaccuracies
-> found along the way, for example about which refs get a reflog in
-> git-update-ref(1) and core.logAllRefUpdates.
->=20
-> I've left __git_pseudoref_exists() in the completion script alone =
-apart
-> from its comment, even though it's used for both pseudorefs and root
-> refs. It could be renamed, keeping the old name as a deprecated =
-wrapper
-> like elsewhere in the script, but it's not obvious what to, because
-> there is no term covering both.
+[1]: https://unix.stackexchange.com/q/807580/301073
 
-> Andy Koppe (5):
->  doc: glossary: add root ref and clarify pseudorefs
->  doc: glossary: update per-worktree refs
->  doc: stop calling root refs pseudorefs
->  refs: stop calling root refs pseudorefs
->  t: stop calling root refs pseudorefs
->=20
-> Documentation/config/core.adoc                |  2 +-
-> Documentation/for-each-ref-options.adoc       |  2 +-
-> Documentation/git-ls-remote.adoc              |  4 +-
-> Documentation/git-update-ref.adoc             | 13 ++-
-> Documentation/git-worktree.adoc               |  9 +-
-> Documentation/glossary-content.adoc           | 86 ++++++++++++-------
-> Documentation/rev-list-options.adoc           |  4 +-
+Changes in v2:
+• Reworded a few commit messages thanks to Patrick
+• Clarify the behavior of the final patches with completion for "git
+  stash save" (also thanks to Patrick)
 
-I wonder if gitdatamodel.adoc should also cover pseudorefs and root refs
-in the =E2=80=9CReferences=E2=80=9D section. Right now it only says =
-something extremely
-short on the topic:
+The final 2 are not only about completion; I noticed we were
+special-casing save completion, did some digging, and was a bit confused
+by the status of "git stash save". So, I figured while I was here I
+would start a conversation about (a) restoring the git-stash(1) manual
+to it's "no save" version and (b) ripping out the special case.
 
-  Git may also create references other than HEAD at the base of
-  the hierarchy, like ORIG_HEAD.
+These last 2 may be controversial, and I'm not particularly attached to
+them, so if they need to be dropped I won't really complain. OTOH,
+what's the point of a deprecated subcommand we still advertise? ;)
 
+Generated-with: git format-patch @{u}.. -o p -v2 --range-diff=@{u}..d1d0bf2d9a7d380d10771b5d1bceb8db91c5f05e --in-reply-to=cover.1791827304.git.ben.knoble@gmail.com --cc='Patrick Steinhardt <ps@pks.im>'
 
-> builtin/for-each-ref.c                        |  2 +-
-> contrib/completion/git-completion.bash        |  7 +-
-> refs.h                                        | 13 ++-
-> revision.c                                    |  2 +-
-> t/show-ref-exists-tests.sh                    |  4 +-
-> t/t0600-reffiles-backend.sh                   |  2 +-
-> t/t0610-reftable-basics.sh                    |  2 +-
-> t/t1400-update-ref.sh                         | 66 +++++++-------
-> t/t1403-show-ref.sh                           |  2 +-
-> t/t1460-refs-migrate.sh                       |  4 +-
-> t/t4013-diff-various.sh                       |  6 +-
-> ...iff.diff-tree_--cc_--summary_REVERSE_HEAD} |  2 +-
-> t/t6302-for-each-ref-filter.sh                |  4 +-
-> t/t9902-completion.sh                         |  4 +-
-> 21 files changed, 129 insertions(+), 111 deletions(-)
-> rename t/t4013/{diff.diff-tree_--cc_--summary_REVERSE =3D> =
-diff.diff-tree_--cc_--summary_REVERSE_HEAD} (73%)
->=20
->=20
-> base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
-> --=20
-> 2.56.0
->=20
->=20
+I accidentally left the above line in v1, but I'm considering leaving it in from
+now on? It's the exact command I run to generate patches; I store it as a
+"trailer" in the branch description, then run "git generated-with"† which
+(effectively) does
+
+    eval "$(git bdesc | git interpret-trailers --parse | grep ^Generated-with | cut -d: -f 2-)"
+
+where "bdesc" is an alias for
+
+    git -c core.editor=cat branch --edit-description | git stripspace -s
+
+Anyway, I've been hand-editing them out of cover letters for the last few
+series, but if it doesn't bother anyone I'll just leave it around. Might be
+helpful for new folks learning how to format patches?
+
+†: https://github.com/benknoble/Dotfiles/blob/master/links/bin/git-generated-with
+
+[1/5] completion: simplify stash subcommand completion
+[2/5] Completion: extract common stash listing code
+[3/5] completion: fix Zsh handling of stash names
+[4/5] doc: drop usage mentions of "git stash save"
+[5/5] completion: drop "stash save" completion altogether
+
+ Documentation/git-stash.adoc           |  2 --
+ builtin/stash.c                        |  1 -
+ contrib/completion/git-completion.bash | 22 +++++++++++++---------
+ contrib/completion/git-completion.zsh  |  5 +++++
+ 4 files changed, 18 insertions(+), 12 deletions(-)
+
+Diff-intervalle contre v1 :
+1:  d0e461a14a ! 1:  90d36b6445 completion: simplify stash subcommand completion
+    @@ Commit message
+         The stash completion helper contains a hard-coded list of commands, but
+         git-stash provides a mechanism to list such commands
+         (--git-completion-helper). The pattern for using it is wrapped by
+    -    __git_resolve_builtins, so use it, bring _git_stash closer in line with
+    -    other completion helpers.
+    +    __git_resolve_builtins, so use it, bringing _git_stash closer in line
+    +    with other completion helpers. As a nice side-benefit, this also adds
+    +    "store" subcommand completion, which is missing from the explicit list
+    +    of subcommands.
+     
+    -    Note that we maintain the "save" special case, since it was removed from
+    +    Note that we maintain the "save" special case†, since it was removed from
+         default completion in 0eb5a4f911 (completion: stop showing 'save' for
+    -    stash by default, 2018-04-20). We don't have to do anything special with
+    -    the exclude (3rd) argument to __git_resolve_builtins, though, because
+    -    save is already marked PARSE_OPT_NOCOMPLETE.
+    +    stash by default, 2018-04-20). One might think we need to give "save" to
+    +    __git_resolve_builtins' 3rd exclude argument to prevent it from
+    +    showing up, but we don't: "save" is already marked PARSE_OPT_NOCOMPLETE.
+    +
+    +    †We don't complete the "save" subcommand unless at least "sa" has been
+    +    typed, but we do complete its options if explicitly typed. With this
+    +    change, we will complete "save" if GIT_COMPLETION_SHOW_ALL=1.
+     
+      ## contrib/completion/git-completion.bash ##
+     @@ contrib/completion/git-completion.bash: _git_sparse_checkout ()
+2:  6c24a833fc = 2:  abf8efb792 Completion: extract common stash listing code
+3:  22283a1d5f ! 3:  f4f6b89ff6 completion: fix Zsh handling of stash names
+    @@ Commit message
+     
+         From here, the list-choices widget (on Ctrl-D by default) will show
+         stash@{0} and stash@{1}, but the complete-word widget (Tab) will just
+    -    add another brace. Zsh things we're trying to do a brace expansion, I
+    +    add another brace. Zsh thinks we're trying to do a brace expansion, I
+         think! Interestingly, using menu-complete (Ctrl-N) does cycle through
+         matches, since it's taking a slightly different completion path in Zsh.
+     
+         We might try to fix this by passing surrounding single quotes (using the
+    -    -S/-p arguments of compadd, which we can do via __gitcomp_nl's other
+    -    parameters), and indeed Zsh will generate
+    +    -S/-p arguments of compadd, which we can do from Bash in our code via
+    +    __gitcomp_nl's other parameters), and indeed Zsh will generate
+     
+             git stash show 'stash@{
+                             cursor ^
+4:  985a14f18e = 4:  3762f9d5bb doc: drop usage mentions of "git stash save"
+5:  d1d0bf2d9a ! 5:  0266646fb4 completion: drop "stash save" completion altogether
+    @@ Commit message
+         further documentation suggesting to use it.
+     
+         Since we recommend push instead, stop completing for "save" and remove a
+    -    special case in completion code.
+    +    special case in completion code. It still appears for "git stash <tab>"
+    +    when GIT_COMPLETION_SHOW_ALL=1, and when typed explicitly we still
+    +    complete options for
+    +
+    +        git stash save --<tab>
+    +
+    +    which is helpful for folks with finger-memory for save.
+     
+      ## contrib/completion/git-completion.bash ##
+     @@ contrib/completion/git-completion.bash: _git_stash ()
+
+base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+-- 
+2.56.0.237.g5414b88716.dirty
 
