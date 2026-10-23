@@ -1,123 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792756814;
-	b=XupIGp2pMEfvhpEvIMcb+yX0r/X53h1076GIzVyF9khRxUFRd+6/rjwf7c3G8noYhbDJ
-	 nLJ7OO4FLq9vqUM4DtTEqEoA7nwi0N15I3X1NIpWXTRl7iXNqfWk85fMEFKUIuAV91Oh4
-	 NFCPc6HzSwJfWnmDzxFRd2fN9zrZUd7km+rmZ5SdXm1QPKrDwGQA0umNzB8Wg0ZVD/LTm
-	 cSpIH69F/m9YdaZL1Guoxx3L6RA7KsjgTc9a1o8EB5wfI9vhI+qOmNX9kojD0I9mWH+xe
-	 iDIiVfPZ0m2pE6CWA6t8ZaVCQeSETfvdORojMi/4d1pXB9Gtsulng5A9A7L/ujt6VNw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792756814;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=Gdq4U/IMvFoMphqyyBVuzLS1hG3rMvurgLzdRA/Kbi0=;
-	b=H2mpe7Ug9Zy4gLL67XKs7XvXY+VhZXcbJPnpDSJIzH1vTC+lcw1kxYnRfB9gt54X1x/z
-	 bqF07dV2sJpVnsYmX2x0ZHx5cLm8UWcIZTz3QJ0eKGKZnoyzUN26xr72M+CjS96sVntiK
-	 mUhwUcDcmQ+IWiaFt/foBUsSs04CmAOsVrQkvlJadr0PYc5BcInU0SawI5njd8m9rkKUB
-	 yjg5mScqINM9+Ovm/9IRA8tkmiHt31zy8V6tQaheBjDs4Y2peU9R5/KjP1wLlN1DeBxX7
-	 Mlp/DnfyHsGalDkkEUevwpr4Zd59aDywK+Pl2RxdzfI+4DBBQbYxlRpFbG8mQXJB8YQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=Ne2str6y;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=MPBE25h3;
-	arc=none smtp.remote-ip=202.12.124.152
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.45
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792756897;
+	b=4v7RVfflq9My+iAuXuaBqj4f77G8MjjCyHpxNPhHr1VM25+C50pZtUC+kMrufEntXvL3
+	 zgg/oR+L9j3VDr9hr8HGmoSonke5uqiAZCu25M3syuM+vs23zC8CIQPthUMhDKH28QE1L
+	 ZNAAQIe5F5SzL3e9enPfQs61TrbZEz0ZxZlYOWWWY0SYck1TDC0MRAoMLseN+SpHn60XD
+	 BThz+zyLMChnwWsuc4iYvQKzZShCI1U0y4iKzf7JawdRo08W/vartSiSL824O/qSLNdCy
+	 b3D6NHbnZ0hTK6EH/Dh96d0/9bbu22pSY9F+lIyxRiaRszSbWj0Ty/LYMr6IEW44sqA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792756897;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=nudPFtTy9uFZrQk6/h/6VawsvyXPWRfTPXuwPZCeUvw=;
+	b=TS2Fj1LvQnmw1vdFHFW/33eAtKRpOf50PXmwO5IHPMwr69PxrzrircPCiQrO68F1lLBM
+	 MUYIAs9oP0OnpbuYz7sqzuIe9CUPLSlXoyviq5Z5hbHLJbZ84LDJYiRfVUW8MgO4aztXO
+	 aUrJ8CuTBoUcfFBX4X5K4WRNlTbjIgZv7SnErGjWwaFd4CTWFG9Ede+g09j1zUnD1Ej5C
+	 9qbfPwf/aUM+O1veav+GFY9Kup8lTTm9vhK5nb8JDbbxjPIbblt4MaeFXaNu74ApjeiNa
+	 rGoADPMCVAp5vY19BsZoWkg9JThSZl/l/w7W7BeYIXEFRyMPaaByx5p2E2HucAz8Gew==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fUcZgaLU;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.45
+Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B11606A31D
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 12:00:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0B11606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA65F606A31A
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 12:01:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA65F606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=Ne2str6y;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=MPBE25h3
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F323A7A021E
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 08:00:12 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Fri, 23 Oct 2026 08:00:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792756812; x=1792843212; bh=Gdq4U/IMvF
-	oMphqyyBVuzLS1hG3rMvurgLzdRA/Kbi0=; b=Ne2str6yk7KCyRf1fENnHPOf+b
-	cPh2UBXvcBb8IzvnVohMRiNwHRJWK7VfZCYYqIZpRjVXu1QXCQ2B+ewgJ6KE/ObG
-	Q1WFL03zhHu60y/0o9NYCg85kzpVSmHCjO4QrqiUC76aXf7hwh6tHTMgOhCgw/QM
-	0rYV67nLeGybCoPVK2W3PkmwR92ov7F8LZLPxv2XAUdAsFJAZnexVZ/qLogpmK0O
-	Bv/qAJ0Yas0WUvfgQUJBQjiJOhim7hkdavOO6vYC/EjRj7Rwyo0NGDrXVTAIAzxW
-	GfdUkyP8ZcyLhC8HXXmHZHsluYTJY8YRDRPtPsG7ZoXA5/yl45GUsfPT4wuw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792756812; x=1792843212; bh=Gdq4U/IMvFoMphqyyBVuzLS1hG3rMvurgLz
-	dRA/Kbi0=; b=MPBE25h3mMQeNpDFRMMYwqMXEaATmmA/1fxITOnlS6kLOb9Hi86
-	1RLbKCIhCjoY3zK+Xy/XFdya1SveMXNWQcXX1bvpm5bbTmITwDE284PfDgWU5cT8
-	Yb5bbnNFkv5LoRfuGMVGKt1FFqZJ5bd5+iuActHmQ6wgLDBI03YGvimMRFMrw6+y
-	grW9oF7Luw1Jzs6ySZQxeOLq6T1ABsRnKUme3CTu9l5QOQmMkFelCcu7xVAIEPfq
-	Ib0CWXX5r1AiCk/44T2VjxGIx5q2bRSZkWrTbLHqgYYpK6HXgnDKyhrTzeKoioLb
-	vMaWIV29oCHGbr+3vMAloC7a4nT7QIl8seQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792756812; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:iQQaUB/oLi7tW8x5BSHbgMJ8FkCx9y7vYt0xJN0qryRYdgY
-	Yp+V7zxfXOPioDl57pCvxcC41oG/F5CMTH0rwlVRjXQIvmxQXMy2ZjOuwsbvhr13
-	jgrw6GJ2uI1gImaIFFWuTEJJLLrbUxdQDQaQ8DpMYiw7OIu9GLlKDXyCOskSGsKR
-	O5NxkgEbLiMEXMxCPhVPLwsrPOL7ATRxeel9vZRx8J4vXcUssGcNxfHEnrlZVvWi
-	YeskZ427cU1g2gPYQ8MkhldGyEAXegFDaBK9G6OmAZ8byG/beGwnJvpqV0Gay6GG
-	MMb5+oHkgOfSleEINgGle7Dv7UpoA16D0132Yag==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:NoVqu680p9RBFvJiahtAzizL1zxrJI85hNVE3AU6tYU=:QcU/ozfoyW9N+XZYxHuP07Pi7VGBX5ScIdZSzn6Nqs0=;
-X-ME-Sender: <xms:TEzbatQn6ymyG3Gp6tyy4KQ8RqdQWTreyr_Qo72Adm3YE2yU6b2_0w>
-    <xme:TEzbatpThcnx37lXvXrvuyWw9iSi3kHM9FFabhsmpaWMXEgp1N_XyHnDf48BnOfha
-    fr2ki6mS0pQpE7PH5ZLt0FAM1wqfqT3K0mR95caCSNacbrAxlo7PX0>
-X-ME-Received: <xmr:TEzbarIiJZPo1InjjdNEx0WbAF3_GnBsZHuLjhfK3Anii3IlRKzl2NsTi5NEGatfszMOoQ>
-X-ME-Proxy-Cause: dmFkZTFSnClMX7EzQUruNx75fbBJJQsMDOoe1kIyZOze7EG0u0iegAwIiRHErD4s6Hnv+G
-    41Fg4bUHSGFOt0txDUCbVZtT0Em6M07zij89MKTnSJGJn7Ospu1/B9A3oiOmnBxbuDD4hV
-    gvYwBBEhbIgc+NLKD3RvVT49IZ0Fivvlo9uVycloH9kyjY6oxHNtg5apm7A0iDJrZbvLYz
-    1JpAUyAWFJPlMcQzHEZ8x5k5PJ5Foap43lVZM9YOG3zJFLYin9QKd7/7f9ZedezoriKknO
-    2hClox222vCRnG4k6LurAf+eGqN151nAaAiSjnCOp9LirK2Xq3LAEhqWjMhqGDli1zOtuI
-    4iw6AmLVzVH8JYbhri3iK8qkvfnDKkMza9tBRFNl8kG/NeDnMznifOueBYscOKMx4WiBwy
-    5vSzU7NXnghPR77joQbcrrFl1QYDKpTtslDwoDzTnGStjCcD4zq6I4WS8kAQWjAvHNB+vl
-    pBBDM5VQzg63cyCyhEyDXyOsY1X6ckX81yzZQb5++21/CC7JUJbmQkZRQKpYCmCBHMu30L
-    XrWEkXDEJFhItMy9DOdmc3wp2CrD4El7vFXrEwIjO8nMSkAYc27yqQ5miul67fQtIPDMIP
-    iy/9GtU6wR98bVByU4OOiNQB/urUHKOd+eJC5XjwgDTtJ5yXPGqmPJByyRLw
-X-ME-Proxy: <xmx:TEzbagrctOHejQUyPtCsQ3i1F7guGxpeAFuhrczVaNuEp7jJDyqJKQ>
-    <xmx:TEzbajxpAFJFA2xbgbhEJ3dH7nO7n-SkNpNqCu2eKStIHIUuNlFZpQ>
-    <xmx:TEzbakMQBVgLJLrM9-mlj0AwgmtHr_vus7xrxYMzCYtD4NMnyUxJaw>
-    <xmx:TEzbao5mwXR5FqeHiWhqfTiDOoQlBdtr59mqV-p0X_q7Q39cU6AXHQ>
-    <xmx:TEzbatJlz8AkMU18G-c9CXXNf6hRk7yggwqH3ivOAh0JsI37Z3TOZsmx>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Oct 2026 08:00:11 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 20021795 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 23 Oct 2026 12:00:09 +0000 (UTC)
-Date: Fri, 23 Oct 2026 14:00:07 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Mitja =?utf-8?B?QmV6ZW7FoWVr?= <mitja.bezensek@login5.org>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v4] fetch: advertise fetched refs when backfilling tags
-Message-ID: <attMR_XBdfkO3SHx@pks.im>
-References: <20261009-799-shallow-fetch-with-tags-v1-1-379d61504af5@gmail.com>
- <20261022-799-shallow-fetch-with-tags-v4-1-8a1c9ef399ed@gmail.com>
- <atsBbPi_EuhRdNmo@pks.im>
- <CAOLa=ZTe6zeapUBwF2cS=w_gDQzm08RJkezD-jm9aV=7j1u6KA@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fUcZgaLU
+Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-6dd4f3f696aso477756eaf.1
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 05:01:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792756896; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ig+p54mdsfXcKndikULm4zfhQuiZmuOepCHsmAVKc+X2gzniJZbqGWbuMhIHU3nw84
+         mBNxjsE+Ls8JAYbCGiO1cgMSRiTdeRfJgpqMhR9qLWgKsxB5QLRnUlyqf9ow+pugTI9y
+         s7ZtI74rVpsa2Da5iv3476l41xKWipWGvdLXzeWt3I7SPl1SEnsbhCSwQS3eKVGZpabh
+         2W08U9SkuRL5Yxv2XY1mALxWve8ZK/0I2cODSZ0sRMngUGECgJGdCO25K32aK0qkZ4SC
+         S6fZeSl9U7SZNLmwMGht7/wyoqMfIWDsFfmT7rQpFlKrKMB9eeupw7OQhCNvovcfPzlQ
+         OQ6g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nudPFtTy9uFZrQk6/h/6VawsvyXPWRfTPXuwPZCeUvw=;
+        fh=zmy31XQZO3P3w6SLarz79Vf7zbk6CuV4vF5b7qdNdCA=;
+        b=q4qxg8do/LRoR+SeKNl5OJlu4vh+aISeL4a0GIT+gVWXW9C6mpbrSRCun2oFQIdtvL
+         85nS6ZLkv1EZ1k778WxjLYfBHRQjQBV1eOzAyeKCw29s0pFKe+FxhvlLVILADbKeJW3x
+         A1KEVDIrRCNpFB8qFTH0Pfx74CD6PHB5XMoxCVt3ESkYrssZrleaYEcK8U7ECkMJr6pT
+         29zssUfCqVtuHdaPrNISc2ze8jm73Z03l801EOWZlBGlAFWy5TLjtElGjzuThoJD+dYK
+         ZrpFp9FjCEGTYLh1JNqvHAgMHLv3gzj4gG9z5kUpqvS0sd8ZVl03AMROcYQJk65MmE55
+         lEYA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792756896; x=1793361696; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=nudPFtTy9uFZrQk6/h/6VawsvyXPWRfTPXuwPZCeUvw=;
+        b=fUcZgaLUzx2nzMqLEEuyNLdqwXVWhRQ079Zugz6bMLLGtxd8y/9g6YSL8wc2mUid7n
+         SspanSNxRQSKajneFPqgBLHvkQOBjvwjFFghYtN0CRajiHNq9FoYiFTlFLsl68rT/ikh
+         BkWk2BcKd8fV6+PGa7wCRA9jhv01sXSMklmP1Hmil6HOm5bNcYO/Zp345RRtSKqqAawl
+         fBAuPsxE6NjRie3qrXMEZBkrTP9abOGTZVBJHZ/IAKu+c6B62sII7dYi+XW4HJ1g6mwb
+         OOt67gbiUmtVF+J1msVUhc3gdHDu9LYMLYPBkTpn6ZwdSCGP+rQYmSErTLOt2hJp2uLQ
+         FgqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792756896; x=1793361696;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nudPFtTy9uFZrQk6/h/6VawsvyXPWRfTPXuwPZCeUvw=;
+        b=gMCwYLFFWPmF17DaUxsEsfqG9i5kqAu+GNix+IrTu2OCxh5Sw9bO7urZ4JQmDANb96
+         soc14eCrXI3jmztzT8mWj2eWqYHzyk0dKKsxVjtD7d2H4eXlWwBHwJ0cYecTnQQvnXYX
+         EiuUGp7xfxFLOcgPL24ZjltfC6XwXq0pfWgoxCo1iCwJPKdmfb5BQx/FbgxsMQ5ricDi
+         wMXGEpo6WnqKcUXVpwwUPETSGni1yS+49GKyppmf2MQKZU8RyH55kO5jzobsb4XI34fY
+         5NqaWgp2Q2rRmJvHDz8TVG2duEP05Y1bEAoIGXOf78XU3SlDCi2NTj7zvd/etIwShfc+
+         wNvg==
+X-Forwarded-Encrypted: i=1; AKwUvBwNIWG5geu3bNtKj9T+puV5K9TYWPXxKl8fFM7st3eayvbj+X7Mw2OPirwbJXaxY+y2CwM=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJ3EY6YXDAiZ3iLLhyATdhfL+RcG0n4r1h1Pz1oI/GQMM8CJ2ew
+	cbieykQURLuA9Gy48zEDifWWyte0hRkm7NHqTr8v/lVrkmJ0XUc94//k+VKtzj1vTaeUdaFHKfl
+	eQOWr+sNijOsG8QZXhjUqxl9ewwsFuzU=
+X-Gm-Gg: AYBFou1hx8MSzlSCrGLqyCVoISg1JaZSyjFaALM8NxXX81crtFUAG1wLCD2iYxrMxKz
+	XKeLyhnFYXZqrADfZ/WC9iU9mInKagz0rX2+RDsCmoaThSgQPF4ajYDHYWTEko7E3I6sczPJ+WC
+	ZmR2aqp40LTRiJzgpVEaE2gNezjFSA2NVxxEroNr3Uo8agUabjRpCotr8IL+vblbII9f0RCQmSX
+	E1Ul+vSxbFuw+HAj9DkeOlmqkExexjp2vKAO+/J+3xS+UJrF238sg8R2Pmt2DRMHVp51Srwd/IF
+	Vuc+tkcOJqA8yyIwTEF8eGlquCONsHan2aubjodG18GwjRx37kJVIZpTw1ktNnUXyizO24SxGuP
+	/EvfeEFPrU5YBPzjK19AjZMjULZN4aokAcwtbmN558+MFnOaqYTd6z42ZaMPXkU6dejIRn+ahji
+	eE6ivU
+X-Received: by 2002:a05:6820:2205:b0:6b6:87cf:d1dc with SMTP id
+ 006d021491bc7-70b889b7a27mr1211810eaf.24.1792756895651; Fri, 23 Oct 2026
+ 05:01:35 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,47 +105,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTe6zeapUBwF2cS=w_gDQzm08RJkezD-jm9aV=7j1u6KA@mail.gmail.com>
+References: <pull.2271.git.1792522587065.gitgitgadget@gmail.com>
+ <pull.2271.v2.git.1792662432.gitgitgadget@gmail.com> <df93a2a86cae7d342270c0ee67a1c0d41ada202e.1792662432.git.gitgitgadget@gmail.com>
+ <atnz1HFcA8q8IuE_@pks.im>
+In-Reply-To: <atnz1HFcA8q8IuE_@pks.im>
+From: Joie Joie <soniqjjj@gmail.com>
+Date: Fri, 23 Oct 2026 13:00:48 +0100
+X-Gm-Features: AclHuK-NaD2Y2aBV0xPJiyDGJzP1S1bZNdPe4i31LJ7n2T1SA1pwhNpvv66VCnU
+Message-ID: <CAH=d44czyUb3Kam8oEfdqY0ROO4636XN5NuuQ0gn+wHUe9xETw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] repo: zero-initialize configuration values
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>, christian.couder@gmail.com, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 23, 2026 at 03:58:11AM -0700, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > on thu, oct 22, 2026 at 11:00:16pm +0200, karthik nayak wrote:
-> >> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> >> index b2decc6cfd..9867e8c2ef 100644
-> >> --- a/builtin/fetch.c
-> >> +++ b/builtin/fetch.c
-> >> @@ -1697,9 +1699,30 @@ static int backfill_tags(struct display_state *display_state,
-> >>  	transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, NULL);
-> >>  	transport_set_option(transport, TRANS_OPT_DEPTH, "0");
-> >>  	transport_set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, NULL);
-> >> +
-> >> +	/*
-> >> +	 * References fetched before the tag backfill aren't yet committed
-> >> +	 * to disk, so negotiation cannot discover them. Advertise them to
-> >> +	 * the server, so that it does not re-send objects we already have.
-> >> +	 */
-> >> +	if (fetched_tips && fetched_tips->nr && transport->smart_options) {
-> >> +		struct oid_array **include_tips =
-> >> +			&transport->smart_options->negotiation_include_tips;
-> >> +		if (!*include_tips)
-> >> +			*include_tips = to_free = xcalloc(1, sizeof(**include_tips));
-> >> +		for (size_t i = 0; i < fetched_tips->nr; i++)
-> >> +			oid_array_append(*include_tips, &fetched_tips->oid[i]);
-> >> +	}
+Hi Patrick,
+
+Thanks for the review and the suggested wording. I'll add an
+explanation to the commit message and remove the now-unnecessary
+comment.
+
+I'll include both changes in the next version of the series.
+
+Thanks again,
+Joy
+
+On Thu, Oct 22, 2026 at 12:30=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
+te:
+>
+> On Thu, Oct 22, 2026 at 09:47:11AM +0000, Joy Gundu via GitGitGadget wrot=
+e:
+> > From: Joy Gundu <soniqjjj@gmail.com>
+>
+> Even though the patch speaks for itself, we typically still like to a
+> sentence or two in the commit message itself. E.g.:
+>
+>     When initializing `struct repo_config_values` we manually zero out a
+>     lot of its members, which is tedious. Reduce the boilerplate by first
+>     zeroing out the whole structure so that we only have to set those
+>     members that have a non-zero default value.
+>
+> > Signed-off-by: Joy Gundu <soniqjjj@gmail.com>
+> > ---
+> >  environment.c | 14 ++------------
+> >  1 file changed, 2 insertions(+), 12 deletions(-)
 > >
-> > Curious. Why don't we have `struct oid_array` as a local variable and
-> > then simply `transport->smart_options->negotiation_include_tips =
-> > &extra_tips`?
+> > diff --git a/environment.c b/environment.c
+> > index c83cf44839..89af09aa40 100644
+> > --- a/environment.c
+> > +++ b/environment.c
+> > @@ -752,34 +752,24 @@ int git_default_config(const char *var, const cha=
+r *value,
 > >
-> 
-> Because `transport->smart_options->negotiation_include_tips` may already
-> be set when this function is called, so we only free it when we are the
-> exclusive setters of the field.
-
-Ah, okay. But if it was set already, what does it contain? And is it
-okay that we essentially leak the fetched tips to our callers now if it
-was set?
-
-Patrick
+> >  void repo_config_values_init(struct repo_config_values *cfg)
+> >  {
+> > +     memset(cfg, 0, sizeof(*cfg));
+> > +
+> >       /* section "core" config values */
+> > -     cfg->attributes_file =3D NULL;
+> > -     cfg->excludes_file =3D NULL;
+> > -     cfg->editor_program =3D NULL;
+> > -     cfg->pager_program =3D NULL;
+> > -     cfg->askpass_program =3D NULL;
+> > -     cfg->apply_default_whitespace =3D NULL;
+> > -     cfg->apply_default_ignorewhitespace =3D NULL;
+> >       cfg->push_default =3D PUSH_DEFAULT_UNSPECIFIED;
+> >       cfg->autorebase =3D AUTOREBASE_NEVER;
+> >       cfg->object_creation_mode =3D OBJECT_CREATION_MODE;
+> > -     cfg->apply_sparse_checkout =3D 0;
+> >       cfg->trust_ctime =3D 1;
+> >       cfg->check_stat =3D 1;
+> >       cfg->zlib_compression_level =3D Z_BEST_SPEED;
+> >       cfg->pack_compression_level =3D Z_DEFAULT_COMPRESSION;
+> >       cfg->precomposed_unicode =3D -1; /* see probe_utf8_pathname_compo=
+sition() */
+> > -     cfg->core_sparse_checkout_cone =3D 0;
+> >       cfg->warn_on_object_refname_ambiguity =3D 1;
+> >       cfg->protect_hfs =3D PROTECT_HFS_DEFAULT;
+> >       cfg->protect_ntfs =3D PROTECT_NTFS_DEFAULT;
+> > -     cfg->ignore_case =3D 0;
+> >       cfg->trust_executable_bit =3D 1;
+> >       cfg->has_symlinks =3D platform_has_symlinks();
+> > -     cfg->use_nanosec =3D 0;
+> >
+> >       /* section "sparse" config values */
+> > -     cfg->sparse_expect_files_outside_of_patterns =3D 0;
+>
+> We should probably drop this comment together with the code.
+>
+> >       /* section "branch" config values */
+> >       cfg->branch_track =3D BRANCH_TRACK_REMOTE;
+>
+> Other than that this looks good to me.
+>
+> Patrick
