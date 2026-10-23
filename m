@@ -1,111 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792765123;
-	b=chfYV5laSm/UN5tJbN7bRKPDScf1Ihyn29qjRleGIO/qeFVPfQ2Cqgj3ifQLcNDnUF6J
-	 jY3Qh1nTzKMAdxvBh/au4WAjVXBvtj6DygDvxcitT+lIKKI7azz+KX4dzpRNqDxHuPF8C
-	 vsMBAiWebHvgUpBbmuNqEFy/bgwIKBI4o8XKEzxH/Q29ZkwHbDd8xT1wJ5Lv4zQSg7a+8
-	 Np/ewrx8WESbN6W6afAWCi9ZMfWmo5ifPf9qpeAtFSfHysE/XyeNFioBvXHZpPFrURkzZ
-	 j3u5/MxiScKGz0zdJofU8BBzTjGMlOu+ai3CRwCJu/B/g2GsqYfHwnWnG4Aju7u3Mbw==
+	t=1792765147;
+	b=Krd/YFCl0v0J48GNVoU76ibWrAHoGpYYUqkYChU0HBQv0T5yO0i2giUNbYRXmNqdWImY
+	 8YVMh1idtggTM6gqYuBrB5JYnAnqbvbarKIWlZvsmQF1FrlzNl1B7IxwVoY4GqRgecuom
+	 l4mHejf9SHItkYr5j+orEtXQkGu7+RwGNYdkDvmcdKvOlrik7Xq56a8chB1rVjZoJji19
+	 t/0RiPVdu/k+EXcxUtkNqtcpX4REdrgpd2GjS57jDHpgesmjmHJS0VYz/CYVcqvBcNC5B
+	 2KyHfXjp4ZYfnayjpTrRJt8z0ULTvO9TWz0jkDrGzsTJ1ZMJ8lg/C1SR4PYtj3RZ+WQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792765123;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=QjSsOOinkAvGaGoz5/HhbZlkZsfgTFwnkKwegfSl3iE=;
-	b=fP1oggj+2GwGRFzzsTYke5EHluuw4TR1PlwEeoRFmzerrEHEXMHq4/8R6TDByAkgcQ/x
-	 0Jwb2SIjbuHEyLnR+UKv/ef77Ar/fOHGlBNrwN32BeOhRnIACYlafRDzk03aDlSdfXiEq
-	 yRgqCqbGdou0e+pon8udZhkHd/Axj9Bpv36qJ8kuyiGDNmFDRJE5x9MybBo5Ccz/Vqe9Q
-	 TKcJ/+IjZIvkLplKMOgU/e1NRMarY2lY4+f0gMYsu4tzTacN61AV4GYovVmFAOIBd69Y4
-	 gayXzY/v851xw6ham85uYGUvjKWuvCSV6+9tUKxv/18q8GfUH8FQCvgxhTVhoOP8SlA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792765147;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:
+	 Content-Transfer-Encoding:From:Mime-Version:Subject:Date:Message-Id:
+	 References:Cc:In-Reply-To:To:X-Mailer;
+	bh=CqRvDLq2Ua0UtDfry81X1GoStQuhFe+hYDoxIkiFHdA=;
+	b=P1LiNbN6JBQXN7xnXFWWIF2xh6ULVIDGNHFvSMsnzf3naaHndWecdF+FMKkby17Pre5E
+	 7oKo12hDHYWYEdB3FD5/9QYXLAoKJgOEKylgzN76/chdRMHaAx82f8QAy5CJ5H7YeMcDI
+	 h8ttCIYUo5OoNhVgjOKu0fgbovu9chNDFlKHeJ51Cg5khxjMOAnLdsID5YbQhh7WnoI56
+	 lsW7CsKvywpuzixAFOT7aBJuahtMGi2PD0iOG+7HCwnMydajxmEJBqN19jVBoFiJh3V9D
+	 6Z5KYs+fXiGp18GnKm99tjWLBkaPXvsAZo5dBp29OVgd+NHJWaBKLhvp82UP90qp3Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=IZ7W1SCx;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=RBf5mJy1;
-	arc=none smtp.remote-ip=202.12.124.146
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=OsL3dbuc;
+	arc=none smtp.remote-ip=74.125.224.45
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8860A606A31A
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 14:18:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8860A606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AAD606A31A
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 14:19:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E1AAD606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=IZ7W1SCx;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=RBf5mJy1
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.stl.internal (Postfix) with ESMTP id B158A1D00151
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 10:18:41 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Fri, 23 Oct 2026 10:18:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792765118;
-	 x=1792851518; bh=QjSsOOinkAvGaGoz5/HhbZlkZsfgTFwnkKwegfSl3iE=; b=
-	IZ7W1SCxc3gReGdoMccHALdfIDLxyDYofxwegy83DjKk+p2HuMf+x2/SH22/lZ65
-	qGQlJ2A3mJxMUgkLlC+NSgVYMNag2itZQq5GckugvK57WpckER+oMhkxFM4Z3RBI
-	X9huXurHOdr2aW3zdZnGfeUv1TxCwXI92wWygOzfmdyRWdn5uEXw2bX6FGR+uYUr
-	4zKLZHTYCtaWf3Z6N/Gmqc0uHNh+5bxQy7Yic5W5gwbwX9Rybh2u0qxdP041yu2e
-	J0iRG6zew+Bmb0FEOrUXn663HbD5XbiQBrWtmhxfqTrKac953y8g4p+JrjkJTeqV
-	8AFasS85nV2f/uVsxtg70Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792765118; x=
-	1792851518; bh=QjSsOOinkAvGaGoz5/HhbZlkZsfgTFwnkKwegfSl3iE=; b=R
-	Bf5mJy1OZh/Z46gScY3xienmR2lB8fa2A3m9njrqvTWC/fbf3070UGks04Ou4yjJ
-	NvYTPXklmAqxBziEn1i6ApIRQ67x11CeBGvFeP/8Ff2BPifScI1JyeJK+bgZgaam
-	Sc0k/erUtYpJS7Tjtp4JnIfJGmSYQQkEFnwlwp1EHl6AEqLk/iPdCdk0OxibZOtT
-	DUdu1QFFA3JQIvbZDf0OnmHD0X5QG/bk/dw3Klt82ELJlhAgLPcw3bXarf5T+XbS
-	g+DHH+bss2fCv4IczUkp6g8UIa507tL/g3DOPDRCU6IGmsDGb0vbCjvevBkBeQax
-	J0uyDri+FJfitPUMZ8I6A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792765118; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:eBwlxrMCx8RSFfkzWcLZ7ujem28rBcl1mKij7dw6umW6Pb2
-	hnB1tppa+8nVr4/bMQOjai3vQlE7B0DkEutal38mCPyahAjAiZWDV+IlFWvhAxb/
-	dZMhDcqrtbOIZR9PHOTn2om+QbFk9zwUe/YPRf2K2s69yri0f6fgZh1vKGXvQ1Kc
-	hJcdk6iIiTxu8RPOjFPLMIMW0HGnQc2iJAbvSMw0vUTJ4MQwvWe4J1YUahzTBkbJ
-	hU7S09Y2/VQtoheqeaG+al2k02Mfg44c6JTs18HGxByQ3I8dykrkPmV7VyfsK642
-	RmmdbSMNbce6z67wfxiie3rkNqOGsv8HWU6oc5A==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:YTdc0Lv4VL+blUupj+0x4i+Yp46S/07Tnwd9zJqbu00=:oXXUxrMVL83aRJmP76OZstGcOpNyPwkZTlYSyrxaenE=;
-X-ME-Sender: <xms:u2zbajR_QRtyF8jHANnrzLVylYb9f1WrDcDPOk4PxB171H5uiFV8vEQ>
-    <xme:u2zbavm0qqrz25fxfJqHflhhHWssKiV_AvTJozA6fCX7O6BnQOIXWO1_aDunAIhtP
-    WaaXIHfcEfWna8Ouw66bLm4zfCrPBdf3sKVtp94Y7M-7NA9q6cI8g>
-X-ME-Proxy-Cause: dmFkZTE7MwTQEPJnb3PfrnXpC+HXgufED+04sCa6np+1k1BYzGmSWtV4+TyPHYQSk54spq
-    IAIk3MOHS3GZGtNiKPpEovJ82+4m3sDN0O2a+wOgEcAxyQDmQ9CbcsOz/8YpRVBXxDCrhc
-    S/RkfOx2HS60tZ5x1LNSR5ZzmtWW80DzVavX0u2xQzxccP8L06hhaaVOa+trgMCvb7/o7j
-    6iOX0/LUfdZRex8Z5P4lmUYEJZaZeujvsULpGTDfYLhU8WkHHES6e+7QsupopM7C+Hoi6O
-    J0rjsERKpTAcGL8vmCHuNsQn4XX4WEL9GSV0a3F4OdpEYyMErKwibqGI2+Q0UIksQfKPGQ
-    fLnsAPEakUOgJ78Sx3KOoh3esH5BWzccoHvk/FKRC8bPOmZVryVmcbcOh6fU31CJ6AjcXl
-    UN0Z7u5tma0oLD+KF0TmohdQLfQyAMgkQw3WknYXeu4BUkJMtNF/0Sc4P6kiYAkuC8lZC3
-    sZkuwQGliPpanbbAi9iESERP45X7w0wliSCXv2XeblfM7FM+vi4KAZ3Ykl8N9dk+LVfWO3
-    Ml2SpNmq9+z1QuQhkChjYFSN6SC/AW+5AMLEE5oBXazvFMVIS3rQDd1NtwJh4YGG8RBkyA
-    0YaXwEiZa6kH1cz3M2u9FQ1QkmrMhJKSw1QpZmmVyfcWk+Q0vZkezIrwuh2A
-X-ME-Proxy: <xmx:vGzbaudpGkjuPGALs-giwYt6dFW1iPfCy-JQfkrcDdWHeTt17RLWSA>
-    <xmx:vGzbahL7VGWzty8Se27LXCFogii0Oc5qVG7AoO33Lt8_lPwmc4L9wg>
-    <xmx:vGzbarFakuUacP82YAyAGd2nuuuMowmpzDCfPCz5gWuVr7izZagIMw>
-    <xmx:vGzbasDkaE3LsnfHB3wLp8tT5bdizcXIrIXUywB01C4TbfO0iNUlyw>
-    <xmx:vmzbaoAo1cBwKzrOM4PkYi_a73dv_6w__s9O74jDOexBvmjxwxpZRmPe>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 1170F22C009C; Fri, 23 Oct 2026 10:18:35 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=OsL3dbuc
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-675676afc3cso1124684d50.3
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 07:19:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792765146; x=1793369946; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=CqRvDLq2Ua0UtDfry81X1GoStQuhFe+hYDoxIkiFHdA=;
+        b=OsL3dbuco7Vgpr64NHlIX1hv8pLdpgGtWivoYQKPXXYle8sBFuRZgeITmDXbWLlceW
+         xQ7MMETAdbvvyWdqkl+duQKXmSYDRDNinUKXCV0fpkisESln4oFq4ucxd7EcAGjBTNs3
+         u0sX5DeE5Jbp14IOAz6+ZoXex+sEjGaPrNZXhFVncVyZShx3zITUa5CpGfrkZYMJXpG8
+         qyewTd3p/SXbNVRJMlVkCWLk8cL4Kfhiu4SYIdPUlUNSt4vHmLGu1a9ymiL0FH1R0Uwn
+         I6Hf5kjptwpuLoLhavbpN04MNzRhGRYVDR3iq9W6j4GW7pbfi+DrR6J4sDErTJzTsrXY
+         A+ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792765146; x=1793369946;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=CqRvDLq2Ua0UtDfry81X1GoStQuhFe+hYDoxIkiFHdA=;
+        b=0UY5cAAih1pXgfALl37py/LaHHdmiUMvz41mRtCp2al3cfVAujfxeHZn+uJwCxEtjc
+         W3GfXP+yADQsWYWNZmXpYo0i7Ej/crRCMeynD4x3xW/nDNuzTgxxDPb4elutcR48iEri
+         X5d2j4MEzXEg5Q4F6vzFU0O3BidTZrTtIFdzizenrj4xvbja5bX6bryBEDg2/skUPfcy
+         qBzpi7klMxWNWAVkbOnCZk/MmT1GO42wk11uN4905tKYGliba26u7SFzj0gL6foOTjvO
+         Zl06+Bvwb/F4jZQpJtWAPghscZ9saXoGaXkEASNltrFDHGWFeg4spfZiQqLl488aKSOc
+         akhg==
+X-Gm-Message-State: AFq9FYKqNEIf/lo/g0T7ywoVVM44WEyQcdNDXh0Z3zNWieS/sucO6A4F
+	v8i9egUP3doX4A2iyPrtj9dmPTpyRQrcOujOk+sD8QNKozuzzmeij9lb
+X-Gm-Gg: AYBFou0bnS12DjvuaVlnBhzi/Ks612pPkODL5Bgh9Rc88UDxHHsHcZCU7d59MuxUdsq
+	o1x6UslSE5gxEsSoRevQtXpRGMZX546g5KE5oyv7TzcXm5JLlJM2TXWlCdekgBRuOP4ieYv290x
+	BSxWTLnQyAgRfDr/cYlK9it0Cn87gWXRtUQC6oRJvIHUpnW9FzFttptOQjBcIZ/rd545Ndq8c7/
+	Bc3EKqk1olDhE78Qprrdx5NUFGCb8/3A1MTHk5h3EhyMVydwLcfqAkKSOkQjnCm34a9hPoqbTk2
+	sIulW0u6IOM+BVbJjDgqP3hx9Ej7qj30KgaUS7+gO4VyTVgMI3vKKXMWQkn3DKpuH2lL3bZTerG
+	MeVcM16l/TMvP7KmQ0D4zoBCQrhdlTWwraVQozwHfEhReNLoeUt4fIdO0tAw8VMckysUdda1YJ0
+	f+nYwBakDQ4liO9xzuJ5O6HvrKX9p4jNNCe0NfMIsay+PXduVcaNP06W4RZQCx3JRMUVgF9iue8
+	nLlSs4vyBgkG9kEzh/GbADN9P3w0Y9CDQtyQ3X557abqMEt4eNW7vrPZ3Xtj3dHMcrBB/B6MJQK
+	6/TCYlyefVw5SEvxX0Vp3aZyaTiKpo3ZWULtJIJw96qG4xMxH6En4zfrdwNwpB237LLyefOJm3f
+	JG9RkfD4GgEwnd26PuSiuSRc9sA==
+X-Received: by 2002:a05:690e:809:10b0:67a:74d:e16b with SMTP id 956f58d0204a3-67a35b2672fmr1120118d50.17.1792765145793;
+        Fri, 23 Oct 2026 07:19:05 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9d17:3000:1d:477:fbde:1358])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67a34045843sm1346969d50.18.2026.10.23.07.19.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Oct 2026 07:19:05 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -114,71 +90,113 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-X-ThreadId: AGAb6ilPifF3
-Date: Fri, 23 Oct 2026 16:18:14 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Junio C Hamano" <gitster@pobox.com>
-Cc: "Emily Shaffer" <nasamuffin@google.com>, git@vger.kernel.org,
- "Justin Tobler" <jltobler@gmail.com>
-Message-Id: <037a97bb-af3e-4e20-9845-c2d92ed3a2c4@app.fastmail.com>
-In-Reply-To: <f192e10b-c7d0-45d8-8f67-21383474d16e@gmail.com>
-References: <summit-2026.94e33e9ddf234334.06@ttaylorr.com>
- <20261021200341.378978-1-emilyshaffer@google.com>
- <CAJoAoZnhc6Tjm9m9dmTA6UD18HzkxAv2_ifB5x74ectqX8YieA@mail.gmail.com>
- <b36dcec9-ad9c-4ddd-b3e1-e246d2fc093e@gmail.com> <xmqq4iedc99a.fsf@gitster.g>
- <f192e10b-c7d0-45d8-8f67-21383474d16e@gmail.com>
-Subject: Re: [PATCH] Documentation: propose community voting process
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v4 0/6] [doc] Add new page on merge conflicts
+Date: Fri, 23 Oct 2026 10:18:54 -0400
+Message-Id: <254688CB-AD21-4283-AE19-F1061C90C6B3@gmail.com>
+References: <pull.2237.v4.git.1792764293.gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, Jeff King <peff@peff.net>,
+ Julia Evans <julia@jvns.ca>
+In-Reply-To: <pull.2237.v4.git.1792764293.gitgitgadget@gmail.com>
+To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: iPhone Mail (23D8133)
 
-On Fri, Oct 23, 2026, at 15:49, Phillip Wood wrote:
-> Hi Junio
->
-> On 23/10/2026 05:48, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->>[snip]
->>> I also think it would be sensible to restrict eligibility to the cur=
-rent
->>> set of active contributors, who will have to live with the consequen=
-ces
->>> of the decision, by requiring eligible contributions to have been ma=
-de
->>> in the previous two years. I have historic contributions in a couple=
- of
->>> projects that I'm not active in anymore and I would not expect to be
->>> able to influence an decisions those projects make now.
->>
->> But do you care about these past projects enough to (1) notice that
->> they are having a policy discussion, (2) bother visiting them again
->> to learn their current voting procedures, and (3) actually cast a
->> vote to help improve them?  You may not have been active recently,
->> but if you care enough, and if your past knowledge of how the
->> project works still applies, wouldn't the project participants
->> appreciate your input?
->
-> As I understand it the voting systems that are being proposed
-> automatically send a voting link to those eligible to vote so I would =
-be
-> aware because I'd have received a voting link. Having a time limit also
-> limits the amount of admin for the person running the vote, for example
-> handling messages from someone claiming to be a past contributor whose
-> email address has changed. The voting system is only going to be used
-> when we cannot reach a consensus. Having seen how much time and energy
-> people, with no real interest in contributing to git, put into posting
-> to the list when we we first discussing changing the default branch
-> name, I think we should be careful to limit the potential for bad acto=
-rs
-> to try and derail the vote.
+> Le 23 oct. 2026 =C3=A0 10:04, Julia Evans via GitGitGadget <gitgitgadget@g=
+mail.com> a =C3=A9crit :
+>=20
+> =EF=BB=BFHandling merge conflicts is difficult, and currently Git's guidan=
+ce on merge
+> conflicts isn't giving users the information they need to navigate the
+> process. As usual, the process I used to write this was to collect comment=
+s
+> from Git users on the existing documentation, and then address those issue=
+s.
+> I listed the specific issues we're aiming to solve in the first commit
+> message in the series.
+>=20
+> This patch series introduces a new manual page, gitmergeconflicts, which
+> explains the process of explaining a merge conflict with examples. It also=
 
-And this is a very relevant example since everyone can have an opinion
-on GenAI, just like main branch name bikeshedding. Contrast with some
-technical topic that you would have to be involved in the project to
-even care about.
+> links to that new page from the commands which can cause merge conflicts,
+> instead of trying to reexplain the process every time.
+>=20
+> Changed in v2:
+>=20
+> * Explain what a merge conflict is (thanks to Junio & Ben)
+> * rewrite the "ours" vs "theirs" section (thanks to Patrick for the
+>   comments)
+> * add git log --merge (thanks to Ben)
+> * Leave most of the content of git cherry-pick as-is, to make this patch
+>   set smaller (thanks to Junio)
+> * remove the SYNOPSIS since hopefully that won't be required anymore by th=
+e
+>   time this is merged
+> * Fix a typo in git revert (s/reverted conflict/reverted commit/)
+> * 's/the the/the/' (thanks to Patrick)
+> * s/[doc] Thing/doc: thing/ in commit messages (thanks to Tuomas)'
+> * squash the commit fixing the linter error (thanks to Junio)
+> * list reviewers in Reviewed-by
+>=20
+> Changed in v3:
+>=20
+> Thanks to all the comments from Junio.
+>=20
+> * Add signoff from Marie
+> * In "For example, here's a merge conflict where both sides edited a list
+>   of", add a little more detail about how to interpret the merge conflict
+> * When we introduce a merge mention "semantic merge conflicts"
+> * Say "... and any other command that does a merge" when listing commands
+>   that can cause merge conflicts.
+> * Reviewed-by is not the right thing, use Helped-by
+> * Adjust phrasing in git revert and git cherry-pick man pages
+> * Reference the "ours" section in "git show :2:filename shows the "ours""
+> * "there's one file left with conflicts in it: fruits.py" isn't precise
+>   enough, instead say "the conflicts in fruits.py haven't been marked as
+>   resolved"
+> * Delete the explanation of zdiff3 and add a brief warning instead. Don't
+>   be too prescriptive, we should tell people what the issue is (ambiguity)=
 
-Some people care whether software projects that they use but don=E2=80=99t
-contribute to use GenAI.
+>   instead of trying to impose our opinion.
+> * Explain ||||||| when we add diff3
+> * Fix example in "EXAMPLE OF RESOLVING A MERGE CONFLICT" to make it
+>   consistent with the other examples
+> * Replace "configuration option" with "configuration variable"
+> * Mention --skip instead of saying "the most common ways", which is
+>   ambiguous
+> * Add a pointer to the extended AUTO_MERGE sentence
+>=20
+> Changed in v4:
+>=20
+> changes to the content:
+>=20
+> * use Junio's much better example for diff3
+> * clarify in the commit message why we're not mentioning git apply: to
+>   avoid dealing with patches (thanks to Junio)
+> * adjust the wording around "multi-step operation like a rebase" (thanks t=
+o
+>   Junio)
+> * Say "see git-config for more" in the description of zdiff3. Like Patrick=
 
->
->>[snip]
+>   said the explanation of zdiff3 is not really satisfiying, but I don't
+>   know how to write a satisfying explanation, and it's better to have a
+>   short and obviously unsatisfying explanation than a long unsatisfying
+>   one. Added a note in the commit message that perhaps this should be
+>   improved in the future. (from Patrick's comment)
+>=20
+> changes cleaning things up:
+>=20
+> * add periods at the ends of various sentences in an attempt to be more
+>   consistent (thanks to Junio & Patrick)
+> * Adjust the formatting around the [NOTE] to make the CI whitespace check
+>   pass
+> * Replace a couple of instances of "code" with "lines" (thanks to Junio)
+> * Fix Ben's email address (thanks to Ben)
+> * Remove the double signoff (thanks to Ben).
+> * Make the cherry-pick commit message more accurate (thanks to Patrick)
+>=20
+> Thanks to Lobo, Adam Svahn, Louis Vanier, David Turner, Ben Zanin, Salih,
+> and about 12 others who gave feedback on both the original git merge man
+> page, as well as the proposed improvements.
+
+I=E2=80=99m happy with this version based on the range-diff, and
+I suspect we are reaching the point of diminishing returns.=20=
