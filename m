@@ -1,118 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792743791;
-	b=QhXQ0agy49rb93NERQwYx055nXYGWGIQw0GRBjUUqN8546C+jvIKOZJDBVLAcognCekn
-	 MCpsDBrK2B109UZHO/MjwgpXXgzV4y8L7XkAIrjqU5kh3K3+PFWHOp/CgFLcisDNfWS1q
-	 jTqI6U2loA2Mhanvhrnm+20EsN7xnCMvfWh7XtBnhh1xO0Wr9wgTtc4D8jt7LbYTEvhWK
-	 aFTufQn0lyGmyaulT1oNV8MVX6EiPzeYJuNisNmwXuuJOm6tKJUBAQt54O9cOjsKPh5Gt
-	 z0jS6XKBBiautzWJN3fgvGxYR0TSgKIHQcq05OJzu2CcE9RD9D0CdMoj1QIAxx+XQog==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792743791;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=ridM8d7d23V8R44jm2OwA2gyE1y+4ki6qRz1/lMmBNk=;
-	b=vyEmUKQ2DAdN1Yo35LYkoflSGqlRRKIDN/yz2CBgcrkwUI/l/bjtyfRBD9lB0Y6F+M2H
-	 h6LX5wyzYPO4GlfP4SAmOVtc892YOom6G4niy5/k2ZqmIwJoQqKkEGbczee/THm9RS872
-	 s6WgwpAcheZq5hvfPQeWAin+cy9hdBZmqx9381G6zC5heopcMrIh2tNmODy4sgfFEIbSW
-	 xih6jVr5cgF4pYDVB8ZyB/BZnMwq6n76BmJiFaeLFBz7cDtObaBr8YSfHKZGsblY5dbP6
-	 7DdsmU856u83hZ4/je68ObNYt8vl2qMnpaDKynkz3VaX+uxgYwmYkbhZl5cnOD2smhA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=uMt1PNw9;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VrGDuLzW;
-	arc=none smtp.remote-ip=103.168.172.151
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792746460;
+	b=QgNT+vSlTc+G1amvoGDZoVSkJFZgaGGfrs2LhMJZCyVtgngeKvUrwFy7kBewFArgplZe
+	 Bi4ZrDN9ZiNManVlmsMLVPv2otuRR4Y+FVtbUgGgHf8EnCw+Bcc1K5MYsOP0tc9/AN7tl
+	 jUIcgaLh9NpidsCStt+pepE3SCgeNuMYfFK+fcN3TmPQD3Zb+/V8g+edbrPvi5UyhYkeR
+	 HGWXXUn7U4VM4M9WcTtKEY4l8pLuRgOW3amwjqPFbiXFvRlAFha4C2EtV0L645dALR1Nf
+	 69XkrNUV45GQ/ZXD9RBAutnF+ao1CQidTntwfKOeFke+LvnLFXnKdl8QAulG38jk4JA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792746460;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=UaZBsBx8h9CEARNW00nkoearNfH3WyBFKE8mR+Y0o78=;
+	b=ufEB6IEywxeXuovVDdywWkR8jY1XWyYN0FfQfjnP7jH3avtq04+OMEsYaGE0h+1zIRob
+	 rJKUm3T4EvHysWRY5EJ5J9ro/cdxE+W4vVoSxMUfWK5044bcUmzwka2GRg81MiZAOfBAN
+	 FQckBniyp4earR0+BviDVqAYfD0ah2LKdbTbvSS3fABkwRjM3M6afrotH15c20kzB0Byy
+	 ZIy3GluEhYEnsIoFlAQp8igWNfPjcCU1z/x4ry2omjWVoQavKSHuEVuSj0dpaUTza+tNH
+	 HhR0+JeWRXlxPLFcKZ+7YYZQfJ0cbq7NTMCYOizQmYXstjS1UinWY60wudV2zFaLIvw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YUCh3z4T;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.50
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1A0606A31A
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 08:23:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A1A0606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F20606A31A
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 09:07:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 33F20606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=uMt1PNw9;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VrGDuLzW
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 711D7EC01A0
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 04:23:10 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 23 Oct 2026 04:23:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792743790; x=1792830190; bh=ridM8d7d23
-	V8R44jm2OwA2gyE1y+4ki6qRz1/lMmBNk=; b=uMt1PNw9luAZgzD0yy/OsgheGD
-	eYnCeN9NXTm7jmJidlU1To0gLmioow0UL22x70/W+PU3NeAp/laGRaGM/QaVDMyp
-	Na9cUvrotwV7d/0LOl6R9wSPyNm8d88vS18jCRvZQxrgw/e401GC7YY5KjypsduD
-	+wUr0KnnwpPBBo24Mg73CrOibeWRNyDhikcpV8Wb4zeeJ6tZS/qh/Mor4ObJDnJ0
-	CU1iKg9FjAZFJnbiDAH7xPZSpXx/9Ak1xDq+z0h/tiy+cez7Jo9CkYNYCQ4tYgle
-	SIQxHWvHxNTwTwQLkAZYTbya/Q5gP/8Kk9iRnyScvuM6IIxjVgfYj9UgtMnw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792743790; x=1792830190; bh=ridM8d7d23V8R44jm2OwA2gyE1y+4ki6qRz
-	1/lMmBNk=; b=VrGDuLzWUzi3HR+CpY1JXzgUOrkOiv7THDTNc+bEmj/i72bs4Uz
-	pTg+LujIaoFk3xP0GWOH9XJFdlEiLnGqMsM4O6OVRjXiKapm0MsBMlxrk5TkueXW
-	VLCoEgIKiTQCvJEGXVyT2CFUi5o9Haha/5KGJ19qcsYbyZSgzPsiwFJgbenUrlRr
-	fy9uvo0dfmNKsZO6Gmsf+E0TFlAmOrvbgvAAWDUYaKYw8x1vyd9/V/38cef0nee6
-	TJOieFfkAc5zavbJp4PvB4U95uy9WY+QbcFKIkHCVkf84+uaWMRpbMYUvO/njbeT
-	baK1gqlY1yZJ0Z18GknoiSFxZXMHNJNuctg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792743790; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:ebJJiUHg0N4VB0UDXmWUAQqQiGSPZFdfwzPsnT2g3/O/++G
-	sMAHSb+ri9Gs/AkkXOUN78WN9frMxBP+HYfyTumYFhL0LmuQRUGnCiGySjXMwZLJ
-	rT/DKwNsBxu8lwllfd/RpCAGudcBybEZ+KKD3+tOYYOfJ1FccAAHfBW5akzpD1LF
-	kdVGs5SMOjOmm+Ca+S9BbVATqn4PblyFrlRDfL/EmONAicqJAdLvyUcIKSyqMBTF
-	rMIX5oC5oFsmJuR3qMesZyO7EB3JxraQwYC1wBZ4MjobjTJ73qPKdDPItTOu3jCe
-	lejeqU/Kot9EmpzJix5Z7iTuJzItBJS+pQ9JVZg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:1wzBw9xtxS3flt3fSLm4qJ92MbrojCxF+z45u/dN2vU=:dxnOUAkQyx+LB4UzKndjjoP3SBE/czRw+28/oH78TCs=;
-X-ME-Sender: <xms:bhnbakHGkOOL4dDtpOU5u1ZQhzRC589ytVzUwmBCOAKM286tRwGwtQ>
-    <xme:bhnbajVvQvFdM42v1VxuDeWWoH_kg5ZAcf3ICfi5YVDBOdvhoXP6-TmmzHcLaqJSJ
-    C5cFY4r4FqhkRJDKxkTJ5QF0-qBvdQlUfPxpU9-22dCffBjbMXDfds>
-X-ME-Received: <xmr:bhnbarztVxjBV2hxwP-Q8ILB4oN5idoQD-7xAzig4AsoiredkJqknozC5A-r5VBRByAo5w>
-X-ME-Proxy-Cause: dmFkZTGrXCcgpmFGgURFoXKcVMkEVLSPluW9G4B5CFYu93Gj3mObArkTExPfaZAeQ7MPne
-    G7x9iIifVSS4AfTi1GzzhajhF+G3dC3pJb9RZHQ/GipgQLLjXTfbF2yLF1gNGsQ30YOr3c
-    YbnQYdLRokBxG++1QYPDeqgJXUIUljAtRznlNUb3UFNp0PSwUjxHCQpC8sytTdKuSeVg5R
-    31f7AcYnKUMCu4krKJkCFii+TfHVzK7r2zQ39h5zawBTPhIbxadCVxC4HnJ/D8g5qHDjKl
-    omgK1CoxgJT/AuN78ANMCmvDwDiiqgAjsrPnfE57hyuR+aKq4cX56s6x1k2x85EjAeLGHQ
-    qs6nRpHybL1izNnBfpaqoOrKF35dqWsgsRRJ2QnC/fS3/ngNb0Vc9OyWFm189NzoMxYEgP
-    e3EGjvDo6rBoe1f7OPm5kHmcmtkjdp703pMcmito7RFJnq08unIjUtf1HK6pYHd2wyMNOW
-    DThIFdfAXAWCyER+d/0u7AfL1cwWcJfsGieaa9droAAZxcDcU4+LJYKMnrtdFw6dhGNBRs
-    DMXg3W9wUv2vpOz6BgmzF8Joyr7Y47zkHEA/50XXgs22JXoOU1OPwreP1HhJaurmPCH/KE
-    XvjeMifKu+TJsi0B3IFiJO32yECfn8CgoiFV2YM+vnC96Ou+4HCPoMYH71Kw
-X-ME-Proxy: <xmx:bhnbahNqMbZLcb5D6fAE1Roa0JpgUFjDRX3uXU-JlBICSYctLaPQlA>
-    <xmx:bhnbas65oSWkqPc7pqjZG7_-LY0jsnpHQ2YcCNc2Vc81aYydNcWJjA>
-    <xmx:bhnbaiMcS94wg1Y2eC9Q_waJ7YL38oeRy7QbDXj8YSn3PYtgntgopw>
-    <xmx:bhnbaqkfG0cD2b4q4c7j7fXNMMy9MhsZME2DwzF2UMvxaT488pPqbg>
-    <xmx:bhnbavcI83XAyEwZaYg45S3Ks2Z2v_OxKoH0e9GjqfUtSL01qmQdDCQ->
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Oct 2026 04:23:09 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f04f2f6d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 23 Oct 2026 08:23:08 +0000 (UTC)
-Date: Fri, 23 Oct 2026 10:23:05 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC/PATCH] config: honor file permission bits
-Message-ID: <atsZX6exgGJkNQQQ@pks.im>
-References: <xmqqbj8p7okv.fsf@gitster.g>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YUCh3z4T
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6ae14eecc64so868516a12.1
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 02:07:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792746458; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Gf6kjWKvk2e37wnFAOHvjcUyZVboEwFi+GrkvQ2BD3WR2ZenkvAu4C2NLwQi07rDMa
+         cUp+BdmXIgiSn19wcVy+S3NiuuyD/bFbScwlFW9CVDbX4E7LsN6uwxOrVa/D4W71oQrd
+         nAh5FnJwwOLhe+1LRLZci4RBfVzMS8OMWR3ERl+LpeIxDSYVB9Ucu7c1XfLNqMfT9u3v
+         CFULI4WvpHa8A1n2VKo0RCeuQEf/TecyUuH2hGPxyVVfRsw7WtlyXtrhbNpXTaGhfh5z
+         gswylgjaRvHMGQkAPvShav2FZSYPgFVG7/wc3ptbfTv1znAwXOjrK2kWMvjIa6aTOFnj
+         piWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=UaZBsBx8h9CEARNW00nkoearNfH3WyBFKE8mR+Y0o78=;
+        fh=v3aQIpkeG24MIHgWSVAwdpjbWILcZVAGSk3G7JXkpNo=;
+        b=J3zF0pz4UycCtIsNo8H8+O2EzRE3Ssb50wm/qIMnnVjM3utC0zGYUGxvzSai5qO4K/
+         SVFv9uYbHb6DI0fZhTXyYJXtDPwoGJA57Ua9Ieyq4QRYv8Si4FWHe2zes0UzXhQHa0pJ
+         IfyDBBQk9b+lX0DH81SCzqEFSTZvuy1f0Sav1WlrnJEnQZKCzqJxwK/iX86rtpsfmkMH
+         4VcdmJ8Yq30LTJLajGRocP3B59lOwRJIMSOy66dMTl5oyF9lQ7ptOmm0w2M4IZtbpABA
+         oF74zip5YWzUGq0SEzYOyFdhFd1zqFF/+1Ha98HC1YelSWKxYDclrcwgimtlGIPA+1Lx
+         b7Cw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792746458; x=1793351258; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=UaZBsBx8h9CEARNW00nkoearNfH3WyBFKE8mR+Y0o78=;
+        b=YUCh3z4TL8wBUH5LrJTmO/vwJnSTWreRAUQCQQXNaWjmKyFVRwhO6fi7qH6cRzwj7l
+         pE6jnUwPcpEk83VosnNbh4OGlRRBXjeJXcmjzw5gTF3gXem8McVEp6RsA5xb3zW/ppHa
+         4O2ZWTle6LT8QonDdxOSa1h6H6Z62cJCWHfecUrrspV2sJBBW5svfVSWgOQ3NCVMG7tc
+         NWnAaoxFr3ojltdN4pKfgHSNZWN5prxXGubHQIajTgEwKmUgILANNpnogzGIAmfj8hig
+         IUAxlzWgC8ZDcb7GOPYhuBYaLjB/Dbu7fED/lXEbLvlE1xTUJ/QBHfNq5vTMGf7pzg/0
+         9v7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792746458; x=1793351258;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=UaZBsBx8h9CEARNW00nkoearNfH3WyBFKE8mR+Y0o78=;
+        b=HF+07mT9Yh9oUGO/UKMeffTLub9My078kr+HDLkCQYegUf43XYwg9PDt5njjVAvnk0
+         16hB6wRKkFop5hBeyj4MB56fLjJPTEYguGvVFk5J1jgdJTV5xEbK34Oi18DWv8SJ/hTC
+         Ep8YEINOAvNkHV6m1T9bZC9fG85ubSGkZ4hGhVjPfP3RGgXaJrmlPSaBdUopJLl5mFay
+         jIQQKS5SM+0echxIFyQ8eN6NK2gClv+ZcJjjrCoz1KQ6xUXvF38zbsCSMOfU0LiPQUZS
+         vbKqaLQ1GdGZ2zRuVkIzZ1o+Q1ozqpiS6JP7JrXgH356IZKekOXTzoh0OjtpUX4nN408
+         ysTg==
+X-Forwarded-Encrypted: i=1; AKwUvBxd+Qdgo2Qq2JT1WvAfRkUWsR9xD/hGrLMyxx+YyZCcucS/DkuX2lMb/i5KvJ0FD/xBw54=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKCPnjOLXYxU9IUY5c8tzIHXy/MORNoEpYIorzEtqszlpEsVTaK
+	MI0YOa1C/S56d6jLRVmfifq1amCOwrD9XUMv98n3pAXv4nDneb0IJtD4mKdbfIrc39p9VLt+6AP
+	/PjcKQpBoRb2C16l0IZukLXlZAbhtInI=
+X-Gm-Gg: AYBFou3XXyE84Ig381ZuLtewIEkOrM5AmYarU/bKNmUmjtcw4YzEowa/4HFs2xRYc7W
+	Fz+cFIf8aq8tzaRqZ0AcU95L86hH1709wF8LkRFZ0ObVY3zizpV6y1oBb83ecbkADkDZZrliKBY
+	X55Iwd5r6cZMGbnfLl1oKm8ORvqHrfbnYjhdGDXd9aTzgNjlGQqmxb2uy4R9mIYaeN6x0Kto1JC
+	PPE1bAHwVIO/JVSqfzmafp1AGlFCAW7VOQyiqdJjoPQShka6Mqsle0Cc3d2U+91QeHViT3Ye2j1
+	GDo7bU/NJgWSd6jIIH26U26QPTpUbhyMsqd9xR0NV2HG0jxdjH48Xd9TxNbJrbi/goQcr3DJ0z5
+	o628ZeAwNA56qmQ3idbo/ireVKU+uV9cOYN1EtVlRRjfYQEbt14Pr3JP+3g==
+X-Received: by 2002:a05:6402:1f12:b0:6b4:208d:21f2 with SMTP id
+ 4fb4d7f45d1cf-6b432b4a449mr2498853a12.2.1792746458444; Fri, 23 Oct 2026
+ 02:07:38 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -122,35 +103,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbj8p7okv.fsf@gitster.g>
+References: <CAHwyqnUWab7AhqJtWkPQzw_dh+OwxiZxt2+1TTC-r+VPx+20Tg@mail.gmail.com>
+ <20261022174429.81186-1-me@jaspermayone.com>
+In-Reply-To: <20261022174429.81186-1-me@jaspermayone.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Fri, 23 Oct 2026 11:07:01 +0200
+X-Gm-Features: AclHuK_Pn6VHU-R-c144_KYe0L0kbS5puHehE_fGMiIyaVaoi6LCOHqzaZKVnx8
+Message-ID: <CAHwyqnWCndBcrxxkDTyLoC7hM3OgS8pAP=H=gt0r2ZmmKnaojg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] branch: let --delete-merged find squash merged branches
+To: Jasper Mayone <me@jaspermayone.com>
+Cc: gitster@pobox.com, gitgitgadget@gmail.com, git@vger.kernel.org, 
+	kristofferhaugsbakk@fastmail.com, ben.knoble@gmail.com, 
+	phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 19, 2026 at 07:27:28AM -0700, Junio C Hamano wrote:
-> Because our updates to an existing file almost never makes
-> modifications in place, and instead create a new "lockfile",
-> propagate the permission bits from the original, copy the contents
-> from the original file while tweaking the contents as needed, and
-> then finally rename the lockfile to replace the original file, you
-> cannot "protect" your .global configuration file from accidental
-> clobbering by doing something like this:
-> 
-> 	$ chmod a-w $HOME/.gitconfig
-> 
-> Of course, if you make your $HOME directory unwritable, it may
-> protect your .gitconfig from getting updated, but that goes totally
-> against the intuition and is not how you would protect a regular
-> file from getting overwritten.
-> 
-> Teach the configuration file writing machinery to inspect the
-> permission bits of the original with access(2) and refrain from
-> doing the usual "write a lockfile and replace the original with it"
-> dance ourselves when we shouldn't be able to write it.
+> > I'm leaning toward `--delete-merged[=<level>]`. But it's good that you
+> > are pointing this out. It's tempting to unify it like that.
+>
+> The value of --delete-merged is already taken by the upstream
+> <pattern>, and it is required. So "--delete-merged=squashed" already
+> means "branches whose upstream is a ref called squashed" today, and
+> it cannot also carry a level without breaking that.
 
-What I wonder is what makes our config file so special compared to
-everything else that uses lockfiles. Or put differently: if we think
-it's important to honor permissions bits (which I think is sensible),
-shouldn't we do that in a central location like in "lockfile.c" so that
-all users of this interface behave the same?
+This is a good point and stops the `--delete-merged=squashed`, and
+likely also `--delete-integrated=<level>` to keep it uniform.
 
-Patrick
+
+Harald
