@@ -1,88 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.44
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792727812;
-	b=wnmMQGAbO+Xt1UFQhhv0miis43HT4RbLYtCxWCoi+KuTtIr2x8KK03kN42skvxIGzf0r
-	 7k6U7KjwlJQPb2R1ueIxGCug2A+9tdDx/dyAqmjnk5jzRvT4gpwtaBavFpCjEeY7Snmmm
-	 L/IPYOGdqdfsGS4+2hkSRf91Oxp2WJxbVCthDrUOpq8bJJ/me8u3OHv/N9RL2PP0cns10
-	 DPOgjFlzK5Jpspy4ypR2l1tf3HXODEU8MIUoN70zeK2zPz47wQ6P2GqHqWT2hVybvf7c6
-	 +K3K3T8Qcm7tlhsFrSuuzRHf53t14JoND1Rq9ECLLTvrl9q8TCHFRFeDFuRmjGzIK8w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792727812;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.45
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792730101;
+	b=4OrIqhLPGEefcKAW1AXUMVWoHoqcDxA+G3ehvyCn/tPG3R08+ETpmBI1rYTywpz4laXx
+	 K0hFoTEdCDUUKNCL3hD6bPDf82VAt2oAR/vrrwF0Jf/u20pGyqMiiRV57FDIWtZ5/PswO
+	 eTNQCkvy3sy956gx0YHZ0edF/8K6wEQ2HQ1MGwLHMIB0w8B3p7ofKDjCvI+GtvUM5zSEj
+	 uph8LYNUBpGi/xX+al6ymQG/yUCqwTDRFoe1u2MyQ8YbfoItGHzkbCBYr24BXrjONzuwO
+	 /96/P1qBLcenTl534QkjoMsqY+yLFIEOQY19pAEMETbpxZbj4j2cfVa3tVy2GO7QV4Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792730101;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=IfTH7qdUMgoZPRsMixH4FpZWBlw/I37Vg8OCfck+L4c=;
-	b=0Dw39ADzTgFNNZlNiCXM92o1/mLHqMunP7wsTzfZNNO9t0wXMwwrIiqV5Uzo7SoMxIQh
-	 yd6zMC0mhnDZQcBpW9mAwTG9Ll0GhoYDZwhsybmx5LYPe9m4ylFQ1xcQrT6sDgLSWzM7Y
-	 jgNkgYEGUosMHYhZNNxEnEmQYwBEL28xeCeF/fX4FTleUOl9sh2iZ5q0Qrgc17SXwAULW
-	 RiTyC5/Qw6GlAKRrEuTpxwyWXbw5DHyGVwFO2A+vB3TMNBnlPRyAqqhvOsH4nBF1yaIpe
-	 Adk7C52gRXiQsRMNnWQ1uEAEmBMZ+l7STJ9KhwmtBRmLE6UVWZK4oi8maBD7qD0ohyA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=XTtPcExagnMS3NZyEuVPvBlxLHTuwiFqUvzEt+TAWJA=;
+	b=vDOHtWOKeXfuwUnvbUN1W8JK5mZAZImkvdMqIXNrR54lfjFD0YcqOBG1FSfSRTNi/JBt
+	 sHmWTKOhsio2aoJ6+C0gwuFJoLlC4506ld3DOdUIfQRukzcEnjnPwlxV4z/C2o+F/c6lz
+	 9+iHz6GOgBAL0sQtFZWv1F0B26ghUkXr1JEmclGZMauC9W2pTQWyq/qTcB23wdjfpQLCG
+	 tNyHtviHxxDpXvnz1TWFuMPfC0W0YK99UVqWHk6trUxSiPVpJB2dMc52u86qD7BdY/+am
+	 t5hvZOmw9EmdSTUftVsWDvCgua5Xc/SrRV0y1asJV4d0oN4OUOV7Eq43hagoLUiLA+g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ELJ1VB+7;
-	arc=none smtp.remote-ip=209.85.161.44
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="V3/Bp1lT";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.45
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115DD606A319
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 03:56:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 115DD606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FDD606A320
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 04:35:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37FDD606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ELJ1VB+7
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6dde81a6820so327438eaf.2
-        for <git@vger.kernel.org>; Thu, 22 Oct 2026 20:56:51 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=V3/Bp1lT
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-91b55859245so8241636d6.0
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 21:35:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792730100; cv=none;
+        d=google.com; s=arc-20260327;
+        b=N+O16t0aHmsGRPHRPQmiAY0EuBF0I3N5KstOItgkUrLSyR6jVcBDd70EAStrd0gJX0
+         Qb3TIo4iltdqgDMuRAE+KDmUnVogqfVYyMIIJLXjXP8KWqLTFOlaQcMCa6WnQVqHzuaB
+         gZvGVNTzfAY7NAZoQLwuUjX01GKcLqIpypp8+e0Wh7ODk34ZeRgGXBHsL7uCxZlV6WmO
+         Zr+5rdlgz6gADe91/501K+XdL7AWME139m4/YXn/+3ZVXR2BK8MpaxjgB0GHknHjOfkb
+         cja4Fv3bC6cPGF+TnHP+1jlfKpwJPXJC6riNB0rg3nTDVKU35wCu5ttfXfRabog4e0k1
+         Iw+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=XTtPcExagnMS3NZyEuVPvBlxLHTuwiFqUvzEt+TAWJA=;
+        fh=9gtdUkN+VQ5mnNRq42KgUL4cO5wiexsALWc/m6cG2OA=;
+        b=k9DIPioAdvdttX0rM/fpWa2O4eg4umLMS27TrLRsNCbjVTWCiDrbyBKXs44kUchow7
+         gHk+PDOgmqGl6ZSwx1OQh6i1r8p4d7VmdDl7ZWoYQPoXuJXVjx6IxDpgLC5lPv1ZuC4o
+         QuiUmcAttv64Q84gLa14Ezbprg+xsz4Kpd/gFfOufL3Ih0qaSrfwD2XWOjoHkmGb0f/n
+         piN2UZg7EPKodicoky9bWnDtGY7Qpb3WXV2o4DHsMckmHzAEdgRz9hg4OYQGp5776uiU
+         tU2IBrGV7wkhXzKnZs7FcAoOdxoYFUX7wYTmFtlXR+h758YFBTb+W7XUc8IWptRwzD/S
+         MppQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792727811; x=1793332611; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=IfTH7qdUMgoZPRsMixH4FpZWBlw/I37Vg8OCfck+L4c=;
-        b=ELJ1VB+7Hf6Q1wVuTNzCXlUBZkgbDvTO3ffS1ygn/ewMUW6W0ZZDU+5vMUgQHAswEi
-         quMzgv71MGFo7YPEjewmz65D7KviZKg8zJljUpYTgPkgsnh6kwQIbNJZ02iOEyTwfnC8
-         KcMhj1xJ/rYvmAP+qsEYfVpL7oM9oGB0JTynnnUgNqgW9XzN6IFL8VaJ18Efe9ctS+ay
-         VP8SBzzzDrb17z7DYUp247+DpLq5/RjqBNLFpkVe2Ovynm5rE4/oKIgkgypfCmKHQlFo
-         ZAkcBtagxIevUA4OWxddsUrM8bZoVzY2zAWvGhDDZatA5tnefDo7cmACRjJwtWEwPlzA
-         ldVg==
+        d=gmail.com; s=20251104; t=1792730100; x=1793334900; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=XTtPcExagnMS3NZyEuVPvBlxLHTuwiFqUvzEt+TAWJA=;
+        b=V3/Bp1lT+pTDwcP/kXgxfZ59a69enRQ33V0iWRDkQTuTfkPOrXFAXHlik7OhHAwUG7
+         dPMZUVpeaY2BYAMLxEdE85CB91746RznUswSajvcrFW1ObAlDixYniX2BuboufzVD0tf
+         WCz6KWMgh7/e/ElRCvS/vm94pBOFEi8eDl58mvdwhmunXyxZ9cw4mIPKBeL+OO58jlSm
+         rIdwKbwAxpbShlYC/3mnWuPxWplKxJoTOLLv5ZYOvzHDInCaQ9VPn4alD+4HpEILNbo3
+         pBvvUtqiUR7ArSVSlpq5R5lJs7eSRUlvxxc+pCPROikUInN9NNgcuJf4+QVnFCwnxmiX
+         zP8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792727811; x=1793332611;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=IfTH7qdUMgoZPRsMixH4FpZWBlw/I37Vg8OCfck+L4c=;
-        b=Mvwh5VvpV0QLXOeuXIyOIhp2VqpFzhgS3boEc4PN7VE+rB0xiiLyWaPpDtRijX6dV2
-         cEdJMp0WRgVASIBRf+0tq+leX/HvUjP+y0UfFi1lMNaJz3DVgT5aU73AMrk4vYg/ENHa
-         qKHrVEmIRCmme19vY8x++ZKlXbsi032dIZA8MNjvEDO0ab2hpKgqbyuBB733KikWm5aH
-         HeZXMZ/GljVPx/RdJNgdngQUfj/7Yvnk730mxFIZiKQqzo+Zv5ttqrxtsgtXVfy3q3LS
-         LONjmzGpL6paMuxAW1vVraaIzRQxn6++h2gXlnI5Z21655q45FB+3g3zYIJoDfTXhWGo
-         26XA==
-X-Gm-Message-State: AFq9FYJPEeC2NhMrZLHBmJOksAbDfCeMl0dE4QS20iCasAvyEw2DA8l3
-	6WPOOLnlAewQInN8s7vHj1DrL38K3cCELoiq6QlcDjvnElCQJWMOgMSqHeCV2f4D0TE=
-X-Gm-Gg: AYBFou0cXpXx5KcEJ6PJJGJlwsr2aY69q8j8dEZNz2OP0my/lFAuxQ+t47l0yBSlQvC
-	e0H9aMVSpOj6P++UY1NHsd/7fwzXgB005DU7f7YU3HzCuX7UpuQy6Md5rwbIgZUEIQKgaJL99f0
-	uHOtQjzxwTIjVeinukTHag4ny3dNfO/XS7fvIlUQujacOGuYEbhvU4QW/m+Hvkg/x/rZbB43UGT
-	nQHZyeMQ0R/Xy2o6kSTqxx0DLAOrWVYWAkk5JloAUPXueqMQ/OV66Y47LZm4PXCYK6EOcsoBstk
-	d6zNVXZqJsi27y7hh2ejVLpisKAgWpA/Z3bzTXrMUSJp7WIfcO9BRgWacp2YnRlYHU2xcx9sOFq
-	ngQZgAF9YPbMmkxz6hDJzWhmaAzG1zaT9v6j9jXDIKE9zrYbh67YaYHFURFdDA7iAWDhOxX2e7r
-	C/sblLT+QanOn+LbNt9ImNd3mmpFAXaW4Ca6FlX53+wmAkpc35i4u9RBssD0Tc3q7wnIR68+5uO
-	JwL0TOb1P0oyyQ59w/tGbqtPryEzWGv4s+ONYr1Jpcam29Ic4KRQua/AS4=
-X-Received: by 2002:a05:6820:a016:b0:6f8:124f:d4eb with SMTP id 006d021491bc7-70b88ad5cb9mr759473eaf.69.1792727811024;
-        Thu, 22 Oct 2026 20:56:51 -0700 (PDT)
-Received: from [127.0.0.1] ([40.80.212.243])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-70b8b346990sm954611eaf.13.2026.10.22.20.56.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 20:56:49 -0700 (PDT)
-Message-Id: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
-From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 23 Oct 2026 03:56:48 +0000
-Subject: [PATCH] [Outreachy PATCH] diff-delta: use safe integer arithmetic
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1792730100; x=1793334900;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=XTtPcExagnMS3NZyEuVPvBlxLHTuwiFqUvzEt+TAWJA=;
+        b=kZf8vCb6sZjCtRaTLNodCTGJqWgk25nBNf7mPyez+BdsHRkykhnGrPf+yri2GScP7y
+         lkxDvlPWkG/ZmwGAoFCjq515kBqM+HmLM8U9T90AazpkJPMC2k4LgZunsqcFsaTGSgAD
+         rLx1lBM/QJis/zkApagGshyC3C0jwexaJKU4SlRhb17vcX+6VIJjPLj+AEtP2PRc2Eph
+         fpOgTjLr8cld3+eha8MGh1jI5hLxk3jqXbu7gs6py00Vrgt12+ePkn6TY1obfvg8dOhr
+         BImlmyOEewfluHLlrerurdWkM9BRQjZLfdjwXyIF1r3Eo7QXAOf4V2kZnS7gBpH+4Szj
+         Cisg==
+X-Forwarded-Encrypted: i=1; AKwUvBxMY1gHcn8n8ChPwyI1xyPONrzX+++uO1jqaeGjVV1jfPQX6IBx9N2qvrDGmGcZxzW5rXA=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIMsJs7cSzQb24XsYipdX+dX98h2wdc3Dg2/Ums0GQPLJk/T3GU
+	1F+JG5kAHhSlvLRRTswunAunmBkTKD0nbYzkSmG+V2x6nRoKaHXRQcxaNvz3AjtFJ+701nUTva5
+	REgJNHz8kxmZ823rNrdZqo8bBXYmb/Xc=
+X-Gm-Gg: AYBFou1RH+lpF5kWBu3tIRdlYsH+AZLQnfnPItZM7d7bl2yW1jHUHz2fs33K4gAnVab
+	px9b65ED+2YtcU62S0+4eswWJJ/Ff7pm11A333O7gpk9QxpssyTrG5xybgFhE0BYw+0j8kmKV6q
+	z+VQZG2AL6/HiYTeamFl5aWilhcBmjlrGr0OyHIgQjlUCELlNzPBH92mB4QlLIT8+vjy5+21Ca7
+	5q0eSxlDpWumETJKms3HBUb2gYWn3dcVfF24ICnByy3ImyZnwMVxpTpuG/tLSLwRz9tkHPq3rCQ
+	yQumr6+oiMDn5FO1Jiq/4oUBI4rao+q/OCap68aVar5ch3vpQS/y7OKF3CRVF9m0i3AAKxGoeTp
+	lS+T4/GrfBaM164oOKBblRX61Zw+URNA3Zz/l9u+8Q+F347RwiNOVPANuHh1R7rhNovzjUQ==
+X-Received: by 2002:a05:6214:5b09:b0:917:b50e:44ca with SMTP id
+ 6a1803df08f44-91c3a9e0b52mr12314806d6.19.1792730100155; Thu, 22 Oct 2026
+ 21:35:00 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,56 +104,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Srujith A Poojary <poojarysrujith@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>
+References: <pull.2260.git.1792299301663.gitgitgadget@gmail.com>
+ <pull.2260.v2.git.1792666211685.gitgitgadget@gmail.com> <xmqqbj8lhcng.fsf@gitster.g>
+In-Reply-To: <xmqqbj8lhcng.fsf@gitster.g>
+From: Srujith Poojary <poojarysrujith@gmail.com>
+Date: Fri, 23 Oct 2026 10:04:48 +0530
+X-Gm-Features: AclHuK8AaPb6VdfqfTYCTTeQ6ulrvvZbOT83I5my9kPCltuE-QEZECroxPW9B2Q
+Message-ID: <CABh_KWhyZYaXa9Mtfu-XSW7k_KA1BnV31BjDev8wogUoHSjAfg@mail.gmail.com>
+Subject: Re: [PATCH v2] [Outreachy PATCH] t0001: avoid pipes in test scripts
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Srujith A Poojary <poojarysrujith@gmail.com>
+Hi Junio,
 
-Replace manual multiplication and addition in create_delta_index()
-with safe integer helpers (st_mult, st_add, st_add3) to prevent
-overflows while preserving NULL returns on failure.
+Thanks for pointing that out! I've removed the extra indentation in v3
+so the sed line aligns properly with the surrounding commands.
 
-Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
----
-    [Outreachy PATCH] diff-delta: use safe integer arithmetic
+Best,
+Srujith
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2276%2Fpoojarysrujith%2Fc-refactor-target-name-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2276/poojarysrujith/c-refactor-target-name-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2276
 
- diff-delta.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/diff-delta.c b/diff-delta.c
-index 7cbedeb507..45df070ab9 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -162,8 +162,8 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
- 	hmask = hsize - 1;
- 
- 	/* allocate lookup index */
--	memsize = sizeof(*hash) * hsize +
--		  sizeof(*entry) * entries;
-+	memsize = st_add(st_mult(sizeof(*hash), hsize),
-+				st_mult(sizeof(*entry), entries));
- 	mem = malloc(memsize);
- 	if (!mem)
- 		return NULL;
-@@ -258,9 +258,9 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
- 	 * Now create the packed index in array form
- 	 * rather than linked lists.
- 	 */
--	memsize = sizeof(*index)
--		+ sizeof(*packed_hash) * (hsize+1)
--		+ sizeof(*packed_entry) * entries;
-+	memsize = st_add3(sizeof(*index),
-+			st_mult(sizeof(*packed_hash), hsize + 1),
-+			st_mult(sizeof(*packed_entry), entries));
- 	mem = malloc(memsize);
- 	if (!mem) {
- 		free(hash);
-
-base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
--- 
-gitgitgadget
+On Thu, Oct 22, 2026 at 10:54=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Srujith Poojary <poojarysrujith@gmail.com>
+> >
+> > Avoid piping output from git version directly into sed to ensure
+> >
+> > that any command failure is properly caught by test scripts.
+> >
+> > Signed-off-by: Srujith Poojary <poojarysrujith@gmail.com>
+> > ---
+>
+> You do not want a blank line in the middle of a sentence.
+>
+> > diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> > index f1d227f271..02217a9bf8 100755
+> > --- a/t/t0001-init.sh
+> > +++ b/t/t0001-init.sh
+> > @@ -678,7 +678,8 @@ test_expect_success 'default ref format' '
+> >               sane_unset GIT_DEFAULT_REF_STORAGE_FORMAT &&
+> >               git init refformat
+> >       ) &&
+> > -     git version --build-options | sed -ne "s/^default-ref-storage-for=
+mat: //p" >expect &&
+> > +     git version --build-options >build-options &&
+> > +             sed -ne "s/^default-ref-storage-format: //p" build-option=
+s >expect &&
+>
+> Unnecessary indentation.  The only reason why you thought it was
+> needed was because the original was (wrongly) expressed as a single
+> pipeline.  Once that glitch is gone, anybody reading the resulting
+> code has no reason to think that this "sed" is associated stronger
+> to the previous "git version" than with the next "git rev-parse"
+> line.
+>
+> >       git -C refformat rev-parse --show-ref-storage-format >actual &&
+> >       test_cmp expect actual
+> >  '
+> >
+> > base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
