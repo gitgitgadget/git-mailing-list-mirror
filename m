@@ -1,90 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.176
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792785801;
-	b=uWapB0i3h0Gd5bgRjsgZt2hcydr3ckMac3sYPZ/SSrmruMQzB1fE5R7heh+V/5G7kVBp
-	 ztpPF5DsFTTP+9S/0VlvTRl6VmGIvRZcNWCEx/5nmI2aWl7EXCSp8JGj+egxm8RZGYvQL
-	 uKmKWQIW+pkK6LWbe9Eo88FWS/AIfmoutN7B/zpCPem5aru9c2Om3NWmMiU0I3+TUm4Dx
-	 RbUsU0Ep/apyRV1dIDN7ctOyzrYksq+GGnd9/jqFJzKFWxK7ws3Puuswk7cUrRqNewsRf
-	 q+mVwQP5x9NPF1kVz9+O9FYD/3Ci1W43v94FsmTOWPQaAkZ0LzdiR2PThrZhmXw7sPQ==
+	t=1792785802;
+	b=s294yEE8KU3E9chTKCWplQKeMuao8JaBMMtP2U4zBoKXItmqzCObKCDbUh4R3FMEJYeD
+	 fl2Nra1nQusnQKhWuojW7szwBzq6e7g0zpKfujnrw7A7w/eO7UC21y3zdfiaWTotA3gVe
+	 +nUUjbshVZteJH4nKkdcL9I3w99zT++lSzk6QPIOr4XpmjB6mUTaO/aZm3h5hHJbQ3wKJ
+	 FA65BjF4j7JdB/gC/400+msV4Uv4Bs6ukQyvaduGrnJmB2zfK1MORFcHKwqU82UpdhNEh
+	 8dPxHA+tawsVsNynzVi0dpvbLJhfjd3WAoGrpevrMtWQMbPzkn6wsu+SFj7G2umcKEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792785801;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792785802;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
-	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-B4-Tracking:X-Change-ID:In-Reply-To:References:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key;
-	bh=nZ3I1zCnTptxS1LjKRnAu3qsqBqFZeSDro+C9av3ktw=;
-	b=0MhWfhFvO1gpp0v117lADkDsunSqX85rdYwwRNqskWI2eplQDKhZLeegLU/tN2ol4jBg
-	 AzOfUAiyGi1EGz7S5/gKG5fVQ4B81RWuFuqw8At6ZRfEfmokOiuHSASb6GRm5P9gUuxnP
-	 V/UqKqPW9U5InX2Pxi3G4PKVNujIOB/eudWi1PDqKgraawCpv+aEuBO3IZ92ek/WL+x05
-	 rj2sjYE55Pdit0SUm6NctbhKjshA0oof+wLvwYZqs7i2EbO3T6CNfPP6hx9kaKhtYrtYo
-	 EgDrmke2Me9g0qPVRD2kddwJxjQDm+bCKqa4ZFwu6bKMFx8PdLdrHYEZxwlX0beBHCA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key;
+	bh=9sHrN2ZGMpCvCPCJwxDMZdsxfkfZNSJQWnow1jP30Ns=;
+	b=E1z2DjcuIhQcBMufMJYJKJHOOfrmVskoZMh0eqizfyoSTKtYurW3wbWRLd8BkZwQtgC4
+	 fPMeXW2I7mXYEd17cS/irwIcFkfoElFeiCc07MZ3SqTBrYjela7at/5ZyfFEpSLh9r3GJ
+	 lgDsVqZYO6F5wzUWClX7U1k9wXIazecDiJ3mmqPz/NrmoHbNILnHdUn/5/mWFgUiSKpps
+	 VtRjpNDPOJWMEE5mFE0snl/KFa4CL3GOWCJtP09j2lqE7VTdGd1Ft2BW6HAM9N7xIj08W
+	 mRuY4D+oTehH5k4CmPBi2S1zC1ZNxzZK+PraatwC32guWhcPJ0GYs9h/WTRQZQpciUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=S+hjv6Dt;
-	arc=none smtp.remote-ip=209.85.222.176
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pgzsBajU;
+	arc=none smtp.remote-ip=209.85.222.180
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707A1606A33D
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 20:03:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 707A1606A33D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E47260A261C
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 20:03:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E47260A261C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=S+hjv6Dt
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-93f30660e69so94888385a.0
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 13:03:21 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pgzsBajU
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-93f2049ea7aso82701985a.2
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 13:03:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792785800; x=1793390600; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:content-type
-         :mime-version:message-id:date:subject:from:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1792785801; x=1793390601; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=nZ3I1zCnTptxS1LjKRnAu3qsqBqFZeSDro+C9av3ktw=;
-        b=S+hjv6DtmUFw7QcEtDaZQOACyolsD1ctCI3ZrRJKEg1aHpgpzQ0REqm4AlM/RQ8aiQ
-         WcMSQdXzoXpcVZZoc05Ues/wb4wlJ87R9mAsKn1IygI9iSIx4HyXdk2PRJffMy87xOqb
-         a4LdxejZ1nc7w5dx3cagpj4l2rZReul1O0rLKQwnu6lui32MNt1q2ZJZE/n+TWp9I3by
-         p4/PxsoX8wb73v6ImzzerX8OQeQuyR0mqmU9n25hNdaK3X1jkvnsT6tEY3XNeYpGE3gl
-         xFjCM9o7LUO8ZF0oABF/q5kBbxZDcm6TgKHTPSBrgzaaZKg/kecOBbhYAIRVWnxj/hcG
-         2cXg==
+        bh=9sHrN2ZGMpCvCPCJwxDMZdsxfkfZNSJQWnow1jP30Ns=;
+        b=pgzsBajU0nWin8GBmza6glHpRxbmNstZRowUY46pTyvb5CCR1OClJFaV+WX8SXv3A6
+         dP+Bvayn9FHc1Ne/5rEHl4DUK3R6Xohkn3ZZfNXXIjYhB2qlqHfa8xpa72E7OBPBp04E
+         Rlzh65qly/EeHCWxndnsLjK15q7Ipeet9sVnq4i/caMfw+xNNy7rxlKU06LmAFtfqgCN
+         jW1cIFpoJyZnFQvAczCw5cpGbYMGXQznv3wCCHrV/aCCchgOIwjc3TujW9M52dvNwUQc
+         yzaQclrRza/FrpAPpMB6DplB1u4j6NajM/IRwmD3EsjoyYtL816U5FtK4b1svR6bK6gs
+         cEFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792785800; x=1793390600;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:content-type
-         :mime-version:message-id:date:subject:from:x-gm-gg
+        d=1e100.net; s=20260707; t=1792785801; x=1793390601;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=nZ3I1zCnTptxS1LjKRnAu3qsqBqFZeSDro+C9av3ktw=;
-        b=2nchPwMU9GaAXaDvI6eG/Mz46ScVAkADiOR9ZccUr23geVjFMVWsVO3YYHK4bG552F
-         SB8eR82ZR7EYXHiVStWHnNBhLX353uSyecpLHGh5i9bq11sY0PIz0QdHOSbXCgsiG+pD
-         gv5jnw/ju202JSndvDiwB0Uzjdnyvot+y69xd5siZkIUwyb/kHa/U6LvJiLrYm26Y1Kf
-         3BUOciIimQmYn4rMNbFh4HvO24AsMk74Kaar7CJ0IX7AKJXKU5JkE0gYpRUu3V5ayf9L
-         W6sSmVUqFQpZbFH0ENg4ykjtV2BoP3QKkENTs2CHJcjR6lvLQmw+makjGrzj3wXv9QCd
-         wLOg==
-X-Gm-Message-State: AFq9FYKIeyey9jAIar2wZJaeIQ32RObZ/00mbicZtF9XNbDZfcsiDmHD
-	/fxrvMUY16dASAEvkqGEXGQgXfkIAJz/YTJ4iT9HNJYBjurZGPpsp11N3tCkSA==
-X-Gm-Gg: AYBFou37cnMZWmdmnHuenUhTHYEMNE1fN57fd5gdUY4TelWX6qzcXkSVpJIrmJvKXJc
-	LYBPeAOda+ZO7IhfKHtFopGUoFg8oWCTVxtx8U/p84kbSX/9GvWdzEdW7e898mz7GINLyTh4bK0
-	QdzZSG8tInCoKQY72ThZe9YeUuWuxuEws7dMbia4qd1Guuf9GCin8vrLDDfsV8+rhxUY/nunal/
-	1gU1y18Lveyj0My2MqrYwMLdFNmiSh2ycUSr6QFsGeQqkoE1Y8xhcl55sEOXo9GyBAC80vJDCOJ
-	7PA8Yvcb15MiggTcY/vtSdxudzCKEXQty/oD2GDAOnL5ozNRP4gRJRIqamQ4w4RUL6c+f3ua3F9
-	o91z5inPuVNlpkutnRxFxXIgGXeDklPlpoMT0dtdJUu6DSIZ8tSBQTlQUwUSNydts25EDGxOIng
-	tX7A6r+7m/RiTAarCa3SXW4GrVLf11SwgHywgctUUFTWry0DSxBMTEWdSkfvoEtuMP1n0eNY/NY
-	+Ogn5zutg2hcOgdOsDZUpaztWk9zP42Gowz8P0gR7bojx6cxsRx2RmBFhsjtfeBaDDC/scbHcCn
-	dQj0XksGryqa2yLUo2XhwPijmvwWbBBKhmWj5TYj791mDXalneqbSYk4vQlADhTTsO9epK4LljX
-	GpKs4si9GIM+kPeVOpMMv7iJ04advShT5OuQe1tQk5Nw8+JL8fU4/3M9DRF1l3bd+HkmjcJwoPV
-	hi4qGeHa2fyRaleICxe2NVSsgZg1l8mIPPkEQj
-X-Received: by 2002:a05:620a:4542:b0:93b:d7a3:45cc with SMTP id af79cd13be357-940ef96b7eemr13252985a.53.1792785800305;
-        Fri, 23 Oct 2026 13:03:20 -0700 (PDT)
+        bh=9sHrN2ZGMpCvCPCJwxDMZdsxfkfZNSJQWnow1jP30Ns=;
+        b=p/BpAqnKDq/dVeAxuVQO9Nz2BZQem3pajY8Pp20+fy8FEUpCmHGUdQ34DdwplOz83D
+         qUkJMo33Xgy6Pu+ZobV4ufgXvmj5rXlePj1Jsb3YwYqwqaReoHE2/1WtFqlUMGsTEeg8
+         0DcC3fl4T+hBqFb6wNlnlgdvVnoTFUvttpoIGRDbZoy5lx8LnV4gIuuaghJEpXwo/JdP
+         o4tOFLtHjrgeGn33QkTL4tMld7XD340yJ3+Z9dZoaO7bbQxMOyjWCAPGpi1ZFRKg6+n/
+         +aTBX+2gQIzNBKk9x19PhMG0cLv1jWSehQHEu30AKFPNksd8eMQDn84RjQmPXshE/pOc
+         U98Q==
+X-Gm-Message-State: AFq9FYJxJ4Z0bHnviVIoGwloPyoelyYvn7Ps2mWibQtMrrzHP0WBYCpv
+	UMsd/w2NFf9aXN4sJx+8V6q3Wys/OwTORSJt2zlqBeWaOo/ImJBMsN7i+3cVDQ==
+X-Gm-Gg: AYBFou1a0bDyMVJSeFa7FuLbOtKmwni12LxuSprqeuJ3122EMUEzdpuOMBjEG7wDwiC
+	79aJpSwLAof7vP8pa+EfkbgqpKmBt/BmzOb/cAmVSndIq30D7Yii08CoyWEaAwrKR0bBW8HjF0W
+	zaohvFML9mX1/qa222MammG63Fzx7yt4Ya7jfw0Hp8e54lvG/ROq0OviP1F7s3hokthPCj+2DMp
+	TkWCDyVx1+WT7uiFK9YAcQcO9l9pymaKDTlXWmJjM2sl+9LjGlSf2eSF0BuXg5b5APdLAgv4YXp
+	QrFkDRezJ4rwAgt5PzUZmco6+hXfhmtAGEhBukvuomdnfsePE4OGCob6XD1iMg4hOnQd42y3G2u
+	n23cJAPeSFkgFuSSBZyLFjMhHcqS6XolDml6r1e5YY4cxKyxbbGVg4xrQjcPv/jkNEs9YL1ScI/
+	w6Vpv3r7oCsIsDpFbVCMWhYYqMG7VrlJd6AJZ9LZPZL9y/gisdSKpGKKb18HMpbj2Yt32Z3Eqcu
+	bBqhAkNPi1o8sQWe0iL+YWbofaPsrUjpuwEbtz3NWv1fWNjXHMq0ZxTIhh1SWCQIzJrZAuDviyX
+	dqX9G3LPMD9cfeT2yEiD15UgHL2giy9wB8QHz6qZcybDkKXOjEhsUg7zGaBS4CsQtz6xkOM2Y8t
+	GkvVEeWnKmwYBzp81sCvxZsj1NX8ts91L1B8eKJguPJFXh48twWC7euWrX+0gXdjnhmoUvlN4U1
+	/7KTNJOCtX5wjvmRbZHoJr4vC8qJ2J9lDz6Q4CWQ==
+X-Received: by 2002:a05:620a:f06:b0:93e:bcbe:f709 with SMTP id af79cd13be357-940ef913630mr15330885a.16.1792785801440;
+        Fri, 23 Oct 2026 13:03:21 -0700 (PDT)
 Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa (vpn-eastus-03.tradc-corp.com. [40.76.104.167])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9402ee2cbffsm104288785a.2.2026.10.23.13.03.18
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9402ee2cbffsm104288785a.2.2026.10.23.13.03.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 13:03:19 -0700 (PDT)
+        Fri, 23 Oct 2026 13:03:20 -0700 (PDT)
 From: Tamir Duberstein <tamird@gmail.com>
-Subject: [PATCH v3 0/3] ls-files: reuse and update the untracked cache
-Date: Fri, 23 Oct 2026 16:03:03 -0400
-Message-Id: <20261023-ls-files-untracked-cache-v3-0-292260e95f53@gmail.com>
+Date: Fri, 23 Oct 2026 16:03:04 -0400
+Subject: [PATCH v3 1/3] dir: hash ignore files before appending newline
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,230 +94,89 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42NyQ6CMBRFf4V07TOlZXTlfxgXHR5QZTAtNBrCv
- 9vixiXLk9x7zkocWoOOXJKVWPTGmWkMwE8JUZ0YWwSjAxNGWUFrxqF30JgeHSzjbIV6ogYlVIf
- A87yWqGkqOJJwf1lszHtX3+4/dot8oJqjLy464+bJfva2T+PuQManQIFWWmZKpdhoeW0HYfqzm
- gYSM54dFbEg0iUi51lZoKz+Rdu2fQHyvBjCGwEAAA==
-X-Change-ID: 20260923-ls-files-untracked-cache-3559bed01a3e
-In-Reply-To: <20260923-ls-files-untracked-cache-v2-0-d7ee33476eb8@gmail.com>
-References: <20260923-ls-files-untracked-cache-v2-0-d7ee33476eb8@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261023-ls-files-untracked-cache-v3-1-292260e95f53@gmail.com>
+References: <20261023-ls-files-untracked-cache-v3-0-292260e95f53@gmail.com>
+In-Reply-To: <20261023-ls-files-untracked-cache-v3-0-292260e95f53@gmail.com>
 To: git@vger.kernel.org
 Cc: Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>, 
  Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
  =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>, 
  Tamir Duberstein <tamird@gmail.com>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1792785791; l=9023;
+X-Developer-Signature: v=1; a=openssh-sha256; t=1792785793; l=2566;
  i=tamird@gmail.com; h=from:subject:message-id;
- bh=DMxUGReasMJc0IgCsvdngNrzTm7UM2vJXgUtvoVjCbQ=;
+ bh=iGWl8jaqdYHNEQO4bye3E/epO0yB4o0z0TENBtgMOnU=;
  b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
  MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QMQmlPtRIVlWLn2mj50dAckBX3KaWZwRjBp64FEo+jZLQICz3YzoFp++OAcT3+TYQJ7hdLi76z9
- U44KKlBm2vAE=
+ QDO6Mnw9H5bPVe5f0fYBBW5yQH13ZXlwBFRivtvYXnd5AL5JDxtwR6jTql+dBX8GljTmmptzywj
+ yB1IsV26+OAQ=
 X-Developer-Key: i=tamird@gmail.com; a=openssh;
  fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-Repeated queries such as
+add_patterns() appends a newline for the pattern parser before computing
+an ignore file's object ID. Hashing the buffer therefore includes a byte
+that is absent from the file. When the file has an up-to-date index entry
+and needs no content conversion, the function instead uses that entry's
+object ID.
 
-  git ls-files --cached --others --exclude-standard -z -- "**/pyproject.toml"
-
-walk the working tree even when status has populated an untracked cache.
-This series lets ls-files reuse those listings and save the work for later
-commands through Git's existing optional index writes.
-
-The first patch fixes inconsistent ignore-file hashes that invalidate an
-unchanged cache. The second lets 'git status -unormal' and
-'git status -uall' reuse the same cache. 'git status -unormal' still stops
-scanning an untracked directory after finding an untracked file; a later
-command requesting all untracked files completes the listing as needed.
-The third lets ls-files use the cache and write pending untracked cache
-and fsmonitor updates back to the index. --no-optional-locks suppresses
-those writes.
-
-For wildcard pathspecs without a fixed prefix, apply the pathspec after
-reading complete directory listings. A first query can therefore scan
-directories that its pathspec would otherwise skip. Fixed-prefix,
-attribute and exclude pathspecs retain their existing traversal.
-
-A new dir_flags value makes older versions of Git rebuild the cache before
-using it to list untracked files. Changes invalidate cached entries in
-parent directories as well, so updates can reopen more directories than
-a cache populated with --untracked-files=all before this series.
-
-On macOS, with 100,000 files in 5,000 leaf directories, half tracked.
-Each group of 100 leaf directories has 50 tracked and 50 untracked.
-Each binary populated its own cache using the indicated status mode.
-
-hyperfine --warmup 3 --runs 7 (mean ± standard deviation, milliseconds):
-
-  cache   fsmonitor  command          upstream        v1             v2
-  normal  off        query            241.3 ± 14.8    132.7 ± 20.0   33.3 ± 2.4
-  normal  off        query + status   292.7 ± 11.2    187.0 ± 10.8   92.6 ± 3.3
-  all     off        query            231.3 ± 14.6    29.3 ± 1.3     34.7 ± 2.0
-  normal  on         query            223.1 ± 17.8    111.0 ± 13.4   33.8 ± 1.5
-  all     on         query            216.6 ± 12.0    28.0 ± 5.1     34.6 ± 0.8
-
-"query" is the ls-files command above; "status" is
-"git status -unormal --porcelain". These are repeated queries with warm
-filesystem and untracked caches.
+Switching between these paths changes the cached object ID even when the
+file has not changed, invalidating the untracked cache below it. Compute
+the hash before appending the newline so both paths agree. Update the
+expected object IDs of the untracked ignore files accordingly.
 
 Assisted-by: LLM
 Signed-off-by: Tamir Duberstein <tamird@gmail.com>
 ---
-Changes in v3:
-- Release the index lock after reading the directory, before printing any
-  paths. A slow reader of ls-files output can no longer block index writers.
-- Skip the optional write with --debug so the listing shows the stat data
-  read from the index.
-- Link to v2: https://patch.msgid.link/20260923-ls-files-untracked-cache-v2-0-d7ee33476eb8@gmail.com
+ dir.c                             | 6 +++++-
+ t/t7063-status-untracked-cache.sh | 8 ++++----
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
-Changes in v2:
-- Share the cache between --untracked-files=normal and --untracked-files=all.
-- Write ls-files untracked cache and fsmonitor updates back to the index.
-- Test alternating modes, cache invalidation and optional index writes.
-- Replace the v1 measurements with results for the revised implementation.
-- Link to v1: https://patch.msgid.link/20260923-ls-files-untracked-cache-v1-0-08db4cc1efdb@gmail.com
+diff --git a/dir.c b/dir.c
+index d896e7be4b..5484eb1562 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1195,7 +1195,6 @@ static int add_patterns(const char *fname, const char *base, int baselen,
+ 			close(fd);
+ 			return -1;
+ 		}
+-		buf[size++] = '\n';
+ 		close(fd);
+ 		if (oid_stat) {
+ 			int pos;
+@@ -1215,6 +1214,11 @@ static int add_patterns(const char *fname, const char *base, int baselen,
+ 			fill_stat_data(&oid_stat->stat, &st);
+ 			oid_stat->valid = 1;
+ 		}
++		/*
++		 * The extra newline is only for parsing. Like do_read_blob(),
++		 * keep it out of the file's object ID.
++		 */
++		buf[size++] = '\n';
+ 	}
+ 
+ 	if (size > PATTERN_MAX_FILE_SIZE) {
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 8929ef481f..10d4850077 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -98,11 +98,11 @@ test_expect_success 'setup' '
+ 	: >.git/info/exclude &&
+ 	git update-index --untracked-cache &&
+ 	test_oid_cache <<-EOF
+-	root sha1:e6fcc8f2ee31bae321d66afd183fcb7237afae6e
+-	root sha256:b90c672088c015b9c83876e919da311bad4cd39639fb139f988af6a11493b974
++	root sha1:8510665149157c2bc901848c3e0b746954e9cbd9
++	root sha256:09ef24b38105f396a61ad78d73ba6a18ee3cbd89ce4524b4e13b6c1af191e2d8
+ 
+-	exclude sha1:13263c0978fb9fad16b2d580fb800b6d811c3ff0
+-	exclude sha256:fe4aaa1bbbbce4cb8f73426748a14c5ad6026b26f90505a0bf2494b165a5b76c
++	exclude sha1:2bdf67abb163a4ffb2d7f3f0880c9fe5068ce782
++	exclude sha256:b83643f4390b339c1b3ff2f5132c99bd4a77687dd321d3f386c25953aa6f1ce4
+ 
+ 	done sha1:1946f0437f90c5005533cbe1736a6451ca301714
+ 	done sha256:7f079501d79f665b3acc50f5e0e9e94509084d5032ac20113a37dd5029b757cc
 
----
-Tamir Duberstein (3):
-      dir: hash ignore files before appending newline
-      dir: share untracked caches across output modes
-      ls-files: use and update the untracked cache
-
- Documentation/git-ls-files.adoc    |   4 +
- Documentation/gitformat-index.adoc |  13 +-
- builtin/ls-files.c                 |  59 +++++---
- dir.c                              | 251 +++++++++++++++++---------------
- dir.h                              |  16 +--
- t/perf/p3010-ls-files.sh           |  15 ++
- t/t3001-ls-files-others-exclude.sh |  20 +++
- t/t7063-status-untracked-cache.sh  | 288 +++++++++++++++++++++++++++++--------
- t/t7519-status-fsmonitor.sh        |  44 ++++++
- 9 files changed, 506 insertions(+), 204 deletions(-)
-
----
-Range-diff versus v2:
-
-1:  d45e8c7ea9 = 1:  fb0b53b2cc dir: hash ignore files before appending newline
-2:  b2ea9e163c = 2:  ca78501354 dir: share untracked caches across output modes
-3:  a84c08dabe ! 3:  4622b804a6 ls-files: use and update the untracked cache
-    @@ Commit message
-         options can be processed in the same order before reading the index.
-     
-         A pathspec prefix can prune the in-memory index, and --with-tree can add
-    -    entries to it. Do not write the index in those cases. Respect
-    -    --no-optional-locks and continue without writing when the index lock is
-    -    busy.
-    +    entries to it. Do not write the index in those cases or with --debug,
-    +    which prints stat data that an index write can change. Respect
-    +    --no-optional-locks and continue without writing when the lock is busy.
-    +
-    +    Finish the optional update after the directory walk and before printing
-    +    paths, so a slow reader cannot block another index writer.
-     
-         Assisted-by: LLM
-         Signed-off-by: Tamir Duberstein <tamird@gmail.com>
-    @@ builtin/ls-files.c
-      #include "object-name.h"
-      #include "strbuf.h"
-      #include "parse-options.h"
-    +@@ builtin/ls-files.c: static void show_files(struct repository *repo, struct dir_struct *dir)
-    + 	int i;
-    + 	struct strbuf fullname = STRBUF_INIT;
-    + 
-    +-	/* For cached/deleted files we don't need to even do the readdir */
-    +-	if (show_others || show_killed) {
-    +-		if (!show_others)
-    +-			dir->flags |= DIR_COLLECT_KILLED_ONLY;
-    +-		fill_directory(dir, repo->index, &pathspec);
-    +-		if (show_others)
-    +-			show_other_files(repo->index, dir);
-    +-		if (show_killed)
-    +-			show_killed_files(repo->index, dir);
-    +-	}
-    ++	if (show_others)
-    ++		show_other_files(repo->index, dir);
-    ++	if (show_killed)
-    ++		show_killed_files(repo->index, dir);
-    + 
-    + 	if (!(show_cached || show_stage || show_deleted || show_modified))
-    + 		return;
-     @@ builtin/ls-files.c: int cmd_ls_files(int argc,
-      	struct dir_struct dir = DIR_INIT;
-      	struct pattern_list *pl;
-    @@ builtin/ls-files.c: int cmd_ls_files(int argc,
-      
-     +	/*
-     +	 * Do not save an index pruned by a pathspec or changed by --with-tree.
-    ++	 * --debug shows stat data that writing the index can change.
-     +	 * With index.skipHash, the checksum cannot detect concurrent index
-     +	 * changes. Lock the index before reading it.
-     +	 */
-     +	if (show_others && !dir.flags && dir.exclude_per_dir &&
-    -+	    !max_prefix && !with_tree && use_optional_locks() &&
-    ++	    !max_prefix && !with_tree && !debug_mode && use_optional_locks() &&
-     +	    !dir.internal.unmanaged_exclude_files && !exclude_list.nr &&
-     +	    repo->settings.core_untracked_cache != UNTRACKED_CACHE_REMOVE)
-     +		index_fd = repo_hold_locked_index(repo, &index_lock, 0);
-    @@ builtin/ls-files.c: int cmd_ls_files(int argc,
-      
-      	/* Treat unmatching pathspec elements as errors */
-     @@ builtin/ls-files.c: int cmd_ls_files(int argc,
-    - 		ret = 1;
-    + 		overlay_tree_on_index(repo->index, with_tree, max_prefix);
-      	}
-      
-    -+	if (index_fd >= 0) {
-    -+		if (!ret && dir.untracked)
-    -+			repo_update_index_if_able(repo, &index_lock);
-    -+		else
-    -+			rollback_lock_file(&index_lock);
-    ++	if (show_others || show_killed) {
-    ++		if (!show_others)
-    ++			dir.flags |= DIR_COLLECT_KILLED_ONLY;
-    ++		fill_directory(&dir, repo->index, &pathspec);
-     +	}
-     +
-    - 	string_list_clear(&exclude_list, 0);
-    - 	dir_clear(&dir);
-    - 	free(max_prefix);
-    ++	/* Don't hold the index lock while writing paths to stdout. */
-    ++	if (index_fd >= 0 && dir.untracked)
-    ++		repo_update_index_if_able(repo, &index_lock);
-    ++	rollback_lock_file(&index_lock);
-    ++
-    + 	show_files(repo, &dir);
-    + 
-    + 	if (show_resolve_undo)
-     
-      ## dir.c ##
-     @@ dir.c: static int add_patterns(const char *fname, const char *base, int baselen,
-    @@ t/t7063-status-untracked-cache.sh: test_expect_success 'filtered status retains
-     +		test_cmp_bin ../saved-index .git/index
-     +	)
-     +'
-    ++
-    ++test_expect_success 'ls-files --debug shows the stat data read from the index' '
-    ++	(
-    ++		cd persistent-cache &&
-    ++		git config core.trustctime false &&
-    ++		printf one >tracked/racy &&
-    ++		test-tool chmtime =1000000000 tracked/racy &&
-    ++		git add tracked/racy &&
-    ++		printf two >tracked/racy &&
-    ++		test-tool chmtime =1000000000 tracked/racy .git/index &&
-    ++
-    ++		git --no-optional-locks ls-files -co --exclude-standard --debug >../expect &&
-    ++		git ls-files -co --exclude-standard --debug >../actual &&
-    ++		test_cmp ../expect ../actual
-    ++	)
-    ++'
-     +
-      test_done
-     
-
----
-base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
-change-id: 20260923-ls-files-untracked-cache-3559bed01a3e
+-- 
+2.56.0.1134.g47ee84b154.frankengit
 
