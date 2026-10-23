@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.175
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792764303;
-	b=NG9kbAozDhAaUd52oZNCzsXtelykJuL6KEpenLdvdo4WMOywHpaF45FrnOlyBT5xoI42
-	 oIxgZ4Hp5nBjNyuPhg2RovhVjSDezn/z/wxlOuU6FXOfPOWvZwHHtjxg3s7Wp9FaAHTYu
-	 E5Em/TuOrQHEfpvs8HKni8jlNsRVF1fY6PeTr9szY6CtLWg61kgF80piqlDtQhkm1hR1c
-	 17s8VkWcJs1nd8CnEYKxztRCZEq20IF5QtnEj/liYebLx6hjSnEoe2fy31E9T1UlaVdXs
-	 DKqG9iluTawY0zBYWxcrQviKOubWVNN8pes8nB3zwp8NqY28AEVUN9Vibb7WPM/VgBw==
+	t=1792764306;
+	b=ln34dA+7bWJwQWiwFI2WhQGNMc3V+YH/70xQJdZoAJ+dTvyvE8zwNtQfuQamUZKPrGZ4
+	 cUXaxVQVLB+SG0FoxyBhb3wFBSCNp0y7V1lcmnTPnY5vG5C869jVHNyVLKpXNwLza7tqy
+	 P60qt44aMHSLjX3gPPG2qWZkz9vEVQG8NpWqYcrwz6qa5ss/Y/CU4ySKuOId47mAJSvNR
+	 wKyLU3TBw1M1s/udM21okRuFnXfUfCGea3ORr3+neGNpNPuE/j9ddgy1R4NIgIKsnWBPu
+	 u7Rrexfku4gfjCqFyPDEajtxij33A3L7gq7f89Zof+X/SwFWVcofC9Lt8mMEJI+xW4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792764303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792764306;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=atLJWz8cXQbgEe1TNShMXj7VmM7iFZBbO+F6RiNZk0c=;
-	b=SNudIojhKGvioeKWL+tPiPdKPSyKyR1CU/pMQK2vYVVRmFqJKYAphYFI3Us/k3sA6mL7
-	 YDMQDA84AOLjPSB/uoXNftM0fz6OtLz60nvR+fcvzdwwE7B5jCkpgAia0i7XIFV5RR55+
-	 IiQ1MVgPBj+xdHuYXOHGBlfthb/cBzcxx5Mo1Mc5PG7E8yt1QTfSQNqEdZY+lOtscEGTk
-	 L4PpPHmD/9UjKbOvTST/QydlCjfN8ly6GlslFa4I2GLyjn0TPjWDRWNUCxjmM74EZeVWN
-	 ees2WijPEcsNjh2gg79ak7QdvoU9k7hOeWt36T/0eLQNcjhqWuD4nL0XFkGzOo9xMWA==
+	bh=uVMN4yYvQBwSe22gBPvAn84Cr7GNBJBX2Ji9ZZYVwMo=;
+	b=2EY44jPtmxmFWBZuF1HVBE1oz/DvcqvEShdGKhaWlp6PwIUFVjllV0IZ+w0Wc42kt8Tf
+	 RjfZs9Kq0k0EA6QsMdOLU2S7dkyM4TbnJEHO1EVmlmMuwSpB6Tz34g2b/PGBr/CnOuvQN
+	 JrvWbmhy8dc5Qa1oftO5Mf3V27GBpW0acX/nEwMpPzvo/kI7NnHW1PCqLm0VvE8ueVkMx
+	 gxWep9hySCMo30/1PzfD3ghL+IGScrtJt9m0x/anafyUujZfPOrqP9h8ewCBXNIPy6WvR
+	 cdQ5seTERwXgDbrtSQJklP2oxIc8pWK0RjUeE6udzy8iFlYm24VrWxUCUNs9oR6fcTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FYfPHXf6;
-	arc=none smtp.remote-ip=209.85.222.178
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=QbOpILbP;
+	arc=none smtp.remote-ip=209.85.222.175
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECB4606A322
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 14:05:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2ECB4606A322
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5B2606A322
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 14:05:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F5B2606A322
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FYfPHXf6
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-93cb1c0e851so66549885a.0
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 07:05:02 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=QbOpILbP
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-93f2493c28bso76076185a.0
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 07:05:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792764302; x=1793369102; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792764304; x=1793369104; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=atLJWz8cXQbgEe1TNShMXj7VmM7iFZBbO+F6RiNZk0c=;
-        b=FYfPHXf6uUmMgHPKTU2yUrzkcQ4FV1hr+wpn60151GdfC1ug9JMrivXDEB4GbOxPEF
-         puIkxMHpnu0dOZAWVuN4BN+F5jeiR7dm0eKBq0ticIzEY0FoiLIzQnFUyCYwlo1bXpxs
-         qq7NO+TcPjiSYQohkCUDPKIsB318j8ZWOYBX1omayS6MeR6Swvru9ClBRIejtLugJvzG
-         j/DpvmBTup/leC/Y8ubo27h9r4jrexdwzjETsAnHVlxO2kltUF5eMLSJTnh6IzI8ZA2Q
-         OXR3p6IkYv4Uz2fUWWx7YhepMdwBpY6Sbe1l8+dVnvPSIDPcLW0sE4h8Cy9WviKGUVZR
-         MtUQ==
+        bh=uVMN4yYvQBwSe22gBPvAn84Cr7GNBJBX2Ji9ZZYVwMo=;
+        b=QbOpILbPYwJozyBj9/gnGWqr7IJgVMAxY/ZuOsZGtww0Djib8JEgsSEy8xSk4+EwER
+         bgCIOY0KzAmjqACDPV/MAfRG+EKsABEF4W05DCK5KkjsZKHt6RLylpm3v3r3wImEOTzz
+         bMdWqgA+jSxvJPiFcRdybtYSuHT7Hly9frJc4IZzgmMKhF2DIZc+R2lIEsFFS7QGpTfl
+         gURkmuMbXG43UdTDovVUE8fFF3Xdt1YJH1JBCHNQ+8xyTWQSEJdgwTBk6dp+nK9r4JWI
+         emMyxq662WL59VC+RWRgCh/ZLEWY68TSHsxuOw0bZZ7quqBi/4yZWYeN6wrVZ+VcntRm
+         P8og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792764302; x=1793369102;
+        d=1e100.net; s=20260707; t=1792764304; x=1793369104;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=atLJWz8cXQbgEe1TNShMXj7VmM7iFZBbO+F6RiNZk0c=;
-        b=mcVAXRPDHbvEP+FpNW5NFSGEq+SQ46FGXTs6xcCye/YCrPTJM8677Y69A94Hlb3LVT
-         u7cFHRVoWxvv1SlpPSoSfuVx3qZcEbjdPzJyphU+umaJuMt9OdyRf/31LpJfe5EvXBff
-         Nt+Bxz3FDt2AYh/MZcr4rvi36OIPusW33vOlHvVWPcTp+4V1cOox8+/auqcDCPqjS/9I
-         sx4gRXFMOSu5HgOX5XKzaEDCuYiK64zyZSkYT+n7iPzY/ClbueLd2Giov+x6HNtPEBFS
-         GWGIUHKa/zyoczRSFep3pr1li4o3Us0L7dh1SUmg/KwgBWATo1S9+U1qTiD1YRp7PUpM
-         ZXbg==
-X-Gm-Message-State: AFq9FYKrgs9tEvgvH6RFaR8SzxG/ZhWCFyLj04vVUg1YoAUtpIL4tY1A
-	ITcgoRrG30/CdMh2ob3vlF9AE/0oloncjldWYnw6ROol3fuOHKQ0Q4vT8EjGUOHueLs=
-X-Gm-Gg: AYBFou0rNBM3YCk4v8d1tGN9x83wMvFByXg+Aw8OQjpsKFgVFnW2Tyah0qAn//PywFi
-	mrl2opWmN0ey0YLZqXewePKg0ZDCGxQVQ2Rq0g1+G4qF838gMTfJUQUS6IsRaeHbiG4kgnNaRH1
-	jsSOCrNCPqAX1WGw1MN29ylG4ycKwQEvEQYnT3wq9yiTTadpWC7KUOJr/HrLeWV49PTS7ttp00Y
-	iuL0AmmpeYmHKBNU48yTyHiukn7dcNc5rqtV/BXLj5z8spfUf5OR6kvJRP1pssbjEGcbmMzusfk
-	h7n2EOhRVhx4AHvRQL7/FcX+wdWOs7mungwDxWKkirRYBAooktsBxplIJOK2Gab2mrG0p0izfsA
-	3/+/Vnbdk7UdB7X3cL2fd0SmnZHb61x8yQ/miHmwmwJ40m4rJHEK16H6gmHIPE/A1xDqBlc/TKV
-	ByRLPgiZQaLqDrt1lQQ1uCEO06pKicaBkh8ZaBouDEQ1zYefGJgFCsJIbThFX8VyE6NNV+BtoMy
-	cZlX2hdb52qTmWMIg+lH7VfVNRSj/Md2ljT843hu0M0+t9nOESjuZMQ0w==
-X-Received: by 2002:a05:620a:2704:b0:93c:9d56:a860 with SMTP id af79cd13be357-93f6f7891ddmr429832085a.19.1792764301968;
-        Fri, 23 Oct 2026 07:05:01 -0700 (PDT)
+        bh=uVMN4yYvQBwSe22gBPvAn84Cr7GNBJBX2Ji9ZZYVwMo=;
+        b=jsWmpfwvwSg2tHnLMzD5ZJsUUU+iApwa4OPRmIfGMay7phxl6uLlql+MQtEYYztQ1g
+         ZjxXztSR+dlyLYAAMXLZvZVm0h5GzXn/I2EjTSV5nScZpP0lk9SK/Wap9zVSycmiVPUa
+         O3BMNQZFfa+mv+0yaLT8GbCQNSn+5qGu/xdaZDnVlhwdqquCImTiNd5l6MYu5Mpiol2W
+         PB5O6FxtkBJCEch6/wsSRIfT32v8rVb3F07szGoZQtaL8QqGfCbzABWfFINAjKcmw4Z/
+         wDJMzFDFIszkyESezx95GAPLYjVfsEeA+5SF+SklC52Mk1KyWQKW3fnQzulKRgP/mXuO
+         j+5g==
+X-Gm-Message-State: AFq9FYLcWGqCrdoRUwJil6JeQnQcQXCFEQ5nQqaWU6ZGAy45YxKwYKYR
+	+DOYIWdXJEKhJjBKPNG4EYNBm4pzieN+tSN7ajlpqGgV4DApu9IDoWO7Jp/8BmBc3cg=
+X-Gm-Gg: AYBFou17lqnLxSSNc85xFa6x08/tuXPdqiHEbgwwfYmlGxUxTg8h9Mf+0L9tm2TbT/C
+	5O3QN7ByoxDJY9XxHiCHkpAiIGcTwD6QoeUW/BVrZvLitjuaoOIntDpoLV5pa/MOspGyqVzVZhV
+	kZJidP12OzBG5IHdf2IMIKsctz45LxcplgzQ3nvrUxfvsQi9PhYbPAI4V6lBTmOavtBxsL2H0al
+	Ba5HYJlwm6z4ZlTFHnxiIL8AJNDlsATM41wHCufDH28uycOg/lgCYp2htQ9B2U6NAjX33i66G7n
+	mOBC7+rmUZAe4kpb26556IX9y8sW7ax4rX0QOEZdVs9g5YjP58Mw+IwYh16tNBTak3eV4vbByxZ
+	+hgYunZ1lZ9rb7/uRfErfFd5nwzg51AFXkriJhN/HO7MntrgDhiqu8ple//tr1i+BQu1dFe/MU8
+	PJHF2MpXrNc4UvOgCDj+RZbYtJozJ4rU5cfwvlPu6HPxxwxVZKpYPc9PuyTTPDUvMP9700KJURb
+	IjakWFB8AEl2I4MYvOKv8rkxyQP/OJ3CybUgyBJ++myY4cHjKYEdJCkew==
+X-Received: by 2002:a05:620a:4397:b0:93a:2bdc:cd57 with SMTP id af79cd13be357-93f6f5856d9mr409073485a.2.1792764303959;
+        Fri, 23 Oct 2026 07:05:03 -0700 (PDT)
 Received: from [127.0.0.1] ([20.83.174.58])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9404722eee0sm25556185a.14.2026.10.23.07.05.00
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9404732646csm24958485a.10.2026.10.23.07.05.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 07:05:00 -0700 (PDT)
-Message-Id: <2bd9850822605324882794e43773c4be9127bc9e.1792764293.git.gitgitgadget@gmail.com>
+        Fri, 23 Oct 2026 07:05:02 -0700 (PDT)
+Message-Id: <53083b48a3177b1899757d0682ebdf7167af00f5.1792764293.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2237.v4.git.1792764293.gitgitgadget@gmail.com>
 References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
 	<pull.2237.v4.git.1792764293.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 23 Oct 2026 14:04:50 +0000
-Subject: [PATCH v4 3/6] doc: git-rebase: link to new merge conflicts guide
+Date: Fri, 23 Oct 2026 14:04:51 +0000
+Subject: [PATCH v4 4/6] doc: git-revert: link to new merge conflicts guide
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -105,56 +105,34 @@ Cc: ps@pks.im,
 
 From: Julia Evans <julia@jvns.ca>
 
-Remove some of the detail about how to handle a merge conflict, since
-it's explained in detail in the new guide, and there probably isn't
-enough detail anyway.
-
-Leave the steps since rebase is special and has a `--skip` option which
-the other commands which cause merge conflicts don't have.
-
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- Documentation/git-rebase.adoc | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ Documentation/git-revert.adoc | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index f6c22d1598..da70aff498 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -46,10 +46,7 @@ If there is a merge conflict during this process, `git rebase` will stop at the
- first problematic commit and leave conflict markers. If this happens, you can do
- one of these things:
+diff --git a/Documentation/git-revert.adoc b/Documentation/git-revert.adoc
+index ffba365e63..bb0f859f66 100644
+--- a/Documentation/git-revert.adoc
++++ b/Documentation/git-revert.adoc
+@@ -31,6 +31,10 @@ both will discard uncommitted changes in your working directory.
+ See "Reset, restore and revert" in linkgit:git[1] for the differences
+ between the three commands.
  
--1. Resolve the conflict. You can use `git diff` to find the markers (<<<<<<)
--   and make edits to resolve the conflict. For each file you edit, you need to
--   tell Git that the conflict has been resolved. You can mark the conflict as
--   resolved with  `git add <filename>`. After resolving all of the conflicts,
-+1. Resolve the conflict. After resolving all of the conflicts,
-    you can continue the rebasing process with
- 
-    git rebase --continue
-@@ -62,6 +59,9 @@ one of these things:
- 
-    git rebase --skip
- 
++Reverting a commit may result in a merge conflict.
 +See linkgit:gitmergeconflicts[7] (or `git help mergeconflicts`)
-+for a full guide to handling merge conflicts.
++for a guide to handling merge conflicts.
 +
- If you don't specify an `<upstream>` to rebase onto, the upstream configured in
- `branch.<name>.remote` and `branch.<name>.merge` options will be used (see
- linkgit:git-config[1] for details) and the `--fork-point` option is
-@@ -1284,6 +1284,11 @@ include::includes/cmd-config-section-all.adoc[]
- include::config/rebase.adoc[]
- include::config/sequencer.adoc[]
- 
-+SEE ALSO
-+--------
-+
+ OPTIONS
+ -------
+ <commit>...::
+@@ -162,6 +166,7 @@ include::config/revert.adoc[]
+ SEE ALSO
+ --------
+ linkgit:git-cherry-pick[1]
 +linkgit:gitmergeconflicts[7]
-+
+ 
  GIT
  ---
- Part of the linkgit:git[1] suite
 -- 
 gitgitgadget
 
