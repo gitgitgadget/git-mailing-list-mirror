@@ -1,95 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792762091;
-	b=nKl1o8ksCcH7IJx43qD7Y2hxT2+NoxXXKfPGl3DKdnVHWLF9Vd8II+DP7cxVmV8Ldp6e
-	 r2mTddvACfbjmy5uemN1otdr28huvO6oG+Hh4DljxJcn8T693vN2sTfrvxOQpvBtmX8TC
-	 G7G143mVRBE9tKQUopN0Q992EHZxCofnnFksvdryaW/aRM8+Kah62UJlugpnhpYjlBmK8
-	 XTfRQ5tWEWPdg7CtXYrMGIuwAsr79KUerBMpkSLrU9wuZfF3VjLp3lP6w1BspbWMmR6o3
-	 X9fJYmHfMNEs4TqzFbjDmUKHQIAMR2z2AA/tm7cAOelEuZftVj0bMqviDgz62TeC08A==
+	t=1792762285;
+	b=Pf2ehzTMa8noI+0TDnnA8QZL/gRYGW7tcakg6yN8lgO77LeoO/hfq1uJv/xMJgiuYqUv
+	 N70eqJTE1p8xYntCIuXbwCMGxROllJDFN5IQ4gcwK9yGwitKO99fIQXl0bOnApxc5z/tt
+	 kEpJkm/rVKaA9aspJXRk4BKYtCi8kB/vyeHFOwcoWm7RgKeaajw/ihi6GJsGNWOdZjtMR
+	 ogYAVsnNlzu4WCSVfgf7mE0r0mS+1NTFEQWS6JdkjA4KNifLMuYg8UEraQTlAv62MXZT0
+	 B1eBqsQdKn1uUdo2em5WaVqCm0L5QCcGyumq+8gM8FO/aS6r3vwzHHwf6sFgNxZltNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792762091;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792762285;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=BySLGHbaqxd+DW5FE6ypU4QepdF49RXNEv4aDFdGOd4=;
-	b=2HS8pW3Z51MNbFxfjsnWpSryfUvdJqDVISAS2KFgs3/QCPVwnPHdd8p9kcpEyHDWJMiv
-	 QBn6hzxyu8zAp1M2Ty86T5QbAIIg9ZuDLG1JuBNQQfXoNoZ1a4DK2uqa3wcWCkMuSPBOh
-	 G5GqbZSz3NZZglP+WqepEzjWAITRWJWCGoJ/MaXlcZj7d2dx7TYu8dgGC2RfEWuAdyBaL
-	 raLZtfU5V725MVSym0w0uCh0ekiT5TNi490BC3xWWH6hltXQSvwYttQq5B2s4zKeohsYV
-	 YigzBKK3hw8ag0/rocS3ELNK5OFR9wuTr/CvONkgHUCWcTQ9NPr8HQubqxp+6Aig8/g==
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=/09pzq4Ct0J0BOMCRMSzETuCFglb49sooU+AbicEvtg=;
+	b=OpQiJ1PtqAJdTZUFe1/rxOZHLuHbHeHQ95xjPlmLNlw2yorpFYVZAgRA8RvbJgkgYmDu
+	 Nc3ir9CtV1y2hAxNBA0GUfrpGAdeEqyaQPWYNiz5NPZPQSV8qoq+jiBm3yzVMU1Ycn3Tt
+	 gcxfhzfiig93ob9uMEyxb13WzAyOoB2RB1Ghpt6KRB88gOmsOe05zwciE4siDbJlG8K4K
+	 glBRFESmNiFIwsSUl2LkY/0H/TyICrK3UlJgUrovlcA55xEBXT+1R+ovBy03H/DIxAavf
+	 0yPgOLNJBdTBGTM2c4f1kMMk0VLveFjDDNZ5aPSqmDEpmFhfzp4oU+tZdgPrV6mPU5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CYvcgJsI;
-	arc=none smtp.remote-ip=209.85.128.179
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=J9Fr2NOA;
+	arc=none smtp.remote-ip=209.85.214.182
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2BE606A31F
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 13:28:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BD2BE606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BF6606A31A
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 13:31:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1BF6606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CYvcgJsI
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-8ac9d666d4eso7583597b3.3
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 06:28:10 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=J9Fr2NOA
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2e9d1114320so6313075ad.3
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 06:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792762090; x=1793366890; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=BySLGHbaqxd+DW5FE6ypU4QepdF49RXNEv4aDFdGOd4=;
-        b=CYvcgJsIJblcl24C7oXZr99YZBP4O5CCOioeSCx+RXcxj9KuDJv/JsymS3bRxM1Onz
-         ax/rUlk33uhj3clBPsVabSkdQshUwauVZwlLYcYbdIiO5OFgUCoQfnBKme2Y56Upuhf+
-         oAlO5jO3Hfq9lliO/y1Z5zxk8itRb3DVrd7QzX1O89hBJX3Q1Mn2cSeQXCuKwoLFLz/+
-         atOc2C3fWgeeFdnkHwQd5l8yIVA85zcTPq5LGuCvtaYVgkOQubDcmZA52TiGqAxbtQA0
-         boy6/7vttIdMSphRQ/UWMvKNF7jwj/BuwYVLaRVcETRE1VTt/GrwVuseUxE0CWCWP8FD
-         vFgQ==
+        d=gmail.com; s=20251104; t=1792762284; x=1793367084; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=/09pzq4Ct0J0BOMCRMSzETuCFglb49sooU+AbicEvtg=;
+        b=J9Fr2NOAZKD5YvjWa9JSTv1QrqwrI1GqHUzVrHDvIb/SAMNMu8ye5Zvg2nPFW2Wwvm
+         NJrHaHIafhCkSngE+qmhL/VHpK38+jxzZyGRbfaplcT6xxG70kfc6JtHnrokcF1Dpj5J
+         LmaSxd9Sb/pRv1xREm3Q6icSMH7GainjZExr/OoIKTmRzhSfEJHjtgXkl5TSUFCJE9Sj
+         VlHvSrOH12mbWnjV3zs/ims+BUb6Zae5MIbUHG/647Shl29Bklm+CPVRw0+njJDR7NjG
+         ltDre8lrQJ8ZT9Mz2IseC6qvY6hYJuSGzUHi8c0DjSr16NConyEiwPzcM6hwdg65Slwh
+         gaYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792762090; x=1793366890;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=BySLGHbaqxd+DW5FE6ypU4QepdF49RXNEv4aDFdGOd4=;
-        b=a91SHCWpp4JkP7t9NtfrENQ646zVbOKCqFpxc5CfKmAgYvuQfNP3qaOCSI6TOIlG7f
-         vA1vRtIg+eFzUiCm17IwS6ihJOj/iDk69Gk3a3jzANgR7npnI0+kfqBLLnC6r1wkCDmx
-         zliNOXMmYgRcjteGayGhIw0BZPGuvnMPm7TSn+lQPYw3KD6MczgUzB7tBI/7abrWKouS
-         xUf9nn4zX9sgXS8d+qTE9O2KaVrFiZQbKX2jYavJ/OvCQlrB2me0Fa76Z0MJL1Yj4C7S
-         458pph28ImKC5YKjY8/MIHdYqrgndHm1SR+7EZW7dXxc5U9ca2tXbzIGnv8rl+U+3D7F
-         HLEg==
-X-Gm-Message-State: AFq9FYKKbgDXOg0efO61padIdHDu/d41Wk1P+2QYDvqXk59LxLn7V+V+
-	DDKWLIXzTn4X7NpJtOjBdYkWa9dZawHlKnCglCeLCIJzBiEnKyyovg6GbP1gdQPl
-X-Gm-Gg: AYBFou2kbzxhlt1gBtTv3hETRzWwn31X41uAF27aD3GlxgcERgbVaS0xWuQ1wYkCxQO
-	F1IxfOcT70M/dI7/CYQQ0LH3yKw4UgRby8zhJpXwhnkbyjcpvJ1ibEX3F2ppB+/PsCACJSdof4h
-	DEhYBtBgGq/O6umL+6psrdKdPq+nefl/N7ZdFyrN+wTGKHZgtkkqP1Dl6d4Cz9xQ84NsTVmXrAD
-	hzopD9SCoYFoV85Cbdq0TGsOiHce6vZmIvpVxkX1MW+aKwq39me98QkhKP/8XnBpTJ+eWDETzIm
-	H4M6Eh0nnZKreZhR8nX+AmrXRuzjTr/bNDtKI/SNJqzMYSNXkyItGWid+cnobeXrJ36WgHhczf0
-	SCcKeeU6Ki4E85iFMwxhV763jm9zEgVx7/k59BTeS7wvuzzBCuT54Usb1quSyiGqKmre+gLkGWo
-	k502MwEx/KOqhJXN9YO4GI9AbcOnOyUbZCKCxySB3ZX03VyODhWML7JlYF4MzFNYAmo1sz8439q
-	zq3EZCJDcAPo8qmYcu68/XuLVkauVnF7adiqFgOrgHoOHQ+LQUYkt70dCs2rutHQkg9ooND9Pjj
-	Jb0aaEXIxTOfJT38tM03mBiYLzknGDd3g8CQX4vIlqMjlDCnVA54sqrLy7kwm5RuH4zimdJMiSo
-	/Qg8HvEN2rmfyvr1KA/7NLqzx
-X-Received: by 2002:a05:690c:dd6:b0:8a7:d69f:3c41 with SMTP id 00721157ae682-8b157da805amr15875587b3.17.1792762089712;
-        Fri, 23 Oct 2026 06:28:09 -0700 (PDT)
-Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9d17:3000::3])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b156183032sm12898647b3.34.2026.10.23.06.28.09
+        d=1e100.net; s=20260707; t=1792762284; x=1793367084;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/09pzq4Ct0J0BOMCRMSzETuCFglb49sooU+AbicEvtg=;
+        b=QvkODzwUI5QSFlO2+udL8vISCBmzccb0tUcT1cdSVsOkV078F5LMP0Ce2iRZn3qwE+
+         ujr3s49cB/s1h+7M5K7E217b1tb7ubt3cSLZq55jQqrMI/2eowKhDwQfCJJiu6bMMbi8
+         v5vrh5yMCn9qRYBN5jpSCMJIS+zR3APIXxX3dzc5At7x72VsiNfQaN3u23qoc0q/SPwP
+         OT3Ecx0NJUHnjTB5jLLyBdAjemlbEELIYcolzUyLE+NfqA08X09jwfhdin3jQh7ferSV
+         v96rg4iEKLWUkTHYY84R65M7o0s2lGIOz424DnUGr8qlFW1QmyMt07bnNz2zqKs5Qc0J
+         ypVg==
+X-Gm-Message-State: AFq9FYJ8jNTjJL/kTeRwL129KzI8gY5NeAENm2ifB87pCRZdQu2uluxj
+	R7JJ2U0PRPJuJBmTVLYQPGlOMXmsS8O3hkYjPULIhSnaRAJWPH6/gXBa70z0w58l
+X-Gm-Gg: AYBFou1rLlQOKLAbeTF8Q14sOUvW6gBNWUnYfCKRDFH5tsPmUGkUyBR6BXfN3AgaDwG
+	SpSeXcvII10zifjssXhAOQ64qzPJoMbakUXDd/pRpkg6TTxTU8sMg/lUOJQH6+T+nmltiXR+a8f
+	jXWq0rBpHcs4hzdx9qYDLo7TxL4zn2WwV1WOiq25LbU2pAejjJ90pKc+F7IKo5ghE2gHbA1yXKS
+	UpGOCB2SalmCP/Tez8YZph1xrOtDwyGRcsGwkYAHVvgOaeGyXaPxCof+kGTSe3y/O1YPw4U2V1d
+	CqwbrJcSoGD6TtztVINK3X8YyU48D/zgDycpabzifDuDdJ8RG5dmiJ/TtnBXSUw0rGPLX4RAOEc
+	Va7/RKHLqZVYvl4xZmscPGivTTA27NXpxeSSQV79Ew8Mv/0kblNyuX2vON+NbiG9fZgI7Fsl1mX
+	hRanIIV86fFvVr451ygHQGCRSm0XYOG7JVDE04eofdvDiviNJmSJQE3ZKOFHwrFoVJkpsJGq5X6
+	hImyJ2tGt1i8Jckiefu+zryXRh/CgsGfjRxa+GWQkhe40wbcARpkbvu6JbnbK/qcL8OONezZ4IO
+	622Mw3T21Z9aP4OB+qFq7Azn
+X-Received: by 2002:a17:903:1b48:b0:2e3:598:75b8 with SMTP id d9443c01a7336-2ea7cfb86e7mr20340145ad.27.1792762284027;
+        Fri, 23 Oct 2026 06:31:24 -0700 (PDT)
+Received: from LAPTOP-PVRSMPQK ([223.190.84.233])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ea94677805sm385635ad.5.2026.10.23.06.31.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 06:28:09 -0700 (PDT)
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
+        Fri, 23 Oct 2026 06:31:23 -0700 (PDT)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
 To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>
-Subject: [PATCH v2 5/5] completion: drop "stash save" completion altogether
-Date: Fri, 23 Oct 2026 09:20:55 -0400
-Message-ID: <0266646fb4e6eb4932ec728ce425af9886e5f146.1792761643.git.ben.knoble@gmail.com>
-X-Mailer: git-send-email 2.56.0.237.g5414b88716.dirty
-In-Reply-To: <cover.1792761643.git.ben.knoble@gmail.com>
-References: <cover.1791827304.git.ben.knoble@gmail.com> <cover.1792761643.git.ben.knoble@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [GSoC PATCH] object-name: use Q_() for the reflog entry count
+Date: Fri, 23 Oct 2026 13:31:18 +0000
+Message-ID: <20261023133118.456-1-aniketgupta3001@gmail.com>
+X-Mailer: git-send-email 2.56.0.237.g90eb39633
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -101,46 +93,61 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-It's been deprecated since fd2ebf14db (stash: mark "git stash save"
-deprecated in the man page, 2017-10-22) and the previous commit removed
-further documentation suggesting to use it.
+When reflog is asked for an entry that it doesnt have, for eg with
+"HEAD@{5}" get_oid_basic() reports how many entries the log has. The
+message is not marked for plural forms and a log with one entry says
+that "only has 1 entries"
 
-Since we recommend push instead, stop completing for "save" and remove a
-special case in completion code. It still appears for "git stash <tab>"
-when GIT_COMPLETION_SHOW_ALL=1, and when typed explicitly we still
-complete options for
+Use Q_() so that the singular is used for one entry so that
+translations for languages with other plural forms also can have the
+right form for each count.
 
-    git stash save --<tab>
-
-which is helpful for folks with finger-memory for save.
-
-Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
+Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
 ---
- contrib/completion/git-completion.bash | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ object-name.c         |  4 +++-
+ t/t1400-update-ref.sh | 14 ++++++++++++++
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 697fef5462..9cd9c7cadb 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3558,16 +3558,13 @@ _git_stash ()
- 	__git_resolve_builtins stash
+diff --git a/object-name.c b/object-name.c
+index 654668576..eeaac2ddc 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -810,7 +810,9 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 				if (flags & GET_OID_QUIETLY) {
+ 					exit(128);
+ 				}
+-				die(_("log for '%.*s' only has %d entries"),
++				die(Q_("log for '%.*s' only has %d entry",
++				       "log for '%.*s' only has %d entries",
++				       co_cnt),
+ 				    len, str, co_cnt);
+ 			}
+ 			if (flags & GET_OID_GENTLY) {
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 1a164c96f..1d1b46379 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -458,6 +458,20 @@ test_expect_success 'query reflog with gap' '
+ 	test_grep -F "warning: log for ref $m has gap after $gd" stderr
+ '
  
- 	subcommands="$___git_resolved_builtins"
--	subcommand="$(__git_find_on_cmdline "$subcommands save")"
-+	subcommand="$(__git_find_on_cmdline "$subcommands")"
- 
- 	if [ -z "$subcommand" ]; then
- 		case "$((cword - __git_cmd_idx)),$cur" in
- 		*,--*)
- 			__gitcomp_builtin stash_push
- 			;;
--		1,sa*)
--			__gitcomp "save"
--			;;
- 		1,*)
- 			__gitcomp "$subcommands"
- 			;;
++test_expect_success 'reflog entry out of range reports how many there are' '
++	test_when_finished "git update-ref -d $m" &&
++
++	GIT_COMMITTER_DATE="1117150320 -0500" git update-ref $m $A &&
++	test_must_fail git rev-parse --verify "main@{5}" 2>actual &&
++	echo "fatal: log for ${SQ}main${SQ} only has 1 entry" >expect &&
++	test_cmp expect actual &&
++
++	GIT_COMMITTER_DATE="1117150380 -0500" git update-ref $m $B &&
++	test_must_fail git rev-parse --verify "main@{5}" 2>actual &&
++	echo "fatal: log for ${SQ}main${SQ} only has 2 entries" >expect &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'creating initial files' '
+ 	test_when_finished rm -f M &&
+ 	echo TEST >F &&
 -- 
-2.56.0.237.g5414b88716.dirty
+2.43.0
 
