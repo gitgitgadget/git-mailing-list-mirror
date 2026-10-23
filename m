@@ -1,121 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792733603;
-	b=m7lqETdPEWMTxSfMUb38vzKIdMg0mlDIZ0QXdP+OJEJyMZc9nsgRcKMJOvDtUeCuWnvr
-	 EAYx2nyB/31LBh4FsxxD8Oy6OdKcZTkyfa12oCV70sa2ZcKct1JttJMnMmne4Q4Uz71mo
-	 IBOsSeBuqxqv0c9LUgdyN5S416wpo3tgmO/X7BysMFpSTA1qfYqVCN/hQIF8xP1uKNn/0
-	 3SLvkQLOvaphIVYW2q/rcvfhg5U8CPb/5agw+7dM7noikeZcUtE4W+bqVIX2T6y6bUtvC
-	 ojLu1tqOluN21DRjselPkyB+WSXMlR0MpiCmCLcatcvI1Goa6N8l/qfQrPZN9sEVVYg==
+	t=1792734996;
+	b=BNQwOgtQ9BbQWZKmdNv1XLQSZe2Idpol2daJMLkna4ezgifxYtCChYf8HZqDPvlSN569
+	 HLYuHajoAFG9MmwveLuqmZlJTy39d1lxxDmqvTYBvokVHZbzSunx/gQN7zGvwv/aqgZVt
+	 yI6FBqHLsKE8UKDV7MTKApY0s/dYW+ztR5ve33Otxb1qlgJcRNR9/jUxjQisouyr5lGOM
+	 VRFlhhjwUZRPaVruuU+pkeRbLRkjbOKd8wIUrtiR5MAWqbq/PmQXsx1jETrqsUxScrG+d
+	 MydErbthPrHeyzP4fTB0FhnJskCrQwjwfMARQPQ9ppRbXO4ynU7hNfXgWg3zkSR3D0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792733603;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=lgGOlnmgYqAyfj2Uc/gokBVJMJC82+8zD1alsINQ6YY=;
-	b=BykZx+D9xhnbv3nz1R77JhAqz8kwQ0Xs6oBOkWL/DBEkM86bgzVi8aLSpICEgRWbjhJn
-	 RQh1mpdsvJGVXhYMeM6yMJQq1E0Lnhe5l+8/kv/tqLyBKwiPacmglW5PNA/PldmzCBdHk
-	 JVQG/rspuQUQ3wxrhHVnt21afttPr/Ru4KcLvT/ypPi4t8ID0ywWapK0HRgmVUkXzGhUg
-	 j7bAiFT+8/BsBveUpng/aSPCictNFXPGxoAI1H1+ajIpL9LZRRbxlj/cyhgtRwBqFs/DL
-	 N5XtTP5FyLqapm82P7tABo4VUH8/uqbzhfiL2AuiFbuxedk7cB35lfraICbwWNv8mgw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792734996;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=hkfIHZQWuMldMzbFWTwr4pLpGkj4uey/onj+IEAxXy8=;
+	b=aOhq1F5/YkrgevCmQUrTgmkPpaYdzJxYaDWnAd5Cv5Cs9sMZFU05dRFYYhCo01PGChDg
+	 CkuEy5ax6saaRFzD6qVyublSn3mgoIMJxuSVkzfpD/mFwdSAl0p4rolQFv19cVBxKsKBJ
+	 nD9sMkTQVo0xD5t2wKA5EDRIqgBGLp6x4OElzpzhGYN5GApP0GUwyuQlfa9++W8+BOJWx
+	 caGl3WQ5GzEIfUqWg6KK+mmmJ6U9+wRv5sdelrPO7DwFlNrv8CJSER7ZB0MRFzFSQbiOc
+	 kPgTftJEKO8thQ4zjW8ob64gM5dISAnsF7Q4sH2nGX5EbuE2cymDQ66M7hkuuQN57Nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=C5KAzmYs;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="p/hxPZLx";
-	arc=none smtp.remote-ip=103.168.172.156
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hzzcoRs3;
+	arc=none smtp.remote-ip=209.85.219.53
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3C9606A319
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 05:33:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5E3C9606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125D4606A31A
+	for <git@vger.kernel.org>; Fri, 23 Oct 2026 05:56:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 125D4606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=C5KAzmYs;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p/hxPZLx
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 87B0F1400080
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 01:33:21 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 23 Oct 2026 01:33:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792733601; x=1792820001; bh=lgGOlnmgYq
-	Ayfj2Uc/gokBVJMJC82+8zD1alsINQ6YY=; b=C5KAzmYsvdsVV2XtKlJmJ6Yebu
-	MWvgYgyGYuGP9WEdVUsFRRgpEa8Ba/KG5Ny5CVCPYNqoqBEnJH6fgzPwBR19tEca
-	sj1jtdHlCpz9P33N0dnS6yBCpAd8xsnAjAafWWPGQuOwtEwoLTqROmyEkxLtfBCW
-	p/gMAAvctAoD4r9GE6b08tsTGwXLOoU8rRWSQ9isxSuKm7tyUZoGgldoRzpPgb7V
-	kFnnv97tTTfYIc750WVmpMOw9wNTl0a2FUlBNugdExVVOXjWP/cEUGkh703jxiQS
-	cXepEhNmyfxovvb6TiG1UQVzlRntaKU0kE9s3mHCXpoBKPDUYDTm0ekQTfug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792733601; x=1792820001; bh=lgGOlnmgYqAyfj2Uc/gokBVJMJC82+8zD1a
-	lsINQ6YY=; b=p/hxPZLxK4IXHmIa5gzpclxgvFu5/RjSGrMI7ORmBS589Nsxhds
-	Tx9XfvXHcABDVno7n4dnPMYAzIeKue8+uNlZ2fDbtUK+Uues3Llm4v/ErCzrcpaA
-	6lHXiBluvUSSy9lShuYjap3G/AKeLo4PRU1FDanIpPShqMgO2BKbhUfDp1gK9DU2
-	IP6oZhCM4xguxB/mcZme26tBlfLZ1lRXGv9PvgR3s9n3EhKhhq2ygw+5GcH45bFa
-	ulisiAI3OWLA/BXc42FFCKN7WYowOPCe4YyLixQB+3uKx+4uvKp2CgMeMgzzS4yL
-	WLmpIqGX+/Wwx8Mi7b54Ib/x4I2quBe+Ygw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792733601; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:ECMrMB8VY3ZHWKEYafLhpZ/+k1EQoodOLGflexpIl5+UB+i
-	R2cji1FXcis3Eywn9CNREl1GSylCbwPJncXuAwKMTP8oDP0Z5H1b0puPteRBxZap
-	OI1miR8BjYdP0kC/CEWLQgMzlbt75EpaW2nfBACpu1LtYAUWoaeGcV980UfkUu/3
-	5Gr8Xazpb3BCo+kO7Bo/WZbYJEsGVGJdZmhSa06mcgNG5rwXblNSYErWFyMJYbSH
-	MK1sYYuxZ2GGXq6TfHK167TYwGufcjph/xiiF5mFNVE68jA9pyTBLrmBw+/efHrM
-	n1gOR21vNr0R5hc5q8J3lh/tlYPOHPVNRAy9gyQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:52X8ORW+k38PPCnnPo3RzRWlmdppyTKIJRf7zAgdgXo=:c46/vOSaxellJumwNpA5UoDtXf8V++8tjZm6Gf1EP0Q=;
-X-ME-Sender: <xms:ofHaarSFGyrxGNQuS5FLNIYUF35D8av3EYL0Wq5bJuBKSe20aEhtDg>
-    <xme:ofHaaixFW9o6KgLlQGeeiMyDfAz-WAlfi2qwpvldimvdns95xQ6f35Ys0uLln2GJX
-    qriGh7zZdZOsqPwjHaXRY8W5ppU4hHngFFZjteTJY6f7BTx2K47LIs>
-X-ME-Received: <xmr:ofHaaufx2hn5d_SOajt9jQoKE8UhKrNRLQ3xN4pEUdFdUn5fs_kMZfGE1FoYQBLvABQGPA>
-X-ME-Proxy-Cause: dmFkZTFSsqJU8DDkBhz7h30NZPbisMw+bzBsrap1/uNFiVEeSdFJl67xSABCvCEG5/wI6B
-    gyv0bOxlEDiQzwOwpcE27MtgA3YF15sopaGR3gUk5Rc40oqJq9h0HLd7y7qrSyEw2fTZgh
-    wEIT2tAfXxHFQbzxyKs96TsBbcCmjiRfdqKdSDP9dHLz5Pm2V3/ZRoJRB4mHtPDOftjS1b
-    ZcO2ftO4i1U+3jR5YkHvHSzpZa0UbKh1MQxS9i5/peTk6YVCsHfT1gKNONvNP9jZJdWgWs
-    hFGtuVW/hic2ea2WJKXgb1FWu1CfaXJV/2zRA+gbGtG8HvFmybS6slTY1MuDQhvP716ab9
-    x0tha2BXDHkgGULnm9brs8KnzwC6W00P4h6GMxUYHGWbAw3MsPf5Qc0mL6xThriXLOYX74
-    3eMmx3A5GaGKsqHCr5M4P0QMAPaMsjB0nkZSQGE7FLlbyPNAPcLYuZtdfPLky/O5UxACIO
-    N8ENWb0rmPKwSPhVEGLHsyDct9L96pRMWrorlL1M6v09fbfhnX2GdeU5GOEJtXhK4uAJJU
-    dwRV/BwDj3typeRqkzH4tzT9GIFUscuorQSD/7uqND/Ya8ubfCT+yhvn0iSVimbSLY+27l
-    5VzYKnRaD6ofWIwK2GtCGuyGnCe+m2sSvM4BCLYSZQCw9k/ZzVer5VUAO+SQ
-X-ME-Proxy: <xmx:ofHaamLSXDKkWaNXM5FXj_olzYkK96AvtaDsFjPsdNKIhFOpyRd8zw>
-    <xmx:ofHaanEdqK5wH75Af4OQS5AP2qwOdXR3yDO34ZehVxr8Y7OtAcrigw>
-    <xmx:ofHaaor6yydhqIhQ7mDN-Q-Xu3MAInHiiIsk5U8o-CluDgrG5iSh6Q>
-    <xmx:ofHaaoRbvrPCcyTHduI0KS3HJzs5m7IJOhySeNVsnqof7sC6cYvZyA>
-    <xmx:ofHaasBEV2rNd_nj4_iSBuzrjJbEa3c8-lW0nz6sG5HYrq50wcNJX-u3>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Oct 2026 01:33:20 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 889c56ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 23 Oct 2026 05:33:18 +0000 (UTC)
-Date: Fri, 23 Oct 2026 07:33:15 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 5/7] builtin/init: introduce handling of object
- storage format
-Message-ID: <atrxjqESUSunxsqU@pks.im>
-References: <20261021-b4-pks-odb-extension-v2-0-8cf11b65eda8@pks.im>
- <20261021-b4-pks-odb-extension-v2-5-8cf11b65eda8@pks.im>
- <CAOLa=ZRzu_7No085hEHnULo0L50y=ntx3MSkb-VbcywChdOPZA@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hzzcoRs3
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-91b813ac020so9114946d6.3
+        for <git@vger.kernel.org>; Thu, 22 Oct 2026 22:56:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792734995; x=1793339795; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=hkfIHZQWuMldMzbFWTwr4pLpGkj4uey/onj+IEAxXy8=;
+        b=hzzcoRs31hkQGTE1e5va/ZjDUX8ycnTPOeS8oZKrBvXJoIBMPFQlYANqKaRTE12KSi
+         eLrAMYVTlMorHBwMtvslxYjomOVK/NwPPTqMixLEgElQ6PZDeLvX+nBM9WwRHvFf6SBk
+         nAzXKHLUJ02oitvjUCJMG5pyu6GtnCSMTojUh/NXIDv1DjavcehHqm7M2iT6cvkIcuHk
+         kxlcIG1nZ0Tl80jI0YtIXKNkKycFMVBViHBqvcS443VUsMU3u6JamWDaK8N9hi+0XlxE
+         51OddolekMrG86OYVRoIEQ8cP5TRmkFKvzm+/nYSFTDJiCSEakaszkVUFACxLo5SxFku
+         aM+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792734995; x=1793339795;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hkfIHZQWuMldMzbFWTwr4pLpGkj4uey/onj+IEAxXy8=;
+        b=df3BAcOl0/NMh8fVYJz9G9k4PdVbOTbeHxjiEdy/Mf3E2jOpFLYX0H8VyJLeM14k77
+         r35DNfWigtwv42DUSM7947hvzknfH6Im6zzdtQcze0+1sSqoOUTZkhhcJlg+A+5yeqVM
+         dmXXiU1VqycKd39sI+1nvyS+H2DNvs7yqJnKrZViKvV8hUzjpZQ5ay6r52g4Ye6jA9NR
+         QcgVRwyAmcPW9aMq2HUvKcdbadEE6Z3sENrVcJEwg4Sau2We1KYoQ0OFNjZ8OxkYW50x
+         67ZmN2Zb+VXeJPf0D4vHAdqO2Y6fOis+qHVPOKiDrA0dyNCE5cMnSj2JgJijjw/9Js3Y
+         IT5Q==
+X-Gm-Message-State: AFq9FYJ3+ozpjY+9DU5h0m5uVonzwFI6yWeJSqcFZ+LwJ/zMjh/qH3Pu
+	C/VIT+shSPAIZcuAnM0uatWL5N5I7Noe6siXnh15ycGC2Em3MnMnJzqcYCURd27X
+X-Gm-Gg: AYBFou3r7ImOtC0HrHoIK85noE2T3Xr90qLl+jlIbFwYvO1AOrxeV/WQZz3XDx499QG
+	hdr0GY7gZnxwn48NZAyOFiznKXtF5JOso8fZGKVGrP9BIj926KvovmslhaaVO7wo49NGZnaDPTv
+	R/bZfVHP0+GtNo7DfZ0kW5mFCqf5H01N4G9KSo/VLPEZcYHZYki2Cyem5IZFG592yFWv0E5pw2Q
+	Oely4qRWzGN5UKPWlC5L1veYV9KUJOwqzkr6NZYNrXY3MNjPxJzeQ8ek+kRnai3U9PDiwk4bG4T
+	Ic3yaj15sWqkHmeI1SodxkpZ+eh+nAOEFE98XQ+gZRp8tAXFVjZRw4XvB4doL/JEqJ/2V/ASHeI
+	vawMhchUI3uoYmD6n0uWo6DBN8YLzqjbdZd4aqxG2wtzTilubhYN2GJ8rHlr4O+KlTzf0v6NOsS
+	o2FRtMW+VT8VpGSLU2H6gZcwpAv9jbDLIRm2QQd3tfcMpEoyjBz1viPP1Gw5MaXOzo1dvewew4S
+	SE0ewJ/tO3X8gLBOBDm4i4Bumf7Bx9d0DEDHnwY2rPmKqCYecDWwD5ATpM=
+X-Received: by 2002:a05:6214:19c4:b0:91b:b26a:9783 with SMTP id 6a1803df08f44-91c3ac6db6amr12395386d6.55.1792734994681;
+        Thu, 22 Oct 2026 22:56:34 -0700 (PDT)
+Received: from [127.0.0.1] ([20.115.62.68])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c396e33a6sm11935706d6.16.2026.10.22.22.56.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Oct 2026 22:56:34 -0700 (PDT)
+Message-Id: <pull.2276.v2.git.1792734993812.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
+References: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
+From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 23 Oct 2026 05:56:33 +0000
+Subject: [PATCH v2] diff-delta: use safe integer arithmetic
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,75 +95,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZRzu_7No085hEHnULo0L50y=ntx3MSkb-VbcywChdOPZA@mail.gmail.com>
+To: git@vger.kernel.org
+Cc: Srujith A Poojary <poojarysrujith@gmail.com>,
+    Srujith A Poojary <poojarysrujith@gmail.com>
 
-On Wed, Oct 21, 2026 at 10:23:17AM -0400, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/setup.c b/setup.c
-> > index 98140a7641..3d74f8eeed 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -2466,7 +2466,8 @@ void initialize_repository_version(struct repository *repo,
-> >  	 */
-> >  	if (hash_algo != GIT_HASH_SHA1_LEGACY ||
-> >  	    ref_storage_format != REF_STORAGE_FORMAT_FILES ||
-> > -	    repo->ref_storage_payload)
-> > +	    repo->ref_storage_payload ||
-> > +	    strcmp(repo->object_storage_format, "files"))
-> >  		target_version = GIT_REPO_VERSION_READ;
-> >
-> 
-> Okay so this is what also sets the 'core.repositoryformatversion'
-> config. I was specifically looking for that.
-> 
-> Does this mean that even for the files odb with a payload we need v1 of
-> 'core.repositoryformatversion'?
+From: Srujith A Poojary <poojarysrujith@gmail.com>
 
-Yes. Repository extensions aren't read in the case where we have a v0
-repository, so we cannot make use of any non-default object storage
-format there.
+Replace manual multiplication and addition in create_delta_index()
+with safe integer helpers (st_mult, st_add, st_add3) to prevent
+overflows.
 
-> > @@ -2490,6 +2491,12 @@ void initialize_repository_version(struct repository *repo,
-> >  		repo_config_set_gently(repo, "extensions.refstorage", NULL);
-> >  	}
-> >
-> > +	if (strcmp(repo->object_storage_format, "files"))
-> > +		repo_config_set(repo, "extensions.objectstorage",
-> > +				repo->object_storage_format);
-> > +	else if (reinit)
-> > +		repo_config_set_gently(repo, "extensions.objectstorage", NULL);
-> > +
-> 
-> So this handled reinitializing the same repo. If there was a previously
-> set object storage format, we unset it gently.
-> 
-> But, we already catch and error out if the extension before and after
-> reinit differ, so this `else` block is not needed, no? Removing it
-> passes all the tests in this patch.
+Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+---
+    [Outreachy PATCH] diff-delta: use safe integer arithmetic
 
-This is a slightly different case: if you have a repository that uses
-the default storage format, but that explicitly configures the "files"
-format, then we downgrade the repository format version to 0 and unset
-the extension again. This logic basically matches what we do with the
-ref backend, too.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2276%2Fpoojarysrujith%2Fc-refactor-target-name-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2276/poojarysrujith/c-refactor-target-name-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2276
 
-I noticed there's no test for this though. And that then led me down the
-rabbit hole, because I'm not particularly happy with some of the logic
-here. For example, I was doing normalization of "files" vs "files://"
-somewhat inconsistently.
+Range-diff vs v1:
 
-So I've redone some of the infrastructure here to be much closer to what
-we do with the ref backend. Currently we track the object storage format
-as a single URI that we pass around, whereas for the ref storage format
-we pass around a backend type and payload. And that makes normalization
-a lot easier, and we don't have to re-parse the URI in a lot of places.
+ 1:  a0aafe63a7 ! 1:  14ffd630ca [Outreachy PATCH] diff-delta: use safe integer arithmetic
+     @@ Metadata
+      Author: Srujith A Poojary <poojarysrujith@gmail.com>
+      
+       ## Commit message ##
+     -    [Outreachy PATCH] diff-delta: use safe integer arithmetic
+     +    diff-delta: use safe integer arithmetic
+      
+          Replace manual multiplication and addition in create_delta_index()
+          with safe integer helpers (st_mult, st_add, st_add3) to prevent
+     -    overflows while preserving NULL returns on failure.
+     +    overflows.
+      
+          Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+      
 
-So I've adapted the series now to use the same approach. It also makes
-stuff easier to reason about, as we basically have the exact same logic
-for both storage types in most places.
 
-I'll send that later today.
+ diff-delta.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Patrick
+diff --git a/diff-delta.c b/diff-delta.c
+index 7cbedeb507..45df070ab9 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -162,8 +162,8 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
+ 	hmask = hsize - 1;
+ 
+ 	/* allocate lookup index */
+-	memsize = sizeof(*hash) * hsize +
+-		  sizeof(*entry) * entries;
++	memsize = st_add(st_mult(sizeof(*hash), hsize),
++				st_mult(sizeof(*entry), entries));
+ 	mem = malloc(memsize);
+ 	if (!mem)
+ 		return NULL;
+@@ -258,9 +258,9 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
+ 	 * Now create the packed index in array form
+ 	 * rather than linked lists.
+ 	 */
+-	memsize = sizeof(*index)
+-		+ sizeof(*packed_hash) * (hsize+1)
+-		+ sizeof(*packed_entry) * entries;
++	memsize = st_add3(sizeof(*index),
++			st_mult(sizeof(*packed_hash), hsize + 1),
++			st_mult(sizeof(*packed_entry), entries));
+ 	mem = malloc(memsize);
+ 	if (!mem) {
+ 		free(hash);
+
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+-- 
+gitgitgadget
