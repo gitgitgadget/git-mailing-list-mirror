@@ -1,40 +1,50 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.33.87.17
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.53.57.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792857138;
-	b=HzAv3cWQ+7WM51BqU4OXiB0KryG/IhaogkOv/e6yvbScozac58GgYn2XMsUJGEdGwxJt
-	 XdxpHTRRPrG01pDv8QyW+CKSq/FeyL1pJNPNGifYLyU7wL2KD9EfVJftR/8T8j3Wa3p31
-	 PY/Faj3S0kbRk0gkvXSWr4/G8lCDB1IkqfQ4P2QZumXkgjrB2Jpwpf416J3CKu11zZ6MZ
-	 0LYgdc2b1fwxpLAOU5CGHzvyiqat23Fz6aUKm70Kb/B86FQWM5rAjCyXqc/VHuEScCCHQ
-	 XEslBQX3hSWjyR+avb4ADOveTrvj7ZQVkLAzuLDHq32FObi6JJhVkri/weHzyMoj5NQ==
+	t=1792857705;
+	b=lOrqNvbOl1tUnvCCaeMZCqB/HYopMWZj6kDav06zf2uIJ0KFGsc6LI4+RGRhgzW28QXp
+	 QOOiF6vCpfIH7xtBE8JeHvqv9YKU/ElCCzJ32QLk1vAAfbDVkyCE/a+vqnl8gRtndt+7r
+	 luhKru92uazn8o9dqAIYAbgQ1/+NyBuK+nfkMggdu+bbKDbtxQh/GHPO0PBXsmQlfcPRr
+	 q4LLo7K6rSXsD4bIGw8X7LxG8n20OPoA+vlzCaSN2PBJZ1yDbbUDBMhfsFiXuJIBJF8TB
+	 etR1ES8XgK++EA3msA96+QZybW62j4/Cc4L4Hrie+LY96PLIayH2+sncbK/jE/Y+oLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792857138;
-	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:References:Content-Language:From:Cc:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=ddXhbAuMi8HsiiqzeUidvRa37cVXcGe6nsh/kyE8lzU=;
-	b=4b4DX94rBXt/B+bPDhGMaOrpYHYOx2V+qXYYCSRwf8w8X+EUvjOiFD3aIYL5E3+2ja05
-	 vfQOYUO//QqBX8BALaIPCicE/sPYC400hg27NVcbz4LQpy3icqKY8yxqe39hO0ypejCXQ
-	 sn7pYNV2QFeDZJZMG5EGHhHadCUuL4LAnCm/y8skkMdlQy5Zx/svM9Ut5oYSw5zwzn6go
-	 MZq2s72dJ2WxZpQYQmpZGKO6+jYZ7KUj5vm7TPYeXBxrX9ES/zhVFOIP2H5Y2m9UGSSgq
-	 yhZpG4cqajv8+pxCMGFWx2TK8QBMpppQ+hT7dEMhDFkezuHxUUxkIKARXY4V4+Er2OQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792857705;
+	h=DMARC-Filter:Received:DKIM-Signature:MIME-Version:Date:From:To:Cc:
+	 Subject:In-Reply-To:References:Message-ID:X-Sender:Content-Type:
+	 Content-Transfer-Encoding:X-Last-TLS-Session-Version;
+	bh=NDMDzqE7ikW9lwmQg2VY+EMZfhEXypp5p+luTaFXaIk=;
+	b=i332CQYtKaFYvN26/Afmil+OfqsrahEPhApeTh2xjLms39ccqW/QaRwPuLnUb1hipOF2
+	 umka93svOKdFgFcwesbMyyV1NVFd2idcfrFwRfwbtXq5gLZpEeQbK6+2PAcdVSsCt57Di
+	 sOCh4WtSQXmjB+M5r+qLzFTmmJtCFNFqPZekOeg+6VKai7+ipH4aUzmuebEBUj6zC3htf
+	 lQKcFlN+i0YdG8a+ZcKaZNRYbaEm7QdwbvKjbf1sueIjQvoL9JhjLpv3JdSO7zwrVtV9l
+	 46+tzNnP5ODTLJnqDhS3d0aP/QXg1ueJ4zUXmUvot4gMGwA/GVGNa8pR6JNMwdZJyjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=kdbg.org;
-	spf=pass smtp.mailfrom=kdbg.org;
-	arc=none smtp.remote-ip=213.33.87.17
-Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
+	dmarc=pass header.from=donquinleone.com;
+	spf=pass smtp.mailfrom=donquinleone.com;
+	dkim=pass header.d=donquinleone.com header.i=@donquinleone.com header.a=rsa-sha256 header.s=hermes header.b=TKRxKjwI;
+	arc=none smtp.remote-ip=185.53.57.44
+Received: from woden.albient.com (woden.albient.com [185.53.57.44])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646AD606A31A
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 15:52:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 646AD606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.102] (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4jBksh17tGzRnD5;
-	Sat, 24 Oct 2026 17:52:08 +0200 (CEST)
-Message-ID: <75b5e0d7-9608-4e2f-a60c-d278af5b2e85@kdbg.org>
-Date: Sat, 24 Oct 2026 17:52:07 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54218606A31A
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 16:01:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 54218606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=donquinleone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=donquinleone.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=donquinleone.com header.i=@donquinleone.com header.a=rsa-sha256 header.s=hermes header.b=TKRxKjwI
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPA id 96ACD432B5;
+	Sat, 24 Oct 2026 17:01:35 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=donquinleone.com;
+	s=hermes; t=1792857696;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=NDMDzqE7ikW9lwmQg2VY+EMZfhEXypp5p+luTaFXaIk=;
+	b=TKRxKjwIAjlW6PQgq+UU9QKPvs1Ip6Bua3ldWW4TTVSiRHbnvagyDZ+UVqf4zb0+y1/1NE
+	x4TxgNUoWS4IXA7+1uvmUIe4QffvuH1xslM6CXUcrELFGs7IKjbVIUriNQuu2gHTJYZDa0
+	Gl6aPnk3mnuwfR+zh2oQ8ANWYn4IMJHcvvoCGnkmilLWT38BHZIuSYJXdWV54YFKpSi6ZD
+	PBqBtj2cv9WgQLUiTb+slOPjn7Vdzc7nKxUeSt+LRyVpnkem1eaxL97R27IjhttXWYlVzH
+	mF0JPpDpgln+mX63/NOEm+sRzoS34ybx8zaQCqNCmhwSarx4tQ5JQYpb3QM3nQ==
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -44,130 +54,117 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitk: add cherry-pick -x context menu action
-To: Ralf Habacker <ralf.habacker@freenet.de>
-References: <84e29b80-e219-44ed-b98a-b224d7c264d6@freenet.de>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-In-Reply-To: <84e29b80-e219-44ed-b98a-b224d7c264d6@freenet.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Sat, 24 Oct 2026 17:01:35 +0100
+From: DonQuinleone <don@donquinleone.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>, git@vger.kernel.org, Junio C
+ Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [RFC] branch: delete gone-upstream branches only when proven
+ merged into a named ref
+In-Reply-To: <CALnO6CAAoMLZP4MBzgBa96RYMMReyxKXObb2JELqkBe=LBUVLg@mail.gmail.com>
+References: <CAHwyqnU-BEtOPdVbBXtuEYtFYuL3MqC9nUQeP_Puvq5bsoWEAQ@mail.gmail.com>
+ <3EF4DA22-6739-46FA-8028-74EED08BB931@gmail.com>
+ <CAHwyqnWJOk9FCGkPi8yWOFq5vr-CMWNhn=wBAifx9Gfn+1bMzA@mail.gmail.com>
+ <CAHwyqnWi6E=idoP2+1FdeEE4-o3D20xJfsc4Dutt6R30c===xQ@mail.gmail.com>
+ <CALnO6CAAoMLZP4MBzgBa96RYMMReyxKXObb2JELqkBe=LBUVLg@mail.gmail.com>
+Message-ID: <ba149000e13634ffcc5dc51e4d584a56@donquinleone.com>
+X-Sender: don@donquinleone.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: None
 
-Please paste the contents of the format-patch output into the email; do
-not send it as attachment. See the format-patch man page[1] how to set
-up a mail client in a way that does not mangle the patch text.
+Hi Ben, Harald,
 
-[1] https://git-scm.com/docs/git-format-patch#_mua_specific_hints
+Thanks both, this has been really helpful. I've tried each suggestion
+against the reproduction script with Git 2.56.0, and here's where I've
+got to.
 
-Am 24.10.26 um 11:40 schrieb Ralf Habacker:
-> For example, this command is very useful for cherry-picking
-> commits into a stable branch using a reference—something that
+D. Ben Knoble wrote:
+> In this case, if "topic@{upstream}" was "origin/master", though,
+> "--delete-merged=origin/*" would work, no?
 
-We need an en-dash or em-dash (two or three dashes) between "reference"
-and "something" to give the sentence the correct meaning.
+Yes. With push.default=current, "git switch -c topic origin/master"
+and a plain "git push origin topic", the dry run offers to delete topic
+once the pull request is merged, with no code change at all. So the gap
+is only for people who follow the hosting services' advice and run
+"git push -u", which points @{upstream} at the topic's own remote
+branch. That's the setup I'd hoped to help, and I suspect it's a common
+one, but I agree the better long-term fix there is teaching the
+triangular setup. A document like the one you mentioned would be very
+welcome.
 
-> otherwise can only be done from the command line.
+Harald Nordgren wrote:
+> Why do we need the `--into` at all?
+
+Ben has covered it, but in short: once the upstream is gone there is
+nothing left for --delete-merged to check against, and Junio ruled out
+Git choosing a substitute (HEAD, or the remote's default branch). So
+the commit has to come from the user, and --into was simply a way to
+name it.
+
+D. Ben Knoble wrote:
+> Rereading our docs for git-branch(1), I think what this RFC is
+> looking for is
 > 
+>     git branch --list --merged=origin/main | xargs git branch -d
 
-Personally, I use cherry-pick -x so rarely that I have no problem going
-to the command line for those cases. Since the context menu is already
-very long, I am hesitant to add a small variation of a command that is
-already present (and very useful).
+That was my hope too, but it doesn't quite get there in the
+reproduction:
 
-Are others interested in this feature?
+   $ git branch --list --merged=origin/master | xargs git branch -d
+   error: branch '*' not found
+   error: cannot delete branch 'master' used by worktree at '...'
+   error: the branch 'topic' is not fully merged
 
-Below some comments on the implementation just in case there are.
+The first two are just the listing format, and for-each-ref would avoid
+them. The third is the interesting one. "git branch -d" checks topic
+against its upstream, which is gone, so it falls back to HEAD, and
+master is behind origin/master. The commit that selected the branch is
+not the commit that checks it, so the proof is lost at the pipe. Only
+-D gets through, and that drops the check altogether. (The listing also
+picks up master itself, and would pick up any branch that has been
+created but not yet committed to.)
 
-> Signed-off-by: Ralf Habacker <ralf.habacker@freenet.de>
-> ---
->  gitk-git/gitk        | 15 ++++++++++-----
->  gitk-git/po/bg.po    |  3 +++
->  gitk-git/po/ca.po    |  3 +++
->  gitk-git/po/de.po    |  3 +++
->  gitk-git/po/es.po    |  3 +++
->  gitk-git/po/fr.po    |  3 +++
->  gitk-git/po/hu.po    |  3 +++
->  gitk-git/po/it.po    |  3 +++
->  gitk-git/po/ja.po    |  3 +++
->  gitk-git/po/pt_br.po |  3 +++
->  gitk-git/po/pt_pt.po |  3 +++
->  gitk-git/po/ru.po    |  3 +++
->  gitk-git/po/sv.po    |  3 +++
->  gitk-git/po/ta.po    |  3 +++
->  gitk-git/po/vi.po    |  3 +++
->  gitk-git/po/zh_cn.po |  3 +++
+To me that points to the shape you sketched for (B), with one change:
+when -d is given list filters, the --merged commit is the proof as well
+as a filter.
 
-Please do not edit the translation files.
+   $ git branch --upstream-gone --merged=origin/master      # list
+   $ git branch -d --upstream-gone --merged=origin/master   # delete
 
->  16 files changed, 55 insertions(+), 5 deletions(-)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 9506739c50..5d9c781778 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -2859,6 +2859,7 @@ proc makewindow {} {
->          {mc "Write commit to file" command writecommit}
->          {mc "Create new branch" command mkbranch}
->          {mc "Cherry-pick this commit" command cherrypick}
-> +        {mc "Cherry-pick this commit with -x" command {cherrypick 1}}
+In the -d form:
 
-We are in a UI here. Avoid jargon. ("What is -x??") How about:
+  - --merged needs an explicit commit; there is no HEAD default, so
+    nothing is inferred;
+  - each selected branch is deleted only if its tip is reachable from
+    that commit, in place of the usual upstream-or-HEAD check;
+  - a branch checked out in any worktree is still refused, and
+    branch.<name>.deleteMerged=false would be honoured;
+  - --upstream-gone and the existing --forked narrow the selection, so
+    it doesn't sweep up master or a branch that hasn't been pushed yet.
 
-	"Cherry-pick with cross-reference"
+"git branch -d --merged=..." is rejected with the usage message today,
+so this adds a form rather than changing one, and --delete-merged stays
+exactly as it is. In the RFC I worried that this would make -d a second
+bulk-delete mode, but given your point about composability I now think
+that's the better trade. It avoids both an option that only means
+something next to another option and sub-values packed into one
+argument, which I hope answers both of your concerns. I'd welcome being
+told otherwise.
 
->          {mc "Reset HEAD branch to here" command resethead}
->          {mc "Mark this commit" command markhere}
->          {mc "Return to mark" command gotomark}
-> @@ -9167,13 +9168,13 @@ proc rowmenu {x y id} {
->      if {$id ne $nullid && $id ne $nullid2} {
->          set menu $rowctxmenu
->          if {$mainhead ne {}} {
-> -            $menu entryconfigure 8 -label [mc "Reset %s branch to here" $mainhead] -state normal
-> +            $menu entryconfigure 9 -label [mc "Reset %s branch to here" $mainhead] -state normal
->          } else {
-> -            $menu entryconfigure 8 -label [mc "Detached head: can't reset" $mainhead] -state disabled
-> +            $menu entryconfigure 9 -label [mc "Detached head: can't reset" $mainhead] -state disabled
->          }
-> -        $menu entryconfigure 10 -state $mstate
->          $menu entryconfigure 11 -state $mstate
->          $menu entryconfigure 12 -state $mstate
-> +        $menu entryconfigure 13 -state $mstate
->      } else {
->          set menu $fakerowmenu
->      }
-> @@ -9881,7 +9882,7 @@ proc exec_citool {tool_args {baseid {}}} {
->      array set env $save_env
->  }
->  
-> -proc cherrypick {} {
-> +proc cherrypick {{withx 0}} {
+So, updating my two questions:
 
-If you make the default value of the parameter "-r", then the new caller
-can just pass "-x" and we do not need the conditional below. (Also
-rename the parameter.)
+  1. Is "selection is not proof" an acceptable basis for deleting
+     gone-upstream branches at all, when the proof is a commit the user
+     names explicitly?
 
->      global rowmenuid curview
->      global mainhead mainheadid
->      global gitdir
-> @@ -9898,7 +9899,11 @@ proc cherrypick {} {
->      update
->      # Unfortunately git-cherry-pick writes stuff to stderr even when
->      # no error occurs, and exec takes that as an indication of error...
-> -    if {[catch {safe_exec [list sh -c "git cherry-pick -r $rowmenuid 2>&1"]} err]} {
-> +        set xopt ""
-> +    if {$withx} {
-> +        set xopt " -x"
-> +    }
-> +    if {[catch {safe_exec [list sh -c "git cherry-pick -r$xopt $rowmenuid 2>&1"]} err]} {
+  2. Ben, Harald: is a filtered -d, with an explicit --merged as the
+     proof, the shape you'd want? If so, I'd start with --upstream-gone
+     as a listing filter on its own, since it's useful without the
+     delete half (it replaces grepping "git branch -vv" for ": gone]"),
+     and follow with the -d part as a second patch.
 
--r and -x are opposites. While the last one wins, it would be great if
-the one option that is not used would not remain in the command.
+Thanks again,
 
->          notbusy cherrypick
->          if {[regexp -line \
->                   {Entry '(.*)' (would be overwritten by merge|not uptodate)} \
-
--- Hannes
-
+~ Don
