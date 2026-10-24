@@ -1,100 +1,125 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792853570;
-	b=OONffYb78l4GCH0LhwFlvAk9A3meNh3Rdf3QGbVhyeUga6RS1Zs8b9zufOUS52lWZfj+
-	 auKjQRwDM6Wp0Na5yfM/WSoWbkN4JmTxAv+8cOl9AEg0fzME4VrJObo+w0EDoZQLQwOba
-	 bSZ5V5nsZDH1ovRx5ghzoHTN7k1B16xOAkEUFsmMjl4U6XmuQa2v6pMFj6BJ5Ot/VoGgP
-	 guLYVRZ6aapeLMVF8Gx25b9qXqUGa2MJM7+e1frnOLrCX05kJZH5Lysz5JsuKc/0Q74v6
-	 APLfvwSdM7URI5KftnD2jtyILK6tJc1q7ag44Cdhzv95dpItS5Qf5ib2R+I6OMdHQ8g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792853570;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=xsEkPBR+/+Unxj6SO2dRRf+1c4kWZr2d0wWr9S3v0YU=;
-	b=ZU/uD8LQYRv39ljkp4QY3Pyy+afSbJpPENzRiKVfxhcvoN4jO+3uWDwt0wQmqjBjomlr
-	 E8og+uUSOTdWfM6A5HpRcMMBAx2vafExiRelc+2urp5V+AomtBADxxUQCtyBqvvNYB9Ph
-	 mS9hnDDrIMvFoF1KVuxyyWg9ixgKXGPpjL9uRJrZy37cP/eiSH4aZfBD1IKQvRVC5Fent
-	 iR1apMNxtltSOZHG1M779PG/5iMz1WFsm+J3CV8HUHeXFc1WvbzRCDOpxJuSjfeQNNJ22
-	 1k3e2LgHnr7pjsg3udenNzwMesxalXjN696NOLnScutDa4Bb0xh+rIom5rcrUzJ0PVA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="X8R8/1jH";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.44
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792853792;
+	b=xSbobf7Yg8E+6iunUlKhHtxShYATCj/tV0UAYPihUNyjvKYjOn4B5lF6+Y7XbY53cbBk
+	 AeliqLqbiSN9uDldaIpljwG7dmhUpfIVClBs9dWw/asdayqCEU5zzFCwVDTNxAbyFvXnk
+	 9mcXN+b+fHqFgVOeW1eCCvlaXfPKh7bB/FXgXZ7AAZCzLD6UBVmt63lsvS4vRBHlRXJ32
+	 H02zPwe6JHZHho3Ounw7VlsO6lNSoYTqdvYdyyEVEfcai06oPzfvkU1YRnXMisPul3PdJ
+	 pVbG8gnGfedW4n0cMaJaF3idZFnVF6+J+cQQH3eeEXID5gubMqXPK6KFjoIyH+/YQfQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792853792;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=Ri4aV0xfJO2Nbo94fR56L+NI5IYLkEN1duRuzip3CA4=;
+	b=BsUY/JQ3XoHb5n0m6Xjqn7lcRO79FgWacz9NQpz2Wgb/A6GcOFuunC0cnlRBUOD83w0V
+	 lfQLEkpZz7aOwQOaWOr+R5GiGUhM9n7ZJaGvYseLPWm+DVAj6xUxMLnhA+1NcEF3ojYor
+	 lhnTxq52LsFTYlNyQt+VT0oEtCnpqzzmrpuZ3NC28tOpNO7gS6ECXPkX7GiXpUbFACQ5N
+	 yKwfsWVa4hmgYtfs+r8yIKaYEQrGwaF4BJxZpwjKR65z1XH0A7keDG7PPDChdtPvNhkSx
+	 2ZVZdBOgGXdO+sxRSMdxWSAG6hhcOMvlLmCeNK2lnn9QHAz7d/g0ijtA2upX1ddR3gw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=jAQsN3H9;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=iww4tELu;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43BC606A31F
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 14:52:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A43BC606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E469606A31A
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 14:56:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0E469606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=X8R8/1jH
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-c34bff61551so242849366b.2
-        for <git@vger.kernel.org>; Sat, 24 Oct 2026 07:52:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792853568; cv=none;
-        d=google.com; s=arc-20260327;
-        b=CiBSlPO2NBwVwBXAuAdUtNHMV/CZG/SuiZ/P49QiAGEwhoYLZPaj8FAZScKRAt1Adh
-         M0oGF6v5hFNv2b6/I/it+sNyY6NCeRMC4g7tkRGihu7Zsr/QkmafO7vvoEi+zNypRhXS
-         8VWnYCeNumUrf6RpWH/C6er75ZWsjcGBjWUZbTO1gjWeb/Qy94luqYFVQnADVARRMTc8
-         fTtb7BNdSZlECm5OhVUo65dpKW3L4loIU2KRGyTsgDQ/mY3jSbIiGHXQhmPwIYjC0LSG
-         sLp/Qhfte9Sd91U/8qpVkGeU0e2hGitPViydQCHU03vIO4x6pv7AZ7bnezhdHVe/aa0Y
-         BehA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=xsEkPBR+/+Unxj6SO2dRRf+1c4kWZr2d0wWr9S3v0YU=;
-        fh=/Wb7kEQ28gqYgTv1Mb3ssfHumkkce2cCfqhdb3lrnqY=;
-        b=me5AwrVB39Hj6umEl5NlkpP7tzLlsLrjT+ZHxizJC7t6yksPh4TToXm6W+eBiBlS/E
-         tECwYrDzphGvbS+hLYdRWpMprk6axPU0TGII+BB1LJ5/ynMVym+WMepUoOMgYg+EMF0P
-         TLmcSDT213CWylweSM/upaSkc6Q6tsGCJmhPqwmvqLXAlT/IWqrKmNWcvUxtCQu0ax5i
-         s13ntpry9gx+tVEWTcYvoBcogKrKdDe9vQPFJu7SGqa7ApZxdgAI81A2EqAFuKKYZZz8
-         JkL9X8wfHrKSGnHJkxLP6h3flW+dY0URmQN5irk7j6FUt3UR10fqrAnXEb5RmmFobScz
-         1e1Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792853568; x=1793458368; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=xsEkPBR+/+Unxj6SO2dRRf+1c4kWZr2d0wWr9S3v0YU=;
-        b=X8R8/1jH3LfNC+2Pvaean6bjnfDVCdb4f3CapR5x1D9SsXVkjooKc++1on4QXKYcQ/
-         Rw14Rse6++kTslg9hgD+8glamEv7leD0C83Xo71BpQpGTv4rg4G9/3libkZH4MpRYY7s
-         xB2o9tJ/I8f8Q5f40zYkQ9dxB9ZAj6eutRYNlA8JWKyk00IPWa7p0o58W+b/9/UjB0qC
-         Atd8mcgCUT7ugPJ2b88oBira6jUxDX1w8fLxr0/bDAGipmIYlKzEuNtBehupzM+3fuYC
-         7QgDrlyTCitAG48PGea5Jpw7VfJLAjElSh74pskPVAohheCH1KdE5gHsanqgl/9loi43
-         Q6kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792853568; x=1793458368;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xsEkPBR+/+Unxj6SO2dRRf+1c4kWZr2d0wWr9S3v0YU=;
-        b=FZTFZ4hBhLtqaNSv2GfRQMCo/Qol5xdFgVXlX4/+McRm9jRuiuzyC8t99g0yJNPN0f
-         dFIxU7V38QhvsXysuXSo+/CjbfemdHzVAOR+54iPOghXMT5uVII4mohqFRjEnGNWQNp3
-         K8iUz8YTGzZMP10QV+M1LdkeQV7ccjLrYR8/Y3VhqHO713BYiyLhuQTmC3jpOD1m121b
-         w3uPAnbLAYZIkGmns8VRLhN+v0qYD4btv/J1GKdwLpL/nCIJoZ/zY+30er3q6o+qDLAN
-         COjEnIdLj2sDhdTj85e9/Jl+HSbEE6RLhnFoJjIV+9RLwwCNlxSIiPSOLrKoHJVp/4Tf
-         1KXA==
-X-Forwarded-Encrypted: i=1; AKwUvBydm5ODeN7ToUGRdbUhymeLAyyUdjdGMAT93v6Mh94bXR0oFnmBFSTdxFODmbh1X68f+j8=@vger.kernel.org
-X-Gm-Message-State: AFq9FYL7NgUqQzqn+nyIsGNdSdZuDqf9NmDFpURXwmSRho1CeHxW63hK
-	lDikC6iC6w3FKzcXdQBEQdg1cRglqWAID1EC0hEWppe187QAI9esuWx5DUnIEp+yr8gb4v1HpzI
-	IX166u4seJ3o6XyRktEglkQ0xFIFdXNQ=
-X-Gm-Gg: AYBFou0viow/azV8FuvM1sq4s7lIDDMjbuUiaaNRuPqMvMHPSAoxmzHHYGiUrCUwgqk
-	1Cj+Ob26pzo61jqwqxMWigcmcaczy417cMP0AMFpuWhpM0ZV4nxvLpcwngXEGg4UEXa+g1MiABT
-	Y/OQbM75Y/PHLdZdJRx8Y0GDWXg+UqgDB4JYRvvXEP0jc2YDPWfQanh6T+ZCldjir9wmEOako5z
-	W/8/H9P1zZOixiTSEBEy/K8nqePIRJkIoHnaB29cJQNsVjR3Vc8ebLXaVSTQYeZ3hfj5imZWN/b
-	C5MlqkqVM6+9EexrRCNFby2GYZb5TK9i8Lbrv+64NhuYMZYVXHSXqVSdRcT3xG4EwBxzKvLAEzu
-	iXRw6nBvog3QZVNecCVIM1k9TyRsyLWut4ZFN6oYF8cF5adzH5xbjNus7QB3tCpjDGSmf
-X-Received: by 2002:a17:907:6091:b0:c2e:350b:7220 with SMTP id
- a640c23a62f3a-c46bddf632bmr247572666b.9.1792853567878; Sat, 24 Oct 2026
- 07:52:47 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=jAQsN3H9;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=iww4tELu
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2975A7A0156
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 10:56:31 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sat, 24 Oct 2026 10:56:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792853790; x=1792940190; bh=Ri4aV0xfJO
+	2Nbo94fR56L+NI5IYLkEN1duRuzip3CA4=; b=jAQsN3H9trUawkezgklogSq5Dv
+	3BPwQKTqaeh+BsRvrQ2KU4dLkFL44EH7xy8h9T9tULzC1V9NldlTWcwL6Sk+I4og
+	1hYgoFRSc4rH7acR4nJKHUp9rRwf9X/VrFNe5eFTsuq0SiiGbDEP5gXUmiPBwadX
+	cpCOKKEqvafW/HnyW6T1/jkJMEx1tFITVZxy0LeBkpnPFm+Bhs6Fp2ou1hBwYjwf
+	7Ond5TisXKgxs+6kyFTw3TJkdao4oD7Omww0/ZXSI+LWYdz93NluoEm4sP9P6qMy
+	XhlMecaTA9KypbX0QHdaQ80w1caTXMEzeDZD/FB7Ob5H03JecQ4zaxEPZy4A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792853790; x=1792940190; bh=Ri4aV0xfJO2Nbo94fR56L+NI5IYLkEN1duR
+	uzip3CA4=; b=iww4tELuKfTM5Wzuxg6Y9iK5OMaNkEPRA4t5gQ5kwd0YDi4mYBg
+	tMtX4beJW8dHA9Ql0x4WuXQs9laXqEgkZrp3445UfrcVCmsXbpGTl9NagW0T2uaj
+	a3NcoAcFnpnUL5HkSkNrsEN8YcqAuUZsamC4PT4EuBqT7HjJYSx+eMm6lo1KitKI
+	yf8yIKF8Y5U2zd7kVXdkL6PWtJpMpyUMeoiYgEWSSccdMRadFTzbTDcedZGDU0jR
+	uwvX1HYVNdlJmcbhi7qTNNIWnsy+rL+gAcHAwIcTtLGyt7gzCQysoHUCdx2YR/Nt
+	LRjOpoxrZwf5eQXeHePzl4fdHAL1tZV3f+Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792853790; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:iWbi9vJBE7Tt/MJcH/XtoI+cFS/yJShpj7y7gt5xtPrfEKB
+	d0pz62+02qmmCA53KUTzo32rBWcDGt6EeRT246evbzFpnTI9/zSrzEoso/nicWQI
+	1bCltFhYsemoXx2/CtfC5cj1Sizl6VBFLw2ptnFBXQDhbAaJw7gW9CkrWoxUi1ym
+	Kbmnk0jFEe4VANth5ls/Igj/tsWxQ4O/m2/psAodeYcLEyXuh/G8zK2BXV+hLVnv
+	IIlWcJAzFy5WQUI0emL6ZY1SEJQTlMg0rIzF7fvm0JGwuGlYEV8vz3+fOL+2+Rhk
+	7Z3C74IBII6ICtCCY7dVea9B1CH/oSOYXCpVNSA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:ELWrPRXSPNfmpAsb9WkLXa6MX+0W33WT6nVAfj1UcqA=:qA3sqJeS37Sfdf0GlqQlM/KPDvihnYhDv09k/RdX3b4=;
+X-ME-Sender: <xms:HsfcahdNssRsGKHLm-Nk3eMf6e_ZULrdXRM7_4McCk8Z-kBwT0EPnw>
+    <xme:HsfcaheBL_Muyq5eEVZlKxHtOQGbmh-ee2fgZGgGoQYJ_Lqie_RbSKgfEsv6jGcaH
+    WIbnw8YuKzOE_pfrEtwpGfAS5weLa7dq5zBJlCfFv1ure1cn8l2xEA>
+X-ME-Received: <xmr:Hsfcasx8rBfEI7_E4iB4lYlba2zkbXpionSPQkG0A2rI0cxNiRNkBOnwM0Ygpwy4zPxbsnd1AaFUbY8CprLbNP0yBI32Ke6HdUen>
+X-ME-Proxy-Cause: dmFkZTEFhiKkQnoifBW4aL1gLAT/rafAnO80hB01c4bsrGBxnzHJsOtDq/VNAnnSbYhYAC
+    PF//bIrtco/xai3szDwaeG3zxUKVexMqaLsS5Lhc3XPiVWxaQT82VmVXJL8JDVM6YPrNVr
+    yjB7c5rycI2qkCgxr4wNZbdkkO4U83hcXzsveK1Gf2g4ValVoRhjqFsO2R0umvCzkBJsEp
+    Dx4oPM40YuyaDHxVEQaKlq6k0pNSbdxAo/aODVp34GAyKQgv1lr++QdKmoyceW/ETfuR+1
+    bzSzzId5qXpUYoH5p+uwOl08Oof3tRhsj8eZBx4LpwyFokJB94Q1NOLnnbQWLbZtrBgOrE
+    8tvuiD7cQ8NoO+Yd5NE/W+6ZVGHvlorQISwH41R/hpTVj7Lsel/G/IOFq0AM3Xgei+QtbC
+    hPjjl16uaRnh0Sq64BvK2g4nztIQI5g/T0WyAkZ6vaUE2kd1TF9WfKC6BOKVJFKLgQa1m/
+    5YTGgUk7qLNKhE4/CUlK3QgluAF2dr7vkJkIIC+2bVGi2bOygMr7anzVzd4iZu409KEeMC
+    osXHHsqNRQeqd++H2dxAbECqI14VaowUrEpNGY1ytnInIVITXO1ZL+akw/jSTFwJUOv1C7
+    2eKmd15aaIlyhl50HQn5YL40j+VpeP2JTXtsLN9dmIIwPYWhxm+VV1iTUmfQ
+X-ME-Proxy: <xmx:Hsfcag_ZT48wAgInT5euiXouR2iYliqnPQg5_7YCenSLflcbv4UaKg>
+    <xmx:Hsfcasi5iyWQKFBzoAd4YDJQaS0BAS4bR2QFM8SfURZMuGMgPLnDjw>
+    <xmx:HsfcavEpFYxc4uZgQzfAWH5slPjQsaI7Z7FznXuTBQ_VVHdUxwHbNg>
+    <xmx:Hsfcaj-9t8QUHi16wLzb7CG5ArOHuB7G6QmcIiKWo8qx6Ib4tFyy8w>
+    <xmx:HsfcagzOIsH6HhtR-KTWMSq5791HPzvvnQMw1WMKZdWaSHtOyNBTkLmE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 24 Oct 2026 10:56:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Emily Shaffer
+ <nasamuffin@google.com>,  <git@vger.kernel.org>,  Justin Tobler
+ <jltobler@gmail.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Documentation: propose community voting process
+In-Reply-To: <20261024111856.8s8qu%taahol@utu.fi> (Tuomas Ahola's message of
+	"Sat, 24 Oct 2026 14:18:56 +0300")
+References: <summit-2026.94e33e9ddf234334.06@ttaylorr.com>
+	<20261021200341.378978-1-emilyshaffer@google.com>
+	<CAJoAoZnhc6Tjm9m9dmTA6UD18HzkxAv2_ifB5x74ectqX8YieA@mail.gmail.com>
+	<b36dcec9-ad9c-4ddd-b3e1-e246d2fc093e@gmail.com>
+	<xmqq4iedc99a.fsf@gitster.g> <20261024111856.8s8qu%taahol@utu.fi>
+Date: Sat, 24 Oct 2026 07:56:27 -0700
+Message-ID: <xmqqjyn7171g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,89 +129,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <a8561fb7c2da446e7f7acc7e2a443991@donquinleone.com>
- <CALnO6CAsCvJRywkw0WpO1nEhL+yU2-r_4Z2AHdJch1m=NK8=TA@mail.gmail.com>
- <CAHwyqnWi3MCvAw-sNrn6k3ht1tpUfmNg18BAvEThKthen5Dwmw@mail.gmail.com> <CALnO6CAxzo5gxpWkfjtvskTVjmWWD4oFE2QKyFMMo7JZUCkBmg@mail.gmail.com>
-In-Reply-To: <CALnO6CAxzo5gxpWkfjtvskTVjmWWD4oFE2QKyFMMo7JZUCkBmg@mail.gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Sat, 24 Oct 2026 16:52:11 +0200
-X-Gm-Features: AclHuK-cFcsoatPMQqIVrzIwyx1GKpkkysaRJAacWUoleiYQN-wnsvBuvVgEKIc
-Message-ID: <CAHwyqnVV86Satk=_on=oG6ZVnSF5GdUWmpP0_wE74HRKGpKfSg@mail.gmail.com>
-Subject: Re: [RFC] branch: delete gone-upstream branches only when proven
- merged into a named ref
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: DonQuinleone <don@donquinleone.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-> > I would say most workflows are triangular on the underlying level,
-> > even if the developer is not aware of it. If you work with GitHub PRs
-> > or GitLab's MR, then you are engaging in a triangular workflow.
-> >
-> > I picked up some important tricks for visualizing the triangular on
-> > this mailing list. But most of our users are not on the mailing list.
+Tuomas Ahola <taahol@utu.fi> writes:
+
+> Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Yep. Maybe I'll start writing a "triangular workflow" document =C3=A0 la
-> Julia's work=E2=80=A6 going on the todo list, at any rate.
-
-That would be cool!
-
-> > But what we can and should do is to make git itself clearer, so they
-> > have a chance of intuiting it. I think for example that
-> >
-> >     push.default=3Dcurrent
-> >
-> > should likely be the default.
+>> [...]
+>> I previously mentioned "topic count", but commits are far easier to
+>> count.  So instead of requiring two topics in released versions,
+>> perhaps requiring five commits would be easier to implement and
+>> explain.
+>> 
 >
-> IIUC, the last change in this area was controversial. I worry that
-> changes here now would have to get through "scar tissue" (both of Git
-> contributors *and* users). At any rate, it would probably want to be a
-> major version release, and I understand it's probably too late to
-> discuss flipping that in 3.0?
-
-Would be interesting to switch to "current" as default for 3.0.
-
-But I don't know all the history there. "Simple" does feel like a
-compromise in that it's not really good for anyone :)
-
-> > And many people would have a better time with
-> >
-> >     branch.autosetupmerge=3Dinherit
-> >
-> > which gives you upstream/master as @{u} from the beginning, and then
-> > you likely never abandon that if you are a regular GitHub user.
+> Quoting the summit notes:
 >
-> Hm. Since I mostly do
+> } * Emily: Have we used a voting process for something like this before?
+> } 
+> } * Patrick: We need proposals and a vote. Who would be allowed to vote?
+> } 
+> } * Peff: Active developers with a track record; perhaps a threshold such
+> }   as 50 merged patches.
+> } 
 >
->     git switch -c topic origin
+> So it seems that Peff's proposed threshold was substantially higher
+> than what has been put forth in this thread.  Any comments on that?
 
-Me too (or it least I used to before I started experimenting with
-inherit) although for currying purposes I always spell it
-
-    git switch origin -c topic
-
-since I want to have the most variable part last, so e.g. "git sw..."
-auto-completes by pressing the up key in zsh to give me almost the
-right thing and I can just erase and re-fill the last part of the
-command. (This whole paragraph is a complete side-note.)
-
-> or similar, I'm ok with the default (=3Dtrue). With inherit, the primary
-> help is to folks who do
->
->     git switch -c topic main
->
-> or something, right? But the documentation doesn't say what happens
-> when inherit is used with a remote-tracking branch as a starting point
-> (which has no upstream to copy from).
-
-It's simpler than that, since you can skip the "main" part, which by
-the way I don't think is well understood by regular users.
-
-This is the beautiful part: since you start with a good upstream when
-cloning (origin/main) you never need to leave it, *and* you never need
-to even specify it when branching throughout the lifecycle of the
-repo.
+I do not know which between 50 or 200 is more appropriate, but I
+think these are more realistic threshold.  FWIW, I made the first
+review comment that pointed out that the bar set by Emily's document
+was too low to cross.  The "2 vs 5" you are reacting to was merely
+to point out that commit count would be higher than equivalent topic
+count and without bringing "2 is too low" topic again, which I
+already gave an input to.
 
 
-Harald
