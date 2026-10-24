@@ -1,97 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792800192;
-	b=nEPc4JsWD8Y+vZdy8UC73CTfVlPr15xxDx6tL41+ghG8bcap0AZH7si0ITYyJfpFPvlD
-	 8/Jfo1xkbGDMxsyJY4iQaJtHTlFkhbAShQ6d3EDtAJbV3BkCXy3bjD3u3Q8bbNAFCtBmg
-	 VYR+yTE/Rkjfkm5ajVmnNS4TclOuSLd41xPCOEYq7dKpzeNTRK+JgqbQaWICy4uq4MnEC
-	 0Qr5TA8vsyi0UGOgL5rIdxVB/prSsddfdeElA/O0VMZpWBL98Uh3ePwNksuNmG0+T4nWM
-	 lf5l4rwaUKMhpbmgCwT1CyagzzMpxCwUANVt6iX4ruGSV+Pzz1/gWU7kK5uyF1GWVQQ==
+	t=1792801926;
+	b=fXhC2SUYgpjMrwPrpU/h5r+Ly3lpa5Lekr1GkQG06rmoN2GFRaJ4TgnOOggnmlhMX/Nk
+	 BMBKhH5TKNIL+30cwHHY1QXG/JA1s1v58k4q+9HAOwT/lN5PFm7dXbHewc4nD3+YtTdOR
+	 MHSk64+wnKvU46R27sYTMfKgwWrCb90/nJ86cHIjT6sNkY/Y6G41Jz5JC90m/9xCZ61eC
+	 U+x3AiGFRrhTlnBYSL+pcEqs+L8ulShNFaFN848J9LHt8PmnFHP4O01dMgciC5ZiqyC39
+	 GX5QVoTyf4WIJE7fLAHtvoj/43oi9deo5bQw788miRALwYlF9rGj78SgoOx0VL3HzvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792800192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792801926;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:MIME-Version:Content-Type:
 	 Content-Disposition:In-Reply-To;
-	bh=Vn7yHmFigTxkhft6z+c2+yrQLtd+FOQqc8J+CSNmRjU=;
-	b=Fkcm2Lgd5w3YoZ8SZbLviZs3CKQJljSJtj+9vyTJW9U4GJ4zYuYPIi4EuXn5r5Z/vT/+
-	 RlgGZTyJJjvtG5f1/xrZqUKE5gI3MbLCyMKEkpJSLpovGJcE5Ym9+wANM2G44QGIv/ipt
-	 rEkTTOTGQzXdrItCPOXMcov/8EApwsXDaa52NyGc9EqjmOcp4sH1Uh/ZawHuG0kSwDq0+
-	 IhfOHVvw3WGlpuKJD+dt+tz7OLH4UYyXqvvNlJJX4G0z5II3SDNAS91dnJSJBsmBJTa3g
-	 R9gfM0eot+O4hMHTnlbYoy/ZCSaULUcucOzHRJj0Y83oR6iZweIxorojiUVEBIku2hw==
+	bh=1v7ZBXWKwiQnN4dtlK46nUzGEXzadqOOry1mIdOU0vk=;
+	b=E57vifcH0qwbMr8+lQkibUfxN2LuqwfWi8O9PSY69bE+yHz2upUeYNzD4Z8Qs+RQ2ePX
+	 nQUhh1YZ8wPDTFbvvPxDO9Qu4YcuF+l0f841G2vuikiWDFDCOoDMShP8lDBnC+S6cVmF8
+	 qlMlJvrHbsqgbeDz0WizPGkkdtkH3kNsDi9pGPcf3kkQbSwlSr0T5gybLRGthQydvhDBJ
+	 CDDrzQknLb+rBKfzATid5trb6s+jao47JnSFWLpicWDtH8KMzPQGcvffLDcmN3nFtBir6
+	 S8F9aLSdP43tdfGMzcOqICj1/8y2u5T/eCr5jELWh0sxK9oN1q9EID84E7TjmZcu+8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=openai.com;
 	spf=pass smtp.mailfrom=openai.com;
-	dkim=pass header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=GQGXQ3JF;
-	arc=none smtp.remote-ip=209.85.219.49
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	dkim=pass header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=NbJWtdhx;
+	arc=none smtp.remote-ip=209.85.222.180
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F34606A31A
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 00:03:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D2F34606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FFE606A31A
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 00:32:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 67FFE606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=GQGXQ3JF
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-91b834592afso15442806d6.0
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 17:03:11 -0700 (PDT)
+	dkim=pass (1024-bit key, unprotected) header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=NbJWtdhx
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-93f1ca4132bso118639685a.0
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 17:32:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1792800191; x=1793404991; darn=vger.kernel.org;
+        d=openai.com; s=google; t=1792801925; x=1793406725; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=Vn7yHmFigTxkhft6z+c2+yrQLtd+FOQqc8J+CSNmRjU=;
-        b=GQGXQ3JFzTy0DM695rl1fkvEqsFK/VwOZcWtiz8lfQ+xpeZQ/d1qqitcN+TmZ5AK5M
-         CEYRB9VsnMCcMdg82ZEdFz2+D9H+fly1rVgPikOy19GUWvBweLdjeu9oUWCpVJq/Kd4e
-         btLbRwDrTYmPIXZ6CcDZtlE0EKMzL+AeidpSw=
+        bh=1v7ZBXWKwiQnN4dtlK46nUzGEXzadqOOry1mIdOU0vk=;
+        b=NbJWtdhxs9JwrvDhPJJGuHoq2uT2XCTcYQfoBVOxjtTnAo80yyxadbwIXrvNERkUfY
+         mV5ETY4L0vLLTKmCOpLVB3aBllbr/5KjducDByom7/LQMv1up2EInwjiFbYUE6w3YxHi
+         qFVhmfZWmOqDab1g3kKDJNNY8oe8k6byJEr8w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792800191; x=1793404991;
+        d=1e100.net; s=20260707; t=1792801925; x=1793406725;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Vn7yHmFigTxkhft6z+c2+yrQLtd+FOQqc8J+CSNmRjU=;
-        b=yOcJJksMO8BLs58Yv78R/hepQaezgqb9hsHMMhz4cn9CUSTg2MB9YxRG6m0AD+HTgY
-         CM/Ts/Hg/FcYBQwlyq0ntN3TYrqZJyRcAxNR/a1UyToj7bn8sbB/9Y1MtddE3qOpUTgb
-         Z6Ad1XJgemj7i0y0yg/7pw4XlqV/oy8Ys+heX4VuF1T/CF8mSQsmqrrOyB976J+3TnY8
-         XK7kxUQwziS0CGCpqimusSIFaobuXOBMSDxs0hJKA6WVtgRBVLUr/77SROiS6L98hp9n
-         YBVhrNI4oKZVjxGvE7FlasT4ewRih6PJn+arGbOQv9tkpLMMn5kyAZcQRZeIZmDRUg8g
-         I/RA==
-X-Gm-Message-State: AFq9FYLMjOZmWbqCOuf4OKgi8SlYe4Ii3MKpZ+7rxLjgsUGUsY127S0e
-	KWAzo6bWsonDApJAi6MUs6FC/C8r43e0ouGYfKXW7YMkDOO5VLCMeyPU3LRedP3mdz4=
-X-Gm-Gg: AYBFou17W8Grizgb2B6US8l/HYCrjbIpl9+/PgP/FwzCK22fqydEFxJ31VXG/sSSe6i
-	emJVNvTwpQ9vIxtNU8VKKgOUC1ub1RrP6kvmUT50oKsE3SKS/KtCouiSnGjaMD6dmBILt4oC/oG
-	VPKiChfCJB6w2d7Ge89W8Rd9dznijeg/480620DMBG7TGicpXNC3rSivKB0RHZnS5Yh7G6NqL59
-	Hgv80JSC5cktBZg4zBkBN2jX4DO+xYSSALKGLwi7Qd4doPwpp2SxxjPvSnYg9Rbvsy2PLbvy2Fs
-	VwQdP1g42lKXik6Y5cFO0R+zbcO//d8OR8pxhtF2teTINgSwDL/RL/fEagLC2k9/L2NxKXKd7Zs
-	pFLmHPszjwLfcyaoRJ0IK0U2Wj2RBYhsDG442rP0vycnS1rfDLZeTYZl7btMPaWsk+4cUggQ2Iu
-	3jGeddSiCWOWOsxpL+qzgvSXQKXxm9y7UlxjSpjCmeeQPxtCWb0pQA44FyVScAEtVIdOmHwoEW6
-	OaBalRtMfjzg6CrPH4jENt/R7oFPNUJdPxyfFZmcIOcngqIGj99X6bssMROHur0V7tU0J7M9xwA
-	ehVhskspupGNXJJYU4jr2zpblU7dxvaAvrX/mmTQlM37vdg+r6R3KKBQ+XKfsKR1+a9s
-X-Received: by 2002:a05:6214:2627:b0:91b:5d3a:4fcc with SMTP id 6a1803df08f44-91c48ee12f0mr10214756d6.57.1792800190581;
-        Fri, 23 Oct 2026 17:03:10 -0700 (PDT)
+        bh=1v7ZBXWKwiQnN4dtlK46nUzGEXzadqOOry1mIdOU0vk=;
+        b=IpzInJLhWt1Mi6mcuHqqI3AwNHCvTDaWV/qPgE0RMPNNHz8PgU8zZKsW51cbLBgfLb
+         S7w8SHSmBBXPTofiSEfPZ8WbFz5zeKrFEtKgJY09t1bUhetf+Ya1sYk9vMS0n7ye/seO
+         4aLvqXROxIRwgYOcj7rkcUfRpNgKeokMcXi+GiCx/tpBp4BTbe4NWhytSGGiV9weibdB
+         yejseqyV0FK6TFMRo2hbMVLXVlMPV0twT0ljTwxVtUBZEB1ze6gd2FNmotFTLbm/K/ON
+         4kYD5Y5gtx77A9uvb+oVCJgT2+qUu9qMSd0cUhQmf5MrYy2PdoOOY0MujCDqf1FD5Crf
+         YHIg==
+X-Gm-Message-State: AFq9FYKGgZBWUdwHS0fpXN7L5MNSvlgaOAK52ZUlvBzwR7nSIZs8Uwlm
+	sNXHzK+x7kmwg3oxwHpAsFafKrD2OtIiiW9aHhqsGx36JKPqI73687eRnvC+pLXyjQcElCF81C0
+	YekL09Rk=
+X-Gm-Gg: AYBFou0SYxOcYbdJkaXilJrsoQH8Qyp3qYThp3jF9j2QWFCjrwrwD+dipGN9DYt1A5S
+	2SsIsNsXi3LU9XW4EQ0xMKwFMIS4I4wSO0Sjip65/LP+w62IaUDSBOQFsDRn5IZv5yq0xYDQjB0
+	AP/R7Pk+FXNIZR3r1zKN8sJohjzSRb9r9tRRN3jMKAnFKuP5HWWA6b7UWmvFneUW+5WInNHoZQy
+	rvy9j1zUuAOWWap8qwM89lYPqG6owHXm4GIplWQMIrNXcc/8K3lS3nBjnc7ucBu/PBkZO/flb72
+	piGaVYNApKk9VCvDaO7+hXH896/GcXPM0/bZ0UmhO9PnHDQz8yMc7qFnXccvmfEeemI5w7G8IEs
+	/5RgWiRqJf340Y84MCTq15Jkx4pAoZabwYpfQUhlYI8taSxRRCrhgh5cVQSoR7FVqotBDK3PXK+
+	EaFPyb1++npkhA78FhJ4XpsmVZS5YaU8zyNjj9Vne5cfK5HVCQTt2Q67J0BMtr7exMws7HFf1aN
+	didh7vqPM18OJOP1XjeEyL1GEHzxA61OqgFK14CfqJ60bOi7J2ALWGuU0aOsVxarM00tRhxTVPk
+	Sm2igxinDTHLptlpJ1r2e+YrLzhFZZqg3G8+3ggtovH4Hx0CjbKpGWvK9q4hNAzs/diJ
+X-Received: by 2002:a05:620a:31a1:b0:93f:1e3c:4a3d with SMTP id af79cd13be357-940ef956c10mr108901685a.46.1792801925326;
+        Fri, 23 Oct 2026 17:32:05 -0700 (PDT)
 Received: from com-79390 (vpn-eastus-02.tradc-corp.com. [20.102.114.220])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c47c4399fsm7575356d6.22.2026.10.23.17.03.09
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-940f0a771c9sm47152885a.34.2026.10.23.17.32.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 17:03:10 -0700 (PDT)
-Date: Fri, 23 Oct 2026 19:03:04 -0500
+        Fri, 23 Oct 2026 17:32:05 -0700 (PDT)
+Date: Fri, 23 Oct 2026 19:32:02 -0500
 From: Taylor Blau <ttaylorr@openai.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
-	Jonathan Tan <jonathantanmy@fastmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Derrick Stolee <stolee@gmail.com>, Ted Nyman <tnyman@openai.com>,
-	Daniel Reynaud <dreynaud@openai.com>,
-	Aaron Friel <friel@openai.com>
-Subject: Re: [PATCH v2] negotiator/skipping.c: parse parents before queueing
-Message-ID: <atv1uK2ZIupPgrES@com-79390>
-References: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
- <9e9ae442333b5e2ccc0905c44c2c3e16c49481a7.1792704069.git.me@ttaylorr.com>
- <xmqqld7pcqku.fsf@gitster.g>
- <atqSs0yzXw0cf3cH@com-79390>
- <xmqqh5icbial.fsf@gitster.g>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] ci: pin actions in the main workflow to full commit IDs
+Message-ID: <atv8gYf8Le1WHTA0@com-79390>
+References: <a178dde02a80324d4cb52781d542ee575cbb68a1.1792773333.git.ttaylorr@openai.com>
+ <xmqqbj8k3xcy.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,42 +95,51 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqh5icbial.fsf@gitster.g>
+In-Reply-To: <xmqqbj8k3xcy.fsf@gitster.g>
 
-On Fri, Oct 23, 2026 at 07:30:58AM -0700, Junio C Hamano wrote:
+On Fri, Oct 23, 2026 at 02:45:01PM -0700, Junio C Hamano wrote:
 > Taylor Blau <ttaylorr@openai.com> writes:
 >
-> > On Thu, Oct 22, 2026 at 03:34:25PM -0700, Junio C Hamano wrote:
-> >> Perhaps rev_list_push() should mark the commit as 'SEEN' only after
-> >> repo_parse_commit() succeeds?
-> >
-> > I considered this but ultimately decided against it, since the default
-> > negotiator does:
-> > ...
-> > There are various callers of rev_list_push() in the default negotiator,
-> > but all include SEEN in the provided 'mark'.
+> > Some forks are hosted by organizations that restrict which GitHub
+> > Actions may run, including requiring actions to be pinned to full
+> > commit IDs. Our main CI workflow refers to actions by version tags or
+> > branches, which prevents it from running under such a policy.
 >
-> It is understandable that we do not want to widen the scope of the
-> patch by adding a preparatory "fix the existing ones" step, but I do
-> not think "the existing ones make the same mistake" is particularly
-> a good excuse to add new one.
+> I do not see why the limitations of other organizations should
+> affect our workflow here.  What if another organization prefers
+> readable and concise tag names?  Would they send a patch to revert
+> this change, leading to a "last one wins" situation?
 
-I think that's fair. For what it's worth, when writing it my thought
-process was "let's be as consistent as possible with the most
-battle-tested negotiator" as opposed to "this is broken, let's repeat
-the breakage elsewhere".
+I see what you're saying, but I think in this particular case there *is*
+a good reason to do this in your tree.
 
-But looking at it more closely, I think you're right that there is a bug
-here in the default negotiator. So...
+These actions are executable dependencies of our CI, so if a malicious
+actor points, say, checkout@v6 at something which modifies code in the
+tree, we are relying entirely on the permissions of CI's configured
+$GITHUB_TOKEN to save us from code injection.
 
-> Would a hybrid approach to (1) avoid copying a mistake to new code and
-> (2) document near the new code and/or in the log message that the
-> difference is deliberate and fixing existing ones are #leftoverbits
-> and not addressed in this commit?
+There is maintenance involved, including deliberately picking up bug
+and security fixes within a major version. But using a tag does not
+eliminate the decision about which code to execute; it delegates that
+decision to whoever can update the tag. I think making those updates
+explicit in our repository is worth the maintenance.
 
-I think a hybrid approach is fine, though I am happy to fix the default
-negotiator alongside this series. I have a patch for it locally, but I'm
-happy to send either depending on your preference.
+Keeping a downstream patch is certainly possible. But having each fork
+repeat the same translation leaves the upstream workflow without that
+protection and duplicates the work. That is why I think this belongs
+upstream.
+
+I think that we could reword the commit message to explain that benefit
+more clearly, but I do think this is the right policy.
+
+> Would it be too much trouble for organizations with this specific
+> requirement to maintain such changes in their own forks?
+
+Just as a concrete example, before submitting patches out of openai/git,
+I apply this patch on top of my branch, then run CI, and then remove the
+extraneous commit before sending. This happens on every topic, and
+AFAICT this is not an uncommon restriction among other corporate
+organization accounts on GitHub.
 
 Thanks,
 Taylor
