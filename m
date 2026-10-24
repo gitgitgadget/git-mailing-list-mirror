@@ -1,99 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.172
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792815421;
-	b=gcRuwRPxrWp9Jjv5uwEQ61gaGZxjw1eIbmeu8bv1NdZpmz+iqP/RHdipVHOwjVp8jsb1
-	 +vYcHmDitXDKE77wDvcvGCRHItYcO3nYVkP352MeSGwsh4xi2g9+70Fsx+FJ9pHtgnNaB
-	 XXYoraPBfNFS90s71NWITNi6wdUZD2AFAFIKszERDqW1FZvqrCEe54PwD0/23ntXSjZ2l
-	 EQgP0v4FHnOlhwvKtK5kzMzlUoCNQzLhTIHnSB8lmkrPps4oUpOWDIR32Y/F58rxiFltu
-	 zHn5cbNAoyUAaI6fjTEdYPDEXno11/NOtlguWgngSQqIBJ3uol6iTLc/1M9fLFQLwEg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792815421;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792819536;
+	b=SGqGEQYRCcAsIcXnOfWZ2ErUiTdcm6pYERD8EWwqjCED9VvK9xDcjdoIgoW/a2nUMYXk
+	 WxrxM+Jgi2UjLow+NhuvXfTU+ZpOn6ksGL6steV0czxD3u1G3nUXRKP3q6PaoWFvaFYMw
+	 1OytZUx0ZXGFvFy248e+oOXf82OesHy7Y0x1xc1xjpvCaLq1FDfl9jstuxnEjZOxTqRMj
+	 CrPLXgZfl08Ts1FfulYwmCJbdwz+1d0XJNo1pHnR0ba41QSsyGvEJ98gPU//xF9fztKpV
+	 0x9eZaIIy1HUeJjzcErDwxEXl060J9A5/Up4ee++IgSwuu/UHQK0b/WblWe/I64hFEw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792819536;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=ntRGyU5XzcOh2J0pRNCELW+kPIwEA18RsQJBa3e+O1Q=;
-	b=5ArEikXf9/yWE0BgVndk35yDGenmzzlY9DcUKDXTtl+sVUq0ldz+4vqyK3TrSXrNQ+Ml
-	 g8W4/kDOYoFGcSwzDHKecIZqkrjLNYP2LCFGZ71smCq+BPaDEX9MKqGDaqfeEEi2imNVO
-	 AFyJXlTjjNyttlDVmj9XIs4NUWPPUxuEoH4DoON6oAcb/yaXecn7j1goVQELDYvCjKv3H
-	 dJnW0aDkBtZaNy/XEwhOoIMyHM5ip5ByC1isK1yJm98dc0gkrUQfQ8e0dHMzs45wkNV00
-	 NOvQzGxMBFIaFchpbP250+vrlJvJrQ5Bn2juI91zWqW6JrtLZByYvVp7P4e+uXnVGaw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=0n80RJdOUg1Wtzqvj1R1n5jnaBxw1c5QDSlslxFhsjM=;
+	b=kHNcK2anR2Iva608k5D3MIOXzedYWe+7IJpZuLAVDsyPb93TXX7PC7N7K/GMLiRS34MS
+	 x0Vi4v6g0r6HVOVtF8LPWWkDmse8I8ameusxZJ8DlVQTkFb+kIfgBRzBvExn+q/AFUo1O
+	 b9+B+sJlg9grLn8GbWt2p+aIq+R8c7IzHbbO+vtaJwUk/GXTaN/8bRGjcqcDb0qK6MoYv
+	 jTMtPDZ5kjs/z+fD79Gz7ktaZi1ElQxnGPeHOVDBoHSlWXq3FC111lmnY96+cVdPzddHO
+	 KSY0ATExdDgg+IllByax5MZhIhU7dlg00d1z0PMM2/ir+ebd993kQrG7GLCWMDC9xdw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=K5zm+DCp;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.172
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kr3FLpsi;
+	arc=none smtp.remote-ip=209.85.128.46
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF27E606A31A
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 04:17:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CF27E606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749EE606A31E
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 05:25:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 749EE606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=K5zm+DCp
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5e948e56af3so654522e0c.2
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 21:17:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792815420; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KoDCgR/tdMEcftS8h4WM96XhKwxeN3Y3qaauXg1TI7zjTLmEKoFVP5m3SJHcX6z2Hy
-         B2HIyGPXsknHeHMbbvuUVcMY/mw0Ztzk/DBsprDC0z4Dr5NqBGhRAGbc2q+a2hz107ha
-         7wnTt4HyPft0YKCFCDsEQyMRHn+RkV367/WHamE+qRZNLWvxX69uV4jX58uU/nh5wKiB
-         K1mq3mcew/HYrZrVNSb3LdnLquYNPXY/mPNvDZgAaWHrG//1xM1LdFHnBn2TwG5yYMPs
-         ZBLjRqfRkR89UMSeB2IsIL9VtzSilnJzR3O50cwy+iXofbfEXuulX0aT6AmghcDP1yn7
-         CcGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=ntRGyU5XzcOh2J0pRNCELW+kPIwEA18RsQJBa3e+O1Q=;
-        fh=VFkujceCi6Ml8oCNInE1wM/xgv0A/hbpIb5lMNmS5oU=;
-        b=NefaS8ltOwN8qq0i5M8W440VEXXE1bSmrHs5vJ/dNzkT8zVA8L/6+iIfy0YN+JYOIN
-         2cyq8eGuAj3cAknbkjOHa958sKnCKX3smnGLSfrtACapmdl++3vc1hmf0HSZsfldkToM
-         POXe9vdh2jgyMI7wdfC+YHD3KxQ+Zi5XDcdR80CW2l8+kTWlfzG9gvpUZ7c/53YCUNf0
-         jl8ZCgGQUO0xDwL3JVsZEmqqV7mS3oHSeIchxACn77OWedIuAxJVELu1RqC1SbP/KTJi
-         nRU4gsnKsL73T1ACyRQ0suftazoKzyzXQwL9Z0k++FUEPfUtdzOtUiKZE52z+G8QVlfc
-         2cOg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kr3FLpsi
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a210470b49so11305755e9.2
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 22:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792815420; x=1793420220; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ntRGyU5XzcOh2J0pRNCELW+kPIwEA18RsQJBa3e+O1Q=;
-        b=K5zm+DCpgeqJe5M59ZJCynW2j9UvVtSMiY3v6AhJQdqzGoHtVSs6CvImGNaqgAJRrq
-         P4H/VhNB6EBOupK5GYDg90ukm34I+Ee+w4z+rwkql0WV7QVKfDGb31qquKwfNCZKRhBO
-         VpqaD2tAvpKQ/VkD/taFkASbvnC5QiTul9By5qWkadMrxggO8iuyOIb5pJlscZKLzTRY
-         H81JjMTum0o6duPA1YyQjdV7lWTROcEbtN0M0tzOVxySDtU/ukIZUr6GmW1N46MKibqy
-         7kIN9ZrOmqBXpqbsM7BPjoyvfBB07q9aVQi2J3ki0XPlNxJaaID5G7CyG7+aQT5kPqz4
-         JCgg==
+        d=gmail.com; s=20251104; t=1792819535; x=1793424335; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=0n80RJdOUg1Wtzqvj1R1n5jnaBxw1c5QDSlslxFhsjM=;
+        b=kr3FLpsiTavDrHK5tCjFp0dhatWgFnsRLLVpicpgCsyylG2tqQ4ixddeQ2bEQNbKzH
+         U0kjz2ZS20V8GSeA8egKbkR2H7mnJHVgZklPfVMw+C6SAi1kwIsAi3PljvgQt8mkH2bB
+         CNtQE//9YH9bRZWjG2kjJ9iSQ89ixGBeWUo2nFF1mNy6rDkm5Gdincv5saKqVbIpVjyM
+         C0lSraCBT5j6csRPO2ZbY3Qv1MSqy8ASR84342fC+K+1qfvj0zSipTPw3hVlJO75GMBi
+         BZhIp4nr4d3BJQ/AvMNgoPcqAtfA8rSII+jYbATTqDV0Fel5fNzx60oD2xy1IQf+5Dcz
+         BHcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792815420; x=1793420220;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ntRGyU5XzcOh2J0pRNCELW+kPIwEA18RsQJBa3e+O1Q=;
-        b=NhOT5kzdJUlYrpgF5oXkkdmGShr98B+MqFiE2/iMGo9iBFAXjHhpXKHAMygyrK5XHb
-         CEIMLmWr/QulT7fw7NAtmOMpYdnO3CyZYTtmEKM3FrNCeUCirbBlBmLEuhpg5V/ihJkp
-         wIZdQNymB0d14R5ntLZufuqPNdKmOeKiNpyIIMrD5krCBUpyThkhA//n9U8cKucJzdEQ
-         6KrU1bkxcA9UEcTg1ckWVu8cf442dBM9Hf6V+yRvZTlCF+5fMnxsGtr5NnsjSRdgYthS
-         DcDW59xYRwNU+6vmLFdVrL6MgIb3V/UbHCnobeKQiWupHEYED8A6aMBV0LyaY5EA6FCJ
-         TEAg==
-X-Forwarded-Encrypted: i=1; AKwUvByFUApqS/rHA7hPiMsvpPOMiQlph7zD5M7sAEUSHbizL/XREfNP8HbcoUlwL0kfmIjHjxg=@vger.kernel.org
-X-Gm-Message-State: AFq9FYK40HqYr8JEIdALeeoc2M+kMmgBjxR5T2euOcrcXoDJL9Qu8lVv
-	0YhPDQ+zI1BreyYLae4Jx7XDF0AZPl16mBVKJ8tDipmvT98GaysJ9GVG07om6+9pM+hwrwZSoVx
-	LzP4oQdn3MzkbTywdNjAmU4U7bJ2CxwM=
-X-Gm-Gg: AYBFou1hY6TQgUkLk06gAAd8xup4E60gL2A4l0zxybGIRi4I91Zu9A2eQ0spAdiL+OD
-	+A8kZ4ZnbTOdxi09I5zLN+DVWp56/vWGKe+qzoRoHDbZ6R0P6c1TnlFzUhbNxq93uNy0AZTtzsH
-	DyLtMy8/qd4z4HHfiSF4hlQzS9yVQWx5bxhIaUcCifw8w8+0+Mvw2Up9nHT4jlKBYB4GbXGbWbc
-	GH7D3NsQjiO5UTMr/vwei/nH1gsm8Ma8oR13Dv8yKKqeps4NOJR8EqtP/hiAoinIJN7aPZMzcj9
-	lsprjSg+iPXE7OATQWXHgL4XW/TkNlUr6xJ7KcwDIq7kk8z7U0uJ9p67YbYE5JXyvP55LFA8phd
-	PUrbiAkhHJ9H2oo1s0jXV25oiWJqOXqH3/0exIQ==
-X-Received: by 2002:a05:6102:38ce:b0:7a6:b8fe:e834 with SMTP id
- ada2fe7eead31-7ce5cd91472mr293444137.27.1792815419631; Fri, 23 Oct 2026
- 21:16:59 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792819535; x=1793424335;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=0n80RJdOUg1Wtzqvj1R1n5jnaBxw1c5QDSlslxFhsjM=;
+        b=ldybOasJUDAH8+yfmmq1cUhUXqfXShf22KyI6EGe2oXMscr1ySl1sRQ4MTckXGcI0f
+         jqzhvSBnPZ5exdazqGFRikeb6EQQcCf2kh9Jv9vzaqkxQ3ftdjAUbF8Ayht2ENW7GZ3J
+         iZmyCO2Y0U5uZSfS14gW1ZjyCEuhEElKv/PsAaFntrWZv5fUZ5Rr2JSiFR/ToijSLot6
+         5+vBu+IniBommorlKLxDA8EjMY/zyh3gidQxkcnnAoF7hWUSRy60adrIrGJTyaL0R3Km
+         m/CQ1ppfs6hkF+dRMVmDX5pz6+sWpuNXvdoFx2BmHTFquu7+sdYf89eyNfSkkd3rpJzY
+         zyJw==
+X-Gm-Message-State: AFq9FYKT8TRp2cFRQkh/vNWje5LhtzAIvB0FL95QYm0C0Prqn6zcad1p
+	BiZSL7oFWyoDH7MHpK6QCkEcyc8WXpeVJ3x3rZsfm4/kFV96PjGjkIu1BFh1IUyw
+X-Gm-Gg: AYBFou2pJDnibOQJYhmnyK2Cwx/5WsVDSjHHhSDV4waHn2mW3nvFUfMLU9RyOqQWPqn
+	kQoGLEMFhVyeAYgPveNPNcPx1od3fmXcQ+hR1+/2nx3wQ5M9BL3D0n6Ucxh5i3Sytpl+LZsZfgI
+	fQvsznxv/9kL86JVFrmXfF8sSoXdRRKcBnuJzO2Axj0+A4zW5Sbpl+NW3+tNluwSzMe7JzSTtSu
+	QN6W81FK91/tsIK4APNQUM9I7Cladm03Etxr/DuWLn8vhrScIPM8333eHWe6tPycJyBZvB0KtvE
+	OmW9Z3Vmi6zPMd9Q4QLfsPefWpqS+R3wdkWIGlC1gHk+j5MRU4AlsKYgpq8FBIEPFOIspZRiMKF
+	5M8batHwetLkaWREOW3qa1GeCcX6MkOcPjdVq8Jo5JyzLMaIR376YrQBdCpJ0+tVotgB9OJlk9X
+	SYsBn21TB6BXjemz1LNLP+0fIpgs0cIGSK976gejD4SIrzBvcVvDyTtmv49gkwcHsmEY9ZhLwId
+	X734sdG8BWlmab4DqBTQeQQ0zI7p3eJDrr9/X3X3dw+46laFXhzR7FWBYVlwzqldzXtW2drX8ed
+	oUEQAKSA0oqBZgBVin5vaaPVOMZvUsTVrEatpQJoGfH28ePSHgikiewLKj1r+RM=
+X-Received: by 2002:a05:600d:82e5:b0:4a1:cd83:b23e with SMTP id 5b1f17b1804b1-4a35aae3e29mr18437925e9.0.1792819534608;
+        Fri, 23 Oct 2026 22:25:34 -0700 (PDT)
+Received: from HP ([105.163.158.205])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a04ae28sm30945405e9.2.2026.10.23.22.25.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Oct 2026 22:25:34 -0700 (PDT)
+From: Tanga Joris <tangajoris@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	usmanakinyemi202@gmail.com,
+	Tanga Joris <tangajoris@gmail.com>
+Subject: [Outreachy PATCH] git.c: drop NO_PARSEOPT from builtins that use parse-options
+Date: Sat, 24 Oct 2026 08:24:49 +0300
+Message-ID: <20261024052449.95869-1-tangajoris@gmail.com>
+X-Mailer: git-send-email 2.56.0.236.g7e34d8174d.dirty
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,61 +96,79 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2266.git.1792341073005.gitgitgadget@gmail.com>
- <pull.2266.v2.git.1792428811100.gitgitgadget@gmail.com> <atsGfWzCMW0LMHNX@pks.im>
-In-Reply-To: <atsGfWzCMW0LMHNX@pks.im>
-From: Shashank S <shashu8660@gmail.com>
-Date: Sat, 24 Oct 2026 09:46:48 +0530
-X-Gm-Features: AclHuK8LbOzRd3Hy4NWzx4MgWv6w6oN9h2M1rUNYsO_ZoWef7_EK1a6JLYR_p9w
-Message-ID: <CANHmUQRSckmVkxk_+nDmEb2uySewheJj7gvsFRTVD2ByVDh5Uw@mail.gmail.com>
-Subject: Re: [PATCH v2] [Outreachy Patch] prune-packed: remove USE_THE_REPOSITORY_VARIABLE
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Shashank S via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Christian Couder <christian.couder@gmail.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri, 23 Oct 2026 at 12:32, Patrick Steinhardt <ps@pks.im> wrote:
->
-> On Mon, Oct 19, 2026 at 04:53:31PM +0000, Shashank S via
+The NO_PARSEOPT flag in the commands[] table marks builtins that
+parse their options by hand. Builtins marked with it are left out
+of "git --list-cmds=parseopt", which bash completion uses to
+decide whether it can ask a command for its options with
+"--git-completion-helper".
 
-> >        ## Commit message ##
-> >      -    prune-packed: remove USE_THE_REPOSITORY_VARIABLE
-> >      +    [Outreachy Patch] prune-packed: remove USE_THE_REPOSITORY_VARIABLE
->
-> This prefix shouldn't be part of the patch subject itself.
-I will remove it
->
-> >      -    Right now, the prune_packed_objects() function uses the global
-> >      +    The prune_packed_objects() function uses the global
-> >           the_repository variable. To help with the libification effort,
-> >           change this function so it takes a 'struct repository' pointer
-> >           as an argument instead.
-> >      @@ Commit message
-> >           prune_object() callbacks to read from this new struct.
-> >
-> >           Update the builtins that call this function (builtin/prune-packed.c,
-> >      -    builtin/prune.c, and builtin/repack.c) to pass their local `repo`
->
-> One small nit: I don't think we need to have the list here.
-I will remove it too.
-> >      -    variables. Because we are now actually using the 'repo'  parameter
-> >      -    in these files, we can safely remove the UNUSED macro from them.
-> >      +    builtin/prune.c, and builtin/repack.c) to pass their local 'repo'
-> >      +    variables. We can safely remove the UNUSED macro from them because
-> >      +    these commands are all declared with the RUN_SETUP flag in git.c,
-> >      +    which guarantees that the 'repo' pointer will never be NULL.
->
-> As mentioned by Junio, this isn't true. The repo pointer _may_ be NULL
-> in the case where "-h" is passed.
+Four builtins have since been converted to parse-options, but are
+still marked NO_PARSEOPT:
 
-I will improvise the commit and submit a patch v3
->
-> Thanks!
->
-> Patrick
+ - patch-id, in 2871f4d447 (builtin: patch-id: add --verbatim as a
+   command mode, 2022-10-24)
+ - diff-pairs, which has used parse-options since it was introduced
+   in 5bd10b2adc (builtin: introduce diff-pairs command, 2025-02-28)
+ - fast-import, in 863937696e (fast-import: use parse_options() for
+   command line options, 2026-08-11)
+ - var, in e19f0779c6 (var: add "-z" output mode, 2026-09-26)
 
-Thanks!
+This causes "git fast-import --<TAB>", "git patch-id --<TAB>" and
+"git diff-pairs --<TAB>" to offer no options, even though they are
+listed by "--git-completion-helper".
 
-Shashank S Mogaveera
+Remove the flag from these four builtins, like 66fa6e8ed8 (git.c:
+update NO_PARSEOPT markings, 2022-08-19) did for others.
+
+Signed-off-by: Tanga Joris <tangajoris@gmail.com>
+---
+Removing the flag from var does not change its completion, since
+it only has short options: -l and -z. rev-parse also calls
+parse_options(), but unlike the four above, parse_options() is
+called only in its --parseopt mode. Its normal options are parsed
+by hand, so it keeps the flag.
+
+ git.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/git.c b/git.c
+index d7b5f88e52..2d27ad4175 100644
+--- a/git.c
++++ b/git.c
+@@ -571,11 +571,11 @@ static struct cmd_struct commands[] = {
+ 	{ "diff", cmd_diff, NO_PARSEOPT },
+ 	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "diff-index", cmd_diff_index, RUN_SETUP | NO_PARSEOPT },
+-	{ "diff-pairs", cmd_diff_pairs, RUN_SETUP | NO_PARSEOPT },
++	{ "diff-pairs", cmd_diff_pairs, RUN_SETUP },
+ 	{ "diff-tree", cmd_diff_tree, RUN_SETUP | NO_PARSEOPT },
+ 	{ "difftool", cmd_difftool, RUN_SETUP_GENTLY },
+ 	{ "fast-export", cmd_fast_export, RUN_SETUP },
+-	{ "fast-import", cmd_fast_import, RUN_SETUP | NO_PARSEOPT },
++	{ "fast-import", cmd_fast_import, RUN_SETUP },
+ 	{ "fetch", cmd_fetch, RUN_SETUP },
+ 	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP | NO_PARSEOPT },
+ 	{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
+@@ -626,7 +626,7 @@ static struct cmd_struct commands[] = {
+ 	{ "pack-redundant", cmd_pack_redundant, RUN_SETUP | NO_PARSEOPT | DEPRECATED },
+ #endif
+ 	{ "pack-refs", cmd_pack_refs, RUN_SETUP },
+-	{ "patch-id", cmd_patch_id, RUN_SETUP_GENTLY | NO_PARSEOPT },
++	{ "patch-id", cmd_patch_id, RUN_SETUP_GENTLY },
+ 	{ "pickaxe", cmd_blame, RUN_SETUP },
+ 	{ "prune", cmd_prune, RUN_SETUP },
+ 	{ "prune-packed", cmd_prune_packed, RUN_SETUP },
+@@ -676,7 +676,7 @@ static struct cmd_struct commands[] = {
+ 	{ "upload-archive--writer", cmd_upload_archive_writer, NO_PARSEOPT },
+ 	{ "upload-pack", cmd_upload_pack },
+ 	{ "url-parse", cmd_url_parse },
+-	{ "var", cmd_var, RUN_SETUP_GENTLY | NO_PARSEOPT },
++	{ "var", cmd_var, RUN_SETUP_GENTLY },
+ 	{ "verify-commit", cmd_verify_commit, RUN_SETUP },
+ 	{ "verify-pack", cmd_verify_pack },
+ 	{ "verify-tag", cmd_verify_tag, RUN_SETUP },
+-- 
+2.43.0
+
