@@ -1,82 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792879228;
-	b=MK8apxLybhtAxdxZ3tUc0aGiJsP5WGA21gGxOXpaEg+vVZ5sejYSUhpCaG/Ou8n3RTr+
-	 FTjW4P9pU/4xMSMUXZiMCwajRJ+9DlT4By2Brfj7zFidn4jSS8eL6M5DOUZ3fuTyEC9Yi
-	 +YlKiB5ADkdDp5yiMUf7LlxrrzQPLkzZiUkxYlzwnpZISU7EfrzFshU7Q+y+MuGq9i+cp
-	 hJ+hYyJNu4C3+VtwTrcYenPXcECn+KclPcEnqoyo5qgcQGVGxN1lzQ0bnfQyxgcUHDwMH
-	 0RnkC0gnCpBURSA2BFaphrC5wA/Jz/KIVAIss8JsWXnGfjZpYsFHpWgK0HmOgqmNk5A==
+	t=1792879233;
+	b=ZQX96aBw5lojt78N+NKELt38kOcrMM5KWg9+7jqC1nlY6HZx6GlIyxaN5/42ioHZDuT9
+	 gnYzEwcfeDS7OjOFZmntzSgE45CuM78gB8qtFXm3e7l4KlivBzAAoq99AflqbSbYTGgTO
+	 sb//VOB9U8hP78dtqSCw0n050d7S2vDuDP/Y21veAp1uAbBG41L91Lp8R7Tm2Npy5H5RB
+	 a6SS7/7YLiOEyOJ1aR5LkBkJmYnOtEyPMIgsTWYV/Qpn3ogAJdtWmeV77cogOe5aYkkPw
+	 a6f9Q2ZjmznKv39Lo1qkxjabYnrcx8Dc0+d11WR99K3zu6ZNME+qOtTXTmfmD+OuWrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792879228;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792879233;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=NWsRjFOiCzZHNzFCf762W8Huf61DxFmaFSlIJb3+znE=;
-	b=Yls1O0SRu2ybCPv2pt2aZsjBGCZekAjCHyP8rYbmWXEaerzvban8IpvXx8Jpfsp9kKXa
-	 pzi/Cee0E5uPIIVsRDVgw9nJzGncY+1RJcWw2jI+/Ir3/VScDS9Uh7BSR3mSre3KnDRQr
-	 ESaXuVAm7gRMuVtwJc2qNbunH6wN4yZP6I88tUjJHBk43t1gUJhw8znKGWka6W9QRqzrT
-	 sntgHhVjw6OOjAF0K+wqXkZEcr0hW8Fzn7An0fc2i/IE5pBP3KlcOEFDWoJq9caU4lYpT
-	 T3FWex3lp0cQt7pXrikb1Fi5E8X0bUnHfXRgPJlS3nvINEa91QtOVh6XUoSE9FWUs2A==
+	bh=F2WpylZO8DZ4AjkEeHI08TI3uQLXPEUr6DCTZqm7O6s=;
+	b=DlVpgSrsSfqzv4HTL94UxKEyiu9r8Ve9QruH+xObEk6MnDn3R5GG8zxCH6r3/bHyzJ+s
+	 5t+quNNzL6M+jx+5qBkTl5S0xMYH/xnefhXUew1K/O/hFSFeNFiav/dbQkvd9aDczlBp0
+	 mW+SJ2siV7nIOGbnIQCDJqmToFNutMG1qzsXdexOCKeFVBnBSpKet9gzMvDopjR3YtRtQ
+	 7UG3uZwjOlWJ2+8cnw2gORBSOIYl1kL1xsyPRwqk/HaUkbjdpkfqQllYd12kqNwfTffQe
+	 KbeiyJb099jS42xP7QEJqMRczIqtBed4oWxPcc/PhuJCetEMBGAIDDO0AJoUX6nvCOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="o/VBEweH";
-	arc=none smtp.remote-ip=74.125.82.176
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="rwg4ZEE/";
+	arc=none smtp.remote-ip=74.125.82.47
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C709606A31D
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 22:00:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C709606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D122E606A31B
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 22:00:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D122E606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=o/VBEweH
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-35b2c599f43so966469eec.0
-        for <git@vger.kernel.org>; Sat, 24 Oct 2026 15:00:27 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=rwg4ZEE/
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-15ea896ddc8so3224152c88.0
+        for <git@vger.kernel.org>; Sat, 24 Oct 2026 15:00:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792879227; x=1793484027; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792879232; x=1793484032; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=NWsRjFOiCzZHNzFCf762W8Huf61DxFmaFSlIJb3+znE=;
-        b=o/VBEweHSEKpSjxIeLJRqkAkmytLYbdfFz7+eILUjdCfRDCp3Z7n/1Ux2J1dC/9E0O
-         dmqOG2gXQraxXdZsfOjVVu1kJNaDXQE/UyDhdgpLwhIXhiAkFP7gBv29BgwlXoIn1YOA
-         onl3m0Z2GGVq9qNzwIw6y7zneNWX/Xyv3DGICVDyR0eo3c8bqnysd9PBWAxy8sPIG5ae
-         A2YQU1tmIllgoNdMeqvTvhnN1gtnN4SpfTK0CdToifJzILCLtJHH8favi7eCqHw8zXL+
-         FK7fz6qcFlqetRJXkrDab6Q1wu27b2TtEN/VaqEWUHrgqhci23hvz8WaJbSh1aLiJKo0
-         fODA==
+        bh=F2WpylZO8DZ4AjkEeHI08TI3uQLXPEUr6DCTZqm7O6s=;
+        b=rwg4ZEE/PaGTc0rRisA9FGqxNrptapTvboxNosv9BXzd2UGHCtRUAssjdlapb2Qmj5
+         VizbnSnLBV0hdO1a6PGQboqU55ii90SZ9U3fKc8yY79q4IwyMEa0kTNrBYROZlG6QEG1
+         ozIz5FwNeKCFUDalkQn5vc6sDiAUs7csu3ZqQkDGNeLLaMYF4pjgoJF76dyKDLUwicp3
+         F6Or0E2HCVyG35uYCR6vLlfHoxf7FLUbA9FqHaGtNBWsaq/2HgakAKtM6oeISLY9erXC
+         +ar3xA3KkXlyBIm70PRatBCiDBwaVH5iaFIVhIyE+umB9AU6jCIy0C3LPjbvyA8vA1T9
+         ZioA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792879227; x=1793484027;
+        d=1e100.net; s=20260707; t=1792879232; x=1793484032;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=NWsRjFOiCzZHNzFCf762W8Huf61DxFmaFSlIJb3+znE=;
-        b=qZkauwEddYPEYdockhaOdccZYqNMni/gtje8lKxwaC+Q0xEQLEeNpm1RHusPBlZwrZ
-         OBgeyU1IQPl/SeJa6OvGtLclRHYCLDEYSg4bF6byc00BuTDuxumGUVwms1nf80veB+1N
-         OVkM78I0/alruv2hJOFf80BfhgJCjaup8PELb5sVHAKDsyeKKT562taspCyJAF5dWaKm
-         /fyVLnUYk32r0DGbdZvqU8kaYw+iO/V2VS+qSCn9sKYeSb4kJyTrnhcJ55/fHnRM0AuG
-         QNz9hLVe3Ja/sn5C9RW6SLvK+ceAYqRxvPSSoqREesrlqDSWbIfQArewC2hJRA7L8ow+
-         BlTA==
-X-Gm-Message-State: AFq9FYJOsmU4tqXiK/wIXwWLpuP+WBODO87kpWaL7R75F402YvBLKpRK
-	DdQdMRIlpyg3x8l/ZnDnFxxoCXhd4XQP3iI6fQg3vgks2bzeF8/FqO2EI5O5z8GQnNI=
-X-Gm-Gg: AYBFou2iyPD/09XlpTgT/xpGl7oqZlbUAvDko8rr+/1HEqW0KaDp8zU768Tn91ko/+j
-	RJAX32XgcUx7cSM1EQDylnDbPpY0kZHak3oIJ8tdq/tPfeneFelAMHWJMI910KTEdQPbDzKj1Aj
-	k59UklGlwQJsEoZF9zeiSDvoUh9ObbPbr7/himKg9SJnt8vQJ6XPSOZvzXIDEO4HsHZc0DreTuN
-	sbcXjTEUOAv2ddja+fVqBkUKkcswgyrydyuAOuUJg0o3zNniCnVOhDvaVK4jtVvtzkepqdUPSCL
-	hlhf1RvOjFPVlS1DyhcFNsdTE9qxJjoh5vgeVIOGTPzz8qXftBnrup4ta9OaKgTRo1YRX3GcCcn
-	fhNnHus7VAgbVA9ZgnggrbcT1cKjDC8oUfLamcHAB/fZzsIfHjSqAObjcdXuxkitNLIhEgRoVDv
-	2xPMElnUTU0MqLexTNxyRyjz9T+8XWnGQHwvOSRFIgzThM65zA5QLNvDF3sUH2FnexDE9LNZcFZ
-	57fr/TW2ytNYJitOC+FwL22g3m8QIYixgC43p7TNh5GCYXfyD8hG5bq0brotsT87geC2QgLtiJi
-	ZnJWpB+Yk1oUcpUNDW/64YGtAn0prXnaHbtv+WoAsRx2ihqQIooaa6f32Mh6gts=
-X-Received: by 2002:a05:701b:4192:10b0:193:8116:f5bf with SMTP id a92af1059eb24-1993571a391mr4239309c88.16.1792879226763;
-        Sat, 24 Oct 2026 15:00:26 -0700 (PDT)
+        bh=F2WpylZO8DZ4AjkEeHI08TI3uQLXPEUr6DCTZqm7O6s=;
+        b=U/1jKD+Qlo65uT2H4zVaqcmu9WQUs2axkannEVVJhriWZRjIKYv+zoMWjHqUVWNTfy
+         8ND2NtW9155AfJu/o1Vs5hfuUi+HN5SwAYNWQUlGY5MdRmhYXua+iHfmEOMp9xZjguvD
+         eLTIimDJUInlXtekyYDWmEWkfX+87pPtqHX/nVgag931XkfCcr6MB4DlCoexX2AM8QJ0
+         u6aLW0whB9fJs1of41l/bYOeJS99JrxxPUFHShxspMRnH6getG6XxZtFFW2OabWncwSJ
+         QhpmMkBOsoOySGbwLRy4XqD8lJNyD6vpMZPzHlutadP030LspKjEB37E32TKzkkvu0ka
+         m83Q==
+X-Gm-Message-State: AFq9FYIr4lOLtWwL62H3u4O4VEZZc/rlVUsfuwkeuGecjaYDJ2UYyf4k
+	swL5iqV/MvDv8OvO5K823+QkNUu98U/e1mcxi/7R2+lC5i0MGQEp5m5sXjBMQYAc8RI=
+X-Gm-Gg: AYBFou0vrKi5Ba+QO9MBqlF5NskELFywyfpwGdPGyQR28RsuFSv0LhMz9bebEvg26/9
+	V8Q/U0l41kFcqJRQ9Hf26AvyhVDVSo8gifMz8J4rRbrZ6FgmzllGdtJnYSgtKxtiIuU5kOIQ5jm
+	k6XWgLrW1gOZsNEZ7aD23QwcJXtcrgWBfw//3Sgl8RarkkAx8ADYbjJvxtcWzqgFdrgbgGzNzUn
+	nMRQ6LbNOWxpr7ejBh8BkmmLVSVXXZh63LsxRHCDeqq9zEY4ONDShAy8YDGb2ozWWaXvCb/LqQg
+	L2UV/U9bVJaBenQGq5w/CpuU9p1cfSWzhk5QBH+hyt44THLUnzcirh3HJJKPxfW3qjsWMENZsCW
+	os+UK3jPZ4CMs+xo7CF4CNOckI0nNbhJ6HvR93E6wo/IY3xrgJSQfO/lWNmX/et3ZmGrZyBy1bt
+	1gJkf6ujrNXukoHl3SJ9xaALPmkLPSzc9L0Y/9ipeghDSo5S7/92W7ejSsB9o6Vps3+y5B6QKxY
+	tp8GsdIWjudLgQx6mp8746TOXzH2VRQqd/uz8JwMNF/4eUIDCTk4C0gXxb1SBSzhQ/2W7C8FaYc
+	2FvZnNGzsC2MGlBG/QPnNuSAA1t4B9EKCRDpig3NwA==
+X-Received: by 2002:a05:7022:5f09:b0:15e:6541:3099 with SMTP id a92af1059eb24-19933e10e21mr4470804c88.7.1792879231761;
+        Sat, 24 Oct 2026 15:00:31 -0700 (PDT)
 Received: from LAPTOP-PVRSMPQK.iiitd.edu.in ([103.25.231.125])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-198a0f81ea9sm11578875c88.11.2026.10.24.15.00.23
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-198a0f81ea9sm11578875c88.11.2026.10.24.15.00.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Oct 2026 15:00:26 -0700 (PDT)
+        Sat, 24 Oct 2026 15:00:30 -0700 (PDT)
 From: Aniket Gupta <aniketgupta3001@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -85,9 +85,9 @@ Cc: gitster@pobox.com,
 	belkid98@gmail.com,
 	ps@pks.im,
 	phillip.wood123@gmail.com
-Subject: [PATCH 2/4] environment: move auto_crlf into repo_config_values
-Date: Sat, 24 Oct 2026 22:00:10 +0000
-Message-ID: <20261024220012.486-3-aniketgupta3001@gmail.com>
+Subject: [PATCH 3/4] environment: move core_eol into repo_config_values
+Date: Sat, 24 Oct 2026 22:00:11 +0000
+Message-ID: <20261024220012.486-4-aniketgupta3001@gmail.com>
 X-Mailer: git-send-email 2.56.0.240.gf97865f162
 In-Reply-To: <20261024220012.486-1-aniketgupta3001@gmail.com>
 References: <20261024220012.486-1-aniketgupta3001@gmail.com>
@@ -102,338 +102,174 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The global variable 'auto_crlf' holds the value of the 'core.autocrlf'
-configuration, which controls whether line endings are converted when
-files are added to and checked out of the repository. Move it into
-'struct repo_config_values' to continue the libification effort.
+The global variable 'core_eol' holds the value of the 'core.eol'
+configuration, which sets the line ending used for files that are
+converted to the working tree format. Move it into 'struct
+repo_config_values' to continue the libification effort.
 
-While 'enum auto_crlf' ideally belongs in 'convert.h', moving it there
-introduces a circular dependency chain:
+As with 'enum auto_crlf', moving 'enum eol' to 'convert.h' would
+introduce a circular dependency chain:
 
   convert.h -> hash.h -> repository.h -> environment.h.
 
-Therefore, the enum definition is kept in 'environment.h' just below
-'enum object_creation_mode', under the existing NEEDSWORK comment for
-future cleanup. Initialize the per-repository value to its default in
-'repo_config_values_init()'.
+Therefore, keep the enum definition in 'environment.h' next to the
+other ones, under the existing NEEDSWORK comment. Initialize the
+per-repository value to its default in 'repo_config_values_init()'.
 
 Modify the configuration parsing in environment.c to update the
-per-repository structure directly. To read the value, introduce the
-getter 'repo_auto_crlf()' and pass the repository down to the helpers
-in 'convert.c' that need it.
+per-repository structure directly, and introduce the getter
+'repo_core_eol()' to read the value in 'convert.c'.
 
 Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
 ---
- convert.c     | 68 +++++++++++++++++++++++++++++++--------------------
- convert.h     |  8 ------
- environment.c | 13 +++++++---
- environment.h |  9 +++++++
- 4 files changed, 60 insertions(+), 38 deletions(-)
+ convert.c     |  6 +++---
+ convert.h     | 12 ------------
+ environment.c | 17 ++++++++++++-----
+ environment.h | 14 ++++++++++++++
+ 4 files changed, 29 insertions(+), 20 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index 95bdfafdd0..7c7fdd4b2d 100644
+index 7c7fdd4b2d..1d4e8a246b 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -158,11 +158,11 @@ const char *get_wt_convert_stats_ascii(const char *path)
- 	return ret;
- }
- 
--static int text_eol_is_crlf(void)
-+static int text_eol_is_crlf(struct repository *repo)
- {
--	if (auto_crlf == AUTO_CRLF_TRUE)
-+	if (repo_auto_crlf(repo) == AUTO_CRLF_TRUE)
+@@ -164,9 +164,9 @@ static int text_eol_is_crlf(struct repository *repo)
  		return 1;
--	else if (auto_crlf == AUTO_CRLF_INPUT)
-+	else if (repo_auto_crlf(repo) == AUTO_CRLF_INPUT)
+ 	else if (repo_auto_crlf(repo) == AUTO_CRLF_INPUT)
  		return 0;
- 	if (core_eol == EOL_CRLF)
+-	if (core_eol == EOL_CRLF)
++	if (repo_core_eol(repo) == EOL_CRLF)
  		return 1;
-@@ -171,7 +171,8 @@ static int text_eol_is_crlf(void)
+-	if (core_eol == EOL_UNSET && EOL_NATIVE == EOL_CRLF)
++	if (repo_core_eol(repo) == EOL_UNSET && EOL_NATIVE == EOL_CRLF)
+ 		return 1;
  	return 0;
  }
- 
--static enum eol output_eol(enum convert_crlf_action crlf_action)
-+static enum eol output_eol(struct repository *repo,
-+			   enum convert_crlf_action crlf_action)
- {
- 	switch (crlf_action) {
- 	case CRLF_BINARY:
-@@ -188,7 +189,7 @@ static enum eol output_eol(enum convert_crlf_action crlf_action)
- 	case CRLF_TEXT:
- 	case CRLF_AUTO:
- 		/* fall through */
--		return text_eol_is_crlf() ? EOL_CRLF : EOL_LF;
-+		return text_eol_is_crlf(repo) ? EOL_CRLF : EOL_LF;
+@@ -192,7 +192,7 @@ static enum eol output_eol(struct repository *repo,
+ 		return text_eol_is_crlf(repo) ? EOL_CRLF : EOL_LF;
  	}
  	warning(_("illegal crlf_action %d"), (int)crlf_action);
- 	return core_eol;
-@@ -244,10 +245,11 @@ static int has_crlf_in_index(struct index_state *istate, const char *path)
- 	return has_crlf;
+-	return core_eol;
++	return repo_core_eol(repo);
  }
  
--static int will_convert_lf_to_crlf(struct text_stat *stats,
-+static int will_convert_lf_to_crlf(struct repository *repo,
-+				   struct text_stat *stats,
- 				   enum convert_crlf_action crlf_action)
- {
--	if (output_eol(crlf_action) != EOL_CRLF)
-+	if (output_eol(repo, crlf_action) != EOL_CRLF)
- 		return 0;
- 	/* No "naked" LF? Nothing to convert, regardless. */
- 	if (!stats->lonelf)
-@@ -505,6 +507,8 @@ static int crlf_to_git(struct index_state *istate,
- 		       struct strbuf *buf,
- 		       enum convert_crlf_action crlf_action, int conv_flags)
- {
-+	struct repository *repo = istate && istate->repo ?
-+				  istate->repo : the_repository;
- 	struct text_stat stats;
- 	char *dst;
- 	int convert_crlf_into_lf;
-@@ -547,7 +551,7 @@ static int crlf_to_git(struct index_state *istate,
- 			new_stats.crlf = 0;
- 		}
- 		/* simulate "git checkout" */
--		if (will_convert_lf_to_crlf(&new_stats, crlf_action)) {
-+		if (will_convert_lf_to_crlf(repo, &new_stats, crlf_action)) {
- 			new_stats.crlf += new_stats.lonelf;
- 			new_stats.lonelf = 0;
- 		}
-@@ -589,17 +593,18 @@ static int crlf_to_git(struct index_state *istate,
- 	return 1;
- }
- 
--static int crlf_to_worktree(const char *src, size_t len, struct strbuf *buf,
-+static int crlf_to_worktree(struct repository *repo,
-+			    const char *src, size_t len, struct strbuf *buf,
- 			    enum convert_crlf_action crlf_action)
- {
- 	char *to_free = NULL;
- 	struct text_stat stats;
- 
--	if (!len || output_eol(crlf_action) != EOL_CRLF)
-+	if (!len || output_eol(repo, crlf_action) != EOL_CRLF)
- 		return 0;
- 
- 	gather_stats(src, len, &stats);
--	if (!will_convert_lf_to_crlf(&stats, crlf_action))
-+	if (!will_convert_lf_to_crlf(repo, &stats, crlf_action))
- 		return 0;
- 
- 	/* are we "faking" in place editing ? */
-@@ -1321,6 +1326,8 @@ static struct attr_check *check;
- void convert_attrs(struct index_state *istate,
- 		   struct conv_attrs *ca, const char *path)
- {
-+	struct repository *repo = istate && istate->repo ?
-+				  istate->repo : the_repository;
- 	struct attr_check_item *ccheck = NULL;
- 
- 	if (!check) {
-@@ -1354,12 +1361,16 @@ void convert_attrs(struct index_state *istate,
- 	/* Save attr and make a decision for action */
- 	ca->attr_action = ca->crlf_action;
- 	if (ca->crlf_action == CRLF_TEXT)
--		ca->crlf_action = text_eol_is_crlf() ? CRLF_TEXT_CRLF : CRLF_TEXT_INPUT;
--	if (ca->crlf_action == CRLF_UNDEFINED && auto_crlf == AUTO_CRLF_FALSE)
-+		ca->crlf_action = text_eol_is_crlf(repo) ?
-+				  CRLF_TEXT_CRLF : CRLF_TEXT_INPUT;
-+	if (ca->crlf_action == CRLF_UNDEFINED &&
-+	    repo_auto_crlf(repo) == AUTO_CRLF_FALSE)
- 		ca->crlf_action = CRLF_BINARY;
--	if (ca->crlf_action == CRLF_UNDEFINED && auto_crlf == AUTO_CRLF_TRUE)
-+	if (ca->crlf_action == CRLF_UNDEFINED &&
-+	    repo_auto_crlf(repo) == AUTO_CRLF_TRUE)
- 		ca->crlf_action = CRLF_AUTO_CRLF;
--	if (ca->crlf_action == CRLF_UNDEFINED && auto_crlf == AUTO_CRLF_INPUT)
-+	if (ca->crlf_action == CRLF_UNDEFINED &&
-+	    repo_auto_crlf(repo) == AUTO_CRLF_INPUT)
- 		ca->crlf_action = CRLF_AUTO_INPUT;
- }
- 
-@@ -1479,7 +1490,8 @@ void convert_to_git_filter_fd(struct index_state *istate,
- 	ident_to_git(dst->buf, dst->len, dst, ca.ident);
- }
- 
--static int convert_to_working_tree_ca_internal(const struct conv_attrs *ca,
-+static int convert_to_working_tree_ca_internal(struct repository *repo,
-+					       const struct conv_attrs *ca,
- 					       const char *path, const char *src,
- 					       size_t len, struct strbuf *dst,
- 					       int normalizing,
-@@ -1499,7 +1511,7 @@ static int convert_to_working_tree_ca_internal(const struct conv_attrs *ca,
- 	 * support smudge).  The filters might expect CRLFs.
- 	 */
- 	if ((ca->drv && (ca->drv->smudge || ca->drv->process)) || !normalizing) {
--		ret |= crlf_to_worktree(src, len, dst, ca->crlf_action);
-+		ret |= crlf_to_worktree(repo, src, len, dst, ca->crlf_action);
- 		if (ret) {
- 			src = dst->buf;
- 			len = dst->len;
-@@ -1520,25 +1532,25 @@ static int convert_to_working_tree_ca_internal(const struct conv_attrs *ca,
- 	return ret | ret_filter;
- }
- 
--int async_convert_to_working_tree_ca(struct repository *repo UNUSED,
-+int async_convert_to_working_tree_ca(struct repository *repo,
- 				     const struct conv_attrs *ca,
- 				     const char *path, const char *src,
- 				     size_t len, struct strbuf *dst,
- 				     const struct checkout_metadata *meta,
- 				     void *dco)
- {
--	return convert_to_working_tree_ca_internal(ca, path, src, len, dst, 0,
--						   meta, dco);
-+	return convert_to_working_tree_ca_internal(repo, ca, path, src, len,
-+						   dst, 0, meta, dco);
- }
- 
--int convert_to_working_tree_ca(struct repository *repo UNUSED,
-+int convert_to_working_tree_ca(struct repository *repo,
- 			       const struct conv_attrs *ca,
- 			       const char *path, const char *src,
- 			       size_t len, struct strbuf *dst,
- 			       const struct checkout_metadata *meta)
- {
--	return convert_to_working_tree_ca_internal(ca, path, src, len, dst, 0,
--						   meta, NULL);
-+	return convert_to_working_tree_ca_internal(repo, ca, path, src, len,
-+						   dst, 0, meta, NULL);
- }
- 
- int convert_to_working_tree(struct index_state *istate,
-@@ -1570,12 +1582,14 @@ int async_convert_to_working_tree(struct index_state *istate,
- int renormalize_buffer(struct index_state *istate, const char *path,
- 		       const char *src, size_t len, struct strbuf *dst)
- {
-+	struct repository *repo = istate && istate->repo ?
-+				  istate->repo : the_repository;
- 	struct conv_attrs ca;
- 	int ret;
- 
- 	convert_attrs(istate, &ca, path);
--	ret = convert_to_working_tree_ca_internal(&ca, path, src, len, dst, 1,
--						  NULL, NULL);
-+	ret = convert_to_working_tree_ca_internal(repo, &ca, path, src, len,
-+						  dst, 1, NULL, NULL);
- 	if (ret) {
- 		src = dst->buf;
- 		len = dst->len;
-@@ -2009,7 +2023,7 @@ static struct stream_filter *ident_filter(const struct object_id *oid)
-  * Note that you would be crazy to set CRLF, smudge/clean or ident to a
-  * large binary blob you would want us not to slurp into the memory!
-  */
--struct stream_filter *get_stream_filter_ca(struct repository *repo UNUSED,
-+struct stream_filter *get_stream_filter_ca(struct repository *repo,
- 					   const struct conv_attrs *ca,
- 					   const struct object_id *oid)
- {
-@@ -2021,7 +2035,7 @@ struct stream_filter *get_stream_filter_ca(struct repository *repo UNUSED,
- 	if (ca->ident)
- 		filter = ident_filter(oid);
- 
--	if (output_eol(ca->crlf_action) == EOL_CRLF)
-+	if (output_eol(repo, ca->crlf_action) == EOL_CRLF)
- 		filter = cascade_filter(filter, lf_to_crlf_filter());
- 	else
- 		filter = cascade_filter(filter, &null_filter_singleton);
+ static void check_global_conv_flags_eol(const char *path,
 diff --git a/convert.h b/convert.h
-index 137fa1593a..dae11d372d 100644
+index dae11d372d..3c51130177 100644
 --- a/convert.h
 +++ b/convert.h
-@@ -19,14 +19,6 @@ struct strbuf;
+@@ -19,17 +19,6 @@ struct strbuf;
  
  extern int global_conv_flags_eol;
  
--enum auto_crlf {
--	AUTO_CRLF_FALSE = 0,
--	AUTO_CRLF_TRUE = 1,
--	AUTO_CRLF_INPUT = -1
+-enum eol {
+-	EOL_UNSET,
+-	EOL_CRLF,
+-	EOL_LF,
+-#ifdef NATIVE_CRLF
+-	EOL_NATIVE = EOL_CRLF
+-#else
+-	EOL_NATIVE = EOL_LF
+-#endif
 -};
 -
--extern enum auto_crlf auto_crlf;
--
- enum eol {
- 	EOL_UNSET,
- 	EOL_CRLF,
+ enum ce_delay_state {
+ 	CE_NO_DELAY = 0,
+ 	CE_CAN_DELAY = 1,
+@@ -84,7 +73,6 @@ struct conv_attrs {
+ void convert_attrs(struct index_state *istate,
+ 		   struct conv_attrs *ca, const char *path);
+ 
+-extern enum eol core_eol;
+ extern char *check_roundtrip_encoding;
+ const char *get_cached_convert_stats_ascii(struct index_state *istate,
+ 					   const char *path);
 diff --git a/environment.c b/environment.c
-index c83cf44839..bbac8ed8c9 100644
+index bbac8ed8c9..6445994986 100644
 --- a/environment.c
 +++ b/environment.c
 @@ -49,7 +49,6 @@ int fsync_object_files = -1;
  int use_fsync = -1;
  enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
  enum fsync_component fsync_components = FSYNC_COMPONENTS_DEFAULT;
--enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
- enum eol core_eol = EOL_UNSET;
+-enum eol core_eol = EOL_UNSET;
  int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
  char *check_roundtrip_encoding;
-@@ -152,6 +151,13 @@ int repo_has_symlinks(struct repository *repo)
- 		: platform_has_symlinks();
+ #ifndef OBJECT_CREATION_MODE
+@@ -158,6 +157,13 @@ enum auto_crlf repo_auto_crlf(struct repository *repo)
+ 		: AUTO_CRLF_FALSE;
  }
  
-+enum auto_crlf repo_auto_crlf(struct repository *repo)
++enum eol repo_core_eol(struct repository *repo)
 +{
 +	return repo->initialized
-+		? repo_config_values(repo)->auto_crlf
-+		: AUTO_CRLF_FALSE;
++		? repo_config_values(repo)->core_eol
++		: EOL_UNSET;
 +}
 +
  const char *repo_excludes_file(struct repository *repo)
  {
  	struct repo_config_values *cfg = repo_config_values(repo);
-@@ -420,10 +426,10 @@ int git_default_core_config(const char *var, const char *value,
+@@ -447,13 +453,13 @@ int git_default_core_config(const char *var, const char *value,
  
- 	if (!strcmp(var, "core.autocrlf")) {
- 		if (value && !strcasecmp(value, "input")) {
--			auto_crlf = AUTO_CRLF_INPUT;
-+			cfg->auto_crlf = AUTO_CRLF_INPUT;
- 			return 0;
- 		}
--		auto_crlf = git_config_bool(var, value);
-+		cfg->auto_crlf = git_config_bool(var, value);
+ 	if (!strcmp(var, "core.eol")) {
+ 		if (value && !strcasecmp(value, "lf"))
+-			core_eol = EOL_LF;
++			cfg->core_eol = EOL_LF;
+ 		else if (value && !strcasecmp(value, "crlf"))
+-			core_eol = EOL_CRLF;
++			cfg->core_eol = EOL_CRLF;
+ 		else if (value && !strcasecmp(value, "native"))
+-			core_eol = EOL_NATIVE;
++			cfg->core_eol = EOL_NATIVE;
+ 		else
+-			core_eol = EOL_UNSET;
++			cfg->core_eol = EOL_UNSET;
  		return 0;
  	}
  
-@@ -777,6 +783,7 @@ void repo_config_values_init(struct repo_config_values *cfg)
- 	cfg->trust_executable_bit = 1;
+@@ -784,6 +790,7 @@ void repo_config_values_init(struct repo_config_values *cfg)
  	cfg->has_symlinks = platform_has_symlinks();
  	cfg->use_nanosec = 0;
-+	cfg->auto_crlf = AUTO_CRLF_FALSE;
+ 	cfg->auto_crlf = AUTO_CRLF_FALSE;
++	cfg->core_eol = EOL_UNSET;
  
  	/* section "sparse" config values */
  	cfg->sparse_expect_files_outside_of_patterns = 0;
 diff --git a/environment.h b/environment.h
-index 49c86e8879..872da3576b 100644
+index 872da3576b..bf6701560d 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -123,6 +123,12 @@ enum object_creation_mode {
- 	OBJECT_CREATION_USES_RENAMES = 1
+@@ -129,6 +129,17 @@ enum auto_crlf {
+ 	AUTO_CRLF_INPUT = -1
  };
  
-+enum auto_crlf {
-+	AUTO_CRLF_FALSE = 0,
-+	AUTO_CRLF_TRUE = 1,
-+	AUTO_CRLF_INPUT = -1
++enum eol {
++	EOL_UNSET,
++	EOL_CRLF,
++	EOL_LF,
++#ifdef NATIVE_CRLF
++	EOL_NATIVE = EOL_CRLF
++#else
++	EOL_NATIVE = EOL_LF
++#endif
 +};
 +
  struct repo_config_values {
  	/* section "core" config values */
  	char *attributes_file;
-@@ -149,6 +155,7 @@ struct repo_config_values {
- 	int trust_executable_bit;
+@@ -156,6 +167,7 @@ struct repo_config_values {
  	int has_symlinks;
  	int use_nanosec;
-+	enum auto_crlf auto_crlf;
+ 	enum auto_crlf auto_crlf;
++	enum eol core_eol;
  
  	/* section "sparse" config values */
  	int sparse_expect_files_outside_of_patterns;
-@@ -203,6 +210,8 @@ int repo_trust_executable_bit(struct repository *repo);
+@@ -212,6 +224,8 @@ int repo_has_symlinks(struct repository *repo);
  
- int repo_has_symlinks(struct repository *repo);
+ enum auto_crlf repo_auto_crlf(struct repository *repo);
  
-+enum auto_crlf repo_auto_crlf(struct repository *repo);
++enum eol repo_core_eol(struct repository *repo);
 +
  const char *repo_excludes_file(struct repository *repo);
  
