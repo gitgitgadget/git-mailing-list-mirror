@@ -1,101 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.179
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792848930;
-	b=HC0zj1J14ik8QB7tcxUd5g+Lxyo5QF2fGPXz3lbsoAt/89vsLnbnodvNSOKhQU7eDiBY
-	 LzPCMkxXLig+P/pxBPVo0WNNJGLilxAjMgVLAHebIoVXPtNbZuO+fgFaJtkSR4WqkRNaZ
-	 TvdGxgpAosAb+ecsaIr1XDCWX9IzLnyuds8C6JJFhm7oAXMdCPtnaXA1852VzG/KkmwkK
-	 toZgsHNlP5391MoDB2xl1VsNvMUGgVXFLurYROkW2u1fKhe+04VpDR5OfWcv/qcqjF532
-	 nWYmew/FPGdfTandhwNx4qk9kR8DJU+nxUUWqo8YTlV27BrMbrD5SU1HTr5tdIvs/zw==
+	t=1792849779;
+	b=GdR5sg6OG+NpMpfswoxheeFUyALoXVh+XmqXclvA4r2BTrzhU3BRibfaElIMKMKRju2I
+	 Nr0fAjEDPxPjxCIueNsMQcMIYDvdiTpiFwacIU3l1V2PGdGmXBDPmVQF3LgQHl4UQxkRY
+	 jWG2Bk3VONCHOzSbwx8sYEAlkzOGTszFJLwHMwe/U+nDkpH7VAHq1eiSJ7+ddxf/rKkNz
+	 5b0S3m904c4XHPYRBPUA3q6YsgmeBg3mIyE+OspQbuHR1JG3JUmqfCnBAmtMDWIv3XUJr
+	 l9saJH6TUGULjBPBFUwMCAKMZkWO6ds24uv13WvpuapL4C8SHjSoHOXcHL0pxRLr6/A==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792848930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792849779;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=O57GTRhyk6DCa/lVJZ47TmHUbFr4PSZltrAaz5/4RmI=;
-	b=sUl58z9uDaSjWDYZDOr7hFuM7w8jpE2cb+fFYBEvds0tfkphahhZKxbN1JhRUUwmgDcu
-	 pfWRgDPACSbT6W4uF5bOYieAD0AVvjvMmSXjaFgIXvlgwL/t82jo5tWjoxvenSWBSaaG4
-	 eGku8Z0tmkNjkbM+JX0fQBXLMsBAXv0ab/HdAaoOLHy2UylL0FuT0mqznB5SQdV8QY25L
-	 ChpZm6oOacDO4OdF7DX7K4UzqDSEmi0ntVAY2rm5JnU2c441LvvQSNlGSLgnU1ivdt0aS
-	 sQ9/x9h+9N7PPmIcYBUPDKJR9u36WB/eJpogDOH+AD6Rew2yoofUfAe77KVUk+OXrvw==
+	bh=fRNztQ9slKb0sQvv/6HMi6fGYCSWzwDjovpFpTPxUBc=;
+	b=eZaw3SaYqFLihD/CxYQeLoJN4wHAwikdW7hsbR7fBht3mxC0xQHlF6VRoBEHfVhZIAYs
+	 qDSrPuek/OLmvB+2vwERFU6tNWoBDxYSLUmzk5lVKwVjwtZZEuqgw2tgfeaPVYHt2jsl7
+	 XuXjmSO2zlEDwyY+NjXk+sTFM6oUptfBrZGJS/DgNrOB4NxruHMgpO7uspVdi6Xg+e9MC
+	 +6BkyoQVk74cTuTKvdAucS7N7EwhefQKCgMM3QFRB5yoTLZDJQeJ2hOtsgl7nPgE4qik+
+	 vfHWW3k+3Teb2hjZDOS50GNo4HaGULCQSxLcedbSIqnzR/IWukEQ2oIkRQRIQXugasA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NfXnPiw6;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.181
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=gGjaznY4;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.179
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113D8606A31A
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 13:35:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 113D8606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A054606A31A
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 13:49:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0A054606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NfXnPiw6
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8a058f74a54so620047b3a.1
-        for <git@vger.kernel.org>; Sat, 24 Oct 2026 06:35:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792848929; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=gGjaznY4
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-8a06c60065fso1374352b3a.1
+        for <git@vger.kernel.org>; Sat, 24 Oct 2026 06:49:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792849778; cv=none;
         d=google.com; s=arc-20260327;
-        b=WDo3nfUGtXUJ+sQoKizhRKq+wCrgGmqbvhzfsnXVqeY0qIQjCiaZWtjG+i2P3jbgKB
-         vlOdcC0aqWGm4IV8JlUKo0YPJ/eM83zzco/23X1WoZkz+0Q81XtQXJd5pG0ZjIfyGb8r
-         kAWthtlDV2rme4q8Hiaavia6y4nz8lrV6dsfBhm6MxR2rP4nQXIL//c4H3j5Ow6E7qeT
-         PpGPdHmdzL2tZz4kQH5eFD/N2VJ4TJnILQQxKbSKbo/xMIIymKfI2WBQc9n5LBCJw4i7
-         MaJLXWhjR7WWDHQyvte7gb+kKjUpk5e4uDmHWhV1p5VD2CiLv6YDZ6+KhWAj+JWXDomq
-         wTjg==
+        b=OVHwL7HFL5Qx7EuU02kF57/4nYyFMkxwOg9/yYIvX9vks18wnjzWnZnFh4fPNLPkSQ
+         PNUwYh+hcbolsUI/nfpbBPuCYduTyXIlBmhdSK9Vm9KdNyZXnlY/HgOE6Dc9hWfNHaUT
+         CLvyfXs1C7tcz9oEl5HCwfaHZQb0cmSBIwphCssmLRYaUO8COsR5LUmi8GpYXm+ieaTR
+         7BuQQ/Ju3asr9PEttUxIYG4nVjysxWe5Sv2emUB3NBiM5Qd2lVs8j+hKcQiUVAoqNLVn
+         riQ+Pdl/w1WXP7DM+dpZ8WZxHeQjXotZxE27yGAayYTj8TkgQVb461MO37VjSlGFQmQX
+         6GNg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=O57GTRhyk6DCa/lVJZ47TmHUbFr4PSZltrAaz5/4RmI=;
-        fh=pi2Wn4eMF18KpPpJZodM6+VLGdc65sqepg/FFrVG8hI=;
-        b=GVMCYnjKo8Qbx0sJumrnAR76ARuOuw26p0zo9L6NBBRhNne3Hiq014dZlo1JcoW3jp
-         4V4VyorXPzH81Cp2dn/5wNOIt1qw72G7/ua/6J4Z3eXmiBsy5bujcH14yRs6Ep7pwEm+
-         vuU7nvyBaYobjACLq/koowYcmEK+5gv8C0W4gvT+pE9t9pMpHQi0SwNvGDYASbVTP34C
-         1JOFtcTu+znta/HVQHmogjX2DVm2f9UvlBe7IIcsL1zAdOBNHnCOVcXrZK8oWMOIByRY
-         b4eKdrKVlUgZWdi/o3wSIpIIKefNWM8aN8VLjer+q1sJQ6Kpn6TdjvAyknwVdvQSdltT
-         BLig==;
+        bh=fRNztQ9slKb0sQvv/6HMi6fGYCSWzwDjovpFpTPxUBc=;
+        fh=DB3dlBjaJH+ZUZnFZCcHfvvUHBM4Dd4zykfu039Yx3I=;
+        b=FiiYSFbhk4mHZgtUOCzMd+crvdRia+7UzWU2EmqykBj1TNNINbBzpLaqUnG6fxh/1Y
+         57jv5b3tDRqxV2XypJaE39SoX8kbRGj3s51DrCUJND/z9KBt/znATq3b78b6mirPsD47
+         UyLGl7wza3jnGTb7Wkv752Rhcw3k3dv1ZgHqjKxY+CvmDhaYetWtyKKgNrY7D7YNnAqu
+         2quzNIO+VJF04km867ihVF5ojb1Elm9L3aI6G6T9Kze/xwWDmSuzeyck3F7zjuQgqxAq
+         xBO8aZ8pLU/3puUQPoFCEGKpBZzRWNnBkdkiehGcMq3hpaLMMnpJfTDqa75n7OalOke9
+         pRLw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792848929; x=1793453729; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792849778; x=1793454578; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=O57GTRhyk6DCa/lVJZ47TmHUbFr4PSZltrAaz5/4RmI=;
-        b=NfXnPiw6NT5dlDtErNrz0yKl387iHW4djI2krit5CSY49VhdFPHHrgnNf0Tz+5ZK0g
-         X4un7NaqMU+iyc5mitji6ausHIDajd1R7AjT0kNd1c66IxLFnVzXZ5Ao2bDHVdnf7dto
-         GuSadAV4dU7ZzD98UKiuBuhv2eVeiSS7u1O+nmZbNwq1XMXW3/1teumTpR4B6mPI3dKM
-         cGGwf0z+R6cLcCC0X/1M9cz0KY3pLl5v7/fhGofjRRHYecyLYV1IcHnPHyVlBFzAxRE6
-         rTT0UG/yMdPTgqz9wvlV2Rvc4Z3NA6SfspxLPMnXL/OoT5z4MlrXKPGG7HMxclpiULkX
-         Ywdg==
+        bh=fRNztQ9slKb0sQvv/6HMi6fGYCSWzwDjovpFpTPxUBc=;
+        b=gGjaznY4dKOJs0djp0Lks5GiYiJCZXD3yXs/FEqGwQ6o3PFb++wgwrGLuV4hnqL4DT
+         yceLkdo+SXP5nCK2byXuwGi+gThI28ToK8+/J8lI+3uqz7j7xhvxLKX0ZpIonCe18uyG
+         AFDouK7Pq8FY9qRArX0m9HSK8lwpQqfrNxIzNeuY9s6gtahMbiUodKoOVZRgfnxeVUSk
+         mHu9MWxiHGAqvB0MxhUifq/1NMDskOHFQRKcKm1X8Pfte3wixDX41WJ4H8YGp6W2A6nk
+         NFD8JvjwCDU8uAQnNazoBnxZRyKbYTDO2pPm5/fqf8/32x7PQdidDuWavCm6TrLxxesi
+         tqWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792848929; x=1793453729;
+        d=1e100.net; s=20260707; t=1792849778; x=1793454578;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=O57GTRhyk6DCa/lVJZ47TmHUbFr4PSZltrAaz5/4RmI=;
-        b=cHqxJbDIfmFq0WPV7DjFAZOa+Mr6Ohuooef/uX+C/IaLtP3A7i0YTuvxPdnWH/TVXG
-         ArpClCT5OnmPmzYop+tn1S/zMexeZaUQHyNKdUg8WQvsHrLQAipyerCACNFZBQQf3/Rn
-         B21r+8GMoYP3SmWhVhCBnff/TUJgVzANlvAGPXbAwgBgESXj3nW9r6SUcE5CnbYAciib
-         furSWHB7BIyYFdylWsBjawzsoJmciWtdYuK1f5+K0jk3gstky+zTnE0AzraYt5vKn7Mz
-         GCaFEH8b7MsunDFT1l0ttnFmCNVPN347bMT3aJWB0EnDOxKxE4+SG7U/HQr5yob+UEy6
-         7pkA==
-X-Forwarded-Encrypted: i=1; AKwUvBwBIw9kkefAi+uTavFhay1d+FSDgQra3QwAyUPMsd9bbUc+ivxCLEnBHRHCvcxRu+KPMpg=@vger.kernel.org
-X-Gm-Message-State: AFq9FYI2RPZO0yxb0sQ231Po7XEB7aaaEaZB7LYGCd7qxu25Rphn24BV
-	Y75wCyRWBss7Kt7v1clYAW6dp981x8Z+ZxF2PYeE4V0J5EmvuwJByjOHkuwKrojwkg4QZZ688Uv
-	FO4z0eAYJ0bxWR+yxD7bW5Vcj/wLgJCY=
-X-Gm-Gg: AYBFou2VzlYKYKQUlcl7Tgy9bVm68Xb+M/QRvO3qhCe53oJOkSm5iWL76OhfMnD5eDu
-	Z4j3QHFQYVCDZEYW8XL034Y+GvuINq0hmIhBrP10ExWbyBl+/8dccMoPHfAx77N7c2iq7mkG0dt
-	UMLM5moMWcJGgD++thzu2LMoeEAVP2cPqGGQiK8BPUPGMhxtU7B3DLoyXZAlbB4iS+bj5RqMsxC
-	l609FLaragnKO/OcWvksx5EbXNpSEDT8McRzJL7Ob3Joy/aNt9e2XfbQs/Nx0yds3+G4pRkWHii
-	oGuywi8KXDhU0AXCIBxT7xTTYUwiMaXcuts5JWcWwelxmeq4QFKkCbKuh7dB0V0Cl0BCCGTAetL
-	90iF0J/rTCTugIKYNe0ob4y5VRt5nXM33rMtC+Iu+Ehk7GW5zjE+mg6RYRzr6sWw7tLu2Zi4K4f
-	4oASPGpJ9iyBnpF5U+37fYRblblbqWthfI1NciJDUI1dTaBphj3Ejm
-X-Received: by 2002:a05:6a00:2e21:b0:89e:89f5:18eb with SMTP id
- d2e1a72fcca58-8a3661c522bmr1640799b3a.15.1792848929383; Sat, 24 Oct 2026
- 06:35:29 -0700 (PDT)
+        bh=fRNztQ9slKb0sQvv/6HMi6fGYCSWzwDjovpFpTPxUBc=;
+        b=DRuh7AxJFuOFlKou35anX+L/Krl1dlLwvmY7o84WyK7O2/1LZSjAHHIPUJo96gwn+K
+         TrAeasti+5OEZ9oFPsyc5/ldXqoGf9JST2T4O2CkGSSAdvjMjh1ta7Rm8+8W3Gyiv5MB
+         /jHuNmPujr3aRMUN4DX7g5v6D3YJKV035/BO0jIjmMHokorI8md/tTNeYyD4ijgIEsMO
+         FgvHi9E7cBPVpu0Ef+aChxmHPmS5qMejVhm0otaZi1kguyl5Z1660J9+xUnpn+ZHTxw+
+         3IIoL4VazPIDWDSD4ThkvoktYwjSMfxq8shC8BWn/gwKaPW+UltkuLKJ/6E43MEH7YTb
+         zZtg==
+X-Forwarded-Encrypted: i=1; AKwUvBwcwZalqf8hipmjzpvQXPhj4m3km/FO9Ri36cLgZkWxzZFW3jy98Yq3UOIJK/MW6YXW7rM=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJcj5oOtSubyUYKhr1Axhr9VkP3nct1k+pp4n+WdS18RYib2V5p
+	9yCnabNAM6dJQx5dVKATrstp94NIs2LAfVnJOD6MgBqSYyICLoLJqoRZngBU6X/KY1041MCxXt9
+	jwrRf7ZhDRZ9Oc02b1K5XpX1CiNJua4o=
+X-Gm-Gg: AYBFou2EjhNQrqd82mLCpO6QtbcJOQnNBnNqlR23fEk3dkvI8cAhvajFBxm/7GcTJj2
+	g1jW8M9j33ONh9D5YiN3Kh3refP/cIrnbHa18WkOtL80cwwM/sgCRAN5evWwJdkMl64B0GnW9+6
+	5tcLqHt6VApg1agv/Ew+4n0KAeJ2nZDYLhZmkKUXAv+5IWRDY5Xtdv+PQM8uf/ryyFXtKGVf875
+	zmh/RMbXMvAb+9rob+AFlRMQDAWQrAfH734BrQX8uxTJ8x3zHGd1kwfLGcWIYjFdQpr1HnBRquN
+	6TFTA7xUcYdaFYxA8l14v3HM4nGxw/Px76yOll4GKXB8jMvL8ClzyQmYZ4xwsXdoQ4fkwje47u3
+	s2Zu+62BFX8L0if6mPo/0ZgzjC4lsAJFm+pdxUryCEXqbj1P8le/UphSUxWunCmVZJMQxEWo+JG
+	y4eFyNdZh9iZ4f+DoXeVDvScLBQtble55TkUSK46II9xuAxeaZZvng
+X-Received: by 2002:a05:6a21:a91:b0:3e1:7249:e265 with SMTP id
+ adf61e73a8af0-3e7bfa41069mr1518552637.27.1792849778162; Sat, 24 Oct 2026
+ 06:49:38 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,83 +105,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CAHwyqnU-BEtOPdVbBXtuEYtFYuL3MqC9nUQeP_Puvq5bsoWEAQ@mail.gmail.com>
- <3EF4DA22-6739-46FA-8028-74EED08BB931@gmail.com> <CAHwyqnWJOk9FCGkPi8yWOFq5vr-CMWNhn=wBAifx9Gfn+1bMzA@mail.gmail.com>
- <CAHwyqnWi6E=idoP2+1FdeEE4-o3D20xJfsc4Dutt6R30c===xQ@mail.gmail.com>
-In-Reply-To: <CAHwyqnWi6E=idoP2+1FdeEE4-o3D20xJfsc4Dutt6R30c===xQ@mail.gmail.com>
+References: <pull.2458.git.git.1792437798463.gitgitgadget@gmail.com>
+ <pull.2458.v2.git.git.1792585662669.gitgitgadget@gmail.com> <xmqqld7o71ot.fsf@gitster.g>
+In-Reply-To: <xmqqld7o71ot.fsf@gitster.g>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 24 Oct 2026 09:35:17 -0400
-X-Gm-Features: AclHuK_yFmgP7jg0na4sBh3GIgkXECKFIdP9fUAHbvHa53_YJNTSRAp_lAjwHpI
-Message-ID: <CALnO6CAAoMLZP4MBzgBa96RYMMReyxKXObb2JELqkBe=LBUVLg@mail.gmail.com>
-Subject: Re: [RFC] branch: delete gone-upstream branches only when proven
- merged into a named ref
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: DonQuinleone <don@donquinleone.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>
+Date: Sat, 24 Oct 2026 09:49:26 -0400
+X-Gm-Features: AclHuK8FKFkc4ZpXhhuAbH3HrY7HGuOmPq6ooQew7dsebLNn0oBpUHltd2D62bQ
+Message-ID: <CALnO6CBD2aGg_wDZZsT-mWJ99MXYUycx32JfsK8zJXfcmjTBDw@mail.gmail.com>
+Subject: Re: [PATCH v2] status: compare against both upstream and push branch
+ by default
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+	Harald Nordgren <haraldnordgren@gmail.com>, Julia Evans <julia@jvns.ca>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 22, 2026 at 1:54=E2=80=AFPM Harald Nordgren
-<haraldnordgren@gmail.com> wrote:
+On Fri, Oct 23, 2026 at 1:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Why do we need the `--into` at all?
+> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > Showing both without any configuration was the original proposal for
+> > that commit. But some found the comparison with the push branch to be
+> > noise. So the comparison was made opt in [1], with the idea of
+> > flipping the default later if people like the option.
+>
+> The key phrase here is "if people like the option".
+>
+> > Those who find the comparison with the push branch to be noise can
+> > set status.compareBranches to "@{upstream}" to get the old output
+> > back.
+>
+> The presence of an escape hatch is described here.  But its
+> existence is not a valid excuse to force people to use it, nor does
+> it answer the question "if people like the option" posed above.
 
-This message trimmed so much context that I had to visit lore to see
-what it replied to=E2=80=A6
+I agree, though I still support changing the default. I think we need
+to make a stronger case.
 
-=E2=80=A6but I think you'll find the answer in the original mail, which
-discusses how --delete-merged works when the upstream branch is
-deleted (e.g., via GitHub's "automatically delete head branches"
-setting, which is useful to enable IMO). In that case, even though the
-branch was merged, the local topic is not a candidate for deletion
-(because we can't be sure about what happened to its upstream).
+> The paragraph above (and below) also assumes that comparing with
+> @{push} is not noise for many people.  We have not yet heard a
+> convincing argument supporting that assumption in the proposed log
+> message.  In a triangular workflow, @{upstream} is not under your
+> control, so you may want to monitor its progress closely.  But isn't
+> your @{push} destination typically owned solely by you?  In other
+> words, aren't you the only one who pushes to it?  If so, whatever
+> you did locally would be the only change that could go on top of
+> @{push}, and unlike @{upstream} you would not see any unexpected
+> work over there appearing without your control.
 
-So the proposal is originally either
+I think this paragraph assumes that either
 
-* add a modifier to --delete-merged that allows considering such topics
-* add a modifier to "git branch --delete" for the same
+* I'm only pushing new commits to @{push}, or
+* I remember what the current state of @{push} is without checking.
 
-To which I've suggested that either
+I may not see "unexpected" work appearing there in most cases, but I
+certainly appreciate the reminder when returning to a topic after
+working on something else. Have I rebased/amended/git-history'd lately
+and need to force-push? Do I care about the differences? Sometimes I
+already know the answer and want to validate what I'm about to send
+out, kind of like "git send-email" with sendemail.annotate (and
+multiedit, for me) configured.
 
-* delete-merged should be allowed to work in this case, possibly via a
-special syntax, modifier option, etc.
-* branch --delete should be allowed to filter branches, in which case
-we could even migrate some of --delete-merged into that form
+I have a number of ways of helping answer this question, personally:
 
-In hindsight, an *even more composable* interface would have been to
-teach --list mode how to filter the appropriate merged branches (which
-we could then add to for this RFC) and encourage
+* git status: only ahead-behind count, but lets me know if there's
+anything to do. I don't actually check this output too often myself
+because I built the below prior the config under discussion, and they
+are focused + finger memory---I almost always run short status when I
+do look at status, but that's because I don't normally need the
+verbose output these days ;) That's not the case for most of our
+users.
+* "git sbup" =3D show-branch HEAD HEAD@{push} HEAD@{upstream}: a quick
+divergence check
+* "git rdup" =3D range-diff HEAD@{upstream} HEAD@{push} HEAD: a detailed
+comparison
+* "git div" [1] runs a triple-dot graph log (with more options)
+comparing HEAD against @{push} (if they differ) or @{upstream} (if
+they're the same), omitting some other inferences and ways to supply
+which topic to inspect.
 
-    git branch --list [filters] | xargs git branch -d
+[1]: https://github.com/benknoble/Dotfiles/blob/master/links/bin/git-div
 
-possibly adding a -z option if needed (which my read of
-git-check-ref-format(1) suggests is unnecessary)? In which case
---delete-merged could be something like
+So, I suppose my point is: as someone who almost exclusively has
+triangular workflows, I'm already checking this push--local divergence
+on a regular basis. I just built my own extensions to do so prior to
+Harald's welcome addition to status. Perhaps that can help Harald
+argue the case more convincingly in a proposed log message?
 
-    git branch --list --merged-upstream=3Dorigin/main | xargs git branch -d
-
-where --merged-upstream=3D<commit> lists all branches whose upstream
-configuration is reachable from <commit> (and I suppose you might need
-"-D" in some cases, hence the --delete-merged --dry-run form today,
-which would be "just omit the pipe to xargs" in this version). And the
-delete-merged branch filter would still work, since --list takes
-pattern arguments! Hm. I'm starting more and more to feel like this is
-a missed opportunity.
-
-Rereading our docs for git-branch(1), I think what this RFC is looking for =
-is
-
-    git branch --list --merged=3Dorigin/main | xargs git branch -d
-
-which should already list (and then delete) local branches whose tip
-is reachable from origin/main. And it would be sure nice if that
-combined with --delete-merged, but since they are separate forms, more
-work is needed. If we had the --merged-upstream filter, we'd simply do
-
-    git branch --list --merged{,-upstream}=3Dorigin/main | xargs git branch=
- -d
-
-:)
+(Julia and I discussed briefly off-list whether "git-div"/"git-vee"
+should be part of Git, and I'm noodling on whether such a thing might
+make sense as "git log --divergence" or something.)
 
 --=20
 D. Ben Knoble
