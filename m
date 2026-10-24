@@ -1,124 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792797240;
-	b=zxppa3cg8W448M/MNAAIY8Rt0PnluOLLpFzItTWbt8ePNhH8qYps9l1bPjAXwLJRD1Mt
-	 vmSGKQcicYaAULPfJCgtJ6TMWHMdeOSsqb279SxM/zl6I/iIq9a7K2Dsf2+n9e+KYFY6N
-	 1pE3Me06zpRFo2Gip3VYMPEBz9EwBFH2IyG6v8UfX0JteyXfK291S8Yfb3Q0GJZkBSXQv
-	 vCLasj/NWemVBSEJEKAqOcPgbClX7NWY4QLcxLXN6hbtReG1PLTxm0LXI7BGyReqRBbNs
-	 9jdaFOgbuo4NDqo2JT0NtZxWlzs7Ev8LIenpAd/p+yQJAcyrMk5VemRKCbW2+Mt35mw==
+	t=1792800192;
+	b=nEPc4JsWD8Y+vZdy8UC73CTfVlPr15xxDx6tL41+ghG8bcap0AZH7si0ITYyJfpFPvlD
+	 8/Jfo1xkbGDMxsyJY4iQaJtHTlFkhbAShQ6d3EDtAJbV3BkCXy3bjD3u3Q8bbNAFCtBmg
+	 VYR+yTE/Rkjfkm5ajVmnNS4TclOuSLd41xPCOEYq7dKpzeNTRK+JgqbQaWICy4uq4MnEC
+	 0Qr5TA8vsyi0UGOgL5rIdxVB/prSsddfdeElA/O0VMZpWBL98Uh3ePwNksuNmG0+T4nWM
+	 lf5l4rwaUKMhpbmgCwT1CyagzzMpxCwUANVt6iX4ruGSV+Pzz1/gWU7kK5uyF1GWVQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792797240;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=eIg3ZTPJS3Yxcrtwu4cnMMZqXDqoR8VwZS46mu556Zs=;
-	b=PzKxFH2isbG900EjkoRSUxKau3xLV//Njwmh6VMvPrZ5LcwVSnlvn6gvFNsBjPFEoiDc
-	 h2XUoeLP6SVcNAF3TBmyEk7ibPaCjEXw70PnUEZl3wPNNVHL8gq2TnVSVeiSe7DQeW66z
-	 xXfy092nQv6zubI4C1b1p+vkJWtWBt2EIkZ0W9vlz/h0H+vxz9FhtvL5F+QHvchd1cvlo
-	 XiIQg2f7NLLN8xfmzde9mpv4Lbo8BlPB0lX9gbkW/V2+XZC4tExH+vaqK/jkg2ipB+zgy
-	 GEk+2Dx2CHTSOwKK3dNf72GoQAVg6rOeW0LmttaL4EmMK1iHAykf9v0qmPJ1NjqV/dg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792800192;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=Vn7yHmFigTxkhft6z+c2+yrQLtd+FOQqc8J+CSNmRjU=;
+	b=Fkcm2Lgd5w3YoZ8SZbLviZs3CKQJljSJtj+9vyTJW9U4GJ4zYuYPIi4EuXn5r5Z/vT/+
+	 RlgGZTyJJjvtG5f1/xrZqUKE5gI3MbLCyMKEkpJSLpovGJcE5Ym9+wANM2G44QGIv/ipt
+	 rEkTTOTGQzXdrItCPOXMcov/8EApwsXDaa52NyGc9EqjmOcp4sH1Uh/ZawHuG0kSwDq0+
+	 IhfOHVvw3WGlpuKJD+dt+tz7OLH4UYyXqvvNlJJX4G0z5II3SDNAS91dnJSJBsmBJTa3g
+	 R9gfM0eot+O4hMHTnlbYoy/ZCSaULUcucOzHRJj0Y83oR6iZweIxorojiUVEBIku2hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=FwIiHGbY;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=K4RHutg7;
-	arc=none smtp.remote-ip=202.12.124.145
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=openai.com;
+	spf=pass smtp.mailfrom=openai.com;
+	dkim=pass header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=GQGXQ3JF;
+	arc=none smtp.remote-ip=209.85.219.49
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9F5606A31A
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 23:13:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E9F5606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F34606A31A
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 00:03:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D2F34606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=FwIiHGbY;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=K4RHutg7
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id E6F6F1D00082
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 19:13:58 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 23 Oct 2026 19:13:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792797238; x=1792883638; bh=eIg3ZTPJS3
-	Yxcrtwu4cnMMZqXDqoR8VwZS46mu556Zs=; b=FwIiHGbYIpfk+Ks0W12kCvu5BD
-	az2xK4nmi7a8RmuOHDhxEupzDi/CevFMMSdno4acRMpGpjpaiI5GZZ0ZGvH+0BWw
-	Hz/0fsks8A2P9/gKQSsgQpY2bXNlw+l1zylDsrnzGpUUAZrhM1kdb8trA5g+PfIN
-	4SgXTd8ciQ1b2E7U7BxWk8ybPFlixNfOM3DZNyyOAt7x1SmZ9Te4l2cV7aDXKe3h
-	JF90Sp32aZVIVVPOI5A9y4nSF27j+WtuS1K/9DQcwsicPu275D0ipOOPWZsRxPi5
-	vtxflo9CY4Ndz6PvNF6Ps1iNrgDLITZV4ObH9YxDLHlP3vcr0eP822rooE1w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792797238; x=1792883638; bh=eIg3ZTPJS3Yxcrtwu4cnMMZqXDqoR8VwZS4
-	6mu556Zs=; b=K4RHutg7dSH/8CvvZs1GfZ+G3kyyWMnkxCIrCXFbMpfGCBygEpU
-	ZPYuz63iZcNq7LarWzlFRq1ltGI4ZJAqlCBPmuUq81Bzf41pHmzipybwqzR4kJon
-	kW8AHhtRguW26geV63i2LvZVTTiAG5KtS0qGOb8p86TUzlwDwgkux3yEP9XoAx4j
-	/H0upT/B3utLdO6bvGIBzqHGx+SutzJti2HW3gDPtqxsfPUVI+YYqLya4SHmsQ2P
-	vgfN7UJAbFEXP2uONLQvepYkRuDYhAGr//QFWwDmxThbu3eQ5JQ0If4Cq1FhIdxl
-	IPVAGZyKjQFapPHp4VpgMYXKWgZyXikj+Cw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792797238; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:ILgAdYiaRfGGYfn7xqoLhFudBLJ45AH6eXEp+BAqTw6dLNk
-	qtoWkSUcFCOWK+6l3J34e4RYy2KqeSqNGgySI0TlTQhwrgi9MeCJZM+UXNEbHx5F
-	pxTq8ChbNAiWcF7Wp6vWesPyuFW4VHlGm+cdP+icxE6xxe4lTXwv+UQJphIkH9l4
-	i2AMknpiKLgCz7siviS0bZT4DAbELHHItgaNThZMSo8xHhlB9ikULbp2YrsSKnDA
-	rDet5I7SnX2jAuBInTi/B5zXfSMiVviCQtfuYXiOqRrrZEPgEutDmoXsJZ4+0UNQ
-	Lq5385AE/oM2WivhkGbqiFLX2VN85/w5Rf9UnQw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:zL0fPqsqlmlPEt2ihzMWUqn1Lo8uf8bikL9E9do5xDg=:Jvwq8sgz4oV23ujHd2py0O6S4J30a6Ez5f634Ip42Og=;
-X-ME-Sender: <xms:NurbalS9KGXXBdS91l2vNVASHSf5cV7QYF8d-oH8aq8_A58rOHiFDQ>
-    <xme:NurbaidWUwV-4GwEcyx3TM8M6o9pguxeGX_QjParqkFxg_ow5etFImvhwzlVxzSug
-    gyri8yEtqGT8t7vWGmhP1ifMFHhjAXKLv39JRD7e2Bcs3HsMKYSRA>
-X-ME-Received: <xmr:NurbakoTmqryoqdKnd4T8WTKi4siXcJ11ru6HW5xD8fYD7nHFu3yLo97YJ4iZLkLCzg02VXThSfdMogDgq9L7Jxj7-94D4sM1iOk>
-X-ME-Proxy-Cause: dmFkZTEGIIhU9SSPblpXVFrGA5/m7DJHenRylX+vLUSP49FR257p9UV6680N4uyH8eoqTv
-    0GjRVSMLqIh+HkLRLRw1BMOjqmmxWr6QVpIK3AO01sg9/iYJTl4G02YJwbKbuPLBDA2ysG
-    TDvWKAp8KhJZMnG9WB/StwjvFwLy327HVn6ept8xOZaMRUad/JO527lcEbAVP/7jJwZPn/
-    ZMYw7w7gvTJh4JIGCkcAXONjDqHxNAbSyxZhluyiodyfDsIS5r5iPEtCuM7LnUI4F1dNOW
-    SLon+aadVUou/l4BKOntHD7HNODK5R78mGvZnOkfmqBhXEo/43DB1SMLKcJDP4W9h/3si8
-    1JtS8eGuFm2rLRppU2kTl1U1EDzuvVDKbifM3KFDv0F+gUyPBJB4KBwaADuBpO/Epz0rJy
-    aMvhU9qM9kvRbxtZItBMkIIkgDVFx4n1Oa8Ly1/NgbNpmMw10Tn4e5gQ1P80oAw1qDeTRr
-    NHLH3m8+ro4w8/e+6G0WBrsbJLASQcf1r6e7iKQiuN+/Sg93dlwzEjijMZI5WLyxv64Jwm
-    F5kCMrR9u+PuOQe+G370i9C9nHoj+7tV7Chexjf/EGrpV2AqJju/8dym1pA4sOdj6mJgXZ
-    n9pzOp9UvHFSrQlq6uowbIk+vuZEtDPb7ICJKJPx3Ay7Jg/txcF7snHcNgoQ
-X-ME-Proxy: <xmx:Nurbaj8iFOkYd1Clmz9rgIVLQvn3-Fv4ji-VXhqtKg84TUNYEsFhRA>
-    <xmx:Nurbagf-4O4_xw0PrLNOd-UfaFw0fPxX3K6SzchVSeJ1AFny-osOWw>
-    <xmx:NurbatKRqql3zwXeu0dL6mkxoDCtj39Xu8j9Q1Ddpb2VN8joCHWF7Q>
-    <xmx:Nurbagg5QxR_KBOU3fgYwKJHowM9N43SU6FA8ks4LC9sWL-nqvN06Q>
-    <xmx:Nurbau3QKjeyTVSyxnXxI-C8rZqpZzpYX4SWN8owZMmYvmKuQRpVyfq4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Oct 2026 19:13:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>,  Phillip
- Wood <phillip.wood123@gmail.com>,  "D. Ben Knoble" <ben.knoble@gmail.com>,
-  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v10 0/5] fetch: avoid fetching every branch of a new
- remote in a shallow repo
-In-Reply-To: <pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com> (Harald
-	Nordgren via GitGitGadget's message of "Tue, 20 Oct 2026 13:42:53
-	+0000")
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com>
-Date: Fri, 23 Oct 2026 16:13:57 -0700
-Message-ID: <xmqqcxt02eoa.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key, unprotected) header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=GQGXQ3JF
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-91b834592afso15442806d6.0
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 17:03:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1792800191; x=1793404991; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Vn7yHmFigTxkhft6z+c2+yrQLtd+FOQqc8J+CSNmRjU=;
+        b=GQGXQ3JFzTy0DM695rl1fkvEqsFK/VwOZcWtiz8lfQ+xpeZQ/d1qqitcN+TmZ5AK5M
+         CEYRB9VsnMCcMdg82ZEdFz2+D9H+fly1rVgPikOy19GUWvBweLdjeu9oUWCpVJq/Kd4e
+         btLbRwDrTYmPIXZ6CcDZtlE0EKMzL+AeidpSw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792800191; x=1793404991;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Vn7yHmFigTxkhft6z+c2+yrQLtd+FOQqc8J+CSNmRjU=;
+        b=yOcJJksMO8BLs58Yv78R/hepQaezgqb9hsHMMhz4cn9CUSTg2MB9YxRG6m0AD+HTgY
+         CM/Ts/Hg/FcYBQwlyq0ntN3TYrqZJyRcAxNR/a1UyToj7bn8sbB/9Y1MtddE3qOpUTgb
+         Z6Ad1XJgemj7i0y0yg/7pw4XlqV/oy8Ys+heX4VuF1T/CF8mSQsmqrrOyB976J+3TnY8
+         XK7kxUQwziS0CGCpqimusSIFaobuXOBMSDxs0hJKA6WVtgRBVLUr/77SROiS6L98hp9n
+         YBVhrNI4oKZVjxGvE7FlasT4ewRih6PJn+arGbOQv9tkpLMMn5kyAZcQRZeIZmDRUg8g
+         I/RA==
+X-Gm-Message-State: AFq9FYLMjOZmWbqCOuf4OKgi8SlYe4Ii3MKpZ+7rxLjgsUGUsY127S0e
+	KWAzo6bWsonDApJAi6MUs6FC/C8r43e0ouGYfKXW7YMkDOO5VLCMeyPU3LRedP3mdz4=
+X-Gm-Gg: AYBFou17W8Grizgb2B6US8l/HYCrjbIpl9+/PgP/FwzCK22fqydEFxJ31VXG/sSSe6i
+	emJVNvTwpQ9vIxtNU8VKKgOUC1ub1RrP6kvmUT50oKsE3SKS/KtCouiSnGjaMD6dmBILt4oC/oG
+	VPKiChfCJB6w2d7Ge89W8Rd9dznijeg/480620DMBG7TGicpXNC3rSivKB0RHZnS5Yh7G6NqL59
+	Hgv80JSC5cktBZg4zBkBN2jX4DO+xYSSALKGLwi7Qd4doPwpp2SxxjPvSnYg9Rbvsy2PLbvy2Fs
+	VwQdP1g42lKXik6Y5cFO0R+zbcO//d8OR8pxhtF2teTINgSwDL/RL/fEagLC2k9/L2NxKXKd7Zs
+	pFLmHPszjwLfcyaoRJ0IK0U2Wj2RBYhsDG442rP0vycnS1rfDLZeTYZl7btMPaWsk+4cUggQ2Iu
+	3jGeddSiCWOWOsxpL+qzgvSXQKXxm9y7UlxjSpjCmeeQPxtCWb0pQA44FyVScAEtVIdOmHwoEW6
+	OaBalRtMfjzg6CrPH4jENt/R7oFPNUJdPxyfFZmcIOcngqIGj99X6bssMROHur0V7tU0J7M9xwA
+	ehVhskspupGNXJJYU4jr2zpblU7dxvaAvrX/mmTQlM37vdg+r6R3KKBQ+XKfsKR1+a9s
+X-Received: by 2002:a05:6214:2627:b0:91b:5d3a:4fcc with SMTP id 6a1803df08f44-91c48ee12f0mr10214756d6.57.1792800190581;
+        Fri, 23 Oct 2026 17:03:10 -0700 (PDT)
+Received: from com-79390 (vpn-eastus-02.tradc-corp.com. [20.102.114.220])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c47c4399fsm7575356d6.22.2026.10.23.17.03.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Oct 2026 17:03:10 -0700 (PDT)
+Date: Fri, 23 Oct 2026 19:03:04 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
+	Jonathan Tan <jonathantanmy@fastmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Derrick Stolee <stolee@gmail.com>, Ted Nyman <tnyman@openai.com>,
+	Daniel Reynaud <dreynaud@openai.com>,
+	Aaron Friel <friel@openai.com>
+Subject: Re: [PATCH v2] negotiator/skipping.c: parse parents before queueing
+Message-ID: <atv1uK2ZIupPgrES@com-79390>
+References: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
+ <9e9ae442333b5e2ccc0905c44c2c3e16c49481a7.1792704069.git.me@ttaylorr.com>
+ <xmqqld7pcqku.fsf@gitster.g>
+ <atqSs0yzXw0cf3cH@com-79390>
+ <xmqqh5icbial.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,45 +101,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh5icbial.fsf@gitster.g>
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> Avoid fetching every branch of a new remote in a shallow repo.
+On Fri, Oct 23, 2026 at 07:30:58AM -0700, Junio C Hamano wrote:
+> Taylor Blau <ttaylorr@openai.com> writes:
 >
-> Changes in v10:
+> > On Thu, Oct 22, 2026 at 03:34:25PM -0700, Junio C Hamano wrote:
+> >> Perhaps rev_list_push() should mark the commit as 'SEEN' only after
+> >> repo_parse_commit() succeeds?
+> >
+> > I considered this but ultimately decided against it, since the default
+> > negotiator does:
+> > ...
+> > There are various callers of rev_list_push() in the default negotiator,
+> > but all include SEEN in the provided 'mark'.
 >
->  * Resolve merge conflict after master integrated
->    ch/fetch-followremotehead-lazy-validation.
+> It is understandable that we do not want to widen the scope of the
+> patch by adding a preparatory "fix the existing ones" step, but I do
+> not think "the existing ones make the same mistake" is particularly
+> a good excuse to add new one.
 
-> Harald Nordgren (5):
->   fetch: add remote.<name>.refmap
->   fetch: extract collect_upstream_from_remote() helper
->   fetch: infer branches to fetch from a refmap-only remote
->   remote: add "git remote add --limited-fetch"
->   remote: default to --limited-fetch in a shallow repository
->
->  Documentation/config/remote.adoc |   8 +++
->  Documentation/fetch-options.adoc |   5 ++
->  Documentation/git-remote.adoc    |  14 +++-
->  builtin/fetch.c                  |  92 ++++++++++++++++++++----
->  builtin/remote.c                 |  31 ++++++--
->  remote.c                         |  51 ++++++++++++-
->  remote.h                         |  19 +++++
->  t/meson.build                    |   1 +
->  t/t5505-remote.sh                |  76 ++++++++++++++++++++
->  t/t5510-fetch.sh                 |  63 ++++++++++++++++
->  t/t5586-fetch-refmap.sh          | 119 +++++++++++++++++++++++++++++++
->  11 files changed, 456 insertions(+), 23 deletions(-)
->  create mode 100755 t/t5586-fetch-refmap.sh
+I think that's fair. For what it's worth, when writing it my thought
+process was "let's be as consistent as possible with the most
+battle-tested negotiator" as opposed to "this is broken, let's repeat
+the breakage elsewhere".
 
-This topic seeems fairly well done, without seeing any additional
-comments in the last two rounds, but I am highly disturbed that I
-was practically the only person who reviewd its later iterations.
-Because I am not a target audience of the feature, I would not be
-surprised if I am missing something large.
+But looking at it more closely, I think you're right that there is a bug
+here in the default negotiator. So...
 
-I would very much appreciate if somebody else can give the series
-one more read and Ack them, so that we can move it forward.
+> Would a hybrid approach to (1) avoid copying a mistake to new code and
+> (2) document near the new code and/or in the log message that the
+> difference is deliberate and fixing existing ones are #leftoverbits
+> and not addressed in this commit?
 
-Thanks.
+I think a hybrid approach is fine, though I am happy to fix the default
+negotiator alongside this series. I have a patch for it locally, but I'm
+happy to send either depending on your preference.
+
+Thanks,
+Taylor
