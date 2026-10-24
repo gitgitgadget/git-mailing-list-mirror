@@ -1,82 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792879233;
-	b=ZQX96aBw5lojt78N+NKELt38kOcrMM5KWg9+7jqC1nlY6HZx6GlIyxaN5/42ioHZDuT9
-	 gnYzEwcfeDS7OjOFZmntzSgE45CuM78gB8qtFXm3e7l4KlivBzAAoq99AflqbSbYTGgTO
-	 sb//VOB9U8hP78dtqSCw0n050d7S2vDuDP/Y21veAp1uAbBG41L91Lp8R7Tm2Npy5H5RB
-	 a6SS7/7YLiOEyOJ1aR5LkBkJmYnOtEyPMIgsTWYV/Qpn3ogAJdtWmeV77cogOe5aYkkPw
-	 a6f9Q2ZjmznKv39Lo1qkxjabYnrcx8Dc0+d11WR99K3zu6ZNME+qOtTXTmfmD+OuWrg==
+	t=1792879237;
+	b=bazRf1JnPe8vNNrXrhIi+sCBDERTY1qr4Q/MZQdDnOVHK5yztn0qZJaLPnrm/HnRSTFf
+	 t8zdFCC/H4aQw3v3i8eMGPItT8Piy2BkpJLHHmErqLNsTUIaPi1Gsp67uSe3vgeDqpmAh
+	 lQ22OMalMbwQiWcJVzwVj/Dh4IY0A84j8FFk/sqfp97uxc89qyxUJxwAwxe+xLrKHSR+7
+	 362IaJqv//mJoZl80PBSgU/BHyCWDkWaBI8DzGxBKqD2sCgdtwEDN8T8CwE/RSgKfmzBB
+	 LdNEocMWzKOie5zBP08DViHwLuIuaMGq4KLBhrfiu820IWKvksdhclVIJkngt7OtKzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792879233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792879237;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=F2WpylZO8DZ4AjkEeHI08TI3uQLXPEUr6DCTZqm7O6s=;
-	b=DlVpgSrsSfqzv4HTL94UxKEyiu9r8Ve9QruH+xObEk6MnDn3R5GG8zxCH6r3/bHyzJ+s
-	 5t+quNNzL6M+jx+5qBkTl5S0xMYH/xnefhXUew1K/O/hFSFeNFiav/dbQkvd9aDczlBp0
-	 mW+SJ2siV7nIOGbnIQCDJqmToFNutMG1qzsXdexOCKeFVBnBSpKet9gzMvDopjR3YtRtQ
-	 7UG3uZwjOlWJ2+8cnw2gORBSOIYl1kL1xsyPRwqk/HaUkbjdpkfqQllYd12kqNwfTffQe
-	 KbeiyJb099jS42xP7QEJqMRczIqtBed4oWxPcc/PhuJCetEMBGAIDDO0AJoUX6nvCOQ==
+	bh=+zefEaevQGwN4Qbc5MAJZZquvoXUJb1xP8zawhi6E94=;
+	b=yhxkHUYpxaGz4MuqgF+iqHP3MaaOpxEwLKKBQ8QhHpdyt+7IP24/PG/TNM+wQXda+W+A
+	 8SzwedCB3uJiQ+pesn3bIdF2+NEFnYkTpBpv7c1kEDLFkF4K6q9/eU+QspfwqG0had/9c
+	 WHB9a6xMYbvUUjd/3ioqsaVTmZDNTXLBOxXFAXOx1F385Xorrq8SZ75M2IeZ7Fgkxno4S
+	 L/CiRmpzf12Zpl+qy9fkWxhcvVQMXSvL5P+ke0VzsMOs8JZHMLtD2fPTofTKzI8m+Givt
+	 SnxKzftFLseOHrM43/KqyhDoJ8soIfHxlxZxCqrT9HPNp28nAOQmUtoLiNdTYvb9ePg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="rwg4ZEE/";
-	arc=none smtp.remote-ip=74.125.82.47
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=cKNhaYLX;
+	arc=none smtp.remote-ip=74.125.82.46
+Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D122E606A31B
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 22:00:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D122E606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43B2606A31D
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 22:00:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A43B2606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=rwg4ZEE/
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-15ea896ddc8so3224152c88.0
-        for <git@vger.kernel.org>; Sat, 24 Oct 2026 15:00:32 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=cKNhaYLX
+Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-14394530ec6so2605055c88.1
+        for <git@vger.kernel.org>; Sat, 24 Oct 2026 15:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792879232; x=1793484032; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792879236; x=1793484036; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=F2WpylZO8DZ4AjkEeHI08TI3uQLXPEUr6DCTZqm7O6s=;
-        b=rwg4ZEE/PaGTc0rRisA9FGqxNrptapTvboxNosv9BXzd2UGHCtRUAssjdlapb2Qmj5
-         VizbnSnLBV0hdO1a6PGQboqU55ii90SZ9U3fKc8yY79q4IwyMEa0kTNrBYROZlG6QEG1
-         ozIz5FwNeKCFUDalkQn5vc6sDiAUs7csu3ZqQkDGNeLLaMYF4pjgoJF76dyKDLUwicp3
-         F6Or0E2HCVyG35uYCR6vLlfHoxf7FLUbA9FqHaGtNBWsaq/2HgakAKtM6oeISLY9erXC
-         +ar3xA3KkXlyBIm70PRatBCiDBwaVH5iaFIVhIyE+umB9AU6jCIy0C3LPjbvyA8vA1T9
-         ZioA==
+        bh=+zefEaevQGwN4Qbc5MAJZZquvoXUJb1xP8zawhi6E94=;
+        b=cKNhaYLXMiDFLzpjCtjn2WYyJRZoN0gaxKw0LW5mFW2KWYAR/WtUuSLFBsq/Lu/NIj
+         B4WpCvdyY4UJhcscTWxzflpavjNfai4sKtCGOjRjMwiyKSLhQIUbjiO985Im+M+AXV/n
+         FpE12wguX+Ei9qB/GYwwP6Qkwyc7FbPQVII75GTTVw0xvfzFZI15rTemOXaxd+ddmuwA
+         HWE2fzDicbBaw/UmD6wfiEXqogmR2O7wWnAWzA0mZLcQckZpbD6uEVaQIHbJy4SRKopH
+         TrZa+iI0MiDtQ6ERR0gT+E2JIxqVNQAIP99IXGufmd9NCJslch2+qWpUZceCimq37OB5
+         +Fgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792879232; x=1793484032;
+        d=1e100.net; s=20260707; t=1792879236; x=1793484036;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=F2WpylZO8DZ4AjkEeHI08TI3uQLXPEUr6DCTZqm7O6s=;
-        b=U/1jKD+Qlo65uT2H4zVaqcmu9WQUs2axkannEVVJhriWZRjIKYv+zoMWjHqUVWNTfy
-         8ND2NtW9155AfJu/o1Vs5hfuUi+HN5SwAYNWQUlGY5MdRmhYXua+iHfmEOMp9xZjguvD
-         eLTIimDJUInlXtekyYDWmEWkfX+87pPtqHX/nVgag931XkfCcr6MB4DlCoexX2AM8QJ0
-         u6aLW0whB9fJs1of41l/bYOeJS99JrxxPUFHShxspMRnH6getG6XxZtFFW2OabWncwSJ
-         QhpmMkBOsoOySGbwLRy4XqD8lJNyD6vpMZPzHlutadP030LspKjEB37E32TKzkkvu0ka
-         m83Q==
-X-Gm-Message-State: AFq9FYIr4lOLtWwL62H3u4O4VEZZc/rlVUsfuwkeuGecjaYDJ2UYyf4k
-	swL5iqV/MvDv8OvO5K823+QkNUu98U/e1mcxi/7R2+lC5i0MGQEp5m5sXjBMQYAc8RI=
-X-Gm-Gg: AYBFou0vrKi5Ba+QO9MBqlF5NskELFywyfpwGdPGyQR28RsuFSv0LhMz9bebEvg26/9
-	V8Q/U0l41kFcqJRQ9Hf26AvyhVDVSo8gifMz8J4rRbrZ6FgmzllGdtJnYSgtKxtiIuU5kOIQ5jm
-	k6XWgLrW1gOZsNEZ7aD23QwcJXtcrgWBfw//3Sgl8RarkkAx8ADYbjJvxtcWzqgFdrgbgGzNzUn
-	nMRQ6LbNOWxpr7ejBh8BkmmLVSVXXZh63LsxRHCDeqq9zEY4ONDShAy8YDGb2ozWWaXvCb/LqQg
-	L2UV/U9bVJaBenQGq5w/CpuU9p1cfSWzhk5QBH+hyt44THLUnzcirh3HJJKPxfW3qjsWMENZsCW
-	os+UK3jPZ4CMs+xo7CF4CNOckI0nNbhJ6HvR93E6wo/IY3xrgJSQfO/lWNmX/et3ZmGrZyBy1bt
-	1gJkf6ujrNXukoHl3SJ9xaALPmkLPSzc9L0Y/9ipeghDSo5S7/92W7ejSsB9o6Vps3+y5B6QKxY
-	tp8GsdIWjudLgQx6mp8746TOXzH2VRQqd/uz8JwMNF/4eUIDCTk4C0gXxb1SBSzhQ/2W7C8FaYc
-	2FvZnNGzsC2MGlBG/QPnNuSAA1t4B9EKCRDpig3NwA==
-X-Received: by 2002:a05:7022:5f09:b0:15e:6541:3099 with SMTP id a92af1059eb24-19933e10e21mr4470804c88.7.1792879231761;
-        Sat, 24 Oct 2026 15:00:31 -0700 (PDT)
+        bh=+zefEaevQGwN4Qbc5MAJZZquvoXUJb1xP8zawhi6E94=;
+        b=fsjS+jQ54Ih0uwtBVn3mzNkLeBHyUyPfk69oKGchnwKb2r7bunfb94YGul39Yrcy86
+         iBmLljX/MZaVh1/0ele46MflFfl6w4+RSj5SizUM7YndukX/5ktyTb/84t6k1r37lWOg
+         aq3uW+tZOc1/oRdFSxB96cj/hlhP4lAr3H6HMSloXswSWOL/8vyGCWSS1vXBCpiaVTKD
+         ONAaPBlC4FeFA5rQl8aClZGE5zzhuwi7AxIx3mltbO6QvkYaSvVhkencT5Gga5Jv+Yu5
+         /vjSNxYpNa9nB9Dac46lsLvqiV0BXYBHa992pPpvWSpA9AKtpeqLadyZCetnMfXw+S8z
+         0rqg==
+X-Gm-Message-State: AFq9FYKAJTUCqf0JoVbInnFnWaioRn7agNXssk530IljTXvNluCEkf2h
+	Syr9FB/73gtDtZ18P954RZOGicmiKELfyqoPWeGC/UuyHXlfsUSs+qsLyg+vAYIn9+M=
+X-Gm-Gg: AYBFou3MUbuip4I405vvCYgdwDbH1wtE0E9lHO28OrqNxPqom8GIWIpwUcadgCU2S3r
+	kJWik1v/9C662ENtYxOA9+KOALA4rf7mIZ9tB6JU6gLDtjOz/p+XIXQa2lRuCF0kEpWaSb3A/dA
+	qWUCgy0SYrReOVi2NL/l2477BeAuWOHvTX69xL6fqqbkJNlTMsGrbxwRNkJzfAQydicKV4Apcv+
+	7jYXpjFFFbwCJDAThRfd9gho6SnY9n/YDCLQMPjwIuX+/cUFoNyq89JrbqF6r1zEt1cpWI8fkst
+	R2DQuFmCjD5szDVOCqOuhLXGpUZ4VBqd9lQEHqY7R03qjq8adjLUKhMSMrFDSfpGD2RSBGIa9Ip
+	ov5bLYFABhr6/kPD+Sm5Pq78CSxLPNhfohJD58fG45rL+osYO7VXADxs7/+h6UlBJONzl8KDKeU
+	DRkeAjEQMONjLpKGBfNGIoAdnlPGu3RqXDqOLd/FFd5QWzD9vjFJOhKs6jf9iCBRScUTRp9xyDB
+	AO0C+VhQD+2an+/62Orhl/wOlq0tikAjJpPbQE7mytexaT18WahRW0i0T54GjHRNocnj/WkxTRA
+	wL6XCpcZZvGyRenPvKSNafXKbMDqh4nI6GRx1yfDtkA=
+X-Received: by 2002:a05:7022:7e8b:b0:16a:1fa:58cb with SMTP id a92af1059eb24-199290fe419mr4288070c88.1.1792879235622;
+        Sat, 24 Oct 2026 15:00:35 -0700 (PDT)
 Received: from LAPTOP-PVRSMPQK.iiitd.edu.in ([103.25.231.125])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-198a0f81ea9sm11578875c88.11.2026.10.24.15.00.27
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-198a0f81ea9sm11578875c88.11.2026.10.24.15.00.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Oct 2026 15:00:30 -0700 (PDT)
+        Sat, 24 Oct 2026 15:00:34 -0700 (PDT)
 From: Aniket Gupta <aniketgupta3001@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -85,9 +85,9 @@ Cc: gitster@pobox.com,
 	belkid98@gmail.com,
 	ps@pks.im,
 	phillip.wood123@gmail.com
-Subject: [PATCH 3/4] environment: move core_eol into repo_config_values
-Date: Sat, 24 Oct 2026 22:00:11 +0000
-Message-ID: <20261024220012.486-4-aniketgupta3001@gmail.com>
+Subject: [PATCH 4/4] environment: move global_conv_flags_eol into repo_config_values
+Date: Sat, 24 Oct 2026 22:00:12 +0000
+Message-ID: <20261024220012.486-5-aniketgupta3001@gmail.com>
 X-Mailer: git-send-email 2.56.0.240.gf97865f162
 In-Reply-To: <20261024220012.486-1-aniketgupta3001@gmail.com>
 References: <20261024220012.486-1-aniketgupta3001@gmail.com>
@@ -102,178 +102,183 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The global variable 'core_eol' holds the value of the 'core.eol'
-configuration, which sets the line ending used for files that are
-converted to the working tree format. Move it into 'struct
-repo_config_values' to continue the libification effort.
+The global variable 'global_conv_flags_eol' holds the value of the
+'core.safecrlf' configuration, which controls whether Git warns or
+refuses to proceed when converting line endings would not be
+reversible. Move it into 'struct repo_config_values' to continue the
+libification effort.
 
-As with 'enum auto_crlf', moving 'enum eol' to 'convert.h' would
-introduce a circular dependency chain:
+Initialize the per-repository value to its default in
+'repo_config_values_init()', and modify the configuration parsing in
+environment.c to update the per-repository structure directly.
 
-  convert.h -> hash.h -> repository.h -> environment.h.
-
-Therefore, keep the enum definition in 'environment.h' next to the
-other ones, under the existing NEEDSWORK comment. Initialize the
-per-repository value to its default in 'repo_config_values_init()'.
-
-Modify the configuration parsing in environment.c to update the
-per-repository structure directly, and introduce the getter
-'repo_core_eol()' to read the value in 'convert.c'.
+To read the value, introduce the getter 'repo_global_conv_flags_eol()'
+and update its users in diff.c, combine-diff.c and object-file.c. In
+object-file.c, pass the index to get_conv_flags() so that it can find
+the repository.
 
 Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
 ---
- convert.c     |  6 +++---
- convert.h     | 12 ------------
- environment.c | 17 ++++++++++++-----
- environment.h | 14 ++++++++++++++
- 4 files changed, 29 insertions(+), 20 deletions(-)
+ combine-diff.c |  4 +++-
+ convert.h      |  2 --
+ diff.c         |  2 +-
+ environment.c  | 13 ++++++++++---
+ environment.h  |  3 +++
+ object-file.c  | 11 +++++++----
+ 6 files changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index 7c7fdd4b2d..1d4e8a246b 100644
---- a/convert.c
-+++ b/convert.c
-@@ -164,9 +164,9 @@ static int text_eol_is_crlf(struct repository *repo)
- 		return 1;
- 	else if (repo_auto_crlf(repo) == AUTO_CRLF_INPUT)
- 		return 0;
--	if (core_eol == EOL_CRLF)
-+	if (repo_core_eol(repo) == EOL_CRLF)
- 		return 1;
--	if (core_eol == EOL_UNSET && EOL_NATIVE == EOL_CRLF)
-+	if (repo_core_eol(repo) == EOL_UNSET && EOL_NATIVE == EOL_CRLF)
- 		return 1;
- 	return 0;
- }
-@@ -192,7 +192,7 @@ static enum eol output_eol(struct repository *repo,
- 		return text_eol_is_crlf(repo) ? EOL_CRLF : EOL_LF;
- 	}
- 	warning(_("illegal crlf_action %d"), (int)crlf_action);
--	return core_eol;
-+	return repo_core_eol(repo);
- }
+diff --git a/combine-diff.c b/combine-diff.c
+index 717d537688..c77990aacf 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1098,9 +1098,11 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			/* If not a fake symlink, apply filters, e.g. autocrlf */
+ 			if (is_file) {
+ 				struct strbuf buf = STRBUF_INIT;
++				int conv_flags =
++					repo_global_conv_flags_eol(rev->diffopt.repo);
  
- static void check_global_conv_flags_eol(const char *path,
+ 				if (convert_to_git(rev->diffopt.repo->index,
+-						   elem->path, result, len, &buf, global_conv_flags_eol)) {
++						   elem->path, result, len, &buf, conv_flags)) {
+ 					free(result);
+ 					result = strbuf_detach(&buf, &len);
+ 					result_size = len;
 diff --git a/convert.h b/convert.h
-index dae11d372d..3c51130177 100644
+index 3c51130177..18be39ca90 100644
 --- a/convert.h
 +++ b/convert.h
-@@ -19,17 +19,6 @@ struct strbuf;
+@@ -17,8 +17,6 @@ struct strbuf;
+ #define CONV_EOL_KEEP_CRLF    (1<<3) /* Keep CRLF line endings as is */
+ #define CONV_WRITE_OBJECT     (1<<4) /* Content is written to the index */
  
- extern int global_conv_flags_eol;
- 
--enum eol {
--	EOL_UNSET,
--	EOL_CRLF,
--	EOL_LF,
--#ifdef NATIVE_CRLF
--	EOL_NATIVE = EOL_CRLF
--#else
--	EOL_NATIVE = EOL_LF
--#endif
--};
+-extern int global_conv_flags_eol;
 -
  enum ce_delay_state {
  	CE_NO_DELAY = 0,
  	CE_CAN_DELAY = 1,
-@@ -84,7 +73,6 @@ struct conv_attrs {
- void convert_attrs(struct index_state *istate,
- 		   struct conv_attrs *ca, const char *path);
- 
--extern enum eol core_eol;
- extern char *check_roundtrip_encoding;
- const char *get_cached_convert_stats_ascii(struct index_state *istate,
- 					   const char *path);
+diff --git a/diff.c b/diff.c
+index b4ac17f8ef..7eb45160c2 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4480,7 +4480,7 @@ int diff_populate_filespec(struct repository *r,
+ 	int size_only = options ? options->check_size_only : 0;
+ 	int check_binary = options ? options->check_binary : 0;
+ 	int err = 0;
+-	int conv_flags = global_conv_flags_eol;
++	int conv_flags = repo_global_conv_flags_eol(r);
+ 	/*
+ 	 * demote FAIL to WARN to allow inspecting the situation
+ 	 * instead of refusing.
 diff --git a/environment.c b/environment.c
-index bbac8ed8c9..6445994986 100644
+index 6445994986..9b98b3b075 100644
 --- a/environment.c
 +++ b/environment.c
 @@ -49,7 +49,6 @@ int fsync_object_files = -1;
  int use_fsync = -1;
  enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
  enum fsync_component fsync_components = FSYNC_COMPONENTS_DEFAULT;
--enum eol core_eol = EOL_UNSET;
- int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
+-int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
  char *check_roundtrip_encoding;
  #ifndef OBJECT_CREATION_MODE
-@@ -158,6 +157,13 @@ enum auto_crlf repo_auto_crlf(struct repository *repo)
- 		: AUTO_CRLF_FALSE;
+ #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
+@@ -164,6 +163,13 @@ enum eol repo_core_eol(struct repository *repo)
+ 		: EOL_UNSET;
  }
  
-+enum eol repo_core_eol(struct repository *repo)
++int repo_global_conv_flags_eol(struct repository *repo)
 +{
 +	return repo->initialized
-+		? repo_config_values(repo)->core_eol
-+		: EOL_UNSET;
++		? repo_config_values(repo)->global_conv_flags_eol
++		: CONV_EOL_RNDTRP_WARN;
 +}
 +
  const char *repo_excludes_file(struct repository *repo)
  {
  	struct repo_config_values *cfg = repo_config_values(repo);
-@@ -447,13 +453,13 @@ int git_default_core_config(const char *var, const char *value,
- 
- 	if (!strcmp(var, "core.eol")) {
- 		if (value && !strcasecmp(value, "lf"))
--			core_eol = EOL_LF;
-+			cfg->core_eol = EOL_LF;
- 		else if (value && !strcasecmp(value, "crlf"))
--			core_eol = EOL_CRLF;
-+			cfg->core_eol = EOL_CRLF;
- 		else if (value && !strcasecmp(value, "native"))
--			core_eol = EOL_NATIVE;
-+			cfg->core_eol = EOL_NATIVE;
- 		else
--			core_eol = EOL_UNSET;
-+			cfg->core_eol = EOL_UNSET;
+@@ -442,11 +448,11 @@ int git_default_core_config(const char *var, const char *value,
+ 	if (!strcmp(var, "core.safecrlf")) {
+ 		int eol_rndtrp_die;
+ 		if (value && !strcasecmp(value, "warn")) {
+-			global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
++			cfg->global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
+ 			return 0;
+ 		}
+ 		eol_rndtrp_die = git_config_bool(var, value);
+-		global_conv_flags_eol = eol_rndtrp_die ?
++		cfg->global_conv_flags_eol = eol_rndtrp_die ?
+ 			CONV_EOL_RNDTRP_DIE : 0;
  		return 0;
  	}
- 
-@@ -784,6 +790,7 @@ void repo_config_values_init(struct repo_config_values *cfg)
- 	cfg->has_symlinks = platform_has_symlinks();
+@@ -791,6 +797,7 @@ void repo_config_values_init(struct repo_config_values *cfg)
  	cfg->use_nanosec = 0;
  	cfg->auto_crlf = AUTO_CRLF_FALSE;
-+	cfg->core_eol = EOL_UNSET;
+ 	cfg->core_eol = EOL_UNSET;
++	cfg->global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
  
  	/* section "sparse" config values */
  	cfg->sparse_expect_files_outside_of_patterns = 0;
 diff --git a/environment.h b/environment.h
-index 872da3576b..bf6701560d 100644
+index bf6701560d..47d7a9792d 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -129,6 +129,17 @@ enum auto_crlf {
- 	AUTO_CRLF_INPUT = -1
- };
- 
-+enum eol {
-+	EOL_UNSET,
-+	EOL_CRLF,
-+	EOL_LF,
-+#ifdef NATIVE_CRLF
-+	EOL_NATIVE = EOL_CRLF
-+#else
-+	EOL_NATIVE = EOL_LF
-+#endif
-+};
-+
- struct repo_config_values {
- 	/* section "core" config values */
- 	char *attributes_file;
-@@ -156,6 +167,7 @@ struct repo_config_values {
- 	int has_symlinks;
+@@ -168,6 +168,7 @@ struct repo_config_values {
  	int use_nanosec;
  	enum auto_crlf auto_crlf;
-+	enum eol core_eol;
+ 	enum eol core_eol;
++	int global_conv_flags_eol;
  
  	/* section "sparse" config values */
  	int sparse_expect_files_outside_of_patterns;
-@@ -212,6 +224,8 @@ int repo_has_symlinks(struct repository *repo);
+@@ -226,6 +227,8 @@ enum auto_crlf repo_auto_crlf(struct repository *repo);
  
- enum auto_crlf repo_auto_crlf(struct repository *repo);
+ enum eol repo_core_eol(struct repository *repo);
  
-+enum eol repo_core_eol(struct repository *repo);
++int repo_global_conv_flags_eol(struct repository *repo);
 +
  const char *repo_excludes_file(struct repository *repo);
  
  void repo_config_values_init(struct repo_config_values *cfg);
+diff --git a/object-file.c b/object-file.c
+index c049bf13f7..b3ab8f5bcb 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -33,12 +33,15 @@
+ #include "tempfile.h"
+ #include "tmp-objdir.h"
+ 
+-static int get_conv_flags(unsigned flags)
++static int get_conv_flags(struct index_state *istate, unsigned flags)
+ {
++	struct repository *repo = istate && istate->repo ?
++				  istate->repo : the_repository;
++
+ 	if (flags & INDEX_RENORMALIZE)
+ 		return CONV_EOL_RENORMALIZE;
+ 	else if (flags & INDEX_WRITE_OBJECT)
+-		return global_conv_flags_eol | CONV_WRITE_OBJECT;
++		return repo_global_conv_flags_eol(repo) | CONV_WRITE_OBJECT;
+ 	else
+ 		return 0;
+ }
+@@ -576,7 +579,7 @@ static int index_mem(struct index_state *istate,
+ 	 */
+ 	if ((type == OBJ_BLOB) && path) {
+ 		if (convert_to_git(istate, path, buf, size, &nbuf,
+-				   get_conv_flags(flags))) {
++				   get_conv_flags(istate, flags))) {
+ 			buf = nbuf.buf;
+ 			size = nbuf.len;
+ 		}
+@@ -615,7 +618,7 @@ static int index_stream_convert_blob(struct index_state *istate,
+ 	ASSERT(would_convert_to_git_filter_fd(istate, path));
+ 
+ 	convert_to_git_filter_fd(istate, path, fd, &sbuf,
+-				 get_conv_flags(flags));
++				 get_conv_flags(istate, flags));
+ 
+ 	if (write_object)
+ 		ret = odb_write_object(istate->repo->objects, sbuf.buf, sbuf.len, OBJ_BLOB,
 -- 
 2.43.0
 
