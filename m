@@ -1,101 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.176
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792854964;
-	b=nBpHa2tfVNbeF6U3Vx0kTdrAf4bhU4LfFigvq0fTKTZgnPfzPK6p/KlSsZWDncN7VSfZ
-	 Fv0NiH3PEetPXpNYq1LpwDPbiwwEM3rRxXK27vo9dBtcUbdHYH4rPLU8c8Wt9fxbykoAv
-	 pm7aPSRczVDx4Lpg1EpWX6b4maypAPL5JzlxBly+ZzF6HWZDqECXLPsN0f9FL4XLi0Icw
-	 J6aQXz3Bb6NETtAFNOSs50INsRgGKNR0bbI0PUGJ7T5X3D/xzXmGRpVy4k9ST/PeeDCEP
-	 oWpB6Y16nEBSBb5cEtCfDY9vQgu30aoEpYbcqweqiV9dobjdvz4/VcmPI3+GG0QB71A==
+	t=1792855360;
+	b=tD9LSPiaxykat6GFpmX8ogeRfyUzfyknuWKrhWDBlesN352HL8mwYaxwY7+p8YggqP1z
+	 NwgMqhnNrEhyiyUfoozPJAtWVGD9dBFiojR3Kp6H+pjmNeG1KwOMiPsgPL5y+1JaxXTvJ
+	 531pYAMjn2IMZWvyFYtbTubdEcX2be5ZKL3if9MA8nVc/o5VRR+PeDhOnlUFw7EXaHeg0
+	 CGr3Ur4+mdTwMzoRwW4lM1JHJw3Lz1LaKtOGpzMRbNV0XkX8VlTf5IsZEtCz9wosHEK9t
+	 Br5aBZGCO7Lj95d/ViGsLEJ3Ev+o3OwxRTvRfP+ihnzna4azcipzMT6DxJtt/tp3PEA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792854964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792855360;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=z7kDz9FbrQqVrGKgxdm5QpYgkpxnT/9RILgdTkETGxU=;
-	b=Jt0EwXL1+vFmkxkQJBKO1+pvB8E8VZREfqLIVj9mCR1EWccjqwJD9U2JScw4zxqdyvUJ
-	 iI9LfwSog1mSn3qt29Q4SLPCVI84iEUXSSFsuRMRHRvGR3eZnxWJeXS9znUCpWt3WFvLt
-	 Bt44IykJye/9e0s/7ugyBEat6jQABmrB/Ls6Riq7ARfY29yfXtgedl4sBYhFmBOaHxNUK
-	 fXitkY5o4QDqjOy2BHRRPao7QrjLcl8jZa5Xy7PWWK3TaCzHGcMtufjLncM0AbUP2YKZg
-	 0KmQy376eQH7G1+6qV/tVWeoZgM/1xNI19ES8pXI5JxKOHB+f0FPgX2x30kvEawr4/w==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=VC0RjtMhfypSDX9ZhJGeGqLnoLGXc+JS6O1j6uS0qSU=;
+	b=rX1J/0mmDBhdlr4A3pO3gTnXDzAWYnjmhMjuN++7MWeEmK6MSyMdA1wt8qNBj+gKDYn/
+	 7HQkZJ3UegGdzc/+qQIcLFSvt2XuacLDQcYdIsNphGaJTpbWi6xArUfd2Sd0pAmr5c3bP
+	 ccWYOAdx2VChlchfHUJdWpXNt9yA4KXgWBJlAL/LfFR7t25XMxdwuf4GWySMpQWRVyO4d
+	 f8iOr1+4FBrk72pzJCXE0MkbxXxKfGsLX1bvSFP15WdqN8jtOwUVFiSoN61c6V7cBG8JY
+	 d8mIxd5gFA+BWPR/UqYihQkW0NzEClf/JKGxwqUbC43sHnnScbsmeqvmpmgSd2DuJ1A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fL9txD6z;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.181
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=jD9EQAJ5;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.176
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1107606A31B
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 15:16:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1107606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09029606A31A
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 15:22:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 09029606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fL9txD6z
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2e8fe8e343fso9508495ad.2
-        for <git@vger.kernel.org>; Sat, 24 Oct 2026 08:16:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792854963; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=jD9EQAJ5
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8a05e3f0d23so680796b3a.0
+        for <git@vger.kernel.org>; Sat, 24 Oct 2026 08:22:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792855359; cv=none;
         d=google.com; s=arc-20260327;
-        b=NmcfDpLx1tzd7p/BWjRYKMw6R1kA4O2Cpl6iaY0v9TZ0hOkp+Sv0AUTv/TMrD/mGY+
-         m6YtLLtsI7hdtON7kN6E+6/2wq6lxfF9Lwv1ZDJgmBO4/WGaN1nxbLfu/Zq3Qt8lgkmS
-         5u4usL5Gz1/TyXj9XupHsmHDGH6fmd+l9e4cxNkEdW3ygRDSIPvMuMlq7gXPyIIxkn+V
-         x9dK6+gqqJG22ffxsvKBTWqDVkKq1NLwuduXSIFfXRyNIHs+w1A4PpGRhJItEJDhM0lb
-         2UC8vFShNx52LE4w23weObWOMBy4/7rvXWlf5Twp/9NEJzR6WTI8UFWDxS+sOj+JWc46
-         doTQ==
+        b=Zjpk6gMAp3igJ1lyfnXEI4JPBu8ueSWyBZfvZtb1dmXmBdSWrAo9qakGyFLr33lZHx
+         Ll+MjJ74XiCwqn6yveAOynaXg6axyfJuJVZawMySoFll/4csQ4sdniEXObJFb6Y1C5zQ
+         3hwzFWwCa06PMlext9fwDfi3GVlUyVIR9I8vXsTFDkOzawu6lXf78JDPFPwCcp1bZa08
+         iL/YpLHGwXgcvCipYx/2rCbw8GgHMk6b+k3PsCoNd8YV8P2uSkLWd56LAlHyRfFFHV17
+         5hTqrD0hYSIHtmwP5fSVH9xHwKmEHH+SMgpRONa6xqW4OObxjLPDsTMRRZoFix1qXAui
+         jK1Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=z7kDz9FbrQqVrGKgxdm5QpYgkpxnT/9RILgdTkETGxU=;
-        fh=oQFHZM+SEk4szQrC6U0bCQoO46RWO5A983onJ/zu8sU=;
-        b=Fr7z4q+6rVW7/OY96Jf0ONNZWY1APgzTG1W8Jv7rIqxuh/MhHMJyCiza5KidTYlPbR
-         z7pG13ohnBKIqPb3z4Urhn9A0ofS6YSo6/v7LCFRCU8RwCnI7+x8fgS+Ow/ZIfjv9dWJ
-         7Jt13m/Th69KcNPLmgYW2+FCWxJ7TP0oxvLCPc+MdLygH0GKzPrd2ZMsqcNQfP6MVXxO
-         MrGRLJ5szZDTqKXuh1+FxfSgWTo0Igx/VvcQQKSbpf5O5Rg9E0rc5sHIZbp8xAt55yYB
-         MAMS8xVJ2Lu27elk0I4tj9SentMPInhOyBR5MWWm4Zs4nkKeWgP8mKsiRnaFoWHOj3Te
-         GQ8Q==;
+        bh=VC0RjtMhfypSDX9ZhJGeGqLnoLGXc+JS6O1j6uS0qSU=;
+        fh=30uhIBVGkGd5Tb9+T5yCic8YLwdJaQ3n04mqr6/PeT4=;
+        b=mDPdDJWvmMjfmScA4K3+Opc9v/gwyCX544S3YPB1gjBKffyLM4mCw9fomdtho/TKve
+         hvIOO161PbOU0RmBdU7cnB0Us1bz2obLmvLsCUkBjGRFQVaqTbO5zUxdCFkH95xlD5O7
+         I9iCS+g4ZoAO3B5etLrS+C11GZn+RX1LNjnh6RPvqqp7Ko9xe+2QLX5C4CuGWF5BJ4qD
+         HMb0qngGViDXv549oDAMANSiarqK1V5W911/J3mYR0aQOEhhz3xp8cgA6/PFDDwkuNDe
+         3yHpTeg+8MxTqnFWjIMGUjmbcKF6RUMCQmIGJ6OU33v1k96WmiMRzmJ91cbc9cDiJNRo
+         Tc/A==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792854963; x=1793459763; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792855359; x=1793460159; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=z7kDz9FbrQqVrGKgxdm5QpYgkpxnT/9RILgdTkETGxU=;
-        b=fL9txD6z/q9BjvgzbOBBlRgYMP8zIESeuhcHXuzhKu2zzn9bKxzAiGVwgk5umEiF88
-         B+Bga36aXHXXYVKk/bZsQbsdqwrsKCKTVj0lCG3yt09w/iSuDUPFw6EVj5F7CxA2DQmp
-         vl3U6/qusPF19O5oKsE7IXbIz33bJo/SYaDf7/TKZHV22LT3YYLEsKkcMBoQ/Fk0vw3E
-         T+n5hEwygBu0cT+lorhuZaKmVZCL/fjKMt3dQEuvsOYs76cQfka5LTEGq22R5ReJP0ZL
-         ACzQi9B5eELWg6q1cniBsJDV/a6HaHwCyH1vkQ66EWnr0vrOvzK3wUVpMQ9H//XCyzXz
-         QIXA==
+        bh=VC0RjtMhfypSDX9ZhJGeGqLnoLGXc+JS6O1j6uS0qSU=;
+        b=jD9EQAJ5SsHJopbO8bMpn7NFaoHFGUwrEb9pCYTRYr2Z0zCRtTq+qUAKaxLsxwYGOQ
+         tTxTTCMFyi+d214f7X2yhZekH+w6OgKMF0KGOCS39XE+aZ3aXst22Jw0Y+OOLJQ+XW/K
+         3JguRPYwLwFcGcADZLylVUcNfhIMWwNqk07qUMWOlPelMqYdIbvLwVSF44KM0WKwGpm/
+         L1F4N8G9yzzYLkVqdESMwoBIfyZ4lr0RkKvtRhELU9fMF881QC/mbbWZ/XBEAxp5MYZv
+         /bkP6raHp8fps6mkRLVGVS2h8IJZU4gE+nDML79pcaQbk4KRji5RaDpB0uF6Kz2VFknU
+         MpSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792854963; x=1793459763;
+        d=1e100.net; s=20260707; t=1792855359; x=1793460159;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=z7kDz9FbrQqVrGKgxdm5QpYgkpxnT/9RILgdTkETGxU=;
-        b=E7mDk47ie6CqeaTM25lCHDbEbquG0KcW6W7ogl3EA3ZzfYlesAU3+4cjq8jbCCSBF9
-         g3xLgebS2SqWltR7vv5tKKg4tN4cltvJRCHuUQogDmNbIvgnlaQrBambThKx6A/vDGnY
-         wRPxqh6NYmY9lLrOO/0fuN+IzB8nGYGDZziuWJWdaslxM5l7QnW0xDlXlR2KvOw67ZPX
-         kWaaLUyz231uhKNyG9g+1JFYMNWgSjJDFLIp6zCrbV3eKgMOcXcXuhnT9SV+Iq5aWs9B
-         /vDH4YmbdBYBDKygSjUf6HdAHBxyfd2uOGXgevV7dLKzEpX0snxihv/UetfX+SbhAtrM
-         gpPw==
-X-Gm-Message-State: AFq9FYIol/JhKT0RsUo1LHBKbehMkZNLX3pBq0St3sHiqy9IwaC6Un3a
-	HgOfWuiMvph48hLeR8OIcrkJGIQczdD/Y0cZF3RdyGKNVqIXxl5OwZoBhIQoH4NuFdxxPhehR3A
-	qjXIx1FPKbtNFUicJ+jr5naj7qfvR1XU=
-X-Gm-Gg: AYBFou0CgJ93SZtGnYTmz+qnZN+msvxI7IlSuS1iBBNha/AwT3Ar0+m1byDAqo41xbn
-	mQPN8I++Le6iBc5bJ60kQurgDiBnGxtd3O0M0Pn9SP1srg77BYgw3U35yBwoovJwherQl1fXQ6O
-	SeVpg5lYQHUZ4p2779KaKYWObTnRt2deYO7Yl128dMdPun+gWcqpMgM3Pdd9iDdTrjDZaDf6Kn8
-	PKI4VRURfQulgC6iO16X+oKBYrGKbclEGTvzHFaCVLj0APmi2sOAfmFgPFDJYV8mz5NSNX8ED5z
-	dzjQS3UfGYevE4QRpgsLmzwOxy9sn1I+xCvnE40G5TK1mgOae3frHGoYASslJ2I570EN82NT6WN
-	T7c/QZJYKaDMD8KxhTsKZ3NSwfEQGz8MLIr5rR4M2xdzbkk5psHF81Kitg82jcBGTlXyJMzk+Y9
-	b96MtT1VvGQlf/PkggGi11TUAV9EeVleRLJ9s5Pni0SyyaAoa7grDWJQsvEcKcMoPuZ5MqxxDUv
-	g==
-X-Received: by 2002:a17:903:19e5:b0:2e9:52dc:4c10 with SMTP id
- d9443c01a7336-2ea9c6c75bbmr16924125ad.18.1792854963127; Sat, 24 Oct 2026
- 08:16:03 -0700 (PDT)
+        bh=VC0RjtMhfypSDX9ZhJGeGqLnoLGXc+JS6O1j6uS0qSU=;
+        b=pYSW4sxx259T+XTmsHnjfxD3+ryrykbZtqiGZ/MRsbNG3I4kWF/iJfnFAHzqbSZgWt
+         wbHlks9DQxZafzu/TTaES3ddNeVpw7G3reTu0UM/xLAhlr4MYzZy5ieEOiykE4nJz14n
+         tpyr4BiPrHb42bspQz/x8NzrxsIJbsyWGBih6W6VyKrEAgYgJDMs1ioklp/ZIRLzCA8k
+         sr5RvbF4owM6579oZk6EyAI7dmvfLHQtNXSgfTvxt+8+5PgNSHOyHcz3RIBeXgMpDFm0
+         XFo9QnAVZTWDp4eqJ4gcQVOq2nBr25S9uxFwzy6JQgS5TsSpChYGxvZTA04XpUkLBeHN
+         nNWg==
+X-Forwarded-Encrypted: i=1; AKwUvBwAm6v7MDdjCa73rnl/zyT7AHUBDBmFBeYV253VbKbv8LDg7m54mVqaoH+MSMGdoAskVYc=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLl+CkpPuqow5e+zv5uQE1+K8hpC5qNDtQ+j45CpiE7gHpuYknt
+	L0j+BWiutM8ZT6m89ZHhTAxP/7+CHYf2qd1FDclKuwjEG0XdiP8KWxH+gHBi5zQ3cTrC/pGf1Hq
+	0mGWmukz1KMtmyXAZtbBjmXFnR8GmuVVNIR/+
+X-Gm-Gg: AYBFou2KWGJJQjFyfrnycM0iQkiVvLEtzt0E1EcE+M6m26ysWxNnUCpM8yoXCEVoYRD
+	/f45Imz0tMxf+q9ZE1c9bBIjijZVfi04CxjnEC7ry9O5i9iy101dhGbEctJTuh907SyHcfUqnfB
+	J1O/fOQd/knA5DhGb+ViD8Drl8ZmC8yRqwHVoOcFNmbj8rdlQHzsSqb7nmzAkm/Lrdwv/C9xxGP
+	aP8guZ9kfj6iE1m1/KJDG1YaVkj3tXrsJGy6aTH4XgkxhOJdHaxn76dTD2IXMsZGG13L3ojt8Cb
+	g7wEz2sQ7LtsxiJ+WLg74ufW7+e+KDgpKbJ+hNu0+rcAr4PpzQi7jA2BlSgnOn8KiOg79QzdX1L
+	gEHgwQcSQRGgIh01iSOO04l1kaqtBmRSkAWIU/vR7Z9BG4IMJxILgBx1SGfX2L86EulBOXSKUpw
+	52S5+VsdNoaPhr1LY/Ih0/SDNdAQfLO1E94XZuQQ7dTbM/mhONkzq3
+X-Received: by 2002:a17:90b:2745:b0:3ab:c674:cad1 with SMTP id
+ 98e67ed59e1d1-3adeafd682bmr2046387a91.50.1792855359260; Sat, 24 Oct 2026
+ 08:22:39 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,71 +105,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com> <xmqqcxt02eoa.fsf@gitster.g>
-In-Reply-To: <xmqqcxt02eoa.fsf@gitster.g>
+References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
+ <pull.2448.v2.git.git.1792348037.gitgitgadget@gmail.com> <bfc2b43a-6198-47b0-8868-d92551548f22@gmail.com>
+In-Reply-To: <bfc2b43a-6198-47b0-8868-d92551548f22@gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 24 Oct 2026 11:15:51 -0400
-X-Gm-Features: AclHuK_ZrhP-yYViGD3-y_yYc4VTFwLOwFGwdRclMmandWpfDPvyY7WeaS__O70
-Message-ID: <CALnO6CD9sB8JCE42kWa5MO2sD=WzstZ8GoHW2PSpjdpRDF2EjQ@mail.gmail.com>
-Subject: Re: [PATCH v10 0/5] fetch: avoid fetching every branch of a new
- remote in a shallow repo
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Harald Nordgren <haraldnordgren@gmail.com>
+Date: Sat, 24 Oct 2026 11:22:28 -0400
+X-Gm-Features: AclHuK_pQUqNCCWXHtwbTe9717bsbTP4BxEuvkVnFCro0Ryfn-LIHaWFYq9HwQo
+Message-ID: <CALnO6CCtm2PLOfnNF8p2aGU5Pn71qimdC4aAS130O5PrzQb_oQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] reflog: add --operations and --historical-branch
+To: phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+	Harald Nordgren <haraldnordgren@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 23, 2026 at 7:13=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Sat, Oct 24, 2026 at 9:51=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
-> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> Hi Harald
 >
-> > Avoid fetching every branch of a new remote in a shallow repo.
+> On 18/10/2026 19:27, Harald Nordgren via GitGitGadget wrote:
+> > Create a better reflog. Follows the discussion in
+> > https://lore.kernel.org/git/akZfm-igZKeHaDST@pks.im/.
 > >
-> > Changes in v10:
+> > "git reflog" lists every step of a rebase and every branch switch, whic=
+h
+> > makes it hard to see what was done and on which branch. This adds two
+> > options to "git reflog" and "git log -g":
 > >
-> >  * Resolve merge conflict after master integrated
-> >    ch/fetch-followremotehead-lazy-validation.
+> >   * --operations shows one entry per command, folding a rebase into the=
+ entry
+> >     that finished or aborted it, and leaves out entries that change no
+> >     branch.
 >
-> > Harald Nordgren (5):
-> >   fetch: add remote.<name>.refmap
-> >   fetch: extract collect_upstream_from_remote() helper
-> >   fetch: infer branches to fetch from a refmap-only remote
-> >   remote: add "git remote add --limited-fetch"
-> >   remote: default to --limited-fetch in a shallow repository
-> >
-> >  Documentation/config/remote.adoc |   8 +++
-> >  Documentation/fetch-options.adoc |   5 ++
-> >  Documentation/git-remote.adoc    |  14 +++-
-> >  builtin/fetch.c                  |  92 ++++++++++++++++++++----
-> >  builtin/remote.c                 |  31 ++++++--
-> >  remote.c                         |  51 ++++++++++++-
-> >  remote.h                         |  19 +++++
-> >  t/meson.build                    |   1 +
-> >  t/t5505-remote.sh                |  76 ++++++++++++++++++++
-> >  t/t5510-fetch.sh                 |  63 ++++++++++++++++
-> >  t/t5586-fetch-refmap.sh          | 119 +++++++++++++++++++++++++++++++
-> >  11 files changed, 456 insertions(+), 23 deletions(-)
-> >  create mode 100755 t/t5586-fetch-refmap.sh
->
-> This topic seeems fairly well done, without seeing any additional
-> comments in the last two rounds, but I am highly disturbed that I
-> was practically the only person who reviewd its later iterations.
-> Because I am not a target audience of the feature, I would not be
-> surprised if I am missing something large.
->
-> I would very much appreciate if somebody else can give the series
-> one more read and Ack them, so that we can move it forward.
->
-> Thanks.
+> I'm rather skeptical of this in its current form. Not all commands that
+> modify the working tree update the reflog and some commands such as "git
+> cherry-pick A B C" create multiple reflog entires that are
+> indistinguishable from multiple invocations of a single command.
 
-I gave it a read; it's possible the things I wrote were already seen
-by you and not worth commenting on, but I'm not sure.
+Great point. I thought it was very neat that we could make progress
+towards this simply by parsing out existing reflogs, but it's always
+going to be a bit heuristic.
 
-As for the reviewing=E2=80=A6 well, it was nice to review when it felt like
-things had settled somewhat :)
+> The
+> message you cite above is arguing that we need a separate operations log
+> if we want to overcome these problems.
 
---=20
+I also thought this series would be doing something like a true ops
+log, which would be very cool.
+
+> Most of what this option does can
+> be achieved by looking at the branch reflog instead (I really wish that
+> "git reflog" defaulted to the current branch rather than HEAD). I'm not
+> opposed to supporting some kind of filtering/simplification particularly
+> for HEAD, but we should not pretend we're showing users one entry per
+> command.
+
+Ditto
+
+> >   * --historical-branch decorates each entry with the branch HEAD was o=
+n when
+> >     it was recorded.
+>
+> I quite like this idea, but think it would be nicer implemented as a
+> format specifier ("%gb" seems to be free) so that users can use it in
+> their custom formats. I'd be quite happy to change the default format do
+> for HEAD to include the branch name after the reflog message but I'm not
+> sure others would be so keen (perhaps we could get away with guarding
+> any change by isatty()/GIT_PAGER_IN_USE?).
+
+I'm quite a bit more positive on this change, but I like the
+composability of a format-specifier. Great idea.
+
+> If we're going to do this we should make sure it supports "git rebase
+> <upstream> <branch>" so that the branch names are accurate. That is a
+> bit involved because you have to compare the name of the branch being
+> rebased (which is in the "(finish)" reflog message) to the name of the
+> branch that was checked out before (which isn't in that message so you
+> have to go looking for a previous rebase or checkout). It also needs to
+> take account of rebases that checkout a detached HEAD which don't have
+> the "(finish)" message and those that checkout an up-to-date branch or
+> detached HEAD where the message is "$GIT_REFLOG_ACTION: checkout
+> $revision". I've got a patch [1] that fixes this for "@{-N}" which I
+> think works, but it needs some more tests.
+
+Ouch. This definitely points to my "heuristic" above, and while we
+could maybe invest time in the reflog + parsing to make this work, it
+seems somehow simpler to have an event or ops log with more structure
+for this new purpose.
+
+--
 D. Ben Knoble
