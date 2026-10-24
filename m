@@ -1,92 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792822247;
-	b=mMxidG6IXe8Tpq5IFoYJsky834Ixl4bokAVCvj8KyiXqTS7ywS7pss8NCNxfvsJnGCtB
-	 2HO9FL3/Q7D/dh0ODJGtf454gte4vTd7FRZXHivSLbxehVpNjeG5t2Kk3HQCgiuDh64tA
-	 8b7UeTwas0y+LDmyfqXswnynV8Zb7HtHFn57TTbPQM11P2gAujnd+3O8JlefpQXMoeBa0
-	 MJCZEmi7HhOUpSZg3DBrfr7RcEUkbpqRz3/bvEqfyvQdZX5znTLa9tdHE8CtF1Fs1X3vq
-	 mx3vjc6L87hb0UeIMeLlNE36y5zGFnf4jI3D+4tZsusSymHmhGxhUrXLiIVBnrWkryA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792822247;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=L4x8OxdhHlWQ229gd1WJcWwuF5NIc8jMCvWRzK7OOug=;
-	b=rsDG4Ei97+9brj3BCmn8boRahEmM9961jCh8v8BTMm6wNM9q6TmOr55WA4sp8Z7T5aIe
-	 5mDAIJj951vmMkop1YucEkvRdsB9yZ1hEDq08T2Y3/EsCJdQdp+rCGeZ52GWP8upFwSZK
-	 isOEd6trIUVSd93FFB+DMoWV/gRAxjW0TQhR/isAMI71pD6qUl9flrwqO0K/VrzAxGwLO
-	 OnSeEaHdJRBiGwc1NxjXeUiDQJKXZd2GNesyuAUslR/JbDAA1g9GBlEdCoDNqv5qpPnkr
-	 NwxnhJz06K0D3xg0fWsluHpSeTqh4GuhlYbiBGCuA3JeB8tJTuyW2BNTB54u12lLF/Q==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.182
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792823132;
+	b=I7ZW+vY9NXGGObe1wYEA8gLG2oO+QjTHGzpE5MIta9uzWnXi+po/2cymwwLuvTUFQ8Jq
+	 ia66rV2sSji4uLNBeTHS0wTJdyM+W/mpoGeHIS4i8L3771VbqyDzojran2FP5aLoLsAb0
+	 8Dz9dJ9An3dgbmc1MQTP/wj9O2PqPSA1cefkkD5q+X+8alpVT+reQ4U7Qyx1BUcNvcped
+	 ylkSoH9J84kXnTOOJjxsK0r/JLdCX1mobV81bE5/0TnkCLsGxWTbXKf/YunNZuBYNaW7L
+	 TSCGuiNmZqceAsIquguj1/b5UJdOiJg7Xozi56nghJ2cjj4tmJ6v3gAzdpDr+vPFwJA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792823132;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=FOPYuu6RmtryrFGlLZR2UlYlKBckh4CWkSZ4RAnm2FA=;
+	b=bD9ojBGtvikBL8Q4FOphEWkl+/jRHnwNRSPWaoEI6NM4SuEJheueGPOP1Th3jmONIVwK
+	 bTQsVhODkGK+wQ1y/wtjCjQ6qjqk25uQAVz5fE+SXAmWj592iREUI0LN/kC5hJaFWO/0i
+	 Tgla4cgJ51O5KR8laJWNywaZUibY49sC/PLSujIsVeJ7N/qExHd4uXxA0N1hlX7izYaNo
+	 o5lqWZzUWjRoJNEnne2hMhV6ZOcP+oTz+Uc1p769kLcquEtdSPnw1uXw9dFBttx6dB4J3
+	 3M5O6GGFuQqGIB9DOrimuHYeQ8FKlqPhIz/3vs6TLpPoF7L6wLkA0j9fBjOptZcKDgQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=fail header.from=sunshineco.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=d9tNBqBm;
-	arc=none smtp.remote-ip=209.85.128.46
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.182
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B35606A31A
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 06:10:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A3B35606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCE1606A31B
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 06:25:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3DCE1606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=d9tNBqBm
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a218b13c4bso6981165e9.0
-        for <git@vger.kernel.org>; Fri, 23 Oct 2026 23:10:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792822245; x=1793427045; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=L4x8OxdhHlWQ229gd1WJcWwuF5NIc8jMCvWRzK7OOug=;
-        b=d9tNBqBmI4+00MiPp1SkXAPF0hFLfHt+f74mcJv2JVKLdBqNPTV2HhIst+qmJyBnKJ
-         lsIfiS57QEzj6Bd7mDtC5v60kwcKz5VrqvtzOPl0z8T3SbxF8s+XHdVVgin3hjLsncEn
-         DixkEBhk/wyRVNhCufciGeJ9zFMAolJizOQyNaJlHG0BeYCYudQrc9iwRQV/bd2XNvrz
-         jGDC5nSllb2WDfGTTJyQnXe/3ccdaDugaXbpTLW+cst2YOFZjSolckBoxm5GOjiPwSt3
-         wCgV3jDkE+jnEcoc3GneOYcpZbEnt2EX/4ASrknaltcIY2WoW/sq0X15vURdkkh2avCA
-         hIMw==
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-33bb5afa736so251363eec.1
+        for <git@vger.kernel.org>; Fri, 23 Oct 2026 23:25:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792823131; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LBfVaH8137H1eEKxq6sKqr0+GnVZ/qmX3Hx3PnEj2V6zMVm7ydUCEsOhO6ONZ7BQB9
+         Lr0IDDw29Ts3zAU3I/BVMwZsDynxcP/xe3ih35m2H/35twMGLMn1qUweHif44HWWhxhv
+         uSVAtD6fMAnBs1R5n1dQui+N3PFlYZdOmH2niOWq33gt//yWTc3Zz+InAFp2HWPIqsXx
+         kT81AHTzUfWVrRiWiuVJIrrSR6iecHFDRati2p99KFHuERyzbvqm/+ymIc0QxDpLNGua
+         KwCog1lQYuMpzvM66vKLsaDfj9IjDaDgBLW+/uxRMywwko9Az5YcPNuTm0UsCvB8QCAF
+         6niA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=FOPYuu6RmtryrFGlLZR2UlYlKBckh4CWkSZ4RAnm2FA=;
+        fh=n13vmhwHYd5fjMlxtKKaB8SqeBD6EHkOjhIzItr9dJU=;
+        b=bF77486cnWM+wpkNSjQe0Z2QXW3/bwGKOH0vkPcxqOTh/ADOCKTcmURQc30Rp458CB
+         cCbW6KKe/bYT5XAkxILgOfgjb9IjWF/Sp+pI2hpVHLkzoGnR3axjUwurAJlh31UTs6Gg
+         eibm6Tc8xgWvCBWedhYYWLOVgFxc/K8DbGNo8beA3P26J80AMT5ZCHwEQJIskRaGRm69
+         WEXgzbIctZB/wDdgD1f1mf346xjvfF6JWyJvP8M+qRkW5BtBRaPj5Kt2SJ/9fzlarPYk
+         nXJYKaUqfYzpidP/Sw2aPiAWFR121aw0yRIzSi4M7hVKuZUw/QcvldS8srWIkYbH3Qvu
+         11Hw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792822245; x=1793427045;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=L4x8OxdhHlWQ229gd1WJcWwuF5NIc8jMCvWRzK7OOug=;
-        b=NiofgsDSoJXM6rjBWT42IEROoTzX+4APIF2siFXMD6yM7RwkE/1bfxjO0+fcem+Etg
-         lt5tOWKTVGrZIKIMgpEfICswXX8IgUp/++3aQqs6qGZ5kig6wpCzwVNPR4H0VgLx6/EG
-         bok5boY52hlbU1c/Y+eSi+nKnR2nMrmQnM62P3dhHdY6j/tkLp4tjRshqOZ3cvwAE6wt
-         5WF/BYzsktYgEfR9zDxdxAC3o8qPpxxCKuqskgGCPaWVTJ7bO95lLwqGRQzbRJXyfanB
-         8vQc+ScGjFGqfTmi8u6DmpEczNT4YlZAidY8aUZWKJjvBNsL6zLJhNF0DPsNoluEHZEL
-         CEaw==
-X-Gm-Message-State: AFq9FYJr7fR/soWQT5oyMZ50ejSRnBd5aFPenWieM3d9MmVxwWrAK5o1
-	qFucPQOty7AqwIGpI/vA+5ZbV4dvIK1XHJ/+YitdZ1I3KwkoyUtKZpiu
-X-Gm-Gg: AYBFou1ECih1+kb3LcM56f5FkORUG0maZ0tZrC5SGig7KyqLMzqu6ZZzkO6pvBN1wyW
-	bdrcry5+fZ+ZjvrWF8wRPnk9L4WLXXlD21dyD1IvTsCJq6OPC4UDNt6oWYQzYyUUIvpBj3zG5rB
-	cMoAMwXHmwrDbNHnISIJQC2leSRBm7RTUlCacTPLcSVo+ws07HmtQSXPF6NelZ8nH7Egy50KlIG
-	+0YpSKTjfdzybr2KdcRo6bRErZiT1XNn8PeHVk1q1ORa/4girbYNMk9jDZamQCdjNm12MHLjv/1
-	0uvro2hUUGVac3aLYUc4BrHFIrrcVObXtVte4ZL02vArFIEEmZMcsXcZZg9/IMkV0APdHsnMjKZ
-	7AJPduMPnvx4ztgS53BN1RlnUxPnHVaXEfeG0TirlDtiCIUYoeUD1rLpVdq8EMsazNyiHdtXQKs
-	J26WEwYNGaw6sUPAOWoUt92EtMhvTXtQ1Ba+T9yCE/DPrO5WvLpk7xZYVq5mHpKWWkfb7C9ZaJa
-	ErcXCZdyHZpgi64dwEBZx3ZZuRhiGnk87ynnA+g6Jju1PlaB8RHNX20Ph+/NtOV6qflAYcvFS2w
-	UtF7PPdcSroGmTGUUpfmspAaDE/XfFHAmHj/9piznqRDrj55nEZSOF7l7wl89Sh+3fnF4F8Nfve
-	psk4g5ddT
-X-Received: by 2002:a05:600c:c173:b0:4a2:883:4adb with SMTP id 5b1f17b1804b1-4a35ac9ea4amr14096915e9.22.1792822244926;
-        Fri, 23 Oct 2026 23:10:44 -0700 (PDT)
-Received: from HP ([105.163.158.205])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ece13aasm2184625f8f.58.2026.10.23.23.10.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 23:10:44 -0700 (PDT)
-From: Tanga Joris <tangajoris@gmail.com>
-To: jackrawlings2011@gmail.com
-Cc: git@vger.kernel.org
-Subject: Re: Git crashed on `git apply --check`
-Date: Sat, 24 Oct 2026 09:10:17 +0300
-Message-ID: <20261024061017.100191-1-tangajoris@gmail.com>
-X-Mailer: git-send-email 2.56.0.236.g7e34d8174d.dirty
-In-Reply-To: <CALdwsC1cMKZgRPZA+pBaJe4PPs9q9W0K9CQLmM2bgUCyysTB-w@mail.gmail.com>
-References: <CALdwsC1cMKZgRPZA+pBaJe4PPs9q9W0K9CQLmM2bgUCyysTB-w@mail.gmail.com>
+        d=1e100.net; s=20260707; t=1792823131; x=1793427931;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FOPYuu6RmtryrFGlLZR2UlYlKBckh4CWkSZ4RAnm2FA=;
+        b=JUF0RX21pYx3TUIMpDrcn2SpqdcU7IJhf6xpr9hz2x7LDGEoBLqqkamp6daPlb+Xfc
+         noJ6AupnDwNEd1vYR1sW79/9Rn67aPHo/8vnJg4UBa062+Rpw/tV6z4MHrm7NT1flUo8
+         /S72Vac8NofRQFn7h5g04wqR9Hv9u5kHz/AcpsRsorX6kIZyu5QwqMcY+ayIYgEIdl/s
+         5/99NmmxQ6a92NO7q0oW1gOyr5V08BXY7vMAb97SifplYv/EI1lHSKy7l9wPjMjVl3cK
+         XRsbR2nuEOkiK3+dgO4uQ2qCcXrJ3wFUEej1Q9YkGMPjF5PEaJycIQZ9w0ceiPkBHvna
+         vpyg==
+X-Forwarded-Encrypted: i=1; AKwUvBzdDrbtQ4yBOcWK0oocu8osv3xCbgme8KFxMa7/Yx8mv6gshTfvnQYZ+PLSTAiyFBxo4P8=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLYpno72NI9DCcWCVNnZDZvOqQF39TYqZiYi1bExDKV0k8UhDC4
+	vzB0h9xJFw8uwEsSfrvbMOMcbKxbLD0UGZLF0hZKWQF2jS/yr6dm1tildpC2yO9KmJ/WepOs0tF
+	xmC7pBEqT+ubHKbcF3IyJkR+aMk+g7A8=
+X-Gm-Gg: AYBFou2nmav15jmlkdrWUFNXPbGtqZyQYPr6uh7dcgf0s/T1Jdp4fiEg14ZgeH6frWY
+	1EV3rSFmP/dlDfikJypjMVRu8ppRD9eTEjMTBNbZQpSDsmNJA3axWcIm6vIG0w3zs0nizsiqc4w
+	iSvc0/5AVJYMMqlMi9zTvLasxLQ4X1KACSu3wbgPjvQmC49CmoEFBWqZiAMnXJSfTCZO1uytITO
+	HS+HkCs1Q8txJ9Izw55lIPzORMEvsk8/5919SOOXxRnTSL+sgmWYHA0FIK4oH4ulIK2yw0Jw1pS
+	pw1es3fn9abnFNB9O1GQQsRtRe9fYy8jIEk8guLRtMD3b/F+DOIP6uF33boQwLUV+hhJkARq8+E
+	IBmIs/ogvz8mBSrMN6U3u/IhHkLsuRTTt3T+mvIfue5d3020nr6mGte93wY8Yyeo+lbIQWNs=
+X-Received: by 2002:a05:7301:4288:b0:351:6d7f:e2bc with SMTP id
+ 5a478bee46e88-369e84220bdmr3258320eec.2.1792823131356; Fri, 23 Oct 2026
+ 23:25:31 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,26 +89,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261021173350.67854-1-me@jaspermayone.com> <20261021173350.67854-2-me@jaspermayone.com>
+ <xmqqqzhg5kyd.fsf@gitster.g>
+In-Reply-To: <xmqqqzhg5kyd.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 24 Oct 2026 02:25:20 -0400
+X-Gm-Features: AclHuK-Wg_xxClvm9kjMFnT5DlJuNbaQOROu-_ihT99bArQ3oXcJnAXkGVM0tDs
+Message-ID: <CAPig+cTZEcn_5TG0iMVJJym8Zhu1KYP+y9Oc1J=JJgDYSzNSdg@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] worktree list: add --merged and --no-merged
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jasper Mayone <me@jaspermayone.com>, git@vger.kernel.org, haraldnordgren@gmail.com, 
+	ben.knoble@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Fri, Oct 23, 2026 at 2:30=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Jasper Mayone <me@jaspermayone.com> writes:
+> > Users who keep one worktree per topic have no direct way to find the
+> > worktrees whose work has already landed. "git branch --merged" lists
+> > the branches, but the user then has to match each branch to a
+> > worktree by hand, and a detached worktree has no branch to match.
+> > "git branch --delete-merged" skips any branch that is checked out in
+> > a worktree, so these are exactly the branches it leaves behind.
+>
+> Real review on this patch never happened, it seems, perhaps because
+> a discussion on a side issue distracted everybody?
+>
+> It looks like the intro unfairly narrows the problem space.  Even
+> for those users who do not use one worktree per topic do need to
+> find worktrees based on what branch they check out.  While I agree
+> that among the criteria to choose these branches to filter worktrees
+> on, "--merged" and "--not-merged" may be two of the most useful ones,
+> the feature does not have to be limited to them.
+>
+> I wonder if "git worktree list --branch=3D...", where --branch=3D can be
+> given multiple times, is a better primitive?  With that you could do
+> something like
+>
+>   $ git worktree list $(git branch --contains HEAD | sed -e 's/^/--branch=
+=3D/')
+>
+> to reuse the same machinery without any extra code.
 
-Thanks for the report. I was unable to reproduce it with the patch as
-quoted (the "diff --git" line is wrapped in your mail), but I can
-trigger the same assertion on current master, and on 2.43, when the
-"--- /dev/null" line comes before "new file mode" in the header:
-
-    diff --git a/n.txt b/n.txt
-    --- /dev/null
-    +++ b/n.txt
-    new file mode 100644
-    @@ -0,0 +1 @@
-    +hello
-
-Was your patch handwritten or generated by a tool, and could you
-please check whether its header lines are in that order? If you can,
-please attach the exact file so that we can confirm it is the same
-problem.
-
-Thanks,
-Tanga
+I've been too busy lately to allocate time to the Git project, so I
+didn't read the patch body and only quickly skimmed the commit
+message, but I experienced the same reaction that this seems overly
+special-case, and immediately thought of a more general "for-each"
+sort of mechanism. The analogy which immediately comes to mind is `git
+submodule foreach <command>`.
