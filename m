@@ -1,120 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792805911;
-	b=ljLm6NCMsKUnQsaGxTbxnMsSPaDd3gXqPfFDq0YKsO3vl2tCHmv8mQC4barNV/iLTnmM
-	 ftlKCDOhntHKcxzIQcRflfdh1CHb7/QbVpQMkLpugn7AHdOFfECogKV+ioUOzdyfUS8pg
-	 MHAqj7cMji680yS9bpnqbh50SvFROY+wDZrHVTSCcEFzwtx0dMe00JOaE+R0+VcUgHWag
-	 Dt9If/Mit98XBEEJGKpa9NMBCFCE2OWWlTWZ7IRQEtEpVqT8XO9n/9QzNvSNwi8D4JyOe
-	 9E84Pr43kfHLgu5rUa5u3fcV0/ptolDPJJtrAh4yuc5Q9mfyzIQmEpe16PgEmGoFggw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792805911;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=2/ff2fO4iSx4AXk74LJNbVHHs3XtceOCUItbFQH1p0Q=;
-	b=HKGeSklT2OO4YQMmY3pkE7jOZYNSCgO+9U2NmBVQjgDpt3pVeuldddev7OpeCDAwd69w
-	 LhYryCbVrxhJeHjQYroB9trvj/1cfPujyN6dbT/3OcQrsFvugfr4NncgcgTkN9XNKgkYr
-	 lbZ3yuNxh03EpnTKz9wsS519eDNzWrOZAboXZDK3vtaoAYXA0UJ6P1o+OPf2IkNJU5Q34
-	 ovRsTZb+TKcJIShZ3fxkRO2UaZvEpRI8ObsFn18K3zewOy8PG3HzjBb45QSRTHclHxZXW
-	 OAXAhtXV98XKiRod8jMnDq4j9ySWhl7oJUZa1PXRxD0ldgEc1xPI8cZqhAm8xHCsT5A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=QVPQq0Zb;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=anlkYzL0;
-	arc=none smtp.remote-ip=103.168.172.148
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792806046;
+	b=rqeW56UI96JZm54ETNXqoT4AVzkMcFtZuL9tHprT0zE51LNIQLKKzxC+YUBx2cNKjfNB
+	 lm+Oy0G37n0MQ0uWe5pdlIM/sEhnYhzuox+JmMDy6mLx/MtjCLeOThvJ481Koq9V2jO94
+	 VS74Lx4PTCVsBjjBfWRuoFOUMXosISvPzMOUOWp1vNpL43eH8muCPA5gzH3Fk1omRMWMh
+	 OicoFTn9CkMPZkPaua3SoWQ/HSXVrJsL2xXJyYSZb63WoCVD6ReQ5IkmZ+WP4NsIlsw5X
+	 s62jdnZForr14husD88wjD6e0ZLdUusoJIWJYE6j06HEDP54SbYAhJv/WGrErf7RFtA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792806046;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-ZohoMailClient;
+	bh=4/6Lq/D0t5MjQ/eB0bvO9NfoH/R8E51fN7h+02SpZ+c=;
+	b=ZfQwcyIih7xV+VFDjeTn+U7ALbm9zSnD5JZDqg0rhlB1vJC6aLmiTH/OyRp1qRrjFFtf
+	 NeSZ8drPxgpmRoFXPc84cs+66FXdpfR5flo9bykApEnMM6hvfYKeZf3ssxsQDyddletkC
+	 k/ScuzL7J+NMxXZdBDwbzQR0lMu8+h18Re9fjrw1K6LDdVbJPHJXlOb1d2gxxZvoPPmRS
+	 8xe3Ny+xKYSdZDnFUWkqAjc0+oonqas7XAeoIZI5Tz3gAr4004VIFrJLorRr687U9Fw6S
+	 3fvczh3bWJH39YXUjnCogFLtengKZONh9SAJ368p3aW2bE4sb3/Y15+hRlPE1xmBa6A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=none header.from=laveeshbansal.com;
+	spf=pass smtp.mailfrom=laveeshbansal.com;
+	dkim=pass header.d=laveeshbansal.com header.i=laveeshb@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b="G5lb/ti+";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53800606A31F
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 01:38:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 53800606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9C5606A31A
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 01:40:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B9C5606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=laveeshbansal.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=laveeshbansal.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=QVPQq0Zb;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=anlkYzL0
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 935B2EC006C
-	for <git@vger.kernel.org>; Fri, 23 Oct 2026 21:38:30 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 23 Oct 2026 21:38:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792805910; x=1792892310; bh=2/ff2fO4iS
-	x4AXk74LJNbVHHs3XtceOCUItbFQH1p0Q=; b=QVPQq0Zb7hpywajAg4Y/RNklFU
-	9Q0h5NLAh2jy3Ieb12c2sn1G5TDOK39iMMmCihWrFyuBNjX+j13UgLC+1ldbrlEa
-	rFXQtS3gUy8hhzR1LEFlL1jQrsJfJMRC7jN+PHSag7zkaizUQBMjewhV94oD9FZL
-	UH2FBAR5nm/NPOgdY6D9f34hIZVXXvuMjyJoMCYCTG7ugN9UEFqPokApRBejr5tr
-	St1qiNeMHR/PE0hrQTpJgTNc00Sz1rFHLQBdwyeJBs246DU6P5Y1Dov6+WkV7dug
-	Glocp8OCY2T9L+bXjtOwBHuYa+iI2geBVR0vDEaJModBN3ROA3K5H/j23uMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792805910; x=1792892310; bh=2/ff2fO4iSx4AXk74LJNbVHHs3XtceOCUIt
-	bFQH1p0Q=; b=anlkYzL0h/psu00bOL4MUGNUdmVJfLzRgXJslWBYJe1ycJ4i5Xt
-	rOSi7TYon6zWW9oqKZ66fOmOwhSn8g0XREGsIcA2S5MGg6o/3pf8Pu6dLXE9N74c
-	iwPDxq1+P/F2gd+9BXGzbxMB1v5btPUV1cp4xGLkHpI/Vdehr288li0kwm+c4zyz
-	TnVL+VFwX3K58CIqd3xTtYQRxK4lvmqYOeelcjME54JFuqLQRSE8xgd8TuLzEwI8
-	gnNFtxZAxpYEmMcn5APIjNxoTYbdPq9erLxshRvJmeIouXbBWcipIc3b3yp0kayx
-	9Uj9/TO/giKUmIHKIhsJW0K/DaEQd8bmTuQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792805910; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:fvzXSK9tokkBp74L+aO3y9XbZ66Ewr4ncuPj0WUEkImooaj
-	x7nvUZqqSIEG1m/Uord+ck26jAr+hUZPy0DcPwOUzK+46SUrUc4SqnDW19eVKepp
-	oBQjYDrRDVEtvxHqOPDEdPQFBoKzow1bMaWxezlys09gz0nicKNVY8JDSyaXc7WQ
-	su3FKGGYcff3UpRBjKcd+zBm3wsWo5oCtQHTRAKArBBoVqHfQnZwXYhkFz7QSWp+
-	LINMZGXp1WbtvUfSAfgg06JP4IhE15n20pQYUtL8DZdz6wpXkeZzxU27TvAN0YV+
-	kkcxctcc0ozoEr9NtFkAXa/erbxNxvQ2yRoXMVQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:4lZ0W2oxE5pCb5TFp+t2KjM/SO9U+YdC0HTrYvM6ngQ=:GWNAoX+ar9bx/W8GwJvtweLZ1aFAIX+Kuvqabmj4u/Y=;
-X-ME-Sender: <xms:Fgzcah96F1P9-F3w4hHorijASc7hGznKFZgqvXha2jHcNW4lQxDhWA>
-    <xme:FgzcasuZeVI47mAtFjmTTnnxJ6PEx-ttolVTA1I1l_IV9i8eV9zdNWrj4isFbw02A
-    oCuMkoebOacwDkxnffU6yOPUdQ5xJEXKZK0x7UEXThD3HxddI3p6g>
-X-ME-Received: <xmr:FgzcakDrAJ1yhR7jX9ihTrSY3RD88cu_6cGeFJ3-arjXuDB8-gkwuI-7ClpcMch6VsjY5CHB69bdBKxcI9u4BOJ-HxVRDO7EIpOq>
-X-ME-Proxy-Cause: dmFkZTFlxHQ6lEEivxhbrOdGE/BbwbfUVq2emVApiMoRpRxFpHCDblb3XtgalwDNx+jqih
-    HHGyj1idXzbAYkMvCzESbZn6ZnRY/BJGBvFEskyg7TK2/2K8CmTyAsxbfVkrfkOJzuo04H
-    vEXvVckmtjEm05VYJ/K9Y63QncGXtbuApSeD9y46hvI7Tv7XX8fmhVQ2/wUAApOOZis1Kc
-    MUq9/yVBv4yVRXGy+OOxQVeoI8hUomPAu4Qqz+eH7RxFq0CMlekiDazHw3fbJUeqDOect/
-    Cy8PdA7aFCDJgWgLlimES9tvSJjQyxmZ7+4s7UOgOMgzGFzDEgV8LanJ2IdhbuL+LMY6lX
-    95V8r7foqOryri2sfDHkG6G54U7UM23wQaljMaX9i3fyzXpSUHg4gR3dcbYxBj0xHAZQCt
-    OonCsKHNzos58QQaltqxqRHdRfeFL4fu7P5xZGIyRsHKOF6N2pvXB7RtRJdkVGKZYN4Q4N
-    k5payFzGHs8bqIj4w3+crd1rKj4dYaBcJYq7opGtLw4K26FdkN/I39YSgSpkUSsyjXAkp5
-    ZLCH0eFWCm0Lyy9PyMq0M4d60dnFQZRGic240VKzIwRMU4DgLNcr5RAB6fH94bpPSWbV+F
-    FrLL3ZwE+39xavGo/wSXr0xZGWBziRBpMQCh7yMbF5Z5ZaBnmopgDxu9xsMQ
-X-ME-Proxy: <xmx:FgzcakW43-TKVqy-u5GFqxhTdIqvOJByRr6nZKok_-0UoFrL97MEpA>
-    <xmx:FgzcaiCprNXGB1b1K09oXZETk0lTvALXAtv4-e2opwWP-IpNHis1GQ>
-    <xmx:Fgzcan8QjRKyGIkKXu83FF04hD_zlL_r3Y1u-d9QVnrkkMLdzoQdwg>
-    <xmx:FgzcapEz4YHhCKaogu3mJROcKK8nqmbgNKFnoYyAt6JGv9-COwvxzQ>
-    <xmx:FgzcanihgnbGRI9p6ibcfcOPV4Q1Ux8s1Uq45E6BB5Huki_HbQ0tBqS0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Oct 2026 21:38:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] ci: pin actions in the main workflow to full commit IDs
-In-Reply-To: <atv8gYf8Le1WHTA0@com-79390> (Taylor Blau's message of "Fri, 23
-	Oct 2026 19:32:02 -0500")
-References: <a178dde02a80324d4cb52781d542ee575cbb68a1.1792773333.git.ttaylorr@openai.com>
-	<xmqqbj8k3xcy.fsf@gitster.g> <atv8gYf8Le1WHTA0@com-79390>
-Date: Fri, 23 Oct 2026 18:38:28 -0700
-Message-ID: <xmqqzew327zf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key, unprotected) header.d=laveeshbansal.com header.i=laveeshb@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=G5lb/ti+
+ARC-Seal: i=1; a=rsa-sha256; t=1792806028; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=OkZgyPTQJGcK38IBUvrXuc1HEsKqeddm6lVFKSoFMM2ln1D9fpXFSNarNcK3wCcdhrJ4GscBXednPYuyklflRxJTPao4DUC0yBz4jAus27Vz3XDuFVSWPSUELpalxFeCwgkbKuJrgFw65hXD5g4VgR56uOsAD/FxSj7h7EHRE1Q=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1792806028; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=4/6Lq/D0t5MjQ/eB0bvO9NfoH/R8E51fN7h+02SpZ+c=; 
+	b=FMy6ynaVlVOLw8P7DLX58IQ40xU5FcCZkG8y34j9l3Alsn1fI9oqRnA92C2U8BA0ZeQ+ZuJthFLpvOyvJ3iW52DpKvSYbgqa8g0SUZvt7cQcp7oX1/QrYGQ1l4CDSIt+sgjj3QqIt/n781RInaJRIs3uhX6lN5Wi2TGxH3R8flc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=laveeshbansal.com;
+	spf=pass  smtp.mailfrom=laveeshb@laveeshbansal.com;
+	dmarc=pass header.from=<laveeshb@laveeshbansal.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1792806028;
+	s=zoho; d=laveeshbansal.com; i=laveeshb@laveeshbansal.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=4/6Lq/D0t5MjQ/eB0bvO9NfoH/R8E51fN7h+02SpZ+c=;
+	b=G5lb/ti+Fa49W0HsF2U2kSHR55xCSuAtkrpQm3Q4/vH5cX4CVIDcnSg/gzrgU6sG
+	9hY6HXGR0b48nVh5+fWOSe4X4ZbbBQMBljMdVequzwRWAaLY/3/KLWix/H7cCM2d7EX
+	UBhV3gWOYqd4YdLGXAwakccNLZJdgXNILtLXeP3c=
+Received: by smtp.zohomail.com with SMTPS id 1792806025050589.3255213039168;
+	Fri, 23 Oct 2026 18:40:25 -0700 (PDT)
+From: Laveesh Bansal <laveeshb@laveeshbansal.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Sven Weiland <sven.weiland@tngtech.com>
+Subject: [PATCH] builtin/reflog: say "would prune" for named refs with --dry-run
+Date: Fri, 23 Oct 2026 18:38:50 -0700
+Message-ID: <20261024013850.66448-1-laveeshb@laveeshbansal.com>
+X-Mailer: git-send-email 2.54.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,15 +72,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Taylor Blau <ttaylorr@openai.com> writes:
+With --dry-run --verbose, "git reflog expire --all" reports the entries
+it would remove as "would prune", but when refs are named on the command
+line it reports them as "prune", which looks as if they were removed:
 
-> I think that we could reword the commit message to explain that benefit
-> more clearly, but I do think this is the right policy.
+    $ git reflog expire --dry-run --verbose --expire=now HEAD
+    prune commit (initial): first
 
-Together with Ben Knoble's comments, I very much appreciate your
-pushing back.  I agree that a different justification would be a
-good way to go.
+Nothing is removed in either case, only the label is wrong. This was
+reported at [1].
 
-Thanks.
+fcd2c3d9d8 (reflog + refs-backend: move "verbose" out of the backend,
+2021-12-22) added dry_run to struct expire_reflog_policy_cb and set it
+in the --all loop, but not in the loop for named refs. Set it there
+too.
+
+Add tests for named refs and --all. No test checked the keep/prune
+wording before.
+
+[1] https://lore.kernel.org/git/b46cbce8-d2bb-46d2-bdd3-545422813d6b@tngtech.com/
+
+Reported-by: Sven Weiland <sven.weiland@tngtech.com>
+Assisted-by: Claude Sonnet 5.5
+Signed-off-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
+---
+
+Notes:
+    The dry_run bit just duplicates what is already in flags, so every
+    caller has to copy it, and one got missed. Dropping it would mean
+    changing the callback signature, so I left that alone.
+
+ builtin/reflog.c  |  5 ++++-
+ t/t1410-reflog.sh | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 1211c58fa4..49e5453dd9 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -279,7 +279,10 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
+ 
+ 	for (i = 0; i < argc; i++) {
+ 		char *ref;
+-		struct expire_reflog_policy_cb cb = { .opts = opts };
++		struct expire_reflog_policy_cb cb = {
++			.opts = opts,
++			.dry_run = !!(flags & EXPIRE_REFLOGS_DRY_RUN),
++		};
+ 
+ 		if (!repo_dwim_log(the_repository, argv[i], strlen(argv[i]), NULL, &ref)) {
+ 			status |= error(_("reflog could not be found: '%s'"), argv[i]);
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 93b5b49e1d..998a7e8667 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -240,6 +240,40 @@ test_expect_success 'reflog expire --dry-run should not touch reflog' '
+ 	check_fsck "missing blob $F"
+ '
+ 
++# A dry run only ever says "keep" or "would prune".
++check_dry_run_output () {
++	test_grep "^would prune " "$1" &&
++	sed -e "/^keep /d" -e "/^would prune /d" \
++		-e "/^Marking reachable objects/d" "$1" >unexpected &&
++	test_must_be_empty unexpected
++}
++
++test_expect_success 'reflog expire --dry-run --verbose with a named ref' '
++	git reflog refs/heads/main >before &&
++	git reflog expire --dry-run --verbose \
++		--expire=$(($test_tick - 10000)) \
++		--expire-unreachable=$(($test_tick - 10000)) \
++		--stale-fix \
++		refs/heads/main >output &&
++	check_dry_run_output output &&
++
++	git reflog refs/heads/main >after &&
++	test_cmp before after
++'
++
++test_expect_success 'reflog expire --dry-run --verbose --all' '
++	git reflog refs/heads/main >before &&
++	git reflog expire --dry-run --verbose \
++		--expire=$(($test_tick - 10000)) \
++		--expire-unreachable=$(($test_tick - 10000)) \
++		--stale-fix \
++		--all >output &&
++	check_dry_run_output output &&
++
++	git reflog refs/heads/main >after &&
++	test_cmp before after
++'
++
+ test_expect_success 'reflog expire' '
+ 
+ 	git reflog expire --verbose \
+-- 
+2.54.0
+
