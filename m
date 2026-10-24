@@ -1,82 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792879225;
-	b=aIjWIPfO3/dmbsvEqxGEbywVb7mEyDPZcdsvjWfnydgMTp63n3rO+U9tm/EsCnVaxyzn
-	 gzuMV2Mt5FmZVZzihqAHNnFlU1VVccz+rxgx2jobeVIDPBaFe1rweFNa+BKgJPQmGuShw
-	 rF0ssHROOXNuoCVgeieb/3cbNaLe0SMBT7lba+7Hn5BHUZsKnV3sJA+0GEXm7wiaUi4fO
-	 G9+SemXpE5TtjRUzo0UG/+d7+aLSLeO2C6w5YQZSN2wYzqT70IbWBbRFgzVhycRBQq6XY
-	 zVgvHZNEM2XWHSxE7NNzSLEI5kAh/s67ftB9SzcuwJl/QMbRsS8HbD/mNvjqET7SXdg==
+	t=1792879228;
+	b=MK8apxLybhtAxdxZ3tUc0aGiJsP5WGA21gGxOXpaEg+vVZ5sejYSUhpCaG/Ou8n3RTr+
+	 FTjW4P9pU/4xMSMUXZiMCwajRJ+9DlT4By2Brfj7zFidn4jSS8eL6M5DOUZ3fuTyEC9Yi
+	 +YlKiB5ADkdDp5yiMUf7LlxrrzQPLkzZiUkxYlzwnpZISU7EfrzFshU7Q+y+MuGq9i+cp
+	 hJ+hYyJNu4C3+VtwTrcYenPXcECn+KclPcEnqoyo5qgcQGVGxN1lzQ0bnfQyxgcUHDwMH
+	 0RnkC0gnCpBURSA2BFaphrC5wA/Jz/KIVAIss8JsWXnGfjZpYsFHpWgK0HmOgqmNk5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792879225;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792879228;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=wjviDUmo7LruwKOMoKTMEBMFUnWMDnUOUwtMuMMlpOE=;
-	b=OcQq31wU5I9nO4RRboFMZ1ybQHF1Rj9hEX8cDOTqZjosD1TRrFc/6cdi+IsZTMHbHceS
-	 6G3dF5buJIW7mO9l9IOjpB01Oyanvn/3Ui4zySmqWCWmZRtX1U//iLFOQoErL3QPScmc5
-	 MHjKDPdW7vAXBJ2DM0z9ts5ZIBnc/cHlsLbaPAn/5G3t6MX6Gv94KXvbtsTp7Fw8414Ny
-	 RMiezHQ2A1pykdBytFwl4xnN5SQuFa/3LJxJ9rFQUnISIbZAuEcb6Zt2pNCsFqw9W+jNB
-	 zvWfZyYItrZ5axO9qVYwLgyniS9io4wyJDLlRrMaM98fwQrQkSsZDi+ujOYTSem1kvQ==
+	bh=NWsRjFOiCzZHNzFCf762W8Huf61DxFmaFSlIJb3+znE=;
+	b=Yls1O0SRu2ybCPv2pt2aZsjBGCZekAjCHyP8rYbmWXEaerzvban8IpvXx8Jpfsp9kKXa
+	 pzi/Cee0E5uPIIVsRDVgw9nJzGncY+1RJcWw2jI+/Ir3/VScDS9Uh7BSR3mSre3KnDRQr
+	 ESaXuVAm7gRMuVtwJc2qNbunH6wN4yZP6I88tUjJHBk43t1gUJhw8znKGWka6W9QRqzrT
+	 sntgHhVjw6OOjAF0K+wqXkZEcr0hW8Fzn7An0fc2i/IE5pBP3KlcOEFDWoJq9caU4lYpT
+	 T3FWex3lp0cQt7pXrikb1Fi5E8X0bUnHfXRgPJlS3nvINEa91QtOVh6XUoSE9FWUs2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="Lhv3N/k1";
-	arc=none smtp.remote-ip=74.125.82.179
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="o/VBEweH";
+	arc=none smtp.remote-ip=74.125.82.176
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8A5606A31A
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 22:00:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F8A5606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C709606A31D
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 22:00:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C709606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Lhv3N/k1
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-36681e85e87so1172163eec.1
-        for <git@vger.kernel.org>; Sat, 24 Oct 2026 15:00:24 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=o/VBEweH
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-35b2c599f43so966469eec.0
+        for <git@vger.kernel.org>; Sat, 24 Oct 2026 15:00:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792879223; x=1793484023; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792879227; x=1793484027; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=wjviDUmo7LruwKOMoKTMEBMFUnWMDnUOUwtMuMMlpOE=;
-        b=Lhv3N/k1UkuBOoO3/0dN4UwMagrFp/hyMcX4jP6DnXHruhuz2zw1h6A7Kv1Ah2s1K5
-         6WHFIl1I097Ih2ieEOLH2fXMrdFh+knQ+O9yAG+c8R0XxFYzvt0p+CkwI2WJRblNSIH4
-         Am+/pNk5ZUGMjanoqNLjPQpumt1Nq3wk8hTW2/GzQMbmto3Fh3R88OSx9MlyHT8xa0AU
-         xUm11EMLTpPyDPvM6bISsBIMljTK+x05Y1GpAWzgLIRZMrnDhIwaVW4O1J006khVwhGo
-         RZMIGAl8DSfoSht26w1WRtJZ4bW50lrZXOCsszPje/XGeHJl4x2U9+hPXs+KtZDGDjq4
-         1utA==
+        bh=NWsRjFOiCzZHNzFCf762W8Huf61DxFmaFSlIJb3+znE=;
+        b=o/VBEweHSEKpSjxIeLJRqkAkmytLYbdfFz7+eILUjdCfRDCp3Z7n/1Ux2J1dC/9E0O
+         dmqOG2gXQraxXdZsfOjVVu1kJNaDXQE/UyDhdgpLwhIXhiAkFP7gBv29BgwlXoIn1YOA
+         onl3m0Z2GGVq9qNzwIw6y7zneNWX/Xyv3DGICVDyR0eo3c8bqnysd9PBWAxy8sPIG5ae
+         A2YQU1tmIllgoNdMeqvTvhnN1gtnN4SpfTK0CdToifJzILCLtJHH8favi7eCqHw8zXL+
+         FK7fz6qcFlqetRJXkrDab6Q1wu27b2TtEN/VaqEWUHrgqhci23hvz8WaJbSh1aLiJKo0
+         fODA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792879223; x=1793484023;
+        d=1e100.net; s=20260707; t=1792879227; x=1793484027;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=wjviDUmo7LruwKOMoKTMEBMFUnWMDnUOUwtMuMMlpOE=;
-        b=YlF/OtILQw0uk/8riZB4+4LKOU+nmrGw5ITghlG4QRoOLPW/J6wKT8aNU4UJPsqbHA
-         kAdl78hCOeSk8afW+tHp4fTx/q3Q0PC/BPd711wXgS0Qtk6yFEexs27Z4o9WBIpMKezM
-         2Z0kbf1dIQXtAHozuRrbPovYronRqMMPd/Fqc0mRw2b+X5HxU0h7raBnHBZzNoTtHABh
-         lersHRIYMGjNGBSgyV4l9tIWrbjt0+DpRctB+IQJ1I3J2ms5S2vNCIO7EV+TSohnt4Wz
-         tdOwRiMM0WPy5nKb+lWb83LJ3IrNBz8NkdXVWaI4u5PIolqYYxgJ67cwx6I6At+8su8M
-         paJg==
-X-Gm-Message-State: AFq9FYLXo4Sj9OmDEcpyWtp3Zk5sPVardg/6UwELrlVpNA5rYWCZmEth
-	fP0paIyzNIQtqMB7P1hDUFoA0/QzfG2lGJu4J/X2REMtdKEFQZQnUsxlgRg1Om1WQYc=
-X-Gm-Gg: AYBFou1zYRCjBR9XH/Izsbwx7gJetLYgs/SXu3AAJzdRxq9AKU0+qXFXp7S+3htCkIZ
-	eYFH2kurzuEm67frAcYSUQe9NuxGGuasWTPM1kJSsWOx73dLHKAiUttmlZmgfui9v/m8rpydil3
-	ANxYw+M06lPReRoZAgjMpxn11kBeGMKxRmppSqU+aLvPXziia1uBJ071SlAMvujiv+7SLLPvaCG
-	nu/FHATESPsvO2xAJJdsrhYVX6rJBSFro+Kc9xSBcNuwl0iKHjTWOtBaQcQW2md7G2PP83KKNU5
-	NGliYTQH8GWOFVPabpRY8vAWUu9ROJhseP/cZjHOnFzWEqrEcTQKQqG6wU23ZrBoObnLAcrPEd6
-	2kYQjWZXuLvUkcp3jOxmYsFro0au1Bs7ojOz8UmS2/om7mjpgsXNZnrcIGulnB+XSlmfiOsIceT
-	+G3WN+ym1YpJPrRB+rAw3VtWQU2h1bKHa05IhHqj0LYjtRIueYNzHlsKDXDmZMNz3Mkx7yZ2UGY
-	IN3v7X38uOpcz3LmCMO+WN4V2o7mVMb19OeywNX502OaRIgbGhziEWInptVQ/nFuEMPPsS1WHGT
-	pQbufXuDJ4To1Rs/r4ls5jGu85+1bVOnExwKb1Rowg==
-X-Received: by 2002:a05:701b:260c:b0:191:5cd8:818b with SMTP id a92af1059eb24-19935625a4fmr3780848c88.7.1792879223232;
-        Sat, 24 Oct 2026 15:00:23 -0700 (PDT)
+        bh=NWsRjFOiCzZHNzFCf762W8Huf61DxFmaFSlIJb3+znE=;
+        b=qZkauwEddYPEYdockhaOdccZYqNMni/gtje8lKxwaC+Q0xEQLEeNpm1RHusPBlZwrZ
+         OBgeyU1IQPl/SeJa6OvGtLclRHYCLDEYSg4bF6byc00BuTDuxumGUVwms1nf80veB+1N
+         OVkM78I0/alruv2hJOFf80BfhgJCjaup8PELb5sVHAKDsyeKKT562taspCyJAF5dWaKm
+         /fyVLnUYk32r0DGbdZvqU8kaYw+iO/V2VS+qSCn9sKYeSb4kJyTrnhcJ55/fHnRM0AuG
+         QNz9hLVe3Ja/sn5C9RW6SLvK+ceAYqRxvPSSoqREesrlqDSWbIfQArewC2hJRA7L8ow+
+         BlTA==
+X-Gm-Message-State: AFq9FYJOsmU4tqXiK/wIXwWLpuP+WBODO87kpWaL7R75F402YvBLKpRK
+	DdQdMRIlpyg3x8l/ZnDnFxxoCXhd4XQP3iI6fQg3vgks2bzeF8/FqO2EI5O5z8GQnNI=
+X-Gm-Gg: AYBFou2iyPD/09XlpTgT/xpGl7oqZlbUAvDko8rr+/1HEqW0KaDp8zU768Tn91ko/+j
+	RJAX32XgcUx7cSM1EQDylnDbPpY0kZHak3oIJ8tdq/tPfeneFelAMHWJMI910KTEdQPbDzKj1Aj
+	k59UklGlwQJsEoZF9zeiSDvoUh9ObbPbr7/himKg9SJnt8vQJ6XPSOZvzXIDEO4HsHZc0DreTuN
+	sbcXjTEUOAv2ddja+fVqBkUKkcswgyrydyuAOuUJg0o3zNniCnVOhDvaVK4jtVvtzkepqdUPSCL
+	hlhf1RvOjFPVlS1DyhcFNsdTE9qxJjoh5vgeVIOGTPzz8qXftBnrup4ta9OaKgTRo1YRX3GcCcn
+	fhNnHus7VAgbVA9ZgnggrbcT1cKjDC8oUfLamcHAB/fZzsIfHjSqAObjcdXuxkitNLIhEgRoVDv
+	2xPMElnUTU0MqLexTNxyRyjz9T+8XWnGQHwvOSRFIgzThM65zA5QLNvDF3sUH2FnexDE9LNZcFZ
+	57fr/TW2ytNYJitOC+FwL22g3m8QIYixgC43p7TNh5GCYXfyD8hG5bq0brotsT87geC2QgLtiJi
+	ZnJWpB+Yk1oUcpUNDW/64YGtAn0prXnaHbtv+WoAsRx2ihqQIooaa6f32Mh6gts=
+X-Received: by 2002:a05:701b:4192:10b0:193:8116:f5bf with SMTP id a92af1059eb24-1993571a391mr4239309c88.16.1792879226763;
+        Sat, 24 Oct 2026 15:00:26 -0700 (PDT)
 Received: from LAPTOP-PVRSMPQK.iiitd.edu.in ([103.25.231.125])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-198a0f81ea9sm11578875c88.11.2026.10.24.15.00.19
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-198a0f81ea9sm11578875c88.11.2026.10.24.15.00.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Oct 2026 15:00:22 -0700 (PDT)
+        Sat, 24 Oct 2026 15:00:26 -0700 (PDT)
 From: Aniket Gupta <aniketgupta3001@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -85,9 +85,9 @@ Cc: gitster@pobox.com,
 	belkid98@gmail.com,
 	ps@pks.im,
 	phillip.wood123@gmail.com
-Subject: [PATCH 1/4] convert: pass 'repo' to the working tree conversion functions
-Date: Sat, 24 Oct 2026 22:00:09 +0000
-Message-ID: <20261024220012.486-2-aniketgupta3001@gmail.com>
+Subject: [PATCH 2/4] environment: move auto_crlf into repo_config_values
+Date: Sat, 24 Oct 2026 22:00:10 +0000
+Message-ID: <20261024220012.486-3-aniketgupta3001@gmail.com>
 X-Mailer: git-send-email 2.56.0.240.gf97865f162
 In-Reply-To: <20261024220012.486-1-aniketgupta3001@gmail.com>
 References: <20261024220012.486-1-aniketgupta3001@gmail.com>
@@ -102,250 +102,342 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The functions that convert a blob to its working tree format take a
-'struct conv_attrs' but no repository, even though what they do
-depends on configuration such as 'core.autocrlf' and 'core.eol'. As
-we migrate these configuration variables into the repository struct,
-the functions need access to the repository context.
+The global variable 'auto_crlf' holds the value of the 'core.autocrlf'
+configuration, which controls whether line endings are converted when
+files are added to and checked out of the repository. Move it into
+'struct repo_config_values' to continue the libification effort.
 
-Add a 'struct repository *' parameter to convert_to_working_tree_ca(),
-async_convert_to_working_tree_ca() and get_stream_filter_ca(), and
-update all callers to pass the appropriate repository instance. The
-parameter is not used yet, so mark it as UNUSED for now.
+While 'enum auto_crlf' ideally belongs in 'convert.h', moving it there
+introduces a circular dependency chain:
 
-The convert_to_working_tree() and async_convert_to_working_tree()
-wrappers were static inline functions in 'convert.h'. They need to
-get the repository from the index, which 'convert.h' does not know
-about, so move them into 'convert.c'.
+  convert.h -> hash.h -> repository.h -> environment.h.
+
+Therefore, the enum definition is kept in 'environment.h' just below
+'enum object_creation_mode', under the existing NEEDSWORK comment for
+future cleanup. Initialize the per-repository value to its default in
+'repo_config_values_init()'.
+
+Modify the configuration parsing in environment.c to update the
+per-repository structure directly. To read the value, introduce the
+getter 'repo_auto_crlf()' and pass the repository down to the helpers
+in 'convert.c' that need it.
 
 Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
 ---
- convert.c           | 39 +++++++++++++++++++++++++++++++++++----
- convert.h           | 38 ++++++++++++++++----------------------
- entry.c             | 16 +++++++++++-----
- parallel-checkout.c |  8 +++++---
- 4 files changed, 67 insertions(+), 34 deletions(-)
+ convert.c     | 68 +++++++++++++++++++++++++++++++--------------------
+ convert.h     |  8 ------
+ environment.c | 13 +++++++---
+ environment.h |  9 +++++++
+ 4 files changed, 60 insertions(+), 38 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index 036506842c..95bdfafdd0 100644
+index 95bdfafdd0..7c7fdd4b2d 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -1520,7 +1520,8 @@ static int convert_to_working_tree_ca_internal(const struct conv_attrs *ca,
+@@ -158,11 +158,11 @@ const char *get_wt_convert_stats_ascii(const char *path)
+ 	return ret;
+ }
+ 
+-static int text_eol_is_crlf(void)
++static int text_eol_is_crlf(struct repository *repo)
+ {
+-	if (auto_crlf == AUTO_CRLF_TRUE)
++	if (repo_auto_crlf(repo) == AUTO_CRLF_TRUE)
+ 		return 1;
+-	else if (auto_crlf == AUTO_CRLF_INPUT)
++	else if (repo_auto_crlf(repo) == AUTO_CRLF_INPUT)
+ 		return 0;
+ 	if (core_eol == EOL_CRLF)
+ 		return 1;
+@@ -171,7 +171,8 @@ static int text_eol_is_crlf(void)
+ 	return 0;
+ }
+ 
+-static enum eol output_eol(enum convert_crlf_action crlf_action)
++static enum eol output_eol(struct repository *repo,
++			   enum convert_crlf_action crlf_action)
+ {
+ 	switch (crlf_action) {
+ 	case CRLF_BINARY:
+@@ -188,7 +189,7 @@ static enum eol output_eol(enum convert_crlf_action crlf_action)
+ 	case CRLF_TEXT:
+ 	case CRLF_AUTO:
+ 		/* fall through */
+-		return text_eol_is_crlf() ? EOL_CRLF : EOL_LF;
++		return text_eol_is_crlf(repo) ? EOL_CRLF : EOL_LF;
+ 	}
+ 	warning(_("illegal crlf_action %d"), (int)crlf_action);
+ 	return core_eol;
+@@ -244,10 +245,11 @@ static int has_crlf_in_index(struct index_state *istate, const char *path)
+ 	return has_crlf;
+ }
+ 
+-static int will_convert_lf_to_crlf(struct text_stat *stats,
++static int will_convert_lf_to_crlf(struct repository *repo,
++				   struct text_stat *stats,
+ 				   enum convert_crlf_action crlf_action)
+ {
+-	if (output_eol(crlf_action) != EOL_CRLF)
++	if (output_eol(repo, crlf_action) != EOL_CRLF)
+ 		return 0;
+ 	/* No "naked" LF? Nothing to convert, regardless. */
+ 	if (!stats->lonelf)
+@@ -505,6 +507,8 @@ static int crlf_to_git(struct index_state *istate,
+ 		       struct strbuf *buf,
+ 		       enum convert_crlf_action crlf_action, int conv_flags)
+ {
++	struct repository *repo = istate && istate->repo ?
++				  istate->repo : the_repository;
+ 	struct text_stat stats;
+ 	char *dst;
+ 	int convert_crlf_into_lf;
+@@ -547,7 +551,7 @@ static int crlf_to_git(struct index_state *istate,
+ 			new_stats.crlf = 0;
+ 		}
+ 		/* simulate "git checkout" */
+-		if (will_convert_lf_to_crlf(&new_stats, crlf_action)) {
++		if (will_convert_lf_to_crlf(repo, &new_stats, crlf_action)) {
+ 			new_stats.crlf += new_stats.lonelf;
+ 			new_stats.lonelf = 0;
+ 		}
+@@ -589,17 +593,18 @@ static int crlf_to_git(struct index_state *istate,
+ 	return 1;
+ }
+ 
+-static int crlf_to_worktree(const char *src, size_t len, struct strbuf *buf,
++static int crlf_to_worktree(struct repository *repo,
++			    const char *src, size_t len, struct strbuf *buf,
+ 			    enum convert_crlf_action crlf_action)
+ {
+ 	char *to_free = NULL;
+ 	struct text_stat stats;
+ 
+-	if (!len || output_eol(crlf_action) != EOL_CRLF)
++	if (!len || output_eol(repo, crlf_action) != EOL_CRLF)
+ 		return 0;
+ 
+ 	gather_stats(src, len, &stats);
+-	if (!will_convert_lf_to_crlf(&stats, crlf_action))
++	if (!will_convert_lf_to_crlf(repo, &stats, crlf_action))
+ 		return 0;
+ 
+ 	/* are we "faking" in place editing ? */
+@@ -1321,6 +1326,8 @@ static struct attr_check *check;
+ void convert_attrs(struct index_state *istate,
+ 		   struct conv_attrs *ca, const char *path)
+ {
++	struct repository *repo = istate && istate->repo ?
++				  istate->repo : the_repository;
+ 	struct attr_check_item *ccheck = NULL;
+ 
+ 	if (!check) {
+@@ -1354,12 +1361,16 @@ void convert_attrs(struct index_state *istate,
+ 	/* Save attr and make a decision for action */
+ 	ca->attr_action = ca->crlf_action;
+ 	if (ca->crlf_action == CRLF_TEXT)
+-		ca->crlf_action = text_eol_is_crlf() ? CRLF_TEXT_CRLF : CRLF_TEXT_INPUT;
+-	if (ca->crlf_action == CRLF_UNDEFINED && auto_crlf == AUTO_CRLF_FALSE)
++		ca->crlf_action = text_eol_is_crlf(repo) ?
++				  CRLF_TEXT_CRLF : CRLF_TEXT_INPUT;
++	if (ca->crlf_action == CRLF_UNDEFINED &&
++	    repo_auto_crlf(repo) == AUTO_CRLF_FALSE)
+ 		ca->crlf_action = CRLF_BINARY;
+-	if (ca->crlf_action == CRLF_UNDEFINED && auto_crlf == AUTO_CRLF_TRUE)
++	if (ca->crlf_action == CRLF_UNDEFINED &&
++	    repo_auto_crlf(repo) == AUTO_CRLF_TRUE)
+ 		ca->crlf_action = CRLF_AUTO_CRLF;
+-	if (ca->crlf_action == CRLF_UNDEFINED && auto_crlf == AUTO_CRLF_INPUT)
++	if (ca->crlf_action == CRLF_UNDEFINED &&
++	    repo_auto_crlf(repo) == AUTO_CRLF_INPUT)
+ 		ca->crlf_action = CRLF_AUTO_INPUT;
+ }
+ 
+@@ -1479,7 +1490,8 @@ void convert_to_git_filter_fd(struct index_state *istate,
+ 	ident_to_git(dst->buf, dst->len, dst, ca.ident);
+ }
+ 
+-static int convert_to_working_tree_ca_internal(const struct conv_attrs *ca,
++static int convert_to_working_tree_ca_internal(struct repository *repo,
++					       const struct conv_attrs *ca,
+ 					       const char *path, const char *src,
+ 					       size_t len, struct strbuf *dst,
+ 					       int normalizing,
+@@ -1499,7 +1511,7 @@ static int convert_to_working_tree_ca_internal(const struct conv_attrs *ca,
+ 	 * support smudge).  The filters might expect CRLFs.
+ 	 */
+ 	if ((ca->drv && (ca->drv->smudge || ca->drv->process)) || !normalizing) {
+-		ret |= crlf_to_worktree(src, len, dst, ca->crlf_action);
++		ret |= crlf_to_worktree(repo, src, len, dst, ca->crlf_action);
+ 		if (ret) {
+ 			src = dst->buf;
+ 			len = dst->len;
+@@ -1520,25 +1532,25 @@ static int convert_to_working_tree_ca_internal(const struct conv_attrs *ca,
  	return ret | ret_filter;
  }
  
--int async_convert_to_working_tree_ca(const struct conv_attrs *ca,
-+int async_convert_to_working_tree_ca(struct repository *repo UNUSED,
-+				     const struct conv_attrs *ca,
+-int async_convert_to_working_tree_ca(struct repository *repo UNUSED,
++int async_convert_to_working_tree_ca(struct repository *repo,
+ 				     const struct conv_attrs *ca,
  				     const char *path, const char *src,
  				     size_t len, struct strbuf *dst,
  				     const struct checkout_metadata *meta,
-@@ -1530,7 +1531,8 @@ int async_convert_to_working_tree_ca(const struct conv_attrs *ca,
- 						   meta, dco);
+ 				     void *dco)
+ {
+-	return convert_to_working_tree_ca_internal(ca, path, src, len, dst, 0,
+-						   meta, dco);
++	return convert_to_working_tree_ca_internal(repo, ca, path, src, len,
++						   dst, 0, meta, dco);
  }
  
--int convert_to_working_tree_ca(const struct conv_attrs *ca,
-+int convert_to_working_tree_ca(struct repository *repo UNUSED,
-+			       const struct conv_attrs *ca,
+-int convert_to_working_tree_ca(struct repository *repo UNUSED,
++int convert_to_working_tree_ca(struct repository *repo,
+ 			       const struct conv_attrs *ca,
  			       const char *path, const char *src,
  			       size_t len, struct strbuf *dst,
  			       const struct checkout_metadata *meta)
-@@ -1539,6 +1541,32 @@ int convert_to_working_tree_ca(const struct conv_attrs *ca,
- 						   meta, NULL);
+ {
+-	return convert_to_working_tree_ca_internal(ca, path, src, len, dst, 0,
+-						   meta, NULL);
++	return convert_to_working_tree_ca_internal(repo, ca, path, src, len,
++						   dst, 0, meta, NULL);
  }
  
-+int convert_to_working_tree(struct index_state *istate,
-+			   const char *path, const char *src,
-+			   size_t len, struct strbuf *dst,
-+			   const struct checkout_metadata *meta)
-+{
-+	struct repository *repo = istate && istate->repo ?
-+				  istate->repo : the_repository;
-+	struct conv_attrs ca;
-+	convert_attrs(istate, &ca, path);
-+	return convert_to_working_tree_ca(repo, &ca, path, src, len, dst, meta);
-+}
-+
-+int async_convert_to_working_tree(struct index_state *istate,
-+				  const char *path, const char *src,
-+				  size_t len, struct strbuf *dst,
-+				  const struct checkout_metadata *meta,
-+				  void *dco)
-+{
-+	struct repository *repo = istate && istate->repo ?
-+				  istate->repo : the_repository;
-+	struct conv_attrs ca;
-+	convert_attrs(istate, &ca, path);
-+	return async_convert_to_working_tree_ca(repo, &ca, path, src, len, dst,
-+						meta, dco);
-+}
-+
+ int convert_to_working_tree(struct index_state *istate,
+@@ -1570,12 +1582,14 @@ int async_convert_to_working_tree(struct index_state *istate,
  int renormalize_buffer(struct index_state *istate, const char *path,
  		       const char *src, size_t len, struct strbuf *dst)
  {
-@@ -1981,7 +2009,8 @@ static struct stream_filter *ident_filter(const struct object_id *oid)
++	struct repository *repo = istate && istate->repo ?
++				  istate->repo : the_repository;
+ 	struct conv_attrs ca;
+ 	int ret;
+ 
+ 	convert_attrs(istate, &ca, path);
+-	ret = convert_to_working_tree_ca_internal(&ca, path, src, len, dst, 1,
+-						  NULL, NULL);
++	ret = convert_to_working_tree_ca_internal(repo, &ca, path, src, len,
++						  dst, 1, NULL, NULL);
+ 	if (ret) {
+ 		src = dst->buf;
+ 		len = dst->len;
+@@ -2009,7 +2023,7 @@ static struct stream_filter *ident_filter(const struct object_id *oid)
   * Note that you would be crazy to set CRLF, smudge/clean or ident to a
   * large binary blob you would want us not to slurp into the memory!
   */
--struct stream_filter *get_stream_filter_ca(const struct conv_attrs *ca,
-+struct stream_filter *get_stream_filter_ca(struct repository *repo UNUSED,
-+					   const struct conv_attrs *ca,
+-struct stream_filter *get_stream_filter_ca(struct repository *repo UNUSED,
++struct stream_filter *get_stream_filter_ca(struct repository *repo,
+ 					   const struct conv_attrs *ca,
  					   const struct object_id *oid)
  {
- 	struct stream_filter *filter = NULL;
-@@ -2006,7 +2035,9 @@ struct stream_filter *get_stream_filter(struct index_state *istate,
- {
- 	struct conv_attrs ca;
- 	convert_attrs(istate, &ca, path);
--	return get_stream_filter_ca(&ca, oid);
-+	return get_stream_filter_ca(istate && istate->repo ?
-+				    istate->repo : the_repository,
-+				    &ca, oid);
- }
+@@ -2021,7 +2035,7 @@ struct stream_filter *get_stream_filter_ca(struct repository *repo UNUSED,
+ 	if (ca->ident)
+ 		filter = ident_filter(oid);
  
- void free_stream_filter(struct stream_filter *filter)
+-	if (output_eol(ca->crlf_action) == EOL_CRLF)
++	if (output_eol(repo, ca->crlf_action) == EOL_CRLF)
+ 		filter = cascade_filter(filter, lf_to_crlf_filter());
+ 	else
+ 		filter = cascade_filter(filter, &null_filter_singleton);
 diff --git a/convert.h b/convert.h
-index 0a6e4086b8..137fa1593a 100644
+index 137fa1593a..dae11d372d 100644
 --- a/convert.h
 +++ b/convert.h
-@@ -8,6 +8,7 @@
- #include "string-list.h"
+@@ -19,14 +19,6 @@ struct strbuf;
  
- struct index_state;
-+struct repository;
- struct strbuf;
+ extern int global_conv_flags_eol;
  
- #define CONV_EOL_RNDTRP_DIE   (1<<0) /* Die if CRLF to LF to CRLF is different */
-@@ -103,34 +104,26 @@ const char *get_convert_attr_ascii(struct index_state *istate,
- int convert_to_git(struct index_state *istate,
- 		   const char *path, const char *src, size_t len,
- 		   struct strbuf *dst, int conv_flags);
--int convert_to_working_tree_ca(const struct conv_attrs *ca,
-+int convert_to_working_tree_ca(struct repository *repo,
-+			       const struct conv_attrs *ca,
- 			       const char *path, const char *src,
- 			       size_t len, struct strbuf *dst,
- 			       const struct checkout_metadata *meta);
--int async_convert_to_working_tree_ca(const struct conv_attrs *ca,
-+int async_convert_to_working_tree_ca(struct repository *repo,
-+				     const struct conv_attrs *ca,
- 				     const char *path, const char *src,
- 				     size_t len, struct strbuf *dst,
- 				     const struct checkout_metadata *meta,
- 				     void *dco);
--static inline int convert_to_working_tree(struct index_state *istate,
--					  const char *path, const char *src,
--					  size_t len, struct strbuf *dst,
--					  const struct checkout_metadata *meta)
--{
--	struct conv_attrs ca;
--	convert_attrs(istate, &ca, path);
--	return convert_to_working_tree_ca(&ca, path, src, len, dst, meta);
--}
--static inline int async_convert_to_working_tree(struct index_state *istate,
--						const char *path, const char *src,
--						size_t len, struct strbuf *dst,
--						const struct checkout_metadata *meta,
--						void *dco)
--{
--	struct conv_attrs ca;
--	convert_attrs(istate, &ca, path);
--	return async_convert_to_working_tree_ca(&ca, path, src, len, dst, meta, dco);
--}
-+int convert_to_working_tree(struct index_state *istate,
-+			   const char *path, const char *src,
-+			   size_t len, struct strbuf *dst,
-+			   const struct checkout_metadata *meta);
-+int async_convert_to_working_tree(struct index_state *istate,
-+				  const char *path, const char *src,
-+				  size_t len, struct strbuf *dst,
-+				  const struct checkout_metadata *meta,
-+				  void *dco);
- int async_query_available_blobs(const char *cmd,
- 				struct string_list *available_paths);
- int renormalize_buffer(struct index_state *istate,
-@@ -183,7 +176,8 @@ struct stream_filter; /* opaque */
- struct stream_filter *get_stream_filter(struct index_state *istate,
- 					const char *path,
- 					const struct object_id *);
--struct stream_filter *get_stream_filter_ca(const struct conv_attrs *ca,
-+struct stream_filter *get_stream_filter_ca(struct repository *repo,
-+					   const struct conv_attrs *ca,
- 					   const struct object_id *oid);
- void free_stream_filter(struct stream_filter *);
- int is_null_stream_filter(struct stream_filter *);
-diff --git a/entry.c b/entry.c
-index 1c4f0f4407..7fda86e67f 100644
---- a/entry.c
-+++ b/entry.c
-@@ -296,11 +296,14 @@ static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca
- 	const struct submodule *sub;
- 	struct checkout_metadata meta;
- 	static int scratch_nr_checkouts;
-+	struct repository *repo = state->istate && state->istate->repo ?
-+				  state->istate->repo : the_repository;
+-enum auto_crlf {
+-	AUTO_CRLF_FALSE = 0,
+-	AUTO_CRLF_TRUE = 1,
+-	AUTO_CRLF_INPUT = -1
+-};
+-
+-extern enum auto_crlf auto_crlf;
+-
+ enum eol {
+ 	EOL_UNSET,
+ 	EOL_CRLF,
+diff --git a/environment.c b/environment.c
+index c83cf44839..bbac8ed8c9 100644
+--- a/environment.c
++++ b/environment.c
+@@ -49,7 +49,6 @@ int fsync_object_files = -1;
+ int use_fsync = -1;
+ enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
+ enum fsync_component fsync_components = FSYNC_COMPONENTS_DEFAULT;
+-enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
+ enum eol core_eol = EOL_UNSET;
+ int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
+ char *check_roundtrip_encoding;
+@@ -152,6 +151,13 @@ int repo_has_symlinks(struct repository *repo)
+ 		: platform_has_symlinks();
+ }
  
- 	clone_checkout_metadata(&meta, &state->meta, &ce->oid);
++enum auto_crlf repo_auto_crlf(struct repository *repo)
++{
++	return repo->initialized
++		? repo_config_values(repo)->auto_crlf
++		: AUTO_CRLF_FALSE;
++}
++
+ const char *repo_excludes_file(struct repository *repo)
+ {
+ 	struct repo_config_values *cfg = repo_config_values(repo);
+@@ -420,10 +426,10 @@ int git_default_core_config(const char *var, const char *value,
  
- 	if (ce_mode_s_ifmt == S_IFREG) {
--		struct stream_filter *filter = get_stream_filter_ca(ca, &ce->oid);
-+		struct stream_filter *filter =
-+			get_stream_filter_ca(repo, ca, &ce->oid);
- 		if (filter &&
- 		    !streaming_write_entry(ce, path, filter,
- 					   state, to_tempfile,
-@@ -348,9 +351,11 @@ static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca
- 		 * Convert from git internal format to working tree format
- 		 */
- 		if (dco && dco->state != CE_NO_DELAY) {
--			ret = async_convert_to_working_tree_ca(ca, ce->name,
-+			ret = async_convert_to_working_tree_ca(repo, ca,
-+							       ce->name,
- 							       new_blob, size,
--							       &buf, &meta, dco);
-+							       &buf, &meta,
-+							       dco);
- 			if (ret) {
- 				struct string_list_item *item =
- 					string_list_lookup(&dco->paths, ce->name);
-@@ -362,8 +367,9 @@ static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca
- 				}
- 			}
- 		} else {
--			ret = convert_to_working_tree_ca(ca, ce->name, new_blob,
--							 size, &buf, &meta);
-+			ret = convert_to_working_tree_ca(repo, ca, ce->name,
-+							 new_blob, size, &buf,
-+							 &meta);
+ 	if (!strcmp(var, "core.autocrlf")) {
+ 		if (value && !strcasecmp(value, "input")) {
+-			auto_crlf = AUTO_CRLF_INPUT;
++			cfg->auto_crlf = AUTO_CRLF_INPUT;
+ 			return 0;
  		}
+-		auto_crlf = git_config_bool(var, value);
++		cfg->auto_crlf = git_config_bool(var, value);
+ 		return 0;
+ 	}
  
- 		if (ret) {
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 0bf4bd6d4a..51a4db4f67 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -279,7 +279,8 @@ static int write_pc_item_to_fd(struct parallel_checkout_item *pc_item, int fd,
- 	/* Sanity check */
- 	ASSERT(is_eligible_for_parallel_checkout(pc_item->ce, &pc_item->ca));
+@@ -777,6 +783,7 @@ void repo_config_values_init(struct repo_config_values *cfg)
+ 	cfg->trust_executable_bit = 1;
+ 	cfg->has_symlinks = platform_has_symlinks();
+ 	cfg->use_nanosec = 0;
++	cfg->auto_crlf = AUTO_CRLF_FALSE;
  
--	filter = get_stream_filter_ca(&pc_item->ca, &pc_item->ce->oid);
-+	filter = get_stream_filter_ca(the_repository, &pc_item->ca,
-+					&pc_item->ce->oid);
- 	if (filter) {
- 		if (odb_stream_blob_to_fd(the_repository->objects, fd,
- 					  &pc_item->ce->oid, filter, 1)) {
-@@ -302,8 +303,9 @@ static int write_pc_item_to_fd(struct parallel_checkout_item *pc_item, int fd,
- 	 * checkout, so pass NULL. Note: if that changes, the metadata must also
- 	 * be passed from the main process to the workers.
- 	 */
--	ret = convert_to_working_tree_ca(&pc_item->ca, pc_item->ce->name,
--					 blob, size, &buf, NULL);
-+	ret = convert_to_working_tree_ca(the_repository, &pc_item->ca,
-+					 pc_item->ce->name, blob, size, &buf,
-+					 NULL);
+ 	/* section "sparse" config values */
+ 	cfg->sparse_expect_files_outside_of_patterns = 0;
+diff --git a/environment.h b/environment.h
+index 49c86e8879..872da3576b 100644
+--- a/environment.h
++++ b/environment.h
+@@ -123,6 +123,12 @@ enum object_creation_mode {
+ 	OBJECT_CREATION_USES_RENAMES = 1
+ };
  
- 	if (ret) {
- 		size_t newsize;
++enum auto_crlf {
++	AUTO_CRLF_FALSE = 0,
++	AUTO_CRLF_TRUE = 1,
++	AUTO_CRLF_INPUT = -1
++};
++
+ struct repo_config_values {
+ 	/* section "core" config values */
+ 	char *attributes_file;
+@@ -149,6 +155,7 @@ struct repo_config_values {
+ 	int trust_executable_bit;
+ 	int has_symlinks;
+ 	int use_nanosec;
++	enum auto_crlf auto_crlf;
+ 
+ 	/* section "sparse" config values */
+ 	int sparse_expect_files_outside_of_patterns;
+@@ -203,6 +210,8 @@ int repo_trust_executable_bit(struct repository *repo);
+ 
+ int repo_has_symlinks(struct repository *repo);
+ 
++enum auto_crlf repo_auto_crlf(struct repository *repo);
++
+ const char *repo_excludes_file(struct repository *repo);
+ 
+ void repo_config_values_init(struct repo_config_values *cfg);
 -- 
 2.43.0
 
