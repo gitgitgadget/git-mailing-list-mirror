@@ -1,101 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.179
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792849779;
-	b=GdR5sg6OG+NpMpfswoxheeFUyALoXVh+XmqXclvA4r2BTrzhU3BRibfaElIMKMKRju2I
-	 Nr0fAjEDPxPjxCIueNsMQcMIYDvdiTpiFwacIU3l1V2PGdGmXBDPmVQF3LgQHl4UQxkRY
-	 jWG2Bk3VONCHOzSbwx8sYEAlkzOGTszFJLwHMwe/U+nDkpH7VAHq1eiSJ7+ddxf/rKkNz
-	 5b0S3m904c4XHPYRBPUA3q6YsgmeBg3mIyE+OspQbuHR1JG3JUmqfCnBAmtMDWIv3XUJr
-	 l9saJH6TUGULjBPBFUwMCAKMZkWO6ds24uv13WvpuapL4C8SHjSoHOXcHL0pxRLr6/A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792849779;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792849877;
+	b=fMv/pwrgws4T5KDTHN7p6l25yaz+e79QEJshh5DVZZj6shqvhVvihC/CzzNVEaGV6KqQ
+	 Upu6jg31Z7tESctNuQsTxosmYicPzaV3ycIMIJj7Y4bLgepxo2zXS/muqIFaGqHz31Xva
+	 l9n6FvT3CLd7CIXGuOjytSi9tISUiLqUTvz/3u2kFm5LYZhz1Q6VonCSrzaRifAd59WO1
+	 J9+lS1sSvBkcWAjCn+ZDkJcHkqwZU5VHAedmgA+NeNt7vlIhsinct7/7RlU8qZ5328Jvk
+	 +HfEcnm4nad+KKnR9LTUUtBOk7zlbJPom/GfDqZwStJYH2aklia1m8VUzTvsPVFxMjQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792849877;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=fRNztQ9slKb0sQvv/6HMi6fGYCSWzwDjovpFpTPxUBc=;
-	b=eZaw3SaYqFLihD/CxYQeLoJN4wHAwikdW7hsbR7fBht3mxC0xQHlF6VRoBEHfVhZIAYs
-	 qDSrPuek/OLmvB+2vwERFU6tNWoBDxYSLUmzk5lVKwVjwtZZEuqgw2tgfeaPVYHt2jsl7
-	 XuXjmSO2zlEDwyY+NjXk+sTFM6oUptfBrZGJS/DgNrOB4NxruHMgpO7uspVdi6Xg+e9MC
-	 +6BkyoQVk74cTuTKvdAucS7N7EwhefQKCgMM3QFRB5yoTLZDJQeJ2hOtsgl7nPgE4qik+
-	 vfHWW3k+3Teb2hjZDOS50GNo4HaGULCQSxLcedbSIqnzR/IWukEQ2oIkRQRIQXugasA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=vOrIYgmB43cPkcJmyorStnQT8nSQuMW84H+jZTxvU4c=;
+	b=By3mlPKeaR3KFyjgfPEU5qW46Y3LCTzQZYKfBRtjzZ3fRIuMEbGq7EBOet3WtTqXOuLe
+	 QYgtVQfKb/pI4my6QkSjgBTlsib1j7wPWFHBu7+qLLQzwErgwanVi6SUI5BBqpyn4L/MW
+	 0tF2cbaomfJKwYp4sIUBhDJHTtv0ISWbL53Zq4AJxBbLRL6z6cyrHyDdVhQVGE69YeE6P
+	 bL/Wx4JtypDjUD6BC9YjV3MWtCwWRtcn+amKXChfhdLwRXCJh6VeDn1o+pktKC1nf7r8E
+	 2cykhkxRdz0qUaHa44vBK7gdMPk4YWe0VdgsM012OwduG9CfNT9THpdawQWgYdT2I3w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=gGjaznY4;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.179
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YMVmHyw6;
+	arc=none smtp.remote-ip=209.85.221.53
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A054606A31A
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 13:49:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0A054606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B61606A31A
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 13:51:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 46B61606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=gGjaznY4
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-8a06c60065fso1374352b3a.1
-        for <git@vger.kernel.org>; Sat, 24 Oct 2026 06:49:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792849778; cv=none;
-        d=google.com; s=arc-20260327;
-        b=OVHwL7HFL5Qx7EuU02kF57/4nYyFMkxwOg9/yYIvX9vks18wnjzWnZnFh4fPNLPkSQ
-         PNUwYh+hcbolsUI/nfpbBPuCYduTyXIlBmhdSK9Vm9KdNyZXnlY/HgOE6Dc9hWfNHaUT
-         CLvyfXs1C7tcz9oEl5HCwfaHZQb0cmSBIwphCssmLRYaUO8COsR5LUmi8GpYXm+ieaTR
-         7BuQQ/Ju3asr9PEttUxIYG4nVjysxWe5Sv2emUB3NBiM5Qd2lVs8j+hKcQiUVAoqNLVn
-         riQ+Pdl/w1WXP7DM+dpZ8WZxHeQjXotZxE27yGAayYTj8TkgQVb461MO37VjSlGFQmQX
-         6GNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=fRNztQ9slKb0sQvv/6HMi6fGYCSWzwDjovpFpTPxUBc=;
-        fh=DB3dlBjaJH+ZUZnFZCcHfvvUHBM4Dd4zykfu039Yx3I=;
-        b=FiiYSFbhk4mHZgtUOCzMd+crvdRia+7UzWU2EmqykBj1TNNINbBzpLaqUnG6fxh/1Y
-         57jv5b3tDRqxV2XypJaE39SoX8kbRGj3s51DrCUJND/z9KBt/znATq3b78b6mirPsD47
-         UyLGl7wza3jnGTb7Wkv752Rhcw3k3dv1ZgHqjKxY+CvmDhaYetWtyKKgNrY7D7YNnAqu
-         2quzNIO+VJF04km867ihVF5ojb1Elm9L3aI6G6T9Kze/xwWDmSuzeyck3F7zjuQgqxAq
-         xBO8aZ8pLU/3puUQPoFCEGKpBZzRWNnBkdkiehGcMq3hpaLMMnpJfTDqa75n7OalOke9
-         pRLw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YMVmHyw6
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48e00eee27dso1092141f8f.0
+        for <git@vger.kernel.org>; Sat, 24 Oct 2026 06:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792849778; x=1793454578; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=fRNztQ9slKb0sQvv/6HMi6fGYCSWzwDjovpFpTPxUBc=;
-        b=gGjaznY4dKOJs0djp0Lks5GiYiJCZXD3yXs/FEqGwQ6o3PFb++wgwrGLuV4hnqL4DT
-         yceLkdo+SXP5nCK2byXuwGi+gThI28ToK8+/J8lI+3uqz7j7xhvxLKX0ZpIonCe18uyG
-         AFDouK7Pq8FY9qRArX0m9HSK8lwpQqfrNxIzNeuY9s6gtahMbiUodKoOVZRgfnxeVUSk
-         mHu9MWxiHGAqvB0MxhUifq/1NMDskOHFQRKcKm1X8Pfte3wixDX41WJ4H8YGp6W2A6nk
-         NFD8JvjwCDU8uAQnNazoBnxZRyKbYTDO2pPm5/fqf8/32x7PQdidDuWavCm6TrLxxesi
-         tqWA==
+        d=gmail.com; s=20251104; t=1792849876; x=1793454676; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=vOrIYgmB43cPkcJmyorStnQT8nSQuMW84H+jZTxvU4c=;
+        b=YMVmHyw636h/3tV3bjcgnOxGfN47JSOt7aguqwDpB5edZoMRLZs/opEwq1xXpc2rCf
+         Kn7se0Pjnc3AuRuX1jPUaVuH2hcob39rWWhbmnojgqdJiEAJ9P1SsQjM7I3x0UAF71Te
+         sKMZHK2nWbM61deurTAUn5FQkFVy3FU0446izweSbkSjmLZMxs30L1BVrF6zaUpPrAgC
+         MxC/neqH0aKH8ARoyRqfMttaFei2QfOfbYGtXe/2gdZaF4irmlu5SfxRBTYIgFvULuOy
+         CCxCwelDAZdxrTc0NEAQ1FPvQ8Cl0zzZYIJMlzgEjNANZUak/437lKzaZqyFgZ50O7fr
+         q1mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792849778; x=1793454578;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fRNztQ9slKb0sQvv/6HMi6fGYCSWzwDjovpFpTPxUBc=;
-        b=DRuh7AxJFuOFlKou35anX+L/Krl1dlLwvmY7o84WyK7O2/1LZSjAHHIPUJo96gwn+K
-         TrAeasti+5OEZ9oFPsyc5/ldXqoGf9JST2T4O2CkGSSAdvjMjh1ta7Rm8+8W3Gyiv5MB
-         /jHuNmPujr3aRMUN4DX7g5v6D3YJKV035/BO0jIjmMHokorI8md/tTNeYyD4ijgIEsMO
-         FgvHi9E7cBPVpu0Ef+aChxmHPmS5qMejVhm0otaZi1kguyl5Z1660J9+xUnpn+ZHTxw+
-         3IIoL4VazPIDWDSD4ThkvoktYwjSMfxq8shC8BWn/gwKaPW+UltkuLKJ/6E43MEH7YTb
-         zZtg==
-X-Forwarded-Encrypted: i=1; AKwUvBwcwZalqf8hipmjzpvQXPhj4m3km/FO9Ri36cLgZkWxzZFW3jy98Yq3UOIJK/MW6YXW7rM=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJcj5oOtSubyUYKhr1Axhr9VkP3nct1k+pp4n+WdS18RYib2V5p
-	9yCnabNAM6dJQx5dVKATrstp94NIs2LAfVnJOD6MgBqSYyICLoLJqoRZngBU6X/KY1041MCxXt9
-	jwrRf7ZhDRZ9Oc02b1K5XpX1CiNJua4o=
-X-Gm-Gg: AYBFou2EjhNQrqd82mLCpO6QtbcJOQnNBnNqlR23fEk3dkvI8cAhvajFBxm/7GcTJj2
-	g1jW8M9j33ONh9D5YiN3Kh3refP/cIrnbHa18WkOtL80cwwM/sgCRAN5evWwJdkMl64B0GnW9+6
-	5tcLqHt6VApg1agv/Ew+4n0KAeJ2nZDYLhZmkKUXAv+5IWRDY5Xtdv+PQM8uf/ryyFXtKGVf875
-	zmh/RMbXMvAb+9rob+AFlRMQDAWQrAfH734BrQX8uxTJ8x3zHGd1kwfLGcWIYjFdQpr1HnBRquN
-	6TFTA7xUcYdaFYxA8l14v3HM4nGxw/Px76yOll4GKXB8jMvL8ClzyQmYZ4xwsXdoQ4fkwje47u3
-	s2Zu+62BFX8L0if6mPo/0ZgzjC4lsAJFm+pdxUryCEXqbj1P8le/UphSUxWunCmVZJMQxEWo+JG
-	y4eFyNdZh9iZ4f+DoXeVDvScLBQtble55TkUSK46II9xuAxeaZZvng
-X-Received: by 2002:a05:6a21:a91:b0:3e1:7249:e265 with SMTP id
- adf61e73a8af0-3e7bfa41069mr1518552637.27.1792849778162; Sat, 24 Oct 2026
- 06:49:38 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792849876; x=1793454676;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=vOrIYgmB43cPkcJmyorStnQT8nSQuMW84H+jZTxvU4c=;
+        b=pHJdSWkKAy9XAcOwoO8U8XBE5Jnd+SpwUp0InvLwcAJkZA7xsNiFaBQ6y/Qqm7Y9S4
+         oYQtN+Qd3ls4aS7vwlWKDOIS90Bg4N0EwJw5arGPDaEevM2CGVv43+MSCLy8chbH/e7k
+         0DvRNn0JQmp6nI83M5Kc566Fwil4gLBFSgNI5lUY7SdlSaNI9DRyhHONAmKY1Wc1/d9k
+         WH2EB7kJfGw5OGNB1sEHBucs3FBctHm/HsztoNaRM1B+eAGE02nsdAwWcqgd3/eZkiPn
+         GUY7taNPNsMveN5ca124P4YoqbQrrMD+R7oFlVsrbqyjXNME8SN2OjvnYRQF1ktIBft3
+         7NPQ==
+X-Forwarded-Encrypted: i=1; AKwUvBxWz0cTIOL1NS3W+MLjyAv/1K4opD5FxkRKIxSe4vjC7UYFELB1dA0Ekueb8PzEAjHBloE=@vger.kernel.org
+X-Gm-Message-State: AFq9FYK67py2yRJW6pdslHqAYZJHG5PwKEOnzyZ2KG6ETYHeyr3FCs5x
+	3bOOJ3KjbMpVbQFJggxkPJugQ1XKUbhTrF+KhC9j5fMC7TrmE+XbLKSXpjMqrw==
+X-Gm-Gg: AYBFou1kub536zvxRLFjHcnzdIErMsjS2puUsGxRwf+vHarvarqsQ12YjokGdAw3r1b
+	Fu6BNGJ77nS6R3FVemcFkKvIOyMyDkFjAmSPEOeCd7jGXPkCmsRPqYCUrSW3qWveAjaiArAfMMc
+	X9dLjsqvejbI7WHC4gf7AR5hVtATups66Kx0ZjoZnH6TaD+Nqc8WdeI+AN/zA9AjYPJRaKIQDt5
+	JQb/v4d3n90TZSYTb64tB3se6VYpBJyW65nQtWDB/J7X6z2VuEWNCFtWms80sKeA2iBanSbs6Uk
+	KFN0pmaLanZbCOiR7JffFwaxXjFGH6iwVCkTTFxoB+y9nYhBT+1zoex2cm00h74w5U3tZisWn9A
+	OUJf9W5l7xsQIdRKisaelNxmuOCOH0FzKW0omT3E6CdJDuIAvR6ddlChYQUmJRw1gZHLFUaaI2d
+	je7vcx1py26Dp9i9DJ88q2TWtWJAYFcNFT57moe4z1vDM2Z4myluH2hSQGQyyv9WqvUUwvLqGH0
+	ZOb9CEsGTdIOJVh9qyY0x931VBCYY+R4YCEmjc1tZzo9axHUkJAVetcV3SUzOvWCKTfSLMtUdTi
+	19agSfO2j+spy1r3A8lrdv95oz1cC2ZBdg==
+X-Received: by 2002:adf:e889:0:b0:48e:932:aef5 with SMTP id ffacd0b85a97d-48e3eb8bafdmr2285469f8f.21.1792849875307;
+        Sat, 24 Oct 2026 06:51:15 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ecd354asm4161305f8f.43.2026.10.24.06.51.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Oct 2026 06:51:14 -0700 (PDT)
+Message-ID: <bfc2b43a-6198-47b0-8868-d92551548f22@gmail.com>
+Date: Sat, 24 Oct 2026 14:51:13 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,99 +92,398 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2458.git.git.1792437798463.gitgitgadget@gmail.com>
- <pull.2458.v2.git.git.1792585662669.gitgitgadget@gmail.com> <xmqqld7o71ot.fsf@gitster.g>
-In-Reply-To: <xmqqld7o71ot.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 24 Oct 2026 09:49:26 -0400
-X-Gm-Features: AclHuK8FKFkc4ZpXhhuAbH3HrY7HGuOmPq6ooQew7dsebLNn0oBpUHltd2D62bQ
-Message-ID: <CALnO6CBD2aGg_wDZZsT-mWJ99MXYUycx32JfsK8zJXfcmjTBDw@mail.gmail.com>
-Subject: Re: [PATCH v2] status: compare against both upstream and push branch
- by default
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	Harald Nordgren <haraldnordgren@gmail.com>, Julia Evans <julia@jvns.ca>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 0/3] reflog: add --operations and --historical-branch
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
+ <pull.2448.v2.git.git.1792348037.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.2448.v2.git.git.1792348037.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 23, 2026 at 1:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > Showing both without any configuration was the original proposal for
-> > that commit. But some found the comparison with the push branch to be
-> > noise. So the comparison was made opt in [1], with the idea of
-> > flipping the default later if people like the option.
->
-> The key phrase here is "if people like the option".
->
-> > Those who find the comparison with the push branch to be noise can
-> > set status.compareBranches to "@{upstream}" to get the old output
-> > back.
->
-> The presence of an escape hatch is described here.  But its
-> existence is not a valid excuse to force people to use it, nor does
-> it answer the question "if people like the option" posed above.
+Hi Harald
 
-I agree, though I still support changing the default. I think we need
-to make a stronger case.
+On 18/10/2026 19:27, Harald Nordgren via GitGitGadget wrote:
+> Create a better reflog. Follows the discussion in
+> https://lore.kernel.org/git/akZfm-igZKeHaDST@pks.im/.
+> 
+> "git reflog" lists every step of a rebase and every branch switch, which
+> makes it hard to see what was done and on which branch. This adds two
+> options to "git reflog" and "git log -g":
+> 
+>   * --operations shows one entry per command, folding a rebase into the entry
+>     that finished or aborted it, and leaves out entries that change no
+>     branch.
 
-> The paragraph above (and below) also assumes that comparing with
-> @{push} is not noise for many people.  We have not yet heard a
-> convincing argument supporting that assumption in the proposed log
-> message.  In a triangular workflow, @{upstream} is not under your
-> control, so you may want to monitor its progress closely.  But isn't
-> your @{push} destination typically owned solely by you?  In other
-> words, aren't you the only one who pushes to it?  If so, whatever
-> you did locally would be the only change that could go on top of
-> @{push}, and unlike @{upstream} you would not see any unexpected
-> work over there appearing without your control.
+I'm rather skeptical of this in its current form. Not all commands that 
+modify the working tree update the reflog and some commands such as "git 
+cherry-pick A B C" create multiple reflog entires that are 
+indistinguishable from multiple invocations of a single command. The 
+message you cite above is arguing that we need a separate operations log 
+if we want to overcome these problems. Most of what this option does can 
+be achieved by looking at the branch reflog instead (I really wish that 
+"git reflog" defaulted to the current branch rather than HEAD). I'm not 
+opposed to supporting some kind of filtering/simplification particularly 
+for HEAD, but we should not pretend we're showing users one entry per 
+command.
 
-I think this paragraph assumes that either
+>   * --historical-branch decorates each entry with the branch HEAD was on when
+>     it was recorded.
 
-* I'm only pushing new commits to @{push}, or
-* I remember what the current state of @{push} is without checking.
+I quite like this idea, but think it would be nicer implemented as a 
+format specifier ("%gb" seems to be free) so that users can use it in 
+their custom formats. I'd be quite happy to change the default format do
+for HEAD to include the branch name after the reflog message but I'm not 
+sure others would be so keen (perhaps we could get away with guarding 
+any change by isatty()/GIT_PAGER_IN_USE?).
 
-I may not see "unexpected" work appearing there in most cases, but I
-certainly appreciate the reminder when returning to a topic after
-working on something else. Have I rebased/amended/git-history'd lately
-and need to force-push? Do I care about the differences? Sometimes I
-already know the answer and want to validate what I'm about to send
-out, kind of like "git send-email" with sendemail.annotate (and
-multiedit, for me) configured.
+If we're going to do this we should make sure it supports "git rebase 
+<upstream> <branch>" so that the branch names are accurate. That is a 
+bit involved because you have to compare the name of the branch being 
+rebased (which is in the "(finish)" reflog message) to the name of the 
+branch that was checked out before (which isn't in that message so you 
+have to go looking for a previous rebase or checkout). It also needs to 
+take account of rebases that checkout a detached HEAD which don't have 
+the "(finish)" message and those that checkout an up-to-date branch or 
+detached HEAD where the message is "$GIT_REFLOG_ACTION: checkout 
+$revision". I've got a patch [1] that fixes this for "@{-N}" which I 
+think works, but it needs some more tests.
 
-I have a number of ways of helping answer this question, personally:
+Thanks
 
-* git status: only ahead-behind count, but lets me know if there's
-anything to do. I don't actually check this output too often myself
-because I built the below prior the config under discussion, and they
-are focused + finger memory---I almost always run short status when I
-do look at status, but that's because I don't normally need the
-verbose output these days ;) That's not the case for most of our
-users.
-* "git sbup" =3D show-branch HEAD HEAD@{push} HEAD@{upstream}: a quick
-divergence check
-* "git rdup" =3D range-diff HEAD@{upstream} HEAD@{push} HEAD: a detailed
-comparison
-* "git div" [1] runs a triple-dot graph log (with more options)
-comparing HEAD against @{push} (if they differ) or @{upstream} (if
-they're the same), omitting some other inferences and ways to supply
-which topic to inspect.
+Phillip
 
-[1]: https://github.com/benknoble/Dotfiles/blob/master/links/bin/git-div
+[1] 
+https://github.com/git/git/compare/master...phillipwood:git:fix-nth-prior-checkout
 
-So, I suppose my point is: as someone who almost exclusively has
-triangular workflows, I'm already checking this push--local divergence
-on a regular basis. I just built my own extensions to do so prior to
-Harald's welcome addition to status. Perhaps that can help Harald
-argue the case more convincingly in a proposed log message?
+> Changes in v2:
+> 
+>   * Move the "historical branch" rightward in the display for cleaner
+>     alignment.
+>   * Improve commit messages.
+> 
+> Harald Nordgren (3):
+>    reflog: name the strings that mark switches, renames and rebase steps
+>    reflog: add --operations to show one entry per command
+>    reflog: add --historical-branch to name the branch of each entry
+> 
+>   Documentation/git-reflog.adoc       |   4 +
+>   Documentation/rev-list-options.adoc |  21 +++
+>   builtin/branch.c                    |   3 +-
+>   builtin/checkout.c                  |   3 +-
+>   builtin/rebase.c                    |  17 +--
+>   log-tree.c                          |  28 +++-
+>   object-name.c                       |   3 +-
+>   reflog-walk.c                       | 183 +++++++++++++++++++++++--
+>   reflog-walk.h                       |   6 +-
+>   reflog.h                            |   6 +
+>   revision.c                          |  14 ++
+>   revision.h                          |   2 +
+>   sequencer.c                         |  13 +-
+>   t/t1414-reflog-walk.sh              | 198 ++++++++++++++++++++++++++++
+>   wt-status.c                         |   3 +-
+>   15 files changed, 471 insertions(+), 33 deletions(-)
+> 
+> 
+> base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2448%2FHaraldNordgren%2Freflog-operations-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2448/HaraldNordgren/reflog-operations-v2
+> Pull-Request: https://github.com/git/git/pull/2448
+> 
+> Range-diff vs v1:
+> 
+>   1:  d95ed5bd67 ! 1:  745929bd80 reflog: name the strings that mark switches, renames and rebase steps
+>       @@ Metadata
+>         ## Commit message ##
+>            reflog: name the strings that mark switches, renames and rebase steps
+>        
+>       -    "git checkout" records a move of HEAD in the reflog as "checkout:
+>       -    moving from <old> to <new>", "git branch -m" records a rename of the
+>       -    current branch as "Branch: renamed <old> to <new>", and "git rebase"
+>       -    marks where it starts and ends with steps like "rebase (start)" and
+>       -    "rebase (finish)". "@{-<n>}" and "git status" read the switch message
+>       -    back, each with its own copy of the prefix, and a later commit adds a
+>       -    reader for all of them.
+>       +    The next commit adds "git reflog --operations", which finds branch
+>       +    switches, branch renames and the start and end of a rebase by the
+>       +    messages they leave in the reflog. The commands that write these
+>       +    messages spell out the strings by hand, and "@{-<n>}" and "git status"
+>       +    each keep their own copy of the switch prefix to read it back. Reading
+>       +    them in one more place would add yet another copy that has to stay in
+>       +    sync.
+>        
+>       -    Name these strings in reflog.h and use them where the messages are
+>       -    written and read, so they cannot drift apart.
+>       +    Name the strings once in reflog.h and use the names wherever the
+>       +    messages are written or read: the "checkout: moving from " prefix
+>       +    written by "git checkout", the "Branch: renamed " prefix written by
+>       +    "git branch -m", and the "start", "finish" and "abort" steps written
+>       +    by "git rebase".
+>       +
+>       +    No change in behavior.
+>        
+>            Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+>        
+>   2:  579e13b36a = 2:  1c47ba225e reflog: add --operations to show one entry per command
+>   3:  4efe74b04e ! 3:  aa5a98b80d reflog: add --historical-branch to name the branch of each entry
+>       @@ Commit message
+>            still point at that commit, and a rebased or amended commit has none.
+>        
+>            Teach "git reflog" and "git log -g" a "--historical-branch" option
+>       -    that decorates each entry with the branch it was made on, in place of
+>       -    the refs that point at the commit now. The name is colored like a
+>       -    branch decoration:
+>       +    that shows the branch each entry was made on before its message, in
+>       +    place of the refs that point at the commit now. The hashes and
+>       +    selectors stay lined up in their columns, and the name is colored like
+>       +    a branch decoration:
+>        
+>              $ git reflog --historical-branch
+>       -      4e5f6a7 (topic) HEAD@{0}: commit: add tests
+>       -      1a2b3c4 (topic) HEAD@{1}: checkout: moving from main to topic
+>       -      8c9d0e1 (main) HEAD@{2}: commit: fix typo
+>       +      4e5f6a7 HEAD@{0}: (topic) commit: add tests
+>       +      1a2b3c4 HEAD@{1}: (topic) checkout: moving from main to topic
+>       +      8c9d0e1 HEAD@{2}: (main) commit: fix typo
+>        
+>            Every entry gets a name, including ones whose commits are no longer on
+>            any branch. Entries from before a branch was renamed show its old name,
+>       @@ Documentation/git-reflog.adoc: actions, and in addition the `HEAD` reflog record
+>         branch are left out, and a rebase is shown as a single entry instead
+>        -of one entry for each commit it replayed.
+>        +of one entry for each commit it replayed. With `--historical-branch`,
+>       -+each entry is decorated with the branch it was made on.
+>       ++each entry shows the branch it was made on before its message.
+>         
+>         The "list" subcommand lists all refs which have a corresponding reflog.
+>         
+>       @@ Documentation/rev-list-options.adoc: Under `--pretty=reference`, this informatio
+>         	rebase started. It is an error to use this option unless
+>         	`--walk-reflogs` is in use.
+>         
+>       ++ifndef::git-rev-list[]
+>        +`--historical-branch`::
+>       -+	Decorate each reflog entry with the branch `HEAD` was on when
+>       -+	the entry was recorded, such as `(topic)`, in place of the refs
+>       -+	that point at the commit now. When `HEAD` was detached, the
+>       -+	entry shows `(detached at <commit>)`. For the reflog of any
+>       -+	other ref, the name of that ref is shown. It is an error to use
+>       -+	this option unless `--walk-reflogs` is in use.
+>       ++	Show the branch `HEAD` was on when each reflog entry was
+>       ++	recorded, such as `(topic)`, before the reflog message, in
+>       ++	place of the refs that point at the commit now. When `HEAD` was
+>       ++	detached, the entry shows `(detached at <commit>)`. For the
+>       ++	reflog of any other ref, the name of that ref is shown. It is
+>       ++	an error to use this option unless `--walk-reflogs` is in use.
+>       ++endif::git-rev-list[]
+>        +
+>         `--merge`::
+>         	Show commits touching conflicted paths in the range `HEAD...<other>`,
+>       @@ log-tree.c: void format_decorations(struct strbuf *sb,
+>         	}
+>         }
+>         
+>       -+static void show_historical_branch(struct rev_info *opt)
+>       ++static void format_historical_branch(struct strbuf *sb,
+>       ++				     struct rev_info *opt)
+>        +{
+>        +	const char *branch = get_reflog_branch(opt->reflog_info);
+>        +	enum git_colorbool use_color = opt->diffopt.use_color;
+>       @@ log-tree.c: void format_decorations(struct strbuf *sb,
+>        +
+>        +	color_commit = diff_get_color(use_color, DIFF_COMMIT);
+>        +	color_reset = decorate_get_color(use_color, DECORATION_NONE);
+>       -+	fprintf(opt->diffopt.file, "%s (%s%s%s%s%s)%s",
+>       -+		color_commit, color_reset,
+>       -+		decorate_get_color(use_color, DECORATION_REF_LOCAL),
+>       -+		branch, color_reset, color_commit, color_reset);
+>       ++	strbuf_addf(sb, "%s(%s%s%s%s%s)%s ",
+>       ++		    color_commit, color_reset,
+>       ++		    decorate_get_color(use_color, DECORATION_REF_LOCAL),
+>       ++		    branch, color_reset, color_commit, color_reset);
+>        +}
+>        +
+>         void show_decorations(struct rev_info *opt, struct commit *commit)
+>       @@ log-tree.c: void show_decorations(struct rev_info *opt, struct commit *commit)
+>         		if (slot && *slot)
+>         			fprintf(opt->diffopt.file, "\t%s", *slot);
+>         	}
+>       -+	if (opt->historical_branch) {
+>       -+		show_historical_branch(opt);
+>       -+		return;
+>       -+	}
+>       - 	if (!opt->show_decorations)
+>       +-	if (!opt->show_decorations)
+>       ++	if (!opt->show_decorations || opt->historical_branch)
+>         		return;
+>         	format_decorations(&sb, commit, opt->diffopt.use_color, NULL);
+>       + 	fputs(sb.buf, opt->diffopt.file);
+>       +@@ log-tree.c: void show_log(struct rev_info *opt)
+>       + 			graph_show_oneline(opt->graph);
+>       + 		}
+>       + 		if (opt->reflog_info) {
+>       ++			struct strbuf branch = STRBUF_INIT;
+>       ++
+>       + 			/*
+>       + 			 * setup_revisions() ensures that opt->reflog_info
+>       + 			 * and opt->graph cannot both be set,
+>       + 			 * so we don't need to worry about printing the
+>       + 			 * graph info here.
+>       + 			 */
+>       ++			if (opt->historical_branch)
+>       ++				format_historical_branch(&branch, opt);
+>       + 			show_reflog_message(opt->reflog_info,
+>       + 					    opt->commit_format == CMIT_FMT_ONELINE,
+>       + 					    opt->date_mode,
+>       +-					    opt->date_mode_explicit);
+>       ++					    opt->date_mode_explicit,
+>       ++					    branch.buf);
+>       ++			strbuf_release(&branch);
+>       + 			if (opt->commit_format == CMIT_FMT_ONELINE)
+>       + 				return;
+>       + 		}
+>        
+>         ## reflog-walk.c ##
+>        @@
+>       @@ reflog-walk.c: void get_reflog_message(struct strbuf *sb,
+>         const char *get_reflog_ident(struct reflog_walk_info *reflog_info)
+>         {
+>         	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
+>       +@@ reflog-walk.c: timestamp_t get_reflog_timestamp(struct reflog_walk_info *reflog_info)
+>       + }
+>       +
+>       + void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
+>       +-			 struct date_mode dmode, int force_date)
+>       ++			 struct date_mode dmode, int force_date,
+>       ++			 const char *branch)
+>       + {
+>       + 	if (reflog_info && reflog_info->last_commit_reflog) {
+>       + 		struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
+>       +@@ reflog-walk.c: void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
+>       + 		info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
+>       + 		get_reflog_selector(&selector, reflog_info, dmode, force_date, 0);
+>       + 		if (oneline) {
+>       +-			printf("%s: %s", selector.buf, info->message);
+>       ++			printf("%s: %s%s", selector.buf, branch,
+>       ++			       info->message);
+>       + 		}
+>       + 		else {
+>       +-			printf("Reflog: %s (%s)\nReflog message: %s",
+>       +-			       selector.buf, info->email, info->message);
+>       ++			printf("Reflog: %s (%s)\nReflog message: %s%s",
+>       ++			       selector.buf, info->email, branch,
+>       ++			       info->message);
+>       + 		}
+>       +
+>       + 		strbuf_release(&selector);
+>        
+>         ## reflog-walk.h ##
+>        @@ reflog-walk.h: struct date_mode;
+>       @@ reflog-walk.h: struct date_mode;
+>         int add_reflog_for_walk(struct reflog_walk_info *info,
+>         			struct commit *commit, const char *name);
+>         void show_reflog_message(struct reflog_walk_info *info, int,
+>       - 			 struct date_mode, int force_date);
+>       +-			 struct date_mode, int force_date);
+>       ++			 struct date_mode, int force_date,
+>       ++			 const char *branch);
+>         void get_reflog_message(struct strbuf *sb,
+>         			struct reflog_walk_info *reflog_info);
+>        +const char *get_reflog_branch(struct reflog_walk_info *reflog_info);
+>       @@ t/t1414-reflog-walk.sh: test_expect_success '--operations shows a rebase as one
+>        +		cd operations &&
+>        +
+>        +		cat >expect <<-\EOF &&
+>       -+		(topic) HEAD@{0}: rebase (finish): returning to refs/heads/topic
+>       -+		(topic) HEAD@{1}: rebase (pick): C
+>       -+		(topic) HEAD@{2}: rebase (pick): B
+>       -+		(topic) HEAD@{3}: rebase (pick): A
+>       -+		(topic) HEAD@{4}: rebase (start): checkout main
+>       -+		(topic) HEAD@{5}: checkout: moving from main to topic
+>       -+		(main) HEAD@{6}: commit: upstream
+>       -+		(main) HEAD@{7}: checkout: moving from topic to main
+>       -+		(topic) HEAD@{8}: commit: C
+>       -+		(topic) HEAD@{9}: commit: B
+>       -+		(topic) HEAD@{10}: commit: A
+>       -+		(topic) HEAD@{11}: checkout: moving from main to topic
+>       -+		(main) HEAD@{12}: commit (initial): base
+>       ++		HEAD@{0}: (topic) rebase (finish): returning to refs/heads/topic
+>       ++		HEAD@{1}: (topic) rebase (pick): C
+>       ++		HEAD@{2}: (topic) rebase (pick): B
+>       ++		HEAD@{3}: (topic) rebase (pick): A
+>       ++		HEAD@{4}: (topic) rebase (start): checkout main
+>       ++		HEAD@{5}: (topic) checkout: moving from main to topic
+>       ++		HEAD@{6}: (main) commit: upstream
+>       ++		HEAD@{7}: (main) checkout: moving from topic to main
+>       ++		HEAD@{8}: (topic) commit: C
+>       ++		HEAD@{9}: (topic) commit: B
+>       ++		HEAD@{10}: (topic) commit: A
+>       ++		HEAD@{11}: (topic) checkout: moving from main to topic
+>       ++		HEAD@{12}: (main) commit (initial): base
+>        +		EOF
+>        +		git reflog --historical-branch >out &&
+>        +		cut -d " " -f 2- out >actual &&
+>       @@ t/t1414-reflog-walk.sh: test_expect_success '--operations shows a rebase as one
+>        +	(
+>        +		cd operations &&
+>        +		hash=$(git rev-parse --short HEAD) &&
+>       -+		echo "<YELLOW>$hash<RESET><YELLOW> (<RESET><BOLD;GREEN>topic<RESET><YELLOW>)<RESET>" >expect &&
+>       ++		echo "<YELLOW>$hash<RESET> HEAD@{0}: <YELLOW>(<RESET><BOLD;GREEN>topic<RESET><YELLOW>)<RESET> rebase (finish): returning to refs/heads/topic" >expect &&
+>        +		git reflog --historical-branch --decorate --color -1 >out &&
+>       -+		test_decode_color <out | sed "s/ HEAD@.*//" >actual &&
+>       ++		test_decode_color <out >actual &&
+>        +		test_cmp expect actual
+>        +	)
+>        +'
+>       @@ t/t1414-reflog-walk.sh: test_expect_success '--operations shows a rebase as one
+>        +test_expect_success '--historical-branch names the ref of other reflogs' '
+>        +	(
+>        +		cd operations &&
+>       -+		echo "(main) main@{0}: commit: upstream" >expect &&
+>       ++		echo "main@{0}: (main) commit: upstream" >expect &&
+>        +		git reflog -1 main --historical-branch >out &&
+>        +		cut -d " " -f 2- out >actual &&
+>        +		test_cmp expect actual
+>       @@ t/t1414-reflog-walk.sh: test_expect_success '--operations shows a pull --rebase
+>        +		cd downstream &&
+>        +		echo "(topic)" >expect &&
+>        +		git reflog --historical-branch >out &&
+>       -+		cut -d " " -f 2 out | sort -u >actual &&
+>       ++		cut -d " " -f 3 out | sort -u >actual &&
+>        +		test_cmp expect actual
+>        +	)
+>        +'
+>       @@ t/t1414-reflog-walk.sh: test_expect_success '--operations shows a pull --rebase
+>        +		test_commit E &&
+>        +
+>        +		cat >expect <<-\EOF &&
+>       -+		(renamed) HEAD@{0}: commit: E
+>       -+		(renamed) HEAD@{1}: Branch: renamed refs/heads/topic to refs/heads/renamed
+>       -+		(topic) HEAD@{3}: commit: D
+>       ++		HEAD@{0}: (renamed) commit: E
+>       ++		HEAD@{1}: (renamed) Branch: renamed refs/heads/topic to refs/heads/renamed
+>       ++		HEAD@{3}: (topic) commit: D
+>        +		EOF
+>        +		git reflog --historical-branch -3 >out &&
+>        +		cut -d " " -f 2- out >actual &&
+>       @@ t/t1414-reflog-walk.sh: test_expect_success '--operations shows a pull --rebase
+>        +		git checkout renamed &&
+>        +
+>        +		cat >expect <<-EOF &&
+>       -+		(renamed) HEAD@{0}: checkout: moving from $(git rev-parse F) to renamed
+>       -+		(detached at $(git rev-parse --short F)) HEAD@{1}: commit: F
+>       ++		HEAD@{0}: (renamed) checkout: moving from $(git rev-parse F) to renamed
+>       ++		HEAD@{1}: (detached at $(git rev-parse --short F)) commit: F
+>        +		EOF
+>        +		git reflog --historical-branch -2 >out &&
+>        +		cut -d " " -f 2- out >actual &&
+> 
 
-(Julia and I discussed briefly off-list whether "git-div"/"git-vee"
-should be part of Git, and I'm noodling on whether such a thing might
-make sense as "git log --divergence" or something.)
-
---=20
-D. Ben Knoble
