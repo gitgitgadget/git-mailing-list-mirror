@@ -1,102 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.177
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.231.202
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792862781;
-	b=VFtEypH1JSPe+ISK4Q/GnVQYcHahB0qSPxKaR/3e82w+POeritJe83sZ8qBGyiqb3G4z
-	 fsado5ir7MsnUypdm8Vcrfy12tryR1ZITM7pTVoMcyLJaxt4UJseg6mobsTm1ABwCMMXR
-	 Kh7AlIzQ6cJ9A8uxWDT64qy11vXsFaAWLLyrOZwpj880bWqdcnQ0y5R5GMWFGR0ZtIxSf
-	 xG24TrZAsJSUqX8SgrhtMXyKyQ2/BnM41rd2RgIh5y8DucG7/xXqbYizPoerrn8IEJn0a
-	 1oqgfz4XBOGHDrpnUzbo8gafWURZB3ZncBP3+QlKRak+0E22vAGJ1fjo9Ngt8UHNvLg==
+	t=1792864807;
+	b=AYMv8+8PwLZ/YN2BO9Nq2BcNTdnclWwtYMZNksBAslS/KlYXqtKIGFi1QTIZjfwU0Y8T
+	 2H0J8EmeiPEHowJA5HFSmCvSRzr5XBR+h0rPSpxshkLmGvaBKqhZ/9flU4i06hbWjbWIH
+	 i3VTNJf1AoTiZ5U73NBO4VVDI/zcxqOjYS4H9C9KKda0YZOqRS8sQGRoFCSFb5ktrWDqH
+	 Eh6f5KFE1lNBEtjMfSFlVXfavAmuFUVUXkUsOqf5wGJ1RcQkg5zH/HLL/vSBDoukgheSo
+	 7MfaciYZ74dtnNM0lAo3UFsx321GAg4sQrwWIF8m0YYZYGzN5rjpnYnUkq2oQAZ0gbg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792862781;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792864807;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=Voqf05aEd1RpkJOsu3bheI2aJ+QLIsXm5kKz6RjiZuw=;
-	b=R/TQf2x0H/ymEry50E0fwPsHlgBigyhAq2gBns980OpfOT5Kv3NxHNfQeXMGtOim8EdT
-	 u8YTno716X5kVPYnhYMEdzN/Sc3lsE/PGjOAMk+ScyyKwG36v2d2ili1w0w1SA1dLjMEn
-	 zFh6Jr6gpaGD1MvVr6xuq7jVi1pZY1H4HO4Z9+VTA6vR6taJ4I/c+ocPMRohqlpaEZBZP
-	 uVVgtM4Q6Kimkc/+9tj/uBuyCbeYMA7NsSturgZV+XxtZHOL6+KkSfcEOClhvDn+bBC8v
-	 UQyz801QXhxIQAo1gXGoDldtW6cWH3sddPP2hSiWPslBhzHP0atUq9VLKLxRhazTZ8A==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
+	bh=J8iOlQi17M9tA0T5H8J7DqBCzrLXFkxVTEb9MEXRt/c=;
+	b=1yJ6qK9LtFWi8mM3JXD+k2JadLnakFrUh7zQIefnRriTUDfCslUFrYXHHAPLGseRLaF/
+	 3sxIVkguYqjk3cC6ffNCJ360HkFNYYlJuU2M4WlWSB0zQ4TPkMgDu8N+EkdNBD84kcauZ
+	 1MtAjh51wEfDg0YYLWxMbphHMvtKI9VagI5Mt3yHYYIzWNvPRn1ShFP64K9fJkFyr3sHE
+	 8AvVQ3EDj1ZhEUZSgiKUsUo4Xk7JpEWZGavXNN6gA4qA+LELYYKLN526afYQr+6AdYlLn
+	 qXMgvSDY72DsoV9qarFaZHmuD15dajskiIkNGHEWOCiWS17qxenZOYzLZAgYVmVORYw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=n6fMiXf1;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.177
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	dmarc=pass header.from=latchkey.dev;
+	spf=pass smtp.mailfrom=latchkey.dev;
+	dkim=pass header.d=latchkey.dev header.i=@latchkey.dev header.a=rsa-sha256 header.s=google header.b=UNRgFep9;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.231.202
+Received: from mail-oi2-f10.google.com (mail-oi2-f10.google.com [74.125.231.202])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E915606A31A
-	for <git@vger.kernel.org>; Sat, 24 Oct 2026 17:26:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E915606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1270606A31A
+	for <git@vger.kernel.org>; Sat, 24 Oct 2026 18:00:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F1270606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=latchkey.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=latchkey.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=n6fMiXf1
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-5351d76e1baso21867981cf.1
-        for <git@vger.kernel.org>; Sat, 24 Oct 2026 10:26:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792862779; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=latchkey.dev header.i=@latchkey.dev header.a=rsa-sha256 header.s=google header.b=UNRgFep9
+Received: by mail-oi2-f10.google.com with SMTP id 5614622812f47-4c3bb46aaf0so659301b6e.1
+        for <git@vger.kernel.org>; Sat, 24 Oct 2026 11:00:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792864806; cv=none;
         d=google.com; s=arc-20260327;
-        b=rx8mZVR0nnljP+fS1jK1n1Hi2l3JdOkkqDiwL0L0BbVTm98tts4qfZdYEdNkrIe3+c
-         NSCfFh9Hv02/lqWy4JtIRv7onpG/wQvFMO+9dv7Bj0We2Kaw8jLNL5w9RnnhBN3iRmbf
-         tA0TL8ZWW1sYx4ZILXoM7zBegikBkN4cPFcAkUc3VweSAcs8m328zasx05zqywI38fe9
-         30L1wjq3jgPZlTYpCYk4R7A6J+CXB2zz0Y7zu+gnjhD+JvofWwbF3BV8zJG14XE36q4m
-         dJbD5qjP2Pl7UBwKGHOlZs1EawPlhxyr/hImjrSim+ANG1oNvG3OtYMveaSFDpQfhUSu
-         AfJA==
+        b=ZJ5nOgs6WFxhEhbyPpErym+iuAE0wCCwDtta9MNojYAmEthH7gIPxjk5Lc7ipAy+K1
+         E+zLIWX0slER/8VSOBmAMnJZM29atP46dO5hE8TlmUz5iDtA78vGB2zGKEZS59oMm5jY
+         K0izRlhvMQPYfT3GKsaoEeRnuyii2/oBXvie3WqRIy9ZVBnhkIrY8u8EqExRuGGV3Ewf
+         otjGZkMWK/p3RujLd2cDdJL7Fab0GqMurNZo9ADtdnXHmjG9iLW53vrXCQnxVDDrYwQY
+         PWHcGD4GcOwiugnstm7iPRnCxMYsdB/SjM07yQxInKUAeQUi+MYMU9bbQDypXln4tejW
+         BH/Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Voqf05aEd1RpkJOsu3bheI2aJ+QLIsXm5kKz6RjiZuw=;
-        fh=DdEgUv54Rb+NSIn+eslj+iSnrL7I9PD5pUeD/xbHgF8=;
-        b=SD0ECNVjOqfqZXf8jb3jRe/0CJ3gylCaP4nhfgEOYJUphaov/01J3Q6uJKorvBkGNe
-         TtnshFpHacMORiMlOoaFrjBKeTyq4eA4hCsH9NJzDb1DncAPi9CsZLP+TNUTAXLwCVfG
-         XX8e5v4/nNxDcVCe0WaT/faCG1qUlGv58kDbvM4sxWx24R3w94aTkRZojeSIRLJ5WJUm
-         /3OvS84GEgMHavddkjDF9Th/tX+00tig5pEd260rI7298Sm4zD01QJ8tirk0B5cvj+Py
-         85ifzv94xSRntsTNoqV4pDEIhYscWrSdcHSYxHo9ztLJ7vMcBeV7tTRqypCyRqHPJAHq
-         ebMw==;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=J8iOlQi17M9tA0T5H8J7DqBCzrLXFkxVTEb9MEXRt/c=;
+        fh=IlMV9CQq8DWBqhDig09zJ3PiWmDt6zcudgxfCnKlaR0=;
+        b=kH8Z/FEDeA/bN+6akG3OZIBNFHAXzktozr7S0+/XW8idpo9ddo4bcIoKTF94pX5XVZ
+         Bp+rfJg7IQ+mC3ykTGcQGgxGOpkZY1VFu2XqERqKy8xRZ5DQhXnyOX8bu4+fRZf6jWpC
+         ob+Vq/EoLCs2ZDb+jWM5dUNCPGkm83/FM2m8o1tExkLf4+DTQEL78mkwIS43KQX0LIyP
+         xAxqBGjPH6SlRLLdU1tlkj1BWybaWrJDTpK3G2Ke17gKxbIXfDqf892mpbeScKOUUX/O
+         3KpGfxSCgxijHrh7Wip0v+WCoB69WQ46ZVR/xfszQTz/3hJGjVCDB5MFuvm5LWMhKMrf
+         QFog==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792862779; x=1793467579; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Voqf05aEd1RpkJOsu3bheI2aJ+QLIsXm5kKz6RjiZuw=;
-        b=n6fMiXf1CnzJzNRtc+k1kMMpt1zKEzrRAs2eb11gcvghXJMrSjbU7T1t4bkisNMqj7
-         SNXBlvTkz66zgb51gW97vB3h88Sjft09K0ikDmAMKXBsxXnbEisu0sp22BgtkzgisTqV
-         4f2H5jcPfsFpxojS4l6Z2VsKMtjTGPBxfNlfqNwzYcP1MXPYyPHlCoXhbQy4l6fuJ1lj
-         sWoN58zfTj2e/VQXABF/saoy+ikfdOPnE3ipRxOSei692zD3B5gLZRtgD5rdUMgOymPz
-         83tWgslQ3sHSR74h+EYkQgcnDTG5ejTG5s8llJ+CcIbyN8M4qruAUysMjaAy20UfkhZI
-         GzqQ==
+        d=latchkey.dev; s=google; t=1792864806; x=1793469606; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=J8iOlQi17M9tA0T5H8J7DqBCzrLXFkxVTEb9MEXRt/c=;
+        b=UNRgFep96KePtRfL8wYyT3XgVaoh0/4W0MpvDK8an71BoEQJjyxnSM61zYbS1eeWpA
+         8orwS5rVC5WxggqEROw3PgypbT0+mZX6SxN5ci2UkcqfI/G2N1xpkZzpi13ZRdavGRR4
+         ioDIdZkOlxaokMykjItIYJ86tNRJpXfEZb55ryk44/mCx2Ky5NsnE3z4f2omCeDKh1C6
+         jBU69cozqUFbnZvqEO5Nyr9PFeB+IvLvvOfffD7uxOw68kH41vUJJg89JG378ATWAu32
+         +wGeszq0ToFyKaifaZhcNtAzjDOpxJq9wYcgbBqu38WOfySIn0qHCltcodYjYVHxdQrS
+         oiPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792862779; x=1793467579;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Voqf05aEd1RpkJOsu3bheI2aJ+QLIsXm5kKz6RjiZuw=;
-        b=CU9DAniBiic3B/qtL/mECCXYWqD2l5DVD/CKYYXGGfd56Bx24m3f/Sw6XGO+b5Fa3L
-         8obLybU5SoXgf+tJ7IxCCrrKQcEU8+Mr1tATw2iPtby51O3S6r2fy3puV/fRblzcjS4g
-         7ae/q8L815nZhFL31pmwS0k2zQnZeouudPmTT2C6SZGV1YUt5WLmEPfdDYz88EeTb+Nx
-         3vTD7un10l6zCoaM3bNSTUAybsa69QDB+r8GmOxadls1lf1xEuRaKMAVQNCz2UPGvMFI
-         hRL+I8/z3WWKcOdUPevEy4NGpcN9yPNn69E8mM/hW+sZirdjN5PU4ElcwR7AbFQBppn8
-         yh6A==
-X-Forwarded-Encrypted: i=1; AKwUvBxdKcuhb3RG4cfxNxDZ9z5RsP+H2QLADhh0OFv+AWFoBOcG0fcuRJGE7f6HXOJo4qtqk+M=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJ5kO18RJtcduMDSj6DFrfasWMyKBLsxuQdkbrpg0iBxlyMtuwC
-	2Q8uQnTs+SWcFmAdYBib1M4T5XedaKmeRhG6h/uA0ScAjiXzQ37e3FGutepZXZWdTYgwFXd8WJg
-	tJ4q8FvIAMDzaFjJg/DqgTrfc5fs2YyU=
-X-Gm-Gg: AYBFou0yv/CkL5XKYpLcmgZ1/qPTXwm+duUhxUg6613+XOOuaK2zhcu9LZyU3PC2wFg
-	o/O5NW+9HJKYW56ym/FuZrf24AlglH5yFAY7lKB0RL0ANoiG7ygMWGch/I3JAb3iDVvmoIQSbCe
-	Ig3UtCAeZylTJuKGuDALGSa04CHpfgCfeVrBH0c8IyYEKwbI35RnjpnfrWfSeUP5okPlL6bkEyl
-	bai0jVhV8yEltB+DTkKIy32nK7iIv4ALweOnhOA9o5/8EVtBRCaYKS0sJcB1lgRT/lwxwsJrG0j
-	m/Gz3mQaCUW7AczTSTpUSn6mJRn+0Uhsg/Ksy28vsmhzTSLuE0FWgEcWIvryZt2QTUVf3vdfyFE
-	p2hxOiI4vKoRoT1i2f1jA7G4ahXySR8CuOXGR2nWYbnV2QB0SaPVEbDIyhN8ogoZjd1q6HYXg3V
-	GRmE6DGEPdbCLW+3hnQuiEZKh+fVELTHd+qak6+iGvp8Lmu7+u1j2IgULs4KoB6HXv9YcFv8uP3
-	h4dvA==
-X-Received: by 2002:ac8:5d44:0:b0:535:a5f7:d594 with SMTP id
- d75a77b69052e-5383b6a23c4mr33559541cf.35.1792862779513; Sat, 24 Oct 2026
- 10:26:19 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792864806; x=1793469606;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=J8iOlQi17M9tA0T5H8J7DqBCzrLXFkxVTEb9MEXRt/c=;
+        b=zyruE6J6EJAjURkGphJQNInpUUQ6DeU50FDhhSO+QOi3saOtb/QcJ7ZyX5lePKR4rH
+         NMCMEm6UJOiDc4CXryLOrNs3g5dq8MUEPPsQEq+698IQymPyENnqbmCqADjhs+a7Oam9
+         xYZWiOgpqr3UKXfeu98ARN5Xi8nRAbVu2AlH5Fkhf8vKA7Ww9NrlGpcGA2X/jlTRb2Pn
+         wT1JGWV2nA6IWhqN3zaiTt5OR80f/Mpy1YZaoY7fjiEWt/TWp27qlirgBFX3NEKHPHTT
+         bg2FX0HENpOturm1/YJzGxTIlQTs/ibSchOG95/CvU7BmP2ZZ6bhfLd1mJRAi6mli1Kw
+         cBiw==
+X-Gm-Message-State: AFq9FYKtnw82w65P6bA9R5fLZH5+P+UhWXqJIoqHOuuExO8vFc2VudqP
+	CwlAgPHnxfz1F8LTGyjQtimHNv1VaNaVyHiJoZI5DveyfmHhBAOydBscFwKYdXHYrVJOTaKyM/z
+	IVmLe6o0WOrTK9rl+STyoFOYoKQX5jEsBP/N1YA6ScRk6v9jAQjWGxaL5fI/19kb9fw==
+X-Gm-Gg: AYBFou2gml5CQv/yXV6gW3RVTavkpCKfhJ6s0WCRw+q51tgBGtoA1rrY1CUsRMr3kMe
+	kS7zT4wTma3/sfNCbTwVd6DyXczMJ3IVOTd2TdZ1lzBlGPLJxlY6U/xoLAJfIlVYzKeJc1iRedj
+	KZGGktEWDW3Q/XxT7A8kzxovF3AONv5/+jTjboUhLElecJtGdkwOmvMRZ50tmwAgD7Wkj3JeFlY
+	ieGruSjlYqzdMIuCc7PRnVfrUVchHVxN19seCvEtqhvaUaCYJbI5yBGQbATVFw0Ol0NowQf7PAb
+	Q6YOxHshXo2qa6/DnWKVlJ1IP2H7BnmRXnzRFdOLaMmtlGiRaGCBgy5L+oFS8pxDteGISCAWEra
+	JSpC9fcCICU6Cpq+tKcsWpzl814zlp9tN
+X-Received: by 2002:a05:6808:148c:b0:53a:b182:9999 with SMTP id
+ 5614622812f47-55c00263132mr1653434b6e.43.1792864805592; Sat, 24 Oct 2026
+ 11:00:05 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -106,104 +99,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
- <pull.2276.v3.git.1792813697888.gitgitgadget@gmail.com> <xmqqfqxv13d6.fsf@gitster.g>
-In-Reply-To: <xmqqfqxv13d6.fsf@gitster.g>
-From: Srujith Poojary <poojarysrujith@gmail.com>
-Date: Sat, 24 Oct 2026 22:56:08 +0530
-X-Gm-Features: AclHuK_A_rw5PL0iNHqPOIQ9loIPD5ADMRqNop8zwS547Nj04mdHNhi9B4tfE6Y
-Message-ID: <CABh_KWhDcPM6rJROmVd7_oGZ7i3tmX5da-DZX=KJmvSyCxNH_A@mail.gmail.com>
-Subject: Re: [PATCH v3] diff-delta: use safe integer arithmetic
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>
+From: Daniel Zoghalchali <daniel@latchkey.dev>
+Date: Sat, 24 Oct 2026 10:59:55 -0700
+X-Gm-Features: AclHuK_0nUkMxeq0rOgN-ab9-Viz8aei56J3J4UimEmqzRwHtU-QYTfRwFUpSWM
+Message-ID: <CAJwQ=KQynymg4CJOLkyebACYVQa+LhXB2UifniTASkLyArWejA@mail.gmail.com>
+Subject: [BUG] 2.56.0: filtered --unshallow of a moved ref aborts in
+ pack-objects (should_include_obj) via inherited GIT_SHALLOW_FILE
+To: git@vger.kernel.org
+Cc: ps@pks.im
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Oct 24, 2026 at 9:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Srujith A Poojary <poojarysrujith@gmail.com>
-> >
-> > Replace manual multiplication and addition in create_delta_index()
-> > with safe integer helpers (st_mult, st_add, st_add3) to prevent potenti=
-al
-> > overflows when computing memory allocation sizes.
-> >
-> > On 32-bit platforms, struct alignment padding could cause the total
-> > allocation size calculation to exceed 2^32, making safe integer arithme=
-tic
-> > necessary.
->
-> I wonder if "X could cause Y" above skips a bit too many steps.  I
-> was expecting more along the lines of ...
->
->     We will need to allocate N instances of A and M instances of B, N
->     and M are capped to X and Y respectively by this code
->
->         ... code snippet ...
->
->     and size of an instance of A is 8 and size of B could be either W or
->     Z.  When size of B is W, then the total allocation would be ...
->
-> And that analysis applies only on the first allocation.  I didn't
-> even look at the packed side of the allocation size, expecting that
-> you would know how to analyze after seeing my example on the other
-> allocation.
->
-> > Note that hsize + 1 inside st_add3() is safe from overflow
-> > because hsize is capped at 2^26 early in the function.
->
-> It is misleading to say hsize+1 is inside st_add3(), though.
->
->
-> > diff --git a/diff-delta.c b/diff-delta.c
-> > index 7cbedeb507..efebce3aca 100644
-> > --- a/diff-delta.c
-> > +++ b/diff-delta.c
-> > @@ -162,8 +162,8 @@ struct delta_index * create_delta_index(const void =
-*buf, size_t bufsize)
-> >       hmask =3D hsize - 1;
-> >
-> >       /* allocate lookup index */
-> > -     memsize =3D sizeof(*hash) * hsize +
-> > -               sizeof(*entry) * entries;
-> > +     memsize =3D st_add(st_mult(sizeof(*hash), hsize),
-> > +                      st_mult(sizeof(*entry), entries));
-> >       mem =3D malloc(memsize);
-> >       if (!mem)
-> >               return NULL;
-> > @@ -258,9 +258,9 @@ struct delta_index * create_delta_index(const void =
-*buf, size_t bufsize)
-> >        * Now create the packed index in array form
-> >        * rather than linked lists.
-> >        */
-> > -     memsize =3D sizeof(*index)
-> > -             + sizeof(*packed_hash) * (hsize+1)
-> > -             + sizeof(*packed_entry) * entries;
-> > +     memsize =3D st_add3(sizeof(*index),
-> > +                       st_mult(sizeof(*packed_hash), hsize + 1),
-> > +                       st_mult(sizeof(*packed_entry), entries));
-> >       mem =3D malloc(memsize);
-> >       if (!mem) {
-> >               free(hash);
-> >
-> > base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+Hi,
 
-Hi Junio,
+Since v2.56.0, a fetch that combines a tree filter with --unshallow
+(or --deepen) aborts in a non-partial shallow clone when the fetched
+ref has moved past the local tip:
 
-Thank you for the detailed correction.
+  BUG: builtin/pack-objects.c:5098: should_include_obj should only be
+called on existing objects
+  error: pack-objects died of signal 6
+  fatal: could not finish pack-objects to repack local links
+  fatal: index-pack failed
 
-I have expanded the commit message to include the step-by-step
-breakdown for both the unpacked and packed index allocations,
-detailing the caps on hsize (2^26) and entries (2^28) alongside struct
-padding on 32-bit systems. I also corrected the phrasing regarding
-(hsize + 1) being passed as an argument to st_add3().
+v2.55.0 completes the same fetch. We hit it in CI, where a job checks
+out a single commit at depth 1 and then unshallows its branch, which
+by then has moved on.
 
-I have updated the patch series accordingly.
+Reproduction (offline, any Linux):
 
-Best regards,
-Srujith
+  set -e
+  W=$(mktemp -d); cd "$W"
+  git init -q -b dev seed
+  for i in 1 2 3 4; do
+    mkdir -p seed/src; echo "$i" > seed/src/f.txt
+    git -C seed add -A
+    git -C seed -c user.name=t -c user.email=t@t \
+      commit -q -m "c$i"
+  done
+  git init -q --bare o.git
+  git -C seed push -q "$W/o.git" dev
+  git -C o.git config uploadpack.allowFilter true
+  git -C o.git config uploadpack.allowAnySHA1InWant true
+  git init -q co
+  git -C co remote add origin "file://$W/o.git"
+  TIP1=$(git -C seed rev-parse dev~1)
+  git -C co fetch -q --no-tags --depth=1 origin \
+    "+$TIP1:refs/remotes/origin/dev"
+  git -C co checkout -q -B dev refs/remotes/origin/dev
+  git -C co fetch --no-tags --filter=tree:0 --unshallow origin \
+    +refs/heads/dev:refs/remotes/origin/dev
+
+The last command dies as above with 2.56.0, both Ubuntu 24.04's
+git-core PPA build (1:2.56.0-0ppa1~ubuntu24.04.2) and v2.56.0 built
+from source. It succeeds with v2.55.0 built from source. With 2.56.0
+it also succeeds when dev has not moved past the checkout, with
+--filter=blob:none, or without a filter. --deepen=N with the same
+filter aborts the same way.
+
+What happens:
+- fetch-pack runs "git --shallow-file '' index-pack --promisor ...".
+- The pack names the local tip as the parent of the new dev commit, so
+  index-pack's repack_local_links() starts "git pack-objects
+  --exclude-promisor-objects-best-effort".
+- Since d43b9acb05 (setup: unify setup of shallow file), --shallow-file
+  is applied by exporting GIT_SHALLOW_FILE, so that grandchild inherits
+  the empty shallow file.
+- The grandchild no longer treats the local tip as a shallow boundary.
+  It walks to the tip's parent, a promisor commit fetched without trees,
+  and is_not_in_promisor_pack_obj() hits the BUG on that parent's
+  missing root tree.
+- Before d43b9acb05, the grandchild read $GIT_DIR/shallow and stopped at
+  the tip.
+
+To confirm this, we wrapped only the repack child. Unsetting
+GIT_SHALLOW_FILE for it makes 2.56.0 pass, and setting
+GIT_SHALLOW_FILE= for it makes 2.55.0 fail the same way, at its
+builtin/pack-objects.c:5004.
+
+Separately, the BUG() is reachable without the environment change. On
+2.55.0, a filtered --unshallow of the local tip, followed by a
+filtered fetch of a moved ref, also dies there, because the walk from
+the local tip reaches promisor commits whose trees were never fetched.
+
+Thanks,
+Daniel Zoghalchali
