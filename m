@@ -1,100 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792951963;
-	b=nBhMW6VN92+bfLRMzTrmQDmWpJ+62XpGSs9V82Lww1Op2BdtmXuoKyYCk1XIiQ28UgOJ
-	 n5iFJGriNYyat2R69WcsHffHoVEgYH6F+Z5coarUquAnDOqqzvi0CHgHoIj+cMITdpEWW
-	 rpbOGmVAS9D1rIKyfXwlw1KACpvfenN6lO74dAj/wc/dsdteLYpzUYJNqHlfKVsHIBVFx
-	 zEgCqSsRNxP3yMwj0XTAkgml0BCih5Dt9fqKaOhwoGVHfq+FS5nEoBixAbencVi/KWZ8y
-	 qRVD2upidvlacWqqT1/EW1es7bskosWF12SnajtkzDBkzfyP8GXMtPoHqLk2QaGJPGg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792951963;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=iCjt4NMXyujMSluoTQ8HHaxYBfkFND/DqtpgVdOFFXo=;
-	b=ecXmvVGQKsXX8F/tjqI3Dz0Wd9kNI+vJdUP4DsBeMo9yDWgqAWa5HgWcmJB19Qon+EpO
-	 Ga1zwg5GWLyBl7Zai+tNm0FNIuQay3pXUeWWsy3qs9dUxcvG9G2jncrcVnF16g+alGwZ7
-	 zIX+DnlvZk7dk9aTGVemJbeU1olRXpzuWzeFWTHpOoefiXNeSYgTjN1Fz6BdJ3GnVNAOd
-	 uOEAjiX62dMdrO3S5IT4+qa+CuyF4cCYG8LwtIfIMFV0s3dx/ybg5eu+VE+FrDE5Au/eI
-	 X+s73QZOyVG7fOXej3gxswhyEBMvpwPQ2hFImbAhEAkjrcx3OSH4BejhPmpvgqFtsiA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="Vscq8/XO";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792954399;
+	b=fCLQ0L4FHXLihMaewA1hJ4Ulxrzvb9wrTTJIcqm6WFe3hIodWeTMRAhGJBejnguqCufm
+	 mR+Xn/z5sTy/h1Bkdcj8BfOroZTugfMcO4yTXj7ONeQJCYLRlC/iOoZKeKEtX1DqAZfE1
+	 k9Diwhb47cJ2+rOy6k5pwu5xT1Rj+W14Ml7+s+h0uP2qUdST3xJ1V6kfR/zcGBsk4wJ91
+	 uD+ObEqx5adjxe4Bic8p3Db7UBTR7Iem90hSLRqmpMiC5cNhbkCN9Juatra2E0VcKv7G0
+	 c8+xWLdG2iMZuPjifjMzDPAdtzh4biCHaIWxscvvKxRURlANSU3PKJI0deAU+M649nw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792954399;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=3Yrxl5vmZqU/CxHaGfD2rroOo2RlSNTIjbeO0091LjU=;
+	b=1Cdq6mZkYT9MOyu+fmdvO6Pf0R+CDGF3LF+gZ42zAVqHzzxY7SaGpIMWnyiO1hdPjYzt
+	 sEeWSlud5OD4JQo9uRm7EV7xettfiM+gkT82DXfmNqhyhxVBYUhS1o/PWfHXJJQKKDyQe
+	 5FLegB7D2Wf2zCxVyXIZhMlqJWIPOFMMQlqZ+f6WDb0wxxeTeJkCVuMCATVmOtMNrRbTM
+	 dNk1xW6FNZFMACukWx+DbyVXebX1c5JACfopbisVkt3L7wj0RgO733nkTeVvBaqIj+OFV
+	 Ob1wUfRvdsJxs/qzFWsTy5vvHGkIo0LaNnS53eS0Wb3CcFSyedFDtRA3hRAxLzjiY7w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=u4z3hw9y;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=X6pUXXI1;
+	arc=none smtp.remote-ip=202.12.124.156
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D25606A31A
-	for <git@vger.kernel.org>; Sun, 25 Oct 2026 18:12:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 47D25606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749C8606A31A
+	for <git@vger.kernel.org>; Sun, 25 Oct 2026 18:53:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 749C8606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Vscq8/XO
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6b1ec41d8e9so2333441a12.0
-        for <git@vger.kernel.org>; Sun, 25 Oct 2026 11:12:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792951962; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KhXRgPlOusBQMiAQrodEVLQIAOBxJ4JxaXzwpgRAabp2LxGe1dBO1enTPpo68r+sz/
-         JdY0uJM4BGk9ImZ5pL537/qOyCFXkZMky9fr5x7ukkj9fKaHox6wGpkWWe7P2MDHmUId
-         gpM1iy0/o1dv84tMKRpKaW2QdAdCNDYBbQaFR186kWJl5VlByYnNgEBZXvng5oKheeBG
-         KCaAbH5AEXVV/NSqL+yaC1uqpaOEXXMyBaNJSF2Q3Nl//VzRSgQWHNgJjt8KB76+IKvl
-         C6A2AF5vczT43xp9EZlL/eJ+x13r1tF11GxsgZ2TOVW2nRQ4kQoFyhaAn/UFnJ6VJeiW
-         mO4g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=iCjt4NMXyujMSluoTQ8HHaxYBfkFND/DqtpgVdOFFXo=;
-        fh=tROxP9bh/yctZwYZ48MeaLPAWAQGVLtW4A+LLz6gPOM=;
-        b=iiOf+BelP+XzO9qoYStXdDosWrqiYQfuNdjQyRUwG45LVs7iFBwzspBxQkTVozoAKA
-         19DiHi1etv6xNLndd7a47Sn5rgOsYU2283GkmXAxeSAHxFpZD2qInNF0uL8Tm0/o2le6
-         CednPhGbaCQv003B4CvHcgPOltbK6tBfkvjGkQPmDATDLllSpNV+SO8uPIHX9aSS7jyx
-         C3YzpCIT3QH2rNRPGZmNR/SUad1CEy9l0HCYCO2oCutiXoeCuqR7Gl7Pl9FM1ILU3fvL
-         HBFAq8GxqF5rrwGB6NfS3Cw0xKQokROGdXZar5fhkEXa8VEx50K/YCF1lP07jZXjdPJ1
-         MqOg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792951962; x=1793556762; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=iCjt4NMXyujMSluoTQ8HHaxYBfkFND/DqtpgVdOFFXo=;
-        b=Vscq8/XOqH3li4/+9IVhQDNFKH2YDpt13TWs+Arp3Rsv7iww9ko38DrFPdk5XDLVkS
-         bsm37LwBkKQVaase9ZMC4pV92ffcW8D5/uBHFM0dxS6D37P0n77XwSBkuc8g3qOKSDog
-         nft42Uohyxmy9opxazIJO8Ehs1990sgsRfujVxvOwU+vUJGVOiMrLFf8XBV6omMMVNd3
-         3HAE5GFLfmFfEq8WxNOSRXwurUsKz9+rSWzCjKh5YHVjTpVpddg4icNVI2bRPWEQOYA/
-         alLRRmxILmP6/LA6/BxvZNyNP7OfVDqMTqIKdYiscnoLutbqAPBUQtkJFdaNdtOXkfsR
-         vecA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792951962; x=1793556762;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=iCjt4NMXyujMSluoTQ8HHaxYBfkFND/DqtpgVdOFFXo=;
-        b=WMdmJrfwoHFpFovPzOeddlVg+vJ93vjZfLILenkj5GqMeDb63iHB+ohdBeDtCfVOkL
-         759ddh2wylHapHl1CYs1TT+8IswqPH/8lgbF/tjgvmy1rFxdyfN1vCsoatV7ZUqxSi+0
-         61zH6NKG2adBb9vVYnj2y7U53Nvpwvk5gQXkj8R02EjUFH0FmqQKbiEOGlkVulbhvkIM
-         t/CMIUzxo2qr0ZylOonpOKZcUR+Z1gUQvYf1Bqes8G3XWOBprIbrGfnxQs7tDfx51kiH
-         o4cNSaXEDn8aqKWsUMm2DP18608MDEzveEFS/HEMyGNY78xeVbrkGHDaAoFy4m8IhzMn
-         X0Kw==
-X-Forwarded-Encrypted: i=1; AKwUvBwtKSzl4iBuQzjqj0ZMNufdXFVjjGHk3ugZo6x1I99oW8shR2ZX6uERQTOq/DqAv/6MCOg=@vger.kernel.org
-X-Gm-Message-State: AFq9FYL6dmFaejob+Zs5m+0hNhLbVu+NHlOH1Uq4znNtj49P9TsqXudX
-	9vo5PWvuHTgEVWNKWMmnFvpeC/xs5S8FfrlYlkq3iA1SOh0k3gVb9xS+9UnerfE71dn+7Y5PgTB
-	D1w8lQjwPGtgFbxnqS1rIq5ZMlxQoTOA=
-X-Gm-Gg: AYBFou1cAK6sDcXFsvmcldkOJrLJyu0DNzk5r6Iu1RidCwWFJXxUF0R8tnLsAswB+Z+
-	oXNoog5kpc06uT4tiLSy7ICOMeHGBUFbf8jyIBS4bORj32MfU23mebRdezbTB8bBnPKiVCROE5E
-	7fKl+8W+6MBNp+hHqmm3KcPeklMu5efziwbmZMLm+gqSYjSl8hp/dvcCmnq4qFwJJjqBLn6r7rw
-	DwnhRcTvwRSwngyFxRSWiuvYkjtP+z3zE1ODlpGOXSjhw7pQR4Ty38at93BFyjIUrdbORtTFjBX
-	aRV2bmuRkQ4RL6hrV5gSVgENnp3uE0Z+yIUMzgHeeQOMr032bdj5mVP8kVbmR8F9hmXZo07DLmw
-	VEEBTBF1OyjQigbAKre/oXHzA1lP3b5FzKf7cz3G0M5jV7SJu1bGcwrV24Vrjv/n0QF5XZA==
-X-Received: by 2002:a05:6402:15cd:b0:6b1:ef9d:9d73 with SMTP id
- 4fb4d7f45d1cf-6b443000ce8mr4232632a12.28.1792951961441; Sun, 25 Oct 2026
- 11:12:41 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=u4z3hw9y;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=X6pUXXI1
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 506387A0055
+	for <git@vger.kernel.org>; Sun, 25 Oct 2026 14:53:17 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Sun, 25 Oct 2026 14:53:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792954393;
+	 x=1793040793; bh=3Yrxl5vmZqU/CxHaGfD2rroOo2RlSNTIjbeO0091LjU=; b=
+	u4z3hw9yLddZNx9bYoaY8MjnnyHhrqlsac9dR63oVscsDUGopCNxPU9HuGYQgJQj
+	c90ytc5m1TVlznYAWYk02tig/9oLpYbX301lvayci5MZpIFWflwda/1i9qnEPQZB
+	DIICUGaboAHcGidBwSghXOFg57jHO9s8NbsrMPaXHJl/3AUH2SR2ALJbpVF2IQ3y
+	gEXcfHoI+H8ZU7IFv5QAOnxTp/cEXoMwjX57Z2ALKvKHcEtAssepmedKEfgitKDC
+	w+yQV0uifYWTV1sFMDWESwdJ9INFbbiOfWdLBRl+hCfOJrYae+EkkrUHwkDKe7Sn
+	N0ah+jCaRwQSjCbm4sLmRg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792954393; x=
+	1793040793; bh=3Yrxl5vmZqU/CxHaGfD2rroOo2RlSNTIjbeO0091LjU=; b=X
+	6pUXXI1N7nJgG6dbS0hmjD2ZhLkk4lEfB+wFxghDgOdorgf+97VjJZy7FhxDPdPr
+	s9sWeG64WIHm8AkhruYOzsPO5YY2r1wnBFjlAZ8LkIbhGai0p/pdXJy49jKVVsd7
+	Pmk99lOHPOKTIQfYn1U4fh4vc+JpfIN7lcCCjrvf9n3U1/txkrZRguHMErKjycfL
+	tpMGwcK3QlT3nvPOIiz6X7nJasywJ6iGc0LuxOlewUiCjn45nvXhX8C+a5mPoo47
+	ESR+XjaPhQcrm+/fSvxTFCPm4Gw3MAXgjNwq+xKWGKVxf5ralRTBgV98flyMTAQf
+	BBIjiHeaN6fkWj5qg+ssQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792954393; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:NgDNtkUVoCWUbyItydtvjwCl9/Gq5+gC++HyJfoJpftISAn
+	7V4iVrz5tKN08y6Y9f4nILBj565U5/7AwUuAKY6cYpr03AQnr0g+IlhXiv+q0FVX
+	cXIVzW8rSwl8ViEB3E1IvtFViq/YMhXxZL2uVYw9dWUGA9svWbzX2tIFQM8DM4dn
+	JCdj7Ow9aJ5ytmSu4A1jxj9IiGUxltoNANUW3MA4NqAIEkKLsP+BvgJ7lbkwp6D1
+	ioVrK8FiijP4BulqO0kQieAcvHuOmQYEFgTqUkI7t87tHdYU3uWMVc1EeOdM+1xS
+	YKFOkzagxjCGAAJzCQQlr8xGEkpFZX6evZeNksw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:I043A1RQwZc3rg+arMCoNrm0HTrMDZUlcAV3xZZP5m8=:ALqZZcDXfx2N97HTdeHV0s1m+GNwUBwfWlPYyh8fTLA=;
+X-ME-Sender: <xms:FlDearcwTupy4bwBKEv7UXXj0EM0GJXGtP4sSPRNA2TrMgQfPADQejg>
+    <xme:FlDeasD7UXlxXOKcpnb-79m97MYJUQtSj1AQcnpRll589bw1qoCELHaKaIzJwbqM3
+    zouHs8pnTSrivYSwZW-tijpkB9CZG0_2ljdnil78EdxzA6hFlQPWZM>
+X-ME-Proxy-Cause: dmFkZTENj8DhEyqYrko0FdZLG2/i7EZJ9539sPXy0KZKE0WQhBfHwPcsW/7LXfF7tg9swf
+    aL8KaxkOAKsMy+M/j+RGgahBa3EwlFDfD83B4bw+7BCTN+ATql4HY2ahdflHYe4ht/1LMc
+    5aIjwiwZR5EX0RDr8Psnhq2Z/m1szKOdHpGXmr+/bw2HkxJzEH4iPt30TlSOUSzOGA/u+y
+    fhUkeMAjNigvt3ZjKeSt1d0/l5bhGu5wv18mWPyzEZpuD/dcYD8wEV/zifijMfbkMrz8zB
+    SmKUr3lSyrta/PgcqTUHsDKB7BpLCo9qiyfBPYqUeiZjUYHP80N1a/+c+zICETyVu2n8h2
+    TiiXKfIDmMSg1bOzVHD/ZOAHCnXTOwwVBNZpycMPxiWikmwkTTi+Jf1OIxEA97lwUn3QPr
+    FryxMQqB1yqSF4hoDAD5R0SBCTLgz5vxvCtH/HE5qba7IPEzgTviwz9DtfnM5cZRMDZDGM
+    ojslBoS5lIyuLyw4ZBeS9nD8BOPHJxAXyL0zV922mTZhJUsGJbSE9MXAX9BtZ4tjqTMW8D
+    K6Ee+YtFyjNcum1u3osU02crX6AhUNQYCoAzg1wWOv/zQh1US2H7qHZp9ZvYw1T3epop5x
+    WQVtoxipsxUxZt5AtUa+HgYpCUAHMxV2l6QehxnvU2eKXmtTZyqsiKZlcrtQ
+X-ME-Proxy: <xmx:F1DeatKs8yBglCimlf3_OR5Yil02OvVksXRGleuRTdYnk8KmnxWiNg>
+    <xmx:F1DeaiexikYrzdZnAygiFHzefutA8WnoSKDExUjQpfvefGbWXZidxQ>
+    <xmx:F1Deas9GoCyz63iVospIs_-8JVEoAzWQg8Q9PyskLF0LzteHUgETgw>
+    <xmx:F1Deavo-4Ff3VdWdOF7HVAxRISzldLv-veXziCJq0Zd9iaAh_MT2QA>
+    <xmx:GVDeajS84YsDroldyLuYMBG0qpxhxjka_BYDu6OzMsmkfNfjDm4vd26_>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 0702D22C009C; Sun, 25 Oct 2026 14:53:10 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,44 +115,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com> <552bf08971be5204311c96bf232b5da49e852db1.1792503778.git.gitgitgadget@gmail.com>
- <CALnO6CBA3oQMm--3VxhbUdDmXfAGjZo9H5bFxWOGUCY=GADk3w@mail.gmail.com>
-In-Reply-To: <CALnO6CBA3oQMm--3VxhbUdDmXfAGjZo9H5bFxWOGUCY=GADk3w@mail.gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Sun, 25 Oct 2026 20:12:03 +0200
-X-Gm-Features: AclHuK8lGRTnciaTTzdPbcMuh2tCoWdtA2S1xB5QOq7eKYW8I4w5zEt3V5stWDM
-Message-ID: <CAHwyqnVxK+hJXHTttWmswPjb8AzNhkazybOxwrmHG4yEtMOHSA@mail.gmail.com>
-Subject: Re: [PATCH v10 5/5] remote: default to --limited-fetch in a shallow repository
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: AgdWeLtCs7o3
+Date: Sun, 25 Oct 2026 19:52:49 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Harald Nordgren" <haraldnordgren@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>, git@vger.kernel.org,
+ "D. Ben Knoble" <ben.knoble@gmail.com>, GGG <gitgitgadget@gmail.com>
+Message-Id: <fc4d4a00-bc3a-4e1a-939c-f3a68fd8ce08@app.fastmail.com>
+In-Reply-To: 
+ <CAHwyqnVJ618QXq99M=XNm19eEObQC-DTLcpeYOiizzSu_YNEpw@mail.gmail.com>
+References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
+ <pull.2448.v2.git.git.1792348037.gitgitgadget@gmail.com>
+ <bfc2b43a-6198-47b0-8868-d92551548f22@gmail.com> <xmqq5wyr128q.fsf@gitster.g>
+ <CAHwyqnVJ618QXq99M=XNm19eEObQC-DTLcpeYOiizzSu_YNEpw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] reflog: add --operations and --historical-branch
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-> > Adding a second remote to a shallow, single-branch clone used to
-> > still fetch every branch that remote has, since "git remote add"
-> > always set up a wildcard remote.<name>.fetch refspec regardless of
-> > how shallow the repository already was. That defeats the purpose of
-> > having cloned shallow and single-branch in the first place, and can
-> > make a plain "git fetch" on that remote hang or take a very long
-> > time on a repository with many branches.
+On Sat, Oct 24, 2026, at 20:46, Harald Nordgren wrote:
+> On Sat, Oct 24, 2026 at 6:40=E2=80=AFPM Junio C Hamano <gitster@pobox.=
+com> wrote:
+>>
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>
+>> > I'm rather skeptical of this in its current form. Not all commands =
+that
+>> > modify the working tree update the reflog and some commands such as=
+ "git
+>> > cherry-pick A B C" create multiple reflog entires that are
+>> > indistinguishable from multiple invocations of a single command.
+>>
+>>[snip]
+>>
+>> By the way, I too was annoyed that 'git reflog' defaults to the log
+>> of HEAD a long time ago, but the irritation soon waned once I made
+>> it a habit to always provide @{now} or @{0} to the command, as that
+>> notation refers to the current branch.
 >
-> First we focus on "single-branch shallow clones", but=E2=80=A6
+> Thanks Phillip, Ben and Junio for pointing this out!
 >
-> > Turn --limited-fetch on by default when the repository is already
-> > shallow and neither -t/--track nor --mirror was given, so that
-> > adding a remote there does not by itself commit to following every
-> > branch it has. --no-limited-fetch keeps the previous behavior for
-> > whoever wants it.
+> I didn't realize that reflog could be changed to operate only on one
+> branch. And it makes it a lot better! Seems like it should be the
+> default, and I don't think a lot of people would complain, I'll
+> certainly never run the old reflog again.
+
+Well. I wrote in this thread:
+
+> That you rebase many commits and then the reset points (where each one
+> started and ended) get obscured in the reflog is classic for me. And I
+> think many have had the same issue.
+
+But now I wonder if that was just an illusion:
+
+    $ # The rebase was for five commits
+    $ git reflog --no-decorate test-branch
+    0e77d8619b8 test-branch@{0}: rebase (finish): refs/heads/test-branch=
+ onto 7e34d8174dcda3435d1404c9a30bef46afe6c13e
+    d1bcad06e24 test-branch@{1}: branch: Created from HEAD
+
+I have always known about per-branch reflogs and that `HEAD` has its
+own, but maybe I was too much in the habit of running without the branch
+name after rebases?
+
+So maybe my use case was fine all along. But that still leaves
+Patrick=E2=80=99s[1] problems with it.
+
+[1] https://lore.kernel.org/git/akZfm-igZKeHaDST@pks.im/
+
 >
-> =E2=80=A6now we only care about shallow. I think that's reasonable, since=
- we
-> don't have a way to track "was cloned with a single-branch" (and it's
-> not really the key criterion anyway), but the wording begged the
-> question ;)
-
-Good point, I'll improve.
-
-
-Harald
+> However, the format is quite heavy with the full name references,
+> seems like they could be cleaned up:
+>
+>[snip]
