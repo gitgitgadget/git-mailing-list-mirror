@@ -1,92 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792954985;
-	b=SJyoY7pExvb1QaHZn8T1TXjTHf50biT7ETb1vO11QoQEUsmtWlSmwDfE72SE9nLPz9+z
-	 R3Yinny7bukKriSakW3866d2V4U+AM1HDGL9SiisV8C90mJ/8J8xzsgftxV3moe6PTy3O
-	 brqTry23+aFJXlU2Ku64DBNcofE6mqJmw6UDQpquIX+YA+KiYBO1PSVgHW51aippVsEwe
-	 NODikHZaxJbl+crWuF1HmGSBPP1oS9U9HcvSDF5LxwesgXH3kfrtUglTPPYDaaxf2f2JC
-	 hRGuzb+mKubdAJodNxsFHP1losewOKdrjMtRFJqL6aMJ3C1pMHaLxaJQw74TF45voGA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792954985;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-Id:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=WcX+IOyJueCcws3+J8R+78AMewjjV37YSKJuFzZn46Y=;
-	b=xXE4Ev679rJAzSORx2b7Yt9sYmkCatSj0nMPIIDh98ix2W/h5/gSUSqhIk9v6LOPgsAd
-	 q6n82Z+OTvDjXFVFR4htxBhq8HsUoJu4Xl+wuMnBkOFrHDKTXJdlv5KcNddZZtDmXiNoW
-	 Y/On91PdObX8Fz9zthApVXlRkBIrlGPuAJXtsV1L7NVJzOk5DaR3l8EmOcUIs6BZ2NsTP
-	 aFPAhNIJj1F7HRHGd1eEJB4CN7whNP650rqvySMyiie072mN9glTFvUxNRDo7ovbMbvZr
-	 HDQm/sZkMnNpcU1u+jCrrUJxZhfFAVuSWPPBqQVaWxKjyS6KRNvg1jXqQI5NfL7rxxQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=B00g8oeD;
-	arc=none smtp.remote-ip=209.85.128.53
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792955791;
+	b=RbdVcQNO6K/BMQ9CFMwOQACBwAVj8oev4MZX+rMZ8oIB0QhbHQVxv1giN+XjvDXL26x6
+	 Y68rQyGWkXSvbO9r+96c4E/M/elY0y4ptXDQQCJs6y5s4Ikfs7E6ysX4Q3WvwqtVdp1aC
+	 r0uz5cQfcyYisPIUy5270qWhSd+YjxdOhY4BSA6HUPFWm9IHFrWiT4jrKNpRl/tLdhxAE
+	 ByDrp5CjSA/aFyUxb4MsOAgpIIFEyMdu1kqZGOz98uWQADq7FPhYhfY2yNO45xprZ1+gP
+	 xEHRLfWU5sNArFz8l+ueSLZv/ceCg0Ja4yhIj1oQHjqFmtWMCW/GWlhaj93XEaxSuDQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792955791;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-ZohoMailClient;
+	bh=4VnXdYh+sPsWCrQpfYhjRksm/v/shJoI5g6ecB/8z8w=;
+	b=kI3oSNPDmJmoqPurbKP+wNFxEn2xeV1WW/55GAyPORGIYuG3P+6JvDLcKr5YOgT/dJ6c
+	 FlmmLC5JfSQtvXuxLsJRJDRhajiPKNhrjgQVr7riLr7v+2fXCOqXo813v2JKTEYVKO6Tl
+	 Isjte0x2p+cYidR0BOvdL5kBKGiqumvrwHZfpuGW6YDo2xlXcicgpbvkjjWLhHMZMJ07E
+	 GtQkcmh6SnikvK1B+o89GK3Jc0g/iUN2VxzNBvlFih4bRL+1fqW0YlIyscctEXs6uYgDP
+	 N5LrGgAi9VGFaaQr8wW0RBawJm4QdP5YNFlONQ/donB/wmI2hcB0GQ5uk5Q4tTmCFOg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=none header.from=laveeshbansal.com;
+	spf=pass smtp.mailfrom=laveeshbansal.com;
+	dkim=pass header.d=laveeshbansal.com header.i=laveeshb@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=fO69EcPE;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E64E606A31A
-	for <git@vger.kernel.org>; Sun, 25 Oct 2026 19:03:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E64E606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E75A606A320
+	for <git@vger.kernel.org>; Sun, 25 Oct 2026 19:16:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E75A606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=laveeshbansal.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=laveeshbansal.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=B00g8oeD
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a140e7405dso23924135e9.3
-        for <git@vger.kernel.org>; Sun, 25 Oct 2026 12:03:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792954984; x=1793559784; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WcX+IOyJueCcws3+J8R+78AMewjjV37YSKJuFzZn46Y=;
-        b=B00g8oeD2MlrcNL5HSbcyGlWB/M4s9KNZ052UH26r7emWcFatllqGa5Wm9r2WLLRmK
-         Qj7JFFNvHSugcrcNckBnfLYJB38pSwPaq3QHesA1KfU4YRx+YU/bY4Kk3yFmI/GyyJmP
-         mLNeXKeR/xpbEiJaRD//0l3sCYpqLw/pd35EMf9ktlihLC3m1gjw0mHkW0rJjWHycB3m
-         tk2B9+DQaFgunnpuBvfHSe3xdincd6JTa9lSky2HP8TWz7XorAv62S4heidd1aLEYw8L
-         pFx1cQtny3Wlaj1QkbW2wzA+TOHFl55N9IZRR5HmhElJSQNf4gYSa9bJdYtQGSCHWrUX
-         uKlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792954984; x=1793559784;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WcX+IOyJueCcws3+J8R+78AMewjjV37YSKJuFzZn46Y=;
-        b=lQUhIjHMY++rNfI3zUNgKdG3/nI/BIu7hZUHH5wWlMXPltdQkyaqfTX20Ho2WiHMZb
-         WLjF/UUHkeBLhRhZAkgqSih6nhYB/dLewNavEvt9z9Bl4tVybFcsTlb1q/+YlN24CfN9
-         bUmJVe86B7A2jFKa+xbhf7C6I8u8SP4bwjI+Afxc1zqGsEo8bfnsWD4fLNoNbxPX5P+6
-         5QBOpa2i4Ul5EvXlx8D3n5IujBKpu0kDt6JkMCAJDPTi7ywctrffOTR4oGxwkE62CQsy
-         vpnMvxWYu/s84NUdwqnxO8yk/0Oq6B8Wmo9Nlcl1MNlqGGtLzFqGbDPiRJlOl97fBUta
-         dS8g==
-X-Gm-Message-State: AFq9FYLBC4w0n+GqpdJiGPYAcVcgOgGu15jhAB2x6qnJUGr17Ypsgk4s
-	u1On9A+tgQY62N/PRDtci8/Cs4vi9JQlEkYvyLp1DCor1zLgKjVeogkpacQV8jxP
-X-Gm-Gg: AYBFou28SqjsqooVys3lu/yvZvQapficzvx84tQ/kbbCP+63/dvpZ6J1VqRCfZcJFEF
-	m8ky8z4IbeLVGWLjM1V+HJTXqBi7y9EFstQO6TiG6I5w2tEWvm1/XjJAFbVMkOfHOOVgUapeJuW
-	+oPx5ntNFuu8SDxw+Oo11FcYy4K4pNPE8y/SdflO+wRpwqqgnmJ9SwzLP/5PqZHt4MCTTwYTLsO
-	j+opwu6Y0/H/rxLIj0b7pTkEFQ0heDlRYVFGTyxiddpFtoVLgUlKmIRYEyolRuPuhzzccR+gk1u
-	ZOukRwnKyd7LGh3IQHd3CaGeb48OYMav/U6GSFG/oni8PFU5HzvvrbvLh8spOzWAQWSc/ZDkijB
-	3MqfNEwizECUejc73mfSmUG9zMAN/Cy1fNBuzBFP0p9QkyeDoTgEik/3rNaujboV0sC7n56K+aj
-	beKP04kcVFb/6Zhy2EUITXp0o3i5TsBc6aObCIwCg67ip3VLFqHW8GdXTTvN7gKmS/ecEFdrfzZ
-	sNEGaVAjri8S1uh10bRyttn66497KQz5HTBfeeynv7DQ/jlrbQLqRQ6oagaZq6QDpQaz8hEfl4w
-	EAgGjS2jsUEpV2pY3taL5OH1Rg==
-X-Received: by 2002:a05:600c:3114:b0:4a3:5a55:f454 with SMTP id 5b1f17b1804b1-4a35acc772dmr84108025e9.19.1792954983553;
-        Sun, 25 Oct 2026 12:03:03 -0700 (PDT)
-Received: from Stealth.zuku.co.ke ([197.237.143.156])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ebcb9cesm12106658f8f.27.2026.10.25.12.03.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Oct 2026 12:03:03 -0700 (PDT)
-From: Dorine Tipo <dorine.a.tipo@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	kaartic.sivaraam@gmail.com,
-	christian.couder@gmail.com,
-	siddharthasthana31@gmail.com,
-	usmanakinyemi202@gmail.com,
-	Dorine Tipo <dorine.a.tipo@gmail.com>
-Subject: [Outreachy PATCH] list-objects-filter-options: pass repository to partial clone helpers
-Date: Sun, 25 Oct 2026 22:02:53 +0300
-Message-Id: <20261025190253.2207856-1-dorine.a.tipo@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (1024-bit key, unprotected) header.d=laveeshbansal.com header.i=laveeshb@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=fO69EcPE
+ARC-Seal: i=1; a=rsa-sha256; t=1792955773; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=kxxcF5e715F8L/umu0n3037bb5DaRUamWOcYQiWOdfUTl0jjQqPUQ5wSvSWqcwVYN/njL51amq5nmfof+aD3jDNHIoWuKcGuUCtyo8D2gYueWF1K9rlqg0gXxGDnvPhLZdWOcXB2K7KvmJ3tCf4SO0F3yLCjdnqGmeAX4k63vKA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1792955773; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=4VnXdYh+sPsWCrQpfYhjRksm/v/shJoI5g6ecB/8z8w=; 
+	b=k82uMYzkukwR39Vlw8VvlYd9OU+POHiyGzmBGEpEuXLCOU1p94o482M3UbdMFwBuOV4UzlZj+eCKNYWutGRE6Kmc1eGZhDLWz1xPsqhNQTtKDr9wxah1+zD04CrLvFnqvCJvdO8QJx6Gb9wZm4L5pg1KkgJbRHFuDaLBo9n8zPI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=laveeshbansal.com;
+	spf=pass  smtp.mailfrom=laveeshb@laveeshbansal.com;
+	dmarc=pass header.from=<laveeshb@laveeshbansal.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1792955773;
+	s=zoho; d=laveeshbansal.com; i=laveeshb@laveeshbansal.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=4VnXdYh+sPsWCrQpfYhjRksm/v/shJoI5g6ecB/8z8w=;
+	b=fO69EcPEDGwUJ3KhRilQuTs9ddv0Fj4PhMioouUh5kV2uTRJKDtYyEN5ABaf/yyi
+	93SJUllqG5iOkOo30TWrFVEh9Cz72zAo1fycXMki6HXbmMDDW/0b/2T7s4EugDc21bt
+	Zuki22aBdpR1U8wPpSmXqB0WUdqQSvLAS/tgURK8=
+Received: by smtp.zohomail.com with SMTPS id 1792955772003397.88395139995464;
+	Sun, 25 Oct 2026 12:16:12 -0700 (PDT)
+From: Laveesh Bansal <laveeshb@laveeshbansal.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Sven Weiland <sven.weiland@tngtech.com>
+Subject: Re: [PATCH] builtin/reflog: say "would prune" for named refs with --dry-run
+Date: Sun, 25 Oct 2026 12:15:59 -0700
+Message-ID: <20261025191559.79141-1-laveeshb@laveeshbansal.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <xmqqqzhdy7pi.fsf@gitster.g>
+References: <xmqqqzhdy7pi.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,152 +75,16 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-partial_clone_register() and partial_clone_get_default_filter_spec()
-use `the_repository` to look up promisor remotes and to update the
-repository's configuration, which ties them to the main repository of
-the process.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Accept the repository as a parameter instead, and have the callers in
-builtin/clone.c and builtin/fetch.c pass `the_repository` explicitly.
-This moves the dependency on the global one level up, without changing
-behavior.
+> That will help prevent a similar bug from ever happening again, as
+> there would be only a single place that sets up how the expiration
+> is called, instead of two we currently have.
 
-Signed-off-by: Dorine Tipo <dorine.a.tipo@gmail.com>
----
-The file no longer uses `the_repository` after this change. I left
-USE_THE_REPOSITORY_VARIABLE in place to keep this patch focused, and
-can drop it here or in a follow-up, whichever is preferred.
+Agreed, and I think the consolidation is doable.
 
- builtin/clone.c               |  3 ++-
- builtin/fetch.c               |  7 +++++--
- list-objects-filter-options.c | 14 ++++++++------
- list-objects-filter-options.h |  3 +++
- 4 files changed, 18 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 44037dd428..5a6859065e 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1619,7 +1619,8 @@ int cmd_clone(int argc,
- 				     remote_head_points_at, &branch_top);
- 
- 	if (filter_options.choice)
--		partial_clone_register(remote_name, &filter_options);
-+		partial_clone_register(the_repository, remote_name,
-+				       &filter_options);
- 
- 	if (is_local)
- 		clone_local(path, git_dir);
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 1f76ae6242..5277047476 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -2436,7 +2436,8 @@ static inline void fetch_one_setup_partial(struct remote *remote,
- 	 * remote if there is currently no default filter-spec.
- 	 */
- 	if (filter_options->choice) {
--		partial_clone_register(remote->name, filter_options);
-+		partial_clone_register(the_repository, remote->name,
-+				       filter_options);
- 		return;
- 	}
- 
-@@ -2446,7 +2447,9 @@ static inline void fetch_one_setup_partial(struct remote *remote,
- 	 * the config.
- 	 */
- 	if (!filter_options->choice)
--		partial_clone_get_default_filter_spec(filter_options, remote->name);
-+		partial_clone_get_default_filter_spec(the_repository,
-+						      filter_options,
-+						      remote->name);
- 	return;
- }
- 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index bc5d98f9e6..178624f6f5 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -362,6 +362,7 @@ void list_objects_filter_release(
- }
- 
- void partial_clone_register(
-+	struct repository *repo,
- 	const char *remote,
- 	struct list_objects_filter_options *filter_options)
- {
-@@ -370,7 +371,7 @@ void partial_clone_register(
- 	char *filter_name;
- 
- 	/* Check if it is already registered */
--	if ((promisor_remote = repo_promisor_remote_find(the_repository, remote))) {
-+	if ((promisor_remote = repo_promisor_remote_find(repo, remote))) {
- 		if (promisor_remote->partial_clone_filter)
- 			/*
- 			 * Remote is already registered and a filter is already
-@@ -378,12 +379,12 @@ void partial_clone_register(
- 			 */
- 			return;
- 	} else {
--		if (upgrade_repository_format(the_repository, 1) < 0)
-+		if (upgrade_repository_format(repo, 1) < 0)
- 			die(_("unable to upgrade repository format to support partial clone"));
- 
- 		/* Add promisor config for the remote */
- 		cfg_name = xstrfmt("remote.%s.promisor", remote);
--		repo_config_set(the_repository, cfg_name, "true");
-+		repo_config_set(repo, cfg_name, "true");
- 		free(cfg_name);
- 	}
- 
-@@ -393,19 +394,20 @@ void partial_clone_register(
- 	 */
- 	filter_name = xstrfmt("remote.%s.partialclonefilter", remote);
- 	/* NEEDSWORK: 'expand' result leaking??? */
--	repo_config_set(the_repository, filter_name,
-+	repo_config_set(repo, filter_name,
- 			expand_list_objects_filter_spec(filter_options));
- 	free(filter_name);
- 
- 	/* Make sure the config info are reset */
--	repo_promisor_remote_reinit(the_repository);
-+	repo_promisor_remote_reinit(repo);
- }
- 
- void partial_clone_get_default_filter_spec(
-+	struct repository *repo,
- 	struct list_objects_filter_options *filter_options,
- 	const char *remote)
- {
--	struct promisor_remote *promisor = repo_promisor_remote_find(the_repository,
-+	struct promisor_remote *promisor = repo_promisor_remote_find(repo,
- 								     remote);
- 	struct strbuf errbuf = STRBUF_INIT;
- 
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index 77d7bbc846..6a349cb4da 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -6,6 +6,7 @@
- #include "strbuf.h"
- 
- struct option;
-+struct repository;
- 
- /*
-  * The list of defined filters for list-objects.
-@@ -158,9 +159,11 @@ static inline void list_objects_filter_set_no_filter(
- }
- 
- void partial_clone_register(
-+	struct repository *repo,
- 	const char *remote,
- 	struct list_objects_filter_options *filter_options);
- void partial_clone_get_default_filter_spec(
-+	struct repository *repo,
- 	struct list_objects_filter_options *filter_options,
- 	const char *remote);
- 
--- 
-2.34.1
-
+I suggest keeping this patch as it is, since it fixes the reported
+bug. I'll look into what you describe as a separate patch after this
+one, and the tests added here would stay useful for that patch too.
