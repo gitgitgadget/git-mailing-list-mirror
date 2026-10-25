@@ -1,111 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792954399;
-	b=fCLQ0L4FHXLihMaewA1hJ4Ulxrzvb9wrTTJIcqm6WFe3hIodWeTMRAhGJBejnguqCufm
-	 mR+Xn/z5sTy/h1Bkdcj8BfOroZTugfMcO4yTXj7ONeQJCYLRlC/iOoZKeKEtX1DqAZfE1
-	 k9Diwhb47cJ2+rOy6k5pwu5xT1Rj+W14Ml7+s+h0uP2qUdST3xJ1V6kfR/zcGBsk4wJ91
-	 uD+ObEqx5adjxe4Bic8p3Db7UBTR7Iem90hSLRqmpMiC5cNhbkCN9Juatra2E0VcKv7G0
-	 c8+xWLdG2iMZuPjifjMzDPAdtzh4biCHaIWxscvvKxRURlANSU3PKJI0deAU+M649nw==
+	t=1792954985;
+	b=SJyoY7pExvb1QaHZn8T1TXjTHf50biT7ETb1vO11QoQEUsmtWlSmwDfE72SE9nLPz9+z
+	 R3Yinny7bukKriSakW3866d2V4U+AM1HDGL9SiisV8C90mJ/8J8xzsgftxV3moe6PTy3O
+	 brqTry23+aFJXlU2Ku64DBNcofE6mqJmw6UDQpquIX+YA+KiYBO1PSVgHW51aippVsEwe
+	 NODikHZaxJbl+crWuF1HmGSBPP1oS9U9HcvSDF5LxwesgXH3kfrtUglTPPYDaaxf2f2JC
+	 hRGuzb+mKubdAJodNxsFHP1losewOKdrjMtRFJqL6aMJ3C1pMHaLxaJQw74TF45voGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792954399;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=3Yrxl5vmZqU/CxHaGfD2rroOo2RlSNTIjbeO0091LjU=;
-	b=1Cdq6mZkYT9MOyu+fmdvO6Pf0R+CDGF3LF+gZ42zAVqHzzxY7SaGpIMWnyiO1hdPjYzt
-	 sEeWSlud5OD4JQo9uRm7EV7xettfiM+gkT82DXfmNqhyhxVBYUhS1o/PWfHXJJQKKDyQe
-	 5FLegB7D2Wf2zCxVyXIZhMlqJWIPOFMMQlqZ+f6WDb0wxxeTeJkCVuMCATVmOtMNrRbTM
-	 dNk1xW6FNZFMACukWx+DbyVXebX1c5JACfopbisVkt3L7wj0RgO733nkTeVvBaqIj+OFV
-	 Ob1wUfRvdsJxs/qzFWsTy5vvHGkIo0LaNnS53eS0Wb3CcFSyedFDtRA3hRAxLzjiY7w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792954985;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-Id:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=WcX+IOyJueCcws3+J8R+78AMewjjV37YSKJuFzZn46Y=;
+	b=xXE4Ev679rJAzSORx2b7Yt9sYmkCatSj0nMPIIDh98ix2W/h5/gSUSqhIk9v6LOPgsAd
+	 q6n82Z+OTvDjXFVFR4htxBhq8HsUoJu4Xl+wuMnBkOFrHDKTXJdlv5KcNddZZtDmXiNoW
+	 Y/On91PdObX8Fz9zthApVXlRkBIrlGPuAJXtsV1L7NVJzOk5DaR3l8EmOcUIs6BZ2NsTP
+	 aFPAhNIJj1F7HRHGd1eEJB4CN7whNP650rqvySMyiie072mN9glTFvUxNRDo7ovbMbvZr
+	 HDQm/sZkMnNpcU1u+jCrrUJxZhfFAVuSWPPBqQVaWxKjyS6KRNvg1jXqQI5NfL7rxxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=u4z3hw9y;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=X6pUXXI1;
-	arc=none smtp.remote-ip=202.12.124.156
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=B00g8oeD;
+	arc=none smtp.remote-ip=209.85.128.53
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749C8606A31A
-	for <git@vger.kernel.org>; Sun, 25 Oct 2026 18:53:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 749C8606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E64E606A31A
+	for <git@vger.kernel.org>; Sun, 25 Oct 2026 19:03:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E64E606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=u4z3hw9y;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=X6pUXXI1
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 506387A0055
-	for <git@vger.kernel.org>; Sun, 25 Oct 2026 14:53:17 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Sun, 25 Oct 2026 14:53:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792954393;
-	 x=1793040793; bh=3Yrxl5vmZqU/CxHaGfD2rroOo2RlSNTIjbeO0091LjU=; b=
-	u4z3hw9yLddZNx9bYoaY8MjnnyHhrqlsac9dR63oVscsDUGopCNxPU9HuGYQgJQj
-	c90ytc5m1TVlznYAWYk02tig/9oLpYbX301lvayci5MZpIFWflwda/1i9qnEPQZB
-	DIICUGaboAHcGidBwSghXOFg57jHO9s8NbsrMPaXHJl/3AUH2SR2ALJbpVF2IQ3y
-	gEXcfHoI+H8ZU7IFv5QAOnxTp/cEXoMwjX57Z2ALKvKHcEtAssepmedKEfgitKDC
-	w+yQV0uifYWTV1sFMDWESwdJ9INFbbiOfWdLBRl+hCfOJrYae+EkkrUHwkDKe7Sn
-	N0ah+jCaRwQSjCbm4sLmRg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792954393; x=
-	1793040793; bh=3Yrxl5vmZqU/CxHaGfD2rroOo2RlSNTIjbeO0091LjU=; b=X
-	6pUXXI1N7nJgG6dbS0hmjD2ZhLkk4lEfB+wFxghDgOdorgf+97VjJZy7FhxDPdPr
-	s9sWeG64WIHm8AkhruYOzsPO5YY2r1wnBFjlAZ8LkIbhGai0p/pdXJy49jKVVsd7
-	Pmk99lOHPOKTIQfYn1U4fh4vc+JpfIN7lcCCjrvf9n3U1/txkrZRguHMErKjycfL
-	tpMGwcK3QlT3nvPOIiz6X7nJasywJ6iGc0LuxOlewUiCjn45nvXhX8C+a5mPoo47
-	ESR+XjaPhQcrm+/fSvxTFCPm4Gw3MAXgjNwq+xKWGKVxf5ralRTBgV98flyMTAQf
-	BBIjiHeaN6fkWj5qg+ssQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792954393; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:NgDNtkUVoCWUbyItydtvjwCl9/Gq5+gC++HyJfoJpftISAn
-	7V4iVrz5tKN08y6Y9f4nILBj565U5/7AwUuAKY6cYpr03AQnr0g+IlhXiv+q0FVX
-	cXIVzW8rSwl8ViEB3E1IvtFViq/YMhXxZL2uVYw9dWUGA9svWbzX2tIFQM8DM4dn
-	JCdj7Ow9aJ5ytmSu4A1jxj9IiGUxltoNANUW3MA4NqAIEkKLsP+BvgJ7lbkwp6D1
-	ioVrK8FiijP4BulqO0kQieAcvHuOmQYEFgTqUkI7t87tHdYU3uWMVc1EeOdM+1xS
-	YKFOkzagxjCGAAJzCQQlr8xGEkpFZX6evZeNksw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:I043A1RQwZc3rg+arMCoNrm0HTrMDZUlcAV3xZZP5m8=:ALqZZcDXfx2N97HTdeHV0s1m+GNwUBwfWlPYyh8fTLA=;
-X-ME-Sender: <xms:FlDearcwTupy4bwBKEv7UXXj0EM0GJXGtP4sSPRNA2TrMgQfPADQejg>
-    <xme:FlDeasD7UXlxXOKcpnb-79m97MYJUQtSj1AQcnpRll589bw1qoCELHaKaIzJwbqM3
-    zouHs8pnTSrivYSwZW-tijpkB9CZG0_2ljdnil78EdxzA6hFlQPWZM>
-X-ME-Proxy-Cause: dmFkZTENj8DhEyqYrko0FdZLG2/i7EZJ9539sPXy0KZKE0WQhBfHwPcsW/7LXfF7tg9swf
-    aL8KaxkOAKsMy+M/j+RGgahBa3EwlFDfD83B4bw+7BCTN+ATql4HY2ahdflHYe4ht/1LMc
-    5aIjwiwZR5EX0RDr8Psnhq2Z/m1szKOdHpGXmr+/bw2HkxJzEH4iPt30TlSOUSzOGA/u+y
-    fhUkeMAjNigvt3ZjKeSt1d0/l5bhGu5wv18mWPyzEZpuD/dcYD8wEV/zifijMfbkMrz8zB
-    SmKUr3lSyrta/PgcqTUHsDKB7BpLCo9qiyfBPYqUeiZjUYHP80N1a/+c+zICETyVu2n8h2
-    TiiXKfIDmMSg1bOzVHD/ZOAHCnXTOwwVBNZpycMPxiWikmwkTTi+Jf1OIxEA97lwUn3QPr
-    FryxMQqB1yqSF4hoDAD5R0SBCTLgz5vxvCtH/HE5qba7IPEzgTviwz9DtfnM5cZRMDZDGM
-    ojslBoS5lIyuLyw4ZBeS9nD8BOPHJxAXyL0zV922mTZhJUsGJbSE9MXAX9BtZ4tjqTMW8D
-    K6Ee+YtFyjNcum1u3osU02crX6AhUNQYCoAzg1wWOv/zQh1US2H7qHZp9ZvYw1T3epop5x
-    WQVtoxipsxUxZt5AtUa+HgYpCUAHMxV2l6QehxnvU2eKXmtTZyqsiKZlcrtQ
-X-ME-Proxy: <xmx:F1DeatKs8yBglCimlf3_OR5Yil02OvVksXRGleuRTdYnk8KmnxWiNg>
-    <xmx:F1DeaiexikYrzdZnAygiFHzefutA8WnoSKDExUjQpfvefGbWXZidxQ>
-    <xmx:F1Deas9GoCyz63iVospIs_-8JVEoAzWQg8Q9PyskLF0LzteHUgETgw>
-    <xmx:F1Deavo-4Ff3VdWdOF7HVAxRISzldLv-veXziCJq0Zd9iaAh_MT2QA>
-    <xmx:GVDeajS84YsDroldyLuYMBG0qpxhxjka_BYDu6OzMsmkfNfjDm4vd26_>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 0702D22C009C; Sun, 25 Oct 2026 14:53:10 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=B00g8oeD
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a140e7405dso23924135e9.3
+        for <git@vger.kernel.org>; Sun, 25 Oct 2026 12:03:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792954984; x=1793559784; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=WcX+IOyJueCcws3+J8R+78AMewjjV37YSKJuFzZn46Y=;
+        b=B00g8oeD2MlrcNL5HSbcyGlWB/M4s9KNZ052UH26r7emWcFatllqGa5Wm9r2WLLRmK
+         Qj7JFFNvHSugcrcNckBnfLYJB38pSwPaq3QHesA1KfU4YRx+YU/bY4Kk3yFmI/GyyJmP
+         mLNeXKeR/xpbEiJaRD//0l3sCYpqLw/pd35EMf9ktlihLC3m1gjw0mHkW0rJjWHycB3m
+         tk2B9+DQaFgunnpuBvfHSe3xdincd6JTa9lSky2HP8TWz7XorAv62S4heidd1aLEYw8L
+         pFx1cQtny3Wlaj1QkbW2wzA+TOHFl55N9IZRR5HmhElJSQNf4gYSa9bJdYtQGSCHWrUX
+         uKlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792954984; x=1793559784;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=WcX+IOyJueCcws3+J8R+78AMewjjV37YSKJuFzZn46Y=;
+        b=lQUhIjHMY++rNfI3zUNgKdG3/nI/BIu7hZUHH5wWlMXPltdQkyaqfTX20Ho2WiHMZb
+         WLjF/UUHkeBLhRhZAkgqSih6nhYB/dLewNavEvt9z9Bl4tVybFcsTlb1q/+YlN24CfN9
+         bUmJVe86B7A2jFKa+xbhf7C6I8u8SP4bwjI+Afxc1zqGsEo8bfnsWD4fLNoNbxPX5P+6
+         5QBOpa2i4Ul5EvXlx8D3n5IujBKpu0kDt6JkMCAJDPTi7ywctrffOTR4oGxwkE62CQsy
+         vpnMvxWYu/s84NUdwqnxO8yk/0Oq6B8Wmo9Nlcl1MNlqGGtLzFqGbDPiRJlOl97fBUta
+         dS8g==
+X-Gm-Message-State: AFq9FYLBC4w0n+GqpdJiGPYAcVcgOgGu15jhAB2x6qnJUGr17Ypsgk4s
+	u1On9A+tgQY62N/PRDtci8/Cs4vi9JQlEkYvyLp1DCor1zLgKjVeogkpacQV8jxP
+X-Gm-Gg: AYBFou28SqjsqooVys3lu/yvZvQapficzvx84tQ/kbbCP+63/dvpZ6J1VqRCfZcJFEF
+	m8ky8z4IbeLVGWLjM1V+HJTXqBi7y9EFstQO6TiG6I5w2tEWvm1/XjJAFbVMkOfHOOVgUapeJuW
+	+oPx5ntNFuu8SDxw+Oo11FcYy4K4pNPE8y/SdflO+wRpwqqgnmJ9SwzLP/5PqZHt4MCTTwYTLsO
+	j+opwu6Y0/H/rxLIj0b7pTkEFQ0heDlRYVFGTyxiddpFtoVLgUlKmIRYEyolRuPuhzzccR+gk1u
+	ZOukRwnKyd7LGh3IQHd3CaGeb48OYMav/U6GSFG/oni8PFU5HzvvrbvLh8spOzWAQWSc/ZDkijB
+	3MqfNEwizECUejc73mfSmUG9zMAN/Cy1fNBuzBFP0p9QkyeDoTgEik/3rNaujboV0sC7n56K+aj
+	beKP04kcVFb/6Zhy2EUITXp0o3i5TsBc6aObCIwCg67ip3VLFqHW8GdXTTvN7gKmS/ecEFdrfzZ
+	sNEGaVAjri8S1uh10bRyttn66497KQz5HTBfeeynv7DQ/jlrbQLqRQ6oagaZq6QDpQaz8hEfl4w
+	EAgGjS2jsUEpV2pY3taL5OH1Rg==
+X-Received: by 2002:a05:600c:3114:b0:4a3:5a55:f454 with SMTP id 5b1f17b1804b1-4a35acc772dmr84108025e9.19.1792954983553;
+        Sun, 25 Oct 2026 12:03:03 -0700 (PDT)
+Received: from Stealth.zuku.co.ke ([197.237.143.156])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ebcb9cesm12106658f8f.27.2026.10.25.12.03.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Oct 2026 12:03:03 -0700 (PDT)
+From: Dorine Tipo <dorine.a.tipo@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	kaartic.sivaraam@gmail.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	usmanakinyemi202@gmail.com,
+	Dorine Tipo <dorine.a.tipo@gmail.com>
+Subject: [Outreachy PATCH] list-objects-filter-options: pass repository to partial clone helpers
+Date: Sun, 25 Oct 2026 22:02:53 +0300
+Message-Id: <20261025190253.2207856-1-dorine.a.tipo@gmail.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -115,76 +96,153 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AgdWeLtCs7o3
-Date: Sun, 25 Oct 2026 19:52:49 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Harald Nordgren" <haraldnordgren@gmail.com>,
- "Junio C Hamano" <gitster@pobox.com>
-Cc: "Phillip Wood" <phillip.wood123@gmail.com>, git@vger.kernel.org,
- "D. Ben Knoble" <ben.knoble@gmail.com>, GGG <gitgitgadget@gmail.com>
-Message-Id: <fc4d4a00-bc3a-4e1a-939c-f3a68fd8ce08@app.fastmail.com>
-In-Reply-To: 
- <CAHwyqnVJ618QXq99M=XNm19eEObQC-DTLcpeYOiizzSu_YNEpw@mail.gmail.com>
-References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
- <pull.2448.v2.git.git.1792348037.gitgitgadget@gmail.com>
- <bfc2b43a-6198-47b0-8868-d92551548f22@gmail.com> <xmqq5wyr128q.fsf@gitster.g>
- <CAHwyqnVJ618QXq99M=XNm19eEObQC-DTLcpeYOiizzSu_YNEpw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] reflog: add --operations and --historical-branch
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Oct 24, 2026, at 20:46, Harald Nordgren wrote:
-> On Sat, Oct 24, 2026 at 6:40=E2=80=AFPM Junio C Hamano <gitster@pobox.=
-com> wrote:
->>
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->>
->> > I'm rather skeptical of this in its current form. Not all commands =
-that
->> > modify the working tree update the reflog and some commands such as=
- "git
->> > cherry-pick A B C" create multiple reflog entires that are
->> > indistinguishable from multiple invocations of a single command.
->>
->>[snip]
->>
->> By the way, I too was annoyed that 'git reflog' defaults to the log
->> of HEAD a long time ago, but the irritation soon waned once I made
->> it a habit to always provide @{now} or @{0} to the command, as that
->> notation refers to the current branch.
->
-> Thanks Phillip, Ben and Junio for pointing this out!
->
-> I didn't realize that reflog could be changed to operate only on one
-> branch. And it makes it a lot better! Seems like it should be the
-> default, and I don't think a lot of people would complain, I'll
-> certainly never run the old reflog again.
+partial_clone_register() and partial_clone_get_default_filter_spec()
+use `the_repository` to look up promisor remotes and to update the
+repository's configuration, which ties them to the main repository of
+the process.
 
-Well. I wrote in this thread:
+Accept the repository as a parameter instead, and have the callers in
+builtin/clone.c and builtin/fetch.c pass `the_repository` explicitly.
+This moves the dependency on the global one level up, without changing
+behavior.
 
-> That you rebase many commits and then the reset points (where each one
-> started and ended) get obscured in the reflog is classic for me. And I
-> think many have had the same issue.
+Signed-off-by: Dorine Tipo <dorine.a.tipo@gmail.com>
+---
+The file no longer uses `the_repository` after this change. I left
+USE_THE_REPOSITORY_VARIABLE in place to keep this patch focused, and
+can drop it here or in a follow-up, whichever is preferred.
 
-But now I wonder if that was just an illusion:
+ builtin/clone.c               |  3 ++-
+ builtin/fetch.c               |  7 +++++--
+ list-objects-filter-options.c | 14 ++++++++------
+ list-objects-filter-options.h |  3 +++
+ 4 files changed, 18 insertions(+), 9 deletions(-)
 
-    $ # The rebase was for five commits
-    $ git reflog --no-decorate test-branch
-    0e77d8619b8 test-branch@{0}: rebase (finish): refs/heads/test-branch=
- onto 7e34d8174dcda3435d1404c9a30bef46afe6c13e
-    d1bcad06e24 test-branch@{1}: branch: Created from HEAD
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 44037dd428..5a6859065e 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1619,7 +1619,8 @@ int cmd_clone(int argc,
+ 				     remote_head_points_at, &branch_top);
+ 
+ 	if (filter_options.choice)
+-		partial_clone_register(remote_name, &filter_options);
++		partial_clone_register(the_repository, remote_name,
++				       &filter_options);
+ 
+ 	if (is_local)
+ 		clone_local(path, git_dir);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 1f76ae6242..5277047476 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2436,7 +2436,8 @@ static inline void fetch_one_setup_partial(struct remote *remote,
+ 	 * remote if there is currently no default filter-spec.
+ 	 */
+ 	if (filter_options->choice) {
+-		partial_clone_register(remote->name, filter_options);
++		partial_clone_register(the_repository, remote->name,
++				       filter_options);
+ 		return;
+ 	}
+ 
+@@ -2446,7 +2447,9 @@ static inline void fetch_one_setup_partial(struct remote *remote,
+ 	 * the config.
+ 	 */
+ 	if (!filter_options->choice)
+-		partial_clone_get_default_filter_spec(filter_options, remote->name);
++		partial_clone_get_default_filter_spec(the_repository,
++						      filter_options,
++						      remote->name);
+ 	return;
+ }
+ 
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index bc5d98f9e6..178624f6f5 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -362,6 +362,7 @@ void list_objects_filter_release(
+ }
+ 
+ void partial_clone_register(
++	struct repository *repo,
+ 	const char *remote,
+ 	struct list_objects_filter_options *filter_options)
+ {
+@@ -370,7 +371,7 @@ void partial_clone_register(
+ 	char *filter_name;
+ 
+ 	/* Check if it is already registered */
+-	if ((promisor_remote = repo_promisor_remote_find(the_repository, remote))) {
++	if ((promisor_remote = repo_promisor_remote_find(repo, remote))) {
+ 		if (promisor_remote->partial_clone_filter)
+ 			/*
+ 			 * Remote is already registered and a filter is already
+@@ -378,12 +379,12 @@ void partial_clone_register(
+ 			 */
+ 			return;
+ 	} else {
+-		if (upgrade_repository_format(the_repository, 1) < 0)
++		if (upgrade_repository_format(repo, 1) < 0)
+ 			die(_("unable to upgrade repository format to support partial clone"));
+ 
+ 		/* Add promisor config for the remote */
+ 		cfg_name = xstrfmt("remote.%s.promisor", remote);
+-		repo_config_set(the_repository, cfg_name, "true");
++		repo_config_set(repo, cfg_name, "true");
+ 		free(cfg_name);
+ 	}
+ 
+@@ -393,19 +394,20 @@ void partial_clone_register(
+ 	 */
+ 	filter_name = xstrfmt("remote.%s.partialclonefilter", remote);
+ 	/* NEEDSWORK: 'expand' result leaking??? */
+-	repo_config_set(the_repository, filter_name,
++	repo_config_set(repo, filter_name,
+ 			expand_list_objects_filter_spec(filter_options));
+ 	free(filter_name);
+ 
+ 	/* Make sure the config info are reset */
+-	repo_promisor_remote_reinit(the_repository);
++	repo_promisor_remote_reinit(repo);
+ }
+ 
+ void partial_clone_get_default_filter_spec(
++	struct repository *repo,
+ 	struct list_objects_filter_options *filter_options,
+ 	const char *remote)
+ {
+-	struct promisor_remote *promisor = repo_promisor_remote_find(the_repository,
++	struct promisor_remote *promisor = repo_promisor_remote_find(repo,
+ 								     remote);
+ 	struct strbuf errbuf = STRBUF_INIT;
+ 
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+index 77d7bbc846..6a349cb4da 100644
+--- a/list-objects-filter-options.h
++++ b/list-objects-filter-options.h
+@@ -6,6 +6,7 @@
+ #include "strbuf.h"
+ 
+ struct option;
++struct repository;
+ 
+ /*
+  * The list of defined filters for list-objects.
+@@ -158,9 +159,11 @@ static inline void list_objects_filter_set_no_filter(
+ }
+ 
+ void partial_clone_register(
++	struct repository *repo,
+ 	const char *remote,
+ 	struct list_objects_filter_options *filter_options);
+ void partial_clone_get_default_filter_spec(
++	struct repository *repo,
+ 	struct list_objects_filter_options *filter_options,
+ 	const char *remote);
+ 
+-- 
+2.34.1
 
-I have always known about per-branch reflogs and that `HEAD` has its
-own, but maybe I was too much in the habit of running without the branch
-name after rebases?
-
-So maybe my use case was fine all along. But that still leaves
-Patrick=E2=80=99s[1] problems with it.
-
-[1] https://lore.kernel.org/git/akZfm-igZKeHaDST@pks.im/
-
->
-> However, the format is quite heavy with the full name references,
-> seems like they could be cleaned up:
->
->[snip]
