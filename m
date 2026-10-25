@@ -1,66 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792902815;
-	b=luDbx15uyW9uB7Um9DbFnM8ZhIHafmpYxRYKb4D99Wsdl4l/9+ea5STZawgmBpVikIIG
-	 UsLWCHHET9xm4GbZYi+eVH/u19hF3W12ieP4q1xQxWLdwFO0jcRTaRIljBOgFXo8q/UjU
-	 MBP6+6JMRBS3wOWlvMzxI30DrVh0BDb1nkfXz3jhreydXTSkv8eEP4G+KHgQUDwjQlQnK
-	 GPFL9nbSFvfbUIvJhx3QK6lSMnpjkmnPtI97qRguBFYS0KVQAu4D74DxNe/iToW2SLz+q
-	 eOY1vfGHHf4Ersb3rGyepPyoCQwtzLaz+sbdxIC0b7Krquhi1cPgonQwK2sCv99WBvQ==
+	t=1792908749;
+	b=cpfhsyHOo9UjBNUXpJyxM1NoXlKXUrYqQkXrgPVFJ8z+RP/wYS/85GHzAYAb9rP7QtF9
+	 HUw2LTAgjnXWu7y+e4HZnrZRL5SzQNzN8N46/G0qpaZ3S+u0zJ6cTSpDrF47Npc2wih+t
+	 ayOPzTsGFiYpL3F8foLksVJ8ByMXHbxGHmdOsfA2MMYtXMhwKVAgKH+nAlLCy7bDrCSGs
+	 P55NGotvr6Y0s8Y3G495ggfxzEEv6tKGpKbD85GIbc/KLw7zj2uKkQgsIz7WRQRoZ3Qn5
+	 pvv3IvHW6MI4mrZ1OP2bQ0O5oXDKaDLB+EBDDdXtG6fCrer321b/+PEIqxVgic7E8Ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792902815;
-	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:From:To:
-	 Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
-	 UI-OutboundReport;
-	bh=IqXGeVbk9NJbgzk2c3h1I5WMZO0Cu/soSDZDnug6t6U=;
-	b=kP9ht/InZTawsmMxgFn4WSx53LE5C5TqaEafXmfV4Fing4ip+TKyEuWmw+3ioi/3EldS
-	 lYwvfu1MgsRP2jDXCxzsiAqqa52bR7TnKyT4aZAanox3VgMKiyXzyETf9jAnv9vDg5yzD
-	 D2JOn9dX+we1KvQP/Dx6NhrcnY1VxphGFwKJXdKL68B43SH32oc5BDP61F9bznKIAVKgk
-	 ig8DdHCSzvMVaXsO+5pYyxPCbQ5LAVCBATzSKzzSOqkI/jv7GAGDTH1ECjLuO+m7pJDcs
-	 vXdueFdE7PK0UzYuiV9HJl28sftNDwiza44BF3atEEv+hEF3bkpkn/38wEPxnDTXBmQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792908749;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=ZQASeWHgipJa1xD+ZjKpXFrlPgL5UD8lCBQa/AHS/D8=;
+	b=jpe7X71gP6mITQO6wrGT23wBx6+cUZQnp+Rl8EaFRDP43e9o7xlblnCRrNyFy5IANz1M
+	 xbhBOSkgzPJfmbTN8pt/jJGCuUGdw1gjnFvHq8/TIqtJqPkY8mKagUZUg1dbM2gw8v106
+	 7+Jd7M+kwY5CEuAl3LtG1kG2uiacvydM59IuXWfiX4ULhRC2eESYVTknHKTkJBCJdugnt
+	 Emc7Q0ENK42qBB4zYz/8md6tKEXNputJMQ9O+Y0m6xt0QcDeJB5utZYFu/1WTxJtHj2R8
+	 2py2OXA0fwWRcMeizErF04C2AHPbCqGtat5shZfhihFfUDR/v1G/eGgEDnm3Xt97m+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=web.de;
-	spf=pass smtp.mailfrom=web.de;
-	dkim=pass header.d=web.de header.i=tboegi@web.de header.a=rsa-sha256 header.s=s29768273 header.b=FnLw0HgA;
-	arc=none smtp.remote-ip=217.72.192.78
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=r2P24hbD;
+	arc=none smtp.remote-ip=74.125.82.169
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7B6606A31A
-	for <git@vger.kernel.org>; Sun, 25 Oct 2026 04:33:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BD7B6606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6F0606A31B
+	for <git@vger.kernel.org>; Sun, 25 Oct 2026 06:12:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9E6F0606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=tboegi@web.de header.a=rsa-sha256 header.s=s29768273 header.b=FnLw0HgA
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1792902806; x=1793507606; i=tboegi@web.de;
-	bh=IqXGeVbk9NJbgzk2c3h1I5WMZO0Cu/soSDZDnug6t6U=;
-	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:In-Reply-To:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=FnLw0HgANTIOZZ66pOknM0kIzY68pj2w4jnHmLhXH2Fcb/5UZxA8IlDQVPkx4BCY
-	 mEzoaXvY0uoYTfv/S+GLTH1jRoaZhgE/vQbcXrzZb1zZZytvzHhDPvJdYNhlX2HPl
-	 +Yfp32rDBGwo6rovSEw+9YWOtYnC7Qw3vFODMfEJ4XvozW7PfdVQO3Fxta31jqw5k
-	 bBDPD5IYQW1oYyPF37KyNTJE83WjlrpKAfsCIfESNbu5TP2Hne88C+rRB96gpeuVI
-	 DNDLTHN5u5jmaVAw4OKSy7itG4NDEA+VsxELRsnNEqC2kVGa0r43UsoyovDg93mlc
-	 u9ZSqVb265x9TnAEhw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MRF3W-1wxot00sxo-00NAgL; Sun, 25
- Oct 2026 05:33:26 +0100
-From: tboegi@web.de
-To: tboegi@web.de,
-	git@vger.kernel.org,
-	ps@pks.im
-Subject: [PATCH v2 1/1] t1450: use mv -f when overwriting a read only file
-Date: Sun, 25 Oct 2026 05:33:22 +0100
-Message-ID: <20261025043322.1766-1-tboegi@web.de>
-X-Mailer: git-send-email 2.53.0.154.g7c02d39fc2
-In-Reply-To: <atmvASAoaCIpc_ca@pks.im>
-References: <atmvASAoaCIpc_ca@pks.im>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=r2P24hbD
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-35d0be18c71so3573616eec.1
+        for <git@vger.kernel.org>; Sat, 24 Oct 2026 23:12:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792908748; x=1793513548; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ZQASeWHgipJa1xD+ZjKpXFrlPgL5UD8lCBQa/AHS/D8=;
+        b=r2P24hbD0tEO90hLFv4Xy9awkPY67RuH7YRVn7bEWBOCvS52+rPqEyf/YUZnbIsi/0
+         a7xvp6n5SHGvcs+6Fsyw4TvAxA+AWym59FxcsA2rrS5EF/AQi7j5CYNQf+DPGBqWkytF
+         RYfF3HoiwruYLqD6gVUNyX7ImZfevkD3k+7e6twrccfx074K6ENAvxCakph73JMtnfwU
+         1tXEMEGj0dy4wUT7TsNqFY/7Gf6c4MydjKjp9SOiZM9I13tmwRiK2fbJTQvesxPmMWWZ
+         stp0tEgn1W/jvqHmESgXPOAwWCgR77G0Novd8KQHYxXzx647G5g9HiooxgUEZSLXE/nF
+         8QaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792908748; x=1793513548;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ZQASeWHgipJa1xD+ZjKpXFrlPgL5UD8lCBQa/AHS/D8=;
+        b=SbhV2u2n6Rz5JdfL30gSW76QSjqRTq7ZlpkSaiyigg++q+QWRUJh+MpE3DdUA8Pjsw
+         FE7uedCx4K4mxuFCm7qRxoJIsfeeOM4pXIs2/zCY2KlfWxAN0d0kDNNDLlqysasSeUm9
+         6urcsTwklX0JQxJzN+Z7A/+G3nv3jbh+uwLuB6+2gC6RsbDbLVqsVShDqsd9liR6dIP4
+         EFiHEPJuHNIyJePRlG6pbKRU2vMng+KU8/mrOV8hzw9X2xZI/KpeqQjn4EKHQQjnVhld
+         kWmTrfSl2r6TEa30l+RQx048AWyHdCyDvmc2AK8x4zcSJ1Ha+y5i0LGbHYEIX9QktIDj
+         FMyg==
+X-Gm-Message-State: AFq9FYIEf79vX6Q1X67EcPf1JC5EHcZwBWlKz0hqUphLZaPQxwGHGufA
+	fbVju+4Ti+CiyQoKxNW1ZHE9CkMjZicGG6B7Vt/2bjcYBF6a7bgjIG4zedXpr+qTHGo=
+X-Gm-Gg: AYBFou0CQruJXYhgrSwV8Ewyj03dFg1TaA8KcfBbN702lETmN4JpVIgPkEpCNsSocMz
+	xZRRoRxSowO4Lkd0I1otmn1QtlmCUhOnY6hTslJNO978VvY208RAPhlRgUTgmMJMgV0iFstW+LN
+	IyFd1oHuYKuzyzLcdQNOkyW3b91ek346sKEz9T63y7qGLvLmXyeFR9AD1lZerZsyDx9a3v2xAe+
+	lcmYIOBG9PazdeEf1eKgdpfTVsrVP2uwMyk/GX6RCezDRPC4AnsK2txIqhfPe2Zo23uGUVcuq8g
+	8GMphr8jSSvwGGx5tb662Xe5v4MXqm7FvAC5k/tlJGWhkRl3HRSx8Soq8yyv4eNVeJNsRGiOQ5F
+	jH+2kjUhiBFVnaugC1Vrt8P/Bf2BFxuMnYGqaDhlBgcExbOJZtWvY3meXwG5J+TcErdvAw08CGX
+	AoqBaqqUFOL7SQVaLhhmFD2u9oMuRwAx2TQ7SFuq1uvClM+yTjdP7Z65dn0PJK8xQCUu0J2+AHS
+	rCwLfuB6h9bThf4AZLxdyEyzQ/X559N+DvRaF43igCeQ6q61ULFQ29Ar1qZn571l5FVbefcMOfM
+	tZpUE9VZPPW2NoTEIanx3fUZfTAjqUJ5rK3lS4Vp7g==
+X-Received: by 2002:a05:693c:880a:b0:364:377c:cabe with SMTP id 5a478bee46e88-369e8502311mr4215834eec.24.1792908747542;
+        Sat, 24 Oct 2026 23:12:27 -0700 (PDT)
+Received: from LAPTOP-PVRSMPQK.iiitd.edu.in ([103.25.231.125])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-369e8afd64fsm15632196eec.0.2026.10.24.23.12.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Oct 2026 23:12:26 -0700 (PDT)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com
+Subject: [GSoC PATCH v2] object-name: use Q_() for the reflog entry count
+Date: Sun, 25 Oct 2026 06:12:22 +0000
+Message-ID: <20261025061222.382-1-aniketgupta3001@gmail.com>
+X-Mailer: git-send-email 2.56.0.240.gf97865f162
+In-Reply-To: <20261023133118.456-1-aniketgupta3001@gmail.com>
+References: <20261023133118.456-1-aniketgupta3001@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -70,173 +95,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:nRzxoXZRI9/odtVTjGhKeI7p90DLSjMlKY0tyDTRKj4KktqsNiN
- K+pSu+KaeCvfNJXJchhn4jG/sgeQ6T1qkv6xkjUlGEO+UK58G1ndn3tIyHV704LHG4GkXmR
- K+Kq/iiECG92BQD1HzvaP7Juxvogpz1Cm8gX8ZAfx6/4VL6ChLImRMvWZ4I/ebb90ea6gcY
- 7lHMIF9XS86eGL6HaFSVQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:QzpFo8PJ2LI=;shG3arRMblmGz5GKgJ0lYNjbuEl
- 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
+Content-Transfer-Encoding: 8bit
 
-From: Torsten B=C3=B6gershausen <tboegi@web.de>
+When reflog is asked for an entry that it doesnt have, for eg with
+"HEAD@{5}" get_oid_basic() reports how many entries the log has. The
+message is not marked for plural forms and a log with one entry says
+that "only has 1 entries"
 
-test case 38 in t/t1450-fsck.sh replaces a loose blob, "$tmp" below,
-with a trucated version "obj.tmp" using
+Use Q_() so that the singular is used for one entry so that
+translations for languages with other plural forms also can have the
+right form for each count.
 
-mv obj.tmp "$obj"
+Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
+---
+Resend of v2, now sent as a reply to v1. No other changes.
 
-This fails on some sytems, like older MacOS.
-`man mv`
-includes this information:
-  The following options are available:
-  -f      Do not prompt for confirmation before overwriting the destinatio=
-n
-           path.  (The -f option overrides any previous -i or -n options.)
-and further down:
-  If the destination path does not have a mode which permits writing, mv
-  prompts the user for confirmation as specified for the -i option.
+Changes since v1: t1506 was also looking for "entries" and thus
+failed with a one-entry reflog. Now it matches "entr" just like Junio
+suggested
 
-Running the test case in debug and verbose mode `./t1450-fsck.sh -d -v`
-shows this lines (which I have shortened to fit into 72 characters)
+v1: https://lore.kernel.org/git/20261023133118.456-1-aniketgupta3001@gmail.com/
 
-override r--r--r--  user/staff for .git/objects/fc/a75a5be3823dc0560da5?
-(y/n [n]) not overwritten
-fca75a5be3823dc0560da57ade678f212aeb33f6
+ object-name.c                  |  4 +++-
+ t/t1400-update-ref.sh          | 14 ++++++++++++++
+ t/t1506-rev-parse-diagnosis.sh |  4 ++--
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
-POSIX mentions that the observed
-"prompt to standard error and read a line from standard input"
-should not be done if "standard input is a terminal".
-So we may blame the "standard input is a terminal" logic to fail.
-
-Side note: Answering with 'y' to the question of `mv` like this
-(echo y | mv obj.tmp "$obj")
-makes the test case pass.
-
-To make things not too complicated use the most portable form
-mv -f obj.tmp "$obj"
-
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-=2D--
-
-Thanks to all reviewers.
-Changes since V1:
-  "should not be done when" -> "should not be done if"
-  Fix "mv -v": it must be "mv -f"
-
-t/t1450-fsck.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 16cc5d5dcb..335dcbf0af 100755
-=2D-- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -548,7 +548,7 @@ test_expect_success 'rev-list --verify-objects with tr=
-uncated loose blob' '
- 		# Truncate the loose blob such that its header can still be
- 		# parsed, but reading the object data fails mid-stream.
- 		test_copy_bytes 64 <"$obj" >obj.tmp &&
--		mv obj.tmp "$obj" &&
-+		mv -f obj.tmp "$obj" &&
-=20
- 		test_must_fail git rev-list --verify-objects "$blob" 2>err &&
- 		test_grep "hash mismatch" err
-=2D-=20
-2.50.0.rc0.46.g7014b55638
+diff --git a/object-name.c b/object-name.c
+index 654668576..eeaac2ddc 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -810,7 +810,9 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 				if (flags & GET_OID_QUIETLY) {
+ 					exit(128);
+ 				}
+-				die(_("log for '%.*s' only has %d entries"),
++				die(Q_("log for '%.*s' only has %d entry",
++				       "log for '%.*s' only has %d entries",
++				       co_cnt),
+ 				    len, str, co_cnt);
+ 			}
+ 			if (flags & GET_OID_GENTLY) {
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 1a164c96f..1d1b46379 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -458,6 +458,20 @@ test_expect_success 'query reflog with gap' '
+ 	test_grep -F "warning: log for ref $m has gap after $gd" stderr
+ '
+ 
++test_expect_success 'reflog entry out of range reports how many there are' '
++	test_when_finished "git update-ref -d $m" &&
++
++	GIT_COMMITTER_DATE="1117150320 -0500" git update-ref $m $A &&
++	test_must_fail git rev-parse --verify "main@{5}" 2>actual &&
++	echo "fatal: log for ${SQ}main${SQ} only has 1 entry" >expect &&
++	test_cmp expect actual &&
++
++	GIT_COMMITTER_DATE="1117150380 -0500" git update-ref $m $B &&
++	test_must_fail git rev-parse --verify "main@{5}" 2>actual &&
++	echo "fatal: log for ${SQ}main${SQ} only has 2 entries" >expect &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'creating initial files' '
+ 	test_when_finished rm -f M &&
+ 	echo TEST >F &&
+diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
+index 722884e65..9a4b93b79 100755
+--- a/t/t1506-rev-parse-diagnosis.sh
++++ b/t/t1506-rev-parse-diagnosis.sh
+@@ -142,10 +142,10 @@ test_expect_success 'incorrect file in :path and :N:path' '
+ test_expect_success 'invalid @{n} reference' '
+ 	test_must_fail git rev-parse main@{99999} >output 2>error &&
+ 	test_must_be_empty output &&
+-	test_grep "log for [^ ]* only has [0-9][0-9]* entries" error  &&
++	test_grep "log for [^ ]* only has [0-9][0-9]* entr" error &&
+ 	test_must_fail git rev-parse --verify main@{99999} >output 2>error &&
+ 	test_must_be_empty output &&
+-	test_grep "log for [^ ]* only has [0-9][0-9]* entries" error
++	test_grep "log for [^ ]* only has [0-9][0-9]* entr" error
+ '
+ 
+ test_expect_success 'relative path not found' '
+-- 
+2.43.0
 
