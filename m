@@ -1,100 +1,67 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792949265;
-	b=4AEmz7o+2DVJRUEOOzwXju1uo2ENeEsEIThaLOwih7WWAJZJ+M6sJoY5wVzSEmdKAwW0
-	 GJbnIdLGVpXz0qMXRdk6UhpKOVAtXmpWDF8WW34ilVDoeqM0ohnKy3HgLXeySYsZdh6i+
-	 FSv8UOkn9cdzCHuLch9x4BWaocf+ySQrc23aPDWPDTocFvQ1KURLM4LaCoBdJ5tM41S4V
-	 85vj+2NqrPRMbWDGxJzVd831cY5uyzvOCSW4p2jmm9AYa7bXaZ4eaiYlb7amUBfTeuD1S
-	 ScPTGhj0uhMzPWkFSjlzymOYwaOFhWvukKkTYZF9UwP7g1CpNTUwmIThlJ5bfSf2IAQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792949265;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=2U1GnmzJ0BcbkVRtOfZHis5YzAZuB1pW3M6k/8okIZc=;
-	b=cZuc8jnzfdYGMpUaFLnrnQrESsIbQBavX5bpwzC8WOy0AZ3zJhWW6/B40RTMQM6bwXwk
-	 4md6/EF2ODfXAs9XPjYuj9wAHeuKPHAvwD5N+4NrBxmC6E19ucMfsvMC0mQEq+QJeqFDz
-	 zm8YmgL+5Zi6Nnc2B7xFpcydACpyJ51eRaR9HOA/XyU/ffP1GFtyI+r8SBd/rsEvMKMlC
-	 p9VG19PsxHf9fp0GpQG+R0yeFh84jovv/wvqjy+u/LRa5kmJ9KTvJ9xmQXPmWJW22qOHK
-	 6EkeBG4VRmBOZnvebXhSYpNeawFWWcYU1bPDlgA1cfvkuklCf5QfFsMwZANpQvS4b2A==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YLtHFuPR;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.17.12
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792951587;
+	b=JQETdBlaPCJLivwVcNdAIPVKXB5bh/or7zYWB63GLxWXe6JvSQS6EW6iRvPA0cDmbI9h
+	 z8pJOJTAYjV9qKis13LN+Ue41YhScMRByrC7SpsoNv55ccJ2YwQ/nTcBpyXkdVO/BaXn5
+	 5q9rRPT/L/GwjbDy3t8L7xOTHWeWuITVrVhhIXy0ACE+OniiDoYr8OUJ0bBu78o4SAQ6G
+	 c58GwuI8ORDfjrDMkL49RESDBRDii1BHQh3wD4Wll8MkurJlyVUNFfttyG09QLw0uT0+s
+	 6r9V9W3i4IOawqxyaejBVI//WvD2Bo3t7Z6H7BjW5AudpMsbOd7UOU0z1X36v9AeLJQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792951587;
+	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:From:To:
+	 Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
+	 UI-OutboundReport;
+	bh=K2KJrW9fyqIMUOaV8qlKLiMkuCxS4pOfJSsunOTx9+M=;
+	b=aDnFuTS2EW4RyuSrbbLPVHyxB7oMVBfnHkgmf6HrC0Hhu/wuXCdcnqVcJe6Y0qEDhlqF
+	 LQFX9K8Yp9Ie2sTXT/4IWXOrpwG8xleXEibYWN6GKF01jTZToDBaLKeT3myjnAQbsrn/C
+	 NUDSCfG9eKiG41NIVNkcgWonVAczxNMTet9TtvFItFp3OCDkwDOlxG27TJoTqq2vbYAXL
+	 BBkwHTz+81L9VToZzRbUrjbyEqYHTFdmkuqKrBM3l+ihWBWB87y5dDoPrjhF7RDJ9LV2q
+	 HTzuZZd4DrcaAc57lue26wdP8c/JBpgRSmnwCFkTZILTFmdGEympnwui2bVnCIsp67Q==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=web.de;
+	spf=pass smtp.mailfrom=web.de;
+	dkim=pass header.d=web.de header.i=tboegi@web.de header.a=rsa-sha256 header.s=s29768273 header.b=rjJGvz4I;
+	arc=none smtp.remote-ip=212.227.17.12
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C855606A31A
-	for <git@vger.kernel.org>; Sun, 25 Oct 2026 17:27:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3C855606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EED606A31A
+	for <git@vger.kernel.org>; Sun, 25 Oct 2026 18:06:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 86EED606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YLtHFuPR
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6acb9c018ffso3277273a12.1
-        for <git@vger.kernel.org>; Sun, 25 Oct 2026 10:27:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792949263; cv=none;
-        d=google.com; s=arc-20260327;
-        b=DV9+9a8eDSyC9Fti+Y2zGeX4L2ggESxpxLVeFpkX1JhSREySmqfdXoG7V7eGUwComP
-         Mlss7lH7qk5p12CCpmF4Xk1sp5zAnGW8ScA/1CdmOxYY9u92XxvJgRpihENER6mmv/4J
-         6YaxGfdbk412cARclTa+Ppq44uMBucK0pd5N1cWXbmF9XVB4sQSAiDMe83Se86kHSdAM
-         FrXDcG1oSyAM9C3p+b+DWNhFrG2N/BEWUjAunPfsyi9ikxb/pia53va1Fy5VRfIJv6XT
-         +FA95nQPSMGZIuB7IW9qP3FuJcrrbL+Nb0BMQQ4YgcB3wrzbGuhTWZTLaWiBHMANSJ20
-         42WA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=2U1GnmzJ0BcbkVRtOfZHis5YzAZuB1pW3M6k/8okIZc=;
-        fh=+EbqtoTGLBV4sjbR9yaBPp8DM8sA7UUx74SBphIgiXk=;
-        b=FXiq3FGnJInuz/bON/9Q61CudetksG1wQCpfI8rl8qLv3J8aHnjQJMqLSuQteNQhsi
-         G84dYJQQnaBrNTmlS18FYyn8aO+F6mJ4Q7gZ5Mz/4EjTD2RT1ZkwUE4TG2rE58+D5+Qr
-         7IsNFn5UO7vOeDq9LPdwHeWo6eQPBemgy6nBaG7GFroYBhHi7k83mPH9IYSrxYmmVmv9
-         8qnnQqhnNIhdrxirED7JYcBovlb69nTIjNJuVskuGU2C54bE9gwm8+iiGtU+sYfbtOXU
-         ffKtMk5mjAdFzjYdWYMttl6Q6VWkBNyarkszq+lx1/LlPKxTMOr5ycYJBoR7bzjcV7nU
-         Bsmw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792949263; x=1793554063; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=2U1GnmzJ0BcbkVRtOfZHis5YzAZuB1pW3M6k/8okIZc=;
-        b=YLtHFuPRw+nA54mF3bNvS4k7Ee3/x17WZsT2/ASkQ/OalB5oqfQBMxUvwQn1qNyXTZ
-         rW78smb/yeYk8dzGJuDHCkPlZfDAxnSqp+2gbf37qFmx6zS4btfTKUO4LCmfERj4WBZk
-         lLsHhA9CVp7j+pck9DPdGG+p+SRMsuy8G+wFaJQ4XfS1UdlLTjwBkHaWzfYGWCw5cThV
-         oMPZyjaR1ZGGSBnoTvTvKHyWMF64m1Qag0ZieCw/J9+0+91nCJ/dheKbD+312nwf6FaK
-         i07mIIJAx+hRUsKtMry0IM/7OH2SKumgz+WAmn/Y5iLiZXBDi88qk5oLflRa3uTdC6NR
-         LKDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792949263; x=1793554063;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2U1GnmzJ0BcbkVRtOfZHis5YzAZuB1pW3M6k/8okIZc=;
-        b=cRCp2cky6kOQ3J6ICeeIkcQnCN3CLFAsSYO54Um8mY0Ebq3xn0wwjWXuOl9mEbRQYD
-         JdfkbmBHZuGStWjRV6Fu3bsHMIJVecyBHnOkgJhDHj1MagkzzAGj9Dge23AP9YWFAcvi
-         37rneUDfG9wlDVxNyJKE6IRLbC2TztknegAWI28JJojo1kn+61FmUwYCBr08F+QN8aSJ
-         zPXSUZlbjshoUEUX7oUNATMPjPhZgpuSna2QKrDxtp55gdMu68Ouil3g3DEaGBp3vBZF
-         nex6gDYAOKo3SEa0kjMjK/AFnmakkUS3EhI3I/tPbGEXCwkw93ZoQxzL+w6BYe5PvXaJ
-         kjIg==
-X-Forwarded-Encrypted: i=1; AKwUvBw+QnJragsbIljz6Bw+Av9mWRS13ocBpT3FrRehS/L+ByWsmqGq9FXRaBotvKliU/zbc2Q=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIiPPPi2rp+PNL6I+En3oTT/DeLN1CGkttUO6FZEbhEyDjLk73j
-	D1SA/tSOvOJDoLW5hHXuEp40GYp4fmQ0z32q+WMs/9jYGlKna30VKdk8xkqqnWhTp6FFr1tq9vH
-	Q893SeXRTQFAaLOc/S9t3O/iNGD7h5Tk=
-X-Gm-Gg: AYBFou159liLYiKWuS/ZbYaf8nhvnTtnipELZiEorAofQHrgtLKBnO8khUy2H4xzK6r
-	sk52Eh5BBHcRrrgmTYXLY7Mc5pL77WaKyV26B4EJngdmxAfPOliKH8OokEfmQdP2pIaQVmu8xaF
-	r9p7e3WdZIg+Ie7Xqa4L4HfCHUahMPKWmHVxhJbAVilAMqxq8hqp6X8pRmdOjVO1tvfnbk0659r
-	CL/OyPlWM8bYur+VUBEiBuGxtWLGH1PVSCA0rGY77jV2Xje/D3eWFTeqzQr+ucivvaYVKbgGcuO
-	Trsf2N9mTCCjWl4wIexkwLXFnPWM79caCSSJ2g/QqPN9tUEVwJuuYjjDSjKbHLxQHfSSzRLHnxv
-	BgDic6965EOQMLmcFva6F3PX0qqiaRhpMtoFhuVHgNyBLbQEgMU1S8YZCgX9jF4yF02mbIg==
-X-Received: by 2002:a05:6402:1568:b0:6b3:b0b2:6e7 with SMTP id
- 4fb4d7f45d1cf-6b442fe888amr3932701a12.18.1792949263178; Sun, 25 Oct 2026
- 10:27:43 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=tboegi@web.de header.a=rsa-sha256 header.s=s29768273 header.b=rjJGvz4I
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1792951582; x=1793556382; i=tboegi@web.de;
+	bh=K2KJrW9fyqIMUOaV8qlKLiMkuCxS4pOfJSsunOTx9+M=;
+	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:In-Reply-To:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=rjJGvz4IrvXWr7hefnagikc30WWSGKP2HUhEldAn8P3nbhtB5tPD4chwacrXxF5m
+	 n2/8TRV+nhSjLK0yybjqQbsLK7JEFhHwVRIQ4RmWnG0vHSOlB+x2zzLYf8lS94m90
+	 dNX4WFjYqVLONKzkA6mnBb2R1oMXAo8KS6AQlj+nwInsgIKXSXscXkPo5hg2aBXrj
+	 0JhZbPsW6E0LdN6ejjaHxMuDzhMS2y5fpgGLR4tar7g4u7Uz1UmVZX7IGU8y+L/yz
+	 GGkJC1kydFtxvOb83k1dowdn8Lif9GoTYnvAhDuM6HRkoCXUB9Vs18bENNoSR5aEa
+	 aRuMta4oNkgg26MSJQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N2SP7-1wZZvl1oD9-013xiM; Sun, 25
+ Oct 2026 19:06:22 +0100
+From: tboegi@web.de
+To: tboegi@web.de,
+	git@vger.kernel.org,
+	ps@pks.im,
+	taahol@utu.fi
+Subject: [PATCH v3 1/1] t1450: use 'mv -f' when overwriting a read-only file
+Date: Sun, 25 Oct 2026 19:06:18 +0100
+Message-ID: <20261025180618.16899-1-tboegi@web.de>
+X-Mailer: git-send-email 2.53.0.154.g7c02d39fc2
+In-Reply-To: <atmvASAoaCIpc_ca@pks.im>
+References: <atmvASAoaCIpc_ca@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,237 +71,158 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com> <9fb7e77a862640007339df639d03e61db37b6f70.1792503778.git.gitgitgadget@gmail.com>
- <CALnO6CCJzzX1qKeX4AR-GViM4LJjKrfdj6iafVXUQZM-c2Su4A@mail.gmail.com>
-In-Reply-To: <CALnO6CCJzzX1qKeX4AR-GViM4LJjKrfdj6iafVXUQZM-c2Su4A@mail.gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Sun, 25 Oct 2026 18:27:05 +0100
-X-Gm-Features: AclHuK-ifQbWDDAtE3kpFP1JMzF-BH7mnqbcWLazv8oxmqwYhSk41CV9tJ6rTW8
-Message-ID: <CAHwyqnUQSninG=3hcxZOXUUwEXGbA6AT7FfmL36gwa9wV3ub4g@mail.gmail.com>
-Subject: Re: [PATCH v10 3/5] fetch: infer branches to fetch from a refmap-only remote
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:9jjHiQaDcc3JCysJ5mAJDdh6ctbqfIvvBAfo9F5EfE0ia1HB921
+ NgW85pRjBC1aY04DAJDJoBNLEW/PbgAS6zOckk80YJa6S0a+cn/oaaku1I2LdiJB+EQ3Flb
+ vUF5XfLhT6VGWbm+oek+9NMgPPr9HCTA1jtT/b4E67qdOSNWeNI9ONqynvFIS7UXNv6wueh
+ YB8zYtmbNSdE0sP5gdLWQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:XRY3zF8EsuI=;RFEFHz41nnx6SvDtULWhNLeUF9a
+ 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
+ qHBlyotMhCT10x2p/Q==
 
-> > Configuring remote.<name>.refmap without remote.<name>.fetch used to
-> > make a refspec-less "git fetch <name>" fail with "--refmap option is
-> > only meaningful with command-line refspec(s)", since a refmap only
-> > says where to put fetched refs, not what to fetch.
->
-> This makes this commit sound like a fixup of [1/5], but I think it's
-> actually one of the main goals of the series! Can we flip the
-> justification around to say something like "we want to allow refmaps
-> to do XYZ [=E2=80=A6] Incidentally, we also make sense of the case when r=
-efmap
-> is configured without fetch" ? That would make the purpose clearer to
-> me, at least.
+From: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-Good idea.
+Test case 38 in t/t1450-fsck.sh ("rev-list --verify-objects with
+truncated loose blob") replaces a loose blob with a truncated
+version using `mv obj.tmp "$obj"`.
 
-> > Make that case infer what to fetch: the local branches whose
-> > @{upstream} is already on that remote. This lets a remote be
-> > configured to fetch only the branches actually in use, without
-> > listing them by hand in remote.<name>.fetch, and without needing to
-> > touch the command line every time.
-> >
-> > Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> > ---
-> >  Documentation/config/remote.adoc |   5 +-
-> >  Documentation/fetch-options.adoc |   6 +-
-> >  builtin/fetch.c                  |  75 +++++++++++++++----
-> >  remote.c                         |  24 +++++++
-> >  remote.h                         |   4 ++
-> >  t/meson.build                    |   1 +
-> >  t/t5586-fetch-refmap.sh          | 119 +++++++++++++++++++++++++++++++
-> >  7 files changed, 219 insertions(+), 15 deletions(-)
-> >  create mode 100755 t/t5586-fetch-refmap.sh
-> >
-> > diff --git a/Documentation/config/remote.adoc b/Documentation/config/re=
-mote.adoc
-> > index 103eada406..7c52e443a5 100644
-> > --- a/Documentation/config/remote.adoc
-> > +++ b/Documentation/config/remote.adoc
-> > @@ -36,7 +36,10 @@ remote.<name>.fetch::
-> >  remote.<name>.refmap::
-> >         The default value of the `--refmap` option for linkgit:git-fetc=
-h[1].
-> >         Used to map remote refs being fetched to remote-tracking refs t=
-o
-> > -       store. See the `--refmap` entry in linkgit:git-fetch[1].
-> > +       store. If `remote.<name>.fetch` is not set either, a refspec-le=
-ss
-> > +       fetch infers what to fetch from local branches built on this
-> > +       remote, instead of fetching every branch it has. See the
-> > +       `--refmap` entry in linkgit:git-fetch[1].
-> >
-> >  remote.<name>.push::
-> >         The default set of "refspec" for linkgit:git-push[1]. See
-> > diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-opt=
-ions.adoc
-> > index c2101a7b39..90b9e13ac2 100644
-> > --- a/Documentation/fetch-options.adoc
-> > +++ b/Documentation/fetch-options.adoc
-> > @@ -245,8 +245,10 @@ endif::git-pull[]
-> >         command-line arguments. See section on "Configured Remote-track=
-ing
-> >         Branches" for details.
-> >  +
-> > -`remote.<name>.refmap` provides the default value for this option, the
-> > -same way `remote.<name>.fetch` provides the default refspecs to fetch.
-> > +When a refmap is active (from `--refmap` or `remote.<name>.refmap`) bu=
-t
-> > +nothing to fetch is specified on the command line, nor is there a
-> > +`remote.<name>.fetch`, branches from the remote that are used as the
->
-> "remote-tracking branches" ??
+Because Git creates loose objects as read-only files, this step
+attempts to overwrite a read-only file. When running the test,
+older versions of macOS `mv(1)` (prior to 12.3)
+will prompt the user for confirmation (somewhat shortened):
 
-Yes, the next version will say "remote-tracking branches from this
-remote that are also configured as the @{upstream} of a local branch
-are fetched".
+override r--r--r--  user/staff for .git/objects/fc/a75a5be3823dc0560da5?
+(y/n [n]) not overwritten
+fca75a5be3823dc0560da57ade678f212aeb33f6
 
-> > +`@{upstream}` of our local branches are fetched.
->
-> The clause here is complicated ':D I found "infer what to fetch from
-> local branches built on this remote" to be a bit clearer, but we
-> definitely still need to get to the point, which is that
-> remote-tracking branches from this remote that are also configured as
-> upstreams of local branches are fetched.
->
-> Now, I wonder a bit: the doc says "when a refmap is active" we do that
-> "fetch remote-tracking branches that are upstream of local branches"
-> [all scoped to the current remote]---but it doesn't really say how the
-> refmap affects that? I mean, I imagine it's used for mapping (duh),
-> but I don't know if it also narrows the scope, or if the scope is
-> deliberately all remote-tracking branches that meet the requirements,
-> or=E2=80=A6?
->
-> IOW, it seems to beg the question "why does the presence of a refmap
-> control this if it has no effect on the set of selected branches," and
-> I think the answer is partly "because we designed it that way" and
-> possibly found in the mails leading up to this point, but we might
-> want to try to connect the dots for folks? Idk.
+As the answer is not 'y', the file is not overwritten and the
+test case fails.
 
-I'll take a look at improving this part.
+Use `mv -f` to force the overwrite and avoid the interactive
+prompt.
 
-> >
-> >  `-t`::
-> >  `--tags`::
-> > diff --git a/builtin/fetch.c b/builtin/fetch.c
-> > index 136a59154a..0fc1fb66d5 100644
-> > --- a/builtin/fetch.c
-> > +++ b/builtin/fetch.c
-> > @@ -524,6 +524,8 @@ static struct ref *get_ref_map(struct remote *remot=
-e,
-> >          */
-> >         struct refspec *effective_refmap =3D
-> >                 refmap.nr ? &refmap : remote ? &remote->refmap : NULL;
-> > +       struct refspec inferred_rs;
-> > +       int infer_from_refmap =3D 0;
-> >
-> >         /* opportunistically-updated references: */
-> >         struct ref *orefs =3D NULL, **oref_tail =3D &orefs;
-> > @@ -531,15 +533,32 @@ static struct ref *get_ref_map(struct remote *rem=
-ote,
-> >         struct hashmap existing_refs;
-> >         int existing_refs_populated =3D 0;
-> >
-> > +       refspec_init_fetch(&inferred_rs, the_hash_algo);
-> > +
-> >         filter_prefetch_refspec(rs);
-> >         if (remote)
-> >                 filter_prefetch_refspec(&remote->fetch);
-> >
-> > +       if (!rs->nr && remote && !remote->fetch.nr &&
-> > +           effective_refmap && effective_refmap->nr) {
-> > +               struct string_list tracked =3D STRING_LIST_INIT_DUP;
-> > +               struct string_list_item *item;
-> > +
-> > +               branches_tracking_remote(the_repository, remote, &track=
-ed);
-> > +               for_each_string_list_item(item, &tracked)
-> > +                       refspec_append(&inferred_rs, item->string);
-> > +               string_list_clear(&tracked, 0);
->
-> Interesting choice of string_list again ;) do we need the sorting
-> behavior? (In fact, since it could come from an "ordered" config,
-> perhaps we should use that order?) A strvec seems more appropriate
-> then=E2=80=A6
+Helped-By: Tuomas Ahola <taahol@utu.fi>
+Helped-By: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+=2D--
+v3: Use a much shorter commit message, as suggested from Junio.
+    Mention that MacOs 12.3 has fixed this.
 
-Agreed, the next version uses a strvec here too. Nothing is sorted
-anymore: the branches come in refname order, and each branch's merge
-entries in config order.
+t/t1450-fsck.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> > +
-> > +               rs =3D &inferred_rs;
-> > +               infer_from_refmap =3D 1;
-> > +       }
-> > +
-> >         if (rs->nr) {
-> >                 struct refspec *fetch_refspec;
-> >
-> >                 for (i =3D 0; i < rs->nr; i++) {
-> > -                       get_fetch_map(remote_refs, &rs->items[i], &tail=
-, 0);
-> > +                       get_fetch_map(remote_refs, &rs->items[i], &tail=
-,
-> > +                                     infer_from_refmap);
-> >                         if (rs->items[i].dst && rs->items[i].dst[0])
-> >                                 *autotags =3D 1;
-> >                 }
-> > @@ -574,6 +593,8 @@ static struct ref *get_ref_map(struct remote *remot=
-e,
-> >
-> >                 for (i =3D 0; i < fetch_refspec->nr; i++)
-> >                         get_fetch_map(ref_map, &fetch_refspec->items[i]=
-, &oref_tail, 1);
-> > +       } else if (infer_from_refmap) {
-> > +               /* Already fully handled above. */
-> >         } else if (refmap.nr) {
-> >                 die("--refmap option is only meaningful with command-li=
-ne refspec(s)");
-> >         } else {
-> > @@ -669,6 +690,7 @@ static struct ref *get_ref_map(struct remote *remot=
-e,
-> >         if (existing_refs_populated)
-> >                 hashmap_clear_and_free(&existing_refs, struct refname_h=
-ash_entry, ent);
-> >
-> > +       refspec_clear(&inferred_rs);
-> >         return ref_map;
-> >  }
-> >
-> > @@ -1978,13 +2000,47 @@ static int do_fetch(struct transport *transport=
-,
-> >
-> >         if (rs->nr) {
-> >                 refspec_ref_prefixes(rs, &transport_ls_refs_options.ref=
-_prefixes);
-> > +       } else if (transport->remote->fetch.nr) {
-> > +               struct string_list tracked =3D STRING_LIST_INIT_DUP;
-> > +               struct string_list_item *item;
-> > +
-> > +               refspec_ref_prefixes(&transport->remote->fetch,
-> > +                                    &transport_ls_refs_options.ref_pre=
-fixes);
-> > +               /*
-> > +                * See remote.c's handling of remote.<name>.followRemot=
-eHEAD
-> > +                * for the analogous, still-unresolved case.
->
-> Is this a "we haven't resolved what to do" case, or a "some remote (or
-> something) hasn't resolved" case? I'm not sure what I should be
-> looking at here.
->
-> Oh, I see. It's a duplicate of comment and code from the
-> else{effective_refmap->nr} block below. Hrm=E2=80=A6 probably it would be=
- nice
-> not to duplicate that? I can't spot any differences between the code
-> blocks.
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 16cc5d5dcb..335dcbf0af 100755
+=2D-- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -548,7 +548,7 @@ test_expect_success 'rev-list --verify-objects with tr=
+uncated loose blob' '
+ 		# Truncate the loose blob such that its header can still be
+ 		# parsed, but reading the object data fails mid-stream.
+ 		test_copy_bytes 64 <"$obj" >obj.tmp &&
+-		mv obj.tmp "$obj" &&
++		mv -f obj.tmp "$obj" &&
+=20
+ 		test_must_fail git rev-list --verify-objects "$blob" 2>err &&
+ 		test_grep "hash mismatch" err
+=2D-=20
+2.53.0.154.g7c02d39fc2
 
-Yes, good idea!
-
-
-Harald
