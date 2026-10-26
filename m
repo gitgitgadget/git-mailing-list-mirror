@@ -1,110 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793026075;
-	b=E5LjXB5Xw7lnmu7rLUlWopYpJYyL6Y+YX6s+kfsEsm1xjXqgrQG4xze/TEAtT0+31j7a
-	 Yp8AtZW9BqMVYMlMQqJi226THuHIVaHA4yjrsf0CkEbenxkd1rOnOmjGopM6hs0DnBnIa
-	 LKQJm5IZ4+afB4YJnSuUO3rdF2SFyySui/9zeA+h3KxZxeJpF0nqnc++sZ6KZM/PRJ7kQ
-	 GT4lgijNM1QDu2Eyb02CZ9X8AmMzo9eOJ3TVn63QeDHJ8dQ64lGGPa8bbBRA9d6+2/uF7
-	 eCTKfYoUGie07ISWaXMSqhL5BbxJQAmOdv+qTHJI+62DVwznorHLTbtupxGSHJlRa9g==
+	t=1793026785;
+	b=pbGFw6C/bmgnvSsdUmVWnKLxW9YFLA4LPTS1ptgTjZ+krEj5RVmmG1Ib7HYu9EE5xEhB
+	 3TLj1Vvkao+7po4xbZWZgqBmWbKXpktkTnZQfaR//CfVCi0Hs6OhLl+NhCEBRSKE+yd0b
+	 8shF0R7fGLDBXf5gOV4EHGd09Wf7q0gSwdoJHVFQQ1mYpiDqCYIdhypt0dT7A/hScOdAZ
+	 EbpmKjs6SVgWSNG2iEu+DXBFnfgBA8MdALs8o2vZ6HBDOfCdj8c1UcU/oqOIdrsR6PP24
+	 CAYREZKjttyu1SmOHGE2XLlEcxR3fDxsEeV24H4KZn0iHauszZJ0Fjd5spgDde9ny3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793026075;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793026785;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=z73pyQe0Z1wLPIDglmtTdWDcVWHaAELS9AMAbQ1XkUQ=;
-	b=dced6exASNVfTklumtRcLQ9ePcF2ABFYetFYQeOLPypLMEtJZVCQlNxg2cmIdL0LZ9lY
-	 27HjoBKMuW5hStCwwNctMWfYbi8yUpWqukk0RIp3tWSz68NMfKChGqwKGLYeUTeZDDGU8
-	 /nayL9doPRvIDCbEyBrcJNu6+nJl3ybmeusbNz+RTLBuJQ79RJo0/wXYPb7iBh829go+8
-	 mJ7ZpykIeSFGHKcy1pHzqlgl7CroWhtLarXbDXc329wZNUZ2h4YvRbxyOwFb12th3RyJF
-	 6IfI0bhiYJcsmF240YOSHAijXDt9QFLs/TtUZbjonyUEuC7ZLNEtwA6N1p0w3GBbDWw==
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=vhs2jMBUeqwrz0GgDmWp+Kh7ZfDJLPQPIAgGE0siuck=;
+	b=A2RM62+z8yh9VHYvNLMNDiUeZdR1HLc0XD/OWTaUSuIM6Z76z0A2X/Gw12SrKkilW1At
+	 yZzQNay0yQwGWnOLjl0i7EXknYW2GWo8CJyqbGD2K6C0BSKwOjxX90zW2OaEfjp1XhVMk
+	 SztYXQZVJtIQk0AOPfu2UUtOmx7oBlwR0vOZe52hcICVkQGF3admN/8UajtbP1/NfpOrL
+	 vLbhyfHhvCsqWIT3m+G567RPdp4+Af3xvzYoAXHbsIJmdcMONyBlUwrxM5YStAQb2gLEY
+	 /Kk328qS/JnYJpCH+RxSTGYIAm2V9jXbcljvdVHcVPyhMuBZhYQ3bxIn45t0uOWgn5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=jvns.ca;
-	spf=pass smtp.mailfrom=jvns.ca;
-	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=IJr79zr+;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=awu+b6Gi;
-	arc=none smtp.remote-ip=103.168.172.154
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DL0UwxYd;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=aSNvXTpS;
+	arc=none smtp.remote-ip=202.12.124.159
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4EB606A31B
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 14:47:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EB4EB606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B031606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 14:59:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5B031606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=IJr79zr+;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=awu+b6Gi
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2ABD11400A46
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 10:47:54 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Mon, 26 Oct 2026 10:47:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793026074;
-	 x=1793112474; bh=z73pyQe0Z1wLPIDglmtTdWDcVWHaAELS9AMAbQ1XkUQ=; b=
-	IJr79zr+UjCzL5srM5F9jLl3BnDNU6a5tgr+K+5+ffxDNVuO8JpW2QQaMIK6VRKh
-	oD+Dffg6aiEU1jX4OT3uOAw919h1kNsqjyWgenlhJz1ZnWpalrBnpSmrpGEV4X/I
-	gVZwZgFjR6cke68snpzHeDyf8U2MKLJw50SNTt2RdkA0/WohFPw+02OutSz+vMoZ
-	DNQON9b9HMYiBXlaFSUd6n2/AqANRsPEnR+lF1PJM/P2mFzmfzIass4FvuyFY/0O
-	LHTYwnwPirIKbi1AujDGeCUzasm1IjetLGXtzkrERin6YWfe39dGrGRw1ONrpaLn
-	qXiYNml1GqvverYN/d85fw==
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DL0UwxYd;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=aSNvXTpS
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C0AC37A0012
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 10:59:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Mon, 26 Oct 2026 10:59:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793026784; x=1793113184; bh=vhs2jMBUeq
+	wrz0GgDmWp+Kh7ZfDJLPQPIAgGE0siuck=; b=DL0UwxYdSTL8GgHlZxyDwXaNF/
+	IfyYhlsjMhTMKGtVZhWVdlI5a/yFXZNeq8y9UVtVdqI/ozGz5GLisYhTpC4AV8vj
+	btVZRjqOTzuNmOuKYqXloAUlA7+KWepwfdhK5CH+dzq2BOxXlOSA2Imqt9SwwGhh
+	Of99Ka/Yt3bG5eh/HMGCoJKHVg0tnodFRQgWkbBTUP42ltxskDFf/VDyYksz+BQj
+	4vtQ2a2es3ZnegK2BQsgwDg0LjC6sgkEeA19UNEOaQY4Tv6+L8taiPCJ5s+mNsbW
+	zJ22wFpXLbt5cHKxl3bSz4D4A+3WrbL6p1nGDUqRLkSmwvj9DaJhH5/U0pRg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793026074; x=
-	1793112474; bh=z73pyQe0Z1wLPIDglmtTdWDcVWHaAELS9AMAbQ1XkUQ=; b=a
-	wu+b6GiooTn6diMInCfA7CjLHrZrBKVY7FwCL4+7PVHf4UX3fogkAPLeZIslS8Gd
-	FAFdRyIRim4Vb1FP4W8B8O/g7uAHljxYpifmPx1G8pHB+Gv0gFjQ7ujqPVmWxL6o
-	ezpQ3Zkqp3PeWTKA8G107ZksGDSuxEbHJdtN8z6jHnZvW57xoND2HIIbtYxjm1T+
-	qrScX+hJwCchIs9gNbZhKA/kD3yjP+c3jO/yrPcWiZnGXMDvy0vJPZ/1nEeDlz4y
-	fbcQoB+n0VAHCWZeK8tC6so2tG8F0A+lUKih1bQcRptTrAiMCt8mURFY/6Bdp7sc
-	V+vtjW3+1kTnoEqREu0tg==
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793026784; x=1793113184; bh=vhs2jMBUeqwrz0GgDmWp+Kh7ZfDJLPQPIAg
+	GE0siuck=; b=aSNvXTpSQLRVPfs0N050BG5k4wpzdpWqyYbe5QNDEDL9TPsENVC
+	KRYrzMTPcRUF7EWxGmmuUvt+zNCdiRnUo4qsAmV/Dc8feZ0G0DKBVUmVW+LlbguG
+	WxB0omV9zkjNhHurEBfangj/h7TQPjPKz8O0tTsKS6ciW8BCcCzEQd485oxqFWPp
+	kbQ+IyF5gK/0nRfoY3x38kzEi3dH6syP3YBug3c3W/TXwARGJocLKlkPjYh7+mGx
+	jUG+BQOzwdrnzJ66SM3h0ChF3GAOhvTI75T9U60Y0/yzZrN9vdV60EcR2DSCWfJK
+	2YvBm/4w1C+rp/GLOocd+c3/pIE/clCee5Q==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793026074; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:J26oWjwS0O8e9NZyDsS9UVJMrzW+IuahN4wBle0CQY6hBNH
-	DKvkVUdHliWy7/MTpusE/JO2zeFrVYbSw8yY00Bgu40ngSH4STL5yYC6OxT+Js+4
-	7oEeYNFHxRJREquQVk1Dx8qMZ8HiP9trYxo0ALwA2BNEP2Ld3zNEf4WXMxsDf01f
-	n3x9QMZWITDoZHaxkLIRtEgLwk/tw3ieuKuog/IwtMCuvWEtpDFUu27QxVaPh4LC
-	olDSSY7sCvZtfRBc3LGjrl0FQy1VCOPAErbOv9+wO1tP5n4i1FUBsLtnvu0C90ss
-	edy5ZcdeJZB/0rFN6IZw3VNRx+Gck3mIFJrnqfg==;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793026784; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:GVdpbctoHvAUidTV3/N7oDEnh11LwjwD+be8Ar6yP2jzRhQ
+	92srzmNgwLHWzURibauiam5nYzZPnHAXIWpYL3E3z8XnK5nZT3CHRRjKT37Tl3wg
+	LKKRMLw/tGu+XS5RLCoJozB8I+xN2omBssWHZiSND8tLFycyuYa7kvOOtPkid4cH
+	rru5SJ6RdT8zLk90/Qng1WkkjkdCp9q1yzkBg8RHmg5RiXvSwJitSianR1uJgFK2
+	a3f3u6oFBy5t1iftYB4XRsWgFL5AH2UYCbfB6uzoKbFSG41evoc+vsdCDo8wt/4/
+	tAv5LP6WP6D4quH7gfQrBwowmXQPWdNInxMszfg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:QB278tUo6IkjxSWKdAGJXJCT0cUKk3xUhAV4LcxORrY=:dX+mf+ddHjUy9mA2wfbkDzpjQhKki3RPp3eXlaLgroY=;
-X-ME-Sender: <xms:GWjfand5h8Eb64Fm77BFlJOu4RqeAMZL3ooL5h5nDCh7vtz-cl-5HQ>
-    <xme:GWjfaoB1EiXsEgnmnU0pLhK30x-DfjEAEZrielH5XV9Mjqlns1aCHCpusV3Qe-bEV
-    gKcOKNvi9TxBN6mPc1kUwniopujy4F9jsjJVpL_xijSxvRdYz3rMk9b>
-X-ME-Proxy-Cause: dmFkZTFcqOgfvKNg4XN1YAmTDYT2uoNZ6mGWXyCxaCGQk6YuMEt8aP0ZibNXtqRpfiP22Z
-    /nncQhj54x730eWhApICl/loO4eGZxdzj0uNxQwWDmli3aHTKY7kmA3XvnJPBEK+Q20oIC
-    pCD3wiW2LGSM3CNjozt4VHhMsYRDTOKdNt7KF36FamSaskELhXZyWdnAq2hdUPTZStsfpL
-    TLWINVHSJrcRoZWYq/PEH1hv+xv1hQR5mEeStqyxFiez34a5mza3+nyihQPKr9Zi/DUkce
-    WXfSWMhrsEFNqVL/ACPvQ02Oo6k3QRY1wQpX8f9kbyQXrCKUoUujldLKfG7po/w5XJ8DWp
-    zhrudM1xb83SnVxrKBHyHBazqkjDai8qJ0eAsvZ88V077+f2CORLSuqqGxKzZ5RBG6uyhB
-    cPYG91kNXJpcnHYq5Qs9Y/N/g5XFb9I+nv+FmShgvODAa+yeNED1ALWcIHpkpIxlLweia9
-    mC4AAIC8td36BusZ90ar08AUL8Iuoqpd2Tq/5hFd2ofnsms3AlxVLxV8vUU7kK9EZ/XZCM
-    68sFEoK5Vn6E4e7BtWnaS2LcIEFkwHs4D3O7xgxQn9ygAB+ob0b+BtFyoCpSg07Vx4Mu2/
-    zNRB417SlIO4QZDDCeZn4jYAijFWZJlEES8Oggl1bgp2dCBbEc/XFzgccc1w
-X-ME-Proxy: <xmx:GWjfapKtZBLqhp1srO-413G78lqOLELVdCLoQ60SaoDsNzkvyHDeRg>
-    <xmx:GWjfaueCVMuu2deFHCYyjXpBkroVEyo_Rnz4doP4dpN_U97sFH8GKQ>
-    <xmx:GWjfao8VAeaJ373JNwqL9DRHmLzYkOvXT5cAQSdagLGWygBTcrNuNQ>
-    <xmx:GWjfarrG2FggjCRK4IDsk6jcWXkKT7yaoIF2NeAaWKe1iAkH3_5ZqA>
-    <xmx:GmjfasmnZnKSY81txjwWrEuie5cFI0X4_k8qg5CfhnjYIuuYk2HJ2Tme>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id CD71278273B; Mon, 26 Oct 2026 10:47:53 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:DMeoEyVWiy1D6skd4lsXkZLqveH1FpNh/Jz9wmChsB4=:PB7kt/9bnNsnX4S1ZDeanpq3yXDQHAfsn0POKPlXw1w=;
+X-ME-Sender: <xms:4GrfarsYPTzqgEHpSeSeBA66kTj54hrO7K8yQU0jq6p_76xqZVKHrA>
+    <xme:4Grfaj6BcTK9pVVh6u1oSaWJxLFHhzGdnNOFq_I1_hpZ9CqUGpfjyxwZkrrwi8wtd
+    fDxOToHO8h84pGay3KEFhhYDl8S_a2ppCf7g69vtYIjibsXKcDIxQ>
+X-ME-Received: <xmr:4GrfasLDF5KaOZMOvK0XY_bmUZta-7jfD04Kcm27ZvDtYfJYUod2ke5DX-pkG7agxa-sPGTpzZRnfTBrBHYBDrovvkTG8dDoP003>
+X-ME-Proxy-Cause: dmFkZTGD1l8L39Sw1Fh/GfwNQs5SvVlAbqlmXfGImH59yFJnkop4JjnGpnGf84n/8B9dgR
+    6ckFUamI791Vx/77DOv6NhtooPUaVhepD8dKsOJCfwvnsXCyTHipv7XGfcsp5d0GfsgL/d
+    e/j574pGDymtVqQM4+Td5gl9PW7YHk4/o1wvCUzFsHERNEgicWTFiEgQmTt9lh9JfIIM8H
+    ITOkxmeG2SLN4sEyUvK7DKp9yEGaIPf2Po1C6WhS+fKAknbZKABtFC+pgFmREsIrmk6B0M
+    x+5xdDE+7WnGaIv60SUsnSmtitPQUlGqXQCd8j5sDjhGlG+aord08EOuFkCUT82zLQ9Be7
+    7QrovFuiF0BTv4i7lXOtoeUfIBhskACtRusN30jhnj9I+cQ17l5YIor0ZkMkVqKFTonTRv
+    Nt/x3McifSCRHjb7LvPNLZJg0mg8kygbBy6kW9eopNXzbh1eMJzlem/U/04O704Ye6vErY
+    xlVSl0lLRd5rXvPGncqKZ6Gf4idaMvwAgY9Y3EXYHIX9K5nE+rKekqZnkTAwPRC6kvDAuc
+    JibUD0Y9in8mz7xVPRmPVNW+gmrL8691PspR7E0NEstCg5OMlk8VlQL8JKtLn+BPi+ogIt
+    FfILDiBmRP8MVns9l9rP2IrUDDmimF8u7UEm78/5J+ugvFNOyi+Doqqacklg
+X-ME-Proxy: <xmx:4Grfaj4poSnmjxxRx6-Lrf9IeDSwKPd_frbfBCBox-vofXIAh-Yr9g>
+    <xmx:4Grfavy-Nbi8kv2qu1i-oQqWPXC-KO2JZAD6sbj_gXahQ02Cn0Buvw>
+    <xmx:4GrfanY6WlsBKvh8kQQ4YQ9ywt32YTfIn5igqhL0ECRYxYVD8wwTxQ>
+    <xmx:4GrfahTyi5x3ILdcXSVqmudMiCgTxwi-pChUt_da0lFNMCrFfsk0wg>
+    <xmx:4GrfakBm7H_mwDbrejzQ9kQJq8pRww8kYyi_T7xdD7gzzqezXheBgvdl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 26 Oct 2026 10:59:44 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2] config: honor file permission bits
+In-Reply-To: <xmqqbj8p7okv.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	19 Oct 2026 07:27:28 -0700")
+References: <xmqqbj8p7okv.fsf@gitster.g>
+Date: Mon, 26 Oct 2026 07:59:43 -0700
+Message-ID: <xmqqa4o0v76o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -114,57 +123,108 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AndINfi0Ib6w
-Date: Mon, 26 Oct 2026 10:47:33 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
- "Patrick Steinhardt" <ps@pks.im>, "Jeff King" <peff@peff.net>,
- "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <d330a5ba-cefd-4a4e-aef5-972a931d4d8c@app.fastmail.com>
-In-Reply-To: <xmqqmrs0v87w.fsf@gitster.g>
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
- <pull.2237.v4.git.1792764293.gitgitgadget@gmail.com>
- <486a77dbd78e111f66f8878594a30974c2abe53f.1792764293.git.gitgitgadget@gmail.com>
- <xmqqtsmc44c1.fsf@gitster.g>
- <2564bcc2-2f78-4ea2-9b6f-c033e95983d8@app.fastmail.com>
- <xmqqmrs0v87w.fsf@gitster.g>
-Subject: Re: [PATCH v4 1/6] doc: add new gitmergeconflicts man page
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
+When dotfile sources are kept under version control, you might
+protect installed files like ~/.gitconfig from accidental changes by
+making them read-only.  This fails because updating a file writes a
+new lockfile, copies and tweaks the content, and renames the
+lockfile over the original.  The original file's permission bits are
+ignored in this process.
 
+Teach the configuration writing machinery to inspect the original
+file's permissions with access(2) and avoid replacing it when the
+file should not be writable.
 
-On Mon, Oct 26, 2026, at 10:37 AM, Junio C Hamano wrote:
-> "Julia Evans" <julia@jvns.ca> writes:
->
->>> So, let's rewrite the reason a bit more tightly.
->>>
->>>     since one side removed `banana` while the other side did not
->>>     touch, and the same happend to `cherry`, it makes sense to
->>>     remove both from the list ...
->>
->> I tried to edit this (like below) but only ended up removing "probably".
->> But "probably" was there for a reason, since this is a made up example
->> and in the real world you would really need to apply some judgement
->> to know what the right thing to do is. I left it as is.
->>
->> -side removed `banana` and one side removed `cherry`, it would probably
->> -make sense to remove both from the list, like this:
->> +side removed `banana` and one side removed `cherry`, it makes sense
->> +to remove both from the list, like this:
->
-> Are we talking past each other?  I did not mean "probably" was not
-> tight enough, and probably is probably a good thing to have there.
->
-> The value I wanted to bring on the table was to point out that the
-> changes are not just "one side did something", but "one side did
-> something where the other side had no opinion on (hence it didn't do
-> anything)".  It is the basis of how 3-way merge works and helps to
-> resolve the example for removal of both.
+This implementation targets configuration files rather than the
+lockfile API layer.  While in-tree files like .git/index do not need
+such protection, out-of-tree files like ~/.gitconfig and its XDG
+counterparts are unique in this regard.  System-wide configuration
+like /etc/gitconfig is typically in a directory already read-only to
+normal users, making the issue irrelevant there.
 
-Oh, I see.  This is such a simple example that IMO trying to explain
-in more detail exactly "why" the resolution is correct risks confusing
-people. My goal with saying "one side removed 'banana'" is just
-to give an example of how to read what the merge conflict above is
-saying, since the syntax might be new to people.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * Only the commit message has been updated to mention that this is
+   deliberately done at the configuration API, not at the lockfile
+   layer.
+
+ config.c          | 22 ++++++++++++++++++++++
+ t/t1300-config.sh | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+)
+
+diff --git a/config.c b/config.c
+index e0bb29b53d..2b84fb215c 100644
+--- a/config.c
++++ b/config.c
+@@ -3066,6 +3066,28 @@ int repo_config_set_multivar_in_file_gently(struct repository *r,
+ 	if (!config_filename)
+ 		config_filename = filename_buf = repo_git_path(r, "config");
+ 
++	/*
++	 * Do not allow updating a read-only configuration file; it is
++	 * annoying and alarming that "chmod a-w $HOME/.gitconfig" does not
++	 * prevent the global configuration file from getting clobbered by
++	 * mistake with the usual "create a new lockfile, copy the original
++	 * while setting a new value, propagate the permission bits to the
++	 * lockfile, and then rename it to replace the original" dance.
++	 */
++	if (!access(config_filename, W_OK)) {
++		; /* happy: we can write to it */
++	} else if (errno == ENOENT) {
++		; /* happy: we are creating this file anew */
++	} else {
++		/*
++		 * most likely EACCES but other errors also indicate
++		 * that we cannot write to it anyway.
++		 */
++		error_errno(_("file %s unwritable"), config_filename);
++		ret = CONFIG_NO_WRITE;
++		goto out_free;
++	}
++
+ 	/*
+ 	 * The lock serves a purpose in addition to locking: the new
+ 	 * contents of .git/config will be written into it.
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index e3f8064889..876d376cc7 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -3019,4 +3019,34 @@ test_expect_success 'writing config retries until lock is released' '
+ 	test "$(git config retried.key)" = value
+ '
+ 
++test_expect_success POSIXPERM 'refuse to "overwrite" a read-only file' '
++	gconf=custom-global-config &&
++	test_when_finished "chmod +w $gconf" &&
++	(
++		GIT_CONFIG_GLOBAL=$gconf &&
++		export GIT_CONFIG_GLOBAL &&
++		git config set --global some.variable some-value &&
++		git config list --global >expect &&
++
++		chmod a-w $gconf &&
++		# "get" from read-only file should just work fine.
++		git config list --global >actual &&
++
++		# "set" to read-only file should be refused.
++		test_must_fail git config set --global some.variable other-value &&
++		git config list --global >actual &&
++		test_cmp expect actual &&
++
++		# traditional "config var val" syntax to set
++		test_must_fail git config --global some.variable third-value &&
++		git config list --global >actual &&
++		test_cmp expect actual &&
++
++		# "unset" to read-only file should be refused.
++		test_must_fail git config unset --global some.variable &&
++		git config list --global >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
+-- 
+2.56.0-369-gb8347ef8b9
+
