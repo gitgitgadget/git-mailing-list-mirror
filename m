@@ -1,119 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.145.225.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793049609;
-	b=eTeD40DX9QyTv+MIy2avd1caGfIPd9U2IbGt5rOI3qaXxL3URuBDZbmdThAD6g5AO6iJ
-	 g16qC+XfbfVbdcdxnLTbGTM3mRdnH6KKWP/NWDK5I05d2JnxVOejDZNo2cxnZKPzNOfe3
-	 oowX/JN6r/f9S3bvaegf9zcofX+3pdckftk9tiAouCJMfRITc7EbtsfQUZn5o93wofXEb
-	 hnxzshqrXWLBem6DE7WrH1DdKY0hs85qTY8zqMdNUjAqYmUNjJLneOUkjM2J9XN5VSz+/
-	 bApeIYF/uHbIOMg6bg8aVRAPNoZouuGdB/ScAQIMyTZBWFwSj93QiixwSgxGSft1iog==
+	t=1793049845;
+	b=lZm6KV6Fz2ZTLgLDJtyj0hPgUAS5REwjyvGfuG4RkOhHSMA3B35tU0srIYGptO3iGGDh
+	 ilUfeCfj60CL/qvDbtPHbUPNqAnSNDT5ySRVyBUrRkX9OnsYYdNgsfywcE8GhRUWrdEAO
+	 JI6TjsyiMp63Hc8mqIE++5RhRQSJu/OOsnBYz/2XstfprNt4ktYfKkXPAgI0HD1fehyUY
+	 bwXmTtGFfnuS+p+JQVgs2qrp/sBOLr83zJ5l3pmaFvnNZq98KetYLNSxYdpKr947BBeN0
+	 L5+A0JG6dvXR/s3rTyxBXVG0jPVgNW0lMVQPUfq8ySLLVqVpPnHqDcIy1j3W7zqPpmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793049609;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=v+bvwISnztWZqlgdJYvsRS2K9UW0GCi5yrQJqIg9EZ4=;
-	b=BIbnX/r7HGFAwYEk+eaZZ+g86esbWBEgJBdXo607B4XiAVlGRcxwNBsuznZ9wzPxa32o
-	 xcbXQe0Oj4/guYMieunurOeEzRDKYLtkmno0UQ63KQzEjtZ5rYPfTYtmMuenMHCKAwHAa
-	 tOJuQD3M97iy9hEgKjdFyE1GjEWI/MkPAUcoeV8OzTyElJz2c7TghJ1D89WMihUMRyoyH
-	 Q/Hnc+GBjmE0xkNljHcEbAarXVjVq2l3vtVFFZoQBrgsoLWOnoczQ3VO744tcQtbgk/AX
-	 0l43mVZH42htkzh0DBi/FBQHpKaF5F25KENZqocicQaa7asJWGhAA04nYV6mZzAMUTA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793049845;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=GZegSgh9HtJOXFZwCmt+RPW/6ZDaKbj0JIEf5+RPcW0=;
+	b=j2JlEeVyy1akg6qhClzIzsOLXAprNDFEIdt4zl3mbEpXaeCBByUmqwWASS+rGIfKTfDt
+	 ET0O8Mrfe0VTLubRTNCKkzZIwOzlUGl/OcW9bC21vtAZy+8XEVaYdkdDgsB0rpJ6uz0cO
+	 PxyR1vypPCU9Hg6oaadxFQA4OMWppFXvd3tuil+EhI0+Vrv6IGzINpNc0h+A/TQe3og5d
+	 C+ir7pKuWvdVhl5OWC4uJ2qc+Sto5nA0CrspRWs6evoW5+/S4srlt1psUqC0pgtbSz4Sg
+	 QIA2BFfhawPRjeNYMhDWi9xnEKrGA6deEUsxYI0t8RjU454DJd6C/V1XhOaCuyA52iQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ZnwxZkk7;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=rZWP2zqm;
-	arc=none smtp.remote-ip=103.168.172.155
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	dmarc=pass header.from=syntevo.com;
+	spf=pass smtp.mailfrom=syntevo.com;
+	dkim=pass header.d=syntevo.com header.i=@syntevo.com header.a=rsa-sha256 header.s=dkim header.b=IjH6SCd3;
+	arc=none smtp.remote-ip=213.145.225.180
+Received: from host45.ssl-net.net (host45.ssl-net.net [213.145.225.180])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B07E606A31A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 21:20:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3B07E606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FEA606A31B
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 21:24:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C8FEA606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=syntevo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=syntevo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ZnwxZkk7;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=rZWP2zqm
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5C99F1400A17
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 17:20:08 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 26 Oct 2026 17:20:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793049608; x=1793136008; bh=v+bvwISnzt
-	WZqlgdJYvsRS2K9UW0GCi5yrQJqIg9EZ4=; b=ZnwxZkk7blw/tJvOIwXlilIR7C
-	89vxvMVhBGoGPTfE19hEt0kXzKumIDDyhU3CtQnbw2YIxehjYCkBkyp7excrV/pu
-	RItZHkXwAp6qHENmYrFWGw/KW9hcZUhrHtjz3rVczbL3T41ZlXm18m6w5GqUqscO
-	7le0HjN4DK9IUv5CjQ4lDkU9F2kFXueceGDNK/4p8IEYBGU86XpWo0hdp1WjGUwj
-	MsDSMQIVarH9EIDNc/YwkQkM2pESO57NuAsExthiqcf2P/2gpbdaQN1SHV/TZTIi
-	pwB2fou7fDkLKRkjrinI16tY89S+eeyDR+D+sq5yWWFJZJLNsmYslZi+4sjA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793049608; x=1793136008; bh=v+bvwISnztWZqlgdJYvsRS2K9UW0GCi5yrQ
-	JqIg9EZ4=; b=rZWP2zqmn2LxTrBEbsZTzYPPL6J5FQ6qLa4XLnHuPeT+IvWtyYx
-	JaMTbTeWYF11WyPt1hYPzx3QaR8sSc5ApPPY3RTCyPfglfPHRoxUBN9Mxixndkot
-	6Av5RsQfZJz28C1txJnhD3TgOe2b4GIM45ZApmollGvYS7YqQmt5vKY70z86wRaq
-	rqVv2a4KGU5dKbukiNlGZKtImyaWJ7zTfDN5Uu1yQxzsJcW6G+EXugFfkalwWv6r
-	FpzQlJvmovuWVcnTW9I7dxDqfdQOUilZHxygwk1cjLI/brYJi+9lwmmfwFHyeHtA
-	+vt3VRnfxdYFNsrPuaIwDoVYKwmCA7LYxmw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793049608; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:khDEnsZNRh3XpzkK0JOrC5eaKxajLn8tJxeqQK8Q0JmtDn6
-	RRHlImNstCzMl1TCpR96i2EmbQM8pfyAN0Pr5RTiyT6uPTLP3Z1RMjeqGqwtKjX0
-	fmedxXVsjb7p6pEzllHlQ1l3I3HpCN/23d+xS8CKewUDTRwm4caOpbvc40Chy7k5
-	u0BVECGTb4pC0D687JaWxqfngBj4ma1VeQOoahEe2v3kQKk34+Qaej/Bnk/x8Fzs
-	LAXbr+s0fyvT0cgJHcsyFKEUjp5PNA6m/f39aj0hV5lMwdwbxaM7v3TEBFz8bZS9
-	GjSN01VEkrrcxxsS5RiEAi3fSnh+jFaoDvoasHw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:JBAARFAQmpKpEm/Y/bByzuUj0Wqy/37NuL2WAc5525Q=:Px5ztqdNyZmDH+gLTBPF72/97HlEspO4HzK9dQqR8/Q=;
-X-ME-Sender: <xms:CMTfaptVc16I4-MqL5qyH1LuPomJ9iWvS4iGkMdB5PbvrqlHl7RSxQ>
-    <xme:CMTfap6sutxkvdhxhqjA8kVGNfOH8FuGp7nS1ju6a4dOdwGemrMDIQcz3qHrztu8-
-    Re4qRu1djYERRbTIJ9Ts5jiV8thbUeh14dNZ1iQ1IW6K2gUNKJsXg>
-X-ME-Received: <xmr:CMTfaqJ7twxsx4N_EfP372hda1zGuoiemKtmw5BkC-hAHdFc0eqr5CEful11tReImaUbW2LGxIeHZDC8TL0W8IQ7NukNrKvvJEBN>
-X-ME-Proxy-Cause: dmFkZTFs9s9Z/dUL4h+2HOPNE66JbmdkeitZhms43/ZkL73L2CQLzNk4QmILxBY5Ptfd1e
-    k9MS++jAjEa2iatbXR2/QDBpkGB08tVTLKY5RtOojFwTP9q/stvFAPePeeLituLtsgFhqS
-    PA5zoKzFqkcxLS0Xr3cWwwNPlyZ6dHSVL3mqN7PZbJzBE9Ta2RoZypsFfzkUwKByU15KrV
-    wQ7vGB0vLuEPNT1ol9V1XZ6z+cvyyPBqz8nW+GnoaSYwtaP7iOkfkRr0WkeZ8dnG1lTtV1
-    GBqmp0KHuhFdky5JlTAdwHdRbIdw7Q2z2/mjDRvGit7tIx8jw9g5khGX6x7ukSZSaMYoSw
-    BrY0epe/F3b1AqlNxmAJXJJkw/QE4lREcLeo4fF4vKJloJVnKWkOj/C0bzgRo73QfewFLF
-    mW/jZWoiwnOb5BUCrjAnV+C1LYRp2T0G6ejYVuvHR5Av0c9Co5hr0CN426OjyQj7S8CO58
-    K6lvbQ2grX6gbqRIeLaNHXahwYb/RhNQkOD2Aepq5fDr+EEPvEJc2f4Xk/NjlaysxRFIqV
-    A051lI3fSA/hNqHzyelzycmhANdgo/BABN6JP2j9ECx11aZdabOPBv1Fr6J1z9WJetwton
-    DV07LkXOrmXZ/gw+DrtArzjYMAnIwmmlcN/aP3W0g1kyktcNwhccuOcRC53g
-X-ME-Proxy: <xmx:CMTfap6zVaE82hbMmbiVxwUKjxSgbWo1mFkOhBcnqeGjaMD4j9lo0g>
-    <xmx:CMTfatzp5rRLpvjsJhnLr3-KlMghXWP4RQwq5PMTEgFSUWXQXh026g>
-    <xmx:CMTfata7zuXwItUPE8KnCH0-mEqc-4MJZ47NLal8UE7L51jOE4Hs8g>
-    <xmx:CMTfavRH48DMLnU9OyEpqHMUh57Rqriua6faYG-vJjtPy0PNag6WjA>
-    <xmx:CMTfal4I5dY9Vw_yoA6T7p8afGf6-fEHv77i_Bwrc3nNJmWi_WddumfA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Oct 2026 17:20:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tilak Kumar <raaztilak07@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [GSoC PATCH] t7104: use test_path_is_file instead of test -f
-In-Reply-To: <20261026164536.50520-1-raaztilak07@gmail.com> (Tilak Kumar's
-	message of "Mon, 26 Oct 2026 22:15:36 +0530")
-References: <20261026164536.50520-1-raaztilak07@gmail.com>
-Date: Mon, 26 Oct 2026 14:20:06 -0700
-Message-ID: <xmqq7bj4p3ax.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=syntevo.com header.i=@syntevo.com header.a=rsa-sha256 header.s=dkim header.b=IjH6SCd3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=syntevo.com; s=dkim; h=Message-ID:Date:MIME-Version:User-Agent:
+	Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	Content-Type:Content-Transfer-Encoding; bh=GZegSgh9HtJOXFZwCmt+R
+	PW/6ZDaKbj0JIEf5+RPcW0=; b=IjH6SCd3z5Ot0meYoe2OphKl11BTxUlP+V3+r
+	xia38n7lQAokg6/swmN7oGORkk09nc4+9Et1eV0h4CLd1eOPWzchrTfDnDY8EEo9
+	C8A0+mU7t75k5BhahNg+iQpJSIHHki7xaklb0J8u9dUkvqtwwarxLDqRZgCf3Uw8
+	ueZ62Lv4XhutchDSigERYo+r3LnkzRRsz7K9foPI03AduJrcqnXNt98yrOmI6LUY
+	aWe5yGSGzv7JwYup6cUmRlSH7Gliu+SRAZ382Lho28M04+REfVSZBfdTkxtdBGRs
+	phpj5B15EjGvT+pBnOh92bcpDqBv43Y59skxIdtB+8vbqL5Pg==
+Received: (qmail 2465920 invoked by uid 7799); 26 Oct 2026 22:23:55 +0100
+Received: by simscan 1.4.0 ppid: 2465802, pid: 2465898, t: 0.5662s
+         scanners: clamav: 1.4.3/m:63/d:28165
+Received: from unknown (HELO ?192.168.92.21?) (marc.strapetz@syntevo.com@91.113.179.170) by host45.ssl-net.net with SMTP [57076]; 26 Oct 2026 22:23:55 +0100
+Message-ID: <729930b3-1be6-4612-823c-55cb20d555b8@syntevo.com>
+Date: Mon, 26 Oct 2026 22:23:46 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,30 +58,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] send-pack: avoid resending unchanged objects after
+ rebasing
+To: Junio C Hamano <gitster@pobox.com>,
+ Marc Strapetz via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.2281.git.1793029565.gitgitgadget@gmail.com>
+ <xmqq1p9cs79b.fsf@gitster.g>
+From: Marc Strapetz <marc.strapetz@syntevo.com>
+Content-Language: en-US
+In-Reply-To: <xmqq1p9cs79b.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Tilak Kumar <raaztilak07@gmail.com> writes:
+On 26/10/2026 18:26, Junio C Hamano wrote:
+> This sounds like the exact problem push negotiation was designed to
+> address.
 
-> Use the helper so that a missing file is reported
-> with a clear message instead of a silent failure.
+Thanks for pointing this out. This series aims to optimize Git's default
+packing for forced non-fast-forward updates, without adding a
+negotiation phase. I should have explained that scope more clearly in
+the cover letter:
 
-This makes sense but what is GSoC doing in the patch title?  Has the
-program already been announced for 2027?
+    `pack-objects` can resend unchanged objects from an advertised old
+    branch tip even though `send-pack` already supplies that tip as an
+    exclusion. This series improves default packing for forced updates
+    by applying the existing sparse tree marking to selected old tips.
+    It targets this inefficiency without the additional negotiation
+    exchanges of `push.negotiate` or the broader recursive tree marking
+    of `--objects-edge-aggressive`. Neither is enabled by default for
+    ordinary pushes from non-shallow repositories. This series targets
+    a narrower opportunity within that default behavior.
 
-> Signed-off-by: Tilak Kumar <raaztilak07@gmail.com>
-> ---
->  t/t7104-reset-hard.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t7104-reset-hard.sh b/t/t7104-reset-hard.sh
-> index c23d6e3f52..acf145e69b 100755
-> --- a/t/t7104-reset-hard.sh
-> +++ b/t/t7104-reset-hard.sh
-> @@ -29,7 +29,7 @@ test_expect_success 'reset --hard should restore unmerged ones' '
->  
->  	git reset --hard &&
->  	git ls-files --error-unmatch before/1 before/2 hello later/3 &&
-> -	test -f hello
-> +	test_path_is_file hello
->  
->  '
+    A divergent old tip can lie outside the boundary reached by the
+    ordinary revision walk. Passing it to `pack-objects` as
+    `--inspect-have` lets us compare its root tree with the outgoing
+    trees, pruning identical and receiver-only subtrees. The additional
+    inspection is limited to forced non-fast-forward updates of
+    existing branches with locally available old tips. Large blobs
+    retained across a rebase are a particularly costly example of the
+    redundant transfer this avoids.
+
+I would also add the following section at the end to explain how this
+relates to the existing optimizations:
+
+    `push.negotiate` discovers additional common commits through a
+    separate fetch negotiation, potentially requiring multiple protocol
+    round trips. This can reduce the pack when ref advertisement alone
+    is insufficient, but adds latency even when the advertised tips
+    already suffice. For small pushes that latency can outweigh the
+    transfer savings. Even if negotiation achieves the same pack-size
+    reduction, improving the default packing path avoids the need to
+    pay that additional protocol cost.
+
+    `--objects-edge-aggressive` already considers excluded tips beyond
+    the ordinary walk's boundary, but recursively marks their trees.
+    The decision to enable it automatically only for shallow pushes was
+    made for performance reasons: the 2014 series [1] records a
+    regression from 4.785 to 23.322 seconds with 22,400 refs [2], and
+    keeps non-shallow repositories on `--objects-edge` for better
+    performance in the general case [3]. This series instead limits
+    inspection to the old tips of branches being forcibly updated and
+    uses sparse comparison to prune identical and receiver-only
+    subtrees.
+
+    The additional inspection requires no protocol exchange or walk of
+    the old tip's commit history. Ordinary fast-forward pushes keep
+    their existing path, including those made with `--force`. No server
+    or wire-protocol change is needed.
+
+    [1]
+https://lore.kernel.org/git/1419462340-769147-3-git-send-email-sandals@crustytoothpaste.net/T/
+    [2]
+https://github.com/git/git/commit/1684c1b219e02c91655ad929f752f4f864c72faf
+    [3]
+https://github.com/git/git/commit/2dacf26d0985521c0f30e535963a45257b63ea21
+
