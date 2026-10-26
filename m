@@ -1,124 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793003921;
-	b=ZwvGW9MSyqC5IDwoGTtod/J1BtsO5GZOZJ5zSeK4eXIaGgaqmh+chUlQ/KAU+kgxCCPN
-	 7cwBrNWLqspB4b7Pi23qN0rLTpC3uY0QkrP5QCwBbnAckQSCL7d8E0GH1MLvK/Hv7V88t
-	 /oDhvp0jjdk916vV9RfSfRM3QDRcOCi6UMmcTmBAtdt4c6x+LCwzvjAtdSMYJJGSExPa7
-	 hXcrdiLd3RuNK6DJEhFsWxxfMP7L2555TNqGSJDDC8YlY70awZnlYut/wEbW6J60axnrA
-	 r9CzQYGLRz3IKYTQ99siuHY57r7bxc4c1mtdj77QuM5Nf1E64xv7wlqlQq0NePd3COw==
+	t=1793004009;
+	b=wVxywVxV64l5ZNmhltf0EXz/8aVLAzrhgY3N1gxAjxp95JCpgcLXrJeYmgeGNQhV8x+C
+	 bjqsPBMkomLWwTFBKieP9AQoCHXfDFvFImrjIhFIDCYXVjyTDgsli2sdwHw6LSb8Dz3fg
+	 KOJc4OpZ2GCTeY086oJqUeJPlII28ttDUkNCUxGLcCNLtkeK/G+6gUUAKFMzMgkOXccRO
+	 ZdL0jWysIGGQzy3kphD+MmFMmJYGAkbd5PtabJM3dB14mg5j7+bQgTu8Lt/IoPVILC7BN
+	 baFll4iUMZLpGJ8SBzKofv48nuXCs+1ZEjzVKNAb/6tUF7zdjDAhl6Ic45IQQi1a28w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793003921;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793004009;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=wOrcYDgpnnnLLWEjaVLkIrRyXiqOeUmyTcHvklQBweo=;
-	b=OFekNpcr46+TNBmeyRpQZwp7T8zop3g6Cf7IIMuMK7g4qgMFvHUTVmWP/6QkrfRioSfi
-	 E1+FRRtaWGyIyFnltQdwchmo3QPWLCD9duuVhW+qacaiq8W8OnEBq+pU0q9VxrC9oQVtF
-	 dtL1UJE0mhH04jny0ou2VUIM4QWcjiwoUmpkXfQauQEZViP40tfmgZ4OVBU4U89CMuLnM
-	 ehH7/FOWcXD93wnhupCOALOPzokI4Hm4IWTM9WA8b6BDJNs1PbCtQSYsRitS/DhAMsV2j
-	 TSTe6q9ejpUoR5ydJOx6C7Uimjl4+XaCjZAenIpVxRbS3v9tiy5G03JiveO8nUrNXzw==
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=yUMWhipPZ0Ss6HBgUTJlnQ0siH8Ujck3UM88DCNawo0=;
+	b=rxMQA2LdpSNI4+SE7QHwneVmx60K9gR7AVwEBcM6el60JHqLqy9z57lYhb3aA+j+Hw6G
+	 vlUPLwSinRMfd1BCgFDfrbKgLajbhqQ+osq2HARNR9AeasyceXTRvltCJHQM0FM+eMjPo
+	 Z0dHwf4cy1fRwBb9Ukgm42gMf07k+PPQw+jBJF+7Xk35Hg45Pv7vGiWGIFfWHcoP+VsxX
+	 NvKDR9EkVa03+O5sxImamCNy+xTjqsDbPTRQ4jm/Cp4zpiVSWeKygBKssPKWT3G2nbeTk
+	 ZGC6Q91822AuuXbGojWv7zYL56mh031NMFRGXoivQ5H3F66ISVpig0+zSQZi4gujrwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=aI2dBcWa;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=y0b1yYr4;
-	arc=none smtp.remote-ip=202.12.124.147
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=fCV1u6su;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jdwDJZFj;
+	arc=none smtp.remote-ip=202.12.124.156
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FE5606A31B
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 08:38:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A3FE5606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47429606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 08:40:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 47429606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=aI2dBcWa;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=y0b1yYr4
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 923681D001C7
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 04:38:39 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 26 Oct 2026 04:38:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793003919; x=1793090319; bh=wOrcYDgpnn
-	nLLWEjaVLkIrRyXiqOeUmyTcHvklQBweo=; b=aI2dBcWadjs4yhZQ0h8AqWuB7R
-	INxwktAZI2hQsVaFnHD+BqJjLO2mJA0kfLT6kSUhasL5xJ4nXw4PJVPFqdDeukvg
-	N1cFc0sstPp4eiCoJcirsVq75fdQ5/7qEtnGqnfIdTJ0gTd5BmUI6pfM6PbCRn1U
-	srV6+9bxN+1TqkMEZ0GApWbg2gi2Q7lx1JqRIguNDYZasSpBYbPDmVp6JNwA0Bjm
-	IRvJ+2lWihpsBfIKzEWeEW8SMjFa5onHc5cNkyxTZNjMMINmrHdns56FM5+uF7BU
-	tSCEcPbnBzzA2MvuhSjgg5L00Kr2e2ks10Dvob+RyhpIZG1eS3NOoo/RotbQ==
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=fCV1u6su;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jdwDJZFj
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 675AB7A01FA
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 04:40:08 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Mon, 26 Oct 2026 04:40:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793004005;
+	 x=1793090405; bh=yUMWhipPZ0Ss6HBgUTJlnQ0siH8Ujck3UM88DCNawo0=; b=
+	fCV1u6suCT8oJUNLYufK8d/pLk31xFMvGZT1UyEFEQBd+o1KVRdoAwJREt0Opebq
+	neHrHv5QWZsFoxqalQ/dJlOXiA5Bm/Iz9w6qIuXi5diHAH4nR6CciaZ/vsIfZsX9
+	KTQ+n2ZbwZ3W3XYFv+praOxxfvlEGYE3k9Vo7YBCSYXBSKwJ8vIh8JRUcnqlIWKP
+	/EwfiYFaan77AaVLtfSNuC1zMho6tedIgdIQMZ8KzPs+aXHRyV2J5xn5D6lhhGEj
+	H8Oq6uQHdJlsjJZE9w8Cnvm9qMGIJIBE0BXyVMxAXiKZD326f7e4qOwLyp6LNLbC
+	xhCBr5y98Qe6qy5aiUspew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793003919; x=1793090319; bh=wOrcYDgpnnnLLWEjaVLkIrRyXiqOeUmyTcH
-	vklQBweo=; b=y0b1yYr4A1/Unh3iFu5lxz1EKVxANyGUYPeI4a051Nl/oVSlbaV
-	8kH4cge8t+8AhQVJ98gvkOKcKKSVNxhb9LBYeUGB3SdDAfWsAGPx9u6ynLALL6XR
-	ppffwskLSh/H4viOWfhugBL+UYnC8qaZ721Yyi+H9rNgk1pNppn50OxFZ8PkA8tn
-	O/lJDrq+eIfIOgFvpKH0VNpT0eSY9EAhbdf9kzEFpuERdKC6eWRkfqAtXP+34qB3
-	Af02feiw1glc5ddvvRhwCyzX5Yujr8HUpI0l/Ki69SeV/fLXw3w3hcNwYigxHtNF
-	/ZO0vvVJpoSH9jLcVISrDvq6ACuyhdTUTXA==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793004005; x=
+	1793090405; bh=yUMWhipPZ0Ss6HBgUTJlnQ0siH8Ujck3UM88DCNawo0=; b=j
+	dwDJZFjfSgu+7YFQQjPw8gFSSes3fOxgV7KRt5QqMEuSN1uGMo5Y59vfDKqswwDY
+	8XG6pGEEhYWeHTgfhqlY3L3OPh6grewxmzoW8thNF5nrI4jGR6ZIol3ujtGO/7ds
+	pa3Yr5vvHHMeYb2j7BBMtUHYPfbzXYLexkCzj6XtYLEsw0b9p+FdUt/xSxi4hTbg
+	rBmuIQk0O6Xsf6Rw45H7+fqrdEqfb9zF3mSnsPAJTaa8MDE9giZukti4wrzkqzah
+	sdBXmyuboVBhF+Eb88yG/jDoEZhyA6RZkpY2Rl4CZfr6WcqBxXWrAc3DkKLyWe0b
+	l6xu83VSRkNkZ5kdAolZw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793003919; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793004005; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:BSMVbjmz2Mv19p8BtgrPoB70q0jq4a0ucEHTnysot1Sbr1a
-	RpnTR9XyvPKZGS9meskS8njS1EaA/Ff74KJzHfyPPQa3QemZtYg/PL/YCxMbSZUr
-	59/TMKVuMfC/dLPFA0PxOUx7qGmO8LljFQcHMdt5/FOEgOzJFGY9BueC8aTR25bc
-	RsnRUlVKZlEMALQbzg5VivyGgLTZos47la55YsdCiwseNCVYKFA8XpSMmKJcKuza
-	cN9eCAzna0it/9DEPLU1UFpwkb7t8wwjmAbGf1JkSE0YMtTUq2B0jLB+0OIkDkxI
-	u+k6PFr7lvV7MLLFAp2FYZccAZfLc1hTOs+WhbQ==;
+	s=fm2:rsa-sha256:pb8NGC6BI/e9QFfplv+4i6L5z4k9C8EkqVDJ+XGwAHT7VOp
+	nTMcHnL52q+dZvynYLMyKQUq9pkHGVsKiBykt6gjOHB/BzKh3FM3GM9G86lyzC2G
+	54hbEZkliADv2FhgoEDbI3W9QhrdPfbZriEwk8A2N2cMf/sIomAZ2hy7vMXVwzRE
+	ZeHeMaUGU5HafqcsHbCYBmz8EElkHtlN5IiKrd49lVTEC91geR6oMmbVOhDGbl7e
+	LklA/vX5CFT6HFNLn1RxPi2ss3SFgsylQbKNYgRPX4XEoilHgOu9Jj2nUO5KlJd3
+	BvJO5ah2Pjg6Pw4Vu+E0zAvPFpQLQgbiLf3518Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:2gjOAbZM7RkPglelUG6BYYy0w2drIM0hQMeje1x6th4=:IXWZ2c/DUW/Xq97Ei455uMwc93OJ0Ue7NnJjLHdxu6o=;
-X-ME-Sender: <xms:jxHfasM8meHEQHTooHjhKP6P-DCo1DOAXGQjoybiIBgK8idnRjensw>
-    <xme:jxHfaiAMA2czPzIM41DmvSYnwcJM6WvrfRviv33G2qkhorR1qcc7OaOrnmRZztycC
-    hRoqFS4ppD20e_6ObS77sypy2Az_VzwsUGjQe9IpjiGP0ashYagcQ>
-X-ME-Received: <xmr:jxHfapenPRom1K8SHiqJmTEuc0Nu7wpP9Aa31HySH3cqSmVgGHA00w>
-X-ME-Proxy-Cause: dmFkZTFTXOCAeH9r/meAnRHRRrs5rlx0elb5k+QZdh5uP1zAM+7n8x+UJrhCNmfTCCkMzp
-    LTBsJcvm6lH4RZmxsP2JYhNB6CLNdYhhha/4fFAtKVjQ/Bn09s4PfA9962mD9F6pYyhF4l
-    reVKacZr9+N2E154acGCbXKczhCAeHlNQ/CkQQZpfc/i/qeKe2WfxuWN4Ygcdb6mWvLrqG
-    YKEgXcikxASeNbUuzAlyavZ6Ox1uzJ0zrE1C4KY5WvEh+XBjhrfmd8AvkK+zKc32Te2bxU
-    XIdNEelDMhZkwJ+Qvclihj3ZQDBq5DXeM6Ug517fywEj39YDYhlZ3IbPMzohECtCuJieij
-    msuGiVToAJmh0a4YkWEaJPOb/FCmJY6YO++na5VgXxyTgYiVYK8PU5EpkdINvBNCTWW1lH
-    IxZq31sWKiH3a4QU2thrzmAk3eOTIwyI6dfFMycIqGMo0OmBVBYBwx3+j/6aA9kDemRG2k
-    G8ngtepT2WNd6Bt/P9UdpgF4fbmVJFxiH3eI8JhQJzjuCg2Rvoub9mckzuXR+qVMclcBvG
-    QR2ADimait3YKOXteKmc111Q/TUAbwMI/vvCe9E7+DFpA5ZV0Y8gEbqsjVQQuFk7Zi+XZr
-    uuljF88KlxkdFQSbfxyaxxStwtSigTwbU07VTkIF+v74Zv/sb6ctC/AcOTuw
-X-ME-Proxy: <xmx:jxHfahMj73aH1qCOJbxAiQ2XoraylB3HIEHLBt7PnzDas35U-2xq-g>
-    <xmx:jxHfapKPF3XKef5rpWKP3rLkZz0A9jGUFGbnxiDdHt1qxKDKjMUAEg>
-    <xmx:jxHfahJLVd1CmPxBCHdvt1V44N-IC-mn0qzpNEz71JUIOwkEhUkUdw>
-    <xmx:jxHfaj5zHjJfqJzOf6ru9ZVnYsBIThOJECQb5xGkLxfZ0mgmPS8JjQ>
-    <xmx:jxHfajuTMQX-kNaEr2PdNa54TFSOGQ_GfTLrtfMD4ApH7qDAJDQ129XS>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Oct 2026 04:38:37 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 60e2c5eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 26 Oct 2026 08:38:36 +0000 (UTC)
-Date: Mon, 26 Oct 2026 09:38:33 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Shashank S via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Siddharth Asthana <siddharthasthana31@gmail.com>,
-	Usman Akinyemi <usmanakinyemi202@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shashank S <shashu8660@gmail.com>
-Subject: Re: [PATCH v3] prune-packed: remove USE_THE_REPOSITORY_VARIABLE
-Message-ID: <at8RfoXGrC6s3km_@pks.im>
-References: <pull.2266.git.1792341073005.gitgitgadget@gmail.com>
- <pull.2266.v3.git.1792833741913.gitgitgadget@gmail.com>
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:uXOpvALJ3VSJ/GbA2+xi0PO3HufVwL/PJvJjfHLtKxI=:yUMWhipPZ0Ss6HBgUTJlnQ0siH8Ujck3UM88DCNawo0=;
+X-ME-Sender: <xms:5BHfakFAP0HxYEEzvkVXefsuuAPviUJ3jwX36L42gcMvzNP1HDd_lGs>
+    <xme:5BHfaoKVIxEkOIIAf4JMVtOYSJfCbIQ8AWO2dIqcNauNeQfc1g_tKhyuGA9JgFN3l
+    Bqj2dBZsmOw1sXvC0azyggz8_2jVtGhpjPEKBR4bd47v1rx9dm2jw>
+X-ME-Proxy-Cause: dmFkZTFpgSRKzY5Dw6/gPW9IZjHUejooYMWSoghoBtKF3Z0A5covLzLQ6mW2DbvnXVqIDB
+    9oqXeZ+RU2nm2GmyBVqGzxxGmB18k/lEZd4kx5Wl14zLHlHki43GhUf+QAoR0zY6IaX4pT
+    D2+ds8KJHYFE46yda1ZHgHhuplDg4qMODxW6/4ohhMPjIMd0wms8J1x2Tqpywt4BxRZNRS
+    jlwCCpxIyWHwscgJVEUayNbgcC+yEJ3u81Hzo3G9zkycyEO+ZtW+9Gq2orv5yFP4RugsXA
+    BlAbDVaG/rLjJxivA0EeHtJYfxSHLMK6eimEuSdOj4ZiA7DhYswG0E333tPx/519aYvBCO
+    YyXRJ7cbMBe2CG9pnWnpjnrmYF8euSBka2QSgYeJFNuAHuNoC5WKq45crGS4JWKgOEjEr9
+    u5XA9nBA/f3deteFQ/Oys+MODK5ZJCvtI7rQBsFDewU6AMuajxS4fvhehFQDxVwcXAC3dh
+    8k0wyCyG1yhKQ/Zyjdm3jRiayf0VU+Av/xnDXhrolIsXvXAFHPfMmFo7p2WYg9RBHP0dWr
+    7SG1oR4HCy4+0TiXqeCJayanTj3S+P8cKXiGrtjxgfi04AVF6Y69HlzklenFysTWHQxIM9
+    02a4TJxHy7dlLN1B7E89rhz+ww4WVAHfwpodnpJg66lQOYW59PVgawoC9viQ
+X-ME-Proxy: <xmx:5RHfalvw_1GUO_xcTYyqEWTbGBLxZJby_KXUmbXtO-ixN4KMhF31lA>
+    <xmx:5RHfasQm7zK2g4xwCG3lHz24iHljD4mzPq8aF58ekxzmawFH_49bPw>
+    <xmx:5RHfajPPmO4lbjHqlz3QVfigFKM6-jEbW0Ot7erxnRIm4mM0BYBppg>
+    <xmx:5RHfapZY0mzR80C0tcgTZ-dHaO99XeGNkLboFCDkI6mO7uGn9T9E_A>
+    <xmx:5RHfaie2B7YUFSOaMaoHzX-O49cUExRp6MGg6bzJU8G8FhgXLmtAVw9u>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 4809022C009C; Mon, 26 Oct 2026 04:40:04 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,143 +115,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2266.v3.git.1792833741913.gitgitgadget@gmail.com>
+X-ThreadId: A8mddxQTrPbZ
+Date: Mon, 26 Oct 2026 09:39:43 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Harald Nordgren" <haraldnordgren@gmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ GiGiGa <gitgitgadget@gmail.com>
+Message-Id: <6568dd11-ea74-4e50-912f-a589356cf6b6@app.fastmail.com>
+In-Reply-To: 
+ <CAHwyqnVs3+ebj25fkTmeRjDTJsJQh9ECNYMy1xU_yJLDdDeAaQ@mail.gmail.com>
+References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
+ <pull.2448.v2.git.git.1792348037.gitgitgadget@gmail.com>
+ <aa5a98b80d2682cc0fa321c091c76e483fb6810f.1792348037.git.gitgitgadget@gmail.com>
+ <8ffe4cb4-fd89-4086-945b-735316e6d501@app.fastmail.com>
+ <CAHwyqnVs3+ebj25fkTmeRjDTJsJQh9ECNYMy1xU_yJLDdDeAaQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] reflog: add --historical-branch to name the branch of each
+ entry
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Oct 24, 2026 at 09:22:21AM +0000, Shashank S via GitGitGadget wrote:
-> Range-diff vs v2:
-> 
->  1:  6b583e1d46 ! 1:  0b474e3433 [Outreachy Patch] prune-packed: remove USE_THE_REPOSITORY_VARIABLE
->      @@ Metadata
->       Author: Shashank S Mogaveera <shashu8660@gmail.com>
->       
->        ## Commit message ##
->      -    [Outreachy Patch] prune-packed: remove USE_THE_REPOSITORY_VARIABLE
->      +    prune-packed: remove USE_THE_REPOSITORY_VARIABLE
+On Sun, Oct 25, 2026, at 21:22, Harald Nordgren wrote:
+> On Sun, Oct 25, 2026 at 9:18=E2=80=AFPM Kristoffer Haugsbakk
+> <kristofferhaugsbakk@fastmail.com> wrote:
+>> >
+>> >[snip]
+>
+> Thanks! But maybe not worth reviewing this code now considering that
+> we don't know if we will even do any of this now?
 
-Good.
+I think reviewing can be about the author and the other person
+learning something.
 
->      @@ Commit message
->           to hold both of them together, and update the prune_subdir() and
->           prune_object() callbacks to read from this new struct.
->       
->      -    Update the builtins that call this function (builtin/prune-packed.c,
->      -    builtin/prune.c, and builtin/repack.c) to pass their local 'repo'
->      +    Update the builtins that call this function to pass their local 'repo'
-
-Yup.
-
->           variables. We can safely remove the UNUSED macro from them because
->      -    these commands are all declared with the RUN_SETUP flag in git.c,
->      -    which guarantees that the 'repo' pointer will never be NULL.
->      +    while 'repo' may be NULL if the command is invoked with "-h", the
->      +    call to parse_options() will give the short help and exit before the
->      +    dereference occurs.
-
-This still doesn't quite put the finger on what's important. What you
-need to verify is that there is nothing between the `cmd_foobar()`
-entrypoint and the call to `parse_options()` that may dereference the
-NULL pointer. How abouT this:
-
-    Update the builtins that call this function to pass their local
-    `repo` parameters. As all of those builtins are declared with
-    `RUN_SETUP` we know that they won't execute outside a repository
-    and thus the repository parameter will be set. Unless the command
-    was invoked with "-h" to print help, but all new uses of the `repo`
-    variable are after a call to `parse_options()` which knows to exit
-    early in case it sees "-h".
-
->      @@ builtin/prune-packed.c: int cmd_prune_packed(int argc,
->       
->        ## builtin/prune.c ##
->       @@ builtin/prune.c: int cmd_prune(int argc,
->      - 	for_each_loose_file_in_source(repo->objects->sources,
->      + 	for_each_loose_file_in_source(repo->objects->source,
->        				      prune_object, prune_cruft, prune_subdir, &revs);
->        
->       -	prune_packed_objects(show_only ? PRUNE_PACKED_DRY_RUN : 0);
-
-Okay, seems like you switched the base of this topic. That's important
-to point out as part of the changes to the previous version.
-
-> diff --git a/prune-packed.c b/prune-packed.c
-> index b6749b8d13..e02d5d7a01 100644
-> --- a/prune-packed.c
-> +++ b/prune-packed.c
-> @@ -8,42 +6,52 @@
->  #include "prune-packed.h"
->  #include "repository.h"
->  
-> +struct prune_data {
-> +	struct repository *r;
-> +	int opts;
-> +};
-> +
->  static struct progress *progress;
->  
->  static int prune_subdir(unsigned int nr, const char *path, void *data)
->  {
-> -	int *opts = data;
-> +	struct prune_data *d = data;
->  	display_progress(progress, nr + 1);
-> -	if (!(*opts & PRUNE_PACKED_DRY_RUN))
-> +	if (!(d->opts & PRUNE_PACKED_DRY_RUN))
->  		rmdir(path);
->  	return 0;
->  }
->  
->  static int prune_object(const struct object_id *oid, const char *path,
-> -			 void *data)
-> +			void *data)
->  {
-> -	int *opts = data;
-> +	struct prune_data *d = data;
->  
-> -	if (!has_object_pack(the_repository, oid))
-> +	if (!has_object_pack(d->r, oid))
->  		return 0;
->  
-> -	if (*opts & PRUNE_PACKED_DRY_RUN)
-> +	if (d->opts & PRUNE_PACKED_DRY_RUN)
->  		printf("rm -f %s\n", path);
->  	else
->  		unlink_or_warn(path);
->  	return 0;
->  }
->  
-> -void prune_packed_objects(int opts)
-> +void prune_packed_objects(struct repository *r, int opts)
->  {
-> -	if (opts & PRUNE_PACKED_VERBOSE)
-> -		progress = start_delayed_progress(the_repository,
-> -						  _("Removing duplicate objects"), 256);
-> +    struct prune_data cb_data = {
-> +	.r = r,
-> +	.opts = opts
-> +    };
-
-Indentation is wrong here now, even though it was correct in v2.
-
-> +    if (opts & PRUNE_PACKED_VERBOSE)
-> +	progress = start_delayed_progress(r,
-> +			  _("Removing duplicate objects"), 256);
->  
-> -	for_each_loose_file_in_source(the_repository->objects->source,
-> -				      prune_object, NULL, prune_subdir, &opts);
-> +    for_each_loose_file_in_source(r->objects->source,
-
-Likewise, this is using spaces for indentation now.
-
-> +		      prune_object, NULL, prune_subdir, &cb_data);
->  
-> -	/* Ensure we show 100% before finishing progress */
-> -	display_progress(progress, 256);
-> -	stop_progress(&progress);
-> +    /* Ensure we show 100% before finishing progress */
-> +    display_progress(progress, 256);
-> +    stop_progress(&progress);
-
-Same here.
-
-Patrick
+In this case I remembered that part of the code from
+skimming previously.
