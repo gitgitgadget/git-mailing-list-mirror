@@ -1,120 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.179
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792998819;
-	b=eKo6Iw+gkpRYYDi/1VPzSO9H7SFPcyuFqgoanWA/3BUTJaSuUjTOio28tWCylW1F4xlL
-	 7Dub58HiAvlLrKH8eUdZbQYwNJ7uNPkOI1Mf5uKrn7UtBA7pwS+y1oOcdC3lTHP+11k16
-	 s3lVOwHmLkNKp/SUNvmhjYHhE1VEUQPIQELxmnN9UnLJGjooIzmLgPkOrIhKl9AQZ2HJt
-	 zId6kU33xEr2eWg8sCp6lOYipIoTrGnrgmFthIScWyUB4XMc/KJtyJ1E0LnhVzLpxgj/L
-	 t7ccJB/7IWtrW+jaxlpiINWWoKKzpI8VpF1UeLABDN+BoLoWY8rzG+QrjuUd79gtLAw==
+	t=1792999119;
+	b=3TbNvPA4rK+CwrWW5FGJKVUSpyAGuZD154oAx6ikmb8gMFoPztskPsNMaEtAsqg5ct0D
+	 8S0rDlQdKRXRJPHqSyuPvAyaTTUbVzkiUgOzVa32TKrRnN2QvgkzljMxHoscDnbimq4Vo
+	 R67L2t91VrNLBGQqr/1Yxilb+NGzqfkOROS7GrZDd1VM8Vb023+AkQJL0C5+mAUKEXyyr
+	 L3ygKJzO9FVHCGZjDPbotuHQWk/gS7KuKDnBflnCR/mKNcDKWMb00tRxl0A2B86X3P6jk
+	 tXljFX2pxl+qZBrUjjwpsTiMvJ8GVSRiF+Z/gLa8FIMYUQObSI9JOTQdWotaynH0i8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792998819;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=HBJyAMSFLWN9cIaMBD/S5zS0soi8ZRHCPZ7w+cxXk/Y=;
-	b=KriZck/r3p93ALOFk9J3oxg2GNbsMoNc4OGhyIjBIwuPAoUmLLTvCxlXontxNVEtQ76d
-	 frWRnZ5Hymz7dm5S+GJoCDYv1jejU/dPMA1clMKlfFUzotGH5YaNno9vD30m5N8wBtZMe
-	 5S9OdQh2x9d5n+P4VURJaZo6xdp5hpCkh/ckjOHFRAanpJRlIgnPGlBTl93+Ni2klv0mS
-	 KgpNqJ8+EWANbBbt0GoKDyG61/SEKnXQNtuLD2UxSTNYz3EUDE3R7pFWtPVeBPqoyY1Oo
-	 IDx5aciRiczMeWGYW0najNxF4Dt8WsCtxNxDHdNl9WmoM9eFelnM3+DqbhYmzfmiJIg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792999119;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
+	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-B4-Tracking:To:Cc:X-Mailer;
+	bh=zzxEUX9fAOi9EMz4cef+7KNjk5pcIKcFAjdA+rffXD4=;
+	b=shwOYqmv9HOmxX6ZWhV/VnwFgyE02Ud/dC3lVutTY4NrLDyzqEmhZEsORpXyJgNuz+Os
+	 csBju2lQee9Hv971Kpyx0Q5M3W6Kvqkc22L/XwkHdiiOHml1cNfNES2MvNmPgi4G9uLF0
+	 OhYC2wFAihuczsphp61yZWV94W6uV3Tb+rkyVd8zZoAGLJls9A5MVrFqFpUi3S9kzhNZe
+	 lN/aX/tfuUQtBKx/Js3AfUtVis1DUgzw+hPyOFl3VKK2Yoks39+PG7nyHEsLd1+nSSDpY
+	 H45cIwMnXerMg+ePJrX7HxPlMCFxmtsS//G9AmwhZmzt77qBcMWz0IBg0n2qsdR+7tQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=uz5Tv0J9;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LBhBK5Kq;
-	arc=none smtp.remote-ip=202.12.124.146
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ajWbUOpK;
+	arc=none smtp.remote-ip=74.125.82.179
+Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3C5606A31A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 07:13:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF3C5606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E73606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 07:18:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30E73606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=uz5Tv0J9;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LBhBK5Kq
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 098081D00224
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 03:13:38 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 26 Oct 2026 03:13:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792998817; x=1793085217; bh=HBJyAMSFLW
-	N9cIaMBD/S5zS0soi8ZRHCPZ7w+cxXk/Y=; b=uz5Tv0J9Gb3NekuOGohl0yKn+1
-	YULAjbEQygEOrTYt7gEto8lStzeXp8NUkXsy9oZBAK/andOi2d7WygQ1PVXKo3gh
-	2TeOCYSglWmgjtJa6g0H7MnSLtYg3O2lPPDX2EgtuTdjiCF+uqA/BsH7srsYkx+I
-	dG72R7VMZuvUZJC/cWAcA5kvcOqkBaLxG2CXol/VBc5bOQyWsJ2iFcdv3FKA10uD
-	xGMKqWFll3lDmLIU0HKcjPaLMt/tp9pThMb4LbT8RFhGqYcTv8NFp6yBC2sb/AJM
-	6Sjc5Spgurt4LFrey/KjmDQw+G8c+6o9TszJlXroWjx5l/NPUxlxloz6HDUQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792998817; x=1793085217; bh=HBJyAMSFLWN9cIaMBD/S5zS0soi8ZRHCPZ7
-	w+cxXk/Y=; b=LBhBK5KqpbVcQfpg9SiejBGCHy6AI1hmpJpr1m/umx9sGwJ8xy3
-	+Lcx/Ve5hMuRJg653FUIu7mGFwesp+K6t/c3wsRKMXZ+UHL4NcS2dm630b+4KJ9t
-	lrfYP6IWJPDYibRpovan5ITE5uqBxpPH5nc3LWQN6FG3TWgm4BoU5T4FuUn7J4kh
-	2N1SZhgPudELG9MEnur5eRqey7Us+4QMCchTdrn3+t7ppqew9ogdgDxzrBGK7lxZ
-	WLBO0E2oizWCT8TLtHGxLP9bDleEdWIbpUoWMWvMGFgmu5JmyNMp27a/ns5HgMBk
-	J8+PO7A7cKozXlwzsGz7fDgk37iu3FQQloA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792998817; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:tCfQeoiXMwTItP3ZIS8aodwbEE24vrLMIYiM7rSnI2UYyVN
-	o8mm7Mds4VCT6UWT1D5+S0HnYG1PLQCTyj/3Py4+N9qJjfe8X6q2UzguBaK8u3z5
-	eMy7OGdoO80AG1hWCYJ/+VH3uHHBSI/0ff/0gCkKA4fIqpmw3HPoeYv/ihHRgspS
-	Dd3KKVL84OyRJpY4AY2o4vZyUtVvZWsf7Mg0s7l0MgGpq6+8I25LfaWkpN59WhiN
-	rPJF2JuGY7wmliFpNMxqJiBdFn9grVfB+3U2aNATT5oulhIDbp2iqZSxEYZXdw5+
-	+G9c4KjJA1xCI7MSS+z33Vt7y9iRRFJD6twfzlQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:PwAYRBRned6YPnS2fYKJ1ucDvCc8hOeHV7uftJ2YjHI=:gjT1SkJ1sLHXIr+M4VabV9egzA6Lm0CORZxtYQlR/p0=;
-X-ME-Sender: <xms:of3eaqnFKtd99Gn8hM5XVsWx5cDMOwdD95qHy1XG9hEl-DP1aeApKg>
-    <xme:of3eapT2aYKhVE3VJUfV86T8098MUCJ8iMmRuVWX9dz4VU6zic3gyAIR35UL2B0gB
-    ZtCaT0pdW0Oj3Ikd3JpKXvhndLbzT9rz3VUK8H_BhunJjcGm1WhWA>
-X-ME-Received: <xmr:of3eamD9lJfn2eARNagU87j_4Z5rzypEiN3klG8T8IOHn9EZiuKoBA>
-X-ME-Proxy-Cause: dmFkZTFtTlrWElm0DS7LGteUtUKrGw9OqyH9kV9t07Z1qodHhFzFvP+WLoqoRH1zo2Jih9
-    VxjaOD5Vhh4m9chBHxAJhXptAgijczElZYFp4TAPq74nv8LAtu4oIpN7J2iUEGIvkdX9KG
-    wBYwuxHP779YTiKrOmTypFyNDtLCs+nBhZ/g7GN+/c+HbqoP4fS9JL9N4eAWDypFsO1qc/
-    8VyoVkdSJCuQSBHeDdQ8MuyzVjg/KbRe+7FlHbcs3z128X3rFsSLvBFPUZI/X4ecpdYHwz
-    gvRngMSCuS9Y8gOqHmqnvbcDHz8mwaQEuLxEEKOyl9I4A0R5PTljFee1oYNKlK8Mfu6hJH
-    oPtSPU8ffwAiDSyqgJgbnK/KU6mr3QB8daiSfG+i1eM5Y/4FuOknIgB3Fhiu420eWPRXpD
-    8H+J3egczwGyWK8OTrd/rmxm4hdrwCVHnLavm7TIa/6/FulJzlSH5O5+g4N6iiMZbadSLu
-    yyh/Bp2nvzkfl8gVmDklNsdoG4RgCOj/q8P7gJIXQZAWyom0hAyxoe/CxlJR+LX+A3pFWw
-    xIRZNBYp4rxAWI8kLM8hEx4Ggxqv05juj1wTL7Jgw+aQsFnSdov8dXx5nqvzSIHXkgJxME
-    mnI+dmdPX2pTJVm5WKSD7FKqlWtDRJvwwVb/z2pPm8Sw1P3w2W1uMufVaemQ
-X-ME-Proxy: <xmx:of3eaoSlXiMRosr_ZTuo6agbWc64L6wZPw0QrNUsNAExO2Pep9ONAA>
-    <xmx:of3easqMEpAtaleP3-v14xII_WnMS_N-WuqExG3TqhyPrdUs0NuiVA>
-    <xmx:of3eaizvLAOWcuG1we2f290bClC4A4BPdDvTYeKTLZuKGP8Tw3FStg>
-    <xmx:of3eapJnZsuYpZ3nFOBFXbOxfto3IIF6qjyQza4j__jIWfq58oM4LQ>
-    <xmx:of3eahsYfHsxD1T8ky883DNzKWOTn-q6VnG8UKyHzpsxzxhWbrHt3LWp>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Oct 2026 03:13:36 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5caeae2c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 26 Oct 2026 07:13:35 +0000 (UTC)
-Date: Mon, 26 Oct 2026 08:13:32 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v2] ci: fail the build if perforce, git-lfs, or JGit fail
- to install
-Message-ID: <at79nEHLDrcoCgn_@pks.im>
-References: <pull.2403.git.git.1789223882471.gitgitgadget@gmail.com>
- <pull.2403.v2.git.git.1792774249888.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ajWbUOpK
+Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-369f33df08eso2247693eec.0
+        for <git@vger.kernel.org>; Mon, 26 Oct 2026 00:18:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792999118; x=1793603918; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=zzxEUX9fAOi9EMz4cef+7KNjk5pcIKcFAjdA+rffXD4=;
+        b=ajWbUOpKnoz86TuJaRUkx5PuRbMQEI2cq4Pd0bwQOy6Olt5eUVeZocL3pu7RrVz5b+
+         Cp5i/boS2nTLaBoYIw2dFWhN4Zk7KvQH9Qi8mtQ3FuoC1kDq2Up+kOoKf+gJ9B1ROtV0
+         MoXtErM9Yqo+0Or4htLOG77ovRih5V1ANNcRnlksZ9cQwTR+6xnm+NG7kGPdoNEPZT7J
+         eGdtVzM9UWvvTAmeHGnff72/GgvK3EcyQeIWGCl2nfC/hP0vxngQsujOqXN7cxxu7PGR
+         SEvnrlMXx3IsTDP3aWEIEuFaEQJpGnp/olV/qlmlQtvRWi5TWEj7whN8YhLxweBN5TJp
+         h+pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792999118; x=1793603918;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=zzxEUX9fAOi9EMz4cef+7KNjk5pcIKcFAjdA+rffXD4=;
+        b=w4pX8ioBxdqXpMZOml051mrcIp8oCT5EY/LpIg5yMZV47reaLkOWgDcULXqMzKuCOU
+         yKHPxb+NbZRiTGV7S8PhSUADkpWAw3bpGa1T6VvcKUv7Pb9mSr42YJg9jZ/aINPTeJDd
+         Atmf1WJmEIarFc9GKATKEnIWE205CrvTubHtabgQus9tDzdPeu6QpDkEiIU7ASlML8UG
+         R/7aouKnxQoqVI9dtvLuMp/LVxd2PAwoZgzcUY1ySbm6GN9yMNsRbpyDx7GQvtS9UC03
+         u1J338f+S5TEHAnhmRG1GkXQnarwn/RxYjZmeX+dsNjuXTcIPjXGnBwixcs1mki3hXEP
+         S59A==
+X-Gm-Message-State: AFq9FYLnJy2V7x59C2FMhVSme3Jw0hv1pFH3iDvUgFEe1N+8T0+nwmUP
+	ozQiUAUA2I+MLNecJBm/IVeB9NX7ORcAk9qM9JUEkDFx+Dgj/wmbb9GoYz8dxg==
+X-Gm-Gg: AYBFou0c1xkcRtB3yHhZ+DZKZn5IwIVYQJEqezLq50+W+IGZfNEXLFfA7HudTrxKOBS
+	TRP6N4cYbcMlzuT2gSnuVviAlU/EtYh83YkhiDpvPBdku2zT2Hu0PI8i67RN8HpTBwNhhWbaeto
+	zK02ToMUjRvV5jivQ0nLkRpN1detW2LBFM5tnfPF2bp9A2bZyqIcjzn3vZTOWEI99nNEqMfozY6
+	g60TQpGF+ztIvUfZFWUrDbRcdR5dNznEE1m7W60wA57mcK7EUg6jIkzELZJOfKtjnfuhNJnVz/r
+	kCyqRhVjAv6aN9VPcXMnZeIIHf+TTil3wikSVuAEm+g2sNO+ve37BMPFOY+hhPqDFZAVMsa7b12
+	A/Xwui1hNqFYi9QYQdm4pUnjJZD/2FmauGBNu6jq62h1qjqa1mPPtaJomGSDl/dUKw5quFtXM40
+	Ra+zdR4m4bC5k043XfzTUiSk5dAe1Cbh5+JcV4XPA4CL/COmFj7I/brWiAcsyW/nbWFVBM4zIqo
+	AEelT4+OvhNMK7vMY3LoOJk+sx21ax0jcoaIPgySoo7a5lr73Bzx+z3OdrvXPY81vVay/3iZ+2G
+	gSkcRF6uRw==
+X-Received: by 2002:a05:7300:5724:b0:369:fbc5:ce29 with SMTP id 5a478bee46e88-369fbc5cfd4mr6458050eec.38.1792999118060;
+        Mon, 26 Oct 2026 00:18:38 -0700 (PDT)
+Received: from [127.0.1.1] ([115.108.41.154])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a005c0188sm8871295eec.9.2026.10.26.00.18.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2026 00:18:37 -0700 (PDT)
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: [PATCH v2 0/2] Make our clar tests ignore the long-tests argument
+Date: Mon, 26 Oct 2026 12:48:20 +0530
+Message-Id: <20261026-ks-unit-tests-ignore-long-tests-v2-0-eaab5657c19c@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,77 +90,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2403.v2.git.git.1792774249888.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIALz+3moC/4WNQQ6CMBAAv2L27Jq2goIn/2E4ICxlI7SmW4mG8
+ Hcr0bPHmcPMDEKBSeC0mSHQxMLeJTDbDTR97Swht4nBKHPQymi8CT4cR4wkUZCt84Fw8M5+Tdn
+ tjToWVGqlIFXugTp+rodLlbhniT681uGkP/bXNn/bk0aFeZ7VeanaTBfXsx1rHnaNH6FaluUNN
+ bI6Lc4AAAA=
+To: Git mailing list <git@vger.kernel.org>
+Cc: Patrick Steinhardt <ps@pks.im>
+X-Mailer: b4 0.13.0
 
-On Fri, Oct 23, 2026 at 04:50:49PM +0000, Harald Nordgren via GitGitGadget wrote:
->     Changes in v2:
->     
->      * Perforce, git-lfs, and JGit install failures now fail the build
->        instead of being silently swallowed. Removed the presence checks and
->        warnings at the end of the script, dead code once install failure is
->        fatal.
+This is a small patch to fix a hiccup I hit while trying to run
+our test using the following incantation:
 
-Thanks for adapting!
+  $ meson test -v --test-args='-ilx'
 
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> index d57dce5663..dad35db78b 100755
-> --- a/ci/install-dependencies.sh
-> +++ b/ci/install-dependencies.sh
-> @@ -95,21 +95,33 @@ ubuntu-*|i386/ubuntu-*|debian-*)
->  			"$P4WHENCE/bin.linux26x86_64/p4d" \
->  			"$P4WHENCE/bin.linux26x86_64/p4" &&
->  		chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4" || {
-> -			rm -f "$CUSTOM_PATH/p4"
-> -			rm -f "$CUSTOM_PATH/p4d"
-> +			echo >&2 "error: could not install perforce"
-> +			exit 1
->  		}
-> +		echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
-> +		p4d -V
-> +		echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
-> +		p4 -V
+  ...
 
-Okay. I was wondering whether we'd even see these binaries or whether
-we'd have to `"${CUSTOM_PATH}"/p4d -V` instead. But `$CUSTOM_PATH` gets
-set up in "ci/lib.sh" already, so there's no need for that.
+  Summary of Failures:
 
->  		wget --quiet \
->  		     "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" &&
->  		tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" \
->  			-C "$CUSTOM_PATH" --strip-components=1 \
->  			"git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs" &&
-> -		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" ||
-> -		rm -f "$CUSTOM_PATH/git-lfs"
-> +		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" || {
-> +			echo >&2 "error: could not install git-lfs"
-> +			exit 1
-> +		}
+     2/1063 unit-tests                                     FAIL            0.16s   (exit status 129 or signal 1 SIGHUP)
 
-This could all be a bit less convoluted if we had `set -e` in
-"ci/lib.sh". But that certainly is outside the scope of this patch
-series, so meanwhile this looks good to me.
+  Ok:                 1061
+  Expected Fail:      0
+  Fail:               1
+  Unexpected Pass:    0
+  Skipped:            1
+  Timeout:            0
 
-> @@ -121,9 +133,16 @@ macos-*)
->  
->  	mkdir -p "$CUSTOM_PATH"
->  	wget -q "$P4WHENCE/bin.macosx12arm64/helix-core-server.tgz" &&
-> -	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
-> +	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d || {
-> +		echo >&2 "error: could not install perforce"
-> +		exit 1
-> +	}
->  	sudo xattr -d com.apple.quarantine "$CUSTOM_PATH/p4" "$CUSTOM_PATH/p4d" 2>/dev/null || true
+  Full log written to /path/to/testlog.txt
 
-This line is a bit curious, it makes me wonder whether we want to
-tighten it as well now. Any reason why we wouldn't?
+On some exploration, we find the following which shows us what's wrong:
 
->  	rm helix-core-server.tgz
+  2/1063 unit-tests RUNNING       
+  >>> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MALLOC_PERTURB_=103 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 /me/git-1/build/t/unit-tests -ilx
+  ――――――――――――――――――――――――――――――――――――――――――――――― ✀  ――――――――――――――――――――――――――――――――――――――――――――――――
+  error: unknown switch `l'
+  usage: unit-test [<options>]
 
-Nit: this is inconsistent with git-lfs, where we also have the call to
-rm as part of the condition chain.
+      -i, --[no-]immediate  immediately exit upon the first failed test
+      -r, --[no-]run suite[::test]
+                            run only test suite or individual test <suite[::test]>
+      --[no-]exclude <suite>
+                            exclude test suite <suite>
 
-Thanks!
+  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  2/1063 unit-tests FAIL            0.01s   (exit status 129 or signal 1 SIGHUP)
 
-Patrick
+So, the '-l' switch that's passed to unit-tests is the problem.
+
+On searching for how these were handled before, I stumbled across
+9faf3963b6 (t: introduce compatibility options to clar-based tests,
+2024-12-13) which handled this by adding such arguments as NOOP
+arguments to t/unit-tests/unit-test.c. So, this patch does the same
+to make unit-test ignore the '-l' passed to it.
+
+The CI pipeline passes (for v1. v2 only had a commit message change):
+
+ - GitHub: https://github.com/sivaraam/git/actions/runs/39756087806
+   (a couple of MacOS ones didn't run owing to the lack of a runner)
+
+- GitLab: https://gitlab.com/gitlab-org/git/-/pipelines/2975804623
+
+---
+Changes in v2:
+- Fixed the s/prerequiiste/prerequisite/ typo in the commit message
+
+- Link to v1: https://lore.kernel.org/r/20261022-ks-unit-tests-ignore-long-tests-v1-0-554a590d418b@gmail.com
+
+Range-diff vs. v1:
+
+1:  66759f627c = 1:  60bc3f0d83 unit-tests: reshuffle NOOP arguments to maintain order
+2:  0bea06fe46 ! 2:  c39dd72a2b unit-tests: ignore --long-tests
+    @@ Commit message
+         So, ignore -l / --long-tests in our clar tests.
+
+         This does not show up as a problem while running our CI as we enable
+    -    the expensive prerequiiste via the GIT_TEST_LONG env variable.
+    +    the expensive prerequisite via the GIT_TEST_LONG env variable.
+
+         Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+
+---
+Kaartic Sivaraam (2):
+      unit-tests: reshuffle NOOP arguments to maintain order
+      unit-tests: ignore --long-tests
+
+ t/unit-tests/unit-test.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+${range_diff}
+---
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+change-id: 20261021-ks-unit-tests-ignore-long-tests-9f32078e9100
+${prerequisites}
+
