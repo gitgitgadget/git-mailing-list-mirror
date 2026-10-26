@@ -1,55 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.216.95.84
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792978377;
-	b=2KyuIztnzyrATKWn2PaulOFSeDXtDRY32iuZKUvnG4+4TiqkE+IwC45NB4D+cfoTQo9x
-	 DpJ7OwXpoE6/OOaaSoNKf8pfzowbvdDrF4iBkSweSTL5zUiS1J2ouBO2lHsG8uBWKQNv2
-	 xBcNfM3KqCjEQGeWagUl7f1P+lyxIm+mt+gX8uOwYYH+Q8FoIu61Sdzj0H/Q2dUzwada3
-	 XoVxndGfbo2DNIOwtJJAtTSDiT14nTyQEWcUTBUGVHYQw3TM7uas8Er8PpiHz5cVRvusA
-	 mbdhgYXkRZFjFRY/TTIS0oxlpil15EZTyhFomRprb30W2J60KZwbX/jAHFvZ3Tffkdg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792978377;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:Date:
-	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=Gbh6dznelc2donhPYY5Wl3/5QXhLdh8tyImfmbd4rQA=;
-	b=UOnelFhXgQVYiH9smVrCASAfMdeBN5YM6rhGzu/sK5EEnRjg0GMwPYaeWdhCxScHVZJD
-	 soSquiN+6OXiUMh8+Q/8PtSWiFlIuMyWeD7qRLPi8kofoLrux2zHch++rRp62IBfUUXnU
-	 u37j8+f23W/DSfEL9weBcdYobU/SjiMubvRfCeNV0A4YxZ99gRuJsSu14hOjiWTGVUcAG
-	 Jz7+Nc3tto06oB+rmNIKPCXrvGlx5l91EUwaRjTTwcYMnJWgytkoP3h08X3RfM7CzzrpY
-	 2C328nW1kqeZUcGsi6VZrLQvN39Gx7BWt/XEpYzLRoDV/D1JpGaxMXMMWb+TCsAO+1g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=peff.net;
-	spf=pass smtp.mailfrom=peff.net;
-	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=bp05ZvtW;
-	arc=none smtp.remote-ip=217.216.95.84
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.173
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792983631;
+	b=nS3YEXZ+KAZ9FoVviWrr2qBz008b27MU1WWtWnAez5gH0lCqUmXf1np10dCeoFcNH2fM
+	 zOnUubMFd0uAfhm+AmCNo2610iiFoB3Hhv6oxqOoXrL/3Q3ipj8kV+xV03+7fhuWaghEO
+	 VjpLtjm0jZPyvTWbB9kniZtNbkMxsBrkiaI5LxeXBRj3nXcQs7n676o276TkfVwEADX/7
+	 biIBVim7b5Mz3KoeOhlO9074En85HyOMnJDfe/ooGxdET2x6KY8jdeg4kC9JqoMR72dtS
+	 mA+IWz4+oEUXr6V658y4ZOhvyd0nRn8jjAEzERROpS4C4M4/dwq1/vOdK6GhDEaMu9g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792983631;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=aGyjmZ+2JhZq7h9GHgHiZDCOWu1XryS6FLFkzZ6Jc08=;
+	b=5LSqBCPkkDMk5mbBsSFq6n2zriciepXNzWfKc8fsZHDA1C0HqlJZOQyjuYLyi7DEba9e
+	 AZcs35S/KDBgbNBJ6ppTcofAwVm8Gyro5xyt8AycTzG6ANgU6QOzbbLlIf5EcVdAw25TM
+	 YPyDIfpudpnZixPTbkqtaC22vz26Rcz7CdKHhkuaN6+r/tlPdcfl9DVZqLOqX9KhH+rU9
+	 YZCzItPXycJfyyzLDfBFLJSHWWsCcK1/DwLyWDX7lS3Us4c0Erz35Hks0F4u3iIhWSZrI
+	 Fx1aTNmxKSCYPvkM9CrH61A03m1UNv3t2ktgBII502/ubacKZOHNwQrzFGy/AqlvNdw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=bZmag4WN;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.173
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25482606A31B
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 01:32:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25482606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8370606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 03:00:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D8370606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=bp05ZvtW
-Received: (qmail 32011 invoked by uid 106); 26 Oct 2026 01:32:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=qvm/AxXaNN+E2+fPp5YPb6zA/Rx+X8J6JTqnUXXUcdE=; b=bp05ZvtWohrxnhaC1VQYNH+mcHDXeMsvJkjxihsmi92x59Oxv8qv4fBbFDs65y8iRszMaTG3pgfq0W/XEc5cjTqsqqPdUvXJUIqVbSxX/ckTmlFmBdYTNyS/WASm8+eeYFK15IdiIvQw2huFypid9g+N3Gq96dOR6anuYZY3LOdxQqBH4k2CvX1XgJKbcnOvK5xp6Rp4gvZZVaozpWYky160bye5h/9RugD5oMUziyzcVvfTwnTEqCprmKGZ3QBkYCdCSeUZBNiqek0G/L8SypN7xqudbqx+RooCs5vXR5EafR4yEP8ZJdaymiUbXxYoYT9IzfApk2usu5rTJqQMQQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 26 Oct 2026 01:32:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 251970 invoked by uid 111); 26 Oct 2026 01:32:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 25 Oct 2026 21:32:54 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 25 Oct 2026 21:32:54 -0400
-From: Jeff King <peff@peff.net>
-To: jyotish kumar <jyotishkumar725015@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [Discussion] t1006: testing %(rest) with object names containing
- whitespace
-Message-ID: <20261026013254.GB3575069@coredump.intra.peff.net>
-References: <CAGjZMyRqv5RsLF4Vo439zy4urfr+R=CTwuDzmYjiemauuZan0Q@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=bZmag4WN
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-53ec9237600so1486555b6e.3
+        for <git@vger.kernel.org>; Sun, 25 Oct 2026 20:00:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792983630; cv=none;
+        d=google.com; s=arc-20260327;
+        b=pc4+oO/n3zHgXIwm888T7dVZzYcLhmp8Vuu7JB2nJbFogaVh1Z0HXZoOXjxaVqA9jY
+         UbOn7t1Uq47QKOlGsCrKRRZV1NbPZBTGBFS/G7WyM/cG+tmfgfDkVRpTf/MIP4kPqqJA
+         l/PyjE3NtaR66tqi27owAffjIHBGG/wWYD+4mPY9+VGXVt78dd1ZqNdlUjeGgdg5hoDH
+         rJBovPo9H9kBmOjf4dlz5fdT7YflZy4DTTQAtaq+Haj1b4AFDcWveqOxMemZxmY3MZRw
+         /kQJ8zAIpZ/xB811YX5SxTkRi8+aRK72fo8NHZOWmSY856Iy30HuNZhanbl+OXvSf+qN
+         qiZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=aGyjmZ+2JhZq7h9GHgHiZDCOWu1XryS6FLFkzZ6Jc08=;
+        fh=omdYVhLuSZr9UgpBAd/pGu8p8kbQ/Nccja0zvlYQk1Y=;
+        b=kXDJEyz/XO7IThXmUnPbaKWCJ+Uzd7yS/C79g8y4ipTPU2GG7cVz/4TwVECptyjpAG
+         JibYbY70SD2ZBq1tC3OwLvuZRZFVQ2LqYliBo2jyVygSHT/6oorB3Pq8dr6GNobmo9dT
+         gfWBGOuMz4AHygu3Qi9z4z0zeNlgRwFAidMIEvAp6nzUMVyaurtvJ0vExKXfsoeAdas/
+         wmZeLhJzBykqwWHWldxm6WmR18qYxsLYURoA8mDZwQlG4TRrbckqw11P7tyfKzlu7rNe
+         3CLGJvD6SqUNzyt8CRjQLpcNsX5YJpbdlmV9JY9yCuCx5vfDzaEWt22k1WO0ssgRxd0x
+         1Z4w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792983630; x=1793588430; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=aGyjmZ+2JhZq7h9GHgHiZDCOWu1XryS6FLFkzZ6Jc08=;
+        b=bZmag4WNc0BqX8s8BIRKSrxl5e0W6Z72sfR1WIqmZZdrG2By3nQFBvoHeT+3mq04Lj
+         19/4PUMckVtFVwmLUN4zoPyl6ZsYKL5vLSS6BI7FwTHYnWMO6wIBb6YCJb70p5YGRSgb
+         FlDTTv/B2cHnKDYYjsA/xbKemRfINomhMAb18iKlWttNxtB4hEddtd8hPQ1Hpai824Jn
+         CCO7KcqCvow8y2iN0SKXNFI1WTaWfX+2sfjnyY77LvyYZdJJYPxyJPthsGtxOw0m2Mf2
+         ELm/E5yjkZqHsa8Rt5V7DzoegzS5dBnLhZiiSWFvjXDfykfgxczNZYRnkJVDfIc4EuXs
+         wmGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792983630; x=1793588430;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aGyjmZ+2JhZq7h9GHgHiZDCOWu1XryS6FLFkzZ6Jc08=;
+        b=P1h/I256UlRNeyBIrW0JQuOOZNhE/IerV1lSCYkN+XEE+FPjkz4xBMwKLEc0f9QUui
+         K9vb/zaOCG0O3DV/GnHcdtmExJZvHPeZf5bSIeYsP8UtCd8nSdP9+MAUQcsFbu5lbDWA
+         7yKfIq4tFSK/9KQ2QiKOtPj8Iiy6mYKuGZNrJbDa4UeQS3qNpopE3wJXmrez0+dj/Ru4
+         +CvexRDoehrMVksd7AcorfMGUMQwoaIfkaChrNLewgQL/bHfNI4HsphNl34QT0UQOJHo
+         c+4ueeaDZeKPX8FKL8ttkDf5MOf6hdSleaNXs5k6d5omJbFTrkzXL0AbAJS36hkEJM+b
+         n2Zg==
+X-Gm-Message-State: AFq9FYJILJGSidvihbsMz8H/49YT/ZQzX+9E57c4Z/sxDW6+4fDsDawt
+	JsCyZCPVDwWX/07J4jrPIvy1woaEQpJkEQj26T6CpTo4na+cAVEOJBh1zhLWvBvZZs+q+lRLGX2
+	m42FIHNo8IL/kmnBrdXeTk0bjwAqn4f0=
+X-Gm-Gg: AYBFou32SQuMl0Ii1oZ3yGMexFmfc97pji1r70jZupO07T/JiTA00eQaS9masB+J0Nw
+	oArVgEhwX9EbpWS7E6UDHV0SX/v1yZoQR3mMD9ctyVAeRN8Tmm2FYrNv9HdVqR8BGfOFIccy42B
+	/p1nSuvWu4ri3nSKVUyx9F/Z4fxoodjB+5aa7KlJBE/P6VD18AZBy70KLzFSZqyPUesTXVxPADW
+	qOGF3GJDCW78NJekm8As5Qy41fb1DNV1NuI86bHpAsKXsZ5W6ILzhlQktSxZJJ7YhyV4u/1d8WT
+	0ibP+wiPxMLGg10BhPJhIbYjYnN5xRvFoPnm9iBkjy82v59qfezAzR2zESqPKPasU16JX4ecBn3
+	Ep8vn+gXku2moHSXs1IWBLLwmLnRPp2OSExR9yD5SuXgR0nRdumFMP0I5d8CgqGoWhy07sthL9b
+	S9b6hxmHM1GgRERy8FkVt0k0YTWHyJpUU8p4R0J/cTrVAW1gkElz+pl1dn
+X-Received: by 2002:a05:6808:c2c6:b0:4fa:8d48:3a5a with SMTP id
+ 5614622812f47-55c002bce7bmr3750366b6e.38.1792983629816; Sun, 25 Oct 2026
+ 20:00:29 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -59,51 +104,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGjZMyRqv5RsLF4Vo439zy4urfr+R=CTwuDzmYjiemauuZan0Q@mail.gmail.com>
+References: <20261024052449.95869-1-tangajoris@gmail.com> <8b60c7f6-4a1c-495a-a594-aaf322279539@web.de>
+In-Reply-To: <8b60c7f6-4a1c-495a-a594-aaf322279539@web.de>
+From: Tanga Joris <tangajoris@gmail.com>
+Date: Mon, 26 Oct 2026 05:59:53 +0300
+X-Gm-Features: AclHuK-ddz99f0vxs981HvtIm5SyXFM-zc78Sfyn08Imr2BOa4n5FJDDv3IM04E
+Message-ID: <CAKrRMNqtqYiE2YKVky+mHyrkqtW2c_L_DcCen1hyaQa8D0+fWw@mail.gmail.com>
+Subject: Re: [Outreachy PATCH] git.c: drop NO_PARSEOPT from builtins that use parse-options
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com, 
+	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com, 
+	usmanakinyemi202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Oct 24, 2026 at 12:17:53PM +0530, jyotish kumar wrote:
+On Sun, 25 Oct 2026 at 10:59, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
 
-> While exploring t/t1006-cat-file.sh, I came across the test for the
-> %(rest) format atom in git cat-file --batch-check.
-> 
-> The test currently contains a FIXME explaining that %(rest) is
-> incompatible with object names containing whitespace, such as
-> HEAD:path/to/a/file with spaces. It uses test_expect_failure for that
-> case and mentions using the resolved object ID as input instead of the
-> original object name.
-> 
-> I investigated this test and noticed that the run_tests() helper
-> already has access to the resolved object ID through $oid. I tried
-> using $oid as the input to the %(rest) test rather than $object_name.
-> 
-> With this change, the focused t1006-cat-file.sh test passed all 423
-> tests locally.
-> 
-> Before preparing a patch, I wanted to ask whether this is the intended
-> approach for testing %(rest) here, and whether removing the
-> conditional expected-failure logic and using the resolved object ID
-> would be a worthwhile improvement.
+> "git fast-import --git-completion-helper" prints its command line
+> options only after it gets fed a line of input.  That's odd.  Do the
+> completion scripts still work seamlessly, i.e. without requiring the
+> user to press <return>?
 
-There's a similar discussion here:
+Thanks for catching this. They don't. __git() in the completion
+script does not redirect stdin, so the helper reads from the
+terminal and "git fast-import --<TAB>" waits until the user presses
+<return> or ^D.
 
-  https://lore.kernel.org/git/20260219152407.12160-1-deveshigurgaon@gmail.com/
+This seems to happen because fast-import only calls parse_options()
+once it sees the first command in the stream (or EOF), as it reads
+the "feature" lines first.
 
-I didn't participate there, but I was the person who implemented this
-crappy %(rest) behavior in the first place. ;)
+Since patch-id, diff-pairs and var return immediately, I'll send a v2
+that still removes the NO_PARSEOPT flag from them, but keeps it
+on fast-import, for now, as I make a separate patch fixing the wait
+behaviour, and ultimately removing the flag.
 
-I think what Junio noted at the end of the thread is important. The
-limitation of %(rest) is documented and how it's "supposed" to work. And
-the reason that is the case is because %(rest) was added much later than
---batch-check, and was stuck with the existing semantics.
+The separate patch would teach fast-import to answer
+--git-completion-helper before reading its input, like it does for "-h".
 
-So IMHO everything is working as designed, and there is nothing to fix
-in the code. But using test_expect_failure seems weird to me. It avoids
-the test suite announcing a failure, but it is not really a breakage to
-be fixed. A test with %(rest) and an object name with space should
-probably just be skipped. We _could_ run just those cases with the
-resolved id, but the point of that test is checking how %(rest) works
-with the name, so I don't know that it would be testing anything useful.
+Christian, I plan to base it on top of your early-scan series, since
+it touches the same code. Would you be fine with that?
 
--Peff
+Thanks,
+Tanga
