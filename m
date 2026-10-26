@@ -1,125 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793029462;
-	b=zoz6VBZPtAScxshHwQS4t3qfvyadoDF5YeG+bSxUXhoVf3SooPq3FmpuEM3KkD7OHSKe
-	 bIqHUFLX0DMQ8GcfPvMtL7d4upTtEuZ3pIYs4v4cwXDLWKaQ9penzdUQPhhnl4SxYWiYB
-	 NrV/fnfN1ODRyIPATnkuW5SyN7t1NFpJSTcsWmzCOvzWuZklDdpCYPmFIs4iyM7EENxEm
-	 /hkjelCW1l+RR/xKHVQAcuOCFDSOsD7k9wIs4fxb2ChhySVAB0qVo3f7yOWO35Fm0JIsQ
-	 Hs3QCM0vBgT4/N1uPHJhfvtD4/elTUsOqPlnLIMn2DJ0zbdm1zbifCtHDwno8PSJxkg==
+	t=1793029483;
+	b=xxJrxOOdo2oAxMQySg3AfIMKi50DhEqjAUgOifsVetQk7BGif2CNR2dduEEeycrg2AnW
+	 4EZ+3Nmee0GfqfimFHpxO6+3YMxS7XgAlpbT2jIOMW+fI5akMiUrBXlTs/rjbV/0JJYtM
+	 ToM5slfFm6SUpS48WxkkfMwBe8QESXv8yTGColkQGiPSpQKoK5q7LldUSUtxI6a9zepjl
+	 ksWAot5PWjcvhqzFD31tuPbUEDkMiCyjuiTLQR0aqtIaa2VqCIIdjy45YxUj1aeP9Bmh8
+	 0nfb8meCfXhqOqYk0VrmKjjuEZw7Pa5TdgJ/BnRHNWvguO5Wk9G0hDVcqRsOtYPpM1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793029462;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=DduWMyMx1OQY2hry17EEwHnjZHFlszU+gVSuHQAXf/Y=;
-	b=xVZegJJDGtTYem40eW74QHpSXjZBGUbWPCz4uwu6BhCWWz5eqJojXx3qLg8E+9Inskk1
-	 TxKoX2MtfRlhOVBty1zc+WjbQ/OK5RGVPxMznKMNSKO9/S/nZySKVV2LK3550eZNB5j34
-	 HYSlLMxRR4erkdU161WxYd0lo0PI/2wjO1HctTTRkg9Cqz7i3/5KGkHqSYvcKPQC2Lpdt
-	 bwEx/480AcpLzLsI8Ilw9VeioioQTrLDW0jTAZ2eG15OiLp2ZNhqCJI00ICK0WEjKwq71
-	 whQne3AZ6JBZVPDvEpCcdsFVAMykh/k/Roqu9jj3F3ZPK3Rmsk9driLoQGcMXI9YsUw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793029483;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=GpQ81czZDk0br1AVhto2WkP+jqUIUNjB2eT+qPRkCJo=;
+	b=Uu+FrOW9tZyBkmVoHDD+4qLOStzcL2hpj0SKGXrKNn5nuuPVSBjIWKr7vS6UWQrJqh3s
+	 GcX9YmnwgcmxbWngUxbABKexT4GIztm4nd/e+F1enzr90ia0cNGpjGGBSlMo53ePVJpDJ
+	 B0Lnjmims/dNKPnRYSlwdsnmd2GAKVsZjsl2luk/9uHI1qOG/46w2j97IJm+KJ/4AfHZi
+	 ZRA14B/mWbfOwBXSyyIkvS0mypnXlGswJvpD7PxT8y7uhxKkyimxHigorTqPR9NoQEUx5
+	 OMyGB9nQY2qPjrKE1uRFnyLKU9q5Oassfw+KMoLKBkikkgolHZTKgYL1KB/48nR2Q3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=QoyKZUUe;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JqPoqw64;
-	arc=none smtp.remote-ip=202.12.124.152
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WWe2+Tvx;
+	arc=none smtp.remote-ip=209.85.210.54
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A245A606A31A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 15:44:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A245A606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40D5606A31B
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 15:44:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D40D5606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=QoyKZUUe;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JqPoqw64
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DB4DE7A03CF
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 11:44:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 26 Oct 2026 11:44:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793029460; x=1793115860; bh=DduWMyMx1O
-	QY2hry17EEwHnjZHFlszU+gVSuHQAXf/Y=; b=QoyKZUUeZ8Vs6g8GCe66A7RPcU
-	8UPKkKpmf8O8yWW2+t1OnVACV8cBqy/Bv+uURlLWjSJTPH+6FhZOVnJrKWQ8PXL9
-	3qnzwxGzIgXU/kDnheZygmkb3a3duHrNeGKBXpb8cSByo0tIss2VMtujnlIVyo3q
-	o8BCp01SIRg/UA1OnbK9efHpFnhemDokuYtTr3Wnrgp/W8ww/0dTXdCxxjN6jgcM
-	iA6ZKoLlIfsUVkpSEm+McLUPZPXLBjn7kkTCrffOPUtEJOsRC3jPIlR1sNRtiwNc
-	H/wITYsvOVPXN4CE2/kdVUubkPB4Z5BQudEttOQmA37jPPfqpc7ymfq3eW6w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793029460; x=1793115860; bh=DduWMyMx1OQY2hry17EEwHnjZHFlszU+gVS
-	uHQAXf/Y=; b=JqPoqw64nI+KAzrovfZNO8qdgbjVMOfmVFSAaI4VlkRxGMLXIXS
-	sOtdhEKaDVEyTxRPxaONW7VbyoC5NHWsfWthzsvsNoMiEiy98GjMMc4GW/BXD0Ju
-	B/4MUvop2CsFRr27618EanhNbHJM9jpTDc/XKMQ5ysoCOjoXBsk81mNohYDR31qC
-	h7SEOFh+tfkS2OOq+ji5fploHH0A3p0hnQ0Pp559MxPs1XS5jch32tg/+ygnNJyr
-	MqU4V5ZVT+PV71prsgXXcY/LA7IKIGyUzlLdpvF6SaKfY/1OEqZfQfTA95QGYc3N
-	SV81hiwZrb2jmXLRixfAd1AyOArqYfAJo7Q==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793029460; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:JOZWY0rQGhnVSo7ygCaJvgq6Yq9J9Yl0w58CUONi+tOsOgN
-	sKtBuiDi02K2M4lUzRABxBibLLSEi9ZcRMcyzyVwC91QE3DX9U7LEMkrNromiifs
-	heh2QrklwvuA/DPgzf6DeoOLVd9ocyxICcXGqh0XcAAFBif+ELwEr8J2Vm3yarKP
-	h2UWCiGL0Wk9z/DfzP0usn8jjcktT+muayNl9xrNsvl/BIUL6jWISXSlp+OQrbJY
-	vl1jMVNImczDQcYZjCUZcouDNXdDL9fLo2OU9erZx7oTDY9geXe0B0XcYF8XkRHp
-	FQ4PB6YugWs6YdTHB22fSIzfWFIlMtJH4L3UMMw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:M34jjbjltmb5nAdWH7BjONaUfwns2frnFSPezN9IOJQ=:9JkvAwq+CuOIks00b+RwWa/WS6DC0yHOFBKisGVY8PI=;
-X-ME-Sender: <xms:VHXfag2PW3QYziuIZXPVPQYsFyonmNbPybvLoO6Q3uxVoc1rjTtIlQ>
-    <xme:VHXfauzX7uoUywQ-mth9dZty5xzBF03jin84SRSa2sGDBv3g2IcHdXPfgnmWSDLG2
-    6EuqlCy3_vIMv0x-l_XzVyjGauCHLNObRy3YsClarAXWoBaun9NDotp>
-X-ME-Received: <xmr:VHXfaitSA5zRSIksq9QTFcqTOSBNh53hoeWn-Qu-1EVYdZF9lW15lF0c9FlmeicDEm1b37CTKrILDf7i8eQbGtrtRk6vEAOEFw8_>
-X-ME-Proxy-Cause: dmFkZTF7gE4KeFED0PKUInNGFXZZlu2//gdwypoUvl0PouX/o5OxqAkqWQEVb4vEIMAgBN
-    LaGYtX37E2bpqAbwUEqM9LcuC6qFqEufPiZetWkT4vWU/VmN5SAH/I5ytglcAlJS2FAC5u
-    OgYZorDzX2kPuvx1XhAMIHrm1wxL803tphd9Q5fT7JZoODaiAZVMaiY6moaDvBzf64Mynh
-    qd205/4gOHMSSa71Vri4owuzsgmgsws4JAg99lekxx0n0sf5AoQJrGJAYm4SipecdtzDzs
-    ti0HpwTB3aGT778mpF9dKD6GbUghZCOe1D+tEx+FsEMdVmlkOEnx8ms+A2YPSQQNwIJJkf
-    ywHFJ/Mhw7YBOvLm+pZYA3qBqdWtdXLA8KK9frQXIrkaUPvNJu6wBWzIf9GomuYNpCxrB6
-    V05PMxRs6BKaNcQ4pkX6cZrtIO+zdwCR1UZDY3GAzcKsbhxUSJnMlufoNePQnWqJXwjq//
-    t2WDu/C0g2bLAV/rFs2jPBhEmdTaq0gt5ynfuc3pthrzLVt5z/u97+jVEo5JdZaSb7KwaZ
-    8FfocUAXlVP3+X0tIA3TeNE0Jwyov3JtL0zFhZsCoQ860Uvf6EjtBzk4fk6jBWw3n1u1kr
-    uJYZZr+PoNjWBmP6fwONLgw9/2qSMS7+igkBbE4MGHpuBFlWs3kgwfQec7ow
-X-ME-Proxy: <xmx:VHXfagwOzlYgWf_C4tG4M1z8-zkapDAgfUncv3GordU_ca3VbKa3KA>
-    <xmx:VHXfalCS4NecN-OGGmZGRccjsePO2XsZ6jFIK_AoK_kKLIYVJtXOoQ>
-    <xmx:VHXfaudKAn_fk1tQHjup2YCZ4h7tqAqRPYyjvDpp_HyJNH1JSmKVnQ>
-    <xmx:VHXfavnkQZCCMjGAQJlBiTX4Unu3EGW0l9ms3-4CGIjAvHAI_xzg5w>
-    <xmx:VHXfanY66k_ESd1MlaLpvcO_-JiKF6254XlKhKHS_-I_Te2cIGkQuuON>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Oct 2026 11:44:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren via GitGitGadget
- <gitgitgadget@gmail.com>,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Harald
- Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v10 0/5] fetch: avoid fetching every branch of a new
- remote in a shallow repo
-In-Reply-To: <101723fc-d392-4000-b224-345c610b2aaa@gmail.com> (Phillip Wood's
-	message of "Mon, 26 Oct 2026 09:43:07 +0000")
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com>
-	<xmqqcxt02eoa.fsf@gitster.g>
-	<101723fc-d392-4000-b224-345c610b2aaa@gmail.com>
-Date: Mon, 26 Oct 2026 08:44:18 -0700
-Message-ID: <xmqqh5i8tqjx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WWe2+Tvx
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-823b938464fso2335458a34.2
+        for <git@vger.kernel.org>; Mon, 26 Oct 2026 08:44:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793029482; x=1793634282; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=GpQ81czZDk0br1AVhto2WkP+jqUIUNjB2eT+qPRkCJo=;
+        b=WWe2+TvxkE/OZ1kiKuNT+CmE9ZH3pWVUVGuJ9sEk1PsQHhK8K3L+aSYyf7Zl2Ypsa+
+         6IgfhJAW8zf8aUsUkf0+39EKW02DzlGYV1/Sh5xym6emBoD2iuE4Aep5dHvZk4635Ok7
+         1dsUBiF5Ki0dilDAgCaSFeZg3fF83EkSIuia9zaY3345lkdGpcpA23OglRc7PcuySOob
+         /9O6plxFA99Y6AS4BzOftrp2qINAxA1t2Bn6a1vKtylAsFhjnQJLK7tg/zXXtl6fOJd1
+         3KQTqaY+Y7hmJP/vW4NtjplRDiSxFt4rsilMB94Lzm9HrBTgRBzyU+z73nz84+3a0+6P
+         rpdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793029482; x=1793634282;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=GpQ81czZDk0br1AVhto2WkP+jqUIUNjB2eT+qPRkCJo=;
+        b=D0eth1rpi+M5AVkxdhiBdUh3YJP+0nlPSEL0yh1xD9k/qcHmXtQGTAHqWwApPWBTEd
+         Jf/FUG+e4Vi8b60f3/TQwJMN+ku4Zxr/GNwBQMDHdPpLTMl96X8t0ACoPT/59g5bCvuN
+         8pPjMbDiY6ksalM3293JeWkj6SPw+iJlcJu3edFxGGxXH4iD1L28wla8bouPG5ju8UIT
+         oFKKAKPTFHC9hM+LMYTOD1wTlFkRMXBS6p21B8dyQ628gMvii4eDr0woaG1QeqOBlV1x
+         W/MU+d20ybM+9azRexZs2RkBGdJwCccEMrzXHufZVCAZOSVrBiVdpmkuO7n/15iAaCT5
+         H3jQ==
+X-Gm-Message-State: AFq9FYIA2bgneIPfvG811TiPvkauPWn9M4d3csJpQQwllgRCpLDNoZhY
+	Mkk2+GCA4v65C8YUJudxOpUpVg1GcQz7LSaZe4RNlGIdejGBe0YIf4ez
+X-Gm-Gg: AYBFou3jJv985DKngPpc15+wA80goJG9y9JAGm24yPKGZo3uNmDZkE3MpNo0hYiqtK/
+	Dd2gFpxlya016/AI9c76ZRc6QO20K981Gdi61LU6eH2UTkHtqM0V1qiDiBOz0MRzGnha+pCHE8D
+	vHLXlSNb5i3w4kxm6ABGJniVxgywAxLVpkHeZc91YZnQDcBdkGfCr3TauHu/yRTzKz15FCHQC0Z
+	O+Ie2GB7JbjjcK/ytmbmVUnpqSif5yyxkPW35vh4ieYDsfe4Hq8JP74BfyC78hnL9sQeF5lVvNx
+	7TPrkyS8owJFEqCLwHMZuuBCf1k5OitnEm3hFZsMzIzX60+ZK5Sc5Awc6873g8MvXjmhH93y5VD
+	nKrf6hbINEJplJhHClWpvlEz45x2WRXlEOahYlXvy5K2FXbRyQyD/2DtTg2inTOIM9e/Gl2HEjy
+	xG/4HXzeiXfTiQFqhQ3xg99ke5KV1gVhGKfnhFtz8EYhSUyg3woc8n9e7aFRfouJkHZc28pqBkP
+	QJ9nK7DqotoRaFoc6HXiNoZRE7Vt1Dy6YY8v1GHq/wK+Dkj9V7dE/PBB8sfGGhxhevmL9phEpQF
+	YKhI
+X-Received: by 2002:a05:6830:640e:b0:81b:ac5b:ea17 with SMTP id 46e09a7af769-850fedbbf50mr5936753a34.16.1793029480648;
+        Mon, 26 Oct 2026 08:44:40 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-850fa99ccfbsm8240887a34.5.2026.10.26.08.44.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2026 08:44:40 -0700 (PDT)
+Date: Mon, 26 Oct 2026 10:44:35 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH v4 1/4] pack-write: make index-pack output comment hash
+ agnostic
+Message-ID: <at9v9p64l72xFEi8@denethor>
+References: <20261020132900.1208343-1-jltobler@gmail.com>
+ <20261021182528.3055494-1-jltobler@gmail.com>
+ <20261021182528.3055494-2-jltobler@gmail.com>
+ <CAOLa=ZTnEJDPB6_fdFQFcM=zV21HEZ4gzzhWqB=A_euSzUut_w@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -129,68 +98,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZTnEJDPB6_fdFQFcM=zV21HEZ4gzzhWqB=A_euSzUut_w@mail.gmail.com>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On 26/10/26 08:01AM, Karthik Nayak wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> >  	/*
+> > -	 * The first thing we expect from index-pack's output
+> > -	 * is "pack\t%40s\n" or "keep\t%40s\n" (46 bytes) where
+> > -	 * %40s is the newly created pack SHA1 name.  In the "keep"
+> > -	 * case, we need it to remove the corresponding .keep file
+> > -	 * later on.  If we don't get that then tough luck with it.
+> > +	 * The first thing we expect from index-pack's output is
+> > +	 * "pack\t<name>\n" or "keep\t<name>\n", where <name> is the hexadecimal
+> > +	 * name of the packfile it has just written. The line is therefore five
+> > +	 * bytes of prefix, `hexsz` bytes of name, and a trailing newline. A
+> > +	 * "keep" prefix tells us that index-pack has also created the
+> > +	 * corresponding ".keep" file.
+> > +	 *
+> > +	 * In the "keep" case, we need it to remove the corresponding ".keep"
+> > +	 * file later on. If we don't get that then tough luck with it.
+> 
+> We start off saying we expect either '"pack\t<name>\n" or
+> "keep\t<name>\n"'. But the last line makes it seem like the latter is
+> always expected? Is that the case, or should this comment be moved to
+> the caller in 'fetch-pack.c'?
 
-> I've just read through the commit messages and documentation changes and 
-> I think it is a mistake to use a single config variable to configure 
-> where fetched refs are stored and which refs are fetched. The problem 
-> this series tries to solve is that the default refspec fetches all the 
-> branches from the remote and it's not possible to use that mapping and 
-> also restrict which branches are fetched. To fix that it introduces a 
-> new config setting to configure where the refs are stored which is good, 
-> but it then uses the presence of that setting to implicitly configure 
-> the default set of refs to fetch. To me that repeats the mistake of the 
-> existing fetch config.
->
-> It would be much more flexible if we had a separate config setting 
-> (maybe remote.<name>.fetchRefs) to describe which refs are fetched.
+Even though all callers of this function specify the `--keep` option to
+the git-index-pack(1) generating the output, it is expected that the
+output may be either "pack" or "keep". When git-index-pack(1) tries to
+create a lockfile, but one already exists, it simply ignores the error
+and returns a "pack" output line. The last line is from the original
+comment and indicates that when we do identify that a ".keep" file was
+created, it is something the caller must handle later on.
 
-Good point.
+The intent of this patch was just to update the comment to be hash
+agnostic. The next patch splits out the `read_index_pack_report()`
+function from `index_pack_lockfile()` and the last comment line is
+removed accordingly. So I'm inclined to leave this patch as-is.
 
-When I wrote the refmap feature (without configuration variable)
-long time ago, one of the goals was to allow me to say
-
-    $ git fetch cabal \
-        --refmap="+refs/heads/*:refs/remotes/cabal/*" \
-	maint master next
-
-That is, "here is the place I grab from there are stored" and
-"maint master next are the things I grab from there" are specified
-separately.  With the configuration variable added in this series,
-
-    $ git config set remote.cabal.refmap "+refs/heads/*:refs/remotes/cabal/*"
-    $ git fetch cabal master next seen
-
-should become possible with the same behaviour.  I am not sure
-offhand if this series does that, but I would consider it a bug if
-it does not.
-
-In any case, this series, since it lacks the separate setting, takes
-the lack of "what to fetch" on the command line (and perhaps lack of
-remote.cabal.fetch???) as a sign to trigger this new feature to
-guess what to fetch based on what is tracked by the local branches.
-
-For now, as this "what is tracked by the local branches" is the only
-kind of smart that was designed to decide what to fetch, it may be OK
-to use "you gave me nothing to specify what to fetch, so I'll guess
-using the smart".  But when we introduce more kinds of smart later,
-this becomes a problem.  So I do agree with you that we should have
-something to specifically say "when I do not explicitly give you
-what to fetch, decide based on what local branches track".
-
-> That 
-> setting could accept something like "*@{upstream}" to "mean fetch the 
-> upstream branches of my local branches that live on this remote" which 
-> would cover what this series wants. I think it would be useful to 
-> support "+" and "^" prefixes on the refs to fetch as well, so that the 
-> refmap config controls the mapping and the "what to fetch" config 
-> handles negation and forced updates on a per-ref basis.
-
-The reasoning here is slightly wrong.  "^" (not) may be good thing
-to consider as it is to decide what to fetch, but "+" (overwrite)
-should be on the refmap side, i.e., where to store.  If you are not
-storing, then "overwrite what I have with non-fast-forward" becomes
-a nonsense request, and that is why it does not belong to "what to
-fetch".
+-Justin
