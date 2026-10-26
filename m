@@ -1,90 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793008471;
-	b=Ki7EiFkin8ozOEZL1VBSg+vghbNffe8aqvFRVWgFEn46xTPrKsBFfsJfpFwY1Pk9UGxq
-	 ojPZRuM/eR/e0duhzX1vIicP9tx5A2nhuWhxAvUQmzKqXJSv8TQzMouyUGbd7M9UzVxEh
-	 5QxF3qEsydJdlrEXaRoiu4vQEgVGh3VYVdjdvT4TzZHLco/svI8oMOot54KZXgS7yxDcq
-	 9lS3ehGioD97RQKQN4qCv3+oG3ctDaFrHuvFQkoM9cIbdHcTunDqP+KDDvdgoW8snmQK/
-	 J+cp+t5dOGyEieu/DcVt6I8CkD6aUX5d11qipamNIlO0VW9M23ZF8q5YQSjP96jt7lQ==
+	t=1793008468;
+	b=DT1HivTsKPxmuupJyJIuH4Dvs6JDN1ahARP6oBo21EVWGQduMkgbxKX1CayNq5RBxqbL
+	 rNvXKTOO+sT40Qo5THC12B4vD8sjpioeO5SNGdAc0m9PVW3kEu3yZBDRK9/B1rq4FAXZR
+	 30Ol0fX3Bzm/iqi3z86nSwxS1d2YkYmUyAcd2uySJKmHwd8XO+yroPA9lgyHShLmZ57JP
+	 MeCCc3LPti0hboo2ZYQo2YKzlivx9v7mDsitG1NgwxjI3MCkFu7LcILIMpsGoDhHm0ao+
+	 by7GbgKtGCCd95dQ+2Y6R4/qR2Okr8HUjZBslFdVzFjQMSR0jFBj/PNKHU5szufe5bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793008471;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793008468;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=Ceeb8/TTt1kL6Wy8qFo4jmEj65d/ZM96TBnwNqn1GWQ=;
-	b=MCW9tVSt6sA7RCWBiNo1tDwWl8W6aORQz3lZWdWF7dTibA9iqzKB12YetvoeLoofVNsG
-	 axZ6CSzJzNxO+b5066FBR8toI791xjJowDFTY1lxFOKW3OLW5ILwc/b5qFFeQ2wy4ap0m
-	 +KPG3QMOXWGe+jKFc3PnZTQXKAn9fErt6ue0al5fPFWmOkI5Ms0voGJpvElYxKWQp0kXh
-	 XKSexeYuT8ytjbaVRlTILmGviUaRKQaZrCnDITtolalHhoVUca6MI8LVsnUlJMNvaM/kG
-	 PYz7wTNngLvMU0myV5WFA5JOUrXgHgBmkWYmieQzhrUuHX5z7hws+6mqQ3eTFoWRe1A==
+	bh=zT+LQVev9eg722PAR6/YyfOsWktTfp0xkgCRgyEvE+E=;
+	b=XyPW9K8i9oYLM1uJCenpfF+IFrz8t71wxEsriXn7rWUdr6HMNjIFDKH6ZQMa7wazU9B+
+	 hVWhOqV9njyaJHTq+iEHTXGVjm3mtZuYhFZe+WjL9tFBzUD9BDSOxY0BtYSzZh2DlP5Yq
+	 MDPrHjYH7Do39E4i5+JBFMriKGGU4M3ggWvkm2OLt+xHh/OAR9qMG7k0N/8pnYnXr2yWt
+	 SZ/GcGSEGvEMW1jaGmAgytSsIdY9S0BuyE0DMc/YNt3vYjt1DqhdPw5xTWaVs4J4wRCPO
+	 871VBQUq0zE0jNd26HvQQbjQTIx9qu65joWp7nFJUnbl2Ufw6tB29fae6UwB5VgTt8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=OPx23kAM;
-	arc=none smtp.remote-ip=74.125.82.41
-Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=QFz7ynan;
+	arc=none smtp.remote-ip=74.125.82.169
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B6960A260E
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 09:54:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57B6960A260E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23C1606A33A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 09:54:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A23C1606A33A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=OPx23kAM
-Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-156cbe59622so1999775c88.0
-        for <git@vger.kernel.org>; Mon, 26 Oct 2026 02:54:31 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=QFz7ynan
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-36681e85e87so282716eec.1
+        for <git@vger.kernel.org>; Mon, 26 Oct 2026 02:54:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793008470; x=1793613270; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1793008467; x=1793613267; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Ceeb8/TTt1kL6Wy8qFo4jmEj65d/ZM96TBnwNqn1GWQ=;
-        b=OPx23kAMX4gfWrlz23PZrU/3NPTfReFjsO0FHCSFNHBlpJcZ3QCaWTD37EtiqFC6Ph
-         Oqqvw8hQsHZdfdH7piyuG2iqkw1wRLzsBcKXWY6MNa0dRX7veB7cj1rplxW+PjwxPpKG
-         83jiEUuCXtB3ZTnzLk3IJJ2UKktLZgW+lukiuRn/fQuBUEyWy1+p9RoiSmMnu/PW6c9D
-         ah1x4sbMNEt5iAd1QmePR2yqzKue6OuXKuZuEQw2j0gfykNfWskrCKoWpqC+d7QZ9ZFT
-         11WWumn49ovCrnPE7H3q8/jGgrXLfeM+2NXP3Ww2koZbds92ZPIErNfNtc6QsRNiRNls
-         X23w==
+        bh=zT+LQVev9eg722PAR6/YyfOsWktTfp0xkgCRgyEvE+E=;
+        b=QFz7ynanVR7xkN1NMfhrU1srn3pCIF7qXFb5uiWKdhqYPTcW7NbaZvYUMjzqzWuRJK
+         tWPhF/b5rkXXvwdSdArgH25/oL/JwWGvvnpQ9gNTho60+r1GSZM8sO2wWDcNK7k8fKx1
+         7MQYxAqDdl63+0gmI12QgJFzI1II8d5O1t/TGQSkTiLZtnJt5FbttgcmgrztSBwcxPmO
+         cyajW6Z0/XzTq4cEi/AuowqHprseyoVWMs3xZ8tzKYY+YMk6YGCBFV5tPTUGkOdGv3W7
+         2gYGrM7HnrTbSygj+dNuNJK0t4AaosV3r6Vx0XZvg2mni+M7QsHJwNTu/OFgYwfXd89+
+         kOww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793008470; x=1793613270;
+        d=1e100.net; s=20260707; t=1793008467; x=1793613267;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Ceeb8/TTt1kL6Wy8qFo4jmEj65d/ZM96TBnwNqn1GWQ=;
-        b=jj2cd663ov1E6Cl9hqNo3fB0Ftp6sVvQX+NFqBWagbfNJJaiCk1/Rr4476ZsAFqzk7
-         XBYMTm2CzVLREB8kCBJPLTakmqQnTEoMGYRq7oB0frX4ln4H02x+fA4AR1bnoKn0YMaS
-         G/9LUh5HR01tlMXx0dY/uhqdnW3J/lTZItWEivtcrxGBK37SEtin2/7nAiR9Lst7REzS
-         sJ+h5sz4eIkvPt9LT+SqlhzsYdSVt/VhCjwLm1KzefgcZLLqnHAY9IGiE7OETg+jlaUl
-         7+NmwWWrV78EkcQvDMtthCO+5VrlCCGNX1RXtEzQRbOMYCr14gG9+jauOnNm+mj2qapq
-         5iGQ==
-X-Gm-Message-State: AFq9FYI7/kdbWfFd0kqwoslkhtbmrvejmSuOfSSEK4YkWTtJr2d56hfs
-	T+NnXaH+5tHaGntiVk4N/pyUQf6DI+6ESXpuBLa0PSvqDX9MIvbmmAxVwrH3zfZAGVo=
-X-Gm-Gg: AYBFou1kPYqZNzSKswIx753NnzWD9zRiIsMU1Hks+ByHtIuPLHKEpk+BxRJBpbvmvMz
-	gm9yoRc+emjY2x2my4CR8Lyt0paZ4UWTtT8AWD1FlEyUpTsLGVM5f6KVOXXAs9dAx8S3J2ZOLGb
-	a2qxxHqsER/OoW2vNczGqtT7Z0sxHa+/I4blidCIuCVs3qc+LPLrO13PN2w8rnfiap/Spoj4Jm7
-	EnWSAvmJJEunyKsf4FskVsBi9JgHRTvPtWzOCJ1rgKxf0/VHcP8+SRasbwBEaVJ+xRK/KZuwqkl
-	uD2Gkbq7Q5+ngbywsvU5K15N/ruX6Wl7U9byCqAgxL1WZcKxs8kyM2xbIUN3CLQqmwKc7HSgFSP
-	Y0t9PjEJMsy+m70fG4O+z32jPsZ/NgNBwrCtSZ7vfa2f9vCozMosbm5kkZ0i0L2FbBhn1Wtl/Hr
-	wOCCu0stwxuw8ariswSuGMafNZmbOHhc4a6Ksep70Iw2BNjnG6X3XnUCvoJUagwDkHlGYW2624/
-	lxSpjuSbEm4W9YKHtEp2TIZD/eiltV5+PWekWm9MxfggWKUoNp9of9i
-X-Received: by 2002:a05:7022:b057:20b0:19a:ace1:793b with SMTP id a92af1059eb24-19aace17b02mr9018114c88.18.1793008470185;
-        Mon, 26 Oct 2026 02:54:30 -0700 (PDT)
+        bh=zT+LQVev9eg722PAR6/YyfOsWktTfp0xkgCRgyEvE+E=;
+        b=P8vPxT9rgXN+cE6wvR+RnMz17PyXIMJ808KBl1lATeG1qg3aTj5tKCeeJhK0AVSfrU
+         cNzwtWnGAmrq1eSG6O7o4q/xjqvjP4YZr3j4MEnsg76BSDec502Ie/Iuts+KY9/LkJvE
+         /adJFcTiXexvyOfktI18Ewh3s+ZrWw05eYw+jNfRf0n6fD7Mr/mg48LNxoTGkCjAnElB
+         zmCIdsaqAWXUNIqep6jmEqqFtExFRqDQeyEv00S+guUABvnjQclBjJef2nY2e7FfxPmS
+         eMzzfkCFbxIxepcQu8puf5OVDogRO+QQiYHZzJjZchj5hC7Y1HPrCxs1o76Tc08ry10G
+         8RaQ==
+X-Gm-Message-State: AFq9FYKEMpOrxzQOph99OZzM+KxDf10u3nYQD66ZJOVYlpPXyrNQs/7y
+	Az9MA0+WtaRxf2l+mrHDEYPhj1pMktvPZgNk0hZidB2rP9Wkjb0WYO39nvG2T3JLaS0=
+X-Gm-Gg: AYBFou24C0PlMhMcsnOj03Wt608ax9iHg4SRsDGpqnTeUbkPO9bMIKDUO5jIquWD31I
+	DyEcnOBHiSaJIqbdpT1aGjVP1GHc8jWV1XHkV63DJctUyqc+tTROnp/RQkzl0AmGFy67YAN0If2
+	YwaIEoeepUdxDsqTOF+DLK017j6K7NgemPXC1ejwGr/Fq5Cqt6rU4GkZil66IblF8sXfZaJawov
+	m6UHwBE/iZDe+9NdJqE46gjweoJ/fDXHHI6i7f4KiJUdlJsHN5ojU2dSAlc3Zq8IVh+R3VJPytl
+	J448cXhHLn/4JKj5e8wSv7ZUO8f444TpOUqSaxQeNxdi72WAxB4KKU3TeiBDDaFkl1baJQtrTVz
+	njVCjIrB039jq/v7rL+v0nwbuyXUu3D8fKyQjyUYWgTfwC3lSYYfXMhRwNZgTSQtAit1EgKxr0E
+	aA81R/hLQD3MZs4cyZHHZA+7jF7gt6pIt206IGuoeqto+r76AvRilkIZn8DJz2o1nq1pDzf1bMG
+	Q9TJokMVHYUusvWnkU4z8Rqp5CY1odPjzjfPh7Me37o+0X8BKrh5hLb
+X-Received: by 2002:a05:7301:2f31:b0:369:d8e1:7bad with SMTP id 5a478bee46e88-369e84d7714mr9641979eec.34.1793008466520;
+        Mon, 26 Oct 2026 02:54:26 -0700 (PDT)
 Received: from [127.0.0.1] ([20.168.98.33])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-19886f790e4sm22962515c88.0.2026.10.26.02.54.28
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-369f44bd644sm16241833eec.15.2026.10.26.02.54.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2026 02:54:29 -0700 (PDT)
-Message-Id: <a57cfbb2a5c0f34e44595c3b688b18c760258685.1793008465.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2403.v3.git.git.1793008465.gitgitgadget@gmail.com>
+        Mon, 26 Oct 2026 02:54:25 -0700 (PDT)
+Message-Id: <pull.2403.v3.git.git.1793008465.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2403.git.git.1789223882471.gitgitgadget@gmail.com>
 References: <pull.2403.git.git.1789223882471.gitgitgadget@gmail.com>
-	<pull.2403.v3.git.git.1793008465.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 26 Oct 2026 09:54:25 +0000
-Subject: [PATCH v3 2/2] ci: fail the build if perforce, git-lfs, or JGit fail
- to install
+Date: Mon, 26 Oct 2026 09:54:23 +0000
+Subject: [PATCH v3 0/2] ci: fail the build if perforce, git-lfs or JGit fail to install
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -99,104 +97,106 @@ Precedence: list
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
     Harald Nordgren <haraldnordgren@gmail.com>
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Fail the build when perforce, git-lfs, or JGit fail to install, and drop the
+warnings that used to fire on every platform regardless of whether it even
+attempted the install.
 
-A failed install of perforce, git-lfs, or JGit was silently
-tolerated. The corresponding tests would just skip and the build
-stayed green, so a broken download could go unnoticed indefinitely.
+Changes in v3:
 
-Fail the build immediately instead on the platforms that install
-these tools. The presence checks and warnings at the end of the
-script are gone too, since we already know by then that everything
-installed or the build wouldn't have gotten this far.
+ * New prep commit drops the xattr -d com.apple.quarantine call for the
+   macOS perforce binaries, it's been a silent no-op since perforce's
+   install moved off Homebrew in 2022, confirmed wget downloads never carry
+   that attribute.
+ * Drops the explicit echo "error: ..." / exit 1 blocks for perforce,
+   git-lfs, and JGit, relying on set -e (already active via ci/lib.sh) to
+   abort on the first failed install, matching how every other install step
+   in this file already works.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- ci/install-dependencies.sh | 49 ++++++++++++--------------------------
- 1 file changed, 15 insertions(+), 34 deletions(-)
+Changes in v2:
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 203e8401cf..7c3c6ad434 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -94,22 +94,25 @@ ubuntu-*|i386/ubuntu-*|debian-*)
- 		wget --quiet --directory-prefix="$CUSTOM_PATH" \
- 			"$P4WHENCE/bin.linux26x86_64/p4d" \
- 			"$P4WHENCE/bin.linux26x86_64/p4" &&
--		chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4" || {
--			rm -f "$CUSTOM_PATH/p4"
--			rm -f "$CUSTOM_PATH/p4d"
--		}
-+		chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4"
-+		echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
-+		p4d -V
-+		echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
-+		p4 -V
- 
- 		wget --quiet \
- 		     "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" &&
- 		tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" \
- 			-C "$CUSTOM_PATH" --strip-components=1 \
- 			"git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs" &&
--		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" ||
--		rm -f "$CUSTOM_PATH/git-lfs"
-+		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
-+		echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)"
-+		git-lfs version
- 
- 		wget --quiet "$JGITWHENCE" --output-document="$CUSTOM_PATH/jgit" &&
--		chmod a+x "$CUSTOM_PATH/jgit" ||
--		rm -f "$CUSTOM_PATH/jgit"
-+		chmod a+x "$CUSTOM_PATH/jgit"
-+		echo "$(tput setaf 6)JGit Version$(tput sgr0)"
-+		jgit version
- 		;;
- 	esac
- 	;;
-@@ -123,6 +126,10 @@ macos-*)
- 	wget -q "$P4WHENCE/bin.macosx12arm64/helix-core-server.tgz" &&
- 	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
- 	rm helix-core-server.tgz
-+	echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
-+	p4d -V
-+	echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
-+	p4 -V
- 
- 	case "$jobname" in
- 	osx-meson)
-@@ -170,30 +177,4 @@ Documentation)
- 	;;
- esac
- 
--if type p4d >/dev/null 2>&1 && type p4 >/dev/null 2>&1
--then
--	echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
--	p4d -V
--	echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
--	p4 -V
--else
--	echo >&2 "::warning:: perforce wasn't installed, see above for clues why"
--fi
--
--if type git-lfs >/dev/null 2>&1
--then
--	echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)"
--	git-lfs version
--else
--	echo >&2 "::warning:: git-lfs wasn't installed, see above for clues why"
--fi
--
--if type jgit >/dev/null 2>&1
--then
--	echo "$(tput setaf 6)JGit Version$(tput sgr0)"
--	jgit version
--else
--	echo >&2 "::warning:: JGit wasn't installed, see above for clues why"
--fi
--
- end_group "Install dependencies"
+ * Perforce, git-lfs, and JGit install failures now fail the build instead
+   of being silently swallowed. Removed the presence checks and warnings at
+   the end of the script, dead code once install failure is fatal.
+ * Version output (p4d -V, git-lfs version, jgit version) moved inline right
+   after each successful install.
+
+Harald Nordgren (2):
+  ci: drop quarantine removal for macos perforce binaries
+  ci: fail the build if perforce, git-lfs, or JGit fail to install
+
+ ci/install-dependencies.sh | 50 ++++++++++++--------------------------
+ 1 file changed, 15 insertions(+), 35 deletions(-)
+
+
+base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2403%2FHaraldNordgren%2Fci-scope-optional-tool-warnings-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2403/HaraldNordgren/ci-scope-optional-tool-warnings-v3
+Pull-Request: https://github.com/git/git/pull/2403
+
+Range-diff vs v2:
+
+ -:  ---------- > 1:  e85ce85d92 ci: drop quarantine removal for macos perforce binaries
+ 1:  dde1b38567 ! 2:  a57cfbb2a5 ci: fail the build if perforce, git-lfs, or JGit fail to install
+     @@ Commit message
+      
+       ## ci/install-dependencies.sh ##
+      @@ ci/install-dependencies.sh: ubuntu-*|i386/ubuntu-*|debian-*)
+     + 		wget --quiet --directory-prefix="$CUSTOM_PATH" \
+       			"$P4WHENCE/bin.linux26x86_64/p4d" \
+       			"$P4WHENCE/bin.linux26x86_64/p4" &&
+     - 		chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4" || {
+     +-		chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4" || {
+      -			rm -f "$CUSTOM_PATH/p4"
+      -			rm -f "$CUSTOM_PATH/p4d"
+     -+			echo >&2 "error: could not install perforce"
+     -+			exit 1
+     - 		}
+     +-		}
+     ++		chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4"
+      +		echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
+      +		p4d -V
+      +		echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
+     @@ ci/install-dependencies.sh: ubuntu-*|i386/ubuntu-*|debian-*)
+       			"git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs" &&
+      -		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" ||
+      -		rm -f "$CUSTOM_PATH/git-lfs"
+     -+		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" || {
+     -+			echo >&2 "error: could not install git-lfs"
+     -+			exit 1
+     -+		}
+     ++		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
+      +		echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)"
+      +		git-lfs version
+       
+       		wget --quiet "$JGITWHENCE" --output-document="$CUSTOM_PATH/jgit" &&
+      -		chmod a+x "$CUSTOM_PATH/jgit" ||
+      -		rm -f "$CUSTOM_PATH/jgit"
+     -+		chmod a+x "$CUSTOM_PATH/jgit" || {
+     -+			echo >&2 "error: could not install JGit"
+     -+			exit 1
+     -+		}
+     ++		chmod a+x "$CUSTOM_PATH/jgit"
+      +		echo "$(tput setaf 6)JGit Version$(tput sgr0)"
+      +		jgit version
+       		;;
+       	esac
+       	;;
+      @@ ci/install-dependencies.sh: macos-*)
+     - 
+     - 	mkdir -p "$CUSTOM_PATH"
+       	wget -q "$P4WHENCE/bin.macosx12arm64/helix-core-server.tgz" &&
+     --	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
+     -+	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d || {
+     -+		echo >&2 "error: could not install perforce"
+     -+		exit 1
+     -+	}
+     - 	sudo xattr -d com.apple.quarantine "$CUSTOM_PATH/p4" "$CUSTOM_PATH/p4d" 2>/dev/null || true
+     + 	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
+       	rm helix-core-server.tgz
+      +	echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
+      +	p4d -V
+
 -- 
 gitgitgadget
