@@ -1,120 +1,118 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793048803;
-	b=LWxWypxdTAPH1dW1oLmsl6CFPqeuGLfWlud4GcL7FOQNAZSR6d07sap27WLmvgKqxj3e
-	 +6FQLt+E67oEgyxM4Ueiu5pHJ8UsaXxWi+0+E7qyGc16IiHoQvwHrOtRG9ZJDAn9JoZsZ
-	 v3Ylf8pQxKzD8NPEEdT/sZVuk3E8rUfj9PSQMOfeQju2EFjJ0t0cgBI0royrrFxnGex7J
-	 VgWvphpEZF5pq4Buq2LogWeW+XYW+60mFlBcY/LfQja67MrNiWKIWj9Mp4zeqOSFbPiME
-	 72cnxrHQLV7sevERCvRXaOrIFOY2QDRR6OkVamUFecpDsjgMIKfLxzrac3AMztKLrfw==
+	t=1793049071;
+	b=FVZsmhGwpJ4yKOMl3ykd91QP7u9DCXUwTT6zNK3igYrjchtr1R5KsXbPTp7jpD5Ra9Gu
+	 UbJ6jO7tf7qhe7pXhKfcExL5GQLD+ms2EdqxHgSKAH16paWY0dumNdzKVRawluvmtMSda
+	 1m3pEI29RwMf923Uykafr1vl4w9bRoXlRDzEJ+sJ+Ao0MV54//Y4xH3nUqBetMEseQTh7
+	 w8DrjB9PLciMx+2KniG0fqbvkxfGXvgrHh/pEsnHlk3uCRa+sbsONTKqehJjZJLQc/7wC
+	 xX32X9NilzLPyKsDxjqW2WBccIiT1s3P6gQ8lPit/7HVKvi9L1skB/VtEU+cs+Vcq6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793048803;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793049071;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=MuPP28nUUGRHZmk961Z2fCwb2Cc2aeW5s5UqTfH4G8c=;
-	b=W45tLlYrSd3GG4U/KJn270ToW+sj2l9Bci9kK0JoEzGkEXPKwMEor2Ke6mxrEeehaICv
-	 gM7XTnlmYj9qwIzngQUTyXSvGMp9e0eh78HYF/28dkAI4gA88izsiym3UQeFgR9CmoKyo
-	 wJnVv9Dt878fzp6l4vj7SXznXE3rPtpjUIOeKMFZKcNqXlEIXKfp1azW9XFhSRTZ/uW/b
-	 zHrTH45+escdWnh0ZZuznmMht4BqTxdR+r34fVAGx79HjSWgi2InFvPDvwWXBdcHCnll7
-	 q2tXZTqYerq5IhkMJ1ca8WX+R3kS2uQ+OOSIqWB5y8LStagBmhIrppweL/Rv9BSabiA==
+	bh=r3pheWcbeDbe6w486LSPMyv8loLmLZTorZTqrXTN3Y4=;
+	b=K0AP6mk8/OoWTXv6dWMsDY0Hbuc7DvnMdUm9mMHXHF34EpUqAM02mAM2DtPJiZ1Kpg9m
+	 dVhMObQtkejDiAD+LwNY0FQbQk+vElOFGgGjBeuCv0nX3irrKfSbdz6RQDjZvUA58/O3I
+	 NEfO37krMGk2w+T3S7dzXL3uFdzO7YW8BHJjmyJ9OPjOH+ET6c3IQYXKNVu00HNTqeE9R
+	 iXfQMg5V/9l/8vcqahBkUqHLLeXMO2kpSRg5h9WZTe25lxCYhhgc47I6Z+G+W30ONgeWz
+	 G5Fi9ngd9NYVRmM7xUUuBNzJOhY74UPTCfWeOGnSDo9vRCLeOaeVh1unrqj9kTNgr7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=UZPI41LE;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=U7nJ2aAl;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=f7jhxby8;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=xIgH1ggK;
 	arc=none smtp.remote-ip=103.168.172.149
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F8E606A31A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 21:06:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1F8E606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD37606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 21:11:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0FD37606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=UZPI41LE;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=U7nJ2aAl
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id F3444EC0A49
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 17:06:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 26 Oct 2026 17:06:41 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=f7jhxby8;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=xIgH1ggK
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id E54A9EC0A58
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 17:11:09 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Mon, 26 Oct 2026 17:11:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793048801; x=1793135201; bh=MuPP28nUUG
-	RHZmk961Z2fCwb2Cc2aeW5s5UqTfH4G8c=; b=UZPI41LEen5Ll6XnUHGKdtGoOH
-	0KiicBiF4LQsJY/v+KF9zIBEN04V6NquXaXNvcjNx68MnZhctPckGGAGdvWtj77c
-	bAMLEcltBgZsTDQdvm/DRlhaCECN0qD1YmwPk9AsgP39v54COmgEcC58san3W+NM
-	7kkZykIft56HW0cCS5k1WaUYUUBbb0a7CysQt/2JzeH1jgJ0PMWYuVftQcvnIhcb
-	QBS0n+gzSfVLfQ8hQg81WCtDthsBq0dXpTjm+SV7FMxaqQaAss2hX3cfpw7RYrVZ
-	icqQwcTpFg4C9BSHqcHwqK10fS59QgZwIgPs4UBj4tpxaUh4qJMNZ6qftBmw==
+	:subject:to:to; s=fm1; t=1793049069; x=1793135469; bh=r3pheWcbeD
+	be6w486LSPMyv8loLmLZTorZTqrXTN3Y4=; b=f7jhxby8Gaqv3ghJWInUb66SqI
+	ElTlcJr6XsFw+zRmWKeR/YdSc+WUb30ENe6VR/gQsA7/vopEv/ifSbDLHob/fBcB
+	A+oQBLV9sd8CqnMajBRDFweEEDAsWIRfSt5tWY270e0LM6P6SE+pOtny3UHrByzn
+	dvG4mVk8ahWie6V6xcoaaDpkb4mPSh4k45h5I/m5ZJ48MCTrEOELkrUYAuCKAmJh
+	I7K3DB0C+dxKywkpFBB61GPpxR6nLtCysOelBaDpA944e4p98AYj2lwnh6Y6e7h7
+	yh54meElHX1evnw6ypdD84B/nd5I6eahjt38+ziJ7j2rsXeQFY7+4kEEnf2Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793048801; x=1793135201; bh=MuPP28nUUGRHZmk961Z2fCwb2Cc2aeW5s5U
-	qTfH4G8c=; b=U7nJ2aAlDQZFdX3pdYjKgp3tJzkrr1LFqGe6cl3+1z1jUpa0zbp
-	tO86+BnB4TlimWBdNAVjsvkH2EYDPWjD4h/b/fL6HKjtvP5YO+x9DumBwjrRYK79
-	2Nz2DC+r2+eL6OKjJxI7R3JBd70Ni6AsZ9ZUFXDnokGStyUvN1E6wznkv47Uk2ZZ
-	o5ElPAkmz1d62jH23DXSrO6KntFj+BbXPerrEyEAFjEzlVmcV46Hkh2dB5+YwyiX
-	RlX+bTDTyjzxMWFJnPEgs8Z2EUauDOSrOOpMwiSUPWwn4vNSg528dPjvVaebQBtX
-	kxTTeU6NoOkt2WeDW1Pya/f08ulEtbtnjLg==
+	1793049069; x=1793135469; bh=r3pheWcbeDbe6w486LSPMyv8loLmLZTorZT
+	qrXTN3Y4=; b=xIgH1ggKAZyYes2ExHB4dYfIIN+nu4n8HRFhMOdsDR1aZG8+Mk7
+	4vVJX7nLz76EdAM+eFG1WcL4M/3B3eq9ofdIgXq+UcobWKA6uQHtng+WtIEuJR2q
+	2417Xq7Q+fwPQduN3TGLLjr2wlQlOV/m1aB84JwYxl9oi2+T8cL33axKDTunV6ht
+	pa2Tkd67s7xyA+T/atKgD3K8MVyf7dsKZ+FshOqXX2wBIdtt6u8Op0GQNPuwLgnx
+	CnY4PngwbAtOsi4365u9OVy25yQY/m0q99Cy3PQDlzEQpADnNIUCBappVjFPxA3j
+	FeqYBEWaRjtvUnLvJz+gjOK8mtG5MBuGCBA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793048801; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1793049069; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:Swn0pPh4zW9F/pZ6Nxk5FRe5uoOTmQkoPuPKC1sQDXyNDnZ
-	uyhjBVp6dtiGt7OIckD8RC5HMC7s5C7zMUM85tN3Wz3Weh91FC7nFiqh8a1SUcuO
-	D7a7jaRDUxKHb84UG/ZYm41hQ0LOyC9dBa2ZQn1I/6ptO3M+yqjGvvhGVyEJgXg2
-	5egvCw854p5jsJvmlrJcQteuki8idTJKnn02w7pBd1yAqDqyFgKgITja+9NgCfp/
-	1apTJSOhLntwmsGWwflQ7911wqNrprnaWytM6Rtu+I+xHCw0aVQ6H7g2lV6sq/7A
-	KP6Sh3y+wZLJ0KsQjs4F5sUPOpCVEqjH7n+vnTg==;
+	s=fm1:rsa-sha256:HbIwdn5Ojbwjj5KdWk0RRbui6C1W8h5fnnUPaNc9nb1fX/8
+	+gwdAxOevoU50zXc24iTO+4rEmt0D0GQ0O5XHUx54/5mUPmF6wbiMTKWvOR0eQGx
+	wlrj2ISHayyrKuaN2F7MdJc1Vv0fU4suQNM62qw8bBtvu9C+h59PhNnqkzgsQFe0
+	zp9d4AR8i/uEwntNiHz3jpukACuNMaD4/v9nXInzJu4w6jUGXIxyvyh8WqgGp2X4
+	JGNXaIE7UQhkdV9IQ6wgmqIe98ISkQO/ROYCSM/qu2FzdQ/7VV+6ONHUuycVJO67
+	UF/oUUfyxVvNmvbpy5fZy8fpbeeINMxfdnB6BOg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:tPThROZjJbNg60ciL/Fm90VmJ/7bGd4EYBMsq8aHOHo=:8UKx0kTUGnLGXfy9lvzY9BfVoVkz+DWCiij3TAaWoVY=;
-X-ME-Sender: <xms:4cDfavAJgf3bpB8WNWVtLiVqPuQJDS6qQPrTlARIaHwC9Zml4TA9bw>
-    <xme:4cDfapMckB9qY0lz6RI0z9rVcMn1hjxwgHfIBY592OG1QlOUmRdLgNi9EZW-CnS0j
-    HCUHiyxGJW4xR1JRqyt4PdlnsR0KNV-KrEEuX7qWlODHZkmk--L4IKD>
-X-ME-Received: <xmr:4cDfakaXTwT5uRW-4R_0rxnfOjmtNb6m45KoE_Qb-kaeTCzvNiATf_A6e0LJFzU02Vq-op-_lTj3ZsPyPU0HUPphqmMX33aZJ34c>
-X-ME-Proxy-Cause: dmFkZTGXe5+baH9eeiLLM5WHyi4YUPdmHZlaHwlhtfjZjJXLKcDkrwm/Af1zofTJjAuUf4
-    z/aqamh1Nc5tH5QClM8yRVmF4q4avj8EvpI8ybMoXyeAdUVg00hooM2GS9kCwrqCjXXtOV
-    yHFx/fxCnCZOTHrc22tS63UF8kUSiR72DlmpAMKiVG2xYW31gqYLdT+hsd+So3QP54/JJF
-    zbj7PyTCJ3rcfv+v16g5jqdfjnpet+qzBiMfMxCC8C4XNHWWCZd2A2YS0JpiRLXF5nfi6m
-    1uR1ujmtM/Mxqfe3IysOa/W4geFAxT+pEYdmqdfJ+91xGioQm3dwQlf8Ma2rFw70Mn3rZI
-    dI6/ZiRjZtwzkRhGchOAGzwCs9IEJ4pkBe8EqKAkMMOlVzHkCjqfKkx5X1XQPcUuXZC+6n
-    6I4SnMKFPDf/PY0xz5IGpRRlm1d/9Xr9gDkLn28R+giUqGF0dJk09qapRe3UQfoJwspErb
-    CpIWfzoI/K5+Yw5w6ynoj28dWR6s9QqUUtdPjCRBbBsCFYzmdLyfZBAe8JIM1OEBs2UKJT
-    YZy4YQ8nqm1tGJPJ5zRg32h/cVlOwMIKRxtfejwJlAWMlRQGhrurROjsEfz/w8XAwG2Yqk
-    GDaJERmYCcocnjFsWpGOTnO+0iCg//diFL8PDwxGwBe4pUE3YxUFmIvpXJkw
-X-ME-Proxy: <xmx:4cDfaou8QWT2IjYs92O1X1DUmjUjoq94pihbT2yd9oekk3De-RXydw>
-    <xmx:4cDfamP4-3_kqXDQrWvpnnAPU9tFln3MDgGUcZdQh34G5Zcvaatyvw>
-    <xmx:4cDfav7S5UPL0ROZYmgDckuXZZ7eg-q9C-GGrEd9VUr0hBYJtrNQ5Q>
-    <xmx:4cDfasSAmzj1Tc7QW5tgtPHA8H0spYLvT-LkOZErwVqr2TFUgqX8nQ>
-    <xmx:4cDfaknWB26iBJ47n9LCpS22h3EonfuV79uQ1pVYd7C7ic0AZXMzPygk>
+Message-Instance: m=1; h=sha256:58fRkXXhLyQlc9zbiyS1xIE8HkjO5xlc0XO5MtxMrvY=:cBw7zhrIogGcNsT8e+uiRmEypyXGK24tiTFfvaX447k=;
+X-ME-Sender: <xms:7cHfal2H3wjbKvFqEvXoUDPvHLxguTK1Z_ehP2SYntv4B3ZF3HxCeA>
+    <xme:7cHfajHxtG0nP49QYp7kcX0PQrgt_Z6FHi2kzlrFP_EWIAv_Vez3LugC3Z4G9z2OG
+    Ar8zlihC9AZL5zvu8cU0c3qOgRG7RWKBd6sh8-AmVWjz_v1beposqU>
+X-ME-Received: <xmr:7cHfaq7F0otLht30p5S_TOqn2nTj4R_Vjh1-blrn2hm6x04SERzHVyz54qD_NC963UZlb1QGs98YO2373f49dQ5rrSrncPVxVtIU>
+X-ME-Proxy-Cause: dmFkZTEaVrc3uwoD3eDKBPNCe4k8HXLw0vGy0MPmvT0IPYmINy9DDYc3hTlL3UDq5LyWw2
+    8mAHSR1xP9AnJ4ZjuOs82K527sOZg/S3x4cNt+ss12RlAQDzxW34h5P8duNLiaolOQ06hv
+    OuR6++hBzLtbhISW1yKiOYU5q4aU8lgLYlxyPPGg23Sd177t+N+GHgzt5fosTQmLXnlJeC
+    +DtItdeGlgohvJZQ40UFJWBgCXRCBQtK6bbUMTn3IVybT1bSOJdK92kakkX1ZSOEd9DtmN
+    RU3cjd3YdZZEQlNwiY8TIi62y3zrhydd2kPU2T8oLDoHZzxdKLdzPPXYonHe+ZjgVc/sFD
+    MXKkQCGwXU5dqr6XuiHJpaLICyUOvODi3xLtNT9culqna2NGNhNI4uXSQSshIcpBOWzItI
+    52v2JomN05atlXjTa7ymaWUxioE8Zd7Ek2jbCPSwTrDn8UCnMdeUgS/i8iuIT4y2uBHYBg
+    21HI6EgmmVpdDqC2pJhxnaI2de3F9jNOl9idfLI2ccjwYUZUlmRTQ736qZi+JiqUdK4JZX
+    uesjqCr1Tt9ob3qN4Mdpuh9UYRgp41KOaiV5ggBMbhQUXMz4ta+D+lZXWo6SPghhoJMuWX
+    zLCbDJOUJLkwZn4DsOXe/lN1h8B6JAVHJ39mYKmASBmlhDpqSUu1ayNqHlUw
+X-ME-Proxy: <xmx:7cHfahuN4N8r-Yr6cl29vI64rqk4fKiRPQ_5CoekWlUZcFYOdFIVmQ>
+    <xmx:7cHfaj6Mhz1SPykV5D32ngYk5LK6bXqAFTptZbavMJcKQB0cfXDvsQ>
+    <xmx:7cHfakW4dFbZMyenbfQIivHWhPgxvOxh08NNCRtjFFSGy3Ki3ie3_w>
+    <xmx:7cHfat-Gx-qodJgSiqh-dlwfYu0XzzufJ03ln5pAC33TVGZgoDO5sg>
+    <xmx:7cHfamaRFvFcPyUFFf-cyITmAAGFxiU4pnREshGFO-te_QdFM-9Bz-mx>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Oct 2026 17:06:41 -0400 (EDT)
+ 26 Oct 2026 17:11:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Fien Dora <fiendora5@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  siddharthasthana31@gmail.com,  phillip.wood123@gmail.com
-Subject: Re: [Outreachy PATCH] t1402: test --no-allow-onelevel option
- precedence
-In-Reply-To: <20261026132525.45414-1-fiendora5@gmail.com> (Fien Dora's message
-	of "Mon, 26 Oct 2026 14:25:25 +0100")
-References: <20261026132525.45414-1-fiendora5@gmail.com>
-Date: Mon, 26 Oct 2026 14:06:40 -0700
-Message-ID: <xmqqfqxsp3xb.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] CodingGuidelines: allow compound literals
+In-Reply-To: <a4b382c0373e1b410c4c1ef74b313f86076d48aa.1793024062.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Mon, 26 Oct 2026 14:14:26 +0000")
+References: <a4b382c0373e1b410c4c1ef74b313f86076d48aa.1793024062.git.phillip.wood@dunelm.org.uk>
+Date: Mon, 26 Oct 2026 14:11:08 -0700
+Message-ID: <xmqqbj8gp3pv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -127,57 +125,44 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Fien Dora <fiendora5@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Git allows later command-line options to override earlier ones.
-> Added tests to verify that --no-allow-onelevel overrides
-> --allow-onelevel and vice versa.
-
-There are many other commands that take --[no-]foo options and a
-later --no-foo overrides an earlier --foo (and vice versa), and most
-of them do use the parse_options() API.  It probably is not worth
-our brain cycles to add tests to cover all these other commands to
-cover all these options that can be negated in a way similar to this
-patch does for the ones based on parse_options().
-
-What makes check-ref-format somewhat special is that it does not use
-the parse_options() API to handle command line options, and instead
-uses a handcrafted loop to parse them.  Covering the behaviour of
-the command with tests may therefore make a bit more sense than all
-the others.
-
-> This ensures that the expected behavior is preserved if the
-> argument-parsing code changes in the future.
-
-So I would say that we need two changes to the log message:
-
- * The rationale should highlight why check-ref-format is special
-   and deserves to have this pretty common "no- prefix negates"
-   behaviour tested (i.e., it is a handcrafted parse loop); and
-
- * We have immediate plan to rewrite the option parsing logic (i.e.,
-   not a vague "if we change it in the fiture").
-
-to sell this change better.
-
-Thanks.
-
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> Signed-off-by: Fien Dora <fiendora5@gmail.com>
+> Our coding guidelines say that we'll allow compound literals from
+> mid 2026 if no problems are reported in relation to the test balloon
+> added in 01e49941d6 (reftable/system: provide thin wrapper for tempfile
+> subsystem, 2024-11-18). As no such reports have been received, update
+> the guidelines to allow this construct.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 > ---
->  t/t1402-check-ref-format.sh | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-> index 9dd64662b2..6036df0210 100755
-> --- a/t/t1402-check-ref-format.sh
-> +++ b/t/t1402-check-ref-format.sh
-> @@ -74,6 +74,8 @@ invalid_ref 'heads/foo*/bar*' --refspec-pattern
->  ref='foo'
->  invalid_ref "$ref"
->  valid_ref "$ref" --allow-onelevel
-> +invalid_ref "$ref" '--allow-onelevel --no-allow-onelevel'
-> +valid_ref "$ref" '--no-allow-onelevel --allow-onelevel'
->  invalid_ref "$ref" --refspec-pattern
->  valid_ref "$ref" '--refspec-pattern --allow-onelevel'
->  invalid_ref "$ref" --normalize
+
+Yeah, I agree that it is about time to promote this to the accepted
+set.
+
+So we do not have test balloon but we know we still cannot use two
+constructs from C99 due to MinGW and older IBM xlc?  Perhaps we can
+raise test balloons for them by now?
+
+Will merge and mark the topic as ready for 'next'.  Thanks.
+
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index c06f5d3071..23a4d2186a 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -311,13 +311,8 @@ For C programs:
+>     . since late 2023 with 8277dbe987 we have been using the bool type
+>       from <stdbool.h>.
+>  
+> -   C99 features we have test balloons for:
+> -
+> -   . since late 2024 with v2.48.0-rc0~20, we have test balloons for
+> -     compound literal syntax, e.g., (struct foo){ .member = value };
+> -     our hope is that no platforms we care about have trouble using
+> -     them, and officially adopt its wider use in mid 2026.  Do not add
+> -     more use of the syntax until that happens.
+> +   . since late 2024 with v2.48.0-rc0~20, we have been using compound
+> +     literals, e.g., (struct foo){ .member = value };
+>  
+>     New C99 features that we cannot use yet:
