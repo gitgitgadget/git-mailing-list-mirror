@@ -1,100 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.173
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792983631;
-	b=nS3YEXZ+KAZ9FoVviWrr2qBz008b27MU1WWtWnAez5gH0lCqUmXf1np10dCeoFcNH2fM
-	 zOnUubMFd0uAfhm+AmCNo2610iiFoB3Hhv6oxqOoXrL/3Q3ipj8kV+xV03+7fhuWaghEO
-	 VjpLtjm0jZPyvTWbB9kniZtNbkMxsBrkiaI5LxeXBRj3nXcQs7n676o276TkfVwEADX/7
-	 biIBVim7b5Mz3KoeOhlO9074En85HyOMnJDfe/ooGxdET2x6KY8jdeg4kC9JqoMR72dtS
-	 mA+IWz4+oEUXr6V658y4ZOhvyd0nRn8jjAEzERROpS4C4M4/dwq1/vOdK6GhDEaMu9g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792983631;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=aGyjmZ+2JhZq7h9GHgHiZDCOWu1XryS6FLFkzZ6Jc08=;
-	b=5LSqBCPkkDMk5mbBsSFq6n2zriciepXNzWfKc8fsZHDA1C0HqlJZOQyjuYLyi7DEba9e
-	 AZcs35S/KDBgbNBJ6ppTcofAwVm8Gyro5xyt8AycTzG6ANgU6QOzbbLlIf5EcVdAw25TM
-	 YPyDIfpudpnZixPTbkqtaC22vz26Rcz7CdKHhkuaN6+r/tlPdcfl9DVZqLOqX9KhH+rU9
-	 YZCzItPXycJfyyzLDfBFLJSHWWsCcK1/DwLyWDX7lS3Us4c0Erz35Hks0F4u3iIhWSZrI
-	 Fx1aTNmxKSCYPvkM9CrH61A03m1UNv3t2ktgBII502/ubacKZOHNwQrzFGy/AqlvNdw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=bZmag4WN;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.173
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792986093;
+	b=1OvyIYXvFd2aF+DG6yAoARuUmsfxGzO/kXaGCJrF2pd5n8eR2EacsypQkMjhhFlBhBfA
+	 M3Q4LPLrse02PpQrUl9r0vxia41wVKt0JneP2bt1OqWInhYITwTOh537WCPFiVEhRWTCB
+	 eha0VWSnSXnxjk72qfAjJ8QamhzZBw9p9mpr94jLpYo8MWpqL9IiHkcBmbAtQtYl4tCCV
+	 onu+ol/nlnowJF5MYX1JYlIGnCWgjpRCufJbb8Rp0FuixQiCZoT41WNOK7wNRTj5ttd0K
+	 eFLl+jVhCXX6itFaApq208dMYXl/l/22d3jYL/QlvTXnkm/KTnTQdd/e5ZV/y3/m5ug==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792986093;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=aBbznbrbC2+I1d6ThTclyAwDzHA5uxHWSGKbWxmhuOg=;
+	b=3n1BuzW1dZrb2KblcH1Ix6MJ0zrp1EVfNDMgmokVuGIG5k/WGDdz2y7yhSQg4/HCjbT+
+	 sVuSilJkhKR3MGKOAFhgVadGiB+M+M/JfqbfyjvoEdz0YHRz9nlS1vTMyTczG6T7WJPfb
+	 an3ai5We1eSPs/rciv//Slnm34F9D0sIrVTr2qnau/M6KtdXTneNnNX9pkYcHgN1uJKjy
+	 uqEH7Qk7aThH8ZSq++vYVMVvAasaubPPmCCJqffdAMLhzdE2jYvpxmNi3GU8HkF7IWtmS
+	 jB6kgV3613Gp51RUBdxirH0hr3zQpymQtGCAvLqiI+QlkZBdeRMmsT94MpRSVuH1ORw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=PPXn4pEK;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=MM3z9ePe;
+	arc=none smtp.remote-ip=103.168.172.144
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8370606A31A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 03:00:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D8370606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914C8606A31B
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 03:41:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 914C8606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=bZmag4WN
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-53ec9237600so1486555b6e.3
-        for <git@vger.kernel.org>; Sun, 25 Oct 2026 20:00:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792983630; cv=none;
-        d=google.com; s=arc-20260327;
-        b=pc4+oO/n3zHgXIwm888T7dVZzYcLhmp8Vuu7JB2nJbFogaVh1Z0HXZoOXjxaVqA9jY
-         UbOn7t1Uq47QKOlGsCrKRRZV1NbPZBTGBFS/G7WyM/cG+tmfgfDkVRpTf/MIP4kPqqJA
-         l/PyjE3NtaR66tqi27owAffjIHBGG/wWYD+4mPY9+VGXVt78dd1ZqNdlUjeGgdg5hoDH
-         rJBovPo9H9kBmOjf4dlz5fdT7YflZy4DTTQAtaq+Haj1b4AFDcWveqOxMemZxmY3MZRw
-         /kQJ8zAIpZ/xB811YX5SxTkRi8+aRK72fo8NHZOWmSY856Iy30HuNZhanbl+OXvSf+qN
-         qiZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=aGyjmZ+2JhZq7h9GHgHiZDCOWu1XryS6FLFkzZ6Jc08=;
-        fh=omdYVhLuSZr9UgpBAd/pGu8p8kbQ/Nccja0zvlYQk1Y=;
-        b=kXDJEyz/XO7IThXmUnPbaKWCJ+Uzd7yS/C79g8y4ipTPU2GG7cVz/4TwVECptyjpAG
-         JibYbY70SD2ZBq1tC3OwLvuZRZFVQ2LqYliBo2jyVygSHT/6oorB3Pq8dr6GNobmo9dT
-         gfWBGOuMz4AHygu3Qi9z4z0zeNlgRwFAidMIEvAp6nzUMVyaurtvJ0vExKXfsoeAdas/
-         wmZeLhJzBykqwWHWldxm6WmR18qYxsLYURoA8mDZwQlG4TRrbckqw11P7tyfKzlu7rNe
-         3CLGJvD6SqUNzyt8CRjQLpcNsX5YJpbdlmV9JY9yCuCx5vfDzaEWt22k1WO0ssgRxd0x
-         1Z4w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792983630; x=1793588430; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=aGyjmZ+2JhZq7h9GHgHiZDCOWu1XryS6FLFkzZ6Jc08=;
-        b=bZmag4WNc0BqX8s8BIRKSrxl5e0W6Z72sfR1WIqmZZdrG2By3nQFBvoHeT+3mq04Lj
-         19/4PUMckVtFVwmLUN4zoPyl6ZsYKL5vLSS6BI7FwTHYnWMO6wIBb6YCJb70p5YGRSgb
-         FlDTTv/B2cHnKDYYjsA/xbKemRfINomhMAb18iKlWttNxtB4hEddtd8hPQ1Hpai824Jn
-         CCO7KcqCvow8y2iN0SKXNFI1WTaWfX+2sfjnyY77LvyYZdJJYPxyJPthsGtxOw0m2Mf2
-         ELm/E5yjkZqHsa8Rt5V7DzoegzS5dBnLhZiiSWFvjXDfykfgxczNZYRnkJVDfIc4EuXs
-         wmGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792983630; x=1793588430;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aGyjmZ+2JhZq7h9GHgHiZDCOWu1XryS6FLFkzZ6Jc08=;
-        b=P1h/I256UlRNeyBIrW0JQuOOZNhE/IerV1lSCYkN+XEE+FPjkz4xBMwKLEc0f9QUui
-         K9vb/zaOCG0O3DV/GnHcdtmExJZvHPeZf5bSIeYsP8UtCd8nSdP9+MAUQcsFbu5lbDWA
-         7yKfIq4tFSK/9KQ2QiKOtPj8Iiy6mYKuGZNrJbDa4UeQS3qNpopE3wJXmrez0+dj/Ru4
-         +CvexRDoehrMVksd7AcorfMGUMQwoaIfkaChrNLewgQL/bHfNI4HsphNl34QT0UQOJHo
-         c+4ueeaDZeKPX8FKL8ttkDf5MOf6hdSleaNXs5k6d5omJbFTrkzXL0AbAJS36hkEJM+b
-         n2Zg==
-X-Gm-Message-State: AFq9FYJILJGSidvihbsMz8H/49YT/ZQzX+9E57c4Z/sxDW6+4fDsDawt
-	JsCyZCPVDwWX/07J4jrPIvy1woaEQpJkEQj26T6CpTo4na+cAVEOJBh1zhLWvBvZZs+q+lRLGX2
-	m42FIHNo8IL/kmnBrdXeTk0bjwAqn4f0=
-X-Gm-Gg: AYBFou32SQuMl0Ii1oZ3yGMexFmfc97pji1r70jZupO07T/JiTA00eQaS9masB+J0Nw
-	oArVgEhwX9EbpWS7E6UDHV0SX/v1yZoQR3mMD9ctyVAeRN8Tmm2FYrNv9HdVqR8BGfOFIccy42B
-	/p1nSuvWu4ri3nSKVUyx9F/Z4fxoodjB+5aa7KlJBE/P6VD18AZBy70KLzFSZqyPUesTXVxPADW
-	qOGF3GJDCW78NJekm8As5Qy41fb1DNV1NuI86bHpAsKXsZ5W6ILzhlQktSxZJJ7YhyV4u/1d8WT
-	0ibP+wiPxMLGg10BhPJhIbYjYnN5xRvFoPnm9iBkjy82v59qfezAzR2zESqPKPasU16JX4ecBn3
-	Ep8vn+gXku2moHSXs1IWBLLwmLnRPp2OSExR9yD5SuXgR0nRdumFMP0I5d8CgqGoWhy07sthL9b
-	S9b6hxmHM1GgRERy8FkVt0k0YTWHyJpUU8p4R0J/cTrVAW1gkElz+pl1dn
-X-Received: by 2002:a05:6808:c2c6:b0:4fa:8d48:3a5a with SMTP id
- 5614622812f47-55c002bce7bmr3750366b6e.38.1792983629816; Sun, 25 Oct 2026
- 20:00:29 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=PPXn4pEK;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=MM3z9ePe
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 99CBDEC00EF
+	for <git@vger.kernel.org>; Sun, 25 Oct 2026 23:41:31 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Sun, 25 Oct 2026 23:41:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792986091; x=1793072491; bh=aBbznbrbC2
+	+I1d6ThTclyAwDzHA5uxHWSGKbWxmhuOg=; b=PPXn4pEK4GmwdBfNCzGCeCsnYV
+	b9eJBl3TvhrhqFEuaed3FRjonyFhyXj/RFWErV3KePYUTpPQGioAfvDAKwluy2yd
+	dMQtXSVRQgw+zlIMQC56bk8QGboftZnAJRNtVxAT7nPy8EKuzYEglKQ64P/QL5qq
+	PIM8bK/9cneGITwCEmyLyp01+Aqpx0HRZSGq9nv5RIGjbWkztClvn5lKFHAZWvYX
+	jefcxMt7ibgXh30xZGqrFq9z1jNyfDff9EASi2eufsP4SZ2CAAKELh7acRB1rN9Q
+	WIHYHMtl5w/DzlylcQibfPVwa7KK4TlL7jwYaudIdDnrHf6S4V0Beq9Eceww==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792986091; x=1793072491; bh=aBbznbrbC2+I1d6ThTclyAwDzHA5uxHWSGK
+	bWxmhuOg=; b=MM3z9ePeHL5o7h8K+LvoqwFml5Dv16ev8T+V4iiqTp4c7cnGhtY
+	sm2+wSX5LLzG92MohkM85HM9+4OwkbxchiCJDprZl/dVzh/IdfT0Orch8ODXEvtB
+	CKbc3iqcd+oAL1MN//qQt6eJxN+583Pzhq1ZMMYhG7jHzZelkHp8HbmA10tOexh3
+	v+UEMX02nwu2s5xeYtndUjR40X8tBrxphIGO4E9CCKInIw0naohDWwhFujXYhHII
+	IxUrWPw0/zXi8iBwL16vwcqz7MX0vMPzVtv+s4lOrCkCFsthDfy3j1wCV1aagBe4
+	+gDWMz/+8wWC4QuPkx5xvjW1d5MjadSFGYA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792986091; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:it3IynwsdoXWiun98dNJO/vXUYR8MYLCpV1B33m9O2omD55
+	9g3ynrJ7pQ7Zk98bNFxMKKzJm/Ci6QVcxeKVI5U14CjPkpYrc2MNmPWOXJo7gu+h
+	uuXuZX34PdQe/LdMYw9vfylzK9ZYCninGfpcSELeesyrjsSJVZPfEs8Fl/FxEQPJ
+	yP0lD9N6qASCN/ek2rVoezYUK+n9PRabCTKm7TDY9+G3l9vRmfL0Aw3+8MemWrhZ
+	SRptqApDmmzNm4+c6G7fydSznMoG9pstTQJtuwK74B8kK1k00OmCb2h2PXhUbmkt
+	eRvuRmJPl/IQvj+WYUxU75i6T2hBu3N6+PVARkA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:XpdPQsbII9J3Ie+mHq5KVbxfS0n94ejGXoLdkrzsidM=:O4IyT9Giul6AI+fX4kuTOIZNaYxQF/GdmNznolISll4=;
+X-ME-Sender: <xms:68veamco48zdOIFPH94ZMykG0Up8RO6_isUUqSR7cIOBbVkRunsHOg>
+    <xme:68veanN-J0euuDOj_AFErBRt61Xx-hO1aaj4Z1f8HqPp4XQbnZcs53sO6aYEv5J2d
+    FDdwwNIUKL8kZPoivDCnYkotqlhttw8j9hGIJPGLnltM_LUS7l5pQ>
+X-ME-Received: <xmr:68veasg2WoFyvwGoVXG7U4eBVHunbDlowDTx_1b2F7Kh7dSZ2kTGVVX1HZs7zI5vfVcYd0iHjjRDWuCDbEaX88TNLC4QetVn7sC8>
+X-ME-Proxy-Cause: dmFkZTGmLbRsYp7J5ycYGVAudJN1d93AD7w8ANK57iBs4z2moKOgu6iKGeHZUSsnk/weFl
+    hYUhMP3tMnRE9OLa4S3E+W2CQU1hWAJy7Sad8pvJrm692rV4UKZbPXWAwn62/7nRc+maHB
+    CaAslK9AKsSbiu5buMSIyMSL13nimOiy9Z4TuDFq4oNtYKymSdMvGEKcB9mKZpgDWj5Veq
+    u5zGYo29u3YSUFfTaz6f11HFUPbnlsQ80jUT96LfPOHN2IgsYnYY1nKfz6eUZuwkHlkvUF
+    4Md2Ohx+nRaspZ2GhZEQWze6kG/ISIORpo+dhD+LiZEFTVFbC5XiFrnLCbIU3alx+OB0ZN
+    1EfvyH62eZtwh6DK8qL4msULRB4RPMzEuxqELiPIe+p+AapdB1kx2ARsNcDTl+hj11LuFV
+    r3APUHyjxFOs4HGQRL//d0No/Kct+1o36kOUQrTkF1WhxxLQexIAMJrC1KFUvdIPTDJpBy
+    bbaiOpV/MwVBuSeNisCBM7MdNkOh9Azbbq3zGzMJnKos7Mbj5D/arLf1eEZ4j57uzJdTts
+    Q5tKj5KURv+J7cXXCUyohh33arJgVlBNuXmdRk/T2FG0oUzXGwrVZ0ay2sj4Yl44DbRdX3
+    l+GnBSJL4qQh2u9PSaMemXJLZ09VYpoAicefiG/IQREmv28u1qkUaY61+XYA
+X-ME-Proxy: <xmx:68veai0RIeqDrmco8k3VxEMLvQNtHP8ErcIjOK7loQxhyG1OP3vndA>
+    <xmx:68veaujzP-7kLlzpnzrGJ6ZlKCDxDxnyyLfa784viFVWqO-3S2sIBA>
+    <xmx:68veaqeX0z7VmSUJ0E_kAtWo1VoY0ZUnZ42jQDXyncZdNlv7eawB2A>
+    <xmx:68veapmvNgLizEEID3SFKhAt-Gin9UJo7GfCgfvQY9AeNhRJrSfbtg>
+    <xmx:68veagf5_orAJOIfMdcdLCAGdArHNQV0dJmhVfAfTPyOWRluvaZqH0w8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 25 Oct 2026 23:41:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: jyotish kumar <jyotishkumar725015@gmail.com>,  git@vger.kernel.org
+Subject: Re: [Discussion] t1006: testing %(rest) with object names
+ containing whitespace
+In-Reply-To: <20261026013254.GB3575069@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 25 Oct 2026 21:32:54 -0400")
+References: <CAGjZMyRqv5RsLF4Vo439zy4urfr+R=CTwuDzmYjiemauuZan0Q@mail.gmail.com>
+	<20261026013254.GB3575069@coredump.intra.peff.net>
+Date: Sun, 25 Oct 2026 20:41:29 -0700
+Message-ID: <xmqqjyn5w2l2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,46 +125,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261024052449.95869-1-tangajoris@gmail.com> <8b60c7f6-4a1c-495a-a594-aaf322279539@web.de>
-In-Reply-To: <8b60c7f6-4a1c-495a-a594-aaf322279539@web.de>
-From: Tanga Joris <tangajoris@gmail.com>
-Date: Mon, 26 Oct 2026 05:59:53 +0300
-X-Gm-Features: AclHuK-ddz99f0vxs981HvtIm5SyXFM-zc78Sfyn08Imr2BOa4n5FJDDv3IM04E
-Message-ID: <CAKrRMNqtqYiE2YKVky+mHyrkqtW2c_L_DcCen1hyaQa8D0+fWw@mail.gmail.com>
-Subject: Re: [Outreachy PATCH] git.c: drop NO_PARSEOPT from builtins that use parse-options
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com, 
-	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com, 
-	usmanakinyemi202@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sun, 25 Oct 2026 at 10:59, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+Jeff King <peff@peff.net> writes:
 
-> "git fast-import --git-completion-helper" prints its command line
-> options only after it gets fed a line of input.  That's odd.  Do the
-> completion scripts still work seamlessly, i.e. without requiring the
-> user to press <return>?
+> So IMHO everything is working as designed, and there is nothing to fix
+> in the code. But using test_expect_failure seems weird to me. It avoids
+> the test suite announcing a failure, but it is not really a breakage to
+> be fixed. A test with %(rest) and an object name with space should
+> probably just be skipped. We _could_ run just those cases with the
+> resolved id, but the point of that test is checking how %(rest) works
+> with the name, so I don't know that it would be testing anything useful.
 
-Thanks for catching this. They don't. __git() in the completion
-script does not redirect stdin, so the helper reads from the
-terminal and "git fast-import --<TAB>" waits until the user presses
-<return> or ^D.
+Yup, thanks for finding old (but not so old) discussion.  We really
+should have fixed the test including the fixme comment as we knew
+already back then that there was nothing to fix.
 
-This seems to happen because fast-import only calls parse_options()
-once it sees the first command in the stream (or EOF), as it reads
-the "feature" lines first.
-
-Since patch-id, diff-pairs and var return immediately, I'll send a v2
-that still removes the NO_PARSEOPT flag from them, but keeps it
-on fast-import, for now, as I make a separate patch fixing the wait
-behaviour, and ultimately removing the flag.
-
-The separate patch would teach fast-import to answer
---git-completion-helper before reading its input, like it does for "-h".
-
-Christian, I plan to base it on top of your early-scan series, since
-it touches the same code. Would you be fine with that?
-
-Thanks,
-Tanga
+Perhaps somebody involved in this discussion thread can volunteer to
+do so this time?
