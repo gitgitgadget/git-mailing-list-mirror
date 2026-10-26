@@ -1,85 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793029568;
-	b=PdYsm6vLEcSHG/nEYJlS17yJ/EUGNlVj+QDhEa16cW0a8+k2QyTj9It37vJVlt34KdtL
-	 /CTg+1FrbqdO/Zwwi+WbKLfpwMQ9V8IOOwtBy/46Tm3sqOnH5Ku6u7I56Q7rmYeFBpsTK
-	 LyIq88bTDe+EfEC7RxqieS/WlZOxZ6QoJgzRdh91MbOMYTbUDqs5b+48OM/zE5XNUU73Z
-	 KJa7mjjNcHPpqXOYRkzNCDdD/6QeJqQC8mu8ydwGf+D950Nlb9da/zy7gicLYdrx0V3ef
-	 0vcsZHsr6HNDKPsuorVsrkGwbBiq6wwnqSQbxO669r1F3Gtt2zy8hr/aKBwnFGeN0cw==
+	t=1793029571;
+	b=LOE9aluAxtebufPdJfY+XimQFBMUpWwmotqTE/f0qvJ2Q2pW1Lmo62pgwfZOnF0TNAJI
+	 nHyUPYHX9wpUWI07FH4rM0xhGx+kgcTgzagy3wkthGCqGrHHKetUhEzAt5/56NNgrZ7nD
+	 2BP6/205yJknBJPnjU1d3Ni9csel84c13NvSPk1O2YKyqZgN/jO7jS0XBMKeEjL2SEjVa
+	 gijYrQLDTJ/1jA6l//fsLs1O9Zda340IIRhokR3XtZ7U6KNWnU0ZNK613+X4N1maTEo3m
+	 UaclY2mSKe7HQnvKpDpl4tIIYuFFzCQhjdnevhtPO9eELjEWOY8yN+OGxYYJ7BIQHJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793029568;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793029571;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=O5eQoff691zv4bHbA0CQyWsnRm247AA3YZWKFQnJhSw=;
-	b=PwFacQlvy4hY6DbBUdgiIvWeO+Jd9HN0zg2zaz4u5kRGCuilx5xiTj99xfpRmPaW2c2T
-	 gGrDoLMO+aN1dyzft98g07YhYI+L9PJGbctc5W6Gt2WbKolgx+JwjaOnSUSs9URjbwtq9
-	 eWv9PcrRpB9h96Nu/taj5Bb4yMZkdrlih+Q7Gom22Oy2GlrGJsuZi/FLnEwVIZwE25b7g
-	 /bn5YcHjVaU5uaB0MjxOcSGnYnYhFMSG8jyeCSkzwWjBPjax/R7D6Hl5qO5Z/x1yH9QB2
-	 XZBCDpAQTLVnJaMMCEdVZ5k+2AO0ypZ7lw2nI1/ptRsyyjQ4xZGinAPQlZKwWE8KGCQ==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=RNpsgjEF5umzUbHJqsyIufok3BU3v57Xv+ZDC+OYa/o=;
+	b=fuT3HyocrVjIy7s6HYArLh3Nb3Z8ZXVbQy/2ERIF6Dd4Uh+xPcLjZghjqG2O38f0kmDc
+	 bRAQWjjrkHpiJiwQK4DIF6KIQr+C7nrUaxMsPbaEs8HEDi5tMfGVvi8YeuQd+vEtEKe76
+	 rY0qqcy5pYc2OQ85+YDlWib8OX6dcx7KfU5Nc6ebT3k15nFafS4+uPjxn0LnyEcTBj0ix
+	 ike6cG50V8/B8Hv8FQGelIqz6zgg4H4dax/g77PaX8ANjtTgJsN6BDWwQVGdNblg86KNx
+	 myNeH2WaUH76RLh5UssqxqUWviaNubvbKaScAHvVtUP/FRUKO/x1eQdsEaJNLCIugPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Cim0G2Lb;
-	arc=none smtp.remote-ip=209.85.214.171
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=q1XlGpWV;
+	arc=none smtp.remote-ip=209.85.210.177
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EA6606A31F
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 15:46:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0EA6606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8905E606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 15:46:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8905E606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Cim0G2Lb
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2e9e53d011eso22283435ad.1
-        for <git@vger.kernel.org>; Mon, 26 Oct 2026 08:46:07 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=q1XlGpWV
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-8a070755c8cso1448861b3a.0
+        for <git@vger.kernel.org>; Mon, 26 Oct 2026 08:46:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793029567; x=1793634367; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1793029571; x=1793634371; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=O5eQoff691zv4bHbA0CQyWsnRm247AA3YZWKFQnJhSw=;
-        b=Cim0G2LbjA2vzOJ58/3Gr9da1y1AdvnX4cm7uqfr9X8vbfxVJksKs4nGtY6I51O1pr
-         6MajzeIBkCI+G+ODxxJ70Y/T7jOeqZrl9SHpYWZHiYAR6FVJ1dDVhhIwlbPi4HaCz7cI
-         IRjrXqZYKDpmKNUWjzseO2XajBmRn7nznC2Qjp38oNq9gK3HSIiIv2UP+AQRvTIrs2yk
-         8C8vlECfj8QAMcJe/gJ78dTtpOD21oaNY9S5cjzOZBgYrzXj0Wkbvh9hVf2KZaF0R5PL
-         iBooIVX/PXcEEQGMrY62wSBvQ4IBb2nhVM1OPVJn8L4epYP0ZKe2aNt57vhnXmXw9QCj
-         CcFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793029567; x=1793634367;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=O5eQoff691zv4bHbA0CQyWsnRm247AA3YZWKFQnJhSw=;
-        b=NFD/dnEYlkTk7b6rEZycuVtAAkvoMw5gQcl2dgWWJ4FlOJfVZRBC+K+4Y5yI9U5Mnq
-         X9quHhN2mlj8tMMMwqOrlttPd6qZdEnKQwUk++GNcPPPF5gaXMTEyzuAOg4GOL9dF+1C
-         Nt5Q0HKVZsv23DZDt0dNFRueHmQXmbHfDOl1ExDL4YxcOan1M5Fy/jg1N9hFxvKDmxvK
-         mujswQPtxj3i8E8FD9vVgJ28QDTPT7EoQX5gRdn0RrE5W0hfZD+ihPW3mSLpqqxcft/h
-         P7Wlk23Vu3t9cyqpVJSZerFswP8VnERd5HtZIdo2VoTDNsr1RuOIzi/ebTwojGTvQszu
-         GSCA==
-X-Gm-Message-State: AFq9FYKuIGQmRE/MNYly9FsAolA4tljkdgY7LiwgjQAkhkh7uBhcO5XU
-	BgNrHken3lKDj8JWUmFavN+9c5ioNJ73qSr2p2XVVBf1hIIeOgqFcnEf6uY57alF
-X-Gm-Gg: AYBFou0aWh3DmVXgJJKYE5oXD4K0ityaem9iq8GJa92Ug9B9FAk2+EzaRcn6TnJ/gUF
-	oeJ5R28sbr6lQAo8NP+kbLbMwO/w2TBEbxeHlVKQnYW9IYOKWtgM7aNkgCfs6N8VakFavhUzhpG
-	ios2PumVyPUwhuOmg2jPopYGueEMh1s2/eJp2QcaH4W9JDVoxYbFcsa1bbssJS78uDCLFYJkbsh
-	AO9+qzX5aHoV2dr/MdRb/tNlx2sKWWod+oSWbwncyspXxcMqEEN+EyTrQUIkQqTYAliRmPOehdZ
-	Hzl6rcwa7gYF28zZ1S0tSeUw2N+vu5asmRr/XK9A0GUSiEPmumKKVJiKcsUuW1BhgelBvgmMRGr
-	Tcs/DnEIVpSnA9hgWaBcGuO10oP5U6U4f2w2DRRsomSHCGIaUGFOAUlopDGbaGpCLD9sH/79LsD
-	w1bsHhBbiFU8xXxPdicofJ6+AeXRNdfqHiPZ9LpHY4OlJLok4bPOr46XYPZKHB3BiViHOlRj7uG
-	fOfobBPnj/C9ZvQMAGv6CwcODZZ9chZNHmXFsiXAOf+NZagIbp4z+wPsw==
-X-Received: by 2002:a17:903:1a0d:b0:2e9:4f73:83d1 with SMTP id d9443c01a7336-2ea9c674e67mr62938425ad.22.1793029566716;
-        Mon, 26 Oct 2026 08:46:06 -0700 (PDT)
+        bh=RNpsgjEF5umzUbHJqsyIufok3BU3v57Xv+ZDC+OYa/o=;
+        b=q1XlGpWVOoC2yRziuAsb07Pl/x66dqt4f6RxZ/440vVgSOO2/ZkWQHgYeqZmE1J6hV
+         xZFBSmA8wLqCMft/ZPMDZY/x0lOEy47ZDy2z2bRDveQI+r7tygGc0rLOxmtkDxCJDLCh
+         KBBcDYE5buWKZ3HlvTrrjf1pxH8TlPn7nNtB0teVYdDEPBe0QxO2X85UwuBRTg15rwAM
+         8+rmr5trtpJVY2Yeg69VGSscbaBrZLyL5u1PmNAyGqGYQDuEabUyDWvTgSJqlnDgRbFe
+         SCFVyI5c+MlA6+fujmVzCdDkhq3IqBzia8yDCq/nM8dZIltKumqjGIHSK9/kaId87Pj8
+         IaQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793029571; x=1793634371;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=RNpsgjEF5umzUbHJqsyIufok3BU3v57Xv+ZDC+OYa/o=;
+        b=XLvYf4z9nJntUjmeANUkN8k1DzSJQVpSLORUmpSyVTt1vWn6eYGICSK1saBuEqY2Qm
+         yj/RZ6qVK4tDFRSo8QPAZIXAaxynQKvjw1UXF1pGEYmggB+0lPcsAGG12h5CRj60bSXL
+         4JqmvwjPglbNcbEZUj3J7N4/bLJCAOaRetSTXs6GjVa39VD8Ef/sA5LzBatwUWTyRmQM
+         RrDM226aOlEN+9XQ1BNN+IciiOSgG+pUDCFnLyFAzsyRKVY8bnA9YKDqBUmcXtRf4BBE
+         QjUmQQFzMOWb9ZjDQeSV42U8+SK3MGsTAVvSzOHU9/nbWc09pdzsbUXuX7KUw5og5lbg
+         DbmA==
+X-Gm-Message-State: AFq9FYI3P/6WfDeJx1NDKkgDOXXdMg8NxO006K26v5BKX3FJV7CQeGYg
+	ZA5dfBvG5t4VdqVZPv1+wZzpDIRGaIJ3MaqoDaA6Je3YjqQjAKMh9uTWyNJDx/6K
+X-Gm-Gg: AYBFou36gHRolFCPvE92fGjjgu5xVBj2DfANwix0PL2Ket87//AbXDazzVZb7M/fv7M
+	GVaAwrbJJ8g4hWztz16lkyucY+dbn+LKjjWnshqqkDTQH2auuZej4vsoUehFrScDWtMp4RJqHvE
+	qb2T06HguI1eIWBpUEmPVvSeJCDKzMjSZdA+02OSiFDG0W0KCu3Dql3qIbJVTV5fZsovVcfP9LN
+	BcDPVYtvcC6mbvdChnNJSn++GraicS4epb9fWq20TLZ7PhBisrAHOw+5th3j5wqrNeBMyVdVTkJ
+	Ge//DstRZFWjHtHFRFDOyRk8AOVZiGVKwpsNGgywPf9VuwsF6b7W7XhhGJLr6JQDiESApQhiV69
+	MnuScs9C8WuXs+dHJKPvBfd9ATUeuIg4784EymMFYOK568v1lmgODC2ICucDt/n/fBFF5PGzTUr
+	hT0E41fXz0LJ9iBmHTVxs3Xk7/7pNXHqJIBsHcd1pnXHpuy15bRveXTCAe5CwFwmZE/zA5xQLlW
+	gow+i6DKRsIwZ0q5ZFmGFXDTlorxlVsdgl+5KeP++EXyo7dnpR1Wflq0jda6kzhnROD33fiF7en
+	Zux98CAnjm+RE9TEM9++sn+4mSEKtLg=
+X-Received: by 2002:a05:6a00:4506:b0:89f:129a:9590 with SMTP id d2e1a72fcca58-8a368e7f9d5mr5869739b3a.48.1793029570582;
+        Mon, 26 Oct 2026 08:46:10 -0700 (PDT)
 Received: from [127.0.0.1] ([20.171.34.166])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ea9b1dfee1sm18683115ad.64.2026.10.26.08.46.06
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a36bb2968esm1493321b3a.35.2026.10.26.08.46.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2026 08:46:06 -0700 (PDT)
-Message-Id: <pull.2281.git.1793029565.gitgitgadget@gmail.com>
+        Mon, 26 Oct 2026 08:46:10 -0700 (PDT)
+Message-Id: <e13f12640853643e14288107ee03f99fc00bb0f1.1793029565.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2281.git.1793029565.gitgitgadget@gmail.com>
+References: <pull.2281.git.1793029565.gitgitgadget@gmail.com>
 From: "Marc Strapetz via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 26 Oct 2026 15:46:02 +0000
-Subject: [PATCH 0/3] send-pack: avoid resending unchanged objects after rebasing
+Date: Mon, 26 Oct 2026 15:46:05 +0000
+Subject: [PATCH 3/3] send-pack: avoid resending unchanged blobs after rebasing
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -93,92 +97,100 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Marc Strapetz <marc.strapetz@syntevo.com>
+Cc: Marc Strapetz <marc.strapetz@syntevo.com>,
+    Marc Strapetz <marc.strapetz@syntevo.com>
 
-A common feature-branch workflow is to push a branch, rebase it onto an
-updated upstream, and force-push the rewritten commits. Large blobs added or
-changed on the feature branch may survive the rebase unchanged. Although the
-receiver already has those blobs through the old branch tip, Git can pack
-and send them again. This can turn a small history rewrite into a large
-upload.
+From: Marc Strapetz <marc.strapetz@syntevo.com>
 
-This series teaches send-pack to request inspection of the old tip's tree
-before packing, so more receiver-known objects can be excluded.
+Rebasing a pushed branch can put its old tip outside the boundary
+traversed by pack-objects. Even with that tip among the negative
+revisions, unchanged blobs may then be sent again.
 
-The additional inspection is enabled only for forced non-fast-forward
-updates of existing branches with locally available old tips. Ordinary
-fast-forward pushes do not enable it, including ones made with --force. No
-server or wire-protocol change is needed.
+For forced non-fast-forward branch updates, pass locally available
+advertised old tips as haves_to_inspect. Limit this to refs selected
+for sending; leave fast-forward and rejected updates out. Restrict
+the hints to branches, which name commits, and skip shallow
+repositories, whose thin-pack pushes already inspect negative tips
+with --objects-edge-aggressive.
 
-The old tip is already a negative revision, but it may lie outside the
-boundary visited by the ordinary revision walk. Its tree is then not
-necessarily inspected. Passing it to pack-objects as --inspect-have lets us
-compare its root tree with the outgoing trees using the existing sparse tree
-marking. This excludes additional receiver-known objects without walking the
-old tip's commit history, and prunes identical and receiver-only subtrees.
+Update the rebase tests to expect two packed objects instead of
+three: the rebased commit and its tree. The unchanged blob is
+already present on the receiver.
 
-Shallow pushes keep their existing aggressive edge handling. Partial clones
-skip the extra tree inspection to avoid fetching missing objects, and
-successful bitmap enumeration keeps its existing path. Old tips are resolved
-in pack-objects, where replacement refs are already disabled.
+Assisted-by: GPT-6 Astra, GPT-6.1 Sol
+Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
+---
+ send-pack.c           | 30 ++++++++++++++++++++++++------
+ t/t5516-fetch-push.sh |  2 +-
+ 2 files changed, 25 insertions(+), 7 deletions(-)
 
-I compared upstream 7e34d8174dcda3435d1404c9a30bef46afe6c13e with the
-patched source using trees from Chromium commit
-5b05cc16e960a021389ef9b543ab38a037c38d60. A depth-two clone supplies the
-objects; the measured fixture has a complete, non-shallow history with a
-common base and sibling receiver/outgoing commits.
-
-Both builds used GCC 15.2.0 and -g -O2 -Wall on an Intel i7-13700H under
-WSL2. Measurements used a warm cache, sparse enumeration, no bitmaps, one
-packing thread, two warm-up pairs and 15 measured pairs with alternating
-build order. Values below are upstream/patched; total wall times are medians
-in milliseconds, including process startup.
-
-Case Objects Pack bytes Total wall ms Reword 3 / 1 421 / 215 2.776 / 1.338
-Single file 6 / 5 667 / 553 3.542 / 2.744 ~99% of files 552,724 / 552,723
-58,082,988 / 58,082,873 4,525.094 / 4,883.623
-
-In the single-file case, enumeration increases from 0.758 to 0.982 ms, but
-pack preparation decreases from 1.637 to 0.458 ms. In the last case, 506,468
-regular files receive distinct small replacement blobs; total packing time
-increases by about 8%, saving only 115 pack bytes.
-
-These are isolated local pack-objects measurements, not end-to-end pushes:
-network transfer and receiving-server work are excluded. Where redundant
-large blobs materially inflate the pack, avoiding their transfer should
-further reduce end-to-end push time, especially on slower connections; that
-benefit was not measured here.
-
-Most objects in this fixture are already excluded through the common base,
-so the pack-size savings are small. The widespread-change case tests
-inspection overhead on Chromium's directory structure, rather than realistic
-compression of a whole-project rewrite. Feedback on this cost and the scope
-of the inspection would be particularly useful.
-
-Local verification passed t5322-pack-objects-sparse.sh (19 tests) and
-t5516-fetch-push.sh (132 tests). Coverage includes identical trees, shared
-blobs under different trees, retained changed objects, subtree pruning,
-partial clones and local replacement refs.
-
-Marc Strapetz (3):
-  t5516: record redundant blobs after rebasing
-  pack-objects: inspect selected haves for shared objects
-  send-pack: avoid resending unchanged blobs after rebasing
-
- Documentation/git-pack-objects.adoc |   7 ++
- builtin/pack-objects.c              |  81 ++++++++++++++-
- odb.c                               |   1 +
- odb.h                               |   8 ++
- odb/source-files.c                  |   3 +
- send-pack.c                         |  30 ++++--
- t/t5322-pack-objects-sparse.sh      | 148 ++++++++++++++++++++++++++++
- t/t5516-fetch-push.sh               |  43 ++++++++
- 8 files changed, 314 insertions(+), 7 deletions(-)
-
-
-base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2281%2Fmstrap%2Fsend-pack-inspect-haves-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2281/mstrap/send-pack-inspect-haves-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2281
+diff --git a/send-pack.c b/send-pack.c
+index f20460fbf4..de6d33cf75 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -42,17 +42,18 @@ int option_parse_push_signed(const struct option *opt,
+ 	die("bad %s argument: %s", opt->long_name, arg);
+ }
+ 
+-static void append_negative_object(struct repository *r,
+-				   struct oid_array *haves,
+-				   const struct object_id *oid)
++static int append_negative_object(struct repository *r,
++				  struct oid_array *haves,
++				  const struct object_id *oid)
+ {
+ 	/*
+ 	 * The remote end may have advertised objects that we do not have in
+ 	 * our object database. Skip those, as we cannot use them as boundary.
+ 	 */
+ 	if (!odb_has_object(r->objects, oid, 0))
+-		return;
++		return 0;
+ 	oid_array_append(haves, oid);
++	return 1;
+ }
+ 
+ /*
+@@ -89,8 +90,25 @@ static int pack_objects(struct repository *r,
+ 		append_negative_object(r, &opts.haves, &negotiated->oid[i]);
+ 
+ 	while (refs) {
+-		if (!is_null_oid(&refs->old_oid))
+-			append_negative_object(r, &opts.haves, &refs->old_oid);
++		if (!is_null_oid(&refs->old_oid)) {
++			int added = append_negative_object(r, &opts.haves,
++							   &refs->old_oid);
++
++			/*
++			 * For forced pushes, inspect the old tip's tree to
++			 * avoid sending objects the receiver already has.
++			 * Shallow thin-pack pushes already inspect negative
++			 * tips via --objects-edge-aggressive. Limit this
++			 * optimization to branches because --inspect-have
++			 * requires commits, while other refs may legitimately
++			 * point to trees or blobs.
++			 */
++			if (added && refs->forced_update && !opts.shallow &&
++			    starts_with(refs->name, "refs/heads/") &&
++			    (refs->status == REF_STATUS_OK ||
++			     refs->status == REF_STATUS_EXPECTING_REPORT))
++				oid_array_append(&opts.haves_to_inspect, &refs->old_oid);
++		}
+ 		if (!is_null_oid(&refs->new_oid))
+ 			oid_array_append(&opts.wants, &refs->new_oid);
+ 		refs = refs->next;
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index a46ba91ba0..067b4ddc16 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -216,7 +216,7 @@ do
+ 			GIT_TRACE2_EVENT="$D/rebased-push-event" \
+ 			git -c push.useBitmaps=false push $push_args
+ 		) &&
+-		grep_wrote 3 rebased-push-event # 1 commit, 1 tree, 1 blob
++		grep_wrote 2 rebased-push-event # 1 commit, 1 tree
+ 	'
+ done
+ 
 -- 
 gitgitgadget
