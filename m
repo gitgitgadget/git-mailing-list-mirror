@@ -1,99 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.53
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793018978;
-	b=T8fKx4RqzPe6cHhnqTDYBKa8uVb7GmoZ4QYVTPgnfIvxi+Wuavvyo0a/+293ZXdyjaao
-	 cbFWcH4hxnZsB053o02FTJw1tbDSFlS5CaMQPkwd7oMso1o0oiUUjYz9e/wi9SgRNscWY
-	 wYPZV3Z+JUP9Q8s4nDrAbXCE5K7+rN91klhsbXM0UZInlzunuH+X+f0yq6DjIWemLMUJS
-	 CSXhjQ83nFkcCfmtQwVI8SPB2JcC2sXR5Fxhc0KGn2g/n7AGeVIQWPYk3zGl8S3SFaxqc
-	 wdC0TP3z6lY0ZjrNHzgbeI165iH+d8FkFQrSsTffkwqhRCfk9LTXew/+tWsDofY7Yyg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793018978;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=azujMy4YXSAKzxi019QKjJHRH/7sqvvoVJNCApkDGfw=;
-	b=0uLjphYyvyJmiT0NmbY+jF++FF6k/j9hJeIp48AbKC8QMBRrbKjvuWypIBi1oeNWAYf2
-	 Acu7IBk+i501trcLqIo4WhUI1Cszcjo52/YICz1EHhYrzLxROGI+AE3D2YUFUsobT0c0Y
-	 Z+7nVW3WHi7Artg7hkIoTgvK6U0fTyuLqxZ8Tk/h7nGJWScAeofZqnMnC7RRUkIcFrgt4
-	 jzBVWsn9gZmsddvYwgcWpHeoZGQ6Y6dLEIBjtAnEueDnQHlqL22dWbegBb14Xzq3Oo1Gp
-	 co66WhpyZ/CRzTl6QniSxWGnvN3hRu+rMdylzxptEW+g3H2hHqdjeEZxsF8Rzo+beqg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=O0a1NfJQ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.53
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793019883;
+	b=17wuyMXjg50J5X0ITykFZ5qDX/2Qceh9vEPjYgAwXEYRShdYUAT0e3xS0HwUrQ79LsmI
+	 lt4arCSGvECwdY8LgHzyXSxB3IPYhGhPipQExteSrS0DrlP3wN0PR1G7wkqSWuf6jrKIv
+	 ww8YnBIjf2mhW9OueeMcCwHEWPOTXbFmlGQQ+n6iYLbBrkp/pGpMtldzNqQtzK4DXTwPa
+	 DGFEBak8Qj2Ix/cOJmytxC/EbSlGORsMyjSP6rt+kjaAEe50K3niLkv90q0OZ+f0VQBpO
+	 rTP2rErJAuRDew5mojJXZv0gfulxXMwi4TeeHK8Q4LGjfJvAvvjdh/cXugdWNMdLjKg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793019883;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=NucSRFLYXbjUAsmmKQXfGPjDcE86IrbRn44IFAgDDb8=;
+	b=TMgiSLQRS9rl/KyLUGKmvphfqmhr7IIQlNTnAPDoyaspWuzjXkyDxVg/yRF/1ZJXjSSD
+	 RJ04TNfCjXIrLSGWML+qBDxzWBx0JI86bPKMZqkDOjhDRDeDcWnfABU2RACeS3jK/WX9f
+	 oGLj+BKBgNlOb+sp2r72E/wcnvK7+/qQidHnFw72l63JP2wZNHmHNGQFVEFXkYlcAHw6t
+	 gMzzRJRVSQF4VpE1hJPowo4haXW9iVEjkV28DfhiwkPLtaY0k5GU1s0o0YjDHN+1bxhYk
+	 5J1laLFKzPGZsfdmubRFkYO3MltcGxfKj3eArA6F5o8+/kT6FUgz4V2AZKGgogjqeVg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=temperror header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=jHM+gqyu;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bQN3fKGV;
+	arc=none smtp.remote-ip=103.168.172.158
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE3B606A327
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 12:49:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7BE3B606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7196C606A335
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 13:04:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7196C606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=O0a1NfJQ
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6aa8d04fcddso5729400a12.0
-        for <git@vger.kernel.org>; Mon, 26 Oct 2026 05:49:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793018977; cv=none;
-        d=google.com; s=arc-20260327;
-        b=D3WLukrC3CtziOUPv3DCqpEV+LoCprHYSzXV7ZnV4+4UhvZrA7B8WOJGkNLs1VCUJu
-         +dPNgv+KGSEDFOdj1bjCm1CjC9plq5jnl/uTN3tESKwVo2ffIGy47jLNP9KQ9JKbCrhI
-         njyMWCSvs63h0TBF0f13ZwfHNVa68JK1EOH/R3HVSBtsJMOzk3lpZpRsJ+HqmueqxiH8
-         6l6vha0FPVUGqmBgNJYkPmjIOBa3DsBSlGgX3UbWPYjy4s+A0cPvrA5Adz1Z2bEdOWvR
-         hV61jiwDLLpgYITVjfbG3MIQYyjQdMs0RnGpCAhlgf/NATdOOMIPNZpLFLbueZnmffO4
-         Sfqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=azujMy4YXSAKzxi019QKjJHRH/7sqvvoVJNCApkDGfw=;
-        fh=sCrAD80SYHRU9WDu8YXR0+zJy5ittAh7VsOz7YBzNb4=;
-        b=NKvgE238iFAxWjXLubrxqrmr5ohEp/Ta8QFllwqxQACU76iqGI7ExwPeD68uGGsFRX
-         6DhAovmYc+NI9az0vFsI2L+Yt3EHDU7CTMDICEWae7iLuj+Mh2zTTz2Tgu2SBEbds3K+
-         JztTCeON+1ydMXrps5B2JtGXmVMDDlHpxFIN3N6UWHu7MzF7VxGoShDwHQ/y94DjfA/w
-         0LB1qRaYvVx6UcuIVeQEL8fCk4y2DA47sr3Aq/m5/JXyshXwuRWw2esv5KflgLDZ6p2H
-         3AVhpePbTtTwcV+KjoTyv/ernfciQ6eXCzH2kynF2RWRaZZAAxRr7qZyLNZSOXJm9C0O
-         8h4g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793018977; x=1793623777; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=azujMy4YXSAKzxi019QKjJHRH/7sqvvoVJNCApkDGfw=;
-        b=O0a1NfJQ/9VBmdHcuJQjlg+aI7hZWhv+0lTfu7X0kJAHIGX3QT6NSBnP+DyKWieX5q
-         KfiYysl53/XwQJlkVYxVZtGGEq+WYqT6rwtNHQgNZI007xAfSHHVrXGHmTAdFSDbISYG
-         /Qbo97q6KVmd/uPdt9SLxsZ4kDQMstctpn8P2Uu0WEfUho1ywpvUyaIbXvDuotpwpSyF
-         p5uyuCmgyo1BvUoqo5wOdEhCGo5PFO97iXmHYL1zrOvgXgwZwf5sThy4jVRjpmxJjHMj
-         QmFH+HBMX8bWBGLeqEjiSuXser3PmwfOB1+cNX1TKJ2/gIMlpelpi+5hyk1aq/B8SZHq
-         9YsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793018977; x=1793623777;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=azujMy4YXSAKzxi019QKjJHRH/7sqvvoVJNCApkDGfw=;
-        b=1fpnx3+JSdcFGd0MZtmXZCLGMhGsk/HgjnJqc3DYlDbvsbAY7/ycqIHCDUvByjivu4
-         wxsvTkTYE5KowgMamw6pnxDYiBqyt3YHgRpQmZy2jnyTVp4E1iXaWI5MdVcW2eQtR8Ls
-         UshtXTbQtlB6zniIlLmkcQh3gzPR6gHv9s8T+fvRugqFKtYwNtHpHwBbPxPUW97bZs8D
-         m9/sqBz2pf06b8OGbL17aRNmaj16mEQUWtZUTGiyMDXEb3jg99Z5YEa4NIVfag+o9gHF
-         oC1waxCys6o3vIvvTz/8AN4o46Y1ql8CF20cNl5tbtJNIQanl6rEOlQVODeZ1vc/JjPO
-         QeRA==
-X-Forwarded-Encrypted: i=1; AKwUvBy4Z8yniKWUKkF83JlcvhINCCW6+PV6/wtGPZx5EZYfOaWL6ub7skfOi/P6hN2HvCCRmkI=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKTpJjNSsaRuoJfkSTdVdPc9Z4XpqEUyi47aXJVxYIcEIdHJ4GO
-	ZXDe9SpFhsH8ryfCbgGxHnVGzLl0o5vMYX3HO1oveLhpWh9aEA6P0Qn72Lnf6r6w65PDPdNUf82
-	7ErkRp/HK7I5NpmTrKafH4K6M0tJyW/L68zcB
-X-Gm-Gg: AYBFou3oas30QyJ4nRnN6GN+ImdRA0iFRoxCCf/cctriheHna1ltM3VIST9kYZKnPhu
-	GDToYTc2gg602y8kjhiaNpSboDFML8b9u4zXGxnxrCf27MMPusHiNzhiGQgM+jBtTnMy1PIHUT7
-	1A6nXnyY5EjghWLu/coiFGvb/J2O8LJ8y8fFv4V+YUevRgGST8Q4I28N6qeTVlHGnahwS09ttFA
-	bw8yqtl9oq4V41cFrsGBcPzXjcVc/VV67Rr6P1t/ER37Rqy/z+KTk8S7DR8mYi/Vv4rr5HNgtPD
-	BHd6z7gAQsDhYg07epAZCo5NT64cOB8MjOa0YMJl3btRqNm56L0bmYQr+mMM6OUB8Mhloonf2Ok
-	xDXOODml8UJgdOKvZqrgzemfwj9dvNpJxNXI=
-X-Received: by 2002:aa7:ca50:0:b0:6b3:886f:1f0c with SMTP id
- 4fb4d7f45d1cf-6b442ff3957mr6036002a12.20.1793018976737; Mon, 26 Oct 2026
- 05:49:36 -0700 (PDT)
+	dkim=temperror header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=jHM+gqyu;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bQN3fKGV
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A1A441400A1C
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 09:04:36 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 26 Oct 2026 09:04:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793019876; x=1793106276; bh=NucSRFLYXb
+	jUAsmmKQXfGPjDcE86IrbRn44IFAgDDb8=; b=jHM+gqyuggUUJMKkydnumkELzq
+	r43S/TKR2TmRdZu+2oECKclAA9xANajq+c41C+fmWc1BLRMaecAhQUeb7eK/WUo1
+	u6m1244WZxo5/T+/LybZn+MMzwpFGnnOfNagr4db3H7psZTXqiUW3aMzs0Oiti4O
+	zARKEhNtg8yvAtTIO2Joszyb28pDooh2MC1yJxAgJ7SDRekuN7Xa7vVY7N29obyz
+	N2qzzRcjQLilzmsXvyZWvItUKxwvsFlcwxxufAN5xsmPHpZJ9/1UVEEiYhr/q5Ro
+	9Gtp9WU0RfprhWhuODfZzjbbwWyJshcwbWuYg/fiTuwFhNHWxtpUFxRzt8sw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793019876; x=1793106276; bh=NucSRFLYXbjUAsmmKQXfGPjDcE86IrbRn44
+	IFAgDDb8=; b=bQN3fKGVLrrYTN5Ur8AZAdC0/Krx+pgHBSuorB2wn9zit51yWe+
+	uDEaOkA4uIzAFkJXH1fvgtDn3eQq1U/gB9mnHGVBwcm4Qx8KvATvoyP7xa90zG/I
+	cEwMaG5hQKapmCqH3sJXVXP1qo9vaCBjfxqR2u8xZimlcMi771A76nYnf/LPv5q6
+	38RI/FyHXdef/EVuMXMH5FJ0TVA5Rc8F35NSTKeRvG7mpSynp4/URvdQBqduNHD5
+	/6TmwUT0d7g5VhZC1O+DTEjopAs3UXehNyVywoCdw8nOtRvILjYzCDIeCALj4u4m
+	XHjwHI14A3WF6qNeH6kSn7XqFkuHearyv8g==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793019876; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:TZXO84wnqIUQ0cWrHSyDrYq6oNGjlo3Zt0YtogqM3POT/H+
+	tuIi1/Xvmiziy+yx35gUJ73fbDSBwg9HbO/5k4V2O67K+Ur+DOoozD2hdJhhtQuB
+	sK2gJsgSDIpvv+6hmskTzJSPWMvCelr/qRx6OEaH5Qj4gtM9yXTt0DRR2er1vatt
+	o4hLrNBpDj+J4cVCmTEVoEc4HMvPKn81rYoqI5M6+wLuCsNJlVQsnYys31gxAWRO
+	XRbOnOTuWjVzJW/zuqI5JxHQdkEbjivYVSx20rTW4dHIH7SGNXTmwCs9ghamao3g
+	/Soc2c+wJgNzyuTo1dw6F5cvHxE3Zaqz8zqynfQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:a0l/YCXjrhYPYPVIyWYyWSsJXUeyl73LI2uRg+c09Qk=:pOe6oQ0r3KsqNNFJHbiwsEx7UljZIMJVTDvqGXm0B8U=;
+X-ME-Sender: <xms:5E_fasfA0FcCfY9WZjS3_qIfFT4eqtsghqFD0dZGwwHn6YXAoQjKVw>
+    <xme:5E_fakN-HBOIcb7AM-2OsLnRc4xt6Dx9uOuVTQQQgHr1B_0I0oclv2QLIQkC5iQsW
+    zQFYvfYTbrKs0xp7YYJZrkiUpqK2f-Bkt9kwijKtHwHyQRM-Tx5>
+X-ME-Received: <xmr:5E_farLqnnAyo05ktpI2wYO23yCatuPt4QKqHo4kr7B-Lf_Q6siSeA>
+X-ME-Proxy-Cause: dmFkZTGxZyfN4A92yK1jhM5Qj/59U7q6xfMAOu0KuNFM85IU8fpQx61vGeNy4k+veLiH9g
+    XhXMAgf3LqTthesFrbG9PNFUy+/bmitU4f1FgkeTBHu7CljtiNwveefr10UKGuBmbBzOFd
+    vc08uXlOWshARTuhW/6ALI+tAzgLibtz6Yd/FHXYxSVwbJXZPz6xjqn9pWwh4d56TE+gfj
+    7bZ0f2u1pe/ETDVW4GVv9qrfw+AYkGBV4a0zXU198Qal7GrXe+zOu82h/IuHWkxh2Bcv12
+    5lPMv3w430jwXohhvmzyV95l6aQXPrPDqr35Z4v7Q7np0m8uuIS4A4zjH/bDQh+vAqbcZt
+    yAm0YLDAsYPJMiyS3z3P18xCiDwFyNtVGc6dNpVdLnpom9/FnmSP+OsubRrMfq4aBXQvyW
+    1QxEji44uoD8OoLCOE3bmJjPYi4kdWZmNjdNc70tayw1cSQ60UUeMoMk5QLVmONgLeg67D
+    1+T4oXDbvU1I9EWLn6NVN62Qz2oKpBPqURkAdIQ0j19wnBCKCimi3LLIfLEAhNnwFnLuM3
+    lhmTyebi6ACkGsj7QD3GDXu582RG1WdIIz+hoeYj0+taXgci6gmJRZHhoABEwgboHoe87Q
+    1R/vGh/i6aOYuoGQI1tbkHpmKUruc3/qVduGDtxFJc16qZRnMI7YNqNaSOjg
+X-ME-Proxy: <xmx:5E_fatEieJo9mYr05oDF3cWAVx7NYB27Y7aFd8YUGMPxvn28jHIAkQ>
+    <xmx:5E_farQW4fR8p8DpTz2iA3pIZ5nOtNLzzVBEOMtte5X-bc483bXeVg>
+    <xmx:5E_fahFOxCEE4Ti2-yPzA1zO5zkalOybkmM1XZWT-89kZnWZHlBfXg>
+    <xmx:5E_fav81-U_aHFqgODiW5wIZaT0LKVpfcqJRxZ5G-VZYDe6gdsZB2A>
+    <xmx:5E_fajMw8Et_NCVxm-ze-kONxddm6JufPIW1E3-fhPJZ2siS2pXUBlio>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 26 Oct 2026 09:04:35 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d7d9ec58 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 26 Oct 2026 13:04:33 +0000 (UTC)
+Date: Mon, 26 Oct 2026 14:04:30 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Daniel Zoghalchali <daniel@latchkey.dev>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] 2.56.0: filtered --unshallow of a moved ref aborts in
+ pack-objects (should_include_obj) via inherited GIT_SHALLOW_FILE
+Message-ID: <at9P0ctULX1BBD8y@pks.im>
+References: <CAJwQ=KQynymg4CJOLkyebACYVQa+LhXB2UifniTASkLyArWejA@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,34 +123,119 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2403.git.git.1789223882471.gitgitgadget@gmail.com>
- <pull.2403.v3.git.git.1793008465.gitgitgadget@gmail.com> <e85ce85d921f5c847c4a370a5c56c98f2f20cee2.1793008465.git.gitgitgadget@gmail.com>
- <at80qOfTn5_YUY_f@pks.im>
-In-Reply-To: <at80qOfTn5_YUY_f@pks.im>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 26 Oct 2026 14:49:00 +0200
-X-Gm-Features: AclHuK813sNGCO1DsRbIz3nEjuVmpnKNX5lHg_hPmHbHbWX1h2U1fmFzhCpoGYo
-Message-ID: <CAHwyqnX2MdcKBLL5Z9Xb9XznKCkOLfztk5bM-OdkJuaOBF0LMQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] ci: drop quarantine removal for macos perforce binaries
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJwQ=KQynymg4CJOLkyebACYVQa+LhXB2UifniTASkLyArWejA@mail.gmail.com>
 
-> > A file downloaded with wget never gets com.apple.quarantine set,
-> > only Safari, Finder, and AirDrop apply that attribute through the
-> > LaunchServices quarantine API.
->
-> This is the explanation why we can remove the flag, but we haven't even
-> talked about the observation or what we want to do.
+Hi,
 
-I'll take a look at that.
+On Sat, Oct 24, 2026 at 10:59:55AM -0700, Daniel Zoghalchali wrote:
+> Hi,
+> 
+> Since v2.56.0, a fetch that combines a tree filter with --unshallow
+> (or --deepen) aborts in a non-partial shallow clone when the fetched
+> ref has moved past the local tip:
+> 
+>   BUG: builtin/pack-objects.c:5098: should_include_obj should only be
+> called on existing objects
+>   error: pack-objects died of signal 6
+>   fatal: could not finish pack-objects to repack local links
+>   fatal: index-pack failed
+> 
+> v2.55.0 completes the same fetch. We hit it in CI, where a job checks
+> out a single commit at depth 1 and then unshallows its branch, which
+> by then has moved on.
+> 
+> Reproduction (offline, any Linux):
+> 
+>   set -e
+>   W=$(mktemp -d); cd "$W"
+>   git init -q -b dev seed
+>   for i in 1 2 3 4; do
+>     mkdir -p seed/src; echo "$i" > seed/src/f.txt
+>     git -C seed add -A
+>     git -C seed -c user.name=t -c user.email=t@t \
+>       commit -q -m "c$i"
+>   done
+>   git init -q --bare o.git
+>   git -C seed push -q "$W/o.git" dev
+>   git -C o.git config uploadpack.allowFilter true
+>   git -C o.git config uploadpack.allowAnySHA1InWant true
+>   git init -q co
+>   git -C co remote add origin "file://$W/o.git"
+>   TIP1=$(git -C seed rev-parse dev~1)
+>   git -C co fetch -q --no-tags --depth=1 origin \
+>     "+$TIP1:refs/remotes/origin/dev"
+>   git -C co checkout -q -B dev refs/remotes/origin/dev
+>   git -C co fetch --no-tags --filter=tree:0 --unshallow origin \
+>     +refs/heads/dev:refs/remotes/origin/dev
 
-> > 5ed9fc3fc8 (ci: prevent `perforce` from being quarantined,
-> > 2020-02-27) added this to stop p4d -V from hanging on a GUI
->
-> Nit: you start talking about "this" without even saying what "this" is.
+Thanks, this reproducer works for me.
 
-Ok.
+> The last command dies as above with 2.56.0, both Ubuntu 24.04's
+> git-core PPA build (1:2.56.0-0ppa1~ubuntu24.04.2) and v2.56.0 built
+> from source. It succeeds with v2.55.0 built from source. With 2.56.0
+> it also succeeds when dev has not moved past the checkout, with
+> --filter=blob:none, or without a filter. --deepen=N with the same
+> filter aborts the same way.
+> 
+> What happens:
+> - fetch-pack runs "git --shallow-file '' index-pack --promisor ...".
+> - The pack names the local tip as the parent of the new dev commit, so
+>   index-pack's repack_local_links() starts "git pack-objects
+>   --exclude-promisor-objects-best-effort".
+> - Since d43b9acb05 (setup: unify setup of shallow file), --shallow-file
+>   is applied by exporting GIT_SHALLOW_FILE, so that grandchild inherits
+>   the empty shallow file.
+> - The grandchild no longer treats the local tip as a shallow boundary.
+>   It walks to the tip's parent, a promisor commit fetched without trees,
+>   and is_not_in_promisor_pack_obj() hits the BUG on that parent's
+>   missing root tree.
+> - Before d43b9acb05, the grandchild read $GIT_DIR/shallow and stopped at
+>   the tip.
+> 
+> To confirm this, we wrapped only the repack child. Unsetting
+> GIT_SHALLOW_FILE for it makes 2.56.0 pass, and setting
+> GIT_SHALLOW_FILE= for it makes 2.55.0 fail the same way, at its
+> builtin/pack-objects.c:5004.
 
+Makes sense. Even though I think that the bug isn't actually that we
+started propagating GIT_SHALLOW_FILE, as we now basically behave like we
+do it with all other global variables, too. And if we were to execute a
+non-local command like git-receive-pack(1) we already know to unset that
+value again via `local_repo_env`.
 
-Harald
+What's fishy is "builtin/pack-objects.c:is_not_in_promisor_pack_obj()",
+which explicitly checks whether a given object is in a promisor or not.
+But in the case where we assume that an object may be a promisor object
+we know that we're running in a repostitory that may not even have all
+of its objects in the first place -- that's the whole ponit of a partial
+clone after all. But when `odb_read_object_info_ext()` returns an error
+we simply `BUG()` right away, which does not make any sense to me.
+
+> Separately, the BUG() is reachable without the environment change. On
+> 2.55.0, a filtered --unshallow of the local tip, followed by a
+> filtered fetch of a moved ref, also dies there, because the walk from
+> the local tip reaches promisor commits whose trees were never fetched.
+
+Yeah, this bug has the same root cause and I was able to reproduce it,
+too. And indeed it confirms my above take as it already exists before
+the change to how we propagate GIT_SHALLOW_FILE. So overall, I think the
+fix is as simple as this:
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index ca3a891dfbc..e634173fb1f 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -5085,7 +5085,7 @@ static int is_not_in_promisor_pack_obj(struct object *obj, void *data UNUSED)
+        };
+
+        if (odb_read_object_info_extended(the_repository->objects, &obj->oid, &info, 0))
+-               BUG("should_include_obj should only be called on existing objects");
++               return 0;
+        return source_info.source->type != ODB_SOURCE_PACKED || !source_info.u.packed.pack->pack_promisor;
+ }
+
+I'll think a bit more about this and send a patch tomorrow. Thanks!
+
+Patrick
