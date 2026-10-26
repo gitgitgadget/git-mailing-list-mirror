@@ -1,122 +1,62 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.216.95.84
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792977384;
-	b=RghIIxFC7+CJ3qwk6pKUFtWRhsT7iFAXNiPsqzF5oERdbMn1MpGuJt9FndR3DqxiSwnU
-	 5xUoNZVbVUgOPhHa5nIbDMEwumrvqhRjLOy5ygLAfsGr1dtSPvTr5oDOHsIcb9R2bBHRI
-	 qT6cEsyJyGPCi2A61RqtFHPeWwNDTcepMvGdj7IdZOU1Y0k/dRtq1qpZ3AB7KGFWCIPTv
-	 /993hdcGHK+iPZUgrjXDKnWq+prQHCEntJ6goZX2neGJtYiPa4bmTKdScUgOGpYRKW1Yf
-	 bwu+XdbbtHMsRjlo+juniZFI310zxu03nkxgCSOgC7WFIPwOglNoQyWLWczGO7Elltg==
+	t=1792977460;
+	b=yXUOtTaVZHkNvZOIZLYIn5Ez0rk3IMrHB6R+b5nioE2x0azAOkuz1S/zRYJ+EU8Tq8Ew
+	 hpzik0Yuidg0cEXWuv22aVM866MKei8+7wz9kRo/muIcLb0m1v1qu5QlhYHvsJjy0UsfE
+	 LCiBADN6RgfD1RMlkSPICO/C0R7a8sEg1tqeQHG5K4eQ0cM1GeHuP2mUXasb8NCzO0NlR
+	 XWlvLWkwZh+e8ccIr3owHXMbFDfH1Y42L6oOKHBOEEadETL9DSrRbzyGUYcCw0ATBIrk1
+	 pn8GCeCNIaaGtRnF6nO3NiyMwpF7qKS9FVPIAdOU0I/E/WM6G7niemVwjR8/mwTBSzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792977384;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=BsUav2r58nACD38crccsW6VxS72B/0hKpAt7H9fVqk4=;
-	b=qDvvOADbml8PHYgmwh4Z2dK/GGZXBO0WHwk5etiEJN1Xfk5XL8wzjJ0jCm7Dpj2Quix8
-	 aPY2hrCTWufDKum3fdP1yWSnIecJOS9CFznSmxy9EGBex+wtXfKyzCuH8Q504FXxH8w6j
-	 iZuNUaynMYsxOzxskOPHFNsfr2eWhgzsxUzImEz3Z/NMNS0/uKnq+x6itIsLGENN6HltN
-	 XHpAgSbl85sAiBo0gpfcw7iQRUmcP5K2sm+2pYteMc22PzfB+h4MnxV9ZnbwiIO1HKqyo
-	 COsJCuZjqoCu5TVZHhdL+m9NlvFPDCiaLMxDaQQEowbnY9rCo4GxUFoTHaQcE2rUhYg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792977460;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:Date:
+	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=2jL3uRzX+TVFSs+4iDPmn4MzR/ibTb7WPrV9c2zzMTc=;
+	b=0LjiXtKCl/tBSkqoxxxnxySKocrBFTxf+AzGi1USS1j7JttatiqGVy1Eokf28W+tbtQW
+	 us0RJZhm/OHimC1alUQbsseHeKzEkLbFl/S0oqG2ihLKMdCURQXKC41YWOpJWBloGdDU4
+	 fbR3RoBJj8rvCCC9wHknq/Bv05Ln6gVcnBSuQGvrfvIa22sjxLCRHks3mZzlFOx/BPgJY
+	 iZbNwk74ouFzDjwrUmIplAt/wZPZIVTzGZJGAryHemiwrwE4JgCfPoLLRty0hAtsWyzjk
+	 7qaoXDVjrHrQ+aQSK6hUvXFdc6+MNWsRw6Jem7rOXnbb80vg/iKJHSeSl785X6VFS7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=gIIvnZo1;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=j3M4DYsc;
-	arc=none smtp.remote-ip=103.168.172.158
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	dmarc=pass header.from=peff.net;
+	spf=pass smtp.mailfrom=peff.net;
+	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=UrbQv01n;
+	arc=none smtp.remote-ip=217.216.95.84
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711CF606A31A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 01:16:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 711CF606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1F7606A31B
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 01:17:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5C1F7606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=gIIvnZo1;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=j3M4DYsc
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ACE16140002E
-	for <git@vger.kernel.org>; Sun, 25 Oct 2026 21:16:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sun, 25 Oct 2026 21:16:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792977383; x=1793063783; bh=BsUav2r58n
-	ACD38crccsW6VxS72B/0hKpAt7H9fVqk4=; b=gIIvnZo1CLZEX6fvLOcdJM9dS/
-	8fZbd79gcR5/WPSXZSA4FTQpWFiEryc2fR4uNMFGgY9v5O0U1XAGeYsO0oALoBgC
-	TI/fgXEg8JkKV0sQFnpZX+PHuC1DPMoVF2UHdsc2+CqOV9Ng2bYO6f+krcplqXbP
-	y83zTeW2kPNlf+xBQo4etgvmVdMIHqAr9pPPUOhbEtNUxMVz4py0YOLM5NyLEcfw
-	Y9WhjDLve3H/WRy2J2XdotqVBO0Y/xj0/Banj/SIUkYvZKQtVzwGfA3lJAl+9vkl
-	atFKRt3YbMStX/SRBsym7pU1SE/YM0EU2QTG1g4yb/Eu9HmqnUUEv5pjYT1w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792977383; x=1793063783; bh=BsUav2r58nACD38crccsW6VxS72B/0hKpAt
-	7H9fVqk4=; b=j3M4DYscsao8HicY+gIU/F+mDCqwYQB1I/k2swfDV7UTIoHhPJZ
-	gLyJjz5Bxl8N2nWoalMAqoBSAbU3BQmk/DEO+4w7fWF2bCcEWaCtcTcNxLv7cnxL
-	rcwEYfSINSmdTp2YHVwA8mFLQGezsempgJA5qHa4nTTXxC/vi5cYl+s/rw1nC17Z
-	SDQD1hXjBFu1c7T48F9m/2IhHYU6NCepTcGEO7ApqpZYN/jjZc98iR+D3Aj1hqeQ
-	qMFh2PSy2OF13fZdLc1Cka0jxpDjkiEjIApSW34+FWKJ+v2TjMyzIVvxxQHQjuUj
-	4yX6d+9DbUMmDRYi5ZPr1TjczTx9BejppAg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792977383; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:MEYmG5ZXd8+ye872DthDfE7KRv/TcOYr8drJNfB06jWLDoI
-	m00VjmVrcTaCQRir4Xn+dil+4Z2A/0LtcYutmIu4MwaB9AMaxRUw+6xkFof4Xtmt
-	7//snI+yAwdaHmYg0qqAo0TCvgxkLs4GOtVDHlDliibDYvqJr9oyJB8azStG0W20
-	O2x5Uy/qD8OId95viVxC4lrO5Qf/+H4fVrss8WDSOa+rtUZL5umXN6pFtJzA79BB
-	0ZK+B5uED9J0dnB3EUMzyDy71JTVmxxL0HojGAdlfdvH376SFCeN7li6O4jXIQoD
-	03I9y4iyH3PjxtRNgZWx63APDPZ1PokbMWTEFsA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:L93mfkEmSY2s8X1wBTvQGjzUy34fYu6YWug2COIsQ08=:BsUav2r58nACD38crccsW6VxS72B/0hKpAt7H9fVqk4=;
-X-ME-Sender: <xms:56neagivm9ZG9N4GFNzHPAS_P30vqXrlkDYTUL3T3sZ8sKCTc9ebrg>
-    <xme:56neasv3W4JTVuf_gp9DZOmXhowMIF8PLUIV8pCqnHsVL5DNShDyPuX1vLmqwZkwq
-    OOveNjyZa93985Epd2GOEKyTnZTREzmEuFuITQZUI0EEKSrEuD0wOw>
-X-ME-Received: <xmr:56neah4-sOOkKQY_gwGnjKJepUAfCrAsTu6yGtI3mmPxilJb97WoyVRZCDVR4HhF0Ju_YkaRif5YpNuAcidDTN8ZYjVOwH1cRRPT>
-X-ME-Proxy-Cause: dmFkZTEQ21NWzZ9RkvjeHqNR/SKuJav588qAtY/Bh/IfFZOClGcT190is0sE6itiynL7Ig
-    RdEUD9Ah7lQevPqfwJvuu82N5nQ6fTku/5epWLeR+uxBeMsmdW/MMkuDe+eX27ITWzb+1T
-    zEFfZV1E0qM56QzogEHNvV7A/Vyq05lVxPcgfGB9LdatX+VKSBUa/h24z7rb/vH6p1YXlq
-    ZYo/LsMAMOkzlg1A9ypPSOETMGbsIJcWM3OLlitdk4wUZel7aohABri5qr3sgUZ37Wqlj3
-    62P6sKeeRC3SY6mJJhBFtDlNgM44094QvaRZXD7mMDbVSosb1f4maEwVsUbWKbKEIwn4Ap
-    RvJERDeTKkIsBS0ThO185WQSfdDO6ZzFmEVOwimbVqbk1HeF2fUTqoweAu2KmldbGkF6AX
-    QWDlNQcy8cBQ1DSKBA0SKwBwAjiE3jhitSXICu/u7NDhlGJhkA1ZMHpwcGZ6jee8X6eNe+
-    X1HzhuA2mZnUUXzrhjqYfdSIxy6VJduER6iZLXRtHBZMuuwUIJc3L85poqCNBNHtrNphWq
-    s4rrHWyaiKqsUQTr8ob2V8Y3Bn3lavIjcI6eALtusjbbQyVqboYVxw+Cgjo7AbGhTy5XbD
-    jGidy9JY0BNle6U3VSWabU4zcEfEzLPB7CE25djA8JxAMuWrABvKGuG1moTg
-X-ME-Proxy: <xmx:56neaoPWbnWTZOR9gmDzEy8pdlUpQkGcDQgK6irtaU-MiyWWkE-ymQ>
-    <xmx:56neavvWJFaxbe1ZBZsv9-Oeq_pCv4p57QR4SU_9Q0PftkcSXloT_Q>
-    <xmx:56nearYpaS8gyn63EdLCbsDAwBotDQYKUuBTXt222v-6AML8GbEvXg>
-    <xmx:56neahy9EAHxd85hz4qceYfCWTFW7-dPfY4YDl0fNgiiGugrwAPxKw>
-    <xmx:56neagom6QmB7Qps4-Fu9ibwRfYlrB18Si75OxZHbEoxCGFkQkgI6xEa>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 25 Oct 2026 21:16:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Laveesh Bansal <laveeshb@laveeshbansal.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>,  Sven Weiland <sven.weiland@tngtech.com>
-Subject: Re: [PATCH] builtin/reflog: say "would prune" for named refs with
- --dry-run
-In-Reply-To: <20261025191559.79141-1-laveeshb@laveeshbansal.com> (Laveesh
-	Bansal's message of "Sun, 25 Oct 2026 12:15:59 -0700")
-References: <xmqqqzhdy7pi.fsf@gitster.g>
-	<20261025191559.79141-1-laveeshb@laveeshbansal.com>
-Date: Sun, 25 Oct 2026 18:16:21 -0700
-Message-ID: <xmqqo6chw9ay.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=UrbQv01n
+Received: (qmail 31959 invoked by uid 106); 26 Oct 2026 01:17:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=hUKX4KA7SlTC161HGbn1NRfsGCmqyThvZ+biyLYm/CA=; b=UrbQv01n7dhvYjR5KQ0ov/R1uLVA9t62bSOvaja7GPTk0eSamP4YHLMIVTCQc3atnv+PU21DRWfOu8/lzIVagTZne2enEJr/Mev2OMvWrEJLGjlTe+sirsJciUwKWUDoKCWznOL7N+h2UQlpuudAXcOHEYU1gmU5+/nGear3vQYoj8xHuw2ygQAQGYAxFQk0U/uOf7cIM6pVcFGG7e6TPqCrL8g3VxcWfEA2340EiocNnuEW6XYkpbvGJwqkGHqavHy8BJFXH5npAJc/pLuKtu8w66iThgpPev4rESWbtjbORSx4CrRj2vfgMUxM3PGLx0Uq61a6pLb+FGx92ktyUw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 26 Oct 2026 01:17:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 251820 invoked by uid 111); 26 Oct 2026 01:17:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 25 Oct 2026 21:17:32 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 25 Oct 2026 21:17:31 -0400
+From: Jeff King <peff@peff.net>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Emily Shaffer <nasamuffin@google.com>, git@vger.kernel.org,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH] Documentation: propose community voting process
+Message-ID: <20261026011731.GA3575069@coredump.intra.peff.net>
+References: <summit-2026.94e33e9ddf234334.06@ttaylorr.com>
+ <20261021200341.378978-1-emilyshaffer@google.com>
+ <CAJoAoZnhc6Tjm9m9dmTA6UD18HzkxAv2_ifB5x74ectqX8YieA@mail.gmail.com>
+ <b36dcec9-ad9c-4ddd-b3e1-e246d2fc093e@gmail.com>
+ <xmqq4iedc99a.fsf@gitster.g>
+ <20261024111856.8s8qu%taahol@utu.fi>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,20 +66,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261024111856.8s8qu%taahol@utu.fi>
 
-Laveesh Bansal <laveeshb@laveeshbansal.com> writes:
+On Sat, Oct 24, 2026 at 02:18:56PM +0300, Tuomas Ahola wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> That will help prevent a similar bug from ever happening again, as
->> there would be only a single place that sets up how the expiration
->> is called, instead of two we currently have.
->
-> Agreed, and I think the consolidation is doable.
->
-> I suggest keeping this patch as it is, since it fixes the reported
-> bug. I'll look into what you describe as a separate patch after this
-> one, and the tests added here would stay useful for that patch too.
+> Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> > [...]
+> > I previously mentioned "topic count", but commits are far easier to
+> > count.  So instead of requiring two topics in released versions,
+> > perhaps requiring five commits would be easier to implement and
+> > explain.
+> > 
+> 
+> Quoting the summit notes:
+> 
+> } * Emily: Have we used a voting process for something like this before?
+> } 
+> } * Patrick: We need proposals and a vote. Who would be allowed to vote?
+> } 
+> } * Peff: Active developers with a track record; perhaps a threshold such
+> }   as 50 merged patches.
+> } 
+> 
+> So it seems that Peff's proposed threshold was substantially higher
+> than what has been put forth in this thread.  Any comments on that?
 
-Sounds like a good plan to me.
+I'm a bit behind on the list and haven't been following this discussion
+closely yet, but I'll just say: the number 50 was made up by me on the
+spot. So I wouldn't read too much into it.
+
+But if somebody is picking a number, looking at "git shortlog -ns
+--no-merges | sort -rn" may be interesting, just to get a sense of how
+many people we are talking about:
+
+  - there are 44 people with >= 200 commits
+  - there are 133 people with >= 50 commits
+  - there are 439 people with >= 10 commits
+  - there are 2388 people with >= 1 commit
+
+At some point it gets kind of unwieldy.
+
+I saw proposals elsewhere to cut it by time. I think "N commits in the
+last M years" is awkward, because there are people who have been around
+for a long time with steady but slow participation steady-but-slow
+participation. But if you just intersect "N commits over all time" and
+"has _any_ commits in the last M years", then you can get a table like:
+
+total    | Active in the last N years
+commits  |  N=1    N=2    N=3    N=5
+----------------------------------------------------
+    200  |   17     22     24     30
+     50  |   34     47     56     67
+     10  |   71    104    124    155
+      1  |  239    357    457    628
+
+Those aren't necessarily perfect metrics, but if we consider them good
+enough and just want to tune the parameters, we could probably pick a
+spot in the table that has about the number of votes we'd want to deal
+with.
+
+-Peff
