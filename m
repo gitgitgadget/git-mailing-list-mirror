@@ -1,99 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.47
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793000328;
-	b=aWvdToB8552U+B/JYP2I/GvVn6xyXTQtzVt27Qoj8xs7DQhXl0+dwjbkp4ji71RkseBx
-	 YH+Q4BymVRKo4azhFLoqPv5NR1skbys7zFUYUrXPJdPGK0T0kMNZkzMLic1b6VBEMlECr
-	 LCckyGcJ1sRtsLf3PC6bT/vDhCI68jaK5BGmxUMslanBIAxrwPWzd5o14v5mcRLhteUm8
-	 dFiim3w55YYi44NSfaJk2RT6Ypaug2em2/bM7leayj6AyCcGENZQaq28xsqxZjY0vmMFk
-	 snH8KHbaCvqJ+PmXyeELT7nbxqsYlhbM9ELGhX8ApN0IB7FflNNBFInF+lWwHXPD1xQ==
+	t=1793000544;
+	b=zEj6Y2sgZiD9GliBQS6R8wONu89zRKK1tpysqC14Tsh3GpLCyer3UG6ykS2gHCEPf0Nr
+	 32pswA9RrNo4ibXgKqJQxiSDu87s95nInl22sdZMqlixhijrxlThAlH4+uYuGjyg0qli+
+	 KcJu1iwcJsGKZkf4Bkh+yA/emLZjHG37KsJzuJ3uOEsQEC0O6Q+38CdVBw4xpJ1puACNL
+	 gclodt8GJg2fz9QB3PMSAe7FyCNuZMqipC8ewwM05WdqqVQhVH+VefT9c9TOuK1QZo6GW
+	 TvklXfICruLet7gg/JchAvNzcAw4uzvifnmC0r1L1C2gqd2HkxMnWfp6Tih7SywNXSw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793000328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793000544;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=f1DIz5URKWYgeSU8jCzlpnWHBoA+fHXAkVhyHhXSGR0=;
-	b=1sA8ixnD99y1Wq3p1qJPSQ6bBkaVw5/AIb3CZc10f8fmXbqUpIsqAnWyP7EFi8kcHuv7
-	 52U3YP2wI1vQ0lvs552cKc327xFiurAiyfWJzkQlz0KrRTzfQXbOUuGcZ+7mLshZ9E8pp
-	 Tv+hMx1p/g1RbSGM1XN3ex+atnADAZaFrekwsXz1IGgCCXLadwV0NqoOIeC6QuiTq0tU6
-	 pVzdlHpcpDg+ZmP+DIxe1S55rXuKc90+9K0l5zBLYwoHHs5Iej4DMmjiaXyfFJhL7ZCS1
-	 uXXkIRRohn7WT6bWKviUgv41QLwrnsLq1N4DkNofnvciAAktAQVO6+IgcanRZQyMoGQ==
+	bh=CNn2YxFJSXifftHetmM/NaZs2A9+RrVDE10/S1WyxGk=;
+	b=5UgeCamr+fvw4HOnNCl8ngUXgHJw/mRmgQiqjBy6+edLgTfTW/XBqVH0TSikYUbjl/da
+	 2MESvt1UUem601VE1xsi8Rpp65chvJRxZ2XjsEfvpmK+hG+/4byU7u/Ic8qfoH/y37f4z
+	 QL0Zo/x2ih3A9w5LgVh0cSlmtJ/4Zpl7J3GmBcBSmQ69fq7xIRAJHHVRSX21ksKeLTrst
+	 clxnAJ1J5jjdVBNz4HKfD/+1WMNXDRCFTS3b1cplC8UEzB+5/+uoRHulcC15WIPGU++vQ
+	 x3+oor7zaET5Xv6DFoXobYrgi7GK6s/G0qcAt6XNkJgrikQBKV3ztaGG1QB8seE2/sQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=I+ZpQLq1;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.41
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ozv5IOLa;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.47
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F12606A31A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 07:38:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 70F12606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84165606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 07:42:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 84165606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=I+ZpQLq1
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c169ae1cb26so570395466b.1
-        for <git@vger.kernel.org>; Mon, 26 Oct 2026 00:38:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793000327; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ozv5IOLa
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-91befe703c4so21028636d6.1
+        for <git@vger.kernel.org>; Mon, 26 Oct 2026 00:42:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793000543; cv=none;
         d=google.com; s=arc-20260327;
-        b=FuMFTt+qxPiIsvuuqwBwjRLNBOcs4LvQjYpASakAqAcy+E8o3P3h2QAKZKH9J8DmuC
-         pkEFiyZgZQzko0dZx3mbpmCkgXIP6LrXXEuUxLITscU2BApB4vpRKSmm2f7fEGF4xK6D
-         fFW5LLKA/tx+uwb2h/9xyTS+eV4kDAfcuNjnp3zJQcxoV7ZRIvtu2Xe5bSI45r8Kucqp
-         fjISsHvdgQY4mx5j92nyYA1+P1inqNt1SCh8QmrRh/I5SIh9Wt0Twq2HpQF5SrF5dAUO
-         cDW+Wa/LRUsjJG2HRP7d6YRt7RhaTeEEkfcMYuxplpfSuiID9ns7CpIpe+pvp7wwMcUm
-         ujdw==
+        b=esHUcpqd1NFYui7mThkGejSHUJ1wv8L2Uh0EhswEzr2txcuS8UmIbwJJ5DZ2ULc+3X
+         3v32AMJ0vckCq+p36vSjbsWzsD6nzirms90LT0qzr+WU+uFD/fgXV0esoZtmQH9+f+pO
+         BM1wEOFIsMf7E9XdugDfR+j9FvrdVZnmfFu7IlVXnsGAZbLNLDOvNYQlSWHO3ya+YJvx
+         EHA6z4hTItEe4Wvr6/St1yVZT7NwQYWCQGou25ppcWIgQzVhVX94GLdCncEHZGvlQAws
+         KzD/HSqaLn1j4+jJ5o7ObroAR6G2dg2axr2SYsR/zt5eGy/EsBW6Y7oVUL/a7QfQmygo
+         B7iw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=f1DIz5URKWYgeSU8jCzlpnWHBoA+fHXAkVhyHhXSGR0=;
-        fh=ejb2MQ4TYQkcXdQU8uSy3CNItbEek4RrldEIwb9Kn44=;
-        b=VtFSaATju3aofa2Qd13gF3YjC+As40GE6hJoizlWww10HKr2MBqbhjgghnbP4NiUkr
-         FEXgqaqjQ9yond1VpwzGZs4su/NuNnEGqp1381fWRSa/e/eRtSCRJaJunvVyTmdFy5Q4
-         iMnxJZeKgpCLvPRe1gb9tdco3rgwAM7jCvVPNuHQFW4DATpzlBfNFt1sdkQiPwrofGU+
-         UqsUKKlKfmVk95qWA8APCQgvMFaUiW44vsEt2VSlffPgiFFkOK4T/k+1J99o0HWdF1dc
-         n3ELuYxrY8u597JASpr4AmmdlZIjmmXDkXFlKfynccK3OiiSAUBDh6ed9T7IaquJT6e+
-         PbpA==;
+        bh=CNn2YxFJSXifftHetmM/NaZs2A9+RrVDE10/S1WyxGk=;
+        fh=fvyVEOpvqwClv+9tWyxlbG0RLWDy+OHJdJZSgiBEirM=;
+        b=TGTW/n75iLqH1e3MNeOwVyTIPd9ZCk7PYojCN8HUkmUTiFkAnPVdYFH0d+W85xbMeG
+         FoPb7S0zo6NRkA3q4Dw3gnbwn5KyVTm9xSktthQqdb6m6KfE/mGm8t4Ms/6mcaeiUbZw
+         xTtGBTKTi2b/CnRnrzHPXD4Baobly3VXwgsYQ1STio4mFbQNeIGDqNlrz4Yd3XsXFXGZ
+         T7vqZyeOuxAWXXOP8DviGAx8EL03XrItAKV6/E6AQUEA6GT4t95glmCr3P4TNifVOAsH
+         ibSAmltzn+nPTBKT7ccUbRJkP3QtbTH3B8upEKCrTWbiHeoKDensa0a+JM0bDu3TpmfJ
+         LaNg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793000327; x=1793605127; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1793000543; x=1793605343; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=f1DIz5URKWYgeSU8jCzlpnWHBoA+fHXAkVhyHhXSGR0=;
-        b=I+ZpQLq1lovQK5dLTn/+chHL3xfV28WO7Wp2oFdyk6FZ0VZH5Cx/7wgBdnNJDsH9Xy
-         R4yuskqaXmFEKPOgTrw5y0hLj2MVyF1lASMzJxKOm+B8sxJ9X/tuYnyVs3It5jxJ4yK5
-         AicQJHolkFGuSkaB5cDGLJHBbMqCgRgtk1vKJXd1P5pkCdeiqIz/LM1pcz9C0WIizEUf
-         NPQyAbioeUwaY7H1W30iOypARUaEW8THXFnJE+NQp6XKP3Qm/wpuwIMUL99VIRanTCiO
-         ksoKNrdEHX2Nv3Q60/lN/+H2ADvWo+4ksl7c2Ku34DisE8PxqGkY5vImoY6fQ6bOFd/E
-         xuGw==
+        bh=CNn2YxFJSXifftHetmM/NaZs2A9+RrVDE10/S1WyxGk=;
+        b=ozv5IOLacpekcXW0SGGYNEpqPr/jGZk4cRdqTXZv+zkH7MEgo9NoiiJ8BFva/KYCBs
+         oIvAmAXKyN2hquyraEAMaPH/TIuKfSWT+yhEe7xqIQoq/hX0ZzFD/mKcW3l7A0p5JKbN
+         Pv/V5ZzGzqzIDikRq+eCWdRcPna79fCTNTXyYzjHgy2rpBjPIpSgplm4vhEPY/rbYZwY
+         XQwkXQKR71yhmbrHNKo6q+ce49/c5fzdm6N2DC5cr4xcPT9IK50ODK/im+tW8lNB/d8t
+         TLQ7PZW6JBA5C4XYImHsMJ639h45Oa0ys75wFl5LH1ge62L0XZTGP7MLlaSP8j/pr8z0
+         6Ong==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793000327; x=1793605127;
+        d=1e100.net; s=20260707; t=1793000543; x=1793605343;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=f1DIz5URKWYgeSU8jCzlpnWHBoA+fHXAkVhyHhXSGR0=;
-        b=Y/so20LI3kGrF+XEuhA6HOZBww6tCU1TrUfvRtB6mMYQRDZ+4yRs+XSkb4zQi0wqGC
-         qXN0XeOlmlUOqxeGTqVNW+NLfOi64ZLTc7jTyZIICGXAVTevHYkE6oQ4d/CZO4iluy82
-         Iod6q9NvuNIqyroBNp/gQ8jy9RWENn3Fy84DEktmYdRa/CL7t7YW0etoOdlpB0w5XVAI
-         cbQ0nxY7Z3ryE5m6ifT99WlroSBwhp458pir33OcafmWsuALFkPx+/T9R0tW1YbdYcDF
-         1GK7Q+p18IzbFDOihDF+FXMVtr8fdfTL7M+aAZesvoHEuvwCf+rNcqhL+EBd6no1hsIZ
-         cqiw==
-X-Forwarded-Encrypted: i=1; AKwUvBxT/oBJrAxCR6oxFoIC8Lhs+8o/gtg5FiNFEe/Qj9bqszXIbrcVA6HO4OnoyBL0F+NfBDA=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLJt5Tcgw++7w8T8SUK/4Yi0UsuxSEdO8oaxtX4bjXZETfxBtgs
-	1//6MzjKhg78cieUuZ2jC7KwD+nbwB65UPjZfCmQCXgiM+hconA6/mSjelWpsvpI300y99BQiee
-	j+GnQUAOTsrYBa2YEZ16VukTGBj1M8J+hCEaB
-X-Gm-Gg: AYBFou2JrhGvf1fhQ1/3LcbNQW/M/OlNYdjQHkFadzv/tb9y26dk5MPn7ZFuboIMHRW
-	rLD9NOL79p7k6UQKbLJIPCDYQYe6Mpk++cp30X86WVyhCchcBfV0C8DsDRQycEMBhpG1EjI7vnC
-	y/BHPDx+1SWJgd2Dq5WUwHCfB/YUFSRWKwH0apGOnzMzxfdIt2xtpWpbfac1hhIhF8vY3fxDxb/
-	uC1slKaUjwi0683H0YOwL3Dgs0qTot+CERcFIuA5a6MFKJ8uKD3ZljotuCiU1owDMgGVr/DCyL5
-	jjZc5ZhSmMMZoWs/+TB8e1+dkEJ3PN+RDTEtgSoMCpJV8GgztwTT/y7oPe6WKolDJx/J9YMXwVR
-	ap/1BhQjJoK34P1Ws0PxrQeoFOWZ+5bhpSGP7AMq4FXY/wbFlsW1zHsc0Td6rPL8N5TFDyg==
-X-Received: by 2002:a17:906:586:b0:c46:ca2b:84ab with SMTP id
- a640c23a62f3a-c46ca2b88c7mr382712266b.13.1793000326676; Mon, 26 Oct 2026
- 00:38:46 -0700 (PDT)
+        bh=CNn2YxFJSXifftHetmM/NaZs2A9+RrVDE10/S1WyxGk=;
+        b=Cf1JPWkmcgcCKALfJo5027gWHsV/otvzFRdehG1C450rnkItDy3C9xb5NIkrcbKAbE
+         4AWGB1++5auoissANzeKq641AnuYxShEqcgvQKZakI+FEGO+z8LX4UFU4MKeMrNjhzcn
+         NhHMFv4q3ujntU5V5tgbIuKACs85yppQ9Galp4fWihgncCQc082nmaqnSJBHQiWXDdHN
+         +8ZEstmht2kXrncdpmgIP5nDFIuXlHssagKnOOfAM6uU8th+bwxXYO0upS+AtpeZ5RQK
+         wnpWqccmB3W1jP/Y3vwXDoojJ0wHUdZd5Hza8cDQVAWpxySfvCL1zhYPFSayLS54WO0p
+         6B0g==
+X-Forwarded-Encrypted: i=1; AKwUvBxKTSRkCzHUGiyZunyQFq47fPlmZGfh9lXYgyR+Dz53a96ukrNObkQ8XjkPAHDBTHWiblg=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJmw9w+fLWWGfwjVeJYluO3voNfA/L7SAEEfn5WWSc9h3vkf68v
+	QG3kncAJZ+bghYy8xLWABqyPNOwqShG4cHLB0lPrRED6zq9xI/gP/UIyCGbNtwb8napsGrgqM/c
+	GV7R56H2Bv7J9OG+7+i64jZFZxxfQ+kQ=
+X-Gm-Gg: AYBFou3vmsvZMr0nCV6Wg7Y30IfFZ9kGHKiQW7th+x4q0OHUDbeu75fyVLfDPbylyVG
+	Lz8lZqdHZABN4mynTVibRCawqEHhpqhwzo0l+m+hcRZwH4/S1HamAApnYquKUaoTPL9bfPTVyXJ
+	EYGg7RU5cZM/UhXtBqO6RZm9udZBbU9nobzScDDQdAqds0FyCYi8kVj9KDoZsQ8w92qm1T8TKpZ
+	iud7o4f+A+3WVqEDDKVjy2n9Z2FXCWD/XyrWSG2SgqP63WEQOu4zi8x0i5Pjw4T4QcfLPQ9Grc7
+	7M35APcZUBI2CJhCdwOWzATF1yNhjS7cPvYJwBts1lfitaD/ikWb9JUSEoVy3bZqpNaYZMB2+EZ
+	9YnYWG/5dJFbqmp3UZH/JAdYSS3OFT3tykeHiBUeTrUkyzozKgQ98FgrRrvVBXq9fOJfovK6/gk
+	lzQwo7wBVC4ccNaYA=
+X-Received: by 2002:a05:6214:2f11:b0:917:8a83:a15c with SMTP id
+ 6a1803df08f44-91c48e7d7a5mr91741676d6.34.1793000543346; Mon, 26 Oct 2026
+ 00:42:23 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,64 +105,38 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 References: <pull.2403.git.git.1789223882471.gitgitgadget@gmail.com>
- <pull.2403.v2.git.git.1792774249888.gitgitgadget@gmail.com> <at79nEHLDrcoCgn_@pks.im>
-In-Reply-To: <at79nEHLDrcoCgn_@pks.im>
+ <pull.2403.v2.git.git.1792774249888.gitgitgadget@gmail.com>
+ <at79nEHLDrcoCgn_@pks.im> <CAHwyqnVVCp9ovsHDtc0pHYrFvpmdJq74gyx9yf3+ZWkL+d=CVA@mail.gmail.com>
+In-Reply-To: <CAHwyqnVVCp9ovsHDtc0pHYrFvpmdJq74gyx9yf3+ZWkL+d=CVA@mail.gmail.com>
 From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 26 Oct 2026 09:38:10 +0200
-X-Gm-Features: AclHuK-fJd24f8D-qbmROd8Mr2e2qUev5PEXHtJm1ITPhN2q7YSxvts84FXweB4
-Message-ID: <CAHwyqnVVCp9ovsHDtc0pHYrFvpmdJq74gyx9yf3+ZWkL+d=CVA@mail.gmail.com>
+Date: Mon, 26 Oct 2026 09:41:45 +0200
+X-Gm-Features: AclHuK9zbBj7DZjlB4VDGKrk_tHCZNq0biDGmbOS8dV-898go9yuyUSEUfcERho
+Message-ID: <CAHwyqnVGpc5ro+TksGGv4sp_JT-_ntuQjuXfVPSaeW+BYu2Pbw@mail.gmail.com>
 Subject: Re: [PATCH v2] ci: fail the build if perforce, git-lfs, or JGit fail
  to install
 To: Patrick Steinhardt <ps@pks.im>
 Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-> >               wget --quiet \
-> >                    "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" &&
-> >               tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" \
-> >                       -C "$CUSTOM_PATH" --strip-components=1 \
-> >                       "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs" &&
-> > -             rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" ||
-> > -             rm -f "$CUSTOM_PATH/git-lfs"
-> > +             rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" || {
-> > +                     echo >&2 "error: could not install git-lfs"
-> > +                     exit 1
-> > +             }
->
-> This could all be a bit less convoluted if we had `set -e` in
-> "ci/lib.sh". But that certainly is outside the scope of this patch
-> series, so meanwhile this looks good to me.
-
-Yeah, `set -e` is a gem of a command. Would be good to do later!
-
-> > @@ -121,9 +133,16 @@ macos-*)
+> > >               wget --quiet \
+> > >                    "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" &&
+> > >               tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" \
+> > >                       -C "$CUSTOM_PATH" --strip-components=1 \
+> > >                       "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs" &&
+> > > -             rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" ||
+> > > -             rm -f "$CUSTOM_PATH/git-lfs"
+> > > +             rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" || {
+> > > +                     echo >&2 "error: could not install git-lfs"
+> > > +                     exit 1
+> > > +             }
 > >
-> >       mkdir -p "$CUSTOM_PATH"
-> >       wget -q "$P4WHENCE/bin.macosx12arm64/helix-core-server.tgz" &&
-> > -     tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
-> > +     tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d || {
-> > +             echo >&2 "error: could not install perforce"
-> > +             exit 1
-> > +     }
-> >       sudo xattr -d com.apple.quarantine "$CUSTOM_PATH/p4" "$CUSTOM_PATH/p4d" 2>/dev/null || true
+> > This could all be a bit less convoluted if we had `set -e` in
+> > "ci/lib.sh". But that certainly is outside the scope of this patch
+> > series, so meanwhile this looks good to me.
 >
-> This line is a bit curious, it makes me wonder whether we want to
-> tighten it as well now. Any reason why we wouldn't?
+> Yeah, `set -e` is a gem of a command. Would be good to do later!
 
-I asked Claud about it and it said this, does it make sense?
-
-'wget/curl never set com.apple.quarantine in the first place (only
-Safari/Finder/AirDrop do, via the LaunchServices quarantine API), so
-xattr -d on these files always fails with "No such xattr." Tightening
-it to fatal would break every macOS build, every time.'
-
-> >       rm helix-core-server.tgz
->
-> Nit: this is inconsistent with git-lfs, where we also have the call to
-> rm as part of the condition chain.
-
-Good point!
-
+But wait, we already have it in "ci/lib.sh"!
 
 
 Harald
