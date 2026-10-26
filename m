@@ -1,175 +1,108 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=193.56.114.177
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.43
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793030596;
-	b=167tJaK5SEGQces/NQIzrE9BKN3/+j2No7/CgxlPJlPJJz1uVqY78bn2ugOyxzTG+mF4
-	 gt5tCKh4X5lVGRcA6/AoQoY4eZ/MLi86eJmTGgcTS+O/wusti47GIdtDCIbKfE0qqGNiH
-	 Vuom11cNA9y019WhGtcJ1kRhER1RUnTlml1keUtZCnqzLXLmBVPuxIwsy4sojzFTv+WZn
-	 uFVQCQsjYJF/xHcXxk5MXcTGkFGWMIyq0PHPpoyimbEDB4tG2kcNZ/qRgyyAdf2KF2dQb
-	 niRciZTg5AWkTouCJ73xsSbMY9KTN9kGD2fN/ngSjnhUF7QVUcLSMem7z1BzWZGbilw==
+	t=1793030913;
+	b=I+o8M1lvHleeQ+5xWRIufEDHgRL+Sy9SlJTdzNNwWAHSPex1xLxGfQo5RQy8QxMDFqau
+	 hYNMCVUx58kBoV8wyUPBDNHGJqE/sBaHB4P5RClcukvo2XvTzd/wL19fryLIkYQIh0a8J
+	 Pn4x9DOyB0FiqDY+MfcWFwdx1FNduFX9id8lLukZoJog4fnICIURa58T5lodkJxXJ3/Q8
+	 NhBtU0ywk2hh8nI3tf1ihkCv+nomy5A9/zHnJV8nEFW3IFbTfAh9dFnZ3EOfi1bJrm344
+	 2x/hyYZNLwUj5G/jUouQctFj4uLTn3k6fDK1gnDEdYlojPn3y7js6uxmPdvT1xEO1xw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793030596;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-MGA-submission:Received:DKIM-Signature:Received:
-	 Received:From:To:CC:Subject:Thread-Topic:Thread-Index:Date:Message-ID:
-	 References:In-Reply-To:Accept-Language:Content-Language:
-	 X-MS-Has-Attach:X-MS-TNEF-Correlator:msip_labels:
-	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
-	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
-	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
-	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:
-	 X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
-	 X-MS-Exchange-CrossTenant-userprincipalname:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=dLqRkZKFDv41MLPPD7b7ay1/y6pNFBSXWJ/QZFTcKp0=;
-	b=rt6KaXBMwVprizzEn9PpvDLLhu3huAvADWFwpxPPMfaorRO9xiVnmHDbi5fY1Z6R2M4e
-	 gCl3TWP/8oZ1R35gySt00durw3MHVqBv4IunOOKUuxGwkWVu2wmYBuHrbEBeEVHZqNjw4
-	 Oqwvbm0Fil7Q+nXj3yEg1UyOxUTBZDqhqwHVI5KJgt1FE1AXnzB34sic1aBowEmNOxC2f
-	 sy2/QQPeobYImT7lNUtF6yiEsDBxDQDrlVgTT+GuEYuUjvOQrm04GVEB29OIERUzF8SZA
-	 y72nUUD5yf3hfX+4ikPpuGcIQJkxGttKjw7m7FnQzGoTjcu5pLjKbicqDWzJbSGljGA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793030913;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Received:From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=ksAyecF26I7N/WzVnYtCvRfmQFbMdTwGZh2dK8EuhFM=;
+	b=TAi7qUqJLIbt93MV1fOPEtdjUT2kM6oDBYs/djnw8HTxeDVX6ti1Gy/RFOfrtEPiDdft
+	 5OKo4I192RghtzTOQtF8IkwphDNT1D7/OOtN9QImKV4vfoqG2ocu3pwkEWxdENWrSrVM/
+	 Bmv5ldDpuuKZFOcEUJehBvqeVsCiDJ37B5TXd55ZEZdUfCHpmqi9wwWNJXaluHWdDCqmx
+	 0oaZLfYOng5R71LBUpGNsHyJEobw/D+MeFwRmSQZ9+3Fa2tcTvd2rn9XBDmCNi6gbQJsz
+	 yGRy9pTsDtltE+J0B3TFrJQ0gh1ZhGqGAyuVM+1PvptSE0VzfnsRIB50vlk2UOSpZNw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=atos.ai;
-	spf=pass smtp.mailfrom=atos.ai;
-	dkim=pass header.d=atos.ai header.i=@atos.ai header.a=rsa-sha256 header.s=mail header.b=lqfyX+fL;
-	dkim=pass header.d=Atos.ai header.i=@Atos.ai header.a=rsa-sha256 header.s=selector1 header.b=Fh04CwXd;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=193.56.114.177
-Received: from smarthost2.atos.net (smtppost.atos.net [193.56.114.177])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=lyQmb8Ps;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.43
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB113606A31E
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 16:03:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EB113606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atos.ai
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atos.ai
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4DC606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 16:08:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4C4DC606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=atos.ai header.i=@atos.ai header.a=rsa-sha256 header.s=mail header.b=lqfyX+fL;
-	dkim=pass (2048-bit key, unprotected) header.d=Atos.ai header.i=@Atos.ai header.a=rsa-sha256 header.s=selector1 header.b=Fh04CwXd
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=lyQmb8Ps
+Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-7cb6dc850c7so959621137.0
+        for <git@vger.kernel.org>; Mon, 26 Oct 2026 09:08:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793030912; cv=none;
+        d=google.com; s=arc-20260327;
+        b=j892Dze8ClrmJy667Xf+TkFw85BbK1frOWwdD5BXZgOES3ww0kt1+7CXRx3LEg73Rj
+         b7wI94KWk180IVRmC7spSF2EUwTWlqpwLn9BaGAxPEeIoZ5kwcXAxJgje6ijLpbusCvs
+         NBdx5VbNNnojwv80ntP+0VxX/Ubq3jNZDQUTK7EEvu1fNac5xAz/hNuH0yyS7dJmNQSg
+         OKDE1YJ9NWfUzNOkoOTmqDhCD3fc3CIreljlzwVy2cV6vit6t6VU1x3zElgPAhOrDs2U
+         ojThRy/ryOru3NuIS/jMyl3LXN3m/suOLLK7VVvgV1f3A+0WN1QLwRp41IFZ9ojkpEAK
+         HH3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=ksAyecF26I7N/WzVnYtCvRfmQFbMdTwGZh2dK8EuhFM=;
+        fh=gydUy51XY/TN5hvyLrltgqIzSdqLsMidxIKsMvmAkKM=;
+        b=fI5CnoHXYEfS2/Jfb4CXAFQLAJ4XiAuhD8ytRBlZUlbz11ITULQgDPLPR0Tb6cRM67
+         vkii09kCHma4FlQZrjw9evWOyvsEtf8MGs/sakMRtGm3dh4pz5TmdJJEWQkTmQ7s+xRE
+         N3IaG8hDuz1QR4q5AOLlY1dKqQ0z5UTe2YxXmIPFshM03114Rll1fUow3X1c8nRs+kc5
+         UKpDIVHixU/oFbYbCEfXiWJuhdB4myXH/DxkK/2BwiQxEY48IwEobGs8gqMUa1yqlcIu
+         754AeyQaJEZo/j9Je1NKWGGUFFW0Vbk5A+pVur9SnA4OEznraEmBxZ8GT08AtaYKVEx1
+         OwgA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=atos.ai; i=@atos.ai; q=dns/txt; s=mail;
-  t=1793030594; x=1824566594;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=dLqRkZKFDv41MLPPD7b7ay1/y6pNFBSXWJ/QZFTcKp0=;
-  b=lqfyX+fLh8qrRdcJC+mEqxmWrbDNwUpOx9nceVN0lui+tDgHhCBqsjpL
-   d4sTMfdrqt4awpfG3nmmBkHJYX1AWaau1c/5tXadIdJjbDiVkGIFETscq
-   srKIt3nFHfPIt/SSf8054D5xSGd8MzgPk5OvqX11b6O6U9zvUJvDtNAYr
-   rpJz2xileeajPd+kYsEQGOxhbJk3NwSKFPOkYWQgwXqoDroEqTEdoFDhv
-   l3ayLWAcl+mzs7N/84YyYnoQVW0rJLig2bDgAXRvvk5AjumZ3KLjLzEKV
-   5numBW5ZrpVa1MDKRs9x6u8nqqba9zCF1XaeFwScmdntjnIQndA/ftLq+
-   g==;
-X-CSE-ConnectionGUID: j4lI/60nQvq8f16pZrtVug==
-X-CSE-MsgGUID: zyZ71TlaQ+ab1SNZ9FN51A==
-X-IronPort-AV: E=Sophos;i="6.27,179,1787004000"; 
-   d="scan'208";a="884586497"
-X-MGA-submission: =?us-ascii?q?MDEZCrHeM1KozVPFaJ4PlgIJUBQCBodX7VF0TJ?=
- =?us-ascii?q?qYYZJcGaNqZU1I9f/et+DHofAZFUKETTzyqmsnjFnuCxCNCZpOBMXJb0?=
- =?us-ascii?q?oW0bI7h3nHeSxB+4S643GYUqj/oARowj5FhtUQ7cgTva9Lv0MllG+clE?=
- =?us-ascii?q?9h?=
-Received: from mail-gv1pr07cu00107.outbound.protection.outlook.com (HELO GV1PR07CU001.outbound.protection.outlook.com) ([40.93.214.103])
-  by smarthost2.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384; 26 Oct 2026 17:03:05 +0100
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KI3qp3UW5Y4VqPw+X/um1xjMMC7SmIc/gKH2IVBvJC2V488QkbHFV1pUZhOX8XS/obDNKhoKqzNHam8KOcJLXdmvZabrQGyoRGQuNfkZmwy8CRDVHLFb0cIB4enPwfiYr0pP1z28goSd2Ra+GzVIE+BHQlmBOd5TWwL7OUlL0zoNSZX4VKyZ9JXPg06Rm7hLZuOk+4v+zT65TcfDbMO3XI63MbdIgPkJHmw+B33IJ+RezEy1ea234KdEWbcW/tY073E1e+iuPJiP8SzZ0gaBZtibJl/Pm4QmDNKTTMhApZqH6RQnLe1vT2MkEkhs9DT+FY1bRXiqfXydDZiH35yPHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dLqRkZKFDv41MLPPD7b7ay1/y6pNFBSXWJ/QZFTcKp0=;
- b=X/Kx7q5SGLXxAzTsj0J5AdrhbMwCs0aEeoGlMQSkTW8oa7u/FXOR44MKZ0GOBtRaNdQSVDYOFmwvEgruNTguAfNbGtvN+fUluLfm2a3mhcCUWGVWOriqWHSEpWKh5rh60m6x9lmqdrE74UJT3B7u/zhBVBT+yGQ+bo66Uz15sGTYwF+f+HZdr3pC40bME4kbFD5dNkPHChUM9ZrSRaxea+XhLvH7p+ACYwT0qJNevUXQJFpVWG+1FFggrttU0qoKah6RtoiENTanVRqp0ZS74lkUK/W/Q4QO9IpyImfIutRtbtIa+3S+1EUPuf7arfX96iZ03CkruHWrpyi/zeLKsg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atos.ai; dmarc=pass action=none header.from=atos.ai; dkim=pass
- header.d=atos.ai; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Atos.ai; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dLqRkZKFDv41MLPPD7b7ay1/y6pNFBSXWJ/QZFTcKp0=;
- b=Fh04CwXdMzS3qm8+D/01TpecjfId0CrmLKCE8JW3+0vZRCzjzdx0IPHkKiMtO5dZC4/tW8YwSTbzfiQUSegrOpz2ZAl77++DqOLdOJeWYGHd9+E33S+YXhKtEHHsDga58dYRAIePQzwj8AzYNxAtMKhyPQOZYUG8KlWFAU+NPbgehBcPSadyR7VSJWekOf5r7JwrmEn4P8btR13iDaQJss9NCETixXQe8bRXBdkeKzyzgl07CedmWhlFubJJKjC+Y39p1pyEtbzWuusfARU2+e18lAhFqzAcbfe6dZpQ3/PYVPhe48uqSysmhQMd7yxJzXyLfXJdQiTrsAvQKf4esw==
-Received: from AS4PR02MB8336.eurprd02.prod.outlook.com (2603:10a6:20b:517::6)
- by GV2PR02MB11201.eurprd02.prod.outlook.com (2603:10a6:150:2ae::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Mon, 26 Oct
- 2026 16:03:02 +0000
-Received: from AS4PR02MB8336.eurprd02.prod.outlook.com
- ([fe80::b6b2:4b44:41b3:f6ef]) by AS4PR02MB8336.eurprd02.prod.outlook.com
- ([fe80::b6b2:4b44:41b3:f6ef%5]) with mapi id 15.21.0546.021; Mon, 26 Oct 2026
- 16:03:02 +0000
-From: Richard Kerry <richard.kerry@atos.ai>
-To: Julia Evans <julia@jvns.ca>, "git@vger.kernel.org" <git@vger.kernel.org>
-CC: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>, Junio C Hamano
-	<gitster@pobox.com>
-Subject: RE: [PATCH 2/2] doc: add new Git tutorial for beginners
-Thread-Topic: [PATCH 2/2] doc: add new Git tutorial for beginners
-Thread-Index: AQHdVcpm9Cox0KrEn0OMrcYDuuWQI7cGwW3cgAATD4CAAR02QA==
-Date: Mon, 26 Oct 2026 16:03:01 +0000
-Message-ID:
- <AS4PR02MB8336459DD1A4537A43A5C724EB612@AS4PR02MB8336.eurprd02.prod.outlook.com>
-References: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
- <41dca2e8e0c5fadb8ad9ed8707029356e56cc540.1791315422.git.gitgitgadget@gmail.com>
- <xmqqzew8wb3g.fsf@gitster.g> <60D4F9B6-0858-43FC-8C2A-B6200640961E@jvns.ca>
-In-Reply-To: <60D4F9B6-0858-43FC-8C2A-B6200640961E@jvns.ca>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ActionId=e272c64b-662c-47af-bc93-d894098473ea;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ContentBits=0;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Enabled=true;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Method=Standard;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Name=All
- Employees_2;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SetDate=2026-10-21T11:23:47Z;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Tag=10,
- 3, 0, 1;
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atos.ai;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AS4PR02MB8336:EE_|GV2PR02MB11201:EE_
-x-ms-office365-filtering-correlation-id: 908c95b5-6ac0-4067-d720-08df337a9ccc
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|19092799006|261021121427099003|261026140227099003|38070700021|4143699003|56012099006|11063799006|261022115727099003|261009223027099003|261022105027099003|261022113327099003|261021135927099003|261022075727099003|261021123027099003|10067099003|22082099003|261026121527099003|18002099003|6133799003|3023799007;
-x-microsoft-antispam-message-info:
- O++bT6BK9J9+kH/Y6LOAQ8HKBKZQ8nLjvUGzI8f6LhtwBls9i+F4aMwL+wF6XBMqjpeULpibcmdMJgwoWtHy4LNF/YWS1eBSe+Wjzl9uBAclNWjIT15iU8lygVSvYz1Xs9dbL/flohT6T/DbCOVjl00FAoApUkxeH1FkmOkDdqqLxCTgbcVaNDU2/dvnRdBHNvrggTQYcNIY6sHuJkkP69NaCtx5fFdolN/1J8Y/n5CDyXKQ55akUIEPwb6f/J93oPMd9OLXiVqGdI4mGwhofKT3iC6pQOGvz6ymb0qlj3LIlhLYeHXrPge/qfW3x+cj8dQhU7bXXT+DJmnj0SWCVhSnCUaOfN4g8q3iZSK0XKYr1/J/jKx79kHw4bq80t2CaK3hdOF+OwHXs2b4B2vfXZ5o4YKzGNmPmJ835uAhrsGqfm/YfGZh2LWr5tenQtM/nmjuE4CCMOm8JTW/O0aQEbemkbT0a8CRPpJvQfjZtN0if1gx63wLjpQy12Ejz6NEJ4Y0pN7lygbwnICHR3VoeDDjVsaoY46Sp4aS29JLPAU+TZRLdOFBgr7qf+BRIW7SdFgJGsAk7aSe4N4Y/oPcYyE5MXJVDPOZOuABK61JKlvvuZJ0g8OadpDlW8nLTQphWvRBu+vLDMOaIXLEafEOBQ/Vj18szcctXMzKz0b4hwAGqfAC0Z66GABTeUd4k2AKL6MdwnjhHbPOIkzjR5S0q+R+1Z+MSKVTgAeWWh15koU=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS4PR02MB8336.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(19092799006)(261021121427099003)(261026140227099003)(38070700021)(4143699003)(56012099006)(11063799006)(261022115727099003)(261009223027099003)(261022105027099003)(261022113327099003)(261021135927099003)(261022075727099003)(261021123027099003)(10067099003)(22082099003)(261026121527099003)(18002099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?Zf4T9yqQ/qcJ6xnXsQZ2hOygutK2KjAUZyIH5J0/FMGX51Q9JVNTTewjtm?=
- =?iso-8859-1?Q?tuW3EQtW2hN+0CzEvxo2dB07jSZS0WJ3E2ieAO+ZcDbfROiN9F7pKhVeBy?=
- =?iso-8859-1?Q?OxfL3Rk9bpMoRbBKYBdJW1SwrwF7XXRBmJRYJ894CF7M5Jn/M0/UaG5DP8?=
- =?iso-8859-1?Q?qpnpuCLWrvT90aqfIJTb3HoIJa0wk4kTz0oAQ4D/4MGI80+eFroT02LXRb?=
- =?iso-8859-1?Q?eXCssI9APR9jcWNOUkU9UtcRuh/zAiPYD7Pn/gXbTfVVHNDxGN37jWXFFd?=
- =?iso-8859-1?Q?+qDkqglHMfaHet+zmgmPXJJJE3+9269IA7ReHqCJ1I0Ns96riBfVk13Tkx?=
- =?iso-8859-1?Q?z8FMaSdf2JOIh9KJ3ksHTyzRHoNwjXlJSp9PYC17dcubMZQac4coKkKWZX?=
- =?iso-8859-1?Q?KueeJwOfxDbPb3GTxqAS4NgUCBjwzkzRLIjpd52God1bhs8YhCH02vovh/?=
- =?iso-8859-1?Q?3p7ipZBXT4aRx3KcmKfKPdJ/M94k9FhAhlE0l1Piyzc3XPo0WSA6/PV80S?=
- =?iso-8859-1?Q?DxRKuGkMr6vNdNraoSPMftGEHcvn0wuag1u2RwIZmHiSXEzyYgwrG6sftv?=
- =?iso-8859-1?Q?Hjqikwz1NyrRK3VF8cM9z1fsMN78qKOrXv95PsBwB69P1NAi1IHK286S9Y?=
- =?iso-8859-1?Q?KvOrZ4nvHs/5QbNBlPM+aNhRUeYzu7EFSPVtG+c7+3OdvAsWcUJyvVaBbY?=
- =?iso-8859-1?Q?QR1x/vC4NLXzzRkqZK1FAbJ2qE4JXf4oDBtrkZLwyNzDP9zxjtOLWD8/R7?=
- =?iso-8859-1?Q?7dKBA0OoOJj0c1iZMlSlfaRKbEXRjXI5LWWYb/4aRjrzN6m+xPC5OiDaZ/?=
- =?iso-8859-1?Q?Jzmv1f7fQ6f7Oo6Pfem+noninYaSBRXpta5xrmAS4kpoiYzieHnDzIUoGT?=
- =?iso-8859-1?Q?f1JtbfX2vahS3BwsNwoVqKzFRS1ylAEHK3Ii/Y5bMcvI6BZSRJGSMi6y9B?=
- =?iso-8859-1?Q?5acEvSUMmhwJq4UcP1LA3dGFE+tz3RYxN07o7fTZvVc7NRRc4KBU84RE1H?=
- =?iso-8859-1?Q?stUXc1FRDjHkRfEcpM7l7Q41ySsQmvfXeaKm32gnu1Ub/fzdZBfQy959Fs?=
- =?iso-8859-1?Q?pML9Nm7xt23H9SttyfG763sRl9EjBsxSVwxZd/mXZGAo33OE3sgEBQgrqJ?=
- =?iso-8859-1?Q?mF98tiacGxCRjBVuac+2T6sVJtxZnEdqhFIxm3OuGzPZmYIOHQZYpZLdjD?=
- =?iso-8859-1?Q?gHyIs4dCUq+RagaibLIYNmxJv3NC1W8Y5o3BatfSVjdAAbTpHhf4K4gmYY?=
- =?iso-8859-1?Q?K9RQ+XafJIPsmtrW0F4eTG6e33fvra0AzBtf3JqKCqlC7pL3FSfrNu4+Nl?=
- =?iso-8859-1?Q?1mkFu3dxY2bq9mwqYJA7oAUkx8iAS9ZspkR1rZx6hHSzkDdro9h+Uby14P?=
- =?iso-8859-1?Q?Pro7MtXP3BrgtzT8lvmCUM5N8E2W2R9+4Fhv9cNpj93A8T3KVj4nN9mkwl?=
- =?iso-8859-1?Q?Hjf5wVXv+Ac42vvfxRG5NN+hecJH58Ao/+H/grSARHGvnDfncmOybFJH2D?=
- =?iso-8859-1?Q?NHTbtyDzfBamEjETgGPza8ughXGmfm+kIX41MptiOYE9LBb0SFdJXirisw?=
- =?iso-8859-1?Q?K8n86WVK7zpd8fcKaoHnBoqKTsf+oWpJkzB4m/YUh6JS4rneitTdniAof3?=
- =?iso-8859-1?Q?yyi/TFIB3yVhtyrJVb27R5/ym5OjVxAf8vJl0PbrVtR4QFPF2iP4HF5zHw?=
- =?iso-8859-1?Q?F0G0DYQtpBGaDBM7ofNzcFdy+lwylx4ajyc9n8CXP8nrIGrKWibKlSIMcs?=
- =?iso-8859-1?Q?a5WISXB/vwMIKds5Nv1TFiqX1M1J1rf6G6kPwU/XXC//IXabOdFCdon2b0?=
- =?iso-8859-1?Q?kU2S58pdXg=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20251104; t=1793030912; x=1793635712; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ksAyecF26I7N/WzVnYtCvRfmQFbMdTwGZh2dK8EuhFM=;
+        b=lyQmb8Psi2jnZEkYzyAPTZixLXMsBnoq9LWJVa5QRi+2ckVnqta9Gv8UQJ6ZN/Bkb8
+         F5lbhmVpT+eUQi86j4I4/qvrKQDLmwaizB4m5ieN2xBUe7Xt4iD8+Wsf86jXwuR+m+5K
+         zCnOhuqrSVdM8w8hbr1vDdkTI0sSwvTfYzm8Wy4Js1zsvMefIyiL5jCocAkbA8GEMJr4
+         s+DRwJriB9RIncOwGl3dGbPwSCP2oO4+85IcGBlE7wFJcbijNLn+Aq44FBCTX0mr05fR
+         GYoSwdnUIBHLfJhKM1kxegpjuUgIWYL2g/myyvVfhTBVgZAljuz4Gx4tNmE59RpqN/cV
+         ympg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793030912; x=1793635712;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ksAyecF26I7N/WzVnYtCvRfmQFbMdTwGZh2dK8EuhFM=;
+        b=g/8udeGaDS8/jbaTijEjGv9HxV0YUJgMChsk3XoyoVSz6goCJ+L3ddhTvpyAVv+Kuo
+         0i2diiCh83vJuCVbkgMFZoez3dFHVHnfvflCx7S/3tWoecG0qxaAx6jYCd8KgIi3vfo9
+         nCc3gfXgk456ICykd7jJyIFz8ANLGlt4nOGdmjtElGqnF/rL7Zx0FQNcMFei9Es+dbsI
+         njm/WUYSdum4Fi/obxJG627NI10d+9P6NxCbulauTXpXSnHehWZej4jWCTWtD7HFTIqk
+         wPlhkQfytDuf1hvcvVQPhioQ1841I4T6Sy6JGJUxCq/d1U51lZ0THFQWTZFcVz1bD7k/
+         LeZw==
+X-Forwarded-Encrypted: i=1; AKwUvBw+3QbYvGc0fAc5J84VTakA7L0rIoJO/DsA24o748L7+V0VUDzN6pQVrBY1WxlYbyH3nOg=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJSbDCTmfWrDQcGOaLKvKo4smijgV9zIuCaQfRk9BjTAgmzSbCh
+	D3Tq6ZNU5SEPw5oQQ2BjrpXGl76EoZvHVyvUWIQdVZiE4UwRLmp/EWGjG08y4uxBR8LBRNoLfjT
+	Y4zI9G3aW8JOh8HFp8CVd8Mrw6G99QAlA2w==
+X-Gm-Gg: AYBFou3VtConZH98Yt3IcD+d5lCRMVAoQD04LCBTyCipY0DgvZaqmoYVm/msdHH6FFB
+	s1VNs1OLkK/CO8zX+T7R/zW/n/LCoFrutigOwI9jODVd3DilaNGmkCgsY8zMD+u2kBzNPJHGGAT
+	KEyLivOZH49CgnkU47fKTmW3EjCA2QvaClJPoYS0yDEN2Qtz9f0UBPzGxbnjS45RZatOSXhlaeK
+	zHYoX5RtIqq9L/wx3Mfq4WqwmionxC39WYlXZ32aeExwGLpd6QFUSJTdGTiwx2Qpvz7A10SehDz
+	kAOu3zCQuYBK4qWRYBgMb1hmy+IlmMhigwbAbpBWiMojifUS9Z3+lGQLCVFGTHQS7KkQTVc3AP9
+	Bxhwb4DM8Ap8+j7UXBHrLJfrz83j960SR6FC77t+n6W1Xw6F6ehwBzg7SZTvucdLarRy9mAQl3d
+	CdU6hu95WY+hBDMo6npo/sn94tpe4=
+X-Received: by 2002:a05:6102:2ad0:b0:7c3:9a14:cfdb with SMTP id
+ ada2fe7eead31-7ce5cd3a0e8mr2137055137.17.1793030912006; Mon, 26 Oct 2026
+ 09:08:32 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 26 Oct 2026 09:08:30 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 26 Oct 2026 09:08:30 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20261021182528.3055494-4-jltobler@gmail.com>
+References: <20261020132900.1208343-1-jltobler@gmail.com> <20261021182528.3055494-1-jltobler@gmail.com>
+ <20261021182528.3055494-4-jltobler@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -179,122 +112,93 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked:
-	F6Q0q0Slpe1XYF6bx1E/3ZrqRNwYRSlzg2wmqjS66mlfJnwRS6WT0tNipOhe1NAZtnLcd8QVCXdcCLePOUGz+GHe0li82aUlOYw96M9UKgyslolk2cKliUW2fo0+nA5gQOeAJ+ucixF/2f0OVNHoDvwKoJk6ktJp4cjslPFFzhONm7iNFBgz3FFBZFSqwSX+6FaFcEOOQ0ZtbjsK9hfuqhgyUUbIUPTeknfMalMo8MKHoGLnJ0RDyVf/+KqmVQDRhyg0fYT9gGFVTBuGe+0iWtUiAIux4eR8/Tb5NqvNGisvwnnBKKwORwLO/FF55Sp/Bk2xRRk0IvIPwohor6ndjw==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	nlTCkBHc1wmu6tplbbMBtpLExtzD33L6yYC8l+fWVYmoL3OGrxh0ugtdBdlheSCJM1IqQBmVyXCmQP+0iF6+8TgJ5Y+ZVe7PrhHTealAzgZpLWFX//ppnA4s5WCYKCJ1VAXqIK4ITln9wGrk71HOirvfToLr4c7ejQm/kVPtwVvMS8e4zWCaOKHnM0pDg9+4q0jp3LKRQkW6jITtc4fuB7uqPqQe/sIdh5XMSKOjvGkOZ+CXXN2verphCuEGCh3f2780PvwI/egZhKBUnFgj91p0AnCNs1r29wZ+KGM+qOwio4464SaZDgkRH4ZtZ1BlBnL28M1KZxl+rTWuXk5etOR3MXbsvhRlfI3XEEv+RY3QdZ9jFhBvTf5diye/vi4+L0+ZbVY8zrWirVd/EV1ZYBvwTkRQTlZidEtQbTzWtVVKN9jPGAnLAslyfJK30hoSONFKd5xHk31IwzDW/TYAcj+u8mYmTgsEWCYOACcZg4YdAP+gh0gCcixskcmie316WP2u+xfp7iYn6P3hdIVn8luh8pxf5wC3aPUR53ApAr/u4FM2gskJmKmcF1x6/Hx7wID05JRuaU5s63jkGx7h9eurdw8sfJkz1oFB3woXV47ViAbS0cxrnaZfV3br8AVIoZRFpo2og3n+M+yf3JBea69dbsTNY9p8can74K5mB0obzGvzTnZzzQSaAR13Br+q
-X-OriginatorOrg: Atos.ai
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS4PR02MB8336.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 908c95b5-6ac0-4067-d720-08df337a9ccc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Oct 2026 16:03:01.9079
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: AalDNrP2p+A2oyKwSr5CeblzohLbXHudo+dmvo5/j71MAE8J7/HuH1TmmoLg5ulNL4cPFMaOGSpgvZIbJAXM3g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR02MB11201
+Date: Mon, 26 Oct 2026 09:08:30 -0700
+X-Gm-Features: AclHuK8H79nAEkjPeL5Piv386gMUIPMXpDtFNih5261vGc54btfL6onJhTd26X0
+Message-ID: <CAOLa=ZSdT2W19-Vg682iv6zhq6sEFM0+rHS-NqL=XQu--JOknw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/4] object-file: explicitly write ".keep" lockfile
+To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im
+Content-Type: multipart/mixed; boundary="00000000000094fc80065ec08a9b"
 
+--00000000000094fc80065ec08a9b
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Julia, Team,
+Justin Tobler <jltobler@gmail.com> writes:
 
-There was a request earlier for notes from Windows Git users, so as I am on=
-e I thought I might respond a little.
-
-I use Git mostly via a GUI app.  I do understand that documentation for Git=
- proper needs to treat it as command-line as all the GUIs are a bit differe=
-nt.  I think they all work via the CLI version and all that I use do always=
- show the commands, so I quite understand that documentation needs to be do=
-ne like that.
-
-However....
-
-Windows users don't use vim (or  vi).
-Windows users don't use ssh.
-
-I'm sure neither of those are completely true, so please no-one write in an=
-d say that I'm wrong, but I think a lot of Windows Git users won't do so, a=
-nd will feel such mentions are not aimed at them and may take it that the w=
-hole document isn't either.
-
-I'm sure I've read somewhere that ssh is a nightmare to set up on Windows, =
-so a first-class mention of it may put off Windows users.  It might perhaps=
- get a note that it's for Linux/Unix/etc users only (or only-ish).  Anyway,=
- I've been developing on Windows for about 30 years and using Git for about=
- eight, and never needed ssh for anything.  Https is all that I've used for=
- GitHub and BitBucket, which you might consider likely to be the most commo=
-n servers users might see.  And bearing in mind that GitHub has on-prem ver=
-sions that may be found in corporate settings.  I'm not sure how easy it is=
- to set up a local Git server by other means as I've never really tried.
-
-Vim I think is very uncommon on Windows.  The only editor that is universal=
- is NotePad, but I don't think that would be used much for serious developm=
-ent.  I use versions of Visual Studio but Visual Studio Code (no relation) =
-may be more common nowadays.  For general editing I may use emacs for histo=
-rical reasons, but I suspect that's nearly as rare on Windows as vim.  Some=
-thing like NotePad++ would be better.  But then again, it isn't universal.
-
-In short, if it mentions of someone using ssh and vim, I immediately think =
-they are a Linux user, and I may tend to skip those parts of an article, or=
- even assume the whole thing is not aimed at me.
-
-
-
-Kind regards,
-
-Richard Kerry
-BNCS Engineer - Media Competency Centre
-MidCity Place, 71 High Holborn - London WC1V 6EA - UK
-atos.ai
-
-
-
-
-
-> -----Original Message-----
-> From: Julia Evans <julia@jvns.ca>
-> Sent: 20 October 2026 19:23
-> To: Junio C Hamano <gitster@pobox.com>
-> Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>; git@vger.kerne=
-l.org
-> Subject: Re: [PATCH 2/2] doc: add new Git tutorial for beginners
+> The `odb_transaction_write_pack()` interface for the "files" backend
+> relies on git-index-pack(1) to write the specified packfile into an ODB
+> transaction as a packfile. To prevent a concurrent housekeeping
+> operation from deleting the newly written packfile prior to the
+> references being updated, a ".keep" lockfile is also generated by
+> git-index-pack(1) via the `--keep` option. Consequently, the ".keep"
+> lockfile is written into the ODB transaction alongside the packfile and
+> later migrated together to the primary ODB during transaction commit.
 >
-> Caution: External email. Do not open attachments or click links, unless t=
-his email
-> comes from a known sender and you know the content is safe.
+> In a subsequent commit, writing the lockfile is deferred until
+> transaction commit and thus cannot rely on git-index-pack(1) to write
+> it. In preparation for this, update `odb_transaction_files_write_pack()`
+> to explicitly generate the same ".keep" lockfile itself.
 >
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
+>  object-file.c | 107 +++++++++++++++++++++++++++++++++++++++-----------
+>  1 file changed, 85 insertions(+), 22 deletions(-)
 >
-> >
-> >> +Step 10: Create an SSH key (if needed)
-> >> +-------------------------------------
-> >
-> > Even though AsciiDoc implementations are somewhat lenient to allow
-> > difference by a char or two, but the number of hyphens there must
-> > match the number of chars on the previous line, so add one '-'.
+> diff --git a/object-file.c b/object-file.c
+> index 210984f825..74a31760bc 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1256,6 +1256,47 @@ int read_loose_object(struct repository *repo,
+>  	return ret;
+>  }
 >
-> I meant to reply to this one. I wonder if it would be better to update al=
-l the
-> headings to use a different form, like this, because it's easy to acciden=
-tally get the
-> number of `-` characters wrong when editing a heading.
->
-> =3D=3D Step 10: Create an SSH key (if needed)
->
-> I don't feel strongly about that though, happy to stay consistent with ho=
-w other
-> pages do it.
-Atos is a trading name used by the Atos group. The trading entity is regist=
-ered in England and Wales: Atos IT Services UK Limited (registered number 0=
-1245534). The registered office is located at: Second Floor, MidCity Place,=
- 71 High Holborn, London, WC1V 6EA. The VAT No. is: GB232327983. This e-mai=
-l and the documents attached are confidential and intended solely for the a=
-ddressee and may contain confidential or privileged information. If you rec=
-eive this e-mail in error, you are not authorised to copy, disclose, use, o=
-r retain it. Please notify the sender immediately and delete this email fro=
-m your systems. As emails may be intercepted, amended, or lost, they are no=
-t secure. Atos therefore can accept no liability for any errors or their co=
-ntent. Although Atos endeavours to maintain a virus-free network, we do not=
- warrant that this transmission is virus-free and can accept no liability f=
-or any damages resulting from any virus transmitted. The risks are deemed t=
-o be accepted by everyone who communicates with Atos by email.
+> +static int write_pack_lockfile(struct odb_source *source, const char *pack_name,
+> +			       const char *keep_msg)
+> +{
+> +	struct strbuf lock_path = STRBUF_INIT;
+> +	struct strbuf contents = STRBUF_INIT;
+> +	int ret;
+> +	int fd;
+> +
+> +	strbuf_addf(&lock_path, "%s/pack/pack-%s.keep",
+> +		    source->path, pack_name);
+> +	strbuf_addf(&contents, "%s\n", keep_msg);
+> +
+> +	fd = safe_create_file_with_leading_directories(source->odb->repo,
+> +						       lock_path.buf);
+> +	if (fd < 0) {
+> +		ret = error_errno(_("unable to create '%s'"), lock_path.buf);
+> +		goto out;
+> +	}
+> +
+> +	if (write_in_full(fd, contents.buf, contents.len) < 0) {
+> +		ret = error_errno(_("unable to write '%s'"), lock_path.buf);
+> +		close(fd);
+> +		unlink(lock_path.buf);
+
+Should we use `unlink_or_warn()` here?
+
+[snip]
+
+The rest of the patch looks good.
+
+--00000000000094fc80065ec08a9b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 91976fd605b3be7b_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1yZmV2c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md3JLREFDWUZDV3MxZnFXdkFTV3doSi9PU1Frc3cxTwpickdiSWQ5eE9P
+cThVWGhUS1R0RVJrMjlUcFAwcXFhbjBWSkxhWmpidEU4WkY4Nit1VENtTU5aTWt2dDV4d2dhCjNQ
+YWd3NkFBSWk4QlJQOVNiU0VyUXpLdFNINjFGY2k0YXRkQnBVUUc5eVl5M0FTSHV0NjM3a0JPVTlp
+azR5YnoKR2dhc3F4ZGpiZllxcWxGSFh4YW53S09qMUUxNkllU1dxbTZPOWJzZUpJRE9ralNFa20x
+YWNSV0huZ1ozYmZCRwo0RVVyMDYxVGZqM2xrZ2FJNVVXamxYVW5ac1BkbUFleGg4UXpwTy9CSkZG
+RUQ5YVdHQXZoQXE2aHEyK1pxaUpjClNlSndTdDBkOGpmcy94ZlpUbGw2VDdqeWo0dUQwaDVuc3RM
+aW13QW0wMHBhVWlxVW10Vm1Ea1IycjV0bHJnVFcKTEU5cFVJYXdyYzN0aFlOU1gzMkRBSkVveStQ
+UTIyTTcrNkdjSlE1Zk5xSU90aVluZlk2bTcxVFhnNURGYmNZZwozZGZxTUllUTdFMmRSVDhUcFJl
+RThvN3RqQXhoZUJpYTRabjdXbWVjdnhBWTlQZzl1U3kwNGY3dksxcm1kQmoxCjlMUHJTMXE1dG1F
+dy96amZYR00rUjFOeUpiaFZMblBQMWgxVk5HRT0KPXpiY1MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000094fc80065ec08a9b--
