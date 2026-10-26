@@ -1,101 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.49
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793040564;
-	b=Rqv7JfKhNEgHbQBr3++e+uvDaJE3tXWQlSq0LmTrvf4X8yg+8WSakEmhqJigMsTRVdEA
-	 QKOeaGmQHEWVOjBamnyBsswmsmLKF/XIX1DwnTPgIIFR83TAr+5Cu3q66pAQOUF5xJfH2
-	 maETHnEvR/M2ap2ejZeR5BAPXzKkqiqsqei5lXXil+0GfBvbZzN4vbUIz+65E2tGS2n/G
-	 20M+iSxo5/+cAGfR0gpCsCt3gimxuyxxsl3VdhiDV7iu0fAY++OsEFPtNCb5bpSOuiqih
-	 DCHYAW82QyAPNsnRN9/3r0cxE7JRiE/KZURckaEyO8ZtH+/SippYs1Q+TuPQrIDotKQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793040564;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793041475;
+	b=itjBKQdi11F/8y1Fmt1wMQcamx7ElWULl89PpbwLN0Mjt+y1+/RAl+sAm804F/rLePOk
+	 FQFSlfr4NOaQOupfeONlK28GRrno7ogLknm+1bFaXzoj6hVPsjK5CKDKSm1CefAWw4mmH
+	 4TbG4F8ACBc5sy2DmrF1/12de+MojH+i8JefUPSNtCd2N60VV25JvwTNrxpUPxmkG1KN7
+	 ujif4EbuJULqixVrAPZIQdPG61E5FmhDJVVg4HPSJk8uwQ00ulsqoDMySh1TlN66TN065
+	 ucGgFr1shMLTuYFPhhTM+np2BwgBjsXz3nuyx5PVI/AgmchZT8wRKgSXH45vTd9Qgsg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793041475;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=fTEcGxKj+rT6/eocxiavxh/OUoiptzVcUE85r1Ts8YQ=;
-	b=0rp/SsbI1TGjhjb5QSITUn4TDSOqRuoBDSP1Y8bFXMKZUie6lMEHSpRfPMjDb+DrlzBI
-	 qassHP8d/QhZgujggLvebI4XoSDgp9mGfPSf8n97rL4sO/3zjNXXIPnJJWvOUitczIjSP
-	 Sl7h8a6STse+hSgiXdY1MJun2v6/MgX/z8/QW5XHKPLCYnkQ4ikSNIBu7FQ/3TfB44oJo
-	 osvuwW3uJEKYSykdkJ0Q6yPw7FzHji/78xq4vk5yA+HPIu+DVL8cHt9t6Ae7YOhsutSvj
-	 4hn/6CT2PpiqtjQwX9eNTYD3DdO8OmWctbEgJqWcLXmf449jWQwSuMGOKJW7zBglGPQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=u1mJF3TM0e2zVlqpczdTDtXsW/aPT6zxtaQF8G06HRI=;
+	b=jctSnmoEuMtbtzievUrBua6yyGkIDIoTiBbM3LaJzAN5R9R2nMv9txTD6QfmPPaI5b6U
+	 DppD7cESaiI6aPciKefmggvThcSICkBZCT6mDhS7aq6NiOobskBdd3+qKETNHfRNQTG3R
+	 CxLBtJg9lGsidhrZ7UjrPo/myv+DEgNIT77Pwb3bWQ3LKPRMxxsoUc5R5b7WUl9kftgnU
+	 zYCKtcaO5fSOMVeA/wvr/VLNItnF3RqODU0DnEygceQEIOXrRma96jbBNcg3dqYineTlH
+	 Cb1xUCV0U+oEm2u6NaeaCTP2FXLmjYFELUEuwL+6Tzm3lkGb+YvZ2bX7Rv0HQnZ09aQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=jrLfIdqz;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.49
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=qNsc6foi;
+	arc=none smtp.remote-ip=209.85.128.50
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFDF606A31A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 18:49:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1AFDF606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4FC606A327
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 19:04:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E4FC606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=jrLfIdqz
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-917a64f28d0so2224136d6.0
-        for <git@vger.kernel.org>; Mon, 26 Oct 2026 11:49:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793040563; cv=none;
-        d=google.com; s=arc-20260327;
-        b=O7IXNDBz/4ho9Ya0HMlcOr8iNzfuQyfdEuF3If/jlKsbeG7byamNvxtgQaPJG46q+1
-         QSjlD7Wu9LbVP4o3qZZnuV1xZgjgrSMhTN9oCYxDL52pudgaVnIZ6hBoqrPSI3tw1mvi
-         VDWU3/mIe14+rlDE2eToFzw0pv9zuIyIxZx0o5NaAm17CxcM9xbZbE4AVTyLVlynjYwP
-         T7DyG6zpAb84s6hMeQFm4VXuWhFfLJC3e7xZ4XfAX62QfOgvw02xd07u64c2SNseGP6j
-         SfSQ+iRhbKjJA4cdXlyFSSOC0f95WCk7WlDyf6EFC7mdv3xIVdc8pFVmllkBa3uP205b
-         1xGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=fTEcGxKj+rT6/eocxiavxh/OUoiptzVcUE85r1Ts8YQ=;
-        fh=JhiuiuAMwJKzPrxKexo06m7esc08wcAsD5xIPo26gQo=;
-        b=L9JeA2mWXO67ww3Tfz4rkVNU4tTtHKI/SL2BVjtaoMFom8WFPEB0KAu2QxRvPdiamw
-         1yhWm0ZrijNjLIyVLsq/4KhwgeevVYJZRdYCUH+EEmMr9lTdwZYHfvO22hpugInt9o4s
-         wU8AdReAkx/6kJHnHNKjog4DaL5xl9TF+/qUuFZ2fb8Qvee9eqbVLecqX83k2L5V14DK
-         3uCUonYPaNG9y7CwqgB04VXr61Hr6a6xuHy9f/T11ngVPNwpbLvRb7ztAQbp+4m1GTqE
-         6D9peMjXTV4pdSLNa4HtdpxLBxTqKCt0tP0+1g+WTG+f5xT12teKHUDntIXBP41COvvV
-         N6iQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=qNsc6foi
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a20bdaf39cso35240215e9.1
+        for <git@vger.kernel.org>; Mon, 26 Oct 2026 12:04:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793040563; x=1793645363; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=fTEcGxKj+rT6/eocxiavxh/OUoiptzVcUE85r1Ts8YQ=;
-        b=jrLfIdqzsd0hgNFbhW7HPjt6/SLach3qSHy3fnOKEXzWbckXVWYTAvKXfMCvZO0np2
-         CFjUaOgphpzF+TCceNKrCvZrvgXx2ED9N9z9RTulv4TNATjHG91iSOC9tOwAsCEcIB7d
-         J79uPw8qCsfDJPy75ToAjSx8R6GX1uMB7X+tphRNPufV3ouWX/9PnZ25F4+ctKcPHJ9P
-         x3bTc8NjSwFPv6CedYnOJmxuwz+SmAYqpr0g2gsc0EfWLrbTPyyUPsxz2jNX+vj5mxW4
-         s7LdgL0p7+w1wQm5hTKOZNmtXY/dRX1mWJXKTKumSLoANp3tkh55R7GYWMQPCnGck41K
-         8Krw==
+        d=gmail.com; s=20251104; t=1793041473; x=1793646273; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=u1mJF3TM0e2zVlqpczdTDtXsW/aPT6zxtaQF8G06HRI=;
+        b=qNsc6foipPq4lNcEwQm+QzbGrn4NPZ/oLUmdOSUKe4Ix+NjCdIoLGCXaexN/M+cKIr
+         9d69iWkJAMua/2jaaAgzMGtnGjx6CswcYL0UcwbC8WeIvP9IdPCM2zAe1XsqOj6E25Fk
+         CfekgUcxIhac8QX/6GzYqS0k1fr6cxdBW1R1rzldC7KBVbvzTGg6KEa3Xn/77JC0uXg7
+         aatNQ3ed2LkgeWEK4J6vb5KJCqwzhst50MPVv51bQ+u8dmbScV7nw9ou6z5iB+jeQ/6/
+         gPcj02B8i7E+k4ELe4GfWhBLFaeh9dJS3cBF1KaMo57SE3pBO0vOBDl7pMY7SOGC7ROO
+         I+gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793040563; x=1793645363;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fTEcGxKj+rT6/eocxiavxh/OUoiptzVcUE85r1Ts8YQ=;
-        b=XtU5kggNtSrsZVyHCNQPkB60oF8N8zBXL0nj0PkWMYWivh37v76GvJeFU3FZlUm2S8
-         NX9UvgojXdvU8mzz80elc1F4OtyNFMLBe2v4vv6VzQhhKM5LmMS/3LGjImqENMavQA62
-         K/TIrRnwY00aNZE8gh7KUnbgjiPxNRsqFCONVQDxOwiRUPi5w70XWcJuP656WVLrZPWX
-         osg1QrmlmFwozXA8pYdrozkMbioNfhJWb4Rq+EdXRW6C4F51VWcIdew+fMh5pgeqOAgH
-         x89byyxVPbuTKSi9KMH90hJ8RRiugu47/ojgIweGHhic1rfr9bdHE8smvfawp6Ee9dVs
-         SfpQ==
-X-Forwarded-Encrypted: i=1; AKwUvBye/B1f1GGB6R6dqnNfESIj/zkeA1IeSLOEAuFewlmBzGC6y/g8nVqGi6CoWJryP5q4Zuc=@vger.kernel.org
-X-Gm-Message-State: AFq9FYK/x9ZyhhAovyVr6a3R93BKjm04Cl3qH5h+DBGGw8iuBNnj8u+e
-	W5j+vNo84e3ZlesBkIb3Wf/cGuzEgzAfGl1uUDAWSdhyi/i6sTepn7LY0lyIN2mMuQ9xI2z7Jfh
-	TVW6RJRzBkr6Y1ScU3xadonlpVfRcKQ8=
-X-Gm-Gg: AYBFou2ezZ6wY7PqxhWT+juTEvIpr9Qcae+Rgt7UWMS1tOAHLnT3dajyPqYrfkTX4+S
-	DVS7o+F7Qt93F1dHbYaWh/Tx4ddnOGdcJWs9cV3yxmiysI9pKCfLFwbfXHl2FUuGx/rbCTamng9
-	aBvWyFMS/R9fTbLkDbJqWOMSZBvwQHzAtQqotcwD94Oxi/HYFWd947UTll8ja0vGdsEBMLGqMWj
-	LpnOlQpTkiF74EFsapHvldKrgxMiaDGnqczLor75o4hjEHYgnjgUzkvgEvxDB2KmWScVmhxrKCr
-	kGlmv35O3XyDGmpcvUVGsyQ/s6mrK7Hvv6rl0VQbjCDl9r4yIfMeb4ABY9JxtNuHV0yc78sr9tN
-	YZ4yNTQuzfwuBRO0/L3ggJ70XieuLfpA6aH92ozHP77P4pjCgqav4YljmHOx4xbqJj74c8heRzG
-	6rfiUqm00nseQc0fIcs3cuCHv4xHB60fuDOuwKZ5YKnw1o+rsR+uEO16rI
-X-Received: by 2002:ad4:5ce7:0:b0:91c:6cca:8268 with SMTP id
- 6a1803df08f44-91c6d483961mr10515336d6.33.1793040563046; Mon, 26 Oct 2026
- 11:49:23 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1793041473; x=1793646273;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=u1mJF3TM0e2zVlqpczdTDtXsW/aPT6zxtaQF8G06HRI=;
+        b=wSf1zv/4yn57LXEBcznVljiYLeZZ7l3VATJZ+UF1nMOPCo+bsuBg+wPFU+K5R8E8F5
+         GRzcKwwlPVB5TEPBOueyL1yYtCFhXOrE5GQWM3MF6oSUwML5n3G888z/OSPEEMLi//k2
+         Qi7xCwJuBxXIDAO/R7K18+eZltyQLPYmWxznp0Fh9kF0UyvQEwNNSIYALYZU4yhIFKkH
+         fJ+wGum0IfRlrazIYJyA+LiMbL8SFbHBom9gNB3XsR/SYnF4B5+F9QAjY1QrE6tJInxp
+         a8HkC2SFjFvTmXhMQkLvJBJgG00vC1M8Y5v0ZynmHSP7rr96UYrkgA1pSuhaej7hTqml
+         omFA==
+X-Forwarded-Encrypted: i=1; AKwUvBwZRi+kOAccWkobVv5kjc/s4lUEUpkBqygEE5KlsfKVGr0LEyq8l7x/zJA6CnYWYHHqLXk=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLdZTNDYDqM0gibEovzgi1DZx/2aNVOhtKkGtkjEuXJFKl5QPWQ
+	56bc+khE6tqU0l+OPeSbZmazzXFBq6qT5SiwcOza3761xeFHlkB2FnsN
+X-Gm-Gg: AYBFou1DnfLmny7YmgyTNEtnMjdrYHf1oKaBPnBTypNPeTWISyAIIQf592sNCOGxm9u
+	xXmfvNNo0YAUeN6e8y2S5Mpi6f5M72WJUYrua06of7CKvYesiZ+QrL2nD71KKfDS5mUw3f5rCXN
+	/ZfdA20KAvlnfu9uFp2khQFN5FTiYbrGqZ/AYx+LgYC6nEE/rSI93hkPltSLooiAtIxR0GemTPo
+	2+cG3K/ZtIzxS0h98YzCPPSViVNi2fDx/7crGjyGddOnNIHmrAy+2cIlbv6cf3iwzHtqGJh26YA
+	dTxTMIq4EqkN5B2k+jj85Vyr7S8O5vKHAOcyoXFN/AaR51Kzuv9o6MfeqqYzjhWsO387+Q2JR/j
+	IZpNbZjUZkVGQXSKNUSs8LM9JMuw4h7kiU7an2xqNr/f6jIY8jhUZ2gHP3I2Isehz6wXfKJO27I
+	jXSErVfdezsSoWaLUp/kub303wKGrzr6jvtWZPU3Nr/MLyGad0tQRsT1Qc7uI4+PNpjGbulO7tV
+	mFkvIGLQ+TkTTTOwQ6BLsaX7w0kua/WHF8778zd52uWegHTQLRd9oIHhuBn6ftQ+aOaxqhtBUjd
+	xo50
+X-Received: by 2002:a05:600c:b86:b0:4a1:7ec7:a479 with SMTP id 5b1f17b1804b1-4a35acc1129mr141897665e9.33.1793041472419;
+        Mon, 26 Oct 2026 12:04:32 -0700 (PDT)
+Received: from DESKTOP-0SUCFI3.localdomain ([129.0.81.241])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a046fefsm271518255e9.5.2026.10.26.12.04.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2026 12:04:30 -0700 (PDT)
+From: kerylefondji7@gmail.com
+To: gitster@pobox.com
+Cc: phillip.wood123@gmail.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	git@vger.kernel.org,
+	Keryle Fondji <kerylefondji7@gmail.com>
+Subject: [PATCH v7 0/1] archive-zip: refactor 'path too long' error message
+Date: Mon, 26 Oct 2026 20:04:21 +0100
+Message-ID: <20261026190423.1925-1-kerylefondji7@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <xmqotsm8qsdl.fsf@gitster.g>
+References: <xmqotsm8qsdl.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,68 +100,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
- <pull.2276.v5.git.1792956031588.gitgitgadget@gmail.com> <xmqqpkwwqs6i.fsf@gitster.g>
-In-Reply-To: <xmqqpkwwqs6i.fsf@gitster.g>
-From: Srujith Poojary <poojarysrujith@gmail.com>
-Date: Tue, 27 Oct 2026 00:17:40 +0530
-X-Gm-Features: AclHuK-7ExuQ8hk7vpMvTnp4acb6eLBFYa2h85JkGEPIph76Z8qnSyERrXH4noc
-Message-ID: <CABh_KWiE3g1Gh3B2VmFKNNASFpCXkmxGsZDvp+ESymz4eqSKww@mail.gmail.com>
-Subject: Re: [PATCH v5] diff-delta: use safe integer arithmetic
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 26, 2026 at 11:07=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Srujith A Poojary <poojarysrujith@gmail.com>
-> >
-> > In create_delta_index(), buffer sizes for allocating the delta index
-> > are calculated using arithmetic operations on entries and hsize:
-> >
-> >   memsize =3D sizeof(*hash) * hsize + sizeof(*entry) * entries
-> >
-> > To prevent potential size_t wrap-around when computing allocation sizes
-> > on 32-bit systems, replace manual arithmetic with overflow-checked
-> > helpers (st_mult, st_add, st_add3).
-> >
-> > For the unpacked index allocation:
-> > - sizeof(struct unpacked_index_entry) is 12 bytes on 32-bit systems,
-> >   which may be padded to 16 bytes depending on compiler alignment rules=
-.
-> > - sizeof(struct index_entry *) is 4 bytes.
-> > - entries is capped by (0xffffffu / RABIN_WINDOW) where RABIN_WINDOW is=
- 16,
-> >   limiting entries to 1,048,575.
-> > - hsize is the smallest power of 2 greater than or equal to entries,
-> >   capped at 1,048,576.
-> >
-> > While entries is bounded in current code, using st_mult() and st_add()
-> > guarantees that any unexpected growth in struct sizes or bounds changes
-> > will safely die() on size_t overflow instead of wrapping around.
->
-> Much more useful for future developers to learn what led to the
-> conclusion.
->
-> > For the packed index allocation:
-> > - Passing (hsize + 1) as an argument to st_add3() is safe from overflow
-> >   because hsize is capped at 1,048,576 early in the function.
->
-> hsize+1 is *not* an argument to st_add3(), though.  It is given to
-> st_mult().
+From: Keryle Fondji <kerylefondji7@gmail.com>
 
+This v7 addresses the feedback from Junio C Hamano and Phillip Wood regarding
+commit structure, missing commit log message, and patch threading.
 
-Hi Junio,
+In previous attempts (like v5), the diff showed 4 deletions and 4 insertions
+because it was compared against prior iteration attempts. Since this v7 is
+flattened into a single clean commit applied directly on top of master, the
+diff naturally shows 2 deletions (-) (removing the original master lines) and
+4 insertions (+) (adding the complete Q_() structure with correct tab/space
+alignments).
 
-Thank you! Noted on (hsize + 1) being given to st_mult() inside
-st_add3(). Glad the expanded breakdown is helpful for future
-reference.
+Regarding the mistakes in previous iterations:
+- The commit message body was inadvertently omitted, which has now been fully
+  restored.
+- An incorrect Message-ID was used for threading (replying to an older
+  reference instead of the proper discussion thread), which is also corrected.
 
-Best regards,
-Srujith
+Summary of changes in v7:
+- Rebased as a single clean commit directly on top of master.
+- Maintained the exact indentation approved in v5.
+- Restored the full commit log message and proper Signed-off-by signature.
+- Cleaned up unrelated modifications from the working directory.
+
+Keryle Fondji (1):
+  archive-zip: refactor 'path too long' error message to use Q_()
+
+ archive-zip.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+-- 
+2.53.0
+
