@@ -1,98 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.45
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793046744;
-	b=ILIst/XknKZ1I21QeRvJxFPcQXwiHD2qLX/Lu/mEFnf81Kw1zpRW8/Qgs1PRLhO+G6Yf
-	 GGPbTq0mUGsNhkAAmSWluWBRlveZ8HrMElECvQ1tgetvoGdhWIzS1Jbheki6BUwRz1hds
-	 jZg2GIUHZYskOk8KsPsEavh2YSdtqU9WPV1NPcO6GUyXRS08MivfTXGstq6eN/tj54HM/
-	 6zzxGb8/ZF3xIYmxxYP+jW/7ZSAoLHKLH0tNPROwAArFNNV/ZIIBMXjh9qQHJN9jg/UH4
-	 RV4mTSv7Btfq8n1pc/mZdAGeyUba87buqCmadUw58aWbNUE6/xBSATkZ29s+LJIvxEA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793046744;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=jOrR7vj6r3rVI1kRj8pmrGNJZ/Ph4+mWHam6ZH0i9VU=;
-	b=yyPDhbuxoYqVFofhxl4aW9VTjSPhZhSJn2pxpjx3Rz/If7IKO6rYDexNT/nWRAAymNRA
-	 jocxKpGbxoh2/AT6u0liCCVJFhqKJ65CIR1N0ZcAqsiun/3WCoj2hNM4RnLSKCfdSo0h+
-	 I9px7zcMNJOuuB0PNgjilnrY3QsX+tCi0fLoAP9lXXA3aKO4MbBR0cdlUskPw/YrNkB8v
-	 /w32Zap375PcPTo6wPx3rTz9uQ+OnfO5k7n8hX0FIRdttyGyxVn1HMQMfgBePdaaPj3jH
-	 buOFkmm4M+3O5QX8Ej67Wfbt76Tf89eEtNnfqE5BbDHHSKg+bVUWSQUkus62rYr3RbQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Ag4gPRlh;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.45
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793046769;
+	b=upqC6NWGH26b4mZVryyHu41v8iarpLsbNQLXQKyfHNliqY+M2q1ayyx+dkpj4Mrrp4DA
+	 ouHjfnEWtrD6VuWEGGfTsXqVGUyCnJhfJnUTspYcVqX0wqC0Mgdfve2vP3i43N3ZnfnDb
+	 +gXwZ+OTnzU8oUPplvsZ4JYUuXHKbbAl0cf3+3XRrV6Y4vYFlAV84/Se2kkwYubtA1jO+
+	 bYcuit3SroxxSfaHNcupZbJIizWwwHU7DnFruB6tOIgzv7RHkERQlkFob9jvBeCr+tsPT
+	 18nuFaOlPCljhCTiDm6/3AVJmrQsagW9yNL+whNl1De5pE/9GPkwxkEikv/LqHZRa7A==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793046769;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=2v3OPo5rs/IM57xx6XcdAmRu6rqFLWUj4v8iOyiGo28=;
+	b=5JIItTCqludJwcLMdP9o4sS5IWZcVSPaYOqNj2c3mlhhm/sbd7y5snL01WYEBwwaJETX
+	 vSjJspgOXqLf6lBA8wqmklum6MoTnv3XEaga/w9SVIrIrWpY3jOgQPa+plCfk1dSoBsHJ
+	 w4NZivAonhYf5oDx0t6zZ7GMwRIVpxGxPGZk3DCVmpaXIOZXjxK8qVw3DhsNWACF+pLco
+	 N2mtUrmYZnz0duQc3ro0Z7YMHnV1OmG3PDMQcHwG/LzWbY3zN6aoaDidowqv9G97CCnS5
+	 prHtom34HL7RbgozDMvXn0F3rdQSYATCBY4IRsb77Dd6wsPmml9RY0HOufC/p2XrVzw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=LWWtKhTx;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=KnF2UglY;
+	arc=none smtp.remote-ip=103.168.172.150
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F02B606A33F
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 20:32:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F02B606A33F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E863606A31D
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 20:32:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E863606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Ag4gPRlh
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c46822eefb6so446721666b.2
-        for <git@vger.kernel.org>; Mon, 26 Oct 2026 13:32:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793046743; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Ykz/lYLZ4QzWzmg2WtI5wNgt1KCsIewUOelKIxswMGzg8kBkxEX/bhBZvFNBetWGoD
-         IpzLZvqYXX2VAWtGPZWkvff3RCAHUDOimONKVuiMehiTLxkDdtZgobO8c+ofVez7YnTe
-         HGRk18doYg28Wm9WhFwEvgiz60EcXGCUSWk7saQtaa97eR+Y3jR6HW4+RTwQHQmtNxPe
-         wamgXag4AWM0QOf90QyZJQDFc6wgDap1saJ1aTTn4JnWFgJWM6B1XkDQTyOA+YHvZP4F
-         ePUuyPkHk1ajFyHZ9bOvvuJ6xaA/jWbeZWUxBMX0/kX5ck45Rw3/mAcqyHWXQJOhcwCk
-         Cd7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=jOrR7vj6r3rVI1kRj8pmrGNJZ/Ph4+mWHam6ZH0i9VU=;
-        fh=2neGNSFCezYEn8XotWoEp1Z60aJip6GkaOlz6pz9/oc=;
-        b=lj/CkI7vqeSyxmkC/fllTflEKfvjV43eHRndoiXcyy4eBOG029VwRhr3/uPKJ3ytaW
-         4pxgclwMODEkvnnbHRpSQbcKAZdhdDwUK5Sp71g7gdgcS5bFyLP4rPK0RYu6WjiMuf2w
-         4SbG3etemC1M8j9//DpsJEaXZPUHuU2wmmgkZFCy8FyjBORVp99A4v3lynpPpWEKdCT7
-         +W4tVLImj9m675ICTh/pUU7u9U29LJf1XrbZX9VdNlwtgqXnsmBOQgfBlt0dqs2KJH26
-         3tqxIMMA5P0yCvbfB/1vONXN2vPavavQyGJzJYEa9ZN0UPFyj5zmNPs/GppJruK4Dmh/
-         sSpA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793046743; x=1793651543; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jOrR7vj6r3rVI1kRj8pmrGNJZ/Ph4+mWHam6ZH0i9VU=;
-        b=Ag4gPRlhXIinKliJi/GBHpBCA0mCPmDJe2Su497mf7HK2pOM8vTrTNQKwrMjIwkKjM
-         OkBUuX+/VKKwpJWiKI9xY5xFHjnl1oRNP16pNLV7BMs9st3rR9Vy28HB9ux7ms6AU0QD
-         1QTDHfENofddv/YkK3QqNx2U4K8nWA4QPbAj1EoWjk0TUioEQddWlYB1anId3TLkLUbw
-         oHJ9zLuvrj9spSxEbhUO2yCsjoIKg8GG9GuY6ZubpvuKapnMiIEiFmgQU1PuMLdlNY13
-         aKG8ytsEZK25s4JLalK01/Vlkwzhvy9d7FU2Xe/0nMDa5LAB6zl87a++YFcIDJx+FFsY
-         yoBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793046743; x=1793651543;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=jOrR7vj6r3rVI1kRj8pmrGNJZ/Ph4+mWHam6ZH0i9VU=;
-        b=UTA/7gnr3f6Zy7Cu9bPkMWKZ8e8Hp/2zrjEuyIGmPVPQnltGVtjGKcLmzQ4RnTF/CS
-         Bbl4HSo/5Jr0pAiqHTanmrYPVU2+eII+ZxHWiKu/hXv7HLOXiS2TLHsdlDlK8I7D5h3P
-         RX2piFKqyX0X8xCWJW7tiqsQorNgnGMYYLCu82lnoiWJ+VWqSNUvrA2aWGcchV53eE10
-         HgdZZzMqtGRHGylHdI6Ajy/PDnHzEuJB3ykuzNe+aYBW58Rx7DR719/dZaa2hX/c1QtU
-         9wvfXGe1iFzl7ElfKKRJpnSrYYENNMMX8f4JTGNq6B/4xG4HTHQfPV2AJIKSVgLNhi/v
-         JdVw==
-X-Gm-Message-State: AFq9FYIAgCzMgCR9scYHNHWdWJceTmMP50nxP7igLRAkFevpS0kOyfsr
-	bPEYSasR0tvTIHPlarhrzlcI9h5Sjv7tgE9a9czuvoC7TRYALHlD+izzYNuZcGAG6bH6Ksa8rKS
-	DBu+Po/sfhQ8KwNgDYqiC+yzeL3JXgCo=
-X-Gm-Gg: AYBFou0CU2icRcbnxrWomhdc9jWE9qIz8azrnO/PMQxm4582Xxz7lTiGwtPPVE/VLlS
-	+aZgDTLx18pPbYYDGvBn4EZpSMCQpznhNnQ+UNlDgARQDhDxj+uZuqXiE0szAKfT+92iwAJs4jl
-	0FHNmLdtdVay9Uy4kzek+aK1yhhwPkuG1qdktpRfr+c/jKGS/ruf1QbGL95AzTaD/eZpr/Snwyv
-	HDOLgdRWjiDyPY0e2hOyDRMw/mAXxnNpoO4izSvQzo3i5uY+dyX5NU8aN4c+DricnbYx98Y888+
-	/CR33MAdwG/LCJhIG2mI+pVV/YGiRSetds+jXfLtBm7LrjaeKgFyKjUIV2ufqzk2SONHGBOH3mT
-	4CFMAWYkP42dSeND9WVtPru2XNrFueeO0xSyEICPuoGUTPpJfBNIdahxd9Dj9dJYvaXMijB4=
-X-Received: by 2002:a17:906:f5a4:b0:c29:5b0c:1b44 with SMTP id
- a640c23a62f3a-c46bde8ad37mr927038566b.37.1793046742392; Mon, 26 Oct 2026
- 13:32:22 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=LWWtKhTx;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=KnF2UglY
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6784FEC0A27
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 16:32:47 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Mon, 26 Oct 2026 16:32:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793046767; x=1793133167; bh=2v3OPo5rs/
+	IM57xx6XcdAmRu6rqFLWUj4v8iOyiGo28=; b=LWWtKhTxZiiU08QIsxHVipWA8i
+	cWFHrAoa3JfpBe2dFdAozsvd7HI1Ir+8CwroXajIsXbXedaVVC5W8RMDS56wSi7x
+	G85wHgvlVDBimBAPVembaZrUS5kHoqXLuhZEWGlVA14tLeiEwstPLDqnteTjEUUk
+	b8er9uYCordA+mhfJvbE8fu+TcyiicY30ZB9aq6Dn22G8q+z9OoexSXpeWFz2Eo9
+	ehQRL4oul7ail9HDS+4aQIkcnGRWR6KRljUfBHroYPdhgUIWk93PQVQ5uOaRDmqA
+	5FmwLARGhaGCzEvQv1eHkG2eCBGq0CpJ2Sr2XGCOjmm9aguRL05yVUgOCIZA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793046767; x=1793133167; bh=2v3OPo5rs/IM57xx6XcdAmRu6rqFLWUj4v8
+	iOyiGo28=; b=KnF2UglYq1CRyLv5lXo1NBdUBwdmQorLEx9IUqjQrfVnLmlywJs
+	UfyAbFrG+A/GH1+CEPcAjfobc0CjETaLwHVgJQmJwIi1FIqZPHhoLDyReRrRKXXi
+	VrytARhlIcBKv8FBq8E5CiuQ3yzNntIbc32YlLF1Gz47SREmbXqqCQqGXtZEgGtW
+	OKCEDzKT6zq4aqbsO0tS1k+TIkIlRY6daGyAdU4l5UuyEJ2glndQx/mduRq4tf2x
+	+pp0aaoSmmLn8GICUb8BxwQEmJmN2qFlEm2Ma0OK+mWG90fpEjxyRyQsMNLqsffY
+	pEAhy/tS83awuFKipsP9qY+CijrakrSFTYg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793046767; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:FASlsKelkrOJ8IQ6dyvNtjl1vQQl7oD4UpfYMakyDzMDMVG
+	aHTEZr38Ckagpbao22DnX+Fo5U8tr2YUjMgojg7hQkQCPJ3MIbdaG4CYjvNljUGB
+	v5wW4mKzQJMK6KcNyCMnUAGkaUm7UCb7PYv5AGLa7fmnQDvVq6v+z4jm6F+9kV9f
+	4RJ9K2tDEkoWZNVJRMNDRuAeb2z1XAb3urkLUYQZu7PoDvVcOkkmx609PHPLssSI
+	3yNGsKGjso1VSvDoNAWJf5mk3Oxd1gXilP5FDy0SC1CNAc3Gt3pCKeEM6nkB5vYh
+	qDPxJz7zasw6b7B8U/ZKKWGbPlHndlEfi1j83WA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:oQTm4W0Q1TUr3WzsMgNUOEfstptTxfcc4gA8ahmaJm0=:27YlPrCllJrbn2NaQZzGOu1wplFlSaemMC35QvzbNA8=;
+X-ME-Sender: <xms:77jfaoeULlkK_5RQzr_D1LIPOmgaefj6cxZIThyYjvTQzbNRWXI9Gg>
+    <xme:77jfat7IK8imh8tvxy9oVX5jayjb2W2rxOk7ykb705jFuHAswIQUBgcWOiJ4vijfi
+    R_o2eOXTxORzoCDqO0nP7YEDIYH60a3XqlMBdyvB3rB4XkH5AgoIw>
+X-ME-Received: <xmr:77jfajVVh4orCy6Q0ufYbDlN7p5lJMvDetb9RWWje6qqY0P6zTyjgth2o8UTVmpg3wk_mxf88mgCLimeJkqgI1U-b9HD2RjEObno>
+X-ME-Proxy-Cause: dmFkZTEc2Brb69PUVgr5FnPT6J1/ZlGL1bR0L+5pf7/SQZqskYjxCQVrOvz0Q6ysrqRExk
+    7fwKkvHZPvUJIbDH9771nMLGtViqjxK+r/HEITh3SYsbl2zxWIazp09XHQCYc5aKq6Ytfi
+    tQastpb7pDocSuW2pvkL82pG0Vrrg+8p4JnIchQEQS6lHF2DcwCNiNdJBtXULt0jZM3Lkr
+    UC3XzOfexNKq734MBi0SMzDKAlP4wYPRAhmZjz0J5uDTNf7kDefJaVGYAZ2uwuZ42OY/PT
+    D6KAZIqNqfin5B5iT5Hi9j7Bs74yWxyz6oK6KudlIW1mZKvTKFbxIM20Lu75+IsjeH1uQn
+    99+MHjFCQQ6BWzIMBAgzNyvv/xg+0FVYtYBsKEVdIXUuzdtNrU8Wgmmq5Nt8M00gX81fUD
+    eI4EjKc/fG1jUpEpv9+faID82MAToz1ZLu4AELZ9+bCAO2rUg+Zak1v6qTwYriA4xixOLL
+    L3Z9nGvIZXV5MecQA4WGDlfxdDFvjb70K2npxIRHpPDNelE30NHKz00WQKKGcrO+S2RGuA
+    fjqO+LalLFX6Rd8u8a0vPgUMTfJQVXBLjkfmtqdbSSCap5/yD3+uOJlFP0l5L8CUp6VCpY
+    M//xwyUc3argmOiqojruEhMw3i/lS5Y01X04cKiSVxdNFa9RnQftl2mX7MLA
+X-ME-Proxy: <xmx:77jfak5V9vhdqnB4XOd-UDikSze9nPYqKhv7UtglJ-jtVFcdPcGwPQ>
+    <xmx:77jfamo15P-P4AT7XpibDJ-SJ6gvE4TmFXnwt7hwVDjx1JA5XpiX4A>
+    <xmx:77jfavkYELVsH4ZDx4xNtQfGngFabwFsJAAYxnmJ7Hdmkm1HnlrAgA>
+    <xmx:77jfaqPO3o_EI5fgw3URQf3LaAlh-ErVNdWMAMJV-zhn_4ljp-6JYw>
+    <xmx:77jfahACVby0JJUB4agFMCwB75zavk3neVw4DOdUhpzJKptKcOu7MlrG>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 26 Oct 2026 16:32:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kerylefondji7@gmail.com
+Cc: phillip.wood123@gmail.com,  christian.couder@gmail.com,
+  siddharthasthana31@gmail.com,  git@vger.kernel.org
+Subject: Re: [PATCH v7 1/1] archive-zip: refactor 'path too long' error
+ message to use Q_()
+In-Reply-To: <20261026190423.1925-2-kerylefondji7@gmail.com>
+	(kerylefondji7@gmail.com's message of "Mon, 26 Oct 2026 20:04:22
+	+0100")
+References: <xmqotsm8qsdl.fsf@gitster.g>
+	<20261026190423.1925-1-kerylefondji7@gmail.com>
+	<20261026190423.1925-2-kerylefondji7@gmail.com>
+Date: Mon, 26 Oct 2026 13:32:45 -0700
+Message-ID: <xmqqpkwwp5hu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,36 +128,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261023154851.7876-1-ogundipesolataiwo12@gmail.com>
-In-Reply-To: <20261023154851.7876-1-ogundipesolataiwo12@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Mon, 26 Oct 2026 21:32:11 +0100
-X-Gm-Features: AclHuK-BwWsLsEFOFaEozuK-XOwsZlfxHweyfmzILjFicXcD4c019tvqkUJ-7AQ
-Message-ID: <CAPSxiM-xyBNHuA5Lm=e-L6z5zu8dGN5kLwGCPjaYQT8XO9Gizg@mail.gmail.com>
-Subject: Re: [Outreachy] Microproject: Modernize file check in t5300-pack-object.sh
-To: Ogundipe Sola Taiwo <ogundipesolataiwo12@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
->
-> Hi everyone,
->
-> My name is Sola Ogundipe. I'm an Outreachy applicant for the December 2026 round.
-> I've cloned and setup the repo locally and also played around with adding a git command
-> following the "My First Contribution Tutorial".
-Hello Sola,
+kerylefondji7@gmail.com writes:
 
-Welcome to the Git project and thanks for your interest to the Git project.
+A few things.
+
+ * Please do not send the same [v7] multiple times.
+
+ * Please do not send your [v7] cover letter as a respopnse to a
+   random other message; instead make it in resonse to previous
+   rounds (either [v6] or [v1]).
+
+These harm automation.  Also
+
+ * Patches [1/n]..[n/n] should be sent as a response to cover letter
+   [0/n].
+
+This [v7 1/1] correctly responds to [v7 0/1], but if gotten wrong,
+it would harm automation, too.
+
+It also is more usual to send a single patch without cover letter.
+
+> From: Keryle Fondji <kerylefondji7@gmail.com>
 >
-> I'd like to work on modernizing the 5 occurences of file check in the t5300-pack-object.sh
-> file. I've checked the public inbox and found no one working on fixing the same issue for
-> this file.
->
-> Please let me know if I should proceed with the changes.
->
-You can work on it.
-> Best regards,
-> Sola
->
-Thanks.
+> Replace _() with Q_() in the 'path too long' error message. Although
+> pathlen is always greater than 0xffff when this error is hit, Q_() is
+> required to support correct translation for languages that require
+> different plural forms depending on the count.
+
+Nicely described.
+
+> Signed-off-by: Keryle Fondji <kerylefondji7@gmail.com>
+> ---
+>  archive-zip.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+
+> diff --git a/archive-zip.c b/archive-zip.c
+> index 6f73ca6d58..160efd878f 100644
+> --- a/archive-zip.c
+> +++ b/archive-zip.c
+> @@ -328,8 +328,10 @@ static int write_zip_entry(struct archiver_args *args,
+>  	}
+>  
+>  	if (pathlen > 0xffff) {
+> -		return error(_("path too long (%d chars, SHA1: %s): %s"),
+> -				(int)pathlen, oid_to_hex(oid), path);
+> +		return error(Q_("path too long (%d char, SHA1: %s): %s",
+> +				"path too long (%d chars, SHA1: %s): %s",
+> +				pathlen),
+> +			     (int)pathlen, oid_to_hex(oid), path);
+>  	}
+
+This is outside the scope of this patch, but we may want to update
+"SHA1" with something like "object name", so that the error message
+works even in SHA-256 repository.
+
