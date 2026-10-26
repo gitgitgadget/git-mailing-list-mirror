@@ -1,107 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.175
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793014530;
-	b=1AArreqCAQgQUWcz089VjgItiAd1L30iG+AHDK+BL9fR48mQAVGf5nzMoRSfOhFc1PdH
-	 n9g+jMWPo4JC1JoSQPrtLp+34whJXR2NDQljgIFVVsk2MbcgLSEUaq8PgREou0hlKFwU6
-	 nLofmgnWwTZ1bWKWEhjTvXIKrNr5yAIKW8HiY39fPzCZ7AdW0T4D0fQ5ub2ARJ1oRmHqS
-	 2EKpYT0vWS5Vor/lHRSp95V3VnJI/Xy2HkdgZLXvDYmgahGnzW8w9PKsyUQP7wQj7oLOI
-	 Ulks9gDAohT4Gd7mMG6gQEIz4Ym4GGgaKqmW+4lbOTItp4t/022SozEaOs7eVXu7gFA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793014530;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Received:From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Content-Type;
-	bh=TM6lrpszI/0NVcrQ7ccVWEoCVMPRUpHPO90sRej+tpk=;
-	b=Hk41CoOoJ4hWJwhE0YTmj1dJ47Kdp3mujk3o1q4ufr4mLDoJ9Qfh7dr32AU3dZvs4S+6
-	 kD/fVMtExmTqZT/E7oE9U/jvwA2wspLUZoVKewoMm8f5JcjyeB247rjZFv52BcToFYUNP
-	 wkm0QWsuTN1GP6CDy4smTB+NiHyKQJp9ST00cGKHkPsY+yhZ8WzDCQemH2WqK9W9fuS9Y
-	 JyedsBRduNrQKjCEgUiBwKLAH1RfW8wcuD6u98xLH6/XBAaq+BuNnuMPd0hmV2igZPSmJ
-	 mNWqmrerQQQeLbqhu8hqnvX613/TQuVDXf8IurSE7vzSaPV7ywpXvt3kLXY1sNOgtbw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=iiUy5Nr0;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.175
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793014843;
+	b=hWSf48mQW1hSzxvV+9hN0QmaU6KiDX7MHtIkUcPrIHWSwMP8VvOfcVX2HI5ibB8GDq0K
+	 gbMKCq5gVzk30uH7cZg4MyLNBYwyXBzUx4ebEya+6AP6lKd/AMkoev4niz05p0Br6SFVv
+	 p5UQBq1L1QkhMHpdsfzRuv3OG53Zh9whBbMTYABhvflH4doTrrFbLqvH8itd7vSHRsVBF
+	 c9JwXrWLxU3bR+WoiGV/8JAwgspuwyyNnGbCWnRON96ir2fPdpI8e32RmFy0PKxa/lloN
+	 VZNpvdIizaoqBhM6IYzy/JawTofyXlIvMkPik/ze1xgIj7uICKNp0zXC116PXWyPoRg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793014843;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=61ATsdGssm+gr3nJVOfJe9oTi8HR2XbLpHlijs5F2nI=;
+	b=rkPosKJn29yPom5fXNXtZCrj1R3n+omg4bqMAxFpFCyvJ023HRQh/8LCY0ZvZRMUOJYe
+	 yStYVuWoIkaTpQXfyJwY1zg8wsahCU5kq6e1yHCOYGyb+rSc4KOdeTY0a8y2+kIaN5BVv
+	 MsnAXmM2dkNKsmaqgm2oZf85XwaESVZ68LySlN5L86/C+yiIAJfqCQT0oJMk5Ced1RyuL
+	 xdBmqbtWriiz2oJni9wAkTo4sL1t1Zo14Cz3BaJVpW42N+n0UnuUo6HnVXqlWiMcmfBRw
+	 BG33RsdSBjeuaFczeH1WLywxRWOj+ZJnAd8O5BvRBDUX873rDOVELjd7CpMNXfrk0mQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=qmxzOrEy;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=qmxuG2aN;
+	arc=none smtp.remote-ip=202.12.124.154
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B80606A31B
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 11:35:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 34B80606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932A9606A31D
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 11:40:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 932A9606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=iiUy5Nr0
-Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-5ead5ff47caso1223823e0c.0
-        for <git@vger.kernel.org>; Mon, 26 Oct 2026 04:35:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793014529; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fwokxIw0QfaCoAKNvNRZVXmy04M4/+RgWF1RWIhLxnmRf9WU7nqtKaF1Kfqfgz6l+Q
-         grxd9bVcqFY42MO2sqo42/vpg79x1lotQ4MesiNXAKCZd9xeZ4yxbrkyqA1wxsd15SeB
-         rk4Ptb9nezgsmXVnZdic6NPM6bDkvIo+lYl8M5kITtefhz8u50UdVCTFKF0Jtd34oGQN
-         iW0i9wgGYDc3Rh85nXNPKKwxyEPRTIt1qURKH7T+3cuAa8dMUF+SUHThaGx2jZJ5aqkz
-         p8T5vkKBaiho4MPj1KnIm9e0thlR/3on9DwpNhx6GYN0yWGhxLKZ3800EY2vKK7nBBqf
-         0CKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=TM6lrpszI/0NVcrQ7ccVWEoCVMPRUpHPO90sRej+tpk=;
-        fh=oM2815uDFeV2OkG+4YpszxVPG9+1dl/C3pn4ODNyOjk=;
-        b=fysPpqlEwWbVrCTRm15Y7ildRRbEYAtlE3a1mZO9mNsCpzHsEaDpMobOXwpvHUl6rO
-         Meu63sIFk2A0VyrOWBWlJ6vy8lXVnk39wrbxt3nJxtQClQC7/RMr0oVT6PAf78og3hMo
-         /5CuciFo2SY380fXQqYFDQClsGo2TXRQ63lW1PMEIdfsahdZMCgHG0GMNqXF9UUMUvgZ
-         B6a8EOIdqpJmwoQyQuUrDcPUjg/EjJDMcQzwwN38jcGm3EkfVMoMZNzKdsvwWpWKyc0r
-         W76UOD/bCi0hKcfGvK/U8Io/P9UI5eNWT9+Lhrj8vNTnoiqueXTDEKoT2k/FkeuFXuHV
-         QUUg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793014529; x=1793619329; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TM6lrpszI/0NVcrQ7ccVWEoCVMPRUpHPO90sRej+tpk=;
-        b=iiUy5Nr01XRF8XOVGTrdAgz9Do4nt0BD4VaD1BT4abGYVG+LpLXZVZyctJe29ePs+6
-         3C+6d+FyvtXQeKbAK9Q9FVoQ6o8bgEvRBfqrs0gqQ4aSNkakmvM1nQX8wQuwKNYNR2wU
-         FE2BHYJH31FSdVct7fOT9c+orvNFrUGCm3rjlV7FbEshjPmnXpJ8I+/WI23gnjtqS30u
-         Bqy6jE/MD+fqyScYxtrELsLu/1ECMbYIbFLDY6Ftyp8PXQUwvsHcVGqXCV4BaoTwerK9
-         S7qXB6z8UaNnHQlhuy5a1CiiElSF+T37eSgjvP68063ztUMR1+2qHbP0HV/8n+0N0wJe
-         XDBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793014529; x=1793619329;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=TM6lrpszI/0NVcrQ7ccVWEoCVMPRUpHPO90sRej+tpk=;
-        b=SatyzH7GhhxZJbLF92CBdksZZtOaWmm2/Ke4trtNTpOL7T39M89xWFjpiWdJTsZaI+
-         5WOjg15yHiSQrAuRaMpIdzhvzRclQGK72bPiAVsZ+kNASpgdZF3NjelTJZTsJ/LyrOWY
-         KAYHssaKnGbg8VrH/7aV1k2TIbhUgk+nMGtRmyDCsC/iX2eHobZNUV0wpdsZXLltNH1z
-         2jml039swBk1Cbomlsr2j2Ed7e7xHIIbLYemo1f+g/lcJK4Jy+l+k7URQPXXkGx7atFl
-         bi8T91enD8oVx8CeQVHx+Lmp1xoBiXHmc2o1LxV4ybSB1lp73VZ1FAZI/sWm9E5iwcvl
-         v+RQ==
-X-Forwarded-Encrypted: i=1; AKwUvBx6roIeWOcMYHFcN4lNAcemULxty303AyagM03QALXQyFRbSAaU6wd0KWdxR9fpFTLnBZ4=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKPEwCJ40WKIklRvdbYczhvqTzB/dWV5t8RbfXqSsjuzgShdtRG
-	tINlm0eT9Mx9vXXiwFwklVslBdYac6fw7Ki8bK16WsmCEObbI/3i2nez2xVrF6KhmjpG+h9h92P
-	MuN4z9XFpEhwwgvLr3wGY0A2oLiB7UtQKug==
-X-Gm-Gg: AYBFou28ifFXUFcq/OkIDSXCmi+dYs8HY6G0DTQVscj051ueP0U7RVYw1s9SfgZGMBY
-	GBxfmBwknEd3bUS4kMnYc2Z+j3gi3eQR9++YSrdZb9LDqYuadByrHj+wcopIcMdzkN7PyLofvfQ
-	y35qZOa335Qfjr3tXgOrh7gKhEOeE9fazLO6tVuhC7wXp5uj0Cp45oxGAXBNo77+QqmNW4MX2s1
-	0WbEP6d/diQfj7COBL3uQhiJbFW/HgReh9zS/XQd0mCIVbrKJwRLx7Y9aQikvwqu/gTe8oJC2eo
-	qZX1r5g0nzLWeAh10r82aYj3Zx5txONpg8KYgXnT39MieeVlGyLfBJ/UJBCK39v2ODz0uF1yyGH
-	rYUlgGH5f/ys6+l9gfX79sJvCb9iwGP9AQk6ClvpKghrZ/NgSyqR1I5w7/nkuVUgDUmobGtqKcJ
-	dm2xJcOgzXmWdm7iCBx/GfozVbG9E=
-X-Received: by 2002:a05:6102:570d:b0:7cc:1ace:fd06 with SMTP id
- ada2fe7eead31-7ce5cdabfa5mr1618612137.20.1793014528980; Mon, 26 Oct 2026
- 04:35:28 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 26 Oct 2026 04:35:27 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 26 Oct 2026 04:35:27 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20261023-b4-pks-odb-extension-v3-0-b1bb30a006db@pks.im>
-References: <20261019-b4-pks-odb-extension-v1-0-143a5963b77f@pks.im> <20261023-b4-pks-odb-extension-v3-0-b1bb30a006db@pks.im>
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=qmxzOrEy;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=qmxuG2aN
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A83097A01E5
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 07:40:41 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Mon, 26 Oct 2026 07:40:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793014841; x=1793101241; bh=61ATsdGssm
+	+gr3nJVOfJe9oTi8HR2XbLpHlijs5F2nI=; b=qmxzOrEydKEVe0QFR1g+eaPhx8
+	Z+p8ONoJmAQzyGF6qFOYv/jACahkoZN4BQugkw/EerSKgGEx6g6Ju+ApgDa1HTWZ
+	67gPxoNQLL3LJvxHNLLHbDBWX5zIdB2lv8+axJ37dbvp5SN4115IWyQFTzr71q8n
+	o5XoRM9AZbypNKymPDvoRuM9fEMC5leUFfYEVnroHfta5/tTCn/3//l6ThUTA38j
+	5S6rl8hT0KeCzeFspo9GMRQIx+XteKPrkg/YKlgJAgYi4zF8EgfnxSqBC/Lgp9X7
+	C+HTlyJO6K1Eiqzo7xiUj1XAPNBXvBW3fFcsB9jxVBNfZSVNEJfeYVqjlJkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793014841; x=1793101241; bh=61ATsdGssm+gr3nJVOfJe9oTi8HR2XbLpHl
+	ijs5F2nI=; b=qmxuG2aNmlkxbhzWLi2DjAmNjoWmVoAW9vBkcfLw6qhBReE3Q4z
+	5Y8BWSQQk3VjaYa0wBrYyn1LphqNqd+ZH7IX2GR7MlHUOYnQ01h489j6b+GqtQ4t
+	0ZXz+l2F5acDFnuaAGA37uHboLesGEMoxxjsLcUuKTRDJ47CzGJ3xwWt/fH7/tyC
+	gc5rcNe3/0oa894FCMOgzdZBj1q9Nczlds8v109cKIkgyFHkEu65TgnbrcJCTXZG
+	U8cw0+HSrN3iOfA5cdbPpHcBhLAwFMZ/ReDd5IGdCqMMVEiHeu2IbtoAEHXQ6h+U
+	k/SnqRhCstbO2qsnbmqkTXHvB2cuoeqCYig==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793014841; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:RJO0eVfctfqFbvqPee1HcUzmqIUgXFm/qUJmXRSHhlgMZ9Y
+	L/pPVnI9hHTptqd3XgUDP44YcUZV+fu6R3SojFTXrSBYPWWh+C4zbVNCVgwAgrll
+	SdoSTlgrmcSzoWZC/KBQFyzpnTw76RVJKheCF94jr0vjIXBa6qPcLGR9sLp1ozk2
+	o80pRXIlJKHSU7REtBPW6ji1uaJw3Aejd2DhtiLadDxdHy4IeFHcXV3IQvBBlIz0
+	Z2elUxM60vGHA2DapBxtYxGuw/yvxWUBFuN0qnmnm1/alGDo3H6q3UihCQ9EOkiz
+	2bJh/zVRueQKNnZ2B+LyVR+vGwx6eTQnICn16Sg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:xop6umXNbJrzDC6BzFooQbYCVc4/HINBkQXHwZVOatg=:0DM+iDopnMF2PiBVXZf8gJ8fSo+vpDeU8V006wgGUgg=;
+X-ME-Sender: <xms:ODzfauh6czE5K0sfOilzIFX4iMaXGaHFf9CRsnnpPA8zGJhjkOrDaA>
+    <xme:ODzfamCFpq8q9ChAzMs00giJXpC8wXUAQR5ZmemkH8rxs2FihBXoBM0Jmd1dlh_iK
+    tY67V38WxlOJmxGi0QptPPB-4Ut6d7KJj97BPO9Tokq8tdmyUcETg>
+X-ME-Received: <xmr:ODzfarEXJQjPVm3-OrGW9wx246RVJ8WmcwvgHi9vu9mfPu4Du0BsZg>
+X-ME-Proxy-Cause: dmFkZTFj13MjGBEyjn+RIAl/qQ4K5FJVtk/6rD7hKjlOC1N/DYnLy3PzieXN1JYeodI/66
+    fsJZYSVM7LjKVu3oEiy4jQyQyEVwCP6UUYVzTlRIKdBYyttTY0VuLIWAxwTpsW+52fLkQp
+    EV74w7R8G7nh6D9Pd3oG3cSWPAf49haNCST+U3ik3P82tli4idN9qo1dJUxQAVPF/FVXQ4
+    3jwwvgEa9jSJCpH2V9s79fBcA/l9HfG9UQ1j+Cx9vbCzRdRvQv815LcrGLlxsJfEfJPzJc
+    CeNwasZ8LDNjCLrnUusJjsXuftYKJ+snWhobKjJ+//eZ1Gl3OXf9v6/x2pKDxghDBdcJKy
+    70o1SQf3dIA0qi4Lqvqnypxyg3qgu3FjddET76o7iF6r5b6rhtlDwVmQO9AhSGOwYlQJBH
+    e1ZlenfmySTqhb8ZGlYtZdOQvkVYoPCzMm2iEycaOxKxH7A3xFHNbHn6WdtT1vN0690F55
+    pYcAZdUch2uBHb9fgRECf53/Po73W1ITq6VPaRqh/Vbo+OL8Lh0Ts/P7ga2KQ6x18AiINg
+    7EAuuLnkW7Hq4NruY7wEc6prds3ZaAojEnNr0+gwMNg6qdWkyHoISFzpGcckkeWVAqISCN
+    UyUoeeCS73MrLsxk9LT4yDMcht63mn6kbHxkyq9wqS3eHtth5zqIoEyg1hhw
+X-ME-Proxy: <xmx:ODzfamIqYPkzFacU3mMrzRSBFo85GomOVSI8woVLdhpSu2jjJ0bSYw>
+    <xmx:ODzfanlNn09qZ7B20zqtZUyDSuiOfhJyI05hygiePin2q7HDKos-Rw>
+    <xmx:ODzfamQAka5yMKZ1Y0O-a7m1bi7acHexnr5ARbvq9E406gU452K5HA>
+    <xmx:ODzfahIWMjbX0uA5bWCgel-jpncPgKOrjNIGXSWMRXQoa-Po4wIIzg>
+    <xmx:OTzfakVFnZ2TeoHHmsQGv5IF84zhHBef6YnNpRrtaHKHImMm12NND3BV>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 26 Oct 2026 07:40:40 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2b2e1347 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 26 Oct 2026 11:40:38 +0000 (UTC)
+Date: Mon, 26 Oct 2026 12:40:36 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Miklos Vajna <vmiklos@collabora.com>
+Cc: gitster@pobox.com, szeder.dev@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH v3 3/4] log: simplify --follow following renames for
+ non-linear history
+Message-ID: <at88KXp0vhXlPhFQ@pks.im>
+References: <cover.1792701579.git.vmiklos@collabora.com>
+ <ba2dc35c77b95803f184e63cc9933e3765bd1417.1792701579.git.vmiklos@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -111,70 +124,107 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Mon, 26 Oct 2026 04:35:27 -0700
-X-Gm-Features: AclHuK8OmKlbxzEB2FDwogRsaCXz0VMOJ-0I5lZ8PtiPV83QRVBybpTZC_F1ubs
-Message-ID: <CAOLa=ZQ+25HBP5NAOQ+6TKBtNH2gSk-sH8d6DPDmxgGShowvAw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/7] odb: introduce object storage extension
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000013d538065ebcba3a"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ba2dc35c77b95803f184e63cc9933e3765bd1417.1792701579.git.vmiklos@collabora.com>
 
---00000000000013d538065ebcba3a
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Oct 22, 2026 at 10:46:39PM +0200, Miklos Vajna wrote:
+> Code added in 304812ed33 (log: improve --follow following renames for
+> non-linear history, 2026-06-22) implemented the feature by introducing a
+> new propagate_follow_pathspec_to_parent() function which adds a new call
+> to diff_tree_oid(). Also it introduces a new loop to record what path
+> each parent of a merge commit should use when following a path.
+> 
+> This was working, but fixing its performance would require adding even
 
-Patrick Steinhardt <ps@pks.im> writes:
+It's somewhat curious that you start talking about performance here
+without even mentioning that performance is what breaks the current
+approach. You mention contributing factors to the performance regression
+without really calling it that.
 
-> Hi,
->
-> this patch series introduces the object storage extension. The extension
-> is of course similar in spirit and design to the ref storage extension:
-> it can be configured via "extensions.objectStorage", has the same syntax
-> with "<schema>[://<payload>]", and we have the same mechanisms to
-> configure it ("--object-storage-format=", GIT_OBJECT_STORAGE_FORMAT,
-> GIT_DEFAULT_OBJECT_STORAGE_FORMAT, "init.defaultObjetcStorageFormat").
->
-> For now, we only support the "files" object storage format, so not a lot
-> of stuff really changes. That being said, its optional payload allows
-> you to configure a different location for the ".git/objects" directory.
-> So if you specify "extensions.objectStorage=files://objs", objects would
-> be stored in ".git/objs" instead.
->
-> The series is built on top of c51408889c (The 6th batch, 2026-10-16)
-> with the following dependencies merged into it:
->
->   - ps/odb-files-alternates at 0ba59c8453 (odb/source: drop
->     `read_alternates` callback, 2026-10-08) merged into it.
->
->   - ps/setup-enforce-repo-passed-to-create-repository-has-no-state
->     (phew, what a mouthful) at 0ba59c8453 (odb/source: drop
->     `read_alternates` callback, 2026-10-08).
->
-> Note that these two series conflict with one another. The conflict can
-> easily be resolved by just deleting the whole conflicting sections.
->
+> more custom code, instead of just extending the existing code in
+> log_tree_diff().
+> 
+> Remove propagate_follow_pathspec_to_parent() and the loop calling it
+> for each parent. Instead, record the path to follow for each parent in
+> the parent loop of log_tree_diff(), right after diff_tree_oid() updated
+> the pathspec in case of a rename. Merges are not diffed by default, so
+> with --follow, run the same loop for them as well, but without showing
+> anything. With -c, --cc or --remerge-diff, show the merge diff after the
+> loop. This gets rid of the additional call to diff_tree_oid(). The
+> rework has no positive performance impact yet, it just simplifies the
+> code.
 
-I went through the patches since the range-diff was on the larger side.
-Apart from some nits, the series looks good. I think we can ignore my
-nits too :)
+> This also fixes 'git log -m --follow': -m diffs the merge against each
+> parent with rename following, so a rename found against the first parent
+> updated the followed path, and the second parent was then diffed with
+> the already renamed path.
 
-[snip]
+So next to a performance regression there's also a bug? Interesting. I
+feel like giving a bit more time to introduce and explain the bug would
+have helped.
 
---00000000000013d538065ebcba3a
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 8592f5d29c1711bb_0.1
+> Also, propagate_follow_pathspec_to_parent()
+> started from that same updated path, so history was lost on the side of
+> the second parent. Now the path of the merge is restored before diffing
+> each parent. Add a test for this, which shows the full history of the
+> diamond case with -m.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yZk92MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM3FhQy80MDVRQXpmKzFnZDhPRURZQlAybFJSem1HcgpJbkR0L1JCU3dl
-YllSTVdNMzdRRVBGSGl3Zmxmdlp3UXJyK2ZIMi9lVi9QR1c5SjBINzZJUWM4SGtjWklscDBRCkJP
-QStKZkpROVdXWndMSkhWMkRma1BKd2IxcXFjV09OMlIwOGZZR1JEd25xVW4zM25nVlNGcTVxTkVZ
-M0tWbnUKQVZzemovV0t5bUxuRzNHNFdOU1ZIWUNzLy9EM2xwOG9LRUhMb2Rkb1RFOC8xdlNxVjBY
-Nzg2MjR3MmpCaEVJUwp3WUNNeFlVV2pObjhzOVJkeW0wKzJ6YWNEMDJkRWsvdFRxUXRPRm9SNHJ3
-T0lSZEc3WG5sNWUyL3ZaT2YzNEx3CmdRNG1USW9OeE5Hanc4UEtrYzhVbGsxWGQ3V3FHU1RwdVJD
-WmtSbWlMbElTSjNxb1hsaThVQUJRRlAwbG9xK0IKbnNkM3VXVVY5NGpHb3FSQU9Hb1hOQXdTUTkr
-a3UrNHduUXlweDJYZm5uQlRvU0tHNUYzdC9ueE9mc2JnVkxKVwphTWZUbWFiZitCeGNybU9JTmh0
-LzBDeXdtZEFFMU9udW9JaU5waFMwem1rVXFJb0pla1EzSm1VL0FnWFovZkZwClVzQ29QVmk3N2Nq
-MVJOcTdiSWhDZWFTNndJNWhKcUhJditzUDBZbz0KPU9lcloKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000013d538065ebcba3a--
+And another bug?
+
+So in summary we have two bugs and one performance regression? The two
+bugs are fixed by this change, and it also prepares us for the fix to
+the performance regression? It might be easier to reason through
+all of that if we were able to split this so that we fix one issue at a
+time, but that may of course not be possible (or just very awkward).
+
+> diff --git a/log-tree.c b/log-tree.c
+> index b4c97b86f5..c5ac6c2bcb 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -1240,35 +1215,67 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+>  	}
+>  
+>  	if (is_merge) {
+> -		if (opt->remerge_diff || opt->combine_merges)
+> +		int merge_diff = opt->remerge_diff || opt->combine_merges;
+> +
+> +		if (merge_diff && !opt->diffopt.flags.follow_renames)
+>  			return log_tree_merge_diff(opt, commit, parents, oid);
+> -		if (opt->separate_merges) {
+> +		if (opt->separate_merges && !merge_diff) {
+>  			if (!opt->first_parent_merges) {
+>  				/* Show parent info for multiple diffs */
+>  				log->parent = parents->item;
+>  			}
+> +		} else if (opt->diffopt.flags.follow_renames) {
+> +			/* Diff only to find the path to follow in parents */
+> +			follow_only = 1;
+>  		} else
+>  			return 0;
+>  	}
+>  
+> +	if (opt->diffopt.flags.follow_renames)
+> +		path = xstrdup_or_null(
+> +			pathspec_single_path(&opt->diffopt.pathspec));
+> +
+>  	showed_log = 0;
+> +	all_parents = parents;
+>  	for (;;) {
+>  		struct commit *parent = parents->item;
+>  
+>  		parse_commit_or_die(parent);
+>  		diff_tree_oid(get_commit_tree_oid(parent),
+>  			      oid, "", &opt->diffopt);
+> -		log_tree_diff_flush(opt);
+> +		if (follow_only) {
+> +			diff_queue_clear(&diff_queued_diff);
+> +			opt->diffopt.found_follow = 0;
+> +		} else
+> +			log_tree_diff_flush(opt);
+
+Nit: style, if once condition body requires curly braces all of them
+should have it. Sorry, I cannot really provide more valuable feedback on
+this patch than this.
+
+Patrick
