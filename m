@@ -1,110 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793018193;
-	b=xgX41bm2tro0GCqQF7C7Jlfa9xqo/u+KL+2d1F42KjUaE1XQEs7JeT/KgO1C7KnDPJ34
-	 49gWBzDLQV85MUWwm1CtrNykNTumhJ2xVQ+S+6N0IazCmzY0mdStrgTG9wdPtGp7Kou1b
-	 aPUuTau2IAKjy7wMY4WDXm81teVjmchgSYvc662pVvnhhjk2gOJ/6WYlcaN+jS6lmP3ep
-	 J5kb8uLBFH6G7OETj9dgf5FBer+hZn4yTgau+Azb9m2cJtXRXcXM8yQw4vYctyqn/+Xq7
-	 BEtx+gFaPCIWHdfk7IXUQ9LSDSvvQyfty+AF9/0e+eScHxLpUmXihE0Ob95VqwFfa+g==
+	t=1793018408;
+	b=lonJ9t9z8VlANPOZPbVWUxCGbj+tBPvWPp0m1cFvhx2HraLPuVB3P4W86JHQplMYsiF1
+	 wCyBh0bSGC4pHeRQtzlL4WahArhUTQDDcwe7/noTP8v06aEYDkga1hZY2W2gfR+qJVXIL
+	 fcWSIhSb9OIovnObSKVPTkhsKKgGdDQb7y0xHoT5f6JyFaeby+cEinhjWbKGhE4V+aK/q
+	 dCEkYhNChyLBBwKBnxMH8hCcmE/PPXxK2h/rCTcOKfDzwuOKHpNjz9W7yaEuFUqacHG3K
+	 sxDqDQlYBIBkxEbpxsAXGz/cQwCqYNq60IYUZqHLOBjKfyMGCxumxH4qHSPomh9kx4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793018193;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=hiuU819+isgEzBu3/deR1N8J45ZMvCr/d+bRFOQZw/4=;
-	b=lIN8/u62muPGz9mWidPl37Wb+a3CzyrYRVhCkL/g3jr4hpKoFkR936r6EveNSqWlEWeL
-	 9XthOrFeIsUPOsRSntzlWg2HWONtjyZuZtNyVlJEH+aevTYEjR4I/6MwQaZYFu6c35pjr
-	 gBDdeXtmM3ruFcIABVobX2wyW020mgnQJfgtYSPjKH6kdNN7BB7HWfaDxh3NRfMbExHTO
-	 dwdqvTJfWxbzHDvpPPFpluQl5KZ6W0X/09L07oNrNWOUMLL0LIVdz/12bZeMt2mba1t1o
-	 JpX4l6fxsqMhP8EuT6aK3rT7YtvpLMZ7ZN7VSqJ1vG1OJmjfVu3Rb9hQp40zyiJZEnQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793018408;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=6nwjNsMaPcFM+VWXVkhlVy1vxvFjhAP0ghmYlJ+FPTI=;
+	b=AK8TYY5IjrKM3UUr+lWiPJFts8ScDxGr8VmLgn2/Np+8GfA5NQvLmHWqlBJacqbCJP+X
+	 /2/6Ctrq+sNazrEnzMoZxPIKqOlf2ZiRPFyqen3yM0wl567nv+3KiWtrzEFlNcm+moARY
+	 D1J77jSoiZnrNZYrJ2r1ww9BhZZbGjmDQWdpGEm57XDYGgbJhYEv+4pF/HHbJIq7mkOKm
+	 k+tdEkcAS1R1jY+XDaJgWQuWWIj7gyQsYB3SxWu5nhK1778AXju+NyLajr+4eLZMFhIFZ
+	 9PJ3S5hDTRexEnHetwzDJy9b003ZJ8wVC/GONXr/yUBL943qtABQjhuh7Btl1DzHqzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=jvns.ca;
-	spf=pass smtp.mailfrom=jvns.ca;
-	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=Xnf0CvvB;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=wsK27jHj;
-	arc=none smtp.remote-ip=103.168.172.157
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=jgLVcnft;
+	arc=none smtp.remote-ip=209.85.218.52
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C53606A31A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 12:36:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 52C53606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73274606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 12:40:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73274606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=Xnf0CvvB;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=wsK27jHj
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 846B214008F7
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 08:36:31 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Mon, 26 Oct 2026 08:36:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793018191;
-	 x=1793104591; bh=hiuU819+isgEzBu3/deR1N8J45ZMvCr/d+bRFOQZw/4=; b=
-	Xnf0CvvBpOUAp/H6UMVajXTWM82WB7pGGezWHgcfPcZ+Rz8VQ4hJN9+aFOJ3z0Vf
-	g2N7D3mxuwZOsxOZzulnYzss2FYa5geeKpjAOE8trAuiArPJoMUwB4FfW2Mk7S0J
-	IK4+LQnAAQYy0nwTZt1L4N5Rgl30u5R5+fYw7R1QO0Nv0eKaofa7bCKO6JJdKf5h
-	lzWXfn7whm134Ts2BDAPbMKZ9x4eN5IC/6mJxxRqW0gpgdwPtIUSlTOsEgFMSOI7
-	XUqs2qGlN1RdbB4mT4QyhqAVQ7ONZ/sjgq4V8ZyANsr7YXEKmEqvIpShLUrlRFus
-	M0obbI8fAe0aVv5AWSZdiA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793018191; x=
-	1793104591; bh=hiuU819+isgEzBu3/deR1N8J45ZMvCr/d+bRFOQZw/4=; b=w
-	sK27jHjP9p5YB/0KSzsvK4BDFIWC1+jHdiLpexg517v0l/tVwGe040nqvR1Vm/Mh
-	DhACVRHILerRQ/H9Vuu3CZiLOhiJci379h94fyZLH0eMIPAc+5KWm+BlGdXCb6k+
-	Pyf9YxzPccTtRijg1lIG6ieFnNrNSyANzduSu0aghXtfi4UIpwxZ4B3TkRAtp/tr
-	FxBtWx404BFYk4Xxl1p3ztA2w9lJiBIE1W+mEYofaghDznamZttrP/rVujN6asD8
-	pw8bXZdcWyZvYMqzELs4ZMZKBFsnVCRbMTQJZap/Fv0p6UpL7snU++0pDVuho6xL
-	H8F5WDdlkYbDX3V0oRB7A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793018191; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:QKV50EbuEROPNyR5+02WCycEQ308Xw2y82O/PlHd8NU3NHr
-	Bl1gFVQBb8fEEzoRYbM7ExWHdDKEXufl1Nt+19mQJLYpy7JouHfeTqBGRGBMzp7S
-	N65sKgl0HqiQ3IR0abQjppu2va4hmTUvABb9wb6Oo8T5xX1a0b5HXT0rXdczAVPt
-	AEZy/y8POBoO+zNhpBupwdFCncEbeEZuSw98sdBBmt/CKmDnJLE7P7RkRni/yWyO
-	OvkqmN7m+8756bJknGbTgp6Q4b0m8XviLTB7TQPrYZNLsmM7Mq9iZ2G+9M3aqr88
-	WgWvkuf3YkgyQrYhPs4iBFDM71MNo/ineq6aryA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:niIYgoKD+uXWsTbT1sc775B98e/iQf57pLtl+8HZnhs=:ofou+wupLcm8divuwogEEEaDxK1FaaofZBjWAvFGpQA=;
-X-ME-Sender: <xms:T0nfanfVqQKjYm5Albf5MxBmCb203rFlKN7u3Y6BobpsueCMZHU3lA>
-    <xme:T0nfaoChW49oZTkx9u3uqQRxqVBzBUqNphUwB29u12wnED5dyNf6a0IYcgdkygG8h
-    P2B-1f6l85zVcScqG1-N1Efor4V3gGKWmF5M5cNt-n6yvWhXnQDxgwK>
-X-ME-Proxy-Cause: dmFkZTEz9wLAOlMqO4b9HKsmO2mk4oVe/AxLzxlrfSolnfYQZH1vp4AaVniONttZ5dD1Jr
-    POcI2duR/erQE9OFZm2PDt0PKO3k+DcHkoCVV8zFsadKJqeGU/f535H/rbNSL3S5FN5WpT
-    kCXs7/bdbS0MZDLag/mIplO3Q5PpSwGTB3aHFK9tGXtpm4K3G86o/PAb+4xU1MxSMoUAI3
-    aeDxRo2eopBf5tF7OOwU5lWymnabcbkV348AVlC5KPUwDdVUqjIcWBgd4bCIctqIXr2sL4
-    y9Ci5t6CWjSX1ljFksMNXcb6WARolBkfIEB74NaK20lShHj+7TB7r+lDNu/NpcFkj042O6
-    HNTfGKva/5iL8364hTIeEnWiWplqHA54oatMDaexaGMqGujOwdVhBPhOdney4M+Vr3iSGm
-    gYELOSV/Infb9crd5aOuDl3cZtaY4r0BDNfznOyxfpnmp795vsAnlFwmMmuE0JUSCe3rPk
-    WNC67BDfafJWfgWlAhwLpiKgcWEVv296oAiiLgN45iMTsYWIymJBMYBoBdbfkEg3XnqVem
-    oF6znIlhHH+zfMKwu0+o60G1Mwk44K+z/2FRsJSQZyXfBbKpKGNCFQqY6MtYO6QXvJFmGb
-    bymtzo56UMmR9hyn2fuB6AMg+7CKVOdvdhXVMkca40Iht1jVhIFD9VqocBLw
-X-ME-Proxy: <xmx:T0nfapKJFHXwcWOa0c_Caf4tKBp24GugFi0aFUSdsd17kvVUSh0MzQ>
-    <xmx:T0nfaucu3Z9-a2dD1AVcoI60_Zv1RLienWyWdKssEeT4zRSK2p09oQ>
-    <xmx:T0nfao9Rur6DWyaAAtSFZ3L6R6-_t0kGcf9aumXiDqABA7Tg2DkIdA>
-    <xmx:T0nfarpSn1tw1zeMgkU5xnHzXBHqMw5SgvKzbKE1ibIS90s3vcYHFg>
-    <xmx:T0nfasnTxx5HTTLFFSBf1Gd4MzVJm5K6CoGSnrKpHef8ouL7v1hM3QBB>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 45291782738; Mon, 26 Oct 2026 08:36:31 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=jgLVcnft
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c46d41f6af3so157362666b.1
+        for <git@vger.kernel.org>; Mon, 26 Oct 2026 05:40:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793018407; x=1793623207; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=6nwjNsMaPcFM+VWXVkhlVy1vxvFjhAP0ghmYlJ+FPTI=;
+        b=jgLVcnftsWR+N3ZzyMc2r3YjbG2MYlOFMegxQWgOfhoiVTTcrUfj9u+gHfSzg9EltA
+         tz2qCtiJtRTLOl6G6TJ+IDKBlcRcIONeILbPWJEL+N2oM3ruKC2L+s8Njnbo24S4gV9k
+         BPGrSYcMqJYgY8FXPKQvIyiJUsrOHsZjkNWsNqIQwlBKGQZ/cUD6jPToXYzS/qdrJpHd
+         eSny5OAdM+PjQ2izVR+xqCLw7AivJjrg26/t00cuS79AqmMFA2AGWfeCxcLfkg/xz/z6
+         9YwIZUeFl2OC2ctbFhjGhlNBX4kQZ8DTtQyJqu/o9FVHPfXuxyXbPEoq3JBsn8yqoOVV
+         EYEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793018407; x=1793623207;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6nwjNsMaPcFM+VWXVkhlVy1vxvFjhAP0ghmYlJ+FPTI=;
+        b=xxPAbrMcPHBxSjJ6Oq8v0hQ77CUWp8dVDaWFGzE1+itrF5Jo4eqRHUbgZ0DWLBsXu4
+         KIjFe17LdW0WH2LUxp51J+5GglF7bMqi9g+V3n2MQsdFRiP6Tl9Tng1beYNiWF20QWz7
+         RNQF0s3tU0NKEdigR9KMKI31x4Tk3D/iVuuZsd7qt6o9qABd7hKkBHWTHcv1mF+rrt77
+         0zrIb1+4ybqZZYzS0ijlX3pMTxDRaKkToEwgPri2oOhvseIb9okVEVwxSfky3qW2HRXY
+         1BPh3JscYOtcie3IUAP6uyUYs+Au9O2gMmlvxM9t3n/7t3qTBWqv88Sse5NWUGiNN0gm
+         Mv3A==
+X-Gm-Message-State: AFq9FYJfEa98P4Ap43REdm6srGRr11E3aAB9AWokuX8skadr5xiLNsWA
+	2fUCQX4K3aCQG/a2BDTpkvB91f4VjmhU7d6SH8y3YmsedC2kOTZ6MnJ9tt5vHdKnaic=
+X-Gm-Gg: AYBFou3GFxIcrTD46FIQvAJNr8L3Okn5+ZmpqJQ0FHGH8jQT0kOWDkcNKYeCt1eaBuK
+	D4Xw9s6+DrVHbn9MVyPlpDxfYam/gpO8LLAaL2tjJJ08Y6VJ6ny2NOiVkp4xD3ynOAylkuXke3T
+	FfbRHPNAxKQDm2fSpeQcr+1i7a8o/qGB7eAMpTZbdE1QFZKIADzvHoh9Ms+bEHVjDqrL9Py1xJJ
+	RPOfBy1A30cviQUtqBGduJSsNadFirmZ6PGD3Uae989eGQfFJ9mKEIOgq93jBy3KtPukRngQP2l
+	G0Wg7ydiAtLa58YUZbupBghgl41TkIgsqSmd9Pke81z9Cast4mk99qNTchGdI15kl0sAo/lxLgS
+	w+d3gYf2zrNB3cVGGv0xNL1W8Q+sFI6EQdn8Dr+HYcuf0+kgObRzm175iDTaea67vHQ97KW3ORQ
+	B5G7wAccy3LXiwuv9SeuP6eNKNxeB6x8oIYP47ZhFcfQnj9BhYTE727CXAFMTdcyJV5w2vKw4My
+	ntryVuoPXYFhcwSAjBc4ZzxJ0/hKVTXQs9ezQL6Ve3lvlbVEakVKlOFJoMa
+X-Received: by 2002:a17:906:1012:20b0:c48:9228:bdcb with SMTP id a640c23a62f3a-c489228c5eemr274281266b.3.1793018406581;
+        Mon, 26 Oct 2026 05:40:06 -0700 (PDT)
+Received: from [127.0.0.1] ([172.174.191.59])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c46bd350706sm325644566b.3.2026.10.26.05.40.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2026 05:40:05 -0700 (PDT)
+Message-Id: <pull.2237.v5.git.1793018405.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 26 Oct 2026 12:39:59 +0000
+Subject: [PATCH v5 0/6] [doc] Add new page on merge conflicts
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -114,114 +95,168 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AndINfi0Ib6w
-Date: Mon, 26 Oct 2026 08:35:47 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>,
- "Jeff King" <peff@peff.net>, "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <2564bcc2-2f78-4ea2-9b6f-c033e95983d8@app.fastmail.com>
-In-Reply-To: <xmqqtsmc44c1.fsf@gitster.g>
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
- <pull.2237.v4.git.1792764293.gitgitgadget@gmail.com>
- <486a77dbd78e111f66f8878594a30974c2abe53f.1792764293.git.gitgitgadget@gmail.com>
- <xmqqtsmc44c1.fsf@gitster.g>
-Subject: Re: [PATCH v4 1/6] doc: add new gitmergeconflicts man page
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+    Jeff King <peff@peff.net>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Julia Evans <julia@jvns.ca>
+
+Handling merge conflicts is difficult, and currently Git's guidance on merge
+conflicts isn't giving users the information they need to navigate the
+process. As usual, the process I used to write this was to collect comments
+from Git users on the existing documentation, and then address those issues.
+I listed the specific issues we're aiming to solve in the first commit
+message in the series.
+
+This patch series introduces a new manual page, gitmergeconflicts, which
+explains the process of explaining a merge conflict with examples. It also
+links to that new page from the commands which can cause merge conflicts,
+instead of trying to reexplain the process every time.
+
+Changed in v2:
+
+ * Explain what a merge conflict is (thanks to Junio & Ben)
+ * rewrite the "ours" vs "theirs" section (thanks to Patrick for the
+   comments)
+ * add git log --merge (thanks to Ben)
+ * Leave most of the content of git cherry-pick as-is, to make this patch
+   set smaller (thanks to Junio)
+ * remove the SYNOPSIS since hopefully that won't be required anymore by the
+   time this is merged
+ * Fix a typo in git revert (s/reverted conflict/reverted commit/)
+ * 's/the the/the/' (thanks to Patrick)
+ * s/[doc] Thing/doc: thing/ in commit messages (thanks to Tuomas)'
+ * squash the commit fixing the linter error (thanks to Junio)
+ * list reviewers in Reviewed-by
+
+Changed in v3:
+
+Thanks to all the comments from Junio.
+
+ * Add signoff from Marie
+ * In "For example, here's a merge conflict where both sides edited a list
+   of", add a little more detail about how to interpret the merge conflict
+ * When we introduce a merge mention "semantic merge conflicts"
+ * Say "... and any other command that does a merge" when listing commands
+   that can cause merge conflicts.
+ * Reviewed-by is not the right thing, use Helped-by
+ * Adjust phrasing in git revert and git cherry-pick man pages
+ * Reference the "ours" section in "git show :2:filename shows the "ours""
+ * "there's one file left with conflicts in it: fruits.py" isn't precise
+   enough, instead say "the conflicts in fruits.py haven't been marked as
+   resolved"
+ * Delete the explanation of zdiff3 and add a brief warning instead. Don't
+   be too prescriptive, we should tell people what the issue is (ambiguity)
+   instead of trying to impose our opinion.
+ * Explain ||||||| when we add diff3
+ * Fix example in "EXAMPLE OF RESOLVING A MERGE CONFLICT" to make it
+   consistent with the other examples
+ * Replace "configuration option" with "configuration variable"
+ * Mention --skip instead of saying "the most common ways", which is
+   ambiguous
+ * Add a pointer to the extended AUTO_MERGE sentence
+
+Changed in v4:
+
+changes to the content:
+
+ * use Junio's much better example for diff3
+ * clarify in the commit message why we're not mentioning git apply: to
+   avoid dealing with patches (thanks to Junio)
+ * adjust the wording around "multi-step operation like a rebase" (thanks to
+   Junio)
+ * Say "see git-config for more" in the description of zdiff3. Like Patrick
+   said the explanation of zdiff3 is not really satisfiying, but I don't
+   know how to write a satisfying explanation, and it's better to have a
+   short and obviously unsatisfying explanation than a long unsatisfying
+   one. Added a note in the commit message that perhaps this should be
+   improved in the future. (from Patrick's comment)
+
+changes cleaning things up:
+
+ * add periods at the ends of various sentences in an attempt to be more
+   consistent (thanks to Junio & Patrick)
+ * Adjust the formatting around the [NOTE] to make the CI whitespace check
+   pass
+ * Replace a couple of instances of "code" with "lines" (thanks to Junio)
+ * Fix Ben's email address (thanks to Ben)
+ * Remove the double signoff (thanks to Ben).
+ * Make the cherry-pick commit message more accurate (thanks to Patrick)
+
+Thanks to Lobo, Adam Svahn, Louis Vanier, David Turner, Ben Zanin, Salih,
+and about 12 others who gave feedback on both the original git merge man
+page, as well as the proposed improvements.
+
+Julia Evans (6):
+  doc: add new gitmergeconflicts man page
+  doc: git-merge: link to new merge conflicts guide
+  doc: git-rebase: link to new merge conflicts guide
+  doc: git-revert: link to new merge conflicts guide
+  doc: git-cherry-pick: link to new merge conflicts guide
+  doc: git-pull: link to new merge conflicts guide
+
+ .gitattributes                       |   1 +
+ Documentation/Makefile               |   1 +
+ Documentation/git-cherry-pick.adoc   |   8 +-
+ Documentation/git-merge.adoc         | 125 +---------
+ Documentation/git-pull.adoc          |   3 +-
+ Documentation/git-rebase.adoc        |  13 +-
+ Documentation/git-revert.adoc        |   5 +
+ Documentation/gitmergeconflicts.adoc | 339 +++++++++++++++++++++++++++
+ Documentation/meson.build            |   1 +
+ command-list.txt                     |   1 +
+ 10 files changed, 366 insertions(+), 131 deletions(-)
+ create mode 100644 Documentation/gitmergeconflicts.adoc
 
 
+base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2237%2Fjvns%2Fmerge-conflicts-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2237/jvns/merge-conflicts-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/2237
 
-On Fri, Oct 23, 2026, at 3:14 PM, Junio C Hamano wrote:
-> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> Things to potentially improve in future docs revisions:
->>
->> - The explanation of zdiff3 is unsatisfying. It would be good if we
->>   could have a clear example of a case where zdiff3 is helpful and a
->>   case where it's harmful, and if we could give a better sense for
->>   the reasons why users are actually choosing zdiff3 over diff3
->>   (or the reverse) in real life.
->
-> Is this a stale comment?  I think you reduced this to just a side
-> note that says `shoter but ambiguous`, which is probably good
-> enough.
+Range-diff vs v4:
 
-It's not, but I'll delete it anyway because I don't think it's adding much.
+ 1:  486a77dbd7 ! 1:  8b526e2bd7 doc: add new gitmergeconflicts man page
+     @@ Commit message
+          there are other ways that merge conflicts can happen to avoid getting
+          into the difference between applying a patch and doing a 3-way merge.
+      
+     -    Things to potentially improve in future docs revisions:
+     -
+     -    - The explanation of zdiff3 is unsatisfying. It would be good if we
+     -      could have a clear example of a case where zdiff3 is helpful and a
+     -      case where it's harmful, and if we could give a better sense for
+     -      the reasons why users are actually choosing zdiff3 over diff3
+     -      (or the reverse) in real life.
+     -
+          Co-Authored-By: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
+          Helped-by: D. Ben Knoble <ben.knoble@gmail.com>
+          Helped-by: Patrick Steinhardt <ps@pks.im>
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +    "cherry",
+      +    "mango",
+      +||||||| 1c22e48
+     -+	"banana",
+     -+	"cherry",
+     ++    "banana",
+     ++    "cherry",
+      +    "mangoooo",
+      +=======
+      +    "banana",
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +----
+      +
+      +With this view, you can see that both sides fixed a spelling
+     -+mistake in "mango", and each removed one fruit to the list.
+     ++mistake in "mango", and each removed one fruit from the list.
+      +This makes it more clear how to resolve the merge conflict: since one
+      +side removed `banana` and one side removed `cherry`, it would probably
+      +make sense to remove both from the list, like this:
+ 2:  6862cb4f04 = 2:  3dc763a2a2 doc: git-merge: link to new merge conflicts guide
+ 3:  2bd9850822 = 3:  02351af1b5 doc: git-rebase: link to new merge conflicts guide
+ 4:  53083b48a3 = 4:  10f8947b68 doc: git-revert: link to new merge conflicts guide
+ 5:  92cfdf260c = 5:  e1fe1c4aa3 doc: git-cherry-pick: link to new merge conflicts guide
+ 6:  bbbf44aff1 = 6:  4f434f5acd doc: git-pull: link to new merge conflicts guide
 
->> +[[diff3]]
->> +DIFF3
->> +-----
->> +
->> +By default, Git doesn't include the original code when formatting
->> +a merge conflict. To include the original code, you can set the
->> +configuration option `merge.conflictstyle` to `diff3`.
->> +This extra context can make it much easier to understand what's
->> +happening in a merge conflict.
->> +
->> +Here's an example of what a merge conflict would look like when using
->> +`diff3`. There's an extra section (between `|||||||` and `=======`)
->> +with the original code.
->> +
->> +----
->> +FRUITS = [
->> +    "apple",
->> +<<<<<<< HEAD
->> +    "cherry",
->> +    "mango",
->> +||||||| 1c22e48
->> +	"banana",
->> +	"cherry",
->
-> These two should be indented with spaces the same way as all the
-> other lines in this list.
-
-Will fix, thanks.
-
->> +    "mangoooo",
->> +=======
->> +    "banana",
->> +    "mango",
->> +>>>>>>> add-fruit
->> +    "orange",
->> +]
->> +----
->> +
->> +With this view, you can see that both sides fixed a spelling
->> +mistake in "mango", and each removed one fruit to the list.
->
-> ", and each removed one from the list", I think.
-
-Thanks, will fix.
-
->> +This makes it more clear how to resolve the merge conflict: since one
->> +side removed `banana` and one side removed `cherry`, it would probably
->> +make sense to remove both from the list, like this:
->
-> The reason why removal becomes the correct resolution is not just
-> one side removed, but the fact that the other side did not touch
-> what was removed by one side.  The "indifference by the other" is
-> what makes one's removal the preferred action by the semantics of
-> 3-way merge.
->
-> So, let's rewrite the reason a bit more tightly.
->
->     since one side removed `banana` while the other side did not
->     touch, and the same happend to `cherry`, it makes sense to
->     remove both from the list ...
-
-I tried to edit this (like below) but only ended up removing "probably".
-But "probably" was there for a reason, since this is a made up example
-and in the real world you would really need to apply some judgement
-to know what the right thing to do is. I left it as is.
-
--side removed `banana` and one side removed `cherry`, it would probably
--make sense to remove both from the list, like this:
-+side removed `banana` and one side removed `cherry`, it makes sense
-+to remove both from the list, like this:
-
-> or somethig like that.
->
-> Other than that, I did not see anything questionable in the 6
-> patches.
+-- 
+gitgitgadget
