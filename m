@@ -1,94 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.171
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793029483;
-	b=xxJrxOOdo2oAxMQySg3AfIMKi50DhEqjAUgOifsVetQk7BGif2CNR2dduEEeycrg2AnW
-	 4EZ+3Nmee0GfqfimFHpxO6+3YMxS7XgAlpbT2jIOMW+fI5akMiUrBXlTs/rjbV/0JJYtM
-	 ToM5slfFm6SUpS48WxkkfMwBe8QESXv8yTGColkQGiPSpQKoK5q7LldUSUtxI6a9zepjl
-	 ksWAot5PWjcvhqzFD31tuPbUEDkMiCyjuiTLQR0aqtIaa2VqCIIdjy45YxUj1aeP9Bmh8
-	 0nfb8meCfXhqOqYk0VrmKjjuEZw7Pa5TdgJ/BnRHNWvguO5Wk9G0hDVcqRsOtYPpM1w==
+	t=1793029569;
+	b=0BFKZpZhWRIZ6Kb5us1JOWYyjDthehczbRRFHg1h0B4S8R4s15kY7bTZlgCELNm8z1jv
+	 j9RA3Oten1iLZpAcaP66dAMtx/eNAcjsag8UofsEHLLjikapiVreRdxoKTORKhjL78bwl
+	 pFaxw7aw8UgIEPU7RPm5Aal7GltvISwlFmffpUszmIwwyYTPpiWKEiwT63UnZUNGtPkfK
+	 Y2IX8Y0xbJbkEfR6eb/Q0s1qXN8y/LrKiqMOWdNhDhpTKb5e3WR7mnLidB+CtVM1TPBs5
+	 LKNbVnL+Mi9Rir9J9F9uI4foNGfC+w0k1PyPQkI3UYLSKhiYChh6XP5/gXfm7tV5RAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793029483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793029569;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=GpQ81czZDk0br1AVhto2WkP+jqUIUNjB2eT+qPRkCJo=;
-	b=Uu+FrOW9tZyBkmVoHDD+4qLOStzcL2hpj0SKGXrKNn5nuuPVSBjIWKr7vS6UWQrJqh3s
-	 GcX9YmnwgcmxbWngUxbABKexT4GIztm4nd/e+F1enzr90ia0cNGpjGGBSlMo53ePVJpDJ
-	 B0Lnjmims/dNKPnRYSlwdsnmd2GAKVsZjsl2luk/9uHI1qOG/46w2j97IJm+KJ/4AfHZi
-	 ZRA14B/mWbfOwBXSyyIkvS0mypnXlGswJvpD7PxT8y7uhxKkyimxHigorTqPR9NoQEUx5
-	 OMyGB9nQY2qPjrKE1uRFnyLKU9q5Oassfw+KMoLKBkikkgolHZTKgYL1KB/48nR2Q3g==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=Io6olrFpWm3VR9CKRHylxTxnyxAZwzgWOusEfeW8LAE=;
+	b=pmY0xwDkC+eSsHO7ZMc5MrhIjONgIs9SQjTba6tUoifu9U4iyXP2jt3J3dP6l/7NCepA
+	 +AMIu1hqMcvSfLh6UjqZOacbKdmx4E8N9UVJh6n5eWuNQkKRmgKo46ZZF146apnkmcKy5
+	 Diy2bQbAvsGbbIIPU4S7l8qAntTKtgSh/Jmg2VsMWpSbyV5TItpt7n64HhwnVyZp2zuDo
+	 LeHkGXwJ1MAyQ1eedSxjPVymq7kS8I4rEo+yoxYCMcn8UFLIooQWH02ppC/AitsJx8erw
+	 CdpF3U+GmNOfmq1o8558UsBz97N9pqZ5f1pKjaD93F4NskXH/CQMRrRVLkwNLBsCZ1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WWe2+Tvx;
-	arc=none smtp.remote-ip=209.85.210.54
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ehgmGgCR;
+	arc=none smtp.remote-ip=209.85.210.171
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40D5606A31B
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 15:44:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D40D5606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE870606A31D
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 15:46:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DE870606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WWe2+Tvx
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-823b938464fso2335458a34.2
-        for <git@vger.kernel.org>; Mon, 26 Oct 2026 08:44:42 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ehgmGgCR
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8a06c60065fso2418146b3a.1
+        for <git@vger.kernel.org>; Mon, 26 Oct 2026 08:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793029482; x=1793634282; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=GpQ81czZDk0br1AVhto2WkP+jqUIUNjB2eT+qPRkCJo=;
-        b=WWe2+TvxkE/OZ1kiKuNT+CmE9ZH3pWVUVGuJ9sEk1PsQHhK8K3L+aSYyf7Zl2Ypsa+
-         6IgfhJAW8zf8aUsUkf0+39EKW02DzlGYV1/Sh5xym6emBoD2iuE4Aep5dHvZk4635Ok7
-         1dsUBiF5Ki0dilDAgCaSFeZg3fF83EkSIuia9zaY3345lkdGpcpA23OglRc7PcuySOob
-         /9O6plxFA99Y6AS4BzOftrp2qINAxA1t2Bn6a1vKtylAsFhjnQJLK7tg/zXXtl6fOJd1
-         3KQTqaY+Y7hmJP/vW4NtjplRDiSxFt4rsilMB94Lzm9HrBTgRBzyU+z73nz84+3a0+6P
-         rpdQ==
+        d=gmail.com; s=20251104; t=1793029568; x=1793634368; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Io6olrFpWm3VR9CKRHylxTxnyxAZwzgWOusEfeW8LAE=;
+        b=ehgmGgCRgf4IRsEHULAK3sBvp7aeo7J3ieIa5QTOjqinzqfnwHaCTxsqSMPMzN1RHm
+         RWuUEEgqqoxmsRj7pX77HaVH7qDckjHkHybyGPeroFV6yQxZ76CazKaHZa+Db6BmmwUk
+         XmK0WPv0VjgO+smuer9zSwa/T6SancFdM04QszruUL8wCnALUHHY79ktnyNWJjkqMGzJ
+         khWUHjo41Gs0mrbxsGngZc0zDg4cLveeyo8V93jnn4Cz69OJI8znju5/Cvx5rNCFOeQF
+         10WD0b4TYN6aCS5QT6/STjUM/XuDP/nOCPZ5qrJNwofvZZE7rzZDncy0Rq6nRrs9UDbq
+         H9yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793029482; x=1793634282;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1793029568; x=1793634368;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=GpQ81czZDk0br1AVhto2WkP+jqUIUNjB2eT+qPRkCJo=;
-        b=D0eth1rpi+M5AVkxdhiBdUh3YJP+0nlPSEL0yh1xD9k/qcHmXtQGTAHqWwApPWBTEd
-         Jf/FUG+e4Vi8b60f3/TQwJMN+ku4Zxr/GNwBQMDHdPpLTMl96X8t0ACoPT/59g5bCvuN
-         8pPjMbDiY6ksalM3293JeWkj6SPw+iJlcJu3edFxGGxXH4iD1L28wla8bouPG5ju8UIT
-         oFKKAKPTFHC9hM+LMYTOD1wTlFkRMXBS6p21B8dyQ628gMvii4eDr0woaG1QeqOBlV1x
-         W/MU+d20ybM+9azRexZs2RkBGdJwCccEMrzXHufZVCAZOSVrBiVdpmkuO7n/15iAaCT5
-         H3jQ==
-X-Gm-Message-State: AFq9FYIA2bgneIPfvG811TiPvkauPWn9M4d3csJpQQwllgRCpLDNoZhY
-	Mkk2+GCA4v65C8YUJudxOpUpVg1GcQz7LSaZe4RNlGIdejGBe0YIf4ez
-X-Gm-Gg: AYBFou3jJv985DKngPpc15+wA80goJG9y9JAGm24yPKGZo3uNmDZkE3MpNo0hYiqtK/
-	Dd2gFpxlya016/AI9c76ZRc6QO20K981Gdi61LU6eH2UTkHtqM0V1qiDiBOz0MRzGnha+pCHE8D
-	vHLXlSNb5i3w4kxm6ABGJniVxgywAxLVpkHeZc91YZnQDcBdkGfCr3TauHu/yRTzKz15FCHQC0Z
-	O+Ie2GB7JbjjcK/ytmbmVUnpqSif5yyxkPW35vh4ieYDsfe4Hq8JP74BfyC78hnL9sQeF5lVvNx
-	7TPrkyS8owJFEqCLwHMZuuBCf1k5OitnEm3hFZsMzIzX60+ZK5Sc5Awc6873g8MvXjmhH93y5VD
-	nKrf6hbINEJplJhHClWpvlEz45x2WRXlEOahYlXvy5K2FXbRyQyD/2DtTg2inTOIM9e/Gl2HEjy
-	xG/4HXzeiXfTiQFqhQ3xg99ke5KV1gVhGKfnhFtz8EYhSUyg3woc8n9e7aFRfouJkHZc28pqBkP
-	QJ9nK7DqotoRaFoc6HXiNoZRE7Vt1Dy6YY8v1GHq/wK+Dkj9V7dE/PBB8sfGGhxhevmL9phEpQF
-	YKhI
-X-Received: by 2002:a05:6830:640e:b0:81b:ac5b:ea17 with SMTP id 46e09a7af769-850fedbbf50mr5936753a34.16.1793029480648;
-        Mon, 26 Oct 2026 08:44:40 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-850fa99ccfbsm8240887a34.5.2026.10.26.08.44.39
+        bh=Io6olrFpWm3VR9CKRHylxTxnyxAZwzgWOusEfeW8LAE=;
+        b=h3eOdMwcRYTacMt0PsjRWRQneoU6U57qd3LdQcEI2OOSNQDeshVFqBj7okZ0TR34lS
+         2G2IMOl7AayVkLkqOarLn/MudHD7MWp/mGdHwVOjCdIj6mBCC+zmAN57udX8PkFFGsZO
+         GNw3E6pgjyWveILZfq9uZtH6gyFB7XqoeHf7Zz2j8bJsZSdnLCHSVmwzqz1lPU2YBJmx
+         8sJxrnAOlepIN5fGjnoFkvY4FKmQLKd5SL0BKPDtJLkDRzqPZ3QXqN9YnVVNOlFw8fJI
+         5alnvqr8Bh2coM+Li6+dux9quvD0absG6ZKTGWg5jboy0SCwmgeIE9EyX0U/iPq21xgy
+         35Sg==
+X-Gm-Message-State: AFq9FYLEXZHiSmPMkyfZmjjUTwKxFYRD3Byt0usNwI8hIHKNygVGmXxD
+	h6VvCnGHG8O3iwfk/t6GgOxSWciPJ28VgvT1OQ7PlfbLM+aiE7+BxsyHxJQm2CGh
+X-Gm-Gg: AYBFou37NBwS+PZZIT2vapxJePRR0QUYUNl3bKl75HidR/p1eyxvdcHz4dZ5JSK/L0M
+	UmFOVjkXSGC6HjYfh2aiS6L6HceB6wh7ItoaedXfgtRDQwrMcOhgFS79LRWNSjZ5NC/7aszmR/i
+	M7WpF7YsUkXa7RiylSXNtZcjsr9YYV8rl7YUrgZuqYp29N/TFzPwNX3VF5jjAGGsbZUs3w+I04b
+	hA/y8eoo5e7jPEFwqQL8hXwFxAeWanFlrpdo7pBeADA17qyEv7YTjjLKM8NiMnhPepmDIsRupSb
+	ymXDPiePZmFsQ6PW1lD3cxdjLNfBzPE7T/sPRetmlDQIl+b6D4b5BElk/WTCIDiSs41Hx+fY2xf
+	47NGy4RubudGt/EfjW1STLNXXvlpI5HY7aLGJ5x+cKbZteLAhgnyLJTXPpcTtvoyTvYAlXYyoB9
+	nBYRxdjMEtSZrnmCx1BCVL7vIAbAGhZtiCxqWBbMvsaI83GZ1juqM34Ah/OCaE4+c7i1OriQA5V
+	zkj2ZdZ1B7RynKRsgiQDkW30yzas+Jj8Y69kD4+V3SSwy1eIMyRANEMy5EM8r9I3tS4UXFZFB4m
+	QJVDN9JVLdLEX8kXuA1DkYun9IKqqyY=
+X-Received: by 2002:a05:6a21:3981:b0:3e3:1013:4651 with SMTP id adf61e73a8af0-3e7bfc13c06mr5084204637.61.1793029568159;
+        Mon, 26 Oct 2026 08:46:08 -0700 (PDT)
+Received: from [127.0.0.1] ([20.171.34.166])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a5863826c4sm1137316b3a.41.2026.10.26.08.46.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2026 08:44:40 -0700 (PDT)
-Date: Mon, 26 Oct 2026 10:44:35 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v4 1/4] pack-write: make index-pack output comment hash
- agnostic
-Message-ID: <at9v9p64l72xFEi8@denethor>
-References: <20261020132900.1208343-1-jltobler@gmail.com>
- <20261021182528.3055494-1-jltobler@gmail.com>
- <20261021182528.3055494-2-jltobler@gmail.com>
- <CAOLa=ZTnEJDPB6_fdFQFcM=zV21HEZ4gzzhWqB=A_euSzUut_w@mail.gmail.com>
+        Mon, 26 Oct 2026 08:46:07 -0700 (PDT)
+Message-Id: <84157f543eebc2ed347dd2165ed6046305e9226b.1793029565.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2281.git.1793029565.gitgitgadget@gmail.com>
+References: <pull.2281.git.1793029565.gitgitgadget@gmail.com>
+From: "Marc Strapetz via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 26 Oct 2026 15:46:03 +0000
+Subject: [PATCH 1/3] t5516: record redundant blobs after rebasing
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,45 +96,83 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTnEJDPB6_fdFQFcM=zV21HEZ4gzzhWqB=A_euSzUut_w@mail.gmail.com>
+To: git@vger.kernel.org
+Cc: Marc Strapetz <marc.strapetz@syntevo.com>,
+    Marc Strapetz <marc.strapetz@syntevo.com>
 
-On 26/10/26 08:01AM, Karthik Nayak wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> >  	/*
-> > -	 * The first thing we expect from index-pack's output
-> > -	 * is "pack\t%40s\n" or "keep\t%40s\n" (46 bytes) where
-> > -	 * %40s is the newly created pack SHA1 name.  In the "keep"
-> > -	 * case, we need it to remove the corresponding .keep file
-> > -	 * later on.  If we don't get that then tough luck with it.
-> > +	 * The first thing we expect from index-pack's output is
-> > +	 * "pack\t<name>\n" or "keep\t<name>\n", where <name> is the hexadecimal
-> > +	 * name of the packfile it has just written. The line is therefore five
-> > +	 * bytes of prefix, `hexsz` bytes of name, and a trailing newline. A
-> > +	 * "keep" prefix tells us that index-pack has also created the
-> > +	 * corresponding ".keep" file.
-> > +	 *
-> > +	 * In the "keep" case, we need it to remove the corresponding ".keep"
-> > +	 * file later on. If we don't get that then tough luck with it.
-> 
-> We start off saying we expect either '"pack\t<name>\n" or
-> "keep\t<name>\n"'. But the last line makes it seem like the latter is
-> always expected? Is that the case, or should this comment be moved to
-> the caller in 'fetch-pack.c'?
+From: Marc Strapetz <marc.strapetz@syntevo.com>
 
-Even though all callers of this function specify the `--keep` option to
-the git-index-pack(1) generating the output, it is expected that the
-output may be either "pack" or "keep". When git-index-pack(1) tries to
-create a lockfile, but one already exists, it simply ignores the error
-and returns a "pack" output line. The last line is from the original
-comment and indicates that when we do identify that a ".keep" file was
-created, it is something the caller must handle later on.
+A forced push of a rebased branch can resend an unchanged blob even
+though the receiver has it through the advertised old tip.
 
-The intent of this patch was just to update the comment to be hash
-agnostic. The next patch splits out the `read_index_pack_report()`
-function from `index_pack_lockfile()` and the last comment line is
-removed accordingly. So I'm inclined to leave this patch as-is.
+Add object-count tests for --force, --force-with-lease and forced
+refspecs. Confirm that the blob is unchanged by the rebase and record
+the current three-object pack: the rebased commit, its tree and the
+unchanged blob. Disable push bitmaps to exercise normal enumeration.
 
--Justin
+Also cover local replacement refs, which must not cause objects
+missing from the receiver to be omitted.
+
+Assisted-by: GPT-6 Astra, GPT-6.1 Sol
+Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
+---
+ t/t5516-fetch-push.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
+
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index b982b209bf..a46ba91ba0 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -193,6 +193,49 @@ grep_wrote () {
+ 	grep 'write_pack_file/wrote.*"value":"'$1'"' $2
+ }
+ 
++for push_args in \
++	"--force origin topic" \
++	"--force-with-lease origin topic" \
++	"origin +topic"
++do
++	test_expect_success "push of rebased branch with $push_args" '
++		mk_test testrepo heads/main &&
++		test_when_finished "rm -rf rebased rebased-push-event" &&
++		git clone testrepo rebased &&
++		(
++			cd rebased &&
++			git checkout -b topic &&
++			test_commit feature &&
++			git push origin topic &&
++			git checkout main &&
++			test_commit upstream path1 &&
++			git push origin main &&
++			git checkout topic &&
++			git rebase main &&
++			test_cmp_rev feature:feature.t HEAD:feature.t &&
++			GIT_TRACE2_EVENT="$D/rebased-push-event" \
++			git -c push.useBitmaps=false push $push_args
++		) &&
++		grep_wrote 3 rebased-push-event # 1 commit, 1 tree, 1 blob
++	'
++done
++
++test_expect_success 'forced update ignores replacement for old tip' '
++	mk_test testrepo heads/main &&
++	test_when_finished "rm -rf replaced" &&
++	git clone testrepo replaced &&
++	(
++		cd replaced &&
++		test_commit old &&
++		git push origin main &&
++		old_tip=$(git rev-parse HEAD) &&
++		git reset --hard HEAD^ &&
++		test_commit new &&
++		git replace "$old_tip" HEAD &&
++		git push --force origin main
++	)
++'
++
+ test_expect_success 'push without negotiation' '
+ 	mk_empty testrepo &&
+ 	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
+-- 
+gitgitgadget
+
