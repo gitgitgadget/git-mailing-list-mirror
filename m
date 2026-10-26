@@ -1,59 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792999629;
-	b=iSLE2zzlkMTBi/s9e+f7NCBUE1S+7lJqgeYltiTsHJquVyf+Fb5iwnS+ePh045DD8fMq
-	 FEn0AGI+oJlq8P3SrvfISzoBIQ5AYqERHY9jflQYB2yyiBFa3RedPvc68t6pN49d/lXPr
-	 /AQr6qe2pe/sxCx+ck3mhKzpi/Qwa+sUz2DYjKYJ1jJWpFXRTm28rfa1WJzBoR82uYk7l
-	 ztx2zjQ1cofgVNVqNqmcF3XU7klJ2yt22DYumlzvjO202MpUtnpA8tvxJUTkeNK/PQgTO
-	 cF9haiAT5Jh3g3z6BJlkX5w2ypRuZzmBCkcgOC9o9eYmCmkq2CPIHxwDb8HpUGlYODw==
+	t=1792999708;
+	b=0DDp3vyGLuMsq+R73VQBex/yRwbOZ3D7+/rAQGiGLYlg1xzBuaHcCGBGDtGS/9KtqnBc
+	 IzlE394O6doPCjXteZGViAxWJUYwLwBTtC3igw/1U5y6VNdb1QxTZgptOTa5/teMUDj/d
+	 Wx7Gr0RaKb9wiVfpeE+ltP0IZBIV/k/NQ3nB8AIWktUbr817aEgjFjyX+IzSlya6RJ4c4
+	 ogFGcQDdEipK4oqZfjJOgMjIW0cW+GisKpCPWxxO6Q9xujclLAE3qvi7RO2qhj0zWeamV
+	 MKFiYEwdQlX8VEnqf9S6B9/L3P6+SG7rtiybwvfQiGLmcSxiSfEETU+b81PIw1cZvOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792999629;
-	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Date:From:To:
-	 Subject:MIME-Version:Content-Type:Message-ID:X-Provags-ID:X-Spam-Flag:
-	 UI-OutboundReport;
-	bh=e5/LkA4rJbshljquLwr6XMc6P85JWTOEZ71NH1YOEQ0=;
-	b=IHMeKTomuxMBkPWms1jtzBA8A0Oix+jcm839cVDB8AFgsyQKa9HTPRGt3ocEkHukq48R
-	 iU6wPmkiI7DZTWiQ7kU3rEEOVV0aSplhS2+b2fgj25tfdcD1QkWCOowd0EOiajfdHYOAe
-	 RF2bepJgLPbF9X++8tTJeH2JRyzWpaBxUzm6vlBeACwv58j1I7YioLlf5up3eD3hTdAza
-	 Ql7GUpmnxXIqBAHqj137IRTUzxZYFIBQHeXqZc0IyX8MEyotQoDErH+ZIwkX0qUEU2Wbw
-	 zjW1nSk3hDze+hD2mTnZFkgyODxIiIiazgjEuIRvJaVMugqoYu7eWAtUi79Y38MdbhA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792999708;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=y5idyQIzYP+mADOGGocgk6CT2YPihrJeZxFwKk2zoqo=;
+	b=mR3Nk9lZNS61QMxC/pf68Ui6laa6/lXkEJkfCtKM5wmXaWfaze9Rzp2Yn8QUlfw2sKFF
+	 xN8oLx7CNJEMnpfxRwtVzZh7JOv5cSyjDUvL1Bh6HPwfElraI0a3tlYrwK7LXCCKctQ0Y
+	 w8FbRii2dD+0yyFXsb+hG91euz99TnEayYCMOqrCig/j6gX4YFd4blN4iacHu9ITKRteJ
+	 F6Q2jBIaev6zGaBNQUg/+xFTY1uOTcQw956hrWPIsRwilSj2Q9ol+bLbkeWLHok2z9jWe
+	 M30RNaoG+lCSsOL6k+WSSGu4e/C2cfDT6ZU66TUOQJQoHMgHufV9EblnFGC+22/k97w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmx.de;
-	spf=pass smtp.mailfrom=gmx.de;
-	dkim=pass header.d=gmx.de header.i=johannes.schindelin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b="YPzw/3YC";
-	arc=none smtp.remote-ip=212.227.17.20
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=rdHMZOtt;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=NaNGcfF2;
+	arc=none smtp.remote-ip=202.12.124.146
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D73606A31B
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 07:27:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2D73606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC198606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 07:28:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC198606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=YPzw/3YC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1792999614; x=1793604414;
-	i=johannes.schindelin@gmx.de;
-	bh=e5/LkA4rJbshljquLwr6XMc6P85JWTOEZ71NH1YOEQ0=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
-	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
-	 message-id:mime-version:reply-to:subject:to;
-	b=YPzw/3YC09U4C8srQIP7xjhGm7K3xFHWWFBKO9D+yS69Ta34XVyBkqkcz9S6avzz
-	 FfOEMDbLlFJdAf/wmNdVgAhTJKOx+1PCAHTeXV1tEZWlE1Dx1luwkdUCr9PkcQb/L
-	 iWkCO14C8azqTmjz9DnYKzBricUpjEujloTOWN9dGyHd7kcaCX5b0/mJN3bf8dhO6
-	 YWMxUVFUm1f0NHVRok5+xmEXK6z1vve3EviR0HB92Yzih3YadQ44pYrDINI74W5vJ
-	 U/rTMNeaL2mhkp/J1aZWfgTM6TkXf67Sj3Oh6rBXEWtsJX2Vl5kRTaXDrhTyUN4DB
-	 TAGsRAX5kaS8KDB1pw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQe5u-1wxgdf3QfO-00Sd7k; Mon, 26
- Oct 2026 08:26:53 +0100
-Date: Mon, 26 Oct 2026 08:26:53 +0100 (CET)
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.56.0(4)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=rdHMZOtt;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=NaNGcfF2
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id A68F21D00235
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 03:28:26 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Mon, 26 Oct 2026 03:28:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1792999706; x=1793086106; bh=y5idyQIzYP
+	+mADOGGocgk6CT2YPihrJeZxFwKk2zoqo=; b=rdHMZOttVglh2zvJapAQ1ibupM
+	3CV8VnIkiaert1+BpAQi+/gchaIyISQE9Fwfm4PxBPykO+niUx4e7gNtAUPj+to/
+	yAR7kUBZNJ75vGydyPzBVxwvLhxUphUHEG7QOkl/SGiL/VnBEYSFiKXjienwLIE6
+	L6hg2/bYxQ2efwG5offq7etBVjk4DH5jGEEe2HrPFiD9TO9fazCAF6gxawZwgQPe
+	aSJ/TBGiTSzAT8JZ38Lbppvmip/t7NkHfN1zYDVqM+WF6pm6SBZkfZELy4WtN1dz
+	KiYx5DpOjfrQQjCvYj9Rq1h5v8ZlTyqXX3PCfDHDDcjDWhZA/RHG4kbtfG9Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792999706; x=1793086106; bh=y5idyQIzYP+mADOGGocgk6CT2YPihrJeZxF
+	wKk2zoqo=; b=NaNGcfF2R3PrJg8diUBh/GfwMSeKRUnIJia6Ps6qx2Oa+UH+DpK
+	EuJwlXw6zK7L/cMoGX/rE3HN9UtlVhEijJNa2RKROHfCKrg2s0c+ffixEka/2VI2
+	NsMip7j+zK+Pu7Tcz6r8RbNKAXgJZVPwaxYq+JB/0ep5bOHR5um1og1j5ze7WKLc
+	l1nO5vMDv7rIhoeEkVjrWKJlYpp9E3MKodBiM9p3ClFcmcWM+xuRhRixMFyfrSv9
+	1kcmuFV+oV0UANNuYnlq6o5P0q7wlQl2h5BBOLfP9Z8xTkjLpW0ZeqpCHIH7AAQQ
+	mBch3BF2YfJESFTUDjtDb9pHV1uZPFTGNoA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792999706; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:JCe47NkYWjt4M3cOjUvcX5tF9zUeCZyMOQvChf1W5jw9/28
+	nanwwNuMNLP0gpuZgfxofm2bfALQ7uwx91veWCJt8vPN7CYp3fN6kw8EWlR+qORC
+	PKvYxEnSpYFKvERsoc5Z5hZag80EcVG86+yuTOKJw845teg+MH7UiRRQ2u82OINA
+	go4sMwbSdEIFNSL5UCPT0xtpJLTwBImiYvTOPVTVmcpO9aZYBKqNWnmgsVy1eNBr
+	d1GpMNl26yeEDpEoMBayi5XDxIqCt7GVimP6stigbL9+u4+JJetTS1waB2ZXLhfK
+	eoYqPSjffCk+OuOdF40rV1W7j26tfSU2Wfrqi/g==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:4DmrwxG6Xi+AbBDe6yCF9/IFgImXGxNB5RaqG+qg+4w=:sTk4BoYfhMWuQGN6l5BLURKjL/keZ1ew5WCmNTrOcaY=;
+X-ME-Sender: <xms:GgHfau2KRRIvi9h19ZM7REA3hlccu_rYwedX3U7kRb9pMt3xC4TjVg>
+    <xme:GgHfanG0fLPkAcRq1VDi3ZFcCT-0xD1GzkyFaBSN695OiERZ2Mg6cqe78mX2qkrhc
+    IH12WeImJFX2uWJd2GfODSufkgw-yZQwAO8_TAEyooijQuM8f-M>
+X-ME-Received: <xmr:GgHfakhQqwB-FYlLKV3JRWG5jZH8hSj3ldFRRWfIzi7hvojqP47vuQ>
+X-ME-Proxy-Cause: dmFkZTE75kHV9tcYdxCcNmVrKvhjpsXw1kcic23KRJOiPs5182u6N+xTd6nxjJ95fvJ9Rb
+    6qoKdqESUCu5BHFP5MMXg9LaSVmjpoN7Df9l58hjrmH5lpHAzvFyp8AkDqGWRHQAM5CUuL
+    ImjFORUwVkT3O5sXBbppOYWib57mnN0Y0wIJqDizd+kanK0tikt4+kva6hti2agDCvV9CH
+    m/DHw4UGMD1eD42JUcygK1ezxSlsUKPIsiWI+dlKsJWCWp0wOVdjPvS5XS1SMVnquuSZVP
+    oUJVsB9G+q1vDNyOh7mzTMwbRHs2Ue/FxVi08OJ3ZytB1thJrAM1G7SytGoC18f7cTwJZ8
+    iDsmhNmfWKcZUWMO/hFXeX+z0RF3sae/uT/1C1Nctkjuzy4e9qHW7mTn3oXR1U3CTK9lLn
+    1+wPikiI3Yf/TdmC2kJ5gRmOMMOAbjXQo73CnVrmQGOvodaouCQ2KxrPX/fboWNrqkC2Ra
+    mq6A3ZBqkjZinziG2QeOAJ3mSxeabCVzBEmjiO28bE2NS3SZU+sY3WePxTCImF/HAdem28
+    9jCwdLbO6gUz9gy3Oq7dbTl+g8CeijeQw1B0JhXK2LD2zVPL4kyMuNu08wOAV2/pUKde3E
+    u6ftu/UHfTmCIR2fNhhfcnBgj9w5Q3v0rjjQ+2+yPSyhOO26DpVg65atWvmw
+X-ME-Proxy: <xmx:GgHfaq8nTM20Km1I6DTfgWnzvgsZI1K-5TZ_lWVuDUgL3YOQ8fO1UQ>
+    <xmx:GgHfajqdLhZIwI6mNrHox6CxK_pbKfiVE5POWm3Nw6rf83poMFB86A>
+    <xmx:GgHfah_5Ki6jMXCdV1QzrRlSfls-BzuW40dH5w5nXNza1hY1aVD-bA>
+    <xmx:GgHfavWeRqpXsz9ycOdnB5PrMMT8co9jk2x817poTcygEkyv3ePawA>
+    <xmx:GgHfaqOTo-mdta6MHhe3h9qesMhZz9kSO7Bbe6OzynKy57lCZQPIIbQQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 26 Oct 2026 03:28:25 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b1b34243 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 26 Oct 2026 07:28:24 +0000 (UTC)
+Date: Mon, 26 Oct 2026 08:28:21 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 7/7] rerere: get rid of global rerere cache state
+Message-ID: <at8BFdzlcaiDl_sL@pks.im>
+References: <20261023-pks-rerere-wo-the-repository-v1-0-b6ac0c2e4b81@pks.im>
+ <20261023-pks-rerere-wo-the-repository-v1-7-b6ac0c2e4b81@pks.im>
+ <xmqqv76s8i12.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -64,137 +125,115 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Message-ID: <1MulqN-1wTpXS3ljv-017idF@mail.gmx.net>
-X-Provags-ID: V03:K1:B+rpK4v9Xaq9dIbOc9BmDUq+HjPjCQA1oar558DxTlAuUZhkvMj
- NnHmNBz15r+U1XHNK3+R/d2JJheBXLpNQrfNGyemB5A9Vyr+otArUVtB4oDUEhTTN2YmyFh
- aWG6wEbhypTXQ+pB9gWRy3/a7j+kOs9cx/nGufUFKhmxkJvK7I2Reo/tx5TymDyzNJWUmWW
- nmtb989/QFHgpvOXqqC3w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:/I6R4BPIrVw=;UY4UMQtTcr6kZVTPQCzPT0D7LM6
- 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
- =
+Content-Disposition: inline
+In-Reply-To: <xmqqv76s8i12.fsf@gitster.g>
 
-Dear Git users,
+On Fri, Oct 23, 2026 at 10:04:57AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > The rerere cache state is tracked via a global variable. On the one hand
+> > this ties it to one specific repository. On the other hand it has the
+> > consequence that the cache may be leaking state across multiple calls
+> > into the rerere subsystem.
+> >
+> > Refactor the subsystem to instead pass around the rerere cache state
+> > explicitly and make callers responsible for setting it up and then
+> > clearing it again.
+> 
+> This step is a logical conclusion of what was done in the previous
+> step.  I very much like it.
+> 
+> I was somehow hoping to see that an earlier addition of "enabled"
+> bit to the "struct repository" would be undone and replaced with
+> this structure, but that may not be feasible, I guess.
 
-I hereby announce that Git for Windows 2.56.0(4) is available from:
+I guess you could in theory, but it felt a bit cleaner to me to cache
+this value in the repository itself. Caching whether or not there even
+is a rerere cache in the `struct rerere_cache` itself just didn't feel
+right to me.
 
-    https://gitforwindows.org/
+We could also just not bother caching this value at all. As I mention in
+the commit message, we don't really have any code paths where this logic
+gets called in a hot loop or something like that. So we could instead
+just look up "rerere.enabled" every single time you call
+`rerere_cache_setup()`, and nobody would really care. But we also check
+for the existence of ".git/rr-cache", adding another stat(3p) call every
+time this function is called, and that just feels wrong to me.
 
-Changes since Git for Windows v2.56.0(3) (October 22nd 2026)
+It's probably premature optimization though. So if you agree with that
+conclusion we could adapt similar to the below patch.
 
-This is another urgent security bug fix release, addressing
-CVE-2026-111497.
+Patrick
 
-Bug Fixes
-
-  * The executables included in the 32-bit MinGit had corrupt
-    code-signatures, which has been fixed.
-  * Upgrades the included brotli component to v1.2.1 to address
-    CVE-2026-111497.
-
-Git-2.56.0.4-64-bit.exe | 4961a4a8cc778d8b6e00a5819e5fe4d078b754555aff7aedc2d77a5d74c2de80
-Git-2.56.0.4-arm64.exe | e7dcc4adbb0eb373064598cd18bc75e60128707d816ead51cd9bd98e356f0075
-PortableGit-2.56.0.4-64-bit.7z.exe | b1f3e52216e2ed6882d1bebfd4d3fdf319bec40d2edbbf9fd26ec4fd3fce7ed1
-PortableGit-2.56.0.4-arm64.7z.exe | 044110f9d951858452ddb5e4b5415ea0f2b5b2598e794d6fec77fe28b9aa8cc0
-MinGit-2.56.0.4-64-bit.zip | e3bf78351fe777fba47ddee5950082f8a98bb0f02604fdc7ba3ee2cb68ffa877
-MinGit-2.56.0.4-arm64.zip | 70f7649f78088c1db1d2f3571ca46a04d5bef06e4e9d56d8ed7f9829e8c6c4db
-MinGit-2.56.0.4-32-bit.zip | 6b3d71c7536d3c85baebaeb26d461e74c755895ccc1f4c817d0e289470419ccc
-MinGit-2.56.0.4-busybox-64-bit.zip | c4f27d9356ef471dd9fea1f89e5c176cfff7c85b29912a00f3cc7fb59197a39f
-MinGit-2.56.0.4-busybox-arm64.zip | 90f882fd91398dc2bd00f91af32401425815dd2f049a95fee68c9e783c311c7a
-MinGit-2.56.0.4-busybox-32-bit.zip | 62dc9ff7c421a0742fd6128d91e9ebb2ec035fa21db6a6a2de0f2a018ca7831b
-Git-2.56.0.4-64-bit.tar.bz2 | 0dae059764ba7c447c9604eb6cb0f4afaf2d90b003ecf1c8cf2dbe5a13e4442c
-Git-2.56.0.4-arm64.tar.bz2 | e3903db2fea42263b4df0d2f581ca8e07ec1c7c9f878156a8d01284f35011642
-
-Ciao,
-Johannes
+diff --git a/repository.c b/repository.c
+index f51699a6dd9..e584d6c4054 100644
+--- a/repository.c
++++ b/repository.c
+@@ -76,7 +76,6 @@ void initialize_repository(struct repository *repo)
+ 	repo->bare_cfg = -1;
+ 	repo->fetch_if_missing = 1;
+ 	repo_config_values_init(&repo->config_values_private_);
+-	repo->rerere_cache_enabled = -1;
+ 
+ 	/*
+ 	 * When a command runs inside a repository, it learns what
+diff --git a/repository.h b/repository.h
+index 86795b6946c..91b1f57db7b 100644
+--- a/repository.h
++++ b/repository.h
+@@ -185,12 +185,6 @@ struct repository {
+ 	/* True if commit-graph has been disabled within this process. */
+ 	int commit_graph_disabled;
+ 
+-	/*
+-	 * Indicates whether the rerere-cache has been enabled. -1 (the default
+-	 * value) causes us to perform auto-detection via ".git/rr-cache".
+-	 */
+-	int rerere_cache_enabled;
+-
+ 	/*
+ 	 * Controls whether the repository should lazily fetch missing
+ 	 * objects from promisor remotes. Defaults to 1.
+diff --git a/rerere.c b/rerere.c
+index e0897612085..58bf298ae00 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -878,31 +878,29 @@ static int do_plain_rerere(struct rerere_cache *cache,
+ static int is_rerere_enabled(struct repository *r)
+ {
+ 	int rr_cache_exists;
++	int enabled = -1;
+ 	char *dir;
+ 
+-	if (r->rerere_cache_enabled != -1)
+-		return r->rerere_cache_enabled;
+-
+-	repo_config_get_bool(r, "rerere.enabled", &r->rerere_cache_enabled);
+-	if (!r->rerere_cache_enabled)
++	repo_config_get_bool(r, "rerere.enabled", &enabled);
++	if (!enabled)
+ 		return 0;
+ 
+ 	dir = repo_git_path(r, "rr-cache");
+ 
+ 	rr_cache_exists = is_directory(dir);
+-	if (r->rerere_cache_enabled < 0) {
+-		r->rerere_cache_enabled = rr_cache_exists;
++	if (enabled < 0) {
++		enabled = rr_cache_exists;
+ 		goto out;
+ 	}
+ 
+ 	if (!rr_cache_exists &&
+ 	    safe_create_dir_in_gitdir(r, dir))
+ 		die(_("could not create directory '%s'"), dir);
+-	r->rerere_cache_enabled = 1;
++	enabled = 1;
+ 
+ out:
+ 	free(dir);
+-	return r->rerere_cache_enabled;
++	return enabled;
+ }
+ 
+ int rerere_cache_setup(struct rerere_cache *cache,
