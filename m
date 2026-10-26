@@ -1,120 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792999708;
-	b=0DDp3vyGLuMsq+R73VQBex/yRwbOZ3D7+/rAQGiGLYlg1xzBuaHcCGBGDtGS/9KtqnBc
-	 IzlE394O6doPCjXteZGViAxWJUYwLwBTtC3igw/1U5y6VNdb1QxTZgptOTa5/teMUDj/d
-	 Wx7Gr0RaKb9wiVfpeE+ltP0IZBIV/k/NQ3nB8AIWktUbr817aEgjFjyX+IzSlya6RJ4c4
-	 ogFGcQDdEipK4oqZfjJOgMjIW0cW+GisKpCPWxxO6Q9xujclLAE3qvi7RO2qhj0zWeamV
-	 MKFiYEwdQlX8VEnqf9S6B9/L3P6+SG7rtiybwvfQiGLmcSxiSfEETU+b81PIw1cZvOA==
+	t=1792999844;
+	b=Or0WplciveIB31FnpMxRN5syoCnia3SsfJ4aXkO7tZMlLrrsl3CGHaNe99OIKO5j1LQ+
+	 tnJGc/XN208GufOIKTLBAh+TZJOa/WvkPmV1l50gUo9+HloOi0ATAHDSNgcG+qUqnzafy
+	 c0aYWMcwf2AtH6+DA7dn5Fk+3evEDoLQiK8rCEkbBi39aq7cPhgf2TBDiocsoTw0cHgFD
+	 CflaAYt19ndBdeHQmH1zOLWMFjjq82ZJuocfrDDghfbtbS7AO8T8jl3Fnnx7duy36O/Em
+	 wDg7ZPPUF56j4Sg6bt/5xBg0nkDs0L9RFYxhYzLEaBN0da2Jf+Z7snkydT0qpp4b6Ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792999708;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792999844;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=y5idyQIzYP+mADOGGocgk6CT2YPihrJeZxFwKk2zoqo=;
-	b=mR3Nk9lZNS61QMxC/pf68Ui6laa6/lXkEJkfCtKM5wmXaWfaze9Rzp2Yn8QUlfw2sKFF
-	 xN8oLx7CNJEMnpfxRwtVzZh7JOv5cSyjDUvL1Bh6HPwfElraI0a3tlYrwK7LXCCKctQ0Y
-	 w8FbRii2dD+0yyFXsb+hG91euz99TnEayYCMOqrCig/j6gX4YFd4blN4iacHu9ITKRteJ
-	 F6Q2jBIaev6zGaBNQUg/+xFTY1uOTcQw956hrWPIsRwilSj2Q9ol+bLbkeWLHok2z9jWe
-	 M30RNaoG+lCSsOL6k+WSSGu4e/C2cfDT6ZU66TUOQJQoHMgHufV9EblnFGC+22/k97w==
+	bh=r6CDXbDQi/vT/oUAurjr3J5ExnNPr4gLwTex6zDxKWs=;
+	b=rio6Z+C3K8PEVTzgRmfsSrVWvG1xD2AMGMULNN03/da4i3fWlFWYPsTevhxU+9VmnyEN
+	 RjMKkEkb+UtyZKmciM9xJr40xJDu2KmZBdtk2MGWVoVBU6i7EhdZFROApnOmTi3jC9fJq
+	 y4z9h7CQF8vWmvmsQl+MFHUL6pm2ZNnOWE+ASWiHNoBivF1iKZ5M+7a53U2Mymu8m6+EN
+	 DlAhia2fJmt7Fg5INb+OOa1e/BP0KuhNaLKNFuUbrRLuwcRN31XFDU74wcs5aLrC1zXHC
+	 VcEOcatcOdFcthVuQUwFDORE/aFdHV8/XwMkYUg344x0LqTh9z2bJI7/GJOKQpHQfqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=rdHMZOtt;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=NaNGcfF2;
-	arc=none smtp.remote-ip=202.12.124.146
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=rF1IYWo1;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p5u9oQtq;
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC198606A31A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 07:28:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC198606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D5E606A31A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 07:30:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59D5E606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=rdHMZOtt;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=NaNGcfF2
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id A68F21D00235
-	for <git@vger.kernel.org>; Mon, 26 Oct 2026 03:28:26 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 26 Oct 2026 03:28:26 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=rF1IYWo1;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p5u9oQtq
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9BF657A01D1
+	for <git@vger.kernel.org>; Mon, 26 Oct 2026 03:30:43 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Mon, 26 Oct 2026 03:30:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792999706; x=1793086106; bh=y5idyQIzYP
-	+mADOGGocgk6CT2YPihrJeZxFwKk2zoqo=; b=rdHMZOttVglh2zvJapAQ1ibupM
-	3CV8VnIkiaert1+BpAQi+/gchaIyISQE9Fwfm4PxBPykO+niUx4e7gNtAUPj+to/
-	yAR7kUBZNJ75vGydyPzBVxwvLhxUphUHEG7QOkl/SGiL/VnBEYSFiKXjienwLIE6
-	L6hg2/bYxQ2efwG5offq7etBVjk4DH5jGEEe2HrPFiD9TO9fazCAF6gxawZwgQPe
-	aSJ/TBGiTSzAT8JZ38Lbppvmip/t7NkHfN1zYDVqM+WF6pm6SBZkfZELy4WtN1dz
-	KiYx5DpOjfrQQjCvYj9Rq1h5v8ZlTyqXX3PCfDHDDcjDWhZA/RHG4kbtfG9Q==
+	:subject:to:to; s=fm2; t=1792999843; x=1793086243; bh=r6CDXbDQi/
+	vT/oUAurjr3J5ExnNPr4gLwTex6zDxKWs=; b=rF1IYWo1HFnxsxcrEDK+m+H25p
+	AM1+dEev0HUnFbm34cUFIWpGlU0jCOGp3leEgrlaBF8ptZjyLfdiXgnigy0IjBf7
+	xlgP986wthEOJZfKbhCz1DOIcD5F5UY1Q03Up5ekS0jaa2XDbasy/q5Vy3R3VBq5
+	6r7/vrq6sXWzdXs9Nnm73OCIUiWCH5NatC5DjGwOmTauZy7N/5j77DStSAy0/u0D
+	9rmez4xtaOgQ6C01llhg7tuH74UYKIIqlYpHkF5Y+QzxNhSKd1fg9MXwUNA3qL79
+	czmgVrwpQ3RSCv8RM8bkJFge3JL4fu3HMqomXKRT5CG7STdlZIJ0yRCKvO/A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792999706; x=1793086106; bh=y5idyQIzYP+mADOGGocgk6CT2YPihrJeZxF
-	wKk2zoqo=; b=NaNGcfF2R3PrJg8diUBh/GfwMSeKRUnIJia6Ps6qx2Oa+UH+DpK
-	EuJwlXw6zK7L/cMoGX/rE3HN9UtlVhEijJNa2RKROHfCKrg2s0c+ffixEka/2VI2
-	NsMip7j+zK+Pu7Tcz6r8RbNKAXgJZVPwaxYq+JB/0ep5bOHR5um1og1j5ze7WKLc
-	l1nO5vMDv7rIhoeEkVjrWKJlYpp9E3MKodBiM9p3ClFcmcWM+xuRhRixMFyfrSv9
-	1kcmuFV+oV0UANNuYnlq6o5P0q7wlQl2h5BBOLfP9Z8xTkjLpW0ZeqpCHIH7AAQQ
-	mBch3BF2YfJESFTUDjtDb9pHV1uZPFTGNoA==
+	1792999843; x=1793086243; bh=r6CDXbDQi/vT/oUAurjr3J5ExnNPr4gLwTe
+	x6zDxKWs=; b=p5u9oQtqmceQ+GmcaIL57gicWdB2cUJTywF+C7kZe4KbeOPL7cK
+	1yxERDTJ361RkoWkTTZB1ujzqyuaEx3Z/GQlVT82x+Nzx0yyjZ9J1owP85+8Y8dh
+	RVjMPUP2kKkUz9UDeI0Z9OMQDgLPMDBL/ffu2baox3o4zU1HI7pUNMwHKLrcwdcB
+	K/qI5th1JtVyfPPV6tKlz1MVmJh31BBlmdWxK5Aa5+Sc/HUCuZCrKmMOxk5Df4+v
+	GZRcJIF51a9OHte/qLwr3VU/JR94UtAq27fZiUBuL+FjgosAsK/i0EZoguhMckvf
+	jP9GMKppqSTRmWtqW/UjeqzMofa1agBfBtA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792999706; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792999843; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:JCe47NkYWjt4M3cOjUvcX5tF9zUeCZyMOQvChf1W5jw9/28
-	nanwwNuMNLP0gpuZgfxofm2bfALQ7uwx91veWCJt8vPN7CYp3fN6kw8EWlR+qORC
-	PKvYxEnSpYFKvERsoc5Z5hZag80EcVG86+yuTOKJw845teg+MH7UiRRQ2u82OINA
-	go4sMwbSdEIFNSL5UCPT0xtpJLTwBImiYvTOPVTVmcpO9aZYBKqNWnmgsVy1eNBr
-	d1GpMNl26yeEDpEoMBayi5XDxIqCt7GVimP6stigbL9+u4+JJetTS1waB2ZXLhfK
-	eoYqPSjffCk+OuOdF40rV1W7j26tfSU2Wfrqi/g==;
+	s=fm2:rsa-sha256:EGtlsAaL/EJJ5+0a9v9IBoDL1PBExp2JNSab/ZVY9AGoknQ
+	u/KyBhMNuMRh3bfknSC2YlSFIaLlDbm13qdpL8lms2KI3Oxl7o3Jz9k6chonCIXw
+	4OxEGzzQcmeP5gxYeEv/sUOc64Z4d+KQjj+FlYCriBMSoBmn1zqzft/Fiw8LbFhP
+	E9GP96yBAEhGUL6f31sGalg2PwuEwnPHix4Kq/t3cwWomYX76S3TS7kpntfAKupc
+	/ai6zHmD2DEpYVXCDKCKAsoKpck2zBz9fW6GyQsK+2x49mx2Z0WS+VxCEhC+Vz7b
+	0JZEXmxruYnAZFv6TStTao/aEp1KyNKJTf5I4Sg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:4DmrwxG6Xi+AbBDe6yCF9/IFgImXGxNB5RaqG+qg+4w=:sTk4BoYfhMWuQGN6l5BLURKjL/keZ1ew5WCmNTrOcaY=;
-X-ME-Sender: <xms:GgHfau2KRRIvi9h19ZM7REA3hlccu_rYwedX3U7kRb9pMt3xC4TjVg>
-    <xme:GgHfanG0fLPkAcRq1VDi3ZFcCT-0xD1GzkyFaBSN695OiERZ2Mg6cqe78mX2qkrhc
-    IH12WeImJFX2uWJd2GfODSufkgw-yZQwAO8_TAEyooijQuM8f-M>
-X-ME-Received: <xmr:GgHfakhQqwB-FYlLKV3JRWG5jZH8hSj3ldFRRWfIzi7hvojqP47vuQ>
-X-ME-Proxy-Cause: dmFkZTE75kHV9tcYdxCcNmVrKvhjpsXw1kcic23KRJOiPs5182u6N+xTd6nxjJ95fvJ9Rb
-    6qoKdqESUCu5BHFP5MMXg9LaSVmjpoN7Df9l58hjrmH5lpHAzvFyp8AkDqGWRHQAM5CUuL
-    ImjFORUwVkT3O5sXBbppOYWib57mnN0Y0wIJqDizd+kanK0tikt4+kva6hti2agDCvV9CH
-    m/DHw4UGMD1eD42JUcygK1ezxSlsUKPIsiWI+dlKsJWCWp0wOVdjPvS5XS1SMVnquuSZVP
-    oUJVsB9G+q1vDNyOh7mzTMwbRHs2Ue/FxVi08OJ3ZytB1thJrAM1G7SytGoC18f7cTwJZ8
-    iDsmhNmfWKcZUWMO/hFXeX+z0RF3sae/uT/1C1Nctkjuzy4e9qHW7mTn3oXR1U3CTK9lLn
-    1+wPikiI3Yf/TdmC2kJ5gRmOMMOAbjXQo73CnVrmQGOvodaouCQ2KxrPX/fboWNrqkC2Ra
-    mq6A3ZBqkjZinziG2QeOAJ3mSxeabCVzBEmjiO28bE2NS3SZU+sY3WePxTCImF/HAdem28
-    9jCwdLbO6gUz9gy3Oq7dbTl+g8CeijeQw1B0JhXK2LD2zVPL4kyMuNu08wOAV2/pUKde3E
-    u6ftu/UHfTmCIR2fNhhfcnBgj9w5Q3v0rjjQ+2+yPSyhOO26DpVg65atWvmw
-X-ME-Proxy: <xmx:GgHfaq8nTM20Km1I6DTfgWnzvgsZI1K-5TZ_lWVuDUgL3YOQ8fO1UQ>
-    <xmx:GgHfajqdLhZIwI6mNrHox6CxK_pbKfiVE5POWm3Nw6rf83poMFB86A>
-    <xmx:GgHfah_5Ki6jMXCdV1QzrRlSfls-BzuW40dH5w5nXNza1hY1aVD-bA>
-    <xmx:GgHfavWeRqpXsz9ycOdnB5PrMMT8co9jk2x817poTcygEkyv3ePawA>
-    <xmx:GgHfaqOTo-mdta6MHhe3h9qesMhZz9kSO7Bbe6OzynKy57lCZQPIIbQQ>
+Message-Instance: m=1; h=sha256:VjoUMbooWwc0a8QDjM2q/B+DQEPqxxkKxj24EV7akz0=:8hyd0Xm/mutr+/pVF0SPLIFV38htJGUjZuJgXbH5a6o=;
+X-ME-Sender: <xms:owHfamryxVIF3pFveU7XPToZ-fyVNqeRYklGRfYCJYgXuGHr1jOskw>
+    <xme:owHfaroz-t7kpyr0YsoG_CzQbR1kU9AcSyD5YTp8j999vamcHCwAjJ89riU5QvCKi
+    n43-KM0btJOg3cqdmTgLUd7brRfCz8PU_vu-Y-HRfwDKzMBDYMoJ08>
+X-ME-Received: <xmr:owHfagMwYyQxOCywZGljxfV21aHf4CacmdL4hHvzyswNq7VxdeO4ow>
+X-ME-Proxy-Cause: dmFkZTGL2M0pSxoffzeQytxU6DB6L0f8Ey4MXP5fDzrULjQ5c6jfzd84SdmJGaxLTIcBKD
+    GoUHZYKz6qX7wawTQPeQwjuy+gkwTimnX7fSz1GnZOTb7jrmzxsjqgPP0XN8mLNF4XjOsQ
+    V094lbShT0IgCxiSpLYKjI6XOA09ti5/lXYybyQMVPT3CnRXaxbdmoF40INVjJmkkx08+V
+    83T2e/QpJHaZx7GIA0rjX7SOMbTx6oc9ETuXGRqkEPu1Ny+GWokybPELTK//1ZGR1VlJhc
+    USjhUov8r8yHCb9GirPeL3XyFIv+bSYpGX/mGXzr5EOJCy0tCBwRb4jA5dufW0tRzWemdT
+    Pqeut3GCY88wWSqVtLtLGhVLDWhuBjx7z6639LhKiV9Zcs/pRAxsM2k2zN0AQkw5VIgSty
+    pKixIT8wyP83o8MLdIohRch8hXLa1qHTjChSnJklmfbEGqE20r8F+KHTjnTb1PhOnISkj4
+    x13UuTg/3Tod3TUAyspRk1mzJnpeAqesSwaxzHJnciV1ykI3wG9dP6DoaaQL3YUkPYOuV1
+    z6kR4EemkbPlIiPjcaqcydC21b8PIyc+xzvEI3nc9+HcwvzhgHWgspH+1/rDQnwHHQBAb6
+    5/hJwllB9OhQnb4I2eAxQ+vqsOCNSUUiVEdsg+qEacPx3YMQeq75ODf4slWg
+X-ME-Proxy: <xmx:owHfakwxQlF4whqrZDVfh6BPT3etq0CU1xpH2bDK-kaw93FWYb8sug>
+    <xmx:owHfaht7yhiZzXmBcrT5_FT8n39D6X4jyVqpq3RuY4Hvx1aoHZKBJA>
+    <xmx:owHfal76Sq6I1bDn_Fa7Qvogg3qM_zjuNUad9vQHpQB4p7SdFzxn_Q>
+    <xmx:owHfaoQhcG3miKquzlWTD_qcVkPRcQdWf2yFI2fBHemIGB1EQVSYTg>
+    <xmx:owHfaqgyY8EY_TnPT-xivgyeI5rkT1b3kLvuXj5Tv49eO6C__0MRAD5Z>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Oct 2026 03:28:25 -0400 (EDT)
+ 26 Oct 2026 03:30:42 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b1b34243 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 26 Oct 2026 07:28:24 +0000 (UTC)
-Date: Mon, 26 Oct 2026 08:28:21 +0100
+	by mail (OpenSMTPD) with ESMTPSA id f89bd624 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 26 Oct 2026 07:30:41 +0000 (UTC)
+Date: Mon, 26 Oct 2026 08:30:38 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 7/7] rerere: get rid of global rerere cache state
-Message-ID: <at8BFdzlcaiDl_sL@pks.im>
-References: <20261023-pks-rerere-wo-the-repository-v1-0-b6ac0c2e4b81@pks.im>
- <20261023-pks-rerere-wo-the-repository-v1-7-b6ac0c2e4b81@pks.im>
- <xmqqv76s8i12.fsf@gitster.g>
+To: Joie Joie <soniqjjj@gmail.com>
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>, christian.couder@gmail.com,
+	git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] repo: zero-initialize configuration values
+Message-ID: <at8BnkKqRSa0fUoO@pks.im>
+References: <pull.2271.git.1792522587065.gitgitgadget@gmail.com>
+ <pull.2271.v2.git.1792662432.gitgitgadget@gmail.com>
+ <df93a2a86cae7d342270c0ee67a1c0d41ada202e.1792662432.git.gitgitgadget@gmail.com>
+ <atnz1HFcA8q8IuE_@pks.im>
+ <CAH=d44czyUb3Kam8oEfdqY0ROO4636XN5NuuQ0gn+wHUe9xETw@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,114 +129,22 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqv76s8i12.fsf@gitster.g>
+In-Reply-To: <CAH=d44czyUb3Kam8oEfdqY0ROO4636XN5NuuQ0gn+wHUe9xETw@mail.gmail.com>
 
-On Fri, Oct 23, 2026 at 10:04:57AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+Hi Joy,
+
+On Fri, Oct 23, 2026 at 01:00:48PM +0100, Joie Joie wrote:
+> Hi Patrick,
 > 
-> > The rerere cache state is tracked via a global variable. On the one hand
-> > this ties it to one specific repository. On the other hand it has the
-> > consequence that the cache may be leaking state across multiple calls
-> > into the rerere subsystem.
-> >
-> > Refactor the subsystem to instead pass around the rerere cache state
-> > explicitly and make callers responsible for setting it up and then
-> > clearing it again.
+> Thanks for the review and the suggested wording. I'll add an
+> explanation to the commit message and remove the now-unnecessary
+> comment.
 > 
-> This step is a logical conclusion of what was done in the previous
-> step.  I very much like it.
-> 
-> I was somehow hoping to see that an earlier addition of "enabled"
-> bit to the "struct repository" would be undone and replaced with
-> this structure, but that may not be feasible, I guess.
+> I'll include both changes in the next version of the series.
 
-I guess you could in theory, but it felt a bit cleaner to me to cache
-this value in the repository itself. Caching whether or not there even
-is a rerere cache in the `struct rerere_cache` itself just didn't feel
-right to me.
+Thanks.
 
-We could also just not bother caching this value at all. As I mention in
-the commit message, we don't really have any code paths where this logic
-gets called in a hot loop or something like that. So we could instead
-just look up "rerere.enabled" every single time you call
-`rerere_cache_setup()`, and nobody would really care. But we also check
-for the existence of ".git/rr-cache", adding another stat(3p) call every
-time this function is called, and that just feels wrong to me.
-
-It's probably premature optimization though. So if you agree with that
-conclusion we could adapt similar to the below patch.
+One note though: we don't top-post over here, but instead write our
+replies below the parts that we're replying to (like I do here).
 
 Patrick
-
-diff --git a/repository.c b/repository.c
-index f51699a6dd9..e584d6c4054 100644
---- a/repository.c
-+++ b/repository.c
-@@ -76,7 +76,6 @@ void initialize_repository(struct repository *repo)
- 	repo->bare_cfg = -1;
- 	repo->fetch_if_missing = 1;
- 	repo_config_values_init(&repo->config_values_private_);
--	repo->rerere_cache_enabled = -1;
- 
- 	/*
- 	 * When a command runs inside a repository, it learns what
-diff --git a/repository.h b/repository.h
-index 86795b6946c..91b1f57db7b 100644
---- a/repository.h
-+++ b/repository.h
-@@ -185,12 +185,6 @@ struct repository {
- 	/* True if commit-graph has been disabled within this process. */
- 	int commit_graph_disabled;
- 
--	/*
--	 * Indicates whether the rerere-cache has been enabled. -1 (the default
--	 * value) causes us to perform auto-detection via ".git/rr-cache".
--	 */
--	int rerere_cache_enabled;
--
- 	/*
- 	 * Controls whether the repository should lazily fetch missing
- 	 * objects from promisor remotes. Defaults to 1.
-diff --git a/rerere.c b/rerere.c
-index e0897612085..58bf298ae00 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -878,31 +878,29 @@ static int do_plain_rerere(struct rerere_cache *cache,
- static int is_rerere_enabled(struct repository *r)
- {
- 	int rr_cache_exists;
-+	int enabled = -1;
- 	char *dir;
- 
--	if (r->rerere_cache_enabled != -1)
--		return r->rerere_cache_enabled;
--
--	repo_config_get_bool(r, "rerere.enabled", &r->rerere_cache_enabled);
--	if (!r->rerere_cache_enabled)
-+	repo_config_get_bool(r, "rerere.enabled", &enabled);
-+	if (!enabled)
- 		return 0;
- 
- 	dir = repo_git_path(r, "rr-cache");
- 
- 	rr_cache_exists = is_directory(dir);
--	if (r->rerere_cache_enabled < 0) {
--		r->rerere_cache_enabled = rr_cache_exists;
-+	if (enabled < 0) {
-+		enabled = rr_cache_exists;
- 		goto out;
- 	}
- 
- 	if (!rr_cache_exists &&
- 	    safe_create_dir_in_gitdir(r, dir))
- 		die(_("could not create directory '%s'"), dir);
--	r->rerere_cache_enabled = 1;
-+	enabled = 1;
- 
- out:
- 	free(dir);
--	return r->rerere_cache_enabled;
-+	return enabled;
- }
- 
- int rerere_cache_setup(struct rerere_cache *cache,
