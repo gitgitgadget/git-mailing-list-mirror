@@ -1,86 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793100763;
-	b=w+TSIVsVF6QjSjUkU7NJSPK6uSbMitj2a4k+mDOqVv+zq0TI1CRJXWxv8yGRa0kULwKu
-	 +MIa2j3WjKLjsaBD9laJaK48R9g2n1qrBAwx5fZhyrCasll189ikxGkN+7Ix9qBUPiPpi
-	 hm/UnXEnNCZpjo2EVUITbtWcu5TVUHBzagGfZ/c3jt1oKhaAUsiCTFdF+v4AIkd6vKrsJ
-	 XVN4mPtm3Gs5b5mKMoGy4YwpWLynvV0/i7u/RW4Ft5qTAEpRM8mf8IjNtNmrJg9RBT83P
-	 c8PL81YCqjfVno1NUfi4sn7x3qSmCEupSkP4gHKLTluQTULA/WdKSIR6M8J3E7k/frA==
+	t=1793101924;
+	b=E+XYCtrNTt3o+tDFTnoCZDM4FTGu0FkE5EeEOOssshz6aLLreN2ib7XXZk4on6Ibxdsz
+	 IrUP2Im5+4onmThuOEEN1+R6jMqDlIJlXQE2YZMSDT2KI7DX8ABrmH8x8wZ2svDMvm58m
+	 HZaGE4c8H1lLCrSs+sVBF9b5uTB3iLnWP8h6tqHKAVcAA0D0dFa3Sre4DvMfZwgBRX6L3
+	 zBnQN9NmW8ZWZZLOLJ0pwF5U6Dwx4xuLlth3+0zVxUxjjbckpFPdev6cqzS6bFLHqgY8z
+	 3RB7HiiVox5u8ptIfVNVz/dvTdb3UulUJ0W2HasczShFYN+Dk2wcxk9QGezeKTsQl9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793100763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793101924;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:
-	 From:To:Cc:Subject:X-Mailer:References:In-Reply-To;
-	bh=N/rwJDHzp7hW4k7LVUnQ4tFI+3GvvGKM1N01unqzzIQ=;
-	b=EP4pTrbS/t+cE3k9+fI7KCqmd1KXlO0zobX/o+AtOsTCp2oJtQu/Yq7wAOeIFf84V8+R
-	 iSYIANTO4sfwksaW58xZ9Ae4Vdw5UCk4y6J+e1MUJH/5yzHtK9UUBYhOXPQaoI3mbdxsK
-	 ABY9g0yQ3R6tWYw4690hQXtgneVKunYNi5ytu+T9KQJFU/K42I8KVcANJe6gMbxlRr7DD
-	 POrevLAuMuaIsrmQpGlWnkn0O48AwJjNZp9OYsTBo1sGlf0k0cUb7qDWaUqEyZ6wmIZaO
-	 bzP688KTii4YvPbdQqVAyHNeg3kCMtACT9GCuzacR7IMZJflVbhRXs/4elrgIyaGazQ==
+	 Cc:Subject:From:To:X-Mailer:References:In-Reply-To;
+	bh=3TBRz1WobxQgZs5Z75PwyICASOqiqUX1AC6Hu/tOxB8=;
+	b=JUyXS7m12dDwrN07hgB7FftVHNLifcq9XMdaQdRmRVpRZB4fJkv2jwMM3otchZpXP0LV
+	 fnRShVRZboxXMYTOtMpyHFIu1j55slQtyj5nnxikDIaa+8nW+NchZ75BEpxN6vV453wF9
+	 WCEHZCyjQeDMr6royN1qJUHaVXvNcLnbcwTQ+KXD651VWoABc70Kq3bjQV3+X6fCaZXKg
+	 IvIfHIaaTGUreXEcdev1c1rephknekcDxYxyjvCfoYy3dBJbGgtzgR3739YbdyYPKMeYC
+	 DIt3eJTLX5EK+Kn8syrNSzCJanzdymPw2jhz4mM1FSSCuXQeUaFbKo0Kjhm3g9tYOXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kxh8Pr2p;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YXvJE+3H;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856D8606A33C
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 11:32:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 856D8606A33C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9512E606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 11:52:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9512E606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kxh8Pr2p
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a5036bbac7so15640185e9.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:32:43 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YXvJE+3H
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a208d93758so46286745e9.3
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:52:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793100762; x=1793705562; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
+        d=gmail.com; s=20251104; t=1793101922; x=1793706722; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=N/rwJDHzp7hW4k7LVUnQ4tFI+3GvvGKM1N01unqzzIQ=;
-        b=kxh8Pr2peiQhCe3mwZy0MLC8OgUsbjgAoaONXXwDOYShvbWKKgh0OmEsr3Gn38oVxM
-         18jbMJwxJt3OFhCAKUYZJESIe9kqR89JqgYkjEPsXdam/2alWDgTUP+5jhoeo3vII+tl
-         J8yCFjqYiX7nZAToYrpJckcvZJevIwJNadyulsiEioX0FrZhnr9Qk3L/ArzORk3sjR8Q
-         myttOdLL4PME0JkaCqCP7t4O1VB0WBBIOBWuPCbnn/kih01Qiix42ojKe8bDUD8A9wM4
-         we9D0ZMwd05dq8Ygcoh5a0J4HOu6JwKlaBDDPvcgvxnwt0yrJdolYvPaNfj1YMGpP4SB
-         2tUg==
+        bh=3TBRz1WobxQgZs5Z75PwyICASOqiqUX1AC6Hu/tOxB8=;
+        b=YXvJE+3HtpnNMP3dofh0DCqu/BeGRI2Pstq0LuZ0Pl6r7LOksRnV7Q44lkidxuoD72
+         jUGXfR8+Av3VuUkAw4VeLNaHO51PYqa5WyltRY7yoKoyqcho8dMPwdZWZecF33moAeaR
+         k59I7X8XCAhRSV4YhHC9tqho2h7QdFNh/g0o9bvCx4wJazcxs9KxdaODGWqVFUO0+IPW
+         zUew4EYh1JCPywcDyhGUywWQItw2rC2Y79jKc2tq/jj19oY+Q19Wbx3Br5P9oxxuauuq
+         PAy1TcKx6UfOa4DW81kuxF341TouPPL5LLzsIVBh2DdBKJseFBGFTk1kBoVsmQwajjTq
+         q/VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793100762; x=1793705562;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
+        d=1e100.net; s=20260707; t=1793101922; x=1793706722;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=N/rwJDHzp7hW4k7LVUnQ4tFI+3GvvGKM1N01unqzzIQ=;
-        b=PGQT0R6sFsOtauAG66Ak+Tfg8AnPFnb0xtlsHGc5Q9v2ybaWM4MjBEwav9vxR4p86/
-         aJ1oVobXCXAh4pJOyipMFOdMO96HTe/S9N0dG6M6N32xmjb8pmLuhSxaNf8C/wh0meS2
-         fo3VAOVPNKC9n4gPJ43n/bd7URKFiMvdcsVh6DpJy/1uNC0120vf8Ybf0cxM0njl77ad
-         y0ZHet6+JPTtAztxZ5NTZ24KL6OTz459AutqTbFJkPNwVtyvPECBrbgROhTNZr2ZFpOF
-         Bw5kLKZPUYeu+/PderDm8VWVfCYOTu/11+bmlmF2DrfRYSn2lenLHPf8J7OvwMVNQWct
-         rSQQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxE/MicHk16pif5/3Fzoh6Z9+jxrk40QIlubEB9BIDX4y9ZkVRB+Fl7234o292E/uzDOqY=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJTJNcrZUdeV9z2uMBkrKiqulC81m4e8OuM1TmzjMYZgNbHKum7
-	kbORmctFrQt9KTSstNKd3ciHZ3uwvQiqMRowvbcpXPQzsrB5IBDM8rRv
-X-Gm-Gg: AYBFou3roWeaab6lSo1aHOHDwfSMDkJLQxOd1y6sYWTXE1IPpYK1YxQAaguhh4vuPmz
-	Cli3efo0BKQDIIKqQhlNBieZwRos9aGVpsVVVG5hOTvv7aT7HhftBNnOiS8hqinixWY2AAY7swj
-	MV7Mq4cL7ZMZMZFgyR+INfZWG8kOJDC7QvCDRDSLuXn8qH9rYqY/YtVSvS8uyb69iEkF8C/kdIx
-	7Z9CJRLSovnNFygZGku23IL+mwMc2srjwiSp5VH/M1QUFpRfZ+czH6qkxDX69JSe3kwebNF0VPx
-	CqCgq97dmc1alibTostV4ytj8/KSKkJs4nmomx3ehUTRZkOeVLROc2h3Fc46x5bJ4Yj466DPlqm
-	6rRbLMiL8Vazi7W0RWCcW0cYMb4TZ2jSuYa2kh+9PELp3rEr7R1Z+uh/jpbWHP4xIN3x7ZNagRW
-	fKvECacBM+dk+RHilYIjwF5YN4ibmpo6+EFxsFoMzZjIK3N/r1zPpMWcPv5qLyJZvzS9CQ9LHr+
-	IU1uhvRRFPIGTYBa+7U3fk9+ILIretITwUZljn23hIXFcZvfaYPdyiN6mfe7XvgCT+3birU1m9T
-	zKlgogn4QgHxwP44ZvDppptrcR66xEUttSXlyXnCs8T9FLy2c8QmvyQWLC5rbB1y1+WQ4DxtLhn
-	Uvq6Y4WL20ieJqE4kNFkVpFRQIP//8bh+lgreY0VHzDOdTDi9R6tkVDrbBwA/pOTZbPzQWmGPBe
-	dQ/Mks1Rgnb8AujmZ53QWovsJl7Q==
-X-Received: by 2002:a05:600c:a00c:b0:4a3:5a98:c279 with SMTP id 5b1f17b1804b1-4a35ac7df10mr168862755e9.8.1793100761510;
-        Tue, 27 Oct 2026 04:32:41 -0700 (PDT)
+        bh=3TBRz1WobxQgZs5Z75PwyICASOqiqUX1AC6Hu/tOxB8=;
+        b=CobDbPb236TXib140Yeoh2zDuQ3KQ/PTJKydRgu8LP59XBHkFjyxX0MPI7WrwgtVvT
+         exzK7s3FO3IoDAKU7e6UJNw1Y8ubSPMq++wkpMMOOobbrguDPj5OgMl3/TZgxlsdjFPJ
+         oDmsZM1dy5BFvDwYBgdQTIbDvFtI8Hu8bwOsj6KB4DIqiAxysW0TLVA8ZXemFxJuTy7r
+         EjnNoioX6tdqAD+owiS25WjBRXRI1I5U0hbWqU+zFoKEfgV99NjSWnLpxgvu5YyMZ2TC
+         mF5nt6jzL6M5nf0eY/B97cqmj3aXyC9Ok/QI4T7j9EEt93Q8NO8u2ASRWEuhF91ROQlV
+         Q1Lw==
+X-Forwarded-Encrypted: i=1; AKwUvBxklDs2DbGSgRxSUwyDsy+vHpZ7UafDwYc3v9zE1uMo/6XC1cqpypkppJKmgQAQBAuaabM=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLa/gQH1BPDZpx2QnewNcyVUy7CnqvqMRILJWkvjThPjfqchvDK
+	njRFNBiUMZHTgnqTYA7bB9b4Z9i3DvPiIFrrjHaMer2PGZnVPKUInmYu
+X-Gm-Gg: AYBFou2dWg1vtp+ycUDo9KRviL8sFHFWsux6Gav72YLP3oorwDrXw/5oz/aEhN2CVhT
+	QMImSi2Y9zvlQ9HfCOtYIL3sxO5TwHis54LD4shnxfwtJH8ezUPAgb7DAMeZfbSY4Vl6i/YASPW
+	HeBF/a3Wj4WVRmu0hQI5g3eyP7I8cvtAC3l+J3JOA04g2pUQbyoQsTA8ZgN2tjaeVFiUlHYCTf8
+	bpp8+rzjV6OMgo6o4elc2PF3uGUM9vw/OvFelJGIdU64jKvzvdlapT3u9EricBJzYWfdY6XzgpS
+	0c8dIlPnwWUDoH0+nvKieVlnhUIYR3Ya2wa2spc7ayRzVSRkxdo/FESv5CrtEnHhkPM/mIaHZ69
+	hwgGmGC2B21d+E9xQ1MGjz4Cy2dnvvu3szwxNoU5N1CbCotKc9gyzxCiJvuOvzSPI69b9+t0Mif
+	9QTM6oXi01osteVl4Uho27+NaWGKsow1VMXexzZTexxHOHa8NWrF6Mw/AmxdkT7B7RnB9ZXLcXb
+	oOLzICrBvULHkP3HSsDQpMr/Jc9anRTik+dI+Cy5f9Zmr8+XyV7utLp3knpEKWM4nlUnB0gcAnN
+	9BjZUKueV7jSxf6v2t5KfUezm/KPoBndBA27QbotDEsPsG9adJg6EWdXgJSn5vPUipJ6SxU/qmJ
+	INhU86WbyF9Z+v2/oRa7cZMYrSzBK1pDx39wvZFxHDO4mAjy4muMP/1C9UaCSmecJO3NdPXwpfV
+	cXFpPr
+X-Received: by 2002:a05:600c:4688:b0:4a1:e69d:90e8 with SMTP id 5b1f17b1804b1-4a35aca5a1amr176538645e9.22.1793101921695;
+        Tue, 27 Oct 2026 04:52:01 -0700 (PDT)
 Received: from localhost ([2001:818:c665:a700:9b4:dea8:96dd:9a68])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a2d6f6fsm253251635e9.12.2026.10.27.04.32.40
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a0cc374sm275726505e9.9.2026.10.27.04.52.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Oct 2026 04:32:40 -0700 (PDT)
+        Tue, 27 Oct 2026 04:52:01 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,69 +92,114 @@ Precedence: list
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 27 Oct 2026 11:32:39 +0000
-Message-Id: <DMFL6539NDIW.2LN0YXSJH5VT9@gmail.com>
+Date: Tue, 27 Oct 2026 11:52:00 +0000
+Message-Id: <DMFLKY90144W.2W4T9I9V2PEYO@gmail.com>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>, "Pablo Sabater"
+ <pabloosabaterr@gmail.com>, "Srujith A Poojary" <poojarysrujith@gmail.com>
+Subject: Re: [PATCH v7] diff-delta: use safe integer arithmetic
 From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: "Srujith Poojary" <poojarysrujith@gmail.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>
-Cc: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>,
- <git@vger.kernel.org>, "Phillip Wood" <phillip.wood123@gmail.com>, "Usman
- Akinyemi" <usmanakinyemi202@gmail.com>, "Junio C Hamano"
- <gitster@pobox.com>
-Subject: Re: [PATCH v6] diff-delta: use safe integer arithmetic
+To: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>,
+ <git@vger.kernel.org>
 X-Mailer: aerc 0.21.0
 References: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
- <pull.2276.v6.git.1793076683043.gitgitgadget@gmail.com>
- <DMFJX3GJOXI0.1US2IH6P4LRUR@gmail.com>
- <CABh_KWhac74wQY3sTAFp7f_9CKKAmBWcE9wir4_1i7iZqsq8fw@mail.gmail.com>
-In-Reply-To: <CABh_KWhac74wQY3sTAFp7f_9CKKAmBWcE9wir4_1i7iZqsq8fw@mail.gmail.com>
+ <pull.2276.v7.git.1793098852493.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2276.v7.git.1793098852493.gitgitgadget@gmail.com>
 
-On Tue Oct 27, 2026 at 11:01 AM WET, Srujith Poojary wrote:
-> On Tue, Oct 27, 2026 at 4:03=E2=80=AFPM Pablo Sabater <pabloosabaterr@gma=
-il.com> wrote:
->>
->> On Tue Oct 27, 2026 at 4:51 AM WET, Srujith A Poojary via GitGitGadget w=
-rote:
->> > From: Srujith A Poojary <poojarysrujith@gmail.com>
->> >
->> [snip]
->> >
->> > For the unpacked index allocation:
->> > - sizeof(struct unpacked_index_entry) is 12 bytes on 32-bit systems,
->> >   which may be padded to 16 bytes depending on compiler alignment rule=
-s.
->>
->>         l 117-125 'diff-delta.c'
->>
->>         struct index_entry {
->>                 const unsigned char *ptr;
->>                 unsigned int val;
->>         };
->>
->>         struct unpacked_index_entry {
->>                 struct index_entry entry;
->>                 struct unpacked_index_entry *next;
->>         };
->>
->> On 32 bit systems we have 4 bytes ptr + 4 bytes uint + 4 bytes ptr. I
->> don't see how it could be padded to 16.
->>
+On Tue Oct 27, 2026 at 11:00 AM WET, Srujith A Poojary via GitGitGadget wro=
+te:
+> From: Srujith A Poojary <poojarysrujith@gmail.com>
+>
 [snip]
-> Hi Pablo,
 >
-> Thank you for reviewing the code and catching that! You are completely
-> right=E2=80=94on 32-bit systems, the fields sum up cleanly to 16 bytes wi=
-thout
+> For the unpacked index allocation:
+> - sizeof(struct unpacked_index_entry) is exactly 16 bytes on 32-bit syste=
+ms
+>   (4 bytes for ptr, 4 bytes for val, 4 bytes for inner entry, and 4 bytes
+>   for the next pointer).
+> - sizeof(struct index_entry *) is 4 bytes.
+> - entries is capped by (0xffffffu / RABIN_WINDOW), limiting entries.
+> - hsize is determined as the smallest power of 2 >=3D (entries / 4), capp=
+ed
+>   appropriately.
 
-12 bytes, not 16.
+Hi,
 
-> needing extra alignment padding.
-> I have updated the commit message in v7 to reflect your exact
-> breakdown. Thanks again for the thorough check!
+I couldn't help but notice that my review was completely ignored. Instead
+of fixing the points I raised, v7 just removes the information, and in
+your reply you say 16 bytes when I clearly wrote it couldn't be 16. It
+feels like I'm talking to something automated, and that's a bit
+frustrating.
+
+If I'm the one who got it wrong and that's why you didn't apply it, I'd
+appreciate it if you told me.
+
+[snip]
 >
-> Best regards,
-> Srujith
+> Range-diff vs v6:
+>
+>  1:  b91a1ed54b ! 1:  8eb6d31788 diff-delta: use safe integer arithmetic
+>      @@ Commit message
+>           helpers (st_mult, st_add, st_add3).
+>      =20
+>           For the unpacked index allocation:
+>      -    - sizeof(struct unpacked_index_entry) is 12 bytes on 32-bit sys=
+tems,
+>      -      which may be padded to 16 bytes depending on compiler alignme=
+nt rules.
+>      +    - sizeof(struct unpacked_index_entry) is exactly 16 bytes on 32=
+-bit systems
+>      +      (4 bytes for ptr, 4 bytes for val, 4 bytes for inner entry, a=
+nd 4 bytes
+>      +      for the next pointer).
 
-Regards,
-Pablo.
+sizeof(struct unpacked_index_entry) is 12 bytes on 32-bit, not 16.
+"inner entry" is ptr + val, it's not a separate 4 bytes field.
+
+>           - sizeof(struct index_entry *) is 4 bytes.
+>      -    - entries is capped by (0xffffffu / RABIN_WINDOW) where RABIN_W=
+INDOW is 16,
+>      -      limiting entries to 1,048,575.
+>      -    - hsize is the smallest power of 2 greater than or equal to ent=
+ries,
+>      -      capped at 1,048,576.
+>      +    - entries is capped by (0xffffffu / RABIN_WINDOW), limiting ent=
+ries.
+
+entries is capped by 0xfffffffeU / RABIN_WINDOW (l 157), not 0xffffffu.
+Removing the number doesn't fix it.
+
+>      +    - hsize is determined as the smallest power of 2 >=3D (entries =
+/ 4), capped
+>      +      appropriately.
+
+"capped appropriately" doesn't say anything, hsize is capped at 2^26
+(with a minimum of 16).
+
+>      =20
+>      -    While entries is bounded in current code, using st_mult() and s=
+t_add()
+>      -    guarantees that any unexpected growth in struct sizes or bounds=
+ changes
+>      +    Using st_mult() and st_add() guarantees that any allocation cal=
+culations
+>           will safely die() on size_t overflow instead of wrapping around=
+.
+>      =20
+>           For the packed index allocation:
+>           - (hsize + 1) is passed to st_mult(), which is evaluated as an =
+argument
+>      -      inside st_add3(), and is safe from overflow because hsize is =
+capped at
+>      -      1,048,576 early in the function.
+>      +      inside st_add3(), and is safe from overflow because hsize is =
+capped early
+>      +      in the function.
+>      =20
+>           Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+
+I recommend reading the review on v6.
+
+[snip]
+
+-Pablo
 
