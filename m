@@ -1,125 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793106906;
-	b=LnE9EelCL2kdrBirXTwz/wD06Hl4hy1pQzKr8wbNM9HgZcljYAg7BZ5m53EUwOmY1udN
-	 IshXfejuBaYyjCpMVDkDa7Apw2Whq+0xNiiQIKUjP/dqNMFsVd8dj8M094zixTNMqJt/Y
-	 RH42WZaDUxx+CAML8NyL0s01PxruJSHmPBQxHfkCAxBVXyxv8IhdM5npOgGGLo7eE2NZF
-	 ceVNEhKjrDJBh591iBqGnV8VcfqH7drSgHCfTixIUNzv7WHhv3d8XBNJ5uV8X9in4kuzh
-	 Kby5buxhFU/4IMqJF6iE5UJ6HTZAxsZNlwyp6czfhkW4+UOvRGxWoIULSoPzrUflp0w==
+	t=1793108249;
+	b=e37i6ZJQuIrkhdqYbVyCyz/VqTOfodRgw+y01BWTXHEJxQNIjwCL7u0ERtoaVxPT0eNq
+	 wDjMPJIoBPRu28JDksyKIWIJZUkTB4ur86en58IKbNWRLMJLY31hFeR66PteNSCGfqQgK
+	 J+hekO9/M7AUaSpoXvFy/0NRsHWSR5VG9dkSqu2UhtLaBBvPmISBvl5kxLen5f4HvRTho
+	 bo944spcb1srJtMfu28D0lMwCWI/txvD807hszfR3pkC0bejE+LDn4aVGuYAoiweeCpXc
+	 W0bS07BNW09FazPsLyu4OuoPcMOSmziiQSEiM7RQZuvLCnkVBRcjIii/kq00k4tbU3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793106906;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=P+yQRCKdkSMlZ7qfciJGjXvoZ65d8d0BFZvvWA6dI7U=;
-	b=NIoIgXWtdnXLvRcfzErPyeiqykRGIMKGlw5YxxKOXXJnZrl1lgNb9JcXyr2QD9EarKGy
-	 2PfIV+O5H/Rsj50OsGaW9KXw3Zrkg34k9Zh/Ma3nIPTvyKBr5fomBnOAtpDMRRMgwMPje
-	 Zd+9pG3qDCOr1O+Hg4n5bl7Z1iSL3nhwGFwAFsfsyijHN07jtZA4r/6mEpdfcfStE1SZb
-	 tOSLNnbCOJOGIR95uc7sqyb7DvD8PdxpZVdIWzBebH4dRi1PoUulTXYhRXaInK55nPBsl
-	 37pQhKpLgWtznopUK67xxVXV4gR8M+mDwbODIf1GkGx9nlKaOPDrx0gqHjovVoFszpA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793108249;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
+	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
+	bh=HI3TvdQWSoyFDSLo75CqjSLtorEOR3XrfVjh1yRd8EA=;
+	b=b2vKk5lJv/hrYX8qPZa0DF7Dp4+Z/M1wcCNbgWZwbOm9gK+EgxwOFUMnsct2Yel1hvJ7
+	 FyciUDHgytXTvlQy8ciB3NnHfDpoU5zoA+cZbLv9EUsV80Yeo6QYV5Z/QKdHTvrvEZYqE
+	 rx7FhHez3TioKDcuFeTSPoHKziSZkWA/4GYPP837HYZdwXrsKkg4j0zVQZoiBE/KHKeCd
+	 2UJX0jTRJUsLFXdpLM6EepbTxzKa7unPEml7J14rB9Xw4PUv09MQq33S/AORrAmwazaRY
+	 p8WBNPs4SAFNkLYnSJ8gX8V9ElNme/lY8+dCBOrciukoNDao1Tf6CvBFuzAvbALmHog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=GshoVjpr;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=UfiuhHfC;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=B8PnnARL;
+	arc=none smtp.remote-ip=209.85.160.176
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51102606A31F
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 13:15:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 51102606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57603606A31E
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 13:37:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57603606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=GshoVjpr;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=UfiuhHfC
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8738FEC016F
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 09:15:05 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 27 Oct 2026 09:15:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793106905;
-	 x=1793193305; bh=P+yQRCKdkSMlZ7qfciJGjXvoZ65d8d0BFZvvWA6dI7U=; b=
-	GshoVjpre/fcOHnfEDUQKLDmGS4Na8IS3cTtP7snpdjJ7p9X42Ssxp8+doySTapD
-	X9BH0yCJEvg8npi9VzS3JLxsW73BUqa7uohOXPXcDLicjXN6OXQ30dqMaMZdBTkP
-	iyx/00v53HiFV5Z1+bYf8AahuywOIhNDZgi1YJldATQGSVlaWPkg57RpEa8yU3+u
-	b7a/V3NiIFodM4PnCjW/6GW9idcum2PoOhKDCpfZsR1i0Kqf8cjPpl4U0+jsL4cr
-	J4D4SL0yGKH3gQnZSBSfkdqIIcrYRgudJyIAEhjKWfrikVh0qihPSHXnqp+5MUtN
-	o+TZ4eSidRXOAsvk7N4xgg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793106905; x=
-	1793193305; bh=P+yQRCKdkSMlZ7qfciJGjXvoZ65d8d0BFZvvWA6dI7U=; b=U
-	fiuhHfC0GTz8H7SIw9AHnkFLCDrl7YK2UjUZoCFIGYaxosKESFS/aGXPug202F3K
-	Wvnr+m+1FB3ZugoN36y7bvgHV7M9OSHVHdM+a5M4f5jBj0qKf/bENCDbUsTaATZu
-	YcDo8vkQPhQCWCOrfKX3QY2N9k9303t1ktQFgAQ5lobZOJiIqXWX+H8KCXn79a4t
-	Gi4bgMFGEFtQ9+dEm6w8JV/oHLFHJ3nsYEdzMfjAby8IZL/FrkmjCfRjqsizPzto
-	x7gsLT6BIOtB2ttJXezIg8FqrFYAUm+IXpxOLjnMycbgPTqU0A1/zr/R28DGm38T
-	t0t12a6T82bidg0W3Z0Xw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793106905; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:ZdIKuLGzDj3nW1AWUbwxU4BPNBzYYtlntEruU6C0aUPXX3o
-	e/9uGku+imUTf/6rZm2PEffkJSkEKb0a5j4/eBt63DIsLX/fUwN00hKHe+GVfH4M
-	kcAykKmrfrNZ0GB9VG+GwVuyoQ9r/+IMg0K02Yw6sCp0BuRCeC+uVafjGx16aJLz
-	ZmijpN6jnbJkVIjKS8mszqukOU0TJGapX8NWTqHhscSpXht+nTt/cRs5ClL3CHDi
-	Kt8mmtk5EAAZ2PqjYcmdwa0TBQnwjmLK2ozGt0WZxvJg13nKJFFeGanAgTWk1wua
-	EpUitTpmGtu3J6l7XneEGkYC+KztRcZjTSwGh8w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-disposition,content-transfer-encoding,
-	content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:k9Vzp+M/PMkrOSNg/1BO/OQGKfU2PJBnMf1N3V15dZQ=:i1hVGohJIY1zozLAPRiN6FqXafnCXfrk7U31Hek4vss=;
-X-ME-Sender: <xms:2aPgavSizz5HNvG4RvBXHgbjwLuqZovgqDmz0k9QEPotzxiBUUgC3w>
-    <xme:2aPgaoORkc1RR54caGwooqqhP6LlexchnP3BS9YXOtVbrr0KHsNHYYHOE3x-Rrcvi
-    iYRTOXQrqKpBXTx_LPGbpWtvHSM56S4dK34BOjOU_4qh5YFYo7Gow>
-X-ME-Received: <xmr:2aPgaiOv-EKaALBhe22kTYc5CbGi9v-u6Ilr6UQnhEzA1Yr7aiDGmw>
-X-ME-Proxy-Cause: dmFkZTEOZx1kzXKS+xyWwZOXj7mkib3tWf4oTDdwYt+tyWXWA8AOYAS3G8dG7lclou0+ZI
-    ohLGl8LygXpEIKCufgm830wE4+PHNWvz5pOKsuOR+MTZHVmuv6wqKnQS8eOG4K0iIb4Zo0
-    uoS1zc5IkAjjSx8qt955ObDLnNrc4AeapI7xZ6mmRlqqtS07R/LOEoM19/I8eTplDUSJUD
-    RdqTdFYXJ6+TZ86VjxId2CKeq/5j9TLhiDsYdtprtjIVH4XV8NczZ0vFLP7x8fN4mHJGPC
-    U/pYC5dTE8kW2kLkPE7p9i4AgQi/Akkl4zopOyQ6lBcfEKqIsuCsfrhC+6+Yaxpvq9RJTl
-    vIhGsLVZ5iP4mVpNj/FnKQpy1LtLuEgzKeXvLyyBUn8+bCq9OiffKyOh9iZeYPHRZYdsvz
-    qxn7jaPqkloM65RyZ8hPZKfVrw6hRRTR6RptPFVZPzBEY9pCZmi9Qu+hj7LjX47q5ws23K
-    dzYPk/1P9fQZRiocAF7Q5h0miz6f+UkkIqNqpucU91p/dBw8ly3Bo0vjdHY67XZMVntHqU
-    lOG077CvKvt7+gfOug2j4vkMYqCNEVNgkUk+2kqfZ3KbFjMh/jQGGQGuXPvTXtDl4su9o0
-    DUG058d1HkOcP1/FQ0LammcL4xKQfrhCPrDwyvBzMAcxJu48PZnVkirKVFnQ
-X-ME-Proxy: <xmx:2aPgaouHSqhXQeXIsjdeGW40vNWqWGXySddzTuiKjjtiOLOIvtQChw>
-    <xmx:2aPgasUTCIZgbEGIFBflUFCub53ONmn_ttRAcHSwdwVi8aOId-SmrA>
-    <xmx:2aPgagvqYG2HCoKT8NgdymOVpr9iGOMOOebdCS_mTFTjQQ3vSSN51Q>
-    <xmx:2aPgaoWSgF4ZsPyhHSa6oYdy5aNVEKQky0bpSlc5Qcd8AEcbR_cDug>
-    <xmx:2aPgaoMdcAUaUgsfTX1y16fwTWtqjDI_bpvpT4I2ClOOLRRtq9iVde0z>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 09:15:04 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cf46a6d2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 27 Oct 2026 13:15:04 +0000 (UTC)
-Date: Tue, 27 Oct 2026 14:15:01 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 6/6] odb/source-files: only reload alternates when the
- file has changed
-Message-ID: <auCj1VesUFVBtT5P@pks.im>
-References: <20261023-pks-odb-files-reload-alternates-v2-0-30559d7ff43b@pks.im>
- <20261023-pks-odb-files-reload-alternates-v2-6-30559d7ff43b@pks.im>
- <CAP8UFD3XSQXFAiqGEp++=Y_OmEhogDo77t-XRFYAu_1yOQc+Gw@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=B8PnnARL
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-53665358476so45053481cf.2
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 06:37:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793108248; x=1793713048; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=HI3TvdQWSoyFDSLo75CqjSLtorEOR3XrfVjh1yRd8EA=;
+        b=B8PnnARLMoZiFkK4m9Gk2Smrmjn3AGw1jnFGw8Vnv5WXX1VNz4eQ6Xd1va/4UsHnI0
+         joSy98B98iUc447sEnTilEXWefUMRsNPNYlucRtyetUOT5lc+9JAtGUidNv0H9wHhAtH
+         LScoccWWaKOzOvfBKq665Fl1RwXugDe5Q24GWHuO/FmE2pIDGYduGTfBwq93FiIXCKhj
+         DjE/CU+fjy50Tz7p6sUtZaDUI+A1VOaOwpcoaCAemHSIuI0dSQNpSY+ekOIgr75ApU7n
+         C5ncMrRdtOsKAqn6ZV5XkBmAvDAlvJgpYBc23dxxCWgyoisVz0BwnXd5zBZI7XSknvMl
+         GvxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793108248; x=1793713048;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=HI3TvdQWSoyFDSLo75CqjSLtorEOR3XrfVjh1yRd8EA=;
+        b=WkCopBsKA0HHaZKyY3soP6SiJwE87Wcsw9EUaeFIzp+v/2DmyDoEqf/+mVRGq2TVdY
+         xXuArELjgNAkrAQoy9+S0sQrfphAcPKcAn/Yq5/34rCRIr+mybXgtXzIWjHE+lOsKgrL
+         UkK/QiAhowVVtPBdIkeZ72I6ffkFbvNcOFwpWpGSeMg1uF41md77fYmOuWN+kLT7lmTV
+         2qbXgxHWnP6iA3ZQJO90uPctRs5d1j8aAQVyqCf+DrdIwOR23cPCX+5Nelfny8+2DweJ
+         3gLNyNqEL+WCesSwcgVsPZVVZ469Y8PMmSu721AdbyL/zCo111F/GzepP1fAFjjKb1J5
+         oIGg==
+X-Forwarded-Encrypted: i=1; AKwUvBxKBgPQPsQMf0kHnKjpELlQpDekI9Zk5p85j42W5WW8hXnOpMrz84MT23ypk7MSEQIaHSk=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJRnreVJLqnSVrbvW99NOt0l71+PrvJlGEzxDA32eLuD5zql0cn
+	vlXjaB/bAYCIiRedBoyaoumN1e6y1EcAIotxLfbq97LySd41OvY5pv8H
+X-Gm-Gg: AYBFou15lG72duBu6PkKY4eR4RuHpT98ul9xFYxfHeSd0c33i+hbcNP76ma2D5TSEjW
+	bUzh60fGN+aCKdn/H3Rn0zkBrmx9qGclZug3niN0al+j1XH8Vg4fE6nnTYRNgZeKOr9Pmg16jd6
+	1zjqlw7oLLQhhQs9PrBIV7zKeM6PX8JeAFFLlOTvZMOOB8cjjr6MJ3bzxTXGqJAcyMoLnfFaRmW
+	2mbWYOVBQDt+DQavwvLiQubcOmP9ZrS6LQ7NT53osTZjPlwiKu1J4XCLkMSya0qZKiGjt9IakUu
+	BG0IBvEbuoLk5kcOBlvUilXqD68JDz/PvSkjlYI2TBhgO80X7pMTEzZ1eVeDBKSu9AxbMKcrEKs
+	l4zQqu9Y+lZ3YAMrrlsD/jLNcuhaByufiIeRgsZox1UHkqBvYBhE4EJRhQbci4qKj2ak7B7TgrI
+	nfAni6mlCVV3RWrvdvZshPmjQl7BTwaJ8F8yOsCh/qdjBzw/Yr/G3k+LXSz7brIOSWVj1CAw5Ha
+	mTJAFdAwfXFGD8OnahAKuHs+0kzEdbHIBv562PvmwYSqMY0WmJuTWr2584V2ZV9suqt7RGctTJ9
+	MwGWt1P7/vUKOAH/T1LLOmGVJ7IRRfTJQbD0GxtSArEqr9gz2YviKZ84C89EqhXuzKfUzKluhEj
+	rUXmu/cMG0krcV4EcZcoqoaUA8uxFPOXvvqwECl26deBxLAmQCWg=
+X-Received: by 2002:a05:622a:14d1:b0:533:a8fe:e43b with SMTP id d75a77b69052e-5383b53186emr157746081cf.38.1793108247981;
+        Tue, 27 Oct 2026 06:37:27 -0700 (PDT)
+Received: from smtpclient.apple ([2600:1004:b03e:6cb9:e8f7:7afe:bb4c:405d])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c47a6abacsm102879476d6.1.2026.10.27.06.37.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2026 06:37:27 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,113 +91,49 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD3XSQXFAiqGEp++=Y_OmEhogDo77t-XRFYAu_1yOQc+Gw@mail.gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2 0/3] reflog: add --operations and --historical-branch
+Date: Tue, 27 Oct 2026 09:37:16 -0400
+Message-Id: <B734A6B4-CEA6-4CF2-8BA0-A4D8CC4125C1@gmail.com>
+References: <1bc5a05e-3d3b-4f56-8b11-2e276cef48ca@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>
+In-Reply-To: <1bc5a05e-3d3b-4f56-8b11-2e276cef48ca@gmail.com>
+To: phillip.wood@dunelm.org.uk
+X-Mailer: iPhone Mail (23D8133)
 
-On Tue, Oct 27, 2026 at 12:22:50PM +0100, Christian Couder wrote:
-> On Fri, Oct 23, 2026 at 2:48 PM Patrick Steinhardt <ps@pks.im> wrote:
-> 
-> > -static int read_alternates(const char *object_dir, struct strvec *out)
-> > +static void read_alternates(const char *object_dir, struct strvec *out,
-> > +                           struct stat_validity *validity)
-> >  {
-> >         struct strbuf buf = STRBUF_INIT;
-> >         char *path;
-> >
-> >         path = xstrfmt("%s/info/alternates", object_dir);
-> > -       if (strbuf_read_file(&buf, path, 1024) < 0) {
-> > -               warn_on_fopen_errors(path);
-> > -               free(path);
-> > -               return 0;
-> > +       if (!validity || !stat_validity_check(validity, path)) {
-> > +               bool successful = false;
-> > +               int fd;
-> > +
-> > +               fd = open(path, O_RDONLY);
-> > +               if (fd < 0) {
-> > +                       warn_on_fopen_errors(path);
-> > +               } else if (strbuf_read(&buf, fd, 1024) < 0) {
-> 
-> Here we start reading from the alternates file, but that file could
-> start to be written to...
-> 
-> > +                       warning_errno(_("unable to read alternates file '%s'"),
-> > +                                     path);
-> > +               } else {
-> > +                       parse_alternates(buf.buf, '\n', object_dir, out);
-> 
-> ...suppose we parse the old content of the file (which calls
-> strbuf_realpath() for each entry and so does a few syscalls) while an
-> in-place rewrite of the file, like the:
-> 
->   `echo "$PWD/alternate/.git/objects" >repo/.git/objects/info/alternates`
-> 
-> in the new t1006 test added by patch 3/6, happens...
-> 
-> > +                       successful = true;
-> > +               }
-> > +
-> > +               if (validity) {
-> > +                       if (successful)
-> > +                               stat_validity_update(validity, fd);
-> 
-> ...then we would update the validity while the alternates file's
-> content has changed (and we only parsed its old content).
-> 
-> So, if the file content is not changed after that, we never parse the
-> content of the file from the in-place rewrite.
-> 
-> (If the rewrite is not an in-place one, but the file is for example
-> replaced through a lock file and rename, the race doesn't happen.)
-> 
-> It seems to me that if we want to avoid a race here, we should have
-> the `stat_validity_update(..., fd);` call before reading from fd like
-> in "refs/packed-backend.c" and "shallow.c".
-> 
-> > +                       else
-> > +                               stat_validity_clear(validity);
-> > +               }
-> > +
-> > +               if (fd >= 0)
-> > +                       close(fd);
-> 
-> It looks like v1 didn't have this issue, as it called
-> stat_validity_update() before reading. A concurrent rewrite then only
-> caused a spurious re-read on the next check. So I wonder if we could
-> keep that order, and just clear the validity when reading fails, which
-> would also address Junio's point:
-> 
->                fd = open(path, O_RDONLY);
->                if (fd < 0) {
->                        warn_on_fopen_errors(path);
->                } else {
->                        if (validity)
->                                stat_validity_update(validity, fd);
->                        if (strbuf_read(&buf, fd, 1024) < 0) {
->                                warning_errno(_("unable to read
-> alternates file '%s'"),
->                                                        path);
->                                if (validity)
->                                        stat_validity_clear(validity);
->                        } else {
->                                parse_alternates(buf.buf, '\n', object_dir, out);
->                        }
->                        close(fd);
->                }
 
-Hmm, that's fair. I don't think that we should worry too much about
-in-place updates when concurrent processes are active as this is
-inherently broken already. That process may see any in-between state,
-and that may or may not result in something sensible. But fixing this is
-easy enough.
+> Le 26 oct. 2026 =C3=A0 06:53, Phillip Wood <phillip.wood123@gmail.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BFOn 24/10/2026 17:40, Junio C Hamano wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>> I'm rather skeptical of this in its current form. Not all commands that
+>>> modify the working tree update the reflog and some commands such as "git=
 
-Your proposed variant is subtly broken because you don't clear the stat
-cache in the case where open(3p) itself fails. But I'll adapt that a bit
-and then include this in the next version.
+>>> cherry-pick A B C" create multiple reflog entires that are
+>>> indistinguishable from multiple invocations of a single command.
+>> I like the direction to make the default 'git reflog' output on a
+>> single branch easier to understand without needing any extra
+>> filtering in this series.
+>> 'git rebase' doing its work on a detached HEAD was likely the
+>> first, and we may want to convert more multi-step commands to do
+>> so, including the multiple 'git cherry-pick' you mention.
+>=20
+> It would certainly be nice to avoid creating lots of entries in the branch=
+ reflog when cherry-picking. I'm not sure what users would make of us switch=
+ing to a detached HEAD as some people seem to find it confusing; if we do de=
+cide to do that we should make sure we update "git status" to explain what's=
+ happening. I'm more relaxed about changing "git am", but like you I normall=
+y detach HEAD first so maybe I'm not the best person to ask about that.
 
-Thanks!
+I sometimes forget that Git detaches HEAD while rebasing!=20
+The prompt script shows the branch info, and git status (I think?)
+doesn=E2=80=99t indicate it.
 
-Patrick
+All this to say, I think rebase=E2=80=99s presentation of a detached HEAD
+that is somewhat =C2=AB hidden =C2=BB might make such a change more
+invisible to cherry-pickers?=
