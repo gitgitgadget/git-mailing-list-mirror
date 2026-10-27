@@ -1,120 +1,119 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793127732;
-	b=rYT3Aw8WfKlZYWxDW975QRa1ftS/fVZJysN3XceVqK6pNmSMFckmzot5P59t6nx+GUwr
-	 0SHX4TARFUDVDuON4RV9tE6K9ehwnehlIVKPxywt75zRG8RPF6FpfuU/gpLeou4GC1ys/
-	 LKrqh1fJiwDCtSrx2xfkUHdO2MfEBZYsmLT7jDRAF109Ey0nzf5csQ7U2gIY8oL8VZYmk
-	 t+Tg2toQ9Amy7wnXcHDVXtrGOhIPBn+tDhUdi+RYIlbaNm0TxAToxLn4exJFMdz4XuuY+
-	 B7nTrVZkcqTo9lQ36l9wEPd9svnKx1fHLeajKlrvPTA4Veqg9TdK57I2HeLHmEne2ag==
+	t=1793128359;
+	b=c7KCwThloku8vfdU0MWnkNv8oJtSNkMH8JWa2AaOO/E7Fn2sDhtZEI6R6gSnxpMgnpq3
+	 p7PYcFu//xZiMCEeqpYJ4xMgxxVg4IxEK/EGJ0GGM3wTJK9FY3gUzo1EFaponaNgJbr59
+	 ZfuLOXPtpjmbdi364mVCSOkBdpUesyc+UlygMeVefPAmA0FSe8uBhhXe8Exod1OaPWwLB
+	 Y6m+SVmcDOy8bRWy97cRMtgNKrfwzyZ5L7wt6FLxwuJOsnO2AqaWn2F256cX+F6/THfbT
+	 vXK999V3DbOT0gUCPSDY02IYQYbJ3sTxBcwUd/c4sp2xQ6HY6Wo24gKyY3ye3Xy+UuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793127732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793128359;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=9539E3e0D0SuviuG1tc1/+sa9m6wQHMLRS/3m61v2pk=;
-	b=Od8VF2ZBqwnI3YYsxsM9CLmylZCchBvvy0CO/CgvHCzoiPY9RO1hfzXkt5gKq9u287Cg
-	 Mcy2Dk/GwwuZ4suFh3JaBcYkzuV5rXV9UuzFkhjOh/T8DBP5leHQVugs7hfa6iXeBCqGD
-	 tiTQPHR3XkMKZrJxxencj3rE4PR+pexMQ/orInNeDtKHTmJtj1VIM41G2XEfjYmiOFO/9
-	 gThRSETfmmPqdUsj+TfnklIK728aYymAtosyBmXT8sg4Ace9w5NTDVJtKYihcfCLTk1AU
-	 6FChKOofdJ6V0maw+E1yXMpXZHSKVc2UBomKAuIlUxOLDnWDKqTWaMa256M5XNv7suQ==
+	bh=P1mHWb/1OJTm1bh0j32Rpp+2TiDmSJZA+V8y03KEI+A=;
+	b=kcSk0JHKL6Zn+vYHVCniTflyW6D2Yc2dFX9nU+j5zyUZeaNYeNmPBClXMsRBVQ9hy6QY
+	 BqQ0O5mXRYjlXfMYVEhMFpOf05lxcDJ5c7HxJv3SgGE++L+tZkLfyWb9Osdeo5H9usXXO
+	 3uVTzUXbr+rBbYRSJSxZ0B1sYdZzU62Gr/44fP99DIu+g1eVV0p64Fz1LulPvODvc0QeW
+	 FxJk7Ipgm04Vu2ca4V+ttfszsb2MuY18yt7j6+MXt7qr+sX6vLtZD6UAAbG2HsSJYCEDO
+	 8AH8qQ5acMQK5UXKQHz+0JzKbS4iOZ0bLgVnDlQoi4nMWbNpyVYSnT7r9rrcbiohI5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DT0Kop7+;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=IrpLw+T5;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=mbA1NPdT;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QX5260Vt;
 	arc=none smtp.remote-ip=202.12.124.153
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5978606A31E
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 19:02:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5978606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A21606A31F
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 19:12:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A2A21606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DT0Kop7+;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=IrpLw+T5
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9E5C97A0146
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 15:02:10 -0400 (EDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=mbA1NPdT;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QX5260Vt
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 08F2F7A00E0
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 15:12:38 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 27 Oct 2026 15:02:10 -0400
+  by phl-compute-09.internal (MEProxy); Tue, 27 Oct 2026 15:12:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793127730; x=1793214130; bh=9539E3e0D0
-	SuviuG1tc1/+sa9m6wQHMLRS/3m61v2pk=; b=DT0Kop7+PeT8EF5+XjeXlTII4B
-	V7AUbYO6JEz1BcXCbFdI1zNTUNHs3kJnSHVxVoFMSXG4Xf2TGA6WJo5/8X/IrHrz
-	VHMtqF1esRlnKyvwMFeGJ+0zoddHJctaGsduBGDgui21PE1+aexYSaFL91PMbuEg
-	p4fT/OeqyI0usvl2IeZX1jks8TJ4XfQvVPnxQAgUXKeVmUKWYOlAp+eM9pTw9+GY
-	2/13N3STIxLB86gy+2hXtpFS5+Va+52SOxSbYNXbKBUsTVgnFin4/Vhxr0SuvugH
-	idrbt9sPtvHeyQZl1Hrfv3D4PGclBWPqKCYvLczah+m9OxJZw06WtQW0UQAw==
+	:subject:to:to; s=fm1; t=1793128357; x=1793214757; bh=P1mHWb/1OJ
+	Tm1bh0j32Rpp+2TiDmSJZA+V8y03KEI+A=; b=mbA1NPdTzDBjDRHEbLD48hfuTX
+	BjmOzs/KTRGjb/f6QPL1YtGeVBv8ssJ2X73AOKcNNpMOuX7Y733HoheUMNpMOvWA
+	MtXr1poeh5eE48wLWepDlGZd3TYnErnhc+Fo+Vpfy9fmBsD97529eZjMB8GpJZDW
+	7QURn0lZwN8tgBvEbcvDz6OA+P6doVBxSS/C7PTRoOtaCRzXpxaxaJmL6RoUdvVn
+	c0k8oh1iS/UAtjAS9OEdckxfjrKeQEr4HP6IdGXQiw0EClyw+Y/Ix2BVHPNq4pdz
+	ke8N1hxUv9YvIkyqzRFM2PAG5IhYExe5aKt4+lVrc2jMcEHmcyZHzjJoRnBg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793127730; x=1793214130; bh=9539E3e0D0SuviuG1tc1/+sa9m6wQHMLRS/
-	3m61v2pk=; b=IrpLw+T5Cf29em9V1U+JLb7p3J5IRQQ3P7QKHzNJEFzEvcRvnI1
-	vBQM592KNTl/vzt1jATwkHqzFbyDATtUzbPfT0q2J48+o5J7p79jJA88tZWnXlti
-	1E/GpiYdjEcPtTEXc55Zh8FcOGbrTNQJUhI/VdnWDvMKR1Y3sA/yqUSXXb85gMb0
-	9N4kQObYT1pX3+nL1bMalwzmhr5KfvVUYBToaHwpknBQdfyIKEn9YuDrrtLsA85r
-	Qa4P0a32NQz1t0ZJVE4whaDznqKS6OyLtyJvREZkJW/YUwR048b68PU5wu5vw2oQ
-	qUryzIcuCVhgquIA7VGcgRRqw71h1PuI5cw==
+	1793128357; x=1793214757; bh=P1mHWb/1OJTm1bh0j32Rpp+2TiDmSJZA+V8
+	y03KEI+A=; b=QX5260VtQ6Tu4NLZkE74cDRGivVxEQ7nH87lhfvzyB7X/KeOKik
+	/L2IVE+XDr+GBHCPRt8Li1ro+7s4Dc4fLWj6Q6DI3PQIoMMgDj567SOw3u5Sy+Fb
+	rzgndguIDeFOVotBZX4wH8ps1aoNZNSQIsepZ9n+NgM+el6oANPJotVpwKA3bnLe
+	9rPHGC4Ft5APacveUMmcihXk4f3y8WhrHL07hBKLedCNPWsPlbh5szRRqiEU8rA3
+	9V2KoYw0Lvh+8OVN2s1qAthHrB06hqyuJXMCda8RlFanAuHi4/IJX/NQiDsdv5FA
+	/rXBKoT08h15roQSuJFAni8qlU23mL1O/WA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793127730; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1793128357; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:mARmXEYlzYPSKvyDNQLIfr+kqpzIY5B+I6o5QGv1bzQFDcy
-	GNq2cdemwXu+qN95W45FMkIEAQBOcvKai9srMxFcAefCa7aKp+CTm+POVJmT6UN8
-	K2YlPVeGNGLx8uhsC/0htalqAsKlgMQ/EPfZEiDywTCvkTO9McwpdfQKdh3gpB+X
-	UwNNNdZ6mFOim4ITpUcfIWaIvAE6Fsps7kGgC2PwEVn9BVn6HVU0CcB9fXVhyT++
-	k/tp8RstfCk6EX88vfuIVJ/XFwUOqRW1NZ4+XasP78dKb+Oy9L3pJs+9pNZZkapz
-	xD6A+QsplJJKsvQkQHM0gFDe1IQJNkkDiiU70Jw==;
+	s=fm1:rsa-sha256:ffVSEjwrExD4HWnsZTwrjeqdhjHAtNl1F7jrOAvxc3dHGu6
+	89FNt9WkhqZ+FS6lCWOPDa3yzKmLFl9GQsoywM+e2NKUB3YDIbSvx8wHq0MFa6PW
+	M/NE3GSC748mZIqgZypO0I4jb1aKFu7PfZNsd9WA2/PU9aEdbOgRiC0GcaYuk5fo
+	ohIGEA9BDejwQxKybDbQgZyHSBCPUExkXDj+5HFbf2FMEziWURecMU9UQboslnl/
+	QLuWNbKbz2UdvTshEXPRw26uSKGLXeOVv5NliMIrUE9wa9ehj9lk9xfWZZiDBIof
+	ee1IN6eFwLcDEsnNMemzb1pDLiFHDohwGtF5qlg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:nl0OqXfhUA+/jVQJhg+7FXW21h8vGA93LgOi+pxDr2M=:LQy4ZusIQWoI+dT+YE+lSv7n1CYY4z5bBJuHN1IxQww=;
-X-ME-Sender: <xms:MvXgauDGm7gZpC39UgLn6WiDMvSoisdbDLSbf-ReOE2qsQ40CqFYWw>
-    <xme:MvXgav_kUtdJAFxdaqaUCBYQ0NMO_MImPD2AH7hdmDg-_0hH8qDjDryht8wX2iKsf
-    jYMSHltqjtHUao_wBGHkF-r8sa5Hly_IkZpQ1cLbgrBvd0pesyPoZ4>
-X-ME-Received: <xmr:MvXgau-impm5YFO7E05kpF9DBbTdb5KuJj0oq7TwQ8dxwjRWIJ4zjC5JOZqry42Y9Sp60DGhBNbW_eShudWNfm08Hvroor_v7a-l>
-X-ME-Proxy-Cause: dmFkZTEXjooJzN7/8Lb0ael7QiGet0u8hYpTba94++ZarbKBtBFtFiAHitUVZJxOIDEYt7
-    1H45C13cJ0ZUgzv0iOLT/jeEOH8ZovSoebNsT2eXUtuDdtlpvmoPLfONe8hIFPu4fKMmy8
-    GpKnDOZyua7iuenu0KFBMPpNWRbfGfKl+vsvmdIK7wxGagFgHTKHFMo1bDKarNhgKOKJ3b
-    gj740/jfQzYH3VOZG3fNx5vn3YqVpKYKHnOLyAN5bx6dI6furVz7htZYiAl3QP1Rxq2Xo3
-    3mc2mjYuGD4acykiJ7+8n7ArV4BWJ8wWHTiJ/YKzI5ab81Isvq+lpV0D3JHQr43cR4a7Xl
-    wolCb9d6UJ5v2mAL2OxH8ouVB5MD6ILRcsBjKZ9kFJgGG1LqP1htfqnCTH3V6tPcZ81Yrb
-    hVz+TtcDKpFiLw0+Pp54eqdraEyjDJyuDXbJJYZt7VHWi7GoZvmCSjrP1BmNfwL2+NNSoV
-    dhhk2n0QE83G11Bq8DIHgWlT6kZYcr06fa09A2L4+BTFThqSgsQ9lEqIMG6PTGdLVdn0ZE
-    oMVKUY2rIwZKfutG0Fyvi7HDzIzQQjEtmfNkwLURz/F4H0W/iXQ1ZIwXfIgc6Dq/y6ESup
-    4XFvLUnx4T5cgAoQoq5Ui8tjrYYpVQ/a2NK45cUeSLbzBpKlKj6qdwKCP1gA
-X-ME-Proxy: <xmx:MvXgamedWLRrj4Zllpm1i-s8baIJyzxWCH-9AuAUwz1ab_i43Fb9lQ>
-    <xmx:MvXganEKez5GEPsINnB-2bkSUB9V9ce0Drp13lzZN8hCAxYGx-qrJw>
-    <xmx:MvXgakd5gs7BM6COCCFEJ7tQzEeO3fmfNq_cu2KN3x4svFC-5sRy8A>
-    <xmx:MvXgahF3yvMMEFDEXgm4A1x83kpOJjGOleL5bXZPXKr69xW3SFzdlg>
-    <xmx:MvXgav8j0lXt8iM7Zcnyqr3BBR3ZXRRe9CEDiQS_Z4ujsSlhcH_tslQV>
+Message-Instance: m=1; h=sha256:UeVsudZ29cNFdKaQoPHtrV+kl1KeOdHaMimGOfqHPc0=:M8Wpf1v/gmC6PF5WwRZmkZLGkiUK7KGLMM7YR+apdRM=;
+X-ME-Sender: <xms:pffgakX4_f6yKleetdOFIeU6dKoI942XFnYvp0r1FhVJW5yhpz3vZg>
+    <xme:pffgagCrniaRRiHdetHQLq6H4YIDO-_vmopaLVpt3xscsquW9llPLLkRPpUBMTppe
+    r41L34KExvYEgucmIN0uTiNi9JQKaHUnHNigfcFX777wxSAoAn6Rg>
+X-ME-Received: <xmr:pffgalzXrtc_aThjNeas4QO7utIn4ZrhT-PL8mJB4xLRw9YiyZ1oGEOIGYEv-AErKuuWIPTxzYr1E4osNMKdLTFflkDhuy0nOC_E>
+X-ME-Proxy-Cause: dmFkZTGejpocc9kJwcsgpToXnP36PjmJpu5UTxxf8nYnt6LNSPthjjFIJIyB5+fiCmgiqO
+    PB/Cx1O1ZygiD8jHKGQjJr9qfqRmpnft215/f+w+7m5J7m9BstEYvqAMzfRUAs4yBCIhrX
+    eauuFgshGoSZH/U+MtPo+yzpzkxPXu5rLcj4tDIcP7Y96qENoRKjcXEbdRnbWeq2kASYez
+    re/3pA6MnnYaCQVwqOPQjOW0R9i1uUB99oKCTHB0veE5HwTP4WaEX8CLHLB91i4kbC7CxT
+    Y+BgD6EwkGHhqa9cRHAqIXQ1DFvSn1xoXoJoDW+XkuXOdfuKCkGPd9/JUISJOd7A8XbDqq
+    MexH/wEAGlx3TZklPTN/ivR9LhFWlg20pdh4Cq3Wp44S+s7u6AxJx6RfmtOJ+l+ploilZ7
+    0P5Pxx7lK6odx56qd+TyLdXejyQU99n6NiYktFM7Hsivb0piK+MHmcLE1+Wr3ai67ytr+m
+    +hF68wbuVs8gQSKBJVxS/5pM1iqHhdnlwxuJHMUEPc9loxS7yBZrRfd9580IlwJsLABvS7
+    KfcX7AVGOThnO+SD5lWcucqTwpfO5hAo515Yw3I1MvREQq1QKFOwvsUzgLuA/5+C+H0cMx
+    /76TipnQ8TRXSJ4OfdIESmJNFU00m/yaOyzRR1GL1C/awNrCE1tEx3O77R7A
+X-ME-Proxy: <xmx:pffgatDdiCRBTsTZq6WOeM33IoEKBaU5QZK5GuvZbKj_WqI7UTKWSw>
+    <xmx:pffgaibNsMuiUQzZzSIUUivVISKRud8ozlpboth1UJj6NVLhP9mT7A>
+    <xmx:pffgalj-MLCftN5pl04cE547DvF9S3DsdNhZYVSVvyNa8YRPFaZ54A>
+    <xmx:pffgak5lUkAlCiafO-18oC7RtIk4RxBLG8iS1Yry7gZ1LUYOiv0zvg>
+    <xmx:pffgakAVsGY_I9uyCc9uAH8ilt9Qi5SJ3QI-fqEvB0eEowNbEx3DACDC>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 15:02:09 -0400 (EDT)
+ 27 Oct 2026 15:12:35 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Pablo Sabater <pabloosabaterr@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH RFC 1/3] cat-file: extract the transport ownership from
- get_remote_info()
-In-Reply-To: <20261027-remote-object-info-batch-v1-1-ea7a1f0b1df1@gmail.com>
-	(Pablo Sabater's message of "Tue, 27 Oct 2026 03:16:51 +0000")
+Subject: Re: [PATCH RFC 0/3] cat-file: make remote-object-info request in
+ batches
+In-Reply-To: <20261027-remote-object-info-batch-v1-0-ea7a1f0b1df1@gmail.com>
+	(Pablo Sabater's message of "Tue, 27 Oct 2026 03:16:50 +0000")
 References: <20261027-remote-object-info-batch-v1-0-ea7a1f0b1df1@gmail.com>
-	<20261027-remote-object-info-batch-v1-1-ea7a1f0b1df1@gmail.com>
-Date: Tue, 27 Oct 2026 12:02:08 -0700
-Message-ID: <xmqqpkwvj7bj.fsf@gitster.g>
+Date: Tue, 27 Oct 2026 12:12:34 -0700
+Message-ID: <xmqqld7jj6u5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -129,29 +128,26 @@ Content-Type: text/plain
 
 Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> get_remote_info() receives the name of the remote and from there it
-> builds the transport and at the end closes it.
+> A noticeable difference can be seen from a 10k OID batch to a 50k batch.
+> After that the difference isn't as noticeable (the number of batches to
+> be requested isn't that big).
 >
-> To be able to reuse the connection for multiple batches in a subsequent
-> commit, it is needed to extract that responsibility from
-> get_remote_info() and instead have it in its caller,
-> parse_cmd_remote_object_info(), which will handle the batches.
+> I propose 50k OIDs as the default number of OIDs for the
+> remote-object-info batches. Coincidentally, git backfill's default batch
+> size is 50k as well though it's unrelated.
 
-Makes sense.
+Interesting.  We cannot share any code with backfill as we only
+retrieve info on objects while backfill does grab the objects
+themselves, but using the same number may make it easy to explain in
+the documentation.
 
-> While at it, rename the transport variable 'gtransport' to 'transport',
-> as it looks like a global when it's not.
+> I have barely done any benchmarking before, so I would appreciate
+> any feedback on the one in patch 2. Is there a better way to do it,
+> or other things I should take into account?
+>
+> Should the server also check for a limit on the number of OIDs it
+> accepts in a single object-info request?
 
-Good move.  We started (not particularly this program but the
-transport layer in general) with a global instance of transport
-object called gtransport, but the ones that we create on demand and
-release after we are done are of course local and it is misleading
-to use such a prefix.
-
-> +	if (!transport->smart_options)
-> +		die(_("smart options required"));
-
-Is this an end-user facing error message?  I am not sure a user who
-saw this message can figure out what went wrong or how to correct
-it.
-
+What I am more curious about is how this updated code interacts with
+existing code (i.e., updated "cat-file --batch" clients with deployed
+servers, and vice versa).
