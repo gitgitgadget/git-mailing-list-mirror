@@ -1,88 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.169
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793099690;
-	b=IgWWXYCA2TFRZecrl5Y3xaTw1fPoYqmYCV/Chs1essUeHoK4TRSkjS7P9oqffHwVssX4
-	 ka0o2TuNCwJZM6fAsdGVmxDgp8pDjMU49MNftl4NMomXmVN5X+9vP13l99j//0UyJDFqY
-	 PdlcAWqhp5apIXEz5ChKCD+D8Brh/pI8EJYFOxZ7hQv2BCYI97PDA+HhppSE09DVISrOC
-	 jsHKb/eZ6Qjj/C0BaK5LejjwrBv9FYbOzJJuRaPXMNlfXzW5WBeEjF7ZyB3ZEm9dGXW7/
-	 lh/cewhqQTQwXftpARElreDHI1DjJYhiRElvSQcj8Xw7DtnjoRQYnrGoZztWiD3NLZw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793099690;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.47
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793100185;
+	b=ZxwCt52uy548Wt/rvL1CERAc+G+Dr8w+dnzLyYWulIGq+eWSoNk4SzxwjfWmQlRo2SWU
+	 xzoge7uXc7yYzsyJ2cC/fXTY702Vr0vx359tV5HfjjrNz7zEPYwL3R5+TCiuMeVfRCpYP
+	 4GJ8XwkDx3abtOEGUCFRtY4mYrMDDrDJ0LFI34ZOmYRhHIefCBZAA8iMecEdlsQQYawzR
+	 ERrfQiriK03I7nhoJDkXI9i+/V/xvK+lmeBsSJicy5mJgdQ/hfSSt1cuIBWcI02waFIxj
+	 Aji1D+h5qqxJCb0zaj7kQkd/A5W3Yg2hoKiGV8ncUYs3AcquJsgnH0BLMxJhlOFDiFg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793100185;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=a+s+xXp3tqR4XPMeZuJQV004ARXEgccqkwkWZBrk/gk=;
-	b=Uq57b87s3N8wJNvyZKoOCmJwccPnRo4oT5snVbhQmVU8lOaPxQX3QGqfikledGzibugp
-	 sonD0NobdaJEhPL8Tv3pc55FrT0KOlaJqFvTh3K4tohTK+uhtEyZ/39bEWT7unzTVW6Nd
-	 1yEx9gKjfc2tP4A1VtMRLzpiZoHhWiLTBMh6xVkGN/ZUpR6DqSEcf0bwY+IEX8HXViwIH
-	 uFiK55udIwjGz0jpjZWSeqSOMyjPI6NRhP6sIc/P70Ne9EWWYwoLSwc4dQKx+clGNoSsx
-	 pRXhipZRPQu+cGh1KstfZoRDBV0kpRG41SuQdbf9pBJDsL5z3Nfhpl1UwmhYpx7pKjA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=Ljph5d3KePALy+AQzkJZr3HSCfY/bhkUr/N2EDbBzO8=;
+	b=2H0Pf1deVsUsH9E7Rqo0vMKpXZcKtXLSP1GflsbLcD6VI8DJNvdK2urSTxB1fvIxs01D
+	 fHEYf3fkgNL0tTgq3JOy1y/PPKbMGNSsrklPJCo67yoPlA1ZseI2wwPsrLofkQ4eosbyB
+	 wDNa9DPDiVvjSthDka/yQ3Ypa7DHJsEzZ8hc9oiwvgLNuKASfP0MZxfwC7FhHTwGSY9Yj
+	 bRB1deciQjwpIQPTYwtHlCZfRXYLBE5MIRWwUMUda0ifEpnaBl3NoDg8NFafSjpYEIqsL
+	 Lebikbyd9YefbEJLQ7FLL+1pRVcZylGfLUJjPiiw7TWK/90ZQq9FfY0+OJvRVeIiTDA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=X85QCvDZ;
-	arc=none smtp.remote-ip=209.85.215.169
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="pfG/q8c4";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.47
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A87606A31B
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 11:14:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5A87606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC531606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 11:23:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CC531606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=X85QCvDZ
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-cd5e2d696e0so2168871a12.1
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:14:49 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pfG/q8c4
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-14394530ec6so4812660c88.1
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:23:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793100184; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MXnGalCrR1+l1Ufd8V/GzVU0vBuVnLrIPgOHs4ochreTDzr16tGp4PIKv4Mt1Dv720
+         aI7A5X2V/dbCGJQb7mg9Vn+AN9P7xY5d4Q2VJPJYMpP+xCEuC7kJwDamQZhRDKaVZQIw
+         BaV1jPyUd9v67V0WQeRV/kMGf6wpfOJrHHcu9qnARuJJICwgFrfWt6swvX+mzPluUJln
+         Ug2XvWE2phpj7mdRKfDlaHK5cyOBGg8w6GBBTTrqb+pGOllZDa7c0+5LRPUrskagC3DV
+         7P43DKtNPCnzjRuyVHvKNfQPihT9z0R3+GlNNG1JHNcS1PGN+TdmSASi1dAq+VDY1V9H
+         FBlg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Ljph5d3KePALy+AQzkJZr3HSCfY/bhkUr/N2EDbBzO8=;
+        fh=4ryOG4wBbIqKixWzeKd5dc717SQGdNJth+KYU2DAukY=;
+        b=bLfgCfGxcNvtXxnBcZ2O/Fb42psbk6G33bvVMeQokGHVSFuAH2cvw9AM+pTdT/lTo0
+         W/WKk/gp1NpvtLiqHS0mtFL/TmYdOjQrGL94FntWGkdP9DXH45iCSnUWe1tDYRmX+bCp
+         G4E24ZCyEs4dOZBJdzZeXp4fRBD2dvj6TEtbTIWW7Qv3m4OAvSGcpstlHH61dKzuMkHg
+         YtL92fT2h35QolMvLO+F1nBvM4QAgcPxKdiDkInreygFzj9Uw94hOlNKwTQisunoMHA6
+         MLGgWouZTxtwoePJuL3FSgwZt1WTt5bQ1vHSiuu5zymm/5EYgnqEldOIcYYj1KX0G4gn
+         fqHg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793099689; x=1793704489; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=a+s+xXp3tqR4XPMeZuJQV004ARXEgccqkwkWZBrk/gk=;
-        b=X85QCvDZXPKjra/NLzITT5xjtZ5KMEvulBuWyBYCQ3NOwFFYRuZEiq2IrOENo3nun4
-         8FHnJBTlfeJfRGj/dGUlDrMXVem/MjyuBQG9eipcb4tx42uPqs7E3xqiLd5/ni3ThOdp
-         pjq3OIwYvGY1nA2mhatdDYRLZ+kSqdda/fpLkyPMU5T+ZG9sJi6v9iM+SeE/Lj1wZgX9
-         nZuF0Hv5ehpxYuj6+Dlsa6EjDmROMlG5qN9u0Ox0xItLNmnGHzdZzTdo4zAaP+3FkmaJ
-         MoZHSw/tIzLjTB97STwk4D6RdV8olOq+segOvOfxOJgCoIBUcQeoRM7RtaZWSFmeU2Ny
-         IhPQ==
+        d=gmail.com; s=20251104; t=1793100184; x=1793704984; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Ljph5d3KePALy+AQzkJZr3HSCfY/bhkUr/N2EDbBzO8=;
+        b=pfG/q8c4ezoCM7Z30NRPCc3F+lg/IefwpDCzZLuRXEUpggVCEgC84V+mPSqse/QSzk
+         w8lVIBzCJ1TCayBVWIBLdKIeW2tzyLbBK9hKOsB4lqyxH046RGPdxpOu1vxjSlNSWTBq
+         bG2f3m6gt+FYH9tVxjgslO+T4vPcbB2HoZpr+NlpII0HehMPArqX6E2Y2DR+PllqtCNN
+         UIqqmLYJlFsFVDHaUHtcLnFYQCupIuIdTXmUeFZeUh8rs6K61/nPvBnwAYr7JYkST8Yg
+         oNp9UKSXGRizWQm5WiC9QvTdyErOHlBTe4z43LLJPnSL1O3RklTwQqGu1qHZCYVcCOyi
+         jE/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793099689; x=1793704489;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=a+s+xXp3tqR4XPMeZuJQV004ARXEgccqkwkWZBrk/gk=;
-        b=msHDI+CtvLdb9tl6aAN4J8zJfZkyutfb8kfmOEys9mzg0AcAkX/yyVJBgM2xqWn28P
-         M6ZQlxra0GmyeXdWNc1KgEyq3bTWnlsL8bZ1MeaVsd19/bkIyYzjCQ9FThX5y/+VyeuJ
-         RJntGK0qoC7VSS39LmL0miW3sCOC6NEa5I+zpohWJ/WkUvlYZqgJYRcO8GfsfqflrwUh
-         jAcP3NMAKRxomgj/ukSoJjfzgZ46s4wxBqoxFmV2ZDQNDzhRI8BuU5o2veKA1PJ2r6uz
-         INRuu5RKRr0HIxZ88fm5mjC900GYa0S2X2NxIVuipywk5xUHsEhTf1wd/0XiPHFlOUuU
-         Rwqg==
-X-Gm-Message-State: AFq9FYJqyTaGP9MUhYDnoW26ismeSAFCU+ggI82ZDNK0PCSPh7Y9R5xI
-	UntEu407wWaaRfvknb4l155mLdtUykUk5IaaG8UGqXPD5Fi/bOXwr8FixuU+Xyhi
-X-Gm-Gg: AYBFou1NLfVXRBpyqk6HrNGU1uiRdafqWOmLqkW6y97Ue3kmZhBsFeVk4AF72YeOGQM
-	icdCXIW2xb6c8Z03k37EFTkzAVGFKHbUL0hZ+OFQ3VDqQqrRtLtQ3YkKmsEhlCG7udmVRGD1pbj
-	Nun+QrNZZ0sUsDe/MNPlDhbO3+noNW5hVxkPhv+XMs8hAgPpPlOx72bnKyxWRhAyR3hXRI1a2DG
-	/mHgCruuQgxwbi1OPuZAqJejWirND+BhEgBTBPAZbbvJEbkxeLCcMpn9vgNqcwxBqXk6+z1ljvH
-	TE1NDJX+Adr8ey/UaffPT9JdLXt0PgCQBAOEgdighmusT3lwKcxQYRSOmlIgFtfiveJKD9BMf4U
-	+j6NNsVwP2+laOBUfp1zCrCp2eIZZ/Pp59BHjbbkAwNd2aj6yE1trIP7ZxX12pXsE4IDoHdH7IK
-	jzJGMDQ2y5EH22Kkz1veAWofR3d3az1rj/8x6MEocYWjQWCPHAeqIm0nFV4kfwfV20unONoLC0E
-	vgs/HjQI/roj+na1AiaELaMKO1anwRcEytAmOJfiYZCUaajQEPwPQi71w==
-X-Received: by 2002:a05:6a21:e08a:b0:3e2:83bb:a608 with SMTP id adf61e73a8af0-3e7afa9a445mr7910284637.2.1793099689122;
-        Tue, 27 Oct 2026 04:14:49 -0700 (PDT)
-Received: from [127.0.0.1] ([4.155.63.153])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a36b37252bsm2100893b3a.28.2026.10.27.04.14.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 04:14:48 -0700 (PDT)
-Message-Id: <pull.2280.git.1793099688076.gitgitgadget@gmail.com>
-From: "Shashank S via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 27 Oct 2026 11:14:48 +0000
-Subject: [PATCH] test-chmtime: use parse_options() to parse command-line flags
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1793100184; x=1793704984;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Ljph5d3KePALy+AQzkJZr3HSCfY/bhkUr/N2EDbBzO8=;
+        b=Rq3fyCy1mBAcxKOXKv6MYcZxZ/aAz5mNktLXtwqeq3Uwj36ZPQ2KJtOTiEklkwsNtN
+         fztwykF7qjwjPSfb5hopZQ/pFo0zSDlbvKCjMNE9UQfSOYrW0sponoeEpYXc+beUvTSt
+         FZSfYabApYJ+Y5vBPYdOh0p+gy2h+prD6ROAjhltlTmMs4y+RBXP9mdVEH/t6/YWd3Yh
+         vb7/L/mmfMD5vGIxKB5Y3zdeARBNzhx+/1mJgZeFImHiUpayOuWTKcpISXBurarwgNeE
+         28Sj2A7opXCExoHg8r//x8MQ40Hf+GGOqHy/QGWsvNfD0HBfSSdkoXRzwh18W2rh7lDn
+         G3ug==
+X-Gm-Message-State: AFq9FYJ9OFppnIxgmqexWAWXKjRABovg5ICXxAasVpZpSWy68OMkydtI
+	k4jwo6ZHVRPV4I/hBZl9WxvTX0HcJ/Lq6z+wBMbXtCtbnB93LTxhFcnfD+p8wJ2pWbhCdKXhuE3
+	eDZKZwcbLBU3ceXMxmC0S0E44d7dVxvI=
+X-Gm-Gg: AYBFou0xn/RxgjEpOkQS2atfdwLEmsRVXs8+2BMyLcz+zt1BvKlq/4NHKx3+GsuccD4
+	Wm3TYBVm+fr5+6wu1a51OuKrl8somWWA8AM7yidWBYvnPksCDGjRgnK9MOV546tuRkpkBeJxIgp
+	Qg4ZewGWOWXbernTOHNhRZVNWgEuhmqneegfQiPJ+1GSDMSBbJJsCgxmtKJ/vqALnsXmjOvzxXP
+	NkVrVRehjQVFz5diglQJzgTItFmqEj3GCtFbphNoKcE701Xzk9rrk8ItURCYHw+qWY8T6y4kRDz
+	3ldcRvtoszxhXP5kqDcUd+P1XajfJyXUw/9hLH9v3jKyzh55PRCZjvr0e84G8W3FZb3XRU6ah2B
+	qvXWfyY7XTsGpzhGBCktffIv2DLFKHouOJ8crQGQoEkwhkx5YMmtHLknAtUa2s9tVWTJQceeYfa
+	uuSPZM/B/sh+GPWaZqKGoxQ6xR6hRJZzBlPjwDO0wGBNkzrYV8iS9ZCcfPRwhHzPl1nzI0xhiaN
+	KC3xOWcqiTz7jgXKiB4s7xT
+X-Received: by 2002:a05:7023:d04:b0:15c:1679:1cc7 with SMTP id
+ a92af1059eb24-19936e34bacmr15182620c88.37.1793100183869; Tue, 27 Oct 2026
+ 04:23:03 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,137 +105,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-    Christian Couder <christian.couder@gmail.com>,
-    Siddharth Asthana <siddharthasthana31@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Shashank S <shashu8660@gmail.com>,
-    Shashank S Mogaveera <shashu8660@gmail.com>
+References: <20261023-pks-odb-files-reload-alternates-v2-0-30559d7ff43b@pks.im>
+ <20261023-pks-odb-files-reload-alternates-v2-6-30559d7ff43b@pks.im>
+In-Reply-To: <20261023-pks-odb-files-reload-alternates-v2-6-30559d7ff43b@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 27 Oct 2026 12:22:50 +0100
+X-Gm-Features: AclHuK-B1k3pgdGe9369Zkn46EsKPwKYybP488eTCYSmVt7osod6yTo4fmw5ZSE
+Message-ID: <CAP8UFD3XSQXFAiqGEp++=Y_OmEhogDo77t-XRFYAu_1yOQc+Gw@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] odb/source-files: only reload alternates when the
+ file has changed
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Shashank S Mogaveera <shashu8660@gmail.com>
+On Fri, Oct 23, 2026 at 2:48=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 
-cmd__chmtime() currently parses the '-v'/'--verbose' and '-g'/'--get'
-flags manually using strcmp() checks and manual index tracking.
+> -static int read_alternates(const char *object_dir, struct strvec *out)
+> +static void read_alternates(const char *object_dir, struct strvec *out,
+> +                           struct stat_validity *validity)
+>  {
+>         struct strbuf buf =3D STRBUF_INIT;
+>         char *path;
+>
+>         path =3D xstrfmt("%s/info/alternates", object_dir);
+> -       if (strbuf_read_file(&buf, path, 1024) < 0) {
+> -               warn_on_fopen_errors(path);
+> -               free(path);
+> -               return 0;
+> +       if (!validity || !stat_validity_check(validity, path)) {
+> +               bool successful =3D false;
+> +               int fd;
+> +
+> +               fd =3D open(path, O_RDONLY);
+> +               if (fd < 0) {
+> +                       warn_on_fopen_errors(path);
+> +               } else if (strbuf_read(&buf, fd, 1024) < 0) {
 
-Refactor cmd__chmtime() to use parse_options() and usage_with_options()
-instead. Pass PARSE_OPT_KEEP_UNKNOWN_OPT so that negative relative time
-offsets (such as '-86400') are not rejected as unknown short options
-and remain in argv for timespec_arg() to parse.
+Here we start reading from the alternates file, but that file could
+start to be written to...
 
-Signed-off-by: Shashank S Mogaveera <shashu8660@gmail.com>
----
-    [Outreachy]test-chmtime: use parse_options() to parse command-line flags
+> +                       warning_errno(_("unable to read alternates file '=
+%s'"),
+> +                                     path);
+> +               } else {
+> +                       parse_alternates(buf.buf, '\n', object_dir, out);
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2280%2Fshashu8660%2Foutreachy3-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2280/shashu8660/outreachy3-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2280
+...suppose we parse the old content of the file (which calls
+strbuf_realpath() for each entry and so does a few syscalls) while an
+in-place rewrite of the file, like the:
 
- t/helper/test-chmtime.c | 46 +++++++++++++++++++----------------------
- 1 file changed, 21 insertions(+), 25 deletions(-)
+  `echo "$PWD/alternate/.git/objects" >repo/.git/objects/info/alternates`
 
-diff --git a/t/helper/test-chmtime.c b/t/helper/test-chmtime.c
-index 0e5538833a..dc6281b1d6 100644
---- a/t/helper/test-chmtime.c
-+++ b/t/helper/test-chmtime.c
-@@ -38,10 +38,13 @@
-  */
- #include "test-tool.h"
- #include "git-compat-util.h"
-+#include "parse-options.h"
- #include <utime.h>
- 
--static const char usage_str[] =
--	"(-v|--verbose|-g|--get) (+|=|=+|=-|-)<seconds> <file>...";
-+static const char * const chmtime_usage[] = {
-+	"test-tool chmtime (-v|--verbose|-g|--get) (+|=|=+|=-|-)<seconds> <file>...",
-+	NULL
-+};
- 
- static int timespec_arg(const char *arg, long int *set_time, int *set_eq)
- {
-@@ -68,40 +71,37 @@ static int timespec_arg(const char *arg, long int *set_time, int *set_eq)
- 
- int cmd__chmtime(int argc, const char **argv)
- {
--	static int verbose;
--	static int get;
-+	int verbose = 0;
-+	int get = 0;
- 
--	int i = 1;
-+	int i = 0;
- 	/* no mtime change by default */
- 	int set_eq = 0;
- 	long int set_time = 0;
- 
--	if (argc < 3)
--		goto usage;
-+	struct option options[] = {
-+		OPT_BOOL('v', "verbose", &verbose, "print the mtime and the file name"),
-+		OPT_BOOL('g', "get", &get, "print only the mtime"),
-+		OPT_END()
-+	};
- 
--	if (strcmp(argv[i], "--get") == 0 || strcmp(argv[i], "-g") == 0) {
--		get = 1;
--		++i;
--	} else if (strcmp(argv[i], "--verbose") == 0 || strcmp(argv[i], "-v") == 0) {
--		verbose = 1;
--		++i;
--	}
-+	argc = parse_options(argc, argv, NULL, options, chmtime_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN_OPT);
- 
--	if (i == argc) {
--		goto usage;
--	}
-+	if (argc < 1 || (!get && !verbose && argc < 2))
-+		usage_with_options(chmtime_usage, options);
- 
- 	if (timespec_arg(argv[i], &set_time, &set_eq)) {
- 		++i;
- 	} else {
- 		if (get == 0 && verbose == 0) {
- 			fprintf(stderr, "Not a base-10 integer: %s\n", argv[i] + 1);
--			goto usage;
-+			usage_with_options(chmtime_usage, options);
- 		}
- 	}
- 
- 	if (i == argc)
--		goto usage;
-+		usage_with_options(chmtime_usage, options);
- 
- 	for (; i < argc; i++) {
- 		struct stat sb;
-@@ -110,7 +110,7 @@ int cmd__chmtime(int argc, const char **argv)
- 
- 		if (stat(argv[i], &sb) < 0) {
- 			fprintf(stderr, "Failed to stat %s: %s. Skipping\n",
--			        argv[i], strerror(errno));
-+				argv[i], strerror(errno));
- 			continue;
- 		}
- 
-@@ -150,14 +150,10 @@ int cmd__chmtime(int argc, const char **argv)
- 			}
- #endif
- 			fprintf(stderr, "Failed to modify time on %s: %s\n",
--			        argv[i], strerror(errno));
-+				argv[i], strerror(errno));
- 			return 1;
- 		}
- 	}
- 
- 	return 0;
--
--usage:
--	fprintf(stderr, "usage: %s %s\n", argv[0], usage_str);
--	return 1;
- }
+in the new t1006 test added by patch 3/6, happens...
 
-base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
--- 
-gitgitgadget
+> +                       successful =3D true;
+> +               }
+> +
+> +               if (validity) {
+> +                       if (successful)
+> +                               stat_validity_update(validity, fd);
+
+...then we would update the validity while the alternates file's
+content has changed (and we only parsed its old content).
+
+So, if the file content is not changed after that, we never parse the
+content of the file from the in-place rewrite.
+
+(If the rewrite is not an in-place one, but the file is for example
+replaced through a lock file and rename, the race doesn't happen.)
+
+It seems to me that if we want to avoid a race here, we should have
+the `stat_validity_update(..., fd);` call before reading from fd like
+in "refs/packed-backend.c" and "shallow.c".
+
+> +                       else
+> +                               stat_validity_clear(validity);
+> +               }
+> +
+> +               if (fd >=3D 0)
+> +                       close(fd);
+
+It looks like v1 didn't have this issue, as it called
+stat_validity_update() before reading. A concurrent rewrite then only
+caused a spurious re-read on the next check. So I wonder if we could
+keep that order, and just clear the validity when reading fails, which
+would also address Junio's point:
+
+               fd =3D open(path, O_RDONLY);
+               if (fd < 0) {
+                       warn_on_fopen_errors(path);
+               } else {
+                       if (validity)
+                               stat_validity_update(validity, fd);
+                       if (strbuf_read(&buf, fd, 1024) < 0) {
+                               warning_errno(_("unable to read
+alternates file '%s'"),
+                                                       path);
+                               if (validity)
+                                       stat_validity_clear(validity);
+                       } else {
+                               parse_alternates(buf.buf, '\n', object_dir, =
+out);
+                       }
+                       close(fd);
+               }
