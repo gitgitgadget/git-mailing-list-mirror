@@ -1,90 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793098697;
-	b=gvridfQB5OgAtHHcM4QIUXxfiVG3t7e2vYsAxes18ajKB4Y62gu8QwkzgbnDyGB6efET
-	 jKhjvUYAEN9U9EG6fUhOky3jZTfgAXPXG6brYxVBE7zE7DCT1zPWqgDIqpjvDUqpcSh27
-	 8CzP8z0sMYArFICuhPRTRvh4N9d8vzCIGDa1j0/ZoQWtEqIZXxvZbsyJJ5TS2ebTu9bKI
-	 J2d7J+AbyGgpV5RSWhfbds7cHIqukjcK4A+IIi8itq5DtG9LHB3L1vxfIrPDPlfcaj5zl
-	 akg4q1bGIepBamErCnD0ORZQkCLd0h42zH7xytaAYLBfWiPrOob/P6lmWkZHzdMjw5w==
+	t=1793098699;
+	b=hdrmYJ85osQoBvBKBt/wON26yjp/LK1x6ucQcnKSqLZnTNgyq2rUu8J3EpursMzh61lf
+	 TiYRyOa8Ml3cIQnPc0T/Zdpps36CyBgFQJDI8aVnCmEaEgtn0STbd+QNJNLNtAov5X9ah
+	 apHJNTCZwSVdZy5giM3e4SmrDIWp7RMXjACzhFXJDdb37uGpLfEIyzLYTz57igxFXG0wR
+	 v8wtNX93n0mEhgnyduvt47PC/vgT+O5IAAmw88NdMbl6mh7AwmknJXmTCgya9QoshW1XP
+	 ok8IYV2ZS8E3q0kt2qqSJrgJlfqtQLvMZk+olceNuT7v5UnTCD1H2Xo1kBw2XUI/HFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793098697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793098699;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:Reply-To:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=7YhaoJ+9kZY4Mk+Kr1wcyZ9hckEfQpqwVWkRpuvkUdQ=;
-	b=DPQo9Fm+Kd3cfAl/W1AsetAIXNygA5HUo+7001uPxNr5nDRQGWL5f8/9yne3kV2dwRnh
-	 BD2P3qvwivbdfbk72FlRsC4UmBnG8t4SZtxk5U/Sy7PSlximk5GX2Vpua1T/6A0Xk72QR
-	 x0bz/Aiy7FPlT2kW6jC6p/2MX/crjexHPkP1ivaAW5FgIoDGuXj3TGotHbM10uByI7NDp
-	 b/ULApmar/8vaUC4Yks5FzJvF++INDBu25KL0BumMdXA1MCr2N7j6g9XkVJRI1AlhvjBi
-	 Q/ali/TVbeCYHXJOyPJZtLdwddJ+SH5F6Hbk1E0U2GYwDpe1nhCwvly4Znm3OcvK5ig==
+	bh=YkinI9rsc9iGEZV1cYm1XSqF4Bvk5zujqWqV6NcseSw=;
+	b=RSO6FUye4ZrOKmIbxAd1Y3OYXfMF86CR+G2gNFSsxukRZC8fCb1h7tKoJKGHulJ+xGTO
+	 DLRt8uqa4dAHFP27mCiXD1IP86SATmJx39uIrfr7VjQCyFC3yhQHglON80bifBiPApYAb
+	 Tr/qm2F8tmyDiM0hOkyUz5rtyD3pRBMkvZswdKTjpbAHe1z2zFZgYrd7fUoS8D+5EzNfI
+	 J0EU/lBzogQc0HcaE1Ygs/FQChKUjyl5LH1WKqOfHQgoTDR5w04P3pIMHiT2WwmGSKxtu
+	 8/9DamjCJd5/gVrM/66ZgSCUGCvKjb3ZlKQYxH35Kw2sKtMZxK/RR07eJScL2qFYmNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=H9pqsuaR;
-	arc=none smtp.remote-ip=209.85.221.52
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hpWKGyyX;
+	arc=none smtp.remote-ip=209.85.128.52
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA3E606A322
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:58:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DBA3E606A322
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D77606A327
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:58:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29D77606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=H9pqsuaR
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-48e3b22e971so1866539f8f.0
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 03:58:16 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hpWKGyyX
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4956869750eso26745775e9.2
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 03:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793098695; x=1793703495; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1793098697; x=1793703497; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=7YhaoJ+9kZY4Mk+Kr1wcyZ9hckEfQpqwVWkRpuvkUdQ=;
-        b=H9pqsuaRWUPk7UxUaCdUEw88GKcqNI/g1OtJbA0pZZ/OqC8BCVlTXyThlO13cIsT++
-         M3FvHtK8W/k7Ebwpt4NnsosbJhxt/WQBZRXroZlaxOB5/dRLysebT25ebaf7ln71v7Nq
-         5FUdt7o197GXiTidK79CHfTO71Xhb2YCzyqEpuWW9vvUIaclOoF2qK6rIyUoLL908fiB
-         78qlBk8yTHjmqNCX7pCh9XPrCwV9OswUWrq1QEHj8RpTry3J2Wr6cwV8Cyj+eqyPj3ly
-         ULUzDQIVWfUMH2KbzwAEyyYgaMJnd3BViCgbzA/oOlJAxUrwUanAFY3fWPeW3K0VS9LO
-         W6NQ==
+        bh=YkinI9rsc9iGEZV1cYm1XSqF4Bvk5zujqWqV6NcseSw=;
+        b=hpWKGyyXfOL1/lXc1BxD0n+EGZcfQBifbZ24XMC0IISmjCnwgsyrNe/SLzbd77tCV7
+         N4E1rj3T3iY+36GAJdvurmfD6/5I4q+RxRnLl/kDRK48MWfFhwtsRZzjaduhbgqDCc0R
+         tDxguJPCwWHbzacjzVBIpz2Scxu3RRsnY/Fh8wOY7/+qEQbBVl385wpvjwK4ict5/hIr
+         Zbj2j/XxYGTw2WOds7oWu7Vlya7ONxzT5Jf2cloZvlS9oGOETDhvT/SYNNq8mTiu51k4
+         cjyu6pcl5pD/3APG8MUl2sTHcqAt9epYTohe/dO8xlzoWX48ILETGXLNe3MeqTGiXpqR
+         /QsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793098695; x=1793703495;
+        d=1e100.net; s=20260707; t=1793098697; x=1793703497;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=7YhaoJ+9kZY4Mk+Kr1wcyZ9hckEfQpqwVWkRpuvkUdQ=;
-        b=kYKuoD9DkjzNg8k1aU99njrZ8b5xshFsqsmaLWUmCwUDbxLmu0MMXR75EwL9XsVL5C
-         nZXZInEJtW08sZoay0QuyOOckEMk3Z6+TEIGRMHCer6zMskDSGq4p7Pwbsfa5T7eVWFh
-         ka5+QA9tVsLjqM1dPgNEvZdmYTg49BYKpp9IuAuFN82aqa4R56YdwJjbs+1WpQN7fCLZ
-         5MJhpdHqei0i/o1SnThGScnugGl7yKEhoxL6Bem+NbJtgZNvqGn7b8rVql8iabAu33mc
-         9LWvXgWY1uR3GofR+FbG77QwSk8wrTt3e700Yw6mZZQE5tKp8r92rNTae9/GTS9165rD
-         sBNA==
-X-Gm-Message-State: AFq9FYI9g9QeADgyi36KB3zxrLLzq/i6cbTMYL4cRZKbyTrFwGNbO5YQ
-	ULqAn8RtyfJexVKNakFwHxvhqzPXVhrkhxIlo+90h0QRyo+qLdloR5X8F6KO+w==
-X-Gm-Gg: AYBFou2IU02d7Z2yrsayIR9Ghik/3wLC4fOjI956d4Ok6t1IxgPigQDbWFVFpdlXnwV
-	GiRQ/3Ud21GICm/PHtpFdN3US7V2wuKzKH1ubVaRqdYY34+7AEXE/5ORxtLE96pBtocRH08OnS2
-	drHC6UiZ0DyQzzMBk1Y8veEGL2aG/uccLsqAIh2pKU0qbT32Jm1IlkADb3jM0KRURKnPlOBKmVa
-	fmUiuSzs4W0fvn2V0KNMLCD/pqpq5sfpZ4iDCjMnUhVrx7I4ps2yCWLvcJi+toPe2kaP32Xh7FV
-	0uZGQNOmEkFQ6umIw/nj+eyQDAkJo1NIOwETqxUAzi64gJeYcWGbYgFognV8cz2zT1rnfWSWglr
-	m6NFRj65SyaC5sSh+M+9wp6jTpBEOk1Yt26z0vmmuDF5Q9BEhsQMXl159eCOKsK5hkl7D+fAjwU
-	k1CJtWEEMnp/OqvEk2hO32HYU/B4hCcAWOPxNEDOo6rmyCf7G1ZL7I3//KZad8JHWfknu9mcivw
-	Q3+yJAM/vuEdlR/v5/BwHzgOJsdJLlGu3OSd3Gc6K6juxxx2WrrnLNdpfg=
-X-Received: by 2002:a05:600c:474a:b0:4a2:d99:3171 with SMTP id 5b1f17b1804b1-4a35acb586cmr185348065e9.23.1793098695213;
-        Tue, 27 Oct 2026 03:58:15 -0700 (PDT)
+        bh=YkinI9rsc9iGEZV1cYm1XSqF4Bvk5zujqWqV6NcseSw=;
+        b=xe2rjke3JNBWYR4U22u5lUfw2jlsV3L10cIGYKbCAXMBSE19zalGq/LzFSPPuwi3Ox
+         PlHBWBd1d63U1LaZEPCcWGvTe4SCUVFZVOASx0JmrEvbabihgMMgbHkWHq9BLZ5FUoOo
+         4fFr+tAguE/WoT5ksB8TASEpq5YH5xs8BhlaHHPBUtcj3wS+qMSLxTV3/72C/VwuvVlf
+         d4P1SwxdXk7T52XG64cxscVHBhydZV2vY0Afru1DbUFiGBvaIznP9+yqbnVe4wAiNGyL
+         cevZXg+Cs3/RRgVBNsU4ti2J6iI47jq13w4JTh5UHUZaaQ4bIOvUfdhHf0j92eduVrro
+         fpJQ==
+X-Gm-Message-State: AFq9FYIqJFiUM5EJ2kcXzAXb0pCfZ+GesJd2sLdTelA0n+9bAxfyNUFt
+	64crWbRkUw98i7JB1KjMd87ewTZMmGTYgrVt8unhQ1RIbR3y+X7hPK6hfk12sw==
+X-Gm-Gg: AYBFou3mUHrCYUB+LLQ82gyGDR3HmbHwobVLSGMskZ5CYyEndmhzVntyRDWAGlVws+c
+	1LUm5jNgUwzginRE/fb6JcBQIp3AsDbOOxej+ELwiwphtXAMGMzI1WThjQi2q5vHtmCMsoH25a/
+	LMU//yeaDEOv+ST9LOWXPk3DRGaXNhPWoZCfiz5JaLaGqgBpw8jZ0ma+9LLP/mkNzz4+44aMgIK
+	Moqkh8F9wuYnxYdfyejM8xWnS2uVa8ebXzIegnWV7nMYuwP6W1iVrHEcz6XT89d6iYjJ7me8BSV
+	q4TsHEDwltHzoo5dLm7NfOgD8L/BMzWvKneULQTVcTciPdc3nq+fWprZ3XwgKCSV+1sZlB+eHQh
+	zn+g7BQ0ot6PCPyARYGKiP0mh1NLDs7YNNoBvYqyZJ8KGKY83lDOZ/6Sh5Tui7E0Nqs1bzWSiyd
+	jwvu6AUGLKo6vmmewL0js++gtH5Z0do2naa3YxnhAWP1zQBAJIsVzdV5Z8hLalrlEax1jNIyUbP
+	Y9ThZfovWuBE0+ZChPIpyXYqKJIykNoESxqOEOKA+sAdOwa91LHY6JyBdkpOm5AsYq9eC92xC9t
+	pP5T
+X-Received: by 2002:a05:600c:1c2a:b0:4a1:dfaf:f465 with SMTP id 5b1f17b1804b1-4a35ac3a7d9mr227508565e9.4.1793098697438;
+        Tue, 27 Oct 2026 03:58:17 -0700 (PDT)
 Received: from berwick ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a0aa0bcsm321638925e9.4.2026.10.27.03.58.14
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a0aa0bcsm321638925e9.4.2026.10.27.03.58.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 03:58:14 -0700 (PDT)
+        Tue, 27 Oct 2026 03:58:16 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Long 76 <long76.git@mail.ru>,
 	Matt Hunter <m@lfurio.us>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 1/3] test_ref_missing(): improve error message
-Date: Tue, 27 Oct 2026 10:57:55 +0000
-Message-ID: <e246ee6f3b11c231580752b6c94a57f31f449955.1793098652.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH 3/3] sequencer: remove AUTO_MERGE at the end of a rebase
+Date: Tue, 27 Oct 2026 10:57:57 +0000
+Message-ID: <2fcb42a0858dffe45241cbced066dd0c0f5da76f.1793098652.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.56.0.336.g97505d19352
 In-Reply-To: <cover.1793098652.git.phillip.wood@dunelm.org.uk>
 References: <cover.1793098652.git.phillip.wood@dunelm.org.uk>
@@ -102,44 +103,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-If the ref being checked exists, then test_ref_missing() does not print
-the name of the ref in the error message. So, if there is more than
-one call to test_ref_missing() in a test, it is hard to understand
-which one failed by looking at the test output. Fix that by printing
-the name of the ref that erroneously exists.
+If there are conflicts when picking a commit, the merge machinery
+creates a ref called AUTO_MERGE that the user can use to compare their
+conflict resolution to the conflicted result. The sequencer tries to
+remove that ref on every iteration of the loop that picks commits,
+but it is only written if we stop for conflicts, so it only needs
+to be removed when we enter the loop, not on every iteration. The
+ref is not removed after the loop has finished, which means that if
+the last pick has conflicts it is left behind after the rebase has
+finished. Fix this by removing the ref before the start of the loop
+in pick_commits() as the last commit did for REBASE_HEAD. The tests
+modified by the last commit are extended to check AUTO_MERGE as well.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- t/test-lib-functions.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sequencer.c                | 4 ++--
+ t/t3403-rebase-skip.sh     | 2 ++
+ t/t3407-rebase-abort.sh    | 2 ++
+ t/t3418-rebase-continue.sh | 2 ++
+ 4 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 09a41d51adc..b56b4f0a6c8 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -292,18 +292,20 @@ test_ref_exists () {
- # a reference. This is preferable to `! test_ref_exists` as this function is
- # able to distinguish actually-missing references from other, generic errors.
- test_ref_missing () {
-+	local refname
-+	eval refname="\$$#"
- 	test_ref_exists "$@"
- 	case "$?" in
- 	2)
- 		# This is the good case.
- 		return 0
- 		;;
- 	0)
--		echo >&4 "test_ref_missing: reference exists"
-+		echo >&4 "test_ref_missing: '$refname' exists"
- 		return 1
- 		;;
- 	*)
--		echo >&4 "test_ref_missing: generic error"
-+		echo >&4 "test_ref_missing: generic error while checking '$refname'"
- 		return 1
- 		;;
- 	esac
+diff --git a/sequencer.c b/sequencer.c
+index 2d6a5f525c7..7a88b6530bf 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5181,6 +5181,8 @@ static int pick_commits(struct repository *r,
+ 	unlink(rebase_path_amend());
+ 	unlink(rebase_path_patch());
+ 	unlink(git_path_merge_labels(r));
++	refs_delete_ref(get_main_ref_store(r), "", "AUTO_MERGE", NULL,
++			REF_NO_DEREF);
+ 	refs_delete_ref(get_main_ref_store(r), "", "REBASE_HEAD", NULL,
+ 			REF_NO_DEREF);
+ 
+@@ -5209,8 +5211,6 @@ static int pick_commits(struct repository *r,
+ 			}
+ 			unlink(rebase_path_author_script());
+ 			unlink(git_path_merge_head(r));
+-			refs_delete_ref(get_main_ref_store(r), "", "AUTO_MERGE",
+-					NULL, REF_NO_DEREF);
+ 
+ 			if (item->command == TODO_BREAK) {
+ 				if (!opts->verbose)
+diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
+index a2a5ac8ae01..d4fcfe567c4 100755
+--- a/t/t3403-rebase-skip.sh
++++ b/t/t3403-rebase-skip.sh
+@@ -100,8 +100,10 @@ test_debug 'gitk --all & sleep 1'
+ test_expect_success 'skipping final pick removes REBASE_HEAD & .git/MERGE_MSG' '
+ 	test_must_fail git rebase --onto hello reverted-goodbye^ \
+ 		reverted-goodbye &&
++	git show-ref --verify AUTO_MERGE &&
+ 	test_cmp_rev reverted-goodbye REBASE_HEAD &&
+ 	git rebase --skip &&
++	test_ref_missing AUTO_MERGE &&
+ 	test_ref_missing REBASE_HEAD &&
+ 	test_path_is_missing .git/MERGE_MSG
+ '
+diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
+index 1703b5ae9b5..fdd9a2b9f61 100755
+--- a/t/t3407-rebase-abort.sh
++++ b/t/t3407-rebase-abort.sh
+@@ -35,8 +35,10 @@ testrebase() {
+ 		git reset --hard pre-rebase &&
+ 		test_must_fail git rebase$type main &&
+ 		test_path_is_dir "$state_dir" &&
++		git show-ref --verify AUTO_MERGE &&
+ 		test_cmp_rev d REBASE_HEAD &&
+ 		git rebase --abort &&
++		test_ref_missing AUTO_MERGE &&
+ 		test_ref_missing REBASE_HEAD &&
+ 		check_head &&
+ 		test_path_is_missing "$state_dir"
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index f35cd130921..1c26bf5de54 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -39,9 +39,11 @@ test_expect_success 'merge based rebase --continue removes .git/MERGE_MSG' '
+ 	test_must_fail git rebase --onto main HEAD^ &&
+ 	git read-tree --reset -u HEAD &&
+ 	test_path_is_file .git/MERGE_MSG &&
++	git show-ref --verify AUTO_MERGE &&
+ 	test_cmp_rev commit-new-file-F2-on-topic-branch REBASE_HEAD &&
+ 	git rebase --continue &&
+ 	test_path_is_missing .git/MERGE_MSG &&
++	test_ref_missing AUTO_MERGE &&
+ 	test_ref_missing REBASE_HEAD
+ '
+ 
 -- 
 2.56.0.336.g97505d19352
 
