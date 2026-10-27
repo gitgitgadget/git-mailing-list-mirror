@@ -1,95 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793098699;
-	b=hdrmYJ85osQoBvBKBt/wON26yjp/LK1x6ucQcnKSqLZnTNgyq2rUu8J3EpursMzh61lf
-	 TiYRyOa8Ml3cIQnPc0T/Zdpps36CyBgFQJDI8aVnCmEaEgtn0STbd+QNJNLNtAov5X9ah
-	 apHJNTCZwSVdZy5giM3e4SmrDIWp7RMXjACzhFXJDdb37uGpLfEIyzLYTz57igxFXG0wR
-	 v8wtNX93n0mEhgnyduvt47PC/vgT+O5IAAmw88NdMbl6mh7AwmknJXmTCgya9QoshW1XP
-	 ok8IYV2ZS8E3q0kt2qqSJrgJlfqtQLvMZk+olceNuT7v5UnTCD1H2Xo1kBw2XUI/HFQ==
+	t=1793098792;
+	b=2GALdU2JIcR70o2FwT+V5EW5yF8o5cvrom5y/K5aRiLIIlM/fS9wSZcFrdhLGn9JfD7f
+	 jR1uHm3Ul9Q6x44FcBrXu57w/w0vSkRBgrl65nDaORB7qBy9yw0Db91fcvvRA4xS29vVC
+	 L25lqImt1UVdJzXtaK5sWQEYst4ilbzEl9FPDYmwUUP02ETmQkrm4nsRvzVJz9iquzhip
+	 BqZrd1sYpmicFXd8C+bki772GPHF7SHrVZJvGstGi/qdivfV+jLoFfBTwNwHn477ACae3
+	 1LonJT6FwBpXbn0PunikRuOQDVBgfYlOQiJ1Jtp8/rFdaN+cpLpOl/YvP99ujLl/hHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793098699;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:Reply-To:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=YkinI9rsc9iGEZV1cYm1XSqF4Bvk5zujqWqV6NcseSw=;
-	b=RSO6FUye4ZrOKmIbxAd1Y3OYXfMF86CR+G2gNFSsxukRZC8fCb1h7tKoJKGHulJ+xGTO
-	 DLRt8uqa4dAHFP27mCiXD1IP86SATmJx39uIrfr7VjQCyFC3yhQHglON80bifBiPApYAb
-	 Tr/qm2F8tmyDiM0hOkyUz5rtyD3pRBMkvZswdKTjpbAHe1z2zFZgYrd7fUoS8D+5EzNfI
-	 J0EU/lBzogQc0HcaE1Ygs/FQChKUjyl5LH1WKqOfHQgoTDR5w04P3pIMHiT2WwmGSKxtu
-	 8/9DamjCJd5/gVrM/66ZgSCUGCvKjb3ZlKQYxH35Kw2sKtMZxK/RR07eJScL2qFYmNg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793098792;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=AkgyyoRuZCCUg3lHv/ciWNt6OdArI6ihQTMi5D2Fm0U=;
+	b=h7V2QozPFizTAYBH1QnlrkXccX13rogeSLsj7YfE1cUNNyQLeic1FhQi/gY3ktTsMR10
+	 XuyWvieH636SfHYLvOTFImdCTmCbTpAI8C5DoOa68v2A/8S5oa7xbYN5C0DP0KIb9VPXA
+	 kLmxUx+9S3dUMyH5xmuH6OOjtXifUdVrPfb/pwNbh+7pD8Tsu61pKHNIMUVkfXeOpn9+O
+	 SEe/jOBhLhhoLbIvphauDACMPAvBrGOY3nD4ATOhB73RFJgR7XyWredYw5KXoC0eEBovn
+	 mUsZ3gtpIe/vP1ZAe98vSCV0GmRJaK+W3J879TgT0JMP2JAIAOIZArQWLA3oHIJA3Ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hpWKGyyX;
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=fhu5s2FF;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=brkZEqDX;
+	arc=none smtp.remote-ip=202.12.124.148
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D77606A327
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:58:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29D77606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B868606A31B
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:59:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7B868606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hpWKGyyX
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4956869750eso26745775e9.2
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 03:58:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793098697; x=1793703497; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=YkinI9rsc9iGEZV1cYm1XSqF4Bvk5zujqWqV6NcseSw=;
-        b=hpWKGyyXfOL1/lXc1BxD0n+EGZcfQBifbZ24XMC0IISmjCnwgsyrNe/SLzbd77tCV7
-         N4E1rj3T3iY+36GAJdvurmfD6/5I4q+RxRnLl/kDRK48MWfFhwtsRZzjaduhbgqDCc0R
-         tDxguJPCwWHbzacjzVBIpz2Scxu3RRsnY/Fh8wOY7/+qEQbBVl385wpvjwK4ict5/hIr
-         Zbj2j/XxYGTw2WOds7oWu7Vlya7ONxzT5Jf2cloZvlS9oGOETDhvT/SYNNq8mTiu51k4
-         cjyu6pcl5pD/3APG8MUl2sTHcqAt9epYTohe/dO8xlzoWX48ILETGXLNe3MeqTGiXpqR
-         /QsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793098697; x=1793703497;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=YkinI9rsc9iGEZV1cYm1XSqF4Bvk5zujqWqV6NcseSw=;
-        b=xe2rjke3JNBWYR4U22u5lUfw2jlsV3L10cIGYKbCAXMBSE19zalGq/LzFSPPuwi3Ox
-         PlHBWBd1d63U1LaZEPCcWGvTe4SCUVFZVOASx0JmrEvbabihgMMgbHkWHq9BLZ5FUoOo
-         4fFr+tAguE/WoT5ksB8TASEpq5YH5xs8BhlaHHPBUtcj3wS+qMSLxTV3/72C/VwuvVlf
-         d4P1SwxdXk7T52XG64cxscVHBhydZV2vY0Afru1DbUFiGBvaIznP9+yqbnVe4wAiNGyL
-         cevZXg+Cs3/RRgVBNsU4ti2J6iI47jq13w4JTh5UHUZaaQ4bIOvUfdhHf0j92eduVrro
-         fpJQ==
-X-Gm-Message-State: AFq9FYIqJFiUM5EJ2kcXzAXb0pCfZ+GesJd2sLdTelA0n+9bAxfyNUFt
-	64crWbRkUw98i7JB1KjMd87ewTZMmGTYgrVt8unhQ1RIbR3y+X7hPK6hfk12sw==
-X-Gm-Gg: AYBFou3mUHrCYUB+LLQ82gyGDR3HmbHwobVLSGMskZ5CYyEndmhzVntyRDWAGlVws+c
-	1LUm5jNgUwzginRE/fb6JcBQIp3AsDbOOxej+ELwiwphtXAMGMzI1WThjQi2q5vHtmCMsoH25a/
-	LMU//yeaDEOv+ST9LOWXPk3DRGaXNhPWoZCfiz5JaLaGqgBpw8jZ0ma+9LLP/mkNzz4+44aMgIK
-	Moqkh8F9wuYnxYdfyejM8xWnS2uVa8ebXzIegnWV7nMYuwP6W1iVrHEcz6XT89d6iYjJ7me8BSV
-	q4TsHEDwltHzoo5dLm7NfOgD8L/BMzWvKneULQTVcTciPdc3nq+fWprZ3XwgKCSV+1sZlB+eHQh
-	zn+g7BQ0ot6PCPyARYGKiP0mh1NLDs7YNNoBvYqyZJ8KGKY83lDOZ/6Sh5Tui7E0Nqs1bzWSiyd
-	jwvu6AUGLKo6vmmewL0js++gtH5Z0do2naa3YxnhAWP1zQBAJIsVzdV5Z8hLalrlEax1jNIyUbP
-	Y9ThZfovWuBE0+ZChPIpyXYqKJIykNoESxqOEOKA+sAdOwa91LHY6JyBdkpOm5AsYq9eC92xC9t
-	pP5T
-X-Received: by 2002:a05:600c:1c2a:b0:4a1:dfaf:f465 with SMTP id 5b1f17b1804b1-4a35ac3a7d9mr227508565e9.4.1793098697438;
-        Tue, 27 Oct 2026 03:58:17 -0700 (PDT)
-Received: from berwick ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a0aa0bcsm321638925e9.4.2026.10.27.03.58.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 03:58:16 -0700 (PDT)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: Long 76 <long76.git@mail.ru>,
-	Matt Hunter <m@lfurio.us>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 3/3] sequencer: remove AUTO_MERGE at the end of a rebase
-Date: Tue, 27 Oct 2026 10:57:57 +0000
-Message-ID: <2fcb42a0858dffe45241cbced066dd0c0f5da76f.1793098652.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.56.0.336.g97505d19352
-In-Reply-To: <cover.1793098652.git.phillip.wood@dunelm.org.uk>
-References: <cover.1793098652.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=fhu5s2FF;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=brkZEqDX
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id CF4B01D000F1
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 06:59:51 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 27 Oct 2026 06:59:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793098791; x=1793185191; bh=AkgyyoRuZC
+	CUg3lHv/ciWNt6OdArI6ihQTMi5D2Fm0U=; b=fhu5s2FF4c9z4easHkmgNYgFC+
+	YEPpQx+oOrEKnLcNh88AnR06Nz6+yaTQ6Wl9cmSm2Yyicc0+JQf55rn01rWAtDfq
+	XdWrmmPCrDDZNZPAYiqRiO55rCHgAFI7ApnTWaW221IO7iFvt1C8hLdfU9ZugGMf
+	urJbYe4jH8r+Aho9PaYMobTm0Zwn8SNCFBMEHdfF808eSqsSvyPB38AHBKzKU1W4
+	R33/HyFzu37gxU8aFrDKjLGUHed5h3hReQ7DcuTlyaCLu5dd2KwrEw32kUh2Cw2p
+	YAGKeOPYDKcdvARYqZSkjeq4Zz+p+UMXW3SYDWxPolToYhX04vd+zJEcDTXA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793098791; x=1793185191; bh=AkgyyoRuZCCUg3lHv/ciWNt6OdArI6ihQTM
+	i5D2Fm0U=; b=brkZEqDXOMXUg17/pK0zA1BBEr2PsggWBRKm5xwv4rGTwaBfYz7
+	rC7YTeVpk03+lH75KMvRRZki4MbThbBiRr6/XbrPAzq50+pSExc4MWOYv4dAQMjb
+	NiDIyDC3IZc8jmJg6fDYQWSPcko/P/CJXKfG6oKpbQsr+IRgl0bKDxXCt9kF94H+
+	7Xp3lhpEGrBBAcqZw3r3bgA0lLgdY9mXaSYUe3+imRUFZlgu8iDcx+N5cFK2R1u3
+	0ooEyw/+OFuf23Yf9daaOMXeTOJIfmre8aJo/LBiWXTfpF/5NKjkFD7XJlrYZLRW
+	3Osgl28Mmn7YyX2qb5eWE6lIPLtwbCqlmxA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793098791; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:cFP66AzHRjpTB0E7vSFXkGkzfOE3FO8ahwAkPwQcc/N4xYy
+	yWB3QGbsGTd4J3Z68YZvvifjK5zV8+6hSv5GVTu2OWMfiTuTtFsxwe8WkHhWprC8
+	rJPwdpkeYqgoSi0jgcE9UXUtjwu8Ksdj5ErsRL+iqFZ7Yc5A9TlOnMJses+cBwA3
+	t7DQATrsPzTG0q4Ps2+xpVwizPZvw0ChsqDjsSOpG0h31XbpQx3eQfzuyfl5Iga7
+	nbdNHO5OK6OZAPIbEeiK+aiBrbGqWalnKG5h8jt1l5pMvWmKjvR3RCOoFjNDBhdc
+	vTlFIR7/VOvX6J1wDiuDL/96H4rezhY/BLCax6w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:T9Bgc/540USYuSrO0VxQI2BYG/oG83NM3i0KIB9NEMY=:AkgyyoRuZCCUg3lHv/ciWNt6OdArI6ihQTMi5D2Fm0U=;
+X-ME-Sender: <xms:J4Tgaownd-WjOq_qrb0xvCluX-yRPBO1zU1MgZ3n_LCdPhIdAs1MlQ>
+    <xme:J4TgajuWJVCicAYPZP6Xi3QTNvfi75hAaYcE2U1q_9JxLkUJA2-xZHpX8BG19WsAM
+    3W09xzfPJepp3z6Jt2WN3pcfqmvrAIFJ5hHJ5GrpYsytyZgmL6jng>
+X-ME-Received: <xmr:J4TgansB3MHphbyMDZl8kI2Mh5ChfFqeh1HdwMilvdqybDwp9WfP8w>
+X-ME-Proxy-Cause: dmFkZTFMNnaKzt2lG+KoKptpMi0c0RXRWg/WgjPJ7MCnb7FWdWwM8squzc0TlyWs8N/T+n
+    J7+YXsEUIGbL2Fg/dEOjElBBUgBko3JjlpLCgOtySM0KTmsy9O4ba2AaCQ8Yv8PjGksVUp
+    25QjjaomYJPV5CbL5F2RyJ4L3ajywluW1smKZPh3R9UZVOO1c+Yztlfdv64vR4SrSxcYLc
+    6X3dUr5kh6w9ZHQGPhFSCpLKf5+1d2hPrHI42SyniZLoc6OMNE2LcYoQeNUCqfY++ckV9m
+    9270c2h+XlTMJVh1nkZcorU202Vie44ze8VO0wmoNlZmOe/5W7KV7Z8rSrq7LXtsPkkoD1
+    nPBwuGhMBllpunvsHchahlh65ZkfalwPWNKSp+Tr0fcd12Cy0imE/G8F8QP5FEHm44HLGg
+    +Ibzm6RPR1KGTGFbwbUUnHuIF0s6Dw404g3kp47JdsAXbTTWJz1ZvALwM8yTJAuyEsiPsv
+    smLSIuPFGJ0S/4nx6y4XcFfMi/7xXf67oLKBvwFL2y2Aap8/f+Gdns0/PdavWZ1TX6JneZ
+    WF0eNSGwttIT85LPVL9WnV00FXoz5HajsPjIfwYy6sY7ePvkNiwEKwxbry2xujHQ3cGD2w
+    yK8uBPn2WbZu24Psk3trG6M97czdjj1QoY5rI1kuMQI0YCo8x3y7nD3H6tuQ
+X-ME-Proxy: <xmx:J4TgagOnLyQqQjJtEDdhZIbxRmnsWf_NRnvFDe0QfWwlIjL0MW3Acw>
+    <xmx:J4Tgat1JfDOymOTNLHa6_jvJplulYTbTf1v98YtjL27x1PmbYRlE3Q>
+    <xmx:J4TgakOClV7c4_lVX3aQKmAkMiFt0WihP9YrJnVlwAVMbFbVlrwDOQ>
+    <xmx:J4Tgal2yRzaHP2Pxm9QuIODhEVzcBXRzLR9ga1YBM6ZCObYxAOShnQ>
+    <xmx:J4TgalqbRXqxF8Q9gHeBzSV_Ak343WaQe0dwr-9-52xP4fZIBeeY-ymy>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Oct 2026 06:59:50 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 00629d82 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 27 Oct 2026 10:59:49 +0000 (UTC)
+Date: Tue, 27 Oct 2026 11:59:47 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v4 3/4] imap-send: check git send-email copies like other
+ messages
+Message-ID: <auCEGdYgWQy5R8Px@pks.im>
+References: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
+ <pull.2456.v4.git.git.1793089879.gitgitgadget@gmail.com>
+ <919e38c31d83d3cb01aae49e59112868ea9a1fed.1793089879.git.gitgitgadget@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,98 +125,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <919e38c31d83d3cb01aae49e59112868ea9a1fed.1793089879.git.gitgitgadget@gmail.com>
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Tue, Oct 27, 2026 at 08:31:18AM +0000, Harald Nordgren via GitGitGadget wrote:
+> This makes the check stricter when some other script writes an mbox
+> with a "From git-send-email" line. RFC 5322 requires a Date header but
+> only recommends Subject, so a valid message from such a script may
+> lack a Subject and would no longer be counted. imap-send has always
+> required a Subject under any other "From " line, though, and only
+> refuses an mbox when none of its messages are counted, so treating
+> these copies like the rest should not affect anyone in practice.
 
-If there are conflicts when picking a commit, the merge machinery
-creates a ref called AUTO_MERGE that the user can use to compare their
-conflict resolution to the conflicted result. The sequencer tries to
-remove that ref on every iteration of the loop that picks commits,
-but it is only written if we stop for conflicts, so it only needs
-to be removed when we enter the loop, not on every iteration. The
-ref is not removed after the loop has finished, which means that if
-the last pick has conflicts it is left behind after the rebase has
-finished. Fix this by removing the ref before the start of the loop
-in pick_commits() as the last commit did for REBASE_HEAD. The tests
-modified by the last commit are extended to check AUTO_MERGE as well.
+Makes sense. I think it's highly unlikely that anyone ever formats patch
+series without a Subject and then expects everything to "just work". So
+even though we are tightening checks, I don't see that this will have
+any negative consequences.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- sequencer.c                | 4 ++--
- t/t3403-rebase-skip.sh     | 2 ++
- t/t3407-rebase-abort.sh    | 2 ++
- t/t3418-rebase-continue.sh | 2 ++
- 4 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 2d6a5f525c7..7a88b6530bf 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5181,6 +5181,8 @@ static int pick_commits(struct repository *r,
- 	unlink(rebase_path_amend());
- 	unlink(rebase_path_patch());
- 	unlink(git_path_merge_labels(r));
-+	refs_delete_ref(get_main_ref_store(r), "", "AUTO_MERGE", NULL,
-+			REF_NO_DEREF);
- 	refs_delete_ref(get_main_ref_store(r), "", "REBASE_HEAD", NULL,
- 			REF_NO_DEREF);
- 
-@@ -5209,8 +5211,6 @@ static int pick_commits(struct repository *r,
- 			}
- 			unlink(rebase_path_author_script());
- 			unlink(git_path_merge_head(r));
--			refs_delete_ref(get_main_ref_store(r), "", "AUTO_MERGE",
--					NULL, REF_NO_DEREF);
- 
- 			if (item->command == TODO_BREAK) {
- 				if (!opts->verbose)
-diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
-index a2a5ac8ae01..d4fcfe567c4 100755
---- a/t/t3403-rebase-skip.sh
-+++ b/t/t3403-rebase-skip.sh
-@@ -100,8 +100,10 @@ test_debug 'gitk --all & sleep 1'
- test_expect_success 'skipping final pick removes REBASE_HEAD & .git/MERGE_MSG' '
- 	test_must_fail git rebase --onto hello reverted-goodbye^ \
- 		reverted-goodbye &&
-+	git show-ref --verify AUTO_MERGE &&
- 	test_cmp_rev reverted-goodbye REBASE_HEAD &&
- 	git rebase --skip &&
-+	test_ref_missing AUTO_MERGE &&
- 	test_ref_missing REBASE_HEAD &&
- 	test_path_is_missing .git/MERGE_MSG
- '
-diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
-index 1703b5ae9b5..fdd9a2b9f61 100755
---- a/t/t3407-rebase-abort.sh
-+++ b/t/t3407-rebase-abort.sh
-@@ -35,8 +35,10 @@ testrebase() {
- 		git reset --hard pre-rebase &&
- 		test_must_fail git rebase$type main &&
- 		test_path_is_dir "$state_dir" &&
-+		git show-ref --verify AUTO_MERGE &&
- 		test_cmp_rev d REBASE_HEAD &&
- 		git rebase --abort &&
-+		test_ref_missing AUTO_MERGE &&
- 		test_ref_missing REBASE_HEAD &&
- 		check_head &&
- 		test_path_is_missing "$state_dir"
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index f35cd130921..1c26bf5de54 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -39,9 +39,11 @@ test_expect_success 'merge based rebase --continue removes .git/MERGE_MSG' '
- 	test_must_fail git rebase --onto main HEAD^ &&
- 	git read-tree --reset -u HEAD &&
- 	test_path_is_file .git/MERGE_MSG &&
-+	git show-ref --verify AUTO_MERGE &&
- 	test_cmp_rev commit-new-file-F2-on-topic-branch REBASE_HEAD &&
- 	git rebase --continue &&
- 	test_path_is_missing .git/MERGE_MSG &&
-+	test_ref_missing AUTO_MERGE &&
- 	test_ref_missing REBASE_HEAD
- '
- 
--- 
-2.56.0.336.g97505d19352
-
+Patrick
