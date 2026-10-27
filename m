@@ -1,88 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793089940;
-	b=5kfOU1luMq3lVMpSvMvqS6x1D4DSaSH3agEeomb/0iXhsrI3p0IyYaQG+Fj69ozfd7o/
-	 I/LCbEqF3M8ndIjyVnvPNfyaUlM7OCslnrsAtXIDd+VeUbWpUyByUCGrogjAzBCCMs5ZZ
-	 LKAvG0VOo+kr+qq9AAhljHgkX+3bMETEdrNmF2YnAYY1LJVXg1c33lyT2Kt0S8tS4Q2iZ
-	 7Tu4j193OsAUYJPa5wIEp88kMSiz4L/swEWdKT5jOJXa1UQkaGhH0YU+83RuoXd29AJ4o
-	 SCVLgEd+qezE3gTgDFBXksu8jeW4yZdo/jYii0CGoqqFALfow2tOyIc1OND6gIq0fKA==
+	t=1793089943;
+	b=ytFbfBBMZSgx1l59/CuNB5VefatLTfpHqzEOHisFFL74jFcx2Xu0UFS4FgHr2M07b0+i
+	 wFp2Oia974Hugv9NieT+c9wMSzcUML4GSvKxI4QH6KWknxr2d4Mfj/888hNG9cSJ2YBPG
+	 x0GTAfUlT/ybLpiVJd26o6kBW/uPcB2GTMIJptDXuHpSZ4iBYTVbNVHwQdNgR4ca55Fec
+	 C+eLjXYuZCt3T31Ubnp0nMXbcdDBi36Lm6/BP18yS1jxIZFRsWwFTuPtJSTqa8Chf2OBz
+	 lXkA+m2wbt1nOvNm85n5KKFTGNTuFVwudC+wUN3ycVNYc7ibYC7qnpxTFBAtmmBFB6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793089940;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793089943;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=e7jlbb9rIEqQmZb5UXclylIfYFAvjy1Gk3cm8kH0SI4=;
-	b=SBWMJbz06SCci2oZxECSrFXlLOJJnJaSaRU9kHIWkudBqCNWlnUlqTKQ1RghjdQeF/Lo
-	 890wfqWmUKHYK7tNDG8t5rM7vArWfPp5lhyQv7+NCpneYMrRqLmLPKECJHiaMDZv9VDwa
-	 GbFNBZuo9PNbYnmhETuKbAdsj5w3ndaB6whLj09n/J2210hO/DdjJSmzqCew8YtiLVKfA
-	 TiSPc/C+9TIE6cT6GBWjoPFyaZnsdEKXvlInVuUC8PpPWU6RCPmWWl2JHGueShQWBJDaL
-	 IZkm3z0skIYX//U2hK4wmkZAFA8MxWeANdS1KvB/KFQZaKBk606+Zy7w4YYbGoM6tSg==
+	bh=9BRahpIOhyZFWIXHDoXt6fpXAp5W2/B1Jp2UCw5UonY=;
+	b=fcueQ2ZUwJnJdYL7TNym2/pVBm5/JXsoglWk8uFSiCyKSGFzPk+xYk4S0YaQ1pnTx4Gb
+	 IJh5w23Gk6WNFtEI+Y3NkSqYV4Bj2siqfivTJEFghO2P2BbS5uWDv6bRErQ+BJ1EkFbJA
+	 IWZWPkybPDZ/q9Gyk5v6Inr9USYERDA7L3e4sUzeSTlyJLDQYJIKbxO90rJzIGGj8JsDe
+	 tcYI9JJqByJ4dZ9avLOCScYzvA7C1HHfPEAw1lt8yG8rR0nY4WktlNEPv/ACfOGJ+WdS3
+	 00CisSeURIudQu1Dr6bnTG7CT5Nnh/JdF1dXXldM695KxtjT71dYzmBaNTClrvyilcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=RgrcoBOP;
-	arc=none smtp.remote-ip=209.85.161.48
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=HgzBiKQt;
+	arc=none smtp.remote-ip=209.85.210.43
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F074606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 08:32:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4F074606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B90606A31D
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 08:32:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E9B90606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=RgrcoBOP
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-706113e92f9so2259467eaf.2
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 01:32:20 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=HgzBiKQt
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-8470d7d430fso1516008a34.3
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 01:32:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793089939; x=1793694739; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1793089942; x=1793694742; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=e7jlbb9rIEqQmZb5UXclylIfYFAvjy1Gk3cm8kH0SI4=;
-        b=RgrcoBOPpV3HAyrQeKJUgRbX/Gw2IKVh7uNzOrD+cVWoBBZ+cmBLUoXymWRG0Wy6KQ
-         8oqVouccWMlarxktIeUovZJd+W+j49DiJbbzZK3O58pQuRoFIUAPrtkqAg4N5+yhDLGu
-         xcbbmmdYML1Ux1j7FMH+WyJqbfrfmkhU/UDS25nCuK2vau9+bax2dRmkdA8QSS7T9rXd
-         3w96C9Bl4z8nw+i5mIKLpZJzj3TeUZa8M7AAvprnvFKO+Ck1ob7rC9rLu1PuS3rdfCKG
-         ogdoDrDpJUMdhU9b/zGf4Fn5TtcWLWU5T3odt9G4myMfih5Q9kGG4JaLvdVur2JQYGz7
-         hDwQ==
+        bh=9BRahpIOhyZFWIXHDoXt6fpXAp5W2/B1Jp2UCw5UonY=;
+        b=HgzBiKQth8THo1r174X9m8osDlW6u/dhz9Wl6u+yCT7l08PmYerg8sKD3L8uAtr3Mw
+         74/+HA/Hl+7jo9dO9jY96SIvw1CrFwwMZMI/Olw5ugnEYc6q4Y6wLUXl0tAfDmG1nrsp
+         ECals6cMcPAAtrfe64uaekWNPmhbOjlqwUfaYhMEfgXvrJHFLl3Cdny2XM2v1JVEsk4G
+         jf00Y4EwZbNvFGPPFHnGYYCig6Q6xfoh9NixJFtXONvsByClrMAg1QdAA3ngMwG3rpzv
+         rPNUBKF+JhTddOusOo1t8LVOL6QPEQzVEdmLOlTxOnqwjudqgj6+ylhGVCfqNGGnUHlf
+         6E3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793089939; x=1793694739;
+        d=1e100.net; s=20260707; t=1793089942; x=1793694742;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=e7jlbb9rIEqQmZb5UXclylIfYFAvjy1Gk3cm8kH0SI4=;
-        b=ulco4+4FsS0H19WUsBNUcsFaSNUq9unvScSByb8el37oUhKeyOT+jMV9em4ZYoUc6M
-         AxqSrHmMzDd/oktKivUTuqn+8T0WfC2Xnvma+ngJdB58aW/JQfJzTU8EsRjfO7/ALRK0
-         vIh6iDltiTVykSfWl/YXraxQXGIwC8C95M1jJLXaXKtrwgqDdCxt4rZFVO5OUOn1QB8C
-         DXqu/VzDg+shXb/WMihfUP36Lu2eQyIRcMD83xInttjgrBl/iHecetFnR1g3A3Ctgr6H
-         UyOUo7qsPfAS7u9aanRnvHswug2uaVoUIb/+XElkhbDSOzksG95gMIVFNG1aIvsT8iVm
-         s7RQ==
-X-Gm-Message-State: AFq9FYJka5zXcKevvPk0pTLNL6EqUmP7Oid5lXIZHae5cM7L/zlRBEaK
-	N9vc3Tg6isTXI13+mX39AFtmVkfc7OPbHymwn3CefKBW+mVJQZtV3F+Ly6T+HnUi
-X-Gm-Gg: AYBFou2uezTHMmoIW4tB4HbNfvL1UsGsQ8Rl2imwyaQZqPZHda551Q3NImY2llqqM+4
-	SgUVqV9+zJhaE+prX2HazR6KGSudbFPZoA+xxN72kH224SxEhzSF8L/JCZo4QjbQnfzEW5fuIyt
-	AOoPz0zrKt2iwI0qOvFH6UWN6p/hCIK7/Jzp1oD4UO6Q+0+v8oRKLUaou17k5IV6kTFE4cyKKnr
-	lkC9Bn1LmVwVlhoThg7ZTpaVgeTuKqHr7cGV1G/jwmpmLcmZhHSIxa4sTehJ4Qumcv4DMSPmrq9
-	IabnBQGsOvuEp1dk/m1KvfEYWyBVkJmVSQjopMB6fie68kHXeFQTXkIKfVTzDm7MTbEooikntRK
-	4Gf12pChD9msVxbwgaVlT3qpWKKYVqwkhB6xcuPN/FUe6439VpIGGjmjoW/JJjiMU5szMpyIKY/
-	eBe6RFZ0Og3Ef+0aol0VZl8Jpo0Olq93ASrSef3llOamxxPzz5/J259qWbsX+BT/1U7mqdKvmB5
-	w90HtPDq7SPBzHUMlLkd08w/Uc9aVzHh0UU1+Gi6IlDzv4suUMdqWZ2DHQ=
-X-Received: by 2002:a05:6820:7099:20b0:708:d037:c504 with SMTP id 006d021491bc7-70ba0e12c28mr3379036eaf.31.1793089939148;
-        Tue, 27 Oct 2026 01:32:19 -0700 (PDT)
+        bh=9BRahpIOhyZFWIXHDoXt6fpXAp5W2/B1Jp2UCw5UonY=;
+        b=SWHWOsZLl+WcZeEZrLTvUf7BGUwfx9WRJGcJ/Mu2ThVxsSpMF732Xo3Aia3UyKt/Yc
+         6I581/U6wJp2TkDzKBfaDFGi54ve0xMNZkuRHE3ak7M8a8T2txeQLa9ZRcv4DSUHi7UI
+         UYfNWKYULN6pmzAzHjcLC1Ec4ko2p6g8FNfYJO+RbU0Nd/DO+XMHQfjix8TxuuFTnx98
+         VGtf2AMiuZkWI5C1SFFB63P9xbWs5HH4boDOKeG8L+pBQzzDHy+XOMl8EOKMNCJpF43m
+         SDSawl+me6X1Zemm5CGarIFEROxIzHj/XAW7kgqCaQU/W63hSmKkciMYtSA0quYZ3OhU
+         nEOQ==
+X-Gm-Message-State: AFq9FYJ+Nd1C4ogDRo3ALW4S28db/x1/xSpsloPDwcgKIoQ5NXvEYuwO
+	bPPZwgprzb6KQF5HcZaKrzEtudpjZsJCm1BMGj4TceIUhJgSMvvuq1IhnBPzWi64
+X-Gm-Gg: AYBFou1titdIBByj5jIvxX1gVj/aNiLEifsSiWwTQQwUztsZKgSJiugVyq3OlRxdxRb
+	XkWAWeCIMTyb+kxoUDJiRWvbbErIFYjxC9G8PPtW73FUj85x9FThpiMDekRVVHoe5EcS5hn8MOk
+	CmSqG+3jcNC3YmE+dbGLeP1Zp4cjolIZVpin9JHdS1nUujUwmm+z0Y/rhrigZno3DGGYslFIkgc
+	pss7bRAd/lmiVgs3PU2ifz8S4Z2iDHhTdQ/0l7M88Us6zjjU5kXfBcoj8mbhc4Y259oCPcUFR8L
+	oVqca258sXxGkN08EwkKhYmqfp83c1Dly3ZdoVsBUkWKSeJlHKj7S/552+Vy+1slxT0qxXl+joE
+	SGBCCUfTxD8JnWQigPDxwmI6FACSgswm/mRUJmuGOzKGpRPDORDtRK8Z8vHh7tZootnRQZEnaG9
+	KhUy8S2DHi40eHe0qP6mdyGm8XbFpzd98EtnfKOSpV+BHPaQpvZgQfZra2M3nfJ3LMBNAv1q4w8
+	DeBYgSlumCTJgz+xhSRDzPKjArhjsVd12T17u/p6RA4gllLpPaonXJXykg=
+X-Received: by 2002:a05:6830:34a6:b0:7dc:4947:36a1 with SMTP id 46e09a7af769-850fd56d125mr7964387a34.12.1793089941782;
+        Tue, 27 Oct 2026 01:32:21 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.201.36])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4a843225d69sm6259556fac.15.2026.10.27.01.32.16
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-850fa99bd35sm10083078a34.8.2026.10.27.01.32.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 01:32:17 -0700 (PDT)
-Message-Id: <pull.2403.v4.git.git.1793089936.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2403.git.git.1789223882471.gitgitgadget@gmail.com>
+        Tue, 27 Oct 2026 01:32:20 -0700 (PDT)
+Message-Id: <c1ee3fcb7dbba1e1ae599d30a2144fcd498d8932.1793089936.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2403.v4.git.git.1793089936.gitgitgadget@gmail.com>
 References: <pull.2403.git.git.1789223882471.gitgitgadget@gmail.com>
+	<pull.2403.v4.git.git.1793089936.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 27 Oct 2026 08:32:14 +0000
-Subject: [PATCH v4 0/2] ci: fail the build if perforce, git-lfs or JGit fail to install
+Date: Tue, 27 Oct 2026 08:32:15 +0000
+Subject: [PATCH v4 1/2] ci: drop quarantine removal for macos perforce
+ binaries
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -97,156 +99,47 @@ Precedence: list
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
     Harald Nordgren <haraldnordgren@gmail.com>
 
-Fail the build when perforce, git-lfs, or JGit fail to install, and drop the
-warnings that used to fire on every platform regardless of whether it even
-attempted the install.
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Changes in v4:
+The xattr -d call that strips com.apple.quarantine from the macOS
+perforce binaries has been doing nothing for years, and can simply
+go.
 
- * Drops the && chaining between the wget/tar/chmod install steps for
-   perforce, git-lfs, and JGit, since under set -e a failing command inside
-   an && chain is exempt from aborting the script unless it's the last one
-   in the chain, so the chain was silently letting an earlier failure fall
-   through instead of stopping the build.
- * Reworded the quarantine-removal commit to lead with the observation (the
-   call does nothing and can go) before the history, fixed a dangling "this"
-   reference, and added that the same holds on GitLab CI's macOS runners,
-   not just GitHub Actions.
+5ed9fc3fc8 (ci: prevent `perforce` from being quarantined,
+2020-02-27) added that call to stop p4d -V from hanging on a GUI
+confirmation dialog that never comes on a CI box, back when perforce
+was installed via Homebrew's --no-quarantine cask flag. When
+49af448197 (ci: reintroduce prevention from perforce being
+quarantined in macOS, 2022-05-12) replaced that with a plain wget
+and tar download, it kept the xattr -d call as a precaution, while
+noting that it already does nothing on GitHub Actions.
 
-Changes in v3:
+A file downloaded with wget never gets com.apple.quarantine set in
+the first place, only Safari, Finder, and AirDrop apply that
+attribute through the LaunchServices quarantine API. The same holds
+on GitLab CI's macOS runners, so the call has been a silent no-op
+everywhere since 2022.
 
- * New prep commit drops the xattr -d com.apple.quarantine call for the
-   macOS perforce binaries, it's been a silent no-op since perforce's
-   install moved off Homebrew in 2022, confirmed wget downloads never carry
-   that attribute.
- * Drops the explicit echo "error: ..." / exit 1 blocks for perforce,
-   git-lfs, and JGit, relying on set -e (already active via ci/lib.sh) to
-   abort on the first failed install, matching how every other install step
-   in this file already works.
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ ci/install-dependencies.sh | 1 -
+ 1 file changed, 1 deletion(-)
 
-Changes in v2:
-
- * Perforce, git-lfs, and JGit install failures now fail the build instead
-   of being silently swallowed. Removed the presence checks and warnings at
-   the end of the script, dead code once install failure is fatal.
- * Version output (p4d -V, git-lfs version, jgit version) moved inline right
-   after each successful install.
-
-Harald Nordgren (2):
-  ci: drop quarantine removal for macos perforce binaries
-  ci: fail the build if perforce, git-lfs, or JGit fail to install
-
- ci/install-dependencies.sh | 64 +++++++++++++-------------------------
- 1 file changed, 22 insertions(+), 42 deletions(-)
-
-
-base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2403%2FHaraldNordgren%2Fci-scope-optional-tool-warnings-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2403/HaraldNordgren/ci-scope-optional-tool-warnings-v4
-Pull-Request: https://github.com/git/git/pull/2403
-
-Range-diff vs v3:
-
- 1:  e85ce85d92 ! 1:  c1ee3fcb7d ci: drop quarantine removal for macos perforce binaries
-     @@ Metadata
-       ## Commit message ##
-          ci: drop quarantine removal for macos perforce binaries
-      
-     -    A file downloaded with wget never gets com.apple.quarantine set,
-     -    only Safari, Finder, and AirDrop apply that attribute through the
-     -    LaunchServices quarantine API.
-     +    The xattr -d call that strips com.apple.quarantine from the macOS
-     +    perforce binaries has been doing nothing for years, and can simply
-     +    go.
-      
-          5ed9fc3fc8 (ci: prevent `perforce` from being quarantined,
-     -    2020-02-27) added this to stop p4d -V from hanging on a GUI
-     +    2020-02-27) added that call to stop p4d -V from hanging on a GUI
-          confirmation dialog that never comes on a CI box, back when perforce
-          was installed via Homebrew's --no-quarantine cask flag. When
-          49af448197 (ci: reintroduce prevention from perforce being
-     -    quarantined in macOS, 2022-05-12) replaced that with a plain wget and
-     -    tar download, it kept an xattr -d call as a precaution while noting
-     -    that call already does nothing on GitHub Actions. It has been a
-     -    silent no-op ever since.
-     +    quarantined in macOS, 2022-05-12) replaced that with a plain wget
-     +    and tar download, it kept the xattr -d call as a precaution, while
-     +    noting that it already does nothing on GitHub Actions.
-     +
-     +    A file downloaded with wget never gets com.apple.quarantine set in
-     +    the first place, only Safari, Finder, and AirDrop apply that
-     +    attribute through the LaunchServices quarantine API. The same holds
-     +    on GitLab CI's macOS runners, so the call has been a silent no-op
-     +    everywhere since 2022.
-      
-          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-      
- 2:  a57cfbb2a5 ! 2:  c6dda879aa ci: fail the build if perforce, git-lfs, or JGit fail to install
-     @@ Commit message
-      
-       ## ci/install-dependencies.sh ##
-      @@ ci/install-dependencies.sh: ubuntu-*|i386/ubuntu-*|debian-*)
-     + 
-       		wget --quiet --directory-prefix="$CUSTOM_PATH" \
-       			"$P4WHENCE/bin.linux26x86_64/p4d" \
-     - 			"$P4WHENCE/bin.linux26x86_64/p4" &&
-     +-			"$P4WHENCE/bin.linux26x86_64/p4" &&
-      -		chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4" || {
-      -			rm -f "$CUSTOM_PATH/p4"
-      -			rm -f "$CUSTOM_PATH/p4d"
-      -		}
-     ++			"$P4WHENCE/bin.linux26x86_64/p4"
-      +		chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4"
-      +		echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
-      +		p4d -V
-     @@ ci/install-dependencies.sh: ubuntu-*|i386/ubuntu-*|debian-*)
-      +		p4 -V
-       
-       		wget --quiet \
-     - 		     "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" &&
-     +-		     "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" &&
-     ++		     "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
-       		tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" \
-       			-C "$CUSTOM_PATH" --strip-components=1 \
-     - 			"git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs" &&
-     +-			"git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs" &&
-      -		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" ||
-      -		rm -f "$CUSTOM_PATH/git-lfs"
-     +-
-     +-		wget --quiet "$JGITWHENCE" --output-document="$CUSTOM_PATH/jgit" &&
-     +-		chmod a+x "$CUSTOM_PATH/jgit" ||
-     +-		rm -f "$CUSTOM_PATH/jgit"
-     ++			"git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs"
-      +		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
-      +		echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)"
-      +		git-lfs version
-     - 
-     - 		wget --quiet "$JGITWHENCE" --output-document="$CUSTOM_PATH/jgit" &&
-     --		chmod a+x "$CUSTOM_PATH/jgit" ||
-     --		rm -f "$CUSTOM_PATH/jgit"
-     ++
-     ++		wget --quiet "$JGITWHENCE" --output-document="$CUSTOM_PATH/jgit"
-      +		chmod a+x "$CUSTOM_PATH/jgit"
-      +		echo "$(tput setaf 6)JGit Version$(tput sgr0)"
-      +		jgit version
-     @@ ci/install-dependencies.sh: ubuntu-*|i386/ubuntu-*|debian-*)
-       	esac
-       	;;
-      @@ ci/install-dependencies.sh: macos-*)
-     - 	wget -q "$P4WHENCE/bin.macosx12arm64/helix-core-server.tgz" &&
-     - 	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
-     + 	brew link --force gettext
-     + 
-     + 	mkdir -p "$CUSTOM_PATH"
-     +-	wget -q "$P4WHENCE/bin.macosx12arm64/helix-core-server.tgz" &&
-     +-	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
-     ++	wget -q "$P4WHENCE/bin.macosx12arm64/helix-core-server.tgz"
-     ++	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d
-       	rm helix-core-server.tgz
-      +	echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
-      +	p4d -V
-
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index d57dce5663..203e8401cf 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -122,7 +122,6 @@ macos-*)
+ 	mkdir -p "$CUSTOM_PATH"
+ 	wget -q "$P4WHENCE/bin.macosx12arm64/helix-core-server.tgz" &&
+ 	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
+-	sudo xattr -d com.apple.quarantine "$CUSTOM_PATH/p4" "$CUSTOM_PATH/p4d" 2>/dev/null || true
+ 	rm helix-core-server.tgz
+ 
+ 	case "$jobname" in
 -- 
 gitgitgadget
+
