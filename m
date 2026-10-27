@@ -1,119 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793098056;
-	b=dLaUJMLHe1cnuAXGtTyUTEbhMIRzc7bwidic4Eh8r/2m6jTAlu6NN4VusYsXLqgOPQkA
-	 YoZTgzxSev7/t4HeK61p1Vs6zC325suzS1fFQEJvxZpk4vkizKferI4/c3eyDN2x6fUY2
-	 vsZN/dSQIn7T7brSn8JQKtYRF8/kafSpr4tTvnwv0kn5CF3QOH/cFIRvF/kmWPc1tKFfP
-	 +g34+kLvE1aZjrh74J6JTcJr8xSzuiWWM4gOqDUkemBdY63/M5T4ek5UfAQ1Zm+6NCBrc
-	 LvbiDydCbaMP4IRWfMsPNgrgqphoHNXwI3itOnpueWN1PIsQJkf6Q1VYHxw37ISc4Uw==
+	t=1793098174;
+	b=hKVx46uei8h6RGZGMOGBOFdyf6XStWTURxf1zzQY2OKZvcvdJpwpnYD3UbjFNWJJytrt
+	 pR06EPAi1/jS6iHgX7y/O8Px5ykfBZGi1D47iYXZlUm6laehS4gJ8ysGu+qLW22uejLxh
+	 f0HUhEaagM7oaETSZMXDzxZcv213t2eBKysz8cEPEzwZRtBMhifdnfx1IehK9zAwHnHIS
+	 fGU/Pwnb160xtLRLjvn6+Gz7MW/t7X67SVilW+tgqp2Ktq/qamuJfYqXHNK/sYTZ94Ew4
+	 kJYt1JoS+x0+hoRAsEui6iQ+JinHZWcxK92/MJsowHBxGNy4eYT3xp/1vqJa+kFzOAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793098056;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
-	 X-Mailer;
-	bh=QL8o+C1uGU+WovUjpkIv6nD7V6UAOpQC19fthsyyAew=;
-	b=yJ53OBlVIvWXVODAwUj04hZJ8C0hZtfJBR3LP8c5GaT8zxq9M4m1MDVaiUpOD9DKoTNv
-	 i9/AaCQJgyIKVlIT3byf+XjyBe0qlvaDZv/Xt9K9qCTR3FxBrGBAGmiEovaF6xXq766Ym
-	 fCLvFR1G1nWFBxffKqykP5v0sT6pWQm498w549HCdnwSOzn9DWfpz9QED+kea6NftCbyd
-	 1vfJEEZvtuvJG1/P/4bdeVcPPT8eBfrRJS1Br48CJn4ddRb1mnHTKUF0UO5N9tKW5sH+9
-	 tryFFlx/JQ1Riv0r9Y5PJk/g10az57iFtfp8fAZR1NbhQii4Z3onIAElKHip0rmwSQg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793098174;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=EMb//4EKdoCq7TKsPzgSME/9IbLsBatRr3ePKTk15wo=;
+	b=p3fJXFB1RuigyZ4+vbtUbyAhPPXEdclEha3svFtny8x2pghg4utvXKet8kCfd6oRhQAz
+	 hH/shL++uPSzL3yOGBJSGiipvXo+T6py95DqMuJ5qCz9JR8cw4W1EFmYFkW5einQwaOVi
+	 z/AIWl4K4vfXDU8TnTnBsXitcV3hI96PTiBitwOAykM9oEb9wCbCYYL/gdLF4IFGQAB+b
+	 GPTSXibtG9aeFzSSZvK7rHU06AlcU0S4/4joAQblnFjnnYDlGJ0Q505Q5Vi2szRY+U9xa
+	 1T3wxTn/2BWDYsJt+KF+lEVDd7NarhVpu1HiMaH7+8qdx2N4NExz5qWktXCDGpDFNGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=rg9ZS9C0;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=SgQDls3T;
-	arc=none smtp.remote-ip=202.12.124.148
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pgo3i19i;
+	arc=none smtp.remote-ip=209.85.221.45
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F4A606A328
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:47:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 09F4A606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5999B60A2602
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:49:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5999B60A2602
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=rg9ZS9C0;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=SgQDls3T
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 537401D00132
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 06:47:35 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 27 Oct 2026 06:47:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793098055;
-	 x=1793184455; bh=QL8o+C1uGU+WovUjpkIv6nD7V6UAOpQC19fthsyyAew=; b=
-	rg9ZS9C0QifdM4s5lndjt3VA70bkG8filPxPr2faI2AMjwNpKmKbUQ8APU8gDMlr
-	q1QM8l/oUSur1vR0t9TaqkLCTWvVtz6eqHNFH4EvDopojY+LomnurLQTT+YG7VXk
-	ch4564ORS2IOsgxaD4KejhDhk303gQ1ptGAdj34bLvf0d8dxVItdbglRaAQRBpC9
-	8CuOeI5kGZm2OANL1N6Avwu1AjNtK92QdnZ81/OX4DU5vvz24DD+U1rrmLYZb9i4
-	audipICr1kkjbX59yD3XzWjMM+QI9Bk2FxOqlsu8HnoKyrR4HLGk05OPA1KZdD+4
-	lRGqaN/Go5bzWEJkiz7Ofw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793098055; x=
-	1793184455; bh=QL8o+C1uGU+WovUjpkIv6nD7V6UAOpQC19fthsyyAew=; b=S
-	gQDls3TyTjxF50vZY6k/y/Usu45fmwv6kihPps20KQXth6YcC3lWvnD2Jb8iTnnu
-	I0N8m9sgUks6g2WldOzu3hZAmrmCaN+zFvOFNeJ4R6Tn89XsykIiKdRIBHeXWEV0
-	Xz2O6bEaM3IGcfYGFQwY6ZmER+S3woqDedR3ZZuyb3Sz74RlsVyWgknzI5Q8U3kA
-	s8UDT6FCu1gkGsML8sbUdzGcSDv+p6oEry0YBE/NdRPCQQ2BU+QaIpqEmQQxPf7p
-	l4pszSzFq4llFmdtxcfXbzNFhjCiybm2UMypT1e1gMhhev2dkc2gr57Tqq4q4SLc
-	lVT5HAoTwQQP9dNfNwGzQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793098055; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:uv6hcODtOtswEjZLwlSBoFBnUdOPAGQUTZZ1c/ImgJ0Nv1a
-	9oqnvD2XB2CCFq0Z7ZtSPQM+VKy9tpDDG83/BaKOyyGQUljXj5boUkt5FD8IgkU+
-	WG24df+ojqj/8X1c9YFyyO8kwVq0JyVOlaNTviMFlvc+RdM9ciRnJan9TA70tpvf
-	o53M8lc0pmTPGv3omMv25d8P7XfmhEJQIs8apPbaNHEGKhFc+L8XXDgUCeZUIs/E
-	uxuE2I9rkyuHViUO40RjbrssGQQk9J1K7LwcSApcSZXh7CDc3EjBAW+26/lIKEEe
-	PzvD3fTlbSGC7PYSCW7h60PVo0QXkzdP86QUvCg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:ZsHtKQAuiEz1rHwxN8nDB/IVn0BPyanJUtmX4rV3xwQ=:/zu6CqzoJx9U6s3avUhdfJYPFYcphQV69jRS/kBS+pc=;
-X-ME-Sender: <xms:R4HgauhLdX_Bo0MToUoVMuz82x063Rt-R3sd7l-lDtPx2a3fKIJHjw>
-    <xme:R4Hgal_Wo3ezx1CGGMVpUQjC6nqWdbkMmwnrIu2cubk-3BGPpnfxeRrjUcwUU3i4R
-    qpV0TpLO5AuJIMNfRNVUcnwcxmHQkSvY8wK2DyOT93ywoxEFmS4wyE>
-X-ME-Received: <xmr:R4HgarsLEqG_cPca1agKSK06KE0kGVJyntee6wTutOBotJzDQrSEJg>
-X-ME-Proxy-Cause: dmFkZTF1EhTm3x5TA3Twx2kWNjiEmAjLUOz8eHVq2ssQOGZrqeMWjH31a6EI4P/IB2JZ5d
-    H4V/3nLvtBP+facsfxhk/exUdovOu+eaeumNXS0298sxUGOLBsIWr3wLxLyeSKH4eCfmVP
-    gz4upb0+OVqGFcHzKVSwEzla4WCz0v4E5G7TJkbOJ2+mDHmHXVd3969MaCUONgnvq3rGrH
-    4h4RcwAKuHkiMF3lqk4eigLN9cC3NUN9nyRlxrxcPxTwYdUWx+hAIdLwPFD7yhrj6KG1Uu
-    9FP7skw0T2pm771hfjhMAQC/c5jWUc9+mVsfxDhk/Np9TrQ2jaQNm9lJTLQtEYwXe9I0sZ
-    DIrKK9B0BgObVSnRINCe3W+vlZBXr+56DZbvtvP1bHBDK6DVvoFvs7MmrheN23URXkZRAE
-    937I5tJ9Hq45OMbxe5h7ltBv9VFjqJHHZgLJrBWSZhooohjNGWrZ72i60ti7wqTgANf756
-    MsI0sHn8VAh1/k4+XMZaN8E2+poh2G2vJxsDzkSKr4MJQWRynPCZQpjm0sYHhL+SWVh6QC
-    iC7sRJdGoscg4Sl01SBt/tsbhKaf1Pkq/Ic6CuuCAWA6ykaDCCla3n46eJm/Nzlk7lrAI5
-    JAShBFseAvxsaV0FsnjtxI012qH1tr7YXz8NVDO2uBPsfBjlavdZaGpXG0uw
-X-ME-Proxy: <xmx:R4HgasaBEi5RWMG5Hji-pR8NHn0ANpdh0I49Bto8wyx67YRGnQH_mg>
-    <xmx:R4HgaroaJjbTqitXEyuqtt7sdC5DjcIReQ_y-HFlzs7b9uGT6Ok-Aw>
-    <xmx:R4Hgah9qX_tQ37nWTm_R0Zj3XLhAKSYLTOmJBdmJJWd8gyKVSeYD0Q>
-    <xmx:R4Hgaq8Si4YQD9hlrNDR8ndeZqpCO-ufOFSgRQSoIXaDC24_K13YSA>
-    <xmx:R4HgarjOYkepxIgSVBJmyIPQ3wBqzsd5YjuObLHqdhIE6PSMPTXdjPU2>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 27 Oct 2026 06:47:34 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ab74f588 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Tue, 27 Oct 2026 10:47:34 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 27 Oct 2026 11:46:55 +0100
-Subject: [PATCH 12/12] builtin/rerere: introduce proper usage strings for
- subcommands
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pgo3i19i
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-48df54150dfso2130587f8f.0
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 03:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793098173; x=1793702973; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=EMb//4EKdoCq7TKsPzgSME/9IbLsBatRr3ePKTk15wo=;
+        b=pgo3i19iFQrXa3KHMpoonKTrdWS3zLW8zeQ9k4loh0BL/BIGhi1kwIh82KYj9qgkry
+         2Mj5xsfTWzdi+GWRQi9dnvbXQh0kj+gV1nN/ANtOd6A+x+WP+8ZOHv9N+JGaqAyqZ5OD
+         oY4PPBMIL468D4PlJxZcbT9oMy7Emu18FK+S7hXizAPQy0wbWJqknLkfTz9pbqkRA8Zq
+         Zd0bcfR85S0H6wZ+KysbjeUYW2U/MUcfikB5mnu6/KwGEdVQf0NDEAan8rox81L2r4eO
+         d6PbaiQIiqBxIFcKb3vKU6TWOsM5UQX4eonkKw1mq9Quje7Tf/aq0216QuoKM41lff0b
+         x+RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793098173; x=1793702973;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=EMb//4EKdoCq7TKsPzgSME/9IbLsBatRr3ePKTk15wo=;
+        b=NePE9YjoDwURXELabFqfREHOGL7tRQndfaLHDiFiwUBIkvNJo5KUE1ymdzETiGfTmE
+         bdcJDmU88xnCqKq9f7P9SAWK+K/49/+aQwf3jRM65QwxPES6w5WoU4d6f33Wn1zvvfnI
+         3kwPwP6l++rhiGw47NfEgoFhssasY2Is3ZjfwZ9/KnV7l/6n7r4++8fd/f8SuFToAvMs
+         gHsWs5P7XfXhu4yGurcJQ9N/z/ULZpPQtwYGXB5ogOkvEm/iRMuVMRGolJCI9c3snbhl
+         bm83T1pjMM8Sb9pAHFa6ifExlLS4YtuHV10L37Tlpqth9U8lNoucb88CmoQ/yPgpixh0
+         4v1Q==
+X-Gm-Message-State: AFq9FYKFz9MLmfOJLrm8+WuPh/F/buhXHwvT67PswNAs/h8PGA3ZJpZ8
+	7AgaLGyf82ITLiNflJkBLSNSsXzLE4tUhKdq6qtXd130gknDSa+R8dcQ
+X-Gm-Gg: AYBFou1eSs/8XUpSzgQOc5VmJLpD83BQnYuT9zoqJCG0orhQAwtjp+6BzoQH4tznEPw
+	0LdS+ShXRMsEWnw4ul11ckqan8lPsYkrU13NrpD5exLEIpTV4Ls9N63VW5IuBkvGwuh+53uoWCy
+	4p30ndvHl79LLIpuEtoRGFy9UjzsnNOGM7FOUjYPx1ouesEHc5OAAxBbyM8bwg6MFHwVX55nGJL
+	SF2EG0Gf0KQdhXWJHsYuM8VUaFMO3yxUH49vGEtEoXNDD6b7nv8LqshdUZN17sdSsFktdom3yaR
+	aMaPumly63wWdviKn/zqQRO2IIdoyuJOHmTT7RfxxtDECf+IYWugq5DKMQYiwzvR/fE/fKgNh//
+	ZumJ7crETNu+wkhh8T1Q3EIdq/6qTHjl3iw/6vhSZwhlGa6lb4LI04l/ZvYWAJYiTw4lcy+o9hY
+	H8jO0gfb+RUWNrYbpXLNDrc5+PZoDF6J70Qv6Uq/wY7Cr/hzQNqFgH81WsyT0lypB2zW+kK/v4D
+	h6eoRMAJbZgj/q8ozZBCzo5CRwjSe+6V1miSnfCxZVDCUxgUd9xEaf5l4FKLKA8Ij3uLXz1o6pX
+	THJjjsS/8+LGwCmPEgGrQba3MtuzpPjvL1Djx3nvDXIQxw63uO0Si0A=
+X-Received: by 2002:a05:6000:607:b0:48d:ff81:5201 with SMTP id ffacd0b85a97d-48e3eb9930fmr21627389f8f.41.1793098172588;
+        Tue, 27 Oct 2026 03:49:32 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e4806e208sm16892106f8f.40.2026.10.27.03.49.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Oct 2026 03:49:32 -0700 (PDT)
+Message-ID: <97fc0f78-a8e9-48cc-9b6d-5356d083ccb1@gmail.com>
+Date: Tue, 27 Oct 2026 10:49:28 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,188 +89,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] CodingGuidelines: allow compound literals
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <a4b382c0373e1b410c4c1ef74b313f86076d48aa.1793024062.git.phillip.wood@dunelm.org.uk>
+ <xmqqbj8gp3pv.fsf@gitster.g> <auBGiu_-qJMd07ua@pks.im>
+Content-Language: en-US
+In-Reply-To: <auBGiu_-qJMd07ua@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261027-pks-rerere-subcommands-v1-12-d836c36ce0c5@pks.im>
-References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
-In-Reply-To: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.15.2
 
-Adapt git-rerere(1) to have proper usage strings for each of the
-subcommands.
+On 27/10/2026 06:36, Patrick Steinhardt wrote:
+> On Mon, Oct 26, 2026 at 02:11:08PM -0700, Junio C Hamano wrote:
+>>
+>> So we do not have test balloon but we know we still cannot use two
+>> constructs from C99 due to MinGW and older IBM xlc?  Perhaps we can
+>> raise test balloons for them by now?
+> 
+> Huh, which are those two constructs?
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/git-rerere.adoc |  8 +++++-
- builtin/rerere.c              | 61 ++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 58 insertions(+), 11 deletions(-)
+The format specifiers "%z", "%zu" due to MinGW and ".a.b = c" in struct 
+initializers due to IBM xlc. I've cc'd Johannes to see if the changes 
+around using UCRT64 makes any difference to the format specifier support.
 
-diff --git a/Documentation/git-rerere.adoc b/Documentation/git-rerere.adoc
-index 4e6ab9a27c9..e04e9ef3ef8 100644
---- a/Documentation/git-rerere.adoc
-+++ b/Documentation/git-rerere.adoc
-@@ -8,7 +8,13 @@ git-rerere - Reuse recorded resolution of conflicted merges
- SYNOPSIS
- --------
- [verse]
--'git rerere' [clear | forget <pathspec>... | diff | status | remaining | gc]
-+'git rerere' [--[no-]rerere-autoupdate]
-+'git rerere' clear
-+'git rerere' diff
-+'git rerere' forget <pathspec>...
-+'git rerere' gc
-+'git rerere' remaining
-+'git rerere' status
- 
- DESCRIPTION
- -----------
-diff --git a/builtin/rerere.c b/builtin/rerere.c
-index 80ecca1fe0d..97a08ecd6e7 100644
---- a/builtin/rerere.c
-+++ b/builtin/rerere.c
-@@ -10,10 +10,13 @@
- #include "xdiff-interface.h"
- #include "pathspec.h"
- 
--static const char * const rerere_usage[] = {
--	N_("git rerere [clear | forget <pathspec>... | diff | status | remaining | gc]"),
--	NULL,
--};
-+#define RERERE_USAGE N_("git rerere [--[no-]rerere-autoupdate]")
-+#define RERERE_CLEAR_USAGE N_("git rerere clear")
-+#define RERERE_DIFF_USAGE N_("git rerere diff")
-+#define RERERE_FORGET_USAGE N_("git rerere forget <pathspec>...")
-+#define RERERE_GC_USAGE N_("git rerere gc")
-+#define RERERE_REMAINING_USAGE N_("git rerere remaining")
-+#define RERERE_STATUS_USAGE N_("git rerere status")
- 
- static int outf(void *dummy UNUSED, mmfile_t *ptr, int nbuf)
- {
-@@ -61,9 +64,13 @@ static int cmd_rerere_clear(int argc,
- 	struct option options[] = {
- 		OPT_END(),
- 	};
-+	const char * const rerere_clear_usage[] = {
-+		RERERE_CLEAR_USAGE,
-+		NULL,
-+	};
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
- 
--	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
-+	argc = parse_options(argc, argv, prefix, options, rerere_clear_usage, 0);
- 	if (argc)
- 		usage(_("too many arguments"));
- 
-@@ -81,11 +88,15 @@ static int cmd_rerere_diff(int argc,
- 	struct option options[] = {
- 		OPT_END(),
- 	};
-+	const char * const rerere_diff_usage[] = {
-+		RERERE_DIFF_USAGE,
-+		NULL,
-+	};
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct rerere_cache cache;
- 
--	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
-+	argc = parse_options(argc, argv, prefix, options, rerere_diff_usage, 0);
- 	if (argc)
- 		usage(_("too many arguments"));
- 
-@@ -115,10 +126,14 @@ static int cmd_rerere_forget(int argc,
- 	struct option options[] = {
- 		OPT_END(),
- 	};
-+	const char * const rerere_forget_usage[] = {
-+		RERERE_FORGET_USAGE,
-+		NULL,
-+	};
- 	struct pathspec pathspec;
- 	int ret;
- 
--	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
-+	argc = parse_options(argc, argv, prefix, options, rerere_forget_usage, 0);
- 	if (!argc)
- 		warning(_("'git rerere forget' without paths is deprecated"));
- 	parse_pathspec(&pathspec, 0, PATHSPEC_PREFER_CWD, prefix, argv);
-@@ -140,9 +155,13 @@ static int cmd_rerere_gc(int argc,
- 				N_("skip gc while another process holds the lock")),
- 		OPT_END(),
- 	};
-+	const char * const rerere_gc_usage[] = {
-+		RERERE_GC_USAGE,
-+		NULL,
-+	};
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
- 
--	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
-+	argc = parse_options(argc, argv, prefix, options, rerere_gc_usage, 0);
- 	if (argc)
- 		usage(_("too many arguments"));
- 
-@@ -164,6 +183,10 @@ static int cmd_rerere_record(int argc,
- 			N_("register clean resolutions in index"), 1),
- 		OPT_END(),
- 	};
-+	const char * const rerere_usage[] = {
-+		RERERE_USAGE,
-+		NULL,
-+	};
- 	enum rerere_flags flags = 0;
- 
- 	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
-@@ -186,9 +209,13 @@ static int cmd_rerere_remaining(int argc,
- 	struct option options[] = {
- 		OPT_END(),
- 	};
-+	const char * const rerere_remaining_usage[] = {
-+		RERERE_REMAINING_USAGE,
-+		NULL,
-+	};
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
- 
--	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
-+	argc = parse_options(argc, argv, prefix, options, rerere_remaining_usage, 0);
- 	if (argc)
- 		usage(_("too many arguments"));
- 
-@@ -214,10 +241,14 @@ static int cmd_rerere_status(int argc,
- 	struct option options[] = {
- 		OPT_END(),
- 	};
-+	const char * const rerere_status_usage[] = {
-+		RERERE_STATUS_USAGE,
-+		NULL,
-+	};
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
- 	struct rerere_cache cache;
- 
--	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
-+	argc = parse_options(argc, argv, prefix, options, rerere_status_usage, 0);
- 	if (argc)
- 		usage(_("too many arguments"));
- 
-@@ -247,6 +278,16 @@ int cmd_rerere(int argc,
- 		OPT_SUBCOMMAND("status", &fn, cmd_rerere_status),
- 		OPT_END(),
- 	};
-+	const char * const rerere_usage[] = {
-+		RERERE_USAGE,
-+		RERERE_CLEAR_USAGE,
-+		RERERE_DIFF_USAGE,
-+		RERERE_FORGET_USAGE,
-+		RERERE_GC_USAGE,
-+		RERERE_REMAINING_USAGE,
-+		RERERE_STATUS_USAGE,
-+		NULL,
-+	};
- 
- 	argc = parse_options(argc, argv, prefix, options, rerere_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN_OPT | PARSE_OPT_SUBCOMMAND_OPTIONAL);
+> This also makes me wonder whether we should have a look at what C11 has
+> to offer. Skimming through it though the only thing that I do find to be
+> interesting is `_static_assert()`. We essentially already have those,
+> but they are extremely hacky and their error messages leave a lot to be
+> desired.
 
--- 
-2.56.0.341.g393f52fd96.dirty
+Yes static_assert() would be nice. Atomics might be useful to reduce the 
+amount of undefined behavior in our signal handling but I've a feeling 
+they're optional. Would _Generic macros be useful anywhere?
+
+> One thing I wonder is whether we can now start to replace the split
+> between e.g. `STRBUF_INIT` and `strbuf_init()`. Right now the issue here
+> is that you cannot initialize a variable at a later point like this:
+> 
+>    struct strbuf buf;
+> 
+>    buf = STRBUF_INIT;
+> 
+> This is because `STRBUF_INIT` is simply defined as `{ .buf = ... }`, and
+> thus the compiler would complain. So instead, you are forced to now call
+> `strbuf_init()` on that variable.
+> 
+> But with compound literals we can define it as `#define STRBUF_INIT
+> ((struct strbuf) { .buf = ... }`, which would make the above code to
+> compile just fine. And as a consequence, `strbuf_init()` essentially
+> becomes obsolete.
+
+That would match what the test balloon was doing for temp file 
+implementation in the reftable code I think. It's probably worth 
+converting STRBUF_INIT() to give us that option for new code. 
+strbuf_init() takes a size to pre-allocate "buf" but most callers pass 0 
+for that parameter and I wonder how scientific the hard coded values 
+below are.
+
+git grep strbuf_init | sed 's/.*strbuf_init([^,]*, *\([^)]*\).*/\1/' | 
+sort | uniq --count
+      79 0
+       1 100
+       1 1000
+       8 1024
+       2 256
+       2 256 * (32 + the_hash_algo->hexsz
+       1 32
+       1 80
+       1 8192
+       2 b_seg->len
+       1 dirnamelen + 257
+       1 dots - name
+       3 from->len
+       1 ident_len
+       1 imgoff + extra_chars
+       2 len
+       1 len+32
+      10 line->len
+       5 PATH_MAX
+       1 PATH_MAX * 2 + 300
+       1 PATH_MAX + len + 1
+       2 q_seg->len
+       1 sb_src->len
+       2 size
+       1 size_t alloc
+       1 size_t hint
+       1 strlen(arg
+       1 strlen(url_decoded
+       1 tgtlen
+       1 though.
+       1 url_len
+
+> Now I'm of course not proposing to go on a crusade and replace every
+> such site, and I only use `strbuf` as an example here. But is that a
+> direction we want to move towards?
+
+I think it would be nice to have a uniform way of initializing structs 
+like strbuf that works whether they are allocated on the stack (where 
+we've traditionally used *_INIT macros) or on the heap (where we've 
+traditionally used *_init() functions).
+
+Thanks
+
+Phillip
 
