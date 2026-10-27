@@ -1,88 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793112791;
-	b=3CwNxYcY8hIFfbLHkDfJyNGUbBi9+Prbpx/cjzxNHBAwoloIhRXqXb8Jl4gUkCBUtLZA
-	 pxk2/+pMfOXcMX6ao2RUzWkpCDTn0TYkMJwuTr6Aq/Jh6x0t6LbgzmJ7nD+8sY7QiaZw1
-	 yEnuF1RN9RDL7NcQnTaSZBL5VItLV/0y5unxEq5dVmM5rLb1NyK8l6mvPnxrB00oOcRv+
-	 IF9ZqTuZXuG/jnV7RKr278uvwde5ZCiwgumfhl6zWqvPU4AgncsYM8hz3VYYYBG1arZy+
-	 5qCmo8422T4jWUSF/LOPDfpjA6CD2kYP5Wf/bNoeZLNvGXielVEt5y1IVNZKkRS7pXQ==
+	t=1793112900;
+	b=r9A1qJb9Y2XrWjLI4PMr9HtowDb2q+71lI43zxQEMqFjn6l2/wqcfjMljBbXq/s/2lIq
+	 qxyXQpayrRLaCc0PuPENhP9+zWHSvKqiIq1u+2d99lDFEpogseKVgfpfnnFnNxAmJGms0
+	 Hgc9aU/pc9UVkzZzDqOYiZQBevuJWjeZwWMOTUTlq8O+MSmYrg3ubHjCpl5PJEsZgXOE4
+	 FuOd+OBiSjF1rLLnPAjx76MObVsGP18CmCr+m8f1Lpe9+KJUz1GHKcRbXBT9D4CrrFYoN
+	 +UJx6LeWybK+ixjn3X++g7vyO0EftFdfQslLPGEEFbJWbgvxDMu5jwv7q5aIb/ai2bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793112791;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793112900;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=xO4jLi3LNN4vGFBx8TqUL3BxSHS9MtomDzn5AS9hAGY=;
-	b=JED3uQNnt/gJ7WOCJkNZn31tWeBaVPFak2FFZOQwP7gGsym5CXEEp5/ngJQTwYQWkD5Q
-	 79VF3p/AqIxvYXYqO2g5R5eIsA1LFbbLMv6A4XnXf9RiJh4sIrWPOXnDagfDKQtOdN1eR
-	 cQgu/a+7VsBxk+rVKXVAzG+PJ16Rk6rMPIqComTyyN+mIeS95Qxa/D1/BV+T4ftLRfm/4
-	 Snf2bcyCgzhV1KOo3D0MCb/Ab5fpAMbSuxJozSa51qpXDDZeDMUt5BkEMo31qZ4SLpELq
-	 gK+W0DLdmZHv+zSlV3vI+YGAwdBliceAxGFUofe3Zj87qZH+rt7PggfdCf0PGsun9Sw==
+	bh=cLrv4YRPzOjaxI+BO5ZflJZZfK9iL8uU63W1deZ57E8=;
+	b=aApv4w6MMjSH65TPsSvH2nLV9Y5aqy6k7Bs1EeTowht/GWrjo/neTX2zSGe377U8XpZV
+	 8R76S28QCKR0lwjJC0y2VmUwDx8tOczzqApLSKpHXde+tTUfXIRweW0ZlOwB/5/Mt0HwL
+	 SbuvEfgsrJoW0nCuiRJ8BSeWBfkrStr9IAtCFgXzD12iVR69G9g2/lqVJTEkUOlMWUxFQ
+	 eogojMH1Y578J1lD49oIe9L5JteTPrgkz9GlX+Xhs5fck7z3RBLn30397Oi7DHo+Ffh5V
+	 lnqoN1mYXC9/ODv2FXJvqv3sfOs1N1U+2lPy9hWs8LTxtLksiZtD0bP6nwTTUig0MQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YY0Z4b4a;
-	arc=none smtp.remote-ip=209.85.128.44
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xefeo6nZ;
+	arc=none smtp.remote-ip=209.85.221.53
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF8C606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 14:53:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5AF8C606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97F4606A31D
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 14:54:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B97F4606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YY0Z4b4a
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a20bde60a0so37542975e9.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 07:53:11 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xefeo6nZ
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48c4be28b82so3837548f8f.2
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 07:54:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793112790; x=1793717590; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=xO4jLi3LNN4vGFBx8TqUL3BxSHS9MtomDzn5AS9hAGY=;
-        b=YY0Z4b4aqApBgSdAcI2NLb0PGGhL9FtVJb9TDk+UQlxMyp2gMpov4TZX9LsgIUZD5n
-         mErOzgEYvsR+N1mOJC/SdET05ifdzjtvmlKcbfsQuhzSHypBwYhXaSzrElo+kfg9zgdj
-         mBwDPMZLWNBFPahJKAtS6GEypkBRDlsXDW0ztu7ln5Go1ro2jszmrebEpp8AFp8++beR
-         XsxHaf9Iy3LF3USJKPuzu5h3jkxPu4L8AfZLyIRC8m+mD/h9Sk6DPj7tKI4mp4VRdzQy
-         AI7Zqb6q0YhNA4VdB5shHhvxOqIkwHcb2WOqm+ExTUAmYt7jhlMpVelGh9bxtIi0eHjI
-         Zelg==
+        d=gmail.com; s=20260707; t=1793112898; x=1793717698; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=cLrv4YRPzOjaxI+BO5ZflJZZfK9iL8uU63W1deZ57E8=;
+        b=xefeo6nZWIctYGzqem/J3qjQ3TaK373MGmienc85CtWsynK5licJk3T9is3qO7hNW6
+         7uTILGL4bxYFng6qwZGOyuihvSdISi4GpDQXNUFBSopCpajSEPZ5cvSRhMUWyio9qblh
+         6+VkYwexKUOQK+AeGYEhp5lBu8/mmkO9XJKyJ31zox/PdPhRilMzmxnS02Sdhppl2yY5
+         eM2NA+gwWAtPQhlf+ty78va7plxZ61ZYdX7sCnGAqAhKbEUnc1sG1Fl4HjIXIgegtVCF
+         DR8bMPPJjXvGqmirI+48YED14lz13x4cfP/CClokZupvTrZb5672fgKKf11UKJMotkSF
+         +W0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793112790; x=1793717590;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=xO4jLi3LNN4vGFBx8TqUL3BxSHS9MtomDzn5AS9hAGY=;
-        b=arW5CU4sk0BeSgXOj905FlDrQoxW3ICzZpHPG2+sRrg8ruLo45RbEqA038ZPoI2Mik
-         RHeIQAfmlYdlgrrR+kwzVbBO8GEQux7ITfGbbqFZnku8zsrbrZPkI2jviDCrDHdJIy9O
-         uOH/6Pr7dJP0loelsNOHs4VxeCBpl5cOQaydyUVB42rDbVCalRZ746XT4XIwALr0c3ak
-         DFeFO89JHPcE5Db8SVNz9U2R5hpKxrBbEeQjXHKu+Ijt/tEu6vDPL9IlEiuiKU/peLpf
-         t/80v9qTFJeRsAuSQkdFRt85R/w62+ykvt6hr916zAFRIugE36JlUfXNQY6uGpxJpuEF
-         oIvA==
-X-Forwarded-Encrypted: i=1; AKwUvBwv0yosnlo/SVeG/8Z48iKpqYUnnY5JYvLVIa6LxOS579h12bIV7lfCx28BN+Yi9QZEfok=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLwJivxFUpk9lmLHNQ3qK9IUNZPQ+ehLopPXhg9YWybGes4FP4H
-	W8/NZilNn1trpWA8D0slQ+l6MPvitebjB/kIG4t/kc86IczpMaSxVf8F
-X-Gm-Gg: AYBFou3LqD7PpxyvxjQockfdfVzTst43xfO5IJg8wfWiQafaVD9IMQUPPnLg0c6yyta
-	bnjmrawvAxne1Ev301ONmm3qzfIa0YgNEFz58CgO9UQxckfJ3LO/VfQr1sGKgUHz/IqdiFJ+z7U
-	3GV2WzTjtocWSk4Obz2/jXuUKvxLfpqFxlBg2LfGGnMDHIA1zIiHcvNIBp5Zr0UOemxNkb/5f+Z
-	EcdD6L9aMRcWCcwV4MicQxKLp3hoydeOM/py1F108+1dZvqB/q/ke2TiCJyw7fgIIsCGp7xUkC5
-	Xy422BhKMWNV8EbYR0aCiu/ofP/zZhsqqu6PCP/U1csIqVhwXrf6vQ4TtVM+GuYZXEGe787/fZ7
-	LCFkRaw33OmJb7OcEg7UUqRWhBkgWYZ4jqTO9dZSIxdpOBeZm+4/yB9Gg4bzHrFIdThykowsZJ9
-	kdJ3t6jlO2HmmwyGoTtmjEzmF3m9bXenhcOvOCwMmJa7UHCxja/XSCZJochN1Lk6vNAAbHwvZBx
-	6IGHmQL/2JSZFJyTglwO65mamjEg2FAbKi6Opwd3i5lJupsdr5cjiE0O4XTW/GsJWIbBJ5UL+/o
-	76I0LPfAywjJO/8FMMTq1w6s0P7Bx4mJjykJwz4IgU19mluYwHminHo=
-X-Received: by 2002:a05:600c:3486:b0:49f:f099:6fb1 with SMTP id 5b1f17b1804b1-4a35ac95955mr171862835e9.15.1793112789523;
-        Tue, 27 Oct 2026 07:53:09 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a046fefsm346624495e9.5.2026.10.27.07.53.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Oct 2026 07:53:08 -0700 (PDT)
-Message-ID: <1da30fde-75bf-469f-80e1-ce90cd29c84d@gmail.com>
-Date: Tue, 27 Oct 2026 14:53:07 +0000
+        d=1e100.net; s=20260707; t=1793112898; x=1793717698;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=cLrv4YRPzOjaxI+BO5ZflJZZfK9iL8uU63W1deZ57E8=;
+        b=QHUs5tsMauYNbzG/rtGmhGJi57vSMijdQ0K44t1SlS3zyxMMYUv/KWRGOtfAnLnlea
+         Fp+I+vNzQFwtYPFLB7Eo/RE9nU9FuOnCjESFfzfaV1w2jpfbr34o/DUDz91BiNPZuBTW
+         oW9YI7KOt/TNVoVui8hBsounN+1ZRXV2w+jnTNCkpJkqz2UhbuLyXZ3/44oxkJdtgNjB
+         Khachm3U9enb3LU/lldyIYKwZiR+T7tMCR5e7vbGcyh0rQeGNFXdkfcp6Cf5P+jRZDvZ
+         BDB2oWX+5AAKZDfga1iBePUFUzyIu8rgFSeVAa1UdtFXSdoAClYXyw8B0eAEQP8FzCeP
+         8nsg==
+X-Gm-Message-State: AFq9FYKE+bPPRpr2ZcWMQ+I0B4LHVcrg+qHtbvD98HH5XZ7Ctao8b3wz
+	k+510TmlG8jUJrDN8nxCAlFGGC5huRPTowGdes4wJE1zifcygy8Z7mm6fKNMRR9lZA==
+X-Gm-Gg: AYBFou0m4LxtX7h430wNADXGThb4HPAW7w/2ULrqmOf90GyehSdq4gM2H1lDWjSxWZD
+	qkXvlI/ivst0vWjflG7BHSYLRIzj+QunNRahf9avfU9ALc/q0bA3B/B9wcHhYMrCwYOs+EgIEvO
+	qw1kQUPoUOP3KWU3Slaftu+nOTdBT1uR9PlUamrfqmUSPDZHRGL9rlj/kn5rIxKe9c6OlF/eLmZ
+	lLUP9BKk4EeDhvd+Xnm9phboToEDjzhcCHyaKM+Yss+57ZtJ3pSnrVTWwmQCuQHpLlvoxjDBrN8
+	YXguKcS66yf54fK4lRQJJBOb2mnqCbmn9UQfMWf/i6vu+/x2lyYVjPIw5bZwgMa4MUyyjmPbJm7
+	y2s9ojsyDuUzl39SeGUAI/zvJEZal+07BuKJ51wlSwV97UNPmT9cfEhZugJZcKP2ga0t2GA5Vek
+	C346PeyYI6h0OL546iXN5i1SDpnkhto9yzQjr6QKIsvtKdEqkW3jSJbibNMuxq3mgB1IrtRn6B7
+	55tDqVxA+XMkZ4A85zR/Qguaty80M5lblB7QduvxTFkfd1JXlAYuKSOMUKQhz/Q3qo4SppQpYxx
+	KFWAl1w=
+X-Received: by 2002:a05:6000:4386:b0:48d:ba3b:af36 with SMTP id ffacd0b85a97d-48e3eba7fdemr17782280f8f.37.1793112897739;
+        Tue, 27 Oct 2026 07:54:57 -0700 (PDT)
+Received: from localhost.localdomain ([129.0.101.12])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ebc39b3sm23920834f8f.10.2026.10.27.07.54.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2026 07:54:57 -0700 (PDT)
+From: Fien Dora <fiendora5@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	phillip.wood123@gmail.com,
+	gitster@pobox.com
+Subject: [Outreachy PATCH v2] t1402: test --no-allow-onelevel option precedence
+Date: Tue, 27 Oct 2026 15:54:51 +0100
+Message-ID: <20261027145451.8617-1-fiendora5@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20261026132525.45414-1-fiendora5@gmail.com>
+References: <20261026132525.45414-1-fiendora5@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,115 +98,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 8/8] t/test-lib: make feature-testbed job more accessible
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
- Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-References: <20261027-b4-pks-ci-test-vars-consolidation-v1-0-f28edf79bd6c@pks.im>
- <20261027-b4-pks-ci-test-vars-consolidation-v1-8-f28edf79bd6c@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20261027-b4-pks-ci-test-vars-consolidation-v1-8-f28edf79bd6c@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Patrick
+Unlike most Git commands that use the parse_options() API,
+check-ref-format relies on a handcrafted loop to parse command-line
+options. Although the --no- prefix is commonly used to negate options
+in Git, the precedence of --allow-onelevel and --no-allow-onelevel
+is not explicitly covered by the existing tests.
 
-On 27/10/2026 08:18, Patrick Steinhardt wrote:
-> Our "feature-testbed" job sets up a bunch of GIT_TEST environment
-> variables and then executes our tests. This is mostly intended as a
-> testbed for features that aren't default-enabled, but that may
-> eventually become so.
-> 
-> Due to the job being special it has a higher potential of failing even
-> though a local test run succeeds. But running these tests locally with
-> the same environment is somewhat painful, as the developer has to
-> manually set all of these environment variables.
-> 
-> Introduce a new "--feature-testbed" toggle for our test suite that, when
-> set, sets up exactly these environment variables. Migrate our CI to use
-> this toggle so that we have a single source of truth, only.
-> 
-> Note that we only set these GIT_TEST variables in the case where they
-> haven't already been configured. This serves two purposes:
-> 
->    - The user can continue to manually override a subset of those
->      variables, if they desire.
-> 
->    - Test scripts typically source "t/test-lib.sh" after they already
->      overrode GIT_TEST variables, and we don't want to discard that.
+Add regression tests for both orders of --allow-onelevel and
+--no-allow-onelevel to verify that the last option takes precedence.
+The tests confirm that --no-allow-onelevel overrides a preceding
+--allow-onelevel, and that --allow-onelevel similarly overrides a
+preceding --no-allow-onelevel.
 
-That all sounds sensible, the commit message could maybe flag that the 
-"feature-testbed" also sets OPENSSL_SHA1_UNSAFE which 
-"--feature-testbed" does not because it is only concerned with GIT_TEST_*.
+Git's planned work to improve argument parsing includes replacing
+suitable handcrafted parsers with existing APIs. These tests
+establish check-ref-format's current option precedence behavior
+so it can be preserved when its parsing logic is updated.
 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index de566309861..8863bcac930 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -202,6 +202,14 @@ finalize_test_case_output () { :; }
->   finalize_test_leak_output () { :; }
->   finalize_test_output () { :; }
->   
-> +set_default_env () {
-> +	if eval "test -z \"\${$1+set}\""
+Signed-off-by: Fien Dora <fiendora5@gmail.com>
+---
 
-This made me scratch my head for a couple of minutes, but I think it is 
-correct
+Changes since v1:
+- Explain why check-ref-format's handcrafted parser needs
+  explicit option-precedence tests.
+- Clarify how the tests relate to Git's planned parsing work.
+- No changes to the test code.
 
-	set_default_env ABC 1
+ t/t1402-check-ref-format.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-evaluates
-
-	test -z "${ABC+set}"
-
-to see if $ABC is unset.
-
-Thanks
-
-Phillip
-> +	then
-> +		eval "$1=\$2"
-> +	fi
-> +	export "$1"
-> +}
-> +
->   parse_option () {
->   	local opt="$1"
->   
-> @@ -212,6 +220,19 @@ parse_option () {
->   		immediate=t ;;
->   	-l|--l|--lo|--lon|--long|--long-|--long-t|--long-te|--long-tes|--long-test|--long-tests)
->   		GIT_TEST_LONG=true; export GIT_TEST_LONG ;;
-> +	--feature-testbed)
-> +		set_default_env GIT_TEST_SPLIT_INDEX yes
-> +		set_default_env GIT_TEST_FULL_IN_PACK_ARRAY true
-> +		set_default_env GIT_TEST_OE_SIZE 10
-> +		set_default_env GIT_TEST_OE_DELTA_SIZE 5
-> +		set_default_env GIT_TEST_COMMIT_GRAPH 1
-> +		set_default_env GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS 1
-> +		set_default_env GIT_TEST_MULTI_PACK_INDEX 1
-> +		set_default_env GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL 1
-> +		set_default_env GIT_TEST_NO_WRITE_REV_INDEX 1
-> +		set_default_env GIT_TEST_CHECKOUT_WORKERS 2
-> +		set_default_env GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL 1
-> +		;;
->   	-r)
->   		mark_option_requires_arg "$opt" run_list
->   		;;
-> diff --git a/t/unit-tests/unit-test.c b/t/unit-tests/unit-test.c
-> index 752fb38fb32..f4898353045 100644
-> --- a/t/unit-tests/unit-test.c
-> +++ b/t/unit-tests/unit-test.c
-> @@ -27,6 +27,7 @@ int cmd_main(int argc, const char **argv)
->   		 * options understood by integration tests.
->   		 */
->   		OPT_NOOP_NOARG('d', "debug"),
-> +		OPT_NOOP_NOARG(0, "feature-testbed"),
->   		OPT_NOOP_NOARG(0, "github-workflow-markup"),
->   		OPT_NOOP_NOARG(0, "no-bin-wrappers"),
->   		OPT_NOOP_ARG(0, "no-chain-lint"),
-> 
+diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
+index 9dd64662b2..6036df0210 100755
+--- a/t/t1402-check-ref-format.sh
++++ b/t/t1402-check-ref-format.sh
+@@ -74,6 +74,8 @@ invalid_ref 'heads/foo*/bar*' --refspec-pattern
+ ref='foo'
+ invalid_ref "$ref"
+ valid_ref "$ref" --allow-onelevel
++invalid_ref "$ref" '--allow-onelevel --no-allow-onelevel'
++valid_ref "$ref" '--no-allow-onelevel --allow-onelevel'
+ invalid_ref "$ref" --refspec-pattern
+ valid_ref "$ref" '--refspec-pattern --allow-onelevel'
+ invalid_ref "$ref" --normalize
+-- 
+2.50.1 (Apple Git-155)
 
