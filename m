@@ -1,117 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793089134;
-	b=qEcqVJBfwi4R23fwD3vthivCff2uhmx0jvAjdcJb9+CoodLJrKVTIcx7gUOkmif4Pb/I
-	 Y20K7XWKif1vQ0wrNpDWRlg4xMVI4bhN3kHTni4tAUCkG7mAoLGRk/C1PFQ6RLxgRL9eu
-	 d1DzpH3Arghnrqi7rfmmyIh68GYk/3cOF+Xp74V0B05uQ2wwMgzohG9l4yg1cMQAC4/cZ
-	 Fmbe0QYdH8wroEQbCAkYHIWtbLWh0LwA7HYoMT9H6XhNfdlluE8gX6p1wqrNEhaFKusYO
-	 uyZPA5l9jJB/Vo4sPn62c/dfDmd4RimxNOK2ic+9azIKJpSpAXFmyjoYUyyCIMzD6hA==
+	t=1793089883;
+	b=oFbPCE2f3BpgDQCrAssLDX8pif5A3fqfw4Y7AjKzW/Rh9dMUYohZ7JrCYo6S6ikGN5+E
+	 ea5ycfAp7yd/5bb7zGMXXnBCq2E2n/zWIUTTPs51dQdTJ2uliLGJM6Ueojy1IYpp7+Ya7
+	 ASRjyxZQT4QMeLKykxo/oIp+QtmmnQmN2BoD14dtHiaaFEHmKQp8b5Hyf40R2TzBtnrjG
+	 ZqZtqEYOdURsV7ven9IT0/ZgtEsP0BXXOKqzu+GWjh5byRrhz7DGkMOwRQQpFyqOs54HC
+	 NyU6QwhACtn9pCXVy5o2U977NSD43XwlMklJEz6m0vESwwiOYYqGhI/awmkyYHQviLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793089134;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
-	 X-Mailer;
-	bh=t0TxOTnNohk4hiko+/X9jvdD1s/s+HHcpJmfRN69lFQ=;
-	b=jcCCj4RG5p3OjjgutRqjNESnXKXY414hFGjZY5XuRJ1lUhmPFzkagPq6qOk2B3gei5zc
-	 fElBYEeqau5V0hpX8tTq5fRktfQ+dFQY0EWaUl1tjOde3EGA6MPr2jj8069j7025Q3olT
-	 o49w1S7gnInYuXLtgoH3YWUy6leO1zPzUp9NDIYbevvi7k3muLX2elKUvdRDjwCJ5ineU
-	 T7oemyPWlwGEdLFxFBgfXLSuc/vMwLNFiDjSWQAH1JXvOfPGX1feNKMWEC8wBFPBBXWkg
-	 snpV3BqdvjtWn256adjrvtbNA5PmzxiXJ9MilGK5zGSQ759qyncoXLcuAH/K1rn4edg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793089883;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=6i2bM5HaFXfEgiBJkebj2MDcvZVZtXSsdVM2GiaqliM=;
+	b=Arh/QSmChcByFvS0f2K5decmp2bQX/7knK1wFPUh3PFM53xopwt3kIkeEah/mUPPBF8z
+	 1px2zMg5KxZ024poNOhRqlL+swSREA7Ri2v7afVQXiCgY6ey1c09q8WE+QL1JR/I9IdyG
+	 BF1Ywg9NyCw4vQ9t0jtllrFsIohidH7LYAKY35iLtHxaz3mbPNtmgOnma2KtXjc6Xh0wY
+	 Ia7WHkChM1Ub1VFCPFkoPekZgo9imGaWz0jqN/EeaYK/PSqDSX6Rb40mzcuWQ89T8RVkr
+	 KtuRxiR8VWfL7CF98blgfYFrOuoNZ3rFhL21pEsT+IFZbCGGQfylm4vsWLn1rgtr05Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=ap2tfod2;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QyjDUIfd;
-	arc=none smtp.remote-ip=202.12.124.155
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=MOaha76M;
+	arc=none smtp.remote-ip=74.125.82.177
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D64D606A32A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 08:18:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3D64D606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB013606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 08:31:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BB013606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=ap2tfod2;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QyjDUIfd
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A44437A0101
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:18:53 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 27 Oct 2026 04:18:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793089133;
-	 x=1793175533; bh=t0TxOTnNohk4hiko+/X9jvdD1s/s+HHcpJmfRN69lFQ=; b=
-	ap2tfod2IPOj5DbRhXlBZtUw0KQR6aiYjPSOC6N25IqRhZDYlo+vKuOJgc25gdfY
-	8fJw1/LYsyPJoQYba+ceEQk8Up4egZb1TWlPVpC1D+CS6N2Q1gsut7ayNXOmccJU
-	k9PBAWatfL/m127JTYAx7Fm4ZE5QbiJjd1txP37yw6edjnHGPDpNU95V+KNAM2B6
-	j3PEdVadSebqXhfAooR83e/WYLsjybf4Hcu9zyFoN1eJy4IS0rnT5RGRGfwSj4cH
-	hcviU5qcogTyMiTRJ9PmIfKHvB6W4LrH2FZMzCwiu/SV6jkY4w/IsA6DpnGm+1xr
-	Az56Dvri0+//hUhpoZke1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793089133; x=
-	1793175533; bh=t0TxOTnNohk4hiko+/X9jvdD1s/s+HHcpJmfRN69lFQ=; b=Q
-	yjDUIfd6xzsGepViwW83sKJC3ElRJcXgh38ZcRzEOdUQhwLa5mfn7gj7PazGKo9X
-	4ppVNtqOsZav3dj25PummG/1uWxMmVFYc1sAnkKDKBfGHOcdNxmts47GmZ4Kcs9o
-	WKnM9Wgf6fkmX1XI9bn03rlSeTQhzCzU9qXvXZ7fw88OtG3bc+HShi3Z+L1783kp
-	boFbUGccvQQ4mgh4mKEf4IYX5YNVz9W2Z/DYTC604+ow9XxaHJeA/sUudG7EKE9o
-	bx0vnvKqeIqlf/O2g/Yd4gSikGqKw1bkIZRgFoSqpCqOvaDrwg4MUQiZT0rkXpBE
-	HDaGSxsusrZfSrny2efuw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793089133; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:AZ+IGpTnjuWXVuZkA9gbB3/xLQ6tF+M/w0GkqeXH9s40Wo7
-	rjuVFPhD799TrVUvpJO8DspkHbR8ZQGtX/j/wqEsPZKv8MXKfwndvHDaKdj4ngBH
-	2DhebU02TR/i/hpwdU+N1rQrG4/Z20eZ6oo/OP4+eUlwgeC0zLPkE89JtWwumuOv
-	uiqwfIUwRwMi1QtZjPEcW7XsKtAmFbN2tnvYcLzgnSUdvtlRw49zZZv9K4Hq7Dwl
-	7Rf1kDpS+X5uQQIbiWxVQvZJuITi0bsumsax+3BjkiXgqbBbcOjBDtqYs2l6X14y
-	FenMDoa/RcjPErXfUvmoALc8UaJ9fm1pPZBSGJg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:IWHJmCvu/labgyqsezhAyPGWFyTQZtZj4DVojok1rcE=:ZuMtmNZB9AxVEu0iyo28+fTCU+hADcgZ5iK4qAz7a88=;
-X-ME-Sender: <xms:bV7gahI1t6tKQWa8Xa775HAj3PXTcf_gcX_jl66JZ3kYmEPMj-7nuA>
-    <xme:bV7ganvSMa2Bm0mHdP02uz9p3ntQ1HVyiJlX8Vm8oJybgk3KBAb_6S7V2nlEC5kyE
-    K-6U2TenNqpijHlcT4w_4aqpw4-bRGPYZDSgyj4q-Rvn6ky0RMofv8>
-X-ME-Received: <xmr:bV7gamQu1Q1dX_vick8Kr9AE1D5AGk5_XVwq0lM8KzWS6G31mht--Q>
-X-ME-Proxy-Cause: dmFkZTGW4gIF+OOltoMUDFuDCLa8JR/1Zq92OR6twLpCr7FBh1VqjIbmn1u+7QM0VHFtEE
-    28zuboRD3XJUQTa1w/qEydFSUd7bjdniYE6Flw1rCS0lGrlAxGs48mDuM+nP4jrMGgZuQW
-    r0bzEzHV5KYokltYYeW/GyP40XNXKJDVfns/KOCTPKKLiaiWS4fZeiwhOvKD70d+2O+x3x
-    8y7g8zimAsnlYuGuNAAIJQPMGVIdeKH8YAnzgdfTX1GW9jzVauJvSv0OBSUZTuW8LxQD6n
-    SneCzaXOtGPo3bbI+fN7fYXTS0d+FAr2f42fua1fOrO+vdbawppR4ejEtf+3v2381tRkaY
-    tSobcIC773k1h+ZEVAJEwEBcIVggPzlkEVJ7AkDruduwKlcoKxh/5wOZnkTb2ivxe2gtL1
-    VmpVBoNuiClHT9s4R1UCpGJnpn/YdDc1ETiP5nIbD+oh8wJz4Dao/bS9VPdMeDUxxOrcmf
-    cpKgpfyi56xJxviMghBUNhwVFaYF8t42/ULt1o21sIaZvI20YxbBi6pM/9dZNkp57NThE+
-    PnnnptisQ/rWlZJD6qUzHfMRUQ5zoJpCyq0WQvLXAxjsd4DVKhpiibLjI2fdYpeS2SLhyH
-    RgutqMa5ALMDytX7oQNWxLe31uY6Dc3EdM+LOQAGuHKS2JeIC4vH9eNG0waw
-X-ME-Proxy: <xmx:bV7galPO45TQDozqo0q3XohzJtbgzGhVEH0JZFa-Sx2XVjI1DkcDeg>
-    <xmx:bV7gaja5d40NpW3Ts8dUmpEZFHIBW7i3EkXkQlxuqtBdVESVb2rYnA>
-    <xmx:bV7ganxzE-aiL6IIcfgKim6rsDxQjyrIu0uFid4CAY3r0tKHaO_Vaw>
-    <xmx:bV7gamJ6hokrZLi7OReWeKxezxuj32g5AAgqI97-bQLx733d7tybhw>
-    <xmx:bV7gaoZ9BH93lHwwfCusJ4aFvNxc-d4vJ4BoTkS_3eFTiNNciXh4SyCN>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 04:18:52 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dfa50e89 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 27 Oct 2026 08:18:51 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 27 Oct 2026 09:18:28 +0100
-Subject: [PATCH 8/8] t/test-lib: make feature-testbed job more accessible
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=MOaha76M
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-33fb4680717so7166183eec.1
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 01:31:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793089882; x=1793694682; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=6i2bM5HaFXfEgiBJkebj2MDcvZVZtXSsdVM2GiaqliM=;
+        b=MOaha76ML7HNCWuEKub+9sHOsoQGMj9AEx1kmQAfrXUaV2J+kKuW9++EOehx/XwzpD
+         xvS0dt4DeYj9bbGJ4k5ksAkbnJ/uRa2DOREHmh/vqCgJC5JAzdiIBKTZG7zlvq4YQ0yK
+         OuXf0UUTvdMQD9NGSHlRK16GOCAJIUb0rrfPXn11yeoxspHo6Odjr96CJ3osBnjPRf2h
+         SFBpn+n5LgFkGquIba/Rc1/yT+aJeS0RNvMg1Sg0qTicWOZH8+YcHJKe/s+isv9FEawW
+         AefaPxjM2WCOO6zczN4AF1PSswFXCVpXJmOZJYrOfIR7mkp3YAzQ2qJ3lx9cgy3Cd3o6
+         3Olw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793089882; x=1793694682;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6i2bM5HaFXfEgiBJkebj2MDcvZVZtXSsdVM2GiaqliM=;
+        b=WlwlMagVmLNOKdRZ+R0hryW59dG1H8nJq8DKs+ikur6XxRIEoyUKvB6Lm88o1U/wd3
+         dyZnMNdCG+kM/voikGj8/5jQUcNmhMq5w+BWWKwvyNY5aDGG1XXfsPZwl/gkUUWefNCY
+         6KBURe871m5CdoRW9X2Ysz0RJeJ9O4lwTj6tnm9OYgzZNRmLtOzvK5lEqptpU5npiBLE
+         5iFJ07EYYjhe2nd3A6yH9bhJ2pQepVklRufP56w7C5v+AmxS91L6zZeEtfgpdCaWWPaV
+         24iKNMS+fH3brhiOzPEaLHy/LsM6cnVoxklGiZeaKLzfuHPYw25x03qZHUEdkdRn1XrZ
+         hqtA==
+X-Gm-Message-State: AFq9FYLZfihVxv4S0fskRMYO0co19Rm9XGY+2Wglqa4qq9rnjoSqc1L1
+	lMuFT5sfeNMQKiSIEwzvInczJXmaARVSwaBTvrB1CL1zoV4dTItZOuGZwbMC95Ep
+X-Gm-Gg: AYBFou1VTBfdM+EqQIP84RdFaf/qwk4bvEExhkGDl2gBtT2ggV/3WlvPhmRdMIXZpAC
+	BDAwSsOEMn65arjycuRo6zgpSMvdsVKTLyoi6/LdFgcVeZ3nnsI+LlRUC3QI5n+bH8d7+touOyY
+	Z5e1XhKytD7pZcOzCKEGTaPTtJfm/JVKNdsKjE0crKu+BrQysoneL33CAvjoXth7upTHyZv23bk
+	+BAzz3Ex8eaffyMwPLGmLUNF7kEjFWGCHMSUckuiUv4D1R+KuH4VdQoMiu0TLOL+apkbGGIwOaG
+	dfQP38AOQEnKXxKDZ0G18lsA3K/QUA4Rb8vj3/0KCZojgb0L0q0Xp7+UkvMOHNGzZT7licFFnOU
+	AuLGSu3RBEalwi3BN7BWoO6kS6qMrtORtlJmnS3sbX24e1HhUPjsw+5TMx4tGg8oK2+tStcfPhf
+	MaL3ifHcf1dc7Wq1BPhj1IU6pYmTgmBGY7hqdzbi6NBjnrs3TuWdT01f+PE7vzSHf5WJZokYFHm
+	VMh890OQTYTdry7xGUFJfCI1FNavrsuasEm6rgSRw9OslWAve8Giv+XXd0=
+X-Received: by 2002:a05:693c:4009:b0:36a:1819:4d0c with SMTP id 5a478bee46e88-36a181952aamr927735eec.41.1793089881310;
+        Tue, 27 Oct 2026 01:31:21 -0700 (PDT)
+Received: from [127.0.0.1] ([20.169.77.163])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-369ef6a71a4sm31803009eec.8.2026.10.27.01.31.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2026 01:31:20 -0700 (PDT)
+Message-Id: <pull.2456.v4.git.git.1793089879.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
+References: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 27 Oct 2026 08:31:15 +0000
+Subject: [PATCH v4 0/4] Fix imap-send with reordered message headers
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -121,138 +95,154 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261027-b4-pks-ci-test-vars-consolidation-v1-8-f28edf79bd6c@pks.im>
-References: <20261027-b4-pks-ci-test-vars-consolidation-v1-0-f28edf79bd6c@pks.im>
-In-Reply-To: <20261027-b4-pks-ci-test-vars-consolidation-v1-0-f28edf79bd6c@pks.im>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
- Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-X-Mailer: b4 0.15.2
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Our "feature-testbed" job sets up a bunch of GIT_TEST environment
-variables and then executes our tests. This is mostly intended as a
-testbed for features that aren't default-enabled, but that may
-eventually become so.
+git imap-send rejected patches sent with git send-email, such as ones
+fetched from lore with b4, because it expected Date before Subject.
 
-Due to the job being special it has a higher potential of failing even
-though a local test run succeeds. But running these tests locally with
-the same environment is somewhat painful, as the developer has to
-manually set all of these environment variables.
+Changes in v4:
 
-Introduce a new "--feature-testbed" toggle for our test suite that, when
-set, sets up exactly these environment variables. Migrate our CI to use
-this toggle so that we have a single source of truth, only.
+ * Store the tunnel as an allocated pointer, so it is only finished when it
+   was started, and drop the local tunnel variable
+ * Add a test for lowercase from:, date: and subject: headers
+ * Explain in the commit message why dropping the From git-send-email
+   special case is fine for mboxes written by other scripts
 
-Note that we only set these GIT_TEST variables in the case where they
-haven't already been configured. This serves two purposes:
+Changes in v3:
 
-  - The user can continue to manually override a subset of those
-    variables, if they desire.
+ * Split concerns into different commits, commit message explains what they
+   do.
+ * Handle tunnel leak in the proper place.
 
-  - Test scripts typically source "t/test-lib.sh" after they already
-    overrode GIT_TEST variables, and we don't want to discard that.
+Changes in v2:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- ci/lib.sh                | 12 +-----------
- t/README                 |  5 +++++
- t/test-lib.sh            | 21 +++++++++++++++++++++
- t/unit-tests/unit-test.c |  1 +
- 4 files changed, 28 insertions(+), 11 deletions(-)
+ * Case insensitive header match according to RFC 822/2822/5322.
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index fbb13ca6c6a..c3a5ec48f22 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -398,17 +398,7 @@ linux32)
- 	;;
- linux-feature-testbed)
- 	export OPENSSL_SHA1_UNSAFE=YesPlease
--	export GIT_TEST_SPLIT_INDEX=yes
--	export GIT_TEST_FULL_IN_PACK_ARRAY=true
--	export GIT_TEST_OE_SIZE=10
--	export GIT_TEST_OE_DELTA_SIZE=5
--	export GIT_TEST_COMMIT_GRAPH=1
--	export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
--	export GIT_TEST_MULTI_PACK_INDEX=1
--	export GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=1
--	export GIT_TEST_NO_WRITE_REV_INDEX=1
--	export GIT_TEST_CHECKOUT_WORKERS=2
--	export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
-+	GIT_TEST_OPTS="$GIT_TEST_OPTS --feature-testbed"
- 	;;
- linux-meson)
- 	MESONFLAGS="$MESONFLAGS -Dcredential_helpers=libsecret,netrc"
-diff --git a/t/README b/t/README
-index fd7e8504b51..211bf78aed9 100644
---- a/t/README
-+++ b/t/README
-@@ -119,6 +119,11 @@ appropriately before running "make". Short options can be bundled, i.e.
- 	This causes additional long-running tests to be run (where
- 	available), for more exhaustive testing.
- 
-+--feature-testbed::
-+	This causes tests to run with several `GIT_TEST` environment
-+	variables set. The intent is to test Git with optional features
-+	and non-default configuration.
-+
- -r::
- --run=<test-selector>::
- 	Run only the subset of tests indicated by
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index de566309861..8863bcac930 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -202,6 +202,14 @@ finalize_test_case_output () { :; }
- finalize_test_leak_output () { :; }
- finalize_test_output () { :; }
- 
-+set_default_env () {
-+	if eval "test -z \"\${$1+set}\""
-+	then
-+		eval "$1=\$2"
-+	fi
-+	export "$1"
-+}
-+
- parse_option () {
- 	local opt="$1"
- 
-@@ -212,6 +220,19 @@ parse_option () {
- 		immediate=t ;;
- 	-l|--l|--lo|--lon|--long|--long-|--long-t|--long-te|--long-tes|--long-test|--long-tests)
- 		GIT_TEST_LONG=true; export GIT_TEST_LONG ;;
-+	--feature-testbed)
-+		set_default_env GIT_TEST_SPLIT_INDEX yes
-+		set_default_env GIT_TEST_FULL_IN_PACK_ARRAY true
-+		set_default_env GIT_TEST_OE_SIZE 10
-+		set_default_env GIT_TEST_OE_DELTA_SIZE 5
-+		set_default_env GIT_TEST_COMMIT_GRAPH 1
-+		set_default_env GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS 1
-+		set_default_env GIT_TEST_MULTI_PACK_INDEX 1
-+		set_default_env GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL 1
-+		set_default_env GIT_TEST_NO_WRITE_REV_INDEX 1
-+		set_default_env GIT_TEST_CHECKOUT_WORKERS 2
-+		set_default_env GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL 1
-+		;;
- 	-r)
- 		mark_option_requires_arg "$opt" run_list
- 		;;
-diff --git a/t/unit-tests/unit-test.c b/t/unit-tests/unit-test.c
-index 752fb38fb32..f4898353045 100644
---- a/t/unit-tests/unit-test.c
-+++ b/t/unit-tests/unit-test.c
-@@ -27,6 +27,7 @@ int cmd_main(int argc, const char **argv)
- 		 * options understood by integration tests.
- 		 */
- 		OPT_NOOP_NOARG('d', "debug"),
-+		OPT_NOOP_NOARG(0, "feature-testbed"),
- 		OPT_NOOP_NOARG(0, "github-workflow-markup"),
- 		OPT_NOOP_NOARG(0, "no-bin-wrappers"),
- 		OPT_NOOP_ARG(0, "no-chain-lint"),
+Harald Nordgren (4):
+  imap-send: wait for the tunnel command to finish
+  imap-send: accept messages with Subject before Date
+  imap-send: check git send-email copies like other messages
+  imap-send: match header names case insensitively
+
+ imap-send.c           | 60 ++++++++++++++++++++++---------------------
+ t/t9001-send-email.sh | 50 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 81 insertions(+), 29 deletions(-)
+
+
+base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2456%2FHaraldNordgren%2Ffix%2Fimap-send-header-order-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2456/HaraldNordgren/fix/imap-send-header-order-v4
+Pull-Request: https://github.com/git/git/pull/2456
+
+Range-diff vs v3:
+
+ 1:  0f446c3c12 ! 1:  8941ae12bb imap-send: wait for the tunnel command to finish
+     @@ imap-send.c: struct imap {
+       	/* command queue */
+       	int nexttag, num_in_progress, literal_pending;
+       	struct imap_cmd *in_progress, **in_progress_append;
+     -+	struct child_process tunnel;
+     ++	struct child_process *tunnel;
+       	struct imap_buffer buf; /* this is BIG, so put it last */
+       };
+       
+     @@ imap-send.c: static void imap_close_server(struct imap_store *ictx)
+       		imap_exec(ictx, NULL, "LOGOUT");
+       		socket_shutdown(&imap->buf.sock);
+       	}
+     -+	if (ictx->cfg->tunnel)
+     -+		finish_command(&imap->tunnel);
+     ++	if (imap->tunnel) {
+     ++		finish_command(imap->tunnel);
+     ++		free(imap->tunnel);
+     ++	}
+       	free(imap);
+       }
+       
+     @@ imap-send.c: static struct imap_store *imap_open_store(struct imap_server_conf *
+       
+       	if (srvc->tunnel) {
+      -		struct child_process tunnel = CHILD_PROCESS_INIT;
+     -+		struct child_process *tunnel = &imap->tunnel;
+     - 
+     +-
+       		imap_info("Starting tunnel '%s'... ", srvc->tunnel);
+       
+      -		strvec_push(&tunnel.args, srvc->tunnel);
+     @@ imap-send.c: static struct imap_store *imap_open_store(struct imap_server_conf *
+      -		tunnel.in = -1;
+      -		tunnel.out = -1;
+      -		if (start_command(&tunnel))
+     -+		child_process_init(tunnel);
+     -+		strvec_push(&tunnel->args, srvc->tunnel);
+     -+		tunnel->use_shell = 1;
+     -+		tunnel->in = -1;
+     -+		tunnel->out = -1;
+     -+		if (start_command(tunnel))
+     ++		imap->tunnel = xmalloc(sizeof(*imap->tunnel));
+     ++		child_process_init(imap->tunnel);
+     ++		strvec_push(&imap->tunnel->args, srvc->tunnel);
+     ++		imap->tunnel->use_shell = 1;
+     ++		imap->tunnel->in = -1;
+     ++		imap->tunnel->out = -1;
+     ++		if (start_command(imap->tunnel))
+       			die("cannot start proxy %s", srvc->tunnel);
+       
+      -		imap->buf.sock.fd[0] = tunnel.out;
+      -		imap->buf.sock.fd[1] = tunnel.in;
+     -+		imap->buf.sock.fd[0] = tunnel->out;
+     -+		imap->buf.sock.fd[1] = tunnel->in;
+     ++		imap->buf.sock.fd[0] = imap->tunnel->out;
+     ++		imap->buf.sock.fd[1] = imap->tunnel->in;
+       
+       		imap_info("OK\n");
+       	} else {
+ 2:  38214d9abf = 2:  ad3158b336 imap-send: accept messages with Subject before Date
+ 3:  213c4950e0 ! 3:  919e38c31d imap-send: check git send-email copies like other messages
+     @@ Commit message
+          the check for other messages. A To header is no longer required, the
+          same as for any other message.
+      
+     +    This makes the check stricter when some other script writes an mbox
+     +    with a "From git-send-email" line. RFC 5322 requires a Date header but
+     +    only recommends Subject, so a valid message from such a script may
+     +    lack a Subject and would no longer be counted. imap-send has always
+     +    required a Subject under any other "From " line, though, and only
+     +    refuses an mbox when none of its messages are counted, so treating
+     +    these copies like the rest should not affect anyone in practice.
+     +
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+       ## imap-send.c ##
+ 4:  01add80af2 ! 4:  5b4a08bbda imap-send: match header names case insensitively
+     @@ imap-send.c: static bool has_required_headers(const char *line)
+       			subject = true;
+       	}
+       	return from && date && subject;
+     +
+     + ## t/t9001-send-email.sh ##
+     +@@ t/t9001-send-email.sh: test_expect_success $PREREQ '--imap-sent-folder stores a copy of the sent patch'
+     + 	test_grep "(1/1) done" err
+     + '
+     + 
+     ++test_expect_success $PREREQ 'imap-send matches header names in any case' '
+     ++	test_config imap.tunnel ./fake-imap-server &&
+     ++	cat >lowercase.mbox <<-\EOF &&
+     ++	From mboxrd@z Thu Jan  1 00:00:00 1970
+     ++	from: Example <from@example.com>
+     ++	date: Thu, 1 Jan 1970 00:00:00 +0000
+     ++	subject: [PATCH] lowercase headers
+     ++
+     ++	body
+     ++	EOF
+     ++	git imap-send --folder=INBOX <lowercase.mbox 2>err &&
+     ++	test_grep "^Sending 1 message to INBOX folder" err &&
+     ++	test_grep "(1/1) done" err
+     ++'
+     ++
+     + test_done
 
 -- 
-2.56.0.341.g393f52fd96.dirty
-
+gitgitgadget
