@@ -1,119 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793098798;
-	b=hL8SF60KjF3lBYT+rDHUVrm9kEjEKOaM+0roWXc9uVBH/es+8QeF14xA94bgcsxBkg1+
-	 NyNvgxS+/JOXFZOrtMBp1CO3TCcozpSlbipWUxI5dakvehTq4n1J2Onnx3saf3JRjrTvg
-	 t/O1Y9W1M+Z9N63YOpcz0sD1GXW//ixM7KqoPy4epHfoowJ8KZ4k5yOln5tp/05JwnW+2
-	 USw2kGG1hvihMnUxdv5t7wmCaI+TT4rlm2Xck+uwzWQ25IqR/7PvU3a6EugA4zsmQBzYr
-	 tMOEbW5ORWRB+LQIcEtALdEU5MFCEZoWUGBH3xFNdKFp/NjKQAuKwswyXCsdplC9pBQ==
+	t=1793098858;
+	b=5ANaXMk4LMuYkb5iZm+kOwKOZfRaRKhcD/I957qrswA4QCN0/0bfCJYwNFRiwYQivHeh
+	 M1qeZ0Ga2oh6rfM5irtEiVnVhO3DzagJ9/abTFXZduiMTU29YsJeFgCClrARPopNuO8+f
+	 jfqtCAMsJAxFRMq6F39gup9j6WsQ4mii9u2i7vQEDIhsosc56jdwiP4RFeYaXDx36+Nf6
+	 j44KIAGqyH3ikQNFVIyyjUaBjM7kl10M7ekj050nooQIeAxctAOkgclicWFaERjWTDYFl
+	 Vh1QtepYLBsDGJ6eul2/otgZKcNOLaFzLXTeEo0zUhFTzMVmFhlMIXDUM1DbMiiPONA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793098798;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=KMBWhI69Smgmd9XieB7Oi0S5mjKtc7T23ud2kKNMd64=;
-	b=uufP8EXq2qSarSd07sjiTmDNcZi8GmKBB4KFhD/eOo6ezcNi+rs7dwiWnflZ7UNf59oI
-	 qi2I04nFFan5fpzYLWBsbrdTfyXw3gCb9r7tse0u2JRzOQpujsOgenm2g/hjt+VSHVuCX
-	 WUaOwhV0BaDcHbDrzjv9zke7KeeHvDNrBqDm9ia2/jF6NZb3fyW24S7b0VyFkKbA/6RHO
-	 ZfnAVBXNz3cF/JQ2FyZDcatJoZIGVjm7MN0ePWx6fRWRZqxDJzCPZm2Zx8+KnaMLU2mW9
-	 ZbqoHf5lwbGGpG75/MhLVzJf7kcXOvt2O/Q4pSY8OYU69sc5dtjpAu+/Fr8dJ10iU7Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793098858;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=T8Tq0MqJQBdVzBggqHI2Xk2juCZlYfAyrhyxyN4xwY0=;
+	b=n6vW46TjklC/kYzq1gUJup88Qm8dLIO5ZWJIWgcIdY/dKgnb+sUP/e2YYRyxBEJ+Zgrz
+	 v/wX/GL96DvIWICrNXlFgMe8lfdvOJeNIw2+FWzIQmpnMj/GbOe5fToXz/m4cdPfHJ58n
+	 HHkVjk4VB9lO2n6dHuYe4dW+EW6vzRK0OIe2SbkjAWTyyo19B8NMU72Bpf+wmtkbg2TKe
+	 AgypfVhg5Fwk50i2TZOXAl+eKnnXLbwZ+wqbvQdeU10Sc+H8HCoD6rMu7fRH+fwV+JSnL
+	 AWNsGKC0FCn9elFmWKL7/1NajE7N3JFhujNPQd41685hfSLqbmq18zmj5+Z6LtUye9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=pjHdOgTg;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jAQatSWT;
-	arc=none smtp.remote-ip=202.12.124.157
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=tBMo4Fd1;
+	arc=none smtp.remote-ip=209.85.210.43
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A52606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:59:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 36A52606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C07760A2602
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 11:00:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C07760A2602
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=pjHdOgTg;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jAQatSWT
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 73E417A00DE
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 06:59:57 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Tue, 27 Oct 2026 06:59:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793098797; x=1793185197; bh=KMBWhI69Sm
-	gmd9XieB7Oi0S5mjKtc7T23ud2kKNMd64=; b=pjHdOgTgOyt18DZ5WqOg61aLN5
-	cb7KH9+7F0oS9E6gV5vBspGHsfJjfy3IqbHLiKbc18dT2fNvBQre81xZa6dpIAc5
-	07lnggDfDh+6XWUoYR4T/EO+i/CzEW4c7SxHcJT5lWtQli3avtDC8X36bthXhDkc
-	cD9bzSMgU7RSvLKeyZmQ8Q+gq8K8dEKc0wylpR46GFXK2rMCXRLI+tRZQoo5K/EI
-	HmlfiEOozGvMkAmAK06tGN5TyWgcZ1KK3IiVNd4FoJRqdU4xaHyvrYu98F4aCeYb
-	3+WszrdfHgD2XfXpzhq2DAsZDmV5YPb9jUZqVTwNh0SF1LqyxSsoCiplnLGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793098797; x=1793185197; bh=KMBWhI69Smgmd9XieB7Oi0S5mjKtc7T23ud
-	2kKNMd64=; b=jAQatSWT8nCDXbzN/NaJciRCdHHrOk7OiU1iPxUaq/c+TsuZmfI
-	Lk3TUaZOK/4h6t0oX9oFhl7NThLp9P8f5lHjQZLM3G1QoOVukjl7AIsZrZX4JLJ4
-	UA3Dq373wuuWj2hFXNk0B4M+on8sCL79goSmvMuCK+6HIoyqyT8vzlYgSYmPQVUC
-	UDwDBgY37fbtoKEwpE7d3NUAQSEg42spawWflknSB8VdhdYf23R36kEcpKLu2zOp
-	CfWNtrV07/4Kbz413zVuvF7sj2Wz5zhv8DfwcjbrbZeXlw5uu7CmABxdHY79LmsF
-	57Jf47XE81C1XlMl1KDljiQligZ0CJZJnRw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793098797; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:sxW42FQx3rrxWqnCEpFZAvzDwyHFbxSHjtYTcC8Yg3oj0BS
-	emKlGvzS1k5o05vS9GSqjkv/GEY7IQRtkbdMwICcm7Q4CDP8hSbCwQijYhU4pJ/z
-	bcpsuBxI6FhVLNxlRl09nIxtGGfjZ15Ph47Ca73OoT0P39i3vo7HxKqtdk3jORCf
-	k0ACTAv+uTDznUDvkZCw47X+jbdU+sMFYil7XznDO6aYS9a9FtDSpiI31IZtVveO
-	QHidYDfupR4Eo6DGFcmemWzsydfFMLL2EwxBVuXX3trv4Uds/ZOOS2BfUoqFQjpt
-	UO6u51oBFM4zBbmIQdM25GX+uenIfjbrJcB1bTg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:ORCdOruDJgbM+rVltAQc2Q57/TJ26yVkLNeEz+P7VcE=:pkGQYr/TejP40rkewycEDbhTkTrwN8Sha/hP/7o+F0s=;
-X-ME-Sender: <xms:LYTgat1Gvx660ukl70SJlbThdj4UD_T5ei-KrLKWK8cYCMLdRg9xoQ>
-    <xme:LYTganXCVR8AJBTRv_U8gjUC8Bs1fn-h0LEQY_ECMNuEL3crMYZypTw2nsdZhMGM0
-    NkKhyLs6LBm5mOtTCvYJa19CYYDlVLfCLMrnjpiCMorfOyKEFqv3ec>
-X-ME-Received: <xmr:LYTganVt3wYLaUS99qYR5Snz_hUOB2oNx5H6oF2DEgZiOa1qkbUd1A>
-X-ME-Proxy-Cause: dmFkZTGe17Dia8vVvC+37aF1UymR8pxoB1RiP3jWNCgebjy+qpOmTVe7skoWdGsl0A6Ghs
-    00eIJua3/MlBUXcSVn+/UArtXIowwOgoCDics4Cuoc/+kUScoEEJSzdCMnhTq94h3dwxbt
-    umd0Ob8jj6n8SE18I6bgr+SLodqCoU3rLzK4qSW/17XdRl5ciKVdk6P50XEcX28GD088qp
-    hUSSFm2BRlMQusT9qWnNnaHDWkF2dHr/U7Im4/jM1Ua22//H6OX0p7TvzXaHpvt6ZuTdFW
-    OTL/sJ+kGQ+1VWLM8BjZPTE5XPIemMjItXdUzThBu87HlkSqlu6xVZ2I7Z/nPZT7udxHXj
-    AKG6Cpgii5wjmlGAAYHDGW70E2/XVPZitCcC59vxyIUrskr17olHHJ8JplyAEAvb7bo4S3
-    /s4A205SHgy0DZ1SaQ0LPnCdJAw12SiETuxlcdgTbCu8ji/1T0n5HDBNtRO/eB43eSsAUD
-    BE9fuvaOQcNXfBdmUD8rC2/gZFwwNF8CuqaZpqvPlItECpr+nkmqfmhd5fiHgu+iFrBNm1
-    LPsm421tY+UmV4+yvTaqMipKvp7+b1AsaNc0uxx9i6GEXRNbIdNsF2JwdX/zph1srhiRQT
-    Pi6QX1hkbSJMymTFqYdDzgBvYCamNF0vY+HSdAxCMmCXd+HXEu2Ery3X+gkw
-X-ME-Proxy: <xmx:LYTgamc0tnEDWrki5Dn2QFX3FxlHhTFvalZZaRh3UlM5lOctLdpqEg>
-    <xmx:LYTgagVbLsnfYDicz-W8EbW0fkl3mGyGt5g_5cygKzFIdZKS-SjYDg>
-    <xmx:LYTgavdI8vpbMR8VDTPxtQNQfDT4sP-G0Fdqs2gfq0QDZUdeuKmkGA>
-    <xmx:LYTgasO7mV9A46YP4-iAo4vawKDPVzRobW_POci4f2ia1OviDTH2Fg>
-    <xmx:LYTgavRbgY6L43PdMZDq4KuxnKy-qCdjAUuaKipDBBLUPD4TPJChLa8z>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 06:59:56 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 730887d2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 27 Oct 2026 10:59:56 +0000 (UTC)
-Date: Tue, 27 Oct 2026 11:59:53 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v4 0/4] Fix imap-send with reordered message headers
-Message-ID: <auCEKSc60ZnLKjBE@pks.im>
-References: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
- <pull.2456.v4.git.git.1793089879.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=tBMo4Fd1
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-846566246e8so747752a34.1
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:00:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793098856; x=1793703656; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=T8Tq0MqJQBdVzBggqHI2Xk2juCZlYfAyrhyxyN4xwY0=;
+        b=tBMo4Fd1kxbofIPhY8lEcvEoPzzkRaWWOVC+b9AP0SdIHlZJfKqT0V/F6hpaaKydZS
+         ytpoDKlBnzA5WE2EJ3IjNhgRZMZyZ3KxSlHZ276KXnh+THaf98KeRYrZT+rwZ7TZGLfH
+         ajfYwk8dnzJZdRqpxP/xPykLu4MHNidSX8vI5IgRQM+2+aIge0to1GQrpYsrQL0hUnV2
+         VekOvciViC/uLVbHbzMgobCSh5DdCVDN3TDfduW+MGyqCedfuTa1cmBf7laI9S4Ai56C
+         6fzNOXiU99p37ruOwEM+CGmJ6OUNsi51cTi1wAGdWhzgSXwUllZx62zS+YWTU83P8b0l
+         aUAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793098856; x=1793703656;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=T8Tq0MqJQBdVzBggqHI2Xk2juCZlYfAyrhyxyN4xwY0=;
+        b=UruDpNrPRW4znXKRTSi71Mwq9XgTyqndGGxLIyTPSCRXX/yXVwisIURMOtYPrd14RP
+         SnCcrecFWiYnglJ2dVykgJvZROOLaE+YFALuY/gMFLYuKmpmp41uvZf/opihsodMI74o
+         zOum3HA5X3xCLJgOGGFlhxL4pMlY44/3r8oB0b2bNFrpmUuBYn/rnEkx6qiWaqTsp8RR
+         EO4s6wDCwumTISP78wbqUc9M3P4yht8xHZ5N+K7C0+eIHDfsFEc1dWBwR35b70u+bdK9
+         nUJV/7gFPMifkIC1ftafe3wuzQ3VRZs0WZqKWS/6gJhmu39I8CcuGnE7JFqtII6yratA
+         ITjg==
+X-Gm-Message-State: AFq9FYLjjePlYcge2rYyXk3VxZvpcK/Mi9kEvqKjuBlQ8OnkDUBibhBx
+	opBUxdAPPsafLtfX+Aty7gBRC8OUrjDx16LFV+kj3wz2L1uGpLeFe5r5gBaw2V8cyAw=
+X-Gm-Gg: AYBFou2q9EimTfI7VH6ttfEQ674qKoiVkIu6F7yqy1iNzEXPNHEyAEePpEm+8N592tt
+	5Gnw3bw41WRLNDuaRiFbfAX7Ego7IrphYL+QAxluRdOox9bieMmvN5WzeNcR+X7S6cSXPTLv/gO
+	5bXIZMZSSdEfsuk+C2S/5ARSetlUXD0vch4u+aqVaGlTFFoKTkQvtafLgC9uLM8ji+J0+0cFCru
+	SfKrd6NZTCZxcqBnvtSh27dSBlB73sS+tWboNPxPeYkRryTSa4XPRxCkDgUrVy2Zb163XLSIN1h
+	E9nXrhUxiK6IT4W1I/MuPV84wu+YrQxJ7WK0zxJSRFNk1tNxZbmcfD9l7+4d6sxLAehmtBFlVDQ
+	r4CGsEHjQ+1OPGiBfywKy9si4MySSzTjulBOtqxuaxzWxU+CoVzCYJ/crPEuKPB39Ql6uhVz8RL
+	DA7Ajc+U6ieda4Q5ttnQ+ItDdZFEqW7BCnpAPCTT9PWFf/x1Km4JbHWmucsKKxOtklkegOKI2RI
+	wBjFDKgrPernpJTL+JLFgp8YnNzOZvRsQMdZrf4ynI5rtoj+GdezcHRwL4=
+X-Received: by 2002:a05:6830:4486:b0:817:d181:50ad with SMTP id 46e09a7af769-8593fc72f8fmr1331498a34.2.1793098856309;
+        Tue, 27 Oct 2026 04:00:56 -0700 (PDT)
+Received: from [127.0.0.1] ([20.84.150.193])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-850f8458d7fsm10187873a34.2.2026.10.27.04.00.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2026 04:00:54 -0700 (PDT)
+Message-Id: <pull.2276.v7.git.1793098852493.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
+References: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
+From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 27 Oct 2026 11:00:52 +0000
+Subject: [PATCH v7] diff-delta: use safe integer arithmetic
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,22 +95,117 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2456.v4.git.git.1793089879.gitgitgadget@gmail.com>
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    Pablo Sabater <pabloosabaterr@gmail.com>,
+    Srujith A Poojary <poojarysrujith@gmail.com>,
+    Srujith A Poojary <poojarysrujith@gmail.com>
 
-On Tue, Oct 27, 2026 at 08:31:15AM +0000, Harald Nordgren via GitGitGadget wrote:
-> git imap-send rejected patches sent with git send-email, such as ones
-> fetched from lore with b4, because it expected Date before Subject.
-> 
-> Changes in v4:
-> 
->  * Store the tunnel as an allocated pointer, so it is only finished when it
->    was started, and drop the local tunnel variable
->  * Add a test for lowercase from:, date: and subject: headers
->  * Explain in the commit message why dropping the From git-send-email
->    special case is fine for mboxes written by other scripts
+From: Srujith A Poojary <poojarysrujith@gmail.com>
 
-Thanks, I'm happy with this version.
+In create_delta_index(), buffer sizes for allocating the delta index
+are calculated using arithmetic operations on entries and hsize:
 
-Patrick
+  memsize = sizeof(*hash) * hsize + sizeof(*entry) * entries
+
+To prevent potential size_t wrap-around when computing allocation sizes
+on 32-bit systems, replace manual arithmetic with overflow-checked
+helpers (st_mult, st_add, st_add3).
+
+For the unpacked index allocation:
+- sizeof(struct unpacked_index_entry) is exactly 16 bytes on 32-bit systems
+  (4 bytes for ptr, 4 bytes for val, 4 bytes for inner entry, and 4 bytes
+  for the next pointer).
+- sizeof(struct index_entry *) is 4 bytes.
+- entries is capped by (0xffffffu / RABIN_WINDOW), limiting entries.
+- hsize is determined as the smallest power of 2 >= (entries / 4), capped
+  appropriately.
+
+Using st_mult() and st_add() guarantees that any allocation calculations
+will safely die() on size_t overflow instead of wrapping around.
+
+For the packed index allocation:
+- (hsize + 1) is passed to st_mult(), which is evaluated as an argument
+  inside st_add3(), and is safe from overflow because hsize is capped early
+  in the function.
+
+Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+---
+    [Outreachy PATCH] diff-delta: use safe integer arithmetic
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2276%2Fpoojarysrujith%2Fc-refactor-target-name-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2276/poojarysrujith/c-refactor-target-name-v7
+Pull-Request: https://github.com/gitgitgadget/git/pull/2276
+
+Range-diff vs v6:
+
+ 1:  b91a1ed54b ! 1:  8eb6d31788 diff-delta: use safe integer arithmetic
+     @@ Commit message
+          helpers (st_mult, st_add, st_add3).
+      
+          For the unpacked index allocation:
+     -    - sizeof(struct unpacked_index_entry) is 12 bytes on 32-bit systems,
+     -      which may be padded to 16 bytes depending on compiler alignment rules.
+     +    - sizeof(struct unpacked_index_entry) is exactly 16 bytes on 32-bit systems
+     +      (4 bytes for ptr, 4 bytes for val, 4 bytes for inner entry, and 4 bytes
+     +      for the next pointer).
+          - sizeof(struct index_entry *) is 4 bytes.
+     -    - entries is capped by (0xffffffu / RABIN_WINDOW) where RABIN_WINDOW is 16,
+     -      limiting entries to 1,048,575.
+     -    - hsize is the smallest power of 2 greater than or equal to entries,
+     -      capped at 1,048,576.
+     +    - entries is capped by (0xffffffu / RABIN_WINDOW), limiting entries.
+     +    - hsize is determined as the smallest power of 2 >= (entries / 4), capped
+     +      appropriately.
+      
+     -    While entries is bounded in current code, using st_mult() and st_add()
+     -    guarantees that any unexpected growth in struct sizes or bounds changes
+     +    Using st_mult() and st_add() guarantees that any allocation calculations
+          will safely die() on size_t overflow instead of wrapping around.
+      
+          For the packed index allocation:
+          - (hsize + 1) is passed to st_mult(), which is evaluated as an argument
+     -      inside st_add3(), and is safe from overflow because hsize is capped at
+     -      1,048,576 early in the function.
+     +      inside st_add3(), and is safe from overflow because hsize is capped early
+     +      in the function.
+      
+          Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+      
+
+
+ diff-delta.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/diff-delta.c b/diff-delta.c
+index 7cbedeb507..efebce3aca 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -162,8 +162,8 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
+ 	hmask = hsize - 1;
+ 
+ 	/* allocate lookup index */
+-	memsize = sizeof(*hash) * hsize +
+-		  sizeof(*entry) * entries;
++	memsize = st_add(st_mult(sizeof(*hash), hsize),
++			 st_mult(sizeof(*entry), entries));
+ 	mem = malloc(memsize);
+ 	if (!mem)
+ 		return NULL;
+@@ -258,9 +258,9 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
+ 	 * Now create the packed index in array form
+ 	 * rather than linked lists.
+ 	 */
+-	memsize = sizeof(*index)
+-		+ sizeof(*packed_hash) * (hsize+1)
+-		+ sizeof(*packed_entry) * entries;
++	memsize = st_add3(sizeof(*index),
++			  st_mult(sizeof(*packed_hash), hsize + 1),
++			  st_mult(sizeof(*packed_entry), entries));
+ 	mem = malloc(memsize);
+ 	if (!mem) {
+ 		free(hash);
+
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+-- 
+gitgitgadget
