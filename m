@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793071018;
-	b=RiRgYJpwmxwelke2qlR9LXXSdMUDLi4CQk7r+oc6AI/exd+q7ztDwTvwG3WyP4ejH6bi
-	 D2X5RM9yXNfTJIqwPttaYV+aApGIdxFxCnBCNt/d+Bw+zb1WGPKdnVgh2FcTXgDgDK7+J
-	 mGZl0auHzZMI06mFqC+qCln/TdxRc4yMKgMuGPRBSfFNnbzY8TjvfvbAOILnpDK2vmv5+
-	 ikTHI3oCx99tWYnb1bT/Hxq1NsNfprVpvw5ONg7OOARlrkoxvQL7QR+U7B1At9KnsH2jq
-	 hJRJ/7npsu4wC+2SuG/OWeSK/A3MxIz3gtYs+Oo7j4uVPDNuWGGHvjXekNSyLl1Al9A==
+	t=1793071019;
+	b=QdxT6AJOk5zzEs7pULXGr9Famq0xj5KrqHo6SZKna4iwF/h3069+NFikuKNJvALBOSCr
+	 iQUaAJ6mnDoiBM7EAdn/jxFooWeCwqw/aH4wNL7cEtB7uleMM7GvITVznK1LojvBxX35v
+	 0h4q4e+nM1kJc2kGkIK5TxTpxSIJChZxU1CPFrY7TUAqv1qcgI6Oem+hT4RHfW4EGT30Y
+	 VqWbjiR4fschEo0xW52hbHzOxjhcTx8HyJSKydSviGJamZw+5t4K/27e5Zba5wpmfLWsc
+	 SWIpbNnIbj4eXRGgjvQq2Ns8lhyzXpCLqgcwomodgTKP/o9k9GhhUkBfsRwjlaRJNZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793071018;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793071019;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer;
-	bh=LQ+242XXpF4XYTgroATD+gR1LZaxLFb4lfgsfyrn/z4=;
-	b=gLyGCz5F/DXK0D8qbDaP/4wPvScEJOieo9FwUztbKTuxFmLaDEtUGS0pCXaOxtYj73u1
-	 gd9wCjkReLTYUnzL7lCqhlombVEjnH6LDAMLHCbome0cXydqGlgp8lfDAbLvdri19EM+E
-	 iVAJdlmHJdgmm+LlLA7wu8jc2jLBX4/DdBQkp+Iexf4U3EYskfRlILukYBVJMWyPDYkUy
-	 eJi//2O3k0+wLfpOpITGOwcsNLISnmcKMoptxnvALPp6jefJSgEkRKrTE+l9x4phtTr9F
-	 DFeiQNEyduvY8e/0aYEHrkmdmY9trm6X+6aHe2zbVZUl1BcgUvtUEcljqzul6aziRag==
+	bh=to505VgkrgPRikI4kOxkJiQZ07ILiscY2rjp3HnkQEI=;
+	b=IgJCRiZgUAVrvarJk5rZD1Z3Q5OlHAKNbG8mh782qjy7f2aXZSbLG1/bUp9YDqC9DUVL
+	 hY+3GeNMLEa7Z6pKCR0FVmCc1C604GeHNAd9WFue0XaBMAviKBtiKV9iHkcfyV2Cosh35
+	 6pC8JIXeSsaVccWwLNqR0RNuDTDPYaZZvQ2hggwWB5DcEIF9RZsBf6Ky1va00zWuowSXY
+	 k9+Y2LoeRJ1koOvtWeEv5Ns3F+R/P24jdltJeSeIgir4vWRUxIeZdCQxH5Tr6aQs9nPxI
+	 AyJ9L0gEKVvgFCSUXnnwnJGCkxqFZA33iJzMX1LezfJgd+YI2ZQIhiZum7CnNvMk2mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=rj5mz7vq;
-	arc=none smtp.remote-ip=209.85.128.41
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=svln1UC8;
+	arc=none smtp.remote-ip=209.85.128.51
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89BD606A321
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 03:16:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A89BD606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9D3606A320
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 03:16:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4C9D3606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=rj5mz7vq
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4a5b2be99a8so15403705e9.2
-        for <git@vger.kernel.org>; Mon, 26 Oct 2026 20:16:57 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=svln1UC8
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a208d93758so42161235e9.3
+        for <git@vger.kernel.org>; Mon, 26 Oct 2026 20:16:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793071016; x=1793675816; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1793071018; x=1793675818; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=LQ+242XXpF4XYTgroATD+gR1LZaxLFb4lfgsfyrn/z4=;
-        b=rj5mz7vq9ZcjRLOOQIj9TsieKRMbNUgiP1FBBzNFxXKI9DOqVqh3CDklh4QtLa6Igp
-         1omG3kOUGgDEmbnx7BNWT0YTuIBk0yaOC7G1iwaSaWA3V+TCYd3SBM85Ke2IVsNt3ICN
-         Rn0oeu2EVrw0yFBEFupXKEBud4Yat9lrRmsKF3lL6yrw7hOns0Qlf6OEtKGsFwIj6ZIP
-         Pv01pXEqefuA1f1OZIA3zQxunStrSPGr97lYk78CNcIVSIrZsxGYCu1dFLI6cNIWFQ91
-         fh7Yn7CEQtCOYk0We3o7ZW1pxkImZYbJuvg5EWlt8dKF7wvA39oazz3yXaf3dz6UyVwY
-         TSIQ==
+        bh=to505VgkrgPRikI4kOxkJiQZ07ILiscY2rjp3HnkQEI=;
+        b=svln1UC8BNlOgpfs0VtAtvDXZAJIwzjnQQdAV8UBiYmD17C3G9xYseZntnMT+iFeSv
+         w4NEd39C5PuGapQUVlcj0pkg5O2D67ZJiOiXuF1Ge+nceTGG8FdSI+acbGL25wv7TinP
+         dXUl0qzYUU0nqp5hqBv5coAT4aSyBUxex7lqz19adPRjmdJ8mneMl7ZCDGm8P3BJlg25
+         VKSzMIqG2Kb2xvta63pyiSZVLOu0bgz55kBJARl/GhvW4x0jZPPmP+lqqy4y127xewLJ
+         Cbdm58b9gPvncEQc2079YhagOrMOebBTdQfm+G5YKSOpIL24+YPVuR4H4GbSSofGQIAk
+         4lUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793071016; x=1793675816;
+        d=1e100.net; s=20260707; t=1793071018; x=1793675818;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=LQ+242XXpF4XYTgroATD+gR1LZaxLFb4lfgsfyrn/z4=;
-        b=OFD8YOIPAkUTJ92CCIp3oIJPsS/uiRjtCLH0T21VPisZVl+a9dK6kox5gLVAS5sANO
-         utRFc+e7HsFTC6/Tg7iP0UPQF7d8aYhT52bw3tlbrzDOj/m30tXX1A0tVhMt3NQk3DZh
-         StEVnkjCDERC+DlpRIu3odGhlVQx9kffOe7lzMbf7XPtvAXQA+wQ87BeDOGSQrRXc/tx
-         GMFfS3Rtmi8L3Q/JoXyjNQZDq2aVkNMfcQAenLlxDOQRttLTR6k9pUjyRtbqCY9OFIaJ
-         jDGBu0Sw3FzZ/9j9R79qwnu9JpOIqFB4vp2QnGuLOD9d+d6Z7Y/C9DY9LCxvYqAilRMl
-         lljQ==
-X-Gm-Message-State: AFq9FYJQ/98QRIlQ2GWYOZkAPNkEBmSAJkjNYRBxmeJYgkN6gmZZTPba
-	an79yZnpA2hpLJ+PrXg/WHCXDXD4aJRFpiAf5obF9IqARTbibvTkT5k5I1kxkr2G
-X-Gm-Gg: AYBFou1Ede+18DZtg/txRfMc6uTKbKUkS24BjVGPc1ckTpXw5dAQPJl9P9/gfdainaG
-	+PZ6awYbhCoEJ+Q5DjgAtsvS7ug8b7yWYqJeZMcOZgqdqW/oWfMtVAZn739yoWjoTFonI7CFCLy
-	WpHLC6Yqxna2hb7t5Y2oWYvhb2LqgT2re1qAGJx7KCpDvJniNkg56yKiWskHJjWYtVzJrWWUZrC
-	myfy3TMD2tF26Zp1xDNU6C0q78hIvVxGoRMjyQyEDyjiBsmsaRP6hDh7Xtv6sDBDQu3Zf0mqbBz
-	r6or284XVgCX9iKsGn9qOpB+E9eC0tmZTdYgPBzFbUwJxUhS2kd6v6ZTiPMB6pRykgATqXzjtwo
-	5RQlG3fxiNcfLXdq/DLwZkv9VNEmPAK+FZhd1UCHH5iIOFYmEMdPuii36IrDraV2303LkeDouzy
-	cw17b7x2bpHBMz3RaIvvjlQw6mdR0l0y0tEiyIwSmJh40K5aom6lQVE5JBEpEqdGQB8fimuPz8C
-	Vha9/kwyfQBBXvEBRWormuyWssKfLO148o1rS24MQ9sHXX2W7rb/aFBFKLH9wGJIUT2qxah6Xu5
-	h8+UmtuIiTOdSi2dhMo2n7Sj/zk3PVhorEZY5O1bf0G/0LGMfnp811d8sHuH32n83rsYTmyQRn4
-	Z9UfwbEgd6ZsnADVR8pCR2pIenO0hmCv/PQqQ6M5mYvdwoDo5s3fefITWYxQu0EVVhIAVU9Agud
-	F7tg==
-X-Received: by 2002:a05:600c:46cd:b0:4a1:e0db:8cf8 with SMTP id 5b1f17b1804b1-4a35ac388b5mr160592515e9.3.1793071016034;
-        Mon, 26 Oct 2026 20:16:56 -0700 (PDT)
+        bh=to505VgkrgPRikI4kOxkJiQZ07ILiscY2rjp3HnkQEI=;
+        b=goeiaCNvle7QOTZY7I4WS3l518KQBlv50QEY9XUTKg75AYFIgTVJaFEh5TvEer+zpf
+         hIb1ng5LfBIlG8DwLoPWYqJ8UUrp1/lUcF+nthObv3y2qc9bN8uh2QFcly/vTg/bkcnI
+         QvdFNl0VZx7E6paoU6qSvLxxIReQzUDe6I4O+AQZepQ16xl2KRtxY2BJw9VrGOc67Sf6
+         wHtNOUqMR1H6M+vTMECgDMb68wRWMdSCVxIQXt4Xh+PFbifCB3FjX3V+N9aXKwqtSXbO
+         qZshHsTxS0SFaa2J/mRtLMYE+iBNdlQ6w4133r8ITfc9m08+anSyvai7Wu5u2uGcvfDh
+         anAA==
+X-Gm-Message-State: AFq9FYKYalkOHtMEbZiAJfC95by0fsAo8cquR3eTqOxj0YdXTYOix4xP
+	n+6pyRi6Yf1d0/GOy5bM/jcZMyquoxaKISg2goaXdipz2LKeK/yDbQ+xaJyBSOfp
+X-Gm-Gg: AYBFou3/nUIabX9s9+5k2FxHshz47CGz8pgtFvZudco2em9COTVKUVdJGLJdS7z1rbs
+	HelJ1maxAQGDQuNEAA1aLyM0SNRH85Ad2Y/hD0UWdcyn+n+yWwPlTyTbjyw/PV58dySVd6ZZVzt
+	tPa7RK+t1MStDAXPUkdPMSC7OzVxqqYJlvDk91fw22QcIOwafFJlN/5Hp4gPzqjgRCmvJuuFFC1
+	lsknyTi0KV8R+WQvmJpn3/oTRizvFkRc5SCrlFApHWAT0SLXqKTERZIrJLM4/tIdQcamJvV9mkl
+	qc0SsijCj4pU89oBzNs9fqFSwVWVhmvqhTl1K21UokxhoPopF5wpTlzVPJIxJOyW+ZgqXeVinoB
+	6mGqOys9NQ7gH6cnQR3twXjKluUq7dlsioICR/wnwhK8hLBQV5/gCj6FRZazvbAMFjhxgCuT301
+	llGrswlZH0rHgTTQCdB194ZldbOxZzt2hFe2Qaya5hPBQ2MOXnAKNT21LO7QL9hfZ0xapu0akVM
+	mUXOyoLQtP0gvvfYXTkvx1ROLtJ2BQ5uoHxZfx6C9r0iWVe1pdGVQXEkZJ9O4+S9rQudCvrkXB/
+	n5ufpZg21amW7hX27PXsgORzOtV0PCYykgNp8vVV9W4o3Ba0mZfJNBJhDTUl9HJRCum/mU92wbb
+	7v0MILldS082IWnEJh5QTTebVfb3hNPp3X4fnfLssnNYrJCEtcn8HKUao05XMSpE8SBxDfULjru
+	noWA==
+X-Received: by 2002:a05:600c:c056:b0:4a4:4d57:8462 with SMTP id 5b1f17b1804b1-4a44d578602mr107386095e9.24.1793071017590;
+        Mon, 26 Oct 2026 20:16:57 -0700 (PDT)
 Received: from mac.lan ([2001:818:c665:a700:9b4:dea8:96dd:9a68])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ebd47basm21777960f8f.32.2026.10.26.20.16.54
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ebd47basm21777960f8f.32.2026.10.26.20.16.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2026 20:16:54 -0700 (PDT)
+        Mon, 26 Oct 2026 20:16:56 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Tue, 27 Oct 2026 03:16:51 +0000
-Subject: [PATCH RFC 1/3] cat-file: extract the transport ownership from
- get_remote_info()
+Date: Tue, 27 Oct 2026 03:16:52 +0000
+Subject: [PATCH RFC 2/3] cat-file: make remote-object-info request in
+ batches
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,156 +95,340 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261027-remote-object-info-batch-v1-1-ea7a1f0b1df1@gmail.com>
+Message-Id: <20261027-remote-object-info-batch-v1-2-ea7a1f0b1df1@gmail.com>
 References: <20261027-remote-object-info-batch-v1-0-ea7a1f0b1df1@gmail.com>
 In-Reply-To: <20261027-remote-object-info-batch-v1-0-ea7a1f0b1df1@gmail.com>
 To: git@vger.kernel.org
 Cc: Pablo Sabater <pabloosabaterr@gmail.com>
 X-Mailer: b4 0.15.2
 
-get_remote_info() receives the name of the remote and from there it
-builds the transport and at the end closes it.
+remote-object-info has a hard limit of a maximum of 10k OIDs per
+command, this means that if someone wants to request the object-info
+from +10k objects the user is the one who has to batch it.
 
-To be able to reuse the connection for multiple batches in a subsequent
-commit, it is needed to extract that responsibility from
-get_remote_info() and instead have it in its caller,
-parse_cmd_remote_object_info(), which will handle the batches.
+Make it more comfortable by allowing a user to put all the OIDs in a
+single remote-object-info command and then internally, let
+parse_cmd_remote_object_info() handle the batching.
 
-While at it, rename the transport variable 'gtransport' to 'transport',
-as it looks like a global when it's not.
+A default max batch size has been set to 50k OIDs. This number comes
+from benchmarking with hyperfine against a local git daemon serving a
+bare clone of git.git, requesting 100k and 400k OIDs taken from
+`rev-list --objects --all` with "%(objectname) %(objectsize)". A 47ms
+delay (roughly my connect time to github.com) was added to
+client-to-server traffic on port 9418 with dummynet, giving an RTT of
+about 47ms:
 
-get_remote_info() returns -1 when there are no smart options, or
-otherwise the result of transport_fetch_object_info(), and its caller
-dies if the result is non-zero. Move the smart options check to its
-caller and die directly in get_remote_info() if
-transport_fetch_object_info() fails, so get_remote_info() can return
-void.
++------------+---------------------+
+|            | objects requested   |
+| batch size |   100k   |   400k   |
++------------+----------+----------+
+| 10k        |  1.691s  |  5.862s  |
+| 50k        |  0.981s  |  2.397s  |
+| 100k       |  0.915s  |  2.058s  |
+| 200k       |  0.924s  |  1.889s  |
+| 400k       |  0.908s  |  1.820s  |
++------------+----------+----------+
 
-At the same time that the smart options check is moved, give it its own
-error message, since "failed to get object info from the remote" used
-to cover both that case and a failure while requesting the object info.
+To request all the batches over the same connection, it must stay open
+between them. Currently, the connection to the remote is closed at two
+places:
+1. fetch_object_info_via_pack() at transport.c: finish_connect() is
+   called after fetching the object-info data.
+2. parse_cmd_remote_object_info() at cat-file.c: transport_disconnect()
+   is called right after get_remote_info().
+
+About 1, make fetch_object_info_via_pack() perform the handshake only
+once and stop closing the connection, leaving that to
+transport_disconnect() on its callers.
+
+About 2, move transport_disconnect() after the batching loop, so it
+only disconnects from the remote after all the batches have been
+requested.
+
+fetch_object_info() is void, so the only failure that
+fetch_object_info_via_pack() could report came from finish_connect().
+The exit status of the remote process is no longer checked. Any failure
+while serving a batch is already caught by fetch_object_info(), either
+through an ERR packet or an unexpected EOF, before any output for that
+batch is written. This matches how ls-remote treats the connection
+after ls-refs.
+
+Make fetch_object_info_via_pack(), fetch_object_info_helper() and
+transport_fetch_object_info() return void.
 
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- builtin/cat-file.c | 61 +++++++++++++++++++++++++-----------------------------
- 1 file changed, 28 insertions(+), 33 deletions(-)
+ builtin/cat-file.c   | 87 ++++++++++++++++++++++++++--------------------------
+ transport-helper.c   | 13 ++++----
+ transport-internal.h |  6 ++--
+ transport.c          | 33 +++++++++-----------
+ transport.h          |  6 ++--
+ 5 files changed, 69 insertions(+), 76 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 8870a210ec..f7d75a026b 100644
+index f7d75a026b..4f78194bbd 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -680,55 +680,36 @@ static void batch_one_object(const char *obj_name,
- 	object_context_release(&ctx);
- }
+@@ -39,12 +39,7 @@
+  */
+ #define MAX_REMOTE_URL_LEN (8 * 1024)
  
--static int get_remote_info(int argc,
--			   const char **argv,
--			   struct fetch_object_info_results *results,
--			   struct oid_array *object_info_oids)
-+static void get_remote_info(struct transport *transport,
-+			    const char **objects,
-+			    size_t nr,
-+			    struct fetch_object_info_results *results,
-+			    struct oid_array *object_info_oids)
- {
--	int retval = 0;
--	struct remote *remote = NULL;
- 	struct object_id oid;
--	struct transport *gtransport;
+-/* Maximum number of objects allowed in a single remote-object-info request. */
+-#define MAX_ALLOWED_OBJ_LIMIT 10000
 -
--	remote = remote_get(argv[0]);
--	if (!remote)
--		die(_("must supply valid remote when using remote-object-info"));
+-/* Maximum input size permitted for the remote-object-info command. */
+-#define MAX_REMOTE_OBJ_INFO_LINE \
+-	(MAX_REMOTE_URL_LEN + MAX_ALLOWED_OBJ_LIMIT * (GIT_MAX_HEXSZ + 1))
++#define DEFAULT_REMOTE_BATCH_SIZE 50000
  
- 	oid_array_clear(object_info_oids);
--	for (size_t i = 1; i < argc; i++) {
--		if (get_oid_hex(argv[i], &oid)) {
--			size_t len = strlen(argv[i]);
-+	for (size_t i = 0; i < nr; i++) {
-+		if (get_oid_hex(objects[i], &oid)) {
-+			size_t len = strlen(objects[i]);
- 
- 			if (len < the_hash_algo->hexsz && len >= 4) {
- 				size_t j;
- 				for (j = 0; j < len; j++)
--					if (!isxdigit(argv[i][j]))
-+					if (!isxdigit(objects[i][j]))
- 						break;
- 				if (j == len)
- 					die(_("remote-object-info does not support "
- 					      "short oids, %d characters required"),
- 					    (int)the_hash_algo->hexsz);
- 			}
--			die(_("not a valid object name '%s'"), argv[i]);
-+			die(_("not a valid object name '%s'"), objects[i]);
- 		}
+ enum batch_mode {
+ 	BATCH_MODE_CONTENTS,
+@@ -708,8 +703,7 @@ static void get_remote_info(struct transport *transport,
  		oid_array_append(object_info_oids, &oid);
  	}
  
--	if (!object_info_oids->nr)
--		die(_("remote-object-info requires objects"));
--
--	gtransport = transport_get(remote, NULL);
--
--	if (!gtransport->smart_options) {
--		retval = -1;
--		goto cleanup;
--	}
--
--	retval = transport_fetch_object_info(gtransport, object_info_oids,
--					     results);
--cleanup:
--	transport_disconnect(gtransport);
--	return retval;
-+	if (transport_fetch_object_info(transport, object_info_oids, results))
-+		die(_("failed to get object info from the remote"));
+-	if (transport_fetch_object_info(transport, object_info_oids, results))
+-		die(_("failed to get object info from the remote"));
++	transport_fetch_object_info(transport, object_info_oids, results);
  }
  
  struct object_cb_data {
-@@ -824,6 +805,8 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
+@@ -805,20 +799,15 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
  	char *line_to_split;
  	struct fetch_object_info_results results = FETCH_OBJECT_INFO_RESULTS_INIT;
  	struct oid_array object_info_oids = OID_ARRAY_INIT;
-+	struct transport *transport;
-+	struct remote *remote;
++	size_t batch_size = DEFAULT_REMOTE_BATCH_SIZE;
+ 	struct transport *transport;
+ 	struct remote *remote;
  
- 	if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
- 		die(_("remote-object-info command too long"));
-@@ -837,13 +820,23 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
- 		die(_("remote-object-info supports at most %d objects"),
- 		    MAX_ALLOWED_OBJ_LIMIT);
+-	if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
+-		die(_("remote-object-info command too long"));
+-
+ 	line_to_split = xstrdup(line);
+ 	count = split_cmdline(line_to_split, &argv);
+ 	if (count < 0)
+ 		die(_("remote-object-info: failed to parse command line: %s"),
+ 		    split_cmdline_strerror(count));
+-	if (count - 1 > MAX_ALLOWED_OBJ_LIMIT)
+-		die(_("remote-object-info supports at most %d objects"),
+-		    MAX_ALLOWED_OBJ_LIMIT);
  
-+	if (count < 2)
-+		die(_("remote-object-info requires objects"));
+ 	if (count < 2)
+ 		die(_("remote-object-info requires objects"));
+@@ -836,48 +825,58 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
+ 
+ 	if (!transport->smart_options)
+ 		die(_("smart options required"));
+-	get_remote_info(transport, argv + 1, count - 1, &results, &object_info_oids);
+ 
+-	string_list_clear(&data->remote_allowed_atoms, 0);
+-	string_list_append(&data->remote_allowed_atoms, "objectname");
+-	if (results.sizes)
+-		string_list_append(&data->remote_allowed_atoms, "objectsize");
+-	if (results.types)
+-		string_list_append(&data->remote_allowed_atoms, "objecttype");
++	for (size_t j = 0; j < count - 1; j += batch_size) {
++		const char **objects = argv + 1 + j;
++		size_t remaining = count - 1 - j;
++		size_t objects_nr = batch_size < remaining ? batch_size : remaining;
+ 
+-	transport_disconnect(transport);
++		get_remote_info(transport, objects, objects_nr, &results, &object_info_oids);
+ 
+-	data->skip_object_info = 1;
+-	for (size_t i = 0; i < results.nr; i++) {
+-		data->oid = object_info_oids.oid[i];
++		string_list_clear(&data->remote_allowed_atoms, 0);
++		string_list_append(&data->remote_allowed_atoms, "objectname");
++		if (results.sizes)
++			string_list_append(&data->remote_allowed_atoms, "objectsize");
++		if (results.types)
++			string_list_append(&data->remote_allowed_atoms, "objecttype");
+ 
+-		if (results.unrecognized[i]) {
+-			report_object_status(opt, oid_to_hex(&data->oid),
+-					     &data->oid, "missing");
+-			continue;
+-		}
++		data->skip_object_info = 1;
++		for (size_t i = 0; i < results.nr; i++) {
++			data->oid = object_info_oids.oid[i];
+ 
+-		/*
+-		 * When reaching here, it means remote-object-info can retrieve
+-		 * information from server without downloading them.
+-		 */
+-		if (results.sizes)
+-			data->size = results.sizes[i];
++			if (results.unrecognized[i]) {
++				report_object_status(opt, oid_to_hex(&data->oid),
++						     &data->oid, "missing");
++				continue;
++			}
+ 
+-		if (results.types)
+-			data->type = results.types[i];
++			/*
++			 * When reaching here, it means remote-object-info can retrieve
++			 * information from server without downloading them.
++			 */
++			if (results.sizes)
++				data->size = results.sizes[i];
+ 
+-		opt->batch_mode = BATCH_MODE_INFO;
+-		data->is_remote = 1;
+-		batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
+-		data->is_remote = 0;
++			if (results.types)
++				data->type = results.types[i];
 +
- 	if (data->info.sizep)
- 		results.wants_size = 1;
- 	if (data->info.typep)
- 		results.wants_type = 1;
- 
--	if (get_remote_info(count, argv, &results, &object_info_oids))
--		die(_("failed to get object info from the remote: %s"), argv[0]);
-+	remote = remote_get(argv[0]);
-+	if (!remote)
-+		die(_("must supply valid remote when using remote-object-info"));
-+
-+	transport = transport_get(remote, NULL);
-+
-+	if (!transport->smart_options)
-+		die(_("smart options required"));
-+	get_remote_info(transport, argv + 1, count - 1, &results, &object_info_oids);
- 
- 	string_list_clear(&data->remote_allowed_atoms, 0);
- 	string_list_append(&data->remote_allowed_atoms, "objectname");
-@@ -852,6 +845,8 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
- 	if (results.types)
- 		string_list_append(&data->remote_allowed_atoms, "objecttype");
++			opt->batch_mode = BATCH_MODE_INFO;
++			data->is_remote = 1;
++			batch_object_write(objects[i], output, opt, data, NULL, 0);
++			data->is_remote = 0;
++		}
++		data->skip_object_info = 0;
++		FREE_AND_NULL(results.sizes);
++		FREE_AND_NULL(results.types);
++		FREE_AND_NULL(results.unrecognized);
++		results.nr = 0;
++		oid_array_clear(&object_info_oids);
+ 	}
+-	data->skip_object_info = 0;
  
 +	transport_disconnect(transport);
-+
- 	data->skip_object_info = 1;
- 	for (size_t i = 0; i < results.nr; i++) {
- 		data->oid = object_info_oids.oid[i];
+ 	free_fetch_object_info_results(&results);
+ 	free(line_to_split);
+ 	free(argv);
+-	oid_array_clear(&object_info_oids);
+ }
+ 
+ static void dispatch_calls(struct batch_options *opt,
+diff --git a/transport-helper.c b/transport-helper.c
+index d5a064d386..dafe829b50 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -786,16 +786,15 @@ static int fetch_refs(struct transport *transport,
+ 	return -1;
+ }
+ 
+-static int fetch_object_info_helper(struct transport *transport,
+-				    const struct oid_array *oids,
+-				    struct fetch_object_info_results *results)
++static void fetch_object_info_helper(struct transport *transport,
++				     const struct oid_array *oids,
++				     struct fetch_object_info_results *results)
+ {
+ 	get_helper(transport);
+ 	if (process_connect(transport, 0))
+-		return transport->vtable->fetch_object_info(transport, oids,
+-							    results);
+-
+-	die(_("object-info requires protocol v2"));
++		transport->vtable->fetch_object_info(transport, oids, results);
++	else
++		die(_("object-info requires protocol v2"));
+ }
+ 
+ struct push_update_ref_state {
+diff --git a/transport-internal.h b/transport-internal.h
+index a10b27cc81..53ce86ed48 100644
+--- a/transport-internal.h
++++ b/transport-internal.h
+@@ -53,9 +53,9 @@ struct transport_vtable {
+ 	 *
+ 	 * Uses object-info capability of v2 protocol.
+ 	 */
+-	int (*fetch_object_info)(struct transport *transport,
+-				 const struct oid_array *oids,
+-				 struct fetch_object_info_results *results);
++	void (*fetch_object_info)(struct transport *transport,
++				  const struct oid_array *oids,
++				  struct fetch_object_info_results *results);
+ 
+ 	/**
+ 	 * Push the objects and refs. Send the necessary objects, and
+diff --git a/transport.c b/transport.c
+index 25e2c14a7b..352540492c 100644
+--- a/transport.c
++++ b/transport.c
+@@ -433,11 +433,10 @@ static int get_bundle_uri(struct transport *transport)
+ 				     transport->bundles, stateless_rpc);
+ }
+ 
+-static int fetch_object_info_via_pack(struct transport *transport,
+-				      const struct oid_array *oids,
+-				      struct fetch_object_info_results *results)
++static void fetch_object_info_via_pack(struct transport *transport,
++				       const struct oid_array *oids,
++				       struct fetch_object_info_results *results)
+ {
+-	int ret = 0;
+ 	struct git_transport_data *data = transport->data;
+ 	struct packet_reader reader;
+ 
+@@ -447,8 +446,13 @@ static int fetch_object_info_via_pack(struct transport *transport,
+ 			   PACKET_READ_GENTLE_ON_EOF |
+ 			   PACKET_READ_DIE_ON_ERR_PACKET);
+ 
+-	data->version = discover_version(&reader);
+-	transport->hash_algo = reader.hash_algo;
++	if (!data->finished_handshake) {
++		data->version = discover_version(&reader);
++		transport->hash_algo = reader.hash_algo;
++		data->finished_handshake = 1;
++	} else {
++		reader.hash_algo = transport->hash_algo;
++	}
+ 
+ 	fetch_object_info(data->version,
+ 			  transport->server_options,
+@@ -456,24 +460,15 @@ static int fetch_object_info_via_pack(struct transport *transport,
+ 			  &reader,
+ 			  results,
+ 			  transport->stateless_rpc, data->fd[1]);
+-
+-	close(data->fd[0]);
+-	if (data->fd[1] >= 0)
+-		close(data->fd[1]);
+-	if (finish_connect(data->conn))
+-		ret = -1;
+-	data->conn = NULL;
+-
+-	return ret;
+ }
+ 
+-int transport_fetch_object_info(struct transport *transport,
+-				const struct oid_array *oids,
+-				struct fetch_object_info_results *results)
++void transport_fetch_object_info(struct transport *transport,
++				 const struct oid_array *oids,
++				 struct fetch_object_info_results *results)
+ {
+ 	if (!transport->vtable->fetch_object_info)
+ 		die(_("remote does not support object-info"));
+-	return transport->vtable->fetch_object_info(transport, oids, results);
++	transport->vtable->fetch_object_info(transport, oids, results);
+ }
+ 
+ static int fetch_refs_via_pack(struct transport *transport,
+diff --git a/transport.h b/transport.h
+index 39193d0077..c7f2b8b87f 100644
+--- a/transport.h
++++ b/transport.h
+@@ -314,9 +314,9 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs);
+ /*
+  * Fetch the object info from remote
+  */
+-int transport_fetch_object_info(struct transport *transport,
+-				const struct oid_array *oids,
+-				struct fetch_object_info_results *results);
++void transport_fetch_object_info(struct transport *transport,
++				 const struct oid_array *oids,
++				 struct fetch_object_info_results *results);
+ 
+ /*
+  * If this flag is set, unlocking will avoid to call non-async-signal-safe
 
 -- 
 2.56.0
