@@ -1,118 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793112439;
-	b=1brYrwTD9nrEzWay0phfvfgZsvtp7O1vHbm7gmPmY4pYvM/HFhoze/2tds23Zf3OVfSd
-	 r8/w1xUXA6boTP06I9qfzSB71iQQvYv0wwHa+/F7s0QAR/tlXP0t8yRQaRiO6S6KVTmP4
-	 oVK4/meG7sUV+zAjFY6q4miBQISmiHM1x/XvFH9sfwSo1kjo7Wwh3k5WRrTPRgOFq/YJG
-	 NOGvqvGgy9FfBguiwdSqjRcXwC6LfRl8XguUSWdvwuBskOBSAeUXchOlZCaEIk6yeq3r2
-	 PkDIOBygJ3QPf7kqXcnuaWp6UooefoFeo4R0cPinoXAk1cYQCwfpB1PjRAzLj5tNv5g==
+	t=1793112791;
+	b=3CwNxYcY8hIFfbLHkDfJyNGUbBi9+Prbpx/cjzxNHBAwoloIhRXqXb8Jl4gUkCBUtLZA
+	 pxk2/+pMfOXcMX6ao2RUzWkpCDTn0TYkMJwuTr6Aq/Jh6x0t6LbgzmJ7nD+8sY7QiaZw1
+	 yEnuF1RN9RDL7NcQnTaSZBL5VItLV/0y5unxEq5dVmM5rLb1NyK8l6mvPnxrB00oOcRv+
+	 IF9ZqTuZXuG/jnV7RKr278uvwde5ZCiwgumfhl6zWqvPU4AgncsYM8hz3VYYYBG1arZy+
+	 5qCmo8422T4jWUSF/LOPDfpjA6CD2kYP5Wf/bNoeZLNvGXielVEt5y1IVNZKkRS7pXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793112439;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Date:Message-ID:From:In-Reply-To:To:Subject:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0HjJ+0TG2Uc8xzY5X4+PNEGPPTn01zGGm8QYSwsV51E=;
-	b=5gib3FhWYeAZYojhFof+iB/ys1NSqrC+4ZdXxyydQdVdxympk0bb/0gYvUr0kh0vEmIu
-	 YEXioqErh/jcswuGixpyJq6/y7VAfn/WiPTK8jJqtL7i+UQjCq0hADi8Zegy7LX0Jm1fF
-	 OPVXIQzJjpm2m5G96Hk3m0nkMnAQgLGLQFpKJcwpvVmj5hId5YGsBDMIgMKV63BkOmz6+
-	 C5tD31Nk1luWjbFHzGoodP/MQSYdydnqrwndOSVaH3DhRaA3MwEgnPugCQpFdM9fSuQ/O
-	 zLPxs48bcTvyHSBJZE8O0uqnjyuI+td6ZTXAw7vYbSCtVjVPbzQlvYg1cuuXwh16+vg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793112791;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=xO4jLi3LNN4vGFBx8TqUL3BxSHS9MtomDzn5AS9hAGY=;
+	b=JED3uQNnt/gJ7WOCJkNZn31tWeBaVPFak2FFZOQwP7gGsym5CXEEp5/ngJQTwYQWkD5Q
+	 79VF3p/AqIxvYXYqO2g5R5eIsA1LFbbLMv6A4XnXf9RiJh4sIrWPOXnDagfDKQtOdN1eR
+	 cQgu/a+7VsBxk+rVKXVAzG+PJ16Rk6rMPIqComTyyN+mIeS95Qxa/D1/BV+T4ftLRfm/4
+	 Snf2bcyCgzhV1KOo3D0MCb/Ab5fpAMbSuxJozSa51qpXDDZeDMUt5BkEMo31qZ4SLpELq
+	 gK+W0DLdmZHv+zSlV3vI+YGAwdBliceAxGFUofe3Zj87qZH+rt7PggfdCf0PGsun9Sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=j5kGPrWe;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=FDH46hm6;
-	arc=none smtp.remote-ip=103.168.172.151
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YY0Z4b4a;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F0D606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 14:47:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 10F0D606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF8C606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 14:53:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5AF8C606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=j5kGPrWe;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=FDH46hm6
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 61DABEC01F9
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:47:18 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 27 Oct 2026 10:47:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793112438;
-	 x=1793198838; bh=0HjJ+0TG2Uc8xzY5X4+PNEGPPTn01zGGm8QYSwsV51E=; b=
-	j5kGPrWeeilHCDTmmo+hzpjsy/Mh7/fEc0JQvy5k2fqlVxRYAeZEDl7iv+lnBqmI
-	VoQhC4ZkmG6ihCs0785qHUzWuQzQzyqda/hB5RDaj1gRD6V8TGN0+MSQnni8trSN
-	2ssESCWqAeerxFFS1Pb8jV49mFFuGzjUVFPA4LYNpQr8yO35F7DRTwlgzWZJyvSJ
-	ZZOKUplIX5WmxC1RKQbF0m6oFo5f1Cnyij8SshJQQLX3OjS+tWW0bWA3/Xl5KhxB
-	1xI3PvSLOP0CzYPPWJLP68BoU87jvrWW576grceoY7m0aZwBo1YN2Rf88jp0y//N
-	XiAzkn7zMceYaoV7cAzf9w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1793112438; x=1793198838; bh=0
-	HjJ+0TG2Uc8xzY5X4+PNEGPPTn01zGGm8QYSwsV51E=; b=FDH46hm6sdtFL8Usj
-	qKGu54vSh0Amw+18r2HmBhoH1qAHJok0GPiPrwgSADerK0hRF2qswDqM0larp9TX
-	knQhsThHLSj2IJTpbAVVoXJcZDN85igQz1Pb+w2HT/MHLN2tadv6rpDW1AU3pDyN
-	az83x+wJsPCctHENBt8O12Xlivip46eFJCmfHPwyzGotKsN9MKcQ6S7m5DBYPUiL
-	Sqg+Ie9RDaLg496ru+3+6pEQvQkHTpl0e6E83S2SXC1HBJ/Rpvnv9Exhk+dJIzyu
-	nxTD3VeqkWMT2EpnSFYxIzJw/5q2CIQwq4nYtTgj4cpwzypiaKPnK2pHzRz1B8UV
-	NTCzA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793112438; d=fastmail.com;
-	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:q/nmg16ZhVM2OXR3Kn/F6tXRefoE0My9IGMtrLKWxLmbJ/0
-	WPvPZqVwDstrq165KAiPFXRUY9GZvjVrprYQ7M1dk1jQHHOs2fSXu2R+KQdnwKlF
-	Fq6YEDjqJCTRTQiTYjHsLUYkqFGnzPcF8whXAZn/6Lso3HaMilBWTfyaAptGxxnM
-	249f4UXTXdINDp29BNUmM2PfdQEtXPDsnhKubRmVwuBev1b4AS9+iOzfwhVdNM1R
-	+ZIyUDeTRA2IVEKfDUEnkdUhTZHiQQ8aWMRsBxwgNH8kipMOOOHWyG9tCcgjdrHW
-	eux7ZGzF/nSKghY0//1nGy1nCwmDjZ7eAI/dl5A==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=11;
-	hn=content-transfer-encoding,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:tfiR06AGzOFLZhBZKfbdqK9wMFQDbXIjP94ufh5EdjA=:sGQfP1AaahQPvMJ+4TY2iE1nkIDdB1ZAqpAvw39V4YU=;
-X-ME-Sender: <xms:drngaiMIH7QDAs7xg-zZFhWBHFM0f_FDwAjQC_XWTudAHik1GcKPZQ>
-    <xme:drngam-IXUVpjxAlR8ANN7iTkdyyIUlf8FnYAiPrlWImw_qidfXlc8cSd7J63ZymQ
-    NfzjSRU-HSh7hIalQZR3OQ1AV1md0x4M_f-odlSQWm6ozVZ1rfAF9Y>
-X-ME-Received: <xmr:drngam7HA87FTx08b-r1Fttl7qNhJBUvCM_TzrvlmPb5HOgywQ6aJ-Dzf3B9wx4AvNtkU3kAsOmG0i74c7pygQ>
-X-ME-Proxy-Cause: dmFkZTExqVyoRJw3JhcVpFCXiOUpLVnq10SUOibdRBYtDA6BEtHsIqcqFdnrePzRHXf9YR
-    CSEkfEuv8Sqq8ulB50guF/wsEUTvbtXm7J/g6YkREWvnpAYYhlFgIRM0WOF3fH5g4tlCVb
-    fiaBoY1aGwQXcc0/yYECtx9sVXujjJsH0aO7rrTuk/o33zGEfRyYe2CMrKorrfH09NhgiM
-    ANjT3+SUTGNFhd309gi/OuTtGAVFbNMZzLLhmdQ462llaa3srs4IPXQQRzD1tgYmqrvvve
-    0VHS5voP8jMSdXfRiSZ1ZL6mSzePWAmjmow2T5Krnu7ZmvNm1rTRjMMYcUUw5yzcISakCO
-    sR4H7w/eGhleGFrx3g3+1TQV/+wl1DFQPl2VfYKfAwGv0yCXVWqAceMgz7U5/k0cggpR9I
-    UNECkO7/+9O5aMygiYZJ0eV1CS7e5BLUY/IgzE0tozTOQmpfxQDg2glBiprLuzSiDJYDuq
-    Qe3j9NCRAUbraQUhlQ6nJEVdSDRXwOsoQBOYBNcfQJGX3s/BPJQXPSv86lX2/fXHBRJvhe
-    gtVBMjDlHBrbjflOmjIAZSIYI/tLnNbf4BYibFnkGQ3xY7qHbSF4VEfgXeH4FVv0tUJW/o
-    hCPU7+R69OV/uiR2J3Uv0xusbePDVAtD84eLbgH60QJRySa8usnPmsAc71hg
-X-ME-Proxy: <xmx:drngat0GC4KefjLMkv9c6l2TTJTxSrUtgOwSKLdeEDS3quHgEoe-xQ>
-    <xmx:drngatD3XioY12y0y5ZNoQpQHBgqcZuND70PERgCUo__rxLBfxuVQg>
-    <xmx:drngav1ObM4He94vjzYQ6V8zbW7DXf3uuYUDFLIKuWeowAy1pfGjQg>
-    <xmx:drnganui5UVhvra6yaiL55PmnWhm4lGI6St2BtJwU1bg9oiKtT7MGw>
-    <xmx:drngatnjAf3PAJRxmt5I-Q_TapTgtnB7wy8zvHn0-OXs_LTqE-c7BvJi>
-Feedback-ID: id2564aa6:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 10:47:17 -0400 (EDT)
-Date: Tue, 27 Oct 2026 10:47:17 -0400
-Message-ID: <c23c4593fa3add2b40613febb2911cfb@fastmail.com>
-From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-In-Reply-To: <20261027-pks-rerere-subcommands-v1-2-d836c36ce0c5@pks.im>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 02/12] rerere: convert flags into an enum
-References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im> <20261027-pks-rerere-subcommands-v1-2-d836c36ce0c5@pks.im>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YY0Z4b4a
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a20bde60a0so37542975e9.3
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 07:53:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793112790; x=1793717590; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=xO4jLi3LNN4vGFBx8TqUL3BxSHS9MtomDzn5AS9hAGY=;
+        b=YY0Z4b4aqApBgSdAcI2NLb0PGGhL9FtVJb9TDk+UQlxMyp2gMpov4TZX9LsgIUZD5n
+         mErOzgEYvsR+N1mOJC/SdET05ifdzjtvmlKcbfsQuhzSHypBwYhXaSzrElo+kfg9zgdj
+         mBwDPMZLWNBFPahJKAtS6GEypkBRDlsXDW0ztu7ln5Go1ro2jszmrebEpp8AFp8++beR
+         XsxHaf9Iy3LF3USJKPuzu5h3jkxPu4L8AfZLyIRC8m+mD/h9Sk6DPj7tKI4mp4VRdzQy
+         AI7Zqb6q0YhNA4VdB5shHhvxOqIkwHcb2WOqm+ExTUAmYt7jhlMpVelGh9bxtIi0eHjI
+         Zelg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793112790; x=1793717590;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=xO4jLi3LNN4vGFBx8TqUL3BxSHS9MtomDzn5AS9hAGY=;
+        b=arW5CU4sk0BeSgXOj905FlDrQoxW3ICzZpHPG2+sRrg8ruLo45RbEqA038ZPoI2Mik
+         RHeIQAfmlYdlgrrR+kwzVbBO8GEQux7ITfGbbqFZnku8zsrbrZPkI2jviDCrDHdJIy9O
+         uOH/6Pr7dJP0loelsNOHs4VxeCBpl5cOQaydyUVB42rDbVCalRZ746XT4XIwALr0c3ak
+         DFeFO89JHPcE5Db8SVNz9U2R5hpKxrBbEeQjXHKu+Ijt/tEu6vDPL9IlEiuiKU/peLpf
+         t/80v9qTFJeRsAuSQkdFRt85R/w62+ykvt6hr916zAFRIugE36JlUfXNQY6uGpxJpuEF
+         oIvA==
+X-Forwarded-Encrypted: i=1; AKwUvBwv0yosnlo/SVeG/8Z48iKpqYUnnY5JYvLVIa6LxOS579h12bIV7lfCx28BN+Yi9QZEfok=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLwJivxFUpk9lmLHNQ3qK9IUNZPQ+ehLopPXhg9YWybGes4FP4H
+	W8/NZilNn1trpWA8D0slQ+l6MPvitebjB/kIG4t/kc86IczpMaSxVf8F
+X-Gm-Gg: AYBFou3LqD7PpxyvxjQockfdfVzTst43xfO5IJg8wfWiQafaVD9IMQUPPnLg0c6yyta
+	bnjmrawvAxne1Ev301ONmm3qzfIa0YgNEFz58CgO9UQxckfJ3LO/VfQr1sGKgUHz/IqdiFJ+z7U
+	3GV2WzTjtocWSk4Obz2/jXuUKvxLfpqFxlBg2LfGGnMDHIA1zIiHcvNIBp5Zr0UOemxNkb/5f+Z
+	EcdD6L9aMRcWCcwV4MicQxKLp3hoydeOM/py1F108+1dZvqB/q/ke2TiCJyw7fgIIsCGp7xUkC5
+	Xy422BhKMWNV8EbYR0aCiu/ofP/zZhsqqu6PCP/U1csIqVhwXrf6vQ4TtVM+GuYZXEGe787/fZ7
+	LCFkRaw33OmJb7OcEg7UUqRWhBkgWYZ4jqTO9dZSIxdpOBeZm+4/yB9Gg4bzHrFIdThykowsZJ9
+	kdJ3t6jlO2HmmwyGoTtmjEzmF3m9bXenhcOvOCwMmJa7UHCxja/XSCZJochN1Lk6vNAAbHwvZBx
+	6IGHmQL/2JSZFJyTglwO65mamjEg2FAbKi6Opwd3i5lJupsdr5cjiE0O4XTW/GsJWIbBJ5UL+/o
+	76I0LPfAywjJO/8FMMTq1w6s0P7Bx4mJjykJwz4IgU19mluYwHminHo=
+X-Received: by 2002:a05:600c:3486:b0:49f:f099:6fb1 with SMTP id 5b1f17b1804b1-4a35ac95955mr171862835e9.15.1793112789523;
+        Tue, 27 Oct 2026 07:53:09 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a046fefsm346624495e9.5.2026.10.27.07.53.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Oct 2026 07:53:08 -0700 (PDT)
+Message-ID: <1da30fde-75bf-469f-80e1-ce90cd29c84d@gmail.com>
+Date: Tue, 27 Oct 2026 14:53:07 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -122,26 +92,115 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 8/8] t/test-lib: make feature-testbed job more accessible
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+ Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+References: <20261027-b4-pks-ci-test-vars-consolidation-v1-0-f28edf79bd6c@pks.im>
+ <20261027-b4-pks-ci-test-vars-consolidation-v1-8-f28edf79bd6c@pks.im>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20261027-b4-pks-ci-test-vars-consolidation-v1-8-f28edf79bd6c@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Patrick
 
-On Tue, 27 Oct 2026 11:46:45 +0100, Patrick Steinhardt <ps@pks.im> wrote:
-> Our modern coding guidelines say that flags should typically be passed
-> around as enums so that it becomes trivial to see what kind of flags are
-> expected. Adapt the rerere flags accordingly.
+On 27/10/2026 08:18, Patrick Steinhardt wrote:
+> Our "feature-testbed" job sets up a bunch of GIT_TEST environment
+> variables and then executes our tests. This is mostly intended as a
+> testbed for features that aren't default-enabled, but that may
+> eventually become so.
 > 
->   <snip>
-> +enum rerere_flags {
-> +	RERERE_AUTOUPDATE = (1 << 0),
-> +	RERERE_NOAUTOUPDATE = (1 << 1),
-> +	RERERE_READONLY = (1 << 2),
-> +	/* If MERGE_RR.lock is taken, return -1 as if rerere were disabled */
-> +	RERERE_NOWAIT = (1 << 3),
-> +};
+> Due to the job being special it has a higher potential of failing even
+> though a local test run succeeds. But running these tests locally with
+> the same environment is somewhat painful, as the developer has to
+> manually set all of these environment variables.
+> 
+> Introduce a new "--feature-testbed" toggle for our test suite that, when
+> set, sets up exactly these environment variables. Migrate our CI to use
+> this toggle so that we have a single source of truth, only.
+> 
+> Note that we only set these GIT_TEST variables in the case where they
+> haven't already been configured. This serves two purposes:
+> 
+>    - The user can continue to manually override a subset of those
+>      variables, if they desire.
+> 
+>    - Test scripts typically source "t/test-lib.sh" after they already
+>      overrode GIT_TEST variables, and we don't want to discard that.
 
-If we're moving to using enum flags, then wouldn't it be better to
-explicitly add a "RERE_MERGE_LOCK_TOKEN" to the enum for that case, 
-rather than have this value only documented by a comment?
+That all sounds sensible, the commit message could maybe flag that the 
+"feature-testbed" also sets OPENSSL_SHA1_UNSAFE which 
+"--feature-testbed" does not because it is only concerned with GIT_TEST_*.
 
-  -Mark
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index de566309861..8863bcac930 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -202,6 +202,14 @@ finalize_test_case_output () { :; }
+>   finalize_test_leak_output () { :; }
+>   finalize_test_output () { :; }
+>   
+> +set_default_env () {
+> +	if eval "test -z \"\${$1+set}\""
+
+This made me scratch my head for a couple of minutes, but I think it is 
+correct
+
+	set_default_env ABC 1
+
+evaluates
+
+	test -z "${ABC+set}"
+
+to see if $ABC is unset.
+
+Thanks
+
+Phillip
+> +	then
+> +		eval "$1=\$2"
+> +	fi
+> +	export "$1"
+> +}
+> +
+>   parse_option () {
+>   	local opt="$1"
+>   
+> @@ -212,6 +220,19 @@ parse_option () {
+>   		immediate=t ;;
+>   	-l|--l|--lo|--lon|--long|--long-|--long-t|--long-te|--long-tes|--long-test|--long-tests)
+>   		GIT_TEST_LONG=true; export GIT_TEST_LONG ;;
+> +	--feature-testbed)
+> +		set_default_env GIT_TEST_SPLIT_INDEX yes
+> +		set_default_env GIT_TEST_FULL_IN_PACK_ARRAY true
+> +		set_default_env GIT_TEST_OE_SIZE 10
+> +		set_default_env GIT_TEST_OE_DELTA_SIZE 5
+> +		set_default_env GIT_TEST_COMMIT_GRAPH 1
+> +		set_default_env GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS 1
+> +		set_default_env GIT_TEST_MULTI_PACK_INDEX 1
+> +		set_default_env GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL 1
+> +		set_default_env GIT_TEST_NO_WRITE_REV_INDEX 1
+> +		set_default_env GIT_TEST_CHECKOUT_WORKERS 2
+> +		set_default_env GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL 1
+> +		;;
+>   	-r)
+>   		mark_option_requires_arg "$opt" run_list
+>   		;;
+> diff --git a/t/unit-tests/unit-test.c b/t/unit-tests/unit-test.c
+> index 752fb38fb32..f4898353045 100644
+> --- a/t/unit-tests/unit-test.c
+> +++ b/t/unit-tests/unit-test.c
+> @@ -27,6 +27,7 @@ int cmd_main(int argc, const char **argv)
+>   		 * options understood by integration tests.
+>   		 */
+>   		OPT_NOOP_NOARG('d', "debug"),
+> +		OPT_NOOP_NOARG(0, "feature-testbed"),
+>   		OPT_NOOP_NOARG(0, "github-workflow-markup"),
+>   		OPT_NOOP_NOARG(0, "no-bin-wrappers"),
+>   		OPT_NOOP_ARG(0, "no-chain-lint"),
+> 
+
