@@ -1,125 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793139771;
-	b=qn8YQULmmsg5TSwtlPxfGH3e/CdGFPCtJa3ZTCrb4/8dx1+epLkfuEoQ9mP4BukaWOA9
-	 iGg9Jb/yNJkM0wOoeBppWBQXSJbNvwykw5rI0UZk5OzxHtGNz/vSkpOOpaN00ibFEZnc/
-	 FQumEdkNslOGnzff6R4nFCvQmzwdCG0GGbmJyOnEhShWaGbsjIlwGBeX/ViXpsgpPdcHX
-	 NnOui+NkiErLO5PbR84xtV8VfPrDd+a7952znrSL3TPYsPPfKKVQVoqloiLE3XIkgSGd6
-	 9CjfAa5J2zMp6l5dl4EWFweh1UMKywRaUvdDgkhXgUpKHO+ECrmsIvo0f8W3YcuiOYA==
+	t=1793140516;
+	b=yW6txVNgtOVxxzriTDf8nGyCnDgH3XSyYQ2xOUGsYWKwsi2SfQHFXpFnpPsFb8Imefm+
+	 +OJ53S09oqGlxl5xHNQAntjxDqd+Pdv8Nj4LCLzX67Hmo1Xv8wX9RZ+19bLpooP/hl9qb
+	 zO9KTEM0uZ/XmqRsJPw9qDwGUvt+OTOKlJCgbw8CNM63ZLM3QrQcjDKSOkBNqlsgWFCT8
+	 /DI1e9nnb4KKHUE/QGWT5rqBdWtMQ7XSKsh8uaquJTv5ZL/1v8TaYQa8NBg8rrjLJ6gvL
+	 USe7s25viMUDhmwgTK1tENT9RzGdOM8x/cmgki11OItM7kJLEtx3EYwLhG/5Y4KmoYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793139771;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793140516;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=20BI1coCmSdMUzIo+8HMviCg9dIvDMY1/hEiqS5HK8w=;
-	b=v75hrwEPDrqQvn53z7i+d6ZVIraBmKC/uhQgd+qD152RdWALwyswqB2cskWFuWyBuFsx
-	 oNBO8TusxDt1PCKaMCXX64qK7SaIFfqxcRkOfVyyuGE2co5xYO2h1Hmik+b5uG1yrdBTE
-	 3b+nV2q01Hahr6OYzwSve5I+sOSD3Lzu/P+suO/JODAI3Z+kBNsRhCAVp4nRr6yxQTfHN
-	 t2ESktg6stufMgDIURT8rZm9Xn0gk9mJ2C41J8Q54AkyZ7QI3bswPsgoQcroOlgNM+RC9
-	 4ds3er8njVmYaPFC17+Eh/QqFVKCHt5jCUJLPNONZersp7Nw5EDc51XyJiyx+tZipsw==
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=gS54ZrUe3+6cTMcuuXfG+OAu3HWdArfuPKsZ5zQC9k4=;
+	b=g9XkdxwUUlgNvojdwfxDr7eM/EowGbqPdtIatEqbggk6F5SmzG1Nxg3iNMEvpWr3IJRC
+	 3UgjvX+mbzbSewkDTOSakiygXQmBkSkWTzbtF0kQ008AoqXSFmuSCCdODhV6zHQrxoJk9
+	 eWmSGZ+TVcsh29yDTSPP4bsE8N1pf3eaeZ37BNOPWcXOGjz2FREfpsGom1rPAZjdLSrPw
+	 biu1C0azv50lIQIiTbL7ztRSW0aGtrFtar2CEJVYIgVYjdmDhFkv6VUUupbxvTxk8E9sl
+	 3u+6OBkmGwAuSAWHIyJIpEp1yYHc4/6dFlz+zps6aRCyVkKlZd+d1ftl4YWGPdDD9lQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=pIEvxyQN;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="GLwo/TyX";
-	arc=none smtp.remote-ip=202.12.124.156
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=diGVk8w4;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Zfv0VzNC;
+	arc=none smtp.remote-ip=103.168.172.155
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E9E606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 22:22:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C7E9E606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E44606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 22:35:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0E44606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=pIEvxyQN;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=GLwo/TyX
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C1E17A0166
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 18:22:50 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 27 Oct 2026 18:22:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793139769; x=1793226169; bh=20BI1coCmS
-	dMUzIo+8HMviCg9dIvDMY1/hEiqS5HK8w=; b=pIEvxyQNk8d7NRfIcWrlaGQY8F
-	sRB7euEao0u8GGN6b+sSJMGB2bVC0Xuq9pjS9p3ORJWhvNkSIL66DUcwY57m8692
-	UaWruA+Su1kaJV9rCJX2woFCVm1fEw8olnzoamu9PIU7uqJhAKb2j9RKZiLWeeie
-	7NHCfXCWbCtg5OH3nUPBrVj6lVgJZlBbB42xvQIYNRs7lX8XbFZm+BK4lIKA3Iiy
-	mAOTNsFafvLd6xu1nZUK1mB+a96wWEwmgoYjg+Ujq+aAoZaTTXo/+K9dnuKIUIMX
-	tFyDebLhnSneeBo5KdTxKlzyguh6eiJgFWtKrpVArMw+Yqu8+/8Nq3SeKUmQ==
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=diGVk8w4;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Zfv0VzNC
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EEA911400096
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 18:35:14 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Tue, 27 Oct 2026 18:35:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793140514;
+	 x=1793226914; bh=gS54ZrUe3+6cTMcuuXfG+OAu3HWdArfuPKsZ5zQC9k4=; b=
+	diGVk8w4ea7cPqUh7i8TF/8cGpv6RW634OfP8iYdQafnwSbKr4byjsieANtWeVQJ
+	V2EJWTvrwYIqCiQLH+CYqOmW997s+d8V+GVLGxB+PLrjGrg9K5VtKjGXY6smjjKU
+	cVuZhSXmrVGxepVQF4HxOevjGivKb9WL2n40rHsqPphwLWysroRam3cXRRMI+68+
+	EobjGWuyiGWHnZ0aQTryYxSWiInSlvO4rwFCNhjckDJw+XA+08LyhU87WlaA+Gvs
+	Qa3m+qflsDpvzAFS7AjtWkes+8mBVsM7YbxzoAjr3sCg2CiQByB9cGoVJ6M8PgFK
+	HCC5DIrD8ciq0A6GF9ZfGg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793139769; x=1793226169; bh=20BI1coCmSdMUzIo+8HMviCg9dIvDMY1/hE
-	iqS5HK8w=; b=GLwo/TyXurAP816QZUyUAC6l9SnoRVSCG9ZEcZcc0z0eCecoqie
-	42bzpEkSDF4kPe13YRUHsreiVnf3dqhYiBGb9WFaFImSQ1D5bOxTOYr4Ve7b3RCk
-	QkCQegIvOXzVlZFODO5ZSisDuidCSImfShmxE8Cuhn27iCyGPR2EvnGk7zJx0btl
-	dQr59MwzBTqW9TgeMEQe4Z80p3+wIa9lc22k8W5xpLG5Iw9OF9i223si224RGHww
-	ZnN4a1Mc9rjSIUvNCiiAHVwkr+JQAIA9p+vtdqyP6bLlcPB7UBZvyS0IBOUKpi/3
-	GqM7lPvpj0Io+cBa8Bz+E8Bdo9proe8OX/w==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793140514; x=
+	1793226914; bh=gS54ZrUe3+6cTMcuuXfG+OAu3HWdArfuPKsZ5zQC9k4=; b=Z
+	fv0VzNCuMZHdU7rji6Gboy0JqZ3yx6T+gx6bEjlDWx309UQ+06MBcieOQk8O5XKt
+	lCF8nQpV72alz7LjAGAI2TIk8inJic0xnrJ6lHn0phIwjp3DR8mKt1HNGZbdQiMN
+	pozSsfaNhBaXiv4QYTt1b14qeARpIlD3Ug89DX6AY+VX1x3gK3Jgjyuc6TO6tn/E
+	+U9UpJM316XB8T3N2fsbktcTQuJrVOS/dgf73BqfUdqO5K63mGDT4G87zvPxPaml
+	zS1JdGQ0kL7AgDCRIJm7SxGX90bxIIKIZxVxTfKyYAsquvZqVp6itsWnkxAChfpc
+	KOu0vlFiswB7z1jJxwgTQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793139769; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:GSk9Mz1+w62Q8albmRUdxSEot5MPrfLbjLi+oexBLicMNbC
-	RCy5Hl7lUUV76LDbVjQLLVWpGAn1UI6rC6uNyYALDq/jil16G4puel4z1ZmX+5wd
-	h61uSgchLu+4YmdLoZyDmt4W/yelxDq+SfmNLisCpLIUzvMT/nU9ZhjYYk0kXG2y
-	mCOqu6MqAi4lU/oNZTaLSsfmrdHJYiPqM40Kgj3fqllLevry6i1FYZLP/Hj/HQ4B
-	Dn7J2J9iYNGRMnBaGPjTo6cxcpe0cEn8x/uym1uvADxm62sZzhG+yqRu+wAFQAd/
-	L58QIv1HGiT/0qiaZ9xEATkSuCW7qnigN45HHsg==;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793140514; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Coul6SNxkotB6nsLmMr85PRMtIxH5BPRd6LsWhPDnGsx3QX
+	r3ZD3HD2+n2RgYhNN+lrc6n0NQL+IdPp5hUA0AO1GTdjmzOyInQZywrNCoW+uDGI
+	DoJ3YU2wAH5k1zaKv1QyJCNcChZcrIbfMRPAbWkL0tMQhbeA/8lYQhtD/PlT3Ecj
+	rVp5Uqluo7JqQ96BahMMJiOr7+8Vaxu5q+YlOVyOgRAYEZKLT/YEV0DaHRxyGelh
+	GnMuoNsA+hddzf1SvrTJ9XthMHEV+GeKZk867H5MghI5EqoiKO1m42Q7SrLcNbLq
+	6KRWCQwUcMBdUyo9BCvAoqB+yqB02OAK5+sgxHg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:+Aw5GmkGeEiSZ2PV2AoxZU8Zzev5PjXiu9F9ofEqkic=:E1iBp7U2zW8yYr7l0wodpuD8FM+p2purW3WodzaOLto=;
-X-ME-Sender: <xms:OSThale8tfRcRZEM_v3VVtEbHWQ2vM1jT1BfqmRNGDlHfk2JVz0kDA>
-    <xme:OSThaiRWNBkB3UPEeZIUcK9ar0ycZMk-Vtfnlnv9UnghhVHEpRPqp4-1JkEltPd-d
-    1R46HJrNkPugbGCZFn9y-M-k29b14Er-imvFg2x7Z9iQztmG9AdXeA>
-X-ME-Received: <xmr:OSThakvDafWcANOOZCaBDbl8Dim6LRwbPZo5Xgi6CFI3vsr2uNJ7HBP6-RSUzcHtf9AJ-ZNXgABw9xJSj-qtV5lMWdd01CcdHoiU>
-X-ME-Proxy-Cause: dmFkZTGS/d769ZeekagL0l73fhIgmv6sq718LOtOYe8T3284ti2SjllX6lRYsDGQkt4eEb
-    foHGp2xtDpViMlqmAfQGBpIXF2uwo2hrVrz2UDOfeSPMYfquPCrrRzkmhM65L7FENZ43UF
-    udOeQ+YldKH6NUI6aAUovW943eaUx3UXfJV/UpqTMu34mBCXsSX8PWpB00dr5a+O4E7Ixi
-    NyyVgF0MIzWoUoYk1IxUUAs6mRgruo7ZQkpep6wXK+sVHeNXpn+NJ+tYUAnauOqvi6Rvqb
-    f7txmdiomjlv8xGzAbs1RPHb7RloX1sCD1j124/JRZjKOFQoFDzuyE/BVH7kQVPXpDJ/kt
-    9jlNs/dtA8s7m3LXL8k5KKoERLmTYO+XzZH5E1P+M3A9OC3Y1WkPc4tc4nBeJK7zUyNZBN
-    nGkg3mOX+reJdmHiphc1p9ScEzpqkRd86kLPu9yg2jwmoFsE3flZn/tl1nxs7pV80cgrb+
-    /GXxBUBYk7C20z6bEZdE1CMta3CI6a6gwWqDvVUnrAqBZqADzu+fzsR0+2pPYuAUyjUrBr
-    wJ23aTEr4fyog/CR5bcIyU9Y0XL6fw829JBqPDwUkrGXK6KoVXZeW1TL1LJG31imfwb6EO
-    97dO80KVIMJQBavrQJmmxfKZV0Or7quOjbxHynU85j45dKW6weSGQ1qrQcOg
-X-ME-Proxy: <xmx:OSTharemigu5Fl31dpLoaHGQYscL0z1snCHZO7LITutlkGLBXWaN9w>
-    <xmx:OSThamb0wwZbMjciN68oDiyRYYdw8naFZRbz96i_WXEYPmUwtOuVMQ>
-    <xmx:OSThalaxwpEA2YwJMvpVi9jmH_Er45Z9fTGSbmWi5wpSLzQ5U_zPnQ>
-    <xmx:OSThajIWRI34npa5s164fl9ZwuIVTqtHGAjPLKr1YKQWHIrn_Hgu2A>
-    <xmx:OSThakDC36XEdPk9NlGa2RakwFITZ3GMjVLWHt5ALvqj03YqsPxOkAgS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 18:22:49 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Venkat Ragavan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-  Karthik Nayak <karthik.188@gmail.com>,
-  Patrick Steinhardt <ps@pks.im>,
-  Harald Nordgren <haraldnordgren@gmail.com>,
-  "D. Ben Knoble" <ben.knoble@gmail.com>,
-  Venkat Ragavan <mail2venkat21@gmail.com>
-Subject: Re: [PATCH] refs: fix loose-ref seeking across directory boundaries
-In-Reply-To: <pull.2258.git.1792067455341.gitgitgadget@gmail.com> (Venkat
-	Ragavan via GitGitGadget's message of "Thu, 15 Oct 2026 12:30:55
-	+0000")
-References: <pull.2258.git.1792067455341.gitgitgadget@gmail.com>
-Date: Tue, 27 Oct 2026 15:22:48 -0700
-Message-ID: <xmqqzevyg4w7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:j6cHss00JrGg7nTfKm8ROQH2gG8cnpQBbXU27DDpGPY=:aFSdjcs71XLP5BbmoyuFwZars1+V5DsxU19bkGsriW8=;
+X-ME-Sender: <xms:Iifhanu69AJaXVCNAvyrLdfqU9mAgHYcFylNIorKy4RGrhpZDsWY0Q>
+    <xme:IifhajS8sJC3PZ526DHUjyxftkJKzdLAUjBu8-1yG42R_S8pNN5hKnYEdkmYlmLIx
+    5kdqo6-SDq4CHtPcpneC-vEfqu2pjjX649MzyR4x04m-fmN-d6kOtJE>
+X-ME-Proxy-Cause: dmFkZTE5umLco4eGDVLCqRNu7uIkTbvsX3cX7xz3nZUn4ujbUXV1dMzFe9LmFPbRXv79t9
+    hGclPW5CU/4UDO7w9y3rpxYIIO9vPJCAnO+Pa5e4Gj2rB+weosSSeYNrK+72csJ3yCRjEV
+    tQGzoP7s2USKG4G5ptHcTm7zT7y/g8+yyYGgp3pu1j8OZwcrTxZ9SnUWRdSkKJhsDkL21H
+    6wAlXIoKT4oczYh1hpbayxLf5Nuz/rsngIcnXylxzXGR/HxMW4ZM/uiq4zTYNwIJ0wy/Ko
+    aVucOhF2HN8/VF/ZHlwK5wUx/vq36tUgsBpNTAHSNcp9k0VbHyPGlHRiQ1gEIwBBK9Pal0
+    wH+2pVR8wUORO68zFH5lyoRPeahFjUmY8jUI+bgCl/wZp8tmTpD8URQqDr5CAjvozqFun+
+    uijDyt33m6vtxgZi9WThjJxphKfRL4+1cwA9fLhD/x/0/M/b/0XSqCLXGL9W8gyZhPSBjB
+    Wh95X5fMUQUquAIePNqS6J8dimcucbAaAb3xWa9XeXnidsAYA1hTbAQ3aqypDqd9Ae60At
+    kGIct4Irh5fIkktRbJY4U0sST+ETslH+DFwel8aOaOYQrX27zCkPrpHHFSbkHiqWsDswWa
+    Q2N2VN0xnPhnQ+AqrvbJ3NfHXvccQ8cAnehSR2tk37TFIwB5O7zojp4Ng2zg
+X-ME-Proxy: <xmx:IifhakT8FidTqjAYgDaVXu1m0B2VWVm8cBiQc8oCGmvRLexj3HUi1Q>
+    <xmx:IifhajSrv1fc7FsGYe_ASYtw_olgW3Zpr1B10NtdNUj9gj3xwpu7oA>
+    <xmx:Iifhah5acrGK5aieN6Omp8XCNIN_h2H5Q6wyhKPHePEB5_26VeqxyQ>
+    <xmx:Iifhan2sS2Z2hrYujRuDWSUr1lerX6n2xEDeOVyamcvEMtduglZpDg>
+    <xmx:IifhaplcCXbBPBBldXTWPv9g6xlnYANSe_bk32Ri0Azwi66cA2-vXkRc>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A59E4782738; Tue, 27 Oct 2026 18:35:14 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -129,28 +114,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+X-ThreadId: A-mM4CllUbeJ
+Date: Tue, 27 Oct 2026 18:34:54 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Jeff King" <peff@peff.net>
+Message-Id: <fbe5442b-6f01-4a23-8282-6a940b89da43@app.fastmail.com>
+In-Reply-To: <xmqqh5i7j6km.fsf@gitster.g>
+References: <pull.2282.git.1793019999896.gitgitgadget@gmail.com>
+ <E45A3779-A25F-43BC-B490-1FB836EAEF39@gmail.com> <xmqqh5i7kpc0.fsf@gitster.g>
+ <CALnO6CCGLFwFH73of8QHnsvFjHZ8d86CRhQgV88z=WeKun6abg@mail.gmail.com>
+ <xmqqh5i7j6km.fsf@gitster.g>
+Subject: Re: [PATCH] glossary: use "object ID" as the canonical term
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-"Venkat Ragavan via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Venkat Ragavan S <mail2venkat21@gmail.com>
+On Tue, Oct 27, 2026, at 3:18 PM, Junio C Hamano wrote:
+> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
 >
-> When seeking through loose refs, cache_ref_iterator_seek() compares
-> each directory component without its trailing slash. This can confuse
-> a directory with a similarly named ref that sorts before it.
-> ...
-> Add regression tests for shared-prefix names, missing nested markers,
-> and markers beyond the end of the ref listing, using loose, packed,
-> and mixed refs.
+>> I can't speak for Julia, but I read her attempt here to clarify things
+>> in line with the ways folks usually use "ID" vs. "name." Of course we
+>> don't always want to let what other people say dictate our
+>> terminology, but in cases where we can make things easier for folks to
+>> understand by using vocabulary in line with their expectations rather
+>> than subverting it, I think that's a worthy goal.
 >
-> Signed-off-by: Venkat Ragavan S <mail2venkat21@gmail.com>
-> ---
->     refs: fix loose-ref seeking across directory boundaries
+> That goes both ways.  You can tell that to those who are subverting
+> terminology that have clearly been documented for the past 20 years
+> in our official glossary ;-).
 
-I overlooked this topic, but re-reading the discussion, aside from a
-test that confused a reader, it seems the topic was already ready to
-go?
+I'll only say that I genuinely thought this might be a fairly
+uncontroversial change. Obviously I was wrong about that :)
 
-Any objections to the idea of making the topic ready for 'next'?
+I'll drop this.
 
-Thanks.
+- Julia
