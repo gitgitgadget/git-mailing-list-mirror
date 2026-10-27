@@ -1,118 +1,117 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793084385;
-	b=QNLSJAOEv0XuRbhTePWD8yOaRMzK+hW1jmzTIVkTvf4D1kzXoIPh3+TF+SySlRO/cuQ5
-	 TJp3uQe+KjUvWBR4JKi9OHcek49cuWtPGlDNNFaSiP38UGEWda69v4iBob79v8/CMnZjN
-	 hhjGvgqPba09gp3Zvs83uk1GSmXW7kt5eadW9wjGTlvA6KY5hxIv6jP+I+Hk71ZA6ypD2
-	 sBCnIQLgXOiLDOoEJFiXW8+ZRDFVSDxCuC+fZzW8laku+xMqQ74dje0oKMrbTHGkK2vbH
-	 H4nY9aAqfwhxo29CQb9EXySuYAEGCVTOe0V8ZHAlD4zkxRd9uXpKeUt+xaoaLEKfRng==
+	t=1793084387;
+	b=C+DLIF847h40BCX/EjpKsEg91i4X9m753tcJWBhnw6VWtRaOH0gxndDn5WaAamZTAyty
+	 yzSr7ElHhFnwhmZzXHc+tJcexxwo5BVfycli1Da68ikAo2TyL2CUMJcb6ynzClhLBQGEx
+	 71G4GkhMXkP1wlQ0wR16OiC/gBxZzaTeDAIpebXwyvY3sLfkr9v7wIt/typRURqZdhczC
+	 eOyVL0Ij2iTBidR9PmRkAYzMBC1J5cktsjrUmm0i0Q6jig7OwDjW1drOhc66cx9w5SG1f
+	 9JbFonu7jpklMYG/Jf+oIcRDAI9uyIg7mPo9vk+qtlbFefYJSEX0IarQPlq8cfol5Bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793084385;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793084387;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=OzFuvfX09t5leQOEYtLIBstB+2lAF+umOHC5hkDxGVo=;
-	b=wXdJohQCqEiw/nf5mCv8sOT92ZYR4Ep+OJMFm0+Lt2uuVyVxaEgSf/y2I7Hu9g7LxcOV
-	 SCELOMV1mxV9Pt6tbhjjeIXH0ccX+/iUPWDvcR8G2ahHJdV/iq8R/fiMyhP4UB3h3VSL1
-	 vek3dge9QdTspZgCDh3g8EHMm2lV8y+525DWTbzCpwxrk8SjkSvjexZE3x8u14fSdbcER
-	 fQibZl5Ub04xMrWinNzq3kTu+Vi1FQY4wrhGKgsAlJtfM6MAgVA+ZzDoALWcNIDwqs69u
-	 HcWZX93He/YcA4M5TLu/oC/YvPleVurfx5Xr+Ng50q847m14NtjsCb7r1kz2ZYKcmCQ==
+	bh=Pur26WguYA5a3JPR8NdTQJZmr8hfGP3x0U2h4+ej//w=;
+	b=QdtBpn+UJFq+IuqjxgcCsQqaW8DN3nw8V7qg+eecqI1I+yk+xzSrXStscktEsObuccfJ
+	 cDYhKxuhJ+BzND+tOwBfVUt+adTMs+bKaGxxj8wB8kOlnsVPwDOXkugQln46M7PiWtiXE
+	 KegLljlcGYBOLIiHlV8fSRr7xBvy3ejd76ZviTa0PJB4DtM935ajUkt28w97vlQzENaMI
+	 SNt5nc67PefpHj6MRvOQ3gi8nQQqaauEL2u73W16VIKvnz/GRrDw293YK6Rd4pv2r2Tyx
+	 PpdK3FVFUkfXwxoioJRuXOml4FcdHcRnUCqDFSSWOdXKDseQhhLMb41kt5M72DImoRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=c2tpqpj1;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QncyKXly;
-	arc=none smtp.remote-ip=202.12.124.151
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=m3vB1UuM;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=v2lEB7l0;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996C3606A326
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 06:59:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 996C3606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C71606A31B
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 06:59:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3C71606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=c2tpqpj1;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QncyKXly
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 015B01D00114
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 02:59:43 -0400 (EDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=m3vB1UuM;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=v2lEB7l0
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 74EFF7A00E6
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 02:59:46 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 27 Oct 2026 02:59:44 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 27 Oct 2026 02:59:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793084383;
-	 x=1793170783; bh=OzFuvfX09t5leQOEYtLIBstB+2lAF+umOHC5hkDxGVo=; b=
-	c2tpqpj1Tp0aeLLy4H/yGvYK+8KxuYfKxyrr1GrHILiMmrzzAqHdpmvjSBAFg1dk
-	60EpQhJaPVKscvcxGdONUowfLSKBF1oJ3U5gUdR++Vmgw1eZMKJ5sKh3f9pd1mBe
-	2AXWqpITKAEOhNzzakeqYKeNSYPKlUXQ2PqlD0t/i2oX2MhgsSgEHIFxPxMVZriz
-	a/WWMQbh/CuhL0e+Ksq7rawTkfCNKBaoP1H2NVmcG7iDczUAvfimdvDCMF1uWr/O
-	lAmmuMxOa07TPqkHIMeSWYdPBt5VfJKCz8sKVeMJIeJQ7wACMrm1PQhoANU2kBAz
-	Ea5LHoPKdsijJhSUSK9ptg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793084386;
+	 x=1793170786; bh=Pur26WguYA5a3JPR8NdTQJZmr8hfGP3x0U2h4+ej//w=; b=
+	m3vB1UuM5mrs1PVjVWedMd5tHNDYMAXAoa2lpBoyzBCcCwtGkB+QckKXqaQDP4yI
+	oZa86OUGQ9lYR7mQBvyBL3gojDF2v+L2siL9T7cuKQeWRzpxa3vgRaegQzFbh+hX
+	77zmMBRG/AzDJkScvCvzmAY6+mXn1EwreokydMsFqtc5VsP0e68a34YfMGGB2adc
+	mq1wdSatQ2fysR+cq5yaTpfbKty1hv20m70Y2d/PdJuc0GcJ9Y/GN+pzFRq3pUM+
+	qyIYlJOBAi7vNShqBFdsYrSuXLH7r+VYiU3CaPkY6JKlc1VG4Mz5CAxftxCeBlz0
+	AQ9qZ77uSYSu3sQoaiPgxg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793084383; x=
-	1793170783; bh=OzFuvfX09t5leQOEYtLIBstB+2lAF+umOHC5hkDxGVo=; b=Q
-	ncyKXly6nibc+4LhKBPXZjSIVPQTOuA61u3g5OFamoacHL5l+CP9IdciXlqkNvYh
-	4RyH+Nm6I/8o5tFziVooWD8aRbfLqnIAYHU5+ktOFEka2NKKIRa+l+7qtWqQY9OB
-	aPQ6djDzrq2mQqDCvuZnjun3Hn9RUbi9T9FREHgUIK32Sq+ADUrl+20dOQopXXDK
-	9DIOGlSo2OAW120CUF5+GcfIq/XAV+EFm+nIvSeIXaZ1vJBH8k8+Hk/ADmeB0fGs
-	F1qLN6smba/HmERu2Rb6dTB933wvPZoW5CUX3YHci0eFMZadKuEWeU1RyTVjGZjA
-	KKSx+PdeLXec+0R6JDbxg==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793084386; x=
+	1793170786; bh=Pur26WguYA5a3JPR8NdTQJZmr8hfGP3x0U2h4+ej//w=; b=v
+	2lEB7l0kdfSsf8wBfyR116Vh4sYcFS4pgXdBZqLmHl9jJb8bLtls61Q+8z79GhWP
+	BQxMmFdV81UCeaFWvTse8qVNQzK24bbl6f6cxegPSasc+PCJ8j7MqOknPDWPzrG/
+	Oddgn9vDWushoOfT++ALOc8ngxrCi3cyTLXgPrCGdgkjai4mvI3lDjfiDJ35NPGa
+	VEy8sm5mcjYJNTZyd3cJF2tS/mfZX772Bu9FZaFpMbrmYTPkvBcjMW9Z1ByCx5M+
+	A1rXoYiTFUy0SYtwupQbDV48V7dp3gsfKGjJJIa3Q64yV2bZv+xhvSNueMJc1QFI
+	GgxhZhfCqeSQOhZ/NY1xw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793084383; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793084386; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:VBjSuKQ1fOc4prfFlppGbOK92ZuD2OGYltJh9SgK5WjFeRp
-	f/HCk45+0z6vaZH/Hrlo8zFV4L2cPhO1nIoVaF1W1yWLAzzX+AYgZN/Sx1r7fd75
-	FHhmlwr7jf0bwb4EC/RSKiqyD2LuOT0KVXdhmTNDxBlLEmneUqb8Bn1mJ2Uo7+do
-	FLwauxTorTyT6bE34Uy6XKIhOrR7fuvx8vOmfYkx9em+HZcu5czqH6I65mFmJL7I
-	bGv+M5Z2iUOcrMa52hIIFVYq1b3yJplDQbJPWehiJRQrOSsVYwEOQdaRJXoDzgFN
-	OKvZBhq7h8lsiADJNaLbKRd0XbDysmik+Bz6JFg==;
+	s=fm2:rsa-sha256:vGn8+grJZTAH2Ql89NybStAO2dVPplEjeDpupPdEpbCj6l4
+	43xg3WTCHrIUnwMTkxwltm/QCwt2DhQwu+1ZNdo7iNX9KenwMGguwTgJvHRsx1Nb
+	plhWSJcWA60cizlF7xFRqAUtDAYyCZ7Fk/w5tRcGMWnEGU7A5VriMMvuIvLKGvpw
+	mtPJVI7yI35m5Y8VT/LhuPF1qefthMJ3OX/gC/cumQvxA2OZsKDX3GGKApkv0vPE
+	0MK6Zp6ZqKMNDjDoiPsq8rgIfIZB5kxQjP5wkC0mPcZtOweJV9RJrd4SwW/D6rRC
+	KUYNynEcFhTnYlNg4Uf0e2ryhRpE+WZmgWRkhdg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:iZzCeAOsFmkyAzWiXaNj5jV65rd6vUynv5IOeSSFbb0=:7fhotmXLJEYW8Jk9XH2zZ5fK10D3UgMpv11DVobalW8=;
-X-ME-Sender: <xms:30vgak9a1jdU8HiN41-C7SnhtK9eQyqc2ZvtkcYW6NekMuXyB-dU9w>
-    <xme:30vgakJlDdDE_6hSsbyn8cp8c_AYXGWNfIkVPdTuAPA7yWGUpVhgtqREVdumAXHz4
-    dr5HmXCxn0Rlq2A885UEQjUBkebFQ3bFtLfYIoWbvl0WpcNOUinq-wz>
-X-ME-Received: <xmr:30vganZxA2gIbN1xrvyh31EgbnGuvYhI8Otj8F4JoTbiMMC95Q90TA>
-X-ME-Proxy-Cause: dmFkZTFdAx1Kb/Rt5xZ5JGvxKgxHT+05wvq5MYh/dlyjwhPl/J5goSmirBj+lxUlhK5dmz
-    N3Fp5zomvm5ydlBgqs8+RmQ7bJWR17EABYD5P0VTOWWecHt/AsCVdMtMSVtAOFDd0GnHsR
-    5U2cYLzwDEVBbfMj2xC5zK7WuoQ8CMOlvqRZyD+ZwnahQvbfQaWaUXnhJwsBuOTG4HM2/w
-    rwF1jsZzo5/5bjsc//rEiiQCHjRjFA76GREzIAhlar+B4rbTTSAOxNTqwFceBwgg4w2Xp4
-    TFr0+6ggbUkDOQzl7nAhA/vP7b52VLFPGTj2sXTyoo4sITc8QH+xu9KpiD8q+tW+/bWEOB
-    nIxKGDbwdEGPAstQryod502a2n655s6K3w0OD6IngGY0hX011x3pB4CFVxdT3mmWVmAyYi
-    NAx5J8XOzCg/010zyH6/7OYC7cg/Rp5tBd7Yg02fJ2tA0WXVkVXPqONHmzSNQvaOYV8UXW
-    onq3E4lqzwRuRgrCaVp41Hl3PF9Sw0PrwGwpPgJPLNeXWHKGmVrMG92cdOVdvH9v9kKhkC
-    DnpByWmtK/iUWSLnH8ABPl2yUlW0+HyPpfhhI/jGGo8NMa8fq4gtiaIonYe9udfIe/4qGA
-    DhBOh07x2/qG6wCUaAVkkDjL+i8GTMkb/1/J3cr9WttFJ3c/CpxTG6MvsqLg
-X-ME-Proxy: <xmx:30vgauLW-TaAPL2pO-kW7fywDaJG6gOMEgO4PWhkboM7mUd-Fo260w>
-    <xmx:30vgatAFKV4wai-CRPmavJrfY5hhsSGFbMrcZ05Bikm1-p8535DoIg>
-    <xmx:30vgarraAbl3W4t9ESXI7L73Cbs6vSyXLP82-6h8IQafOPmxqbrFcg>
-    <xmx:30vgaghHmM0sw79uX1G69lKGOUCPKWy00Cfjh1CiJRLLDKANYhmA5Q>
-    <xmx:30vgaqlB0h1H5FQ-MfT25EhMStIhyNWX0NYHjICLpeDQACgmQEU8prW2>
+Message-Instance: m=1; h=sha256:hdbhZNbp5GnR/GkbeULsVsglrTy3klMDlG5piGN4oiI=:cllaBROOdg/236wnSy5r4Zlv2ncRhUBjQxJfKjpus6M=;
+X-ME-Sender: <xms:4kvgal-QbO92ckwMZEYOvEclp4ePV32WDLyqfOIHWdIs0Q0rGVea4A>
+    <xme:4kvgahLKVKYOHEzTywBfmbPe79zd2yHWE2-0Ct0FeVZuYfFkF_-fDOghTl22FaVkT
+    9sgl13jrajv70RJ3e5MuqQF-_ugspH9jfvj4nKt7pGeEhmkYx66oA>
+X-ME-Received: <xmr:4kvgagY-vBirkf840FuGK1N3d_ukdCGURMxQKU0OOKihAkndmQd0vA>
+X-ME-Proxy-Cause: dmFkZTFiJTMoZfENaBRamlYo6jUwqtatctngIl80GnvY560Z60MghnxUHqRWClEMaPNhjz
+    GTSfIyE1WJQoctVHBHcB9oqzxn29/aS/wxltoM3v+Eddp3vW0tFqELsNHqwHObuah6wXaK
+    Tv3W/aRFBNzMbwsyJh8klZVQRosY4pcaM90kygnealj6l6R7jKJW7rGBVCVOU7IlyofFzz
+    PYAHj6mARsrC4ZeY3KSSkM1y2Ytx8T8H97lr6BJSTinbAhHkAZvYaI2wZD8NLtlhQzoz9x
+    R4bAE+ZnGpJDEvL6xN5pIz6CQbk0/nuwRaGJWxk9ubc9HnjcaEiwOb9xwryuT8o9+oUBPE
+    FQ/ok3UIVpx0gkA0NJrFT4CVJREQi8eHcfzqejFx4IO2sBHpudhhGnX8nN6KKIerj8b5O/
+    10e64qDkxEpa8QK4Z/8DKP46Ip/DwOJ/6EDmMliUwlodRkKV6yiWCszV4vKKrZUQm38T8u
+    RYzCgVDJcd3kl/OJSOFgBm75UDQUeJZBcOVSUgtk6zvyKnfT7QnSq2c7CR4dfvBWU9rro3
+    uqIrATBHs1e02ufnVMg09uB3gP6Q8H0LF9F+eIEwxyLZI+ScHYqMFfKfXAN94bwN7BMg4w
+    KgBbK7YGUl8vtUN5X/uSVXaNSBDzHXJhFptAH7qDpoVevWKohHjn3BIzjx0A
+X-ME-Proxy: <xmx:4kvgajJQMvJ_yoLc0m1zf-dRaFAVYrpHKsNUPYW4ZzW3n_6D0P0zOQ>
+    <xmx:4kvgauCM8gf2QGTS1yxbVQcWFCX0I2-gIOmBtGMc5T90C_DJqt_5-Q>
+    <xmx:4kvgaoq86HX9qQjWKENttAsQP0C9go1h1IVDhtW_F1UZbsppyLry7g>
+    <xmx:4kvgaphMhzaBYBBRXY-GtxB94n1CPDWbUEr8lVUnwNX08pNd-_48SA>
+    <xmx:4kvganlzt3FZvVcOiLDtHCGU20uidtMuGedMWuWcPRNvv53FbByOXRns>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 02:59:42 -0400 (EDT)
+ 27 Oct 2026 02:59:45 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ed947fcd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 27 Oct 2026 06:59:42 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 5f839d59 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 27 Oct 2026 06:59:45 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 27 Oct 2026 07:59:27 +0100
-Subject: [PATCH v4 3/7] setup: allow overriding object storage format via
- environment
+Date: Tue, 27 Oct 2026 07:59:28 +0100
+Subject: [PATCH v4 4/7] builtin: expose the object storage format
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,7 +123,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261027-b4-pks-odb-extension-v4-3-5d28ca0ea1dc@pks.im>
+Message-Id: <20261027-b4-pks-odb-extension-v4-4-5d28ca0ea1dc@pks.im>
 References: <20261027-b4-pks-odb-extension-v4-0-5d28ca0ea1dc@pks.im>
 In-Reply-To: <20261027-b4-pks-odb-extension-v4-0-5d28ca0ea1dc@pks.im>
 To: git@vger.kernel.org
@@ -132,118 +131,169 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 X-Mailer: b4 0.15.2
 
-The ref storage format configured via "extensions.refStorage" can be
-overridden with the GIT_REF_STORAGE_FORMAT environment variable.
-Introduce the GIT_OBJECT_STORAGE_FORMAT environment variable that
-overrides "extensions.objectStorage" in the same way.
+The ref storage format of a repository can be inspected via both
+git-rev-parse(1)'s "--show-ref-storage-format" and git-repo(1)'s
+"references.storageFormat" field. Introduce the equivalent options for
+the object storage format, as well.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git.adoc |  5 +++++
- environment.h          |  1 +
- setup.c                | 16 ++++++++++++++++
- t/t0001-init.sh        | 26 ++++++++++++++++++++++++++
- 4 files changed, 48 insertions(+)
+ Documentation/git-repo.adoc      |  6 ++++++
+ Documentation/git-rev-parse.adoc |  5 +++++
+ builtin/repo.c                   | 10 ++++++++++
+ builtin/rev-parse.c              |  9 +++++++++
+ odb.c                            |  7 +++++++
+ odb.h                            |  1 +
+ t/t0001-init.sh                  |  5 ++++-
+ t/t1900-repo-info.sh             |  3 +++
+ 8 files changed, 45 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 3abb4701c30..34812131bb0 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -609,6 +609,11 @@ double-quotes and respecting backslash escapes. E.g., the value
- `GIT_REFERENCE_BACKEND`::
- 	Deprecated alias of `GIT_REF_STORAGE_FORMAT`.
+diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+index cb8c1e72927..d2dc9b7a69b 100644
+--- a/Documentation/git-repo.adoc
++++ b/Documentation/git-repo.adoc
+@@ -105,6 +105,12 @@ values that they return:
+ `object.format`::
+ 	The object format (hash algorithm) used in the repository.
  
-+`GIT_OBJECT_STORAGE_FORMAT`::
-+	Specify which object storage format to use along with its URI.
-+	See `extensions.objectStorage` option in linkgit:git-config[1] for more
-+	details. Overrides the config variable when used.
++`objects.storageFormat`::
++	The object storage format used in the repository, as configured via
++	`extensions.objectStorage`. The valid values are:
+++
++include::object-storage-format.adoc[]
 +
- Git Commits
- ~~~~~~~~~~~
- `GIT_AUTHOR_NAME`::
-diff --git a/environment.h b/environment.h
-index b336459e901..c26ef92b529 100644
---- a/environment.h
-+++ b/environment.h
-@@ -45,6 +45,7 @@
- #define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
- #define GIT_REFERENCE_BACKEND_ENVIRONMENT "GIT_REFERENCE_BACKEND"
- #define GIT_REF_STORAGE_FORMAT_ENVIRONMENT "GIT_REF_STORAGE_FORMAT"
-+#define GIT_OBJECT_STORAGE_FORMAT_ENVIRONMENT "GIT_OBJECT_STORAGE_FORMAT"
+ `path.commondir.absolute`::
+ 	The canonical absolute path to the Git repository's common
+ 	directory (the shared `.git` directory containing objects,
+diff --git a/Documentation/git-rev-parse.adoc b/Documentation/git-rev-parse.adoc
+index 5b866af66a1..9103d54d53d 100644
+--- a/Documentation/git-rev-parse.adoc
++++ b/Documentation/git-rev-parse.adoc
+@@ -338,6 +338,11 @@ The following options are unaffected by `--path-format`:
+ --show-ref-format::
+ 	Deprecated alias of `--show-ref-storage-format`.
+ 
++--show-object-storage-format::
++	Show the object storage format used for the repository. Prints the
++	value of `extensions.objectStorage`, or `files` when the extension is
++	not set.
++
+ 
+ Other Options
+ ~~~~~~~~~~~~~
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 84e012f83f6..b73dff898f1 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -128,11 +128,21 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
+ 	return 0;
+ }
+ 
++static int get_object_storage_format(struct repository *repo, struct strbuf *buf)
++{
++	strbuf_addstr(buf,
++		      object_storage_format_to_name(repo->object_storage_format));
++	if (repo->object_storage_payload)
++		strbuf_addf(buf, "://%s", repo->object_storage_payload);
++	return 0;
++}
++
+ /* repo_info_field keys must be in lexicographical order */
+ static const struct repo_info_field repo_info_field[] = {
+ 	{ "layout.bare", get_layout_bare },
+ 	{ "layout.shallow", get_layout_shallow },
+ 	{ "object.format", get_object_format },
++	{ "objects.storageFormat", get_object_storage_format },
+ 	{ "path.commondir.absolute", get_path_commondir_absolute },
+ 	{ "path.commondir.relative", get_path_commondir_relative },
+ 	{ "path.gitdir.absolute", get_path_gitdir_absolute },
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index ec33c19bdfc..d2154eac8d2 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -17,6 +17,7 @@
+ #include "gettext.h"
+ #include "hash.h"
+ #include "hex.h"
++#include "odb.h"
+ #include "refs.h"
+ #include "quote.h"
+ #include "object-name.h"
+@@ -1138,6 +1139,14 @@ int cmd_rev_parse(int argc,
+ 				puts(ref_storage_format_to_name(the_repository->ref_storage_format));
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--show-object-storage-format")) {
++				const char *format = object_storage_format_to_name(the_repository->object_storage_format);
++				if (the_repository->object_storage_payload)
++					printf("%s://%s\n", format, the_repository->object_storage_payload);
++				else
++					puts(format);
++				continue;
++			}
+ 			if (!strcmp(arg, "--end-of-options")) {
+ 				seen_end_of_options = 1;
+ 				if (filter & (DO_FLAGS | DO_REVS))
+diff --git a/odb.c b/odb.c
+index 0649622bc6f..a0866e6c889 100644
+--- a/odb.c
++++ b/odb.c
+@@ -40,6 +40,13 @@ enum object_storage_format object_storage_format_by_name(const char *name)
+ 	return OBJECT_STORAGE_FORMAT_UNKNOWN;
+ }
+ 
++const char *object_storage_format_to_name(enum object_storage_format format)
++{
++	if (format < 0 || format >= ARRAY_SIZE(object_storage_name_by_format))
++		format = OBJECT_STORAGE_FORMAT_UNKNOWN;
++	return object_storage_name_by_format[format];
++}
++
+ enum object_storage_format object_storage_format_by_uri(const char *uri, char **payload)
+ {
+ 	enum object_storage_format format;
+diff --git a/odb.h b/odb.h
+index cb0505334a4..1340f606327 100644
+--- a/odb.h
++++ b/odb.h
+@@ -37,6 +37,7 @@ char *compute_alternate_path(const char *path, struct strbuf *err);
+ enum object_storage_format object_storage_format_by_uri(const char *uri, char **payload);
+ 
+ enum object_storage_format object_storage_format_by_name(const char *name);
++const char *object_storage_format_to_name(enum object_storage_format format);
  
  /*
-  * Environment variable used to propagate the --no-advice global option to the
-diff --git a/setup.c b/setup.c
-index 99ead7d90c1..5580aaa10e1 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2078,6 +2078,7 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 
- 		if (startup_info->have_repository) {
- 			struct strbuf err = STRBUF_INIT;
-+			const char *object_storage_uri;
- 			const char *ref_backend_uri;
- 
- 			/*
-@@ -2096,6 +2097,21 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 					die(_("unknown ref storage format: '%s'"), ref_backend_uri);
- 			}
- 
-+			/*
-+			 * The GIT_OBJECT_STORAGE_FORMAT env variable
-+			 * should override the repository config for
-+			 * 'extensions.objectStorage'.
-+			 */
-+			object_storage_uri = getenv(GIT_OBJECT_STORAGE_FORMAT_ENVIRONMENT);
-+			if (object_storage_uri) {
-+				FREE_AND_NULL(discovery.format.object_storage_payload);
-+				discovery.format.object_storage_format =
-+					object_storage_format_by_uri(object_storage_uri,
-+								     &discovery.format.object_storage_payload);
-+				if (discovery.format.object_storage_format == OBJECT_STORAGE_FORMAT_UNKNOWN)
-+					die(_("unknown object storage format: '%s'"), object_storage_uri);
-+			}
-+
- 			if (apply_repository_format(repo, &discovery.format,
- 						    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
- 				die("%s", err.buf);
+  * The object database encapsulates access to objects in a repository. It
 diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index c7c464d3a26..5e7c25e42cc 100755
+index 5e7c25e42cc..d080ab04a82 100755
 --- a/t/t0001-init.sh
 +++ b/t/t0001-init.sh
-@@ -869,6 +869,32 @@ test_expect_success DEFAULT_REPO_FORMAT 'extensions.objectStorage with unknown b
- 	test_grep "invalid value for ${SQ}extensions.objectstorage${SQ}: ${SQ}garbage://payload${SQ}" err
+@@ -853,7 +853,10 @@ test_expect_success DEFAULT_REPO_FORMAT 'extensions.objectStorage with files bac
+ 	git -C objstorage config set core.repositoryformatversion 1 &&
+ 	git -C objstorage config set extensions.objectStorage files &&
+ 	test_commit -C objstorage A &&
+-	git -C objstorage rev-parse --verify HEAD
++	git -C objstorage rev-parse --verify HEAD &&
++	echo files >expect &&
++	git -C objstorage rev-parse --show-object-storage-format >actual &&
++	test_cmp expect actual
  '
  
-+test_expect_success DEFAULT_REPO_FORMAT 'GIT_OBJECT_STORAGE_FORMAT overrides extensions.objectStorage' '
-+	test_when_finished "rm -rf objstorage" &&
-+	git init objstorage &&
-+	(
-+		cd objstorage &&
-+		git config set core.repositoryformatversion 1 &&
-+		git config set extensions.objectStorage files://objs &&
-+		mkdir .git/objs .git/other &&
+ test_expect_success DEFAULT_REPO_FORMAT 'extensions.objectStorage with unknown backend' '
+diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+index d115d2d9f98..493a78f2302 100755
+--- a/t/t1900-repo-info.sh
++++ b/t/t1900-repo-info.sh
+@@ -69,6 +69,9 @@ test_repo_info 'object.format = sha1 is retrieved correctly' \
+ test_repo_info 'object.format = sha256 is retrieved correctly' \
+ 	'git init --object-format=sha256' 'sha256' 'object.format' 'sha256'
+ 
++test_repo_info 'objects.storageFormat = files is retrieved correctly' \
++	'git init' 'objects-files' 'objects.storageFormat' 'files'
 +
-+		echo content >file &&
-+		oid=$(git hash-object -w file) &&
-+		test_path_is_file .git/objs/$(test_oid_to_path "$oid") &&
-+		git cat-file -e "$oid" &&
-+
-+		test_must_fail env GIT_OBJECT_STORAGE_FORMAT=files://other git cat-file -e "$oid" &&
-+		GIT_OBJECT_STORAGE_FORMAT=files://other git hash-object -w file &&
-+		test_path_is_file .git/other/$(test_oid_to_path "$oid") &&
-+
-+		cat >expect <<-EOF &&
-+		fatal: unknown object storage format: ${SQ}garbage${SQ}
-+		EOF
-+		test_must_fail env GIT_OBJECT_STORAGE_FORMAT=garbage git rev-parse 2>err &&
-+		test_cmp expect err
-+	)
-+'
-+
- test_expect_success MINGW 'core.hidedotfiles = false' '
- 	git config --global core.hidedotfiles false &&
- 	rm -rf newdir &&
+ test_expect_success 'values returned in order requested' '
+ 	cat >expect <<-\EOF &&
+ 	layout.bare=false
 
 -- 
 2.56.0.341.g393f52fd96.dirty
