@@ -1,86 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793101924;
-	b=E+XYCtrNTt3o+tDFTnoCZDM4FTGu0FkE5EeEOOssshz6aLLreN2ib7XXZk4on6Ibxdsz
-	 IrUP2Im5+4onmThuOEEN1+R6jMqDlIJlXQE2YZMSDT2KI7DX8ABrmH8x8wZ2svDMvm58m
-	 HZaGE4c8H1lLCrSs+sVBF9b5uTB3iLnWP8h6tqHKAVcAA0D0dFa3Sre4DvMfZwgBRX6L3
-	 zBnQN9NmW8ZWZZLOLJ0pwF5U6Dwx4xuLlth3+0zVxUxjjbckpFPdev6cqzS6bFLHqgY8z
-	 3RB7HiiVox5u8ptIfVNVz/dvTdb3UulUJ0W2HasczShFYN+Dk2wcxk9QGezeKTsQl9w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793101924;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.174
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793102220;
+	b=T9rgDh6J6YfPlmuYgfKG2jTtersedupyz6nUpgI7Y3o6EyGTrJe4yqt/pYtcqH11JqqJ
+	 8QwHF+AlWi6qivtUs7Bj2ZPcDHj3hTfMRNm4WcWIyo5l5hO9+kPf6GDm379nBYEMhGEhJ
+	 IrJPGEbr3o/SuHJOScbvlQT4B2/c/YUzR3uStuJdgnYiLc5djr41Vz1ni0adE7MSKIVPR
+	 MbK4thDNilu6cqp8bsdOL05U51YoxnL/0nUx1KAl/HzXriQE5ToSqUXD03yAms18aKEua
+	 lsqUtVW+x1amLzm/qgZksqYmXqkiK3X8PKdZlTF4/zg04wjKTDbBudDJVRc5eFQy9Dw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793102220;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:
-	 Cc:Subject:From:To:X-Mailer:References:In-Reply-To;
-	bh=3TBRz1WobxQgZs5Z75PwyICASOqiqUX1AC6Hu/tOxB8=;
-	b=JUyXS7m12dDwrN07hgB7FftVHNLifcq9XMdaQdRmRVpRZB4fJkv2jwMM3otchZpXP0LV
-	 fnRShVRZboxXMYTOtMpyHFIu1j55slQtyj5nnxikDIaa+8nW+NchZ75BEpxN6vV453wF9
-	 WCEHZCyjQeDMr6royN1qJUHaVXvNcLnbcwTQ+KXD651VWoABc70Kq3bjQV3+X6fCaZXKg
-	 IvIfHIaaTGUreXEcdev1c1rephknekcDxYxyjvCfoYy3dBJbGgtzgR3739YbdyYPKMeYC
-	 DIt3eJTLX5EK+Kn8syrNSzCJanzdymPw2jhz4mM1FSSCuXQeUaFbKo0Kjhm3g9tYOXw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=eZiWrNtZNJzA3VDsl7SBj650Zb5zRC9hiK9mMAlcDlU=;
+	b=SWxDRiBNKl2DBo7NHMU+WpuTjOXje2TSQyLd33YxASlDzZMsNkautfoCIkWoEGimcDC2
+	 C6U5dJuREFW2TJ4cKl0Z2Y+QcySezsICi5WiSZfH9ysRxKyFwFYP0+zijHfeF4ITJSKQF
+	 1uHOmlEg7hPHlfP9GQh+fFTSjYqUzmo56egdJ5tZxOTmYLguthPQbDcQfWVOcBAnbf9ou
+	 O/00sPqk5lqvJjz8D4y7UHV/f0B8VYmV0F72GtzJnLJsISITx2lU3JGBQYlSe8jCah4d2
+	 8N2G8tYZ4d9hgtU+cCKrIpEFmMiYRZ3YPggWsNxdW3WoHf9OEUfyXxob9Vk2UTtiadQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YXvJE+3H;
-	arc=none smtp.remote-ip=209.85.128.44
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="eP/E++JJ";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.174
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9512E606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 11:52:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9512E606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6649F606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 11:57:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6649F606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YXvJE+3H
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a208d93758so46286745e9.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:52:03 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=eP/E++JJ
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-8b10ac6ab7bso37496947b3.1
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:57:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793102219; cv=none;
+        d=google.com; s=arc-20260327;
+        b=IzshrxUw/KwjOv0agYHXEUEDayfHnxR97A6Y1A21XmlbrATgo6VDf6JWWUkoQxTkoW
+         v9SsIhsqDZcHtP5CfCTpCq7HFroRtYz9hahTpJhx4kcwmPiPA8R9XGDcU2RctFfqcU1e
+         oIIuMdLi2+PQSPbJy8/n1ZGGKabr6txee4qY0FpZ5LpETzv0PfOd7NmQ+lAbVaLnlSPj
+         BgLZha5L8QuMgjbhK2EPs6WGKV10oo+1/xT3yDQZ32xoh6OjYB4UbrK3bxv9xAu+Hd+/
+         hWCnL59tLJLbmToR/eeURF3CJ9KHHj+LFnA9qa0aaUw1bhN85ZvfyCG+kInv8G8tIAho
+         pYlA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=eZiWrNtZNJzA3VDsl7SBj650Zb5zRC9hiK9mMAlcDlU=;
+        fh=yh48E+bIdIF5bkOxOqeqFS6MqWS5L1IGeGCToXGaOZs=;
+        b=Ckfvb2Bq8FZuZ7mx50UeAArrlas3o9kLBxnia2d605wONFNB8RlaE6bx3YdwbETl37
+         scB7/gsqR2/oNK9RmWsgGreKzRRDRUKeYKAvUuw+ltUHUQRjKaia+hyXmdi9uHPIqY70
+         V41fNRjkJwQ+iXbUBfWhYZmhm2qTBYkB+ZFlRUW1N6I2qwEybCeSDR9GLE8SUWSOyFbO
+         pANQiTmwhM3td3yriB7ZoC28GujkdXhxQP3lPq7g3rU/tg6r7XiGSq87j25gd/2/ihl1
+         bcJmoaynutjR7jUnQzGbYT0hJFJuyR5ghDntui+dWY8fa2KHaOp9J35v9Gcn1evK4REx
+         w/iw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793101922; x=1793706722; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=3TBRz1WobxQgZs5Z75PwyICASOqiqUX1AC6Hu/tOxB8=;
-        b=YXvJE+3HtpnNMP3dofh0DCqu/BeGRI2Pstq0LuZ0Pl6r7LOksRnV7Q44lkidxuoD72
-         jUGXfR8+Av3VuUkAw4VeLNaHO51PYqa5WyltRY7yoKoyqcho8dMPwdZWZecF33moAeaR
-         k59I7X8XCAhRSV4YhHC9tqho2h7QdFNh/g0o9bvCx4wJazcxs9KxdaODGWqVFUO0+IPW
-         zUew4EYh1JCPywcDyhGUywWQItw2rC2Y79jKc2tq/jj19oY+Q19Wbx3Br5P9oxxuauuq
-         PAy1TcKx6UfOa4DW81kuxF341TouPPL5LLzsIVBh2DdBKJseFBGFTk1kBoVsmQwajjTq
-         q/VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793101922; x=1793706722;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1793102219; x=1793707019; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=3TBRz1WobxQgZs5Z75PwyICASOqiqUX1AC6Hu/tOxB8=;
-        b=CobDbPb236TXib140Yeoh2zDuQ3KQ/PTJKydRgu8LP59XBHkFjyxX0MPI7WrwgtVvT
-         exzK7s3FO3IoDAKU7e6UJNw1Y8ubSPMq++wkpMMOOobbrguDPj5OgMl3/TZgxlsdjFPJ
-         oDmsZM1dy5BFvDwYBgdQTIbDvFtI8Hu8bwOsj6KB4DIqiAxysW0TLVA8ZXemFxJuTy7r
-         EjnNoioX6tdqAD+owiS25WjBRXRI1I5U0hbWqU+zFoKEfgV99NjSWnLpxgvu5YyMZ2TC
-         mF5nt6jzL6M5nf0eY/B97cqmj3aXyC9Ok/QI4T7j9EEt93Q8NO8u2ASRWEuhF91ROQlV
-         Q1Lw==
-X-Forwarded-Encrypted: i=1; AKwUvBxklDs2DbGSgRxSUwyDsy+vHpZ7UafDwYc3v9zE1uMo/6XC1cqpypkppJKmgQAQBAuaabM=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLa/gQH1BPDZpx2QnewNcyVUy7CnqvqMRILJWkvjThPjfqchvDK
-	njRFNBiUMZHTgnqTYA7bB9b4Z9i3DvPiIFrrjHaMer2PGZnVPKUInmYu
-X-Gm-Gg: AYBFou2dWg1vtp+ycUDo9KRviL8sFHFWsux6Gav72YLP3oorwDrXw/5oz/aEhN2CVhT
-	QMImSi2Y9zvlQ9HfCOtYIL3sxO5TwHis54LD4shnxfwtJH8ezUPAgb7DAMeZfbSY4Vl6i/YASPW
-	HeBF/a3Wj4WVRmu0hQI5g3eyP7I8cvtAC3l+J3JOA04g2pUQbyoQsTA8ZgN2tjaeVFiUlHYCTf8
-	bpp8+rzjV6OMgo6o4elc2PF3uGUM9vw/OvFelJGIdU64jKvzvdlapT3u9EricBJzYWfdY6XzgpS
-	0c8dIlPnwWUDoH0+nvKieVlnhUIYR3Ya2wa2spc7ayRzVSRkxdo/FESv5CrtEnHhkPM/mIaHZ69
-	hwgGmGC2B21d+E9xQ1MGjz4Cy2dnvvu3szwxNoU5N1CbCotKc9gyzxCiJvuOvzSPI69b9+t0Mif
-	9QTM6oXi01osteVl4Uho27+NaWGKsow1VMXexzZTexxHOHa8NWrF6Mw/AmxdkT7B7RnB9ZXLcXb
-	oOLzICrBvULHkP3HSsDQpMr/Jc9anRTik+dI+Cy5f9Zmr8+XyV7utLp3knpEKWM4nlUnB0gcAnN
-	9BjZUKueV7jSxf6v2t5KfUezm/KPoBndBA27QbotDEsPsG9adJg6EWdXgJSn5vPUipJ6SxU/qmJ
-	INhU86WbyF9Z+v2/oRa7cZMYrSzBK1pDx39wvZFxHDO4mAjy4muMP/1C9UaCSmecJO3NdPXwpfV
-	cXFpPr
-X-Received: by 2002:a05:600c:4688:b0:4a1:e69d:90e8 with SMTP id 5b1f17b1804b1-4a35aca5a1amr176538645e9.22.1793101921695;
-        Tue, 27 Oct 2026 04:52:01 -0700 (PDT)
-Received: from localhost ([2001:818:c665:a700:9b4:dea8:96dd:9a68])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a0cc374sm275726505e9.9.2026.10.27.04.52.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Oct 2026 04:52:01 -0700 (PDT)
+        bh=eZiWrNtZNJzA3VDsl7SBj650Zb5zRC9hiK9mMAlcDlU=;
+        b=eP/E++JJzAPN1vVOr0rDOzIvp5QvsQ2hUtW/SNjGc952cSD6UFLfR69U4BNymf5IKF
+         YOkEo4q9vSX5O8v89K9wk3XMWBePhM48ESQxovqYW7U4IVLY0rZP7hwfSQJrCvpP9InN
+         VSR3HqeImjdsiquZdmyisGBqmvKy++6hgMfJx24B+WrYn0m9S8//zjBjAwoYIEXd/qiB
+         LTZwUm57R3knNAKhViPu75Cx3o69qjrF4OcX2/SMY3Rmn/8zBKFusrqxcR3BtmfLmkuf
+         W2LDrwlBqb0Ux4mHXEuQiDl1VRp/nUlY6nIkjI/akvuFrHMfIfO1HKdS5my+0L8P7O2C
+         1n+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793102219; x=1793707019;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=eZiWrNtZNJzA3VDsl7SBj650Zb5zRC9hiK9mMAlcDlU=;
+        b=q5vDj4IWMEYhTRY9F41tGVmXJO3hUS2bBcf3hE0KEcubARO36LipGCf4jm1/ED1TFt
+         8fDsucc7vbEaI8ZMwevwzrSCe5suwlspngZCoRqqWn+V6+o2fdSm/u/8CQC7yA/w8Fwl
+         McJFfPNBdt7agfUVM0grYkbNMotc2mIAJGLiQTNp9TWX3LBrpQU3ygR1HUa0xiwO4EXQ
+         LgM5uCDJo9yeiMeuw5KvbOYXKyvUXzR6S0Tco2zRpAS9VTCpQAw+1z5tIXv6/W6IHHb7
+         g38i1dEmDmPy/ZFMPu9c6TZNkUTSBU7K+qgh6wMWzekouPUfS14BZbuSq6x6kwAXmXX/
+         mAUg==
+X-Gm-Message-State: AFq9FYK2YIbBwyyP13oyAwgpxh0Aq2wkp2fpi/+sd3Jh18Y9Ti+hwJmr
+	i/81NRlT0Zhb951pHqWPCNo/5d9LIzreEFQFXkfkgzgkUBY0fctvZ7+EmgtyHcxV5rJ5iHJiFNW
+	OMc7s5EY1ASeNGdofUCKNDolTfi+yuw==
+X-Gm-Gg: AYBFou2Gcd1B/FnARO32I+7Hjolcmg527NOavGmSqKNUBWvWYDX30+wRZ9vajRLWyKE
+	HP9dVchgqWCh61GsYemUME3FRHsHBfHImJiWuF/7b8BIBuZBUtQHmav53aIBoMO72Y/hcXrHwJz
+	8s+S3llYqvxtFdAE7zSKEnB4SsFDtuaTi1NH5GGG1CYvKoiSESkT8WV412C1+b3lI7m4ckpsQv1
+	00MtB2bAUZRJXDDtyuffSNPSGn+YN9iPvnaNMkxr/EZ0lM7raaTeqNQTn3g7pmd1QwKyuKy8jt7
+	8BDIX3Lh1KudfTnrgLskV3FdqoFMBa4gRjF3xsvUedllVUGBWrEMspxfP1lKFX5DIKVGtZkvf4I
+	9kKmwQVIiJBybINg94bXhS5rmxDh6q4FSeg==
+X-Received: by 2002:a05:690e:4008:b0:679:935e:3543 with SMTP id
+ 956f58d0204a3-67a4525b8bbmr7431542d50.1.1793102219246; Tue, 27 Oct 2026
+ 04:56:59 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -89,117 +101,81 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 27 Oct 2026 11:52:00 +0000
-Message-Id: <DMFLKY90144W.2W4T9I9V2PEYO@gmail.com>
-Cc: "Phillip Wood" <phillip.wood123@gmail.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>, "Srujith A Poojary" <poojarysrujith@gmail.com>
-Subject: Re: [PATCH v7] diff-delta: use safe integer arithmetic
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>,
- <git@vger.kernel.org>
-X-Mailer: aerc 0.21.0
-References: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
- <pull.2276.v7.git.1793098852493.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2276.v7.git.1793098852493.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+References: <20261026132525.45414-1-fiendora5@gmail.com> <xmqqfqxsp3xb.fsf@gitster.g>
+In-Reply-To: <xmqqfqxsp3xb.fsf@gitster.g>
+From: Fien Dora <fiendora5@gmail.com>
+Date: Tue, 27 Oct 2026 12:56:47 +0100
+X-Gm-Features: AclHuK-7M4_d1-ws4d-ZIlupypeRBD0qojboufcZ5Xth87NuNm67O4YPUcwt1FU
+Message-ID: <CACWAS-U2-riX0ajiaE4VgiQWxmoWcL-d9-arrSASa+dnVxoyEA@mail.gmail.com>
+Subject: Re: [Outreachy PATCH] t1402: test --no-allow-onelevel option precedence
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, 
+	siddharthasthana31@gmail.com, phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue Oct 27, 2026 at 11:00 AM WET, Srujith A Poojary via GitGitGadget wro=
-te:
-> From: Srujith A Poojary <poojarysrujith@gmail.com>
+Thank you for the feedback.
+
+I'll revise the commit message to better explain why check-ref-format
+needs these tests, with the rationale highlighting its handcrafted
+option-parsing loop and the planned conversion to parse_options(),
+then send a v2 patch.
+
+Thank you
+
+On Mon, 26 Oct 2026 at 22:06, Junio C Hamano <gitster@pobox.com> wrote:
 >
-[snip]
+> Fien Dora <fiendora5@gmail.com> writes:
 >
-> For the unpacked index allocation:
-> - sizeof(struct unpacked_index_entry) is exactly 16 bytes on 32-bit syste=
-ms
->   (4 bytes for ptr, 4 bytes for val, 4 bytes for inner entry, and 4 bytes
->   for the next pointer).
-> - sizeof(struct index_entry *) is 4 bytes.
-> - entries is capped by (0xffffffu / RABIN_WINDOW), limiting entries.
-> - hsize is determined as the smallest power of 2 >=3D (entries / 4), capp=
-ed
->   appropriately.
-
-Hi,
-
-I couldn't help but notice that my review was completely ignored. Instead
-of fixing the points I raised, v7 just removes the information, and in
-your reply you say 16 bytes when I clearly wrote it couldn't be 16. It
-feels like I'm talking to something automated, and that's a bit
-frustrating.
-
-If I'm the one who got it wrong and that's why you didn't apply it, I'd
-appreciate it if you told me.
-
-[snip]
+> > Git allows later command-line options to override earlier ones.
+> > Added tests to verify that --no-allow-onelevel overrides
+> > --allow-onelevel and vice versa.
 >
-> Range-diff vs v6:
+> There are many other commands that take --[no-]foo options and a
+> later --no-foo overrides an earlier --foo (and vice versa), and most
+> of them do use the parse_options() API.  It probably is not worth
+> our brain cycles to add tests to cover all these other commands to
+> cover all these options that can be negated in a way similar to this
+> patch does for the ones based on parse_options().
 >
->  1:  b91a1ed54b ! 1:  8eb6d31788 diff-delta: use safe integer arithmetic
->      @@ Commit message
->           helpers (st_mult, st_add, st_add3).
->      =20
->           For the unpacked index allocation:
->      -    - sizeof(struct unpacked_index_entry) is 12 bytes on 32-bit sys=
-tems,
->      -      which may be padded to 16 bytes depending on compiler alignme=
-nt rules.
->      +    - sizeof(struct unpacked_index_entry) is exactly 16 bytes on 32=
--bit systems
->      +      (4 bytes for ptr, 4 bytes for val, 4 bytes for inner entry, a=
-nd 4 bytes
->      +      for the next pointer).
-
-sizeof(struct unpacked_index_entry) is 12 bytes on 32-bit, not 16.
-"inner entry" is ptr + val, it's not a separate 4 bytes field.
-
->           - sizeof(struct index_entry *) is 4 bytes.
->      -    - entries is capped by (0xffffffu / RABIN_WINDOW) where RABIN_W=
-INDOW is 16,
->      -      limiting entries to 1,048,575.
->      -    - hsize is the smallest power of 2 greater than or equal to ent=
-ries,
->      -      capped at 1,048,576.
->      +    - entries is capped by (0xffffffu / RABIN_WINDOW), limiting ent=
-ries.
-
-entries is capped by 0xfffffffeU / RABIN_WINDOW (l 157), not 0xffffffu.
-Removing the number doesn't fix it.
-
->      +    - hsize is determined as the smallest power of 2 >=3D (entries =
-/ 4), capped
->      +      appropriately.
-
-"capped appropriately" doesn't say anything, hsize is capped at 2^26
-(with a minimum of 16).
-
->      =20
->      -    While entries is bounded in current code, using st_mult() and s=
-t_add()
->      -    guarantees that any unexpected growth in struct sizes or bounds=
- changes
->      +    Using st_mult() and st_add() guarantees that any allocation cal=
-culations
->           will safely die() on size_t overflow instead of wrapping around=
-.
->      =20
->           For the packed index allocation:
->           - (hsize + 1) is passed to st_mult(), which is evaluated as an =
-argument
->      -      inside st_add3(), and is safe from overflow because hsize is =
-capped at
->      -      1,048,576 early in the function.
->      +      inside st_add3(), and is safe from overflow because hsize is =
-capped early
->      +      in the function.
->      =20
->           Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
-
-I recommend reading the review on v6.
-
-[snip]
-
--Pablo
-
+> What makes check-ref-format somewhat special is that it does not use
+> the parse_options() API to handle command line options, and instead
+> uses a handcrafted loop to parse them.  Covering the behaviour of
+> the command with tests may therefore make a bit more sense than all
+> the others.
+>
+> > This ensures that the expected behavior is preserved if the
+> > argument-parsing code changes in the future.
+>
+> So I would say that we need two changes to the log message:
+>
+>  * The rationale should highlight why check-ref-format is special
+>    and deserves to have this pretty common "no- prefix negates"
+>    behaviour tested (i.e., it is a handcrafted parse loop); and
+>
+>  * We have immediate plan to rewrite the option parsing logic (i.e.,
+>    not a vague "if we change it in the fiture").
+>
+> to sell this change better.
+>
+> Thanks.
+>
+> >
+> > Signed-off-by: Fien Dora <fiendora5@gmail.com>
+> > ---
+> >  t/t1402-check-ref-format.sh | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
+> > index 9dd64662b2..6036df0210 100755
+> > --- a/t/t1402-check-ref-format.sh
+> > +++ b/t/t1402-check-ref-format.sh
+> > @@ -74,6 +74,8 @@ invalid_ref 'heads/foo*/bar*' --refspec-pattern
+> >  ref='foo'
+> >  invalid_ref "$ref"
+> >  valid_ref "$ref" --allow-onelevel
+> > +invalid_ref "$ref" '--allow-onelevel --no-allow-onelevel'
+> > +valid_ref "$ref" '--no-allow-onelevel --allow-onelevel'
+> >  invalid_ref "$ref" --refspec-pattern
+> >  valid_ref "$ref" '--refspec-pattern --allow-onelevel'
+> >  invalid_ref "$ref" --normalize
