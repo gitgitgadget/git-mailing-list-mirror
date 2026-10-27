@@ -1,87 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793116742;
-	b=xy5/sKwO/8Qv3BU1aLSCJGPNBYHrvF+v1bUStFfQDWm7ftZ/tL0GMSQdnkMlMMpvzPwT
-	 q8nKITod59sBbPJcBtu5KTSnjhUN2I4GH67JNHXooZN0gTZPmG1ew3DzBPvHsu3VjcfGI
-	 +KQReVtP57GG74OFNUxft8Ap7colMSlTbp0wEAi8XimU+3qMJvG6a1De04QnkEPzBRjnJ
-	 I652ZS6s+9+oQDC2ctRCt49xoGQojTJb63ombeZh+0ibnU5oTtYPi8QLJNjFrzA84OcaE
-	 Fyci6buAkar51oqFJafxN0aE6uAJvMJFjD8EaU9Zp3YYmrwRIpYiaiUt8ymFJylqrag==
+	t=1793116934;
+	b=qieDTABjZBDOEbFwIJnEuNFM0w/1h5PTrejIfJ/6j0w/EQLi4hgNBkT9WoVKGqxcSfZb
+	 AaOV24WDBtfMwiuJaYej6vWgYoLrZ0sqe8eiTbd95ryHxxLm3pSAeHr6Zwp8Gt6jwCA5S
+	 YeatqQo1xHWC+c+d6osy9j00qT1afQo8LeH9GZzQXoSSt1fF6+M/xF9fUp8tJlN9yvI6j
+	 M0LdliTebRC2BvT0S1HzVaNa4AVS0tEYy7mKqjBqTn3gogr0VvVNkMMluxZsFcBI5vILh
+	 C6tST8H/ppEyJZ81ucxSXz9tIq5nLb7pCHDpnPCWBI6c0mdcQDvcHXMK8VsG5r5AMcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793116742;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:
-	 Content-Transfer-Encoding:From:Mime-Version:Subject:Date:Message-Id:
-	 References:Cc:In-Reply-To:To:X-Mailer;
-	bh=SDg2i96V7omk3+T4EfuFmf5cD+SjsdYeANih2WGwVns=;
-	b=SGnTtFBQlUWMuox2Vrd04sDAxHzKskKPcUZI0LO+7jj+ba6CifeHV7DPumioPPgu4LL+
-	 T2FJox0x7oxdKtRJ63NfBW8mTxf2GZ95WIerY4+O/T8evm7A5cgpLh3W18niUUlenbicI
-	 h3lQYL8D2/1ffaOeNZkOHKcXMOOFT6zShPT/IQGWeP4iWOh6bZgeIi3MnPVpXgFogafRf
-	 NtqTK+Ygqjx4TbaVuYnBjJpuQ4FVNVWUTMcar0ppDSdxanm5SJLGzyBLygFImxrJJdWdu
-	 sQdJddKf1vbYUYpxB09WbQHjkh50jSINwLKAVGR8nx79zpkXH+n+zaFFIvmlmvzndSw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793116934;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Date:Message-ID:In-Reply-To:Subject:Cc:From:References:To:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=SHF0OUIBnmclkHpAFOrmGSXXh/3raUtF240iTPWximM=;
+	b=hYQXVjLkBULkzuaGdoJbScTgt5ATQW1AIW4yeX0Jsaoab5EwpDwaTIVGqxvZE1xicAbG
+	 UXDFBpap+oyZwCV6ekRydhfzBZJnRW7mQ/rEvrUbceMOk2AfwZazZ+pjnpjBSANC+JsjB
+	 RquHwbHNLBgXmG2t8ybhR5zVb7az530ABTXL93fgzG4n9EV/R752Rw2dp5keCIiikSlxE
+	 Lakh/VptnCmUSneFg59l6sjbED6b+Jr49ml0q90tmaKfkUEK+FykKvWdB5Wz7GLeMHQwn
+	 wb9tl4eum+ob/tn8dtJv/Wsa3UzjGXMnzAed3OllVCiDZr+HjXhh6VtLkvPiB79VyRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QIdtqNrZ;
-	arc=none smtp.remote-ip=209.85.128.174
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=FdctLD7c;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Y3pfdNMa;
+	arc=none smtp.remote-ip=103.168.172.158
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414B3606A32D
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 15:59:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 414B3606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83DE606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 16:02:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B83DE606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QIdtqNrZ
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-8b0dba37a7fso37029977b3.0
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 08:59:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793116741; x=1793721541; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=SDg2i96V7omk3+T4EfuFmf5cD+SjsdYeANih2WGwVns=;
-        b=QIdtqNrZ1EHdLw/lqYII10ZlLKNeAQtZhtrmqH9+3yzfYyDtLkhH0YzhtoNXYieWzm
-         NKm88UsITTfbSsnRo34DO3SZsArGU1i6CBwsHD+XOSi3qLZD7iXhQvaZvH333lIvXFQD
-         AF4kRwOvoNkm82KsCjZscXgApBCAJqjDvx+e6KkTNHx4bW78sD97Ejtuo2FpYwOsBtMn
-         XL/osni0mdM4ogWwCdd9rCoBHtO/N0EODDlJQpDpvaYb7JCChCmOtBg2S0Wc5k/MWz4h
-         xeDJymPPml426pNppbVwge9+N6426nkYBwaNJyofdcimhzrjpHTOYHU5FhWYycvry8zD
-         7xqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793116741; x=1793721541;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SDg2i96V7omk3+T4EfuFmf5cD+SjsdYeANih2WGwVns=;
-        b=s6fTR06upwrzcOodbh3g7LioTMiNWZnn6o/hKt6CzU/ZexjJ+3lxnzCzAeniANuF2z
-         7Ymz/a8V80XjgofOqojt4GScowtINVVb6npGfYGayAbdkod6LlKcWFHs0+OPryX0t2xZ
-         r2PiFnyX1LNUUYXTaGHWQSxvYNF5t50hxTizf8qlUduOu1Pe+X+xBsBSVdrgQWJhckiI
-         vtl1PeoNbOG7qrU4KuSnrkYr3adxfS6aJ9Qk3pt3aUMbtNLkRzIoP+xrELTLjjd+UEmO
-         Q6Jrz16RbbtinfPCbgrOxCWUpz5mw3RpWYNq2UzTtc0VPdgVkHvgKq5H/0aPpVtiokMd
-         /2nw==
-X-Gm-Message-State: AFq9FYLdoEIiuf+NA/bHuSu7d6lQj6p22RpiyehmO1bih0UgrALWWNeC
-	fVVFCgXydNZ7k0fHAd2XtGoZDfjaMYZC7U5IeME/jC3HqEwO3D0ZwsG7
-X-Gm-Gg: AYBFou0PcrPxZXWVyCD/aO+aW0BSMqa+1ndtHoc6OrqoKSw0b7M60JF7aSbhZuSXzru
-	hBcU2qwvKZ3eaHGMAD5Y2JnBXv3V7H0NeOn/J9HNfDRP+lmLSiYtN//89bElw91XPNL4KOnCoV6
-	k7R8gfrR2dpph3LOVre4ua3cIt97rOPGaXTVwZ2CDI+jUyARXFxHtjgZt5bkBlwGqsAnhxFroWi
-	aFcnSlgpAqBZp+u+xDrwxFX13Gww5JGtrUCTCbQooVkl9sTRPx3aapvh3cHMhfAyvNWTzqTTWNf
-	+AarTVVGi0TusuQ/k5PXuj1HjqBDBYcS6kyAMt3FZBWD2O0xyANQ0EGndocO1x52pRpjBjRQz4A
-	CAjApaGdFe9YzTkXiylEqC/fMWMZPBHGwKvUX2qcJWi5bnPh7oYjUiwpAPxToVTnPu1C6cxvA90
-	8thLE97MESc25tksc/Y+pffoOLNmoplbfpODXlkK5aGh4LtjDXuu10XvISkrg4a3WowomrrnZRl
-	+XGqpJzmB2vFqCy/Bvn1hkLRuO/jhRqmU6nsK3ST0AZlKoD801KFd0vvMAcymJDIhHYANaHyxK4
-	oaM4CiU1E9QcTHt/kj9FL+EBAFI6u+ci2ApaWM87xzRQ9gqBmphAd5mcNZqChTjIFeTe2nxOrOF
-	R88HGO7V3Hi/BmxMfEoYGUaMTg3ATaQ==
-X-Received: by 2002:a05:690c:7108:b0:873:5bd1:98cf with SMTP id 00721157ae682-8b166c956f2mr62552017b3.65.1793116741077;
-        Tue, 27 Oct 2026 08:59:01 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9d17:3000:4455:c602:9aaa:33ee])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b19e5adfd2sm14851947b3.25.2026.10.27.08.59.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 08:59:00 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=FdctLD7c;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Y3pfdNMa
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B5CD614000F0
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 12:02:12 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 27 Oct 2026 12:02:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793116932;
+	 x=1793203332; bh=SHF0OUIBnmclkHpAFOrmGSXXh/3raUtF240iTPWximM=; b=
+	FdctLD7cVfqpEQNv6hGzJWaeM2ia5Z8ja7AEC7pERxock5exknWnOXtRjaqmj4kS
+	zMooHv/tj3hnIDf3S/5taV+LQ7YTw4zeHSvwBZiZw5ohvidT8E6yTUKp8oA6U3+I
+	I2VorNo2RJrb19geVam2VzPm5gulyAQJSs/Nc9SKjj5pP3iTbkv1XoiArXfF85b6
+	MkPYcuhzvYm4dVlw73qcXhkyhG/89KH82p54ekI0GUtCng+j43EJXdjcwMffcSF8
+	N2PDjcXa5r4TcAUhJZvfNlBp3FXw8KgvqPLmYZ01cGoVjXV85QJxg6iXtMa5YnDL
+	XHmpcHw3+hyzsZ2UihafOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793116932; x=
+	1793203332; bh=SHF0OUIBnmclkHpAFOrmGSXXh/3raUtF240iTPWximM=; b=Y
+	3pfdNMaYfMI1RboEJpMVEijiaiD6RodagETrYPgqaoQxGPYE7oJ95j++EV/wgUJo
+	6DzcId84dyE1wVrLg5wBKMi44lfIq4Hh1bmJlATLusHFcX3AsPuIE0+CmFZq9VRB
+	2VKdCRtcvlfxxu3JfHeBypOVt39sIcMC8SMD32ZTMgPPTZS9SW7qt3bL8HjxcKrt
+	diJR01pU1uaWM4LafBfrpa44uV5aguDF1a6+dKoTufz8Nkw06qzyKgpoYn8GHUbj
+	pWv/JdqZDXjRZkg2ykP7e+N90TMlTN8DlG+pIBuu4q97EuZ5woLpqfq29+O6oOgh
+	rgm/CylFnh3JjtPFG8DEA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793116932; d=fastmail.com;
+	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:aTz4uTyh0pHKn0jsMvxQ88AOKPYVVIqcPOJMMmmDZbBJpkz
+	EL2Wu77fArtJeTeCOC3F7Qmiib6JizwWKa0wAg2JBQQkTJAoqQwtF6zlPEjanajm
+	qw2RBOUuHjQggozT1+1p8A4Uh9GIQzaAi5QO+FmuBfpRXAhom1NABw4K5jWM5ziP
+	ON6wkDgPgQphDKHK4OMuxB/XrCbDjVrwITPBNsa7HD/75JsrrEYOnQZkf5C1VaX3
+	1KfEb2w0fj+FL8R6sV7JMztlbXvEtjlTf3NUbKmf/DeYd1yZ1EWC5hCIbqbIdKA8
+	l+HH2onRXZg0j+pFanuVYf7/k5QwjtHGCmZnzyg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:iB0YdRac2JafMnnTW/x+bRm/z4ydXMd63DCVTvu5ZYo=:G+6teiGTmX+ZX3HdmTLXyfu91nAW1rVrb94Sg+gpWk4=;
+X-ME-Sender: <xms:BMvgas1_JuctDv595D9_9IBKryjGrdQy5q7ljAvcVcQN6N4vn2fWHw>
+    <xme:BMvgauiPBEtPjHwKb6SZjgGO_3nd9AJqYgTyv0wPiE7iGbfSD3wPiNwaJR549xzex
+    AAgqippuKSeqtWjixDeiRBW2A_51XKynLckdYRGmv-dTmAqEfPSl5M>
+X-ME-Received: <xmr:BMvgaiS-mRhfjX1UoKx36t77KK8l5U7_MUrGQHfaNUDp4JUF11sFLX-ADEwrj_OH1WbxD6QAszRbJcjgEs21-g>
+X-ME-Proxy-Cause: dmFkZTE8yc0l18LqkraF+uve4cHTnMnssiTdugUuDBbuizwBSRPwQgFieVBlO35aN+lsm1
+    guuJyR6H0ioPqGnjACGuDdlPCqSglgVtTUDN5RpCOmUZITxFV6k1aP9YPeufZf7sPShCvl
+    3G4BLGD0GiGgw75iilMYA38adRu+omyRS8nBgeRHhhXgBGHNQ2LuoY3Q/ykPeXZNZiV7m7
+    ZB0hcKxGNPbgN/HIsiCW9ZRTXFNY1FnvVG1e5KPSNXI0YZKTfWTv7gD4zMPeaULiJmfT+J
+    42ZYPJachBymi3qtlnXF5XcQr2cHDkohcXwdPwSFjv9cgFyRaGzSmVQtuv1b+blTFixnf8
+    qWxb0ZmKc0UCNXIS5nshU8gsPSHF1pQFSlaH+6ZgZ+oQ+KVxzfFzhrccdJbgAhSvglRgjv
+    wflTLKUIAxpREMl7ZeEfnnZnqhBuLLFYQAmTAB5bZRixKS7yfe+Djcc/HOY+PSC0ABuWxa
+    2WE8hxkVtYT3u8m9NjY+9QXKukbnuAVsz5Fa1ftFCenDqMg/LPeV7mlHIMnpQk2eKGbJqd
+    vz3sO7aC5y0UURwXbKHDiG3U6AiBd8fu36s4z/aAPNjxXBSOYKIG3mm60R6+t7frGFKQUv
+    sc1/DrOJDJgSmyKnmRV0Cpt67bb+zyLyYi2MrKFfRm9MDWM9+cwIK0f8B/+w
+X-ME-Proxy: <xmx:BMvgavjQRASt6L-EmNs6oAR7bx-3eB5JMoI8MttQsqGLP8FXaFhdJw>
+    <xmx:BMvgai5FDcRAS4m_labQK_JYEUT1ipQ4fSIDJ3wG_PJWC-bTkIUbCA>
+    <xmx:BMvgasBJxxo0unsnZPFpMBZuh9Wnefc1bD2lZm-Ny7G7JOgto6S_YA>
+    <xmx:BMvgapbw711wNqrT_fgVOWBGai_5wBucuytc-DpflslizgMvSnWRsg>
+    <xmx:BMvgaigspgkbmsS6b8QhSm-3LVgmz9oZ7skkW0_HRKDijyOw2D-dFwsB>
+Feedback-ID: id2564aa6:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Oct 2026 12:02:11 -0400 (EDT)
+Date: Tue, 27 Oct 2026 12:02:11 -0400
+Message-ID: <03704f3590183aadc16d5d81bdc64e9a@fastmail.com>
+In-Reply-To: <20261027-b4-pks-pack-objects-repack-links-with-missing-objects-v1-1-f50f90651274@pks.im>
+Subject: Re: [PATCH] pack-objects: handle missing objects kkkjwhen excluding promisor objects
+Cc: Daniel Zoghalchali <daniel@latchkey.dev>
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+References: <20261027-b4-pks-pack-objects-repack-links-with-missing-objects-v1-1-f50f90651274@pks.im>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,85 +122,31 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] Makefile: let ccache cache objects built with the precompiled header
-Date: Tue, 27 Oct 2026 11:58:50 -0400
-Message-Id: <579C36BA-1418-4E15-9CA7-70C752A69FCE@gmail.com>
-References: <pull.2464.git.git.1793104847288.gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-In-Reply-To: <pull.2464.git.git.1793104847288.gitgitgadget@gmail.com>
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
 
-> Le 27 oct. 2026 =C3=A0 08:49, Harald Nordgren via GitGitGadget <gitgitgadg=
-et@gmail.com> a =C3=A9crit :
->=20
-> =EF=BB=BFFrom: Harald Nordgren <haraldnordgren@gmail.com>
->=20
-> Since 8d3a673147 (Makefile: precompile "git-compat-util.h",
-> 2026-09-15), rebuilding Git with ccache is almost as slow as building
-> it without. ccache refuses to cache a compilation that uses a
-> precompiled header unless its "pch_defines" and "time_macros"
-> sloppiness is enabled, so it runs the compiler for nearly every object
-> file, even after a "make clean" in a tree it has already built.
->=20
-> Both settings are safe for our build. The precompiled header is only
-> pulled in with "-include" ahead of the source file, so no "#define" in
-> a source file can come before it, and none of our sources use
-> __DATE__, __TIME__ or __TIMESTAMP__.
->=20
-> Enable them for the precompiled header and the objects built with it.
-> On my machine, "make clean && make -j8" with a warm cache goes from
-> about 100 seconds to under 30.
->=20
-> With Clang, switching to a branch that changes one of the headers the
-> precompiled header includes and back again still misses the cache,
-> because Clang records the modification times of those headers in the
-> precompiled header.
->=20
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
->    Makefile: let ccache cache objects built with the precompiled header
->=20
->    With ccache, building after switching between two feature branches gets=
+On Tue, 27 Oct 2026 08:00:28 +0100, Patrick Steinhardt <ps@pks.im> wrote:
+> In a partial clone Git tries to maintain two different sets of objects:
+> promisor objects should be those that we have received from the remote,
+> and any such object may not be fully connected. Locally created objects
+> on the other hand should be stored as non-promisor objects. The goal is
+> that promisor objects should never reference non-promisor objects as the
+> "promisor" property is contagious, where a promisor implicitly means
+> that any of its referenced objects are promisor objects, too.
 
->    about 6 times faster. The first build of each branch gets about 25%
->    slower while ccache fills its cache.
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2464=
-%2FHaraldNordgren%2Fmakefile-ccache-pch-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2464/Ha=
-raldNordgren/makefile-ccache-pch-v1
-> Pull-Request: https://github.com/git/git/pull/2464
+Wordsmithing nitpick: this reads awkwardly. You start by saying there 
+are two different kinds of things, and then introduce one of them,
+followed by a comma, followed by something which _isn't_ the second 
+type of thing.
 
-I can=E2=80=99t comment on the above, not being a ccache user myself.
+Maybe:
+In a partial clone, Git tries to maintain two different sets of objects:
+promisor objects (which are those we have recieved from a remote, and may 
+not be fully connected), and non-promisor objects (including any locally
+created objects). The goal is that .... 
 
-> Makefile | 2 ++
-> 1 file changed, 2 insertions(+)
->=20
-> diff --git a/Makefile b/Makefile
-> index a96be506b5..43ea5e0c40 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2946,6 +2946,8 @@ $(PRECOMPILED_HEADER_GCH): %.gch: % GIT-CFLAGS $(mis=
-sing_dep_dirs) $(missing_com
-> $(PRECOMPILED_HEADER_USERS): %.o: %.c $(PRECOMPILED_HEADER_GCH) GIT-CFLAGS=
- $(missing_dep_dirs) $(missing_compdb_dir)
->    $(QUIET_CC)$(CC) -o $*.o -c -include $(PRECOMPILED_HEADER) -Winvalid-pc=
-h $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
->=20
-> +$(PRECOMPILED_HEADER_GCH) $(PRECOMPILED_HEADER_USERS): export CCACHE_SLOP=
-PINESS +=3D pch_defines,time_macros
-> +
 
-This is a little curious to me. I=E2=80=99m familiar with the GNU Make-ism=20=
 
-to set variables for particular targets; how does the export work?
-Is it the same but with a propagation to the recipe processes?
 
-Would it be better (for some definition=E2=80=A6) to put the export in the 2=
-
-pre-compiled header recipes directly?
-
-And, what about Meson?=
