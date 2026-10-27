@@ -1,88 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793114400;
-	b=nt2Oyz3DjQVXQeVSNqH3Zebz3FFYqaMuBNSKQQE5FUT4ayVGH5LLXPTkpZ+iIpXKXf/o
-	 dUuhGw9PFzUPV4gzK/5sb64kQtVpcES7LPrEl+0U2gkoSGRLdt09czIM1zRwmmbNoypT/
-	 pqgSqhH/EEFPg84n3qu0SOfBGqBTqoYloEOK7iEZ03vidcdJmgI02KoyxXaFCj2VW8Lzy
-	 VytwpEr3OJ+oBVhtwrpO3iFoCkNav/fNl6swhVUVj9/32NIv3z2WyDlAkgLQw6168TVBI
-	 pw7KsMCwPX+oCZnrdM/tHY3rOU0GrM3VchphXqTvk12wNSozVbaosVktcbF3g7+KzaQ==
+	t=1793115450;
+	b=zp8piqWSU0lrbAN3+HyaX09KCbC9lQhwF3OF9DkApi5ak7a3ChaxQyDuzU7apHJ4w6W6
+	 UdrL4I96x6Hlwugim5eL1gjwHxGIDyAH6A9sKeZRier7LxDrU893neTNJXNZDCjPZgIxx
+	 coNu0FWW9TTn/fC6MBsDFPQ1hax61EKRkcagHW/rbny7ZfbNw1T0J3ua9Xem9DWXN3nXa
+	 /kwadsB7NgqWtmtRlhtg+m6oV2Zzo+b/M/wZZH2pll4YvIijxCuZ7llfaZsobhTQlz4s0
+	 DNpvv4Lj/U0sezJLQJ7l3rkjn5h0uHBMebgWLOF9iNH4nOIC9Zkf1K0O3z6MqgagCEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793114400;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793115450;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
-	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
-	bh=lyiy9YF4KQZRgwzGgvGGO+QMBNkd6cDKFLXnzTXxOdQ=;
-	b=QXQfj2Bx7nK2to49j8jk9Q/+dWU6DNaIlKPFhee+kV3pBLDBXxNcMhfMwwIcLbrP28in
-	 sYUvupyFKj9RAA584dv+1HbaNmQaD2BBKFSa0KACostdPJL53iYYWbjLdBeW7T9gGRsaU
-	 ax18o6vfZQIva9vTdss8AeScahGv9yV+64ni+CYf8GyvNbcRV3GLNCvL03Glv+PClLDUi
-	 6c9ulQflFFHMz/pmitmG0BNY0finMO9hFbjCq71V7P/XYwOx1aNd08fHM07nM4exm4W/d
-	 ArDE1k+cOrc1jVEzPkb9dknnxVQCkLZD4q+c2zDJXHUHP/qucmx+rGD9T/2O5Gsi79w==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=Kwyton4Mi7qmRDgUOQzVd61Mua6ApAI+S1lDD4jiS1Y=;
+	b=nIF7ZEq+Ibr02lHQ7443/LUCcXOfegKNIAAf81T1vheoEKNkitiRlnJue03AVBC4Hu4T
+	 r55B8gCBxx1jqVTt3N5OosZRH/EjudQVSYWlCXP9AZkpO09W2tOBYkNUFFePZwMUmYs95
+	 0lymvekmSrHM5pE8nK2PlbvaeF3BX+RdVPlwMH7roYbauk+7pMP7kDw2lKwO4rTv6TeLi
+	 kP2ivY6HzZ6ItIb7LURZHyvGcJXBobIinF5Tw2S5BGwtL4z+1fOM80hbY2EdTuzBQWQiK
+	 ByWBr9OQwG3ySrjWJMEOiiaKtR61H2W0pKooWUVigo9IkddC9OpGFj3d42/nWn5DpIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="y2h2P/zm";
-	arc=none smtp.remote-ip=74.125.224.53
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=c+4si9SD;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE915606A329
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 15:19:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE915606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419E1606A33B
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 15:37:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 419E1606A33B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=y2h2P/zm
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-67583c777abso1508258d50.1
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 08:19:59 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=c+4si9SD
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a2d6cf958bso17987955e9.1
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 08:37:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793114399; x=1793719199; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=lyiy9YF4KQZRgwzGgvGGO+QMBNkd6cDKFLXnzTXxOdQ=;
-        b=y2h2P/zm9DqGuJb0XgLQ5PN0uTkjh3LGSgFeWEVi+wzLlIa5bfcJn2a0sekWPvcRS9
-         TRhJKma3h05OZ/+IQWQUDla8Qj2wpyZjke0MtGory+XFVwLOyHQstAnPL7/Qw0EzZAIF
-         F9MTE9tqLSHKhk0acYNoB5/ZJE6c61e1qj6ATdLi94/5mTVSvYihE71MnPcZX9+0vLRA
-         xRkWZvwDsfL3KKWpqTlPIpQcsEe3Q2tdL99XtQjigq4WoDeBWLQuUrkdZhNv6HAi+x+u
-         Ru3fyYe3GdOJUItaJ2me/yAsaLD69VBO+z6h6OmnODuJ/VMGz10bF2h50iMZfEeXTphX
-         ykwQ==
+        d=gmail.com; s=20260707; t=1793115448; x=1793720248; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Kwyton4Mi7qmRDgUOQzVd61Mua6ApAI+S1lDD4jiS1Y=;
+        b=c+4si9SDB12F2pxnGIgbmAvwGk53SoVvGeDHIWD8oKlSfyJc6YkzbIQi2xd2sh2DCV
+         KQMeZ6qy9SIt7qL1lV6X1lCf4meuDjxcTUNEzo+L73HX+qvephZCO+hDQ9+I5so7ApNu
+         BSAxjDVRR83bxfobfwWEMuYwMxiDbXFs3Q4e/AeH3G2N2Ouc0ZNgDS6ma31Fy7rmNi/l
+         OXEr1P6eW1LZ8xy8TgQUdQ3Tb4/mUHeMKPzIIsIqXUzcJHlXDc4p3C5FHMqWwgBFxMNQ
+         tFTgpHrG2BWixlNgNjcSAke9vKgTfMxtakTwJWa8xcsl8zirow/05SmO5gbIrdOyHmRB
+         EnTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793114399; x=1793719199;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=lyiy9YF4KQZRgwzGgvGGO+QMBNkd6cDKFLXnzTXxOdQ=;
-        b=iQe76iHrzf6dopP0dLlX+Ok9QKg+vIwvUrj0ZC82g0QZgTq3aigTs47DvzS0oM5moW
-         5CrEbA3mGelc55sVkh6zZssIHKNNbgQ6JJfESROiOSJ5fv+xYLeD0jVy2wbz9SAx28uG
-         0ysspDuI8MeeP3feGSibZ0kqePW6yA5vhpLe9IKumosiQAWP5rlgHomHvCCjf/6DlVUz
-         KwbV7EMDMXdfO98uPCyxfwZH6WcywYihkgEfP1uJOSlspFlsfNQFlD0zzOaLK+gkdrqF
-         IuUbIcUQrU5YRx38uvSrvdOZ0opmcC3B7XAY0/oTA+YMClrfZYv2mZRj8Skc6dtA/G0v
-         dbjA==
-X-Forwarded-Encrypted: i=1; AKwUvBwIbc7UCswLWAgxXD+fvNdBLaB6/CI92Pymy0xjz4s8bj/3tRzfcFztJ6hR19YZoUMY35o=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJPt2U+BOikFX+TZf7nGPcab9VZynhiKdWiShoLJbpBYYlU/hnh
-	beHtBzIluWZIVFnLaC7xzfKzmWkepw3CIrxJdSx4DVeyPn0GTlVCFEv1
-X-Gm-Gg: AYBFou1sqAtNVIir7b3InV/JhuRsFSsv9ZB7Ez/hkAMSbNt+VGAL35soP2UzKTk3GTj
-	AR91i9FQ4i6HyxXsfJxW+4TW5RU85HnUy88DdHOZiws+2tMVAN/12/NAqMp5jI7qfG+a7QsLvXB
-	7UaZMCxe/O4tM5Os2LywViRpymiyheN+UOs8zZWJZ/WUkzJT8VD2n+KUHWHvfeiRhoUit3mh0Vh
-	b52GAIvzB3+QeFT0yPpYFX2/fFz7Kel920k0o7VxmBPVxXGTXUDlBtZN6j2qTWDxEUcixUZ1v/j
-	pkFc5DSqov2JgJPmfGODxNA0yM0VyhY/+ht3+Nod6Eg58Y4ZfKrFvy18CHst1pohH3lpZC0QPit
-	AwMf64KAUbKtBxjSxJfbc0SY3EfJhKQyaXiC1EmjJ7NYT3t1lqsLkXMZNHCdOmsqxW605q1AkA6
-	SW/Ckkwj65lpsXzOVX5A6r8H0Q6ckJaw7g/NeKDZ0Topnc9SkI8g2oEafaqWuPSH0o7WaQVQ0qB
-	JaVzywS9bfU8UgX/9E282BLoPWOHorOYSzkhFxIETl13Co2gr0QbCwLe2a53OM4pdc3ZURx//ok
-	/ANP3THbDpvFAjGRozdq7AOAqMBbAqi208ss579YYBdAGotPXC23sGFsk7nhH/pTs/UqCy+VAO+
-	J6++8PrJF4l6gBJyxskxBOm6oryrjag==
-X-Received: by 2002:a05:690e:dc6:b0:679:bfcf:a0fe with SMTP id 956f58d0204a3-67a6df14740mr2207328d50.18.1793114398744;
-        Tue, 27 Oct 2026 08:19:58 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9d17:3000:4455:c602:9aaa:33ee])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67a79f38dfesm327851d50.1.2026.10.27.08.19.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 08:19:58 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20260707; t=1793115448; x=1793720248;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Kwyton4Mi7qmRDgUOQzVd61Mua6ApAI+S1lDD4jiS1Y=;
+        b=arHRAHOuDcMQ1jBQ8mTfQD27DLZzDbqV36vcwjmBIXew184ViAxNml5eKaOw4I81AR
+         EUVXqBsZiChaUcYMWFCRZPlR6RRjJLH6s/f2ul+YZ/p4RBTWOomv5qlbQJne/qS86Lbf
+         oB9cf02/SsYH+826YaNkUu6v4Dh95aaDn0oJmaaTK4CM9QYNjZuJpo6fp6a4meLwc3hf
+         RcnjcXBbLrj9DbPYzYPRyXKNgRyUKS3hRuhlZUuR2S170Evmz0905i54RUblx72pVwha
+         kKCnux960mJUEY3xAm0nOsWFO7PXFmxmoiioxaDY1hslz4xAkIaLPI9lwVPSg7RclQ38
+         EMlw==
+X-Gm-Message-State: AFq9FYIq/dV+/0uF0LsFVB4Evcg6IpgMpbk5irim5NV1sI0IVnx9wihn
+	S8//vY31vT+cD1MaKRDCKWm5j3GDpjarsE+a7s5EH3ni99JTh1ORCRmuf1EqwBhT5UM=
+X-Gm-Gg: AYBFou2hRj5hkP2eiyJSw3gnrSs/RL8rsR7zFRg+wtzVtx/k0aSyod6F0yS7Ogiq5WS
+	prI0Kjx0reIyWj5d/cd9U92rY5c207sXQfxXQukz/eu+q4Xm5M3tKyQybz4Azy1BohrQ7/hpbH5
+	PbIlRnDjiLNxXyY5dCRLPFneovs1LKGoyb9NLSWGW1ozwZYQNQ5AEvAmr4u1nXMgrRmSrF2oWHW
+	liw5o26DgNiTGt75JsAQtz/pz6BUoEW432oKf1n7WvNsru/heS1/P27FeN8CNhUyxgcGHcIt+mo
+	TlndUiQTXvFiGzFDq9IY/OC0bjg2PdQXDA8uKDIST/kBKpioTYGe/b7gn8bI9qi0VcLYWnAtXK/
+	AglKpAb4G1lg2meuqLJl2uGtRfXjcjpbOhbwzRIL/2pK0D+egtJEkhif3wmR2vKjV0tWKwgga7D
+	uhyVTI2M+I74VaAa8MGU/nCcAhzfHjkOnV7eLOMb0papyG+gi9PqPKFXzmb6QZIlHnvfkrN6MdW
+	oxUVzEQ6eHL/nV7O+iBVUl6PGCtCPdu2HS9lV0AZNODxHbFaKP4O1m1EbLtYwwP0VOX3hvh5ZG1
+	KtDKVNlstS0T+9+tJzGPDb4T2HANeGfFi5Nlb5fXVOSsvBQct8fQHm8q/0BIOMv41+ufztrpWNG
+	GAiyQO+zpcnJh76in5jg3mvCCTCdCMsfR9W2WYxi6+dDPL0eFFlbxaHjnY7HE8yhInWgjNhhNZf
+	G7
+X-Received: by 2002:a05:600c:5253:b0:4a2:1a:a120 with SMTP id 5b1f17b1804b1-4a35ac99828mr190472005e9.6.1793115448296;
+        Tue, 27 Oct 2026 08:37:28 -0700 (PDT)
+Received: from localhost.localdomain ([104.28.251.99])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a5697a7sm268484155e9.7.2026.10.27.08.37.06
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 27 Oct 2026 08:37:27 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [Outreachy PATCH] negotiator/default: stop using the_repository
+Date: Tue, 27 Oct 2026 16:34:28 +0100
+Message-ID: <20261027153429.14131-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,130 +96,148 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v3 0/2] doc: add new git tutorial
-Date: Tue, 27 Oct 2026 11:19:47 -0400
-Message-Id: <A48F72E1-8686-453E-91EC-674BD92CA1E5@gmail.com>
-References: <e7a03372-56cb-45c7-ae32-68b3c9e6bd27@app.fastmail.com>
-Cc: Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Tuomas Ahola <taahol@utu.fi>
-In-Reply-To: <e7a03372-56cb-45c7-ae32-68b3c9e6bd27@app.fastmail.com>
-To: Julia Evans <julia@jvns.ca>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
+The default negotiator uses the_repository to parse commits,
+clear marks, and walk refs. fetch_negotiator_init() already
+has the repository but does not pass it down.
 
-> Le 27 oct. 2026 =C3=A0 10:30, Julia Evans <julia@jvns.ca> a =C3=A9crit :
->=20
-> =EF=BB=BF
->=20
-> On Fri, Oct 23, 2026, at 2:01 PM, Ben Knoble wrote:
->>>> Le 23 oct. 2026 =C3=A0 11:17, Julia Evans via GitGitGadget <gitgitgadge=
-t@gmail.com> a =C3=A9crit :
->>>=20
->>> =EF=BB=BFSo far we've gotten 112 comments from 30ish beta testers who ha=
-ve tried to
->>> learn Git for the first using this tutorial. Most of them were able to
->>> finish it successfully. By far the most common piece of feedback was tha=
-t
->>> people want to learn more about collaboration and branching. I've writte=
-n a
->>> draft of a tutorial on branching, but this is already quite a lot of wor=
-ds
->>> so definitely we can't cover it in this series.
->>>=20
->>> I don't know if it's possible to get this merged quickly, but if it were=
- I
->>> think it would be amazing since people are so eager for a tutorial on
->>> branching. If we spend a huge amount of time revising this I think there=
-'s a
->>> real risk I'll run out of funding before we have time to write about
->>> branching. Ideally I think it would be great if we could merge a "good
->>> enough" version and then have a way on the website for users to give
->>> feedback on it, so that we can later incorporate that feedback and
->>> iteratively make it better over time.
->>>=20
->>> Thanks to Paula, Agavi, Ken Wells, Michael / Chgowiz, Ishmaeel, and all 2=
-0
->>> or so other test readers.
->>>=20
->>> changes in v3: (v2 was the "first" real version since v1 was a WIP)
->>>=20
->>> * Say that the tutorial supports any version above 2.23.0, when git swit=
-ch
->>>  was introduced, since the next part of the tutorial on branches will us=
-e
->>>  git switch
->>> * Mention that on Windows the tutorial will work best in Git Bash for an=
-d
->>>  it might need adapting for PowerShell. (thanks to Ben)
->>> * Add a warning about how Git can dump you into vi, how to handle that
->>>  situation, and how to write a longer commit message. I tried to strike a=
+Give default_negotiator_init() a repository parameter, store
+it on the negotiation state, and use it for those calls.
+clear_marks() receives the repository through its callback
+data. Drop USE_THE_REPOSITORY_VARIABLE.
 
->>>  balance between lightly suggesting that it might be good to write longe=
-r
->>>  commit messages, while making it clear that you can just use -m"" if
->>>  you're not ready to navigate the world of editor configuration. I don't=
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+ fetch-negotiator.c   |  2 +-
+ negotiator/default.c | 26 +++++++++++++++-----------
+ negotiator/default.h |  4 +++-
+ 3 files changed, 19 insertions(+), 13 deletions(-)
 
->>>  think we can use Pro Git here though since it's a bit outdated. (thanks=
+diff --git a/fetch-negotiator.c b/fetch-negotiator.c
+index be383367f5..1a2cf3f384 100644
+--- a/fetch-negotiator.c
++++ b/fetch-negotiator.c
+@@ -19,7 +19,7 @@ void fetch_negotiator_init(struct repository *r,
+ 		return;
+ 
+ 	case FETCH_NEGOTIATION_CONSECUTIVE:
+-		default_negotiator_init(negotiator);
++		default_negotiator_init(negotiator, r);
+ 		return;
+ 	}
+ }
+diff --git a/negotiator/default.c b/negotiator/default.c
+index 19cdf3808c..4684bed796 100644
+--- a/negotiator/default.c
++++ b/negotiator/default.c
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "default.h"
+ #include "../commit.h"
+@@ -18,6 +16,7 @@
+ static int marked;
+ 
+ struct negotiation_state {
++	struct repository *repo;
+ 	struct prio_queue rev_list;
+ 	int non_common_revs;
+ };
+@@ -28,7 +27,7 @@ static void rev_list_push(struct negotiation_state *ns,
+ 	if (!(commit->object.flags & mark)) {
+ 		commit->object.flags |= mark;
+ 
+-		if (repo_parse_commit(the_repository, commit))
++		if (repo_parse_commit(ns->repo, commit))
+ 			return;
+ 
+ 		prio_queue_put(&ns->rev_list, commit);
+@@ -38,9 +37,10 @@ static void rev_list_push(struct negotiation_state *ns,
+ 	}
+ }
+ 
+-static int clear_marks(const struct reference *ref, void *cb_data UNUSED)
++static int clear_marks(const struct reference *ref, void *cb_data)
+ {
+-	struct object *o = deref_tag(the_repository, parse_object(the_repository, ref->oid),
++	struct repository *r = cb_data;
++	struct object *o = deref_tag(r, parse_object(r, ref->oid),
+ 				     ref->name, 0);
+ 
+ 	if (o && o->type == OBJ_COMMIT)
+@@ -78,7 +78,7 @@ static void mark_common(struct negotiation_state *ns, struct commit *commit,
+ 			struct commit_list *parents;
+ 
+ 			if (!o->parsed && !dont_parse)
+-				if (repo_parse_commit(the_repository, commit))
++				if (repo_parse_commit(ns->repo, commit))
+ 					continue;
+ 
+ 			for (parents = commit->parents;
+@@ -119,7 +119,7 @@ static const struct object_id *get_rev(struct negotiation_state *ns)
+ 		commit = prio_queue_get(&ns->rev_list);
+ 		if (!commit)
+ 			return NULL;
+-		repo_parse_commit(the_repository, commit);
++		repo_parse_commit(ns->repo, commit);
+ 		parents = commit->parents;
+ 
+ 		commit->object.flags |= POPPED;
+@@ -179,7 +179,9 @@ static int ack(struct fetch_negotiator *n, struct commit *c)
+ 
+ static void have_sent(struct fetch_negotiator *n, struct commit *c)
+ {
+-	if (repo_parse_commit(the_repository, c))
++	struct negotiation_state *ns = n->data;
++
++	if (repo_parse_commit(ns->repo, c))
+ 		return;
+ 	mark_common(n->data, c, 0, 0);
+ }
+@@ -190,7 +192,8 @@ static void release(struct fetch_negotiator *n)
+ 	FREE_AND_NULL(n->data);
+ }
+ 
+-void default_negotiator_init(struct fetch_negotiator *negotiator)
++void default_negotiator_init(struct fetch_negotiator *negotiator,
++			     struct repository *r)
+ {
+ 	struct negotiation_state *ns;
+ 	negotiator->known_common = known_common;
+@@ -200,10 +203,11 @@ void default_negotiator_init(struct fetch_negotiator *negotiator)
+ 	negotiator->have_sent = have_sent;
+ 	negotiator->release = release;
+ 	negotiator->data = CALLOC_ARRAY(ns, 1);
++	ns->repo = r;
+ 	ns->rev_list.compare = compare_commits_by_commit_date;
+ 
+ 	if (marked)
+-		refs_for_each_ref(get_main_ref_store(the_repository),
+-				  clear_marks, NULL);
++		refs_for_each_ref(get_main_ref_store(r),
++				  clear_marks, r);
+ 	marked = 1;
+ }
+diff --git a/negotiator/default.h b/negotiator/default.h
+index d23a8f2fb8..bd998eb32e 100644
+--- a/negotiator/default.h
++++ b/negotiator/default.h
+@@ -2,7 +2,9 @@
+ #define NEGOTIATOR_DEFAULT_H
+ 
+ struct fetch_negotiator;
++struct repository;
+ 
+-void default_negotiator_init(struct fetch_negotiator *negotiator);
++void default_negotiator_init(struct fetch_negotiator *negotiator,
++			     struct repository *r);
+ 
+ #endif
 
->>>  to Ben)
->>=20
->> I noticed some discussion in Discord about the main text being out of dat=
-e,
->> but while the appendix makes copious references to editors
->> that have fallen out of style I think it also covers common cases
->> like VS Code and so on.
+base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
+-- 
+2.56.0
 
-;) long emails?
-
->>>    ++
->>>    ++Warning about terminal text editors
->>>    ++-----------------------------------
->>>    ++
->>>    ++If you run `git commit` without any arguments, Git will open a
->>>    ++text editor in the terminal for you to use to edit your commit mess=
-age.
->>>    ++This lets you write a longer commit message with more details.
->>>    ++By default, Git uses the `vi` text editor, which is extremely diffi=
-cult
->>=20
->> Personally, I=E2=80=99d drop =C2=AB extremely =C2=BB here to avoid castin=
-g a judgement?
->=20
-> The goal isn't to judge vim (I love vim!), it's to make sure people who ar=
-en't
-> familiar with it know that it's not a good idea to try to figure out how t=
-o use it
-> in the middle of a tutorial on how to use Git.
->=20
-> It's almost impossible for me to imagine someone successfully learning vim=
-
-> when they're unexpectedly put into it for the first time.
-
-I too love Vim, and I agree. (Well, I sort of did learn both at=20
-the same time, but I had a lot of free time as a first-semester=20
-freshman in college=E2=80=A6).=20
-
-Anyway, I think since the goal is not to judge, I=E2=80=99d still consider d=
-ropping
-=C2=AB extremely =C2=BB, but it=E2=80=99s your call!
-
->>>    ++2. Run `git config --global core.editor YOUR_PREFERRED_EDITOR`
->>=20
->> This is probably ok for now. Long term I encourage folks to set
->> EDITOR and/or VISUAL environment variables, so all
->> programs know what to do, but shell configuration is way
->> off-topic here :)
->=20
-> Yeah. It also depends on whether the user is planning to use a terminal
-> editor at all, I think some folks will choose to use their IDE integration=
- to
-> work with Git and so setting EDITOR might never become relevant in
-> that case.
-
-Well, if they use their IDE=E2=80=99s integrated terminal and run a command
-that looks at either variable=E2=80=A6 ;) Although I wonder if some set
-those variables in such terminals automatically?
-
-Regardless, I=E2=80=99ll let this one go as it=E2=80=99s off-topic as I said=
- =E2=80=98:D=
