@@ -1,91 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793110865;
-	b=oStvcB1t8bIUaJ6PiLnmkSRmxVENf7LYoU2oMUv7MJ4aOyht+L55aoMr6R0upPLDUGkm
-	 b4Nt9wsbWO36DMldZ/3r94O1GT9HXOxrZhwlaxXW/jnWNf1hkq871zvpOjrrQbzFVKSdw
-	 g31BREedeNJU1i2VC7D7eKOGC9TohDSLaepms5dFYz6RjM0Fkk/8KteUT/cDOnMDDuJQ/
-	 v1Ok0F42IgiJlS2z3uHaWSp2lFuWn4JICjJH4l0zntWmR3HMR6QX9fNnaRpR9RxTAAG81
-	 7gXLK++l48IGQoRtp+A9ZkwsoIqA8mbHks4Qf9HpY0MiwvIUCDDIL5YNpT4j6yFs60A==
+	t=1793111447;
+	b=ukgg5gE0bE4RUUPHYRGZ1kZn/vG8oGINaF3MHpT5Ln4sWai1q5CyRSTEUSKsvw24YNL0
+	 q7Syvj2pu7+oP6NYcIsXJQ7OxEBGUmBsMCh+F49Za8+SBTbh9haSiDU4oW+5utusl8ksn
+	 ZiX7Q2n/mwh0jf22e72pLGp4UTwq/7C/czDP44mXWKZ6j+cEz/3mdbF2M2Ba9AO19dZuA
+	 slHGG5thfK5tuW+jK0gajMuRZJ3ey9LZuMPR4PUnPoKPD8PC4tSGe07F7gXaZzdIVKYY1
+	 T8H95Mp+J/GS6Gb+KMuVW8peyGE/qscCLNRs7jG5Hy+jvLWeg3lY8cBIURIu28FnN5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793110865;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=izlnucM5kuP9L1/DoCotA8xnDVTF2Bzo8Q7X98NJKz0=;
-	b=sqcQgtW7gSISjSY8+86ap6E4iFJV/Yrci9AEpj8Jhn/oMnsHClyk7vkU/j3t/uYUXaes
-	 lSoRTUNkE+llBdtCwASyn6QOuILYDpYL+eHGX33VRa0hh/jBGOuUB23p4j+bo4Oqu3WtL
-	 2h0jOKN0fnAtNUUMvvPMrcNYgtkFwkE3CltsC59FM1MX7Y3sTIoQv2Ef695rGbPi+MXyr
-	 vELik0pVOPkdjeU7utpq+jj2YKRNIgcaw9AcGK3WQLlRY/mE4ZFj8IRELJ2Cz6HOHFH5R
-	 XiEYviOUJ167NBGLv+qba+VI8E68CKZGUykIjf843UZU0ZahUM5rlP0anXQsle7jhCg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793111447;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=7+3nnoXDmrDM9YKKjvKLFrkbjqgF0Bk62jcKRLIo2cU=;
+	b=GkqVdx/o36Z6VaMU4Q64OuzRb3HbrrahfCEvLPOGLwtaIpGwi+PLnLphl1fxtEduntn6
+	 4SjxWCkyVvfWf2xDsDdXNxc26BR2aiw6OASIhdFi9GUmK1x4cpXhGmICc4ZltlHrNtNvO
+	 Gr/NxcHLUSr26w819YgkaPZMBn3C0f0j7+HxM3IYnSE8CxmSHAs9TUNzX/RqeVdBClO0B
+	 jiqxl/ywVxYandnOniL1UXo5C97DX3p7eQh+Qe4nUOAzyNYIDFMmwr6dXwelQkdUwcsGV
+	 +3s3LQgejVJr36kZJ66j+V9z0uqn1y1fLgnV2sFQuwtFRKGKFGKsgOKvptazoMX2Q3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="Z/esB2P2";
-	arc=none smtp.remote-ip=209.85.160.176
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=WWD+6X7F;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LBJkMHvf;
+	arc=none smtp.remote-ip=202.12.124.144
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3E2606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 14:21:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7C3E2606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8FB60A5BD0
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 14:30:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6D8FB60A5BD0
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Z/esB2P2
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-5366463571cso49096041cf.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 07:21:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793110864; x=1793715664; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=izlnucM5kuP9L1/DoCotA8xnDVTF2Bzo8Q7X98NJKz0=;
-        b=Z/esB2P28hgP92pw/YZygHzq+tVy8X49zKOXobN/YphNZYdTyF48idmcaHu03A/YC1
-         hFSj/C2IjXIZ7mPwR+h/AimmBhlCMnXIma3/K2FziJ4YjvQrG4EuGyHX91n5tkzWYK+y
-         4XtRF/Yad0eKZSR6wddQeMFEziGW5TDaLFuPuR49MwtUtAVbvD2YKofbHNAbHKpGGiqb
-         AASRiusQqkfzSuI3QeDC74tquREUPqcsJLe7l7avZuzS5a2kWHG/hw2KZFihqJ4T8cTj
-         D0TbxJyEHkW2Arg3rYVksep1MhmbPHxB2e6zpw6uXEl2PcNF42bit967BFa/ADtm/2XJ
-         H0lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793110864; x=1793715664;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=izlnucM5kuP9L1/DoCotA8xnDVTF2Bzo8Q7X98NJKz0=;
-        b=x7FLiNkNWRa/SnKuFXv2GPqR1vMq2VBYxeYPzlWjh/QyOBKkJIW1JLPSqj9DEs78Wh
-         oz7Lq4vSnnXI9JsLqcJWgD61b2t/nVEirODbwa2smMBLApbirHucBxxgybiq0Qym9/LU
-         8rx+/yhCB7c0TaBkWYVETrCpODRbp9iNEvLqz7wRBe9un77d6tZvwFPlUNYmIeOekwNP
-         OW6GdDkAyKHs2Xlcvz4hSSXOCdahm81u/vDujEtemR2RMhcNPhgh4zd2dukR/PsYac0G
-         XAHu/6VjnvM91Wx6gFQtpoV9iExNyoLpbsKum1a6YYiG9jNx3UcVhIq/f2SoolFWYXy1
-         lbYA==
-X-Gm-Message-State: AFq9FYKJJ0eNSk7eEqgclsPF2B5uwu+v0VXx4/xq9t5aq3w4UWnDEdXw
-	LMn9902/G4K8J6XgxPxI/nJjg9kWjQERwKKcEuJ8dd2f/6rokMPdw3t7ZIGnvqFg
-X-Gm-Gg: AYBFou0vMNqLMX87eipjcZN5gPK1srcKo1of6C31sYj8MQYa4jCB4CJpIgfpUba86hC
-	fQ8Fm0NlOAX1eD6bwazLSTEwA/mOQKONYeHnKHADjjN7arm3yOHFOkLFvXBhkzNKo7rwFVF3gSw
-	y3aohR3/UzLleqdbo2axedjI7Gdmhagy7ry5bDOj2U8eNtXaDnu0Wx/DSt+9ULzUGqmxX6t+ZbY
-	JSZl2gClEThW4kueZsW9auaITwROUISpcvR6nM2kQoyc0NW97ULi9FrB8B/rTp/oxZpF0vxqsFt
-	i2NFD5feB7MeKvR7/HrDs5cLcF3CYDKuxzRXkI04NkeiX6ON7Ylku6soPAW37hh0KgGCj3Cxf+g
-	lgr2zdnSw4lbDpwInSbN/Axo1I9XZmVF/Cc0uMfcmCuuIZ7VuB+NBpQCR8OiaYv1zPCG+4SN41F
-	UPqIJa9OClUxLSRPPqcjFfMZZmB3lseghQv3Jppq3xNRGO2w6qf7XdrXQd+VFsxOZWESQhmhLFq
-	senzFnjhyNdTJN92VelF1JSZ3oE6D6CtjMxxCLaPkAXIp1eJHO+k/wXcA==
-X-Received: by 2002:ac8:5756:0:b0:536:780e:8f42 with SMTP id d75a77b69052e-5383b667071mr168476741cf.33.1793110864222;
-        Tue, 27 Oct 2026 07:21:04 -0700 (PDT)
-Received: from [127.0.0.1] ([20.55.87.176])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c47cb4f56sm105386586d6.35.2026.10.27.07.21.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 07:21:03 -0700 (PDT)
-Message-Id: <pull.2276.v8.git.1793110862959.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
-References: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
-From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 27 Oct 2026 14:21:02 +0000
-Subject: [PATCH v8] diff-delta: use safe integer arithmetic
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=WWD+6X7F;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LBJkMHvf
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id A41071D00193
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:30:45 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Tue, 27 Oct 2026 10:30:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793111445;
+	 x=1793197845; bh=7+3nnoXDmrDM9YKKjvKLFrkbjqgF0Bk62jcKRLIo2cU=; b=
+	WWD+6X7FadhWSucSiSN0rRagrDiDv7jeJOo37wZ1XMJE+OAX+6DbfrvGtcJw2Uy1
+	UuEsjEZXOv74FHd9xucLo5y2C8/aV8vVAevphGQF5itemjJbNiNc0n57kN8zGLTS
+	DtrtOY6eWxi/6Q+kgyvhxYETyXw4efNWOD+yPNeHHoo6/9AkRjtYMS1HBKvhXOPF
+	QcRisPPcVFSLlCdXQJ4rLsVM4F3TAjwAVYuet7nyFpYw+/d0iFfuwNkr5OHth1Rx
+	XjCGJxskcedi7nSxtDdxpJizSgE7y6W7+hZF3ifhEzQBYFns6SD855pBNrSZB3N6
+	z4wnqQr6s6683tuvD1QL/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793111445; x=
+	1793197845; bh=7+3nnoXDmrDM9YKKjvKLFrkbjqgF0Bk62jcKRLIo2cU=; b=L
+	BJkMHvfzpto+XMtO9jkSsKqqBwuALHGBRUpOukRISD1EtZcRWDcoDn0myik3C5Hq
+	SxlkEe1P+PhbUC3VS+iP94+U+WKgXkauIy9FA4RU4tBU1rxhm9kxGLMBjklXZgzE
+	dyELA5GJXTvwBsDnvBwLJSsBf6CyKhyglUq3rcYb4M9AHBIxZPDVRq5jBJ2Kpx2J
+	oa/8BcTsOrLqNGPB6LWjFWSJBuzz8e0S/+1L3FJyJ4Ri28YgZ8KzoLGAuaYONmgy
+	xC0R3dPklkUJ++YeSQsYx1y4I5GRWQC70Vc+8Ejhu8Su6Os82QwnhBG16Nk1WLYl
+	JwezBW3wA7IKMN8n85NtQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793111445; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:ruUar+seGgnKal5sXjnfSmlQfGD+kceXpiqM8yEo4andPjA
+	AsFSPBs2/mK+LBPjXQMd+AYVbDhiZmct7+fVn6dtt9kfgCjmV+xcYLKF3upbeLUn
+	f7tljGlx5ZqfgcJHwJiupMTzxv9Eol501f/lcXzcghPjBhvqtrIHRcmuKE5t3tI9
+	2Jg25HXvSvzrWzZX1LqLVgAztXxlAoHu6eSqL/nvWAOEfvQHt8dfFPnxwedhAxDt
+	xRc6XEXd60TiBVdVGUVVQljdEcNFooJiXMarN04mAOKHsHDNZLbeIF9eocnnV6xA
+	kMlc/vw+b2OEgj3H12MZ9Eb3uqyAZKykocR6aZA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:n/C+JczA6F62ddN9yDAGaecQB8aiEw/ym3m6qudiJAw=:l5RbRfwa6lnaCO2xMfBsjm2dGbh4iSBqZWuT2/qbUmw=;
+X-ME-Sender: <xms:lLXgarv5fvbF_313pTEgnLxmAQEBcegfwZgCp27XqyZ6SQq8LcWXyw>
+    <xme:lLXganQqYUbtI7PZV1sbWNNYwiSVwALxByanNzVDUqlY6GfMFMx1fE4tgetZVmP65
+    4Z84SP44YnftG5orkfPtvHnPE58IcybqoiltW0FHmkXOolSG5zN4Bo>
+X-ME-Proxy-Cause: dmFkZTEIU7J/AHbGvF7wry01hWh9MegCPoxPjaBrQ/CoUEUCmGfmQFPu7OpB+egV0qJPCm
+    v+vxjqMfsjwY4n3tMtiBpSsu16N7heuA6vgiJLesxKWOXtacOU1h2LOMwi3flap7ODoS/X
+    wrkIIHbNMh0mTVWNODUnb34mKU86zVD99TkMh72lRaSoCVqgfbh8leJS1ziLnzfVqXvvjZ
+    yT101gJWD1XGCEzbX7/HI5UVwOAqOWfPd5BjEbhSFRW+503n5jVHiW53CSNO1XZPsWCICH
+    H2J7aHVL7fo+sFjcgKuRahvnxNwkIB96zDCjsrSmsBJCkMs/5l3Yo5vNFlq0z/TY+ZTsbd
+    z8257veQfATaO2laVmB5cJb8aW0CDjevlhglfQZR+P1HUohUXbk1vKtqbJvi/O7WaCq9Ea
+    pH4jfE1fm1mQltYwtKy4rETKPxOBwD/svrDHqY/IoAXY9p1CzACEBbuppiD7YfQMDPo7hV
+    Fuxs6MHlYvv4sAUtvCF6XsVlBUW+GphvYl0ZA0dWmauKS8C3VUgxuwuJfFpw6zc9Mvu8jN
+    acY9SGDusm+Q0UDFkGIec3tynAwm9L24YIoONfK28Bcda4zlB8XcayXt9agJlN+zIQ1bRd
+    /uqXurCxG/Efede+04Ca4cA4H6LNQAYrdedyJ0v8N7Mz1TkOxOTcMsNPL91A
+X-ME-Proxy: <xmx:lLXgajVbBkbaVMMISGk4RUN4H6mfjorbeEVGG-WDKByg_btGm6Ofug>
+    <xmx:lLXgapaBomqo_BTbkU6q_BLyT-oFQxgvR4-UiJ5-9T8F-pA2Uke4MQ>
+    <xmx:lLXgap0mJ59E4vTvNQ4u7ahwOuwXdP_vhWDNJnWXY6ihxRtdkBF7og>
+    <xmx:lLXgarjMrv0HuJaVKtwAL9nC8OnOPQmFWxIJAtDLlyyt3u_EHDmalg>
+    <xmx:lbXgahatsHbEYiX1PwEiOPzfZlt5YSRX7ep5c3FIH_sNanHuMsVn8Z4V>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id AC52378273B; Tue, 27 Oct 2026 10:30:44 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,105 +114,316 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-    Pablo Sabater <pabloosabaterr@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>
-
-From: Srujith A Poojary <poojarysrujith@gmail.com>
-
-In create_delta_index(), buffer sizes for allocating the delta index
-are calculated using arithmetic operations on entries and hsize:
-
-  memsize = sizeof(*hash) * hsize + sizeof(*entry) * entries
-
-To prevent potential size_t wrap-around when computing allocation sizes
-on 32-bit systems, replace manual arithmetic with overflow-checked
-helpers (st_mult, st_add, st_add3).
-
-For the unpacked index allocation:
-- sizeof(struct unpacked_index_entry) is 16 bytes on 32-bit systems
-  (4 bytes for ptr, 4 bytes for val, and 4 bytes for the next pointer,
-  where "inner entry" consists of ptr + val).
-- sizeof(struct index_entry *) is 4 bytes.
-- entries is capped by 0xfffffffeU / RABIN_WINDOW, limiting entries.
-- hsize is the smallest power of 2 >= (entries / 4), capped at 2^26
-  (with a minimum of 16).
-
-Using st_mult() and st_add() guarantees that any allocation calculations
-will safely die() on size_t overflow instead of wrapping around.
-
-For the packed index allocation:
-- (hsize + 1) is passed to st_mult(), which is evaluated as an argument
-  inside st_add3(), and is safe from overflow because hsize is capped early
-  in the function.
-
-Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
----
-    [Outreachy PATCH] diff-delta: use safe integer arithmetic
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2276%2Fpoojarysrujith%2Fc-refactor-target-name-v8
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2276/poojarysrujith/c-refactor-target-name-v8
-Pull-Request: https://github.com/gitgitgadget/git/pull/2276
-
-Range-diff vs v7:
-
- 1:  8eb6d31788 ! 1:  0b88f5a10b diff-delta: use safe integer arithmetic
-     @@ Commit message
-          helpers (st_mult, st_add, st_add3).
-      
-          For the unpacked index allocation:
-     -    - sizeof(struct unpacked_index_entry) is exactly 16 bytes on 32-bit systems
-     -      (4 bytes for ptr, 4 bytes for val, 4 bytes for inner entry, and 4 bytes
-     -      for the next pointer).
-     +    - sizeof(struct unpacked_index_entry) is 16 bytes on 32-bit systems
-     +      (4 bytes for ptr, 4 bytes for val, and 4 bytes for the next pointer,
-     +      where "inner entry" consists of ptr + val).
-          - sizeof(struct index_entry *) is 4 bytes.
-     -    - entries is capped by (0xffffffu / RABIN_WINDOW), limiting entries.
-     -    - hsize is determined as the smallest power of 2 >= (entries / 4), capped
-     -      appropriately.
-     +    - entries is capped by 0xfffffffeU / RABIN_WINDOW, limiting entries.
-     +    - hsize is the smallest power of 2 >= (entries / 4), capped at 2^26
-     +      (with a minimum of 16).
-      
-          Using st_mult() and st_add() guarantees that any allocation calculations
-          will safely die() on size_t overflow instead of wrapping around.
+X-ThreadId: AJEn36qy8-Bg
+Date: Tue, 27 Oct 2026 10:30:23 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "Tuomas Ahola" <taahol@utu.fi>
+Message-Id: <e7a03372-56cb-45c7-ae32-68b3c9e6bd27@app.fastmail.com>
+In-Reply-To: <F2555C10-8453-4196-9D07-02870D19199D@gmail.com>
+References: <pull.2248.v3.git.1792768625.gitgitgadget@gmail.com>
+ <F2555C10-8453-4196-9D07-02870D19199D@gmail.com>
+Subject: Re: [PATCH v3 0/2] doc: add new git tutorial
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
 
- diff-delta.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/diff-delta.c b/diff-delta.c
-index 7cbedeb507..efebce3aca 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -162,8 +162,8 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
- 	hmask = hsize - 1;
- 
- 	/* allocate lookup index */
--	memsize = sizeof(*hash) * hsize +
--		  sizeof(*entry) * entries;
-+	memsize = st_add(st_mult(sizeof(*hash), hsize),
-+			 st_mult(sizeof(*entry), entries));
- 	mem = malloc(memsize);
- 	if (!mem)
- 		return NULL;
-@@ -258,9 +258,9 @@ struct delta_index * create_delta_index(const void *buf, size_t bufsize)
- 	 * Now create the packed index in array form
- 	 * rather than linked lists.
- 	 */
--	memsize = sizeof(*index)
--		+ sizeof(*packed_hash) * (hsize+1)
--		+ sizeof(*packed_entry) * entries;
-+	memsize = st_add3(sizeof(*index),
-+			  st_mult(sizeof(*packed_hash), hsize + 1),
-+			  st_mult(sizeof(*packed_entry), entries));
- 	mem = malloc(memsize);
- 	if (!mem) {
- 		free(hash);
+On Fri, Oct 23, 2026, at 2:01 PM, Ben Knoble wrote:
+>> Le 23 oct. 2026 =C3=A0 11:17, Julia Evans via GitGitGadget <gitgitgad=
+get@gmail.com> a =C3=A9crit :
+>>=20
+>> =EF=BB=BFSo far we've gotten 112 comments from 30ish beta testers who=
+ have tried to
+>> learn Git for the first using this tutorial. Most of them were able to
+>> finish it successfully. By far the most common piece of feedback was =
+that
+>> people want to learn more about collaboration and branching. I've wri=
+tten a
+>> draft of a tutorial on branching, but this is already quite a lot of =
+words
+>> so definitely we can't cover it in this series.
+>>=20
+>> I don't know if it's possible to get this merged quickly, but if it w=
+ere I
+>> think it would be amazing since people are so eager for a tutorial on
+>> branching. If we spend a huge amount of time revising this I think th=
+ere's a
+>> real risk I'll run out of funding before we have time to write about
+>> branching. Ideally I think it would be great if we could merge a "good
+>> enough" version and then have a way on the website for users to give
+>> feedback on it, so that we can later incorporate that feedback and
+>> iteratively make it better over time.
+>>=20
+>> Thanks to Paula, Agavi, Ken Wells, Michael / Chgowiz, Ishmaeel, and a=
+ll 20
+>> or so other test readers.
+>>=20
+>> changes in v3: (v2 was the "first" real version since v1 was a WIP)
+>>=20
+>> * Say that the tutorial supports any version above 2.23.0, when git s=
+witch
+>>   was introduced, since the next part of the tutorial on branches wil=
+l use
+>>   git switch
+>> * Mention that on Windows the tutorial will work best in Git Bash for=
+ and
+>>   it might need adapting for PowerShell. (thanks to Ben)
+>> * Add a warning about how Git can dump you into vi, how to handle that
+>>   situation, and how to write a longer commit message. I tried to str=
+ike a
+>>   balance between lightly suggesting that it might be good to write l=
+onger
+>>   commit messages, while making it clear that you can just use -m"" if
+>>   you're not ready to navigate the world of editor configuration. I d=
+on't
+>>   think we can use Pro Git here though since it's a bit outdated. (th=
+anks
+>>   to Ben)
+>
+> I noticed some discussion in Discord about the main text being out of =
+date,=20
+> but while the appendix makes copious references to editors
+> that have fallen out of style I think it also covers common cases
+> like VS Code and so on.
+>
+>> * Add Helped-by: Ben ...
+>> * Add output of "ls ~/.ssh/*.pub" (thanks to a test reader)
+>> * Suggest cat ~/.ssh/whatever.pub to make it clearer how to copy the
+>>   contents of the file. One of the test readers said this was unclear=
+ as
+>>   well. (thanks to Junio)
+>> * Mention that the public key might not be called ed25519.pub (thanks=
+ to
+>>   Junio)
+>> * Add a short section on the importance of git status
+>> * Fixed the formatting around the headings. Kept it in the same style
+>>   because I had issues with the docs linter when using =3D=3D DESCRIP=
+TION
+>>   (thanks to Junio)
+>> * explain what --set-upstream does (thanks to Ben)
+>> * A few other small phrasing fixes from test readers
+>>=20
+>> non-changes in v3:
+>>=20
+>> * didn't use git config set since the tutorial claims to be compatibl=
+e with
+>>   Git 2.23.0
+>> * kept using the term "folders" since my impression is that Mac OS and
+>>   Windows use the term "folder" and those operating systems are more
+>>   popular than Linux. I don't think any test readers were confused by=
+ this
+>>   term, though "directories" might be fine too.
+>> * leave git init instead of git init myproject so that folks can use =
+the
+>>   same process when setting up Git in an existing project
+>>=20
+>> Julia Evans (2):
+>>  doc: remove gittutorial
+>>  doc: add new Git tutorial for beginners
+>>=20
+>> Documentation/gittutorial.adoc | 1035 ++++++++++++++++++--------------
+>> 1 file changed, 573 insertions(+), 462 deletions(-)
+>>=20
+>>=20
+>> base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-224=
+8%2Fjvns%2Fgit-tutorial-v3
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2248/j=
+vns/git-tutorial-v3
+>> Pull-Request: https://github.com/gitgitgadget/git/pull/2248
+>
+> The range-diff below looks fine to me! A few small nits, but I don=E2=80=
+=99t
+> want to hold things up.
+>
+>> Range-diff vs v2:
+>>=20
+>> 1:  42035aa84a =3D 1:  8c0366e996 doc: remove gittutorial
+>> 2:  6532e60e30 ! 2:  d8ea142af6 doc: add new Git tutorial for beginne=
+rs
+>>     @@ Commit message
+>>=20
+>>          Some design choices:
+>>=20
+>>     +    - Only use commands present in 2.23.0 (when `git switch` as =
+introduced),
+>>     +      to support older versions of Git.
+>>          - Introduce a much smaller set of commands than the old tuto=
+rial, to
+>>            keep the tutorial quick (doable in an hour). Some users fo=
+und it to be
+>>            very fast and some wanted to stop early (after step 7) so =
+this seems
+>>     @@ Commit message
+>>            policy if applicable since the "easiest way" may not be th=
+e best), and
+>>            giving some instructions for how to translate an HTTPS URL=
+ to an SSH
+>>            URL.
+>>     +    - Warn people about how `vi` is the default text editor and =
+give some
+>>     +      instructions for how to escape
+>>=20
+>>          At least 20 people have successfully completed it, and feedb=
+ack was
+>>          incorporated from problems the testers ran into.
+>>=20
+>>     +    Helped-by: D. Ben Knoble <ben.knoble@gmail.com>
+>>          Co-authored-by: Marie Claire LeBlanc Flanagan <hello@mariefl=
+anagan.com>
+>>          Signed-off-by: Marie Claire LeBlanc Flanagan <hello@mariefla=
+nagan.com>
+>>          Signed-off-by: Julia Evans <julia@jvns.ca>
+>>     @@ Documentation/gittutorial.adoc (new)
+>>      +1. Git to be installed. You might already have it installed,
+>>      +   and if not there are directions at https://git-scm.com/insta=
+ll/
+>>      +2. A terminal to use. On Windows, you can use Git Bash which co=
+mes
+>>     -+   when you install Git.
+>>     ++   when you install Git. For Windows this tutorial will assume =
+you're
+>>     ++   using Git Bash and if not you might need to adjust some comm=
+ands like
+>>     ++   `ls` and `cat`.
+>>      +
+>>      +You can check if Git is installed by running this in your termi=
+nal:
+>>      +
+>>     @@ Documentation/gittutorial.adoc (new)
+>>      +------------------------------------------------
+>>      +
+>>      +The exact version isn't too important: this tutorial is designe=
+d to work
+>>     -+with any version of Git after 2.0.
+>>     ++with any version of Git after 2.23.0.
+>>      +
+>>      +[[step_2]]
+>>      +Step 2: Introduce yourself to Git
+>>     @@ Documentation/gittutorial.adoc (new)
+>>      +but we're not covering that here.
+>>      +
+>>      +Step 3: Create an empty folder and 1 file
+>>     -+------------------------------------------
+>>     ++-----------------------------------------
+>>      +
+>>     -+In your terminal, create an empty folder and change directories=
+ into it.
+>>     ++In your terminal, create an empty folder and move into it.
+>>      +Later on you could follow the same steps in this tutorial to ta=
+ke an
+>>      +existing project and start managing it with Git, but we're goin=
+g to use
+>>      +an empty project so that everyone following this tutorial has t=
+he exact
+>>      +same files.
+>>      +
+>>     -+For example, run these commands to make a folder called `myproj=
+ect`
+>>     ++For example, run these commands to make a folder called `myproj=
+ect`:
+>>      +
+>>      +------------------------------------------------
+>>      +$ mkdir myproject
+>>     @@ Documentation/gittutorial.adoc (new)
+>>      +
+>>      +You've now stored the first version of your project in Git!
+>>      +
+>>     ++`git status` is very important
+>>     ++------------------------------
+>>     ++
+>>     ++`git status` shows you the current state of your Git repository.
+>>     ++It can give a huge amount of different information that takes
+>>     ++practice to interpret, so this tutorial has several examples of
+>>     ++how to interpret the output of `git status` in different situat=
+ions.
+>>     ++
+>>     ++It's often useful to run `git status` before and after running =
+a Git
+>>     ++command to see how it changed things.
+>>     ++
+>>      +Step 6: Make a change
+>>      +---------------------
+>>      +
+>>     @@ -1,2 +1,2 @@
+>>      +$ git add example.txt
+>>      +----------
+>>      +
+>>     -+Then you can run `git commit` to commit it.
+>>     ++Then you can run `git commit` to commit it (though see the warn=
+ing in
+>>     ++the next section!).
+>>     ++
+>>     ++Warning about terminal text editors
+>>     ++-----------------------------------
+>>     ++
+>>     ++If you run `git commit` without any arguments, Git will open a
+>>     ++text editor in the terminal for you to use to edit your commit =
+message.
+>>     ++This lets you write a longer commit message with more details.
+>>     ++By default, Git uses the `vi` text editor, which is extremely d=
+ifficult
+>
+> Personally, I=E2=80=99d drop =C2=AB extremely =C2=BB here to avoid cas=
+ting a judgement?
 
-base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
--- 
-gitgitgadget
+The goal isn't to judge vim (I love vim!), it's to make sure people who =
+aren't
+familiar with it know that it's not a good idea to try to figure out how=
+ to use it
+in the middle of a tutorial on how to use Git.
+
+It's almost impossible for me to imagine someone successfully learning v=
+im
+when they're unexpectedly put into it for the first time.
+
+>>     ++to use if you're not used to it.
+>>     ++
+>>     ++Some signs that you're trapped in `vi`: suddenly typing doesn't=
+ work
+>>     ++anymore, and there are tilde `~` characters on the left of the =
+screen.
+>
+> Perhaps =C2=AB bottom-left =C2=BB; they aren=E2=80=99t in the rows wit=
+h text,
+> for example.
+
+Good idea, will do.
+
+>>     ++
+>>     ++If Git opens `vi` and you'd rather use a different editor, you =
+can
+>>     ++handle it like this:
+>>     ++
+>>     ++1. Quit by typing `Escape`, then `:q!` and then `Enter`
+>
+> I never know if I=E2=80=99m over-indexing on this, but: perhaps
+> =C2=AB press the Escape key, type =E2=80=A6, and press Enter =C2=BB? O=
+ne probably
+> does not want to type the word Escape ;)
+
+Good idea, will do.
+
+> Ideally we=E2=80=99d recommend :cquit!, too, to exit with an error
+> in case the user accidentally edited the buffer and managed to write i=
+t,
+> in which case they may create a commit and the recovery may be confusi=
+ng.
+> But POSIX doesn=E2=80=99t require that of vi/ex even though most distr=
+os
+> ship Vim as the implementation. So :q! will have to do.=20
+>
+>>     ++2. Run `git config --global core.editor YOUR_PREFERRED_EDITOR`
+>
+> This is probably ok for now. Long term I encourage folks to set
+> EDITOR and/or VISUAL environment variables, so all
+> programs know what to do, but shell configuration is way
+> off-topic here :)
+
+Yeah. It also depends on whether the user is planning to use a terminal
+editor at all, I think some folks will choose to use their IDE integrati=
+on to
+work with Git and so setting EDITOR might never become relevant in
+that case.
