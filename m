@@ -1,120 +1,116 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793084591;
-	b=3E3uxV+o4o7aqbmCflYz5/1dWAX5Gr5mCd5ERIKQU9qUaxW6HT477/qygkWE5V5RviTq
-	 ploDFf/UloIh28r11ZuZXOdV7BTPeHk45oXPPhQt98n3b+wbqDjl+EhAd+PmaLrK/YpVs
-	 VjQLJweeJCR953McnxTES2vohwJGxWk336Q+OUR3A4SHV09YhjAgWD4Orx/fllbk55ke/
-	 EpSHGh5fFDEmf57y80ipVxabpYOdJD8Hg4BD0k2ZdLLKmYHJgpAxd51Q/HcJ9D4ujWV6B
-	 gnPbb2/lHGVNFqtlxDvLdWxAQIYb+7CNRHxf0kvuqyDZlE8J3iXL+SHv28tSl/SfVvA==
+	t=1793089116;
+	b=cDUZPEBftCy6YpHuDz0amylikckr9wcB9m2QgcvgbblFYkWmH41TbfhKepJNECfpmHRV
+	 JJSinoH90lfkCuiXlAUvEEqpZaxLeKYKgzVpToRRhR5Z4OV4dloPzRk/k8JydfwlmZDnd
+	 NznZaLTiJcCDV2yi0YLd1gQc5IB3iqdPC1zNvOo2/1yc8qoBeb2xhdIJ/BHI9eZLyl5uA
+	 K/8ndEhfTxyz/PTSiuy0hd0LRs1fyngqeCJBEGKseCQRx6+v0rvOiKVJeEmKVBFamyD4e
+	 IhdpI0uvvqDxgeEDZM0rjqyAMKLlWXzp3pVFPTZ0M0cbBmak9Q8IUkzXTahrJWTm5Lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793084591;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793089116;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=CrEe0QdHldRCtHNuwmrX2oKEpg1GgsKdLEZ5BUUmDo4=;
-	b=GFqZgdG++ORY2ZuTZEIsNJYehwP7yg5rL5OA5lo6StyK0/IoQBkOEkFwMzp6dgn9YibW
-	 yH3ZMzJ3TtfCh5AuloSLEPAacTbbMNAj8igSHIyHT1xhyLPHPmal0Lqzd4tOzAgcsuPcm
-	 GgXjUfHPD9HUPR0riEXINdtXeWvm0EJz/g01t9JayAkX7MeK9E95yEZcLhcn4TRLCgUnV
-	 CpGgABwixdXpxV46RjKXtOV7UhtILxPS6/PQilMEPV6K/qlVkS+KpB82tWnPdd5jb2jEl
-	 6fLmuI6xdBldFUAczM/+tbb7ssRfO/llkMxd7kbsZKE7gSSGmty57nsmaAG4+ZAKlhg==
+	 Received:Received:From:Subject:Date:Message-Id:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
+	 Cc:X-Mailer;
+	bh=ASbHliRETNLR29eobBxUXz+7GoAZ9kLjp0jlTsr72Eo=;
+	b=Br1KNSdWtpbrZ5ElU5tN9URa1AZR+tpZKJ7f/tw2QRz5iNV0zyxisOfRmAPFa7VXnBJt
+	 perz+q7WHXjJ4piGFRfqfOuM0MGmE4yx0nbDUEkTWj8BUjpBqFcZkeUcui0WxQe7U48t5
+	 03cpf+0nnywGm14myjoQ7hR8i2ZEDXDKj7Y0A9KV7sTqUOAZDTDp6BHisW1qAPxzJS1kt
+	 DxTtvQ8nYVT+mJWNmPEobJCRlnpHws5oq/zLfSEmlGEYXuYnWjtBu+koW1uLgblrZSmcr
+	 tVeTUz2jOKMclEhhklSgEHE/nECkQg4t0/Ek5YswTQHsSHKx0Vgom/EWSGNQF0764zA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=p7sZOl6Q;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=pN7oSg+i;
-	arc=none smtp.remote-ip=202.12.124.153
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=VOSTsc4A;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Hu+6vKE1;
+	arc=none smtp.remote-ip=202.12.124.146
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDF6606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 07:03:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DEDF6606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0054B606A328
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 08:18:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0054B606A328
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=p7sZOl6Q;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=pN7oSg+i
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 38E9D7A00A7
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 03:03:10 -0400 (EDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=VOSTsc4A;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Hu+6vKE1
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1254C1D0008A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:18:35 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 27 Oct 2026 03:03:10 -0400
+  by phl-compute-07.internal (MEProxy); Tue, 27 Oct 2026 04:18:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793084590; x=1793170990; bh=CrEe0QdHld
-	RCtHNuwmrX2oKEpg1GgsKdLEZ5BUUmDo4=; b=p7sZOl6QRrlOs5PuRnsnu+4aW6
-	VxPkA7sYrZNE2WGb7cLhs+IphlCTQJV2coMwZJuJPiK08y8PqfogWhdAsKyZnIAn
-	xPKSL1n/R9TXbRXCa8mt0R3iGpngLToYDaqvhpmfBuLFFn326o0Am0No0X2xG+i3
-	vWnFHKY8knsnWoNICjStE3Tx5WpMcdisd0NkTW16shqtoOdPLUmsnqklQ6OWCJcJ
-	crv9lYXX7zw+TyJb9e3QEc39O4gAIv8o4eEKhHh4+8p0BN8YLZu//VmmTG3HZGY0
-	yfcDECgByQfz0q9vuKx+JRqEJRXvlcB2DQymd6rB6Ldi9IucPfEUOL25bpsQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1793089114; x=1793175514; bh=ASbHliRETN
+	LR29eobBxUXz+7GoAZ9kLjp0jlTsr72Eo=; b=VOSTsc4AeNuEeAMB1xAnAys5tq
+	S/JspijpxJVYF/0Gxf6okOYgIUW5OlWW3ow1MhTtj3X7Vix27wj/NsXmh7gxR5T9
+	CqjfdxcypL522iFcq27mFqkkKs/YhrdOC+KBn0Dv667FM/TuHtkS8LJH34D/zG0P
+	+QmJxWM3Tc67qlzTKTH/8mf0NJWSb1Iur6YZH1KGLQa8z0Vu9YtFlAw7ttC//6zG
+	wP7OJkeJUcdGCCNCHJ5LJNa+G328qh+gjqYaGHIbdf6qPrKHwvNluglGoxCEw/Do
+	D1FTEeWyRBZkDY7lNK1lKbsMqbNB88/Wi5Ecf0hW00XS7ltUpOgE+DHl2y4A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793084590; x=1793170990; bh=CrEe0QdHldRCtHNuwmrX2oKEpg1GgsKdLEZ
-	5BUUmDo4=; b=pN7oSg+iH3qTzA+tPxZKDBgckJAma0zApKJwkdNVZPsyy+AD8EF
-	ea+jeBF5U0JbN51GHY/hWJiJaW3DsgKHJCiQQM52bd5KeuhxoGx/1vORE0UVsd0t
-	klyUUyS1nNWCAL9jD1zGnknt5qaUNfcLBahUREJlzyNtTC7S0e+sJ6uk9dLzwFIL
-	czi3WpgaHpnPc/oDRX6t4My+xNDI6FdtT7rFEAdcupjI0FJMv0AY1PLUxeuS/8wD
-	nbtikxgnUbR2p0VI1/mbXgVfYffSI2spmZdeMtAVZTPrDgwslmMOhH/RaDLIghBf
-	Vlant0g1Q5ssMgTMfjoBWiPpl4c+rVeNnfA==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1793089114; x=1793175514; bh=ASbHliRETNLR29eobBxUXz+7GoAZ
+	9kLjp0jlTsr72Eo=; b=Hu+6vKE1k6PxBGAUPudqHcwdepm7JDgH9U25AZa8EIpX
+	E5+jjGUBkrcEr9yJAdHtC8IhXj2Jec33+STuvi1gDE8gAtOxO8mBwqqKSt3Q43BA
+	zhb0xWdzJZ00AaCbQeEnL66ZWSVpp/8a4yHP7MTv2RO4nIl+PJvqukQxEYPvj81q
+	ayBCk7bG3uSQw1gBUMHZNuWIZ4n78mSlTLjK2ETfBbEBX3jncSNBTT9CsyaO7gdy
+	273IyhVsJLAioOFLkvUSXWgBc3zLdXLowKyFYiA+fsHRIq2DwXMF2/4ZiI90ZJay
+	ZPtYHNEgsn6ur+ACTd0EcsjxlOLQVtwWpk56aAZ7wQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793084590; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793089114; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:F4oigAjI/KxK5dSD118C6A+8gwOtMZkMWyxJ81YXkMFkXtl
-	VPCbS69z+stVO0IVBe0hCPueJupBj8AcT3gbtYTQ0ZsBhpo7njqwygFSnlZ0R9aq
-	kG7ng+4m3Y5jwwipyAQbF7SHVY1omT2Qj4G3kWSq6sFMUU+XPIlsz9RiKPhReAWb
-	UA7bPblAW8gRZwVzuvEUOZrpiC9RiwD2tLfe+C17IgmCdPeyqhk1tKfKbtxAnCVZ
-	HHs41jwoTv1WKM3W4j7+yNSwCoRVxsNmcqJI35XUIVWzAYK+D1zno7lUfY6F2NOz
-	O+Yhg4bVkjfnF56J+hiDk0beRlt7dHlkzERX2eQ==;
+	s=fm2:rsa-sha256:Ajp4piYeUgFxODbjP4XvvokBITDWQh4SK1xkpU7fKg2Uy5Z
+	U1vk9a1DZ1y7NRWN234Lh5S7MGVwCcRuYGo83oltw0raesSFqUI+VQqdaR+0yPr6
+	JDWffAB0wg5+P87snDZ2qJ4SSwj8LK2v8Fh3eKniGY3S5SnKi/yTx9/UVBxF6TWu
+	/xrYM/udky4qUQ3bQsd+MDofClQr0TtmApB3aYVoLVDXdrr1fZsmPw9lzITXFefe
+	QVOOnldAonKErZB7XOYBGZrpfBUlATPw3qUA9HJ4mK6O1+Jb7XGl6CKYfNgz4NQz
+	ClbpNlOYEDTB3lgmCjej7xchFMDjwoiudbASW/A==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:fo/2HdoXAf6n6tUYd2Fg8+EPEffuuQuaSv4yGKLzRtk=:geeqiyk4FSOWi6AJqwG/KuptWGs2lilbs8QukTA/C+w=;
-X-ME-Sender: <xms:rUzgapnevM-BLYxTXR5lFlRKO0zFJWaNr51VQEIEWkbvopoDS-Snwg>
-    <xme:rUzgaq3cB98n0m-SVvUXVoCAqPkQW7d3eMUaZCgEIs16E8EItbSHvR-xBYeOHw5AP
-    W7qgJyKOELeBPQISP70AAGMYzYUGS-6CH8Xc2DSCibFkdNr8qGOM7c>
-X-ME-Received: <xmr:rUzgatRZYbCqWw8ioCQhkTlOE7NU3nR7IAtSKeGk3T1sjvP1CZkauQ>
-X-ME-Proxy-Cause: dmFkZTFMaUyysz+NBAlNuntVBAiZegYd2z9Dk5NcmPAv2gD9Iqtv+J5oipTBFidCLutodY
-    CPVo/rJo/nASmps/lY5sFexVo+qBPytXgFUkN2s1dvhrMOCOeEdfRfDB3k9SKtU7TIOvCV
-    fO0KH8t+knr3EktjOC8EBRv0phAVxmfE16U2QFC3QYiMi9IPGWPO1oJId+DCrTXmG0kO8d
-    ekWKYsXXILyIoWsDQe/lcHks/C5pAIZcddz2M+/yb5TYSbaDTruEkoIuVLdUw+cjQxcr3P
-    zZsjzQNpkb4Tua8TbAOV9gG6H/TNUE23xV6dr31cRgaw4J7kZBailVghSClAgEQNPuOVi+
-    tzH+3UeN0oXjtaS/qnZx/QGfe8d5DAivpYagIG80CmL2E7hJb69KAjpdrRhaVniy41nUrP
-    MeAJxYyZ2DKGBF8ECG1eyE/O8RFrwWShE5Ek6NWm80rLFwULfhEiJyKh7Or/itM3qkhauB
-    nW/Yt9gzirw41Q2EwE863lz7qKAq0gI/owt7ZSd1mD1KRgDjRDwXPY4I0v3pYQNkphIqMQ
-    FWextlDWiVYQAuATPsdZE0sEmUXBuso/425iytDz8V4Gd7Xfl/jie8P27BsxC653gnd2Wi
-    4b/UpY/WbdQizJzFdD+GcK8fKwC+ZUq1QcsbVKMzGNbCronFlS10FvNVzoAQ
-X-ME-Proxy: <xmx:rUzgaksAcl_S1DannrbLILL6tO3fiUFGMg74R1Cy06xM0c9_WNJA-w>
-    <xmx:rkzgaqb_t0iJvo_2BSoOJ5conwbPkMcK44D0C31oRvfSWfvXjjoD0g>
-    <xmx:rkzgahvppoQfN2-tz6q7Rl-IKbvXBSNJng4hMG6uLq7_0f4v9Y9EBg>
-    <xmx:rkzgakE1-JpSOai-ml4Xki4LCgBiJnlZmeBfvTj1Qr__FqAb3UAyHw>
-    <xmx:rkzgaiVbbsQCGl1oyeL-g8ek8frch6AydmPqL_2hoUZOJRmwfg9qsfU8>
+	action=mi-m=1; hc=10;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,message-id,mime-version,subject,to;
+Message-Instance: m=1; h=sha256:SO5vkThPRyIjkXMiUhzrtLC2Tu51dZjQ/DUrfhPnD5Y=:0dmC9Yvs0GkB1uTvIORsEOBqlwZv0zkDE+vnM2epkoo=;
+X-ME-Sender: <xms:Wl7garIip-z6oyfC1OTnXFvhJiWKwwcXnQYs9fnNeSoFoT3ygfd9gA>
+    <xme:Wl7gapu_V7JJl2l7ou7nB57eypbuVpTAItR9QDeUDgjnHHcjgXVQBekuOKkk4COFv
+    AcQUkq5DoWhnE-8RG_ArpVqz2to5mGOiHP6_3zKOorpldDm2Gje>
+X-ME-Received: <xmr:Wl7gagTlhasQEdxwCUatLVwY6YPfKMzSqp1tWRr-vOGBKhbj9YgGTA>
+X-ME-Proxy-Cause: dmFkZTF/yzkEqh+Ezgc+Q6Pvfg/YR6LUrJ5fcDmwMKxko6sf1ZBvUN9KVvyaHOZyUlk+9x
+    /8auspJ6o0AHjbSuYinqB89JhhJL6fPO1302rmWIU6NsEGTxeHlhAz8A6CoOhLoYu1PEPx
+    EVMvycGTQEFQ99q4R0S+VHvPzUWnT9MtT9RhDs4BCDAJf/xEYtUfLikTM81ztS3Y3mmPlV
+    NgBKzh/DoGC4Pam6OcRgUUXD+IQ6X2Kz5W2A1AN37I1uVHDXOXaotqsqnrzhal9pAKTfVh
+    fo/2HcOHUTlG7gNmjh0rTOLbRzGIPB4uAd03PMWMKWDAixv1qm/PfPoZcMv77+s+rd9Bic
+    6vbJO0/YWJQlDpixZG3ulnDu4MO8B9tCqzEE1WWrP8hIPFm8g0X9mh5i8H4uc/8DzL+wSU
+    OtoxsA8JuuBrhRTRIreQ2Ic8D6RJ2BKEgO8ar6cFouBzONPtQLPywBcX2ENtOwtcUw0v/W
+    8Mdwu3gtYgaHedzw8gCjIQVtLu7ea8B1dm54IRsRXS8a4svhGPM+Q4Kq6FauhmIK3Ud4vJ
+    jhfz96WeGN5oVBJZB7H6riKYL16/m86BJcYHlzGy85GZfjGpkDKQGEFeMepYy7mLlT/hx/
+    ysISuR/Xe8bFsrKWIfwTb/AynywGE1ZMxQA6bjb+CbBnZZp7KGHi6Rnb76BA
+X-ME-Proxy: <xmx:Wl7ganNQtZg93RMzgOVO7mYWuzkAAX7IxkPbGfc3dRD_-vFceKHVEA>
+    <xmx:Wl7gatbgFB7ewk2xesT9Ct5q6_TctEs1VULV40ZTxhF4bt-kI9pfkQ>
+    <xmx:Wl7gapwSF_LPuyWKgzE552zp_ZJiXLtbFdNrrKGBuIJfhUat1SKpEA>
+    <xmx:Wl7gagL7h1n_1j17poDmbTmM8r-5JS2rkfcKvWj8l40Ayj-JCewvmA>
+    <xmx:Wl7gaibwDO48f5ah7lALmhE10rKbmUpSCKR93KhKrYXfdWNX0XHj9rOF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 03:03:09 -0400 (EDT)
+ 27 Oct 2026 04:18:32 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id be9ba552 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 27 Oct 2026 07:03:08 +0000 (UTC)
-Date: Tue, 27 Oct 2026 08:03:05 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 8763266a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 27 Oct 2026 08:18:30 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Daniel Zoghalchali <daniel@latchkey.dev>
-Cc: git@vger.kernel.org
-Subject: Re: [BUG] 2.56.0: filtered --unshallow of a moved ref aborts in
- pack-objects (should_include_obj) via inherited GIT_SHALLOW_FILE
-Message-ID: <auBMqRatQLqerRte@pks.im>
-References: <CAJwQ=KQynymg4CJOLkyebACYVQa+LhXB2UifniTASkLyArWejA@mail.gmail.com>
- <at9P0ctULX1BBD8y@pks.im>
+Subject: [PATCH 0/8] ci: consolidate test variables
+Date: Tue, 27 Oct 2026 09:18:20 +0100
+Message-Id: <20261027-b4-pks-ci-test-vars-consolidation-v1-0-f28edf79bd6c@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,120 +120,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <at9P0ctULX1BBD8y@pks.im>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNQQrCMBCF4auUWTuQRA3Fq4iLdDLVUUlKJi1C6
+ d1Ndfkt3v9WUC7CCpduhcKLqOTUYA8d0COkO6PEZnDGeWusx+GE00uRBCtrxSWUhpw0vyWG2tb
+ YR0M+nI8UXA+tMxUe5fP7uN7+1nl4MtU9DNv2BQ92X5uFAAAA
+X-Change-ID: 20261016-b4-pks-ci-test-vars-consolidation-8d0c6a53ca28
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+ Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+X-Mailer: b4 0.15.2
 
-On Mon, Oct 26, 2026 at 02:04:30PM +0100, Patrick Steinhardt wrote:
-> On Sat, Oct 24, 2026 at 10:59:55AM -0700, Daniel Zoghalchali wrote:
-> > Hi,
-> > 
-> > Since v2.56.0, a fetch that combines a tree filter with --unshallow
-> > (or --deepen) aborts in a non-partial shallow clone when the fetched
-> > ref has moved past the local tip:
-> > 
-> >   BUG: builtin/pack-objects.c:5098: should_include_obj should only be
-> > called on existing objects
-> >   error: pack-objects died of signal 6
-> >   fatal: could not finish pack-objects to repack local links
-> >   fatal: index-pack failed
-> > 
-> > v2.55.0 completes the same fetch. We hit it in CI, where a job checks
-> > out a single commit at depth 1 and then unshallows its branch, which
-> > by then has moved on.
-> > 
-> > Reproduction (offline, any Linux):
-> > 
-> >   set -e
-> >   W=$(mktemp -d); cd "$W"
-> >   git init -q -b dev seed
-> >   for i in 1 2 3 4; do
-> >     mkdir -p seed/src; echo "$i" > seed/src/f.txt
-> >     git -C seed add -A
-> >     git -C seed -c user.name=t -c user.email=t@t \
-> >       commit -q -m "c$i"
-> >   done
-> >   git init -q --bare o.git
-> >   git -C seed push -q "$W/o.git" dev
-> >   git -C o.git config uploadpack.allowFilter true
-> >   git -C o.git config uploadpack.allowAnySHA1InWant true
-> >   git init -q co
-> >   git -C co remote add origin "file://$W/o.git"
-> >   TIP1=$(git -C seed rev-parse dev~1)
-> >   git -C co fetch -q --no-tags --depth=1 origin \
-> >     "+$TIP1:refs/remotes/origin/dev"
-> >   git -C co checkout -q -B dev refs/remotes/origin/dev
-> >   git -C co fetch --no-tags --filter=tree:0 --unshallow origin \
-> >     +refs/heads/dev:refs/remotes/origin/dev
-> 
-> Thanks, this reproducer works for me.
-> 
-> > The last command dies as above with 2.56.0, both Ubuntu 24.04's
-> > git-core PPA build (1:2.56.0-0ppa1~ubuntu24.04.2) and v2.56.0 built
-> > from source. It succeeds with v2.55.0 built from source. With 2.56.0
-> > it also succeeds when dev has not moved past the checkout, with
-> > --filter=blob:none, or without a filter. --deepen=N with the same
-> > filter aborts the same way.
-> > 
-> > What happens:
-> > - fetch-pack runs "git --shallow-file '' index-pack --promisor ...".
-> > - The pack names the local tip as the parent of the new dev commit, so
-> >   index-pack's repack_local_links() starts "git pack-objects
-> >   --exclude-promisor-objects-best-effort".
-> > - Since d43b9acb05 (setup: unify setup of shallow file), --shallow-file
-> >   is applied by exporting GIT_SHALLOW_FILE, so that grandchild inherits
-> >   the empty shallow file.
-> > - The grandchild no longer treats the local tip as a shallow boundary.
-> >   It walks to the tip's parent, a promisor commit fetched without trees,
-> >   and is_not_in_promisor_pack_obj() hits the BUG on that parent's
-> >   missing root tree.
-> > - Before d43b9acb05, the grandchild read $GIT_DIR/shallow and stopped at
-> >   the tip.
-> > 
-> > To confirm this, we wrapped only the repack child. Unsetting
-> > GIT_SHALLOW_FILE for it makes 2.56.0 pass, and setting
-> > GIT_SHALLOW_FILE= for it makes 2.55.0 fail the same way, at its
-> > builtin/pack-objects.c:5004.
-> 
-> Makes sense. Even though I think that the bug isn't actually that we
-> started propagating GIT_SHALLOW_FILE, as we now basically behave like we
-> do it with all other global variables, too. And if we were to execute a
-> non-local command like git-receive-pack(1) we already know to unset that
-> value again via `local_repo_env`.
-> 
-> What's fishy is "builtin/pack-objects.c:is_not_in_promisor_pack_obj()",
-> which explicitly checks whether a given object is in a promisor or not.
-> But in the case where we assume that an object may be a promisor object
-> we know that we're running in a repostitory that may not even have all
-> of its objects in the first place -- that's the whole ponit of a partial
-> clone after all. But when `odb_read_object_info_ext()` returns an error
-> we simply `BUG()` right away, which does not make any sense to me.
-> 
-> > Separately, the BUG() is reachable without the environment change. On
-> > 2.55.0, a filtered --unshallow of the local tip, followed by a
-> > filtered fetch of a moved ref, also dies there, because the walk from
-> > the local tip reaches promisor commits whose trees were never fetched.
-> 
-> Yeah, this bug has the same root cause and I was able to reproduce it,
-> too. And indeed it confirms my above take as it already exists before
-> the change to how we propagate GIT_SHALLOW_FILE. So overall, I think the
-> fix is as simple as this:
-> 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index ca3a891dfbc..e634173fb1f 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -5085,7 +5085,7 @@ static int is_not_in_promisor_pack_obj(struct object *obj, void *data UNUSED)
->         };
-> 
->         if (odb_read_object_info_extended(the_repository->objects, &obj->oid, &info, 0))
-> -               BUG("should_include_obj should only be called on existing objects");
-> +               return 0;
->         return source_info.source->type != ODB_SOURCE_PACKED || !source_info.u.packed.pack->pack_promisor;
->  }
-> 
-> I'll think a bit more about this and send a patch tomorrow. Thanks!
+Hi,
 
-And here it is: <20261027-b4-pks-pack-objects-repack-links-with-missing-objects-v1-1-f50f90651274@pks.im>
+this patch series consolidates our test variables as a follow up on the
+discussions in [1].
+
+The series is built on top of 37b3475fb53 (The 9th batch, 2026-10-25).
+
+Thanks!
 
 Patrick
+
+[1]: <20261008-pks-ci-housekeeping-v1-0-baf015c589c0@pks.im>
+
+---
+Patrick Steinhardt (8):
+      ci: consolidate setup of test environment
+      ci/lib: always set GIT_TEST_USE_SET_E on Linux jobs
+      ci/lib: deduplicate test variables by pattern matching
+      ci/lib: merge switches for specific job names
+      t: honor default ref storage format
+      ci/lib: add another NO_RUST build using glibc
+      ci: don't override initial branch name in testbed job
+      t/test-lib: make feature-testbed job more accessible
+
+ .github/workflows/main.yml |  3 ---
+ .gitlab-ci.yml             |  3 ---
+ ci/lib.sh                  | 34 ++++++++++++++++++++++++++++++++--
+ ci/run-build-and-tests.sh  | 44 --------------------------------------------
+ t/README                   |  5 +++++
+ t/test-lib-functions.sh    |  2 +-
+ t/test-lib.sh              | 25 ++++++++++++++++++++++++-
+ t/unit-tests/unit-test.c   |  1 +
+ 8 files changed, 63 insertions(+), 54 deletions(-)
+
+
+---
+base-commit: 37b3475fb530c14109211faca33716a173db61ed
+change-id: 20261016-b4-pks-ci-test-vars-consolidation-8d0c6a53ca28
+
