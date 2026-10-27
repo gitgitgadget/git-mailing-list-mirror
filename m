@@ -1,101 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.177
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793098877;
-	b=EacvmLwwtUJV/WBhlHqoG6Ft5bYXQFkjWt9e2zThWEWDQDfXlYfq8/+7zIKAaMsGfDxw
-	 rTj0NCSUx6iife78crwPneuYmVc69W5RJrcBeJ749syNpW5MgFj5cwt98VpFdiq6jZH43
-	 mQwam1r9cR36UBu+7LVvVxbTea3Ow66srIQD0HpHO1MzDHwbJdiqwO7Nxdgyz99sZaMa/
-	 A0kyew00ibpUXB1+5DQ1f1a9+KxCQhUOPPQPRRbEjFbAKzGkKBG3sLHA9N9aGG2z44cpA
-	 BnPQbH9KFD+1XpG1Dc060Ia1GK3eMecb8c3t5PmNSOG6RQMNHnk5n1fllJ3xX4x0Fmg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793098877;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.169
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793099690;
+	b=IgWWXYCA2TFRZecrl5Y3xaTw1fPoYqmYCV/Chs1essUeHoK4TRSkjS7P9oqffHwVssX4
+	 ka0o2TuNCwJZM6fAsdGVmxDgp8pDjMU49MNftl4NMomXmVN5X+9vP13l99j//0UyJDFqY
+	 PdlcAWqhp5apIXEz5ChKCD+D8Brh/pI8EJYFOxZ7hQv2BCYI97PDA+HhppSE09DVISrOC
+	 jsHKb/eZ6Qjj/C0BaK5LejjwrBv9FYbOzJJuRaPXMNlfXzW5WBeEjF7ZyB3ZEm9dGXW7/
+	 lh/cewhqQTQwXftpARElreDHI1DjJYhiRElvSQcj8Xw7DtnjoRQYnrGoZztWiD3NLZw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793099690;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=p+wwrVF3OUfpPfnJESGFaoDo1T4IREtEjh3A7Jw92uY=;
-	b=NnDW7lDSrPrpbsagyoYtCfVpOG55e9PfBRIh6Gmqjmtrd2Sc0/Wyyv1p8mGAqyYpsaUk
-	 on4CK36gp26qcEHxwdHusk1C8NIVG2Zj3kVnBFbdcaeB0QQsTE2N4z8Ck2d35+tV87Kqi
-	 gJE7P3lrhAHb+5CCbMbkpAL4Ar+wSZUVYRXg5vq/dAdiNCFaFs9jd76WCWntykD7lr5o8
-	 VduyQia1LS/NWS8X1ZpPIi1kCdgHHmyGoGOr7eSf/+wBu7SX5JoH5nPn2ZdhMLZaDz4rJ
-	 FEatwSCNRBtGJk8oRGorjZKcIINts5GnuONkJNoPxuYlZZvStPrDUSfDd/uka1kH9aw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=a+s+xXp3tqR4XPMeZuJQV004ARXEgccqkwkWZBrk/gk=;
+	b=Uq57b87s3N8wJNvyZKoOCmJwccPnRo4oT5snVbhQmVU8lOaPxQX3QGqfikledGzibugp
+	 sonD0NobdaJEhPL8Tv3pc55FrT0KOlaJqFvTh3K4tohTK+uhtEyZ/39bEWT7unzTVW6Nd
+	 1yEx9gKjfc2tP4A1VtMRLzpiZoHhWiLTBMh6xVkGN/ZUpR6DqSEcf0bwY+IEX8HXViwIH
+	 uFiK55udIwjGz0jpjZWSeqSOMyjPI6NRhP6sIc/P70Ne9EWWYwoLSwc4dQKx+clGNoSsx
+	 pRXhipZRPQu+cGh1KstfZoRDBV0kpRG41SuQdbf9pBJDsL5z3Nfhpl1UwmhYpx7pKjA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=QesPc47v;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.177
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=X85QCvDZ;
+	arc=none smtp.remote-ip=209.85.215.169
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0B7606A32C
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 11:01:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BB0B7606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A87606A31B
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 11:14:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5A87606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=QesPc47v
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-8b0d63f60bcso28623667b3.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:01:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793098876; cv=none;
-        d=google.com; s=arc-20260327;
-        b=FQmWsk/6qa6ZaSRQ1t7Xbn2LXj4mB4GeXeJjJSNaGAHSVXfchVw+khvfITLlOdtFND
-         dwZlWpMOD4y/sczR8BqSijAe/e+PAELI2ovtDpVapSRBM/5oWtYmvaD8AY3f9OdV7yal
-         4XyMfMDvfK81b7HFjKvF3OSem7gzJheG4mvn+3JDmH2jDhp+t1dqxit8uqTkXREpn4XU
-         hxRcN9uF1SUCQ+sl6r4LoAl7cuEBASrzSMI3FVyqMsRFecA80MhE8JVJV3FIdMwToK21
-         UeooXuYmX43l4FiYETcidKB0cXwwEguCbVozZRtP1VAdru/+iSmO0zoLiZYqRYazP39N
-         efUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=p+wwrVF3OUfpPfnJESGFaoDo1T4IREtEjh3A7Jw92uY=;
-        fh=9xF8/pJwy7ZYvNA9qBvf3Z7QmRk2IJrjTl8ecjI8DwE=;
-        b=Gpox9WSCwQyKEHFVF4spcxlnuPc+nHaxajaTfF0vSjGErMwZmwmjWz504JgQsXl0WE
-         3M6MsKGtHSmzMvjjPKeomSoVDyxnoypTZHbrZnx7D6yIpKKIKpKyDZsEP/nJppZbd9Pc
-         AOd5Zf+e136Bc+tJO6n4zdiRGtCVTFZABwo5q0goCsXWmnuvlBknkVa/e1blxsWzIb/K
-         n8rNF5/E9rgNl/Zs9ZndP6uZy+AmpVfixKcFsP9wCcoiUR6JN7A0x5RtQoqPz0xlaCfX
-         NRvSYK5ViipXf7dmsYvJiMAyoXnv7H+vNlH8Y9ajEDVmFtl5XVkuH5sXg5r1/qSb5NTb
-         HMBw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=X85QCvDZ
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-cd5e2d696e0so2168871a12.1
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 04:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793098876; x=1793703676; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=p+wwrVF3OUfpPfnJESGFaoDo1T4IREtEjh3A7Jw92uY=;
-        b=QesPc47vX7u+M+Q6YsupXnUJM/V1TQugz2O+1PAiJPLA7XRb1P/Al/Hw9ykdmS48Dn
-         cEkjIC/38ioRQiHPru+fcryxPtKw4ycZqiF7aNlLaZU00J2YRd6EluSw1DnYDywW+pPI
-         cGKCJixxj+71Wb0oykQozAWX45JuaLEWvQdpkZ/7Ge/q6IMRhHaPozpbKH5MDV/6aV1F
-         k5GtpNDsZ7BYmEc3oWnFqpggT/BA6eKnt4WLplOEqFmcfscvRerOZy9FCp84eJ8tCMMn
-         n9AqjM8YYhC2l/RNeFBqHQJGgw4g3Y/Yx4avuN4oOCyTJbNyLfC20Lshfmuw+nG5cvOY
-         bVwQ==
+        d=gmail.com; s=20251104; t=1793099689; x=1793704489; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=a+s+xXp3tqR4XPMeZuJQV004ARXEgccqkwkWZBrk/gk=;
+        b=X85QCvDZXPKjra/NLzITT5xjtZ5KMEvulBuWyBYCQ3NOwFFYRuZEiq2IrOENo3nun4
+         8FHnJBTlfeJfRGj/dGUlDrMXVem/MjyuBQG9eipcb4tx42uPqs7E3xqiLd5/ni3ThOdp
+         pjq3OIwYvGY1nA2mhatdDYRLZ+kSqdda/fpLkyPMU5T+ZG9sJi6v9iM+SeE/Lj1wZgX9
+         nZuF0Hv5ehpxYuj6+Dlsa6EjDmROMlG5qN9u0Ox0xItLNmnGHzdZzTdo4zAaP+3FkmaJ
+         MoZHSw/tIzLjTB97STwk4D6RdV8olOq+segOvOfxOJgCoIBUcQeoRM7RtaZWSFmeU2Ny
+         IhPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793098876; x=1793703676;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=p+wwrVF3OUfpPfnJESGFaoDo1T4IREtEjh3A7Jw92uY=;
-        b=JL+Im6xWASZYSOzCv5OoqoXQFTEBpNw1PJ6aflAPbIJQ3HYAx/tGnJHoX4mPtkn40Y
-         tu5TqsGbumRFehS+MAQQ1VmrAmO3KkdxiYqAhR0d+HOWCfRy5lG4AOqikl4aXjBpfdxn
-         dv7w3hnd0wQJ08MdrVvrPh2vIgGD5rziaRdXM0NBfZg8Quq81sXdyOBcLlnqEBQu2qsJ
-         O5Xwky5iMarneTnXrVrW77Lj1DEtLFQngdlOQ+nGoNXeRGeqiQ52xJucjtde/VOZ36vN
-         7/SPT9ih9kC7NY/yxRlOyqmIEyOoaBMYL2gFRZaeZ3v/IX9aJIt5AMimVINzIDv+6MLY
-         0Wsg==
-X-Forwarded-Encrypted: i=1; AKwUvBweHlNZqT5SlmBS37G8jqpWqeK2TW7WmAPxKLH2cVdusl4KLUgiZZRQ2xTOlqeZ4PFIFh4=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJG2VNRSPBm/fePW73jRkmQBWL5rZkct/sB2pM7IzBs6MrGl0le
-	k4aoF0+fixLn7AwI+z1STGZadmqRDGPnJfaazEgpY+s6X42l3cUfuUw/3WV0h5zdJ1PiPNULBMe
-	eBf3o05JQSMUy7kCrrmsYLJmnaKoG7Oo=
-X-Gm-Gg: AYBFou1XFpkenc+GKLbMt4iAtJuG+5a4mY5bjiUSYNlCZaCqkzOmPF7hBq25EmOZJqk
-	V9JP2HfcjFBRhZgORm9BApaWvJwGv7z04Vij1YpQV6dRlVyjylaF3vFfWk0mGSMdnRBpjFwo7HL
-	t5f3nsQXZ1m5T+eunoy468TzZPWABGUGKqlgidsbNBzXSIg9QuXyXHSwjp8NT3eYtpLvtiuFxYy
-	r2GxgHWg4/RMRNmPv7AozJE1oF2JSclFHWM95Q2hgQZcyW2+Oaan/JkheXrMmoepOAw27NENgyi
-	fD9nNsaCCukAt8gj5X7VscKeok7TIHsyWNn1z+94yiuNSmfdFylIjnsi3vYzjRoCXus6u+cKl7u
-	rua8yWwAPG/F3Dmgakp3EQoSOBKO8VbWQRaxYm471N/pMPF4W16d5YWBht8CpV1JkPC4I2FMOvi
-	A/d/cq1LB99HbjEDYnUFp3TBycoi87rzQnYfxphR5+6bsRLf3AUueDQjvi
-X-Received: by 2002:a05:690c:388:b0:8b1:2b42:c9eb with SMTP id
- 00721157ae682-8b166b95b12mr68997147b3.13.1793098875156; Tue, 27 Oct 2026
- 04:01:15 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1793099689; x=1793704489;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=a+s+xXp3tqR4XPMeZuJQV004ARXEgccqkwkWZBrk/gk=;
+        b=msHDI+CtvLdb9tl6aAN4J8zJfZkyutfb8kfmOEys9mzg0AcAkX/yyVJBgM2xqWn28P
+         M6ZQlxra0GmyeXdWNc1KgEyq3bTWnlsL8bZ1MeaVsd19/bkIyYzjCQ9FThX5y/+VyeuJ
+         RJntGK0qoC7VSS39LmL0miW3sCOC6NEa5I+zpohWJ/WkUvlYZqgJYRcO8GfsfqflrwUh
+         jAcP3NMAKRxomgj/ukSoJjfzgZ46s4wxBqoxFmV2ZDQNDzhRI8BuU5o2veKA1PJ2r6uz
+         INRuu5RKRr0HIxZ88fm5mjC900GYa0S2X2NxIVuipywk5xUHsEhTf1wd/0XiPHFlOUuU
+         Rwqg==
+X-Gm-Message-State: AFq9FYJqyTaGP9MUhYDnoW26ismeSAFCU+ggI82ZDNK0PCSPh7Y9R5xI
+	UntEu407wWaaRfvknb4l155mLdtUykUk5IaaG8UGqXPD5Fi/bOXwr8FixuU+Xyhi
+X-Gm-Gg: AYBFou1NLfVXRBpyqk6HrNGU1uiRdafqWOmLqkW6y97Ue3kmZhBsFeVk4AF72YeOGQM
+	icdCXIW2xb6c8Z03k37EFTkzAVGFKHbUL0hZ+OFQ3VDqQqrRtLtQ3YkKmsEhlCG7udmVRGD1pbj
+	Nun+QrNZZ0sUsDe/MNPlDhbO3+noNW5hVxkPhv+XMs8hAgPpPlOx72bnKyxWRhAyR3hXRI1a2DG
+	/mHgCruuQgxwbi1OPuZAqJejWirND+BhEgBTBPAZbbvJEbkxeLCcMpn9vgNqcwxBqXk6+z1ljvH
+	TE1NDJX+Adr8ey/UaffPT9JdLXt0PgCQBAOEgdighmusT3lwKcxQYRSOmlIgFtfiveJKD9BMf4U
+	+j6NNsVwP2+laOBUfp1zCrCp2eIZZ/Pp59BHjbbkAwNd2aj6yE1trIP7ZxX12pXsE4IDoHdH7IK
+	jzJGMDQ2y5EH22Kkz1veAWofR3d3az1rj/8x6MEocYWjQWCPHAeqIm0nFV4kfwfV20unONoLC0E
+	vgs/HjQI/roj+na1AiaELaMKO1anwRcEytAmOJfiYZCUaajQEPwPQi71w==
+X-Received: by 2002:a05:6a21:e08a:b0:3e2:83bb:a608 with SMTP id adf61e73a8af0-3e7afa9a445mr7910284637.2.1793099689122;
+        Tue, 27 Oct 2026 04:14:49 -0700 (PDT)
+Received: from [127.0.0.1] ([4.155.63.153])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a36b37252bsm2100893b3a.28.2026.10.27.04.14.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2026 04:14:48 -0700 (PDT)
+Message-Id: <pull.2280.git.1793099688076.gitgitgadget@gmail.com>
+From: "Shashank S via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 27 Oct 2026 11:14:48 +0000
+Subject: [PATCH] test-chmtime: use parse_options() to parse command-line flags
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,140 +92,137 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2276.git.1792727808109.gitgitgadget@gmail.com>
- <pull.2276.v6.git.1793076683043.gitgitgadget@gmail.com> <DMFJX3GJOXI0.1US2IH6P4LRUR@gmail.com>
-In-Reply-To: <DMFJX3GJOXI0.1US2IH6P4LRUR@gmail.com>
-From: Srujith Poojary <poojarysrujith@gmail.com>
-Date: Tue, 27 Oct 2026 16:31:03 +0530
-X-Gm-Features: AclHuK86EReTrDzhA3GYtayvujbHdy8I1AyyxP937NuPUDSHm2eKJOELsFxSvHQ
-Message-ID: <CABh_KWhac74wQY3sTAFp7f_9CKKAmBWcE9wir4_1i7iZqsq8fw@mail.gmail.com>
-Subject: Re: [PATCH v6] diff-delta: use safe integer arithmetic
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+    Christian Couder <christian.couder@gmail.com>,
+    Siddharth Asthana <siddharthasthana31@gmail.com>,
+    Usman Akinyemi <usmanakinyemi202@gmail.com>,
+    Junio C Hamano <gitster@pobox.com>,
+    Shashank S <shashu8660@gmail.com>,
+    Shashank S Mogaveera <shashu8660@gmail.com>
 
-On Tue, Oct 27, 2026 at 4:03=E2=80=AFPM Pablo Sabater <pabloosabaterr@gmail=
-.com> wrote:
->
-> On Tue Oct 27, 2026 at 4:51 AM WET, Srujith A Poojary via GitGitGadget wr=
-ote:
-> > From: Srujith A Poojary <poojarysrujith@gmail.com>
-> >
-> [snip]
-> >
-> > For the unpacked index allocation:
-> > - sizeof(struct unpacked_index_entry) is 12 bytes on 32-bit systems,
-> >   which may be padded to 16 bytes depending on compiler alignment rules=
-.
->
->         l 117-125 'diff-delta.c'
->
->         struct index_entry {
->                 const unsigned char *ptr;
->                 unsigned int val;
->         };
->
->         struct unpacked_index_entry {
->                 struct index_entry entry;
->                 struct unpacked_index_entry *next;
->         };
->
-> On 32 bit systems we have 4 bytes ptr + 4 bytes uint + 4 bytes ptr. I
-> don't see how it could be padded to 16.
->
-> > - sizeof(struct index_entry *) is 4 bytes.
-> > - entries is capped by (0xffffffu / RABIN_WINDOW) where RABIN_WINDOW is=
- 16,
-> >   limiting entries to 1,048,575.
->
->         l 148-158 'diff-delta.c'
->
->         /* Determine index hash size.  Note that indexing skips the
->            first byte to allow for optimizing the Rabin's polynomial
->            initialization in create_delta(). */
->         entries =3D (bufsize - 1) / RABIN_WINDOW;
->         if (bufsize >=3D 0xffffffffUL) {
->                 /*
->                  * Current delta format can't encode offsets into
->                  * reference buffer with more than 32 bits.
->                  */
->                 entries =3D 0xfffffffeU / RABIN_WINDOW;
->         }
->
-> entries are capped by 0xfffffffeU so the real limit is:
-> 268 435 455 (256 times more)
->
-> > - hsize is the smallest power of 2 greater than or equal to entries,
-> >   capped at 1,048,576.
->
-> After the code above we find this:
->
->         l 159-162 'diff-delta.c'
->
->         hsize =3D entries / 4;
->         for (i =3D 4; (1u << i) < hsize; i++);
->         hsize =3D 1 << i;
->         hmask =3D hsize - 1;
->
-> What this does is set hsize to the smallest power of 2 >=3D entries / 4
-> (with a minimum of 16), so it's "capped" at 67 108 864 (2^26).
->
-> >
-> [snip]
-> >
-> >  diff-delta.c | 10 +++++-----
-> >  1 file changed, 5 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/diff-delta.c b/diff-delta.c
-> > index 7cbedeb507..efebce3aca 100644
-> > --- a/diff-delta.c
-> > +++ b/diff-delta.c
-> > @@ -162,8 +162,8 @@ struct delta_index * create_delta_index(const void =
-*buf, size_t bufsize)
-> >       hmask =3D hsize - 1;
-> >
-> >       /* allocate lookup index */
-> > -     memsize =3D sizeof(*hash) * hsize +
-> > -               sizeof(*entry) * entries;
-> > +     memsize =3D st_add(st_mult(sizeof(*hash), hsize),
-> > +                      st_mult(sizeof(*entry), entries));
-> >       mem =3D malloc(memsize);
-> >       if (!mem)
-> >               return NULL;
-> > @@ -258,9 +258,9 @@ struct delta_index * create_delta_index(const void =
-*buf, size_t bufsize)
-> >        * Now create the packed index in array form
-> >        * rather than linked lists.
-> >        */
-> > -     memsize =3D sizeof(*index)
-> > -             + sizeof(*packed_hash) * (hsize+1)
-> > -             + sizeof(*packed_entry) * entries;
-> > +     memsize =3D st_add3(sizeof(*index),
-> > +                       st_mult(sizeof(*packed_hash), hsize + 1),
-> > +                       st_mult(sizeof(*packed_entry), entries));
-> >       mem =3D malloc(memsize);
-> >       if (!mem) {
-> >               free(hash);
-> >
-> > base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
->
-> The code looks good.
->
-> Good job ;),
-> Pablo
->
+From: Shashank S Mogaveera <shashu8660@gmail.com>
 
-Hi Pablo,
+cmd__chmtime() currently parses the '-v'/'--verbose' and '-g'/'--get'
+flags manually using strcmp() checks and manual index tracking.
 
-Thank you for reviewing the code and catching that! You are completely
-right=E2=80=94on 32-bit systems, the fields sum up cleanly to 16 bytes with=
-out
-needing extra alignment padding.
-I have updated the commit message in v7 to reflect your exact
-breakdown. Thanks again for the thorough check!
+Refactor cmd__chmtime() to use parse_options() and usage_with_options()
+instead. Pass PARSE_OPT_KEEP_UNKNOWN_OPT so that negative relative time
+offsets (such as '-86400') are not rejected as unknown short options
+and remain in argv for timespec_arg() to parse.
 
-Best regards,
-Srujith
+Signed-off-by: Shashank S Mogaveera <shashu8660@gmail.com>
+---
+    [Outreachy]test-chmtime: use parse_options() to parse command-line flags
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2280%2Fshashu8660%2Foutreachy3-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2280/shashu8660/outreachy3-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2280
+
+ t/helper/test-chmtime.c | 46 +++++++++++++++++++----------------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
+
+diff --git a/t/helper/test-chmtime.c b/t/helper/test-chmtime.c
+index 0e5538833a..dc6281b1d6 100644
+--- a/t/helper/test-chmtime.c
++++ b/t/helper/test-chmtime.c
+@@ -38,10 +38,13 @@
+  */
+ #include "test-tool.h"
+ #include "git-compat-util.h"
++#include "parse-options.h"
+ #include <utime.h>
+ 
+-static const char usage_str[] =
+-	"(-v|--verbose|-g|--get) (+|=|=+|=-|-)<seconds> <file>...";
++static const char * const chmtime_usage[] = {
++	"test-tool chmtime (-v|--verbose|-g|--get) (+|=|=+|=-|-)<seconds> <file>...",
++	NULL
++};
+ 
+ static int timespec_arg(const char *arg, long int *set_time, int *set_eq)
+ {
+@@ -68,40 +71,37 @@ static int timespec_arg(const char *arg, long int *set_time, int *set_eq)
+ 
+ int cmd__chmtime(int argc, const char **argv)
+ {
+-	static int verbose;
+-	static int get;
++	int verbose = 0;
++	int get = 0;
+ 
+-	int i = 1;
++	int i = 0;
+ 	/* no mtime change by default */
+ 	int set_eq = 0;
+ 	long int set_time = 0;
+ 
+-	if (argc < 3)
+-		goto usage;
++	struct option options[] = {
++		OPT_BOOL('v', "verbose", &verbose, "print the mtime and the file name"),
++		OPT_BOOL('g', "get", &get, "print only the mtime"),
++		OPT_END()
++	};
+ 
+-	if (strcmp(argv[i], "--get") == 0 || strcmp(argv[i], "-g") == 0) {
+-		get = 1;
+-		++i;
+-	} else if (strcmp(argv[i], "--verbose") == 0 || strcmp(argv[i], "-v") == 0) {
+-		verbose = 1;
+-		++i;
+-	}
++	argc = parse_options(argc, argv, NULL, options, chmtime_usage,
++			     PARSE_OPT_KEEP_UNKNOWN_OPT);
+ 
+-	if (i == argc) {
+-		goto usage;
+-	}
++	if (argc < 1 || (!get && !verbose && argc < 2))
++		usage_with_options(chmtime_usage, options);
+ 
+ 	if (timespec_arg(argv[i], &set_time, &set_eq)) {
+ 		++i;
+ 	} else {
+ 		if (get == 0 && verbose == 0) {
+ 			fprintf(stderr, "Not a base-10 integer: %s\n", argv[i] + 1);
+-			goto usage;
++			usage_with_options(chmtime_usage, options);
+ 		}
+ 	}
+ 
+ 	if (i == argc)
+-		goto usage;
++		usage_with_options(chmtime_usage, options);
+ 
+ 	for (; i < argc; i++) {
+ 		struct stat sb;
+@@ -110,7 +110,7 @@ int cmd__chmtime(int argc, const char **argv)
+ 
+ 		if (stat(argv[i], &sb) < 0) {
+ 			fprintf(stderr, "Failed to stat %s: %s. Skipping\n",
+-			        argv[i], strerror(errno));
++				argv[i], strerror(errno));
+ 			continue;
+ 		}
+ 
+@@ -150,14 +150,10 @@ int cmd__chmtime(int argc, const char **argv)
+ 			}
+ #endif
+ 			fprintf(stderr, "Failed to modify time on %s: %s\n",
+-			        argv[i], strerror(errno));
++				argv[i], strerror(errno));
+ 			return 1;
+ 		}
+ 	}
+ 
+ 	return 0;
+-
+-usage:
+-	fprintf(stderr, "usage: %s %s\n", argv[0], usage_str);
+-	return 1;
+ }
+
+base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
+-- 
+gitgitgadget
