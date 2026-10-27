@@ -1,116 +1,120 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793084436;
-	b=jSGuOoDH8H6KOKXe5LkV0kJ29RAbtLuBk9vM1hfpHczniCCJol1Lpfn5RoiQ5yn+Dj+6
-	 EMxMWBL5K/wj6KScupn2CNiGBLXFozHJtE/iRVYWuCdRRDw52KDKgvDWwTmAklUm5YtuV
-	 FtQjdmD0UU95sdXgUD+1/KDJFY1SOc5JIki2Xy3BPuHlR/qTp/doojXjsBuy+CxxgU84Y
-	 xH0eQRC+ETj5EdqCZtN6+6Nb3GTYIoa6piXRlJo9OE4HUz8wd0yGQxwtnnFRwQBK7n0mN
-	 ju1kQmEvZamqUFXhGm8bA/JYRYM/YmENnpF8vd52uG4QvVMiyAX4HI5pxunQ9fOOF9w==
+	t=1793084591;
+	b=3E3uxV+o4o7aqbmCflYz5/1dWAX5Gr5mCd5ERIKQU9qUaxW6HT477/qygkWE5V5RviTq
+	 ploDFf/UloIh28r11ZuZXOdV7BTPeHk45oXPPhQt98n3b+wbqDjl+EhAd+PmaLrK/YpVs
+	 VjQLJweeJCR953McnxTES2vohwJGxWk336Q+OUR3A4SHV09YhjAgWD4Orx/fllbk55ke/
+	 EpSHGh5fFDEmf57y80ipVxabpYOdJD8Hg4BD0k2ZdLLKmYHJgpAxd51Q/HcJ9D4ujWV6B
+	 gnPbb2/lHGVNFqtlxDvLdWxAQIYb+7CNRHxf0kvuqyDZlE8J3iXL+SHv28tSl/SfVvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793084436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793084591;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:
-	 X-Mailer;
-	bh=GviWiCYVV1c7HxUkxFZzqukyQhclJDXv9MmFn7km3u0=;
-	b=I9t/xLYrd+0oBEhbmrSHRtd+qVBOdHZtklnnoOq70Wd1z0/ZF9z6l7YTv3ZRYLjwRjdj
-	 hOQu9k5/Hrb+e04+x1Wdtuail2HfSMWmVZFJ7buW0uer0EVe1kbqjG8u3b91WoAb7NXXa
-	 yRj9YaOm9JhX9lulHlUr3WEhleVfPAlX76q6OFVbcJTfy8/phopJm+OhcBYlw4oc8DgoM
-	 a2q2wB1o0KMueRTkfpVuTnDEVXXR4X5pF0KbRn7K8n0x4JAau8+AtznohdDMjClqa2FJt
-	 TFCwbFlpH+Enb8014eW2JXfsIm4WvDI7C/Dh7Pe3ol+0xnY5pkFKy1hEdF88Ok9SlVQ==
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=CrEe0QdHldRCtHNuwmrX2oKEpg1GgsKdLEZ5BUUmDo4=;
+	b=GFqZgdG++ORY2ZuTZEIsNJYehwP7yg5rL5OA5lo6StyK0/IoQBkOEkFwMzp6dgn9YibW
+	 yH3ZMzJ3TtfCh5AuloSLEPAacTbbMNAj8igSHIyHT1xhyLPHPmal0Lqzd4tOzAgcsuPcm
+	 GgXjUfHPD9HUPR0riEXINdtXeWvm0EJz/g01t9JayAkX7MeK9E95yEZcLhcn4TRLCgUnV
+	 CpGgABwixdXpxV46RjKXtOV7UhtILxPS6/PQilMEPV6K/qlVkS+KpB82tWnPdd5jb2jEl
+	 6fLmuI6xdBldFUAczM/+tbb7ssRfO/llkMxd7kbsZKE7gSSGmty57nsmaAG4+ZAKlhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=j32XZ900;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=vMkCYadG;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=p7sZOl6Q;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=pN7oSg+i;
 	arc=none smtp.remote-ip=202.12.124.153
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40D6606A31D
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 07:00:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C40D6606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDF6606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 07:03:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DEDF6606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=j32XZ900;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=vMkCYadG
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0DE6C7A00A7
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 03:00:35 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 27 Oct 2026 03:00:35 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=p7sZOl6Q;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=pN7oSg+i
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 38E9D7A00A7
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 03:03:10 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 27 Oct 2026 03:03:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1793084434; x=1793170834; bh=GviWiCYVV1
-	c7HxUkxFZzqukyQhclJDXv9MmFn7km3u0=; b=j32XZ900CURh/6iJwfaTt2Bvve
-	FX3munO/C0g1iUH6xvuGvK+4jRDgQJRiwjpnYfZpVid3iFlHpAKPN0zZZNwQ1jkV
-	lQl3RkNCEikB+5IG62xONZPXSsPL/2mhDtQC5RZKjUVqCkcOAtKXvHVWW2A8ww7Z
-	yBJDYloVMMCNUAdYpNUtjiUCGqZR+KAJWrzK++dNGqCjZMdilt2AISXE9uORHB9C
-	6KNBmQwcPkq+MXDd89EvdSI0Z8xtJEmvL315MjoyBrr8TFZ5YkB2u9TJbJXlZgpF
-	F3sWmOC97Ii/CeIi7IEXCxSarlFW7wM249SkjO7lYTPV13cNeLGTEyByCA6w==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793084590; x=1793170990; bh=CrEe0QdHld
+	RCtHNuwmrX2oKEpg1GgsKdLEZ5BUUmDo4=; b=p7sZOl6QRrlOs5PuRnsnu+4aW6
+	VxPkA7sYrZNE2WGb7cLhs+IphlCTQJV2coMwZJuJPiK08y8PqfogWhdAsKyZnIAn
+	xPKSL1n/R9TXbRXCa8mt0R3iGpngLToYDaqvhpmfBuLFFn326o0Am0No0X2xG+i3
+	vWnFHKY8knsnWoNICjStE3Tx5WpMcdisd0NkTW16shqtoOdPLUmsnqklQ6OWCJcJ
+	crv9lYXX7zw+TyJb9e3QEc39O4gAIv8o4eEKhHh4+8p0BN8YLZu//VmmTG3HZGY0
+	yfcDECgByQfz0q9vuKx+JRqEJRXvlcB2DQymd6rB6Ldi9IucPfEUOL25bpsQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1793084434; x=1793170834; bh=GviWiCYVV1c7HxUkxFZzqukyQhcl
-	JDXv9MmFn7km3u0=; b=vMkCYadGsyOMYjgtELcKfvbpR+PzpwNjf1DQpWSlMbv3
-	tCAxvx8UDpNmhPAyRasgewzlx2KtHZVNdADc6FpA7fcOA5ylZp5CEaocY037kQOo
-	agCmL7OtTUvCouMTPGdUsvxWpzEJFyFz5t0fPCBp8huda8dRBZu5CbMnSFbkZNX5
-	OddCQXsDB6sMi00bbXiHtnhRTGQTQM1WDZl/7CfCGg3zGzCOdEhbq9vfOYJkRv4o
-	QsU/EDJRHTN2fz1SwvVX2qK48IWvblS2xgmr2EmL9kqYGOKILtf/pQcjLiaV2M6l
-	qPRfeckLnNADAVeBGI77uHJlv19NwcpWOrvlt4vCqQ==
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793084590; x=1793170990; bh=CrEe0QdHldRCtHNuwmrX2oKEpg1GgsKdLEZ
+	5BUUmDo4=; b=pN7oSg+iH3qTzA+tPxZKDBgckJAma0zApKJwkdNVZPsyy+AD8EF
+	ea+jeBF5U0JbN51GHY/hWJiJaW3DsgKHJCiQQM52bd5KeuhxoGx/1vORE0UVsd0t
+	klyUUyS1nNWCAL9jD1zGnknt5qaUNfcLBahUREJlzyNtTC7S0e+sJ6uk9dLzwFIL
+	czi3WpgaHpnPc/oDRX6t4My+xNDI6FdtT7rFEAdcupjI0FJMv0AY1PLUxeuS/8wD
+	nbtikxgnUbR2p0VI1/mbXgVfYffSI2spmZdeMtAVZTPrDgwslmMOhH/RaDLIghBf
+	Vlant0g1Q5ssMgTMfjoBWiPpl4c+rVeNnfA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793084434; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793084590; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:H1Zuz779o7jR5RZ1/5PrT0ROe9Icd+xKE7avIewWJgy9Vbv
-	tk5sA+2/F9E5/vwTUKN75folbfBEW1aDhIZYnnlFxyAK7TqBrHNsnRMrtTz8ev5a
-	69DseSzJeygYypVJdKhOQCaaSWPtC3Gd8T0Cei9wAaqSOmDH46Y0OjUqADKO+H1a
-	huaHcFoBBO1sSg0yY8erZC40rzSaszcZB5RL0YSmSFlq7wSOTr0/pFGHMeZeqmrO
-	UmW/Mf4CMYTG9ofSNk3Ux36nRUpAxabo6Ch/MCkQ7NVjhkcv2s3+QO+ztk1Iiyr0
-	xjjr5HlH+bPqhytbN0nq1eTf9JUL09FIUNwH4Ww==;
+	s=fm2:rsa-sha256:F4oigAjI/KxK5dSD118C6A+8gwOtMZkMWyxJ81YXkMFkXtl
+	VPCbS69z+stVO0IVBe0hCPueJupBj8AcT3gbtYTQ0ZsBhpo7njqwygFSnlZ0R9aq
+	kG7ng+4m3Y5jwwipyAQbF7SHVY1omT2Qj4G3kWSq6sFMUU+XPIlsz9RiKPhReAWb
+	UA7bPblAW8gRZwVzuvEUOZrpiC9RiwD2tLfe+C17IgmCdPeyqhk1tKfKbtxAnCVZ
+	HHs41jwoTv1WKM3W4j7+yNSwCoRVxsNmcqJI35XUIVWzAYK+D1zno7lUfY6F2NOz
+	O+Yhg4bVkjfnF56J+hiDk0beRlt7dHlkzERX2eQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=10;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,message-id,mime-version,subject,to;
-Message-Instance: m=1; h=sha256:eIuS90M1t/USydpqV4dw7TfJ7tkzkL+XTnm+k7hSwKM=:H+XoVwxJaGHWvwvQQXAyH1/U7ndK40e6UCdEC8+4d28=;
-X-ME-Sender: <xms:Ekzgartgi6E2A99bU_HZwogU8jO6t0B60WECz-kt1oqBVh8bx4536Q>
-    <xme:EkzgaifRNzCeF6EfTO4ngndMjgg52BxBe3P1kEPqIpMzB1HN4pX3vDYj0Q1tXMwpu
-    onuKDcW8NwxNlPNNqEZCPXQHAhG6XOkM42_-cM2M1SjXDJsfwdK_eA>
-X-ME-Received: <xmr:EkzgasYN6oNHUEJJ6wH6Rl-i1VddQ0qsv9KmqpBe3o4MuK1FEzfghQ>
-X-ME-Proxy-Cause: dmFkZTFa7XJyOTf3fcKudai0rBJP74Ngz3tqjzBaqPQxKrXTh+vl4tFkLXUqZ+TXfDfXXD
-    SgqHnCkJW9fpuOmy9cX/umOOYdAH4jCVfrjTIYAS3IOq4BAY4u1TjJD1ix2NeKvXW2t3Al
-    sC1o1AuKWH8fYBH9FGVIuvM5GXHCtntQQS1wFK+wBjrHNzpzF5tOUwgyluKOdDN4rE4MoC
-    siBoYCwwanv7dS0/dQP2mpz+2XTE9kMyn6e82KKqx7L9GwYady/pa07T9jB9MuqusOUuut
-    eh4+XLb2HIn6MR0ErD3D10T2+YLsqbnblmRY78d6s2K7dWeUs4M+Yqlr5tGuHWwoiEQLAq
-    dCrhqSqpnYMGUYeXmPKJNGoa2iqhp+Pxy2YloTzmjBcDF8NxIzgHc3flROqEQd8zeVfrxm
-    DV2ZTN0fmN1dO5U/tt6dP+uXN+BnWbeQ9//sJ4PvDw68nzDsDDxD95hMdN2cdDgTsv0+xe
-    CEe6OPHLduBaVgtwxhImhTIAjADUle7w8ekiyhokeXb2H0OI/8cYlnwEOM9fDyiMAXGn9x
-    xxJUaePqcLLQW6JAwbCPT5fiIy5p/H5o97e11rhPUJNOZURc1jYGdJC9bO3cwB/ebPYqfD
-    1zXYdfRI2ljhV607iRgIiivg14iupVSfKkM14yHvo0U5mO5QH5YS+6dNS2sg
-X-ME-Proxy: <xmx:EkzgalUKagG77qsSA7PYT4lDMFN4yxvu7FOR-gFPXoCUkJeF-0kx6g>
-    <xmx:EkzgauhBkQXHtPXsvDMf6tKJQ-1d1hI2sEfKEQvnNJR5amDCYqLHkw>
-    <xmx:EkzgajVrh29zstXxxFw4YSQp9LwVy-3jZbH6VJiSSGVm2IMMpYasAg>
-    <xmx:EkzgalP2as0nLzZwKJDZ7jBOVKUUZEpk0iGqQUBeheL-bU4g9tSXrw>
-    <xmx:Ekzgamev8FEdgxVTkmDyAmIb7OCpuoFDCI873IQ_tCHh70ff2fgMuXjY>
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:fo/2HdoXAf6n6tUYd2Fg8+EPEffuuQuaSv4yGKLzRtk=:geeqiyk4FSOWi6AJqwG/KuptWGs2lilbs8QukTA/C+w=;
+X-ME-Sender: <xms:rUzgapnevM-BLYxTXR5lFlRKO0zFJWaNr51VQEIEWkbvopoDS-Snwg>
+    <xme:rUzgaq3cB98n0m-SVvUXVoCAqPkQW7d3eMUaZCgEIs16E8EItbSHvR-xBYeOHw5AP
+    W7qgJyKOELeBPQISP70AAGMYzYUGS-6CH8Xc2DSCibFkdNr8qGOM7c>
+X-ME-Received: <xmr:rUzgatRZYbCqWw8ioCQhkTlOE7NU3nR7IAtSKeGk3T1sjvP1CZkauQ>
+X-ME-Proxy-Cause: dmFkZTFMaUyysz+NBAlNuntVBAiZegYd2z9Dk5NcmPAv2gD9Iqtv+J5oipTBFidCLutodY
+    CPVo/rJo/nASmps/lY5sFexVo+qBPytXgFUkN2s1dvhrMOCOeEdfRfDB3k9SKtU7TIOvCV
+    fO0KH8t+knr3EktjOC8EBRv0phAVxmfE16U2QFC3QYiMi9IPGWPO1oJId+DCrTXmG0kO8d
+    ekWKYsXXILyIoWsDQe/lcHks/C5pAIZcddz2M+/yb5TYSbaDTruEkoIuVLdUw+cjQxcr3P
+    zZsjzQNpkb4Tua8TbAOV9gG6H/TNUE23xV6dr31cRgaw4J7kZBailVghSClAgEQNPuOVi+
+    tzH+3UeN0oXjtaS/qnZx/QGfe8d5DAivpYagIG80CmL2E7hJb69KAjpdrRhaVniy41nUrP
+    MeAJxYyZ2DKGBF8ECG1eyE/O8RFrwWShE5Ek6NWm80rLFwULfhEiJyKh7Or/itM3qkhauB
+    nW/Yt9gzirw41Q2EwE863lz7qKAq0gI/owt7ZSd1mD1KRgDjRDwXPY4I0v3pYQNkphIqMQ
+    FWextlDWiVYQAuATPsdZE0sEmUXBuso/425iytDz8V4Gd7Xfl/jie8P27BsxC653gnd2Wi
+    4b/UpY/WbdQizJzFdD+GcK8fKwC+ZUq1QcsbVKMzGNbCronFlS10FvNVzoAQ
+X-ME-Proxy: <xmx:rUzgaksAcl_S1DannrbLILL6tO3fiUFGMg74R1Cy06xM0c9_WNJA-w>
+    <xmx:rkzgaqb_t0iJvo_2BSoOJ5conwbPkMcK44D0C31oRvfSWfvXjjoD0g>
+    <xmx:rkzgahvppoQfN2-tz6q7Rl-IKbvXBSNJng4hMG6uLq7_0f4v9Y9EBg>
+    <xmx:rkzgakE1-JpSOai-ml4Xki4LCgBiJnlZmeBfvTj1Qr__FqAb3UAyHw>
+    <xmx:rkzgaiVbbsQCGl1oyeL-g8ek8frch6AydmPqL_2hoUZOJRmwfg9qsfU8>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 03:00:34 -0400 (EDT)
+ 27 Oct 2026 03:03:09 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7bc67655 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 27 Oct 2026 07:00:33 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id be9ba552 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 27 Oct 2026 07:03:08 +0000 (UTC)
+Date: Tue, 27 Oct 2026 08:03:05 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 27 Oct 2026 08:00:28 +0100
-Subject: [PATCH] pack-objects: handle missing objects when excluding
- promisor objects
+To: Daniel Zoghalchali <daniel@latchkey.dev>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] 2.56.0: filtered --unshallow of a moved ref aborts in
+ pack-objects (should_include_obj) via inherited GIT_SHALLOW_FILE
+Message-ID: <auBMqRatQLqerRte@pks.im>
+References: <CAJwQ=KQynymg4CJOLkyebACYVQa+LhXB2UifniTASkLyArWejA@mail.gmail.com>
+ <at9P0ctULX1BBD8y@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -120,172 +124,120 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261027-b4-pks-pack-objects-repack-links-with-missing-objects-v1-1-f50f90651274@pks.im>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/z2NzQqDMBCEX0X23AUjIthXKT0kcdWtNoas/QHx3
- d2m4GEOH/Mxs4FQYhK4FhskerPwEhTMpQA/2jAQcqcMVVk1RoOuxjgJRusnXNyD/CqYKOPMQZs
- PryM+WYTDcBrO1m1HPWkM6HZM1PM3/97uf5ZXdn9nsO8HTDfEjpkAAAA=
-X-Change-ID: 20261026-b4-pks-pack-objects-repack-links-with-missing-objects-ba49defedef1
-To: git@vger.kernel.org
-Cc: Daniel Zoghalchali <daniel@latchkey.dev>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <at9P0ctULX1BBD8y@pks.im>
 
-In a partial clone Git tries to maintain two different sets of objects:
-promisor objects should be those that we have received from the remote,
-and any such object may not be fully connected. Locally created objects
-on the other hand should be stored as non-promisor objects. The goal is
-that promisor objects should never reference non-promisor objects as the
-"promisor" property is contagious, where a promisor implicitly means
-that any of its referenced objects are promisor objects, too.
+On Mon, Oct 26, 2026 at 02:04:30PM +0100, Patrick Steinhardt wrote:
+> On Sat, Oct 24, 2026 at 10:59:55AM -0700, Daniel Zoghalchali wrote:
+> > Hi,
+> > 
+> > Since v2.56.0, a fetch that combines a tree filter with --unshallow
+> > (or --deepen) aborts in a non-partial shallow clone when the fetched
+> > ref has moved past the local tip:
+> > 
+> >   BUG: builtin/pack-objects.c:5098: should_include_obj should only be
+> > called on existing objects
+> >   error: pack-objects died of signal 6
+> >   fatal: could not finish pack-objects to repack local links
+> >   fatal: index-pack failed
+> > 
+> > v2.55.0 completes the same fetch. We hit it in CI, where a job checks
+> > out a single commit at depth 1 and then unshallows its branch, which
+> > by then has moved on.
+> > 
+> > Reproduction (offline, any Linux):
+> > 
+> >   set -e
+> >   W=$(mktemp -d); cd "$W"
+> >   git init -q -b dev seed
+> >   for i in 1 2 3 4; do
+> >     mkdir -p seed/src; echo "$i" > seed/src/f.txt
+> >     git -C seed add -A
+> >     git -C seed -c user.name=t -c user.email=t@t \
+> >       commit -q -m "c$i"
+> >   done
+> >   git init -q --bare o.git
+> >   git -C seed push -q "$W/o.git" dev
+> >   git -C o.git config uploadpack.allowFilter true
+> >   git -C o.git config uploadpack.allowAnySHA1InWant true
+> >   git init -q co
+> >   git -C co remote add origin "file://$W/o.git"
+> >   TIP1=$(git -C seed rev-parse dev~1)
+> >   git -C co fetch -q --no-tags --depth=1 origin \
+> >     "+$TIP1:refs/remotes/origin/dev"
+> >   git -C co checkout -q -B dev refs/remotes/origin/dev
+> >   git -C co fetch --no-tags --filter=tree:0 --unshallow origin \
+> >     +refs/heads/dev:refs/remotes/origin/dev
+> 
+> Thanks, this reproducer works for me.
+> 
+> > The last command dies as above with 2.56.0, both Ubuntu 24.04's
+> > git-core PPA build (1:2.56.0-0ppa1~ubuntu24.04.2) and v2.56.0 built
+> > from source. It succeeds with v2.55.0 built from source. With 2.56.0
+> > it also succeeds when dev has not moved past the checkout, with
+> > --filter=blob:none, or without a filter. --deepen=N with the same
+> > filter aborts the same way.
+> > 
+> > What happens:
+> > - fetch-pack runs "git --shallow-file '' index-pack --promisor ...".
+> > - The pack names the local tip as the parent of the new dev commit, so
+> >   index-pack's repack_local_links() starts "git pack-objects
+> >   --exclude-promisor-objects-best-effort".
+> > - Since d43b9acb05 (setup: unify setup of shallow file), --shallow-file
+> >   is applied by exporting GIT_SHALLOW_FILE, so that grandchild inherits
+> >   the empty shallow file.
+> > - The grandchild no longer treats the local tip as a shallow boundary.
+> >   It walks to the tip's parent, a promisor commit fetched without trees,
+> >   and is_not_in_promisor_pack_obj() hits the BUG on that parent's
+> >   missing root tree.
+> > - Before d43b9acb05, the grandchild read $GIT_DIR/shallow and stopped at
+> >   the tip.
+> > 
+> > To confirm this, we wrapped only the repack child. Unsetting
+> > GIT_SHALLOW_FILE for it makes 2.56.0 pass, and setting
+> > GIT_SHALLOW_FILE= for it makes 2.55.0 fail the same way, at its
+> > builtin/pack-objects.c:5004.
+> 
+> Makes sense. Even though I think that the bug isn't actually that we
+> started propagating GIT_SHALLOW_FILE, as we now basically behave like we
+> do it with all other global variables, too. And if we were to execute a
+> non-local command like git-receive-pack(1) we already know to unset that
+> value again via `local_repo_env`.
+> 
+> What's fishy is "builtin/pack-objects.c:is_not_in_promisor_pack_obj()",
+> which explicitly checks whether a given object is in a promisor or not.
+> But in the case where we assume that an object may be a promisor object
+> we know that we're running in a repostitory that may not even have all
+> of its objects in the first place -- that's the whole ponit of a partial
+> clone after all. But when `odb_read_object_info_ext()` returns an error
+> we simply `BUG()` right away, which does not make any sense to me.
+> 
+> > Separately, the BUG() is reachable without the environment change. On
+> > 2.55.0, a filtered --unshallow of the local tip, followed by a
+> > filtered fetch of a moved ref, also dies there, because the walk from
+> > the local tip reaches promisor commits whose trees were never fetched.
+> 
+> Yeah, this bug has the same root cause and I was able to reproduce it,
+> too. And indeed it confirms my above take as it already exists before
+> the change to how we propagate GIT_SHALLOW_FILE. So overall, I think the
+> fix is as simple as this:
+> 
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index ca3a891dfbc..e634173fb1f 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -5085,7 +5085,7 @@ static int is_not_in_promisor_pack_obj(struct object *obj, void *data UNUSED)
+>         };
+> 
+>         if (odb_read_object_info_extended(the_repository->objects, &obj->oid, &info, 0))
+> -               BUG("should_include_obj should only be called on existing objects");
+> +               return 0;
+>         return source_info.source->type != ODB_SOURCE_PACKED || !source_info.u.packed.pack->pack_promisor;
+>  }
+> 
+> I'll think a bit more about this and send a patch tomorrow. Thanks!
 
-So when git-index-pack(1) indexes a packfile from a promisor remote, and
-that packfile has objects that refer to non-promisor objects, then it
-tries to reinstate that partition by executing `git pack-objects
---exclude-promisor-objects-best-effort`. That command packs local,
-non-promisor objects that become reachable from a promisor object into a
-new promisor pack. This best-effort mode tries to exclude promisor
-objects by using an `is_not_in_promisor_pack_obj()` callback for the
-rev-walk: for every object that we see, we check whether it's part of a
-promisor pack. And if it is, we exclude that object.
-
-But in a partial clone we may fail to find some of the objects during
-the object walk. The callback only stops us from walking into the
-parents of a commit that lives in a promisor pack, but the commit itself
-is still yielded, and `traverse_commit_list()` then queues its root
-tree. And in a repository that was cloned with a "tree:0" filter that
-tree does not exist, so `is_not_in_promisor_pack_obj()` fails to read it
-and Git would `BUG()`:
-
-    BUG: builtin/pack-objects.c:5088: should_include_obj should only be called on existing objects
-    error: pack-objects died of signal 6
-    fatal: could not finish pack-objects to repack local links
-    fatal: index-pack failed
-
-This bug can trigger in situations where we have e.g. a combination of
-shallow and partial clones, and that bug has existed ever since we
-introduced the logic in c08589efdc5 (index-pack: repack local links into
-promisor packs, 2024-11-01).
-
-But more recently, in d43b9acb05b (setup: unify setup of shallow file,
-2026-07-07) we have introduced another case where it can occur. With
-this change, Git now propagates the "--shallow-file" option to child
-processes via GIT_SHALLOW_FILE. But when unshallowing or deepening a
-repository we'd pass "--shallow-file=" to `git index-pack --promisor`,
-and thus we'd now also propagate that environment variable to `git
-pack-objects --exclude-promisor-objects-best-effort`. And as that asks
-it to ignore the shallow boundary we may eventually try to read beyond
-the shallow boundary and hit the missing tree of a promisor commit.
-
-While we could stop propagating the environment variable to the child
-process that would not help us to fix the first case. And besides, all
-other global Git options also propagate to child processes in the same
-way, so it feels wrong to behave differently here.
-
-Instead, we can simply observe the fact that a missing object cannot be
-a local non-promisor object by definition, and hence there is nothing
-for us to pack in that case. So instead of calling `BUG()`, we should
-rather just skip such objects. And coincidentally, that's also what
-`repack_local_links()` (which invokes git-pack-objects(1) with
-"--exclude-promisor-objects-best-effort") already does.
-
-Reported-by: Daniel Zoghalchali <daniel@latchkey.dev>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi,
-
-this patch fixes the issue reported in [1]. Thanks!
+And here it is: <20261027-b4-pks-pack-objects-repack-links-with-missing-objects-v1-1-f50f90651274@pks.im>
 
 Patrick
-
-[1]: <CAJwQ=KQynymg4CJOLkyebACYVQa+LhXB2UifniTASkLyArWejA@mail.gmail.com>
----
- builtin/pack-objects.c   |  3 ++-
- t/t5616-partial-clone.sh | 55 ++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 57 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index ca3a891dfbc..d6caed16d97 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -5085,7 +5085,8 @@ static int is_not_in_promisor_pack_obj(struct object *obj, void *data UNUSED)
- 	};
- 
- 	if (odb_read_object_info_extended(the_repository->objects, &obj->oid, &info, 0))
--		BUG("should_include_obj should only be called on existing objects");
-+		/* Missing; assume it is a promisor object */
-+		return 0;
- 	return source_info.source->type != ODB_SOURCE_PACKED || !source_info.u.packed.pack->pack_promisor;
- }
- 
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 7cc6f58a31f..97a72e161ce 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -747,6 +747,61 @@ test_expect_success 'after fetching descendants of non-promisor commits, gc work
- 	git -C partial gc --prune=now
- '
- 
-+for opt in --unshallow --deepen=1
-+do
-+	test_expect_success "filtered fetch $opt of a moved ref repacks local links" '
-+		test_when_finished "rm -rf source target" &&
-+
-+		git init source &&
-+		test_commit_bulk -C source 4 &&
-+		git -C source config set uploadpack.allowFilter true &&
-+		git -C source config set uploadpack.allowAnySHA1InWant true &&
-+		COMMIT=$(git -C source rev-parse main~1) &&
-+
-+		git init target &&
-+		git -C target remote add origin "file://$(pwd)/source" &&
-+		git -C target fetch --no-tags --depth=1 origin "+$COMMIT:refs/remotes/origin/main" &&
-+
-+		# The fetched pack contains the new tip, whose parent is the
-+		# local non-promisor shallow tip, so index-pack repacks the
-+		# latter into a promisor pack. The pack-objects process doing
-+		# so inherits the shallow file passed to index-pack and thus
-+		# walks into the promisor commits below the former boundary,
-+		# whose trees do not exist.
-+		git -C target fetch --no-tags --filter=tree:0 "$opt" origin +refs/heads/main:refs/remotes/origin/main &&
-+		git -C target rev-parse --verify refs/remotes/origin/main >actual &&
-+		git -C source rev-parse --verify refs/heads/main >expect &&
-+		test_cmp expect actual &&
-+		git -C target fsck
-+	'
-+done
-+
-+test_expect_success 'repacking local links tolerates missing trees of promisor commits' '
-+	test_when_finished "rm -rf source target" &&
-+
-+	git init source &&
-+	test_commit_bulk -C source 4 &&
-+	git -C source config set uploadpack.allowFilter true &&
-+	git -C source config set uploadpack.allowAnySHA1InWant true &&
-+	COMMIT=$(git -C source rev-parse main~1) &&
-+
-+	# Fetch a single commit as a non-promisor object, then unshallow it
-+	# with a filter that omits trees. The commits below the former
-+	# shallow boundary are now promisor objects whose trees are missing.
-+	git init target &&
-+	git -C target remote add origin "file://$(pwd)/source" &&
-+	git -C target fetch --no-tags --depth=1 origin "+$COMMIT:refs/remotes/origin/main" &&
-+	git -C target fetch --no-tags --filter=tree:0 --unshallow origin "+$COMMIT:refs/remotes/origin/main" &&
-+	test_path_is_missing target/.git/shallow &&
-+
-+	# Fetching a descendant of the local non-promisor commit causes
-+	# index-pack to repack that commit into a promisor pack. The revision
-+	# walk must not die when it reaches the missing trees of the promisor
-+	# commits below it.
-+	git -C target fetch --no-tags --filter=tree:0 origin +refs/heads/main:refs/remotes/origin/main &&
-+	git -C target rev-parse --verify refs/remotes/origin/main &&
-+	git -C target fsck
-+'
- 
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
-
----
-base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
-change-id: 20261026-b4-pks-pack-objects-repack-links-with-missing-objects-ba49defedef1
-
