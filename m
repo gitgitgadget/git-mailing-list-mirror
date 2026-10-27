@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.216.95.84
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793122954;
-	b=kLhcThG/bgx1tvGmBFR5XQ4PeeVf3/30PPwytA/jZlWT5Xi3htTbk/LzPL5Q7QcRJLAK
-	 vDmoxwxomGYp1RnmFOJqfUWSAFsESBt65klvUjX06pl9KaAHiFngobuiM15rPv8Xh2Brb
-	 XW2eJfMH4u9l+zECxD8N3faoWIfYu8ZhlB05qMo614nl7hOHhJsUdbQu55a5pnXT2gEcM
-	 TKQbQKkn1YySOV2Cip/KFYTio9JJ5ifxvfpTw/tPajMwzpPvKW6a5KeXo2mq45G4K7e6X
-	 j++QAMj8Bwb/caH8vrMF/MLOlCsFrsunVG6DRwmdhdMyO95JJMTQu8zrEa8W0T7GGFQ==
+	t=1793123084;
+	b=SdIKX9ocWgRTIgx1vrGXlJ63LSA4fOVBctDNLOB+W5auk671waHGyVoIRtOzHsJHWXQY
+	 HEam75E8UHdhql1U+UAspCeJDJESnYTT+DO6V5OZjkyfICCUg6tcO96XvjVLUdb0QK6zX
+	 jcZEflSFYOzQbqaleZaYwjs4PfLQAhL7omfCsAMCGBro7PABoIC0pu7KbtuGoJ3cEPIKg
+	 j/o1tmAiRjBwzg5zAvaQ/Yun5D+4IySDhLuauCom86GSe6u4r05PwAnS4q0pXkkNQf2qT
+	 +0gPWhMWhpUQsidAG2lP9yQzBdJOvomoYXLB8LbyZnmqx7y4KpF+7NFw5xiclQCGtkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793122954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793123084;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:Date:
-	 From:To:Subject:Message-ID:References:MIME-Version:Content-Type:
+	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
 	 Content-Disposition:In-Reply-To;
-	bh=rhAmxZCne7zwuwr8QDaFgGkW7gkX/94G7FIEv1+khRE=;
-	b=jRjcRqK1/S73Vv2NmO7GjwMxzjby5yX4mnVfMp6lY2al7J0jfl2ecG58Yi8rMeEAbpoT
-	 wCzTVFGccf63z2tLBKNi6GnxpyfWPOf4cgLtrh/6snq5TUmp6lBrYmnL/JPRJMX3o2DjX
-	 6ZTRxcfBSysV9afZvv4wSB6xbZfaYn5beND2by6etPniRVGnbNJUxQTT98C/AUPGo1Sv0
-	 RRzHkfhStzxe8bnMrkdArQyyySPwA4Z43fEjProLh/cw+m0kfERpByE/qyl+JtL1fp3cI
-	 Nzj+SFibY2Fng5p5UvmWrIPo3/30pi0KDXX0nAtseiv7VAnrzMhqOuTxOnU5aNwT5Sw==
+	bh=Lsmf6poNODJP67yJ+yeHV6YanQsNTX+gZfidstaisjg=;
+	b=tV0D2CGFQxE94GoQM5KdZfhvABfrgHh+5g8x1K2YVZdeQUGWb9Xyrg1JhXTE/G+tXDcy
+	 vCwKTkc4Y9/5YS5vO0u56JS8lGw4CCUAHEclVtWzPlqeiDck0j135iAzdcYFf79Ob9hmV
+	 JWmjxXLlDTaY4fKvGCRpTKFce6Xwb0pV23gAI5sH2i3cvJR7WHt8aq8W8iQacf+BrBX6X
+	 Z3dL7F2CmFz3JK1C2bi0CUox4EhRojxP3S5p7BxeJwF+vJVq7QtPLbQ7AYy2mL693e1r3
+	 u4NEROfGZ9LtYWM76hRdK1sC1DMNEOW/+YrEVth2jcv7kruen8M2coPBA4A3pnnvUnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=peff.net;
 	spf=pass smtp.mailfrom=peff.net;
-	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=RjMILAM2;
+	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=huPPiinx;
 	arc=none smtp.remote-ip=217.216.95.84
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CF8606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 17:42:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 67CF8606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13DD606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 17:44:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E13DD606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=RjMILAM2
-Received: (qmail 38420 invoked by uid 106); 27 Oct 2026 17:42:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=v1kVE7qVzPsxxLx9TWzV82XMg4O5yGOtO+H7N90NUTE=; b=RjMILAM2jxmLS57Twz4uuf5DVL0mQ7PgUbHW8k2k2iFh3Hf4W9QWY+XEEiIDhY2R2J2e5B/06HWdayT6tAKyEQjNL22OO2UVMz1KwwDkq5Vav2RezmxMdeMVMtXTMkH3tfxWPlMflK6cvQCKf/yCZeS2vYH6sq5u0KejxJjmUJSUGPacSYiQN6A/JQDaQYET9t7QyEJrJG2gNTPwhrMJzuNwl2I67queHNLjCGB01nlIQdkJAHyql5g4G/PfgE73SH6Kny/mKEKDny44fD4nnaKZ83vAxfm8mOXLkuNJJOyD4QlTsFqBeMd/XchRrvCTEpw/ZDClU065Oq7ZxxVU8Q==
+	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=huPPiinx
+Received: (qmail 38430 invoked by uid 106); 27 Oct 2026 17:44:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/9Xc/Fhu+GkQHKajGhfQszfapOgut6qB+6QM5FcrOBk=; b=huPPiinxwzvAPH/2O7p0yeYvnI/xI8kGP66Ecxgby7jNwzved3UMCc/MNyDcQ7EcZvWI+i6rLo0oUzI5Kd6M4TOdo1h83HnuyLaVztm6odohg7UuBiKUs7g3qAxevUKhMCg5oM4xfkf2w7+NY5yzqfnZOzJEHDLm1c9DaTSHvvbpPsUGXQUW00DPcylzdHI636DTnmC2uCtRbm7ETkuXHFY7xZhBD3jF8Ie3hhvQRy+KLH1C1V/9dD45DxV45nixyzvnqb6ranVuDtoNDlDzrlPM+iKjq4f04K2Ce1AYghHEaeZLa/O70wb4/n8ErQhtM9Q07AY91nyisf3iYoGz5g==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Oct 2026 17:42:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Oct 2026 17:44:43 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 276052 invoked by uid 111); 27 Oct 2026 17:42:32 -0000
+Received: (qmail 276075 invoked by uid 111); 27 Oct 2026 17:44:42 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Oct 2026 13:42:32 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Oct 2026 13:44:42 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 27 Oct 2026 13:42:31 -0400
+Date: Tue, 27 Oct 2026 13:44:42 -0400
 From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Subject: [RFC/PATCH 8/8] test-lib: drop the shell JUnit XML reporting code
-Message-ID: <20261027174231.GH136740@coredump.intra.peff.net>
-References: <20261027173205.GA97799@coredump.intra.peff.net>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Git mailing list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 0/2] Make our clar tests ignore the long-tests argument
+Message-ID: <20261027174442.GA97882@coredump.intra.peff.net>
+References: <20261022-ks-unit-tests-ignore-long-tests-v1-0-554a590d418b@gmail.com>
+ <20261026-ks-unit-tests-ignore-long-tests-v2-0-fdbbefbd19fb@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -59,332 +61,23 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261027173205.GA97799@coredump.intra.peff.net>
+In-Reply-To: <20261026-ks-unit-tests-ignore-long-tests-v2-0-fdbbefbd19fb@gmail.com>
 
-Our shell tests can produce JUnit XML with --write-junit-xml, but we
-don't have any in-tree callers. The Azure Pipelines consumer went away,
-with the remaining CI references removed in e39e332e50 (ci: remove stale
-code for Azure Pipelines, 2025-01-10).
+On Mon, Oct 26, 2026 at 01:01:03PM +0530, Kaartic Sivaraam wrote:
 
-GitLab CI does still consume JUnit XML, but that's generated by Meson in
-meson-logs/testlog.junit.xml, not by us directly.
+> On searching for how these were handled before, I stumbled across
+> 9faf3963b6 (t: introduce compatibility options to clar-based tests,
+> 2024-12-13) which handled this by adding such arguments as NOOP
+> arguments to t/unit-tests/unit-test.c. So, this patch does the same
+> to make unit-test ignore the '-l' passed to it.
 
-It's possible that somebody is invoking the tests with --write-junit-xml
-themselves, but we have no easy way of knowing. If so then we'd need to
-drop/revert this patch. I tend to doubt it somewhat, though. We fixed a
-bug earlier in the series that would cause several tests to fail when
-run with "set -e", and we enable that feature automatically when the
-test suite is run under recent versions of bash. So there's a reasonable
-chance anybody using it would have been seeing test failures since
-ffe8005b9d (t: detect errors outside of test cases, 2026-04-21).
+Your patch looks obviously good, but it prompted me to polish and send
+in a much larger fix that I think makes this fallback option parsing
+obsolete:
 
-Getting rid of the option lets us also drop the test-lib-junit.sh file
-and the test-tool xml encoder. Note that the start_test_case_output and
-finalize_test_output hooks in test-lib.sh aren't used by anybody, but
-I've left them for now. In theory they're generally useful, and they
-don't cost very much to support. The other hooks are still used for
-GitHub workflow annotations.
+  https://lore.kernel.org/git/20261027173205.GA97799@coredump.intra.peff.net/
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Makefile                   |   1 -
- t/helper/meson.build       |   1 -
- t/helper/test-tool.c       |   1 -
- t/helper/test-tool.h       |   1 -
- t/helper/test-xml-encode.c |  80 ------------------------
- t/test-lib-junit.sh        | 125 -------------------------------------
- t/test-lib.sh              |   5 +-
- 7 files changed, 1 insertion(+), 213 deletions(-)
- delete mode 100644 t/helper/test-xml-encode.c
- delete mode 100644 t/test-lib-junit.sh
+I don't propose to replace your series here with mine, but just that you
+might be interested in it. ;)
 
-diff --git a/Makefile b/Makefile
-index a96be506b5..20ccdb7fa7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -879,7 +879,6 @@ TEST_BUILTINS_OBJS += test-userdiff.o
- TEST_BUILTINS_OBJS += test-wildmatch.o
- TEST_BUILTINS_OBJS += test-windows-named-pipe.o
- TEST_BUILTINS_OBJS += test-write-cache.o
--TEST_BUILTINS_OBJS += test-xml-encode.o
- TEST_BUILTINS_OBJS += test-zlib.o
- 
- # Do not add more tests here unless they have extra dependencies. Add
-diff --git a/t/helper/meson.build b/t/helper/meson.build
-index ae513b4cdc..3dcc4d5219 100644
---- a/t/helper/meson.build
-+++ b/t/helper/meson.build
-@@ -77,7 +77,6 @@ test_tool_sources = [
-   'test-wildmatch.c',
-   'test-windows-named-pipe.c',
-   'test-write-cache.c',
--  'test-xml-encode.c',
-   'test-zlib.c',
- ]
- 
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index b71a22b43b..b1be64da06 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -86,7 +86,6 @@ static struct test_cmd cmds[] = {
- 	{ "trace2", cmd__trace2 },
- 	{ "truncate", cmd__truncate },
- 	{ "userdiff", cmd__userdiff },
--	{ "xml-encode", cmd__xml_encode },
- 	{ "wildmatch", cmd__wildmatch },
- #ifdef GIT_WINDOWS_NATIVE
- 	{ "windows-named-pipe", cmd__windows_named_pipe },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index f2885b33d5..17b72276a1 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -79,7 +79,6 @@ int cmd__synthesize(int argc, const char **argv);
- int cmd__trace2(int argc, const char **argv);
- int cmd__truncate(int argc, const char **argv);
- int cmd__userdiff(int argc, const char **argv);
--int cmd__xml_encode(int argc, const char **argv);
- int cmd__wildmatch(int argc, const char **argv);
- #ifdef GIT_WINDOWS_NATIVE
- int cmd__windows_named_pipe(int argc, const char **argv);
-diff --git a/t/helper/test-xml-encode.c b/t/helper/test-xml-encode.c
-deleted file mode 100644
-index b2f330d1a4..0000000000
---- a/t/helper/test-xml-encode.c
-+++ /dev/null
-@@ -1,80 +0,0 @@
--#include "test-tool.h"
--
--static const char *utf8_replace_character = "&#xfffd;";
--
--/*
-- * Encodes (possibly incorrect) UTF-8 on <stdin> to <stdout>, to be embedded
-- * in an XML file.
-- */
--int cmd__xml_encode(int argc UNUSED, const char **argv UNUSED)
--{
--	unsigned char buf[1024], tmp[4], *tmp2 = NULL;
--	ssize_t cur = 0, len = 1, remaining = 0;
--	unsigned char ch;
--
--	for (;;) {
--		if (++cur == len) {
--			len = xread(0, buf, sizeof(buf));
--			if (!len)
--				return 0;
--			if (len < 0)
--				die_errno("Could not read <stdin>");
--			cur = 0;
--		}
--		ch = buf[cur];
--
--		if (tmp2) {
--			if ((ch & 0xc0) != 0x80) {
--				fputs(utf8_replace_character, stdout);
--				tmp2 = NULL;
--				cur--;
--				continue;
--			}
--			*tmp2 = ch;
--			tmp2++;
--			if (--remaining == 0) {
--				fwrite(tmp, tmp2 - tmp, 1, stdout);
--				tmp2 = NULL;
--			}
--			continue;
--		}
--
--		if (!(ch & 0x80)) {
--			/* 0xxxxxxx */
--			if (ch == '&')
--				fputs("&amp;", stdout);
--			else if (ch == '\'')
--				fputs("&apos;", stdout);
--			else if (ch == '"')
--				fputs("&quot;", stdout);
--			else if (ch == '<')
--				fputs("&lt;", stdout);
--			else if (ch == '>')
--				fputs("&gt;", stdout);
--			else if (ch >= 0x20)
--				fputc(ch, stdout);
--			else if (ch == 0x09 || ch == 0x0a || ch == 0x0d)
--				fprintf(stdout, "&#x%02x;", ch);
--			else
--				fputs(utf8_replace_character, stdout);
--		} else if ((ch & 0xe0) == 0xc0) {
--			/* 110XXXXx 10xxxxxx */
--			tmp[0] = ch;
--			remaining = 1;
--			tmp2 = tmp + 1;
--		} else if ((ch & 0xf0) == 0xe0) {
--			/* 1110XXXX 10Xxxxxx 10xxxxxx */
--			tmp[0] = ch;
--			remaining = 2;
--			tmp2 = tmp + 1;
--		} else if ((ch & 0xf8) == 0xf0) {
--			/* 11110XXX 10XXxxxx 10xxxxxx 10xxxxxx */
--			tmp[0] = ch;
--			remaining = 3;
--			tmp2 = tmp + 1;
--		} else
--			fputs(utf8_replace_character, stdout);
--	}
--
--	return 0;
--}
-diff --git a/t/test-lib-junit.sh b/t/test-lib-junit.sh
-deleted file mode 100644
-index 03a7360198..0000000000
---- a/t/test-lib-junit.sh
-+++ /dev/null
-@@ -1,125 +0,0 @@
--# Library of functions to format test scripts' output in JUnit XML
--# format, to support Git's test suite result to be presented in an
--# easily digestible way on Azure Pipelines.
--#
--# Copyright (c) 2022 Johannes Schindelin
--#
--# This program is free software: you can redistribute it and/or modify
--# it under the terms of the GNU General Public License as published by
--# the Free Software Foundation, either version 2 of the License, or
--# (at your option) any later version.
--#
--# This program is distributed in the hope that it will be useful,
--# but WITHOUT ANY WARRANTY; without even the implied warranty of
--# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--# GNU General Public License for more details.
--#
--# You should have received a copy of the GNU General Public License
--# along with this program.  If not, see https://www.gnu.org/licenses/ .
--#
--# The idea is for `test-lib.sh` to source this file when the user asks
--# for JUnit XML; these functions will then override (empty) functions
--# that are called at the appropriate times during the test runs.
--
--start_test_output () {
--	junit_xml_dir="$TEST_OUTPUT_DIRECTORY/out"
--	mkdir -p "$junit_xml_dir"
--	junit_xml_base=${1##*/}
--	junit_xml_path="$junit_xml_dir/TEST-${junit_xml_base%.sh}.xml"
--	junit_attrs="name=\"${junit_xml_base%.sh}\""
--	junit_attrs="$junit_attrs timestamp=\"$(TZ=UTC \
--		date +%Y-%m-%dT%H:%M:%S)\""
--	write_junit_xml --truncate "<testsuites>" "  <testsuite $junit_attrs>"
--	junit_suite_start=$(test-tool date getnanos)
--	if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
--	then
--		GIT_TEST_TEE_OFFSET=0
--	fi
--}
--
--start_test_case_output () {
--	junit_start=$(test-tool date getnanos)
--}
--
--finalize_test_case_output () {
--	test_case_result=$1
--	shift
--	case "$test_case_result" in
--	ok)
--		set -- "$*"
--		;;
--	failure)
--		junit_insert="<failure message=\"not ok $test_count -"
--		junit_insert="$junit_insert $(xml_attr_encode --no-lf "$1")\">"
--		junit_insert="$junit_insert $(xml_attr_encode \
--			"$(if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
--			   then
--				test-tool path-utils skip-n-bytes \
--					"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
--			   else
--				printf '%s\n' "$@" | sed 1d
--			   fi)")"
--		junit_insert="$junit_insert</failure>"
--		if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
--		then
--			junit_insert="$junit_insert<system-err>$(xml_attr_encode \
--				"$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")</system-err>"
--		fi
--		set -- "$1" "      $junit_insert"
--		;;
--	fixed)
--		set -- "$* (breakage fixed)"
--		;;
--	broken)
--		set -- "$* (known breakage)"
--		;;
--	skip)
--		message="$(xml_attr_encode --no-lf "$skipped_reason")"
--		set -- "$1" "      <skipped message=\"$message\" />"
--		;;
--	esac
--
--	junit_attrs="name=\"$(xml_attr_encode --no-lf "$this_test.$test_count $1")\""
--	shift
--	junit_attrs="$junit_attrs classname=\"$this_test\""
--	junit_attrs="$junit_attrs time=\"$(test-tool \
--		date getnanos $junit_start)\""
--	write_junit_xml "$(printf '%s\n' \
--		"    <testcase $junit_attrs>" "$@" "    </testcase>")"
--}
--
--finalize_test_output () {
--	if test -n "$junit_xml_path"
--	then
--		# adjust the overall time
--		junit_time=$(test-tool date getnanos $junit_suite_start)
--		sed -e "s/\(<testsuite.*\) time=\"[^\"]*\"/\1/" \
--			-e "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
--			-e '/^ *<\/testsuite/d' \
--			<"$junit_xml_path" >"$junit_xml_path.new"
--		mv "$junit_xml_path.new" "$junit_xml_path"
--
--		write_junit_xml "  </testsuite>" "</testsuites>"
--		write_junit_xml=
--	fi
--}
--
--write_junit_xml () {
--	case "$1" in
--	--truncate)
--		>"$junit_xml_path"
--		shift
--		;;
--	esac
--	printf '%s\n' "$@" >>"$junit_xml_path"
--}
--
--xml_attr_encode () {
--	if test "x$1" = "x--no-lf"
--	then
--		shift
--		printf '%s' "$*" | test-tool xml-encode
--	else
--		printf '%s\n' "$@" | test-tool xml-encode
--	fi
--}
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 3754db0ea7..c107fd687a 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -195,7 +195,7 @@ mark_option_requires_arg () {
- 	store_arg_to=$2
- }
- 
--# These functions can be overridden e.g. to output JUnit XML
-+# These functions can be overridden e.g. to add CI workflow annotations
- start_test_output () { :; }
- start_test_case_output () { :; }
- finalize_test_case_output () { :; }
-@@ -260,9 +260,6 @@ parse_option () {
- 		verbose_log=t
- 		tee=t
- 		;;
--	--write-junit-xml)
--		. "$TEST_DIRECTORY/test-lib-junit.sh"
--		;;
- 	--github-workflow-markup)
- 		. "$TEST_DIRECTORY/test-lib-github-workflow-markup.sh"
- 		;;
--- 
-2.56.0.559.g7c1a1d8168
+-Peff
