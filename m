@@ -1,102 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.170
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793130128;
-	b=D+/qim5Rt2GcGKUeGm/uOTYSE62vTPkRAGiY5HkPjlWccSTWnJmQXh0gchs5Wwb9Sv2a
-	 GJryWXFX/PnvlVr2ksMcFnxs6cL9jLuQaqkQVZar60tuA+DCVPmmAsCvJK7phHi+N6b6r
-	 /j4/PsiRjEhLYPrDR2ry332KU4Uw3PQG8Pmjzy0o3GzPWUNLkj78D3veLQ3RHciqKLrKx
-	 0PSCF/AX3zVqMLMNq3TpC+9kHOgy7smwb1W90bkaV960ICOwrN48d1oY2dfu4Q+i2TBTo
-	 eZ7/vqdAHIZ8X8WiX+A14cp7uycK95QMJeVzUc41qwtrQ1D5dXkcTjHzAOTt+5DIz4Q==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793130128;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=+TF0zymFXk4wXEcskGsU+TdUCdPOZCQIsB2Z6LDf3xk=;
-	b=ngVfqOWOE1PMIvxslyFbdvtZl2gLIrsWzKGszAAAS9LEKfxBOurKl7nK2WgjDMJM8vyW
-	 INgZPZCSFTxrBJTntK4WdStNUsKLCjMOpggwKN1/82QO2RZ4T4ivcSiu2Ti2d0dnpZ1SB
-	 nECaR3Ed3dc59MZyaO5cZq0TRh4YAR5JYWt2JTU3wLjUPK9Bm59okIRzhdXY4zMetJvTO
-	 UGKz0kKTeKyZhkq0rJ7rbGpOwnWfqxRi2gjnZ1euqqGIXUyo2JsoBexMj/5Vv0xZqpD+P
-	 4XyiJKZq6U6UMJGjq8p9KK67rGF94rrFmGiJ4kc/pke56RZRRaO7aiOVCuOX6IE6sJw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Z+grr3Pr;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.170
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793130520;
+	b=r/cnsGBIlquwcc1+fSmeENKHn0MKUM87/eN6jOtELnGfPGkYUnG34t9UXvxwDezc6mpj
+	 ei08CAlpsjYHIRoJvZSerV31jXJCjtgyZ3dTziHjj6/jRsgCttPoevU3FZ5C6ehw+YX4r
+	 Bjvvqmje6Kstm9mn5dYe46coszkIuj+VHPO6Dgf9GPhpqHyafVeNrS2Uai1yEBaqaYKlS
+	 wqi4stqvW977yvoXRk/TbGa/pyXYbfHOKFTnU2JFCoebbXXkSFOF0uZZuwddLo3IoDaO3
+	 VkzBV4frGu68QOb+C3ovwMakryr3WLTRsTxT7GYKOYNIZNw+FRQJseK9u9wVD/vacjg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793130520;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=p5kH/GpwInfVAGeuNNHDiNOQyYCaFzHJRBP/fgKX4aw=;
+	b=BV0ZlQRY4bXf7YqzoQLscpMMj14OzK/rwjIJ9LXkPI3rd+AkyeQtVLrm96BNBp73JYnt
+	 0yOInkQSEJVWGyLpm98xcjf2pdqZ2WTHXrJpdlgtFzoSABRkrZyGqoPu95Oy2slVmFcNm
+	 tEv0IvUFICfKh87s1czIa6Q+25ZKCh0fbJTvEBXdDUGy5HsPL2xK303ZIPmAml2EDjlS9
+	 34q0tI31eNRoAXqzkUn7abiDeEVJ6FH3Aww/dnYEQiDOebHOY3LsEKjUdYooPYJguVnYj
+	 ooEZPa3qUJIDsc5IPKy9JfVqmokd5vsRUzQFrrohk06KVMORtoPdubJ2QD7qrxavStQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=mE0xQYtA;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="yUmG/PVB";
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470CA606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 19:42:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 470CA606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AB8606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 19:48:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 90AB8606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Z+grr3Pr
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8a05f2d5cd3so147522b3a.0
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 12:42:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793130128; cv=none;
-        d=google.com; s=arc-20260327;
-        b=HU1Z6aoDGSybRmN8sY7ibT5rsYSk3RNozUtIdELzWREw2vi11HVI7/n22ZCqOLQ0mU
-         1uJetiNAdIQD4FNBuh8MZ8OrzdibHH54txTa+umrlHsgVkBSz9J0ci5XjdDxiNVLdftK
-         kV9YZQngOckdYKur4guiTU2KGQ1wy2wNx1NKL4Cfr6XvHBa3h9htg/sjRHY0uLlBQCcm
-         T3/vx9VSpiw94O/Uu+oUeXt0zQroPNzAs87rDviDWyB3zg32+oEHh+NwXt+JCGsJwIs1
-         aFt9M1XM7ZftQ4OKw7MALaT96RtNlePXtbFS41eD6LNAJxlJDxbhdIqH04YtE9mbIXGi
-         RxJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=+TF0zymFXk4wXEcskGsU+TdUCdPOZCQIsB2Z6LDf3xk=;
-        fh=1N0JDWu4157h+WhruOrmu5yMf69TeXVYPqAnhT112No=;
-        b=AWxZu+X08HjrwlBk6Hsj6uSToIDdp9Xm8jK8Bb6sVH/YFyzAeAJRnC70pX4OQUz91l
-         hhixDnTgMgifg4Ek1MSWL+ybqjmTsIDh51XsWrjvPtOC6qdvvpgjgcH8PwPwtYzHGKBE
-         WqPZuutIWnFeJjdBnCZ+L/xtyyBhCO4t+iVDaZlaayW2QBRAwWNzb6dySDzK/E9U7x37
-         5kPQHxk2RzQLK5fi1Kqitc0+GqLxbEx4SO3fGVZNviiBAOgMJvPeDM59gmbdzzzZkvJm
-         LvEWoXl8uS9UG7PeXIegmDGRABLTwqrXoi7EQBY638PegZWENWn9aPvcgWBG/kz3uGfv
-         yctA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793130128; x=1793734928; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+TF0zymFXk4wXEcskGsU+TdUCdPOZCQIsB2Z6LDf3xk=;
-        b=Z+grr3PrNW9uPCeUXWWOz0GENutLbUZR4klfCnyYm7+Vz8Kb7lQHThbV21zhUjwG2y
-         Lq2FRVMVuAkqJxA5AkoeHUNH6akOZoBirUUieab9SKbLjajNEBr+b2ZUthVHdcksBJ1q
-         6LHfwmFffQoah9diQpTtMNp8aTaiKtHSNPEUKC0NrAd84B08+arG98Pdq7waH0r1qEzK
-         CTN/2MpnSiG4UF1yMZq9SUOHvJbdjZS+czBZ4T8Fo2sTGvAi6qE3szpHrEoZymtJLTln
-         LG8Lo3qZw5ofTugCCWr2yeaWCL3Kfn01K2zOtRqEYbUPfgKejmq7kl+8H1RomIO95jPH
-         xJog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793130128; x=1793734928;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+TF0zymFXk4wXEcskGsU+TdUCdPOZCQIsB2Z6LDf3xk=;
-        b=GDn6neoP+4xHyBM1jwHbYfEzhStFaXBtAt2sygx5q9fHKlypimI2aSftrA9q6K+TO/
-         Rd/cu0Mt1vcuMBqNdmZ+nAZbVck2axB+L3PP8udelper01k0CZ/3IjUw6V2arkM14hW4
-         7dElSC1s3faMhqotkhfxsqFSHuvpIuu5MxboGsZNEezwdWmGgYhJAa2PxWDAKYgysm3C
-         vZR63yv8ioSEejZlLfiR2ra12UTc9eNNKCxI01t0zJ0Yhv5XbULk/kPzc8DcC+4OBdL1
-         S7tATonQ4ROwkNDn7wovdU46GTiUuxsCUI1G10uD9GMBvTwF8KThTyanF6Hd7Sg+LZcb
-         s0HQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxWCBmJv1HZVN53GP+PGcAePm8WqCnnt3ziEV47tfAfpV1bnCbhYyE27tvlw/tQf79EXVE=@vger.kernel.org
-X-Gm-Message-State: AFq9FYInu+/9sk2swf5iynW5i0+PfI16PQC8GapVENgskGR1Xs6tCIcr
-	cJrGJagRN8hCTABeifTNYizrndEm1HayhJblpUwL+5i2khRLW4KHxtq6FTxcemMlCgESs0zNDjI
-	f2Dde76T/yoxeXuhR5zUpT1VAlfbZ6KI=
-X-Gm-Gg: AYBFou067zI4xrPO2sdNDgWHoVRf4G0YyqNAch8Up8/xiNWiLOx4R1cSz/tV3DTevO9
-	qcVIWbJ20HBFDboCW6V8eqTg7eFIJSLm6nW4zctRaSb9I+UKje4uFISvPwIBh6UcAyAog0bvvgk
-	I5b9nwduIMc8fKJl09zXMG2DMaL7jF4ho2iHZg4hCx9Rmn1zXskA4t2fWuQ1Fbt2SVgqsBJHN69
-	OlOxB6DPLCF/H/82YF5uGbAYhjvZ4rWph0UGSfmuZhZNdrVEIv6j+P3N7fJ5mWfn8oOG4QsfpAJ
-	e2qOkqpUXM+ZLus/b8vrqXLLjS3aOe4TrAid3T7vmQqcqopi0CWW/M8Ny9HRnekwdAD2XWuPL6x
-	giHCQC4Bt3S+WysOPF4tNd1cuh0TBpfz+6mWcwAoEooNHRJI/wBGnk9oxOo46Q70NEIZhFsZykP
-	606KCXRlIMSIC9rw326lBp9X2Z/bfCb8C/zP6mKiv+ruptg+8/dp9qxfKOjIj1Y8hvtYVFVKnQf
-	KH/qXD4JXXewkA=
-X-Received: by 2002:a05:6a00:4105:b0:880:5fe5:a818 with SMTP id
- d2e1a72fcca58-8a6e869d235mr176860b3a.59.1793130127671; Tue, 27 Oct 2026
- 12:42:07 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=mE0xQYtA;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=yUmG/PVB
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 003247A012F
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 15:48:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 27 Oct 2026 15:48:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793130518; x=1793216918; bh=p5kH/GpwIn
+	fVAGeuNNHDiNOQyYCaFzHJRBP/fgKX4aw=; b=mE0xQYtAlXNF1WYYn6xTyJrYbb
+	FE6cRV8SmM2oDyNTa9plGr3sN0W0rOclE+7bhy4itT0/zx5tKPompeMYe62akd50
+	KI5JeptLgXXzS1Zkhpdzk+RYKCRVzJF4SqbBhV4VMKgVWdmu9YwS6hIyd4cNV055
+	D5ms7+EmrilLRwTGUVPn9Paz0rcQSOf4CB5tSwxz2TlXAa26akck+YyMnOCGGx7/
+	WPeHirMQu2aufH4nuCGOOQ/NE+8irLTyWcDkHIbekysZW+WLJCuLoVpxLyCElPzj
+	tp7blEI/epDxjBWaAwamnt5aNxGpDR5DfcPsnqajSQKpn+Vr7VhI8ODzIvQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793130518; x=1793216918; bh=p5kH/GpwInfVAGeuNNHDiNOQyYCaFzHJRBP
+	/fgKX4aw=; b=yUmG/PVBadXfe3JDMdVNNdyZq7EhXAw3aEmlg5ZyF78QaaVuZGp
+	48MvPq8fHGmbOLJ4G9VXGmvvxV2qawi/B6foU9YxfjPH8tAhXLIlprzR8OOZwBp4
+	aM4bCuTY8Aop/HjW1eZVHwhdE7MDTv6RBx/4OGzqNgmNArtt807l6ckPSH5qsEiH
+	1qZprKeIc+NqS2Lvi+7qee/KbQEEg5EjFb3mB9ZkUB0A7gVgUaebxKNyqQPJ6dkS
+	00lhXDk7OjOtU042FX8HYBwS2pPr4QHUOUouPhqHJ53/wVzTEYJYn8x1V5vZW1s6
+	3ygYU0TMs6/P/QH8gRELWjBlAVETyn/laHQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793130518; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:f3ucescYZg6iqa7pgdzbYVeVRQkTCSnqGrDGhV9fLCR9q18
+	kzc7khh0xvPgiYGgg+pxCHO8QOZC4ErBh1sVLFXkR+TmO3JdgiKXEX/ybGj9mDtS
+	x2XCYAdKdIDDbGvgoyQBhdERq4vju3kyFWMsIg+CAr3Yoj64WRJ4iLMCsS29f6ty
+	kOvIq9cyCoQUUoIreAbV7BYDdmOsFz6EHo+dOErDXa4tFP+SGVNuHSQySTA9goKQ
+	Zf0DqSyoI0uu4Lb/utjrDbaEdVSJlVDDqq11Xok72ceAdf7KILcqk24RHnGEHl0w
+	P0KiRXcmNQpjZuE3a74XOGXpPWwBZuUGoZ6bXEQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:xH4FNx1Jkx7PLs9sG7oPhXHM6V9eeD+OH0R1H0Rqsr0=:alyvvASooQPVZusF45UKSQ0ZhgyvL+jwLWZqEp/CCks=;
+X-ME-Sender: <xms:FgDhai1Ye73B5QbEEDwPytXa-sYy2oDyQH0llGu6NcQUbQ8knUuh_w>
+    <xme:FgDhasjwCoAg-zzfjgHt4gi-nyTGXtS9VR3rdb-NlIkTBhavzebZ3Eo2tq5R_Blg_
+    AEn1eHW8ZVoRkZqQRoepUc0MQ_4-W5vmRzmu373yRqKzX5gkEjm5cg>
+X-ME-Received: <xmr:FgDhaoQ92vW-Kjrz1rn5k1mazWaOtHS8SYXAVKivBW7-NG5YCpCAe0_mTE6_xJBmnl4LPSpEN2oc0qWDTfVxdCLx7bZ3keP1YrfL>
+X-ME-Proxy-Cause: dmFkZTFBRrtVz9XnAAzVZYeGDfld540KlszgRAnwkmHfftBrC1GTJiou2z88i4+SdbJCcf
+    WUFSP0T+z10RrkSJlopftaELlDMNv2Flk7SMHwasWPzDwOkVfGHQq5OkWlbefYsQ/vWm1F
+    vpdU7EcX7oCUf0cVzYnoVaXRi/GB4k2ifZqZ/N0Vt1/tTXRSRDJl6AYA14vcBPDuwBrt9b
+    14w1yqcZruLu/EBoXO627PdPygElDv5+uSXad/3mWptI2hX5xpOFoyJCnuUM7gjegBzbDc
+    FUusRBUy8kgpeYdo9l77evqFarA9WacTZp4DbVRtMEYyeZZYprwe8IwOX4yNnVPGDsjNO2
+    JPu8xynrG72WCEZQY7YQ3wkWjw1aN7xmHZK/Ct0x+CFN70XgAVUD1BpoT1b3ZbMlD9UIPr
+    o/J0SABKyGbkEr7TzQtE+qcIqvUc/wI4p5vGIaPT2yvQPj2DF4Vf2mSO5Pp36YofiA1wZV
+    HHTsaEy4crV7xSGQ8SCQCmVVAGvav5JWwFnykfoxW5KdIawT2OgTPQjTy1RlTfJW7++rFL
+    WgtN2OhDDwq78jZ4azSEg0MFkAwBQfCo1+ufRq/bCT/H8cncUqqbbukQvQC69+67iaY9fT
+    eMS8jUBbsJL5wEV03TFUABWWORfydV+075fxhZw0XaKapqNPid1Uz/XQ0Rqg
+X-ME-Proxy: <xmx:FgDhathMq9dgAHGFJJzTcoC6kkOzqJ6cV7QWOPImA40ZegnlEJ8Egw>
+    <xmx:FgDhao5De0z6dMh2V2U_55AdOG9KBccpjbcQ_xR4LfZhYWWdwT_jUw>
+    <xmx:FgDhaqDYpsQcDM-pvIO89V6RIB-gn-X0MZPnwDR6PfQQyy7vJuaAmQ>
+    <xmx:FgDhavYF_YJvTpaDhZkDdA4-w8IpZhi6ZCDzZQfUTY2a5XvTuZtwdw>
+    <xmx:FgDhaspitr16qBJ7ilPf6AtX9c_WkJb5e1ViZ9chFh4Dc3lwm6-TiHjQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Oct 2026 15:48:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/12] rerere: rename `repo_rerere()`
+In-Reply-To: <20261027-pks-rerere-subcommands-v1-1-d836c36ce0c5@pks.im>
+	(Patrick Steinhardt's message of "Tue, 27 Oct 2026 11:46:44 +0100")
+References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
+	<20261027-pks-rerere-subcommands-v1-1-d836c36ce0c5@pks.im>
+Date: Tue, 27 Oct 2026 12:48:36 -0700
+Message-ID: <xmqqv76mj563.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -106,72 +124,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com> <aa20604144efdcc5ada00d65d538fdb42c2e31d3.1792503778.git.gitgitgadget@gmail.com>
- <CALnO6CAgS3=ne1RkT-DioLmY6SqhnOZ8NH5kxxCZA_1QFx-dBg@mail.gmail.com> <CAHwyqnVELh2ZyCy5W8+jHHWN=UvcgMJP0k0i1PJKU5bU_AhUrw@mail.gmail.com>
-In-Reply-To: <CAHwyqnVELh2ZyCy5W8+jHHWN=UvcgMJP0k0i1PJKU5bU_AhUrw@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 27 Oct 2026 15:41:52 -0400
-X-Gm-Features: AclHuK-yu6rPInVA2vlWHz8cRPzXy_8f1vvjctyk_vczMefI1YxnavOqcWBKhwk
-Message-ID: <CALnO6CBEPcPeTmZj2_O6WMXdjo4e6YiQCctN3Bs-o9LSN2rsrw@mail.gmail.com>
-Subject: Re: [PATCH v10 2/5] fetch: extract collect_upstream_from_remote() helper
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sun, Oct 25, 2026 at 1:20=E2=80=AFPM Harald Nordgren
-<haraldnordgren@gmail.com> wrote:
->
-> > > The latter is independent of the former on purpose: a narrow
-> > > refspec (for example from "git remote add -t") can leave the current
-> > > branch's own upstream uncovered, and we still need to be able to fetc=
-h
-> > > it.
-> >
-> > I don't really understand the meaning here. I can guess that you mean
-> > something like "A remote with a narrow refspec, like what you get from
-> > 'git remote add -t', can omit a branch's upstream from the remote's
-> > fetch refspec, and we still want to fetch that upstream." But it's
-> > taken me a while to put that together (after puzzling out the above)
-> > after first not knowing what "uncovered" meant.
-> >
-> > I think the whole thing would be clearer with an example:
-> >
-> > """
-> > Imagine a remote with a narrow refspec:
-> >
-> >     git remote add -t main colleague <remote>
-> >
-> > and a branch whose upstream points at that remote, but isn't part of
-> > the remote's refspec:
-> >
-> >     git fetch colleague work:refs/remotes/colleague/work
-> >     git switch -c work colleague/work
-> >
-> > When we "git fetch colleague" without a refspec, we decide what to
-> > fetch by combining the remote's refspec (main -> remote-tracking
-> > branch, in this case) and the current branch's upstream, if it was
-> > based on that remote (work -> remote-tracking branch, in this case).
-> > """
-> >
-> > Note: we aren't "guessing" what to fetch!
->
-> Thanks! Maybe this should be the example instead?
->
->         git clone --single-branch <url>
->         git switch -c work
->         git push -u origin work
->
+Patrick Steinhardt <ps@pks.im> writes:
 
-I'm not sure if that captures the same "narrow refspec" remote or not,
-to be honest, though it might be simpler? I'm not sure what the push
-has to do with it, though, and I don't know what you think about the
-rest of the proposed wording ;)
+> The `repo_rerere()` function is the only function in "rerere.h" that
+> does not have a `rerere_` prefix. And while it does indeed receive a
+> repository as first parameter, that's not a good-enough reason to give
+> it a `repo_` prefix.
+>
+> Rename the function to `rerere_record()` to be consistent with all the
+> other functions.
 
-[later]
+I do not think the convention to give "repo_" prefix to variants of
+functions that worked only on the_repository should stay with us
+forever, and losing repo prefix from this function would be an
+excellent first move towards that future.
 
-Reading the new version, I think I see what you're after. I personally
-would love to see an example adding a remote, since I tend to want
-"big" fetches from my primary remotes, but that's fine.
+I howevr take isseus with the verb "record" in its new name.  What
+the function does is not just record.  It autonomously finds out
+what situation it is in and does the logical next thing, which
+varies.  It resolves when a recorded resolution exist.  it records
+when seeing a particular conflict for the first time.  There was no
+single good verb to express that.  Perhaps "to rerere" or "to
+perform rerere" can be invented as a verb to describe such an
+intelligent operation?
+
+
