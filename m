@@ -1,102 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.179
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793129080;
-	b=Ma0tWFye2aBUqrPc/aOnV1YCgeR9Repy6VtOHQTACQwBGxMqmEzpywr6tiG5XwTEfLto
-	 ZJw48nORymbOo2mmSgs2dOGgS2NJfa1Z6kxIecn5SKqil9f7qTwqj6CcLS3OTS5pYtXR3
-	 W46WdfUFRX3qanjZZHMZf0/A4qK2suxdoa+p/yNQfEzsFeHJZ8YMtLp8hnDv04a7DO8Kk
-	 G2Id4nzYimyNsLjW473xDN7i6d5wTYWi3Pjoy22TbfG9bxg/G2o4mXq2pL1L4W0hzOzl4
-	 qwkS6RgF/ndFRnay0Y5qWnhWuULhqZlThYc4HCyDJk/FNw6Dy7xDPTYSmCIy/S4niPw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793129080;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=sOsvs8ECDZF9ovW8/USOVFjMJNxzk4FS3pPpn6msIvM=;
-	b=a8Otc2mQ4+j4pL1J+XAsudojieLmR6olK+zEBO4qfS19r3hJAHsJAZT0wi7ibEkGkYBM
-	 BxNnyvuuU5F3JeZCM65TqYZl8fBnkfDLFtgFMUlqHS8/dwCtj2zMrSUA8NNS9lvPD7cG8
-	 STB6Jt4DAQEPlj8SDLzAgEv7Nj6og3+PkSDYUeryRVgSAGPbhhA1TAySQWwtxA9Il8H3G
-	 4hOiWPBN+pIcdGtIMxO9HWp1GgWonndbfqgLQFZsesLG/3ox641EMzusNfISE7y2c9Zhl
-	 BKGgCS+dvYB9zk7iYpwBofcIu5gO6MMB0kQQyzXSKRooA3ZhLnNPCfM3EvorcRLCUpg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jq950eDA;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.179
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793129378;
+	b=hexXNgtrzxL3bbtN8M30FGWn93BldJ/dYzRNkc9Wafri1F+3JvaQSIwhqMd/bkvqS1Rd
+	 NDeRQJbuhUq0TyUvJbiQaEh6k6iHnhwm1/9EwDdjxYuTQanlwFwtrQcO/AgSlM40hGq30
+	 MFK0U9+5pTlYdZHY489LQOI1/Y+CLUZvTsVpZuDlteVEmHbjy1/O7oX9weZrRFM7fFVVz
+	 YbAuGvKkg90kt4APR9VG8TPlszdzgJ3AU0w0GpwmIpGeBwEdukHNI7b8sjX4VuOJUpbSO
+	 s/H+qM3Cp78OFYEXFy4bpdtTeDYfA34u8GeDrnZ17adv2Sjaui26v0AVIpkD/UaKWOg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793129378;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=TWxFGQEalhwadFrBHnidI2vxNzEqMlITH/bhRpPcrdE=;
+	b=j01+8Jt2anZa2Hf6tYazM59oWD29g3cO0bknX2sBu0BEsdB7c4wpX5CrHrrxlDJoul6P
+	 /PmoVv2CRrZpWo8dMM4o+gKFdLMRW1fe52/96g7mXtSTfXi9LjiFn+ue8fWDr5o1feEZd
+	 41maBB6oDRBHT/FtuWEgM1or1DPFjv74dHtQsvh8tGHK4XFTgQKkFwwyWTjNlY9LqatTc
+	 eXxgX6/1vHbAfv+hetWdZU0ZvWIiEVss+NQOZYZcFD+KvEUS7yazReCT1xhEtlkVDMox8
+	 SyW6Rgo6azQ/xljWjJwt+E3WhPzXsG6Bk2SUzD/narsy5QFtm7CCCe6RGyWNZKpgvdw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ng0hYqz6;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Dq1xiAuh;
+	arc=none smtp.remote-ip=202.12.124.151
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5D5606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 19:24:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CA5D5606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7D5606A31A
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 19:29:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4F7D5606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jq950eDA
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2e946155442so1148415ad.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 12:24:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793129079; cv=none;
-        d=google.com; s=arc-20260327;
-        b=XlJh827VY44KwlrP4mw2mZPBbfyuAwWuLs22bynKjSG6+32S93wQQgOzAzmZHd4hEM
-         K7izQkoLwl3pgjvEZa8Nt8NUkSKtthsSM79MWqri94KW9TwiI3Tj7AmmWo1TiL/YZ3F9
-         dMETxVSxJFluk+lVFE1FC7Mo+yzKoMFS/IPfPQLRw8fUW8yrzCWNV3MYxduSVoyLR/6j
-         TQA6fxtocsQmjXn1AWW5tR7FbctW9NOgUYpQ5BKESPhWuf86sqZMLkBRHOQfgIZLgGOs
-         JhMulvh0dU1fHan9mj5q2yXLSqY2Xxe7uHCCTBCNPhLhWrXOVZQUCRYeQv76090XwIC2
-         ue+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=sOsvs8ECDZF9ovW8/USOVFjMJNxzk4FS3pPpn6msIvM=;
-        fh=NMTStYaZCmhqu/MFezBFdPpecEgJl5LIcCGd7W7enWM=;
-        b=On5y1XD0i3J2TzMUwLHSLv0xDpMaQe3SzrkHNv+4fcB8yH3E37KOUcTThLZcqN3yZR
-         uouuxMLo8jZnko9269/z36uMrx8/PQ4F4rizqnrEQBABICr5FfMWIUYJYX4n7hEYQq80
-         hQgYRxA65ztUtK/cW8IV2EdZAYs1f7GCYKPs46dwbTVin7Nia0mZ5Om9mkbp9q/NpUtW
-         tklsYXEOdv124CV8L53US2G7gYM+RwT7m6iCejhVWH6aX3RoSdrvPFM9e+8X3/7eBZoE
-         rP2OsuuWdg38oHfqStmB/z/yJ21/4H3+f8dvsU5wHwF214svYeF807Co9wEn8tjE/yfF
-         Ihuw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793129079; x=1793733879; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=sOsvs8ECDZF9ovW8/USOVFjMJNxzk4FS3pPpn6msIvM=;
-        b=jq950eDA8D+ZzcMUXCSXiFArOV5eEnCInd4/K/wnWyCWGiWg1iCFkE5f8wG+xcLgcI
-         OOjDE19n2PfBMIX/tynWVQtz3G5wuWq4nY9HMg7NiwLkr8s8TZGXg7Du8ZTxp9Ga3rZr
-         qd9/d4BE/9p0w/3W4nsnctVTM+12aXxzud5kRIRnyUYmHEslwh48BqHh1SG7v/UpcvgW
-         VpvQrqMfTca8hl5HmUAwyh8jKWFUx6i9MeFGRl/N3TPuTg40IfBEcIPQ6UrTydi0QkUS
-         O0dbdlAa2d49l0iVA20ACrLlKIg+ru67Q8M+vByf44jAfgALM60gT0F+jyqh6xC0nv0J
-         YOEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793129079; x=1793733879;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=sOsvs8ECDZF9ovW8/USOVFjMJNxzk4FS3pPpn6msIvM=;
-        b=NfHIAaphWftk2PbDc0z1vJI87hpf1f+19odoqgrlCgsnPir+S/0tYw43NWYkzylpbB
-         keKxHypfppmFWW0SD1JDyAK8FgxOtemVMhniqpdS5mUe5lgpC/9eG2pYfHiVX8+tSGil
-         H3N9yn0rfFCMG6SSYBhe9ihP4MJb1rGkCsTuiZm43Lq8JHqiWLbl5ULDHYdSw/Z/fQDu
-         ulZn3EATChi08sGBxaPfPGGEsC/icgHODBipaLNTtOGgm0ESjS7dXR/4xu/bROe08Oe5
-         YyHyrQyQPTaeMKKooI8XIY/3kA6YA2+pEkIEX1uKraDnVrcBpX5dwvOn7758rn99llv/
-         0HWA==
-X-Forwarded-Encrypted: i=1; AKwUvBzChRjR6CwKD8jiIalfcXdfbELFrl82g5xgRW2gbT+dJvjbwanNsnTzQdWcUv0Nax+cvT4=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLI0A7hf5u16oYIqzFnNQaiIn5yRvlZnEV7cXITVvklvLlOjkh8
-	zNIOgOlb69daIDd1oVvEyHsWqTbzY1tWjBv1N1RX2k9VKff0d2EggYHW45FxS7GXDili3Lfz2By
-	s0TrJZk7rAURqXElwh8TXrLnHmXCecbg=
-X-Gm-Gg: AYBFou3Rf74OZzIiZ0+uFhFjVNILurZXOmaLa3Pq6BelJbZKcsRzJ8Y4+/cc7pQ11S0
-	XLHs/D6TXGBtTzfeZ9s1pVAllXrlX+iq/QaMVjbgS2fuxkrnFznAxMeTEpSnIdszql3mNqoaRo8
-	uuCZBdItt9JUibdfzHZJ7nluE0bsYo/n4Si/lvIxfdroZp6q7nWnn9WNCfWg9KDSrObu7PzlDHt
-	k1VQrAPDStDnRRrSEeI04zCjtxp1rkgdsBpz3UQrGOZCIFe4zU8RETBYkx7b7F+MpcFy0BsBANd
-	Le3mtmsvu2j5xF/qccMEwEkl6uMtQ/F2mRRCgBeaKUUGdUCzz8RT6SYCl3RMy/84/H0qR8/Koq5
-	4S4U65Hgc0Yd3h624kYNn9HmPZcvrRJw0dY/KIHcq0oZACbm3L37eUfxqUR3BLDCyQoR7MT1Zm4
-	jtq/u+WBP1/8vQl0E8RJjxi2g7/pLXWDG9Tfg+1V5gMkNwlG4ksD7mTygVNE87tiBkHbSLoNkQL
-	NeKtTlpTWOS60Bk
-X-Received: by 2002:a17:902:f691:b0:2e9:5eee:e071 with SMTP id
- d9443c01a7336-2eb00587616mr2975925ad.57.1793129079008; Tue, 27 Oct 2026
- 12:24:39 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ng0hYqz6;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Dq1xiAuh
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9E96C1D00133
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 15:29:37 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 27 Oct 2026 15:29:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793129377; x=1793215777; bh=TWxFGQEalh
+	wadFrBHnidI2vxNzEqMlITH/bhRpPcrdE=; b=ng0hYqz6eOE6pLsVpRdpdtbjCO
+	piYLtoSB7AdSEEogmqwfK2QCN1EKdzTZZcvl6sgpbZWr/CrDMEPdxZhQRT/qUedt
+	ysvtMLy89mcr6AHBxDSAEV2qi9TIE56xIhKb+YEFbNDbEjQS+Fe4Ju+5hhXblwEe
+	sPIrqAX0Kvj5ufl4yW8IgZhClKInVHeJSbziH+Lji43MLogoUKCIhPaflq0K/qQY
+	xYQFvHD20YBo8rG+o41FXpxi8Jidi+5Pt71Jb4ua2J4V4mcA/9wlU9V5MhE2B+2N
+	2gbIEJxSIIuui0sBG8trRrTuD9Y7OJ/opryKDNrjyQieJoSaKnnyMMMKB/2g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793129377; x=1793215777; bh=TWxFGQEalhwadFrBHnidI2vxNzEqMlITH/b
+	hRpPcrdE=; b=Dq1xiAuhKmDimIhAR4yO+TzxRD66dC5q+RnLBrzKWnqWBWRazfs
+	G+xXN824h5+LAs77XP7Ge/B5HDjAilRG/VImNaNjyqgrl5yATaG0EUATVm0Uqlr7
+	lPjUZ+DhF7yBvN0Civ+CFq47Z/A0L7yYi2whjkMXqJp5tpLaMMk7AH7LABZ2E6/1
+	+FOGZLkxQBsFWBtbBXaCPeot4x+0aX5Z8KTmT0qS0f9tQGaaL8kycUynYtZgvtiE
+	1+OZbnOc0MwHLaNYRonHXzOVX/hZkuElSHpag0JY1RZS9qYdTCdhvruytHahzQpW
+	uIqI1aonrLpf55MioeSUfaiahpa5L1JOpOQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793129377; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:XmdzZhnmjNQIm/g3egLFxfScmAq4tt9pN64rOHpIIlvZ9Zm
+	SH6P6xOMKhF+t/FPXGPtTpDxMlsOHWoD0x00SRH03hJrHk+zXvuqHRl/GYpq5UaK
+	R+phW50KTOjggUJx0Q+UFNq9mHMredPxkTbWRpthJO9qbrpAx0voKxiKYdPLOR0D
+	EP1qwMhNwa2k0zATaIM/W5K+CwkBXcuff36OQrGqhHrLjtdFcARPrtw9Gugs4OVB
+	0zh0IHi0lCMSj8qyADBSliBSb5pzODhxSBW8DM2kKghuFTEZqHrrO/n2ahfEyCxl
+	hEEGHeqWlM5lxHgrl4rpdoPDmTuxumnslYsJBfw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:fRNA7d7QedAlE7BGZPfUefXL7Ao3QqrEbIDfq2H8Wtw=:8b6UmySKddJIRHKnSgm4Pyw/BGA6XHsvqRmWlx3pG2k=;
+X-ME-Sender: <xms:ofvgat92hKogRKD7vtB3hI-FITiE3i8s7_TBLOVnDRHQ229fIMyd-A>
+    <xme:ofvgapLumEaqgM8jvupBECihhtx_ppATr13AwaYIilWEkwT_S6fJV7fSjv4njRvcQ
+    qQsRNIscn4jFfFd6VatXqHPV6j_7j6k6H7v3kgNCQQVVyD5DhLn5go>
+X-ME-Received: <xmr:ofvgaobIijQO7V8yjhVcyqNQo3WkbcDii1IZN_5DPjJ9nhte8q9ZVihRRgeYkE1De5yWo5c59O6p5obf46RFUXJYbyR2ovvgbwQo>
+X-ME-Proxy-Cause: dmFkZTF068a0Q+cBs/k5GO3vkfgeBRxKYhn0Fv4DoYbH0Epz2JphfDcn62DYSQm7xdfJQR
+    fp+1dwtxhXHt5K7Ltb9v8B6Ta7aEHyTqtcfavSp7DaZOcBywFiZZBffoNdlPupMU+r0a3G
+    Aal+Ovc5V17xz628OGHCEnLfxsuZnm/nlvZCKubg+dsxykKzkYEER8aBi7OPh85LrfsiWb
+    wmSTPdsWVDFdN4/LTjzSIxrTYggPAeImlYj0Yffx1wvaHnIMOzod97e8a+OKU2HK2bgZ6T
+    ONrxZRh4H0tMilH1u/jzRT7cW8kU587RBez7zLaRFBSLAd9SN5Eez11IYh2KC1jpTmposg
+    kp84KfhQU8QvIRerZOUDiqkdd3G6kGtZ9FfA+bbYurojhfslU0xJi0IgoWScB/3zcbht9d
+    C3FKbbqFLymrKbbOcXazpfKn651VgconyiYThVnWhVjrCLUWOVJ9fo3qM8Dbf2LJZUV6F+
+    2K/CoYqsnk9Wix8TMye4M9ifmkXB7aJSUHhDe6vUauCI3E9wXljm9pAdNzhqmJ9vQaRMXw
+    q1aX9NWfOL+3Zlg6zZ7kl/UtK4K0ZNXYc3WRRkqIy8XYA6GqJN3AIi40XVNfgReVlIc+rz
+    0z0dmSHjwOOogphEGBlLuFHb9N8SKDrm17jEQc1HufaH53dNdhYVlQrr08ew
+X-ME-Proxy: <xmx:ofvgarJIkgdVaNJp2Rqb71B2woJVD5WtSJEkSyDc4tc29b3R0wK3og>
+    <xmx:ofvgamBbEnGqlNUXjSTXhICPoDTAnEvuSEX654cyu59SJPm6XQ4Zyw>
+    <xmx:ofvgagqp-in4Tt-PvVGWu7MCCd3X4Ec3bFHg-OtHagTEpnzi6xLqjA>
+    <xmx:ofvgahj_owI_9wH8JCex1RRnrGfvG42-eSnB1IjZDpnSF2balJFiug>
+    <xmx:ofvgalLD-QngmQx3ZNZuTxvF1R1jAm4LTuONeF6ZLrjuDSy-rSVCJPe->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Oct 2026 15:29:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tilak Raaz <raaztilak07@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH] t7104: use test_path_is_file instead of test -f
+In-Reply-To: <CABB4Jh3QD5-4d8+cSgVj+WbP3Uj+FHqL4kS_4uP5anepTEQCQQ@mail.gmail.com>
+	(Tilak Raaz's message of "Tue, 27 Oct 2026 08:46:04 +0530")
+References: <20261026164536.50520-1-raaztilak07@gmail.com>
+	<xmqq7bj4p3ax.fsf@gitster.g>
+	<CABB4Jh3QD5-4d8+cSgVj+WbP3Uj+FHqL4kS_4uP5anepTEQCQQ@mail.gmail.com>
+Date: Tue, 27 Oct 2026 12:29:35 -0700
+Message-ID: <xmqq8q3jj61s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -106,53 +125,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2282.git.1793019999896.gitgitgadget@gmail.com>
- <E45A3779-A25F-43BC-B490-1FB836EAEF39@gmail.com> <xmqqh5i7kpc0.fsf@gitster.g>
- <CALnO6CCGLFwFH73of8QHnsvFjHZ8d86CRhQgV88z=WeKun6abg@mail.gmail.com> <xmqqh5i7j6km.fsf@gitster.g>
-In-Reply-To: <xmqqh5i7j6km.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 27 Oct 2026 15:24:23 -0400
-X-Gm-Features: AclHuK_am4V8GhB2IFFmXHCAd3cPTRX-vCqjm7n2vFOk19Hgzty9961epPU9HVQ
-Message-ID: <CALnO6CDMjtNVuvYNdnaKMSDQ0gxEXXo_r=133TeMNUCBZe1ikw@mail.gmail.com>
-Subject: Re: [PATCH] glossary: use "object ID" as the canonical term
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	Julia Evans <julia@jvns.ca>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Oct 27, 2026 at 3:18=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Tilak Raaz <raaztilak07@gmail.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+>> This makes sense but what is GSoC doing in the patch title?  Has the
+>> program already been announced for 2027?
 >
-> > I can't speak for Julia, but I read her attempt here to clarify things
-> > in line with the ways folks usually use "ID" vs. "name." Of course we
-> > don't always want to let what other people say dictate our
-> > terminology, but in cases where we can make things easier for folks to
-> > understand by using vocabulary in line with their expectations rather
-> > than subverting it, I think that's a worthy goal.
->
-> That goes both ways.  You can tell that to those who are subverting
-> terminology that have clearly been documented for the past 20 years
-> in our official glossary ;-).
+> Not yet.I added the prefix while preparing to apply for GSoC 2027,
+> which was premature.
 
-Fair enough :)
+OK, that is fine and makes your patches more informative.
 
-> > I still find it strange to call "main" an object ID ;) even if our
-> > current terminology says that's fine. Heck, the glossary says a name
-> > is a "unique" identifier=E2=80=A6 so there ought not to be more than on=
-e way
-> > to spell it, even if there are many notations to refer to it? Alas=E2=
-=80=A6
->
-> I do not think it is OK.  "main" is *NOT* an object ID or object
-> name.  "main" can be used where an object name or object identifier
-> is called for to uniquely specify an object.
+My question was not rhetorical, complaining about the use of the
+mark.  I knew (and confirmed later with the people who run the
+program at Google) that the announcement would not be made until
+December, and wanted to know if there is public information that
+says otherwise.
 
-Ah=E2=80=A6 so in that case I think we may be saying some of the same thing=
-s?
-Interesting.
-
---=20
-D. Ben Knoble
+Thanks.
