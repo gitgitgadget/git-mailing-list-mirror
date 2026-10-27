@@ -1,87 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793120636;
-	b=sCDwg+gX6fUKKmbFqg+kEa6MXSYYtfLmflIGnKo+XqFisdPGcfGrKiLiT8RvFZ0jvATg
-	 pAAddu7wlteiF4TKNPmdQJ26JKIyODs1+W1faAwXzSkIP9kMQ8vXCnrxyAgpBYPA4uAII
-	 r41h4EGCCzPDx495K96JNvH+4sJ1iElocg9knMHrzD9/vpFchWw89T5N0yeZlbSbxc8og
-	 59sAYIXKDk3cIjVj2UaR4hWNNIbM3WLWXuxrVSLlwJ/ThObOj2vtbLVhaoaKUeGEicTQl
-	 no/ZZxd8bjK4RejIAVdNCk6XD7bm8ZPSqExiwDkoDJm2llDeQ5T3iINizpVcolryjjw==
+	t=1793120644;
+	b=4Q1aWizNUjWt6UmdlrnE8ecdIGsZBloA8H9ygdGJUEvsbVAR7hgCIS9rf1z7SEkWxPVD
+	 vdD+aOgqKiNwJmAP0lKDbjyCBL6SsdY0bQVljQZawxyXfm5ZiqWOCtUJxzrX5rOsj4lwR
+	 r/KbXjQ3J8Ax+ACNQr7p4AHfktmvx56u/ADvNYsG4+gDH2FMssip7jviKzf02yJq9vOUx
+	 sfH0H6Sb0eFqPFV2PZY3BR1QQU9Q4+0r9wvhDaY3/fbqfFq+9RMXv58jl3Gk1/iLXEN86
+	 /R9wl7ypqohpYLa60qWjWrqXj0exAPCPgDV/dOgC7DNju8cggkzpYX8Ceti8DgLfpbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793120636;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793120644;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:
-	 References:Content-Language:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=DbzIlumBx1vkp+oGrP2I+GWgieeQtjMkRzhl82GR52I=;
-	b=YPSpC7NT2FP41Nvs3cc97ymUY/UW3Fc6wvCJA0i63gcbGj+IYv2pg4F8GTYsTtigIrap
-	 AVemQaYAdm6WE+wEOs61EwSDsB9+QE8tWip5IFvxpQXLxe/kXcuPhTKZWTaue3cciF/hX
-	 velxDKvok1scNZCFsBOZNcCUHwvYdVzeSPslOPZxd8paQPIl4L/jkjsigifdxx/o2Frsl
-	 6yJhLn9AdTQDH12ImpbNj7EQdJiMHUF62wDUW6NKwOMSEHH46amEFXGqLjWyEaVhvr7YO
-	 N9+wvtRg5WSu0DusEyyfH8fvSHCJG5Rj9HRSHy2QtNB6UFytikxrVbdUDgP6FTmw62A==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=YrTzPmNqyt6IweGNEu/L+0zcb8xIDxRml9KuUQa2JX0=;
+	b=UWWv1OcH/BVXISUOraCX/Rg226uyv7POFlOYWdx5K2vf5LAFOPGyyUuR3Itb5yQOhbsY
+	 FI2y+pFeYPYg0I5xW4u+bPxcUBJBUJwH/2fqVpADqvT5pKpdx7yjkipwG7pHdD3HIKTxC
+	 /B4IOGsMi2zat3RqpQCCCCg1HLSgz/4ykETwzgKiU7/SMC/ezIbli/uw5ncsIztwEXMDe
+	 D/0XGnwNAhesI2/jcMwKXzKrV4R7KEZG7GpgzZEg0fnZKJmPcNHWytfa0Je6G5CYiSZd3
+	 tc5Fpd6lyB/+Z6zHZWW9cxy8mvsRC0IgL9iBF9NI9Vufog/oakDXDAFYuj6vDvPfk2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wOuoanDw;
-	arc=none smtp.remote-ip=209.85.128.44
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SoF4sHB1;
+	arc=none smtp.remote-ip=209.85.128.53
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A48F606A320
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 17:03:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9A48F606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5642606A32E
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 17:04:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5642606A32E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wOuoanDw
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a5036bbac7so450565e9.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:03:55 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SoF4sHB1
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a4d7ae1ae9so725255e9.1
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 10:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793120634; x=1793725434; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793120642; x=1793725442; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=DbzIlumBx1vkp+oGrP2I+GWgieeQtjMkRzhl82GR52I=;
-        b=wOuoanDwjEB8nIJ+Cm7GQ3pZpHI1BXWe5OJLLCw5lWfzyislaa/5MQhrjJRlvCFcdG
-         Ka7eIKmwZ/DtEmodSY7pX+Gh/DkuYYstDali76RkXtfP/oeIUDH1EG60YcJ3U+jzJEH6
-         l6kphjy9VBJDw9YN9JfAmj4IozZ+Sh8SemAFCpIDtuE2YgztCBmqdMqhw/+nQcpNMJY7
-         zixTOteohiVFMn4loeVkYGxpPyzfiUbT0rc3okdmhPWON504Lq0RiQq3bdPLuTP8P6NU
-         PcsehaiyPVvVwsm66WcBLy3/gF4fWPqcxrIC3iLszJmtUhSAuteCMpxMrzSQAWAuuOFZ
-         0HSA==
+        bh=YrTzPmNqyt6IweGNEu/L+0zcb8xIDxRml9KuUQa2JX0=;
+        b=SoF4sHB1ifeYTG/58GAmQ90409Gz9QcMR5RXsvHF9GtTf6DPbhddnZgy2djGp5Lad2
+         /PNt6Ldj3LxqtXlZdYy5u34gtFaxgO4LXRQmhlDOFyNF2Ju8XR5KKhT+L7JMN50zuRcy
+         j+b1VBwhXBaYOVFP1TpEgm/DxilH9x8lw0/S+mrX2Y9Java8D3grwNvbUbXzxVL+igWU
+         VqVNT0jTPY95dn937bXNhCWMjDITDNkiLx3xC1Z+axPf/plpMWw7j2Fe2unyguzIVyNR
+         iBbQO7IIy8tx1hH1gIq/bZ+iXe7y5m6jefw6ywEuwiKXKcoYOrWhpotWZfseSwmhmsE/
+         VScA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793120634; x=1793725434;
+        d=1e100.net; s=20260707; t=1793120642; x=1793725442;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=DbzIlumBx1vkp+oGrP2I+GWgieeQtjMkRzhl82GR52I=;
-        b=KVhC2LlXK923enrDbdMQCPFnHuksNfJdLikVbw+5A6xrX0esSU1X4uO/etemdeSNhf
-         UE9NiyeeC5iYeKWqd4xJcFsUjuUFE9HUVcdxZxtWg+XSBgzkK16tio57r2KZW1CNjQ9+
-         4Iltbac/K1frjGbx7bolY1pEmCNGsZjWluDAcWC3qWIp19gskP01opUE+MV4O/soJ95b
-         g3HKJkxZ6Cz8xourPDojC9LidspkqC4uvQHopmtnNpEDvlES5KlAJhydH0uuuXL7xRaw
-         9Ib9KWsk0IdGpejQaQb4Zj/s/nMltC3HkKYGjQcFkrlD3KE2ribzmZtqhCBx0iXpnkR3
-         WDkw==
-X-Forwarded-Encrypted: i=1; AKwUvBwrO1WkRuMSqiazMI+kZBPJe15arYKvpLICqA/BmOj5CHwsEooJRyWF0B6l+ZABGGQXBrQ=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJ2/XWVnRH9J82XOHJORK4T+cPlkM/gmv7WCjQQJloHJ0q988xo
-	6Z1FDNFu3IN+YQhgKl0wQZlTgLzDBC+weU7O+BBwBVS5pf7v2yciTOlH
-X-Gm-Gg: AYBFou07VpAKlOdDLxcdMt1jgnOuPpVJwiEVqK+AfUyKSD5PXV1nQXvqdzGroWV1XT3
-	QaXB1QB6nv+INoueEL/2+hHUjPB9S0stJhdSRp0vwekvoR4bvigvp2NTfmmkNZUggK7d1b7WOyW
-	VQOfDU0FYFeD1r75oZlF1CBnjWqmjaW4MnATVLWzmOJwp0SeoubOpaLkmqCkYY5RiK1HjAxDD7a
-	mw0ESEUjq5zzunrhzPK5A6hIxqxYJWxN3Nw9kkG17XVT6PNSaYZvTUVHAneEovAAADR92ump4zg
-	Xv0qwpPwrpF/C/xBsN8uO4p3PJ/oWFyYr/CooVn5pRpT+m9WahGo7yYD+CBq6A6AFhsVXSogao8
-	9afdBdeJOEUnUd7688phntR/DvpPSaYJaL5fSpTyFtqswHxsLAHdCXnwcwY0pzWrJjagtK8h/6X
-	LNxISfLigsuUEGRP4LP2jadlK5fQZdgKfvtLxcvs6fZ4gmK1ydFJw7AzwFqJpCapOjbngfctAqI
-	t5O7AE7ZAZ8smQI2Z30J7voivednrchnrKtTPdfyx1Ht5JuY5Hckhrlkiqzs5GkZfN9erX+9gn3
-	cyeH2LRfyW/1F62gNEByWAngWTgar7Us/A==
-X-Received: by 2002:a05:600c:474a:b0:4a1:d97e:cd60 with SMTP id 5b1f17b1804b1-4a35ac91f2amr219230005e9.16.1793120633681;
-        Tue, 27 Oct 2026 10:03:53 -0700 (PDT)
+        bh=YrTzPmNqyt6IweGNEu/L+0zcb8xIDxRml9KuUQa2JX0=;
+        b=wARmuQQdQtfvz6KKPCbxB47iI6mk3mqx5ZHifOYLMRoS1Vwfcj/udLrDv3gR5ySSB6
+         jAR5UNG4aVzJA5Lw2twHL/o+QIgCOgFXqiR9PE3VEOU4u/9JXMyLkkQLd2nxPDE9IMed
+         ZlFNa5iearEKYAhEdjRuRE9FNs0qR2eKXt08xvDzz/F+X6nM9gsQSL3/ZNGeXzIBgFi9
+         +v9eO/KJ6ZJrplobTjSz7mvPdxOioqaKG6Qz2Uzjx31GqiXoezPt2oKJL7HwZdNE3Xmt
+         03Jm95iyk8P9Dl6yKyqpUHePOhOvcr6U6D9cTuzLoT/nprRUFiTm4ko9F0rCJi00dhzT
+         1yXg==
+X-Gm-Message-State: AFq9FYI6/3FFngr9IYIXAlq1ZQioUP+7Puk6fgDacs9zIfaCo9n1MVik
+	aKXzxgmdPQ7Fopw7OZCcqDYpSC8ZSgR7X984QI//RkclGjR6BylPAQFk0PwNxA==
+X-Gm-Gg: AYBFou0qR9c+ZIhmAv/CKJ8y/udglfer7B0CZewcWWugvI89GA1NaL45Pe4KUnes/D5
+	A5QDV9OpC0x7IDs94MAyCO4BqsTo+dIKGDoPn+/CzoX4t03APCi91dE4a3sMW0pLW6ZDhbzxDH9
+	XAOeEO/Fwp5TJeS7mnzMwwSsuj8oWJJg7iCzhLhH7c4NI6dXXzgEGRXXIJuBUw2XyulHM6v9UCC
+	I298GKjRhVmUp+ws5w+Ciu7C5H6PwJ9RYiYwNX9iff8JWc7yk1T6djW1Y/KJHnRN+5y/yanFbdx
+	UvtgwGy5WzCoWySRlSzu/aTGaIpx54LyedoF5ge0Dl1WfluKqQJoDvOYR/2u3z4TvNCOOOlTf20
+	1mz6PxcmXMS8aOZeYeMi6XfiINuYdtLG/XsnVrYFORCeBlJM+vOLWxjc50vlLwk1agpPEx3/GkM
+	XGloEyg7Z5KST8PwbHy7N3sbiP79h5x+hR5Ya4weOOQVXlXa/cPbZ95BNmcCUfQM2n+F2vgDjNp
+	aHGN8K3kWG38D10uYPWEGijUG7550AVYtQi9SeWd1eDOozASQSTwWVtgsFVGA4z62iOL5OAtssS
+	d11+y5Zk8ToC1sffEL+4i+dOa1w+TRqyVoA/2WfQ2xCvkuEbFdmmCks=
+X-Received: by 2002:a05:600c:4f89:b0:4a2:150f:160f with SMTP id 5b1f17b1804b1-4a35aca4e43mr204830785e9.25.1793120641807;
+        Tue, 27 Oct 2026 10:04:01 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a92d182e4dsm3613405e9.2.2026.10.27.10.03.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a92d182e40sm3124075e9.1.2026.10.27.10.04.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Oct 2026 10:03:53 -0700 (PDT)
-Message-ID: <7438f8e3-4969-49a9-a0b0-41520ee35aa3@gmail.com>
-Date: Tue, 27 Oct 2026 17:03:51 +0000
+        Tue, 27 Oct 2026 10:04:01 -0700 (PDT)
+Message-ID: <48e21b4b-6762-4e76-a817-1be6bb31bbb7@gmail.com>
+Date: Tue, 27 Oct 2026 17:04:00 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -94,63 +92,63 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v10 1/5] fetch: add remote.<name>.refmap
-To: Junio C Hamano <gitster@pobox.com>,
- Harald Nordgren <haraldnordgren@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+Subject: Re: [PATCH v10 0/5] fetch: avoid fetching every branch of a new
+ remote in a shallow repo
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
  Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
+ "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>
 References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
  <pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com>
- <ba7f1354cd5492ef964ad4d1d398b5ecfc4e0086.1792503778.git.gitgitgadget@gmail.com>
- <CALnO6CAhUNRMf=KZmY6YbC-5g3h8DE6U40HehGwbcRTPhDasrg@mail.gmail.com>
- <CAHwyqnXWxiF6NLh3e4yGq6_y+=A+-_PwKF7D9DJJDxbk_0vF-g@mail.gmail.com>
- <CALnO6CBAEB8=FfZfde0OWvfLJikVkXQ8itP9wZpGHxfxK+y_LQ@mail.gmail.com>
- <xmqq33ttxw9h.fsf@gitster.g>
- <CAHwyqnW=W=XnRs210h1VxA5KWxdObwihCty6Gthiwh6+hDkD8w@mail.gmail.com>
- <xmqqcxswtqd0.fsf@gitster.g>
+ <xmqqcxt02eoa.fsf@gitster.g> <101723fc-d392-4000-b224-345c610b2aaa@gmail.com>
+ <xmqqh5i8tqjx.fsf@gitster.g>
 Content-Language: en-US
-In-Reply-To: <xmqqcxswtqd0.fsf@gitster.g>
+In-Reply-To: <xmqqh5i8tqjx.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 26/10/2026 15:48, Junio C Hamano wrote:
+On 26/10/2026 15:44, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> I actually do not think we should have master next seen on the same
-> remote.cabal.fetch configuration variable.  It is a multi-valued
-> variable, so it should read more like
+> When I wrote the refmap feature (without configuration variable)
+> long time ago, one of the goals was to allow me to say
 > 
->           [remote "cabal"]
->                   fetch = refs/heads/master
->                   fetch = refs/heads/next
->                   fetch = refs/heads/seen
->                   refmap = +refs/heads/*:refs/remotes/cabal/*
+>      $ git fetch cabal \
+>          --refmap="+refs/heads/*:refs/remotes/cabal/*" \
+> 	maint master next
+> 
+> That is, "here is the place I grab from there are stored" and
+> "maint master next are the things I grab from there" are specified
+> separately.  With the configuration variable added in this series,
+> 
+>      $ git config set remote.cabal.refmap "+refs/heads/*:refs/remotes/cabal/*"
+>      $ git fetch cabal master next seen
+> 
+> should become possible with the same behaviour.
 
-Doesn't that cause older versions of git to try and update the local 
-branch when fetching, or is it only when pushing that we'll fill in the 
-right hand side of the refspec with a copy of the left hand side? If we 
-use a different config setting for "what to fetch" then users that want 
-the new behavior can unset remote.<name>.fetch and older versions of git 
-will fail rather than overwriting local branches when there is no 
-refspec on the commandline.
+That makes sense
+
+>> That
+>> setting could accept something like "*@{upstream}" to "mean fetch the
+>> upstream branches of my local branches that live on this remote" which
+>> would cover what this series wants. I think it would be useful to
+>> support "+" and "^" prefixes on the refs to fetch as well, so that the
+>> refmap config controls the mapping and the "what to fetch" config
+>> handles negation and forced updates on a per-ref basis.
+> 
+> The reasoning here is slightly wrong.  "^" (not) may be good thing
+> to consider as it is to decide what to fetch, but "+" (overwrite)
+> should be on the refmap side, i.e., where to store.  If you are not
+> storing, then "overwrite what I have with non-fast-forward" becomes
+> a nonsense request, and that is why it does not belong to "what to
+> fetch".
+
+I see what you're saying. It is unfortunate though that we then need 
+separate refspecs if want to reject non fast-forward updates of some 
+branches but map the refs in the same way for the fast-forward and 
+non-fast-forward cases.
 
 Thanks
 
 Phillip
-
-> 
-> And without these remote.cabal.fetch configured, but with
-> remote.cabal.refmap configured, this command line
-> 
-> 	$ git fetch cabal next
-> 
-> should work just like
-> 
-> 	$ git fetch cabal \
-> 		--refmap="+refs/heads/*:refs/remotes/cabal/*" \
-> 		next
-> 
-> I think.
-> 
-> Thanks.
-
