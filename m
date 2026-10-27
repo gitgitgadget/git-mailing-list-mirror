@@ -1,101 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.41
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793103664;
-	b=wBU2OIoR+bnclNpc96ZMFFs/hXZ8YITQhjXvcr7U2SqXAMyDBnGrTFZT9o5Jl2S3/1MN
-	 BeRIWWCn/cCdpTUK+1uOkTH4YBcWUfq2qocBBJNJAxUH1qlNxn78RReTYClx9LWbB06IC
-	 hNo+H7o8hTANwCQ/PbLt/EfGKjR5nb2NaIFiYRTmodVc2LCJbzFOZhq2RXKoKbj3uvLz4
-	 RwuukW23Q/42tIgKCVKFYSFHaqk3Ho8Mvn8WWHgw4ja+PS0hZx0Q7RnX0OMukozmxXRXH
-	 v8vt7GLzjlQ6scI3XtuFQxJHCpfhMPN3G4rXSNHwA1GZSFUt+wHq3il2+67TrAC3BwQ==
+	t=1793103784;
+	b=uynfWzWKUxCDp5eH13eFDtxa/HUdi0V6INNjTzGmpva2a6Wwl0GrAu5lByjjDJVTFzK8
+	 sF/KjTr0/4mX/ycfYPkoU6Bcc4Mkf37GLBjPztXjNP3hgnCsiPzBi7ud4pUVJS5GIJPdG
+	 rTQtoiRqiDTUTnvxivz3cJjg8qvkSgfUHAt6oy5cO8kHkjCOzR3z3D+48t0HpSk8lx3xG
+	 pUjERPx8Zvzj3GPbvvoF0bmEc9VkWehYqawQXGe5feWUtaOnkma1yzi+c65Mhvq+PMLba
+	 4xyufaivvl8Zb0YtCf1hIyPMVQCTMtGt5LpL/3yeoqbiKlwBHBr0zmhEpu2dSocu8RQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793103664;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793103784;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=E1ea+Rw+xaqRSzUN6t3J9svS4ypdNeEF2yKxQetAvWc=;
-	b=RF0L4SG9kigXSFzg2Tq/pT53fJ9YJ8ZfYE252X63K1wQAmZtTnVcgEn9uSUhod1pJwIz
-	 mibAtlz3+2Sw+rnPjpKu2eLH+G5apNOjSVv4mDhPPAJpfaO+GqB/QmS/1Y1X+nb+ACS4C
-	 PnpLuIA7cWoLKMBYidvOcEjal7dTQkhEC+Mvjpa/WCsoLrTUElJtNTUa+wGSi1JesF0AX
-	 4V62u6OkvJ4lHgalwzDRghJSYjF/ZzKHNzcRY1flOkby2lrt86n8UMDzu0U9R4eC668/a
-	 psMWCAY2inEnWn+5c/4v2T2lmePGOLkjkvAFO96SOKNsLNJG9qu0qXPdcnJLeVl4Xjw==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=3xCfNdkVVtM+wYM93mmTHLbWeKwspenQEOInWBozDks=;
+	b=fYZacfE/XfP/7jZ7AJQP/vw53HpaWUXHupJDimcmyNbFN7bD2tfLMo0q2ue6Wrz/dqyi
+	 A48uG31t/0Sb7Y/umHQdkaDsM/f1p+faEKk2Sy0oF6zDPfl0wyrqBivH4KkSyXgmN0/hd
+	 s9We3KD/m7g77zstMEKAHTdF/4XPCI06aXt91ZEuQUyq/bOOk/cpjeIzM+9bzZHkRWA6g
+	 6slYZKCnM+oYSZqd0ITE64g1COuiuefZhdiS2py0lTWoM7b7HwD+FMmG90715ZvGkKI3p
+	 aqw7V5/VB3RxkTfA2tEqTOJjyV43cs/+iuMLoqolvZQhfbbchl3fxyNKrjQTqm1EW0w==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ImTQCX6I;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.173
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Q1AhNksz;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.41
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9857606A320
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 12:21:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9857606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74516606A31B
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 12:23:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 74516606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ImTQCX6I
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4f699fe49b3so2481707b6e.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 05:21:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793103663; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Q1AhNksz
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6afbc363efeso5866573a12.3
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 05:23:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793103783; cv=none;
         d=google.com; s=arc-20260327;
-        b=Xfiqo2LfZjWWCxG6FmMpxfXS40ppcvq7SIqK+USgHaWw31RqyRFKmoLaRLIRmIsUw6
-         4YSs+TojEyw/JaYwxF8Y7uT28KePeCJFmNpoZTUI2oowgd9gYX2YfnieGzl6vM1Xzywx
-         NSF8ZGcWLZIK4wweqITMOJ0QGsjIpAV4DGNEnp36KV5l/R2Gb4GpyC7D8E4Dzeto+sRV
-         wGxWwbYT2FFQ1Mwqq8C4nLJCFE30hTfdt+XJTSiQ7k5EWywRCIpYnbMc+0YmrvNx5nXR
-         agjJcbjbfykgG+zOpL2wu04yF7ZaV2UWbLwNvNa2UE90BnP7nGOhog/dpaZafx214HhI
-         QoNw==
+        b=AOm0zrZNKDpO9SC75vFiNO/0t2bWpwZ3WjBsvGNlEvVwAfaJeJ4VhcYheZ+hwniGIf
+         KrlY7GG/aMnWEWCpTSwnDnOHGAGN/8mD9MW24EkjISsoG8+sYNGJaofcGBptMGWoR1TA
+         jfdxGXekkNeg2X3SxclI8E/t7QfaeLgVOV0vzUoDmrz179jrKlkYiAxTuNUraf0+1PHo
+         ZTzcn61IR7Isn09aNVf4gMFtRYSOAlcDg5ffArjPzzkS6RgtLbv3vlxURxsQv34YoVBX
+         wGdlVZfhGHIAbDLbGOXW+5ODrs38UkRBn0xvd0aKreUomZfv3+g/EOUWFJGxUu6sANoa
+         AGcA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=E1ea+Rw+xaqRSzUN6t3J9svS4ypdNeEF2yKxQetAvWc=;
-        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=My4Y7dknIFZlDjaFjthKYMCS7LuTKn1xI+o2l0pIWBBsAbanIdqh8qNl8jPlkG/Tsm
-         cHaqKR2Z6uCTp+5vTH5IEmGJ5SxsiCPoCKf/LxYEzdJ7ahx7DNq4PMeaounTyqtuwffa
-         hW2RGhhVxnOVKUFECC/p462dhnLO9lyt/ueass1Q7bn17oXJpvGDLQyPv9UBHQxpKZF1
-         xJq3Kq6wlTyIjjHDTewokCNi03HmEU/J1DBKhb9tszZ0iEEUBr8BuQuqIxaBo5+1bWvM
-         NBuSYcz5FH6OSPZ4DoD3PcnGRbwTNeKJDwpsT308dGSbGzsvyOroN0lFpirR2CpA2839
-         3iMA==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=3xCfNdkVVtM+wYM93mmTHLbWeKwspenQEOInWBozDks=;
+        fh=FsUzaFgOBcI4DI0P5jLFcaWFtuEmS1+U4biXc0luaY0=;
+        b=HtZ3jloWWu1LyOHa23moyl60OyjFjcanTHdaxQOOa1lx7CK+nYdR2XeN1My7p6OXrR
+         ky4q8tZM7ASQMqyXKNqmR8MfJ3V7XZP4rQGTpJEh/Ckzg3OCOS54pVzQOk9dMZiNR8F9
+         mtPyj5v1X3lpJusGC9f08JLTVsmv2tgMZO0/FA7SrdJFEJgZNeW5i0l2JaHjyAMfJS9i
+         rtJkOiTcVn7JvUczKgKEteOtqkF+ynIX6UTn7Td8bIfIHTvJI8rK3pOHQ5UVxc1aB+2+
+         PbYAOOcWc509k+7Hrq/WGeERGYgAV2tTS0qkmN+k5eY9nTXf1UZ1dyUENhsB9LXXNlC7
+         BH4w==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793103663; x=1793708463; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=E1ea+Rw+xaqRSzUN6t3J9svS4ypdNeEF2yKxQetAvWc=;
-        b=ImTQCX6IgTI1E0OKVM2cMBYrbwhg4QZfqAfUCAR9OYPrFsPN8Ui1mRQK3YB8AUfrJB
-         1uydi/9QlsOqy7D6Xpkx/LY4JZxUxAVuCF7ggy/8/K2qUxNqPDAkIt0xtGPilhAh9rtN
-         unGuZliIrKi2Revb8PmGt2jcTa08K07ExhaFnF+U7puoHv1w/BMgviy0xv1yYTZhE3rJ
-         03sSo7mpVsBZu3g83TjxNl03yWIEt6vBg1XzBis0AReGbBu201TpaTnSlawAfc+Ctcz8
-         kOya+q6IUMqXn8fsfZRGVRkAOdL3IBrVMdV/f8pr88Q1PCmr2dKQHMw3z7qvZsE/obPe
-         xu6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793103663; x=1793708463;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1793103783; x=1793708583; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=E1ea+Rw+xaqRSzUN6t3J9svS4ypdNeEF2yKxQetAvWc=;
-        b=KS0ndOb9dbl0FQSzQ8IIYElyqw/uPSglFXSol5OjeLIX5nHveU+5lNssU7jeEXRyLL
-         v+pw3vxrKbn8hz59137PtTADDYsHXR72BEqgTT/kjtzIIoDOK2eaTkzGEHjzzPMzjsEe
-         3MTZgpEHqkX7jmC6KgkH7TUYr/KLtSuqsIiVXu1qVwIT/dbMFHABFGup9NAT4qg7sNmV
-         Cz9PDc6qENnhxdnDdmSrJwrDGG9OoGbN8qV4Pk50HvGcDbnsL0HA/CriExw46EZH2+dL
-         yIXkb+49DjV2Zh9zbFmaG81NHWG1dV+Np3ukQkv4IdII22NwrOHLgBjStQh/6aIQrWqs
-         +M0A==
-X-Gm-Message-State: AFq9FYJlnG/i3XBxABBYnOx8yqmKiFtsRicioCJ1qZ2m0xlM50eMA5fA
-	Yz5tuEtgb1MlLZpklra6FAgVPHlwn8O2Z03yAOKsSG0p6CXsi9SLUj97MZf/PcfbHBN0rAdpm3d
-	fXDrTllCKe75k9vT4T4OLAsJSY90CBipn+tWk
-X-Gm-Gg: AYBFou1YGXkdjBRM0oOqUN0XqCV/WifizeL0kV+lw7KymR8EHHkFjL5aG1QK9OIG5Ua
-	imp2NTEXqSPgdyo9D+8wcZ7nFKsPubl9G2QlQX+UHoZaWlWL6SZZN6PwTJ0msBURDklvMXuJJTx
-	JWjfwHuViZpjuxyv8nqsRp150ObMLwvAL6Hgxp7SkyCxNYVK4l2sFYBDfBNRLgglsv1u49gHAuk
-	Vp0wb+MBsRikTPLkVW2tbXjN4k1AaJCVvrxrZboF5cw8qYYbeRas6/WAZV93Zrgz8PeORft+7q2
-	ovg8uia4n7tpKGCNW/mwmfxJOoVhY7r9Q1EE56cnYjrME3kP22BljBWwPw720nbDEHhfmrlggia
-	yyfHHWhrtQsCWXR7su5+NN53/gANEUwb70/VTgew6fm0rvEPqJ/vzg7qqOOCKUqfSzvrI3Lq3m/
-	XOjLmvH29rpE6qqeRdv+bJoH1SxxKAo+Z0cpovCwP+TXLiat7VbxvrxYuG2h4v9x8yORfpK8vKC
-	o8qa/IKWAPM/a5B3AEdW6DA
-X-Received: by 2002:a05:6808:13c4:b0:4b9:a8ac:480 with SMTP id
- 5614622812f47-55c002d14f5mr6782388b6e.30.1793103662593; Tue, 27 Oct 2026
- 05:21:02 -0700 (PDT)
+        bh=3xCfNdkVVtM+wYM93mmTHLbWeKwspenQEOInWBozDks=;
+        b=Q1AhNkszVoWvoXD7bPoCdvWAmwndRWdQQhvkJdYGBPCopGmTaL/OGKd21eCkHkASmx
+         Ju0/0towIKAD27I20/CQJc3YfitsHYCT6B/2XYSPoBTllWJMxOMgvvuAK8wk6Wp8xWL3
+         CuAIg1ZGHyk9eTUDHtDAPZ3rC8sm9AjVxXjLBpl/NDf0tbqDgzoTqOHR+8vIpZAKEe8J
+         frIMjyCJvXBhw0Z3HiOL7hQq2qxLtK288lgLVFBTI6Z2OKzsl0bBvE7pIzhAAni+73t4
+         C8Up/7HLaEsBaZKiekfjnbnwRgS628WfB+Tsqif0HBSS3zrWI0fIsvrZlbWHXqKoXAnM
+         xkBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793103783; x=1793708583;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=3xCfNdkVVtM+wYM93mmTHLbWeKwspenQEOInWBozDks=;
+        b=b+dRtWmbyecgEPtn0Qh1vZ0TrNPnhXfM7u+CkEtNjJkF0LcVxKhnEmY4nZ/vnbQ2er
+         R/t7ZpQnIMREYeaq6+Jz+VpP7GFc29Fjj8enlJtsuKbF1glzewDACPaChoCL5mButu5v
+         73fOYpv1KPjYFilbJBepXyEUhC6e9YbAzzHaZBb/Ai8eSSIu8yOLX9vgKH6jg9v+FTPT
+         doPed/qLRXtY/LdKyz/F72Jjjq43ssmmKAJFWEr94kjoR9EylEFjHCph5ex1m9fzgkg3
+         5FwWFdCffOngEGLvkb1wD3iIodu+Z0uOpO7PD8jrXylAxGjkan/eBlRKjPhGwsWMUTt3
+         pF/Q==
+X-Forwarded-Encrypted: i=1; AKwUvBxBK0Wh9vywwS663+XLaIo0VQi4d+fqsca2wzT6ZzSg/Qk2ksyUTiekymILRLqxJQn7A/w=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKc0waK+r08prpJV/SBHub1hixVggdomn5PY+eAG0kNBTKoNqAB
+	EwAygVvpk7j9wb6yBtDa1Mus2ujb2jdorXkzXcFma73agkqyeiPcLj+0IBHWe/MIM2VreSghYw6
+	0hS9iGQMWxoh/WImAW9ZsRcNi8M1B5fs=
+X-Gm-Gg: AYBFou0uPBfmAi7Z1lBBWaWgLj7dNPNUK+XngXVtIgphyPnH551uzu1/eKpsYYipH6A
+	oe2H9EXEPNgWYNpTanH9+dYz9ierVbkDIJ7g/QHaZlygmNuUEGgPYQp3qLiFyi0tpZq3rUi+52F
+	UFBQukT3fssq+GD78zn0dmukOEyt7SMJeZ8KU7ti/QvMEBEwYCFzfYBzj5hrNHqxLcrXlkik3zd
+	OFtU1UmNbWjv18thtuvCKOVkP2bfwr2vrPr+YHiMSq2ZCfx4OJjhqKpI2usLphmGj6hBUhZtUQL
+	nan4POtOe3Y6Ui4Qnd81sES3ROXHzbRp1pwZsY2nJNwOJPuiDatridnnlTXiwFOHxxgkJ3v9zBS
+	OzTdkKd9u2oQqfB1vdAI9v3KjgHaiy/tPX0erlFVzYyKqirsdBvZEAJ9Dg79cKOfNSF75Cg==
+X-Received: by 2002:a05:6402:4410:b0:6b4:203:a182 with SMTP id
+ 4fb4d7f45d1cf-6b442a89b98mr11314786a12.3.1793103782707; Tue, 27 Oct 2026
+ 05:23:02 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,47 +103,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261023-pks-odb-files-reload-alternates-v2-0-30559d7ff43b@pks.im>
- <20261023-pks-odb-files-reload-alternates-v2-2-30559d7ff43b@pks.im>
-In-Reply-To: <20261023-pks-odb-files-reload-alternates-v2-2-30559d7ff43b@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 27 Oct 2026 13:20:50 +0100
-X-Gm-Features: AclHuK_H2CsxnLujdldarrPUKq_aD5e_BkzSAQYbvzEuwFaMVDRjHB6NvLVQnZs
-Message-ID: <CAP8UFD18E0v6fBeFaW9YKkf1w2_grQa6iUcLpZmMF44ts_Fw_A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] odb/source-files: always load alternates via
- primary object directory
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+ <pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com> <xmqqcxt02eoa.fsf@gitster.g>
+ <101723fc-d392-4000-b224-345c610b2aaa@gmail.com> <xmqqh5i8tqjx.fsf@gitster.g>
+In-Reply-To: <xmqqh5i8tqjx.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Tue, 27 Oct 2026 14:22:25 +0200
+X-Gm-Features: AclHuK_tycNNO87lm7yU85YibqO6NngX3jElZvbJfLjid19UKiCxG6W1DYbxITM
+Message-ID: <CAHwyqnWBzrj=OVzRWWTwbSU-zG-t_2wbfg+cdTaCWgYstV78mA@mail.gmail.com>
+Subject: Re: [PATCH v10 0/5] fetch: avoid fetching every branch of a new
+ remote in a shallow repo
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
+	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 23, 2026 at 2:48=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+> > I've just read through the commit messages and documentation changes and
+> > I think it is a mistake to use a single config variable to configure
+> > where fetched refs are stored and which refs are fetched. The problem
+> > this series tries to solve is that the default refspec fetches all the
+> > branches from the remote and it's not possible to use that mapping and
+> > also restrict which branches are fetched. To fix that it introduces a
+> > new config setting to configure where the refs are stored which is good,
+> > but it then uses the presence of that setting to implicitly configure
+> > the default set of refs to fetch. To me that repeats the mistake of the
+> > existing fetch config.
+> >
+> > It would be much more flexible if we had a separate config setting
+> > (maybe remote.<name>.fetchRefs) to describe which refs are fetched.
 >
-> The files source tracks a list of object directories. The head of the
+> Good point.
 
-Nit (to match 'the "files" source' used below): s/files/"files"/
+Ok.
 
-> list is typically expected to be the primary object directory, whereas
-> the tail is the list of alternates linked to it. This assumption does
-> not always hold though, as transactions cause us to prepend another
-> quarantine object directory to the list.
+> When I wrote the refmap feature (without configuration variable)
+> long time ago, one of the goals was to allow me to say
 >
-> This is not much of a problem now, but in a subsequent commit we're
-> about to re-read "objects/info/alternates" when we hit a missing
-> objects.
-
-s/objects/object/
-
-> So we may start calling `prepare_alternates()` in situations
-> where the head of the list is _not_ the primary object directory, but if
-> so we would now try to read alternates from the quarantine directory and
-> not from the primary object directory.
+>     $ git fetch cabal \
+>         --refmap="+refs/heads/*:refs/remotes/cabal/*" \
+>         maint master next
 >
-> Fix this issue by instead using the path of the "files" source both when
-> reading alternates in `prepare_alternates()` and when deduplicating the
-> primary object directory in `odb_files_dir_is_usable()`.
+> That is, "here is the place I grab from there are stored" and
+> "maint master next are the things I grab from there" are specified
+> separately.  With the configuration variable added in this series,
+>
+>     $ git config set remote.cabal.refmap "+refs/heads/*:refs/remotes/cabal/*"
+>     $ git fetch cabal master next seen
+>
+> should become possible with the same behaviour.  I am not sure
+> offhand if this series does that, but I would consider it a bug if
+> it does not.
 
-Yeah, the change looks good to me.
+It will do that in my next version and I added a test specifically for this.
 
-Thanks.
+
+Harald
