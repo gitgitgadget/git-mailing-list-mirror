@@ -1,120 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793188258;
-	b=SqAH9qVSxLCMezsMf+BPgy4p4fH+MFnYJ0RjcxUFH601sacV1fw5caegzv+jwqW241f8
-	 b5QH0GNg6Dvj991ihgE4ww9W4Rd2iqeELVgl2ctdaldKEELKJsu4n1PeQunTId/cD/1on
-	 TBqSpbvWJ6f/tvkSC8UQM5Pl3WTvPbb/IIENTduBow7jaM/yCzCdridKNSJT8UYRl+0KW
-	 QCSFMAirAtDR4TSYZNACCPw3+Xqr2bV1msGUvIBaSJS5EU55opBKgGTZII7pCUK+5AQGc
-	 MsNSNjpLuj2pDqzZjekMvURZ1MX5ElcU9MPnw24yE+iKeStEdEMVn7k2TRX1NJIOKIQ==
+	t=1793188482;
+	b=dbEWfp5BEPy4Aic60apLX4xaNcD7p3/JvF+D7d8ZuwU7UdwBE4P3q6f67jkLR97GCTTZ
+	 jw2R6U7Ui+TZNGwxT8hGWYv2FNQl5Quhdc4zRVwqlpX2lAXBr/ZHjiXr3+kLJq4ueEDuP
+	 0yTWxLqLNIRr1V9mTA4np39Eqo3YyQdWo/Z6q8Uet2xzdFZh+52t5Z/i5B61wJWvI/qUC
+	 /cwCtqWUi+WMF2Cyw8EenhJG36yV42bRFSCMdr39hEjdxsbQoE8X9GYQ4eQYH8+v3NG+l
+	 QFbbU9iVCXCWdsZOV6zPl8dlHGCtTCmXIFxLgPe8ZNoTgr5a87d4WiUWqf7hObiJNww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793188258;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=2wVIthEHPHHZeW3KGvk6Rwa8YXYYdp5ZFWUDz/i+zi0=;
-	b=wuRI9rzqCaiEttBQMcFcXXkN26hCiFmYKfknCu5h8vq851cuKJoSprhOBNxwWUsv/kDB
-	 erVaE3+jxF3deVSwnTcwyMk6753pwCPOx39yWoHh8i92ct88tlZfBA7joyHKRIuvrWpe1
-	 bIFNoSv1my0Z9cghzh0idnMUEvvjBsI7bwq71EbTH6QddamZlIc+Qsed7Ev4cZVIjwHhb
-	 vUo0nxFskkJ6OXkAxXouYL6ZmRdhBoHHhh7dGeHfseC0oEZUUkayetnnIWPRYikuxcnPw
-	 7Xk51UVy6Xtj/CiugGZHWSpSwpP6RpKWQbh9x9LOBd9yqI2C7pcRini8bxhlWJXe1ng==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793188482;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=I/kEvjD1oNEi9669FCZ70pSbteLi+Xov3QAeIn2UH/o=;
+	b=fw2eVN+QsW9qcxQylcoTL+4o8FaP3YYMNiAuVWzaYNR5xwvEmL3tAbns8noyUQnvNmv0
+	 KVizml7X7k5bZJegF0Xu92JX8xypalyQ/QBL5NqEoxVTvhhDud8E9LAr1DudCisIB2eE7
+	 axn8n+rDCfEXZRnvdBkka/4dgFOaBY4j3zFc4C8D91E0TEN2GaWOlR7PAeTzb5Eb0uGUZ
+	 pP5UfQTdz/phsgqNYsZJk88pttNRjjceBAa+8kHH9T8QGQxh2iyZZVi+t2bQZAe9gq5x8
+	 UDr9NS4hLPpJzYL2nuv5J1Iupno4kvVXU6FxeRzwv6cZU4sSjk8K0fMJAl09pZ69vvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=aQwlEcuM;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ynigYb6I;
-	arc=none smtp.remote-ip=202.12.124.148
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cMeenu+s;
+	arc=none smtp.remote-ip=74.125.82.43
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EDD606A31A
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 11:50:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92EDD606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C3F606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 11:54:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 10C3F606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=aQwlEcuM;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ynigYb6I
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id E84CB1D00073
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:50:56 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 28 Oct 2026 07:50:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793188256; x=1793274656; bh=2wVIthEHPH
-	HZeW3KGvk6Rwa8YXYYdp5ZFWUDz/i+zi0=; b=aQwlEcuMzD3ZzL43j3AOySg+FR
-	iNJl7UWVCghkU7LdYHmkSOPO8NAo2NYlQz8dMoTmSw2d/w/MBf8hL1IabbZ2tnX+
-	NNfoixFXMUX31sxxkuvPQbdf89QctFKzynQUfTXlutEWjSrLBLHFa1qtbGEVum4L
-	02rhlgf+7+gm5Dv5Hk9VOgYCJ/rp6bL5p5jEloFDXKRp4AodzUUjuejPRZ4TKYaq
-	p5komiKjjJEkJu/UmM9PoCfjT9B9rrwsTXEqwLexl/NtQIMpGdwZDaeeTNTB7mwe
-	swUo6i6Sp+dZfARrGm1j2f19uMx+yV9ljJkS6eqJ/cQ/PbEaI6uxA/wcXyvw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793188256; x=1793274656; bh=2wVIthEHPHHZeW3KGvk6Rwa8YXYYdp5ZFWU
-	Dz/i+zi0=; b=ynigYb6IiOEUZJP9eBoSXxeo3f1H645JpZh3SLzPfne6vgbzSSz
-	JogQmMAnR08VEqh54lbwHZzh88aZlQccDeq/JJKzmmbQI10TU3ryhC4UQKLMSwXY
-	e6E2dJ+WqLUnTFXXJEtCW20Nv0xDFkq7TlP8nY8JPFbbMxXOp8BxjGTfw3SJ8Eph
-	QxoW8Je090IvK2iL3ayP6KFlJb5+uiPqdoMtwb8+4AumPhdFGyh09Oa0nd0FV/mc
-	m/Upp8UOX4020B9kRXnO8dsYQKDTL6qwjLJKPMNDXQZ2HFhigiEjjVeURE+N/bwU
-	iM8fH+azTULdqs0ILgce1iHoBBf1pHFPC/A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793188256; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:FOXu9ZhYJGuX4k2Yhch2psclQhGUzfueNjRBH4pilt/ThlC
-	iik20zM814/LXMFlS+G5eO7QEZXcwkxN/LyhYfx3f7lFjvK+ezJR5rgE0/zlZQkm
-	5tFWinxwYP9hOvfAbS85sMCdLWsvwHrB3wfprKLQ9BBXIgLXKaK97EJ2DpWM5tvv
-	SlRThdz3Xr6vlrrK/+gdxRk8rnGtI2fSWtuLltSANJ5pRboIcyCmXBuWXPC9/ehu
-	cMY0wiEKOKl0MQ42LeQWkbhCnXXbBdBoPvuQIVGh/I45aUJtmfYtKq0bCSQm0gEY
-	YgYHfEc8eFO8YgjZbRyxAFynk2Pa0T/6JEJpPWw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:9/NkmPlWA5QeBNXPvfvIt4dlNfqhGCXN+9oDVDxvaAU=:AZJP8npMo/oWOLu898QGt4TSyCbXpjAkBcEInDPAtWc=;
-X-ME-Sender: <xms:oOHhavtb3GyaD102MR12lEsQe26KOiUpZ7L6z9vaShwroZIo8jN47w>
-    <xme:oOHhan6jrHscRYYN-VAh6Y-ekG-uqVqNQf8JROzfBw4cV90ea8EMttoIX7chRdHmE
-    JihH1I1b9wuXqYMbjDyg3qoVZ6Ycbso8EdlpCkQq3OkldrJf1vLfg>
-X-ME-Received: <xmr:oOHhagLZCvSsjbaSWO9fNrOXqEiwxVZ2wkeinuXYxW79iz67n3YSiQ>
-X-ME-Proxy-Cause: dmFkZTFTX5RhpsHLa2/RMXqHNgOWLYg7z1jgxvd3ZY0B81Utv1B4qwHJhNCwX3O8HGa5Pu
-    cuNHufUtx7koN2tz7t/nvw6GFzhqQCwF9ZZjTHoGV02fT9lw2iUcG2qE+hFV8CeOQOcCdr
-    2EUfir/PWrALscACiyatWrdQ9I5UY7yerhqGd1addJ5aLr8irfymLZSjRzHk114ApgRTiL
-    vruvD2HLJZvmD5X+kvT5dxMOHLftPmenscO+g+fr3fyYVeT6t/X42gAdjrMbgg2WN9cFEH
-    JvS2K+jYBZtj1rxGkDwPvE0g58nWmM4v8BtTo0uJUFeljqbPD1awJZTkdqXRwLZamQoiHn
-    N4qAPzkxSigj4I1FGU+cuEIaXUKm2vu2CDP/NaQn+ia3AD7QL04pYX69sQntlYCZ/RE3RT
-    IK5NWwdOm+++rZFr6dJ9AX1X7tTNfxd4j6/g9q9HMPxl3akmIrOgfd8jYReJDGpoehlFdx
-    fB6NAn4DttJbafRIaKrWoByHOxiIe8UueWywtSBzAJOvIlL3ssgyoQ4Ya9nQrX4aLTzeyZ
-    xUvlQWCTh2EqMvWwrMKk7RgSdBfQu1NQx2rd0btY//dB6aH1+5hiSBlsWUdG2XQCcP71W9
-    5LDf2V6jyWUynzfc0OoHGcJwUyzeZTuzzA2VSjapc3LDJ2Q11aGOJkmI8Pcg
-X-ME-Proxy: <xmx:oOHhan61OFoYQBCVumyMya2celBIw4pD-G8RSX_50Vm3ZUh9loEVOA>
-    <xmx:oOHhajz2vVuNIfuwBpJC81H2ugW_U03Woje1AnWB7bzrKCMfCOjSvA>
-    <xmx:oOHharZA_cx4Vm26rd2weZaUIQEod-RKGcD7pTzEi_FLrv9IC59x7g>
-    <xmx:oOHhalQbk7k3nyz47Hc_Ywly2Oibi3eJRZ2BjnnBdvidSJsEQnTZlA>
-    <xmx:oOHhaj5XfNgDFbtFkxfjVdlxGSND9E4SW8SPacPJrDaRCcj1Vp4bM0pf>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 07:50:55 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3fab7852 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 28 Oct 2026 11:50:54 +0000 (UTC)
-Date: Wed, 28 Oct 2026 12:50:51 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Daniel Zoghalchali <daniel@latchkey.dev>
-Subject: Re: [PATCH] pack-objects: handle missing objects when excluding
- promisor objects
-Message-ID: <auHhm1NAL_dRnp1c@pks.im>
-References: <20261027-b4-pks-pack-objects-repack-links-with-missing-objects-v1-1-f50f90651274@pks.im>
- <xmqq7bj2e0o1.fsf@gitster.g>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cMeenu+s
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1931ff67a29so576917c88.1
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 04:54:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793188481; x=1793793281; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=I/kEvjD1oNEi9669FCZ70pSbteLi+Xov3QAeIn2UH/o=;
+        b=cMeenu+s7PHm08gfl5+HyjXAKfGi1IlX89206XJe2cXYTcJ5xMcagFcAb+y0i387xe
+         LYgGRTlNr3jywUF/LmigSIY4p8U3pWMeL3hj0Xev5uQCWvWSAhoNYm6+r0GSHVYlNRiP
+         Mx5O7jmf6Cjf6BusgOnF3tf/5qXH3e7vDjO/MJyrDIbotfL05njpuiCmSJzsz0tjyF9R
+         BJARsfQcaFl/FWL+R/eoeXnqCcgfBmwTxWyeM2x98eXXjf45T5vveyQfbfsDIsxWQ3V5
+         Qhazqoowwmbigb+K7U1YJvrnFylL36TcwOLtfH1++OWOzGRx6HV0DMUiQQ18Qg4ytO17
+         I88w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793188481; x=1793793281;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=I/kEvjD1oNEi9669FCZ70pSbteLi+Xov3QAeIn2UH/o=;
+        b=SY+vxUpAgThCCZ30uRTFhnIoNhbPCXkBs+HDXrMHMqAehOrkLw6uATuQnZCuyTvOuu
+         4LPrWG3YKTVU92hSyZCCam4DRdOU+i7R7v46ViGWKzrPqSptIRALemYIoJdw0dTnXEOT
+         KvixIKXJpukYcRzC6jnQPX/NRJsB+yKfmsjqRkiTJ145qdWk9SJz0J7U0Kg96UOQSlkK
+         2YA6OWqGtKtV5aaiJ9aylaHW0Cj6xQnI3tB4d6lzuJhHvWfGTFAD6q2vHNamsgJ4zaxj
+         1XpBjOJa3g8Grmgm1SVBKsU8NB4igVeAsS5ac0eBxmVaFGT3Sn0Koi9Y2P4HJO+n4GdK
+         YkJg==
+X-Gm-Message-State: AFq9FYK3xOUffPZfbqdMYZJQ6GMy74oICehb164DqUoT2ZovsxbIiHRa
+	VbJ97BLK1WlGFF9YVSlGNsiQgbFTuJsCKNz8avmJTHWvKFWwjqlNw8l+AxU1Ww==
+X-Gm-Gg: AYBFou25oc3ItZFVwn1NRsMELPBXpG88xGaVVk7rZTdDmqhRIPMCQHMRawWs2fDaBJT
+	6Qm7mzgP7YEjK6TLUzMlEF46+9HTay4nsYVDJvDquVgVL2A79puvY9wErQPIlNrlhN2nL1n7mrL
+	YR4zMih/wy64eoB8WibED/ZRQ4xFOw9UqyEq2EWMFkXlC2Qq1RnvdpDM9+JGJCMP8PUmesQHaIV
+	xDXjPWYafgkDTz9xVTA6RCGOe5tL2YC0sLEfLunyFvhb6J6QV8DqXu3Wam+d1BJQ093l3CPgUE2
+	Kdu4+ANjq7EHXp9agtC3d7JY7HVZWMHKA0/T3QNs0cWrYUo4fXvNWzuPp53qouoR6/Q8Z69vi0h
+	Fwthdqw7wi9wYKDKy95wEYN6cHYTa9l7Z2iS3ocNJHqRW6krifQa8dVZutFq52lqQinxiN1HT0Y
+	DmnxD5l4swtrQaEziQjVN8St6+F75wHqJyPWWGU2M7oEjRHda3owfOPve18aahBtv2yT2Hn+zmC
+	mAWRBE2p3fsXxgIFqd07/Lu+s39kXjQgpH7IqxRFbGvVjqWHccpfSusCE/fy2Kolh/IZoRUDNrC
+	8lklvac/lD5S7eqxFUfb+2fCdz4PctYDl5TkpigRC6xWu6PhU04GDofW
+X-Received: by 2002:a05:701b:464a:b0:166:b307:5855 with SMTP id a92af1059eb24-1a6c24c4efamr3024011c88.0.1793188480685;
+        Wed, 28 Oct 2026 04:54:40 -0700 (PDT)
+Received: from ksivaraam--20260831-PCX54 ([2406:7400:12b:66b5:b36d:2c4:846e:bbe6])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1a75f7fb28csm6350819c88.18.2026.10.28.04.54.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2026 04:54:40 -0700 (PDT)
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To: Git mailing list <git@vger.kernel.org>
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/5] Improve error reporting to mention how a Git repository is discovered
+Date: Wed, 28 Oct 2026 17:23:58 +0530
+Message-ID: <20261028115412.169748-1-kaartic.sivaraam@gmail.com>
+X-Mailer: git-send-email 2.56.0.283.g7d13445134
+In-Reply-To: <20260924120502.2642141-1-kaartic.sivaraam@gmail.com>
+References: <20260924120502.2642141-1-kaartic.sivaraam@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,37 +96,212 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7bj2e0o1.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 28, 2026 at 12:37:02AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > this patch fixes the issue reported in [1]. Thanks!
-> >  builtin/pack-objects.c   |  3 ++-
-> >  t/t5616-partial-clone.sh | 55 ++++++++++++++++++++++++++++++++++++++++++++++++
-> >  2 files changed, 57 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> > index ca3a891dfbc..d6caed16d97 100644
-> > --- a/builtin/pack-objects.c
-> > +++ b/builtin/pack-objects.c
-> > @@ -5085,7 +5085,8 @@ static int is_not_in_promisor_pack_obj(struct object *obj, void *data UNUSED)
-> >  	};
-> >  
-> >  	if (odb_read_object_info_extended(the_repository->objects, &obj->oid, &info, 0))
-> > -		BUG("should_include_obj should only be called on existing objects");
-> > +		/* Missing; assume it is a promisor object */
-> > +		return 0;
-> 
-> It is not entirely the fault of this patch, but the code relies on
-> .fetch_if_missing being set to 0 elsewhere.  While that is not wrong
-> per se, shouldn't this call to odb_read_object_info_extended() pass
-> the OBJECT_INFO_SKIP_FETCH_OBJECT bit explicitly for clarity?
+At the moment, when Git gives up with "fatal: not a git repository",
+it does not say which directory it actually inspected or where that
+directory came from. This is especially confusing when a leftover
+environment variable is steering Git somewhere the user did not
+expect.
 
-Yeah. This is fine in practice because we always unset
-`fetch_if_missing` with "--exclude-promisor-objects[-best-effort]", but
-adding the flag explicitly for clarity feels sensible to me.
+In v2 I tried to address this by explaining why the inspected
+directory was not a valid repository (missing HEAD, HEAD outside
+refs/, and so on). Junio pointed out that this is less useful than
+saying which directory was used as the repository and where that
+came from, since once the user knows that they can go look at the
+directory themselves. He also pointed out that v2 was uneven, as it
+named $GIT_OBJECT_DIRECTORY but did not say where the git directory
+itself came from.
 
-Patrick
+So this iteration takes that direction instead. The validity checks
+in is_git_directory() and validate_headref() are left untouched, and
+we only add information at the points where we are about to die.
+
+With this series:
+
+ - An explicitly given git directory says where it came from:
+
+     $ cd /srv/git
+     $ export GIT_DIR=project.git
+     ...
+     $ cd ~/src/myproject            # later, same terminal
+     $ git status
+     fatal: not a git repository: 'project.git'
+     this path was taken from $GIT_DIR (which can also be set with --git-dir or --bare)
+
+   --git-dir and --bare both just set GIT_DIR, so by the time setup
+   runs we cannot tell them apart. I went with a single wording that
+   is true for all three rather than plumbing that information
+   through. Happy to revisit if it is felt to be worth it.
+
+ - The discovery walk says where it started, where it stopped and
+   what GIT_CEILING_DIRECTORIES is set to:
+
+     $ echo 'export GIT_CEILING_DIRECTORIES=$HOME' >> ~/.bashrc
+     ...weeks later...
+     $ cd ~/.config/nvim
+     $ git status
+     fatal: not a git repository (or any of the parent directories): .git
+     searched from '/home/user/.config/nvim' up to '/home/user/.config'
+     $GIT_CEILING_DIRECTORIES is set to '/home/user'
+
+ - An unusable $GIT_OBJECT_DIRECTORY, which was the original
+   motivation for this series, is reported wherever we die for want
+   of a repository (explicit git directory, ceiling and mount point):
+
+     $ GIT_OBJECT_DIRECTORY=/does/not/exist git --git-dir repo.git rev-parse --is-bare-repository
+     fatal: not a git repository: 'repo.git'
+     this path was taken from $GIT_DIR (which can also be set with --git-dir or --bare)
+     cannot access object directory '/does/not/exist' set via $GIT_OBJECT_DIRECTORY: No such file or directory
+
+Commands that are fine running outside a repository stay silent and
+do not build these messages at all.
+
+This series does not handle the following, which I think are better
+done separately:
+
+ - The gitfile case (for instance from inside a submodule or a
+   worktree). A gitfile pointing at an invalid repository dies
+   earlier in read_gitfile() with its own message.
+
+ - GIT_ALTERNATE_OBJECT_DIRECTORIES. It never leads to "not a git
+   repository". Its diagnostics are misleading in their own way (one
+   of them points at .git/objects/info/alternates even when the entry
+   came from the environment), but they come from the object database
+   rather than from setup.
+
+ - The "$GIT_CEILING_DIRECTORIES is set to" line is printed whenever
+   the variable is set, even if none of its entries is above the
+   current directory and the walk went all the way to '/'. The
+   "searched from ... up to '/'" line makes that visible, and getting
+   it exact would mean passing more state out of the discovery walk.
+
+CI:
+
+They seem to pass.
+
+- GitLab: https://gitlab.com/gitlab-org/git/-/merge_requests/672
+
+- GitHub: https://github.com/sivaraam/git/actions/runs/40676055975
+
+Changes since v2:
+
+- Dropped is_git_directory_verbose() and the HEAD-related reasons, as
+  per Junio's review. is_git_directory() and validate_headref() are
+  now unchanged.
+- New: say where an explicitly given git directory came from.
+- New: say where the discovery walk started and stopped, and what
+  GIT_CEILING_DIRECTORIES is set to.
+- Reworked the GIT_OBJECT_DIRECTORY reporting to ask once at the
+  point of failure, and extended it to the discovery walk (ceiling
+  and mount point).
+- Dropped the test for HEAD being a symlink outside refs/, as the
+  series no longer cares about it. This test was failing on Windows
+  in v2.
+- Reworked the t0009 tests to check the new messages, including that
+  a command which does not need a repository stays silent.
+- Kept each message as a single translatable string and added
+  TRANSLATORS comments describing the placeholders.
+
+Range-diff versus v2:
+(This may not be very helpful because I threw out 3/4 and 4/4 from v2 and have 3 new
+ patches in place of them.)
+
+1:  0b062456eb = 1:  b37136baa4 setup: normalize an if-else to follow our convention
+2:  7e8dab0078 ! 2:  08f3584c3a t0009: add tests to cover more error reporting scenarios
+    @@ Metadata
+     Author: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+
+      ## Commit message ##
+    -    t0009: add tests to cover more error reporting scenarios
+    +    t0009: add tests to cover more repository setup scenarios
+
+    -    Introduce few more tests to t0009 to cover error reporting scenarios
+    -    when --git-dir is used.
+    +    Introduce a few more tests to t0009 to cover repository setup
+    +    scenarios. We introduce these as we intend to do some change
+    +    in upcoming commits which would benefit from this additional
+    +    test coverage.
+
+         Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+
+    @@ t/t0009-git-dir-validation.sh: test_expect_success 'setup: .git as an empty dire
+      	)
+      '
+
+    -+test_expect_success 'setup: custom git directory with missing HEAD is rejected' '
+    ++test_expect_success 'setup: --git-dir pointing to an invalid directory is rejected' '
+     +	test_when_finished "rm -rf parent/empty-dir" &&
+     +	mkdir -p parent/empty-dir &&
+     +	test_must_fail git --git-dir parent/empty-dir rev-parse --is-bare-repository 2>stderr &&
+     +	test_grep "not a git repository" stderr
+     +'
+     +
+    -+test_expect_success 'setup: custom git directory with HEAD as a symlink outside refs/ is rejected' '
+    -+	test_when_finished "rm -rf parent/head-as-link-to-garbage" &&
+    -+	mkdir -p parent/head-as-link-to-garbage &&
+    ++test_expect_success 'setup: discovery fails when GIT_DIR points to an invalid directory' '
+    ++	test_must_fail env GIT_DIR="/path/to/does-not-exist" \
+    ++		git rev-parse --is-bare-repository 2>stderr &&
+    ++	test_grep "not a git repository" stderr
+    ++'
+    ++
+    ++test_expect_success 'setup: command that does not need a repository stays silent for invalid GIT_DIR' '
+    ++	echo x | GIT_DIR="/path/to/does-not-exist" git hash-object --stdin 2>stderr &&
+    ++	test_must_be_empty stderr
+    ++'
+    ++
+    ++test_expect_success 'setup: discovery fails when a valid git directory not found within GIT_CEILING_DIRECTORIES' '
+    ++	test_when_finished "rm -rf parent/no-valid-git-directory-within-ceiling" &&
+    ++	mkdir -p parent/no-valid-git-directory-within-ceiling/ceil/sub &&
+     +	(
+    -+		cd parent/head-as-link-to-garbage &&
+    -+		git init --bare real-repo &&
+    -+		touch garbage &&
+    -+		rm real-repo/HEAD &&
+    -+		ln -s ../garbage real-repo/HEAD &&
+    -+		test_must_fail git --git-dir real-repo rev-parse --is-bare-repository 2>stderr &&
+    -+		test_grep "not a git repository" stderr
+    ++		cd parent/no-valid-git-directory-within-ceiling/ceil/sub &&
+    ++		test_must_fail env GIT_CEILING_DIRECTORIES="$(pwd)/../../" \
+    ++			git rev-parse --is-bare-repository 2>stderr &&
+    ++		test_grep "not a git repository (or any of the parent directories)" stderr
+     +	)
+     +'
+     +
+    -+test_expect_success 'setup: custom git directory with invalid GIT_OBJECT_DIRECTORY configuration is rejected' '
+    ++test_expect_success 'setup: discovery fails with unusable $GIT_OBJECT_DIRECTORY and explicit gitdir' '
+     +	test_when_finished "rm -rf parent/invalid-git-object-directory-config" &&
+     +	mkdir -p parent/invalid-git-object-directory-config &&
+     +	(
+     +		cd parent/invalid-git-object-directory-config &&
+     +		git init --bare real-repo &&
+    -+		test_must_fail env GIT_OBJECT_DIRECTORY="$(pwd)/does-not-exist" \
+    ++		test_must_fail env GIT_OBJECT_DIRECTORY="/path/to/does-not-exist" \
+     +			git --git-dir real-repo rev-parse --is-bare-repository 2>stderr &&
+     +		test_grep "not a git repository" stderr
+     +	)
+     +'
+    -+
+     +
+      test_done
+3:  312b861c6c < -:  ---------- setup: introduce new helper 'is_git_directory_verbose'
+4:  29191f463e < -:  ---------- setup: communicate why a directory is not a valid git directory
+-:  ---------- > 3:  34a110da6d setup: provide hint about the source of the explicit git directory
+-:  ---------- > 4:  9986739fec setup: provide hint about auto-discovery boundaries
+-:  ---------- > 5:  7d13445134 setup: report when GIT_OBJECT_DIRECTORY is what we could not use
+
+Kaartic Sivaraam (5):
+  setup: normalize an if-else to follow our convention
+  t0009: add tests to cover more repository discovery scenarios
+  setup: provide hint about the source of the explicit git directory
+  setup: provide hint about auto-discovery boundaries
+  setup: report when GIT_OBJECT_DIRECTORY is what we could not use
+
+ setup.c                       | 104 ++++++++++++++++++++++++++++++----
+ t/t0009-git-dir-validation.sh |  77 +++++++++++++++++++++++++
+ 2 files changed, 171 insertions(+), 10 deletions(-)
+
+-- 
+2.55.0.1003.g10538fe699
+
