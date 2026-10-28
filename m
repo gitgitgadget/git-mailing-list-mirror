@@ -1,118 +1,119 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793206061;
-	b=Z8crqjUGX+iM/wZ11S+oKaQVkp6yW6rTmiUZSAcZvuK33vuYDleN9EcIulYZTrerSQYb
-	 1hsm1eCCw0KDlWiD4hwiypG4xrz6zHitTdIibcIal3cff9T+1K4n6MKndPZqOtwmoBTOM
-	 n6HSmmxscZfA+WyeaTdv5Ga0PPjH0I8jV4PWiLf8XhIzLY5KVhaDBBwqMk+l5Iw6dEYGQ
-	 Q/B98nqdJqtqoZY4iz/a7bNwOWUil4QU+vU1jiPBnjef440y0UcbZ49PWdr8K+Es1bavK
-	 HAFWJX8FBZgzwWIMqq2WaAIR/5vBjoxU71J6t4IwhMwCm+9aMAqd4RaDRK/DJrimQCw==
+	t=1793207064;
+	b=r3QAK/Cf7DA9fJR2AJxeW4Xz6TdBX/TNc3cZsxSr9+hobWXb4T1FGtLpeGFlQNaXKim/
+	 LEW8oJvldWumIIExZcsIBFVc5QuAWT9xMy687DOsVBXx97WBLSUgCNpnDeCYW0e+j1vNN
+	 +VKGUdSk5kNvDja6ermkxCXMRDGAWZr15PS/HEgDW5IxqWlASp2AaEI2TNY6cjRfEp5Zo
+	 0CFV8VHHJRMtwSCXn0018ivmQGiohPZUtYWtTcChEQ30zpjQVOH2XQtEFtpnicLQTViX1
+	 5eeWtNCzt8PVvDMm9tMMMuf+gjD6B/6iuIF7HWBAajbeIyXXF1AV+ITyRKRTjwTV5gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793206061;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207064;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=n/S2cQV0QtH5aazFonwkS0BrrwiC87RB/um+Kpv+YKY=;
-	b=LW1dvxfcx42IolBd8hjAi1pSNnscNKt8x2FgmPUht1Mt3T6vb0apm9WWyf9PTTyULTWU
-	 2m5o2pu2NQ1gy50wsV6I2xvndHPlRaZAZAXO+PglVJGjz226sxWSDCq6Qm01n6kyGeyac
-	 gdE0xg6QcSfAHoW0RL8D0n2SQ0A90AnlSOZquwmsf+Pwue3WTJ4uM2HkzWwAN7DtDZQIY
-	 c7RPX/JldjclvDvYtJi9kBadI6ZH3cM0w7X84zHhtFkp3kFrjVIKm3DTOWXCeWZRJ1Xbi
-	 VeAHKHByD29LrBOtuXjMVeseDgC0Qz0AKZMtqmdnazgXSYE4zI1xIpjqsu9NbbsWc3Q==
+	bh=WtJrlTVNGFV2j4MmSrBY83nZ9xyvN9uC4jZ6DbOiJ8w=;
+	b=gpr+cLKrVMw91QhKWt1B8XbciT8XPlNTSjVtT8r6hT2+X6WwZPg0WHM91fqtUdv8QS9I
+	 WUSgbb2oPBhhzgTA8JqFhy2fE6suVqYIu7GxlK26qQ5imF773o1iYbI2MIiw+kuwph/C4
+	 wOqx+0/9TntC+tuy2BdbEMIEhzXUrbDFCiWZ4X3WQqVNFdBxgWmwHssXyKGPBkH57gZ0K
+	 bD2oSGCwGJlteiEJS0daNuHs389UDzTpsX/peT1Cts7I1OwANOQKuEPl7tEmPcgX1ED8i
+	 fHiLzXxxI3LiqZzI/1hhuR639DgpIDmUBvyMiEizHVZOSbVNq9yD9WHpthUESPbU6Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=fnIsiesU;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=NIZgPcJ5;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=eQH1RIM8;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=kyVlRuq+;
 	arc=none smtp.remote-ip=202.12.124.159
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708D3606A325
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 16:47:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 708D3606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA5A606A31C
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 17:04:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EAA5A606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=fnIsiesU;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=NIZgPcJ5
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C85847A009F
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 12:47:40 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 28 Oct 2026 12:47:40 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=eQH1RIM8;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=kyVlRuq+
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 521CA7A0100
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 13:04:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 28 Oct 2026 13:04:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793206060; x=1793292460; bh=n/S2cQV0Qt
-	H5aazFonwkS0BrrwiC87RB/um+Kpv+YKY=; b=fnIsiesUpg9pkrd5jraWPxm7Dj
-	q7pgiqBls3mndJP6npo0jv5ZEOv56vPZ7WEi0LFr8JkctlVFxFeExn3v7cwwptol
-	0crOwO6N9AqCkAjyVSv/DSNLg8JfnYiNrvd6yl5PCUgbCCoGQfKad8buQqz6U6oL
-	d872aoeD7RMjEHdItJtl69KzT9gkLYWCpksRtSpfjbht0yaoLoAWxJnLPukJUsRD
-	T24wlavVAEKMAXn2gjAcJxdkM9NvMmzliBgSQVaKULpCmw5HG9aYNGOHw3NvMQvs
-	P6ODmVpwPK5N8u3BrkIOk6rgrF4TH5aV0HI9Vlw+hxhw7oJH03r0VBiY99mQ==
+	:subject:to:to; s=fm1; t=1793207063; x=1793293463; bh=WtJrlTVNGF
+	V2j4MmSrBY83nZ9xyvN9uC4jZ6DbOiJ8w=; b=eQH1RIM8JZ0T/gCdjkKNt4jZaH
+	OavMdSHwQCkI3FQpQXF57/JU9CRmg31eSpvstuOWM2gLKaIQucwO4Sv+CJLhZslC
+	Ory+/3kvLehzDqPqPpbz99mUbPLKv0M+7famHgka+6bl4WrFbKT+NZ9Z59qXM8v0
+	0S1Qk7VzKeRWqomnZUwqt8psQFjHBruu7lr+MWBMbBfCAauH9VpELyMBMneAJIn6
+	VOkEGpsRQOAnUjIZ18fN/cV8Exj6QAvMvsZ7Jf0sxHQHAmYauqRmuS057/u9hcq0
+	ITIDWqhaqtYeWTUPjRLkvjSIch4E4unCrsbyjgv2XwBUbOYEERWQVYhdFU1w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793206060; x=1793292460; bh=n/S2cQV0QtH5aazFonwkS0BrrwiC87RB/um
-	+Kpv+YKY=; b=NIZgPcJ5/WozLkrL//c3s/9eUH53AetXAnzLzh+voYMmT9aDMrC
-	ss8+emkx3kcG41MZjTILYLIPiDTsNmKUBqYnTEABu9mqeLZWs22jwDWKsFbc5c04
-	IGIxsLdK0lUDJRNd+6Xu5f4LnXyKRrwdF4TnLDG6ZIEYe7VQj0zKFyiqLsduGkV+
-	4uoHbcvwmLjdmT+viZHXDap2/UcvtXdm8WgUtG4B1npgxw37oSvXwVZKCu/9gGAE
-	4tqi8Ky4Lv+C4HTrEVvd3qQIr+IuaBnRwYW8+G5NnVXQG32hKG/O+aaiU1Gw1+ND
-	6STiaJpdoL8Pv4OkAFQizshkSjx6eIPaSkQ==
+	1793207063; x=1793293463; bh=WtJrlTVNGFV2j4MmSrBY83nZ9xyvN9uC4jZ
+	6DbOiJ8w=; b=kyVlRuq+dyPKmvkkRi7pB4uIP4bn5vt4KIgaQquOyZOgWhAbHdj
+	Ra+V5pcyjW4L2jMdAhqKqU9jBCpvWLAY4JomZON3U9NnVvAYi8vRabI7K2eej27M
+	L6PYgacSWKBid1zxn+dxErSVFCK2Az3u3vWMiaZkiZ8DXWzqTLxjitHSgVd6N2LX
+	N8O/QHvr0L1XRP/dY7qMf7gTI3+4i7qQe/lyzhxILoDCXOVI9PoW1ItnOwqyuinZ
+	NNl06a2Mpgs8pSzbw+CyGjMvbdVpj1gyHfHdw5bOuMpf9S3KKlTRo2cYh2+ced6K
+	xxbBSNMC2nvGJXo8eJi8Fgpe0kDfvGyoAbA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793206060; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1793207063; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:kuP0ajU/0BcZZ1LMwb8VbhHHb7XlDaQlfUFniKGlF8F7iTo
-	xFClN654VFqip9Y7qRqrIAUKRCjhiqAtwaTGDaUXZo+EiktDeY43EZzu9YwQlSm6
-	dfJYse6oGJVp9PegYQ5RbKX8IQI92kgdce6W/tdIzrzC0zRtAss7gJiT3uI3777T
-	1+FCTfY9zZnuGtAv4ZBmTNZHsluBe0Gf3xaHb1P3dEDS2B8SWtN5k0SalQBSFPOc
-	5rQhvNfAIEGnRY/FrMwesg8W4R4A3DtLXYBHQQByPmZyaohZfLlbZ8j14mcVOQdg
-	prnZ3njd14JeQRlv4TpVKVmKICrkKtkqvd+Bcdg==;
+	s=fm1:rsa-sha256:eZsvKQOtWI6mtE26ELKXm2Gl+MW7+a6jWlmtNVsvgNrYud8
+	VOO+DoKPCSwpJiQUMDMlw4QqLSm/LBVuE1/RuZg0EXZma1c6cQOIGDUfJzBFfA8g
+	KXvMdl6m0fn4qGLU/AXOM1N6yTUn3XZ1WR9vF0fv07CHusUdu0OIDAsGU6psl2pI
+	kK7JfUgdcSBGvQSmlM6zK8+RdxFApps2+A58UBdlJU0YdPr3oRRoIVJBVpfmA1C2
+	fpLDupri6s1sghWFqzO+fmQ45MjcT/HTvnO5i/uCX6WNM5ycG1cVrHtM3F9yGsof
+	pmhuej4W/wrpeAVrn5IuotqEjYSvzkqUMYoETnw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:vtQ3do7Gnv5iLPYoQ/iZ/vtIkWTR+HnhhH9UGNKWvgw=:PCDmQ8H/0xBhDowxxRT6t88oL17rsqQtRo2btMoLsoM=;
-X-ME-Sender: <xms:LCfiaohlR-jmCTH5C9rKiRrmFeXvD8t6X2EgSFal-Pk5ey4OxtbPXA>
-    <xme:LCfiakRzfMkGLY4pY3wS7zraBvkSAjA1c0lzPX73fD2Q0yZYTY8eumPtx_bxdMFzg
-    nXTMnKQe21sbfMO7ldSgCoDAZplwRAjQllXtP3KO77fnCYG6NudFzna>
-X-ME-Received: <xmr:LCfiapivBr1SpZT8un0LgA4JNIvNoZId_nIe4-NK518dZfTm0y9uGaI9DezrP0A8oLdkjXVeHGZbe9dCG3eVVwZ7W1upkfZm3t-z>
-X-ME-Proxy-Cause: dmFkZTFcm+4hAj0xlutj3aQ9U1j6ixbCeHlxmYDGJ5L4DniBoPKhIBEIQ+8VXeZulRuDtP
-    fXg6R1Ui8bCYhrk63LzmrBU8up/p7a5/TQeMw+zwyN1dImvUef3P1aYR5qRJqURjvtJdHK
-    wTEBa7nyxYg1tm+6pY7D2xe7XAgts8C9vNXewZiI/dDIza6yEo7BXgrMFo35C6zn9qenJO
-    zTMLIkGN9GpHAXuOq/UgmT9Y+KjyoZg8j88fcal+AVJ319AxddkFYLCJCEkh19Rq034lkQ
-    /O5vdPH33sqotaI+DSKToUvd7zqdVpRGMFtI+28yHLYpjArru2rXiSdBzBGv1KLGXa+2M4
-    1kdAr0odwKXBfKM/uUSlOkDhP/HHDC+kINRtpAsldY5wSdz+mjWpholWZSH7h5yHNp2k9F
-    fbAeiMzuYK+pKI1OS1apIVbEj33JpS0666LBTJlIFHVXvkKbyowcKINK2QK4DYcj+/pWU6
-    oYpaPlTuJLUbV4i3FWI/dtKP8E+ebamUDq+Xx0oWdGMqlIMuhT1/3RHTAlTH8r7juXEj3O
-    Z9RiMLjXldcuvkEfjBHNF6ux/4UaGwMtAs6plhgGcRI4PzsLITEyWn6Lhc37J9ClFZOCfl
-    vRDzZQInApB2RPVh5Vuo6a6JukfjODCkyRuUIH85dXQtYce+GSaj5vbFUyBA
-X-ME-Proxy: <xmx:LCfiak7PHJiIUUw2xUTQDbLh6RjGyahr6rj7jglku4P6v0IDRUXJxA>
-    <xmx:LCfiamDZ_XDLNelkF9lJPo-Im3OYz7tMAHjZmge5On228udYYaKQGA>
-    <xmx:LCfiarbXtD-QSr3G-fKi-gjlQxoY10r_n6HrcIFQv3JFaAyjSg8Q3Q>
-    <xmx:LCfiahYdxKx7cq_elh1bdUwvddgfjdHhJquLx93_yqKCYqxIk-V78g>
-    <xmx:LCfias4kRGHCUBZgjkaiuI-uK4UhaoGaSbxSMtG_WeyaU0Ul7o56SKdZ>
+Message-Instance: m=1; h=sha256:rwf78Y7LkUb4In0/Vg4hb3d+dC7pi+vyfjfxyLTsa6s=:k8OhoranXFDJFHxu8fGQcTCCB7F5Bixtvl3eaQC0efY=;
+X-ME-Sender: <xms:FiviaprTWe4AKAk2rKQTrTa4XFSHH-Xo9luAEiXDWxRN3JU6sf1LSw>
+    <xme:FiviajFsJYAGikdWBm6JFp84ENTycMYwJ_DZjNeHOQaEKUmFFQTu247aqz4duQx8b
+    CiBdnk2LQrXs0h5RQ8cYhQonw-DJfgePfZ0LW4uO5y0PFeIqOHDErE>
+X-ME-Received: <xmr:FiviajkfzZ5ebOeHcxt6sCYHupxMba8OnHyW00dJB8ydkiXrq09oopo_IIN7PGLyBuLtOjHiIpuPc23iXAcc7kVD-YVLG0kzw-_d>
+X-ME-Proxy-Cause: dmFkZTEA+F9S9Fg0HmvkfBBIMk3PmTGm8Du1hBBCD62Z0S0vp2mfs281Y0Xf8ZxUU8i47N
+    Afo+5Pgs3FOqxy+Sy2Kr4sMiPV6j4vjdMrn2suQaqp0WL693QoEyAHIj1yl0uHE67Ixvef
+    7KwgTOe08illo/tpWWDDLgNg8M5xTtrMSmcIzGiqMF8DcMR/eYaK9r3Rq8hWAwQMJ6eTKd
+    2sOC9M4nixD+x6dYqgeqcIIAbgmBaa5rg4FZYUi6f6N67ax0eSxYPXMxFqw7+caKshM53x
+    upIupj3OczO8DKqIOCs/XamK8vckYwWqjD5b3FXt7yIwHfcuCdcEBAiq256zUEEnRH/0gL
+    58tv6BsFqfdxbUhGMSTmOpJ48BjbmCZNNjU8tuzeu3HqjBjE0mt9OXf5TdZH1cNfeEXnrB
+    OiX9Sjv/B/XWI0NOnvZGszgPLX0rjoSfGTOPsId8bkUjSMSjJNp3fyWnzDO2ZADbgnMoKR
+    O1KqkUz72ka7Kee+a/fO06dtUiLpmg0WEP33Q87fzMj6K9EyEOZyDm/TshYWi9uKJ99LCA
+    fjP4b9RQ9qcVvcYR7zPcLxlPKAUF3qSAos+plojP+Veeu/K3aw/DS041CGVQWJsOoipj27
+    MBsMLYNvA6HMpf77OTs72n6S/P1wOqOFrLbwPoThvuRMc9D6S0EkGADIf+6A
+X-ME-Proxy: <xmx:FiviaukEugYlsdGcjoPsBXJ7b8S8nifmuGFna2X5bWHtWZ-r7hVDcA>
+    <xmx:FiviasvoyvxDVwquEUYuqCMiS5OHoV7blBnYPsy2zbaPaIlSpx046A>
+    <xmx:FiviapkBQZ9TrUGlnz3JN6GnxIOIUryXjfkg6fWibT9Lqu805LQQ4A>
+    <xmx:Fiviavst_MoqYiPidA4hUWUQ1gTLZHjCWcBmjttkbfnkrPtYXqMkcw>
+    <xmx:FyviarHd8CH8Wl8479W8Dn6ypyAkrMz0PX_f48S14jVSDBt2dBOP1XvA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 12:47:40 -0400 (EDT)
+ 28 Oct 2026 13:04:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Hardik Kumar <hardikxk@gmail.com>
+To: Edson <edsonwasswa54@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] t/t1467: use test_must_fail in place of NOT operator
-In-Reply-To: <20261028-refs-rename-test-fail-v2-1-505ca9558503@gmail.com>
-	(Hardik Kumar's message of "Wed, 28 Oct 2026 15:53:45 +0530")
-References: <20261028-refs-rename-test-fail-v2-1-505ca9558503@gmail.com>
-Date: Wed, 28 Oct 2026 09:47:38 -0700
-Message-ID: <xmqq8q3hbwlx.fsf@gitster.g>
+Subject: Re: [PATCH] builtin/diff-files: convert ad hoc option parsing to
+ parse-options API
+In-Reply-To: <20261028141354.1155-1-edsonwasswa54@gmail.com> (Edson's message
+	of "Wed, 28 Oct 2026 17:13:54 +0300")
+References: <20261028141354.1155-1-edsonwasswa54@gmail.com>
+Date: Wed, 28 Oct 2026 10:04:21 -0700
+Message-ID: <xmqq4ie5bvu2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -125,42 +126,96 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Hardik Kumar <hardikxk@gmail.com> writes:
+Edson <edsonwasswa54@gmail.com> writes:
 
-> Replace the "not" (!) operator with `test_must_fail` for refs-rename
-> test.
->
-> The use of `test_must_fail` is preferred over not (!) operator because
-> it ensures that the command fails gracefully. If the command crashes
-> (e.g. a segfault) or is killed by a signal, the failure is handled
-> correctly by `test_must_fail` which will fail the test whereas the `!`
-> operator would silently accept the crash as an expected failure.
->
-> Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
-> ---
-> Changes in v2:
-> - Refactor commit message
-> - Link to v1: https://lore.kernel.org/r/20261028-refs-rename-test-fail-v1-1-b7458ca62149@gmail.com
-> ---
->  t/t1467-refs-rename.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> The cmd_diff_files() function manually parses --base, --ours, --theirs,
+> and -q options using a hand-rolled loop with strcmp() calls. This is
+> error-prone and inconsistent with the rest of Git's codebase.
 
-Will queue.  Thanks.
+The first sentence is correct, but is it error-prone how?
 
-> diff --git a/t/t1467-refs-rename.sh b/t/t1467-refs-rename.sh
-> index 2b28be75c8..b7d290d05b 100755
-> --- a/t/t1467-refs-rename.sh
-> +++ b/t/t1467-refs-rename.sh
-> @@ -88,7 +88,7 @@ test_expect_success 'rename with symbolic ref fails' '
->  		A=$(git rev-parse A) &&
->  		git refs create refs/heads/target $A &&
->  		git symbolic-ref refs/heads/symref refs/heads/target &&
-> -		! git refs rename refs/heads/symref refs/heads/renamed 2>err &&
-> +		test_must_fail git refs rename refs/heads/symref refs/heads/renamed 2>err &&
->  		test_grep "is a symbolic ref, .* not supported" err
->  	)
->  '
+> Convert this to use the parse-options API by:
+> - Adding option definitions using OPT_* macros
+> - Removing the manual parsing loop
+> - Using parse_options() for consistent argument handling
 >
+> The --base, --ours, and --theirs options use PARSE_OPT_NONEG to prevent
+> negated forms (--no-base, etc.) which are not meaningful for merge stage
+> selection. This follows the pattern used in builtin/checkout.c for similar
+> stage selection options.
+>
+> This makes the code more maintainable and brings it in line with Git's coding standards. It also enables auto-generated help text, git completion support, and option abbreviation.
+>
+> Signed-off-by: Edson <edsonwasswa54@gmail.com>
+
+Earlier messages to the list from this e-mail address identified the
+sender as "Wasswa Edson".  Are these the same person?
+
+See Documentation/SubmittingPatches [[dco]] and [[real-name]].
+
+
 > ---
-> base-commit: 37b3475fb530c14109211faca33716a173db61ed
-> change-id: 20261028-refs-rename-test-fail-ec7a8fa74e54
+>  builtin/diff-files.c | 28 ++++++++++++++++------------
+>  1 file changed, 16 insertions(+), 12 deletions(-)
+>
+> diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+> index ea91347ce2..a0c3981407 100644
+> --- a/builtin/diff-files.c
+> +++ b/builtin/diff-files.c
+> @@ -14,6 +14,7 @@
+>  #include "commit.h"
+>  #include "preload-index.h"
+>  #include "revision.h"
+> +#include "parse-options.h"
+>  
+>  static const char diff_files_usage[] =
+>  "git diff-files [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]"
+
+Using parse-options API means you'd need to be careful about how
+you write the usage string, as the parse_options() call itself will
+list options and its meanings.  Doesn't the above need adjusting?
+
+> @@ -48,18 +49,21 @@ int cmd_diff_files(int argc,
+>  	prefix = precompose_argv_prefix(argc, argv, prefix);
+>  
+>  	argc = setup_revisions(argc, argv, &rev, NULL);
+> -	while (1 < argc && argv[1][0] == '-') {
+> -		if (!strcmp(argv[1], "--base"))
+> -			rev.max_count = 1;
+> -		else if (!strcmp(argv[1], "--ours"))
+> -			rev.max_count = 2;
+> -		else if (!strcmp(argv[1], "--theirs"))
+> -			rev.max_count = 3;
+> -		else if (!strcmp(argv[1], "-q"))
+> -			options |= DIFF_SILENT_ON_REMOVED;
+> -		else
+> -			usage(diff_files_usage);
+> -		argv++; argc--;
+> +
+> +	{
+> +		static struct option diff_files_options[] = {
+> +			OPT_SET_INT_F(0, "base", &rev.max_count,
+> +				      N_("show base version"), 1, PARSE_OPT_NONEG),
+> +			OPT_SET_INT_F(0, "ours", &rev.max_count,
+> +				      N_("show our version"), 2, PARSE_OPT_NONEG),
+> +			OPT_SET_INT_F(0, "theirs", &rev.max_count,
+> +				      N_("show their version"), 3, PARSE_OPT_NONEG),
+> +			OPT_BIT('q', NULL, &options,
+> +			       N_("be quiet"), DIFF_SILENT_ON_REMOVED),
+> +			OPT_END()
+> +		};
+> +		argc = parse_options(argc, argv, prefix, diff_files_options,
+> +				     diff_files_usage, 0);
+>  	}
+
+Is it necessary to introduce an extra block that only increases the
+indent level?  I do not think so.  Move the "struct option []" up in
+the beginning of the function.  If we really have to use the
+parse_options() API, that is.
+
+It also is unusual in modern code to have "struct option[]" array as
+a function scope static, even though older code like cmd_fsck()
+makes it static.
+
+>  	if (!rev.diffopt.output_format)
+>  		rev.diffopt.output_format = DIFF_FORMAT_RAW;
