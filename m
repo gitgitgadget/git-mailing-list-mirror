@@ -1,82 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.175
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793146534;
-	b=KHAzC9FdbV3LTTcZOtG8Tdij+h8+rGHR8ZvR1lLmOGixlrYxeT9VeUav7MLxDr57pqoJ
-	 vTNryFHwK7I6cUr/ZbtFc0jVGm3GvvN9gRgXc7OPl4G/j8Wk8DKHO7WdwGUXB/cFUTlOK
-	 Z+el1O043ZRJMQrRs2eTjKeqYWiQ3fMg/9h5iXg+B1AG9ooJJzVyifmBejfZOI0UKMKIN
-	 nIauY4gmXI3gNu4IT4MBTkjPkv0Ow3r58enOpw6QoWxl1BA3sAYoSu95a4EEvNbz9wyfU
-	 JhjGInSf2dn7PTkfY2nT/zuUW4JYO9SnJH30ZxWtLpqJr7aTJzFhQfI5sFgyAkQeYaw==
+	t=1793146535;
+	b=K4Y2p/u2C82dr5pYJ67zMSloS1ZBJDtffK7RKl9YtkU8r3qSlFWvkrLVCBe/3/9pQ+BN
+	 bY9MPnZ3bkVbG0rG6o980/JOswyj/3hJyuMDJ3v2tsJ83DU8oSJvqZmBVlZk3rX2ljGQm
+	 TSYaQVs2owHIb9I1CcEL3PPpbXGgz37U8iY162BMWtTPimZmkRG0z3Xje1VtIH7cRTdJR
+	 vHb9x0Knevt8lHQUuhYhaVODIcG6mtBfWd3VMND7K11AFoFGmoPL5jBmynUOOgEtE3ySY
+	 LMmLhM/Q6K4QfGVJ3ZwKv5lVM41kXM4USmOPqk2s5csrtkn/uTKSV14DUCmewPO0ONw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793146534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793146535;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=+n/3kdKXpdx0uembxzzDchMti8s2bkG2IK49RNFDEu8=;
-	b=xF17L9NmhcT+URsIQUPhGzyRUIOAPp0UM/bL88joce/JO+74zwocdbwdNEHm8WrQPD2c
-	 7PvpODSS7XmntGcBJcrdpDuR4TOYaHmU578XACF4VtcDA4t5u9BtDyNR72yIK5MRWMcgW
-	 TwGutY/t54ozLTk750P8CxPWulbiZmTjiuINJZJsh/IJMrnz7rs5F+bJQKUesxFcqdXeO
-	 XVzhv4CmzuNNQ0aaMQEc+mSUlKA3Ik9CN5vQlKL2+txJSfGgFDAZnRorsvpBwZ56/v39o
-	 XxRD8uJusfFFeYYWR85NUyS6gLZ1ac0+tZAXT3F2kR/8uuxDLCB2Rk1AtWlKYNKpMdg==
+	bh=f5vIuvlhuyxIgqMlPwagxbk30wmtwR9zG+UkE1IaHGM=;
+	b=ej9+AEXMX3YNmrMOyl4ZXUVMTO3T6eA3OkWFApHh3CxcfwbJIb2ARR4v2JAIPoIJvMf2
+	 ElPpG+IuYqkWrvZuuJk+KzzwJPakmokLjgqKcpGxm7a+MtWCaITLJF+2kfRRqz5qtlT+I
+	 7B4hyQ0J6w3mt8xULquurGu+2JHRaE//t23G/jCLHBLAReELtzNMYD7DTbt1jadrGm5eW
+	 1M7FrArG2wysnzzcfJbY8GYhzSTE7NqSZpFOPyUtshznqRiQU7tBqyRhzyQkajA7sUQv4
+	 GILzujXNZevZLXSWgJQHe4ZSyvEchB5KrmyfaODshKN1lsZxXwz2zUePhv2wMRfkDOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HRfjumeR;
-	arc=none smtp.remote-ip=209.85.219.53
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nTyO1fDQ;
+	arc=none smtp.remote-ip=209.85.160.175
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F61606A322
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 00:15:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E1F61606A322
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2DF606A32F
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 00:15:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1E2DF606A32F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HRfjumeR
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-91c5e31bea9so6425356d6.1
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 17:15:33 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nTyO1fDQ
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-5364042eecfso7063561cf.2
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 17:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793146533; x=1793751333; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793146534; x=1793751334; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=+n/3kdKXpdx0uembxzzDchMti8s2bkG2IK49RNFDEu8=;
-        b=HRfjumeR65pW5vBlkH/Tgm+3nM5qA0nWv4tgkj7yDKbfIU9AOJjH/VuB4BdUZp0tAu
-         01or4GVC1mCk6EuOpJE97Uqgwa3Aub296ovyrqxt84x5kZ3x6ySl1In6VHbxH5va5Nnh
-         3ds7B5fyZwYPsvDXWO2uHwTicHv8wIroOpgcbHcpropBpDIsWXqWhOt41xUysFQysTx4
-         kAhEJHFZ7jT1J3R0oLYwr+JDy+7ufE/0hs+VMXJiBNIdn9/Bb7oRvireU+8NH2a3F6iy
-         FEA4CkgUjE0GBEbIrsufQhodrv+ugUgXaVxrQEutxYYe+bJyhHsewFHiWkATDVgVsZeo
-         l/oQ==
+        bh=f5vIuvlhuyxIgqMlPwagxbk30wmtwR9zG+UkE1IaHGM=;
+        b=nTyO1fDQJZVDMQ/WIsi/IGDR5n+KR9hm1IpL1eYn6hhbOeOQGdB5Aa5lUjBl+O4qaG
+         PNwVxU+cMi1CVzL7PGAbr0Z21BddAGnDMTgFdjzvDm+yusls43gwwY6B6a4fzKSzzdhX
+         VgqK1NxWfAlsip54wW91t1rnQXNOXEvV/a9CUjcm8JhoVu7Q+j4S9WPIEUW05J0tPxpS
+         /ZIRWOc45snAiq68pVFovCeqgJd1lIPROiznTsmxuYbCSQLvb/RK5sTJKbKleegkyRDw
+         5XF945Jf6sqtMubjSiVsMMw73w0olEH1U54hFBXaFqDQGGgcOX3THFTHKTU/Lr6hEC8l
+         4TpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793146533; x=1793751333;
+        d=1e100.net; s=20260707; t=1793146534; x=1793751334;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+n/3kdKXpdx0uembxzzDchMti8s2bkG2IK49RNFDEu8=;
-        b=tqbpzC9RTGljvFakNn4s3rF9lPugS9pvAy+vjmUB1CEytAuJE4L0VGJDpehEVmcw7D
-         0w9sLP/AIPoN0pbLLIU3McMdYVQeKzfKAMlEFG/LbHQXNiLODGAPIBXttINaICSzmDN3
-         qQVFSj0muTSVYuIgsiZkvcn1HPnNWHGMOd8EYanIQJDTaUoZHa9gSHa075fvEq+GY5x1
-         K2n61NEh/Hr9SRDmAQhSESYRtF8e1yzu6ZAWjMvH3WovjANz/hVyi5O1LZpeIfw2Qm5+
-         +3vbwjwhMQ32XuXNKZCLS4D6+TMVky1vKgnKKExbJe+bX8Alci1IEgQlTMT1MpgpTOCz
-         6WLg==
-X-Gm-Message-State: AFq9FYJyaxU7aPpN9GcmcglJDupjrItPOlIfRzmqwS2j/my594Pnb7Sn
-	FcvNekqIhgaNosSuPOZ0bvZRDaEPt4U/zTb8JmPSH7MuBAlumAQhYs3VlK1sfQ==
-X-Gm-Gg: AYBFou2XaxMxUnoyBYhOiohxAhDBLw+/Hc4eC9TeGm/9LOsJBax2E5kYPTxBbkEtT0P
-	OcSN7M8s7jzgWh0tD3X3Al3R5kVGEzcZRmNeDpslJD1nDRJXEoNmFwSceAxoqG6PKfn0hf+q8Fq
-	/3yOk/Xj4tWiQKOaBGgvT3dYs997pKjeJ9itG4CppLrQntn6Qs/reY2otK+eW/yARMI8HG5Kr4H
-	JaGbJQaNLxuMLrg9/zLZX7Z7lM6FNeTx15Ivbcx7/yZlbGBdsbGBiL5V7CRt+Ce2MGEYMSZsTMf
-	OqtgJNok9yXCIOp1r9Hc/vbZox7LHe2zJIKIKW81mINhlnhpdYJLiLY5xdkB4Ty+61MuGRyoKiw
-	P2tlR235ryfW1+vxR09x5ANYuwCcbXZL3Y5XraYc9blezI2Ec+FL8yykofWGQCAcSuN64YLW8XY
-	tV6JAbJZFGmdb+dx4o39N93ka/b5ABk7JV9t1DeFkIeDtsqxUeSByR9nP5P/L06h41Kg1a1sZUP
-	N0TeARb5EcQdh6AoU2YtCnhQooblIipDcUSWKZufWBNxLEy0w3JcEig4mwEX3m8qkFOZzSwt1fv
-	+d0cCpUkztmD
-X-Received: by 2002:a05:620a:460f:b0:93e:ce12:aadd with SMTP id af79cd13be357-94408db358bmr95927685a.58.1793146532751;
-        Tue, 27 Oct 2026 17:15:32 -0700 (PDT)
+        bh=f5vIuvlhuyxIgqMlPwagxbk30wmtwR9zG+UkE1IaHGM=;
+        b=ZIBayyLPzJacwoI4i9Ptxgkd3C5vKbhGz7+xJS4ujgLzIXiGOIa0kh9GNK7zSyKTxD
+         3JdZag11bBNyceVkXPFGhcUSuOGMbCRFqgI0elYt+gTgR7w8lxaLnLVwHUcGIHZQpDLY
+         Ou+ppCnGfBXhqvPBXR6wU4fx3TtTP4Cx9R2CYwJUmZb6QBhJePMbbXnWFptw7mn/LacS
+         IrAPlRTVQ0vo7mDr1XbnIxt0Qw2lW571VtJKiE99osKlJRTqI/Zq/m5RrrFeOoTJ7++1
+         Qoh248SQlj+umzDmjdSSOp6IWmqC/9aC7+cUBsAYRtctOFO/kk96myMaOSqx3Ol4TbH7
+         Ggtg==
+X-Gm-Message-State: AFq9FYLIYgIFT/YWuAbzZTECc4N4zekCm8miDcRGUN+8FMihD0cIQeiS
+	WAulToC28AVrTGszVnHDk/SfiLKtOD1ETcvqkkbJsSoiUW/EMHl+b3C9eiuIHA==
+X-Gm-Gg: AYBFou3774BJgEyKKSfD5qH15nsWmHsd+hN0ZHikpt3g6i+Uki/02sNjBboAAh60eoa
+	wFOCPA9fQnl5jhIjFkfUbzL5NwC5vv9tXxSRx1sy4WxkFV0/5l/GQo5AIb5MDLg2MfSirVWobb7
+	LgzZYfyVMfAqgE2lT8fr7Sv7EnTAcb4O6RGzIAwN0XCyRYcGMl0BhgY8lF4j37sR6xcgwHth7Qu
+	a5nBGCF2/eXGNTuDbIXVQriHXf+HNQIIpE4e2qLWJukwAHg+3DzvoFKA1J9JMa6PIDRkrbLhKcT
+	ZoN1O7qVCnu04DppW3V/f0piSi8XSSkTuZqH2b/JYuyqyttrPu/zObw4BTDUpYe5JRlbpLdIAPa
+	WCjIfcGWqStYZcZKRXg85PgrgWvgLeSMygWY0AngpmQutzlb/kGy1X03bxfbkjae/h+pefdxWj/
+	vlOHpxE09DfWPX/8FAFYhmVUfjEdq2K7YHmm7sQXJxUlHG4T2phoKwa8TjwHaGwXqEdkQ6mjtCl
+	QUHcRuH3sqWB1acQYiQQRhoGTfd4576CURUvXVMDVfNbqUZw4oCLacKYy0GRA+rLnXJ8nOVaoxV
+	qLKrseDBgdbLhH5srw4qGBsNddHRsG+5eJ4iNpAS4frAVk+/3cWgNCluELiZ2w==
+X-Received: by 2002:ac8:5a93:0:b0:535:bb7a:884b with SMTP id d75a77b69052e-53fcbee41femr17021871cf.27.1793146533893;
+        Tue, 27 Oct 2026 17:15:33 -0700 (PDT)
 Received: from Williams-MBP.internal ([107.11.98.107])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c6e20ba4fsm38666656d6.14.2026.10.27.17.15.31
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c6e20ba4fsm38666656d6.14.2026.10.27.17.15.32
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 27 Oct 2026 17:15:32 -0700 (PDT)
+        Tue, 27 Oct 2026 17:15:33 -0700 (PDT)
 From: William Hatfield <whatfield.git@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -85,9 +85,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Glen Choo <glencbz@gmail.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	William Hatfield <whatfield.git@gmail.com>
-Subject: [PATCH v2 1/3] submodule: add --reverse-traversal to foreach
-Date: Tue, 27 Oct 2026 20:15:27 -0400
-Message-ID: <20261028001529.81557-2-whatfield.git@gmail.com>
+Subject: [PATCH v2 2/3] submodule: add --include-superproject to foreach
+Date: Tue, 27 Oct 2026 20:15:28 -0400
+Message-ID: <20261028001529.81557-3-whatfield.git@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028001529.81557-1-whatfield.git@gmail.com>
 References: <20260131214309.1899376-1-whatfield.git@gmail.com>
@@ -103,61 +103,58 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When a project has submodules nested in other submodules, and there are
-changes in several of them, committing everything with "git submodule
-foreach --recursive" does not work in one pass: the command runs in each
-submodule before it runs in the submodules nested in it. A nested
-submodule thus gets its new commit after its superproject has already
-been committed, and the superproject does not record it. To get a clean
-working tree, each submodule has to be visited before its superproject,
-which today needs a script that lists the submodules and walks the list
-backwards.
+Some commands, such as committing the changes made in the submodules
+of a project, have to be run in the superproject afterwards: its
+commit records the state the submodules ended up in. That means running
+the same command a second time, outside of "git submodule foreach",
+and keeping the two invocations in sync.
 
-Teach "git submodule foreach" an option, --reverse-traversal, that
-visits the submodules in the reverse of the order it uses otherwise.
-With --recursive this is the usual sequence read backwards, so each
-submodule is visited after the submodules nested in it, and so before
-its superproject. Without --recursive, the order of the submodules
-directly in the superproject is reversed.
+Teach "git submodule foreach" an option, --include-superproject, that
+evaluates the command in the superproject as well, after all the
+submodules. Together with --recursive and --reverse-traversal this
+visits each submodule before its superproject, and the top-level
+superproject last.
 
-"Reverse" is meant literally. It does not describe a tree walk
-(bottom-up, post-order) that would mean nothing without --recursive,
-but the order that "foreach" and "foreach --recursive" currently use,
-read backwards. As that order was not written down, document it: the
-submodules in the order of their paths, each one followed by the
-submodules nested in it.
+The command is run in the top level of the superproject, wherever
+"git submodule foreach" was started in it. The output follows what is
+done for submodules and announces the superproject by the name of its
+directory, unless given --quiet.
 
-The submodules of a repository are looked for when it is reached. With
---recursive and --reverse-traversal the nested submodules are therefore
-looked for before the command runs in a submodule, not after it, and a
-command that checks out nested submodules itself does not get them
-visited, unlike in the usual order. This is documented and tested.
+The superproject is the repository "git submodule foreach" itself runs
+in, not a different one that is being entered, so, unlike for a
+submodule, the environment that selects the repository, such as
+GIT_DIR and GIT_INDEX_FILE, is passed on as it is. The command thus
+sees the same repository, worktree and index as the one given to
+"git submodule foreach", including with a detached worktree or an
+alternate index.
 
-Implement it by reversing the list of submodules before walking it,
-and by recursing into the nested submodules before, instead of after,
-running the command in a submodule.
+Git sets only $displaypath, to the name of the superproject's
+directory. $name, $sm_path and $sha1 describe the submodule's entry in
+its superproject, which the superproject does not have, and the command
+already runs in the top level, which is what $toplevel would tell it.
+The other variables are not cleared by this option, though: they are
+whatever the environment provides, for instance when this
+"git submodule foreach" is itself run by another one.
 
 Signed-off-by: William Hatfield <whatfield.git@gmail.com>
 ---
- Documentation/git-submodule.adoc       |  25 ++-
- builtin/submodule--helper.c            |  66 +++++---
- contrib/completion/git-completion.bash |   5 +-
+ Documentation/git-submodule.adoc       |  20 ++-
+ builtin/submodule--helper.c            |  38 ++++-
+ contrib/completion/git-completion.bash |   2 +-
  git-submodule.sh                       |   7 +-
- t/meson.build                          |   1 +
- t/t7427-submodule-foreach-reversive.sh | 215 +++++++++++++++++++++++++
- 6 files changed, 292 insertions(+), 27 deletions(-)
- create mode 100755 t/t7427-submodule-foreach-reversive.sh
+ t/t7427-submodule-foreach-reversive.sh | 208 ++++++++++++++++++++++++-
+ 5 files changed, 265 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/git-submodule.adoc b/Documentation/git-submodule.adoc
-index e9c81a7170..18658ded41 100644
+index 18658ded41..5d4b06cb96 100644
 --- a/Documentation/git-submodule.adoc
 +++ b/Documentation/git-submodule.adoc
 @@ -18,7 +18,7 @@ git submodule [--quiet] update [<options>] [--] [<path>...]
  git submodule [--quiet] set-branch [<options>] [--] <path>
  git submodule [--quiet] set-url [--] <path> <newurl>
  git submodule [--quiet] summary [<options>] [--] [<path>...]
--git submodule [--quiet] foreach [--recursive] <command>
-+git submodule [--quiet] foreach [--recursive] [--reverse-traversal] <command>
+-git submodule [--quiet] foreach [--recursive] [--reverse-traversal] <command>
++git submodule [--quiet] foreach [--recursive] [--reverse-traversal] [--include-superproject] <command>
  git submodule [--quiet] sync [--recursive] [--] [<path>...]
  git submodule [--quiet] absorbgitdirs [--] [<path>...]
  
@@ -165,336 +162,223 @@ index e9c81a7170..18658ded41 100644
  Using the `--submodule=log` option with linkgit:git-diff[1] will provide that
  information too.
  
--`foreach [--recursive] <command>`::
-+`foreach [--recursive] [--reverse-traversal] <command>`::
+-`foreach [--recursive] [--reverse-traversal] <command>`::
++`foreach [--recursive] [--reverse-traversal] [--include-superproject] <command>`::
  	Evaluate an arbitrary shell _<command>_ in each checked out submodule.
  	The command has access to the variables `$name`, `$sm_path`, `$displaypath`,
  	`$sha1` and `$toplevel`:
-@@ -244,6 +244,12 @@ ignored by this command. Unless given `--quiet`, foreach prints the name
- of each submodule before evaluating the command.
- If `--recursive` is given, submodules are traversed recursively (i.e.
- the given shell command is evaluated in nested submodules as well).
-+Submodules are visited in the order of their paths, and with `--recursive`
-+each one is immediately followed by the submodules nested in it.
-+If `--reverse-traversal` is given, this order is reversed. With
-+`--recursive`, each submodule is thus visited after the submodules nested
-+in it. Those are looked for before the command runs in the submodule, so
-+nested submodules that the command itself checks out are not visited.
+@@ -250,6 +250,11 @@ If `--reverse-traversal` is given, this order is reversed. With
+ `--recursive`, each submodule is thus visited after the submodules nested
+ in it. Those are looked for before the command runs in the submodule, so
+ nested submodules that the command itself checks out are not visited.
++If `--include-superproject` is given, the command is also evaluated in the
++superproject, that is, at the top level of the repository `foreach` was
++started in, after all the submodules. There, Git sets `$displaypath` to
++the name of that directory and sets none of the other variables listed
++above, although they may come from the environment.
  A non-zero return from the command in any submodule causes
  the processing to terminate. This can be overridden by adding ++||:++
  to the end of the command.
-@@ -254,6 +260,13 @@ checked out commit for each submodule:
- --------------
+@@ -261,11 +266,12 @@ checked out commit for each submodule:
  git submodule foreach 'echo $sm_path `git rev-parse HEAD`'
  --------------
-++
-+And this shows the path of each submodule, visiting the submodules nested
-+in a submodule before the submodule itself:
-++
-+--------------
-+git submodule --quiet foreach --recursive --reverse-traversal 'echo $displaypath'
-+--------------
+ +
+-And this shows the path of each submodule, visiting the submodules nested
+-in a submodule before the submodule itself:
++And this shows the path of each submodule and then of the superproject,
++visiting the submodules nested in a submodule before the submodule itself:
+ +
+ --------------
+-git submodule --quiet foreach --recursive --reverse-traversal 'echo $displaypath'
++git submodule --quiet foreach --recursive --reverse-traversal \
++	--include-superproject 'echo $displaypath'
+ --------------
  
  `sync [--recursive] [--] [<path>...]`::
- 	Synchronize submodules' remote URL configuration setting
-@@ -442,6 +455,14 @@ NOTE: See the NOTE above for the `--reference` option.
- 	only in the submodules of the current repo, but also
- 	in any nested submodules inside those submodules (and so on).
+@@ -463,6 +469,10 @@ NOTE: See the NOTE above for the `--reference` option.
+ 	submodule they are nested in; without it, only the order of the
+ 	submodules directly in the superproject is reversed.
  
-+`--reverse-traversal`::
-+	Visit the submodules in the reverse of the order they would otherwise
-+	be visited in, which is described for `foreach` above. This option is
-+	only valid for the `foreach` command.
-+	With `--recursive`, nested submodules are visited before the
-+	submodule they are nested in; without it, only the order of the
-+	submodules directly in the superproject is reversed.
++`--include-superproject`::
++	Also evaluate the command in the superproject, after all the
++	submodules. This option is only valid for the `foreach` command.
 +
  `--depth=<depth>`::
  	Create a 'shallow' clone with a history truncated to the _<depth>_ revisions.
  	This option is valid for `add` and `update` commands. See linkgit:git-clone[1]
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 64412adf9f..8a16e1ceae 100644
+index 8a16e1ceae..fff5142eda 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -323,9 +323,38 @@ struct foreach_cb {
- 	const char *super_prefix;
+@@ -324,6 +324,7 @@ struct foreach_cb {
  	int quiet;
  	int recursive;
-+	int reverse_traversal;
+ 	int reverse_traversal;
++	int include_superproject;
  };
  #define FOREACH_CB_INIT { 0 }
  
-+static void recurse_into_nested_submodules(const struct foreach_cb *info,
-+					   const char *path,
-+					   const char *displaypath)
+@@ -447,6 +448,36 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
+ 	free(displaypath);
+ }
+ 
++/*
++ * Run the command in the repository foreach was started in. The helper runs
++ * in its top level, so the command does too. Unlike for a submodule, the
++ * environment that selects this repository (GIT_DIR, GIT_INDEX_FILE, ...)
++ * is kept. Only $displaypath is set.
++ */
++static void run_command_in_superproject(const struct foreach_cb *info)
 +{
-+	struct child_process cpr = CHILD_PROCESS_INIT;
++	struct child_process cp = CHILD_PROCESS_INIT;
++	char *toplevel = xgetcwd();
++	const char *slash = find_last_dir_sep(toplevel);
++	const char *name = slash ? slash + 1 : toplevel;
 +
-+	cpr.git_cmd = 1;
-+	cpr.dir = path;
-+	prepare_submodule_repo_env(&cpr.env);
++	cp.use_shell = 1;
++	strvec_pushf(&cp.env, "displaypath=%s", name);
++	strvec_pushv(&cp.args, info->argv);
 +
-+	strvec_pushl(&cpr.args, "submodule--helper", "foreach", "--recursive",
-+		     NULL);
-+	if (info->reverse_traversal)
-+		strvec_push(&cpr.args, "--reverse-traversal");
-+	strvec_pushf(&cpr.args, "--super-prefix=%s/", displaypath);
++	if (!info->quiet)
++		printf(_("Entering '%s'\n"), name);
 +
-+	if (info->quiet)
-+		strvec_push(&cpr.args, "--quiet");
++	if (info->argv[0]) {
++		if (run_command(&cp))
++			die(_("command failed in the superproject"));
++	} else {
++		child_process_clear(&cp);
++	}
 +
-+	strvec_push(&cpr.args, "--");
-+	strvec_pushv(&cpr.args, info->argv);
-+
-+	if (run_command(&cpr))
-+		die(_("run_command returned non-zero status while "
-+			"recursing in the nested submodules of %s\n."),
-+			displaypath);
++	free(toplevel);
 +}
 +
- static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
- 				       void *cb_data)
+ static int module_foreach(int argc, const char **argv, const char *prefix,
+ 			  struct repository *repo UNUSED)
  {
-@@ -396,6 +425,10 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
- 		strvec_pushv(&cp.args, info->argv);
- 	}
- 
-+	/* With reverse traversal, visit nested submodules first. */
-+	if (info->recursive && info->reverse_traversal)
-+		recurse_into_nested_submodules(info, path, displaypath);
-+
- 	if (!info->quiet)
- 		printf(_("Entering '%s'\n"), displaypath);
- 
-@@ -407,28 +440,8 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
- 		child_process_clear(&cp);
- 	}
- 
--	if (info->recursive) {
--		struct child_process cpr = CHILD_PROCESS_INIT;
--
--		cpr.git_cmd = 1;
--		cpr.dir = path;
--		prepare_submodule_repo_env(&cpr.env);
--
--		strvec_pushl(&cpr.args, "submodule--helper", "foreach", "--recursive",
--			     NULL);
--		strvec_pushf(&cpr.args, "--super-prefix=%s/", displaypath);
--
--		if (info->quiet)
--			strvec_push(&cpr.args, "--quiet");
--
--		strvec_push(&cpr.args, "--");
--		strvec_pushv(&cpr.args, info->argv);
--
--		if (run_command(&cpr))
--			die(_("run_command returned non-zero status while "
--				"recursing in the nested submodules of %s\n."),
--				displaypath);
--	}
-+	if (info->recursive && !info->reverse_traversal)
-+		recurse_into_nested_submodules(info, path, displaypath);
- 
- cleanup:
- 	free(displaypath);
-@@ -440,15 +453,18 @@ static int module_foreach(int argc, const char **argv, const char *prefix,
- 	struct foreach_cb info = FOREACH_CB_INIT;
- 	struct pathspec pathspec = { 0 };
- 	struct module_list list = MODULE_LIST_INIT;
-+	int i, j;
- 	struct option module_foreach_options[] = {
- 		OPT__SUPER_PREFIX(&info.super_prefix),
- 		OPT__QUIET(&info.quiet, N_("suppress output of entering each submodule command")),
- 		OPT_BOOL(0, "recursive", &info.recursive,
+@@ -461,10 +492,12 @@ static int module_foreach(int argc, const char **argv, const char *prefix,
  			 N_("recurse into nested submodules")),
-+		OPT_BOOL(0, "reverse-traversal", &info.reverse_traversal,
-+			 N_("visit submodules in the reverse of the usual order")),
+ 		OPT_BOOL(0, "reverse-traversal", &info.reverse_traversal,
+ 			 N_("visit submodules in the reverse of the usual order")),
++		OPT_BOOL(0, "include-superproject", &info.include_superproject,
++			 N_("also run the command in the superproject, last")),
  		OPT_END()
  	};
  	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule foreach [--quiet] [--recursive] [--] <command>"),
-+		N_("git submodule foreach [--quiet] [--recursive] [--reverse-traversal] [--] <command>"),
+-		N_("git submodule foreach [--quiet] [--recursive] [--reverse-traversal] [--] <command>"),
++		N_("git submodule foreach [--quiet] [--recursive] [--reverse-traversal] [--include-superproject] [--] <command>"),
  		NULL
  	};
  	int ret = 1;
-@@ -463,6 +479,10 @@ static int module_foreach(int argc, const char **argv, const char *prefix,
- 	info.argv = argv;
- 	info.prefix = prefix;
+@@ -485,6 +518,9 @@ static int module_foreach(int argc, const char **argv, const char *prefix,
  
-+	if (info.reverse_traversal)
-+		for (i = 0, j = list.nr - 1; i < j; i++, j--)
-+			SWAP(list.entries[i], list.entries[j]);
-+
  	for_each_listed_submodule(&list, runcommand_in_submodule_cb, &info);
  
++	if (info.include_superproject)
++		run_command_in_superproject(&info);
++
  	ret = 0;
+ cleanup:
+ 	module_list_release(&list);
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c3a49e2e22..be026abcf3 100644
+index be026abcf3..f47459d589 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -3644,7 +3644,10 @@ _git_submodule ()
- 	summary,--*)
+@@ -3645,7 +3645,7 @@ _git_submodule ()
  		__gitcomp "--cached --files --summary-limit"
  		;;
--	foreach,--*|sync,--*)
-+	foreach,--*)
-+		__gitcomp "--recursive --reverse-traversal"
-+		;;
-+	sync,--*)
- 		__gitcomp "--recursive"
+ 	foreach,--*)
+-		__gitcomp "--recursive --reverse-traversal"
++		__gitcomp "--recursive --reverse-traversal --include-superproject"
  		;;
- 	*)
+ 	sync,--*)
+ 		__gitcomp "--recursive"
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 8632194138..efea4e5400 100755
+index efea4e5400..964f5a8bf0 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
 @@ -14,7 +14,7 @@ USAGE="[--quiet] [--cached]
     or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
     or: $dashless [--quiet] set-url [--] <path> <newurl>
     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
--   or: $dashless [--quiet] foreach [--recursive] <command>
-+   or: $dashless [--quiet] foreach [--recursive] [--reverse-traversal] <command>
+-   or: $dashless [--quiet] foreach [--recursive] [--reverse-traversal] <command>
++   or: $dashless [--quiet] foreach [--recursive] [--reverse-traversal] [--include-superproject] <command>
     or: $dashless [--quiet] sync [--recursive] [--] [<path>...]
     or: $dashless [--quiet] absorbgitdirs [--] [<path>...]"
  OPTIONS_SPEC=
-@@ -36,6 +36,7 @@ force=
- reference=
+@@ -37,6 +37,7 @@ reference=
  cached=
  recursive=
-+reverse_traversal=
+ reverse_traversal=
++include_superproject=
  init=
  require_init=
  files=
-@@ -173,6 +174,9 @@ cmd_foreach()
- 		--recursive)
- 			recursive=$1
+@@ -177,6 +178,9 @@ cmd_foreach()
+ 		--reverse-traversal)
+ 			reverse_traversal=$1
  			;;
-+		--reverse-traversal)
-+			reverse_traversal=$1
++		--include-superproject)
++			include_superproject=$1
 +			;;
  		-*)
  			usage
  			;;
-@@ -186,6 +190,7 @@ cmd_foreach()
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach \
+@@ -191,6 +195,7 @@ cmd_foreach()
  		$quiet \
  		$recursive \
-+		$reverse_traversal \
+ 		$reverse_traversal \
++		$include_superproject \
  		-- \
  		"$@"
  }
-diff --git a/t/meson.build b/t/meson.build
-index 11b3752f00..31a57b85d3 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -926,6 +926,7 @@ integration_tests = [
-   't7424-submodule-mixed-ref-formats.sh',
-   't7425-submodule-gitdir-path-extension.sh',
-   't7426-submodule-get-default-remote.sh',
-+  't7427-submodule-foreach-reversive.sh',
-   't7450-bad-git-dotfiles.sh',
-   't7500-commit-template-squash-signoff.sh',
-   't7501-commit-basic-functionality.sh',
 diff --git a/t/t7427-submodule-foreach-reversive.sh b/t/t7427-submodule-foreach-reversive.sh
-new file mode 100755
-index 0000000000..06e341b075
---- /dev/null
+index 06e341b075..a53ea0b851 100755
+--- a/t/t7427-submodule-foreach-reversive.sh
 +++ b/t/t7427-submodule-foreach-reversive.sh
-@@ -0,0 +1,215 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2026 William Hatfield
-+#
-+
-+test_description='git submodule foreach --reverse-traversal
-+
-+Check that --reverse-traversal visits submodules in the reverse of their
-+usual order, and that, together with --recursive, each submodule is
-+visited after the submodules nested in it.
-+'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+# Create a commit with some content in repository $1.
-+create_content () {
-+	echo "$2" >"$1/file" &&
-+	git -C "$1" add file &&
-+	test_tick &&
-+	git -C "$1" commit -m "$1 commit"
-+}
-+
-+# Add submodules $2... to repository $1 and commit.
-+add_submodules () {
-+	parent=$1 &&
-+	shift &&
-+	for child in "$@"
-+	do
-+		git -C "$parent" submodule add ../"$child" "$child" ||
-+		return 1
-+	done &&
-+	test_tick &&
-+	git -C "$parent" commit -m "add $*"
-+}
-+
-+test_expect_success 'setup' '
-+	git config --global protocol.file.allow always &&
-+	#
-+	# Resulting layout:
-+	#
-+	#   top
-+	#   +-- sub0
-+	#   +-- sub1
-+	#   |   `-- sub2
-+	#   +-- sub3
-+	#   |   +-- sub4
-+	#   |   `-- sub5
-+	#   `-- sub6
-+	#       `-- sub7
-+	#           +-- sub8
-+	#           `-- sub9
-+	#
-+	mkdir reversive &&
-+	(
-+		cd reversive &&
-+		for r in top sub0 sub1 sub2 sub3 sub4 sub5 sub6 sub7 sub8 sub9
-+		do
-+			test_create_repo $r &&
-+			create_content $r $r || return 1
-+		done &&
-+		add_submodules sub1 sub2 &&
-+		add_submodules sub3 sub4 sub5 &&
-+		add_submodules sub7 sub8 sub9 &&
-+		add_submodules sub6 sub7 &&
-+		add_submodules top sub0 sub1 sub3 sub6 &&
-+		git -C top submodule update --init --recursive
-+	)
-+'
-+
-+test_expect_success 'default order is unchanged' '
+@@ -3,11 +3,13 @@
+ # Copyright (c) 2026 William Hatfield
+ #
+ 
+-test_description='git submodule foreach --reverse-traversal
++test_description='git submodule foreach --reverse-traversal and --include-superproject
+ 
+ Check that --reverse-traversal visits submodules in the reverse of their
+ usual order, and that, together with --recursive, each submodule is
+-visited after the submodules nested in it.
++visited after the submodules nested in it. Check that
++--include-superproject also runs the command in the superproject, after
++all the submodules.
+ '
+ 
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+@@ -212,4 +214,206 @@ test_expect_success 'committing in reverse order leaves nested submodules clean'
+ 	test_file_not_empty fwd.sub6
+ '
+ 
++test_expect_success '--include-superproject runs the command in the superproject last' '
 +	git -C reversive/top submodule --quiet foreach --recursive \
++		--include-superproject "echo \$displaypath" >actual &&
++	cat >expect <<-\EOF &&
++	sub0
++	sub1
++	sub1/sub2
++	sub3
++	sub3/sub4
++	sub3/sub5
++	sub6
++	sub6/sub7
++	sub6/sub7/sub8
++	sub6/sub7/sub9
++	top
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--include-superproject combines with --reverse-traversal' '
++	git -C reversive/top submodule --quiet foreach --recursive \
++		--reverse-traversal --include-superproject \
 +		"echo \$displaypath" >actual &&
 +	cat >expect <<-\EOF &&
-+	sub0
-+	sub1
-+	sub1/sub2
-+	sub3
-+	sub3/sub4
-+	sub3/sub5
-+	sub6
-+	sub6/sub7
-+	sub6/sub7/sub8
-+	sub6/sub7/sub9
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--recursive --reverse-traversal visits each submodule before its superproject' '
-+	git -C reversive/top submodule --quiet foreach --recursive \
-+		--reverse-traversal "echo \$displaypath" >actual &&
-+	cat >expect <<-\EOF &&
 +	sub6/sub7/sub9
 +	sub6/sub7/sub8
 +	sub6/sub7
@@ -505,47 +389,134 @@ index 0000000000..06e341b075
 +	sub1/sub2
 +	sub1
 +	sub0
++	top
 +	EOF
 +	test_cmp expect actual
 +'
 +
-+test_expect_success '--reverse-traversal without --recursive only reverses the top level' '
-+	git -C reversive/top submodule --quiet foreach \
-+		--reverse-traversal "echo \$displaypath" >actual &&
++test_expect_success '--include-superproject announces the superproject' '
++	git -C reversive/top submodule foreach --include-superproject \
++		true >out &&
++	test_grep "^Entering .top.$" out &&
++	git -C reversive/top submodule foreach --quiet \
++		--include-superproject true >out &&
++	test_grep ! Entering out
++'
++
++test_expect_success '--include-superproject in a repository without submodules' '
++	test_create_repo "no subs" &&
++	git -C "no subs" submodule --quiet foreach --include-superproject \
++		"echo \"[\$displaypath]\"" >actual &&
++	echo "[no subs]" >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--include-superproject uses the repository it is run in' '
++	git -C reversive/top/sub6 submodule --quiet foreach --recursive \
++		--include-superproject "echo \$displaypath" >actual &&
 +	cat >expect <<-\EOF &&
++	sub7
++	sub7/sub8
++	sub7/sub9
 +	sub6
-+	sub3
-+	sub1
-+	sub0
 +	EOF
 +	test_cmp expect actual
 +'
 +
-+test_expect_success '--reverse-traversal announces each submodule after the submodules nested in it' '
-+	git -C reversive/top submodule foreach --recursive \
-+		--reverse-traversal true >out &&
-+	sed -n -e "s/^Entering .\(.*\).\$/\1/p" out >actual &&
-+	cat >expect <<-\EOF &&
-+	sub6/sub7/sub9
-+	sub6/sub7/sub8
-+	sub6/sub7
-+	sub6
-+	sub3/sub5
-+	sub3/sub4
-+	sub3
-+	sub1/sub2
-+	sub1
-+	sub0
-+	EOF
++test_expect_success '--include-superproject runs from a subdirectory at the top level' '
++	mkdir -p reversive/top/dir &&
++	git -C reversive/top/dir submodule --quiet foreach \
++		--include-superproject "pwd -P" >out &&
++	tail -n 1 out >actual &&
++	(cd reversive/top && pwd -P) >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--include-superproject sets only $displaypath and keeps the rest of the environment' '
++	git -C "no subs" submodule --quiet foreach --include-superproject \
++		"echo \"[\$displaypath][\$name][\$sm_path][\$sha1][\$toplevel]\"" \
++		>actual &&
++	echo "[no subs][][][][]" >expect &&
 +	test_cmp expect actual &&
-+	git -C reversive/top submodule foreach --quiet --recursive \
-+		--reverse-traversal true >out 2>&1 &&
-+	test_must_be_empty out
++
++	write_script nested-foreach <<-\EOF &&
++	git submodule --quiet foreach --include-superproject \
++		'\''printf "%s|%s|%s|%s\n" "$displaypath" "$sm_path" "$sha1" "$toplevel"'\''
++	EOF
++	git -C reversive/top submodule --quiet foreach \
++		"if test \"\$name\" = sub0; then \"$TRASH_DIRECTORY/nested-foreach\"; fi" \
++		>actual &&
++	sub0_oid=$(git -C reversive/top rev-parse HEAD:sub0) &&
++	top=$(cd reversive/top && pwd -P) &&
++	echo "sub0|sub0|$sub0_oid|$top" >expect &&
++	test_cmp expect actual
 +'
 +
-+test_expect_success 'a failure stops the traversal' '
++test_expect_success '--include-superproject preserves a detached worktree' '
++	git clone --bare reversive/top detached.git &&
++	mkdir detached &&
++	(
++		cd detached &&
++		GIT_DIR="$(pwd)/../detached.git" &&
++		GIT_WORK_TREE="$(pwd)" &&
++		export GIT_DIR GIT_WORK_TREE &&
++		git checkout --quiet &&
++		git submodule update --init &&
++		git submodule --quiet foreach --include-superproject \
++			"git rev-parse --show-toplevel" >../actual
++	) &&
++	(
++		cd detached &&
++		for sub in sub0 sub1 sub3 sub6
++		do
++			(cd "$sub" && pwd -P) || return 1
++		done &&
++		pwd -P
++	) >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--include-superproject preserves the selected index' '
++	git clone --recurse-submodules reversive/top index-super &&
++	cp index-super/.git/index index-super/custom-index &&
++	echo content >index-super/alternate-file &&
++	GIT_INDEX_FILE=custom-index git -C index-super add alternate-file &&
++	mkdir index-super/dir &&
++	for dir in index-super index-super/dir
++	do
++		GIT_INDEX_FILE=custom-index git -C $dir submodule --quiet \
++			foreach --include-superproject \
++			"if test \"\$displaypath\" = index-super; then
++				git ls-files --error-unmatch alternate-file
++			else
++				test -z \"\$GIT_INDEX_FILE\"
++			fi" >actual &&
++		echo alternate-file >expect &&
++		test_cmp expect actual || return 1
++	done &&
++	test_must_fail git -C index-super ls-files --error-unmatch \
++		alternate-file >/dev/null 2>&1
++'
++
++test_expect_success '--include-superproject commits from the selected index' '
++	cp index-super/.git/index default-index-before &&
++	test_tick &&
++	GIT_INDEX_FILE=custom-index git -C index-super submodule --quiet \
++		foreach --include-superproject \
++		"if test \"\$displaypath\" = index-super; then
++			git commit -q -m alternate-index
++		else
++			test -z \"\$GIT_INDEX_FILE\"
++		fi" &&
++	git -C index-super show HEAD:alternate-file >actual &&
++	echo content >expect &&
++	test_cmp expect actual &&
++	test_cmp_bin default-index-before index-super/.git/index
++'
++
++test_expect_success '--include-superproject does not run after a failure' '
 +	test_must_fail git -C reversive/top submodule --quiet foreach \
-+		--recursive --reverse-traversal \
++		--recursive --reverse-traversal --include-superproject \
 +		"echo \$displaypath; test \$name != sub8" >actual 2>err &&
 +	cat >expect <<-\EOF &&
 +	sub6/sub7/sub9
@@ -554,68 +525,39 @@ index 0000000000..06e341b075
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'submodules that are not checked out are skipped' '
-+	git clone reversive/top partial &&
-+	git -C partial submodule update --init sub3 sub6 &&
-+	git -C partial/sub6 submodule update --init sub7 &&
-+	git -C partial submodule --quiet foreach --recursive \
-+		--reverse-traversal "echo \$displaypath" >actual &&
-+	cat >expect <<-\EOF &&
-+	sub6/sub7
-+	sub6
-+	sub3
-+	EOF
-+	test_cmp expect actual
++test_expect_success '--include-superproject reports a failing superproject' '
++	test_must_fail git -C reversive/top submodule --quiet foreach \
++		--include-superproject "test \$displaypath != top" 2>err &&
++	test_grep "command failed in the superproject" err
 +'
 +
-+test_expect_success 'submodules checked out by the command are not visited' '
-+	git clone reversive/top dynamic &&
-+	git -C dynamic submodule update --init sub1 &&
-+	git -C dynamic submodule --quiet foreach --recursive \
-+		--reverse-traversal \
-+		"echo \$displaypath; git submodule update --init --quiet" \
-+		>actual &&
-+	echo sub1 >expect &&
-+	test_cmp expect actual &&
-+	git -C dynamic/sub1/sub2 rev-parse --show-toplevel >actual &&
-+	(cd dynamic/sub1/sub2 && pwd -P) >expect &&
-+	test_cmp expect actual &&
-+
-+	git clone reversive/top dynamic-usual &&
-+	git -C dynamic-usual submodule update --init sub1 &&
-+	git -C dynamic-usual submodule --quiet foreach --recursive \
-+		"echo \$displaypath; git submodule update --init --quiet" \
-+		>actual &&
-+	cat >expect <<-\EOF &&
-+	sub1
-+	sub1/sub2
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'committing in reverse order leaves nested submodules clean' '
-+	git clone --recurse-submodules reversive/top rev &&
-+	git clone --recurse-submodules reversive/top fwd &&
-+	for d in rev fwd
++test_expect_success 'committing in the submodules and the superproject leaves nothing modified' '
++	git clone --recurse-submodules reversive/top full &&
++	echo changed >full/file &&
++	echo changed >full/sub0/file &&
++	echo changed >full/sub3/sub5/file &&
++	echo changed >full/sub6/sub7/sub9/file &&
++	git -C full submodule foreach --quiet --recursive \
++		--reverse-traversal --include-superproject \
++		"git commit -q -a -m \"update \$displaypath\" || :" &&
++	git -C full status --porcelain >actual &&
++	test_must_be_empty actual &&
++	for path in sub0 sub3/sub5 sub3 sub6/sub7/sub9 sub6/sub7 sub6
 +	do
-+		echo changed >$d/sub6/sub7/sub9/file &&
-+		echo changed >$d/sub6/sub7/file || return 1
-+	done &&
-+
-+	git -C rev submodule foreach --quiet --recursive \
-+		--reverse-traversal "git commit -q -a -m update || :" &&
-+	git -C rev/sub6 status --porcelain >rev.sub6 &&
-+	git -C rev/sub6/sub7 status --porcelain >rev.sub7 &&
-+	test_must_be_empty rev.sub6 &&
-+	test_must_be_empty rev.sub7 &&
-+
-+	git -C fwd submodule foreach --quiet --recursive \
-+		"git commit -q -a -m update || :" &&
-+	git -C fwd/sub6 status --porcelain >fwd.sub6 &&
-+	test_file_not_empty fwd.sub6
++		case "$path" in
++		*/*) parent=${path%/*} && child=${path##*/} ;;
++		*) parent=. && child=$path ;;
++		esac &&
++		current=$(git -C "full/$path" rev-parse HEAD) &&
++		original=$(git -C "reversive/top/$path" rev-parse HEAD) &&
++		test "$current" != "$original" &&
++		echo "$current" >expect &&
++		git -C "full/$parent" rev-parse "HEAD:$child" >actual &&
++		test_cmp expect actual || return 1
++	done
 +'
 +
-+test_done
+ test_done
 -- 
 2.56.0
 
