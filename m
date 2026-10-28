@@ -1,57 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=157.230.60.252
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793164665;
-	b=4jB6oNOue/0Ghbg5f1AFoZyjOMW6o8X9pgA0ZrB2X7JwSVhactt2tq5GzvLom+RKJ/ZI
-	 zagTW0/Pk9MddgTeb7NZjlY+HTFNSd2Hq4/kqq1mg8vru3w14t2Rzdkgug6OTtLrKCtpe
-	 z5Zzlc9+QCqRSovFOPIwBbz4y58mT4CzY+Mq7O9sfwXNu/iAqR//1r/OnavRZLjpAHcUR
-	 xxwcf36DbB0ahh/0vQ6sl3eWbkMYgJeFrGTFCxQpBAw3PTRAwbmOnauRTVod9CeSGjSUE
-	 0x8hE2uBDOkREgwmNULn/rGd8IMcktL6yJmv89JGDUyVYr//WrNW2jOG/TKmXP7JGKQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793164665;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=E05INjM1YGQOKumQoFI7crWTtHUxXBJcgqO6Zsq/0oA=;
-	b=uvZOJJFfRZ9kPsO+YtkVTtKUjL8YE9I9XeYd9gXw2iiZYHT9e+KYMhb1D3oazvxMxyno
-	 GJ6CnVT8Ang9r9CSjoOZv4Z4xtiwQStjhsJMepnadGUcLcc12kFUkDZLeBYwi/HDC+Fct
-	 tklNeQ0cPQoIe0dlpHJai302peznBzC/h9VsEBoCBcrV6WjcA6OUMZbcuD1yYqD1+kVG2
-	 E9K/TKmifAvWve9f/pHBkkCLE/EvLRenYED2ao5zY6239M2CejWoD2MX2h/BOGCHajm/F
-	 Bss7yaIFU+2gaMjXuisWZZcu59yKLJtSPaSwdTqJnxtM8zUL14KBK5vJSXJMenJwiKA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=lfurio.us;
-	spf=pass smtp.mailfrom=lfurio.us;
-	dkim=pass header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=sGWOu04O;
-	arc=none smtp.remote-ip=157.230.60.252
-Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.171
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793167387;
+	b=cUGcl74Bf38XmrFxk5Mu0H0xFqIwznrdjZOBlkpYbBQ3k4U9obx8zot0XUcpd+3T5baZ
+	 NHLfgJ9cVQvInp/J5ppM0dFy4XV9R+zL552XKw13P9uZYeP6gOk00XK/2uzwxiB0QQvUe
+	 wzsJgt2HmwlvtpJZkYi8gBnoeaTQEZBJT+s/95Q4hnUJ/sIWL33voOYU9lVNzEw2+H2u1
+	 FcSK35pkjdjOegXW5Jxt0fSSNXuW/Oa0JPpUSWvZpFeuqaACKVFmkbZ0NZG/HwIFapal+
+	 47kdsCsWkEo6W+0LTmQDPGnkiCEb15N60Rx7fYqvZFr2pOCgMSQyjKdAKldWoEF8Ecw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793167387;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=gubt4KhKgtI2K/R1GpM5dFmSs+tRBXWlY4doN44wm4U=;
+	b=q1VhtMp1y1KJkPK3VkUbH47hW5BS/41flzuQqI7oqUTMtQuaw7swTIiaD3dnEOeuTsKP
+	 XxYTJMnxBYF6ZdpWLrfNUTCAVN3johkd/hu4OiomszExrPALxZ54b989T0NDAIW9ISMFy
+	 8D2r/gwx5hTxbFzApKnes2TmaAaUQrl8eaDJVMdeoIrMh3tXz9Gl6eFxvJlMEJoZCmLHw
+	 cFLsfYGRlPc7nRkCsi9DqwJwdpTfX8lZn9MwY7COEWu75oReP7Gn3+gTBCo/iZY7Up656
+	 ZEfvyfy8hTV4lPPO1bhXgSED5D3yYWhHcK+QqjNdhI/TNNeojupVts11K0ddTAb29WQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=fail header.from=sunshineco.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.171
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A49606A321
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 05:17:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3A49606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=sGWOu04O
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
-	t=1793164658; bh=K56bAYqo/TNrkgRPoG0+jhJSi24G7bW7E8jZHtZLcQw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGWOu04OsecUPmG51xcfsTkW981MAjPDbRspnkcAZe1zKgOci7lXFEYGGrWso9BwP
-	 YQREBAQmw0pioasSbKaqR8/3EscFfdnGl/MIKulLjoiohGBDlP9eeOBFyX8AmXy+y2
-	 Polki+hmCcjTO5FlfzTZ3KyBsc3d7e1we5vl4Lac=
-Received: by mail.normalmode.org (Postfix) with ESMTPSA id 566F26005A;
-	Wed, 28 Oct 2026 05:17:38 +0000 (UTC)
-From: Matt Hunter <m@lfurio.us>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Harald Nordgren <haraldnordgren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3] init: show absolute path of (re)initialized repository
-Date: Wed, 28 Oct 2026 01:16:37 -0400
-Message-ID: <20261028051704.2759358-1-m@lfurio.us>
-X-Mailer: git-send-email 2.56.0.333.g9ad7b1359b
-In-Reply-To: <20261020053932.1274210-1-m@lfurio.us>
-References: <20261020053932.1274210-1-m@lfurio.us>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35444606A323
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 06:03:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 35444606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-33c10faf6easo97711eec.0
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 23:03:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793167386; cv=none;
+        d=google.com; s=arc-20260327;
+        b=OYMOTYAwFNckfKEDHcgmsyet4bkgVnV9Ml/qNrYPnax/xlU62C6piHjUknqan3ZUcM
+         3dBUqSvKPeDxygeHXmwpmLb/1CHIRFa+WLW7ORgGJCfcIejkxccig19KbgZKi38YRcXE
+         9/lXyC+grTw0WuCE2ig0SdY+hyqrOd4iwYKN/Ya2nfOKnl9hYngbACopMlpUdj/aBO2H
+         qqQXHIst4Y937oSevQdCfqZMizupNtuK+bpKuM0MjxqO68xWikYq8fznp/HfhJWSRSTa
+         agCcV6FZJ4dlNpeOkidN5hEliA8a+5W7qsF7tXxFQC4qLQmXmVmL6/r8LNqGlz8TxRvO
+         yDVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=gubt4KhKgtI2K/R1GpM5dFmSs+tRBXWlY4doN44wm4U=;
+        fh=HLdWuAsu3OQx1LuHyCAOW0o1pUgf3OALFgOfJRjqLms=;
+        b=Hq2bqzskInrLIO1b/qnihx1BhglbHjrq/FLgK+S6phOHxhQLr7kmvcU7MKsQwekIv0
+         fvCA0nPKu0SUbEGPRpEM98AMQ53vdO8LoS8fSop6BjF51NmIsr0HJmjmopQTDhhmc53p
+         ScPZbcODNFOerAac+vNVB+j5+pusJZ1qYlx9ipcaFluYq14XsyK2Rf88mlowO8Pxnf9R
+         lkmZ7NpxK4PaYeL6Zyh6axrORFQtlgzWXFsGpAQaoRdQXLwyi3FbX/6pluVnI+1iXfQv
+         P9zdcmlTLnQzz9EhQSJxxhI8u8d9B+piY/2mUQLlEeJb3h3sFx0+IjOVu0lS8/TR33IS
+         E2TA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793167386; x=1793772186;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gubt4KhKgtI2K/R1GpM5dFmSs+tRBXWlY4doN44wm4U=;
+        b=dKlpgyWtSpwZe46SjlQiL4tTtUF9j6Fn+sMbjwA5nhzsHZJw6fYDZuxq30MBQzAw8l
+         3JeEH1cXRCQust0pPcrm7MLQKMDKRixA5iHT2U0esZyQn954WBkSvRxxVGdpyEgQrHYT
+         rFtWEs0iXWOJe/8GB8OZ1b1JBAtfSia8Ts176TR/JKHcv1m/RsadbxR2hGHMw2qqiI5f
+         jj3nXS45u1ozIOA1JbR89dx/ILKacNcwJ5XXHXxA4dn+OIDQL0uQPWoHpSfQ7U9+KW81
+         EEZjFXacndHLqCCLW6IRWojZhKVJzHiQJVZkcLSVSlTc54KPqv+J9TkLnAfgLygIsmhf
+         qVWA==
+X-Forwarded-Encrypted: i=1; AKwUvBzFyinc0zGOXcMIeWHc6zgkYbmhF3O1L1iKthSGW26WsYGIAUgxwImlxDWuGbm4jlnvR7s=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJKOS2nL4yatfVFW1TT0lTWJLWL/1HGNhNptQrw7Sxqefy6havm
+	GfFhxSPy3FK7HwMRH5QFSK1I24D4CFc1nUgSOnz+1h4RZTA/HppEhBqBgQdQQ7vFYHj04x+Wurj
+	qs3vnzVwDVtoHviyKYj84g8YRj+yPYyE=
+X-Gm-Gg: AYBFou3CSx5Z8tRfwCYKC3iGNgh7btLEaIoun5EoY74rEBtzhW8P5vNu6Ip1ktGfa0r
+	5HKF49MSWz7k7LK2ghl0DgpAcQn1N1vZ3a3rldAABErikCQ5DMyAY4IOfNjUbD4/rgEOoFU5KyZ
+	yu8yDFiKNfCzGUHwRf+75KGPDCt8UnsOBaFR2oVmGHG7C29VkvQXY9mmu+v0F9fVJzMkyy/ozqk
+	LcpnxIxPG4mwCx+lOP96SPOdeMv0bpa0szaeKt2ViChLuINWycNEMXd0Zichie2T48a4GcUFfT/
+	SvNtk+rP4GVWWJXk4SKlzj9VDlOl+qvVmNzMvmvQkzrvKEdJgxdyidREu+qcxYWZZUH/anhfc3P
+	4aVsmpfI/PhBF5F1EgF+/bTpPBx4zFmDSEMajbad4kt0ZcLlwelwRKgRmB8LgnszJj/jix7k6jx
+	UlVKz5vdnSwA0PRjMP
+X-Received: by 2002:a05:7301:e109:b0:368:1f8c:5f23 with SMTP id
+ 5a478bee46e88-36a1fcb0eebmr3409727eec.0.1793167386265; Tue, 27 Oct 2026
+ 23:03:06 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -61,104 +90,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAPig+cTZEcn_5TG0iMVJJym8Zhu1KYP+y9Oc1J=JJgDYSzNSdg@mail.gmail.com>
+ <20261024165311.57387-1-me@jaspermayone.com> <e08fd267-7017-493f-8f1b-d8dfb568b5fd@gmail.com>
+In-Reply-To: <e08fd267-7017-493f-8f1b-d8dfb568b5fd@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 28 Oct 2026 02:02:55 -0400
+X-Gm-Features: AclHuK9OE01FDcVpAVQSVBNzWS24seJRMyz-iJY4xv-XNC3riTFMA30AnbYNZ9E
+Message-ID: <CAPig+cT6rxKptqSEKuVbi2FafBqh+DfcHAkHfz2-=SH3y2hfyw@mail.gmail.com>
+Subject: Re: [PATCH v2] worktree list: add --branch to select worktrees by branch
+To: phillip.wood@dunelm.org.uk
+Cc: Jasper Mayone <me@jaspermayone.com>, git@vger.kernel.org, gitster@pobox.com, 
+	haraldnordgren@gmail.com, ben.knoble@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Since 20e38cba3926 (setup: split up concerns of `init_db()`,
-2026-09-10), git-init produces the message:
+On Sun, Oct 25, 2026 at 10:47=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
+l.com> wrote:
+> On 24/10/2026 17:53, Jasper Mayone wrote:
+> > A worktree that is rebasing or bisecting a branch
+> > counts as having it checked out, as it does for "git branch -d" and
+> > "git worktree add". <branch> is a branch name, or a full name under
+> > refs/heads/.
+>
+> That's useful because "git worktree list" does not show branch names
+> when they're being rebased or bisected. The commit message should spell
+> that out.
 
-    Initialized empty Git repository in .git/
+Aside from Philip's excellent review comments, I have a relatively
+minor question:
 
-instead of the previous
+Rather than naming it `--branch`, under the assumption that users may
+eventually want to filter on other worktree properties, should this
+new option be given a more generic name, such as
+`--filter=3Dbranch:<name>`?
 
-    Initialized empty Git repository in /full/path/to/repo/.git/
+If so, that potentially raises the question about how such filter
+options should combine. It's obvious that multiple
+`--filter=3Dbranch:<name>` options combine via logical "OR", but a user
+might want to combine future filter criteria via other logical
+operations (AND, NOT, grouping). Do other Git commands set precedent
+regarding filter option naming and logical operations?
 
-Prior to 20e38cba3926, the code producing this message was in function
-init_db (renamed at the time to create_repository).  In that context,
-the git_dir variable was updated by 'git_dir = repo_get_git_dir(repo);'
-earlier in the function, to set the value used in printf.
-
-None of the discussion [1] around the original patch indicates that this
-change was intentional, so address the regression by similarly using
-repo_get_git_dir in this code's new location.
-
-1: https://lore.kernel.org/git/20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im/
-
-Signed-off-by: Matt Hunter <m@lfurio.us>
----
-
- Changes in v3:
-    - expand test to cover the full output of the init command
-    - Link to v2: https://patch.msgid.link/20261022120749.3567828-1-m@lfurio.us
-
- Changes in v2:
-    - len type is updated to size_t
-    - added a regression test (changed my mind on this)
-    - some text is stripped from the patch message
-    - Link to v1: https://patch.msgid.link/20261020053932.1274210-1-m@lfurio.us
-
- builtin/init-db.c | 7 ++++---
- t/t0001-init.sh   | 6 ++++++
- 2 files changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 374ed3a74706..9612d2b8bfca 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -248,18 +248,19 @@ int cmd_init_db(int argc,
- 	create_object_database(the_repository, NULL);
- 
- 	if (!quiet) {
--		int len = strlen(git_dir);
-+		const char *full_git_dir = repo_get_git_dir(the_repository);
-+		size_t len = strlen(full_git_dir);
- 
- 		if (reinit)
- 			printf(repo_settings_get_shared_repository(the_repository)
- 			       ? _("Reinitialized existing shared Git repository in %s%s\n")
- 			       : _("Reinitialized existing Git repository in %s%s\n"),
--			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
-+			       full_git_dir, len && full_git_dir[len-1] != '/' ? "/" : "");
- 		else
- 			printf(repo_settings_get_shared_repository(the_repository)
- 			       ? _("Initialized empty shared Git repository in %s%s\n")
- 			       : _("Initialized empty Git repository in %s%s\n"),
--			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
-+			       full_git_dir, len && full_git_dir[len-1] != '/' ? "/" : "");
- 	}
- 
- 	free(template_dir_to_free);
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index f1d227f27167..5d438dcc2804 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -1000,4 +1000,10 @@ test_expect_success 'init honors GIT_OBJECT_DIRECTORY' '
- 	test_path_is_dir custom-odb/info
- '
- 
-+test_expect_success 'init shows absolute path to gitdir' '
-+	echo "Initialized empty Git repository in $(pwd)/init-path/.git/" >expect &&
-+	git init init-path >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-
-Range-diff against v2:
-1:  49d220d97aa8 ! 1:  6c9adee7702b init: show absolute path of (re)initialized repository
-    @@ t/t0001-init.sh: test_expect_success 'init honors GIT_OBJECT_DIRECTORY' '
-      '
-      
-     +test_expect_success 'init shows absolute path to gitdir' '
-    -+	expect="$(pwd)/init-path" &&
-    ++	echo "Initialized empty Git repository in $(pwd)/init-path/.git/" >expect &&
-     +	git init init-path >actual &&
-    -+	test_grep "$expect" actual
-    ++	test_cmp expect actual
-     +'
-     +
-      test_done
-
-base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
--- 
-2.56.0.333.g9ad7b1359b
-
+Note that I'm not suggesting that this patch should implement such
+additional filtering behavior (it should not), or even that all these
+questions need to be answered right now. I'm asking only, taking the
+above into consideration, whether this option should be given a more
+generic name to avoid closing the door to those possible future
+enhancements.
