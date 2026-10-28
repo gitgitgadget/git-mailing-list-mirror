@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214853;
-	b=bH3NENpy+pXkY6e+iZ9IDUcuBHpprbADVl8wcEY3Xz5eZ3JRJdMxr2oLWpFgazzMCDXe
-	 vtMPeqKE/eOB+olmYiCPiVhJFKK2hBG0Vy1PdOIAYxJe102GbAgV0JtOh2qzuMHRPSvBC
-	 VfZn2f3xMsW9NJJfSTPr4qqArD3SNqijpjjtiz6U6HFp4xss5zlS87nM0miFns7lNSnlf
-	 sAEjusxhQMfYZZMJ+loXhsOIr+uHJYjsmZ8IJ6aBOMwokth3S5JymhxfvJpdoU/SkZVr0
-	 JligOwd+03T/NaSd4c5MPKdKHhPiqXoNcI3j3uwbZBgo8reKMuhU+a2T/NPG8A7C4pQ==
+	t=1793215619;
+	b=2ree3442g3JHO91Hjo6bJJxJIVmP6YDYDOiHypfkV6sPaRTO5Z9me9q0+ye8vdqhgSz8
+	 TY6D54y6FBzOJK1YTu42mKQ/JH57mF6TJoCUPYnNTeGiiWSVxJvINTx7yQ8Ty20vWHkzX
+	 /25uhQozP+qObJbhOdskFaRuAY5UIkgXakUg5A3IU92HVa6IRRB6A9N20r9QKptmWxmGU
+	 qhG9qZEeTuovim1gJMiBRTZtpLBHzA4swyVQGn88Vd7jh42oY9bFvLGSHIHDjbFwoozZ8
+	 ffaRLySBThpEhmvxehk759dmGwZwAKH07o6yQ5ZuQkllKjhLqU0Vyk6lAE8SU/22jEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214853;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215619;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=BxaB5SrUGGUfCCThpsYEnR+6yBDhE9oOcn+KIGn++80=;
-	b=SqT5PXUuIOhgHBaDb8sbpC4J0vS1T9/z+h2sOgm+0XdaEVctsEP1WmTfduZB4jawfyeQ
-	 aHseha/O13Icg2MLGupUQyL0l49tDMIWhCuB+P5GzojOVbevBkJCaPu5PM0NsiMoQbh0V
-	 FryDTTksxd+TgJkJrZMi+ebPaNsYAP9q4/WjgCeeaZSdroRMGY1qkU5hS3rYoTKNqAoft
-	 FSur4Gk+bAJoz4ahUf1GYPMQOTXRi7728d7QUjDL/lMQDKBSh3mZ8lsFoFooLq3lEbkK/
-	 lqwRNfhBAUq7t+MUfg/L/TQ6oJm3/avb6N8tx/N3IeRaOL4p2A8kuh5nBwa/tUnC2LQ==
+	bh=XTdz+N1utYOwDFuKeBUHafG89ZGTvqNEAsodOG+INdk=;
+	b=3HXO2CHFVDRPWMRZOA79D5Y26D63BjvPjEk3osFiFfIRc9/Nv4VAT+ZBp0loFQ/PeX4U
+	 I79hA1nU54t/kpbOkIFqJOuyy93gmQMiUps+x50QFXxknVvQ1xvbeWQq9fLC92ovUwIBt
+	 SdUvvVTyOw6o8AAB554kDYTbrILxC4F7TgcoV3ju+Y+G4TwjPBU4tzsHny8tKB0oaw5G1
+	 VFk5ZbxvwcPLyhEWZvKCuK017iSGBYM21IvqG1AB90PFVrmvw3oV6ywR/VXHMKZkeX78F
+	 +VKcfNqIljdLc6ky57t0T1T0kFnATrm1gWxIwp6M/wDmbjXWDi26xoNFafoTJmwKu+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="l/Z32JhE";
-	arc=none smtp.remote-ip=209.85.208.54
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zujYJRO+;
+	arc=none smtp.remote-ip=209.85.218.45
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617AD606AB1E
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 19:14:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 617AD606AB1E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35036606A31C
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 19:26:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 35036606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=l/Z32JhE
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6b4883643ccso1826454a12.1
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 12:14:13 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zujYJRO+
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c45551fa84eso140255366b.3
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 12:26:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793214852; x=1793819652; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793215617; x=1793820417; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=BxaB5SrUGGUfCCThpsYEnR+6yBDhE9oOcn+KIGn++80=;
-        b=l/Z32JhEZZbayTnlIfiIgl+gulf5Xsdb/KVlmM3rv8aUuGsQe2CeEvpILpn0PKWHpB
-         S1xq9TGqsHfhryhlC3sAs7OUCSY9h/LTwYV6ed8KedKuImXcyVpSPihzYBR7yJhqaCuL
-         Gcvmc3K8BS7FdnuAtsgc5auFbwjXtcAywU3rebx5891Dr23wEMCEMprPRfWXnvgGVjsX
-         qn8vFq+1ZIVje+5FDK1/e/jPq4iKtWw9yKWFa3vabLGtEA8UaUYqrPjrYkBUqMXIEFog
-         dPsj82cYCTGkmGNHLjUVZlo8zO8zaIygLvJSFb5uRnps0k5ik/1aKoWBnzcz4F22Aous
-         ef4Q==
+        bh=XTdz+N1utYOwDFuKeBUHafG89ZGTvqNEAsodOG+INdk=;
+        b=zujYJRO+Pz4UgjtOGbLAAOHSUBPAvQ8f2AkEd8c4zEfX2rxwgDQ3Ow8i9metK4XaXE
+         EloyDq+MJUVP/Jwwnp+eDI2dJ3VSDPm+3l+hGCJYuEavoQiXh6U4vqB1YADKGYeq64Pd
+         zIT0w56znoKzJ2nhROeeIYUNdVNgcbYJY+HAiP0p5345t3MvpVSUNBdRofmRoOb/8UgC
+         HRDWeBtmXxr7k+uOe1nxop+sK8Wp/Ixaq3q8ODdEKaVGBtVaifU6r5Wp9/EzXIAm/cgt
+         0YC+1K05ms5n7Fmt5rxf89tOBBQer9jhjZZA7DUjW5Qb4RReAquHUx9pEh3I4j80aALT
+         l3MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793214852; x=1793819652;
+        d=1e100.net; s=20260707; t=1793215617; x=1793820417;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=BxaB5SrUGGUfCCThpsYEnR+6yBDhE9oOcn+KIGn++80=;
-        b=jSC7TKTLbnqbsb5f8NKRVQnfSv0bzkv3KaQkWuEQo/QpiE3ZqypXFqkHe3mNk3+I3p
-         yW9uT345cG0K7DYA5Sn18WeA/EZ/Xj2BUCiFLi5e/kTFbUDwXyyEQjSoiO0MPJuH9rUK
-         moyAzErBGtcuHm4NkCpSHTUXSke9w5TIbeEt0p78VqLSUlhujUGt/bkHCTsgbA2lgmDM
-         APNNzPM7U0//QvFdowEQxzlpmZmfWyKSfPb1GxZ3lha+dCYVOgYIr9S/nZrJy0sXFndf
-         iIUOJJhQN6iZfCyqgzWC9io/JYgQaQnYy3a/UqwMiHu1LM6vBoMSjDwEJkTlZ2Rr3cEc
-         kLVA==
-X-Gm-Message-State: AFq9FYJ2VjqJc1/sqc/yFBmqJ41umKZXYkXTVrPiTCmmmTOKBvbJw4NH
-	nPJpkcFtsHTP7Jg7zPkpA9vqA48VwOCJwU+8IWEnCRXpnbHjbkUaWdIe1XZxZOQuhASTm/Wz
-X-Gm-Gg: AYBFou2OIV3z42TJkg04aoKrVSpqdnS/HAaIiEUuWZ04qKSf6kKGHqiiBdnCMpL+gRJ
-	fBDAeocydlNPcXs7k1ieEht71w/XMC8xw4+J4t4sNOZLIhT4HYY10fTe+WAV0c0gwa78XGwA8B8
-	6i0e8V6NN5dA6kcQqZIKzbx0t0+DUkX7AwNtYGAJnAoRm6hM3tNeWmeWeudCD5kYi9nGG6PFY5n
-	rQMNZurt91RxtuHx2976Q8EoYvGmnPin/bdWk9gIwaMDl9rR/ZuX6UNBX0AeHDkbTd3tPeiO35b
-	oX0QE9wC2BGPxYczssVJCxTTxjCmfcNB+WlCSjYPaN4RMaCEvFmXusx7yDDoc3lEzdC52Ni/9xW
-	9P33vGzbroXrXunj40mUHmyh+fJez64+94sHwfMrIvh0SBxSd9u2AXzxkkC8y81P2ebiDn02K9E
-	gh5rBnxHu70ldgxYtrL65RCwknSTPGrqZOYUlU/zixjovIc8j6xe4uIi8F8LmcgZb+jDUINtWPw
-	SC9IffGEBt0kuZLSxG9UmY8ZV5UrXL4fxbtn2J1PFhLlH1ht2UeB/3SnFc9M7gn1+XUgKFLaJ49
-	R0RY0F2X3+K4PPz3wFaY8TPEoVUE700ao/lhZh3z1LBoBk6eB2nugj+eBfvNXZXNCHAAGL/gLfl
-	ZP7Z96DchGz+BffPdbYvEjfX9RoqGHfOxOlvw2Ls5kG04DJuPdnno7X1bc/jupjQrIZeifecH1Q
-	YT+oFvuTo51bURCQbCrpQ7kcUOb7/eSZNN4xIrOJUI4Igv
-X-Received: by 2002:a05:6402:13d6:b0:6b4:1629:b1aa with SMTP id 4fb4d7f45d1cf-6b49cb4f157mr2351721a12.2.1793214851503;
-        Wed, 28 Oct 2026 12:14:11 -0700 (PDT)
+        bh=XTdz+N1utYOwDFuKeBUHafG89ZGTvqNEAsodOG+INdk=;
+        b=L7vX3kxnEsVF05tiCO2X9/65DQ8LpjY1zFNu3d2Gfi48/APjeJ7U1pG1mkFbCrgxj2
+         jJGJTNcEyMaxfDfOZHJFyUS47Ekb5GTlvKITDHj+oX9AlnFoII6ff/rcMg/Z8zQB++7S
+         n2tngYdW5q0tux2YHXmd1vU5HeuJPBkdvGKxi0gmCz4XtXHPYtZ2gX+Fa+MsKc4nMpBK
+         mPPTvrw3s40j3DJCO9ymSOaNXfZ7mFS4SJ7lHpQEoVrCNReArgbdps90ASpT9qWGvM5l
+         E7BfS4XCqz46y7cI49t69NcjUwZQB2WMwG3ZlwpCUDZs5CXXTgyyueAjmSxXfXUcDTdq
+         uC+w==
+X-Gm-Message-State: AFq9FYKeklBicos3RHpDtxaheLOg77LtxZENmMkiJof/3M7p6/tYxti2
+	cb69xFFMJ/looLhkG4Gq9cI+Pu6W+JNgxgsO7PahG1Zj7wnO5o2rk9+/QB/yfrlWr5qQqY8l
+X-Gm-Gg: AYBFou3fJKQogjNbOnAgbnDuYSTer7AHtapfpweVxn/MSDpwcHbRi12se4h/slIxdQO
+	hfzWTbTkwhxSRog4Iq7YeQOErQc7re0lWc9TAc4mtTpgRx7aI7eTsqNwPznqH9xrFBK81T60p/i
+	wnIpNTLHGEh0IMlgsj6SbbWp+uzEs5/j6VFth75P7pLjTytPeRX5sFXuF6CkitTrBE0IpIy/eeh
+	hnTjDUdm5832IyGMgMwXKmmP3XONGeKfhH9BRszEvQK/7WTVXyTnqaPPst3p1YQb4JPnYotwer/
+	42IvPseUoge9AVY7DhLUgISz7GXM/YgicLpp4Rx81I/esop1Kqpy079+3AHvHxqia33af6Z+3FP
+	iJs0ryZa1LMzCPFsfr6018HgB/714mAtoJT3op5TXzmILjPknF5xtUUFhiN1PYnocJcuoCP3Kiu
+	j4Zld5gT+CMOMloDUpwgMUq48QMRWFYLZXX9eJW4V5qZWuftnSlz7sV+2W8cDkQn9MflLrziZh+
+	/bQw3qzJiKVs/kgJJH8UP9OwzYk0xfRH6UbLfji5WlEBce6jE1X0eH85f9+M5I3Fd/YPUfLgZZa
+	QepevVzoZxKMOJko6qbRWj91IvFusz5p5APBqIydqS4MqdmCBTgLyQpfXXpFh3ZMSgxTaBJIV+A
+	7a3/I+FDRGgNdnnKkIAGa1H+vHAY9bSo8WowAntDsqmo766l2Ml8VK1JPJ0a1hEuPHT454V5TLD
+	f43h5c0CQYnZFKhr+d9fkf7G8=
+X-Received: by 2002:a17:907:9606:b0:c3f:dce3:20d5 with SMTP id a640c23a62f3a-c49bdf14449mr289806266b.22.1793215617307;
+        Wed, 28 Oct 2026 12:26:57 -0700 (PDT)
 Received: from localhost.localdomain (190-2-149-64.hosted-by-worldstream.net. [190.2.149.64])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b4952e380csm1888222a12.0.2026.10.28.12.14.09
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c46bd77e1e9sm648493366b.67.2026.10.28.12.26.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 12:14:10 -0700 (PDT)
+        Wed, 28 Oct 2026 12:26:56 -0700 (PDT)
 From: Edson <edsonwasswa54@gmail.com>
 To: git@vger.kernel.org
 Cc: edsonwasswa54@gmail.com
-Subject: [PATCH v2] builtin/diff-files: convert ad hoc option parsing to parse-options API
-Date: Wed, 28 Oct 2026 22:14:00 +0300
-Message-ID: <20261028191400.799-1-edsonwasswa54@gmail.com>
+Subject: [PATCH v3] builtin/diff-files: convert ad hoc option parsing to parse-options API
+Date: Wed, 28 Oct 2026 22:26:47 +0300
+Message-ID: <20261028192647.976-1-edsonwasswa54@gmail.com>
 X-Mailer: git-send-email 2.46.0.windows.1
 In-Reply-To: <20261028170432.3524465-1-gitster@pobox.com>
 References: <20261028170432.3524465-1-gitster@pobox.com>
@@ -106,12 +106,6 @@ and -q options using a hand-rolled loop with strcmp() calls. This is
 inconsistent with the rest of Git's codebase and lacks features provided
 by the parse-options API such as auto-generated help text, git completion
 support, and option abbreviation.
-
-Changes since v1:
-- Fixed author name to "Wasswa Edson" for DCO compliance
-- Removed vague "error-prone" claim, replaced with specific justification
-- Removed unnecessary block scope around option array
-- Changed from function-scope static to regular local variable
 
 Convert this to use the parse-options API by:
 - Adding option definitions using OPT_* macros
