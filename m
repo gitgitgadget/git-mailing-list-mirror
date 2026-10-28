@@ -1,89 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793179125;
-	b=x4X5ksF7aNft99Ls92tvJWhmxW7Qgh9Af0oZOF/eLiJucE3rW1sErL5RSD7G4MBa+ZGI
-	 wRLMdofg11TDIIi8CpTrn2ilTUpMYpY66ppfqqGcvbErwTPmWbr9a/0ZPSWRtEqfwGNRE
-	 Q2c+rOpGS6gSGw3GfvJLuxDeLMuJRuNpozPT8oDUiZtC99+PBVy1CqDjWoN5ZaK9ynwwA
-	 +yHIHF71NUMBUIUZOu1ETZhe3rstAIZNaQVOUSAJWwZIPs4XWbRaO4jUauG2Tj4PhxbfA
-	 n7XUQLfZPT4+TjNpKqEhYwGw1izQIm7SRys8b0AoB3fcLZsvW0FbY8w2/C6A2s5I7Kg==
+	t=1793180128;
+	b=cYkYw7J/FdSi/+yOuvT6OiZsJAeP+3WsznrW+U5ZPap4E0FMFpPsvgZqzg7tUBNKhlBl
+	 +GdICq2CVo12qgWFyniEuGxDQ/8K5sAjrRq1Cor6WemGv6HC5bX/d7RrKLSqe8bfu5VFY
+	 339uGaH1n7uYTFOWHCzpsGe136eOY+ux1B5o0JLMdGj1zAPx2Em8Q8Iziqyr5VdKYOkoe
+	 UzFad5SGHkITTPejRFIrZIi64eoDal/QiFE4U1eJotaZqlvoEZ88tuKM2NcLz/zq/FqAj
+	 7GssMgFp3Df9DznYcQtaE2JqV9zAsq8//qmTUkbRNgdD3xRFDVqvyXc9U20R6m4Twhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793179125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793180128;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=RPph4HpvZQcx2g6WCase4u+AfwVSyPbUxbd46ZQ4JpU=;
-	b=d5V/qeGPJUVRSZ/UO/knrILZdsDCvHdG+WYW985/iiZXTyY1MJ3scstcAJSHkXGnMRTt
-	 lNBXkm2Neq4Qibkwf4obG79NYv1w/6mK5QzppJ2qqA5g0DdUgPeUcB+EjCDjzQtvCJEmR
-	 U700QpmzIj3zWrxq2By7WrfwttA+YZFynCiCeNjgqjceGXN6OwQ7z1QwTGjSOu2yufiJI
-	 CwRJAm84igAo1sJekQicFTyK0C8BM6A3VwbwMDbQgaVpUhSe4d6lHCWliZPkGyDCcmDE8
-	 0HS1/w2jq7cUPI19ym82ZBqC1Qb/2InbUEQBb8CcOglzd7fUHdPUNHM0Wbchosl8kIw==
+	bh=Or3YYZzodosQeezLXHhi1FfVFrtqB+mc1G15FNZqRkk=;
+	b=Tx6djE0Qa7Jns6hghWBsG9yY65qpVoQxtWXUz0f4QYn9joNB1RJ2gQf2wiVbhJivjtSJ
+	 SwYjMdosQZZfvxEC1GEkglMDjN01FbkWGw7XDM3z6Pq07dtjbf10LmXrzuuAafGU8Wt3l
+	 dszSN5zs2ggemnM0ad9RbnKeya/uhNJvn3wo6fw+78jaqP99Um0NkHSE7Bzx2wVGSX4Cu
+	 kmQB0hGaR9nwgU317JarxVaS/NrLcdc2udAunaVmQl8mpqdpKz6xDZWjorzMT9pu6lCxX
+	 tulnBA466xolGn29mtWRjXxkEdcQ30c7za5q+/0Uqa/T8Daq2sa6MWqHa74a2LHS2uw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XUr6qYE0;
-	arc=none smtp.remote-ip=209.85.128.43
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hfmhd9wi;
+	arc=none smtp.remote-ip=209.85.208.42
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8D6606A323
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 09:18:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8A8D6606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C10606A320
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 09:35:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 70C10606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XUr6qYE0
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a35ac4475dso5122155e9.2
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 02:18:44 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hfmhd9wi
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6afbc363efeso1226962a12.3
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 02:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793179123; x=1793783923; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793180127; x=1793784927; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=RPph4HpvZQcx2g6WCase4u+AfwVSyPbUxbd46ZQ4JpU=;
-        b=XUr6qYE0ZsWFaFBju1NI3DYdUb71p+6fy0vy6vW4Vy6+1/0xIDsgDIL1tZo9VSXg+i
-         PaQ2hCwevnTNnI/flHwEuPG9Hen75FgtT7jZTmi+/6mEZa8/doCZY8FM1bfuXeMSJi+i
-         U3ejuq2fLrg42IvNLyylh2Ub6wHPVFdDjiZtny8IUroEOeW/+LWBnqZS9AF0UjbETdsh
-         U1SwXV37jlFKDw84qRUkEdgs99PSnhm8Gtf6Ata34i/3RlM/YBPAVu0V+grh1PSxTcyf
-         W9VROc6opsHg7EQqLAMdIpaS41SEVhEPqSgaIm6/yMm3kfekPTDPYQLYHBe7LcuknzBj
-         jd6g==
+        bh=Or3YYZzodosQeezLXHhi1FfVFrtqB+mc1G15FNZqRkk=;
+        b=Hfmhd9wiwNAuiK+Y/3Wm3Y9MpOGsLMkT4S2+O+/RY4L9uYsTSZ5BQEaukYntfTV5tu
+         NhEhXlizVQfkkimJg6SjxR1Tw9IDWFrOofuqzFmbgiKAoyOUjHr+hvSPpEKFVC2FPjQo
+         T5UNEpsznx2zEfo2P1Qd9gc5rZYxY0GfS1PbtnO+hW26U+tb/ZdeRGDIHpGoarhhNjcW
+         DzJgLhRXrq3CJMMAACS46nLNWlvklrzimhNQxmui7TL4N+KoNW46BXINECV0UdQR7eWZ
+         27y4roPuYeKlxbqC8eJrgGUbEXwghKdkSAImxe3rNau1ewcZehPD0nMxHxiMKZ602gHU
+         4swA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793179123; x=1793783923;
+        d=1e100.net; s=20260707; t=1793180127; x=1793784927;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=RPph4HpvZQcx2g6WCase4u+AfwVSyPbUxbd46ZQ4JpU=;
-        b=v69lG2tqHglHeviTSmlt7N/FiqrKvU/ArKBmRn2qlqn0+Etq5+q+dSQndL3tN4wIve
-         AM38/GtwFhgYk9WT3RQmC8bgo7Ifr06ccS2wxt0f4v0drW+y77TTePqrc9YESn8LLPDN
-         kR2aM0IiKgWF5inSdUyBZD7M36KkVYeWEGiYvJA7FvoZH9GJcHtghcnPdK0NAal4Mpch
-         5eRA9S/QU0po+GRgWpILfKQYNF75bCCj2nsJbu1ds0Lku2WCOVM6t1gNp0HD69DC/tSg
-         0EJnFT7eUqiTypEqWO8UTQRUOQPf66PwdVPHY6PrVKE4D12wyhchBTowC5SN2KtQtWgB
-         +jYQ==
-X-Gm-Message-State: AFq9FYJUS261VJCSzuVF4I/IHrOcxgHrlonQOdoLHhFOt1mJmFkeNcwn
-	GVyzwJT3FIApkYPAHZzI5u/nWKfh6/FGRGQYG3osktrc0Kilf4Ds4ZRgUVFRxWe99PYhFzns
-X-Gm-Gg: AYBFou3hOOc/KSUKQTXHswMbA8dFilPx655q4QIdmcBggmC5LdjnYwmH/vs2gX6Pfef
-	qzZtizxfPYFairsKpYZxksEz96Vq7MGTZJSQPydeH36Xueoell/hOFKDFh69iWOazMjBsgcX9te
-	e3vZp5RsR4hyek5m1O2/odCOzQ3cUPIEJipsgVdosoM3b53U9BPFr8zJOny4PrwVFy7saDpdn/d
-	nq/w+s3bhWIyP3iaA/jUWUDG3O7IOiUNv+5utrwJFj6MrhFJRYDm1cMa79Tl+2tfUfDECZR2Iv7
-	V516nDX2I4xbOS+dtBrYiTTw0uGyKh/hJ7cVFYkdmJ+606r7IbTHQnq7TZ2fZ/tw7Gin+m8k+o2
-	l7OmJtgeLZWFfVuQ3pFyoJZFdL16sXj60LaBOBWBKhdW6pwp6z2+mpbLaQhhikC9UUx34igGy3P
-	70IhlaslvxBAGuGn9ZajabLqangZ7uH/yqKQRWQXHeE+/HB0PCB9DRHCy5pZYVEtBdC5s8yIDkX
-	4/4PQDlfrgQykzL7mu101fLCc4AZ5XBiEklqLKxVd5wXC9e6ZufM9qL7yJnSEKXMksgNYZkrEQu
-	CVbX+btX5VJFs/iQGS+T1UY+FL9d/w5cYwIvoH6CrG1hSDfUTpws4PKzDSZ9irvnOo1zq5WTCOu
-	QYhuRkRaq4eLTIlMZjKZt3kpvYAcmfNSJz/rEHU6wrqJ/KKYgX8XOc4cGcQ==
-X-Received: by 2002:a05:600c:524c:b0:4a2:a9:ed56 with SMTP id 5b1f17b1804b1-4a9661ab67fmr35472715e9.8.1793179122652;
-        Wed, 28 Oct 2026 02:18:42 -0700 (PDT)
-Received: from localhost.localdomain ([169.150.218.10])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ebc3c5bsm28207490f8f.9.2026.10.28.02.18.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 02:18:42 -0700 (PDT)
-From: Edson <edsonwasswa54@gmail.com>
+        bh=Or3YYZzodosQeezLXHhi1FfVFrtqB+mc1G15FNZqRkk=;
+        b=15xrotry8onXKYkkZnB+R/CuFM3Iu4rFrYtYdiLp4OiOn9WB1nWss3Q+Ew1UUZ/481
+         o527GMDpihWQaH0SSYsq614zwr6aXVYgmBSTZv01RqXw/Ok2V+fU8KCnpIht7ZJ5u2d9
+         3Bhg45OlI0f0y2Um6T8Gmn4zC6fChzElKXRXt3mpaEtVMNWcVK3An1OhchNFEijq5dfT
+         GOKnz8oqmA3hrj0lwJMxEs6h/dLZll8RN9VbQbGlCjHEm+nu0IPZs8ydG7twDG1IU/rH
+         sCUWzT9UTpXd1sLnxVV6td5CdbOdfWdUVDBohhL+Cc6Buiaunu8hp0KSMVAy3yMkS6Co
+         YqmA==
+X-Gm-Message-State: AFq9FYJxOEYwg5/4tmoH/7mgvSOoEu42zYNiFjURTXf3Gqvpq2ifnPMj
+	QU6FolUcMqvmjyXvRXTg6VC0sldT9qmOBl4kYeUk2Dby+nqPrWCSXRg7qn0cYxfbb0o=
+X-Gm-Gg: AYBFou0Ueg71RitNW9v3PNog1aZ6LybSm27EzjCUFhL2ubYfLb6b61SX5tEfrhh/l9Z
+	fXZSyvNN7sRj6GlWRqxEWFKHCqvU2neVBjjXAFD99aCo92Ca6kAzAQNnsYFTKZrVeBy2x6hOyoJ
+	bT0V+1Tm0sCg35B2eJn94TADLQ8m/PKXFGwmatpfnpB99KUHsppwAgtv8Ya0oU4gpKsNCcLjQn/
+	YNfVeddHadvzrv4QIVSUQi6EomLv/4mOq7JAEzWalyApoLeWPkQfRVa4rxCy516S82vCDHikTf/
+	WqIAEVDUqsINvjqIV+LqxBSkeJl8YI7x1qzLopT1GyPCray71WkRPhpDiQGjuUgewFmUvgCnMGe
+	P5PTxfRDufJKiSwMmF6VDp9DWyAB8gfyOUUT2/RqwUjXBNQ2PX4hCmVVsKJ1/3eflJA4mFrMjvx
+	4ta7JZCOx7LFDRuf7TglbcxnSABHfDMOy2ww6Zs+64abiTmEH9dEy+QDelnArqIE8LBG2wL6hbU
+	tEY+kxzm40VnDJcnnVR/3KbKCBeOexbI+V6ONwGJxmg+aOVg32MAlYficoqpaFnF2LF/N3tJpqE
+	39b2c3+5Xqe4DS45xURpkUTNMjHQYz4PtXIxxkCLyqoHYzFUZCKruxN5LErH4fB6Jj1hn/WHWoK
+	HQu+AZMiMmdnX4uw2s57IMeRkD4pTExTfqUzAEKIyD5vrUBt0dpq6JW9aoJUuTWw4AQx88Fd2Qh
+	9pKrascXl0lptPF8uZ5m2r1QfXI7VAXApTAaYofYw02CR96NdaJw==
+X-Received: by 2002:aa7:d152:0:b0:6b4:21b3:a407 with SMTP id 4fb4d7f45d1cf-6b49cbec0d5mr784068a12.22.1793180126521;
+        Wed, 28 Oct 2026 02:35:26 -0700 (PDT)
+Received: from localhost.localdomain ([104.28.251.98])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b496435c7esm1213185a12.29.2026.10.28.02.35.15
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 28 Oct 2026 02:35:26 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Edson <edsonwasswa54@gmail.com>
-Subject: [PATCH] doc: document two-pass promisor remote fetch order
-Date: Wed, 28 Oct 2026 12:17:49 +0300
-Message-ID: <20261028091749.1948-1-edsonwasswa54@gmail.com>
-X-Mailer: git-send-email 2.46.0.windows.1
+Cc: christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [Outreachy PATCH] bundle-uri: use the passed repository for refs and tracing
+Date: Wed, 28 Oct 2026 10:34:55 +0100
+Message-ID: <20261028093455.76247-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,55 +99,58 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The "Using many promisor remotes" section in the partial-clone design
-documentation describes how promisor remotes are configured and the order
-in which they are tried. However, it does not mention that servers can
-advertise promisor remotes via the protocol v2 "promisor-remote"
-capability, and that such server-accepted remotes are tried before other
-configured promisor remotes.
+unbundle_from_file() receives r and unbundles the objects into
+it, but reads and writes the refs in the_repository.
+fetch_bundle_uri() also has r, but uses the_repository for its
+trace2 region.
 
-Document this two-pass fetch order: first try accepted remotes (those
-advertised by the server and accepted by the client), then try all
-configured promisor remotes.
+Use r for both.
 
-Also clarify the security model for server-advertised promisor remotes.
-Advertising a remote does not, by itself, make the client accept or trust
-it. By default, clients reject all server-advertised promisor remotes
-(the promisor.acceptFromServer default is "none"). A client only accepts
-an advertised remote when the user explicitly configures an acceptance
-policy via promisor.acceptFromServer or promisor.acceptFromServerUrl.
-This prevents servers from arbitrarily directing clients to fetch from
-untrusted repositories, addressing the concern that a server might inject
-a brand-new, untrusted promisor remote configuration.
-
-Reference the gitprotocol-v2 documentation for protocol details rather
-than duplicating the information.
-
-Signed-off-by: Edson <edsonwasswa54@gmail.com>
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 ---
- Documentation/technical/partial-clone.adoc | 9 +++++++++
- 1 file changed, 9 insertions(+)
+unbundle_from_file() still depends on the_repository through
+fetch_pack_fsck_objects(), which reads fetch.fsckObjects and
+transfer.fsckObjects from the_repository's config. I left that out.
 
-diff --git a/Documentation/technical/partial-clone.adoc b/Documentation/technical/partial-clone.adoc
-index 18718a3840..f80346729b 100644
---- a/Documentation/technical/partial-clone.adoc
-+++ b/Documentation/technical/partial-clone.adoc
-@@ -196,6 +196,15 @@ filtered `git-fetch` commands from the central server.
+ bundle-uri.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 2bb2eb99e4..0d612d92fe 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -448,9 +448,9 @@ static int unbundle_from_file(struct repository *r, const char *file)
+ 		strbuf_setlen(&bundle_ref, bundle_prefix_len);
+ 		strbuf_addstr(&bundle_ref, branch_name);
  
- When fetching objects, promisor remotes are tried one after the other
- until all the objects have been fetched.
-+When a server advertises promisor remotes via the protocol v2
-+"promisor-remote" capability and the client accepts them (see
-+linkgit:gitprotocol-v2[5]), those accepted remotes are tried first.
-+Note that clients only accept server-advertised promisor remotes when
-+explicitly configured to do so via the `promisor.acceptFromServer` or
-+`promisor.acceptFromServerUrl` options (see linkgit:git-config[1]),
-+which prevents arbitrary injection of untrusted remotes by servers.
-+After trying the accepted remotes, Git then tries the other configured
-+promisor remotes as described below.
+-		has_old = !refs_read_ref(get_main_ref_store(the_repository),
++		has_old = !refs_read_ref(get_main_ref_store(r),
+ 					 bundle_ref.buf, &old_oid);
+-		refs_update_ref(get_main_ref_store(the_repository),
++		refs_update_ref(get_main_ref_store(r),
+ 				"fetched bundle", bundle_ref.buf, oid,
+ 				has_old ? &old_oid : NULL,
+ 				0, UPDATE_REFS_MSG_ON_ERR);
+@@ -859,7 +859,7 @@ int fetch_bundle_uri(struct repository *r, const char *uri,
+ 		.id = xstrdup(""),
+ 	};
  
- Remotes that are considered "promisor" remotes are those specified by
- the following configuration variables:
+-	trace2_region_enter("fetch", "fetch-bundle-uri", the_repository);
++	trace2_region_enter("fetch", "fetch-bundle-uri", r);
+ 
+ 	init_bundle_list(&list);
+ 
+@@ -886,7 +886,7 @@ int fetch_bundle_uri(struct repository *r, const char *uri,
+ 	for_all_bundles_in_list(&list, unlink_bundle, NULL);
+ 	clear_bundle_list(&list);
+ 	clear_remote_bundle_info(&bundle, NULL);
+-	trace2_region_leave("fetch", "fetch-bundle-uri", the_repository);
++	trace2_region_leave("fetch", "fetch-bundle-uri", r);
+ 	return result;
+ }
+ 
+
+base-commit: 37b3475fb530c14109211faca33716a173db61ed
 -- 
-2.46.0.windows.1
+2.56.0
 
