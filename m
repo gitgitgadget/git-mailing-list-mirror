@@ -1,120 +1,127 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793171015;
-	b=ynJmad4FzPPQc5RLNfsaJrkvGI5W9+m64VU4Lv9d6ICFNSwWDWeLrwzfPZE+ET5T4+og
-	 0oWrIy7XZpxmwphHwxnm5llWuikvsBgkNJnroS12Z6nkx9ktMxDIyL7x/33++6/yyIfsl
-	 IYbOJMsMLiT/1nQzIr4TBkkXKFCGlvhCHj3v+IgPi1ObauT4H2dKggMXEFrzkIeSbjAes
-	 SwNhReKGiTtp0qrjDkXymYeiz6lbHrm4SLmYBGiaE4w780gf4sRXzq5GtduYcxzUUD/Ah
-	 K/WA/q+JyiHVU7U5JqZoow0Ltws+LR3GRPutlCjwayXp0s58xMymr2M/OKEsGD1eCAQ==
+	t=1793171312;
+	b=Gd57kfUoLvC6lU+Eklvocvm26kU5yr7cX7jblAYpf3FVbHqExwqg0nJlqPsCMLRXF6aX
+	 3Hrnrl4x+6hQ064sBP2vKn/Onjoz2ek5T4Kp+suYluuJGhyoHFiEq6OByWgOZn2lqa1y6
+	 AWW5h2a+UpGRlVynNx0CLn/s50y940LWDS4tN1Noww07+/2S7QgqVConeOYNcUUGFIMzU
+	 DjeB/wJCZD3XwyfmNRISe3zM//5vYkfZGTvUSIVNmDaPIa/SMQ5pahFfs5L6h7IGGQKVo
+	 KevjaQY4lZC1MUr/GRxQVjWyS604+d6psH4UA4G/pl1hzqL276jIjp2YMogKezYoLZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793171015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793171312;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=4EF1irBUNl8IYNwncVzn7IGIqbwwY7zs7jA/8EGy65o=;
-	b=2T8jHGytjnq799LH6BhXTV1LelvaLVuxLYINZ+FQMUscHljhOop9+z4dVwggWetjp0hd
-	 8lzxd35u5cWc+hyiSOhmMBfgxzcwkXQkp1Rh4n65yx5A/RZT4ppD16304iOZ5D4xFWkcg
-	 Cz/m5dEi38nl+S0MjX+6Mns+UJiZ1bE5Y1h+Uwi25F4yWaRWV7K3MnXbBTj4wHXvGEKEE
-	 6+6Ka+vIu/5GUhVz3RVFcDYhxEufOsSvZLgZ/TZg6rtfgMmXmfmwnFRBzXel8tOxdzeJM
-	 6x0Eo3wo+e2hBrEQsdVg2HRXXi00t+6SuOZdEFZp6/rubtPaDx2lzQMYspW3TuNziow==
+	 MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=wNcTbluXLB6u8XmjfMqA+Gmyeq4IwCGAcGG1PuibCuQ=;
+	b=i4p4uXgjfs0kQvgQQWn9LaLCGVAxbS/L271QVGW4vCFfzcu6gc9oCmYdn7Ls9OgkaEwi
+	 mP8pxnCH+EBGvPXz1IoUdLxWS5TXX4fxFCj/w8OJ1gklOvTE57z1EjaDS2johOPI8V+P/
+	 lpU5Lff9voglwNZpVb/ZVz6pNgaW/ik0qhWAIpr62TvoaTbm52UjH8031HppbAFM4pKnr
+	 O1xYlnF2LbvlfO25PPXJICt83WC+4ZhPTqlHnQAegDZF1jJFVYPnPRjcIA2M7r/S3Ha5l
+	 dIv0hiFIXcrkEXvx5nhFvdu75zPUNBNcyuMYebdvA2aMYI91nT6ieWbw7ef9n9iCkSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=EClypZwX;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JspDZkuD;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=lyVVpSOa;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=MitsyerP;
 	arc=none smtp.remote-ip=202.12.124.151
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A84606A31A
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:03:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F1A84606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5918B606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:08:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5918B606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=EClypZwX;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JspDZkuD
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 193AD1D00211
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 03:03:33 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 28 Oct 2026 03:03:33 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=lyVVpSOa;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=MitsyerP
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 838111D001F0
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 03:08:31 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Wed, 28 Oct 2026 03:08:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793171012; x=1793257412; bh=4EF1irBUNl
-	8IYNwncVzn7IGIqbwwY7zs7jA/8EGy65o=; b=EClypZwXFTxAV/2+emYNFhTBHR
-	KeAfh1gp/2dDNAKTgXtaRKoML66Q1yoakNGy/UQrNb4RvwCs4JkzWe58FNRrBHuj
-	5514Fx0UzmToDV8i3M1345ihx8pUuTFIBR+nH+cl6pUnqS8XSfCOQaNRQfJoFCtS
-	pukdED3cirkl8dqkYsnCtlKM8gsHnHt9nVIpKvWJlSB3PSYjIwj00ql1Vm4hEElG
-	7tL7H58nTig7o6mCEiPuYo2ux4SYZIFfqtMO4ypoAnv+4QDABAbFLHPYxMvJecSm
-	mAjEeUlyFkg0kpmIVfwzs8zufkpSUCp6iIw4/oVXibfiw10n5NTzF1PCk75A==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793171310;
+	 x=1793257710; bh=wNcTbluXLB6u8XmjfMqA+Gmyeq4IwCGAcGG1PuibCuQ=; b=
+	lyVVpSOanrfi4JkidPgkXcYPcdtMpV07KWuVf1lPI8rT8ENQI89KY5eC/t0oSYI7
+	G2nwXltxEidaSiUu2zWbSorZaOTndFWJa4c9yzrbW/c1VXuM1wB1rve9EWbZlQy8
+	dQV7OKgRKECVLSERAXw+cPksOCghXwrD2yKAbrfDOsH9uPpY82AJnIpKqsRX3jTp
+	l4dpkgnNE9ch1AbgTNW4O2l6SQn95otiMEoa0PULa0lZbXhCPXs5cNfcXw9EjiSQ
+	ZrVFAjAaOBML2cFgk37Rfd9jiHALc0jHn7xJtNQeUadfEvSHGHGVIxIVhY9f/fgX
+	XIKCNUpJUM8fJfW95M7b3Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793171012; x=1793257412; bh=4EF1irBUNl8IYNwncVzn7IGIqbwwY7zs7jA
-	/8EGy65o=; b=JspDZkuDIkvB54G7CmoNe6UZidDRtDbZw9g7aqoXUoLCJSA+t45
-	1h/m5oMZmSZWZ1QHw9Bu+6SMpBuobRUf5CuUQpB2l3Gdt5Pk2q1sIx4VVZYmBKW1
-	hYJitYcE0lUINGnjAOasy+gAHLItVbJKcosURTuB7pBBuNjfCmNCKSzo5CU94szQ
-	eXZgaO+1FqHVZEyxczqoV1N8spq/Ui1SLRz5nm/jXqWTa3GDF0zo7sVrEJ3iw6pL
-	vZT4ekRhk8qCGwsshUD9yUH0uBZblE9TNwLMkPdWKkZeh/Fn7K3sKnj3IuXV/pFx
-	Eo4ZhtcBOpe3xkzn44RoFJpfWCkIvwnv/kA==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793171310; x=
+	1793257710; bh=wNcTbluXLB6u8XmjfMqA+Gmyeq4IwCGAcGG1PuibCuQ=; b=M
+	itsyerPRJE09rtb0FA1ujXAdd3RiotYj9ze0FTp0H9Hf4jaIyZ+WtqdKIIa/5gP/
+	sk5n9IMsW4GLuHoC7VatTCECDOkTlxN6qXefz1D6fDJXBlJLRPwKRDtwM1HhyZGt
+	+Y62pZotaEJiRF2t28xc1+HoJmjvT35is2HbiSmgyyJuH4zZNhoyubkbMKIhXVcA
+	wmNf0Ea/6yLyTdX22BWojT8WeHLP+3A1oLQHMWIeYbAgrhlLF/0BDBWQl1wccezI
+	S+elSTZT7SFqnT7xkuQwLi7o82UHy6PKVSKxb4FFICO7Lli+3+Zast3tQqrFBIV9
+	guh/Gp5EmMa8AFyGGja6A==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793171012; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793171310; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:f3WVESaGao96u4MfUr4NZPKHpkrSA9EfaTmJkHH2KOYdx3+
-	8SUtfR8DI5GE+HXcRRsH78/ZrPI2cz1/TpthFhYlUWA02oyiJVwECugEXzmN148n
-	QIRJSnwPL+UvaVo4hvhAzqebi/eogQ2XZ7gShgqjpKN6fE/qaUJrBwjRWfDGKETA
-	iRrZ58x4hsQCjU6UZ27GEmv79iJ+uPr/aqnnv/T19LEx0CszS8BE8yKHsR4UnEfJ
-	CuU1kvS2hSivevJa8nVe7+B5YJwiqnDpnPAsYKg73SS2aPyHAc5YBBkbPxnhhJKG
-	ltBjCgmCv+0RmusbgD2n0N7jL0ZWkLYhgfNVAwQ==;
+	s=fm2:rsa-sha256:USVvDcxHl41Y3HdgRuSzUE3VA5zi6FgGGFfzCrHMjSHQ9SJ
+	/gN45Lf75o2r8vWEHW4+4IT2q2uDAxLZlkQAV6eqhheXNOIPZW4+b+eF6rZgCX/h
+	UlqLQYvnef/x+KF6vUrbRmxuh3Frah8i49cuzy73BIsHN8g1wkeVyVDyMFe4MhfN
+	jO4L3nnKVN7F6BJnL9dcGIHwN8R62RgyHUOGFt2lOG7peHVb1MapW0yeYmtlMVYu
+	bCTPQCVlNK4cXCCl94czG9e/KOXhzv2ik6vRzOwpAnMpx+Wm7bceXkf+U2tqEpI3
+	IUa1OFryKgqNk2H0SJKFcWykaW3kc64O9XRKsaQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:B1iP6MJlkNoVI8zmuyUWyFhzsLXRBVwSLklTQnLhvEk=:y9+TREIalSdjWfswCm0cqApuKS/zplQ9/AA6U4F8NLg=;
-X-ME-Sender: <xms:RJ7hang11gxmxRvnu9oZe2_mD7XSlyQFrtjeH-l5S5YW4omt1UtZGQ>
-    <xme:RJ7haumhyLMXlgIoGRYyan5cpISAbir4Qo5ie67Q-E5wBDSqweduNpFnMa5xHYJ2f
-    F59-w5Z4LQbEg1svBD9QKK9w1oXuTc83Pfoh0LzJXpihIYGokkC8Q>
-X-ME-Received: <xmr:RJ7hajpU0Pesi3M1c6iDSvtsnOevo9z7W0Q4MpoY2SVP0Py_HRAfsA>
-X-ME-Proxy-Cause: dmFkZTFsF4+ovJrKbKbuUqhgmTf5+zdTYY4nMtMPjvQJw/lCA7eqiTM3PwJPL9QemTAzg1
-    1UozBOn6i+NBhMINZ4YhFdgEM5At6rs4Gch68pu3nRcs/pOLxN4xt7rG/s/xZCK9P4KtLU
-    zuqTd44ER7nQwx+Y4FtNerwMIT3qukTCvuyxOUlMGWdp+6f4jU0izKAJNyL0vXlCUqOpMT
-    rP58Ln4NlZp/SafBARHgq54PeEM4yfYI5CbSenurGrnd3eBv7vB0mt5yLSLkbxXgCTuGHF
-    TQB2cvM2jFqHwuipbKpkOxwGxJ3VySZyVCkW9Y9de/4B+45Z7wTEHHxl1bD5MMLON1COSa
-    nFmoRYpyK5DcFJQ9i1B4mfqvTT0lzqNHxfna+zW7odJkNNGusgfsLA2fQwk5JEtVtIyLzk
-    jRZxC8yPG/Ju7jPG8GHoAqUVy4o6SdUkM1rFIHd31vS2um2omd0l8/IkFTSOPM9f+Gfn6e
-    AYurL9cY31vVzKqyZIaPlaF2t+YJ2s05F3v6c2jT3py0rElemfr0iHdZme2CfnwCME4ycG
-    sdUnozwLKZQoa6ZvBlonzCVPVNauMwEGfyGT+JuRh1sGhjk7eSPpLq6Ou56Mz1wG3tm0uG
-    xbrLuJZypp1Z508QVJWk+53TGyIm5StyWebQFk/0bm22IxBl1oxmuK5G/8aw
-X-ME-Proxy: <xmx:RJ7hanEuGU5h1XNrpeVT1hh5ox5rhdZe2tTxThhDrbY87WRaJxYE7w>
-    <xmx:RJ7havyZNP1a4UdoSh2eTMfqvw124Xty8sDa643OXxR95PHazmg2FQ>
-    <xmx:RJ7hasoL-RVPhswcG_9WSGwTrPm1qOxMd7gy0Bn-U8n463AEIqkGDA>
-    <xmx:RJ7haphnBkG7W_br2FAdpAnKKfA0qwQdt-lYAhbjT9HR5Z0aIy8U_Q>
-    <xmx:RJ7haohCQHgrXShrUKzdC9eM11S9yKh-pVBgv3oFpoYtIDq9weVNarN_>
+	action=mi-m=1; hc=13;
+	hn=cc,content-disposition,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:3KUkKLcVv45GPiKtCbLnnWPvZf4kQqQps0owZZ8Gh4s=:Dp+FjsH9Dq7wnZGBnjJnSpINxkuc4rR9QzkR/doXYGY=;
+X-ME-Sender: <xms:bp_hamFP8xYDV7WzgVv0MFmyOz0ewsXl0nnPM4bZWcy-el0KlAVX9w>
+    <xme:bp_hatWR6YJuBUkADIbs2zgYYuiBCuONo1z8Pyw4PUW4o-i1_RuxeqrNNp8BsglvA
+    QI8Yp5axrKIrdpM9vM_D9Lvm66XDF-3RDHXM8IhP3ytX3xpA_37tVc>
+X-ME-Received: <xmr:bp_hatxrHfG9CYG-l7WuID3nq6qCluEF-ECht2iFZqZs566bEMIMGg>
+X-ME-Proxy-Cause: dmFkZTEsGTMUUwirQ7RlccaRgWlNA5+9pSHR/sKrIB52rvU/LnybnLzL1Gp6Im1jSu8mbA
+    1kgILD1uHcQiNzd6/wYvXT8eobvC9nGUzp5Jssp004RiZXSL7KfPP92yqzVlc6rr1QtDLM
+    KL5s3ERcPKdzXvCdRb/2CSaPipUT2wl435+lkYzQBpMErjpbmXM0kZqyiP0YRjH34mTLRc
+    o16a8HffDTwm4o09UIh5L32m2P6yzM2zMRZIUzM7ZtGZ4wEGCj+gfFVTMY3LUexjJY2bum
+    XV50MNBaTxQLVGUG9X4SlmQeByRMQCPqh3RTXlslvvAd7rVvFHPUI1PJDep6mOxQ7c0yRq
+    uJqYAeWARvS0cYH5Z12SGCmVRo/ReHOrXWy7bBIXdBJUWoeV1tdFiFMC1lvXtXMx4nNbzy
+    mgDdTjvSDztdpds6BDiGtFLJIk7pOrjs8D0zxCvPofMw6py/V0bieJdM66V9W0IlsanSeR
+    XclkdcZOFXG1UReAAVF8BdVzFUS3MJ7Wzm1zF9Yh4kaFmKVvHafh3xM14vSXGsdrWQuvqZ
+    /ZqJ3s5yy/qKuwZX7S2WLC0iuL6NMHkoRTYEsNdHlnqpssyZFnchGdCskzX5qa21Kg822q
+    5/99Tl3cFeZrs91K8FMOh9oY7/99RE28l4+I9RyiGce0gS7FJ5ngLx1i42RQ
+X-ME-Proxy: <xmx:bp_harPdGHdrOXpbAfyFoOT_ZvwKIj3Gzdwaez3vT3j-X7t5abeVSg>
+    <xmx:bp_hau60j5GpFf1L2aAgaLMKHBxPxTaYcscO5MTNSYKo8sV2kS3b7g>
+    <xmx:bp_hasPIvePIZIJ9_KgyUB8MWs007gbFsgstNdd9lSqVBFf2G_158w>
+    <xmx:bp_haslfhoOZRhB7HAQYnX9aVO4ka7iecYzK3Mij3KPlqUBahKlCOQ>
+    <xmx:bp_havlz7P898LkvruCKHi3mCqh-ZcWJN-vlnqmqNaUX_s9r9mMJbqrU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 03:03:31 -0400 (EDT)
+ 28 Oct 2026 03:08:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5ac39623 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 28 Oct 2026 07:03:29 +0000 (UTC)
-Date: Wed, 28 Oct 2026 08:03:26 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 0dfc0c5d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 28 Oct 2026 07:08:28 +0000 (UTC)
+Date: Wed, 28 Oct 2026 08:08:26 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Matt Hunter <m@lfurio.us>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] init: show absolute path of (re)initialized repository
-Message-ID: <auGePs3hkgJ85JlV@pks.im>
-References: <20261020053932.1274210-1-m@lfurio.us>
- <20261028051704.2759358-1-m@lfurio.us>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 5/6] odb/source-files: avoid stat'ing already-known
+ alternates
+Message-ID: <auGfaigL7dXwnLAK@pks.im>
+References: <20261023-pks-odb-files-reload-alternates-v2-0-30559d7ff43b@pks.im>
+ <20261023-pks-odb-files-reload-alternates-v2-5-30559d7ff43b@pks.im>
+ <CAP8UFD1-Fh-fiGpFiVtBk09JygbD0P5fOYHgXjvk1X+YUCVyPQ@mail.gmail.com>
+ <auCjz2OeO3GiRnDk@pks.im>
+ <CAP8UFD0B_ra=GG2GvGX0Sou14gmJFz-PTS-cnCPm0bS=r7E-sA@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,15 +131,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261028051704.2759358-1-m@lfurio.us>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD0B_ra=GG2GvGX0Sou14gmJFz-PTS-cnCPm0bS=r7E-sA@mail.gmail.com>
 
-On Wed, Oct 28, 2026 at 01:16:37AM -0400, Matt Hunter wrote:
->  Changes in v3:
->     - expand test to cover the full output of the init command
->     - Link to v2: https://patch.msgid.link/20261022120749.3567828-1-m@lfurio.us
+On Tue, Oct 27, 2026 at 03:31:43PM +0100, Christian Couder wrote:
+> On Tue, Oct 27, 2026 at 2:14 PM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > On Tue, Oct 27, 2026 at 01:36:35PM +0100, Christian Couder wrote:
+> 
+> > > Does avoiding the syscall means not printing the "object directory %s
+> > > does not exist" error then, when we know the alternates but its
+> > > directory was removed?
+> >
+> > It depends. When trying to add an alternate that doesn't exist we'll
+> > continue to print this error. But when such an alternate disappears
+> > after we have already added it to the object database then we indeed
+> > won't print this error anymore.
+> >
+> > I don't think this really is a huge issue by itself, as it feels
+> > sufficiently niche to not really matter, and the end result itself
+> > wouldn't change. But let me know in case you disagree.
+> 
+> I don't disagree, but maybe the change deserves to be mentioned in the
+> commit message.
 
-Thanks, I'm happy with this version.
+Makes sense, will do.
 
 Patrick
