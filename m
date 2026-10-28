@@ -1,120 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793222941;
-	b=ff+jALJtDcDlE0JIpLDCe/9NkYTc03xfsOfgSu2/H+DKkE6ZYA9L8vcP1QqBeK3X++95
-	 9Me/Tmry8SnvaxaCqEYJlGCL3ijsRqF2E/kiBp2cO//xvu/f5OxaekVBwVso9c4q+AAWY
-	 wvmuGJPeJaNO3aFqYHh55dSryaKEQsL3x3ETNhKo1w+MweUc5Hry5BmgmGdsRbBAXgZ8k
-	 xrejUjffs3Y6WyrKZv7iD3/3jYcGT/OdiQU0wJ+hunVu+xoUOO8VoljMVG8ttZvjtYJ2K
-	 3U0ed0G3q96UF7qQuNqgao/oB2tpBmsB99fCrlQZQiXDTqrL0Q3dbEBupb+q79vq3aw==
+	t=1793224328;
+	b=UYwIex8QJabey6acFWBhfhMi2FfT+FcSp/WVykwSwiPqB9n8JLUOrqC80ThDB6sz3ZyW
+	 yWtxtcalFcABt/1a0f/t+HiYrEgR7IHnH1Wd3QCQazL7jOvoDnnuj8WeDElOeOhkilO3P
+	 hk5Kepm5c9c9wYsW5JvLGotgc3nFoW18SkXqEDzhIrJW7d3eWRK7v5QyiYyVBYCbobIrU
+	 28e0iypsBaUVN5vC/c/OoT9L23UQ6vT9GDUXxkvwUcia1vwrM07+firqzgu0EsT8l7x+e
+	 tTa7ebJirzMIP8XoKhvShsgN+SibzkuNvZvZ1Ix+So2pWi81/GqJ/DxQeu/oj5DzwdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793222941;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=wvN9LtZF1MG5+AaP2Q7rjd5r8K+mN261MFW1YPgkdho=;
-	b=o+N4r7QExV2ik5z5zDPKjzhnWlaPjFYUNH3VICvQg8K7wjwnFH3yiHOUWGfJpgUs63is
-	 TA1ttcgKX7PRrmCSkduppLrZo8euOj8hQEhS14UlU0VgKGrRUh9dBznrIldhApr8Fq0EY
-	 pDiaL94mIw6d0QV3XiPV7sNWRAx49Jf1GOOGEOGSTO8DBLy0iStrDF+l25My2ZdUQnlBU
-	 FmvQJ/A7enU477G+cueoevfBAnY1sw0ee3Dv4j5//nZDDTyNJx/U/K2yvEwMlTZKdpdv5
-	 t5OCEr9POyhhJmZszM36APPOhugbMdL010ji7ZZ8CzrFTsFQ+kiW0EZkSu1S0KehPOw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793224328;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=sVchRUDK0bqOSRYondupHdWADCTtDVq0IZSl/YtQ2Ko=;
+	b=g1TKN7FU/SOHOETgCN9VN+hRsbOiNWDkp8Th+PJ6sI2+6AwIR46C8dabHGXYE6+OQv4J
+	 QCtn6j0rWQQfz7IvowHs58j/d++55UGWs5RMK+6JvKb0s1R4KQy2ksuF0hcV+ajcfThMc
+	 2uRpLHWqGBCJGdRN3vBzmH6Ko9HcwsVT9IxxgRRRs+dFYIqJk2HCicjzTC6tb95Mc+4dV
+	 EcNQjGEn3HTB7OYYCkIFvUrNT9KvGn2bV+cCkHLTJPm/NITbLSWlwMq7vNRvK8kMShnBU
+	 8RKg/SNYerwPZPaeP37zvJ1RCHWyEn+Hst5jjfwx3MBVGqaIlqoMYGJ0K6CR3QEwpEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=dgYMga3E;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=KQoL1kb8;
-	arc=none smtp.remote-ip=103.168.172.152
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Dk3TXV5g;
+	arc=none smtp.remote-ip=209.85.218.52
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D30606A31A
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 21:29:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76D30606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C574B606A322
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 21:52:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C574B606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=dgYMga3E;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=KQoL1kb8
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 840EE1400169
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 17:29:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 28 Oct 2026 17:29:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793222940; x=1793309340; bh=wvN9LtZF1M
-	G5+AaP2Q7rjd5r8K+mN261MFW1YPgkdho=; b=dgYMga3EFr/aezd9l4FQxez+P9
-	5vtKIFPs3fWln1aqiy3Z/Q2XPJJ4cE9UBlAXo7vJDggOHTslkSTNgRRzZlX+ASTQ
-	a1GUI5MqsUJYcpOYa55v1ATj1WXe4iExzflC2t1IsEjddBefarNJkcj+x98NsA6Z
-	RwFNbY2/gof1F5c1yqQR+RbTC9s6U5Aa6dZPS+Rbd2jWmcvT9hcGbxODXOuVhtXG
-	ODwjgItXvhvrZXkr3RDsoKTlF5BS5YZlz6yrhfal4S4AU5hm6QQs5GOE25i3kEpG
-	oelCtF8mEcMmVsZiwNWZ8xcyh/5YOKPUY8qqYeVqrATcCCwo9ExcCPHW8j0A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793222940; x=1793309340; bh=wvN9LtZF1MG5+AaP2Q7rjd5r8K+mN261MFW
-	1YPgkdho=; b=KQoL1kb8cgYcEkitnJD3xovG+9DSmJL7cw7eFcO92drDwH/DoJ5
-	QD1IzBlVx2S5O4KkUi9h3ZB+yP+vVqwH6TQmPK1Uyq+C5NcUqC0YFqsE/FbdAXqu
-	cqGRoqInURN5pVKDEYCsMhHhzbIAYgw4RR9Fhxyefnl3g21+RqsA402alP/Rn27F
-	rIfZXhk8wXqVdBTu/uw47Oxh+3kDEXsCLBbCNKM1wzOvtV3gJsj9aiUrONWpgcjj
-	W3AlfkPZsQdWn+5LS8El0Y9HL+MMc//QT251WybrJefV7joHwMfwD8c/tFaOe7TU
-	+urzrwLQoxSZjoczlypuzE42QTSiXwx7/Bw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793222940; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:iI9xie3E3KkIwfbWRNUxrQj1L36mML34zjSDlgO2W+7fdSe
-	XMDpjUFqsgkoCRQPBzt2EEItgH2idMk4GoNKNDyHziAyqXCzxBz0I8Osl4m8P6qP
-	4Ut/n0JmLHhKR0CtYA86TN+VRehuCNB3LunuJJof2L96vzcKUc/pcd6DJTAXR2w9
-	FTrzN/nC2xjg/fpxGgT4ESkgyg89Zxr5gZ4TNricfsdSxcaAag465wwlJeyH6zRk
-	/26YBKqZNhQzCVPYq7i7nUD3IqLfSj5Ve8uJ0CcCKRFOlFtuDOKPDxgjSdsMEze2
-	tNqw0Uxp4IKhaKr7F71nsMb6wAOGntCuaxfq4OQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:kDJy2pGNfe52R06DG9LWeiwq3+qRazdewkg/a2w1cF4=:ixQSI4I+q4bdL2wqmvLMUOL9Efz9mqam8++VPNkOytY=;
-X-ME-Sender: <xms:HGniaouTeFcjICccp5JcnjJuFc8iSY2JkTFrd6z0AWFVPcja214czw>
-    <xme:HGnias6r29J_YjIaxQ2tlq4XzI4CyXhpV324XsX47K151lEnSK0HI4Vhn7gzQ2p7a
-    cp8tPMcF2P-1QKI7va-1Q1CgnUex1RceQ8p1JkDqzYng9nc5qJFymI>
-X-ME-Received: <xmr:HGniahJDSV7W_PlvXYJx--Jj2hLdRpuxipVc3hBEw0gilZZ5XWMtOAVb7UyE3LW8OMs-INNbN3odazAs_zmXxuwRKBNlnzAHpOqv>
-X-ME-Proxy-Cause: dmFkZTEC8YD1nCJOAQ5oAPqOVXX8uuzPQhR+Ih7M9cjOr4YM0ufBHVUXD0VG100v/QaDHY
-    j+TB2PWyNq5nQpG/yARHLc2SuYzuScdMRkHNH5rfr++1SrjKMbMDNQsKRYI+zACxP95oZP
-    RQXxw2Yb82W8GTznT5Be+0k8de7Entm5RvhPP25GKgX+umLuV94mqpzkHPFOwOrZFk2XBl
-    R3GCZxYDwq9e7Pxf42oSeI7MSymNyctm8+9G/ptoV/BhxqhWGgi/kXlh3qLWVXGln5T46J
-    MTPDkxm3ALu5s5AlXSpPmWGTpUz0L+19xWX1Y2XrgaG89SDAeZAC9kbvBCqeZ46W+dtoqq
-    x9834onbfsNT1tVgxx7ABSPum3A/C3XF5gQiph1CCh2iFuhU7cDlsEQwX63roPrSYdmtgE
-    EJJdXSKO/ZdXIZn0oHJ3MlmXLNj23KQFdYUu+hVYtEeqRGHaDpvKiGsM4Oy6HpH2Ek4lMd
-    Hr3ajXej/y+6RO/rVokYPEENiToQNI/xAiaDmlLbtF82N9pIhCBxUU9gtqdU4kTGkQ7I8b
-    fNYx3DSWUb2M5F+YRttSPKf/iJVvSyZ/OeQBeQ6FS0DKFD17WK4ewWItvMt44Ve6ph6hYZ
-    x/8jp8f51o4KVICNkrIFZFlD06PTbM4Ucg1iqvABOlQvaMpM1hWhjcsRvHPQ
-X-ME-Proxy: <xmx:HGniak4-1lCZs2770NACr8ixxvgc_C2-z8LcFOcR5isqNRZF4CO9wQ>
-    <xmx:HGniaswWfGUQlCu2hs5xT5usk-PM8b9oFJwvBr1cq7QkgUi6cvhebw>
-    <xmx:HGniagZ-8qgVW3OFOYmLuacaPtPQf7Ke-4bgSa6LyYGZTB5tCLZ3uw>
-    <xmx:HGniamQW1JtljISKqqi-xhSKakDRWsExzvpyBoIRgsqQFr2Eh075MA>
-    <xmx:HGniatAYD6jNRN8nUzRObPi-QxGq5T8qsymfoNq0CO86IWiA9XKV7LU4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 17:28:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/7] builtin/commit-graph: some small cleanups
-In-Reply-To: <xmqqv76l7e48.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	28 Oct 2026 13:40:39 -0700")
-References: <20261028-pks-commit-graph-cleanups-v1-0-c549344c363f@pks.im>
-	<xmqqv76l7e48.fsf@gitster.g>
-Date: Wed, 28 Oct 2026 14:28:58 -0700
-Message-ID: <xmqq8q3h7bvp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Dk3TXV5g
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c414e5d282eso195652966b.1
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:52:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793224326; x=1793829126; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=sVchRUDK0bqOSRYondupHdWADCTtDVq0IZSl/YtQ2Ko=;
+        b=Dk3TXV5gH7of+fHnyGb0wUYMWDz3Lp/fKIMJz/CCNa/LiaPH0XuMlwMdv1AJA3mQ+I
+         U3oE2m79imRAhGCyuouM0tPG8JuNw4eRfFG8JbOhrRP+opjvIaaOmYKkIUkSYqdQ4x1t
+         81qkkvTEa6cqavUNTV9OLcVbWlq6P1wdwf2XM9K1eMPhzuf/Ub6qJ/f9k+2xiIYcqS3S
+         mw/YX/JVXGZgyJzjWbWtZ8ELus5eXkcmXNFZZ3AnrstFtI3unRth8/r6JjyJYdok+gna
+         9H69oVDChzk9qMQrDv9bNNv4NrynpYObOy9jmrRVGQ9LiyR1GWx5n+6gqqyZVLTF/UVf
+         aM6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793224326; x=1793829126;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=sVchRUDK0bqOSRYondupHdWADCTtDVq0IZSl/YtQ2Ko=;
+        b=nEtXF91wItDtA/7eWSWJiSnGoE/WG1CrUL+zbV7qvDN5hFvIzEDfuP4Ry3fgpWMJuq
+         NbxZ79c2DI7pg9felT33rJlPMT/qiNTqB0jbE4grY3+CPI7KeTWs8ZDx1ZzfD2rc/wFw
+         feeQ9wJIgS6HEOnrYmyo79HIbfUfUdifv6yLLOcwmumx4I8633ucDhxkPW2KQ77Vpgmn
+         oZ03JKXbTZv2UeiB2vvtLbUAaAE3dQ8tlfELBbNdd/clkCSzy8lCah4zUgBqpizPPC0t
+         0njn0BNQc9SrD1tMSI6HTTPgh3Vj6/1JTLBBUwPqRlw72UbOqopxlWcURFV21OFJVtic
+         h64A==
+X-Gm-Message-State: AFq9FYKPd+1s9uwMWBDdJOK78c7sDIwtKxspJl3mhIYZTaGjcgifFVvC
+	2yt1V3s3wG/nGba4WNuhxVg60BTKf1d6mYs5Djm+K5Dx3kFDIWzAPf0uhJTNtgm2bj4=
+X-Gm-Gg: AYBFou3l3YmrOw0IUnWTfPYnOUQCBDgQKfxeLEIkDKGhdj0GGnkSw2eN4BGoTq1YuQS
+	NwrzvY4X0gZcp6gP7t0eSnBaq7ulKYaLWqqp00ky2ij86muDJegnxYo4WQHdexAgxV40rEccocK
+	XkwVGXIVvGYCvC0KiMUBpb9smxuORqS9qzo190zkRp82uhTaWzdofc6C6870d0Mb8VYiR9ChsNj
+	o9Tf74gJnJZLxOi/1pMmXKtHHQr7P75rygOz7m5O78g0EL1MhNY3wthfNYw2dzsgtt3WQxvDVAm
+	Hi61SgiP3e1IrNMp7GgWfdsT52DldYqmQAfFsS/ZeYVLN3GCtrAHIAC5tZnx9u40Sd6A2JC+U/W
+	yime2P8e+Hlw6cjg6hwXETghUSQgZvTsD2XFg3pEUkcKkgv0uLFRI/5vrGmEmbLwWi8Ipm3QeiK
+	7hav+84XzkJ2knrqzZn0LifjtbmWiOc9SdC6rOC5JMVF4AZrSY8Bz4VNTi38aTEq202joGMdlB6
+	zBoYQSKGAC0CBqhxsnp17jpjiTheHfqtwYaQjRrEo65TnSsZ8sJ2SPWs9gDtoipVQZPyfupON6b
+	PMwcOrltW9jhvZqyyx7BZZEX9tdFE1Q/kmXeIzBnaeNkHjb5vtKupgkijBx+OVxFcroLhroe4xu
+	AxzbDx1iPX22jIJl9NrU1Q5+TTKGOwgcQFX08F6ldFG458hkZeBxtIaSGkZlIUa5Wx9llKuQh8z
+	y8dXq4IK+wqZnE3eR5Wy9R5wL2v0cTmg==
+X-Received: by 2002:a17:906:9f86:b0:c40:80eb:c541 with SMTP id a640c23a62f3a-c49bdd7e2admr323891166b.2.1793224326037;
+        Wed, 28 Oct 2026 14:52:06 -0700 (PDT)
+Received: from localhost.localdomain ([104.28.251.99])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c46bd350a61sm654799366b.12.2026.10.28.14.51.54
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 28 Oct 2026 14:52:05 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [Outreachy PATCH] range-diff: use the repository from the diff options
+Date: Wed, 28 Oct 2026 22:51:37 +0100
+Message-ID: <20261028215137.15262-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,24 +97,82 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+output_pair_header() and patch_diff() already receive the diff
+options, but use the_repository and the_hash_algo. Use the
+repository from diffopt instead, and pass only the hash algorithm
+to get_filespec(), as that is all it needs.
 
-> I read the first 4 steps and they all looked sensible.  May come
-> back to the remainder later this week if nobody beats me to it.
->
-> Thanks.
+read_patches(), output() and is_range_diff_range() still use
+the_repository, so USE_THE_REPOSITORY_VARIABLE stays.
 
-As to the rest, quite honestly, [6/7] and [7/7] were "Meh", even
-though I do not think they hurt [*].
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+ range-diff.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-All the rest looked good to me.
+diff --git a/range-diff.c b/range-diff.c
+index 8e2dd2eb19..3f56a4f71a 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -418,7 +418,7 @@ static void output_pair_header(struct diff_options *diffopt,
+ 
+ 	if (!dashes->len)
+ 		strbuf_addchars(dashes, '-',
+-				strlen(repo_find_unique_abbrev(the_repository, oid, abbrev)));
++				strlen(repo_find_unique_abbrev(diffopt->repo, oid, abbrev)));
+ 
+ 	if (!b_util) {
+ 		color = color_old;
+@@ -440,7 +440,7 @@ static void output_pair_header(struct diff_options *diffopt,
+ 		strbuf_addf(buf, "%*s:  %s ", patch_no_width, "-", dashes->buf);
+ 	else
+ 		strbuf_addf(buf, "%*d:  %s ", patch_no_width, a_util->i + 1,
+-			    repo_find_unique_abbrev(the_repository, &a_util->oid, abbrev));
++			    repo_find_unique_abbrev(diffopt->repo, &a_util->oid, abbrev));
+ 
+ 	if (status == '!')
+ 		strbuf_addf(buf, "%s%s", color_reset, color);
+@@ -452,9 +452,9 @@ static void output_pair_header(struct diff_options *diffopt,
+ 		strbuf_addf(buf, " %*s:  %s", patch_no_width, "-", dashes->buf);
+ 	else
+ 		strbuf_addf(buf, " %*d:  %s", patch_no_width, b_util->i + 1,
+-			    repo_find_unique_abbrev(the_repository, &b_util->oid, abbrev));
++			    repo_find_unique_abbrev(diffopt->repo, &b_util->oid, abbrev));
+ 
+-	commit = lookup_commit_reference(the_repository, oid);
++	commit = lookup_commit_reference(diffopt->repo, oid);
+ 	if (commit) {
+ 		if (status == '!')
+ 			strbuf_addf(buf, "%s%s", color_reset, color);
+@@ -474,11 +474,12 @@ static struct userdiff_driver section_headers = {
+ 	},
+ };
+ 
+-static struct diff_filespec *get_filespec(const char *name, const char *p)
++static struct diff_filespec *get_filespec(const struct git_hash_algo *algop,
++					  const char *name, const char *p)
+ {
+ 	struct diff_filespec *spec = alloc_filespec(name);
+ 
+-	fill_filespec(spec, null_oid(the_hash_algo), 0, 0100644);
++	fill_filespec(spec, null_oid(algop), 0, 0100644);
+ 	spec->data = (char *)p;
+ 	spec->size = strlen(p);
+ 	spec->should_munmap = 0;
+@@ -492,7 +493,8 @@ static void patch_diff(const char *a, const char *b,
+ 		       struct diff_options *diffopt)
+ {
+ 	diff_queue(&diff_queued_diff,
+-		   get_filespec("a", a), get_filespec("b", b));
++		   get_filespec(diffopt->repo->hash_algo, "a", a),
++		   get_filespec(diffopt->repo->hash_algo, "b", b));
+ 
+ 	diffcore_std(diffopt);
+ 	diff_flush(diffopt);
 
+base-commit: 8d1b215c01512b9658d4525c54ff9b9245f9a7e8
+-- 
+2.56.0
 
-[Footnote]
-
- * Unless these things are lifted out of bulitin/* hierarchy, there
-   is no strong reason to avoid relying on global variables or even
-   the_repository.  Once we move things out of there to make them
-   truly reusable, these things start to matter, but until then...
