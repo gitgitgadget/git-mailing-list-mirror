@@ -1,99 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.47
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793196138;
-	b=HcQuHZPmN4TM1AJWezWq4oLRRjtOhbFz0QZL1ZKDhil02/++WZXW0E1gbjbudhKuT7mB
-	 UqK1ilmlcDwaq3oO6Xm9fC4E/U7C1bIu4LgRA54MxiPw9eTdPIK77mWF/ZBRK80exKZ8h
-	 EaTLlkRaZ3CuHPczjyG1KaJTx11JD+Fwx34rQp9chs+VvradcKC16hHK28LN6MYymR79C
-	 CHfxzx9NCsm085dbBrrx+g9nQSwnkLd8edqpxoH/lhCdplUi49pZjMnh1tZdWmZfv8WXE
-	 6EM2FRqKmoApfLV2vMnz2v+cpHsVAPGylAU8eGXbXWWVboXXVU2LRovKHdWEpfyJJwA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793196138;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=LA7ggMLw+uyccS0ZW18fV7/aDp9fSVONyDZ9uDm+DT0=;
-	b=dV9eIyRrsnV3G/entZEPtjXkjQQTZmdhf2u/Lb/M1H46LIjxR0/ry+eE3usvs8vGZ7cu
-	 snINdC0WCIW2b5vW/x9cJgzPZWUZbzR593LH4Y/Cf3tXEBQ7SlU7iPq3kLHK8pvgCJFaq
-	 ORLi+lt1alYZClOHLEKR3RZDD/bLVcKPVEGbZytKwIhjTF5wMf4e4Id1CYKpSWnaXLY/t
-	 d0qc+xw79Cpld8mM+VJ8AQmK99JU9LNMuO2kP4Tc837cz9vqCAsqDc9xtAD3UayJvNjZj
-	 JxkuG8kIstnDCi32eN6QypAGSx+sR3Liu6pF3cC6YvVrsrFKtrGvvylqGejvIWqAyYw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Sw4EN17O;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.47
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793196700;
+	b=tgqPN7kBp4KEIjb9tVxMd9Kt7pdJhfYEjk53iyC56c8Fwqei/yLWbSJ2jvwdoapDPqbJ
+	 fY5f+QdBsQNbphvq/B/02Zvqens0Z9B6t6dadTRgg2jLjBbShD6RN1tj66wkZl/tcZ8gl
+	 VMbyWgNR9YHzmObtZFG4VcArZPKcCK1p2nLKmKlGc2Ur4KBSFZaLe34qD5eTLmZL+gKTO
+	 FK5/aGSx1QoRT/T3X8k/Z0vPFIxwF8Js4rvHWS6gP+xbZq8N1Kdwmqt3b2Xk1ESGSmLig
+	 aTOU8vDadhe1ndgP0F0lsq0DQOpdj5R7NA8lLG5r+bRT0JZ/3GuIKLyd4z/RJNp5zyQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793196700;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Date:Message-ID:To:Subject:Cc:References:From:In-Reply-To:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=P6mAYJAZM+99AEwvuwBh8uJQltnOOvPG9q850XH4Gs8=;
+	b=UBR57tWpeXhNk0igTK6bDvP14V0weM2gaRZW5AR5HpuG4tV2F7VWfoDS6wIgm3QRLhaM
+	 h+sjbFFXpT4zf7FjM/o5ORotItjLitiPFt00eb4F1KDQ+e+qE20/LhuiB4aZPHJrqJ120
+	 OpBm5Y0bSsD5DLauCCtq9pFptPUtWsNwQWTepmPWpCpJotv4JdD4EnYeM3oO40uIIMwt6
+	 bSIg331HChNaI4SvrvTOMAQTomlFGeO6jTtGyHt8nE4bG/ei+mbx4Tziu3ageyhf9cehF
+	 peVg9RcNgM/GF6+5R/rk7njWl3GZpjPQQUUinIkbyrL8l6wR/EG2Ye/U8nwSKQ8SBpw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=hGfTPO0m;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=nT5vie9i;
+	arc=none smtp.remote-ip=202.12.124.149
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DE0606A31C
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:02:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8DE0606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B01D606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:11:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3B01D606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Sw4EN17O
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c34bff61551so146450366b.2
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:02:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793196136; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Vsi5ezjKWQDIpQhfjKeLvqFKxCl2XebSJfvE5x+bWYSPbHPwz7axC4FGjcG97b8rn1
-         6dOkW/geUHnFKuMQm5Ma/VMScQlZjModAKCYtR2/x/R+s9iJS4OVHbTIrmEHqv4PEWEx
-         Cej2zn7DEv+gPubeA1htuYDT2n+IexLIu3j5S3QWya7WffWKcqoirAxqtWHhwDgSaeZe
-         hTyhv7IYeCt6TTrOM3vCQ6STmBnsPmc1xAxCiylheZXwW+SuqKujmtdvM1AcwbtJ9nMZ
-         ZODqFpeJgRlEokxGTrNcURCTS5NAA9mCsl2McIHQbOZksx3f6Wvc1ZzpBZT3A7elYb4T
-         ULvA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=LA7ggMLw+uyccS0ZW18fV7/aDp9fSVONyDZ9uDm+DT0=;
-        fh=2neGNSFCezYEn8XotWoEp1Z60aJip6GkaOlz6pz9/oc=;
-        b=hxTc/PxfbpxKguqim5S+Q3oReDD6XC7xcvSJi6XiaJDWr50Qt/iwKfS04KNpiv3a1H
-         tMwjl9PDFqDAfaeOIAJO2dyEM8qvWkMXvNDhUghYpk7afk1BflZanbUm2XsVe6Fr17I9
-         rBnMllaolbpdHj49UijlKZtQuM6GhN4Z72vJBYZzFtHEloJjWggm9RteUOGhZoTJ3h+4
-         IAP7mQ6uePpPyLvK0ga7Vb0iyWFRcEBgrT6pYcYOIcxNVKy5Nh8Zq0crptCM7V41N8AM
-         Mbsg98Ukuro+g9BpZEoAwm6MSV5hW2nbFRvcRtbUldRYn5yGxjAaiAvllFw21UO+eEup
-         fDSQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793196136; x=1793800936; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LA7ggMLw+uyccS0ZW18fV7/aDp9fSVONyDZ9uDm+DT0=;
-        b=Sw4EN17OA04WzvdbRmRtVYMswJQV/PIqZrfuBkGCwf5cb4qOU80VzIdw7EjwU+JOSr
-         6HiLILwefMN9NiBO/d0J3VvODgInKbqYvDEZ1nR63FdldKcFpJFKAt4PCsFfvO/Gs12Q
-         sTHAYJcv4Cu5YwlKBCkBvsYGTR8hHOlRc0WZkBEsXwuV1n1He50RYo9oLzWQ0LfSufWw
-         HYj4k52xva4dJR/JfgkeErlVoKe4jm7w2EwO8QZElqNrynZELqyepG1w1cHs12oLLTjO
-         yEsVxAtWuHpqQQhQDa/Px58TfX6cqNt6p4IQa5fWeS3uhAfa5jfOuQzycrucJWbzYkV9
-         BYkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793196136; x=1793800936;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=LA7ggMLw+uyccS0ZW18fV7/aDp9fSVONyDZ9uDm+DT0=;
-        b=DRNcnIB/hfcvIRLwEIZ6KYKh7oGEH4B6sMlLdJqE8aYqmD6UVdN9objYWBmTN3AyC9
-         rs9LSsHnPbbE7+XzASIrOb1G7/9xWZwfRA4y0HO7wYm3XXpAktfxVym2bHZ+Rq03BJoU
-         DgO6ZK8V5iZYnTr47wvEzvUmrafuF2+RNYPlc743rlmVoQnfLftXfIhyMWU2ToTzwwFT
-         i4FdfvsW57vHz7dFd/xu4wORwVkxXzj/BVEJOhUBeaFF7uXaxVedJ+jkNU480WhLkDLh
-         ONgQWs5bBBri494s8/QCaOpK2aeG/LDjLuYXCyicpcG5JBs2GXfVLzVjB/wpnxaLIriN
-         anaA==
-X-Gm-Message-State: AFq9FYJk7anjjSoQciZjai8N5zTlSgXNH5C2wEWSkShNpKU0uD4jvG3+
-	UKoIDu71xa1JZFqBRBxC1S4FVaXSrhJwDrljU51I+e+XqQkgS4p1t9AZOe4SgxnvArqyk+j+iwG
-	KMs5hfTlvIGHGTYmRPYJZYWwSdsdo220=
-X-Gm-Gg: AYBFou0u5mFJHbAEn/F4Z5NAeS7uHSmf9RkCmUOJpCSneoUIu5JdDEelSXR8fPU+Tb4
-	tCp9k9xpq7/NK2EiOU7I5rlXjm1W/6TWYBsl+vwhYHOq9z/hgxXXWcQyfaqkkrsDBG7RN07OuKq
-	0UIZl0VqtyWsz0EQu1+gvYzZUsZZlUk+o+SG4PYqsbzwhtDrBgb5m+uEzBc+XQ49GZKiMqxaaCF
-	O8fx5JN9sQNqeuc44yIXDSulJcbhL8qtYTF0Ve5UF8S5evDtnZdw2UYt1I44FFBLAcbgnONRHtK
-	csiX3C2v3rop6GiuF56mp+eGvv0wuvmf1V8bNZsr6oaTuEH3l5sAlL1aq5ylOMYmruSNIOzlL6h
-	1W/8LnE9iGjtWL/iWOZ0jIgnT7M4PZHb3ah187sCHTHpkfOcjlejdfNIp8eF9QfdCEZNujwDO2y
-	o2MDJNTte9vUpXXuU=
-X-Received: by 2002:a17:907:843:b0:c3f:8c92:3b51 with SMTP id
- a640c23a62f3a-c49bdb67901mr234480866b.4.1793196136032; Wed, 28 Oct 2026
- 07:02:16 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=hGfTPO0m;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=nT5vie9i
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8B56F1D0019E
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 10:11:39 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Wed, 28 Oct 2026 10:11:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793196699;
+	 x=1793283099; bh=P6mAYJAZM+99AEwvuwBh8uJQltnOOvPG9q850XH4Gs8=; b=
+	hGfTPO0mTdkhFijHRnW9JOwILf5SXiAnuux8NIX86s3Fgxuzp0qdCDRru+PsNKRl
+	Q1ixHWmYXwgcTAB/LAJD3kaXLMJtgMkXn1N0Li+ifVTtkm1c07+qWVA0I/qsQefg
+	oROdeTPQjUGO54Jv59VCf6Rvh0lMlRhFYYaKSxUFehHLAySuFxoqNgXDxTNaN+UJ
+	4HQxuyb7FqakiiqsZ2WiAANjtRGIp2xjla6BdBmyf4vNRzYAdDZ3nucAR4ONqeks
+	ZtX+0JDmH/nChkxqhi8ZrY/iATzMseAaSbNUinw9xj7nx6UUnXT49fgkDRtWWySx
+	JSr9XrXP6EetAN10OFDuWg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793196699; x=
+	1793283099; bh=P6mAYJAZM+99AEwvuwBh8uJQltnOOvPG9q850XH4Gs8=; b=n
+	T5vie9imkacfQm9Hrmyo8pOTMnbBCWj/OcimyAK+vEsCaYIuTjrSwZfA/PLdTL/b
+	TF4OXDZIaufBCx0z79EtLwWf9AGJG5xmpxjKfxW2WP1gm/Jm+bAQpTXFlEQIyU7/
+	kPn6mPB1UH39hO9Lj4xCHhxo6sKgwylQ2sh+IQ7dJaMtPIkBGj+mGswsn2Zjkdap
+	gXuwqQ/8AeEbJAXCczX9R3whlkzKypuC40vp6QdGodjKCkZfLDmWqqGFRoNnHvxx
+	L/TM+reaTe1JXysGealFhk4UQhpi4XTlbvaWMJEPQzWW/U321ZIeC4ja4cTJVUxn
+	ZFNM39zBH4n7AGkLjVtdA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793196699; d=fastmail.com;
+	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:fx1kSrS8dUrXavMPOLrNOCeoMlduRRatqouuevSiPRVUXVT
+	cQMO/Bwc03fReMjkt4ts6Kud1ad5WtXyTfLDAeiGMH/+np8ytKUDvYKvdM/qHMsc
+	R1QVjUoAgkOCkZc25zjEcDGKQgkedqgO+nPe3gpbJ8v+M0jTiT/9wt3y0VHOFmcC
+	YekEf+PLSkHwqV9WqzTVHoB9cHxD7/3Cbs17Q61rvCmFZPRu7PdzqTlMA9x/Wvo3
+	d7KevF2UlQzdnlPahh0p+U9nMdSw1nUZXA7XirEb07IKpge+vMjtzrjgD50WFHI7
+	cp2STVvR41i69WXftiMcjQZYglwhkYy6INEc8BQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:1neelh6NGPxvAaEKY4fC5rVz09uJjnZBu0j0cAdeDW8=:Qac01IHXwL+xsUjgEoEpsNB6znj52lBL8dTmrJ8pbOg=;
+X-ME-Sender: <xms:mwLiaqI2iTVz1AzxkCclGIbmC5MPqLMRjsV1Uqz5F1356Pf4a8kmAw>
+    <xme:mwLiapnGq53qk0cdv2tSHNepWVJnz_UH_B5VqFomXH_QXCg7ZEtCHg0X7Q4Vum7nn
+    _PztAe75hkWqEHiEVc_8cOJY16iYTcNlMNh3umKED-psJ3LUsOMFJ2F>
+X-ME-Received: <xmr:mwLiaoENG24TZzwMY5_yrNSYEHOqTqFOh-gOATx3iY74p420JzwAacJHBGY>
+X-ME-Proxy-Cause: dmFkZTGK+kKfiqetnAKZuLHdp6BOYF8vDLJnv2C1JfX8sEy5+GYUEKtjtfP11DCWfk2G+X
+    JmkISjyVuYtLNvCBMH3kYQYlmmV/9KoH6VbCedfXjAbPZsT2A2bl+VR45LlAR9uDKIz9yr
+    14Em1QfbGf5+rsOB0ANdoOhmW/OKU2GfB21Mm6DaqofhAco2n1ccdbybSBaTx0t3/Fsbdy
+    M/BVQrkLH6AFles74gQ15JQQcIJJO+P7N0RP//j0BzSQeyXcpuX//HtBeIMOYssHr2fYKp
+    aonvfpbN9SYd6av+qIVW6WtP2n2Eqr+MZEaJ5IbGzo1NCP1xcOS62yodo+3msRqollySVx
+    gamiCLD99KU7YHepFwmSUQzvlVTiJVGIDN14pTUB+4yA4/ILQZIQM7tDyG0WUw9Ve26ja1
+    8TZkBsF3aSJWiH6Ne41IIyGRo/fzhuD/pO3F7XxFczeyu1hIanDG1VkEjcUz0NXCzkezFs
+    K9/H4LuAaM4nrzDSWetw0zZerX0LRNZEoa12Lk8qyPY0EI8HXp8yaIfMJ/+lrcYsFukwI7
+    8v3WXqlcsM3zZbFKPb/D5/l5HOUNcPFNJHgvfUaKJeME7zvbkJtNjrz1CKue+hBZykEBrH
+    YcAIANlFZ53vrm9dR2yBWQtGu7hDdJ3Fbl2xeeb7PnNP/ooENXNCaMXRPSXg
+X-ME-Proxy: <xmx:mwLiapEpXWmah6xxKKZg01ZiNdT9uep_94vE3sfL-nfYIg7zi1HJeQ>
+    <xmx:mwLialN0EApiusFogzvbOFEFTlBw4-V1YYE2B0b__PissNPMyUhCGA>
+    <xmx:mwLiaoGamVLsUsoKN193dXBc7RwURSt4u4SGBnGT4FDOsB6VisyglQ>
+    <xmx:mwLiasO49eaZClUlPn48EpVVPzTfG_vzfGjdYV6X6jWW9eqGiiW55Q>
+    <xmx:mwLiaht18xiaRT7_KGnyX61iwcfbKyv8r0BB3BXXO2IbBxhgCHMzhqCf>
+Feedback-ID: id2564aa6:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Oct 2026 10:11:38 -0400 (EDT)
+Date: Wed, 28 Oct 2026 10:11:36 -0400
+Message-ID: <541b09ff60a5acd851aff471cf6fba75@fastmail.com>
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 02/12] rerere: convert flags into an enum
+Cc: git@vger.kernel.org
+References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im> <20261027-pks-rerere-subcommands-v1-2-d836c36ce0c5@pks.im> <c23c4593fa3add2b40613febb2911cfb@fastmail.com> <xmqqzevzhqyq.fsf@gitster.g> <auGzVZj5vbVm3-xf@pks.im>
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+In-Reply-To: <auGzVZj5vbVm3-xf@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,18 +123,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261023154851.7876-1-ogundipesolataiwo12@gmail.com> <20261027183623.3600-1-ogundipesolataiwo12@gmail.com>
-In-Reply-To: <20261027183623.3600-1-ogundipesolataiwo12@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 28 Oct 2026 15:02:03 +0100
-X-Gm-Features: AclHuK9Wsc2Wms2KgXYnrshxxkzVpxgQzkShD_ejFLZklhb6NCEpZOwGzNV1Kzk
-Message-ID: <CAPSxiM9sZXbLQQsMFiWqXDmiGGM7FzCAH2hWizLL-mX3575g_Q@mail.gmail.com>
-Subject: Re: [PATCH v2] t5300: modernize test path checks in t5300
-To: Ogundipe Sola Taiwo <ogundipesolataiwo12@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
->
-> Improves test t5300-pack-object by converting old-style
-Looks good now. Thanks.
+
+On Wed, 28 Oct 2026 09:33:25 +0100, Patrick Steinhardt <ps@pks.im> wrote:
+> On Tue, Oct 27, 2026 at 12:40:45PM -0700, Junio C Hamano wrote:
+> > "Mark C. Chu-Carroll" <markchucarroll@fastmail.com> writes:
+> > 
+> > > On Tue, 27 Oct 2026 11:46:45 +0100, Patrick Steinhardt <ps@pks.im> wrote:
+> > >> Our modern coding guidelines say that flags should typically be passed
+> > >> around as enums so that it becomes trivial to see what kind of flags are
+> > >> expected. Adapt the rerere flags accordingly.
+> > >> 
+> > >>   <snip>
+> > >> +enum rerere_flags {
+> > >> +	RERERE_AUTOUPDATE = (1 << 0),
+> > >> +	RERERE_NOAUTOUPDATE = (1 << 1),
+> > >> +	RERERE_READONLY = (1 << 2),
+> > >> +	/* If MERGE_RR.lock is taken, return -1 as if rerere were disabled */
+> > >> +	RERERE_NOWAIT = (1 << 3),
+> > >> +};
+> > >
+> > > If we're moving to using enum flags, then wouldn't it be better to
+> > > explicitly add a "RERE_MERGE_LOCK_TOKEN" to the enum for that case, 
+> > > rather than have this value only documented by a comment?
+> > 
+> > Perhaps you misunderstand what the comment says.  It is an
+> > explanation for the next line, i.e., it tells the API users "If you
+> > want the 'immediate failure when locked' behaviour, pass the _NOWAIT
+> > bit".
+> 
+> Yeah, this. I guess we can help that though by documenting all of the
+> flags while at it.
+
+Ah, yeah. I misunderstood that. Obvious in retrospect, but I was
+puzzling over that for a while. 
+
+    -Mark
+
+
