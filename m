@@ -1,89 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793198691;
-	b=mAfFhS8/gx6w2V2kwapbJevNpu/3S1pQr/DS0WxrHd/V8TBkdCYkJHbW336NLcz7VWbn
-	 8YgiFy8Xiy0wt+TJuPk7uB14F4JqZ6IDXuE8MzXbrVXVSZL2Z5FPBvmaQ+gxODMyOUXEh
-	 VwJgyB5mE+YGtmHyKMsMRb2ps3JCoUJ5eD58X7+putA5oMKb2Sgn7mukmRIFKNYyw4JAq
-	 anL/e+H1JFSAmmt6XjY+JPCZTJ9dRP1oyTmKRlAqQOnseI1J303qz2cMgt4In/Q3VNB2s
-	 UkhJndTuMiSac3sHGF+FQ8QStmV2h0cL6SfPoBFxSaQyfaVBWErPtjh+BomA1eMzIYA==
+	t=1793198693;
+	b=ogl8Xiua8zAkS6Sbgee+zyAmJGZnP8LW2L73oCh2ElL0GKvjEC3j39DzWjvhOKCQHqII
+	 biUPARKFqcBp8aesWmYCwys7kTlewjtF5OG1/5OL9TXN1fO4bvTzXlgTeNSVh3MYAisu9
+	 UhyA5xTqEssu32jmNWJQ7hgl7EG4huwcjtkOl83hK7whx6ZzYvRi5CpRj5U/zycOLXS0Z
+	 MsYtcbxQXkP7Y5L8Y2MRyzy16DYpl5Qi6Dd+E5mXntRwhrMSk69Cexe6mH4he03T20eRR
+	 KmGlv19HANwow6KvG/e7x79T0GIOa13uu32V+WwB6uNdPQdrGHO8ka3k6+ScRN+ed2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793198691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793198693;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=mCKKqYUXd7rwYszWEgU74sjMszzvFOLcFu11hmRe17k=;
-	b=tmzrjzhw56aNo/p2aZzKOhR2DCM3qyNuCU16dufMgBoJsG2vD4u213W3Erixz3is5fbn
-	 /TR0pPZ7lOy3OTsb5tyVBjIn77RDPp6O6gc+ZJW5ckziNQXqzTikyhlFNx2ZBy+lqnt4c
-	 /r+Cf6/kOhQnmWswvE1C/bBehrazaBj0utOYNWl+r6Bzr613G/TPfu2DiD8m3jOgMIH9D
-	 O3e+tf8tVjWUsiJFfb4Asoeuc+HpQ/svBKpyKpAjDV4daaqSO38IsfSTV5Kwn19lgV5SP
-	 oPgd58b9Xl7Jq5L1nWWnSHzMWvdS2xSpsNImHtxHBO58KiH9tUGQbBSUlx/SiSDlYLA==
+	bh=1BtLvuHA89Rg3fGSpzFIt8PVOLrMFOcHMCRu39M3PgU=;
+	b=hkeMjyYWzR8iwkoyJMQ3eulKXfFrI2r3QDN5OgfUHGXtO5CBbTRqr/zZsru1xlBj59fb
+	 WzdbQU+XvfTKVc23UxuowSP6ntIv1KoafvEBgIknG1QlrjnijuxoY0rz0dFvID5wSUhtJ
+	 w28fbt3EsV5UeaZO1cJJ5qse0jcH+4o5ogfRZG2kC8Qu2ngLhcUWRavS6VO+aC4zr1RXV
+	 kNcEuIXRTQiVRAxFLsN+MZMunpy3OvIStEY0eRV1VpfDy2eySZ8MdV5SBkdDvjlbe/nrf
+	 Ki0gHSOdcUzhfao74cdrqa4Yda+mvx5ujpnQcN5efp2Eyz+ag3IPYbQFvaWF1LwnszA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HE43hjgF;
-	arc=none smtp.remote-ip=74.125.82.49
-Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KrtZndc+;
+	arc=none smtp.remote-ip=74.125.82.172
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2297606A334
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:44:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2297606A334
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB27D606A32C
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:44:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB27D606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HE43hjgF
-Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-156cbe59524so1158054c88.1
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:44:50 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KrtZndc+
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-35b2c599f43so2247258eec.0
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793198690; x=1793803490; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793198692; x=1793803492; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=mCKKqYUXd7rwYszWEgU74sjMszzvFOLcFu11hmRe17k=;
-        b=HE43hjgF9fRPbOnumNuMe/iJs/cD07fPolAJ6jqv9KXyhs2Bl1FiQ8WgpVC6Sok5kX
-         8KoE3GLsr3S1yHuTasE9ZGyNtLtlyOj3uDHeSdtPQXIyi8jpb3R9YK7XZchvB4945Ix6
-         tQGG19F4UmGxBtp46HIM6jpi5Opd3y77HRfL9k44FxEfY7AL63NY1WfKu0+7MFGUJTSj
-         b/JGyHPTqFXVK0M35ZbHQiewhBQ+w6XQ90rBxeodslhWrklQ3FnjmZSm0Sl4mgdHwL/Y
-         1gPjhr3XRDYv4g5NstO6PsdU3QBarLjvDy67x5Ogh9+MXHjvozGifUZtc9tIzbX5SDru
-         KVGQ==
+        bh=1BtLvuHA89Rg3fGSpzFIt8PVOLrMFOcHMCRu39M3PgU=;
+        b=KrtZndc+daeTKm8i2RDL8HruIkqb27OW44h5GZMHa71xNd7cZ9tIypRPU8kZYBaLoP
+         0zByli3C4N6TScd1ZM/TcpQw9me4WDatMIEQniCC0rtwotGUUEd9/GnC0YU7uFqCmEGT
+         16zszLuEVqBTslDbaa2qEImI7UzDbgk/Y0w8kACrtq7wxyeMq/3pIuTQ2pg/yElMT478
+         s4u5O6mC113n4CGD2pY3s/EOqX5b1MvHHpmCXeAcrPwr+AaV9SDFmmPC9YM7rfmT2CdK
+         kCyJXL0oog4Nv7y9UUi9fBLbkusWFkqRB2jvvADpw6+78J/b6Ts+x4sLvozBNUneMJL2
+         n8MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793198690; x=1793803490;
+        d=1e100.net; s=20260707; t=1793198692; x=1793803492;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=mCKKqYUXd7rwYszWEgU74sjMszzvFOLcFu11hmRe17k=;
-        b=tBESpAutgdnlEgPsbH0+EpMbFaygWbJqt8kvEX65cgCbppGw4/yfaVlUPl2GhdVAeC
-         M8iXKfC0l99PqrVe7I/SVr9yj13XK5aK9UfTLPEBA8vYWS/1qm/q+OQqwdk/SkRDP3tP
-         Oq7MTMaJU4vy4FfC1MikzlayxvBTP78JFAniLOy+e6uIFVnqSfKe1iqXL0Tg7bl6QgBH
-         Zt1kq6ttA3pB9BC9t9c1j+jXDNV7PxhWpXlTCfgGHOFm2UIqf9nk8n+EPjhAwa+JFEoK
-         eliUWqn6Rj6Uv+L7LE3PVY+3ccWOuASyREfaZQXaKsY0wK5SNtnDKTxyDtOX03B6oOWE
-         gW3g==
-X-Gm-Message-State: AFq9FYItGx+ON7BipCfBQzLAFbJKqGGnCVKUhFJt5YNWVgdkq/YO4RFO
-	EsJOTe4GkimeyFDfjNnCWJqVJKzFwYSyfkmRGsNpPuhU1DfLlBJKSGIpchbqGMwO
-X-Gm-Gg: AYBFou1Rf+0QRIxyRR02GIsUP30pw2eFiszkjrPL2XsfwJuIhiaQkehMSyEUOEUyzoS
-	EsQtxBsPhF6SVowyFfyam6UXchP4h4etxt6Yi0U01JytmXo9ijcY+onY2OjhTiyYj2vUIYa3QNR
-	kTHRtI/lwQb6d17c3y9A/W+6VJ62+lLpCvqNllJU9rcIKgqUKB5ZnOU3FeO+SNRNexoTr6oZwBQ
-	COll1cl0r6E3X9uDRcTxyVHute7Ppdwhqng25OaqXn/AKvrpHbuiALTR9lVBCuwCHLCmtgF90dN
-	icG0r+a8AIfe9t1nn69xFlF3+wgb9XoS96X58Sx6NkebGma/kdGDgHxUHXzYmte0goi+fGst8cM
-	6nvqGdbeI7RsMTpo+3Sr9RUyM6JfbPBQz9iksTXE+8wm7MwcMB8r5aUBiIcDpcQhWRn6HXpEmjk
-	2VHcFG6hz0dr6iWm18DxCOflhGcteoa5HMHZAcikZtystGSkAUI1prhvTtYetG+BbX+UERTW4aN
-	qEaQ1fsU5qYc9kH4cuoSgkYbO/7JQsyYExi4xA85sf//MtTvhsNW8YQnEZ87BPL5eQRTfZpQez7
-	GxP1nDo7BEtz+yn5z03iYTskmtx/smDf
-X-Received: by 2002:a05:7022:2582:b0:198:b1e:90d9 with SMTP id a92af1059eb24-1a6cd498bf6mr4081044c88.10.1793198689481;
-        Wed, 28 Oct 2026 07:44:49 -0700 (PDT)
+        bh=1BtLvuHA89Rg3fGSpzFIt8PVOLrMFOcHMCRu39M3PgU=;
+        b=lD2inMwq28mLlVIBW0D7WjobrTtmf6/s4+uZFqAZniU4/ODsuKH96Mjik3JDTYsXWL
+         4Kap7mvjySEqb/ZJU/Hrgtfp7DM/vl2cQ20RH8GinA8fkPRSH0hy3/qU8G6bc9DsbCW6
+         glax68PJYHJnB1Q4p52G8LN6CWLAZWvONqx1tleWkGxefH/JcvZj87j9UtRmiSwVUmXO
+         fkFGvMJ91Klp6q0hV0z6Y8Ku+MbKVLfIt3PWESZjnShlmeciwmFvybm6agSSiBEHgb3a
+         imky5KWSNh6+gBIRwevdMC8hzskpde5iiULLeBtR6Wblau+fkdPpprnxwbiv6yHbZmVM
+         po8g==
+X-Gm-Message-State: AFq9FYLDzg2yYK1Z0iixnLVkyRXW+EamVMeg74wEOFj2pCYqhVYp2ZjS
+	tdTYQQuzfWhxg+OmVWJA4NREAV/lEBV0k8PIstJBBmSG470gU3UPATvfpi5pOC8R
+X-Gm-Gg: AYBFou1AHG2To5cfcivHQtSbNoB/VMpXcswFXGfhzJ7p02Bzp3OCETImRAHiN3nca0f
+	iAPVHRf4iSbDORjAXFjerO3jN3oY49eoopXkbkcv/qi2f1/wBg+o5GxObhjfpQz0cvxR0MjO8SU
+	rAh1f2GyhzUMOYUJXWKNpB05jFbVm0esqcDr4smUKM6e9MWIscdLrpopjVLwA18e3MYoJUn1I/Z
+	gnLW/57NtQjG9mcztlxgT7Kcct3Sjlu9mtwtL2UR9m93JlbvyavbVuvlON4W/vBqSxlMfQHkfGl
+	lK5OB7FHUjh3LFqL6P1eXJ2pbIePS3FGdsQVMP852yRWMZit9txdN2IZTlccRfj9hU7BBrYD8ah
+	NA2guVeNQHF2F9ta4HNUzXblnP9KX/90IOjUGhAQw3rL4RmSO+0HHCpBiR0UOibgU3L4flNXp6Q
+	XH9aS64L0WRZaxB1B0Yg6zzBBr4k/Poykc8iLEqFV9tiI/ixJ+rr5p8R8Bb5425+arww48GEj9c
+	75VF5unrBrlHSlQB1x9SuhE7NmXUX/8V1tz/aJ4a/Gn0MHqDuEupIwj/6pgNG+9weEFW69x6r12
+	E8xG1ReLJM+oIVZqXODxIbIbuqpssdJO
+X-Received: by 2002:a05:7301:188d:b0:369:f3e3:4277 with SMTP id 5a478bee46e88-36a204bf28cmr3787545eec.38.1793198690946;
+        Wed, 28 Oct 2026 07:44:50 -0700 (PDT)
 Received: from [127.0.0.1] ([128.24.160.231])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1a75e0098basm5926655c88.12.2026.10.28.07.44.48
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a238d9c14sm6961671eec.7.2026.10.28.07.44.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 07:44:48 -0700 (PDT)
-Message-Id: <pull.2248.v4.git.1793198687.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
+        Wed, 28 Oct 2026 07:44:50 -0700 (PDT)
+Message-Id: <64d9811539b531104d01ae4382c90230eea01c61.1793198687.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2248.v4.git.1793198687.gitgitgadget@gmail.com>
 References: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
+	<pull.2248.v4.git.1793198687.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 28 Oct 2026 14:44:45 +0000
-Subject: [PATCH v4 0/2] doc: add new git tutorial
+Date: Wed, 28 Oct 2026 14:44:46 +0000
+Subject: [PATCH v4 1/2] doc: remove gittutorial
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -100,271 +101,700 @@ To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
     Tuomas Ahola <taahol@utu.fi>,
     Richard Kerry <richard.kerry@atos.ai>,
+    Julia Evans <julia@jvns.ca>,
     Julia Evans <julia@jvns.ca>
 
-So far we've gotten 112 comments from 30ish beta testers who have tried to
-learn Git for the first using this tutorial. Most of them were able to
-finish it successfully. By far the most common piece of feedback was that
-people want to learn more about collaboration and branching. I've written a
-draft of a tutorial on branching, but this is already quite a lot of words
-so definitely we can't cover it in this series.
+From: Julia Evans <julia@jvns.ca>
 
-I don't know if it's possible to get this merged quickly, but if it were I
-think it would be amazing since people are so eager for a tutorial on
-branching. If we spend a huge amount of time revising this I think there's a
-real risk I'll run out of funding before we have time to write about
-branching. Ideally I think it would be great if we could merge a "good
-enough" version and then have a way on the website for users to give
-feedback on it, so that we can later incorporate that feedback and
-iteratively make it better over time.
+The next commit replaces it with a new tutorial.
 
-Thanks to Paula, Agavi, Ken Wells, Michael / Chgowiz, Ishmaeel, and all 20
-or so other test readers.
+Do this as a remove/add instead of just replacing the file in a single
+commit to make the patches easier to read on the mailing list, since the
+existing content isn't being reused.
 
-changes in v3: (v2 was the "first" real version since v1 was a WIP)
+Signed-off-by: Julia Evans <julia@jvns.ca>
+---
+ Documentation/gittutorial.adoc | 671 ---------------------------------
+ 1 file changed, 671 deletions(-)
+ delete mode 100644 Documentation/gittutorial.adoc
 
- * Say that the tutorial supports any version above 2.23.0, when git switch
-   was introduced, since the next part of the tutorial on branches will use
-   git switch
- * Mention that on Windows the tutorial will work best in Git Bash for and
-   it might need adapting for PowerShell. (thanks to Ben)
- * Add a warning about how Git can dump you into vi, how to handle that
-   situation, and how to write a longer commit message. I tried to strike a
-   balance between lightly suggesting that it might be good to write longer
-   commit messages, while making it clear that you can just use -m"" if
-   you're not ready to navigate the world of editor configuration. I don't
-   think we can use Pro Git here though since it's a bit outdated. (thanks
-   to Ben)
- * Add Helped-by: Ben ...
- * Add output of "ls ~/.ssh/*.pub" (thanks to a test reader)
- * Suggest cat ~/.ssh/whatever.pub to make it clearer how to copy the
-   contents of the file. One of the test readers said this was unclear as
-   well. (thanks to Junio)
- * Mention that the public key might not be called ed25519.pub (thanks to
-   Junio)
- * Add a short section on the importance of git status
- * Fixed the formatting around the headings. Kept it in the same style
-   because I had issues with the docs linter when using == DESCRIPTION
-   (thanks to Junio)
- * explain what --set-upstream does (thanks to Ben)
- * A few other small phrasing fixes from test readers
-
-non-changes in v3:
-
- * didn't use git config set since the tutorial claims to be compatible with
-   Git 2.23.0
- * kept using the term "folders" since my impression is that Mac OS and
-   Windows use the term "folder" and those operating systems are more
-   popular than Linux. I don't think any test readers were confused by this
-   term, though "directories" might be fine too.
- * leave git init instead of git init myproject so that folks can use the
-   same process when setting up Git in an existing project
-
-changes in v4:
-
-Make the instructions more Windows-friendly (thanks to Richard Kerry), by:
-
- * mentioning that Git for Windows will ask you to configure a text editor
-   when you install it
- * saying that the SSH instructions are Mac/Linux only and suggesting using
-   Git Credential Manager on Windows, and update the instructions for
-   whether to use an HTTPS/SSH URL accordingly
- * using "folder" instead of "directory" in a few more places Also:
- * Say "bottom left" (thanks to Ben)
- * Add a link to how to configure various text editors
-   https://git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Setup-and-Config#ch_core_editor
-   (thanks to Ben)
-
-non-changes in v4:
-
- * leave the comment about how vim is "extremely difficult if you're not
-   used to it" alone, I couldn't come up with a better way to communicate it
-   and I really don't want anyone to think that being able to use vim is
-   expected.
-
-Julia Evans (2):
-  doc: remove gittutorial
-  doc: add new Git tutorial for beginners
-
- Documentation/gittutorial.adoc | 1051 ++++++++++++++++++--------------
- 1 file changed, 589 insertions(+), 462 deletions(-)
-
-
-base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2248%2Fjvns%2Fgit-tutorial-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2248/jvns/git-tutorial-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/2248
-
-Range-diff vs v3:
-
- 1:  8c0366e996 = 1:  64d9811539 doc: remove gittutorial
- 2:  d8ea142af6 ! 2:  4b40588c90 doc: add new Git tutorial for beginners
-     @@ Commit message
-            policy if applicable since the "easiest way" may not be the best), and
-            giving some instructions for how to translate an HTTPS URL to an SSH
-            URL.
-     +    - Use Git Credential Manager for authentication on Windows, since it's
-     +      simpler, SSH auth is a very "unixy" thing to do,  and it comes with
-     +      Git for Windows
-          - Warn people about how `vi` is the default text editor and give some
-            instructions for how to escape
-      
-     @@ Documentation/gittutorial.adoc (new)
-      +commit is up to you.
-      +
-      +When Git stores a commit, it stores a copy of every file in the commit
-     -+in a database in a directory called `.git`. This is called a "Git repository".
-     ++in a database in a folder called `.git`. This is called a "Git repository".
-      +
-      +In this tutorial we're going to show you how to:
-      +
-     -+1. Create a Git repository in a directory with the command `git init`.
-     -+   This creates the `.git` directory where Git stores all your commits.
-     ++1. Create a Git repository in a folder with the command `git init`.
-     ++   This creates the `.git` folder where Git stores all your commits.
-      +2. Tell Git which files you want to put in a commit
-      +3. Make a commit
-      +4. Change a file and make a new commit with the new version
-     @@ Documentation/gittutorial.adoc (new)
-      +1. Git to be installed. You might already have it installed,
-      +   and if not there are directions at https://git-scm.com/install/
-      +2. A terminal to use. On Windows, you can use Git Bash which comes
-     -+   when you install Git. For Windows this tutorial will assume you're
-     -+   using Git Bash and if not you might need to adjust some commands like
-     -+   `ls` and `cat`.
-     ++   when you install Git.
-      +
-      +You can check if Git is installed by running this in your terminal:
-      +
-     @@ Documentation/gittutorial.adoc (new)
-      +$ cd myproject
-      +------------------------------------------------
-      +
-     -+Next, using your text editor, create a file in this directory, so we
-     ++Next, using your text editor, create a file in this folder, so we
-      +have something to work with.
-      +
-      +Make a file called README.md, with these contents:
-     @@ -1,2 +1,2 @@
-      +text editor in the terminal for you to use to edit your commit message.
-      +This lets you write a longer commit message with more details.
-      +By default, Git uses the `vi` text editor, which is extremely difficult
-     -+to use if you're not used to it.
-     ++to use if you're not used to it. On Windows, the Git installer asks you
-     ++to set your text editor during the install to avoid this problem.
-      +
-      +Some signs that you're trapped in `vi`: suddenly typing doesn't work
-     -+anymore, and there are tilde `~` characters on the left of the screen.
-     ++anymore, and there are tilde `~` characters on the bottom left of the
-     ++screen.
-      +
-      +If Git opens `vi` and you'd rather use a different editor, you can
-      +handle it like this:
-      +
-     -+1. Quit by typing `Escape`, then `:q!` and then `Enter`
-     ++1. Quit by pressing the `Escape` key, then typing `:q!` and then `Enter`
-      +2. Run `git config --global core.editor YOUR_PREFERRED_EDITOR`
-      +   to configure which editor to use. For example, `nano` is available
-      +   on a lot of systems and has basic instructions on the screen for how
-     -+   to use it.
-     ++   to use it. Here is a list of
-     ++   https://git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Setup-and-Config#ch_core_editor[how to configure some common editors].
-      +3. Run `git commit` again
-      +
-      +If you don't want to set up a text editor yet, you can also just use
-     @@ -1,2 +1,2 @@
-      +a Git repository on the internet, like connecting through SSH or open
-      +source Git forge software to your server.
-      +
-     -+Step 10: Create an SSH key (if needed)
-     -+--------------------------------------
-     -+
-     ++Step 10 (Mac/Linux only): Create an SSH key if needed
-     ++-----------------------------------------------------
-      +For Git to upload changes to another Git repository, it needs a way to
-      +login to that repository. One of the most popular ways to do this is
-      +with an SSH key.
-      +
-     -+If you don't already have an SSH key, you'll need to create one. On Mac
-     -+or Linux, you can check if you already have an SSH key by running:
-     ++On Windows, you can skip this step and the next one because Git for
-     ++Windows comes with
-     ++https://github.com/git-ecosystem/git-credential-manager[Git Credential Manager]
-     ++to handle logging in. 
-     ++
-     ++If you don't already have an SSH key, you'll need to create one.
-     ++You can check if you already have an SSH key by running:
-      +
-      +-------------------------------------------
-      +$ ls ~/.ssh/*.pub
-     @@ -1,2 +1,2 @@
-      +security team in your organization, they might have very different
-      +opinions about the appropriate way to configure authentication with Git.
-      +
-     -+Step 11: Tell the Git host your SSH public key
-     -+----------------------------------------------
-     ++Step 11 (Mac/Linux only): Tell the Git host your SSH public key
-     ++---------------------------------------------------------------
-      +
-     -+First, find your SSH key like this (on Mac or Linux):
-     ++First, find your SSH key like this:
-      +
-      +-------------------------------------------
-      +$ ls ~/.ssh/*.pub
-     @@ -1,2 +1,2 @@
-      +Step 13: Find the address of the repository
-      +-------------------------------------------
-      +
-     -+Now, find the address of the repository on your Git host. It should look
-     -+something like this:
-     ++Now, find the address of the repository on your Git host.
-     ++
-     ++If you followed the Mac/Linux instructions to set up an SSH key, look
-     ++for an "SSH" address like this:
-      +
-      +-------------------------------------------
-      +git@git.example.com:username/repo.git
-      +-------------------------------------------
-      +
-     ++If you're on Windows, look for an "HTTPS" address like this:
-     ++
-     ++-------------------------------------------
-     ++https://git.example.com/username/repo.git
-     ++-------------------------------------------
-     ++
-      +(where `example.com`, `username` and `repo` will be replaced with the
-      +actual values).
-      +
-     -+If you can only find an address starting with `https://`, then
-     -+you can often translate it to the SSH format by replacing `https://`
-     -+with `git@` and replacing the `/` after the domain name with an `:`.
-     -+Here's how:
-     ++If you can only find an address starting with `https://` and you need
-     ++an SSH address then you can often translate it to the SSH format by
-     ++replacing `https://` with `git@` and replacing the `/` after the domain
-     ++name with an `:`. Here's how:
-      +
-      +-------------------------------------------
-      +https://git.example.com/username/repo
-     @@ -1,2 +1,2 @@
-      +
-      +First, tell Git about the other repository by running `git remote add`
-      +in your terminal
-     -+(replace `git@example.com:username/repo.git` with the actual address):
-     ++(replace `git@example.com:username/repo.git` with the address from Step 13):
-      +
-      +-------------------------------------------
-      +$ git remote add origin git@example.com:username/repo.git
-     @@ -1,2 +1,2 @@
-      +$ git push --set-upstream origin main
-      +-------------------------------------------
-      +
-     ++On Windows, this should pop up a dialog from Git Credential Manager
-     ++asking you to log in to the Git host in your browser.
-     ++
-      +Let's break down this `git push` command:
-      +
-      +* `origin` refers to the Git repository that we just added with
-
+diff --git a/Documentation/gittutorial.adoc b/Documentation/gittutorial.adoc
+deleted file mode 100644
+index 03120ba191..0000000000
+--- a/Documentation/gittutorial.adoc
++++ /dev/null
+@@ -1,671 +0,0 @@
+-gittutorial(7)
+-==============
+-
+-NAME
+-----
+-gittutorial - A tutorial introduction to Git
+-
+-DESCRIPTION
+------------
+-
+-This tutorial explains how to import a new project into Git, make
+-changes to it, and share changes with other developers.
+-
+-If you are instead primarily interested in using Git to fetch a project,
+-for example, to test the latest version, you may prefer to start with
+-the first two chapters of link:user-manual.html[The Git User's Manual].
+-
+-First, note that you can get documentation for a command such as
+-`git log --graph` with:
+-
+-------------------------------------------------
+-$ man git-log
+-------------------------------------------------
+-
+-or:
+-
+-------------------------------------------------
+-$ git help log
+-------------------------------------------------
+-
+-With the latter, you can use the manual viewer of your choice; see
+-linkgit:git-help[1] for more information.
+-
+-It is a good idea to introduce yourself to Git with your name and
+-public email address before doing any operation.  The easiest
+-way to do so is:
+-
+-------------------------------------------------
+-$ git config --global user.name "Your Name Comes Here"
+-$ git config --global user.email you@yourdomain.example.com
+-------------------------------------------------
+-
+-
+-Importing a new project
+------------------------
+-
+-Assume you have a tarball `project.tar.gz` with your initial work.  You
+-can place it under Git revision control as follows.
+-
+-------------------------------------------------
+-$ tar xzf project.tar.gz
+-$ cd project
+-$ git init
+-------------------------------------------------
+-
+-Git will reply
+-
+-------------------------------------------------
+-Initialized empty Git repository in .git/
+-------------------------------------------------
+-
+-You've now initialized the working directory--you may notice a new
+-directory created, named `.git`.
+-
+-Next, tell Git to take a snapshot of the contents of all files under the
+-current directory (note the `.`), with `git add`:
+-
+-------------------------------------------------
+-$ git add .
+-------------------------------------------------
+-
+-This snapshot is now stored in a temporary staging area which Git calls
+-the "index".  You can permanently store the contents of the index in the
+-repository with `git commit`:
+-
+-------------------------------------------------
+-$ git commit
+-------------------------------------------------
+-
+-This will prompt you for a commit message.  You've now stored the first
+-version of your project in Git.
+-
+-Making changes
+---------------
+-
+-Modify some files, then add their updated contents to the index:
+-
+-------------------------------------------------
+-$ git add file1 file2 file3
+-------------------------------------------------
+-
+-You are now ready to commit.  You can see what is about to be committed
+-using `git diff` with the `--cached` option:
+-
+-------------------------------------------------
+-$ git diff --cached
+-------------------------------------------------
+-
+-(Without `--cached`, `git diff` will show you any changes that
+-you've made but not yet added to the index.)  You can also get a brief
+-summary of the situation with `git status`:
+-
+-------------------------------------------------
+-$ git status
+-On branch master
+-Changes to be committed:
+-  (use "git restore --staged <file>..." to unstage)
+-
+-	modified:   file1
+-	modified:   file2
+-	modified:   file3
+-
+-------------------------------------------------
+-
+-If you need to make any further adjustments, do so now, and then add any
+-newly modified content to the index.  Finally, commit your changes with:
+-
+-------------------------------------------------
+-$ git commit
+-------------------------------------------------
+-
+-This will again prompt you for a message describing the change, and then
+-record a new version of the project.
+-
+-Alternatively, instead of running `git add` beforehand, you can use
+-
+-------------------------------------------------
+-$ git commit -a
+-------------------------------------------------
+-
+-which will automatically notice any modified (but not new) files, add
+-them to the index, and commit, all in one step.
+-
+-A note on commit messages: Though not required, it's a good idea to
+-begin the commit message with a single short (no more than 50
+-characters) line summarizing the change, followed by a blank line and
+-then a more thorough description. The text up to the first blank line in
+-a commit message is treated as the commit title, and that title is used
+-throughout Git.  For example, linkgit:git-format-patch[1] turns a
+-commit into email, and it uses the title on the Subject line and the
+-rest of the commit in the body.
+-
+-Git tracks content not files
+-----------------------------
+-
+-Many revision control systems provide an `add` command that tells the
+-system to start tracking changes to a new file.  Git's `add` command
+-does something simpler and more powerful: `git add` is used both for new
+-and newly modified files, and in both cases it takes a snapshot of the
+-given files and stages that content in the index, ready for inclusion in
+-the next commit.
+-
+-Viewing project history
+------------------------
+-
+-At any point you can view the history of your changes using
+-
+-------------------------------------------------
+-$ git log
+-------------------------------------------------
+-
+-If you also want to see complete diffs at each step, use
+-
+-------------------------------------------------
+-$ git log -p
+-------------------------------------------------
+-
+-Often the overview of the change is useful to get a feel of
+-each step
+-
+-------------------------------------------------
+-$ git log --stat --summary
+-------------------------------------------------
+-
+-Managing branches
+------------------
+-
+-A single Git repository can maintain multiple branches of
+-development.  To create a new branch named `experimental`, use
+-
+-------------------------------------------------
+-$ git branch experimental
+-------------------------------------------------
+-
+-If you now run
+-
+-------------------------------------------------
+-$ git branch
+-------------------------------------------------
+-
+-you'll get a list of all existing branches:
+-
+-------------------------------------------------
+-  experimental
+-* master
+-------------------------------------------------
+-
+-The `experimental` branch is the one you just created, and the
+-`master` branch is a default branch that was created for you
+-automatically.  The asterisk marks the branch you are currently on;
+-type
+-
+-------------------------------------------------
+-$ git switch experimental
+-------------------------------------------------
+-
+-to switch to the `experimental` branch.  Now edit a file, commit the
+-change, and switch back to the `master` branch:
+-
+-------------------------------------------------
+-(edit file)
+-$ git commit -a
+-$ git switch master
+-------------------------------------------------
+-
+-Check that the change you made is no longer visible, since it was
+-made on the `experimental` branch and you're back on the `master` branch.
+-
+-You can make a different change on the `master` branch:
+-
+-------------------------------------------------
+-(edit file)
+-$ git commit -a
+-------------------------------------------------
+-
+-at this point the two branches have diverged, with different changes
+-made in each.  To merge the changes made in `experimental` into `master`, run
+-
+-------------------------------------------------
+-$ git merge experimental
+-------------------------------------------------
+-
+-If the changes don't conflict, you're done.  If there are conflicts,
+-markers will be left in the problematic files showing the conflict;
+-
+-------------------------------------------------
+-$ git diff
+-------------------------------------------------
+-
+-will show this.  Once you've edited the files to resolve the
+-conflicts,
+-
+-------------------------------------------------
+-$ git commit -a
+-------------------------------------------------
+-
+-will commit the result of the merge. Finally,
+-
+-------------------------------------------------
+-$ gitk
+-------------------------------------------------
+-
+-will show a nice graphical representation of the resulting history.
+-
+-At this point you could delete the `experimental` branch with
+-
+-------------------------------------------------
+-$ git branch -d experimental
+-------------------------------------------------
+-
+-This command ensures that the changes in the `experimental` branch are
+-already in the current branch.
+-
+-If you develop on a branch `crazy-idea`, then regret it, you can always
+-delete the branch with
+-
+--------------------------------------
+-$ git branch -D crazy-idea
+--------------------------------------
+-
+-Branches are cheap and easy, so this is a good way to try something
+-out.
+-
+-Using Git for collaboration
+----------------------------
+-
+-Suppose that Alice has started a new project with a Git repository in
+-`/home/alice/project`, and that Bob, who has a home directory on the
+-same machine, wants to contribute.
+-
+-Bob begins with:
+-
+-------------------------------------------------
+-bob$ git clone /home/alice/project myrepo
+-------------------------------------------------
+-
+-This creates a new directory `myrepo` containing a clone of Alice's
+-repository.  The clone is on an equal footing with the original
+-project, possessing its own copy of the original project's history.
+-
+-Bob then makes some changes and commits them:
+-
+-------------------------------------------------
+-(edit files)
+-bob$ git commit -a
+-(repeat as necessary)
+-------------------------------------------------
+-
+-When he's ready, he tells Alice to pull changes from the repository
+-at `/home/bob/myrepo`.  She does this with:
+-
+-------------------------------------------------
+-alice$ cd /home/alice/project
+-alice$ git pull /home/bob/myrepo master
+-------------------------------------------------
+-
+-This merges the changes from Bob's `master` branch into Alice's
+-current branch.  If Alice has made her own changes in the meantime,
+-then she may need to manually fix any conflicts.
+-
+-The `pull` command thus performs two operations: it fetches changes
+-from a remote branch, then merges them into the current branch.
+-
+-Note that in general, Alice would want her local changes committed before
+-initiating this `pull`.  If Bob's work conflicts with what Alice did since
+-their histories forked, Alice will use her working tree and the index to
+-resolve conflicts, and existing local changes will interfere with the
+-conflict resolution process (Git will still perform the fetch but will
+-refuse to merge -- Alice will have to get rid of her local changes in
+-some way and pull again when this happens).
+-
+-Alice can peek at what Bob did without merging first, using the `fetch`
+-command; this allows Alice to inspect what Bob did, using a special
+-symbol `FETCH_HEAD`, in order to determine if he has anything worth
+-pulling, like this:
+-
+-------------------------------------------------
+-alice$ git fetch /home/bob/myrepo master
+-alice$ git log -p HEAD..FETCH_HEAD
+-------------------------------------------------
+-
+-This operation is safe even if Alice has uncommitted local changes.
+-The range notation `HEAD..FETCH_HEAD` means "show everything that is reachable
+-from the `FETCH_HEAD` but exclude anything that is reachable from `HEAD`".
+-Alice already knows everything that leads to her current state (`HEAD`),
+-and reviews what Bob has in his state (`FETCH_HEAD`) that she has not
+-seen with this command.
+-
+-If Alice wants to visualize what Bob did since their histories forked
+-she can issue the following command:
+-
+-------------------------------------------------
+-$ gitk HEAD..FETCH_HEAD
+-------------------------------------------------
+-
+-This uses the same two-dot range notation we saw earlier with `git log`.
+-
+-Alice may want to view what both of them did since they forked.
+-She can use three-dot form instead of the two-dot form:
+-
+-------------------------------------------------
+-$ gitk HEAD...FETCH_HEAD
+-------------------------------------------------
+-
+-This means "show everything that is reachable from either one, but
+-exclude anything that is reachable from both of them".
+-
+-Please note that these range notations can be used with both `gitk`
+-and `git log`.
+-
+-After inspecting what Bob did, if there is nothing urgent, Alice may
+-decide to continue working without pulling from Bob.  If Bob's history
+-does have something Alice would immediately need, Alice may choose to
+-stash her work-in-progress first, do a `pull`, and then finally unstash
+-her work-in-progress on top of the resulting history.
+-
+-When you are working in a small closely knit group, it is not
+-unusual to interact with the same repository over and over
+-again.  By defining 'remote' repository shorthand, you can make
+-it easier:
+-
+-------------------------------------------------
+-alice$ git remote add bob /home/bob/myrepo
+-------------------------------------------------
+-
+-With this, Alice can perform the first part of the `pull` operation
+-alone using the `git fetch` command without merging them with her own
+-branch, using:
+-
+--------------------------------------
+-alice$ git fetch bob
+--------------------------------------
+-
+-Unlike the longhand form, when Alice fetches from Bob using a
+-remote repository shorthand set up with `git remote`, what was
+-fetched is stored in a remote-tracking branch, in this case
+-`bob/master`.  So after this:
+-
+--------------------------------------
+-alice$ git log -p master..bob/master
+--------------------------------------
+-
+-shows a list of all the changes that Bob made since he branched from
+-Alice's `master` branch.
+-
+-After examining those changes, Alice
+-could merge the changes into her `master` branch:
+-
+--------------------------------------
+-alice$ git merge bob/master
+--------------------------------------
+-
+-This `merge` can also be done by 'pulling from her own remote-tracking
+-branch', like this:
+-
+--------------------------------------
+-alice$ git pull . remotes/bob/master
+--------------------------------------
+-
+-Note that git pull always merges into the current branch,
+-regardless of what else is given on the command line.
+-
+-Later, Bob can update his repo with Alice's latest changes using
+-
+--------------------------------------
+-bob$ git pull
+--------------------------------------
+-
+-Note that he doesn't need to give the path to Alice's repository;
+-when Bob cloned Alice's repository, Git stored the location of her
+-repository in the repository configuration, and that location is
+-used for pulls:
+-
+--------------------------------------
+-bob$ git config --get remote.origin.url
+-/home/alice/project
+--------------------------------------
+-
+-(The complete configuration created by `git clone` is visible using
+-`git config list`, and the linkgit:git-config[1] man page
+-explains the meaning of each option.)
+-
+-Git also keeps a pristine copy of Alice's `master` branch under the
+-name `origin/master`:
+-
+--------------------------------------
+-bob$ git branch -r
+-  origin/master
+--------------------------------------
+-
+-If Bob later decides to work from a different host, he can still
+-perform clones and pulls using the ssh protocol:
+-
+--------------------------------------
+-bob$ git clone alice.org:/home/alice/project myrepo
+--------------------------------------
+-
+-Alternatively, Git has a native protocol, or can use http;
+-see linkgit:git-pull[1] for details.
+-
+-Git can also be used in a CVS-like mode, with a central repository
+-that various users push changes to; see linkgit:git-push[1] and
+-linkgit:gitcvs-migration[7].
+-
+-Exploring history
+------------------
+-
+-Git history is represented as a series of interrelated commits.  We
+-have already seen that the `git log` command can list those commits.
+-Note that first line of each `git log` entry also gives a name for the
+-commit:
+-
+--------------------------------------
+-$ git log
+-commit c82a22c39cbc32576f64f5c6b3f24b99ea8149c7
+-Author: Junio C Hamano <junkio@cox.net>
+-Date:   Tue May 16 17:18:22 2006 -0700
+-
+-    merge-base: Clarify the comments on post processing.
+--------------------------------------
+-
+-We can give this name to `git show` to see the details about this
+-commit.
+-
+--------------------------------------
+-$ git show c82a22c39cbc32576f64f5c6b3f24b99ea8149c7
+--------------------------------------
+-
+-But there are other ways to refer to commits.  You can use any initial
+-part of the name that is long enough to uniquely identify the commit:
+-
+--------------------------------------
+-$ git show c82a22c39c	# the first few characters of the name are
+-			# usually enough
+-$ git show HEAD		# the tip of the current branch
+-$ git show experimental	# the tip of the "experimental" branch
+--------------------------------------
+-
+-Every commit usually has one "parent" commit
+-which points to the previous state of the project:
+-
+--------------------------------------
+-$ git show HEAD^  # to see the parent of HEAD
+-$ git show HEAD^^ # to see the grandparent of HEAD
+-$ git show HEAD~4 # to see the great-great grandparent of HEAD
+--------------------------------------
+-
+-Note that merge commits may have more than one parent:
+-
+--------------------------------------
+-$ git show HEAD^1 # show the first parent of HEAD (same as HEAD^)
+-$ git show HEAD^2 # show the second parent of HEAD
+--------------------------------------
+-
+-You can also give commits names of your own; after running
+-
+--------------------------------------
+-$ git tag v2.5 1b2e1d63ff
+--------------------------------------
+-
+-you can refer to `1b2e1d63ff` by the name `v2.5`.  If you intend to
+-share this name with other people (for example, to identify a release
+-version), you should create a "tag" object, and perhaps sign it; see
+-linkgit:git-tag[1] for details.
+-
+-Any Git command that needs to know a commit can take any of these
+-names.  For example:
+-
+--------------------------------------
+-$ git diff v2.5 HEAD	 # compare the current HEAD to v2.5
+-$ git branch stable v2.5 # start a new branch named "stable" based
+-			 # at v2.5
+-$ git reset --hard HEAD^ # reset your current branch and working
+-			 # directory to its state at HEAD^
+--------------------------------------
+-
+-Be careful with that last command: in addition to losing any changes
+-in the working directory, it will also remove all later commits from
+-this branch.  If this branch is the only branch containing those
+-commits, they will be lost.  Also, don't use `git reset` on a
+-publicly-visible branch that other developers pull from, as it will
+-force needless merges on other developers to clean up the history.
+-If you need to undo changes that you have pushed, use `git revert`
+-instead.
+-
+-The `git grep` command can search for strings in any version of your
+-project, so
+-
+--------------------------------------
+-$ git grep "hello" v2.5
+--------------------------------------
+-
+-searches for all occurrences of "hello" in `v2.5`.
+-
+-If you leave out the commit name, `git grep` will search any of the
+-files it manages in your current directory.  So
+-
+--------------------------------------
+-$ git grep "hello"
+--------------------------------------
+-
+-is a quick way to search just the files that are tracked by Git.
+-
+-Many Git commands also take sets of commits, which can be specified
+-in a number of ways.  Here are some examples with `git log`:
+-
+--------------------------------------
+-$ git log v2.5..v2.6            # commits between v2.5 and v2.6
+-$ git log v2.5..                # commits since v2.5
+-$ git log --since="2 weeks ago" # commits from the last 2 weeks
+-$ git log v2.5.. Makefile       # commits since v2.5 which modify
+-				# Makefile
+--------------------------------------
+-
+-You can also give `git log` a "range" of commits where the first is not
+-necessarily an ancestor of the second; for example, if the tips of
+-the branches `stable` and `master` diverged from a common
+-commit some time ago, then
+-
+--------------------------------------
+-$ git log stable..master
+--------------------------------------
+-
+-will list commits made in the `master` branch but not in the
+-stable branch, while
+-
+--------------------------------------
+-$ git log master..stable
+--------------------------------------
+-
+-will show the list of commits made on the stable branch but not
+-the `master` branch.
+-
+-The `git log` command has a weakness: it must present commits in a
+-list.  When the history has lines of development that diverged and
+-then merged back together, the order in which `git log` presents
+-those commits is meaningless.
+-
+-Most projects with multiple contributors (such as the Linux kernel,
+-or Git itself) have frequent merges, and `gitk` does a better job of
+-visualizing their history.  For example,
+-
+--------------------------------------
+-$ gitk --since="2 weeks ago" drivers/
+--------------------------------------
+-
+-allows you to browse any commits from the last 2 weeks of commits
+-that modified files under the `drivers` directory.  (Note: you can
+-adjust gitk's fonts by holding down the control key while pressing
+-"-" or "+".)
+-
+-Finally, most commands that take filenames will optionally allow you
+-to precede any filename by a commit, to specify a particular version
+-of the file:
+-
+--------------------------------------
+-$ git diff v2.5:Makefile HEAD:Makefile.in
+--------------------------------------
+-
+-You can also use `git show` to see any such file:
+-
+--------------------------------------
+-$ git show v2.5:Makefile
+--------------------------------------
+-
+-Next Steps
+-----------
+-
+-This tutorial should be enough to perform basic distributed revision
+-control for your projects.  However, to fully understand the depth
+-and power of Git you need to understand two simple ideas on which it
+-is based:
+-
+-  * The object database is the rather elegant system used to
+-    store the history of your project--files, directories, and
+-    commits.
+-
+-  * The index file is a cache of the state of a directory tree,
+-    used to create commits, check out working directories, and
+-    hold the various trees involved in a merge.
+-
+-Part two of this tutorial explains the object
+-database, the index file, and a few other odds and ends that you'll
+-need to make the most of Git. You can find it at linkgit:gittutorial-2[7].
+-
+-If you don't want to continue with that right away, a few other
+-digressions that may be interesting at this point are:
+-
+-  * linkgit:git-format-patch[1], linkgit:git-am[1]: These convert
+-    series of git commits into emailed patches, and vice versa,
+-    useful for projects such as the Linux kernel which rely heavily
+-    on emailed patches.
+-
+-  * linkgit:git-bisect[1]: When there is a regression in your
+-    project, one way to track down the bug is by searching through
+-    the history to find the exact commit that's to blame.  `git bisect`
+-    can help you perform a binary search for that commit.  It is
+-    smart enough to perform a close-to-optimal search even in the
+-    case of complex non-linear history with lots of merged branches.
+-
+-  * linkgit:gitworkflows[7]: Gives an overview of recommended
+-    workflows.
+-
+-  * linkgit:giteveryday[7]: Everyday Git with 20 Commands Or So.
+-
+-  * linkgit:gitcvs-migration[7]: Git for CVS users.
+-
+-SEE ALSO
+---------
+-linkgit:gittutorial-2[7],
+-linkgit:gitcvs-migration[7],
+-linkgit:gitcore-tutorial[7],
+-linkgit:gitglossary[7],
+-linkgit:git-help[1],
+-linkgit:gitworkflows[7],
+-linkgit:giteveryday[7],
+-link:user-manual.html[The Git User's Manual]
+-
+-GIT
+----
+-Part of the linkgit:git[1] suite
 -- 
 gitgitgadget
+
