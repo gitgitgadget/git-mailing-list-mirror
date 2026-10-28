@@ -1,90 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793200707;
-	b=roPFXeCOWhjDd15xk+MYo+3jeFpijdQaBSg185Io4QmS4Gf0xO9QG4yCzG7zZj0q4QPd
-	 Y/KA+HOikx4gf7jYf4kh2LYtbALrfl1OBD/0Fhx2lOF0DiC6feyoLqQmSMV8IelrnmdBH
-	 BzLjZ0nKTSla8/UwSeFwBM8uG3M1+D1bASJqsKcJrH5MFWux3LjZsnURfNzwjRXSx8rFZ
-	 KnqDY/V04blQyRd/AbukpTpa/nbOlEQ3DqRcjbualoDK9BDSj0pLYG2PabeGvHe8jhYdf
-	 LormNjR1mNk3lU+CMzCwfSRuObQveN/xrjDLHpEK2oOXpSiIzjk84uPOK8fd4kw+Y4A==
+	t=1793201226;
+	b=kqiH8Tz8HnsGjy+KjxHcRugdQ20Soi9pMwDObVEy8vtdSWCBt33lYMWUJ0PPttc4Pv2R
+	 hu66KkApiB2jwgP07Yr53veLCuP1kfR9/hKRZfmS+ypNyc1kIp3ple4xBxh6X37HlttuT
+	 vI/Z1NODQ+CyymwGLkQ5wNSSv6LN05Qeqa1ZcCG+56+JTul2K6iggerDZSlJglTp4NSj1
+	 MvOtsrvLGDcJ3ItKlsCpET2O/WA9Zdt7l2mc0d4wmFD53qZhfL6fPk+DGbWilPY/1Ijf0
+	 JivI5kJk1u0wdLuPeHHmWy0+S/+qgN+oYhbQQIatWrIE63O9BzaMe+SD4LkzBkXbbMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793200707;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=KyBVUGmKn+/jKmSpvfuobtldnRwO8dQ1i1wb1HzpLbE=;
-	b=e91/kaVD1K7U2PCZVI7zTXdTRRK66BLOeHqUrbPminpGl1LPOSUKCW3kD4YrjmOLOAfp
-	 pJi049At9krXCjXMjkS5wncRNz+FPFoh+7JmTt4wbJXxKgxi66eIACDz/hcA/Om3CtRkW
-	 bLNkMtaXbkPmFPETsg+QMrMbsMQ2QE9peLljqFOUR7G+J2pO/oDmePJnfiA4Y5TPNXTOI
-	 x1v9DvMF32vuQnKy7ZCNcZMG5nzKoHZWnhstFziSVcSmxsyrbjvP/QazIovgp4pe472tY
-	 g51eIXXOD+qQFcBp+B9rXc1Hv30X8oDArWzN4HMGoPPdH5b0idsPc1JLWZzM4QUJeJQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793201226;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=E0SZNZXiD3XYnDdIIIIWliuhJJt37wT4uBi7RZB6mCU=;
+	b=q/h0PcuWC9QFJnhaWi06tGp3i8qdBYXTr00G1kHs8D4dfiIy7E7d/PoSX7UXMQCK5JBd
+	 sko3AiLyuJqh9Hs4P/9fBXqul6NbhH/whfHgKLKcUqmdX5+I1sQk2paToUqiWE3fs6k+3
+	 imK2MIbPXnhaflz4yiBKc6CXuINg2FBIrB/QVUNaZdLxpV5fZM5s4MvRbobfOGT4MvfDH
+	 xIo4+gKslsxmD26bCBrcX8thvOyugm6b9SGtzvim0/dW8R7JaClz9EIzLQ4hSPdfT7u15
+	 C1dcD3iOgbp8L9zDWwfyshdowFQU8hzRs22EhazZI38dfjE7BlBirJc1Zll8BBC6A6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FTxsljFi;
-	arc=none smtp.remote-ip=209.85.160.178
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Q78FjkBT;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=E6Utm4Z0;
+	arc=none smtp.remote-ip=202.12.124.158
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34096606A31A
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 15:18:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 34096606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A8C606A31C
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 15:27:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02A8C606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FTxsljFi
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-5364648ae07so14750821cf.1
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 08:18:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793200706; x=1793805506; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=KyBVUGmKn+/jKmSpvfuobtldnRwO8dQ1i1wb1HzpLbE=;
-        b=FTxsljFiSMGIOhvl+aTcSgHTGU+iZKwEReagpU1kpNQhKxgLCKU8yZfRiG4AqvsNse
-         3NU82ti3F88KuZx/y4YBBchtraiMe3G2KafBB7wRVqeWfZXbDFg9eil/Q2Tbr7tpVds/
-         riyNMAsMOmkXk5G3TNd0sFmXB45CZnzfC12Cp91YdAdwRZwZDe7GQK1Xw7afWO2KpDe6
-         jEcAFt2TvH1PkR/LSo6fys8lNPr4ddfJLhqmjX+3Hwr7qBnHlEuKOEP2qhOBxiz7wbJn
-         7lpjJs+//EvHSHD5Q+9UrO9J61qkfwN4KCjW6XugLIhs9NhTwXqibxuFVO/fN24MtSVt
-         a+iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793200706; x=1793805506;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=KyBVUGmKn+/jKmSpvfuobtldnRwO8dQ1i1wb1HzpLbE=;
-        b=xlIk84zkXalRJ6RWvz4QEyilGq83SXrbOcvmYmfTNWP9MmWWRgLAXfToQYA7F3sN3n
-         pZvqumEdp747rcYP68AIIe8l4O+VxAvhInCeinC6JXrN2GLZmO0V4rZv9MLbg0qUe0GR
-         gVxSVPsmeb9GFJIK2bkYPUlMPxEfa1P+G+z0BisCinq/YRg0xvWpte+/ReMdhD1w+COu
-         r0TIIwI3m0YySWOVfPf3+eEpghgiGoOtoiKX07ZGLAbEb76ZXmyOQOp4WCPLC+PQXIt8
-         bAmR5pfVB1jdJJDW3Lz9ph86PlV3xiGy2alk/fsBH/SeRqIP0Jd7bpGKbaddvDfqoFHN
-         WR4A==
-X-Gm-Message-State: AFq9FYLlERp8E1vOJdcyeTVDc3yGWo+AxyGadBKDGh/8nB9sPaGPJDSJ
-	LRNhmAJGzEubKUm2TPpMBX565dRdypQQrfyZJ+rt2UhS6dl2NFA9WdZT3S8CDVzj
-X-Gm-Gg: AYBFou3PVL0fOdi+QzgbgcUwbsIPnrTB+QX1oJ7f61xMNBp/mDAqQsHb9qp2vzqgGXo
-	Kox6udVfB5gWqeMElFV+SQLWTokUwhcu/K7YhvwY2Go6/CPbFE8Q221BmJ1GLQ0f5UE95VQHHEG
-	+qSpyWIn5SWd+Ydy/KyldERBgdHDSZYTD33RxJQw0rWsMtHGgyRkk9wW3FSk1V2M5F6dAOLgWkA
-	CeVmNvMosP3MqgphF7vjPivcfrgEZaWYqgbSvW8oqHJtEDZ6OP3N48QH3eT1X4EO3aeczcEs3Rc
-	C2GLApCxkX3qUS383z6RxeuBZP+W14/imM8u6splOlAGF4/vc/1G+GTWgh8H0txXuN0ShTf1h+P
-	y2sEfE82t715dAPqP7yRxv//aaYlOwdWmNPdydtQ/QHs/iL7oQ6AGxonHsAar6HMEnWp1JkM16E
-	o5MAstiIz+rTJ1OX9IVOEonIfXUyNnlKm/BgdszmeKBacFh87fIoptmL1E/txAGuCmGiX6fyDzD
-	mkaZcv3oWxq6SDrLtyQOFoUoe6aUJ5bew9uj87J6L1Oq54P56v4HRUPskRpqv8WE9muWw9ryktj
-	k+7QiHwbUTI/0VB4muqlp2Sm58TEFUSzvw==
-X-Received: by 2002:a05:622a:528f:b0:535:11bb:c2a3 with SMTP id d75a77b69052e-53fcc6cbc72mr43906631cf.53.1793200705943;
-        Wed, 28 Oct 2026 08:18:25 -0700 (PDT)
-Received: from [127.0.0.1] ([57.151.83.105])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c6bc95b66sm64701066d6.43.2026.10.28.08.18.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 08:18:25 -0700 (PDT)
-Message-Id: <pull.2285.git.1793200705017.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 28 Oct 2026 15:18:24 +0000
-Subject: [PATCH] odb: do not list our own refs as alternate refs in the
- quarantine
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Q78FjkBT;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=E6Utm4Z0
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 571947A00F9
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 11:27:05 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 28 Oct 2026 11:27:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793201224; x=1793287624; bh=E0SZNZXiD3
+	XYnDdIIIIWliuhJJt37wT4uBi7RZB6mCU=; b=Q78FjkBTvbZV8CVZ5ziB2adtxL
+	zeDhxJBfcIew92sxn/FAAbj+KuJhqO4sE0aPqJoElvCRUNsIp9COWQdixX8fafvm
+	+jGFovytynwfmmdg5pGd2Gqs+oTnE1YeWmioZyIEy2hlmcErPg8gHwqglg2onRFB
+	LBVfbSCNIWTV8SSwW4RXEPS271ha8J4lRoeHM9Pn3QW0ljaPMwNgH4ZKiuYKSlyF
+	HCpvfcUv8itsl1aTLwsWOYNeccvwvVYUo8aY4pNEmmBMnoV0AxpWQP/OXOXlyNAu
+	jZ+jRr2Sb1aZoGWYgoWDHGKqFD+RQX6aqtbClifRIA/uIEKl7kQD51hAB60A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793201224; x=1793287624; bh=E0SZNZXiD3XYnDdIIIIWliuhJJt37wT4uBi
+	7RZB6mCU=; b=E6Utm4Z0kP46SmPfPPl4K4yJ9VS5fj9AQM2Gua22FIDQn1Xl6Q9
+	DdUk+9DeHAcRLXpyjY0W4Ya+mWbwgrUJDltK2SQLVHSeVnCsBETwbGO2WdvyXX80
+	e5LPBypnyNU95cV5vy590jOaB8Eq2Wo7N4I/6dj+oKUwA+yICbO3nGEsHCeLclDS
+	RMpc7SOPeI9KZ/JbJjdYuCHbb/AWPygqPZ5BRcFqLmEthX0Hnbdbsr0v8L3T8Eh8
+	fBAAlobEaifaLgpikrgvbaVQU0SdIF3fHpEotwttykGBH17LoIRlXRuMKp1e3i7N
+	+hoHMPn5JU4ztSytmgMvS/3HVqSEm4pT+MA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793201224; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:H3pwhOtKHYYgb4iV+H/wavR7heFrHP3eQWCxRfTG/4QRPl3
+	GWSv8cAzhYJeg3znmW7nYMu9H2Iq9Ud8ua8XNSjdPQ1OFsR+9YX5RGkf1HkodYvL
+	9vz1Epbu0XJK0Q1TUVJIoM2J5XBrq8HJPdu2+R0h981yN52WSnjBwmULWfcP5YDn
+	fyziq9YZ8jBVX8wjQCF8Sge69D+1alves+Juc8V3uUyL+iLRTUpaS4V5QchlskZm
+	2/58lI5IiHhnxL0PYmPbVbkHSRDKHsOMenSZs1/dqvQgB0p/zionhLEHGyyBATYy
+	CtefXLtC6Nx0GIi41OS3LOKDtV6vSr7e2iPfQGg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:JzK7Vp874G2Hlr/qXMTtH5SC9cIc7js+THaqza7leFk=:gDFIJG+NBLkLHE97LHcmKjshi5GR6JpvCGfBoZ26JS4=;
+X-ME-Sender: <xms:SBTiampLOTFJh5iDxgQiSNwTa6eyLTire98bDOnViMXqfEhDxIQHsw>
+    <xme:SBTialXGjW9XsFe_SIoQL8AeXfkNtJPgvgR4m_5lY731R_LlWdyVUUtDIkXOtLW01
+    EwHSn-lS2mrni0Amb8S-43zOhfS4U6NnuvLSr5YMHgD-h5HCrfbqw>
+X-ME-Received: <xmr:SBTiapaknrPJ-L4ieSB2sdY9TXnzeAFZRsAi89Ncjc0i7erk4yDlUIwr5t9IfVKXIw4uK3hxF1DbT-RZxF5SsUGz2t6_GNBf-vqY>
+X-ME-Proxy-Cause: dmFkZTEyFLgwzijmu6W8fcwwjOrol8eWJrtZsvs4xDTvEFXSm7E0nzDFhSLFC4Fgd82r+w
+    0M1cdCU1sWwuepO62akdQM4ZeAZBBnANoZA2tsofmM4/O+9QJYqNoOhs8MolLLQaf9wE7i
+    oOyMaO2OQekfy78oyp4pf5ZBgJycQlsoyR/D7sZMXoNzin92AoLfFibKicDEyorc3t2U9w
+    YKgcb+U5kM6qvt6Cu1oguZJDrNGWRUsWxtQiPh2GrRH/o/FwgxPLGoMcD7X12P66AoZSd/
+    TwRTxWdQme+2j9EUR6GPJU2cVwuOsYBnssqNGhALe/+no8FXXoMYCNq98PX492iPJkxSqb
+    3/uVD59vTdMSt6yw1EPZkXszNC/TsMgmJOC1qg+cY1n/LhDmOYO+jQG8B47tv0qEXI2LR/
+    qgmfJRrg5tjdssY3cCZusw48Lgvv5NOfaw1dw2niOu4ogohVmAZRzbU0d4GE/snBrB2wBe
+    BddKs8wUWvK6j8aQly849IwNMzl+WyDpgS0sDGUiL1zvmdr+tfKnxzExzr8S50n2o+zx4e
+    RBuwe3u+9yhGI7+0ob1gHP1VDcdK86xEhJj9RPlgrapETrSZwqLYbOPrZptFgi+K8zDB7O
+    E71uOGr5rirAFwWAzosDxLwJ5Eid2nuuh5wqHvVsCFopn1XwnsXMBo6k59fQ
+X-ME-Proxy: <xmx:SBTiaqc3ACNmLrlD_epjF6LgGbLGBSGra3VDUqpv26vLljJiDi1Nhw>
+    <xmx:SBTiar0X5qwQbxz6I0v4IyV-_wGmusSi3FOUCiDXyjOUdJqVCmTuAg>
+    <xmx:SBTiapLk8K23HMKl0HCwbg32KLDbdcsYwvwbt4PgfKQXTqVWUdkl1A>
+    <xmx:SBTiaiE8EWOh73SAah_7PAW4jeYIXcFHn7l5HY9O-k-92NuqKE8Y0g>
+    <xmx:SBTiah1KYtzQ8hRJpsCqqV4R3wa1HDtsLWzPf_Bg14wxYspUMG-GAHyi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Oct 2026 11:27:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: phillip.wood@dunelm.org.uk,  Jasper Mayone <me@jaspermayone.com>,
+  git@vger.kernel.org,  haraldnordgren@gmail.com,  ben.knoble@gmail.com
+Subject: Re: [PATCH v2] worktree list: add --branch to select worktrees by
+ branch
+In-Reply-To: <CAPig+cT6rxKptqSEKuVbi2FafBqh+DfcHAkHfz2-=SH3y2hfyw@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 28 Oct 2026 02:02:55 -0400")
+References: <CAPig+cTZEcn_5TG0iMVJJym8Zhu1KYP+y9Oc1J=JJgDYSzNSdg@mail.gmail.com>
+	<20261024165311.57387-1-me@jaspermayone.com>
+	<e08fd267-7017-493f-8f1b-d8dfb568b5fd@gmail.com>
+	<CAPig+cT6rxKptqSEKuVbi2FafBqh+DfcHAkHfz2-=SH3y2hfyw@mail.gmail.com>
+Date: Wed, 28 Oct 2026 08:27:02 -0700
+Message-ID: <xmqqik2ldewp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -94,231 +128,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Jeff King <peff@peff.net>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+Content-Type: text/plain
 
-From: Kristofer Karlsson <krka@spotify.com>
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Since 722ff7f876 (receive-pack: quarantine objects until pre-receive
-accepts, 2016-10-03), receive-pack writes incoming objects to a
-temporary object directory. Child processes see it as their primary
-object directory, and tmp-objdir passes the repository's own object
-directory to them via GIT_ALTERNATE_OBJECT_DIRECTORIES.
+> If so, that potentially raises the question about how such filter
+> options should combine. It's obvious that multiple
+> `--filter=branch:<name>` options combine via logical "OR", but a user
+> might want to combine future filter criteria via other logical
+> operations (AND, NOT, grouping). Do other Git commands set precedent
+> regarding filter option naming and logical operations?
+>
+> Note that I'm not suggesting that this patch should implement such
+> additional filtering behavior (it should not), or even that all these
+> questions need to be answered right now. I'm asking only, taking the
+> above into consideration, whether this option should be given a more
+> generic name to avoid closing the door to those possible future
+> enhancements.
 
-The connectivity check passes --alternate-refs to rev-list since
-39b44ba771 (check_everything_connected: assume alternate ref tips are
-valid, 2019-07-01). Inside the quarantine, the repository's own object
-directory is one of the alternates, so --alternate-refs runs
-for-each-ref on the repository itself and lists all of its refs.
+Perhaps, but at that point I suspect that the most general form is
+to allow you to write a callback function that is given the path to
+the worktree and determines if you want the worktree to be included
+in the result.  Then
 
-That includes hidden refs. bcec6780b2 (receive-pack: only use visible
-refs for connectivity check, 2022-11-17) added --exclude-hidden=receive
-to the check so that repositories with many hidden refs do not have to
-load all of them on each push. The hidden refs are excluded from --all,
-but they all come back through --alternate-refs.
+	git worktree list --filter-command='
+		test 5 -lt $(git rev-list --count master..HEAD)
+	'
 
-Skip an alternate whose repository is our own when listing alternate
-refs. This is done by comparing paths, which is a hack: it is mainly
-here to measure the cost of the bug, and a proper fix would have the
-quarantine tell its children which directory is ours. It is safe,
-though: alternate refs only serve as negative tips that are assumed to
-be complete, so dropping some can only make the traversal walk further,
-never make it accept a missing object.
+may become a way to list worktrees with work that has more than 5
+commits to be massaged down to 'master', for example.
 
-Add a test that our own refs are no longer listed, a test that the refs
-of a real alternate still are, and a perf test pushing a single commit
-into a repository with a visible branch and about 200,000 refs hidden
-by receive.hideRefs, and into a copy of it that hides nothing:
+"git branch --contains" etc. can be expressed inside the framework,
+so "--branch" may become a special case for that more generalized
+mechanism.
 
-    Test                           HEAD~1            HEAD
-    -----------------------------------------------------------------------
-    5552.2: push, hidden refs      0.31(0.32+0.08)   0.10(0.06+0.03) -67.7%
-    5552.3: push, no hidden refs   1.25(1.08+0.68)   1.03(0.84+0.62) -17.6%
-
-With hidden refs, most of the time went to the for-each-ref child that
-listed the alternate refs. Without hidden refs, every ref was listed
-twice, once for --all and once for --alternate-refs.
-
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
----
-    receive-pack: connectivity check does not exclude hidden refs in the
-    quarantine
-    
-    This is mainly a bug report, in patch form so that it comes with a test
-    and numbers. I don't expect it to be merged, at least not in this form.
-    
-    When a repository hides refs with receive.hideRefs, every push still
-    loads all of the hidden refs in the connectivity check, even though
-    bcec6780b2 (receive-pack: only use visible refs for connectivity check,
-    2022-11-17) excludes them from it. With many hidden refs, that is most
-    of the time spent on a small push.
-    
-    I stumbled across this while working on the boundary walk of the
-    connectivity check (the follow-up to kk/connectivity-check-incremental),
-    when the walk loaded every ref during a push even though it should only
-    have looked at a few of them.
-    
-    The cause is that receive-pack runs the check inside the object
-    quarantine, and there the repository's own object directory is passed to
-    rev-list as an alternate. --alternate-refs then lists all of the
-    repository's own refs, hidden ones included. Without hidden refs, every
-    ref is listed twice instead. Setting core.alternateRefsPrefixes to the
-    visible namespaces works around it, though that also limits which refs
-    of real alternates are used.
-    
-    The patch includes a small fix by comparing paths, mostly so that the
-    perf test can show the difference (about 0.31s -> 0.10s for a push with
-    200,000 hidden refs). I am not really happy with it as a proper fix
-    though.
-    
-    I also tried resolving the object directories that --alternate-refs uses
-    before the quarantine is created. That got a bit messy: it needed a new
-    internal rev-list option, and receive-pack had to carry the list of
-    directories through to each of its connectivity checks. And it only
-    fixes the check itself; other processes running inside the quarantine,
-    like pre-receive hooks, would still see the repository as its own
-    alternate.
-    
-    So the question is really where this should be fixed: is there a better
-    way for processes running inside the quarantine to tell the repository's
-    own object directory apart from real alternates?
-    
-    I am likely not the best person to answer that. Patrick, maybe you could
-    take a look, since you have recently reworked tmp-objdir and the odb
-    sources?
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2285%2Fspkrka%2Fquarantine-altrefs-bugreport-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2285/spkrka/quarantine-altrefs-bugreport-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2285
-
- odb.c                            | 16 ++++++++++++++
- t/perf/p5552-push-hidden-refs.sh | 37 ++++++++++++++++++++++++++++++++
- t/t5547-push-quarantine.sh       | 25 +++++++++++++++++++++
- 3 files changed, 78 insertions(+)
- create mode 100755 t/perf/p5552-push-hidden-refs.sh
-
-diff --git a/odb.c b/odb.c
-index 2c93a9490c..0cda333c4e 100644
---- a/odb.c
-+++ b/odb.c
-@@ -183,6 +183,7 @@ static int refs_from_alternate_cb(struct odb_files_dir *alternate,
- 				  void *payload)
- {
- 	struct strbuf path = STRBUF_INIT;
-+	struct strbuf self = STRBUF_INIT;
- 	size_t base_len;
- 	struct alternate_refs_data *cb = payload;
- 
-@@ -190,6 +191,20 @@ static int refs_from_alternate_cb(struct odb_files_dir *alternate,
- 		goto out;
- 	if (!strbuf_strip_suffix(&path, "/objects"))
- 		goto out;
-+
-+	/*
-+	 * NEEDSWORK: this is a hack, mainly here to measure the cost of
-+	 * the bug. Inside an object quarantine, tmp-objdir passes our own
-+	 * object directory to child processes as an alternate, so we would
-+	 * list our own refs as alternate refs, including the hidden refs
-+	 * that the connectivity check of receive-pack deliberately skips.
-+	 * Comparing paths papers over that; the quarantine should rather
-+	 * tell its children which directory is ours.
-+	 */
-+	if (cb->repo->commondir &&
-+	    strbuf_realpath(&self, cb->repo->commondir, 0) &&
-+	    !strcmp(path.buf, self.buf))
-+		goto out;
- 	base_len = path.len;
- 
- 	/* Is this a git repository with refs? */
-@@ -202,6 +217,7 @@ static int refs_from_alternate_cb(struct odb_files_dir *alternate,
- 
- out:
- 	strbuf_release(&path);
-+	strbuf_release(&self);
- 	return 0;
- }
- 
-diff --git a/t/perf/p5552-push-hidden-refs.sh b/t/perf/p5552-push-hidden-refs.sh
-new file mode 100755
-index 0000000000..e9aa206298
---- /dev/null
-+++ b/t/perf/p5552-push-hidden-refs.sh
-@@ -0,0 +1,37 @@
-+#!/bin/sh
-+
-+test_description='speed of push into a repository with many hidden refs'
-+. ./perf-lib.sh
-+
-+test_perf_fresh_repo
-+
-+test_expect_success 'set up repository with many hidden refs' '
-+	git init --bare dst.git &&
-+	test_commit_bulk --ref=refs/hidden/base --id=hidden 1000 &&
-+	git rev-list refs/hidden/base >commits &&
-+	for i in $(test_seq 200)
-+	do
-+		sed "s|^\(.*\)$|create refs/hidden/$i/\1 \1|" commits || return 1
-+	done >input &&
-+	git push dst.git refs/hidden/base &&
-+	git -C dst.git update-ref --stdin <input &&
-+	git -C dst.git pack-refs --all &&
-+	cp -R dst.git dst-visible.git &&
-+	git -C dst.git config receive.hideRefs refs/hidden &&
-+	git symbolic-ref HEAD refs/heads/main &&
-+	test_commit_bulk --id=visible 1 &&
-+	git push dst.git main &&
-+	git push dst-visible.git main
-+'
-+
-+test_perf 'push, hidden refs' '
-+	git commit --allow-empty -m new &&
-+	git push -f dst.git HEAD:refs/heads/new
-+'
-+
-+test_perf 'push, no hidden refs' '
-+	git commit --allow-empty -m new &&
-+	git push -f dst-visible.git HEAD:refs/heads/new
-+'
-+
-+test_done
-diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
-index 1b7097179e..855a1d2c0a 100755
---- a/t/t5547-push-quarantine.sh
-+++ b/t/t5547-push-quarantine.sh
-@@ -101,4 +101,29 @@ test_expect_success '.keep file is removed after push' '
- 	test_path_is_missing "$keep"
- '
- 
-+test_expect_success 'quarantine does not list own refs as alternate refs' '
-+	git init --bare hidden.git &&
-+	git push hidden.git HEAD:refs/heads/main HEAD:refs/hidden/one &&
-+	git -C hidden.git config receive.hideRefs refs/hidden &&
-+	write_script hidden.git/alternate-refs <<-EOF &&
-+	echo "\$1" >>"$(pwd)/alternate-refs.log"
-+	EOF
-+	git -C hidden.git config core.alternateRefsCommand ./alternate-refs &&
-+	test_commit hidden-push &&
-+	git push hidden.git HEAD:refs/heads/new &&
-+	test_path_is_missing alternate-refs.log
-+'
-+
-+test_expect_success 'quarantine lists refs of other alternates' '
-+	test_when_finished "rm -f alternate-refs.log" &&
-+	git init --bare other.git &&
-+	git push other.git HEAD:refs/heads/other &&
-+	echo "$(pwd)/other.git/objects" >hidden.git/objects/info/alternates &&
-+	test_commit hidden-push-2 &&
-+	git push hidden.git HEAD:refs/heads/new2 &&
-+	(cd other.git && pwd -P) >expect &&
-+	sort -u alternate-refs.log >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-
-base-commit: 37b3475fb530c14109211faca33716a173db61ed
--- 
-gitgitgadget
+I dunno.
