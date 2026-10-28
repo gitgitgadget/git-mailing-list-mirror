@@ -1,128 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793172903;
-	b=fmSJMx98QN/KJWS24EHdP3b567Ak2RQucQ8fafqVvZFDKuYZV0gYD8ipXtY3+rrSG429
-	 nrAj0gUPbHm/zK9wNVW9iVtLye8JPa1PQl4rOz8+6j0VEjNViQs+p9RGw0/cr6wf848CO
-	 Mrjhq9CdKVkbubYxnh5Mklgj/mzTIqrZyilhXN6/xfe9pOUYG4ETaFYDWQVMNyk1jzCRK
-	 wBzU9Dji6po2mGJCeXpaa0Kk8D6+lflAXxopOlTuYONu9Y8G8dujekXa9ZAjNZohINcNy
-	 4oIp1ghRae1SsDcwIkyVhMDwgcy1e2D2EBZyGYW1EkpjAG/ocQflJk3nZHp6/BwBjeA==
+	t=1793173025;
+	b=EbENco8i2TO+Iu6brA1Fqg1Rat41XlUbaSkqbUNlViTfEEv2JvtchzyUYlK37NPLz4OC
+	 /eRL6E/Qel5wUTBC2GQbRGa2oVNSK1ChVvabUspz80Jfifa+a+B7959mvdFnA7H9tU+wP
+	 3RyK92lQMsceL+6wAWFg0YfnlDuo8UIvyaslR8yFiRhjG9GZIys6Hu/PaIX7CTzdjTohH
+	 VmIR1HSFM9GWjRQgJ2N/BysyoaJJIt9fW2r4CdKihtF+zh5lXO6ZW1ELiqKvQLZl7yNWC
+	 vKUf13Ca3ziaB7xM4qyAKuCnoE8Q/IULjZeXKbyo2WEcjF4HrOGVFuhWWJ5/R1VmEwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793172903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793173025;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=xNDdGixs30gcs1i51/ZErV1Yb+1RfgkC32dR+PgQmoE=;
-	b=nwU5RsA0syzZ+PbgQYlshYL+AA6mtKMiS2OHaxx1x++WT1CW2JJdt39kXoaOgU3vi1U6
-	 XwPohfXyuthGyHs7PM2gx30dOpDtDj1ENnQWvUaGnL47iZv256z4pdtMUO774K5Y1GdqP
-	 y24uPJOHDpw6QiWr4NQTSlQFwySpsGJZRMmqYfKe0CBoBzCx7vZhyNcXwH0eAVGJZW0gl
-	 Nq63Oq2lgfx6M/GRXVaaJbVTrOQpzi3X9bzec4gcrVeE43SiwpkBZ4y9CpmkgMKSCgWI6
-	 0PfuNyM8/FIz4q6wi7+CfZjWgcN/+LMc1bHh7CVqX5Nd12b84NmzOW/uGVIfsXDUD5Q==
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=k8vW7YamAXvfWYe62dGSCyIjpcDs9Y2Ra5QcbR5fqU8=;
+	b=hnCobtt1OtY1dY2Nc9qjaUqFSzMnbrKu88FqzDgkbxACChYRek1nTita0hrVGDXvuuLv
+	 d1UPhQ2NZOnLh7FwwkhxKhAUjfGiYvswizSufjesrtgi3Ih12aXP5tI9R3/e5ZehhpvlK
+	 Xxx78cSBYpIpRO6bKEWbTcEaEyUoDYj51kpaXRwjvN5JN5z68qnin/5O0KyA7nW8Sx2C9
+	 Rec3sUCXuGrnIPxCyvBxk9tk9QxB+USr8xR6INLCQwyJav9bkeI9dIp+0nWq+kk/8VhBH
+	 yY5E3+yizYGpT8ExmhFQlo4lN4frV+bhjQ1hl3jeIke0C8SpP2BSmxkqxfHiYeb3M2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=sSVivlm2;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=TpIaKIYU;
-	arc=none smtp.remote-ip=202.12.124.153
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DAFNjlio;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="WZ+OlL/B";
+	arc=none smtp.remote-ip=103.168.172.159
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA2E606A31A
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:35:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ACA2E606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7B0606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:37:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DA7B0606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=sSVivlm2;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=TpIaKIYU
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E6AB77A01A8
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 03:35:01 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 28 Oct 2026 03:35:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793172900;
-	 x=1793259300; bh=xNDdGixs30gcs1i51/ZErV1Yb+1RfgkC32dR+PgQmoE=; b=
-	sSVivlm2MswHo6DWvgVaReFG8zhSOpbkeORgB9pvn7R5JpeTPZ4cvyzSfGiUyest
-	PM6pdt9pMrX8OZI9/FObbJtplmjP1nxdEkI+gtn+JDrS29d6DquusVCQiy/iBa4/
-	/M0dRv3v0/fs6UkshvS6Da5YH9R7PaPWc71vvE/WX1ARJ/87IX2CpO4RF3u6zUHF
-	hsljcXrZcqJfPPtr9MyNHdS7SMiw95vI4J+61Y2Ru1nFSkr3y9c1F/D9/Ti2HWQg
-	8VImUHtIF6lDRvbyb3WnvyeiPJtF5lbt7R01ZvT6y1fP9no3+dEVih5FZ5ruxGCo
-	XRSW1QHCUvmSOp3le9ZCiw==
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DAFNjlio;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=WZ+OlL/B
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E9B5414000E1
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 03:37:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 28 Oct 2026 03:37:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793173023; x=1793259423; bh=k8vW7YamAX
+	vfWYe62dGSCyIjpcDs9Y2Ra5QcbR5fqU8=; b=DAFNjliogKdYl4iE5Q/O4aRsuu
+	mITCdf+2IUgZOL2g/7VPTAK6vib/jyThpSSqvMu4ZLUG1EIRVktrPxG366Wv96Rd
+	Yb+dFRy+KRqXLdXNkb+F7jIsWEr7T5K2hgVyYgOLTWqpuPjk0VMga3bEy31f5q9K
+	60qMrVuHa91m+JsCnd4/Deh0XOOHYIorrGXbe3Bf6HiU1/aVXPpJ0ZkiUtgyQzyZ
+	Ov8O9vVwodqGETnxUR27ah+hZvns3FMynlD1TnuwGTbA3pIMKnYfqtxwp6tLSvW9
+	7J0sxm7Lh+xht4MjcIfj5hmOk3X5EoVHJ+q8NO2q0Unz5FRe4AsoUM0kKMLA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793172900; x=
-	1793259300; bh=xNDdGixs30gcs1i51/ZErV1Yb+1RfgkC32dR+PgQmoE=; b=T
-	pIaKIYUQn1c2asPQ0HaTvDyjm3QT2tpWCwAtcSaNqPgAi8fc7SsAL1hjCNOrFQKa
-	P48K7sBJANaZ65vO/jAKQ+ZDZwAIy6PSt2/0JygcmOMmjnLOjg1/oo/1Vg44HkFk
-	9f5q+zeAX2VEPqd/AqvJuDA8JY2+SIZ2YgG2fNw4ALSkjchLf9sYDViyIdi3/rUA
-	tm2GD9z7T+v4CEVpzEaGr94o3t9rk0qiJKlQDGWtvJ1JQCDZsjwz08k+bsDN91Qu
-	3Qk+3sPapBzZlevnSAIAGz4wGtmSZ9e9HN3CSKwO8uApXDn+VT2Ke2+VCiKR+6Cm
-	UVLLsH/Jops/xgfFaCMZg==
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793173023; x=1793259423; bh=k8vW7YamAXvfWYe62dGSCyIjpcDs9Y2Ra5Q
+	cbR5fqU8=; b=WZ+OlL/BX/2kdn4kX7J1KWsIY23oRQ7YKaWbE2USSB1Qm7SLotF
+	Fcp+Q2aIBrdB8hiklMHPc8RoeReq/rmtk2qBLi5Ds2HWYeCyibiQK+Z8V+Iq6CIN
+	n/rNV+EyuW+/uTWhqLrTvKNjCfRgWrbBGrZhaU4f+VDhpA32OYGWdDdUYcjRpKPw
+	+EZmI07fXekt+SNXV+gKebwTJsBjhPVnznygAUlVeaLrLf8DiKcEgGA94wX6i+tL
+	5j69rqTGtpraPWdw7lF/OV/M7bC1EeKFNGX1aaulbTTqGLU4+PI7DVkJV2bdfLil
+	rH8J4RnzJK6Ew6usjO0h9K7eRxzu9v7F1SQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793172900; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793173023; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:k+I9SO/um+pFqAbpH3Vb/gL5ww8Q2tpxezNIrkWUcGi5LYp
-	QLz7p9ALwVswiA/hqD6+3pAKUV6rUbRpOtZBdQWlpFLc60VBT/2KU/34hVp6uIze
-	teXsetSNdhfR2ZEvcPq5Pz/Kx3o21wmEABiS6rC4ssoyyV6qk4cNnj5vkyjAFB4b
-	2uzoXDzweEIWkJou5igykU7HUdkbhjjTMWrwUyWklqlXzqG384wGlwV93dOmhRN7
-	MHvofP0ZPD8Ib+mu99qIIPVeBFwYKSpbzsPOuotRjPP5WxJVo95WsL9hu2Q/1wgh
-	57I9Zxox6RyylH3ZQv7YAMQsmTJlkidiGe/9JXA==;
+	s=fm1:rsa-sha256:fT1S7Q77EEvXYk9FzLaDJnj/N41DJ5lqY4aJdKv0TOJCTIT
+	qAY4IYfeBfsMpvcr43QXQrkQdrB/MfX6OD/W3LAjMy/TjjIbUCoVz3RCQzVbVXQU
+	3yVw+z1Q+kxcni1NP/1+6vQa+Tg5RnDz6XkPA4Orl5mxVrLPgxHG/fYL+rTtWeMz
+	bpaUrdSDtI2oALqb5Naeei/SlW7lgvxXYujY82F2L/eFVzAV3A0IZNx3xYqknWPA
+	QvrhF2tpG+j5Z2hOOVf+wuuPJ4YzjQTXnfEoNs51kuvyapYCpUfttJb+Lo6Kn0HT
+	88+GJCpqUC8XCR4CocbRVVilWlwvcbQ+534KSBQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-disposition,content-transfer-encoding,
-	content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:zsTgoCUww6Wr+P+VhyNOe0VDrARXRvOe6p7thtqGyuc=:RZ/unoqOfKO1zhakSePu0lifclmdDHM9U6JQmhlrPtY=;
-X-ME-Sender: <xms:pKXhalxpiKYdz-4cWO-IzFTYCVJUPG1WfZ-K9b3SounvIUh09smMfA>
-    <xme:pKXhasREvMJMB71Cfe-Gi4WvZOn0l1h2K-m6GLytvn9ns5_qzrVXvpFyEnp3q1z5D
-    ZuaTCgfc3RvYEJ_7WW6jlm78oEO2sZcYYaumTiKoWYo3Regp6GlxKU>
-X-ME-Received: <xmr:pKXhakVti9rH_vT0jC30Oa8RzP86KNK0g8OTmc8tKNTbMsoGzUlf6w>
-X-ME-Proxy-Cause: dmFkZTGeNaWO1aBrgvQjYe8aXpzg8+0n0J9tguJT223e94V1yytR+iI4T0Q4Pricylj7MX
-    stuPchskJbV8gxM5WUHdSJMDGVSyllf19pKFTyUeY6nOWhq3qVXOaJOuzIvt7Wi/LIAUNo
-    K65VTl7GHpHpOj/6jbzyk0tFjcr/1aakFcyc8//KHxqdozYFXU1BpcuckNIE/kWD2YxCpK
-    uRdEGXfYHSATJ7QeEmX4NVJilYlVecqUvzRS01pOE3rAmEA26EGv9ONdUDX7ScP/WoHR/M
-    8Wwc7LfzKKPyYcQUpbj0KVtnJp9ALxx7WuvWF9JLBzh4CSUl8mh5btcmT9cVRYQtk/bbit
-    i9UbXBOqOwUr4eiQL7B+xWiKBEqO4logqF0l/PlU1QrROS1gyMfaBLVTmVqpJeLAVIMlvQ
-    ZlILukugG7YF1kghKcyajyaKwhIygOefMGw39VCKTcRD8TfJ5jE2h2q6PV2KseYpyT+VDR
-    V1OmqkrA5C4vi2JYc+z6LGmzn4JGo5bC0quWsVXG34OW6EZi8jVXgQ4YAEZ6TrFpZOQr6X
-    gzD4oxC6GO+AGLDO6/XYRm8Wp6vPuhasch06ug0Pu1yLQ0EY8jF4Gra+Qmj++WW2qg1WYW
-    5AO1nQeH+VDF5k6WzZHAf6iKKh6DE+Bwur132yKmD6OBL4cUWFj87f7UYtxA
-X-ME-Proxy: <xmx:pKXhamaSRbxgO-gY9wZK5iQOlpVaBw9IHSHl6zLjjOKNBJBYSPPjeg>
-    <xmx:pKXhai0vcMICCuPMBV5h-ySk4E2ogInknaV7b54WAN6SRhp-qzb9hA>
-    <xmx:pKXhagjSOGYkv5h_ndFW0nyFWtJMSFKrXMVhhitF-mpnfbq4rFLq4g>
-    <xmx:pKXhauawL6peSkshOzqLakSQ69L3T7w13v4GOi-1X0d-NqIKEmzFQQ>
-    <xmx:pKXhagr0LbqNwYRv1vNnUgmAGwDRHv90omdixLF_CHh6sfmX1HAq3O5B>
-Feedback-ID: i197146af:Fastmail
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:P9pFNn9Nnfdsh9iDH+1P6BbPFsOJdm7e/pDpV2FqL+Q=:oCtFVaJo1naKJqWAirAu/51Hd8KDbGyS+FU4QPmf8xc=;
+X-ME-Sender: <xms:H6bhamAc6vr_b04ll6FZKjFBZ-Qh_e_uMNDj8-34nBxTgOhjePH6Mw>
+    <xme:H6bhangV2_ZK-mXOsXXCKrw0B5E7w4r52XMy3zGLnOu_mFXcPYRlstZoWSpnY2Q8M
+    4ExMDZFi-g1eJr-DmpYZRXoPbpBCSQp-jqrk56G7Y1ClovDDHDvf--S>
+X-ME-Received: <xmr:H6bhaukBHDnvYw2erytg5glp5_5bCj5iox8JGwEb4byzhrrQdblpn_rwi396E72wfqTsT77J6XKn1ZNEmIbp9UQu6iW1f_O7Ckyl>
+X-ME-Proxy-Cause: dmFkZTGB85QLbLhZD08sYc/PGIvwcgYImzgtJQNeF5bm31nRWvs591n918Ga/gKtKaCbjb
+    UwU902Vh95LUjKfrV43ver17l/3S6kDAx25gvS2WTzE06cozjO1q3bahRa821Gdv924wl2
+    Msw9P1BKQKUozW2iI3g74arhZ4tjlimKBmiPTHrclJIl64ps+91vRF2sDoVrIBJz0Gnm5K
+    bv6K7a2prjJy0y+YsKfzT/4yCSPIFTcEJBkhaeLFimtGFswWPRYnVY1K6ZrO3vBq8aHK+2
+    Hc9e1gmrq5hxmkAMZSibPU1yFA1n5ib2cSC/Vgcr90yoKPmv7AMXuQbeOEglg+au3U85Cj
+    39phu9x9W+w9hR1at/VYjym2qUISpGm6ZkDllDkzSuHjet4JZpKZjx4FWt9XsTpdw5UjLX
+    iIS1FxNMf2+6L2pvFSZH44SxIxfTpqOc/lbt4SMbwAvjiTGqkB1b5ajQ5gclbfB9xUPSDE
+    y3cC3pOSglIPDxnU6fOaml6NySc4ArmFCsMkrm/WbbjO7ln3LiIGyq96I28y7rtl1zb7Hq
+    H0NgjfZqcoaP0l+IYF+gA53KWPZ2uILpukhkos/AxXOXGbRVqv8azUpEodns0CgGO7qX1y
+    /aukjhJQc8eCMLgSIF+/Wz12vip6jF+43u5hs8S7kSsaf64biNTvOYZy9Hdg
+X-ME-Proxy: <xmx:H6bhajo0kCQEZ8PU7KzHPt0ymbBKodbMECuJ1E94zeRIEz1wZEJsnA>
+    <xmx:H6bhanGOCz_te-_pvu9zu6HP8Z_8E21lzOum6kiKKAM_IbRB3DQjyg>
+    <xmx:H6bhavx5p9Y9N444aqWfFGMeS8ZzqgmVOA9L3bFqlSOOk7xWxCakwA>
+    <xmx:H6bhasprImGPKZlY0XW70EDsojtTMzFizot69BHwhjN3okIH5c9LOA>
+    <xmx:H6bhamFFlCiDC6i9lkOupLCDyO3Ns9RuI9oRoStbWnvDyBOEeXD4nkdY>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 03:34:59 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 56d63be6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 28 Oct 2026 07:34:58 +0000 (UTC)
-Date: Wed, 28 Oct 2026 08:34:55 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] Makefile: let ccache cache objects built with the
- precompiled header
-Message-ID: <auGln4usFADtcUPB@pks.im>
-References: <pull.2464.git.git.1793104847288.gitgitgadget@gmail.com>
- <579C36BA-1418-4E15-9CA7-70C752A69FCE@gmail.com>
- <CAHwyqnX3sR9YxfK3NtPxVgmTfzfbgXX2bzPKzGGAbfC9k1iF4A@mail.gmail.com>
- <CALnO6CDpsQtAX0rHr9Cuot08K4j_6WMpiPOKA38sjDbWB-wj7A@mail.gmail.com>
+ 28 Oct 2026 03:37:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Daniel Zoghalchali <daniel@latchkey.dev>
+Subject: Re: [PATCH] pack-objects: handle missing objects when excluding
+ promisor objects
+In-Reply-To: <20261027-b4-pks-pack-objects-repack-links-with-missing-objects-v1-1-f50f90651274@pks.im>
+	(Patrick Steinhardt's message of "Tue, 27 Oct 2026 08:00:28 +0100")
+References: <20261027-b4-pks-pack-objects-repack-links-with-missing-objects-v1-1-f50f90651274@pks.im>
+Date: Wed, 28 Oct 2026 00:37:02 -0700
+Message-ID: <xmqq7bj2e0o1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -132,31 +124,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CDpsQtAX0rHr9Cuot08K4j_6WMpiPOKA38sjDbWB-wj7A@mail.gmail.com>
+Content-Type: text/plain
 
-On Tue, Oct 27, 2026 at 05:57:38PM -0400, D. Ben Knoble wrote:
-> On Tue, Oct 27, 2026 at 4:00 PM Harald Nordgren
-> <haraldnordgren@gmail.com> wrote:
-> >
-> > > And, what about Meson?
-> >
-> > I think it's not touched by this? My goal is just to speed up my local builds.
-> 
-> Yeah, it'd generally be nice to keep the 2 on par though ;)
-> 
-> I don't know enough about our pch infra, though, so I'll bow out from
-> here. Just thought maybe we should make Meson do the same?
+Patrick Steinhardt <ps@pks.im> writes:
 
-As Meson auto-detects ccache I'd think that stuff like this should
-rather be handled in Meson itself. I e.g. found [1], which feels like
-the right direction to me.
+> this patch fixes the issue reported in [1]. Thanks!
+>  builtin/pack-objects.c   |  3 ++-
+>  t/t5616-partial-clone.sh | 55 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 57 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index ca3a891dfbc..d6caed16d97 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -5085,7 +5085,8 @@ static int is_not_in_promisor_pack_obj(struct object *obj, void *data UNUSED)
+>  	};
+>  
+>  	if (odb_read_object_info_extended(the_repository->objects, &obj->oid, &info, 0))
+> -		BUG("should_include_obj should only be called on existing objects");
+> +		/* Missing; assume it is a promisor object */
+> +		return 0;
 
-But if somebody wants to implement this in our instructions meanwhile I
-won't complain.
+It is not entirely the fault of this patch, but the code relies on
+.fetch_if_missing being set to 0 elsewhere.  While that is not wrong
+per se, shouldn't this call to odb_read_object_info_extended() pass
+the OBJECT_INFO_SKIP_FETCH_OBJECT bit explicitly for clarity?
 
-Patrick
+>  	return source_info.source->type != ODB_SOURCE_PACKED || !source_info.u.packed.pack->pack_promisor;
+>  }
 
-[1]: https://github.com/mesonbuild/meson/issues/14662
+Thanks.
