@@ -1,119 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793220042;
-	b=I3G6bR4b7ZIGXWBlvVC2Why193yOiSTT/4QiTTsHuhYVadO6H581GVx80PDEl2TY87F1
-	 R1n7+VEC3mhQ3w90kjHlqnfJllIYRqr65XkaKtW2PR6MzD7HFbGZxZyNWPAzEuxxLsEgs
-	 Tx+vhJc8ucStmCVfY4IQcssYO5rFWYB8NMEi29l8O+kewonxO8j2/OLBOvm7s2D5XyBBK
-	 MOW3WKnZW72HprVKj9s3/nR+p2yu5h/eTiN9kgs54A99+aRcpF+gXAyfl3INQAksuUjgi
-	 EzYYpL79/CsLdIEc66kZ4LI3vXWnY2tZSmT5zCbKxGW5d0++dHCUcGxRfe0c/Uqutgg==
+	t=1793220506;
+	b=F/QRiYd9WT9VYnRNh5RXfUBsqD71lxbhnEF7XNeLaXPu3XtvW60SVo0QYLeSJ7caVCSi
+	 kXnR1mfQioW4pkdEBYjGt5tR5xIHrXifM3fVquIpp04PlAqdSnxyZDc+GYO9ZXWhkLxED
+	 W7Dfh/1GhKJWn9Z04eVcfKd4DCs8zQjz173mK6tk4J77F6q73KqBCgL3yZVZDkR3cGbhp
+	 65tb+9S4aITBn3Ym5Otv3MKHy4+EtURHbS1hQh+9CRoj5qfk29QdWrVbO5F1YwTYOJxHj
+	 Y/HfqPpIsBAUuLY9I+A/6/adIUlIVxeNdixyKllHZh06aH1NOR/I5cBo3g0VZ7HjIcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793220042;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=4UhRiryWh3fVLUaQl758RTfK5/fITHl3psOn2X/0Vlc=;
-	b=LP1Nx1AeFwXq8V+Sd1oGGok9VGQSzUqQuDkDnJFEDUf/x+7mlC+6xOZIbWR9dlCm8Tay
-	 nlf++cERewYXJAvcaYXjRLOxJx/kgWFart9KFZ+wHiwT/7cm5X3SHqD8UHYMkVQ0OoOtq
-	 l5l398jl3R7YosP/pSWWsB5oJJOIds7VOMB4ElhLl9pYOvHjWMPUR9LZ89JwzSpSIWO8K
-	 bXPj0d1ZTzxbZ1IMzxP4q+W4vjnSJinr0wBwo2y7jXipv/m30mNSTvg0c/0d0LbFfgR6U
-	 p6qq104PWVaRDXlVhDavAZJkstZmnGWLLn1O5mntU2p/H26WLmqm6x8Zd5QQNM9MZ6A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793220506;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:
+	 Content-Transfer-Encoding:From:Mime-Version:Subject:Date:Message-Id:
+	 References:Cc:In-Reply-To:To:X-Mailer;
+	bh=h8JpF2GR5VJVuV7s8WRXEopXq5zXs4iOZFEamMutetY=;
+	b=X+LCm/pCa5iHpMUtvkG8xenli6a0dHBqxKgDOOcEbLSxNIUBs2HmpDgwhgjZ+XyxMG08
+	 QoBFIGYAW1au+Czr3uceoPh/S8QyixvKWajNfPff4z47k961a4ARekWY2/XlLf8Je/Sbb
+	 12d1EvGBHGVowownkyuvsx0GqAF/gwLrSa4PMapltBdDpsLLAgL1sjLFK2emKKXu+sH8w
+	 mb7K5AjwxP62f4wJvXUJTRwhjgvGMc8vCNEcYeQSYA1mP6EvZkgsENMB3OpL4j3mzxivG
+	 cl15taDQyoWWd6mtV8/5/rKvC90AKxyw2SI8nP3ywTENw1eBddsUqG2Ilcz8AI5zeTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=fSvNx1EI;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ntZ5fh5n;
-	arc=none smtp.remote-ip=103.168.172.144
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OXDcFGC3;
+	arc=none smtp.remote-ip=74.125.224.42
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D8C606A31A
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 20:40:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E1D8C606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110AF606A31E
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 20:48:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 110AF606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=fSvNx1EI;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ntZ5fh5n
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 27610EC0678
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 16:40:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 28 Oct 2026 16:40:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793220041; x=1793306441; bh=4UhRiryWh3
-	fVLUaQl758RTfK5/fITHl3psOn2X/0Vlc=; b=fSvNx1EISUfXNu2s4NefFcPPMO
-	upqmQeevacvu4mbB81luM31gENGE98CJJyovWvlwE4Csd5zDezJS8A2PzUNt0Ja8
-	yJIXUJ4nAR1dYxYCFW3c4rS8npC27oFoNwyIQa4G6pgU26R64VxaMTR/ftO3/i6d
-	4eblPGI3woEGWWrhrU24H/0pGDDZo2P0oYve7knhI0kLe1p5pE2dgwM+RP0ZMNyn
-	0coljw4/G7gj1wT5hPpNB1W4BuTdBk3PKJDNSrGvf3lr4btOCfiiIrZj4ixRhMfz
-	GOKaHgsbHJgXXfTQfrLBLZ0f1baTZo9esuXNFH4gTZjL6KWTaR3Ov+mRwCcA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793220041; x=1793306441; bh=4UhRiryWh3fVLUaQl758RTfK5/fITHl3psO
-	n2X/0Vlc=; b=ntZ5fh5nD7oTmGR6lnliICgWfm4/7oGBhQrz2tNjZbqQKYHoP7/
-	GT6312SuII8b343bOoZAly8jkO59PYHqq3aNGdlKe6xrR+0hSibQ5iueU7KR0dZq
-	KSS53J45FS6/GIwXp7i1OmOEMarAvDookiQlFQm/DZUspOmZ39kHKa3+wlFgKdZC
-	SsHAsblXIrpHD2IDVaA2oj0QucVCoQ2HNzahOq9hvrpsm+8ZSbJjsPP0PofX2aTC
-	Xz7dadzCxqGBOaRbbgwaNiIjIrA01A27p6B2ihQI0IuRrsOKxkXl9Jdc5fscNO13
-	t+dlLDzi1LYqUTmtOV2A8ELZ/Yi9t36db4g==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793220041; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:FsFZzNb7G/hRIMCwulbRnlTneaN54sMrfFLb/E1HkIqis6x
-	B3t1/XRSyxxeI4+FIDcBG8tPlk+cPrf8U89uj/00q+15ucSHpkPs5BiY0pWUF4cB
-	IDwSN7lZ/Yx3mc2r9kHN4SEOwPxpY3PqcD7zJTZo1icG73WhSUmAnB3ixEe2dzU3
-	yb7kSjP4q3CPn9xbGK/0rdjwsskQDVt9/P+vPygA2BxLZt75QnScibT8GYBTYm8D
-	58pJQfSUWFnpAgRDV/Aab7KPDYjS+uJxHz1G+YNda6cECeqXhBhomWP43RZSvZvK
-	devEG7qUPFnDZHHJEqhVmvGeSiJzZ1r4QpojW2w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:g5STG2qLi4slPe9A6IxMkyqtwFZIEcNuBEFW5coye8A=:/CHkLm8KS17hqycVfKOu3dmc8g5I357znTgxSJX1J7I=;
-X-ME-Sender: <xms:yF3iarkvIZM3EOJrK_0uv32NzL0zqR_2ej3p9KEGPXiLe1Rjc9W-2g>
-    <xme:yF3iamR_X5QW4lTITHbKeiggZBZlMehPPjdCrFLtz0FxWumuHQCWbhaUbthzLqOIn
-    e3NXrN4fBFwzvbjQIpUDYqrAa8a-XHn9jOrU5pTvgRBWmVQlrW_KHDW>
-X-ME-Received: <xmr:yF3iavAdy1Vvx1jAu254hTDtildA4o-7NPQsNFV2NbTEy1chBBnfY-5yUGMRPwBxImUI4Me4ASrH9kWpFeTszlJwhjTjCJIQ6UJh>
-X-ME-Proxy-Cause: dmFkZTF/ydW3vCItEK+V5iV/w3swrHwcwIgi41EroWx7yiKaj5EujiW5YILjh5B2Y/jPvk
-    W6zJfU06FQzXp20hxknXJxLchjfZH5XdNQ02y4auYX+o4+IKoNId9ccfoLv8S2Xldt8rcB
-    906oeyaqUpZq/NWVrQnPiK6xDdTUswmKvEaspTIpdvhmSQaowqAP7AHUSnie894GshsowE
-    8LfuJqk9JAqvK9UKYePohnPZKdfWAn9/ImzPNIsr1tLRqkh/FerwreNZKPX+uTmYZE9/zR
-    6h0YBJGc+p/NQbe9O6+j7Lb7PBWqbEo+V8WPaOnDd4bGOFwYzvDVnwTv5tP+YXiieOolHZ
-    kc7T2RO3my/13qDHyFW3O5K/XmciK877pyofBxgpouSRuTSvLtE8w2f2Cm7eCwqaN0Dcs9
-    Izpe/DoXyy/XDPEwh6G89zpQmx/HZ9XfqJgZyYd5TUqbi80dmOBK9j87npRO/zbAUgewPg
-    vNHZsOa8G2cMymPuI2BMbogl7Bsne2Rt6ewZ+7EY2lpRK+YhSvX5kDA4GEMvNI+VfZyeSv
-    VDFd/JyxnNxqq5KjT7FPuNs65QVwlEL3ThpBacwkOrI32G6KRXZyXhrgT/7qRrf6Gm/hww
-    WWCzDPLhW+5ihkNr6r0AfrfRycnkHeDxYQ3xbIbvQ8/4oGT+HwtHUPckIVTQ
-X-ME-Proxy: <xmx:yF3iatTia6a7jRC_f_XZEQl9auDaOxD6oq29_yZNHe6eq7J9PNGXyw>
-    <xmx:yF3iatqHiyeBoTVolzg-o_W6ABEAfzB4moA-87HnOTcgxTPUV-Efuw>
-    <xmx:yF3iavw0AIbqrfvBA1ECaOV_VODW9YlDrbrORskZAgBSygPqssjLkQ>
-    <xmx:yF3iaiIB1Atvipo5ubLZqe7Dy1QvuuoRFvII1u4ximR-1Ff6-ZBlHA>
-    <xmx:yV3iamZv4rW4JEqHVSrwduclK4i9fyCERUtELihx5wZwIMRtDBVP3-J8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 16:40:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/7] builtin/commit-graph: some small cleanups
-In-Reply-To: <20261028-pks-commit-graph-cleanups-v1-0-c549344c363f@pks.im>
-	(Patrick Steinhardt's message of "Wed, 28 Oct 2026 12:57:52 +0100")
-References: <20261028-pks-commit-graph-cleanups-v1-0-c549344c363f@pks.im>
-Date: Wed, 28 Oct 2026 13:40:39 -0700
-Message-ID: <xmqqv76l7e48.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OXDcFGC3
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-675617e81f9so1489842d50.3
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 13:48:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793220505; x=1793825305; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=h8JpF2GR5VJVuV7s8WRXEopXq5zXs4iOZFEamMutetY=;
+        b=OXDcFGC3iaFTShxYkTagBPnJ6NoF+BqegeRGBmRKOAqqNbeqTYBGLHSExbxfjzdSvJ
+         zDjrqW7XZoa4bxPd1rgqxpkBehuGLWZ1meSJ+S2+au7e6Y0fLTY12Hg1++Xc7yPJSZUQ
+         i0EI4iUAJygQl4SUQ3c1Znvs9CfuhqoGSixByFmssWMVNvwiQVvYUUt2g8PrteX292mB
+         xVSz88nAqQhcrCD15Sql9yu9t9K9XV0RxvyyEC6+15VZ9M3FkTteUN9hCXc67fwg/1SS
+         UXVhuf9en46L/SmmVBSoz/liz3kitvvMrZ6EkiX3ttpR2xlp+5TYIlPIC4jGRjarBysn
+         8Uqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793220505; x=1793825305;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=h8JpF2GR5VJVuV7s8WRXEopXq5zXs4iOZFEamMutetY=;
+        b=EAH5/N0S3TZjRPkhtHKVuWegEK74UjUObM1Al6/YHHJgL21GJhs395BBTQIAjfcszj
+         T+B6x2URzdtl/xltlrRCocG4N1nFmGBZkedVhPWoZlfUIOtNStgkiUTRO8OkBav4FwsU
+         ukUVUFKfi9s7uvrUD/T/cBMmo7ZRhNg6XNrzMtlazkGavxg3p2gEQNVQX42DHV28w0QW
+         B4pIu6iUoqQiGl1sMI1DPph+sJT/8bZqon6pkQ+abD8/xpadNupp3DBHsbi8Be65sj9K
+         Prytjkb2UssoQt0hX06H9SUzuS235iVoE8MfuhZC6EybbUgAcAmuG6nz/jzirbULMSBl
+         INiw==
+X-Gm-Message-State: AFq9FYK3G/b6KfH6Wky/kqLeUSGKC65GuqOlOalcek3MI6QuTulf8JUT
+	hHI2tmcLFla91v8Iwpg1qmMkJUCLCzGbHFNS38gNXVqnBhLwy4Pvym82pOYfug==
+X-Gm-Gg: AYBFou0SY9cbIWJ24tAGezZp98U7CXjhCruc0rRv3UNdz5s3wYnJLAN96UXUvW0KNmo
+	f2BjKD+X9lICf/KbaBTN9Tf4avAyD5xFhY+tjE+Bln5syAqVcEoYbO0g+wZCOnaS/cZY7zFbtdE
+	xahrBP5RkzjMOepOjFRtvNjiq9+8flbSO61+/bIIHsG7ycNT8217DvS9LqvAYL5Vdw3WAT7S6aJ
+	xM09/F2m+feL+q7uCu84MAyPmEeAoq/ma19+1UPnvoIoxge5qWvsFqMhB/U2nDYXrAIpZmUX6SV
+	Uo9BunEOXdqg+YeHJJS6k/VskwBSWixiB/PlgKw0363RHduaJ4/z5EvJGljApsE/CSvr793cYlW
+	ZOlpmffylOPYVhgvQf+89xCDpT1eNH2+w+mMq9uB0eVsuI/OTtO4urwhJsuFRhOGaQX3ZtlODAD
+	qmHeQbCKCTf1nNXuqgzkMmtp+DEvEDQDqlhyXE6UhPXwdWwxxLTyCSw5mSvlcwjpZPGKMTdI8gE
+	FWjEyogj17JGWubfiBBggCciVM/MA8YPTx14FAub25+JvcUqAveu2B8fwEU/aNMx44xv75IVYyg
+	Mc8tblMa/pt7UtnlbtXS8iPiC5zN3EPZEbdX2hg1Lk+byKdnQTuC2ua0MLqTMMkE8OAgkinZXRR
+	zNuV1HFpCP8qBniTpAirtIqg73BqT8ieFE7XXRBny10zfB40oBDcfPZ/IaNew3yHmRbXSk/nW9/
+	pdhg==
+X-Received: by 2002:a05:690e:1406:b0:679:bcd4:a9a6 with SMTP id 956f58d0204a3-67a7bf2c65fmr3198510d50.109.1793220504782;
+        Wed, 28 Oct 2026 13:48:24 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9d46:600:6079:8281:6136:1024])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67a7a146c98sm2314463d50.16.2026.10.28.13.48.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2026 13:48:24 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -122,49 +91,88 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] add -i: hide init/clear_add_i_state() functions
+Date: Wed, 28 Oct 2026 16:48:13 -0400
+Message-Id: <2E0FBA76-AB3A-4B5C-A08A-9B3272C65307@gmail.com>
+References: <xmqqh5i58uo0.fsf@gitster.g>
+Cc: git@vger.kernel.org
+In-Reply-To: <xmqqh5i58uo0.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (23D8133)
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> Hi,
->
-> I'm working into the direction of making commit-graphs pluggable so that
-> backends can fully control where exactly commit-graphs are written to
-> and read from. This patch series contains a couple of small preliminary
-> cleanups.
->
-> Most of the patches are rather uncontroversial, I'd assume. The only
-> one that might raise some eyebrows is where I "fix" git-commit-graph(1)
-> to only accept "--object-directory=" for subcommands instead of both as
-> a command-global and subcommand option. I feel like this is quite a weird
-> outlier, and it got in my way. In any case, I'd appreciate some extra
-> thoughts on this.
->
-> Thanks!
->
-> Patrick
+> Le 28 oct. 2026 =C3=A0 16:22, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
+rit :
+>=20
+> =EF=BB=BFThe "add -i" machinery is encapsulated in run_add_i() function,
+> which uses init_add_i_state() to initialize the machinery, does its
+> thing, and clear_add_i_state() to tear it down.  External callers
+> have no need to call anything other than run_add_i().
+>=20
+> Make init/clear_add_i_state() file-scope static functions, and
+> "struct add_i_state" type as well.
 
-I read the first 4 steps and they all looked sensible.  May come
-back to the remainder later this week if nobody beats me to it.
+Yep, narrower interfaces are easier for programmers to consume, thanks.=20
 
-Thanks.
-
->
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
-> Patrick Steinhardt (7):
->       builtin/commit-graph: rename subcommand functions
->       builtin/commit-graph: drop declaration for `read_replace_refs`
->       builtin/commit-graph: get rid of `the_repository`
->       builtin/commit-graph: drop global "--object-dir=" switch
->       builtin/commit-graph: simplify how we wire up common options
->       builtin/commit-graph: de-globalize write options handling
->       builtin/commit-graph: de-globalize options handling
->
->  builtin/commit-graph.c | 131 +++++++++++++++++++++++++------------------------
->  1 file changed, 67 insertions(+), 64 deletions(-)
->
->
-> ---
-> base-commit: 37b3475fb530c14109211faca33716a173db61ed
-> change-id: 20261028-pks-commit-graph-cleanups-d1dc30f3e05a
+> add-interactive.c | 11 ++++++++---
+> add-interactive.h |  9 ---------
+> 2 files changed, 8 insertions(+), 12 deletions(-)
+>=20
+> diff --git a/add-interactive.c b/add-interactive.c
+> index 3cf8a1dbf8..9a00daf9f9 100644
+> --- a/add-interactive.c
+> +++ b/add-interactive.c
+> @@ -19,14 +19,19 @@
+> #include "prompt.h"
+> #include "tree.h"
+>=20
+> -void init_add_i_state(struct add_i_state *s, struct repository *r,
+> -              struct interactive_options *opts)
+> +struct add_i_state {
+> +    struct repository *r;
+> +    struct interactive_config cfg;
+> +};
+> +
+> +static void init_add_i_state(struct add_i_state *s, struct repository *r,=
+
+> +                 struct interactive_options *opts)
+> {
+>    s->r =3D r;
+>    interactive_config_init(&s->cfg, r, opts);
+> }
+>=20
+> -void clear_add_i_state(struct add_i_state *s)
+> +static void clear_add_i_state(struct add_i_state *s)
+> {
+>    interactive_config_clear(&s->cfg);
+>    memset(s, 0, sizeof(*s));
+> diff --git a/add-interactive.h b/add-interactive.h
+> index eefa2edc7c..47f67ede82 100644
+> --- a/add-interactive.h
+> +++ b/add-interactive.h
+> @@ -6,15 +6,6 @@
+> struct pathspec;
+> struct repository;
+>=20
+> -struct add_i_state {
+> -    struct repository *r;
+> -    struct interactive_config cfg;
+> -};
+> -
+> -void init_add_i_state(struct add_i_state *s, struct repository *r,
+> -              struct interactive_options *opts);
+> -void clear_add_i_state(struct add_i_state *s);
+> -
+> int run_add_i(struct repository *r, const struct pathspec *ps,
+>          struct interactive_options *opts);
+>=20
+> --
+> 2.56.0-433-ga9209adf11
+
+And this matches the log message.
+
+I did not check for callers, but I assume you did your due-diligence there ;=
+)=20=
