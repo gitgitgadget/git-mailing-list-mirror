@@ -1,89 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793197764;
-	b=qWc10hWkj3kbYYdiytxGue9u/H9nvRKKw2s2zOZNmX5e8IwgkHT/0SoW45HjBUQXJXAl
-	 sODZYPS5ULd3jXwvXdxsARIH8PM2n5uDDllFAZkEesupf7RBllgBhBGu5DA6Sv6PRApMo
-	 a0YJLJ7YNyHdyzTCsrKwGSzZrpkml6bKrQ4j4wxcDs5U1WEBwaW8k+gnOqwHGlKcEX+MB
-	 Xw31gKyqVJCclw7ATf/6q+p2njirLElvSzgRShR0kkpaYGA5O9fJfez5r8sYpMHF74uPM
-	 IityC212GmGe6bYHw0TkmRGx7vXKNoMububF1c0lKHEvnMEI6QKRZ5enOjg4ChfWpOQ==
+	t=1793198000;
+	b=bd4OiGkst6Go5Qox3uuhiEpZ/QsTD+Xav+7u/6WkEHPFNKXXRBfYFd8CRfpmnyl999vA
+	 lXAYn5T/qs59HUJ9Vwg19AourMaXcM+7Bm3TXDKXTxrX5uYkVHHTMIbYFgAHRoMkxA49X
+	 4WQmYFzvhgOXmhC1qm7wGuizadBB60KLyRdTCNRF/pdUkcLVRCe48J9dLJhqdiTJAr3gR
+	 kDj2CV52kGLWIdUvC4WET7AF9pq/rp1OjZfAhYmHbCtu9rfBE7ifGJ0jaZsdSQ00YRmxU
+	 YQKF/Tuwwvy03yWPq+6jmddP875YEhNTubHqvwkGZcS0jOSHOlHtMtbNIpD8Bt14Rpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793197764;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793198000;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Reply-To:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=xHOgOLRLi2GgzjAZ9R4kAiwhgP1J+rfmSscDb9d0vRo=;
-	b=vsep8bSnURjwsKBKJU4F/za/IowUtXSCi9UpFRsuK8flErkqrRvhpA/pvlXrALg7pQwq
-	 HZ6V0RIYyQLVHNuvwqSbksDIpG5e96K/MDpOxmGi5MoxjLkCvm0vtP3D2lt3v+pLIhSlF
-	 ESbqlKi1btgmLNiLMPFIpgSLAcUvxcJ+xxXhw+nLg1s4BEj+edqeIbU4QNyYo0frmJYRi
-	 g9qyd3jnMlcEXdGCn7iACzfsviuvl1bpldL1t09ecpNdfO4yI3sMyXjocDz5QeJdlUKUq
-	 dmj27zWBM+4f6AxarxxB5W7PNXRqBZQe1Y3iOcDM2Ka0mgVBGspZWBBiLKouVD5Cagw==
+	bh=rQyeMXTfVVSKAygEC7rCSkZ7Jf6Ew489JajaZ+PduHw=;
+	b=oSVXyPWP4z/tfMWA/bGGAeU0xrSVbwaukQAoahpWRYZExOptXa7bSt+c1MNPHNv+cL48
+	 vGa6pKCmusM9AesJii908F2eUUCYswZksL4NwAGGhP7PXX8hvCt08G+43eYzlNX2qbMwO
+	 WelA/jUkTldpv5EURd5dzVF9FShHrN2LunMDORbgxJgyFQo4FAKpTLDBEY7VB/2sWvbwX
+	 dwbwwGIwJNvfbsGU1XUMcmO93xx7eviejPdOGHW8O6iDacBvU33hv/Ef5dJUevLEIaRq6
+	 KeVMl9Ntg9TcBmV64Z0ceC/DRHRvsRFcDRlMRy2GN9njOhwBF450QH5+cvFSNiCOZtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BQhhX8gq;
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="r/Fwu1qk";
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59655606A31E
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:29:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59655606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA335606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:33:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA335606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BQhhX8gq
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a2069b9710so10124305e9.2
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:29:24 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=r/Fwu1qk
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a7992e2f7dso8975655e9.3
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:33:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793197763; x=1793802563; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793197998; x=1793802798; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:reply-to:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=xHOgOLRLi2GgzjAZ9R4kAiwhgP1J+rfmSscDb9d0vRo=;
-        b=BQhhX8gqHVaWC7N06GbASMUGG6dVq3ardfv8iu2e9xZCuTwToOmBtuePo+Kv/4mzn6
-         8d+yLVb7DyZn/9NVPZ263WDz3WHiZOmgeZY3VDr5xz29092s15iUQxmNSLOv6DBklsTj
-         9hC6bKPsvSJ/1+mmmiELiD+KreJH6MdXDYdwdfPxUXD2sbWA0O8YS8aVF8o8gmxq0cu5
-         uYpY4pEsueVPORZ9FtvYLSq42kWz+ev3pPC+NCPKHBuwjRRRPjqgrLkNgE8Q8TzVSHz/
-         YnyMwI3vOaCCYQrrzZNs5bERKfCGn/dsW6LhnXEAG/iq+oMi6drMN+72SU/1ricUTYTc
-         Vh1Q==
+        bh=rQyeMXTfVVSKAygEC7rCSkZ7Jf6Ew489JajaZ+PduHw=;
+        b=r/Fwu1qkJAWtec5Aatc/WbBjuEM1jSxjkggPNDF5cnM79acwy7IceITh+JHowegrwp
+         5dRxCw4DWh3U2gixz7liyTKbKvMlL6Iuk0D5HiohrEnMVFquDBFFdubiOSerVBDezrYi
+         16bSlvv4ejOxLXo2JDsXkOXy33jpdZG9TzlxuSgzwfOGhdL2+W/GesRdbApo4TUmkJxA
+         bWtmbIxQJgaHM991QvJ03zoSzNyKMsAKm/DHLkh1XXvO8v9p4hhc15wLKpB2F+eemCqc
+         wahxjD/h8Ooh8Nt+h41V9mmZcOHqXQmb1UGZEiVT0tpN3wcp5Dz9VOmE9xpVg2sdpEOk
+         oQuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793197763; x=1793802563;
+        d=1e100.net; s=20260707; t=1793197998; x=1793802798;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:reply-to:user-agent
          :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=xHOgOLRLi2GgzjAZ9R4kAiwhgP1J+rfmSscDb9d0vRo=;
-        b=Ujl7Wd56NRjjC+SbH4UN9ztNpr8LWB294OiN791ntH+JZwcpG070xHFgI2fLPlUheQ
-         3+iQ43QaI09RNmFnqskAWVj/zwYVQ2FYFI6JhyIgcahL/75NhIt7X2pu3hjzc5w3USdW
-         Dbc73JB9Gbvw/hag2deuHDO3ahuFNtjbXxfmjoWwHtXZVGX37a5/vKYv77MpehxzklCV
-         CjQXa3PDsNUMN0CPQuIvftjQq/ySvTLq38Dxc5BzAJEhdOLQ234UUAGGMdpII2fOLk94
-         oMrhphq0l0DIjk0pwtwkvL22GgY4pahJKNMT8l8QvtKaEI9ggOIDQzc4x154Skfx/8Kw
-         DZ8A==
-X-Forwarded-Encrypted: i=1; AKwUvBzExO41CUoZhHjHqhgMPIWsmaE2retHSUqugS27HZglZGh3hsOD5PeTtEu9fZ04u9Y/w7U=@vger.kernel.org
-X-Gm-Message-State: AFq9FYI+dNV+RKxf5Lvh1CMsYtZ4mcue24f34sPkuEjWImYXe28Z9moR
-	yTxZddmJ9zq49f4iKuaD84JWG41a8p/PZRy9UAC2nLwA+pnk84oG8sec
-X-Gm-Gg: AYBFou07OC3Fc5mXu1e5zZjpVZqnZkDWdel2uyuViEhQLgrIKVzOZKnTbn/zoegR96Q
-	C4kynThAbonkDoKcSJ93t/lcSCN0JplIUYE35L/mcogdAjIbYtdQumhOMvwx9fDGq5H9RF8f/JJ
-	Kse5OCQz+CbUL2HSBBd9UF/GkB3I/XMvjz+4Urop3Igfs157C+3I0s2rgaYMn+rdefvHiTZynEX
-	dcWRSjlpfFUEj3m3Ob7UfJMcm8n9Zz6Qn1YOd7OCaZ+TC7kNzlq0Nd9tQRy7zuyb1SnoZNeUSn9
-	pVzVZMyDAkyMl1QiAA6z7rtIyg3w3qgFhfJ/vH8qMqOLcbkZR+8xPkkng5sqNegGrhR7VPHjAmh
-	64wc21xiOhypnb+QXqpqaIqXj1Wls5k28KZCHpjA842XmBh/1ItaYMt0NCq2Qg1Ys2iJM8jgvIu
-	rztcIMcv9yiyc0mXbPBK04Hoe3g5+4rhpnFIRruTEhvdBojxA/85BmlFjKW8IKT3CB9LjryK2zY
-	DbTfAmhWFYgrEfzXGsc+cdMOtiXIwCuUfCeWpb8IdgdDlxfOZo4LBDgVaL6z8zhD3w2zHD1yWyY
-	yMrYOo9o+WkK5D+O1S3JVlwkm80EqgHClWLQY+Q/Xh0UvYZUdKOguJOP6CbKW+4J/XmH7rDfdQ/
-	mYBvSQxQ=
-X-Received: by 2002:a05:600c:3541:b0:4a7:9025:5c3b with SMTP id 5b1f17b1804b1-4a966f20483mr56815425e9.19.1793197762225;
-        Wed, 28 Oct 2026 07:29:22 -0700 (PDT)
+        bh=rQyeMXTfVVSKAygEC7rCSkZ7Jf6Ew489JajaZ+PduHw=;
+        b=DYHLUmRN9hAIdEJ0zGNkoJsRWxY/F5tInHeumoYovaCrYK2TVW9Frly5rmq2oaAukR
+         6ufTdtRmV+uW9ooMc/ODFBqFlMN9YmEw5VMsDXn3JCGJmlNs6tAhC7+k96XunMwQ2bR8
+         5IpJSZ/15n3bR9WpamIf6pqHLl9M7IfQuqnM3A7tVbrU0HT8lpkRQ5d8aZv4H2qUC68O
+         Ta0CabbVVD9W4e1Ow0NuKbmobfgxPY96BSFSKPh2i7bRjJWTv+WnQOephUrsjn9KLRaI
+         UaR6RfoHRJZVM/NqU3q7h+eyNJGHcGF+hdccdKQC+lFGUfWsU/G25kjBog+tqgmRUkP+
+         EpPA==
+X-Gm-Message-State: AFq9FYKYGmwR1wAqGqCMF2YmircX8QYD65NxA7LQqvcES0H9J++tPt1J
+	z8jKj5cKHRwVH26qQRr4rajRqr5zGKmRm9b9R+I8rYSDJMbXPw5xREAh
+X-Gm-Gg: AYBFou2SfdmMhsh5bpVq65ImT/o10eNW1enJyOq4hhWJasOX1NGZIxi56Q1TXhfpTCN
+	KW2SRQiG9JT0SGLnI6GXEm7gQ8cvP5NI2esgxADJOoG22+o4tpNdpreiVu4b8s5zYakIAcI0toz
+	5w1JgoR3VPurardZYvIVsbaNTq9eAyEiACq2BEo4pafFLjRajnbiKfGCn/5CgawzU1zOQzCJHHg
+	FUxtnubTzD2VB5okD0J9e7JLvNbzxj/LzzBqmhmvWbwne+ygGwUvAOGQG6edI+3c1fweDGR/lhB
+	2ahXyVS3BbFmrJQsuzHOPpQJx7bVoMfVOr1MKFCZfS05IjYf2fkZXcw04HjBhB5LqDBr3jejLpW
+	orMAVWSSGpBR663F+bRf8oJKViWCrTXRxA2oQXBCyy2jIDGVq8ruv/dtC0KC0pFDWmVt3VxJJm+
+	h6LislskuZZL8gfvMeogC0cD+YdYGml30mgKJJN2nR7nvFfjbcr3Uy6pmr3oyyd2eQW4gGN7sF/
+	iFe+vyUbamcyyZu9r/0G9g58uyxoJh/hDCEn5rsbR2roInbCi5dRWzCZIC6EAfmHQhaVA03P+w4
+	tqQLT7jn8hSu3pTVasPa9/euamgNdB0WtizsTEq7YZs3oKjiVK3+sP+vjJFeNfSFLzqrE7tJ2zD
+	NMWOl8Bo=
+X-Received: by 2002:a05:600c:19c8:b0:4a1:df52:3e36 with SMTP id 5b1f17b1804b1-4a967201e9dmr56758085e9.27.1793197997961;
+        Wed, 28 Oct 2026 07:33:17 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a977edc20csm42916725e9.3.2026.10.28.07.29.21
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a976010d2csm50074335e9.2.2026.10.28.07.33.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Oct 2026 07:29:21 -0700 (PDT)
-Message-ID: <3f939144-d4b3-4bc5-aaea-16422450d638@gmail.com>
-Date: Wed, 28 Oct 2026 14:29:19 +0000
+        Wed, 28 Oct 2026 07:33:17 -0700 (PDT)
+Message-ID: <617fa828-387a-4f4a-bc85-099ca691bca4@gmail.com>
+Date: Wed, 28 Oct 2026 14:33:15 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,60 +94,31 @@ Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sigchain: recover from concurrent double-pops of the same
- signal
-To: ian4hu <hu2008yinxiang@163.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <pull.2263.git.1792154272296.gitgitgadget@gmail.com>
- <20261028133755.112476-1-hu2008yinxiang@163.com>
+Subject: Re: [PATCH 8/8] t/test-lib: make feature-testbed job more accessible
+To: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+References: <20261027-b4-pks-ci-test-vars-consolidation-v1-0-f28edf79bd6c@pks.im>
+ <20261027-b4-pks-ci-test-vars-consolidation-v1-8-f28edf79bd6c@pks.im>
+ <20261027212349.GA774120@coredump.intra.peff.net>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20261028133755.112476-1-hu2008yinxiang@163.com>
+In-Reply-To: <20261027212349.GA774120@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 28/10/2026 13:37, ian4hu wrote:
-> Hi,
+On 27/10/2026 21:23, Jeff King wrote:
 > 
-> Gentle ping on this one.  It is queued in 'seen' as
-> iy/sigchain-recover-concurrent-pops, and the latest "What's cooking"
-> marks it as "Needs review".
-> 
-> A short recap: when two copies of the same signal reach two threads
-> nearly at the same time, the concurrent sigchain_pop() calls in the
-> handlers can unwind the chain by two levels instead of one, leaving
-> the process spinning in a handler that keeps re-raising the signal.
+> IMHO this whole thing isn't really worth the complexity, but if we are
+> going to do it, should it be "make FEATURE_TESTBED=1", and then that
+> enables the right build knobs, and test-lib.sh respects that variable
+> coming from BUILD-OPTIONS rather than the command line?
 
-It sounds to me like the bug is that we're unwinding the same chain of 
-signal handlers in two different threads at the same time. Doesn't that 
-mean we're potentially calling the same handler twice, once from each 
-thread, which doesn't sound like it'll lead to anything good. I wonder 
-how hard it would be to fix the code to ensure that signals are blocked 
-when we spawn a new thread so that they are only handled in a single 
-thread. It would probably be good idea to start using sigaction() as 
-well so that we don't interrupt a signal handler if we receive another 
-instance of the same signal while the handler is running.
+If we want to be able to recreate the CI job locally then I agree a 
+Makefile flag is a better solution. I seem to remember Ævar trying to 
+add Makefile targets for some of the CI jobs so they could be run locally.
 
 Thanks
 
 Phillip
-
-> This is reachable with "git clone --depth 1" over ssh receiving two
-> SIGTERMs in quick succession, and only SIGKILL gets rid of the
-> process.
-> 
-> The patch leaves the push/pop fast path alone and only teaches the
-> "n < 1" guard in sigchain_pop() to fall back to the pre-chain
-> disposition, so the stuck handler's raise() terminates the process
-> just as a single delivery would.
-> 
-> Peff, I have Cc'ed you since you wrote the sigchain code.  I would
-> appreciate your thoughts on whether this "repair after the fact"
-> approach is acceptable, or whether you would rather see the chain
-> mutation serialized instead.  I also have a version that uses a
-> per-signal spinlock around push/pop, and can send it if that is
-> preferred.
-> 
-> Thanks,
-> ian4hu
 
