@@ -1,121 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793173189;
-	b=wnKoMEZV0zouOIMTaIAAKc7QsZVN7j/Lmj9/CEmQqN3+IhBOL66rNhytnPORD9NVL8Y0
-	 aUz9FIPSQr5lA9Sx9559m7VLV9JcAhimZHVt12sj37QyYiUdgI02Bh8xmBftTCRopbbSb
-	 kZZsxJ+9uqTveGuUCA6rGDgHNQwIMIcQb0fJ4ik7/r8NfABt1DLYOdiUgtAXR1HGBISUX
-	 qZL+XeW+HAAo6LfcuAG/X0zedYfFT3N3Jf/E1icl6rSkAiUSmKWUoY7GzlQuhgvCDPi/D
-	 5e9Zlg79P2FIxpDW5l0bKewZcfloGIeKBbfrwyvoQyqhe/18Za96c8B8+iJstub9/AQ==
+	t=1793173295;
+	b=DTtI7qHqLmG96A79nuxjf8G/uSRTbFi5mKB7bRUM8kezz1RJ0//O4s47kMAiksZUE2/9
+	 LphzcBJiSnsbkkUj4MXWRsM4sSdHVWvoXDQtN3XLWOGKhe07nCRSjqI5LY123pvLLB80S
+	 YOWnjOxY75QgBbk6jh146kI0QWsLHQEgBH32DIuwU6xzfAm1paK2jVwQm0ejCh9RU7ka+
+	 g4RHCS0P0D1vYN/OVFJg0vWYw1k+Hi+/WRSl8XIO8WQY0DBLNzcKtrk71FnaYDvz4nGOD
+	 UAthGsLrY2+dCPjXUsMA3svm7Uq22T3ZSf571NPI3uJV2UO2E5xj6PuqEqq/DkxwMtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793173189;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793173295;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=lCmfxxLqpSlZQWBtbfAUx274FJ9/0SWfqA/1hRx+dEA=;
-	b=tCt93oX92+e5UW7VOH/2SDNnH500XDHn9JV8YqKxSJY3BZ7mCNFqZjqQdK66qP3g2FL7
-	 Jh82Qu/pKsFk+xuMOuyiw5IJ3KeMqH4rZsV5i6/vLs2ZpljkTC1zn69WixfBnAYf6bLTH
-	 FU12P9llZ627EMlVOZezWQZoS9/xSZgO7hIPEQyWcZqHiRoU2Mt/60v9QfEVSAmeVZMzq
-	 PnuYk2tcUMLqizh5+ZMsluCrgDItwsCYIIsdmYQh6Om0PSi7KToHQWgZB1mgkRdqBn9G9
-	 OpTN1RzUdqwL5rMLUyXnHezzy3N0JQxtzyp2PXnjpzYTzPAl3IxPsuCaHgPnLhJPdoA==
+	bh=ASAaaGslpHCJStb63hpWvoai98Vp8emAC3uEF7bJcS8=;
+	b=d/Z4IOlX/9w/ZCLUjOy+e0nFwvEJzd/duSdz47+kHGCdDaTfKNx8ZjiLrPZwq3kIBeN6
+	 Py98zKaq6q6UBdu9+WMqVVWlHOKT/wRF6Igh6eVX2vzeNjS69QWZlRsKyuyYyhKLc6C4+
+	 jUQwXJ1TGsJE2izMbd/31sxCqa5jcwZRUISHpw/E+vm/BFdBqoA3SV1nOX2zOY5+bfbxK
+	 Ckm/fF8Staz00cjNLnxR133eRV2pWmXNJ9pADtkqRGiVSi0I3DdA9VH3BilaE6xw+ZLKa
+	 eWhvtk+mP/Qa+IxxLEbRDKRbzpmX/yQXhPALY1uS6tkUvi9zbsFSIXleeioXecFrRcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OROLEukE;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="nqhw/3Uz";
-	arc=none smtp.remote-ip=202.12.124.151
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=SgCGE0Tb;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=qbQhsN+M;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E8A606A31A
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:39:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 80E8A606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C3C606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:41:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 11C3C606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OROLEukE;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=nqhw/3Uz
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id BD3E91D001B7
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 03:39:47 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 28 Oct 2026 03:39:47 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=SgCGE0Tb;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=qbQhsN+M
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 518EF7A01A8
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 03:41:34 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Wed, 28 Oct 2026 03:41:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793173187; x=1793259587; bh=lCmfxxLqpS
-	lZQWBtbfAUx274FJ9/0SWfqA/1hRx+dEA=; b=OROLEukEeIz3dZWxJDpD9RJe2b
-	JzmWUWvuh9ba/YamHkdeUyUEphNemWNYiqg5oXfPeJDkmSiZorXa+Cxf8qrI1rjx
-	h+IQ8vRz8l2JDBEa/zLqiTehe/rBcqavWlC0CnKjWDoT02iVhWRkOMlWmgLWRwPW
-	SBromrmlg3FWywrBBcIcc8aFAhSKpPyy6GEiHkVcHo2gJd8EU6uKMIlzoA3uPLyl
-	oUtobSb/haCbH41Sgj7gY0MrXcLL/593QYXi6Ith6O8SsBM8FtTPiN74HKlbpUTc
-	YSfjlfW0foE8OitzwddBzUk393+Mbr41OH3yjxvOHjB/Pd26pCrQT5TrAg9Q==
+	:subject:to:to; s=fm2; t=1793173292; x=1793259692; bh=ASAaaGslpH
+	CJStb63hpWvoai98Vp8emAC3uEF7bJcS8=; b=SgCGE0TbrlF990N/IHiqybE07W
+	CRghSn9O2wBexYQdHHGeu7DpQ5a6erx5NzmkjhHxK4d9z7rOJMmep02odcpSyeIg
+	LfXoe896PHIfoDAB+q4ci2EmBW7ZNO4Gah12JYycwUlAFQ8oCjyU7Z/rpwzJrWkK
+	tZmfPK6zTQcZokfSYaLiRy38wyrNfqEZ1WwBbCC52Lbd/votiT1azNCEYHJGHGqh
+	rBTd/Cpy6YUQ77r1FWK5QPs4zAD2GWCl+Imud/FBRS0/REernUgmymNRLtsMtOBb
+	6yOldWXd66s0jf8fScMA6oH72i+hkwZssPk1MJt28WoYSHf5urlh1CF2v4mQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793173187; x=1793259587; bh=lCmfxxLqpSlZQWBtbfAUx274FJ9/0SWfqA/
-	1hRx+dEA=; b=nqhw/3UzKQs93qgsDYvlwSE7UptmzNgZNB2K6Y7HxCWWu3Kcj7V
-	UQNjMjY782Q0Nxq88G3Ilh8hHWV+i0k10SBi3L7TtTBAVqjKh6OyXQxaRKzbnEvJ
-	qGl6SwivCkB0FxPsvzTsgruXZefkI8u3VoH7PLiZdMVanHbMfiQci4Hktz//H6PG
-	NNyiTb6vir2Dxef75DWde7HnS2Fq9QW1ibqCYbHgJmem9mmj4brxBbrOqPnms77I
-	6ns0anPnl35pBf4lAfsdOx23XrECy53USvvNehbVUAkTz/5PTIL5Dr1Xt2FEGo+Y
-	jSOYKDAJW9o8QRRyvxSOXdU3OPtyBVYoQWg==
+	1793173292; x=1793259692; bh=ASAaaGslpHCJStb63hpWvoai98Vp8emAC3u
+	EF7bJcS8=; b=qbQhsN+M0tl6bSfhoURP9Bzt1jpdbu1LBhViXrVKAe/FmJKQnOr
+	c4g+poR3GU6SsxbxgQU/6lzhrYoRyhXLj9uVNuIb9nUWvHANGnwALHnDK8MMjVLj
+	omi2d0whNW7UnblfzHnNh/Zol5E0zZBf2ee0qvfuO3NRvbTmR6c9pAJsCPxtm0Yq
+	0YBQkWXZ/ljoBadt8cCd4YmeptJOCYClaovdcyuCUTxjyFei+x3FQc0R8cFgpdQf
+	HBws44mE4yOinwp9psQIG7d1/8b8Zca3lpXpHCnl6KJb8DbcUh8tcCz0H2+p0pBG
+	TbKTGcHZEgqHcHi3Ttv/3DVRMIr5wnj5y9Q==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793173187; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793173292; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:nYAh6a3ZWn/D0WGAFQcL9eUX6sJzWfBzE+VQkyTtTXf/k6h
-	0Lk7IeCLTgrOb8dtHfA/Isi5eRTekent3CsS7a77l9YB3Lyp1D/7xELQcQTNqpXp
-	GAxDvCPTPp0gQ4+uGHLNty/Xm9Sp7UaXxIuFM6Mk8u4GCWZAMAWntGaSI/JpBWYX
-	SG4qOeCUNvXLEHeOYm9x0vuF4VT/QcesIChDxv83Fd5Mz/0T6LK97iOyTOId7p4G
-	sxna3YVql20n5KDrcaSVoW55AWuB1Ib1PtyIp28clZncId26xZ6CbZvd/Q/J2Xxg
-	dFapbvzMQ8RVbQ4dNcUNTlqcNgqoIfPeWAylUUw==;
+	s=fm2:rsa-sha256:Yk7TAkTrevL4ForbWyx8aD6jISg9i3vJjaNJS4WR6REuNNB
+	e9IaoZegJz/nYvivyu2wUNhwjrzJk/dE/74ZGV53zkJGx4XgiE8X58aTsCqNWoMc
+	fqhSKvK7Qul134R/P1zBt2oMz9MVuGE1LMdxQX9R5OrSFr5NR1XINMH69t8FsgA7
+	a5A69bKM7eK5nD8NeVtlRxvVICQ2buFytdnUrQLkzJUtPKHUuEbNmoEyq08KLDab
+	VP9VOQUVp8gPSX2Rnn0w8oxxWSJN4ANW29TzOdwu6iFcznY371BmShvd1aHrK/Sr
+	aXh0UjvMfi7e0AgMFw0cRtQtJuAH2EDqmobNwxA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:qrs7SHlQItNxqGavbQ+lNPVOMnrfyjfc29MxMIdSn+k=:hRHzXWSEwauDJWVqyK381JjrIKTIet1xjwkOibczRnE=;
-X-ME-Sender: <xms:w6bhasASGlFOs8gA869zg-m4M3I5qfbcMXVWSppSvWM_5jmVFIXgIA>
-    <xme:w6bhalg8ISF8MtewX-YNJABpKLgqwKaX11CA_gLwJvzxf52ajfMgxB8WoOmwJ5uJf
-    otxjP315bz6WxbKsgbavOJrqE4-Lbyp0dmxK_HoRA8V7FhvBWCva1U>
-X-ME-Received: <xmr:w6bhaknPZ1ZC_N8suIOsRTEA4ay-fYyUzG54Hi0zn0BX1btsjfZh5Q>
+Message-Instance: m=1; h=sha256:tUe84QT9eXstCKihtWFLg8WMUyvhV2z0my1il04r0O4=:0oE9seCGEZ2a/tnznE085Tdv8AUpspzZh2Z1G1Vu8k8=;
+X-ME-Sender: <xms:LKfhahohBz0BMy0WQpWLcHhG4aUAkCTKAYckFhcbDtt-ax7gYuAnjQ>
+    <xme:LKfhaqha645LpWVUnpa3TcpL1Gnm5YptOLxIcSLH26hq6SrFoV32tD1cmT44JinNx
+    CEeNnKmgc7Eyje4lEOVvDPBInacTyycebwVlqIDlRbzR_kU9rWMglk>
+X-ME-Received: <xmr:LKfhamgcmzMKxZxFKkcsFjZjl_Ip5R8yt48QqOj8MtSR2v36N9LAZg>
 X-ME-Proxy-Cause: dmFkZTFVGQfHR+syN53u+F3U4e5WX0VyyHZyCtWT0X0EP2K26zQZ1h/sxXIbSwpt2wjfva
     nGF37sxUX3MsKTkerUsMgqaZlemjjeRYq3ZjnQMevK9hJ7kPMk5tFOqS3MF9rp/I9KceKh
     ZPy744i+wJ7GHePF9s/FwmczuQFTItm5ge8+B0ww/XQHHeO8ZbRyURhUXItT7QszXzvxwW
     G/a6T2IpZ4oXI0ncpibsy2uld8lP6EBJ4GZ6NoazsEcYJ6gKF2tuuI9HIvAbRx7hu+tzdZ
-    j36nSRQJBdFVGQCKHcQIrFGtVq2czrueK3ch0xPySXQ3B8OMUfjm7UBo7a9nykITcrgoJw
-    ln3wp6guMIDr1zJTPFjaUtbn6KxxCoRAms+msptr4vwR8SCcEbB4LmfgOxvWOcyLYYxa4j
-    /bjOxn0k5dVO5xtQCwODnVNtVKA0HWGvlrAlzq+TAA2vkgOXkNeHSFPwnMzqGyvnN+ZUzu
-    tJ+ajuZvCxrpbea0G/mGrgWX/QIWP3V4UxDp7SVT6+eqiyWI0u7H6bugTYwb22ZoRXpHhd
-    oJt2eIl3E+VLJO7R1fgfvPRmxWj0XfNlfTwNf7lNwf0PTPqkWbmZBNd6AbEItl9wCvq5Us
-    e7VSiw5N+kYvOe53c5rqWtRaLxYeCC2NhnZ/u8FTRoFPHyMaPLQKrfWWHTyg
-X-ME-Proxy: <xmx:w6bhahrm2kwTC16djQY-VX2U4OsZjMEdOb_FtOs2Rg3TQvTLiT8ziQ>
-    <xmx:w6bhatGKKL2yUPOnft1UwoTBxy4b0FW-FFqTddeIjH2gqmuWaDfoxw>
-    <xmx:w6bhatwuPXyWoh-8ZcwylzyX3WA0oHdez2kuvZk8Ic1rQn6JX9UwXA>
-    <xmx:w6bhaiqv4WCtYj4MlnRZoHCdm1E0DYEd2vvQYJRAGdCJPY_mqkmY2w>
-    <xmx:w6bhaugzBRNVMiU0aJ2vKQXNYP8mRhX66EXpDI2RxGMkZjyQxNTC7dhp>
+    j36nSRQJBdFVGQCKHcQIrFGtVq2czrueK3ch0xPySXQ3B8OMUfjm7UBo7a9nykITcrgoEw
+    aTullE0RYZC4DEnIu0HbtMTeTw7Aqg0h/4F3miY///lvmdgi5Afc0OO8b1b43e4p5me6xQ
+    yEGtuF+JrcCorgI0mfFnkSFiiS1HKUI9ojOicpkqGqLFrnaEJ78t9YLMiwN0ZyqOzKjXNY
+    +1wPaPL6N884GtpgTOtPfdZqwygi2ieV6uRMnzpDeQSBzr8WxP+zm/N4Q3mIe3HOUzK2WT
+    ZLwWDZnkcsbSCwLSU3BJF4T3nRaxA/WpNh1Q00eCqUJBhzylyJNB/l+HY583DTHT02wgnc
+    plUIz73/bgI+JxGu8k58697gyM5bmlsPBTj8h2U7abEwbzKdXyohRDrusZnQ
+X-ME-Proxy: <xmx:LKfhaoiyEToWhIA0dz4qOKhJdwB0u7dV6Ufa_PTFBWda4WvFsvuRZQ>
+    <xmx:LKfhauLwZFp0mw1FHMRDHLxCsZPBn1cuC5EbFbJRO9gQV82i2DrBjQ>
+    <xmx:LKfhavH1uT12gtkaY0yPpCLnaKFgtXAxPULLXQE1fcqrBN9-6R9TKg>
+    <xmx:LKfhaqSFiWmJVJ1uTpZuNNNyJ_jaGfZ3Tr4V-QIxQmTGmIsucQOe9w>
+    <xmx:LKfhapBvLS7OO86phpOaeweBchaJoK4XkpLHfZGrgrrYrOUg-itCd3e9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 03:39:46 -0400 (EDT)
+ 28 Oct 2026 03:41:31 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 890a9189 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 28 Oct 2026 07:39:45 +0000 (UTC)
-Date: Wed, 28 Oct 2026 08:39:41 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 69ea64b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 28 Oct 2026 07:41:30 +0000 (UTC)
+Date: Wed, 28 Oct 2026 08:41:27 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
 	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Subject: Re: [PATCH 8/8] t/test-lib: make feature-testbed job more accessible
-Message-ID: <auGmvTuD1NcFIw37@pks.im>
+Message-ID: <auGnJ_cb5vQgo0We@pks.im>
 References: <20261027-b4-pks-ci-test-vars-consolidation-v1-0-f28edf79bd6c@pks.im>
  <20261027-b4-pks-ci-test-vars-consolidation-v1-8-f28edf79bd6c@pks.im>
- <20261027212349.GA774120@coredump.intra.peff.net>
+ <1da30fde-75bf-469f-80e1-ce90cd29c84d@gmail.com>
+ <xmqq4ie6j1vw.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,53 +129,56 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261027212349.GA774120@coredump.intra.peff.net>
+In-Reply-To: <xmqq4ie6j1vw.fsf@gitster.g>
 
-On Tue, Oct 27, 2026 at 05:23:49PM -0400, Jeff King wrote:
-> On Tue, Oct 27, 2026 at 09:18:28AM +0100, Patrick Steinhardt wrote:
+On Tue, Oct 27, 2026 at 01:59:31PM -0700, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> > Due to the job being special it has a higher potential of failing even
-> > though a local test run succeeds. But running these tests locally with
-> > the same environment is somewhat painful, as the developer has to
-> > manually set all of these environment variables.
+> > That all sounds sensible, the commit message could maybe flag that the 
+> > "feature-testbed" also sets OPENSSL_SHA1_UNSAFE which 
+> > "--feature-testbed" does not because it is only concerned with GIT_TEST_*.
+> >
+> >> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> >> index de566309861..8863bcac930 100644
+> >> --- a/t/test-lib.sh
+> >> +++ b/t/test-lib.sh
+> >> @@ -202,6 +202,14 @@ finalize_test_case_output () { :; }
+> >>   finalize_test_leak_output () { :; }
+> >>   finalize_test_output () { :; }
+> >>   
+> >> +set_default_env () {
+> >> +	if eval "test -z \"\${$1+set}\""
+> >
+> > This made me scratch my head for a couple of minutes, but I think it is 
+> > correct
+> >
+> > 	set_default_env ABC 1
+> >
+> > evaluates
+> >
+> > 	test -z "${ABC+set}"
+> >
+> > to see if $ABC is unset.
+> >
+> > Thanks
+> >
+> > Phillip
+> >> +	then
+> >> +		eval "$1=\$2"
 > 
-> OK. I've usually just cut-and-paste them, as my first step is figuring
-> out which is the culprit anyway. My biggest question was: what if the
-> culprit is a build flag, and indeed, we leave the one build flag here:
+> This one may want to quote the right hand side to be more widely
+> portable, i.e., eval "$1=\"\$2\"" or something along that line.
+> POSIX Bourne shell does not require the right hand side 
 > 
-> >  linux-feature-testbed)
-> >  	export OPENSSL_SHA1_UNSAFE=YesPlease
-> > -	export GIT_TEST_SPLIT_INDEX=yes
-> > -	export GIT_TEST_FULL_IN_PACK_ARRAY=true
-> > -	export GIT_TEST_OE_SIZE=10
-> > -	export GIT_TEST_OE_DELTA_SIZE=5
-> > -	export GIT_TEST_COMMIT_GRAPH=1
-> > -	export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
-> > -	export GIT_TEST_MULTI_PACK_INDEX=1
-> > -	export GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=1
-> > -	export GIT_TEST_NO_WRITE_REV_INDEX=1
-> > -	export GIT_TEST_CHECKOUT_WORKERS=2
-> > -	export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
-> > +	GIT_TEST_OPTS="$GIT_TEST_OPTS --feature-testbed"
+>     VARIABLE=$VAR
 > 
-> which makes this feature only half-work (well, 11/12 if we want to be
-> pedantic).
-> 
-> IMHO this whole thing isn't really worth the complexity, but if we are
-> going to do it, should it be "make FEATURE_TESTBED=1", and then that
-> enables the right build knobs, and test-lib.sh respects that variable
-> coming from BUILD-OPTIONS rather than the command line?
+> to be quoted, but CodingGuidelines has observed some buggy shells.
+> It may be better to be extra clear than sorry.
 
-I dunno. Until now I've never had the case myself where the issue is
-because of the above build flag, test errors were only ever caused by
-one of the GIT_TEST variables. So what I typically want is to toggle
-between GIT_TEST- and non-GIT_TEST test runs, and ideally without having
-to recompile everything. And more often than not I want to only do this
-for a single test file, only.
+Fair. I've queued this change locally for now, but will wait for the
+discussion to figure out whether I'll keep this change in the first
+place.
 
-So I'm not much of a fan of moving this into our BUILD-OPTIONS, as it
-would kind of defeat my own use case for it. I'm thus inclined to either
-leave this as-is, or drop the patch altogether. I don't terribly mind
-either of those outcomes.
+Thanks!
 
 Patrick
