@@ -1,122 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793196750;
-	b=X33L0zDJzNXlR5smEVTwNbFeZBrUO7uXKCuau91ioXbQ7hqooTYczC4YYT7hKkohPd3F
-	 1puokihQ38ZPVt0dL0SceI1SB3dOWEGvTwmdNZCLad5OjpbOwlhDRR4xDPjzMxPmcYkVw
-	 xceuZzZo8i7IJOFOvS9xstc/7UO+uEZEDd3A86XcSVKwjK5RAjls2fH77dBPVPbaE//KS
-	 myDsHbu+9MPYLUGQH1Fk4hSmKHx4yzTToj3YNSeZt7r86YoDT9qGsvlvgrPKCwXGnT/kO
-	 kkSh6h0MKOBl+A/kmdwKfGC/f27o+ZCjmXhn19BkgUYukx2HRJp/76LVfrPLmlEM6xg==
+	t=1793196855;
+	b=GUJbrPANcxgeWzAC3oJWCr0STe7PgBwduaPunIBjpbQQWbQEd7il5Svkg6EfgSZZ4pGp
+	 BzvBEBZhh/sbZzGr730tZ4IanjJeZ6jzx10jKmgHstsDlQ4liF4YwNaYGHAK6rUELc/OP
+	 Q9MlDxOpjPoiERuTOLgb5xcGVaGuOw9b44St3qCW4dje7Zt7HBegEsx/j1H1YNbFRjL2r
+	 pmH+gmj7NT7KKgH5m5SrkfzvtoEKFtFugfWFPuwwkJjQxWwSD+4aloVel7G3p9VqLxv5r
+	 D3N4g8H+oYLhh4feVmX0cpoLTMME17CKqU/ovLbDCgVFSoCc+YYYu3V/KQWpPJ/rSqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793196750;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=8Jm7g8vxbphpacBuh2iF+YTDhbgo9cUUxZvgU+up+/w=;
-	b=Soah08KltEPERVgN5GqShyrjCUTPkrnyCPKKuU46NVo2xEcXRNsGquOy4fGkIEUF0XG/
-	 xSqh8JmO+P9qtjUNVs7J0Ibww5vLDtTw2o6Oejj5b3vqqQSmy8yzECegsZPeNM7rHiAmJ
-	 AurQaGIJmS4SVb0/boylyJKEe61hQUcQkPNYklwNdsIc26JxHihsgNl3zVmSgkTlmKWmP
-	 QvCh/0+oay1/sSItHyRXIyGVQcFL2NmJRRWgixWTh4B4iF6GPWazR6r1VMNv1FJlTH+tF
-	 fYzXJ1xc/2gHY16UinVxiQEfQ5DAERvYZ2zVLcs1cNc9UtNLEaU6bluIJxgwcpcIVnQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793196855;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=OoqIUC1OG3tutNK0P1CXoDbsUafMYqA+MRR7t4I4M6Q=;
+	b=2awLJZz97YtXzREEgCptggFypFQOAAIn8SDocwsyMxkD8EJRe51l7T0Y+h4ZHjb1R/sr
+	 6WA5qQKdOatG697pIfIeCCocjNNBVP4v8UqblsAoYSVQq45aarSvKchj2WJV5gt0XCDwe
+	 e9Ul1Q6nJ9AAX6kLjNcGotRX0YwTiZcR6cn5lQ0dyCS0aLt46dz6rgbqc7JNt9rB8gLOC
+	 f7IZ7IqYn225wOUPxjeRO3LIZcO93wP30dYUFfOgYdNoVOi3vlkNUfcmKL0edoo6s5DB5
+	 Vah/GwhiNTRUSSqFhktRNyM1M+6hHsq0lEif4YbN+KnJPYiuQCrM8FQWGzK8PDOEhaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=bJv0Dxvp;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ORc4CVmx;
-	arc=none smtp.remote-ip=202.12.124.154
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dS0McqVi;
+	arc=none smtp.remote-ip=209.85.128.46
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F187606A31D
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:12:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F187606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6896606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:14:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C6896606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=bJv0Dxvp;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ORc4CVmx
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 036147A00E8
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 10:12:28 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 28 Oct 2026 10:12:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793196748; x=1793283148; bh=8Jm7g8vxbp
-	hpacBuh2iF+YTDhbgo9cUUxZvgU+up+/w=; b=bJv0DxvpSw+Lzs1X+uembAUW9R
-	97SfxioDpjyNQJ1EORmQsHccvC7g54GZ3wPZY2cZYHhk7Y1Mx5n+EOw2PRCnFqh+
-	Q4P+G4SYa6AztjR+iHuhwdCArhQyWFhJzBTyCyeKn6gk+aeBKlJ/X7uhrsa6vHKR
-	I0t35q7pT9Awie1tKbNuKFKjSzT/vQoW8NPf4YMXEt7HNb8jv6yMr0g3wCSAP97M
-	hZVpeXGINVqTN+Zc9cgMyJBqZCn+Cz2OvEl4A8+YdID3YtEIcPAOO6kpH8j/JEjK
-	b+qd+dW+dZDBfSMg5L7Z3Fn+H9plLQtWMUC2+kPXGelfGiRgg+HIenn6hoZQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793196748; x=1793283148; bh=8Jm7g8vxbphpacBuh2iF+YTDhbgo9cUUxZv
-	gU+up+/w=; b=ORc4CVmx4f/KtrWpeZYDceYDHwuvBNGN+5HxORmSAST6EfZWuw8
-	kMRyAzpGEr/vD3O8eZAzIa6kn1cLBzSZkimpbwb0Bjfr/pG2ps33E3adXIMc1YFS
-	szp0awgkPTvyCbqIU93k2iHiv5UHv5thQjj3aYfCFoXG+e2+SWukyL9mLGyHrclY
-	s8Hj2o/m7XxNy7lUR7BZ3iZ0Kmw8OkTj5KISmIdagLYftlOkh9UQG5YvWMqZzLwb
-	DV6IfNELtbVd26OSGNXzlwK8QzgNWkZit8Od+n22C4ouliv7xfMdxgyMCVVOGgG2
-	UPchvfld9uGM/r08MJyiij2acsJuBmSEE1w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793196748; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:V1mX8ggrnJTvilMmHu/uKopCcnpHfYz99/5hN7S4vEz3G7I
-	tbrWx1rG5d1pnpFoeVJnBa0S4RmFaQUOwQbC1anIstQHMQCJiWCBi4PrA6O3fQ6Q
-	o8F8fpj0fkYUyCdul3abCIVGiHSFW1f/v2zm0XdUFUGtzQbO3bRejTQNX0i6UcPs
-	BJGu33jsrFH3CO1CLLRKcN2qqqEDl6DVg552WQNNNEKrSOTfEOCDGxXqwdXfiO3p
-	qYnTQ1wV+xrzcpRdzZIFSby7XzS7vYqZ4svOqDPSLrP3YdBzkeO6jU9bpGwXd5xa
-	Lpj4IqV0VUTN0J2V2eFwllODJopHfalJoMTgz7Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:NkZ99y/pgQZ5soGhVOkdp39FTas55lkQ3hQRyuXaTVw=:nlhW6PqHdVU1HeN+e/BRDpNQr+9Y52C1huvR+WIJWDE=;
-X-ME-Sender: <xms:zALiagssU1NeG0SGAggImnUCqyhqXbW6pBaoQqNQWCfxmphWaV0r5w>
-    <xme:zALiahLkkE-Vio0hpx_7BVxQpkFTifay5V7gIovyW2C7wRPlkVltyK0k-aBud7Aw4
-    f1EY1y_L2YG5MWBfiZ4Smj-fZMEPHNFap5apSOFcF_VZfiJD7bPsQ>
-X-ME-Received: <xmr:zALialmi9DIUqwhUQtGw9THjD6_PrahIlMqW26u-_6HsKZFN-R1kKV-NiumD-lHXWVEp8rYAfL6pEJ3tk5ZVLhL7a38CnNwqzoXk>
-X-ME-Proxy-Cause: dmFkZTEBUZ1GKPlvsm9vs2pLfnC8sgNDtsD8W8aWTSBBcL2uS1cFeTuBaBBm22/zOrxnSS
-    R+MQ31hGX3eXgdxCQj38Mb0fn1sDwiuZVRM6pzSCIlykhC5MNDnD6nINI24bzddZiIGcP7
-    RvV1AfwxQF6lDi8ht9qrYr4DkO6SD2a76EK8rTrvP3dLDT/B3WKknQRiWobo7fiJ7GzPc8
-    6Q9dMW4eyY0Lki2ycgoquhBkmsrNjklpDzWOmDRiljm/60K8z4Ci8u/o5C2DItyK9xLDPw
-    HkXo0EVyuPuFEwAMAUQZwqkhyrkvZhLxDByyheoDn0TrhBfZHWfe2LEJUwgVDU5uZ1b5Wc
-    M3VuiF0W9xuUwaHrEgR77QEjtnXKLQQSW9yIi79pi9p9xRTI+RAJvcFZgknCfjiwRBYoYf
-    5NY3kX+sFm5QzAGvZ2E1ho6mMjswhkhRJumcYYEO6iDT7WJUUj/sSIrHowFlF/UAafLJgZ
-    CjocD0O6UzLlxWVS98c/GDO4FnHe9zqxuxaDyWXGKx/w0eaL+r2wjzfkehdHqohCI/nMMf
-    2CMbDaryNAb7/kAk4U/aErHmheIzB/qrIcQHWeNfFnIA57uZHZTlcTG0NzCf05iiRFBima
-    J/rwRHfO4Xvpv6My1+UdGaiojt1QsWeXGCBz2flhHwpXCtWE+iORSW7AAyFQ
-X-ME-Proxy: <xmx:zALiaqKF_jcCCosI5NDFOS5FztFnmHrBlGuq9aq0Rg2Y_MxrWfEacw>
-    <xmx:zALiai5BPJcy9dF38mr6r_YvFHeIcuT_HzrbwsnSWVVXueehOQVu6Q>
-    <xmx:zALiam0zzxCtK15HEB5_ClhpDT4sHOvRJozgNkDv_rcz6UotORVKNA>
-    <xmx:zALiagdK8UxfUv-D_MQTUjRzDgep5Id3hLRssUtDD7nM1pgyMUtgKA>
-    <xmx:zALiatTqg39BqcDh4gaVedpP8wlz6W0Hakt1kJZQpA8547jXo7owlOf8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 10:12:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ogundipe Sola Taiwo <ogundipesolataiwo12@gmail.com>
-Cc: git@vger.kernel.org,  Christian Couder <christian.couder@gmail.com>,
-  Siddharth Asthana <siddharthasthana31@gmail.com>,  Usman Akinyemi
- <usmanakinyemi202@gmail.com>
-Subject: Re: [PATCH v2] t5300: modernize test path checks in t5300
-In-Reply-To: <20261027183623.3600-1-ogundipesolataiwo12@gmail.com> (Ogundipe
-	Sola Taiwo's message of "Tue, 27 Oct 2026 14:36:20 -0400")
-References: <20261023154851.7876-1-ogundipesolataiwo12@gmail.com>
-	<20261027183623.3600-1-ogundipesolataiwo12@gmail.com>
-Date: Wed, 28 Oct 2026 07:12:26 -0700
-Message-ID: <xmqqy0bhdid1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dS0McqVi
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a214c5c4c0so9178985e9.3
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:14:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793196853; x=1793801653; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=OoqIUC1OG3tutNK0P1CXoDbsUafMYqA+MRR7t4I4M6Q=;
+        b=dS0McqViFWGRcMYFD//rqOa2rpTbvfunLsFJMdYovhsy2BNaXm78Flsgui2FuGv252
+         UD+O+yZcqQ58gzTLEyN1I5fHCGCld0kWZqSuVPv1BS9sp0Glo8y1HI3i0DA4Tk2uGgHj
+         PtazyM8o0+x20pDiEnpQKL+LCUNxH2/8Bg7lZOTtGdT/jv+MMxz6EdFkQzukknNBRvLw
+         5m5tqx1kuif5Wbs07ZQsKQYWhRAYFc+3UbRT/bRVhJtpk6z1WOjvbAnYeQoUqZLcSzuH
+         STTB8P4sQUdSXK+wvVpKxNID2iogb/ZBFis9/1ZrxiwyyCFVwJuC8iwwsBek+k98/m5G
+         1B2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793196853; x=1793801653;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=OoqIUC1OG3tutNK0P1CXoDbsUafMYqA+MRR7t4I4M6Q=;
+        b=d9vZRT5/wq3cL3I3z8cuXJTHdDyrkKPF8NP3HJ5uNgCt+Fy3nb5FRmZRURPO5qYckz
+         uRCLzhMOVkZraUvvHNftX5n+Zbpcpx7oowzNgueN77ueTXu+mjRt4EDOkdvIckbwUxlu
+         e26Uu4vc6O1EAWkY8/oHO+b5/ivs9vTy5Ch+5lQJ7n3AoIzg79JQJCFxHLAe/Fu2toNT
+         Dmh6MkFzZPjQMQauwInzW5dMcOj+TQ8TNq/YpKhWAuuR//8q2DJDEc9VrzqfH+6HM37A
+         bsNPFRkEhwwLIfZNDBHvwprM+Pru54EQ0pwHG2BzkNop8kjjfiAy0NSuPKSp8z3yv1PV
+         K09Q==
+X-Gm-Message-State: AFq9FYLP9TlbFuOhwwOzmySBR+7vrP3zbjR/cx7klaNCMkc15VMyPjxU
+	oA5WR9X9YLxPthwk41Is4dcAP4anuQQXJ4nFS526aNaj6TP/WrWKViTFabmdRsIStVtYFtOQ
+X-Gm-Gg: AYBFou16KlRLDXpFMWq1ge3QGzPGmFigU7/3jQ10OcZdraTTLpdirIhpXXkUx56vKng
+	yt5k6NPrA8ZJh4xfzK+D/mA/F15V64LM3qJ9OrDI88eopXgm4q1h5VKpxUMPeeWP9gFGAuJRm1P
+	c5jb4kF+T20dneVIUyyIRtNOU6nVdAH0p4OKSiDvxJeLGFwyOpWZbd5c2+W8NymSRhu35ceI8mT
+	NXTTR6DPr3dpJh6rpn+vjES8ulBGhqB4pS3tiU0SeENZsBvc18n3YVp8GofZnF7yJ5y/+fPT44c
+	WV4FPGh/1HCFk201h0/jkEVgg0Q14ZIVrC3r2p4y7SDp+bF+6wOdfKE3pmj+WCWtnHpSh/PVwER
+	Xf56Q/pqIX7Q/LZuKnBlvMvETB8zVE/cjFOkqp+woFY7Eshlie9VqDeZJ4C+ycSL2xEbx1SJLjX
+	o2MxE0LpY2etwWUK1XxDkRTYn0b53A1HoYUql0XWIXVViY94gTeHrFzwFr552Wt2MPZFUCnUhja
+	anxq5orEXfyyGJLWBog/7uiLxFDSNbJGd2pTaW0PAtfTjVDYfDQPwmhSpV/VG3Xm8LU/55wQdKL
+	Ltp/L2W7GZ7xBk7Rh0F2iqDb2/tRafqWUy0rNCW1Mua0rafSavTU7JG0a+a3TcUhCMUzpNBZoct
+	i+oCN19ZKpp35NYF4UXWAlSb+vk8LRS3Q2XPCl4/Whk3ZyeSFfEW9x/Reag==
+X-Received: by 2002:a05:600c:3c98:b0:4a1:f9e6:f418 with SMTP id 5b1f17b1804b1-4a967ba6b5amr51302775e9.34.1793196852981;
+        Wed, 28 Oct 2026 07:14:12 -0700 (PDT)
+Received: from localhost.localdomain ([169.150.218.10])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a97cebf858sm54910505e9.12.2026.10.28.07.14.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2026 07:14:12 -0700 (PDT)
+From: Edson <edsonwasswa54@gmail.com>
+To: git@vger.kernel.org
+Cc: Edson <edsonwasswa54@gmail.com>
+Subject: [PATCH] builtin/diff-files: convert ad hoc option parsing to parse-options API
+Date: Wed, 28 Oct 2026 17:13:54 +0300
+Message-ID: <20261028141354.1155-1-edsonwasswa54@gmail.com>
+X-Mailer: git-send-email 2.46.0.windows.1
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,69 +92,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Ogundipe Sola Taiwo <ogundipesolataiwo12@gmail.com> writes:
+The cmd_diff_files() function manually parses --base, --ours, --theirs,
+and -q options using a hand-rolled loop with strcmp() calls. This is
+error-prone and inconsistent with the rest of Git's codebase.
 
-> Improves test t5300-pack-object by converting old-style
-> path checks to use the `test_path_is_file` helper function.
+Convert this to use the parse-options API by:
+- Adding option definitions using OPT_* macros
+- Removing the manual parsing loop
+- Using parse_options() for consistent argument handling
 
-"Improves" -> "Improve".  It would be nicer to state how use of the
-helper improves.
+The --base, --ours, and --theirs options use PARSE_OPT_NONEG to prevent
+negated forms (--no-base, etc.) which are not meaningful for merge stage
+selection. This follows the pattern used in builtin/checkout.c for similar
+stage selection options.
 
-See similar test updates from others and review comment on them in
-the past 4 weeks from the list archive.
+This makes the code more maintainable and brings it in line with Git's coding standards. It also enables auto-generated help text, git completion support, and option abbreviation.
 
-Thanks.
+Signed-off-by: Edson <edsonwasswa54@gmail.com>
+---
+ builtin/diff-files.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
->
-> Signed-off-by: Ogundipe Sola Taiwo <ogundipesolataiwo12@gmail.com>
-> ---
-> Changes in v2:
-> - Rephrase patch summary to remove redundant wording
->
->  t/t5300-pack-object.sh | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-> index aac139e6a0..e5ce478484 100755
-> --- a/t/t5300-pack-object.sh
-> +++ b/t/t5300-pack-object.sh
-> @@ -283,11 +283,11 @@ test_expect_success 'survive missing objects/pack directory' '
->  		GOP=.git/objects/pack &&
->  		rm -fr $GOP &&
->  		git index-pack --stdin --keep=test <../test-3-${packname_3}.pack &&
-> -		test -f $GOP/pack-${packname_3}.pack &&
-> +		test_path_is_file $GOP/pack-${packname_3}.pack &&
->  		cmp $GOP/pack-${packname_3}.pack ../test-3-${packname_3}.pack &&
-> -		test -f $GOP/pack-${packname_3}.idx &&
-> +		test_path_is_file $GOP/pack-${packname_3}.idx &&
->  		cmp $GOP/pack-${packname_3}.idx ../test-3-${packname_3}.idx &&
-> -		test -f $GOP/pack-${packname_3}.keep
-> +		test_path_is_file $GOP/pack-${packname_3}.keep
->  	)
->  '
->
-> @@ -376,7 +376,7 @@ test_expect_success 'build pack index for an existing pack' '
->  	rm -f test-4.keep &&
->  	git index-pack --keep=why test-4.pack &&
->  	cmp test-1-${packname_1}.idx test-4.idx &&
-> -	test -f test-4.keep &&
-> +	test_path_is_file test-4.keep &&
->
->  	:
->  '
-> @@ -616,7 +616,7 @@ test_expect_success 'setup: fake a SHA1 hash collision' '
->  		cd corrupt &&
->  		long_a=$(git hash-object -w ../a | sed -e "s!^..!&/!") &&
->  		long_b=$(git hash-object -w ../b | sed -e "s!^..!&/!") &&
-> -		test -f	.git/objects/$long_b &&
-> +		test_path_is_file .git/objects/$long_b &&
->  		cp -f	.git/objects/$long_a \
->  			.git/objects/$long_b
->  	)
->
-> Range-diff against v1:
-> 1:  ca6cd5870e = 1:  ca6cd5870e t5300: modernize test path checks in t5300
-> --
-> 2.56.0.116.g6de20f6092.dirty
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index ea91347ce2..a0c3981407 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -14,6 +14,7 @@
+ #include "commit.h"
+ #include "preload-index.h"
+ #include "revision.h"
++#include "parse-options.h"
+ 
+ static const char diff_files_usage[] =
+ "git diff-files [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]"
+@@ -48,18 +49,21 @@ int cmd_diff_files(int argc,
+ 	prefix = precompose_argv_prefix(argc, argv, prefix);
+ 
+ 	argc = setup_revisions(argc, argv, &rev, NULL);
+-	while (1 < argc && argv[1][0] == '-') {
+-		if (!strcmp(argv[1], "--base"))
+-			rev.max_count = 1;
+-		else if (!strcmp(argv[1], "--ours"))
+-			rev.max_count = 2;
+-		else if (!strcmp(argv[1], "--theirs"))
+-			rev.max_count = 3;
+-		else if (!strcmp(argv[1], "-q"))
+-			options |= DIFF_SILENT_ON_REMOVED;
+-		else
+-			usage(diff_files_usage);
+-		argv++; argc--;
++
++	{
++		static struct option diff_files_options[] = {
++			OPT_SET_INT_F(0, "base", &rev.max_count,
++				      N_("show base version"), 1, PARSE_OPT_NONEG),
++			OPT_SET_INT_F(0, "ours", &rev.max_count,
++				      N_("show our version"), 2, PARSE_OPT_NONEG),
++			OPT_SET_INT_F(0, "theirs", &rev.max_count,
++				      N_("show their version"), 3, PARSE_OPT_NONEG),
++			OPT_BIT('q', NULL, &options,
++			       N_("be quiet"), DIFF_SILENT_ON_REMOVED),
++			OPT_END()
++		};
++		argc = parse_options(argc, argv, prefix, diff_files_options,
++				     diff_files_usage, 0);
+ 	}
+ 	if (!rev.diffopt.output_format)
+ 		rev.diffopt.output_format = DIFF_FORMAT_RAW;
+-- 
+2.46.0.windows.1
+
