@@ -1,98 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.43
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793156206;
-	b=uFrt7b7C0JpXa8cImssil/B+74oQm5aI3VMbvEHf+WCirtaHUHsh8/63Nt7kptZCTlON
-	 VR9zPiDi3MnkSlancw8PAooRYWS1Y2U+VB2vyNlvTJnWvK77t2qS0THKPI21U5VU5SEM3
-	 xhYyO92ChHq+KQR0jJI1aDAofmOtY0qa9axa7SoQmV/GuawcColmtoAJAn8i1x+mgwoLY
-	 u8Yy+dyPKzU5SPuzrTV/bue2Aoi66x0RQIsqNqrRj3hsZLWE01RHpNn+FTHht1n8r5Eyc
-	 Et6c8OhgYWruW2OUvHssx59zvX2LjRYnS3YOlNb0KRNO09UvvOMQbAz0zlXnR4AziHA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793156206;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=qe+Aba1mc70euwvyHmGWBgP7N9IWvenUJ5MnD/rXHZk=;
-	b=lPjSGLntEIpsDQyxoTUF//sOeVE7I0VU7GZwzgeHxnVQ1GckgEvYoWzxecdCJMM3ye2Y
-	 MaFc0l0dSIWEkNPqV0HcuwpGlVZYnuamosawWA1MhLkS3tiZGGeC7CfPhaP884XzYEu/B
-	 37xT4L2gcAVlMcmfljJtFMZWJXFzoXba1IpQbaqLGsW7QLe1SxZBxOpeSpKK16taMs4XF
-	 7F2fQDAm+8MCLjB15VaQD7gfGvhTJNmpW2hBDb0IpGL3F2jfdtfQarg9LAczVKER+2oRv
-	 SIIDGsBvTY87tYRIEN6j8TrhPuLlzcwBrh0ziI+0XjEVFUIY4mgSNuVm5GSwrQAwqKQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lE8CTKwU;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.43
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793159003;
+	b=gkf0JvPlUU3aUijlpojScv7WawV6o4CK2kSuHPyzKBfeDZkc5u8Qy7NVHQtNvHnO7PYG
+	 UzyQkRpd3sznfDF5rWllJAMfCIDstLLQ3svL0isyCoFOfRBDvzKLarV/utTXvj8pKngsx
+	 Pi9mW+xp4FtprrYE8TY7BoUc89rsckXWb9LdnaTVAVYCrXQcaBWD9IQt8RNWUp3mrDIJg
+	 KLHtXBYL/n1CZuqEqTE5lXCe4LfwBjwIYetR579l9iScJn/PKxC3ptVYnuuOnTlkcq1DU
+	 cWnYHCs98coM92yV9V+zel7Jfmm+HukwY4vPYLSPPMTT7JzQcpYTRtQgGe7MgDTh6cg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793159003;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=oftkx14mRDg0I9xSHW/souiwCdUoQ61hHPLqWTm+uz4=;
+	b=Y+KDHgOMK41OCTA1QY5pNK+tfMPQ3LZsVcmnEkryizdjL5yNQWCyJx68EF0+q0bUywgC
+	 +HBLtdS9k6VIkk89n31SMD3h/KVlmHGNCrrlfBvBpgBv/mOljUAlIe2ualOzgxTWw/1c5
+	 /1RJeCNjI0TORg747/9NxdEaAO3xy2nEQsjyTKuqEr6EPZUA5th7W03UDZFQavjR9/51V
+	 FEzhbXhIfhduQeupc4CHIKVPBPszwSfEUoJ7R9WUN1y1+cGyg3KRsAN7Zbb2Iclyw3YWX
+	 T058mXnlwxXkEEBZmbxF2nZLF+E2pxvZ66KZ+6MdXv0MbqNHCo8HLcwtETQo0ZY6aVg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=S6IF9631;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=SpPf9FMN;
+	arc=none smtp.remote-ip=202.12.124.158
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5A0606A32D
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 02:56:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B5A0606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8AD606A31D
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 03:43:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE8AD606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lE8CTKwU
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48e46e449e8so280627f8f.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 19:56:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793156205; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ZM6zg3DBvtTJ0jSeBQ6TAXcMxw0W+1PJnZCAtJC1T12wCWSf18aO94/UjX34xyp+3Y
-         YA6ZX3NO7P7EB0jswkMjf/4bXoaE9SJbJNN2gZ3rbtLLDBPZAfh4RpnaqBKPWV3ktlwY
-         b5/SkT+nw2R25S4RLbK7W4Ejc3N+cAmAexwsBZ33buG4xJlPN1jEd9e+2TY2wOQONBI7
-         YcN72MOQy5uchOyVo5kUBjyGCpxfvCe47hhM8LsiQKHERBCwwDfXtv2HuNX7Favq3jm9
-         oTNTfd80E+1JsRMQfArYm2Vjl0k7YX3ZqHkdhqMtxCFK9zfaqPvbzytzYXn7fQjGx2pn
-         fm9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=qe+Aba1mc70euwvyHmGWBgP7N9IWvenUJ5MnD/rXHZk=;
-        fh=9lOeBiTeAI+4FIPMHGbUvHErvC4nv37dZNbhm6sOM2g=;
-        b=F4b5dcXtVBY2mF3efcXm6vudchqLe865W1onPjhGTQkGePCX8ttvr5ShpgZtFOf8DN
-         jATSD8zBg6GFwLe8UDlhs4AiaUq1OHfWfUq3J0kABw5hvGSqGDkh9TP8PFES/leRZuah
-         rCGSsX1IHgkw6VeDIKgWvFuZL5F4jwQQRDStl9ybr6Kuf6S3G6J391YDwQJMsPFacrqw
-         +b6P5gAqTbKbBGsrduVI5DIXGmN2nR6mBYzqw/GQZY4NV+veym50rosi93BVTHG0M80W
-         n7PzunJ03ifCQJOxW+66n2J8dNE2lt7huBAFal9sB9KymeeeRZ1qLJD5se2h7Z34Ul7y
-         PUgQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793156205; x=1793761005; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=qe+Aba1mc70euwvyHmGWBgP7N9IWvenUJ5MnD/rXHZk=;
-        b=lE8CTKwUfpn78kKP4piu1JZLLyop+LEi9LBXi5pha9+YkS1kHhNvBp6Y89c+0reChU
-         +g4TTv4UN75UV7zloKX5OiqqrHnyIGrXVsNQz6SWzAI4KLkCmFiIeyb5J4zu2YOZ9F/K
-         h6qNdCAFYgSEem04IR3T+bEVYH40ABZJH1Ixj88pRlmk6oIr+PNZG/KDxCSA9cUi0/cf
-         bPVOs0pyrMwwBy2P3GBXYw18Ik+Oxam4cSZhVeiRBvoOALpWMwdOHAYZByCTUlxhhV5W
-         OCRNjIRKGlnfhDJadF24HNRO+a7jNgiqj2bTrnHBtMsBRXvOMIl6lspmFkSLEPDD06cj
-         jRJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793156205; x=1793761005;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=qe+Aba1mc70euwvyHmGWBgP7N9IWvenUJ5MnD/rXHZk=;
-        b=wKZkEC+6ZJxuB/1Htn+ghGdELF1PPupZ46UuEdvxxCdT/RZS8G7oH5OAKNfRxugFLs
-         sv450bSK3++CJn0R3ZnZPua6+Sl1ZhYXxmzUN1tctQkqv+Lpgf0v91kjlPKeNvHC/nJG
-         N3HVyw101LDgkxRgJ1Lf2bH3l29Aq0xeDQA9R7dDeB39NauVqy8dR72xHrjlB/hVgc6+
-         PR7vElpI4ewkhZypdha+6U45WTjARgdNOZ9l0QfGGEhhcA3q0P3DUG6TCHwIvrItD6rH
-         ZyWKlCZG+ExH84GUlmbbmP75O5ptSoC3Jp+2pkgruVnYJtbaXvCWy184brdM5Mjip1+v
-         STjA==
-X-Gm-Message-State: AFq9FYIpVDW6q/Z0U6xFs5fHOyXJLfRYpApvi/bhwlofcdejaQ1RKhJK
-	K1wIVNhfAfgf+CkUw6//m6DzZk+b3HTOvvZiPIf9Ky0fyJ3SzyC6Mx5Xr3hPe/0plWXMNKy05S3
-	KhOsSY7Rd2HFd2QIxuRyGiwaUCBn9DuU=
-X-Gm-Gg: AYBFou3unOksKJf7bKulU59XRDms9yo2lBw51vAuv7d35JCKD4eaBXD7hbMTP51JyvX
-	92CwyPenkYDxntvnODF07GeG+XGxihG1bYFsvMsyNoErLpItlnF8ZQfj49kuZNXJid8dlWmu29f
-	lpReaIL3cWbY2dYYPDQdttVIuFiSFzEdfT/TsI1qu8pExLx4xCzryDNIg2PY+9HT9QzCbufoBex
-	BaSS+Flfq0WKcUIUnLfjjb7pmra0VB0/WBhiaLCeZIBENGlcOam1T0TJBHBUhyhP/nBD9d08Ezd
-	MxFTilI4Fxw/VXZ07auuTMlj0aveY/SfN5bvfeYjfAG0m18m9T7xQ/Xh53u8QNeGHixp9dwXFZ2
-	Gz6z+euQKpXeSLhL+XCwSIsQ4EN6E/LdmSVRG3aAo0J4SXR0kqU4CyGynmBs=
-X-Received: by 2002:a05:6000:4a0a:b0:48c:69b3:610f with SMTP id
- ffacd0b85a97d-48e5d2f2015mr2621781f8f.26.1793156204639; Tue, 27 Oct 2026
- 19:56:44 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=S6IF9631;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=SpPf9FMN
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 29DD97A01AA
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 23:43:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 27 Oct 2026 23:43:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793159001; x=1793245401; bh=oftkx14mRD
+	g0I9xSHW/souiwCdUoQ61hHPLqWTm+uz4=; b=S6IF9631K5buMjW98L8hr7qZpg
+	RRPmTbK0SitKloCXuwFkvSTs4Sty4lh+rdw2fsr50bw+cVBJPFcVOaT0IcACX3e0
+	bOe5/EzMOeZumfjPzoNFIOkNWCmcLSX+0WaDXLHUA+VDKg5GXtLb3Z+9P7cetWCs
+	YaeAlNPUv1AaOJGHuJGKD9+D/hBZOc+RFAauhCU0Az8YfF8RGpQW1c5OU1UOVCOr
+	O+im3/pAOCF+Cqcpz/i6CMyzZLDsWbU9aKR+J37neMtubQ4t9PzTWWH+SQGq794j
+	PuTFOYTRjIQQXcV1J6K7YxtOzrSKedNJ6zqWmzVgyTUqGu8qaPsXkhcbI5uQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793159001; x=1793245401; bh=oftkx14mRDg0I9xSHW/souiwCdUoQ61hHPL
+	qWTm+uz4=; b=SpPf9FMNN6eNmQgIG3IrjzZ+MRflLMHI26TKxyTz3kn9k02CIT3
+	WwUeDbDtvMoYbhKo82RLktp/lWK/Kz4CZ0D+lK9F1GgnoE8/kFAKWnnXzJMUkkb7
+	26oAM26dp5OjSHRDbn/+DeTLvFoRqBpcc9xJyeu02mXOAugklp5F257n+fVszfkA
+	A3v1g/k5Wk8PnNuIUvp1g2p/qbOO++1muVJVqgf5IDqVC6qxhRWIccv9xzfd9D7O
+	6PkFywCG0iIrK2gDuMlyvEwTPzlZVN8dyCR/yRGwioN3McvgnCBdS1E6Rq9lXThd
+	Lxt9MNAx9DJmEaNjcJ+pPi/1MCykK/6MUmA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793159001; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:LiNlOD4Vgne5Sf4kphstNPvOeqxXsbyxw2CMGMOBgjSIA6b
+	jwi6ZbUS480x6CQSMPVbFRSJaupGIvTYW4XdQZWDTzl0jwNVwsjFhD8T2IgAVelh
+	+MxjG64tD7yNZezraKB5pJOgGCKPmt1QgvGSZjeiv87pk1wnMU3gGE7ni6cPKfjG
+	1PrksT1Tk9eiOBLb64IzvxDwTJvEDcjLjMfAKHwC8SzVl+mKivF3nf49beFUtPjz
+	E30ohFI5+U3WD2bPPjEc63XiE6HLyrcuHVrJDxAzDHs1dKQ9irf3g13qPmzTYbIr
+	+5o4CxuFcfZglgsZ7mo8mUzQfQ01kFpCzRsBUJw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:ijRDS37jt6x0w8n7IkF1URros6JYhkkFD5Tfo0oPc8s=:3sLVneE5h3ythlO9rPSz83h3b7HzuCVJ5BFk+4e0t4o=;
+X-ME-Sender: <xms:WW_haqQIuh9NrC2P6UZWAekpPwT2zLLHYWIQetxy7bfP_Qjsr7ARUg>
+    <xme:WW_hamzGVzjIIdF_auMt9nFIHDkFG3IR4TcYBhy0yFo40kn0s1VyrkWciqBPxu7BV
+    d0KPvyQyeE3wiOo1LsSnJ5AFHVSV9EPfbEFH_CDB0ABcqODSRJ0Pw0>
+X-ME-Received: <xmr:WW_has2RHtsh9iVw5NCMYpiPEMOHDdA7AvZp-oJwc8sDvX_vPx9pnEPx9QAhrF2ufFpO8hzrkHVrj8tXSljqWiipjjRzY4bX0Nid>
+X-ME-Proxy-Cause: dmFkZTGNaWNdLhGuL+pvuv70ctq2Of/MIk2RUEoXtg+Ca+vsSWx8y7YZ+BJRHjdzaCxLLn
+    aHpw403FyyttrTLqJC7h03m1x+kj/IaRxFQvXeil1BK3yw7FK6uic2CvFfTvok/ctE9wMu
+    rTgl4xdIJNska2RzHHpFc8a05d89Hg2KMKRHsKmUJKiwyGkGg8yYcgBGSydg5/rxviNY/t
+    UB8K/dPhoevMgMuNbTotUarL9K1BkdcjSn+nFp298AebuXYbtxBrf+riZdtYLllWjhdpMQ
+    9mNitB1Y48A3NwRkqmEaOh3x1Xx5YKALHb/eIJKkgWxJyFcEFa9v7BBdU/QqkDXjN3NqH2
+    SVgIU+Km85GRXLi6IPPSIR19n91wseucOYgSeCj998ExqI6GicOe44tZFi0qUrB3iMcZ0w
+    KghVgTGzu+n+8Q1cwT3gB8evTRH0OPvQS/pXtcIBoMO3WxOvwvYGCzeVSM1DtilgL0IzjA
+    PKaxyeIxVTurm4SQwbQXRDAWnoeRSDHphgqzL2HHWPnacMLW8t0+hyPqsHbtk4qIbLt3D7
+    YukiYqtq4fCN8SF0HEh9rWjeG6AFjhbO0dVs+UBnbKEy5GDTEiUCPN9Q43DUrrK7iI+vrn
+    t3P9QhYzGJWlp9Cq3zX+RcVPXwWFrSLodrW9fDIojYQDlzmloWoUOJh7uQjw
+X-ME-Proxy: <xmx:WW_hak5QHstWlKYuqQ1-W1bCqUVFTJuKQjgi1IKzc1adOSzmUJ57yQ>
+    <xmx:WW_havV6NxE4W8ubUbe---pV4YN21cYjbc-TJkfFXiXOhfsZHrJTWA>
+    <xmx:WW_hajDGiUt5Ezm_zX1Cchq7r_Rlf3zsTnmVfLeqMz3oePxNkNIcdQ>
+    <xmx:WW_hau6V480HSCRXIp0kGGeeNcskWU_CZ-9YlB8RFq5HKbrKv7oE_g>
+    <xmx:WW_hapirSZcTmCQgHYrIqKCLFQ4hGozoxWNYlgfWEgHwFNtNMV5qd-to>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Oct 2026 23:43:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Hardik Kumar <hardikxk@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] t/t1467-refs-rename: Use test_must_fail in place of NOT
+ operator
+In-Reply-To: <20261028-refs-rename-test-fail-v1-1-b7458ca62149@gmail.com>
+	(Hardik Kumar's message of "Wed, 28 Oct 2026 00:18:43 +0530")
+References: <20261028-refs-rename-test-fail-v1-1-b7458ca62149@gmail.com>
+Date: Tue, 27 Oct 2026 20:43:20 -0700
+Message-ID: <xmqqld7iebhj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,32 +124,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261018235508.848-1-colinlewishinton@gmail.com>
- <20261023185007.21642-1-colinlewishinton@gmail.com> <xmqqecdezfr1.fsf@gitster.g>
-In-Reply-To: <xmqqecdezfr1.fsf@gitster.g>
-From: Colin Hinton <colinlewishinton@gmail.com>
-Date: Tue, 27 Oct 2026 19:56:33 -0700
-X-Gm-Features: AclHuK9cYNS5VYtF46PjGaJjuEAlNq34nVHjvzM-Hmsrc5c5VXRYSp5m8-xiTQE
-Message-ID: <CAHeTm9NOqLA=BfTU9ABDFt8+jOzaRDPRrMNP8thzAQN2NVZAew@mail.gmail.com>
-Subject: Re: [PATCH v2] remote.c: defer remote.<name>.followRemoteHEAD validation
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, m@lfurio.us
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-> This part of the code becomes overly deeply indented, and more
-> importantly, the outer conditional around here has been reworked by
-> another topic and the code that learns follow_remote_head will have
-> to be reused elsewhere, which would lead to a nasty merge conflict.
+Hardik Kumar <hardikxk@gmail.com> writes:
+
+> All tests in `t/t1467-refs-rename.sh` use test_must_fail for verifying
+> when a test or command is expected to fail. `test_must_fail` is used for
+> all Git commands.
+
+"all Git commands" that are expected to fail, right?
+
+For two "git" commands that appear immediately before the line you
+touched in the patch, test_must_fail is not used ;-)
+
+> The use of the NOT operator is replaced with `test_must_fail` to ensure
+> consistency in the unit tests without any functional changes to the
+> tests themselves.
+
+A more common way for our proposed commit log message phrase the
+above is
+
+	Replace the "not" (!) operator with `test_must_fail` to ...
+
+More importantly, the use of test_must_fail is *NOT* about
+consistency.  The most important reason why it is the better way to
+write than "! git refs rename ..." is that test_must_fail notices
+and fails loudly if the command line getting tested does not fail in
+a graceful way.  If somebody tries to update the "git refs" command,
+introduces a bug and makes it segfault when 
+
+	git refs rename refs/heads/symref refs/heads/renamed
+
+is run, the command line prefixed with '!' will happily say "ah, the
+command crashed and did not succeed, and I am happy", but that is
+not the kind of failing that we want to be happy with.  If you
+prefix the command line with test_must_fail, however, test_must_fail
+would still fail when the "git refs rename" died with segfault or
+otherwise killed by a signal.
+
+Thanks.
+
+
+> Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
+> ---
+>  t/t1467-refs-rename.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I'd like to see this part refactored into a separate helper
-> function, by squashing something like this on top of this patch.
+> diff --git a/t/t1467-refs-rename.sh b/t/t1467-refs-rename.sh
+> index 2b28be75c8..b7d290d05b 100755
+> --- a/t/t1467-refs-rename.sh
+> +++ b/t/t1467-refs-rename.sh
+> @@ -88,7 +88,7 @@ test_expect_success 'rename with symbolic ref fails' '
+>  		A=$(git rev-parse A) &&
+>  		git refs create refs/heads/target $A &&
+>  		git symbolic-ref refs/heads/symref refs/heads/target &&
+> -		! git refs rename refs/heads/symref refs/heads/renamed 2>err &&
+> +		test_must_fail git refs rename refs/heads/symref refs/heads/renamed 2>err &&
+>  		test_grep "is a symbolic ref, .* not supported" err
+>  	)
+>  '
 >
-> Thanks.
-
-Okay, I will refactor this into a helper method since yes the
-intending is becoming too much, I will also keep my eye on the patch
-you previously mentioned, and post a new version once Next has been
-updated from Harald's work so I can rebase with their fixes. Thanks
-for the feedback.
-
--Colin Hinton
+> ---
+> base-commit: 37b3475fb530c14109211faca33716a173db61ed
+> change-id: 20261028-refs-rename-test-fail-ec7a8fa74e54
