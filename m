@@ -1,93 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215619;
-	b=2ree3442g3JHO91Hjo6bJJxJIVmP6YDYDOiHypfkV6sPaRTO5Z9me9q0+ye8vdqhgSz8
-	 TY6D54y6FBzOJK1YTu42mKQ/JH57mF6TJoCUPYnNTeGiiWSVxJvINTx7yQ8Ty20vWHkzX
-	 /25uhQozP+qObJbhOdskFaRuAY5UIkgXakUg5A3IU92HVa6IRRB6A9N20r9QKptmWxmGU
-	 qhG9qZEeTuovim1gJMiBRTZtpLBHzA4swyVQGn88Vd7jh42oY9bFvLGSHIHDjbFwoozZ8
-	 ffaRLySBThpEhmvxehk759dmGwZwAKH07o6yQ5ZuQkllKjhLqU0Vyk6lAE8SU/22jEA==
+	t=1793215661;
+	b=xzuHI0OO/6fVV6n8IHb56Dmd9a6zauSXhmJIwsOl2JMOaNZJtzAnkKSL1/gJ5ZfpQJvz
+	 +/eboV+gk+ONRy59QpYEqawhXIoj0r7K0/e1LEkiIXnLxUjpWraldBfQx3G6KNN6JweMQ
+	 P/ma3BIaSTY9cL+l0Xigw8w+9xtGn6KwXXYzcF2ZZWoaFm308tR9WZ6NLtQLQR3XaF6JM
+	 A7gWRMbBGB1xCwvrS3lJfqszerm8ovCklqoJ6r5iqP+wNmFwzsBQ4WO8ZPFayaioPByKw
+	 hM4r+qiQmbLjlr5OEbBF0jtxzSIA7h1OOAbfzGvrFd4lrN8vgKAemH2z3m8CpbKVXWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215619;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=XTdz+N1utYOwDFuKeBUHafG89ZGTvqNEAsodOG+INdk=;
-	b=3HXO2CHFVDRPWMRZOA79D5Y26D63BjvPjEk3osFiFfIRc9/Nv4VAT+ZBp0loFQ/PeX4U
-	 I79hA1nU54t/kpbOkIFqJOuyy93gmQMiUps+x50QFXxknVvQ1xvbeWQq9fLC92ovUwIBt
-	 SdUvvVTyOw6o8AAB554kDYTbrILxC4F7TgcoV3ju+Y+G4TwjPBU4tzsHny8tKB0oaw5G1
-	 VFk5ZbxvwcPLyhEWZvKCuK017iSGBYM21IvqG1AB90PFVrmvw3oV6ywR/VXHMKZkeX78F
-	 +VKcfNqIljdLc6ky57t0T1T0kFnATrm1gWxIwp6M/wDmbjXWDi26xoNFafoTJmwKu+g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215661;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=hR3xzQDEoycjEal02khglfCKpUmcD0BtG6rvW5E3398=;
+	b=Ig68kkNI+LxARqGz/dExPKK2XgxcZL/l4kbreOlw8h5cOKkTYY8UffR41BRmRq5cMD11
+	 7Up+mcOC9/NBJW82dG3UbGYuTKhwD+T/fK8cDUy/qyzoYeuoHvPER55xXmtKJFJr0QPX2
+	 t1wk1q8qipoX2tSyp+5Ek7yoUfOlR9Yqa0L9j1oH38vcRsY6MLj6t85RZG6SZDW9QL+Vk
+	 L6Hz4KJQFaL71reW3amf/TTmZwzYTnv3U7xK/rsZvLYB9v57RKQmM8ha9/XHbdMA/tDYd
+	 u9Y13x5YMHXUiiBTd+krv12PFQ9tomKkRNuA+E4MgYrQOykixeLEAIfAYK1DfFV12oQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zujYJRO+;
-	arc=none smtp.remote-ip=209.85.218.45
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=BnA9Nmmq;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Ai01HKnj;
+	arc=none smtp.remote-ip=103.168.172.144
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35036606A31C
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 19:26:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 35036606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFB5606A31D
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 19:27:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9AFB5606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zujYJRO+
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c45551fa84eso140255366b.3
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 12:26:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793215617; x=1793820417; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=XTdz+N1utYOwDFuKeBUHafG89ZGTvqNEAsodOG+INdk=;
-        b=zujYJRO+Pz4UgjtOGbLAAOHSUBPAvQ8f2AkEd8c4zEfX2rxwgDQ3Ow8i9metK4XaXE
-         EloyDq+MJUVP/Jwwnp+eDI2dJ3VSDPm+3l+hGCJYuEavoQiXh6U4vqB1YADKGYeq64Pd
-         zIT0w56znoKzJ2nhROeeIYUNdVNgcbYJY+HAiP0p5345t3MvpVSUNBdRofmRoOb/8UgC
-         HRDWeBtmXxr7k+uOe1nxop+sK8Wp/Ixaq3q8ODdEKaVGBtVaifU6r5Wp9/EzXIAm/cgt
-         0YC+1K05ms5n7Fmt5rxf89tOBBQer9jhjZZA7DUjW5Qb4RReAquHUx9pEh3I4j80aALT
-         l3MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793215617; x=1793820417;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=XTdz+N1utYOwDFuKeBUHafG89ZGTvqNEAsodOG+INdk=;
-        b=L7vX3kxnEsVF05tiCO2X9/65DQ8LpjY1zFNu3d2Gfi48/APjeJ7U1pG1mkFbCrgxj2
-         jJGJTNcEyMaxfDfOZHJFyUS47Ekb5GTlvKITDHj+oX9AlnFoII6ff/rcMg/Z8zQB++7S
-         n2tngYdW5q0tux2YHXmd1vU5HeuJPBkdvGKxi0gmCz4XtXHPYtZ2gX+Fa+MsKc4nMpBK
-         mPPTvrw3s40j3DJCO9ymSOaNXfZ7mFS4SJ7lHpQEoVrCNReArgbdps90ASpT9qWGvM5l
-         E7BfS4XCqz46y7cI49t69NcjUwZQB2WMwG3ZlwpCUDZs5CXXTgyyueAjmSxXfXUcDTdq
-         uC+w==
-X-Gm-Message-State: AFq9FYKeklBicos3RHpDtxaheLOg77LtxZENmMkiJof/3M7p6/tYxti2
-	cb69xFFMJ/looLhkG4Gq9cI+Pu6W+JNgxgsO7PahG1Zj7wnO5o2rk9+/QB/yfrlWr5qQqY8l
-X-Gm-Gg: AYBFou3fJKQogjNbOnAgbnDuYSTer7AHtapfpweVxn/MSDpwcHbRi12se4h/slIxdQO
-	hfzWTbTkwhxSRog4Iq7YeQOErQc7re0lWc9TAc4mtTpgRx7aI7eTsqNwPznqH9xrFBK81T60p/i
-	wnIpNTLHGEh0IMlgsj6SbbWp+uzEs5/j6VFth75P7pLjTytPeRX5sFXuF6CkitTrBE0IpIy/eeh
-	hnTjDUdm5832IyGMgMwXKmmP3XONGeKfhH9BRszEvQK/7WTVXyTnqaPPst3p1YQb4JPnYotwer/
-	42IvPseUoge9AVY7DhLUgISz7GXM/YgicLpp4Rx81I/esop1Kqpy079+3AHvHxqia33af6Z+3FP
-	iJs0ryZa1LMzCPFsfr6018HgB/714mAtoJT3op5TXzmILjPknF5xtUUFhiN1PYnocJcuoCP3Kiu
-	j4Zld5gT+CMOMloDUpwgMUq48QMRWFYLZXX9eJW4V5qZWuftnSlz7sV+2W8cDkQn9MflLrziZh+
-	/bQw3qzJiKVs/kgJJH8UP9OwzYk0xfRH6UbLfji5WlEBce6jE1X0eH85f9+M5I3Fd/YPUfLgZZa
-	QepevVzoZxKMOJko6qbRWj91IvFusz5p5APBqIydqS4MqdmCBTgLyQpfXXpFh3ZMSgxTaBJIV+A
-	7a3/I+FDRGgNdnnKkIAGa1H+vHAY9bSo8WowAntDsqmo766l2Ml8VK1JPJ0a1hEuPHT454V5TLD
-	f43h5c0CQYnZFKhr+d9fkf7G8=
-X-Received: by 2002:a17:907:9606:b0:c3f:dce3:20d5 with SMTP id a640c23a62f3a-c49bdf14449mr289806266b.22.1793215617307;
-        Wed, 28 Oct 2026 12:26:57 -0700 (PDT)
-Received: from localhost.localdomain (190-2-149-64.hosted-by-worldstream.net. [190.2.149.64])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c46bd77e1e9sm648493366b.67.2026.10.28.12.26.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 12:26:56 -0700 (PDT)
-From: Edson <edsonwasswa54@gmail.com>
-To: git@vger.kernel.org
-Cc: edsonwasswa54@gmail.com
-Subject: [PATCH v3] builtin/diff-files: convert ad hoc option parsing to parse-options API
-Date: Wed, 28 Oct 2026 22:26:47 +0300
-Message-ID: <20261028192647.976-1-edsonwasswa54@gmail.com>
-X-Mailer: git-send-email 2.46.0.windows.1
-In-Reply-To: <20261028170432.3524465-1-gitster@pobox.com>
-References: <20261028170432.3524465-1-gitster@pobox.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=BnA9Nmmq;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Ai01HKnj
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id E170FEC065F
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 15:27:39 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 28 Oct 2026 15:27:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793215659; x=1793302059; bh=hR3xzQDEoy
+	cjEal02khglfCKpUmcD0BtG6rvW5E3398=; b=BnA9Nmmq0C2VVPM+hZUZu1CqO8
+	A8KnoSkmczrOcZNHv9v0DKOnkUco3motJ2TCwy59vOBMI/P5sJALNSAiUMciphsJ
+	O5lI1Rj1YSmcaC/sxJ/W4r8+MO/McM+W/88OtZDdBzZLt2ipVjmxWZ6jV2HvKaLQ
+	hTR96oNar5dE39id8t6gke20Sy5EJy8iHAsRGD3lQulCHwqCldOVLyZT3NADypmj
+	QIAoQAn+CrZzyYtMfJgPol92JLW86ejFVIKb1FvQ6oY9risueRVQL0CpSa9wO50o
+	hPRIumt+87zloqz7rU7I3JiTqFZl+E0wrIF/Y1vbf3DvH68CDXV80SihV1aQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793215659; x=1793302059; bh=hR3xzQDEoycjEal02khglfCKpUmcD0BtG6r
+	vW5E3398=; b=Ai01HKnjt1qbe2cKe5DmupnXI0vjxFuCdQ/cTBeY0TOmm4IBPhn
+	8/tPQvyvXacJcpL6DcXdwcE+jN+0z8kvZJE3h8WRsyxAlLjqqYrYuw5GdzPIFFyt
+	gWn7ucCnqAuhWVlOtQvlquhBK+5qKJ1iPFMgcGfBxLIhBxEXlgcRaoAnLqv/1R1r
+	oWu50mdmRMsp3iu+TXDdyCfB9edoMiHTJCyMieZCTWrJnyaGtzIL0+jodzQoNZN3
+	cqvnTGJ8B3l+vcy0nldVhTIjiCt15xDCC+WiCcKOP1NfIRF761y5d3ySzlpnoEXT
+	V129G/2MCNLXCCMw6RoA5gJ61IOjPf3vqwA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793215659; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:D89/bzqwlCQPzePQTH/fJxnmthYqFaj/CCC3GYYjWrcxmRI
+	rObolGOzePuguTGX+A8bcrvZEiAzOWN6kgOLDtTuZ4llpTnbygsyGMRC+15VEtl3
+	W3PIlBv4og/iTwIelUd0e+XxeLubEb3PWoXgCpxe81/t5GBNUBNed8Cv/zV89s14
+	17JrqJyGQcGfDcLCVdWgj6rMHp0sGclSUoyD3+lFasObzzv5aQcuyPVyJj+CSkqX
+	Ub41AFdLj1jHTWxyQTG4k8yQ9LCugXliAXw54bkzurwX1j58+wUifIlxWT0zw+Y2
+	ez+XHL+XTbCCxxAmD1BLDwg0lXCONMjVRFE56lQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:iSXMAO9Y5jfoov0fE5iV4b76AnHmEOvAHF3jdIdHE5s=:l7jwdi94nFSi4br6HeJcjVEcbUy6j+Szzo1AFDlvr68=;
+X-ME-Sender: <xms:q0ziakl2t7lnqmz6-SY8Y-FvY6xWRhGl8HXNdvYbLHWjkMAPkVaCRw>
+    <xme:q0ziaq2z3aOSJmyIAvjXxKX7cpt3LVrlTaVb56f90Y2LVfYz2hEMvIH3V3KMJry1d
+    ZMsKZuEz4x5sSfh85s8qL1x5b05AzLuKslv0EWIIIjEICsdOdJUgFI>
+X-ME-Received: <xmr:q0zianr8OAzYnEGpJttafNAeXSclfWNBP2QGVcoCPjScsrmvhHwBIeUoxoGfvVTC6Zj7uLbim4DlGMUjC5eEYfCRiLHhINnTbbPA>
+X-ME-Proxy-Cause: dmFkZTE7X98lbSDbGAXXooJoGPbiWD7jnofDZvbEic9ZoYCphqO6RT84T9AVduCctbo139
+    eCI/cBaMI36eIhcXozR2UXxONJQxZ1Oviw+mV++r1gNuVptw0PShwBAUBjVZMN8ofgpV1U
+    fDSlt3FNswjrBHj1eqzKN88knMqr8EEWUMZxCfc9pTZ2EaOWy4Y640EYJoX++lQAKlVggO
+    mlDn+NmC4XR8u2kHMQTcqhca8Y+FuA1e5iuiI9WrtZS1Y5tVAODk3r1X7SmolyJ9WbO81E
+    2LcKoyp4hIG9KNwQ24EE2DJK2pjH3y/t2+sSLZWi1yvJ7M+xHjnbsewO2hBJRbVbv/dhNV
+    Fsk+plX/ekyeDtho6z1QzyerkpBvSUV/NMqYYRSEnrkCV8K2gSH6TjMw95p+RtpkEzput0
+    yAO+qTwYhGUjEDmyM5JP3LMFs/MekRFytQgEScdwdB2tSIsoXE02MM+wDAf9AHP/p+dLYf
+    BSjP/W2ZAB2NNkQ7MsIqwIV1qMKHmDs76Tde3nueAKkGZXnRm+u46oVrFSPHuNoQZw+AQB
+    qmqthDDORdKCJnnlYjRGqizRe7uQhj6LpOLL78gHFm/bSw5h4hNZ9l4GkRRdyAOpgDFddM
+    FcPtIL8T9e7VST1hoNNi/oF26VuQ1jeIeME1wPBNt4PgIPbd3Pg/FxTBzh9A
+X-ME-Proxy: <xmx:q0ziavcpscxLUIG6u8U4n4XHyvDXxppmkmboNQDgSWEJxIbtkKbu5g>
+    <xmx:q0ziaur9F-JLvvVKRXZQSSkuIJVYWjp-5_64xMiULz2OWWix5hwKsA>
+    <xmx:q0ziaoGmpSDW5vJK1h2jwC5BIzpDy2X_3jyr9r4j-Ih9oywfZpK62A>
+    <xmx:q0ziamve9p7WJnVX3xi5LyUpioZSCz07eXVQ0Ujb2AXggcxZYUiQPA>
+    <xmx:q0ziajK_jAxIopdNO66-m20IYU418dQS-Wo613955iGuWCHf6tge0eRu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Oct 2026 15:27:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Git mailing list <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 5/5] setup: report when GIT_OBJECT_DIRECTORY is what
+ we could not use
+In-Reply-To: <20261028115412.169748-6-kaartic.sivaraam@gmail.com> (Kaartic
+	Sivaraam's message of "Wed, 28 Oct 2026 17:24:03 +0530")
+References: <20260924120502.2642141-1-kaartic.sivaraam@gmail.com>
+	<20261028115412.169748-1-kaartic.sivaraam@gmail.com>
+	<20261028115412.169748-6-kaartic.sivaraam@gmail.com>
+Date: Wed, 28 Oct 2026 12:27:38 -0700
+Message-ID: <xmqq4ie5aamt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,80 +126,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Wasswa Edson <edsonwasswa54@gmail.com>
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-The cmd_diff_files() function manually parses --base, --ours, --theirs,
-and -q options using a hand-rolled loop with strcmp() calls. This is
-inconsistent with the rest of Git's codebase and lacks features provided
-by the parse-options API such as auto-generated help text, git completion
-support, and option abbreviation.
+> Improve this error reporting UX by explaining the real cause wherever
+> we are about to die. Because the check does not depend on the candidate
+> that is given to is_git_directory(), it is enough to ask once, at the
+> point of failure, whether the configured object directory is to blame.
+> With this, the user would see the following:
+>
+>   ...
+>   $ git status
+>   fatal: not a git repository (or any parent up to mount point /)
+>   Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+>   cannot access object directory '/tmp/git-objects' set via
+>     $GIT_OBJECT_DIRECTORY: No such file or directory
 
-Convert this to use the parse-options API by:
-- Adding option definitions using OPT_* macros
-- Removing the manual parsing loop
-- Using parse_options() for consistent argument handling
+Hmph, this is only a half of the real story isn't it?
 
-The --base, --ours, and --theirs options use PARSE_OPT_NONEG to prevent
-negated forms (--no-base, etc.) which are not meaningful for merge stage
-selection. This follows the pattern used in builtin/checkout.c for similar
-stage selection options.
+    $ git status ;# to show I am in a healthy repository
+    on branch master
+    nothing to commit (use -u to show untracked files)
 
-This makes the code more maintainable and brings it in line with Git's
-coding standards.
+In such a healthy repository, if I have a bogus DB_ENVIRONMENT,
+discovery does not have to fail.
 
-Signed-off-by: Wasswa Edson <edsonwasswa54@gmail.com>
----
- builtin/diff-files.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+    $ GIT_OBJECT_DIRECTORY=/ git status
+    fatal: bad object HEAD
 
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index ea91347ce2..bd761443b9 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -14,6 +14,7 @@
- #include "commit.h"
- #include "preload-index.h"
- #include "revision.h"
-+#include "parse-options.h"
- 
- static const char diff_files_usage[] =
- "git diff-files [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]"
-@@ -48,19 +49,20 @@ int cmd_diff_files(int argc,
- 	prefix = precompose_argv_prefix(argc, argv, prefix);
- 
- 	argc = setup_revisions(argc, argv, &rev, NULL);
--	while (1 < argc && argv[1][0] == '-') {
--		if (!strcmp(argv[1], "--base"))
--			rev.max_count = 1;
--		else if (!strcmp(argv[1], "--ours"))
--			rev.max_count = 2;
--		else if (!strcmp(argv[1], "--theirs"))
--			rev.max_count = 3;
--		else if (!strcmp(argv[1], "-q"))
--			options |= DIFF_SILENT_ON_REMOVED;
--		else
--			usage(diff_files_usage);
--		argv++; argc--;
--	}
-+
-+	struct option diff_files_options[] = {
-+		OPT_SET_INT_F(0, "base", &rev.max_count,
-+			      N_("show base version"), 1, PARSE_OPT_NONEG),
-+		OPT_SET_INT_F(0, "ours", &rev.max_count,
-+			      N_("show our version"), 2, PARSE_OPT_NONEG),
-+		OPT_SET_INT_F(0, "theirs", &rev.max_count,
-+			      N_("show their version"), 3, PARSE_OPT_NONEG),
-+		OPT_BIT('q', NULL, &options,
-+		       N_("be quiet"), DIFF_SILENT_ON_REMOVED),
-+		OPT_END()
-+	};
-+	argc = parse_options(argc, argv, prefix, diff_files_options,
-+			     diff_files_usage, 0);
- 	if (!rev.diffopt.output_format)
- 		rev.diffopt.output_format = DIFF_FORMAT_RAW;
- 	rev.diffopt.rotate_to_strict = 1;
--- 
-2.46.0.windows.1
+On the other hand, if I am truly in a bogus non-repository,
+it does not matter where DB_ENVIRONMENT points at.
+
+    $ (cd / && GIT_OBJECT_DIRECTORY=. git status)
+    fatal: not a git repository (or any of the parent directories): .git
+
+Even when DB_ENVIRONMENT points at a valid object directory
+
+    $ (cd / && GIT_OBJECT_DIRECTORY=$HOME/w/git.git/.git/objects git status)
+    fatal: not a git repository (or any of the parent directories): .git
+
+the command fails because it cannot find a valid repository.
+
+> +static int describe_unusable_object_dir(struct strbuf *out)
+> +{
+> +	const char *objdir = getenv(DB_ENVIRONMENT);
+> +	int saved_errno;
+> +
+> +	if (!objdir || !access(objdir, X_OK))
+> +		return 0;
+> +	saved_errno = errno;
+> +
+> +	/*
+> +	 * TRANSLATORS: The first %s is a path, the second %s is the
+> +	 * name of the environment variable that set it, and the third
+> +	 * %s is the system error message.
+> +	 */
+> +	strbuf_addf(out, _("cannot access object directory '%s' set via $%s: %s"),
+> +		    objdir, DB_ENVIRONMENT, strerror(saved_errno));
+> +	return 1;
+> +}
+
+As this is called ONLY when we cannot figure out a usable GIT_DIR,
+we do not have to worry about a case where $GIT_OBJECT_DIRECTORY is
+not set and $GIT_DIR/objects/ is not readable.  So I do not think
+this additional message hurts much, but I am not sure how much it
+would help.  It would make the message more confusing in the "no
+valid repository, DB_ENVIRONMENT pointing at a healthy object
+directory" situation in the above example.
 
