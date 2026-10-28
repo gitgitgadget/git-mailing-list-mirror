@@ -1,120 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793141825;
-	b=Ig1arqXfr+QDbBPP9Kba1dNoFQ7+WAOccsT/82WlJdddFdjVX2UrgxbDmghU1XTsey5Q
-	 FCDQ+Kp+NW9FSeI/QSGcgi7wcDyqHTpqVhzplK1KZ6zB1RAfv+oFUMs/FhL7rZ9NvxEmo
-	 PzdnBphPB4bYTWbH6L743ZgDlyVQOnZmA/MHDfdbmFy3FhgHs9NNy0Bdzg+G240UV93/w
-	 dQWYeVjp6DSe3fXHZO4EK2jMW9SMbTVCMdgfvDIKmyTaYQAZskgL7mbW5JF/DhWMWI4dZ
-	 PFNF697pUIn3RhFy6gK+1g5NIYbP0CuvOsg9+/x3AcXSLyXKMM+tMttDI+tIaG6VM6Q==
+	t=1793146533;
+	b=zLzDl3gvR3crHeOaLj8cdeTG0hepKznTYOZo0zuChyhKR0FmsknPSPZASFhGE0k5K8Vr
+	 eErOco1EOhQZUgRr9/T/yqHQoWj8GpLQNtDqr37YSlA5j5u4v2+qSKcy6jRTwEY3lvyQG
+	 6/E6Vbzp0+SDo199fMR57lg1zTTSb/u4pDdLSDDtitGoHGM9eB+PYbbgVLVsVgFxaNyRv
+	 JISKeoFEJES135EE4KzAMr82r0tpA5kQAo4hKYtxyd8Co2rnHy0hglhMF4Li8C6mCxZku
+	 aY4V3oQeucDpPlwIlVRxmnhr1whafn3pQ1mAvgkZm97fYM/jiF+E8UFiH+djtLPVpeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793141825;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=OeN2EsMqMaRFd5HO+Z4E+Ml3mwZ9BOq7pWqrl8yTNA8=;
-	b=YCKaEgMWzT6NdL5iRm1m6ak8ZgMgugw1flJCpE7VqjeTySNjnPuyJ/cl1GuYGX07rf3p
-	 19hIEmgAapyY8TCikzSrsHsLApWlzBmFAJobZKaLCci0Xzd7/0KLL663W5GnCKXS48rUl
-	 wefRxEtGwS9eM7BeZe6QJgugSOgD46ZAF3mUmrgT5IQR5CKrr7VVAUVZLl74D/vMIMBBr
-	 uK5EfqsWrQgHxb/zUrPJRyLxbFK+fSTrFR2pxF2AF6HqgMr1Gj43ZGjCYtH+DHnqt+w6b
-	 V4+xXi1Y9ywDAM/lg3ud0g9GDKDDkgcdmY92IE8nP26CgODbOvHlRc7/gg8VvbbzA+w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793146533;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=0kufzUFQ8a5cekKgSVKYdYZlTro9zGZLuNn1kSFvO2Q=;
+	b=BJ5Z3m+tjJu5K4lzd6+p8glZw066mbr4Ab+wUSAbxAcjoYDnwl0AzX0+2Kn42fgqNYQH
+	 UEKgdMCoS5C7MnrQIyYuEqsbDTd45LMfAW6dzU6owBew9dA5ma2nDsBAzO77798qZRM32
+	 gi8S9jrvMpnGL/m0Sm7A3JdnX35M8EfiuQgfyi27b1Zn2tOS+x5gBELKRJ3+GJg7i1QMb
+	 IoyvsxyINuh50ghp1C+nlYZab4DpuZpG5EKqm/W7Erfqb6tCpr+i39AhQAazeDbkNclpQ
+	 McsAvG4SelYTtjdFWB0+5W8qwPmw7WcG5vA/ApOv4RQHFpC6jGF5lUhmLBLUZQq/ewA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DYyzCETG;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=pO46gUnu;
-	arc=none smtp.remote-ip=202.12.124.147
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KrpMgTrk;
+	arc=none smtp.remote-ip=209.85.160.177
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA674606A31A
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 22:57:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EA674606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1299606A31D
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 00:15:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1299606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DYyzCETG;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=pO46gUnu
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 597581D00112
-	for <git@vger.kernel.org>; Tue, 27 Oct 2026 18:57:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 27 Oct 2026 18:57:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793141824; x=1793228224; bh=OeN2EsMqMa
-	RFd5HO+Z4E+Ml3mwZ9BOq7pWqrl8yTNA8=; b=DYyzCETGiH/w2tjY0XMCYme9n3
-	Et99CHXIDamtqYvcxyaMVIgqRKtC6vfqtYZ2ghCtaLJ8TvdxCTeO78xRpg4KYw6r
-	A4tmuDt5HATMHOb9HlNkaV6IYSdhRZuJVm6097HfQcXTsDNNGSCD7aZVqyAB2rAc
-	Sr6j6itRYcGUnjhEOc2V2zYy897N25ta75Mw6gXlLUUIsM7FNqX1ObcO7kaKRfIN
-	AGK5bQnUto9dS/XsseQyG3c27qZd00Q72W/tIarwqMu1jMBrQQpyhZnLtXPEEztZ
-	kDxS3NkOkFPg2Uwn7zVGS4zRGM6xFVrkWfqr+06ZK0wIWxGLefbQEGWQy+Og==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793141824; x=1793228224; bh=OeN2EsMqMaRFd5HO+Z4E+Ml3mwZ9BOq7pWq
-	rl8yTNA8=; b=pO46gUnu61spluxob32w81NkU3jG78eVG9eJen7iiRrpexHh3Oo
-	78HQrcpRJc7fQF9VNOmWjaG74jadT+J+Z6pe2fDrffjF3r6Dr6wBzGO2abQ0HhxC
-	W3+BmHsmlNm1bukZHJwL87K1IBYMI9xyPqAH12FK8jdXLpuTVK2VSsXdM5E9QiLS
-	DgylbS0ZlV8RkDHLjVjFJfxcgg8XB/pQCUoKSZIEhvC8CcidVvSK+vedjFkn5Peu
-	fnYQVjey2JjNzGLTMRExJ2fwqUA5uCW8EYRqblC4+mu++0E+2Rsa9EaxB+lAmdsm
-	HSlyndbfvCEy90GgFxNFZvTP17az8va7uqA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793141824; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:YEyOALm+rjPb6ZwKDoE419ZDxhNTR9dWbQCjT0utqbkHyNn
-	KAXtTXYF5iWm7vEF+bZ05dDfrKT6LoFhIv3kDXEizQp1ncNwSdC344MmYk/gDfCF
-	7tbGDqk1Uq4yZ7PsdHUIis6JUuVEmaNpI97g3795ANFoZ+lV0pgq+zlWu4twdvOn
-	FQBCDAhLS+oHZ81okbHWqY7ApERKzCaTf272UzsyQKsvomO7jYkLdvAkDAVviNFZ
-	K4Xdk2/iLfQLIxbfiEreRaYRyl5tFGwb2TL3wrPIWBg11KK8cUT0/OVU8/gnHWuT
-	tsDLipqV231Rpn2xbwkoVmJtpIVA3tsw4Fh4lHg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:dH2RQwsummtNqzaIOeDwSf9uQWqjchJ/wdfhvqweWiY=:OeN2EsMqMaRFd5HO+Z4E+Ml3mwZ9BOq7pWqrl8yTNA8=;
-X-ME-Sender: <xms:Pyzhaucu9XYM2v7vFJ4AV0KA1y7WnuX_gH2DRZh7djFh6qQeAMCtew>
-    <xme:PyzhavFoqZhJhdoImink4o2ZzJgITq7ht968rlnc1dhsYtFkB4YiUBE3KQtWPdLva
-    R8UFCVdkmTnjHaBmH1m5eYK75OTt18jYzSzetQ4BrQWKwGx5mc41w>
-X-ME-Received: <xmr:Pyzhan3HqJOovMKa5nCWxM-AAruY6IUfMrVQICftjBWNAfWoKrRpE2cr0DBGCxKuvCJbMBU4kfbX11_EJfiJm7Hw3G7zxveQ3Iiu>
-X-ME-Proxy-Cause: dmFkZTFGKy7NkrjYpn5ZzzQyOzC0sNxC8Fs6pfbu5tDrvqVw8uN5XY3B8FtFLANPeGncRZ
-    +/KgW//30SYIKqohXozQq88lYTdI6v+62Lpn1BtKxzEBLQSmFOHzf8HqMYzqe6B+thsMk7
-    rIlytvtoHpkz2XQPg5N8HXNMhQ4OJuqunwm9VNa3M4oo0D0hpiVKohTEhCvXRfOR/OkVZg
-    6s4iedTs9sKONOVTi9xN6rveYqkogwi2+FeKi8Vk/Q7G8PmQ0cyOyuNCtRaGA25SexRFjw
-    oU2DjX9u20Gl+H/rfWAYvWwAyIWDBd+Y8ZZRs8Sn8HwFDPWphUhrFTpmOa04NaW5koz5ng
-    JLCODRiINPVGcc6x6H9QxsRZ5SilRvMvOEvJkILm3QHqsqTVCPzDPORE+YD4kbM+rEgQor
-    pjD4IYGNkJ5rtaFz+lXuoUE9U9DNedoZcBKd8VmcxvuufHT5DIbnpZ0LI/8N+WUGy9v6+3
-    zMm3o6Rma9qsd6yAWKMM3tl+JSS/kEin0z9D9LE/WNnkZbA/kycFlob+V+MgZ3W31vq8CS
-    9bHrhJWEnTQnyOU/5x3UuybqA4Wgc/afInkOZrFdjUa3nMGr/dC9PffPw9LLxkMNEfaNPS
-    wzn2Xw/lwhPDdrIvWbdUvDrJ/BsJcP36l2XuL6QFtS8v5G28ZghquJBLO07w
-X-ME-Proxy: <xmx:Pyzhanlo9FSG_i21RXwAjuiNRc4vbDRDSVp9VSeB2gDWXuNt-l7g8g>
-    <xmx:Pyzhan_ujjSRsMKAEN_qs9mQuK83mRJKAQchWGKGlhCtnfHiKvrpfg>
-    <xmx:Pyzhasr_Mc6aKMSRQJfrvKb66n2z7cCDjVqp8sduxpEC8DbBOwY1TA>
-    <xmx:PyzhagmtigcHvY-G3q3uslgVWfkxt86TtDU0uOf660eCniOsb8H1DQ>
-    <xmx:QCzhaixW88FpQzOBZh-RQFOgxQFHUwvWuPsytXPslG0-796BnyLPxolm>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 18:57:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KrpMgTrk
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-53667180af3so6092471cf.2
+        for <git@vger.kernel.org>; Tue, 27 Oct 2026 17:15:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793146532; x=1793751332; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=0kufzUFQ8a5cekKgSVKYdYZlTro9zGZLuNn1kSFvO2Q=;
+        b=KrpMgTrkq5UC0T+9KvY0eWagng1YzKNzm5phtyLqjS1cdx6lyN+ILI5//YeADS4BPU
+         dPlDMZq7pcJy1ELXDiqhOVl//1v4Kl8U9YopunhIXeqvDJupJrD2HuefyY+ikijqqrXs
+         kUU9ZDzvmEqNVMK1Ag9KNMfSG+6OJkdxN1iPtxNdy27v5GLY3+7/uK6YQm91smBVssuo
+         89ALeKIpGraAXhnqNk1MbSp81lcuw3WaRZ+Lq/GJ5jeYGkrP2UY9KFLyLAd23QqLYLuN
+         vV7AnzGVZDkF/ZXQBgYeVBItcMSasA8qisTA2AWjauM9/mN/UtDm4IUTExzWyHDEBQ0K
+         4eAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793146532; x=1793751332;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=0kufzUFQ8a5cekKgSVKYdYZlTro9zGZLuNn1kSFvO2Q=;
+        b=KAf0dw6ZFV9Ljf7Dw1SuEkgUSrIS4wcucS0V2W5LqL6cqPax5kB1qDL5XDXH3gOP7n
+         5W+szMPiEoun+HUF48xxxxV96Ix41hnYH6E5TGsubYYEUzFk++ftwKq2HeagDXXiOkAH
+         H1gRaplOnZyYG3vfqk2/5bEmV8yjGOUOaJ3FZJkuGE/CbGNN+8cFKmnrfXSX6MF5u9+t
+         OvgDD3breM3QryD65Am8n16kgZJQOlXs7wk0ZyQ6xP85BuYsQdsxDcwGWrVuvdj03wCV
+         kifrhCdRTaWNd5Ax6WtFQ+dj2EzkCEfuXgJHyiWXDD4D2IWfImK1ueDvWmGszG8pr8/I
+         UwWg==
+X-Gm-Message-State: AFq9FYIsEDLZ5NAkXZVaAd+qT2F9TwWmiA6TJTt0OLznS0VlMWTDh85H
+	a6bf9jNiM+610GtUJnyu9JG9UAePo+SYhRGEOCVMflgT4AegB/A4NP6Jr/8IzA==
+X-Gm-Gg: AYBFou1860Q40u39k71hMoP8B4gnFCxoN7RZay95i+/T3omjd0bk5/Ps69SzT55CjUO
+	FvmYMfT2UW/JFwN8ewTEdfnOqf3CEOUwAWi9MSIHZO1rBueiJZMXxbdCnt2x1Tz6YUvaZXp/gSH
+	jWcsnj8PnMy3tFxEh5O7urmPl4NZOcO7yiHJOp+PrAyrcv0DoC2wgItp/dl7leoYj0o7rFrsv0e
+	l3v/Yud1LIJ1Kz970UyOJyBot8ireLEUBZlsoZtm63NsNtr4oXfMGpr6lXXSWKlE4FQYBW9emD6
+	atDQ5bi/45794DvutQ/uvc1Pbo806WiTqd/tBwqfow7jeRB3v/Hy44ZbEDHjEjf00CveuMU52Tn
+	EGs1r5dt/2Kb6VcbBDd91YZYcj0hW8HOMmADbFcoipcqVrIvD/i9gKwi0Mbt9AM9RMAsm63LqWL
+	JQqBkz4yJtRFxfejJedbVflMgy6UAROm2/cuWHOi3FMjH2DX4K68ucwUp5bR7fOdvLbAME8En/J
+	VjK14Mh2wU465K+KBTDHSx6h16kJWBLLYHVRgi27jKS9mFH1e0S8brP+vqtoZmPiLY1wlSnBxWi
+	+RLPwpuQOZm01dVqZxvXNsnj9Knjpw/fUXiA43EzXyaKx2x9fb+T2tZgonN1tw==
+X-Received: by 2002:ac8:5e06:0:b0:536:986f:e97e with SMTP id d75a77b69052e-53fccbb76e9mr15334611cf.63.1793146531618;
+        Tue, 27 Oct 2026 17:15:31 -0700 (PDT)
+Received: from Williams-MBP.internal ([107.11.98.107])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c6e20ba4fsm38666656d6.14.2026.10.27.17.15.30
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 27 Oct 2026 17:15:31 -0700 (PDT)
+From: William Hatfield <whatfield.git@gmail.com>
 To: git@vger.kernel.org
-Cc: ps@pks.im,  sandals@crustytoothpaste.net, Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH v5] move rust gitcore crate to a different subdirectory
-In-Reply-To: <20260917060415.2986259-1-mh@glandium.org> (Mike Hommey's message
-	of "Thu, 17 Sep 2026 15:04:15 +0900")
-References: <xmqq5x0df19l.fsf@gitster.g>
-	<20260917060415.2986259-1-mh@glandium.org>
-Date: Tue, 27 Oct 2026 15:57:02 -0700
-Message-ID: <xmqqh5i6g3b5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
+	Patrick Steinhardt <ps@pks.im>,
+	Glen Choo <glencbz@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	William Hatfield <whatfield.git@gmail.com>
+Subject: [PATCH v2 0/3] submodule: foreach in reverse order, with the superproject
+Date: Tue, 27 Oct 2026 20:15:26 -0400
+Message-ID: <20261028001529.81557-1-whatfield.git@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20260131214309.1899376-1-whatfield.git@gmail.com>
+References: <20260131214309.1899376-1-whatfield.git@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,30 +100,100 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Mike Hommey <mh@glandium.org> writes:
+Some commands need to visit nested submodules before the repositories
+that contain them.  For example, when committing changes throughout a
+project, a superproject can record a submodule's new commit only after
+that commit exists.  "git submodule foreach --recursive" visits each
+submodule before descending into it, so it cannot do that in one pass.
 
-> Having `Cargo.toml` at the top-level of the repository implies that one
-> can run `cargo build` directly, but this doesn't produce anything useful
-> on its own.
->
-> Additionally, when including the git source as a submodule of a Rust
-> project, it prevents the git source from being included at all in the
-> crate package because cargo skips directories that contain a Cargo.toml,
-> assuming that everything in the directory is relevant to the crate.
->
-> Move all Rust-specific files into a dedicated `rust/` subdirectory.
->
-> Signed-off-by: Mike Hommey <mh@glandium.org>
-> ---
+This adds three options to "git submodule foreach":
 
-I was looking at discussions that are older than a month whose
-patches are not near 'next', and found this patch, which we haven't
-seen any comments or updates on the discussion thread.
+ - --reverse-traversal visits submodules in the reverse of their usual
+   order.  With --recursive, each submodule is visited after the
+   submodules nested in it.
 
-It does not seem nobody, other than the original poster, for obvious
-reasons, was enthused by the topic, and given that the exchange on
-"what happens post Git 3.0?", I am not sure how badly we want to
-keep this topic.
+ - --include-superproject also runs the command in the superproject,
+   after all the submodules.
+
+ - --reversive is a shorthand for --recursive --reverse-traversal
+   --include-superproject.
+
+Take a project "top" with a submodule "mods/a" that has a nested
+submodule "inner", and uncommitted changes in all three.  After
+
+    git submodule foreach --reversive 'git commit -a -m update || :'
+
+"git status" shows nothing modified in any of them.  With --recursive
+instead of --reversive, "inner" is committed after "mods/a", which
+still records its old "inner" and shows it as modified.  t7427 checks
+both outcomes.  (The "|| :" is there because "git commit" fails where
+there is nothing to commit.  What a failure means is left to the
+command, as it is for "git submodule foreach" today: a non-zero exit
+status stops the traversal, and the superproject is only visited if
+every submodule succeeded.)
+
+This is a new version of "[PATCH 0/5] submodule: add 'reversive'
+traversal options to foreach" [1], reworked after the review by Junio
+and Jean-Noel:
+
+ - Tests are part of the commits that add the behavior they test,
+   instead of a separate first commit with test_expect_failure.
+
+ - --append-superproject is now --include-superproject, which says
+   what it does: the command is run in the superproject too, last.  Of
+   the variables a command can use in a submodule, Git sets only
+   $displaypath there, to the name of the superproject's directory.
+   The others are not cleared and may come from the environment.
+
+ - The command run in the superproject keeps the environment that
+   selects the repository, such as GIT_DIR and GIT_INDEX_FILE, because
+   it is the repository "git submodule foreach" itself runs in, not
+   another one being entered.  The tests cover a detached worktree and
+   an alternate index, also from a subdirectory.
+
+ - --reverse-traversal keeps its name, but the manual now says what the
+   order it reverses is: the submodules by path, each one immediately
+   followed by the submodules nested in it.  That was the missing piece
+   in the objection that there is no "natural" order.  I do not think
+   of it as a walk of a tree, for which "bottom-up" or "post-order"
+   would be better names: those say nothing without --recursive, and
+   reversing also reverses the order of siblings, which "bottom-up"
+   does not promise.  Please tell me if it still reads as unclear.
+
+ - With --recursive and --reverse-traversal, the submodules nested in
+   a submodule are looked for before the command runs in it, so a
+   command that checks out nested submodules itself does not get them
+   visited, unlike in the usual order.  This is documented and tested.
+
+ - The documentation follows the synopsis style that git-submodule.adoc
+   has been converted to, describes each option by what it does first,
+   and has an example of the resulting order.  The usage message, the
+   synopsis and the completion are updated too.
+
+Because the series is organised differently from v1 (three patches
+instead of five, with the tests moved), a range-diff against v1 would
+only show it as replaced, so there is none.
+
+[1] https://lore.kernel.org/git/20260131214309.1899376-1-whatfield.git@gmail.com/
+
+William Hatfield (3):
+  submodule: add --reverse-traversal to foreach
+  submodule: add --include-superproject to foreach
+  submodule: add --reversive shorthand to foreach
+
+ Documentation/git-submodule.adoc       |  41 ++-
+ builtin/submodule--helper.c            | 103 ++++--
+ contrib/completion/git-completion.bash |   5 +-
+ git-submodule.sh                       |  17 +-
+ t/meson.build                          |   1 +
+ t/t7427-submodule-foreach-reversive.sh | 429 +++++++++++++++++++++++++
+ 6 files changed, 573 insertions(+), 23 deletions(-)
+ create mode 100755 t/t7427-submodule-foreach-reversive.sh
+
+
+base-commit: 37b3475fb530c14109211faca33716a173db61ed
+-- 
+2.56.0
 
