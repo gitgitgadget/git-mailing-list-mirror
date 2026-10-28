@@ -1,120 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793176407;
-	b=WTUGkJ/BjGwRobxtOpEUlzFrNhXsLVAb3MTdF7KKPpQgzD4KzRq8BOUsds1w4H564fqm
-	 G+TUvdYpmoULdQIn1ACpiNzlf5xjNTTGuoSprwIeywA2QIzn+S87uHo+V7rsQr71tI2Az
-	 lJO8Bg0KV0PVyhZQbH0sjl73MGrh3wv0w/xxBcyyBDIAMq9RR5Kh6nwUFi3OHndcN+8ZU
-	 QNzGa/F0Jwm9jOxCJq1vUC9vOAhW8xnRRySCe4agAPPb/3Flr7yt7qmz/uDKh+fK7mkoa
-	 8CMONJ+AUCxBOaX27wj51jNY05xCDGP8FrQgqCF3kD1rFPc9Qm9RakVvIGCgMhkG6Dw==
+	t=1793176411;
+	b=ZnAKaGMSzOZFLYLOwRBn8M28YWwd8zRzDuNBtbWPd3+mllSVCoadc0cTWlo0LYK6oPRh
+	 tqXutHScqzcozNLWXrG8ObvuzpZcqwuB/mtZWeFahX2Kr0vu5zRi0szGXT/CJdPxiTmNS
+	 gjbMn472GSjjBE0RqIHwmhlQ0WAB7bmYPqP8PU3LOnVTVHkhG/aw6wI4hRUnSWfE6jIv1
+	 bEwmh/5QtCz3spGOuM9uLJJnSPyoBn05YcA5If8d/kqUANeQPKpeR8I58fBo7yO3HbLTU
+	 jNaebLD9TAR3u5DlxuLTPmvYSyTf9cwzYEoayYZ6y1v7h20xrSUyic4xXfR2zSQXrzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793176407;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793176411;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=AI8hHmSTyvSjHnYCRommbKP5PZ6lSX5n3LZM9wbE39E=;
-	b=xDuQ8ilZNMIiPdLR0qZVucWUR2nvL3Ifjv+R2fGL5nCF+7OcyqX0+p3CChRBDA8T9eyX
-	 kkR6EGE55rGolZXagoA8TfckDt810QoGLSUg6hq8y92Lyefq54XiNpev0i1ahMo9yQHKs
-	 6BJX2bweUtNeaJAFM6UeCaNc7ZWxVR6XJgSQS1NlYxHYIvcB0vbRC31EbqGl2bp4xteIn
-	 N3aAYhs8aWiu2X3sw0Dw6zKFFj1qkoFQELMxS0yGxA3xW7JGmgNyyq60ZvpgU6wW3eSlT
-	 bkGimrMOWwYTzywZStKgXK2IPfX2OeyRZTFHDQkDoyMoYVLmGRynqVZ+turYJcKJ5SQ==
+	bh=8/P+MtI6Cua+yPnTAcfFvblNpb+sKAb+S07Aa8cm9/M=;
+	b=bZ8IVrd3Q6GlooeheS2+ANNnhpb1fRpnldScfZB0+Dl9b9tMyvEGgDFoNQ2Ihdao/RlX
+	 iFWQ2P4P/kS6SPJhECzHXn2JVomKCE9W9m3b6T8CMHl0qkVDS0f9STJVS5ACkXa0hLohX
+	 8MFQniM2j479jb0VInZI57UsJvbXrpBHP+cAIshIKOjrLr9mPislXsHMmx/NjpGUOR5w5
+	 PpPHbBTI0y/heIQgMQPxomlcGj0Jyq1kbvfQbLLOXNLJEhqyi3hLEL5dXh6dQc1sCk0s5
+	 ahEfHkY4+sWpWJz0YS0hhp6OWEMUv+DSJvUuIc9QXm6PD3X5rrBy90Jla6lQgfhjYOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=Ee0nJVjH;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="pj/yLJZ9";
-	arc=none smtp.remote-ip=202.12.124.146
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=gk6ePLBp;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="lnn/7bq6";
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0343606A320
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 08:33:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0343606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D190F606A31D
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 08:33:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D190F606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=Ee0nJVjH;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=pj/yLJZ9
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=gk6ePLBp;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=lnn/7bq6
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0EF191D0018A
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 04:33:26 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 24E497A0012
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 04:33:30 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 28 Oct 2026 04:33:26 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 28 Oct 2026 04:33:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793176405; x=1793262805; bh=AI8hHmSTyv
-	SjHnYCRommbKP5PZ6lSX5n3LZM9wbE39E=; b=Ee0nJVjHBfllWil6/ddV9mbF2Z
-	CUDf7gu7qJ7AWtdD48HczVXGfBXu0mKEVolKYM8LaRIQsMrEniCbOG5iiz0eA2Dx
-	cUogGXSO5WWOywMygSWGDOTSHMA3HaDPnunxx25KEOCKmPZYkEYFs0BCBhkLGRDM
-	fX/iwTEtLKwrNM6bvlwb0j9MJpnO9XlDuVrGznyosJ0sKvpN/0ABQ1RjkqYTL7I8
-	r+3k0ZqAORCLxkBHpg+/HvdtTJafV8Y2UuHTw6vJBxc8Ys9EG+ia6zlwch/uUHVC
-	6eU5gMtgwKjNOw9gjM0sK7g9NgO5sFn5O5AicVkRtBQJKQnmu22Iprr0n3hQ==
+	:subject:to:to; s=fm2; t=1793176409; x=1793262809; bh=8/P+MtI6Cu
+	a+yPnTAcfFvblNpb+sKAb+S07Aa8cm9/M=; b=gk6ePLBpQ5W6NC8IksEZp3u3UF
+	vJDhD4Ik5ccuPrbT+0H4m6vwyY9nFQ7mfALgVO5vCRM/nyrUJBWvafMMDw0QR6iW
+	j3R5EFWA4FJHR4znP/t9oCAv+JBBWKqX03x7aML7cXyGLgAKMJLvNVl89yhX5td+
+	q7kLtariGPAhzt8Ou9QQdk8ahMMO6dDUK43nNhqpj4zXhgWnRac3CUtpPj96eR6u
+	h7Bd3FK0frhnM+m5bRKZz6iCuMnHsH7/k71Lh709E1Zc2uqRYqjMxa8JIcgOgMfq
+	v7kmo51eXJm2fhMsNa6xTEcyZ+q8qQkBbDE3azN2UIWXQNMHvV2ndoQmK+/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793176405; x=1793262805; bh=AI8hHmSTyvSjHnYCRommbKP5PZ6lSX5n3LZ
-	M9wbE39E=; b=pj/yLJZ9rzRrxomHM53/FErbNY7Rbg42XuCPLJXm/Ax89+Ax9lC
-	zAv2Dp6nFsSpXA/tqTILRNmZgofYuzkdr/ojmyrFOmc3bTiBYGcq2l+P5FJfgJ9s
-	V015sJAEET9cprS0OUFx0Di5nyeTvm2b1DHMUbmBP34Q09qKNNe7ziZ4ErZMjRwa
-	EFaMRyHsFgPGfVoZ1DOb/uFa8xZnIF4BC3hshKdtTZHFwQjrxwV0kfjCi17TVCZi
-	Bb2zBonXbxN0nNIA9A2MMNKtiU4pXMJjogHEkBKWKSbsIma9tizbXVvafv3Niuu9
-	icDtWeCWecWaLfNbY9HacNLpCzlvkY3csVQ==
+	1793176409; x=1793262809; bh=8/P+MtI6Cua+yPnTAcfFvblNpb+sKAb+S07
+	Aa8cm9/M=; b=lnn/7bq6Pe9/UMLJS3m6qPdMOgKXY4AaPXbae+5aoadPTUArCD3
+	73jpdO5ft2xF7r/jv8GYziK3ozbgmfepG4JnN/4vEBXRAPkxd+ewlSjizUaZrExj
+	WIMVYvl/hp3YUQCSA0ijmXyuNpu5rSqAcRfS5m1S/krQkMv7mJbHhQ+wGHHXanKV
+	/Qasyo6wHUmBUenr30pAlBnclRHvQkgxEsPtfy/FxPrV0n+mbb0IqSwoppS29WGk
+	/EJ9R/BQcxRRZg4h7mRRhUtUS42JcnjJ1qo4FtrzOxBCRe4uFQrM4fm/GbDPCaVZ
+	c2zhvtnxDt7GkAhF527CewUtriQZ6D+QGFg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793176405; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793176409; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:UGlX+HBL1gEKJqIgZoz9DhiOG2YvGIrzZ5Ic26v7jurLF1P
-	6PlS1xZWB5mSd/fDrk9I6nKfG40oINmTEQszCvownxV8FJXCYREmdhI9Djtnjruq
-	Pl1xynRA12DydyG0AMhCETc47xPcv2QowfE4clgiI7lNzlbJgfEfzoD4U0QettiS
-	FEHxatK05Vh+v6VYRITmJN3Gz0cme94fksuLweKEQBIsZ/9VFvt2jcx0RSPi/XxW
-	Ub2CNZgC3vvP7iTfbGzFuGofheCX2k/MkH7UsI0iz3xRbQnm1s1hvkPKdb2UdFsa
-	FFNGMD5ARgelC3/CZWWRzSYnrKwvLVJZg82PM0w==;
+	s=fm2:rsa-sha256:SdDJJ6QkjBpbmSAoTIrQD1udICFRIR7m+qbwBxdREbx5ayK
+	ll572iRZU0FOQPZ0uL5/Sk1MgStd/7Y5A4WN0BbgLB4V0KKvf3vJ3nN7JWT4xyEc
+	PeblD2D+Bn1YEwlIsAEJ2qmETma7NRfaa6OdrUbkungyW2UNvjoNlzKWuqEAiERe
+	YPvp2cKmDwyg2StlqPlzH/yA93HDUxLwxoFVoRf2yM0Df6JocTl1JUu9+EN4fBgN
+	jM07eR9cpEDKknFD2+m2KpNLCSsnGPSvgc/m3nYIWLqcq32v/yP4TgIzB+QjMtYo
+	l23G/jJtT4Qot477Js7zz2YlAh9Ed/OyZaYQN1w==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:cnkPnb7q0927D6PEfxdfeCxeMZ+UwWho5wUep8o6OUs=:Ctl+iULjWbZcmi6zBMQ4SFTmttPgL1glXfE/OkIKibY=;
-X-ME-Sender: <xms:VbPharohty-DjwLXp5n4fY5QVR8dOuQot1-5SUA1ss-kXnZwK5yUrQ>
-    <xme:VbPharoXUhXE66Cg5PJpZ0aCH2q3NIbMjWRDHvdsH0g_T82aWzHcpxSOe9MxPAHPn
-    XQ--I_PCC_29loqEnRprhWosiWDvXwMsFoTnXkO3vOHHZKotYGhgg>
-X-ME-Received: <xmr:VbPhal0sBjV3YYAPn31mAqlg3SZ-TZ83Fd0H927uHwAf0NPybKBmnw>
-X-ME-Proxy-Cause: dmFkZTGJzd3hm9Y6ShJ20CJO9s2IFHLHydvFGQbZsYmPVidbUX1cwgBUpKSHx9hPkgo3VM
-    dZYHttLi2etAGwq93H9tpbX3SWuLZp4mtN3+I001tBCmN4/Y+PUfh8abDWsfCozLlgrrw6
-    fiRoM/hPXS/HDN73PwyCh/D2VaXXVS4viykcKdNaze0m7gW00BM2f954XyP9NtxwHTZtPt
-    3kIMKPpEAgd7OoQmNtKH0TC/hJqYDasLHtHmEPDsUMKWZHYf2/HOkKCiWGCbW44rt/o5H7
-    XhM5mtMn+uTzafUNVzydsA7qSE7IT1VhhM6vaefxKwBwRn4DTxvyGUMf85QloUU0xWt9sH
-    0LiTX0vEDF4tGmkeZYfhgCrFQZcY1bHlOyEyx5LHSfrhxMGCuziCm55G+s3jZ8poBzVrEw
-    kWIbGZrWYEXTCvO/WiYgG4xZ5AQWz+oIszk5u8aukyF4jTrh8sgcfPu4XtURU9VoFTV0NY
-    lR5Ux317o+m/5cQ3j7UUCgpukT1WVig7Quvk7LSyP5pH5oxZLcTraFILtEq+dM0PEelsFP
-    aCkbC01L+SzknycLL2vucZdljdI8okbA4bvxWY3HUZopHUjp7Ubzm+9Q23WJIZN71L9l8X
-    SeITgl2DE9wFbGN3jWgO332VNcLieRukLOheHvSR34Kf9g7SD6im10Yj7EsA
-X-ME-Proxy: <xmx:VbPhaqC6EtOrmyGq1o1GN6FX9kmnSgpAzESKQisKv2IRYH1Ss34qCA>
-    <xmx:VbPhatez62fG7UVmP9oGpK5U10JiZsHXgFce5eQhr17V04kg7il0nA>
-    <xmx:VbPhavinutzfKKaDuN-GCIRSSlUuxAhM9OAlTV92wq50SPGtoWR22A>
-    <xmx:VbPhaloHl3L0Lxe984SonEYtKC2qadEIF47a1_Yx_y1ufIfk7vJ9xg>
-    <xmx:VbPhavCUcf2w5wOvB8ArvaE0CFsRH6V8iQQ0ECIx5leW6QJJa0oAxtOU>
+Message-Instance: m=1; h=sha256:fpeccN9sbD6Sg7BXjhkaF7x6PDzM149zThu0wx/bnLU=:5rwqY6O86Y+J3la4XrZhRqeCWF3N3Yd7cuFiQcvdpnY=;
+X-ME-Sender: <xms:WbPhavCGbUfoiXw09cMfEL4ZdgjzmnIzSIA_2cplg5Feav-yVOZXCw>
+    <xme:WbPhas8L8AdQ7VgifoVjPrFdhiu9tnId2tXGlolJUZjfZLOg7Q57-iO8Ij2lIur2j
+    PI3PI-F2ZCgjFQKfrNdLck3hK4t9p6jaxqBMwARx0NZVZGIbL-_eQ>
+X-ME-Received: <xmr:WbPhan8JI6VErfp3mac8Ol083TshlBgJcUq1nVFmq5luadYXYz4N_A>
+X-ME-Proxy-Cause: dmFkZTGJdOb81pcQtoncRJ7WYzIwPxB0oBuD9La1zNpqaCaj34gVgiE/SYTzAkIo3CbxsN
+    1xuuuMYeXTF7bpOo/lpTCq5JXZChgqTtFwQ9qJ3gQjNkH+Qt59lSRIwsQ30zfF+2kL+TWZ
+    83+k/2D45slZl0zF0S0E5nr/XKFoF68/MfQ+gUpOWo5anA8ss09oX88iReKW7rbWIcAuI1
+    Eqw8TeD8u197gJQlyibpg6CBDGs82xI0QAk8OqxFFs0EkGWUyyvptW13Lo/2pIoOEMfQkG
+    qjlc2QIxa3wyzOwJ6JoDkCrTLWH+zBR26lIL31s+8I/mBsm9CPm0kv41ClBxbg3EDTePdB
+    5QxqvFTHo4uy/94nzS5EJ3HHLoDc/6pIfaajFEuhqOKNvR8BgCRskU4JU2gcHyrYFEtHww
+    qGdWBLkr+x/tmyEbaoDv5vXV0YBnw4n2qxDB1cPt/H8N1CjpDtvGSgseZ2rNnGmepCCFNP
+    WhJuTVo/IjzS+Sup1O/vlctEyidwc07SYL0ldp7frXA1hG+rcPCkegIydt7/VROrQCajmN
+    v74+KIimj1lg5HJQ+MXByAJGQ8LzvYnFcGJjbOQ9Lz3XYPPuvXHkUCb42g9HOCKWilFpVn
+    35Psm+f4xgU8TUhu87ebTo4g7C1esJw77HELr8/hU+Ou60oeNVF7fyocYGLA
+X-ME-Proxy: <xmx:WbPhareoUZZ13k8WftMnOGuUJyoeSeSRs-K84pM2eRe_pWnaDNDbmA>
+    <xmx:WbPhaoG7bgOV7AoQZC3RcVFF4wFerbp03ukGKKwmuWDqgl2Ut1g34w>
+    <xmx:WbPhahc9GbYM_2XXhd1sEgoXpNXxzQkSHdl9YhK7P2UQGqmPa89XJA>
+    <xmx:WbPhaqG2qOZiVDXrHB9K9q9HUQ9WvbdMlIOznerjHdzyqQ60sYBuRA>
+    <xmx:WbPhalGNwKmltEzFeoaMrFHx3KxBq1M-bDkT3JTc0trZO4Qc8SmYcdbg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 04:33:24 -0400 (EDT)
+ 28 Oct 2026 04:33:28 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dfbf118a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 28 Oct 2026 08:33:22 +0000 (UTC)
-Date: Wed, 28 Oct 2026 09:33:19 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 1a8ce326 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 28 Oct 2026 08:33:28 +0000 (UTC)
+Date: Wed, 28 Oct 2026 09:33:25 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/12] rerere: rename `repo_rerere()`
-Message-ID: <auGzRmkt6Mk6peSp@pks.im>
+Cc: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 02/12] rerere: convert flags into an enum
+Message-ID: <auGzVZj5vbVm3-xf@pks.im>
 References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
- <20261027-pks-rerere-subcommands-v1-1-d836c36ce0c5@pks.im>
- <xmqqv76mj563.fsf@gitster.g>
+ <20261027-pks-rerere-subcommands-v1-2-d836c36ce0c5@pks.im>
+ <c23c4593fa3add2b40613febb2911cfb@fastmail.com>
+ <xmqqzevzhqyq.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,46 +128,35 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqv76mj563.fsf@gitster.g>
+In-Reply-To: <xmqqzevzhqyq.fsf@gitster.g>
 
-On Tue, Oct 27, 2026 at 12:48:36PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Oct 27, 2026 at 12:40:45PM -0700, Junio C Hamano wrote:
+> "Mark C. Chu-Carroll" <markchucarroll@fastmail.com> writes:
 > 
-> > The `repo_rerere()` function is the only function in "rerere.h" that
-> > does not have a `rerere_` prefix. And while it does indeed receive a
-> > repository as first parameter, that's not a good-enough reason to give
-> > it a `repo_` prefix.
+> > On Tue, 27 Oct 2026 11:46:45 +0100, Patrick Steinhardt <ps@pks.im> wrote:
+> >> Our modern coding guidelines say that flags should typically be passed
+> >> around as enums so that it becomes trivial to see what kind of flags are
+> >> expected. Adapt the rerere flags accordingly.
+> >> 
+> >>   <snip>
+> >> +enum rerere_flags {
+> >> +	RERERE_AUTOUPDATE = (1 << 0),
+> >> +	RERERE_NOAUTOUPDATE = (1 << 1),
+> >> +	RERERE_READONLY = (1 << 2),
+> >> +	/* If MERGE_RR.lock is taken, return -1 as if rerere were disabled */
+> >> +	RERERE_NOWAIT = (1 << 3),
+> >> +};
 > >
-> > Rename the function to `rerere_record()` to be consistent with all the
-> > other functions.
+> > If we're moving to using enum flags, then wouldn't it be better to
+> > explicitly add a "RERE_MERGE_LOCK_TOKEN" to the enum for that case, 
+> > rather than have this value only documented by a comment?
 > 
-> I do not think the convention to give "repo_" prefix to variants of
-> functions that worked only on the_repository should stay with us
-> forever, and losing repo prefix from this function would be an
-> excellent first move towards that future.
-> 
-> I howevr take isseus with the verb "record" in its new name.  What
-> the function does is not just record.  It autonomously finds out
-> what situation it is in and does the logical next thing, which
-> varies.  It resolves when a recorded resolution exist.  it records
-> when seeing a particular conflict for the first time.  There was no
-> single good verb to express that.  Perhaps "to rerere" or "to
-> perform rerere" can be invented as a verb to describe such an
-> intelligent operation?
+> Perhaps you misunderstand what the comment says.  It is an
+> explanation for the next line, i.e., it tells the API users "If you
+> want the 'immediate failure when locked' behaviour, pass the _NOWAIT
+> bit".
 
-I was picking "record" because that's also what git-rerere(1) says:
-
-  This command assists the developer in this process by recording
-  conflicted automerge results and corresponding hand resolve results on
-  the initial manual merge, and applying previously recorded hand
-  resolutions to their corresponding automerge results.
-
-But I guess your point is valid, as we don't only do that, but also
-update merge conflicts locally. I'd pick your "perform" proposal in that
-case and rename it to `rerere_perform()` instead. That name is somewhat
-vague, but I guess that cannot be helped because it actually does a
-bunch of things at once.
-
-I guess that can be helped with documentation though.
+Yeah, this. I guess we can help that though by documenting all of the
+flags while at it.
 
 Patrick
