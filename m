@@ -1,115 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217474;
-	b=QpY1qoLd5lM8trsqgJjArKk1rxUF83vLLKv8cIIbfUF4f3lo0XWnrBnrtvaM+slQKDtj
-	 Tc6X3jxuIa4tbUvjFppoXGnvvfeJ6U3m84eEpLHMp1Hv3GeHyF36V2qqQAVf7fMOyPgmP
-	 IjDmRqTlPFBvHf5yqH8F6rXpCGqry19bipu9BnhiOz1kA1zXzxvtI1tuts5eRBJ6Erw40
-	 h69wxoNVvw2VkLMVcrgEYCJsOS5oyE7RBVAPkEQevVJrWviwdKVYrbaGG6TAY9qch0m0X
-	 NtUt2D1l4PvyVCJehT11gTyD3E77gjwtLt/CPwg6XWcZTTyea5wSyB6Ke4W210zxR1g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217474;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Subject:Date:Message-ID:User-Agent:MIME-Version:
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793217647;
+	b=k0Rll06iGiDPWbbxRc7eNgC509uPSm251yQTMaUwB8msZinLveM/A9FsPPLIrGXYuM3G
+	 55fCL1OK4ffThpJ1T+crBga1WCp8OGuxTYERxoX90g2AnMwyk5VRCB0TjbjinF7vvlJy2
+	 QE4Gzo+xjH11J+jDkDw3Tk2rrg13r1hCRH/jLqhZyQCz7pcUnJ3PdFGavWZPjRkuvjCBA
+	 Ckmvjkxrcs3LaLfwjZk3xDaq/G3cJNQCOvK70Evnz8wNUJbpV2CEHuVJAyebpR5RqKuY2
+	 Y2sqkhI2F3ubv6UmupJiuka28fBZVdxXUWdAmXoA3yFr/oQ7J32Is/BR2TZHguNsg7A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217647;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type;
-	bh=xxGWCk3FE091eJcPbuZD3jk9q717csQyoRzkKAu7YmQ=;
-	b=iiOoaN7lHobd74de+akGs+wtoFvHQA2X3h6TO4uqxykMTi3g8TxZxiRzrGEVbSLfcVBK
-	 frn0GGrajxp3VW5ekbvMMaWfjiA+FTQsi15tmL/mE8yYW708OpsqSd9kj/bjmjEZdb04O
-	 miyKxuY0jttLAaP/pfN+PKjgmNKi1jO++dlrrA9VyrdKPgAdkiRUWmDo1CHvOk3YGpoyg
-	 BzNnCyahq2Va90DAhMLJfP4IHyyfjF+jGKrBZPesfJLfBZTDMXRQkDRjohWAy7OOcu9Zc
-	 7brIndej5OIzZHefJT9lJa2IoEvN+JUHkUxIAPlecYxyHtJ3l9jQpRvQ2Q0LaB0HRsg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=UPRA7W+D;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VBE6RxV5;
-	arc=none smtp.remote-ip=103.168.172.159
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	bh=Xe09ZpwCMYkBcUTwoqW3AZu9cglCI62NUy3RfxID1d8=;
+	b=WzmdgluFCYc4upEarWHPx/sAolKAO1Ie1m0+6y0AbtcMkQone55C1YZSdUubCcuVLuz/
+	 SC2cFoSwj6JRp3JNPEF+xkyfDGaWvDh3+OAzZ/WO0H1Bt/wp8zJAInWDSX4JS2exx8t2x
+	 nC9s7Kv+1oUcH91srQCPll7+P97ynylr6C74PYekj4d5Oetho3juxWe0iHCmfldQOSU6B
+	 DdcMMDKYEEjT0jIhmcY22GjIVeWfRKXSjEk3gn/cXysk7N/Tu2yCWYMKkF878Gdy+AFsu
+	 dev5LmE577BXxqUzlCcpwbFlirhacnNd47pqSNTrqpH4BjpRDoAPOc8EheEzB5ymq6A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oSWjM93R;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.44
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C8E606A31D
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 19:57:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02C8E606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A810B606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 20:00:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A810B606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=UPRA7W+D;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VBE6RxV5
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2E0801400021
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 15:57:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 28 Oct 2026 15:57:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1793217473; x=1793303873; bh=xxGWCk3FE091eJcPbuZD3jk9q717csQy
-	oRzkKAu7YmQ=; b=UPRA7W+DPhmFbcB4xVOiXpFNmHKGtSQQakMsx8GbRVJnqG5A
-	offisosBi2lRDSWs2q3qX3Npf023a8lWtuqCG68zEX5AAvaoP1wd8e0WUAKPtKxq
-	w5ZcNArxddiG34m7L+YMxxqEg/wSMRUageYD4kNi1Op6ltaGhMe/LDlNHDL0uSr0
-	AUwS5jtl9FK3f/siaZRt/VjRJsNspJfR+cOv470vcDey91c/2nTKeJtt5Bb84rQd
-	NbzILAih078rfoQf/r+VQW+DzEhgFSea6hVT5P6jbNU0hyqrvT62M2CYzQkiQvHp
-	6SJqR7evZdySvT/xEYeRJv5JklRBopq26sqrpg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793217473; x=
-	1793303873; bh=xxGWCk3FE091eJcPbuZD3jk9q717csQyoRzkKAu7YmQ=; b=V
-	BE6RxV5Jyoskocpl1SFR28Y3rxwPwkM10tHoZLukRy1yE3uRcMZzXJOi1mKZElvb
-	qJ8itjGA7tOMxSjduHNItcP6qu0AcRM4PKUCc+OLP0iqKJx9MI7Kd1m8o0o1pgle
-	jsHHZBU591a0iL6WNpbZiVkf3sLg5QVqCHpgnZTnJKdScagnSJp0DQdxeZnjw829
-	O0+B3DSna9rS6AycP3BW7ioabJvKjB7xhYIpeDY0q+vClbaC+McQxleEHP60sBHJ
-	Eyns3R8Tujzetiw7XEais241d9r6lizszh/1z8Tk5VufsKNJMpq2EXXJkWuxCWRy
-	ZN5p0ISOYna1HOBP40R6A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793217473; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:L/dBwz+/PNO94CoW74FlkSNhMRp6W5UN8ZjVc9uupYu0slc
-	gf/OltqYXdAq/nTF/FWZOY703PiaCqTm42PJczslghlmjK5KFtoli2g64IhxHUBq
-	tX8QlcQxM/JERcD7uOUrl69sdm7BIlx+5AMlWRgeVeTQ4qqi+jPzAcx89OeB9IQr
-	3ATYVB1bc6pPnTdsyRY6jbn9+p7ys05LSD3KhYdXyn6LRCAqx0J3gW5FcCHjKH1X
-	0fcB1vvVxUNFOC31/RrrJ+eeIlpvdkf6mnK1MbT6SIesUwjaH4KhkiMHHz5BwPPe
-	i1S6LjaYPMBlIFu9Ds+OGiAD69263DGeWIyw9yQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=9;
-	hn=content-type,date,feedback-id,from,message-id,mime-version,
-	subject,to,user-agent;
-Message-Instance: m=1; h=sha256:83oFvpsPwSbuOt+y0xqhimsD+jjz4pXsvHYYmUwKTGA=:ZQVdWc1e5fJW9VxLcNvBAWbPbmEyGT9gfSceLfTuGVo=;
-X-ME-Sender: <xms:wVPiagrcjwRZfxu0VG0W__Fa5pX9Lt9kCwBr2dPVg_EcUBO7UWMMjg>
-    <xme:wVPiaspLvY6lrj46hv7XJ83APYOlm8tsAOnYVXdG80C30Zm-jecV-IWIMVKM0yzG6
-    agNHk9qblFqn1AkKrRKPDF35st9TxWBh-qxRRDjv9ek5v55qBsEIA>
-X-ME-Received: <xmr:wVPiai23MRcPieru3FSHtRhHVGh0TUlkNPEs4isMHzgivvdJyxZfZoJ_THcVaJVy-qSledRpdmGZWyE-l7_MlfrpnBrq8r_rNuad>
-X-ME-Proxy-Cause: dmFkZTGhWOOFBUqpxCD7aSDUyjQFcmhF2LL2Z5sYDNT9c8b1AXQvBEavW/Jy2QsnMnIJKu
-    dsT4NEYWpCgChAc05kSiZlIBPaUFl4pnvsmsq60sj5BIX74ywx286HFlBL8th3bWv//gO/
-    s2R+HcZ1DGLAilU39trwp+DI8A0IsFFJK6i1YBJKIPNEb7OsMq+3WAZPIHaLfRrXNer9ES
-    5iaMhPePJyIp7FV1YXX0loTOjhDM6Rxk9oDtHJXyO4yBCjj3+volAF7CikVUkLoPglp0JY
-    VVVBjzDepbUdhHTexdIc9XbfjyPhupNrlu7DdA495JH/cNIl2I/QMLcNx+RtKGCqkL1GHK
-    Yg79UOjFL05ii9aWQAeZo46t3slRB+81UrFqLfDDBHsK6wc0ih7THvubBYbsTX9l28VWrL
-    vgwulYYNYHjWJywJE+v2ZneSi1QqrL0snONQ7xphmZCjEIvn5M1xsqN9ABN4+s9JVGx5t8
-    CD/Xrxg/QeZI2tAN5HbvvituA+pii3QQbC7E/vODHzUq40ZNBe9dOsiCJogL1W2s6gMqrr
-    9XIhYQixAQ4Fa3pLt7PQVVEhnASrGfe5I3RQhx3kcvs0ELSsvqlFwY0CrKo+HdJz2ASZyf
-    +sBoWTl9Oc9RsXusA4KRZXAtfdRozIYgn5b80YEb1RM8i2HAW199NxOL8kAA
-X-ME-Proxy: <xmx:wVPiajC1E5Y3tBhkYbVJo3IM_jAmD3FEMgYyuZHBApD6NPuXoXQdKA>
-    <xmx:wVPiaifDMy17-77IqqZXmovXUlKUCVQUUK-Dj18FFfRKjn2O20LbOA>
-    <xmx:wVPiaggN6xe3RtlZJohlq0bDq-Wg7xBvaym2uu4InmKGSfBoccYJkw>
-    <xmx:wVPiaipvvit7CmWSvu0PdyLx498E2m7vLbocWhW3LVmyFsE9Q0RIeA>
-    <xmx:wVPiakC3Rcm-MLLARYZjDTxG5giSH3DcGbXcIK_9nOfksgcxBig0PXGo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 15:57:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] add -i: hide init/clear_add_i_state() functions
-Date: Wed, 28 Oct 2026 12:57:51 -0700
-Message-ID: <xmqqh5i58uo0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oSWjM93R
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-679965fb848so1572109d50.1
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 13:00:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793217646; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LHlOwX3Evi5rpi3pjS5j/2Y+llVysfCIqrb8467RiH2ZSeG8++wSyLaK8FWiWZJfKY
+         t3KLDw2sVE9R0PQTw+PJ1HW/iNt9mjCN70FQnzfawklqC4yiWVlW4nJILXrHJoJcGPGy
+         B6B5xYiq6W8Sv9YdglOAtEuZ66xotVVHg2QLsZqUn1fWU5CwSZvp0Psk9iIBmlMYUcEv
+         0G1xS6KBYbcHMXFWrLz34JschBmC1faPJveFxw65jDI/J1la6m/sPHRcWXu2xIgTsPqV
+         xBi/fNniUm/8YhEyf3/kLVdmojgaUk35Z9/3KV2AARZrEIDQ3RhBfEd/sf1wqactXxQl
+         LGvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Xe09ZpwCMYkBcUTwoqW3AZu9cglCI62NUy3RfxID1d8=;
+        fh=yh48E+bIdIF5bkOxOqeqFS6MqWS5L1IGeGCToXGaOZs=;
+        b=s3V+YyYlU9Gdk6+65riF4PqYAnsmQx51LLuJ5+XE8iR9Hb0uYa//je7DkgyyJkm9Yn
+         5TCXnPhGpcZkOWHBgiEfyVzIzw9pq0emc7E79I2DxHku2bFOYIvVa+dcSCvWxfULVbN4
+         PmYiFGTe7az6REX/leeJk8nEI4c788mgcVFdrraF6ZzowVR9WUxBkHQ2QgT4GZ4GHkuT
+         SIduR9hDqhgDomLI8aVD0S8bS2iZKkOWFPvvCHHAewmpYHjivOLoHmgIWWnvzVxKfuf9
+         p+AEWpIgfv6C8B91tWGSCdVdOyWKPm0dDUbusw1maK/31iFMwUaG4BjbUKhnfeu7zslV
+         MVbg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793217646; x=1793822446; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Xe09ZpwCMYkBcUTwoqW3AZu9cglCI62NUy3RfxID1d8=;
+        b=oSWjM93RsN1/9WvJLXjneawUFRw8JlUN6dCWAEX2EzGkrwcsGcGg3V7lQf3Fgn9ulR
+         iU3CRgT/46AyEwv4AqYKmd2JmnGcX+ghcoCTEtNvjSUSqcKDqyTILn2keYsuqU7F02gB
+         t9Bi7sxpH5I/r3Mq3/aUXttmtdsPAHzpPkq2ayZJk+hdZw3lSINpkupTFJ15HLQVlnTr
+         qLGbFaOzma8TPICG/Hrqkfaw2tDPShllZ5LvWf6TOQCHW/Rk5ZxfHCgYun11UC3+vtsi
+         YhKzbZPLvS+PxZC3pjtNstWILEgyBirQj9vLH989vfoXPINwVupMl0QG+OfA2Lk9K5cl
+         STBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793217646; x=1793822446;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Xe09ZpwCMYkBcUTwoqW3AZu9cglCI62NUy3RfxID1d8=;
+        b=0/+M/7UyesWoOhCtCeWQSqs8gbWktWrHVberwBEKWIqvH6fauvoK9v4rkTZJ25ZgJJ
+         T+8PlFdbM6ze/XFBmZteidXAlC8dEFi4JNgfODIvec46NfYZ43wpRrRHzsAERsWgcotN
+         1evXFHqiEyBpPYaqElZacwgYjN7vGjbjxwRd45/x7S9XKG072JjigaQf1XJyzgt6bLVu
+         3uVWy8LFzdXvTtBqxlQy3uWmxKk5DP0l5F+XYaQsPC8NBDjZexRVCUjn5ox5oGV9MyiK
+         TuYbHBSP0gRdtCd8rdJoWEQ1ac/4KHNN9fyXY5hmMoj7HqqGogxYlHECIVm54zvTt5wt
+         mf/Q==
+X-Gm-Message-State: AFq9FYKmUf+09fMj2d4SxNy4UNFuFI+vFgnx7RtJUIVbOioklIdZ8YFA
+	HH7fySVt86dxOfdsO0zhIGGrtI2v8pQSmyp1jKQBbPcOn8mTAYhB/lHvpLy0fBlM8RgYSP0QFHL
+	olhWWoAxBMcl7ahdUX6OC4+tHua4gZw==
+X-Gm-Gg: AYBFou1GyRCIObQaX8P4KbCC4mK254LQq234fb9EsUBjFbJuDSFe5kLYsOqA6RQMtvy
+	EvgEY+u93KH9dqrerW9h50naF+OOuLSg1/l/pXlLrHJ/v6BZ+LxE/2VtvE6Y1jc+NmggW9THJr2
+	HXDVoFJgHpZa0dB6ZoC10Af8RovAM9RqlHCFDeGWNhft77ZjomkOVuCfkpSco3DR/SnHElPlCMh
+	ytxJxLrFpqStCjqSNHyh2ksM/EDufFhxEN9EE2LhaSTucL+SB0tE07qW03tzzsoFKG5LC73XtTQ
+	3rXoRYs1K+Q29T/T6faiVEkpqD44vViZvKOq/fIEDoTRdC3mty1QBWclGe8fWTVZxuY1gBShYot
+	BG/9cL8UI1cowuE5iJPUtlCGddTU6xptq2Q==
+X-Received: by 2002:a05:690e:1697:b0:67a:2ca2:8a39 with SMTP id
+ 956f58d0204a3-67a7b992bd8mr2397466d50.3.1793217645553; Wed, 28 Oct 2026
+ 13:00:45 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -119,69 +102,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261026132525.45414-1-fiendora5@gmail.com> <xmqqfqxsp3xb.fsf@gitster.g>
+ <CACWAS-U2-riX0ajiaE4VgiQWxmoWcL-d9-arrSASa+dnVxoyEA@mail.gmail.com> <xmqqpkwvm7j8.fsf@gitster.g>
+In-Reply-To: <xmqqpkwvm7j8.fsf@gitster.g>
+From: Fien Dora <fiendora5@gmail.com>
+Date: Wed, 28 Oct 2026 21:00:34 +0100
+X-Gm-Features: AclHuK829rcFRQKh9F_ZTTOQjU0MwxxDuIJjJU7zU6fY81gijlOWgU_rw2M-wWM
+Message-ID: <CACWAS-WBYxD8FhMRRyyeEjsek=0Oitd83PUBxqMWEX8uZk8CGg@mail.gmail.com>
+Subject: Re: [Outreachy PATCH] t1402: test --no-allow-onelevel option precedence
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, 
+	siddharthasthana31@gmail.com, phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-The "add -i" machinery is encapsulated in run_add_i() function,
-which uses init_add_i_state() to initialize the machinery, does its
-thing, and clear_add_i_state() to tear it down.  External callers
-have no need to call anything other than run_add_i().
+> Fien Dora <fiendora5@gmail.com> writes:
 
-Make init/clear_add_i_state() file-scope static functions, and
-"struct add_i_state" type as well.
+> Please do not top-post.  Your response will come _after_ the lines you
+> quote from the message you are responding to.
+>
+> And trim your quote to the parts necessary for bystanders to understand
+> what is being discussed.  Do not quote the entire message.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- add-interactive.c | 11 ++++++++---
- add-interactive.h |  9 ---------
- 2 files changed, 8 insertions(+), 12 deletions(-)
+Thank you very much, Junio, for your guidance.
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 3cf8a1dbf8..9a00daf9f9 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -19,14 +19,19 @@
- #include "prompt.h"
- #include "tree.h"
- 
--void init_add_i_state(struct add_i_state *s, struct repository *r,
--		      struct interactive_options *opts)
-+struct add_i_state {
-+	struct repository *r;
-+	struct interactive_config cfg;
-+};
-+
-+static void init_add_i_state(struct add_i_state *s, struct repository *r,
-+			     struct interactive_options *opts)
- {
- 	s->r = r;
- 	interactive_config_init(&s->cfg, r, opts);
- }
- 
--void clear_add_i_state(struct add_i_state *s)
-+static void clear_add_i_state(struct add_i_state *s)
- {
- 	interactive_config_clear(&s->cfg);
- 	memset(s, 0, sizeof(*s));
-diff --git a/add-interactive.h b/add-interactive.h
-index eefa2edc7c..47f67ede82 100644
---- a/add-interactive.h
-+++ b/add-interactive.h
-@@ -6,15 +6,6 @@
- struct pathspec;
- struct repository;
- 
--struct add_i_state {
--	struct repository *r;
--	struct interactive_config cfg;
--};
--
--void init_add_i_state(struct add_i_state *s, struct repository *r,
--		      struct interactive_options *opts);
--void clear_add_i_state(struct add_i_state *s);
--
- int run_add_i(struct repository *r, const struct pathspec *ps,
- 	      struct interactive_options *opts);
- 
--- 
-2.56.0-433-ga9209adf11
+I now understand the convention, I will apply them in my future replies
 
+Thank you
