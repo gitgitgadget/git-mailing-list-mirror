@@ -1,117 +1,118 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793171514;
-	b=uPE2Yd8TQMCV2K3qP5LoUaa0GA2K1hYYwln9hp+s+HCbobcY7vGZHfkRB0SanP3I1dx1
-	 aVeEMCvXk+KeEO7jP/QvhQ3ICoU0ovW3Y0/2S2x8ApFxghhri7TaDLMWB6RWFLdApHgGW
-	 MXe3GJKsoopnYCrUIPdnoY7gWIEbrTV743CprcAH2VowSp3E8lweP//+b8+ohA8hpM0nH
-	 sv85JE6DSYVXLu4Po0Ge/LenTunN6NCX4i9PvgeR78NSgnym6+KZ/xIch8wHK75JkyT5s
-	 LGJzMYJ07E4iu6W4MwomkQTMmOzLcfAmQQ1WFgEzJn23cyy3hHtUnQ/qmQLV9JaMzBA==
+	t=1793171517;
+	b=DC9LKnVF2SZA5bh84dd9CrEHBES8Uw4Kv+66rv22iIc55JH+QJHfIPPeL0gpyXSyet3T
+	 94Whb2XJ5meuyNwUA/xEs5CTukh00mKoIXTjvaO5YeMzv4IQsQcN2oq75XoiwTK3qwxq3
+	 BQGlEGi127DuyouWozt9lFzpiiGXVkp29ozDUEnw2RE9TUVQzSYzjAct77DF791uXQyz9
+	 Cj4jPvnSb9WmNIeUP8IAUYr4fYSHopMP/TISdWTIMQYkGfR8qgEBq9/xdIDy/fCOsP5ZS
+	 ALKr7PTak2rki8wNQ26Z047yvKpJ2sT6dWc/CovsYv4pNR/XWpNdYwE23e01P1XZ8Gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793171514;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793171517;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=Xjh+BlaAFfJG+HSTTexzwUvK2UsWrepiIu23cGh7Fl0=;
-	b=LNhbD3gmR+Y/t2+ViQHvFDxqcZvmWCbI4XLMz6s1Ojr1sE+TcHXTw2P1ly19tr3dByqQ
-	 YOSj7aQSUWSCBX9FMfLnsSgmkGX18wXsGrntstYU5mAgU2waCH2pU9V5+TA3V5Vd+dFaD
-	 SF9s8daSDtRsPOn5JYtNgvCTKkWqLq/zzqK7vXml6GMDzJ3TC5XyN4tfGyKzABIMb9vtM
-	 uzDHBUZrkpCXEPs4K2G3ZIoO2o2UxeE4TjGP/86CbYKNZuSfBGocf9ULrC+/iT87xMBLI
-	 RrwIuy/6KRXMuc13aE5NBSPX8iPtJshflRQ8MekNy7KzucNHrYXOfR7R/eKx22sIFqQ==
+	bh=h1pUUgMXaFrl5su7TyefUGZVea1GgtHy4S9EByNhP84=;
+	b=vaYakzWwKpMv3g2KgMS/9vzz6NNzoWzVyUSBkGZhsfOBhocccdfxBf6lauX671YBMm0W
+	 mVK1wboyi4SyqYp/ABSJok69VBudX4tRoHm/VHQ7Xnvf5hUcRxtPF+PXnxzMpNbYzu0Yq
+	 gR/4xpA0ZFzy9rsifBIv5B07fU1JdgS1AvijNPDq8n6bmrdW0d4sM4e5wdc4oV2EkNBTx
+	 4O/jx807COR55uFRjSRx0sX6glC1WTVeLLl8uEyrtJHJUfARyVDGbqXjU1vY9Vfiby57e
+	 sEnIMK3mCzg9jLLN1EkAntm3Diz3hQR26VjPNeD4d29+aQMc0hXr8lWVSVDtWW9OEtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=k9WAR3Hl;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QA+zbEdP;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=eyoRorlt;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=DtYDacxV;
 	arc=none smtp.remote-ip=202.12.124.151
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B08606A31A
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:11:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 49B08606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14FF606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:11:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E14FF606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=k9WAR3Hl;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QA+zbEdP
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7523B1D00132
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 03:11:53 -0400 (EDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=eyoRorlt;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=DtYDacxV
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3AE7C1D00141
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 03:11:56 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 28 Oct 2026 03:11:53 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 28 Oct 2026 03:11:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793171512;
-	 x=1793257912; bh=Xjh+BlaAFfJG+HSTTexzwUvK2UsWrepiIu23cGh7Fl0=; b=
-	k9WAR3Hla2BcvtHi6gNb+l6mBoPmVqhIRxqNDIT0MzoTtt2iILUSiRTikVrR0qpJ
-	ZEEDWJAVAe8F1XI0PUuJUpeVEIbm8xNQJHZOEAYwf8X3XMcWO+LkHYdY3g4THdc3
-	vfuIkToZGmd92XCj4FVeCI2QBGU4Ew4CSCUyZ8l0+7EdK7Rly+K3pvsN+GvMMGTr
-	oou72Fqr5kAjN2hCJ8dboQb0PmqcrufnVKQHDdJf89GwaaT3yxeW5hC4364b/YoQ
-	zRFsfq2wbPyE2graq9+u9Xsew9FI3cOM9EUAjso8oS9NgOmZG0BieTPioUyJ0fkq
-	tDw/0VdoxnBB2gs/Oc9L/Q==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793171515;
+	 x=1793257915; bh=h1pUUgMXaFrl5su7TyefUGZVea1GgtHy4S9EByNhP84=; b=
+	eyoRorltVlTgpKXl7Enduw/UqZH4WPBna/CVa6UXVacn4ghPi7CjlH4T3URHXzWB
+	hu6mvvfg0YUvYHG5sinRCB5st1jMSQx9S2y0IIa+oA5N00uYUku9ytnm1jUiKATY
+	krXsl5rU6MpRYcYOnFEQBE+x4N8ijKq0L4iTKF2ZZxMeTFFYMJKqEJeeIMjjZCN0
+	0blyJNIJvWFfod2LCH+hesiUK9Jnzx+HGYwznzCATlojzf+mei6eWeEq91AaRCJl
+	W4On9wzaBjswf0Bq1gd83wMy7q87rPcwugXBfNTA/aerCv2K5ZRYPg/g5BdJeCst
+	aOlF9BjoN6R/SJsE6O+TLQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793171512; x=
-	1793257912; bh=Xjh+BlaAFfJG+HSTTexzwUvK2UsWrepiIu23cGh7Fl0=; b=Q
-	A+zbEdPvasNRv7dV5ZWkGFd5JxDt4azpwDcjQvVhqRWu1OpdN/QtDy0wTUdl4Ajt
-	XCiraiCImb9iQljgAwt8C5PwhdT02uAj+oNqz3ZxA4J59NH67SWhbsVTA0sNuuxn
-	K4aRLe7AtbR/doJA8ov/s3pGq/xSnLxo856RCoxx+RsPFIftpdr3isD4IcTXY1VJ
-	C6T0xaGS0qju1tvprH20qSzfzHsgxLb0HL/Y4J/VL9GW4+FbRIhvpYWs/xYDSSPC
-	Pf4kfRpluALoYGGsdKiz06BmJclQ8hbf3ut871JVfbtfqlvoQS1YBzvqtuMSAahH
-	jDGuY1F5VdwhOdbHgGeFQ==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793171515; x=
+	1793257915; bh=h1pUUgMXaFrl5su7TyefUGZVea1GgtHy4S9EByNhP84=; b=D
+	tYDacxVGUYgCaqOzxzRguxWNHTiifVbvAlV1pMm24t//4PVSXlcKdV1ak/4PGklb
+	FtoGGokz0dB7gfsBSV0MNtERXn0rL7YoWRPVbriGY7dJYpweRre59wjijvs/Ka0h
+	q7oELiR7uT7PiU6jOWjBh51feyoIjDUDPPHv2JzfR85aIroX0unulIXzEtYXvjCf
+	iExZd/TrZcjv7eAM3jmO11fRsKvEFVqDcb2+TnWRQYepHmnpRe5wA6q+n9TWsiS9
+	xpjAq8psRFz9mU5goTeC5Oy6/2be8ciAF+q1LJtue5aq7eD4HYB3zLX+d02NPrQ9
+	ls36BZcASJAKZO/keHHFA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793171512; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793171515; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:du6i4fM6bRArx5y8wQVs/HJTRV5Plnbaf/hJ9oHc7J3szPv
-	buXO00AZqoODopuUgaRKDQEiELhObpoVhdJB48QUeuC/YE6mnCNFQFz1oDKAeV3A
-	HKMSZA6i1fhLhOGktS8jnhp1SkHCI9qTNe4FjD4XyOc7UqpeLbSoCOrfD8yvH5QZ
-	I6qQ1EkXpiKvNufW1dH6SXjG+prgbdf0lgqOX9Lfbp4gmj4iPmPyYswzunsSWR7U
-	Nxl5m/9QaUadomVutvo62rWDTWmQd+XpeXALRq+R+AiF7dI57uVidrvTKshrKyeG
-	BAB9ai0/iwOzZDp7UqA/SyBqC92dZulVY2+bC4g==;
+	s=fm2:rsa-sha256:lADNDfm9SNLhVMMqhRSx1LXm6w64tD7aolexVwA2r60zOvk
+	GNB9nHOP/slg0tbQ/5PUejRLwdXjUwz/PuW2PTtAZbeOc1+tgVD0tQ5NuuwF1Wn6
+	ax0HwVzvhkqPR2s3sS7mYGUgyZm74k3IPLJqAOE/iz0OFdRxObrt5lS73iUOkx3k
+	8RZ6nWr71WyIDu/II3MRo3Ugr1+6M+6rv5JZV9p5IzvFrhjw/jMkx/ln8TN1WK+k
+	sfvwJ55v5rbTBMDpjghzSnAPYHFCaB4IhkhShVZpUTu8HpWkK8DvdtuUX/qVVpNn
+	1FaCSm0Nj9ATyw7FhBL5exGzxo6DyFsrAlGBmqw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:dx2oiTaIMXx5rE0QSsmSammW+2Lc5nmVdNhhhqlrk1w=:jpzw/vyfnTtTT0om07dqG8vTh/J6+igRveNJX9GvPr0=;
-X-ME-Sender: <xms:OKDhavijYkdSutlB4-fJdjuveetgwN4D_uWFYKNYC3K5aD21-6Ereg>
-    <xme:OKDhaiBAhBWInbzVnXBavLLVGUyzdfFMsbyLf9QzUyQ51E6NJKgrZDwPQrDPmidIL
-    7Tj1O8QsxByOm7V6fnNYst-Tn4JHUKFD22kezNtnz_87yTTwDGtNQ>
-X-ME-Received: <xmr:OKDhassDtQygmnH2TKVYaVa1YlMQW3GuZI8jTl-WdovZTzv1Rgae3g>
-X-ME-Proxy-Cause: dmFkZTEc37deRu1YjV1twq5x8S9h2vHzSpOqVUeY/oQALEq4MTycwj++wTftSJtpmBg179
-    SJnohMVvYziqzg//5jnQToKdvt+XMQRpOm6yEJQlohEgJkkmNJdHX7XJwpxhGgueoh5KMu
-    s9r8Js2aIJXnOsxIYKWDUruYSO/k92nvZABL2lKBtb9zjIUDB9aaPM5r4UpAGris3HVsGV
-    Qg+H2VLQceKg6IlswIZKBbZHJZF6SwIx6wOXNwiEVtTmHiBBGHmXU30qTItsWyIS3nXmQy
-    RPkL5ZHovsqaU4xY9l/R3h+um4aBLRdxuv/2iAYPEd17NECs0PSntrPYQ9YFKrO9aR77aS
-    Qvz9HZB4R7Jn6jNLO6SbLKwIj8WhKSQqwYpg/Wi+nAs9qHpvto+Ufzp68fiSw4KX3w5R7F
-    oMW4bmPwXgDwtcLYoo1AQQYumGiylF1UjPXDSmgyhdqURlyvwhNzEuCXaCdTxBNU3b9550
-    ZfCO6HjG/zAnEg8+XRiOcaxgyCepGDlYvZs6QOEzm4yt3j6zkWDc3ediedMNqixK6wA8qe
-    uhSRUnLdgTDEDPHsmw5wiIHRzxIrAITG6/V8Jsr/hhI/cZsYVVns0oGGGPRG9XkQx/7NHJ
-    uLFO7a1Si1/eXpUZKzHJeOB3gE8WhCS0NfDalyZmf94F7HMUib7kH9hY91Kw
-X-ME-Proxy: <xmx:OKDhanZIebvH9cstTYiiQ5iS9D6pGxQW2FMH2Pd9AxBJmEU7sLUYHA>
-    <xmx:OKDhavVbTNQTC2Dha-HYWHabCuwy_0PN7BcRQFATeyX33K0ytYoY9w>
-    <xmx:OKDhar4wldgF6l3KzZL93EWgseGkc-CLC0W_mFwI45rMSIdB_SpcIA>
-    <xmx:OKDhaqgnDdBZD7yt9CbhHENmB8b2Tkku3lHMGUWRJsnQT55px1rsQw>
-    <xmx:OKDhanQewcxcLTfuGmGgJLHc1WffttgfsMX23FaWtkskDS21WCMA3izA>
+Message-Instance: m=1; h=sha256:mXme9z8Lgl30pC38lJmXdwgsJUbrLbRiQEr9R9nWnUs=:LLZ/o1u8AwE0/1eQ+Ptb31keX4wTB8GkAMZLYoLZxOE=;
+X-ME-Sender: <xms:O6DhajFaUDGQVY3PTpJDXkYLN_-Z2scduJRa8rrTPGE41Rwz35DqWw>
+    <xme:O6DhamUM_qun3uBKX-pMpb7xXxT5_gUqQNbuGmooXy7NRxr55_7so3dQTUrJj4p1e
+    4Uxq9LwWlbqyVP6RvQJ2l2DO6EFjnMjKB1Yz1NUHxXINOXORynTVHk>
+X-ME-Received: <xmr:O6Dhaiz7srHF9Ur8ELo24dsyClrn02ZM4IOeDJCfpMDICzpUiXAwFg>
+X-ME-Proxy-Cause: dmFkZTGJn+tvXSM5aixDCnxnv/vI4/275NkNr7QOqtNTCubi1icyieGUXKU30EzEQkf4+x
+    jvuU5cQOfRCZzeAHDK5hom+UCjNcn0pjfhPVFAFA801APwilip7V9cwpdipFXLx6TakXi8
+    xG1amDJlufVNHzsb/pdbvNazGZ8eHv5r9NPQX0u+VGY56+1ubxIccXPLF7XpcyjUW9EJvS
+    D8j14g1qFGoPxFV7R3NqxHlcWKMdnagJ3A1GZzCWGDvyzWOIX2DHxTVUx1IRRTPK5GK+hZ
+    GCePLF8Wj6/TMAxxFVGGPei2wfadTrDBVW3tvz1V/0Na5rvfF5IBdS1abx52l92RzM37Iq
+    r63UZ4e6mmtl9W5N9hHtb9DZm2v+pRz7YMP/CKwP12CypIpo49ApBXTtLLW5uEwLrr72y0
+    f63drGvxoox4oKXMObUtiJk+wEVZl/SEmWJ2IKe83wiHl3mONPIDn3TIBTAQMcqTvZVPkS
+    XvxKiv8xPoQFgTrU5bBOHqZB6LQwnCx7BqG5zhhIQDr3NWmZCJZ7IukpsEvNAFCeWUbzoR
+    /5zX5PPtaR1g+y2qpZMTgfd3fJOfSmtZeVQmiUdMRRMOGFLaLXI/SgvJ07Mj0jP6u8fimH
+    swDaWYX15bsYUHpHcsoet2H9rSjWaMbp731Ob9BNLjyM4oHBYcRUOoUFKcPw
+X-ME-Proxy: <xmx:O6DhasPCSFNDKBGLWHxzcf6GxrBA54N18WtZLIy03dlIc3tmctq7bA>
+    <xmx:O6Dhar6cgGTkwwmJdMJVLcOjuyFsDRVuwZmZSsmykD61iQCAAa8O4A>
+    <xmx:O6DhalNcVTgO4K5ubzemLZhV5lannGwpV9KHXei2y9HWYRoEDYxaqw>
+    <xmx:O6DhahmUY59aCB6NUu8wIckxxoQC9tIcgWahE1Qy9rYkEFEVaPTb1A>
+    <xmx:O6DhaokX6uDvMMmwkHOsivi-eBjMjslgBopkNd_p-6VbWOjON0xAm5uv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 03:11:52 -0400 (EDT)
+ 28 Oct 2026 03:11:54 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 840ff19c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 28 Oct 2026 07:11:51 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9e2b366b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 28 Oct 2026 07:11:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 28 Oct 2026 08:11:41 +0100
-Subject: [PATCH v3 3/6] odb/source-files: reload alternates on retry
+Date: Wed, 28 Oct 2026 08:11:42 +0100
+Subject: [PATCH v3 4/6] odb/source-files: simplify directory duplication
+ detection
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,178 +124,298 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261028-pks-odb-files-reload-alternates-v3-3-011ddb64b626@pks.im>
+Message-Id: <20261028-pks-odb-files-reload-alternates-v3-4-011ddb64b626@pks.im>
 References: <20261028-pks-odb-files-reload-alternates-v3-0-011ddb64b626@pks.im>
 In-Reply-To: <20261028-pks-odb-files-reload-alternates-v3-0-011ddb64b626@pks.im>
 To: git@vger.kernel.org
 Cc: Christian Couder <christian.couder@gmail.com>
 X-Mailer: b4 0.15.2
 
-When an object ID cannot be found we retry reading it from our packfiles
-after we have flushed the respective caches of the packed backends. But
-this misses one scenario: it may happen that the object databases'
-alternates get rewritten concurrently and all of its objects are moved
-to such an alternate. If so, we won't be able to find any of the objects
-anymore. This used to be working just fine, but with 5946a564cd
-(odb/source: make `read_object_info()` function pluggable, 2026-03-05)
-we have accidentally dropped this logic.
+When loading alternates it may happen that we try to add the same
+alternate multiple times, either because "info/alternates" contains
+duplicate entries or because one of its alternates matches the primary
+object directory. We try to detect such duplicates via two mechanisms:
 
-This scenario sounds somewhat unlikely, but we've actually been hitting
-it in the wild: when running long-lived git-cat-file(1) processes that
-we interactively query over many minutes, and that repository gets
-forked concurrently, then we move all objects into an object pool, write
-a new alternates file, and the git-cat-file(1) process will remain
-broken for the rest of its lifetime.
+  - We have a hashmap of `struct odb_files_dir`, mapped by their
+    absolute paths. If the path of an alternate is already present in
+    this map we skip it.
 
-Fix this bug by re-preparing alternates when the object in question
-could not be found and then retrying the read. A couple things to note:
+  - We have another, explicit check to check whether the path of an
+    alternate matches the primary object directory.
 
-  - This requires us to re-read loose objects, which is an operation
-    that we previously skipped on the retry. But we only need to do this
-    for the loose object directories that are actually new.
+We can simplify both of these mechanisms by turning the map into a
+strset, as we never access the values of the map. On the one hand this
+gives us simpler interfaces to access the set. And on the other hand
+this allows us to add two entries for the primary object directory: one
+for the real path, and one for the absolute path.
 
-  - The result is still incomplete, as we only reload the alternates of
-    the primary object directory. But alternates are added recursively,
-    so in theory we'd also have to check whether alternates of any of
-    the alternates have changed. But we never did that before the
-    regression, either, so for now we don't care about this edge case.
+Note that there is one gotcha though: when "core.ignorecase" is set then
+the expectation is that we deduplicate alternates case-insensitively.
+But we can also make that work rather easily by downcasing all paths we
+add in that case.
 
-  - It may happen that we reload when a quarantine directory is active.
-    If no alternates existed before that reload we may not have lazily
-    populated the map of object directories yet. So the assertion in
-    `odb_files_dir_is_usable()` does not necessarily hold anymore, and
-    we now have to populate the map with all object directories.
-
-Furthermore, this change causes a performance regression when asking for
-lots of missing objects. But that regression is basically in line with
-the performance we had before this mechanism got broken. The following
-benchmark demonstrates this when asking for 20k missing commits in an
-empty repository with a single empty alternate:
+Despite being significantly simpler, this also gives us a speedup
+because we don't have to resolve the realpath of the primary object
+directory on every call to `odb_files_dir_is_usable()` anymore. Using
+the same benchmark as in the preceding commit:
 
   Benchmark 1: ./git -C /tmp/repo cat-file --batch-check (rev = 5946a564cd~) (50 runs)
                   mean     ±       σ          min     …     max
-    Wall Time    289.9 ms  ±     3.4 ms     285.8 ms  …   307.5 ms
-    Memory         5.6 MiB ±     0.1 MiB      5.5 MiB …     5.7 MiB
+    Wall Time    289.0 ms  ±     2.2 ms     285.8 ms  …   295.1 ms
+    Memory         5.6 MiB ±     0.1 MiB      5.4 MiB …     5.7 MiB
 
   Benchmark 2: ./git -C /tmp/repo cat-file --batch-check (rev = 5946a564cd) (50 runs)
                   mean     ±       σ          min     …     max
-    Wall Time    184.8 ms  ±     2.5 ms     181.5 ms  …   191.9 ms           -36.2%  (1.6x faster)
-    Memory         5.6 MiB ±     0.1 MiB      5.5 MiB …     5.7 MiB           -0.1%
+    Wall Time    183.8 ms  ±     1.2 ms     181.5 ms  …   186.9 ms           -36.4%  (1.6x faster)
+    Memory         5.6 MiB ±     0.1 MiB      5.3 MiB …     5.7 MiB           -0.5%
 
   Benchmark 3: ./git -C /tmp/repo cat-file --batch-check (rev = HEAD~) (50 runs)
                   mean     ±       σ          min     …     max
-    Wall Time    189.1 ms  ±     2.7 ms     185.9 ms  …   196.1 ms           -34.8%  (1.5x faster)
-    Memory         5.9 MiB ±     0.1 MiB      5.6 MiB …     6.1 MiB           +4.9%
+    Wall Time    293.2 ms  ±     2.7 ms     288.8 ms  …   299.7 ms            +1.5%
+    Memory         5.9 MiB ±     0.1 MiB      5.7 MiB …     6.1 MiB           +5.0%
 
   Benchmark 4: ./git -C /tmp/repo cat-file --batch-check (rev = HEAD) (50 runs)
                   mean     ±       σ          min     …     max
-    Wall Time    293.2 ms  ±     2.6 ms     289.3 ms  …   303.2 ms            +1.1%
-    Memory         5.9 MiB ±     0.1 MiB      5.6 MiB …     6.1 MiB           +4.4%
+    Wall Time    266.5 ms  ±     2.8 ms     262.6 ms  …   276.7 ms            -7.8%
+    Memory         5.9 MiB ±     0.1 MiB      5.6 MiB …     6.1 MiB           +5.1%
 
-There's no helping this though, with the regression fixed we will be
-slower compared to before as we have to do more work. But the next
-commits will improve the status quo a bit.
+Rename `dirs_paths_icase` to `dir_paths_iscase` to match the naming of
+the newly added set.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-files.c  | 21 +++++++++++++--------
- t/t1006-cat-file.sh | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+), 8 deletions(-)
+ odb/source-files.c | 120 ++++++++++++++++++++++++-----------------------------
+ odb/source-files.h |  17 +++-----
+ 2 files changed, 60 insertions(+), 77 deletions(-)
 
 diff --git a/odb/source-files.c b/odb/source-files.c
-index c0375e7cb70..d66949b7de5 100644
+index d66949b7de5..8b63d0eff2b 100644
 --- a/odb/source-files.c
 +++ b/odb/source-files.c
-@@ -243,10 +243,11 @@ static bool odb_files_dir_is_usable(struct odb_source_files *files,
- 	 * thing twice, or object directory itself.
- 	 */
- 	if (!hashmap_get_size(&files->dirs_by_path)) {
--		assert(!files->dirs->next);
--		hashmap_entry_init(&files->dirs->by_path_entry,
--				   strihash(files->dirs->abspath));
--		hashmap_add(&files->dirs_by_path, &files->dirs->by_path_entry);
-+		for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
-+			hashmap_entry_init(&dir->by_path_entry,
-+					   strihash(dir->abspath));
-+			hashmap_add(&files->dirs_by_path, &dir->by_path_entry);
-+		}
+@@ -72,7 +72,7 @@ static void odb_source_files_free(struct odb_source *source)
+ 		odb_files_dir_free(files->dirs);
+ 		files->dirs = next;
  	}
+-	hashmap_clear(&files->dirs_by_path);
++	strset_clear(&files->dir_paths);
  
- 	if (!odb_files_dir_paths_cmp(files, path, normalized_objdir.buf))
-@@ -425,6 +426,7 @@ static enum odb_read_status odb_source_files_read_object_info(struct odb_source
- 							      struct strbuf *errmsg)
- {
- 	struct odb_source_files *files = odb_source_files_downcast(source);
-+	struct odb_files_dir **tail = NULL;
- 	enum odb_read_status status = ODB_READ_NOT_FOUND;
- 	enum odb_read_status ret;
- 	bool retry = false;
-@@ -448,10 +450,11 @@ static enum odb_read_status odb_source_files_read_object_info(struct odb_source
- 			status = ret;
- 	}
+ 	odb_source_release(&files->base);
+ 	free(files);
+@@ -176,60 +176,15 @@ static int odb_source_files_create_on_disk(struct odb_source *source,
+ 	return ret;
+ }
  
--	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
--		if (retry)
--			break;
+-/*
+- * NEEDSWORK: we're using "core.ignoreCase" to deduplicate alternates that
+- * _may_ be the same. This requires quite a bit of boilerplate for dubious
+- * benefit:
+- *
+- *   - Duplicating alternates should really only lead to regressed performance.
+- *
+- *   - We don't properly resolve symlinks or mointpoints, so we may still end
+- *     up duplicating alternates.
+- *
+- *   - The value may be lying, in which case we might deduplicate alternates
+- *     that are in fact not mapping to the same directory.
+- *
+- * We should investigate whether we can remove this whole mechanism outright.
+- */
+-static int odb_files_dir_paths_cmp(struct odb_source_files *files,
+-				   const char *a, const char *b)
+-{
+-	if (files->dirs_paths_icase < 0) {
+-		int icase = 0;
+-		repo_config_get_bool(files->base.odb->repo, "core.ignorecase", &icase);
+-		files->dirs_paths_icase = icase;
+-	}
 -
-+	/*
-+	 * When we have reprepared alternates then we only re-scan directories
-+	 * that were newly added.
-+	 */
-+	for (struct odb_files_dir *dir = tail ? *tail : files->dirs; dir; dir = dir->next) {
- 		ret = odb_source_read_object_info(&dir->loose->base, oid, oi, flags,
- 						  status == ODB_READ_NOT_FOUND ? errmsg : NULL);
- 		if (!ret)
-@@ -461,6 +464,8 @@ static enum odb_read_status odb_source_files_read_object_info(struct odb_source
+-	return files->dirs_paths_icase ? strcasecmp(a, b) : strcmp(a, b);
+-}
+-
+-static int odb_files_dir_by_path_cmp(const void *cb_data,
+-				     const struct hashmap_entry *entry,
+-				     const struct hashmap_entry *entry_or_key,
+-				     const void *keydata)
+-{
+-	struct odb_source_files *files = (struct odb_source_files *)cb_data;
+-	const struct odb_files_dir *dir = container_of(entry, const struct odb_files_dir, by_path_entry);
+-	const char *path = keydata;
+-
+-	if (!path)
+-		path = container_of(entry_or_key, const struct odb_files_dir, by_path_entry)->abspath;
+-
+-	return odb_files_dir_paths_cmp(files, dir->abspath, path);
+-}
+-
+ /*
+  * Return non-zero iff the path is usable as an alternate object directory.
+  */
+ static bool odb_files_dir_is_usable(struct odb_source_files *files,
+ 				    const char *path)
+ {
+-	struct strbuf normalized_objdir = STRBUF_INIT;
+-	struct hashmap_entry key;
++	struct strbuf buf = STRBUF_INIT;
+ 	bool usable = false;
+ 
+-	strbuf_realpath(&normalized_objdir, files->base.path, 1);
+-
+ 	/* Detect cases where alternate disappeared */
+ 	if (!is_directory(path)) {
+ 		error(_("object directory %s does not exist; "
+@@ -239,28 +194,57 @@ static bool odb_files_dir_is_usable(struct odb_source_files *files,
  	}
  
- 	if (!retry && !(flags & OBJECT_INFO_QUICK)) {
-+		tail = files->dirs_tail;
-+		prepare_alternates(files, NULL);
- 		retry = true;
- 		goto retry;
+ 	/*
+-	 * Prevent the common mistake of listing the same
+-	 * thing twice, or object directory itself.
++	 * Prevent the common mistake of listing the same thing twice,
++	 * or object directory itself.
++	 *
++	 * NEEDSWORK: we're using "core.ignoreCase" to deduplicate
++	 * alternates that _may_ be the same. This requires quite a bit
++	 * of boilerplate for dubious benefit:
++	 *
++	 *   - Duplicating alternates should really only lead to
++	 *     regressed performance.
++	 *
++	 *   - We don't properly resolve symlinks or mointpoints, so we
++	 *     may still end up duplicating alternates.
++	 *
++	 *   - The value may be lying, in which case we might
++	 *     deduplicate alternates that are in fact not mapping to the
++	 *     same directory.
++	 *
++	 * We should investigate whether we can remove this whole
++	 * mechanism outright.
+ 	 */
+-	if (!hashmap_get_size(&files->dirs_by_path)) {
++	if (strset_empty(&files->dir_paths)) {
++		files->dir_paths_icase = 0;
++		repo_config_get_bool(files->base.odb->repo, "core.ignorecase",
++				     &files->dir_paths_icase);
++
++		strbuf_realpath(&buf, files->base.path, 1);
++		if (files->dir_paths_icase)
++			strbuf_tolower(&buf);
++		strset_add(&files->dir_paths, buf.buf);
++
+ 		for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+-			hashmap_entry_init(&dir->by_path_entry,
+-					   strihash(dir->abspath));
+-			hashmap_add(&files->dirs_by_path, &dir->by_path_entry);
++			strbuf_reset(&buf);
++			strbuf_addstr(&buf, dir->abspath);
++			if (files->dir_paths_icase)
++				strbuf_tolower(&buf);
++			strset_add(&files->dir_paths, buf.buf);
+ 		}
  	}
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 72fc8acc611..f2b24dd2787 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -1481,4 +1481,36 @@ test_objects_filter "object:type=commit"
- test_objects_filter "object:type=tag"
- test_objects_filter "object:type=tree"
  
-+test_expect_success PIPE 'concurrently written alternates are loaded' '
-+	test_when_finished "rm -rf repo alternate stdin stdout" &&
-+	git init repo &&
-+	git init alternate &&
-+	oid=$(git -C alternate hash-object -w --stdin </dev/null) &&
-+	mkfifo stdin &&
-+	mkfifo stdout &&
-+	{ git -C repo cat-file --batch-check <stdin >stdout & } &&
-+	(
-+		exec 8>stdin &&
-+		exec 9<stdout &&
+-	if (!odb_files_dir_paths_cmp(files, path, normalized_objdir.buf))
+-		goto out;
++	strbuf_reset(&buf);
++	strbuf_addstr(&buf, path);
++	if (files->dir_paths_icase)
++		strbuf_tolower(&buf);
+ 
+-	hashmap_entry_init(&key, strihash(path));
+-	if (hashmap_get(&files->dirs_by_path, &key, path))
++	if (strset_contains(&files->dir_paths, buf.buf))
+ 		goto out;
+ 
+ 	usable = true;
+ 
+ out:
+-	strbuf_release(&normalized_objdir);
++	strbuf_release(&buf);
+ 	return usable;
+ }
+ 
+@@ -365,11 +349,17 @@ static void add_alternate_recursively(struct odb_source_files *files,
+ 	*files->dirs_tail = alternate;
+ 	files->dirs_tail = &(alternate->next);
+ 
+-	hashmap_entry_init(&alternate->by_path_entry, strihash(alternate->abspath));
+-	if (hashmap_get(&files->dirs_by_path, &alternate->by_path_entry,
+-			alternate->abspath))
+-		BUG("object directory must not yet exist");
+-	hashmap_add(&files->dirs_by_path, &alternate->by_path_entry);
++	if (files->dir_paths_icase) {
++		struct strbuf path = STRBUF_INIT;
 +
-+		# Read the object the first time, without having alternates
-+		# wired up yet. The object should be reported as missing.
-+		echo "$oid" >&8 &&
-+		read line <&9 &&
-+		echo "$line" >actual &&
-+		echo "$oid missing" >expect &&
-+		test_cmp expect actual &&
++		strbuf_addstr(&path, alternate->abspath);
++		strbuf_tolower(&path);
++		strset_add(&files->dir_paths, path.buf);
 +
-+		# Read the object the second time, this time with the alternate
-+		# set up. The backend should reload alternates and thus find
-+		# the object.
-+		echo "$PWD/alternate/.git/objects" >repo/.git/objects/info/alternates &&
-+		echo "$oid" >&8 &&
-+		read line <&9 &&
-+		echo "$line" >actual &&
-+		echo "$oid blob 0" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
++		strbuf_release(&path);
++	} else {
++		strset_add(&files->dir_paths, alternate->abspath);
++	}
+ 
+ 	/* recursively add alternates */
+ 	read_alternates(alternate->abspath, &alternates);
+@@ -1272,11 +1262,9 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+ 	CALLOC_ARRAY(files, 1);
+ 	odb_source_init(&files->base, odb, ODB_SOURCE_FILES, object_dir);
+ 
+-	hashmap_init(&files->dirs_by_path, odb_files_dir_by_path_cmp, files, 0);
+-	files->dirs_paths_icase = -1;
+-
+ 	files->dirs = odb_files_dir_new(odb, object_dir, true);
+ 	files->dirs_tail = &files->dirs->next;
++	strset_init(&files->dir_paths);
+ 
+ 	files->base.free = odb_source_files_free;
+ 	files->base.close = odb_source_files_close;
+diff --git a/odb/source-files.h b/odb/source-files.h
+index 837e8903044..595a4e78eef 100644
+--- a/odb/source-files.h
++++ b/odb/source-files.h
+@@ -2,6 +2,7 @@
+ #define ODB_SOURCE_FILES_H
+ 
+ #include "odb/source.h"
++#include "strmap.h"
+ 
+ struct odb_source_loose;
+ struct odb_source_packed;
+@@ -18,12 +19,6 @@ struct odb_files_dir {
+ 	/* List of alternate object directories. */
+ 	struct odb_files_dir *next;
+ 
+-	/*
+-	 * Entry in the files source's map of directories, keyed by this
+-	 * directory's path.
+-	 */
+-	struct hashmap_entry by_path_entry;
+-
+ 	/* The two sources derived from this object directory. */
+ 	struct odb_source_loose *loose;
+ 	struct odb_source_packed *packed;
+@@ -55,17 +50,17 @@ struct odb_source_files {
+ 	struct odb_files_dir **dirs_tail;
+ 
+ 	/*
+-	 * Map of object directories, keyed by their respective paths. This
+-	 * map is used to detect the case where the same directory is
+-	 * registered multiple times.
++	 * Set of directory paths that have already been linked into this
++	 * source. This set is used to detect the case where the same directory
++	 * is registered multiple times.
+ 	 */
+-	struct hashmap dirs_by_path;
++	struct strset dir_paths;
+ 
+ 	/*
+ 	 * Whether directory paths shall be compared case-insensitively, as
+ 	 * determined by "core.ignoreCase".
+ 	 */
+-	int dirs_paths_icase;
++	int dir_paths_icase;
+ };
+ 
+ /* Allocate and initialize a new object source. */
 
 -- 
 2.56.0.341.g393f52fd96.dirty
