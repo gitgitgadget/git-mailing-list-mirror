@@ -1,88 +1,117 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793188705;
-	b=3dAiOu4QpH9jHESRfuepkZO9rdRK79cueQAvwUdfPQudR4CcV3ZKLDw1Yq0edyVg53/H
-	 Z0MTy/jSEe7mo2B6KzC1VzatEb6nrTEs6v05llSBo3d2tHR+n2K5ygAWXePFVrKcSlvG5
-	 q4mm0Gki5Hi7Cd3JEVRbGW9ZE0UrCQm0fUXdNdvB1Aczcd6uL/9n91eMm9M6RbGKgZz9R
-	 +K1RjpbsFVozbCEACd8gxJVlWI7xwGdI8/99lBtEuuppoJgYQpLB3itmJhQtei7P5R/BL
-	 rheyxwQ1ZbCMC9Z9jLvQpvRAuSXxDgYOF45wwST1axH5knoHFM6jl6aTOJID0mZCDnQ==
+	t=1793188958;
+	b=ZEPQsgko6x3uO0c4HQG560EbMlxCp0BwvZFTnJvr7K+GvKNILVMfgmAq3QkRjUhhSNhb
+	 gYf0LfX6U4ecglU4nUenZrxT54HSJZaoGVPc3pBq4oLc6+rgotUwycdMj0DcWHrq6w3od
+	 9pbWVGQaOaYAL6dDnWBx7iPSUaZ16gMNd0SqYmfw2rURcgKglgs3CvZDE6VeokJiwy4sQ
+	 YkDCXswx4NDD7kLevCow2AiDXlySL4fWdj/imm/SgaetIJJ7Ok8s2o70zZaRccTHxDPeh
+	 DlgMCP/VwHrk3qprzp0Z7tFMWRT3EfOPMd3ukbgF/QtAXmnqfAVUyoSF74K/7lXY6uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793188705;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=DxJKrT6pzFPTX8TAZpP/e0YopQtok4sFndqGgkVHx5k=;
-	b=OL5JUB3I3unj+b99nyO7boEUj1ss+TVSumdG3293bDtBi4HKoq4wxEvPdjQiNhDYRjKA
-	 0IpZeKxBmfJ7eFnjVGkB+JHblQn0hj32hK0szVBXFUJ7uUZbeUXVCc21Q+9K7FBjVOaYH
-	 zR8dk4W1CADg8v+1djpba0/ssHpT274lKyTKnqNZKVm+B4ubfzmzUs9GvzJ0tbOyirGJW
-	 E2ypRZn3MZO7aYNyUYjlNGp7IQwM4dncCEYX/fFoUVXqSMNr6Z8xWYz1SmqqGhvMWHw4d
-	 BLEQr7c1bAgrLT5BGC4MwmYTncoDXqFDqOi8W8rYIamzHcfmkqOgycyQMwszdxdsMKw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793188958;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:From:Subject:Date:Message-Id:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
+	 Cc:X-Mailer;
+	bh=koV9JYjgA7gv/XGVKnAsTDyOrSmWRsawEfkKIgQyKr4=;
+	b=tpDs0thrpUNfyukIIffbX9csN/ckpvWWFBL29YapX04tYs2K4kkV6nk9X1PUABFQWf9Q
+	 GI/4rcTpe5Sokh9jv2VFqfWrVa9t/i2+vEwEYn8ZWtWAZAoRnebEw1C12v60ywbTKvM2h
+	 9CUsIzoxaKJSmJlqGU0F4s3KRVCzjanu908pUilbrcnwNmP1jG37C03DlwzGOLTT2b52B
+	 3cTaqGZO+/YLotagw5HfBADoMk37/6qgawMn45e3FR3TOlBXNbXboQ8+P4d8Y/NBj99PG
+	 uOzLyvbp7RRIwp6140fO9YdSqY26nmUbSG5M84aKvcWL/r33EaAp+jyVg3ZDZ9Tn63w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=p5QPDUec;
-	arc=none smtp.remote-ip=74.125.82.171
-Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=mBeiffqp;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Wsh1d4mo;
+	arc=none smtp.remote-ip=103.168.172.155
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556CE606A320
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 11:58:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 556CE606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288C2606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 12:02:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 288C2606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=p5QPDUec
-Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-35829219da8so2512103eec.0
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 04:58:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793188704; x=1793793504; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=DxJKrT6pzFPTX8TAZpP/e0YopQtok4sFndqGgkVHx5k=;
-        b=p5QPDUecCpXVj7Bf2OGtzWSgyeimPqag+Npm8tpx9jAmYmbmhK/TsRECwGHCQxmZn9
-         HdsdrceVk0ROYqAUeJarGenKXzOlIL8vNwBc3xaOpfxxZ/1MNERQwSeC88YRzeQV4k3l
-         cSPUGaQ4V6ct7Shv1GFWFGc50Xo6Bqb4NMAdNZeG2WeKZFBDtVKvyE3mx9/woNwNLIei
-         BrVUJj+PYdyigJdodW6OM/b1WJHLAPEXwLMvbA4m7/RZ9Ns0aTtqFYtMShj962OlyJWR
-         VBhSXRikT1xQI71W9VtblTOmcLtVO0hcg6MDsq3pJFORJjD3L13GXodkIGvY7xac6uCZ
-         YNug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793188704; x=1793793504;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=DxJKrT6pzFPTX8TAZpP/e0YopQtok4sFndqGgkVHx5k=;
-        b=KzQ+S8cQIJyj9d3TurA1bI38dYYhw2cydKTNK+ejTtKiji/N4sDOGdUPTTBQYSa020
-         0dCMyPDqYzqvcdGHTErhF+bRqbnHGZK7CDOXoNYx0vFTKL5+XWAoxj2/2LrR30fUZZkz
-         DAk6tZT+qn2wewRu2Eu+mK3IgHcllaQx2vB8xBxS+SuXPFTDnE6gt0Nehoygt997p8rw
-         XCXEIGxXlBX7hUd7Xjr5f2vOud5sqUbk5hcvdxEcDbVVzWCTRnBZ54GgxbnzUm0lR8DI
-         eTgJEKvZBOUP7h4jWh1xkaMuzYaZL7TOzrLYITD5eGKHjwzZtyZo+TQGxCE9CbUoQ1Vh
-         LcWg==
-X-Gm-Message-State: AFq9FYJLTNe2Tx+R936uCVVsRpiCbPxusd01Lo6aEZBa2jRhMY8qafxK
-	ewcl81u6DEa/XgotiToJp1ezi8QwYEIvDBBQQRtVD4YQVbqo/A9RWb4MUguc0eQU
-X-Gm-Gg: AYBFou1YprY5/K4A9h4yvlDtTwcZJ49Opm7KIQuxnL/qqFeNPFyH6DG52FFAfeIExq4
-	9P9EPc+8BnckBcHPjQbDZx8rzjx5vBzZtlQe3PvN+VwlvmFnfa+RLs8BpiZXW5iOh0NI8bUOolF
-	h2cn9SzoyZj5OYWCE4QdEtrlE/MXtO98FtJzVvJpihwvOgcxQ7X6BxwEX+UyfSjjtt/mJF8meJ9
-	GhEvSwSoXOeZBCbWitubaQoShgxQEadcyTsqkdMkJsCLEzXoIrhBH2UlqgvycnGalUcvhspppQx
-	CN09+hv1A/7CV0jt4ZGwlHiswaqEFaOdTbPC1Jeh/q63LRekmHq/bzpFxbqwsuQC+9VjxuB3Nao
-	lFuaTtPCuiGXwOqKqOnreW6+meisHiCZ8Gaf+NIYv6aXLx/yT1wz5ssRkn4EXoMC5NPeVHOaKHM
-	QvUREx0FBJiW97HAcD5ThAF/Hp+9MFzHNzGcsbJRQPC339Z0KsKByd0iLDRE+dLnD/jK4bwRRF6
-	6pQNicArQ7qNX/yjQO3Bime1QXqzAojmPhUktRviV2pegITkKB15gZoFyexFwDmP/MPgUjAK/xQ
-	krUGfe0I9naJIgPG+WvcwGMLt42eKJq1FMKmdGLKgmq98ZrWVwGS3iK5UzC3hA/71lTx5x68
-X-Received: by 2002:a05:7022:2609:b0:159:d448:dd1c with SMTP id a92af1059eb24-1a3c904ca8dmr8861400c88.19.1793188704149;
-        Wed, 28 Oct 2026 04:58:24 -0700 (PDT)
-Received: from LAPTOP-PVRSMPQK ([223.190.84.10])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a23641e78sm6920358eec.0.2026.10.28.04.58.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 04:58:23 -0700 (PDT)
-From: Aniket Gupta <aniketgupta3001@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH] bundle-uri: do not die on unresolvable relative URIs
-Date: Wed, 28 Oct 2026 11:58:18 +0000
-Message-ID: <20261028115818.410-1-aniketgupta3001@gmail.com>
-X-Mailer: git-send-email 2.56.0.278.g37b3475fb5.dirty
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=mBeiffqp;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Wsh1d4mo
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 39F051400144
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 08:02:37 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Wed, 28 Oct 2026 08:02:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1793188957; x=1793275357; bh=koV9JYjgA7
+	gv/XGVKnAsTDyOrSmWRsawEfkKIgQyKr4=; b=mBeiffqpowBwIdUwpALWHm3Uu6
+	tXPC0sSpXAvX1Jl5Bx+pOeZxXpMRWefDIW5OXlKz6tfXinmIj7vWLdVN7JitS4ws
+	45ulQfaRCtb2/s7pT/kSBYMKQOmJivcfjZbBSBhvjTHfOAJi4tRrRoF+WHjHrFzk
+	p41JgewwVPO8cJLT/0CwEr68rTwu6Thd7zBLVrOk+hobVrU2bZTzrUt63WyTYL73
+	Xmpc7E8t0b0/wLBBeLHopz6R81Edc4ngxfapxBtTx0IM33jwLRjuRLa0JAYGCPR3
+	nk+NwS+dtsJwv0rbGvG3HxihZrjEDfFy+r25JShqhoAYS5x0qigL+EcH5E6Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1793188957; x=1793275357; bh=koV9JYjgA7gv/XGVKnAsTDyOrSmW
+	RsawEfkKIgQyKr4=; b=Wsh1d4moUNtxNJiZoLNJnYdlJHMqTMJfePNZkdqRn3GJ
+	4t7qOkFNHHFRGlvdN7WelNX3fkqUD6GY/wZ0rVQmbhVYCFESLIxvs/w0geFRp00r
+	ESZApdQK0L8D9g9cqEvLPEox8cEftS3vl5Dk6azQj+1Ijx3N4bkeg40VdeZl0Xc+
+	XHbagSjJDmc2IdHEh0gLv8uiO0iVDVhOFAHSyHmujAWKlunyeF1jSKRcVMnq/XSI
+	4pAOHQcd5W0r5iWdyN/APdltGcVPz18RYg0Y/C9QiGczaDJLQ+uUmqLHpkUnxheh
+	HLk1iywVNhLuPPblX9qXSvANkThXo6UI0QR2YS2F6g==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793188957; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:E/lV9Thlp3x8Lx2/kHIbdOX4xdgFhDIqzngaGlyrD1zda2M
+	H6ts5hHf8xVIP7g1e51Ub6asDch1els53DXhYj2NfXZh3/cYEItHdY1gCR8NvZH+
+	5VEZiMrlQplHggNXL6QxaPd3uVCP1DceB2RUZS76r7Q/BOaa0SsHV7svnuqauumk
+	PiF3wQQ7ufbGPz5c5qKHVhkIi3fszOEoaKGRxC9TWyvP6jV8DOn9ceoXwNMZk7Q1
+	HmXH/qn9ivabu6MYceEoknlM0tXf9bazcF6z7inaW8jNemt0y/8Dtgnh4OCUxr9r
+	RZxLMnL/DAwkhNsA06aBkcc12XA0Ggftt7I1PLg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=10;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,message-id,mime-version,subject,to;
+Message-Instance: m=1; h=sha256:HYq2lqRsVdMxpVYNIyV9MQnYi8u1epwinHSTMG9iivI=:SpbxnZtVoMMEFf3QEvqJpsWShh2yLD5E/aX+6EFsLTg=;
+X-ME-Sender: <xms:XeThaqb9zZWr2XFEetFvho5DYqcwXfHVx5WG2PJaBBulOwtw0lgmHw>
+    <xme:XeThakU4QEpGpXu0kZGOSoY-9bzng7EecKkYDhTYjFEDt8KbnL76r5MFXGJQ5kL7j
+    XNW0ohItvfk0HteJpj7Xq5lFljlexCUv9Sr0FgyBhcPOYRvDlNcmT7N>
+X-ME-Received: <xmr:XeThaqlepIEPcO6L5zGUW0TdVdgIXem5LERwbBl0g3HKXk3uvI9dHQ>
+X-ME-Proxy-Cause: dmFkZTFQgGH4PqajQwZX+JzzIMFHHZ8ogiF7166tdwYiK2KtQ2U9tDiUIlPgyjsm5TqZaw
+    MfxSKzWlcaS2rYg4zeTVojS/3RB0OWz5Rp7Y0SmwCs95TlaQJu9WvGJUbXFeIMtl9LKbpQ
+    2MyDYcw+pSo53WgDs30SqBJFjO4+GDuZxg3/ICao4hjo6bq2rWn/UrHM+xiAY2ayAPsW44
+    oyPx2cM1We8T4VYXMnEbyV5ism6ez5tC+YXpFFZSHTxVj/BeVnO9ygVIgZ8g6jZVPjhNcV
+    1JHFE0LHOE+N3tspv9lmlpe4HSynOTRucpJncRmG5nb+V33CatnNVw3WEWKcmPk38lfKjE
+    wiBrw1X75pz0/LVlN6VtbZbt016oxoP/E2NVAMUbk9hcGKwF2bqq6i9BdnxfAhPcbsLPCb
+    0TBg/aCbPK+D7Ya3rj8UJerEYkmMCysUbMdoz0KInJSZhxQNcV8nIDxZnIUpKdsnJ0LTvj
+    WWj30hJnjPglgBzA0F8jSFYdyOkxptO8/IoxLRj9SOLMte4jk7gGY91l4fKIlhvReFUPiB
+    fNpu5cG2hKFIwsCP4l6tgB5harcHLhuRYSWEOnhLARGJXuHJTbO2hvEoWFEmqOrfl6Q8jt
+    giPE/wu3Fr0oOUMPpJ1pOwcqwYomx0mrB0RR5jV/O/FOXYYrzOOPze6mKXBQ
+X-ME-Proxy: <xmx:XeThahylSRrL0cJwvZESieoL6kA2RLmRldwqEE3PTIqq7xzbFm3kPQ>
+    <xmx:XeThalhqp3osqI-lql6HWrL4FNGj2d0JfQ4GoNva7geIUa9gxsrxyQ>
+    <xmx:XeThamVEnr0XSxWX7wj1y9sY54pX4NoyIzmQHwkG1QMi-9iQfE8OPA>
+    <xmx:XeThan3m8J8vE5DBQa6wpQjbFvVHLxhlW6c9-nla8ZjdVbFcAKavkg>
+    <xmx:XeThao5zofI0ZvCE6TDgFkQg-gWvIKinIsEBqwLu4ZoFu3xpnk6lCTVT>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 28 Oct 2026 08:02:36 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 6e6aca5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Wed, 28 Oct 2026 12:02:35 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/7] builtin/commit-graph: some small cleanups
+Date: Wed, 28 Oct 2026 12:57:52 +0100
+Message-Id: <20261028-pks-commit-graph-cleanups-v1-0-c549344c363f@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,181 +121,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDMBBA0avIrDuQRCqlVyldxMmo09YYMiqCe
+ PemdfkW/++gnIUV7tUOmVdRmWKBvVRAg489o4RicMY11rgbprciTeMoM/bZpwHpwz4uSTHYQLX
+ pajZXD6VPmTvZ/u/H87Qu7Ytp/g3hOL7V7S08fQAAAA==
+X-Change-ID: 20261028-pks-commit-graph-cleanups-d1dc30f3e05a
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.2
 
-relative_url() calls die() when the relative URL has more "../"
-components than the remote URL can absorb. bundle_list_update() calls
-it on URIs taken from a bundle list and a single bad entry takes down
-the whole command.
+Hi,
 
-Add relative_url_gently() which returns NULL and records the reason in
-a strbuf instead of dying. This will keep relative_url() as a wrapper
-that dies so the submodule callers are unchanged. Use the new function
-in bundle_list_update() and report the problem as an error like the
-other malformed lines in a bundle list.
+I'm working into the direction of making commit-graphs pluggable so that
+backends can fully control where exactly commit-graphs are written to
+and read from. This patch series contains a couple of small preliminary
+cleanups.
 
-Update the test in t5750 accordingly and drop its TODO.
+Most of the patches are rather uncontroversial, I'd assume. The only
+one that might raise some eyebrows is where I "fix" git-commit-graph(1)
+to only accept "--object-directory=" for subcommands instead of both as
+a command-global and subcommand option. I feel like this is quite a weird
+outlier, and it got in my way. In any case, I'd appreciate some extra
+thoughts on this.
 
-Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
+Thanks!
+
+Patrick
+
 ---
- bundle-uri.c                | 10 +++++++++-
- remote.c                    | 39 +++++++++++++++++++++++++++++--------
- remote.h                    |  8 ++++++++
- t/t5750-bundle-uri-parse.sh | 15 +++++++-------
- 4 files changed, 55 insertions(+), 17 deletions(-)
+Patrick Steinhardt (7):
+      builtin/commit-graph: rename subcommand functions
+      builtin/commit-graph: drop declaration for `read_replace_refs`
+      builtin/commit-graph: get rid of `the_repository`
+      builtin/commit-graph: drop global "--object-dir=" switch
+      builtin/commit-graph: simplify how we wire up common options
+      builtin/commit-graph: de-globalize write options handling
+      builtin/commit-graph: de-globalize options handling
 
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 2bb2eb99e4..1f198ef9a9 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -210,9 +210,17 @@ static int bundle_list_update(const char *key, const char *value,
- 	strbuf_release(&id);
- 
- 	if (!strcmp(subkey, "uri")) {
-+		struct strbuf err = STRBUF_INIT;
-+
- 		if (bundle->uri)
- 			return -1;
--		bundle->uri = relative_url(list->baseURI, value, NULL);
-+		bundle->uri = relative_url_gently(list->baseURI, value, NULL,
-+						  &err);
-+		if (!bundle->uri) {
-+			error("%s", err.buf);
-+			strbuf_release(&err);
-+			return -1;
-+		}
- 		return 0;
- 	}
- 
-diff --git a/remote.c b/remote.c
-index 49ee2ea318..7472c426aa 100644
---- a/remote.c
-+++ b/remote.c
-@@ -3005,9 +3005,11 @@ void remote_state_clear(struct remote_state *remote_state)
- }
- 
- /*
-- * Returns 1 if it was the last chop before ':'.
-+ * Returns 1 if it was the last chop before ':', or -1 (and records the
-+ * reason in `err`) if there is nothing left to chop.
-  */
--static int chop_last_dir(char **remoteurl, int is_relative)
-+static int chop_last_dir(char **remoteurl, int is_relative,
-+			 struct strbuf *err)
- {
- 	char *rfind = find_last_dir_sep(*remoteurl);
- 	if (rfind) {
-@@ -3021,17 +3023,19 @@ static int chop_last_dir(char **remoteurl, int is_relative)
- 		return 1;
- 	}
- 
--	if (is_relative || !strcmp(".", *remoteurl))
--		die(_("cannot strip one component off url '%s'"),
--			*remoteurl);
-+	if (is_relative || !strcmp(".", *remoteurl)) {
-+		strbuf_addf(err, _("cannot strip one component off url '%s'"),
-+			    *remoteurl);
-+		return -1;
-+	}
- 
- 	free(*remoteurl);
- 	*remoteurl = xstrdup(".");
- 	return 0;
- }
- 
--char *relative_url(const char *remote_url, const char *url,
--		   const char *up_path)
-+char *relative_url_gently(const char *remote_url, const char *url,
-+			  const char *up_path, struct strbuf *err)
- {
- 	int is_relative = 0;
- 	int colonsep = 0;
-@@ -3073,8 +3077,16 @@ char *relative_url(const char *remote_url, const char *url,
- 	 */
- 	while (*url) {
- 		if (starts_with_dot_dot_slash_native(url)) {
-+			int chopped;
-+
- 			url += 3;
--			colonsep |= chop_last_dir(&remoteurl, is_relative);
-+			chopped = chop_last_dir(&remoteurl, is_relative, err);
-+			if (chopped < 0) {
-+				free(remoteurl);
-+				strbuf_release(&sb);
-+				return NULL;
-+			}
-+			colonsep |= chopped;
- 		} else if (starts_with_dot_slash_native(url))
- 			url += 2;
- 		else
-@@ -3102,6 +3114,17 @@ char *relative_url(const char *remote_url, const char *url,
- 	return strbuf_detach(&sb, NULL);
- }
- 
-+char *relative_url(const char *remote_url, const char *url,
-+		   const char *up_path)
-+{
-+	struct strbuf err = STRBUF_INIT;
-+	char *out = relative_url_gently(remote_url, url, up_path, &err);
-+
-+	if (!out)
-+		die("%s", err.buf);
-+	return out;
-+}
-+
- int valid_remote_name(const char *name)
- {
- 	int result;
-diff --git a/remote.h b/remote.h
-index cca02033b9..940474fa71 100644
---- a/remote.h
-+++ b/remote.h
-@@ -478,6 +478,14 @@ void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
- char *relative_url(const char *remote_url, const char *url,
- 		   const char *up_path);
- 
-+/*
-+ * Like relative_url(), but if `url` cannot be resolved against
-+ * `remote_url`, return NULL and add the reason to `err` instead of
-+ * dying. `err` must not be NULL.
-+ */
-+char *relative_url_gently(const char *remote_url, const char *url,
-+			  const char *up_path, struct strbuf *err);
-+
- int valid_remote_name(const char *name);
- 
- #endif
-diff --git a/t/t5750-bundle-uri-parse.sh b/t/t5750-bundle-uri-parse.sh
-index 70ae94c4d0..0f0ac29565 100755
---- a/t/t5750-bundle-uri-parse.sh
-+++ b/t/t5750-bundle-uri-parse.sh
-@@ -68,17 +68,16 @@ test_expect_success 'bundle_uri_parse_line(): relative URIs and parent paths' '
- 		uri = <uri>/bundle.bdl
- 	[bundle "two"]
- 		uri = bundle.bdl
--	[bundle "three"]
--		uri = <uri>/../bundle.bdl
- 	EOF
- 
--	# TODO: We would prefer if parsing a bundle list would not cause
--	# a die() and instead would give a warning and allow the rest of
--	# a Git command to continue. This test_must_fail is necessary for
--	# now until the interface for relative_url() allows for reporting
--	# an error instead of die()ing.
-+	cat >err.expect <<-\EOF &&
-+	error: cannot strip one component off url '\''.'\''
-+	error: bad line: '\''bundle.three.uri=../../bundle.bdl'\''
-+	EOF
-+
- 	test_must_fail test-tool bundle-uri parse-key-values in >actual 2>err &&
--	test_grep "fatal: cannot strip one component off url" err
-+	test_cmp err.expect err &&
-+	test_cmp_config_output expect actual
- '
- 
- test_expect_success 'bundle_uri_parse_line() parsing edge cases: empty key or value' '
+ builtin/commit-graph.c | 131 +++++++++++++++++++++++++------------------------
+ 1 file changed, 67 insertions(+), 64 deletions(-)
 
+
+---
 base-commit: 37b3475fb530c14109211faca33716a173db61ed
--- 
-2.43.0
+change-id: 20261028-pks-commit-graph-cleanups-d1dc30f3e05a
 
