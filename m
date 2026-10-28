@@ -1,97 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793146536;
-	b=3vJUO9nEoyOqPlzXB+7wZjRIPAUTzA54eXdS/eescNyNxR0jTVvP5TUVRsXVxA5qh4m/
-	 mybVKr4KCFjmt3E1yAHVWDspojT1s3FBK/SHajipjrXG2E26aeFOEYjuVdHu3X8vk3o/P
-	 j7dxlALD/dpfz2EUWyBogOVXN9tVaqwvVKiuDGr/pKW2PmBkukJpoe3Kf5E0bEA1Ztsr8
-	 eHykH+le48e+FhJzRU0pn0siHbDGgd9ip2L8Y3ffDGD8NAgRZwWw9jlBKgWjVnGRMx56e
-	 A+mHD8ErLIkO0Xmh492KfFghRF4QNeTk68KFaMvn6MoP4GZnx0GYEU/Gu5y9BfpT3Mw==
+	t=1793147226;
+	b=X0tIX+8WNylbcVyBFHd5LC8Aj6hTdP87iGPoUPhpVIntzvtcIlqUu84eSYnrOa2ESJad
+	 /VAw9d9isxBQmv4iZQCQ5LBGokenetqnIHCnKidK9mPY+jnz3r8uk5TA+bJdmzrvNWbVx
+	 niYSneDNGhJ6IlBG3zPyAIpDGVH65lbsqC9rL2vob408KmZXwmw0xAg/HQY3d2zhAGc+V
+	 bEASofvgUV6/FxcOEq3tUGmSRwRHCHT/dD6HUfCSL82g+XMh+1Cm5sI9iwzVqdB+6GTRR
+	 BDNEk2P/icI6ug1dBuEhYtqsIVV4wDWNgZYX9V3CYprR6k1xjeu6TJqyR2Fx/15xEGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793146536;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=AeQZu3zAiwhYNwpxU//S/PsZFl/8aQLyBAngbo05SXM=;
-	b=FPVBxagPRZL3FZxKcZ5LdV/GHjEICUfOW2JuA3ULTVQLYXym0wNBQZ/+4oIG/bmCxpMq
-	 hGUG/rLJybsV//ah6ZgTFFj37ZpWtLELtQtO8jasDfCoCt+vpDBb3lszULFFzsHbH3c2s
-	 r1XJcFyTlUt/AXHWwv0Ku+K/JH4ak1cpGbAR8/z+iBkb/tcACi3hMNfWZxk2qmkclXUZM
-	 BZoEV+ilX7c2yiCvUVlymsEE2V6n2KvXiPC9aax9Q52Jw2sR6gYEBUJ00OteKYOvb53Qy
-	 uVqhsYQfkio9/9TYnS8WonH5S5eShtDx5FA552jWDkQzj1bUEBZweuiVmO/RfTgBKpQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793147226;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=EBTA73nZ0064pflAfeljt+RNd2xXuHTq2M4DpMoGryI=;
+	b=AHo/kSlaDTNs7nRZd0incIRWi6ZecE2ChKf2Uw0WcGs5/1d8cpqh1KOahO4uIMEW9acH
+	 lpozlYGok4k2Ss1L4HXG4ZQDvFxVdJsH53ZsHoiSMP0RkOR5tjxtnwOJra54ZXq9323xw
+	 wbIZeN1bGdb6lbl9IK6Cp/7hYLQ0Y62+RwArw/fanzfGy1qP+Dz0uUDeQQZC095+a0lsZ
+	 JLdDTUpa26DbW//AaN/Pobco24jPuceOqJGhFHUloBlOSsC6Ihyg6UtLCHAMSrfpGXncA
+	 4niZJH1FBAS8W1Z9i0HsHalj+twQL+IyzL2SEY4IMSG6Q2suLLosdvjJG3nVde4lf/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sy0J8e2Y;
-	arc=none smtp.remote-ip=209.85.219.44
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=hffNigPS;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Skrcn5wg;
+	arc=none smtp.remote-ip=202.12.124.157
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F97606A338
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 00:15:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21F97606A338
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56208606A320
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 00:27:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 56208606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sy0J8e2Y
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-91c73c63116so5080326d6.2
-        for <git@vger.kernel.org>; Tue, 27 Oct 2026 17:15:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793146535; x=1793751335; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=AeQZu3zAiwhYNwpxU//S/PsZFl/8aQLyBAngbo05SXM=;
-        b=sy0J8e2YjIo+yVeg+a8zfr2Msc/It21qpZin8pFIeHkpLiHRU1Nq1YWZj5snZbmw5V
-         7vU7X5o11WmJgTU5KTqepFqEHp7et0uZmfCZ0F4fqrFNbYWgCTbkOJdviaIZL/YD8nMG
-         l+KR07lFlyHzOiUEhyGxd0rCnyAFsLpHrR4Dd3whHrY75nT0RC9lmYvywpcBgQEuljmB
-         uXdYilCCqqbRiaXYHJsMMXUO9ylHxLFWghUMcE6H5at95EiprXxBB+bDS/A8/u7cDrwd
-         3zfnY+QtS6luCwVzwImgz3tqfOhbyl3A6ZpzP7AO2D1/QfmjVypyVnVo5cwcO8dkzEa6
-         eLsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793146535; x=1793751335;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=AeQZu3zAiwhYNwpxU//S/PsZFl/8aQLyBAngbo05SXM=;
-        b=XGFe4HtlfHySkRh7Mn9zyIM+exrfl+VX4jfO9FbnQhZfWh4o3tOqo2g8AlGPiJqvRY
-         7iSlaFrXU8VXBeRnmYLnI3Zoevnkzcy4MgSQwPbkybKbM/59+VZ3aZjpst8zSu5dtZhM
-         volXg5iyttCi6qgGAqTBOKG4d07j4YoaYnrib3HY9LQllRCn3edEvHIjWiSk68TeEoX7
-         5HifZkF6qdz3mZRllNJP36bIZKnGblU8ieS7pirqF6SZv9LDPLif+9HK7mOhZDX/tqwO
-         M9v/kgvKzGkH9/3h4V7k1ZYYYffplR9hTqVSAcKXAdxrJ6yVki+4FcUfaNlrWr36y40q
-         IMuA==
-X-Gm-Message-State: AFq9FYKBgT4C9F1dH8lqZKz0hFz6iENn+JQVyFAYINLvVCTPoNlJoZ36
-	ByEXzbnl+Mk5u7ARa2TBu4mzby7kDK+za88YxVa6u82PWIYDjELWHc+au6wkYA==
-X-Gm-Gg: AYBFou2pAAFjicjtIksyNDXe+ChufAWpRwS8ciSwifr8n2m6GG7HsM/y50x+ux198Vm
-	hvv1LYh48vFDNCKCcRk06FqMPTMKkeSTSRS8a6ztIxkVxB36wSw3xzscd8ItEbMSDJw8nTTG7xS
-	pVSK+HlroQEGIscArIrnJtOXICZvOiG5dDnC/laL6/ehga58WH4V2PMD4QDZErmJnxrUz8tCC9R
-	MNRiDj1h//gTWbHChN7NKPGD0sL4mKXB9EVlnlE+CclqDiS+DCT3Ef1eFdoavKrq9XcroGRo57o
-	VNQ+BTcR2xtSVRq0aQVVW7W0Ry3wb+yoKPWBPS6RIs1ztfY3Vwzzvf9CL8pT71lDH7n9jWi7u6a
-	fybf6NBDd1VxudYlG6vGKhHgp8/curXqhKyQrBBdQ1l+Ha8KQTxtkLr3u8RYg3vNF0qt7p1RFE3
-	2NcMVlbVxl3xHVaj7TTqlPZ5HMpcW4R/rLroNslJKzLgt7eHkHhuVFIMCOWtOQxAQUk4yElPm4T
-	DV5xA1MKdw/GECy2pL0We9JnUyjFpd7ofBDVBss6iz+Gs0SkAaxcuiZFWlzf/jdLy2ANAdS1omH
-	EagAnJcY2UPG3nPcyqneeUTT5KJYcwZEXvlQ/5V1fmvH7d2QYtugTZbRd/zg9Q==
-X-Received: by 2002:ad4:5aaf:0:b0:91b:8272:5157 with SMTP id 6a1803df08f44-91c7cdf5c78mr14162276d6.2.1793146534972;
-        Tue, 27 Oct 2026 17:15:34 -0700 (PDT)
-Received: from Williams-MBP.internal ([107.11.98.107])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c6e20ba4fsm38666656d6.14.2026.10.27.17.15.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 27 Oct 2026 17:15:34 -0700 (PDT)
-From: William Hatfield <whatfield.git@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
-	Patrick Steinhardt <ps@pks.im>,
-	Glen Choo <glencbz@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	William Hatfield <whatfield.git@gmail.com>
-Subject: [PATCH v2 3/3] submodule: add --reversive shorthand to foreach
-Date: Tue, 27 Oct 2026 20:15:29 -0400
-Message-ID: <20261028001529.81557-4-whatfield.git@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261028001529.81557-1-whatfield.git@gmail.com>
-References: <20260131214309.1899376-1-whatfield.git@gmail.com>
- <20261028001529.81557-1-whatfield.git@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=hffNigPS;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Skrcn5wg
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 77DFB7A0179
+	for <git@vger.kernel.org>; Tue, 27 Oct 2026 20:27:04 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 27 Oct 2026 20:27:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793147224; x=1793233624; bh=EBTA73nZ00
+	64pflAfeljt+RNd2xXuHTq2M4DpMoGryI=; b=hffNigPSgMQQPOyIUUymkBap2L
+	IzwGizZtm6eQydxoO2AV9wb5Y33AnIlm26t3KHGWN+6zlJRqkzaTGu78TgAUSKi/
+	7gOjOCg2vsXNGLdr+RG+WuHO1HmkPmzdvfbApGPab3FjAM7c+M3kEFf/T+FvxlMv
+	6wU8usUQyMhNNoCaE0KPZ6a+e7Au7Eepenp8q9jv7okaC0tHHQD0e2wGJWIWFxOh
+	MBWN0wAtXH+UzVOBKfaysn7zoQQs4+w5O+y/B6bC0Sxl4ezw7ZOqjZERBiLam7wG
+	6XM/0grAuRosVM6+jd/KKOBs5kS0u3Wa6f1/ohiDJCllI2aUa/a6eLGPKP0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793147224; x=1793233624; bh=EBTA73nZ0064pflAfeljt+RNd2xXuHTq2M4
+	DpMoGryI=; b=Skrcn5wgo/Wixv5YY//etGStSL/6n5Blwfgkn0NXOCT96rmnM5x
+	yokPfBzmqE9xBIrt19IUygjFm98O4XeGcTvfcjuji+RFwLDaXud+tYC2U8KqFI9+
+	nz2f1NgIGn1wl2q3T8Nx8ZEJBnVdNqZY05lUobYruqzQP8+MvPmOyntuIohLpkkG
+	oevFd33gpKJcj7b0WJODmDhBflQ1dEMxSmebQu7Lh7L5LPloFIdVf8RyGcE2qlrf
+	7BHPgTephvJPWdkPBOniBnsOXXxikxayb9PDpRpGniYkYmEzsY1D25F32J24Z6SX
+	EkZIsL8kNOCzf46HBs60Utdd3/pC/ZHpiCQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793147224; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:c9C07VZg60Kwsf/dsFuHqD/zcvjqLPA+zMWtaBt6E7PRNqq
+	0EpynTDOGD8kzm1QJSWmoS6wIr433vMB0kSP7JKE0Qf9iHiFLSw3JCvCTJa9t/tk
+	ywsuMr1PMN8Nrou1CjrgJd48O8mrTnwqWqHddEq3ur6Qejua1RPM/Ls9XDiCY0NL
+	9bEIlPk8P117i8q7A2g3zRun3F3Lm/n2gxTF7UJ9JFqy4yfv6aurbT+Pw51jnZMl
+	ZO22iCtzRYpsIB5ti97Vfi2KX/QhZAvpiE5atpv3AJ8D38I/hbwZD/beQR2HEeC7
+	4wXAzWhqJlisDLbc7KYjTUJqPVChsNfOST/YsVQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:BNn5sacPymS/IAxQ/IU1YOy5fYRsIuNBceG2YxdG4bc=:WFn8OFgsFbgMLXjv0fFQjZD87SojO8k5X7o1mbB/hPE=;
+X-ME-Sender: <xms:WEHhatpi2odde7cgu2B9NVsC-Av4hL_oRjbD9cmIJnh1Fx4hRnORsw>
+    <xme:WEHhajU0NTGwqOtdDwj4iihZoEbhKbvVJVIy5l4Mus36CepySG3MhyeZZglTfTq3C
+    bwGmp1k5KTLNqFVTYZvW2N-0Qvi3e2UEabt7LKLTYduwb-G1GltKwc>
+X-ME-Received: <xmr:WEHhakAzLiDbG0faWEyJOkgEx4F4HsnjXXmIGRI-BlYjF3pzEW6kUPtc48jHRaCO80BlIlNUVu1PKp9xX1j6AlIZ_OnHPL136FWT>
+X-ME-Proxy-Cause: dmFkZTGWlYl9fim2ds6iNeoKu4wYr9ls0LKlZzSUlwgChEzw5Brh/dFHmM5cQflJDughtd
+    sEdn6nOleWh2MPhBTA1tpf+sV5DPcasD0EkjhBfxCeZ9G+t1Xx8fvWzFQjAqZhyD2/K32g
+    t53y4osNZcl8eKtJIFw9tL8dJfk5yDRxg+w+u/NCkTAaH2V+dTyVCAJHu8SpNgywlkQ9Vt
+    3rwOWk0Q8j6rHaV4oE6FvHXQ5nh2rI3+FDX5bcjxVoh+dsMzKPW45cSgl95eXy4vcrQ850
+    j1nZ4BGorAjaHhtuSh4XhVpBm6nlVYomG8Oo5SKFzPMQ6Byz6ibWCxsj7NZdtiP013NcQo
+    lwTERECaEWdosECa+/7rJIgS6Y/NDRCt9IgWxFWMd0DQhYlDdWq2UK5g2f192ewGxfhWEv
+    mmNY0ApR6ylOCWbOCnxtCg0M5B87qnjYISwDYbw2tqppIxHASoKjqCVDYsgWQDnczzgGUV
+    kIRJqpP85LhOM8RPpDd2mIYp/cXv0W3eUqoHD6Ont5spMx78BZqBLDEV16f6baKPI+ihDR
+    Z8BCtEYU2zJu8ybX2Y5K5uRbl6D6KsUuacfTqRlI/gGW9zCJdVZtsjRTg5OaplQyten7qc
+    8VlDdehLJQ5Z+PHWm9D8SZEdhegOexyKR++ZnRF9azFIgCtZyTru+1pDbIqQ
+X-ME-Proxy: <xmx:WEHhav3BpNj89nrtEIpCHU_UCIeEMBAKUmimztNMuV4HhAzluKwE7g>
+    <xmx:WEHhau21IeYT_a32Z96msa6gI-8QPYMQLvPOTXyxNl2dutCRz2L63A>
+    <xmx:WEHhasCCeRFgzHhvn_kLEG72trBqplTpM9Va5VU_cc7CK3VjqCdfDQ>
+    <xmx:WEHhal6iPbMM6f7bu6-4tU0RtK-rWQZHAttYuy4YVxMJaAeP-q1vHg>
+    <xmx:WEHhatGaS99wdm8mQdHPcU-bd_T9tKrw9fADTh97Z9545BrD3XujEQAx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Oct 2026 20:27:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <ttaylorr@openai.com>
+Cc: git@vger.kernel.org,
+  Jeff King <peff@peff.net>,
+  Ted Nyman <tnyman@openai.com>,
+  Elijah Newren <newren@github.com>
+Subject: Re: [PATCH v2 0/8] repack: various corner cases for cruft-less MIDXs
+In-Reply-To: <cover.1790827875.git.me@ttaylorr.com> (Taylor Blau's message of
+	"Wed, 30 Sep 2026 23:11:29 -0500")
+References: <cover.1790731662.git.me@ttaylorr.com>
+	<cover.1790827875.git.me@ttaylorr.com>
+Date: Tue, 27 Oct 2026 17:27:02 -0700
+Message-ID: <xmqqcxsufz55.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -101,204 +127,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Visiting each submodule before its superproject, ending with the
-top-level superproject, takes all of --recursive, --reverse-traversal
-and --include-superproject. Those are three options to remember and to
-type for what is, for this purpose, a single thing.
+Taylor Blau <ttaylorr@openai.com> writes:
 
-Add --reversive as a shorthand for the three of them. The options keep
-working on their own, for the cases that need only one or two of them.
+> This is a reroll of [1]. Thanks to Stolee, Junio, and Peff for
+> reviewing.
+> ...
+> Thanks in advance for your review!
 
-Signed-off-by: William Hatfield <whatfield.git@gmail.com>
----
- Documentation/git-submodule.adoc       | 14 ++++++++++----
- builtin/submodule--helper.c            | 11 ++++++++++-
- contrib/completion/git-completion.bash |  2 +-
- git-submodule.sh                       |  7 ++++++-
- t/t7427-submodule-foreach-reversive.sh | 14 ++++++++++++--
- 5 files changed, 39 insertions(+), 9 deletions(-)
+I am trying to eject stale topics out of my tree, and the discussion
+on this topic is about to pass the 1-month mark.  It seems that
+comments on half of them are "looks good" and the rest are "just as
+confusing as the original without improvement".  How viable is this
+topic?  Are we still improving on it, or has it long passed the
+point of diminishing returns that nobody is interested in polishing
+it any longer?
 
-diff --git a/Documentation/git-submodule.adoc b/Documentation/git-submodule.adoc
-index 5d4b06cb96..8f4bc002cc 100644
---- a/Documentation/git-submodule.adoc
-+++ b/Documentation/git-submodule.adoc
-@@ -18,7 +18,7 @@ git submodule [--quiet] update [<options>] [--] [<path>...]
- git submodule [--quiet] set-branch [<options>] [--] <path>
- git submodule [--quiet] set-url [--] <path> <newurl>
- git submodule [--quiet] summary [<options>] [--] [<path>...]
--git submodule [--quiet] foreach [--recursive] [--reverse-traversal] [--include-superproject] <command>
-+git submodule [--quiet] foreach [--recursive] [--reverse-traversal] [--include-superproject] [--reversive] <command>
- git submodule [--quiet] sync [--recursive] [--] [<path>...]
- git submodule [--quiet] absorbgitdirs [--] [<path>...]
- 
-@@ -222,7 +222,7 @@ specifications.
- Using the `--submodule=log` option with linkgit:git-diff[1] will provide that
- information too.
- 
--`foreach [--recursive] [--reverse-traversal] [--include-superproject] <command>`::
-+`foreach [--recursive] [--reverse-traversal] [--include-superproject] [--reversive] <command>`::
- 	Evaluate an arbitrary shell _<command>_ in each checked out submodule.
- 	The command has access to the variables `$name`, `$sm_path`, `$displaypath`,
- 	`$sha1` and `$toplevel`:
-@@ -255,6 +255,8 @@ superproject, that is, at the top level of the repository `foreach` was
- started in, after all the submodules. There, Git sets `$displaypath` to
- the name of that directory and sets none of the other variables listed
- above, although they may come from the environment.
-+`--reversive` is a shorthand for giving `--recursive`,
-+`--reverse-traversal` and `--include-superproject` together.
- A non-zero return from the command in any submodule causes
- the processing to terminate. This can be overridden by adding ++||:++
- to the end of the command.
-@@ -270,8 +272,7 @@ And this shows the path of each submodule and then of the superproject,
- visiting the submodules nested in a submodule before the submodule itself:
- +
- --------------
--git submodule --quiet foreach --recursive --reverse-traversal \
--	--include-superproject 'echo $displaypath'
-+git submodule --quiet foreach --reversive 'echo $displaypath'
- --------------
- 
- `sync [--recursive] [--] [<path>...]`::
-@@ -473,6 +474,11 @@ NOTE: See the NOTE above for the `--reference` option.
- 	Also evaluate the command in the superproject, after all the
- 	submodules. This option is only valid for the `foreach` command.
- 
-+`--reversive`::
-+	A shorthand for `--recursive --reverse-traversal
-+	--include-superproject`. This option is only valid for the `foreach`
-+	command.
-+
- `--depth=<depth>`::
- 	Create a 'shallow' clone with a history truncated to the _<depth>_ revisions.
- 	This option is valid for `add` and `update` commands. See linkgit:git-clone[1]
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index fff5142eda..f923d2e926 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -485,6 +485,7 @@ static int module_foreach(int argc, const char **argv, const char *prefix,
- 	struct pathspec pathspec = { 0 };
- 	struct module_list list = MODULE_LIST_INIT;
- 	int i, j;
-+	int reversive = 0;
- 	struct option module_foreach_options[] = {
- 		OPT__SUPER_PREFIX(&info.super_prefix),
- 		OPT__QUIET(&info.quiet, N_("suppress output of entering each submodule command")),
-@@ -494,10 +495,12 @@ static int module_foreach(int argc, const char **argv, const char *prefix,
- 			 N_("visit submodules in the reverse of the usual order")),
- 		OPT_BOOL(0, "include-superproject", &info.include_superproject,
- 			 N_("also run the command in the superproject, last")),
-+		OPT_BOOL(0, "reversive", &reversive,
-+			 N_("shorthand for --recursive --reverse-traversal --include-superproject")),
- 		OPT_END()
- 	};
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule foreach [--quiet] [--recursive] [--reverse-traversal] [--include-superproject] [--] <command>"),
-+		N_("git submodule foreach [--quiet] [--recursive] [--reverse-traversal] [--include-superproject] [--reversive] [--] <command>"),
- 		NULL
- 	};
- 	int ret = 1;
-@@ -505,6 +508,12 @@ static int module_foreach(int argc, const char **argv, const char *prefix,
- 	argc = parse_options(argc, argv, prefix, module_foreach_options,
- 			     git_submodule_helper_usage, 0);
- 
-+	if (reversive) {
-+		info.recursive = 1;
-+		info.reverse_traversal = 1;
-+		info.include_superproject = 1;
-+	}
-+
- 	if (module_list_compute(NULL, prefix, &pathspec, &list) < 0)
- 		goto cleanup;
- 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index f47459d589..69a31316ca 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3645,7 +3645,7 @@ _git_submodule ()
- 		__gitcomp "--cached --files --summary-limit"
- 		;;
- 	foreach,--*)
--		__gitcomp "--recursive --reverse-traversal --include-superproject"
-+		__gitcomp "--recursive --reverse-traversal --include-superproject --reversive"
- 		;;
- 	sync,--*)
- 		__gitcomp "--recursive"
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 964f5a8bf0..c86cbe76d2 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -14,7 +14,7 @@ USAGE="[--quiet] [--cached]
-    or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
-    or: $dashless [--quiet] set-url [--] <path> <newurl>
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
--   or: $dashless [--quiet] foreach [--recursive] [--reverse-traversal] [--include-superproject] <command>
-+   or: $dashless [--quiet] foreach [--recursive] [--reverse-traversal] [--include-superproject] [--reversive] <command>
-    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] absorbgitdirs [--] [<path>...]"
- OPTIONS_SPEC=
-@@ -38,6 +38,7 @@ cached=
- recursive=
- reverse_traversal=
- include_superproject=
-+reversive=
- init=
- require_init=
- files=
-@@ -181,6 +182,9 @@ cmd_foreach()
- 		--include-superproject)
- 			include_superproject=$1
- 			;;
-+		--reversive)
-+			reversive=$1
-+			;;
- 		-*)
- 			usage
- 			;;
-@@ -196,6 +200,7 @@ cmd_foreach()
- 		$recursive \
- 		$reverse_traversal \
- 		$include_superproject \
-+		$reversive \
- 		-- \
- 		"$@"
- }
-diff --git a/t/t7427-submodule-foreach-reversive.sh b/t/t7427-submodule-foreach-reversive.sh
-index a53ea0b851..d5aa29f08e 100755
---- a/t/t7427-submodule-foreach-reversive.sh
-+++ b/t/t7427-submodule-foreach-reversive.sh
-@@ -3,13 +3,14 @@
- # Copyright (c) 2026 William Hatfield
- #
- 
--test_description='git submodule foreach --reverse-traversal and --include-superproject
-+test_description='git submodule foreach --reverse-traversal, --include-superproject and --reversive
- 
- Check that --reverse-traversal visits submodules in the reverse of their
- usual order, and that, together with --recursive, each submodule is
- visited after the submodules nested in it. Check that
- --include-superproject also runs the command in the superproject, after
--all the submodules.
-+all the submodules, and that --reversive is a shorthand for all three of
-+these options.
- '
- 
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-@@ -416,4 +417,13 @@ test_expect_success 'committing in the submodules and the superproject leaves no
- 	done
- '
- 
-+test_expect_success '--reversive is --recursive --reverse-traversal --include-superproject' '
-+	git -C reversive/top submodule --quiet foreach --recursive \
-+		--reverse-traversal --include-superproject \
-+		"echo \$displaypath" >expect &&
-+	git -C reversive/top submodule --quiet foreach --reversive \
-+		"echo \$displaypath" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.56.0
-
+Thanks.
