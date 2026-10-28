@@ -1,123 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793197618;
-	b=SPsj8Fu9HdVqDUL5HJOzzEzTjUUzDPq83nmw81+J7PyFD2CzVyPqMF9u4zlxvlefLDcc
-	 gk26n5maUJxY3FWja7sbsT8DVHo7dI2F3MXFeoyK3foiw41iVi7kf3wxJQEG84SyG+tLj
-	 5qZvaY+sViljiODL5gfVkqiO1JzDnsaafsYdChsrnH3eI9DzysHRRAyNeJBfsy206Ulz4
-	 TrBKe45ESZYJMSqbhR1ia6Ukc17z3sEWVemEuK8OihO+UVeGp+qSa7fGuUtytnF4cUK9G
-	 1MISoYG96QhFO5HShb8Ejzp1T5337Leli/F5CLPWmpWEZPrTF8s1GvAMbfH5l627MBQ==
+	t=1793197764;
+	b=qWc10hWkj3kbYYdiytxGue9u/H9nvRKKw2s2zOZNmX5e8IwgkHT/0SoW45HjBUQXJXAl
+	 sODZYPS5ULd3jXwvXdxsARIH8PM2n5uDDllFAZkEesupf7RBllgBhBGu5DA6Sv6PRApMo
+	 a0YJLJ7YNyHdyzTCsrKwGSzZrpkml6bKrQ4j4wxcDs5U1WEBwaW8k+gnOqwHGlKcEX+MB
+	 Xw31gKyqVJCclw7ATf/6q+p2njirLElvSzgRShR0kkpaYGA5O9fJfez5r8sYpMHF74uPM
+	 IityC212GmGe6bYHw0TkmRGx7vXKNoMububF1c0lKHEvnMEI6QKRZ5enOjg4ChfWpOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793197618;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=7BAIWCZSWQRkYeroqmed6D/4bVuEIDSIZ3ugWdqh3HA=;
-	b=PncQa9q7n5Nj6qsNWBm+K6kC6SMcvcCqXY02KwVcHGigedUet+qRoibebP699+ocYJEt
-	 Va8SxbHu71xraUBlUHqwrtl9SmxB+yKo3f8tbksaHdC1qQrrMsz6ax5edKa0UM2ZdC0jQ
-	 WqMyiYDbpBECCKGif/VJZs3JquthKgRvBraqy9fnRvZ3BOE+KJ0Ni67h4vU0kMjcmdrLX
-	 isjKEZ7L2DhFXsxLhAnycwWMJ1Z3y0FtqqJrWzveKaMRKj9B4O6cxfTI7vGe86cMuuOZW
-	 q4u0C1ngEIKttPL+45wNO54FjHevDETHsGXCmUeLMGqCX6cTQbLDnhR61zZ4tKXfJ0w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793197764;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=xHOgOLRLi2GgzjAZ9R4kAiwhgP1J+rfmSscDb9d0vRo=;
+	b=vsep8bSnURjwsKBKJU4F/za/IowUtXSCi9UpFRsuK8flErkqrRvhpA/pvlXrALg7pQwq
+	 HZ6V0RIYyQLVHNuvwqSbksDIpG5e96K/MDpOxmGi5MoxjLkCvm0vtP3D2lt3v+pLIhSlF
+	 ESbqlKi1btgmLNiLMPFIpgSLAcUvxcJ+xxXhw+nLg1s4BEj+edqeIbU4QNyYo0frmJYRi
+	 g9qyd3jnMlcEXdGCn7iACzfsviuvl1bpldL1t09ecpNdfO4yI3sMyXjocDz5QeJdlUKUq
+	 dmj27zWBM+4f6AxarxxB5W7PNXRqBZQe1Y3iOcDM2Ka0mgVBGspZWBBiLKouVD5Cagw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DSsk3qT8;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=UfDze1Gk;
-	arc=none smtp.remote-ip=202.12.124.154
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BQhhX8gq;
+	arc=none smtp.remote-ip=209.85.128.52
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2528606A31E
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:26:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2528606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59655606A31E
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:29:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59655606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=DSsk3qT8;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=UfDze1Gk
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0F3D27A01B6
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 10:26:57 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 28 Oct 2026 10:26:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793197616; x=1793284016; bh=7BAIWCZSWQ
-	RkYeroqmed6D/4bVuEIDSIZ3ugWdqh3HA=; b=DSsk3qT8fLuX+NGO8f7bd3yW04
-	jF8Q5pFMf/uI8rNw2n7oIlrrfo6+t9fg37GPMPANJUk+5+f4XuSHNtXwAm7W1i0K
-	FMGDPGoc/2blG/S0D9T9GcyF4K4sHDeE4CPsFZWECLex26OKN05CQEt69lPlsZDE
-	4LLeDmnQUXBOkUWl+4uYe3V/H94vtLR8OsH9KLSUFy6ZKBpf4TN4qx/B95axyIsa
-	50xLS61QvXALQtFyZe87gfy6yaPQccB3o0XXShahghXx8YMXVSoAz9Zq2vbIsY5o
-	HaXVVPqNaJsPya5B4VvdvW4M9E2uLE+G9bffqCBWrTchLObsj9C8MvBz0u0Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793197616; x=1793284016; bh=7BAIWCZSWQRkYeroqmed6D/4bVuEIDSIZ3u
-	gWdqh3HA=; b=UfDze1GkRE8oRvk2ukrgX6UcpvgdMSoHQSUq4FnVxgZr71tEeqi
-	H8T3jZ4KEfmRzjZTwciiE9czBhuuCKF4yvUta2mYZrtVZYLr0tuOnQ4DvTaIE2s7
-	JmbGk1fUik0cgmk/NshNAuTeM5z3zTkTPHAPXl8eUGnC9UFSSguAIX+CZ72YR0cY
-	d95VyJ5fobrHewbqoYJjUwlu4UU9W1L28cEqJu597Bp8uowMz44PCdaksepOUQ7S
-	6ouPh8tIqI5tkboRb43ScCv2jIt6CaDFf3vVLgdSIH5T+xa4Vad5lfi978nlAlhm
-	aqrqnmCsE6WbV9gcjI4p9vzIT5urmheAFxg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793197616; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:XPH7qAi73nKcZMyUPtdbrhi/sBCZEqpLGNUTgCPlIfX9lP9
-	IS3uQcjGzUdgkZGJK1J769QprDIbYOvZfpNpeOUg55kcrCrMC+eV+B8N9/8PmHDD
-	46ds1BEBPcRk4bqZNDnr21cMst2xAcFbkSeUJ4TKhumd39Lj+pNQ509RX3K8zStO
-	Sf1DAZQpEHSdCawhOB9fdqdkkMmauJswCrmXoPjiEZIXosK7JbS5Dv8a6bsZcylS
-	zwSwiOsq/UwwS+uDZfUhRLGVKrBBH9+enjoV4Wndxmwcc63B0B0eQleOFpnZtx9V
-	5MagBcygTVHo+nq8zxUqLxEkV/ybpSlcnAXTnOg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:uVPHGN2OcglJxl0PlUwAqbOKeUbrIkV/GPtwUFmaWac=:wcunnct32wOvs4zYC0/9cedB0AzhtYlX72mDo69jlnM=;
-X-ME-Sender: <xms:MAbiaqhVzdUaCY5WuSH4VjpaBHcXCdgrAPhdwh_YhY50DNt-KGjO3A>
-    <xme:MAbiaiApcY2tGHs8RinDJHL1QPiTS-ySBvMnUZ0_fAPk6ZwQ8pSXuWdSgrHvYBiHj
-    vS5J9LU16g5zr2Lc1zJM_ZxkowXt9YwxVc81eJtuSxNj8LOUbf2Hw>
-X-ME-Received: <xmr:MAbianFQi_u5SRMDHIg1ihf69YNHbuTnDuasZp22VrpTWDwNew94uNjBwAC7rJyO79fnAySvxvsK7IMDV9vfZU-wtJrXHHerWMDD>
-X-ME-Proxy-Cause: dmFkZTGEeXGHFij6FZLwLlFwCQy6DJ5l+CENmYHnvq3M4A6Ygv3DIYanqXBDoCUKHsWC9l
-    7FacsN+s1SkSCJ1ZUgNLXNWvmQBMkdAgGScoyo/Fyjy1ytUdgEcJi10siJ1FnTlqtkjxOi
-    ks+09rHK1OXTN22FvB4TAdD82BVWZ+CWU6PTY/91s08YtEya3nuNSHUxdR+V0/enhpfxF+
-    tQWimne9+tECa/Y8K98ZPlt8mHg1QxBe9/iQE4Ow/fGvaPkMCjLzDhWMpQfWJyOAyxUEy5
-    ggP/uwA1B75BDrtI4vK5DnOdxaz4svadOaU1zBIqrQimsr67/6zMKaJkfweG53BQiEjQiP
-    mUXWLNxLDh5Uqse63ncxe2dD6NIBjLItkOtOWZ/BrqEPNUCbLgIRHzt6L1NEA7v1SILEQ1
-    LRfcliNdjymvbHqvKQ6bM55Z1x59Zye+t4Yd3tyjtkDMofKYSALLOBBfO2zpR/7gVm+WC0
-    NBbzOlKGFc3vmZpiwahYZ8QPdtdMOBrvGqwZVjMzp6AX6P2cSxHKYqLelJ6+CtxrXo6Vbs
-    Y1B9IIzBowSHRbKfATlbu2shCUfgl8Cn86nHVtpHmFSuuG0UHcdEZE3vTS+j2YQmkh7vhe
-    tNrQ9WuKeb7E9tHOn74H4MOZ65KwrCIrR0nqBGZMLXpwjlPfOpIizTdFi0MA
-X-ME-Proxy: <xmx:MAbiaiLU4kOYCwcmuo2bNt3lp24IgH8tjHqJuiMYtX4f3W5zIrrRkQ>
-    <xmx:MAbiajkUxGqPHDu_IaBr_DuH0228updycVkiR1KjEPVi_76DZ7dS0A>
-    <xmx:MAbiaiQgygDWCEBYmIljZW-AGa795OCycUT2e-Fllnp0NNl7-TASXg>
-    <xmx:MAbiatIaC1DfaFQKlszZQOgTdne1IIhKoXqsb54ERIv9m-9PuMQbwg>
-    <xmx:MAbiamXyi4ylHC0Oth0gq_IaSP1nUGz-5hqt-kcA8EOVfUoyOmBnbfWn>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Oct 2026 10:26:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Colin Hinton <colinlewishinton@gmail.com>
-Cc: git@vger.kernel.org,  m@lfurio.us
-Subject: Re: [PATCH v2] remote.c: defer remote.<name>.followRemoteHEAD
- validation
-In-Reply-To: <CAHeTm9NOqLA=BfTU9ABDFt8+jOzaRDPRrMNP8thzAQN2NVZAew@mail.gmail.com>
-	(Colin Hinton's message of "Tue, 27 Oct 2026 19:56:33 -0700")
-References: <20261018235508.848-1-colinlewishinton@gmail.com>
-	<20261023185007.21642-1-colinlewishinton@gmail.com>
-	<xmqqecdezfr1.fsf@gitster.g>
-	<CAHeTm9NOqLA=BfTU9ABDFt8+jOzaRDPRrMNP8thzAQN2NVZAew@mail.gmail.com>
-Date: Wed, 28 Oct 2026 07:26:54 -0700
-Message-ID: <xmqqmrrxdhox.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BQhhX8gq
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a2069b9710so10124305e9.2
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 07:29:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793197763; x=1793802563; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=xHOgOLRLi2GgzjAZ9R4kAiwhgP1J+rfmSscDb9d0vRo=;
+        b=BQhhX8gqHVaWC7N06GbASMUGG6dVq3ardfv8iu2e9xZCuTwToOmBtuePo+Kv/4mzn6
+         8d+yLVb7DyZn/9NVPZ263WDz3WHiZOmgeZY3VDr5xz29092s15iUQxmNSLOv6DBklsTj
+         9hC6bKPsvSJ/1+mmmiELiD+KreJH6MdXDYdwdfPxUXD2sbWA0O8YS8aVF8o8gmxq0cu5
+         uYpY4pEsueVPORZ9FtvYLSq42kWz+ev3pPC+NCPKHBuwjRRRPjqgrLkNgE8Q8TzVSHz/
+         YnyMwI3vOaCCYQrrzZNs5bERKfCGn/dsW6LhnXEAG/iq+oMi6drMN+72SU/1ricUTYTc
+         Vh1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793197763; x=1793802563;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=xHOgOLRLi2GgzjAZ9R4kAiwhgP1J+rfmSscDb9d0vRo=;
+        b=Ujl7Wd56NRjjC+SbH4UN9ztNpr8LWB294OiN791ntH+JZwcpG070xHFgI2fLPlUheQ
+         3+iQ43QaI09RNmFnqskAWVj/zwYVQ2FYFI6JhyIgcahL/75NhIt7X2pu3hjzc5w3USdW
+         Dbc73JB9Gbvw/hag2deuHDO3ahuFNtjbXxfmjoWwHtXZVGX37a5/vKYv77MpehxzklCV
+         CjQXa3PDsNUMN0CPQuIvftjQq/ySvTLq38Dxc5BzAJEhdOLQ234UUAGGMdpII2fOLk94
+         oMrhphq0l0DIjk0pwtwkvL22GgY4pahJKNMT8l8QvtKaEI9ggOIDQzc4x154Skfx/8Kw
+         DZ8A==
+X-Forwarded-Encrypted: i=1; AKwUvBzExO41CUoZhHjHqhgMPIWsmaE2retHSUqugS27HZglZGh3hsOD5PeTtEu9fZ04u9Y/w7U=@vger.kernel.org
+X-Gm-Message-State: AFq9FYI+dNV+RKxf5Lvh1CMsYtZ4mcue24f34sPkuEjWImYXe28Z9moR
+	yTxZddmJ9zq49f4iKuaD84JWG41a8p/PZRy9UAC2nLwA+pnk84oG8sec
+X-Gm-Gg: AYBFou07OC3Fc5mXu1e5zZjpVZqnZkDWdel2uyuViEhQLgrIKVzOZKnTbn/zoegR96Q
+	C4kynThAbonkDoKcSJ93t/lcSCN0JplIUYE35L/mcogdAjIbYtdQumhOMvwx9fDGq5H9RF8f/JJ
+	Kse5OCQz+CbUL2HSBBd9UF/GkB3I/XMvjz+4Urop3Igfs157C+3I0s2rgaYMn+rdefvHiTZynEX
+	dcWRSjlpfFUEj3m3Ob7UfJMcm8n9Zz6Qn1YOd7OCaZ+TC7kNzlq0Nd9tQRy7zuyb1SnoZNeUSn9
+	pVzVZMyDAkyMl1QiAA6z7rtIyg3w3qgFhfJ/vH8qMqOLcbkZR+8xPkkng5sqNegGrhR7VPHjAmh
+	64wc21xiOhypnb+QXqpqaIqXj1Wls5k28KZCHpjA842XmBh/1ItaYMt0NCq2Qg1Ys2iJM8jgvIu
+	rztcIMcv9yiyc0mXbPBK04Hoe3g5+4rhpnFIRruTEhvdBojxA/85BmlFjKW8IKT3CB9LjryK2zY
+	DbTfAmhWFYgrEfzXGsc+cdMOtiXIwCuUfCeWpb8IdgdDlxfOZo4LBDgVaL6z8zhD3w2zHD1yWyY
+	yMrYOo9o+WkK5D+O1S3JVlwkm80EqgHClWLQY+Q/Xh0UvYZUdKOguJOP6CbKW+4J/XmH7rDfdQ/
+	mYBvSQxQ=
+X-Received: by 2002:a05:600c:3541:b0:4a7:9025:5c3b with SMTP id 5b1f17b1804b1-4a966f20483mr56815425e9.19.1793197762225;
+        Wed, 28 Oct 2026 07:29:22 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a977edc20csm42916725e9.3.2026.10.28.07.29.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Oct 2026 07:29:21 -0700 (PDT)
+Message-ID: <3f939144-d4b3-4bc5-aaea-16422450d638@gmail.com>
+Date: Wed, 28 Oct 2026 14:29:19 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,37 +93,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] sigchain: recover from concurrent double-pops of the same
+ signal
+To: ian4hu <hu2008yinxiang@163.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <pull.2263.git.1792154272296.gitgitgadget@gmail.com>
+ <20261028133755.112476-1-hu2008yinxiang@163.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20261028133755.112476-1-hu2008yinxiang@163.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Colin Hinton <colinlewishinton@gmail.com> writes:
+On 28/10/2026 13:37, ian4hu wrote:
+> Hi,
+> 
+> Gentle ping on this one.  It is queued in 'seen' as
+> iy/sigchain-recover-concurrent-pops, and the latest "What's cooking"
+> marks it as "Needs review".
+> 
+> A short recap: when two copies of the same signal reach two threads
+> nearly at the same time, the concurrent sigchain_pop() calls in the
+> handlers can unwind the chain by two levels instead of one, leaving
+> the process spinning in a handler that keeps re-raising the signal.
 
->> This part of the code becomes overly deeply indented, and more
->> importantly, the outer conditional around here has been reworked by
->> another topic and the code that learns follow_remote_head will have
->> to be reused elsewhere, which would lead to a nasty merge conflict.
->>
->> I'd like to see this part refactored into a separate helper
->> function, by squashing something like this on top of this patch.
->>
->> Thanks.
->
-> Okay, I will refactor this into a helper method since yes the
-> intending is becoming too much, I will also keep my eye on the patch
-> you previously mentioned, and post a new version once Next has been
-> updated from Harald's work so I can rebase with their fixes. Thanks
-> for the feedback.
->
-> -Colin Hinton
+It sounds to me like the bug is that we're unwinding the same chain of 
+signal handlers in two different threads at the same time. Doesn't that 
+mean we're potentially calling the same handler twice, once from each 
+thread, which doesn't sound like it'll lead to anything good. I wonder 
+how hard it would be to fix the code to ensure that signals are blocked 
+when we spawn a new thread so that they are only handled in a single 
+thread. It would probably be good idea to start using sigaction() as 
+well so that we don't interrupt a signal handler if we receive another 
+instance of the same signal while the handler is running.
 
-The 'ch/remote-defer-follow-remote-head-validation' branch at
-https://github.com/gitster/git/ has a change on top that you can use
-as a reference.  If you are going to make this a two-patch series, it
-may make sense to first extract the code commented with "See
-remote.c's handling of ..." into a helper function, and then extend
-it to cover the lazy behavior in the second patch.  When viewed
-that way, the helper function should not be named with a 'lazy_'
-prefix as I mistakenly did.  Being lazy is not its purpose.  Its
-point is to determine which setting of followRemoteHEAD is to be
-used, and the helper function should be named after that concept.
+Thanks
 
-Thanks.
+Phillip
+
+> This is reachable with "git clone --depth 1" over ssh receiving two
+> SIGTERMs in quick succession, and only SIGKILL gets rid of the
+> process.
+> 
+> The patch leaves the push/pop fast path alone and only teaches the
+> "n < 1" guard in sigchain_pop() to fall back to the pre-chain
+> disposition, so the stuck handler's raise() terminates the process
+> just as a single delivery would.
+> 
+> Peff, I have Cc'ed you since you wrote the sigchain code.  I would
+> appreciate your thoughts on whether this "repair after the fact"
+> approach is acceptable, or whether you would rather see the chain
+> mutation serialized instead.  I also have a version that uses a
+> per-signal spinlock around push/pop, and can send it if that is
+> preferred.
+> 
+> Thanks,
+> ian4hu
+
