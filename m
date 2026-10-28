@@ -1,101 +1,125 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=74.125.82.52
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793178010;
-	b=Lk6RKh83qzzVmCdrtBW5q4OyvYp/GPtApwO604beu2VQfHcYfvFZGLljxuFKYHtDsCJg
-	 9nPzIXXnr/WhcA5TSrw8h+F4We2niMzJrq7d8NLRLTyTBa1seUMBggm0TA0tjftULoGzn
-	 HOveBMkkMDQGkOtUbnq61KeJCMpMaD4t4hhNHHLbLt22aNjPR8PaIfCLW2Uby9a5FfW2W
-	 sJlhC8pET1U3SzYv3WX8dYG/EnQa6p1tQyg4RLPeWf/+g8aD/KskO2omvA4JNpF6ixWrp
-	 j5iHnO7WVlHVDbkabDsSeskNgf4Hi2iKdcljvwB9QhksOSZOlX7kskiZLZ4HjU7enPw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793178010;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=A3urTuepO4XsLFwgutQQXKtPisMqz8bX2N26TAdzcCc=;
-	b=ROPa8THoKRWcrJEIDvKJFlrfMXItswqpk3jf9rpsoRs5xM3sMxfaMx34rnoqWPRjYIUS
-	 lUuF5BEezmldUFSnYP53LMkSqlPxuNGYU0jKuNjVj+YLXgTavEHJrd/NcNwnUpxEcPpY5
-	 zupIiK8XmxoFs4j5gvZW6In0FKfHc38C8fqn29vy9qlNsb52z53/7lt7kxNFd1VxyDwia
-	 Kh0CS3EQhh41JWbp5mGjfgUhGus0Fas/uANwzl8u9VdRDZoU5KJzn+eLQcKFgN1bU6iq7
-	 sf2+qxCtUDKSC5FSNNCl3jXYQ2ZIZ7BR+Zv4wTe7h+lIsZ1rTB7v9gDnAp/Rs3l6+Fw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WQGo4aj9;
-	arc=fail smtp.remote-ip=74.125.82.52
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793178445;
+	b=3HWAreDWZ98rPGjDNubYyE/jSCWhpaYpNIZ9IJaF3V0fCV93o0BKBVT1cEcNFVBJq2Pe
+	 8oHWy+zByVFuit6RK6AWKeAFLS1zN5zBMSx7a7MJ6BxiXDzqdMpWsPDTwKAWOLNoUaj3d
+	 rOEP1LwiRd//3LVUw5FUgKfiKsROzUu6tEY/hlTf7D2yy/IbGjSGbfgNHocG/xRthTbpX
+	 1iifJbsr8n8/R6SNBkK4dnm6L+gPl/Dwd8o6h8guGuaK/eEKWPTL86VdhAZUGvUaTV5DB
+	 1730Iz6jsErK7Hg4hStMNMcHS3cZMQTEdhRpCY2lQ1eN5XDUPfukrhbQ7/DDp62S4Zg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793178445;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=ZG4XY4YZNlDuh7tFOErLfy25Oi0Ffk35PKrWRmSTTF4=;
+	b=JzmhFogxX+4ZvCGOFUuyTBDJvLf+QieDF4IiNdwxr5MJJkyS9/FCX7NfHIH15n2pAheO
+	 QF03txVCh+JurXHU6y3fs6CegWC5o835o7XRd1sFi2vbMO+UrE6XI/z1xFd8o4sKRqZ7v
+	 7Vd9dlQY2xat8vt9gwDyKI0qs4xwY/1V2p4kv+OJAGKd3bRPQtXWFmfgPqiQkFA/RCKpE
+	 QjGiGq7oxpaZiGJzU9RayOWrEue3AQ53jMPW7UYBDfFzc8S73Ndz2kY8PO7BD622XvIDv
+	 PAJwM+gsFLqcg4dGiMxw62ydctFjPwE7+qjLgund82FbfRaSKgP647yXNTVFbXekobQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=JKrpoUdQ;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="L3fnn93/";
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A0A606A31D
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 09:00:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E6A0A606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628BB606A31C
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 09:07:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 628BB606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WQGo4aj9
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-156cbe59622so770618c88.0
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 02:00:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793178009; cv=none;
-        d=google.com; s=arc-20260327;
-        b=n4kW4FTq7vfJ5CvtYksodqOeXTNAnVjplK1midTR18RIEoIzxFCzVeDM1xoBxg4D24
-         olwtyv9F5ItHlhMa5mMl24g64ZkkfjzNcUKWHfIvOgDg2Kq8edB8DJ4sMkZXEMJZwQoI
-         Vndm+CS7GTy8F99+ht+1qMgzafNBmqNWHajSYP1PCPxURftTP2RaNiY2uTz121xNXPbp
-         9WT3JIGMvmrQu6Dw0hLS8VDPPXoTP2nPDOw3P3ueSJ80mi3b+ZBNQt+1oDHGr9YGZhwM
-         5TCbRw6x1J3yuszoQ/cSj3RzBbqBXrC/O6ClHCaGIZ+1POt8O0gM4X+p6sVrCldY9tKV
-         Hn1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=A3urTuepO4XsLFwgutQQXKtPisMqz8bX2N26TAdzcCc=;
-        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=DJeRkn7EhujmosHsh7vaYdvfXRo7iLla8To6nC9kIa7JIPjlzQZMFWWlH6HuMxfLfT
-         Ojgb8eLc8GJH4XqdL/RPMo6iDx9NTroeODYI0ak1kPQ6lZwop+fLgW5rxC7vJFwl0tUF
-         acTxRbIdViVS8CYpGq43E2YFN6nF7+mhZCOaZJiLY4u/o9pTv/MpHqFC7p2g8NJx1z2l
-         FuU/wwhinbiwoSEZ0FgncbmeadrMGw45if9ufzzxVStacgorWwUHRyMiAZ+uTqfWIdp9
-         ep/8pLudqCHccR5xOKexKRdhuji9mjcRERG0Phriu3BNC5wQE43Ax04k3nc2a4GZp8Nm
-         iT/A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793178009; x=1793782809; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=A3urTuepO4XsLFwgutQQXKtPisMqz8bX2N26TAdzcCc=;
-        b=WQGo4aj9fIJDlc7LN2xzL/YSpTzIc17AeGOXYvXRIVIruyOQp84wrQPWXPwnFS6Xtm
-         f9gSiI68ULyziTqwgXQoIARHEIGd+k90xlKR6V2kDco1MGvJLxOYveenPNqIvgnmKvMS
-         GLu16aa1YqBK/2/LL1fs9FReWKLi9VFCmm/011t6sc9/lmYIqWXJOQ4xWPqLD/OhmWPQ
-         Yi8MmRH7OFHuAnn4j3j65nZRHsWR/ibDq6pzZ3JLxmf32AgHWYQrOVAXGmEuRJ2IcAEb
-         yEwhgz4bF+iHpTUKRirwVmQDo8vQo3ky5UI7mDtU/LRtA7aE1DaqPQyqdLNljWObkAwk
-         ruYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793178009; x=1793782809;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=A3urTuepO4XsLFwgutQQXKtPisMqz8bX2N26TAdzcCc=;
-        b=B7wJYN22Lar1XNJqVC8uZMa8JJyDlVaXzDSPK8fxIVe380GTtp6JyRMeaQeg61ddSQ
-         Jfy0OKYvWvzpD3bjCQpn3tR+YlLJx/Lgj7H9PDhhJsozlQ3Iiy3TRLFN1h6Zm3mankXP
-         mJTrpXkXoXM6B3Z1PihwlQCxh5YHzFFRi0qwtuKCAlDTgt+LsQxIWDXZJ/tPIpop31hi
-         tOW7HMV2btprxNzdPuzG7Ozq4UoWch1XupoCyV+PhqRfu710a6qwoQktArkDGH+qLqXK
-         /vQL3pyQfmzGKccjYzBS6zVc9PlMGCa80ndtXoDdGGpR99w7b4Mh3Z39FCY19fcz2vZr
-         dRUQ==
-X-Gm-Message-State: AFq9FYL9T9pszzRNdhoeFeMn25Tep/a+MpMZzyRRpaT9xn3+9tGCHVkX
-	J2Y3Wa7Yto6jFneWTXsVSLZU2gCB2ZqUtyh4EeYyFl4s8cqoI3QBtmQNwqCtif9kwMs7hMVkIAa
-	+g3vu1suWmtfoPPiMLVhWD6is0dvsOg9s5E+x
-X-Gm-Gg: AYBFou110Jcmo7OhZagKrvzzjAUTJ/5+Cz2z1x04SVCsfCkMoadEqj6imaTbLmDxqH9
-	GDxJSLRbdNivjP6kI53i6FoZ3vT1dQEtjFZMo0wdhczd/CXC8/jHdCDnb+u4Ebk5bey5dUD4/RU
-	XLlACBNn3Getayw66Kb/IPKTNsWSY6vpt02DrEbSOuuDHqkXJircJP4TxMfM6Q7l5PAGnm11Ccu
-	N5iP8yV2vX6ZFX9sBphdMnGCjuguX7r9gvR2wxFqeAzbd1jpk24P3OnQi4c+3jaYeYXb+pBhMni
-	G5SwY29UzBT18mXyVu6SDpojpJXiKlZMEwzXqvbaSn7bOD4WKpgOxrZf7LZCkMipJQ9UjuRulHB
-	pbyRgppbdJONR2afA/QGfvOcauQfYDxsq9xD9HnsGu643RAeGScKwGjALeJmy7VUo98sLToW6hM
-	yh7dS0UC8EMlvEffS24fG9lib6+wF2TP/xIbx/TY1XzGOwcAEdbKieM0L5MpSsmFd9IfY8xFcZq
-	HxZz0Z8wo9h9W9GHLts24pT
-X-Received: by 2002:a05:7022:f50f:b0:18d:9eec:e0be with SMTP id
- a92af1059eb24-1a6c9cda82bmr2632695c88.2.1793178008523; Wed, 28 Oct 2026
- 02:00:08 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=JKrpoUdQ;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=L3fnn93/
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A96237A0169
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 05:07:24 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Wed, 28 Oct 2026 05:07:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793178444;
+	 x=1793264844; bh=ZG4XY4YZNlDuh7tFOErLfy25Oi0Ffk35PKrWRmSTTF4=; b=
+	JKrpoUdQ3nLAAzSEdL0AzlpSK+G9E3mO4MjQqqsB5+8lpbn5sKR6B1qwYm3mjA64
+	xvJG/I7HgHb082EL6eR+YaY+yGhCRZy2pmttlifnXJmNAU5hqrvh1M8iLQQAhFdV
+	GPftsg1ntdEjK90jiz+UQOBjv77uxPIctcSfPOSupzlKHsfNd5DTSsfypWUAavQZ
+	zx6xSRiGJPAlh6PT8UFBezO1OQmXHN7nPXTk7ZUeIVozpWfb2NK2IqiGefWOa9mx
+	sQf9hgOEcrko5Vx+1wLS2tJBe0eIH9+KApuazY45ySvsBP6Puywzi2/RwsdNpACA
+	h+6qsDZzU7/oS+IzqU6rBg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793178444; x=
+	1793264844; bh=ZG4XY4YZNlDuh7tFOErLfy25Oi0Ffk35PKrWRmSTTF4=; b=L
+	3fnn93/ngf0nMZucBJU16v/g3hIqdLzvTSilVEl1fqFsDGEFSnS60FW+Ngx/dwF8
+	0EyWy0zQwJhFYxLoHe/jECnt++QeA6WF82/mt9PZmoRaLx6F8Mk77x7I3xgvyBKJ
+	9oNAGrD42YJaln4tb4w4w2SDR/aIOWFCXakOgPDUFlmP4KSk5w21HkQLfNK9qYSk
+	Ymm/2TJSYVUcxiKFY3GQ8xlBJ1eOLlemUY5taUJ09y6RKZ6K7dD7zRXuP3A9QZWT
+	Cxe5eLmp4pVU+bVk0/porsYw9RtkSFQFDgOlj9NcK81yJWsV14IDlO4A86gLijwN
+	ny9V/mRmhH75/l4eBdpSA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793178444; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:rG9ZMvLuPamqDAmYMR6HPMmN5s+KlmH5pN32/yziAJiWV5u
+	yc1UToACipB1Qj7zeU4h9xzrmI2xu4uaSNKnYRmmOJNtvCaMqrlil+2jzxt7+y/K
+	wXD60EVKAktqExCzEEgakhtrILbY8yZZRkh+3tZ7Xd8B4gg9tVXRx14Rg0Rq5kRv
+	VAAk4zDfgeqOhm875vOEn195WG0XB9a5OCDsEDr2b3dn3mEFi1M9Fpvfbp28HGDv
+	gbpGwJvpPXE49WC9D1ariO2I5YIvmIYe+GUd9dXTNYRc89iq7ym+BWbauAbiGU/n
+	WzKatEAvguza+WnJpmbft5CBLQUO5fnvhXdEAEw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-disposition,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:RnsoSuQWk/FFqtL6PC9uZDsLHA62fmFZ/dwbHi5/gqE=:PvJ8BMeya4vQSnydUaGe+/+mWxUN2G54wsLpY0yMmKo=;
+X-ME-Sender: <xms:S7vhaln7CLvE-szuzdJukHzzAXVlO6KbkfvA0Zfb20z3szZbgtwIkA>
+    <xme:S7vham2aRHH42qb4GnIE-LYP3RiBjnC6Bp5gfgDriO5MnbUJ0N4bVSmjqEhE6Hk65
+    aUmm0YYVajgD7TNx58xaFBbNmpq7fAcQrtxsrH7qinloIWVsQiplDI>
+X-ME-Received: <xmr:S7vhapSkuPOyguMfeVaLSI3SxARSPUmP5rkCSY3b2I6_Y8cXOj8c2w>
+X-ME-Proxy-Cause: dmFkZTFgwi6vl9EeM12OMbSfcqYtBQIY0w0Oy1MADthxIC/NxJhObTsdO53qMmFExXtyHr
+    R8MSHZ6J3pmfYqAdaTIARuCpwpRDKbVS2Ooj3gUi/8kUwMycCH0u9KMnhFh/2PNAbw4WWJ
+    iEoR30qfaa3xwhoUiagOOiP7N2AjgzWF44LJjQdFpBB2hP2G+cxfYppWLoTT0Ut1Dr18lk
+    i+cqJNzzklvW1e3QyMRN3J4gwUEgNPowIRbfkQsL3qB1K/Gvcxoce+oPQXJIRKLJq6xJih
+    1u7JAkyCL0ncIqYmCwxz0lvmN84K3LfPfPW4im5+3PgYpbNL38IVh1Abo8WViKjNyzJjUf
+    IO9ZpQE4NIbStwn1DiEMowLgPZpRtrrNBpRWrAPO52yecB3cPVFMvATc7bJACgpov2ln1T
+    DCHD02Cpw7xBOb+QaCKDJFREbUuUwbPYEcpzBAkLdeLRxCkfaV3b0tXAnlgaYDfQKnechK
+    BOT7nO9gJZ4Qkf+711mKhSGJJ/S5E4OFM5r53Lj1KQNxDQS36u4QtCIJ5VjcSn5zUyjfZe
+    uEJBmfdk6gie2wwA3XQqRKv1Fo2wYVvaPneHbaBXMxM23oZ7scAwbD8oeFnp0Wh7vLGAfX
+    2753NrnsC8xds9KWbukESuPnNEFhGIkATLuLy5s7EQfxQMvBB7LUgpmmX3Pg
+X-ME-Proxy: <xmx:S7vhagtUxeHJ_FHL0ZoMdLIH2hLvP7BA3knGzAoniVv_o3yR_XDynw>
+    <xmx:S7vhamYocVgxUBM-A2K6fLuykXOaiWdbOhnFFFK-XHaIzzZx0UnHGg>
+    <xmx:S7vhatvCGaJo8h7tK6oTrkUlHNkmwcWC9OZo4oRg3H18mbEAZOnq0A>
+    <xmx:S7vhagFsgZHjxItqdtwhaR62Sn_euqo6K-PjtMNJDLvasW2fQ3Bh7w>
+    <xmx:TLvhauVDXtRUY--TApjT7H8NOkgNAv7OzY6kkNxdxJwgz2VYcgb-iFok>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Oct 2026 05:07:23 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id be8c97b4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 28 Oct 2026 09:07:22 +0000 (UTC)
+Date: Wed, 28 Oct 2026 10:07:18 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 4/6] odb/source-files: simplify directory duplication
+ detection
+Message-ID: <auG7Ru6MhhXzrVd-@pks.im>
+References: <20261028-pks-odb-files-reload-alternates-v3-0-011ddb64b626@pks.im>
+ <20261028-pks-odb-files-reload-alternates-v3-4-011ddb64b626@pks.im>
+ <CAP8UFD2Os79AwJrFvoPti-AD=v6wDf7BVWy4o9dQxQriFD3FzQ@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,26 +129,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261028-pks-odb-files-reload-alternates-v3-0-011ddb64b626@pks.im>
- <20261028-pks-odb-files-reload-alternates-v3-4-011ddb64b626@pks.im>
-In-Reply-To: <20261028-pks-odb-files-reload-alternates-v3-4-011ddb64b626@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 28 Oct 2026 09:59:57 +0100
-X-Gm-Features: AclHuK_F-UD67kPdlk9-GRzSW9OdPzJIK43E5oIaDdNwd55HwPxnNQxgMg3-ago
-Message-ID: <CAP8UFD2Os79AwJrFvoPti-AD=v6wDf7BVWy4o9dQxQriFD3FzQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] odb/source-files: simplify directory duplication detection
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD2Os79AwJrFvoPti-AD=v6wDf7BVWy4o9dQxQriFD3FzQ@mail.gmail.com>
 
-On Wed, Oct 28, 2026 at 8:11=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On Wed, Oct 28, 2026 at 09:59:57AM +0100, Christian Couder wrote:
+> On Wed, Oct 28, 2026 at 8:11 AM Patrick Steinhardt <ps@pks.im> wrote:
+> 
+> > Rename `dirs_paths_icase` to `dir_paths_iscase` to match the naming of
+> 
+> Nit: s/dir_paths_iscase/dir_paths_icase/
+> 
+> Otherwise the whole v3 looks good to me. Thanks.
 
-> Rename `dirs_paths_icase` to `dir_paths_iscase` to match the naming of
+D'oh. To many s's that tripped me here. I've queued this locally, but
+will refrain from sending a new version just to fix this one commit
+message typo.
 
-Nit: s/dir_paths_iscase/dir_paths_icase/
+Thanks for your review!
 
-Otherwise the whole v3 looks good to me. Thanks.
-
-> the newly added set.
+Patrick
