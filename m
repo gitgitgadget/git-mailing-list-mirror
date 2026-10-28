@@ -1,93 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.152
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793224328;
-	b=UYwIex8QJabey6acFWBhfhMi2FfT+FcSp/WVykwSwiPqB9n8JLUOrqC80ThDB6sz3ZyW
-	 yWtxtcalFcABt/1a0f/t+HiYrEgR7IHnH1Wd3QCQazL7jOvoDnnuj8WeDElOeOhkilO3P
-	 hk5Kepm5c9c9wYsW5JvLGotgc3nFoW18SkXqEDzhIrJW7d3eWRK7v5QyiYyVBYCbobIrU
-	 28e0iypsBaUVN5vC/c/OoT9L23UQ6vT9GDUXxkvwUcia1vwrM07+firqzgu0EsT8l7x+e
-	 tTa7ebJirzMIP8XoKhvShsgN+SibzkuNvZvZ1Ix+So2pWi81/GqJ/DxQeu/oj5DzwdA==
+	t=1793226302;
+	b=1dnp3o6XpKA5l7P7n+T9Oc0WPVHHe3KIY0gRgt3bM8/MM8841wMFVb4ffzC4QS9LQove
+	 twDwji1IR2hP9HNEMzwUIv+wTibcelrP1rB/FH/xzXSM54PMntYLr+w4/sFphG0A8Xfjv
+	 UOgrpzAf29dY/+RLoW9JLAAa0xS+gPdVeGsTRrHwfec6+WHkdBHVilFtj+MSeyUXKX1oJ
+	 ANnCdDuIkKM2LOCCu9S2TJCR90mXf0sg54nWd263a2W1s2Gg9bFSIjkHqITLfqFhYR97T
+	 2ZVH89q0vLiOBmVxw9s3Rsu8fE9+JR+ErbK5WQNp4tpmrSrso3VYISib2agHaoLlFRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793224328;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=sVchRUDK0bqOSRYondupHdWADCTtDVq0IZSl/YtQ2Ko=;
-	b=g1TKN7FU/SOHOETgCN9VN+hRsbOiNWDkp8Th+PJ6sI2+6AwIR46C8dabHGXYE6+OQv4J
-	 QCtn6j0rWQQfz7IvowHs58j/d++55UGWs5RMK+6JvKb0s1R4KQy2ksuF0hcV+ajcfThMc
-	 2uRpLHWqGBCJGdRN3vBzmH6Ko9HcwsVT9IxxgRRRs+dFYIqJk2HCicjzTC6tb95Mc+4dV
-	 EcNQjGEn3HTB7OYYCkIFvUrNT9KvGn2bV+cCkHLTJPm/NITbLSWlwMq7vNRvK8kMShnBU
-	 8RKg/SNYerwPZPaeP37zvJ1RCHWyEn+Hst5jjfwx3MBVGqaIlqoMYGJ0K6CR3QEwpEQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793226302;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Kzfro+znvouxL+DSiae8OrDdSbuwiOv0XzNf1zQrw7A=;
+	b=e8aXwhDc9uV0g3/1HgL0+OJZTRgTRDdVJfdAiQdUO1x2PXIy77Hpi5jOAyP+5SNlFNBo
+	 xMQn/lgaTTVvq3Kj7EJE53EDtyb6hmM0IdCCoVS46La/t4BsvDoHwgaT1jOK2WA40IJwI
+	 PJqW7jEi9DjcAeyRwEs6paKG697AI9v/YNt+9A5MmL0jLcCnN9GU6RfhWfCYTSnHv4miQ
+	 ahd5ufQwEUlX7XDQRK4E8KEmRRq72HPeI8uXmRZCZKPc7Ne4mrOsTem0Ykc7ZuARSsNAl
+	 c1NkcwVgVQrWXG5t8PJvxq9JQBrgB8XAcfr1mgHQlbBAFXS8q2KKnPd5FIvi1irfKJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Dk3TXV5g;
-	arc=none smtp.remote-ip=209.85.218.52
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=n7X+2JkB;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bVuDGTeA;
+	arc=none smtp.remote-ip=103.168.172.152
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C574B606A322
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 21:52:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C574B606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B44606A31A
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 22:25:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02B44606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Dk3TXV5g
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c414e5d282eso195652966b.1
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 14:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793224326; x=1793829126; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=sVchRUDK0bqOSRYondupHdWADCTtDVq0IZSl/YtQ2Ko=;
-        b=Dk3TXV5gH7of+fHnyGb0wUYMWDz3Lp/fKIMJz/CCNa/LiaPH0XuMlwMdv1AJA3mQ+I
-         U3oE2m79imRAhGCyuouM0tPG8JuNw4eRfFG8JbOhrRP+opjvIaaOmYKkIUkSYqdQ4x1t
-         81qkkvTEa6cqavUNTV9OLcVbWlq6P1wdwf2XM9K1eMPhzuf/Ub6qJ/f9k+2xiIYcqS3S
-         mw/YX/JVXGZgyJzjWbWtZ8ELus5eXkcmXNFZZ3AnrstFtI3unRth8/r6JjyJYdok+gna
-         9H69oVDChzk9qMQrDv9bNNv4NrynpYObOy9jmrRVGQ9LiyR1GWx5n+6gqqyZVLTF/UVf
-         aM6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793224326; x=1793829126;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=sVchRUDK0bqOSRYondupHdWADCTtDVq0IZSl/YtQ2Ko=;
-        b=nEtXF91wItDtA/7eWSWJiSnGoE/WG1CrUL+zbV7qvDN5hFvIzEDfuP4Ry3fgpWMJuq
-         NbxZ79c2DI7pg9felT33rJlPMT/qiNTqB0jbE4grY3+CPI7KeTWs8ZDx1ZzfD2rc/wFw
-         feeQ9wJIgS6HEOnrYmyo79HIbfUfUdifv6yLLOcwmumx4I8633ucDhxkPW2KQ77Vpgmn
-         oZ03JKXbTZv2UeiB2vvtLbUAaAE3dQ8tlfELBbNdd/clkCSzy8lCah4zUgBqpizPPC0t
-         0njn0BNQc9SrD1tMSI6HTTPgh3Vj6/1JTLBBUwPqRlw72UbOqopxlWcURFV21OFJVtic
-         h64A==
-X-Gm-Message-State: AFq9FYKPd+1s9uwMWBDdJOK78c7sDIwtKxspJl3mhIYZTaGjcgifFVvC
-	2yt1V3s3wG/nGba4WNuhxVg60BTKf1d6mYs5Djm+K5Dx3kFDIWzAPf0uhJTNtgm2bj4=
-X-Gm-Gg: AYBFou3l3YmrOw0IUnWTfPYnOUQCBDgQKfxeLEIkDKGhdj0GGnkSw2eN4BGoTq1YuQS
-	NwrzvY4X0gZcp6gP7t0eSnBaq7ulKYaLWqqp00ky2ij86muDJegnxYo4WQHdexAgxV40rEccocK
-	XkwVGXIVvGYCvC0KiMUBpb9smxuORqS9qzo190zkRp82uhTaWzdofc6C6870d0Mb8VYiR9ChsNj
-	o9Tf74gJnJZLxOi/1pMmXKtHHQr7P75rygOz7m5O78g0EL1MhNY3wthfNYw2dzsgtt3WQxvDVAm
-	Hi61SgiP3e1IrNMp7GgWfdsT52DldYqmQAfFsS/ZeYVLN3GCtrAHIAC5tZnx9u40Sd6A2JC+U/W
-	yime2P8e+Hlw6cjg6hwXETghUSQgZvTsD2XFg3pEUkcKkgv0uLFRI/5vrGmEmbLwWi8Ipm3QeiK
-	7hav+84XzkJ2knrqzZn0LifjtbmWiOc9SdC6rOC5JMVF4AZrSY8Bz4VNTi38aTEq202joGMdlB6
-	zBoYQSKGAC0CBqhxsnp17jpjiTheHfqtwYaQjRrEo65TnSsZ8sJ2SPWs9gDtoipVQZPyfupON6b
-	PMwcOrltW9jhvZqyyx7BZZEX9tdFE1Q/kmXeIzBnaeNkHjb5vtKupgkijBx+OVxFcroLhroe4xu
-	AxzbDx1iPX22jIJl9NrU1Q5+TTKGOwgcQFX08F6ldFG458hkZeBxtIaSGkZlIUa5Wx9llKuQh8z
-	y8dXq4IK+wqZnE3eR5Wy9R5wL2v0cTmg==
-X-Received: by 2002:a17:906:9f86:b0:c40:80eb:c541 with SMTP id a640c23a62f3a-c49bdd7e2admr323891166b.2.1793224326037;
-        Wed, 28 Oct 2026 14:52:06 -0700 (PDT)
-Received: from localhost.localdomain ([104.28.251.99])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c46bd350a61sm654799366b.12.2026.10.28.14.51.54
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 28 Oct 2026 14:52:05 -0700 (PDT)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Subject: [Outreachy PATCH] range-diff: use the repository from the diff options
-Date: Wed, 28 Oct 2026 22:51:37 +0100
-Message-ID: <20261028215137.15262-1-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=n7X+2JkB;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bVuDGTeA
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4D54314000CC
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 18:25:01 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 28 Oct 2026 18:25:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1793226301;
+	 x=1793312701; bh=Kzfro+znvouxL+DSiae8OrDdSbuwiOv0XzNf1zQrw7A=; b=
+	n7X+2JkBQuiBSqVZGOPDP23QtbmIIxd8QlJxU+mtPjpmQTAWp62D7Jagz5dZswuJ
+	L7IQuJ1nPItUCHWY4n6RWLTorhYK6XfU7u6yK41TLyAYYSLhNTla+PZBBqZ9elHs
+	uT2tezcHAtL0fcCDJXXz7oRmPF3oFMsUZsvKyiNLli331JnwbqBytOO/q8ykxDBH
+	qXGa0XAJ2c2Cc0HeA6mQlR0RLw+f+Bl2jqkOQwOX+u41o0Ue14oH7OfqK6I3ZtTi
+	hrnNNl4MPGP225KddfFZRNgUzVOR2OC4ncE/6EULWiOIdPEkkn2OXjS+AryIX0Nv
+	E4voj5jJEb2OJ82jmd2+Jw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793226301; x=
+	1793312701; bh=Kzfro+znvouxL+DSiae8OrDdSbuwiOv0XzNf1zQrw7A=; b=b
+	VuDGTeAfIEJJauKXlv07FWDm7G/LY+PfMDvKcGf4d4eHWh9ui4kYJ01lBVUAO1GW
+	sda/XP1bOwgpi5WMDYBVJipqoMZYzVfV+E5IIRgFs5728aRsBGC+87TUW0hAR7Z6
+	4Ha1YExHKd/xAO4YXA0u+A9IK79LbQDXf9fQExS6RJ/zNk4+KH4Hi/ql3l+UyQK9
+	f1piVUbrNhO9YPVcZMg6nz+K0gF1TQ+hvQZscYB+/csLYxSiv4b1qOq94HvhVTpI
+	17kkYsyDhpXfQvNxrNeBVCuWYrEZDb1TsY4aU/xBTNPRiKcB1mmNR4sjUhWr0Y7O
+	+RtGqwofA6GNbaFmrJ4Ng==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793226301; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:dZRVknp8R88M+NdGz5C0rXAovEpcFwEbsw+0W5VW/1DVaKa
+	ametXoi7SOVR5SEBQ6/6LjAZTt3A0PEL+rx+pL9KCILAOeG2zUUuI5iA4HsF75W1
+	XsEVVKk3B3B+cyvEwFGoiuwPAYxLngxOviP9I8+cnSgKevPuSm9ZW5cknRzNAkK7
+	jliTbY6oScX68ykeKcXsN1kN2WAQBR3EuzXCuLU/WBgIpd0FS1S6ADVFLG0zRI1E
+	pUtuXEeIgO1oBO6bPFqmEwFARy9pUw2Bw1soeMcY7B6u3+8JLwlFy27RTIvBqx7j
+	dO+EJ6PHcSJrh31xrf0IAOCe2TtKpLCcI+u8hvw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:HjFAAGz14L/ic21LbgcAdv21o3LDPdz2EljR6fN7AiI=:B6A//lEmnmB4TtPSbhxLSAxYZxxzJxSTd2JJiQ8YSVQ=;
+X-ME-Sender: <xms:PXbiavKDeYhs2WCEfkORIX2K0oD-Sn9r0adObuNylTRhSdrOG3JVSg>
+    <xme:PXbiaqmRMnk0iRft__ZS9yxJW285otHOnCwb_G-z1ZhCMt60__TcOY_zwKTQFZUaX
+    aE5gHNPRB6JWvpDKMhFLeUuOvKCglWz922ELuz7NralQqus3GLd7nw>
+X-ME-Received: <xmr:PXbialHjrxOfn_JlPd64xDa5w9SISk-7PA-cJiUf4aFv8Tn27v6lCbO2BPGROTLl9S6nKLIP_lwpOL9cBQYQTlTLGPYTxkGGMtXO>
+X-ME-Proxy-Cause: dmFkZTEy77JI3yMUjnnSKpyoaRwAeSC42RauNhSfjO9augZvAO7MKjljeiePPvCw6XRLpC
+    6mdBZL1/yHnUMx4uqHp1iKYY9x44Ua2ziLmcT0sYP7v/HuavUJkrYPGBX5CgRKW5xyhUpo
+    1AH2g94Qy2ce49FblPPYPZCfGbN5vRmLipA/vKzvQzLCiEMizZOdFclQKRAw9DE8YCWEff
+    eXSqKLOuUDShclVn+WK3N1F28J88V2TLGEPz0/mh+Yt81NzUfsigHNTEXs/vY5ztqKMQZl
+    S6AuiRdb1JpdLPmP+D4W0fxzS3JKgfIrtH4g9gEZeyZqPGEernQUFQqZnJCsI54XZHqdJC
+    VLzattpbiLFFuFW+gnNW0WTUCPWaF5T1TXAwbAa6l18/PSt1W4YHoCWTZY1T4Il5Arap04
+    zqJc3c4zCqAi8LizyqQWMd18UEOh9wISasMDnAre0MpHBvHrkObGEw3b73H+PwOMpG4X/Y
+    tXzdmbduBjm9bAY8RKU+bkgs1oDDPaL/JDlkq5mEcuxZ4tMOZuEcM2tAKhQKu5gPzvlCOG
+    7IKarHsnRBEWZRRf72qQVuLssv85T/ywxweGcGOgKkihccQBjjNOHn1uDld445cdQ1tfYQ
+    yBCaSDsAiocC1ZjfRqOqw0CnpOIneJuyaSgUJgOLGuf2gGVlFqUhjhRj9kNg
+X-ME-Proxy: <xmx:PXbiaiETlR2hKy-z_qz8GtxrJ8k-5grMNQ8wdk4CMM0pHV4905J_OQ>
+    <xmx:PXbiaqNGdjKAzSkWxOI_2Lwi7qj9DsO5YbAZVRQh5K7xZslDR3GRxA>
+    <xmx:PXbiapEGqEIK_yTd4IbfzmmKuICIpt6PACffZB5Q1e8STt9iw3iQyQ>
+    <xmx:PXbiapMb8JBD-0bKcLe5zI5A1rxMWrNRivOgBdCQy4SlazOxk_XVUw>
+    <xmx:PXbiaimJXoCrVWrQJKgQime_eiTQVLR6jGPzwtNshEbTaTl2QjtAz4iQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Oct 2026 18:25:00 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Edson <edsonwasswa54@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3] builtin/diff-files: convert ad hoc option parsing to
+ parse-options API
+In-Reply-To: <20261028192647.976-1-edsonwasswa54@gmail.com> (Edson's message
+	of "Wed, 28 Oct 2026 22:26:47 +0300")
+References: <20261028170432.3524465-1-gitster@pobox.com>
+	<20261028192647.976-1-edsonwasswa54@gmail.com>
+Date: Wed, 28 Oct 2026 15:24:59 -0700
+Message-ID: <xmqq4ie579ac.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,82 +128,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-output_pair_header() and patch_diff() already receive the diff
-options, but use the_repository and the_hash_algo. Use the
-repository from diffopt instead, and pass only the hash algorithm
-to get_filespec(), as that is all it needs.
+Edson <edsonwasswa54@gmail.com> writes:
 
-read_patches(), output() and is_range_diff_range() still use
-the_repository, so USE_THE_REPOSITORY_VARIABLE stays.
+> From: Wasswa Edson <edsonwasswa54@gmail.com>
+>
+> The cmd_diff_files() function manually parses --base, --ours, --theirs,
+> and -q options using a hand-rolled loop with strcmp() calls. This is
+> inconsistent with the rest of Git's codebase and lacks features provided
+> by the parse-options API such as auto-generated help text, git completion
+> support, and option abbreviation.
+>
+> Convert this to use the parse-options API by:
+> - Adding option definitions using OPT_* macros
+> - Removing the manual parsing loop
+> - Using parse_options() for consistent argument handling
+>
+> The --base, --ours, and --theirs options use PARSE_OPT_NONEG to prevent
+> negated forms (--no-base, etc.) which are not meaningful for merge stage
+> selection. This follows the pattern used in builtin/checkout.c for similar
+> stage selection options.
+>
+> This makes the code more maintainable and brings it in line with Git's
+> coding standards.
+>
+> Signed-off-by: Wasswa Edson <edsonwasswa54@gmail.com>
 
-Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
----
- range-diff.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+Nicely described.
 
-diff --git a/range-diff.c b/range-diff.c
-index 8e2dd2eb19..3f56a4f71a 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -418,7 +418,7 @@ static void output_pair_header(struct diff_options *diffopt,
- 
- 	if (!dashes->len)
- 		strbuf_addchars(dashes, '-',
--				strlen(repo_find_unique_abbrev(the_repository, oid, abbrev)));
-+				strlen(repo_find_unique_abbrev(diffopt->repo, oid, abbrev)));
- 
- 	if (!b_util) {
- 		color = color_old;
-@@ -440,7 +440,7 @@ static void output_pair_header(struct diff_options *diffopt,
- 		strbuf_addf(buf, "%*s:  %s ", patch_no_width, "-", dashes->buf);
- 	else
- 		strbuf_addf(buf, "%*d:  %s ", patch_no_width, a_util->i + 1,
--			    repo_find_unique_abbrev(the_repository, &a_util->oid, abbrev));
-+			    repo_find_unique_abbrev(diffopt->repo, &a_util->oid, abbrev));
- 
- 	if (status == '!')
- 		strbuf_addf(buf, "%s%s", color_reset, color);
-@@ -452,9 +452,9 @@ static void output_pair_header(struct diff_options *diffopt,
- 		strbuf_addf(buf, " %*s:  %s", patch_no_width, "-", dashes->buf);
- 	else
- 		strbuf_addf(buf, " %*d:  %s", patch_no_width, b_util->i + 1,
--			    repo_find_unique_abbrev(the_repository, &b_util->oid, abbrev));
-+			    repo_find_unique_abbrev(diffopt->repo, &b_util->oid, abbrev));
- 
--	commit = lookup_commit_reference(the_repository, oid);
-+	commit = lookup_commit_reference(diffopt->repo, oid);
- 	if (commit) {
- 		if (status == '!')
- 			strbuf_addf(buf, "%s%s", color_reset, color);
-@@ -474,11 +474,12 @@ static struct userdiff_driver section_headers = {
- 	},
- };
- 
--static struct diff_filespec *get_filespec(const char *name, const char *p)
-+static struct diff_filespec *get_filespec(const struct git_hash_algo *algop,
-+					  const char *name, const char *p)
- {
- 	struct diff_filespec *spec = alloc_filespec(name);
- 
--	fill_filespec(spec, null_oid(the_hash_algo), 0, 0100644);
-+	fill_filespec(spec, null_oid(algop), 0, 0100644);
- 	spec->data = (char *)p;
- 	spec->size = strlen(p);
- 	spec->should_munmap = 0;
-@@ -492,7 +493,8 @@ static void patch_diff(const char *a, const char *b,
- 		       struct diff_options *diffopt)
- {
- 	diff_queue(&diff_queued_diff,
--		   get_filespec("a", a), get_filespec("b", b));
-+		   get_filespec(diffopt->repo->hash_algo, "a", a),
-+		   get_filespec(diffopt->repo->hash_algo, "b", b));
- 
- 	diffcore_std(diffopt);
- 	diff_flush(diffopt);
+$ make DEVELOPER=YesPlease builtin/diff-files.o
 
-base-commit: 8d1b215c01512b9658d4525c54ff9b9245f9a7e8
--- 
-2.56.0
+is your friend.
 
+>  
+>  static const char diff_files_usage[] =
+>  "git diff-files [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]"
+> @@ -48,19 +49,20 @@ int cmd_diff_files(int argc,
+>  	prefix = precompose_argv_prefix(argc, argv, prefix);
+>  
+>  	argc = setup_revisions(argc, argv, &rev, NULL);
+> -	while (1 < argc && argv[1][0] == '-') {
+> -		if (!strcmp(argv[1], "--base"))
+> -			rev.max_count = 1;
+> -		else if (!strcmp(argv[1], "--ours"))
+> -			rev.max_count = 2;
+> -		else if (!strcmp(argv[1], "--theirs"))
+> -			rev.max_count = 3;
+> -		else if (!strcmp(argv[1], "-q"))
+> -			options |= DIFF_SILENT_ON_REMOVED;
+> -		else
+> -			usage(diff_files_usage);
+> -		argv++; argc--;
+> -	}
+> +
+> +	struct option diff_files_options[] = {
+> +		OPT_SET_INT_F(0, "base", &rev.max_count,
+> +			      N_("show base version"), 1, PARSE_OPT_NONEG),
+> +		OPT_SET_INT_F(0, "ours", &rev.max_count,
+> +			      N_("show our version"), 2, PARSE_OPT_NONEG),
+> +		OPT_SET_INT_F(0, "theirs", &rev.max_count,
+> +			      N_("show their version"), 3, PARSE_OPT_NONEG),
+> +		OPT_BIT('q', NULL, &options,
+> +		       N_("be quiet"), DIFF_SILENT_ON_REMOVED),
+> +		OPT_END()
+> +	};
+
+Move this a lot higher.
+
+builtin/diff-files.c:53:9: error: ISO C90 forbids mixed declarations and code [-Werror=declaration-after-statement]
+   53 |         struct option diff_files_options[] = {
+
+
+> +	argc = parse_options(argc, argv, prefix, diff_files_options,
+> +			     diff_files_usage, 0);
+
+parse_options() takes a NULL-terminated array of constant strings,
+but diff_files_usage is a single constant string.
+
+builtin/diff-files.c:65:30: error: passing argument 5 of ‘parse_options’ from incompatible pointer type [-Wincompatible-pointer-types]
+   65 |                              diff_files_usage, 0);
+      |                              ^~~~~~~~~~~~~~~~
+      |                              |
+      |                              const char *
+In file included from builtin/diff-files.c:17:
+./parse-options.h:424:38: note: expected ‘const char * const*’ but argument is of type ‘const char *’
+  424 |                   const char * const usagestr[],
+      |                   ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+
+As I said in my earlier message, conversion of parse-options API
+requires adjustment of usage string.
+
+>  	if (!rev.diffopt.output_format)
+>  		rev.diffopt.output_format = DIFF_FORMAT_RAW;
+>  	rev.diffopt.rotate_to_strict = 1;
