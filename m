@@ -1,117 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793188958;
-	b=ZEPQsgko6x3uO0c4HQG560EbMlxCp0BwvZFTnJvr7K+GvKNILVMfgmAq3QkRjUhhSNhb
-	 gYf0LfX6U4ecglU4nUenZrxT54HSJZaoGVPc3pBq4oLc6+rgotUwycdMj0DcWHrq6w3od
-	 9pbWVGQaOaYAL6dDnWBx7iPSUaZ16gMNd0SqYmfw2rURcgKglgs3CvZDE6VeokJiwy4sQ
-	 YkDCXswx4NDD7kLevCow2AiDXlySL4fWdj/imm/SgaetIJJ7Ok8s2o70zZaRccTHxDPeh
-	 DlgMCP/VwHrk3qprzp0Z7tFMWRT3EfOPMd3ukbgF/QtAXmnqfAVUyoSF74K/7lXY6uw==
+	t=1793188960;
+	b=yUn9YmqmJ3L/35ikmfTBoM4p5XTAW6/F6sxICgb3PA3VUcrq9lJ2/ZzEpW6ONOWWXjXb
+	 f/aiXl8n0hMCpKXn6tfd5d+34SU1Hb4K/SVOAbc/hAMRNFdXnFOBqcqTNy6H1XvGbOxY6
+	 vkGw9ocNvO0Lthy3eccoYUdUypqw9hSvGJIoVTywSPCeQDHMx5nRJ0K3vWl/Pk6UPRIWQ
+	 8A+qGGigreKtJXu7gtDfQFPp/WFWmSS38IwtvqnUQyXycNm1IsOxj2WcoxWS4WtYV9yD1
+	 kDF1YeuEzhOBvfL1G6qJbf2b1HOMlkMz3hz7mnDr19SRMSNsUhQKrnJCH/Bjb1lZH/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793188958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793188960;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
-	 Cc:X-Mailer;
-	bh=koV9JYjgA7gv/XGVKnAsTDyOrSmWRsawEfkKIgQyKr4=;
-	b=tpDs0thrpUNfyukIIffbX9csN/ckpvWWFBL29YapX04tYs2K4kkV6nk9X1PUABFQWf9Q
-	 GI/4rcTpe5Sokh9jv2VFqfWrVa9t/i2+vEwEYn8ZWtWAZAoRnebEw1C12v60ywbTKvM2h
-	 9CUsIzoxaKJSmJlqGU0F4s3KRVCzjanu908pUilbrcnwNmP1jG37C03DlwzGOLTT2b52B
-	 3cTaqGZO+/YLotagw5HfBADoMk37/6qgawMn45e3FR3TOlBXNbXboQ8+P4d8Y/NBj99PG
-	 uOzLyvbp7RRIwp6140fO9YdSqY26nmUbSG5M84aKvcWL/r33EaAp+jyVg3ZDZ9Tn63w==
+	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+	 X-Mailer;
+	bh=z6TSXyeicbFhQOrwJ+znA8UONhDmB71ZRTH+HItthN8=;
+	b=p+1VRG7A4kd+/nnfiZD07pb59Doj/jvBCNVy6+ibA+PXnqtZSIyHG68Qafx7tplopSMO
+	 b7WE50LZMacv2ZYaHrhs2TK2HZ/9qOD98CyQ1Tp4vQqAi6Kgb5OB4+jW4bjM4QDXuG46r
+	 oq7nwZzkJnwnwVDsIRc0sqSZe3Cb/nfSgsaL6a19CJwx8SbKPvRVYVXYSbVtO/+NrxZjp
+	 5TS7xqPFwMknz2l7rcNB1W7XWhibN0Wf8iSxk8ZWv6fMaZMyshxvQxCBwzgYQJ9rCOoLv
+	 bCr5SSCnDlKIMn2zCtTWgl/xcbmtk2NzwoTcAVAV8aY6Gx//xwYKbxQlISKg3r4fVgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=mBeiffqp;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Wsh1d4mo;
-	arc=none smtp.remote-ip=103.168.172.155
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b="JLBI/6Eq";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=h2ouky8F;
+	arc=none smtp.remote-ip=103.168.172.149
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288C2606A31A
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 12:02:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 288C2606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC08606A323
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 12:02:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BDC08606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=mBeiffqp;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Wsh1d4mo
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 39F051400144
-	for <git@vger.kernel.org>; Wed, 28 Oct 2026 08:02:37 -0400 (EDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=JLBI/6Eq;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=h2ouky8F
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 05D19EC008D
+	for <git@vger.kernel.org>; Wed, 28 Oct 2026 08:02:39 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Wed, 28 Oct 2026 08:02:37 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 28 Oct 2026 08:02:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1793188957; x=1793275357; bh=koV9JYjgA7
-	gv/XGVKnAsTDyOrSmWRsawEfkKIgQyKr4=; b=mBeiffqpowBwIdUwpALWHm3Uu6
-	tXPC0sSpXAvX1Jl5Bx+pOeZxXpMRWefDIW5OXlKz6tfXinmIj7vWLdVN7JitS4ws
-	45ulQfaRCtb2/s7pT/kSBYMKQOmJivcfjZbBSBhvjTHfOAJi4tRrRoF+WHjHrFzk
-	p41JgewwVPO8cJLT/0CwEr68rTwu6Thd7zBLVrOk+hobVrU2bZTzrUt63WyTYL73
-	Xmpc7E8t0b0/wLBBeLHopz6R81Edc4ngxfapxBtTx0IM33jwLRjuRLa0JAYGCPR3
-	nk+NwS+dtsJwv0rbGvG3HxihZrjEDfFy+r25JShqhoAYS5x0qigL+EcH5E6Q==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793188959;
+	 x=1793275359; bh=z6TSXyeicbFhQOrwJ+znA8UONhDmB71ZRTH+HItthN8=; b=
+	JLBI/6Eq9hVWvchPH8hsRIhjVW3oXZ9ktho7cypXJaF7lIsRV5Wmz4KEmO+hnuVL
+	arZTvDxpQsgn/BFYBWZgGM6oC62MBDz38oIExjdBzI9Gb4Tk5mbixk/RhBDuHrvA
+	44brH8/9drZNjD8dpHaW7bG/zi3yPTilQWXpeFp/X7idBqA9W2bqVImModq7W6hc
+	ZuF6PXhkhQ37nYmojs5LC2AsMnNe9qt4C2QjOfEwKJVNtXPw5uaZ1OSOPTpYsVZz
+	AYeEVApU2PVtGx48jMILjGjUzj7T/iqmQb4ckxadJYYwsgTohTEYY/2YOZ4GKV0A
+	2QxBPgZVRqlK1sWjGCaz/g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1793188957; x=1793275357; bh=koV9JYjgA7gv/XGVKnAsTDyOrSmW
-	RsawEfkKIgQyKr4=; b=Wsh1d4moUNtxNJiZoLNJnYdlJHMqTMJfePNZkdqRn3GJ
-	4t7qOkFNHHFRGlvdN7WelNX3fkqUD6GY/wZ0rVQmbhVYCFESLIxvs/w0geFRp00r
-	ESZApdQK0L8D9g9cqEvLPEox8cEftS3vl5Dk6azQj+1Ijx3N4bkeg40VdeZl0Xc+
-	XHbagSjJDmc2IdHEh0gLv8uiO0iVDVhOFAHSyHmujAWKlunyeF1jSKRcVMnq/XSI
-	4pAOHQcd5W0r5iWdyN/APdltGcVPz18RYg0Y/C9QiGczaDJLQ+uUmqLHpkUnxheh
-	HLk1iywVNhLuPPblX9qXSvANkThXo6UI0QR2YS2F6g==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793188959; x=
+	1793275359; bh=z6TSXyeicbFhQOrwJ+znA8UONhDmB71ZRTH+HItthN8=; b=h
+	2ouky8FBlWzxy968dSvVqhdwKBFsuhgtwC1v198JU5JwSPotvuyubw3vVsDQs+rS
+	wNt62VS5J74CwyHt52pllXZGQevRHdvX36NQGH4zt60LL3E5xVulngbfPMLhuYsb
+	weG+DCayh+qpUKXEubj9Ug+WsowHNS2rhLCjP3NuB0sgbicXzaC5JQ6r6LI9oief
+	sJFyELpTDsYtls0Tn3pidscadEWYikFeAqUjWnmlFWYm2TpzVaLA2bDyZy/D4pI0
+	EBKkta49SlZNA/5yFiT/Lxh3rxIj7HoFchdD3jmuVe4b6zY1YgzhrPvkECfJEhLu
+	cQM+H+6JgqqirlXxivgqw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793188957; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793188959; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:E/lV9Thlp3x8Lx2/kHIbdOX4xdgFhDIqzngaGlyrD1zda2M
-	H6ts5hHf8xVIP7g1e51Ub6asDch1els53DXhYj2NfXZh3/cYEItHdY1gCR8NvZH+
-	5VEZiMrlQplHggNXL6QxaPd3uVCP1DceB2RUZS76r7Q/BOaa0SsHV7svnuqauumk
-	PiF3wQQ7ufbGPz5c5qKHVhkIi3fszOEoaKGRxC9TWyvP6jV8DOn9ceoXwNMZk7Q1
-	HmXH/qn9ivabu6MYceEoknlM0tXf9bazcF6z7inaW8jNemt0y/8Dtgnh4OCUxr9r
-	RZxLMnL/DAwkhNsA06aBkcc12XA0Ggftt7I1PLg==;
+	s=fm2:rsa-sha256:F6hPZpEfvljzzoSsFJCpGmf3zE3X6qay/TLP3RWQWv13IhN
+	ulFEkDRLJEPX/dZ02ASvs11CDPbUW1XHpkTggarJwLy3TiTA7+IFkCsMea1oDM8Q
+	4ABsWWufVczoKGerMXfW5kSWg28EEqms1JFj2mvbVChUfHfpznZGdPCarEZ+LcNQ
+	4jJ1QDaANmvZnyTMMgzOvL61c2r3LNVXT2ra1MDSew2ePpY2HXdQPpwzVwrDHjBM
+	iqkkRBjzHfBmTI/9aHr1Pe6aHPAWzh92NgsylX9FefiyIpfBS895kYXA6kUe+AI3
+	foNIIlElSqV1j2fpTUn1VmJ4e7BCiHQTg08Ry9Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=10;
+	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,message-id,mime-version,subject,to;
-Message-Instance: m=1; h=sha256:HYq2lqRsVdMxpVYNIyV9MQnYi8u1epwinHSTMG9iivI=:SpbxnZtVoMMEFf3QEvqJpsWShh2yLD5E/aX+6EFsLTg=;
-X-ME-Sender: <xms:XeThaqb9zZWr2XFEetFvho5DYqcwXfHVx5WG2PJaBBulOwtw0lgmHw>
-    <xme:XeThakU4QEpGpXu0kZGOSoY-9bzng7EecKkYDhTYjFEDt8KbnL76r5MFXGJQ5kL7j
-    XNW0ohItvfk0HteJpj7Xq5lFljlexCUv9Sr0FgyBhcPOYRvDlNcmT7N>
-X-ME-Received: <xmr:XeThaqlepIEPcO6L5zGUW0TdVdgIXem5LERwbBl0g3HKXk3uvI9dHQ>
-X-ME-Proxy-Cause: dmFkZTFQgGH4PqajQwZX+JzzIMFHHZ8ogiF7166tdwYiK2KtQ2U9tDiUIlPgyjsm5TqZaw
-    MfxSKzWlcaS2rYg4zeTVojS/3RB0OWz5Rp7Y0SmwCs95TlaQJu9WvGJUbXFeIMtl9LKbpQ
-    2MyDYcw+pSo53WgDs30SqBJFjO4+GDuZxg3/ICao4hjo6bq2rWn/UrHM+xiAY2ayAPsW44
-    oyPx2cM1We8T4VYXMnEbyV5ism6ez5tC+YXpFFZSHTxVj/BeVnO9ygVIgZ8g6jZVPjhNcV
-    1JHFE0LHOE+N3tspv9lmlpe4HSynOTRucpJncRmG5nb+V33CatnNVw3WEWKcmPk38lfKjE
-    wiBrw1X75pz0/LVlN6VtbZbt016oxoP/E2NVAMUbk9hcGKwF2bqq6i9BdnxfAhPcbsLPCb
-    0TBg/aCbPK+D7Ya3rj8UJerEYkmMCysUbMdoz0KInJSZhxQNcV8nIDxZnIUpKdsnJ0LTvj
-    WWj30hJnjPglgBzA0F8jSFYdyOkxptO8/IoxLRj9SOLMte4jk7gGY91l4fKIlhvReFUPiB
-    fNpu5cG2hKFIwsCP4l6tgB5harcHLhuRYSWEOnhLARGJXuHJTbO2hvEoWFEmqOrfl6Q8jt
-    giPE/wu3Fr0oOUMPpJ1pOwcqwYomx0mrB0RR5jV/O/FOXYYrzOOPze6mKXBQ
-X-ME-Proxy: <xmx:XeThahylSRrL0cJwvZESieoL6kA2RLmRldwqEE3PTIqq7xzbFm3kPQ>
-    <xmx:XeThalhqp3osqI-lql6HWrL4FNGj2d0JfQ4GoNva7geIUa9gxsrxyQ>
-    <xmx:XeThamVEnr0XSxWX7wj1y9sY54pX4NoyIzmQHwkG1QMi-9iQfE8OPA>
-    <xmx:XeThan3m8J8vE5DBQa6wpQjbFvVHLxhlW6c9-nla8ZjdVbFcAKavkg>
-    <xmx:XeThao5zofI0ZvCE6TDgFkQg-gWvIKinIsEBqwLu4ZoFu3xpnk6lCTVT>
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:0VEGd/78FyRBtqA0XUV4IeGxo6i/Xe/tDRMHeWu664E=:GV6C9R0Ubc4ju3ANJYb5qQ0DGZQov7axxXw92lmPPPY=;
+X-ME-Sender: <xms:XuThaqJ6amGBYDsiBsfYlzpu4Adh7pt6DtV6SRg8fTiJ2sH0usiDMw>
+    <xme:XuThapHXe1TRs_jqBCfzLcEo5j2p5fIKhJGd6eH4npwlrwhT_c9eWSXIpfiVO_NGR
+    LMxzGoFBxqB5vnrIzIGVCh1vmfNXFBbvWOuPozdyD1RJtwXi_6GUr0>
+X-ME-Received: <xmr:XuThagV6NTCgsi2bFPW1TWkalwM4ZfS-Rw-h9zVTfkL65joCrf9GpQ>
+X-ME-Proxy-Cause: dmFkZTF2Mc3g8z5gD8+pUCnfHo0lMqlp5+WCfQ6DsmMs7ZRLfmLWaPAYb3OxASUOPEyWii
+    rrGgpP73XAFgqgFdZiQVcNzt70BknD6/ZmmrBAMiD3EdIwO8hYWgJwBghKUmNI97PfWjJD
+    dgtYN9YY/E9q22Yhy2fa1Ym1d7UZTvT8Vq/JeZlfbe+TNu5Z8lvZt2oScPfQq0wGB7wmKU
+    8IuWikhTGkGoqr4o6kk9jMI6s5BGPq64SYLjB8oDNH2FzUqfRY7ONmZsx4k/2aG8zqU7e+
+    d/F1HDktwSDIEvNqnYSx2X+hHzOrsWqsioMfYGiJmCA0Ad0vys5hak9zDzQvBEnHvC85mN
+    yCNw1VawN/9CNFHHU5SumeO4c7wenymeB9cHBO4kAvhdSjIuPJRSXo3pB/t/HUA7zyayZR
+    D87uTM/CHE7sN6uKwKIqpqPHSKK6aSiMnSsyAvpnOH5c4O3ECn53oh1TjCQLqbYD/j1of4
+    +c2SUbS3L0lGT5B6cQBXNfAnvPqEh2rHMahAZ0zjv+lKf7Pjy5m4hKG49ORViIpvIWz/O+
+    FxY6KZJEGQ1SaDNNgGgSBiUkSaZNH05d4gIUyn2zvCiDOQpFSS1Jp69Lp8c31TH695Ba1g
+    cl7kS82y986jAkkgfEKofgI9WJdNfJA9tHsXoxMipXXViM8MgwGbKU51JRpw
+X-ME-Proxy: <xmx:XuThakjzds1EIasz5bQtEbKnp_jSFs2XyE6lGvBKsLt014SjqxXk1g>
+    <xmx:XuThahQ7vbEcyMnIIk00hScDozMKarB3hEy8WbA2s5HReiQLbbIafw>
+    <xmx:XuThanEMwUA6RCS8xa7K29VkFNKX4jJ8FjJn6_u6PYkClgQwGwJ2nw>
+    <xmx:XuThapnbioh_-N_dtznFwnlTcuTCkAFsjQwiYReDyUCUaUv1HHzK1Q>
+    <xmx:X-Tharqkrrc6EkAZy5rtgI44516kPXJv-p_b-SI6hZYDBWqUkqxsbLIW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 28 Oct 2026 08:02:36 -0400 (EDT)
+ <git@vger.kernel.org>; Wed, 28 Oct 2026 08:02:38 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6e6aca5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id dcc444b7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 28 Oct 2026 12:02:35 +0000 (UTC)
+	Wed, 28 Oct 2026 12:02:37 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/7] builtin/commit-graph: some small cleanups
-Date: Wed, 28 Oct 2026 12:57:52 +0100
-Message-Id: <20261028-pks-commit-graph-cleanups-v1-0-c549344c363f@pks.im>
+Date: Wed, 28 Oct 2026 12:57:53 +0100
+Subject: [PATCH 1/7] builtin/commit-graph: rename subcommand functions
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,47 +124,64 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDMBBA0avIrDuQRCqlVyldxMmo09YYMiqCe
- PemdfkW/++gnIUV7tUOmVdRmWKBvVRAg489o4RicMY11rgbprciTeMoM/bZpwHpwz4uSTHYQLX
- pajZXD6VPmTvZ/u/H87Qu7Ytp/g3hOL7V7S08fQAAAA==
-X-Change-ID: 20261028-pks-commit-graph-cleanups-d1dc30f3e05a
+Message-Id: <20261028-pks-commit-graph-cleanups-v1-1-c549344c363f@pks.im>
+References: <20261028-pks-commit-graph-cleanups-v1-0-c549344c363f@pks.im>
+In-Reply-To: <20261028-pks-commit-graph-cleanups-v1-0-c549344c363f@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Hi,
+Subcommands that we wire up via `OPT_SUBCOMMAND()` are typically called
+`cmd_<command>_<subcommand>()`, but we don't follow that pattern in
+"builtin/commit-graph.c". Rename the functions.
 
-I'm working into the direction of making commit-graphs pluggable so that
-backends can fully control where exactly commit-graphs are written to
-and read from. This patch series contains a couple of small preliminary
-cleanups.
-
-Most of the patches are rather uncontroversial, I'd assume. The only
-one that might raise some eyebrows is where I "fix" git-commit-graph(1)
-to only accept "--object-directory=" for subcommands instead of both as
-a command-global and subcommand option. I feel like this is quite a weird
-outlier, and it got in my way. In any case, I'd appreciate some extra
-thoughts on this.
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (7):
-      builtin/commit-graph: rename subcommand functions
-      builtin/commit-graph: drop declaration for `read_replace_refs`
-      builtin/commit-graph: get rid of `the_repository`
-      builtin/commit-graph: drop global "--object-dir=" switch
-      builtin/commit-graph: simplify how we wire up common options
-      builtin/commit-graph: de-globalize write options handling
-      builtin/commit-graph: de-globalize options handling
+ builtin/commit-graph.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
- builtin/commit-graph.c | 131 +++++++++++++++++++++++++------------------------
- 1 file changed, 67 insertions(+), 64 deletions(-)
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index ff244c866fe..415eb6afee9 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -65,8 +65,10 @@ static struct option *add_common_options(struct option *to)
+ 	return parse_options_concat(common_opts, to);
+ }
+ 
+-static int graph_verify(int argc, const char **argv, const char *prefix,
+-			struct repository *repo UNUSED)
++static int cmd_commit_graph_verify(int argc,
++				   const char **argv,
++				   const char *prefix,
++				   struct repository *repo UNUSED)
+ {
+ 	struct commit_graph *graph = NULL;
+ 	struct odb_files_dir *dir = NULL;
+@@ -224,8 +226,10 @@ static int git_commit_graph_write_config(const char *var, const char *value,
+ 	return 0;
+ }
+ 
+-static int graph_write(int argc, const char **argv, const char *prefix,
+-		       struct repository *repo UNUSED)
++static int cmd_commit_graph_write(int argc,
++				  const char **argv,
++				  const char *prefix,
++				  struct repository *repo UNUSED)
+ {
+ 	struct string_list pack_indexes = STRING_LIST_INIT_DUP;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -362,8 +366,8 @@ int cmd_commit_graph(int argc,
+ {
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option builtin_commit_graph_options[] = {
+-		OPT_SUBCOMMAND("verify", &fn, graph_verify),
+-		OPT_SUBCOMMAND("write", &fn, graph_write),
++		OPT_SUBCOMMAND("verify", &fn, cmd_commit_graph_verify),
++		OPT_SUBCOMMAND("write", &fn, cmd_commit_graph_write),
+ 		OPT_END(),
+ 	};
+ 	struct option *options = parse_options_concat(builtin_commit_graph_options, common_opts);
 
-
----
-base-commit: 37b3475fb530c14109211faca33716a173db61ed
-change-id: 20261028-pks-commit-graph-cleanups-d1dc30f3e05a
+-- 
+2.56.0.341.g393f52fd96.dirty
 
