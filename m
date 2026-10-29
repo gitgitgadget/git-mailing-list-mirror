@@ -1,88 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793277950;
-	b=WoJx0Xxu+AOR+5DhKowK6xmgH8B+mHvPTCEpeXcF4KdqWZTIJuZua9VlekstwqQ3Q31/
-	 RoL4yrT0OpoqLKBYboGPH+KFwWt+g6VJyL6VYLlHCaJaxTxGK8NiaXBHNQLTkW07vBQmE
-	 dUq267TKt/15/5w0GR9Zft37praDMlVIgeUY+HjXD5UQr2787T30Wbzp97fyNnmPXDjHd
-	 23ziX/VPnkqW5iemLbRw5V/n+U4jhoyKVzB8y4K2z4Pylbu8uq2Lb32qkkcuFoth2jcqN
-	 ngNZpXvWRcFvKt07dB3MHICFeUd2zijeiDtszh6LYjNo7MzxtM5A9JNJXVa3uH6A6uw==
+	t=1793277953;
+	b=Q/4fT45t6m+H0h4k0B7Ap9zpvYNk03SedZZA44pu2ouyOAOTJw7ks+0kdTOdSbcz/eDE
+	 9bbQxOZ7xyt/AdrpCdmtpXeoredl1TgDQQMkrS74Oi4oY9nLtsVXF0xbGY2f1WPUxtZZW
+	 5MTNar9lP8/D0MMhp6IGloBUxIsp9nCHfGZl9zTBslc5RrkCh/LH7U+0SB7ipIv46swa5
+	 iu2rJaSwaCZSaHN95YdBOQqH5/eDXxU6PcGHR2qkgN0LgLqLn60VTi/CGWTTj4ILpNfD4
+	 e6rCEiZQ4QxkdcdaMb6xDE/Gn3WD78wqiVUx/3HizZ8HPzc37kc4fI9plI4wFRVv7Bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793277950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793277953;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
-	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-B4-Tracking:X-Change-ID:In-Reply-To:References:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key;
-	bh=HNjxk6BKSlKsGSI4DqYZcZy9GVuIPFRwFQH5Kh/1ksk=;
-	b=msx5I7IBmq6czLRJLuDmRkDkE3eNFWYdt2TrRXe0voSV/3Q4CLDAoTujXoYENT0n9ufa
-	 J6bSjyseFhh9qJ9sEBlK1gehz230opHvBnnNvWW9G96g8osNlNvXEpe2i3qA2ynv4QXlf
-	 Q8F98zvp1QFVtnKPvYII1Pk68h23cIK8bJoZsr4ZJDSj0zSTLshGcbpYm+uFumiE/Al9U
-	 BmKiQI7YSNknRi4on0IvnkSeOvvdbte5Wc3cgWtSBrvB2OapaGr9cDNBqtwJCAxLJ+yXF
-	 0ZdbGtEWYFkeMpuL8VYpu/EFiBLnT+z1UkZucofQ3RxLdqm2Iaql3QQ366uWDh2rYVw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key;
+	bh=385Sj2vBZyzCoQKTlcXiAjZinAjezEEUEJH5WKUFbyw=;
+	b=Td7ia8TGSaKSre3tyeJwPnMkbZhlE4Yn108LK3XAOFY3sPeekcCl5p9lS64gLNxPoJ93
+	 gRwQbR7hbEbvzpo0tPSGEG6MHfYqe5RqPtfsmFmRk2/b7djeFa+JnY8V/QJIRNEB2Jd6a
+	 DTCfKzUKTis2BauaYYbd4suiicAndSytANcRt0NabY5Ei92KdjYd0Mkw4QKsCET9GTpsq
+	 ywBwN9ihySpoa7hXEwQZGxRIWfLvzcuppRwd9njAPGzHyIbiJYA5YYm/MSh+6VPN8TykN
+	 bB50kiTmzGwAgU8rmOvEsWwOjD8eA6hIZHfxBFvji9+wO4LB8M59NbY2xJ1X7riQObg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pDbBFFG6;
-	arc=none smtp.remote-ip=209.85.128.49
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dtFblpXI;
+	arc=none smtp.remote-ip=209.85.128.45
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F77606A31C
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 12:45:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62F77606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2044606A31C
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 12:45:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2044606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pDbBFFG6
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a2000d5fb1so15137275e9.1
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 05:45:50 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dtFblpXI
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a215e64962so22238095e9.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 05:45:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793277949; x=1793882749; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:content-type
-         :mime-version:message-id:date:subject:from:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1793277951; x=1793882751; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=HNjxk6BKSlKsGSI4DqYZcZy9GVuIPFRwFQH5Kh/1ksk=;
-        b=pDbBFFG6pYqjgK7WDJ5fmjB+EegJ7HU4DpK3+qpcD2hfbfs0ZP73p/AymZx46tGXmO
-         zB/l1x2YB0u6YS/mXraU0tJmbJbuQi3KRcVldh0EogAKcCttKjpQvYAXxbnwQ3ozmBpZ
-         PtziEwGqwxvo+VZrZMp47ADRws/l2bUrKZjuaiQNz6ivaVcKtG3UlZnn1ID+JMS61m65
-         R7oCPKk11wBE13gAwKeuK/J12Wa2RQf9t5qqw6BSzb+bOg7mz/KiV0+n+we9YEP5oAJk
-         yxewTx5AlxFGxBswCS1eRYWq/B3qnYKpgPESlKloXGP3BvMil+mWFatDFU3KyL9m90on
-         QdSQ==
+        bh=385Sj2vBZyzCoQKTlcXiAjZinAjezEEUEJH5WKUFbyw=;
+        b=dtFblpXIxo1LgTr94cE5mUkR2ex93/wfslzN4qjNIp3bM9JzEK13UKpxUZWB2U5ZnP
+         RdULSnbBxYUAxYlanMulQCH6ulRIejXU5Y7jZrxQ8zPDOMzlBXH/KwfPpaQB3Ay8euDk
+         8KbTCtLw8ZiqA2M+zrjo3nElOKZL1FD9fp9T2cuwMuK4Qk2wNXPRKyMkUGqVpgiD1e3Y
+         gXxr5GO0F6NST4Qg9exnGO2IX1hKMneL1Qp4299gMVzM2ZJfA2iV5B+FLrFRBLFXKBJZ
+         XYvLP8h5ohg1eu9AD3QiXcAyLueWMpd2R+Wx8RjAb2sPpFu42htnfQFgPXFZXJ29Pn7r
+         3LmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793277949; x=1793882749;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:content-type
-         :mime-version:message-id:date:subject:from:x-gm-gg
+        d=1e100.net; s=20260707; t=1793277951; x=1793882751;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=HNjxk6BKSlKsGSI4DqYZcZy9GVuIPFRwFQH5Kh/1ksk=;
-        b=btnGItk1ClV88Cfie5570fxpLSnZr+OkgOw1ShlV1WNO4nzlSOojQT7zzkQSDgEDT/
-         Jpvew7J07bRtdjWZ4GeaZ6b1EhW4FHZXgqs0RnLnGXh8qpeXitz96EPk7MPdX0IXFStg
-         7ZMjtiY70pMtS1Qe6+iwfgFmxSkb5dH/tH5n+IwZqOYX12Mk11FWy6lpaxKJs36oH557
-         z1HLAuuFBIV4RZWhG86cEHX9DEGhYzHX3wudU7e6ZbGxbbullfg+NAP7WX3t0Meg8U9L
-         kNk7FcML+k5yU0YbZTWxklIf42fo/po4oCyjdmRJUG19l+Yg2qu7RXbRXhdRc6ZISExW
-         YYww==
-X-Gm-Message-State: AFq9FYLz2ScK8gbkdsW1fgG6dkFTA4Lju1mqp9UIjN3v4X0BFUBGj4sa
-	eV32dr8ZVHPuiDtKeKKO4Z6fteuegoUvTI+gZoYHOxxUg4GqX9AhzqR3
-X-Gm-Gg: AYBFou1NORUCZtjdgTTGv/fb93XTpZJ/nB63wOcaMKNmJcCFhSb0mo718MZ3IyUbwNy
-	yYIlXu9v5zfMqms8Bpl7wfOWOSNqAXv2sr8kp5y8ZTTVZXotBiCup89Rt6r5TfYfessJl/NwEkJ
-	zW5yq+jPW5E5Onld+4QlWBTmkHb/DNzZtzh9hM/32aL0BuCfdUM8WG61lCtS6V68MV9codt6TC7
-	91wYgv7dzq6uWSk+v1pIsC0NZHnnY7/p+vcRl73RlFKVMu7dYBUlUmTEJvRz0vkd2EGWHiZcWpu
-	dbZ8HliXRqFFc4n3HOF03wpVtc/KQxxZF6zviiNs+qj7GJFvi4ye2/TKXNRtRUXqrURIDSiBv3Q
-	7Eu8ASUi+EqZfHmlI9uHno27f2z7CYsrLfCoHyhiDRi7fNp7yzTXlvLSfT0iCVgPNE7cSmim5Dx
-	sYUv8jeseW3zhhyPgwfhmfEcjwYU3NZpfamBTmImeeTWDGJ4+CSJfu5kwp0Daj46A6rfVxksddA
-	fKzYGxvo/BnFrHzA2a8v3OgMmBQ2DWiHvySNca6sPetUWKFtX2FlMabtlHJ0scsEodUFQxK8DN9
-	ev4xHeoEzGcwiOFAmUXyMigIPNPtNSqjpnL2kOWcd7BRRYNPm6e01hXtDahBv5dVIVKOhg==
-X-Received: by 2002:a05:600c:3e0a:b0:4a0:1c0e:b057 with SMTP id 5b1f17b1804b1-4a9640f1fbdmr125372775e9.4.1793277948419;
-        Thu, 29 Oct 2026 05:45:48 -0700 (PDT)
+        bh=385Sj2vBZyzCoQKTlcXiAjZinAjezEEUEJH5WKUFbyw=;
+        b=ljLRbdYF6s/l/uFYBqM2P99EfeuQP4+wfIUVqbvulksuiufvBwLOFGI5551KphF0y9
+         10yNaiHXSNtpCY5JiwTo/6QzWdbAXd5SAno3pqwma1yNVYI5eMk2p7HN3Zzgv0cveoXi
+         F7sGQpPEOK2w32kgKgrrA9pz8vzJx3Qon0eJFYig1amXKe5Ap+6hd2tnKdTyszUZStkO
+         Egj9Sz1adKWgedas6y5Jm6CIUHYa7psnoeKBLYVDfpEuO2qqDP95NXyuX8WvpC5KTPGe
+         NXpb+j5EHa2hpyKpi5IkWHSGU7Mn8SMKHSI/vKD/0FcHt8JrFiXGOOlJeechgdwqguRn
+         9jbw==
+X-Gm-Message-State: AFq9FYIZqIjgBfP+hcwWpiVR348yvP/mmrRKf5Pir5xQK6ibZFUOjOP2
+	I9dRC1lRXPVObXBdp51DLiGUdyMi2Ndg1FvdBRU9Y2twVN6HqFHR5eHX
+X-Gm-Gg: AYBFou0cAQahDyNfncWhZ3BHD8Xy0MooZw3VkeuZ2HAl/qIwOXjTC9dgpCQVMcQAXAp
+	P+AFu2zlF6NaoeNWlXcOOWK4IkJl/vkYHWcL5g00U/aaUOrgEpKbqhvFt3ipoiJXv9KWL9wu8Zr
+	TlLVj0h5PRpg/qE9/v0XPA2pY0dGi1bQ+c9uCj9iAv0rfK5AqymS/BUc50siXpVd7+AaLbqIBqH
+	mzqnm8k2lEcVKxgmYPjfLvbXOa32/yw1BpmagVvTdNilR9gbigp5J3cWbLycEvSLMHmDA5d+FgZ
+	0LHRJLC59isrtKtI0956h7Bu9CBk5hrlW5N6kYe6Bs02+gyzyD2nSEZEUa+5yhq/NMwGNXJRlYL
+	NZ8KNLpWTekbgMLzu+5aJJ/I05x6fiKxZieL02F9tETY4VEuNorDjY/StF41MBE98eGqlPgBvUL
+	dx6E+PqLEGeABFH503J9f1wDHuAUMpg529VHAV43CShcMEGnE+hmmi87F6zfGHb1ivaa7WzZxq9
+	gSGFuX+W1RJYqzTkDiP1McoxJPIJtw0nsWjYE7Jo9MeRQJdVw/0M3dzuOLE98EPMApn1nOA0NEP
+	bs7D7pwf8Q6dp15tgO2wymwlhm42KJgs0d+S5BD/W/f8UXnEdyvAdaNFZ6u7Mxa5/ejr7g==
+X-Received: by 2002:a05:600c:34cc:b0:49f:e8bf:8f9b with SMTP id 5b1f17b1804b1-4a963ffd2b9mr136953155e9.4.1793277950137;
+        Thu, 29 Oct 2026 05:45:50 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:7938:fafa:2306:bf7a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a930a63eb3sm106593635e9.1.2026.10.29.05.45.43
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a930a63eb3sm106593635e9.1.2026.10.29.05.45.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2026 05:45:44 -0700 (PDT)
+        Thu, 29 Oct 2026 05:45:49 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v6 0/3] fetch: advertise fetched refs when backfilling tags
-Date: Thu, 29 Oct 2026 13:45:36 +0100
-Message-Id: <20261029-799-shallow-fetch-with-tags-v6-0-e6ddd5201def@gmail.com>
+Date: Thu, 29 Oct 2026 13:45:37 +0100
+Subject: [PATCH v6 1/3] t5510: cover upstream info update on fetch failure
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,139 +92,80 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4XOy07DMBCF4VepvGaQx85tuuI9EAtfxolR2qA4p
- KAq745ThBRlEZZHGn3/3EXiMXIS59NdjDzHFIdrHtXTSbjOXFuG6PMWSqoKpayhJoLUmb4fbhB
- 4ch3c4tTBZNoEvlJWc7CKghRZ+Bg5xK+H/vr2u9OnfWc3reR60cU0DeP3Iz/jevdXosPSjICga
- /IVlrIwoXxpLyb2z264iLU0q42F6thS2SoUIpNB7bXbW3prlceWzhZJW7FuLDVe7a1iY6l//iq
- y1Rh0xEETsd9b5dZqjq0SJNSu0M6R4Qbl1lqW5QfGeRblCAIAAA==
-X-Change-ID: 20261007-799-shallow-fetch-with-tags-d62b3efb29f0
-In-Reply-To: <20261009-799-shallow-fetch-with-tags-v1-1-379d61504af5@gmail.com>
-References: <20261009-799-shallow-fetch-with-tags-v1-1-379d61504af5@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261029-799-shallow-fetch-with-tags-v6-1-e6ddd5201def@gmail.com>
+References: <20261029-799-shallow-fetch-with-tags-v6-0-e6ddd5201def@gmail.com>
+In-Reply-To: <20261029-799-shallow-fetch-with-tags-v6-0-e6ddd5201def@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
- Justin Tobler <jltobler@gmail.com>, gitster@pobox.com, 
- =?utf-8?q?Mitja_Bezen=C5=A1ek?= <mitja.bezensek@login5.org>
+ Justin Tobler <jltobler@gmail.com>, gitster@pobox.com
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4663; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=stqYgPA8B3WSm102PIcIMMeHvD6G+NfQnzym1Dn6KFY=;
- b=kA0DAAoBPtWfJI5GjH8ByyZiAGrjP/bI3OoSLFy+/0Gz9SEMwXTwjWSu9mQND/RGxq3sp1gqI
- IkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq4z/2AAoJED7VnySORox/sxoL/A2T
- dV2tNuESt12gqVfP7pnDJ90yH275TUYdJVwlAQ8bydRSmXLRbAvWyp+193Kr4jHNmmmLqkmSkeJ
- 9ZdVZoM2HiqxueP0Jpd22o3h5ODpJurMjlZSkxGVtAA7egktvVDVbujkFvapA+PKTWvtlkkLTyC
- xXZ2AUYKflx7DHIbXKaWGwATGB/eSEEqm96o4CpCrsX2xBzqulnyfcFfTvUEXEAQwgUbFMwVjt2
- cJrfWYIgsC3Bf2rhcFRv2KTk4szKGF/xhEcZsPWndTYosa3KtUMoshNJgfIdGj0mvMeA6GWL+jJ
- z1qIEbDUTAv7/JPsTnZm3I3f/m9WiwzzDBTYleYPyMgYe21c+hLewA+pYvtwmCU0gVnlqrTACGp
- MfJ6178A0tx84VYumBpujigkxu3to3mehV8xi8gDtd+DDVXprdWCOlrIGqexWdHejVVVEroWOss
- jY7UbqWYMzwWDS5JPc6hFdDy/I3U6pAPwuRJ47mcmPg5/4FDXlxZtzhaqA/Q==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1832; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=k5ptcp4CjzItV1dQQD4Vf0RYo2cmbih0ECPAueeUzwA=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrjP/ZjyjLWqS+mdAXDYdQunBAz5uq/LVhiM
+ s2Z+wtU881YD4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq4z/2AAoJED7VnySO
+ Rox/DmUMAI3b4giwO1sQCqEhTdXvEun26nHXOqO7m2eFqZh8khnja2USfvHI81hd1U9LR3DSINE
+ bx9skuqc40cd0z3LlEt4YoiWB7VAeJyEQPWIiYAc9PbvlggkrhY1yo2sOdXMSX86em1sdbjJ8iS
+ +8Elcy2FXN3M8i1VV047Z9P4b6JSTsH8G23rEBCVSYsW15srXnzyAFwspeQKKE1CQ6bLPVNmN0O
+ dcJkk5Rsow9FBq9hphZVdqIFhQyc6DLx38CdcJxhamGQtXBqLRhaRTH2L1nRb5K17+4aRfJIKcM
+ G2+YfQmbM3eqbbY4EpnilWN60aoRK6WBmVRO7natYBN+vyj51uFCQie/sb8wJG3MH7s/hG6I9Yx
+ QkGHIyGnnvZNXryjVLLIrw6zIGqQ8jazp0voWY+kvCuFTjUhufKG+fmGlR45SYriEdeHlsZhExt
+ mlzWBAkxJRX10heBJubGvG1FnHlSDuGPzAzje7vrgOFR+iBvI16Keinsp3neXkb74QwH0TmBLl5
+ 8U=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The issue was reported by Mitja Bezenšek on GitLab's Git repo [1].
+git-fetch(1) performs reference updates in a single batched transaction,
+so individual updates can be rejected while the rest succeed. Even in
+that partial-failure case the command still performs the remainder of
+its work, such as writing the upstream tracking configuration and
+backfilling tags.
 
-When fetching, git-fetch(1) performs the reference updates in two
-steps:
-1. Fetches the regular references
-2. Backfills any tags
-
-With batched updates, both of these operations came under the same
-reference transaction. Unfortunately, this meant that the initial
-references fetched were not committed and couldn't be used as 'haves'
-during the negotiation when backfilling tags. In shallow repositories,
-this could mean that the server was sending objects the client already
-possessed. This series fixes this regression.
-
-Earlier versions (1-3) tried to fix this by splitting the transaction
-into two. Which works, but makes the code more complex and is a bit
-messy overall as we have to deal with errors and also jumps in the
-codeflow.
-
-Justin suggested that we could use the references already available for
-negotiation instead, that is what v4 onwards does.
-
-[1]: https://gitlab.com/gitlab-org/git/-/work_items/799
+We have no test asserting that the upstream tracking information is
+written when one of the reference updates is rejected. Add one.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
-Changes in v6:
-- Move the last commit to the front, since it adds a test to exercise
-  existing behavior.
-- Fix grammar in the commit message and mention how the next commit
-  would catch the leak fixed in 2/3.
-- Link to v5: https://patch.msgid.link/20261028-799-shallow-fetch-with-tags-v5-0-7c43cc9ae810@gmail.com
+ t/t5510-fetch.sh | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-Changes in v5:
-- Add a patch fixing a pre-existing leak in the remote-helper
-  transport's cleanup. This allows the patch to drop its manual cleanup.
-- Move the upstream-info test into its own commit.
-- Some cleanpus around the commit message and grammar
-- Link to v4: https://patch.msgid.link/20261022-799-shallow-fetch-with-tags-v4-1-8a1c9ef399ed@gmail.com
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 300bd5396d..30871617f9 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -2005,6 +2005,31 @@ test_expect_success REFFILES "upstream tracking info is added even with conflict
+ 	)
+ '
+ 
++test_expect_success REFFILES "upstream tracking info is added with conflicts and backfilled tags" '
++	test_when_finished rm -rf base repo &&
++
++	git init --initial-branch=main base &&
++	test_commit -C base one &&
++	test_commit -C base two &&
++	git -C base branch foo &&
++	# Backfilling only takes place for tags which are not pointing at tips.
++	git -C base tag -a annotated -m annotated HEAD~1 &&
++
++	git init --bare --initial-branch=main repo &&
++	(
++		cd repo &&
++		git remote add origin ../base &&
++		mkdir -p refs/remotes/origin &&
++		>refs/remotes/origin/foo.lock &&
++		test_must_fail git fetch origin --set-upstream main \
++			"+refs/heads/*:refs/remotes/origin/*" &&
++		git config get branch.main.remote >actual &&
++		echo "origin" >expect &&
++		test_cmp expect actual &&
++		git rev-parse --verify refs/tags/annotated
++	)
++'
++
+ test_expect_success REFFILES "HEAD is updated even with conflicts" '
+ 	test_when_finished rm -rf base repo &&
+ 
 
-Changes in v4:
-- Instead of committing the first transaction and starting a new one,
-  advertise the refs already fetched when backfilling tags. Thanks to
-  Justin for the suggestion. This also fixes the `--atomic` flow.
-- Link to v3: https://patch.msgid.link/20261015-799-shallow-fetch-with-tags-v3-1-90b6e38b98d2@gmail.com
-
-Changes in v3:
-- Fix the early exit, so a failed transaction_begin() only skips the
-  backfill.
-- Keep the first commit's result separately, so rejections don't skip
-  the upstream and remote-HEAD setup.
-- Test that the backfill advertises the fetched tip as a have, instead
-  of checking that the root object isn't fetched, which passed even
-  without the fix.
-- Add a test for the upstream setup when a main ref is rejected and a
-  tag is backfilled.
-- Link to v2: https://patch.msgid.link/20261012-799-shallow-fetch-with-tags-v2-1-4211e9a13d3c@gmail.com
-
-Changes in v2:
-- Add benchmarks between master and this branch to show perf regression.
-- Instead of checking the trace file, simply check that we didn't fetch
-  older objects in the test.
-- Link to v1: https://patch.msgid.link/20261009-799-shallow-fetch-with-tags-v1-1-379d61504af5@gmail.com
-
-CC: Patrick Steinhardt <ps@pks.im>
-CC: Justin Tobler <jltobler@gmail.com>
-
----
-Karthik Nayak (3):
-      t5510: cover upstream info update on fetch failure
-      transport: add `transport_options_release()`
-      fetch: advertise fetched refs when backfilling tags
-
- builtin/fetch.c    | 33 ++++++++++++++++++++++++++++--
- t/t5510-fetch.sh   | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- transport-helper.c |  1 +
- transport.c        | 24 +++++++++++++---------
- transport.h        |  2 ++
- 5 files changed, 107 insertions(+), 12 deletions(-)
-
-Range-diff versus v5:
-
-3:  ed24854913 = 1:  6aafee69c1 t5510: cover upstream info update on fetch failure
-1:  f15e69e2e6 ! 2:  a22b348247 transport: add `transport_options_release()`
-    @@ Commit message
-         the latter misses this.
-     
-         This means when using remote-helpers, data allocated for the structure
-    -    leaks. Introduce a new `transport_options_release()`, which acts as a
-    -    common path to release memory allocated with the structure and use it in
-    -    both files.
-    +    leaks. None of the existing tests capture this leak, but the tests
-    +    introduced in the next patch do. Fix the leak by introducing
-    +    `transport_options_release()`, which acts as a common path to release
-    +    memory allocated with the structure and use it in both files.
-     
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-2:  dc7024fafb = 3:  ebe210d2df fetch: advertise fetched refs when backfilling tags
-
----
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
-change-id: 20261007-799-shallow-fetch-with-tags-d62b3efb29f0
-
-
-Thanks
-- Karthik
+-- 
+2.56.GIT
 
