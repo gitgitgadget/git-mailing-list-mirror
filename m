@@ -1,84 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793315807;
-	b=yuvP/dbums+eall0LySQgPevxaLYz1bFRWrsb2rJ+LouiY/dQT/sn9D9ZXZHUI/WCM1W
-	 QVUshoTsI5tgb6kW1Cy1RY+TRynn3OVihFuseAY61kbtUbCtCg6Z8m45rrfFTp4gEjX2a
-	 LaEyY/PyNdtP6DYI1D+Il/N7YrXA5qtyX6APuWO3y5Lr6pXyXyo+3dLkYuoUXQ7LX5tLz
-	 VSxjJfNC/iB8paF+SvXDKzFaAiCGLCqZA3zjfQbk/y0JZ0bl5ojkGNNTGlH37+hLPpHqL
-	 5jnn0p2bR0zoMFEOCSGXxIFsXsrP+dmeXCxtrVeop4gxRPsaT9fTFuubBkIHetcOSIw==
+	t=1793315827;
+	b=DQUM99JmLuWvVrBCEruQKsIS9fwz2s0rM+FzjpOSktsdoRzdbWEqL6oZFIEXnvYVm1lB
+	 bGR7hebRYusQisvz9h1Brsih+PuH7zfuEd5AyE1H+rNRv6LAaL8POm2tElJsVH4nZM5fk
+	 xBw25VKZclxJ4neq/GRzjgfRbKkp+pU996cm4eN+eUeA7vs0nY/4fa/EtTVzsY95rZC6D
+	 6HksCkZVC1X48KBqs/xtqY3rIevdUC+jV0vfavolWsYaHY7s0Idkx8LS2z5F/R3WCUJ/n
+	 z/3Tew1a9/Pgeq68xbITgmg6V9NrcFXzMMoRdacsrIH0hWpe6cg9yP8cqxveJACkimw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793315807;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793315827;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=U3Mk1KIA3nQYDm4eQQzRm+5jQNU9lwPSfK14X4pqIiw=;
-	b=ktpoP7nf+q693KHTG0iWicJ5OS98w2SQR4r17MuYC0rEARq+d5rjtciVj0+YB8mWjUWs
-	 7xLe0sP8wwUBzFNdBWTBAz2MWeT9UD4/kol/GYBgfGy/PBGZhKlyI4/gr8vxVMhQHFOlC
-	 2X9Ctn3jh5Xdh27WEljqDQEuipyb7BJkeFzM1YrdIFfjRVsSRthGLRMNpi53C25LPGekd
-	 YBt48yHeNyUQBbT9R+5ZZyC8lMs6LeA8U6y5L+DK2thmpx5dYlAjPJQLEgmuxpwQl7GuP
-	 +OjhK5mrbvox9jPW6zkzc+rUF6KZ3IMz4p+z1aQSPN/JrihI4kHoOVhxm1eeGAHJwTw==
+	 Content-Transfer-Encoding;
+	bh=tzrW+Tc3mhkgZcFp8N6z2Aa8JEg1kjoYe5MswEW2ETA=;
+	b=4CsoUQ47yFb74HjcoVkyeIcm34/MxTB9MwbbQR4pFxQVDM9dR/5ADUr1GPgtpa0aVKZ2
+	 p26yux0s8dOEExxleQJaY+KUb4lytQfLwtNm/mYnsGyR59wayimZg5gVr3bx8rMhA+a90
+	 gEOiF5NI58/r/Pmtu0nWnoR5KVR7elpKHJ2LuNW8wgyfFo0akTPrvh7Ec/a1cMsvisdhs
+	 nez+c931NVicparnNowSvbLI8cocWi8ESkRuio7dlYfxJR15eBnmxSnLYNutv32kV/phW
+	 7ufTfSrfifHaTSQrmh8OCvfddp29IxXK7d/pIR0XIqDsy5cVbjFHXNfXxAvhQw1p7Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DUVT1MEh;
-	arc=none smtp.remote-ip=209.85.221.45
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZPdecUTP;
+	arc=none smtp.remote-ip=209.85.221.43
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA488606A31A
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 23:16:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CA488606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EF8606A31A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 23:17:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A3EF8606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DUVT1MEh
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-48c45111bebso56068f8f.0
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 16:16:46 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZPdecUTP
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48e20edd106so101276f8f.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 16:17:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793315805; x=1793920605; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=U3Mk1KIA3nQYDm4eQQzRm+5jQNU9lwPSfK14X4pqIiw=;
-        b=DUVT1MEhLA0fpCkzYnu8jgaIVqb7h0yEIh4nIMvjZowpPWTcObUq2x0HpLMVWxfW4B
-         q7xo5/TF4FwOaz3pgMji3Yru6q+kVJzqyNtKu871WF2aiYakpMdovVWKuyq1g6IERZZP
-         Va0NM92a2t5HYHfwtjOCuKHI+d0msqehKpaHFUHCNhrCRM6C2ViPfcSGX5A/DNqREoeu
-         m1HujH4sUU5zO5GWuHVQ0JCVZtQCXgDZul7gbbdPgRneHYDpxXlicSQDJ4/c0HYCY3G4
-         LzMmpFiIFW1mryauefLC3o5KAoZYpYBM2q+MiaQPmKcTjkCBPv3G9o3/q7XLO8J7ETOx
-         HHAA==
+        d=gmail.com; s=20260707; t=1793315825; x=1793920625; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tzrW+Tc3mhkgZcFp8N6z2Aa8JEg1kjoYe5MswEW2ETA=;
+        b=ZPdecUTPXT3TAN9UvHEZMXMHBlan7B+B79urCyEGZEfqP6KnjUrcUrwmPhpIgRHv87
+         AwywjPAMZdusnKv2bXTw9l4ra2i6N4g5fGWv8ZjBawr6dkCJ2uQ/H6BhRDx6lLGYQ8ET
+         SaIzYjfc6KO+O47s7gFUsthlZAE8VogoMxsT3XAmvqhPF4OKJ7qKqaysjGJdu24G3dR9
+         QBBIXXbNZIS7GYOZGJJD1TaM02LV0hiX13bUYxOKcFdGQW7tfG4ZTeYDrMxiZ4JSLm7+
+         fXurkws+1xkFfoMIP9q6OlQHMFJ/kBK3/YM7r92Nn4FNhSZlWPreFgGu60zdYy3e+Ris
+         CHBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793315805; x=1793920605;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=U3Mk1KIA3nQYDm4eQQzRm+5jQNU9lwPSfK14X4pqIiw=;
-        b=k5rUlfBGLsSe++HGkQz26bs7z5sACZeZ5ALdMvlPxwnmXwNvYqe9cdtHlxce7BoHUE
-         yzsfPaKpqHndcJsdLE8+jPJp8dc1+HR3Cna5NXVAtN01+Gmn/iaJ3y4SZQyrjjp4tBsQ
-         EbpTthc+1TQJvQNZSq4IygL+0/0ueLCYTH+qcaA6h3SAk4jrG5wNT4n2FqWtM0z9wNru
-         6hmPZC+xw7sIyyw/uZhQcQnikwN/vMs3OepnGOH44lpZGg39O4zOSpnJdkFoGvZW5h1b
-         bcqQFLmyEmOnE3DqkTBRp7DghRZ19DcAVyuJum0/oRzJzpG6vWOu5hw5ftWxkplgaaEF
-         o9yQ==
-X-Gm-Message-State: AFq9FYK8iq55qGUN6C3LfizpmqbFApR3/HxoWFAIZFowBYpxM/M9qKPF
-	efX8C9lZfBFwC7/B7rUieJEfJfFOITIVyfjbolAniLU2pPKxckosEuqGU31nWtiE
-X-Gm-Gg: AYBFou2z2HoNSkJT59zRL+kMjrpJ9QO4ZJ4tcR5XzTwDZ45mZhyQlo6WxgzPaArcUIL
-	/3M0MpAmYfXUeHbVMdZjaqefBzzgOBk1d979JxwYnMZE/VvkbTTo5Ih8tLEGSEeDg+HF/bCAQkO
-	+VuyoNINte7VKwH6BqqIfuL8TcWFkgz25t/QLpiPx+o3CyHe4kXDi7CGIKuWgo3+ExGq+aNGvXI
-	79ggxDCMSobfqP9k3skP0FCp7IvnnJP/Sea5B3H/cuOUhU2HfraKh8QHE5hU0B2MS4AKlbvJ4XM
-	gHnDKHsMb8fkqTLQZv8RbfEXEmg3Rjfa4sd+P+Ds5Ew09o8bNH9dhvF3nNH1URIvnSjgR1YHtgW
-	9roCNHmalG68WZKV4dvDDBvqmi9Y8MBvlBov78BbzcE/Her6w7m26ml5Z+UYjJ5wrrZKmOEElkm
-	QytB71j1563IROl6ibxgN+LTTpZX/ueTquiwYUfpTyfJiJOszO516Sb8F0zs2xgikHKhpoCbCOk
-	VVQJ1OEVmkP2dc8mtnphAYdxg/UdB1jP/kU+7Ko8lbDa2kuggu/WGYmw9a0eTZGyvwlT3QmhScZ
-	ftJRZ/ZY8q4a7RCslhO4/mCEw1biPZuIQhBHLOUmxTgTHmhCSkd0cfB+MdbjJQt3jDqLkKyE9v7
-	ahNoS6FzHINixxMWiXjbhnhMAWRXeVpetBJ4=
-X-Received: by 2002:a05:6000:ec2:b0:48e:159f:e33a with SMTP id ffacd0b85a97d-48e6e50567emr1257314f8f.34.1793315804977;
-        Thu, 29 Oct 2026 16:16:44 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1793315825; x=1793920625;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=tzrW+Tc3mhkgZcFp8N6z2Aa8JEg1kjoYe5MswEW2ETA=;
+        b=niQkZtHcG42Xt2bTi4E66kOwxBK2ylJrqQ7+QTE/jDQWAi15V3C1gQ3TmoTGxGlPKr
+         QR8zhZv6tfbib3qkrH7ImL3CUzOFjqBw0l2CU6REMG7Dy54z0FFWLB5tdxUkH9ztUM2x
+         BFbMXx8AAZmvZVnwkuGvT4f6+qq/6XVpHJ8P/4qp6dUgGFL357Zu2+qVn5FLzryToFbl
+         5F5Zsr44dcc3DppKgCdpA7d0xKoVadFaCJFn5gaRIyxjFCgJUIodluAo7YGX/ZmNGdBi
+         +uYv3hI3PslSo07yEfh2FGWTk+22KcAJy9/rWEUjFTweVqmi4jUmA8v8Jv4eXaYd+I1X
+         6p5Q==
+X-Gm-Message-State: AFq9FYLL4lu/bxRY6x1c1AbWChA8+Yy9YXEFmQYTgZEIlFW9y1WLMwae
+	cDoBdjxlFqLwfUp+qmm7SBV5bp7hcxvMqwfzCwXQkwerq4ayN/a84CfHZJ/FocmW
+X-Gm-Gg: AYBFou0X9SAyVvHa/J0HloouxDbPkPXX1onKJO7q0MJmrw7k6h47gyIaeZvzst2W6gX
+	9Kk/j9ToHVzcYo6ojnCCInPmvA225mnv9JmZqJ3QJeK/L9qJjBwg2fS0wgUACGKf4dJn4r90qON
+	4IJWxsHKD74vNCCq9mFYqR1UaODmtQ5vloLhtSbzMOAvjZv+3mQbwjZcV9pikLPONvNiugKmGyF
+	nEzIXNhesX3pWiz3WvtxZXvuFngi8Xi1mvPHaoVBpWog2jKtmydvDXRh38fpkgpJNhAkekOgHcb
+	QVREQ0VG1/HsfiPjkaQGyaVJkfAzxRurR/qyDh4UXhgvU3NbFCH/UoU6gS2Kt3DjBX2QX2rShYJ
+	PSCh5dQ0VHzkiszja8ceGcFDr7BAqkE/moLEFvqA633zJpQnUksECDzM549dN0UIQUltphsAo3C
+	XPcWPyQQpyE0EQ0XXPQR9q+KW8y3hQvimH7CCj84O+Jh+RznHBx47wIJ6PJ/DQaS16t1ErggWrA
+	L+Ggeo+VdfnMBxEuhjSXnmYMtotYF6XHqKGwOE8i/YGKjTZh4LQkW88Q+R31AzqWwz2u+7RZaX8
+	nIIv+t2+niYJ5zoz80tYQasTz+UOURNkDSuYC4W27QNE0oyIaW4rVaNfIPyPVbFLH7siurjlmc0
+	ICVeO24jZtZuzAOZrSVsf+VYWa9cPY6ErdTan
+X-Received: by 2002:a05:6000:288b:b0:48e:1421:ed49 with SMTP id ffacd0b85a97d-48e6e2e76b1mr1685008f8f.18.1793315824853;
+        Thu, 29 Oct 2026 16:17:04 -0700 (PDT)
 Received: from HP ([105.163.1.130])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e712c2692sm234861f8f.22.2026.10.29.16.16.40
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e712c2692sm234861f8f.22.2026.10.29.16.17.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2026 16:16:43 -0700 (PDT)
+        Thu, 29 Oct 2026 16:17:04 -0700 (PDT)
 From: Tanga Joris <tangajoris@gmail.com>
 To: git@vger.kernel.org
 Cc: l.s.r@web.de,
@@ -88,12 +87,13 @@ Cc: l.s.r@web.de,
 	kaartic.sivaraam@gmail.com,
 	usmanakinyemi202@gmail.com,
 	Tanga Joris <tangajoris@gmail.com>
-Subject: [Outreachy PATCH v3 1/2] parse-options: answer --git-completion-helper before command runs
-Date: Fri, 30 Oct 2026 02:16:20 +0300
-Message-ID: <20261029231621.48958-1-tangajoris@gmail.com>
+Subject: [Outreachy PATCH v3 2/2] git.c: drop NO_PARSEOPT from builtins that use parse-options
+Date: Fri, 30 Oct 2026 02:16:21 +0300
+Message-ID: <20261029231621.48958-2-tangajoris@gmail.com>
 X-Mailer: git-send-email 2.56.0.298.g27111c8f60
-In-Reply-To: <20261029012616.139783-1-tangajoris@gmail.com>
+In-Reply-To: <20261029231621.48958-1-tangajoris@gmail.com>
 References: <20261029012616.139783-1-tangajoris@gmail.com>
+ <20261029231621.48958-1-tangajoris@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,73 +103,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-fast-import parses its options only after reading the "feature"
-lines from its input, and it creates a temporary pack file before
-that. So "git fast-import --git-completion-helper" waits for input,
-and each run leaves a tmp_pack_* file behind.
+The NO_PARSEOPT flag in the commands[] table marks builtins that
+parse their options by hand. Builtins marked with it are left out
+of "git --list-cmds=parseopt", which bash completion uses to
+decide whether it can ask a command for its options with
+"--git-completion-helper".
 
-bash completion runs the helper with the terminal as input, so
-"git fast-import --<TAB>" would freeze once fast-import is no
-longer marked with the NO_PARSEOPT flag.
+Four builtins have since been converted to parse-options, but are
+still marked NO_PARSEOPT:
 
-Since show_usage_with_options_if_asked() already answers -h and
---help-all before a command does any work, it now also answers
-the completion helper, so fast-import and other commands that
-call it reply without reading input.
+ - patch-id, in 2871f4d447 (builtin: patch-id: add --verbatim as a
+   command mode, 2022-10-24)
+ - diff-pairs, which has used parse-options since it was introduced
+   in 5bd10b2adc (builtin: introduce diff-pairs command, 2025-02-28)
+ - fast-import, in 863937696e (fast-import: use parse_options() for
+   command line options, 2026-08-11)
+ - var, in e19f0779c6 (var: add "-z" output mode, 2026-09-26)
 
-Reported-by: René Scharfe <l.s.r@web.de>
-Helped-by: Junio C Hamano <gitster@pobox.com>
+This causes "git fast-import --<TAB>", "git patch-id --<TAB>" and
+"git diff-pairs --<TAB>" to offer no options, even though they are
+listed by "--git-completion-helper".
+
+Remove the flag from these four builtins, like 66fa6e8ed8 (git.c:
+update NO_PARSEOPT markings, 2022-08-19) did for others.
+
 Signed-off-by: Tanga Joris <tangajoris@gmail.com>
 ---
-Changes since v2:
- - Moved the check from fast-import into
-   show_usage_with_options_if_asked() in parse-options,
-   as Junio suggested.
- - 2/2 is unchanged
+ git.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
- parse-options.c        | 6 ++++++
- t/t9300-fast-import.sh | 8 ++++++++
- 2 files changed, 14 insertions(+)
-
-diff --git a/parse-options.c b/parse-options.c
-index 283a0f1dc2..f2a23b79a4 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -1536,6 +1536,12 @@ void show_usage_with_options_if_asked(int ac, const char **av,
- 			usage_with_options_internal(NULL, usagestr, opts,
- 						    USAGE_FULL, USAGE_TO_STDOUT);
- 			exit(0);
-+		} else if (!strcmp(av[1], "--git-completion-helper")) {
-+			show_gitcomp(opts, 0);
-+			exit(0);
-+		} else if (!strcmp(av[1], "--git-completion-helper-all")) {
-+			show_gitcomp(opts, 1);
-+			exit(0);
- 		}
- 	}
- }
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 73c6e3d448..99d7843217 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -2914,6 +2914,14 @@ test_expect_success 'R: blob appears only once' '
- 	test 1 = $n
- '
- 
-+test_expect_success 'R: --git-completion-helper does not read from stdin' '
-+	find .git/objects/pack -name "tmp_pack_*" >before &&
-+	echo garbage | git fast-import --git-completion-helper >out &&
-+	test_grep -e "--date-format=" out &&
-+	find .git/objects/pack -name "tmp_pack_*" >after &&
-+	test_cmp before after
-+'
-+
- ###
- ### series S (mark and path parsing)
- ###
+diff --git a/git.c b/git.c
+index d7b5f88e52..2d27ad4175 100644
+--- a/git.c
++++ b/git.c
+@@ -571,11 +571,11 @@ static struct cmd_struct commands[] = {
+ 	{ "diff", cmd_diff, NO_PARSEOPT },
+ 	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "diff-index", cmd_diff_index, RUN_SETUP | NO_PARSEOPT },
+-	{ "diff-pairs", cmd_diff_pairs, RUN_SETUP | NO_PARSEOPT },
++	{ "diff-pairs", cmd_diff_pairs, RUN_SETUP },
+ 	{ "diff-tree", cmd_diff_tree, RUN_SETUP | NO_PARSEOPT },
+ 	{ "difftool", cmd_difftool, RUN_SETUP_GENTLY },
+ 	{ "fast-export", cmd_fast_export, RUN_SETUP },
+-	{ "fast-import", cmd_fast_import, RUN_SETUP | NO_PARSEOPT },
++	{ "fast-import", cmd_fast_import, RUN_SETUP },
+ 	{ "fetch", cmd_fetch, RUN_SETUP },
+ 	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP | NO_PARSEOPT },
+ 	{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
+@@ -626,7 +626,7 @@ static struct cmd_struct commands[] = {
+ 	{ "pack-redundant", cmd_pack_redundant, RUN_SETUP | NO_PARSEOPT | DEPRECATED },
+ #endif
+ 	{ "pack-refs", cmd_pack_refs, RUN_SETUP },
+-	{ "patch-id", cmd_patch_id, RUN_SETUP_GENTLY | NO_PARSEOPT },
++	{ "patch-id", cmd_patch_id, RUN_SETUP_GENTLY },
+ 	{ "pickaxe", cmd_blame, RUN_SETUP },
+ 	{ "prune", cmd_prune, RUN_SETUP },
+ 	{ "prune-packed", cmd_prune_packed, RUN_SETUP },
+@@ -676,7 +676,7 @@ static struct cmd_struct commands[] = {
+ 	{ "upload-archive--writer", cmd_upload_archive_writer, NO_PARSEOPT },
+ 	{ "upload-pack", cmd_upload_pack },
+ 	{ "url-parse", cmd_url_parse },
+-	{ "var", cmd_var, RUN_SETUP_GENTLY | NO_PARSEOPT },
++	{ "var", cmd_var, RUN_SETUP_GENTLY },
+ 	{ "verify-commit", cmd_verify_commit, RUN_SETUP },
+ 	{ "verify-pack", cmd_verify_pack },
+ 	{ "verify-tag", cmd_verify_tag, RUN_SETUP },
 -- 
 2.43.0
 
