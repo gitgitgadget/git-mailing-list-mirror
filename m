@@ -1,94 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793233463;
-	b=O3iMjZm2jDFrgy2M58WfbI2FhRpJjfdcQs2QmuqwQczMoAT8hDdGYE7fx1YVhB7e+PrG
-	 4qP1UqjiZA1VWynPfP7mfILNSK2B1Biw5+18KL1prdFztQeR9CSuiwRpMqC067QyxDCu5
-	 +bkXScdONmuyFurOKaLufyptpqSL4dd8aZ/opp+XSIwVEOfRU2+EbNIKTPVzPF3J1F7+s
-	 nHcOS5gcjs7btNGK7M1CQYhra3oTJPuq5iIE4LFaS3nAjpUbG5lVhQ92UW+V+m/g29PDb
-	 rNUWPehPkhBEn1oCSs2wXvwJHexLqsqasiuevXzsbw/4Is2xXsEbHFIFvGM5gjWReZw==
+	t=1793235768;
+	b=IuhvX9t64sJivel2msSva1zM/1cXEs/YYTtkNBwrJPInCVOnyey5SLImKUSR91pz3LIS
+	 /n1P+/X5ORlPhxRFNIWwAMwIUpK8qp2xGFAzkCghsOFEyAm/9rzzHB4GkqMdGfmv9NhOV
+	 I2woCzMNdJkXXTjLKzv/q9YOjsE10+vSxcTYgEi7QYNV0HJIqBCAfqZEic4G43Vsb4Czz
+	 WN5MDWsBAgltyP9vM/O1HLwD+9eFDz6R08pgARHEzkZuSsJu45oKyuTfTjsVMmXbDnuRc
+	 BjN5kVill3MO1n0M0bm0Ks3j5JyeIbLzEyU9E+lIKX63Rvdp4Nao6l12jWj8XUeyCYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793233463;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793235768;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=cC8Lqz3CnsZVQVYva5XOb6xrWvEyc3oGUeiKfeNK1xw=;
-	b=PIJ5qswrCFSGP/IhqAB0hlhlMPkBRS1BwERhnEsOkQU2vnw2l8fFKaVB33PybHxt91uQ
-	 OnfN4Yotf0zOSNpZv7AaRMVH57Tlma9T8pUsxHLC34YWp/IfLC0f70GsH6oJC2gsrB9AE
-	 3hWWRO2XW8AFvtfo93c183mhn4E9+bnLniQ7YRyPEQpTJgNm/efWFHLy7lcwb+N4HBRBr
-	 HKzvG7oQAXZ4h3+n9IdJF09W905rvLhcYdfx0fJZZLL61vT3RnUXIPvFHpCC5mngc1Cgm
-	 ypmmkyfJEG6434m1uG5AqOwyOsfDBVKjmsgTGfK70DHDaGWZtHR/K/15vKMRO+Su70A==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:
+	 Cc:Subject:From:To:X-Mailer:References:In-Reply-To;
+	bh=mizKqmrxZ2yzOvch2PkF5uly4TaFR3o4W3LmksXy6R0=;
+	b=jBDkn4l1OiWzdERERrZJtIR2kl1jFN+ltQLV/3631RCXFBrs2tsfyqCAhpPaM7MZMQds
+	 5fWcfoqQyES6ArlPEQTF9lmmspBewwloAamMIOU1jlD/SQN2+eLHJX/XwQnsCfmff70/i
+	 keGWckjRxOvXU66NnOF4DvDaX4v7ZBd9g5mrHEM7qQ/WGEtiVLBj3dVHKPYZtNXCWNwdB
+	 L/Y45QO5wfB5Ko61fMFNCXS2HI+TM3XBtHfGzgcJIvky6rHvQBMLjlGpF+CXeiBmMKVKb
+	 io7Jl738gmopE3Y5/5lEdKHexexxanw7ws6kEUDWQzYuWeFTMf/OMpUaPD968WKNX+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tAVNJjiB;
-	arc=none smtp.remote-ip=209.85.161.46
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LyUf0XOP;
+	arc=none smtp.remote-ip=209.85.128.41
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D16D60A2603
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 00:24:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6D16D60A2603
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B4E606A31A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 01:02:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C8B4E606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tAVNJjiB
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-702fd86d674so1094795eaf.2
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 17:24:23 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LyUf0XOP
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4a35ac4475dso11905475e9.2
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 18:02:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793233462; x=1793838262; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=cC8Lqz3CnsZVQVYva5XOb6xrWvEyc3oGUeiKfeNK1xw=;
-        b=tAVNJjiBm1QPo2xqDnw0rpBJzy6xq3+zcgBZrumZGCTjnan0BmuL2M1NCdGGqF3Q/M
-         C7PtMVrtXeR0vj5aygUfiH0NePc9luDjE5VMF+KqbF/oERljo2gpQGCyLMJmeXlVZxOD
-         2laOQWOI992vwVNxe0c9AD8Dmle4Wvwe8bmu53kvPfnTQaxzAhYpmoJc/CsLZC1RRGUO
-         rsuwvSNfE4HtCDIPFbbG/QBWIgGMErhso83i+i1v2zZoMXMLHn5Uy0MDKk6Jk1+WnIJb
-         6/W7Nprarp/WKRiYtO0IPtVmyzGS/4YozdPPeIsRJt4pPhX4lxY1QCxUm0PPyvg1m/7B
-         DG6g==
+        d=gmail.com; s=20260707; t=1793235766; x=1793840566; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mizKqmrxZ2yzOvch2PkF5uly4TaFR3o4W3LmksXy6R0=;
+        b=LyUf0XOPoWjSAJSo3Q/aAiVh3Q/XR7jzbtIAAzVwPvSZ6vxNHdJJ6FphddADQLd6Ix
+         ukPouJth+hthMIByADe+x9ChK5illUO+XRxSpR6ySaXPUNciLr5De+0yKIFuq47Gk+xB
+         glHagRSc1Cf3DMOXCX2wyNrH/1/g5blkuIZ88GBekqHgL7qe5YC5pPniqEak9q8FjlGK
+         usELCwq50WsiG6xrdvWu4aRCEykpTvR10jNz1tyssWDUz4TODzRxBHkyg7ZWgSbMCxFz
+         k81+tDQElhQh8t6HYGEkZWTGkG2mUbPi4PyqgpehrV+gi6K8Re1lO7ZNwMPgUOSI53HJ
+         bUCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793233462; x=1793838262;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=cC8Lqz3CnsZVQVYva5XOb6xrWvEyc3oGUeiKfeNK1xw=;
-        b=ydWNDZVOKlOS7KbuzPayHbS0VY+2Lyzb3ptMOU5nohN6eLAaCJjpA2qbDqZyG4LK2i
-         3t5t30CdH0OIC/jhtJAswvounEqrfB9uI8phGI70nXdIWpl/UrTCKsmoIXrvGToo+/ky
-         VkwVF/zOlb3XNUYuGdaJgYP+OPWX82SCefFr+sohomALQHT10Kr/HmMOEM2jjxZBNJEZ
-         J0MWeu4o7lIpPqGgj2/WP/kvzGfRj+TmrTyCHBXxN/kH1cmU3pEO8JNjOXIb5RuNtheq
-         9ZL6UOjbND2O6LDILmmygkTdOdtZvSag8mr6lgecv11uFGfPIml7mZHM3+r6ABZCOHZT
-         YOfQ==
-X-Gm-Message-State: AFq9FYLrtosb4gWcLRCWWMhxuymAlEw8hRme19ofbwyHUyadXWuFjoVd
-	B02wDKqArH6/TXmNGLBQUn4acew4ArWHioLVjrHmPMMhnSxQ9jSe6oVcuZmslQ==
-X-Gm-Gg: AYBFou3HZqNKQnzVfKskbjAJrRvUBTbOInz8deJNub3OwoOGda0BtwDHComTUCGh64T
-	GgFXiWThoB5+3FcKtIbmmNZeVbxeF/YVLlTaMCWviQh4p+fxzajtZsabBLYgbF2mR7EOiKxM/oN
-	9rvZILbpn3jkcaZcquJIHMH6WVdjkCOyOismyD4AQgdZPdl5onz28RRypXZ2iwbcTUcLljsDlVq
-	luq/ycTkMgOQdm0qi02ixH+Nq2pCRV8PqMtVptC8v1nJsZMr+EC2PWDP5DLA+B1seee9NfaeAAn
-	lkweSfJyAQ+eMy5j3LHJo2NVsU+6lcQ/LODfILe3v+2Fn9jAX9V7O3j1ZhP7AnOUCI7pcHYESx/
-	KaePt/WdCexnu/wji7DORN6+zRXlag95begA7P2xjjhGl+GFYY/4MGaXp8d40aqrxV1HRXMo4Vc
-	NKSzVYfvwTK6ZT0E13ENYoOTKNQqBe5njdytY4+ki6BrMKnUZRA7HLLvKUO83Rzj6kJqiUhJIWo
-	HGlKmsEpqgR8CXZLpjN9296XHFv2OuGdhWRuH2ZzlXXY9alL2r3se3jgGxStobKauWk1SzfnGV8
-	7xS7hdT4r7x2RkrnX74VJlOJJPeLOI79DdCwXei+o6A46nuZ43Bwq+Au9KDIanPwq3kh9U0cXb4
-	zrqdWL39Bf/sTog==
-X-Received: by 2002:a05:6820:a513:10b0:6cd:3ffc:e339 with SMTP id 006d021491bc7-713f06cfe2emr1667309eaf.87.1793233462123;
-        Wed, 28 Oct 2026 17:24:22 -0700 (PDT)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-7142bb7942fsm2976439eaf.5.2026.10.28.17.24.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 17:24:21 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 4/4] tmp-objdir: merge loose object index when migrating tmpdir
-Date: Wed, 28 Oct 2026 19:24:13 -0500
-Message-ID: <20261029002413.3291184-5-jltobler@gmail.com>
-X-Mailer: git-send-email 2.56.0.173.gf57c9a7388
-In-Reply-To: <20261029002413.3291184-1-jltobler@gmail.com>
-References: <20261022234007.3081825-1-jltobler@gmail.com>
- <20261029002413.3291184-1-jltobler@gmail.com>
+        d=1e100.net; s=20260707; t=1793235766; x=1793840566;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mizKqmrxZ2yzOvch2PkF5uly4TaFR3o4W3LmksXy6R0=;
+        b=aeqQB1PQa76gzjJlSxxbuVyBgSS7DS5INLHlveDQYJIUZfH0LcFP57nMZqG3sxwCFr
+         +LlgqR0tIyE+GWaDyujIGS6CXpuLwxZWyhu2uTY5TB7of5mfNSsfjHE37r0zNx3La0/r
+         Z7GyLFLKMb7UtQo6U8fY3V9JJWW2KcXZXbWeg57PHqDzS5C1y+sYS1CRyDE6mVXxsIJs
+         3psrQsvrg0tDZkWCF3Ida3nqFqg93Qhwe3CwMW7WMNkXT+fjbLgwc6uRTRoT00T0Uzf8
+         X5ve9W6d5Ua9aeQLMCjxRghTYBGOWyPJYNWv87bq40cOLaBc88dyUAmtWeJ+X10mNNNE
+         Nkdw==
+X-Forwarded-Encrypted: i=1; AKwUvByHETImWjaxGmhwnNQvhMPmm5Ba3h4wP2rmAIx0BGK9PlnsmCdgq9Ljl5oR27MzSWTk2oU=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKIW3u/mj9oAJs7ecFXtatMRbmF23XWBLFcQ0NBl6eHCJ76ZFT3
+	UTk2NoBkUC4T83vyQ+Tq/i9yWoGR+pzYz8Ctc85yAD06paL7/lcoNkAs5gO414i9
+X-Gm-Gg: AYBFou0YMLcOQ09QUneLfjkMo9Q6La0zc1OeGaqm+DVDwktyzVGR3HYh9ifLqqu/DAQ
+	VHXueceRm2N0GEjj+ACQ84e7TvMJ097mOsG4UaBZgEyzNUS5bM1IfLnWBcAUI44KLYtXBw0mRdm
+	bSmTgDvK2hpHBNPwhpM/V6fMuuOVOS5grb6UlZImOYthKD+AxlJ32TMIwrYCEm9q3P7fjVoiFcz
+	U+hnr64kpRiKcn3ZiioaXwRjoLOmrBwWALh+cP61VuqTzY7ZWfOO8APIUrTfx9DMY2bFz3CixjW
+	MYWczYOB4STx27oqwApL8ywe6qM/TtbTwvrGLGc2cifb0v5VK+BbBREAjSJgPoacBx7whipj1+/
+	TVL8ZfipXMtCC/GI3J0CbTYbjepIsOIPZzJXuicOU8npmDu7pu6q+wb25URo5VAH1hSu3BctuaL
+	bU6l9VXUjGT6wCPyz1Uy1STF8xed4QWosAublJjMMjtX7dAuEv0p23ogNoLj7fHjGV8xfOMUEc2
+	4QzfQ9v4Xf/Bk51TrcudDQW+eHXzcXLybq5Es/23P0yCzB7b/kidxHcUyOCVwZB2rXD8iPOyAIZ
+	LhZ0Dh25zz4EYSHP+gT96CcWItMRglxfNLzd4PqOXUsIn4uRiiEKudyn3X6a525MDb1Y6UlQbSy
+	AUU/bGrgP6KDo/QWAXegT3yOYk0tThgs0uqsyUWcXFco2Z9uealLiYpFFhrOBoF8e/5nVMvkVui
+	FxyYCSMVYHQVG53Cj9veafk6L2QY//9ye8aB0H4EpRMiX2C3nPO8zkzUg=
+X-Received: by 2002:a05:600c:1391:b0:4a2:967:dfb8 with SMTP id 5b1f17b1804b1-4a966e2b41dmr96634425e9.20.1793235765907;
+        Wed, 28 Oct 2026 18:02:45 -0700 (PDT)
+Received: from localhost ([2001:818:c665:a700:b017:4479:7c99:e3fb])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4aa7ee57594sm26769035e9.3.2026.10.28.18.02.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Oct 2026 18:02:45 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,182 +89,144 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 29 Oct 2026 01:02:44 +0000
+Message-Id: <DMGX0XEZIMHC.2P0KB28XC83HV@gmail.com>
+Cc: <christian.couder@gmail.com>, <usmanakinyemi202@gmail.com>,
+ <siddharthasthana31@gmail.com>, <kaartic.sivaraam@gmail.com>
+Subject: Re: [Outreachy PATCH] range-diff: use the repository from the diff
+ options
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+To: "Okhuomon Ajayi" <okhuomonajayi54@gmail.com>, <git@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <20261028215137.15262-1-okhuomonajayi54@gmail.com>
+In-Reply-To: <20261028215137.15262-1-okhuomonajayi54@gmail.com>
 
-When a repository is configured with a compatibility hash, each loose
-object write also records a mapping between the object and its
-compatibility hash in a "loose-object-idx" file. This mapping file is
-located in the same object directory the object is written to. If batch
-fsync of loose objects is also enabled, the loose objects and mapping
-file are instead written to a temporary object directory and expected to
-be migrated to the primary object directory when the batch transaction
-commits.
+On Wed Oct 28, 2026 at 9:51 PM WET, Okhuomon Ajayi wrote:
 
-While migrating the loose objects works, the "loose-object-idx" file is
-unable to be migrated if a mapping file already exists in the primary
-object directory. This occurs because `finalize_object_file_flags()`
-expects an already existing file to have the same contents. Otherwise,
-the following error is returned:
+Hi!
 
-  error: files '.git/objects/tmp_objdir-bulk-fsync-XXXXXX/loose-object-idx' and '.git/objects/loose-object-idx' differ in contents
-  error: unable to migrate temporary objects
+I think that the title, "range-diff: use the repository from the diff
+options" can be confusing for someone that doesn't know that diffopt has
+a repo field (as it happened to me when reading this).
 
-Furthermore, it is not sufficient to just replace the preexisting
-mapping file with the new one as the new file only contains mapping
-entries for the newly written objects.
+Also, when talking about variables in our code, using their names makes
+it easier to know which code is referred to.
 
-Update the temporary directory migration logic to handle
-"loose-object-idx" files explicitly by merging new entries and
-atomically writing the resulting mapping file.
+Does this work for you as title?:
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- loose.c                       | 47 +++++++++++++++++++++++++++++++++++
- loose.h                       |  2 ++
- t/t1016-compatObjectFormat.sh | 27 ++++++++++++++++++++
- tmp-objdir.c                  | 11 +++++++-
- 4 files changed, 86 insertions(+), 1 deletion(-)
+range-diff: use diffopt->repo instead of the_repository
 
-diff --git a/loose.c b/loose.c
-index f2e111c25e..36da63684f 100644
---- a/loose.c
-+++ b/loose.c
-@@ -311,3 +311,50 @@ void loose_object_map_clear(struct loose_object_map **map)
- 	free(m);
- 	*map = NULL;
- }
-+
-+int loose_object_idx_merge(struct repository *repo, const char *src,
-+			   const char *dst)
-+{
-+	struct lock_file lock = LOCK_INIT;
-+	struct loose_object_map *map;
-+	int ret;
-+	int fd;
-+
-+	loose_object_map_init(&map);
-+
-+	fd = repo_hold_lock_file_for_update_timeout(repo, &lock, dst, 0,
-+						    LOOSE_OBJECT_IDX_LOCK_TIMEOUT_MS);
-+	if (fd < 0) {
-+		ret = error_errno(_("unable to lock %s"), dst);
-+		goto out;
-+	}
-+
-+	if (loose_object_map_read(repo, dst, map, NULL) < 0) {
-+		ret = error(_("unable to read loose object index %s"), dst);
-+		goto out;
-+	}
-+
-+	if (loose_object_map_read(repo, src, map, NULL) < 0) {
-+		ret = error(_("unable to read loose object index %s"), src);
-+		goto out;
-+	}
-+
-+	if (loose_object_map_write(repo, map, fd) < 0) {
-+		ret = error_errno(_("unable to write %s"),
-+				  get_lock_file_path(&lock));
-+		goto out;
-+	}
-+
-+	if (commit_lock_file(&lock) < 0) {
-+		ret = error_errno(_("unable to write %s"), dst);
-+		goto out;
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	loose_object_map_clear(&map);
-+	rollback_lock_file(&lock);
-+
-+	return ret;
-+}
-diff --git a/loose.h b/loose.h
-index ed663ac550..35b46f4be5 100644
---- a/loose.h
-+++ b/loose.h
-@@ -23,5 +23,7 @@ int repo_add_loose_object_map(struct odb_source_loose *loose,
- 			      const struct object_id *compat_oid);
- int repo_read_loose_object_map(struct repository *repo);
- int repo_write_loose_object_map(struct repository *repo);
-+int loose_object_idx_merge(struct repository *repo, const char *src,
-+			   const char *dst);
- 
- #endif
-diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
-index 9cafcee509..6d0f48226f 100755
---- a/t/t1016-compatObjectFormat.sh
-+++ b/t/t1016-compatObjectFormat.sh
-@@ -305,4 +305,31 @@ compare_oids GPG2 'commit' signedcommit4 "$signedcommit4_sha1_oid" "$signedcommi
- compare_oids GPG2 'tag' signedtag3 "$signedtag3_sha1_oid" "$signedtag3_sha256_oid"
- compare_oids GPG2 'tag' signedtag4 "$signedtag4_sha1_oid" "$signedtag4_sha256_oid"
- 
-+test_expect_success 'batched fsync migrates loose object index' '
-+	test_when_finished "rm -rf batch-fsync" &&
-+	git init --object-format=sha1 batch-fsync &&
-+	(
-+		cd batch-fsync &&
-+		git config core.repositoryFormatVersion 1 &&
-+		git config extensions.compatObjectFormat sha256 &&
-+		git config core.fsync loose-object &&
-+		git config core.fsyncMethod batch &&
-+
-+		# Write object to generate initial loose object index.
-+		echo foo >foo &&
-+		git add foo &&
-+		test_grep "$(git rev-parse :foo)" .git/objects/loose-object-idx &&
-+
-+		# Write some additional objects and ensure the corresponding
-+		# temporary loose object index entries stored in the transaction
-+		# are merged into the primary object directory.
-+		echo bar >bar &&
-+		echo baz >baz &&
-+		git add bar baz &&
-+		test_grep "$(git rev-parse :foo)" .git/objects/loose-object-idx &&
-+		test_grep "$(git rev-parse :bar)" .git/objects/loose-object-idx &&
-+		test_grep "$(git rev-parse :baz)" .git/objects/loose-object-idx
-+	)
-+'
-+
- test_done
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index 3debb60270..5307717354 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -4,6 +4,7 @@
- #include "chdir-notify.h"
- #include "dir.h"
- #include "environment.h"
-+#include "loose.h"
- #include "object-file.h"
- #include "path.h"
- #include "string-list.h"
-@@ -294,6 +295,11 @@ static int is_loose_object_shard(const char *name)
- 	return strlen(name) == 2 && isxdigit(name[0]) && isxdigit(name[1]);
- }
- 
-+static int is_loose_object_idx(const char *name)
-+{
-+	return !strcmp(name, "loose-object-idx");
-+}
-+
- static int migrate_paths(struct tmp_objdir *t,
- 			 struct strbuf *src, struct strbuf *dst,
- 			 enum finalize_object_file_flags flags)
-@@ -317,7 +323,10 @@ static int migrate_paths(struct tmp_objdir *t,
- 		if (is_loose_object_shard(name))
- 			flags_copy |= FOF_SKIP_COLLISION_CHECK;
- 
--		ret |= migrate_one(t, src, dst, flags_copy);
-+		if (is_loose_object_idx(name))
-+			ret |= loose_object_idx_merge(t->repo, src->buf, dst->buf);
-+		else
-+			ret |= migrate_one(t, src, dst, flags_copy);
- 
- 		strbuf_setlen(src, src_len);
- 		strbuf_setlen(dst, dst_len);
--- 
-2.56.0.173.gf57c9a7388
+> output_pair_header() and patch_diff() already receive the diff
+> options, but use the_repository and the_hash_algo. Use the
+
+This first sentence reads a bit strange. But apart from that, I miss a
+reason about why we want this [1].
+
+> repository from diffopt instead, and pass only the hash algorithm
+> to get_filespec(), as that is all it needs.
+
+"and pass only" reads as if now get_filespec() only receives the hash
+algo, but it receives the hash algo on top of what it was already
+receiving.
+
+Also, saying that this is related to the_repository replacement because
+the_hash_algo comes from the_repository would be nice.
+
+>
+> read_patches(), output() and is_range_diff_range() still use
+> the_repository, so USE_THE_REPOSITORY_VARIABLE stays.
+
+Nice to know. But I think that it would read better [2] if you used the
+verb at the start, like:
+
+Keep USE_THE_REPOSITORY_VARIABLE because read_patches(), output() and
+is_range_diff_range() still use the_repository.
+
+I recommend reading Documentation/SubmittingPatches for this kind of
+things. I left at the bottom two links.
+
+>
+> Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+> ---
+>  range-diff.c | 16 +++++++++-------
+>  1 file changed, 9 insertions(+), 7 deletions(-)
+>
+> diff --git a/range-diff.c b/range-diff.c
+> index 8e2dd2eb19..3f56a4f71a 100644
+> --- a/range-diff.c
+> +++ b/range-diff.c
+> @@ -418,7 +418,7 @@ static void output_pair_header(struct diff_options *d=
+iffopt,
+> =20
+>  	if (!dashes->len)
+>  		strbuf_addchars(dashes, '-',
+> -				strlen(repo_find_unique_abbrev(the_repository, oid, abbrev)));
+> +				strlen(repo_find_unique_abbrev(diffopt->repo, oid, abbrev)));
+> =20
+>  	if (!b_util) {
+>  		color =3D color_old;
+> @@ -440,7 +440,7 @@ static void output_pair_header(struct diff_options *d=
+iffopt,
+>  		strbuf_addf(buf, "%*s:  %s ", patch_no_width, "-", dashes->buf);
+>  	else
+>  		strbuf_addf(buf, "%*d:  %s ", patch_no_width, a_util->i + 1,
+> -			    repo_find_unique_abbrev(the_repository, &a_util->oid, abbrev));
+> +			    repo_find_unique_abbrev(diffopt->repo, &a_util->oid, abbrev));
+> =20
+>  	if (status =3D=3D '!')
+>  		strbuf_addf(buf, "%s%s", color_reset, color);
+> @@ -452,9 +452,9 @@ static void output_pair_header(struct diff_options *d=
+iffopt,
+>  		strbuf_addf(buf, " %*s:  %s", patch_no_width, "-", dashes->buf);
+>  	else
+>  		strbuf_addf(buf, " %*d:  %s", patch_no_width, b_util->i + 1,
+> -			    repo_find_unique_abbrev(the_repository, &b_util->oid, abbrev));
+> +			    repo_find_unique_abbrev(diffopt->repo, &b_util->oid, abbrev));
+> =20
+> -	commit =3D lookup_commit_reference(the_repository, oid);
+> +	commit =3D lookup_commit_reference(diffopt->repo, oid);
+>  	if (commit) {
+>  		if (status =3D=3D '!')
+>  			strbuf_addf(buf, "%s%s", color_reset, color);
+> @@ -474,11 +474,12 @@ static struct userdiff_driver section_headers =3D {
+>  	},
+>  };
+> =20
+> -static struct diff_filespec *get_filespec(const char *name, const char *=
+p)
+> +static struct diff_filespec *get_filespec(const struct git_hash_algo *al=
+gop,
+> +					  const char *name, const char *p)
+>  {
+>  	struct diff_filespec *spec =3D alloc_filespec(name);
+> =20
+> -	fill_filespec(spec, null_oid(the_hash_algo), 0, 0100644);
+> +	fill_filespec(spec, null_oid(algop), 0, 0100644);
+>  	spec->data =3D (char *)p;
+>  	spec->size =3D strlen(p);
+>  	spec->should_munmap =3D 0;
+> @@ -492,7 +493,8 @@ static void patch_diff(const char *a, const char *b,
+>  		       struct diff_options *diffopt)
+>  {
+>  	diff_queue(&diff_queued_diff,
+> -		   get_filespec("a", a), get_filespec("b", b));
+> +		   get_filespec(diffopt->repo->hash_algo, "a", a),
+> +		   get_filespec(diffopt->repo->hash_algo, "b", b));
+> =20
+>  	diffcore_std(diffopt);
+>  	diff_flush(diffopt);
+>
+> base-commit: 8d1b215c01512b9658d4525c54ff9b9245f9a7e8
+
+The code looks good to me.
+Passes make DEVELOPER=3D1 and git clang-format --diff HEAD~
+
+[1]: https://git-scm.com/docs/SubmittingPatches#meaningful-message
+[2]: https://git-scm.com/docs/SubmittingPatches#imperative-mood
+
+Good job,
+Pablo
 
