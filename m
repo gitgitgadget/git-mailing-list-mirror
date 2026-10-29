@@ -1,121 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793281037;
-	b=UUrsAjs01nnp918rcA26c7JZ5eNqrDinnJIOqxNFLV/27u2H3/EbGaRhnhhJgSYIPlUI
-	 7W6VZeojJw+Zxo4ZlmeK3wt8u9ko/pjrXOXhqnDtARWmISn06JOPn74WQoVS5F7osKTDt
-	 wBZ0Se7H1j94oyd7k5HTtk4VWdpC8Wt+3qwLQu9tsosKAgqhoDuv85sHjpKAAkBmmAQFg
-	 lgDd3VtbWWVui10xxnHdVQ6Ox6L94Jvp1EKwu/TB+JAWcDcBj0uB7rw2D8G/mSgvA6lRC
-	 Rl3zaBZWMTLQzzcTJUONS2BzhjCMD1bm+dyMczSQKFyySm0vcl6OSFKFQ/G7D3p76lg==
+	t=1793281519;
+	b=ydKBOgOiFJpAri1YpDtG3ux1sAiNh+BovS3trcoFYKcIG6CvQ1LS1sPu5ztGXYHDduF1
+	 sXGmfoi1mlTU7k81Ueuh40BewtWD8fBIanZPISARr7ZJrxa9oevqINru6FQWNAziTStaq
+	 6bFyjGPc/SzJ5wdDC+DfZiz9VPIiQMZ3ptqDwqSKew+IOnR5KmSAg1tMc31U7QT2N1bYj
+	 F4fdcrnP81+yqJu1oo96Iard9yL0KQlotoJKalnlJ02A7O310U83UlMEOBAcuX+UH4zAp
+	 Wr0fvS14FBPLIZgluoOql6dQy2bntPadF24+EEYx0RiVwBGOG1jYyhI7NUwaKjdCIPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793281037;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=3MTdya3RtoyW2IOHCt7nb6aEUwcT58T70QhoHoXEsD8=;
-	b=1As5XjjEqTvzh2uinlpzV1miT6KjZg8ILJ14vU9YEIJfrmjcYzvdj/rus6L/u1uRHKmy
-	 7RqZmUdxFITf42edOBeVB08nyiaaTTwVrBrkD2R8AsosJvCXblNP7MATF1PuNElCkPPm+
-	 +DlXc10YrgrS+WedYq2TyCAz0b6ZjM0tMJvBDsRDSI5bIDIXlScBzm2ZMWuIubHz2Dna7
-	 1RNRzE5+4i3Y37TKrxUc9Ga6UJLNbvgbG9VbcDfl5QLg0WugHh0ADn7ejfoYInDb2HOo2
-	 SQXqkvb3Ryh5D9vYRZkY6gvgyO/3+0xhaJN5b8BAQfIrD9DE6R/ikiNFVZwId+TwxUQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793281519;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:
+	 Cc:Subject:From:To:X-Mailer:References:In-Reply-To;
+	bh=wByy2paBPc9U2K1V5Cu+DgMhZahNIK8jSioMcVpI1QQ=;
+	b=c6+MQ1joBD+krbYVFZ/xbWOmgGhc4nKGteV/T1r5+jI7A45lCbUIiOzx2pN/p39CSsKc
+	 EwhRMtKOwUJ0ByzcWL61v4UVcSpuirwzYI4ylgSGdirjislLgNE7tzM/yI+hmT9hcB1fh
+	 5mKpOArlcJbV7cwfSyUdKlNTn/RBtuQeoWOrkrOThtSeWGoH+ZJHPASSGVyKYfvgXoD6E
+	 6Z7tsG+3HOVpmIdsptu6wKLL2WJtWiSQYUwuZOqiVsui87TqgqeLqjbrf7RbvWwCUltgc
+	 xg7EUWDHnZZ9iSmHyToL0MkILqI1lMMnbAq7wF4wP0ty+WIkwxJPgSrWKzTEcrnH25w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=oia5Q662;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=lCHjBHm9;
-	arc=none smtp.remote-ip=202.12.124.157
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0FhiF5wn;
+	arc=none smtp.remote-ip=209.85.128.52
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC2B606A33C
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 13:37:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3EC2B606A33C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC2B606A31C
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 13:45:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2EC2B606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=oia5Q662;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=lCHjBHm9
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 930357A00E9
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 09:37:16 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Thu, 29 Oct 2026 09:37:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793281036; x=1793367436; bh=3MTdya3Rto
-	yW2IOHCt7nb6aEUwcT58T70QhoHoXEsD8=; b=oia5Q662/KB4WfLdMA0sCcKjYy
-	SpaPqSd5wFGffcn6XSPAv0gLiXiHWAez4NoDiDViICKFXL00XSCROtnvPs2dj+Al
-	Upc9+DK46fo78xWxHn8nU9A++mOnPkai9RKbo3X61bw/2Gg/wclXcP27aEWmXy/L
-	f0QpmTUwqDX/4K19W470hHVXuEp05mcMZyoYjpQ1fS0F803cgM6j0olq+QT2onkM
-	do/Oq1u+jG4JvECySJ7IC4NUJJP8ys0LNzB/3EuZRHfMjOD+oJjwxQWGeu7bQeXM
-	QHZ3/weDkvCsMb4ouMbVqz4sQcdH5SO+XfhoqrCgoPiCgRU/Jhd9bicsz5NA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793281036; x=1793367436; bh=3MTdya3RtoyW2IOHCt7nb6aEUwcT58T70Qh
-	oHoXEsD8=; b=lCHjBHm9Csjuceyicn590R9TZNd8p4VnMU2JKuCXGnIYQOGWGV0
-	ZBBHmajVWTJne5qKziNJ+ptmDTud408CrJxWJIAYt2RUXAIuaYJNbhA6qmrkwR9/
-	B4CQiAdRuFaJ+eDvk0FUkxxgFPegbb+EU7esNORIfAy6MxUDRd1Jjxln4wH+C2qj
-	aBJMoLnb+up6XkUXB5k/rjZLi6Bc7gi/Q5ceG/GtCwRIKkJxJMfFfS6h0yoqbtah
-	3XbmlOIZsfg3IPuNLLqjddbwT3nv92TGSMo2jjwfTuG9ZfTgDsI7HaCnFX9QPDTV
-	IZDRSGvS8q5QuUjgIRlEph2m3wB841CovgQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793281036; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:j4jjbQcrEm9lL9GXkBakaD6fvlbrZCiiSxB3a5H8QsKmPSe
-	ITy990wNEfRtK0n9rM7S34/CxcaZB/M+f4MFZFWon9VTa35dzg8p3f58nic2gmAS
-	L4t1rDcdk8PmoQiAWNBKRGIcNwEU789zUgwmAhltfL+xQzWyJx0sL+SbHhxq+YAW
-	N453HOo1l+Sx61u92vy9SIqfriCYdd+Dv9V2E66AHJg8TR0SHqXNQwbq/MH0jbQ3
-	1TrArF/gPFLl31/JL3HNDux7vh8QXsHoRCCTSQumhvheuasbzskw1Syq6bEwuXGY
-	bhXj1Hz2Skj4a9HIwajVKSGOiCPTt7IvLJ9rg0Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:rwJVQgdmQ6y48yf6wzMtlxiA/MGgb0r0ljf8NIB+X6U=:SFxd0H3vGB7hPXANvpmYMxyJcmD90ATyg+hH4z8gxIM=;
-X-ME-Sender: <xms:DEzjatVGXz7vNz2zO14HQNLQNp9HrQPpEdQrwi8Qe9obx8bnW2DMKg>
-    <xme:DEzjav2KXilJi9EXJSTm3ClMHY62MVHb-ZF7kXa7SjloXHLNeHoZFaUyJFkW2p5FW
-    q6mLm-JrVT1UAizQiJaHk8WusiOs7cIUUHtAaSJgMw_uj5E_kymDMo>
-X-ME-Received: <xmr:DEzjarpXoAAOagCd2XiytM7F9zhIcZk-oXuTTj1kGlWxVh2vvlniLA>
-X-ME-Proxy-Cause: dmFkZTF8R2v4wPDHTWNH5Ll3t5umSe0PaAL74J5fwD4X/pmhJDDxVrguq1G1NfbgtbPLPs
-    KXH60HikjoPZ4FSVOStiujf9kjPakwjwwsX32XeghxZlmTaffeT4zVGQtjgupX/JbvKSu+
-    4KXYDIJ09XoGxYKXtovNjHq4rLr6M0oYe42F8YvyaNzPhsHpuhdolEAyEIppvbWwoL7vO1
-    wCVJXS6F6BnT9iuZHHCSJoqkb0WxTMyM4Ohxz9h7R9ABtTJkohEtEWOPXl4tF6adfY2xDT
-    2Txz94VQbT7lhez2ZKqOJhjJ1wiB5xt5uk0C3rxpKR02HwL8RrEgx5LqOjx6i6JEEZ0Dq1
-    0k2eBSrKA0+ng9szPQgXeMnE3LUHSD0+UXS7jy1lI+WCz3xZTYzAafeZ3D8ow0pluC0plb
-    PU1cb9/NfZZ1bIWo8Dm4mKMswjtleBuDWZUpm6rhVcnnbUWofh6fPNSLyi1cFyFRmEqqhm
-    hTd4wIlrfor4NkniUm8tbIF3CS/EWt6ChFE78uIf4TUfVaywt8iTWJhjY8g+MFCQSg+jpb
-    Jk7XVgpvPVf8T4+6FF5NhjGX61prdRmn9dxRzsig2ZTSeeQ2Q7ibeTzM8+1oLEVMQZGzhd
-    A8cTX4p0PFjZiwfc8g+XiUHBL6Dgrgoip9kB6uZuQb0fEalxnswqlBAmYKFw
-X-ME-Proxy: <xmx:DEzjamXkPQ0epOhi9_4efsFqg0IYdk-cY20HltArwk0nVjxKp0_Zbg>
-    <xmx:DEzjambRXalkyF7ZynoJHL9H-z4kggi2U1PoIriqnrr11Tu2GCl8WQ>
-    <xmx:DEzjajcsaTfX09dUuSuWcc5ARaL_j1JcJ1vKJrYoSuUu3osNGueaMg>
-    <xmx:DEzjag2ZD_6tKYaiWMJt9Ig4LXe1fopSQAfPPmaAyfcQyfgw4G3rKw>
-    <xmx:DEzjaoUb341M3yETrfG-CU1RdEfHdMW-V7c6EnMsjZbD4ylktEyqu82o>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Oct 2026 09:37:14 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c8d0b6ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 29 Oct 2026 13:37:12 +0000 (UTC)
-Date: Thu, 29 Oct 2026 14:37:10 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com, karthik.188@gmail.com
-Subject: Re: [Outreachy PATCH v2] bundle-uri: stop using the_repository
-Message-ID: <auNMBpm4WY1sGUIG@pks.im>
-References: <auM3DGcWTL5OdRnD@pks.im>
- <20261029131325.79176-1-okhuomonajayi54@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0FhiF5wn
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a20bdaf39cso23324035e9.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 06:45:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793281517; x=1793886317; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=wByy2paBPc9U2K1V5Cu+DgMhZahNIK8jSioMcVpI1QQ=;
+        b=0FhiF5wnEyNGnhOL9gRqXuf4EqmCVcThG6rv/YgYfdtzj/StTcpoIQYpujsYA46BGN
+         07wfSWmHnSLbVZO9CfBK5eGnjpcxPh125LKHiEv85Dp8Yxf/heRQFN5SbbpNbFgRfvVh
+         7ZiaJGuX1+YRswzW8bAMGNJb5+JLhucNJjDgUjtBF1ctqxJk30TixwAIc3BIgQPlW+dv
+         XeceZxBsLyfEGWTCnKCHVfyo8ZSJm6kQQBcGAgeqbwDLKZC1x2xWo+CQsRIWwmQxZIm+
+         dj723pNA/O15C5eoQAMLfuakZNMzJfMjUIN+TjOQvtXBy30ucMbZHWB/SbUNCXRUM9gZ
+         gWyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793281517; x=1793886317;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wByy2paBPc9U2K1V5Cu+DgMhZahNIK8jSioMcVpI1QQ=;
+        b=uG8Obp3/72HkfWaaBMwgzSTME9GftqAFNkui/o4YIt796IFN5VGfuJpsDWOsFBTx1I
+         Q4T3C31bJLaWHLoBt1plLen2LfjqXd479AoVZgKp8U4RxwvhPd7mgsfHQgLWh613ZhRe
+         fJueZcwYrvCDc12JGTaQC37EJMEPk+URclVhNup8qJiFkxrhuTvlyWq/NWFfCHhyKxCf
+         BT2oZPCWpl3XgQk3gcX/bY/4Ylq07xvpdBvxfN9xAsZ86nwkcBMl4aIo1R78tENWKMse
+         67gCpCxXPhTM200cpA1pKCfIOVJLgF4XOSD86cY++RCmS/yk014N/RWo+uefYBadhjaP
+         TD7w==
+X-Forwarded-Encrypted: i=1; AKwUvBw0Nwb4o25+R2rWndIBLW4bADhfcs53/d5GIEVdczPnpYLEkrcHXoGI6ERQdLkBB5wQJdo=@vger.kernel.org
+X-Gm-Message-State: AFq9FYK9rZO+5TuTBqdOCFAXRZlriWRkzN9WqN4P+PE8lnTs0b13+TED
+	L9+ZloB87TEJtUuCK1bKR8OAwpLwSMTv2JFADIVh/2zKIT22Nu9zWBeSen+AX+ZJ
+X-Gm-Gg: AYBFou2IRxxYYdC0O/GoF1jubNDqVw7uH4QCjAYvs9Na/fFTy6wX3ZBYs3jJ/yXvW1x
+	LUsBo2YAAopW2Sbn6/8H7w+XAIqI/JQ4fUjsoxTLi1VdWqxwvd27CwYKQpboumWfm9qOBB1r26G
+	j+wWvkX+V7qYqpNBGZ+1/dwKXdq7mcRHgHP1ffIrdJVN4BsQz6MPbTEKgE/9hXMHW1uW1xl+6to
+	8gY52KAjopmT8X2CBwCZeMXCflCuntEEVHg6SlI4F6N2Gu+8r3AG64daHwFePoGelnaz134yWOv
+	8yYCknEQZpNC+fXT7tBQr+PtEMmdtwr35LFGOmsjf2RpItEXAMs9zsTfilycJ/QIR0m2f41K/Uj
+	UVWdwDEYA7v0Z+UfSfiToGiPKLR+2CW9Kbb4fK1U5j3fOXJ8/njuEzK5CneTMobBgH3+SaUDd9h
+	RzB0VDvfutQBG2A8NufH6LV6LJvBMSJXnCqCAOHlKS0AKqQrgB1t39toMTtqvrOe4lMedGEHa52
+	I/bh4+ZUqXgXy01o6qNJRKgD7/iIWBgLVor8XF8N3EpWz1Qu1EW25eoUE1i5BzqgCn6sCIiTCX6
+	8WjbCkjde2ZfL/wAUsgSqQliE2561xPhX+BS9gDSK+KuA1xeMD5V+J2NWswdGSZFeqNWopSQNbu
+	2ZjG7IGfGE6OSKt5A4I9PLaNKGeD7jon7S2lsKrnwSxhP0km/I2DetL/0LbBUotneDd3ZMRlHUm
+	tX3wuM/gDAPrUr2mJb9PGq8qBj5X/lM5yVBTCFZasM+cZLn4vXGT3g+Ps=
+X-Received: by 2002:a05:600c:8b58:b0:4a2:8f4:96c with SMTP id 5b1f17b1804b1-4a9678c333bmr137744245e9.29.1793281517159;
+        Thu, 29 Oct 2026 06:45:17 -0700 (PDT)
+Received: from localhost ([2001:818:c665:a700:b017:4479:7c99:e3fb])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ecdd5b3sm34508328f8f.53.2026.10.29.06.45.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Oct 2026 06:45:16 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,20 +89,84 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261029131325.79176-1-okhuomonajayi54@gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 29 Oct 2026 13:45:15 +0000
+Message-Id: <DMHD8RCO7V74.2BK7C9T4HNLHO@gmail.com>
+Cc: <toon@iotcl.com>
+Subject: Re: [PATCH] bash-completions: add --[no-]graph-indent
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+To: "Mirko Faina" <mroik@delayed.space>, <git@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <63106e1dec45e82c7f132a18816b2d1fffb52752.1791921033.git.mroik@delayed.space>
+In-Reply-To: <63106e1dec45e82c7f132a18816b2d1fffb52752.1791921033.git.mroik@delayed.space>
 
-On Thu, Oct 29, 2026 at 02:13:25PM +0100, Okhuomon Ajayi wrote:
-> Changes since v1:
-> - Also pass the repository to find_temp_filename() and
->   copy_uri_to_file(), and drop USE_THE_REPOSITORY_VARIABLE,
->   as suggested by Patrick.
-> 
-> Thanks, Patrick, for the suggestion and the diff, and Karthik
-> for the review.
+[Cc'd Toon because of the mention]
 
-Thanks, the diff looks as expected.
+On Tue Oct 13, 2026 at 8:50 PM WEST, Mirko Faina wrote:
+> Add missing completion for "git log --graph-indent" and "git log
+> --no-graph-indent".
+>
+> Signed-off-by: Mirko Faina <mroik@delayed.space>
+> ---
+>  contrib/completion/git-completion.bash | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
+git-completion.bash
+> index c3a49e2e22..2348a3cfb9 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2298,6 +2298,7 @@ __git_log_common_options=3D"
+>  	--right-only --show-linear-break
+>  	--show-notes-by-default --show-pulls
+>  	--since-as-filter --single-worktree
+> +	--graph-indent --no-graph-indent
 
-Patrick
+Thanks for Cc'ing.
+
+I didn't know about this so I completely forgot to add it, however from
+what I read, this is the __git_log_common_options and I'm not sure if
+this is a "common" opt, as I don't even see --graph here.
+
+I searched where --graph is, and it's here:
+
+l 2383-2409 'git-completion.bash'
+
+	__gitcomp "
+[more opts]
+		--graph
+[more opts]
+		$merge
+		$__git_diff_common_options
+		"
+	return
+	;;
+
+I think it would fit better here (not sure, I just quickly skimmed the
+file).
+
+Also, I missed this for the --graph-lane-limit option so maybe it should
+be added too?
+
+My main doubt is, both these options proposed (yours and
+--graph-lane-limit) are --graph dependent, which means if someone
+autocompletes them but doesn't use --graph, they will get an error
+saying that --graph is needed. I'd say we do what other --graph
+dependent options do, but AFAIK these two are the only ones.
+
+From Toon's Git Merge talk, more options for --graph option will be
+developed so we should maybe think about how to do it in a way that=20
+doesn't autocomplete if it's going to error? (maybe that does exist,
+given the multiple options that depend on other options)
+
+>  "
+>  # Options that go well for log and gitk (not shortlog)
+>  __git_log_gitk_options=3D"
+>
+> base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+
+Thanks,
+Pablo
+
