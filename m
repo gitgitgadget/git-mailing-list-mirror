@@ -1,87 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.5
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793283330;
-	b=b1unzykGvu2E+hq7DMxhxBaVWjWX9SQKac9+hdq3tNfDeHd+/r1L8XDqqkEkF5RnIu5/
-	 IzSWJyJaqnY+arsLJMqYBk7F146lgob924/tXwblbq1wCJv8KeTTllaSbc68lWivAxthe
-	 QhchIwd2tXCFtHE39tKsSuDmi7YW5Y/6kknfeKGSemLdzDnQAAjUpQjEGifv+c6gOco6v
-	 qrwml53VmT0C8+8M37BX9C2Rhrzg6LXXaPclR4xtG8Ggb9M9exkkP5YLer2PYhNPtEf53
-	 aBsSNgjiKP1mOt1cOrQVB6xrPdlwsdgoipHrCU7hWMupTgstu6RyCJ+3JaVt5cu0xhA==
+	t=1793283372;
+	b=NbGptNRMOU9uO3AA6xSqTvcSk247acgmWb5yOLXN0wv9Fj1VMtH8pdD1SCtcoAgY1N+V
+	 VWf7iUn4qtZdp8RuT4iaDpbIsCpP1Hy2YObTls7NYzwnOb8IcWiMgr0/3cs7Rwp8Q4a0x
+	 +kGZfwINrRT/40hMEIyYC4KkYpn1Q4HiPFgoxIXQqTC213E8OCjgHWRvt5V2CWZNjDK18
+	 jX8GgGgNk58mHepNZTXyl9gYeuk1gt+kOL/tgnJdZBTrglYE6/Ee3uSb/HKLUxzhdjYxG
+	 fQqXSIrKHzGVDq6gfTJ3asHJieD04Wyimzazre/59OYtC72lE+YBsgiLAB/J8RtF0Fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793283330;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=UKi0a1UZMdK4wKYAN8M7vBgSv7WStN7g+j6BiE/gjoo=;
-	b=WuA8GlvgesMQdpzgnKNDDmx4NYYqX6JXgg05yDW8gdFteu7hfkqFbQf1SPTn0HojnYHQ
-	 5Galb8Uh6afAqO9FJCp2ccc9cSM/7NfTwgwGuqccC6cUpDHt9L/bvPlhm3h9+tDu1wkxS
-	 XHI7JnYAGjtAHf9fu4DbmCDefWt7BFCcDQQvVPecLMLkZ/Ti3Dig74Q8cfSXyofdX08+t
-	 80AYpDkT9oJQ7Es2MB8dOHIWyKH75EVSvJReeSOPgQAvV6HdmZyNzdvgPtGovqJHRTt8j
-	 fOlzOQrj426MH/sWPmhQrLyq8J0sBWSzbXIlBoXJHUEs/hAxwC5h1QJ2UrG6mz+5FTQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793283372;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-CM-TRANSID:X-Coremail-Antispam:X-Originating-IP:X-CM-SenderInfo;
+	bh=rI9Nl1ZRlvvzhtH0grSrahQNCseoQcwaGaA4H0SzSag=;
+	b=hKmYrwXZwuPZPSLmj5EVcKjSkT++5vypYamjr/3V1Qg5KkiJnbZj3506ealUwMuTFIgC
+	 ywHfPLov6vzGUWAef8thBowxDtm2JnDB9heRVnLkyAaTHJsLL9rWwvDKYmaJH85P5BYs8
+	 GrhuSQDh7KqspNd3pPtY6pdXGayTeY3lCc8WBvC0j+RuHtyq+Z9QRipHNabufLxAA5vcc
+	 uMejPtaLq13C2OtZP0BqkkNCmcxfcjIi2IJ+KSSY/oCy015GYsyPvmwGEpa9UeSx5qpNN
+	 Xru+nwnBbhS38U9on9S3NgjWaoiCTkMsjywZuSqp982i7U1kT5qV8cioEkEXKVMnzXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uDnuQkDy;
-	arc=none smtp.remote-ip=74.125.82.46
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=163.com;
+	spf=pass smtp.mailfrom=163.com;
+	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b="J/t3i8h/";
+	arc=none smtp.remote-ip=117.135.210.5
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D735B606A31C
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 14:15:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D735B606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEC4606A31A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 14:16:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9CEC4606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uDnuQkDy
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-1a2af4c8d00so1147729c88.0
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 07:15:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793283329; x=1793888129; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=UKi0a1UZMdK4wKYAN8M7vBgSv7WStN7g+j6BiE/gjoo=;
-        b=uDnuQkDyoL3T/Y2sTtkIEihzliDtBG1mTNUmxKUqLX4eVsyUpawfz7wyR3TiYq5cjY
-         XNDHzn8Nw2z9e3G1f8mEpiRF+NNl1wkcwY+mLNZps2awgLD6gjC8BiQe6qzVRF1Rs901
-         JNilPcxRptQIsanCrMZk9LTlEcvQvR0Q7cdqWXa2NVhr4U3b/HJdXKoukqyu/aDGV24p
-         2iCnMXzl5NrhK/b1Sh9m/EjxOo2IZ2ZkUg0FWz5KM8YMN2iSee51qJbgGqA1DImHU8mV
-         8240fugQ/bpLnFQW/Nd7QHyv3gU77NAiRA0Uj2CmMpW9dp+gSzTY6rM+ImAOxwJCmlrm
-         qMig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793283329; x=1793888129;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=UKi0a1UZMdK4wKYAN8M7vBgSv7WStN7g+j6BiE/gjoo=;
-        b=rWBIKw/upTRSt/DufYXd+v8HQcdlIAB58Z2RgKezWiQq6E0nu01zyoZ5StA+y1IAw6
-         XRfBD0VaR8Yd97rQ5MnEHbA5+Sn3v6OvyoikVcuzwN/u83QRO7JlzKk3zHWn4u62chnW
-         DW5bXbIUNybny8Gzr6icF6LihjXv4xAS6CcvHdGpn2XuyiyaXvFA7/brXlKUpsV3qRA1
-         wN17Ih6J1QZQRsXsi8W01Gc96XpVu5pdVTkMBU5AnXDDK21kuYydpA8VKYLJi2XhNvR8
-         Y0vBWzIcDH9GhK0TYn0sxt2ry806t+6RU54Ot+Dc50T2NxP9qxEMUQxBD8zfiyCWkbFh
-         R3xg==
-X-Gm-Message-State: AFq9FYKMg4kwKDb/+YDWSwiG3L+7yDudmqn7/Sh78fFpXkUu81Fbt8CD
-	iYwBYyfmG7K44qwLqaRXNWrSEL1dxUTy/JYTXY9C2ar5HOBgxTVAiuh2D35vrrqb
-X-Gm-Gg: AYBFou3oe2GP/QvMriYPFsmUIj3FDnBb567neE6S8xJo2nErGNTHJNwQzoOU379Mngc
-	FGA4W9DUT4lMqU32ir8920sj2KXhgNv0Yzz5reO6xJpX3m3os8H38G19x8s1px5n6CkHIc37HL7
-	BSP4nCjxixfLZJbNV4iQyTatq5/cJ9MOn0x9Xd5Vifd0W7tCfnxjoSZlj7n7TNFWRRbNa5mVLLZ
-	z5IvahnkLVpU450pdwjEQewUUV0QlKwaLQ2qadpc5WT0YbwkdX1MUt8N4Ne9BYTjCP828h8dkRm
-	Gyoki5JRSk/fuQ7OXZ/axE91FYp4DqNkrU2bwXs7/1l2bXJp0ycal73/0oaIe4jGwb/0y9asQJT
-	jxAxas5m+zON72SeuIYf6kmjlM/SsRv2TcMVYgyikW66QcUZriFj31d7ZPI9775H8pt1n5Tw5dN
-	MCu5ZNlUtK8etiCcPxAzPMs/qHvIuDhSlkJFk99uHdGvKQXqROchgChXVgYimONzf8ZS7BVFg8f
-	QyC64UjX6wjSin8UuGissdS+gGOFlyaZ8d02kmIlMfKai9TDh6oepywgwwyZ0RihSNqt/k/oQAE
-	dUEw4TSW9tLt+vmm/LZlqDfVLy5jvXJ4oyUODheXoZdbf3W/gJdfAitbWo9ZHL1EjkHYjw==
-X-Received: by 2002:a05:701b:2514:b0:196:d6e1:108b with SMTP id a92af1059eb24-1a6cbe7fa09mr7458809c88.10.1793283327899;
-        Thu, 29 Oct 2026 07:15:27 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:3ea7:bd5d:c91e:2c81:a705:3fd6])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1a760569d53sm15697905c88.23.2026.10.29.07.15.25
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 29 Oct 2026 07:15:27 -0700 (PDT)
-From: Tilak Kumar <raaztilak07@gmail.com>
-To: git@vger.kernel.org
-Cc: Tilak Kumar <raaztilak07@gmail.com>
-Subject: [GSoC PATCH] t0410: use test_path_exists instead of test -e
-Date: Thu, 29 Oct 2026 19:45:15 +0530
-Message-ID: <20261029141515.68254-1-raaztilak07@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (1024-bit key, unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=J/t3i8h/
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=rI
+	9Nl1ZRlvvzhtH0grSrahQNCseoQcwaGaA4H0SzSag=; b=J/t3i8h/3Hx/YcDvil
+	7UG+SzmBqPTVjoDmVUZT8Y4vmvYR/qwoJ4Or3VHmnFswhNHlamojK0YXDQdDv/H+
+	1s+NxMyBx/jAZH2l9WqdgV57QUJUW5jmzNQgyKo2PUKYJzzbBez0Twxd44uQpN4a
+	untjJRHhebkAQcIbr/NyhqRgk=
+Received: from mbp-home.softshell-mine.ts.net (unknown [])
+	by gzsmtp5 (Coremail) with SMTP id QCgvCgCHgJH5VONqe_ApCw--.34741S2;
+	Thu, 29 Oct 2026 22:15:21 +0800 (CST)
+From: ian4hu <hu2008yinxiang@163.com>
+To: phillip.wood123@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	hu2008yinxiang@163.com,
+	peff@peff.net,
+	phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] sigchain: recover from concurrent double-pops of the same signal
+Date: Thu, 29 Oct 2026 22:15:21 +0800
+Message-ID: <20261029141521.164544-1-hu2008yinxiang@163.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,29 +63,66 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:QCgvCgCHgJH5VONqe_ApCw--.34741S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Zr47Xr13GFyrJF15tF13urg_yoW8KrWkpF
+	Z0qr1qyrZ7GFyxuFyDZa18GF4fArZ3uFs8Gr98G348A3y5Ww4SkrySya1YvFW5Ars7W3Wj
+	vFsY934DJFWDtaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRGsj8UUUUU=
+X-CM-SenderInfo: dkxsiigy1l05pldqwqqrwthudrp/xtbC7hrmgGrjVPpJmgAA3m
 
-Use the test_path_exists helper so that a missing
-promisor packfile is reported with a clear message
-instead of failing silently.
+Hi Phillip,
 
-Signed-off-by: Tilak Kumar <raaztilak07@gmail.com>
----
- t/t0410-partial-clone.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for the follow-up.  All three points make sense; let me
+confirm what I plan to do so we are on the same page.
 
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index a54685e3c7..c3c5fd6e33 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -627,7 +627,7 @@ test_expect_success 'gc stops traversal when a missing but promised object is re
- 	git -C repo gc &&
- 
- 	# Ensure that the promisor packfile still exists, and remove it
--	test -e repo/.git/objects/pack/pack-$HASH.pack &&
-+	test_path_exists repo/.git/objects/pack/pack-$HASH.pack &&
- 	rm repo/.git/objects/pack/pack-$HASH.* &&
- 
- 	# Ensure that the single other pack contains the commit, but not the tree
--- 
-2.55.0
+On SIGPIPE: you are right that my wording was wrong.  Blocking is
+not ignoring, and the write() fails with EPIPE either way.  What
+changes is that the signal is not delivered while it is blocked;
+and since a SIGPIPE raised by a write is thread-directed, it stays
+pending on the writing thread instead of being picked up by the
+main thread.  If that thread never unblocks it, it is never
+delivered, so a worker that blocks SIGPIPE simply stops dying of
+it.  I left SIGPIPE out precisely to keep the "upstream of a pipe
+dies of SIGPIPE" behaviour that common-init.c restores.  The set I
+plan to block is SIGINT, SIGHUP, SIGTERM and SIGQUIT.  If you
+think SIGPIPE belongs in it too, I will add it.
+
+On the blocking pattern: agreed.  I will block once around the
+spawn loop and restore before the join loop, rather than around
+each pthread_create(), via a small guard pair
+
+    struct signal_mask_guard guard;
+
+    block_sigchain_signals(&guard);
+    for (i = 0; i < nr_threads; i++)
+        pthread_create(&t[i], NULL, fn, &data[i]);
+    restore_sigchain_signals(&guard);
+
+plus a git_pthread_create() wrapper on top for the single-thread
+call sites.  The loops I have in mind are preload_index(),
+index-pack, pack-objects, grep, name-hash and the read-cache entry
+loader; the fsmonitor--daemon and simple-ipc threads I would leave
+alone for now, as they have their own lifecycle and signal
+handling.
+
+On sigaction: agreed as well.  The handled signal is deferred by
+default, so the remaining hole is a handler being interrupted by
+one of the other common signals that share the same handler.  I
+will set sa_mask to sigfillset() and save/restore the whole
+struct sigaction, so pop() does not clobber the caller's
+sa_flags/sa_mask.
+
+The one gap I cannot close is a thread created by library code
+rather than by us.  libcurl's threaded resolver is the case I am
+aware of, depending on how libcurl is built; I do not know of an
+in-tree instance, and I will mention it in the cover letter rather
+than claim it is covered.
+
+So I will drop this patch and build the series along those lines.
+As you suggested, I will wait a few days for Peff and Junio to
+comment before spending much time on it; if nobody objects I will
+send the replacement as v2.
+
+Thanks,
+ian4hu
 
