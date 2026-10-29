@@ -1,99 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.42
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793262665;
-	b=IHf6m/6nZZO2dmtmWSrWEdAETWKMYxuDTnOF0Oh6dkBzSNky8S+RaYHwzbF/5oHd6Q0k
-	 iiqZYqcMuX9ynDf2PcvxuZsxqIQOGrPPXYfttTB+iYXXhBBO8yTQNmVs96ZictI1T3zR1
-	 0FVAOZUUxIs18Xj/3AKga/HjKoKOJ1htFowtHVAUc/iDOnDBIq4uPDEcDPsbdNtMSeEkW
-	 agOWB1LiiDCrqpxWFv2Qx7YJ+bbmedxkRlEzexoE2+S1WBwtfvVNgw0cR5v92A7tTbebt
-	 HsQQmFNUO+f9m9tSUnay6Rjmu5IvvObICOCNOfZxk4a8n2dm8MC9/59yQwcWiwe2G6w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793262665;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.171
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793262821;
+	b=HNhBP/vLLtS+OF/MAz3Um2TwRU6RbOOLUbsJtlC62A/07xZ+/RrZnQDk+7Ul3sauGeEC
+	 3pfykEo+3xqcfJfh2Z3XzKM9KI0eVB7ezr8GS85xOAS8Lp8gbtDy2S5NvW5VXpNo4g7hl
+	 Q+ZuzBJyqMVGKquyBOA7jLOZvbWaqcKTgVYpPfVRYI2oSPkvltNP5QvrqLIo2vCb3vmBN
+	 N+B9QnUt1aPojQkw+bwl16Sl3EFouHRbpd97fLQkom0Ky4Jd8htczbG7XsV31twMHPR2a
+	 SfCPtQ02lHtEImPnBy305hDfJqH1OsoixcM9qVU8I3NjJBeIx4kx5VPccW9pKLONSLg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793262821;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=iTup+LbI65HmX+F0ajq64fRnVNFNt8p5D/NFVGWrCWA=;
-	b=MGz3zopBgeM0697yzN2odF2bdMe78EO+3e1HTCi3UKvORN8S+nW/ObeQFOsGo/FMORPu
-	 j2pKx8sQTm8p7v23k999jvLj71pJVminwEZawIrA1g5eY42Q3pqbYEoc26jb7gy4/waWJ
-	 kzLgPwP2UeSwO49TLRKeVLLIsI/u3cmuQ9HckwtI7jNmCJ/o8KnIqY7+s0HzKQWYocsMQ
-	 WBvAZDe9NEyR/U1WVgrMoGq8XRSkAjgGbCHZNLFxSmoMwTjvXjIXKmLoTIkF4bxwie7pc
-	 tRzQu71PIUxTmxXHv9546N3luHZdTLJCAjDm6praapvUfW7ejkd4f0/fH/j2TaIL++Q==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=l/PY3qmZhkJs+hCoThO0aC98AtPf+4Y+ktfKtCVqfko=;
+	b=vsKejslPoCzI96K7j9NLOPBMRj/Qujgvhw5el/uNohGCvRxH2D3P3PlCJ7Eogd8eK+ZV
+	 vPikxFZkZ1YV9v/w9njC8P84FmyBcX9huYLEL9C/TNllTsWOYn5+FEVSBaSQop/4g6W3v
+	 H64udwliKdqTWGY7rlWkWvMxQZJuGTiIHNqZaNAHMXE1th5elOoD4o2Y7ahhYySKXfFO6
+	 wnN6VZrDIHid/wttao+W0iGgIfOpQDs/b3Y8D47ISWvmUgqhesnm7ALh58tDYVdmselc4
+	 Lp4Lx119DcM5SpFn/qop8c6wQ6fnP7yMAZ7gzSu+2UM+r6HMK9tZwmxPTB+vqQ0zU2A==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="bww9/Ac0";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.42
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=N14gNrYO;
+	arc=none smtp.remote-ip=209.85.214.171
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90AF606A31A
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 08:31:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B90AF606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15181606A333
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 08:33:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 15181606A333
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bww9/Ac0
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6afa651700eso2769551a12.2
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 01:31:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793262663; cv=none;
-        d=google.com; s=arc-20260327;
-        b=P6qpHAX+DxWQx0B5eRAG0PZRYL0M2Xtq9tupD3hE1j+MIASF23ziEkPD8DNcfJbzWx
-         gGOIbqIPt0MjdXOUySO1hWQjR5w08N1rCzHAl7/0xgxHTVbxslVzhoklWTM6T8h5PQoJ
-         lCjL7M6s/y7UTKtZ1eHvwf1cyTIesm4VCXzPwgbxFwmfeWE7T6kP+YjMt0uSrNUjo3mj
-         escnTiScMuEa64R+GOv5RkxevZBKv3ybaairFubWJJH3HGVXK2Nb0yNRO0nwOLsYkyiu
-         CsbUpZtmbMcn17QkLsEsHCNS02nlNRsaD0UTiAL3Fl7uGjRZ/dQsfPjwfpIW8Fb3VX/2
-         wY4g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=iTup+LbI65HmX+F0ajq64fRnVNFNt8p5D/NFVGWrCWA=;
-        fh=b/tPKeTBrkTwi1/O6y9UJrAOjDTp9JQQ/336bk26UPY=;
-        b=iDTSLoSsoQcvsElUENFCvA8I6gQwQiUUq59pq1bpLNUvMyHp2a1joNRtlI4/FJKVnC
-         1JvDf8ENjVQtwBQoAG0f1obNR6OoFw1Ce/eAqvllgtxOokOJoNVwkeXfu0fLp3NPDzDS
-         sWxA/l37ifaaG+S88IsbbhmsmeouIbVxTjVpkpTpeKJHfDBfFMZdGgJ4/M0J3mtzRMOV
-         XU8UvmSOHsMy7Vv9TIJGgquv0lExWPl/IUgDJDDzTB05O7mhD99/m5eLX7UlNt20+z6b
-         HA0DVFR//8sr3yIS//iS2xFsWx/Py6RI1dyCqKxWb0GEd0zfLnWbqPg4MyHLsolvDpkF
-         gO7A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=N14gNrYO
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2e9ae391a05so3487975ad.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 01:33:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793262663; x=1793867463; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=iTup+LbI65HmX+F0ajq64fRnVNFNt8p5D/NFVGWrCWA=;
-        b=bww9/Ac0vM3LR1GAlfNxLJV9j5wW5vggfETUfaqWSg4lngWln82NjGzD9uvTkFN543
-         u5uX1EnGTPSYu6oWiHqvojg8+h+2k/45zUkxWeUfRBD2HQ4ayYsUKzYyEr8yxuBGd9jp
-         hrmLOxK9wuxwPJSKAdDdjSyCxFSdPrSARM5yT6q/7BX2jusF46DxEQ2uPnDtRrnwfvkk
-         P3aO8tPx6j7JgWPHTczdMcKjMx0mMfIKUCfVkVnkPVcaG4CBVAbuD7rwCO2uWIJamv1k
-         By8uN4ROhNSMsfzxE8z2whkEE9o23d+9Z+/vEcDDKEVH9Ry0ExgNNSL/PkkvoRLAsS+u
-         IQ0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793262663; x=1793867463;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20260707; t=1793262820; x=1793867620; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=iTup+LbI65HmX+F0ajq64fRnVNFNt8p5D/NFVGWrCWA=;
-        b=Jg3Z/JPlvz+k3EP+tUm1gNGMa7wt8SENnPcwzQpF4mo2+HlkMBpTRMynhTYrlxAZRy
-         gQCbtsfWD6EyPSsFQTowezNeQwLVvbG/zLyIEOreuHcCIHImZKP6Drs0gOospy3SWt0f
-         AjzlW0+J3K70F8a3rAQCc/ToUC98aPK4/zUBwK3aJ0Cp+J6s5xW0V34frTP9+n62/fVp
-         bqTbJXnqsv9YfDZ0ssi/6u5SR7NYw96fLK51OPLoxD1BrkCIkUdzs/nimym1X+H/7eLC
-         d71FN1qRpyIkDaCDViocmD9PcqelC84KaSotZQyBArL3O/rmCuZw0W349tQ3aX4R+krn
-         FXYg==
-X-Forwarded-Encrypted: i=1; AKwUvBx8+l7uOVEynk0TMXTbmDWk4TIuqbRPA8tiTKAscKaQ6Qr4tZmhzqN4HKCdwIMLBlWjSSk=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKxzBd7R6JXeitXwpaA67wHcfX+32cI08skBG3uwgL4BwxGg7ad
-	ivWAymp1BDOIplsjiHtsXbmuNuTiiRqeYuwlUs10hCegtSQBMSCgrzXazwv3WzT3RP8YXBZ0FaU
-	RTSN7H8siQgAaQR5/ulJesti5eGT3Gws=
-X-Gm-Gg: AYBFou2E9qTkUBpIZlUln0iEaDGvvp1v88+Xks5D/dvDW88rUm5tgLcN4FKX9bXEzY3
-	EJ6IxyziRXBIg0CjsML+aeEHdTaGPSxlyC7Fe/QklXl2zanwRqDAXYch3YsY7eJDy97rg6kgduU
-	krS/Vy7kEd+cqyqfKdwABqf9CLB7tDAxJ91J2S+hhAjAN32TaoM3NnNrofHreY82i0rjv1mgT0S
-	jLag3K+EQrDh87IIHYcPY/CME/bXzBMdo33sv7qMcZtB1llwHIRCKLL0wudyrioE1nP5GuiMcG6
-	VlcjmH77bb13/Vi9sa4V4sEefk5jPT1eHN+E2oqyRn595Rt4w65uMr4UpEg++1ont6iVwOBVOxi
-	nMMK54v83v+O06rXxyi3/BEDZ9wKzGEdIKoR7JEbMME64d4eo2oFTGxQyPysGZ7mLrIk=
-X-Received: by 2002:aa7:d78e:0:b0:6b4:5f93:33cd with SMTP id
- 4fb4d7f45d1cf-6b49cbd736bmr2597258a12.8.1793262663069; Thu, 29 Oct 2026
- 01:31:03 -0700 (PDT)
+        bh=l/PY3qmZhkJs+hCoThO0aC98AtPf+4Y+ktfKtCVqfko=;
+        b=N14gNrYOm2U4O93LGv+CBKioWuanJXcay5zMGcA8Az4MchbqP3XmIkRK/4g3/Py6gr
+         FE/2aTH1xJQIFdg3xEz2Li3GUZ0R1+sVZkHr4V8ruANqyg3tCXCC5YJlUZkQH7oCOZ9d
+         vHPCfJSX+hoXmjAgwDAvCtiHG5sU4uK1b4RhZUQ/lkg/iZAP83LlP+0owJG5OvTEmMh8
+         TUIt15IiISPPqAZDT9GQdnY4Xc6y96QeVrJgGtAB9lqn2cPzN4qrcGre6i6eP++wO9zK
+         9VabNtqFSpS9jEKNngraX0MszcJQcUZd0PcqR8XGop1lp5pgM1hCE5KCKZ4cBXZrELuV
+         OZHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793262820; x=1793867620;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=l/PY3qmZhkJs+hCoThO0aC98AtPf+4Y+ktfKtCVqfko=;
+        b=0LDnNEzpuqwPhywlPKZeF+/2iCVWgfy9MtGQzPZ/xcl7wfNrpz8y+CSCCEj4aVynHy
+         Y67zdrd/TrDl3B7LBXjUxTxTTUWydwhopykaZQkaNnp/d8NhDgvUh+y2E/3KmzpO1+DN
+         n0oV8VcyrVUqXLjHBs5TzakYtdyQUl37pb4EQTA4z59ZVKgyY+G3eT/qtZTxNG0etxUw
+         6/nXhJBzIUCwkgx62pg86CtCRsZjK6GylPSjG+maBhe4Ul2AEpsPRda/wLpbRCTJnl8t
+         RR9+LuX08ON+xMlmgWilURDA4sbOGvbosA3IOQ4oek7NXGbHheRefvTe266qzhVt6PXf
+         ppqw==
+X-Gm-Message-State: AFq9FYJGOGiisDJsDiJBnTMbvmz8edasMM2Qd8g14yd1FK+qU9QlbXu4
+	sOZy25dBrQaGQbPZmW24WyNIWrkpfB84pn5QIW5PXpazg8EolOtw5n3dJSNzM39T
+X-Gm-Gg: AYBFou00plXnpv3JmSIEpd8cIN046vn6hJFaSk1zBSkk6pr1wYZPCxSieiKDyk8cbfI
+	hBFn6gtKIl8O7aa37Zo6Yl/GCqixjKbLxmVRrmbBxQg8XQpD+udMASO+FOTaz9dFvwtZ5MzGZAk
+	BXUlztfcqd9nj5XZVbp4Gy1RK1Hu1ApXKFdbNcca2PNykl0GbEUUY0IO1sesWQmYaIJgevYgVFG
+	19YZi8vUBn2elZ7uut3+rR6JdK2DPsfqX2zmHlhJmTvFVf9XfPr/aEaZYEgG5LFJ9s6dP+IlbXl
+	Sng2/gloKlpg0SL3D8hDACxhvMYPN1LPAqdgdNf/+cfH8aM8bo2IZcUEaETZZKk8a0hd9dXBgHW
+	zBpGSQvot3mYx2QlZXIirM7v2f7NK2yeGOlgoiAqSdS/3biEHXXe614qiXyXyWGLloxoGRvNM4X
+	hgbYXuakMuaiaCyyINQgpGQoRBtsrkXP3cS0U/PVizEA+R/ri/NMxCzeb5nq2zxc4vD57gTZ5lA
+	gt6JY1k0/T3VUbgPVCHnccr7TOJ8+gEN0VTBO+ZvUlw55MqYYqrUSuLq4mez6KmARgniT5FTXaU
+	mWWz198nzTCPtYQXnZwRi8Hp6M7dIXBw
+X-Received: by 2002:a17:903:1a4c:b0:2ea:238c:4cfd with SMTP id d9443c01a7336-2eb1ac4f070mr13752555ad.25.1793262820310;
+        Thu, 29 Oct 2026 01:33:40 -0700 (PDT)
+Received: from [127.0.0.1] ([4.155.196.101])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2eae6c3b67bsm29863065ad.52.2026.10.29.01.33.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Oct 2026 01:33:38 -0700 (PDT)
+Message-Id: <pull.2464.v2.git.git.1793262816420.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2464.git.git.1793104847288.gitgitgadget@gmail.com>
+References: <pull.2464.git.git.1793104847288.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 29 Oct 2026 08:33:36 +0000
+Subject: [PATCH v2] Makefile: let ccache cache objects built with the
+ precompiled header
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,29 +97,101 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2425.v4.git.git.1793003627.gitgitgadget@gmail.com> <20261029043041.5994-1-me@jaspermayone.com>
-In-Reply-To: <20261029043041.5994-1-me@jaspermayone.com>
+To: git@vger.kernel.org
+Cc: Ben Knoble <ben.knoble@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
+
 From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Thu, 29 Oct 2026 10:30:25 +0200
-X-Gm-Features: AclHuK9sx5sISCWYjM47KYLbtocVjdkz4uoYKijfPghq7Tb08Ni8n4sU3rePank
-Message-ID: <CAHwyqnV2XrqLmvfKXXqrk3WdHsan_NeoT2rLH-ToxvhnNxumZA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/4] branch: let --delete-merged find squash merged branches
-To: Jasper Mayone <me@jaspermayone.com>
-Cc: gitster@pobox.com, gitgitgadget@gmail.com, git@vger.kernel.org, 
-	kristofferhaugsbakk@fastmail.com, ben.knoble@gmail.com, 
-	phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
 
->  * "git branch -h" does not show --delete-integrated in the usage
->    lines, although the SYNOPSIS in git-branch.adoc has it.
+Since 8d3a673147 (Makefile: precompile "git-compat-util.h",
+2026-09-15), rebuilding Git with ccache is almost as slow as building
+it without. ccache refuses to cache a compilation that uses a
+precompiled header unless its "pch_defines" and "time_macros"
+sloppiness is enabled, so it runs the compiler for nearly every object
+file, even after a "make clean" in a tree it has already built.
 
-Good point.
+Both settings are safe for our build. The precompiled header is only
+pulled in with "-include" ahead of the source file, so no "#define" in
+a source file can come before it, and none of our sources use
+__DATE__, __TIME__ or __TIMESTAMP__.
 
->  * Giving both --delete-merged and --delete-integrated dies with the
->    full usage text. A short "cannot be used together" message would be
->    clearer.
+Enable them whenever we build with the precompiled header.
+On my machine, "make clean && make -j8" with a warm cache goes from
+about 100 seconds to under 30.
 
-Thanks, I will fix this.
+With Clang, switching to a branch that changes one of the headers the
+precompiled header includes and back again still misses the cache,
+because Clang records the modification times of those headers in the
+precompiled header.
+
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+    Makefile: let ccache cache objects built with the precompiled header
+    
+    With ccache, building after switching between two feature branches gets
+    about 6 times faster. The first build of each branch gets about 25%
+    slower while ccache fills its cache.
+    
+    Changes in v2:
+    
+     * Move the CCACHE_SLOPPINESS export from the precompiled header targets
+       into the ifndef NO_PRECOMPILED_HEADER block.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2464%2FHaraldNordgren%2Fmakefile-ccache-pch-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2464/HaraldNordgren/makefile-ccache-pch-v2
+Pull-Request: https://github.com/git/git/pull/2464
+
+Range-diff vs v1:
+
+ 1:  1984b13246 ! 1:  e61cca8cca Makefile: let ccache cache objects built with the precompiled header
+     @@ Commit message
+          a source file can come before it, and none of our sources use
+          __DATE__, __TIME__ or __TIMESTAMP__.
+      
+     -    Enable them for the precompiled header and the objects built with it.
+     +    Enable them whenever we build with the precompiled header.
+          On my machine, "make clean && make -j8" with a warm cache goes from
+          about 100 seconds to under 30.
+      
+     @@ Commit message
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+       ## Makefile ##
+     -@@ Makefile: $(PRECOMPILED_HEADER_GCH): %.gch: % GIT-CFLAGS $(missing_dep_dirs) $(missing_com
+     - $(PRECOMPILED_HEADER_USERS): %.o: %.c $(PRECOMPILED_HEADER_GCH) GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
+     - 	$(QUIET_CC)$(CC) -o $*.o -c -include $(PRECOMPILED_HEADER) -Winvalid-pch $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+     +@@ Makefile: PRECOMPILED_HEADER_GCH := $(addsuffix .gch,$(PRECOMPILED_HEADER))
+       
+     -+$(PRECOMPILED_HEADER_GCH) $(PRECOMPILED_HEADER_USERS): export CCACHE_SLOPPINESS += pch_defines,time_macros
+     -+
+     - $(filter-out $(PRECOMPILED_HEADER_USERS),$(OBJECTS)): %.o: %.c GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
+     - 	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+     + ifndef NO_PRECOMPILED_HEADER
+     + PRECOMPILED_HEADER_USERS := $(filter-out $(COMPAT_OBJS) $(REFTABLE_OBJS) $(patsubst %.c,%.o,$(THIRD_PARTY_SOURCES)),$(OBJECTS))
+     ++export CCACHE_SLOPPINESS += pch_defines,time_macros
+     + endif
+       
+     + dep_files := $(foreach f,$(OBJECTS) $(PRECOMPILED_HEADER_GCH),$(dir $f).depend/$(notdir $f).d)
 
 
-Harald
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index a96be506b5..80653bb22c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2903,6 +2903,7 @@ PRECOMPILED_HEADER_GCH := $(addsuffix .gch,$(PRECOMPILED_HEADER))
+ 
+ ifndef NO_PRECOMPILED_HEADER
+ PRECOMPILED_HEADER_USERS := $(filter-out $(COMPAT_OBJS) $(REFTABLE_OBJS) $(patsubst %.c,%.o,$(THIRD_PARTY_SOURCES)),$(OBJECTS))
++export CCACHE_SLOPPINESS += pch_defines,time_macros
+ endif
+ 
+ dep_files := $(foreach f,$(OBJECTS) $(PRECOMPILED_HEADER_GCH),$(dir $f).depend/$(notdir $f).d)
+
+base-commit: 37b3475fb530c14109211faca33716a173db61ed
+-- 
+gitgitgadget
