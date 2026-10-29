@@ -1,121 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793298694;
-	b=SxOjBQSugRSM/mPeOAruoL6Q5zrGJVgW3atmNHn7YAIFWu7Kg5hOMW1+REYw5CZtWsVy
-	 Ot0s54pTpdrlMaEJnbM6EePdqqbPJ+oI/Iz25uBzKhD2/OnT601KL814/VEls/a4TMmQE
-	 NTKT2cxByx0HEJt53um9Uo1C7WasraEb/rRLo8ltvImY/YlmjSkyW+whW0tdnbidumsTE
-	 0Bun+v7AeWPrRChT3u09+oKdPovlksHU+L2YaXLYH5NLJinSMi+KUwxGEucD5/8m6GttJ
-	 lxHflBlQpECgDVBkdbyMMU9OCkVWPXNucnupqQK3Hq/kra73lJ94yiTJXfk0A3V+7fw==
+	t=1793298810;
+	b=JTGyIFu13vTMCCmSQlykFuBkHvcLQJlxYJiKgaYaSaC1HruobpTwvLDJD5Pd+vT+YInR
+	 +CqFhRL36MOzifjQSm0L2FGhsMsxl7KbNKYKqBVATPEGvfXeJcc3Xj2Qja6MZ8gadiSYA
+	 zF3+GeH35YtnkxUf5nvkFDu4bBt2E5qQ6ZtiCg1J4F9E6QlvW6BsxrxuDpnXBZ/W4gUgK
+	 iPwigfjFPWiYKElP8nUTlf/o1DknO7nJ1BuTKPKKGAIOAYNzKkKFe1O0ieSfuX2x0lgFw
+	 PfE5yp82olYjlT+TKjJRWjdfBV5gs9WVCvEWVLLT5sUA+dFro+a+IBfUq9q3CrLdcYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793298694;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=dMCB4O3peKSaDrTlGMiZ4kqr7Rh+QkRWsrW84MQgkG4=;
-	b=y0xOUPExn2Xq/BYx1LbKD/3Q7RpNbUbEYTzjhP9XMIouPLiIvbw8N08bNB87xjdChkuN
-	 tHZYy3Aa1E+swjPNrzTA5SKFZN87AFnGMf2AmP3scpNHYzZjO9O1D2RtnEdJB1CYudVd3
-	 nEA0YIAuVICtzSO2KeOTbDMQ84SoLPJ3E01undLzMzCZ97SF2wastNr0W7zkkUfbILKdr
-	 a4ha8EqgmgZsMx0q4R49LFk8yMTnE0z4kq+bvuZrUHDkkBgqGFTV1IifflHqIMXDxbliL
-	 AhJfuRiE/eivtX3YeBfFbWzJPQDVinFMbwSyFuU0obqwB0J+4ma9PEn5dejOmsHOI+g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793298810;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=JT2cXjgvvOJieViMBkjfTYw/I/u/Ku3gzMCUrx164AM=;
+	b=4O2M8A88CLWmhUnzPozuVR1UOsOlhSI8WlWLO8XWVQ6Pe5W3ljzsBv5MC1Lvo0Wdf4hJ
+	 M9Eeh3R/EWatDQDRdMAYLS5Dogsd9KdiUXhwg5i+wRYCjM7w6frTNR9Ov1oHLem+eVGNW
+	 QrtVMSuYzwTF0WM3wP215xSCyvkwOsVUiDwwpOUJOcqE8uqUkuHQG87gcpXZ1qoXfv9IA
+	 sXJYXoB4y0PwITFWJGxqy5aFdZrYZqQ6ko/0s2YNJYRo3OvZLXIDL6AHiv7FUZj2GYGfq
+	 +0bQ8h4cMepunXEkohBIz1tM3BJHZ+NKefPGubOB7/vFFPGORS7QpAxVYLtZnI2eA6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ZXt6ZANQ;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=qwP2ulnp;
-	arc=none smtp.remote-ip=202.12.124.145
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MLx4mWQ9;
+	arc=none smtp.remote-ip=209.85.160.180
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACEE606A31A
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 18:31:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CACEE606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4ADF606A31C
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 18:33:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D4ADF606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ZXt6ZANQ;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=qwP2ulnp
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3A5761D00168
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 14:31:33 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 29 Oct 2026 14:31:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793298692; x=1793385092; bh=dMCB4O3peK
-	SaDrTlGMiZ4kqr7Rh+QkRWsrW84MQgkG4=; b=ZXt6ZANQvFB7H3BuF4Bl5qQ9e7
-	xVeZgZB4AJWUDY0VH+NRGN5WhB6Yoz0D/PQFhGEhV2Dj/dyUqRRy/FQ3bFWaIjXH
-	wP7FxPulVL8h0hHJfb874OJBRuI6eipydBeMuouxvtlxQghg76Q3i7+g5zq2/l29
-	UtcJcR9yrJ4XGAD3bhlEdlgEK2puASoKtxKHNOuYuRXr6DBHTe/fXtAGPbhL5zCn
-	uYqaA+ffNZw3M4WLbzBWJKURo+3MX+meNS5piBNjSbj37Xywlrcp4vc9uICjZzY3
-	lFcsy4kYDrIqA8olMFreozNHfJF7pWI9Zpx2DdoV2wQla7Y8xsyjknV1LLcQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793298692; x=1793385092; bh=dMCB4O3peKSaDrTlGMiZ4kqr7Rh+QkRWsrW
-	84MQgkG4=; b=qwP2ulnpWYu/+Ty81yTpGkZvJZMtyu4c6QzioeilekQyT31MF+N
-	5aMOjzBbB+Ta0GJCdulbu+Xi5ZL6niMvxAng/iX+vymHLRFlVgPRZp8Z/5n9VnCm
-	XhiEOlJwCmKujHVAyQLhwPmBZBRBpezjpX+1oDAWaH5Kas9sVm3TDV3EwIulu7HU
-	Mf5VOrtDfu+47yoS5rS5iFfqUb8BdAvUpfYuTTKa4MD82is8QWrZe93Xo1pIil1V
-	n3yV9coh4+s9ZTrEUjqSsDDETOA4vfCyJW9w37c+9MFQDNc+3wwGfmcnF5nzZad5
-	giQbOMQZGpjohFmxxuBwVIflQpi1eNqPt3Q==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793298692; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:eQ0pTOpKFo/bvCgcAq6U8wgWMsv5Vwaoy2kz+u6hp/IlN/W
-	KoKCBCqVp/YUL2LEnebUsgP3MUQXv6P/iJ99fJvr7/F/i/L8YH2/FBYKVUifDsAk
-	X+yy4sF4M78lJcWJoZlhk0Pnleyjt0OF7ERpMXKlp8/dR7cU8M55KNBDTyR9wLhu
-	Zeh5r7jSI84NxqoRGZElIiPlCVujSOt0UcGujMTK1Zye9UGzw6XJFFIIjW6Wp4xL
-	KJE8SBz76D9a8/RlHApZEZzYhix6hfRoqyLtiwfXI/tmww2GmlRoS5t8q4uuNjfC
-	AhHwgZKIkRZjjkuTzIxiA0PpQsCBWty2PCiF4dA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:5Z+JSHm/e8wwttFGOSuiZQYLmiA0+VAyANsuaVOMdao=:WJjs2c/crDI76rMPhGRkcjWSYIOSaQFGbUBB3MEXU04=;
-X-ME-Sender: <xms:BJHjavHwBoSrL2pW_6sEZem9lwp-h8r6ZhFATgsA5bxORPRvoXiHvQ>
-    <xme:BJHjajXdx_LI5iEFzPSzqrgpSXzpRPFNr0ogoIXUuUCXedNQ0WUGf72KFnawinKBr
-    pp91a7t7CjxvhynJ2tMhARUQQjzvV44If1bjpNOxtSZ24-KLiKuEl8>
-X-ME-Received: <xmr:BJHjamLbnEBwnFnM-dPZGcPLkWN0qJqbM5S7diOZpk1YApq1JtnqkYCUNud94jxj7H2lfVJk-aQlvQJGgiqJIZQQ3kNkjQM2wTcm>
-X-ME-Proxy-Cause: dmFkZTE1MU36nHdfyebKGhablRt3DeKbizjoA2XGA/6EwWsSj5Z50mUF1s5u+p0IV0ebuG
-    AgprqTn42jHo5G3AWCKd2GA/q2IAWnsgL2QM8ewRzkJZQQXzEvbZxRCQzqHZHImBM9slUW
-    Q/ZKL9oAY+hkjmjtJ14YCT7oiv7W5XIQ2O17rzw8Fd9V2Q8uJQIfUJgM5iPrpHBR+gTotF
-    n5QIDocGp5u8BCCsIo7Gg4uikvUWMXq73vXU7Ny/iYU0oYnu1bpczL+xVyZ+K8l0EqIDN1
-    u9zyG2ACuWdN0XT3448gaQFOVoI2x862TGaFfd3Hc4WmH7mMEU82ra0Wk3vqiIkQlb3tfV
-    WkRooOm+wQ1zh6tQkATz1mbr5EaZKaVi2bCgVSTQrj26fOwh1uGSAjEYMntkVDqJmEiG9U
-    DDDRd/bH1KelKKaOF0LngWyJbFAYaGEK9OZp0r9/euirsBW8a0YVTGc1uTRJkwCuR7ur7D
-    djAA2o8Sx8idYlBfkJcrlzTmpGqXqOo7sJ9wMcT86WU+r2NNCqGlGdKeOsKfYgzd2+cOaL
-    MYtW7FI5EqYAhBw6kz94kpGW/x15cFU8FwPF/aScXSiCwi1vVxEE8/RZbCk35pNDIGAAZ0
-    eoXQZlNLI/OzCQGGN8QWmKkjoEfXMHLjv3NLLRW2NlvbrmTGhuXMDtxbFAJA
-X-ME-Proxy: <xmx:BJHjar-CW4P7_3DR9YHfOXPDh6C89yLFiCNBZ0lQBy7DtCs_02U61Q>
-    <xmx:BJHjahJ7w_y-pHbLQLRHbgr_iYk0XMzfRt90DYybzOKhG3RQfSog7g>
-    <xmx:BJHjaong-56X1Eq-Ne_c4mKQlvcksPQQ6hxUljWWsbHh4KnRalCThQ>
-    <xmx:BJHjatPDMFHcIdZvSeBJH60PtXnjCcmjGRWswYhb0JKUc_neTvPB0g>
-    <xmx:BJHjahpQ_TDtB_wGbg8sZdP1l2e5k319la_74K7MwK7SQDNoZeapSU88>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Oct 2026 14:31:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: Immaculate Mecha <immaculatemecha87@gmail.com>,  git@vger.kernel.org
-Subject: Re: [Outreachy] Microproject idea: modernize a file-existence check
- in t/t0081-find-pack.sh
-In-Reply-To: <CAFpMFfA17dnuLSRt97BrM0u3cHAifJybr_Zc2ahr_zq2nspgsw@mail.gmail.com>
-	(Okhuomon Ajayi's message of "Thu, 29 Oct 2026 10:03:16 +0100")
-References: <CAKUOgLz3sefhypa9yzLszW43uQ=Jor_nRBAJaBXXv0d8M2ePBw@mail.gmail.com>
-	<CAFpMFfA17dnuLSRt97BrM0u3cHAifJybr_Zc2ahr_zq2nspgsw@mail.gmail.com>
-Date: Thu, 29 Oct 2026 11:31:31 -0700
-Message-ID: <xmqq7bj02wak.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MLx4mWQ9
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-5363c8de563so29089331cf.0
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 11:33:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793298809; x=1793903609; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=JT2cXjgvvOJieViMBkjfTYw/I/u/Ku3gzMCUrx164AM=;
+        b=MLx4mWQ9C1IZco1yFZlQfPuY9zYkKXhJ7kpgM+m6ENIDk6ZM3w8AkaHRyauQs4dcEz
+         7Pc9bIeViPNQeLXJGrU2aZDXsK3fWwMLcNBS7cn+fOMA6tMvyw+VP63p9oHzux73O+Id
+         ol4IMBsYjTi41XeVAhdsr8chv12WFar10GUMOfnVafzcyI2u1eq9ZMTZi0e/Myan/FaH
+         MNDoFGTWzf5ycmY6fXbHbw2OHji8HJe4tOFeXAQkI1y05Vb6LY6rjXhLHz6xa7GTMNhH
+         senNZm4nNmp3oa4NauyjPKdY1U02nVU053SYH+1IN8IkjL4WTIMQlPqwv7HCunvGwcGN
+         0lGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793298809; x=1793903609;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=JT2cXjgvvOJieViMBkjfTYw/I/u/Ku3gzMCUrx164AM=;
+        b=TMVduFcPfFPZsd60etdS141CwCacOnIQ7fQqCQuJg1kD5CQVuTln35sSX7jpeUyqm3
+         n9t+9uLqx6lkUaGf8JpY4lLWnVKyyAhMPoDy3cX+7DNBmmZLVUG6sOyZlmq3sEIXFmI3
+         u7ozO0x9B20LktbUweX57YkExpJGPUK42MqYnvXiZN4MZkRZCLIfFk44miFwq7EQnTYw
+         fVnrjtlS3jlpeJ/PfrPTm+y2z6penQQUy8HwI9KFxaj8zaFPaX0z4RiVsSo/fgEtOReg
+         IKsmDrrNRy2fi/zgFAWgEuFoBM+5T9MPTIS7kGLUT5P+0bKPhHMR4+iwvYSB4PNQA/0A
+         7Umw==
+X-Gm-Message-State: AFq9FYLVxVd0c5qVtVn6GLHClhilK7JdpZxmbEag8Oi2MEbMBEIrbwXa
+	h1hb2iIsMMB4k8LYrx9qNM4DjEXUu5BQ2SS3o1QpM1euHvAkvTo/U0vpGGpgSlFa
+X-Gm-Gg: AYBFou0stTqaBeN69BnZ4Zzxq+VesNpM6cWG5AqLsY48VPVH4jub/eT6czlz7yDbGXJ
+	ZzbXm0PDOm7TtZLibMRsn6LSRlbaIfaR6KnZktLRxvLlN/rSN1V3JNdpdZkjyb1LBOEpiZDGANt
+	6ZQ6jc1pmOKUaI0c12YJzzr5Z0adPZAoVUjSgVi3NE7E/KG7soopS+XLZGbR5+QO6h1uBpMB49m
+	9Xjbt6terkSbNNlyN/mELwhhL+aFG8UWpALBs6/HKYUV9VVCSKqNeT4myAghYOqUmE+mCLLYUih
+	EjcibB6WnKx6k8jAh3g8zv4m2OxtyhSXx3q16fgq5SfjEVizm8f9XVmFtaXqkmdYZNPHdYhuFdw
+	sVIQuxYTo9HRSAYBMSPYwkdNAmLPIBUUxxoADvp2aR70KZ8tw7GCP557SK2NM3NADdwckEW+2Wd
+	Xqfnbk5RDfvSzqPRYezjeIRfPdqFoZPgjFm4doFrXRfDTkxiuM3H/U0CrHD4+Wb8WsCEqbiCcMo
+	+ZCJBbciJ0mELhNrEAp2ev/k9zhqgjhT5PUMVWDYMMm8AFh4aLeV8dXWgdS/oBPyOoNBuFcBjwv
+	9is5Z5BMAvnOWEUNnCW7XEs9vKFf6q60IDI=
+X-Received: by 2002:ac8:5a16:0:b0:533:33c6:e635 with SMTP id d75a77b69052e-53fc8db3913mr99118271cf.8.1793298808598;
+        Thu, 29 Oct 2026 11:33:28 -0700 (PDT)
+Received: from [127.0.0.1] ([172.208.92.165])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-542a40265a6sm738551cf.4.2026.10.29.11.33.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Oct 2026 11:33:28 -0700 (PDT)
+Message-Id: <pull.2470.git.git.1793298807397.gitgitgadget@gmail.com>
+From: "Husain Sitamuwala via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 29 Oct 2026 18:33:27 +0000
+Subject: [PATCH] check-ref-format: use parse-options API
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,16 +93,117 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Husain Sitamuwala <husainsitamuwala21@gmail.com>,
+    Hussain Sitamouwala <husainsitamuwala21@gmail.com>
 
-Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
+From: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
 
-> Before choosing a microproject, it helps to search the list archive
-> at https://lore.kernel.org/git/ for the file name, and to check the
-> "What's cooking" reports, to make sure nobody is already working on
-> it.
+Use the parse-options API to handle command-line options
+consistently with other Git builtins.
 
-Great advice.  Reading others' patches and reviews they have
-received will prepare a newcomer to avoid making the same mistakes
-as they already have made.  Reading Documentation/SubmittingPatches
-would also help, but that goes without saying ;-)
+The command currently parses options manually, duplicating
+argument-handling logic. Using parse-options makes option
+handling consistent with the rest of Git.
+
+Replace manual option parsing while preserving support for
+normalization, branch names, and refname validation.
+
+Signed-off-by: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
+---
+    check-ref-format: use parse-options API
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2470%2FCodeWithHusain%2Foutreachy-microproject-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2470/CodeWithHusain/outreachy-microproject-v1
+Pull-Request: https://github.com/git/git/pull/2470
+
+ builtin/check-ref-format.c | 45 ++++++++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 17 deletions(-)
+
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index fd1c9c0e0c..58e60eecd2 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -5,13 +5,20 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ 
+ #include "builtin.h"
++#include "parse-options.h"
+ #include "refs.h"
+ #include "setup.h"
+ #include "strbuf.h"
+ 
+ static const char builtin_check_ref_format_usage[] =
+-"git check-ref-format [--normalize] [<options>] <refname>\n"
+-"   or: git check-ref-format --branch <branchname-shorthand>";
++	"git check-ref-format [--normalize] [<options>] <refname>\n"
++	"   or: git check-ref-format --branch <branchname-shorthand>";
++
++static const char * const builtin_check_ref_format_usages[] = {
++	"git check-ref-format [--normalize] [<options>] <refname>",
++	"   or: git check-ref-format --branch <branchname-shorthand>",
++	NULL
++};
+ 
+ /*
+  * Return a copy of refname but with leading slashes removed and runs
+@@ -58,13 +65,26 @@ int cmd_check_ref_format(int argc,
+ 			 const char *prefix,
+ 			 struct repository *repo UNUSED)
+ {
+-	int i;
+ 	int normalize = 0;
+ 	int flags = 0;
+ 	const char *refname;
+ 	char *to_free = NULL;
+ 	int ret = 1;
+ 
++	struct option options[] = {
++		OPT_BOOL(0, "normalize", &normalize,
++			 N_("normalize refname")),
++		OPT_BOOL(0, "print", &normalize,
++			 N_("print normalized refname")),
++		OPT_BIT(0, "allow-onelevel", &flags,
++			N_("allow one-level refnames"),
++			REFNAME_ALLOW_ONELEVEL),
++		OPT_BIT(0, "refspec-pattern", &flags,
++			N_("allow refspec patterns"),
++			REFNAME_REFSPEC_PATTERN),
++		OPT_END()
++	};
++
+ 	BUG_ON_NON_EMPTY_PREFIX(prefix);
+ 
+ 	show_usage_if_asked(argc, argv,
+@@ -73,22 +93,13 @@ int cmd_check_ref_format(int argc,
+ 	if (argc == 3 && !strcmp(argv[1], "--branch"))
+ 		return check_ref_format_branch(argv[2]);
+ 
+-	for (i = 1; i < argc && argv[i][0] == '-'; i++) {
+-		if (!strcmp(argv[i], "--normalize") || !strcmp(argv[i], "--print"))
+-			normalize = 1;
+-		else if (!strcmp(argv[i], "--allow-onelevel"))
+-			flags |= REFNAME_ALLOW_ONELEVEL;
+-		else if (!strcmp(argv[i], "--no-allow-onelevel"))
+-			flags &= ~REFNAME_ALLOW_ONELEVEL;
+-		else if (!strcmp(argv[i], "--refspec-pattern"))
+-			flags |= REFNAME_REFSPEC_PATTERN;
+-		else
+-			usage(builtin_check_ref_format_usage);
+-	}
+-	if (! (i == argc - 1))
++	argc = parse_options(argc, argv, prefix, options,
++			     builtin_check_ref_format_usages, 0);
++
++	if (argc != 1)
+ 		usage(builtin_check_ref_format_usage);
+ 
+-	refname = argv[i];
++	refname = argv[0];
+ 	if (normalize)
+ 		refname = to_free = collapse_slashes(refname);
+ 	if (check_refname_format(refname, flags))
+
+base-commit: 37b3475fb530c14109211faca33716a173db61ed
+-- 
+gitgitgadget
