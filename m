@@ -1,100 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.46
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.48
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793253168;
-	b=0PB95vxJwhmnRQMrRpveZE1uYiAhSNO8d/c8aAGFdL7qoVdo3g1IaXnZNYR790J94Y0s
-	 XAqx70nQcra5KoAf8fKNDeNvTgM2FeLVsWJOJ31/1UazAvOWESY2f1dIoBrz1Dt1W8osy
-	 N6bISKse19d4nEf052+CnY413gFWIifakr2eh5G/MKTl3nWfJhJDc9WYKwNSTH78RFZ7I
-	 5DXeuigPcUc87eMO5qfxdzHpwNrJX4gmiNchIBqKBEWK4u0kVfWtWN7RxJ3FjTLXXp8bw
-	 gucxUudQxRYg/GyDQnEDQbwWRa1dZIqZBOhwg0kh5mcclKafVuzF4SqwaYv987Bs5ug==
+	t=1793253295;
+	b=dXPNhku4q69PyjHOu2y/vqrYHrF2/AS1/QlmyRdpH3SaQeP8LGXz09p6CtvTe5Ll0EZb
+	 XFjpqoOcQCdhYbIKuSFSXx3o2GsB3i+krOI3nse797LewNUJd82BMt5ygey2xqIu0ej0T
+	 0OGNPOZTulqX9cGugdob7qRxOpSnoqIJvN+Q/wsx1QaI8F9+OGbeFIfQ3aazMUYFUH+G2
+	 1CpzwOwWO8AKw4otmlAAmysrjuWq0v4oN5AU/2b/bHDrnE7tPTsF72s0bsGpoqnnjyO9r
+	 7gyAO1/DJcNYkJLV/JPHli8C09rGWf2hq9lYeVMBB4aOq/RU5f2nbAtDRjNj+r2LFQQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793253168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793253295;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=L66vZuGRx6pPPexmAvCTP52tqRLfdcBsY/Zxls4w9yQ=;
-	b=q+FDlK5U68aeSnXW2GJ2SfTk/ppNmdjPJNhLHXqDV2Ss1ixwQw2YUVI4by7zqL/VFmQa
-	 /FIa4NWrmB74YxmNwNLpdVXBVp8BBKSlp9UYFDqkiEyjD0Ovq9wtNeFKliQSczhmuenik
-	 DZgIPo5bZAt20COQNH057nSwNdqioL3MToAcLEes269iimsxaxZyy8gp2tOWkupGXSciT
-	 xa7UUJeJlfW3B75o2ad9S0Oshq1jiQZxa5xZFljIMKUUptUmVGXV13rZ+BSsbdrFFH4UO
-	 qr6bUx+iGibwlc8J1XVHghNH8zXK9hrauSTpw2jYcRgjhAQEdxCM5AGeBR8j9dNy1Ng==
+	bh=42dlGTZpxSHdy/xfx/Zmq3djmE/GaICnX6NmoUbRf9s=;
+	b=OjIEMuLgxkvYk5gistZ3H8LskQjZt86AhntT5aXqcdjCgr4Y3ZC8w5oc2VVa+yi8JD6Q
+	 t0LRwPoSnTSchBqmZ8yNRGrCOb92jr2+TNSQgEaMwVgKyhi2uDbOM4eoCJia6DD85LJzg
+	 J0hs3J9af7p0A8M5ZOmuFHu4ZuI4HmH1VlyAmANR5QfrgpWM3kKK0kbKInpV8HUpGqF0i
+	 f5gHMfAqN/0DI3iDtCkcFvGuzQw5A3xwO5O2ilEIpHF1bdCR6ZniGrMsjakQ1RtOhECHl
+	 qYjnYhrm61eBMHL47dpMs/WnvIjIO+aGMvBP/FxVwnq8RnIFgUdi5IQMd487yQOScLw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=n6xywctK;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.46
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C9SvFM4B;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.48
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8EE606A33C
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 05:52:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BE8EE606A33C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12267606A31A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 05:54:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12267606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=n6xywctK
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-7cb6dc850c7so569141137.0
-        for <git@vger.kernel.org>; Wed, 28 Oct 2026 22:52:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793253167; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C9SvFM4B
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-7cc81984fceso519058137.0
+        for <git@vger.kernel.org>; Wed, 28 Oct 2026 22:54:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793253294; cv=none;
         d=google.com; s=arc-20260327;
-        b=NwyrUhxEtJynYC4bgxe439Nj/8Yv4oFDAbXWA1zXeI+2QVcuBByw8CJjliFA2DPLEk
-         5+AajFaDbYTY52SZlZt/FeyUGRyRwbuHr8Coem0t+bXfozyZNTqebq4LzggLSX7bsYUv
-         42f/0rpklMaMzLlkJkUUazXXItX/7Y3aRIv9nJXKaDsrrv3EUi+nzNUAc0TWjexCEUfW
-         epYN5PKv2rdjdVbLlIGR+60n6nb1T7nQe/9M0LLEK+9ZJaAM662WHTqqTkdk+7RzqVFz
-         uoiZP00pRDS50IWqjSdb5qiIFIoG7P3Ek++6WZGmZlZnglcZeBWw1WYatEt4FTipQPue
-         LMJg==
+        b=Me6ZsTdoDB+QtU6UVIQ/txdPBxjwK5QWpxp0tMrpt6Xd77/I4F2QR7DP/LhCu0wGKP
+         kHeHhsYa72Y5tK/2WLQOE6kozNHZCHj+1OeWTVKEiS4kGwLzHTpA5L95dZ3sV+lPECFP
+         OOQ78yFynHAdsPyVJ6p0Y598RiLvoAlHCKiyYtxUE+AHrLPT6ZEoK8HwgDQnB7Zw5pKc
+         dLsENoHc7Gmi2x4WbiJR0ILUxpvClDN5fPwAdrxleJlp74yeWpYWtB1rTgK4vbsBKeVk
+         jgqHHhg6L5NXjnxOrr+onFUkcYU+NhHJHBb1yAv1w8/bokKr+zrIjF9iycKvckqAkSsV
+         R8fQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=L66vZuGRx6pPPexmAvCTP52tqRLfdcBsY/Zxls4w9yQ=;
-        fh=seSHNth4cqs44JqgUVc9d6HiuUxwB5UoKEh0HXhB454=;
-        b=Z4XL7/s0clac3wwxB/ccKK6K7SO2JIL68R31cBU8bxuzCLFWr94eX2muwRWXwgLyeB
-         58WAMXUGYI1LYnbV4NuUTRfva7Pz0DDlys7h9nqEuauIbV5PqJIvColAtVTEYPeliw/S
-         x1/HSkGUvp+MLAdYW/3vRWV8NKG6QBeAsRAuyG1lza843HUSleFaBwHqPyED36wbXUde
-         Dg4gG34pybyg1PXvGqlAY1dKvlwdBtyQjb2Supeyg6HGTCFmOUD3s3enH5IAGxDiaOOD
-         1c4jET4f/Sydf9iSAoxoF91oXhKX4fp3Ged0YlOSwaFS5JNPZbc9BXTyXtLLCmVDYykx
-         E/BA==;
+        bh=42dlGTZpxSHdy/xfx/Zmq3djmE/GaICnX6NmoUbRf9s=;
+        fh=0v9AP56toc6RKP9VA5MNi9TKANdIaAISEDD/nEmSJSQ=;
+        b=S2yPXQ4vBfs98a9IKX4/k2kFVKejgiF6nR3hWRKDL2yStoPqvNuryI8S1wAcuDHZc8
+         MzEDo+bM4iPCwPyLgyMFfbRY6dW1qIkROJoNYFUv0mubT11K0XkuFQDDvG21sr0NxUPv
+         hRCgkfM8XvjcvOkMlAcmflrmo825YZX86YvWxLvJe8xW+AGTC4fkTA+xZCSJUMOSCh4N
+         2bxHsV0tE5wNRpOjn96NWJzYw1zobiLSU4tKYCXsdqezz/exXGZEV+8aHm8xEgLqGnjh
+         iH2tcqSwZiF0MxbgxAUkvkuIxqdwnFAAPLDfxwLhrZQMYUbiikBq8HF/JrEN+oCZFH6I
+         jkHA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793253167; x=1793857967; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793253294; x=1793858094; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=L66vZuGRx6pPPexmAvCTP52tqRLfdcBsY/Zxls4w9yQ=;
-        b=n6xywctKJQ5dkkLuvUxRMoaYFGFHvGDcqDcptkK7uym6yrzv1qNfuy2xj7V6qQQUaT
-         FtyZ6L5pEIvRjyZp4lwGDbdyRHhpoBICYqbjz5fQ/dSfwYdyqXfshFtHvgOxtEnxZyej
-         g2STBmUvORtEsr5z5HMoRcyMpXc6wEhX4jEMKPrWtEI0d4SqIT1QdEttFY261usCqD+N
-         MGCO4dHm2qaH7QndSHNYpMGmFE0uNcgkB2l9u4/P8N+6R01IES51Uw7KwjlWxcBDwEnE
-         hkFmzO0cicb+Ns+lZk/lvuvgHLH7RXeaxbJSbSHXB3Ttnac2lVFzJi7r2+jcCDS8y0OJ
-         A24Q==
+        bh=42dlGTZpxSHdy/xfx/Zmq3djmE/GaICnX6NmoUbRf9s=;
+        b=C9SvFM4BGuPGxXd98UgE/aYFhHXLZZGD+goEmPzLtkEfhoOqUUL/bTeiHuxIcMD2Ba
+         xUN9AqUmHU6mr3l18Ba8wCwstDT7Cz30BnhiGLRKW9RfHiRZmDj+sXYqo0XAmoONxw2u
+         93PYDMIysUYklgKq1zRLHJoVCH20680Hx84ibu9n7Vu+6MnP76wY2PvmmwN5+kHkaad2
+         b5/K+HPi3xFSxllNIqSwJr6tQaaf8a1WNIrdib16E5N/AB1Ob3wQA0IqJFHL+wvN5zgL
+         g33PslfwWbb+SNwRNJZJx3kotvs0Q2WPKxjV/nXTpdTPUv31V+wohDRmZ3rYAASSB/zV
+         AK4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793253167; x=1793857967;
+        d=1e100.net; s=20260707; t=1793253294; x=1793858094;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=L66vZuGRx6pPPexmAvCTP52tqRLfdcBsY/Zxls4w9yQ=;
-        b=zQn+0GaG6lmgovdVJ4kbG3wrILPewRq7atbaODx5cIYWl37XNizWwUH7Ec70oS5Suf
-         4neFGe86VNccYp925woS5n88sjp/nIyeMXjtJxdKTNv5pZYaqBjRf5fHJv8/kdwHLnQj
-         5SZkATHeNVIKB6mY5T9fHYcPPVVev8VqeSwsYL30DmHegKKW+vd5YDmsNbbNuWxmYitM
-         L2djt/Hxs0YDynWFoqm2FXuY5bYrNl8agk7Dkkxc1qoEcZMg5khf7TsLsN99lYY5hr0A
-         TUWzIGRL5EBj4e1Lphx+weBZdNg+yM3re0RzTl756jqXNRh+VYC5AGjApMzkPziYe8zg
-         M+ww==
-X-Forwarded-Encrypted: i=1; AKwUvByFYteYbY8a/BW3Dp1aLnTqvo5VWbmmcsICeU/i1ZfM3bvdY22ciOI3sa1Cp67MEepzVCI=@vger.kernel.org
-X-Gm-Message-State: AFq9FYL5R0EyE59dv53SeLljoDrvlVoJwXKhIPwqE7j55iUEoTwZT9Jz
-	Z6IehJ1/dFpdMsvGQgOwfLJpAnNnZJt5o//6YQrDudngAXVzIU6RGhUI1XLhFPjzJs5QQ0Zb6NF
-	5ytKFRB4W+tFlOHczq38IabqN4bula3w=
-X-Gm-Gg: AYBFou3AXwwebg4sCKxBdn8TqNlx/QbJGs3bCUxLJ2TmlAKgfmKJX+Wq8DRAwiZsRqb
-	p/ikk4gS4FscAJxy4cZXbfsDC0A+2KNn/0Ls/5ComwuK7coNKv/8+25DDwuipb3F+3qAn/OZ0Rw
-	6E3Lf/ia0OMlHu95+RMbsZLeMsSZjJTSvK7uG2ccnzMcXKFHBGLaxtPN0b7X8SffYXsXcnLPqS3
-	PwMyzzgAXVV/IUAh1dj9gaoROExqs3396haJuXAowceEP7r5wKWI/TZdkipdBWYgIkXYBw8MwiQ
-	nJ6TjTc7eKCHIr562C5JcH9HYGnKMDfTnXdSSF+4S5rv2IOcWHNgh85fAm14IV5ohZYyR8qthOw
-	Gf4sXf8ShbRdFsHTWorJbSYmxCojk7Iod4k4fJh/+e8FA7Q7EXVgPvtDT1hjDA74QAdAu+j2Wzu
-	KeW1rpmxW1a8W9a8mX9UH8hlXn
-X-Received: by 2002:a05:6102:dc9:b0:7cc:1d0b:6d33 with SMTP id
- ada2fe7eead31-7d03a5eb01fmr1972763137.26.1793253166661; Wed, 28 Oct 2026
- 22:52:46 -0700 (PDT)
+        bh=42dlGTZpxSHdy/xfx/Zmq3djmE/GaICnX6NmoUbRf9s=;
+        b=AOXaYvdQqcLu/ODpthJ+BlpO0iNQWkSFP+/KRDBeXi+5PNfgjDnatA9OB/Tt38kA8C
+         lSh7R5Xn9DRpN8IUD7YICmCoDij2wYeCz2bLBRPXCCkeSnLUK9Is+W4pqz+d+kDdA9qY
+         ZfmPosgqtkacyfZ9ZR6Kh/t1qBWkIOnuAqe/D73wqoe/u/sgK0rmGHEwMBVlx1KjAJzx
+         UKtBUYMdfFkPkpcjKSGjZlfBCH+bsHjwJ3abBFvXsw/z0fu1lDyYHOsB8YoRqdXw4wLv
+         YtCCeBQbbNJwwduMkB5VtHxu7/qR2BjG/vGbOw0ML6PZLzOLiQ3vc6nc3PiQMdJA9n5W
+         Db9A==
+X-Forwarded-Encrypted: i=1; AKwUvBxSsSZOXZaFWb83wXh6Z2+ULBvRAIErLUzfpknN5SFt4yGn7B1HdXzUaDmsU8S+ExBkW8g=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLoZyRV+yeQuFFxutaCch06IToPAHEIssf4oS5MKUQFcrkcGSed
+	7N7U3mG9vQwmHKahHbXvy1FLjyxRuuBLUXVIQM1I1tzeWaA+l26hk4O/0PqtfxOx1/X09dcVKkX
+	m44NgwqwIRjTqtF4vKQypjRRhSe/gYQQ=
+X-Gm-Gg: AYBFou36xgjUBHKB37mTJC6VqmPduz7JDnbQ7ZVUp4HWkZ8aFJIA1Q1Jqi6/sIlELwW
+	wy5gV+6zdfxWT39zYp+m7G+lXQBmU93DfEjAAblpraHpOglgvQfRjvHESdVWKThWJkx34NRI2Ms
+	ke8pXgFLdZrmmNUvTCeCPzLVIp7zoJC1KN+rAkjj5gyYDHYl4QBXEhHRkV31rTZ+W2qdH+51RU5
+	SUbMe0WVvZo+6fxVio3kuAlFu2cep8T4GzSFE/QsrB2q4FNzwb0op2FQ3dRTFTEDV6zg4S1iDRr
+	rHoOeyg3m8OCn+X9TPMJqs2QOGUzda/aPpSiw6ZrsVcEvAtkc3sl3cb0IwafyBtepz4py6cG6kM
+	tB/52z+0xI3Ok21y4iwcddFSWrYAGXpYGD+jq80vxVh6x5YN1vLAefk1XAYaz6tRpBaRju1qBBm
+	Cc8WFkDhSkIw1sUadcYGn2Ct0A
+X-Received: by 2002:a05:6102:6883:b0:7cc:232b:f5a9 with SMTP id
+ ada2fe7eead31-7d03a5d1946mr1498663137.24.1793253293881; Wed, 28 Oct 2026
+ 22:54:53 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,12 +104,12 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2280.git.1793099688076.gitgitgadget@gmail.com> <xmqqzevzj8f7.fsf@gitster.g>
-In-Reply-To: <xmqqzevzj8f7.fsf@gitster.g>
+References: <pull.2280.git.1793099688076.gitgitgadget@gmail.com> <xmqqv76nj7ys.fsf@gitster.g>
+In-Reply-To: <xmqqv76nj7ys.fsf@gitster.g>
 From: Shashank S <shashu8660@gmail.com>
-Date: Thu, 29 Oct 2026 11:22:35 +0530
-X-Gm-Features: AclHuK_B0XZtd--pV7CeNmjI_YvmE3hWVbSCVgo9HUUQSl6oANfo5B0Gc41YoHg
-Message-ID: <CANHmUQSEoz=NFH0KV9bNyTz9_gUVPhicUeHdJr2yp1q6iVaDWA@mail.gmail.com>
+Date: Thu, 29 Oct 2026 11:24:42 +0530
+X-Gm-Features: AclHuK-yRdY_xDaCa1HQ0N_Y3Mte1ivYCxBXIKmRPYGRscADO6F_j6wJKAFz-tU
+Message-ID: <CANHmUQRO1z1hL-L-To3_5n77P9V=GQAhN5cJ8BdDewP9sNqEYA@mail.gmail.com>
 Subject: Re: [PATCH] test-chmtime: use parse_options() to parse command-line flags
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Shashank S via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
@@ -117,216 +117,32 @@ Cc: Shashank S via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
 	Siddharth Asthana <siddharthasthana31@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 28 Oct 2026 at 00:08, Junio C Hamano <gitster@pobox.com> wrote:
-
-Thank you for the detailed review and for pointing these out!
-
-> > and remain in argv for timespec_arg() to parse.
+On Wed, 28 Oct 2026 at 00:18, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I somehow find the verb "refactor" used to describe a change like
-> this slightly awkward, but it is excellent to reminder readers why
-> it is necessary to use PARSE_OPT_KEEP_UNKNOWN_OPT.
+> "Shashank S via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-Understood! In my v2, I will change the commit message to use "update"
-instead of "refactor".
-
+> >
 > >  t/helper/test-chmtime.c | 46 +++++++++++++++++++----------------------
 > >  1 file changed, 21 insertions(+), 25 deletions(-)
-> >
-> > diff --git a/t/helper/test-chmtime.c b/t/helper/test-chmtime.c
-> > index 0e5538833a..dc6281b1d6 100644
-> > --- a/t/helper/test-chmtime.c
-> > +++ b/t/helper/test-chmtime.c
-> > @@ -38,10 +38,13 @@
-> >   */
-> >  #include "test-tool.h"
-> >  #include "git-compat-util.h"
-> > +#include "parse-options.h"
-> >  #include <utime.h>
-> >
-> > -static const char usage_str[] =
-> > -     "(-v|--verbose|-g|--get) (+|=|=+|=-|-)<seconds> <file>...";
-> > +static const char * const chmtime_usage[] = {
-> > +     "test-tool chmtime (-v|--verbose|-g|--get) (+|=|=+|=-|-)<seconds> <file>...",
-> > +     NULL
-> > +};
 >
-> Is it necessary to spell out the options like verbose and get, once
-> you switch to the parse-options API?  What does "test-tool chmtime -h"
-> say with this patch applied?  I think it is common to say [<options>]
-> instead and let the list of options produced by the parse-options API
-> to take it from there.
+> Forgot to mention one thing.  Do we have any tests to cover the
+> behaviour of this test helper?  If not, should we add some (not a
+> rhetorical question)?
 >
-You are completely right. Hardcoding the flags in the string is
-redundant now that `parse_options()` handles the `-h` output. I will
-update the usage string to `[<options>]` in v2.
+> Also, one thing I missed is that the original ignored --verbose
+> when --get was given, since they contradict with each other.
+> Shouldn't we make them explicitly incompatible with each other,
+> perhaps before where we call timespec_arg()?
+>
+This is a great catch. While `test-chmtime` is heavily utilized in
+scripts like `t5304-prune.sh`, there are no tests covering the
+helper's actual argument parsing.
 
-> >  static int timespec_arg(const char *arg, long int *set_time, int *set_eq)
-> >  {
-> > @@ -68,40 +71,37 @@ static int timespec_arg(const char *arg, long int *set_time, int *set_eq)
-> >
-> >  int cmd__chmtime(int argc, const char **argv)
-> >  {
-> > -     static int verbose;
-> > -     static int get;
-> > +     int verbose = 0;
-> > +     int get = 0;
->
-> There is no reason why these two need to be static, but as a
-> "main()" function for a run-once-and-exit program, there is no
-> reason why they should not be static, either.  With this change,
-> you are forced to explicitly initialize them to 0.
->
-That is a great point about the automatic initialization of static
-variables. Since it isn't strictly necessary to change them for
-`parse_options()` to work, I will revert this specific change in v2 to
-keep the diff as small and focused as possible.
+In my v2, I will add `die_for_incompatible_opt2()` immediately after
+`parse_options()`, and I will include a second patch in the series
+that adds a dedicated `t/t00xx-test-chmtime.sh` script to explicitly
+test the `--get`/`--verbose` incompatibility and the standard usage.
 
-> > -     int i = 1;
-> >       /* no mtime change by default */
-> >       int set_eq = 0;
-> >       long int set_time = 0;
-> >
-> > -     if (argc < 3)
-> > -             goto usage;
-> >
-> > -     if (strcmp(argv[i], "--get") == 0 || strcmp(argv[i], "-g") == 0) {
-> > -             get = 1;
-> > -             ++i;
-> > -     } else if (strcmp(argv[i], "--verbose") == 0 || strcmp(argv[i], "-v") == 0) {
-> > -             verbose = 1;
-> > -             ++i;
-> > -     }
-> >
-> > -     if (i == argc) {
-> > -             goto usage;
-> > -     }
-> >
-> >       if (timespec_arg(argv[i], &set_time, &set_eq)) {
-> >               ++i;
-> >       } else {
-> >               if (get == 0 && verbose == 0) {
-> >                       fprintf(stderr, "Not a base-10 integer: %s\n", argv[i] + 1);
-> > -                     goto usage;
-> >               }
-> >       }
-> >
-> >       if (i == argc)
-> > -             goto usage;
-> >
-> >       for (; i < argc; i++) {
-> >               struct stat sb;
->
-> I agree that the original was horrible in that it did not allow -v
-> to come before -g etc.
->
-> Now, let's read the updated code.
->
-> > +     int i = 0;
->
-> >       /* no mtime change by default */
-> >       int set_eq = 0;
-> >       long int set_time = 0;
-> >
-> > +     struct option options[] = {
-> > +             OPT_BOOL('v', "verbose", &verbose, "print the mtime and the file name"),
-> > +             OPT_BOOL('g', "get", &get, "print only the mtime"),
-> > +             OPT_END()
-> > +     };
-> >
-> > +     argc = parse_options(argc, argv, NULL, options, chmtime_usage,
-> > +                          PARSE_OPT_KEEP_UNKNOWN_OPT);
-> >
-> > +     if (argc < 1 || (!get && !verbose && argc < 2))
-> > +             usage_with_options(chmtime_usage, options);
->
-> I am not sure what is going on here.  The command, when parsing out
-> the -g and -v options, expects to have <seconds> and 1 or more
-> <file> arguments.  Why should it reject argc==2 when neither -g nor
-> -v is given, but allow argc==2 when -g and/or -v is?
->
-> OK, the usage of this command is a bit opaque.  The command works in
-> two ways.
->
->  * When -v/-g is given, it is a request to show the timestamp of the
->    file, so <seconds> becomes optional (i.e., when given, it sets
->    and then shows).  We still want at least one <file>.
->
->  * Otherwise, it is a request to set the timestamp, so <seconds> is
->    required, and we want at least one <file>.
->
-> Not the best way to design an end-user UI, but this is merely a test
-> helper, so let's not complain too much ;-).
->
-I completely agree, the original logic was very opaque. By removing
-the initial `(!get && !verbose && argc < 2)` check, we can rely
-entirely on the `timespec_arg()` check to validate the `<seconds>`
-argument, and then simply use `if (i == argc)` at the end to ensure
-`<file>` arguments were provided. I will clean this flow up
-significantly in v2.
+Thanks again for the excellent guidance
 
-> >       if (timespec_arg(argv[i], &set_time, &set_eq)) {
-> >               ++i;
-> >       } else {
-> >               if (get == 0 && verbose == 0) {
-> >                       fprintf(stderr, "Not a base-10 integer: %s\n", argv[i] + 1);
-> > +                     usage_with_options(chmtime_usage, options);
-> >               }
-> >       }
->
-> This is largely the fault of the original, but I wonder if we can
-> avoid the "without -v/-g, timespec is required" logic in two
-> separate places like this (and the earlier one that puzzled me)?
->
->
-> >       if (i == argc)
-> > +             usage_with_options(chmtime_usage, options);
->
-> And we want at least one <file> in any case.
->
-> >       for (; i < argc; i++) {
-> >               struct stat sb;
->
-> OK.  We will iterate over the <file> arguments given.
->
-> > @@ -110,7 +110,7 @@ int cmd__chmtime(int argc, const char **argv)
-> >
-> >               if (stat(argv[i], &sb) < 0) {
-> >                       fprintf(stderr, "Failed to stat %s: %s. Skipping\n",
-> > -                             argv[i], strerror(errno));
-> > +                             argv[i], strerror(errno));
-> >                       continue;
-> >               }
->
-> This fixes a whitespace breakage, which is an unrelated change, but
-> I'll let it pass.
->
-> > @@ -150,14 +150,10 @@ int cmd__chmtime(int argc, const char **argv)
-> >                       }
-> >  #endif
-> >                       fprintf(stderr, "Failed to modify time on %s: %s\n",
-> > -                             argv[i], strerror(errno));
-> > +                             argv[i], strerror(errno));
-> >                       return 1;
-> >               }
-> >       }
->
-> Likewise.
->
-> >
-> >       return 0;
-> > -
-> > -usage:
-> > -     fprintf(stderr, "usage: %s %s\n", argv[0], usage_str);
-> > -     return 1;
-> >  }
->
-> We exit via usage_with_options() with 129 now, but used to exit(1)
-> upon a command line error.
->
-which is a nice bonus of migrating to the parse-options API.
-
-> Looking good.  Thanks.
-
-Thanks
-Shashank S Mogaveera
+Shashank s mogaveera
