@@ -1,92 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793316166;
-	b=03zjVIh7J+O1cD7BVNeeiaV6wnhWWjP7bF9jVexiNydgwsroHGbNmyjQW27t+EdE5ONG
-	 myhCnzoofC54lZnY1IOfwcppI70BJqOPx6wrlW+24StAApfLWX0A+7PqRJQsODNT7qWvQ
-	 aITkmgioLNOafD7WkYRgokMdKjHH3p/IMC3Yp9x/9r9KdyBln9rmw0lzK1RZ5S6X4sCUK
-	 dufPW5oV1kskct2hF/oKLlSkhmf48MxTuL46MV1HeWyqjSZm4ECuF8JLJJA6OboxFlZSR
-	 X43T1uz7s8KF2rAaOAdURh37bUAsXieKGKwwnkQwcGtr78+UC01neQH8XteYixMn2ww==
+	t=1793316167;
+	b=BQeBtHIAllFsjYvSM3cLWRP9X5uEIyd+nHhgWGwr/5H1UGaQV8zQkJ1Q+AqF6X/oeEfa
+	 ckODAr0xXMtSlhmfN2UsHuBWJKHvXI3xBJV0dbd2IU7ugCc9OeU4uqRfQFbxx9rmQzAeg
+	 ml3Aj1MY//afrelphRNEsAUdrHRm3pqgluXEPVprzPWx2B5hcNiR22zjR+Bm3VV3ocAmb
+	 q+7HjxI5zeJvBTnRAvUrO8KPbi+of44sCG3yDLp5awUcPltF5JF/p/xuALgmNF6kdgcOT
+	 MPtWLd6ph+myqw/1okvq6CoIzw8F8C0tCpkp11dIhkOLEhH2nqGMijiGdveUYnKdlWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793316166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793316167;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=K6hPh7ZtIH2q84BhBaX80iFDqAgQCqc8nUxKIwvyg0w=;
-	b=yAdlMwsHfBk/Q6ptxQ9Pm2v8SApTiojCi9SO3rVg1BOhoryVY55PVN1p9er/syILC3Bf
-	 LxNoaoiPIYwBRU1eQPRZuuLyyBqtQ70xcWUEjYlYct+EEfuaPRJaBuLZ7yo9w5Eja8jxc
-	 1ApVqCAMz8Gjd4aUIlBJ9uu2YJlrOYgJvub3E6L59zw0kYLGVuROHwJRggA1uIxOQdsvZ
-	 8a24mSTck6xW44J2dWzXbUeEoBrvmrPhxfEft6Ols1OEEFwp3rEDYB9rEWqISsUbkHA5r
-	 FyN9+FUMl3AKLfCa15iI344ch7AMsFPIxuykjy1Vh1OZ070RWXDsYOJ7UhmE1ccfHWw==
+	bh=47/Z9OU9fXJNFo8CAl76rZuuH3pd8VoOkv+ELwsU5Yk=;
+	b=DCXp2RhRCBswj2hSZJr0gNbNABJn/h8j+MiCSecv1iThsBEFEKcku1MCRHD46Os2TR3l
+	 K+qCvuHBgXmu1ChjH2fJy2BYT2NYBGd4Kczlu54FmCwpAUPo4DG2QEfvzuQg8+pYO4ElV
+	 8tXaRDC/ojU36hTmuxjmuMLpbjue886SCTN2zR5bmfuNIXCVSZIeQMfx7V7j7lkAc3Pdj
+	 rhKDXpg6w67RZuSf4imZwBTEEVBJlQwSMu39A6aX0i3+0369Tv6H1cLSavG87EI2QpSVN
+	 KGCV5XerO5JYFvon+AR1GoBYMEVWTXYNCaf5i373SOXFLl1sCohz7i53aCQhrI57O6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=A+VZa8nm;
-	arc=none smtp.remote-ip=209.85.210.49
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OGnAN3Ao;
+	arc=none smtp.remote-ip=209.85.210.43
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDB6606A31D
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 23:22:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0EDB6606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FB7606A320
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 23:22:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1FB7606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=A+VZa8nm
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-82109f51565so86763a34.2
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 16:22:45 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OGnAN3Ao
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-843cf077f10so232413a34.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 16:22:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793316165; x=1793920965; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793316166; x=1793920966; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=K6hPh7ZtIH2q84BhBaX80iFDqAgQCqc8nUxKIwvyg0w=;
-        b=A+VZa8nmwK4ScC7g9gTKxUm7dOsRvSlwdge/HuNglNEU+9BMZ3B/ac7i20RkHmc17w
-         +sBmNn1jyppMJb5fkFCl2JGOBul7qyrO+N9EhA2xUJyO5Qdb/x21RV8g8VVDgBHeUr4A
-         v7doICGtyGnIYL4jMEWDLmmhit21lyucn92VR3q4Bm+4Wjb+nmnLiBqsK+LpPAxoiiGT
-         hBrDy+X5JNv/2JUgbpVJLPeBDWu/ES0zmBjg4J4YNPjNqIVKZ58EoYAfZ5/BfqyZHe58
-         5iEpLwKGB4xQK71gyhch3rZ8mTfTtbo68OwiMZBKZCM6reuY9MdMB4GlKK05HTFJsG4L
-         J3Pg==
+        bh=47/Z9OU9fXJNFo8CAl76rZuuH3pd8VoOkv+ELwsU5Yk=;
+        b=OGnAN3AoP+W7mosjdV8gRPw3oWAcMD2JzeirPpahPdkpT9Wma/z4EGsLLMiHF7BZVA
+         /3KYKneM62uyJolJnviApcEMUcrnqGwL2NVFwxEdTEt/9uC8PFwa3XbcNOl4sDfGn89E
+         HfPgQvi3+mLzk0aNrBsGztwz0waoka6iBt5CzdEj7MZy4/IOwxlpJ+zabkoo7fnmvj+a
+         YQ9SprWnY9Abxho//Py/Q5kYO0/KM7CBZps32ROGuzzmuJGkya9eNenPfWOG7bIqPeow
+         zcQgaSQOe96spJlDCoUDsAD3Gt5JNKWcdZ7mGZMaOIXoTHSgmvIUq7ajvt9Gx3lYXGpW
+         GcCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793316165; x=1793920965;
+        d=1e100.net; s=20260707; t=1793316166; x=1793920966;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=K6hPh7ZtIH2q84BhBaX80iFDqAgQCqc8nUxKIwvyg0w=;
-        b=Q8omj/FjgoCzr4dBrQYMzKMpoTRF51AHt23al4Hed8Ex6VQlW+TT1boimESKc0ULsH
-         ODlGUYTQa7e/Plo4SOAdnm+AlgS3tEQggeVkvMIX6k82bqS1USlKX1i0x4iEI5d8U/Lo
-         6koKeUZeS7PX+9ktzkfwiwGDgsPVRtYZv1ZaaYDPqGzCjylJEwyLcBvlAlejSB1jLyKf
-         Js7iPEj+BlDgMAumNl8l40QiQjeN/vA5BYttwq5+Wvr45RGa0m7dgtI/QUYOAXfA8zSc
-         EGusRp5/5uzGAPef+QQJl7Fmoqmi2fpV7vvC7WV+aa52cKvfjKasu97MXk/jHXuYdx+z
-         Wn1g==
-X-Gm-Message-State: AFq9FYJ1SHlo8e6iEr7QVbH+w3y5onefj29zO373F04TP7O4xq+9AEnJ
-	/aCeRiFLKogoHIiRvoyGzKWKcxdNeKrhnAHELUc9i/c0V8SvJo7yAigAk1k6lw==
-X-Gm-Gg: AYBFou0RMPZj5sxlNUmmTPqtGJ6g100IjIVjJ1+vmvlXQXe1gPZwurSbUDrLQlAe+d4
-	xw95ewkUPpLaQFlVkh3T4Ht2edMB7v7ToABfsB9+x7GRE1JmI4BnG7HSNknr0rd5xs2AeYZr7NH
-	H3yOGCO4D2BQ7BSDzjkoGeA3CPqURlulxGdUDmxaast5SnzYaW7vO1KRSgEengFlVZa/gXjV5w4
-	1Y6R85KpClBrkVwPG9V7+68+vLOZwYRyRZy9Ai79pa/9YDR05P9QTwfpZq8HvMLKAmh6HOQuPKW
-	jQmB08dHGsUQ0EwsG3ICAqfIFBHPz+6xKCINYijaydazl3MOz8TAZBYXzmw8F8x9no9MWACQh9r
-	pHjCLHNv7ELWbUIDtJ/zmujQvz7ai1TWqhrWCY92j45dCSNyAoqkHSoTx7jyqUe7QY0jFG8m1Gs
-	X/s5xfbcD4ibigH+SKNw3cPI4j2l49/YOl2SXqoacdkIGgRc6R4NkP7jcDtR2qMPHQzElmIGW6I
-	b6vZESLAYrx3mrXmiIu4WttgUpjtn44f/CNCEEC/svo1nfRub6Roz2if5XnmJO+3HMV8xponJ0S
-	NYNjYtikb2P6BIL6pSG030C/7EsnK4+Tic/NEaeKU8PXwKL2ejlMPMAmz9/zsUCqm7le
-X-Received: by 2002:a05:6830:264a:b0:846:5d82:8b69 with SMTP id 46e09a7af769-85d3656fb81mr598675a34.20.1793316164858;
-        Thu, 29 Oct 2026 16:22:44 -0700 (PDT)
+        bh=47/Z9OU9fXJNFo8CAl76rZuuH3pd8VoOkv+ELwsU5Yk=;
+        b=FwXwxMcWEhpHL+r4a1AwUbYk5oQg75MTbATDBjaji8SRNBo9lYq+1OEda3aNKdF2/T
+         aNoQH1jY5d6eB9Wyga/4e43AUOkYSpMxEj+z+iQeIq6zt17dQALvhGamD4Q8W7DyOldD
+         jkEHg/8TsRh3CjU2EulyWcuJHOe+uKmBW8geCiJuSkN/D4BIwT9a2cX8qudbAjzonlsp
+         6sBuxFBdScLjY3kUOI8CF9zgARfvod5NsPdAdal8Gjc9VPdLNQfbvdvS/2sHf2IbMmL9
+         NB5HfJKeNlhRsT0myp02/D1EJl0e8WGXS4/iiNdQzZp1YcIh+atudrQ3zIlSBc0EY+Ah
+         8oNA==
+X-Gm-Message-State: AFq9FYJifDgVNrUZuZLtSpm6UgjGIoI7zq06vo0bXVm2UCduAr+qQtJl
+	NQppdiiJfNU03zzwsGYH6wVbwF46D1n6xMuwpk15UXS/mxzQ5sAssJMJrVjQhQ==
+X-Gm-Gg: AYBFou0UJLCPR7wNSzIYmZyDP/sSWdsa95inKSRnlMhuXpfdRjWkqldRbeRiQoHXyB5
+	Y/Y/qduQWUhU8rxSW0ba8akdLVVo6qSHinaVinZ5ZfPQrW7wYI45lnxJYULhQJhhX0D9ZNgVOVp
+	yzoh2Y2S9xyRTVcP3fds3V8SC6WUXi2XpFS8FolAEfsMYeGdXUntd1iUgoNI2mEOuSoCKvE4uoC
+	sbajc9IQqbhmr5/foqG1f9KgF7lsdHsOTEXyY93W8u7tx65QkbfXZpMzeu5YD6EP0t6iPr195Em
+	RB0f61W844fhr1BIhbJIcOQ5K90T1I9WyRXyI81T8fTztKhnNKviVpNRb5ii6uoKdbrk1P7/HDq
+	3wx69zD/TZybCq4yemk1frdfbcxBp7OJeuJNlQS21hcY4/XAes1KvTqUrTJkafLeFKHcjpuC+8Y
+	wBHeulBpJLz1Ng4hYojXq2Hl0UTGK06KQK+nMlw7ZiEwEipZIZ0hvkB17vB55BIuRSGGtRQCNbO
+	x8OvVzz0CxmJKRBokpFqm6wl2q41GHlOw22OwFUcx4OPSf8FlQHBKHU2CkaA00rOQ1iitmiyZBl
+	XakOFs+6luP5c/NpU/UwvkixkneZ81I22ui5bRZ0i3ZffludiuoE0ipnfS7HYNtgdG15
+X-Received: by 2002:a05:6830:44a0:b0:81f:af5f:84ba with SMTP id 46e09a7af769-85d36533c12mr586360a34.16.1793316165656;
+        Thu, 29 Oct 2026 16:22:45 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-85d354d05e0sm694924a34.15.2026.10.29.16.22.43
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-85d354d05e0sm694924a34.15.2026.10.29.16.22.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2026 16:22:44 -0700 (PDT)
+        Thu, 29 Oct 2026 16:22:45 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 0/4] loose: fix migrating "loose-object-idx" with batch fsync
-Date: Thu, 29 Oct 2026 18:22:16 -0500
-Message-ID: <20261029232220.1245827-1-jltobler@gmail.com>
+Subject: [PATCH v3 1/4] loose: use finite timeout when locking "loose-object-idx" file
+Date: Thu, 29 Oct 2026 18:22:17 -0500
+Message-ID: <20261029232220.1245827-2-jltobler@gmail.com>
 X-Mailer: git-send-email 2.56.0.173.gf57c9a7388
-In-Reply-To: <20261029002413.3291184-1-jltobler@gmail.com>
+In-Reply-To: <20261029232220.1245827-1-jltobler@gmail.com>
 References: <20261029002413.3291184-1-jltobler@gmail.com>
+ <20261029232220.1245827-1-jltobler@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,128 +99,57 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Greetings,
+Loose object index file writers first attempt to acquire a lock via
+`repo_hold_lock_file_for_update_timeout()` and specify a timeout value
+of -1. With a negative timeout value, the lock acquisition retries
+indefinitely while the lockfile still exists. If a process dies while
+holding the lock and leaves a stale lockfile behind, every subsequent
+writer of the mapping file hangs forever instead of reporting an error.
 
-While working on a separate patch series to convert the "files" ODB
-transaction to be eagerly created instead of lazily, I encountered this
-bug that causes an ODB transaction to fail on commit when a
-compatibility hash is also configured. This occurs because the temporary
-directory migration code does not know how to handle the loose object
-index file.
+Introduce LOOSE_OBJECT_IDX_LOCK_TIMEOUT_MS to set the timeout to 1000ms
+and use it for all callers that lock a "loose-object-idx" file. A value
+of 1000ms matches the default timeout used for "core.packedRefsTimeout"
+and should provide concurrent writers sufficient time to acquire the
+lock.
 
-This patch addresses updating the migration logic to explicitly merge
-mapping entries in the transaction and atomically write a new
-"loose-object-idx" file.
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ loose.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Some other approaches I considered:
-  - Storing the uncommitted object mapping entries in the transaction
-    without writing a file and only writing on transaction commit. I
-    chose to keep writing the temp index into the transaction so that
-    child processes that write to the tempdir could still append entries.
-  - Also writing mapping entires to the main ODB loose object index.
-    This also didn't seem like a good apprach because it write entries
-    that may not ultimately get committed.
-
-Changes since V2:
-  - Reading the src mapping file is now done prior to acquiring the lock
-    to reduce the critical window.
-  - Added a comment to `loose_object_idx_merge()` and updated some
-    commit messages to improve clarity.
-
-Changes since V1:
-  - The loose object index write after the merging maps is now atomic.
-  - Added a fixed timeout to all loose object index writers.
-  - Duplicate entries are now dropped when writing the merged mapping file.
-
-Thanks for the review,
--Justin
-
-Justin Tobler (4):
-  loose: use finite timeout when locking "loose-object-idx" file
-  loose: lift loose object index parsing logic into helper
-  loose: lift loose object index writing logic into helper
-  tmp-objdir: merge loose object index when migrating tmpdir
-
- loose.c                       | 207 ++++++++++++++++++++++++----------
- loose.h                       |   9 ++
- t/t1016-compatObjectFormat.sh |  27 +++++
- tmp-objdir.c                  |  11 +-
- 4 files changed, 196 insertions(+), 58 deletions(-)
-
-Range-diff against v2:
-1:  6f104c482e = 1:  6f104c482e loose: use finite timeout when locking "loose-object-idx" file
-2:  4799421a74 ! 2:  3ae068f364 loose: lift loose object index parsing logic into helper
-    @@ Commit message
-         explicitly specify the map to insert the entries into. The
-         `insert_loose_map()` helper function is also updated accordingly to
-         explicitly operate on the provided map and optional cache instead of the
-    -    object source.
-    +    object source. The cache is made optional for future callers that may
-    +    only be interested in updating the map.
-     
-         While at it, stop treating all errors related to opening the
-         "loose-object-idx" file as success and instead only ignore ENOENT. It is
-3:  4233e913ce ! 3:  0a05eb5fb6 loose: lift loose object index writing logic into helper
-    @@ Commit message
-         Extract the logic for writing a loose object index file into a separate
-         `loose_object_map_write()` helper function that allows callers to
-         explicitly specify both the loose object map as well as the file
-    -    descriptor to write the entries to.
-    +    descriptor to write the entries to. Note that the responsibility of
-    +    locking the file being written to is left to callers so that it is
-    +    possible for a lock to be held for longer than just this single
-    +    operation.
-     
-         Signed-off-by: Justin Tobler <jltobler@gmail.com>
-     
-4:  614aab27d1 ! 4:  3c4a3332a5 tmp-objdir: merge loose object index when migrating tmpdir
-    @@ loose.c: void loose_object_map_clear(struct loose_object_map **map)
-     +
-     +	loose_object_map_init(&map);
-     +
-    ++	if (loose_object_map_read(repo, src, map, NULL) < 0) {
-    ++		ret = error(_("unable to read loose object index %s"), src);
-    ++		goto out;
-    ++	}
-    ++
-     +	fd = repo_hold_lock_file_for_update_timeout(repo, &lock, dst, 0,
-     +						    LOOSE_OBJECT_IDX_LOCK_TIMEOUT_MS);
-     +	if (fd < 0) {
-    @@ loose.c: void loose_object_map_clear(struct loose_object_map **map)
-     +		goto out;
-     +	}
-     +
-    -+	if (loose_object_map_read(repo, src, map, NULL) < 0) {
-    -+		ret = error(_("unable to read loose object index %s"), src);
-    -+		goto out;
-    -+	}
-    -+
-     +	if (loose_object_map_write(repo, map, fd) < 0) {
-     +		ret = error_errno(_("unable to write %s"),
-     +				  get_lock_file_path(&lock));
-    @@ loose.c: void loose_object_map_clear(struct loose_object_map **map)
-     
-      ## loose.h ##
-     @@ loose.h: int repo_add_loose_object_map(struct odb_source_loose *loose,
-    - 			      const struct object_id *compat_oid);
-      int repo_read_loose_object_map(struct repository *repo);
-      int repo_write_loose_object_map(struct repository *repo);
-    + 
-    ++/*
-    ++ * Merge the mapping entries of the loose object index at `src` into the one at
-    ++ * `dst`. The resulting mapping file is written atomically.
-    ++ *
-    ++ * Returns 0 on success, a negative error code otherwise.
-    ++ */
-     +int loose_object_idx_merge(struct repository *repo, const char *src,
-     +			   const char *dst);
-    - 
-    ++
-      #endif
-     
-      ## t/t1016-compatObjectFormat.sh ##
-
-base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
+diff --git a/loose.c b/loose.c
+index d6a2bb5ba3..c6f4ee0ec6 100644
+--- a/loose.c
++++ b/loose.c
+@@ -14,6 +14,8 @@
+ 
+ static const char *loose_object_header = "# loose-object-idx\n";
+ 
++#define LOOSE_OBJECT_IDX_LOCK_TIMEOUT_MS 1000
++
+ static inline int should_use_loose_object_map(struct repository *repo)
+ {
+ 	return repo->compat_hash_algo && repo->gitdir;
+@@ -137,7 +139,8 @@ int repo_write_loose_object_map(struct repository *repo)
+ 
+ 	repo_common_path_replace(repo, &path, "objects/loose-object-idx");
+ 	fd = repo_hold_lock_file_for_update_timeout(repo, &lock, path.buf,
+-						    LOCK_DIE_ON_ERROR, -1);
++						    LOCK_DIE_ON_ERROR,
++						    LOOSE_OBJECT_IDX_LOCK_TIMEOUT_MS);
+ 	iter = kh_begin(map);
+ 	if (write_in_full(fd, loose_object_header, strlen(loose_object_header)) < 0)
+ 		goto errout;
+@@ -180,7 +183,8 @@ static int write_one_object(struct odb_source_loose *loose,
+ 
+ 	strbuf_addf(&path, "%s/loose-object-idx", loose->base.path);
+ 	repo_hold_lock_file_for_update_timeout(loose->base.odb->repo, &lock,
+-					       path.buf, LOCK_DIE_ON_ERROR, -1);
++					       path.buf, LOCK_DIE_ON_ERROR,
++					       LOOSE_OBJECT_IDX_LOCK_TIMEOUT_MS);
+ 
+ 	fd = open(path.buf, O_WRONLY | O_CREAT | O_APPEND, 0666);
+ 	if (fd < 0)
 -- 
 2.56.0.173.gf57c9a7388
 
