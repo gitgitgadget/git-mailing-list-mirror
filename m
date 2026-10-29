@@ -1,111 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793305212;
-	b=pe7E7MsmYhtobXm69N3hLD3jj5+3yTudponETkv3TZyB2yoje/pwRF1iNBp13kzFID52
-	 bEJPwpimLz9dB8EsH1hmzRZWEyF9TKDjQpwB9jg1DLvDk8NvLakCIqBWdhElud5utm3fX
-	 ddyaxPoIMQF8PjwXaEiR4mMsomXtCvscRqW3wyuOAwSwDHGEmzAbk748bR6Yr5slcIXT1
-	 ANPWltn1vk/mjEEPv0fLvViO0hx0GRdjqO7+acFjtb8O0Th6sjIkZGdVkE/6XWrJNW8Hu
-	 HQzAsq0xUqQE7GSgZ9z6xxPlHYgSJMcmYlw/PvvlFGfFTc3uE6G5F7VYK3lthMo8thA==
+	t=1793305914;
+	b=ydUZLvbLrutdRpKCNKuNjFyW2LJ93pYRFNr54AU1Djl3DVb9Gstk0aVGbMVuc/jS0LYq
+	 d1Cqcf6/m9vS9cjYpyy1/dBJfHOCZNwblPg0MIYcw4leY/6xxH87oCmF5WP9UrBU4lm+g
+	 mhlu8NK+f0UjTPR93JPj3Ny6U4TLpLkv5Gh3W6fkIZ4XlXCZjlylq+VUJnhF3vQ4UTr/Z
+	 T2Gh1EZWLAQv0ioS7JY2tcKipSiCDJHKWK7a1vsTXlTy5XM14LyC+QUZazQet/gSBro1X
+	 pptvFnkqYOYYd08JlZOhKRbQNjKpYLVylZ3VzkjKzo6NEYw4Mu633RUbUZ8yz2ZBRIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793305212;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Mime-Version:Content-Transfer-Encoding:Content-Type:Date:
-	 Message-Id:Cc:Subject:From:To:X-Mailer:References:In-Reply-To;
-	bh=7BQSRFHSBJqapdjgqYmN8XfyG0MP8BuvabQtNkdtbfI=;
-	b=CWz4JXcdprNN2k1nBhBxm/9NvMU4F2b4iEB1XCszWoGsaXBWAeRPp6RtyR6wU3rScnH3
-	 0FVf2iSLWzQ9MwBfGOjOCNYkK2cNFd8IXeh7buB6lZzMt39XlKjvxciaa1lS6OgWH0/bO
-	 2mTSKjeXmLFwJa0awhzBLo7o8gDstE19QxiBCDq6F6HSST7jABlt9MMptLP+z2HHmX21h
-	 U1qCjpHBcAkb004uHTN7JrsbtBlH2kdAB4++lOYYPARQegaF9rM07KeknCcWGQmCp87vw
-	 brjBsSL+k2RiLhr2zNWDWONZw1iHvZe4O4kE8i/2A20kpm8KmuJhouJPOC6wdR4P8GQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793305914;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=rozNt1Pvxgwo+7+V6qPgeeU7KHOUlWIFLURsJCEH85s=;
+	b=fuuHsRo4N4vNPZIj4PbckcIN3tD0xFgOwhRAThatgMTzXXednhiyhRaRUkLFzgGe9zix
+	 +THikfTqAP+G6wn5pEtDrzeO1x7aDB03KtjJwJgFGK0GXqJXN+4vhVowm0P62frCqjtDO
+	 ggS3nStZ8feCvSL0uCjYURmBMrlRRiOwvQV489hX65soKxh5A2UxA0g7YjIqGWNvUIrnT
+	 +RRO6Be33kY+kWWlrZosRRBYtLqjFdlIRsSFlXcp5eL8KwgVhn41xM0+fS283+B68Soia
+	 9De40cdU3nR/RlPzvLos0Joe4R1/VJ5v7E0PL+lDDIoa2N4wmGzJORiV4haIotkPy7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=j4anFfl5;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=gus2KIfb;
-	arc=none smtp.remote-ip=202.12.124.152
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=openai.com;
+	spf=pass smtp.mailfrom=openai.com;
+	dkim=pass header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=AlcCmdfy;
+	arc=none smtp.remote-ip=209.85.222.169
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4C5606A31A
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 20:20:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE4C5606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD6D606A31C
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 20:31:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8AD6D606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=j4anFfl5;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=gus2KIfb
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 208877A013F
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 16:20:11 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 29 Oct 2026 16:20:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793305210;
-	 x=1793391610; bh=7BQSRFHSBJqapdjgqYmN8XfyG0MP8BuvabQtNkdtbfI=; b=
-	j4anFfl5aKk/wnR+xcaI3sc3KuGQTKDFp9+Dcx+FJVJqyVdgue6S67xxahCZ0ei/
-	BdJEhqdZwIxqp8/cuT4AsZ3rKTlbUvD6jdNc88m5ReriE1GOZ0eUL0orTPguyZJC
-	NEGuWQyyX7oeddHeYN3cutcVQjMANG3YLUQXMvIUhdm+doaubxnOP5CcfWB84KUb
-	K3h3ERJGkA7QWQMfnavHqtcBb077Dv8ehPPCwNRPx30ay+hzXnJFqNW40OOoZPpz
-	8iR9o9nhftfNYKmukS2eNAT2YQrJBcMWbe6frYRQ3hCWR9NH4I9K4/mtdavhK/ql
-	2E9VWBcJqDN29zqZNc8YnQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793305210; x=
-	1793391610; bh=7BQSRFHSBJqapdjgqYmN8XfyG0MP8BuvabQtNkdtbfI=; b=g
-	us2KIfbxieRtJrRKBCxg37ZHNulRfdhtvyGqWLFjFcNdmiSa/du5M7VY7G5DTkhR
-	qmliTgdx2MGOeBUP/MOLx4JgEaIDye+OYxIerZ1xCe+oKf0DCPPKZBvDUCrd2SEW
-	XfEmbeolhCi7VLlwMt92/fmNbvGRnp5tyJvnvThQ/wRcCHeYKzvjOGdUMfSySSZa
-	qcdH81SOwlMginmifcIwbAbQj81EHbpXvOxU5HID1/05cBmq0eepn+Y0lmkXaNMn
-	7kERLVG3o39ynhOs6q4CXKdn1ftHGI6Ye1eFaz32x/eWcoaXRXd63p3KI/UdbvXp
-	VisWt6U3SIo1Rb5IpUWrg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793305210; d=fastmail.com;
-	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Anvt1ab6wmHOpHf1plvRu+i9NAJTzdbhb0RsuP5I+nIYFZ6
-	68mkWRi1n+xmne0mV+ZAz9Kz8l+8UjZTZaluifvkxr5DifJr0FgMrDmiPCcHVz/7
-	UyaZvQI7PgwDQ1UNzM3UUoAJByBkjHNeelhKLdu2DndcMwjPeAm6epkCfF7/OGQP
-	OEUsBD4jTNO58jhsqe7hv8unehhwy0gafcUnnJYHer8E1ujczeM/37uo9COXdgOw
-	NR0UTQMs0Wbygjj8gulovKqw76y08Rul5O/NRDalPOjuQNwd46Kb/kkVt5Qf1Cnf
-	jU3EigtA6bf7Srv1DYCSNkxmJERTRUpYjNQkfvA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:uFupvXZW9Z3wBpU3Bwb6Y3r2yS0QeRRzh712/1CiG3Q=:lW9nwkb05BoDmH+dCb11qeOfs2nj7BS6jQXXQQwPYu4=;
-X-ME-Sender: <xms:eqrjaq6hiFRcexbm4Ohdwt8UVcXZ_hT6E9IRu93UTur4X_emZ794Dw>
-    <xme:eqrjarUiqWHqm2AinekUmCYG95yye5eDbzI2uRREBV79V6lEkK6GSN1sfgpnzNHyG
-    vHUF8ziWyveo301qPxxV0JCL0dEY3nDX2cnSxNykzsVErdcW2D0tAiX>
-X-ME-Received: <xmr:eqrjam1tjLMigVdt6vSeHqJMmgbxEMODouALXVI3T0Q_11DKKX1ZvTpoZIyd5L2AH3j36ZGcK4YqJkbTmwtJtwVskOYn1DFNFOpNBB9XMtSrcZ7iarvt2iQ1ZQ>
-X-ME-Proxy-Cause: dmFkZTEBROWezfNIXqHdn9xoqIQUFsioIaBYYGFQWamOGWQRr3/11M+4WXLJvGSlX81+kr
-    XWil3afXVfy4yPD/PceVLTdtUW6PdN0wVZWr9GvFk2PLo5NTlS+HyeKuEKONPICN5upjjY
-    L5M4EtekUCbpQGziY7bBKEC2FPo+Ra/UVaM2yA5AHRbhNtUx+uypd64q+DA8LWvhl91JNO
-    lbGNsotz2jSi5Vd+P4VjMXcVJCgCTMidYSee9jkQ+mBsnSIg3dtQLw2C14SspU4P+OpvIj
-    pZOMmEBNMf5FtbRCj/P4zaw+nqDntK4V58tr+6clNQQTOvj9KC/QntMCh2CthrMVKc0ZjM
-    v/QUOSgfMoysRgpJyTw0ya//0pVRnTMDlSP37XMPRWx02mf3fcAZRkOuITEf4S1IrkcYbG
-    xdLQt+kjruj0u8mqtzxpH0vexN2NlFyZODcDBOw2qnK6BupMNelPHzpkBN7YwRRkgCFyx5
-    K522V+/kUfzqlX74r5o8ianpH5aMaYlcmYryy973MZQVAFoCr26Hs37PI0YqM+7IsWuyfy
-    XDRDddafguai7WrjN58Us1AH8LR+eX+KrWnXng4yEyFXs3wEPWLkq5qVKc/LnzGbAFbvRq
-    XVq4xoBy0NKb9hoFp0YBxlttR/l9/Kc/w26nQYrXzYRbjJDzMiHGWfYqR4XQ
-X-ME-Proxy: <xmx:eqrjag0JYewmH-IZ6pH1LFelaVOH50ZOhvw8fQisvXiUeqrFROEqQg>
-    <xmx:eqrjah8E0NvPqIznKPLLmi4hDXHXyhyqf_tpKh0YFBICXTSvo50LBA>
-    <xmx:eqrjal0cazTr_HNm5aFXAvUYKK8hlVbeH1NWVt9hq84T8ip96sNDLQ>
-    <xmx:eqrjam-rpcYQh8uqEIWSBzb3yERiNxZHPb9L2NamlZ1MXY1ffGvVkg>
-    <xmx:eqrjajcPvQSfANeaXBH7PchASkWPYZ9bmrOPOCA9qCgf0wIpyGUy3WjL>
-Feedback-ID: id2564aa6:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Oct 2026 16:20:10 -0400 (EDT)
+	dkim=pass (1024-bit key, unprotected) header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=AlcCmdfy
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-93e63ee7b4cso267484485a.2
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 13:31:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1793305913; x=1793910713; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=rozNt1Pvxgwo+7+V6qPgeeU7KHOUlWIFLURsJCEH85s=;
+        b=AlcCmdfyT62Y4gLWPbNzCoDXkisCfqzc2bvkHWX+lKviNGxOSHqduJBT2/1ie2bHb6
+         tdg2oQq5Y0LGt5gmRvLy4cjiBRh7OYkrlFDfuqJMVyiHCUalln3geOcMgQYQqF9saq3p
+         Auz1UFLXCR4rjtMRLTtwY1UfHneYaim9JbjJ4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793305913; x=1793910713;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rozNt1Pvxgwo+7+V6qPgeeU7KHOUlWIFLURsJCEH85s=;
+        b=zs6F+hPcl7wnIMG3JHnplYMiLD1yToUHuKbMj50kZoqOWO7mqAN5kXiIaBp9NUxd/C
+         ECWG+7jIPYSaqUQcpT0GkZPgWSQRCuRaZqtzf8kZt3EISFDFvFqS6mwXHprlmnZzaDq8
+         IyPvWvvp3re8ZltspbOIH8+cIVgx1yMNJ5jN+uHA8LTkkst9WzlC4jITjwS65Iy1Sh2d
+         KUnixaMSNf4T0bYXcuCeq7qf7KWKgRwPa/9ocS+laMgull86frnQR7ZdkEiL+jReSS2A
+         Le/grtwP9KYMgG1fqZn8onnvypBxUd1QHnlqTnJVwwcUOR8vYp/LIZVKbc8BxO4xjayu
+         N3vA==
+X-Gm-Message-State: AFq9FYKdysguioRzOCRnmwYLB+HIHHuioiPWt6HgYoiuiJBAdwl/UF0i
+	j5h4iOjaaHsKe14/f+gaMCdZEO5tPpio5CStYOD9qTXFJ3S8j2ecF+3fLmZ95crZVdGYS/bKVob
+	mx6qUPsM=
+X-Gm-Gg: AYBFou3JxUY/j7l3HWZuE+mWRfWP99gFPmd9Y7GK1A2gN+aXCP3VPQFXaWnlelxZLbt
+	6KalpVzBgZzlmyJDCPMbU/paS7HBqvAMaA0e9+5f1IBV87kUCknia5TT6AQOOugEvhlxwBZApdm
+	a5phTulwSRf2odNit0ZBtDixEvwwUqnXDSX/PL+i5ky12BjKn6s9Lia9FqhdKPljdKoof/CeZWe
+	acuoLD8GTXTrNE7kef+zF87cozx0/l1FLgHoC+4izhC2ogp3HMjOgRpfWtCZ30DI0qAtFyyzqCe
+	4uAlcjnTt4QRifMAImvM2t4ACaFPmHu1XEwibP/Pq4k8HdoZ06hn0UUkFqKoOAoq4nKfDLrvpy5
+	yBU7iRvxoyAozWvPO/VRLVeqIhdSCfwePV4RNthE+nIwSl71AdJdHVdEh01vlvsFWKmOO7a2tHt
+	rPmBofsyUSGJ9R3LMcueAxtr8Qk1hNqiETCc7UNuEPXgFAkob2VoDFxTmDAis1oT4G7b31CXoOE
+	NYJCrEGEJgpbW67XWIdPOaOSfQMdVyozTgNEVI4j4Tn578hIhuZiFOZv4Qv9m0CuzXUXls9vmXn
+	zznXnGa07YLR7e2P5ewFRAv/dBCbbOuifxmWqdXht5JG9nteiDFEC+OcmTiqvsZsi9kZ39ry2xG
+	Jkr/vDpHZi7DgsGawFkbpMeu5lBagV9USDJrb4OwWpQ==
+X-Received: by 2002:a05:620a:26a9:b0:93f:1cd7:734b with SMTP id af79cd13be357-9442174f216mr52977285a.34.1793305913516;
+        Thu, 29 Oct 2026 13:31:53 -0700 (PDT)
+Received: from com-79390 (vpn-eastus-02.tradc-corp.com. [20.102.114.220])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-944210e4449sm36228485a.5.2026.10.29.13.31.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Oct 2026 13:31:53 -0700 (PDT)
+Date: Thu, 29 Oct 2026 15:31:44 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Pia Park <pia@pierre.co>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3] midx-write: skip writes with no object entries
+Message-ID: <auOtMGiGOvWVtkl7@com-79390>
+References: <eef33827000cf106544174ed000129c2989af1cd.1788851232.git.pia@pierre.co>
+ <97eca05600afc5828e3f27c6fcfd3f7872ca326b.1793260625.git.pia@pierre.co>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -114,62 +94,21 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 29 Oct 2026 16:20:10 -0400
-Message-Id: <DMHLN4FBDV5C.8O60G05LVV3@fastmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH v4 1/2] repo: add level of concern reporting
-From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Mark C. Chu-Carroll"
- <markchucarroll@fastmail.com>
-X-Mailer: aerc 0.21.0
-References: <20261029-b4-repo-structure-concern-v4-0-d813537ec617@fastmail.com> <20261029-b4-repo-structure-concern-v4-1-d813537ec617@fastmail.com> <xmqqld7g1dy4.fsf@gitster.g>
-In-Reply-To: <xmqqld7g1dy4.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <97eca05600afc5828e3f27c6fcfd3f7872ca326b.1793260625.git.pia@pierre.co>
 
-On Thu Oct 29, 2026 at 3:53 PM EDT, Junio C Hamano wrote:
-> "Mark C. Chu-Carroll" <markchucarroll@fastmail.com> writes:
->
->> @@ -550,51 +700,76 @@ static void stats_table_setup_structure(struct sta=
-ts_table *table,
->>  	stats_table_object_size_addf(table,
->>  				     &objects->largest.commit_size.oid,
->>  				     objects->largest.commit_size.value,
->> +				     repo_structure_concern_level(
->> +					     CONCERN_STAT_COMMIT_LARGEST,
->> +					     objects->largest.commit_size.value,
->> +					     repo_structure_concern_thresholds),
->>  				     "    * %s", _("Maximum size"));
->
-> So, objects->largest.commit_size is computed using the value in
-> objects->largest.commit_size.value field.
->
->>  	stats_table_object_size_addf(table,
->>  				     &objects->largest.tree_size.oid,
->>  				     objects->largest.tree_size.value,
->> +				     repo_structure_concern_level(
->> +					     CONCERN_STAT_TREE_LARGEST,
->> +					     objects->largest.commit_size.value,
->> +					     repo_structure_concern_thresholds),
->>  				     "    * %s", _("Maximum size"));
->
-> And the same objects->largest.commit_size.value is also used to
-> compute objects->largest.tree_size here.
->
-> Copy and paste mistake, perhaps?
+On Thu, Oct 29, 2026 at 01:26:17AM -0700, Pia Park wrote:
+>  midx-write.c                            |  5 +--
+>  t/t5319-multi-pack-index.sh             | 15 +++++++
+>  t/t5326-multi-pack-bitmaps.sh           |  9 ++---
+>  t/t5334-incremental-multi-pack-index.sh | 52 +++++++++++++++++++++++++
+>  4 files changed, 72 insertions(+), 9 deletions(-)
 
-Argh, yeah. I road through this commit _so_ many times, and still=20
-managed to miss that. Grumble. Will, of course, fix.
+Thanks, this version looks good to me. I agree that the remaining set of
+questions can be dealt with outside of this series. Thanks for working
+on this, Pia!
 
-    -Mark
-
-
-
---=20
-Mark Craig Chu-Carroll (@MarkChuCarroll at gitlab)
-*** Software Tools/Math Geek - Software Engineer at Gitlab
-*** Work Email: mcarroll@gitlab.com / markchucarroll@fastmail.com
-*** Personal Blog: http://goodmath.org/blog / Personal email: markcc@gmail.=
-com
-
+Thanks,
+Taylor
