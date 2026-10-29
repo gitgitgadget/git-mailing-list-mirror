@@ -1,109 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793268175;
-	b=qHNf1vKF2CnkYD8FL0gyWnkI7Do6ViOk7r1ECJC6zBhO2OXjCqOeC32hC+qep9+RfDdj
-	 a66ZGa05uI5+UC9obVrvb00aOjFb5MTGZFl8TaTchag8akGCQaamZ6c96fwe5gCQePRr2
-	 gO1DEVV5WO2jE1PlQBKt2yNgCoa0JVQDUk9OIzFkFM5w3c9P5kQHbinvYR+effM9nrQtQ
-	 FYQUhdCIBc8izAOWx5mjXRHCzxJYtI12aqOtrR/tYcojheeEGq0Dw3BGgZYkNMswdbSTb
-	 KXfRWHy7+8Z6Rx2HuCtk7DHfVCjBnAhgRBsCsKatcJVHV5hSOsP0XnT0ZOuMzdY6FdA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793268175;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.42
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793269680;
+	b=TfzqSiYRU3sP7WO7zn+aHrBI60aNVI+I19Mv32s5TivfzpdGkW/M0YrbSPij04u84n1b
+	 DOd7w9LUD+20Qebm69LgcyfNIcUeXOZ2SrBccp5wuesa/Wq136RA+JDpZoUcWx82X28GX
+	 gQ1HSAHsg+8IGQjsYudOYP+0grEJSRyZ5Mm9Be6v0UJjAfjnUvA2K1z4+zS2Zp2NG8MgO
+	 57uOKR5cazWMUi1nEM9c/RiEB0VEuqlQ3QmJqnvniOxoI1L443U0F6JBdt1j070JYxz2r
+	 Rylr8Wv1GMEYPcDcghHfAcbfaJGBDzsYVsjZAfXnBa6E9kQSkHtSIwm/nnFbWNUtRWg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793269680;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Received:From:
-	 In-Reply-To:References:MIME-Version:Date:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type;
-	bh=NoEGuzUHD7aL/osoPwdeB5Bx+8Jwglt2g/V+qz0MX+U=;
-	b=F2PElZaisCrnX/zqtKKzl8lRPrRMaCW9tLAkyZznUyf4eRAMs4Vm3y6QkOMMgYrH7K1x
-	 KrVU8mX8Jcs9leRn3TEq2fo/DE0Q4YIpKIAcTYIrDA6hjMyp5jwrSXz6SjhRwdN/6MRGs
-	 AcbnFgha5+Z0G5nQ5sG4g+Vmi8692qsiotsijm53FrA6dyZd5LSJzqLBUEMkC9kPmdRlm
-	 IA+2z5aGZLvMo9XI/lpZogYEnwdykxoEyda6D04zsb6lqf50CywmdfXy1hn/j9fTGwbIe
-	 w8JEQGpiLhGDj0C6h1F8fxYcUCHsWhofDVOaY2IUPwVs9qiK8q9CRHYRr0PRgpCo0+w==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FAY5BYFZ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.46
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=C9hYt8rAhB4r+a+s19WieTcDjCYPKF370/NYlxj7cIc=;
+	b=g9yp0cZjRtV4YJVznueYVLaU23KIvdA3JQgAdlDcWVT1Yo4Pzo+7o4YIb1JDsXkAuSdt
+	 P90K2YKCwvzXtQisiLdcKVartrBIowcK4xb0DZ30Rh2tk/4XefMRYH88ZFtkbyOOEl77j
+	 OFAnFLW6nbUEoEkVHUhk7J71g9C4OHWZtoV3u1rVHqgsIK6uhCyDa6zRuuC8WD3VVRNvh
+	 mgt11qnQAd6LY8eCqg4NRL5zGSTXmHwnyI4yzeAo7HlxMRRm9IlHawwP6gAbIYAPywFqJ
+	 f3oNbpZQlf3AX1yiSbtm+EeSBH8eSt6mGkD2hD8WPY02zJnw9Yhw5JLzWHvoYlQ5BVw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gitlab.com;
+	spf=fail smtp.mailfrom=gitlab.com;
+	dkim=pass header.d=gitlab.com header.i=@gitlab.com header.a=rsa-sha256 header.s=google header.b=TYnlLsWR;
+	arc=none smtp.remote-ip=209.85.221.42
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD301606A31A
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 10:02:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BD301606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91789606A33A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 10:27:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 91789606A33A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gitlab.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=gitlab.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FAY5BYFZ
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-7cb6dc850c7so614702137.0
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 03:02:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793268174; cv=none;
-        d=google.com; s=arc-20260327;
-        b=OwEmeh1/lTOsdSftLdfBf/oqG8Jk0GaXOLjHwom0M9p59QR8HKuXA/Snf7CoDwWS0j
-         jmvkivqKaD95nTHruhXAUp0ED90gqzA0rz9xhYGtEM9jB1N0qIFBDdBaVzYresfZyTll
-         JwoDGWSucV29gU5DkkllufP+qTqHTdTdrk/DUNWPc6Dh7fZhJUrddHEHTvqMU3WgYf0K
-         rKsp8tdyu/aJv8h86LUjUFx3dPrLpB9vxx/VvqfubDyWmeABvE8lyE8xAxsj06XaHbRL
-         icNV894+wapQtwS8xcufjnqxXslh7I1fOmczGx0Ow5efShvbL7z501dy9sc/jk9dwC6l
-         pAmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=NoEGuzUHD7aL/osoPwdeB5Bx+8Jwglt2g/V+qz0MX+U=;
-        fh=GGWEzrIIQ6cHJJb0qSNwyEDctpXMUll4R1Dn3XJ2gys=;
-        b=Cs0CqB+bC0SioXdMfY7d54PjxCmPinRz3uaGtt5M89jeezb5mYDXdMmIxqMHoQYgwQ
-         ebqJUGUzqQQqRkBbDWTpkhM9A3wJ1X7eWaLuExXWcvN6hpP8VKYfF465aia3XVeTDdXI
-         F5MCIea/klBNuN/reeUFT/kCuf0Np+SEY3iVfCDvmnfWcspkLoM8vixouJnn84Vc/FLf
-         JP247STE3zBTZyyIUuyk3wAyPQvjlcqkpfg3FroKkYJNjaE91Z3KM7Zk6ikzecdUOxGN
-         4u0Jno+1W+PHKeTovXJ5gpEH2aq/pkINcKLnEUbeJ1zjpGwZO8iKN1mNpPvLxTI+4XFV
-         /X6A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key, unprotected) header.d=gitlab.com header.i=@gitlab.com header.a=rsa-sha256 header.s=google header.b=TYnlLsWR
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-48e0d1c095dso962715f8f.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 03:27:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793268174; x=1793872974; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NoEGuzUHD7aL/osoPwdeB5Bx+8Jwglt2g/V+qz0MX+U=;
-        b=FAY5BYFZVjjlg6nCWMKFOeerVI9d19CYN42Z6lBmspwY6gRLBvNT0yCtMN7bOqob22
-         p1p5u85EX2Ua7beqnwDBvIir0DF+Wj986jkZQ16XSUYJDxf/ETxC+7EUNRkXNhY42qhw
-         kR/3uZ+/yiQ0EyCuXdZBPTwBGLftF9KX8dB79o5TfcTgHIzhhftf7D7G4zUv8nBAnBwz
-         TdrolGoaRae+nDYFqMS2m2dGyM88ISq2jHAlpugy0AuchHtpQzJoqWcuuUFpcstWDn0l
-         cdSbJQeR4gaVmSBahKe46TzKuejilEYgmtDyztQEWnxNqtdb1A1D0IseyxAl76WDblsz
-         C78Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793268174; x=1793872974;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gitlab.com; s=google; t=1793269678; x=1793874478; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=NoEGuzUHD7aL/osoPwdeB5Bx+8Jwglt2g/V+qz0MX+U=;
-        b=oQK7pvTFMd4G3/NPxMlsmKQbSAGsIO9AS6yEVDSWaeqZxbVOXkGYV4vQlh4iKt2wK6
-         ZYzTAydz13NuJk0VsEbwI3TxIqeWUaPHA60aT3ttu2KTr/pDFihy991ziTgDfeXgQQk9
-         miDuL+JHnTtbSAkjy3eNqO0lXwthiRvPh6TYU22LLzdxBdawoDNGfIFoRKBnibRCyOZ5
-         hF/6P43KpEmGTa7j6DtzUUcdurGWRLRMCXfFZXcl1WCF/2nTWKFeY5ew93reLLrXAjU6
-         UtGpHOp8Y7AWacuf70WCImEeX73EfgMCPXxzRH6shjE/Ldr+elf0QmLlxF0HSDdI//H9
-         mIQQ==
-X-Gm-Message-State: AFq9FYJoxpXjgf/Y7bk5QmB9xhJav9JcNfMvvK/Zduy1O1lVKqPcw+hY
-	ZxmD2gk7Hc8gkb1cZuB1whcs3MuVgf+o0jRs5ZPWQVAU8coxYZ6mpIpxiU29ktFXU+x0xrUs/gF
-	y75DEnXB2FY0TYE5GfbRq3bkYeMZkwxA=
-X-Gm-Gg: AYBFou04PA1mKumXoAHb1XpBNTb5YSZuujMUuFbBvenl0cB/zQxuLy8s14t78GnbdG6
-	PaZsX3gqOrrUf4VISRS3RvKvuPhF/wfQrUfv0J5rGNxxr71ZISV4E4SloIuTrVNMv16G/dbRJTz
-	b+vckX3BWnMYJGeh4JibQjZfRWd9VjrY+sMZFOAqBowpXsiwBD/8VOb3PnYA6OxdBUI9wuT+z8i
-	vfxrR0KPAWH3yugoLP+iw2tfThqszq8z4ZuqKHbCQCY9CHJp4egf6ffD4HX/To+KKbdRvSvySe7
-	LU7Amd3PlbWD8w1QhOR4lbD/4/hdDIjdNHybDxQFWfT0aEd1y6LyUk2TCf+tSbJkQYYaY55biGh
-	Q/kn4Ug/PPzIVYhmFuxUBIDVUqc5UAhiOfoNAA8nnc9Z81e8j7dVMkAi4NMOCbxfxNg4GWKg+bL
-	j1kqzzH2MHlp0nVauURxyHcmy85UE=
-X-Received: by 2002:a05:6102:4422:b0:7cc:9d47:9c9 with SMTP id
- ada2fe7eead31-7d03a6567eemr2189058137.35.1793268173661; Thu, 29 Oct 2026
- 03:02:53 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 29 Oct 2026 19:02:51 +0900
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 29 Oct 2026 19:02:51 +0900
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <auL-r__SD8m3it5h@pks.im>
-References: <20261028-799-shallow-fetch-with-tags-v5-0-7c43cc9ae810@gmail.com>
- <20261028-799-shallow-fetch-with-tags-v5-1-7c43cc9ae810@gmail.com>
- <auHfmzP3aXyonp3C@pks.im> <CAOLa=ZTCwvUJNj6c1G8dU778ejwO5WvVL9F5C-Db=P4Au5=mQA@mail.gmail.com>
- <auL-r__SD8m3it5h@pks.im>
+        bh=C9hYt8rAhB4r+a+s19WieTcDjCYPKF370/NYlxj7cIc=;
+        b=TYnlLsWRwwAvyWsL1Lu2ZvbKt+tG3QeXNHDRVbHYSXQpPB6DWJ2YSJpOkz56WeBEVe
+         /kgdwG1k1utZyyiYQJe66FiqpNKJnlfc4Et1ko7nbMqkFU/TeaMqAXppr3d6A9I9lO3r
+         6e1nWKH3tyss8jwbWGuKEgFwdFDk2dSD1NqqI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793269678; x=1793874478;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=C9hYt8rAhB4r+a+s19WieTcDjCYPKF370/NYlxj7cIc=;
+        b=Z1x72n5TL1MjsleuBRlkRcoWWQm+BOSh/JHFgoGxqJx417fjph05YM9LvDWErJ+RfG
+         9UtsEh7gN9bn+m3ljumvSb9KGjCTzN6HY2eZVXF1RpuLAW3BVrEjqHtz2/JdPftNBUN4
+         zA518+KW+3YgEcMBxCu1/ze9p9Z3GOvRqRZUp48Nm5j00LIPyz9VPDBBxkveCKW2rUxn
+         GNTB/MaQa7wm0K3798QD+EdO7qWQX60kSgQR6+rh+f3sz6715LNCF6qCkjqdUvOd+UHX
+         9OVSliMRjouS992cmWSZZE4LGLcFK7d2IULb1jNeLopPIpYFOhpOj8GTx2Jw+YId4Cgz
+         VfYw==
+X-Gm-Message-State: AFq9FYJmWOPcLkhf7v1tYItT9OB31GjjvII2Q0z2tvfKfDEbN+/+9PIV
+	Im3LCdbbsgdDa8gU2ZM2XqIH5rQHbMU6gNzHXH5CB/9AKm1H4KNLhEj+KvLCfoc513E=
+X-Gm-Gg: AYBFou3eKic4hAaayJ0bKfI2LUzbEUfjjrljBhVK9ScZTILp49BYqGtib9MLMzRtKHG
+	E9wu0HLgxL12iMV3NziWQurMqB3hOYqpLZ+DSAxlUyPU49Z0Mzwza8pPX609Wgh5W66qBjeEcMh
+	AIUbUOCcFA4QuUNRtF7NrqsVEHwWz12alDnhX1rJADCam+ErQ57+FjJ8OBL/Q9fWcB9ordl1yjY
+	M6fzBkHhxZYYXQcCkKURPssxzS8pnh6jmpmMT08jlzsc9L2L1FgBsr6AiNy8tO/+1lfBJgX0ZRs
+	YfSrAh9LxMqIknBZQVZGnnfukBGlsOEnAnMjiri/JupBVfaUGdpuZ3uP3if7l+FhjMB5cUjIoZr
+	Ec+77GIbHjZW16ERWZwLhX8Zs/eo0+EaGP0wBg5KngTWxXRRgpJWsz6WkUe0YXubqyKi2DXXDZl
+	WvusXKWswhplHvulXZweDPsvDR5GLD6px5+mN97ctzT9sklqUCeZbi5cbKQrfBrgi6doR7fzFX3
+	2KtBuOQI3n7iNiFogf4p+qHDp/5DBpGnxpB4r7rE8rhe94mehRcPSD3wwGHhXS7jKjnNZhhfBTJ
+	3lvBaXM4ec1IXUFkTeG0IPRFTxnvHEY0lbvWHETqF5VKecjy7nNwtlgWtnpgftdx3+hz
+X-Received: by 2002:a05:6000:2313:b0:488:8931:b1b2 with SMTP id ffacd0b85a97d-48e5d2f087bmr13010292f8f.28.1793269677783;
+        Thu, 29 Oct 2026 03:27:57 -0700 (PDT)
+Received: from iwiedler--20220823-X3P9M ([2001:9e8:a83:ff82:d4f4:c123:c569:718e])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ebc3a1csm34028252f8f.16.2026.10.29.03.27.57
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 29 Oct 2026 03:27:57 -0700 (PDT)
+From: Igor Wiedler <iwiedler@gitlab.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	ps@pks.im
+Subject: Re: What's cooking in git.git (Oct 2026, #09)
+Date: Thu, 29 Oct 2026 11:27:55 +0100
+Message-ID: <20261029102756.35612-1-iwiedler@gitlab.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <xmqqy0blwbyt.fsf@gitster.g>
+References: <xmqqy0blwbyt.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -113,75 +93,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Thu, 29 Oct 2026 19:02:51 +0900
-X-Gm-Features: AclHuK9GwA_82llS3UD6td3nAiw-NhhsmS_0xQf97K7MYvX89f0LYJefXe8TnTU
-Message-ID: <CAOLa=ZRr2X58KqC75uqqrb73ALuP=KRPkNMuEM-oAqPkfe4X1g@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] transport: add `transport_options_release()`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>, 
-	=?UTF-8?Q?Mitja_Bezen=C5=A1ek?= <mitja.bezensek@login5.org>, 
-	gitster@pobox.com
-Content-Type: multipart/mixed; boundary="0000000000007a8888065ef7c8ec"
+Content-Transfer-Encoding: 8bit
 
---0000000000007a8888065ef7c8ec
-Content-Type: text/plain; charset="UTF-8"
-
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Wed, Oct 28, 2026 at 04:18:11PM -0400, Karthik Nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->> > On Wed, Oct 28, 2026 at 10:47:59AM +0100, Karthik Nayak wrote:
->> >> The `git_transport_options` structure is used both in 'transport.c' and
->> >> 'transport-helper.c'. But while the former specifically clears any
->> >> associated data in the structure during the cleanup of the transport,
->> >> the latter misses this.
->> >>
->> >> This means when using remote-helpers, data allocated for the structure
->> >> leaks. Introduce a new `transport_options_release()`, which acts as a
->> >
->> > Nit: "a new transport_options_release" reads a bit weird. I'd either add
->> > "function", or drop "a new".
->> >
->>
->> Fair enough, I'll drop the 'a new'.
->>
->> >> common path to release memory allocated with the structure and use it in
->> >> both files.
->> >
->> > Why didn't our CI detect this leak? Don't we have tests exercising this?
->> >
->> > The patch itself looks obviously good to me, thanks.
->> >
->> > Patrick
->>
->> We don't have any tests which exercise this it seems. The tests in the
->> next patch do, which is why it hit the bug!
+On Sun, Oct 25, 2026 at 05:18:50PM -0700, Junio C Hamano wrote:
+> * iw/connected-deepen-fetch-no-alternate-refs (2026-10-19) 2 commits
+>  - odb: ignore refs of shallow and grafted alternates
+>  - connected: negate alternate refs in deepening fetches too
 >
-> That would have been great to point out in the commit message :) Thanks
-> for clarifying!
+>  The post-fetch connectivity check in 'git fetch' has been corrected
+>  to avoid passing alternate refs as positive revisions during a
+>  deepening fetch, plugging a severe performance bug.
 >
-> Patrick
+>  Expecting a reroll.
+>  cf. <20261020075536.49286-1-iwiedler@gitlab.com>
+>  cf. <ats6VLXUqKwKZzIY@pks.im>
 
-Let me push a new version with all these fixes. Thanks for the review
-
---0000000000007a8888065ef7c8ec
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: b2bd3c47e618462a_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yakdja1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMExuQy85UHJuQXhVeE9aTUZSL1VscUlBRG5NTDR6UQovUWJHQm8zUUNE
-Qy9RTGJZTC9jNXJVRnMzUGxoc1VRUlNhdUJqeTNpaUVKbkRQRkxndHVaV1pwUmNUNDRUZ1dOCklG
-UHRsNEFtQy9ZQmk2b2xseUc3R05UdjFpaC9rZkQ1b1RVYWU3dVVUTnl1YjlhdmRLMkNtWnlhTTJp
-dkNnQnMKa1FJSkxYZlBCdm1jdHBjUnovMk1vdVJZbGxsSUpqNWoxcDFBSEVIUEZXTGgwRHNaOFUz
-am5KcEp4aVNJTGgzSApPdURCeVRSSzAxRGZBRTVFKzR4RlpZZ0FiMTdGazVzMVg1MTVNdTZNYmVh
-cEVZWHJxRE9FYWY5WVVyY0ZMTzVICmJEN2VCbEZaVVROSmhzVUlHYndmOHNIV3c3ZFhzR0dhNUJO
-djlZWXRDRFkxaDZEdHBObjBsZjRMZDBDc0VOTGQKSGl6NFFrYmpMZWIzUDk5NW5pa1pkdkdRMDhS
-QkU2N3hVZm5Yby9wOEpuTEVrcHEyU1NLdXBBWEMyQzdRN0dhQQo5OXpGZmJuZCt2ejFVTk1zQXNx
-QjZZcFpzdzZTK3dMUkNJU1RjbEJ5T1pnd2JDZG1HYmpyVlJ3KzNEdkhHQkpYCkpwRWNQbi9UT0tI
-V2c4ejFzeGpEK1V1VG4xV0tmVGJMbW9LaEpMMD0KPTRpSlkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000007a8888065ef7c8ec--
+There have been no code changes since v3 was reviewed. Do you want a
+reroll to fix the threading of the patches under the cover letter, or
+is there something else I missed?
