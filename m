@@ -1,111 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793271940;
-	b=VrSFd3nK2Gs9hfWnkOoOK1I6cGInSs+0e/Ryvf338OgZ9oEsyuC4Nq2dJqxz3y2iGr2N
-	 iX4Onv+8dnaMBRMDasHC1ev9gRbzejj1pBF42K0rvDsGUi/Mry7ZD1TSQkQCJiRDzusDr
-	 cA1Jv7YuzK25bO0SJUjxfWF6mU2dnheRTw2cIm5siiFextRXwUB6doSScTNKKHPtCVOH+
-	 RDusXeU+LXIjO+9wn14/jgVu5zkxBkbPlNXj8zybLmCV/T3PFNmIrTQ23W1qMugaGlAcd
-	 dTyJyq7TSzHUYqI/ZRmPCbgcom4v/8PPajQELUbGLqCOwPqeZycJll15+icuxQr59xg==
+	t=1793272486;
+	b=Ih1Ab+QBWBDhA9VEYNoTXSUD3zR4ktCtjvcTLqCFsGakL0qeoBdLztOQW/TL3QQlUTBn
+	 Rqlt5qJzumByW13y7RZkeqQaSJOEFeJ4eVjIbHKlCFuA7ltRikPpPwcUcjDv0wrf6De4Z
+	 UZ2gSBpXeEQWL9yjmhwH8ksDURpE4sfpGmlJmyYEWO0Ovv+4KmWfU+Ugr71DDbQOleyzh
+	 6SDhlWjrCthgJDIfmuPEOuxC6wHNfqo47Q7nDGlfcF1qCQ1KCm83PdORy8pY08mlEi5Ah
+	 jpZR6RQhVswW1oVI2X52C91AbWckqPygQ5WhPSCAP4qHQU6SkAsb6soIiNMGQaMHYXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793271940;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=7NhYdPeWRSGIAUa4OO487OsvQULpZ3QTZfGdipqXox4=;
-	b=KGSduUVny78WMoz2O61vNTRg3OIXihE6s3VacqeWBsLDwgRhzU+ILTlZGQIoanONoggS
-	 8N1QPcBR+yepVV/U4Bl0swr7bEbwHXyWC6nrvuEzvFMWPzCachtzUIv7SRfTjgAo1Mi5C
-	 B9rMVd3WkOFLmp8AHZFaXJnFxuvVDQduq0Bc1HzhjqH4eBm/LbKI7P/6lAe4XRKg0d+Hl
-	 bZ6oi6mEPtnTrcwwopU5q85WZiiAzr2q3GDBu1zCyeemdRcMrJ1aAgJYSQ5f2E1us1lmO
-	 CIfU5trqQY6gIcGGvTTvDWISxt8AMYo88Qnhk3n8Mf5DwvnjIzlsQDDXeMAytkXqQWA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793272486;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=RnqZmWpncscbZK5j8YFEjkgHssywGsqVwh1vmQS7dm0=;
+	b=zlpHiFRcuhn2xn/3Tpdn9UAswLTK6pL9YtyHCpTzYKnLGGr4Y7PGHuLH1PKgp05Vzgnj
+	 b1zZluM/KscqPnrXKej/0WaTVAjxTGX5aj9r6wcOuYCX025hV+Ecum953wYaWsj/dtSQe
+	 N/tcgfd210aJrPA+MNTkKCwAFW7Gj7TjZTkMYtxNesrDhBEEqP6zx0IPZqTz9l7NvNued
+	 5yYBm84NI7YBmQ2XsZ1uwsheg12yQckDmfglLHkvMKctIgYZNE5d+7PDfBHspfLkXtsQy
+	 jv9IX4SKIeEa+bB/KQ1PAKkxLxWmRfLGKSFzAi2iWJswIUWT/Eab7dZSw+08Z7U33Dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=pthK02xY;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=tdQBtDs9;
-	arc=none smtp.remote-ip=103.168.172.152
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZCDzLDTr;
+	arc=none smtp.remote-ip=209.85.128.49
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87406606A31A
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 11:05:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87406606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7785A606A31A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 11:14:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7785A606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=pthK02xY;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=tdQBtDs9
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 75AAC14000C1
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 07:05:38 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Thu, 29 Oct 2026 07:05:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793271936;
-	 x=1793358336; bh=7NhYdPeWRSGIAUa4OO487OsvQULpZ3QTZfGdipqXox4=; b=
-	pthK02xYahHRWb77LJt1nSRLErxYULN6j1iEseUXNzOrEzw/2Pl15Chjfmnrru4s
-	REVHts4TWw7xOOzewjwfnXWsPYXD7rt6HGFAtzOjgPsgKqMZLtbQQlKJPjeFKPgp
-	Z/q9fzAxG1YMpSEPQcXTRhM7aqP/l5IZf8bnm4WyhUkipleXb3VfwQHWzjTRs3fe
-	TJ0ogtHli6UF8TfnMxgr5VvAbHzw4O65eXsCPfhHC58c0V5wMOPo5VLZxqFCR2rB
-	136s7ocQwSsz9IKK7v6SfxOW0RZ7AqQK5q0aTtRH9BZ7c6cJ8Rlhv0rE4sivB1Yh
-	K+eBMWeTSl5mgOe6sbA9jA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793271936; x=
-	1793358336; bh=7NhYdPeWRSGIAUa4OO487OsvQULpZ3QTZfGdipqXox4=; b=t
-	dQBtDs91wHbT5j/vqcpqDYnTP7hyCQosluMvaSyISW6+pftwcGv0nVClkbHTI76Z
-	swWwOUbReVC7ox4+kH2MgUgflj3ImtV2FIf/ZbtWs0YN0ImE6vvr//WQvg2+Bqsd
-	XFPrROvtvcyX3sjnowX+9mXJOJmZZj6EQSm4F9a1JG0qd9bl6ij0LPcnH3aPThUw
-	XlLL1fgS9Pe9B6aCDO6iAkP8r0UNJP8GAGDFGoLj8uPQhlvDU3CDi+bmp8H0gVPG
-	1rRFmz/dAChtlifF94sGYii2dKTTD0TrTC9RinFtHlpEh1J6UiiSbCI4P8h+SOJ8
-	eMahtjJzsgdJFN7jFTXUg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793271936; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:qjLoZQOBRorUfHi8bGaLcIrlAdvKpT1Xk8NmTExnq2ujr5O
-	u3MA1A7SulYryNWjSrt5wCcrsjjADGgb7eunioZ19e2A0EY0FWbuuu0jnLFUG14x
-	ak7zdeGKm7MLdKcc0KbGh+ScVyCmyR9PrTfFuqk3n+jwlvwpa9nDDMXdGk3ICtho
-	e8aVRv0qqo5WskuU4F0jRSL7fTdYAwIHmV/+/avssM+LMclpFGno000TAf5UegtY
-	uvDVDZtUR79gXA/ZFry+akBaH98P3H7MbySGEwSdUIlKVmuUwMHVAWiUctNFLJAS
-	iqRtIWNSW6R4MgI7nplmUvkF/0KD7eXFJ1P+8Aw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:WgQQpXu/vped6Xm1GK0LainAk/hzauZ0ll/8Tz4UWlI=:S23+R3yV5rL0Nx3SdyfzdCSwbs9yPRjsMj3Mi3wGES0=;
-X-ME-Sender: <xms:fSjjarY13VU1HRYEivc_I8jf0w6qa7fUSmpn-f3UkTrrfWtPhBzHH_w>
-    <xme:fSjjalM2yICjliUV080_iJdfPxubaM3U2eSzNoaDsk7zWvFl40_wd4ZBRqENpibkF
-    6IJ-yhrH7rvDOI0WYv5S2JPDXBpocurLhlhWpQ6cCAvKJODdoZPYgQ>
-X-ME-Proxy-Cause: dmFkZTGpj8mgmO4j33P7KX7aOsZrSDGH5twaWcy3lWW7MaAtEG0jCSyZdlmFV/8cwJJNXo
-    KbSZoxs1rigXb76jxsZWDZiBkDdMMwku9Toeq2m0JqoHA9SpmzxOPniiHl0VngViZTs2iK
-    O30uMg+h2Gn7Q7bJ3NF2DZhd4Gu7+yPuBfOZYs1tPhRLPhJrSc8BwAZqMa9K8g/K8SMrsU
-    C6O3+K77GD2V8w2FyGsUMDD28k2MF3hQkcFoGW3vDImROtSxIyL69cn0YvNT6zBX+kL8QY
-    CdFAmWMksYV2hAxBcERs/rO8UQYrGZTcA20Rc8UICDrhUGrYE4//dMnN2mRe/MV77bWct5
-    5JsRVAOOllxwMxNn4cIYCXfbOFQ9or7S2u+uObDzaFGoM8KjR5pwG9mtFuaX0WW+N0N6f9
-    EaEAHfHV5WeGGs02LkgjEAFYPWFETFMWOdA/mUO3+UCNlOgXR6l5mrplnfDRQVjlDN5rWb
-    9VOSv+UnQBhOotq5c65AFKAo/90MymwB4aOuYbuXBX9GNfKDgsu+oiDMhsQSrQMo33YJJ7
-    SB/2zXj5XxbWM4z0YjKlRVCH5lr9eWbeGYkXaFmvxKVfsw70XV9Mf4o/KPtmkEUiba457Y
-    8q0W+VWHvqToQawMs4NJhOJMBJYIvvyCNHpio0QCh1U1noStGjBR49wzKfOQ
-X-ME-Proxy: <xmx:fyjjagCf4EV_IDqupR4lpj7d6NtCjHcC0KvRIOdgVbPOWu9vHydpRw>
-    <xmx:fyjjagXBnfy5a8z31xgPa5pSFz8EcfRMXE98JNs9wCrdnCWWfbL_cQ>
-    <xmx:fyjjauDicj4N-scAcLTo_pUD7JFPXdIhH6D4Nm-IPsljG3rAiQB6rw>
-    <xmx:fyjjaj8n1oNEmMKE9amqG54Fwv-cIo-nVNC1bioeOF-bTAm1KLyW_A>
-    <xmx:gCjjarEO7LrCndQh3LHODexJXBFVxR61z-nuR3OZyJIIAYfTrQgN5tSe>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id B9D5922C00A0; Thu, 29 Oct 2026 07:05:33 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZCDzLDTr
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a5087a5348so18771105e9.0
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 04:14:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793272485; x=1793877285; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=RnqZmWpncscbZK5j8YFEjkgHssywGsqVwh1vmQS7dm0=;
+        b=ZCDzLDTrf0dSsLRdqk7QIAQXdWiMCsRqHWDRT19sjfcUENv9vsmOUntxCvfq40a2O4
+         YBY0sczMU7r93t3b8G0kZ4H6ZtdZ3cBibThX7ghVKSaHhFYM7GAB6Q9sLHIbasjedGrZ
+         FJKDV36vxT3HnDYYEauAbzGRSqsFxS6GieEHa7FW+jyLEPKZe7OIKosiEGFFRQhX39Nh
+         SVHrYuJu4rSIlxAn4JnfJorR9tw5g/p4lOmeR2LhDTgqxyHpkSyRT/yVJXT7/XmQl0bQ
+         gP6BbAKjrFWGmDP6PUGfyPC4HBQlWXYk1jbkJC/20nBNtaeCs/s3DMDfXOmrAeSliDr8
+         c7vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793272485; x=1793877285;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=RnqZmWpncscbZK5j8YFEjkgHssywGsqVwh1vmQS7dm0=;
+        b=syAFI8gAM9pvvQS9ZAHusopkJggULcI2ohLBd5YfFTJV3klJ2L9kG2DtL0ORqOhxpe
+         r/kFfppgmBouTD3I+nOQj7wRnR+qU1SHnIt+dzoYfbXGCW4gN9btHqIgBZuP04QzwiIL
+         NC2styuF5DRLevC5Pnbzhpk4p0iPfNn65t4gAnBmy0WrVEl/nBHK6I3FT3cUo42lCyoP
+         O1WfWT7YriMRl1BPxtfOzJ2T/nt90Cvc9VM+wraqiG32Jn5dRs6HgMxeSpdHSbbrYE68
+         GZvRxQNlYEkoeOs9Btm7FF7g9/WomGPCVJJtwLLpznFvaB9qK2VBWpVQakj/dbFwsTWx
+         RPUg==
+X-Gm-Message-State: AFq9FYLaemtYZChz4j9foQl/zpumLu3eM06Q7dailYnHnwqsaqST/ZYb
+	oLmpk2LQYswliuQ8vF0d+qPGp7qgl1H/UzWLXwr22Jee0F9IgVFiH5Q+
+X-Gm-Gg: AYBFou0TG6l/I0B9K8oi3Tki3z2eGLkBHanAzWBgJVKf3rJ9y721vw1tZdz4GHKFRwi
+	vM/OKouoAcqCwmsHaCzyzqkiXSlZHy9Ff73E+RVzv2VL9KHd24LQH5oTiReZNkv04bP3N0sQrzH
+	F+w40JwIo4A5PqJ7TgTkJ2VBL8BHQNcCCdGzr8crV4OpiEbyMXmKxPu2dRzc0ZVe6mEDQRKb1Y2
+	VjZa+aWJeAivExgvh+55n5D5Kte76a9QrASCQVV8ofwbmw+544OsaMmuuzWjeP2ptzRZLdAOHMS
+	ka00qPh2S9nVrx66l2Ye5fN0QkqsBXNcTK51ie6CH4zZPKg8ptu0Enni4/nvp2YvHcG/rGIQEPf
+	Px7hsbl2lDkSbQYD7Qwyn2gytxKGTNGIhbuCOMWF+mVZDyaCZOy9umlh/gxJBQeM6EYyAX4y+V3
+	FyNSwnCiI0gRm1Vk0yc1J5grgfq/favfbG8xq99aw3PZ+/2wqicUcCixSHV1sFzKGJFiyl+V80s
+	5/wO5ZbjrM+owPHaKVm4+/E1f2N5qN2ctFxZPNKINotsFJ1Te2AbcHMqy0p8hPUAKLIVNSGcHdx
+	hTRKtl6okjUN8nWk5RpHjgy/afxMAgPoaOcEFwDdq+b2LHFb+21oS0PCl3X0982ZhEOWCu9bN/A
+	GZkpu2fY=
+X-Received: by 2002:a05:600c:1d0a:b0:4a2:883:4adb with SMTP id 5b1f17b1804b1-4a9678c28ffmr116462875e9.22.1793272484524;
+        Thu, 29 Oct 2026 04:14:44 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4aa7f7f50d3sm86267655e9.8.2026.10.29.04.14.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Oct 2026 04:14:43 -0700 (PDT)
+Message-ID: <d0051192-8e86-403d-9aae-b988883ccfd9@gmail.com>
+Date: Thu, 29 Oct 2026 11:14:42 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -115,86 +90,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AOwTqJ9IjbyF
-Date: Thu, 29 Oct 2026 12:05:12 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Farid Zakaria" <farid.m.zakaria@gmail.com>, git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <3c4f3793-07d4-47c7-b503-13a6ae567147@app.fastmail.com>
-In-Reply-To: <20261028-fz-notes-concurrent-write-v1-1-3d513e1fdbb7@gmail.com>
-References: <20261028-fz-notes-concurrent-write-v1-1-3d513e1fdbb7@gmail.com>
-Subject: Re: [PATCH] notes: do not drop notes written by a concurrent process
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] worktree list: add --branch to select worktrees by
+ branch
+To: Jasper Mayone <me@jaspermayone.com>, kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
+ haraldnordgren@gmail.com, ben.knoble@gmail.com
+References: <ad504925-cdda-4de6-8791-97a51a9d90a3@app.fastmail.com>
+ <20261029044633.12429-1-me@jaspermayone.com>
+Content-Language: en-US
+In-Reply-To: <20261029044633.12429-1-me@jaspermayone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Oct 29, 2026, at 04:55, Farid Zakaria wrote:
-> "git notes add" and the other commands that modify notes read the
-> notes ref, update the notes tree in memory, and then commit it on top
-> of whatever the ref points to by then. If another process updated the
-> ref in the meantime, its notes are silently lost.
+Hi Jasper
 
-This looks like a really nice find.
+On 29/10/2026 04:46, Jasper Mayone wrote:
+> 
+> So I would like to drop --branch and instead make %(worktreepath) use
+> the same information, so that it names the worktree of a branch that
+> is being rebased or bisected. That is a smaller change with no new
+> option, so the naming question Eric raised and the --filter-command
+> idea Junio floated do not come up.
 
->
-> The fix is to remember the commit the notes were read from, and use
-> it as both the parent of the new notes commit and the expected old
-> value of the ref update. A concurrent update now makes the command
-> fail with "cannot lock ref" instead.
+That would certainly be a useful improvement, there are a few 
+differences compared to adding something to "git worktree list" though
 
-This makes sense and is how I would have assumed `git notes add` and
-similar to work. Because you have:
+  - "git for-each-ref" does not have an option for NUL terminated output
+    and %(worktreepath) may contain a newline. If is possible to work
+    round that using one of the quoting options, though it is a pain to
+    use those if you're not using one of the supported languages.
 
-    git update-ref <ref> <new-oid> [<old-oid>
+  - there is no way to know from the output whether deleting a worktree
+    will delete the whole repository.
 
-Exactly so that you can try to update a ref with the assumption that
-nothing else intervenes, because it will fail if <old-oid> does not
-become the previous OID.
+  - I'm not sure that it handles branches that are checked out in more
+    than one worktree. For warning that a branch is in use somewhere that
+    does not matter, but if you want to track down all the places it is
+    checked out it does.
 
-So I thought that the code that git-notes(1) uses would work
-the same way.
+> Is that change in behavior acceptable? A script that reads
+> %(worktreepath) would now get a path for a branch that is being
+> rebased. I think that is a fix, since the rest of Git already
+> considers that branch checked out, but I would like to hear if anyone
+> relies on the empty value.
 
->
-> Signed-off-by: Farid Zakaria <farid.m.zakaria@gmail.com>
-> ---
->[snip]
+I think we can consider the change in behavior to be a bug fix.
+> Phillip, thank you for the review. Your point that "git worktree
+> list" output does not say which entry is the main worktree still
+> stands, and I can send that as a separate patch if it is wanted.
+As Eric said, we only need to mark the main worktree if we're filtering 
+the list of worktrees, otherwise it is always the first one listed.
 
-So if this change is:
+Thanks
 
-=E2=80=A2 Before it silently dropped the change
-=E2=80=A2 Now it loudly fails
-
-Then that is a pure improvement.
-
-However, thinking beyond this patch. Let=E2=80=99s say one program wants=
- to
-add a note on `master`. But another one wants to add a note on
-`feature1`. One will fail. But should that happen in a perfect world?
-Let=E2=80=99s say that `master` wins. `feature1` is not trying to =E2=80=
-=9Cclobber=E2=80=9D
-anything relative to the `master` program; it wants to add a note to a
-different commit. And does the `feature1` program care if the commit
-corresponding to the note is a child of the commit when it first started
-the process? I don=E2=80=99t think so. It does matter for two programs t=
-hat want
-to update a branch, but here the commit structure is a kind of
-implementation detail, how Notes are implemented so that you get
-snapshot of the notes as well as the whole edit history. As an example:
-
-    commit A, commit B, commit C, commit D...
-
-It could just be shuffled.
-
-Instead, maybe this would happen in an ideal world:
-
-1. `master` and `feature1` race to commit a note
-2. `master` wins
-3. `feature1` notices that there is a new note commit (from `master`)
-4. It checks whether that commit changed the commit that *it*
-   (`feature1`) wanted to update
-   =E2=80=A2 If so: fail
-   =E2=80=A2 If not: continue
-5. `feature1` retries (go to (1))
-
-Maybe this is too much logic for a =E2=80=9Cporcelain=E2=80=9D command (=
-interactive
-use), but there is no plumbing Notes command.
+Phillip
