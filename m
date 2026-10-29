@@ -1,93 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793313959;
-	b=a9WkaB5aj8/D2ypNWq3qxAGesj5j5rs6WU0tdgBKx6xoN5J78N+WCq9bj/5IFXP/LC/8
-	 KyR1k4jOue5zhQhCZmeD5SSvvxSk9k7uQMfvkfArnifihQHNdg73lnwFU4BWYBJdpph0U
-	 2aK8De1IY6g4pnQ1mtEjF7M920foEs6QTb59rcVLavLmO1OY3fVNy3gaXhTXhwnCJree7
-	 tKgFhrtrv+Jbgv1BMNU6DlBlelSd6Q+aRSzcn2u0i8yAh5tRiJBDSlPtZKJC+PKcFDZ82
-	 ZCNjHKl3GUKhmyZ4i5Hl6dLljFy4i8XlpP77k5MOqOIt4JIs2l3AiBNcyfKMtc4IV/Q==
+	t=1793315807;
+	b=yuvP/dbums+eall0LySQgPevxaLYz1bFRWrsb2rJ+LouiY/dQT/sn9D9ZXZHUI/WCM1W
+	 QVUshoTsI5tgb6kW1Cy1RY+TRynn3OVihFuseAY61kbtUbCtCg6Z8m45rrfFTp4gEjX2a
+	 LaEyY/PyNdtP6DYI1D+Il/N7YrXA5qtyX6APuWO3y5Lr6pXyXyo+3dLkYuoUXQ7LX5tLz
+	 VSxjJfNC/iB8paF+SvXDKzFaAiCGLCqZA3zjfQbk/y0JZ0bl5ojkGNNTGlH37+hLPpHqL
+	 5jnn0p2bR0zoMFEOCSGXxIFsXsrP+dmeXCxtrVeop4gxRPsaT9fTFuubBkIHetcOSIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793313959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793315807;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=VQYRKJslZX3VhLc/o/owtOpTxGGjRYEk7zjBmjOkUQ8=;
-	b=mDDWqey0iwvALTTEH9vG1oKR+n/R2WpVYpWixNOpQYKUbA6NIbg25KwX2CXx7fCYoQIg
-	 dZfiaBbVjvpmoGCB7QVOm53yHVu40L8quGGnUfUXoCMsWYZGr0iqos+teqd5n2ud1G7tJ
-	 zTwO5J/nWSqaIgMJK6Tr3/kQrmZ+AKSgO0DXN7EHrzONrZj4XHyNp+G8xEjuh8QtZB07h
-	 aTcvyo2E8z8marraM1LjCp6xJuC7tMGWbXeIzOS/qn92XntBltRwhJ8EcPk/uG7a7BaOV
-	 tpqAw7JNyDbj5Jcokq3OPw8VgMj/e+XPu/S+xdQHE/1ZtHK3o2sc3HSNv0inYQExJgw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=U3Mk1KIA3nQYDm4eQQzRm+5jQNU9lwPSfK14X4pqIiw=;
+	b=ktpoP7nf+q693KHTG0iWicJ5OS98w2SQR4r17MuYC0rEARq+d5rjtciVj0+YB8mWjUWs
+	 7xLe0sP8wwUBzFNdBWTBAz2MWeT9UD4/kol/GYBgfGy/PBGZhKlyI4/gr8vxVMhQHFOlC
+	 2X9Ctn3jh5Xdh27WEljqDQEuipyb7BJkeFzM1YrdIFfjRVsSRthGLRMNpi53C25LPGekd
+	 YBt48yHeNyUQBbT9R+5ZZyC8lMs6LeA8U6y5L+DK2thmpx5dYlAjPJQLEgmuxpwQl7GuP
+	 +OjhK5mrbvox9jPW6zkzc+rUF6KZ3IMz4p+z1aQSPN/JrihI4kHoOVhxm1eeGAHJwTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="h7f+m/B0";
-	arc=none smtp.remote-ip=209.85.210.44
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DUVT1MEh;
+	arc=none smtp.remote-ip=209.85.221.45
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E212C606A31A
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 22:45:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E212C606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA488606A31A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 23:16:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CA488606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=h7f+m/B0
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-847ac7ccd85so109882a34.3
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 15:45:58 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DUVT1MEh
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-48c45111bebso56068f8f.0
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 16:16:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793313958; x=1793918758; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20260707; t=1793315805; x=1793920605; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=VQYRKJslZX3VhLc/o/owtOpTxGGjRYEk7zjBmjOkUQ8=;
-        b=h7f+m/B0f6n+EyoCMw7iTFNEL6V3T78hS3G3gsXiSKaZ8avRHeGW+TWlSzDyHzNV5Z
-         Pkq8jnOJg9l0y/YIm1ac86OZkMBgLNJYCFaS6H2IPZRfwRb8NxbADjjmCJlaoHizMlZw
-         0LaCIu1QZyMwCMMVbvswsIqi9eaQLkCkzUGOiFBYzHi9UJ6fCdsPUMUNiZtVh96dFuZ7
-         Bovm3caCkJPb+w9wFUhg3mFCCGYhtQeEVcDl5fIHhe/0YfmKtEFafhjfFtvL2hCIfxtq
-         6VagOksSd20x6bf9NG2WVjFA+PtMs0Y90t9M8aEGmT6AgY5DW5M78edUSAM1ynICryTf
-         SixQ==
+        bh=U3Mk1KIA3nQYDm4eQQzRm+5jQNU9lwPSfK14X4pqIiw=;
+        b=DUVT1MEhLA0fpCkzYnu8jgaIVqb7h0yEIh4nIMvjZowpPWTcObUq2x0HpLMVWxfW4B
+         q7xo5/TF4FwOaz3pgMji3Yru6q+kVJzqyNtKu871WF2aiYakpMdovVWKuyq1g6IERZZP
+         Va0NM92a2t5HYHfwtjOCuKHI+d0msqehKpaHFUHCNhrCRM6C2ViPfcSGX5A/DNqREoeu
+         m1HujH4sUU5zO5GWuHVQ0JCVZtQCXgDZul7gbbdPgRneHYDpxXlicSQDJ4/c0HYCY3G4
+         LzMmpFiIFW1mryauefLC3o5KAoZYpYBM2q+MiaQPmKcTjkCBPv3G9o3/q7XLO8J7ETOx
+         HHAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793313958; x=1793918758;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1793315805; x=1793920605;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VQYRKJslZX3VhLc/o/owtOpTxGGjRYEk7zjBmjOkUQ8=;
-        b=BpNAKrBOXJifSWj3GcXrf1G7UBwtUnVQ1gL5weQ2eQygNrmLZfGaOrvnogNYGo5MkB
-         c8OGmOW7UX3ROiDWzWEwJFZvDxwxXOUkm5Wr/WbiIl3+HB4ch8USceaPJj+Y2SVbrtbn
-         raPbcaVLuzHT1g7tB7JCJFpHBFlThJSNI5bAOF5Qj5Wv70AAbSVUIXX78o6t4B1luLGX
-         qXUxQDZCDN6b8L4lipn5cyzNZq9QirGS2jzdBwq9kMAzXei2ALUNw4lmjDjZzRjzEC2i
-         7N6K1w9459oeq4xmdJdcBliOEGmdixh1pOqsq5yWxxlyAPMVzq/20PazitoF2SUtR7gi
-         lLBQ==
-X-Gm-Message-State: AFq9FYJeE6LfS3Y5cYU6ez/ugzKQH6vwy0rg8RLGW/UlBoBOtomaoQvm
-	T47xMD/JDLtpMOQahPvon+uoGwDhgr33GQYnOAAz0bZ2xfMc7Ip3BNbn
-X-Gm-Gg: AYBFou3JAbziT9EdmmV+mmOPCbFmXL9U7mUXGyQ1cywwU+q+krNq8+3SemRmO9GG51N
-	tHAw9EfebFAOHPKcuk4yWqmMvXZ+8rxzckR1oxQGbXMVsiwojZiDmeGkM8dV9DbPFS9YdJdHWHq
-	9V2ZcR+28tJAJFBF6PM2fZIIhP3CleczbkytlVYMSSp77tXyATALIo+urxLNDN/MRsHM640S+2P
-	5gAZOTqsmYEm9BYADEmfXyckLaqpKehk6d+aZScenFcPDIhSxfYnXBhiDBXOkkIkwQ40I4o1eE1
-	XjyLsYHNBpw9vEHQqPnBk1+KKvwY9xt7bEEdXczI2dhBrdEJO07UxKox1OmNdycnH1SrJYJnPuu
-	yPajjuOq1JM08ao315XtuHB8wwxUD9xL4eM5JVOOxGdJoJf280LadnklH/eG9e4B7bn4oxrB3ot
-	jinwULhll7/fpLLAwGO6DY3YT7v4MfivKJt8AbmytNqtK7pyrGPus7KbWtcPDH+/LfDCFNdQQpb
-	4A4TdRXJjY5nFKllgYmTwgR1M7CzB6D0aZgiuFQTWjmhEdA6rITveOnW2uMWrIG+LwDS+/YP4bx
-	Ce+VPtJFgUICTcLeJWrSqHn/nRAVZiKrxAGhybJ0GVpeGa81UFeR9hk=
-X-Received: by 2002:a05:6830:43aa:b0:828:d647:332c with SMTP id 46e09a7af769-85d3647359dmr492874a34.25.1793313957800;
-        Thu, 29 Oct 2026 15:45:57 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-85d3549a2b4sm655290a34.13.2026.10.29.15.45.57
+        bh=U3Mk1KIA3nQYDm4eQQzRm+5jQNU9lwPSfK14X4pqIiw=;
+        b=k5rUlfBGLsSe++HGkQz26bs7z5sACZeZ5ALdMvlPxwnmXwNvYqe9cdtHlxce7BoHUE
+         yzsfPaKpqHndcJsdLE8+jPJp8dc1+HR3Cna5NXVAtN01+Gmn/iaJ3y4SZQyrjjp4tBsQ
+         EbpTthc+1TQJvQNZSq4IygL+0/0ueLCYTH+qcaA6h3SAk4jrG5wNT4n2FqWtM0z9wNru
+         6hmPZC+xw7sIyyw/uZhQcQnikwN/vMs3OepnGOH44lpZGg39O4zOSpnJdkFoGvZW5h1b
+         bcqQFLmyEmOnE3DqkTBRp7DghRZ19DcAVyuJum0/oRzJzpG6vWOu5hw5ftWxkplgaaEF
+         o9yQ==
+X-Gm-Message-State: AFq9FYK8iq55qGUN6C3LfizpmqbFApR3/HxoWFAIZFowBYpxM/M9qKPF
+	efX8C9lZfBFwC7/B7rUieJEfJfFOITIVyfjbolAniLU2pPKxckosEuqGU31nWtiE
+X-Gm-Gg: AYBFou2z2HoNSkJT59zRL+kMjrpJ9QO4ZJ4tcR5XzTwDZ45mZhyQlo6WxgzPaArcUIL
+	/3M0MpAmYfXUeHbVMdZjaqefBzzgOBk1d979JxwYnMZE/VvkbTTo5Ih8tLEGSEeDg+HF/bCAQkO
+	+VuyoNINte7VKwH6BqqIfuL8TcWFkgz25t/QLpiPx+o3CyHe4kXDi7CGIKuWgo3+ExGq+aNGvXI
+	79ggxDCMSobfqP9k3skP0FCp7IvnnJP/Sea5B3H/cuOUhU2HfraKh8QHE5hU0B2MS4AKlbvJ4XM
+	gHnDKHsMb8fkqTLQZv8RbfEXEmg3Rjfa4sd+P+Ds5Ew09o8bNH9dhvF3nNH1URIvnSjgR1YHtgW
+	9roCNHmalG68WZKV4dvDDBvqmi9Y8MBvlBov78BbzcE/Her6w7m26ml5Z+UYjJ5wrrZKmOEElkm
+	QytB71j1563IROl6ibxgN+LTTpZX/ueTquiwYUfpTyfJiJOszO516Sb8F0zs2xgikHKhpoCbCOk
+	VVQJ1OEVmkP2dc8mtnphAYdxg/UdB1jP/kU+7Ko8lbDa2kuggu/WGYmw9a0eTZGyvwlT3QmhScZ
+	ftJRZ/ZY8q4a7RCslhO4/mCEw1biPZuIQhBHLOUmxTgTHmhCSkd0cfB+MdbjJQt3jDqLkKyE9v7
+	ahNoS6FzHINixxMWiXjbhnhMAWRXeVpetBJ4=
+X-Received: by 2002:a05:6000:ec2:b0:48e:159f:e33a with SMTP id ffacd0b85a97d-48e6e50567emr1257314f8f.34.1793315804977;
+        Thu, 29 Oct 2026 16:16:44 -0700 (PDT)
+Received: from HP ([105.163.1.130])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e712c2692sm234861f8f.22.2026.10.29.16.16.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2026 15:45:57 -0700 (PDT)
-Date: Thu, 29 Oct 2026 17:45:54 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v2 0/4] loose: fix migrating "loose-object-idx" with
- batch fsync
-Message-ID: <auPKJ-hUt22YaeyW@denethor>
-References: <20261022234007.3081825-1-jltobler@gmail.com>
- <20261029002413.3291184-1-jltobler@gmail.com>
- <xmqq8q3gywny.fsf@gitster.g>
+        Thu, 29 Oct 2026 16:16:43 -0700 (PDT)
+From: Tanga Joris <tangajoris@gmail.com>
+To: git@vger.kernel.org
+Cc: l.s.r@web.de,
+	gitster@pobox.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	usmanakinyemi202@gmail.com,
+	Tanga Joris <tangajoris@gmail.com>
+Subject: [Outreachy PATCH v3 1/2] parse-options: answer --git-completion-helper before command runs
+Date: Fri, 30 Oct 2026 02:16:20 +0300
+Message-ID: <20261029231621.48958-1-tangajoris@gmail.com>
+X-Mailer: git-send-email 2.56.0.298.g27111c8f60
+In-Reply-To: <20261029012616.139783-1-tangajoris@gmail.com>
+References: <20261029012616.139783-1-tangajoris@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,29 +103,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8q3gywny.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 26/10/29 03:22PM, Junio C Hamano wrote:
-> Merging this topic to 'seen' had a funny interaction with other
-> topics in flight.  repo_write_loose_object_map() function, from
-> which loose_object_map_write() helper function was extracted out of,
-> loses all callers, and will disappear in the merge.  But the new
-> helper, which gained a caller loose_object_idx_merge() in this
-> series, remains.
+fast-import parses its options only after reading the "feature"
+lines from its input, and it creates a temporary pack file before
+that. So "git fast-import --git-completion-helper" waits for input,
+and each run leaves a tmp_pack_* file behind.
 
-Thanks for the heads up. I see the function gets dropped by de2910a42b
-(loose: drop unused `repo_write_loose_object_map()`, 2026-10-27).
-Keeping the new helper and dropping `repo_write_loose_object_map()` is
-indeed the correct resolution.
+bash completion runs the helper with the terminal as input, so
+"git fast-import --<TAB>" would freeze once fast-import is no
+longer marked with the NO_PARSEOPT flag.
 
-It does look like in `seen` the declaration of
-`repo_write_loose_object_map()` is still left behind in "loose.h"
-though.
+Since show_usage_with_options_if_asked() already answers -h and
+--help-all before a command does any work, it now also answers
+the completion helper, so fast-import and other commands that
+call it reply without reading input.
 
-I have a few small changes queued up locally for a v3, which I will send
-out soon.
+Reported-by: René Scharfe <l.s.r@web.de>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Tanga Joris <tangajoris@gmail.com>
+---
+Changes since v2:
+ - Moved the check from fast-import into
+   show_usage_with_options_if_asked() in parse-options,
+   as Junio suggested.
+ - 2/2 is unchanged
 
-Thanks,
--Justin
+ parse-options.c        | 6 ++++++
+ t/t9300-fast-import.sh | 8 ++++++++
+ 2 files changed, 14 insertions(+)
+
+diff --git a/parse-options.c b/parse-options.c
+index 283a0f1dc2..f2a23b79a4 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1536,6 +1536,12 @@ void show_usage_with_options_if_asked(int ac, const char **av,
+ 			usage_with_options_internal(NULL, usagestr, opts,
+ 						    USAGE_FULL, USAGE_TO_STDOUT);
+ 			exit(0);
++		} else if (!strcmp(av[1], "--git-completion-helper")) {
++			show_gitcomp(opts, 0);
++			exit(0);
++		} else if (!strcmp(av[1], "--git-completion-helper-all")) {
++			show_gitcomp(opts, 1);
++			exit(0);
+ 		}
+ 	}
+ }
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 73c6e3d448..99d7843217 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2914,6 +2914,14 @@ test_expect_success 'R: blob appears only once' '
+ 	test 1 = $n
+ '
+ 
++test_expect_success 'R: --git-completion-helper does not read from stdin' '
++	find .git/objects/pack -name "tmp_pack_*" >before &&
++	echo garbage | git fast-import --git-completion-helper >out &&
++	test_grep -e "--date-format=" out &&
++	find .git/objects/pack -name "tmp_pack_*" >after &&
++	test_cmp before after
++'
++
+ ###
+ ### series S (mark and path parsing)
+ ###
+-- 
+2.43.0
+
