@@ -1,120 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793304593;
-	b=ANMUWTyFhnzXB2nKS44SvPn716Xz9Ar3L3BR6Liog205+D9fYxkUlXiqVgQLcl4alsPJ
-	 9jYclodoftpA+gTUon8LjVtKTXFfu9KRAkHefLRluAWFwNY5w0vujLWzm8iCl9/6aGJG+
-	 vCztglvE/FoFVKiuC+opLnMMs9jIRcLm4HCds6WBdNcxNQxsMaKd4T6EL3WGphgfVfb2m
-	 Y5e65eTcF3z35Yhfki9hFrNKV594MB4yaip2KZGLPsD8VJwKV5UrD3Y3tHZgh1h+7Y5Qf
-	 /t5ypriv9vhyevXs0nFjqLF+mGX67fpmAqQY9jMGhMcMdr6pB/wmvMfP+fUvUcUS7Hw==
+	t=1793305037;
+	b=D+13qCryJEXiLwrYlITXBF8Bp08Sos3/w1VCt39WHIC2C+6+vPFz2gbikhrVctoA6IoU
+	 WQi6zIZ4oz8qCDol/Mj0Mp7M2aPe2MnIWt8f90HACswPXcMMm4iOFdWU99EdRe9WtQqsO
+	 TxRV6A/YtujTIzLtXsMsx0sYg8bJhN6aKeJy6CubuTDkkWZEZr9rqs4quBNv8jVZTBjaf
+	 5N+vnYeXkIItwNhHB9tPuvdx8D45FexXNkorlDY0KhZjNYl0cZaruHCNgjYjtFMETEc0u
+	 c0P11tG6H4htT4QzizCncB0vYejuRNzq1nxJsVDAUGj88mdIY+sA939/Hk6dVz8HBTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793304593;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793305037;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=MPnCcC5/SWk71eKRfVg27Mgklqo4P6Y6s2S9XV79mkg=;
-	b=uJ/DwLmzHQeFX3MCSr1qsb2ZCIJUA8X54/UwzGuJGM/45DttlK2mFjCkGLls5sOMuFUS
-	 ogCBfcr4f1F8dzHSPjt9N32eQir4F8euZpvFUxuDCi6rDDQKxX6ZbkXMvmhFvBe9CAUNB
-	 JLyKGhNcT04lc4P0xpWay0bGa03+VSAwsEXnCnoGJ6ebF09iaXA2cC3D3OSC43AuPrjq3
-	 8dKXjrieioakVvZTgG1dWgfWkv0pQ6KDFdIC80Tci86pcJBpCZtnXuJXTkN82Hxa9mXTO
-	 RMU3CdN09qcenpypEY1TLi+7mS9bcvEnWQ8SrPIprtTCyIk7HWtG9BZUa3qmm/pcmPA==
+	 Received:Mime-Version:Content-Transfer-Encoding:Content-Type:Date:
+	 Message-Id:Subject:From:To:X-Mailer:References:In-Reply-To;
+	bh=BMsXRXqPvXyyVDDi538ZQJDuK0MGOmlp7SI17o9BIEI=;
+	b=Ti1BgfUX65jkXDz0wBpxa3UWEiMN3l3RTBQXrGjHBTdXqxAOqPFSlCPwFUcgyDA0kwud
+	 lMNKJ6TiIW9HZVdzYFEdO4wPeIWUSINSOISeuks/1NfvdthbQyx+0ZLbTSvvFXBRKnZfs
+	 fvLFbu6pOa52hTGdPW6rQvHQ+P84RdsWBi6Ww36agnA21eQ1TUuFTpAWuL9Ub/oSTXwCM
+	 1bOnzykSJvxkTi8yjCMHTH9BcLlxfDwVJ8mRcuYRHn00xl58wybP463/SenmKmRK6y9eY
+	 hcOPm9oDgLD3ycLirkwBz8ioKWjMBVWYSH3yS0TMjToSrR6GcoES1ctJbcSsKQIynYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=kwBPG2Q2;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=iUqn+d2X;
-	arc=none smtp.remote-ip=202.12.124.150
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=NN7z019c;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=dr7uUtv6;
+	arc=none smtp.remote-ip=202.12.124.152
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E405606A31A
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 20:09:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E405606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C169606A31A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 20:17:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0C169606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=kwBPG2Q2;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=iUqn+d2X
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id B909D1D000B9
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 16:09:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 29 Oct 2026 16:09:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793304591; x=1793390991; bh=MPnCcC5/SW
-	k71eKRfVg27Mgklqo4P6Y6s2S9XV79mkg=; b=kwBPG2Q2d2zaz8wz8OlYz/xi9o
-	jOBXAhDsw5gn8+WVdvPAeuwovOUlKqqzWAMsQPa0pLy/UGKPGJynglpgljSGQeD0
-	PY8EESnzozud8T8z7nY2ouweU0EgwqqAAVpNgXffSLxVMiVn7hyTNQ+6NGDAMSVr
-	2aUSGGIFNSASmUrHDqNqdlzY5SnJrhvT0kUdaVIa6Y9s0yLJKT3XaJeMZsHfTNET
-	Xx7quM2ADl3TSJXb7dWYGDBa/vJVSdfyNIqWfR+Qd09SUDGTpNL2V4Sp7v3/PG12
-	FUL46DDSdl8Iwg9RmSqju2figEe3IpIkyi0Zvh2PnBfOv3LsBCbsxdcLByug==
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=NN7z019c;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=dr7uUtv6
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6F3087A0132
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 16:17:16 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Thu, 29 Oct 2026 16:17:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793305036;
+	 x=1793391436; bh=BMsXRXqPvXyyVDDi538ZQJDuK0MGOmlp7SI17o9BIEI=; b=
+	NN7z019c9BmGDhRQWxoRT98Q+B116Q1blsm5aVUaNWnJIyswLQaLl4hUL9Cj0zbv
+	1oannt1EGYt5nXq+vqEBGmQH36botkPeUbV5sRddVvUrot5g5KK+BKBADnAmHsfj
+	VPEXEt0e5BHm3pa7o/Qs8P6iFRBrNuT6js4IT8D5+HRTafklGrHRPem34Pde72V3
+	Ljg9WPXQXMVmyDLDPAFk1MKNUIAA4AjocAXm5ggjLHMX6TmAq2qEdnwYC7cQa99q
+	RvPGQKW0GKywtwaXBEdXC9sMBAqhGFatTXt85y6Z9xJGeMYtMJN2qgeOnSftgnuA
+	7GWHaw0KAneaaiY2vRWE5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793304591; x=1793390991; bh=MPnCcC5/SWk71eKRfVg27Mgklqo4P6Y6s2S
-	9XV79mkg=; b=iUqn+d2XG4EsT5CzDJwEdQDsAalZJNZ9d/iHf6LpQTiCx/DksgM
-	NSmiD/LvDS61co2qYYL8i0EI4DxMqQfL4oB7mWMPqo8cdUsXGZOsfx91VXlVHJmZ
-	GS55cDLtNyBKiz256hrnX85ZoVzFwnLvG9Pm9q33+Lk/JMDwb6wyzJStKXlCKpbY
-	ebdHGGY/a582iZtSy/uAsF88T0dAPxjaeXXM66TLWiZODSyHqzeXnwxSZXxZ+sqr
-	CzGPLl48D+XezI58nC5A+iVjK7FNO4797kNZcfwfCOZux6PaG6r6O5BUjGXcB5m3
-	KN8kVvrA+k916yNrB7iXFUpSTqMiNjPyO0A==
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1793305036; x=1793391436; bh=B
+	MsXRXqPvXyyVDDi538ZQJDuK0MGOmlp7SI17o9BIEI=; b=dr7uUtv6koBZtafS5
+	BMo+g3iB9R3evkgJAk4xXs8A9eAIfn2oxh91ZMj8TTwrwUlV0PAoJHLF14FX1JdH
+	xOvjRlmrrCCPgSzKq0NjxyLkUi6XnfoGK39TFsNlfRhI+3ccamCYBbZdy6J4Tg1V
+	4xpvJUlGQZaminIqVBYqFYRiFlR+qFvPcI3d6JpWDE8/YvHHYacBPbnnBb0/vwIY
+	sfaE1jeMndD8ahCaG1HPqN1T7VLdXBMj0XkEYRCAYtEeU7pEMmM3/CniSZNVK526
+	3ZaQMd5oegwc1OJ+uzQuR2Gvj1hcd6A3z9x2cSZIQqV0cGY9+OPkVaNn9MV1N490
+	dZ0Xg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793304591; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793305036; d=fastmail.com;
+	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:giXE2dStKUl8A8fRcjpy9wgRmzdcvKHlpwUdyi1dwqyppgZ
-	H+vq3PxfRJeriAO3Dk33ofVsFIBqhwZUiEnMxUIMlR2kCN6ghqCodaE+y+F1eOiC
-	USDxue1U9XCIu482jhestTyqEq5as0h7vSpVWrOjYKP2AVln3/XNZf3QSM3X2MrX
-	GlN9jNIrO4fuo9MpwZScIGVCGRn7hYv00TrkmVjvQsVWYzX1cHkkp8iyr9cyJUys
-	QV2NH8qGp7vtBAybX82Ff2nLyG6DHjv0fH2vikFFVM0FJM7qBuruif1UFyW8lKPA
-	5Dw+Xyjsa/MmM+H62pha49kN4NhzlCjaawcZ41A==;
+	s=fm2:rsa-sha256:Kwkr/uhVxzgdv0Gh5q19TCjja0J4oPV6dVju1nbn5H9Ngi0
+	6cbnbAEJVwcdGZCdX2Ye7h2mW9Kc5P6FoZ1kK7sbG2O0aDaqqRe0XyahgMSMUMoY
+	knB63bAwA67OTRCbtPbjjZzkpEoqMq5sbWRK2YUoCMnNM8SVZ3OI6YBmWywxNUPa
+	GTgmktKnk4AULw4Us71HRyMmvq6K2EUKeNofLwrJ5ocn7koc9KqxRwdSUr2sfRKe
+	rcfc7+3TC96gmcWqxulmKY5hqpmxU1kcF3aT4rW0N9R+Kqc4EOvHYRv9TEbsvw4c
+	jtW9Y4Z5YB2EENZWE7sc9lSL9XCAAfSPEq6A7QA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:92t48pqIfX3UtrxybPHRh7UyHPVTVz5Bed2LKhhuUTw=:5qw3YlaOViZ1gk4dvq9tM9dAB5y6MIwF70ugV6lvBOA=;
-X-ME-Sender: <xms:D6jjaqhFml_HJhLPECdfITHg3K82eUDEIrN647Z6Nqr-dBNXAjUQkA>
-    <xme:D6jjaiBZU5m-mhPa0XPRgTqeY18-HLf3lHKwOQM1mxwuwbuI-87GdgVUsA-VXBi_R
-    VyyRu4RxxxMqqJvp-RLIOSgrlTni-UPLGBPSQSPPdF8fsEJQ8Yej90>
-X-ME-Received: <xmr:D6jjanHA-YGQPdBDnKkytIsPvOKXxcQ921lsYsm5LvtTD37q6shHEzmPz44K71tPEndW7Slco6UMv5CkIA3U9hulXEh74gIQgAkr>
-X-ME-Proxy-Cause: dmFkZTGHDLWtRkcJQUxGu8hepBSA7VHr1z+7SEGVuwMGxCdxH6PtCjye6qP5uW46hgwZ90
-    +9+V/BgFJIxz+iJQIQJs1u8POV4y0PDfbw1kKOY/NAAsFzanQlxBuFlR1kuMCY9WTK6Bav
-    6zEBslq2PP1P6lNgIfR8RewavpTSSLpPGGLbxJE/7Jav+eH7AcPJ9fCxuOjHpL9Dhfy20X
-    Ux+F2EbEY2A5m0tPOb0Oj12D5MXVPgCWyG41dpIwO9azJspzVipykKh9FCoD3UI/Tgpzdb
-    RhnVpyXS00H7D9vwWGsDxByz5cEqvhZL0z/mSJXiVs7A0nlg73mf72krhT0/WMA4yiINZN
-    Qcp1grBPFW5ubOEK7zcJOgvRF009Vc2b+3Mbjn6EnBCPBB1ujosR7bH25Gh3XLZfe3ba2F
-    jE8s8CSVoOBQmdE8NFxkxJucl+dno9JEP2k2EOtCbZ2BFHare6RIrrlA9tq9adSRu9yP0v
-    YLGte2m0AVDfE1jZ+tIexmvIYF7lbg6frvdHJCG5t9SGU/zY3cbKUm4KGHU4M+tc5h5e50
-    R3ZQQKv7b8HBFlgShnngA+sbaZ0AeKovvAklVjQqGCAsRiKciscqDuGKoMkrxAykoPUP5u
-    4KG3Nh/kt624TVO1MTtcS9AztrKuijsqMrAYGRNJ0Y/CF46WIX0DFTRQzvZw
-X-ME-Proxy: <xmx:D6jjaiKEiPl4hCDsJ-gvhj-dFrjAGtyAAU8ndoeLINFtWhS1qXtF5w>
-    <xmx:D6jjajkEcN7IqEuarjZEVv_HZJGwiXvA0aVZ_JIpMnaGsGQ0wbVB2A>
-    <xmx:D6jjaiRQn_rQK2n_RWF93XKgmgUVv-aWAKEy7To2YTblCuSLoScfsw>
-    <xmx:D6jjatKK8HidFPtEmbGVv-Smct-Xe9faYbIu2QFDADTF2lFeL8oXzg>
-    <xmx:D6jjaul9FiWxkIW4PfNhUCwx_xV59gDifiIu85Ns0wdwh1rw9FDnmNzj>
-Feedback-ID: if26b431b:Fastmail
+	action=mi-m=1; hc=11;
+	hn=content-transfer-encoding,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:AV4rxfpco+qSFK85A9oCH77Pem/wQRtoDQm9DQrdKu4=:BKTJVIrw7aYN0BJhIPC5Nk7mrjfRqxQDuz4HOI1Xq+w=;
+X-ME-Sender: <xms:zKnjakg9Ge9ATxyxhKM3tbpwo5oeF28xIuv-YgHvJ_Ux6G2_drFvHA>
+    <xme:zKnjajBnwUG_7D07yofLXxsJENZiqZildDinCXIJIlXCFUQjakru2VEAn0fXOq6yZ
+    kj7JxCkT3LELqLcVvm0r3vwoEiy7EIiMrik_QrhEEz-ax4tdlX-tg>
+X-ME-Received: <xmr:zKnjapsFl7bDj25YsYtufcvn86M5TUCJVCc0foMXjmd9IKaBkw0OO9ICa3U>
+X-ME-Proxy-Cause: dmFkZTFkxOhLUuQePbeazO/6SH8gGRhrno3vPGMtvom+VyNjfpBtDck08eZN93aP24nkiT
+    q6oreIc3Gs2zqrJqN1vSu+7RA5tbf2Pa1Pj7QaXR0xgGYK808G4ItVUmzvWIsS0BGMatcM
+    2Lwqyii+Z3g6U+19HjKhUKsaFzCZ72mZR/BLTsScF7fmZYtBnU1HIGTPpHPewob3f5Rvr7
+    BqeT6cK1qFiBlkORD6iC40UH/mfn+ogWqVrQu9GxX2wPA27LyedFHuOWsf13agVENMkuZF
+    0HG+aA1VzNvD1QT+UTBXJBjtwofpbE1XEwOlCuQbPXg6XOMCymYvDGD63HufMxwzfXmPsA
+    zm3Nx1mPBUQQsAqBvAOL7mLutiz6i6Hn5kmcpvgrcXiDSPjyiyTy0HXkeUqSyibPfZlRl5
+    hXocx2yWc4pmhudJiqP9YK/xTZevA/RwyEcHD98ffeUqzNCuI9zqEFbmHaaWju3bzf48tX
+    shrWfvVipzmg2GlIZ6M8AFM1w0UImR0Dn8wtH8mrzLdVryPmuo0HNv6PURUXVtgYdBlKwW
+    TiIlqwSGsEwNUzTl1Rgy3sloIr21nyFjyWYuJxqD53Lp4/oYU5+xZYHY2hS/I9U8CHAF3c
+    sqnfMwk+Gi9Xcs6ejiH+HftdFlyJEjEuMo9iJi2np4HsaPuvOyOzSdDMc+Cw
+X-ME-Proxy: <xmx:zKnjagbuFCpgqVr0AfhUAA-eXt56dChAAT4pD6k_hCcZtqO4lMfGtQ>
+    <xmx:zKnjakU6EUROUXZBqMo_hJHDNrGuUcJh_QpjPCqg42srluAleWWSew>
+    <xmx:zKnjas6446DMtNQAFMXlPg6ezdW354_1nCrWDJj25ZVy_chGEwcD2A>
+    <xmx:zKnjanh2e_ZQNEbCQOj-9XME2CAUK9o_y2wpSplZ9-Xu7sJiTD2Htg>
+    <xmx:zKnjasTMFCffRQPkhQ9m9iGdPw1TIXV_SNYMpVFwfYaSj8xwFjHNdAXI>
+Feedback-ID: id2564aa6:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Oct 2026 16:09:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Husain Sitamuwala via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Husain Sitamuwala <husainsitamuwala21@gmail.com>
-Subject: Re: [PATCH] check-ref-format: use parse-options API
-In-Reply-To: <pull.2470.git.git.1793298807397.gitgitgadget@gmail.com> (Husain
-	Sitamuwala via GitGitGadget's message of "Thu, 29 Oct 2026 18:33:27
-	+0000")
-References: <pull.2470.git.git.1793298807397.gitgitgadget@gmail.com>
-Date: Thu, 29 Oct 2026 13:09:50 -0700
-Message-ID: <xmqqh5i41d69.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 29 Oct 2026 16:17:15 -0400 (EDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,119 +114,70 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 29 Oct 2026 16:17:13 -0400
+Message-Id: <DMHLKVCPT29F.1JXB7BAOXBPYT@fastmail.com>
+Subject: Re: [GSoC PATCH] t5402: use test_path_* helpers instead of test -e
+ and test -f
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+To: "Tilak Kumar" <raaztilak07@gmail.com>, <git@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <20261029200024.32206-1-raaztilak07@gmail.com>
+In-Reply-To: <20261029200024.32206-1-raaztilak07@gmail.com>
 
-"Husain Sitamuwala via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-Didn't I read very recently that somebody else was updating
-check-ref-format?  Perhaps I am hallucinating.
-
-Anyway.
-
->  static const char builtin_check_ref_format_usage[] =
-> -"git check-ref-format [--normalize] [<options>] <refname>\n"
-> -"   or: git check-ref-format --branch <branchname-shorthand>";
-> +	"git check-ref-format [--normalize] [<options>] <refname>\n"
-> +	"   or: git check-ref-format --branch <branchname-shorthand>";
-
-What is this change about?  More importantly, is it sensible to have
-this and ...
-
-> +static const char * const builtin_check_ref_format_usages[] = {
-> +	"git check-ref-format [--normalize] [<options>] <refname>",
-> +	"   or: git check-ref-format --branch <branchname-shorthand>",
-> +	NULL
-> +};
-
-... another variable with very similar and confusing name with very
-similar contents?  How do we plan to pay for the cost maintaining
-them in sync?  Do we even need both of them?
-
-> @@ -58,13 +65,26 @@ int cmd_check_ref_format(int argc,
->  			 const char *prefix,
->  			 struct repository *repo UNUSED)
->  {
-> -	int i;
->  	int normalize = 0;
->  	int flags = 0;
->  	const char *refname;
->  	char *to_free = NULL;
->  	int ret = 1;
->  
-> +	struct option options[] = {
-> +		OPT_BOOL(0, "normalize", &normalize,
-> +			 N_("normalize refname")),
-> +		OPT_BOOL(0, "print", &normalize,
-> +			 N_("print normalized refname")),
-
-As can be seen in the usage string and in the "git blame" output for
-the code before this patch to parse "--print", which points at
-a40e6fb67a (Change check_refname_format() to reject unnormalized
-refnames, 2011-09-15), we still accept "--print" as a deprecated
-synonym but we do not advertise it.  A good candidate for using
-PARSE_OPT_HIDDEN, probably.
-
-> +		OPT_BIT(0, "allow-onelevel", &flags,
-> +			N_("allow one-level refnames"),
-> +			REFNAME_ALLOW_ONELEVEL),
-> +		OPT_BIT(0, "refspec-pattern", &flags,
-> +			N_("allow refspec patterns"),
-> +			REFNAME_REFSPEC_PATTERN),
-> +		OPT_END()
-> +	};
-
-Do we want to barf when the user says
-
-    $ git check-ref-format --no-print --no-normalize --no-refspec-pattern ...
-
-by the way?  With the above, we suddenly start taking these options,
-and I offhand do not know what the ramifications of doing so are.
-
->  	BUG_ON_NON_EMPTY_PREFIX(prefix);
->  
->  	show_usage_if_asked(argc, argv,
-
-The call to show_usage_if_asked() is still here, which means
-
-    $ git check-ref-format -h
-
-is intercepted by this call and the control will never come back.
-
-We will never reach parse_options() call below, so you lose 80% of
-the value of using parse-options API, which is that you get the list
-of options and its descriptions for free (well not free, you
-carefully prepared them in the option[] array above, and they are
-wasted).
-
-> @@ -73,22 +93,13 @@ int cmd_check_ref_format(int argc,
->  	if (argc == 3 && !strcmp(argv[1], "--branch"))
->  		return check_ref_format_branch(argv[2]);
->  
-> -	for (i = 1; i < argc && argv[i][0] == '-'; i++) {
-> -		if (!strcmp(argv[i], "--normalize") || !strcmp(argv[i], "--print"))
-> -			normalize = 1;
-> -		else if (!strcmp(argv[i], "--allow-onelevel"))
-> -			flags |= REFNAME_ALLOW_ONELEVEL;
-> -		else if (!strcmp(argv[i], "--no-allow-onelevel"))
-> -			flags &= ~REFNAME_ALLOW_ONELEVEL;
-> -		else if (!strcmp(argv[i], "--refspec-pattern"))
-> -			flags |= REFNAME_REFSPEC_PATTERN;
-> -		else
-> -			usage(builtin_check_ref_format_usage);
-> -	}
-> -	if (! (i == argc - 1))
-> +	argc = parse_options(argc, argv, prefix, options,
-> +			     builtin_check_ref_format_usages, 0);
-> +
-> +	if (argc != 1)
->  		usage(builtin_check_ref_format_usage);
->  
-> -	refname = argv[i];
-> +	refname = argv[0];
->  	if (normalize)
->  		refname = to_free = collapse_slashes(refname);
->  	if (check_refname_format(refname, flags))
+On Thu Oct 29, 2026 at 4:00 PM EDT, Tilak Kumar wrote:
+> Use test_path_exists and test_path_is_missing instead of "test -e"
+> and "! test -f" in the post-merge hook tests, so that a failure
+> reports which path was unexpectedly missing or present instead of
+> failing silently.
 >
-> base-commit: 37b3475fb530c14109211faca33716a173db61ed
+> Signed-off-by: Tilak Kumar <raaztilak07@gmail.com>
+> ---
+>  t/t5402-post-merge-hook.sh | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/t5402-post-merge-hook.sh b/t/t5402-post-merge-hook.sh
+> index c77aa56421..1e222ac28f 100755
+> --- a/t/t5402-post-merge-hook.sh
+> +++ b/t/t5402-post-merge-hook.sh
+> @@ -37,12 +37,12 @@ test_expect_success 'setup clone hooks' '
+> =20
+>  test_expect_success 'post-merge does not run for up-to-date ' '
+>  	GIT_DIR=3Dclone1/.git git merge $commit0 &&
+> -	! test -f clone1/.git/post-merge.args
+> +	test_path_is_missing clone1/.git/post-merge.args
+>  '
+> =20
+>  test_expect_success 'post-merge runs as expected ' '
+>  	GIT_DIR=3Dclone1/.git git merge $commit1 &&
+> -	test -e clone1/.git/post-merge.args
+> +	test_path_exists clone1/.git/post-merge.args
+>  '
+> =20
+>  test_expect_success 'post-merge from normal merge receives the right arg=
+ument ' '
+> @@ -51,7 +51,7 @@ test_expect_success 'post-merge from normal merge recei=
+ves the right argument '
+> =20
+>  test_expect_success 'post-merge from squash merge runs as expected ' '
+>  	GIT_DIR=3Dclone2/.git git merge --squash $commit1 &&
+> -	test -e clone2/.git/post-merge.args
+> +	test_path_exists clone2/.git/post-merge.args
+>  '
+> =20
+>  test_expect_success 'post-merge from squash merge receives the right arg=
+ument ' '
+
+looks correct to me.
+
+
+
+--=20
+Mark Craig Chu-Carroll (@MarkChuCarroll at gitlab)
+*** Software Tools/Math Geek - Software Engineer at Gitlab
+*** Work Email: mcarroll@gitlab.com / markchucarroll@fastmail.com
+*** Personal Blog: http://goodmath.org/blog / Personal email: markcc@gmail.=
+com
+
