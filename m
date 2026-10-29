@@ -1,58 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.5
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793283372;
-	b=NbGptNRMOU9uO3AA6xSqTvcSk247acgmWb5yOLXN0wv9Fj1VMtH8pdD1SCtcoAgY1N+V
-	 VWf7iUn4qtZdp8RuT4iaDpbIsCpP1Hy2YObTls7NYzwnOb8IcWiMgr0/3cs7Rwp8Q4a0x
-	 +kGZfwINrRT/40hMEIyYC4KkYpn1Q4HiPFgoxIXQqTC213E8OCjgHWRvt5V2CWZNjDK18
-	 jX8GgGgNk58mHepNZTXyl9gYeuk1gt+kOL/tgnJdZBTrglYE6/Ee3uSb/HKLUxzhdjYxG
-	 fQqXSIrKHzGVDq6gfTJ3asHJieD04Wyimzazre/59OYtC72lE+YBsgiLAB/J8RtF0Fw==
+	t=1793283458;
+	b=chTdIcvdYy+Wr9nVZZmZrXn0sACyMsvKeBt72SBJkoQhSvbniY0R1A1H2m+bUPNnGLVd
+	 u+8HLf8IzZTNkN87Mc22t8xCvbGf/lwhlLhCVNozgTIIFompz8IB+YbDx/XRDe1Bk/nyO
+	 njQ90GsQEDcedJgNsc9EdeHwzkdOZpRLjPAqv1pQ7XjXg2eAyPxeku/qNsCyimQD3Nu6t
+	 FHFlS2NzM0iHCTxg0UV3YG42mvgzOk4Tcs98D6RuJCVMR9Wo/l7BgBaw7GuNTx30znQkC
+	 btTYaMwuW9JOTwFJttTb4Rc6upCqB5npPWqi9C6p/h/dOKVPsfcBelBHS/TgEex26yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793283372;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
-	 X-CM-TRANSID:X-Coremail-Antispam:X-Originating-IP:X-CM-SenderInfo;
-	bh=rI9Nl1ZRlvvzhtH0grSrahQNCseoQcwaGaA4H0SzSag=;
-	b=hKmYrwXZwuPZPSLmj5EVcKjSkT++5vypYamjr/3V1Qg5KkiJnbZj3506ealUwMuTFIgC
-	 ywHfPLov6vzGUWAef8thBowxDtm2JnDB9heRVnLkyAaTHJsLL9rWwvDKYmaJH85P5BYs8
-	 GrhuSQDh7KqspNd3pPtY6pdXGayTeY3lCc8WBvC0j+RuHtyq+Z9QRipHNabufLxAA5vcc
-	 uMejPtaLq13C2OtZP0BqkkNCmcxfcjIi2IJ+KSSY/oCy015GYsyPvmwGEpa9UeSx5qpNN
-	 Xru+nwnBbhS38U9on9S3NgjWaoiCTkMsjywZuSqp982i7U1kT5qV8cioEkEXKVMnzXQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793283458;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
+	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
+	bh=gL1cAGYkT4bPsuaW51pJmX7q92UP8CFE7nLAK9H4h2Q=;
+	b=iUAphbxtTsHOTwkP3Zt3nOzfUdt8hj3uUrKOHwoXMH+Ma90t085xrbPpRT6tG9aW9kLu
+	 FJf572l9T7PBfFHWxZGBmUI9eZ4oPch3i28/554pRGJA7+SFmXU90q0zl9//ty7nQMIc/
+	 POMfJMh9XShpPzqss9qkxWt3SktPfki3FUyEFGddJsAyfqiKDZNMJawYvKYC5cKTZGQkP
+	 FeqA8RICXaxvmOGAShpRVZQZPi2y8PTsRFnr+jdZppgSq7aa5kOT3DPvuMZ00rjsMGpti
+	 HA32Ahs3kY2kfvdpV0C4ejU+lv1qNAcxl0H1HpR1mspRs7DPjlJySHaad0pLgt5q4pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=163.com;
-	spf=pass smtp.mailfrom=163.com;
-	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b="J/t3i8h/";
-	arc=none smtp.remote-ip=117.135.210.5
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y9RAjKBU;
+	arc=none smtp.remote-ip=209.85.219.54
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEC4606A31A
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 14:16:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9CEC4606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47658606A31A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 14:17:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 47658606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=J/t3i8h/
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=rI
-	9Nl1ZRlvvzhtH0grSrahQNCseoQcwaGaA4H0SzSag=; b=J/t3i8h/3Hx/YcDvil
-	7UG+SzmBqPTVjoDmVUZT8Y4vmvYR/qwoJ4Or3VHmnFswhNHlamojK0YXDQdDv/H+
-	1s+NxMyBx/jAZH2l9WqdgV57QUJUW5jmzNQgyKo2PUKYJzzbBez0Twxd44uQpN4a
-	untjJRHhebkAQcIbr/NyhqRgk=
-Received: from mbp-home.softshell-mine.ts.net (unknown [])
-	by gzsmtp5 (Coremail) with SMTP id QCgvCgCHgJH5VONqe_ApCw--.34741S2;
-	Thu, 29 Oct 2026 22:15:21 +0800 (CST)
-From: ian4hu <hu2008yinxiang@163.com>
-To: phillip.wood123@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	hu2008yinxiang@163.com,
-	peff@peff.net,
-	phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sigchain: recover from concurrent double-pops of the same signal
-Date: Thu, 29 Oct 2026 22:15:21 +0800
-Message-ID: <20261029141521.164544-1-hu2008yinxiang@163.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y9RAjKBU
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-91b55859245so28913466d6.0
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 07:17:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793283457; x=1793888257; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=gL1cAGYkT4bPsuaW51pJmX7q92UP8CFE7nLAK9H4h2Q=;
+        b=Y9RAjKBUEPWtZ9aN9H1SBKw9Ui0Lv+oNrhsU5HOuIMsnai1lM03sxkrHbslfwa3BTz
+         RaHY9s6jClxwz4FYEBXcOeyKaXxGc1jS699JkfqKJVlcDfk+FGWOHO1FsGskcezXa7wR
+         jeHnLuc8+85Jr7PopnwH3/496fQrYscDMGypiW6nHDGPGtoQyGBPCwc4/dz3+iKhT0y3
+         lK3GYFiTg0yom/7PKbD8Tv7IHpA4MUihxNM2PAtu2tyz+Oz+RKG8ETLVLfdBxY3cYt60
+         BhlhOUTS5Ak5y8AxK7ghIrnumIOS4VD7gjQ1YZpug+f78VXnk2DNzJg0zGP+u6vzpIkr
+         1Z2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793283457; x=1793888257;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gL1cAGYkT4bPsuaW51pJmX7q92UP8CFE7nLAK9H4h2Q=;
+        b=u+gQqg9yxHQQe3xO4G0TYWSNSNjkSlnimuZ6TdQGM73vGUuujhaz3FoDMEx75kTE+p
+         jvYesWjz2e6l7ZTnFtb8CKndr9LWX2zAd3mgDxITh1+KGGGlQWBHFzW5yBnFg240psP+
+         In6k811JawK8vP8guDQPWOmqALs3TIQJGfsk5qkJQiuj5qiEXAxgY7iMy4Dutbq6VZHQ
+         1JQ1yhN4TsmQ92QIEG39vt4lT5g3x3X69GBARChIL/GsDEjp0DDNGxK3SSxqApoqiKUB
+         Pev2hf/qGOUCffMr9mfbefgrJSt/XGvql2q6fWFtghdhXCuyM19zvgtm871jRrG9nJSs
+         rIOw==
+X-Forwarded-Encrypted: i=1; AKwUvBw2LM0edViKm61s9WuHbsO/1EaqqFC3NrNJmonBRS0n1IdPbAh1uj6wUSKyhjc7AOP+bjE=@vger.kernel.org
+X-Gm-Message-State: AFq9FYL0RFodvtKkjcKUPkTzFxmd4j5WOEEogUlZ2Oy0Ha2x3p3oInI6
+	An6+LU31N9Fl3bZydpuu4VkUE2Nt/dRTBWlwXx/MCsy4Ll3lgbtZ9IcsnkhR/g==
+X-Gm-Gg: AYBFou2wjFgvdS9iLfMsBTaGs+clxPzrOJ482+xxfvTjlCyAhuc+mfoVLGXUUlb/RVP
+	I4FuWbo/VsRI8YIAY+SdF4bPAHaTgBmkkH3EK7LLb3P9wJjimiZDqIN/qSFD//mPSX3NYzy9ov+
+	gsGO4MwW65LYOmi9X3PqfCDhUrqQP+5U7GcEG/bsEawcsw0ZqJGeXgJvv8WW0ZGE4w+5xrsp0LQ
+	EKnXz2/2Zd+KV0MidBKbWJIyIfdxesIPRonI2qIvattVRAAOo5e5aGC7g1Fm/St88uGgB13YRz6
+	kAguYqZeT6VHfbs0FYtCDDKD2ghDADDUYy+1/C6aMmZ9X5W0shX0NUmuOuIfSfZ1p3APIpOld0Q
+	WdK8XI4CoXn8+XWpqSSp94/k8m68IYNbzjfTkorPFGzSL44BbR8YoIexvNJ3YK8QJAWG2TZcKww
+	5fK7TmISfouClVSdF+aqDJ93IepT9nF6UaPxatUKt8OZKFDri2jebxwPgv4KdOOoqF7uiw7sJ8W
+	beSEfHR3OQc4i5MnNESKf0/EMHAiyaFM/ldhNSu3nfdwsTEMmlWECIhVV/eWgzk7PJdeUyRDFow
+	xOhEOu0P+DzwG4KCZy2vUKyk3uc1PC8q2If/w9jnmvlVjN/xmnbOSNge5+sKM5tR0wHU97MSmg9
+	eGclEbKp0JexWgyVbYbFxlhPkXmG5IkX/UVZL2cOE2wOuW7D4J9ZD/RCi4MxJEEC77CqKdz8gTo
+	auZZU=
+X-Received: by 2002:a05:620a:4515:b0:93e:6620:bde7 with SMTP id af79cd13be357-94408cf3ed5mr866182885a.20.1793283456927;
+        Thu, 29 Oct 2026 07:17:36 -0700 (PDT)
+Received: from smtpclient.apple ([2600:1004:b03e:6cb9:c1f9:7732:784f:faa9])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-940f067c879sm1541050885a.16.2026.10.29.07.17.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Oct 2026 07:17:36 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -61,68 +92,84 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:QCgvCgCHgJH5VONqe_ApCw--.34741S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Zr47Xr13GFyrJF15tF13urg_yoW8KrWkpF
-	Z0qr1qyrZ7GFyxuFyDZa18GF4fArZ3uFs8Gr98G348A3y5Ww4SkrySya1YvFW5Ars7W3Wj
-	vFsY934DJFWDtaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRGsj8UUUUU=
-X-CM-SenderInfo: dkxsiigy1l05pldqwqqrwthudrp/xtbC7hrmgGrjVPpJmgAA3m
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] bash-completions: add --[no-]graph-indent
+Date: Thu, 29 Oct 2026 10:17:25 -0400
+Message-Id: <E1710743-1244-4959-81AC-DAA4DFE4B702@gmail.com>
+References: <DMHD8RCO7V74.2BK7C9T4HNLHO@gmail.com>
+Cc: Mirko Faina <mroik@delayed.space>, git@vger.kernel.org, toon@iotcl.com
+In-Reply-To: <DMHD8RCO7V74.2BK7C9T4HNLHO@gmail.com>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+X-Mailer: iPhone Mail (23D8133)
 
-Hi Phillip,
 
-Thanks for the follow-up.  All three points make sense; let me
-confirm what I plan to do so we are on the same page.
+> Le 29 oct. 2026 =C3=A0 09:54, Pablo Sabater <pabloosabaterr@gmail.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BF[Cc'd Toon because of the mention]
+>=20
+>> On Tue Oct 13, 2026 at 8:50 PM WEST, Mirko Faina wrote:
+>> Add missing completion for "git log --graph-indent" and "git log
+>> --no-graph-indent".
+>>=20
+>> Signed-off-by: Mirko Faina <mroik@delayed.space>
+>> ---
+>> contrib/completion/git-completion.bash | 1 +
+>> 1 file changed, 1 insertion(+)
+>>=20
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
+git-completion.bash
+>> index c3a49e2e22..2348a3cfb9 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -2298,6 +2298,7 @@ __git_log_common_options=3D"
+>>    --right-only --show-linear-break
+>>    --show-notes-by-default --show-pulls
+>>    --since-as-filter --single-worktree
+>> +    --graph-indent --no-graph-indent
+>=20
+> Thanks for Cc'ing.
+>=20
+> I didn't know about this so I completely forgot to add it, however from
+> what I read, this is the __git_log_common_options and I'm not sure if
+> this is a "common" opt, as I don't even see --graph here.
 
-On SIGPIPE: you are right that my wording was wrong.  Blocking is
-not ignoring, and the write() fails with EPIPE either way.  What
-changes is that the signal is not delivered while it is blocked;
-and since a SIGPIPE raised by a write is thread-directed, it stays
-pending on the writing thread instead of being picked up by the
-main thread.  If that thread never unblocks it, it is never
-delivered, so a worker that blocks SIGPIPE simply stops dying of
-it.  I left SIGPIPE out precisely to keep the "upstream of a pipe
-dies of SIGPIPE" behaviour that common-init.c restores.  The set I
-plan to block is SIGINT, SIGHUP, SIGTERM and SIGQUIT.  If you
-think SIGPIPE belongs in it too, I will add it.
+=46rom memory, I think =C2=AB common =C2=BB means =C2=AB useful for multiple=
 
-On the blocking pattern: agreed.  I will block once around the
-spawn loop and restore before the join loop, rather than around
-each pthread_create(), via a small guard pair
+completions =C2=BB (common to multiple commands), not
+=C2=AB commonly typed =C2=BB?
 
-    struct signal_mask_guard guard;
+> I searched where --graph is, and it's here:
+>=20
+> l 2383-2409 'git-completion.bash'
+>=20
+>    __gitcomp "
+> [more opts]
+>        --graph
+> [more opts]
+>        $merge
+>        $__git_diff_common_options
+>        "
+>    return
+>    ;;
+>=20
+> I think it would fit better here (not sure, I just quickly skimmed the
+> file).
+>=20
+> Also, I missed this for the --graph-lane-limit option so maybe it should
+> be added too?
+>=20
+> My main doubt is, both these options proposed (yours and
+> --graph-lane-limit) are --graph dependent, which means if someone
+> autocompletes them but doesn't use --graph, they will get an error
+> saying that --graph is needed. I'd say we do what other --graph
+> dependent options do, but AFAIK these two are the only ones.
+>=20
+> =46rom Toon's Git Merge talk, more options for --graph option will be
+> developed so we should maybe think about how to do it in a way that
+> doesn't autocomplete if it's going to error? (maybe that does exist,
+> given the multiple options that depend on other options)
 
-    block_sigchain_signals(&guard);
-    for (i = 0; i < nr_threads; i++)
-        pthread_create(&t[i], NULL, fn, &data[i]);
-    restore_sigchain_signals(&guard);
-
-plus a git_pthread_create() wrapper on top for the single-thread
-call sites.  The loops I have in mind are preload_index(),
-index-pack, pack-objects, grep, name-hash and the read-cache entry
-loader; the fsmonitor--daemon and simple-ipc threads I would leave
-alone for now, as they have their own lifecycle and signal
-handling.
-
-On sigaction: agreed as well.  The handled signal is deferred by
-default, so the remaining hole is a handler being interrupted by
-one of the other common signals that share the same handler.  I
-will set sa_mask to sigfillset() and save/restore the whole
-struct sigaction, so pop() does not clobber the caller's
-sa_flags/sa_mask.
-
-The one gap I cannot close is a thread created by library code
-rather than by us.  libcurl's threaded resolver is the case I am
-aware of, depending on how libcurl is built; I do not know of an
-in-tree instance, and I will mention it in the cover letter rather
-than claim it is covered.
-
-So I will drop this patch and build the series along those lines.
-As you suggested, I will wait a few days for Peff and Junio to
-comment before spending much time on it; if nobody objects I will
-send the replacement as v2.
-
-Thanks,
-ian4hu
-
+Sounds reasonable, though I also wonder if these commands=20
+could eventually be taught to give their own completion help
+like all the parseopt users. =20=
