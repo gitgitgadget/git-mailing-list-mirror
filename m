@@ -1,95 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.54
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793303540;
-	b=JyFattLM0KaAX2jDa+5sHjz7p57JhRe7zpYFMOdLpJm6YyKtGZFGDynsoiEJqougU9R/
-	 ZQNSHSZqYwVxCGscXAOAhRreQmeF9SH1aUZl70oJfH2Rmw0xPgs29PmGxjiLQ6MdAe58W
-	 GVlwxr0rrMEZy5CIjQlgvTMR13vvss+K38abaSZvYgqTiCVvx85inYNcFOcrzRwkFhIak
-	 YMrF4I/K3J5b8t7CmfB48CwvzrTZzPkUs8OawWFnYwXVqjIXv+gIcUCeC3y61UJSfvmNb
-	 oagrKo1SbYuJORm1m8s2zk4RlWUSi22LuOTpx7HwSkThcK0V1W6jfJwVSg+3X5tcTrg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793303540;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
-	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
-	bh=w8KRbL/5fDLf5ihJmuixp6rX3EvCCXYdR349ODGPuH8=;
-	b=uZmnUmDnCMsH1RBD8GIWGkD3eZqLbm1Ta3mp1+Z+I6UQ5sTk++8sn6I/j8egWwzqoAgD
-	 M8tLCQtXeC0hZ6RMAyROONNPM6ERuD0zu8qcEUIiyjukjr7gK1TFoMgOvKg5Rx5jWKzte
-	 C3q5Tolx1DWC+uzC5pF+ImYBca1REcDNRPAG5IrQ7LSQh8H/SIvuOY+xRzHDTEYMtOKFI
-	 OjXAfKU+BxygdDYeGD22FyGGbfLh0QI38gr+M1nv6ZMeR6MV6zN+2uz8KMDKmgiYh0apr
-	 yfrW5rmP3Rze0NBaamykw5BAZHNXIsdYbv8kXaPBrXX355aSFQlL5P8GRbB89dF6TNQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="w67Z/YZY";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.54
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.150
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793303591;
+	b=TxGDOk67Nzh5Ro6Kw3Q2em4WFm616+PAjdg9+j1oOP4mmmj+ErnMmNfU+k4IXNV+WdKq
+	 wVTQS84mvrPpUwowEWqWuIIO1KZsIyaI++WI3sKtOXfOoK6K0/0iTnKhlpZAsQZ7xlN0O
+	 /O4/HO5lr12honRxin/BisVJ0dbpiVjFPlbLGbO7ipxc2vPLjVyDEydNoQ6VI6UcnCUeJ
+	 dajBPfRw/ojcA7PBiQ7GdMQQzyHR6IWpH4yPSopWKWTKSvo6meffeV8RgSwe2GJeSnYyC
+	 xgj57rRRQw/mnIT/8w+lZIpwPdIt3CplAa0jEkHhsCKZ4WwyYy4+oBCZwvGD6GethkQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793303591;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=ZbYu/8zZlV5dFbyRpu9UkYC/ndXyNUaDQBHOjQQzoqQ=;
+	b=vbL2ekZQfntcvJZZOjWkuTzEJCyc/IVHDmrSdFoHIG1ojMgeHQrL2KJr4h4Kz67E/Ah2
+	 uXwkWLNG3i7NrKwpVmyomrRjO1wV1BAyMi0Cbt7tv3U8gpKpxmYSPCa3tcHPoeVl4uLcb
+	 R+9m0NSY7j2Uj84IvGkobj0o9j6IcU246zY+qPOWnX6JJN6+C8Sy4j+A2/UcpdqP7hhSP
+	 Bd5v3hwPTTcovSXZrFyb5DXLYzcsDqZCxpPxuiaHZL4BrzE3wNFaMPv+zUT4WnuEn5XHh
+	 +whS28B+paBw2bqxTGof2v2NK9eL+wHn9Ug2iziojrTxW+SGRWcJI0leOSBTJeAiocA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Hh8UsSzu;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZfH2l22y;
+	arc=none smtp.remote-ip=202.12.124.150
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DCC606A321
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 19:52:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7DCC606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E6B606A31A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 19:53:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7E6B606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=w67Z/YZY
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3ad787b79ffso1641055a91.1
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 12:52:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793303539; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ftcxqAGKYadG2TA8wnA2/7jH0h4iGR/jMmQ74rLST6nVrfXg5Wfj0Hk9BbTctiKVYp
-         5SPJBwTWe7nv4+K286Em7i8YaBu+g6QlGGA/l1e2f6QRWKN6pO6O48TMojqA4mIJTdUO
-         XqaqKaht6fsJnj+UVv70lDMJ7mZnZenp8VCJMK5wUqCipUgaxGjeaKCNbxN1wWMyy6Ka
-         S04q9ZcGE7yRQGmcHmVmjzqifKnSNEPCJZjyhvZ/WhwkuEUCj0dY56UDeqp9Vc0JKRGt
-         ufA2vTv1wD1KToY/2PzU9QLE9X9/fnbdGqgWvONBhFRC/F8T84wDL4/Tz/4PPo6LZ4RU
-         udFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=w8KRbL/5fDLf5ihJmuixp6rX3EvCCXYdR349ODGPuH8=;
-        fh=hANhMzA4CSwTO8G+BmCYAcha4kczQCsL0YABiQGUDu0=;
-        b=mWNtXmjmVFsut01GdIw9fle2SzHl1hzSUKfaeFCCrRqwu0uOTV6RGvbcXBn78bymxS
-         W3eoLiU/AwVyLVPa31PW+Ndd6rYOMIbBDaZZwKkq+rSLi4aObkJMgi3/dt+hDf4a4qCw
-         23L48s0rPXKVqJqU4ct/KIIMwYcRI6gebkQQLDruSk0Yi1uzVDM/nBU+pza2N5XBtHSA
-         GrOs2bV77uLIpCryI156dAfO9xgS4BPCo8lnDL/JGcCy3JgKsQ+G3BEdusm2wNcG4TF5
-         FQWlPGLIPJ5ptEpQ2jvvWW/StGLJVFj8GHueXefNhBWamyLqZDXlrWsZJIWxpshGwbrK
-         YT4Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793303539; x=1793908339; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=w8KRbL/5fDLf5ihJmuixp6rX3EvCCXYdR349ODGPuH8=;
-        b=w67Z/YZYV0hW81C0vz4Ixy8kLHxUIcPowf1Xwo88S1LQISlZRmdnMvzrWt74j6OhJD
-         OUJZtpBw9vCTK9wRCYbuonzAlz4u25Td3asJNmqckxWnIYnmU86O8OSujx0FEibyVQ84
-         jM/hrgaTmDkcfTkc/WAOj6q61tA+ovvNtvxn9AmxF4vu4+ZAcNl0/w6GMtwYOf77GxMx
-         gGiNr6oNit45rLeiKFxWS3GPU7rpMmeCm16o5WQcCpsIFThy4L9TqPgkWV81DyvkXDOJ
-         bdx5/7D0K6waMfjxecpXuUG3v7W67XlbTZiiw6JSvVIwKymn0y6YYi6N2Go9F4AlMFo8
-         n5FQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793303539; x=1793908339;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=w8KRbL/5fDLf5ihJmuixp6rX3EvCCXYdR349ODGPuH8=;
-        b=XkgCzV+udqMQ2oc23907CoZ+U2yZraFz44fjk8T4+elg1GWozoW3Qm3DNu/OQkuRIS
-         MPl5zAGTGxiQj98sRWyWVxQlhRTk3sxSDnrQDnJGKBMLWOSrNUDYZaCkEqAmD9qCmApo
-         HYc0REauOnPhX2WSCtAjILngaysj6TtKyLy84hAP2jBsl04Vg3Ts4O2IB/VK0tjViC/Y
-         6X80BZLxcJ1VVZCyi1sNnlyFo2Pr4GvGunGlG9McpFcR8U/YhIHkyGhuaNz/yrYzVDR4
-         PBEhUW1x5nXT1VL8KAwmXi3xsV9lpJAcXPHv2Fx1Qcm48LzPr8wO4XWSOPjlmpod1JWi
-         GxhQ==
-X-Gm-Message-State: AFq9FYKU7tfS8sDZH4DzE4FWaNjPbPSokpzAS1oikcoFc/Rm7GgqBenZ
-	ERmaS5VdYCkDVUS04UcrufSykwccVqpcuKcoYD1bSpVBjhYtXRn/ZjlbqI5jmD47oQiqbSU5pAR
-	knttfoHFfrzsx0SrLgKSvWouMG4A+hIWPgCJo
-X-Gm-Gg: AYBFou0EKmOT+rZwA5+rPoEK+0b5zqozqe08mLtIKWLUl4c7vItSQxHUdgEd/NcfsEq
-	JmP/4wDae0XEDe2oO2yV4Z2Vug/jcPXPB09cYT/YikvlmnTqFyqVdhP0Ecr5JsGBvAeRekph7kz
-	RCjLI0jXZPz9Y8UT0Wjz6RSrOWwk34rtmeRVZIQSitcw82CC61WA6W6PQZMiMLuuA1TqTwMILck
-	We6AD9V+oEVE7MtaTZy7YAfAJ+sHfwZA/XE3Z1YOO0w4sxFaxhdXIQEZtUt3fRMaZotKrP6GeC3
-	hkVsurz7vqTp5SgHuw7uKDwa0SU0VvPaPcd0Q2IEd6w1UoSsFmDuY7x5aGePwh2ts+Wr1Lf8GQP
-	NdDWvn+FIGx5pe2xf1NjCuAdWc3yVWQBGMg==
-X-Received: by 2002:a17:90b:33c2:b0:3a7:a6bc:9d58 with SMTP id
- 98e67ed59e1d1-3ae897e076cmr7826a91.54.1793303538978; Thu, 29 Oct 2026
- 12:52:18 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Hh8UsSzu;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZfH2l22y
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 292831D000C6
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 15:53:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 29 Oct 2026 15:53:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793303589; x=1793389989; bh=ZbYu/8zZlV
+	5dFbyRpu9UkYC/ndXyNUaDQBHOjQQzoqQ=; b=Hh8UsSzuXY5nTO30aiJm5yKW8d
+	bXSPzGIE4FGEmg9yyUnpwxaFFRDe7cuuAv7BNV8kzhUtKs1B1RHAcILm98QyszfT
+	6lfieBx5Xe8rAstfXKAyiBNd8VlHHKEnpovCUA3rIITJvDVS0GNFnWXDVG3E4/Zs
+	VSTq4RyRF5zzaRCKmAh6+z0XWc16PFb3Abc8Tdorytb8axac8JL213B9GMHnn5Kg
+	1GfjChkq9reIqICpIe2LQsDaX3SrUxs0EX5StMOHVy6ORyVU3qAHtsWzgguHrBAF
+	AIk4T7dgrt9ZcRe2DzD1GOgSgXcMYx2LC4K+UuhSvgzEES63O7iUizKR35hA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793303589; x=1793389989; bh=ZbYu/8zZlV5dFbyRpu9UkYC/ndXyNUaDQBH
+	OjQQzoqQ=; b=ZfH2l22y2UJva3YXxb3Fd1OhdNsPSHoAmiE0ETx2xIdHO2DGZSa
+	EjTR2ADeAZPhYObFN0z8vpmySQg5/H5MWqwdut6eCb48WKudiCiEFCBvile62Cvf
+	FuG0E0h6T2+kA2xcOfOMN5famUMCqBDlFpw1/jJu3egweGJmsrVI/yKIIjogsEjm
+	ni+DQecXA1SzyfSU3ga/2u+WC3EuGqtXIfHJXxb5fWvn7yborcz8/fEOCPtn78YW
+	CzYx0+0fZNNGHbQkqjqF8yOZJCENjBFquFvbNFWV/dt0IfOWeho1+DNBS1HTmIzx
+	CG6bOsApOiq4UApqZAMN5Xv4tuWlxGma9Zw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793303589; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:O5xLDpjrPTfQzfaUUuw/gWArWkMBQvJ1QMwnPqVYQFjWbJz
+	jbdpoNHaxxxB+yyk7C+iZBy1Lw75UoJDI9CAn9/Ss/kLUrErlx2dBJ5hmI9BsgGA
+	B2Cy1I9GeRBdneijmFlrgOJCoFx8tnguUEjQUYtyYPcJB0T5hf0x/0nNJy5sAbku
+	nHKUpbjtC+Jcf+Focs8OKIkjNUosjl16nUsw70vcXdPGHRivs6LrnjFhTk8OGJ4N
+	E3Gp3ckvf/lyfxO4IoJhHUDMGxeE/y//LKBXWa6On1rpiEmiOH13p3GxCLpokOf6
+	WvAAHxVmLuCV95smI4EPmPdO59oigQYo2c67RNQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:AgsseJFRhEEwCBowurY6W2HQpGS6kpeoCMUO/9LB2S4=:tBenGnX1m5IHUN2Xng1IyhX7BmJL1otMkCIQImFmGmE=;
+X-ME-Sender: <xms:JaTjagJ_gcmu4WE8mVShWB8cr1efKkHC5dpkvCvD3unc5sxhe7lTlw>
+    <xme:JaTjannX6Kdv3ak7hlRy8S_zyarrNIIjd_VUlqXinXxgydJEfUldEDWEblTkxbd1G
+    z0r2Pv9sR-3sm-vUlUJuE2TTOnzwCs1mfQDzf5L9TL4bM_ggIO0KAcD>
+X-ME-Received: <xmr:JaTjauF8xHX7I5opqeFVyelksOw2TpbFAj7vWyOv4TxkQloSoon4ZmbtdeSjhns9na2mg5kUkgKmEuOJdDJnsx8DS36s0_Aw3ISc>
+X-ME-Proxy-Cause: dmFkZTEgbPj9CqGeyWbLe2FYIaUEU5/mV3fZSEBxtuZXYxyXeQ6PHDjmeKAzc7rqe8ZIqs
+    kicDUnpRVlw3XZlRLnIEKDLpIUcTsmlIRhBJUHzZm5Td5K6YBJezu5NClSjQ4SSl/8yQAo
+    K8nV6dLU+Pc5ly7zCajXkFl1d60gcLqYgwj7+WGvts8T54y0izG5pN1120ituzOpyvAubE
+    Ol4ICN2uN0l/fqcPzIQ9lzm2thktTfJ3KVASHySUffCLpHUhUPUnkqaP6rUD8Oa30gzXMf
+    ZYc7H5oRgpxNW4tIOtWkCb87B1NLK2qgbn93gwc4noc+Hqk61jBYMv7nUcN5Cf3V2fm4t0
+    XA7nWTVOC02PluHgVXM9OIUvKs9QEW1zhB90eU3LhCwnyhDBP3+vsmuhH7Eu/rIUiA8o72
+    A/r2Jp8MP7n4xvYcV7I4ST2c0pLnHLkbhRzx/HaMY/QDkN6qewE6GNUwDSMfKwV9JxqwrN
+    zN+doWTwjUtKsakwERwBNPrRaYMze0OMH/lDN0SrK+qWLB53uuU7+QLICEwRk6dd2FrmCC
+    /jQ6qDPARb5iO2qZwbGGYtkz0pqF8z8PDzPnvNNA/GAE5coKTwUbGw3PRraVYz2inGc8zo
+    7kMnW/02vjwrHCjrYCwX9JzfyyzqfWQX9Z6W/7y9UEq6CH/IBXAQ4+8X2SjQ
+X-ME-Proxy: <xmx:JaTjanHVEdOy23xNaar8mae2LjqZ7UP6DQjXdtahaX5xPq6dFdWl7A>
+    <xmx:JaTjarPi6BCLqITn8QxVf3IDeBYC0bESo5Dfp7fsFykfYiAhGFxW7Q>
+    <xmx:JaTjamHZarCX2QRtfPWIWf2D331qd4FkuHcK-LeODL5t2W33yXYl9g>
+    <xmx:JaTjaiO-Cg635wYDGYJtkwncv-XWaVX6fYwVlCXsxoDq2_l0cJlGDw>
+    <xmx:JaTjavt1amaDetrI-s5-XAW8XuLrX5ehWuDkqoUKwTPCZJECHBFdl-gQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 29 Oct 2026 15:53:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] repo: add level of concern reporting
+In-Reply-To: <20261029-b4-repo-structure-concern-v4-1-d813537ec617@fastmail.com>
+	(Mark C. Chu-Carroll's message of "Thu, 29 Oct 2026 13:52:22 -0400")
+References: <20261029-b4-repo-structure-concern-v4-0-d813537ec617@fastmail.com>
+	<20261029-b4-repo-structure-concern-v4-1-d813537ec617@fastmail.com>
+Date: Thu, 29 Oct 2026 12:53:07 -0700
+Message-ID: <xmqqld7g1dy4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,126 +124,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-From: Root <rootminus0x1@gmail.com>
-Date: Thu, 29 Oct 2026 19:52:07 +0000
-X-Gm-Features: AclHuK_Ok2A--fr5BSZCXgSkc6np6RzT7bVg9HLfxEgHfK0OeOQAKZlMMI0VEn4
-Message-ID: <CAMtVYEjWd2XwJpXdk3PV2jbNdoOaqS3x+08EMu5byy55RxfRmA@mail.gmail.com>
-Subject: [BUG] grep --recurse-submodules <tree> dies on a directory inside a submodule
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi,
+"Mark C. Chu-Carroll" <markchucarroll@fastmail.com> writes:
 
-Since Git 2.56.0, "git grep --recurse-submodules <pattern> <tree>"
-dies when it reaches a directory inside a submodule:
-    fatal: unable to read tree (<id of that directory's tree>)
+> @@ -550,51 +700,76 @@ static void stats_table_setup_structure(struct stats_table *table,
+>  	stats_table_object_size_addf(table,
+>  				     &objects->largest.commit_size.oid,
+>  				     objects->largest.commit_size.value,
+> +				     repo_structure_concern_level(
+> +					     CONCERN_STAT_COMMIT_LARGEST,
+> +					     objects->largest.commit_size.value,
+> +					     repo_structure_concern_thresholds),
+>  				     "    * %s", _("Maximum size"));
 
-The working-tree form ("git grep --recurse-submodules <pattern>") is
-not affected, and neither is a submodule with no directories. Our CI
-passed the same case on 2.55.0.
+So, objects->largest.commit_size is computed using the value in
+objects->largest.commit_size.value field.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+>  	stats_table_object_size_addf(table,
+>  				     &objects->largest.tree_size.oid,
+>  				     objects->largest.tree_size.value,
+> +				     repo_structure_concern_level(
+> +					     CONCERN_STAT_TREE_LARGEST,
+> +					     objects->largest.commit_size.value,
+> +					     repo_structure_concern_thresholds),
+>  				     "    * %s", _("Maximum size"));
 
-    #!/bin/sh
-    set -e
-    work=$(mktemp -d)
-    cd "$work"
+And the same objects->largest.commit_size.value is also used to
+compute objects->largest.tree_size here.
 
-    git init -q sub
-    mkdir sub/dir
-    echo hello >sub/top
-    echo hello >sub/dir/nested
-    git -C sub add top dir/nested
-    git -C sub -c user.name=t -c user.email=t@t commit -qm sub
+Copy and paste mistake, perhaps?
 
-    git init -q super
-    git -C super -c protocol.file.allow=always \
-        submodule --quiet add "$work/sub" sub
-    git -C super -c user.name=t -c user.email=t@t commit -qm super
+Please do not take this "review" to mean that this is the only
+glitch I spotted, or that I will advocate for its inclusion in
+'next' once it is fixed.  I am merely pointing out what I happened
+to notice while driving by.
 
-    git -C super grep --recurse-submodules -e hello HEAD
+I do not have a strong opinion for or against the feature itself,
+nor have I read the entire patch carefully.
 
-What did you expect to happen? (Expected behavior)
-
-    HEAD:sub/dir/nested:hello
-    HEAD:sub/top:hello
-
-What happened instead? (Actual behavior)
-
-    fatal: unable to read tree (935cff11a11f8734cf4e0d40955d1e0e5c12038e)
-
-with exit status 128. The id is that of the tree of sub/dir.
-
-What's different between what you expected and what actually happened?
-
-The search dies instead of listing the matches. It dies at the first
-directory inside the submodule, so nothing in that submodule is
-searched from there on.
-
-Anything else you want to add:
-
-It starts with 93cd344e34 (builtin/grep: stop registering submodule
-ODB as source, 2026-09-11). Built from source (with NO_RUST=1), its
-parent a532feba89 prints the expected output above, and 93cd344e34
-dies with the same message and the same tree id.
-
-In grep_tree(), each subdirectory is read from the superproject's
-object database (builtin/grep.c line 656 in v2.56.0):
-    data = odb_read_object(the_repository->objects,
-                           &entry.oid, &type, &size);
-
-The function's repository is opt->repo, and grep_submodule() sets that
-to the submodule. grep_submodule() reads the submodule's root tree
-from subrepo->objects, which is why a submodule with no directories is
-searched correctly. Before 93cd344e34 the submodule's object database
-was registered as a source of the main one, so the lookup above found
-the tree there.
-
-On v2.56.0, reading from repo->objects on that line instead makes the
-reproduction print the expected output. I have not run the test suite
-with that change.
-
-grep_cache() reads sparse-directory index entries the same way, on
-line 563:
-    data = odb_read_object(the_repository->objects, &ce->oid, &type, &size);
-I have not checked whether a submodule with a sparse index fails.
-
-Both lines are unchanged on master, next and seen as of 2026-10-29.
-
-We met this in CI: GitHub's ubuntu-22.04 runner image moved from git
-2.55.0 to 2.56.0 between its 2026-10-12 and 2026-10-25 releases.
-
-[System Info]
-git version: git version 2.56.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: enabled
-feature: fsmonitor--daemon
-gettext: enabled
-libcurl: 7.81.0
-zlib: 1.2.11
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Linux 7.0.0-38-generic #38~24.04.4-Ubuntu SMP PREEMPT_DYNAMIC
-Mon Sep 14 16:37:11 UTC 2 x86_64
-compiler info: gnuc: 11.4
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): <unset>
-
-(Ubuntu 22.04 in a container, git 2.56.0 from the git-core PPA; the
-kernel line is the host's.)
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
-
-I hope this helps fix the bug (if it is indeed a bug). Let me know if
-you need any more
-
-Regards
+Thanks.
