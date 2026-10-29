@@ -1,87 +1,107 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793277958;
-	b=PjlI1uDNY0ZOnE1EOsK8a83SEX/rXFegI4tLQXIr1/vrIgfqTnn0FigkKvJiS/Fp4Q7+
-	 gJbeKoYJkDP1qlTVlUn6o4PSCCf+R9ViHBKBnOvfGXItIupTGs81lTO/6ojpKGFnQgXzK
-	 C+fPAO1KTkd19x/pDyRhKVyTd0FQ0+ZDwgnQrehetFdLLpxSmrdv6YbgclZyfF+HyuMac
-	 l9wZgjR5OA8RrJeqP3SYpRz9QDpKKkiMgkoE+CKpNqHYDAP6T3Mri0tveRHlxPFiJGzSV
-	 LYe/QmJyfpwP+hL4OjhpCDv7JE3ulmO5Owtmi7lJJurJaiy/3XEdBMsY/vYUWBTepPQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793277958;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793278009;
+	b=0PTszsQcPIIKsTkd8DLdXB6vp98C38UZ9uhbXnBKLk/Cqtrc69KIVdMv/QY7symyg5D+
+	 brUCii1MrHWJnYPk4pfmOqVbuXpqZSVDB8ULCqRjBSlBH1lwbVnKI96tshYX2HuuTqVmO
+	 xrxuSrToo8NLjVVCHoNE/puTppBdPWNFhj+ewPSM2k7FxagaZfyUZk77Q+tThHgEBPnzl
+	 PAT+06Po0CES7rsZ9eYC8EUYuN5XRS6f1xxVVpqeZztnn5SN8A1+Zvk2T3JO/WDFnDj5S
+	 O/V9Al+zUoifbFI5ihJxEbaRtAdI9tHaCWYii4qsAxo2yjTh9ydF4lhyRk6FfNjJNAQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793278009;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
-	 X-Developer-Key;
-	bh=xBVcwLo9Kiea6Wzx1N+t48QCnHPSNAPw007VnlqmoAI=;
-	b=YT18tfCycysmY2ayBu+BpzMaA03v7JvkNtPvGiH229B8jYh/7mng/X1K4mv379nLh3VL
-	 CfJsyVgv2du4b2c9HrEUbcX0bV8JM3WbChoh4i5eBQnE/nNmLTHQjJKZhBdgvsYH+D5Ig
-	 qtGG43rjwYR38f3CGH19YbCgW2yryPf4rxCi4FMJhSV+dDbN9rY9eHwcGBTbSCyNBweiR
-	 iY6GyjHc7Fn4+NFNKLvb0w5dSWX7PpFYAcb7Mrkfrlt99PZL9nIHjm5g8g556OZbkmurv
-	 Sv+fOdSQ5HyJLsT7HFe2C/FcojdHi8zru3YDvNvpRhhSDZepQfbAsu81L5MkPmxC2Wg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Received:From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Content-Type;
+	bh=TewcAqaMjz1SdNVvgURSQ3e7oimLZulGAvliEbwRKlY=;
+	b=YTSSB+kdQoWeZYN+vB5JYAmSrTFgTdxdw/6ZC4tbmYkkTp2rYDkw/ezp3TXA/35/ylau
+	 J9/eS0NQfQGeEFPNXB1GCq4G0CwCmwvU5DBfyWFuzFrZQiQ8NFX5O5st4Kz3q5JwYxbsA
+	 +zTPqHISr96Fo97XQWDXCrXnYnq7601GOt1PeSPa10504lA/RfwDLjs0yhFDvLk2cT7+/
+	 QqjYAQpVDDMm9r/i3jGWlVHAUYATaSXe37ReTLehbXtFSxaGbYBE8O3QlFNCqrODWWNcM
+	 is0k6O0kCc+9PFdLsEkHPtAXqaUEFFPuI7Re0iUSMVzlWvxc6EuyN5dBIuyJB2F1vTg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=StiWPz2d;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dFqC9blp;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.44
+Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6195F606A31C
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 12:45:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6195F606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92DD606A31C
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 12:46:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B92DD606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=StiWPz2d
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a35d5d4a20so22833635e9.2
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 05:45:58 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dFqC9blp
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-1a3c08d6928so2750902c88.0
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 05:46:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793278008; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YGN8toVrlUvxwhLSXKY3N9IdL6QVJJayOQLwjmuQjho8l+IiEAEQuybp6fJuLhIOt+
+         7FDqxAHj+/XGP/Rp8wIbBgntV5Uz1ZQbaeJHwpIE31j1rulzrvX5vVmVW52vcGcknk2x
+         dDBDGrziiUiMbUm/8VsDJgmvcrIr/Esmsq877d0JZhcROdlWEFBDTGA13FxML16eKYkc
+         QAooer1iykMI3TZjpFFqJlYag8QVG7Fx3CteJnHEKz3+PkO7D3Wt/plzrigRtSeO4CIA
+         frISQ+P7qeZIvQAtay1/UXhXckxPl1zAu/8evQhMB79uKLtGo2jU5/7OG1GoPOgamIGN
+         oS0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=TewcAqaMjz1SdNVvgURSQ3e7oimLZulGAvliEbwRKlY=;
+        fh=lyRVSDRDdA6UzAlN/x9NEoYZjoiGIiZt+S+t3wc1xic=;
+        b=lFzVxytBn5yVXnuUCiZJU2X0p2J0yzA4Ysdaib+c7lKGnW+zNGJgtSZzaDtEbqp2HU
+         V7Sr+WPLYihhmxfcC+sJSC+gRI1+LyxsMt6sVwvwYGqGASE9JVxb08SMDTsA9bOzWIjs
+         lsRQ7ID/mWh5WSisipRY5erObu/4/FfOKzup4ivQdWlKHfkMBzRkPd3NDjTfM81SiRKD
+         LIYpmI8b0hdSZP1GlBeZHtBe0sNnv/L+k4r16H6ZL2HYQEfSdpLcT5Ww5NktFlnApxWA
+         IZkhycZT4QcN+0odoYoHfiCNSBEhBXbBm2ITDoy/VYrgKEmbum0hXy443D6tklBuLYij
+         7efQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793277957; x=1793882757; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=xBVcwLo9Kiea6Wzx1N+t48QCnHPSNAPw007VnlqmoAI=;
-        b=StiWPz2dO14TB4ENVfHYu/Tbbk2y8jDOv0detVFEXfIGsdvPWw+KtGlltCgHL2sZ+a
-         6QNmoBG8qPd8IniR0XpPbDWMuqUSDny1Zg4Rfc9VN/wuJdh1c+i2bdVnJFS4z1X0uDsK
-         1Ua5jiktjv6RJLAfjvSdwLAmPMwIqfPdGDlRS2T4jXv47Z/Aj7X86KaDhFk72C0FoXXQ
-         3yEWjmkfunBs+gLRt8Sp5KFxdTr5GAZro6UyT5/4aDRY/uEmfXm1/x29k6ZFkutuTM8d
-         RYfZou8ixfvzgJ9xTz7jvOdZX8h/uLUBKsjdED2uIIlghweNpyzCpFxhpm0ECNwTBzZI
-         Bo9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793277957; x=1793882757;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1793278008; x=1793882808; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xBVcwLo9Kiea6Wzx1N+t48QCnHPSNAPw007VnlqmoAI=;
-        b=fGZbiw9OiDOW4GEjNbqM2gBFd1AktYtdMoJ8+2yQG/rWq5nEP4NQ/bfdFh0+sgOQ/+
-         8SHmxGYLJnHoAAK9qbZhEhMHj09PhPqOxaBJJ8Rz5A4cjKKWmwViK+w5Q082WOaS+euk
-         4l0dlyxfhWwhLFx7CvsRkBi5UeyPAjBCAhRFGkSPpVexmCRTer8LlKlNoNjfVNsYGv1d
-         YqATNxbzGYSK5K17S6vLyWbaeMSQSsviQuRJGaDBlpseVXhq+GbjMTlsm8sU649e/CRs
-         4LK0ZuArNw/WeLMo+p4aDi9v5GvmXqBLRLpZVR6ZzETYPP2WdCO82Z6umhvDCtnPczTe
-         DhUQ==
-X-Gm-Message-State: AFq9FYKKr4YV6P/SjEb7+zCgbeknefPn/+QN5CqDxTBCJlvqafoKpSQS
-	kYCtQCOVGKefizL7fzoZjq8aJ4gmKXm++VIK/5Wv6H2U1S1meHUajWwb
-X-Gm-Gg: AYBFou2Ig3cQes35F1JDfqPvzI1GaD3swztapoAcntrODbvtfp4DtaOH1iaB5OjJhTV
-	cu3f4hcwLkI2St7LvY61EqcdyCsnYZy+sBE9CdhRQLdhxcvJbugiU54xNTBiSfcuQa4rSrdyBrA
-	TxMAiCAqnoJjzU7JohS98VPsF/sfsX2CfBpww+KYfRcsK/6WaWihRfSXIPy8zVdQqx1dcgl01Ly
-	eMVpakQHxhiXefTy+Q95doDWItfegFhZeCVPQ2xejFiUdP3xmwlGqDHVn8squn2hcPwdRY6bmPY
-	eKeLXvMDOv+tmv51GKMsv1Ag5k6ZkyYdPQJHSyf+tBb1hd8fOrr7W8MK9zLbUrUu2PQpX/FNe5t
-	ekW/McEo/VqrCbjy2uTQm/FOXw9ysUd41feWvaRYlp5h3XuMy0ORKokk6uC0+FIk8bR7P+/Qukv
-	U4sOB0qo/aQa4KiQOjB2K/vsqcwd4o+VssiidhE8MOzlQcRA20cyDm5Zna8AazmnK1F5m00smHc
-	PPGZ5FwTPQKvKNIge/0IYpBUeOWx+D1elIGE6SQ0ITZrBOpVZX9eGgxbFRFjSfMMZMXM5Ukqx7C
-	gO9Txdl8jaCd2eOL+rjIQHeVMvf+/aaV0qnIFHpl5Ih5GBfRsUx+aAIailcyBAxlEvQkaQ==
-X-Received: by 2002:a05:600c:83ca:b0:4a2:150f:1610 with SMTP id 5b1f17b1804b1-4a9672030admr134761415e9.23.1793277956467;
-        Thu, 29 Oct 2026 05:45:56 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:7938:fafa:2306:bf7a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a930a63eb3sm106593635e9.1.2026.10.29.05.45.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2026 05:45:54 -0700 (PDT)
+        bh=TewcAqaMjz1SdNVvgURSQ3e7oimLZulGAvliEbwRKlY=;
+        b=dFqC9blpcSVn655ELVzEyw+jrwE/kgPZA9KA1tWkDTwCGSVnOjZ0qqK8vO2PLgP4PQ
+         Z4jA2DOMfCdgJSv3R3MaAyaUNNj0NlvSz6luUbH8Yr91AfLvT/ZTminA985SnNWhP1Kb
+         a+Q1XMvYtsx9WmHEeF6fsZi8cRZftnrOzdIKpe7RbJwClEGLbj4sQ9UBeHuIUDrGptSz
+         YTeIle+RITqYztRVZ8yj6Yu5cX6V0hykmwQ0XH0cjQTJI68jBRD6xRAwwmw4xrNQ0vS+
+         QAQbb1jexM1j+gSWoCMtc8553TAa0lx9jmeBEsOD4kD6sA4BQ2AWAWps0Cy9R2fujnA5
+         1xLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793278008; x=1793882808;
+        h=content-type:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TewcAqaMjz1SdNVvgURSQ3e7oimLZulGAvliEbwRKlY=;
+        b=xTVtx/qoG11zt347lxnM+QfRucZ17dhmOokvW4VsJop1xKs/Dmp88eA4bqQZ+RIGNp
+         nTvLxmPo4L3lXHVfRck+HItqXKucK9ADJD630u8P1FZgbRuBsW12rQx9zc5gaCoDAY0X
+         L4A9Lmdcyj58TCY/RkD6dTlP1HOOW5fb4abHka/IE3hlChtlyEvP2oSHa9ICCoz9jyWn
+         4sa57I7nfcTBz1K4rqofAukPnRHgKs8k7j8osHCd8KBzuWCyA7Rk8NCctybK+72n6KLz
+         06y1gZq9lEzVg5H0+BXe2KYG3DfGcP0oB71AHe33xfAr/AAw3jhid+Eca/woS3csV8EG
+         kJUg==
+X-Forwarded-Encrypted: i=1; AKwUvBxd711gEusbIulLSDS/1aS6j6kdIgqESP/U/a7SobHONtdnr+xpRstU5pAWPrC0iuIr9rU=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKqPjDAQ+k7AmYMSeA70MCmFyAZUsSy171ifWOn4y6GWbieLcd3
+	l83QXXNkj6rnKrLeb8EFbil7dIq3ygkfisMHCwf1S4a+LFIW+B+/L0Jzx0FHjl4o1Uif3WzdcpK
+	ey4s0ex7wzIcZryRNFRqHvki7nyDXg0RAfg==
+X-Gm-Gg: AYBFou2vMs9RP1KOq82FUmMzZiRfwYNc52uoaMJTA5Pb2SUHf9ucpf+wy4CG5eC7qUN
+	B8kIId0HHPujl0x9Y36BWPRK/Pvm021BSqJL/3beSXccd+XFt0nIFUb48AzugKGcEcZk/CS6hBR
+	jadAg3hSvhKJQ8W8LM7JoqdxsPq8MqtJ6FH9VVRgJYwilktPXZ/rnyB0cuNip1En/n9IeXV9cUg
+	RNoUcEsy0fzv9PQ9v+GhY0vMRAudb+oRkKV+ZkE+h5YZrMITbaxLi8F0hHp1AlMTS11SUC/TGGw
+	LdgfKra+5yM5ETcn1WklY8Qu0hbzH7zRbouvAbB362bxVLsiHD7sMj1ibaqhuXX7sMMEyTxl3dk
+	cpVjVVf6rm8VALDP4M9/1zL3fB5v+lPLSl/QfVwI5JrYly+0AB8Or64XlcKs+hH6ipsflUvx93Q
+	CacHbR2JFtQXbqTKY/0o0od4WIF1o=
+X-Received: by 2002:a05:7022:7f0e:b0:193:1148:64fe with SMTP id
+ a92af1059eb24-1a6c87bbfabmr6778214c88.6.1793278007747; Thu, 29 Oct 2026
+ 05:46:47 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 29 Oct 2026 05:46:45 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 29 Oct 2026 05:46:45 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 29 Oct 2026 13:45:39 +0100
-Subject: [PATCH v6 3/3] fetch: advertise fetched refs when backfilling tags
+In-Reply-To: <xmqqo6cd5hnt.fsf@gitster.g>
+References: <xmqqo6cd5hnt.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,179 +111,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20261029-799-shallow-fetch-with-tags-v6-3-e6ddd5201def@gmail.com>
-References: <20261029-799-shallow-fetch-with-tags-v6-0-e6ddd5201def@gmail.com>
-In-Reply-To: <20261029-799-shallow-fetch-with-tags-v6-0-e6ddd5201def@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
- Justin Tobler <jltobler@gmail.com>, gitster@pobox.com, 
- =?utf-8?q?Mitja_Bezen=C5=A1ek?= <mitja.bezensek@login5.org>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5916; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=HuSZuE0vHXl7kE1nwZzLQmaPkiO1TSlsNS9Dndq9TZg=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrjP/dmvLtCv1R3yU/YQ+LVVayEavbXgJ9L6
- Nab5j5W2715+IkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq4z/3AAoJED7VnySO
- Rox/Jx4L+wbAvjv1jktJc9xx5vSQ9zSiQNTsQoti+Hb8L3eyUm0wB3LjMSubt5wZHqNOsth0t/I
- QRCJcn/Io7UBVwNMaysPZo1q+DYDXLDx8m3vMv1ueNHqmJd7IoH34KMO8LBeak7zwShOBdjaHF4
- LNeqVufO3qZvbdWYRi0wmt4SZvwK2osvQLL/muzGTOxBFiZmqe27Z+pNjyHTOFuSB46IHbsSLfS
- MhWqXClUwl5Q/p7/RSumUkDwax7mcJ3NczglLyMZ7KV2Ogve+pGLdNeDUt2kwHA5+0FONGyxCyN
- 1n74Bhc1nw1BqXg44tjD5j7qbK9I6OYpWBaGtWXfP+bgwcuvKkSf80ClWwsPgK9eWezS1YABMYu
- SnZk7SDM7kJCZIWHqGYCxyvV8QEqCc9Z1zu7Kqodj+T0eDZhUeYHIDisa8qAEVjh9beH7GhZMvN
- 4RdpEeGZCtCQDVvyBQ+2ashHchDjntjfw8asialqSwH0//GcC0Qxi2Wpyg0Y1KHoi8ul8NGVBW8
- 0I=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Date: Thu, 29 Oct 2026 05:46:45 -0700
+X-Gm-Features: AclHuK9E3VQ0EE7LNa-YhoDXrAAllbCsO-XTJETTIrnxOwtL2uvjZ_qAK5ASfP4
+Message-ID: <CAOLa=ZSKqRU0okvmvazTieLFKJKZPAxF=1fsVFa7mQhkAz4iLA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2026, #10)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000a3239f065efa12cd"
 
-In 0e358de64a (fetch: use batched reference updates, 2025-05-19), the
-fetch code was modified to use batched updates to provide a good
-performance improvement. Batched updates are used both for the fetched
-references and to backfill tags.
+--000000000000a3239f065efa12cd
+Content-Type: text/plain; charset="UTF-8"
 
-When using batched updates, the references aren't yet committed to disk
-when we start backfilling tags. For shallow fetches, the negotiation
-phase while backfilling tags does not advertise the newly fetched refs.
-This can cause the server to send objects the client already has.
+Junio C Hamano <gitster@pobox.com> writes:
 
-The issue always existed when the '--atomic' flag was used, as both the
-regular ref updates and the tags need to be part of the same
-transaction.
+> * kn/fetch-tag-backfill-batch-fix (2026-10-28) 3 commits
+>  - t5510: cover upstream info update on fetch failure
+>  - fetch: advertise fetched refs when backfilling tags
+>  - transport: add `transport_options_release()`
+>
+>  The tag backfilling negotiation in 'git fetch' has been updated to
+>  explicitly include the in-flight fetched tips as 'haves', preventing
+>  the server from resending objects when batched reference updates are
+>  used.
+>
+>  Will merge to 'next'?
+>  cf. <auHfmzP3aXyonp3C@pks.im>
+>  source: <20261028-799-shallow-fetch-with-tags-v5-0-7c43cc9ae810@gmail.com>
+>
 
-Fix this by advertising the already fetched refs as 'haves' during the
-negotiation. Do this by simply adding the tips to the transport's
-`negotiation_include_tips` field. This also fixes the issue for
-`--atomic` fetches since it follows the same route.
+I've sent in a v6 with minute fixes, that version should be good to
+merge to 'next'. Thanks
 
-This does mean that all references fetched before the backfill will be
-used for the negotiation. While duplicate OIDs are trimmed before
-negotiation, we could still end up with a lot of distinct OIDs used in
-the 'haves' section. However, this is still better than the server
-transferring already existing objects to the client, which can take a
-lot more time.
+--000000000000a3239f065efa12cd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 803a38598ac99676_0.1
 
-Add two tests, which validate that the 'haves' are filled when
-backfilling tags for atomic and non-atomic flows.
-
-Reported-by: Mitja Bezenšek <mitja.bezensek@login5.org>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- builtin/fetch.c  | 33 +++++++++++++++++++++++++++++++--
- t/t5510-fetch.sh | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b2decc6cfd..d3974faf6b 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1676,7 +1676,8 @@ static int backfill_tags(struct display_state *display_state,
- 			 struct fetch_head *fetch_head,
- 			 const struct fetch_config *config,
- 			 struct ref_update_display_info_array *display_array,
--			 struct list_objects_filter_options *filter_options)
-+			 struct list_objects_filter_options *filter_options,
-+			 const struct oid_array *fetched_tips)
- {
- 	int retcode, cannot_reuse;
- 
-@@ -1697,6 +1698,21 @@ static int backfill_tags(struct display_state *display_state,
- 	transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, NULL);
- 	transport_set_option(transport, TRANS_OPT_DEPTH, "0");
- 	transport_set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, NULL);
-+
-+	/*
-+	 * References fetched before the tag backfill aren't yet committed
-+	 * to disk, so negotiation cannot discover them. Advertise them to
-+	 * the server, so that it does not re-send objects we already have.
-+	 */
-+	if (fetched_tips && fetched_tips->nr && transport->smart_options) {
-+		struct oid_array **include_tips =
-+			&transport->smart_options->negotiation_include_tips;
-+		if (!*include_tips)
-+			*include_tips = xcalloc(1, sizeof(**include_tips));
-+		for (size_t i = 0; i < fetched_tips->nr; i++)
-+			oid_array_append(*include_tips, &fetched_tips->oid[i]);
-+	}
-+
- 	retcode = fetch_and_consume_refs(display_state, transport, transaction, ref_map,
- 					 fetch_head, config, display_array);
- 
-@@ -2077,6 +2093,16 @@ static int do_fetch(struct transport *transport,
- 
- 		find_non_local_tags(remote_refs, transaction, &tags_ref_map, &tail);
- 		if (tags_ref_map) {
-+			struct oid_array fetched_tips = OID_ARRAY_INIT;
-+
-+			/*
-+			 * Collect the tips we just fetched so the tag backfill
-+			 * can advertise them to the server as 'haves'.
-+			 */
-+			for (struct ref *rm = ref_map; rm; rm = rm->next)
-+				if (!is_null_oid(&rm->old_oid))
-+					oid_array_append(&fetched_tips, &rm->old_oid);
-+
- 			/*
- 			 * If backfilling of tags fails then we want to tell
- 			 * the user so, but we have to continue regardless to
-@@ -2086,8 +2112,11 @@ static int do_fetch(struct transport *transport,
- 			 * the transaction and don't commit anything.
- 			 */
- 			if (backfill_tags(&display_state, transport, transaction, tags_ref_map,
--					  &fetch_head, config, &display_array, filter_options))
-+					  &fetch_head, config, &display_array, filter_options,
-+					  &fetched_tips))
- 				retcode = 1;
-+
-+			oid_array_clear(&fetched_tips);
- 		}
- 
- 		free_refs(tags_ref_map);
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 30871617f9..ca5f9642fc 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1942,6 +1942,40 @@ test_expect_success "backfill tags when providing a refspec" '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'backfilling tags advertises fetched refs as haves' '
-+	test_when_finished rm -rf source target trace &&
-+
-+	git init source &&
-+	test_commit_bulk -C source 10 &&
-+	git -C source tag -a tag -m tag HEAD~2 &&
-+	HEAD_OID=$(git -C source rev-parse HEAD) &&
-+
-+	git init target &&
-+	git -C target remote add origin ../source &&
-+	GIT_TEST_PROTOCOL_VERSION=2 GIT_TRACE_PACKET=$(pwd)/trace \
-+		git -C target fetch --depth 5 origin &&
-+
-+	test_grep "fetch> have $HEAD_OID" trace &&
-+	git -C target rev-parse --verify refs/tags/tag
-+'
-+
-+test_expect_success 'backfilling tags advertises fetched refs as haves even with atomic' '
-+	test_when_finished rm -rf source target trace &&
-+
-+	git init source &&
-+	test_commit_bulk -C source 10 &&
-+	git -C source tag -a tag -m tag HEAD~2 &&
-+	HEAD_OID=$(git -C source rev-parse HEAD) &&
-+
-+	git init target &&
-+	git -C target remote add origin ../source &&
-+	GIT_TEST_PROTOCOL_VERSION=2 GIT_TRACE_PACKET=$(pwd)/trace \
-+		git -C target fetch --atomic --depth 5 origin &&
-+
-+	test_grep "fetch> have $HEAD_OID" trace &&
-+	git -C target rev-parse --verify refs/tags/tag
-+'
-+
- test_expect_success REFFILES "FETCH_HEAD is updated even if ref updates fail" '
- 	test_when_finished rm -rf base repo &&
- 
-
--- 
-2.56.GIT
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1yalFETVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOTg5REFDQTlxYkhjS25kNVFYRWx4cHc4alZ2Q0V0KwpRWlRGdzQ3d3k0
+SXNCWkJFZFhnbmwvYnl2S2lQVmxMUjlCK0N4WmpOa0JMbXRoWHRnZEd3ZVdqditoVVB6cktaCkgz
+anRDWGdQM0dqTDNBVGpVNTA4cHF5VjA0UkJpTUJsdGFXWDRiVXBsNFYxb2lySFlHNWRuOTBIeXp0
+Zzd6Z04KSnBNMW1raHhaMjVTMzZIODNRM1pDalcrdUczUUFoVjBWbUU0RmRNTFZ1TENVcW9SUzJX
+VGo5YUhNRzU3ZG9jUQp6MHJkVzI4N3pjOFNCamI4ZUsvdUd3MmlEU1NmSHY3QXhMeVpZaGFZSVFO
+emY0Rk1kWDZ3bEN3NTBVYXN6VFZnCmlQdW00WDZYR2hsdnRzbDlCdGN1UUttY0dvWStCRHg0SEhT
+U1k2akVCSVFOMmZCMGU2ZmtPSjZQRHdlcE9jK3UKYk5SSEVqUVlleXlsVHNRUmpBejY4SlJIWWVT
+dFh6S1Q4aHoxbFd1SVkrOGU5Wm5Fb1F0S2xyZDNxUENETGNWUApsdlRVV0NtamhiZ3R2Yklva3VL
+ajEyWFd5RHlaY2ROc00vVXVMVTFSajcwNjBsZWkzRWt2OWFMMmZQYkNFUkdNCnlKR1pUNlBSSHNN
+Q09rZUtlQ3RaSSt1Sm94YXhCd0h5aUlOenE4RT0KPVM1bi8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000a3239f065efa12cd--
