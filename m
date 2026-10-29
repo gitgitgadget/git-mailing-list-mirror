@@ -1,106 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.172
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793278518;
-	b=Nae4rUQniJyj059QWpUAM3a12xZf4jw5f7hzpqnjzpRULnz0ogd3cRMl1oiUVhKRJPua
-	 88O/UxovATYFmsBnhnYPEhYOb4x2buPE8kA5etxnK9GPhvz6tbmEkloGJ87DSUaIgN/zU
-	 aIfbrPPqqWGMHNWMHkttuqh+nqzN6gzLByX9JzYdrbVH/AUGDKo9x0BZ8mBk3HIQH7aLx
-	 iBii7QeNl6qFAgutx1qeViySRqAjNbRKpG+zD7ayuaE/Pswgo9+e6KLHeKg/dmxxHkS25
-	 bAKetw/B81B9sTTxjDF8lctWBJmwsO+xaTa85xnkc2gZ1lOv8iIEGIo083w4JyQ9uqQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793278518;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793279623;
+	b=LOIx+SysJdNXeFISB8FbWl4OVXCgU3MZPNW9KjdurwooghxYBhHtHjwnxL/ZB8NacEqJ
+	 4oKR37MMSYy3JpXIQy0GVhY7U00gRa5m5WzlU8+X4aQrSE1RiqoQrfppfCNSUnRvTw8th
+	 QBhtl1d16ePCYwLmuIN5gy/RJjYblW3SjcCF20ZjIY/d4eYYgtQXo4y+rV1TNTkqPpaWW
+	 mXXDqSSxu2/Sq3cJPZwPny4b70xo6YtqMZX1ANkIFd9HLd/bhf+Q182IMku7SpiqAJ5GS
+	 XL4z4HJchwJxQeiAt6YgFZjA4gs8X+MwbXnpQt0BRkfiSwEmzc33CTksOuiEuvc+tdQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793279623;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Received:From:
-	 In-Reply-To:References:MIME-Version:Date:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type;
-	bh=RCBUhqIqSDIwvI25RkooxdvW2DZbzW8nP9vIhmJtmbY=;
-	b=T46R9ql0iLORi9niYK9ixQmQMCQaKjeOelIc61qi8E/RhIPy+qFKAeC3LK3SrQ5UalRr
-	 do7z89EDRu9SSck59fXxoejOhQE7D+Nwv2hSMHN9FU257g4mrxCkpxrIlGWb/wxz9cY03
-	 a+oRcRWJ1kZCs6IRbFcHZAwbnuGYZ0qFTUbirEdAiLuxV9AV9r0E7fAlcFilolHw1QlHE
-	 AL/tgX22nlgN3X5UUEsDd1Gm4aSwtaPQNo1H4Ry1pD9bf/Ulg4Jo2amuNRtezdtA/p7Os
-	 x+KGyU2j1J0qOVUSgQ+kVuUfmzSxKYhqmULWX4r266dX+ZtNzcfJ7v2f1SuHhe2zJGg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=5ccRXohapoGrF44EK+Pjbx78IG/gDpGV6aZsG7rx2Jw=;
+	b=lc7lIkZvH4npBM2cC2TvEpvCil7SJNZE8mOqBJo8fA+iCih5A9En8UhgRPBhopiHBMA8
+	 bYicoECd+AY4GboySEI+R6cY0y5Meai6B8imCQ4Q8TZX6bV2+2RHhi4RZFKsSw3e6gP7/
+	 0CKFTFdX3u9wUPJ+SyQ4x2fdxcHvxU2hSsKi2HZycz6fInhmJZXLqz6NVPPllPTrtOVPj
+	 OMZ9Yd28dbaH8HKIZYbzczgDFfVHbXGH6LNhPXoe+CyGL4obZumzKIt/rpITzj2ZW/XRB
+	 If2tpSuQx8zDzqI6zQVS0ItmSGG35cN2iKGsHPbZnksPyLwDWqqYrehHWTUrq07WG3g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UalM6NVA;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.172
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CwQ4wbPz;
+	arc=none smtp.remote-ip=209.85.128.43
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB16606A31A
-	for <git@vger.kernel.org>; Thu, 29 Oct 2026 12:55:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6BB16606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A54D606A31A
+	for <git@vger.kernel.org>; Thu, 29 Oct 2026 13:13:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A54D606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UalM6NVA
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5eadadf23e5so1892297e0c.2
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 05:55:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793278517; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Y0j1dkSL99Vtca+JxzBANaGa4Y3jmRtuhOiBd2h0FaAQZy5mo4P7ELz02nMwBSs8R1
-         no3QZ/Uc3cvIjOdHO1K2oWijMuBU/bRufADrG3EJeaSH7n8pWbzg3TyIFLC05/bOxAr+
-         FX5ch2BF6BnsyLHrMPftHyEwmKWnrMa7o8aKHufb42bt0LxOrAB8P2pzTSzbbUU1jTMJ
-         r17044XPeMKfaN/SsusFL4kC6OwFviE/eZdBOEh8kjP1P6DhY7TieAnfEkgMqbOvI1re
-         gzDbfnJt4heJ/3ljF18JAbpalDDRrC7BJYYJoRxE9SJbiiZ+ubxFLaxyiVPBzzRp1nP/
-         TbBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=RCBUhqIqSDIwvI25RkooxdvW2DZbzW8nP9vIhmJtmbY=;
-        fh=18nicFiHTirRLCAe3/ZbsSVU6pIEmhaQMvWER+8HkRA=;
-        b=apRKPaWSID+Jyg3+WDHV/pjP3KkJjPjdaOe29jiek4cEcfMeUtdo3NOHfRU8YArZKG
-         4v/kh4GM8WWFcLAauHWsY/44tO9QEkbHKauiP0yTt0GIcSMxqyURG4utVFRcCEmQ4jEb
-         LLJDfzP+ZeyGuVRI6X2Ogyt5c91/qmFxvEGUEJoCinrrAxEr4CKoYWUtQD6PwCJV+bkr
-         Zw6y2bzteL5d34tw3pYyA6yhX2V39XM2/NzQZBmlBqSi0aD5USAzwc7O8Dw+2G4AJ+P8
-         gnMlc1EtZ+bycRIlC2m5y6ezfegsEdGOlZ6l1G/sXh/Qxym7IG/+R/CiUhtVcLrZUVAF
-         Nlcw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CwQ4wbPz
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a2153c8525so15822735e9.3
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 06:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793278517; x=1793883317; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RCBUhqIqSDIwvI25RkooxdvW2DZbzW8nP9vIhmJtmbY=;
-        b=UalM6NVAmEVVFtSU9r/7vBx9NtzBXGaxAU7+vY2zjGzLiNfCjOQrtdyf57krUdeBy9
-         kL17nMb+GsQNEcxs6BlVNAVHqQhaRMQtJ5Vr5v1q2slxaa9ciRYS/YHOuFHBJYsgtltw
-         N8fD8nVaDRkcDcwdF/jUWBZm8t7hFlR3T1refX5jyN9tVorNtvlT42xO+V+3x9xCQwVD
-         OJ02PgZQJeAF/e6zMzfFNDFAFGwuvOXfltAQ9k6wYrt3hXsmop8pun61kkhVQ4CYknEE
-         HDD/EstWyq5HtDbYoY49HNbpVKYDdgJQfqNamOptZuIWaV6kUMn/Vi42NI+zcgPfZFJ7
-         QiMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793278517; x=1793883317;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1793279621; x=1793884421; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=RCBUhqIqSDIwvI25RkooxdvW2DZbzW8nP9vIhmJtmbY=;
-        b=BPDhJIwn5dxHBbHePuMj5YSbbzJQu6jkKw5LefTlsHLpTIcCQdlnGKWn1KqOp4k/pm
-         FIRpB/BjIhNqxO34bkwoS3c+bG5nbGx161nUiCSA2LW9jCC3Hz5RH6UbDR3oWMViNIaE
-         gdkfZYbOVDZCQNqTYabc5fTd9TLlbigLAgqgZwkvgLw2Gwdgg5LrN3UaIdTXJyGgLxef
-         dhNu7L3CRQApEtM7+aW3FWZSnNuRw4qkm4yKiWbNumkPPB8xwPIlXP3hbTSZobTX+c6S
-         t8gMEEBqlqWD+O56NvHb43SKCk4X3N0ywkibroKiL9iMxG5sR3YPMk1dEysoAvDYZR+J
-         Ra0g==
-X-Gm-Message-State: AFq9FYIQh7Kloq7wsylB0q4+YPtxk+LFxH7yN7Ev4MlAP85WOQdZPf5R
-	Q/XFs/rVpC7iD4oGB3I7U6jgiH3t0M8acjE+JLdpP1NbcD29tjVnTtU5riTfBrRSg4FQxXW+PCs
-	MeQWQV6xRiyaMs6BADcsvr8cMwW0AY00=
-X-Gm-Gg: AYBFou29hOMUIohXUQgVE/+5WxCvanxNaMtHcV5YKyKE5WX2KUGe2JUA6Inu9C8jGBX
-	CRKHAllTsKu0zNjrobP5Bi34kVYd24rvLfhwVtTtNp/tyQ/OYl0IZ4YsgmmCZrf49hF7iuC0DkW
-	mrRbNf7sZyNZFPt6+fICUj+ZC6S1HtnlfFK7UacPt1OmZYquyVfCjvtC7HQZss1GJV7LwEvcWsy
-	/tiIXKSdZ55coEK7YI+gJTn/2D7VrGL/1p0+7LcRagWFm9svJ8WUYbFqqjWEVKOlodMqyQ9WhjT
-	hLAmrdPeqkFYk4+XoRvmB8ou6GIO1l3mHzRKRzTfx5DjjKZT15NHi0MhlTlpOGoraSJ3vXAa5+K
-	6LkKnYfdbUzlGc+BuqZdb9FbpggALOMYI0qoWphA7NbtEqVpeZcV1Cam6URuUtNkkMK9+pzy50g
-	z1EpDiOUqlMwEcwWqqPHIUZgVoGZw=
-X-Received: by 2002:a05:6122:6602:b0:5ea:d247:adb0 with SMTP id
- 71dfb90a1353d-5ec4cbcc13emr2918044e0c.4.1793278517327; Thu, 29 Oct 2026
- 05:55:17 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 29 Oct 2026 08:55:15 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 29 Oct 2026 08:55:15 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqv76l7e48.fsf@gitster.g>
-References: <20261028-pks-commit-graph-cleanups-v1-0-c549344c363f@pks.im> <xmqqv76l7e48.fsf@gitster.g>
+        bh=5ccRXohapoGrF44EK+Pjbx78IG/gDpGV6aZsG7rx2Jw=;
+        b=CwQ4wbPz108mJxF1bx5xS4xw0feafKC9PJ08FicyF/hrKR5mmKw5zZNSKPfMp30Vjt
+         i74hxyjNt5Nuu/qOWhbEyHb53LovEMVdFTH7CTdjZAdfl5uKlyX1t8LlF7+48d5swVhB
+         MNK3/vMnBJdHzk+yG/wV//UEkMM+yq+ogXkoYFQ7oAS/qM26w3AEW2uJrLNfvJZZt0QZ
+         sH22Pmi01R30kF6C17KdTK01MA1DJKS+GsBzzl3+5XPt5hpFGICXDI6v3s68m4v6ZVhl
+         3TQNVY1U78xuw0TzFSC+HJoyTijCr0RaSAPYmO1gWAE5hcHNBkn4AaxelcuS/0HCpokS
+         cOVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793279621; x=1793884421;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=5ccRXohapoGrF44EK+Pjbx78IG/gDpGV6aZsG7rx2Jw=;
+        b=Xwhp8pxgGoGEIbyRYXP5501tnA7cpkqnt5FiAS+WXNlW8jj7lBsGYZ9BwRnIx48fVQ
+         8iFgVsejomnYKQS3e/yQcMiaHr3/nm5dAoT1f5GzmAUfby1RSjqzk6XGmB4GGIpjci5u
+         sPpLPWaB5WwSjNeWN8+YNPSRPzaJq+4smsr2FA4PUiJbohpUIYsdrbAaqD0ttjFthZc4
+         OsNor8AAopy8d1JO17RSok4XFSFfDvMsSf7m4Aos3JBsOsKVcBPuq4lbXkRihDY8HAw/
+         pIF/PCsoyCOMFESPDj86JWfXJ1wdWSPrFtT0r+55N/FoDyXx3YT2UgE7waPPKATiewLX
+         hsWg==
+X-Gm-Message-State: AFq9FYLkUZAx4VpgKYX+JWAfGc8haWEv9qKEDOZ0yT/2CGxpXUjgO6JR
+	ueH4BQYagoL8O4jujnEKmKD1Z87WTRa+Q9vmYgZfe5BsPpUqssyhLwh3ULZ1bUDn37g=
+X-Gm-Gg: AYBFou1eTwMchS8f/1GMcRLEnOGmvGG9kCamTfmGvVxPHchgMxBMf3AtvWWOVCAM5j7
+	1ust38tzXnx5CRdcYyBbPIX7I6qIdCxKFrAng4ELconf/UJ2I2BEWhTicTff56J5U/EoJO6/90o
+	WkTm8QoPNnQm6kbcEIIr2yiUPmP9FxN9k6+WWeQXtEZkXQKSvFTOxZRuCYrxxxv7spgT/JiWi50
+	iRLURqBmkgL3ZMFGmbER3zxATZ20vCzEIlYOdAE2xlUbi9m686sb34nDRsEHmv+3HnUBRu5DvE4
+	22mcljCxLht3Gr2NKM6Sq+G8806+I8ycD01WCa9I/t6EJzgyECpmPoQELJDvrBKlLphwadQeYct
+	Uc8v+bB77aA4PjHjIquzz2+uK5rR3HF0ZOWOTObFvfWBZQL2QELnoRWsh1BU+bTXrJF4dEE6Yu3
+	C/ygdoG20F+s/PXpB3i43XI8butQC3fDO49Vg5y3YWGx4iLhTH334rnD1WW5EPTAo8FlbF0nX3W
+	y7QuxokbKo+ETllsmSKc6wUsUZNFsVIbalQNvj56FlOwFXDxeNqwTrTYtIN9euG3XZdGBN2d3TB
+	3pj/CSvxQNKeKPrNx3rbEMLqjLvyZCxitJEjXXtKk+qCcWwlKJBQHPJ9izNXlFjld/vIrOB6dWr
+	Y1cIAKSNf4TTUxsUjCMYorAwdrjvnz0X/aq+bSG657WkLugv0Ytwmjj9ldDhTSs0RjWTnu42uq4
+	rV4PV1uhj/PsGPLBVI1oFISAv2nzZ1GT1GxE4FaJxB6yWHfQ==
+X-Received: by 2002:a05:600c:3510:b0:4a9:18f4:925e with SMTP id 5b1f17b1804b1-4a966774dc4mr124478275e9.18.1793279621363;
+        Thu, 29 Oct 2026 06:13:41 -0700 (PDT)
+Received: from localhost.localdomain ([105.113.99.55])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4aa80f04723sm72386865e9.5.2026.10.29.06.13.37
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 29 Oct 2026 06:13:40 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	ps@pks.im,
+	karthik.188@gmail.com,
+	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [Outreachy PATCH v2] bundle-uri: stop using the_repository
+Date: Thu, 29 Oct 2026 14:13:25 +0100
+Message-ID: <20261029131325.79176-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <auM3DGcWTL5OdRnD@pks.im>
+References: <auM3DGcWTL5OdRnD@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -110,65 +103,129 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Thu, 29 Oct 2026 08:55:15 -0400
-X-Gm-Features: AclHuK_J59PUNam9gL8PC49MpY99VP7dpcBTlFfjjLLqXGBpSZ-bz-xS57MXWRw
-Message-ID: <CAOLa=ZRVhZjv3yXA76wK+fZ0o=FrwScHcT3=xJOOgYvjG6cSiQ@mail.gmail.com>
-Subject: Re: [PATCH 0/7] builtin/commit-graph: some small cleanups
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000027d22065efa31d9"
+Content-Transfer-Encoding: 8bit
 
---000000000000027d22065efa31d9
-Content-Type: text/plain; charset="UTF-8"
+unbundle_from_file() receives r and unbundles the objects into
+it, but reads and writes the refs in the_repository.
+fetch_bundle_uri() also has r, but uses the_repository for its
+trace2 region. find_temp_filename() and copy_uri_to_file() also
+use the_repository, even though their only caller,
+fetch_bundle_uri_internal(), has r.
 
-Junio C Hamano <gitster@pobox.com> writes:
+Use r in all of these places, passing it to find_temp_filename()
+and copy_uri_to_file(). With that, bundle-uri.c no longer uses
+the_repository, so drop USE_THE_REPOSITORY_VARIABLE.
 
-> Patrick Steinhardt <ps@pks.im> writes:
->
->> Hi,
->>
->> I'm working into the direction of making commit-graphs pluggable so that
->> backends can fully control where exactly commit-graphs are written to
->> and read from. This patch series contains a couple of small preliminary
->> cleanups.
->>
->> Most of the patches are rather uncontroversial, I'd assume. The only
->> one that might raise some eyebrows is where I "fix" git-commit-graph(1)
->> to only accept "--object-directory=" for subcommands instead of both as
->> a command-global and subcommand option. I feel like this is quite a weird
->> outlier, and it got in my way. In any case, I'd appreciate some extra
->> thoughts on this.
->>
->> Thanks!
->>
->> Patrick
->
-> I read the first 4 steps and they all looked sensible.  May come
-> back to the remainder later this week if nobody beats me to it.
->
-> Thanks.
->
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+Changes since v1:
+- Also pass the repository to find_temp_filename() and
+  copy_uri_to_file(), and drop USE_THE_REPOSITORY_VARIABLE,
+  as suggested by Patrick.
 
-I didn't beat you to it, but I too have nothing to object here,
-everything looks to be in order :)
+Thanks, Patrick, for the suggestion and the diff, and Karthik
+for the review.
 
---000000000000027d22065efa31d9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: fdb9d1549b19ec0f_0.1
+unbundle_from_file() still depends on the_repository through
+fetch_pack_fsck_objects(), which reads fetch.fsckObjects and
+transfer.fsckObjects from the_repository's config.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yalFqSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meWgrREFDVDZGcGx1UDFtT1JxdVRyZ3hOWU1sQ0JqcgorUllHVDlraUZB
-L1U1UzQ0elV5N2hiakRONjlWTks2ZTlYYmpTN3ZJOTBHaFZCa3JHUWlwdlN4bmJJMG8wQWU4Ckwr
-ejlqM3lvZmRhQTA4R3lNbTVrbCt3VEZNTVhxS1FTVGcwa1BndVoxWTZMU29LajlQMk9yQkx5SVdE
-b2FNUjMKc09zanJTTHAwalI3UURpOXdWSmFyQ3FoeGNFL1hTYlBjMVNCR2hyQW1Hb20zd0hPMnhj
-alk5TExHNGMrRlE1VQo3ZDRLKzNaWTd0b0ZxSlJibndrY25LNnhHQlB4eERSZkYyTXloNmJSMC95
-eHVleXYxL0ppL21uTnc1dDQySGlTClhYR0tWVzd5MlRxbmdFR2FUeDdoRVdSRDhSbnZqRC9hSVYz
-YWQ5dm0vSU5xKzM1NHZKclQxOWdIVFM3eno1VmUKaTFySDBWV0EvMHpsdlFsaDhDNndHTHBMNGIy
-N1JmSE0wUlR4MGh6ZTZhK1FYMFdFZmxDejJoK3hBVk90dUYwUAo0NjZWUHA1ZEJxQlNlM05weHln
-dXJsUGFxYkNBNXc0UDR3TE9xTDgrVXdFMGpQdFREbTJsQzFuSjJWbnN5TmxkCmR5VzZIenRDSE5z
-elllRFMxYmtOKzM2OENhWUFBcXRJMG5CVjNkQT0KPUFzUWMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000027d22065efa31d9--
+ bundle-uri.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 2bb2eb99e4..9797eaed9a 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+@@ -286,7 +285,7 @@ int bundle_uri_parse_config_format(const char *uri,
+ 	return result;
+ }
+ 
+-static char *find_temp_filename(void)
++static char *find_temp_filename(struct repository *r)
+ {
+ 	int fd;
+ 	struct strbuf name = STRBUF_INIT;
+@@ -294,7 +293,7 @@ static char *find_temp_filename(void)
+ 	 * Find a temporary filename that is available. This is briefly
+ 	 * racy, but unlikely to collide.
+ 	 */
+-	fd = odb_mkstemp(the_repository->objects, &name,
++	fd = odb_mkstemp(r->objects, &name,
+ 			 "bundles/tmp_uri_XXXXXX");
+ 	if (fd < 0) {
+ 		warning(_("failed to create temporary file"));
+@@ -384,7 +383,8 @@ static int download_https_uri_to_file(const char *file, const char *uri)
+ 	return result;
+ }
+ 
+-static int copy_uri_to_file(const char *filename, const char *uri)
++static int copy_uri_to_file(struct repository *r,
++			    const char *filename, const char *uri)
+ {
+ 	const char *out;
+ 
+@@ -396,7 +396,7 @@ static int copy_uri_to_file(const char *filename, const char *uri)
+ 		uri = out;
+ 
+ 	/* Copy as a file */
+-	return copy_file(the_repository, filename, uri, 0);
++	return copy_file(r, filename, uri, 0);
+ }
+ 
+ static int unbundle_from_file(struct repository *r, const char *file)
+@@ -448,9 +448,9 @@ static int unbundle_from_file(struct repository *r, const char *file)
+ 		strbuf_setlen(&bundle_ref, bundle_prefix_len);
+ 		strbuf_addstr(&bundle_ref, branch_name);
+ 
+-		has_old = !refs_read_ref(get_main_ref_store(the_repository),
++		has_old = !refs_read_ref(get_main_ref_store(r),
+ 					 bundle_ref.buf, &old_oid);
+-		refs_update_ref(get_main_ref_store(the_repository),
++		refs_update_ref(get_main_ref_store(r),
+ 				"fetched bundle", bundle_ref.buf, oid,
+ 				has_old ? &old_oid : NULL,
+ 				0, UPDATE_REFS_MSG_ON_ERR);
+@@ -774,12 +774,12 @@ static int fetch_bundle_uri_internal(struct repository *r,
+ 	}
+ 
+ 	if (!bundle->file &&
+-	    !(bundle->file = find_temp_filename())) {
++	    !(bundle->file = find_temp_filename(r))) {
+ 		result = -1;
+ 		goto cleanup;
+ 	}
+ 
+-	if ((result = copy_uri_to_file(bundle->file, bundle->uri))) {
++	if ((result = copy_uri_to_file(r, bundle->file, bundle->uri))) {
+ 		warning(_("failed to download bundle from URI '%s'"), bundle->uri);
+ 		goto cleanup;
+ 	}
+@@ -859,7 +859,7 @@ int fetch_bundle_uri(struct repository *r, const char *uri,
+ 		.id = xstrdup(""),
+ 	};
+ 
+-	trace2_region_enter("fetch", "fetch-bundle-uri", the_repository);
++	trace2_region_enter("fetch", "fetch-bundle-uri", r);
+ 
+ 	init_bundle_list(&list);
+ 
+@@ -886,7 +886,7 @@ int fetch_bundle_uri(struct repository *r, const char *uri,
+ 	for_all_bundles_in_list(&list, unlink_bundle, NULL);
+ 	clear_bundle_list(&list);
+ 	clear_remote_bundle_info(&bundle, NULL);
+-	trace2_region_leave("fetch", "fetch-bundle-uri", the_repository);
++	trace2_region_leave("fetch", "fetch-bundle-uri", r);
+ 	return result;
+ }
+ 
+
+base-commit: 37b3475fb530c14109211faca33716a173db61ed
+-- 
+2.56.0
+
