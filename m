@@ -1,110 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793393544;
-	b=jFFzGFDMpxG+Z8Y5ZXP1QZS3eokGsYyaWt3jmViCHuqh/9FKz9W8aZZq9QDWSJ/OA5+U
-	 7+6MLXWefSI0+srpUhuVxdkFFeTVZ5ydTgFzKcDZLhFvjCsxlN6Gf8gWG8XtI/g04+hjI
-	 2BE3FaQl9Go50hcWele+qTbvQololUhDjIg1pArHs6duwEuxlViWHW4Ltrk2GhWggptV3
-	 jS7Y/gL0wrEHPNUjsbsJFatcG9Kq+VvMK+2AJgu8K327hKAdYUh9KedATcJ7pBK0ibCpH
-	 UufDlZ05F0cXmXvuqs6FjYOX1swJTHcYmfAtWeJexxwUj2OyTPPpwxuOfxfJFvqI2zg==
+	t=1793393790;
+	b=O0yrX9uZdtuPUvRa3yOtfDgt3xevW4pXirMVEWv4WBetExxrZXjN2iNQ5s6mi0a3UPE4
+	 jgCWSyXyUKbkbQGm3SJrQYgT7I6pytH1rrQM0d2x8MB9qhaKPqhWwpTQETVxgBrwR4gtO
+	 EBsCAccMXPI99qEzny/CMCePoBM045s5LQFKLG3G2/2a47fEFF82bQOGm0BKJ1TB+2Taw
+	 SQI6hZ3XfoJa8rlvPC7HO/VzD4tLxUe0C5Lo/orDzDG9dTGxwnta8fzWh7HWZ6DR+oFXK
+	 RySXtCg8YapWcJbTsm5ljHGDOjaYdJfC+fzqKpADvW2Qk6Xm84igzkP+IkbLLTYY6cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793393544;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=FCyJUIEV5zzNUzExDt1Z/BoTWIYIg6xtZGyYHF4Fno0=;
-	b=cUKl1tj5NVjVdo68U7d8b3bLVWDqxhG0befBcYxJfggkSsz6z3Oyhwk+JqsfiNdoXAnw
-	 F1+TC4t+T1FEwPXBlD7k4z2oPmoe4V2Roz3u0gYtTOdTPZYcljExcyFWEsUz4hQ0YWUh8
-	 XTt4CQn8hslrh+E7ZjdGn1ZPq/ydRD7TJF7xqndRU61+bUnX7lIkA2upN809DyuF3UD1Z
-	 zQ7Xf9Oaed6T3eK6GwVv1BU3gjxA4va1hAhDEFAcR3M1ckT7cO1XUzh/9eMPdXicQFcLn
-	 6QkaiMgci4Y4BA0raN8WJlCeagDIvVBca4OFoqMiLQxXa6NdWSPfTdxX+xm12zmmudw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793393790;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=4U2sAke5UAov0kFIkq0GEtlb3aqnN8vWiEBQHkiwFgM=;
+	b=W//DakelrrzAhPijubKNUJ+aLa+ZNh+119xaTjiUcTaB3I6ifPtLs5OQ5WFTLcuSqzbM
+	 2W2KY2+obQmGbbUWvOzeLj/ZlMN7WDjLuTgJpwU5RTeOIF87ErOb5R055gi/pIQWgR3iK
+	 MfsJ0MK5D6HHH0ekudVcA8uNcyz9TfOuSWwoZXOXaT0KAdG2WZPpAs+Wn/2AZAUj7ltqm
+	 vyOhok8xFCcYJTRSIE3YIvD75dBU3kXDOmj/DMeLTT7X8rZwvmB9EDYhwSqlbtzRjBsIJ
+	 6ILfvqAOfkCw4ox8+8L88zvIf6UrNnsL4X9Ae2OcfSlrTJveUvkXD41w0PBTW1PxBNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=jvns.ca;
-	spf=pass smtp.mailfrom=jvns.ca;
-	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=KR6JqkAm;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QgWw6VMn;
-	arc=none smtp.remote-ip=202.12.124.159
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wdHlc7Zl;
+	arc=none smtp.remote-ip=209.85.210.48
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B786A606A31A
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 20:52:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B786A606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766A2606A31A
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 20:56:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 766A2606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=KR6JqkAm;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=QgWw6VMn
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 256657A00D7
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 16:52:23 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Fri, 30 Oct 2026 16:52:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793393542;
-	 x=1793479942; bh=FCyJUIEV5zzNUzExDt1Z/BoTWIYIg6xtZGyYHF4Fno0=; b=
-	KR6JqkAmJf4IWUvkewyFY0QWrVypi80+WYTI/dkOqCynTd4rdSv3oQaNVIVReI5E
-	b/Wy3yrJRR6T+2bhSwPgjF2D50QbSvLEE12JfdYYrwrwKlrr1qkzUxFwRkPUs86S
-	kIVSCjG51kDtPRtpkBfBQlZfvaFyeP6zWNgL9mlT3/58gfajzvVzrwA8HtfXs+n/
-	hHt9SiTkvqpwbe3hMGDFV0vg3SFHafBIfmYomjJapn/3YDD/vq5CAgya5ix4w5Y/
-	mi0foNtnvRbTrbZVjuOKDmyPPAFGRORE/s8zj+1D5WQssRTS5y9c1FHe13rD76jC
-	e+Fd6pb52xSFuUhEPbmqMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793393542; x=
-	1793479942; bh=FCyJUIEV5zzNUzExDt1Z/BoTWIYIg6xtZGyYHF4Fno0=; b=Q
-	gWw6VMnfaGQbFmPOjvDhyeJQ9BGZ0BlhqhLY0P7C3hlQi4/+MRkghxdSzCUdoX1S
-	RMxAB80CC7adl9GxNB3m9McWp8AVMP3UkhU4fCjhpEEKEidqYONixYw6RtrThjdp
-	tNHUGuaCBr663wQFgbXsvL0DEWqYHXkngd3vM4Ubp5goYvtNk3S3RWHasFkf7jvi
-	9XuC28a48dLl62LqnjZ08+ldVM4lRI8TcZirlPhx0ZLhe9h+FV1yDrf0OMk5oRl+
-	JEJfBm+NWwNJ0S320LTA9pgjPixwxp2mhylHWf+mapwQEN+gi0iDQPrY9BgxID1w
-	UKvBYgK1zgqpiGNWbqy9w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793393542; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:DJVFhBUKG3mOLfnTRrjvv518lr9DmCp3MYRdRDhlwuDACGf
-	FzEGJzZsrfKvxP6ZQUoXsAgCQ2SEj0uUb+3LumsogKoKOOTyp4BCVamjIGLdoobS
-	8ltOop1+yAiM9IRrYPWTKbVoWcHlKacNu7c9avSb46XbtQ51v20LHq7hXj2PzcD+
-	BYPE7h9MoqfSy0USBzXjNmPi6XpKrgCkAB6iy5hN106faDuFB1jwjPnZi2PDw0vS
-	hGyrzMRBa8hh/956N63q+6aDg4VnwAdVuBFDSxH38AEP++PasGzojJqs9M+/D4eC
-	UYggq7IHAPWDDkJHetuSzOU8vWHp5ONV5z91drw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:CqrHtwu5QelLyaySAM6uvPM946VxI7JwFW+FeRJrrV8=:vX1xa00ssxpZiYH4sNGhaWzgyWk6qnGz9oOpwWahc5A=;
-X-ME-Sender: <xms:hQPlagSBQzEvTnckMljimUpnjHnQawcht9gi2jNh-ijej3hXcbsaGA>
-    <xme:hQPlaola5uLjRT_fvLtHv383nBUG4DpLWWVpJqYqvv66A5o9xShEWREzyu99WbCXS
-    6p74vgc8cBhHbgq4YR_Mgnre9AoeZ4UqkTs7QmepGFj-NmzkKA6O8jz>
-X-ME-Proxy-Cause: dmFkZTFh5dEXcef9CCd8q/pWNGCv7GvT3/utGRIyQuuZDrSFUhhCXhseozcVsiRelK8rDw
-    ToS0udqLpoU5MLAjXCS1vnEn64406jIGEyEd5QRzA2IkybBbeLEbFz6XAvURvj9Pkp8ZQM
-    3kASjdSlBlu/ii7C77bAayAXBJYTzIxAQflAfsyII+cDyp7L5oke17iwEf111sPPsbzKrd
-    cgxvT31laqCvEARBcADqxc8NCz0PFuJEzCcwMpsIjDj1jLvYnVcaQ+awfE8KmktBwt3lzj
-    GQwuICf0rAr1OqTX6Ml/EU3VBnlN+lot1mF1NJ5gYmKUXmSdwazOiyJFxByd9d4qQwdHjY
-    DxrdHHJ2nhBs6sFI/vI3VQh/EiwKave27h+ATY5BtLHkm6xfjsQGHfhg5LDADwCWD51moi
-    38K4QEi6/g8R2/lqBidz/gKGUHJZXM4mkebU/wAlB2DdpyD4BBm5Fxmbx9jpxjzGpb0Jp0
-    aDEChJAzH34yA6OqlS6t80yUJ0cJCQsTpCENhU8/AsfOkCj1ZJrxFdw5QhfOxOyirS1ngn
-    2MF/ATGIuCAOj/XaPK2OHpRpXKhblmAb0qt0ArIFBmEO9qgHDNthe//q49Io6xuMS3Tkj6
-    pj8tzL9dh17UJ7uwXBCG6gCCG9A8hIMA0gOloehExCTB2l3J4e6yodVrFJOA
-X-ME-Proxy: <xmx:hQPlaj_UlX42AgRZdiwvyQmgc3sdzqM_Gg0uCqfnp32u9p0UXJ0l8w>
-    <xmx:hQPlapBofbJi527SweGMPHHmwYhYmGOPkmxxv3evAqMgi4P95C5J6w>
-    <xmx:hQPlaoS0jFYn3SCkRkKAUyqRlEOP-SXaLRDscKXBVFezwSjkzWcUFQ>
-    <xmx:hQPlaguT97QKAWwuTk7NkI2ZfkQ0DBZ1xr9xZwgc9T-Qdg6o1W_yEA>
-    <xmx:hgPlauZfPGzO8twUBJVZSy4vxkkSn3GoscL8_lov24Znw4g8OR1YVWpO>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 95A17782738; Fri, 30 Oct 2026 16:52:21 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wdHlc7Zl
+Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-8446af403b5so760208a34.2
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 13:56:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793393789; x=1793998589; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=4U2sAke5UAov0kFIkq0GEtlb3aqnN8vWiEBQHkiwFgM=;
+        b=wdHlc7ZlBo1gRZjtDxNKrwL+vuy6lxkvmm2PLFJp4R2qwU7foHNbe+p3ZRk8sesbKO
+         DvQQrUn0IgJRNV6MWobf/98BRo/W7MsnOpxmc7dbsmhGpCdf00mS7QfCdkh3rB92lLXW
+         B7DGzKJc5FO5dIIMc9yqidvR1xXrVBSVHn4HkAmd+CVgYFetm8JYH+nkp766tphFJSH+
+         xL/nmsS5uV63f0vH2NBmx1rbM5IPRD90M9+tfdX6SnzS1bn4BaTM9orYaZuzBkCHJ/D5
+         TCj46yWAbokrf9RSrhAVeysrc2IzEH6m4aJ5CCt58x7C+Yg551Va28utwc5VhuYzsPXz
+         Uf1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793393789; x=1793998589;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=4U2sAke5UAov0kFIkq0GEtlb3aqnN8vWiEBQHkiwFgM=;
+        b=Lye7Jv9/w3yaU3v+BqcbkBgeAqEpjF3pJn+AONRen/he3wmKyIeo+3tnLDae+iAY82
+         H8H210up0ycSuSxARVA31jHxvMToova/A6JK2J0Sgr2u6wcsTaeIPXQt+Yhlm1c7fZJp
+         BpISuHNQTPHOL6FqSZzAiKJYJezasROpQPcix3VM3zTOkxOe2XaQFAMeRJiXDugq3Wzp
+         ydB9H6EC38nU7avA6tgOf1+2FI33AndqGpXncUW2GC0T0pUcXi4YLecwQln/y+5QRLaH
+         cb+bmueWkYsZxBGkeBUqJUXcy8QnbYWRftk2EgRM/XKDDSFhd2A0gb7oJ2uG9g/dLTvI
+         t89Q==
+X-Gm-Message-State: AFq9FYIMyor8HSTi2daj9PpV/+zF1GTXgisPs+GyytjBGsbKqmLOmi7y
+	fqCmto9FlXOq3L72kDgL1tGKS3Hx+MqIbldhINwwPykEUvgb5bFl3bJ2J+RLwBISOL0=
+X-Gm-Gg: AYBFou0ZAXB4nRhQBbcdtEFko/4/4Ul5YBL36KXQVCx6kfgI0KRcc+CYN9gDFBaJyml
+	Kkr3xpnuN/HvDAWiJ08sNsGcMZk7Stg53ZHEVnOAeKiGexAuM/KuZw1pYrGZWeBYvkBUH0iEG0E
+	gZXAd4kjbRoNk4ERX1kXwAqDg+R8e2FEO73rM7fGNiE3s8rTnPEtSplF7Ox/lW7XyXCAlOxnFZC
+	EoXxQcYshaXqmsPKZuvS+i73neNHElFZMQf7exe7A8FPRoCZJb8QMjsbacMnCNPMZmFi7O94XZr
+	9LhOfiwJ398NXRXpu7WGYVEwl0gwK3Ei9xMG5ajJhMsMqxcO/JxxBZdC91lj7Lr5Mm1OnXy2T/j
+	jDnCxyCLtn+/mEG4BvfLUXft2yiqtXUVjh9IZ8pDE2/z2q6lPC8K7raFTpphMjOnOFSXp+bBqh+
+	sRDxucgvW8yteFQuheJEhIS8m3sfDewKh69EIcTrFYTswb+SIthPlbjJ7gDZdF8wTJ19yPTEfXA
+	yDywyveMtA9JtL1++eLVPNvml4o3sw7guL4jcFZWI4gMifD5an7blXeqSlzBEs+QvhKnqAgirwv
+	gnMCh5W2DONU08UzOpAjTBq6e9fUS08pUQM=
+X-Received: by 2002:a05:6830:7181:b0:846:5201:5286 with SMTP id 46e09a7af769-85d364d3d77mr2969094a34.12.1793393789341;
+        Fri, 30 Oct 2026 13:56:29 -0700 (PDT)
+Received: from [127.0.0.1] ([172.206.179.242])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-85d35499153sm2893816a34.9.2026.10.30.13.56.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Oct 2026 13:56:28 -0700 (PDT)
+Message-Id: <pull.2248.v5.git.1793393787.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
+References: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 30 Oct 2026 20:56:25 +0000
+Subject: [PATCH v5 0/2] doc: add new git tutorial
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -114,68 +96,133 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AOKiOg8RUAPV
-Date: Fri, 30 Oct 2026 16:52:01 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
- "Tuomas Ahola" <taahol@utu.fi>, "Richard Kerry" <richard.kerry@atos.ai>
-Message-Id: <9e07da3c-0e75-41d2-8769-1347b3827ba6@app.fastmail.com>
-In-Reply-To: <xmqqh5i5aemi.fsf@gitster.g>
-References: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
- <pull.2248.v4.git.1793198687.gitgitgadget@gmail.com>
- <64d9811539b531104d01ae4382c90230eea01c61.1793198687.git.gitgitgadget@gmail.com>
- <xmqqh5i5aemi.fsf@gitster.g>
-Subject: Re: [PATCH v4 1/2] doc: remove gittutorial
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Tuomas Ahola <taahol@utu.fi>,
+    Richard Kerry <richard.kerry@atos.ai>,
+    Julia Evans <julia@jvns.ca>
+
+So far we've gotten 112 comments from 30ish beta testers who have tried to
+learn Git for the first using this tutorial. Most of them were able to
+finish it successfully. By far the most common piece of feedback was that
+people want to learn more about collaboration and branching. I've written a
+draft of a tutorial on branching, but this is already quite a lot of words
+so definitely we can't cover it in this series.
+
+I don't know if it's possible to get this merged quickly, but if it were I
+think it would be amazing since people are so eager for a tutorial on
+branching. If we spend a huge amount of time revising this I think there's a
+real risk I'll run out of funding before we have time to write about
+branching. Ideally I think it would be great if we could merge a "good
+enough" version and then have a way on the website for users to give
+feedback on it, so that we can later incorporate that feedback and
+iteratively make it better over time.
+
+Thanks to Paula, Agavi, Ken Wells, Michael / Chgowiz, Ishmaeel, and all 20
+or so other test readers.
+
+changes in v3: (v2 was the "first" real version since v1 was a WIP)
+
+ * Say that the tutorial supports any version above 2.23.0, when git switch
+   was introduced, since the next part of the tutorial on branches will use
+   git switch
+ * Mention that on Windows the tutorial will work best in Git Bash for and
+   it might need adapting for PowerShell. (thanks to Ben)
+ * Add a warning about how Git can dump you into vi, how to handle that
+   situation, and how to write a longer commit message. I tried to strike a
+   balance between lightly suggesting that it might be good to write longer
+   commit messages, while making it clear that you can just use -m"" if
+   you're not ready to navigate the world of editor configuration. I don't
+   think we can use Pro Git here though since it's a bit outdated. (thanks
+   to Ben)
+ * Add Helped-by: Ben ...
+ * Add output of "ls ~/.ssh/*.pub" (thanks to a test reader)
+ * Suggest cat ~/.ssh/whatever.pub to make it clearer how to copy the
+   contents of the file. One of the test readers said this was unclear as
+   well. (thanks to Junio)
+ * Mention that the public key might not be called ed25519.pub (thanks to
+   Junio)
+ * Add a short section on the importance of git status
+ * Fixed the formatting around the headings. Kept it in the same style
+   because I had issues with the docs linter when using == DESCRIPTION
+   (thanks to Junio)
+ * explain what --set-upstream does (thanks to Ben)
+ * A few other small phrasing fixes from test readers
+
+non-changes in v3:
+
+ * didn't use git config set since the tutorial claims to be compatible with
+   Git 2.23.0
+ * kept using the term "folders" since my impression is that Mac OS and
+   Windows use the term "folder" and those operating systems are more
+   popular than Linux. I don't think any test readers were confused by this
+   term, though "directories" might be fine too.
+ * leave git init instead of git init myproject so that folks can use the
+   same process when setting up Git in an existing project
+
+changes in v4:
+
+Make the instructions more Windows-friendly (thanks to Richard Kerry), by:
+
+ * mentioning that Git for Windows will ask you to configure a text editor
+   when you install it
+ * saying that the SSH instructions are Mac/Linux only and suggesting using
+   Git Credential Manager on Windows, and update the instructions for
+   whether to use an HTTPS/SSH URL accordingly
+ * using "folder" instead of "directory" in a few more places Also:
+ * Say "bottom left" (thanks to Ben)
+ * Add a link to how to configure various text editors
+   https://git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Setup-and-Config#ch_core_editor
+   (thanks to Ben)
+
+non-changes in v4:
+
+ * leave the comment about how vim is "extremely difficult if you're not
+   used to it" alone, I couldn't come up with a better way to communicate it
+   and I really don't want anyone to think that being able to use vim is
+   expected.
+
+changes in v5:
+
+ * replace "it" with "GCM" in the commit message
+ * remove some trailing whitespace the CI on GitHub told me about (make
+   check-docs doesn't seem to check for this)
+
+Julia Evans (2):
+  doc: remove gittutorial
+  doc: add new Git tutorial for beginners
+
+ Documentation/gittutorial.adoc | 1051 ++++++++++++++++++--------------
+ 1 file changed, 589 insertions(+), 462 deletions(-)
 
 
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2248%2Fjvns%2Fgit-tutorial-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2248/jvns/git-tutorial-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/2248
 
-On Wed, Oct 28, 2026, at 2:01 PM, Junio C Hamano wrote:
-> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Julia Evans <julia@jvns.ca>
->>
->> The next commit replaces it with a new tutorial.
->>
->> Do this as a remove/add instead of just replacing the file in a single
->> commit to make the patches easier to read on the mailing list, since the
->> existing content isn't being reused.
->>
->> Signed-off-by: Julia Evans <julia@jvns.ca>
->> ---
->>  Documentation/gittutorial.adoc | 671 ---------------------------------
->>  1 file changed, 671 deletions(-)
->>  delete mode 100644 Documentation/gittutorial.adoc
->
-> Strictly speaking, this step alone would break "make check-docs"
-> because it fails to remove the reference to the removed document
-> that is in Documentation/git.adoc file.  To be peanticly correct,
-> this step must remove the reference from there, and then the next
-> step must add it back, to make sure each and every step of the patch
-> series builds and tests correctly.
->
-> $ make check-docs
-> ...
->     LINT GITLINK git.adoc
-> git.adoc:1211: error: gittutorial[7]: link outside of our own docs, 
-> shown with 'HERE' below:
-> git.adoc:1211:  'linkgit:gittutorial[7]' <-- HERE
->
-> I personally am too busy to worry about the "each and every step
-> must correctly build and test" rule while flipping 100+ topics in
-> 'seen' myself, so I'll update this topic in 'seen' as-is, but if we
-> ever need rerolling this series, then we may want to remember
-> cleaning it up.
+Range-diff vs v4:
 
-I tried to fix this, but there are quite a few references to the tutorial
-(including in `git.adoc`) and removing all of them would
-cause some merge conflicts which I believe would cause more
-work for you. I can remove them if you think that's best though.
+ 1:  64d9811539 = 1:  64d9811539 doc: remove gittutorial
+ 2:  4b40588c90 ! 2:  051b2c4551 doc: add new Git tutorial for beginners
+     @@ Commit message
+            giving some instructions for how to translate an HTTPS URL to an SSH
+            URL.
+          - Use Git Credential Manager for authentication on Windows, since it's
+     -      simpler, SSH auth is a very "unixy" thing to do,  and it comes with
+     +      simpler, SSH auth is a very "unixy" thing to do,  and GCM comes with
+            Git for Windows
+          - Warn people about how `vi` is the default text editor and give some
+            instructions for how to escape
+     @@ -1,2 +1,2 @@
+      +On Windows, you can skip this step and the next one because Git for
+      +Windows comes with
+      +https://github.com/git-ecosystem/git-credential-manager[Git Credential Manager]
+     -+to handle logging in. 
+     ++to handle logging in.
+      +
+      +If you don't already have an SSH key, you'll need to create one.
+      +You can check if you already have an SSH key by running:
 
-> Having said all that, it seems to me that this version is now in a
-> pretty good shape to be merged to 'next'?
->
-> Thanks.
+-- 
+gitgitgadget
