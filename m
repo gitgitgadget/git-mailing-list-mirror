@@ -1,88 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793395993;
-	b=jym1PUmd/9D3qQ7j6GUm+8rzQa+C7yRkiHesJE/zxCGSX92R3CMyDDqpJWJHALAMIsfS
-	 QdDzBoNrl5ZxuXHfQJ5Kg2pptZXETOLQ4tLvRdZBhBIwLI4kzMcN74hO+rtSpDL8HL0Nw
-	 4e0F68Zc+bbSu1K7b2IQrkSXm9arRwFrJ6NNG68hBv+Ib6UEIw99Z1D3sZnxA6s6ACe3e
-	 VTvPiq7XM/nWqwIP6gqPjiBtsSLtcz/oMljiJIXr/7QHECLadPv3Vt3vTHzHJLe1SyF7E
-	 WA7Bu3KtfAxEgjZiu1ks+5dxDQaxXMDDyfw2TmcDXp6RutRu7CiltRqL6OYFb82D2hg==
+	t=1793396133;
+	b=1zUD5Cf9zkVakgHoV/8TZoVCvHMxOC9GAnSOSun9wEa2wmyUtsahChqVEQIzHJzhz3sp
+	 jFfyolVU113cyBrcbMQ0OoBFG3t6EFwOAdWXoiX5+fixJSfx38CQNKbEwYfHOX19b6IUM
+	 R2Kjfbb+6eZyrA2+AHZrrnapcWrsCKDdA2DQyH+ZI9Ia7acJ7GMe2l9RtQbpb7YyfZq2W
+	 ZeIq+Ow8LyYU30INll/T3LrGNsU8mShkx23BFgNBhFEpuOwMIID26FSgzV7WyzL/unxg8
+	 sqxzyywvh0EtmsV3RMGrj4ienIEWytTQ6FjlbEFkq7KpooGlpw1X+adw5UO5SNpl4vQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793395993;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793396133;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=XoEvjigjRTGfUMWnUZfAHJD9p1M3O4kUL5j7Sa2lBnc=;
-	b=rW6Vy4ez//ZC4OIJPcy3lky4QfzOllYRMDHGNJcYzG3rjwbphz6WSNiRcMAOdchD9Naq
-	 4HIRRdTd1cTziwdBYuY86Ad9BPF944EhGnmUL1C9IswlcdOXBSGkVj9s8jBVSCTPmiQ+9
-	 ZJOxU9NlAibN3TzSEMWGc57jImjyMvbUWsZ0u4dg+xaKJjdrBEoOPA5hfmKMoKqzuOlU1
-	 74rMUpX91hT7ZgvvYB+fpSUGPxsAZsEB73IUIlwIBjjDmWPQZg3f1aCz4K4JU+IKuCgoo
-	 VVft7pvsZBvgGW+YiHKwl//KamlktF7YsQ+rCOIT1nbY9zd1+nvKAOANn1b5f3WTmSg==
+	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
+	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
+	bh=7fjcGz6L4YXP4jJvHwN9iBSLTtTwhYKiwcdXSFDAnHM=;
+	b=ANavovAA/fqs5mvSa1Rbfh7fsEWPyF+8FAWJ41ShuCtZXXUDEtB8AA6YJ46tBbyzy9z1
+	 GZ6qTQPZD7ublrQLhySmrP3FTl2qrFbO9RiVVoNFUHKAx1L8D51vYmUGrNFNkAYpCNQxx
+	 orJvDnc+vB6SN+Tq4b49jGR514F+M5blnVo7vJE4o2fhK0g3arOsIVIRorM1nWPggaVxn
+	 xwax+QdspsZbD9d8cmdDEL7P6jQWACTpUCa+WQE4+d05bIR4qjEV2L1/Y6ycCFGI6iKIl
+	 JXxyAQkgf1ZpS77nOGJSVBX+og5g6OvsfY44/a82S0KeAMVol9vrNzKi8+9YRM3Yutw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sE4SFqkG;
-	arc=none smtp.remote-ip=74.125.82.177
-Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gBr4CePI;
+	arc=none smtp.remote-ip=209.85.219.45
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF19560A2628
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 21:33:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CF19560A2628
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850FA606A324
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 21:35:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 850FA606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sE4SFqkG
-Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-36a2551d7b5so2904179eec.1
-        for <git@vger.kernel.org>; Fri, 30 Oct 2026 14:33:12 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gBr4CePI
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-91c73c63116so13987526d6.2
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 14:35:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793395992; x=1794000792; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XoEvjigjRTGfUMWnUZfAHJD9p1M3O4kUL5j7Sa2lBnc=;
-        b=sE4SFqkGSKVzWvAuAzJ+l9cqv/HOe8RDBLTmRjkqbvtsv5JCK3xLwvS4IX8EZ8/SjV
-         6Q7IHn05wLgrmc/arEErDk8RwG6jHa9XDMbpa9WICq5MmUtvUX0PVFkZzalTL1melKs9
-         4tuaClDrlwT5l2ktTzOYxWKNUXPvUqr7mvkO6cHZ5M1CEyWtbNiQzp9ZUcz1BR4o7a41
-         bn9d8ztRmGxI70XDhpV8xwChrUztL9t0QPRsCaKHSmC4Zt84hBs5K5Gb15Uh/xkryPPM
-         ZFlQeH49toOb9dLytEpIU8Av8C+rjHe+VlqZ0Ga0aoSoFXfFffyzEHtNdcAxdyzp3OCM
-         +vqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793395992; x=1794000792;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1793396132; x=1794000932; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=XoEvjigjRTGfUMWnUZfAHJD9p1M3O4kUL5j7Sa2lBnc=;
-        b=hSBB4CQtJiL/CESGsKkGmlhY6we8xYpqaGYgQWVHne4PWTxZRSB0FClGeJ9m+RU/RS
-         WjGC/ZYYYe7Txf6UOG12dcsuunXtr3n1cCBlDabBfhtfJWWCPl35k6rtdzxm14HPawhk
-         y0bBDpa9lp0wMmjpUWI1t/EyhtN/mjt9JsECVuwhdqKXgtd8X+5WpLaRnq46LLbUeJ6j
-         Akwn0ckJWnyl7UpLG0Uq6m/CAJGEwMpriAFRmRx3XLbBIiQqcCV9XO1MxeahPQJndf3V
-         53+L0zY95hXZBX6aNelQU5x3xXFmW7AaXWFzJ1tkrdDT/+c4ljLdRavBfndIMOgS98kW
-         jMQw==
-X-Forwarded-Encrypted: i=1; AKwUvBy2vDJQ0qVambN6U+MzyiOe/awTGVU12Tsx7MZ4jm165k8ZZcpxmr6rrSRKTAMrn7ZueAo=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIg86Ulj0CeZEL3J6nij75i/noAuCnZ77KcZhqrjV0KLHu640Zz
-	LOnnxRhTGz10n+pcKqqzgJSogatoW6/uArPW/yasAPY0TBy+BobwXpQI
-X-Gm-Gg: AYBFou3DzJT1ODIMRJLlpSPeAjhl4BWqElbpnUp9Cs5DpxJQj8tiWm/FfOO+mjyvyKc
-	UHK0N32mMrx9VCewkzFx5dQd+UJHirnL2xxQkBZeuhF66Euzu7q3zGMuxHh+0Fo/kFEbiMV/yRL
-	T3KX8nZHBbUUzjtNwnSKOird8sWBcRCSfk1qIS3WrHyFbWuBHPFNaDoSHILfxX52M4v3mxXQnVR
-	f6U9EUtJkw7nSK1w03+8pfJ7s7sUo9BrpJro4l+rmrcaosXsvzBjskXzTUwS510OID2iBZRBosM
-	FeiqqINxHT31HIM5Yd8Y447zTfQLa0IuYyfw2S4d4xBfoib2CdV5yFIkFKogPWqeUxISQ9Svfy/
-	0HHL+S2xqCiFoEYTUBZQkmsHpyxeGgDl3f6uOIeXyihl0n//ElZJDy/ENz1VOqDCXMuRDkuUAIf
-	IXIBPyOQGLS52284U5qR9yIpBwswk+6CTw90dKYuZ65C7phXH4QX3XTt4qJqn4Fas1RodPwhAEl
-	onEjxVaIMj8YpuAhrPM6zROfdyfxdJFuoG/2WecybXs+ICQ5v6swUE62d6ffsCuzzXrxTKd9G0S
-	g/Wx89s+3xWR2NMwWGUNIiv+dbMZygEZOtK2/Qwh
-X-Received: by 2002:a05:701b:4549:20b0:143:1bb1:3305 with SMTP id a92af1059eb24-1a94abded94mr8484373c88.22.1793395991666;
-        Fri, 30 Oct 2026 14:33:11 -0700 (PDT)
-Received: from [192.168.0.11] ([106.51.26.191])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1ac13ef1d4dsm8832444c88.3.2026.10.30.14.33.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Oct 2026 14:33:10 -0700 (PDT)
-Message-ID: <1e194ea7-2e28-4142-b678-d8cb8bca8e35@gmail.com>
-Date: Sat, 31 Oct 2026 03:03:05 +0530
+        bh=7fjcGz6L4YXP4jJvHwN9iBSLTtTwhYKiwcdXSFDAnHM=;
+        b=gBr4CePIR4m1ZJ8GSaF3FlvE87dgJaknw39uQniToCIyzsEHNgOW/8g9TZZchPdcQc
+         /tXE4v/KgyygWNL1bXSg9cwMfJMLhFFLwSo8q8EmSmAGOCfrNOZNLASzXEgIU39yTFEz
+         bQ4DSQyRnV7KdTedjAMZaY4Hjckla2l2zCp/2XaUAYuhh5DB4hh6QUTjxTuJ1WYrs1Lq
+         xl8ZFypHKmKeReJQ03WqN+3cLQoTI/1oMgWRzh2wEEkRM7tWPQGRshjkY4Xdo4MSv7pB
+         ePmwhPC+JzIB7+uWZ1SV2qNCjqAWHD2g9GjxGhAvwjBnZSNmwAwXZXuLH9aTFA2PHaCu
+         olaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793396132; x=1794000932;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=7fjcGz6L4YXP4jJvHwN9iBSLTtTwhYKiwcdXSFDAnHM=;
+        b=gO+pjWR6bPSA65MH0Uitf1BK6pYrwzg1akK784eSePh8n5CKQxZbPp71XIagr86M3q
+         89cGqI/bYGi7IneZMZjs4Jyjter2sCDr2WFg53ZH3CLzKt+x/A2BFPeuvE+HP1Zx7GX2
+         lKHzTKa/uo1fpEoyKBeQ9mp+pkyDSnRwIwFxom7+mSPiR8pfiGknZxIrzBWI3uZin4Lm
+         SfNRSpSCQAkXYy/MnPj9logXJ12PVwqgOXSEttsHPxw9SrpHlZd8WWHuzCeFPkF5v+mc
+         k6BJc+tvvHcgY9LcUjMgj0qLirwTf05CjEZLycAACMy1D1lR84ssYEL6C90k4OiV+oTK
+         AKkA==
+X-Forwarded-Encrypted: i=1; AKwUvBz4rLSlQevXvAPbty2r2R9QfT9zL9pSix+fh+VCs/MStFeY32nS5fTG5IoOzvs/yahj5NM=@vger.kernel.org
+X-Gm-Message-State: AFq9FYI6wb96f5GJHwpdeGbGBs1u4N1xEOfJr6mHXe23KLdfw7kVryV2
+	tjPcGutPP5DjQHnbW2Kb+VCX5RdbkruAoHkb2eZPHsOTj4S9pD6uP9/1
+X-Gm-Gg: AYBFou11N2gpnqIita0xipULutYK7xhkFcoHgZP76dJNK6oka4xRCaZVqsvkUgh81B1
+	PJ9ZfOsKAsEUzotHJGOFD2pXfBtFEF87GgLVGbiL54XTA6Ph8l8kQtQq5pXwzG+5jaBJdVvPest
+	1WoAxM31n0T/D5JwjV1VWB2/OG6+ROjkuEYkxj+6phS3wFOoYWamX4t3tF6R/9J7zuubczfjOqw
+	PbNURxaNPcKmlfKZniLE9XJ2rC/Yh2A48l1UYnN3buFdTRBClIAChCf21HpSIjIEQmpXhzfD/WU
+	0cxuM4zMskE4hwAc0yN5F02ggM4IIe1DxYMXCcwdpbClQfs3JvFkdtrZ/TEwNUWdMf+9AMI1MkQ
+	intFZVqFU0MU8qsAGPrkwlcvmYKw9g8S4z1t4kRbu7vEhDsvQ0qGAj2qeJtOcorIfRRTNlvbGNw
+	FcO48Uimw7PriFZrKcXJxfvxAv52YIUEGzPrznKbeZU18rCZimq+HibgWgvJbpLs1pLJN5i2Z83
+	as7kfNILFz+F/N5NgWHIjlfCj7dj2tSLJjuk0+7IqnpuVg3UbqKtiYMA6amiXTrtC/yiVRJLzF8
+	GwYW8K3kYuBw30y+T4oOb+9HuR8nWw39+ASWwLh1GycHlYy0lYwgOBb9bKvJXHt31fy0IwrjdWh
+	45ePYbQIuy153RonFiW+lPShUqMfekmfuDF2p+ObUeaq90UQkxmIWl9g5yHa3xRmD9udW0Mm5t9
+	1gqV98ru96H8GMBdHOBDy6cXtq
+X-Received: by 2002:a05:6214:27cf:b0:910:c44f:a81 with SMTP id 6a1803df08f44-91ca4b5958dmr55400586d6.10.1793396132193;
+        Fri, 30 Oct 2026 14:35:32 -0700 (PDT)
+Received: from smtpclient.apple ([2600:1004:b03e:6cb9:c1f9:7732:784f:faa9])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca80700b5sm25496956d6.38.2026.10.30.14.35.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Oct 2026 14:35:31 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,70 +92,47 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] Standardize early option scanning
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
- Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
- "brian m . carlson" <sandals@crustytoothpaste.net>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Justin Tobler <jltobler@gmail.com>
-References: <20260923080928.1534413-1-christian.couder@gmail.com>
- <20261012074413.337183-1-christian.couder@gmail.com>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <20261012074413.337183-1-christian.couder@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] add -i: hide init/clear_add_i_state() functions
+Date: Fri, 30 Oct 2026 17:35:20 -0400
+Message-Id: <EDD8FC7B-91B4-49CA-AE6B-3475E03EF786@gmail.com>
+References: <xmqqv76jxl22.fsf@gitster.g>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+In-Reply-To: <xmqqv76jxl22.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (23D8133)
 
-On 10/12/26 13:14, Christian Couder wrote:
-> 
-> Changes since v2
-> ================
-> 
-> Thanks a lot to Junio and Kaartic who reviewed previous versions.
-> 
-> Rebased on top of a018953688 (Git 2.56, 2026-09-27) to start from a
-> stable base.
-> 
-> There are a number of important changes since v2:
-> 
->   - In patch 1/4, parse_options_takes_argument() now considers
->     PARSE_OPT_LASTARG_DEFAULT options as taking a value. This allows us
->     to remove a limitation that was in v2 as these options now consume
->     the next argument when there is one, like in parse_options().
-> 
->   - Patch 2/4 is new, see above.
-> 
->   - In patch 3/4, we reuse the new lookup_long_opt() function extracted
->     by patch 2/4. This removes a number of limitations (around negated
->     forms, unambiguous abbreviations and aliases) that were in v2, as
->     the early scan now behaves in a similar way as parse_options()
->     regarding long options. A number of tests have been added to ensure
->     that.
-> 
->   - In patch 3/4, the scan now stops at short options, unknown options,
->     ambiguous or disallowed abbreviations, options with a low-level
->     callback, and value-taking options given as the last argument,
->     instead of skipping over them, as it could otherwise take an
->     option's value for an option.
-> 
->   - In patch 3/4, early_scan_fn() has a new `unset` argument for
->     negated options, and early_scan_options() now returns the index of
->     the first argument not consumed also when the callback stops the
->     scan.
-> 
->   - In patch 4/4, the commit message and documentation are updated to
->     account for the better behavior of the early scan. A related
->     NEEDSWORK comment is also removed, and some tests added.
->
 
-The v3 seems to be in a much better state to me. Just left a few minor 
-comments.
+> Le 30 oct. 2026 =C3=A0 11:30, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
+rit :
+>=20
+> =EF=BB=BFPatrick Steinhardt <ps@pks.im> writes:
+>=20
+>>> On Wed, Oct 28, 2026 at 12:57:51PM -0700, Junio C Hamano wrote:
+>>> The "add -i" machinery is encapsulated in run_add_i() function,
+>>> which uses init_add_i_state() to initialize the machinery, does its
+>>> thing, and clear_add_i_state() to tear it down.  External callers
+>>> have no need to call anything other than run_add_i().
+>>>=20
+>>> Make init/clear_add_i_state() file-scope static functions, and
+>>> "struct add_i_state" type as well.
+>>=20
+>> Nice cleanup. For historical context, these declarations are not needed
+>> anymore starting with d51b61f5dab (add-patch: remove dependency on
+>> "add-interactive" subsystem, 2026-03-02).
+>=20
+> Thanks.  I did not notice that I gave a backstory for the other
+> three commits but apparently did so without digging into the history
+> for this one.
+>=20
+> By the way, I queued the patches sent to the list on a branch (I
+> initially made them on a detached HEAD without keeping a local copy
+> after sending them out) and tried 'git history reword' to update
+> this one, but it seems it does not honor the notes.rewriteref
+> configuration variable.  I wonder if this is a known limitation, or
+> a deliberate design.
 
-Thank you for working on this!
-
--- 
-Sivaraam
-
+Indeed. I believe it is a known limitation (one I would love to
+lift, but will probably not dedicate time to produce code soon). Still, I=E2=
+=80=99ll help
+in the usual ways if I can ;)=
