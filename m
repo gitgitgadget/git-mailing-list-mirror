@@ -1,88 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793395654;
-	b=tfitCg885bejtrISk1c+SsC3Ha0QhbnUAi9j+rnnwnabDM0o/0s/Hv/+/SMG2ss6sjM/
-	 XLbA7kOyNJ9/lR0yezOnSnIxmqgDUsbFDGvkNiQ5KKHvJnQ2XvOEH+0450MhFb3+aEPFG
-	 DkdqVi1IJQbpppWUplzGeGeujrHh8MadKrS2hQIXoCowCq/EIWNFqel/xwaB/nj5bKOGr
-	 fQhJRpVscOoEQIl3Q5pk5CZruW3tn1+rSolC37dE5p1S7c7I4h8imA5/6OL7kl9O3Fjux
-	 f1pvYNROWSykYTWLjbr0x3XWbHVzfZIWoXef3bHIOryq++MXPaA48ZLSNUlYK3cVexA==
+	t=1793395993;
+	b=jym1PUmd/9D3qQ7j6GUm+8rzQa+C7yRkiHesJE/zxCGSX92R3CMyDDqpJWJHALAMIsfS
+	 QdDzBoNrl5ZxuXHfQJ5Kg2pptZXETOLQ4tLvRdZBhBIwLI4kzMcN74hO+rtSpDL8HL0Nw
+	 4e0F68Zc+bbSu1K7b2IQrkSXm9arRwFrJ6NNG68hBv+Ib6UEIw99Z1D3sZnxA6s6ACe3e
+	 VTvPiq7XM/nWqwIP6gqPjiBtsSLtcz/oMljiJIXr/7QHECLadPv3Vt3vTHzHJLe1SyF7E
+	 WA7Bu3KtfAxEgjZiu1ks+5dxDQaxXMDDyfw2TmcDXp6RutRu7CiltRqL6OYFb82D2hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793395654;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793395993;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
 	 Content-Language:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=MgxQBYU0SqvxqW0uvAqUUsaMKmV9w5lBQ/WM0fKcwlY=;
-	b=5PTCUMkkSoi0JJSDE48jZtHEXr6g/cirnTcs5UpUnKUdUl08ZCf/WHU2iFc2xn9QtA/W
-	 j1dJCRwU/Dwy5Tu0O061wWmRi4R8cDOBHU3XDzd02wh0YafLPuYFPD8zvC9nPed/cfzaC
-	 8AaXMkAuA4sb/c6GwqbxWp+EEzq/d3SGlBhAOluOalCyDKr3P/ZNa6KmNJZKRWevNgtEE
-	 8VGOBF++s/2OxaLHIcZovf0uwGShPdoXuZqkKeyV7Nagq8avjR0GTPwmguu82GiPxZ2Jt
-	 K4C38czxZR+EQIHXKpORDIBAX/PCq0+M8w/hkb0NZt10fZUW6NKdqVJfuSuP9ePOTdw==
+	bh=XoEvjigjRTGfUMWnUZfAHJD9p1M3O4kUL5j7Sa2lBnc=;
+	b=rW6Vy4ez//ZC4OIJPcy3lky4QfzOllYRMDHGNJcYzG3rjwbphz6WSNiRcMAOdchD9Naq
+	 4HIRRdTd1cTziwdBYuY86Ad9BPF944EhGnmUL1C9IswlcdOXBSGkVj9s8jBVSCTPmiQ+9
+	 ZJOxU9NlAibN3TzSEMWGc57jImjyMvbUWsZ0u4dg+xaKJjdrBEoOPA5hfmKMoKqzuOlU1
+	 74rMUpX91hT7ZgvvYB+fpSUGPxsAZsEB73IUIlwIBjjDmWPQZg3f1aCz4K4JU+IKuCgoo
+	 VVft7pvsZBvgGW+YiHKwl//KamlktF7YsQ+rCOIT1nbY9zd1+nvKAOANn1b5f3WTmSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RQ2ngd4w;
-	arc=none smtp.remote-ip=74.125.82.170
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sE4SFqkG;
+	arc=none smtp.remote-ip=74.125.82.177
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD4560A5BD4
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 21:27:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBD4560A5BD4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF19560A2628
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 21:33:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CF19560A2628
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RQ2ngd4w
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-36a1947498bso298152eec.1
-        for <git@vger.kernel.org>; Fri, 30 Oct 2026 14:27:33 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sE4SFqkG
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-36a2551d7b5so2904179eec.1
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 14:33:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793395653; x=1794000453; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793395992; x=1794000792; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=MgxQBYU0SqvxqW0uvAqUUsaMKmV9w5lBQ/WM0fKcwlY=;
-        b=RQ2ngd4w9ZUUBF394F9J4hHGznebciX0tF/SkYzAPQaKoAtYBEaEsNFhLbsNjdmkw9
-         25jbmmQ92Fx4jvCIzrFm30yTVqPHWy95Ny3uGQSai+3yIs3izzpwJJLA/R+/Iyl4KqNI
-         3A5Z6XO88spnALyNHkB9hOQeD3kANdB3Q6B+t1E8eVJWOvbXg+AC+2XCJ7x/ZOh6ujA/
-         AMrgtkJRan0D0gMDHYUy9d1nq0+bFziC9GuCvfnpYO4qwPQJNimOYKpxCz+sKDWy9rSH
-         3QBPI7E65RusexpgqC4kGC5zCxzzeN+qwW/srosjV74YTVLXALd6qkdjuzbKoqf22G1W
-         EPOQ==
+        bh=XoEvjigjRTGfUMWnUZfAHJD9p1M3O4kUL5j7Sa2lBnc=;
+        b=sE4SFqkGSKVzWvAuAzJ+l9cqv/HOe8RDBLTmRjkqbvtsv5JCK3xLwvS4IX8EZ8/SjV
+         6Q7IHn05wLgrmc/arEErDk8RwG6jHa9XDMbpa9WICq5MmUtvUX0PVFkZzalTL1melKs9
+         4tuaClDrlwT5l2ktTzOYxWKNUXPvUqr7mvkO6cHZ5M1CEyWtbNiQzp9ZUcz1BR4o7a41
+         bn9d8ztRmGxI70XDhpV8xwChrUztL9t0QPRsCaKHSmC4Zt84hBs5K5Gb15Uh/xkryPPM
+         ZFlQeH49toOb9dLytEpIU8Av8C+rjHe+VlqZ0Ga0aoSoFXfFffyzEHtNdcAxdyzp3OCM
+         +vqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793395653; x=1794000453;
+        d=1e100.net; s=20260707; t=1793395992; x=1794000792;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=MgxQBYU0SqvxqW0uvAqUUsaMKmV9w5lBQ/WM0fKcwlY=;
-        b=iyZu3c7Vq3MpqKvGoQZI4uJllVuj+7VNLyJ2TfTpxnQpCivwZhTFQmpIal7VoaJsuX
-         UDs2mFmFrSL8jZ621GhLuXUlcftPSWFqWKaP/HtxgWhWxlNwcTWTbLNYem97I9mSSnXU
-         Shie57A2QrT1K7tbf3kpAd3i7S/wMD7k9sVVqCMOCzf9KZkX5fVeoGoAXM5DP18XKCRB
-         XrkK8rLvnsO1yDEiQ/RGZDwRuYhIWwm47cngfru+imyEubAdJJ6UNwYKlag9MMyI4MxT
-         6Uqy1+3OzzRaCjPWHwVv4pI+fCV55IARTMzGhLbWURvzNek/4S/PI2hbB5RbWS0gRTML
-         NZrg==
-X-Forwarded-Encrypted: i=1; AKwUvBzIYg5drdP8VPIJUc09oSIvUZ3r+tI8ZemDg2lWtS+K8s2ARym4wMFN3b9vCWmoAoyBugQ=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKMFvKvAUiPg5LvGntuJgnjVlnxFQc+Y0kEW0yixTUnZ9gvfxu7
-	mMi1whrecYL7SaPtUj9Dt0mOGJ95JkUcgFhLWkAXB8qMhqQYtnT8iRNb
-X-Gm-Gg: AYBFou2pWPj3LtOq8uuO7R7WKcgqonMctT2WcT97LzlfsbLSDwaULbv9eNPhKq5hYKN
-	AAfJT1vftJX62R7DwMPXMBfDDp79MaZaKKC3mZMzEyXIh/5wzzID4ZwhG/KaHyQqEqaVl2eI7C7
-	+cd00x7xlpICEkVD+hUi87oS/ZTfJoi+D7TdooPnQTWVSQkH4A8d1bcAzL0rCDzF5O1OvUwHYfi
-	/U3pYmZDdt9LlvG17g01AVblDoBoOT/Oa1Y6QaJCAhbpGi1Lz6L0NEkjMqNcOqbt7C1YMVAwwT0
-	i0MHdtZjtOehlQOYGeOF0XxqlENHob7HnQRH+zYsL3bIbgsU8obN7Pn9Da0sEcDaFYXupOhIML/
-	Muoi7mK5ZFJknR/DnRlcOnVY0OsapeX5hkyhHj/7PUtsUKqly5tkLdgoURYqLEQ2x8zzDsMxbLF
-	R3GBkeC+RHxzad6QAe6hDkp1rmwLdw2K7qLZCzgvcO7MuZxNW+Z5Zy5wyXed2ewod2QMCNrO8/E
-	U2HPqDsno7p0GGDyingYJ1tJufMijMqzEbTx+m57k4tSKXN/KVEaBW2bnJa+zWlEOUzkDOdAYat
-	V7BrXpxozmj1C+wpgqOE+hczd1OHrSBVSyvbAAMs
-X-Received: by 2002:a05:7300:d215:b0:366:c0a2:642f with SMTP id 5a478bee46e88-36a423b3b95mr4852912eec.22.1793395652637;
-        Fri, 30 Oct 2026 14:27:32 -0700 (PDT)
+        bh=XoEvjigjRTGfUMWnUZfAHJD9p1M3O4kUL5j7Sa2lBnc=;
+        b=hSBB4CQtJiL/CESGsKkGmlhY6we8xYpqaGYgQWVHne4PWTxZRSB0FClGeJ9m+RU/RS
+         WjGC/ZYYYe7Txf6UOG12dcsuunXtr3n1cCBlDabBfhtfJWWCPl35k6rtdzxm14HPawhk
+         y0bBDpa9lp0wMmjpUWI1t/EyhtN/mjt9JsECVuwhdqKXgtd8X+5WpLaRnq46LLbUeJ6j
+         Akwn0ckJWnyl7UpLG0Uq6m/CAJGEwMpriAFRmRx3XLbBIiQqcCV9XO1MxeahPQJndf3V
+         53+L0zY95hXZBX6aNelQU5x3xXFmW7AaXWFzJ1tkrdDT/+c4ljLdRavBfndIMOgS98kW
+         jMQw==
+X-Forwarded-Encrypted: i=1; AKwUvBy2vDJQ0qVambN6U+MzyiOe/awTGVU12Tsx7MZ4jm165k8ZZcpxmr6rrSRKTAMrn7ZueAo=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIg86Ulj0CeZEL3J6nij75i/noAuCnZ77KcZhqrjV0KLHu640Zz
+	LOnnxRhTGz10n+pcKqqzgJSogatoW6/uArPW/yasAPY0TBy+BobwXpQI
+X-Gm-Gg: AYBFou3DzJT1ODIMRJLlpSPeAjhl4BWqElbpnUp9Cs5DpxJQj8tiWm/FfOO+mjyvyKc
+	UHK0N32mMrx9VCewkzFx5dQd+UJHirnL2xxQkBZeuhF66Euzu7q3zGMuxHh+0Fo/kFEbiMV/yRL
+	T3KX8nZHBbUUzjtNwnSKOird8sWBcRCSfk1qIS3WrHyFbWuBHPFNaDoSHILfxX52M4v3mxXQnVR
+	f6U9EUtJkw7nSK1w03+8pfJ7s7sUo9BrpJro4l+rmrcaosXsvzBjskXzTUwS510OID2iBZRBosM
+	FeiqqINxHT31HIM5Yd8Y447zTfQLa0IuYyfw2S4d4xBfoib2CdV5yFIkFKogPWqeUxISQ9Svfy/
+	0HHL+S2xqCiFoEYTUBZQkmsHpyxeGgDl3f6uOIeXyihl0n//ElZJDy/ENz1VOqDCXMuRDkuUAIf
+	IXIBPyOQGLS52284U5qR9yIpBwswk+6CTw90dKYuZ65C7phXH4QX3XTt4qJqn4Fas1RodPwhAEl
+	onEjxVaIMj8YpuAhrPM6zROfdyfxdJFuoG/2WecybXs+ICQ5v6swUE62d6ffsCuzzXrxTKd9G0S
+	g/Wx89s+3xWR2NMwWGUNIiv+dbMZygEZOtK2/Qwh
+X-Received: by 2002:a05:701b:4549:20b0:143:1bb1:3305 with SMTP id a92af1059eb24-1a94abded94mr8484373c88.22.1793395991666;
+        Fri, 30 Oct 2026 14:33:11 -0700 (PDT)
 Received: from [192.168.0.11] ([106.51.26.191])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a428af1easm8752764eec.5.2026.10.30.14.27.28
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1ac13ef1d4dsm8832444c88.3.2026.10.30.14.33.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Oct 2026 14:27:32 -0700 (PDT)
-Message-ID: <6782fa63-1e46-4ae9-b129-a157986c2556@gmail.com>
-Date: Sat, 31 Oct 2026 02:57:27 +0530
+        Fri, 30 Oct 2026 14:33:10 -0700 (PDT)
+Message-ID: <1e194ea7-2e28-4142-b678-d8cb8bca8e35@gmail.com>
+Date: Sat, 31 Oct 2026 03:03:05 +0530
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,7 +93,7 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] parse-options: add early_scan_options()
+Subject: Re: [PATCH v3 0/4] Standardize early option scanning
 To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
  Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
@@ -102,80 +102,58 @@ Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
  Justin Tobler <jltobler@gmail.com>
 References: <20260923080928.1534413-1-christian.couder@gmail.com>
  <20261012074413.337183-1-christian.couder@gmail.com>
- <20261012074413.337183-4-christian.couder@gmail.com>
 Content-Language: en-US
 From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <20261012074413.337183-4-christian.couder@gmail.com>
+In-Reply-To: <20261012074413.337183-1-christian.couder@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 10/12/26 13:14, Christian Couder wrote:
-> diff --git a/parse-options.c b/parse-options.c
-> index a98b958423..c03c396aa6 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -726,6 +726,8 @@ static void parse_options_check(const struct option *opts)
->   		     opts->long_name))
->   			optbug(opts, "uses feature "
->   			       "not supported for dashless options");
-> +		if ((opts->flags & PARSE_OPT_EARLY) && !opts->long_name)
-> +			optbug(opts, "uses PARSE_OPT_EARLY, which needs a long name");
->   		if (opts->type == OPTION_SET_INT && !opts->defval &&
->   		    opts->long_name && !(opts->flags & PARSE_OPT_NONEG))
->   			optbug(opts, "OPTION_SET_INT 0 should not be negatable");
-> @@ -763,6 +765,8 @@ static void parse_options_check(const struct option *opts)
->   		case OPTION_SUBCOMMAND:
->   			if (!opts->value || !opts->subcommand_fn)
->   				optbug(opts, "OPTION_SUBCOMMAND needs a value and a subcommand function");
-> +			if (opts->flags & PARSE_OPT_EARLY)
-> +				optbug(opts, "OPTION_SUBCOMMAND does not support PARSE_OPT_EARLY");
->   			if (!subcommand_value)
->   				subcommand_value = opts->value;
->   			else if (subcommand_value != opts->value)
+> 
+> Changes since v2
+> ================
+> 
+> Thanks a lot to Junio and Kaartic who reviewed previous versions.
+> 
+> Rebased on top of a018953688 (Git 2.56, 2026-09-27) to start from a
+> stable base.
+> 
+> There are a number of important changes since v2:
+> 
+>   - In patch 1/4, parse_options_takes_argument() now considers
+>     PARSE_OPT_LASTARG_DEFAULT options as taking a value. This allows us
+>     to remove a limitation that was in v2 as these options now consume
+>     the next argument when there is one, like in parse_options().
+> 
+>   - Patch 2/4 is new, see above.
+> 
+>   - In patch 3/4, we reuse the new lookup_long_opt() function extracted
+>     by patch 2/4. This removes a number of limitations (around negated
+>     forms, unambiguous abbreviations and aliases) that were in v2, as
+>     the early scan now behaves in a similar way as parse_options()
+>     regarding long options. A number of tests have been added to ensure
+>     that.
+> 
+>   - In patch 3/4, the scan now stops at short options, unknown options,
+>     ambiguous or disallowed abbreviations, options with a low-level
+>     callback, and value-taking options given as the last argument,
+>     instead of skipping over them, as it could otherwise take an
+>     option's value for an option.
+> 
+>   - In patch 3/4, early_scan_fn() has a new `unset` argument for
+>     negated options, and early_scan_options() now returns the index of
+>     the first argument not consumed also when the callback stops the
+>     scan.
+> 
+>   - In patch 4/4, the commit message and documentation are updated to
+>     account for the better behavior of the early scan. A related
+>     NEEDSWORK comment is also removed, and some tests added.
+>
 
-Would it make sense to also have these validations within 
-early_scan_options() just in case it is called before 
-parse_options_start() is invoked?
-   > diff --git a/parse-options.h b/parse-options.h
-> index 589f8d9008..f39b9a779a 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -51,6 +51,7 @@ enum parse_opt_option_flags {
->   	PARSE_OPT_NODASH = 1 << 5,
->   	PARSE_OPT_LITERAL_ARGHELP = 1 << 6,
->   	PARSE_OPT_FROM_ALIAS = 1 << 7,
-> +	PARSE_OPT_EARLY = 1 << 8,	/* only for early_scan_options() */
->   	PARSE_OPT_NOCOMPLETE = 1 << 9,
->   	PARSE_OPT_COMP_ARG = 1 << 10,
->   	PARSE_OPT_CMDMODE = 1 << 11,
-> @@ -502,6 +503,96 @@ static inline void die_for_incompatible_opt2(int opt1, const char *opt1_name,
->   		BUG("option callback expects an argument"); \
->   } while(0)
->   
-> +/*----- Early scan: scanning argv before the actual option parsing -----*/
-> +
-> +/*
-> + * Some commands need to look at a few options before they can parse
-> + * their command line for real, for example because the result decides
-> + * whether a repository is needed at all.
-> + *
-> + * Such an early scan has to know which options take their value as a
-> + * separate argument, or it could mistake such a value for an
-> + * option. The functions below allow performing such early scans
-> + * without being fooled by option values.
-> + */
-> +
-> +/*
-> + * Called by early_scan_options() for each argument matching a
-> + * `struct option` with PARSE_OPT_EARLY set.
-> + *
-> + * - `option` is the matching option,
+The v3 seems to be in a much better state to me. Just left a few minor 
+comments.
 
-Would it be helpful to also convey here that the caller is not expected 
-to retain the pointer as the memory pointing to it would be freed once 
-the scan completes?
-
-Rest of the patch looks fine to me.
+Thank you for working on this!
 
 -- 
 Sivaraam
