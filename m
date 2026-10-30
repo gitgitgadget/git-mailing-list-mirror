@@ -1,69 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793349962;
-	b=n/XaKviMa7S0PEYEbDAgvtddphOcOSBapPFI+l94XBZZaFdsIoRIgYz1yvPtP7dYAX6g
-	 /9kuVhnzMCsHxEOe0qS/TrdGDKu73Bqq35oEkI+l1SDXUcg2ZoBO5v7qxz/GGAr6KlViT
-	 EEu4wkljWAg+8y67xZK+2aJ0w8/bYxQzaERs68JN7VO3LXAj8ybJwFpedmHwFzgOn/4L5
-	 IPluUZ+CoaPpKtwBcuq8OLHOD7+VXg9fIwfjciWXOG7Jwlx9mAX7PnZ6N0w7dJce4PXJg
-	 k2vTlFMZkpYk4nChePiZBOQX0rH4BQqyox3ct9mp4TLis3ATz+GqGmJwAnV3831uu5w==
+	t=1793350344;
+	b=rbYdYgMZ2uMXSaiX4neXgGhUD2tGOulfOnPiYHsizj4eTScqM8+bayXPcGZa3dopoM2w
+	 lsgLmsw4vc3r0WUHFHS+eUZZH8hoRbfr7Z/aZNyrsInAI1rT9RHsO4iKHXyq20RLTNptq
+	 JGSwPwbva4/8kUP2HrioBvER2P+E/+PRYJMiUQxNszAAC69vS04gnIL6+ha1N/+CUOIxi
+	 QzGfbvN74FQTK5U2v8vhvnvVmJUzpSxT2mZVBebIYnE9cjHnyega/y0bOWPVOU8oWzO/5
+	 1mcJyGzoji8G99mu9j2pyHJblD5YFtWsTsxm5w5VkA8Xpmk7y+2iifV/5bk/A0HIRZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793349962;
-	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Received:Date:
-	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:X-Provags-ID:X-Spam-Flag:
-	 UI-OutboundReport:Content-Transfer-Encoding;
-	bh=YwAj3bPn3BImy1uMUUYT869uHKcd5Liihe9Gx4UffYw=;
-	b=YrWCXgLPxoYLUszfinJlfmQsgfsaReT0ZO9CvPSpZPyBDS7IHiDNEqZN39Xrz2+7eCsC
-	 1CrmqmEYzXZTn8N7ugwzsHnya7/v9b9xDoRuvdl9Kb5pWwlUBD3+rvxYknKxD/F6jYOwi
-	 pNzMPJjQjwSLTjxC7h6JCWpex2lMjzMdaoGN8AzdNtbXrXkXrT49JgQ/jsUurjlxDK4n9
-	 DU/m1CvOaU7FcyfbTynslO7XC2HURAx9OLGwGZhK2XNopKnrslj3jmWEb2CwkoqWlleWj
-	 u9gsG9+leszSqwAyiPlC63F+mAOsE6pDm6hooq0BhX3o6L3YgopZphqJDJVdKoNMFZg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793350344;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=MKvawX9F+ZU7Kv5mbXuWUSueZu9ojF6pDJ7s4piv8ZE=;
+	b=DWsx+nuP4kRUm2CZzE+EHtfrSdkx32ZulpDx75A3jZ88Xic5kZK0vAmd2GE6wJXxI281
+	 og2rN+aLkz7oirqruUaB2lj5QD0j3muX192DNPikqOhuwhfL/g6lUZBkfnXdRjL/uO3FR
+	 Rca0Ip5PTVswpAH0dVLuvD40KMz6DEpio88cD8E3n8C5gIk26HmVgmZzdvMbu2O2KwJhD
+	 YBpRIF5oznlXF2VJqXtteiXMhF6ClE1BtfHbQNDOcqWOkwQaiajphA8nSEixTpoVStGXm
+	 RlvdELOW+6dENhSXJPAmoedBHI0INNtkE0hPhezkQLCghWTkXYi56ddEDUvyKIEHX6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmx.de;
-	spf=pass smtp.mailfrom=gmx.de;
-	dkim=pass header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=HbfrvZoT;
-	arc=none smtp.remote-ip=212.227.15.15
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ujsFd0T4;
+	arc=none smtp.remote-ip=209.85.215.176
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63CD606A31A
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 08:46:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A63CD606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEB9606A322
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 08:52:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0FEB9606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=HbfrvZoT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1793349943; x=1793954743;
-	i=oswald.buddenhagen@gmx.de;
-	bh=YwAj3bPn3BImy1uMUUYT869uHKcd5Liihe9Gx4UffYw=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=HbfrvZoTVW4vvfBhvljL7POD94AjWVqQ0ZmZdpyAlIHF+fY5tCWiCXxCUtWIXZpt
-	 yUVWk1fuLnUOBh7gQxF+5YHhvzEKNDXwJnc3NzG2SKemfCC348IhhRe4orQ2HyuNX
-	 4MMlI5i2YyDVzoNYKZ3gJhPlZBeDxSEn82q3GVqka7Sm0ikefnHDEMJ26RkDvkbkV
-	 DjHtiAIPK17jSLBCqQ49jWWU+RnH7P64zSE87SJroNHNcVaKyPQrZa/sYlyJtQ8B+
-	 16eNaiP4Xtdc91i4OmcwCScbY3t7kmg2Pm/52jY1P4X2GIPqtlkAnulazz+XHCGJr
-	 DRCaQQSnDy27lgMGFg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGQnP-1xJhQQ2jhl-0013qO; Fri, 30
- Oct 2026 09:45:43 +0100
-Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
-	id 1xMiF4-LFb-00; Fri, 30 Oct 2026 09:45:42 +0100
-Date: Fri, 30 Oct 2026 09:45:42 +0100
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: phillip.wood@dunelm.org.uk
-Cc: ian4hu <hu2008yinxiang@163.com>, git@vger.kernel.org, gitster@pobox.com,
-	peff@peff.net
-Subject: Re: [PATCH] sigchain: recover from concurrent double-pops of the
- same signal
-Message-ID: <auRZNlHezwALJOD5@ugly.lan>
-References: <20261029141521.164544-1-hu2008yinxiang@163.com>
- <4c2728ca-5511-4c30-a2ef-6c32fe7a3e9e@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ujsFd0T4
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-cc4be0e5351so178549a12.0
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 01:52:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793350343; x=1793955143; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=MKvawX9F+ZU7Kv5mbXuWUSueZu9ojF6pDJ7s4piv8ZE=;
+        b=ujsFd0T4x0PnuTPcfH2y4NkcxWIxdljyRb460su0azR2eG3B7Ubch3em7wGriP96vf
+         XtmEAr354gFIPZXsg1s/CWce7/OXPJEjHx9usncqq2D4U4QTUkz/MaXwcVR752EB2qdX
+         ejAGp7TKT70IqwBX3XIgC1nSzXkuPIIkUzdi0V+PAWYAMFbUpUP+XFHJqlE6dwUipurl
+         zKQbFRdXYX/G0okMleU3HBbA5qChKxdFE5OcrHhJjZxg2z7A3CfMJrUkLJcR5oni3hM2
+         OcGR2oj+pDh6+Bthxrkcba0hcRVgl7plnEMT06zefSKQsmHkvkJ4u74F3MdNGrNzCAL8
+         d/Lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793350343; x=1793955143;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MKvawX9F+ZU7Kv5mbXuWUSueZu9ojF6pDJ7s4piv8ZE=;
+        b=idYKRFQ712UsaQRtlGwSNTJswcYI85vFf9ZAc+ziqvvXjemJhlUsyiAIhfRciaZAFQ
+         HlvthJeEBd44gMRl8CU6cgUgPeAk41AwrQpf8KVT6/HAkkHGny7qsb4+SCZ0Pvq0H3LZ
+         rbylBxJhKMIBiKKH0g+DIp8JuRcuFv5fxTlQCSBpc/QpPOcPt6K06deDeUM42Rg8Y8Qa
+         L6uz8Uf2HGdv0KLS1uhemZtdbUql+vhBg6s5ueUPKUGsEPZzzQ9n1mD1Lix5rYCa68FF
+         CXBGbWIEnhfX8RPaQIYbdHatkBGERGICfDbUbjpKyAad3drx3uk5nXJZKBliwB/FDa/n
+         xj1Q==
+X-Gm-Message-State: AFq9FYLbupxZI3kcLH36p8b1z4hxwZa9g/7ps55GzTzNbG3RKo0v+AD/
+	bHEAL/l/2wAFgV/XrDRpNs94CwItA2cvdHlRlSA1MFy2V4TPm72cNdU1gK0Psj2V
+X-Gm-Gg: AYBFou19z9OCfUhuC4CRSyThX68r+alDFCEoA9zeLmaDQs2liCYBeMsZtTENW4riBP3
+	DMNKo9c+BYkNoE7j33zC4UH+F0/DZjnFFIsXARbDLC40unmD8Ay9RujBLAgwh8fjPhRRTU1hQTP
+	8Fb6GEAqr0K+9AFKapycabuP0MtuyZqib2G3UcL/RS0jiRllb8xmke6cg7o9eUCvFEP3ZKh7YBx
+	RN76XAYL3V9o1rVzL2MdoEvGWzl5HxEOuCS679Qm8xp8Nb+cLu/A/1e3BGmdYkWYJDo+z5Zf195
+	3emmAcSP73NT8uy+JkAF4Vkra+5vvaS0IMvUYSM7nnTGuitrgyXBsy8iI0JGekKdRm/w1V6xLup
+	QrQRWk3ZS8I4AHqcTgK47r+i2hp6u6MX4FFwc57VyavDnEaHolXBl2zpibG0Gqte+xwKRCWcjQK
+	ZxM5+F6US5hp73UEtTtIEMECqEqcHNX4O22bX3xv4kPTike5dtJjblVzNqW78VLJ2thiUTMpzkj
+	yqp4PcYqJbOnbrRNvsUWaCsr1iB1tqgDnGADebWsgTZhC8ILBkGdb/o95Mkpdrgdn5A6ZhfcVKz
+	9bnIyJdLzQpKnBfhIXGuZpK5cqZpGvEB2vKSh9ActsKE528qTQnOKw==
+X-Received: by 2002:a17:90b:4f87:b0:3ac:af8d:c839 with SMTP id 98e67ed59e1d1-3ae897f6e6dmr1251632a91.35.1793350343125;
+        Fri, 30 Oct 2026 01:52:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.86.196.199])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae845fb9f6sm3173798a91.17.2026.10.30.01.52.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Oct 2026 01:52:22 -0700 (PDT)
+Message-Id: <pull.2280.v2.git.1793350341743.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2280.git.1793099688076.gitgitgadget@gmail.com>
+References: <pull.2280.git.1793099688076.gitgitgadget@gmail.com>
+From: "Shashank S via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 30 Oct 2026 08:52:21 +0000
+Subject: [PATCH v2] test-chmtime: use parse_options() to parse command-line
+ flags
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -73,132 +97,428 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <4c2728ca-5511-4c30-a2ef-6c32fe7a3e9e@gmail.com>
-X-Provags-ID: V03:K1:PC6Ql0HpcfxFphmcva70mhcow3QyD5iSE+AGz6fLi4c2CkZcV8w
- P2xjM6VL/ut8z3+qt5Dvu3u8mCrl3AczYKRU1Ad9Mfp3J1wqJGTk1/mdVHIwNrKNiKMYn0q
- JqqoAwAVEYRKfqTWyKPrF9Tf8FmQe2pVP+PiSiAr0OtqriHvZbT8L1u4Fq4ttFRJt2G7fSQ
- 39T+cWyakrYmPVg5beCcg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:SMs6skNyzhA=;GMLAhe9d1dkzSNrgGLLImAcf6bJ
- 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
- cMrQ3jmwhZW0NNUZr0iQR61PxMzpZLEE9
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+    Christian Couder <christian.couder@gmail.com>,
+    Siddharth Asthana <siddharthasthana31@gmail.com>,
+    Usman Akinyemi <usmanakinyemi202@gmail.com>,
+    Junio C Hamano <gitster@pobox.com>,
+    Shashank S <shashu8660@gmail.com>,
+    Shashank S <shashu8660@gmail.com>,
+    Shashank S Mogaveera <shashu8660@gmail.com>
 
-On Thu, Oct 29, 2026 at 04:03:18PM +0000, Phillip Wood wrote:
->On 29/10/2026 14:15, ian4hu wrote:
->> I left SIGPIPE out precisely to keep the "upstream of a pipe
->> dies of SIGPIPE" behaviour that common-init.c restores.  The set I
->> plan to block is SIGINT, SIGHUP, SIGTERM and SIGQUIT.  If you
->> think SIGPIPE belongs in it too, I will add it.
->
->I think we want to block all signals when we create a thread, so that=20
->all signals are handled by the main (initial) thread.
->
-that wording again does not address the fact that sigpipe is different=20
-due to being thread-directed [1]. even if the outcome is identical, it=20
-needs to be reasoned about separately.
+From: Shashank S Mogaveera <shashu8660@gmail.com>
 
-[1] https://stackoverflow.com/questions/21718311/when-multi-thread-program=
--receive-a-sigpipe-signal-because-send-which-thread-wo
+cmd__chmtime() currently parses the '-v'/'--verbose' and '-g'/'--get'
+flags manually using strcmp() checks and manual index tracking.
 
+Migrate cmd__chmtime() to use parse_options() and usage_with_options()
+instead. Pass PARSE_OPT_KEEP_UNKNOWN_OPT so that negative relative time
+offsets (such as '-86400') are not rejected as unknown short options
+and remain in argv for timespec_arg() to parse.
+
+Additionally, strictly prevent combining mutually exclusive options
+('--get' and '--verbose') by utilizing die_for_incompatible_opt2(),
+and introduce a new test script to verify both this restriction and
+the standard usage.
+
+Signed-off-by: Shashank S Mogaveera <shashu8660@gmail.com>
+---
+    [Outreachy]test-chmtime: use parse_options() to parse command-line flags
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2280%2Fshashu8660%2Foutreachy3-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2280/shashu8660/outreachy3-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2280
+
+Range-diff vs v1:
+
+ 1:  4f702e3f0b ! 1:  43c96de13e test-chmtime: use parse_options() to parse command-line flags
+     @@ Commit message
+          cmd__chmtime() currently parses the '-v'/'--verbose' and '-g'/'--get'
+          flags manually using strcmp() checks and manual index tracking.
+      
+     -    Refactor cmd__chmtime() to use parse_options() and usage_with_options()
+     +    Migrate cmd__chmtime() to use parse_options() and usage_with_options()
+          instead. Pass PARSE_OPT_KEEP_UNKNOWN_OPT so that negative relative time
+          offsets (such as '-86400') are not rejected as unknown short options
+          and remain in argv for timespec_arg() to parse.
+      
+     +    Additionally, strictly prevent combining mutually exclusive options
+     +    ('--get' and '--verbose') by utilizing die_for_incompatible_opt2(),
+     +    and introduce a new test script to verify both this restriction and
+     +    the standard usage.
+     +
+          Signed-off-by: Shashank S Mogaveera <shashu8660@gmail.com>
+      
+       ## t/helper/test-chmtime.c ##
+      @@
+     +  *
+     +  * The mtime can be changed to an absolute value:
+     +  *
+     +- *	test-tool chmtime =<seconds> file...
+     ++ *  test-tool chmtime =<seconds> file...
+     +  *
+     +  * Relative to the current time as returned by time(3):
+     +  *
+     +- *	test-tool chmtime =+<seconds> (or =-<seconds>) file...
+     ++ *  test-tool chmtime =+<seconds> (or =-<seconds>) file...
+     +  *
+     +  * Or relative to the current mtime of the file:
+     +  *
+     +- *	test-tool chmtime <seconds> file...
+     +- *	test-tool chmtime +<seconds> (or -<seconds>) file...
+     ++ *  test-tool chmtime <seconds> file...
+     ++ *  test-tool chmtime +<seconds> (or -<seconds>) file...
+     +  *
+     +  * Examples:
+     +  *
+     +  * To print the mtime and the file name use --verbose and set
+     +  * the file mtime offset to 0:
+     +  *
+     +- *	test-tool chmtime -v +0 file
+     ++ *  test-tool chmtime -v +0 file
+     +  *
+     +  * To print only the mtime use --get:
+     +  *
+     +- *	test-tool chmtime --get file
+     ++ *  test-tool chmtime --get file
+     +  *
+     +  * To set the mtime to current time:
+     +  *
+     +- *	test-tool chmtime =+0 file
+     ++ *  test-tool chmtime =+0 file
+     +  *
+     +  * To set the file mtime offset to +1 and print the new value:
+     +  *
+     +- *	test-tool chmtime --get +1 file
+     ++ *  test-tool chmtime --get +1 file
+     +  *
+        */
+       #include "test-tool.h"
+       #include "git-compat-util.h"
+     @@ t/helper/test-chmtime.c
+      -static const char usage_str[] =
+      -	"(-v|--verbose|-g|--get) (+|=|=+|=-|-)<seconds> <file>...";
+      +static const char * const chmtime_usage[] = {
+     -+	"test-tool chmtime (-v|--verbose|-g|--get) (+|=|=+|=-|-)<seconds> <file>...",
+     ++	"test-tool chmtime [<options>] (+|=|=+|=-|-)<seconds> <file>...",
+      +	NULL
+      +};
+       
+       static int timespec_arg(const char *arg, long int *set_time, int *set_eq)
+       {
+     -@@ t/helper/test-chmtime.c: static int timespec_arg(const char *arg, long int *set_time, int *set_eq)
+     - 
+     - int cmd__chmtime(int argc, const char **argv)
+     - {
+     --	static int verbose;
+     --	static int get;
+     -+	int verbose = 0;
+     -+	int get = 0;
+     +@@ t/helper/test-chmtime.c: int cmd__chmtime(int argc, const char **argv)
+     + 	static int verbose;
+     + 	static int get;
+       
+      -	int i = 1;
+      +	int i = 0;
+     @@ t/helper/test-chmtime.c: static int timespec_arg(const char *arg, long int *set_
+      -	if (i == argc) {
+      -		goto usage;
+      -	}
+     -+	if (argc < 1 || (!get && !verbose && argc < 2))
+     ++	die_for_incompatible_opt2(get, "--get", verbose, "--verbose");
+     ++
+     ++	if (argc < 1)
+      +		usage_with_options(chmtime_usage, options);
+       
+       	if (timespec_arg(argv[i], &set_time, &set_eq)) {
+     - 		++i;
+     - 	} else {
+     - 		if (get == 0 && verbose == 0) {
+     - 			fprintf(stderr, "Not a base-10 integer: %s\n", argv[i] + 1);
+     +-		++i;
+     +-	} else {
+     +-		if (get == 0 && verbose == 0) {
+     +-			fprintf(stderr, "Not a base-10 integer: %s\n", argv[i] + 1);
+      -			goto usage;
+     -+			usage_with_options(chmtime_usage, options);
+     - 		}
+     +-		}
+     ++		i++;
+     ++	} else if (!get && !verbose) {
+     ++		fprintf(stderr, "Not a base-10 integer: %s\n", argv[i] + 1);
+     ++		usage_with_options(chmtime_usage, options);
+       	}
+       
+       	if (i == argc)
+     @@ t/helper/test-chmtime.c: int cmd__chmtime(int argc, const char **argv)
+       			continue;
+       		}
+       
+     + #ifdef GIT_WINDOWS_NATIVE
+     + 		if (!(sb.st_mode & S_IWUSR) &&
+     +-				chmod(argv[i], sb.st_mode | S_IWUSR)) {
+     ++		    chmod(argv[i], sb.st_mode | S_IWUSR)) {
+     + 			fprintf(stderr, "Could not make user-writable %s: %s",
+     + 				argv[i], strerror(errno));
+     + 			return 1;
+     +@@ t/helper/test-chmtime.c: int cmd__chmtime(int argc, const char **argv)
+     + 		utb.actime = sb.st_atime;
+     + 		utb.modtime = set_eq ? set_time : sb.st_mtime + set_time;
+     + 
+     +-		mtime = utb.modtime < 0 ? 0: utb.modtime;
+     ++		mtime = utb.modtime < 0 ? 0 : utb.modtime;
+     + 		if (get) {
+     + 			printf("%"PRIuMAX"\n", mtime);
+     + 		} else if (verbose) {
+      @@ t/helper/test-chmtime.c: int cmd__chmtime(int argc, const char **argv)
+       			}
+       #endif
+     @@ t/helper/test-chmtime.c: int cmd__chmtime(int argc, const char **argv)
+      -	fprintf(stderr, "usage: %s %s\n", argv[0], usage_str);
+      -	return 1;
+       }
+     +
+     + ## t/meson.build ##
+     +@@ t/meson.build: integration_tests = [
+     +   't0071-sort.sh',
+     +   't0080-unit-test-output.sh',
+     +   't0081-find-pack.sh',
+     ++  't0082-test-chmtime.sh',
+     +   't0090-cache-tree.sh',
+     +   't0091-bugreport.sh',
+     +   't0092-diagnose.sh',
+     +
+     + ## t/t0082-test-chmtime.sh (new) ##
+     +@@
+     ++#!/bin/sh
+     ++
+     ++test_description='tests for test-tool chmtime'
+     ++
+     ++TEST_PASSES_SANITIZE_LEAK=true
+     ++. ./test-lib.sh
+     ++
+     ++test_expect_success 'setup' '
+     ++	echo hello >file
+     ++'
+     ++
+     ++test_expect_success 'mutually exclusive options are rejected' '
+     ++	test_must_fail test-tool chmtime --get --verbose +0 file 2>err &&
+     ++	test_grep "cannot be used together" err
+     ++'
+     ++
+     ++test_expect_success 'missing timespec without -g or -v is rejected' '
+     ++	test_must_fail test-tool chmtime file 2>err &&
+     ++	test_grep "usage: test-tool chmtime" err
+     ++'
+     ++
+     ++test_done
+
+
+ t/helper/test-chmtime.c | 72 +++++++++++++++++++----------------------
+ t/meson.build           |  1 +
+ t/t0082-test-chmtime.sh | 22 +++++++++++++
+ 3 files changed, 57 insertions(+), 38 deletions(-)
+ create mode 100755 t/t0082-test-chmtime.sh
+
+diff --git a/t/helper/test-chmtime.c b/t/helper/test-chmtime.c
+index 0e5538833a..cfcbca75a4 100644
+--- a/t/helper/test-chmtime.c
++++ b/t/helper/test-chmtime.c
+@@ -5,43 +5,46 @@
+  *
+  * The mtime can be changed to an absolute value:
+  *
+- *	test-tool chmtime =<seconds> file...
++ *  test-tool chmtime =<seconds> file...
+  *
+  * Relative to the current time as returned by time(3):
+  *
+- *	test-tool chmtime =+<seconds> (or =-<seconds>) file...
++ *  test-tool chmtime =+<seconds> (or =-<seconds>) file...
+  *
+  * Or relative to the current mtime of the file:
+  *
+- *	test-tool chmtime <seconds> file...
+- *	test-tool chmtime +<seconds> (or -<seconds>) file...
++ *  test-tool chmtime <seconds> file...
++ *  test-tool chmtime +<seconds> (or -<seconds>) file...
+  *
+  * Examples:
+  *
+  * To print the mtime and the file name use --verbose and set
+  * the file mtime offset to 0:
+  *
+- *	test-tool chmtime -v +0 file
++ *  test-tool chmtime -v +0 file
+  *
+  * To print only the mtime use --get:
+  *
+- *	test-tool chmtime --get file
++ *  test-tool chmtime --get file
+  *
+  * To set the mtime to current time:
+  *
+- *	test-tool chmtime =+0 file
++ *  test-tool chmtime =+0 file
+  *
+  * To set the file mtime offset to +1 and print the new value:
+  *
+- *	test-tool chmtime --get +1 file
++ *  test-tool chmtime --get +1 file
+  *
+  */
+ #include "test-tool.h"
+ #include "git-compat-util.h"
++#include "parse-options.h"
+ #include <utime.h>
+ 
+-static const char usage_str[] =
+-	"(-v|--verbose|-g|--get) (+|=|=+|=-|-)<seconds> <file>...";
++static const char * const chmtime_usage[] = {
++	"test-tool chmtime [<options>] (+|=|=+|=-|-)<seconds> <file>...",
++	NULL
++};
+ 
+ static int timespec_arg(const char *arg, long int *set_time, int *set_eq)
+ {
+@@ -71,37 +74,34 @@ int cmd__chmtime(int argc, const char **argv)
+ 	static int verbose;
+ 	static int get;
+ 
+-	int i = 1;
++	int i = 0;
+ 	/* no mtime change by default */
+ 	int set_eq = 0;
+ 	long int set_time = 0;
+ 
+-	if (argc < 3)
+-		goto usage;
++	struct option options[] = {
++		OPT_BOOL('v', "verbose", &verbose, "print the mtime and the file name"),
++		OPT_BOOL('g', "get", &get, "print only the mtime"),
++		OPT_END()
++	};
+ 
+-	if (strcmp(argv[i], "--get") == 0 || strcmp(argv[i], "-g") == 0) {
+-		get = 1;
+-		++i;
+-	} else if (strcmp(argv[i], "--verbose") == 0 || strcmp(argv[i], "-v") == 0) {
+-		verbose = 1;
+-		++i;
+-	}
++	argc = parse_options(argc, argv, NULL, options, chmtime_usage,
++			     PARSE_OPT_KEEP_UNKNOWN_OPT);
+ 
+-	if (i == argc) {
+-		goto usage;
+-	}
++	die_for_incompatible_opt2(get, "--get", verbose, "--verbose");
++
++	if (argc < 1)
++		usage_with_options(chmtime_usage, options);
+ 
+ 	if (timespec_arg(argv[i], &set_time, &set_eq)) {
+-		++i;
+-	} else {
+-		if (get == 0 && verbose == 0) {
+-			fprintf(stderr, "Not a base-10 integer: %s\n", argv[i] + 1);
+-			goto usage;
+-		}
++		i++;
++	} else if (!get && !verbose) {
++		fprintf(stderr, "Not a base-10 integer: %s\n", argv[i] + 1);
++		usage_with_options(chmtime_usage, options);
+ 	}
+ 
+ 	if (i == argc)
+-		goto usage;
++		usage_with_options(chmtime_usage, options);
+ 
+ 	for (; i < argc; i++) {
+ 		struct stat sb;
+@@ -110,13 +110,13 @@ int cmd__chmtime(int argc, const char **argv)
+ 
+ 		if (stat(argv[i], &sb) < 0) {
+ 			fprintf(stderr, "Failed to stat %s: %s. Skipping\n",
+-			        argv[i], strerror(errno));
++				argv[i], strerror(errno));
+ 			continue;
+ 		}
+ 
+ #ifdef GIT_WINDOWS_NATIVE
+ 		if (!(sb.st_mode & S_IWUSR) &&
+-				chmod(argv[i], sb.st_mode | S_IWUSR)) {
++		    chmod(argv[i], sb.st_mode | S_IWUSR)) {
+ 			fprintf(stderr, "Could not make user-writable %s: %s",
+ 				argv[i], strerror(errno));
+ 			return 1;
+@@ -126,7 +126,7 @@ int cmd__chmtime(int argc, const char **argv)
+ 		utb.actime = sb.st_atime;
+ 		utb.modtime = set_eq ? set_time : sb.st_mtime + set_time;
+ 
+-		mtime = utb.modtime < 0 ? 0: utb.modtime;
++		mtime = utb.modtime < 0 ? 0 : utb.modtime;
+ 		if (get) {
+ 			printf("%"PRIuMAX"\n", mtime);
+ 		} else if (verbose) {
+@@ -150,14 +150,10 @@ int cmd__chmtime(int argc, const char **argv)
+ 			}
+ #endif
+ 			fprintf(stderr, "Failed to modify time on %s: %s\n",
+-			        argv[i], strerror(errno));
++				argv[i], strerror(errno));
+ 			return 1;
+ 		}
+ 	}
+ 
+ 	return 0;
+-
+-usage:
+-	fprintf(stderr, "usage: %s %s\n", argv[0], usage_str);
+-	return 1;
+ }
+diff --git a/t/meson.build b/t/meson.build
+index 11b3752f00..004bda52c1 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -128,6 +128,7 @@ integration_tests = [
+   't0071-sort.sh',
+   't0080-unit-test-output.sh',
+   't0081-find-pack.sh',
++  't0082-test-chmtime.sh',
+   't0090-cache-tree.sh',
+   't0091-bugreport.sh',
+   't0092-diagnose.sh',
+diff --git a/t/t0082-test-chmtime.sh b/t/t0082-test-chmtime.sh
+new file mode 100755
+index 0000000000..277df4ff1a
+--- /dev/null
++++ b/t/t0082-test-chmtime.sh
+@@ -0,0 +1,22 @@
++#!/bin/sh
++
++test_description='tests for test-tool chmtime'
++
++TEST_PASSES_SANITIZE_LEAK=true
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo hello >file
++'
++
++test_expect_success 'mutually exclusive options are rejected' '
++	test_must_fail test-tool chmtime --get --verbose +0 file 2>err &&
++	test_grep "cannot be used together" err
++'
++
++test_expect_success 'missing timespec without -g or -v is rejected' '
++	test_must_fail test-tool chmtime file 2>err &&
++	test_grep "usage: test-tool chmtime" err
++'
++
++test_done
+
+base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
+-- 
+gitgitgadget
