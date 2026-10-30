@@ -1,123 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793360687;
-	b=PJZTSxkdm2prBDm8PFqHpGSFBZoHLXLy6q0VRBagd04mi3UFA5FTtstw8TfSYBoc4Qrf
-	 XoZYajMYQ8r5Ret/lKsIZwZznK7cWiG4Ax0LAVJZ5T8FE4Ef+/FcYJWAiClGl8Ng25fAO
-	 RelaBPE4/S8OKWOYSdsRLx15E3l43LqeLSnLF3bH6iFaf52ljpELVJwLT0YupwS5hiKpX
-	 N99lWN12INfG4at6n5v58lFkOECUQ+oKWuHLDKEQDgnHph4pcuPX/LA61f56rrcvYvpTu
-	 jfUxjBzWT/VEJcYo1JTokFi9TYZ7gj8HVY3K8uJx7pFDjScK+UPaH0TeqQLTIgdWxWw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793360687;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=zGVGFlCD9FuvJSfrKa0Vu8FWN3EK1T07PXIqkJ/foRU=;
-	b=QeSLXGEsUP2K+u230c/0lfWXiPIejdM1GtpW+Ss+zPD1CCp1Zhp73JbbCIN+VFOOsNag
-	 R7b/kZPJl1ywa2Gy7cDjzrpJwTCLzV4PlUysBBjHm6WBS/leTnar5b9fNI1J2hpeJNZvG
-	 pnjjK91/bUn898jlvRUwRZMK9sTEH7KGmqKtYXQGAvjHmOuzD5ZnugnYi+FsIWTa1zOfo
-	 tbM9i6By1oP6Ufihb4W9BLzIuE61jnXsCe1e2yuQQrYdSgMuPHaZuwH2vydi35EDVE6BA
-	 3LRNd7ssqwLQMJliOeFlsTA4SBtWIUEAYq4gtSdT5mq6ltFId2Q4ipeSh9aObSZVZEg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=Lz2ofuWv;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p1jmUude;
-	arc=none smtp.remote-ip=202.12.124.155
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793361118;
+	b=iu2+m1VusZxZ/CAufzh7ZBPf6TbBAVhKwA1y8+Y54S16t8Ef6zrIbJYVXVokkWg4U7ET
+	 Vpyh+UR2qp/nnawVnJwxx7i+0nFD/vScvVuhKxVHGHh9iVDD7m8OTVho+Oeyfs/KSPrNY
+	 FAnjeHmTF6XLguMhHGiPkUL7OqrEvXDX5qHuUS/5pFurRU2b4AkCr8RrFw/TjDZGOKKqO
+	 5EgwbWt+vdyCOWNCxvmsyM+jtygLV/mNHalH0oAyIugmPue5AlOt2vy2SUCj35Uo4fyZU
+	 MnWzHCbeo3+MUIDlSSYs7e6+kpSvJ0JJjWOp+9G0rzd+q6Q4LE2vhDUa7GG7NBvPxWQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793361118;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=nleg3v3ss/35EwFO4a0CSmM5kNqGJPHNF9IV/Gtdvec=;
+	b=OzETUtC07yG2Ot822iwKOXHUxlTRFR/+IXOFn9L0ZTK1AUHBeZQ5aV34nHP0SU4+ZFT2
+	 r0rUW6RTx6mJbwk5L97jsLekyj0cwrJzCJ2poBBDuu6Ldq1QS45lW3uwsXcSiyhPVo0Ri
+	 zesm4E9+67NLESqONwyLj3U3TEYoStC3HWKZRBaQbEgwPkKMCJPBJ67WU6uayacLd/V+H
+	 kKX70iUlnISge4xqJgdZc0hnTw+z1J8NrhdmVl9f4ceQRsnBoCXEGX1VCW6W2L2Y1a+hP
+	 iTxtoAL+1FO89WZK5kxexMO457wdNVz6GV/Oq1A+0hPFD9HFNMo9C3Qj6l7ZTt3dNlA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b="eu/FGqVW";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912D7606A326
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 11:44:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 912D7606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C63606A322
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 11:51:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30C63606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=Lz2ofuWv;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p1jmUude
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DE3ED7A012C
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 07:44:45 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 30 Oct 2026 07:44:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793360684; x=1793447084; bh=zGVGFlCD9F
-	uvJSfrKa0Vu8FWN3EK1T07PXIqkJ/foRU=; b=Lz2ofuWvI2CLHHR2Gb5P1dF1Q+
-	/vCQKJTZZyeiFG8tJXakunltMR3ay5iQRrUla122iZVSobAZwd3EmUuCtCnjhlgI
-	yUtaHqtwPywZi6Bl+v47Izlxv6cr3NUw6SNNMgdBmHLUMwSyhtCWVWBVch14yXVg
-	YkDUmOyJAOyP1ISuElEdnyFoRV+VfSZfgdNSdsiyVE5VwX8eTnULTVmqxj6qshdL
-	SUsaCHwmc6WfiiBrJIAV1J3g5Ii65xcJwfDoNONsVpwG0C5GgIs50ruJeTLTFBvx
-	YTQrxF4bRjOLfY64z5bQE/QMVe0RqiqgoMiT8aDFFRl3HE3W+Zr6n2yEkuEg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793360684; x=1793447084; bh=zGVGFlCD9FuvJSfrKa0Vu8FWN3EK1T07PXI
-	qkJ/foRU=; b=p1jmUudePz9gXt0rqcIpNSWz1YHX80oer1y3W0XoxMq0JQyqsGQ
-	1eQlYI37kOghRP5qArAwm9Oq80AulfxXaJxxu14cAYq0zWEYBueu2OUlowDTNebC
-	XMCmOO1IxziQIVkaVsJiIcDNbf4LWJjdF6LPiAHgm7XWVFMwDHPlsUJXlWBgvbTu
-	S+lM/CVp2p8PzPk5M8c6LzzTCrrKluRtD6Q+GNEX6igg4iv7TKM/gZdtVHt2mg4Q
-	z0slWhxxh/53+Z1O6muNYWkNFRm7vETXs7hJZyAPzpXTUsXyv+b7JW4jsXPmJhzy
-	ZY342p+/xwHZaQXnEPWD2Uhm4OTsHcrqQrw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793360684; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:vh4MzAZS2A5pUdsADxouW6yyzFubWYH4VoZT69gqyOHL1L/
-	YrW/O3ieqcjAo/799orXqfA9jR1zVgpXB6nQU7dxK20E5ddrQalECkOfz6X8BQrz
-	cO1nOS3KksN+IWeSqcN+NcyXMAf8/GS5nO4Vnl9BKj5SSQxmAGCp58JQhhxHK6s0
-	v71HP6wH1hU1ZQNWOq4G7XPnhohQLyjSa8pJc9EEamJSVzcUcDTOf3d4O0mYQ6Nk
-	zexq4dE1VGvN3sHSUywyU2ZHj164KVA8MAMDo1LcHi18s85YWGrsLmq8dVCQs5F7
-	kRSJ5slHfLhB3EZFYieRI9EitswoNQ+barUArSg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:o2VnmLJVBJzKPZLxvmUc2y6EJnvLeW60AQic/84VbE4=:iD37Lk6/rPmJyR3XRNvJvqz3jQO64dU4LTUzuBoG2d4=;
-X-ME-Sender: <xms:LIPkagyHuMKSafRypLH7a-zFnTKiz1p_qNlDZY-uuqziXF1RiRWcfw>
-    <xme:LIPkan-JZ5Bsc_qf_qzSKiO4SSGu_ZhXLK-7SbhLd_ga2MSLJRxYfgla5kYQhAz4g
-    vWjkVeTtUTSvhq5sd9N1CbD3OI9Aai-Q4JL3FTyjqmGiSI0y0jz>
-X-ME-Received: <xmr:LIPkasL_dK3hcnlU21pr2ltTidzucQYz5Pyat1ZQ_Ki9zJYn2Osw3LMtdyOK0WxdArlHOw>
-X-ME-Proxy-Cause: dmFkZTEweYRmagK+U6NI40C2gOY56/U7LG2BkHRYtHGegF8oYRz9i4J2vGpEgnudzkTbxw
-    S+05SZ6tnysqAiIuvW0rwxSCZ00N22HDFMiHosy/Ua4cl6RIbsjuJ/uu7lp6OCXbAHqwkT
-    6QXUlJGPjy1NHLsRNtVlr5IhsX7e34mkzuRSD0q6qfCPSfug2rRloXJkdp42sa5WRXVz1s
-    OB/Vtpd017fmsUWB8n51/KGmPksOVmgNcVVsvnKkP1w/4p1Gl3FFTMFj/yE9SGa9bGqYZd
-    DEAc5WEVzqrmu52PmOXcyz83GCHyepZh88qBQqR3ddvqbZWDlNCiYkOIuK5E9t2uSo9UrW
-    uDsZbLiLkyNl+/mZPx2C2zpsrfDuzTbWfDzBcdBwgfoeJwWbFIqZEmKtRH0HHBSsHSxFEF
-    cELHcrywywF8Y98o13OMk/C60Xux16S1eRy9viAXSYCOPOBR3a33c6uEyGUNrB4J5oXb/0
-    6zebDeAaBa6PkDtt6HC3d4c6goESm2AY+ruW6qwPLZeq85zSDO5zDnTDNwauZ54Iy0k9wm
-    VFdjItAm144W8N9y3huFdGuAxwkLRYhsCQCppOeAEgjQb5OBhokdXXivFCRHTcgTpi8VeI
-    MyFObumJieraW8/g1VW9/BvaI74q2MSY4WaZwdqFmjJvSg7225lqcvN0SU5Q
-X-ME-Proxy: <xmx:LIPkalehXt8cM15RbK0dhBmg9qi2cdwyS0qN8-dLahExQwSjXYYq5Q>
-    <xmx:LIPkaj-r6LTF-53YmZa1VAAeb9Qyw5J9uB1EHEWBz17xNaenIP3-VQ>
-    <xmx:LIPkaqqiLyDRTGNIhtOG2MqeclORWXarzLqcN9TwJwA2dwkkCyYhpg>
-    <xmx:LIPkagB1Le_i1W_AyiP0UACxAiUynOiTPnZrvCicDr1JseCXdAbpiA>
-    <xmx:LIPkas7Uo3SkbBjEzjmXvSD6JIgDVWcHg-vA4ILXP3B2Sb3qmOjBcrZK>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Oct 2026 07:44:43 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 41ad265b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Oct 2026 11:44:42 +0000 (UTC)
-Date: Fri, 30 Oct 2026 12:44:40 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Elia Pinto <gitter.spiros@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 4/4] convert: use size_t for text statistics and ident
- counts
-Message-ID: <auSDKKHJONZjx2LX@pks.im>
-References: <20261021101640.329990-1-gitter.spiros@gmail.com>
- <cover.1793352943.git.gitter.spiros@gmail.com>
- <84e9e38a3e63a2b135847471a13ea36d37bd64d4.1793352943.git.gitter.spiros@gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=eu/FGqVW
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c434376dbebso127688766b.1
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 04:51:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793361115; cv=none;
+        d=google.com; s=arc-20260327;
+        b=NtIzvRwTbts3y5xv0XGaW07w7Nhj6NZuA6vjjjU4GCpRvbdWZ21cguJkAcMdVlBKZ9
+         zEKMvhuw2yOv1/VYD64k7rZS8lJaN5lwxI9pyCJ74ecwdmPoQaE4epsRzSPkdoqdvBge
+         f7ZSzEtTCbTq3Iam3dXgNI+CDoazoqZNFuD8hX3ECJlQl+rIYNGOvJ7URF3ZzUTk7ixz
+         jv6VdTQ6Yv08yb43jlwAhWJl687noQnDxEXF9qWYa9czYgQVJzGoPGpz/3NRChMUZrGa
+         fGuWApQOm46gnFVkQ4G7/lcJF/gisFAtJpwNEwutoxKVInNlwpX8VBQWxUwK9FR4rVq5
+         5LfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=nleg3v3ss/35EwFO4a0CSmM5kNqGJPHNF9IV/Gtdvec=;
+        fh=xAjaA82MGe8lpMWFU8KQCMypkU8bW2wRAkznxMRXU/w=;
+        b=JsYQWbALVZqr7XHzMxnLG46ZhKqbTC/1b8k5EnVkZQiviBLRe9nv4JOJGaMbvWvkDH
+         TDXRerZPnofRujK/b/OCdSsyHUbqO0QTu+BRbxKRuXu5hCms2wzygjy0uE5HttU1k06h
+         knQQJxPLH4DDQKLzHlxcLviyOz5fs3kOAsMWaz8o0xOFdda2GgTKzoyidhMVQZDYm+iN
+         Y9TBJG1GFiIJI2gVxMdQiJ07+wDh/3F9V6AMafZgrLdli17WSXyRWEYj83+s2AQCCkGy
+         AwC1MPz/zS+vwTQC14LCY7W1F8Zd5xBbmf/wWobxGnl8VWOy/GE9P9Gqz+eKk1jMicA5
+         uoVg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1793361115; x=1793965915; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nleg3v3ss/35EwFO4a0CSmM5kNqGJPHNF9IV/Gtdvec=;
+        b=eu/FGqVWvTunL+Fu/ri4gHq+aggO+JwHHKIOk8Lm4ICzXFOlS8kzrdHgek0noYSE0u
+         nrQZOG6NmtDPrz/oDRdwqDmtvKvsuVb1klRrSssAgJGEp8fQDLkR0N3HXkfnFZSKDh9Z
+         ZaekPSObq+nivN13adOTcJfgylF/1wBu4DjZo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793361115; x=1793965915;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=nleg3v3ss/35EwFO4a0CSmM5kNqGJPHNF9IV/Gtdvec=;
+        b=u8KbHgxKDRfD/J1zddUBfWLXJlaD6WH/xCJ+Y6im7IlKPEJYImQIfFnC0vBeRCEdVp
+         NhoRkBN49KODpbD5qtEOsI1CzGYANE/awgNE7H2Jn8q6yCh7O94p59q0dLcmYrl8ZjIl
+         uMTrREDWOfH4E6QYkHkHOIHfDHIx5NafooBUWJvkg9/nLGy0IIs/FdViQpZ5K8LRDDZX
+         5VJAb2a0Gkqx86Cy+8VtDv3hEUeWJP9d3Dbvp0DQ7RTR7tGhQ0p9QLwnTivO46d5O8jh
+         srFwvaFJrmNFO+mGuuk3q2iR9anGIMLkFBTFXO8tXZgqWfFOTrJjBhT/6VWsUTKQJdir
+         0tRw==
+X-Forwarded-Encrypted: i=1; AKwUvBwgbUFGtPumGZRWzOVsIhicJeB9XdqRXIeKmkvhuze5gYXmMSy4p6J7Mh+YqM2TlKnFoWw=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKBBHd4GFMfuKmagKtgzkcvvaauhAEp5l7hKRPoEdh6RnxOLAfx
+	iuYk9AwpiDfZcpIsypqFTSTM6Lz8sGd9obRC2svQMM+y8Im68/bkxeI9J5Jjeh7EsZpAPtyNBzS
+	CcaGk5fI7U5i3SDv58GyOXQBEA2yp8XxPeQatEhZdSw==
+X-Gm-Gg: AYBFou0gjNhT0Z8akT9rJovGNHrd+Zrnbtmz+9fOt4PnrMWwzXIMl79RVkXgObqb0KG
+	lppf+cOuII9u/kHPnFYvf6Gjcd/CoAiIBKoOJo6lresnBe2gmb4Z4Yp2H/2OswmT5xggK0m8aB8
+	/Suk9J+isDK3VcrTXjUL9VvMyXQ+HVfGzhT2dJFuDcIg1hIekK54tQoX/OqiLJfTOw41zB2ZQTW
+	AegHWlwsMz4lSm2y5SBM95UhfkW0/GptkfhbbO0fT3pZQTzQA4ovOUZdzlhZwfQKjJnpVhO5yk6
+	lUXgwIRUNQC2ILmzOFEPyUy0EkC3wvezrK75xardqahSNExy1mkHrW9uOCjvrXJnsHZuBeFJnYu
+	qdDgmIYD5D4bUZF7Tea10/wV+LOu0KoLfii+soQ==
+X-Received: by 2002:a17:907:3e06:b0:c2e:7fe7:2898 with SMTP id
+ a640c23a62f3a-c4ca7a6aa23mr191982266b.12.1793361115631; Fri, 30 Oct 2026
+ 04:51:55 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,44 +100,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <84e9e38a3e63a2b135847471a13ea36d37bd64d4.1793352943.git.gitter.spiros@gmail.com>
+References: <pull.2285.git.1793200705017.gitgitgadget@gmail.com> <xmqqfqxo4dy1.fsf@gitster.g>
+In-Reply-To: <xmqqfqxo4dy1.fsf@gitster.g>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Fri, 30 Oct 2026 12:51:43 +0100
+X-Gm-Features: AclHuK8qfsq-VEYvD3n14dNN-T5VMLsCIJEjjvQX8hzuTtzC2n4q-k7c6bL18ek
+Message-ID: <CAL71e4PXZ8-T3RgLQQLtL2ASQMLbRrChfV6wAqxFSd_Tw7-2Sg@mail.gmail.com>
+Subject: Re: [PATCH] odb: do not list our own refs as alternate refs in the quarantine
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Oct 30, 2026 at 10:58:53AM +0100, Elia Pinto wrote:
-> gather_stats() counts NULs, CRs, LFs, CRLFs and (non)printable
-> characters in "unsigned" fields of struct text_stat, and
-> count_ident() counts "$Id$" markers in an "int". Now that the buffer
-> sizes they work on are size_t, a large enough buffer overflows them.
+On Thu, 29 Oct 2026 at 18:24, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> In other words, if we tell our quarantine child where our real
+> object directory is, say, via the 'GIT_QUARANTINE_OBJECT_DIRECTORY'
+> environment variable, can the child notice the variable and identify
+> which of the passed alternates is the real object directory, so that
+> it knows not to use the refs associated with it?
+>
+> It is a bit of a shame that tmp_objdir_create() exports the same
+> value as DB_ENVIRONMENT in GIT_QUARANTINE_ENVIRONMENT, as the only
+> existing use of the latter is to check if the variable is exported
+> or not---in other words, to carry a single bit of information ("are
+> we in quarantine or not").  I wonder if we can change its value to
+> name the parent process's real object directory instead?  Then we
+> would not need to export yet another variable to carry the
+> information we need.
 
-This sounds a bit too deterministic: it doesn't necessarily overflow
-them, but the possibility exists in theory.
+Agreed, I think that is a reasonable way forward to a concrete fix.
 
-> Unlike the previous patches, this is not specific to LLP64: "unsigned"
-> is 32 bits wide on all the platforms we care about.
-> 
-> The counters only drive decisions, but a wrapped counter makes the
-> wrong one. For example, a file with exactly 2^32 lone LFs gets
-> lonelf == 0, so will_convert_lf_to_crlf() decides there is nothing
-> to convert, and a wrapped "printable" or "nonprintable" can fool the
-> heuristic in convert_is_binary(). In count_ident(), going past
-> INT_MAX is undefined behaviour.
-> 
-> This is not a memory safety problem: the counts are only used as
-> hints to strbuf_grow() in crlf_to_worktree() and ident_to_worktree(),
-> and the buffers are then filled with strbuf_add(), which grows them
-> as needed.
+I started working on a v2 based on your suggestion there.
+First I tried tweaking GIT_QUARANTINE_PATH to
+point to the real object dir, but I realized that might be
+unsafe since some hooks may depend on the semantics of
+that env variable, so it would be a breaking change.
 
-These paragraphs very much read like AI to me. I would appreciate a
-human touch, also to demonstrate that a human was involved between us
-and the AI that tries to understand what was done.
+Then I started adding a second env variable.  That worked
+and it was not _too_ messy though I realized it was a bit
+redundant.  We can simply deduce the real object directory
+from the quarantine directory -- it's the parent, based on
+how tmp_objdir_create() works today -- so I built my preliminary
+v2 on that.
 
-> Use size_t for all of them, and compute the size hint in
-> ident_to_worktree() with st_add() and st_mult(), so that it dies
-> instead of wrapping around.
+It feels like a slightly icky assumption to make, but it
+feels safe since I added tests to cover it, and does not seem
+possible to override outside of git itself.
 
-That's awfully specific.
+That said, if you think this is over-simplifying it, I can
+pivot back to introducing a new environment variable instead.
 
-The patch itself looks good to me, thanks.
-
-Patrick
+Thanks!
+Kristofer
