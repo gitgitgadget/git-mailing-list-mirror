@@ -1,99 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793354341;
-	b=kxCauGl2Nt3wVUyNUSvHesXUkNDHbh8a1o7KwkBr1EFdkXXstMsmgsj3lKiejCAU71IG
-	 PbLm3taCsk7g0HvzjOgKSuvbjgi5J/5XqypMa+Ypb6Kz3KKef112oxmshsVcEjXk2wJ60
-	 9iUSRFI7TmAzC7MYiVG1VxA36HVeDitGXVwXFm0I/OFLOev22HX/xHhQLviBnuDEhwRy/
-	 zvUrXYKVEJ2QJ0Plx9Dx+yFlyvsB7Gqj8cFXo2GIrNfVbzm6gbRXDjvkil+Fbl9qrqHRD
-	 XDjalfzOGKHi2dGgYtDc7SAKcnuWdPuOVPt3FHYu7rJI4lQlNKbemDx+4ktylJU+r1Q==
+	t=1793354345;
+	b=0y6pylrgKpTuHpxaNSUxC5WxsMTWUwGyMCaNXDr2NeDGYVGHhLsmcRR7dkeafkRcDew1
+	 1ADPht4jlWXpDBLaNtrn/uqc0GLxo/0VMNn+g9k0Gq5ln+aSTjMPJPQY3wIoelEdnxwzo
+	 kZkrTBKa/oUZlOSaP10+1n+eCX4LpNZMvgNlTrcKItW3/rdTm3zG418JnOrJTwrBPLMLZ
+	 Ut2pAniaQk0tv5ECUT7jrDhCEQY9tL4CYNtbAq9S1+xAoLOb7+CXpqTauGXJdI3wXwI5f
+	 kxE9nzS5YNUtgYmPRhoR20j5+vLiVNzVennVtjDFn/Ls6ao8fV+ah7mHL1A3UKPMZDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793354341;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793354345;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=0yuVB2QPGYFxZhqHLqluowKqlNUo1ufQKo3ulDSqXjE=;
-	b=oc6rF5hQ5WzVThYlm7rxbp3n8w3ziyzeDgh1oL2qUYXJW82FX/bLU8psK4UBj7bqsp05
-	 e4/BDg+NN1liappJj2JYLE/Y/wRxVhdRZEG0DUSLy+5iPUy78lPRmJ7+BRWMkvKHj8PXp
-	 b9NpIzNImI54p1gCvQb768CCThDZCpx3Ke/dvUW3XXGYaf+tXZHTVan/m7FpyAf9S88m9
-	 TtzBQeKk2j+Abu5j9ShXIzlW7ext+96IIZqn+qgXoF0/2RoBSZDRUG4yDXOaYTYRc4ALJ
-	 B6+YTrii6EJh7DrxjvFMgICamkJ5DEMhvg/zx4dhqQVmdczBzRME+FAvuCSUtGzoUtA==
+	bh=YB/dY1/JncGppmuxvNSdbjIP5bvqd49CyeqBNY5NcXQ=;
+	b=soMhF3k3NF7XsKKZ+7bRifTPLuld//lG9CpTDftmuI8OZeeylbf4RgH9hcLa6VdTxrj9
+	 WJZ6IfN/RIKkJR1LUDF9R1Ax6fIXu4jAkE03XEvV8qNrJW9mIC/Um//m0CqfRxEpUfqK0
+	 DRIKqEJoSIQ3CgHN9JQ24TpoM7pMxr/vt7DwnG3prL1pEaIv3p1bN0JToZJbxSxnKFWN0
+	 UWJjFu/cJUHF5gze2pRwTNXTq0gv4c+6IQAqZufxNNzk3Xtf4NVfDVC09i7l04zelAbsd
+	 1nKtmeCwVmrCI6UgmcqoHMednEACi/29XPt51GRxj6hxXSRMbdKvfVu0/EHgo2ae+1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TFH9TqOK;
-	arc=none smtp.remote-ip=209.85.221.53
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d2pKI2Ov;
+	arc=none smtp.remote-ip=209.85.221.49
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70309606A31D
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 09:59:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 70309606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507AE606A325
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 09:59:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 507AE606A325
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TFH9TqOK
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48df4f540ebso232353f8f.3
-        for <git@vger.kernel.org>; Fri, 30 Oct 2026 02:59:01 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d2pKI2Ov
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-48e09aa5264so231011f8f.2
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 02:59:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793354340; x=1793959140; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793354344; x=1793959144; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=0yuVB2QPGYFxZhqHLqluowKqlNUo1ufQKo3ulDSqXjE=;
-        b=TFH9TqOKbphuSHhRgZNjbwBfMvr6p1UUI8u7KX8j2kGMlMteqa0VqAU6zf/mWFWB/i
-         kWMfguA97AmvzPA2UnT6a37Zx+GLmuAg6AaHEnaWiFGNEObztYhBsRUf/d1gMYUf6GIc
-         GYYgiG24bn4xoAnJMmetfPjPyB0AR5cD9e+iiV68gVSVj9i5vfrgcs6na37AaWkoKd8R
-         KvuGR4EXgt9dtOFSG5fT+N5LY5nm4czE0owcf796YoacO9oR8njyK0+QhvSF3A4XAk03
-         8JNr72+NuD+lHCKOQt6+hHQkhmLuIDioWMziddcant2+u3y2hbGhYi08AOnxzyyunMS1
-         +A1g==
+        bh=YB/dY1/JncGppmuxvNSdbjIP5bvqd49CyeqBNY5NcXQ=;
+        b=d2pKI2OvDqEoFuixVIUuG0aE1ZuQURUKd1KVMJkG0TboaPw5ZjcW4x4jYTBLMXbTh0
+         NlBWwEQS/uoK6GewIBKqjezLSHe8OB/0xXGQibA5IYkdckl7VZAB4W0h87iQUbbBsTM0
+         4zOttIkh/g6vUGhE2CNv/0kkl8UYYQIOk2yfiKnIvfejljMyDP7UVkwuwIfB1Lu/nrDs
+         5m9U2XnPAIks35dUXqD2U6mKznnNGjtI5Uu0DNUwzDdgANWAShrfVc269p1q/iB9zTdd
+         TXwL5nH1mFe7eMy7Kem5VBNOFEWbH9bkIFYf7liBBjXGCpbCOAX2EEmPSW1ZXXDt2SYc
+         Zpaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793354340; x=1793959140;
+        d=1e100.net; s=20260707; t=1793354344; x=1793959144;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=0yuVB2QPGYFxZhqHLqluowKqlNUo1ufQKo3ulDSqXjE=;
-        b=nWIS16TNgABC7Vj7LyI+APootRZ4RjSB0/CMowPNPRfINJI8yb8Gd/LmnEbcYGO2kT
-         QK6/pRbzUsZZLuuSUNU+jQOAOoF+e1KF8KO/9bDbW+yTu+xzUL/yBpJebyR8JX2DfOGg
-         cI0/VlOIPdKHB5hmrIw4FOyCaM+wZz1M4RIAhlAzE/a65No+XGyKiPLsX8dxflPZDId+
-         JzK2Na791a1RQzm7e3TTpRGU4Efgbl7cvFJHjIFPMSmFKxN/efUfuGkHemuR0AB/OnKC
-         ExaPrmy0s0yVpkEdhg3p79D5z4gt19IIeiDzEEHbZzpaAKEnmRiprLZ7t98k/XOGYCUy
-         OCPg==
-X-Gm-Message-State: AFq9FYLIQ7/vJtojXLg8UCI6oNWGvx0FRL+tAk7KYReBiAqcpWQxNkqe
-	02AkveX9NjHPV+phGlY6Pg0d4WBsHBWOyY53jPWFozwg/+mcvzddonTWLDd0Dln5
-X-Gm-Gg: AYBFou13BvR1cOfpOJ+0hovOsYjwVuK6kKrnjyGKmHTuHr4eAbpc7y1CRvPSVCeXCJl
-	YWFybiyNFyAdyWm4HrUrNipXI33I7UpPBsKxZ8B2c97Qb8JHMSvqpaF8TFpi2i+83vccxRhiVDJ
-	CtGjp3hKLxxipBEeVrg1EjFueRRcHVh7Tr9rWAiPOZfxTMGYklx4gHsqmxhtE5Y+hiOVp89CPMa
-	jXX+FMvKbbSlVjOAhqDOilKL1aMZ66HB9qXN/X5dI1PGEyWHHlrxH1+adIsjRWnd+RjfgiHCblI
-	w/ImbwsSqcYDZ4wBw7XwG/x7PEoy7bTpSFui6Tw+6XcItWXVrGn9sa3CA05pedkadH2+6qUqpln
-	u3wAhRBXukG2Nicgy6ymUwsMFjPGY3oO1e5X/3kzsBwY94yxQZcN5XnDmVrQH+mhCmaq+F475ce
-	bi+cXxaYXRoKjUww03BQt3+53psNUC2UKfNXg7sbLoqKEOTnhJmhfkzQfE8qLvte/DdDqEiWjG+
-	Jo86sip/0I5DQRVZJVmq9n47IGkdTmOnieUGZJUaIjFWPtOeh8Bxm0hIi8J38riSxyzc31l1xqf
-	yaIub7BdZ7PvEEUNbg/UCatxKuV8bZlY9MPGeC+CU20uyfi6DA==
-X-Received: by 2002:adf:e001:0:10b0:48d:f470:6b3e with SMTP id ffacd0b85a97d-48e6e30722amr3250182f8f.13.1793354339631;
-        Fri, 30 Oct 2026 02:58:59 -0700 (PDT)
+        bh=YB/dY1/JncGppmuxvNSdbjIP5bvqd49CyeqBNY5NcXQ=;
+        b=J6nlFNx+bmimzwi22kCt0vWQhOJeYbv4PRoarFFzj/HOrujejCmOw3cH9nbLjgmn5k
+         TcRtwsWvVO83qRArEBZkPyv16aureh/1hU3GLRGZmscLEMmCRE9WcKrsrVXQ08gE3w+8
+         TNT6QnrwDA1a9b5T43jp0Br99SU53Iehuyi0cKjbB2A0t2C1cgQTzse59nb0x1oGSXVo
+         ysXxTQuIaAjD/Pe2VewySwnKXPhJ5roRx+qHSwczpmHbrWgzboIyzr38mOfG4uxipKAN
+         GkuOYGu5PntMEc6oDfdy942bwXdm9XiuZrceyxeukjew9D6qmptwWCDOk0+2AZHWcvOt
+         dYDw==
+X-Gm-Message-State: AFq9FYJNhwQd8g/qHme4Xyom050NwjtHDyIVXVZnP+hV6f9SDIL01+FA
+	UcqfIjqEPMucq5qAe0FjzF/ql1U+GYy5YDcUAbu6VQP/i4lTJ5hWvNC+17Q8eHPC
+X-Gm-Gg: AYBFou2gSQP7+bS7oLkyyBxuuVS+vSHd7JlSyMp7NfA5DQWiHK8n8x7rqMwNP9ArFq9
+	e3OdWbdBgDDhEgLbod69GQcZnzn1KRAekWRSYezt+O8KrHy36/4sTu+SbHfo2K2cj4jmT9zbJ56
+	dEPbOEaMvtZWNaYxEQJGlHYWywk6FfYzMdp51wTK+GOE5BVH94rr/7S/dWIjZiyrvK6f+msxmur
+	WYh2ARApUW7Rn3uszLJNYbhxz6tdou9Wgl3xeLpZm536Oy9VlrZRDY4P/33/JFTErsi6QvVmJ0m
+	tk5itAYltdY0o9mVaLG57m2siyzUhQV2RSXebXeQ/JEjdJgUUAY4S6wzzCe+O38ZZux2Di8ERfv
+	W/Lq/SGn+61+P/5HlTMfRFPren1S8yzn56lW1bWROyRckwaJ6bB10FVsUqI9JyRxy+BuqLF/l91
+	SoJ17iSF2gKtP79Twvw2sN+ifl7RaAWLP08gL1lp7NISvnABNnfu3bBGsfzaAKs/cjylsExnwnq
+	xJ9PDWsPGI2OXSDTuMCgQFxD+PBlcpyXlGbf/sEGhuS9kupKimu5qgbLChyhNtxT/9nEA10VEIp
+	ANqjRdAhAX1z/SG8/rYnD+YAbcPggU+qvr+vl41Wj+q+Poet8w==
+X-Received: by 2002:a05:6000:1619:b0:48a:fd58:a7dc with SMTP id ffacd0b85a97d-48e6e2f2b25mr3347957f8f.12.1793354343613;
+        Fri, 30 Oct 2026 02:59:03 -0700 (PDT)
 Received: from ubuntu26lts1.example.com ([205.147.30.18])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b9b54dsm2359421f8f.47.2026.10.30.02.58.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b9b54dsm2359421f8f.47.2026.10.30.02.59.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2026 02:58:59 -0700 (PDT)
+        Fri, 30 Oct 2026 02:59:03 -0700 (PDT)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jeff King <peff@peff.net>,
 	Elia Pinto <gitter.spiros@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
 	Toon Claes <toon@iotcl.com>,
-	Shuqi Liang <cheskaqiqi@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: [PATCH v2 0/4] use size_t for a few more object and buffer sizes
-Date: Fri, 30 Oct 2026 10:58:49 +0100
-Message-ID: <cover.1793352943.git.gitter.spiros@gmail.com>
+	Shuqi Liang <cheskaqiqi@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 3/4] convert: use size_t for buffer sizes
+Date: Fri, 30 Oct 2026 10:58:52 +0100
+Message-ID: <88ca2ceb801f93f39eabac3bf0b51f53fd04e4d0.1793352943.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261021101640.329990-1-gitter.spiros@gmail.com>
-References: <20261021101640.329990-1-gitter.spiros@gmail.com>
+In-Reply-To: <cover.1793352943.git.gitter.spiros@gmail.com>
+References: <20261021101640.329990-1-gitter.spiros@gmail.com> <cover.1793352943.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,100 +104,141 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On 64-bit Windows "long" is still 32 bits wide, so a size_t that goes
-through an "unsigned long" loses anything above 4 GiB. Like v1, this
-series widens three such places: the length taken by the object
-write API (patch 1), the allocation size of the word-diff buffers
-(patch 2) and the buffer sizes in convert.c (patch 3). Patch 4 is
-new. The cover letter of v1 explains how these were found:
+The conversion code receives its buffers with a size_t length, but the
+helpers that scan them, gather_stats(), gather_convert_stats(),
+gather_convert_stats_ascii() and count_ident(), take an "unsigned long".
+On platforms where that is 32 bits wide, like Windows, they only look
+at the first "size mod 2^32" bytes of a file over 4GiB. The decision
+whether a file is binary, or contains CRLF line endings or "$Id$"
+keywords, is then based on that prefix, and we may convert the line
+endings of a file that is binary further down, or not expand keywords
+that appear after the first 4GiB.
 
-  https://lore.kernel.org/git/20261021101640.329990-1-gitter.spiros@gmail.com/
+read_blob_data_from_index(), which feeds has_crlf_in_index(),
+get_cached_convert_stats_ascii() and the reading of .gitattributes from
+the index, gets the size of the blob as a size_t, but hands it out
+through cast_size_t_to_ulong(), so on such platforms "git add" of a file
+whose staged version is over 4GiB dies when core.autocrlf is in effect.
 
-Changes since v1, all following Patrick's review (thanks!):
+Use size_t for all of them.
 
- - Patch 1 adds the test Patrick asked for. The existing "hash
-   filtered files over 4GB correctly" test in t1007 only hashes; the
-   new one writes the object with "git hash-object -w" and checks its
-   object ID and size. It is EXPENSIVE and SIZE_T_IS_64BIT, like its
-   neighbours. Truncating the length to 32 bits in
-   odb_write_object_ext() on Linux, to mimic Windows, makes it fail.
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ attr.c          |  2 +-
+ convert.c       | 14 +++++++-------
+ read-cache-ll.h |  2 +-
+ read-cache.c    |  4 ++--
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
- - Patch 4 is new and answers Patrick's question on patch 3: struct
-   text_stat still counted in "unsigned", and count_ident() in an
-   "int". Note that this one is not specific to LLP64, as "unsigned"
-   is 32 bits everywhere; it is in this series because it came up
-   in the review and touches the same code. A wrapped counter only
-   leads to a wrong decision (e.g. no CRLF conversion for a file with
-   exactly 2^32 lone LFs), not to a memory safety problem, because
-   the counts are only size hints for strbuf_grow().
-
- - Rebased on current master; no conflicts.
-
-Elia Pinto (4):
-  odb: use size_t for the length of objects to write
-  diff: use size_t for the allocation size of word-diff buffers
-  convert: use size_t for buffer sizes
-  convert: use size_t for text statistics and ident counts
-
- attr.c                 |  2 +-
- convert.c              | 24 ++++++++++++------------
- diff.c                 |  4 ++--
- odb.c                  |  2 +-
- odb.h                  |  4 ++--
- odb/source-inmemory.c  |  2 +-
- odb/source-loose.c     |  2 +-
- odb/source.h           |  2 +-
- read-cache-ll.h        |  2 +-
- read-cache.c           |  4 ++--
- t/t1007-hash-object.sh | 13 +++++++++++++
- 11 files changed, 37 insertions(+), 24 deletions(-)
-
-Range-diff against v1:
-1:  0fff9532f9 ! 1:  8fcb9f10f1 odb: use size_t for the length of objects to write
-    @@ Commit message
-         source.
-     
-         The existing "hash filtered files over 4GB correctly" test in t1007
-    -    only hashes. Running the same with "git hash-object -w" on Windows
-    -    shows the problem, but needs another pass over a 5GiB file, so no new
-    -    test is added here.
-    +    only hashes, so add a variant that writes the object with "git
-    +    hash-object -w" and checks both its object ID and its size. Like the
-    +    other tests over 4GB, it needs EXPENSIVE and SIZE_T_IS_64BIT. Truncating
-    +    the length to 32 bits in odb_write_object_ext(), as happens on Windows
-    +    without this patch, makes it fail with a different object ID.
-     
-         Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-     
-    @@ odb/source.h: static inline int odb_source_freshen_object(struct odb_source *sou
-      					  enum object_type type,
-      					  const struct object_id *oid,
-      					  const struct object_id *compat_oid,
-    +
-    + ## t/t1007-hash-object.sh ##
-    +@@ t/t1007-hash-object.sh: test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
-    + 	test_cmp expect actual
-    + '
-    + 
-    ++test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
-    ++		'write filtered files over 4GB correctly' '
-    ++	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
-    ++	test_oid large5GB >expect &&
-    ++	test_config filter.null-filter.clean "cat" &&
-    ++	echo "big filter=null-filter" >.gitattributes &&
-    ++	git hash-object -w -- big >actual &&
-    ++	test_cmp expect actual &&
-    ++	echo $((5*1024*1024*1024)) >expect &&
-    ++	git cat-file -s $(cat actual) >actual &&
-    ++	test_cmp expect actual
-    ++'
-    ++
-    + test_done
-2:  4ab9569f13 = 2:  42d4eae985 diff: use size_t for the allocation size of word-diff buffers
-3:  7ea1a566b5 = 3:  88ca2ceb80 convert: use size_t for buffer sizes
--:  ---------- > 4:  84e9e38a3e convert: use size_t for text statistics and ident counts
-
-base-commit: b9e5cff1803ab24582201ef059516eb16014b9d9
+diff --git a/attr.c b/attr.c
+index 0e63f1b6de..1acb4ef430 100644
+--- a/attr.c
++++ b/attr.c
+@@ -793,7 +793,7 @@ static struct attr_stack *read_attr_from_index(struct index_state *istate,
+ {
+ 	struct attr_stack *stack = NULL;
+ 	char *buf;
+-	unsigned long size;
++	size_t size;
+ 	int sparse_dir_pos = -1;
+ 
+ 	if (!istate)
+diff --git a/convert.c b/convert.c
+index 036506842c..ca5594cab0 100644
+--- a/convert.c
++++ b/convert.c
+@@ -42,9 +42,9 @@ struct text_stat {
+ 	unsigned printable, nonprintable;
+ };
+ 
+-static void gather_stats(const char *buf, unsigned long size, struct text_stat *stats)
++static void gather_stats(const char *buf, size_t size, struct text_stat *stats)
+ {
+-	unsigned long i;
++	size_t i;
+ 
+ 	memset(stats, 0, sizeof(*stats));
+ 
+@@ -102,7 +102,7 @@ static int convert_is_binary(const struct text_stat *stats)
+ 	return 0;
+ }
+ 
+-static unsigned int gather_convert_stats(const char *data, unsigned long size)
++static unsigned int gather_convert_stats(const char *data, size_t size)
+ {
+ 	struct text_stat stats;
+ 	int ret = 0;
+@@ -119,7 +119,7 @@ static unsigned int gather_convert_stats(const char *data, unsigned long size)
+ 	return ret;
+ }
+ 
+-static const char *gather_convert_stats_ascii(const char *data, unsigned long size)
++static const char *gather_convert_stats_ascii(const char *data, size_t size)
+ {
+ 	unsigned int convert_stats = gather_convert_stats(data, size);
+ 
+@@ -141,7 +141,7 @@ const char *get_cached_convert_stats_ascii(struct index_state *istate,
+ 					   const char *path)
+ {
+ 	const char *ret;
+-	unsigned long sz;
++	size_t sz;
+ 	void *data = read_blob_data_from_index(istate, path, &sz);
+ 	ret = gather_convert_stats_ascii(data, sz);
+ 	free(data);
+@@ -223,7 +223,7 @@ static void check_global_conv_flags_eol(const char *path,
+ 
+ static int has_crlf_in_index(struct index_state *istate, const char *path)
+ {
+-	unsigned long sz;
++	size_t sz;
+ 	void *data;
+ 	const char *crp;
+ 	int has_crlf = 0;
+@@ -1077,7 +1077,7 @@ static int read_convert_config(const char *var, const char *value,
+ 	return 0;
+ }
+ 
+-static int count_ident(const char *cp, unsigned long size)
++static int count_ident(const char *cp, size_t size)
+ {
+ 	/*
+ 	 * "$Id: 0000000000000000000000000000000000000000 $" <=> "$Id$"
+diff --git a/read-cache-ll.h b/read-cache-ll.h
+index 066dd8bc3b..d279059b5f 100644
+--- a/read-cache-ll.h
++++ b/read-cache-ll.h
+@@ -416,7 +416,7 @@ int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
+ int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
+ void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
+ int index_name_is_other(struct index_state *, const char *, int);
+-void *read_blob_data_from_index(struct index_state *, const char *, unsigned long *);
++void *read_blob_data_from_index(struct index_state *, const char *, size_t *);
+ 
+ /* do stat comparison even if CE_VALID is true */
+ #define CE_MATCH_IGNORE_VALID		01
+diff --git a/read-cache.c b/read-cache.c
+index c4cf08a3a3..635dad1ba3 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3472,7 +3472,7 @@ int index_name_is_other(struct index_state *istate, const char *name,
+ }
+ 
+ void *read_blob_data_from_index(struct index_state *istate,
+-				const char *path, unsigned long *size)
++				const char *path, size_t *size)
+ {
+ 	int pos, len;
+ 	size_t sz;
+@@ -3503,7 +3503,7 @@ void *read_blob_data_from_index(struct index_state *istate,
+ 		return NULL;
+ 	}
+ 	if (size)
+-		*size = cast_size_t_to_ulong(sz);
++		*size = sz;
+ 	return data;
+ }
+ 
 -- 
 2.53.0
 
