@@ -1,124 +1,61 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793376305;
-	b=HFkfp8/FQoD1hGiga88v0skYvYqgq5hYsSuoevmH6DYpdKYKpViC4kgxgwDhtjgv3Nh8
-	 0SP4V01D1k9FyGzc9jSavI7iQCuiKmFlMN0/tIJkiUa/QuNK/zR+IKIusLmOPyKCv05j8
-	 AMk/dsD/dZSwCicCDwflEVg89eg2G//UU1g/plokECM9axaf7HwRHvqOldpuc6rcVfEh9
-	 8X97kI/oqWhpIFG2tC3vVgnaP6IjGpQLm8Tv5268Sb9GYQCtteWvJl/TGWenTTVrHv5Am
-	 IeChR5u7DsDdlChXZOlNdMGlevTkXPN/WXOZ/oFaKqq0Xq7wr0e8oFVKa8siP3VqLpw==
+	t=1793377543;
+	b=1Be601KwMxTVWM7DVrWJNP0r9WK3CvTWbYWBBS14Z/AAlXdf1bg9m1cVUcLprwxjnS1c
+	 zepmwKhp8PCdBuMzSdpqGZxxHz1e8OU0b+t2gicDJI7tjksxfKNCaXVpOaSJrEDh97a5c
+	 4UOocgTTircICpiK4huIOzACNomjkz6lca0BL2j5jqEkLViA6CIOhF8i3n/8JhzMyK/r4
+	 ehqpepRtcGdK9E5I8wXRqeD5JGFvzelNFYIF23ieM7OK3+373fhwf44q6CrMwVPTbIM5i
+	 2XZSdVBrm//3354A1n3KICcIPf/54lqRQ3fVneWYN0Rs7PyfzuEKx2RyfSFOiXmXYZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793376305;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=3OySYjPiDxKXamHoDOiEpbW9qHFQOg9g2hVFzAEHDj4=;
-	b=QWnnU7Ltc0HUosZ+SyQluu8yZE7/fKjkTkFlZ73eYTWOHtdSjFq10wYTDqgSsaPZWAmg
-	 NGGXtBIxhvS3v8B2zAa/mj+L4L+lbDQnyUJZSOoD00XkK7Yws2ef5+fXqxe8n9zwH4hDn
-	 8Qpj2CvFcvR1wGksgz/wf7DlN2Gp+rUu6lKOfaG5uPAgWZkJihdmeEGAYcsDkIIgrXaiq
-	 +mZeuer1HsmEqgP3QV5ztfMLBxVkUcqEbbpJS9Yk4Q5R5r+QDO+segEmCyue4wG2ln1n4
-	 mvhxWwK9p1XG182pTI3lXke4K/fEjIfhigvXsJrcSAESs1Qx7wiV/s0x/xG0SXqUYRw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793377543;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=xY8wjIGpJwUm7Q7EB/OiTHrTr51IwvmWl8JsnP9t8N8=;
+	b=gIMA/0jyJJn818MAU8tc2HiRxN4sswtzimwSOUleaFN4E1QeKsy3r7FRicZGM79kCDGh
+	 iNsyCjcnNK2I15j+61pPk1f86Dcei78lf2TBy6w00tpRcwBUxemHbcwN1v7ma5JpSp27V
+	 eQY6G0ZaoC88aYDJLYdFrbBSnT+Tzfe7yj3E+vRzmlo5R/+fT6foW8YTPigQsI6yxWEfA
+	 RuusdgPYMQRqBG5dZBLfmoijc3hFOSYidOJ1RvBbaCMHa8x9ycyzu3iCGt8Jz8CRT0JiZ
+	 A7RoYgBCwNwBd9XWbcYdfHBGKmuD3za2paSeBsGwZKSOsht+GrDqlRVeCuF/HG+VR6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=AgioIZHV;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LbEXZUnq;
-	arc=none smtp.remote-ip=202.12.124.148
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=iotcl.com;
+	spf=fail smtp.mailfrom=iotcl.com;
+	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=2cHJlg99;
+	arc=none smtp.remote-ip=95.215.58.4
+Received: from mta1.migadu.com (out-4.mta1.migadu.com [95.215.58.4])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55720606A31A
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 16:05:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55720606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A08606A31A
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 16:25:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B0A08606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=AgioIZHV;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LbEXZUnq
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9B9371D00105
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 12:05:04 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 30 Oct 2026 12:05:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793376304; x=1793462704; bh=3OySYjPiDx
-	KXamHoDOiEpbW9qHFQOg9g2hVFzAEHDj4=; b=AgioIZHVR7F2aIoqW7w4K8Sba3
-	82PYCH834ULWed5d+QHEhOEecrngwEKUYwf/sQCVX/3nJFcs6AopmmMVlWcXLTel
-	Y4jMthU6hIeeJI38Xk8Obz2rp4TU9DBbYkZPR9uJUBtQf6qkM3QmHz4G+F9qP6Wh
-	PBQcyYnlg236ywwyGXYnzRcliGXfBvtjaCabEl6Ju9x+NDgC1EGtPAil6dk/yyqU
-	6aeMl/QPb3mtkQQb/IVzuuhZHWZQS9vSG+APWHyqjg0pqCWM7UdmpsQVqDoezNfa
-	cbMFk2PLy9NnfnJOkCKf1YuhGHuBypkG05RcLYu4QCH+yP0GrMU1QDDpbmKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793376304; x=1793462704; bh=3OySYjPiDxKXamHoDOiEpbW9qHFQOg9g2hV
-	FzAEHDj4=; b=LbEXZUnqFXwmiFOMw0GiukKY0GysG3/KpjEfMizeIE+acboMh3y
-	GKQyciNil0uVc8Jtb5nYApHjVTepsRIR15nmxJcPYt2IeBMEi2mh9I52eyJsqWrE
-	qMmVqpYl2Stlbzw7N2h6hzqYsoSqSqxzDTt/H3nzAi/PfHxgjS8CnyCmx11l8bNa
-	0MaxShrcqhQBsJtZf6Mlz/PvHo2B6cCSB3vyM0pyMkBIIzuMcocwugFhuM89W3gi
-	DfZDHrBC/lBmP//O5ESc7keezNJozpbmZudsL701pna7WKvVhZ4F7e7eGHiG7gQg
-	gMb8efw65jluDzxD4ZwsGNUA9cQ5m/DnV2A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793376304; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:jU+M8jVVmFsLc5AgK2jynRdBrZmwwW3c0o7+YpSr58+jwUK
-	rjk2b38rRhbfo9ig7ereryLAHJPbVr19pSLpqh/AqwumsK7bAHGS+jkHKAijlV4C
-	JRTanI6w6GIVhXCr1Wf0xbEADqac9nFNnlhTY8Dq3yktnaq68nezf/08gGBrIFCa
-	4ucPQ6Kty+vOJqssX0jVRtT9hla4O0Jl8D5A3Fh8MbSHGkzMSGZe+4GA6Ymx8Ei5
-	+11fakjwIHVl6HKtBds9EOxYgvOkJpDEiI7oBpcCK9x47IoX0DIAOI6aoT8k4+5t
-	pzvHJMVdRpHYohowR9O3s2pjA7WReCbzeRWud8A==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:L7IwRRuffl4fbNSVXxibxVVe41+hrzOgU+7GCA66Knk=:7HKuivIG1Ec1XKKmyi/WR4fmaUIQLhEKFG2bBUy66LI=;
-X-ME-Sender: <xms:L8DkashoPOstylqDWREIksBBo-vAczIOYRqEpjYayHtVzjYHw3gzNw>
-    <xme:L8DkaouOrW4t86dx3C64Iwv8zFDSjGE1d8wGOBVahU5vz03VVB4-bibbvcuPOvGCz
-    neeKsZYHXo5_a8txsWlzNv4AdHEZ1URUZ5-L4jKGlEmSUiQjRYlbQA>
-X-ME-Received: <xmr:L8Dkat7t3UjIiKrUWpXuJ3FRePHWd4qXE9D1nC4a9Kxb_3hDMUccnUywftow8cB2g3GjAzy2aqeBBBpUeRWgn6GqUMlOQZDbfGnd>
-X-ME-Proxy-Cause: dmFkZTEaxwuj0Hg4JegmVMPtK8J1h6I78NgOf5ehaQ4y9zYjBYPiromsEE4iYoFVQqIt2R
-    d/exu8iNienCvHjXZWZFaCcLh1hAXMvQQO20ZNMXsaLPG4EhFtffEAl+JmdUdM5yx/axxI
-    wrmzwGW9+yGkhrj4W54r0AWc8r3MCMAZjuWL1x9JPsp3pk99vrmncfHSiAd9QC/UTZMUMt
-    IrCxl9i2hDqYEg7rx8hHIfVVDEWgf3LMF4aosxDIiXNc/tPJh8A/mP7s/Uq9FHgIfJJLFu
-    EzZ3RQoFZrJ38ZHzRkGModHxelA/zRBKph3Zw62Xq/ikhGNuArEdXs6BXs9fBZkrXg1Mkn
-    UXIYfnfn4PwRpb/RSQR1aNwOaUJ5YRtLciMIZabVjqJu8s+HhGmrNN+s6KhZnh6qUBG0CL
-    dPRbaZvp0Z7k1QI/xtS12+PNgeLnD5i0MPfG3xhat9OxYLLZmnVxrP2NQHugo26jz92DRv
-    bv4pf3F6eJc3WAgS+ydpz9zxNBYEyN6R7iCZXdrdz6oCzplTuRyJcG2gjD/Y128X8YpYYJ
-    8+pGZuEJ9LjdOecTtuN/d+qbQ2ZBGcg+N5Xhy30BMJScIngx+3yFvNceLErn8YSVFfKa+G
-    PeS+bNtjeaDRRSsLFggpgJq5AYA1Dzle1esuaK0lmZYLaj0wAkN3NlxCYGow
-X-ME-Proxy: <xmx:L8DkakMryRoLpcyNBeGq63A0YIX0388N-aTii9coFBx6gOTyGESkHg>
-    <xmx:MMDkartsv4YbgIOQC9DEUhv76evOmlujj2pR1fg8dG2QPfHq6RCxRQ>
-    <xmx:MMDkanZsxVBHYgJUUSZtMfuLNgfdrv0RGIYHsIbqjwGqlgYdJFeKBg>
-    <xmx:MMDkatyoUSLMk1PUWJrPb2--mIx_qFSsz4CJ_Thzptp-7o36W63n2g>
-    <xmx:MMDkatUor6C4Y9y3-6HgramIgHEm5W067VpBsa0nKwbMDDZh5qC-RFDO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Oct 2026 12:05:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH] odb: do not list our own refs as alternate refs in the
- quarantine
-In-Reply-To: <CAL71e4PXZ8-T3RgLQQLtL2ASQMLbRrChfV6wAqxFSd_Tw7-2Sg@mail.gmail.com>
-	(Kristofer Karlsson's message of "Fri, 30 Oct 2026 12:51:43 +0100")
-References: <pull.2285.git.1793200705017.gitgitgadget@gmail.com>
-	<xmqqfqxo4dy1.fsf@gitster.g>
-	<CAL71e4PXZ8-T3RgLQQLtL2ASQMLbRrChfV6wAqxFSd_Tw7-2Sg@mail.gmail.com>
-Date: Fri, 30 Oct 2026 09:05:00 -0700
-Message-ID: <xmqqjymzxjgz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=2cHJlg99
+X-Envelope-To: git@vger.kernel.org
+DKIM-Signature: a=rsa-sha256; bh=KwUDtwcSIC86jAWGicummk9u6zsafoBq1YpXM33CQ1E=;
+ c=simple/simple; d=iotcl.com;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1793377536; v=1; x=1793982336;
+ b=2cHJlg99fUQW/x2gUNtge26zQ9BT2SeBU2xhHYsSsbnPhtnWjnPVptcoySGutbBe06auwAkN
+ VztPXc92DgYoclAPkD7TntXR87/mF6sGKsfiTfFd8f3GDlQ88D7E92BfNZVgXNpbz5sMHJLZZbv
+ WWEMOg9zN0NVpw0epDK3AXM4=
+X-Envelope-To: git@vger.kernel.org
+Received: by mta10.migadu.com with ESMTPS id 8e22eefbc3d9a16d;
+	Fri, 30 Oct 2026 16:25:20 +0000
+X-Mizu-Trace-ID: 8e22eefbc3d9a16d
+X-Migadu-Flow: FLOW_OUT
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Root <rootminus0x1@gmail.com>
+Subject: Re: [PATCH 1/3] builtin/grep: read submodule trees via their
+ repository
+In-Reply-To: <20261030-pks-grep-recurse-submodule-v1-1-d4eb5c87d8fb@pks.im>
+References: <20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im>
+ <20261030-pks-grep-recurse-submodule-v1-1-d4eb5c87d8fb@pks.im>
+Date: Fri, 30 Oct 2026 17:25:11 +0100
+Message-ID: <87fqxnyx3s.fsf@dev.null.iotcl.com.invalid>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -130,33 +67,106 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Kristofer Karlsson <krka@spotify.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Then I started adding a second env variable.  That worked
-> and it was not _too_ messy though I realized it was a bit
-> redundant.  We can simply deduce the real object directory
-> from the quarantine directory -- it's the parent, based on
-> how tmp_objdir_create() works today -- so I built my preliminary
-> v2 on that.
+> The function `grep_tree()` searches for a specific string recursively in
+> a tree. It can recurse in two different ways:
 >
-> It feels like a slightly icky assumption to make, but it
-> feels safe since I added tests to cover it, and does not seem
-> possible to override outside of git itself.
+>   - It may either see a subtree, in which case it recurses into itself.
+>
+>   - Or it may see a submodule, and in that case it recurses via
+>     `grep_submodule()` which then again calls `grep_tree()`.
+>
+> In the latter case we continue grepping in the submodule repository's
+> object graph. Historically this used to work by linking that submodule's
+> object directory into the main object database. But in 93cd344e34f
+> (builtin/grep: stop registering submodule ODB as source, 2026-09-11) we
+> stopped doing that and instead expect to read submodule objects via the
+> submodule repository.
+>
+> This logic is broken though: while we indeed know to read blobs via the
+> submodule's object database, we didn't adapt trees in the same way. The
+> result is that Git fails to read the object:
+>
+>     $ git grep --recurse-submodules -e hello HEAD
+>     fatal: unable to read tree (935cff11a11f8734cf4e0d40955d1e0e5c12038e)
+>
+> This went unnoticed because our tests only cover submodules that contain
+> files at the top level.
 
-Well, as Patrick said elsewhere recently, the entire "since we are
-borrowing from this alternate object store, it would be nice if we
-can assume there is some ref storage that tells us which objects in
-it are 'complete', but because the alternate object store interface
-does not define such a set of refs associated with it, let's just
-assume the refs/ directory sitting immediately next to the objects/
-directory is such a hierarchy" is an icky hack that is crumbling,
-given that the alternate object store may be a part of a repository
-that uses reftable.  It also is troublesome to "borrow" from a
-shallow clone where their grafts are part of the mechanism they use
-to avoid stepping outside the set of available objects, which the
-alternate object store mechanism does not "borrow", as far as I
-recall.
+Should we mention this is a regression in 2.56?
 
-So until we figure out how to fix these icky points, it probably is
-not a huge deal to pile on another icky assumption as a short-term
-measure.
+> Fix this by reading nested trees via `opt->repo`, which is set to the
+> submodule's repository via `grep_submodule()`.
+>
+> Reported-by: Root <rootminus0x1@gmail.com>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/grep.c                     |  2 +-
+>  t/t7814-grep-recurse-submodules.sh | 23 +++++++++++++++++++++++
+>  2 files changed, 24 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index b045f8a488d..22fb365eeac 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -653,7 +653,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+>  			void *data;
+>  			size_t size;
+>  
+> -			data = odb_read_object(the_repository->objects,
+> +			data = odb_read_object(repo->objects,
+
+Derp... What simple (in hindsight) fix.
+
+>  					       &entry.oid, &type, &size);
+>  			if (!data)
+>  				die(_("unable to read tree (%s)"),
+> diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+> index 3d149d34c15..f51c5181805 100755
+> --- a/t/t7814-grep-recurse-submodules.sh
+> +++ b/t/t7814-grep-recurse-submodules.sh
+> @@ -631,4 +631,27 @@ test_expect_success 'check scope of core.useReplaceRefs' '
+>  	git -C base grep --cached --recurse-submodules C
+>  '
+>  
+> +test_expect_success 'grep --recurse-submodules with tree-ish and nested directory' '
+> +	rm -rf sub super &&
+
+Small nit, shall we use test_when_finished here?
+
+> +	git init sub &&
+> +	mkdir sub/dir &&
+> +	echo hello >sub/top &&
+> +	echo hello >sub/dir/nested &&
+> +	git -C sub add top dir/nested &&
+> +	git -C sub commit --message "sub" &&
+> +
+> +	test_config_global protocol.file.allow always &&
+> +	git init super &&
+> +	git -C super submodule add "$(pwd)/sub" sub &&
+> +	git -C super commit --message "super" &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	HEAD:sub/dir/nested:hello
+> +	HEAD:sub/top:hello
+> +	EOF
+> +	git -C super grep --recurse-submodules -e hello HEAD >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
+
+Verified the test fails without the fix above.
+
+All changes look good.
+
+> -- 
+> 2.56.0.341.g393f52fd96.dirty
+
+The other two patches make sense to me as well. Seems worthwhile to
+include them even if they aren't directly covered with a test.
+
+-- 
+Laters,
+Toon
