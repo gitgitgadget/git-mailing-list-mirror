@@ -1,101 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.174
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793340774;
-	b=qh0O9TFNfl9qm11BgU54s3CGPOAiU+FGiGBHO9LHphIDNAAzrouCYHxw1xcG5gJ3vWo1
-	 ArRVbPLIldWx70/OT04UnI1Zynkp0Jv9gsF0Ulq3AIvzTi52qY9twcNS/2jMJJh0PqNYL
-	 6M7zPDBKAJy2QnNQaUvITwc275nBc4+rxfD6GiMRgwB+TPH+//JAjENw11xtq9wvwjQGX
-	 EsRfeW1xv+RlzamejdELV/V27rM1ZBRbqcgVqzyiSlodoOp0AdWMTW1NQHpr9Yhp73Oen
-	 XOxZR+vvLI/GFELzvom4ldAWa/7Ioh3r54Z9C7Ae4JFQzmuZ5JBPZQTGa5RHBpJW3qg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793340774;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.53
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793341002;
+	b=EYPgHDHh9ua//87RE14jb/iSO/mRshJ3Bi4fnOR+sWnxN2pAHBqoBMQj6uUCLKRpN8SZ
+	 TAY06Pn0368qMG7WBQDoVJvWgZJd+VgN5sfOuXdp80seKC1S69xbigmMkNgtQU0kte84U
+	 jRCOBHmVvYJHOrLKH+OXlnVfIf39wE5/jZFR+5dyw2K/GVzXp2X5D0vrCXhWV/cw/Iw2r
+	 KpjcGZzuxxQDCn85U2X4A9UmxuGZfz94o2UYLDSZ2bksnYcVNqVBOCWdoDzFcpOHiQJkL
+	 8sg0dwPbYejAZZLFOWfczVDaeimqkncNAFNuYYVdWx7eyolzTgjAn7eb/s7AGAEkFKw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793341002;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=koLzWHXW97TNEzE6lZyfsMu4/INbSHZoqvSoVHdmAK8=;
-	b=wnTdP1rm5JxEqQoQ+b0zpOxpDOTT/8ixDQu3gNNNjcjsN5GSZy2ssSh09VNu/N1hi5a0
-	 JXUys2YsIYfFMhB48sTbUqUYP8LbdguD0Zy29i0DN9MvKHewArzDgKSV4P49rUZfzk0XD
-	 jlTffldgS1/ETKHxCEzKu2tIwAKMI7rx4qn5zZjziFhdQC+ZP2rjENcyikY5ZTzHIGRZY
-	 G2UtQQdo+vlkGIk087+GX0s5/jWWYv4xLzVNTo8U6VPjNmB88CLp56wcUtm+JhABC/FH3
-	 KDK/FQJ5niFkbPNc00qv9y372tyKS16xK32tQhDc+CV3q+CRU3AATkrbomT0PdzAM2A==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=Y1wg+ylM7N8dc5S1wUmNR0bS8Ss14y95Rcv7/AdVz9A=;
+	b=qYXkzpuOaQRvqCn+FA0+M9gIgEJlLqA6N6g8ZNGtYbPb2lLKB95RuWf3FZEqLv1TgxhB
+	 HGF/qVgaeezLz9SJnzj8cLcLq28GJzb7mRdeC87U+vfj2t2JSODQ+HaPIoot+v+MRyaFx
+	 be1Uirq/PHUSY3JyEwgzT3lQPdnBWLtLdf2QjOuOkCxuA1ZWjT4fMbHa61kbwlHWvynV/
+	 Fandtp2n/Cp8GXXY1o/LbhoYty+DPpTMAsDQiWyw++F4iAzZgxmCbK9+fzSA9nsLJTWH4
+	 rei+PstE82KQVtF0I683Q+pBpddW71X2A7pSc+JXXXRmkiKRUA2zl5rD9xtz/+nAC1A==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=nortesoftware.dev;
 	spf=pass smtp.mailfrom=nortesoftware.dev;
-	dkim=pass header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=cHEerX2O;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.174
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	dkim=pass header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=c+TkWmIN;
+	arc=none smtp.remote-ip=209.85.161.53
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DC7606A31A
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 06:12:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 35DC7606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE69F606A31A
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 06:16:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AE69F606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nortesoftware.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nortesoftware.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=cHEerX2O
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-533797e72e8so1924581cf.2
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 23:12:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793340773; cv=none;
-        d=google.com; s=arc-20260327;
-        b=LLrwptRlhiei25SWYrwO3U9J30TA5LuMGTh7+BNooqqm5fZDLVxsR7zkOFImYjMrER
-         rCbCbBhM9aPPSWfyzbqAbG54UFlDQvmW9hStl38m/nncZa6wtX/d31QDCHNxuYTrxa+F
-         dBzDp5qsMWZ3PCdtc2+V79QqzNSDqsrX+MZ9J9WCH5+xfuHYZUwTJRsscWQHE4Bep9bQ
-         G9wQWLCrvT15NwwDGHLWw1SEj9f1IlDyPdAN1B4ZPVEm0zTJZjDp7/THC/VEeSEO9ieK
-         CAkklwc67aUZspvylPJJNZbLzdJIi2j5vVKwiFD5anBfS/y4/eHpm8A5G3otvAYmtpXp
-         f82w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=koLzWHXW97TNEzE6lZyfsMu4/INbSHZoqvSoVHdmAK8=;
-        fh=l6RrM80C46TPjLLpc0VBUcGGhagrqWQY3cTc92IWjBg=;
-        b=hdr6/LHtgxc8j0bek6Iw7vRfyPw/CSmiFI5Puc3ku1IAlUoLRTRPPPBgFWzKN67Ys3
-         sFdZyaHXSCdnme370i2b0SxS/ppxhGuwX+A9Zb/94zfvf0tjsYkIq2Jf3MmlSddoyfru
-         GF5K6sJpgHLHLycSMZLjIGCgmLHSXhSB4IBH2Dhk8f0LLt5jskKsBavm3RFQNyJ+yMjm
-         j7zVpDv0PKAqYBK/LRDcWE6QJRe0Z5sDHUaFBeAYeqvnm9K7ZAWfBUtWnzMnMVewAFQJ
-         DBCvdOYBVGZcGKaI0UQOAXA1uC8KF8bRQWzcgFQ43ZuUeVSLjd4fpsSi5Ers9L0o+AZk
-         Mkhg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=c+TkWmIN
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-705cb6cedd5so1056197eaf.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 23:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nortesoftware.dev; s=google; t=1793340773; x=1793945573; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=nortesoftware.dev; s=google; t=1793341000; x=1793945800; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=koLzWHXW97TNEzE6lZyfsMu4/INbSHZoqvSoVHdmAK8=;
-        b=cHEerX2Ou9qKFvK2UNaPNr+StWTcV3VZdLbw+k44xSlQIwu6T5aQvDCrmMpzVwbSGP
-         NbPGFonVEYG9SYUCs9Da1crw5T+0VGUyaE+ypdmghle2SU3t3D3hO09AChZc1s/3aSkh
-         eiPTCdqlVXkfPM9HCeFLEZTjjDwTKh5HMCoO43560q1iEgci8avOIFT9fgArBgvLMTqv
-         Agr4ovU5QwcOLgsEruxL6yqMbFCqNlEsuku5BR/yoOIbWoXVK/PYP3IIg81ghNmBJb3K
-         mtvri1Gzvyje8P3ZO/FXjj00+b4TYuoUaCbheu6wkisx/XGjyfhSzkhueLIRiEbfG0H1
-         jiMg==
+        bh=Y1wg+ylM7N8dc5S1wUmNR0bS8Ss14y95Rcv7/AdVz9A=;
+        b=c+TkWmINTDqUH9eJ+8442Ry+6wdzYUqxqUXg5mw+YTb91smfU2yli4LZE1Ytwbxmp+
+         d9OKOxqkK9yLcg0N0dChTQpUqwXwfAN8DGp1cGR552N5hXSX5+i5zQshAyJOlpGhu045
+         1oYqiGnVljo39+945HslsyL5coT1/LjzzOtKDwjiPsibmFr/aNGn4gDqu/gGccyCqNW0
+         cRBVTcaQTUMzRFtvO6EiOEvS3pzl43VMrcnqHMTi8sxt8CbVqMtone5BJq/GsQ6NdwII
+         UW9Y6AeWDhv5tZvjcecyDzHPy2CqQLvzgf4rAvsHwaW2Te7NdQQq1RW2Pm1vwm0upC7E
+         UB2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793340773; x=1793945573;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1793341000; x=1793945800;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=koLzWHXW97TNEzE6lZyfsMu4/INbSHZoqvSoVHdmAK8=;
-        b=VLqv8zXv6P1GfugH38yofhKmnvti/vGXZ8CJjchImPUhMS9RgYpdZk4rxRJwlNGAAn
-         mZLQiVVlc556Jd2UCoYy9yDs+nbevjD6bK1Sz3vZFxtEtO7cHhibtoPMtxZhWnJDbMLZ
-         A1bpxCyeTpdQoGjK2LHTUCIGTQFSRLtxx9WqLNEifJt8sD0u3JQvWL/bDGxoa943gs5w
-         gKC+TrJvrUcUcavExbDtCA5JooIoZtTbrxoWoz8/hkDcK9xvoNiPm4C2MqD0lu3E7vpC
-         B43CLmN9xCl9Bq3UXKqIrLxAlMGI03Kc9Gg5p7xLi4d3f/+0zN6AB46MDRT6SeAsw+XW
-         jf5Q==
-X-Forwarded-Encrypted: i=1; AKwUvBy8aAgOXwUzvGk4AHGc2GHeqa5E5ZEPwRfu/YDJ/fL0ajoNTrREacIV1DBrFMXmjHH4KIU=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIUhfrvoT9QWQYndEN2qriFoAj/gpgKYJ2DyXc4dQ6Ap4T9Hwsg
-	KKy508miZsRTwYgm5DL4ngycZu8RfaCJpI7VUa4wsb/t6otPRvyUCSlV2W7gnBoZcbd0XL1boT3
-	QvSDwoyHM4AZ2V9pElMFk5CeAS/a+gAlJz3nXW04gjA+TrRTj8FByUFmN
-X-Gm-Gg: AYBFou0NnVPzkEmMr+pZQnYQnT6HkyHgU2qTgMMvQENXjZ8gCWAKeF1p6phTE8HEHRu
-	9roVdnDfI0nBcmado20467I+F8YD0xEp+Zp9m1LRfoHBGrNT160437h/d/wVBeo+AyCCmn1He88
-	5AhYbN9SZET2SMZZx9CAoBY0uV6aXNfmqTuDgJIH9ki5xf6s5kTYZjS/tHWAF3l4TsO8PdvnxoT
-	t+me1oGXDyMtN0khnJBXrB19XdEBWU7gh6/ZMb1yaCK625ZBA+Pfft6MtE1x0kb3BAX24A8yODD
-	C5XvBD2/XC5bnTcGZ7H/btHgwNdMb1BnmQYikj2a/OjQh4Ef3h+8XdVb1Minp8Xs21okxnTOsEh
-	sAYp7iUM449gcXMzPYsnCtRi9mH0lfqgQmXZe/fGwyCEKewALgVZxkwIbQU5y9bVYFVJfd2Oz6f
-	EFCt84DpdEGve9dZeiAsb/
-X-Received: by 2002:ac8:5d8c:0:b0:536:64d5:553e with SMTP id
- d75a77b69052e-542b397df4fmr19908851cf.3.1793340772925; Thu, 29 Oct 2026
- 23:12:52 -0700 (PDT)
+        bh=Y1wg+ylM7N8dc5S1wUmNR0bS8Ss14y95Rcv7/AdVz9A=;
+        b=o1gpwOH7tUcBGi2dwl5/dfJwIb2gtucf268XvWGrUts2WzNHsIGfchJEO4obIXW3Dp
+         s7sh5DWC4O3PVJixrY/TSy6G9MFzhEn+HVZUsEklnTry4Cl3TkgBxiWB2u2/iiirFQ4C
+         WsZJYaGX6Fr90Kzh47zNsdIDjJE4wEHnOFGB6rFVFMXsDF5W9l5tz6466gzbIY1hjaLl
+         SrQNV4g1HjB8zTo7ToCAWBh0gkvwXo1bKm4ISudaQOmRufVP4g2AxBrHHfWZDbAXSL2N
+         CzW6vsLXkn3ejJgPpa2Rvo5HRmp5CHPkF0qCUHXv16eJglQ30VDZrFNwcEc6jYl7uDj/
+         4ghg==
+X-Gm-Message-State: AFq9FYJC8UgwS8Wzss1Kfak1i5LzoWEAl+w3lGD5iV2KmkTotbPcySjI
+	KnsA0B/9sB83swMXyYoxLMFRuJpK+ZJYCetPUGxin++jl5Cj31Zpcd7jJ1LT1vXz5Kg7SwL2Aof
+	bQgzYrA==
+X-Gm-Gg: AYBFou3g3xrDsoRLrikMq/hxw0oof6R/IC7Bi0H3y5Nh+/EWn+gKQ68da9+xTtG7vjO
+	5hHEHLvYjY9oM+ZTfw1NoEs9eR7qDLCPbidCsoQOEODI7K9jGEmMbqOM244Or+Wacr7pUTJbQWK
+	JmuLbwrvSxJk+acu/l6BmQYhPvDaihJJ2lbezfRLtEvKdLzpqQVyJracFa+b2wYjoyPmqhOErf4
+	ItEsHeLyT9FUEHQ2VkleWG/ANug/YgMlHR/vVFQyTDFsGdA/g/2KVPGWZshPpxPjY2BwH9JNVMY
+	Y0qPCCEs0E8nt5O+QzBge7lHxG3lu4gCdhKC7k5dqWc6HLg2nl/45jOMGkGbpdFlFcBxqZA3Lda
+	YzPe5Yn2T8SalcSvBUJZrBkNUVJ9WWo3AIVX4ngf7q0scgo8H40bko3UMDI5Tv44/WWRw1Wsm7t
+	uARKU362PpiX3w+n64SgwcOah+a361wGoTcBCjoeNAbYzlLcUgJoIzQtL7i9d0nShNZ614UWtxn
+	4PzzGJSbzbxblSeg3L8fNtL2dS4lgMCth9ezsQ7oSIyZa3O/dTtT7QEBcD6Gx1dk63ofHv31Oy6
+	ck7kEqVPkTaFfqlY2xsQs6nJcdOc42+bJWvanIgnvU+AFT66BwflW/nMvIJRBiokB3LGrlonpmI
+	0mdbzZars1+LGrWAKF4aKj1tKG4NvbdamRT/8
+X-Received: by 2002:a05:6820:f004:b0:6f9:59ee:cf96 with SMTP id 006d021491bc7-714f2942a06mr688950eaf.15.1793341000456;
+        Thu, 29 Oct 2026 23:16:40 -0700 (PDT)
+Received: from nortesoftware.dev ([189.129.139.54])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-714f2d16ef5sm1239848eaf.7.2026.10.29.23.16.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Oct 2026 23:16:39 -0700 (PDT)
+From: =?UTF-8?q?Christian=20No=C3=A9=20Ramos=20L=C3=B3pez?= <chris@nortesoftware.dev>
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3] doc: gpg: say which date SSH key lifetimes are checked against
+Date: Fri, 30 Oct 2026 02:15:28 -0400
+Message-ID: <20261030061528.27901-1-chris@nortesoftware.dev>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261021030347.565306-1-chris@nortesoftware.dev>
+References: <20261021030347.565306-1-chris@nortesoftware.dev>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,57 +100,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <ec4de165-c7d1-43d9-979b-08c1cb67022d@gmail.com>
- <20261021030347.565306-1-chris@nortesoftware.dev> <xmqqqzhior8t.fsf@gitster.g>
- <atmsSIJrFhA0t1rH@pks.im> <xmqq1p9hiszk.fsf@gitster.g>
-In-Reply-To: <xmqq1p9hiszk.fsf@gitster.g>
-From: =?UTF-8?Q?Christian_No=C3=A9_Ramos_L=C3=B3pez?= <chris@nortesoftware.dev>
-Date: Fri, 30 Oct 2026 00:12:41 -0600
-X-Gm-Features: AclHuK92C5aFzx6nNx0ivd_zm2x0P7mspNxXEfxaTyDByyQ641MxcOhKvc3S75g
-Message-ID: <CAHGSfbYbP=sQEG4JGFx7CPHL1+tdYQjkXz1jKsevTZA_G5wGvA@mail.gmail.com>
-Subject: Re: [PATCH] doc: gpg: say which date SSH key lifetimes are checked against
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> Can you stick to the expected flow: (1) send v1 (2) get review
-> comments on v1 (3) respond to these review messages and then (4)
-> send v2 AS A DIRECT REPLY TO v1?
+The description of gpg.ssh.allowedSignersFile says that Git marks a
+signature as valid if the signing key was valid at the time of the
+signature's creation. An SSH signature does not record when it was
+made, though. When verifying a commit or a tag, Git passes the
+committer or tagger date to ssh-keygen with -Overify-time, and the
+valid-after and valid-before options of a key are checked against
+that date.
 
-Yes, will do. Sorry about that.
+Say which date is used, and that the signer chooses it. While at it,
+fix the spelling of "OpenSSH" in the same paragraph.
 
-Also, in What's cooking (Oct #09), the description of
-cr/ssh-revocation-file-fail-closed seems to start with a sentence from
-cr/doc-gpg-ssh-key-lifetime.
+Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Christian Noé Ramos López <chris@nortesoftware.dev>
+---
+Changes since v2: Patrick's wording, which also says that the signer
+chooses the timestamp.
 
+ Documentation/config/gpg.adoc | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-El jue, 22 oct 2026 a la(s) 10:45=E2=80=AFa.m., Junio C Hamano
-(gitster@pobox.com) escribi=C3=B3:
->
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > I think explicitly pointing out that the timestamp is under control by
-> > the signer would be useful context though. It's implicit to us, but it
-> > may not be implicit to everyone else. So maybe something like this?
-> >
-> >      Since OpensSSH 8.8 this file allows specifying a key lifetime usin=
-g
-> >      valid-after & valid-before options. Git validates the signature by
-> >      checking the committer or tagger timestamp is within the validity
-> >      time range.  This does not provide any security guarantees as the
-> >      timestamp can be chosen arbitrarily by the signer.  But it allows
-> >      users to change a signing key without invalidating all previously
-> >      made signatures.
->
-> Sounds sensible.  Thanks.
+diff --git a/Documentation/config/gpg.adoc b/Documentation/config/gpg.adoc
+index 240e46c05..d3713e960 100644
+--- a/Documentation/config/gpg.adoc
++++ b/Documentation/config/gpg.adoc
+@@ -70,10 +70,12 @@ A repository that only allows signed commits can store the file
+ in the repository itself using a path relative to the top-level of the working tree.
+ This way only committers with an already valid key can add or change keys in the keyring.
+ +
+-Since OpensSSH 8.8 this file allows specifying a key lifetime using valid-after &
+-valid-before options. Git will mark signatures as valid if the signing key was
+-valid at the time of the signature's creation. This allows users to change a
+-signing key without invalidating all previously made signatures.
++Since OpenSSH 8.8 this file allows specifying a key lifetime using valid-after &
++valid-before options. Git validates the signature by checking the committer or
++tagger timestamp is within the validity time range. This does not provide any
++security guarantees as the timestamp can be chosen arbitrarily by the signer.
++But it allows users to change a signing key without invalidating all previously
++made signatures.
+ +
+ Using a SSH CA key with the cert-authority option
+ (see ssh-keygen(1) "CERTIFICATES") is also valid.
 
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+-- 
+2.47.3
 
-
---=20
-Christian Ramos
-Director general =C2=B7 Norte Software
-chris@nortesoftware.dev
- +52 9671456444
-nortesoftware.dev
