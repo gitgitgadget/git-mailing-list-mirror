@@ -1,96 +1,108 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.172
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793361118;
-	b=iu2+m1VusZxZ/CAufzh7ZBPf6TbBAVhKwA1y8+Y54S16t8Ef6zrIbJYVXVokkWg4U7ET
-	 Vpyh+UR2qp/nnawVnJwxx7i+0nFD/vScvVuhKxVHGHh9iVDD7m8OTVho+Oeyfs/KSPrNY
-	 FAnjeHmTF6XLguMhHGiPkUL7OqrEvXDX5qHuUS/5pFurRU2b4AkCr8RrFw/TjDZGOKKqO
-	 5EgwbWt+vdyCOWNCxvmsyM+jtygLV/mNHalH0oAyIugmPue5AlOt2vy2SUCj35Uo4fyZU
-	 MnWzHCbeo3+MUIDlSSYs7e6+kpSvJ0JJjWOp+9G0rzd+q6Q4LE2vhDUa7GG7NBvPxWQ==
+	t=1793361316;
+	b=aVoXLICDe4E43srROi8lzg47idva+MiK7P3boMoFFaypJMm7ZGIvbp4/ddsAYBeI6SLZ
+	 KMrXZHEIIxvrbmXKbuYEhLWg/mcy6VcC8oUENNRyFB8ImsFQ2D+Md0ZOkz2inWaLGnl/K
+	 JqlYglpk+WBQxa6GmjEswo3PKh1CIPyryknyNe/h8qYV5CIdl6yeP1EdWNKFk1a71ZSZh
+	 1vKkacaQNI1lTgiYyPxJUj97gPcdkUjTXhmDVx4Y1V9CBXnBpNciybwQIQR0sB5LwjOUW
+	 /cCbpBuLW0C2bOQTA80LkFEGwqJn0WtjaFI0sVr+ZtQxNP5+s5TnTzvrIl9OW+vmonQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793361118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793361316;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Received:From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=nleg3v3ss/35EwFO4a0CSmM5kNqGJPHNF9IV/Gtdvec=;
-	b=OzETUtC07yG2Ot822iwKOXHUxlTRFR/+IXOFn9L0ZTK1AUHBeZQ5aV34nHP0SU4+ZFT2
-	 r0rUW6RTx6mJbwk5L97jsLekyj0cwrJzCJ2poBBDuu6Ldq1QS45lW3uwsXcSiyhPVo0Ri
-	 zesm4E9+67NLESqONwyLj3U3TEYoStC3HWKZRBaQbEgwPkKMCJPBJ67WU6uayacLd/V+H
-	 kKX70iUlnISge4xqJgdZc0hnTw+z1J8NrhdmVl9f4ceQRsnBoCXEGX1VCW6W2L2Y1a+hP
-	 iTxtoAL+1FO89WZK5kxexMO457wdNVz6GV/Oq1A+0hPFD9HFNMo9C3Qj6l7ZTt3dNlA==
+	bh=mZAMIW6YMjzfVfeVniDx9tSFIwqqu4A/nBjGCK8aPcE=;
+	b=Mv+j/PFS5OcIdVy9xXcqA7wSnb7/9YCwsbJgs8vxNTTJmfMokEldW5II3tIGRBSG1hCZ
+	 i9agRvIZEJJkRjXwmsgw04rTgN91YvvSDoMcqUMy5lFlrEoG4lPiVTrKR2XpGwPj/qIOW
+	 xp5koftYrlr5P+X9JcxSVHb80utdML71b4/oVqp5ulXBuppFJK8iCm08U/Ba35K9Hm3rI
+	 QI44YOGvlwz+m6+JroX7BViSVFHaF4CZRcXBNMpGQdkg9XZ3SnvP0yfyc2j1du/E1N16I
+	 MDjmtDnN5tbruAZRDBvZfVZ57f1YKzk1XOeRU8VOZ9fNqzVzJzyrQshczWx6iRkjBHw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=spotify.com;
-	spf=pass smtp.mailfrom=spotify.com;
-	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b="eu/FGqVW";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="ondi//EG";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.172
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C63606A322
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 11:51:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30C63606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC49D606A31F
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 11:55:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AC49D606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=eu/FGqVW
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c434376dbebso127688766b.1
-        for <git@vger.kernel.org>; Fri, 30 Oct 2026 04:51:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793361115; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ondi//EG
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5eafb65e169so467854e0c.1
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 04:55:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793361315; cv=none;
         d=google.com; s=arc-20260327;
-        b=NtIzvRwTbts3y5xv0XGaW07w7Nhj6NZuA6vjjjU4GCpRvbdWZ21cguJkAcMdVlBKZ9
-         zEKMvhuw2yOv1/VYD64k7rZS8lJaN5lwxI9pyCJ74ecwdmPoQaE4epsRzSPkdoqdvBge
-         f7ZSzEtTCbTq3Iam3dXgNI+CDoazoqZNFuD8hX3ECJlQl+rIYNGOvJ7URF3ZzUTk7ixz
-         jv6VdTQ6Yv08yb43jlwAhWJl687noQnDxEXF9qWYa9czYgQVJzGoPGpz/3NRChMUZrGa
-         fGuWApQOm46gnFVkQ4G7/lcJF/gisFAtJpwNEwutoxKVInNlwpX8VBQWxUwK9FR4rVq5
-         5LfQ==
+        b=hq29F1bq7MTSgTizzmxUnL3CWdCYW4dCM61CYl3Qa5Y33k2nglKV9oDFIEVkdUN91i
+         Rlr0okgKs0wnjbvzyzVXzoA6BUKwIJfOdHIfcHoQUrYBYkOeam43vzrSpyTYztW6vUpZ
+         7BrG4vNA3nFhyUWCJLJP/hOAzwRNNZNe99tECK+LpZsW900pYwwy2hOH62oWWMSXc8hl
+         x2FNtuecOECJnvr7SUipNiwFQeHYmuqpdVMxZkxVg1CcmT+qqVsMLCtYgbJqLppCnhjS
+         gi3hAnDUy3/QuTO8GMb4LoDM2PeM7de1sHpMN1reAVtTXOGogxAS8LTuvxB+DV/2dph2
+         OfDw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=nleg3v3ss/35EwFO4a0CSmM5kNqGJPHNF9IV/Gtdvec=;
-        fh=xAjaA82MGe8lpMWFU8KQCMypkU8bW2wRAkznxMRXU/w=;
-        b=JsYQWbALVZqr7XHzMxnLG46ZhKqbTC/1b8k5EnVkZQiviBLRe9nv4JOJGaMbvWvkDH
-         TDXRerZPnofRujK/b/OCdSsyHUbqO0QTu+BRbxKRuXu5hCms2wzygjy0uE5HttU1k06h
-         knQQJxPLH4DDQKLzHlxcLviyOz5fs3kOAsMWaz8o0xOFdda2GgTKzoyidhMVQZDYm+iN
-         Y9TBJG1GFiIJI2gVxMdQiJ07+wDh/3F9V6AMafZgrLdli17WSXyRWEYj83+s2AQCCkGy
-         AwC1MPz/zS+vwTQC14LCY7W1F8Zd5xBbmf/wWobxGnl8VWOy/GE9P9Gqz+eKk1jMicA5
-         uoVg==;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=mZAMIW6YMjzfVfeVniDx9tSFIwqqu4A/nBjGCK8aPcE=;
+        fh=zsCM3X89Rpw5fJyF8JP4Lf6Dpmo5KEVveAtcUTxUHFc=;
+        b=Vn7N4JYCqSu3MDHirzNXc/ahEIg3d2BTLVK5p4LC5gj9gcIePOZlIvtvTpVKALzilO
+         7K74hdD49qcEwIRFMS5J6PBmRq3wxaPkZ6/cknBDaCKtMjwoULukN5f8vLg0TVWB5pjH
+         moHHH2+TinXoAUdcgkmg0w0beim1YVQzzRPGDRBAkDtUw62V7lukKBBpieqzbysssR6V
+         Ib/AhVaJd1wl41I2HSdLon2oWXdxrUaAWrzCVvWtR08gBl/me7EFYFvns4wt0zz9/BYH
+         AfoMMvAzDQ6hcpXwJhEdvzJ3LPbyJBM2VnuKWkVe7a7iJJe+5UDFf2NkXcfsBYGstdVm
+         5DJA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1793361115; x=1793965915; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1793361315; x=1793966115; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=nleg3v3ss/35EwFO4a0CSmM5kNqGJPHNF9IV/Gtdvec=;
-        b=eu/FGqVWvTunL+Fu/ri4gHq+aggO+JwHHKIOk8Lm4ICzXFOlS8kzrdHgek0noYSE0u
-         nrQZOG6NmtDPrz/oDRdwqDmtvKvsuVb1klRrSssAgJGEp8fQDLkR0N3HXkfnFZSKDh9Z
-         ZaekPSObq+nivN13adOTcJfgylF/1wBu4DjZo=
+        bh=mZAMIW6YMjzfVfeVniDx9tSFIwqqu4A/nBjGCK8aPcE=;
+        b=ondi//EG9hntiVlUm082A97zNN19ikiioXFmGQq9i1Yr1fU/GBxZH9EgqV/68oNHk+
+         WNDpzs7Uog2Rp3533iPPRIEgnkWJ3bfzUfmqkrl/vbbH4As9QTdcY/6veKv21h9LrL9V
+         X5+PDmMzXEMYtzKpeb68c3DeYbBYjQzu2IWq92lfW6hkAXWb2XW6uUgQ7yqM5PZfW1sM
+         8Z1It1S9BA4zgRUMvArs1cHo9r066FOFrJm1U1pvbaXG7dGLyWqU67WzkaQjpNIMBxNO
+         5VG2A/PCrCGD6x9w6YwXNtkVN8MzzIqafiznPTgO/YCwAgDLEvlrbuhNbNQ+XEwycREL
+         3CCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793361115; x=1793965915;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=nleg3v3ss/35EwFO4a0CSmM5kNqGJPHNF9IV/Gtdvec=;
-        b=u8KbHgxKDRfD/J1zddUBfWLXJlaD6WH/xCJ+Y6im7IlKPEJYImQIfFnC0vBeRCEdVp
-         NhoRkBN49KODpbD5qtEOsI1CzGYANE/awgNE7H2Jn8q6yCh7O94p59q0dLcmYrl8ZjIl
-         uMTrREDWOfH4E6QYkHkHOIHfDHIx5NafooBUWJvkg9/nLGy0IIs/FdViQpZ5K8LRDDZX
-         5VJAb2a0Gkqx86Cy+8VtDv3hEUeWJP9d3Dbvp0DQ7RTR7tGhQ0p9QLwnTivO46d5O8jh
-         srFwvaFJrmNFO+mGuuk3q2iR9anGIMLkFBTFXO8tXZgqWfFOTrJjBhT/6VWsUTKQJdir
-         0tRw==
-X-Forwarded-Encrypted: i=1; AKwUvBwgbUFGtPumGZRWzOVsIhicJeB9XdqRXIeKmkvhuze5gYXmMSy4p6J7Mh+YqM2TlKnFoWw=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKBBHd4GFMfuKmagKtgzkcvvaauhAEp5l7hKRPoEdh6RnxOLAfx
-	iuYk9AwpiDfZcpIsypqFTSTM6Lz8sGd9obRC2svQMM+y8Im68/bkxeI9J5Jjeh7EsZpAPtyNBzS
-	CcaGk5fI7U5i3SDv58GyOXQBEA2yp8XxPeQatEhZdSw==
-X-Gm-Gg: AYBFou0gjNhT0Z8akT9rJovGNHrd+Zrnbtmz+9fOt4PnrMWwzXIMl79RVkXgObqb0KG
-	lppf+cOuII9u/kHPnFYvf6Gjcd/CoAiIBKoOJo6lresnBe2gmb4Z4Yp2H/2OswmT5xggK0m8aB8
-	/Suk9J+isDK3VcrTXjUL9VvMyXQ+HVfGzhT2dJFuDcIg1hIekK54tQoX/OqiLJfTOw41zB2ZQTW
-	AegHWlwsMz4lSm2y5SBM95UhfkW0/GptkfhbbO0fT3pZQTzQA4ovOUZdzlhZwfQKjJnpVhO5yk6
-	lUXgwIRUNQC2ILmzOFEPyUy0EkC3wvezrK75xardqahSNExy1mkHrW9uOCjvrXJnsHZuBeFJnYu
-	qdDgmIYD5D4bUZF7Tea10/wV+LOu0KoLfii+soQ==
-X-Received: by 2002:a17:907:3e06:b0:c2e:7fe7:2898 with SMTP id
- a640c23a62f3a-c4ca7a6aa23mr191982266b.12.1793361115631; Fri, 30 Oct 2026
- 04:51:55 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1793361315; x=1793966115;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=mZAMIW6YMjzfVfeVniDx9tSFIwqqu4A/nBjGCK8aPcE=;
+        b=Wv3pHC/3vxf+lnT8fFSdyoXvwlV0tZ2MIGLYbHQK3sEAybR1OfccBpAjNa2PYyXbbL
+         dLxQU84Fm46hwYFeZKbwk8KOZYEWPcZyng7ejaychWf+FFMDOUrSK28zS/znf1kXunFQ
+         sSZ7vGg4a5NvIkr7EQY1OGxu/zaaxbwrddxLZiwd73wMOzxyalS2rSMuG4tR10mg4R0H
+         TEHnT1PmoksFgO+EHPOv7SAKgfTIEtBsnx3vOFSUd+3URCjylvzDWh/zOm6+LdDBsvue
+         ys5haQrTNo3jyLPGUFxT04xYnetfUSUPKt46eL2bAbeFHgEmdqQbb/vekoyH3s5MPngm
+         u+yw==
+X-Forwarded-Encrypted: i=1; AKwUvBzk291sPGB5qEDL+QMEidtxTrMF1oApcaP3yT4z2uhqexn4L6cxcopQTtkZknPhrClXJiQ=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJfUQk0VutcoDzMH65srmVMPH5gbqqRlDQFfmzaLBoPQ11t/SlG
+	p+qvYlWY0n5uzRqYPs/1S77oGlKGicQ7UVuNo9+FK0R6L/S+jPwStiCMqVHkrVeCYnmIWe2Z834
+	PTyoOurh9FrOxSOoEi7KPIW0cAL84DrM=
+X-Gm-Gg: AYBFou0+ePwQSUTGdaWAGn1fVJof6Wcaq+g6kMBRF4F0tCIVbZGWZEJC+WmEOwZSXn3
+	HNLtCKzMqC94nrLy7rB9irgoBzknh4Ycia7Ar4P/4uBPzqGCf2arcLCyclgGtX3qaJYuVKKdjlN
+	G0IlM371+7TcsvK2uOV5RYblcvT0wu5VDPkS2vtDaruam2CfVZuTdBVPShhtAwWAcnavgnOmdcg
+	vnVjZrrGgcfNxMyHClxrzEekNX4LFeDOgi+l1YHWlB2nu/YDF+R/VZa0KprtxHgBb1vUcb/YEAe
+	KmuveD4dhm6ZJ4bC+dkIE+Bok1l4yos877/nGO+F/28WcdzGKQxFMUnbX/Nree3Nd7OSeQg1uer
+	Dntd5t0zHEwxRoZRaXGfFkBDpI6GXcH/yGeH8OwM6QeVTcInhE2RVOdl3BH5J0C5sZ0tuucrVhO
+	vtks57L8UzFIDpdJ6k/csUhfqZW4g=
+X-Received: by 2002:a05:6122:4d86:b0:5ea:aedd:6087 with SMTP id
+ 71dfb90a1353d-5ec6871d3d2mr1102264e0c.4.1793361314657; Fri, 30 Oct 2026
+ 04:55:14 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 30 Oct 2026 20:55:10 +0900
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 30 Oct 2026 20:55:10 +0900
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20261029232220.1245827-5-jltobler@gmail.com>
+References: <20261029002413.3291184-1-jltobler@gmail.com> <20261029232220.1245827-1-jltobler@gmail.com>
+ <20261029232220.1245827-5-jltobler@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,56 +112,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2285.git.1793200705017.gitgitgadget@gmail.com> <xmqqfqxo4dy1.fsf@gitster.g>
-In-Reply-To: <xmqqfqxo4dy1.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 30 Oct 2026 12:51:43 +0100
-X-Gm-Features: AclHuK8qfsq-VEYvD3n14dNN-T5VMLsCIJEjjvQX8hzuTtzC2n4q-k7c6bL18ek
-Message-ID: <CAL71e4PXZ8-T3RgLQQLtL2ASQMLbRrChfV6wAqxFSd_Tw7-2Sg@mail.gmail.com>
-Subject: Re: [PATCH] odb: do not list our own refs as alternate refs in the quarantine
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
+Date: Fri, 30 Oct 2026 20:55:10 +0900
+X-Gm-Features: AclHuK_eUFfDJBsCNaZ1YCWuuvTgqAbBLEjUbb-5FMlU5Nl6ZKNnzR2AGrVh7CE
+Message-ID: <CAOLa=ZR2AmC4EDM7V2A9UainUZ5md=dQT_pnJycxuqV7BhfxxA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] tmp-objdir: merge loose object index when
+ migrating tmpdir
+To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im
+Content-Type: multipart/mixed; boundary="0000000000001d697c065f0d7822"
+
+--0000000000001d697c065f0d7822
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 29 Oct 2026 at 18:24, Junio C Hamano <gitster@pobox.com> wrote:
+Justin Tobler <jltobler@gmail.com> writes:
+
+> diff --git a/loose.c b/loose.c
+> index f2e111c25e..0ce9c7486e 100644
+> --- a/loose.c
+> +++ b/loose.c
+> @@ -311,3 +311,50 @@ void loose_object_map_clear(struct loose_object_map **map)
+>  	free(m);
+>  	*map = NULL;
+>  }
+> +
+> +int loose_object_idx_merge(struct repository *repo, const char *src,
+> +			   const char *dst)
 >
-> In other words, if we tell our quarantine child where our real
-> object directory is, say, via the 'GIT_QUARANTINE_OBJECT_DIRECTORY'
-> environment variable, can the child notice the variable and identify
-> which of the passed alternates is the real object directory, so that
-> it knows not to use the refs associated with it?
->
-> It is a bit of a shame that tmp_objdir_create() exports the same
-> value as DB_ENVIRONMENT in GIT_QUARANTINE_ENVIRONMENT, as the only
-> existing use of the latter is to check if the variable is exported
-> or not---in other words, to carry a single bit of information ("are
-> we in quarantine or not").  I wonder if we can change its value to
-> name the parent process's real object directory instead?  Then we
-> would not need to export yet another variable to carry the
-> information we need.
 
-Agreed, I think that is a reasonable way forward to a concrete fix.
+Nit: should we name this `loose_object_map_merge()` to stay consistent
+with the other `loose_object_map...()` functions?
 
-I started working on a v2 based on your suggestion there.
-First I tried tweaking GIT_QUARANTINE_PATH to
-point to the real object dir, but I realized that might be
-unsafe since some hooks may depend on the semantics of
-that env variable, so it would be a breaking change.
+> +{
+> +	struct lock_file lock = LOCK_INIT;
+> +	struct loose_object_map *map;
+> +	int ret;
+> +	int fd;
+> +
+> +	loose_object_map_init(&map);
+> +
+> +	if (loose_object_map_read(repo, src, map, NULL) < 0) {
+> +		ret = error(_("unable to read loose object index %s"), src);
+> +		goto out;
+> +	}
+> +
+> +	fd = repo_hold_lock_file_for_update_timeout(repo, &lock, dst, 0,
+> +						    LOOSE_OBJECT_IDX_LOCK_TIMEOUT_MS);
+> +	if (fd < 0) {
+> +		ret = error_errno(_("unable to lock %s"), dst);
+> +		goto out;
+> +	}
+> +
+> +	if (loose_object_map_read(repo, dst, map, NULL) < 0) {
+> +		ret = error(_("unable to read loose object index %s"), dst);
+> +		goto out;
+> +	}
+> +
+> +	if (loose_object_map_write(repo, map, fd) < 0) {
+> +		ret = error_errno(_("unable to write %s"),
+> +				  get_lock_file_path(&lock));
+> +		goto out;
+> +	}
+> +
+> +	if (commit_lock_file(&lock) < 0) {
+> +		ret = error_errno(_("unable to write %s"), dst);
 
-Then I started adding a second env variable.  That worked
-and it was not _too_ messy though I realized it was a bit
-redundant.  We can simply deduce the real object directory
-from the quarantine directory -- it's the parent, based on
-how tmp_objdir_create() works today -- so I built my preliminary
-v2 on that.
+Nit: Shouldn't this be unable to commit/rename? This will differentiate
+from the above write error
 
-It feels like a slightly icky assumption to make, but it
-feels safe since I added tests to cover it, and does not seem
-possible to override outside of git itself.
+> +		goto out;
+> +	}
+> +
+> +	ret = 0;
+> +
+> +out:
+> +	loose_object_map_clear(&map);
+> +	rollback_lock_file(&lock);
+> +
+> +	return ret;
+> +}
 
-That said, if you think this is over-simplifying it, I can
-pivot back to introducing a new environment variable instead.
+The rest looks to be in order.
 
-Thanks!
-Kristofer
+--0000000000001d697c065f0d7822
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: fcabd22c6980276a_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ya2haa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNmFyQy80MHp2S2RkUWdaY09TeVhpVnpibk5tV1l5ZAphK3MwOGIydjJ5
+c0JIb0ZJdjRFaW90UFZESnFvM0s3RVIySEtyR3BWSjhrVVlHeSswUUN2dkdXclgrMXlrL3ZYClV6
+dTVJM1M3Wjc3V1Vud2dMZlQ2aFNjc01ZZFVRSHFvU1pndzczbVBhRXFFTG1CYVp4L3ZUNzBXQWwr
+YWtrUzcKMXBiSHFaTkZqd3U0NEdqak9xaVJhTkw5K0lza0p6SFJMMHIvRWs1aUQ0NU1EU29kVWw2
+dDNiSXNEYzdxVWdIZApzQkdJYy96eWNKM1Z1bmhZbk5YMEZORUkzVFpUM05BZ3VsaXZrSnNLSnVQ
+TmkyS3NrK3Z3ck91eDVkTHFxQ0lICjNyRXNmZk9TN2s0aWhUL3ZSaFZBMGdSZlJGUUdWeGxvU1BD
+ZGxpN3ViNVF5eHZJd0dNcmthRHhPYUxncEVuOG4KdjNJcHIxVnpWYmVteS8vRlVkZzVZMHErNXBm
+Q1NEcGpic0VLYTY2d09jYVRNU3AxQURqQW5mUGdsNnc5VHhUeAo1VHByRzBoVHc0bTB0VjAyUGJW
+NitYeXo3YjhSWVNXU292VWVrYWE4cTNDNXIySm9hcWFxMGQ2a0l4aTgzOHV3CnRYREM2ZGM5LzFi
+MkFZOVNMNW9wUHpEdVA1TzZmSkEzYW9UaHBDZz0KPUdQazQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000001d697c065f0d7822--
