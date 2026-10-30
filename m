@@ -1,86 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.182
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793337453;
-	b=yu9k9SrAwQPs0997gtpdkEfkXC30HvqeHWIdkOkwdjFX6HohmVFVh+D+VzAaQFI4rdcx
-	 4QvG0NDt/F1GTnlNtF1vR5vvslNKFVjDUaY/8R3p7FOvm9YAOrDHTCarjDjDms5E3IG/b
-	 MWtV1ZYH3N7hNNW7q32R5NSlOl4INcZPcccLbuwn1IeZ3Of5JWybhnmqfCgPnEI0crUFM
-	 aPFP8PC+HqtvDQndYyZEpcRl25SkOrCaF7oroOYax3unwZywf+fscfH7fpnfK84qXBl0E
-	 7h4FRTaWoaK663pIK6eDLsZ2UIosgMRt9UCTPP0O1tDOXTBJHC4/egrJc+vMTdDfl2A==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793337453;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.174
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793340774;
+	b=qh0O9TFNfl9qm11BgU54s3CGPOAiU+FGiGBHO9LHphIDNAAzrouCYHxw1xcG5gJ3vWo1
+	 ArRVbPLIldWx70/OT04UnI1Zynkp0Jv9gsF0Ulq3AIvzTi52qY9twcNS/2jMJJh0PqNYL
+	 6M7zPDBKAJy2QnNQaUvITwc275nBc4+rxfD6GiMRgwB+TPH+//JAjENw11xtq9wvwjQGX
+	 EsRfeW1xv+RlzamejdELV/V27rM1ZBRbqcgVqzyiSlodoOp0AdWMTW1NQHpr9Yhp73Oen
+	 XOxZR+vvLI/GFELzvom4ldAWa/7Ioh3r54Z9C7Ae4JFQzmuZ5JBPZQTGa5RHBpJW3qg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793340774;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
-	 X-Developer-Key;
-	bh=IzDjqdOHWAiK+KdsxbHryF1w0oCjsA5PZ4HzbPY8qm8=;
-	b=N7awn+NRzsgmaCRBJirvmTKFNIgXsg3Gmsn/vJcSjyKEdoLkTKwPwURZqS4fHQjrh9Ne
-	 LAnRdQlL6xforMEH4Jn5fO7Mst8Yn2EPSdCSDFN8ZLaFHvIjsc/wUk88djB8IIxP8XdRC
-	 L0GQJFWOFaGSeBXjVkB4a0PN5J4UG30vT1o9eWtGXoif1wFn22MPdrzLAeslKtxis/e23
-	 3PCi20kuVF7REs5cvpk74fRQ67IPFJWbxEXQj6M4zn6fI4SORY0b5o/Z1sfIraXcwRnqr
-	 W4PmcpwhoHcxWsImvkU9VYgCfZmE/k5bhGyJiuG9DrfH2WwOD7YdS5nha7MlSQRCqsw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YtMCsrub;
-	arc=none smtp.remote-ip=74.125.82.182
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=koLzWHXW97TNEzE6lZyfsMu4/INbSHZoqvSoVHdmAK8=;
+	b=wnTdP1rm5JxEqQoQ+b0zpOxpDOTT/8ixDQu3gNNNjcjsN5GSZy2ssSh09VNu/N1hi5a0
+	 JXUys2YsIYfFMhB48sTbUqUYP8LbdguD0Zy29i0DN9MvKHewArzDgKSV4P49rUZfzk0XD
+	 jlTffldgS1/ETKHxCEzKu2tIwAKMI7rx4qn5zZjziFhdQC+ZP2rjENcyikY5ZTzHIGRZY
+	 G2UtQQdo+vlkGIk087+GX0s5/jWWYv4xLzVNTo8U6VPjNmB88CLp56wcUtm+JhABC/FH3
+	 KDK/FQJ5niFkbPNc00qv9y372tyKS16xK32tQhDc+CV3q+CRU3AATkrbomT0PdzAM2A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nortesoftware.dev;
+	spf=pass smtp.mailfrom=nortesoftware.dev;
+	dkim=pass header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=cHEerX2O;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.174
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F12606A31A
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 05:17:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 01F12606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DC7606A31A
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 06:12:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 35DC7606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nortesoftware.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nortesoftware.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YtMCsrub
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-35b2c599f43so817069eec.0
-        for <git@vger.kernel.org>; Thu, 29 Oct 2026 22:17:32 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=nortesoftware.dev header.i=@nortesoftware.dev header.a=rsa-sha256 header.s=google header.b=cHEerX2O
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-533797e72e8so1924581cf.2
+        for <git@vger.kernel.org>; Thu, 29 Oct 2026 23:12:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793340773; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LLrwptRlhiei25SWYrwO3U9J30TA5LuMGTh7+BNooqqm5fZDLVxsR7zkOFImYjMrER
+         rCbCbBhM9aPPSWfyzbqAbG54UFlDQvmW9hStl38m/nncZa6wtX/d31QDCHNxuYTrxa+F
+         dBzDp5qsMWZ3PCdtc2+V79QqzNSDqsrX+MZ9J9WCH5+xfuHYZUwTJRsscWQHE4Bep9bQ
+         G9wQWLCrvT15NwwDGHLWw1SEj9f1IlDyPdAN1B4ZPVEm0zTJZjDp7/THC/VEeSEO9ieK
+         CAkklwc67aUZspvylPJJNZbLzdJIi2j5vVKwiFD5anBfS/y4/eHpm8A5G3otvAYmtpXp
+         f82w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=koLzWHXW97TNEzE6lZyfsMu4/INbSHZoqvSoVHdmAK8=;
+        fh=l6RrM80C46TPjLLpc0VBUcGGhagrqWQY3cTc92IWjBg=;
+        b=hdr6/LHtgxc8j0bek6Iw7vRfyPw/CSmiFI5Puc3ku1IAlUoLRTRPPPBgFWzKN67Ys3
+         sFdZyaHXSCdnme370i2b0SxS/ppxhGuwX+A9Zb/94zfvf0tjsYkIq2Jf3MmlSddoyfru
+         GF5K6sJpgHLHLycSMZLjIGCgmLHSXhSB4IBH2Dhk8f0LLt5jskKsBavm3RFQNyJ+yMjm
+         j7zVpDv0PKAqYBK/LRDcWE6QJRe0Z5sDHUaFBeAYeqvnm9K7ZAWfBUtWnzMnMVewAFQJ
+         DBCvdOYBVGZcGKaI0UQOAXA1uC8KF8bRQWzcgFQ43ZuUeVSLjd4fpsSi5Ers9L0o+AZk
+         Mkhg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793337452; x=1793942252; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=IzDjqdOHWAiK+KdsxbHryF1w0oCjsA5PZ4HzbPY8qm8=;
-        b=YtMCsrubyNS496J34oaEfTSAqaX1vS5tyxrn0vNRt14PSChN5WaHiL59iJT0obaSai
-         zRnkufkceX1wbxIQuJqVQIsE6HXYZkHphXRwpgg5mfQZiPVh7ZNm1B/iigAqbiusDp0v
-         st4eacTUk1fWrtM9TyMUPobXwYflmbN2kcKbVL3Z3eW6kNq9Yw4+sNO4cyCVQ5Uk7rXB
-         lRdl5hCWdy7tMYXWBgsUdVivHpqRgiIMfjRCHt8P5u6E7VpUnSDq+N95KFa8nE2Cbqwp
-         kDUSD6U/gzHeASuUSs1Yh7IZOWFFc2odzSZ3o9mTwOn++xd7Y4pSH4eJHVUOTVukdfIq
-         oTjg==
+        d=nortesoftware.dev; s=google; t=1793340773; x=1793945573; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=koLzWHXW97TNEzE6lZyfsMu4/INbSHZoqvSoVHdmAK8=;
+        b=cHEerX2Ou9qKFvK2UNaPNr+StWTcV3VZdLbw+k44xSlQIwu6T5aQvDCrmMpzVwbSGP
+         NbPGFonVEYG9SYUCs9Da1crw5T+0VGUyaE+ypdmghle2SU3t3D3hO09AChZc1s/3aSkh
+         eiPTCdqlVXkfPM9HCeFLEZTjjDwTKh5HMCoO43560q1iEgci8avOIFT9fgArBgvLMTqv
+         Agr4ovU5QwcOLgsEruxL6yqMbFCqNlEsuku5BR/yoOIbWoXVK/PYP3IIg81ghNmBJb3K
+         mtvri1Gzvyje8P3ZO/FXjj00+b4TYuoUaCbheu6wkisx/XGjyfhSzkhueLIRiEbfG0H1
+         jiMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793337452; x=1793942252;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=IzDjqdOHWAiK+KdsxbHryF1w0oCjsA5PZ4HzbPY8qm8=;
-        b=tzFk79gl1nbMyPOJYnzyYBJpg+O/Dq3DByO+2HBLkqrnnOwZqcTUE0mdF8FHVYKeST
-         4tCZQT0tKLv8sbzAhaGamw284FxKJjHAWoRMm2papm4LwqJCF33mUidpmZZKELYXNEg5
-         RUyAdEmZqIwrW4ovVyJnlN80CQ1MnGViBZwkc1WAh8Clljp0gRwn5qzt1bYzfXghAJOD
-         scakS4crAv3Fp2Y4Y833eqDjYc8V+fRykqyF29Db+CAngyRStYwQ1u+5OpPLxZH7c4u4
-         2EU8EMGa5NTyrQH0MUc23Q9BalQ13k0suvN8MVNGbylePahmkuu/TS98wZQw2ZzIi277
-         Ebyw==
-X-Gm-Message-State: AFq9FYIwW73xBxSWFKTf/6CKjFYa+qmSxhXpx5lD92T7tpkWCvOhAhte
-	G21CVP811ASVff5gw+hwzLL9sX9ejtl/1D4lqF/a8/zex16DFPZ7HIrNdKGWYpr3
-X-Gm-Gg: AYBFou3towzSwlKF0gL4PhysXFpAwxtTM8+DFsgO6n7B8uIa0BByQLeZ5sr8TR0E0Qw
-	NQfL9jS8jWXh4GQ5vJOA/woXG5A53CVFzyA8cbsN9WFisknTcjQQk0cAPxLUaVp20WQH478Nr9Z
-	5SSZbMzVn9eXJZ+rsB1M3AylC3eSrMG/Y64JSoa8BbxsWTWaPzO5Qur/bhhVHvLem0th5I6A8pG
-	WGj7LRBiVxufSoxD6qA7F03zgnSVBcfH0cwANkzQsoATF2PwrOG0wveJyKsFjOp8n+roHJsTExB
-	9ATqs1rcQyarnMMDNTk0CL9QuXX+7lA9o1hiU3f4ZYYKMWzYnp2CwwRIptPsreuUhqQ8R7T1DU7
-	Q4wdE8CUJ7UmBo7I/CzhxstsoJX3S/Lu3l8JrV1MezIzRlbvinSAmdeALFfnTacPu6CSAi9CZ/m
-	unzKrAmS3PJNmAvX5XqdaNPI4sQzW/U6L4TFo2d9BWwWPzqmTrzozkyBMJoUYQW3mid2O9j2GaV
-	RwSbt8s4BqTtzyFpsWLwatdQfjXvmyi6bVIMTTy7E7QwJwdJSrB7B7tJcarFm0ZtxuaWdxlFqB4
-	I/TcM0CSK3E0kh262JU21OTS4s6rBBycbg==
-X-Received: by 2002:a05:693c:88cb:20b0:343:9eb1:9940 with SMTP id 5a478bee46e88-36a423e8150mr2141676eec.26.1793337451939;
-        Thu, 29 Oct 2026 22:17:31 -0700 (PDT)
-Received: from [10.116.151.240] ([117.213.200.4])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a4239ca82sm3714705eec.0.2026.10.29.22.17.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2026 22:17:31 -0700 (PDT)
-From: Hardik Kumar <hardikxk@gmail.com>
-Date: Fri, 30 Oct 2026 10:47:20 +0530
-Subject: [PATCH] doc: config/log: fix typo in git config docs
+        d=1e100.net; s=20260707; t=1793340773; x=1793945573;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=koLzWHXW97TNEzE6lZyfsMu4/INbSHZoqvSoVHdmAK8=;
+        b=VLqv8zXv6P1GfugH38yofhKmnvti/vGXZ8CJjchImPUhMS9RgYpdZk4rxRJwlNGAAn
+         mZLQiVVlc556Jd2UCoYy9yDs+nbevjD6bK1Sz3vZFxtEtO7cHhibtoPMtxZhWnJDbMLZ
+         A1bpxCyeTpdQoGjK2LHTUCIGTQFSRLtxx9WqLNEifJt8sD0u3JQvWL/bDGxoa943gs5w
+         gKC+TrJvrUcUcavExbDtCA5JooIoZtTbrxoWoz8/hkDcK9xvoNiPm4C2MqD0lu3E7vpC
+         B43CLmN9xCl9Bq3UXKqIrLxAlMGI03Kc9Gg5p7xLi4d3f/+0zN6AB46MDRT6SeAsw+XW
+         jf5Q==
+X-Forwarded-Encrypted: i=1; AKwUvBy8aAgOXwUzvGk4AHGc2GHeqa5E5ZEPwRfu/YDJ/fL0ajoNTrREacIV1DBrFMXmjHH4KIU=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIUhfrvoT9QWQYndEN2qriFoAj/gpgKYJ2DyXc4dQ6Ap4T9Hwsg
+	KKy508miZsRTwYgm5DL4ngycZu8RfaCJpI7VUa4wsb/t6otPRvyUCSlV2W7gnBoZcbd0XL1boT3
+	QvSDwoyHM4AZ2V9pElMFk5CeAS/a+gAlJz3nXW04gjA+TrRTj8FByUFmN
+X-Gm-Gg: AYBFou0NnVPzkEmMr+pZQnYQnT6HkyHgU2qTgMMvQENXjZ8gCWAKeF1p6phTE8HEHRu
+	9roVdnDfI0nBcmado20467I+F8YD0xEp+Zp9m1LRfoHBGrNT160437h/d/wVBeo+AyCCmn1He88
+	5AhYbN9SZET2SMZZx9CAoBY0uV6aXNfmqTuDgJIH9ki5xf6s5kTYZjS/tHWAF3l4TsO8PdvnxoT
+	t+me1oGXDyMtN0khnJBXrB19XdEBWU7gh6/ZMb1yaCK625ZBA+Pfft6MtE1x0kb3BAX24A8yODD
+	C5XvBD2/XC5bnTcGZ7H/btHgwNdMb1BnmQYikj2a/OjQh4Ef3h+8XdVb1Minp8Xs21okxnTOsEh
+	sAYp7iUM449gcXMzPYsnCtRi9mH0lfqgQmXZe/fGwyCEKewALgVZxkwIbQU5y9bVYFVJfd2Oz6f
+	EFCt84DpdEGve9dZeiAsb/
+X-Received: by 2002:ac8:5d8c:0:b0:536:64d5:553e with SMTP id
+ d75a77b69052e-542b397df4fmr19908851cf.3.1793340772925; Thu, 29 Oct 2026
+ 23:12:52 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,47 +105,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261030-config-typo-v1-1-f9797f518c43@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzNDA2MD3eT8vLTMdN2SyoJ8XQtDyyTLpNTk1CTjNCWgjoKi1LTMCrBp0bG
- 1tQBHQDC8XQAAAA==
-X-Change-ID: 20261030-config-typo-819b9beceb3f
-To: git@vger.kernel.org
-Cc: Hardik Kumar <hardikxk@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793337450; l=955;
- i=hardikxk@gmail.com; s=20260827; h=from:subject:message-id;
- bh=AngNRrBbkq6JCZP6Wbqi6YtOgfberI6ECJsQtTJHA1A=;
- b=rFc+dRQrJZ6q9E7SGxCC8chDg51GKDkiNAFeAsO4EYhuqeWPZe3vrQ97e54QiGwoE6TryFzDu
- 4Thi7n9kXuBDtwVI8nFXZUUKCZ6CNgT1F39SSvtuyhmZPSL2QO10XBQ
-X-Developer-Key: i=hardikxk@gmail.com; a=ed25519;
- pk=56yFuFlLHAdRemUZghoGHVCijEX767atrut3dPD0thQ=
+References: <ec4de165-c7d1-43d9-979b-08c1cb67022d@gmail.com>
+ <20261021030347.565306-1-chris@nortesoftware.dev> <xmqqqzhior8t.fsf@gitster.g>
+ <atmsSIJrFhA0t1rH@pks.im> <xmqq1p9hiszk.fsf@gitster.g>
+In-Reply-To: <xmqq1p9hiszk.fsf@gitster.g>
+From: =?UTF-8?Q?Christian_No=C3=A9_Ramos_L=C3=B3pez?= <chris@nortesoftware.dev>
+Date: Fri, 30 Oct 2026 00:12:41 -0600
+X-Gm-Features: AclHuK92C5aFzx6nNx0ivd_zm2x0P7mspNxXEfxaTyDByyQ641MxcOhKvc3S75g
+Message-ID: <CAHGSfbYbP=sQEG4JGFx7CPHL1+tdYQjkXz1jKsevTZA_G5wGvA@mail.gmail.com>
+Subject: Re: [PATCH] doc: gpg: say which date SSH key lifetimes are checked against
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Fix an obvious spelling error in `Documentation/config/log.adoc`
-"overriden" -> "overridden"
+> Can you stick to the expected flow: (1) send v1 (2) get review
+> comments on v1 (3) respond to these review messages and then (4)
+> send v2 AS A DIRECT REPLY TO v1?
 
-Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
----
- Documentation/config/log.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Yes, will do. Sorry about that.
 
-diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
-index f7dfce69b5..cb82f521ab 100644
---- a/Documentation/config/log.adoc
-+++ b/Documentation/config/log.adoc
-@@ -61,7 +61,7 @@ This is the same as the `--decorate` option of the `git log`.
- 
- `log.graphIndent`::
- 	If `true`, indent visual roots when rendering the graphs with `--graph`.
--	Set true by default. It can be overriden with `--[no-]graph-indent`.
-+	Set true by default. It can be overridden with `--[no-]graph-indent`.
- 
- `log.showRoot`::
- 	If true, the initial commit will be shown as a big creation event.
+Also, in What's cooking (Oct #09), the description of
+cr/ssh-revocation-file-fail-closed seems to start with a sentence from
+cr/doc-gpg-ssh-key-lifetime.
 
----
-base-commit: b9e5cff1803ab24582201ef059516eb16014b9d9
-change-id: 20261030-config-typo-819b9beceb3f
 
+El jue, 22 oct 2026 a la(s) 10:45=E2=80=AFa.m., Junio C Hamano
+(gitster@pobox.com) escribi=C3=B3:
+>
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+> > I think explicitly pointing out that the timestamp is under control by
+> > the signer would be useful context though. It's implicit to us, but it
+> > may not be implicit to everyone else. So maybe something like this?
+> >
+> >      Since OpensSSH 8.8 this file allows specifying a key lifetime usin=
+g
+> >      valid-after & valid-before options. Git validates the signature by
+> >      checking the committer or tagger timestamp is within the validity
+> >      time range.  This does not provide any security guarantees as the
+> >      timestamp can be chosen arbitrarily by the signer.  But it allows
+> >      users to change a signing key without invalidating all previously
+> >      made signatures.
+>
+> Sounds sensible.  Thanks.
+
+
+
+--=20
+Christian Ramos
+Director general =C2=B7 Norte Software
+chris@nortesoftware.dev
+ +52 9671456444
+nortesoftware.dev
