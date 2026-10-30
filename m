@@ -1,96 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793359768;
-	b=mx6agL3nObRSK7806XyYDj5BWGrj2EPqYVF5su4EephfiLzXf/xyTxjr2X5IfoDaY0SR
-	 M8P2Hk9WSJKnK7TCN0EmEnSsUXq96Sqdpl7BIha5iFs5O7if73kZVeTqkxVOUbBcbhSEG
-	 31shLBO2hdxLpv+eqCWqsXNrOHlgU7TZl5Ls4L3NWZkmSLPvMEx7m3WJpIjo4bBCnNoom
-	 nmmmQdC3nRpPDQxsD9d4gF0hjIeSzZc/UdaJH/wul8SuBJuXit2uWKlKzKANTJwQzOQA7
-	 Pc7DPdTWalnw7i7wSLmLmnFy1e7oCCDlMQuAD4u3cU1PexCVqDRrRUp68vZiHZoptbQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793359768;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=dSCSWRXkrhgjdUGqYXEEVh8DVAlKG1eLuXOgLELyYXE=;
-	b=bNJ/cYakQzBhyiOVT8AfsEi/95XyY7XX4g2YLMDWTMQ2ZgDrg++xsipTMcXdqI7PVwV8
-	 N0CcMrkQEPcUwBKQo7v2yM/9Ss1rLY6zYItvtI6ICy4fWI4dq4+fIHfPxV+BW3uJ+3gw1
-	 G0eWN5lJrHU1JlhrTo1YCQu8mwbuxdYRi0kklNbILXPmeezKEfxnu4+9oarbzEdxeiHKH
-	 /DApHcbjZPNSyBOYEm711poTHIPhvZrgxFDmZQJAwMmH/IzZhdiJv1OfvopVIignw4OnI
-	 Csrld1bNcrX+uIURv21n074onI5r7UCBUmgyJZk0VQcyJ9+AN01AgD5jJb/RS/cRV2g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=spotify.com;
-	spf=pass smtp.mailfrom=spotify.com;
-	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=DseK21L5;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793360683;
+	b=hi3Ko4AnUkwkbCIvyCtlU17hmhhHrA+kj7lU9sSWw8DAcV7lGoJ+B9ZqMdMCHmFG326v
+	 XabneaaZSooxW1fWfjD5xeYv2JkNZiA+bI6Cr9jqHLupd05tnnHQQVjhD/FFIW56ZVA1Z
+	 qTK1th0fE3D9heioBq1J+qPBcaEvvv3JdF+AK2gLvdHq6rHwuTx7dKBFAyAfFi6gAgFnq
+	 bCQVRk3GJGeKLncRYtBlAUO8LUf3x/tbQR2nOrmWB7Y5z+feSqOcqMc+EifS2xlPAj+X3
+	 u4fY4kjsvHWlrsPsnzJzE7g3WiJYtSjrkTLiZueZX2e5cZ9TCMqAAZA4xJFtd2R1BqA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793360683;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=uF6hO61BEUX/d/lC2a1EFppSpga5TcespB/emHrmVDM=;
+	b=jiLLBiYue/Vx4q2OUKausMlNvTck4OtCA0u7wQRwiq8QsexqYAw5by0/jOI1W4CIJ02H
+	 xf0AcPBipUeSruPDyJlGU1ZxrcLUx1V6moFCSAG6lp1StIFFrqpVNrjM6ICA62ORYLgfQ
+	 T+dMpyBU05gJC2gIsOUydLBLbxTLMaUqqvowUnwR7Y/fADhjeg8IU8scmxfsMZy+JdTx6
+	 P5nnOJI5fuKkiKABG7pPY0OsHIyDlKq1OZ3JoNBEaaLwi61Y2vjChha6CXE3h/64NLtLh
+	 3HjVogp6UIhNomaK1EzhRl7dT6LkcQym5ny8h1xNNfF7HHSr9s+KDh+YurE69HfY+pw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OsC7voQO;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=lOmIwyjX;
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74331606A325
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 11:29:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 74331606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE68C606A31E
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 11:44:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE68C606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=DseK21L5
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6b1aa27963eso2846833a12.1
-        for <git@vger.kernel.org>; Fri, 30 Oct 2026 04:29:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793359766; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YBXBodv920zvVmpU1w1MYp56r6Gmh4/YtAoh58dNTTro349tzWLSkrp8XkYZWDYsjK
-         dkKvE94uXHoZojOpIrLUMvVAtjr28oFu1ZGJpcCJJCVO4mQQLnMGYkGQMIk+wzc4x/yj
-         Nj1xB+ynKumi6QGQ+ZwfXPZIgjTKuvQE77RI56mn/KbCK1LTURz4kV7LNGoPnt9U6cF0
-         +ppi/lfyh4SUVR7SzKFVKIISX98oP7FOJQVliGdYsFQDqG+VyLtC88ajB3Pm1qGbbVxx
-         7aJjBl388e3YGwOEdAmg01X7orfuaRId3s2+j2RV83SmjUbPBsC7bEYufSCJezmmYW6G
-         MOuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=dSCSWRXkrhgjdUGqYXEEVh8DVAlKG1eLuXOgLELyYXE=;
-        fh=9tCTmLeCXfmq5OzEbw9Unxz1Z59H+4UXYkli6m/qvNY=;
-        b=lkb4+pYu8E7HDBjnW57baLmIRlzdmwbVmrwiP/aFDcD+Ik7uPOMCB9p6VksWrGwT0b
-         jGqw1YGovpD46Tf0VMY52i6sXcvvWAT2v5GRGtt9SKYqmFGLL1i2y2p5YH6QDPs33dRQ
-         8RyehkaeL+8mZKUYhMGEmi0auano46Z9BLoyQeX60Tt+KIUj3z2KRHyHoQwnH1nBRxZy
-         +tjGGVOYykdch05ZFyagDGx306JPefTH1znsUccVvoBUAwTrNWtGgZokLXeP+CMcluOG
-         j3x3Cn8W9QkVHWglUlM2h96SQPEbGAZnqOSgVNm62MNTT9lfnzG7zmYYbyDGJbP2+51v
-         UYEQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1793359766; x=1793964566; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=dSCSWRXkrhgjdUGqYXEEVh8DVAlKG1eLuXOgLELyYXE=;
-        b=DseK21L5+l6TdOREiA95+hZ9RY5TOZ7+BINLKIGV7M2nF6YinjIIjl82506m0wWP2f
-         bH41A8yrwbTkEB2NSwr4jeKBDbcyIkh8q7hzRI3Nkz1A0f5+8h+yd5+JUjsfOlVXelxp
-         MfY7kM8Dk3K0imPXftg7ZnTFi/ahI9+juF3lU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793359766; x=1793964566;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=dSCSWRXkrhgjdUGqYXEEVh8DVAlKG1eLuXOgLELyYXE=;
-        b=DV+1zQ02+1C6OrdRJEiJH9jcYkDoU179jY0TQITRmZzppbo4tKKrAmM05shdwGpMIP
-         5PMp4OTPhAq4E9QAE/K7cHcO4zEveH9j+SF9HXYSr7w/IL/fU2aBRf8Rn9ImPn/lI5nD
-         lKcTtArk5oERCr35euLEofLI0vf6mvwVjvTG06qV75aWSz9o5hVVyIwKBjPaUHE2pHwr
-         24fzXmSh9s99TJFc1XgLD/yDyufeptoltMpvR0Hrc22xURrkjv8pzExTyIekyYEFQB1k
-         rGjrvT9V1cqrucXNfnMlxeUP15vsmtX6UEUppjZdGNnmrUj39tkv42XLcQY9I+TRC5bj
-         16pw==
-X-Forwarded-Encrypted: i=1; AKwUvBz5QWyP61nDVXGXkwhgmvnmtAC6H8QTRmaA7lNVP/8bJEPFhc3Ee0UPDeJEKmMmaomHMYc=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJdr69ZNHLF/Gkqa0SoEq8qgwoqglMY1+bs2rJb6Ht9FMh+SK0k
-	S6+r/lOa7zvzVpvsc424CQ1qeVU5al6kvDfSWsNsjmhizOR5/hLQPRFwyKCb+2sJ1RHaZn9Zx4F
-	xegoPuB2xDXQb86udgsIPHAr+PAAbSSg2UUrax4qshcKWNbasqqpjTZkISA==
-X-Gm-Gg: AYBFou3vp2jy/Vt/qT1zHK5ZGbzjytTFP1+T2hHkROyjeWAz/82sdmRiED/pz6GHJ3h
-	KhIbr/n/AKFmfkau7crRTHkaemGoD9ZyMrRsz1LWVCgiUYhMhfVE3z5c2TYZVbZLvgssEsTJIcL
-	2eKiFt+MWcfp4a1zDRqo/FW1qcRBxEebjgyfTqDixt/5WPQoGPBcqpdjum4nVaOrgw0HIkOZUmA
-	xhKkMQgn6iyKdCRdToqAwn9ap9Hd9JRvv4xm9lrUbNDCRCDDzRRzUT4WfBo1ipMUhealyM6p65X
-	7GW8HambANZdaY8PeKkQg0P2H1K2y+P/o4VY0H8wPU8/OhBYiKS3lQMp7WFO0k9FNmJvR0utquA
-	jAFTErl/fs9kFiV2lSePkyEs3ztAwJU0fcV9zpA==
-X-Received: by 2002:a17:907:869f:b0:c41:825d:ed8c with SMTP id
- a640c23a62f3a-c49d147e127mr475594766b.26.1793359765660; Fri, 30 Oct 2026
- 04:29:25 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OsC7voQO;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=lOmIwyjX
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3842D7A012C
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 07:44:42 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Fri, 30 Oct 2026 07:44:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793360681; x=1793447081; bh=uF6hO61BEU
+	X/d/lC2a1EFppSpga5TcespB/emHrmVDM=; b=OsC7voQO1Zo+kDpVsqNZAxgYX4
+	nlhTRLCPxLtezHSSLwNnlU/ZFt7sy98WKFbkeoaSVKKUrizAGCLSiQwD96jFhllw
+	H/CypOkzZfpOZC/nvd3WqJs1Rri9ALQXdbmRyZJP4LF4fSSFkyIB0HyZDC1S+cup
+	8zbbfGIOeVKk9iKENBBQ+1tEHkgYgUthyh+RbSSLYXJ84Df0v/PT4NGCWXw2lJ+1
+	SFx7sF0xgerWkmB1L9WHADWIvCveRNCyJxodFCPMxfvq3hbn7uzEXo08TAnyjOAD
+	3QD7qJh49oBCLpaWEOSCyH/ZN4RFERByCjJGOoA8PuFJBpF0+EdeelBSh3DQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793360681; x=1793447081; bh=uF6hO61BEUX/d/lC2a1EFppSpga5TcespB/
+	emHrmVDM=; b=lOmIwyjXjM3wTZT386jBbTetaasz1rxbeEv7xWRy/SQFi1gzlTx
+	Rgg5DzR5wnhwXrpp5g/OOCwOGyWlhIZT6sbd4W+7mdFj0VhpqJZtUfsOjLt4cRLa
+	SjyJnOtMV63mbaM2CJtpERZYYYZ+yTVr9ufxj+vUV8bYsLigSWAMvp1/FngGRc7x
+	u/FW1lnNItVCzc0bo3V7S7l3yfN0Vwc7J9xFmd+/qojI6zNdj50WX6NMHP44cTIa
+	y+QMxp46TZNI6dzOPNHtTnk9KRnq1X9F2N/5l3J2uMpq7XMXafAThEUNyMJaaJEk
+	WYK+cBnlKxzKvAnUO7vuSYF8/GOQwTTBgcA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793360681; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:a1MlKjDK8bfmoGrX5iomKDMJ0cHKvQ703N/3P4NaHejjwkK
+	Fp5Rj6QMAcXbiIc0yI5ykiC7Xok5O9DC2an7GaZ2fbP51F1eRb7PWyF0mm1HH5Tn
+	BbmzUHzRT1j5HwbNd7p4X4Q3hT7fT/wk/NJJXogkpCAiI49D2l+T3/iI+0n4u6Tr
+	x62ALsmQHN4HBnIgX6JFeKqyJmvpz3we4lCZH/BPZAVtnZh3DKz4X075N+ckWBdo
+	d7aItx54ceDptJyxhSJWGmf5xZvK6kDDV0XkRo1pJP0c9aJzaNujhPTF/7hoZdra
+	mBmNC+JDtLDOkLpmg86YSmnA2fMOMviXmQk1cAQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:j2897QwMj20BDN9hpe10ujqXooUwfB/cpNUZHj6Uris=:1qqsPGNbB5JTv6/BAsDX9OMz7bQk2HN7dO+c7MSa5U8=;
+X-ME-Sender: <xms:KYPkajuiI7wzuiN4txeyf8uuca09Jw3l-3l8Mn-W7xOZLj831E52Aw>
+    <xme:KYPkarX7ffKYndfdZ_FAHBZMsq5FtTcOe3OqUXwofq6ucj2gsJJ7qoFwIXk6pAD1N
+    e5Qz0p4vRQNNHfBVp937UxplORGB2TEZW1AtSNoiUOwrFlLMDiJ1hE>
+X-ME-Received: <xmr:KYPkavFctxPODyyLu4si1WWNE6zYha-eneAbNJyCXCYchl2LRTIdanBKG1eUfnTsaTOyfA>
+X-ME-Proxy-Cause: dmFkZTEweYRmagK+U6NI40C2gOY56/U7LG2BkHRYtHGegF8oYRz9i4J2vGpEgnudzkTbxw
+    S+05SZ6tnysqAiIuvW0rwxSCZ00N22HDFMiHosy/Ua4cl6RIbsjuJ/uu7lp6OCXbAHqwkT
+    6QXUlJGPjy1NHLsRNtVlr5IhsX7e34mkzuRSD0q6qfCPSfug2rRloXJkdp42sa5WRXVz1s
+    OB/Vtpd017fmsUWB8n51/KGmPksOVmgNcVVsvnKkP1w/4p1Gl3FFTMFj/yE9SGa9bGqYZd
+    DEAc5WEVzqrmu52PmOXcyz83GCHyepZh88qBQqR3ddvqbZWDlNCiYkOIuK5E9t2uSo9Um6
+    HiVIgMYoLTUOBe5foGA2aWC2QphM1FwvnZmsHBYBKVVFZ/M+3xJ7SnV63k6y9sfdSKnfWd
+    VSkZIRzACelF+7cfgFIP1H56F80BC9a3ucV3oR8FvnyVa1BG+XcS/Fl5KHIkosBnU9LMWk
+    ORzOZpg3t9E7OQYBLgr4Qs3fOy/OjtjtDWiX/qNwyM2ZbHQYQcV4/g0cTEwQnDrU8dogPC
+    S/QEoNhfSI2kQYDjrGL6m4WWDLgZJZZijIcvy1BkvFn+uUzLFBkf9p+qKljsk7VCX1OLWX
+    Lgfp6AJFFkjwJHn2ShOYTbjabTpdtHDW98JxHo0AA2zWYUdZaMmNTp6BIL6g
+X-ME-Proxy: <xmx:KYPkat1CYFTSYRzoctVzMxVltGLK2C1SnjdG1VdRBWq2VmtSwKymIA>
+    <xmx:KYPkahPD4Of1DzmBqYoeoL1Lx3UumIZF5IetjCCSoaMbcK9iyHSiDw>
+    <xmx:KYPkas56dv3M3U8nFG4Dza1SfQE4TTLM7c45A4EEAZYP7l5i_ZV8mA>
+    <xmx:KYPkar2l6I2zgab6G-dhalA5QQUQJg_GHoSNpGYEkq9LJ6Z57iMwIA>
+    <xmx:KYPkarSFzLheB7q50lLlTLDNuzrpJhpmKC9WsqqrdsHl-99UwJpGm4-P>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 30 Oct 2026 07:44:40 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f6e97cd5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 30 Oct 2026 11:44:37 +0000 (UTC)
+Date: Fri, 30 Oct 2026 12:44:34 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Elia Pinto <gitter.spiros@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/4] odb: use size_t for the length of objects to write
+Message-ID: <auSDFRHpLy65PMF_@pks.im>
+References: <20261021101640.329990-1-gitter.spiros@gmail.com>
+ <cover.1793352943.git.gitter.spiros@gmail.com>
+ <8fcb9f10f13962acd5cdac652bea8fc4164f2e78.1793352943.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,66 +125,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2285.git.1793200705017.gitgitgadget@gmail.com> <auNvMUNxmeJe31Bq@denethor>
-In-Reply-To: <auNvMUNxmeJe31Bq@denethor>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 30 Oct 2026 12:29:12 +0100
-X-Gm-Features: AclHuK9xf8aVwVCFGZyAy6daclTF1psOCr1PLTJRomJdKSZsJymaiRjwTGOWEdg
-Message-ID: <CAL71e4P9LauUqjKTx1VeqehGVrbOpb3PXC8z1iQ6Bh7CFihr8w@mail.gmail.com>
-Subject: Re: [PATCH] odb: do not list our own refs as alternate refs in the quarantine
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8fcb9f10f13962acd5cdac652bea8fc4164f2e78.1793352943.git.gitter.spiros@gmail.com>
 
-On Thu, 29 Oct 2026 at 17:57, Justin Tobler <jltobler@gmail.com> wrote:
->
-> This indeed sounds like a bit of a hack. To me the underlying issue here
-> is that downstream git processes don't really have any concept of an ODB
-> transaction. We rely on the git alternates mechanism and overriding the
-> primary object directory to get the unaware child processes to behave
-> how we want. This typically means setting the quarantine directory as
-> the main object directory and the "real" object directory as an
-> alternate via environment variables. That way any writes that are
-> performed by a child process are written to the quarantine.
->
-> For the connectivity check though, we don't really expect
-> git-rev-list(1) to write any objects. Consequently, I don't think we
-> neccessary need to set the quarantine directory as the primary object
-> directory here. That would avoid git-rev-list(1) processing the "real"
-> object directory references a second time.
+On Fri, Oct 30, 2026 at 10:58:50AM +0100, Elia Pinto wrote:
+> diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+> index 463b38f990..0a89bbb455 100755
+> --- a/t/t1007-hash-object.sh
+> +++ b/t/t1007-hash-object.sh
+> @@ -297,4 +297,17 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
+> +		'write filtered files over 4GB correctly' '
+> +	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
+> +	test_oid large5GB >expect &&
+> +	test_config filter.null-filter.clean "cat" &&
+> +	echo "big filter=null-filter" >.gitattributes &&
+> +	git hash-object -w -- big >actual &&
+> +	test_cmp expect actual &&
+> +	echo $((5*1024*1024*1024)) >expect &&
 
-The connectivity check explicitly disables lazy fetching so it
-should be safe in practice, but it's hard to reason about
-potential regressions and having a more strict flow for this
-would be nice perhaps.
+Isn't this the exact same as `big`? So...
 
-> >     So the question is really where this should be fixed: is there a better
-> >     way for processes running inside the quarantine to tell the repository's
-> >     own object directory apart from real alternates?
->
-> Building off of my previous thoughts, maybe it would make sense to make
-> the connectivity check a more explicit part of the ODB transaction
-> interface? Maybe for the "files" backend we could introduce a
-> `odb_transaction_files_check_connected()` callback that configures
-> git-rev-list(1) with the appropriate environment to validate the
-> quarantined objects and not cause this bug? Happy to explore this path
-> further if it seems reasonable.
->
-> -Justin
+> +	git cat-file -s $(cat actual) >actual &&
 
-I am somewhat of a novice here, but I had a similar thought,
-that this should ideally be fixed by tweaking the API somehow,
-although I do not know exactly.  I am not sure if we should
-introduce odb_transaction_files_check_connected() or resolve
-the alternate-refs into fixed directories earlier in the chain,
-or enforce better read-only mode (and add quarantine as a pure
-alternate for the connectivity check).
+We shouldn't read from and write to the same file. Maybe write it to
+"actual.size" instead?
 
-So, I am not sure what the long term fix is, but I think your
-idea makes sense for that.  For the short term, I think
-something closer to what Junio suggested in the other reply
-is a reasonable way forward.
+> +	test_cmp expect actual
+> +'
 
-Thanks,
-Kristofer
+... can't we `test_cmp big actual` here?
+
+Also, it might make sense to use `test_cmp_bin ()` instead.
+
+Patrick
