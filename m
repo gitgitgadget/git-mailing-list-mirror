@@ -1,93 +1,126 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793385213;
-	b=CFXi5CWGVoq2cTWp3fJ+o0maBtNyO1inA5mhfuzMXj9lJE0SzLWMLy0maq+Xf/c2whK3
-	 7yWA+uCxElpvZEvDSKfOT8SV2aN/6o4prv4k8A0KuShOq9gND6LuzbT+nZk//bXPenJTg
-	 6byLPLbb7NTrz7VciBeT1r+3kJdX9s/xOZU6ClpEK9IF32jSnLh8z/Ar9rQU+ZlAM/JLB
-	 7P5vPkU2FD8dL0xzQMSakvsUtx2zDV5mP8BloqVSNy4HP8j55V8wRVgu039x0TUZl9e9k
-	 cTp3w1fuW6DhBwXNE0hH8RVGNmxxBLwxHng9+iehiwkfzSd14O5DTWmbpAfCsy3xlIA==
+	t=1793387655;
+	b=GGUdqXBxQ0bV4N+ewQH133mm780hVLZFEmErbYutqJcaoc+cy/IvOZiBwYSmEmBjmSPl
+	 I3V3pTxu4dmErLnQqsR/AQrAIprLMuipZ9MccgjhL+qBzL9XvEvYuixGlSyREthDy8w5D
+	 V/mcHFEVyW9LpVlj9+50vIfRXDKZ1RPmSNEgM029ieEZc5KahkFvOcjt4czE2E/gfwtms
+	 coMZ3in471noR+h8kOvWotPBiu4mhiwNb8kQSCtNoNnSfye3Z00hLl/T4RtBGrKQH7Klq
+	 1UmJ2cpuGKD2kaM1PUMMUD7c4A3Z8eYLd4XR+vmRKoSgQXe7sId7gy5qYQjGFLAQz1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793385213;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=xjsX+FiXO+LeY2q9tOk6kjY1ctXHTCv8/Io5cKen+bc=;
-	b=Tac+pbGJIZP4x65+Mmo/thkrMcVxLdl8MddPhKg2Q+qm7LAqKC8WQ16fTDJKqm3CEz5G
-	 icOIbbflTcSrYn6+rFb7Gkj9ToQXEq6+Nt/xNS1eC3FYEwTjaKSE2blgoxbfM7ncJ0hS7
-	 2RPiISqYNc4hLVQC0T6a/Z9hYWCfj7Ku26BplMlyZKyT4f68Oa1PK8cbSxBFyWvy1z8qJ
-	 EBgvDufajp/4/JXI/62V7wRa8hK3Z46mUw0ZNJ0eZXf6hgsujINQj3EKEfBUVejrk2lOL
-	 78eLy2Pak3nkxmvIl1h0fh/FEbkBsHvf7Ol1dTp+z+VEta3DkJvulfId5jTqKaukHLA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793387655;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=H6eODFZcO9iEJU3s46vGcWVEgORmUjA+WFGFheaNnN4=;
+	b=oFSRSMNBiUxvYCPuqYTqPUDFAW7K6jDpZi1Cw7ytRmrArtZy6Y3XFSxPcjqaEULkN4/+
+	 eMpVVIYlmQcjaxqdHFwUGCSJqfS7l5GHhh63Jwwf/M1WtwZwAUEeutVjjBiY6ZUcYIvqA
+	 yEmZcItyQ+6MamVUbrcRUojX9vYjY2pgZiGCo5cA/o0d2BYR+Hp4yLmM+lgsg3A8M7trR
+	 7Og91zyKqXcR7DLmYWju1ycF5rBXxIu7Umernuy8YNHoAyBrf9mpqbg+mK/A/mqEBd75x
+	 SyqvDrT3S3yTQjMFnqTfNRK9552nBvBZN7Fgen3HB9W6fY0yK00i9J7ihM6p8RUDEsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AxBR5KOu;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=a9MHXbwG;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JkCE4VEi;
+	arc=none smtp.remote-ip=103.168.172.158
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA20606A322
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 18:33:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4AA20606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83506606A31C
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 19:14:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 83506606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AxBR5KOu
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a1b07c3c5fso9646135e9.1
-        for <git@vger.kernel.org>; Fri, 30 Oct 2026 11:33:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793385212; x=1793990012; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xjsX+FiXO+LeY2q9tOk6kjY1ctXHTCv8/Io5cKen+bc=;
-        b=AxBR5KOue/G0265DLAqVTjSP4Lf+dayN/bmXhP1sO+AcKqkfp6GV9E/Au8LC3E3s02
-         MC4cp9A9aLTHC2GE8tNXR99akKtDEn+Msw8LI1eCtEx5yqpmiJxkkKSAYm/A9F8GUZV6
-         jp3xqaI9YZ4l8Sbvd4og3tf40LSmvQRV/Vy6jlqTnD8Hpm3fs/f7Bt4ghHjFqNYnZ3UU
-         9V2dOygjhDpOn1ynvqgu2FJ7hrLWkdtiqxrIR1UBblinvxlzJzEnbSmzOvaGOVYjurMM
-         WZYoAQEiPrxmh7a/hRCF5xFf2nmSPPN+OZAqD2Nl2KYpq8HY95bmjbwzKBBd5NhBJrQK
-         kBBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793385212; x=1793990012;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=xjsX+FiXO+LeY2q9tOk6kjY1ctXHTCv8/Io5cKen+bc=;
-        b=PPYZIBcIhmuD98pW5MPY6NfncnfCO5sgpz5qIllgWBdJ8NOfyI4SkSd8FHVA/qd2XM
-         rHDAcEMW4yiwmnhnbJFuobZ6dBPt2BMec1rSiNx7M/Kr/tEsrN2jjYzVU0irVcPyG+Zd
-         B6Fw6Hbrh9MzQWDEm527+AL7VYky2TaE8L4sotC3QcpzaESNxyoIOKudhDk1xP+I4yM5
-         93TIqZK1/YvCn66wyW4kbf4/JXkqE3RG5sBzGQ/SRAhCcj1emtkCDqBl2QVk+F3drnUC
-         L14GplXug57JgPk4EZdiEZ3IQJtR1bS6gHoZvNd29xcTm/sGW9FxAH5zQf2hUZHGH8q3
-         ag2A==
-X-Gm-Message-State: AFq9FYL92crb4zrcrPh/rw6xqFMCRvqibG17W1Jd9Z1r7VAMu5JVJix1
-	jiSwsgH3R1AqXTDJ+9CUrx8O0bo/15EWk4ndanYOB6aslnvgZBwqBgqWKEOsImsUZjg=
-X-Gm-Gg: AYBFou0vbYDlPG3BdP7RKsDQp4dkCeaVvwGuWBx+8LhU0HdIThYfC7AxwdlnNXWZLEQ
-	15dSH9P/Cx4Qnm03cvO2QZNMsm2lGBY8MriPDP1JrCZWEaL6l8lWrwf80Oy89vW9YLDXHC3oDCg
-	SSdHaNzIRooyOjQ9dz47ir2Sn1j0Tzaj9zCOeX+vgdKVTWqkkchar4uobzMEAsKbylLKL0GtaIj
-	QiMDzx6YigLwYhA7sq/KUzBVDSuiw1WShfLBNBHpEooLULXRaz9vDlFivwRCkh7lbgsrZV/fDLZ
-	OOnKxiBDxgqoH9cRNd/8ySDxcJ8iZ2Y7b3vTG2xekp/oolf002EXSuydFL95P2igPzO7UbftDaO
-	WEIyk2U2hFypCaJe176z8qxwPMGOhZRomUW093ggoR/+BWf+gXttnHZc+ZkJuLzOzI5vjbWqov/
-	X6nWaDYN+CarL7ecahZTyQNwEiZEG37koFbwXWiXEGZTXcAlgKjABXIXO0O0KjJj/K5VsPLOkIM
-	OWlQ1iUDmXnJQkXvD8scXykKdFMrWQyWUI77L3IhnIwi6yzj/ijjjeNgPpQ8q69rCitXgPNokbh
-	h2uRnflvEVkiG/aYxzA1cBM75DtXxyfkygwcQ5+4u9LkVL9jybiRqMBCIUM0E0Oc1MQk8gviMNL
-	za1ki8JXOcQoxJJichj/70cKax/voYLzJRJNpdP3WtoSkTN9daz7H5E3fDtNvJWDw5I/QTL+MhT
-	LIxgxN9DxjQBM3axWKqd07bLcsFUYADq3AMX/bzJRPddSKf7s=
-X-Received: by 2002:a05:600c:6216:b0:4a3:5aea:21e5 with SMTP id 5b1f17b1804b1-4ac1737c533mr68437655e9.9.1793385211274;
-        Fri, 30 Oct 2026 11:33:31 -0700 (PDT)
-Received: from localhost.localdomain ([105.113.81.148])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b8a7d1sm4520956f8f.38.2026.10.30.11.33.28
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 30 Oct 2026 11:33:30 -0700 (PDT)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Subject: [Outreachy PATCH] name-hash: use istate->repo instead of the_repository
-Date: Fri, 30 Oct 2026 19:32:18 +0100
-Message-ID: <20261030183218.32630-1-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=a9MHXbwG;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JkCE4VEi
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B663D1400087
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 15:14:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 30 Oct 2026 15:14:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793387653; x=1793474053; bh=H6eODFZcO9
+	iEJU3s46vGcWVEgORmUjA+WFGFheaNnN4=; b=a9MHXbwGDj5BymOiqlV8b3Kb3c
+	ubSdQ3QDAO0njiU6TsMFjLTst0KwwJzUK0iL1tRHkc93OVx/Fd949EjqgthEvorp
+	42JmKcxBwHwmfkXwc8WhKe7dWGcJaPN+xTFEg899pHUNIlh+Vu2NmLdpWt2AWs4w
+	+Uj5dFsEhOg/Xm43BSYED5UCBkjXhi5Mr0I2fBb26t35T00myIZYjQG6b49mBHHj
+	XIhqe5PTlLO1W7oVNnlji/t5Uxs5aezCNjV4zbDTFX73qA3A4SXXyu3vhDJUxDXH
+	t20iKAWViQ56sffC4e70lMQti91KaJVDOkLQ+RJGkcPJbgMEWCRPxM/a499A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793387653; x=1793474053; bh=H6eODFZcO9iEJU3s46vGcWVEgORmUjA+WFG
+	FheaNnN4=; b=JkCE4VEi4CCiDS20oK8l2q11r1PhvL6oe37NEbRfJwqjLO+XBxA
+	ECDMNVp2NgzIxnh/FLMMyCVr5N18IIdWP+kLlHXDXrfVj4CAYyXHNO0RZfkXEA2z
+	5mf6gUo0QP27F1ajyfVIB5tYN75uNJM2if29H2GSuna0Bb7zSPvV+8LItWLDFC2R
+	GFNrEApviC1TbLMQ+RtyhiYoUu6lrYeVK0OBu0298lZI8Plo5aDHWAsVsjY+XTN6
+	A23vdhbKO3Lejvrex9XMzeO1iWArY+cWbAEBmsqGA+AdFGsQChBPmtVE2DO8WQad
+	JdUIJ8zTG+rcxfpMC5zUNdp6z4fh1uSJKRQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793387653; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:JqNlLpaTH0vjct4T3iFvuLtWCpor1ZsHyZl6q3P1jVqXKF+
+	D71JjhCCSzTflXQuJ/obhhf0hl25iY5Dz9v9hI3RBEkt2H8ZXDtAIIFiPbZR+EJv
+	RaPgAFVTtgNJ+ZcTSC3U32lzWUldcn47FfwPqX4pZ5uQj/1NebdAp7+5CoVdtHac
+	uDkXGf6ldhX6++mOHLp7MuYjPGu6nKhNAWka3gBmnSmbi4ZRSW1GUPXkA8uhkvIH
+	J18hJBqebW69BXpMESWprp5Qu8Vt4/7dlwKQ+9DOceTn0dE7Xo8oDoswD0N8asAP
+	RRY3CDT5BYxfBg778ZoKtQRsdtuW9B3Vfsxa2iQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:qAHot9U0mzBN75xP87RCfXsMBUbieCRsyxA0kk8bROM=:yVGFIB8RnewMJhbbiL8VS06DYHD2vHsNnACMVe8tFTU=;
+X-ME-Sender: <xms:hezkaqELM2Yvdc2Vwb_bvuSw3VzjpefOjYimF6C7g6aTaKn1YqzlfA>
+    <xme:hezkaqaUA0VT8iqFX4ERacn7BJZxqfrhSLDasjJupBl2aL37trSLJrxnYcFeb5aGS
+    R2PZSBN8h0hAbRRcnKnwScM08Xfk7YSI7gY4jKsF2CvKSdxDIgzms4>
+X-ME-Received: <xmr:hezkaqUsqCqZfvm17tpb8K9fvVYkU5n9mZZpFHjo87yHJEBuYUSfv0uBRlotkiB6w50aa3MdbN9oAiU3UCakZRujj4BIKxRh0_52>
+X-ME-Proxy-Cause: dmFkZTGpCWPEmveLJ2CtSpuawnQHf/H5UI0XYM3Zn2dcsvJHNFxjDQtu7CyI2xHXExHEHr
+    EbHPSKAKcfN1iEyfqNIgGOro52d0OFX4ewug1cjfnerBtgT9bgN1TTXQv9+2l88QJ8Z5FO
+    hsfRL0OKDiAwnfAajSzsdvGiYqvCUHOHG4uGo2iEe901mHrFjDCpzaPHwhxEV18tnpVfjh
+    r5/957sJ8n4Fst5TYmS/R4cCSe36Mf3Oe3aAdZvQ28Yw8yi6MxdsDdbGFXvYxXfe3T4YcI
+    vN1HjNArHza0NubMFllOzTs6rYtkyE7vbWPvTP5YbSwLtiWbfC5ZRlX6U+CNfEXIF3SnTS
+    S2xOTttgKEqeNFCNWyQq0wWvxZinx73O9l71FfN/OrfZe+7+F8md3MEXr7uWRCL/wboHT6
+    ia45P7uMqNINz6BrW4rFnNNCYfgfiAeBeh9kB4b/ExNF/Hw6hZxzy/U5m/enGAxOQNZ1k5
+    Htlr4jms4XpGbb71bJ/YrBav66YB9nzI7OTWpS3UlcBKg5AobA1EftWCvgtXE0LH3r0Z/T
+    DUhJZ9Mg9VHsH6dKzkM0CCfDPE6lLHZWTbpd8bz99NZuyOL6AhNRifDkxiWmq1SC2P88nV
+    tKgqda2rHW4V2F2JKuzWsOj1i8eeoNgM9J5vS1dI4v7nZ9zH3l50wq7ovpTQ
+X-ME-Proxy: <xmx:hezkaglevPQNgby3PQ1EVkdzMgl2LCQB6n9urHILnCtKM7livUNP9w>
+    <xmx:hezkalCuOhfbgJgN05SOn1hbXXNMdASc03XUFBeJ_Oyn-XMTkWrQRQ>
+    <xmx:hezkavgVEI_b42pvkzu_9o_wWWv7F_JTyjDweVAgP_MxEeAThaTEyw>
+    <xmx:hezkaix7-TBsqWTcvS_5kinVe9Mu9n4pKQosZ95MZ4LZMdNxPLSTvw>
+    <xmx:hezkamoznT6bfIBs-ybKYi-WBlTT1q7CvAJ7ZZY6gd_8C_Pr0XDib2UP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 30 Oct 2026 15:14:13 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>,  Jasper
+ Mayone <me@jaspermayone.com>,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v5 3/4] branch: add --delete-integrated to delete rebase
+ and squash merged branches
+In-Reply-To: <bf30f57ceb77c5052a72aa7dc01e3bb163993a63.1793357582.git.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Fri, 30 Oct 2026
+	10:53:01 +0000")
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+	<pull.2425.v5.git.git.1793357582.gitgitgadget@gmail.com>
+	<bf30f57ceb77c5052a72aa7dc01e3bb163993a63.1793357582.git.gitgitgadget@gmail.com>
+Date: Fri, 30 Oct 2026 12:14:11 -0700
+Message-ID: <xmqq33tnvw58.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,67 +130,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-hash_index_entry(), lookup_lazy_params(), and remove_name_hash()
-already receive the index, but read core.ignoreCase through
-the_repository. The setting belongs to the repository that owns
-the index. An index for another repository would still follow the
-setting of the_repository.
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Read it from istate->repo instead. Drop USE_THE_REPOSITORY_VARIABLE,
-as nothing else in the file uses the_repository.
+> +static void find_landed_commits(struct landing_search *searches,
+> +				size_t searches_nr,
+> +				struct strmap *landed_commits)
+> +{
+> +	struct changed_paths cache;
+> +	struct diff_options opt;
 
-Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
----
-I checked whether istate->repo can be NULL here: it is set whenever
-an index is initialized, and repo_ignore_case() returns 0 for a NULL
-repository anyway.
+A tiny nit, but because so many things are called x_option in our
+codebase, I am used to seeing the variable also carry "x" to match,
+or the use of mere "opt" down below would make us go back to see
+what kind of option it refers to while reading the code.  I'd liked
+to see this called "diffopt" instead.
 
- name-hash.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+> +	repo_diff_setup(the_repository, &opt);
+> +	opt.flags.recursive = 1;
+> +	opt.output_format = DIFF_FORMAT_NO_OUTPUT;
+> +	opt.no_free = 1;
+> +	diff_setup_done(&opt);
+> +	init_changed_paths(&cache);
 
-diff --git a/name-hash.c b/name-hash.c
-index 83757db874..98e170851e 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -6,7 +6,6 @@
-  * Copyright (C) 2008 Linus Torvalds
-  */
- 
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
-@@ -126,7 +125,7 @@ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
- 		hashmap_add(&istate->name_hash, &ce->ent);
- 	}
- 
--	if (repo_ignore_case(the_repository))
-+	if (repo_ignore_case(istate->repo))
- 		add_dir_entry(istate, ce);
- }
- 
-@@ -207,7 +206,7 @@ static int lookup_lazy_params(struct index_state *istate)
- 	 * code to build the "istate->name_hash".  We don't
- 	 * need the complexity here.
- 	 */
--	if (!repo_ignore_case(the_repository))
-+	if (!repo_ignore_case(istate->repo))
- 		return 0;
- 
- 	nr_cpus = online_cpus();
-@@ -651,7 +650,7 @@ void remove_name_hash(struct index_state *istate, struct cache_entry *ce)
- 	ce->ce_flags &= ~CE_HASHED;
- 	hashmap_remove(&istate->name_hash, &ce->ent, ce);
- 
--	if (repo_ignore_case(the_repository))
-+	if (repo_ignore_case(istate->repo))
- 		remove_dir_entry(istate, ce);
- }
- 
+The .no_free member is set to avoid the diff_free() call made in
+changed_path_of(), which in turn is called by find_landed_commit().
+Everytime I see manipulation of .no_free member, it makes me look at
+the code twice but this seems to be a good use of the feature.  And ...
 
-base-commit: b9e5cff1803ab24582201ef059516eb16014b9d9
--- 
-2.56.0
+> +	for (size_t i = 0; i < searches_nr; i++) {
+> +		struct commit *landed;
+> +
+> +		if (!searches[i].changes_nr)
+> +			continue;
+> +		landed = find_landed_commit(&searches[i], &cache, &opt);
+> +		if (landed)
+> +			strmap_put(landed_commits, searches[i].branch_name,
+> +				   landed);
+> +	}
+> +
+> +	deep_clear_changed_paths(&cache, free_changed_paths);
+> +	opt.no_free = 0;
+> +	diff_free(&opt);
 
+... clearing the member before calling diff_free() to release the
+resources is also in line with the established practice.
+
+I didn't have time to look at other parts of this patch (or other
+patches in the series), but the use of .no_free in this function
+looked OK.
+
+Thanks.
