@@ -1,120 +1,125 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793345055;
-	b=CcbBEWfbie8d4AYBDuZhSXVq0Hnhgs4Hd5H6oKAeILtkt5jKw88UdXxXwyfcgZ4NnSKr
-	 wMsMaYMaRb2R6QRPAr3UJU++G06CPDgov/V4coObPsCHegvN7akvkDvviaOp+okWIClPG
-	 oSCKcXYTZPT7OlZ6ZmoFMuVvhQqvaStmBAM50ilMdtzNT55SJqkcMY+0hDBHWsHUi6XKk
-	 JEQn8xw08JLmnRh96Kp1XdTlI7/0neUzLz6Ml6C9QGCrL9pWPargs2nG8pzm0Vo38L1eb
-	 hkeRvNOmQKTuS6GJdZbe9dllf+PyFP+0bpRsrXcft8jjzmOMhES0/p3pvQ91mDBP0xA==
+	t=1793346030;
+	b=zgtJybMyr7fu6wazJm9yTs1RRSJLhH7VQJxaTNispl+e5rLTQGrhO8nbRdEJ6k7l0rho
+	 +gK44/I9E1SlwZkaMytFbx8+hmy2U52OZ2AfrDFPNqlS+UqTDp3ZrSpECDF+DclVpLzPB
+	 G+FQudLMVN7OKdhoZSbxDrB7fyOL00JrXo66danVa7X7f72UvESpR5xgyylHdZ6gtd/UK
+	 gFL4ZYEt7PRzsBCYH0r5U8NAMXTyG+F/lUh3uehflFbOIFF5NW+i2ouo/E+ZO8ZTHn3XT
+	 UdcRzgKBr0UH6tX2kqcBvnag9GCY1auxBkK6wtoOR36S8IBYjaiX1yusZyHMjLnYnmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793345055;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793346030;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=Pl0VHUCWK5VjQfI9hlEhfyjv4zBsTZ7lHXA1OhTjFNQ=;
-	b=SXc/CWOD5lH/wjcTe5KE19dSIrvfNnvnc00Tjg/oXXsAdWfqyjwi+IwMHzcJOHGV1q0V
-	 ekT0i1fJS6lQ6Dm3mCVeAYBK0d7rXclSdIeQb34i6GHtoO+ASa4V7eV6eJS/C016bgwC8
-	 MVXPfzmc/o8kzvWmRzSQ+lbB/G0BZJsa3ELV0Wx3nflJr+r3nn94HPLo2L3vR2HFibOfI
-	 SVLMQYBxQCZ9DBvFfEpSepARUwkkstBM91Qs30yPOQXVqvaFALZuPL1JAw7NbLbRwJ7jY
-	 1lJtZCFT0wuVPcBpFlMTVNVF++TBacCYENwp8c/pGz8CbNEeDKy+FozcYf4PuJ45/5w==
+	 MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=OHUYXbF1isLdaNTw+mEw5xY0VYJ8paueKgNpf358CLI=;
+	b=tsHNvGPfiJRRDk11JntCdE3/keLjw56lQtls6HOk2uvd5Old4ifqc1g1aPe/foYqF1fY
+	 zFmCwuyOiSdCCYag0qM4a8N8v3rlXCnQQHj2rg45MhdUxr19PxUFobchCxcpFeUvcg2FH
+	 WgKpCTdkyvN1FKusKG+1x0dBgdtFQIP6Sz+a5w9I4Zn5lZfBzcJeYWurhAkOS4bkpeLbF
+	 hOFDCB/uZS0NbjSCwFmtzm8U3WCjRV2UK6f5xn8dUB+xurzCL+0tg23JjbKgRD5JopDsM
+	 EHRmylE/GRIyd040LFKUZmxNOT3YA/H6+G2Gk4yHmogiSnik6ZOMazohjAd76t2VWmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=gw0mi+U0;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="Yk8a/2ai";
-	arc=none smtp.remote-ip=202.12.124.145
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=fbQ2n0FX;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=c4BE6TFi;
+	arc=none smtp.remote-ip=103.168.172.158
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28ED2606A31A
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 07:24:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28ED2606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABF2606A31A
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 07:40:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DABF2606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=gw0mi+U0;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Yk8a/2ai
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=fbQ2n0FX;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=c4BE6TFi
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 52B331D00151
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 03:24:13 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 30 Oct 2026 03:24:13 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0BB831400186
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 03:40:29 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Fri, 30 Oct 2026 03:40:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793345053; x=1793431453; bh=Pl0VHUCWK5
-	VjQfI9hlEhfyjv4zBsTZ7lHXA1OhTjFNQ=; b=gw0mi+U029hVgMRlqQqt6nsoDV
-	ueaYATUqBgHSme5TewWMC5PenarWgMZ8GlOqx9VKyFVzILAfXsEfqI9AmcRUVMjW
-	ATC4VAVy4yKh3JHHTGL7awfbQLgP3jPCkuEJZBKgtEutscpxsY1gKU+8Gc911Yjf
-	ZRfxqqnC/V7dETZxoC3U2iTnOY2UZIIpMvB7IzBv97i8MjZcBEqE9ppkwKjZFYJ9
-	7uyo2tVPSjWBS/z3YK47NHzO3kHYclPsKYhGXfwh/nzHONDSdlK95qsrMrl9Qq4B
-	JB+QBVff6/gbCfkPTwI4pUZt7LgNlzHF+0CHhLMatbsziSqHUedRL4+dLEAA==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793346029;
+	 x=1793432429; bh=OHUYXbF1isLdaNTw+mEw5xY0VYJ8paueKgNpf358CLI=; b=
+	fbQ2n0FXeKZh2TrYl7NDSuzVVv5z3/9B1iW07OIMiSo7q8zmscejsQBNI1iDYgcM
+	iG26KsmChegcNpK9jh8i3GCAvyrwLacmTepRT0ZeNF0y+KcvD2Hrhtj1BJrkQG/M
+	KM462XGjNZCLvRIlguHrKcZryuUy1ivE2EX/eBTcKQt11W/OwQQekWEQxUp3gdOT
+	tJFL8YpeOfRIdvIZQrvr7L3Wg1psTiFDE4b0KxDzzYB47r5RSCOkg/fEKeFGpvE4
+	QMIflZUpb+Ch/xZ1+sgRrZESeCPi+eYuy34boCr7318oYa0lKp7UdrhVuvz7xZFL
+	I2vzrHbLr142+5HusDgkeA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793345053; x=1793431453; bh=Pl0VHUCWK5VjQfI9hlEhfyjv4zBsTZ7lHXA
-	1OhTjFNQ=; b=Yk8a/2aiX0vpbCGm5os/lgzZXwc1iFjAUexz/cxZsmdn2n05t6B
-	guW0go4/UVlENIQHSrplaBLvEq7g0/XmDOYDHQQaZpzD7ylTZmARTbf81L7Bj+5+
-	HnVM+UfZWPEo/f+mbzMB0l4yD9N91Nae2E3TnLAtP1L2/Vn7EbrP1+fmzJ7vzFob
-	ckoZj+6NlTRFCSpxrdZtrfpCc3GrVuL3YRhxbwN2Nesx1+OYuGtTx6TN+NHTH3Dm
-	jMX2f1VxHGlfz94df64F/5pL7bAbQs3sYyE/DUzdJKPV5u8bLTyPU62oC75UKnXW
-	izWxTQPGLUkrXNgDc3Zvo8xHgRBZjavRKDA==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793346029; x=
+	1793432429; bh=OHUYXbF1isLdaNTw+mEw5xY0VYJ8paueKgNpf358CLI=; b=c
+	4BE6TFix+PZ0DWHjVvFCq5tdm+QbDI2BcqSVZel5ztShStUVhURC1ubsdGxgvNZe
+	wfeaNVZNW2yyK81hqUIT+2izMEn58bGTp+5d17GHtpUX33LXVJvyziN51UkLSwVF
+	6tl7Kri0vweS9h4N0j/gOgjz9PSmAo7xOq729UjOAbdN7KMKl8KNIHhe1RnA3WOZ
+	cVb3/4ZU5pivbWAhpcESvx6NV/V4uOtE14Bp0G27xlZYYNoC8P0CknK659M5nLms
+	eDw587oIGZL6oMRn5p5Yo5PYL8Lk+mH6DRqDGV8j4c6O18MGm2AfYLTNm9N+9tS9
+	WVhETpVl7k6Xu7BRNsVjA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793345053; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793346029; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:IJ8Hjn9FCyBjeXu+N41blX3WqEGtoPe+5S/E6LZajTJH1Cx
-	nrnxez1nCTosgait3tZvix6+sFSv2FsVJY+MQzR2zCRNNjEr1gqhWsdxeufSAg9R
-	HDARq1mWsmocaStAgXUz3N+Nie8WcKaI+nklMDcFBdd+DtUuoayzPKHK214bgTIE
-	ZXjRxQnqg+Hs8+TCaablxv0bXAEvjNpICM/aC/l6ocXRWH6cD4H8qMfqi4sYEJGL
-	gGVRBg3O0QH9YZ8fMglDKCbxTLL+s6zC27NBPvkCWxb0rCNa4k6H06YXnXWyjgfQ
-	rVEAKMwESiXmp/PvHZidQmVkP1wmrSKc2uB5tRw==;
+	s=fm2:rsa-sha256:kOF8ALNshr9za6eSC4FxfnxlQPcvPdNenGJ2neyETo0TJdD
+	pedKdQQcacjWBKZAk4QgR8h4ttj5PyBD677Rcik/0HConnzhNGsLA8shh3EY7ywx
+	c2gA80MqTPD6CApQwgCx31C0GHvV6rfRcnFaQjW2RIc/UCsKgno9SJa5f2hemPKT
+	ZSMDFOXsW+p031bEsINf1sWxlW0d38Q4XPoFI9lG1SueHGhMQ+jaUOnxzp3Jqp+p
+	49bfR8tGY6lrqeM3UbikA5wnUZX8OvRmtvBCqScMGxqC3MwCxYvHNVl/sYM881oi
+	EbjsuCp95NB28vVo6eMRm9Qk84W3R0emStFuFtw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:472YDk8A1udlGkzDayhhwHQqDgJN9F8BwrVMLrOu4rw=:MPcc+PkZLscDkM8rUqmBwS+Ymns0srsn7AWhcnDQoOg=;
-X-ME-Sender: <xms:HEbkajEV600uRf29pG7qFmQHzJ0B2_IIcJYlGBPvUPufknypdNdzVQ>
-    <xme:HEbkanXMfMxsC1oBMJ9XpsYK45jLqvJ3oSeQEFpr7-9auDlyg2ANJki23HxpE-9f3
-    J0eRLQ818vhpmARoK__zR9Lk8ruY--mbY514n0u7ktn8MBYxKGqaw>
-X-ME-Received: <xmr:HEbkaqI5mpBqjFiyv_-FD0cXjNlp4k00HsCXpTQRmW4TzRlHmmKw_x1194hSgImLPuA2Yw>
-X-ME-Proxy-Cause: dmFkZTFEfWcn6rXYShZJbPO4PZUFYDJpdn/igaIp1MVd7ZaApI0Z8593kzpZBPATOZi8X9
-    mPRIUqu0rfqzHIPESdoNxSYWZoMVKoqNHj67tm4tW2BhBwITUtEN6OuE31QnfNUezt94kd
-    oaiFnAjneTfviQalUpT65lEIWav6ZDoq57Y3G5AA0sWWxraveEc2/bqbH+L/uB5ohn1XfG
-    F0dFRJVslRVcFT/E8YJOEBIfaVoC/atT82zzB5+DrbfgG/DK9ADJ/w7iJ8AzLRwX5obVlB
-    Sh393n+WKMlSQrWaI4g6xoqTxdu/kC1VgAYo7B83AV2Xqm/W+yeVnbn4ZGSb26rNPgeotr
-    l9croi3neWiM0svGBWtfxNRUTVIQCDMo/jcsEMSwJdHMW8WbZpNq000a6kZKnthFb/apkE
-    yoHf0PlwHIaQ4Sj6W4fd2+/N4LfJiDAwWYZl7P9bL3GtmS2EANQohZtchaHeHlGtnENJs+
-    sLVlXvIpjPc/lP8ugQFt1/x/R9k751E7Ou0FTpRXrchHsY7H/mnkF7jAfsQFPePUM1sYlQ
-    toYDZkPlhKwqkjaTZh06MjuJ1gQh+S+c+XubjEVBwYGGFWQmnEXkQ3YSK4R/fbH5J/Ea69
-    66RhGin1ljsZTXXKgb0Z+ly3WqKga62URIL/rzx+U/egoblHAVoO2Vwu8zJg
-X-ME-Proxy: <xmx:HEbkav8j6pcJHVwXQ1nX7arHREhhbvzlueAUsqMrQ5Wy5p8tGxbkFQ>
-    <xmx:HEbkalKjXQnBHrI6N5_dJ0T-xWRviqAqwk7fj9QgqPoe5etAhN0pjw>
-    <xmx:HEbkasmDyBfh9G34d7kYwxFmneJOdvTgk3Fq-SFQZX3Mv25rpZf1mg>
-    <xmx:HEbkahPG_ZkQaCurOAadE4qFwJwPgY__W6eT4Ko6oe9Ju_ZuLMnQAg>
-    <xmx:HUbkajd-0ThGTF-Mpw35RNQbwEfzMDTizLhdEcLH0R2gHw6_-w4GxcDh>
+	action=mi-m=1; hc=13;
+	hn=cc,content-disposition,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:DLGYNKIXI/ztbW3PCWb+LwWf6oxNTAniaxiSkA4VnVw=:OHUYXbF1isLdaNTw+mEw5xY0VYJ8paueKgNpf358CLI=;
+X-ME-Sender: <xms:60nkarS-NE2aP3lChbXc9Qc5EPE1SWImopD_LjA0Q7jZguPjyT7lOA>
+    <xme:60nkaqn42gFs6GNjydIKPKj-Qtz2uVbQLGuAzPifVIJQWXTSUph8NwbbJon6c2hk1
+    3usSm8ikDgYrR3Hfs3v8AeF7u584v93eepaK-iHEuvj9wGH5lLeMw>
+X-ME-Received: <xmr:60nkarTrsPzDEC_bTj30hXvi4zaklohT8sT-BZMFFCZXLhosiQSGEu1oqTioyv3lorFm-Q>
+X-ME-Proxy-Cause: dmFkZTEyrMYLzi6YZVytRVXxXrgLtyCaudG0kfkRfkPEuyux28xEiwIkaHBh1YsTfZ7HKs
+    Tx4hILWSkAxjmJ5on30MhHrzS8RiB31zV5s4jQ1H6D7JQ/2Mcv4LS0qcsyZMELgTHOvVRz
+    UIvfkGoGpwvrVcteDzvASoiGEC+2Btt8M3tpAC/652mMz32Jbw9gld0ICkGDHe2RiGr0fP
+    pGHfNK3Rioc0Zz6hp4EXTWdymKUphQ++JURxPzidI5OiAnrA6VoEMC51d9auoVzbClffIL
+    hIJX3ujyF7GAk2nvdOo6G2alhxFTyylmxhq2kHRWzE6IucBIG1FY4PB5fex94ClEdwyQUg
+    Z5YEtFUlWVJi3aexQVpoR26Td+AOKQ+1YK13CcWyvjDyVGYoXOPjYNsyIYdruJaylgZ2jB
+    co8et1KrFZQRZdND+xdxLKDXwr/OtwIZ/McGbmkhUZ5CXLKFr71BgLUeHre27DOLhC2y7H
+    snQZM4OCwq2IW6FezOwEFZYUD5DFxvOcqIcbMMJ5StWmbu+H+/6tEflL3XCtDZyUt6BPHV
+    zUkww6pzcI/QhSJwZybnKcPp+lCcm0lJRxP9hc/qEWjVAC4eJZje+r5C33V1VXH5fUB6Aw
+    LMIZgCBcUXtcrXF8gUJhy4FCfMTGl+/Brr146qMDkvG7kHkhhinor/ubQwiw
+X-ME-Proxy: <xmx:60nkaoNhnjtRfbE9dFeK4MAfvfig91iotbur5a8uGe56e8vJFjXn-Q>
+    <xmx:60nkakVKurRcOXY5g36WfKiv2umpXjiIlS33ZG5yp-CAThIBFoofCA>
+    <xmx:60nkaveD1LrCtIWcxCG7gTfG50UsRO4DMbHdRH_RNGrpn9EAGepMdA>
+    <xmx:60nkagut0vdv2sVYzJjRYZV5zv4W-oj_8lBcF0WOS3xc85JxlR3Cow>
+    <xmx:7Unkalrd8bP2zgUSGL84DZ3ZhHJHY51QndoMNbjLAXXSh46UrOOObw2k>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Oct 2026 03:24:12 -0400 (EDT)
+ 30 Oct 2026 03:40:26 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e81ff74b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Oct 2026 07:24:10 +0000 (UTC)
-Date: Fri, 30 Oct 2026 08:24:07 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 6ce62224 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 30 Oct 2026 07:40:24 +0000 (UTC)
+Date: Fri, 30 Oct 2026 08:40:21 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>,
-	Srujith A Poojary <poojarysrujith@gmail.com>
-Subject: Re: [PATCH v4] [Outreachy PATCH] t0001: avoid pipes in test scripts
-Message-ID: <auRGDmW0R-Ipn-gT@pks.im>
-References: <pull.2260.git.1792299301663.gitgitgadget@gmail.com>
- <pull.2260.v4.git.1793284463139.gitgitgadget@gmail.com>
+To: Christian =?utf-8?B?Tm/DqSBSYW1vcyBMw7NwZXo=?= <chris@nortesoftware.dev>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] doc: gpg: say which date SSH key lifetimes are
+ checked against
+Message-ID: <auRJ5U_yYZ3c3rZG@pks.im>
+References: <20261021030347.565306-1-chris@nortesoftware.dev>
+ <20261030061528.27901-1-chris@nortesoftware.dev>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,22 +129,14 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.2260.v4.git.1793284463139.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261030061528.27901-1-chris@nortesoftware.dev>
 
-On Thu, Oct 29, 2026 at 02:34:23PM +0000, Srujith A Poojary via GitGitGadget wrote:
-> Range-diff vs v3:
-> 
->  1:  a70ccdf49e ! 1:  4373eef413 [Outreachy PATCH] t0001: avoid pipes in test scripts
->      @@ Commit message
->           [Outreachy PATCH] t0001: avoid pipes in test scripts
->       
->           Avoid piping output from git version directly into sed to ensure
->      -
->           that any command failure is properly caught by test scripts.
->       
->           Signed-off-by: Srujith Poojary <poojarysrujith@gmail.com>
+On Fri, Oct 30, 2026 at 02:15:28AM -0400, Christian Noé Ramos López wrote:
+> Changes since v2: Patrick's wording, which also says that the signer
+> chooses the timestamp.
 
 Thanks, this version looks good to me.
 
