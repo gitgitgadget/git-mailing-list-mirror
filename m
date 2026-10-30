@@ -1,82 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793354343;
-	b=B7CWuUw7t1JV7mSecDwFG40JiqeIDHSWa7CEAKfuofqAJAEFzfMp8PpqWXvDew74AFz0
-	 9JHGztbINr5wQNLiOzsDIj85jmF447aw/+s6LGWrH/SnR0BW/4Vb5CgVyESelLzAQBvyc
-	 VPl28wpdEInoiKacUbJRErVc4J7L+3uXbLLue7eyFveY847ZjgAbtE1fbEZD4+cV80Oqj
-	 fLyMcqKphaVUF03Dl89byfkT1Ueg7cziOrxtYlv5wBdgF5gyEGC+5rKSqJTH3XU/0G5vK
-	 8amfzMbi+YmMsSafj9sxIT8G/37eFAQfzpJ8FuJZPtTCx6gWe0bHc4/FhE+pYPUMWlA==
+	t=1793354344;
+	b=hPWhmdi8iHkLGu1P0d9BtWQs3m0NyUZChvuP3byahqbApi69uDNsKrgeI2QzUrxJUi2W
+	 iwCSafyl5OqBsZ+ch+fXRSkHjs1L7nNZ8iH5eJvLoiQ+leonhQMjP2L55qHk59aILt89V
+	 8X7imDU1bCBlegZGzsYHhFuyDuV+NWtXGhwtRsUVD8ay4uLujNGjGoyMWN8OSDdUlvysQ
+	 ZYEcxIGLN5DfIsnwt7b70l0yjw6WxJS/vO4Nb+u2jL3IpHxFNuxoJGNeSorZ7AMGYE1Vj
+	 gC1ULabYAx5SUQ68kbAl8Fd/0iYWbQ/4uM8RlPfwhvPhDBXqBQHK8r8fA7zYUyGk0Zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793354343;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793354344;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=SuLEXYTmuhsbw0HUoXxlmJgqO2YnSVWsrRaUkFsW0fY=;
-	b=t9siSmP+bzYLrADlZaNwG6UC12udgOkxT2oSW5eJ6zcrRdExmThD2f6SXsZjgxnOXasq
-	 PcvYnDyW5NST6D3RNcPolPwlch91UXJ7uhvYo6ILBEhL2zDgOdOrv/XA7PsUh2TEyQTyT
-	 aM90cpegHF1skNMl+vEOUv15xPi6z7ZPAIUikLDj1r7r7FPpIYDTE1Mdx6/DgoioZSvZt
-	 hNJ+RYaFFBy0AtmMJbwGpPrlBZW8dKHd3gQVbc4xk9/oDw8WM3ukwb7xed6N53BDVLBbA
-	 LnIi70vQ8sBUBQW33/s2Es0cu8WjsEJ5V4d1IFJnZ4Zz2YXt+9M42zVtEodnm+q1ESA==
+	bh=dPkKzaHYkJhh6wa7QFoKyPu7Q3qgqtI2wNOLP5sPG0o=;
+	b=Nn/JJd74FgxvO2VqweSSMvzMRt5OtmJlJMFNi8EJ9N9hOP236zq4zvfdkESqoC0u2xFn
+	 hhD0qjA5DGNO+xnKeCVknnnB15pN7KphrCNOT1Dilg9q/Ro8vfxR0yq8x/eDbOJliB9tD
+	 gB/u3oEa6g3o72lsSt9P8asbXNnrFK4co9+2BZEPUosH/nGeGf6Qw0Xhmq3lkJ8mtgQpl
+	 L5ZFomNqiz8kzBSkb8ZuUlOCjQ6E4x56lbVHH8va5WIy5z6j+emD5Q7rnY3XMdqmctqnF
+	 8X9dngLUjlvEpTQ6HEg+qYrYDOU95JVCXjqzzeuAbnZL276B/MzPk5YJkhI19EQcR+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=O5jOkB0n;
-	arc=none smtp.remote-ip=209.85.221.41
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cvvieoqL;
+	arc=none smtp.remote-ip=209.85.221.50
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF72B606A321
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 09:59:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AF72B606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A410A606A32D
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 09:59:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A410A606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=O5jOkB0n
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-48df4e9d2d4so243664f8f.3
-        for <git@vger.kernel.org>; Fri, 30 Oct 2026 02:59:02 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cvvieoqL
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-48df0fa43c5so273781f8f.0
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 02:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793354341; x=1793959141; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793354342; x=1793959142; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=SuLEXYTmuhsbw0HUoXxlmJgqO2YnSVWsrRaUkFsW0fY=;
-        b=O5jOkB0n9CtHo0AzK+m8OITBM8VMuIgFMhQ88154FwcMN8aAkLZEF2YoNCQYHrCIk6
-         8FAc/Hc7QfU0taQfPX3Z5hqWYaTwUDSONzRtmrkrkcAJOLlKBbX9V89ptkyrndawQQzg
-         SZPZMXbMQ7z7hh5zVMP+ljuOaQWybvnxQ5+lqJ7kC8QZk3vGsstCvmZunUSveIRJtbkC
-         +ahkyTruJCej1cnrMTzo564zDjA883BuyIZ+CtjEQbTQEm4c43/tYpSKnei/iFcE0DW3
-         eGR7EslQUIk0ZoDKciFc0e+iIEsLbPrnBUcGC8XUjkopBehAV4gw4JuzyKf33Q5DnjB/
-         di+A==
+        bh=dPkKzaHYkJhh6wa7QFoKyPu7Q3qgqtI2wNOLP5sPG0o=;
+        b=cvvieoqLQQ7e7QgsIWN0arVsfCEajft2XKVYcUX2Q4BNE3kog8dKkrpUcz+uc2B1A3
+         q14jGD2Vnn8SsdvM2EefjYjEueqB7tZ4VBvuPofaFoQxDDHGovmPSvhKWUQ6V3RIOzc0
+         bNTlSgB2xUbHyotsuF77OgJ+zpfYtKO3Ja4LCve3UQq9aOlWIibEvWPDQ7HWvqxVekWv
+         lLHfQrT6sYEzwmpstzYwLVYrGIwpR+O3xXNFlxsfvopXbPOKTccnEkbUXLM/AgNR8xyM
+         udN9WqGLrL589kA4KkT921f7dl1kR4lMXjA/hcMRVEtoaRte0Ph7UsmvaQVtGJU5LpBs
+         vMpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793354341; x=1793959141;
+        d=1e100.net; s=20260707; t=1793354342; x=1793959142;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=SuLEXYTmuhsbw0HUoXxlmJgqO2YnSVWsrRaUkFsW0fY=;
-        b=Ax3Cq1AuSa82tka1c/ZiPqXPcUQhckQABSrfXJvWLNzmycvvkabeYR6Y9ZgvuJ6Ixu
-         nL81D1GrTpefG7sfhk8oL0QFXzDXxZucLoD/XUx5P03pqeDq+gX1dli9GFEeyDk7VIcs
-         17IO+2iDYmie/0i3Ve4S7G/tKT2JEuC0vRBlRzXCmkWyYjSfUtg/TrhLrCMGmrm4F0U5
-         Ax1AQ2XjgtYh+fBBvtU846SW5EdP4PKAG2DGXORBtSoURDJDnlIlMkC84QazrgEh32Ih
-         y8LVhZ6h6d/d7TPB/ovc3LrG4i+FLo6d4s9oXAkC6T4qNIug4OwH/znvGtLuV34Ebdct
-         ACFA==
-X-Gm-Message-State: AFq9FYLOD/CISaGVDAA//nGIMsVtzfNbpImfNmxNhpPwbJ69vZ4KUA4N
-	3S5q1Pqjj44CVGl9zUMj4v5D5s/U3q+MJhqhwHpgltzmlYmg5RUQn2liTtaeT1sg
-X-Gm-Gg: AYBFou0lFAJBeTQPoUapPB+G/YnqXflwNr1pkExCKJAEbhBjUNqi6cN7UToGdtQp43H
-	TMmjLHCbo2i5XckwnuQjXYsyJx3neSJ3rhWRn27drqLa3C3Mqj6Ptqan3YIQKb7D4ITQamx/kBw
-	CIVMT2lsROs95k233LYe5TJTp63jQrbiwimeXVyur0UazdJ7F25XnH6VLrDr615VdbyhwiAOTEu
-	/FW/4mtb9Cfkg6XgOP7WTk5+0mGrdIMf+mJi+RFwac1IF0+kCP8CvEmIlDgxsX0eM/W6TNYHHhc
-	dOgTD9WftQEnfBw4Mj7HA4JPOiHy0IgKiYlpTKXPYmXxAzaodbhFFI1iO2PndNL5XZuJKn9zjkK
-	UhpcslRBn4chkevjDeapfk8t9szixQXzuWRz4CRyqV8PaiD2e0dCibSfafDKJ585Qxj/1UF/0H2
-	b8cUF1qX0UpMl32PwM/bZZqK+LZkgj1cTv53kYF7DBGb8lCzS5id1sSCANMniibqF35tKOSgSw6
-	9nM4nNVdB1ETTiXFATYJ9ZRqn2Yqp2mdOGfjqGRR5oAeQ/4Zn1sF/8RA147q/PIwFeCXfw9TH33
-	UENkBCTFSQrl3q7UNjKQNGgwXssPMrWRWHyQY8wY4QDCEQMzfw==
-X-Received: by 2002:a05:6000:2209:b0:48d:ee0d:8b3d with SMTP id ffacd0b85a97d-48e6e2f6d6fmr4394863f8f.28.1793354340953;
-        Fri, 30 Oct 2026 02:59:00 -0700 (PDT)
+        bh=dPkKzaHYkJhh6wa7QFoKyPu7Q3qgqtI2wNOLP5sPG0o=;
+        b=PkxyG48drWuU5b4BSN3VzKl25JB0NLmVSh+YFyhHx/AToFynUxlTfOpp/88224ii6N
+         jHos6W02I7/Hm8P2zZeYFgCvixg5/rG8jQWCD2yW8TeOuZLRgpbENoInplvGsOR4WxC4
+         WwIYaqj+H3cbW3oeXoc8AAmcm+w5efSngfmGKJIFC8PW6gQVN2RzbdXfazTCDqf4lmy5
+         0kxWY7Vha/8LvtQGvfjx6fPAhxF0Qksyz4VlgnEJAHXFL87zJ+QHo7BVbKnJc+sm73Xt
+         09Z+EQwQCnhcGQEoVsKMLiwOq2T/5++sOoiL5l+DxMCN3IcARRro8ntsYXpbHRIRezAS
+         iDYw==
+X-Gm-Message-State: AFq9FYJiDLwIzULfagkdyylBmRAGiO1qpu04J7SN/EapIa7MzIQbLfCK
+	VV3xVXFE4vnjdYwLpOwOQwVoWZ78Cpf7lblU5R+USXto2+f8Icv5nKHBcwNUujOS
+X-Gm-Gg: AYBFou0ZkmyYrgOXvuEg+3YAGnmtsTteyU+29ZWYZpJlrwFlJKUH1+dwfeqtS6b93/Q
+	uH4Uf5igMcQT1ej6y+Np/qJTgCadsznXHRVdjFFSNJ6n9Wer/peX+IFN3HY63YdPbsDqt2kW3xI
+	VcOye0wBV8ScbQ54OrAINT+RQBqgBlxMfMdCVRuI3bx7d4PkAx9D6jI6gXvot2mCzhxavC5YmKh
+	nch+E/eLIEhc2IGhuXVY2XTeKtdLkrkXtBvnQJIsdfDSqqNVocJWYBKAOfkakh15Z/1oHu2+Zom
+	O88WWZMI3ulzyG4UaJJZ5nwERG2dqP/wkbuaRpLn6XbrMAkjDZ8xxKI6hFBiVVyEavZFEERhJ43
+	YUQY2R9pj9W3E4fu7ErkWGUWyEW/NNgd1xD4Q2XkJ/5pMXREQakixFReOqDvfhpRqlp7Vk3xKlf
+	dJi88fgHl/mW9RXz/eyss0q6Xs2bXu0hYNoiUwtJADnIMd0quDW/qOMYTJ4FnxV8nT9Khz8M8ph
+	0Ql5D0lbDhzq/sOj8/ciiwCnVUsfIwsOiK7Vfi0E4iHetcWTwCpbdDUCynTXZwuYrBTdwzg/l27
+	YIomT9+Mw2tnNQ122Law2duDVKFpNuH+KfvAhJNALfjWj/twZA==
+X-Received: by 2002:a05:6000:2007:b0:48e:5e63:27fb with SMTP id ffacd0b85a97d-48e6e2dd32fmr4711947f8f.20.1793354342000;
+        Fri, 30 Oct 2026 02:59:02 -0700 (PDT)
 Received: from ubuntu26lts1.example.com ([205.147.30.18])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b9b54dsm2359421f8f.47.2026.10.30.02.59.00
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b9b54dsm2359421f8f.47.2026.10.30.02.59.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2026 02:59:00 -0700 (PDT)
+        Fri, 30 Oct 2026 02:59:01 -0700 (PDT)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
@@ -84,9 +84,9 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 	Jeff King <peff@peff.net>,
 	Elia Pinto <gitter.spiros@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/4] odb: use size_t for the length of objects to write
-Date: Fri, 30 Oct 2026 10:58:50 +0100
-Message-ID: <8fcb9f10f13962acd5cdac652bea8fc4164f2e78.1793352943.git.gitter.spiros@gmail.com>
+Subject: [PATCH v2 2/4] diff: use size_t for the allocation size of word-diff buffers
+Date: Fri, 30 Oct 2026 10:58:51 +0100
+Message-ID: <42d4eae98540028cbb1deba469d82d676642ca17.1793352943.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1793352943.git.gitter.spiros@gmail.com>
 References: <20261021101640.329990-1-gitter.spiros@gmail.com> <cover.1793352943.git.gitter.spiros@gmail.com>
@@ -101,139 +101,55 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-c6a4629e32 (odb: use size_t for object_info.sizep and the size APIs,
-2026-06-15) widened the read side of the object database API, and the
-write_object() callback of odb_source already takes a size_t. But
-odb_write_object_ext(), odb_write_object() and odb_source_write_object()
-in front of it, as well as write_loose_object() behind it, still take
-an "unsigned long", which is only 32 bits wide on Windows.
+Since 3c7a31204f (xdiff: use size_t for buffer sizes, 2026-09-30) the
+size of an mmfile_t is a size_t, but the word-diff code still grows
+these buffers with ALLOC_GROW() using an "unsigned long" (in struct
+diff_words_buffer) or a "long" (in diff_words_fill()) for the allocated
+size.
 
-Most callers hand them a size_t from a strbuf or from odb_read_object(),
-which silently gets truncated. The most visible case is index_mem() and
-index_stream_convert_blob(): when "git add" or "git hash-object -w"
-runs a file over 4GiB through a conversion (core.autocrlf, which is on
-by default in Git for Windows, an eol or ident attribute, or a clean
-filter), we write a blob made of the first "size mod 2^32" bytes. The
-index records it with the stat data of the real file, so "git status"
-stays clean and nobody notices until the file is checked out again.
-"git hash-object" without "-w" uses hash_object_file(), which takes a
-size_t, so the two disagree on the object ID of the same file.
+On platforms where "long" is 32 bits wide this is not just cosmetic.
+diff_words_fill() writes every word followed by a newline, so its
+output can be up to twice as large as its input, which is limited by
+MAX_XDIFF_SIZE to just under 1GiB. alloc_nr() computes (alloc + 16) * 3
+in the type of "alloc", which overflows a signed 32-bit "long" as soon
+as the buffer grows past about 700MiB. The result is undefined behavior,
+in practice a negative size that REALLOC_ARRAY() turns into a huge
+allocation request and a die().
 
-Use size_t throughout, including for the size kept by the in-memory
-source.
+The buffer in diff_words_append() is bounded by MAX_XDIFF_SIZE, so
+there it is only a matter of consistency, but if that limit ever went
+away, ALLOC_GROW() would truncate the requested size, and the memcpy()
+right after it would overflow the buffer.
 
-The existing "hash filtered files over 4GB correctly" test in t1007
-only hashes, so add a variant that writes the object with "git
-hash-object -w" and checks both its object ID and its size. Like the
-other tests over 4GB, it needs EXPENSIVE and SIZE_T_IS_64BIT. Truncating
-the length to 32 bits in odb_write_object_ext(), as happens on Windows
-without this patch, makes it fail with a different object ID.
+Use size_t for both.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- odb.c                  |  2 +-
- odb.h                  |  4 ++--
- odb/source-inmemory.c  |  2 +-
- odb/source-loose.c     |  2 +-
- odb/source.h           |  2 +-
- t/t1007-hash-object.sh | 13 +++++++++++++
- 6 files changed, 19 insertions(+), 6 deletions(-)
+ diff.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/odb.c b/odb.c
-index 2c93a9490c..1f173625b7 100644
---- a/odb.c
-+++ b/odb.c
-@@ -640,7 +640,7 @@ void odb_assert_oid_type(struct object_database *odb,
- }
+diff --git a/diff.c b/diff.c
+index b4ac17f8ef..9483931c05 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1959,7 +1959,7 @@ static void emit_rewrite_diff(const char *name_a,
  
- int odb_write_object_ext(struct object_database *odb,
--			 const void *buf, unsigned long len,
-+			 const void *buf, size_t len,
- 			 enum object_type type,
- 			 struct object_id *oid,
- 			 const struct object_id *compat_oid_in,
-diff --git a/odb.h b/odb.h
-index dd85b880a7..45182d28cb 100644
---- a/odb.h
-+++ b/odb.h
-@@ -621,14 +621,14 @@ enum odb_write_object_flags {
-  * Returns 0 on success, a negative error code otherwise.
-  */
- int odb_write_object_ext(struct object_database *odb,
--			 const void *buf, unsigned long len,
-+			 const void *buf, size_t len,
- 			 enum object_type type,
- 			 struct object_id *oid,
- 			 const struct object_id *compat_oid,
- 			 enum odb_write_object_flags flags);
- 
- static inline int odb_write_object(struct object_database *odb,
--				   const void *buf, unsigned long len,
-+				   const void *buf, size_t len,
- 				   enum object_type type,
- 				   struct object_id *oid)
+ struct diff_words_buffer {
+ 	mmfile_t text;
+-	unsigned long alloc;
++	size_t alloc;
+ 	struct diff_words_orig {
+ 		const char *begin, *end;
+ 	} *orig;
+@@ -2192,7 +2192,7 @@ static void diff_words_fill(struct diff_words_buffer *buffer, mmfile_t *out,
+ 		regex_t *word_regex)
  {
-diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-index 75cf29fa9d..c13cffc805 100644
---- a/odb/source-inmemory.c
-+++ b/odb/source-inmemory.c
-@@ -10,7 +10,7 @@
- struct inmemory_object {
- 	enum object_type type;
- 	const void *buf;
--	unsigned long size;
-+	size_t size;
- };
+ 	int i, j;
+-	long alloc = 0;
++	size_t alloc = 0;
  
- static const struct inmemory_object *find_cached_object(struct odb_source_inmemory *source,
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index 50cb388c35..60801e70e8 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -758,7 +758,7 @@ static int end_loose_object_common(struct odb_source_loose *loose,
- 
- static int write_loose_object(struct odb_source_loose *loose,
- 			      const struct object_id *oid, char *hdr,
--			      int hdrlen, const void *buf, unsigned long len,
-+			      int hdrlen, const void *buf, size_t len,
- 			      const time_t *mtime, unsigned flags)
- {
- 	int fd, ret;
-diff --git a/odb/source.h b/odb/source.h
-index 8b839caa39..07d5019aa5 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -451,7 +451,7 @@ static inline int odb_source_freshen_object(struct odb_source *source,
-  * object ID and the compatibility object ID, if non-NULL.
-  */
- static inline int odb_source_write_object(struct odb_source *source,
--					  const void *buf, unsigned long len,
-+					  const void *buf, size_t len,
- 					  enum object_type type,
- 					  const struct object_id *oid,
- 					  const struct object_id *compat_oid,
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index 463b38f990..0a89bbb455 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -297,4 +297,17 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
- 	test_cmp expect actual
- '
- 
-+test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
-+		'write filtered files over 4GB correctly' '
-+	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
-+	test_oid large5GB >expect &&
-+	test_config filter.null-filter.clean "cat" &&
-+	echo "big filter=null-filter" >.gitattributes &&
-+	git hash-object -w -- big >actual &&
-+	test_cmp expect actual &&
-+	echo $((5*1024*1024*1024)) >expect &&
-+	git cat-file -s $(cat actual) >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ 	out->size = 0;
+ 	out->ptr = NULL;
 -- 
 2.53.0
 
