@@ -1,118 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793355720;
-	b=d9TGHitHoklSo3+0cjlCNbIjO5jDy4TnjxvOJI3W44fI9iYY0MvTVsfiq3tWli6HxQhL
-	 EC73orbom/pTZWsO0K9T0XEN6bY5fAIJbz2HsD4iySNcW/QChajcpdoqu140s1eH48od0
-	 eu4DLzMMwap6ZeSTNAyPNgbvEFwGaRSDOXXDtAtpODqcVXvOzY+xnKvOiAVb8bSCSjIR0
-	 clL9jDrNWE13dacznJDwEJFtUbgyao8JZjHJkX9o2X14vLAvAoa4Rebg9s8elTM5xTVgP
-	 ndfS642tqsUoh1CF4oh7wVd+ZQUdXjxn7Pk34k4+8f+MmYXvkyxPSTZYnQaFObHJWjQ==
+	t=1793355722;
+	b=Du19d6EuuswMv81Kk+Ut44SYNEidKeZ39hFWtDd2lElP5NCoz8J/hlNUWKsFsbJm/HKr
+	 IRVFUvQRBMFfjvde6P551JcDCx3LYgsuC9j9pl7jG8zVhfjP8mUztfvpkowrhctdsiIrw
+	 nz52XwYEZI0tS6GQqfhIAPZVofmyE5UM98HCQMR5MfkPn84WhwV9AksODsgxYw8V/KNLQ
+	 QeTIw9VapZT4aaEB2fIuEmaSK5W6sYIeszG6GM638wBVu8OtjjrIggvIIMLKAmfaClVR1
+	 hnObzr4o2P1xyV4hBs6GOnVW8CxjSIFWqeL1l9KKAz6dwYxKnuudeLhlFxN911LkfJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793355720;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793355722;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=xOJwRQ1V+RAr/vlzHQ/BG0lXcO8GbzHmowgBDFimiU8=;
-	b=OThaaYjZ6e6x97HEpMvlOanh51tAxB/dv11wO6j6iLLgDkeZOBJk/grxQVcu+EU9UaS1
-	 Mxfe4mHaXW2NJYk3aVbYVGZ2EUF8M7M18dk9hAmtb4C8ld6I35m3hvkvvWTtiMyunq69d
-	 mFn2QcdUBSj9Il2NldRErBuxL9yU6T3+ASewUa9aZCOmWn4hJ0CzVxc2dQkzCZitFsPNX
-	 jPExNsN3F4croniejpuVkG/Aic8+dsua0PSIiIz7qepiSZwwUQsdBTzgsqTSIozIzctdd
-	 WUB9q0DhMoZasvfBxF6EAxNhtFywvbCEZ0jeBccHeUMGPgj1JrN4bUVtJkDABN52EhQ==
+	bh=OKuxaKQx9565RAdkzDxDpsNPu2+rsT4yxJIBEIFQVZI=;
+	b=JckXe+F92Otwu/YxV0D/qDFBT3B2bQ3aEnfhV5W7P+YDjbjgPYC62kQxDeMrC9zFHfRJ
+	 bxfumWkC47Oidm45253FNuazwDVDTsCEtPbiEnM+s2eoqmsFFhamJj4qvd9UClvmhuBQO
+	 JER0+zlX6sWboWrTov+KokD/o3B0+OMX0kHa8mpso0wNnLepIu7WOUuDCLvSW+8VNsp9U
+	 IB+S7fnDT2/BMrfZeITN/aNbuT+i95lrBjv3AORNw9Dm3BptZHj/caL7uDh5hBp9o3M/Q
+	 EPfrSbmw1nmrE/NyZQTt4Z6PFjZUoZwS1KBrn6UeAAQ7w21S/Wv8eistH1K6ghZooNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=E8Ulr47S;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=av8SO8Dy;
-	arc=none smtp.remote-ip=202.12.124.153
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=fsfJeJiz;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ExoF9+OB;
+	arc=none smtp.remote-ip=202.12.124.151
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2D2606A31A
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 10:21:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F2D2606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA6D606A323
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 10:22:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8BA6D606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=E8Ulr47S;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=av8SO8Dy
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D31E37A00F4
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 06:21:58 -0400 (EDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=fsfJeJiz;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ExoF9+OB
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id DBEF51D000A7
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 06:22:00 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 30 Oct 2026 06:21:58 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 30 Oct 2026 06:22:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793355718;
-	 x=1793442118; bh=xOJwRQ1V+RAr/vlzHQ/BG0lXcO8GbzHmowgBDFimiU8=; b=
-	E8Ulr47SFAKQ9XCJJi0bpNwflN34c2CxcrVI4EQ5NXQYWZ2DJBoQp6qGwijVu7do
-	3qm9AxHjfzbnOvk01THUN/CoaBRz/3euOllqJjK1MGyQHwkhEWHyJAZM1VRhs34g
-	rG5IuLbVUGqnsWWmVjsuUWuhFUOsG9fTRrsRBw5qquFmFbfPZTs/WHahX3L9yzTA
-	0+0fivFwB7Fp7VlYR/CbzL6mOecMtfJnOR3r6LMI+OeU9Yzo+3Jgtqe3n8HbMLBX
-	ZTpcGgDBjXHIt3TGAAnv6GGjg9SnwOV3j6vNAbtiPUFuHssERyebR6/YQnshJCKw
-	Cn+vpDyny6/JaN2aq1XW8A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793355720;
+	 x=1793442120; bh=OKuxaKQx9565RAdkzDxDpsNPu2+rsT4yxJIBEIFQVZI=; b=
+	fsfJeJizv8wZU3TUnUJHvsWqXeVUlOV0FPVnT4fcg4kcoVT5N76op+btfLTidPUm
+	utbwGD2Qn18awEXjIogC0MJrd3Y1sqpbMqcNqwp9/dFKZuEllfi+XJQMNgDmpwd2
+	HWSyFk12w2u0TaB45/7VeZu5wPVDKwQ4+A6mu5BlHAxUIN1lgXm1IQpKTVE17KHs
+	YP8cSW9sItfpHu3+RutMlcXJvLsE1KAPkE2WnvkIj8ekf5YMUDDT3eup8yiFoSZS
+	ueB5rpsou3F7SU7BWs+R/rl1yeFhnmLxAaeao57xs374cuSVXE7NtRYNAC+wcn1R
+	nCIcTJKmpG2icePsKMakJQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793355718; x=
-	1793442118; bh=xOJwRQ1V+RAr/vlzHQ/BG0lXcO8GbzHmowgBDFimiU8=; b=a
-	v8SO8Dy/3YtfiX/O4p2MXcMQ0G2WCj8n30I4I0H4+9CMkHlMBcSI4WsGsvLfNKeW
-	WyTtgw4zJDizI1jSnmoIEyvCf62wdKQvPimPv+X79fxm+6Jq+1jszEkPBfhyZfnU
-	sFnuzXbX8oA6fL720WkE+nenf99U3TVsG3FmN/jdd/jW5bVwJPg9dn6vVjSAzbC/
-	k01QY1HJczbg18OAQMIh3FtnH0FZPbPXQnjmcb5qoxcZ8JaR5UBVF/qI9+Pzu6ow
-	Aga5bfOAWXifAOoebjKf7Wsp5iPYQDOUB3kDO2tAqrhOeSfUmVwC1Sl9UW5w6FKU
-	X3tsuol9vqvg6+5KBj1mQ==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793355720; x=
+	1793442120; bh=OKuxaKQx9565RAdkzDxDpsNPu2+rsT4yxJIBEIFQVZI=; b=E
+	xoF9+OBLIsGFFbIAZUKOZMwmrsQVL0wIiujNk4QnSVIsx1MPoQiaaYbYdNkT7oY3
+	FiWAdQBdzGRpBm66vsm89d5nN10zDvSmTPnyoBSvffwJ0tpo5X/SVaxd4+/3nN0T
+	xHC1DDBD6Wh+Ye3OPyxToixvqFKq4dUWBJCGXcR4TC/JYy7/zePGonjYuW4zHFJW
+	odhTbOW13P6FeUUH6fD+gjJhWR0NfIi2myWNQ8DTFKKWCZ+lfZ4OZLJOde9EMYJ+
+	2etE+x/aXbfbj98VphoQX74z7D2lldZqOsIMeuEwYFETxP5OQdT0NJobgKC3PVl0
+	hRvuC1AVK5mxb/VeIcTQA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793355718; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793355720; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:rDOiAQupjNK2xzqFYtiTLZOhkuVJxPlKYuqVCRd5vN7tify
-	VzmBq2q1rjHNXK/HvFesUvW5no/4jbwe7K5bJAOWf5REsPZEogJNUcX9hMRLXyLq
-	mV9sMg1t+40tOZLnTEbm78eOIQ0tYqgk8lVU2BRZ9r3Bc0e9vIwkAxjxr87WU+y3
-	gRANUseF76ELUzsL/jHClZdiYG0Bjs6WGsfiQidJUX/FpGyWomGKIEVeL93VCZ31
-	gWu21VeNgYhMBpqTmfWEn2PLXmHd2RgoDVynqpNcj3VIURA2FubnUxFf12SJ/MPU
-	Y5A+6FTxSG+yT2TFf2eUr+s7KoyRjLkeD/uOWGw==;
+	s=fm2:rsa-sha256:cbIuE1OQ+TESZJ59IjcK031HgKphUtII95Jfs4uJgRKBzTJ
+	lIcpktYWqismjnNGw0W7nU8/2slqrCkuyxoEy/IwsWRiO6Ca4ytQ1AcyrtUBCViy
+	oaF7OjmvAHg/4NkaVrm9RJEVq/Pq9nYqENnyar6l4pcRVzii6HUwilY/tMigWlwx
+	yn8Q41w9Vemejy9s/bsCEJhK9yKmE5xzWhTRWk+PEy9eclakA3ssgbsBwYKgMFMN
+	0XE07WFx5SP1xnqSMA1PqIKTrPZNfiJ1Q2WQPFFRQ7D96N3ROcFFFFYWhpFVlC+M
+	k5gva4t5HrpWaJ64tsyJzYswC1svjhTCJbtC81w==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:Jgfd/s54Hn5nVTmqne+n1/U0XCDSN/Vt7iZc023Cku4=:z+7aIGHMdK2yOG6FubZlomqGcbz4CnppwBu0fFD+FrU=;
-X-ME-Sender: <xms:xm_kais8KV07LUuftI_zal8_Zwl5y4DzcobN3PPNbuTUQPEj8OK29Q>
-    <xme:xm_katff1FCi0-ZxXwmzNxSDuXjyFrzpJy3V7hNlf2mSfrZGzjg8QHTQtWzaXiWLz
-    Uq81zSTSNmCPg6c9aJk4LSQJc8iCiYDebxYH1RD2ZR71RQxmQH3Sg>
-X-ME-Received: <xmr:xm_karZuO6w5Pqk7bM5iTPUVCyTg0t8PtmhW71wujbsB-nHkuH_ITxUh32fsHhbaXbQ62g>
-X-ME-Proxy-Cause: dmFkZTE5DZFNz4dJlzhS+5nPFBPgibdHSgNM2fRPkCMWD1wjIyf+Y/6ffcd0dUnTGV2WsH
-    jx1i1mZz7ZDicoi5CA0FwpapLN4Tc0C94tjKz22+HmDW8wErM1M68ZSanzjC/r/LRu73mv
-    mTCAqncabcSeLFONNaVM6PJyd/py0Q1z0cANZrfgsIXPGVVxepzc6k8Xr61Z8uTE0ewgNw
-    6M18A45NSNh6S7xZ1DAmvZOrboVv17uj8+oDU4EB86/eHyoyNCV7PaKI4Z2o1vFhd1ZDwI
-    GsK8vBUjF6T/nGNQdPIPB7qe8yLWaw8pCI1zrkgIKBcI8emdc+gvubVe1EplTgThf71ill
-    HmkLQNkq0ux+DwXuDN8L17muAOnSsB1wo6Nif3wQS/98Weng/hEolpDzFUHczfhSE9Jwxf
-    mcjM//VOZvDxo0PGKenLLXyKPYgGK+wVKfEpHQ9mCazZ1LAGOuPXNJ3mvft7i6P2Oe2HDz
-    D0M6ulhwPcfh0TtZr+rcG0fm0krRLkEYM3S6bk/EZWQyMkMXyHwBiM3Y8W31IfxEq7EeR2
-    S7gv7MhOaWuryV9Ld15rZYhcKVSlF454pLtnsg6oLKZuVwG03JZB7gP39v9A0qgI2iHtOe
-    fVVAJ9cnCfW7Om/NFVApGXvjCkqKjkViO1WUGakmMJGlfEvl3K9CLeCq7PFA
-X-ME-Proxy: <xmx:xm_kaoXwZ8Zng7dFjw1_p0MAQH_b3SA-qtnVyMrcr7nPXutyEdW9Og>
-    <xmx:xm_kalhku9aOHK_CG0CfKXcZ_KntoJK40denYypPD7wmC70XFzwEqw>
-    <xmx:xm_kauW0qDh9C6YIkUICgO4mJXzaUe1i9SqOFULJY08xPZaoTRr03w>
-    <xmx:xm_kakN2C-cBzAamdf8PW40atmlR85tP7qeR6RbMfLGEgA67Sq6gJw>
-    <xmx:xm_katfBWp7l6YfhPkfODcrJ5sjcIZ-0ZCl8b7mowiZ3DyJyRcyoLw78>
+Message-Instance: m=1; h=sha256:8N7fH+hktNdhiw/XM2X2bdaV9UB6DyJYQcy+nmb1h2I=:if18a5gsE6suI57x0/veWA/FNsU5nKZVC0mvQPMVv/E=;
+X-ME-Sender: <xms:yG_katcgwIp26PzFbzuxOriKZvrErUJhleXzhDI4yHiFA_xX0oV2Ew>
+    <xme:yG_kahPFFkL3NxJJ-o9dehR49RuBihm3iBYYXmBfIVrRTXdq6f37LJXWxiH9-inje
+    CouZ3iC787jlTXH4kl_8hlcIYCsKeNYbDW4QNlFsLWQsNB7rK_Wxw>
+X-ME-Received: <xmr:yG_kakLxjfRuKL5aVbpEOYobuE9tXgj63rzduzYvpuRHT5z72CiRu4YGXNjrY1rubvUWog>
+X-ME-Proxy-Cause: dmFkZTGnfjP8Ce7Y5OxQEoi584NpxOS+ux2/AlFQpPqlCrctePrPU9xtuXEN57EydbMOeD
+    uKCcBR0ZCHWL0JVVKdP2toch8j8m9MhSLZNd26rU3Jkm3/zUqEF4IuCZTnwIxaDY0V/tLj
+    HPCCAd6edAcH74Fb6dTyZnpJL5lchwnIo77DZeDcJBpULBOuV/npxiguobs5HhHHcKxRwg
+    DnXnPCidbyg13/FKdrwVIJXASUfEI7oDWJDcbK+MVWvtcezD0lEuTpE1YENU42Xjiy9+7a
+    aou8YssUOX+9kEmTzwmAUrwGE6OIrCwqv8eeOqikEaid85oaqsh39WchJPYMjdWG/Q1aHZ
+    uLqWxNjxZE5NKHtwm86dthwWGHQOb1XXgchu487tryIeNPCuCFQ6TRb5ABerFEahkPI66+
+    fZmq9T/hN8UCvVxQRzhX5rBroj5XPmmgB4/J9SXunEesHlLpeSmw40UTmCNdNTOLT8UbHA
+    LCSVpu63paYVJrK2q7jWUGtN0xHRe8xgfkXu7jKa9DIT9sTtpIAbAhJFIOM21ES8tlib9e
+    vT5eEqrAMWUw39F+DJ+C1ILMaKbOFPjSLcaWY2TPR4WWuAhDq7V1IB/F04dEDp5Yi8RlKX
+    7VOtxNGtPa5J68SgGocKVB5UxJKXOhFv+UMG/5lNt7YNeFaLrfqVhwA4T3EA
+X-ME-Proxy: <xmx:yG_kaiFO43MGqgAwuzxJo7w0tFVXgYDr9GS8dxshABsxP8uYSLimNQ>
+    <xmx:yG_kasRnLB4Lvs6Cq4Hhq5RnnG33HsGH8lxwtFVLMICnrIbAlZBPwQ>
+    <xmx:yG_kauExavz3BSGyMqi2FyiqzKFNSfxjdAIQ2ZQodCMvXrF490R-kQ>
+    <xmx:yG_kao8VCNcpD3oUWu0EqeHbiTX2aRWvn6jNomCXFe5vnIQad0F9yA>
+    <xmx:yG_kakMRW_93kH9z52JmRWb5PbZK3j7ScAEhC0u5ML3bqveDkUrXx3I0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Oct 2026 06:21:57 -0400 (EDT)
+ 30 Oct 2026 06:22:00 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c41b0a9e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Oct 2026 10:21:56 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 0b2e1d20 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 30 Oct 2026 10:21:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 30 Oct 2026 11:21:48 +0100
-Subject: [PATCH 2/3] builtin/grep: read sparse directory trees via
- passed-in repository
+Date: Fri, 30 Oct 2026 11:21:49 +0100
+Subject: [PATCH 3/3] builtin/grep: read ".gitmodules" via passed-in
+ repository
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,31 +124,22 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261030-pks-grep-recurse-submodule-v1-2-d4eb5c87d8fb@pks.im>
+Message-Id: <20261030-pks-grep-recurse-submodule-v1-3-d4eb5c87d8fb@pks.im>
 References: <20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im>
 In-Reply-To: <20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im>
 To: git@vger.kernel.org
 Cc: Root <rootminus0x1@gmail.com>
 X-Mailer: b4 0.15.2
 
-When iterating through the index in `grep_cache()` we may encounter
-sparse directory entries. In that case we read the tree object they
-point to so that we can recurse into it via `grep_tree()`. We do so via
-`the_repository` though, even though `grep_cache()` may be called for a
-submodule via `grep_submodule()`.
+When grepping through a list of objects with "--recurse-submodules", we
+call `gitmodules_config_oid()` to load gitmodules for the specific
+revision. But instead of passing `opt->repo` we pass `the_repository` to
+that function, which is somewhat fishy.
 
-This issue is similar to the one fixed in the preceding commit, where
-`grep_tree()` didn't use the correct repository. But in this case here
-the issue cannot be triggered as we call `repo_read_gitmodules()` on the
-submodule repository, and that function will cause us to read its index.
-But because we only ever set `command_requires_full_index` for the
-top-level repository we will convert the submodule's index into a full
-index, and consequently we will never see sparse directory entries. This
-is also documented as such in a NEEDSWORK comment in `grep_submodule()`.
-
-Regardless of that the code is still wrong, and it may very easily turn
-into a bug once we start to handle sparse indices for submodules. Adapt
-it to use the correct repository to preempt such a future bug.
+This is again not a bug because `grep_objects()` is only ever called by
+`cmd_grep()`, and consequently we know that `opt->repo` is always going
+to be set to `the_repository`. But it's a code smell regardless of that,
+so adapt the code to use `opt->repo` instead.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
@@ -156,18 +147,18 @@ Signed-off-by: Patrick Steinhardt <ps@pks.im>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 22fb365eeac..cb518d8155e 100644
+index cb518d8155e..22f0a1b0d0e 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -560,7 +560,7 @@ static int grep_cache(struct grep_opt *opt,
- 			void *data;
- 			size_t size;
- 
--			data = odb_read_object(the_repository->objects, &ce->oid,
-+			data = odb_read_object(repo->objects, &ce->oid,
- 					       &type, &size);
- 			if (!data)
- 				die(_("unable to read tree %s"), oid_to_hex(&ce->oid));
+@@ -883,7 +883,7 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		if (recurse_submodules) {
+ 			submodule_free(opt->repo);
+ 			obj_read_lock();
+-			gitmodules_config_oid(the_repository, &real_obj->oid);
++			gitmodules_config_oid(opt->repo, &real_obj->oid);
+ 			obj_read_unlock();
+ 		}
+ 		if (grep_object(opt, pathspec, real_obj, list->objects[i].name,
 
 -- 
 2.56.0.341.g393f52fd96.dirty
