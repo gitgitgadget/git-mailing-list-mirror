@@ -1,119 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793356001;
-	b=QKcYYckUUmA0eTd847SetMIcRABfxjJFpUJHaUGcOYiXLo+vhnTQXoZ/+/EFH+fFhPTL
-	 6Euf/k4w+kaPWOGbUnEnsDAmT0eHFlNjGWrftaAHLBHAgSW7k2hh7yRdCAxhPBs0bEFwO
-	 6IAczSCIrbOG5V7XX27L8AOlXkJ4ZWJRivkYigBNY43mLgqebBjGoipauZ2K74CduykF3
-	 9ekuG/zw/Y4gnZ6nXY5xhAUzNP0s9S/UEMb6PAiUBdu9QvbeKiNZJ3mNWUNfZGXt+GPUs
-	 szxvU2xj3TNlklW1sTyk+yrFNnsre1tn3Gu10VuFcvDHfV040QQGEu9f8GrzsDq4OTQ==
+	t=1793356128;
+	b=27akGapBFdzuhKsgsIomwdR+prv4mZUhj1oecBz/n/7H3MCLmIIVJGpKjzxvWo6hgXmT
+	 kCqvqgYeFI0afWXETS3CQ8ZSEwCZYkpmsFKaId95f0Cwt6iVNxkm3rHzy3L2pqvVBMW/J
+	 XHtga+uI3O28ORtWipZgLCSn7Bv8H98hGY8BQYWLVW1Lg68w9ibL+iFsvG6hTfTcpr9RT
+	 fU6Z+8bOJlpOQGGIw7KO3haere6SMPbj2uV8X0M+ueO/XjD+k5Qn3IzufpUnYMjSj87IL
+	 HhDpUYNRKeKzNixr07dl2upWC19tprIvr6XFL2N8bSFIOgCcO1x8DYCEqoq7/0D7A3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793356001;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=WQGrEGREqOhZo5cqoRJWzPntTu6B626/kFqHnS8m7IA=;
-	b=wjaEnZw+WkIY1SW7OhcxWzxeS/fBya4X62enN6Bs/4rTqmTKohr2eu31zZ6CUMr/5Bs5
-	 adsQtSCpxHtAmpoDUqokbtCh2pzXC1TWUTUSMRRSpeeNwD3i6U8TfpFuzLP2dS6AWv5LO
-	 uPcnpoSYbtCHT9rT84fyhJnvyfLbAPoxEAXvs+dOZumxv5UMk3WZUx9j6Zbn7g6AGVWRM
-	 787fzNlYMjwpG7Do2EvrQeHb3zgEGgKQs1+GErGycD+ovqMGG5Ma52fht/unC1DYJ4Akh
-	 6Bv+2UfHXXfhZQaq9KuflALdAcN1j/pVJH4tFpiy9eEWK+RbwMUB2B5p2CNgvgqjkGQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793356128;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=YfdX/o6CwbfM/kj1CTQ2Cv7cDqpw0N6PZX5sOl9jbVY=;
+	b=U5FYDShjhQaqk2rSpKJToVLBW02m/Wo4jZkx6jjxOzzwe/pkOumK+OABbrKumnkO1Y5u
+	 EyjTbBdAyJAGk1Jj8I/Q7QYAAZmV0LJZQVATDt2ocogsDsVk++IRkZOwKGGcriQGJSkYM
+	 NHmOl/kvF2o1ZRooq8vi/WI0djgX4qiF7UQl48T+XPN/glHSn9jkH/jpkRh7+VKvK9AXO
+	 1PEn4DB9MtDrPZFtUcOPm1bYQoQiIbOqTYy2UI0FSqsyz6DUEBwgpXT8/TxLIb0psKMml
+	 /cyxFjlXll2RdFnzGA1IbNy32iBPZ4uyixHk8W7SIlG9Qm+Pi1y10TQOByKeW2o/LAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=ccHisrad;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Q5TiQavW;
-	arc=none smtp.remote-ip=202.12.124.153
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FgIYuViw;
+	arc=none smtp.remote-ip=209.85.128.53
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16307606A321
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 10:26:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 16307606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C712F60A6F43
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 10:28:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C712F60A6F43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=ccHisrad;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Q5TiQavW
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 93D787A0187
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 06:26:40 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Fri, 30 Oct 2026 06:26:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793356000; x=1793442400; bh=WQGrEGREqO
-	hZo5cqoRJWzPntTu6B626/kFqHnS8m7IA=; b=ccHisrad8g1LPG2IDXy52evKtK
-	IK8f8Vo0gxURv2PZBucOxKzYuz8aPMHP2Yozikc1Uq2o8ZJGeh+p29b3yEZnAJfW
-	kr8oLFa+pJ4hpLitthSx81KHLFC0HOm59lWODd3aaS0C94UN/EfA/ERqlv+EeLDH
-	orBfT1469GRJE+Q6z6jWQCm2mzcnDJIkQPe6p3IH72rh35n3aJulD1Jtqy2EmeXD
-	BTqpLarahHk6/fIyd6PoEodekQ2QdOqerdvJfuFqWk6Lj0eeEqcxrKrXHHG1CVGH
-	miZWYoNsIT7/MkRGhr+M39Lz0GOljAlRjomWur+8+L4H6kBudvnZw3MvYUaA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793356000; x=1793442400; bh=WQGrEGREqOhZo5cqoRJWzPntTu6B626/kFq
-	HnS8m7IA=; b=Q5TiQavWkT/ce/3xZrn/QFdfWdAS+9kBxAoVra/BOsRBxS9ua/A
-	e4Pm8XBmMmviOBazyJbwi1hb90xD9iTNhA5iS8GWClpRscuIa+iTInznpfrwl1Nw
-	d+Uqy10CasuSYZv8YIj/4s3mx8/y1PSxQwbgD+gGXRt7TQDZOJjZnva1U1wUI+P6
-	jSzFsLpphctV1qUvv+hIQ3+pPfUOqsIKvcqpjCy6C/YX/i9aszkoKwTeqUqkF6o0
-	RE1S4QOUyQcf4eLyqLohc5xZmBjhRz8H9XCvPZ+vs+p92XZGd0zxrdeEYz7j1AMa
-	VdaYP49PjFbSdrYjf3OZZBbNrqkcUqaVFsQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793356000; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:CUkcj+DGVFdeKEiD+5BFAFL909weHgzYix7u3mVNcMC5926
-	s6hYjoaMMLJuW0SMQ0BVGsqfnchm84Wywf/+sqiqt0fk9nR5zXHEiUabu7rliBKJ
-	spv0Ky5rQkliyVi5l4scriJH078q3ltYhBQpE6zgO1m/MOwv2m9JBP5uBV4AcEym
-	8obIZp5zd94MTcD2j8P4Kn9zhPGBbWCC7sKuwNgW3C6ni+O+EgcTpk/phQKG6SPS
-	X+0y3Pr9y07TwuFGogd1BM29hjcEqxyF1xnTccyPb1D5TyaJxD2uAXSkMssBFLrG
-	JIRosd+JH7wsg8wHbulwvXW+1bel9xsDeDPycaA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:HbNiPfXIUV46sAuYtau7+znkeu5LoNMxUM5MQog9YJ8=:0kv8JgYQfq1V2bhgcoGpbuksE1wDADXPEPb9ULmpnmQ=;
-X-ME-Sender: <xms:4HDkaga4rfAn_iVA11ycmgXw9PXZsZ-yuEj6ojbWar8T-nQQr1vEmg>
-    <xme:4HDkahZeaD_Grwn6YZ681C_e1d7yKag08nXmXXi3Da8I5q8Hv_PXSb3O-fCE7NkHX
-    _q0o8YIt7rHfnEWn0iQF8gTmyldagQ6PGJYfpXdfcn54w2MU7lWySE>
-X-ME-Received: <xmr:4HDkaonJiMie7PtssLYFqGa1ShP3zm74sA22ctSzU5NY9E-4zym2NfpA0pWPZIpRmkvkrg>
-X-ME-Proxy-Cause: dmFkZTEDALSQ47Oxc36ay7gq9fxnrQD3pVBABBKufYKDb14Vg92FVwLmWoMmQWXyc02OS+
-    K/kDCAD208keqguFgt00RLgu/Yk6HiGzxy4daF+5qXzAlNgI1ZMXeSUmjurn/xgpyyiv8O
-    M04RO+SftK5i52/QDCznLeWfqB1F9Qkynnl+PGZR1m1M5OYyJRJtH2fqAGs4renwhMinUs
-    tIiJmN7wIMuJLDrdL0CPMd/z1MvFZ7GdjN6X0LTxCbwjRJZAomt/WFdvM4MKZZ4vIdeLAX
-    aw4YzMHX24EWiMWEKX7foSK9JlQKRWqlFw4L32oYsS8TczwrKy6Jx+vcs373sK5M9YGLPY
-    4YBj60V+s2pxtIC+Pld7OFTx5vCEPQtROUl6NWR9C1mLIquhTNjKBRmvy4mWRN5KvD/1Ma
-    qTaqR9e7Hao+uJf4mznC8BGvjlRBH1wTnjW0OUEAFthQ04/gzAz9tKVXQb1dlBIGqo1udW
-    e/brQsTT0+rYS9vxgqML8nUvJsHq5F881vi+zjDHi7/hqBZaAbcE0HHoRfXM2s27G8yMD/
-    VoHWhtZvmjZcxjXMus6sOeXQlZRNNOh1y8eNd1UE23yVRm6G0X7IGgI9iEz787CAPVvUo6
-    sqm6wAZsgDmy7L1CF8hK8p4nIJH2XZpMpxW7cVsjp7KGw2EUDuuVQ9JQtALQ
-X-ME-Proxy: <xmx:4HDkalwudQf7UW5_pectCslreNC0cNGX_BglgGdzZFEMxIq8sY3udw>
-    <xmx:4HDkauPiIeMYecQOMuIf86WyMHoLXEWca9883nAoq9SyrAn1GD_BNA>
-    <xmx:4HDkahR4IchTdCpUl1tzDvY7BiQFrMcYO3lGOqhpemqyvFagw-5jmQ>
-    <xmx:4HDkakbLJi4dygrcTNKbaAsILK1r-kH30tx9tFxxGOVLfeR-StNLAQ>
-    <xmx:4HDkakpcFl0DRvCPCBKaRTNFLARjPUM91ZO6NSWHzu8KIuUagLNhPDJw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Oct 2026 06:26:39 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dc32be2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Oct 2026 10:26:38 +0000 (UTC)
-Date: Fri, 30 Oct 2026 11:26:35 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Root <rootminus0x1@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [BUG] grep --recurse-submodules <tree> dies on a directory
- inside a submodule
-Message-ID: <auRw2yZv6p4MKwNJ@pks.im>
-References: <CAMtVYEjWd2XwJpXdk3PV2jbNdoOaqS3x+08EMu5byy55RxfRmA@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FgIYuViw
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a1b07c3c5fso4493285e9.1
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 03:28:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793356126; x=1793960926; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=YfdX/o6CwbfM/kj1CTQ2Cv7cDqpw0N6PZX5sOl9jbVY=;
+        b=FgIYuViwHoxIpd2OMQs9rJ3qujv0D6FuOvK2uPIV7NrNYncukQ1oURQ5CdztzyWqC4
+         nhpGshAWkDEaCvTKLbtfNvZ+Cawg6xI5EjqZ+RTxLQu4jPa3mK2G5cmmetPyKqy3ZRwk
+         ur2xNml9TLCvqQnJpLjVBDQ75BWjkd/CmpgK/zXDczKyzD9uqaLJMYtdqwBVMYJteEJC
+         6/A3xwaEp2WZXFDejmAdV+rVwY9cPCtaE0go6ZNZkblMrwv/ryDmUSJpmztZqGcRwcrg
+         a/+A7wZx1YDm6UpD/qNVYHcOL8jbiXoLON7VKsNtZ7uOItrXUGVQYJJ5MXzRVJJf4Hur
+         1/IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793356126; x=1793960926;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=YfdX/o6CwbfM/kj1CTQ2Cv7cDqpw0N6PZX5sOl9jbVY=;
+        b=ohfsUA744nByH6zmjC88aEdF8h7hv7333wRjisIdX8aKycb4JbdGK0q9Wn4UxHXOHy
+         kAB2cO0x/B8NpdpEaGJ4J8Mc9QgcB/LgN0XA7dv1FZdFS9y20HjKdyCfkpO7jUEZbVIM
+         gNHEgGsjusBoddo1XyoK6ux3skowvmOYPOZLhNsV5L9vKvGWeHFQwW57k5KdKfJqWirN
+         SMvW6wgV6k97SLvOESKaH+lJ3/OlcHwQ0Yuxwp1mmLyuCx3phDETVWceD8Fq5AFGAdXF
+         enIhiGGVf7jJC0n84Y5gEYXiWVsrhFPOdgnQz4JaP267zBGVci9uB6c/jGHNBpVfETEu
+         eplA==
+X-Gm-Message-State: AFq9FYKpefW4MLy9BzZunl11OILsRBG1mFC2a3xuaHKKU+5zZLPKbzjY
+	yZubBbG4A/plfLWugow6+dgS5AoPflmQSj8MfnSmqEY1SUCz7lWkFi7nQE3cNQ==
+X-Gm-Gg: AYBFou1QrCUqzY1hLbRjrbPbw8oG0zasrhGkK+WuDxiFAh/L7MKnpDsmPdqiLRzr3CD
+	Go1q47EVyoj2LPbv0gVrDrtGpiZsrFS8G5e4yJRvP6LwYFIF2Y+j4gBRCeGEkQ9goRxIws6Zx0G
+	DQZ8dUXJQl4DCcJk4QZFoW5/nbnCTKurFKLIMQjlFop9kB92NvHpQYu0PRsAdsCqAn/eZKotqxg
+	RXupjKjpZVdxdeWqtLrV7wIezKfPLfQcyqMbwMEDZMqyTbyErAeXwTYu8fUi41YxFXDdAWDAkdS
+	MR9ZR5MTLTQhL5NzX5ZWi8M94ptzjAauogSn+6mgAHZvV3+4plGOj8y/mJOh7yhlXT7D297aQ3n
+	reK2vYWROUKyU8iV1cpA4YFt4PdCP9QkLEjXcHz9Lnw+Qd0bDJd0BK4NXjBp6fN0IwjwRvkQxA9
+	CoX1PYPf0mBJBSt0OOxNXHRIqoQc8uCg+Zp0IxUXFEBOWSK6f4rAnsmRHbPvwIFZilzSHRaBsj6
+	ORwg6aq66l9hJPkSXA+RL+C+O7it22oNX41CUKTSUFTLFOMlaAHMiKkL2hQonBHcFOBBq/L5mr7
+	pew4SqXosbJW6l+HOHtQPRe9FTxr85w0XOfDi4G3mQ2rSAo4Xw==
+X-Received: by 2002:a05:600c:354a:b0:4a3:5a55:f454 with SMTP id 5b1f17b1804b1-4ac17e10ac3mr38502525e9.19.1793356126139;
+        Fri, 30 Oct 2026 03:28:46 -0700 (PDT)
+Received: from ubuntu26lts1.example.com ([205.147.30.18])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b964desm2449445f8f.46.2026.10.30.03.28.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Oct 2026 03:28:45 -0700 (PDT)
+From: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Elia Pinto <gitter.spiros@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
+Subject: [PATCH 1/6] object-file: check size of inflated loose object against its header
+Date: Fri, 30 Oct 2026 11:28:34 +0100
+Message-ID: <6c2efb87fbb95d3d24ac8e4ef34b586c2b25980e.1793355390.git.gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <cover.1793355390.git.gitter.spiros@gmail.com>
+References: <cover.1793355390.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,59 +100,138 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMtVYEjWd2XwJpXdk3PV2jbNdoOaqS3x+08EMu5byy55RxfRmA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-Hi,
+unpack_loose_rest() allocates a buffer of the size given in the object
+header and inflates the rest of the stream into it, but it never checks
+that the stream actually produced that many bytes. If the compressed
+data ends early we return success with the tail of the buffer never
+written, and callers like odb_read_object() hand it out as object
+content. For example, "git cat-file commit" on a loose object whose
+header says "commit 200" but which contains only 44 bytes prints 156
+bytes of uninitialized heap memory.
 
-On Thu, Oct 29, 2026 at 07:52:07PM +0000, Root wrote:
-> Hi,
-> 
-> Since Git 2.56.0, "git grep --recurse-submodules <pattern> <tree>"
-> dies when it reaches a directory inside a submodule:
->     fatal: unable to read tree (<id of that directory's tree>)
-> 
-> The working-tree form ("git grep --recurse-submodules <pattern>") is
-> not affected, and neither is a submodule with no directories. Our CI
-> passed the same case on 2.55.0.
-> 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 
->     #!/bin/sh
->     set -e
->     work=$(mktemp -d)
->     cd "$work"
-> 
->     git init -q sub
->     mkdir sub/dir
->     echo hello >sub/top
->     echo hello >sub/dir/nested
->     git -C sub add top dir/nested
->     git -C sub -c user.name=t -c user.email=t@t commit -qm sub
-> 
->     git init -q super
->     git -C super -c protocol.file.allow=always \
->         submodule --quiet add "$work/sub" sub
->     git -C super -c user.name=t -c user.email=t@t commit -qm super
-> 
->     git -C super grep --recurse-submodules -e hello HEAD
-> 
-> What did you expect to happen? (Expected behavior)
-> 
->     HEAD:sub/dir/nested:hello
->     HEAD:sub/top:hello
-> 
-> What happened instead? (Actual behavior)
-> 
->     fatal: unable to read tree (935cff11a11f8734cf4e0d40955d1e0e5c12038e)
-> 
-> with exit status 128. The id is that of the tree of sub/dir.
+The opposite case slips through, too: when the whole object fits into
+the buffer filled by unpack_loose_header(), we copy only "size" bytes
+out of it, the stream has already ended, and the extra data is silently
+dropped.
 
-indeed, thanks for the report. I've sent patches to fix this via [1].
+The packfile reader in unpack_compressed_entry() and index-pack already
+compare total_out with the expected size. Do the same here and report
+the object as corrupt if they differ. Today fsck notices the first case
+only by accident, because it hashes the uninitialized bytes and gets a
+mismatch.
 
-Thanks!
+Teach loose_obj() in lib-loose.sh to write a bogus size, so that the
+tests can create such objects.
 
-Patrick
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ object-file.c                | 15 +++++++++++----
+ t/lib-loose.sh               |  5 ++++-
+ t/t1060-object-corruption.sh | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 43 insertions(+), 5 deletions(-)
 
-[1]: <20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im>
+diff --git a/object-file.c b/object-file.c
+index c049bf13f7..6d39138511 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -212,14 +212,14 @@ void *unpack_loose_rest(git_zstream *stream,
+ 			void *buffer, unsigned long size,
+ 			const struct object_id *oid)
+ {
+-	size_t bytes = strlen(buffer) + 1, n;
++	size_t hdrlen = strlen(buffer) + 1, bytes, n;
+ 	unsigned char *buf = xmallocz(size);
+ 	int status = Z_OK;
+ 
+-	n = stream->total_out - bytes;
++	n = stream->total_out - hdrlen;
+ 	if (n > size)
+ 		n = size;
+-	memcpy(buf, (char *) buffer + bytes, n);
++	memcpy(buf, (char *) buffer + hdrlen, n);
+ 	bytes = n;
+ 	if (bytes <= size) {
+ 		/*
+@@ -244,7 +244,14 @@ void *unpack_loose_rest(git_zstream *stream,
+ 		}
+ 	}
+ 
+-	if (status != Z_STREAM_END) {
++	/*
++	 * Make sure that the stream produced exactly as many bytes as the
++	 * header claims. Otherwise we would hand back a buffer whose tail
++	 * was never written (if the stream is short), or silently drop data
++	 * (if the stream is long but ended before we noticed).
++	 */
++	if (status != Z_STREAM_END ||
++	    stream->total_out - hdrlen != size) {
+ 		error(_("corrupt loose object '%s'"), oid_to_hex(oid));
+ 		FREE_AND_NULL(buf);
+ 	} else if (stream->avail_in) {
+diff --git a/t/lib-loose.sh b/t/lib-loose.sh
+index 3613631eaf..807fca6f05 100644
+--- a/t/lib-loose.sh
++++ b/t/lib-loose.sh
+@@ -5,9 +5,12 @@
+ #
+ #   oid=$(echo foo | loose_obj .git/objects blob)
+ #
++# If $3 is given, it is written as the size in the object header instead
++# of the real size of the contents.
++#
+ loose_obj () {
+ 	cat >tmp_loose.content &&
+-	size=$(wc -c <tmp_loose.content) &&
++	size=${3:-$(wc -c <tmp_loose.content)} &&
+ 	{
+ 		# Do not quote $size here; we want the shell
+ 		# to strip whitespace that "wc" adds on some platforms.
+diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
+index d2ef468b45..bd3d1adf5d 100755
+--- a/t/t1060-object-corruption.sh
++++ b/t/t1060-object-corruption.sh
+@@ -3,6 +3,7 @@
+ test_description='see how we handle various forms of corruption'
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-loose.sh
+ 
+ # convert "1234abcd" to ".git/objects/12/34abcd"
+ obj_to_file() {
+@@ -163,4 +164,31 @@ test_expect_success 'corrupted loose commit can be read from alternate' '
+ 	test_grep "inflate: data stream error" err
+ '
+ 
++test_expect_success 'setup loose objects with bogus header size' '
++	git init bogus-size &&
++	(
++		cd bogus-size &&
++		printf "short" |
++		loose_obj .git/objects commit 200 >../oid-too-big &&
++		printf "much longer" |
++		loose_obj .git/objects commit 3 >../oid-too-small
++	)
++'
++
++test_expect_success 'reading loose object shorter than its header fails' '
++	test_must_fail git -C bogus-size cat-file commit $(cat oid-too-big) 2>err &&
++	test_grep "corrupt loose object" err
++'
++
++test_expect_success 'reading loose object longer than its header fails' '
++	test_must_fail git -C bogus-size cat-file commit $(cat oid-too-small) 2>err &&
++	test_grep "corrupt loose object" err
++'
++
++test_expect_success 'fsck reports loose objects with bogus header size' '
++	test_must_fail git -C bogus-size fsck 2>err &&
++	test_grep "corrupt loose object .$(cat oid-too-big)" err &&
++	test_grep "corrupt loose object .$(cat oid-too-small)" err
++'
++
+ test_done
+-- 
+2.53.0
+
