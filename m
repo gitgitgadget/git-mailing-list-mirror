@@ -1,126 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793395505;
-	b=eMiz/8oG/bYE+c56wiN3S7KRq17ygw6/updxFagxur8xeiV4GDhJhzipgRJhrWOrE1U2
-	 eeXi3t29TK4LrZ/WnKmpZDUVHz8e3lbTzzdA86/su9kokR5F9+fiR2Z0673vCNPpUItyN
-	 Z3hTnIzIn6kvZrmKZB3kE+26Wk+Ap7vdFjGTxmXtNpShLYfK2GLKc1LS+7vYxTPiNgOGd
-	 tsXc7FdfonnTXY5oCFOxbEUrnT8XVAwqJSiqCKaJ+J0iFI/SIKHXOTYAw34dnq3+U00nS
-	 V8Ft328kyxGSa+HRyPxVmGm1gARtJGUB7Lc0V6w/eJWBakw1mT8nE6frN5FJWr8GOrQ==
+	t=1793395654;
+	b=tfitCg885bejtrISk1c+SsC3Ha0QhbnUAi9j+rnnwnabDM0o/0s/Hv/+/SMG2ss6sjM/
+	 XLbA7kOyNJ9/lR0yezOnSnIxmqgDUsbFDGvkNiQ5KKHvJnQ2XvOEH+0450MhFb3+aEPFG
+	 DkdqVi1IJQbpppWUplzGeGeujrHh8MadKrS2hQIXoCowCq/EIWNFqel/xwaB/nj5bKOGr
+	 fQhJRpVscOoEQIl3Q5pk5CZruW3tn1+rSolC37dE5p1S7c7I4h8imA5/6OL7kl9O3Fjux
+	 f1pvYNROWSykYTWLjbr0x3XWbHVzfZIWoXef3bHIOryq++MXPaA48ZLSNUlYK3cVexA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793395505;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=czKxT4YUpK0bcFHJ0pnlWDjD1ITUZyIXBths4kn0t4s=;
-	b=FtP4zz2k6H84ER+SZ94p2TT0j618WMV78lBZcllifFWy1MSJTcfHATs2Dn4KoZuyafUv
-	 bG797Jj+MUzRcL0JX/wq17288G+ovGQzva37jUwQJ+91/Ig+gDMpt4AHav0MBoHsxTPfA
-	 ZqQV2lwjXIvSqbQM48KD8eAUUsMCV66lJ2BF9p0rDTNTjO2wN7mAeibBO6/XaE1FcYH5c
-	 7KCKF+ggUAR97pfXl1VgPqtCXB5JciGEpcZX8KO4uNctj1zpXkqjuJTh6TRhmBrmypRPB
-	 66/Br1if/NLVtN5+QaWlsFww8vC9bOt2VHTQZcshKuyNIfJBSP6lYEMKmBdz6YdDLhQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793395654;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=MgxQBYU0SqvxqW0uvAqUUsaMKmV9w5lBQ/WM0fKcwlY=;
+	b=5PTCUMkkSoi0JJSDE48jZtHEXr6g/cirnTcs5UpUnKUdUl08ZCf/WHU2iFc2xn9QtA/W
+	 j1dJCRwU/Dwy5Tu0O061wWmRi4R8cDOBHU3XDzd02wh0YafLPuYFPD8zvC9nPed/cfzaC
+	 8AaXMkAuA4sb/c6GwqbxWp+EEzq/d3SGlBhAOluOalCyDKr3P/ZNa6KmNJZKRWevNgtEE
+	 8VGOBF++s/2OxaLHIcZovf0uwGShPdoXuZqkKeyV7Nagq8avjR0GTPwmguu82GiPxZ2Jt
+	 K4C38czxZR+EQIHXKpORDIBAX/PCq0+M8w/hkb0NZt10fZUW6NKdqVJfuSuP9ePOTdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=aKSARWRV;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jkT0NsyK;
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RQ2ngd4w;
+	arc=none smtp.remote-ip=74.125.82.170
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B76606A98D
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 21:25:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 72B76606A98D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD4560A5BD4
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 21:27:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBD4560A5BD4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=aKSARWRV;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jkT0NsyK
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id A19F7EC0192
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 17:25:04 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 30 Oct 2026 17:25:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793395504; x=1793481904; bh=czKxT4YUpK
-	0bcFHJ0pnlWDjD1ITUZyIXBths4kn0t4s=; b=aKSARWRV0SL6Nmf8yXlVrTRby1
-	+T3wzULAMI1ct2/wixhBnVRMbdk52z+t9nz2AmGTX6Lc3nBX2zBg5lSfjEYe7VIa
-	oTWuDqMlKlFdC6zwwqF4wP3Cqgk8oZdhrt35T5WQjsJ3yyEDRWpiPA/8ZPoWNZwA
-	GPkzoxIPeVScSOF/sAeMEyyp3LSF86q6cH/tNjNEVBjd5DiiZTqB6tByyVM65naH
-	jdEtENI7z/KQ2x32HB0b3iq2swHAeVAonwk0DnHncAlovEalkUwC6SHBNsW4bZmc
-	oJveSubJYU/Xpq5yLZCuXCAIuZi9rUlCTlHoO0bhit1QfNk9aiKusY3e9+fA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793395504; x=1793481904; bh=czKxT4YUpK0bcFHJ0pnlWDjD1ITUZyIXBth
-	s4kn0t4s=; b=jkT0NsyKRj693N9H/20El/uBdB/Rdgha4xRdKY/0RWyZRwMAZ6y
-	nJeE/dONDBPfEcwi6vpbuEnqOeuSAZvmQb0YnPL1+vKGJ7IY3Kn2EWgoHy+tdRNp
-	dX4KCZkLDPM3jmFbjCypYB+2RGxp+p9do98wBgZxP61aa84bEWy3DiWwYdblkeSq
-	uYQHznGnlFKfQ4fPKvrDjkpzCNGs0bNvInLMzclaFFIRW8e27TtJemjw8nuGIRsK
-	OCKaO6xVPIo7QT+o+VLqJWfJNM1DzK0YF/24qQG9+a1imPk/tPCfx4MEz+KzF0mi
-	FlCQazLo5e0oMFWz3FxNmX5Yf6XrCdcRvBw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793395504; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:eaZEH9Oh1gvcWox2uY4Rs5VEKfVaxxXaNndLET/oDudNFz7
-	5wT/W9RIVzkiR6kk02rS0da8XlC4HNISXhT80tFdtwgkUQ3siBCemGUKEho2h5Yb
-	JjPHGLTTYRLCpr9ejav7YFcEl/TH4tgMmQHXq10xYmti0Wqdn1OGCzxmtLysQsvq
-	/RwVjVD5RQDDGphYH5KDIg5MT6qridUj3S/+pYunadDVMNdyM9o8X4WjuQRHvYss
-	kslnLMa/EbRxcoFSD8CWjinFosOuIjqxbQ1laCtFkEyy+mzRnKpawcQy2Ami/Ql6
-	kbErYXrydK92DaUCu7pBSK3RbX8mIZ9Lf7U04FQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:ioOWhLvJk0VM6xyvn6HQ5BUc9zwzb4efnUBi61tB7MY=:zCu8XTyK9a+ws0Gx+BQxD0AwFEKDMUb1tiPcreOKkk0=;
-X-ME-Sender: <xms:MAvlaoxC8BHhClzENyi5w19H-Sbq9MAmOq6LIcoF9FozWWo2FfpCxQ>
-    <xme:MAvlaugh9D47A0N4Ul91XW_TtmY1Cg9P3UqHuSSYyoCsxXAur7OjnNvLyL62ggHX4
-    TH0e1wjqpSWe_g7jvznBRqLyud-PzO6VwTvqA5o4HTblP98lKc20A>
-X-ME-Received: <xmr:MAvlasm7jIHEjuoi9RGq6Yacj6QjQSU7UZuujXJoQNDaaHyzTY7s5v6-zkBCq2NS74UDYbqxMOZiWrN65ZfsiWoYfmKSv3QdWFy8>
-X-ME-Proxy-Cause: dmFkZTEfHnoDFc/gpmJqVH7dDfa8szJEg0Fvas15hMFrvKebc8IqUPiiDf9cDGprgE7yXH
-    AR9ML+FUz0gsOT1Z5iBy31Fi0R/akEH0stG6vu7nuTdQasa+F1BYJI32eUWIGpPUP2JOE5
-    srVujzioOuGXF8VBZPu97zJOT8GynECb+8rcf1z53GIHjaJQOpgeaw4s2zOawJuX4JN46J
-    eIhjdlNSSSU1SS3qTQikrZActWMYYIakRnwt8xOLDWWlook39e9yWRsQksRBzdDw/qLn8k
-    U8ATptne95AsKPSXM0UALlsPdx2tgk9Hd5aK5j4L2vQGRysjOZ6da/Ege1X9StdpIRlTSN
-    b5TZh2AhqZ62p4X2j1RpOlXduPxkd6wyY/DFmg38Kvm5oS6UWTdr0pmyhhK4fYxN5L6WWg
-    p7Ym3CEkub1aaieVLj40AvTlbIu5Bns9BEUo4mMZR2YL/ssUrwpcdt3fDeIuvswnkUB4lR
-    ZaYkx6p+ZQ3oOGXkTqy2eR/o9afWRu9hTpuy/pvqmGMy7ylphsgcA0RT3M6okFYIit+xZ7
-    aRcsFd8ctesmgRD+r2VejpyrBhG+IblHwfHpWJvhPcN2yO02arUiHxDtSywXDFRxslyrZb
-    GzNDyx/ZrZCb4NOYX+VCjO+kWh0vEq15CxpRu3Ht1zBEvGDAk7yRxsMdxpzw
-X-ME-Proxy: <xmx:MAvlasj4nZNxPv9UuvBJoQ543cLXumPq10CviEM_YD23s153sAu6Vg>
-    <xmx:MAvlao1x29dpb6ZXmme-c56M2D3iOzg3T5AEwM3W_LuHFfhTCNULAQ>
-    <xmx:MAvlatJmvVZ6ETBQ0q6-6uu4wwEb1SmYV_gI1t6ZJMvqdPk76mBCbg>
-    <xmx:MAvlagzPd3IaBVNjIMZE7Vu0msAgO24Pc6WeeHDZtNDg2JIhGmJIjw>
-    <xmx:MAvlasK0IL2pC10AQ1Rw5mgDAB1u-XtvOK4_omHYhWZmArt6PTMAjrmR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Oct 2026 17:25:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  "Tuomas Ahola" <taahol@utu.fi>,  "Richard
- Kerry" <richard.kerry@atos.ai>
-Subject: Re: [PATCH v4 2/2] doc: add new Git tutorial for beginners
-In-Reply-To: <xmqqik2ivqht.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	30 Oct 2026 14:16:14 -0700")
-References: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
-	<pull.2248.v4.git.1793198687.gitgitgadget@gmail.com>
-	<4b40588c90c82549c9774f14cfeb4e4741b66386.1793198687.git.gitgitgadget@gmail.com>
-	<xmqqpkwtag8d.fsf@gitster.g>
-	<13af97a1-a86c-4077-9136-204c74f3d625@app.fastmail.com>
-	<xmqqik2ivqht.fsf@gitster.g>
-Date: Fri, 30 Oct 2026 14:25:00 -0700
-Message-ID: <xmqqecd6vq37.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RQ2ngd4w
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-36a1947498bso298152eec.1
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 14:27:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793395653; x=1794000453; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MgxQBYU0SqvxqW0uvAqUUsaMKmV9w5lBQ/WM0fKcwlY=;
+        b=RQ2ngd4w9ZUUBF394F9J4hHGznebciX0tF/SkYzAPQaKoAtYBEaEsNFhLbsNjdmkw9
+         25jbmmQ92Fx4jvCIzrFm30yTVqPHWy95Ny3uGQSai+3yIs3izzpwJJLA/R+/Iyl4KqNI
+         3A5Z6XO88spnALyNHkB9hOQeD3kANdB3Q6B+t1E8eVJWOvbXg+AC+2XCJ7x/ZOh6ujA/
+         AMrgtkJRan0D0gMDHYUy9d1nq0+bFziC9GuCvfnpYO4qwPQJNimOYKpxCz+sKDWy9rSH
+         3QBPI7E65RusexpgqC4kGC5zCxzzeN+qwW/srosjV74YTVLXALd6qkdjuzbKoqf22G1W
+         EPOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793395653; x=1794000453;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=MgxQBYU0SqvxqW0uvAqUUsaMKmV9w5lBQ/WM0fKcwlY=;
+        b=iyZu3c7Vq3MpqKvGoQZI4uJllVuj+7VNLyJ2TfTpxnQpCivwZhTFQmpIal7VoaJsuX
+         UDs2mFmFrSL8jZ621GhLuXUlcftPSWFqWKaP/HtxgWhWxlNwcTWTbLNYem97I9mSSnXU
+         Shie57A2QrT1K7tbf3kpAd3i7S/wMD7k9sVVqCMOCzf9KZkX5fVeoGoAXM5DP18XKCRB
+         XrkK8rLvnsO1yDEiQ/RGZDwRuYhIWwm47cngfru+imyEubAdJJ6UNwYKlag9MMyI4MxT
+         6Uqy1+3OzzRaCjPWHwVv4pI+fCV55IARTMzGhLbWURvzNek/4S/PI2hbB5RbWS0gRTML
+         NZrg==
+X-Forwarded-Encrypted: i=1; AKwUvBzIYg5drdP8VPIJUc09oSIvUZ3r+tI8ZemDg2lWtS+K8s2ARym4wMFN3b9vCWmoAoyBugQ=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKMFvKvAUiPg5LvGntuJgnjVlnxFQc+Y0kEW0yixTUnZ9gvfxu7
+	mMi1whrecYL7SaPtUj9Dt0mOGJ95JkUcgFhLWkAXB8qMhqQYtnT8iRNb
+X-Gm-Gg: AYBFou2pWPj3LtOq8uuO7R7WKcgqonMctT2WcT97LzlfsbLSDwaULbv9eNPhKq5hYKN
+	AAfJT1vftJX62R7DwMPXMBfDDp79MaZaKKC3mZMzEyXIh/5wzzID4ZwhG/KaHyQqEqaVl2eI7C7
+	+cd00x7xlpICEkVD+hUi87oS/ZTfJoi+D7TdooPnQTWVSQkH4A8d1bcAzL0rCDzF5O1OvUwHYfi
+	/U3pYmZDdt9LlvG17g01AVblDoBoOT/Oa1Y6QaJCAhbpGi1Lz6L0NEkjMqNcOqbt7C1YMVAwwT0
+	i0MHdtZjtOehlQOYGeOF0XxqlENHob7HnQRH+zYsL3bIbgsU8obN7Pn9Da0sEcDaFYXupOhIML/
+	Muoi7mK5ZFJknR/DnRlcOnVY0OsapeX5hkyhHj/7PUtsUKqly5tkLdgoURYqLEQ2x8zzDsMxbLF
+	R3GBkeC+RHxzad6QAe6hDkp1rmwLdw2K7qLZCzgvcO7MuZxNW+Z5Zy5wyXed2ewod2QMCNrO8/E
+	U2HPqDsno7p0GGDyingYJ1tJufMijMqzEbTx+m57k4tSKXN/KVEaBW2bnJa+zWlEOUzkDOdAYat
+	V7BrXpxozmj1C+wpgqOE+hczd1OHrSBVSyvbAAMs
+X-Received: by 2002:a05:7300:d215:b0:366:c0a2:642f with SMTP id 5a478bee46e88-36a423b3b95mr4852912eec.22.1793395652637;
+        Fri, 30 Oct 2026 14:27:32 -0700 (PDT)
+Received: from [192.168.0.11] ([106.51.26.191])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a428af1easm8752764eec.5.2026.10.30.14.27.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Oct 2026 14:27:32 -0700 (PDT)
+Message-ID: <6782fa63-1e46-4ae9-b129-a157986c2556@gmail.com>
+Date: Sat, 31 Oct 2026 02:57:27 +0530
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -130,13 +92,91 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/4] parse-options: add early_scan_options()
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+ "brian m . carlson" <sandals@crustytoothpaste.net>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Justin Tobler <jltobler@gmail.com>
+References: <20260923080928.1534413-1-christian.couder@gmail.com>
+ <20261012074413.337183-1-christian.couder@gmail.com>
+ <20261012074413.337183-4-christian.couder@gmail.com>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20261012074413.337183-4-christian.couder@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 10/12/26 13:14, Christian Couder wrote:
+> diff --git a/parse-options.c b/parse-options.c
+> index a98b958423..c03c396aa6 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -726,6 +726,8 @@ static void parse_options_check(const struct option *opts)
+>   		     opts->long_name))
+>   			optbug(opts, "uses feature "
+>   			       "not supported for dashless options");
+> +		if ((opts->flags & PARSE_OPT_EARLY) && !opts->long_name)
+> +			optbug(opts, "uses PARSE_OPT_EARLY, which needs a long name");
+>   		if (opts->type == OPTION_SET_INT && !opts->defval &&
+>   		    opts->long_name && !(opts->flags & PARSE_OPT_NONEG))
+>   			optbug(opts, "OPTION_SET_INT 0 should not be negatable");
+> @@ -763,6 +765,8 @@ static void parse_options_check(const struct option *opts)
+>   		case OPTION_SUBCOMMAND:
+>   			if (!opts->value || !opts->subcommand_fn)
+>   				optbug(opts, "OPTION_SUBCOMMAND needs a value and a subcommand function");
+> +			if (opts->flags & PARSE_OPT_EARLY)
+> +				optbug(opts, "OPTION_SUBCOMMAND does not support PARSE_OPT_EARLY");
+>   			if (!subcommand_value)
+>   				subcommand_value = opts->value;
+>   			else if (subcommand_value != opts->value)
 
-> If you ever need to update the topic, please make sure I do not have
-> to add these fixup commits.  Thanks.
+Would it make sense to also have these validations within 
+early_scan_options() just in case it is called before 
+parse_options_start() is invoked?
+   > diff --git a/parse-options.h b/parse-options.h
+> index 589f8d9008..f39b9a779a 100644
+> --- a/parse-options.h
+> +++ b/parse-options.h
+> @@ -51,6 +51,7 @@ enum parse_opt_option_flags {
+>   	PARSE_OPT_NODASH = 1 << 5,
+>   	PARSE_OPT_LITERAL_ARGHELP = 1 << 6,
+>   	PARSE_OPT_FROM_ALIAS = 1 << 7,
+> +	PARSE_OPT_EARLY = 1 << 8,	/* only for early_scan_options() */
+>   	PARSE_OPT_NOCOMPLETE = 1 << 9,
+>   	PARSE_OPT_COMP_ARG = 1 << 10,
+>   	PARSE_OPT_CMDMODE = 1 << 11,
+> @@ -502,6 +503,96 @@ static inline void die_for_incompatible_opt2(int opt1, const char *opt1_name,
+>   		BUG("option callback expects an argument"); \
+>   } while(0)
+>   
+> +/*----- Early scan: scanning argv before the actual option parsing -----*/
+> +
+> +/*
+> + * Some commands need to look at a few options before they can parse
+> + * their command line for real, for example because the result decides
+> + * whether a repository is needed at all.
+> + *
+> + * Such an early scan has to know which options take their value as a
+> + * separate argument, or it could mistake such a value for an
+> + * option. The functions below allow performing such early scans
+> + * without being fooled by option values.
+> + */
+> +
+> +/*
+> + * Called by early_scan_options() for each argument matching a
+> + * `struct option` with PARSE_OPT_EARLY set.
+> + *
+> + * - `option` is the matching option,
 
-Actually, I missed a few more that would affect check-docs.
-I'll come back with updates later.
+Would it be helpful to also convey here that the caller is not expected 
+to retain the pointer as the memory pointing to it would be freed once 
+the scan completes?
+
+Rest of the patch looks fine to me.
+
+-- 
+Sivaraam
 
