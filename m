@@ -1,88 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793370111;
-	b=kAr7WFfqPqL/cAEMsxJsz5WT48oHdKxAV8yF80gqpFLpPUlavzWbfM5meim/eyXb5tWs
-	 Hvf1wILTDeJNBzf7bcp0ILhn3NAI9LJzSsWpC+5JHEMoC2TggC5el78zIkiyBNS4ipQb8
-	 UroluunE7+WXQUbtFokYnwcbYHBujOyAH/s4rSdGr18C860dLUsBNHL0ZSS1zV2Rph5lQ
-	 4VLXoc7xN9IE2yMdrIJDzoxSls1uTEaSK/rmKaEuLzsHZ6jOd/bMAQDYhdhK5nduSi414
-	 UqMv+5aU0AfjAukvwuFe2RZ0Iko0H5SalHWSkjm3nFeUD+eHm3KEu1euOC7XlbuR0BA==
+	t=1793370112;
+	b=dJ1kYgxBRsa1sWMSdsPgz2szJYf5oZn6aienDpefeMt+ZHh4sVmOi1IEDb/wneC/8C0G
+	 Th9w/TQXyRSTQ3iE/e3h4shLln8s4eNthYBzf5hBfnbRny5lXf8r94q6t9ZBYyBGDCEQP
+	 LYnBJDH3esLeS/DH4RL76ad2trSqFSgpnE2448O/p9v041COWwmGiODhSuEea5pvojQXH
+	 btcXrGlxPFwtMX0VK9/0Vg7fhFmrI1bS53W569zi/omR4iIBuM+9TxR8xd5iTPDiyxJvW
+	 pBJqCnylZdhhFLL16xeeLY7IWJk6r7T6uf5UtArXEh/ypZIpkqg3K4LmjWs4Alebatg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793370111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793370112;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=B6nEcWNJ1LLUQ6xblQhrQyuZq7Y5ZwMKBTpsU8rwHLE=;
-	b=2+SIFw3nzXVDc/9UMJjWJjZUHgumY7/VdddPxzFDAeMTtbJrsWwfYBTg2T7wJxurYUDY
-	 x5LOL2dPu/jO1bCcaavkwxhZCXQNn+BZz99QMZssxD8HR6VjdR4JgMhzBIM0CtHQ/eKos
-	 FDAJ/rQ0ewzFg7MtxKr9x61yl3SY3LcufUofwLkCvsl7vFtPBDBNe/q9uVNmLj10yqkhs
-	 HTmMLh6qpDm3AtXAZpZUDk1s31Jjbj2KGx7UWMAeMCnqMakWCtF1/bm2jATZfqv3GJXWZ
-	 vZqCyWjyZY3AcP+P0Puf2zDzXfiWgcsYJQbYnh++lmSBHEZYK/CJMEKmx8zWUiw7OoA==
+	bh=yGPnmubuXfL9gryM+nGNLV0mRo/amRq/s4mHU01BpSw=;
+	b=Q3cyHmjqufJ2+driKQ7cYxzcvoKhfBO3M5swmlzg5mzlFw2DdWgyOpmPQKSoPO1S7mId
+	 e1z+uBe+hHQeG+7RXfdqYlNtHysSKSOv8nyl5jITDZPDVwR3dHqwfPHgRjwDrZlC4jNCT
+	 jSqpma43lS9WZQIMVS/cAN5ESfPXiLyxSCR1qDCXaEE/c8h9xdueHgsF4cAYvsSW6bNcy
+	 m66fMCVWkymCvdBNRmt3/drAnaeXsE4ifIlO1+Fi7KLy+FKY8nXqnVEkbmKV5RtNC6E6p
+	 mnFZHTyufL7zX7cWqgBJWQe1yd8fDsOidEAXUED+EjIOSrUVhdOo8M8okR9iUYOweLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=jaspermayone.com;
 	spf=pass smtp.mailfrom=singlefeather.com;
-	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=KSYd6pqt;
-	arc=none smtp.remote-ip=209.85.222.174
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=KXyuS4Ow;
+	arc=none smtp.remote-ip=209.85.222.169
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46D7606A31C
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 14:21:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D46D7606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6466C606A324
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 14:21:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6466C606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jaspermayone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=singlefeather.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=KSYd6pqt
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-93f3c89594cso48063685a.2
-        for <git@vger.kernel.org>; Fri, 30 Oct 2026 07:21:50 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=KXyuS4Ow
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-93ece7a73b9so94000885a.3
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 07:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jaspermayone.com; s=google; t=1793370110; x=1793974910; darn=vger.kernel.org;
+        d=jaspermayone.com; s=google; t=1793370111; x=1793974911; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=B6nEcWNJ1LLUQ6xblQhrQyuZq7Y5ZwMKBTpsU8rwHLE=;
-        b=KSYd6pqtLSXohFa+TFc1d0BiXd0pJg5cyOLD0b5n/pMqx16IB7zGm9P4Sw4QeF2Ejo
-         v4Zytop/LWv5n50UAmP8lYXG4QFlUPH2927tGHKKBoRPTrffofHVsoNF6EOMhUBsS0K/
-         IXnywaqZFQyzii8lSkv3evaJIZ8BdTv9aywQ3Y+6LYW2KfD/hojg9eB8PiNljKl8q3xd
-         KsEDlapgd9N+5QjGO5gKZjbqsMzCLc2QcDlxwNU7jm1QaOUxnlbZ+YP7sN9RaugYd/UO
-         5CZaMu/az09i61x3wbxKewSzh1XDkr7WuJ+WCjM5UUfsPX+MEfH5Co7k+ygdg03mIzBG
-         G9nw==
+        bh=yGPnmubuXfL9gryM+nGNLV0mRo/amRq/s4mHU01BpSw=;
+        b=KXyuS4Ow1FKfsLNFk1+JMOG9f1vUo7tUCj4fB5w395VoiBxoDTOOhxfCygOgmwuku/
+         P7D0mVHPVDCt5eTcJNBtodBO9df/igDPYb8F/fUligIRVMOL+Azrtd2zBMK22IxlVvOv
+         HgQsC2S6evurU6aZochqmULMWpTrruVnmtbql+WnkvbW7H613P0Jn6H+1e85Xcg+SGcC
+         yrdwSpyMlRhJL2Cc8R9hN4wV5t+/45rqYvZ6xuy/G4g6vS0L0E2F2tSR6Hpabe20XUcj
+         9nm/doEX+rRSPBj07jIxcS36pwGQBAgN+A3ZmATTyrGkT5UfDB6b1J0YhvLM6vL08RZx
+         XYHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793370110; x=1793974910;
+        d=1e100.net; s=20260707; t=1793370111; x=1793974911;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=B6nEcWNJ1LLUQ6xblQhrQyuZq7Y5ZwMKBTpsU8rwHLE=;
-        b=BKaSGlDcccB8W1xgT8TxUwBaGkOEtTA+tx8eKWapR+1c/6f9zPrznoQNXWXmBi+FiL
-         WE1ZcGvzj7VgOoJZyqezmOTioGydROXlhF05HnsGhIsa2JYw3AnptsPKMDleqinZ6u/c
-         zaAOvidWbAR77gMqecDTbL25yUt73b+LQhnj2HDc+e7iNWL3ySjLMTQuwbyUpUghivlQ
-         taoH0LD24V0oRMA6TbtCBIixipI5bj/VCsCPkBKuqQxGRXIsxoa3KP/FhvzWWClC89gg
-         nbeCM+rlO4TJDftnbTerYT81b+CQKWvwZAoG324kxnuzOzMhJMpryhX0PqPuD189Q951
-         Bqww==
-X-Gm-Message-State: AFq9FYLf848kHZknmZ7e9MXaE94NYAY345KKXvcYvcmQp8LMDcOL3Jsk
-	Ar8KGmpKxs+QF97NWJiXBMU9B2o1MhSEa3wnPI03Z3sQFw8HrZcuOvXvK+l9Tp2VbYj7xBij0Z3
-	k7tcHcsaqxXu4sz6totgdGjDdzptuVyAwI+PEfPG4yp41YTPyIFhWZi1C0SiLkZ7h246JbDwz5o
-	usHyYDiYHvNdsx4eaODdCRr3d9YuQm2gZthcFpgVXjlHoZDcQXvWePtxDzY4yp1VHl+Ls0VgzNg
-	veRwen3KzyoD/6PlnuzvrJB4xKoeCk1yzcMibjnAQM=
-X-Gm-Gg: AYBFou3xvKNHClXS/uSELvCErdc+LdXoMIwNq1wMxTK1xRnXrJAnlyX/fTySoL1v3gP
-	AOJUPQgGNPG9xALoP2tlrUokTZL30N960Op6Wa7LZAeOLd6163/LBIhm6V6C/IM5LY1La4Ji2FA
-	CiEOAVTaIaQR2I3h/21Y43r8UlfkcEweiG6QPtU8E5tV9E6LnIQHwCHU+7cgO4UTwwVaazql1qw
-	Ad08pHWxs/vC9aT1Tk6vkp8vAkGTCLdq54KMogT2WMaoftUxepwB9nBH/G7Y7Pi0bUb9j7ibStD
-	qk9KPLFttqmWBdVc0dZD6twktDNaCHTfNUh2TwGvDpV3mXDBlDY7hw4ok1msvGimjqN1B5teo10
-	/AdICfNO384Ivjfzvl79Mah7l/ju6RLpoAErTxitd7d/kKyG0ryR2zQEcbvcu6HFhxCssDW54Os
-	sGDrQX/wnIfXMFxSUny6Noh7USNv7g+VQcV4YBmhUAoztltWQcbTGzKtFdjOwR6qRYfoXetWflY
-	YKiv+7+h8ZfJloJKfXtPr1God7gnB0ja3zWF7LNv12peyeb4tUP15i4ix6D31yfAp/kqo6A7549
-	XgCnaW0Skzwn/GG2DneQVZH+0jWZfu6J/ljGozUTmrkZ2a1uYoKBM+STPuAE43WqfM87zEbIIo9
-	C7WNH71mKiD4GRX5cqzy+qdgPrZEwu9th95lHSXnn9EdLUODL0FiIjMV+5B96ohYbpom/HktqCR
-	7XDW4rOIY5DYHW4pYsimFhXzgplIwbhMUWxapKysE0kkDfLjH2S/pYfr3Gp9GFrspmBnwGmkk3L
-	IxQZJqhmAYtbaD8BPlp1iDZO44HgJnSJbUpEdZL9nDJBosBl2ws
-X-Received: by 2002:a05:620a:4404:b0:93c:9c0b:3898 with SMTP id af79cd13be357-944217217ccmr383889685a.59.1793370109498;
-        Fri, 30 Oct 2026 07:21:49 -0700 (PDT)
+        bh=yGPnmubuXfL9gryM+nGNLV0mRo/amRq/s4mHU01BpSw=;
+        b=lBA9GV6NaZYvTTcarj9VAytaCrOOGNVdHCAbwDVbEW/DOf4w+nwAKEvRI908OeeUnC
+         pBr/ebmSWdpsHPqwMb9jQBCTqhBocwMio2WFrbl+DFR5YIWdAa1V/Rd+EviFvJpcAx02
+         riNKKjuyzzd0Qcp3aKDpWUx7rmc1lSBP3/3Cb9CEIv7JJ+4mefz9vb8+TodHPVkN0y7h
+         ODKjXfd6veHd4TNgkIRtKMZ/tN0HHi8P7WWy03viblifuWCFLAfeSDcA/GLSIowZj3FZ
+         7/1f5rWcouA6fflgR32xKGTbHDwcw/TSe3kJyBdgSE0588OpUrRult9XFnIhKCJqfmAf
+         s20w==
+X-Gm-Message-State: AFq9FYLbJNPRWqKzlkULiPvCmzBRKIU/dsI98CnxqftXLn0hPnXP5c52
+	+mUnPFuoMtfV5gotPzpzehpF0rX7vmgp1LbYIKijNzvpg6jvVKkjqMV9QBU7IGrpCa23Az7JGwm
+	DTR3ahb6BmdUS9Km83zYFMd0fmHqWzxCaoD4H+LW5MAHSrOeQ0MTToen8ppf1mL0QOeaWrsJoZb
+	1bBgFEYweEtVaKQnPHDnUlolReURN35Bz8jBTwyDaS6Ml2WCSNsMtOaE4vhvq2XgJlOFTn49Spz
+	p3xk1f7G20IU41qb57lr0m/bxmngcxxEpTMU8P+Qio=
+X-Gm-Gg: AYBFou01wnf6zSKpBOKjHBEY4v/+118XovvoP/b5hlm0FzADxONJi1jxfCZrM94sYUj
+	lotW03qwnn5E8J2/4a5zVnNrRC6aoGmmye8SuSNQsOZJp9oRgvTYEGjA7aXUt6bTe/+/xGOYJgW
+	BpZCb/Q92oQEMMUnx6p9b1vRAvgY3qxvYAKZuoQg9EXM3rZsAxiVQFbZaS5pOfvxgZQHAt7eM1y
+	cd8qIkmd+o/iGW0I5QTWhi2ND5wVKQS5GC86kQkdgX7sk76XYwtu1VSBYByf08NJY7Ozb2o2DrQ
+	8xvDeljL9QinNoWVGIbzc8HCWb7eWB63ciDBYRpXlfYOAW0qMOWiPovyD1K+OHN2FA9io9tnJeA
+	rHDwjeTlDq5DGJNESJZfxqb/3dcP6VNAan77g1fkXHwKjNpVib8Nfv6VUqyWYP/vzEx0AJeq5Cg
+	qccZZB4w+QvUz8mvqOJyNP2oDKj+yMLp5EZc6Z9N+bueeYEBOIxyfkdePImtU4xxH+ZgaynvTBr
+	BCgVd5OmzGWegt1YDM/3YDN6rbIoV7vnjyX5Z5I6knj0EHeDpqyDfEmlcKJq4CeEKr2fYQIQIyx
+	+5ClDSsJuLatTg4Qm3LXvSN+Uch0Pp09CWb2WBPWihJa7WqGuof8r7MDO4xmThUYW0z1DsNEp11
+	Gfu4jCvkBdrredmMPksMUpdXQ0UwMyJbt+ox+63/Bc5qVpjBTkDNYTMcc1FRr7RKuajGOjQ8IBs
+	pDnUVXDgy760We4JTmwfSy593M5vJAdgHcmDB5eZxbweGxyaM2T50fQQjM0iZAxrWHkRD0SK/8n
+	QImPHi2xpV+OFWPGZlzywzRg+DEjTOrDr03HwbjayigVbDMvYCx
+X-Received: by 2002:a05:620a:28cb:b0:93f:35fc:5253 with SMTP id af79cd13be357-94421739824mr418064785a.31.1793370111089;
+        Fri, 30 Oct 2026 07:21:51 -0700 (PDT)
 Received: from remus.wildebeest-stargazer.ts.net ([69.43.66.31])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-944252e5492sm153831485a.1.2026.10.30.07.21.48
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-944252e5492sm153831485a.1.2026.10.30.07.21.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2026 07:21:48 -0700 (PDT)
+        Fri, 30 Oct 2026 07:21:50 -0700 (PDT)
 From: Jasper Mayone <me@jaspermayone.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -92,9 +92,9 @@ Cc: gitster@pobox.com,
 	ben.knoble@gmail.com,
 	haraldnordgren@gmail.com,
 	Jasper Mayone <me@jaspermayone.com>
-Subject: [PATCH 1/2] worktree remove: refuse a worktree in the middle of a rebase or bisect
-Date: Fri, 30 Oct 2026 10:21:36 -0400
-Message-ID: <20261030142137.54750-2-me@jaspermayone.com>
+Subject: [PATCH 2/2] ref-filter: name the worktree of a branch being rebased or bisected
+Date: Fri, 30 Oct 2026 10:21:37 -0400
+Message-ID: <20261030142137.54750-3-me@jaspermayone.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261030142137.54750-1-me@jaspermayone.com>
 References: <20261024165311.57387-1-me@jaspermayone.com>
@@ -110,186 +110,289 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-"git worktree remove" refuses a worktree with modified or untracked
-files unless --force is given, but it removes a worktree that is in
-the middle of a rebase, a "git am" session, a bisect or a cherry-pick
-or revert sequence when its files happen to be clean. The state of
-that operation lives in the worktree's own $GIT_DIR, so it is lost
-with the worktree. A rebase stopped at an "edit" or "break" line, an
-"exec" that failed, or a cherry-pick sequence after a conflict was
-resolved and committed is clean in this sense and still has work in
-progress.
+%(worktreepath) gives the worktree that has a branch checked out, and
+"git branch" uses it to mark such branches with "+". It only looks at
+the HEAD of each worktree, so while a worktree is rebasing or
+bisecting a branch, its HEAD is detached and the branch shows no
+worktree at all.
 
-Treat such a worktree as unclean: refuse to remove it unless --force
-is given, and name the operation in the message.
+The rest of Git already treats that branch as checked out: "git
+worktree add" and "git branch -d" refuse it, because finishing the
+rebase or bisect will check it out again. "git worktree list" shows
+such a worktree as "(detached HEAD)", so %(worktreepath) is the only
+place a script could find out which worktree is working on the
+branch.
 
-A worktree whose directory is already gone is still removed without
---force, as before: the check is part of the check for a clean
-worktree, which is only done when the directory exists.
+Also map the branch that a worktree is rebasing or bisecting to that
+worktree, as prepare_checked_out_branches() in branch.c does.
+Branches that "rebase --update-refs" will update are not mapped: that
+worktree has not checked them out, it only moves them when the rebase
+is done.
 
-Reported-by: D. Ben Knoble <ben.knoble@gmail.com>
+As a result "git branch" marks such a branch with "+", also when it
+runs in the worktree that is rebasing or bisecting it, where it shows
+both "* (no branch, rebasing topic)" and "+ topic". Document that.
+
+Reported-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 Helped-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Jasper Mayone <me@jaspermayone.com>
 ---
- Documentation/git-worktree.adoc | 11 +++---
- builtin/worktree.c              | 31 ++++++++++++++++-
- t/t2403-worktree-move.sh        | 59 +++++++++++++++++++++++++++++++++
- 3 files changed, 96 insertions(+), 5 deletions(-)
+ Documentation/git-branch.adoc       |  5 ++-
+ Documentation/git-for-each-ref.adoc |  4 +-
+ ref-filter.c                        | 60 +++++++++++++++++++++------
+ t/t3203-branch-output.sh            | 35 ++++++++++++++++
+ t/t6302-for-each-ref-filter.sh      | 63 +++++++++++++++++++++++++++++
+ 5 files changed, 153 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
-index e6e77252ab..da4c38f909 100644
---- a/Documentation/git-worktree.adoc
-+++ b/Documentation/git-worktree.adoc
-@@ -142,9 +142,10 @@ the new working tree location.
- `remove`::
+diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
+index bfdf459329..d499d7e0d4 100644
+--- a/Documentation/git-branch.adoc
++++ b/Documentation/git-branch.adoc
+@@ -33,7 +33,10 @@ DESCRIPTION
+ If `--list` is given, or if there are no non-option arguments, existing
+ branches are listed; the current branch will be highlighted in green and
+ marked with an asterisk.  Any branches checked out in linked worktrees will
+-be highlighted in cyan and marked with a plus sign. Option `-r` causes the
++be highlighted in cyan and marked with a plus sign. A branch that a
++worktree is rebasing or bisecting counts as checked out there, so it is
++marked in the same way, also in the worktree that is rebasing or
++bisecting it. Option `-r` causes the
+ remote-tracking branches to be listed,
+ and option `-a` shows both local and remote branches.
  
- Remove a worktree. Only clean worktrees (no untracked files and no
--modification in tracked files) can be removed. Unclean worktrees or ones
--with submodules can be removed with `--force`. The main worktree cannot be
--removed.
-+modification in tracked files) can be removed. A worktree in the middle
-+of a rebase, a `git am` session, a bisect or a cherry-pick or revert
-+sequence is not clean either, because removing it loses that state. Unclean worktrees or ones with submodules
-+can be removed with `--force`. The main worktree cannot be removed.
+diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
+index a7b31e8aaf..90ff37259e 100644
+--- a/Documentation/git-for-each-ref.adoc
++++ b/Documentation/git-for-each-ref.adoc
+@@ -182,7 +182,9 @@ but if used together the last option is selected.
  
- `repair [<path>...]`::
+ `worktreepath`::
+ 	The absolute path to the worktree in which the ref is checked
+-	out, if it is checked out in any linked worktree. Empty string
++	out, if it is checked out in any linked worktree. A branch that
++	a worktree is rebasing or bisecting counts as checked out there,
++	although that worktree's `HEAD` is detached. Empty string
+ 	otherwise.
  
-@@ -189,7 +190,9 @@ twice. If the destination is already assigned to some other worktree but is
- missing (for instance, if _<new-path>_ was deleted manually), then `--force`
- allows the move to proceed; use `--force` twice if the destination is locked.
- +
--`remove` refuses to remove an unclean worktree unless `--force` is used.
-+`remove` refuses to remove an unclean worktree, or one in the middle of a
-+rebase, `git am` session, bisect, or cherry-pick or revert sequence,
-+unless `--force` is used.
- To remove a locked worktree, specify `--force` twice.
+ `ahead-behind:<commit-ish>`::
+diff --git a/ref-filter.c b/ref-filter.c
+index bdf54f6f59..1aebea243e 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -97,7 +97,8 @@ static struct expand_data {
  
- `-b <new-branch>`::
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 77ecd0f71f..ed08de1f43 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -26,6 +26,7 @@
- #include "submodule.h"
- #include "utf8.h"
- #include "worktree.h"
-+#include "wt-status.h"
- #include "quote.h"
+ struct ref_to_worktree_entry {
+ 	struct hashmap_entry ent;
+-	struct worktree *wt; /* key is wt->head_ref */
++	struct worktree *wt;
++	char refname[FLEX_ARRAY]; /* the key */
+ };
  
- #define BUILTIN_WORKTREE_ADD_USAGE \
-@@ -1408,6 +1409,32 @@ static void check_clean_worktree(struct worktree *wt,
- 			  original_path, ret);
+ static int ref_to_worktree_map_cmpfnc(const void *lookupdata UNUSED,
+@@ -110,8 +111,8 @@ static int ref_to_worktree_map_cmpfnc(const void *lookupdata UNUSED,
+ 	e = container_of(eptr, const struct ref_to_worktree_entry, ent);
+ 	k = container_of(kptr, const struct ref_to_worktree_entry, ent);
+ 
+-	return strcmp(e->wt->head_ref,
+-		keydata_aka_refname ? keydata_aka_refname : k->wt->head_ref);
++	return strcmp(e->refname,
++		keydata_aka_refname ? keydata_aka_refname : k->refname);
  }
  
-+/*
-+ * A rebase, "git am", bisect or cherry-pick/revert sequence keeps its
-+ * state in the worktree's own $GIT_DIR, and removing the worktree
-+ * throws that away even when "git status" says the files are clean.
-+ */
-+static void check_no_operation_in_progress(struct worktree *wt,
-+					   const char *original_path)
+ static struct ref_to_worktree_map {
+@@ -2380,21 +2381,56 @@ static int get_object(struct ref_array_item *ref, int deref,
+ 	return ret;
+ }
+ 
++static void add_worktree_entry(struct hashmap *map, struct worktree *wt,
++			       const char *refname)
 +{
-+	struct wt_status_state state = { 0 };
++	struct ref_to_worktree_entry *entry;
 +
-+	if (wt_status_check_rebase(wt, &state)) {
-+		if (state.am_in_progress)
-+			die(_("'%s' is in the middle of an am session, use --force to delete it"),
-+			    original_path);
-+		die(_("'%s' is in the middle of a rebase, use --force to delete it"),
-+		    original_path);
-+	}
-+	if (wt_status_check_bisect(wt, &state))
-+		die(_("'%s' is in the middle of a bisect, use --force to delete it"),
-+		    original_path);
-+	wt_status_state_free_buffers(&state);
-+	if (is_directory(worktree_git_path(wt, "sequencer")))
-+		die(_("'%s' is in the middle of a cherry-pick or revert, use --force to delete it"),
-+		    original_path);
++	FLEX_ALLOC_STR(entry, refname, refname);
++	entry->wt = wt;
++	hashmap_entry_init(&entry->ent, strhash(refname));
++	hashmap_add(map, &entry->ent);
 +}
 +
- static int delete_git_work_tree(struct worktree *wt)
++/*
++ * Map each branch to the worktree that has it checked out. A worktree
++ * that is rebasing or bisecting a branch has it checked out, too,
++ * even though its HEAD may be detached, as for
++ * prepare_checked_out_branches() in branch.c.
++ */
+ static void populate_worktree_map(struct hashmap *map, struct worktree **worktrees)
  {
- 	struct strbuf sb = STRBUF_INIT;
-@@ -1461,8 +1488,10 @@ static int remove_worktree(int ac, const char **av, const char *prefix,
- 	strbuf_release(&errmsg);
+-	int i;
++	struct strbuf ref = STRBUF_INIT;
  
- 	if (file_exists(wt->path)) {
--		if (!force)
-+		if (!force) {
-+			check_no_operation_in_progress(wt, av[0]);
- 			check_clean_worktree(wt, av[0]);
+-	for (i = 0; worktrees[i]; i++) {
+-		if (worktrees[i]->head_ref) {
+-			struct ref_to_worktree_entry *entry;
+-			entry = xmalloc(sizeof(*entry));
+-			entry->wt = worktrees[i];
+-			hashmap_entry_init(&entry->ent,
+-					strhash(worktrees[i]->head_ref));
++	for (size_t i = 0; worktrees[i]; i++) {
++		struct worktree *wt = worktrees[i];
++		struct wt_status_state state = { 0 };
+ 
+-			hashmap_add(map, &entry->ent);
++		if (wt->is_bare)
++			continue;
++
++		if (wt->head_ref)
++			add_worktree_entry(map, wt, wt->head_ref);
++
++		if (wt_status_check_rebase(wt, &state) &&
++		    (state.rebase_in_progress ||
++		     state.rebase_interactive_in_progress) &&
++		    state.branch) {
++			strbuf_reset(&ref);
++			strbuf_addf(&ref, "refs/heads/%s", state.branch);
++			add_worktree_entry(map, wt, ref.buf);
+ 		}
++		wt_status_state_free_buffers(&state);
++
++		if (wt_status_check_bisect(wt, &state) &&
++		    state.bisecting_from) {
++			strbuf_reset(&ref);
++			strbuf_addf(&ref, "refs/heads/%s", state.bisecting_from);
++			add_worktree_entry(map, wt, ref.buf);
 +		}
- 
- 		ret |= delete_git_work_tree(wt);
++		wt_status_state_free_buffers(&state);
  	}
-diff --git a/t/t2403-worktree-move.sh b/t/t2403-worktree-move.sh
-index 69768c1207..4eb56a8911 100755
---- a/t/t2403-worktree-move.sh
-+++ b/t/t2403-worktree-move.sh
-@@ -271,4 +271,63 @@ test_expect_success 'move worktree with relative path to absolute path' '
- 	test_cmp expect .git/worktrees/absolute/gitdir
++	strbuf_release(&ref);
+ }
+ 
+ static void lazy_init_worktree_map(void)
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 7c44186341..e04599392d 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -442,6 +442,41 @@ test_expect_success 'worktree colors correct' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'remove worktree in the middle of a rebase' '
-+	test_when_finished "rm -rf mid-rebase; git worktree prune" &&
-+	git worktree add --detach mid-rebase init &&
-+	test_commit -C mid-rebase rebase-me &&
-+	test_must_fail git -C mid-rebase rebase -f -x false init &&
-+	test_must_fail git worktree remove mid-rebase 2>err &&
-+	test_grep "in the middle of a rebase" err &&
-+	test_path_is_dir mid-rebase &&
-+	git worktree remove --force mid-rebase &&
-+	test_path_is_missing mid-rebase
++test_expect_success 'branch being rebased in a worktree is marked' '
++	test_when_finished "git -C rebase_dir rebase --abort; rm -rf rebase_dir; git worktree prune; git branch -D rebasing" &&
++	git worktree add -b rebasing rebase_dir branch-two &&
++	git -C rebase_dir commit --allow-empty -m rebase-me &&
++	test_must_fail git -C rebase_dir rebase -f -x false HEAD~1 &&
++	test_must_fail git -C rebase_dir symbolic-ref -q HEAD &&
++	git branch --list rebasing >actual &&
++	echo "+ rebasing" >expect &&
++	test_cmp expect actual
 +'
 +
-+test_expect_success 'remove worktree in the middle of an am session' '
-+	test_when_finished "rm -rf mid-am patch; git worktree prune" &&
-+	git worktree add --detach mid-am init &&
-+	test_commit -C mid-am am-me &&
-+	git -C mid-am format-patch -1 --stdout >patch &&
-+	git -C mid-am reset --hard init &&
-+	echo conflict >mid-am/am-me.t &&
-+	git -C mid-am add am-me.t &&
-+	git -C mid-am commit -m conflict &&
-+	test_must_fail git -C mid-am am ../patch &&
-+	git -C mid-am reset --hard &&
-+	test_must_fail git worktree remove mid-am 2>err &&
-+	test_grep "in the middle of an am session" err &&
-+	git worktree remove --force mid-am
++test_expect_success 'branch being rebased is marked in its own worktree' '
++	test_when_finished "git -C rebase_dir rebase --abort; rm -rf rebase_dir; git worktree prune; git branch -D rebasing" &&
++	git worktree add -b rebasing rebase_dir branch-two &&
++	git -C rebase_dir commit --allow-empty -m rebase-me &&
++	test_must_fail git -C rebase_dir rebase -f -x false HEAD~1 &&
++	git -C rebase_dir branch --list rebasing >actual &&
++	echo "+ rebasing" >expect &&
++	test_cmp expect actual &&
++	git -C rebase_dir branch >actual &&
++	test_grep "^\* (no branch, rebasing rebasing)" actual
 +'
 +
-+test_expect_success 'remove worktree in the middle of a bisect' '
-+	test_when_finished "rm -rf mid-bisect; git worktree prune" &&
-+	git worktree add --detach mid-bisect init &&
-+	test_commit -C mid-bisect bisect-one &&
-+	test_commit -C mid-bisect bisect-two &&
-+	git -C mid-bisect bisect start HEAD init &&
-+	test_must_fail git worktree remove mid-bisect 2>err &&
-+	test_grep "in the middle of a bisect" err &&
-+	git worktree remove --force mid-bisect
++test_expect_success 'branch being bisected in a worktree is marked' '
++	test_when_finished "git -C bisect_dir bisect reset; rm -rf bisect_dir; git worktree prune; git branch -D bisecting" &&
++	git worktree add -b bisecting bisect_dir branch-two &&
++	git -C bisect_dir commit --allow-empty -m bisect-one &&
++	git -C bisect_dir commit --allow-empty -m bisect-two &&
++	git -C bisect_dir bisect start HEAD HEAD~2 &&
++	test_must_fail git -C bisect_dir symbolic-ref -q HEAD &&
++	git branch --list bisecting >actual &&
++	echo "+ bisecting" >expect &&
++	test_cmp expect actual
 +'
 +
-+test_expect_success 'remove worktree in the middle of a cherry-pick sequence' '
-+	test_when_finished "rm -rf mid-pick; git worktree prune" &&
-+	git worktree add --detach mid-pick init &&
-+	git -C mid-pick switch -c pick-src &&
-+	test_commit -C mid-pick pick-one &&
-+	test_commit -C mid-pick pick-two &&
-+	git -C mid-pick switch --detach init &&
-+	echo conflict >mid-pick/pick-one.t &&
-+	git -C mid-pick add pick-one.t &&
-+	git -C mid-pick commit -m conflict &&
-+	test_must_fail git -C mid-pick cherry-pick pick-src~1 pick-src &&
-+	git -C mid-pick checkout --theirs pick-one.t &&
-+	git -C mid-pick add pick-one.t &&
-+	git -C mid-pick commit --no-edit &&
-+	test_path_is_dir .git/worktrees/mid-pick/sequencer &&
-+	test_must_fail git worktree remove mid-pick 2>err &&
-+	test_grep "in the middle of a cherry-pick or revert" err &&
-+	git worktree remove --force mid-pick
+ test_expect_success "set up color tests" '
+ 	echo "<RED>main<RESET>" >expect.color &&
+ 	echo "main" >expect.bare &&
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index 7f060d97bf..d656901f21 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -3,6 +3,7 @@
+ test_description='test for-each-refs usage of ref-filter APIs'
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-rebase.sh
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ 
+ test_expect_success 'setup some history and refs' '
+@@ -541,6 +542,68 @@ test_expect_success 'validate worktree atom' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'worktree atom names a worktree rebasing the branch' '
++	test_when_finished "git -C rebasing rebase --abort; rm -rf rebasing; git worktree prune; git branch -D rebasing" &&
++	git worktree add -b rebasing rebasing main &&
++	git -C rebasing commit --allow-empty -m rebase-me &&
++	test_must_fail git -C rebasing rebase -f -x false main &&
++	test_must_fail git -C rebasing symbolic-ref -q HEAD &&
++	echo "$(pwd)/rebasing" >expect &&
++	git for-each-ref --format="%(worktreepath)" refs/heads/rebasing >actual &&
++	test_cmp expect actual
 +'
 +
- test_done
++test_expect_success 'worktree atom names a worktree bisecting the branch' '
++	test_when_finished "git -C bisecting bisect reset; rm -rf bisecting; git worktree prune; git branch -D bisecting" &&
++	git worktree add -b bisecting bisecting main &&
++	git -C bisecting commit --allow-empty -m bisect-one &&
++	git -C bisecting commit --allow-empty -m bisect-two &&
++	git -C bisecting bisect start HEAD main &&
++	test_must_fail git -C bisecting symbolic-ref -q HEAD &&
++	echo "$(pwd)/bisecting" >expect &&
++	git for-each-ref --format="%(worktreepath)" refs/heads/bisecting >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'worktree atom with an interactive rebase stopped at edit' '
++	test_when_finished "git -C editing rebase --abort; rm -rf editing; git worktree prune; git branch -D editing" &&
++	git worktree add -b editing editing main &&
++	git -C editing commit --allow-empty -m edit-me &&
++	(
++		set_fake_editor &&
++		FAKE_LINES="edit 1" git -C editing rebase -i --keep-empty HEAD~1
++	) &&
++	test_must_fail git -C editing symbolic-ref -q HEAD &&
++	echo "$(pwd)/editing" >expect &&
++	git for-each-ref --format="%(worktreepath)" refs/heads/editing >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'worktree atom ignores branches rebase --update-refs will move' '
++	test_when_finished "git -C updating rebase --abort; rm -rf updating; git worktree prune; git branch -D updating mid" &&
++	git worktree add -b updating updating main &&
++	git -C updating commit --allow-empty -m one &&
++	git -C updating branch mid &&
++	git -C updating commit --allow-empty -m two &&
++	test_must_fail git -C updating rebase -f --update-refs -x false main &&
++	git for-each-ref --format="%(refname:short) [%(worktreepath)]" \
++		refs/heads/updating refs/heads/mid >actual &&
++	cat >expect <<-EOF &&
++	mid []
++	updating [$(pwd)/updating]
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'worktree atom ignores a rebase of a detached HEAD' '
++	test_when_finished "git -C detached-rebase rebase --abort; rm -rf detached-rebase; git worktree prune" &&
++	git worktree add --detach detached-rebase main &&
++	git -C detached-rebase commit --allow-empty -m detached &&
++	test_must_fail git -C detached-rebase rebase -f -x false main &&
++	git for-each-ref --format="%(worktreepath)" refs/heads/ >actual &&
++	test_grep ! detached-rebase actual
++'
++
+ test_expect_success 'start after with empty value' '
+ 	cat >expect <<-\EOF &&
+ 	refs/heads/main
 -- 
 2.56.0
 
