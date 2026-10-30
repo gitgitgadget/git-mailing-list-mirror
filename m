@@ -1,118 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793355716;
-	b=RScLldloE6VephCrNykdtl7MSMKoV46Ov70wqFwoF3hnL2mgq9lVmFCGCOVuIH6he9Yg
-	 xlQ+gCyVHchpamBiMg/hJnI4owVJKjJiUzqet3EnK5FgQD2SpbqU9EXgM16IUVgGe/OxQ
-	 mfmPEujt8v8nwyBRb/JaUsgiHgMSoBE0Y1HOEYDa3kDb/lXJLdyQ0vkQJlsWPlxgcS7Sr
-	 V5q06i5JL5mPXzSI/bFcbazk+kdtgLriZAftHTIuQHVKNPqqYBM8sLks3NkNxPlBzQi/c
-	 /HumBd50tSpJhMCUOzXVJns/E4uYScbFJ3k/34thBJSOpV2awo8MmOEiX+5EeRk09Yw==
+	t=1793355720;
+	b=d9TGHitHoklSo3+0cjlCNbIjO5jDy4TnjxvOJI3W44fI9iYY0MvTVsfiq3tWli6HxQhL
+	 EC73orbom/pTZWsO0K9T0XEN6bY5fAIJbz2HsD4iySNcW/QChajcpdoqu140s1eH48od0
+	 eu4DLzMMwap6ZeSTNAyPNgbvEFwGaRSDOXXDtAtpODqcVXvOzY+xnKvOiAVb8bSCSjIR0
+	 clL9jDrNWE13dacznJDwEJFtUbgyao8JZjHJkX9o2X14vLAvAoa4Rebg9s8elTM5xTVgP
+	 ndfS642tqsUoh1CF4oh7wVd+ZQUdXjxn7Pk34k4+8f+MmYXvkyxPSTZYnQaFObHJWjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793355716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793355720;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=PZhvSpbs+FQD1B9O9jYr8OFYf8FozI7PPT27TecGtts=;
-	b=to47h+57MjvQwBhk1wURzw/NsOpgOMjbVCZWssgClHrfZgVEeyeGAwB9ZK+r84oaB7vZ
-	 ZbVrcgde4hPcjmzcYmpALm7wiT0S+8gArS9El2m2TOoFimdCr3jqGqWz20UPBdEomGbTQ
-	 kvvUtmNza6jOIlj6fcApbJJ044p+U9+m/T/06UEVP+KyoQn69rXFF/nxnmaFgOEvH6OtG
-	 IfGOQuFpzJ+g2xp1Ci/d4nrsqw3DoDpP1zkJxkCv2q/jidzEs2zRTDMHcD/SHcznsWnkv
-	 F+Ady82JjZdgWRT1J1jOQ45jR/uvCh5qL91ZoiCR/9E1atZYbJrvNfhmk4rYbKua8yQ==
+	bh=xOJwRQ1V+RAr/vlzHQ/BG0lXcO8GbzHmowgBDFimiU8=;
+	b=OThaaYjZ6e6x97HEpMvlOanh51tAxB/dv11wO6j6iLLgDkeZOBJk/grxQVcu+EU9UaS1
+	 Mxfe4mHaXW2NJYk3aVbYVGZ2EUF8M7M18dk9hAmtb4C8ld6I35m3hvkvvWTtiMyunq69d
+	 mFn2QcdUBSj9Il2NldRErBuxL9yU6T3+ASewUa9aZCOmWn4hJ0CzVxc2dQkzCZitFsPNX
+	 jPExNsN3F4croniejpuVkG/Aic8+dsua0PSIiIz7qepiSZwwUQsdBTzgsqTSIozIzctdd
+	 WUB9q0DhMoZasvfBxF6EAxNhtFywvbCEZ0jeBccHeUMGPgj1JrN4bUVtJkDABN52EhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=ZxkBbhs3;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=l+a0d0ke;
-	arc=none smtp.remote-ip=202.12.124.151
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=E8Ulr47S;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=av8SO8Dy;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8EC606A323
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 10:21:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C8EC606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2D2606A31A
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 10:21:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F2D2606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=ZxkBbhs3;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=l+a0d0ke
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=E8Ulr47S;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=av8SO8Dy
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 93B191D000AB
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 06:21:55 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D31E37A00F4
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 06:21:58 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 30 Oct 2026 06:21:55 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 30 Oct 2026 06:21:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793355715;
-	 x=1793442115; bh=PZhvSpbs+FQD1B9O9jYr8OFYf8FozI7PPT27TecGtts=; b=
-	ZxkBbhs3+2Q6PnDxuBDweqTy2UryTzayK2XbO9sGQ0ZlnklEzyGWFhd1DC8o/Kd8
-	kpyGf8jYz1O7M+OL9nRafcNv65BQ4/x6oL2QL0km9jIQiHvEOSmRcc4Qd3kxxsu4
-	XWVqIP6DsCcCh9dpM7QFgParjlmniI4qnHIfWagEvbXY8qIkF0/86DImHuJJaDof
-	NlKxRNPip6zcBHgmnx7SL9ap3eAyo3GLQzQGBijKOAb0BAf9AaqkOTQfZH37pvyN
-	qGwcWMpEhpIpSthqRlmbGLqAynwr3GjP8Vmo1D1UNxidw5/zS4uqZcUmdTbA9Mdg
-	fENYKzduqgAZ97EDKpK9Aw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793355718;
+	 x=1793442118; bh=xOJwRQ1V+RAr/vlzHQ/BG0lXcO8GbzHmowgBDFimiU8=; b=
+	E8Ulr47SFAKQ9XCJJi0bpNwflN34c2CxcrVI4EQ5NXQYWZ2DJBoQp6qGwijVu7do
+	3qm9AxHjfzbnOvk01THUN/CoaBRz/3euOllqJjK1MGyQHwkhEWHyJAZM1VRhs34g
+	rG5IuLbVUGqnsWWmVjsuUWuhFUOsG9fTRrsRBw5qquFmFbfPZTs/WHahX3L9yzTA
+	0+0fivFwB7Fp7VlYR/CbzL6mOecMtfJnOR3r6LMI+OeU9Yzo+3Jgtqe3n8HbMLBX
+	ZTpcGgDBjXHIt3TGAAnv6GGjg9SnwOV3j6vNAbtiPUFuHssERyebR6/YQnshJCKw
+	Cn+vpDyny6/JaN2aq1XW8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793355715; x=
-	1793442115; bh=PZhvSpbs+FQD1B9O9jYr8OFYf8FozI7PPT27TecGtts=; b=l
-	+a0d0keDkO0YTGVSt+ztvmPbjGfOIZ+9UeJAj4BN9PkjrDt/rq+eSnw6OrxhLXP4
-	Yp4Ug3bWoKZfCY4WXpmIEq2xipPhyyHi2oeDt9YEImKddm4Y+fw3zwht/6DGif54
-	JgMOeDWWF1nyPxMjsE6kdvRsU47SqwltJwYnJBNqyH1DpiM5W1wi2dlWjKrbHD7O
-	haTd1kGJmTjvfN58yJaU3LZM4M30Oa5rhIaMc8JFYw9RcJYEVAUksyzqknyvGktR
-	oys6yRdRprpnA6PJwzsEIcFNWbJ9b3rSDoyT/ndsRnv5i4vKC4dnZay7OKas75Fo
-	6lZL64GhtmtMiUuaSoXXg==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793355718; x=
+	1793442118; bh=xOJwRQ1V+RAr/vlzHQ/BG0lXcO8GbzHmowgBDFimiU8=; b=a
+	v8SO8Dy/3YtfiX/O4p2MXcMQ0G2WCj8n30I4I0H4+9CMkHlMBcSI4WsGsvLfNKeW
+	WyTtgw4zJDizI1jSnmoIEyvCf62wdKQvPimPv+X79fxm+6Jq+1jszEkPBfhyZfnU
+	sFnuzXbX8oA6fL720WkE+nenf99U3TVsG3FmN/jdd/jW5bVwJPg9dn6vVjSAzbC/
+	k01QY1HJczbg18OAQMIh3FtnH0FZPbPXQnjmcb5qoxcZ8JaR5UBVF/qI9+Pzu6ow
+	Aga5bfOAWXifAOoebjKf7Wsp5iPYQDOUB3kDO2tAqrhOeSfUmVwC1Sl9UW5w6FKU
+	X3tsuol9vqvg6+5KBj1mQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793355715; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793355718; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Ksu9KoFDEx5iM4mO0/Z5v9i8+waGYBCbFpn8pZpE3PAGvrK
-	DPVEIjzFoL4PmaH10s7ZDhVsgg00eVMEDDzX3x/fuW9Ct780O08RTKixcBYiQe9g
-	q/Z0xtVU+rxU563bcakr9PwYnh92Q0/JwLHcnWXzJlY++JiAAkoTLIOOMlNummWQ
-	uzPYlIjGQ15inJuqzQ7oW14MXBQcgoNjgqtsASFXkiYifBL5g4miaRZdfbc5pvlG
-	NTGYdh+J5FVTpH5tJ+d7HGyGOG8JpIbjjsaxgptLXT2KCWaWNGn1QebP4eb33EBA
-	adiO1S0BtwppdojKjY2DG7/XcmH+JBHETDxZo5w==;
+	s=fm2:rsa-sha256:rDOiAQupjNK2xzqFYtiTLZOhkuVJxPlKYuqVCRd5vN7tify
+	VzmBq2q1rjHNXK/HvFesUvW5no/4jbwe7K5bJAOWf5REsPZEogJNUcX9hMRLXyLq
+	mV9sMg1t+40tOZLnTEbm78eOIQ0tYqgk8lVU2BRZ9r3Bc0e9vIwkAxjxr87WU+y3
+	gRANUseF76ELUzsL/jHClZdiYG0Bjs6WGsfiQidJUX/FpGyWomGKIEVeL93VCZ31
+	gWu21VeNgYhMBpqTmfWEn2PLXmHd2RgoDVynqpNcj3VIURA2FubnUxFf12SJ/MPU
+	Y5A+6FTxSG+yT2TFf2eUr+s7KoyRjLkeD/uOWGw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:rVDD+s5IevFql1sHD3QO/VPrBOjQZwvXqkTp4XyJb7E=:E5WFQ3UMYkT1/YzKFiGdhvhsIK2btOejQjYn+Cxl/CE=;
-X-ME-Sender: <xms:w2_kaiFrGczlEo25QbexRGGutM5M01onKJyf3S84-RAhvioFBLzTew>
-    <xme:w2_kapXiEfZUzTcxElOyzMxEvuMzJJpMe2MuDl-ACgtZDrp_WkVNSy3SVUMpzWGTf
-    ra4iBGtGWf2ip8XFQLxpbSMTVqtMXKBD2p7KPED7S65iSriZSTtOA>
-X-ME-Received: <xmr:w2_kapxN1CIzvgWlFDF-VWAMAT14a-uv2u15cX-qHp73R_3jTCRb9_uC-LuDBoyASR5Fdw>
-X-ME-Proxy-Cause: dmFkZTGnfjP8Ce7Y5OxQEoi584NpxOS+ux2/AlFQpPqlCrctePrPU9xtuXEN57EydbMOeD
-    uKCcBR0ZCHWL0JVVKdP2toch8j8m9MhSLZNd26rU3Jkm3/zUqEF4IuCZTnwIxaDY0V/tLj
-    HPCCAd6edAcH74Fb6dTyZnpJL5lchwnIo77DZeDcJBpULBOuV/npxiguobs5HhHHcKxRwg
-    DnXnPCidbyg13/FKdrwVIJXASUfEI7oDWJDcbK+MVWvtcezD0lEuTpE1YENU42Xjiy9+7a
-    aou8YssUOX+9kEmTzwmAUrwGE6OIrCwqv8eeOqikEaid85oaqsh39WchJPYMjdWG/Q1aoE
-    W6afvULI8GRkIfCysuvIyy9XRUYGejyB9Z6D3tdRfYw6jZXGbzbWT9Eza3kwofUbax504J
-    l8YdhJyZKkfEZvDcH8IbffbEX83Ta0Oj+zGSs2vcC0ZT+58troOqbsKsvswUw23VH1AXAO
-    xeVhtpLpYwEigd2YH+gt5NpqHiTOeCPnwQB6mWh+bLjEPRSyjp6lBp7JnIgCfdY2/1Q+55
-    WrmR717ukBb1SbNJZAabPrHMOTFCfmsttzrhYIZNcI9nvba14ib70sB7MisaeNGzKND1vK
-    YCXxspHiSpDhFJMKX30A76ynCdxFF4pW0m2yqY6Hj5ngQAvXNQw0t+g+waLQ
-X-ME-Proxy: <xmx:w2_kanN8yY2RWcxSftvZLp9IOwHlgxLmuJ6ibP1BfmEPGD0c-GGjKQ>
-    <xmx:w2_kaq7MY8JgEaAxiZ2Z0Lv2mvmP3XIuy-kBdGjEqqmxWERy79SPpA>
-    <xmx:w2_kaoNlYqDwJY6_whRQIlAlcYJz4z7i4dZ94-PEIhp_UU-jaxfxMg>
-    <xmx:w2_kaomdcbuoJGPnGhPwAsFkkIg0uDO76bioU_kiO1cVCWH8YPI5Zw>
-    <xmx:w2_kai1wIv8jy6otXApXorhZylUqvYqA1BoxCx_JjnWoTgG75e1HD4KS>
+Message-Instance: m=1; h=sha256:Jgfd/s54Hn5nVTmqne+n1/U0XCDSN/Vt7iZc023Cku4=:z+7aIGHMdK2yOG6FubZlomqGcbz4CnppwBu0fFD+FrU=;
+X-ME-Sender: <xms:xm_kais8KV07LUuftI_zal8_Zwl5y4DzcobN3PPNbuTUQPEj8OK29Q>
+    <xme:xm_katff1FCi0-ZxXwmzNxSDuXjyFrzpJy3V7hNlf2mSfrZGzjg8QHTQtWzaXiWLz
+    Uq81zSTSNmCPg6c9aJk4LSQJc8iCiYDebxYH1RD2ZR71RQxmQH3Sg>
+X-ME-Received: <xmr:xm_karZuO6w5Pqk7bM5iTPUVCyTg0t8PtmhW71wujbsB-nHkuH_ITxUh32fsHhbaXbQ62g>
+X-ME-Proxy-Cause: dmFkZTE5DZFNz4dJlzhS+5nPFBPgibdHSgNM2fRPkCMWD1wjIyf+Y/6ffcd0dUnTGV2WsH
+    jx1i1mZz7ZDicoi5CA0FwpapLN4Tc0C94tjKz22+HmDW8wErM1M68ZSanzjC/r/LRu73mv
+    mTCAqncabcSeLFONNaVM6PJyd/py0Q1z0cANZrfgsIXPGVVxepzc6k8Xr61Z8uTE0ewgNw
+    6M18A45NSNh6S7xZ1DAmvZOrboVv17uj8+oDU4EB86/eHyoyNCV7PaKI4Z2o1vFhd1ZDwI
+    GsK8vBUjF6T/nGNQdPIPB7qe8yLWaw8pCI1zrkgIKBcI8emdc+gvubVe1EplTgThf71ill
+    HmkLQNkq0ux+DwXuDN8L17muAOnSsB1wo6Nif3wQS/98Weng/hEolpDzFUHczfhSE9Jwxf
+    mcjM//VOZvDxo0PGKenLLXyKPYgGK+wVKfEpHQ9mCazZ1LAGOuPXNJ3mvft7i6P2Oe2HDz
+    D0M6ulhwPcfh0TtZr+rcG0fm0krRLkEYM3S6bk/EZWQyMkMXyHwBiM3Y8W31IfxEq7EeR2
+    S7gv7MhOaWuryV9Ld15rZYhcKVSlF454pLtnsg6oLKZuVwG03JZB7gP39v9A0qgI2iHtOe
+    fVVAJ9cnCfW7Om/NFVApGXvjCkqKjkViO1WUGakmMJGlfEvl3K9CLeCq7PFA
+X-ME-Proxy: <xmx:xm_kaoXwZ8Zng7dFjw1_p0MAQH_b3SA-qtnVyMrcr7nPXutyEdW9Og>
+    <xmx:xm_kalhku9aOHK_CG0CfKXcZ_KntoJK40denYypPD7wmC70XFzwEqw>
+    <xmx:xm_kauW0qDh9C6YIkUICgO4mJXzaUe1i9SqOFULJY08xPZaoTRr03w>
+    <xmx:xm_kakN2C-cBzAamdf8PW40atmlR85tP7qeR6RbMfLGEgA67Sq6gJw>
+    <xmx:xm_katfBWp7l6YfhPkfODcrJ5sjcIZ-0ZCl8b7mowiZ3DyJyRcyoLw78>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Oct 2026 06:21:54 -0400 (EDT)
+ 30 Oct 2026 06:21:57 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ca31a28a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Oct 2026 10:21:54 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id c41b0a9e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 30 Oct 2026 10:21:56 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 30 Oct 2026 11:21:47 +0100
-Subject: [PATCH 1/3] builtin/grep: read submodule trees via their
- repository
+Date: Fri, 30 Oct 2026 11:21:48 +0100
+Subject: [PATCH 2/3] builtin/grep: read sparse directory trees via
+ passed-in repository
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,93 +124,50 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261030-pks-grep-recurse-submodule-v1-1-d4eb5c87d8fb@pks.im>
+Message-Id: <20261030-pks-grep-recurse-submodule-v1-2-d4eb5c87d8fb@pks.im>
 References: <20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im>
 In-Reply-To: <20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im>
 To: git@vger.kernel.org
 Cc: Root <rootminus0x1@gmail.com>
 X-Mailer: b4 0.15.2
 
-The function `grep_tree()` searches for a specific string recursively in
-a tree. It can recurse in two different ways:
+When iterating through the index in `grep_cache()` we may encounter
+sparse directory entries. In that case we read the tree object they
+point to so that we can recurse into it via `grep_tree()`. We do so via
+`the_repository` though, even though `grep_cache()` may be called for a
+submodule via `grep_submodule()`.
 
-  - It may either see a subtree, in which case it recurses into itself.
+This issue is similar to the one fixed in the preceding commit, where
+`grep_tree()` didn't use the correct repository. But in this case here
+the issue cannot be triggered as we call `repo_read_gitmodules()` on the
+submodule repository, and that function will cause us to read its index.
+But because we only ever set `command_requires_full_index` for the
+top-level repository we will convert the submodule's index into a full
+index, and consequently we will never see sparse directory entries. This
+is also documented as such in a NEEDSWORK comment in `grep_submodule()`.
 
-  - Or it may see a submodule, and in that case it recurses via
-    `grep_submodule()` which then again calls `grep_tree()`.
+Regardless of that the code is still wrong, and it may very easily turn
+into a bug once we start to handle sparse indices for submodules. Adapt
+it to use the correct repository to preempt such a future bug.
 
-In the latter case we continue grepping in the submodule repository's
-object graph. Historically this used to work by linking that submodule's
-object directory into the main object database. But in 93cd344e34f
-(builtin/grep: stop registering submodule ODB as source, 2026-09-11) we
-stopped doing that and instead expect to read submodule objects via the
-submodule repository.
-
-This logic is broken though: while we indeed know to read blobs via the
-submodule's object database, we didn't adapt trees in the same way. The
-result is that Git fails to read the object:
-
-    $ git grep --recurse-submodules -e hello HEAD
-    fatal: unable to read tree (935cff11a11f8734cf4e0d40955d1e0e5c12038e)
-
-This went unnoticed because our tests only cover submodules that contain
-files at the top level.
-
-Fix this by reading nested trees via `opt->repo`, which is set to the
-submodule's repository via `grep_submodule()`.
-
-Reported-by: Root <rootminus0x1@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/grep.c                     |  2 +-
- t/t7814-grep-recurse-submodules.sh | 23 +++++++++++++++++++++++
- 2 files changed, 24 insertions(+), 1 deletion(-)
+ builtin/grep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index b045f8a488d..22fb365eeac 100644
+index 22fb365eeac..cb518d8155e 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -653,7 +653,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+@@ -560,7 +560,7 @@ static int grep_cache(struct grep_opt *opt,
  			void *data;
  			size_t size;
  
--			data = odb_read_object(the_repository->objects,
-+			data = odb_read_object(repo->objects,
- 					       &entry.oid, &type, &size);
+-			data = odb_read_object(the_repository->objects, &ce->oid,
++			data = odb_read_object(repo->objects, &ce->oid,
+ 					       &type, &size);
  			if (!data)
- 				die(_("unable to read tree (%s)"),
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index 3d149d34c15..f51c5181805 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -631,4 +631,27 @@ test_expect_success 'check scope of core.useReplaceRefs' '
- 	git -C base grep --cached --recurse-submodules C
- '
- 
-+test_expect_success 'grep --recurse-submodules with tree-ish and nested directory' '
-+	rm -rf sub super &&
-+
-+	git init sub &&
-+	mkdir sub/dir &&
-+	echo hello >sub/top &&
-+	echo hello >sub/dir/nested &&
-+	git -C sub add top dir/nested &&
-+	git -C sub commit --message "sub" &&
-+
-+	test_config_global protocol.file.allow always &&
-+	git init super &&
-+	git -C super submodule add "$(pwd)/sub" sub &&
-+	git -C super commit --message "super" &&
-+
-+	cat >expect <<-\EOF &&
-+	HEAD:sub/dir/nested:hello
-+	HEAD:sub/top:hello
-+	EOF
-+	git -C super grep --recurse-submodules -e hello HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ 				die(_("unable to read tree %s"), oid_to_hex(&ce->oid));
 
 -- 
 2.56.0.341.g393f52fd96.dirty
