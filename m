@@ -1,91 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793357912;
-	b=HMl5So0VoqD6y3RhJblplukqBMZVRK77/qWmygS5Noel+fxZt3nmINP/xb/bu7yCVsNT
-	 vikNOo6+qLWQFrZXDI6Aex6igQl/LYe2RiX/IRnTu154vaue6pq8VxabWTPmJ/d5yY7Ti
-	 IRL1MU4JhXXqiuZm8bws9JgxNhxPiTOjZ7arjdtd7k8SKJ2jJ1ie1fA/V0u8QDdd5zf8Y
-	 bc0t0eKUDjbJNqiP/v/1sCvaRgyhwO81+IfxYKd4rR5fmhDQSPuR0S3mMCNh/e/eqb4qg
-	 y2pwxwo68j6P++1RA5aBvYZn9mBZs3ZonW2NrTB88Cr2JuIAELZ0YCCVqqFolUz86gA==
+	t=1793357911;
+	b=ltTM4zKF4C+T0+T9hfBm5+TgH1r8kY/+PmobokttK4w/Phx9Y0d5dbuVCI+kyZ6BjZZq
+	 XEl5t0fb69mPKHq4KLf78ihtvNT5dIRdCvxjzE4wSDatsCNssDBcRimmCkdQBAkp08hDr
+	 NiQyuVUbypnWK/lrU3J3r/zPbuV6b0vXof8dNhqVCOfiqENc5r2K4bygsEnlIcQBnp3yC
+	 G4ccYhxKJ+shwM+Z4figA4yiOADGlF9uW3e9Yyp6yStMhOPy23AAagJd/FKSoQMungN9N
+	 LtklVwUoC1pS5lvJKmQorXmEuIwiA+VXbdZFbQU6trXhAjKgFUAP8qAt8aJjgRO3mMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793357912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793357911;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=zWlK2WaYjYPEMNyoVZMUo+k9kT/8U8ddKxtZw3m9xq8=;
-	b=cBwBKnsZIthjtQeqi9+oIGuv9ksVxuteOEfM9lHsGkifJqx83K645/jp4e3EuUYJKM4c
-	 J1Q2tHBCq0kZfV2ViThYH0i1MiG/U3yvBnIlz5FKuTnXwjYPVQ+Hwzlw89VQ0irzN3G6f
-	 O/tiaMU91yAY2FFxcyqjNloYDZ+tcDPLtTVSJrS3UkohJRudugM2S27ovxcMfNlMbidiP
-	 9zDwZZqqy//m1wYzNQnNoXCxXTN8Z7nZB8vfHTD7OXL7zR1TSGf9iF1PW4Z+tw+8hTNA2
-	 g06oMvofsfPcL7inBL4Ve+YqOX8tHyep282XApHg7zvsPWmqiJRcJ8tuVlNZ14xx+dg==
+	bh=hF/lLJMqqzREKWNSlzumurXYlryR7oMCogNRABs1bO4=;
+	b=s1cCoyqOG8tzZijIwHIoFS8oXUUZpOEpADMyagHgiL89JrUxMPdvNuZ4QwfldSDqfNLQ
+	 RCeGOm1DKRUZyPDymIcc++J58Uy5MgHoIjxhibYguhBGtpyUtLHal7ENetla5BFCeSbx9
+	 QWBePQlny1MCv4b8B4XRt54kVVXnDqq1tgXCns3a/TP70Cbmu6imk8zNEKvIFxDNLHnyW
+	 0lF7rpbu7wKi3E5OlAPPLzXPSRKz8JIeb6ot8vOiWs0uEbvnWSKyN/xIIDnUYlk+rxuHc
+	 HdiSKeoGHyTYi1Bx2/lApsdXbD6VoF8r/WDL0uZD+8eL1MVBdqdwL1MDxPKhX1LoWsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vMJI0v9n;
-	arc=none smtp.remote-ip=209.85.128.47
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hu4oyYoa;
+	arc=none smtp.remote-ip=209.85.221.50
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2372606D288
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 10:58:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C2372606D288
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BCA606B97F
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 10:58:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C3BCA606B97F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vMJI0v9n
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a5720b0a57so9298685e9.0
-        for <git@vger.kernel.org>; Fri, 30 Oct 2026 03:58:31 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hu4oyYoa
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-48b042c0728so136500f8f.1
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 03:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793357910; x=1793962710; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793357909; x=1793962709; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=zWlK2WaYjYPEMNyoVZMUo+k9kT/8U8ddKxtZw3m9xq8=;
-        b=vMJI0v9nDiohPEtKbQ3GK3iRuziKLL27XGOaj6dLcuamGr1g1XJJsaYEx9Tqi8mNCb
-         zwFxj1cSpkJsLRuULjV7ecygNrBuqy+Oap4GlkwhAfE8oeBEICe6aa14Ogfv9Bu238XS
-         nIKOgPGUG/0XXOmoI3XlKC5atNq1QDBX3acYivFe7X9q7RJuo8rk9r7OqnHS4N6AhSzm
-         poH/f9sBZhsALwGmTvKmuLs1SSvmT1nYASg4h8uG15q6Om9ArZcuEULWSIELzUmT3Dd2
-         riZ/qRXZlLQ7etQ8SK58X4CyeJcvPwKHmox2x9xUAiRvtua8Slo8Kr66c53fzyHQcTV+
-         DXzw==
+        bh=hF/lLJMqqzREKWNSlzumurXYlryR7oMCogNRABs1bO4=;
+        b=Hu4oyYoaZ7dsfCTF1riYphLnbX5UMeFBfQz7QCGwXma0DXtbHZT7M/dv44+Ec7x8E/
+         xhlZbkK5nJr9CBcyoQM3Azge6ESnUk/MwCM+uLfl+vlEtXgYJ1r8TTsGh8l3lGHbqK/S
+         W728zPWwAghJvc3ZsHYmpdFBcjoiQV0utDmChPRUvXQanA3ZF3Ve71VyiuAKY2HP2Bex
+         vbN+cD0N4rWQGFuMgfdleTta+TJioNr+MS6TZ9hf+kuHB3l/PQG4aoC5VcVGkI7NGHbJ
+         h8VjTQ73wTPcBwjT31Dtmny7vdb7yYt7CcHf1A1G5MmgIPgmSWLHKSv3rDe1cubHUWvt
+         1Yvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793357910; x=1793962710;
+        d=1e100.net; s=20260707; t=1793357909; x=1793962709;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=zWlK2WaYjYPEMNyoVZMUo+k9kT/8U8ddKxtZw3m9xq8=;
-        b=lnFwmxCNABVC0biDpq4FENWOLLe8+qPG+pcIssdWG4m3pEGVGqTFOeOLMi3qI+x4MM
-         bXrhHeSAf6PrWSaTUq8IFpBvL2I3/xgWZAoe5Vuz0kf9TfcdIadiZtYggsiFQzbi/Fgz
-         CBai00XmrPLDKM8dV6lK+o2GAfJ3hdAdJJzO1UWvbKVdAapKK91c8Dkpt7mGooWQUg4V
-         4uov+7EWXKPXYQxpt2Rc8BCR8N5reCH3EHAV7sDgQHXArjjm73puFZAwm9yVoMDuyZ3n
-         ZCiP2W7kUE5H0DP5UXKTNPYCZfnwE3FYK24BRwICaXqBc9qsWZQGyC3I4p1LlqS2ie77
-         Xe0Q==
-X-Gm-Message-State: AFq9FYKM41YCNbM3ljc4laYV5BeDYB1rlQUzNCBfSKfY7q62FDg42aGX
-	qHdvzgRLUKpHX7a1jAYa7chFLPZBK3HNofMj7oPB4aYP5DSEwVQCF3K3bmsAkA==
-X-Gm-Gg: AYBFou2RLI1lpBdUmLOmxioBhl5yLetdr+VzOjoJ23oE/FtyY0viQrs0+U4EJOJGjUQ
-	cc4x0Vk6OMjDkoXr5pxvdKMuiBTxOx2uqytDUwfk+DLDT0JDNif06kPKVSTaqpjhVjTUXwbZURz
-	0oz8d7v6GPV0AtKGTmKpyGu2pWicj6qBT5RTUkoxckErcwakCRf71QDATreG4vALRwLOQ3T6KYl
-	hmcTiDFsWnAoJJRnTocSI4PtmOe+bIUU+SU1mbFqfU7bgrrCVCEXRIWRhAoD4t66UHciwW3dofb
-	XIUXfb6uyUBcBdwqK/8pGxBXGirOu9ihzZ3KlW9mu+br/jXDQC1kTHMPhDAqjejuEq/t9HBrZuN
-	kOmfLbGecOWyni15sNuHwE2gcQpce8NCn4NHc47psG550XwQ1gqtDtuddiBm6/H8jHQY0aYyujO
-	fiwzYSVmePBjZ10Cr4kpSEQcPk63guGF8mYGTKH9FvEI3O9mfSox2N+aieRLFJlbdSg9mepMb1r
-	peJqcOZafXoZ6CeOexZVi6PwOtTTFDIxgZbGaa0TbRN9M70VP/4N9qr0RrkdiUO4ZM9UgOWuqmZ
-	VotsyVQ2i1HyUEIIOpsBgF8TnHSlZYINVtAwFAwevcflZS1CZkShsUdqTXFjwYJpuX30thI=
-X-Received: by 2002:a05:600c:4715:b0:49f:ffa2:1c72 with SMTP id 5b1f17b1804b1-4ac17567cc8mr39411835e9.11.1793357910260;
-        Fri, 30 Oct 2026 03:58:30 -0700 (PDT)
+        bh=hF/lLJMqqzREKWNSlzumurXYlryR7oMCogNRABs1bO4=;
+        b=o+a5kw8uuDuTtYYuZIBKQzxNBHyHMA1YREB5lEfwvg7BsE07gnHczYkr6zEakEhE47
+         2+w+i86ITww4YLvjC5/CtlMx34wjCoV5gXX932Jl/W6AX5JQ7opcDLIuYLjE6u7LqfJY
+         hhEir3b12ehw6y+sRJfypUu8DjrjuZk5NDcigBcFArsBaHFttEQ2PGYhHxfjNqXML0O7
+         VYNyiKsOVh/2aXtl136lICEEsrhHQWU/gCmrZttX076Q+YAvp7/gWjo9ecWGH4N5dn0q
+         gozyPHQmuOrR3LoNW5KSEjIFGVvIzMxI6WvC07NlM/EDMkSy0gNK/r/1SAOL7gWMFzfl
+         PQPg==
+X-Gm-Message-State: AFq9FYLN6nzQ4Pi8MdEjL7CUYVM6kBA9ZbBrA2oKMw44P3ihyGn3inyT
+	EckfLA6JtKKDiNBRV8G5mN20YCnNBe/eYuMU574kQ1oPn7kxeIqmkcJnoftFYA==
+X-Gm-Gg: AYBFou3qjacZRKle7uYIFm/heK28keoRddw6bvbaUYqHvlJsPzpvXTr83kO1DSbhlhE
+	Ngol6Pt35gaIyqQXG8+AMaky+ZJi7hgilVABG7FUVw1E9B6ucy3DPwwuY7eLZWFgAc3MudkWWDr
+	U3GIV4xfpwJtowBINZP1Sldwvg0nHtyfCyym32cyV1Ke/3WWq8FvawSkYwEd2JldFF/eb/Ynzw8
+	ql7GXeavsC0hTMt5IxqqD2cnAZ5j3d55N1YxO0ynqefhWNejQ7Kkc+stD2q46gKcEFWITfcCMdw
+	010f6doW0JBmnLaDuuTa/xjOH5k/uyQpkFobfAFZjhEM/OikICofAH2l6OORWgPX4HRuIMUlJF7
+	cKl3USOENw6NFkI/Xm/iY5St6NwKCCgwuSyM/V5bLGEpEQ3L2jyC5/W4HNyCpdllfY4/lHFf/OT
+	jSAnQk4/mDH3n65DvgTzvf83yKm7cc6b/RgI5jyzjos020mIPxCvE63AvvLH+Ep7rrStKQJs++a
+	mKpddzq+Xx6uYDarsgxie7N9Ul4m69E26w/Dp3zyzo5Zpsq1V418cK90n5WVEKIWEFPBn9Zil7d
+	mPrWy8q1Jw8MnV0jDIUfF2X/QyWkRKgtRfOUONfegdXuem7lJQ==
+X-Received: by 2002:a05:6000:2209:b0:48d:ee0d:8b3d with SMTP id ffacd0b85a97d-48e6e2f6d6fmr4763914f8f.28.1793357908898;
+        Fri, 30 Oct 2026 03:58:28 -0700 (PDT)
 Received: from ubuntu26lts1.example.com ([205.147.30.18])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b727c6sm2677980f8f.16.2026.10.30.03.58.29
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b727c6sm2677980f8f.16.2026.10.30.03.58.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2026 03:58:29 -0700 (PDT)
+        Fri, 30 Oct 2026 03:58:28 -0700 (PDT)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] tree: use size_t for the size of parsed trees
-Date: Fri, 30 Oct 2026 11:58:23 +0100
-Message-ID: <0b1d1c5668c89e3329e246d787ec80a161bd1dac.1793357680.git.gitter.spiros@gmail.com>
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH 1/2] tree-walk: use size_t for the size of tree buffers
+Date: Fri, 30 Oct 2026 11:58:22 +0100
+Message-ID: <908bcf7a607195d7f5215f191a85f25ab0059e8a.1793357680.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1793357680.git.gitter.spiros@gmail.com>
 References: <cover.1793357680.git.gitter.spiros@gmail.com>
@@ -100,57 +102,124 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-struct tree stores the size of its buffer in an "unsigned long", which
-is only 32 bits wide on Windows, and parse_tree_buffer() takes it as
-such, although repo_parse_tree_gently() gets it from odb_read_object()
-as a size_t. Callers then pass tree->size to init_tree_desc(), so with
-the previous commit a tree of 4GiB or more is still truncated on
-Windows before it gets there.
+struct tree_desc keeps the number of bytes left in the tree buffer in
+an "unsigned int", and init_tree_desc(), init_tree_desc_gently() and
+decode_tree_entry() take the size as an "unsigned long". The size
+comes from odb_read_object() as a size_t, so for a tree object of
+4GiB or more it is truncated. As the field is an "unsigned int", this
+happens on all platforms, not only those where "long" is 32 bits.
 
-Use size_t for both. parse_object_buffer() still hands an "unsigned
-long" size to parse_tree_buffer(); it is shared with the other object
-types and is left for a later change.
+The walk then sees only the first "size mod 2^32" bytes of the
+buffer. decode_tree_entry() still checks that the NUL ending the last
+entry is within that size, so we never read past the buffer. But when
+the cut falls between two entries, the rest of the tree silently
+disappears: "git ls-tree" lists fewer entries and exits with 0, and
+fsck_tree() only checks the entries it sees, so its checks for ".git",
+".gitmodules" and the like never look at the others. When the cut
+falls inside an entry, we die with "too-short tree" instead.
+
+Use size_t for the size in struct tree_desc, in the functions that set
+it up and advance it, and in the struct dir_state used by
+get_tree_entry_follow_symlinks().
+
+There is no test, as it would need a tree larger than 4GiB in memory.
+Truncating the size to 16 bits instead, in init_tree_desc_internal()
+and update_tree_entry_internal(), makes "git ls-tree" list 10 of the
+2058 entries of a 65856-byte tree created with "git mktree", without
+any error.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- tree.c | 2 +-
- tree.h | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ tree-walk.c | 14 +++++++-------
+ tree-walk.h |  6 +++---
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/tree.c b/tree.c
-index 53f7395e9f..d37b9bc7b1 100644
---- a/tree.c
-+++ b/tree.c
-@@ -172,7 +172,7 @@ struct tree *lookup_tree(struct repository *r, const struct object_id *oid)
- 	return object_as_type(obj, OBJ_TREE, 0);
+diff --git a/tree-walk.c b/tree-walk.c
+index a67f06b9eb..aaac1fd48d 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -14,7 +14,7 @@
+ #include "environment.h"
+ #include "read-cache-ll.h"
+ 
+-static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned long size, struct strbuf *err)
++static int decode_tree_entry(struct tree_desc *desc, const char *buf, size_t size, struct strbuf *err)
+ {
+ 	const char *path;
+ 	unsigned int len;
+@@ -49,7 +49,7 @@ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned l
+ 
+ static int init_tree_desc_internal(struct tree_desc *desc,
+ 				   const struct object_id *oid,
+-				   const void *buffer, unsigned long size,
++				   const void *buffer, size_t size,
+ 				   struct strbuf *err,
+ 				   enum tree_desc_flags flags)
+ {
+@@ -63,7 +63,7 @@ static int init_tree_desc_internal(struct tree_desc *desc,
  }
  
--int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size)
-+int parse_tree_buffer(struct tree *item, void *buffer, size_t size)
+ void init_tree_desc(struct tree_desc *desc, const struct object_id *tree_oid,
+-		    const void *buffer, unsigned long size)
++		    const void *buffer, size_t size)
  {
- 	if (item->object.parsed)
- 		return 0;
-diff --git a/tree.h b/tree.h
-index 677382eed8..50f0b15af4 100644
---- a/tree.h
-+++ b/tree.h
-@@ -10,14 +10,14 @@ struct strbuf;
- struct tree {
- 	struct object object;
- 	void *buffer;
+ 	struct strbuf err = STRBUF_INIT;
+ 	if (init_tree_desc_internal(desc, tree_oid, buffer, size, &err, 0))
+@@ -72,7 +72,7 @@ void init_tree_desc(struct tree_desc *desc, const struct object_id *tree_oid,
+ }
+ 
+ int init_tree_desc_gently(struct tree_desc *desc, const struct object_id *oid,
+-			  const void *buffer, unsigned long size,
++			  const void *buffer, size_t size,
+ 			  enum tree_desc_flags flags)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+@@ -113,8 +113,8 @@ static int update_tree_entry_internal(struct tree_desc *desc, struct strbuf *err
+ {
+ 	const void *buf = desc->buffer;
+ 	const unsigned char *end = (const unsigned char *)desc->entry.path + desc->entry.pathlen + 1 + desc->algo->rawsz;
+-	unsigned long size = desc->size;
+-	unsigned long len = end - (const unsigned char *)buf;
++	size_t size = desc->size;
++	size_t len = end - (const unsigned char *)buf;
+ 
+ 	if (size < len)
+ 		die(_("too-short tree file"));
+@@ -561,7 +561,7 @@ int traverse_trees(struct index_state *istate,
+ 
+ struct dir_state {
+ 	void *tree;
 -	unsigned long size;
 +	size_t size;
+ 	struct object_id oid;
  };
  
- extern const char *tree_type;
+diff --git a/tree-walk.h b/tree-walk.h
+index 9646c47ac5..5ccd4a9361 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -35,7 +35,7 @@ struct tree_desc {
+ 	struct name_entry entry;
  
- struct tree *lookup_tree(struct repository *r, const struct object_id *oid);
+ 	/* counts the number of bytes left in the `buffer`. */
+-	unsigned int size;
++	size_t size;
  
--int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size);
-+int parse_tree_buffer(struct tree *item, void *buffer, size_t size);
+ 	/* option flags passed via init_tree_desc_gently() */
+ 	enum tree_desc_flags {
+@@ -85,10 +85,10 @@ int update_tree_entry_gently(struct tree_desc *);
+  * members of `struct tree`.
+  */
+ void init_tree_desc(struct tree_desc *desc, const struct object_id *tree_oid,
+-		    const void *buf, unsigned long size);
++		    const void *buf, size_t size);
  
- #define parse_tree_gently(t, q) repo_parse_tree_gently(the_repository, t, q)
- int repo_parse_tree_gently(struct repository *r, struct tree *item,
+ int init_tree_desc_gently(struct tree_desc *desc, const struct object_id *oid,
+-			  const void *buf, unsigned long size,
++			  const void *buf, size_t size,
+ 			  enum tree_desc_flags flags);
+ 
+ /*
 -- 
 2.53.0
 
