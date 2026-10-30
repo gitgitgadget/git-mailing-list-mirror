@@ -1,121 +1,123 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793360683;
-	b=hi3Ko4AnUkwkbCIvyCtlU17hmhhHrA+kj7lU9sSWw8DAcV7lGoJ+B9ZqMdMCHmFG326v
-	 XabneaaZSooxW1fWfjD5xeYv2JkNZiA+bI6Cr9jqHLupd05tnnHQQVjhD/FFIW56ZVA1Z
-	 qTK1th0fE3D9heioBq1J+qPBcaEvvv3JdF+AK2gLvdHq6rHwuTx7dKBFAyAfFi6gAgFnq
-	 bCQVRk3GJGeKLncRYtBlAUO8LUf3x/tbQR2nOrmWB7Y5z+feSqOcqMc+EifS2xlPAj+X3
-	 u4fY4kjsvHWlrsPsnzJzE7g3WiJYtSjrkTLiZueZX2e5cZ9TCMqAAZA4xJFtd2R1BqA==
+	t=1793360687;
+	b=PJZTSxkdm2prBDm8PFqHpGSFBZoHLXLy6q0VRBagd04mi3UFA5FTtstw8TfSYBoc4Qrf
+	 XoZYajMYQ8r5Ret/lKsIZwZznK7cWiG4Ax0LAVJZ5T8FE4Ef+/FcYJWAiClGl8Ng25fAO
+	 RelaBPE4/S8OKWOYSdsRLx15E3l43LqeLSnLF3bH6iFaf52ljpELVJwLT0YupwS5hiKpX
+	 N99lWN12INfG4at6n5v58lFkOECUQ+oKWuHLDKEQDgnHph4pcuPX/LA61f56rrcvYvpTu
+	 jfUxjBzWT/VEJcYo1JTokFi9TYZ7gj8HVY3K8uJx7pFDjScK+UPaH0TeqQLTIgdWxWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793360683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793360687;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=uF6hO61BEUX/d/lC2a1EFppSpga5TcespB/emHrmVDM=;
-	b=jiLLBiYue/Vx4q2OUKausMlNvTck4OtCA0u7wQRwiq8QsexqYAw5by0/jOI1W4CIJ02H
-	 xf0AcPBipUeSruPDyJlGU1ZxrcLUx1V6moFCSAG6lp1StIFFrqpVNrjM6ICA62ORYLgfQ
-	 T+dMpyBU05gJC2gIsOUydLBLbxTLMaUqqvowUnwR7Y/fADhjeg8IU8scmxfsMZy+JdTx6
-	 P5nnOJI5fuKkiKABG7pPY0OsHIyDlKq1OZ3JoNBEaaLwi61Y2vjChha6CXE3h/64NLtLh
-	 3HjVogp6UIhNomaK1EzhRl7dT6LkcQym5ny8h1xNNfF7HHSr9s+KDh+YurE69HfY+pw==
+	bh=zGVGFlCD9FuvJSfrKa0Vu8FWN3EK1T07PXIqkJ/foRU=;
+	b=QeSLXGEsUP2K+u230c/0lfWXiPIejdM1GtpW+Ss+zPD1CCp1Zhp73JbbCIN+VFOOsNag
+	 R7b/kZPJl1ywa2Gy7cDjzrpJwTCLzV4PlUysBBjHm6WBS/leTnar5b9fNI1J2hpeJNZvG
+	 pnjjK91/bUn898jlvRUwRZMK9sTEH7KGmqKtYXQGAvjHmOuzD5ZnugnYi+FsIWTa1zOfo
+	 tbM9i6By1oP6Ufihb4W9BLzIuE61jnXsCe1e2yuQQrYdSgMuPHaZuwH2vydi35EDVE6BA
+	 3LRNd7ssqwLQMJliOeFlsTA4SBtWIUEAYq4gtSdT5mq6ltFId2Q4ipeSh9aObSZVZEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OsC7voQO;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=lOmIwyjX;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=Lz2ofuWv;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p1jmUude;
 	arc=none smtp.remote-ip=202.12.124.155
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE68C606A31E
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 11:44:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE68C606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912D7606A326
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 11:44:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 912D7606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OsC7voQO;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=lOmIwyjX
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3842D7A012C
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 07:44:42 -0400 (EDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=Lz2ofuWv;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p1jmUude
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DE3ED7A012C
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 07:44:45 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 30 Oct 2026 07:44:42 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 30 Oct 2026 07:44:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793360681; x=1793447081; bh=uF6hO61BEU
-	X/d/lC2a1EFppSpga5TcespB/emHrmVDM=; b=OsC7voQO1Zo+kDpVsqNZAxgYX4
-	nlhTRLCPxLtezHSSLwNnlU/ZFt7sy98WKFbkeoaSVKKUrizAGCLSiQwD96jFhllw
-	H/CypOkzZfpOZC/nvd3WqJs1Rri9ALQXdbmRyZJP4LF4fSSFkyIB0HyZDC1S+cup
-	8zbbfGIOeVKk9iKENBBQ+1tEHkgYgUthyh+RbSSLYXJ84Df0v/PT4NGCWXw2lJ+1
-	SFx7sF0xgerWkmB1L9WHADWIvCveRNCyJxodFCPMxfvq3hbn7uzEXo08TAnyjOAD
-	3QD7qJh49oBCLpaWEOSCyH/ZN4RFERByCjJGOoA8PuFJBpF0+EdeelBSh3DQ==
+	:subject:to:to; s=fm2; t=1793360684; x=1793447084; bh=zGVGFlCD9F
+	uvJSfrKa0Vu8FWN3EK1T07PXIqkJ/foRU=; b=Lz2ofuWvI2CLHHR2Gb5P1dF1Q+
+	/vCQKJTZZyeiFG8tJXakunltMR3ay5iQRrUla122iZVSobAZwd3EmUuCtCnjhlgI
+	yUtaHqtwPywZi6Bl+v47Izlxv6cr3NUw6SNNMgdBmHLUMwSyhtCWVWBVch14yXVg
+	YkDUmOyJAOyP1ISuElEdnyFoRV+VfSZfgdNSdsiyVE5VwX8eTnULTVmqxj6qshdL
+	SUsaCHwmc6WfiiBrJIAV1J3g5Ii65xcJwfDoNONsVpwG0C5GgIs50ruJeTLTFBvx
+	YTQrxF4bRjOLfY64z5bQE/QMVe0RqiqgoMiT8aDFFRl3HE3W+Zr6n2yEkuEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793360681; x=1793447081; bh=uF6hO61BEUX/d/lC2a1EFppSpga5TcespB/
-	emHrmVDM=; b=lOmIwyjXjM3wTZT386jBbTetaasz1rxbeEv7xWRy/SQFi1gzlTx
-	Rgg5DzR5wnhwXrpp5g/OOCwOGyWlhIZT6sbd4W+7mdFj0VhpqJZtUfsOjLt4cRLa
-	SjyJnOtMV63mbaM2CJtpERZYYYZ+yTVr9ufxj+vUV8bYsLigSWAMvp1/FngGRc7x
-	u/FW1lnNItVCzc0bo3V7S7l3yfN0Vwc7J9xFmd+/qojI6zNdj50WX6NMHP44cTIa
-	y+QMxp46TZNI6dzOPNHtTnk9KRnq1X9F2N/5l3J2uMpq7XMXafAThEUNyMJaaJEk
-	WYK+cBnlKxzKvAnUO7vuSYF8/GOQwTTBgcA==
+	1793360684; x=1793447084; bh=zGVGFlCD9FuvJSfrKa0Vu8FWN3EK1T07PXI
+	qkJ/foRU=; b=p1jmUudePz9gXt0rqcIpNSWz1YHX80oer1y3W0XoxMq0JQyqsGQ
+	1eQlYI37kOghRP5qArAwm9Oq80AulfxXaJxxu14cAYq0zWEYBueu2OUlowDTNebC
+	XMCmOO1IxziQIVkaVsJiIcDNbf4LWJjdF6LPiAHgm7XWVFMwDHPlsUJXlWBgvbTu
+	S+lM/CVp2p8PzPk5M8c6LzzTCrrKluRtD6Q+GNEX6igg4iv7TKM/gZdtVHt2mg4Q
+	z0slWhxxh/53+Z1O6muNYWkNFRm7vETXs7hJZyAPzpXTUsXyv+b7JW4jsXPmJhzy
+	ZY342p+/xwHZaQXnEPWD2Uhm4OTsHcrqQrw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793360681; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793360684; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:a1MlKjDK8bfmoGrX5iomKDMJ0cHKvQ703N/3P4NaHejjwkK
-	Fp5Rj6QMAcXbiIc0yI5ykiC7Xok5O9DC2an7GaZ2fbP51F1eRb7PWyF0mm1HH5Tn
-	BbmzUHzRT1j5HwbNd7p4X4Q3hT7fT/wk/NJJXogkpCAiI49D2l+T3/iI+0n4u6Tr
-	x62ALsmQHN4HBnIgX6JFeKqyJmvpz3we4lCZH/BPZAVtnZh3DKz4X075N+ckWBdo
-	d7aItx54ceDptJyxhSJWGmf5xZvK6kDDV0XkRo1pJP0c9aJzaNujhPTF/7hoZdra
-	mBmNC+JDtLDOkLpmg86YSmnA2fMOMviXmQk1cAQ==;
+	s=fm2:rsa-sha256:vh4MzAZS2A5pUdsADxouW6yyzFubWYH4VoZT69gqyOHL1L/
+	YrW/O3ieqcjAo/799orXqfA9jR1zVgpXB6nQU7dxK20E5ddrQalECkOfz6X8BQrz
+	cO1nOS3KksN+IWeSqcN+NcyXMAf8/GS5nO4Vnl9BKj5SSQxmAGCp58JQhhxHK6s0
+	v71HP6wH1hU1ZQNWOq4G7XPnhohQLyjSa8pJc9EEamJSVzcUcDTOf3d4O0mYQ6Nk
+	zexq4dE1VGvN3sHSUywyU2ZHj164KVA8MAMDo1LcHi18s85YWGrsLmq8dVCQs5F7
+	kRSJ5slHfLhB3EZFYieRI9EitswoNQ+barUArSg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:j2897QwMj20BDN9hpe10ujqXooUwfB/cpNUZHj6Uris=:1qqsPGNbB5JTv6/BAsDX9OMz7bQk2HN7dO+c7MSa5U8=;
-X-ME-Sender: <xms:KYPkajuiI7wzuiN4txeyf8uuca09Jw3l-3l8Mn-W7xOZLj831E52Aw>
-    <xme:KYPkarX7ffKYndfdZ_FAHBZMsq5FtTcOe3OqUXwofq6ucj2gsJJ7qoFwIXk6pAD1N
-    e5Qz0p4vRQNNHfBVp937UxplORGB2TEZW1AtSNoiUOwrFlLMDiJ1hE>
-X-ME-Received: <xmr:KYPkavFctxPODyyLu4si1WWNE6zYha-eneAbNJyCXCYchl2LRTIdanBKG1eUfnTsaTOyfA>
+Message-Instance: m=1; h=sha256:o2VnmLJVBJzKPZLxvmUc2y6EJnvLeW60AQic/84VbE4=:iD37Lk6/rPmJyR3XRNvJvqz3jQO64dU4LTUzuBoG2d4=;
+X-ME-Sender: <xms:LIPkagyHuMKSafRypLH7a-zFnTKiz1p_qNlDZY-uuqziXF1RiRWcfw>
+    <xme:LIPkan-JZ5Bsc_qf_qzSKiO4SSGu_ZhXLK-7SbhLd_ga2MSLJRxYfgla5kYQhAz4g
+    vWjkVeTtUTSvhq5sd9N1CbD3OI9Aai-Q4JL3FTyjqmGiSI0y0jz>
+X-ME-Received: <xmr:LIPkasL_dK3hcnlU21pr2ltTidzucQYz5Pyat1ZQ_Ki9zJYn2Osw3LMtdyOK0WxdArlHOw>
 X-ME-Proxy-Cause: dmFkZTEweYRmagK+U6NI40C2gOY56/U7LG2BkHRYtHGegF8oYRz9i4J2vGpEgnudzkTbxw
     S+05SZ6tnysqAiIuvW0rwxSCZ00N22HDFMiHosy/Ua4cl6RIbsjuJ/uu7lp6OCXbAHqwkT
     6QXUlJGPjy1NHLsRNtVlr5IhsX7e34mkzuRSD0q6qfCPSfug2rRloXJkdp42sa5WRXVz1s
     OB/Vtpd017fmsUWB8n51/KGmPksOVmgNcVVsvnKkP1w/4p1Gl3FFTMFj/yE9SGa9bGqYZd
-    DEAc5WEVzqrmu52PmOXcyz83GCHyepZh88qBQqR3ddvqbZWDlNCiYkOIuK5E9t2uSo9Um6
-    HiVIgMYoLTUOBe5foGA2aWC2QphM1FwvnZmsHBYBKVVFZ/M+3xJ7SnV63k6y9sfdSKnfWd
-    VSkZIRzACelF+7cfgFIP1H56F80BC9a3ucV3oR8FvnyVa1BG+XcS/Fl5KHIkosBnU9LMWk
-    ORzOZpg3t9E7OQYBLgr4Qs3fOy/OjtjtDWiX/qNwyM2ZbHQYQcV4/g0cTEwQnDrU8dogPC
-    S/QEoNhfSI2kQYDjrGL6m4WWDLgZJZZijIcvy1BkvFn+uUzLFBkf9p+qKljsk7VCX1OLWX
-    Lgfp6AJFFkjwJHn2ShOYTbjabTpdtHDW98JxHo0AA2zWYUdZaMmNTp6BIL6g
-X-ME-Proxy: <xmx:KYPkat1CYFTSYRzoctVzMxVltGLK2C1SnjdG1VdRBWq2VmtSwKymIA>
-    <xmx:KYPkahPD4Of1DzmBqYoeoL1Lx3UumIZF5IetjCCSoaMbcK9iyHSiDw>
-    <xmx:KYPkas56dv3M3U8nFG4Dza1SfQE4TTLM7c45A4EEAZYP7l5i_ZV8mA>
-    <xmx:KYPkar2l6I2zgab6G-dhalA5QQUQJg_GHoSNpGYEkq9LJ6Z57iMwIA>
-    <xmx:KYPkarSFzLheB7q50lLlTLDNuzrpJhpmKC9WsqqrdsHl-99UwJpGm4-P>
+    DEAc5WEVzqrmu52PmOXcyz83GCHyepZh88qBQqR3ddvqbZWDlNCiYkOIuK5E9t2uSo9UrW
+    uDsZbLiLkyNl+/mZPx2C2zpsrfDuzTbWfDzBcdBwgfoeJwWbFIqZEmKtRH0HHBSsHSxFEF
+    cELHcrywywF8Y98o13OMk/C60Xux16S1eRy9viAXSYCOPOBR3a33c6uEyGUNrB4J5oXb/0
+    6zebDeAaBa6PkDtt6HC3d4c6goESm2AY+ruW6qwPLZeq85zSDO5zDnTDNwauZ54Iy0k9wm
+    VFdjItAm144W8N9y3huFdGuAxwkLRYhsCQCppOeAEgjQb5OBhokdXXivFCRHTcgTpi8VeI
+    MyFObumJieraW8/g1VW9/BvaI74q2MSY4WaZwdqFmjJvSg7225lqcvN0SU5Q
+X-ME-Proxy: <xmx:LIPkalehXt8cM15RbK0dhBmg9qi2cdwyS0qN8-dLahExQwSjXYYq5Q>
+    <xmx:LIPkaj-r6LTF-53YmZa1VAAeb9Qyw5J9uB1EHEWBz17xNaenIP3-VQ>
+    <xmx:LIPkaqqiLyDRTGNIhtOG2MqeclORWXarzLqcN9TwJwA2dwkkCyYhpg>
+    <xmx:LIPkagB1Le_i1W_AyiP0UACxAiUynOiTPnZrvCicDr1JseCXdAbpiA>
+    <xmx:LIPkas7Uo3SkbBjEzjmXvSD6JIgDVWcHg-vA4ILXP3B2Sb3qmOjBcrZK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Oct 2026 07:44:40 -0400 (EDT)
+ 30 Oct 2026 07:44:43 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f6e97cd5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Oct 2026 11:44:37 +0000 (UTC)
-Date: Fri, 30 Oct 2026 12:44:34 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 41ad265b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 30 Oct 2026 11:44:42 +0000 (UTC)
+Date: Fri, 30 Oct 2026 12:44:40 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Elia Pinto <gitter.spiros@gmail.com>
 Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/4] odb: use size_t for the length of objects to write
-Message-ID: <auSDFRHpLy65PMF_@pks.im>
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 4/4] convert: use size_t for text statistics and ident
+ counts
+Message-ID: <auSDKKHJONZjx2LX@pks.im>
 References: <20261021101640.329990-1-gitter.spiros@gmail.com>
  <cover.1793352943.git.gitter.spiros@gmail.com>
- <8fcb9f10f13962acd5cdac652bea8fc4164f2e78.1793352943.git.gitter.spiros@gmail.com>
+ <84e9e38a3e63a2b135847471a13ea36d37bd64d4.1793352943.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,39 +129,42 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8fcb9f10f13962acd5cdac652bea8fc4164f2e78.1793352943.git.gitter.spiros@gmail.com>
+In-Reply-To: <84e9e38a3e63a2b135847471a13ea36d37bd64d4.1793352943.git.gitter.spiros@gmail.com>
 
-On Fri, Oct 30, 2026 at 10:58:50AM +0100, Elia Pinto wrote:
-> diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-> index 463b38f990..0a89bbb455 100755
-> --- a/t/t1007-hash-object.sh
-> +++ b/t/t1007-hash-object.sh
-> @@ -297,4 +297,17 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
-> +		'write filtered files over 4GB correctly' '
-> +	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
-> +	test_oid large5GB >expect &&
-> +	test_config filter.null-filter.clean "cat" &&
-> +	echo "big filter=null-filter" >.gitattributes &&
-> +	git hash-object -w -- big >actual &&
-> +	test_cmp expect actual &&
-> +	echo $((5*1024*1024*1024)) >expect &&
+On Fri, Oct 30, 2026 at 10:58:53AM +0100, Elia Pinto wrote:
+> gather_stats() counts NULs, CRs, LFs, CRLFs and (non)printable
+> characters in "unsigned" fields of struct text_stat, and
+> count_ident() counts "$Id$" markers in an "int". Now that the buffer
+> sizes they work on are size_t, a large enough buffer overflows them.
 
-Isn't this the exact same as `big`? So...
+This sounds a bit too deterministic: it doesn't necessarily overflow
+them, but the possibility exists in theory.
 
-> +	git cat-file -s $(cat actual) >actual &&
+> Unlike the previous patches, this is not specific to LLP64: "unsigned"
+> is 32 bits wide on all the platforms we care about.
+> 
+> The counters only drive decisions, but a wrapped counter makes the
+> wrong one. For example, a file with exactly 2^32 lone LFs gets
+> lonelf == 0, so will_convert_lf_to_crlf() decides there is nothing
+> to convert, and a wrapped "printable" or "nonprintable" can fool the
+> heuristic in convert_is_binary(). In count_ident(), going past
+> INT_MAX is undefined behaviour.
+> 
+> This is not a memory safety problem: the counts are only used as
+> hints to strbuf_grow() in crlf_to_worktree() and ident_to_worktree(),
+> and the buffers are then filled with strbuf_add(), which grows them
+> as needed.
 
-We shouldn't read from and write to the same file. Maybe write it to
-"actual.size" instead?
+These paragraphs very much read like AI to me. I would appreciate a
+human touch, also to demonstrate that a human was involved between us
+and the AI that tries to understand what was done.
 
-> +	test_cmp expect actual
-> +'
+> Use size_t for all of them, and compute the size hint in
+> ident_to_worktree() with st_add() and st_mult(), so that it dies
+> instead of wrapping around.
 
-... can't we `test_cmp big actual` here?
+That's awfully specific.
 
-Also, it might make sense to use `test_cmp_bin ()` instead.
+The patch itself looks good to me, thanks.
 
 Patrick
