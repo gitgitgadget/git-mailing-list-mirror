@@ -1,122 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793379556;
-	b=2A7EwH4cUNzjLqVMnA/ZCImAQM08GV8MyDNeNVCnlP5TqjqAGPjeT/EN8u9xBj/E6Z3l
-	 AQrb1wZ3YdLCr5LbP8FUvZQ+q7YJSxP6O1vKrK4PT2l9V2JiHtpPSHU21LxL4xF5I38Un
-	 HMh7LW9IGyQwwdFNHfhkXPMHQzOIqoXoOibDrJCIfu/k2ZJwB2L36tjrUTdLPdSRV+7o4
-	 boucVCUIdSfWxzjWAdD/mrER4sjC6W52H4TjYsX4xe8TvVS+DOizodnKMyKx+bQPDT6/O
-	 7yb/3rsT7T9+sAYz90CRQvOTadxoHgLeEZWm6QvbRMJByXEVpVUtX7YbOT41pKRptXQ==
+	t=1793379575;
+	b=gVWkeLiM0sryURUevjXz7mN6H6b1oGVz9GPYQbLceXuYBoTN2FJQn3rW10Nj1VRmoS79
+	 DxzTqOm+soFhv0HLf+Racb2zXDUC7TfNXe3a+dJGy8xQTqd72CpqvFmuITym31O7BNYx4
+	 2+QqLxxKVMzPdmQwiIjDQoQkdyCjtHZX+o6dJ/eesgAz52boGqb1Krt0dPpphIZQijicU
+	 k9XRp0jLEIB8+8btehKtQek4/UO8oNQ59PqOM8v19Y5jEFYAl6mmyJHkHRwb0lc6oxr7p
+	 mlk0NUU5Kpmpn1T8CPidka7KxYAMx40XtYZlquP1G4F3ZjG5mnpgsG3yv6WaMT0ojZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793379556;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=iqERUGJ3m8BWocc14o+S5UOkjKS8/jSvxyNvss38l5M=;
-	b=cmwrRuX9rxwmwUH/pmUnvRBLe+AhWjC88osjAUyaghiQxB6VxCiL0N3nRGm7MtgUGCf5
-	 Sr8Cp8ItIqILTAiRhXYbJ1yT52snzQ0waX1aEi8Dt3VT47Qmx1Q4x5j2Oo4SyCfdCZveB
-	 FXjjzSscrke8ZrcjSaeguf1KGQUx7uqRMvK4qX7KODMxfJzWSE0zm8gUKAJ9hxucCQAxQ
-	 qppEZPdY+j8Ev/ggIKhZF03tepZAVd24OUMIsAjpdDIB8RrW4RGOeVfpLl2PrwIKPvT4b
-	 ZkDYU/u7KoPVUcruRFY2iTPLmz+5QT6BIKc2MXoY75wXRhCBdLnNMbInnmrBew46a+Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793379575;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-Id:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=3tNqsyQpWHQ+cBcicvq/hKEZNzqmlVUm/qvxX5wcct0=;
+	b=CQ8tcJhMj4b+Nd1MtseiJVgj/yoP9H0EdbtybaWGH902dQAI2za8faaBkvhMUpL+zjy8
+	 zayRtMvQHY+LBk5qYhPqiIEP8H9C/hXoJLxM8l5/U3GV3/1lt+/yQpZEKW/oWXKiMlDiS
+	 KvvVyzC1tBFaViOzVMny1ywFOlkDw6MfWOZIqeVcFGoO4yo6GBnA7YwjPiYbw76opQRRu
+	 zWVxfEGXusZCNZo7KTm4H282rMjDufVSYuSWp2Qtrzb4nrHs/6NWyrecnmx8c/RLtRUxt
+	 PV7bC6tIQQQP/vUJZVb4zunYxaiHK2NyaXOondetuM64m7nzA/KxZz9GmDY8iRB7kOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b="eM5/DUkT";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=E7a1MSYO;
-	arc=none smtp.remote-ip=202.12.124.154
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yIWhNgo2;
+	arc=none smtp.remote-ip=209.85.128.45
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64A0606A31D
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 16:59:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C64A0606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDCA606A31C
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 16:59:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8DDCA606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=eM5/DUkT;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=E7a1MSYO
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E01BE7A00D8
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 12:59:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 30 Oct 2026 12:59:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1793379554;
-	 x=1793465954; bh=iqERUGJ3m8BWocc14o+S5UOkjKS8/jSvxyNvss38l5M=; b=
-	eM5/DUkTcxcBswYesLEGkfOu7C1n/St1isTjpC+AwwLKxs32vdDlVSgNKvrQI1Yc
-	uVOqG65mqzkQPncvdSA4MKpzTtBI435bsbnlGGn7UyXMvJXJhRP9eiZX+COR9zUL
-	EjEYnEOGSK4Q6NS8IwciUAoQ/6XDgPcnoQU6SQ/3GDaMqxpeFESXzsPIxwjwLhM5
-	JulVVCrk4+898ew0/w8y1ygD0+UXAChQjPkhj0mUTEebLtQUqMkUlM/mxUTKSuQ7
-	nX0F+XV98757rnLfloZ7xxPiHn1iiad165uqy2rYU4135fnPF/PUOgmzVSc2gikT
-	GQCPoLusGhpGDK3smgy/ZA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793379554; x=
-	1793465954; bh=iqERUGJ3m8BWocc14o+S5UOkjKS8/jSvxyNvss38l5M=; b=E
-	7a1MSYOjmBiQX8hVIUg59Y3Rshhh4FXJKDLmMNv2IX5WmBGC86qcFIrN36Srbzka
-	crTTRKV/WDXQBI2SaucMKCG5Ae5l5nhytypE3rgG3ivPqXBiRPftQifc+P6PgFpm
-	nr3BxEwQN7f2vWdqopRvCAkl6Kas+I43al7XPEkHsQCdJAmB3EijMbUfOqjcCSb2
-	2xs74l1KJoXObwlO7Gp/aUPo1AqgT4O8D9ytxPmOCN0IZv63XT7hqdQBvAlNinxY
-	JFjlDl44HWxoJo72tYS27NK5xyK4CPhPA+Gy9O8EP8v/PlhS8Ypjm2qpGXp2Sjkm
-	HK+qI5nHS2zO3i8DY/u5A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793379554; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:k1/gLbInNvP8mcSwKkO+SFhnVcYsjWfumk0CP0MQJV0njeI
-	vzuvwZgUMuCtcu71544fNwYozS7uGRDxjBwwr61oDgW2mdm4EXoAzVGyhR68D4OK
-	I9n9SzOiO+Ldjt/hfYGIayOe4+EmeBDjI2NxMwqmUC9Abj5YRDfWlUQtPrVx2X1u
-	hdTTREt9dNI6PXdnnUBvfWSNeni3I0F8zO1PAPQ39qwjPuUw9IEPWTWJBsOnbl1h
-	C1AUdQln5yd9GiOnmoBPCColV1I0lz8tUln2zlgepvdORUl86hqrCFyOg6rTQf3o
-	hxXnx7hRms+9SKQRWvCx5trSsEChfOu4Su64bhg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to,
-	user-agent;
-Message-Instance: m=1; h=sha256:ywUVtFCRcs8nm6tGFMOaQg24Oa37UKVVa+/ni8Bwiq8=:x19N+z/Pasr7intik+GrShKgLNJlB9yYE1saVOZcI20=;
-X-ME-Sender: <xms:4szkatulVNPACDw6H7jkf4IVXIC3g4U9NDC-KWkFd_Uw1mBM52O1cg>
-    <xme:4szkat5Xw4l4nn3mPbxjOHxOBkqnpGcO5Nucq5C_VeltfAano6DrtQdNwkA1HgFaF
-    _hejBE8Qc9PcRhHql2PnmSHUqrBbvnBVrxot2V0TdDVqtvBT5Tquw>
-X-ME-Received: <xmr:4szkauLlQ-KPQG0vllzeQjDrnmXvccxpSs-RShV2_ilvSjpSCDOFkiCaRPIVi8KZQxf-7vRjbD_4XIfKPMWsXpt1gX2U9FVvG9i3>
-X-ME-Proxy-Cause: dmFkZTGk94ehy9fIpCv8C8I7oKIBApgyUP13hvXg1/SFk6W/IAQN07MpVfvYDQWRswtJfe
-    WKctGgXm9kwx3zNnU9Qe7nUW42TO5Hn+FRt4GdRVVVaogPO6ej8ZZYDoZNQNAAP9rZ3IRX
-    v5CR+8lbFZzdRhuqYRhNxN8fFpusgJimw2GMGsB6PNO2HmhmPe17Tn710yw+YD/14j4DKa
-    G1+7YlGwGSea7Zc7AVQVQws+wiQ4v2BeBdYYhRXvIG93GHrQ9WjkpSYVm+9j8pCKrFKhXz
-    hmBcMYJpUo89NjTjeDjj0mKoSsvIn8O7LzJIE7sABcA1byAwBPTD2cIigqNwzkDyt1Owr7
-    q4sHErSvV8nc2uA6Uag33377NYWz1mbnTusfW6Xaxy8uWmQk1gRbqVM/Stwug3oHoFZ2DX
-    ES8Kwt5uEBFIqW346N+6iw7nF51rNByc89/c31ktGx3YASPRomF7V7iM5733SpiwEX+mVS
-    RQsyCOk8oi/3g98DeaW5z8bP0uv64wo7aKxNR7aVzYZ9TKc+NjhtGMPPg04iIwY6tWOBNs
-    6yPmp+m6pJc9N8i9vN5Hs1ewJufer6B0AuvQToE4mb72fBZCsoViXbhwWXAxJWMrHHdPcP
-    osRSulNVse4iIPIiqUtWNmx9CpNyotSWRY42iMBMj4B5atuNKZDbkec0F/VQ
-X-ME-Proxy: <xmx:4szkat5wlCj5jdmcHnqFPK6aMzrRBBbrDkekHB_hqqVpMhuyWm0KJA>
-    <xmx:4szkahz-pJ-NksCJA1UJXhwiQMaQKRMDEUxRNtoFr17z8rlhPS-z2A>
-    <xmx:4szkahbb7smip94Wci2UgagC2515oEc9kiLj8oFYhTmQxYy8O3tUzQ>
-    <xmx:4szkajQWpA2cTB2I5uoE7qd1f-e7yKIJQ8b77WeuRBv72yWSOdppPA>
-    <xmx:4szkalguAgkObtZJHLSBkA6hJobOcR2jRUFjkKHDAt4dj4lLzud4zQVu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Oct 2026 12:59:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Windl, Ulrich" <u.windl@ukr.de>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Q: .gitignore and asterisk "*"
-In-Reply-To: <07b3498d83424cac87221724b371839a@ukr.de> (Ulrich Windl's message
-	of "Fri, 30 Oct 2026 10:46:01 +0000")
-References: <07b3498d83424cac87221724b371839a@ukr.de>
-Date: Fri, 30 Oct 2026 09:59:12 -0700
-Message-ID: <xmqq5wyjxgyn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yIWhNgo2
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a35d5d4a20so10364085e9.2
+        for <git@vger.kernel.org>; Fri, 30 Oct 2026 09:59:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793379573; x=1793984373; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3tNqsyQpWHQ+cBcicvq/hKEZNzqmlVUm/qvxX5wcct0=;
+        b=yIWhNgo25aaknSweBzfIxHZhTnUq05jYXkL4GyFsc1p3tdRfnLmidVu111/5SArkBi
+         o/uKsC+5aDl/eRCPVPGPx5O1HN/YStbw7OzyNiM0GJ4Ws4KU8602F/jwSw30MSWI4WV5
+         Y4b6TR4YNkvX7VEYCI/LAO77BJOytKQZbn5TgZt5yzhggOS4GdTQvXfkuecCXs+y8x4K
+         ztDegtTRppZsUiiAifw+n6r+QDmYotn9A2mqjD8uiMBvi0mAhvqBHAFN11W36ttv+lPZ
+         +zaJZs+lh6HbOklMgWoh8FzLtQLk7wVq4kVIkVakVUOw/vqREThXhIKuoICq0sMkWDxp
+         V4BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793379573; x=1793984373;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=3tNqsyQpWHQ+cBcicvq/hKEZNzqmlVUm/qvxX5wcct0=;
+        b=ymRm6O0GKA+dyINh98+CQ9GynFPl8QFSsvAhU86E/p0Mn/GEsrZawR3aykdz9yMTg6
+         7+96CE0lbdM2o+hK7+J4hm2lZijvjrnxp8KHgL4E36mnH9CHG+XgbLSRihgzNuhk2JW+
+         6REi6c0GfiQL5bDwMBkSpyAHgLUc0NQj4EVJOa86mLTr4CzbhFrKBYee3YX75yOk0Z7C
+         0QCjrTp1y1hZWtogqRvev8JPJVj/vMZtEzvSiVhog2CKyb5lQo3KiemMFMP2puj0BGs2
+         19D/LISGYGYtd6/khpGEHaCgRPIc1wNw7dK459bx/6Mev+vGH8gOcgvW34TD+BXBbsWm
+         iQNA==
+X-Gm-Message-State: AFq9FYJUvY3NZJSZHtmxLoEYx9Kz7tORiBbLTOWgIvN3k/j2AWwvPh/T
+	d1+PWkVeEsinNt/2xdzsiILYbzKoLviyD/xIBgUF59c5IfY/fkV3GVlkYL/ECsyz
+X-Gm-Gg: AYBFou37oxkummLDTqMr/H4DrlMy0AKIY8PH3DDGBLfVNRjOt5NYEbThHEIZaUHu95i
+	WuogPNPbT5/zCyBWJtXUldXROW7LOah1Itk9AtAv6GQ3wcp0WNTf2D4AuEjWRZY7XHfhBsizatO
+	pna9uHJRsy+W20ou5tx/nCFIk74EDCfDURXjMcy0pMiijFItJ+ZJuAKFfRDZ2xKck53Hm/1rYhs
+	//W9+V3r51Fu3vJ8IAhMHoWLfDsibAvPDUsv/9sU/8u6BnXAtjLbm2RHnEyQoRS24A92ygw05dS
+	7K1za6fV0/0/2VzGGZ6P/etxq1+cp8SLwiZT7AIzZjCmW4WDPPoy4oCwjX7Fm2wXi1lvN2atcQB
+	rBoJ1ZUSbqKlckH7HOlDgLw0rk2tqSm56lKvMB0SbWZE4GI5PK/NI4PUOkbgy1wUmZNFnj+hn0b
+	IbYm0vQqlcA6mrh8NRFctUmUCNadsaC0FdVUJOeJXUFkRXDBcsFqViKfP7QtYwffm4aDZx1HGSW
+	rlL347eG4XVbl0BZrH5mnL3bsiFyo0a0gnnLOqedpS9Dt58x5tlD/Qdj1Sfp6FFW7sB8hnqfzQj
+	owqT9JqXaOgOKSwpf5khg4RemkrhtB7uoaeEF7pPZYTjLbdvgvI2CRR1w6phMJBOD5wc1FGcMu4
+	=
+X-Received: by 2002:a05:600c:8b63:b0:49d:34:420d with SMTP id 5b1f17b1804b1-4ac17ff9d41mr62684585e9.20.1793379572668;
+        Fri, 30 Oct 2026 09:59:32 -0700 (PDT)
+Received: from Stealth.zuku.co.ke ([197.237.143.156])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4aa820492cesm161264925e9.13.2026.10.30.09.59.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Oct 2026 09:59:32 -0700 (PDT)
+From: Dorine Tipo <dorine.a.tipo@gmail.com>
+To: git@vger.kernel.org
+Cc: okhuomonajayi54@gmail.com,
+	ps@pks.im,
+	kaartic.sivaraam@gmail.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	usmanakinyemi202@gmail.com,
+	Dorine Tipo <dorine.a.tipo@gmail.com>
+Subject: [Outreachy PATCH v2] list-objects-filter-options: pass repository to partial clone helpers
+Date: Fri, 30 Oct 2026 19:59:23 +0300
+Message-Id: <20261030165923.53000-1-dorine.a.tipo@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20261025190253.2207856-1-dorine.a.tipo@gmail.com>
+References: <20261025190253.2207856-1-dorine.a.tipo@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,81 +102,163 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-"Windl, Ulrich" <u.windl@ukr.de> writes:
+partial_clone_register() and partial_clone_get_default_filter_spec()
+use `the_repository` to look up promisor remotes and to update the
+repository's configuration, which ties them to the main repository of
+the process.
 
-> I think the documentation for gitignore(5) could be improved regarding "*":
-> It's nor clear whether "*" matches an empty string.
-> So when I have
-> foo.log
-> foo.msg
-> foo.sh
-> foo-whatever.log
-> foo-whetever.msg
-> Would e.g. "foo*.log" cover all the logs?
->
-> The manual says:
->        •   An asterisk "*" matches anything except a slash. The character "?"
->            matches any one character except "/". The range notation, e.g.
->            [a-zA-Z], can be used to match one of the characters in a range.
->            See fnmatch(3) and the FNM_PATHNAME flag for a more detailed
->            description.
+Accept the repository as a parameter instead, and have the callers in
+builtin/clone.c and builtin/fetch.c pass `the_repository` explicitly.
+This moves the dependency on the global one level up, without changing
+behavior.
 
-Very good point.
+Remove the USE_THE_REPOSITORY_VARIABLE definition from
+list-objects-filter-options.c, as the file no longer uses
+`the_repository`.
 
-The reference to fnmatch(3) may not make readers to consult the
-documentation for the library function.  The system they are on may
-not even have "man".  fnmatch(3) often refers to glob(7), which
-typically would say that a '*' (not between brackets) matches any
-string, including the empty string.  The reference to FNM_PATHNAME
-we have there is an attempt to refer back to fnmatch(3) that would
-typically say that the wildcard does not match a slash.
-
-How about rewriting the entry like so to reduce external references?
-
------ >8 -----
-Subject: gitignore: rewrite wildcard description
-
-The documentation for '.gitignore' makes reference to fnmatch(3) and
-FNM_PATHNAME to describe how an asterisk "*" and a question mark "?"
-behave.  Even though it spells out that these wildcard characters
-do not match a slash, it does not say if an asterisk matches an
-empty string (it does).
-
-Rewrite the section so that the readers would get a more complete
-picture without requiring them to know what fnmatch(3) and glob(7)
-says.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Signed-off-by: Dorine Tipo <dorine.a.tipo@gmail.com>
 ---
- Documentation/gitignore.adoc | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+Changes since v1:
+ - Drop USE_THE_REPOSITORY_VARIABLE, which is no longer needed
 
-diff --git c/Documentation/gitignore.adoc w/Documentation/gitignore.adoc
-index 7979e50f18..671a5a4c99 100644
---- c/Documentation/gitignore.adoc
-+++ w/Documentation/gitignore.adoc
-@@ -110,11 +110,16 @@ PATTERN FORMAT
-    and `a/frotz` that is a directory (all paths are relative from
-    the `.gitignore` file).
+ builtin/clone.c               |  3 ++-
+ builtin/fetch.c               |  7 +++++--
+ list-objects-filter-options.c | 16 ++++++++--------
+ list-objects-filter-options.h |  3 +++
+ 4 files changed, 18 insertions(+), 11 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 44037dd428..5a6859065e 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1619,7 +1619,8 @@ int cmd_clone(int argc,
+ 				     remote_head_points_at, &branch_top);
  
-- - An asterisk "`*`" matches anything except a slash.
--   The character "`?`" matches any one character except "`/`".
--   The range notation, e.g. `[a-zA-Z]`, can be used to match
--   one of the characters in a range. See fnmatch(3) and the
--   FNM_PATHNAME flag for a more detailed description.
-+ - An asterisk "`*`" matches string of any length, and a question mark
-+   "`?`" matches any single character, but these wildcard characters
-+   do not match a slash "`/`".
-+
-+ - A pair of brackets that enclose characters match one of the listed
-+   characters, and a range notation inside them, e.g., "`[a-zA-Z]`",
-+   would behave as if all the characters in the range were listed there
-+   instead.  Wildcard characters "`*`" and "`?`" lose their special
-+   meaning inside a pair of brackets, e.g., "`[*]`" would match an
-+   asterisk and nothing else.
+ 	if (filter_options.choice)
+-		partial_clone_register(remote_name, &filter_options);
++		partial_clone_register(the_repository, remote_name,
++				       &filter_options);
  
-  - A backslash ("`\`") can be used to escape any character. E.g., "`\*`"
-    matches a literal asterisk (and "`\a`" matches "`a`", even though
+ 	if (is_local)
+ 		clone_local(path, git_dir);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 1f76ae6242..5277047476 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2436,7 +2436,8 @@ static inline void fetch_one_setup_partial(struct remote *remote,
+ 	 * remote if there is currently no default filter-spec.
+ 	 */
+ 	if (filter_options->choice) {
+-		partial_clone_register(remote->name, filter_options);
++		partial_clone_register(the_repository, remote->name,
++				       filter_options);
+ 		return;
+ 	}
+ 
+@@ -2446,7 +2447,9 @@ static inline void fetch_one_setup_partial(struct remote *remote,
+ 	 * the config.
+ 	 */
+ 	if (!filter_options->choice)
+-		partial_clone_get_default_filter_spec(filter_options, remote->name);
++		partial_clone_get_default_filter_spec(the_repository,
++						      filter_options,
++						      remote->name);
+ 	return;
+ }
+ 
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index bc5d98f9e6..b74caf3bf7 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "config.h"
+ #include "gettext.h"
+@@ -362,6 +360,7 @@ void list_objects_filter_release(
+ }
+ 
+ void partial_clone_register(
++	struct repository *repo,
+ 	const char *remote,
+ 	struct list_objects_filter_options *filter_options)
+ {
+@@ -370,7 +369,7 @@ void partial_clone_register(
+ 	char *filter_name;
+ 
+ 	/* Check if it is already registered */
+-	if ((promisor_remote = repo_promisor_remote_find(the_repository, remote))) {
++	if ((promisor_remote = repo_promisor_remote_find(repo, remote))) {
+ 		if (promisor_remote->partial_clone_filter)
+ 			/*
+ 			 * Remote is already registered and a filter is already
+@@ -378,12 +377,12 @@ void partial_clone_register(
+ 			 */
+ 			return;
+ 	} else {
+-		if (upgrade_repository_format(the_repository, 1) < 0)
++		if (upgrade_repository_format(repo, 1) < 0)
+ 			die(_("unable to upgrade repository format to support partial clone"));
+ 
+ 		/* Add promisor config for the remote */
+ 		cfg_name = xstrfmt("remote.%s.promisor", remote);
+-		repo_config_set(the_repository, cfg_name, "true");
++		repo_config_set(repo, cfg_name, "true");
+ 		free(cfg_name);
+ 	}
+ 
+@@ -393,19 +392,20 @@ void partial_clone_register(
+ 	 */
+ 	filter_name = xstrfmt("remote.%s.partialclonefilter", remote);
+ 	/* NEEDSWORK: 'expand' result leaking??? */
+-	repo_config_set(the_repository, filter_name,
++	repo_config_set(repo, filter_name,
+ 			expand_list_objects_filter_spec(filter_options));
+ 	free(filter_name);
+ 
+ 	/* Make sure the config info are reset */
+-	repo_promisor_remote_reinit(the_repository);
++	repo_promisor_remote_reinit(repo);
+ }
+ 
+ void partial_clone_get_default_filter_spec(
++	struct repository *repo,
+ 	struct list_objects_filter_options *filter_options,
+ 	const char *remote)
+ {
+-	struct promisor_remote *promisor = repo_promisor_remote_find(the_repository,
++	struct promisor_remote *promisor = repo_promisor_remote_find(repo,
+ 								     remote);
+ 	struct strbuf errbuf = STRBUF_INIT;
+ 
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+index 77d7bbc846..6a349cb4da 100644
+--- a/list-objects-filter-options.h
++++ b/list-objects-filter-options.h
+@@ -6,6 +6,7 @@
+ #include "strbuf.h"
+ 
+ struct option;
++struct repository;
+ 
+ /*
+  * The list of defined filters for list-objects.
+@@ -158,9 +159,11 @@ static inline void list_objects_filter_set_no_filter(
+ }
+ 
+ void partial_clone_register(
++	struct repository *repo,
+ 	const char *remote,
+ 	struct list_objects_filter_options *filter_options);
+ void partial_clone_get_default_filter_spec(
++	struct repository *repo,
+ 	struct list_objects_filter_options *filter_options,
+ 	const char *remote);
+ 
+-- 
+2.34.1
+
