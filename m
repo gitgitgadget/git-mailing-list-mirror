@@ -1,59 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793391029;
-	b=mCHfnytUDWKjz+e7DBo90zP5v34dnrlwQfej+ol4tqARakq9SFsv+zJpCNWTz/TJnNAB
-	 WszLsnEDthBx4BdCksbYa5+0OuFNuzyh+F/xN5BlF3miCCeoBINX0F0fDmmvATNFkcdmU
-	 OWfJ4uMea1rhgxrMs6qPsRJUYPxEoDiDnbqL5+zx46wvRXMiLfZISL2sOAa8j6+yPJPrN
-	 0oJEK5+rWx6ceSqD5qCHiGN9UOFLy7p4WL79twe6erN2rwWLgJGBpI8rinMqBmfevBJkE
-	 8S7nnZgS5f0v93IYIMxKqPDw4BqulR5oFJOrbf8MH7aM5iyYVkKGSAjKGShzpb0XBEg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793391029;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
-	 X-Zoho-Virus-Status:X-Zoho-AV-Stamp:X-ZohoMailClient;
-	bh=6PtfeTXsJVwTSiTLixur2HnME17FNzOIT81qAYhCEqQ=;
-	b=2cbyZcgw1xOVtBUE2aX59rW7pwxKm8rfuJNUDPnHFjnu/nEI+So971vCWxAxoXqZ/hOi
-	 1SJDC6OqaamXZNqKu9ok8zL48kiZJ4fqq6koBpERUoK1r9NWSZr0ewHXqftOEEGOIAm3Y
-	 LQcaudsR0zk5b0Iui5nQjsTaO4ocPRvHyDKivkxxsi9ygN8EUlLeS2pFw1pcNh5+Vh21A
-	 pMLfAoZbv5xEbfmU9GY1eKlM1ClR73H0WRke6LAHpKmQdlYd7wnPrLi2/faulSBJ1Ntev
-	 s6iM7jTzw4BthvdUUc9M7zQYyI21M3Wxns7EFw8VMegtahBqRm0qgB1iGER+Dm+WVvw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=collabora.com;
-	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=WZlAv36i;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
-Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793392525;
+	b=I/Vvq2ObzJnN6WTQfwrIDhwZ56G3cN+R9hzOLLBT0SSH8pc5R6G1ViHRuICD3Q+gKeMx
+	 sIQMbnk3V2i2LQr3S9l4wFrAm0YALoLFOXjZ8s/iY0X0mwCZpzQ5vQO9lMH1b4oGQfhyn
+	 QJv0pfdfeCsoh+MGdUbC4vh6WPSUNrGAyBoCZOBFfna/wKU785kGCFtNhOJVqmyR74TOA
+	 9/Os/tVjiN1LcVQwcgQYkTSWsFxsJE3iKyZKjFpzilhRj5deDP2nX2bLx1i3jkxFqtFYs
+	 5QCwNp4ZeKZPG+xAOnQ3BxFvKJOZbxgMiUsfILu6RCCLXskijkTB6EJoocc/CQjcOJw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793392525;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=1b0kd7b2WDIUmPf2/iF45ABdDPC+pfSvv6ed02F1vdw=;
+	b=jeTslkqE/jKS7CBpIcsk8neCXBiGwElv6v3l/JOFyeMdJL6zPcG0XFBF1fRf+eWLZCuF
+	 YHf87/nlM8PSIx+3JpJMETANp8v8rlCwSpVFenYeceKtFBq/XKU570mU3QP2c5jYsYSaq
+	 03UU6sk2nFInqQnizsEtSvhT1LiUMcUkBw6V4n8FgN1yHKysIMr0uKXYL37VdCTw92ZNs
+	 PWZVldfl0oX4YZuPhsAH1CEYyYb5grsGUageBzdeigDQujcfnu9eYBgZxG1Pt6RsIrFz+
+	 RLihe+hZ/BrjuOdTGIsjUBv5cmbN2UckSmhwABURfu+bNV9BaEt1K1IwZLzZrwasutg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=H2+TyX9r;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=u7tnZdH2;
+	arc=none smtp.remote-ip=202.12.124.145
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D269606A31A
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 20:10:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4D269606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1ED606A327
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 20:35:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E1ED606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=WZlAv36i
-ARC-Seal: i=1; a=rsa-sha256; t=1793391020; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=d0oQgeXKtya4Kz8cf/ko3GZujQjatkPPfmLs90kroRlgObmyNfdCj6ihkMuW4mnZ+E4K7NsvXHRd/8+3VwfYixZ1LPRSB+0KwUH10dq5EL9p8RImt1fDARPSZy9JM45o55x0kmFZEROUx+kvT7QOagq//txZOlW1gk1e3YQ8mhg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1793391020; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=6PtfeTXsJVwTSiTLixur2HnME17FNzOIT81qAYhCEqQ=; 
-	b=kuyrQVxFvGJPh/togSMABtNIUYkVx0N0omhwYQbwzZmxYUdGAHU/oyupRswi07U7sueGchc+eFmb7j4HnTyKDq5+AHhXN5M9F/laTMHA6rqSIl0B/fOwvY8gtDtGfsutFCkcSHQ5jdNsiS35+0TMZG6aF0rkyzqj3mYsPsgPo3Y=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
-	dmarc=pass header.from=<vmiklos@collabora.com>
-DKIM-Signature: a=rsa-sha256; b=WZlAv36iJKi//6jkCxvD4sgjZGxCMt6QpcGInAD9SDju59gBWDnePnw8mujHBtoCjxJMkBGH9CbLgZdP+xXKsWuB3ZAWx8t8lUg9ugqGlr68UUnc/altlgh7IbMFm90BEWZ83PqCNxgfzlYqSTSMGjnRPz4HvTHkrhszQtxItrg=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=6PtfeTXsJVwTSiTLixur2HnME17FNzOIT81qAYhCEqQ=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1793391018088704.8541088389551;
-	Fri, 30 Oct 2026 13:10:18 -0700 (PDT)
-Date: Fri, 30 Oct 2026 21:10:14 +0100
-From: Miklos Vajna <vmiklos@collabora.com>
-To: gitster@pobox.com
-Cc: szeder.dev@gmail.com, ps@pks.im, git@vger.kernel.org
-Subject: [PATCH v4 6/6] log: fix --follow following an edit on a side the
- merge did not take
-Message-ID: <7be8cfb3ba58a4d4dc040fb2f229524599524b78.1793298331.git.vmiklos@collabora.com>
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=H2+TyX9r;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=u7tnZdH2
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7B1AB1D0015C
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 16:35:23 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Fri, 30 Oct 2026 16:35:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793392522;
+	 x=1793478922; bh=1b0kd7b2WDIUmPf2/iF45ABdDPC+pfSvv6ed02F1vdw=; b=
+	H2+TyX9rJWaG9IlqOSQjICPYWP5AVCaF8680eJplRYUnqcexTrkogo3JGEhWVf9P
+	zNsBnNIkA6DEJRlWYL94RVqfYfYREcYlGYnQSaA3eM0mqec58pwlqajZ8C7N5tlp
+	JpSH9vr/TBDTN5ok/NOmI/SJHokDNJcjjH/Fzcv+DkrNsiiX+1eQyB9pKdySjYT5
+	3gAHr4yI63suU5UPhKLSyUZHxYKZOPOGkLY4OnieHnfIPBWM47NnSJhLkaM+H3oH
+	v8Tl4Ov13+ywVhMFqzBTk2a+cMm3S00lmRC2Zi0iNVdRfDJ9R8M8x/yWYw1/OO8i
+	1nIZ1gAU3Z7rk2ZYOFA3Yw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793392522; x=
+	1793478922; bh=1b0kd7b2WDIUmPf2/iF45ABdDPC+pfSvv6ed02F1vdw=; b=u
+	7tnZdH2yvd00ItJWrgmnJU9KiomA9zP5sn3ZnX1CLdwedM3Y23as51vR6kcuBowO
+	wVfCk1DuPFeTmCt/VDWPfvRurQCHsczepnNoCy1XxosqGEAYbNv8SceC4rKMAY+y
+	7hfnGvPu8ZK66ugZ9ry4NaoDSk8PJZyURqAjuhTwEAJ4pyJWEcpLSc0mj6VLtm1F
+	91EHcGg1oaeC0a2eWhjkzzQdm+DZ0EBmvgJFMEv7GrXLL3VPURKloughPAO/voIY
+	f7nK+NzwU5VlzrEztOE1Oowqc7UlVyR4mY7CmzGw2aBzDUIK2772b7dynyMnfAks
+	bW+QF39Xj5EO57Evyhd7Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793392522; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:IT54wdG2y8JKClOy8sv77RPb6nLLBORTcaUmcxSnCgZO4Oc
+	bVO7HpnR4t0lOhMMtr98bAbgUSI9UD395fBwC9BygC45vJ+JQN9IWM53HbavpEV8
+	5kyIT3mAT1byn0miCuSC3ZmC6cpA3ii4+Liqi/+H5ZZW4Yvi1b4Dnr+sqga16L5i
+	hwetoSaQIJeFo9szcjOMU60K1dkQOQPpt+YSt3ZZd7c48SDoY/Aqg+DV+3lrPcTd
+	uJVtBkLdLQ0RzsFA+iM49DALhdUet9CoJMZVioIgG6Z8QebuBA+G30xr3gMF5jnw
+	HQC052uLpX3VQqKAb1/SE907ET0v5Wu6t9oFfPA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:7v41qRa0pecuazv8K8jmGPkRV/ctSIKoDowcmY0g9rQ=:C11Z25kek+lZnlrqMrEKAopN0+X3Aj1XabO12jjJo5s=;
+X-ME-Sender: <xms:if_kai4wXnnEAzMZoTblIY4jut0g6Fyl9f4COUQPznmsTdx7MX4SMA>
+    <xme:if_kamurWnbmXs6-ruyxcLitJy0cSBoTwp-bRgA3oknOcX6mUuqiL7a9k0WmtXpD3
+    ySWUbloypGnpqTi_qIA9O9QuGlHcPXqns78t5bbMQNAiIzIfb56kuuo>
+X-ME-Proxy-Cause: dmFkZTEWlc/H+L+LAjPUwmtMkmVVob+tpn2HCCEO/7d4yDUOEt8LECrJtbik8sDEi00FiC
+    OEImduscir244xPdowJPL5RcrP5ttNcBo/PCiF31QcMePZ6UpnO6eRyPRt70E417HL2Pfi
+    h31YF4ZXPZQoKI+IiZQ05DzlQdwz39AYt72albvTe9dTh5heqReOJzeFDcrSXHrDms7XBB
+    ORU7k0D7uXMOhnBY8iwHVJ641mwD/LngQb0bJ1v7mAq6Ht73dS18x0KCKQor6PYLaaWN5n
+    j0tn4TZwo5wCkYvd7nZLB8CGMBpa3/qhEQ65iUwh8DnBFosgDlTnMkmg6UIhlDn6Q9jSgX
+    rPWOLjims/qDPYzWrfQqBvAhJOOcrJugzBuJQkfUgMpHD6tVGWd+FsokM16p3aOcxZOXgT
+    An8qwn9RpmMMniAaFMgyicOIUx6RmBHOu95noZwzVLxCwNHIadUnPfY/znsnHs6U93pldw
+    eIYGvxWbMBEnvaDZXXWReGaAbRZiI2H52eXXrhUAMJhEogA7JobH/9vYTp0QR1uOeVwF2D
+    6Q88yWMdnRiDVtpdfbcmpxicivGvP/dFi0edk4XL58cNyB0qrh1cGuyAg0peowpzW9MSaV
+    9w1feqfhpL1sXMfvYmG0UhttNEiJzpsb0GbdyrU4upzMnsxVzuGhmWujZA1w
+X-ME-Proxy: <xmx:if_kaqn7KuRkA2c1dVWb3llLQ0mziYKLJ0UihYx46w5cjdECeR2rQA>
+    <xmx:if_karJsIDabySyD6OvLgWdw0NkaGGP2n9ySKnN6MqPUim54GkCPog>
+    <xmx:if_kav4CBCQDWqk7YLtuliPfsP97GA_0xJrTMkDmufBpev5I5Mzzmg>
+    <xmx:if_kav2YvYVvIvizZFmPji93EwTXKoPxH7Rg4D1Xt1UWVSl7lksHMg>
+    <xmx:iv_kaggPffoZICSmVORb4CB0ofGaKYGPBVUUao8sqN5GWodxokZ-9cSA>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id B1A7F782738; Fri, 30 Oct 2026 16:35:21 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -63,225 +114,96 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1793298331.git.vmiklos@collabora.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/293.370.16
-X-ZohoMailClient: External
+X-ThreadId: ApuIcoGem8Go
+Date: Fri, 30 Oct 2026 16:35:00 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Tuomas Ahola" <taahol@utu.fi>, "Richard Kerry" <richard.kerry@atos.ai>
+Message-Id: <13af97a1-a86c-4077-9136-204c74f3d625@app.fastmail.com>
+In-Reply-To: <xmqqpkwtag8d.fsf@gitster.g>
+References: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
+ <pull.2248.v4.git.1793198687.gitgitgadget@gmail.com>
+ <4b40588c90c82549c9774f14cfeb4e4741b66386.1793198687.git.gitgitgadget@gmail.com>
+ <xmqqpkwtag8d.fsf@gitster.g>
+Subject: Re: [PATCH v4 2/2] doc: add new Git tutorial for beginners
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Take a history where F is renamed to G on master, F is edited on a side
-branch, and the side branch is merged with '-s ours', so the merge keeps
-G and drops F. Here 'git log --follow G' doesn't show the edit of F on
-the side branch, while it did before the previous commit.
 
-The problem is that follow_needs_renames() only searches for renames in
-a parent without the path if the merge base still has the path, which
-covers the case when the parent renamed the path. Here the other side
-of the merge did the rename, so the merge base only has the old name.
-The parent is then told to follow G, which it doesn't have, and the
-history of F on its side is lost. Searching for renames in each parent
-that lacks the path would fix this, but that is the expensive search
-that the previous commit avoids, e.g. 148 merges hit this case for
-include/linux/rsc_table.h in linux.git.
 
-Fix the problem by also searching for renames when the merge base
-doesn't have the path, but the parent changed a file since the merge
-base that the merge no longer has: only such a file can be the old name
-of the path that still needs to be followed in the parent. This check
-is cheap, since it only diffs the changes of the side branch, and it
-rules out 146 of the 148 merges in linux.git. Then do a plain rename
-detection from the parent to the merge, which only looks at the files
-deleted by the merge, not at all files of the parent like --follow does.
+On Wed, Oct 28, 2026, at 1:26 PM, Junio C Hamano wrote:
+> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: Julia Evans <julia@jvns.ca>
+>>
+>> Introduce Git in two parts:
+>>
+>> Steps 1-7: Create an empty repo & make 2 commits (`git init`,
+>> `git add`, `git commit`, `git status`, `git diff`)
+>> Steps 8-12: Push the repo to a remote host like GitHub or GitLab
+>> (`git remote add`, `git push`)
+>>
+>> Some design choices:
+>>
+>> - Only use commands present in 2.23.0 (when `git switch` as introduced),
+>>   to support older versions of Git.
+>> - Introduce a much smaller set of commands than the old tutorial, to
+>>   keep the tutorial quick (doable in an hour). Some users found it to be
+>>   very fast and some wanted to stop early (after step 7) so this seems
+>>   to be a good balance.
+>> - Have users start with an empty repository instead of an existing
+>>   project, because many of the testers did not have an existing project
+>>   to test, or were scared of using an existing project.
+>> - Add a troubleshooting section, since in the testing some users got
+>>   extremely stuck (for 4+ hours) on minor issues like needing to say
+>>   "yes" when SSHing to a new host.
+>> - Don't explain branches, because explaining branches and collaboration
+>>   is complicated and deserves its own tutorial. Instead just tell users
+>>   we're not going to explain them in this document.
+>> - Tell users to set their default branch to `main`, because many Git
+>>   hosts use it as their default branch and it really simplifies things.
+>> - Keep it as vendor neutral as possible, while acknowledging the reality
+>>   that Git hosting services like GitHub, GitLab, etc are extremely
+>>   popular. Do this by creating the repo locally and then optionally
+>>   pushing it later.
+>> - Use SSH for authentication, explaining how to set up SSH in the
+>>   easiest way possible (with disclaimers to check your security team's
+>>   policy if applicable since the "easiest way" may not be the best), and
+>>   giving some instructions for how to translate an HTTPS URL to an SSH
+>>   URL.
+>> - Use Git Credential Manager for authentication on Windows, since it's
+>>   simpler, SSH auth is a very "unixy" thing to do,  and it comes with
+>>   Git for Windows
+>
+> What does "it" in "and it comes with" refer to?  It is unclear
+> between GCM or SSH and since SSH appeared later, it tempts readers
+> to think that it says "and SSH comes with GfW".  But the early part
+> of the same sentence says SSH is "unixy", which probably was used as
+> a synonym to "non-Windowsy", implying that we do not want to
+> recommend it.  It gives a conflicting and confused message.
 
-Reported-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Miklos Vajna <vmiklos@collabora.com>
----
- log-tree.c                  | 96 +++++++++++++++++++++++++++++++++----
- t/t4219-log-follow-merge.sh | 31 ++++++++++++
- 2 files changed, 117 insertions(+), 10 deletions(-)
+Will replace "it" with "GCM".
 
-diff --git a/log-tree.c b/log-tree.c
-index 0dc71be61e..c2c3473f25 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -1111,15 +1111,20 @@ static void set_pathspec_to_single_path(struct pathspec *ps, const char *path)
- 		       PATHSPEC_LITERAL_PATH, "", paths);
- }
- 
--static int commit_has_path(struct rev_info *opt, struct commit *c,
--			   const char *path)
-+static int tree_has_path(struct rev_info *opt, struct object_id *tree,
-+			 const char *path)
- {
- 	struct object_id oid;
- 	unsigned short mode;
- 
-+	return !get_tree_entry(opt->diffopt.repo, tree, path, &oid, &mode);
-+}
-+
-+static int commit_has_path(struct rev_info *opt, struct commit *c,
-+			   const char *path)
-+{
- 	parse_commit_or_die(c);
--	return !get_tree_entry(opt->diffopt.repo, get_commit_tree_oid(c), path,
--			       &oid, &mode);
-+	return tree_has_path(opt, get_commit_tree_oid(c), path);
- }
- 
- static void remember_follow_pathspec(struct rev_info *opt,
-@@ -1169,26 +1174,97 @@ void release_follow_pathspec_slab(struct rev_info *opt)
- 	FREE_AND_NULL(opt->follow_pathspec_slab);
- }
- 
-+/*
-+ * Did 'parent' change a file since 'base' that the merge (with tree 'oid') no
-+ * longer has? Only such a file can be the source of a rename on the other side
-+ * of the merge that still needs to be followed in 'parent'.
-+ */
-+static int follow_parent_changed_dropped_file(struct rev_info *opt,
-+					      struct commit *base,
-+					      struct commit *parent,
-+					      struct object_id *oid)
-+{
-+	struct diff_options diff_opts;
-+	int i, ret = 0;
-+
-+	repo_diff_setup(opt->diffopt.repo, &diff_opts);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
-+	diff_tree_oid(get_commit_tree_oid(base), get_commit_tree_oid(parent),
-+		      "", &diff_opts);
-+	for (i = 0; i < diff_queued_diff.nr && !ret; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+
-+		ret = DIFF_FILE_VALID(p->two) &&
-+		      !tree_has_path(opt, oid, p->two->path);
-+	}
-+	diff_queue_clear(&diff_queued_diff);
-+	diff_free(&diff_opts);
-+	return ret;
-+}
-+
-+/*
-+ * Is 'path' in the merge (with tree 'oid') renamed from a file of 'parent'?
-+ * Only look at the files that the merge deleted, not at all files of 'parent'
-+ * like --follow does.
-+ */
-+static int follow_has_rename_source(struct rev_info *opt,
-+				    struct commit *parent,
-+				    struct object_id *oid, const char *path)
-+{
-+	struct diff_options diff_opts;
-+	int i, ret = 0;
-+
-+	repo_diff_setup(opt->diffopt.repo, &diff_opts);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.detect_rename = DIFF_DETECT_RENAME;
-+	diff_opts.rename_score = opt->diffopt.rename_score;
-+	diff_opts.single_follow = path;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
-+	diff_tree_oid(get_commit_tree_oid(parent), oid, "", &diff_opts);
-+	diffcore_std(&diff_opts);
-+	for (i = 0; i < diff_queued_diff.nr && !ret; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+
-+		ret = p->status == DIFF_STATUS_RENAMED &&
-+		      !strcmp(p->two->path, path);
-+	}
-+	diff_queue_clear(&diff_queued_diff);
-+	diff_free(&diff_opts);
-+	return ret;
-+}
-+
- /*
-  * When the path in a merge is the same as in 'same', does the path still need
-  * renames to be followed in 'parent'? Only if the merge has the path, 'parent'
-- * doesn't have it, but its fork point with 'same' had it, e.g. 'parent'
-- * renamed the path.
-+ * doesn't have it, and either:
-+ *
-+ * - its fork point with 'same' had it, e.g. 'parent' renamed the path, or
-+ * - 'same' renamed the path from a file that 'parent' changed.
-  */
- static int follow_needs_renames(struct rev_info *opt, struct commit *parent,
--				struct commit *same, const char *path)
-+				struct commit *same, struct object_id *oid,
-+				const char *path)
- {
- 	struct commit_list *bases = NULL, *base;
--	int ret = 0;
-+	int ret = 0, changed_dropped = 0;
- 
- 	if (commit_has_path(opt, parent, path) ||
- 	    !commit_has_path(opt, same, path))
- 		return 0;
- 	if (repo_get_merge_bases(opt->diffopt.repo, parent, same, &bases) < 0)
- 		exit(128);
--	for (base = bases; base && !ret; base = base->next)
-+	for (base = bases; base && !ret; base = base->next) {
- 		ret = commit_has_path(opt, base->item, path);
-+		if (!ret && !changed_dropped)
-+			changed_dropped = follow_parent_changed_dropped_file(
-+				opt, base->item, parent, oid);
-+	}
- 	commit_list_free(bases);
-+	if (!ret && changed_dropped)
-+		ret = follow_has_rename_source(opt, parent, oid, path);
- 	return ret;
- }
- 
-@@ -1313,7 +1389,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 			     parents = parents->next) {
- 				if (parents->item != parent &&
- 				    follow_needs_renames(opt, parents->item,
--							 parent, path))
-+							 parent, oid, path))
- 					tail = &commit_list_insert(parents->item,
- 								   tail)->next;
- 				else
-diff --git a/t/t4219-log-follow-merge.sh b/t/t4219-log-follow-merge.sh
-index 36204ae2bf..a85fb78ca2 100755
---- a/t/t4219-log-follow-merge.sh
-+++ b/t/t4219-log-follow-merge.sh
-@@ -266,4 +266,35 @@ test_expect_success '--follow with --diff-merges=first-parent follows all parent
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'setup merge keeping the renamed path, other side edited the old one' '
-+	git init keep-renamed &&
-+	printf "line 1\nline 2\nline 3\nline 4\nline 5\n" >keep-renamed/F &&
-+	git -C keep-renamed add F &&
-+	test_tick &&
-+	git -C keep-renamed commit -m "O: add F" &&
-+	git -C keep-renamed branch B &&
-+	git -C keep-renamed mv F G &&
-+	test_tick &&
-+	git -C keep-renamed commit -m "A1: rename F to G on master" &&
-+
-+	git -C keep-renamed checkout B &&
-+	printf "line 1\nline 2\nline 3\nline 4 T\nline 5\n" >keep-renamed/F &&
-+	test_tick &&
-+	git -C keep-renamed commit -am "B2: update F on B" &&
-+
-+	git -C keep-renamed checkout master &&
-+	test_tick &&
-+	git -C keep-renamed merge -s ours -m "M: merge B, keep G, drop F" B
-+'
-+
-+test_expect_success '--follow follows an edit on the side the merge did not take' '
-+	git -C keep-renamed log --follow --pretty=tformat:%s G >actual &&
-+	cat >expect <<-\EOF &&
-+	B2: update F on B
-+	A1: rename F to G on master
-+	O: add F
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.56.0
+>   - Use GCM for authentication on Windows, since it comes with GfW,
+>     and is simpler than SSH authentication.
+>
+>> +Step 10 (Mac/Linux only): Create an SSH key if needed
+>> +-----------------------------------------------------
+>> +For Git to upload changes to another Git repository, it needs a way to
+>> +login to that repository. One of the most popular ways to do this is
+>> +with an SSH key.
+>> +
+>> +On Windows, you can skip this step and the next one because Git for
+>> +Windows comes with
+>> +https://github.com/git-ecosystem/git-credential-manager[Git Credential Manager]
+>> +to handle logging in. 
+>
+> This is the only mention of GCM.  As described in step 14 (push),
+> GCM will kick in when needed.  It is great that Windows users do not
+> need any handholding beyond this line ;-)
 
+I hope so! I found a friend with a Windows computer to test this
+and it did work as advertised. If there are issues hopefully we'll
+hear from folks about it and we can adjust :)
