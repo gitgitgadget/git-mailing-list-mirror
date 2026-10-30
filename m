@@ -1,59 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.12
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793390838;
-	b=EhO5PNmdTBdI2VIwUkK1+btnIwuPisq8M4aMKOQMcRNHUk8LEZYkfusoeov7Jirc1D8O
-	 T0oUCwCpa5jKZ6Jppm6MwF0aMr792Wpx2YfOuQbQlPIc2g++Lx5EZNamULtsFKwZQ/F/k
-	 oTS8Glf8lCyxJvpKoegc/PzKErMTABkopxaUa6SVnMSJWtdvYS0EREu3tzbVv3bChf8Nw
-	 eQRN36kWro1KQL/waK+ivHzC/3P/rx0HYl/QQvcX0Mj6GjQWpdc3xHO9naKAcNzFwRidH
-	 +M5gh2eyS+2Ag5hCdBUhRxOkzwxHWewB0bMhdyx/OwxnUibKR2GUSSlxofossD2YO9A==
+	t=1793390863;
+	b=SK3golTgz1I951G1wuwinm0tivaJ3kmU38raBkTktt4OEp5HyDXdDhMdEB2TilZLBmkO
+	 T1+sGAFI8yEpzi34FogIiNd6vOCCwljGj4nOCndIesyvO+aqzO/Dm4QfraObTb6u0FeFN
+	 1ZxreKFNPYEWaN8N+kvPbczAwZLYsKE3zQ557+QeKKM9pyxb8DgFkreqW6uZJ6Vs4EJqY
+	 b2PjVCNCnE3PMxifspnbx5x6zsvpb3XpF6i2m4hxiM811kLbZwi6i5agD6MFB0CZ7b94e
+	 DialNIL0L5lWWj1A2wllLgYZdM6eQr3tSUUoqGk2AuHUSlRZf4/En7qibrK9YboGseg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793390838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793390863;
 	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
 	 Message-ID:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
 	 X-Zoho-Virus-Status:X-Zoho-AV-Stamp:X-ZohoMailClient;
-	bh=krkUOFCfC4H7KoMGBnYia7532fuInjFi6CWvZA2H84E=;
-	b=3xMIvaZ9ipfU9+a7v1CNshxlFexupjuLO/P98jd/OntMasN2ZMStQQ2PlJKbaIRlSia6
-	 A/EspIM4kp4U6Pq+XfF6vZXV7RQ+a9BkUGMMPlZizKICquf2qV1R/bV95QVNxaTPHjmiC
-	 CKrE6wj98r0DoQKfchq1BiS7YldA6JqB/8/OZwhselYyqIW5BpGTuuqxqMLle2otV7T3L
-	 l24RYzbsBb4iO7mDxbK3u7uU92R5KXhxodr/vJxlkxz8W5N/s36ZEKZa6iMokrf9u4n/D
-	 jP/HSrmXk1joTQ5ZBqLDj/ErqeVI3VoUcUoy0TNTB1VBxSxsQ2BdvdwLN9mQ5+EEZkA==
+	bh=5lr26VjVhmrjFyAgcCXOtkoLaWZzl2aaN0ybDpdJq2w=;
+	b=Xb+UCo2L7IXUleHsDoQ3/3RJ6DRl1Y5U5K9zsh2Lmwq5MCBa2ZIAZjhaymTMb41PY5c3
+	 NH18J70YB3gngRFjJtK2Enb+CX6P6UBzyuaCNbHh8xvnGiaVWdy/kOveWrii3BW5UhIbC
+	 AOWE82GEJjsIHgxAEoyHa49HnzJOIy6FcL6V4X9EaQLk51NF1Ppmz/GDoJwB5i9M1bU8i
+	 CxWIy14wcQlM1k6ZkjSv831Ya9k2RXtzvtOLKlFux1mUbaj8X72lx9U/YVuVSQ7QlZQyr
+	 bdQo87xZVW90rSZwZpFaGsbm+QteMZSc5YYIYVFVn0D5Kvs6d1IpCW8/6q8/25PT/Wg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=collabora.com;
 	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=bUmFH+97;
+	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=Ky9fXk6c;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.12
 Received: from sender6-op-o12.zoho.com (sender6-op-o12.zoho.com [165.173.180.12])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7E3606A31C
-	for <git@vger.kernel.org>; Fri, 30 Oct 2026 20:07:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF7E3606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923A7606A31A
+	for <git@vger.kernel.org>; Fri, 30 Oct 2026 20:07:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 923A7606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=bUmFH+97
-ARC-Seal: i=1; a=rsa-sha256; t=1793390828; cv=none; 
+	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=Ky9fXk6c
+ARC-Seal: i=1; a=rsa-sha256; t=1793390856; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=RBPPPRvKZpyTyhe1J5KI8Euh6BGoRN5yEneb1ROpiB9/yWafliYnVeahhl6C1s2G1lc9v0ImaSy/9mEZG6F66yTBfuVEHd2cC8uxXRe8ur9uVY4cpNq8i2zvtpvzCji8ehEcWTyWmyAtacUa293VtnQwhV2ybRCb//X/X8IfYOg=
+	b=Woz+UqgdabuIhjP7eonbLezM8WmZnKqyJ4YogspfFiq8dRq3lguDF7Qw3qrB87JS2xQJi5aDVmzRhy1Z7gkaE5AB/bKyQtdEE79hYCq5cJM3yPMWeA/lfl3DozI+pGRO4P+NwN/R5gksrGvAzxoYYq7cxv9Fv1h7Urpg2FzZKfc=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1793390828; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=krkUOFCfC4H7KoMGBnYia7532fuInjFi6CWvZA2H84E=; 
-	b=UgBN4NxMZqX3H6E95sjHAadbcycGe81oO2VUG/l1ziBR5yihdUZOLHYAuqLQexo0BEBwCK7X9Fu6QOux7t+1o+yxJHWmbejNEne03yw+e0rRicEdApRU2Eg41Bj5/sw06X89Y0at8Di3FRbyK6aATLzuOKxaziNar/qmCsTZNKY=
+	t=1793390856; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=5lr26VjVhmrjFyAgcCXOtkoLaWZzl2aaN0ybDpdJq2w=; 
+	b=igbYPbqvtXSIn2XDYF5ds4AMID2nlbCyN6fqtoJ6adbu9hrPv/p3BGTrBvvpjltQX8Ua66hbgGdiivbkuivQAI8tID3WoDV7XTRgSVbvfrrGCQ2HntTk48bdALGWhsOaHDOd4v11AdruffWhJ0acVutAGUDrIpPDDdiZRyqa/ak=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
 	dmarc=pass header.from=<vmiklos@collabora.com>
-DKIM-Signature: a=rsa-sha256; b=bUmFH+97kivyV3Wq0dc++v/ACj1tdZPPWCU/Pu0oEt7zVrU1UmF0YTXchvaCRf5PUcc/pxnzj7EkKSl74hg6J/zk4QpqMSFcWfPyWo7M4u4sWS75DZIEX8WZJ2/CAlZ8QrDRIK7uOV0p0SolkEHnPy4DuVhUC4S+NftIFyJb/Cg=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=krkUOFCfC4H7KoMGBnYia7532fuInjFi6CWvZA2H84E=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1793390825280690.1501719504074;
-	Fri, 30 Oct 2026 13:07:05 -0700 (PDT)
-Date: Fri, 30 Oct 2026 21:07:00 +0100
+DKIM-Signature: a=rsa-sha256; b=Ky9fXk6cNBYtkgedYF+v21pmNQe+jHSTHDKkjKkUF1/G/g312yR6ZjZe5mVDBZNMzZKmJfX2iz6VsbfPJk1zuEhDK8tVAJkv361gzlRzLS6+miWzsbeg7jt+hl15JLhZTOsQg6ugRVJdRQkp+BPrHe+1c2PQDlzBdg4wlLt3umk=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=5lr26VjVhmrjFyAgcCXOtkoLaWZzl2aaN0ybDpdJq2w=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1793390853306351.3340134902227;
+	Fri, 30 Oct 2026 13:07:33 -0700 (PDT)
+Date: Fri, 30 Oct 2026 21:07:28 +0100
 From: Miklos Vajna <vmiklos@collabora.com>
 To: gitster@pobox.com
 Cc: szeder.dev@gmail.com, ps@pks.im, git@vger.kernel.org
-Subject: [PATCH v4 0/6] log: speed up --follow following renames for
- non-linear history
-Message-ID: <cover.1793298331.git.vmiklos@collabora.com>
+Subject: [PATCH v4 1/6] t4219: test more --follow cases across merges
+Message-ID: <aabf5652c91f2a38ab3cb8b18c7c368ec7269201.1793298331.git.vmiklos@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -65,234 +64,139 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1792701579.git.vmiklos@collabora.com>
+In-Reply-To: <cover.1793298331.git.vmiklos@collabora.com>
 X-Zoho-Virus-Status: 1
 X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/293.370.16
 X-ZohoMailClient: External
 
-Hi Patrick,
+A later commit in this series will speed up 'git log --follow' for
+merge commits. Add tests for cases which already work, but had no
+test coverage, so it's easy to break them while optimizing:
 
-Thanks for the reviews of v3. Changes in v4:
+- --follow through a fork with renames on both sides, with -c, --cc
+  and --remerge-diff
+- a --no-ff merge taking a rename from the second parent, in both commit
+  orders, since the result could depend on the walk order
+- a merge keeping the path, while the other side renamed it
+- --diff-merges=first-parent, which diffs merges only against their
+  first parent, but still walks all parents
 
-- The -m --follow fix is now a separate patch (3/6), so the simplify
-  patch (4/6) no longer changes behavior. The two bugs you pointed out
-  in the old commit message have one cause: the followed path is not
-  restored between the parents of a merge. So 3/6 fixes both. The
-  commit message of 4/6 now says upfront that 304812ed33 (log: improve
-  --follow following renames for non-linear history, 2026-06-22) caused
-  a performance regression.
+Signed-off-by: Miklos Vajna <vmiklos@collabora.com>
+---
+ t/t4219-log-follow-merge.sh | 124 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 124 insertions(+)
 
-- Fixed the brace style nit in the simplify patch.
-
-- Patch 6/6 fixes the case you found, where the speedup lost history:
-  one side of the merge renamed the path, and the other side, whose
-  version the merge dropped, edited the old name. It uses your test.
-  I kept it separate from the speedup patch, which is complicated
-  enough already. With the extra check, the linux.git case still takes
-  about 37s.
-
-- I also noticed that the simplify patch lost history with
-  --diff-merges=first-parent, which diffs merges only against their
-  first parent, but still walks all parents. Fixed that and added a
-  test for it to 1/6.
-
-Thanks,
-
-Miklos
-
-Miklos Vajna (6):
-  t4219: test more --follow cases across merges
-  log: extract showing the remerge/combined diff of a merge commit
-  log: fix -m --follow losing the history of later parents
-  log: simplify --follow following renames for non-linear history
-  log: speed up --follow following renames for non-linear history
-  log: fix --follow following an edit on a side the merge did not take
-
- log-tree.c                  | 265 +++++++++++++++++++++++++++++-------
- t/t4219-log-follow-merge.sh | 171 +++++++++++++++++++++++
- 2 files changed, 388 insertions(+), 48 deletions(-)
-
-Interdiff against v3:
-diff --git a/log-tree.c b/log-tree.c
-index d5ce58d91d..c2c3473f25 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -1111,15 +1111,20 @@ static void set_pathspec_to_single_path(struct pathspec *ps, const char *path)
- 		       PATHSPEC_LITERAL_PATH, "", paths);
- }
- 
--static int commit_has_path(struct rev_info *opt, struct commit *c,
--			   const char *path)
-+static int tree_has_path(struct rev_info *opt, struct object_id *tree,
-+			 const char *path)
- {
- 	struct object_id oid;
- 	unsigned short mode;
- 
-+	return !get_tree_entry(opt->diffopt.repo, tree, path, &oid, &mode);
-+}
-+
-+static int commit_has_path(struct rev_info *opt, struct commit *c,
-+			   const char *path)
-+{
- 	parse_commit_or_die(c);
--	return !get_tree_entry(opt->diffopt.repo, get_commit_tree_oid(c), path,
--			       &oid, &mode);
-+	return tree_has_path(opt, get_commit_tree_oid(c), path);
- }
- 
- static void remember_follow_pathspec(struct rev_info *opt,
-@@ -1169,26 +1174,97 @@ void release_follow_pathspec_slab(struct rev_info *opt)
- 	FREE_AND_NULL(opt->follow_pathspec_slab);
- }
- 
-+/*
-+ * Did 'parent' change a file since 'base' that the merge (with tree 'oid') no
-+ * longer has? Only such a file can be the source of a rename on the other side
-+ * of the merge that still needs to be followed in 'parent'.
-+ */
-+static int follow_parent_changed_dropped_file(struct rev_info *opt,
-+					      struct commit *base,
-+					      struct commit *parent,
-+					      struct object_id *oid)
-+{
-+	struct diff_options diff_opts;
-+	int i, ret = 0;
-+
-+	repo_diff_setup(opt->diffopt.repo, &diff_opts);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
-+	diff_tree_oid(get_commit_tree_oid(base), get_commit_tree_oid(parent),
-+		      "", &diff_opts);
-+	for (i = 0; i < diff_queued_diff.nr && !ret; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+
-+		ret = DIFF_FILE_VALID(p->two) &&
-+		      !tree_has_path(opt, oid, p->two->path);
-+	}
-+	diff_queue_clear(&diff_queued_diff);
-+	diff_free(&diff_opts);
-+	return ret;
-+}
-+
-+/*
-+ * Is 'path' in the merge (with tree 'oid') renamed from a file of 'parent'?
-+ * Only look at the files that the merge deleted, not at all files of 'parent'
-+ * like --follow does.
-+ */
-+static int follow_has_rename_source(struct rev_info *opt,
-+				    struct commit *parent,
-+				    struct object_id *oid, const char *path)
-+{
-+	struct diff_options diff_opts;
-+	int i, ret = 0;
-+
-+	repo_diff_setup(opt->diffopt.repo, &diff_opts);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.detect_rename = DIFF_DETECT_RENAME;
-+	diff_opts.rename_score = opt->diffopt.rename_score;
-+	diff_opts.single_follow = path;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
-+	diff_tree_oid(get_commit_tree_oid(parent), oid, "", &diff_opts);
-+	diffcore_std(&diff_opts);
-+	for (i = 0; i < diff_queued_diff.nr && !ret; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+
-+		ret = p->status == DIFF_STATUS_RENAMED &&
-+		      !strcmp(p->two->path, path);
-+	}
-+	diff_queue_clear(&diff_queued_diff);
-+	diff_free(&diff_opts);
-+	return ret;
-+}
-+
- /*
-  * When the path in a merge is the same as in 'same', does the path still need
-  * renames to be followed in 'parent'? Only if the merge has the path, 'parent'
-- * doesn't have it, but its fork point with 'same' had it, e.g. 'parent'
-- * renamed the path.
-+ * doesn't have it, and either:
-+ *
-+ * - its fork point with 'same' had it, e.g. 'parent' renamed the path, or
-+ * - 'same' renamed the path from a file that 'parent' changed.
-  */
- static int follow_needs_renames(struct rev_info *opt, struct commit *parent,
--				struct commit *same, const char *path)
-+				struct commit *same, struct object_id *oid,
-+				const char *path)
- {
- 	struct commit_list *bases = NULL, *base;
--	int ret = 0;
-+	int ret = 0, changed_dropped = 0;
- 
- 	if (commit_has_path(opt, parent, path) ||
- 	    !commit_has_path(opt, same, path))
- 		return 0;
- 	if (repo_get_merge_bases(opt->diffopt.repo, parent, same, &bases) < 0)
- 		exit(128);
--	for (base = bases; base && !ret; base = base->next)
-+	for (base = bases; base && !ret; base = base->next) {
- 		ret = commit_has_path(opt, base->item, path);
-+		if (!ret && !changed_dropped)
-+			changed_dropped = follow_parent_changed_dropped_file(
-+				opt, base->item, parent, oid);
-+	}
- 	commit_list_free(bases);
-+	if (!ret && changed_dropped)
-+		ret = follow_has_rename_source(opt, parent, oid, path);
- 	return ret;
- }
- 
-@@ -1295,8 +1371,9 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 			changed = diff_queued_diff.nr;
- 			diff_queue_clear(&diff_queued_diff);
- 			opt->diffopt.found_follow = 0;
--		} else
-+		} else {
- 			log_tree_diff_flush(opt);
-+		}
- 
- 		showed_log |= !opt->loginfo;
- 
-@@ -1312,7 +1389,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 			     parents = parents->next) {
- 				if (parents->item != parent &&
- 				    follow_needs_renames(opt, parents->item,
--							 parent, path))
-+							 parent, oid, path))
- 					tail = &commit_list_insert(parents->item,
- 								   tail)->next;
- 				else
-@@ -1340,8 +1417,15 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 			opt->diffopt.flags.follow_renames = 1;
- 			parents = all_parents;
- 		}
--		if (!parents || opt->first_parent_merges)
-+		if (!parents)
- 			break;
-+		if (opt->first_parent_merges && !follow_only) {
-+			if (!path || opt->first_parent_only)
-+				break;
-+			/* Only find the path to follow in the other parents */
-+			follow_only = 1;
-+			opt->diffopt.flags.follow_renames = 0;
-+		}
- 		if (path)
- 			set_pathspec_to_single_path(&opt->diffopt.pathspec,
- 						    path);
 diff --git a/t/t4219-log-follow-merge.sh b/t/t4219-log-follow-merge.sh
-index c8474ed151..a85fb78ca2 100755
+index e370f82955..c109c29f70 100755
 --- a/t/t4219-log-follow-merge.sh
 +++ b/t/t4219-log-follow-merge.sh
-@@ -254,4 +254,47 @@ test_expect_success '--follow follows a rename on the side the merge did not tak
- 	test_cmp expect actual
+@@ -126,4 +126,128 @@ test_expect_success '--follow follows renames through a fork in a single history
+ 	test_cmp expect actual.sorted
  '
  
-+test_expect_success '--follow with --diff-merges=first-parent follows all parents' '
-+	git -C keep log --follow --diff-merges=first-parent --no-patch \
-+		--pretty=tformat:%s F >actual &&
++for opt in -c --cc --remerge-diff
++do
++	test_expect_success "--follow follows renames through a fork with $opt" '
++		git -C diamond log --follow $opt --pretty=tformat:%s path >log &&
++		grep "^[A-Z]: " log | sort >actual &&
++		cat >expect <<-\EOF &&
++		A: add path0
++		B: modify path0 on upper
++		C: modify path0 on lower
++		M: merge with rename to path
++		X: rename path0 to path1
++		Y: rename path0 to path2
++		Z: modify path
++		EOF
++		test_cmp expect actual
++	'
++done
++
++# Build a merge that takes the renamed path from the second parent, while the
++# first parent only has the old path. $2 decides which side is committed first,
++# which decides the walk order.
++setup_rename_on_second_parent () {
++	git init $1 &&
++	printf "line 1\nline 2\nline 3\nline 4\nline 5\n" >$1/old &&
++	git -C $1 add old &&
++	test_tick &&
++	git -C $1 commit -m "A: add old" &&
++	printf "line 1\nline 2\nline 3 modified\nline 4\nline 5\n" >$1/old &&
++	test_tick &&
++	git -C $1 commit -am "B: modify old" &&
++	git -C $1 branch topic &&
++
++	if test "$2" = topic-first
++	then
++		git -C $1 checkout topic &&
++		git -C $1 mv old new &&
++		test_tick &&
++		git -C $1 commit -m "R: rename old to new" &&
++		git -C $1 checkout master
++	fi &&
++
++	echo other >$1/other &&
++	git -C $1 add other &&
++	test_tick &&
++	git -C $1 commit -m "M: unrelated change on master" &&
++
++	if test "$2" = master-first
++	then
++		git -C $1 checkout topic &&
++		git -C $1 mv old new &&
++		test_tick &&
++		git -C $1 commit -m "R: rename old to new" &&
++		git -C $1 checkout master
++	fi &&
++
++	test_tick &&
++	git -C $1 merge --no-ff -m "merge topic" topic
++}
++
++test_expect_success 'setup merge taking a rename from the second parent' '
++	setup_rename_on_second_parent rename-master-first master-first &&
++	setup_rename_on_second_parent rename-topic-first topic-first
++'
++
++for order in master-first topic-first
++do
++	test_expect_success "--follow follows a rename from the second parent ($order)" '
++		git -C rename-$order log --follow --pretty=tformat:%s new >actual &&
++		cat >expect <<-\EOF &&
++		R: rename old to new
++		B: modify old
++		A: add old
++		EOF
++		test_cmp expect actual
++	'
++done
++
++test_expect_success 'setup merge keeping the path, other side renamed it' '
++	git init keep &&
++	printf "line 1\nline 2\nline 3\nline 4\nline 5\n" >keep/F &&
++	git -C keep add F &&
++	test_tick &&
++	git -C keep commit -m "O: add F" &&
++	git -C keep branch B &&
++	printf "line 1\nline 2\nline 3 A\nline 4\nline 5\n" >keep/F &&
++	test_tick &&
++	git -C keep commit -am "A1: update F in place" &&
++
++	git -C keep checkout B &&
++	git -C keep mv F G &&
++	test_tick &&
++	git -C keep commit -m "B1: rename F to G" &&
++	printf "line 1\nline 2\nline 3\nline 4 B\nline 5\n" >keep/G &&
++	test_tick &&
++	git -C keep commit -am "B2: update G" &&
++
++	git -C keep checkout master &&
++	test_tick &&
++	git -C keep merge -s ours -m "M: merge B, keep F, drop G" B
++'
++
++test_expect_success '--follow follows a rename on the side the merge did not take' '
++	git -C keep log --follow --pretty=tformat:%s F >actual &&
 +	cat >expect <<-\EOF &&
 +	B2: update G
 +	B1: rename F to G
@@ -302,32 +206,13 @@ index c8474ed151..a85fb78ca2 100755
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'setup merge keeping the renamed path, other side edited the old one' '
-+	git init keep-renamed &&
-+	printf "line 1\nline 2\nline 3\nline 4\nline 5\n" >keep-renamed/F &&
-+	git -C keep-renamed add F &&
-+	test_tick &&
-+	git -C keep-renamed commit -m "O: add F" &&
-+	git -C keep-renamed branch B &&
-+	git -C keep-renamed mv F G &&
-+	test_tick &&
-+	git -C keep-renamed commit -m "A1: rename F to G on master" &&
-+
-+	git -C keep-renamed checkout B &&
-+	printf "line 1\nline 2\nline 3\nline 4 T\nline 5\n" >keep-renamed/F &&
-+	test_tick &&
-+	git -C keep-renamed commit -am "B2: update F on B" &&
-+
-+	git -C keep-renamed checkout master &&
-+	test_tick &&
-+	git -C keep-renamed merge -s ours -m "M: merge B, keep G, drop F" B
-+'
-+
-+test_expect_success '--follow follows an edit on the side the merge did not take' '
-+	git -C keep-renamed log --follow --pretty=tformat:%s G >actual &&
++test_expect_success '--follow with --diff-merges=first-parent follows all parents' '
++	git -C keep log --follow --diff-merges=first-parent --no-patch \
++		--pretty=tformat:%s F >actual &&
 +	cat >expect <<-\EOF &&
-+	B2: update F on B
-+	A1: rename F to G on master
++	B2: update G
++	B1: rename F to G
++	A1: update F in place
 +	O: add F
 +	EOF
 +	test_cmp expect actual
