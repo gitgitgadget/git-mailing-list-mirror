@@ -1,90 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793446788;
-	b=0hTWqccu/63vvUeuy+UEPV/6kAuk/J8+5YB1KQ4T/C5BAuvJbfV4sJ+5TMXvrfV562RL
-	 kf2EIRaKuYNCHJTk5eJQPHi1rdFhnXgom884SfJEZ8asIlbwdP5WyXgvIS0YIwnbmGo6U
-	 UEY9ltpH4FFvltf0RD5JzgzR+toXsJvNapM8HMjOabAUxLGPMUZYqePlJGUTUXVpd0RBF
-	 wlsvJt+onGa1mLlU8jiNOsnEuQdA008+qiET22jCl92wd7eCzwFRI2kEuurcMEXU75LSW
-	 Qs2cEogxFvHzwYTt5JprokFhq8rS4igHbjyiA4o6OIFYiDhNLxo7VDrm5S6dLH8R5NQ==
+	t=1793446789;
+	b=pBDtTOdojDHLnVNiw7hVtVtLwWLq4sJ54fzrixFokomigxe7BbtuT61Sa1YcH2HXJisk
+	 lGHaWd8OgQbImeiu96KWkwtgsIRpXBMCbdA4nM11P6WJWm5xskvv2MC99BxG5/zgC2a0x
+	 A/m8AKBymqqR6J5vFFvkzAGE3AkVapsGHFHcn93g7ZpK7ag0uclHZDzaBw7PC7gha2jnd
+	 LyeYqb9/hkryDywwMVf/B4TBwWAR4vz0WEm4mniLxUW93vNTcxJC7LZS3axxHA4ZrSpin
+	 00GC31ySCJAaImsPpFTdZN8sHzT39JGTeIIkrWd/6ygYYJioDUsbyV8nCrknvItv/PA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793446788;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793446789;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=0E3fCx9XCR8vCrn+9DeLShjIsItyc0sFuK5XQADgWpE=;
-	b=XPUAUW3tNhwnZ5mDQH0chOpFOzYyNq4PX6YGgQOzrawxc8QWTc4oLtBXTmRja/zJtQIh
-	 aOvlD2c5ZBV9VsiJMG+8cSQml3aV4mrBpq5/jRV8WbV2uL4IxAFTp2rv4OcwmdZjWn70u
-	 f9vsfpS1G/iaFdv8iORzqjG9hBn/JcNfdzUTy/Uu/xagatAsgZT9zxAYMwOiSO085yj7A
-	 tpEdnfrfTgzGHr1bldSf/ft19ATPdRoNWuIAeqiKrTGDK+xSKKrROPdTmnhRg+OEruPIn
-	 ze3eT4Wp1bQjuoHM2T68CbAt2/NbHRor9KiLUwN6RwDXMuhXz5qp9iUEH2/WO6VNuxw==
+	bh=Bc8n/qIMIDl4LzX4d+xBd1iNZ8XAjyP91d6jiUG1yLA=;
+	b=uYzVTRumrtm2AnB3anGO6PE4hb0JYlaXnOA5MfsWLOBzF5sHyYtvAjPR2ITWDLeNt8HJ
+	 8vsujADJUT/kFjAN4Sk+CaN6IyvGnDBe6r8WNM+I2qZPL4T5jwbhDPUN9sFFETh/Tgtx8
+	 8Y0oe3ziQotGL99NSgV6agD69SR6SMIl1KTQWozJyhIEKjv3AypH5hLOqyUFWAZI+bunH
+	 sZH9YOz15PNkb6pnX24XHqhQKlWrRXAYyFOFjHP/ZPrQ77xx/8vYjuleByLXDqDw+VQ9n
+	 AVQK6G/GD8xzwYocxQrRDi35+v5iuSscPaaBfjdm7AJJxUy9nzRRH74zRQrDBEZkXsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oLjL+lgj;
-	arc=none smtp.remote-ip=209.85.128.46
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YiUCRJJo;
+	arc=none smtp.remote-ip=209.85.128.47
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDE3606A32F
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 11:39:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBDE3606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD16606A320
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 11:39:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9CD16606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oLjL+lgj
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a20a37703bso11633375e9.1
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 04:39:47 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YiUCRJJo
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a2084d62cdso13698045e9.1
+        for <git@vger.kernel.org>; Sat, 31 Oct 2026 04:39:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793446786; x=1794051586; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793446787; x=1794051587; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=0E3fCx9XCR8vCrn+9DeLShjIsItyc0sFuK5XQADgWpE=;
-        b=oLjL+lgjMAHQ1L6Egon5UOhVNQfa0yaJ9WmkIiuLyTQbH7He7HksUG9r+4MH+CSemm
-         IqbC/jRr9YQIsYgK+jTFfl3yE1EMB27clXXQPtS9J5jZnThadpsB/SJzGVQRyfekwL6i
-         AZTmeeFn39NiRb3KtKBkidnKMhKZhXIdBgqEjkFNaSsy6fJHlpk5ajEax+wh9PTgnW+q
-         0VuhvNCbSWuMkUt+dV/x7QpJsmXACDKolSpT0hN68bIk8YZ3XgqDgEO6QJ3NcW8nIHG7
-         wg8AyiqWXCSjDTfgeAwgr7YkXfQeai7jlSOXYVoC13ZVNJaD2b2FG47I+EQdj7ApJKXm
-         iL7g==
+        bh=Bc8n/qIMIDl4LzX4d+xBd1iNZ8XAjyP91d6jiUG1yLA=;
+        b=YiUCRJJoILBAYyPwowlCPrYp52yPvPD3zrkl5ItKnwvHILrulb9PPt/sxrpiMvlZGy
+         aOSYY54JsiKMg9RfcFzbP9aJtvX8SaoHcHZa/his0vMd1+9vxt2fQKSqKqC3VsUl9qap
+         JmF2kmSVeDhlgY3EkhlEzqIVPR9YLhxTVWs8cP+F0S9EWN+vmfFOcG/tQDSqhRtjKTHu
+         no+rtAIyxIdKx+m8utlcrp6FbfrDQXIVexCjt8L9f4bMtnWcSElKDFuUdyxAWkRx69CZ
+         3pekigDlEn10jddiBvie2n6Mezm4ny22N2Y6FF4bFgcO7W0nScTL6jq7icjNUHlIycK4
+         ymAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793446786; x=1794051586;
+        d=1e100.net; s=20260707; t=1793446787; x=1794051587;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=0E3fCx9XCR8vCrn+9DeLShjIsItyc0sFuK5XQADgWpE=;
-        b=oC3BpxH2sL/lpwQ6kK6hBnCLlcgphjRw2UY7UW47GMKG0ATuErcq3O75dZGqXFUqfC
-         ufA0lae1ISpHOfvAXVomLZBsW6fLBWk2Gie8oHUyLEFWaWWF5bGC4NEYHMbo/5fc2iiV
-         /yeg4qawLaF/jHD57+SJ5dg66C6uPhlac5rXLUKn9kGxnjiyTJxcFw8W09is2sqkHvdx
-         wNM787k0ZV25JvrssFIj7mBewHPsdSeK5Rugtx+qTp+NuxYQxWECx98bTFBp4FPSgoHT
-         1xNdz32SLU1ztatsDZ5EL71L6aDBJL2LhRAAWWgV2nCYO1lUxEqxClBorlOD85uOKuwa
-         9ieQ==
-X-Gm-Message-State: AFq9FYIGErxkQcDhDL8Ba1oUFNQyP4A4u2/oiptfwG7dt0a2GcJN/Cg5
-	NRZ84qCN2LDBzZWuh9JzhHOn3lDkM3e3jHWZDDopNHfMema5KIeG/dcdJ1+Kb1Bh
-X-Gm-Gg: AYBFou3mKBnJh3iw6KumFuAlLMmI7obKxHoB78IV0YHxPHVrpd3m1kJ9c0WEiiV8TD5
-	xRIc8o9I/oAcux47ybjTLVENI+oMIgGK09tR8sMI/i5HkwlsFz9G30iveOICm+RduGVbP7famZa
-	kBbp/wfCrLba3KxC6WAW0BFPL1i6qL+n+plMZ030Q+A0Cgt9JBlRvDGf8uN/yjFDDUWKYiJ1dqE
-	PX0Zl6AaRBemBF/7Mlab/4XM+Foqi3Qv5OpHfI0VxVYaS3q9UqrZsz7246nv3vqFtu9aQsmw3+j
-	i6+dlCrUI3jR8zmYpnNbOv/1/L7NzmcpKsH2P+9dkFN2Lc8VzLZBjFJPpUfGXUZRM31u9Zvs60F
-	IvkvQf+y78vQo14m/l2cHy+ZjkhcnFGDLx3kvifmbVnH+IcJube0hTVi9+Jd0e7qjDc8F94/OaP
-	V+AGcwQTtmW0WjnjEv4FZTQLC3Yy/Am8YkoyHQ8L+coIDCEdDZElZKKD/qM361UR9CAm5naHXL7
-	7jWkrVDlkQtx07MHuVc9tpNSlOG3D3kSqnVUxoxwWSp0wRAbZMayO9ba6ZkLClbsJV/fe8mg566
-	9JpIL+6Yejr1ZW4dOsG7fPxnIylPiatc61AKxRh4N9DH+kMaoZNcHtBlQ1w12qE=
-X-Received: by 2002:a05:600c:a4e:b0:4a1:e57b:667c with SMTP id 5b1f17b1804b1-4ac183d1edamr112082675e9.26.1793446785927;
-        Sat, 31 Oct 2026 04:39:45 -0700 (PDT)
+        bh=Bc8n/qIMIDl4LzX4d+xBd1iNZ8XAjyP91d6jiUG1yLA=;
+        b=dzub40yFEaSjlMrIwm/pG+uY30GBDP3W/+UnPGrEx+VMtvvhTxz2KcFP4Kls6VnLTN
+         px5Qhs53YB9kVHjy1dOf0VwCu7wRIJRMQQW4qOTAbJUhVZYe6o6l7vjh5RAk/SWL8gmb
+         V6Gn0YsLTkAT8bY+fZeEDZW9NWT7QCQ4pUxUwZ0D+J1FqojedATUFNntZj6plh91+ze2
+         gelabONmp6uDRozyhzSN/bncNkHBo17typf+0v53juZBEMvPzvOGj0X8WpBpArg5w3dV
+         KM72HCP+XXFFl+Z5NvrL55XIGgrSF8lsLZHpdZjHb0Ts74BwypP3vjlvLmrZxnO1JGs2
+         xzHw==
+X-Gm-Message-State: AFq9FYLE5P71wAVnuNyd0hNvdNDJFWK13UF5QCz5irySgNG7zdfW1xi2
+	3nAU7QX2SDIHZ6QCKbszC+34fC43LMC2aLUQY+4sKaMB2UfMDi6k2lPKG6+x8V/K
+X-Gm-Gg: AYBFou2KiHUfJUqgYPZA0Fi6SKO0xntf9kn6QRpXyGMuyUdalsNRzhh/A3kUrM5kneU
+	VufP9Wsu1GAJHt2/AhzWF1TdjL9XPjPN68drKaNyzukVFbgUH2iKP7GBUvEXP6CM0YTfbgVNibZ
+	z+LMGjwRp228oGaqr4eeR7Cu4/hFGvi367XUb40qpLqWMZ4E3TYIYlMWOHNS1KkYrwN/U9y4qkt
+	SbIn+qslR/qOmj8RShg8jPajv6NpypGGc/8oTguASXZ5tfKdnjgRfGvm0Jta9o7Tr/Uh/NRsPQB
+	N3BE3W0mK5f94RChsOOfSN9znQLMydU5SGzj+u9RTP4KMhceB30E929jwEbh42u+bjYAdU9eTLE
+	oGhFQj/4g5B71vyhGWX3tWpXmiE7/JGV8GHVNr3YFdv8TJTldiyVhc7pI3OL8Cd6OusJWrbQYIo
+	pyV4pNdfFcSfXIt0MRIpuOHzNOy2fMO8wUtm8rZ28uZoeoFzactNnknHnKsLQY8w5QCqNBXEcx/
+	ZtXi8N+o6etfBb5nTaS4uzvWeE7Qqe7406dUzB75U3mTXvdAfTfVMllyyAjumc3vstWfdUCO746
+	ALsLkuNaiyyDtrlUkpbsb4MhbfnCFttOPGxUCt73dp00+gwiofG4G3YF/GhmVHA=
+X-Received: by 2002:a05:600c:3b87:b0:4a2:150f:1607 with SMTP id 5b1f17b1804b1-4ac1709ad56mr110317225e9.13.1793446786888;
+        Sat, 31 Oct 2026 04:39:46 -0700 (PDT)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b78a4csm8345366f8f.23.2026.10.31.04.39.45
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b78a4csm8345366f8f.23.2026.10.31.04.39.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Oct 2026 04:39:45 -0700 (PDT)
+        Sat, 31 Oct 2026 04:39:46 -0700 (PDT)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/4] index-pack: use size_t in write_compressed()
-Date: Sat, 31 Oct 2026 12:39:36 +0100
-Message-ID: <438f7c6ba2ed76a782b8af6f5bc1edab1f3fb73f.1793446357.git.gitter.spiros@gmail.com>
+	Jonathan Tan <jonathantanmy@fastmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 3/4] index-pack: use size_t for object sizes
+Date: Sat, 31 Oct 2026 12:39:37 +0100
+Message-ID: <02582827457e53b61548f544f57fd7f4044e725e.1793446357.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1793446357.git.gitter.spiros@gmail.com>
 References: <cover.1793446357.git.gitter.spiros@gmail.com>
@@ -99,42 +101,76 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-write_compressed() in builtin/index-pack.c takes the object size as an
-"unsigned int" and returns an "int", which are 32 bits wide on all
-platforms. It is used by append_obj_to_pack() when resolving thin packs
-with --fix-thin.
+Functions like sha1_object() and append_obj_to_pack() in
+builtin/index-pack.c take object sizes as an "unsigned long", even
+though struct object_entry already tracks them as size_t. On platforms
+where "long" is 32 bits, this truncates the size for objects of 4GiB or
+more.
 
-With a local base of 4GiB or more, write_compressed() compresses only
-the first "size mod 2^32" bytes, while the pack header written by
-append_obj_to_pack() records the full size. Later, when resolving deltas
-against that base, unpack_data() encounters an early end of stream and
-dies with "serious inflate inconsistency". Shrinking the parameter to 16
-bits and using a 100KiB base makes "git index-pack --fix-thin" die the
-same way.
+When receiving, on those platforms, a large object that already exists
+locally, sha1_object() compares the real size (size_t) against the
+truncated size, resulting in a false "SHA1 COLLISION FOUND" error and
+aborting index-pack.
 
-Use size_t for both the size parameter and the return value.
+Use size_t for the size parameter across these functions.
 
-Triggering this requires processing a local base of 4GiB or more, so
-no test is added.
+Triggering this requires processing 4GiB or more of input on a platform
+where "long" is 32 bits, so no test is added.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- builtin/index-pack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/index-pack.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 0264c18c5f..f65228468b 100644
+index f65228468b..d4c073654d 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -1411,7 +1411,7 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
- 		    nr_ofs_deltas + nr_ref_deltas - nr_resolved_deltas);
+@@ -588,7 +588,7 @@ static void *unpack_raw_entry(struct object_entry *obj,
  }
  
--static int write_compressed(struct hashfile *f, void *in, unsigned int size)
-+static size_t write_compressed(struct hashfile *f, void *in, size_t size)
+ static void *unpack_data(struct object_entry *obj,
+-			 int (*consume)(const unsigned char *, unsigned long, void *),
++			 int (*consume)(const unsigned char *, size_t, void *),
+ 			 void *cb_data)
  {
- 	git_zstream stream;
- 	int status;
+ 	off_t from = obj[0].idx.offset + obj[0].hdr_size;
+@@ -765,10 +765,10 @@ struct compare_data {
+ 	struct object_entry *entry;
+ 	struct odb_stream *st;
+ 	unsigned char *buf;
+-	unsigned long buf_size;
++	size_t buf_size;
+ };
+ 
+-static int compare_objects(const unsigned char *buf, unsigned long size,
++static int compare_objects(const unsigned char *buf, size_t size,
+ 			   void *cb_data)
+ {
+ 	struct compare_data *data = cb_data;
+@@ -881,7 +881,7 @@ static void do_record_outgoing_links(struct object *obj)
+ }
+ 
+ static void sha1_object(const void *data, struct object_entry *obj_entry,
+-			unsigned long size, enum object_type type,
++			size_t size, enum object_type type,
+ 			const struct object_id *oid)
+ {
+ 	void *new_data = NULL;
+@@ -1438,11 +1438,11 @@ static size_t write_compressed(struct hashfile *f, void *in, size_t size)
+ 
+ static struct object_entry *append_obj_to_pack(struct hashfile *f,
+ 			       const unsigned char *sha1, void *buf,
+-			       unsigned long size, enum object_type type)
++			       size_t size, enum object_type type)
+ {
+ 	struct object_entry *obj = &objects[nr_objects++];
+ 	unsigned char header[10];
+-	unsigned long s = size;
++	size_t s = size;
+ 	int n = 0;
+ 	unsigned char c = (type << 4) | (s & 15);
+ 	s >>= 4;
 -- 
 2.53.0
 
