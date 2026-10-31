@@ -1,94 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=130.232.247.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793446789;
-	b=Ir0i653vg8EIqEB1eVuNSLLFZhKmDE3YzoXkGWkQ4dIdmRCtuyd11N5g37klQUNUtoLL
-	 7XC2QM8GpSzj3Un9cyRzZd03TsSEQRZjCI45PlQ8MC3iPZAZLBAGoQYpy7mVR5ckxHMia
-	 W7oHtQuKLMYCZ0gvMcFQg65VHdZkRAQPBCJbgUukRGnSruc9HzZohJAvGCJpZdgpCicQH
-	 b8Hn7Qboq7IrNbjRytwKV54v1xGjJ/8Em3zb1XAnRzVJq0lokU1U8do/0JpdKYiY/6UuY
-	 QFt5nB6eZIehrXrs5v54JwuhW6CUMX3+dsqzAVjP5wrlrtOVy4fol5060irc+xp7Krg==
+	t=1793449930;
+	b=bcy9MhXEmRrFwVcjwYXng/ejiwLAr6fLiWoeiCV3ZiI0+jTaFcghPyaFiqM5DAp4sstW
+	 B2X/+5BJvjtnNnMFLNg415L5LK8aEB5wjWW+8sc3EQmP3Yo/YPDRjYdUvQvz62SYA81ex
+	 r9O8vgYYWRa58KSBS2UdlLn6wHl0cN1+wKvEXy2aKqVW2eHPxzdQCBg9HrDNfKu2bMfJN
+	 qeFIvlwQkpw+G0n4xfnhVmG9zu6Xg6ioRvyLzlMw15ekLMq4R89EyCAPxzG9O0bq97bX9
+	 N6T1lHdcG1Z3m2cbsCrrPZ9zsmyPui56fi3oUuuD+SYoI3siIwFlysfsS2Dw2oOeuZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793446789;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=8p9GbalgbMvhbko0eMxSIpNpIqieLkSd4MvrE9fuiSc=;
-	b=P4Ywhl+3t6xaZBrZnOaB5ciZxJyLFhF1uIL5KdApPmuwuLcX3db9r221EqtUQEkTlJnj
-	 IlBIrh3Ir/EQHaIsnqmPSweyz4MxJlasqGe+aDGeZGImrFPJU7bBdkWJLJEY8+3v/dai9
-	 WkklbPXMJ/wBo24E4gGQs4PdMqsEWEf91zuvgVnWZh22ni/CRGP/SVAlatn9eLDs4Detn
-	 mKSed2PCc1AxWL7JtcNrgh/jvZdNENbS3L9NU/0ql5C78BK8N7Y0uOwo2/Z1sRb808d8K
-	 lzJmdmlPFVQceqJwiOKbiByT0Q/FNhZXuV0xrzcUlgumFRThTSksYSmUFdte8l/rQ1w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793449930;
+	h=DMARC-Filter:Received:Received:Received:Received:Date:From:To:CC:
+	 Subject:Message-ID:In-Reply-To:References:User-Agent:MIME-Version:
+	 Content-Type:X-Originating-IP:X-ClientProxiedBy:X-FEAS-BEC-Info:
+	 X-FEAS-Client-IP:X-FE-Last-Public-Client-IP:X-FE-Policy-ID:
+	 X-FE-Hostname:DKIM-Signature;
+	bh=tzuH0vc+mZTfqvZzmEda8bxQh1ldfiX4GTnxtfAXmw0=;
+	b=zrhWQtfGZ+SkyT1Vi+rC7raS+TDxfChZDgCjCW2ascmX9CWr5DXJG+w4ZpvQ7z9vJLUZ
+	 ZyZB+ELemwdf9OLW4tuh43zcfbaISq240OiglL9XYAaEjrOfIO2cwhgm5PE6KfA0qv6wa
+	 b6ZZ3mcnh4IS+ARdIV0Kl+FBsAERXmxg4OVIWb2p73gTaYRtydL1tyQkiKngsZtw0dsf1
+	 QASufdFELGtoawnA9WaNYtmgDeFA3cUuZqbNgGxuSEYHDyWMvBEMcJWUt819L5gHn1k4C
+	 3pdu4t9en0nr/7sbu7Nenz+FukHXjVSre1nuNIlvW3aTee0iDhBFt9aALQ0x0/2x/NQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=niLb88ey;
-	arc=none smtp.remote-ip=209.85.128.43
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=utu.fi;
+	spf=pass smtp.mailfrom=utu.fi;
+	dkim=pass header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=c7f26i1S;
+	arc=none smtp.remote-ip=130.232.247.4
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7748F606A323
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 11:39:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7748F606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99085606A31C
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 12:32:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 99085606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=niLb88ey
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a2000d5fb1so9406645e9.1
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 04:39:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793446788; x=1794051588; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=8p9GbalgbMvhbko0eMxSIpNpIqieLkSd4MvrE9fuiSc=;
-        b=niLb88eynncR6SjH26cHisLoHp0sW4mjor37urbhqIxeo5fZ2Vuk9gVtD9lLhz7QHH
-         Za7flBKQJld4ruqEUbJY/8LxY2lTE0G+JFQbZPEIPDwZljuTIbAKVsguWbExTSDHRhu1
-         108u104mhmdVXn5ZMJWZgniRMT4bO1Rwr1Lk21Wr89/Ys1DbCFFKpkSEQX4243YOadR2
-         D0jX5/vDlLk6m2u+w1XdKTjecZZRDLL77SbQOINgCS9RWhVdVYImdFAycXSUcboI4dit
-         qj0WhwjXZWQQVzliumM6Yoa8JAQjXu6kEojebRVCpoLDB6PoGeVZ4uOlT3mc5mecC5EC
-         0VtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793446788; x=1794051588;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=8p9GbalgbMvhbko0eMxSIpNpIqieLkSd4MvrE9fuiSc=;
-        b=1yJY6qjd6z94cVH3QENbsgmcZowqUX1ORrweFhK7/vN3QlVu1Bs+Y4MmEDH2kjD3sr
-         ayBEMWVkTuaRYolAsQPSMgJBSWfZPBB4+RDeXUp9BgD3eFUVUFoPGPHPIe2nbMUZJbDl
-         /02FY++y1F+NzISGetS27dUGwdxWEzEG8LKa45UaxWf094YeF4Z/+Z45tbZ7NSl6M08j
-         i1pedWMyF4or5r7BNMlPoeWVgsmYBC/P+ggr0dURlKc/hBVjyo0rIkecMo6W4KUVaqju
-         prdhFHwmA/UZcuqzhq69GmOglHj6/iD/XHePmguuVdH6Do7k3oUV++PVmSc9rX2OJPoa
-         PC2A==
-X-Gm-Message-State: AFq9FYIF+9wzHF1xYRrQbHZ3Dh0gGPF5cA/QBYpzkGfFAEnnbrR3D/Up
-	CLFX/sdHbEP8Yro1Bx8llrJwl1bjKF1eFWDHtbVbwpnXax2xXydif39Y9VLQTo4/
-X-Gm-Gg: AYBFou2FHnYAWz2xPXFb1ypUgFjObrn1wu1hlfA/UhWSdgjg1yikJ+S9JR6atCVJ3ls
-	7e9uuU25kOBCrLeTRxyk58GlmCsCANrw7oR6fFRgpTDR4WNSyASDGMGlQ2yUAgxD1UbS34FVomZ
-	gtpjHtnmYCys88Vus3AQWvCb762PSxfSPaZR+IvmoED+IyoVVOFpTH9hHZqvBBA+Y+Xd8qdOoo5
-	v7VJUyT0xkx93CIInUlO8IijJ19FoJikAwrlNZTB52Y1SSK6/5A26rYQDK3dvsftahVf2i9/YOk
-	cvzkHf3nlbGVM/q46EfVeTwD/jPcYAFMibdWIFXGiOCOpyfLueg3mWGriXoI7zo7wjpAlR/fuue
-	JXG8T0wYSvvcKYq0elglzg2iNy7HcjBWDmt6ZF605P2qjrEnDLIHdeavaEe7fgYxVnEMqOEN4ho
-	bxfysX/WAQXD4NTy9ZfLk+Du+fMF5ZEKFFadeggTE+L5hdIWFA78lVoNUDwEJq7IBIKJw4Z3w1R
-	8l16/h8B3UBLLN8xx7U32hQUW8eeFkdh3owaFuiunU6aB4tT74UHaQ9lkSXgsaprGn3wn7omCvW
-	wsW2X2pgWfGs1KTQi60YC66/PCPdhRbf7EYlDuia03TF+TuvP/ZgXpBCm+5Ktgo=
-X-Received: by 2002:a05:600c:6215:b0:4a1:a45a:88f with SMTP id 5b1f17b1804b1-4ac187a6c3amr104757645e9.20.1793446787906;
-        Sat, 31 Oct 2026 04:39:47 -0700 (PDT)
-Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b78a4csm8345366f8f.23.2026.10.31.04.39.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Oct 2026 04:39:47 -0700 (PDT)
-From: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Elia Pinto <gitter.spiros@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 4/4] pack-check: use size_t for the size passed to verify callbacks
-Date: Sat, 31 Oct 2026 12:39:38 +0100
-Message-ID: <87b0d2bd96ad2e62f770c556eca9589bf7aad11c.1793446357.git.gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1793446357.git.gitter.spiros@gmail.com>
-References: <cover.1793446357.git.gitter.spiros@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=c7f26i1S
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 69VCVonA031171-69VCVonC031171
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Sat, 31 Oct 2026 14:31:50 +0200
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1xN8FS-00ElQn-DE;
+	Sat, 31 Oct 2026 14:31:50 +0200
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Sat, 31 Oct
+ 2026 14:31:50 +0200
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id d120d4a4;
+	Sat, 31 Oct 2026 12:31:49 +0000 (UTC)
+Date: Sat, 31 Oct 2026 14:31:49 +0200
+From: Tuomas Ahola <taahol@utu.fi>
+To: Linus Torvalds <torvalds@kernel.org>
+CC: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>, Linus Torvalds
+	<torvalds@linux-foundation.org>
+Subject: Re: [PATCH] describe: count the distance correctly when commit
+ dates are skewed
+Message-ID: <20261031123149.yxap3%taahol@utu.fi>
+In-Reply-To: <20261031065525.19883-2-torvalds@kernel.org>
+References: <20261031065525.19883-2-torvalds@kernel.org>
+User-Agent: s-nail v14.9.22
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,71 +72,148 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-09.utu.fi (130.232.247.49) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgcBxoeCQQMGygDDRoGDQRG
+ BxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhcSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWEhZX0gPARwbHA0aKBgHCgcQRgsHBUhYSFlRSBwHGh4J
+ BAwbKAMNGgYNBEYHGg9IWEhaUUgcBxoeCQQMGygEAQYdEEUOBx0GDAkcAQcGRgcaD0hY
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
+ bh=tzuH0vc+mZTfqvZzmEda8bxQh1ldfiX4GTnxtfAXmw0=;
+ b=c7f26i1SJew/nbAameZ7O5BDucNmzfQhw2cx0uBVn2IzMXc8os3V74W53P4tSfKt1Zt+KszDJNr0
+	RiOdi/iag5pKI4XO9PtMIBrAeEMmyQDotdhcSqX8PFUTz6IXt1RRfYW85G+b3Jmrr/rE8SItUbop
+	BsS7UCi0x9v3kPK6rd4+0jBFpkuMeSL0TLWhRubh2+hz+M9zDoO5Vk630eElxEhFdiePJSteB41R
+	qN8xNFiICpBtMnRjSPVmXAtXVxf1nrv1u5VLKWd5km9zqddUonBaW3p/b26qUonXOM1fNV9X2yY4
+	aoCkwZ3UKyye30Zqoa8Bz40krK4QwxcwKXiU/Q==
 
-verify_pack() in pack-check.c passes each object to a verify_fn callback
-(defined in pack.h) taking the object size as an "unsigned long", even
-though pack-check already handles it as a size_t. This signature is also
-replicated in struct odb_fsck_options (odb.h) and implemented by
-fsck_obj_buffer() in builtin/fsck.c.
+Linus Torvalds <torvalds@kernel.org> wrote:
 
-On platforms where "long" is 32 bits, running "git fsck" on packs with
-objects of 4GiB or more passes a truncated size to fsck_obj_buffer(),
-causing parse_object_buffer() and fsck_object() to inspect only a
-prefix.
+> From: Linus Torvalds <torvalds@linux-foundation.org>
+> 
+> The current merge window for Linux v7.4 showed annoying behavior with
+> 'git describe', where it doesn't actually follow the documented intent
+> of the result: the commit distance is miscomputed when the commit dates
+> aren't entirely reliable.
+> 
+> This makes the 'git describe' output not match what the kernel
+> calculates in its localversion:
+> 
+> 	linux$ git describe && uname -r
+> 	v7.3-19342-g2a500a04d6f9
+> 	7.3.0-19059-g2a500a04d6f9
+> 
+> and the kernel calculation is correct, and 'git describe' is wrong. The
+> number that 'git describe' gives (19342) is nonsense.
+> 
+> The reason is that 'git describe' has walked the commit list past the
+> actual tagged release due to walking the commits purely in date order,
+> and is thus counting a few hundred commits that were already included in
+> Linux 7.3.
+> 
+> The fix is to take the commit generation number into account when
+> ordering the commits. That will still fail if the repository has no
+> commit graph, but it at least improves on the situation in the common
+> case. With that one-liner fix, 'git describe' gets the correct commit
+> distance on my kernel tree:
+> 
+> 	linux$ git describe && uname -r
+> 	v7.3-19059-g2a500a04d6f9
+> 	7.3.0-19059-g2a500a04d6f9
+> 
+> See also commit 1b600e659a ("Compute accurate distances in git-describe
+> before output.", 2007-01-27) which fixed a different issue in this same
+> area. Clearly the *intent* is that the distance number is actually the
+> real distance.
+> 
+> Also add a test-case for this. Thanks to Claude.
+> 
+> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+> ---
+> 
+> [ Using my kernel.org email to send this, because setting that up is
+>   easier than fighting gmail ..   - Linus ]
+> 
+>  builtin/describe.c  |  2 +-
+>  t/t6120-describe.sh | 27 +++++++++++++++++++++++++++
+>  2 files changed, 28 insertions(+), 1 deletion(-)
+> 
+> diff --git a/builtin/describe.c b/builtin/describe.c
+> index c0abc931a5..2cd597d919 100644
+> --- a/builtin/describe.c
+> +++ b/builtin/describe.c
+> @@ -328,7 +328,7 @@ static void append_suffix(int depth, const struct object_id *oid, struct strbuf
+>  static void describe_commit(struct commit *cmit, struct strbuf *dst)
+>  {
+>  	struct commit *c, *gave_up_on = NULL;
+> -	struct prio_queue queue = { compare_commits_by_commit_date };
+> +	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+>  	struct commit_name *n;
+>  	struct possible_tag all_matches[MAX_TAGS];
+>  	unsigned int match_cnt = 0, annotated_cnt = 0, cur_match;
+> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+> index 7a7c46658a..a75f9227d9 100755
+> --- a/t/t6120-describe.sh
+> +++ b/t/t6120-describe.sh
+> @@ -749,6 +749,33 @@ test_expect_success 'setup: describe commits with disjoint bases 2' '
+>  check_describe -C disjoint2 "B-3-gHASH" HEAD
+>  check_describe -C disjoint2 --expect-failure "B-3-gHASH" --candidates=2 HEAD
+>  
+> +#            T
+> +#  o----o----o----x
+> +#        \       /
+> +#         `--o--'
+> +#            B
+> +#
+> +# T is dated an hour before its parent, so a walk by commit date
+> +# reaches T's parent through B before it reaches T.
+> +#
+> +test_expect_success 'setup: describe a tag dated before its parent' '
+> +	git init skew &&
+> +	(
+> +		cd skew &&
+> +		git config core.commitGraph true &&
+> +		test_commit --date "2020-01-01 18:00" base &&
+> +		test_commit --date "2020-01-01 18:01" o &&
+> +		test_commit --annotate --date "2020-01-01 17:01" T &&
+> +		git checkout -b side o &&
+> +		test_commit --date "2020-01-01 18:02" B &&
+> +		git checkout main &&
+> +		GIT_COMMITTER_DATE="2020-01-01 18:03" git merge --no-ff -m x side &&
+> +		git commit-graph write --reachable
+> +	)
+> +'
 
-Use size_t for the size parameter in verify_fn,
-struct odb_fsck_options.object_cb, and fsck_obj_buffer().
+Just a clueless rewrite of the above.  I had quite fun writing it, so why not
+to share... it works and might even offer some not-completely-bogus food for
+thought.
 
-Triggering this requires processing objects of 4GiB or more on a
-platform where "long" is 32 bits, so no test is added.
+	git init skew &&
+	(
+		cd skew &&
+		test_config core.commitGraph true &&
+		test_commit base &&
+		test_commit o &&
+		test_tick=$(($test_tick - 3600)) &&
+		test_commit --annotate T &&
+		test_tick=$(($test_tick + 3600)) &&
+		git checkout o &&
+		test_commit B &&
+		git checkout main &&
+		test_merge x B &&
+		git commit-graph write --reachable
+	)
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- builtin/fsck.c | 2 +-
- odb.h          | 2 +-
- pack.h         | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index da90cf84bf..9f62aa1f4e 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -390,7 +390,7 @@ static void check_connectivity(struct repository *repo)
- }
- 
- static int fsck_obj_buffer(const struct object_id *oid, enum object_type type,
--			   unsigned long size, void *buffer, int *eaten, void *cb_data)
-+			   size_t size, void *buffer, int *eaten, void *cb_data)
- {
- 	struct repository *repo = cb_data;
- 	struct object *obj;
-diff --git a/odb.h b/odb.h
-index dd85b880a7..9cb36ed5ad 100644
---- a/odb.h
-+++ b/odb.h
-@@ -197,7 +197,7 @@ struct odb_fsck_options {
- 	enum odb_fsck_flags flags;
- 
- 	int (*object_cb)(const struct object_id *oid, enum object_type type,
--			 unsigned long size, void *buffer, int *eaten, void *cb_data);
-+			 size_t size, void *buffer, int *eaten, void *cb_data);
- 	void *object_payload;
- };
- 
-diff --git a/pack.h b/pack.h
-index ada506b5c5..d9649c6ee0 100644
---- a/pack.h
-+++ b/pack.h
-@@ -88,7 +88,7 @@ struct progress;
- /* Note, the data argument could be NULL if object type is blob */
- typedef int (*verify_fn)(const struct object_id *oid,
- 			 enum object_type type,
--			 unsigned long size,
-+			 size_t size,
- 			 void *buffer, int *eaten,
- 			 void *fn_data);
- 
--- 
-2.53.0
-
+> +
+> +check_describe -C skew "T-2-gHASH" HEAD
+> +
+>  test_expect_success 'setup misleading taggerdates' '
+>  	GIT_COMMITTER_DATE="2006-12-12 12:31" git tag -a -m "another tag" newer-tag-older-commit unique-file~1
+>  '
+> -- 
+> 2.56.0.237.g993442f913
+> 
