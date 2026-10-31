@@ -1,96 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793441807;
-	b=zGttQqBGMMbciWzGTGPYO0qC7Qz37lN+D3TE6dDu3uuJ8Nz/lJgcXBIlNRbZfzqt5MbT
-	 6exYflHV41rF4lqm68d6kVZ8yb547GTUWM7FDKeX5QWi6+4mV652bYFBx6PgqQ0qECmmu
-	 KHESyjXslecNJcoKuwa6h/qUJnF/ixegqkXC0C8F9Q+kRrs73SQpMSOQ0s9vCJELu0nPs
-	 ZtIcrgz4eZAyzz6ZqVqVfI9AxPNINUiTD086uuJg7NmTOUhylPfMUNFfDHlNcvMoxqwyG
-	 /0T01dtA2x2BK0bV8GndgLXikzw+2QMAbl1IFrJMfQz7KtCzKstqqA4zAMqU9+7v1UQ==
+	t=1793443538;
+	b=LyOTmzdeoUCeJATyDFc1Bx9FeSJsH2IkOwe+7ZagYJ1LaKqaTtfrBRlRNoyDLGmA3+mP
+	 KYFWsVJss3VtSmbdaorqN0hCtAWs03SgoTRvTn50CEYrEMe7/lje3p+oxuNY6c/IKX/V1
+	 sbaf/cwS/JRk5AZ3cCF75FpL0q3xl4GD3BipL0uLd29JhJ5h1kahNwdM/YE2EZ8QGRwt2
+	 ecACQcJo4s0OhNBfJg0MrYvb9ilXJkoFq+PpXx3OtyKMDzrL2Xy3F095wGCJ39hlZ5dyX
+	 g4uV6nkv3E35ybB/rpt4ol3i2UvaCBC777kCRKxAUi/xubfisVi3auOtAOW036yHIYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793441807;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793443538;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=DuKfUpkPfjQuMEeRzGlFTR7PrW9NU9nH4sZfFpBqbnk=;
-	b=QghTYhP3mRprn1DEEsx+AUgon79CWWw8pbWJ2aYsQO2BETVwUOL89lnIiLE65plqzBJf
-	 mgwm0W2E8TaYKpbslf9g2hN/DupwXEGKUBgefURyu/BdKhtC3CCADNAuOTtcKPWPn6zoZ
-	 msyzjlY9F0v+6M60Re5KGJP6p144SR5qGqfzXVsHgxlAiTHCD6qaLZbkCTBALQXI0d/9w
-	 GfKonh8fcOTK/88qxv44rfv0bEWVVaScJcD3hwalgWY6ZZnUe+KF91bNpeh/n2KJuQ7Nu
-	 Npv+t8aGOe6ghkAtP980+03Sx9YzNaMZSnetpXVVMc4lj3xdZ5MH/Dspccz+7a0WxlA==
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=mRep0eAkSTDV6HB340hQFRMCJrZXm9K1DmqT1eT9lTo=;
+	b=v2jdVzzfJuq/Dxt5JcByNn9UNRl88xeujylBrNsZcIY4bSk4DS+zKZGocdhhmxqmRp3I
+	 ONqvuyB5haUzANKaD3jcKXLy9JuGDF1bac+VJN4GMOqzJwuPFjKIZWlJHXuLJ8znfQQ05
+	 w+0R8E4PTPfF/WsmQExO2QLSpwiGJHC4W3yPvJgCpn9+xdTHk+rx8nHi+HVD6zWikqrD3
+	 aClWOyEuw9TuGFDlYkw4Za2jLZSWqKIbDWUG+E4sRHCPyD11Qt6Hmu+wEuvKcIIInn7PA
+	 xK7Rk5z2jWwtNg3qp6pAfeGsv7nlDEw587bOez1yR55+lQ/EZQcpCq870FME4sjedDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ns5OEyjI;
-	arc=none smtp.remote-ip=209.85.221.46
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="IOL/kY9M";
+	arc=none smtp.remote-ip=209.85.128.52
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE24B606A31C
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 10:16:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DE24B606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A49606A31C
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 10:45:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5A49606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ns5OEyjI
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48e00eee27dso746737f8f.0
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 03:16:46 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IOL/kY9M
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a35d5d4a20so16795375e9.2
+        for <git@vger.kernel.org>; Sat, 31 Oct 2026 03:45:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793441805; x=1794046605; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=DuKfUpkPfjQuMEeRzGlFTR7PrW9NU9nH4sZfFpBqbnk=;
-        b=ns5OEyjI5fX+dMAVKnzW3MGq2Bknf4WMFN4LAHvYOPq/xxr9yOkl6ZTh8Pl47uHUKx
-         sVBzh5Obcw4bwaOKuqhiVjB+e3IvGz1iPuYcC4yPWwxu1U5boGEXoYUEUOtyyG/cxZ59
-         MCC1qJj4THrKFx7J0AdC+j9Y4xb21eA60h2HV7V2Z3TJQHsTEGq1DU0wiMGZBJv53YvZ
-         +xb3J8mmzjsEfIHKOYob4w4oVhg9PC5KciPRb76yLnXa40AThUYyw9ewewjg6Vxu38fk
-         8HBD69p+bN6JIpBc7s9LCVYjh0+eW5GoWYLgjwfe+TXv0GFwaXtuGcqvw1fbLXzWldph
-         SlyQ==
+        d=gmail.com; s=20260707; t=1793443536; x=1794048336; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=mRep0eAkSTDV6HB340hQFRMCJrZXm9K1DmqT1eT9lTo=;
+        b=IOL/kY9MlVYOqfIeDptbaV7JTm2APIZatxUhf06laEF62Gn2+icClrU1myEf2X8KUj
+         mcpvFxcVVNXGoJWzEWmtAk5MtbsEGxgGlRRNWB/+dzGJQeIcmOwThd6ZJGTdt9WBvFc5
+         GxHgFqh+yyXaIukBEHG2r8SG17EViZm/Gy5HSVO18GR/6NclqAVgS9V407JWungoc6te
+         VxGa7Wj3YKKHSMsX9Agh7IPm/HirmejTiBwWqRRS1gH2QUnPOs9k+koKTqMKn47eUzP4
+         EDUBozRLYWU+5kGz98l5NBOBdzeaOcWL5pPQxiJ4f06K1p2ov68U7owfoxmvzALbqMyX
+         HGUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793441805; x=1794046605;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=DuKfUpkPfjQuMEeRzGlFTR7PrW9NU9nH4sZfFpBqbnk=;
-        b=nMsJb3ffxcYohlVxnpM+M0Yp/ZCgdSfhRyY5tahUhbllOpLILEytY/vla9F4wsbO6i
-         tlZ99h7D+Upys0BrHzJHsGvdULkOmyT/kle602xDdArxjW9NMtHQM1nusPbfL8Nwhutl
-         e2wI/6GP0RMUD+9HWEfG3R+mGacBgel9+9D3N1cnZss0cPx5+GBajO2FVcwLzgBxLB5o
-         bnWWrwrAJZrraLzOVPz6+JGXOPkgb+NUTS1VZfWrNVxgam/D2J/gghV6g3nnmYP+gwYX
-         FLLSy3841nT0ONjzteh2e2o66rc+gFMBReJwa9zmR5oPiceAtx7WLEMKLnAZigpXBOVv
-         ilCA==
-X-Gm-Message-State: AFq9FYJoH/WKToc1+bixCgpaYt7OOhCgBzJ/EKF0YgpKmnLG0wvbTG6o
-	/fdMhkt2UbSwyeu49g+tuJ+xSjYQkCnhis06FY5JxH4L0yQqQOMSyjDg/hcn8rJD
-X-Gm-Gg: AYBFou2mQn6DixO4gb9wz38ogs5V047h1k/6XlgFctZHGYyHLXbXe8dEc24gbPHEEhe
-	SZXh5Nzovoo2DS0zO3j+ZW6wbtzHVPk7Oh/d+HBhWQNxXe3uBLmN6/RJOI6mE5rVlml8u+9ULLM
-	g7s0Zo1ihr/EXkRcM+Ti8pm45cnbZZyUbWj1IAFxm3NBugMdBhS6GwwKcRo6jo299LI6uMuXCB5
-	2DDKC5TMOGxaRQ/nN/0Ab22t+roGM6d1S1vCTARxAktJnOn/t2nbJMy21JzJ+Akqu5U7J4BZzRO
-	uH5tymAJTFR7nqeRsPk9bpPZHtU4vshm/A6yjliuxJAYEGEbO+AKync4HVAj70R2AIiQhXarQnF
-	ZnMGacNnRldhgNI4Biki18HwQ2obxosqmE6FMPZ80+6oTtw/V8fT/irKYptS0Oh0jb8PZezGrT3
-	2KdP8CPklb/GAvSkUULYd1IwUHF3EycJ6baj60PjAhYBHz7XEuCFiMRES3fmQg83En3xmGSe1aS
-	Rw+WHvjio/OrkObZWQ+CWY7PBPpJ8xTSNxPF8a55rkTJFUmJWFQO6mjJnRhCGlX893ZRoGJRHK0
-	rkpRWgapbYm/d+svUHXbw61O7VEC9ZqIRtMw+MC/SKNr8VhWt3UudoulCb4dtfsX
-X-Received: by 2002:a05:600c:871a:b0:4a6:44b:2593 with SMTP id 5b1f17b1804b1-4ac18d68babmr93072195e9.29.1793441805129;
-        Sat, 31 Oct 2026 03:16:45 -0700 (PDT)
-Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4abf60f1076sm127220015e9.6.2026.10.31.03.16.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Oct 2026 03:16:44 -0700 (PDT)
-From: Elia Pinto <gitter.spiros@gmail.com>
+        d=1e100.net; s=20260707; t=1793443536; x=1794048336;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=mRep0eAkSTDV6HB340hQFRMCJrZXm9K1DmqT1eT9lTo=;
+        b=Lcu0XxULGFArLTwwWhYy1tn8tzsTVNM+mhRJmDKhYxR3cRFlZTlytK+SaEW3HF24aJ
+         ZSwZEybDIWiz3OIcdVkTOYoXSI8x1xp2Q92x4h4Oy5c7/a4AhmJZNpaycwjqPCEjcbwj
+         jzBLQZTvabbQk3YPldoe27Zyfc6Z315WfmyotfXjFVaVoHOe/9v/4Rb9AdcMv2yYvUoQ
+         5cCU0IFFuKUIGEQgBes8OecWBqbmBcopAvqdACvHTtv1kN4V2Khzi+YJ7gagEA8GmZhg
+         O7ZywxAXIZPUCfkdnzcExzYuxFDqsjITqIVWhamgBWlhmC1Z0FsZIktmRH02VavLl/3V
+         T9iA==
+X-Gm-Message-State: AFq9FYJIVMGQ0ah6yjCK1O5f3gs5YlMPgVlFJwasqrPLMGbMHp660gPC
+	26/RDs/tEA+peqna4EroL/Yyq9byim/zptp5YeusW/XCwAjydyyLPAUL8Fua/+QnYg4=
+X-Gm-Gg: AYBFou39tpBTJiIE7VCHwmLpkQv4WaUCOwtpItge3xkqf7LbPt2BxIIMYG5rWIznB76
+	VSd4WVwpXOAH96shTEH3N+hH1gk2xC0OKITG/pauKtqf4uxy6lh7yvPzEk8ahA+GUOtZTiR2VLO
+	iTX90fiDaROjF3ubHQUXQT/MYTES9t9SGoJPdLZbTE4ZKQq4ipBEBt4Lq5dHt4ZSxUGP15r+E3c
+	2ImAikjoVmpwHcQHhZZhEkUHGXYS9l4CUEQZKrlr+vy+qWjuImhFlBKbp5JHApA2pvZny4cSDtC
+	IwuS9SxPNiwci6iESeeR3NEJLKg+Tcur4nJfYLd+Efkze2kLwYxWJaC3A8IRKaXWneeVVwQFZge
+	YnD7OEAQZYgx5fQZ5sO0fXWQHgLAZeoMwedgVaFo2tjtiMon/vY01r9PMv6YewMviuUfLWhJTR4
+	XfIWtY56SJ1JZGwv0pe/CFVYc345e18JunflZQsSt4fG48WbMdH8bNQmE7ORyHvH9pGdg/eLq8Q
+	LgbjoZKW1rECIBGREimq9DwIsCwUlYdg0OpSoJJRQVZlA1I72bDohNv/sUK2bNpgMaxoTNSg0At
+	EV/opgeRMUCohE6OmrECkzcre130CoBRQVX4YZh4c7I5/4yfzNWSnN7UpRiwR9yZvnYGjKuMJCd
+	Dgp0pFPqzr0Wm+jw63SPm20H/HyHA4icIa1Lk2aAyOvqX0IjJX8CnCtFzNDxoGZEwCL8QICedSV
+	qTghqim1m2sABEkmp5OD2RNIN5jb1+
+X-Received: by 2002:a05:600c:6216:b0:4a3:5aea:21e5 with SMTP id 5b1f17b1804b1-4ac1737c533mr104010535e9.9.1793443535713;
+        Sat, 31 Oct 2026 03:45:35 -0700 (PDT)
+Received: from localhost.localdomain ([105.113.81.148])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4abf0b36853sm110388405e9.0.2026.10.31.03.45.33
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 31 Oct 2026 03:45:35 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Elia Pinto <gitter.spiros@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 4/4] convert: use size_t for text statistics and ident counts
-Date: Sat, 31 Oct 2026 11:16:35 +0100
-Message-ID: <153463b531b03e942247c0f6f9b3d89b8e55ac7c.1793439137.git.gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1793439137.git.gitter.spiros@gmail.com>
-References: <cover.1793352943.git.gitter.spiros@gmail.com> <cover.1793439137.git.gitter.spiros@gmail.com>
+Cc: christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [Outreachy PATCH] notes-utils: use the passed repository for notes refs
+Date: Sat, 31 Oct 2026 11:45:26 +0100
+Message-ID: <20261031104526.46711-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,75 +99,43 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-gather_stats() and count_ident() use "unsigned" and "int" counters to
-count characters and markers in buffers whose sizes are measured in
-size_t. On platforms where size_t can exceed 32 bits, large inputs can
-overflow these counters.
+create_notes_commit() and commit_notes() receive a repository,
+but read and update the notes ref in the_repository.
 
-For example, a file with exactly 2^32 lone LFs wraps lonelf back
-to zero, causing will_convert_lf_to_crlf() to miss the conversion.
+Use the repository they are given.
 
-Switch the counters to size_t and check the size hint for overflow.
+Keep USE_THE_REPOSITORY_VARIABLE because
+init_copy_notes_for_rewrite() still uses the_repository.
 
-Triggering this requires processing over 4GiB of input, so no test
-is added.
-
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 ---
- convert.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ notes-utils.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index ca5594cab0..34fb4ce685 100644
---- a/convert.c
-+++ b/convert.c
-@@ -36,10 +36,10 @@
+diff --git a/notes-utils.c b/notes-utils.c
+index 5c1c75d5b8..d4606bc576 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -26,7 +26,7 @@ void create_notes_commit(struct repository *r,
+ 	if (!parents) {
+ 		/* Deduce parent commit from t->ref */
+ 		struct object_id parent_oid;
+-		if (!refs_read_ref(get_main_ref_store(the_repository), t->ref, &parent_oid)) {
++		if (!refs_read_ref(get_main_ref_store(r), t->ref, &parent_oid)) {
+ 			struct commit *parent = lookup_commit(r, &parent_oid);
+ 			if (repo_parse_commit(r, parent))
+ 				die("Failed to find/parse commit %s", t->ref);
+@@ -61,7 +61,7 @@ void commit_notes(struct repository *r, struct notes_tree *t, const char *msg)
  
- struct text_stat {
- 	/* NUL, CR, LF and CRLF counts */
--	unsigned nul, lonecr, lonelf, crlf;
-+	size_t nul, lonecr, lonelf, crlf;
+ 	create_notes_commit(r, t, NULL, buf.buf, buf.len, &commit_oid);
+ 	strbuf_insertstr(&buf, 0, "notes: ");
+-	refs_update_ref(get_main_ref_store(the_repository), buf.buf,
++	refs_update_ref(get_main_ref_store(r), buf.buf,
+ 			t->update_ref, &commit_oid, NULL, 0,
+ 			UPDATE_REFS_DIE_ON_ERR);
  
- 	/* These are just approximations! */
--	unsigned printable, nonprintable;
-+	size_t printable, nonprintable;
- };
- 
- static void gather_stats(const char *buf, size_t size, struct text_stat *stats)
-@@ -1077,12 +1077,12 @@ static int read_convert_config(const char *var, const char *value,
- 	return 0;
- }
- 
--static int count_ident(const char *cp, size_t size)
-+static size_t count_ident(const char *cp, size_t size)
- {
- 	/*
- 	 * "$Id: 0000000000000000000000000000000000000000 $" <=> "$Id$"
- 	 */
--	int cnt = 0;
-+	size_t cnt = 0;
- 	char ch;
- 
- 	while (size) {
-@@ -1170,7 +1170,7 @@ static int ident_to_worktree(const char *src, size_t len,
- 	struct object_id oid;
- 	char *to_free = NULL;
- 	const char *dollar, *spc;
--	int cnt;
-+	size_t cnt;
- 
- 	if (!ident)
- 		return 0;
-@@ -1184,7 +1184,7 @@ static int ident_to_worktree(const char *src, size_t len,
- 		to_free = strbuf_detach(buf, NULL);
- 	hash_object_file(the_hash_algo, src, len, OBJ_BLOB, &oid);
- 
--	strbuf_grow(buf, len + cnt * (the_hash_algo->hexsz + 3));
-+	strbuf_grow(buf, st_add(len, st_mult(cnt, the_hash_algo->hexsz + 3)));
- 	for (;;) {
- 		/* step 1: run to the next '$' */
- 		dollar = memchr(src, '$', len);
+
+base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
 -- 
-2.53.0
+2.56.0
 
