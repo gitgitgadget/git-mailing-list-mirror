@@ -1,95 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.50
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793476946;
-	b=Gw0pW9o5M0g+pbCv1Q2FdDtY7BNmcjvc4XuNCdVuEzZk5xDLg4qYg8y5NITB5CaCgQ19
-	 KsfFBirGcRaED84ExYRKppoLmXpDq+gSLyAd9LB4NwQLKGOllTT4nW5+lMplhmESg6N7Z
-	 336a/ELgbKiOYe5zsFV7wieXQuYnIxGJr5YAguga7GurARZGnEP9N96rnebnYaxD23+J5
-	 ywiBhNDAhMi79S8z7AP+OvJ0C1XZBMAACV9UAufODPClpUoFK/hV3J5LaY8xbZxG9AFpF
-	 Y1ZLV1yMUvQJaqS+NlrTqGqSCcJgtUlNUtHSrapBxZkxGIxkgU4CMfKMwlwkgobUUQw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793476946;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.48
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793484127;
+	b=Y8oajUUa1oN3OoQCm7gFT+DaAPOdjfVjD7V5CZiUTj758nHMyHRKoTtb++X+JZWi/8oS
+	 qXoqNHl5FyEVJ5lTaD4tJdl3yx7/YMBPHyO3uWqWRyC92hNfzaJSCsjAsw9+enlMXYo5j
+	 QVJcpKGF8iqNU3evNZX/R/g++xPH06Gira3N1m5qbtr5nj3ilGGyokfkM/CSVK1CP4K4H
+	 RP/mngo7KLthIQT1sUAN6J2+fMVnhHPOnfwt9ahlaoW3odueyBR1BqVImVpZ7tTciyQYr
+	 axTOYupG11on841zErlXm3WD/QySQVyd9EY2DyZpME5zPK9EWrgSjPRwmhdnx9O7e0A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793484127;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=tnMZfpCsZsBk7Kome3B8VgOBYBol4CEfBMMwiNMpzB0=;
-	b=RaIh8Y+VyGMKPxSLQc+RMfvPbbGLBKwKPtg5ROyTHiyPJ9SnhCsAEpXtO8JA3Mqoy5Rr
-	 23OS6GZ36iwH+TT2sH/4ytCJylZU5ur7UGb3ymjhPSaODuxtfoS1vSdi7q9BFfZg8jXN2
-	 GzOldPgWvq0RyC0rAn6a/eviNrACdj5E6Ibw0II7xm2r7jVXJpMbU0wkV1gQ1BF7+fHBZ
-	 W5iaL589xyytfUsFRa/uU9gR2A7cTXBaYgTNLeM1epKCopND8qaVrELzDSFHutVYP87eU
-	 HE7r9xNJLg01Ecz8WkzkBsBbDVeGtt7xpLbJnfap0bCpCUEfDq/hNxs6wrEv4U176sw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=nrq9WUZYc3roIL0ut4vu7BVSZVFPLEYhLtmPBFJ6BBk=;
+	b=BBBvfDFVg/+OtqRzkzj0SJhEKvYT8iBzQ5cWdjy+DpoPax2Ps96fAAfnZ7lX+7FKmLL0
+	 JPLCKi3uerlY0k0rGRxugb6F394Stp1ios1T3j+vbf1GJnzr0VL/JtgZesk9AS0eARbrr
+	 NbI9VPTj1XJNqhOc4Ga+4zisThUWVc2Ak8aQ0Fg1o9rG/2Nasqd5nnnsYcxIr8k4rLj3j
+	 /UoM83ap4bypw0E4ClBNekK7B3ruABCR5ETUD9dtmcV0Dvxz7PNiI6/k0ta+lXrAt9Len
+	 mPN4wrLPz66tHpEQzAhBawTyq6FAVNwwWDIFpta5XGbFPFHSpp6gde4GlPhGe23Rw+w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SaReFleZ;
-	arc=none smtp.remote-ip=74.125.82.50
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=a1xkriQ2;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.48
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3167606A31A
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 20:02:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B3167606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AF3606A338
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 22:02:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 03AF3606A338
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SaReFleZ
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-1931ff67a29so2183748c88.1
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 13:02:25 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=a1xkriQ2
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-6dd4f3f696aso858912eaf.1
+        for <git@vger.kernel.org>; Sat, 31 Oct 2026 15:02:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793484126; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LCqtwPTT6giPxzV7UWyAtbf6T7m39jr52woHyqGlhIXt4oY7m7imA7/EkHN8FqCC3b
+         JyQmSDXanjPkas/MBKOZmM14Kmby+PzwfHR8/TwGhVwK36FAW7huFKWa+3wLJV6zNE+f
+         X/xcxW+IErPqm+mBBJG7v4a2lJoFs02NmbATqRRAPpF+ZDoGZFhOi6toq9DudbHSFy5Y
+         fdB3eJNGAJaWR6mM7YA3dnyJYQV0baLJ9PavOyuctXe5Q2BWuAmd+erBTwsjZHZfqf43
+         d1sqiUMQicsT8HpXPprSsZdmqa2q3YRVXskzwD4c1azvMfIQurovHRGFZYVse7sz94v7
+         5B2Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nrq9WUZYc3roIL0ut4vu7BVSZVFPLEYhLtmPBFJ6BBk=;
+        fh=hz+/nn3ggLKvx7MVMCnEfhHO7zZTcWxbS8wudRGL11s=;
+        b=TDqCxl3sEwuRY0MEllN42g6fu4IKDt0yKnpozGhgWIIbjzNn7dY4+0M5N3xwf7TXuG
+         8D/kvGwyBGIRGWzCFo0S92mURVVWfpaBA2UBdUB+/n4qu+clpj4yK0p0GHheXhbFWl1D
+         OjFRvcvshmWZ7UFLgUmsPSK5Jpo6craA8tji7tcikOzBz3jqVhCT389g76VfVF3vkHpi
+         nQwo3qUsDJc4HoIfC9ZRIpHf0qXefEDQzzOyZ1+ZD5gZ1gUShC0Hs76PeihEHFxMv2dK
+         Ys1r4vggg1/cLCFpuxVIFxO/x0IVpRHQNSsedSXr52hUG1Iuw3O8I52TetSiY0CRkSVR
+         WPKw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793476945; x=1794081745; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=tnMZfpCsZsBk7Kome3B8VgOBYBol4CEfBMMwiNMpzB0=;
-        b=SaReFleZrMO2B6Xd0670G/Onx8YEo74FuTRaXNVQYslTXrunsQd11EZcL6witOmy4m
-         hcT/qQuqWk01GdGngBZFuVSPhuJ1bjWjuQciwQA80pRIQ6NF4XmQatBtqT2eVbNv72Ki
-         t5StY3itB2rWoxcW3Obe5ti2Po+4WSFAxRVE/NbWOyZpKyR/3pOCcYG0dvWftsDN3uLn
-         gMPU6vAqUHSxji7vWnSR2y7hFFkS1W8T5Ds7QBH4Lg0OBvcrwWimOi3nx6vEl4WDt+ct
-         m5laD1X3UMxjr9KuCC1WZLIjElHGXaNWlqO7QbYCv0+Kg9W02epwkElXntRnGEueAv+e
-         6ZLA==
+        d=gmail.com; s=20260707; t=1793484126; x=1794088926; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=nrq9WUZYc3roIL0ut4vu7BVSZVFPLEYhLtmPBFJ6BBk=;
+        b=a1xkriQ2Q6KWNLdzOQN1VaQdBILg47Pk8w8aInRQujG4Yfxo/qgMsM6xr0FbI+d4Mp
+         w9GKYwTVKDaKm4nsp48aThRG6350D2gC9SvLKA639Qu6EqqYqi2KaWxcFfDiQHZ+fF0A
+         KrQJzPm0XNgHn/vOJGpMcR3Xi3uqLYbsLfsHPskZ6QYHXTD6nUs4Eerj7FvnoXxBOaiW
+         Tdi8tqZk+MlY/+pFWnT7XZTVD/lDixd0EFlwyIQjb5QyMXHBlcYU+FXde8zh7e988Gy7
+         pcHtXC2JJGw+hIBTk4Z/hpJ+41L/wJ1tLGGt6OYEd8shLd+6VQMG45F+VkkeBhW3qqvL
+         gVlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793476945; x=1794081745;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=tnMZfpCsZsBk7Kome3B8VgOBYBol4CEfBMMwiNMpzB0=;
-        b=SCgGixFKvIt+8V1jLRfWFAUwQ+S1V1mBOiAHFqm+03vJQcSlE+bIpZpLwz+aaLRIoM
-         9jkjdnEk79rC+y1boxSqwxsgXfUjqPvUs0GhpiyRsByj8AZGmtbEz9GtX5i8rRR7vuEB
-         dGCyMdFSflBbxwvPE1XpNtfJjtFTOcmjqELFtPsxdo6zr8EJW+JtaZQEIKVdrQ5Hhf9B
-         g1akrJFpXIjTPxFx4FKKaFjDHwvRPwWHcSDXCVxOPWNBvghUAGH9bTBfewINeN/F7ybt
-         5EqcdtgcSGwtywxaCongTWz+GQVV3pShbjarhR8pHZkzhESb7bdxHcQjlNgaEizOyuz9
-         +hLw==
-X-Gm-Message-State: AFq9FYLWS/MXXTl4y/gPAoYIAF+J6VkBOim4wD9ZrYHCgx3IYl3zhXMT
-	xSIatZE0Q1GVEwgmrYxU8q/bSF71sPKPEXU3T2OYA7RcnT0UvuPV0QINTnwwlZT/WCA=
-X-Gm-Gg: AYBFou2DpDu7r6A5sCECFukYgarX6ESR4EQES5cojLNJ43HxWr2l/MPXh+hVqEzqSkL
-	p1JEFYpbFabe7UlgsZRR3vUlv0S79u44kijllfAEuDYaLvF6UUY28eM3GtHU91ZYh3LGe6bpNQh
-	CIangMDg+iVG/ZotI5Pwa2CU/rayp3sToiw9oYOn60+OXuiYaIfLAC4aDxhQWqeBYjKCxTWLNxk
-	X991cIlqjon3BBNXpVk7fVZ07R7aDxCa0tzP0XsVYdBt82zpDJ+BqPFElrAYX7eqHeKlaS/ISng
-	6WY+BAzX7Ic2txhUHqUEQUc6xxW5wyHx8ldaZ8H4YQuljdb2dOSEYwklMBk9Uh5IXp6reoMdgdX
-	cqX98jd6Qh94wL3k9Ok60DeG7wGW2TTe7VPW/s4cvjUc8yvu+gH4WcQEszriO7zx9P7knmlFlDa
-	OVIs+oFNywvZVzRVZoiuc0GDFHkuk9lHlgy5QwcQRtJ3F81LD+QxfZiGoka79SsDmaJ/qP0habd
-	Vu6o7FRefpjBAAkSEr/BO2mJP9GG37y2+/3/5LwMTLOMZub940QG0Xt59b9iG7sO6NGutGK7ZIs
-	UHb407kkRmm9ylJUFIGitcUbcFf04QSJHt6WlKCQTfy7wbuQQRMFzFAvp6WR3oItoiSD0UphNkQ
-	=
-X-Received: by 2002:a05:701b:4589:b0:190:f24b:9491 with SMTP id a92af1059eb24-1ac59fbfa7cmr8370136c88.12.1793476944542;
-        Sat, 31 Oct 2026 13:02:24 -0700 (PDT)
-Received: from overlord.home.arpa (ip68-107-67-45.sd.sd.cox.net. [68.107.67.45])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1aed79b3dfcsm12956831c88.12.2026.10.31.13.02.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Oct 2026 13:02:23 -0700 (PDT)
-From: jasmeet.bhatia.us@gmail.com
-To: git@vger.kernel.org
-Cc: "Jasmeet (Jazz) Bhatia" <jasmeet.bhatia.us@gmail.com>,
-	Deveshi Dwivedi <deveshigurgaon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Sergey Organov <sorganov@gmail.com>,
-	Victoria Dye <vdye@github.com>,
-	Leon Michalak <leonmichalak6@gmail.com>
-Subject: [PATCH] stash: reuse prepared state when creating stash
-Date: Sat, 31 Oct 2026 13:01:07 -0700
-Message-ID: <20261031200107.285168-1-jasmeet.bhatia.us@gmail.com>
-X-Mailer: git-send-email 2.56.0
+        d=1e100.net; s=20260707; t=1793484126; x=1794088926;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nrq9WUZYc3roIL0ut4vu7BVSZVFPLEYhLtmPBFJ6BBk=;
+        b=Nmd+i1K5VFbQKh9xY/Nn9UMLv2RcLhYa1kQvhQeD5mjMkVfb3HMx/CqXpWwgQmjkUr
+         EckfXrh0v/sxqInsZu0TFDqYmfCEqK8zaRfBlR1wmHILnMDY4baeu6Z22jELDFz5glpb
+         PXKyBCg5hmYwGe/X7/bfFq1+s+QfZeWVD/jCwQX3oAgZE0Uq2ipiL0/RAR3xcViornJJ
+         wNJcBfh73lvNtqmfBoV5o/6wP0GAjONpb3diNatR2tdDIwAfXPxAMnuV+GF25z4tK7lZ
+         s3P9JVEpep31grPJr+6xNB4bnRuZgXQc+wR3lbskDyHV3F/diVGropxj1zVV3WggFex7
+         yFJA==
+X-Gm-Message-State: AFq9FYIs3vDy4dt/rmTl7SdZJyoAcqdUIgQk0gZhfGLnBSJ0/wIqBeqx
+	VnYyreA3iwpMgJzUwIXUl3l2R0Xb+4Nj8NdPThh+IjEuPab8EfejmvkjO9ntx2kc5g5vqKzVla9
+	iJ/wqGTSmyJvr9ju96w7PulwZ+LwV0kU=
+X-Gm-Gg: AYBFou2zhYqZue2sHHNvK2ohhmiP55RH7v19NRf2MCjd4+flv5rOHvW9uTUwGU9d2AF
+	Htm/nTibSmEP763Npk42sSdNnSGkHbxc3qYZN/3c/HR9S5WZgypEctE8ku105t+H45eexpJaKPr
+	OwzOFO7orHRjavvcjldJi8/gmPbMGNbaxsN0TJ1d43c6W/V/nRFKZjUtLhDn/AFJaf6Dv3E8Ano
+	eBKCc8Bgaoj0iKiT/0ZThKQXVsZ/tjGrnLt4Z5U/MnzGIUUsA16nTizy3BWY0w9qapao8brTN9D
+	XNEoppBUoP3Xfbb/mCBLTeBAhKlquYlSPdUtAtAK+MT3JJTN55MScQWTmRCkgAA0beEgktJrjyz
+	sygnmlZ9tmNArOiloUC/cKhb5EHJt46hDHsDbfRmrZffKyi2/kM2URbB+Jr/7PE7Crp9IvrbpBp
+	WyWbn32/ez8Lk5dDXju+IMJXMBOfmpKHyrsap59y7DLMnJKnM0KzRx
+X-Received: by 2002:a05:6820:a659:10b0:6ff:fcf5:40ed with SMTP id
+ 006d021491bc7-714f2a97a1emr2246108eaf.90.1793484125863; Sat, 31 Oct 2026
+ 15:02:05 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,116 +104,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261029012616.139783-1-tangajoris@gmail.com> <20261029231621.48958-1-tangajoris@gmail.com>
+ <123de4e4-3387-4eef-8a05-9ed1ad1fce30@gmail.com>
+In-Reply-To: <123de4e4-3387-4eef-8a05-9ed1ad1fce30@gmail.com>
+From: Tanga Joris <tangajoris@gmail.com>
+Date: Sun, 1 Nov 2026 01:01:27 +0300
+X-Gm-Features: AclHuK_NYAf_WrTmCCjB16uX3nnIzHf-ZXzTCul7nUqLHnt-HnCAv60de_i6ZRw
+Message-ID: <CAKrRMNoAALZ0V5fdKjZPQnCXuMP8y49vfUmxYnRt7UEeUTE7kA@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v3 1/2] parse-options: answer
+ --git-completion-helper before command runs
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: git@vger.kernel.org, l.s.r@web.de, gitster@pobox.com, 
+	christian.couder@gmail.com, siddharthasthana31@gmail.com, 
+	usmanakinyemi202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: "Jasmeet (Jazz) Bhatia" <jasmeet.bhatia.us@gmail.com>
+Hello Kaartic,
 
-do_push_stash() already preloads and refreshes the index and calls
-check_changes() before invoking do_create_stash(). However, Git then
-repeats this same index preparation and change detection, including
-rebuilding the list of untracked files when requested, which is
-duplicate work.
+Thank you so much for taking the time to review this.
 
-Instead, avoid this duplicate work by passing the already prepared
-untracked file list to do_create_stash(). When the list is provided,
-reuse it and skip the redundant index preload, refresh, and
-check_changes() call.
+On Fri, 30 Oct 2026 at 12:44, Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+> Just a gentle reminder about this portion of the MyFirstContribution[1]:
+>
+>    It=E2=80=99s good manners to reply to each comment in the mailing list
+>    discussion instead of letting the next version of your patch be your
+>    only response. Tell the reviewer whether you plan to make the
+>    suggested change, keep the original, or pursue a different approach.
 
-This maintains the existing behavior of "git stash create", which
-invokes do_create_stash() without prepared state and thus continues
-to perform its own index preparation and change detection.
+Thanks for the reminder about replying to comments. I'll do that from
+now on.
 
-Testing this using the p3904 stash performance tests shows a decent
-performance boost.
+> May be give a hint that you plan to do this in the following commit?
+> That might give someone without context (for example someone reading the
+> commit after a while) a hint about why you are worrying about marking
+> fast-import with the NO_PARSEOPT flag.
 
-    stash -p, no fsmonitor
-    0.12(0.11+0.17) -> 0.10(0.10+0.18)  -16.7%
+Alright, I'll add a sentence to the commit message saying that the
+next commit removes the NO_PARSEOPT flag from fast-import, which would
+make "git fast-import --<TAB>" freeze without this patch.
 
-    stash -p, builtin fsmonitor
-    0.11(0.10+0.02) -> 0.09(0.08+0.01)  -18.2%
+> The change seems to be fine but I wonder if it is worth a note in
+> parse-options.h about why show_usage_with_options_if_asked() is also
+> handling the '--git-completion-helper' and '--git-completion-helper-all'
+> arguments?
 
-Testing this on the Linux kernel on my system, "git stash push"
-improved from 254 ms to about 239 ms, which is about 6%.
+Yes, I think that would help, so I will add a short comment above its
+declaration in parse-options.h explaining that it answers these before
+the command does any work.
 
-Signed-off-by: Jasmeet (Jazz) Bhatia <jasmeet.bhatia.us@gmail.com>
----
- builtin/stash.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index e1a3a76bd0..58eb782597 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1459,7 +1459,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 			   int include_untracked, int patch_mode,
- 			   struct interactive_options *interactive_opts,
- 			   int only_staged, struct stash_info *info, struct strbuf *patch,
--			   int quiet)
-+			   int quiet, struct strbuf *prepared_untracked_files)
- {
- 	int ret = 0;
- 	int flags = 0;
-@@ -1473,14 +1473,17 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 	struct strbuf msg = STRBUF_INIT;
- 	struct strbuf commit_tree_label = STRBUF_INIT;
- 	struct strbuf untracked_files = STRBUF_INIT;
-+	struct strbuf *untracked_files_p = prepared_untracked_files ? prepared_untracked_files : &untracked_files;
- 
- 	prepare_fallback_ident("git stash", "git@stash");
- 
--	repo_read_index_preload(the_repository, NULL, 0);
--	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
--					 NULL, NULL, NULL) < 0) {
--		ret = error(_("could not write index"));
--		goto done;
-+	if (!prepared_untracked_files) {
-+		repo_read_index_preload(the_repository, NULL, 0);
-+		if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
-+						 NULL, NULL, NULL) < 0) {
-+			ret = error(_("could not write index"));
-+			goto done;
-+		}
- 	}
- 
- 	if (repo_get_oid(the_repository, "HEAD", &info->b_commit)) {
-@@ -1493,7 +1496,8 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 		head_commit = lookup_commit(the_repository, &info->b_commit);
- 	}
- 
--	if (!check_changes(ps, include_untracked, &untracked_files)) {
-+	if (!prepared_untracked_files &&
-+	    !check_changes(ps, include_untracked, untracked_files_p)) {
- 		ret = 1;
- 		goto done;
- 	}
-@@ -1529,7 +1533,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 	parents = NULL;
- 
- 	if (include_untracked) {
--		if (save_untracked_files(info, &msg, &untracked_files)) {
-+		if (save_untracked_files(info, &msg, untracked_files_p)) {
- 			if (!quiet)
- 				fprintf_ln(stderr, _("Cannot save "
- 						     "the untracked files"));
-@@ -1615,7 +1619,7 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
- 		return 0;
- 
- 	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
--			      NULL, 0);
-+			      NULL, 0, NULL);
- 	if (!ret)
- 		printf_ln("%s", oid_to_hex(&info.w_commit));
- 
-@@ -1698,7 +1702,8 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 	if (stash_msg)
- 		strbuf_addstr(&stash_msg_buf, stash_msg);
- 	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
--			    interactive_opts, only_staged, &info, &patch, quiet)) {
-+			    interactive_opts, only_staged, &info, &patch, quiet,
-+			    &untracked_files)) {
- 		ret = -1;
- 		goto done;
- 	}
--- 
-2.56.0
-
+Thanks,
+Tanga
