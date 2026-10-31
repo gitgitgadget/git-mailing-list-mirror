@@ -1,93 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793443538;
-	b=LyOTmzdeoUCeJATyDFc1Bx9FeSJsH2IkOwe+7ZagYJ1LaKqaTtfrBRlRNoyDLGmA3+mP
-	 KYFWsVJss3VtSmbdaorqN0hCtAWs03SgoTRvTn50CEYrEMe7/lje3p+oxuNY6c/IKX/V1
-	 sbaf/cwS/JRk5AZ3cCF75FpL0q3xl4GD3BipL0uLd29JhJ5h1kahNwdM/YE2EZ8QGRwt2
-	 ecACQcJo4s0OhNBfJg0MrYvb9ilXJkoFq+PpXx3OtyKMDzrL2Xy3F095wGCJ39hlZ5dyX
-	 g4uV6nkv3E35ybB/rpt4ol3i2UvaCBC777kCRKxAUi/xubfisVi3auOtAOW036yHIYg==
+	t=1793445010;
+	b=HsTitYqPc0+vYcUtJvUrBHd1tSN6vB8GJ+5+MOqX5AThoooQt00GefDQSCqtoQ6Orp5f
+	 gTVztP5ukF6Jtbsav5HftuAk7xaqRmqI0E3dFggwObzZx+HL+qguUVaMHyGddWokdSFAR
+	 BE7wTCKSIpiUtam54wsBSyJzwDep4Rz5uXS7parY6CMtD3/jjAyPnxsrcea9xn9FQedso
+	 uDka2IpXePLJEQuRW22sm2JQWQLDLTXwOx46JBn1Ps3cZWI+qXXqRXWRTOMeGk/+TzRxL
+	 BdynJVqKVHVXvUDt+0N1/mVMDtVLi5s8JkqcU94jhk3yvLnv/PYduEP3C1m1o43z8nA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793443538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793445010;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=mRep0eAkSTDV6HB340hQFRMCJrZXm9K1DmqT1eT9lTo=;
-	b=v2jdVzzfJuq/Dxt5JcByNn9UNRl88xeujylBrNsZcIY4bSk4DS+zKZGocdhhmxqmRp3I
-	 ONqvuyB5haUzANKaD3jcKXLy9JuGDF1bac+VJN4GMOqzJwuPFjKIZWlJHXuLJ8znfQQ05
-	 w+0R8E4PTPfF/WsmQExO2QLSpwiGJHC4W3yPvJgCpn9+xdTHk+rx8nHi+HVD6zWikqrD3
-	 aClWOyEuw9TuGFDlYkw4Za2jLZSWqKIbDWUG+E4sRHCPyD11Qt6Hmu+wEuvKcIIInn7PA
-	 xK7Rk5z2jWwtNg3qp6pAfeGsv7nlDEw587bOez1yR55+lQ/EZQcpCq870FME4sjedDw==
+	bh=6IR5fKXE6fobKlGM2aV9DDc+2UlBIJWON1EB6nJGS8I=;
+	b=289Et1itWXagWwEjwtgfXi3S28ZJm/0gOaZlKeyEgzzeuUH3nqMjqH/0mj2/Q9QljZa2
+	 MlhI9fnDxHF5gFhbBFyt+yG23OaRTrzIEggdzuFHolfcxQYgfKFMCy6Y449V1IkjikiAh
+	 bV7oRAd7VUKlXiaTPXe35r4kFQ446yQbnR6o0skkA0wJ+uXK1Q1qM7QaqRBT4wsTnMoQV
+	 XlclS1e+h2kz9ur3su/j+1xJDQ6wXrtsjaa0xDqWi8D2T/yCc7Sh0rxjzMdGkuF+jF/iq
+	 sLFmOcSpR25b0807XNIo8GM50I+MyJi8rAY2J7lMFK9yyJPNycUr9mNRCNTmR56UC1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="IOL/kY9M";
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=InNJmtfq;
+	arc=none smtp.remote-ip=209.85.221.46
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A49606A31C
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 10:45:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5A49606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9993C606A31A
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 11:10:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9993C606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IOL/kY9M
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a35d5d4a20so16795375e9.2
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 03:45:37 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=InNJmtfq
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48e47347279so939628f8f.1
+        for <git@vger.kernel.org>; Sat, 31 Oct 2026 04:10:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793443536; x=1794048336; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793445008; x=1794049808; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mRep0eAkSTDV6HB340hQFRMCJrZXm9K1DmqT1eT9lTo=;
-        b=IOL/kY9MlVYOqfIeDptbaV7JTm2APIZatxUhf06laEF62Gn2+icClrU1myEf2X8KUj
-         mcpvFxcVVNXGoJWzEWmtAk5MtbsEGxgGlRRNWB/+dzGJQeIcmOwThd6ZJGTdt9WBvFc5
-         GxHgFqh+yyXaIukBEHG2r8SG17EViZm/Gy5HSVO18GR/6NclqAVgS9V407JWungoc6te
-         VxGa7Wj3YKKHSMsX9Agh7IPm/HirmejTiBwWqRRS1gH2QUnPOs9k+koKTqMKn47eUzP4
-         EDUBozRLYWU+5kGz98l5NBOBdzeaOcWL5pPQxiJ4f06K1p2ov68U7owfoxmvzALbqMyX
-         HGUA==
+        bh=6IR5fKXE6fobKlGM2aV9DDc+2UlBIJWON1EB6nJGS8I=;
+        b=InNJmtfqyhgsoFtZ9SZ09GtyPjncQQlpL2hEqtRIXIKqGR3h+7zE/rb9p/qJ2XtUB8
+         UUnKfLGbt71VDjwzLHYwH7CzyJk25MZlsDczi6ELEc9vD8hGoQtL4rWlnC3TQ+XacOUa
+         SwT3G4D4MG4MoYb2k4zWx9InP1PsyiMcTrv/ombYD5pKXruWT8GMELkAkojSowJWSnbs
+         ezaQ2TUrx8tPw3ZPxqUMQneGoZuoTkMLPk21lh/L/6GTnXjdMuzLMDTYujr6eAnXxUX+
+         YiaCQWRAHytTumRaa9/GI5h3F93SGnwOcPySEy0icSx97q5yTkpLgcbJ6uuoZxpQRxch
+         5tag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793443536; x=1794048336;
+        d=1e100.net; s=20260707; t=1793445008; x=1794049808;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=mRep0eAkSTDV6HB340hQFRMCJrZXm9K1DmqT1eT9lTo=;
-        b=Lcu0XxULGFArLTwwWhYy1tn8tzsTVNM+mhRJmDKhYxR3cRFlZTlytK+SaEW3HF24aJ
-         ZSwZEybDIWiz3OIcdVkTOYoXSI8x1xp2Q92x4h4Oy5c7/a4AhmJZNpaycwjqPCEjcbwj
-         jzBLQZTvabbQk3YPldoe27Zyfc6Z315WfmyotfXjFVaVoHOe/9v/4Rb9AdcMv2yYvUoQ
-         5cCU0IFFuKUIGEQgBes8OecWBqbmBcopAvqdACvHTtv1kN4V2Khzi+YJ7gagEA8GmZhg
-         O7ZywxAXIZPUCfkdnzcExzYuxFDqsjITqIVWhamgBWlhmC1Z0FsZIktmRH02VavLl/3V
-         T9iA==
-X-Gm-Message-State: AFq9FYJIVMGQ0ah6yjCK1O5f3gs5YlMPgVlFJwasqrPLMGbMHp660gPC
-	26/RDs/tEA+peqna4EroL/Yyq9byim/zptp5YeusW/XCwAjydyyLPAUL8Fua/+QnYg4=
-X-Gm-Gg: AYBFou39tpBTJiIE7VCHwmLpkQv4WaUCOwtpItge3xkqf7LbPt2BxIIMYG5rWIznB76
-	VSd4WVwpXOAH96shTEH3N+hH1gk2xC0OKITG/pauKtqf4uxy6lh7yvPzEk8ahA+GUOtZTiR2VLO
-	iTX90fiDaROjF3ubHQUXQT/MYTES9t9SGoJPdLZbTE4ZKQq4ipBEBt4Lq5dHt4ZSxUGP15r+E3c
-	2ImAikjoVmpwHcQHhZZhEkUHGXYS9l4CUEQZKrlr+vy+qWjuImhFlBKbp5JHApA2pvZny4cSDtC
-	IwuS9SxPNiwci6iESeeR3NEJLKg+Tcur4nJfYLd+Efkze2kLwYxWJaC3A8IRKaXWneeVVwQFZge
-	YnD7OEAQZYgx5fQZ5sO0fXWQHgLAZeoMwedgVaFo2tjtiMon/vY01r9PMv6YewMviuUfLWhJTR4
-	XfIWtY56SJ1JZGwv0pe/CFVYc345e18JunflZQsSt4fG48WbMdH8bNQmE7ORyHvH9pGdg/eLq8Q
-	LgbjoZKW1rECIBGREimq9DwIsCwUlYdg0OpSoJJRQVZlA1I72bDohNv/sUK2bNpgMaxoTNSg0At
-	EV/opgeRMUCohE6OmrECkzcre130CoBRQVX4YZh4c7I5/4yfzNWSnN7UpRiwR9yZvnYGjKuMJCd
-	Dgp0pFPqzr0Wm+jw63SPm20H/HyHA4icIa1Lk2aAyOvqX0IjJX8CnCtFzNDxoGZEwCL8QICedSV
-	qTghqim1m2sABEkmp5OD2RNIN5jb1+
-X-Received: by 2002:a05:600c:6216:b0:4a3:5aea:21e5 with SMTP id 5b1f17b1804b1-4ac1737c533mr104010535e9.9.1793443535713;
-        Sat, 31 Oct 2026 03:45:35 -0700 (PDT)
-Received: from localhost.localdomain ([105.113.81.148])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4abf0b36853sm110388405e9.0.2026.10.31.03.45.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 31 Oct 2026 03:45:35 -0700 (PDT)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+        bh=6IR5fKXE6fobKlGM2aV9DDc+2UlBIJWON1EB6nJGS8I=;
+        b=HODnf5hkzxUObHDLs7W6uDg/o2nRK/luT9Gzf4Z2Tz8KF/jvbRFxsna5iaFOmm4bl2
+         tj0eQ4HfjalC5Mjy24MP8/m4Wvjd4qikwUL6F2+B4S5ORDKKT3GEI3yanchPzfNBAf9O
+         0Km8L6O4Gso4PlCYiAJcDvIt5guJrqql89AIvOwMXK6x8NkIYLyKB+j/Vue/DYIoLqt0
+         AtP3Gh1l8yeB9t77xypMmkguU14jxRuDuWPHpB8ZB3uUc5xAtpBAyliTRSUN16FtGQqS
+         FwM95LCkK80UP/OEsX+09Dkc0rvtMSP3QkUwQ98BJKR3bdiRaaXuV/IL9wuB/DGJdkQa
+         mvLQ==
+X-Gm-Message-State: AFq9FYJqDN1/r/paahZTgk5/F1v9+WLUCewca8ddRbIyd3ltRJqOBXxs
+	GWCBnsnBdl1NWazK47Ke4al1/9kQV7pa8rRJvHL/3mjLPMaQlMbyXe7LVBYShG1F
+X-Gm-Gg: AYBFou0N+sSLRWUy2fMQ2YVTqF2izZwIz4Tnzoxu8kliQE5+NqA8dS4VWXWP8NtxHON
+	gzVKfVJeOE7hc9YlojFemz2xakoLihOrObqh4I0X2bdRCCwRbID39wWVV6JYhDa/KhxoimsOOBR
+	aZFpumsX+lTfwqm72q78Wp3LFVyjKPI4NcZ68FULoldGs6USxJFuQ/9XDySSyOqqo5iNPqu+OF5
+	Fk++FLkBslUpdJ8XME3FwJCCyRlF342fkK0dTuRrriqP+HOReic0hX4gPS6YYZgjwxIjvqY/pw7
+	d44sNVc27lU3bQ3OOzGYWeSvfJXtWZHGGP31qkV4hO4U9VQSw2pbRXays37FQPSExTvvfpSq3B0
+	01LGmDQVk+amGEc60mU7uWU9P5y8khu0T28zGUwNfiCR3xshI+NLO6y/zufBUa42S9ZnhJWLMh9
+	DrCO74lF/PNowRZUKxAWukn/dRc5MMlN6R+/laZqSgQcbOYPgqEuPo4BnIL1DTjqTcUIehOGMKJ
+	YXxbREAbGGTm/Fo9AU4wSY9O5E/CYcGIjzs6f/0EWpvF/6NjpW6ucB8aubE0hqgzqAIiIPu6yO4
+	3LpMvJMygP6mr3j+flvumsCPdkEra+aTuO0NU/f1FK8rt20OAZT/2lPF/cAGfgY=
+X-Received: by 2002:a05:6000:2410:b0:48e:6674:3b2f with SMTP id ffacd0b85a97d-48e6e5005c5mr11951228f8f.51.1793445007932;
+        Sat, 31 Oct 2026 04:10:07 -0700 (PDT)
+Received: from ubuntu26lts1.example.com ([151.31.213.44])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71ba7168sm8853670f8f.55.2026.10.31.04.10.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 31 Oct 2026 04:10:06 -0700 (PDT)
+From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Subject: [Outreachy PATCH] notes-utils: use the passed repository for notes refs
-Date: Sat, 31 Oct 2026 11:45:26 +0100
-Message-ID: <20261031104526.46711-1-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.56.0
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Elia Pinto <gitter.spiros@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
+Subject: [PATCH 0/4] use size_t when parsing and checking objects
+Date: Sat, 31 Oct 2026 12:09:56 +0100
+Message-ID: <cover.1793444420.git.gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,43 +102,60 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-create_notes_commit() and commit_notes() receive a repository,
-but read and update the notes ref in the_repository.
+This series continues the search for truncated sizes on platforms where
+"long" is 32 bits (Windows). It covers the functions that parse, verify,
+and check whole objects in memory: they take the size as an "unsigned
+long", while their callers have a size_t, so above 4GiB the size gets
+truncated.
 
-Use the repository they are given.
+Each patch addresses a specific component:
+ - 1/4: a valid object reported as corrupt;
+ - 2/4: fsck looks at only a prefix (e.g., .gitmodules);
+ - 3/4: parsing of a prefix (with set_commit_buffer() now dying instead
+   of caching a truncated size, as repo_get_commit_buffer() already
+   does);
+ - 4/4: "git tag -v" doesn't find the signature, plus the int index in
+   copy_subject() on all platforms.
 
-Keep USE_THE_REPOSITORY_VARIABLE because
-init_copy_notes_for_rewrite() still uses the_repository.
+There are no out-of-bounds accesses; large objects only fail or are
+handled as if they were shorter.
 
-Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
----
- notes-utils.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+No tests are added because they would need objects over 4GiB in memory,
+and they'd only detect the bug where long is 32 bits. I am happy to add
+EXPENSIVE tests guarded by !LONG_IS_64BIT (like t1051) if reviewers
+prefer.
 
-diff --git a/notes-utils.c b/notes-utils.c
-index 5c1c75d5b8..d4606bc576 100644
---- a/notes-utils.c
-+++ b/notes-utils.c
-@@ -26,7 +26,7 @@ void create_notes_commit(struct repository *r,
- 	if (!parents) {
- 		/* Deduce parent commit from t->ref */
- 		struct object_id parent_oid;
--		if (!refs_read_ref(get_main_ref_store(the_repository), t->ref, &parent_oid)) {
-+		if (!refs_read_ref(get_main_ref_store(r), t->ref, &parent_oid)) {
- 			struct commit *parent = lookup_commit(r, &parent_oid);
- 			if (repo_parse_commit(r, parent))
- 				die("Failed to find/parse commit %s", t->ref);
-@@ -61,7 +61,7 @@ void commit_notes(struct repository *r, struct notes_tree *t, const char *msg)
- 
- 	create_notes_commit(r, t, NULL, buf.buf, buf.len, &commit_oid);
- 	strbuf_insertstr(&buf, 0, "notes: ");
--	refs_update_ref(get_main_ref_store(the_repository), buf.buf,
-+	refs_update_ref(get_main_ref_store(r), buf.buf,
- 			t->update_ref, &commit_oid, NULL, 0,
- 			UPDATE_REFS_DIE_ON_ERR);
- 
+Not covered here: the pack paths (index-pack, unpack-objects, pack
+verification) still pass an "unsigned long" to fsck_object(); that's the
+next series. The tree API (parse_tree_buffer(), init_tree_desc*()) is in
+the tree-walk series:
+  https://lore.kernel.org/git/cover.1793357680.git.gitter.spiros@gmail.com/
+This series doesn't depend on the other series in flight and merges
+cleanly with them. Based on master 50fe5cc63f.
+
+Elia Pinto (4):
+  object-file: use size_t in check_object_signature()
+  fsck: use size_t for the size of objects to check
+  object, commit, tag: use size_t when parsing object buffers
+  tag, fmt-merge-msg, ref-filter: use size_t for message buffers
+
+ commit.c              |  8 ++++----
+ commit.h              |  6 +++---
+ fmt-merge-msg.c       |  2 +-
+ fsck.c                | 18 +++++++++---------
+ fsck.h                |  6 +++---
+ object-file-convert.c |  2 +-
+ object-file.c         |  2 +-
+ object-file.h         |  2 +-
+ object.c              |  2 +-
+ object.h              |  2 +-
+ ref-filter.c          |  6 +++---
+ tag.c                 |  4 ++--
+ tag.h                 |  2 +-
+ 13 files changed, 31 insertions(+), 31 deletions(-)
+
 
 base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
 -- 
-2.56.0
+2.53.0
 
