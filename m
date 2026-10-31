@@ -1,89 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793441206;
-	b=L0Tzu/LvFuJPH5ny1rn/cy6g/QOeZA65KD0dQ6dqiEssl3jsr3UQtXv69MKGSunBXIHN
-	 mkbHRAbZJQAe8rwprAD0J4TAFdF9Cpb4B5gTHPICQe3u+hyelgXmYtx3NWfV/ibUMzEQi
-	 GYaIRZR2IIlQfypeyDTImRWq4dnl0PjlPjGkUl14XX2QtEozH4fhRZc0tAXtMPXJRlLDA
-	 SKfwScB/zWk+5qX7X6/hpT+iKxWnydxgf2XFS1CGP8IEB3q/v7lJfcjFhnrrgmMwQcaQm
-	 MReKZ21I8JdnSP7/4ceCob44VIFwlN/jYjchUBiPktTgAIz2YwXBsXdvNVDroCCO5iw==
+	t=1793441786;
+	b=TPIKG8tXfAxwu04BY88QwJDVhuQ3hQlA9KJatX2SWbgY35yG815BbyDqchLCP/+5Vp0a
+	 VXGZ0uokCnENk5q2dSQWrR/Aa4lQC7d0rlGQu501PGQ9tmSGEO6fT9pNyEWqsZlvB397T
+	 wp+lnCeWDQ+L59SRd+8/dmrV/TEBE5pxaroT+UAZxqx9PHzjimh8xvfsF6KpkfOOsIUCj
+	 FWeoU6uwYmrZvyBNCP+fj/WPeucmLlKFSc/8wZtOBMtumpGmbqk0o8k8Go1lyNzK05Ftx
+	 VfWnMdsZMRzUxEiuDdm/LqwFRp8r9Xt+pgiQWdjgfbHH8FvoG1c8iqQdX7SEhly6ACQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793441206;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793441786;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=zh2NQrxX85uxvb6nmWqxaMjGSL6MB1t2kujZPkhME4Y=;
-	b=EHVRkCzNzgzWYds1G9vaukwQH9s6VjFUqP91AxG9EGPRXNwdFJ/It96uVcdAk13QM/5p
-	 kfwHDJXDdpzSIBPPzDtlLFvDZb20Mj9GZqyzrVdMyekfMc6Osiwhwzh4eDSDq9mQAG8Ct
-	 rNVjbbPegxIY2jFz3wT5mOyCkq11fA6veOx2vgvMhQHSbyGQjMrnIhUIOwUUrQBNAVgg6
-	 Ykuu5vQkV1iyBBD3Gz4P9QPjfTFHXgm6WX0ts8sy0Kbr3blkctq7LqjB81TFW+G7Hqyuf
-	 9wi/1FUD5p5bcBa36pWS5nCl4igkJ06MSviDDHYv6fRA03v6SgSniHNFL37otjkBT2w==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=xj5ayNOzVZqhTKaSQL0FhSYsnH5IxBrdCK4vfUJpoXk=;
+	b=EuzlXNjQLr8XmN1YIC2wiZ0uD4CN8RgHh3rco2BtgWsgiC/WagfkijVWViaVVsatJbeX
+	 w3THBsHHfodN3Y7RPqM56VD35N50xUFOBay2GTo6bUtDPGZHr1B82tiEjN2vRxtJA6xln
+	 CJoCtNz7/sa56JnFQMTrmzr8VACJrrn6Z9MdBFzwP6ZOEf6OtiqL1H8cgQrD6y7EvHxnN
+	 L6EpsS6TkoVWlnwFqR9TMKfMHpmgjDIr99Y9HwU6Pwj4maL12lsH7fZ3w9bQdfGWiztdg
+	 52CvCKH+U7AEnQnZG8opaHnUGczpwgKAdG38JlcGS3HYusqq110wNJ82ULyK+OIgFEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C1gOhTA8;
-	arc=none smtp.remote-ip=74.125.82.179
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ES38Q6mo;
+	arc=none smtp.remote-ip=209.85.128.46
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D39606A31A
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 10:06:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76D39606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D6A606A31A
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 10:16:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28D6A606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C1gOhTA8
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-3645f0f3fcdso2566762eec.0
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 03:06:46 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ES38Q6mo
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a214c5c4c0so12783945e9.3
+        for <git@vger.kernel.org>; Sat, 31 Oct 2026 03:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793441205; x=1794046005; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=zh2NQrxX85uxvb6nmWqxaMjGSL6MB1t2kujZPkhME4Y=;
-        b=C1gOhTA8VZNa5wGLSQzffOGqJqgm6UcbmZEZSOCVhhlFcBV1j3L+Zq3KcAEsz7DIBD
-         XWMNdjgIFLjxeDjdBPhR/EIY5cEzArHyq2qpx6MP0CHM3yfMlaMXnxbar73MCuxBIzee
-         aHHvMHaesTLgQwQABUldYnsVJoT0C5S7qRU52oKBtmuuvHDsPc/VQIPibQ7mI/1JWxlm
-         usiha13ykvUEpqK8Lg2p+CfNWTWO/Q4+8xHnW/lRHcZddRCkBKJRYag1r/k23PDDT6Jx
-         2V2NaCmnRvy5utY7W/qS3Nt4ILEBkeMHnl6XrKVQqTt2WxOjoKMqRmNEw9RuShw1SEpx
-         6XiA==
+        d=gmail.com; s=20260707; t=1793441784; x=1794046584; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=xj5ayNOzVZqhTKaSQL0FhSYsnH5IxBrdCK4vfUJpoXk=;
+        b=ES38Q6moYaUpd2oM0ZHPVxrkWeD2yyxREntzpPKmWgu75irvXK6WICdcpkHJOLaFLq
+         XOXCw+Yqm6fS0AND22/rlNErNOli6/VPEOuaZbSE/tXs91VhVt4AUdcJuTY6/w/1asmP
+         iG8Ab66TxhVGs8Gn1ebEsGjborjc7TMpC5ZY0NebV8/60onGpczxnPYwvDPJdNVMHRuj
+         +lsLVSjHI5++NTFseMvEYZsexXMued5QPDtIb8jcQvkNqs/dkiPCdo9J4GcM5pB39O2g
+         hdaIV5j/zUkdoCiZs8fzaDRY+OP/y9CMtpWzXSNqL9yWKW7Dr3U+H1TI8jYyR6LAcN60
+         UWYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793441205; x=1794046005;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=zh2NQrxX85uxvb6nmWqxaMjGSL6MB1t2kujZPkhME4Y=;
-        b=kr98YhVuSXatvA8ZQuRZtA285xpWos9uXTVFxpWzhkZPvXx7lSveqpKkHSOAVwIEjV
-         QSWSmaUCMBBOQ+XUlYDdy27N3vfkgt8cs2yHvAo8QZ2jQZt1471aIZ3qkhRLCX2sllod
-         pcK4qQ8mfXhGX4ZPFlOohNh6X2udqY77aNgp+FsZTTxFWYe3Ayg33PF2S9PILghKe9jX
-         BR59pVqzlRXjO1wEmny7tiJDZjoeJ23Y+mFL+z3Mb0BmVl8rNepwvhdsmnR0QkKe194w
-         AmssdE+/WZP3XzS/oB+i40EaWu1MbSKSUCBBoifGaiS8V/jWiatwMfU4dXkS+V7n69nz
-         uW7g==
-X-Gm-Message-State: AFq9FYLUHZ+0EYPuE22vky9JPv2Yulo/VObhZLiSfqjjQHz3OwOwfU+Z
-	MHixImoTBVIIrQFIv4R2lMDqKPZsmE2LBWB5wGxV2jI8frseblL8mdym0RsoEShh
-X-Gm-Gg: AYBFou12Vcio80OAy805LHIMQ9sh7O9yA4wWmWyjSyferrh5Qzm5JuSmM83r774KXiu
-	KinN+9FA3NEbOjFCB342g2ZJ/8podj8SdPNjsIN8VXSvdEoT+ni0161pTJmzjmfHhI5sbS5pDn7
-	z/GgfWS4HNekTC5pA+dxBWlFIuOw1do6k9ZyRfq7mdprqIKajPkTte3pRF0I70Vp3hFqWh9nsnW
-	tjAwCi1ZUVMgaIVbIyTKU6nn4zjN1pIK78MUYUbPfwQvjpZh1q7A2coNW7cPYtaJQGl0ctxkwXI
-	NOZNi2qdXD0zI01Hy9urQptGyKfAkZkC2/k0FKjIGbaPsL1xHItsmCt3i9N6WC+fMbJUxM2kxxD
-	+J8vhpAyN1PxZq/QwUGKKq+WDAOIozhgpIc9Vk6qO8qnw3NhogybpTPD7yQ0KRYwO1JV514CQIE
-	crY/L8oZS/+Hbi+kZaVeLtwQVn1AbtjSgBrkn38bhN7q28AwZIM6+qtjnGdd/viweFtPiHgkWy2
-	vKH5XrLnH7vZn0rfAFdG0kDqRlVgJn3msezk7m6KqXbBEYsC2093qFP4/yo7Vziy1W5Kn7F+hKc
-	r3051hNuuWG3lyKsGjBQFECQL7rlTP3DllRs1TZgkjcwGnUu3K62
-X-Received: by 2002:a05:693c:87c6:10b0:367:5e31:ce29 with SMTP id 5a478bee46e88-36a42404ab3mr7398384eec.20.1793441205258;
-        Sat, 31 Oct 2026 03:06:45 -0700 (PDT)
-Received: from [127.0.0.1] ([52.161.82.81])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a42aa8999sm17546687eec.29.2026.10.31.03.06.43
+        d=1e100.net; s=20260707; t=1793441784; x=1794046584;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=xj5ayNOzVZqhTKaSQL0FhSYsnH5IxBrdCK4vfUJpoXk=;
+        b=Q78loqwdHorue5GFG9Xjc3WCLs8QTZBdOVlNxic+X5yIfSyt7+2rIorVciy0oHIBjz
+         NUxHUZefWCXtsl0IsmT3rHBHvbUC8wymzUG3EKva1ltBnlGfhBvi64ugXqpZ9Q9caObV
+         2lZIUq98rGDQKiem+XJ5nDpECmlp5qxvjGXzNtd950A2AycqqM10r8+///nFzwfqMVjE
+         jH0kwEk5owYz1uNPXOApkVLLrq5wIL8opPtk4iUyK/zkHoi6471166MGYhw0xqX3HbrQ
+         pecdQCv63GROOfOHWabMX0HtY3w2x6lEnV8+JfMphMyJCoCfhRfnF4bD+sQH2wz5zKsf
+         JmrQ==
+X-Gm-Message-State: AFq9FYLt0FZ96KJiqWgWngFILoF6HqP3Bbo5Pc+QmiE6MdGtVVYBgHUz
+	VVlp5gxatFCljkAcUey14x+SsQJbsU6c5zuHjAi6t0ZJ/3j2gVC6G778nKZjTMyY
+X-Gm-Gg: AYBFou3ayRpelZ6cCF6CQet4gp7qzlMSB9Lejo3SNv6rLINOrKZfJBIhevCgY1M0ByQ
+	FBfusMfE2+D3irWm1TVYn8xnAbyWfU4toE/1l0XWv5PibWJwe4datJ+LkzWxZ//vAtDeylB1q42
+	HOxsHAizNU3yLZhYQjVuOucGBGQ/LF4546dkiPW+4gN4oDg741zGLqn3lSWI8x2I+rLw6bxzNVU
+	07b3h8LQMVwmdxhN2v9QJMHAzZ/XrEstnM5g90dsskOHej252qOO6fOxM1u+X2CeD3xtO2R4KJE
+	nz5kIkmtDaCfXiWxjlFry5879F3djfwf1sspci+upu1w7pNPZESB6h1vv+a/ttznYmY91zOxGCX
+	CjdruJjU5qm513CgQdidDsWyWYrWi+Lm9wtydLq5mzDljtCj4AanHgVBWAWJjXuNaRsnok849Zv
+	q5ugI9Hw/ySEPN+U9mlpZolLBA26iJD/fvJx86zURxjMhVshUxKpfdcrww7Y4FWw+SoRS1hlEMY
+	N5uTzin7DVdehdrRFUTGNobL93aWznIsagjJGz7qmSUB0yLr3i9LQMiObEdqSa3rLnk1fQCmfMj
+	BOYDJTSCJso8y9GtqIr901tUxFKfsDpS+onIMwRW3NQcEj53iiG3j8stUUgIvRS58VTlSI4wjRO
+	sOzyojPSg
+X-Received: by 2002:a05:600c:8183:b0:4a1:f9e6:f418 with SMTP id 5b1f17b1804b1-4ac19802178mr89971875e9.34.1793441784109;
+        Sat, 31 Oct 2026 03:16:24 -0700 (PDT)
+Received: from ubuntu26lts1.example.com ([151.31.213.44])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4aa8213ead6sm195434335e9.14.2026.10.31.03.16.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Oct 2026 03:06:44 -0700 (PDT)
-Message-Id: <pull.2284.git.1793441202854.gitgitgadget@gmail.com>
-From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 31 Oct 2026 10:06:42 +0000
-Subject: [PATCH] merge-ort: accept rename settings given without a value
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sat, 31 Oct 2026 03:16:23 -0700 (PDT)
+From: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/4] odb: use size_t for the length of objects to write
+Date: Sat, 31 Oct 2026 11:16:18 +0100
+Message-ID: <20261031101619.172770-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <auSDFRHpLy65PMF_@pks.im>
+References: <20261021101640.329990-1-gitter.spiros@gmail.com> <cover.1793352943.git.gitter.spiros@gmail.com> <8fcb9f10f13962acd5cdac652bea8fc4164f2e78.1793352943.git.gitter.spiros@gmail.com> <auSDFRHpLy65PMF_@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,134 +99,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Thomas Bachem <mail@thomasbachem.com>,
-    Thomas Bachem <mail@thomasbachem.com>
+Content-Transfer-Encoding: 8bit
 
-From: Thomas Bachem <mail@thomasbachem.com>
+On Fri, Oct 30, 2026 at 12:44:34PM +0100, Patrick Steinhardt wrote:
+> > diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+> > index 463b38f990..0a89bbb455 100755
+> > --- a/t/t1007-hash-object.sh
+> > +++ b/t/t1007-hash-object.sh
+> > @@ -297,4 +297,17 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > +test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
+> > +		'write filtered files over 4GB correctly' '
+> > +	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
+> > +	test_oid large5GB >expect &&
+> > +	test_config filter.null-filter.clean "cat" &&
+> > +	echo "big filter=null-filter" >.gitattributes &&
+> > +	git hash-object -w -- big >actual &&
+> > +	test_cmp expect actual &&
+> > +	echo $((5*1024*1024*1024)) >expect &&
+>
+> Isn't this the exact same as `big`? So...
 
-"git -c merge.renames merge" fails with "missing value for
-'merge.renames'", although git(1) says that "git -c foo.bar" sets
-foo.bar to true. The same happens with diff.renames and
-merge.directoryRenames, and with a setting written without
-"= <value>" in a config file, which git-config(1) also documents as
-true. Every command that merges through merge-ort fails this way.
+Ah, there was a slight misunderstanding here: `expect` didn't contain
+the content of `big`, but its expected size in bytes (`5368709120`),
+which was then compared against the output of `cat-file -s`.
 
-merge-ort reads these settings with repo_config_get_string(), which
-rejects a missing value. Read them with repo_config_get_value()
-instead. git_config_rename() and git_parse_maybe_bool() already take
-a missing value as true.
+That said, your point stands: checking only the size was a weak and
+redundant check. The OID printed by `hash-object -w` is computed
+directly from the object content that was written. If the length had
+been truncated (like on Windows), the written object would be different
+and its OID wouldn't match `large5GB`. I verified this by simulating the
+truncation: forcing the length to 32 bits in `odb_write_object_ext()`
+causes the test to fail right there on the OID comparison.
 
-Assisted-by: Claude Fable 5.1
-Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
----
-    merge-ort: accept rename settings given without a value
+Because of this, `test_cmp big actual` isn't needed, and running it
+would unnecessarily cost another expensive read of 5 GiB from the object
+database.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2284%2Fthomasbachem%2Fmerge-ort-valueless-renames-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2284/thomasbachem/merge-ort-valueless-renames-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2284
+>
+> > +	git cat-file -s $(cat actual) >actual &&
+>
+> We shouldn't read from and write to the same file. Maybe write it to
+> "actual.size" instead?
 
- merge-ort.c                               | 20 ++++++++------------
- t/t6423-merge-rename-directories.sh       | 17 +++++++++++++++++
- t/t6434-merge-recursive-rename-options.sh | 12 ++++++++++++
- 3 files changed, 37 insertions(+), 12 deletions(-)
+Agreed, reading from and writing to the same file was fragile, even
+though it worked because shell redirection happens after expansion. In
+v3 this goes away completely since we dropped the size line.
 
-diff --git a/merge-ort.c b/merge-ort.c
-index c410a5d353..24ddd97696 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -5453,31 +5453,27 @@ void merge_incore_recursive(struct merge_options *opt,
- static void merge_recursive_config(struct merge_options *opt, int ui)
- {
- 	char *value = NULL;
-+	const char *v;
- 	int renormalize = 0;
- 	repo_config_get_int(opt->repo, "merge.verbosity", &opt->verbosity);
- 	repo_config_get_int(opt->repo, "diff.renamelimit", &opt->rename_limit);
- 	repo_config_get_int(opt->repo, "merge.renamelimit", &opt->rename_limit);
- 	repo_config_get_bool(opt->repo, "merge.renormalize", &renormalize);
- 	opt->renormalize = renormalize;
--	if (!repo_config_get_string(opt->repo, "diff.renames", &value)) {
--		opt->detect_renames = git_config_rename("diff.renames", value);
--		free(value);
--	}
--	if (!repo_config_get_string(opt->repo, "merge.renames", &value)) {
--		opt->detect_renames = git_config_rename("merge.renames", value);
--		free(value);
--	}
--	if (!repo_config_get_string(opt->repo, "merge.directoryrenames", &value)) {
--		int boolval = git_parse_maybe_bool(value);
-+	if (!repo_config_get_value(opt->repo, "diff.renames", &v))
-+		opt->detect_renames = git_config_rename("diff.renames", v);
-+	if (!repo_config_get_value(opt->repo, "merge.renames", &v))
-+		opt->detect_renames = git_config_rename("merge.renames", v);
-+	if (!repo_config_get_value(opt->repo, "merge.directoryrenames", &v)) {
-+		int boolval = git_parse_maybe_bool(v);
- 		if (0 <= boolval) {
- 			opt->detect_directory_renames = boolval ?
- 				MERGE_DIRECTORY_RENAMES_TRUE :
- 				MERGE_DIRECTORY_RENAMES_NONE;
--		} else if (!strcasecmp(value, "conflict")) {
-+		} else if (!strcasecmp(v, "conflict")) {
- 			opt->detect_directory_renames =
- 				MERGE_DIRECTORY_RENAMES_CONFLICT;
- 		} /* avoid erroring on values from future versions of git */
--		free(value);
- 	}
- 	if (ui) {
- 		if (!repo_config_get_string(opt->repo, "diff.algorithm", &value)) {
-diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index 24d4c5447b..da145c150c 100755
---- a/t/t6423-merge-rename-directories.sh
-+++ b/t/t6423-merge-rename-directories.sh
-@@ -97,6 +97,23 @@ test_expect_success '1a: Simple directory rename detection' '
- 	)
- '
- 
-+test_expect_success '1a (valueless): merge.directoryRenames without a value means true' '
-+	mkdir valueless &&
-+	(
-+		cd valueless &&
-+		test_setup_1a &&
-+		cd 1a &&
-+
-+		git checkout A^0 &&
-+
-+		git -c merge.directoryRenames merge -s recursive B^0 &&
-+
-+		git rev-parse >actual HEAD:y/d HEAD:y/e/f &&
-+		git rev-parse >expect B:z/d B:z/e/f &&
-+		test_cmp expect actual
-+	)
-+'
-+
- # Testcase 1b, Merge a directory with another
- #   Commit O: z/{b,c},   y/d
- #   Commit A: z/{b,c,e}, y/d
-diff --git a/t/t6434-merge-recursive-rename-options.sh b/t/t6434-merge-recursive-rename-options.sh
-index 5a6f74839c..427de2ba95 100755
---- a/t/t6434-merge-recursive-rename-options.sh
-+++ b/t/t6434-merge-recursive-rename-options.sh
-@@ -332,4 +332,16 @@ test_expect_success 'merge.renames overrides diff.renames' '
- 	$check_50
- '
- 
-+test_expect_success 'diff.renames without a value means true' '
-+	git read-tree --reset -u HEAD &&
-+	test_must_fail git -c diff.renames merge-recursive $tail &&
-+	$check_50
-+'
-+
-+test_expect_success 'merge.renames without a value means true' '
-+	git read-tree --reset -u HEAD &&
-+	test_must_fail git -c diff.renames=false -c merge.renames merge-recursive $tail &&
-+	$check_50
-+'
-+
- test_done
+>
+> Also, it might make sense to use `test_cmp_bin ()` instead.
 
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
--- 
-gitgitgadget
+Since the size check is gone, we only compare the OID, which is text, so
+`test_cmp` remains the correct tool. `test_cmp_bin` would only make
+sense for comparing binary content, which we no longer do for the
+reasons mentioned above.
+
+Instead, v3 checks that the object actually exists in the database by
+running `git cat-file -e "$(cat actual)"`. This is a cheap check that
+confirms `-w` wrote it successfully without needing to read back the
+5 GiB content.
+
+Thanks for the review! v3 will follow shortly in the same thread.
+
+Elia
