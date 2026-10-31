@@ -1,83 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.179
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793436365;
-	b=oCoBnP5AqtParuj9regOAcx45AB4Pp49+6D7tvi4lwGy8BZpYkKjVoHN81bj6SrH6Ul9
-	 EIkNeWSYUIvG45icO6sppq/PJqtjBKwOu2r7Ihc9NDyDT18ZAQavkBlQijYq5OuVbDnwJ
-	 S3ORpgL8UkqYmbuRomFfeG3a7X5JMz2rpHUSeEIsu4fPluEG7lxHrHj5hG/8eBeSdjtuE
-	 TiYEcZLzu8ipixRNdSaM+YdzegfF78099oTD6+HzDDdh1lV+FcmpRxKmaUpKo4lfZQk78
-	 6kYHaY0scpvmhsRWwDjNc/ZPxWNZZg8QrvqqY7NOP2J99OF6g/xV6OVgV0Y5cSDGCUw==
+	t=1793441206;
+	b=L0Tzu/LvFuJPH5ny1rn/cy6g/QOeZA65KD0dQ6dqiEssl3jsr3UQtXv69MKGSunBXIHN
+	 mkbHRAbZJQAe8rwprAD0J4TAFdF9Cpb4B5gTHPICQe3u+hyelgXmYtx3NWfV/ibUMzEQi
+	 GYaIRZR2IIlQfypeyDTImRWq4dnl0PjlPjGkUl14XX2QtEozH4fhRZc0tAXtMPXJRlLDA
+	 SKfwScB/zWk+5qX7X6/hpT+iKxWnydxgf2XFS1CGP8IEB3q/v7lJfcjFhnrrgmMwQcaQm
+	 MReKZ21I8JdnSP7/4ceCob44VIFwlN/jYjchUBiPktTgAIz2YwXBsXdvNVDroCCO5iw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793436365;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793441206;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Mime-Version:
-	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:
-	 From:To:X-Mailer:References:In-Reply-To;
-	bh=5/Bnl1IZWVlVxC5jcH0L+/RxTVto69m99nrIGUBRfpE=;
-	b=yPYsdYoPmeT9eUKyhm6tlpap5RsDUJh+jL9QouoOLVPgiz4h8rzZLN0EfV3Shd6z0U02
-	 ANLPmktj+R5PIiMAIzCo/P7rk86WSiGlB28GOqUAroRvkRKeLiav3iJX4jMHuYficdQFH
-	 62Dmd6fuRe5aon/9vh8ZBOPDXSWFJYrzXpgmlRQ2GM9pJBva6Gozoeqc+621eIvZ1Z306
-	 uRfEYB35bLkl2j7mEI7A+IjbcyJOm9tAxR6EO6NdF/c7UIxuxooRYdtkthBs16w1/obkA
-	 mAeRw+877/UmK3vkh1OWv6O1a+Eg2SnDQAehK6/vZEi+PaQFOuO3fknv4u0fCmeTq7w==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=zh2NQrxX85uxvb6nmWqxaMjGSL6MB1t2kujZPkhME4Y=;
+	b=EHVRkCzNzgzWYds1G9vaukwQH9s6VjFUqP91AxG9EGPRXNwdFJ/It96uVcdAk13QM/5p
+	 kfwHDJXDdpzSIBPPzDtlLFvDZb20Mj9GZqyzrVdMyekfMc6Osiwhwzh4eDSDq9mQAG8Ct
+	 rNVjbbPegxIY2jFz3wT5mOyCkq11fA6veOx2vgvMhQHSbyGQjMrnIhUIOwUUrQBNAVgg6
+	 Ykuu5vQkV1iyBBD3Gz4P9QPjfTFHXgm6WX0ts8sy0Kbr3blkctq7LqjB81TFW+G7Hqyuf
+	 9wi/1FUD5p5bcBa36pWS5nCl4igkJ06MSviDDHYv6fRA03v6SgSniHNFL37otjkBT2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XJmvfi1F;
-	arc=none smtp.remote-ip=74.125.82.182
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C1gOhTA8;
+	arc=none smtp.remote-ip=74.125.82.179
+Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8783606A31A
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 08:46:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B8783606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D39606A31A
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 10:06:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76D39606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XJmvfi1F
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-36a315ed211so1788738eec.0
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 01:46:04 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C1gOhTA8
+Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-3645f0f3fcdso2566762eec.0
+        for <git@vger.kernel.org>; Sat, 31 Oct 2026 03:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793436364; x=1794041164; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=5/Bnl1IZWVlVxC5jcH0L+/RxTVto69m99nrIGUBRfpE=;
-        b=XJmvfi1FMhK6ZLrVDTXJUDc+0LbEG3MIK0/+fc7qnETGX0MM4i4ud1dNEwtl+BohDd
-         iLyY8GwvkojgBs1fPDUk41H8zIjXgCgwfihv2hlCpMzq4rsf151XUz0ZwMxcHX2t3bbf
-         z50XiOR+JZLaAsD+maM1q38l9V0uHexgTm2ZXPUItZMcrB8MTr0+V3X3RmXm/hs+uZb/
-         1n8XRY7sBbPBOPZkRbce9RIfGp1yOPXF+2bJd/AYO2Zcbja70/MdbpPIk2gPO8pMLMFu
-         pCF5GhraP6Sgj9rvujl5vs4IOWoULj2xt2guX/ed4sgSV1w4ExysvBSSpsBg1ULxB3tp
-         7QNg==
+        d=gmail.com; s=20260707; t=1793441205; x=1794046005; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=zh2NQrxX85uxvb6nmWqxaMjGSL6MB1t2kujZPkhME4Y=;
+        b=C1gOhTA8VZNa5wGLSQzffOGqJqgm6UcbmZEZSOCVhhlFcBV1j3L+Zq3KcAEsz7DIBD
+         XWMNdjgIFLjxeDjdBPhR/EIY5cEzArHyq2qpx6MP0CHM3yfMlaMXnxbar73MCuxBIzee
+         aHHvMHaesTLgQwQABUldYnsVJoT0C5S7qRU52oKBtmuuvHDsPc/VQIPibQ7mI/1JWxlm
+         usiha13ykvUEpqK8Lg2p+CfNWTWO/Q4+8xHnW/lRHcZddRCkBKJRYag1r/k23PDDT6Jx
+         2V2NaCmnRvy5utY7W/qS3Nt4ILEBkeMHnl6XrKVQqTt2WxOjoKMqRmNEw9RuShw1SEpx
+         6XiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793436364; x=1794041164;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5/Bnl1IZWVlVxC5jcH0L+/RxTVto69m99nrIGUBRfpE=;
-        b=k++/0l0Vpr7V8HAUqHH16tZSzSyFXdrPlUPE2wsgBSegJd69T2cH8i+Ly7wzW/76Vc
-         8/Y1kGiB50ytoloNp8FctJNHCERiWwZroMMtOeSCoc/YVv5GPPJ22iPgh1S+URGSO0N4
-         fVekmacqh4VJDagNJcZGJsY32UMVJLzjPb+Fe4JcA+AgzrNMimq7FoRBr0fKnmB9w1kf
-         BPTwdIT0m5JdD/hsWKiGw4kjlZAGle3r66uUZpXyZq5IYr+nGurNKBIEOaKqshpdRiDS
-         ly4ZJse9RHR90dpHKhPKd8JyxOwHzrlJmC+nWzTEShOpP/SCJCUM/PZY6UbX5qLSBSg2
-         H4+g==
-X-Gm-Message-State: AFq9FYIHUSvvedrf6zN2eCdUQrmS8RBJWnjc6mF3ACADzUtLwE+/thvG
-	Xm2qrYc+dyEkZu135dLnyQ5C93cMONlb0DbaMi57Jisx+FGJzOWfcGww
-X-Gm-Gg: AYBFou29Lr9L7IvNt+rCXSrwl1bVkxuMQHXTkDGuzAi8rtwnsnP/V7L8HVSyRTRzwog
-	gJoij/q241Piu2dv/EJzmzy+n0V7g/H3SXxBWRdDutDk/Ue5tK3n+TZT0pI9A5/vq69uAWfogFB
-	5S2reV+SJLZ9IypoV9lxs5cHKTy82xCs+eF+zqTqKzL4sP33GfX09GKlK5T4ABQrF9xsnK0Nt2c
-	Nnarl+BF8RM8dN4rMWZOdggPdOottIonv66VYzVYXlgK/Sott2rRribaHqvTL1u8f/JGPI4Kv8B
-	DgQIQTQYZmldzEa0/QD8t4sQeGg9KP2twkQzq2173Chb03wvTDNPo3FHRT4LIb9TOe5m9xDtKtA
-	4krM0E0Qf3BFpDOtyeXUg+SCLcIHTkGxjmZ54YLSkywQ0lf5VR8h1L04Qcr8cSVda/ygt5JVH99
-	2blgsLmWpVkJOq4eUTSOh+3jKSdhL47oxya/4ieiHjs9f/6/hbrEmmqwg1I+AMdTRTQR9cgEMnv
-	tKzBjqX2INIwnuDfp6Saw1349lDHiApFkXzYBbMaxS8nEUZagRz9QOgLJjrnP5Op1xUdqoJCz8H
-	FVLPwiHFMu8Hw22RSqagEwh/
-X-Received: by 2002:a05:7300:cd91:b0:369:f231:b98f with SMTP id 5a478bee46e88-36a300084d3mr14341181eec.4.1793436363616;
-        Sat, 31 Oct 2026 01:46:03 -0700 (PDT)
-Received: from localhost ([220.158.183.16])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a428aed76sm15195736eec.9.2026.10.31.01.46.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Oct 2026 01:46:03 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1793441205; x=1794046005;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=zh2NQrxX85uxvb6nmWqxaMjGSL6MB1t2kujZPkhME4Y=;
+        b=kr98YhVuSXatvA8ZQuRZtA285xpWos9uXTVFxpWzhkZPvXx7lSveqpKkHSOAVwIEjV
+         QSWSmaUCMBBOQ+XUlYDdy27N3vfkgt8cs2yHvAo8QZ2jQZt1471aIZ3qkhRLCX2sllod
+         pcK4qQ8mfXhGX4ZPFlOohNh6X2udqY77aNgp+FsZTTxFWYe3Ayg33PF2S9PILghKe9jX
+         BR59pVqzlRXjO1wEmny7tiJDZjoeJ23Y+mFL+z3Mb0BmVl8rNepwvhdsmnR0QkKe194w
+         AmssdE+/WZP3XzS/oB+i40EaWu1MbSKSUCBBoifGaiS8V/jWiatwMfU4dXkS+V7n69nz
+         uW7g==
+X-Gm-Message-State: AFq9FYLUHZ+0EYPuE22vky9JPv2Yulo/VObhZLiSfqjjQHz3OwOwfU+Z
+	MHixImoTBVIIrQFIv4R2lMDqKPZsmE2LBWB5wGxV2jI8frseblL8mdym0RsoEShh
+X-Gm-Gg: AYBFou12Vcio80OAy805LHIMQ9sh7O9yA4wWmWyjSyferrh5Qzm5JuSmM83r774KXiu
+	KinN+9FA3NEbOjFCB342g2ZJ/8podj8SdPNjsIN8VXSvdEoT+ni0161pTJmzjmfHhI5sbS5pDn7
+	z/GgfWS4HNekTC5pA+dxBWlFIuOw1do6k9ZyRfq7mdprqIKajPkTte3pRF0I70Vp3hFqWh9nsnW
+	tjAwCi1ZUVMgaIVbIyTKU6nn4zjN1pIK78MUYUbPfwQvjpZh1q7A2coNW7cPYtaJQGl0ctxkwXI
+	NOZNi2qdXD0zI01Hy9urQptGyKfAkZkC2/k0FKjIGbaPsL1xHItsmCt3i9N6WC+fMbJUxM2kxxD
+	+J8vhpAyN1PxZq/QwUGKKq+WDAOIozhgpIc9Vk6qO8qnw3NhogybpTPD7yQ0KRYwO1JV514CQIE
+	crY/L8oZS/+Hbi+kZaVeLtwQVn1AbtjSgBrkn38bhN7q28AwZIM6+qtjnGdd/viweFtPiHgkWy2
+	vKH5XrLnH7vZn0rfAFdG0kDqRlVgJn3msezk7m6KqXbBEYsC2093qFP4/yo7Vziy1W5Kn7F+hKc
+	r3051hNuuWG3lyKsGjBQFECQL7rlTP3DllRs1TZgkjcwGnUu3K62
+X-Received: by 2002:a05:693c:87c6:10b0:367:5e31:ce29 with SMTP id 5a478bee46e88-36a42404ab3mr7398384eec.20.1793441205258;
+        Sat, 31 Oct 2026 03:06:45 -0700 (PDT)
+Received: from [127.0.0.1] ([52.161.82.81])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a42aa8999sm17546687eec.29.2026.10.31.03.06.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 31 Oct 2026 03:06:44 -0700 (PDT)
+Message-Id: <pull.2284.git.1793441202854.gitgitgadget@gmail.com>
+From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 31 Oct 2026 10:06:42 +0000
+Subject: [PATCH] merge-ort: accept rename settings given without a value
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -86,26 +92,135 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 31 Oct 2026 14:15:53 +0530
-Message-Id: <DMIW4MQ45760.PE3EFBOA3KEX@gmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH] doc: config/log: fix typo in git config docs
-From: "Hardik Kumar" <hardikxk@gmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>, "Hardik Kumar" <hardikxk@gmail.com>
-X-Mailer: aerc 0.22.0
-References: <20261030-config-typo-v1-1-f9797f518c43@gmail.com>
- <auRkba74Y5LD0Ubc@pks.im>
-In-Reply-To: <auRkba74Y5LD0Ubc@pks.im>
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Junio C Hamano <gitster@pobox.com>,
+    Thomas Bachem <mail@thomasbachem.com>,
+    Thomas Bachem <mail@thomasbachem.com>
 
-On Fri Oct 30, 2026 at 3:03 PM IST, Patrick Steinhardt wrote:
-> On Fri, Oct 30, 2026 at 10:47:20AM +0530, Hardik Kumar wrote:
->> Fix an obvious spelling error in `Documentation/config/log.adoc`
->> "overriden" -> "overridden"
->
-> Tiny nit, not worth a reroll: we tend to finish sentences with
-> punctuation.
+From: Thomas Bachem <mail@thomasbachem.com>
 
-Thanks, will take care of that from next time.
+"git -c merge.renames merge" fails with "missing value for
+'merge.renames'", although git(1) says that "git -c foo.bar" sets
+foo.bar to true. The same happens with diff.renames and
+merge.directoryRenames, and with a setting written without
+"= <value>" in a config file, which git-config(1) also documents as
+true. Every command that merges through merge-ort fails this way.
+
+merge-ort reads these settings with repo_config_get_string(), which
+rejects a missing value. Read them with repo_config_get_value()
+instead. git_config_rename() and git_parse_maybe_bool() already take
+a missing value as true.
+
+Assisted-by: Claude Fable 5.1
+Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+---
+    merge-ort: accept rename settings given without a value
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2284%2Fthomasbachem%2Fmerge-ort-valueless-renames-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2284/thomasbachem/merge-ort-valueless-renames-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2284
+
+ merge-ort.c                               | 20 ++++++++------------
+ t/t6423-merge-rename-directories.sh       | 17 +++++++++++++++++
+ t/t6434-merge-recursive-rename-options.sh | 12 ++++++++++++
+ 3 files changed, 37 insertions(+), 12 deletions(-)
+
+diff --git a/merge-ort.c b/merge-ort.c
+index c410a5d353..24ddd97696 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -5453,31 +5453,27 @@ void merge_incore_recursive(struct merge_options *opt,
+ static void merge_recursive_config(struct merge_options *opt, int ui)
+ {
+ 	char *value = NULL;
++	const char *v;
+ 	int renormalize = 0;
+ 	repo_config_get_int(opt->repo, "merge.verbosity", &opt->verbosity);
+ 	repo_config_get_int(opt->repo, "diff.renamelimit", &opt->rename_limit);
+ 	repo_config_get_int(opt->repo, "merge.renamelimit", &opt->rename_limit);
+ 	repo_config_get_bool(opt->repo, "merge.renormalize", &renormalize);
+ 	opt->renormalize = renormalize;
+-	if (!repo_config_get_string(opt->repo, "diff.renames", &value)) {
+-		opt->detect_renames = git_config_rename("diff.renames", value);
+-		free(value);
+-	}
+-	if (!repo_config_get_string(opt->repo, "merge.renames", &value)) {
+-		opt->detect_renames = git_config_rename("merge.renames", value);
+-		free(value);
+-	}
+-	if (!repo_config_get_string(opt->repo, "merge.directoryrenames", &value)) {
+-		int boolval = git_parse_maybe_bool(value);
++	if (!repo_config_get_value(opt->repo, "diff.renames", &v))
++		opt->detect_renames = git_config_rename("diff.renames", v);
++	if (!repo_config_get_value(opt->repo, "merge.renames", &v))
++		opt->detect_renames = git_config_rename("merge.renames", v);
++	if (!repo_config_get_value(opt->repo, "merge.directoryrenames", &v)) {
++		int boolval = git_parse_maybe_bool(v);
+ 		if (0 <= boolval) {
+ 			opt->detect_directory_renames = boolval ?
+ 				MERGE_DIRECTORY_RENAMES_TRUE :
+ 				MERGE_DIRECTORY_RENAMES_NONE;
+-		} else if (!strcasecmp(value, "conflict")) {
++		} else if (!strcasecmp(v, "conflict")) {
+ 			opt->detect_directory_renames =
+ 				MERGE_DIRECTORY_RENAMES_CONFLICT;
+ 		} /* avoid erroring on values from future versions of git */
+-		free(value);
+ 	}
+ 	if (ui) {
+ 		if (!repo_config_get_string(opt->repo, "diff.algorithm", &value)) {
+diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
+index 24d4c5447b..da145c150c 100755
+--- a/t/t6423-merge-rename-directories.sh
++++ b/t/t6423-merge-rename-directories.sh
+@@ -97,6 +97,23 @@ test_expect_success '1a: Simple directory rename detection' '
+ 	)
+ '
+ 
++test_expect_success '1a (valueless): merge.directoryRenames without a value means true' '
++	mkdir valueless &&
++	(
++		cd valueless &&
++		test_setup_1a &&
++		cd 1a &&
++
++		git checkout A^0 &&
++
++		git -c merge.directoryRenames merge -s recursive B^0 &&
++
++		git rev-parse >actual HEAD:y/d HEAD:y/e/f &&
++		git rev-parse >expect B:z/d B:z/e/f &&
++		test_cmp expect actual
++	)
++'
++
+ # Testcase 1b, Merge a directory with another
+ #   Commit O: z/{b,c},   y/d
+ #   Commit A: z/{b,c,e}, y/d
+diff --git a/t/t6434-merge-recursive-rename-options.sh b/t/t6434-merge-recursive-rename-options.sh
+index 5a6f74839c..427de2ba95 100755
+--- a/t/t6434-merge-recursive-rename-options.sh
++++ b/t/t6434-merge-recursive-rename-options.sh
+@@ -332,4 +332,16 @@ test_expect_success 'merge.renames overrides diff.renames' '
+ 	$check_50
+ '
+ 
++test_expect_success 'diff.renames without a value means true' '
++	git read-tree --reset -u HEAD &&
++	test_must_fail git -c diff.renames merge-recursive $tail &&
++	$check_50
++'
++
++test_expect_success 'merge.renames without a value means true' '
++	git read-tree --reset -u HEAD &&
++	test_must_fail git -c diff.renames=false -c merge.renames merge-recursive $tail &&
++	$check_50
++'
++
+ test_done
+
+base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+-- 
+gitgitgadget
