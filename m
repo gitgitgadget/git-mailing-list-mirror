@@ -1,90 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793433848;
-	b=UnmoqnsNh4mFCN+Mrxt58umAPmq1PamIu1+eVaP5Th1N9LHHQ1vDUIBjUp+/cMasGnzB
-	 uCcTmxumdTGkSWWb2Vh8P6lRiGMcpDr6mslS3dc4H65kAGIi6j7QF33wL/pNtH6bvOeo8
-	 sPpS16uhgmgrKFSQCw+RrqfF9LZTP9tBg/CBDLxjoT8gkW2f28BEM5DbZ45BaoitEs5EQ
-	 XfvmQYqX3QQ7s2pPwVz2tXhKpBT9Kwya/vHmED6o/HPEqaHJLwDadC6i/Ky6YEhHmpnkO
-	 xz9EMDw0WKEBzgsPRE+dCBHB5SRJy58mH1DAcm9e+O2lZSmYCKa8q+T0T30OYHTfMtQ==
+	t=1793433849;
+	b=mCSBrjnru8F+4kr/JmAcaHPmwjN/Wc82rVn+Pg/m5dTPCm/Gw/Iz3ShC2x2g062YDfXh
+	 ZmLQl7b+txhNgH8UMgt+TaunVL7zKCM8ktMPiQONECelkWqSSyaAn97efzL0vP+NqYm8j
+	 qKi8flG3Pv/XosZvmzr80PiJ2uiYwyHnTkV3J/Jzvk4s5v+YWtGroYzfDG9BNh5yQ7OVV
+	 JRqm21T8CPlY9bQbp7R/WasQs//SP2cfBFIx8cBWk9hjF/ZB+KetinMHwehjWXfapBzqL
+	 HaijBDIOKPmaegS5TWcUt455IKdvZzEJmg4TRz1zsDrQxg5lrW8UDJHLvx7RAPd+HwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793433848;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793433849;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=SElNwdS4FgrF6o0psPB1xjbOG7Wc+yurPkV33PXLdDA=;
-	b=X0udNE3m+MCpdDfVogxJ/O/0W5LjHpy8tufKlZJwqnPixscwzfEH8MhGBd7SMVyGnmvW
-	 NTOziffToRiQ4lcknp764BajN7CQX3DZZKiJE9kWenl0mcLQGl+89wdrkl0Jb/6C9o/Ap
-	 SM3f6/QAOsPMlA8o8YINw9BhtevXBJpwT/WEEukIy9j/WVr5LF/BquCOiH51tRDDNw3NT
-	 xmgSXheB5ICFWQJHslfCFIYtXL90yBcJJwn1csp0H2TmV7DpEuShKBXF9KNATyYkUgt7K
-	 toSjEtXVaqU2+m3BBfBnK53o8r620C1QwVftrnimU6A2LrqwqSCpUW1sCWHcoyfIuOQ==
+	bh=W3Lf7J7cS0JWq4lihEaDpQQyKgxvs533xxklAJLyVm4=;
+	b=zvTW30zVt7HzHE5C24atTlyz9nJdCP5PLuQxsTB6zhK7yc8YHb30Pr81svjFFScqv01F
+	 Wv3xv1uiSx0b5QONKvgZk3BTlrt9/pwZwV4dWz+It4t3zcd+TGY+DSimn/AstZ2CNsMzo
+	 n7/8V9zQBMYIiIR+WNyanhML//JLf5p8eJhmo4SxANSwg1KJCFmwgb54aHZyMpFgGoDnw
+	 Urt3m6YotVdVP6oUCutcKw8OAtSuHaAbaKrtKAAhgKFwUAZ7Rbq8MJiIYXZmuqUH1XaFq
+	 cAmukBYtrnG60e/OefncHJpvHkMJ3eLp+hlgE4nhg67IH24D4wpqByQ8h1LqreinyiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QlizUzE3;
-	arc=none smtp.remote-ip=209.85.160.178
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ez0QUXAY;
+	arc=none smtp.remote-ip=209.85.219.42
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B82606A31A
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 08:04:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2B82606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F9E606A31F
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 08:04:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 98F9E606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QlizUzE3
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-53cd0c8614eso11106041cf.0
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 01:04:07 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ez0QUXAY
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-91c847584b8so20400946d6.0
+        for <git@vger.kernel.org>; Sat, 31 Oct 2026 01:04:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20260707; t=1793433847; x=1794038647; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=SElNwdS4FgrF6o0psPB1xjbOG7Wc+yurPkV33PXLdDA=;
-        b=QlizUzE3Feg+n8fO6KhX8EHTJzgJ2xcGT2a2/Z8pnUp1FFcmOCV67vSe2/TZkQrnAS
-         2LCX7obR7xDbRKED9FNiOZTfyfbb2G68H/MtCRIzsI9xr/JNdmWIgou1rFHOvVjX3czv
-         TWsRXhy2yqeE3J3TgkxmdTspwgxnImnrvyz5dAdb3xk/QatSKDv+jy1SyGRVvlPp1j9R
-         QpJDI39GWqR1pPfCWEQjGrKSqjPcc+fBf0OS0QwMQW4RzurG5T4SdHkZix1f0CmAcKKi
-         uM9ivgACliHVehE2eMG78jA5C0fyNfOS05mcAONpZLYnBZsjmMvbmUpUGeHml20wUbEV
-         s1OA==
+        bh=W3Lf7J7cS0JWq4lihEaDpQQyKgxvs533xxklAJLyVm4=;
+        b=ez0QUXAYGDNVHFq5w+tEgO0iupmxQkLkmJU9pKhP4IaOYTW8227wdzpjyHMqx5QeL0
+         WDZeuyfPXH6U6z+20r6Pi2c5SgQmjjFqvHwEMlxTAReLxly8GwBNcYEIkCP/lEUHEfYc
+         o988fwyni28wC90h9asdU75vpSBvyyK8CAindWDmSjQgSe54i2TIY0PM/W7crMhYMdCX
+         J1JSUBdT42JRA9eX3lePxJ/2AHOYumRhvEBbNN4saf+eSfx6T+tzpw89wrZqQ6iUmw8J
+         tk0Olm7FpEqyWcErraInGyCYZsJrNd0YDGx+gVaN3HRRwstw9ZQH/Q88WtRJDJdgocfv
+         cvng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20260707; t=1793433847; x=1794038647;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=SElNwdS4FgrF6o0psPB1xjbOG7Wc+yurPkV33PXLdDA=;
-        b=rAFMJGhI4+F8U+t7x8fxQ1PcTxoHD5jgzHu0Ooyn+GH9JuTe3nhFmInovvE+cT41xE
-         ut98wDEDOeOPJtiKvVqRz6wA6vfhtyzIG5gybLSUTA0sd5oID7ljlwsircI9W/G6rtkz
-         LirC5wI07DwY2pCYmG8ozuNR4KrDKKKDlRD5GbF9jXT/ROGu02IV6SatvM8IwDzbB4NY
-         9gzT+WTIJnCPGb6aLAJjgw1qMJerpvddUtP3FF/HByIuXDpNFALHDtT3NTmbNGtQpOoy
-         ZJCBfFv+vmFOWhvo1Q4bPeVYzswa9U/FlKzclrGAmCa91jA1+tExXF1zEjucQwbeJf0O
-         Q8Mw==
-X-Gm-Message-State: AFq9FYJlUX/wrm2sIBMIxwb255bCqp2c1m6qT9nQ7R2vMuCigqXCFzV4
-	TyY4mOzrwj6IVm7+iPAqfJVOEyVqV4xOPqnaC3JNpQziR3qgW7Sfn1feuaGSUSqTD64=
-X-Gm-Gg: AYBFou3pxhENajkXlrGiUVl5AVfuda1QA8Wo9QhWYBmTYRZkR2VmKmVOPx6YSoFrTty
-	ikvyDJCvBr/CdfsIr91XgJHExTTerFFIqMOLpKtQnFm3YS5MOCYaJWqP0R26ecKBhJk2CdlbEUe
-	nZqBKBZxT5TcqZky6Owcg2m9I+GWWeV2EjnZfcVw2AkYrO8vivIHGsweZWKKeKC61E1Sh7gpm/l
-	EJ3wE+AAIKJeQlkJzNkzLoNi8HDvnk0kaA+pZd3evgheAm5BS8qDXac6k0Nw8FWSZNc0dOnhuGg
-	0cDilgngqQMcLtISrVjEhzcbBuYRxhQpA76w0D02M9+MksuV/qr1d18sRAr6xKqXEi8Sri13QoR
-	M28zw0ONrRYdJ9AcsTrby0XROxUfXw+8rz3JXHoghKS2LcyiJVI2gn8r6sV6bT0Y01XT6rbezvz
-	7DPjSzL8sHLSp0iH9HGG9L5Q3u7AL/MaibYJ5bp9+mmuWoTF2PtZHwKTRJukFl8x1YYpRDMiCvz
-	kt0f81MVLNqZLgolLNNBvQYYRSqCUMi0KyHk9RZ6jLrQbvDeojTqQ37gBdeWt3okgiov8XOQD2+
-	wMpufGR72TbuP6K8wBigKLup+CDTyNGZzA==
-X-Received: by 2002:a05:622a:2b4b:b0:535:c88:8f1 with SMTP id d75a77b69052e-542b6d5eb3amr73047271cf.41.1793433846485;
-        Sat, 31 Oct 2026 01:04:06 -0700 (PDT)
+        bh=W3Lf7J7cS0JWq4lihEaDpQQyKgxvs533xxklAJLyVm4=;
+        b=YIaZW7evxiUtUQ0TN7RON/LLvGiwa0RDeD+XFfVgZ/SmEq9QghlJB6WXK5tWinmuQD
+         mg6n4YM9gHWQGU4CNW94hRBAP1ib+pfJWe5iyHHUPPlorjPWK0WfrIpN5atfyb5SACIo
+         nhP7inVtdArRh+3SiifASdgmA70/A7mSpodM4UKvJQQfFTlh7SriA0aTU07/GsZl6tg+
+         /VIECyMoilTsqgIkqQkQgfwW+8O/AHsphPYP2e1r741xWu4upEMKlXpFitW2m5XuY+BS
+         k7KQpK67d7Zia/B0x8DALQwOUjd3ZNWGVJ8i2gWD4FpETFNEonHgz3H7NvJ5Yn8d35xM
+         6rjg==
+X-Gm-Message-State: AFq9FYIX4s0pXEeZzspjfYv7PcCeyZn4STBiq89IuoiIA4iWyEY1//Or
+	JUXh0FUVmd7xVaeHXTWReWxYq8DzEqB1kVoD6HcsjwQiJ6kumBdOTJAEBBnnv3LFsGs=
+X-Gm-Gg: AYBFou00HdIgXHbHbcmFfYWTuSytUfEVvW945N2KM6m9SRzfiDs3xO91kuEYex0NR06
+	HPcrJL+cKpgxpqqlL2a9SNt56EUoZvQL9dE4SPKBaZ6cZyKhkV/Wufg3bK0TGll1dRH0oxGpMMw
+	va4S5JMoBnOHwW3ro7+K1LMEsw9KwDimupd+3rHaQRJoPOp9cbmoUR2b1rLOi5BSyvY3BRkMrW1
+	jsl6hb18/E7AdYDdkejrNstnZhKS4Rk3x6eH0/98qbNOY3csqn8EMG65UdUC2dcKHVHwixB1z5g
+	MziRZodK8UsDXdqMgS2wZ9Vx/hpiH2aQPKUi0xj+8YOPNbtCjalFGnj0wi1ncQQGtg1f9U5YyMw
+	rDlF7lu2C49WNUDXN2GM9lWI+jgNBfOAN713o1d51M01rpt4pIi9CA+YjdUIVmWOcfixCk34SyO
+	q2ftcnaLpyRjqF/R5FqTBhTo5QicN5q9WkBlzeoyDfXsyVWfNbKTna+UkLfUxCX+BT96DcDJXyi
+	NoVgCFqKga0bw7aizJfdv6q+99j4zBW14oIUeLKcB+yU+tlEHh3QmqfBoACOMtYRxJvIv8iGOnv
+	FAowoMx5TlxYbJYFPJC+Qkc5dK2mVjz++Q==
+X-Received: by 2002:a05:6214:c46:b0:917:c04c:77b5 with SMTP id 6a1803df08f44-91c90409713mr134676136d6.3.1793433847523;
+        Sat, 31 Oct 2026 01:04:07 -0700 (PDT)
 Received: from [127.0.0.1] ([20.127.239.240])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca7f4767asm36715736d6.21.2026.10.31.01.04.05
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91cb4478981sm6792236d6.35.2026.10.31.01.04.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Oct 2026 01:04:05 -0700 (PDT)
-Message-Id: <151fef69b9ec221b39fdbab1d46f0b123f9079e4.1793433841.git.gitgitgadget@gmail.com>
+        Sat, 31 Oct 2026 01:04:06 -0700 (PDT)
+Message-Id: <c58afcc4b166d33489feee41d57e65738581a0da.1793433841.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2466.v2.git.git.1793433841.gitgitgadget@gmail.com>
 References: <pull.2466.git.git.1793105039624.gitgitgadget@gmail.com>
 	<pull.2466.v2.git.git.1793433841.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 31 Oct 2026 08:04:00 +0000
-Subject: [PATCH v2 1/2] remote: move "simple" @{push} resolution into a helper
+Date: Sat, 31 Oct 2026 08:04:01 +0000
+Subject: [PATCH v2 2/2] remote: resolve "simple" @{push} when pushing to
+ another remote
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -104,77 +105,114 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-The "simple" arm is the longest in the switch of branch_get_push_1()
-and needs an extra block to declare its variables. Give it its own
-function so that it reads at one level of indentation and the next
-commit can teach it about pushing to another remote without nesting
-it further.
+With push.default left at "simple", a branch whose upstream is on one
+remote and whose push remote is another gets pushed by "git push" to a
+branch of the same name on the push remote. But @{push} for that
+branch fails with "cannot resolve 'simple' push to a single
+destination". As a result "git status" shows the "git push" hint under
+the comparison with the upstream, even though "git push" goes
+elsewhere, and leaves out the comparison with the push branch when
+status.compareBranches asks for it.
 
-No functional change.
+"git push" learned to handle "simple" this way in ed2b18292b (push:
+change `simple` to accommodate triangular workflows, 2013-06-19). When
+@{push} was added in e291c75a95 (remote.c: add branch_get_push,
+2015-05-21), its "simple" case only covered pushing back to the remote
+the branch is fetched from, where the upstream must have the same name.
+
+Make @{push} follow "git push". When the push remote is not the remote
+of the branch, resolve to the branch of the same name on the push
+remote, as "current" does.
+
+The test added in 9bf9eed093 (remote: fix leak in branch_get_push_1()
+with invalid "simple" config, 2026-01-19) relied on a different push
+remote being invalid for "simple". Use an upstream with a different
+name on the same remote instead, so that it still exercises the error
+path.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- remote.c | 40 +++++++++++++++++++++++-----------------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ remote.c                  | 13 ++++++++-----
+ t/for-each-ref-tests.sh   |  4 +++-
+ t/t1514-rev-parse-push.sh | 13 ++++++++++++-
+ 3 files changed, 23 insertions(+), 7 deletions(-)
 
 diff --git a/remote.c b/remote.c
-index 49ee2ea318..d15d34aad7 100644
+index d15d34aad7..98665a3085 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -1967,6 +1967,28 @@ static char *tracking_for_push_dest(struct repository *repo,
- 	return ret;
- }
- 
-+static char *branch_get_push_simple(struct repository *repo,
-+				    struct remote *remote,
-+				    struct branch *branch,
-+				    struct strbuf *err)
-+{
-+	const char *up;
-+	char *cur;
-+
-+	up = branch_get_upstream(branch, err);
-+	if (!up)
-+		return NULL;
-+	cur = tracking_for_push_dest(repo, remote, branch->refname, err);
-+	if (!cur)
-+		return NULL;
-+	if (strcmp(cur, up)) {
-+		free(cur);
-+		return error_buf(err,
-+				 _("cannot resolve 'simple' push to a single destination"));
-+	}
-+	return cur;
-+}
-+
- static char *branch_get_push_1(struct repository *repo,
- 			       struct branch *branch, struct strbuf *err)
+@@ -1972,16 +1972,19 @@ static char *branch_get_push_simple(struct repository *repo,
+ 				    struct branch *branch,
+ 				    struct strbuf *err)
  {
-@@ -2012,23 +2034,7 @@ static char *branch_get_push_1(struct repository *repo,
+-	const char *up;
++	const char *up = NULL;
+ 	char *cur;
  
- 	case PUSH_DEFAULT_UNSPECIFIED:
- 	case PUSH_DEFAULT_SIMPLE:
--		{
--			const char *up;
--			char *cur;
--
--			up = branch_get_upstream(branch, err);
--			if (!up)
--				return NULL;
--			cur = tracking_for_push_dest(repo, remote, branch->refname, err);
--			if (!cur)
--				return NULL;
--			if (strcmp(cur, up)) {
--				free(cur);
--				return error_buf(err,
--						 _("cannot resolve 'simple' push to a single destination"));
--			}
--			return cur;
--		}
-+		return branch_get_push_simple(repo, remote, branch, err);
- 	}
+-	up = branch_get_upstream(branch, err);
+-	if (!up)
+-		return NULL;
++	if (!strcmp(remote->name,
++		    remotes_remote_for_branch(repo->remote_state, branch, NULL))) {
++		up = branch_get_upstream(branch, err);
++		if (!up)
++			return NULL;
++	}
+ 	cur = tracking_for_push_dest(repo, remote, branch->refname, err);
+ 	if (!cur)
+ 		return NULL;
+-	if (strcmp(cur, up)) {
++	if (up && strcmp(cur, up)) {
+ 		free(cur);
+ 		return error_buf(err,
+ 				 _("cannot resolve 'simple' push to a single destination"));
+diff --git a/t/for-each-ref-tests.sh b/t/for-each-ref-tests.sh
+index b1a10dd933..4991a82b91 100644
+--- a/t/for-each-ref-tests.sh
++++ b/t/for-each-ref-tests.sh
+@@ -1745,9 +1745,11 @@ test_expect_success ':remotename and :remoteref' '
+ '
  
- 	BUG("unhandled push situation");
+ test_expect_success '%(push) with an invalid push-simple config' '
++	test_when_finished "git config branch.main.merge refs/heads/main" &&
++	git config branch.main.merge refs/heads/not-main &&
+ 	echo "refs/heads/main " >expect &&
+ 	git -c push.default=simple \
+-	    -c remote.pushdefault=myfork \
++	    -c remote.pushdefault=origin \
+ 	    for-each-ref \
+ 	    --format="%(refname) %(push)" refs/heads/main >actual &&
+ 	test_cmp expect actual
+diff --git a/t/t1514-rev-parse-push.sh b/t/t1514-rev-parse-push.sh
+index 5a4f16867a..dc2df7eb80 100755
+--- a/t/t1514-rev-parse-push.sh
++++ b/t/t1514-rev-parse-push.sh
+@@ -39,7 +39,7 @@ test_expect_success '@{push} with default=simple' '
+ 	resolve main@{pUSh} refs/remotes/origin/main
+ '
+ 
+-test_expect_success 'triangular @{push} fails with default=simple' '
++test_expect_success '@{push} with default=simple fails when upstream has a different name' '
+ 	test_config push.default simple &&
+ 	test_must_fail git rev-parse topic@{push}
+ '
+@@ -60,6 +60,17 @@ test_expect_success '@{push} with pushremote defined' '
+ 	resolve topic@{push} refs/remotes/other/topic
+ '
+ 
++test_expect_success 'triangular @{push} with default=simple and remote.pushdefault' '
++	test_config push.default simple &&
++	test_config remote.pushdefault other &&
++	test_when_finished "git checkout main" &&
++	git checkout topic &&
++	test_commit simple-triangular &&
++	git push &&
++	resolve topic@{push} refs/remotes/other/topic &&
++	test_cmp_rev topic topic@{push}
++'
++
+ test_expect_success '@{p} is short for @{push}' '
+ 	test_config push.default current &&
+ 	test_config branch.topic.pushremote other &&
 -- 
 gitgitgadget
-
