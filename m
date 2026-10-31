@@ -1,42 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.187.169.70
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793466384;
-	b=480zhvtdnCbEWe0mL/J6SgC7fE3VZZsLt+YJfWNHrzKZvyqM7lcNWTtQeR6qAb6zcfB4
-	 HW+6zseeLBJAbq4BaPjWVrzNyhW2cXfNy8+k49gD7e8u/nxa/k6gPLFki7npxIQajK1iV
-	 QOM4G7jSCVhqYIFtcsKo16vM3GIzNYYJVWuKVLvm4Xv1EgpjhXEc52htBx884lZDle7N0
-	 YYB0sjDrIn3Fp2PymfK1q3lU53lYLypvXVdVx68iPZ83jJec23on0g793hZGxIg5ip6zT
-	 yOwKGSmKcf8IzSjQSzlVuXSQlT4V6w3bn4VTqsS5TM62R5696tFA/U6VycTblBPH6Eg==
+	t=1793467123;
+	b=4kQ3rHv534nEdLrf50kIe/c1MigAxVWmkH0AuAkn+sQNwKvkC2GAhbSmkx5bmyfyCb9e
+	 ECn+eyZQXSCIMuDN5aiRIuNZConsizZSkDSO3OWGdj5lFK5P5Zcdp7cUHUCvUsSb0t72o
+	 CcVzo6h73D1JASxrOpFfrPy74Ld7fRYa3u8qpw34lIHzMrkqxqVK1cyvA2FpFnW7TlIJw
+	 qUEBme9t4HIKUMTuEpxd2Z0wMHzHEoxqgYeeSZdxhqeia1wdV3BsD3NXsmuniTM/cnS7M
+	 CYo1rT9pg4GC+yKdqQxqif/TP/Dinj4RbGUboH+4XJIRq8FOboTjkzq8NGiy0lQYfTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793466384;
-	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:References:Content-Language:From:In-Reply-To:Content-Type;
-	bh=MjSWCa3sAUUYmgwMKHkBosAuUElrh1j8SywwYA7r5T8=;
-	b=0g9BL5aM6NuyAWAzHHQVFFw5K7TS7EoABV0o2qqSXrUSRI7HICAoRS8CdVdsyzEKkPHu
-	 B667i40RMJT/VROrRJUHqRwg4LhxxLb/td6u9yP8QK+Y5zebookErGslCVRZK8evqDAH7
-	 0yr5C0tAaGmj/K9UGoc7xkRuJr+6PhZga1oGMtAPxPlnuuErnO8KE56onSh0xc0lZBlYm
-	 bbvaE/zGKZHQigcsNf2eNHC+cIsAaMHMwNvP89mi7V0NIMM3b6nh4gIOcwlkOopAokQ+K
-	 J3diQ6yR24uTnB+BQdpJuPLHs+h+sIA8htw1z44swZcYjQZaqm5aeOqODB3IJfNxORg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793467123;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=0H6OfuzcuGYAWheteHC82SQyAshDq8ttW81k9/Ud2Kg=;
+	b=nU4C6PJOyY6OBalvLrNPH9pbwgEz/CrtgOJ5xceYfb7v/ofEHm0zPuRPK0ukZbZ5l1fw
+	 C4zOJjCtOYG9nsa+W9xD9rJ+nFvaxCz4vt3yEc9hGbYAG5OLznNH9L2p9VwH9fJ2arAr8
+	 G4heew8bfOTxP5MD4RKzGLhP8gXT+NglNabci8pHv7OEh+XpH0lZkrsvrjKFfZa6ZfBqG
+	 Nh7rd5vyrOKGQEv2XAQVApxEWkqFH6Q0BsnCt6PfSK3TS/xEV4Txq94fLQD3NCIYh8HNe
+	 ora8C5aKbLl2ozyB3QqRsBuSZcDtA4Yu7/2qLC+uiYbb3NFHUZ6+8LkAIVSj66bUQmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=hogyros.de;
-	spf=pass smtp.mailfrom=hogyros.de;
-	arc=none smtp.remote-ip=185.187.169.70
-Received: from psionic.psi5.com (psionic.psi5.com [185.187.169.70])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PfC1zdcn;
+	arc=none smtp.remote-ip=74.125.82.45
+Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E84A606A324
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 17:06:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E84A606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hogyros.de
-Received: from [IPV6:2400:2410:b120:f200:9e5c:8eff:fec0:ee40] (unknown [IPv6:2400:2410:b120:f200:9e5c:8eff:fec0:ee40])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by psionic.psi5.com (Postfix) with ESMTPSA id A1E7A3F11B
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 18:06:12 +0100 (CET)
-Message-ID: <b6c3c811-cabf-4421-aab2-f6b4b30951c2@hogyros.de>
-Date: Sun, 1 Nov 2026 02:06:09 +0900
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FD0606A31A
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 17:18:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08FD0606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PfC1zdcn
+Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-1a2761c69fbso1639026c88.0
+        for <git@vger.kernel.org>; Sat, 31 Oct 2026 10:18:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793467122; x=1794071922; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=0H6OfuzcuGYAWheteHC82SQyAshDq8ttW81k9/Ud2Kg=;
+        b=PfC1zdcnsjCOKFQ0QcMkewauwhZL4DaBOdLdYGRih7l+HuCxhro5ZFEWqfL+LUTxp8
+         WepkdobEc7vL0ygCqaWV0V3tXkjSSxzJayWCwCa3lbu0IpxyCtwozoifGVwtOU0+GHqt
+         swVpxU6tNoFoqMFCZrQimCipb2mZuu0UlqOl6Sl7XbuL7aqDyl76fNApgmmrDTbkui0L
+         wUJTHAzau4v88a7dmcWWv44TO/8fwPYx/lFNiaW/oWHZzszFzQ20oPwXlBkjDPE3lIMT
+         dxxrFY6tslJ1+Zl2+9p7RJMtkoSdvLFyjYd/0kJoVQzaZf5F//lWEhlk7AYITk16YPjT
+         Xqxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793467122; x=1794071922;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=0H6OfuzcuGYAWheteHC82SQyAshDq8ttW81k9/Ud2Kg=;
+        b=SLW3HGLwT4P+dk2IPijd1ajUGWSd2xXBKUqoDd8BSpEEzYFjntTUVSSUOo+YSdI3Bh
+         19EN8oBtyuVYJNJrjMhd4I3HzDwsB3H15/zAhlxaFvKRBAmM2D2uWeq44Oz1a4M5FjuH
+         ykSl49kzCwVwv5KKh6ZTq24NTkPR9G1ipsddYs6zzaen6CEra6GXniR7FkMi464BY8gf
+         OYqC1F1lC1P9IQHVITalqJ4P5zsmpRJbV9Mvw7pWGyRZRoX2FFQYoph1r7tPFzUUC39z
+         ovQu2g2D1a9zhCVXmUfHi2ibu7nlr+H6p7SldRSvofC/SBSMPQEn/i/gdgStOwflc+w3
+         0ffA==
+X-Gm-Message-State: AFq9FYIfJSEVz5WDLDx3i4J1S2t++skdP9PWckqwpa5i5d2gDyQtTgIO
+	afCk6mS6nnKfMEUSZCXufxR7gGWSz3qjKC2j+6i+oWHfJxsIfZp3J3ZT
+X-Gm-Gg: AYBFou0+RHp0TRBpNgyijN2NWbhopjb3XKr+lLyJvsNYpqqZ0pkcUJcLmKIpCwr9myk
+	VrXxWfN9ySChpLCRGwD49ALSjRyET/apfIE81T2oZXkxPRX3Ozr852cgE3VrsV2/BchjqkV2f07
+	4vo4QBspGrl9w4x/N7X3MzDCq13qmyB5+EPwxPBHbOXWF6RM8B2ZfOphyqgPhQHt4YRHnwrJPgR
+	M2Y0OW7Fi6gL2WQXCUrZmK/++f7ml/SH6r30dwkhxnurObFjtivdrzfl7Zg8B6StSkBlpcUe05X
+	ei5FjJ1yXSSB5EwnZ/sjA+ojzhUx/e94S3c7cvosiSG0qR5EsXbwXHIHovDIN+PVq2DcSRQoqMN
+	Lfo4ueyQ2zeKNS6eeb0W4DVf+gRJ6f4L3i6WV2E18ygrQXcG8VhGSqdP5yGFHgCQS6A0Gn3GQIj
+	4UoNsb+5qYucNeaZnl0eRGz5pOVxNR46lq7eLDq2R4aBn8KNGd+VGwEfCjEd1eQO7VrYIpDGSCL
+	t1kMqo2adeEToDekud7THIk3ZeypVdamuwnFULD1Zbj2wPDaerxD0OI9rSUBGYFieRumQA+Af60
+	8jirOzBClDROldSwDhmfPy4hedMteXpYmmv7OkGns+xCU8fIb4VlRg==
+X-Received: by 2002:a05:7022:5f0b:b0:1a4:3fa7:adef with SMTP id a92af1059eb24-1ac5d1ceb76mr7141228c88.47.1793467121938;
+        Sat, 31 Oct 2026 10:18:41 -0700 (PDT)
+Received: from localhost.localdomain ([117.206.63.98])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1ac13ef1932sm17007959c88.2.2026.10.31.10.18.38
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 31 Oct 2026 10:18:41 -0700 (PDT)
+From: Nakul V S <vsnakul@gmail.com>
+To: phillip.wood123@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	ps@pks.im,
+	phillip.wood@dunelm.org.uk,
+	gitgitgadget@gmail.com,
+	vsnakul@gmail.com
+Subject: Re: [PATCH] sequencer: refuse to revert shallow boundary commits by default
+Date: Sat, 31 Oct 2026 22:48:34 +0530
+Message-ID: <20261031171834.64081-1-vsnakul@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <7179f371-a709-476f-8e94-807d7b62ce6e@gmail.com>
+References: <7179f371-a709-476f-8e94-807d7b62ce6e@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -46,75 +100,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] use size_t when parsing and checking objects
-To: git@vger.kernel.org
-References: <cover.1793444420.git.gitter.spiros@gmail.com>
-Content-Language: en-US
-From: Simon Richter <Simon.Richter@hogyros.de>
-In-Reply-To: <cover.1793444420.git.gitter.spiros@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------4pbkUyMaYGgRgbCSM0421aW7"
+Content-Transfer-Encoding: 8bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------4pbkUyMaYGgRgbCSM0421aW7
-Content-Type: multipart/mixed; boundary="------------vTNbbgNAoVD9im4YrScNAZ4i";
- protected-headers="v1"; hp="clear"
-Message-ID: <b6c3c811-cabf-4421-aab2-f6b4b30951c2@hogyros.de>
-Date: Sun, 1 Nov 2026 02:06:09 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] use size_t when parsing and checking objects
-To: git@vger.kernel.org
-References: <cover.1793444420.git.gitter.spiros@gmail.com>
-Content-Language: en-US
-From: Simon Richter <Simon.Richter@hogyros.de>
-In-Reply-To: <cover.1793444420.git.gitter.spiros@gmail.com>
+Hi Phillip,
 
---------------vTNbbgNAoVD9im4YrScNAZ4i
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Thanks for the review. I've sent a v2 that addresses it:
+https://lore.kernel.org/git/pull.2273.v2.git.1793455522168.gitgitgadget@gmail.com
 
-SGksDQoNCk9uIDEwLzMxLzI2IDIwOjA5LCBFbGlhIFBpbnRvIHdyb3RlOg0KDQo+IFRoaXMg
-c2VyaWVzIGNvbnRpbnVlcyB0aGUgc2VhcmNoIGZvciB0cnVuY2F0ZWQgc2l6ZXMgb24gcGxh
-dGZvcm1zIHdoZXJlDQo+ICJsb25nIiBpcyAzMiBiaXRzIChXaW5kb3dzKS4gSXQgY292ZXJz
-IHRoZSBmdW5jdGlvbnMgdGhhdCBwYXJzZSwgdmVyaWZ5LA0KPiBhbmQgY2hlY2sgd2hvbGUg
-b2JqZWN0cyBpbiBtZW1vcnk6IHRoZXkgdGFrZSB0aGUgc2l6ZSBhcyBhbiAidW5zaWduZWQN
-Cj4gbG9uZyIsIHdoaWxlIHRoZWlyIGNhbGxlcnMgaGF2ZSBhIHNpemVfdCwgc28gYWJvdmUg
-NEdpQiB0aGUgc2l6ZSBnZXRzDQo+IHRydW5jYXRlZC4NCkFnYWluLCByZW1pbmRlciB0aGF0
-IHNpemVfdCBpcyBhbHNvIDMyIGJpdCBvbiAzMi1iaXQgYXJjaGl0ZWN0dXJlcywgDQpiZWNh
-dXNlIHNpemVfdCBpcyB1c2VkIGZvciB0aGUgc2l6ZSBvZiBpbi1tZW1vcnkgb2JqZWN0cy4N
-Cg0KQW55dGhpbmcgdGhhdCBpcyBvbiBkaXNrIGNhbiBoYXZlIGEgc2l6ZSB0aGF0IG9ubHkg
-Zml0cyBpbnRvIGFuIG9mZl90LCANCndoaWNoIGlzIDY0IGJpdCBpZiBsYXJnZSBmaWxlIHN1
-cHBvcnQgaXMgZW5hYmxlZCwgYW5kIDMyIGJpdCBpZiBpdCBpcyANCm5vdC4gSWYgbGFyZ2Ug
-ZmlsZSBzdXBwb3J0IGlzIGRpc2FibGVkLCBvcGVuaW5nIGEgZmlsZSBsYXJnZXIgdGhhbiAy
-IEdCIA0KaXMgc3VwcG9zZWQgdG8gZmFpbCAoYmVjYXVzZSB5b3UgbmVlZCB0byBwYXNzIE9f
-TEFSR0VGSUxFLCB3aGljaCBpcyANCmRlZmluZWQgb25seSBpZiBsYXJnZSBmaWxlIHN1cHBv
-cnQgaXMgZW5hYmxlZCksIGJ1dCB0aGVyZSBpcyBhIGNoYW5jZSANCnRoYXQgYW4gb24tZGlz
-ayBvYmplY3QgZ290IHRydW5jYXRlZCwgc28gdGhhdCBpcyBub3QgZ3VhcmFudGVlZC4NCg0K
-U28sIHVzZSBzaXplX3Qgb25seSBmb3IgaW4tbWVtb3J5IGRhdGEsIGJ1dCBpZiB5b3UgYXJl
-IHJlYWRpbmcgZGF0YSBmcm9tIA0KZGlzayBwaWVjZXdpc2UsIHRoZSB0b3RhbCBjb3VudCBv
-ZiBkYXRhIHByb2Nlc3NlZCBuZWVkcyB0byBiZSBhbiBvZmZfdC4NCg0KICAgIFNpbW9uDQo=
+> I wonder if it would be better to refuse to cherry-pick and rebase a
+> shallow boundary commit as well.
 
+Yes, I think so. v2 covers revert, cherry-pick and rebase, including
+the "apply" backend of rebase.
 
---------------vTNbbgNAoVD9im4YrScNAZ4i--
+> Do you know of a sensible use for reverting a shallow boundary or is
+> the new option added out of caution in case someone wants it?
 
---------------4pbkUyMaYGgRgbCSM0421aW7
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Honestly it was out of caution.I can't think of a real use for it. v2 keeps --allow-shallow-boundary for revert and cherry-pick only, and rebase always refuses. If you'd
+rather not have an escape hatch at all, I'm happy to drop it.
 
------BEGIN PGP SIGNATURE-----
+> For such a rarely used option I don't think we need to add it to the
+> synopsis
 
-iQEzBAEBCgAdFiEEtjuqOJSXmNjSiX3Tfr04e7CZCBEFAmrmIAEACgkQfr04e7CZ
-CBH4wwf+OJcM5OaXkW+YowpgLiZm4vF3iBlfQxIcRilGtrVKP+FDPLsn1hdNA4jA
-06emhL4REMXL10p4gnsVNmOaka1Kk1sf+ViCCLhwXGMQ6l++KwC2nAvsUnEFb2nx
-34oPEt0+7zKYJ8vgJ1se4hj76Hahyevvx/x7JEHKFCkDCbAfWjVHFAR/3QhKtZC2
-zbw0pqwsfAscRjZFYreSSSp8rAK6hcSloBycjXL2/EYFkT73VtVWLlPDDHtRbADL
-SIpFVJ7JvVZd86e3Q7uerPVIU3+FflkkU/vf69ClcIdyBw8GRe5i/MN476bUTZ41
-Bl7tdP2b8/DZta2X42cuPo6PFERKYg==
-=susz
------END PGP SIGNATURE-----
+Fair enough, it's out of the synopsis now.
 
---------------4pbkUyMaYGgRgbCSM0421aW7--
+> It would be good to extract this into a helper function so that we
+> don't have to copy the code to detect a shallow boundary each time we
+> need to detect one.
+
+Done. There is one helper now, so the error message lives in a single
+place.
+
+Thanks,
+Nakul
