@@ -1,102 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.170
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793473711;
-	b=Wr+CcESVeC2qgr/+5p+m4Wc8U9zPDPmZ5dRW5GsULGV5npX+XQiihypsJO6trc3nZOcT
-	 8edv2HYGJtg3PQjn55KruV2lUyzFtC0dwgTxr6ngaHQ/tlPwBZUjxGZwpgO/c/O3YFMOq
-	 0KczU7RwFHNCv5m124iDSa1I+SG3MF1NsTVak/qiMzf7BlECMNJUNS71p82ra3ctwDdKO
-	 ZFs+/rMWoGeN4psNl+6H9Inl8aU+I9vI0Hn415PfV1EaCVhzzHkcpXSAASyxSY+zPbkLR
-	 WpKNFdNBsi9mLg31MR8uvtfR5dXZFfgcYO1K49FJItPIpoHUIYiUqeZi8MJlDqITmLg==
+	t=1793473760;
+	b=D2jRHPeNp4hxOmJBp3XkDV8QuE3Qn/CoSwjrFNbYH1ZzLYn0LuIgIDMO4w5uVgwv57mU
+	 V4Gaxo+2Kf8QmftcWdYsnWtF8hH4zvOcpgVmhvi+esQG+r1tEOHFZbkYVt83NiYeaXfy/
+	 ilvLpG7POYrM1QRjVoVFNlLgGDgu6U3fFzjfjrgNaggtqAzXd6SYjSW6nv081KLhzyDwN
+	 8L8A3k+/J0cPwK4hARhZJUY3gIPR9znQeidFeTzznbbZ4sEg6nDLACwSdRDUUwUrS4TYu
+	 9HO3lZ8hRi3dob/fqRGi8gWSbSv/OwlB1uYhq2kZ3RVSplm1M90ZGdI19k0q73ARyRA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793473711;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793473760;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=sDmlTxezdPFtYSKNsPxm7Vl1oLEBZBWr2TyrrMgrEEk=;
-	b=hFjLhub7rCCRbR6YLPlh6AoyqCK9IazR1BKsyEF1lPGEkeuIqnNRw2LQBPOhRE7167Wc
-	 hzSrXDcZpDbYWWOFE/vNntLbWq3XeVtBO2bfMI2FJ/FjAkF9UncFKiu9yGb3VQtvPxmT0
-	 sugsFqSHwLVfAAvYEXUJydRSC2nJ2EKwXhzk66xVblXYVLySNn+FAwwlAw89dnM9MLLxX
-	 6C1lHpJpmfn8Ysb97bK1DUhl5hrar0DZ12GAM3BSgfa18LgrmNccOJbGAqXnwsHXbviKS
-	 YrcXqzbljfBjbQ6hEQup0mtRL+znwYs11GbKx5SouSzyYZJih38AFAMh9RqWoN/yLEA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=63FtY+OU5OlOXJzwqbDOeHJxvzvmm+Xxbjg9nyzItqM=;
+	b=3taOXu00gaqV8jH45QWPnKrrCeA9/crHdSX6LpOanLKiihsUHOavj35pIJz4JTOjkeza
+	 kfO41dgviW8FuLmbDfZUKvcMLVPv69q63BEtqkuUWMCQtXgELtLE5PyzMO+dHMXgQbfox
+	 Sac9JrFF7m3liYP6fvHCVc8gU4RDBIA/2LpzFl5HEs1rum3z7Sa/GucbSg4b6RA7WAS3Y
+	 6+dcRHDHIQ+9ZNndeWHkkQCY08nKM+v/te4lWBUVO52NIdC8RvX4rfgvTmBUW4nTETb9x
+	 dxSokoHmKyB69gmNm97mmefaTYZYUEoSso4snbCQrXWkM497AMkNIkA7+5bgyeJBN5g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dq0Ix8jm;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.48
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y+inRLeb;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.170
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F14606A31A
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 19:08:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 07F14606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68A9606A31A
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 19:09:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A68A9606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dq0Ix8jm
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-91bb5795792so21263436d6.2
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 12:08:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793473710; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y+inRLeb
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-8b125371596so22051567b3.0
+        for <git@vger.kernel.org>; Sat, 31 Oct 2026 12:09:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793473758; cv=none;
         d=google.com; s=arc-20260327;
-        b=YpgxQDFYn9EEwgr/OczR7SdfCYcmqNhTIubGMRpPMdd89/lOWZrjHvwl9LqMPdlo4v
-         hryL32lmOjSXvUbgVFDyTQGAVDeG/Fu/0j9GjNicZ2nv1TVlGRcP8v7nau7O+Bslb0qJ
-         ebRYz8I2WYp4caN3ioMNhMo4vunIu2/LgdyIiWO+wLgsDoAwpNL29p4Eh5WHF/24NCx8
-         8BWecMVIFaaLpD4ZNfg5OwIBCo9dnIU//qsg3+Zh2V+NsS4acev6GGRKRQb9G5Ziy2/5
-         I1sEoVNFiW4nszPBVgllgle2LpbLqJ42b0UFATGibOLAKKeAvYWaBW1aqL1/EVG/BRhN
-         XtJQ==
+        b=Hikg10tvRpMTeMlCU+ZLyFRAGUW5+5RDP3V676id/vAhMNIt69zQUN6D1CuSgr7hPJ
+         ewf710UFAAF/QLXGWIJ72rVt7Vjona3VxC3+XR5AxZ78j/TNvnRLHp1pt4TgXoMa8d9d
+         N1QhgjHIppXleg1kJ60nNLpNTOS10QvgWXPqsOv1x6TFJzy75QkB6i1slRzkikwU5qdK
+         ySD36f21VlApl2CYAGi1ue9uRWy7rUOp9OhzZhLPTv9tYNniFWhtFk0TARHzdhEc9Q/C
+         Lzbig5Rr4R3ZKovkH2s6joKStvqCinLgahruT1aAQ6cs54iTJKlvMu3JxKdWD0P9Nqjg
+         7s2A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=sDmlTxezdPFtYSKNsPxm7Vl1oLEBZBWr2TyrrMgrEEk=;
-        fh=0ntEjTNBVORqxkOvMCyrsNWjOyMy54RXFfOMQ0AFUFo=;
-        b=QkXgZTXQfzQobeXTryXXZhb/OF//NHnm7pvtu0iUKwuQDODsYTCqstRodxArEdF930
-         ah65L/+W+iBkQud4ZujzyWpR1UVvJqSw8K/MR+B2mnYeMI28PG/NVJGkwer7SYohRSex
-         PQgW2ooR9D9rTQSYNiWitP5LqZ9AYkqiYPYOysTClyEeJiQ8jlElImeSYw4UHFa8r1PU
-         ro/6bnGpJ4B4EgO0ICQfrZ3TI2ao/CkDlWi0ovyA/sf9wkAqKqQUZNAOPHgE7avgL3Kx
-         zp0dr5TowJXwG9kchwGZ4eD3vGaksC5dkjSI19K+dr14ve4nPpapSOFpeRlh4v/HLXZy
-         P2xg==;
+        bh=63FtY+OU5OlOXJzwqbDOeHJxvzvmm+Xxbjg9nyzItqM=;
+        fh=GV+q3+xoptdzTjdo/fAURyeoLF5hkow4oLuqL90b9Bg=;
+        b=G9GbLsG/F7bWaMXL9OAkFufgrcNHux363jc2DFAn20/Ru7ky4c/Qzmf9HH9FdNYzRK
+         K0pzWqAZdzrylrrxjm6fkthqeVN7N4bMeT46XXLlDkygII6kbtPMXnOqL6KjRlHe9y/Z
+         FJNXqaby0gY2DHn0a1ZlUVsejsw45F1hvgJZ/4UheIYtSCEgCeN3CAFIMZyLhQjx3deV
+         g8QXpY/fLg4Q325le0qwwvv1rqmOtY2vqeTE3QzS/VwSSvxbToRvswVBaTvWEqUUgHzY
+         NpARtNuBxis6jE/+DPPRTo7D0iWurMY+jbldIhT5ItAI3+/SIFsj+v5PnE/7N0noALmO
+         jWKQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793473710; x=1794078510; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793473758; x=1794078558; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=sDmlTxezdPFtYSKNsPxm7Vl1oLEBZBWr2TyrrMgrEEk=;
-        b=dq0Ix8jmqxu5SJT5OSNrPiurqTl93AcTTg9e3O2lhEqU0nIwE+IpM/TcSlEtXtluTD
-         fxplOA6RgVfcWuiI7AR5nJ3BkoLD/XWO/LF634nhnqJpJKE4KX0E0pmfj5sS1ZXnDNXI
-         wOE+qu0wFFe6+BKkMbbdhCYfMArEjHtZE/QehXAaEva8f7QtEblLZbWFjUPJD9TJhCN9
-         ra9iQYAHbCbJUUGr1JVp4zpIHh2OLwwjxajwgkdqKmBvBw+C9x2C0J0N/6B1b7PchfJG
-         kHtGwAq9ESsqjv/9wD3la2fCP9oxkaHOK+ZMgTTEE4BUPDjS29FVXfOM8JmNB6QEdIxg
-         uY0A==
+        bh=63FtY+OU5OlOXJzwqbDOeHJxvzvmm+Xxbjg9nyzItqM=;
+        b=Y+inRLebSj/8YSwsyGyX3tpR6Wqi4xv+kOIFnXFfwbYt50+0cAgwQqM9h4XjljU4xg
+         x/OoGQyLYrQrwfJzIqjVEOTC/BJrP1QMy9e2hUGIDQzHVKWggKvKjqrR99LTreQz1Ouw
+         m0Mnk4+lSxdyTvWeZZPVnQU61qocxHYrY07bvUJMHQ71c2WwtOOU9oWJkSVan5tYLa38
+         iH/jfm1psJIFBapMBjZaMZo2NP+340duLieSLN1Wp3Igl21diYNqWld6c38Q4wSVPdU2
+         6/+yS8bwNq9rqbrpc8JpZujZ8Kphf/+AmPz7jDSwmajuWfhKHRN0jxvpYYTS92DI8AlR
+         PQNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793473710; x=1794078510;
+        d=1e100.net; s=20260707; t=1793473758; x=1794078558;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=sDmlTxezdPFtYSKNsPxm7Vl1oLEBZBWr2TyrrMgrEEk=;
-        b=VC56U6oZ16/0VO6Ptlr0//88zPgWIkKGwEBSf97vu/okAinOuJeGFN7mr0vphGm1YP
-         BWx87dPYQNbKDPayY1rNd1A2O0S/W4VoK9hk4BKidhmGEx/Du0XDSnl1a6aKY/FxrELD
-         MkNv6tjQ+uE3rN+8DPq/3XLL/Nd526QtfR5Kr9w0WdtzvS4H5iNFIXOF0wkDZE3jVQGl
-         rFSOitZlvxIuFMarfIjCNAtsU822QFswt2JGfh1a3be6gz4fFqz4TVEahfckrVPovnkw
-         CTFz4aeWy+sqomeMWmvkx6FTQabnVydoJ50dJYOZly9IwBKfNIYi4DgaEkP/KvGrl2MX
-         zpSg==
-X-Forwarded-Encrypted: i=1; AKwUvBxJGTHAArY0uvpjbGehQIXBK15h6X14VS3rjB5ERbaeITAyLvG/O19DkeI/hb1d9WzusTo=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIbbvtJQAbDhbTj6bNbeFicPsjVpJ0GPP2TO6qjamB083rImSZf
-	ZMqX15Xt7VMYXV94Z+YXz1HeYjpQObnmc54SzCOexVu8NHf4nQe7wRE18jiHYkitzV7Wz18OUfv
-	dluOlIAKNjeikSeaA5XaWrvTf1YhevZw=
-X-Gm-Gg: AYBFou1fuuZHzPKJze2VaUOeoHiKMlKRlhlCxE2XVjuIvoeHA1fDFA00negmdlpfBZb
-	VSJEQlEhVxDNmQY9wOwcXsHEHtgGE1ENqZtV9zU3qZyrfIqMHekxQsI+HkUQfQ8MPyff2bCXwjq
-	f3pp9CU7l79lDQ3TMGlBcaGBHmjlDgrdeAXJ4eWuHWTEhtdBeFSfS0AqL5NJ0mn4NkRwImvR1Qp
-	OVprsEa1S4GmC0hMZPm3PqlH0pSD17tPAXYLyB1bGJDHCH0QyyFQhYvs6UyX/mx6J0MefSoOWRf
-	u75N5g7VWG5Ecz7O+U0XPG+wCnpAbzw3mI5Nk4oBTclV2pvt77A4RnQrktw03fZXgR9GHyFPckv
-	ar57xJnJIW2BEsyXww34gjdNcHB3BBOWbX5Iu8llWXtopyOU1/SC2ZDDYDVR4slNe8LRovzDKko
-	IbnhYd5lNsJwdpTiTPaKk/mnIs1Fzrpay3QS8O+FeiC24tTvvWORxJKD3/7bH6G/HPK7SEltdxL
-	Jps
-X-Received: by 2002:a05:6214:5507:b0:91c:809d:6fc0 with SMTP id
- 6a1803df08f44-91ca4b6a87dmr95821536d6.43.1793473709778; Sat, 31 Oct 2026
- 12:08:29 -0700 (PDT)
+        bh=63FtY+OU5OlOXJzwqbDOeHJxvzvmm+Xxbjg9nyzItqM=;
+        b=Y4liATw1QsAJDGETUbZ6eoG36Wnfndixonj54vVllzraTEgov4K/d5yDpMdrEIZbGJ
+         V0/5zh7RWNa70+cO057wDs7ZrQGMrP/8WiuCAdC4IcbWqCjClAxmPoKOhXSF7E9JamW6
+         +j6IpdlOnAdx0z9/sXswFIdbcQBrTox9cdJfRt/Rddw5QOBjZ9q/27SU3Ud6e/ISYLQk
+         XgCu62wjurksCwoRN50HrRI9MsvDLfl/SAiZv14fZ7uCqA9KmY9m5rMmSv2UMWFunMJo
+         +iFnIo8hLnPco9Y8lf1vcanPJBNl/2Rw5+Wq4bgI7+yJcrAgVOgiifCD5fR2HujqvjSX
+         nrkQ==
+X-Gm-Message-State: APuU4Z+1ZAcvccxm0LWngBhDsbVa0nAJil8to2QmzS9EH2DMl2WjU/B5
+	2oK5IJcBUlyjN4JQrI7t+ujqWCVzrddwLnCuenxAQgU9rZBuc9Sngs7RPsMJQX2VLxJIc6dEdVc
+	kcqF3bxvaKP5gYX7NFeB3Ie81t6x/3oo=
+X-Gm-Gg: AYBFou0Z6D3tD8cGty1UQM9s/TaM3PNkBOiq0olaXxggt2Iv+KH/ds+oBd7z/yk23vX
+	bUyN4RKe3tEjF2ZlFvDJIks1YrWV4V5SBO726DeSYAV9PAmS3MOrTJQAoQE4WW22/Ri82EYViBl
+	OAu8VxGapKnF1zYGqg2fe3wexsFfFielhEopuGFXbHk0MjfZ23ED27hKEMjgqr9/7PGf9POuFkB
+	DVjWN2Sf/l6dqXjpjNCzafeWWMmPIZMOfWgoRZGIej3wYvwDzDlMa7g7Od3ffdBdsAXtE9HrSQ5
+	1FC1DL7qTpMpRI/JbuCpLj/mEyITmcyi1gTCrGIJhzVlAV+xFIToIbymzlydAv4zlNGat32sJle
+	RAV8lsIyBJMnrSwwAL7LvzQGmFjidU68L5pq+hXXTr4GNbcek25Il2XakUOrse52er4K4dafK1X
+	WNkHX5s6K/Hh2mwaq2JtDIYo4V3CnPyXIzX+5SypCMLX8Im8funaXfIOhkaxyN3/pn/5eptcsBA
+	uQlBAvFsQldQ5TA2I/P6VMKc1cEPyi5rj1fztZvvWLoAZy5Qdmw1EIa9pWFjw==
+X-Received: by 2002:a05:690c:81:b0:8b1:368b:3935 with SMTP id
+ 00721157ae682-8b2b66cc36amr41247457b3.10.1793473758548; Sat, 31 Oct 2026
+ 12:09:18 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -106,76 +105,193 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2288.git.1793435149942.gitgitgadget@gmail.com> <CAFpMFfALb1KbEw-dc4wYCxS4PXfDBwzQOD6YPRe52_bpRnGt9w@mail.gmail.com>
-In-Reply-To: <CAFpMFfALb1KbEw-dc4wYCxS4PXfDBwzQOD6YPRe52_bpRnGt9w@mail.gmail.com>
-From: Srujith Poojary <poojarysrujith@gmail.com>
-Date: Sun, 1 Nov 2026 00:38:18 +0530
-X-Gm-Features: AclHuK8qnAk6Ire-LsUTE7cM-CRSu2ov8vhBRztZHYXYSk0WcXt94SHzYbb5Jds
-Message-ID: <CABh_KWh0N0y7rN61wx5=zQWs3QmD8Ho6ONig75ocj8zFWKh4bw@mail.gmail.com>
-Subject: Re: [PATCH] [Outreachy PATCH] t4041: use submodule repository for
- commit abbreviations
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.2288.git.1793435149942.gitgitgadget@gmail.com> <pull.2288.v2.git.1793473062113.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2288.v2.git.1793473062113.gitgitgadget@gmail.com>
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Date: Sat, 31 Oct 2026 20:09:07 +0100
+X-Gm-Features: AclHuK93ToRjRsKa10Irz1TAqVLamQcrapEvPxCxQtwdDSeDlPKUz9fZf4adUFI
+Message-ID: <CAFpMFfAeMtJ=qTt757aEvMfFyw1nEkB8d07b4wgaTJuQ2tnKiQ@mail.gmail.com>
+Subject: Re: [PATCH v2] Submodule: use the submodule repository to abbreviate commits
+To: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Srujith A Poojary <poojarysrujith@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Oct 31, 2026 at 10:16=E2=80=AFPM Okhuomon Ajayi
-<okhuomonajayi54@gmail.com> wrote:
->
-> Hi Srujith,
->
-> I applied this on top of master and ran t4041. The new test fails
-> without the submodule.c change and passes with it, so it does catch
-> the problem.
->
-> A few small things:
->
-> On Sat, Oct 31, 2026 at 9:26 AM Srujith A Poojary via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > Use the submodule repository when abbreviating commit IDs in
-> > submodule diff headers, so uniqueness is checked against the
-> > correct object database.
->
-> It would help to first describe what happens today: the commit IDs
-> in the "Submodule ..." header are abbreviated against the
-> superproject's objects, even though the commits live in the
-> submodule, so the abbreviation may not be unique there.
->
-> > [Outreachy PATCH] t4041: use submodule repository for commit
-> > abbreviations
->
-> The change itself is in submodule.c, so the title might read better
-> with that area, e.g. "submodule: use the submodule repository to
-> abbreviate commits".
->
-> > - strbuf_add_unique_abbrev(&sb, one, DEFAULT_ABBREV);
-> > + if (sub)
-> > + strbuf_repo_add_unique_abbrev(&sb, sub, one, DEFAULT_ABBREV);
-> > + else
-> > + strbuf_add_unique_abbrev(&sb, one, DEFAULT_ABBREV);
->
-> The same if/else appears twice. Maybe choose the repository once,
-> at the top of the function, and call strbuf_repo_add_unique_abbrev()
-> with it in both places. I also wonder whether the fallback could be
-> o->repo instead of the_repository, since the diff options already
-> carry a repository.
->
-> Thanks,
-> Okhuomon
+Hi Srujith,
 
-Hi Okhuomon,
+On Sat, Oct 31, 2026 at 7:57 PM Srujith A Poojary via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> + struct repository *repo =3D sub ? sub : o->repo;
 
-Thanks for reviewing the patch and testing the new test case.
+Thanks, v2 looks good to me.
 
-I've made the suggested changes and submitted v2. I now use `sub` when
-available and fall back to `o->repo` when it isn't. I also simplified
-the code and updated the commit message.
+> Submodule: use the submodule repository to abbreviate commits
 
-Here is the updated patch:
-https://lore.kernel.org/git/pull.2288.v2.git.1793473062113.gitgitgadget@gma=
-il.com
+One small nit: "git log --no-merges submodule.c" shows the area is
+always written in lowercase ("submodule:"), so "submodule: use the
+submodule repository to abbreviate commits" would match.
 
-Thanks again!
+Thanks,
+Okhuomon
 
-Regards,
-Srujith
+On Sat, Oct 31, 2026 at 7:57=E2=80=AFPM Srujith A Poojary via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Srujith A Poojary <poojarysrujith@gmail.com>
+>
+> The commit IDs shown in a submodule diff header belong to the
+> submodule's object database. However, strbuf_add_unique_abbrev()
+> uses the_repository, so it checks the superproject's object
+> database when abbreviating those IDs.
+>
+> Use the submodule repository when it is available, and fall back
+> to the repository from the diff options when it is not.
+>
+> Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+> ---
+>     [Outreachy PATCH] t4041: use submodule repository for commit
+>     abbreviations
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2288%2F=
+poojarysrujith%2Fmicroproject-git-libification-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2288/pooja=
+rysrujith/microproject-git-libification-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2288
+>
+> Range-diff vs v1:
+>
+>  1:  7b2af1b46a ! 1:  3133cd3017 [Outreachy PATCH] t4041: use submodule r=
+epository for commit abbreviations
+>      @@ Metadata
+>       Author: Srujith A Poojary <poojarysrujith@gmail.com>
+>
+>        ## Commit message ##
+>      -    [Outreachy PATCH] t4041: use submodule repository for commit ab=
+breviations
+>      +    Submodule: use the submodule repository to abbreviate commits
+>
+>      -    Use the submodule repository when abbreviating commit IDs in
+>      -    submodule diff headers, so uniqueness is checked against the
+>      -    correct object database.
+>      +    The commit IDs shown in a submodule diff header belong to the
+>      +    submodule's object database. However, strbuf_add_unique_abbrev(=
+)
+>      +    uses the_repository, so it checks the superproject's object
+>      +    database when abbreviating those IDs.
+>      +
+>      +    Use the submodule repository when it is available, and fall bac=
+k
+>      +    to the repository from the diff options when it is not.
+>
+>           Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+>
+>        ## submodule.c ##
+>       @@ submodule.c: static void show_submodule_header(struct diff_optio=
+ns *o,
+>      +          struct commit **left, struct commit **right,
+>      +          struct commit_list **merge_bases)
+>      + {
+>      ++ struct repository *repo =3D sub ? sub : o->repo;
+>      +  const char *message =3D NULL;
+>      +  struct strbuf sb =3D STRBUF_INIT;
+>      +  int fast_forward =3D 0, fast_backward =3D 0;
+>      +@@ submodule.c: static void show_submodule_header(struct diff_optio=
+ns *o,
+>
+>        output_header:
+>         strbuf_addf(&sb, "Submodule %s ", path);
+>       - strbuf_add_unique_abbrev(&sb, one, DEFAULT_ABBREV);
+>      -+ if (sub)
+>      -+         strbuf_repo_add_unique_abbrev(&sb, sub, one, DEFAULT_ABBR=
+EV);
+>      -+ else
+>      -+         strbuf_add_unique_abbrev(&sb, one, DEFAULT_ABBREV);
+>      ++ strbuf_repo_add_unique_abbrev(&sb, repo, one, DEFAULT_ABBREV);
+>         strbuf_addstr(&sb, (fast_backward || fast_forward) ? ".." : "..."=
+);
+>       - strbuf_add_unique_abbrev(&sb, two, DEFAULT_ABBREV);
+>      -+ if (sub)
+>      -+         strbuf_repo_add_unique_abbrev(&sb, sub, two, DEFAULT_ABBR=
+EV);
+>      -+ else
+>      -+         strbuf_add_unique_abbrev(&sb, two, DEFAULT_ABBREV);
+>      ++ strbuf_repo_add_unique_abbrev(&sb, repo, two, DEFAULT_ABBREV);
+>         if (message)
+>                 strbuf_addf(&sb, " %s\n", message);
+>         else
+>
+>
+>  submodule.c                      |  5 +++--
+>  t/t4041-diff-submodule-option.sh | 18 ++++++++++++++++++
+>  2 files changed, 21 insertions(+), 2 deletions(-)
+>
+> diff --git a/submodule.c b/submodule.c
+> index 6fcb606f7e..1302c11ddf 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -543,6 +543,7 @@ static void show_submodule_header(struct diff_options=
+ *o,
+>                 struct commit **left, struct commit **right,
+>                 struct commit_list **merge_bases)
+>  {
+> +       struct repository *repo =3D sub ? sub : o->repo;
+>         const char *message =3D NULL;
+>         struct strbuf sb =3D STRBUF_INIT;
+>         int fast_forward =3D 0, fast_backward =3D 0;
+> @@ -599,9 +600,9 @@ static void show_submodule_header(struct diff_options=
+ *o,
+>
+>  output_header:
+>         strbuf_addf(&sb, "Submodule %s ", path);
+> -       strbuf_add_unique_abbrev(&sb, one, DEFAULT_ABBREV);
+> +       strbuf_repo_add_unique_abbrev(&sb, repo, one, DEFAULT_ABBREV);
+>         strbuf_addstr(&sb, (fast_backward || fast_forward) ? ".." : "..."=
+);
+> -       strbuf_add_unique_abbrev(&sb, two, DEFAULT_ABBREV);
+> +       strbuf_repo_add_unique_abbrev(&sb, repo, two, DEFAULT_ABBREV);
+>         if (message)
+>                 strbuf_addf(&sb, " %s\n", message);
+>         else
+> diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-op=
+tion.sh
+> index 4dd4954260..e80472af32 100755
+> --- a/t/t4041-diff-submodule-option.sh
+> +++ b/t/t4041-diff-submodule-option.sh
+> @@ -14,6 +14,24 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>
+>  . ./test-lib.sh
+>
+> +test_expect_success SHA1 'submodule commit abbreviation uses submodule o=
+bject database' '
+> +       test_when_finished "rm -rf collision-super" &&
+> +       git init -q collision-super &&
+> +       git init -q collision-super/sm1 &&
+> +       printf "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n\nb1rwzyc3\n" >collision-su=
+per/sm1/a0blgqsjc &&
+> +       git -C collision-super/sm1 add a0blgqsjc &&
+> +       tree=3D$(git -C collision-super/sm1 write-tree) &&
+> +       commit1=3D$(GIT_AUTHOR_DATE=3D"1112911993 -0700" GIT_COMMITTER_DA=
+TE=3D"1112911993 -0700" git -C collision-super/sm1 commit-tree "$tree" -m a=
+2onsxbvj) &&
+> +       commit2=3D$(printf "child\n" | GIT_AUTHOR_DATE=3D"1112912053 -070=
+0" GIT_COMMITTER_DATE=3D"1112912053 -0700" git -C collision-super/sm1 commi=
+t-tree "$tree" -p "$commit1") &&
+> +       git -C collision-super/sm1 checkout -q "$commit2" &&
+> +       git -C collision-super update-index --add --cacheinfo 160000,"$co=
+mmit1",sm1 &&
+> +       git -C collision-super commit -q -m "Add submodule" &&
+> +       git -C collision-super diff --submodule=3Dlog >actual &&
+> +       printf "Submodule sm1 0000000000e..%s:\n  > child\n" \
+> +               "$(git -C collision-super/sm1 rev-parse --short "$commit2=
+")" >expected &&
+> +       test_cmp expected actual
+> +'
+> +
+>  # Test non-UTF-8 encoding in case iconv is available.
+>  if test_have_prereq ICONV
+>  then
+>
+> base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
+> --
+> gitgitgadget
+>
