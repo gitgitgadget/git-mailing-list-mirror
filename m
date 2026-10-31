@@ -1,92 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793446789;
-	b=pBDtTOdojDHLnVNiw7hVtVtLwWLq4sJ54fzrixFokomigxe7BbtuT61Sa1YcH2HXJisk
-	 lGHaWd8OgQbImeiu96KWkwtgsIRpXBMCbdA4nM11P6WJWm5xskvv2MC99BxG5/zgC2a0x
-	 A/m8AKBymqqR6J5vFFvkzAGE3AkVapsGHFHcn93g7ZpK7ag0uclHZDzaBw7PC7gha2jnd
-	 LyeYqb9/hkryDywwMVf/B4TBwWAR4vz0WEm4mniLxUW93vNTcxJC7LZS3axxHA4ZrSpin
-	 00GC31ySCJAaImsPpFTdZN8sHzT39JGTeIIkrWd/6ygYYJioDUsbyV8nCrknvItv/PA==
+	b=Ir0i653vg8EIqEB1eVuNSLLFZhKmDE3YzoXkGWkQ4dIdmRCtuyd11N5g37klQUNUtoLL
+	 7XC2QM8GpSzj3Un9cyRzZd03TsSEQRZjCI45PlQ8MC3iPZAZLBAGoQYpy7mVR5ckxHMia
+	 W7oHtQuKLMYCZ0gvMcFQg65VHdZkRAQPBCJbgUukRGnSruc9HzZohJAvGCJpZdgpCicQH
+	 b8Hn7Qboq7IrNbjRytwKV54v1xGjJ/8Em3zb1XAnRzVJq0lokU1U8do/0JpdKYiY/6UuY
+	 QFt5nB6eZIehrXrs5v54JwuhW6CUMX3+dsqzAVjP5wrlrtOVy4fol5060irc+xp7Krg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793446789;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=Bc8n/qIMIDl4LzX4d+xBd1iNZ8XAjyP91d6jiUG1yLA=;
-	b=uYzVTRumrtm2AnB3anGO6PE4hb0JYlaXnOA5MfsWLOBzF5sHyYtvAjPR2ITWDLeNt8HJ
-	 8vsujADJUT/kFjAN4Sk+CaN6IyvGnDBe6r8WNM+I2qZPL4T5jwbhDPUN9sFFETh/Tgtx8
-	 8Y0oe3ziQotGL99NSgV6agD69SR6SMIl1KTQWozJyhIEKjv3AypH5hLOqyUFWAZI+bunH
-	 sZH9YOz15PNkb6pnX24XHqhQKlWrRXAYyFOFjHP/ZPrQ77xx/8vYjuleByLXDqDw+VQ9n
-	 AVQK6G/GD8xzwYocxQrRDi35+v5iuSscPaaBfjdm7AJJxUy9nzRRH74zRQrDBEZkXsA==
+	bh=8p9GbalgbMvhbko0eMxSIpNpIqieLkSd4MvrE9fuiSc=;
+	b=P4Ywhl+3t6xaZBrZnOaB5ciZxJyLFhF1uIL5KdApPmuwuLcX3db9r221EqtUQEkTlJnj
+	 IlBIrh3Ir/EQHaIsnqmPSweyz4MxJlasqGe+aDGeZGImrFPJU7bBdkWJLJEY8+3v/dai9
+	 WkklbPXMJ/wBo24E4gGQs4PdMqsEWEf91zuvgVnWZh22ni/CRGP/SVAlatn9eLDs4Detn
+	 mKSed2PCc1AxWL7JtcNrgh/jvZdNENbS3L9NU/0ql5C78BK8N7Y0uOwo2/Z1sRb808d8K
+	 lzJmdmlPFVQceqJwiOKbiByT0Q/FNhZXuV0xrzcUlgumFRThTSksYSmUFdte8l/rQ1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YiUCRJJo;
-	arc=none smtp.remote-ip=209.85.128.47
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=niLb88ey;
+	arc=none smtp.remote-ip=209.85.128.43
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD16606A320
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 11:39:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9CD16606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7748F606A323
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 11:39:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7748F606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YiUCRJJo
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a2084d62cdso13698045e9.1
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 04:39:48 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=niLb88ey
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a2000d5fb1so9406645e9.1
+        for <git@vger.kernel.org>; Sat, 31 Oct 2026 04:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793446787; x=1794051587; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793446788; x=1794051588; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Bc8n/qIMIDl4LzX4d+xBd1iNZ8XAjyP91d6jiUG1yLA=;
-        b=YiUCRJJoILBAYyPwowlCPrYp52yPvPD3zrkl5ItKnwvHILrulb9PPt/sxrpiMvlZGy
-         aOSYY54JsiKMg9RfcFzbP9aJtvX8SaoHcHZa/his0vMd1+9vxt2fQKSqKqC3VsUl9qap
-         JmF2kmSVeDhlgY3EkhlEzqIVPR9YLhxTVWs8cP+F0S9EWN+vmfFOcG/tQDSqhRtjKTHu
-         no+rtAIyxIdKx+m8utlcrp6FbfrDQXIVexCjt8L9f4bMtnWcSElKDFuUdyxAWkRx69CZ
-         3pekigDlEn10jddiBvie2n6Mezm4ny22N2Y6FF4bFgcO7W0nScTL6jq7icjNUHlIycK4
-         ymAA==
+        bh=8p9GbalgbMvhbko0eMxSIpNpIqieLkSd4MvrE9fuiSc=;
+        b=niLb88eynncR6SjH26cHisLoHp0sW4mjor37urbhqIxeo5fZ2Vuk9gVtD9lLhz7QHH
+         Za7flBKQJld4ruqEUbJY/8LxY2lTE0G+JFQbZPEIPDwZljuTIbAKVsguWbExTSDHRhu1
+         108u104mhmdVXn5ZMJWZgniRMT4bO1Rwr1Lk21Wr89/Ys1DbCFFKpkSEQX4243YOadR2
+         D0jX5/vDlLk6m2u+w1XdKTjecZZRDLL77SbQOINgCS9RWhVdVYImdFAycXSUcboI4dit
+         qj0WhwjXZWQQVzliumM6Yoa8JAQjXu6kEojebRVCpoLDB6PoGeVZ4uOlT3mc5mecC5EC
+         0VtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793446787; x=1794051587;
+        d=1e100.net; s=20260707; t=1793446788; x=1794051588;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Bc8n/qIMIDl4LzX4d+xBd1iNZ8XAjyP91d6jiUG1yLA=;
-        b=dzub40yFEaSjlMrIwm/pG+uY30GBDP3W/+UnPGrEx+VMtvvhTxz2KcFP4Kls6VnLTN
-         px5Qhs53YB9kVHjy1dOf0VwCu7wRIJRMQQW4qOTAbJUhVZYe6o6l7vjh5RAk/SWL8gmb
-         V6Gn0YsLTkAT8bY+fZeEDZW9NWT7QCQ4pUxUwZ0D+J1FqojedATUFNntZj6plh91+ze2
-         gelabONmp6uDRozyhzSN/bncNkHBo17typf+0v53juZBEMvPzvOGj0X8WpBpArg5w3dV
-         KM72HCP+XXFFl+Z5NvrL55XIGgrSF8lsLZHpdZjHb0Ts74BwypP3vjlvLmrZxnO1JGs2
-         xzHw==
-X-Gm-Message-State: AFq9FYLE5P71wAVnuNyd0hNvdNDJFWK13UF5QCz5irySgNG7zdfW1xi2
-	3nAU7QX2SDIHZ6QCKbszC+34fC43LMC2aLUQY+4sKaMB2UfMDi6k2lPKG6+x8V/K
-X-Gm-Gg: AYBFou2KiHUfJUqgYPZA0Fi6SKO0xntf9kn6QRpXyGMuyUdalsNRzhh/A3kUrM5kneU
-	VufP9Wsu1GAJHt2/AhzWF1TdjL9XPjPN68drKaNyzukVFbgUH2iKP7GBUvEXP6CM0YTfbgVNibZ
-	z+LMGjwRp228oGaqr4eeR7Cu4/hFGvi367XUb40qpLqWMZ4E3TYIYlMWOHNS1KkYrwN/U9y4qkt
-	SbIn+qslR/qOmj8RShg8jPajv6NpypGGc/8oTguASXZ5tfKdnjgRfGvm0Jta9o7Tr/Uh/NRsPQB
-	N3BE3W0mK5f94RChsOOfSN9znQLMydU5SGzj+u9RTP4KMhceB30E929jwEbh42u+bjYAdU9eTLE
-	oGhFQj/4g5B71vyhGWX3tWpXmiE7/JGV8GHVNr3YFdv8TJTldiyVhc7pI3OL8Cd6OusJWrbQYIo
-	pyV4pNdfFcSfXIt0MRIpuOHzNOy2fMO8wUtm8rZ28uZoeoFzactNnknHnKsLQY8w5QCqNBXEcx/
-	ZtXi8N+o6etfBb5nTaS4uzvWeE7Qqe7406dUzB75U3mTXvdAfTfVMllyyAjumc3vstWfdUCO746
-	ALsLkuNaiyyDtrlUkpbsb4MhbfnCFttOPGxUCt73dp00+gwiofG4G3YF/GhmVHA=
-X-Received: by 2002:a05:600c:3b87:b0:4a2:150f:1607 with SMTP id 5b1f17b1804b1-4ac1709ad56mr110317225e9.13.1793446786888;
-        Sat, 31 Oct 2026 04:39:46 -0700 (PDT)
+        bh=8p9GbalgbMvhbko0eMxSIpNpIqieLkSd4MvrE9fuiSc=;
+        b=1yJY6qjd6z94cVH3QENbsgmcZowqUX1ORrweFhK7/vN3QlVu1Bs+Y4MmEDH2kjD3sr
+         ayBEMWVkTuaRYolAsQPSMgJBSWfZPBB4+RDeXUp9BgD3eFUVUFoPGPHPIe2nbMUZJbDl
+         /02FY++y1F+NzISGetS27dUGwdxWEzEG8LKa45UaxWf094YeF4Z/+Z45tbZ7NSl6M08j
+         i1pedWMyF4or5r7BNMlPoeWVgsmYBC/P+ggr0dURlKc/hBVjyo0rIkecMo6W4KUVaqju
+         prdhFHwmA/UZcuqzhq69GmOglHj6/iD/XHePmguuVdH6Do7k3oUV++PVmSc9rX2OJPoa
+         PC2A==
+X-Gm-Message-State: AFq9FYIF+9wzHF1xYRrQbHZ3Dh0gGPF5cA/QBYpzkGfFAEnnbrR3D/Up
+	CLFX/sdHbEP8Yro1Bx8llrJwl1bjKF1eFWDHtbVbwpnXax2xXydif39Y9VLQTo4/
+X-Gm-Gg: AYBFou2FHnYAWz2xPXFb1ypUgFjObrn1wu1hlfA/UhWSdgjg1yikJ+S9JR6atCVJ3ls
+	7e9uuU25kOBCrLeTRxyk58GlmCsCANrw7oR6fFRgpTDR4WNSyASDGMGlQ2yUAgxD1UbS34FVomZ
+	gtpjHtnmYCys88Vus3AQWvCb762PSxfSPaZR+IvmoED+IyoVVOFpTH9hHZqvBBA+Y+Xd8qdOoo5
+	v7VJUyT0xkx93CIInUlO8IijJ19FoJikAwrlNZTB52Y1SSK6/5A26rYQDK3dvsftahVf2i9/YOk
+	cvzkHf3nlbGVM/q46EfVeTwD/jPcYAFMibdWIFXGiOCOpyfLueg3mWGriXoI7zo7wjpAlR/fuue
+	JXG8T0wYSvvcKYq0elglzg2iNy7HcjBWDmt6ZF605P2qjrEnDLIHdeavaEe7fgYxVnEMqOEN4ho
+	bxfysX/WAQXD4NTy9ZfLk+Du+fMF5ZEKFFadeggTE+L5hdIWFA78lVoNUDwEJq7IBIKJw4Z3w1R
+	8l16/h8B3UBLLN8xx7U32hQUW8eeFkdh3owaFuiunU6aB4tT74UHaQ9lkSXgsaprGn3wn7omCvW
+	wsW2X2pgWfGs1KTQi60YC66/PCPdhRbf7EYlDuia03TF+TuvP/ZgXpBCm+5Ktgo=
+X-Received: by 2002:a05:600c:6215:b0:4a1:a45a:88f with SMTP id 5b1f17b1804b1-4ac187a6c3amr104757645e9.20.1793446787906;
+        Sat, 31 Oct 2026 04:39:47 -0700 (PDT)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b78a4csm8345366f8f.23.2026.10.31.04.39.46
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b78a4csm8345366f8f.23.2026.10.31.04.39.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Oct 2026 04:39:46 -0700 (PDT)
+        Sat, 31 Oct 2026 04:39:47 -0700 (PDT)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
-	Jonathan Tan <jonathantanmy@fastmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 3/4] index-pack: use size_t for object sizes
-Date: Sat, 31 Oct 2026 12:39:37 +0100
-Message-ID: <02582827457e53b61548f544f57fd7f4044e725e.1793446357.git.gitter.spiros@gmail.com>
+Subject: [PATCH 4/4] pack-check: use size_t for the size passed to verify callbacks
+Date: Sat, 31 Oct 2026 12:39:38 +0100
+Message-ID: <87b0d2bd96ad2e62f770c556eca9589bf7aad11c.1793446357.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1793446357.git.gitter.spiros@gmail.com>
 References: <cover.1793446357.git.gitter.spiros@gmail.com>
@@ -101,76 +100,69 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Functions like sha1_object() and append_obj_to_pack() in
-builtin/index-pack.c take object sizes as an "unsigned long", even
-though struct object_entry already tracks them as size_t. On platforms
-where "long" is 32 bits, this truncates the size for objects of 4GiB or
-more.
+verify_pack() in pack-check.c passes each object to a verify_fn callback
+(defined in pack.h) taking the object size as an "unsigned long", even
+though pack-check already handles it as a size_t. This signature is also
+replicated in struct odb_fsck_options (odb.h) and implemented by
+fsck_obj_buffer() in builtin/fsck.c.
 
-When receiving, on those platforms, a large object that already exists
-locally, sha1_object() compares the real size (size_t) against the
-truncated size, resulting in a false "SHA1 COLLISION FOUND" error and
-aborting index-pack.
+On platforms where "long" is 32 bits, running "git fsck" on packs with
+objects of 4GiB or more passes a truncated size to fsck_obj_buffer(),
+causing parse_object_buffer() and fsck_object() to inspect only a
+prefix.
 
-Use size_t for the size parameter across these functions.
+Use size_t for the size parameter in verify_fn,
+struct odb_fsck_options.object_cb, and fsck_obj_buffer().
 
-Triggering this requires processing 4GiB or more of input on a platform
-where "long" is 32 bits, so no test is added.
+Triggering this requires processing objects of 4GiB or more on a
+platform where "long" is 32 bits, so no test is added.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- builtin/index-pack.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ builtin/fsck.c | 2 +-
+ odb.h          | 2 +-
+ pack.h         | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index f65228468b..d4c073654d 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -588,7 +588,7 @@ static void *unpack_raw_entry(struct object_entry *obj,
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index da90cf84bf..9f62aa1f4e 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -390,7 +390,7 @@ static void check_connectivity(struct repository *repo)
  }
  
- static void *unpack_data(struct object_entry *obj,
--			 int (*consume)(const unsigned char *, unsigned long, void *),
-+			 int (*consume)(const unsigned char *, size_t, void *),
- 			 void *cb_data)
+ static int fsck_obj_buffer(const struct object_id *oid, enum object_type type,
+-			   unsigned long size, void *buffer, int *eaten, void *cb_data)
++			   size_t size, void *buffer, int *eaten, void *cb_data)
  {
- 	off_t from = obj[0].idx.offset + obj[0].hdr_size;
-@@ -765,10 +765,10 @@ struct compare_data {
- 	struct object_entry *entry;
- 	struct odb_stream *st;
- 	unsigned char *buf;
--	unsigned long buf_size;
-+	size_t buf_size;
+ 	struct repository *repo = cb_data;
+ 	struct object *obj;
+diff --git a/odb.h b/odb.h
+index dd85b880a7..9cb36ed5ad 100644
+--- a/odb.h
++++ b/odb.h
+@@ -197,7 +197,7 @@ struct odb_fsck_options {
+ 	enum odb_fsck_flags flags;
+ 
+ 	int (*object_cb)(const struct object_id *oid, enum object_type type,
+-			 unsigned long size, void *buffer, int *eaten, void *cb_data);
++			 size_t size, void *buffer, int *eaten, void *cb_data);
+ 	void *object_payload;
  };
  
--static int compare_objects(const unsigned char *buf, unsigned long size,
-+static int compare_objects(const unsigned char *buf, size_t size,
- 			   void *cb_data)
- {
- 	struct compare_data *data = cb_data;
-@@ -881,7 +881,7 @@ static void do_record_outgoing_links(struct object *obj)
- }
+diff --git a/pack.h b/pack.h
+index ada506b5c5..d9649c6ee0 100644
+--- a/pack.h
++++ b/pack.h
+@@ -88,7 +88,7 @@ struct progress;
+ /* Note, the data argument could be NULL if object type is blob */
+ typedef int (*verify_fn)(const struct object_id *oid,
+ 			 enum object_type type,
+-			 unsigned long size,
++			 size_t size,
+ 			 void *buffer, int *eaten,
+ 			 void *fn_data);
  
- static void sha1_object(const void *data, struct object_entry *obj_entry,
--			unsigned long size, enum object_type type,
-+			size_t size, enum object_type type,
- 			const struct object_id *oid)
- {
- 	void *new_data = NULL;
-@@ -1438,11 +1438,11 @@ static size_t write_compressed(struct hashfile *f, void *in, size_t size)
- 
- static struct object_entry *append_obj_to_pack(struct hashfile *f,
- 			       const unsigned char *sha1, void *buf,
--			       unsigned long size, enum object_type type)
-+			       size_t size, enum object_type type)
- {
- 	struct object_entry *obj = &objects[nr_objects++];
- 	unsigned char header[10];
--	unsigned long s = size;
-+	size_t s = size;
- 	int n = 0;
- 	unsigned char c = (type << 4) | (s & 15);
- 	s >>= 4;
 -- 
 2.53.0
 
