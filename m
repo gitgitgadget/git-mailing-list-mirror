@@ -1,98 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.50
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.45
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793576706;
-	b=I0O+2abi/0MQoS+GdopmufNeSHmT35FX3nHH4DQ7uajuKdpfkABUsDqWQUZmjAQPr020
-	 IcH7/lGZWX/V1kcPL+HlTcGtKm9NOYHESjwv97P7lfV6KgveuxY4TSagZM2Rw1sa5dWNZ
-	 VpXE/WlHZ5N9drbbRb6xoz4ttkbIOoYFCLkN4x5OBBDSkTyJdnoSLIvspXGkOLii9TFjO
-	 s6FUL7e1Nqt4ULUpyn4tpa/1rqJWhPz41Y1pT57a8vf4MdVuTlEK6qtzwkERREYm/vcwk
-	 UzCIrxT4PExkVvX2Bwm5P8BUClna4rUYMKdxtcVl2tAEHiqJzMBqCgEkZrnmaYxmA0A==
+	t=1793576793;
+	b=0NGiheBpyIxVrhh0U++BQHLqGauY2gKrIKMxtu5OCCNiGnHiX05cQBIZ9QNW1pG+GzjB
+	 UYl13t7D4uVg47kERbWE3CTKj9vcDCmlPSw7Pr0tWKi9U3j/EGjDOcIIByT010WoNP42A
+	 +0MgX9EpkEG+BOD9UJe/EbD6ynf0ancItgXZEs+R7YnlEW1UOPcuKgPmz2VBXNEPtMZcK
+	 fo7olHtAbRGCavz0vFZ3TpEJrCUjoCJCZIUT3zjb0NqrjsrmF7c78/CnDsxgStbyAuKHx
+	 IeM/k6pdySJ8DOxuXwHudWrwABgESmaIqYv16udDhBLsRm+6ElZgh8FxY9uIwql3DuQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793576706;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793576793;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type;
-	bh=/aDzNsISMSaalB4/mSKq2yU4f1sldf7mcGv7ze4WWA4=;
-	b=ZEGARTx/ExIdA5M4IgJdrl5RVO8kkAr/j1XTlAHuCmB/jc3k1QKGxzkmKv85bTM8CuyV
-	 R5Hh/0VXpiNOaf4ILvNF5WoBgIIMafSV7nA/W5hx3w5ormrbFsoAWeMC0KyAYMIjYuQ5H
-	 E3L8V2uKUlfPC5eEV5H4y/WLJ/hptcH4viMg/FEqEN7uKrYU9qpuHEY2S8nxVc8QiSkAY
-	 3XsgkfPBeRSVc8Sgq4ssngY5B8yylR/5VTCXyClBGY+X2ur4MEbvgmcxUDInOIIGXePzI
-	 X+/g45rbCwODM5jW4+W/oF0rQqfGzB77/GTwVVC703AglmcTbWsW2iMaVxpAELoO9Zg==
+	bh=CL0xx3I4icA2XhnYO0z7yTbq9dcTX/+PLCUsgrrXSmU=;
+	b=Cfuj/MexyiHn5rH0/yI/Jjmfwj4oza9OO+lI+4FImh33mPr4AGWNkozFh64EL5j77YDJ
+	 1SsoeVzaWf0gCEYB1VVZi+oHDItK3zqFCEmjsW5x0l0mk278soyNSPO+GB0lWMisc9MjY
+	 wn1baHdXdH/HD8EVWaRzK5qXCZRGjVdXDlBVvLtdMmA7Z2BpBClrayFDeh+IeM67v+jOL
+	 uJhY4fZ9ZtvWVlT5620qn+fYGhLfKWqMx2SsEb6gsqpEZ3HlEY2W3jUCg8pz1PsYoklb6
+	 hHsjHzyCdcZFFonvswXb6vrRdO2K3Pxpf76G6kQxmSz+Qom2k5N8YW/7CaNIHzOkZrQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SBNEM+nQ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.50
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ARVHR++7;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.45
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC43606A32C
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:45:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CDC43606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243ED606A32C
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:46:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 243ED606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SBNEM+nQ
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-4a77dcc4ca0so1348975fac.2
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 15:45:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793576705; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ARVHR++7
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-499f20c7054so1383211fac.0
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 15:46:32 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793576792; cv=none;
         d=google.com; s=arc-20260327;
-        b=SmMlQ/Ueypl5bE4He7RyATINd4rxByuAPtDbj+AJ4USSXgj5ViesTYQeX+WrvSAlbM
-         pxYWbzkLGm06Q1oie/sfUsS6suoyAsx74QcmgoqDgQrSjb83WiQP3jTfteDA+qC5NCRP
-         R31QuYKlfUKX2BnEML+7gEWUmOv0aVyKmQhtt1Db8CJe3uiEpENa7wHROo5skPtopNIi
-         pJ62cC3DUY5yuL9Zbq+3cuyXYcu3VRbGCRTBvTmqJJ6gP9z3C+bHQQNl9ct0eiBsHRJ5
-         r2mR4SUuEyhGk0JaA+3eT2Lgrx1SwDRCAa54DrE7MYP7rtsCTffU9y5ed3r2l7uCHvw1
-         oDCA==
+        b=CxOwEcWVxrHwnciqp3z1lwrGTuLZoAfnJX56FFhrlR4J0G1avLE7VqktPuTc9PUz5q
+         YM+KrQRwxiJ6Yhhl6pdmC38wyCDawT0bIcxEgxARtDAGCSobMkp5JkltAr7ZHPvJf2iW
+         k5Di/sKBmTCKhKDp8B+eLHQLDPhO7P0a/+7TLJ4TwzWCPo4ulFo0WThkq3lz9MxpL+q1
+         oUeAY9S9mjIROI2+e5Mb6xaHwgqbPYXYiXVsQJKAmaQU+HYZKldgl2FXG2R+csmUvyi7
+         hositbIJmmxbeyJlYNJk8WpkVn10AFZK1Now3DBqdBqAutdElzy651FjjWjFpLwyWTZB
+         60KQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=/aDzNsISMSaalB4/mSKq2yU4f1sldf7mcGv7ze4WWA4=;
+        bh=CL0xx3I4icA2XhnYO0z7yTbq9dcTX/+PLCUsgrrXSmU=;
         fh=+Ve7dG4yAo6b6IJAJcsfAVXuA3IHmj+18im/3KFY0tU=;
-        b=qQl8jpewuS+2AcDvrPiXxWUe95lXiVYqaPLoZFmBft6T1FnVw7k1SB5YcI7JKsFWWX
-         TNyhldEdbPOjnLyNN3y9BRrgGKsHAolxRp8ECXKGxfHEI+H1HVwjB4wIwdUy9KMoJhD/
-         qSOFZgcOxTWHxUbFBH400Xi1t9fV/Kj8TCgnTDx3GSkQ43srOAJFqJbwEfivtqobuO2V
-         B4Leki1qK5FI168wk4OIzhaCkF/Ma/r98Mfb8ccvqcQkRYJYUnYH9kDFsZKgcDAXRn3Y
-         Olo7GrkJq2pkByC6E49ymyfpETUD4xbYAiT06wMmOCgDPftX4pMKIa054yuYIPtqwP8j
-         Ro6w==;
+        b=US1e/fPcbBXUiXrqc0bDPgaKubM0UUYL4/UIwrjxa37/QT16F/22QVxkDdkM08I9eK
+         2W7Eya5EO0N0EmEvtorKJy7RyPdRBwCqu2ElY8xH6FdU38S+48jO+mFUMLegktKeBcNU
+         ianOS3kYH1OQXXOecQCwgnO8jRfTlAdQBY2pygmWvcYTCivaJwaxgaKEWggmfUI0t1AF
+         PBxilmRB51LP8Y8uXbcmNzTPFdXexSad25DXV8yc+2mIZnQ6xg2MJiv3if43XN0w/TQx
+         7siVQRrkTEuVoS+GQpsfoZLE+URVNdyxBjfgVaJW0Ilxwzjam5gkidxtXoBKryfz8FhA
+         WO8Q==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793576705; x=1794181505; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793576792; x=1794181592; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/aDzNsISMSaalB4/mSKq2yU4f1sldf7mcGv7ze4WWA4=;
-        b=SBNEM+nQlnGp9MHNN1KSK4WHn5cHI+CBYde56ZHxhgdU1F0EOLXq4yEzHEjkl8qew0
-         9HzpHJ67859qUXhz8XGoC2qZZjUkZ1hLRZoO2Ri+su9HCcLWkr3ZWpq7gAGur5jVR95G
-         t3yNyebN9Mx+tqr9/a+uwKj9IIFZKfA0o3zq6tYCeuKr8svXmkhIQecO4oRTniyEJG5v
-         inwiXAe8iVi9PWrT9Tgc7vVaq/dcPCua43ShIv1KvQQkQ3zB1/Xl1n6RT1PJFS1Cl/7Q
-         JuMNxksOQMPvwjBNDD8smNpWCYf1YwmHxzRE9oWQo+lgHDaHZX7+RgH7E1/mCWhBMv9N
-         W4kA==
+        bh=CL0xx3I4icA2XhnYO0z7yTbq9dcTX/+PLCUsgrrXSmU=;
+        b=ARVHR++7GwZqupIQI2pjZqc25JbHe/CPoxB6dln+JkZa0+SFVEzYjUzoiXHIkGNWmK
+         3yACk2adII/CPYZ8jY0qmYpAjJMYi8TcSO7Eg/JLgF1pHi89wiDZB3dYViM2v+VzO1ym
+         fsJh1AZYdvOQJ92OV49L5RDpA3BXwVok6bafVXYqjCwBBspYS23D+z6xEnHVJy2ooLoz
+         hw04dK429aUIiQR9qhdoYvhveuxyJKdB3oOkJQ6rPgEVNvww27q3OWmpJ+sYxYN+8QQ9
+         k8YZsaXTJUKP0tEiiNLXJ0B9VVvTWPqZ6V0RHZc3ny64bJ7drkqXJ98tcFqsuEy3gvRq
+         1KxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793576705; x=1794181505;
+        d=1e100.net; s=20260707; t=1793576792; x=1794181592;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=/aDzNsISMSaalB4/mSKq2yU4f1sldf7mcGv7ze4WWA4=;
-        b=ufuUDmJK8k5nWfJOiXEu6jEy99kdcWBI+aMNn/JDCannd5+ZJjY/foRs2zeccQ5fz9
-         XmcpP53xagFdOA2VvD8+R9bncyoI7+DVr3if8rBR08LZmzpRKKoeZUKbECHhsQd7ekYw
-         sM+PEL91QeFHe6LdGom/Tb2MfWK9lnYVN3rR8In4eecIu3EpS4Rwg8BFNy75euhlQwP/
-         HjFavCi64Ui8fbubH1L4TOOO+A3TQwPdfHwZ9fug702KOYl49MGqF1ulvZWnvgIw1c7x
-         3dg6JlXkVOQvHBx3KhCDT8b/N2WWSPfSc1GWKJeL7KdiHVdaHF+hOxPMD/4CdmIMq9XJ
-         tj0Q==
-X-Gm-Message-State: AFq9FYLZ6i6w5qvA6n/213GvhJWA6z4pi/Q5BRp63UqiwvpZk68IiyCS
-	wM4RQH2w6Z8FSct+fpst7jLnZkDxlCenRzowGqxSQt06cYg5sYL3YUTNaaoQsn5MjzCrRAdh2JS
-	eiKkTNZbU5Cm1SvtakHYVwaS9WRerWtbxaWWc
-X-Gm-Gg: AYBFou2GtjHtZIYfltu/cdKfEO3plkDtnTnvclsj0amE1I9TNRDMIng/ROo3btVlJ6u
-	n8SSyGhnK/yjTsoEzGDJ7W/Q7z4TwT5eobpfS/mUecySFgiPYIncAmmHc6L35KUASjU7fxFwYjm
-	RhE/5lvlqwFwP592Xxh52EvTvhvWTylCfr6RHFt8JjqQkZqKnTUeLCGlku5LqGStmOb8OrPbh0a
-	GVK3bTUre6arGvfqMqo/bkcJLGYy4oc2oHd7XS75bcn3RdwQ8jzQcLw1tNyXufMK+MQPkevwnkM
-	jI1GFs8LezavU8LaCTdnha+E/IQ/UIGmJR/ep/mrRia1htlBBSdn+21COoRH+tJDml21I2KmJ82
-	w3E9y/MZHCqguW5csmesERuKhv0bFrqSeiG4=
-X-Received: by 2002:a05:6870:8242:b0:456:5d8b:5681 with SMTP id
- 586e51a60fabf-4a9072d45b8mr5483786fac.1.1793576704549; Sun, 01 Nov 2026
- 15:45:04 -0800 (PST)
+        bh=CL0xx3I4icA2XhnYO0z7yTbq9dcTX/+PLCUsgrrXSmU=;
+        b=vd/4bj4ujG+JfXT7Pcl6gA2K1jssCNALneUnT/DFG0MhSdvHVeH19vAGV7BU9/1rU3
+         ryZACjP1qTXNb278bOrVoTa6CQcOKqf/x0VRn1/lG/ehzBSGpXbeXYw+GgfDG06rB07j
+         EDEVj8I+ffI1SnWDYtSFX+TM5oxWIZN3khKN3+9pTRWDi/ld8SmMigm9piZ27O9eabWP
+         zDnocb0uDnXkYMsTyxmAwuGCYRoMc+Sn+MKRPbrtoSeGmZdw/8SLGEqUSEIZ6XGEBpW7
+         c88VlkkQ4w0fNIqLy5/QDu0vXNCT+fFeT+Vyy9ZwvDN0Q4A415EGIH8aqdZcs/4+5TIy
+         UC0w==
+X-Gm-Message-State: AFq9FYIYenlZyy3dN2tXNLkuTOmmsCp393pZVrMUuC46yrU4tmE7hx+U
+	+y+4LAWuyjnbuIkyjGMPoirGYk5gjts8STlEkS1+6P3T1n6qufq3HspnynR3KWB3w55FOpAqRka
+	9IDYFQEIS8KLDbfceu1SAndMCZ8j1UfU=
+X-Gm-Gg: AYBFou1SUebHNd12m/muzTFd/gfZYpXJtH3ndAPg40xTYNhOUTHqwGNRcc5XeuXW+Bx
+	3C/xtBibsZWpsMu0fsAXuSYeaj+11RocFzbVU0DrR95dID32epAElodF2P4Nx7EdWTuuWuzRjo8
+	Uk4XoiA67PyhY129Pn7vBQLoLWak8w/WvDPze7YNBN6LH2rdt7ruOX3qwmqDaDpyzToZ4YAsMrF
+	/YLd6I6PCu8iVeiijLsAnUZTFfm/4CSjQgBBUw9DlZYFxl81VCPgbuZvYZiVAexbNhlskAk98GH
+	it3oZ9xNFB7UujZ99RdvcvdmNTAX8PKenWOJ4aFNGjZludfsJ91yXnoUU9SE+I1Wg/qGWaIRkb/
+	RKUDuS89rFL2H3PD/qffuL63YLiH3xd9wbqI=
+X-Received: by 2002:a05:6871:460e:b0:4a7:c737:5a13 with SMTP id
+ 586e51a60fabf-4a9072d445fmr4962082fac.4.1793576791971; Sun, 01 Nov 2026
+ 15:46:31 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,76 +102,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022212903.177261-1-andy.koppe@gmail.com> <20261022212903.177261-4-andy.koppe@gmail.com>
- <atsPwpbD3YqmBds_@pks.im>
-In-Reply-To: <atsPwpbD3YqmBds_@pks.im>
+References: <20261022212903.177261-1-andy.koppe@gmail.com> <20261022212903.177261-5-andy.koppe@gmail.com>
+ <atsPx0Wn9tyMzpCl@pks.im>
+In-Reply-To: <atsPx0Wn9tyMzpCl@pks.im>
 From: Andy Koppe <andy.koppe@gmail.com>
-Date: Sun, 1 Nov 2026 23:44:53 +0000
-X-Gm-Features: AclHuK9RQ6Y_Bm_TdPD7HFZunUHrTpmllp4Bq-3FWFlMF_AEXS6xkR0pBi5PsCg
-Message-ID: <CAHWeT-aa=6WByd4U9BB-6mMMUAxPQCC5GhyM1WMSSVVatvN0Tw@mail.gmail.com>
-Subject: Re: [PATCH 3/5] doc: stop calling root refs pseudorefs
+Date: Sun, 1 Nov 2026 23:46:20 +0000
+X-Gm-Features: AclHuK_jCczbnK1ZU3Pd6djjyvwLOv01kbBOeyVc2Aq78ke8aDax9sqvZnU9bpw
+Message-ID: <CAHWeT-bNKp_1draVXjgqVHKLCaa5yS5Fr3agEhdaurXfy4owXg@mail.gmail.com>
+Subject: Re: [PATCH 4/5] refs: stop calling root refs pseudorefs
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, Julia Evans <julia@jvns.ca>
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 23 Oct 2026 at 08:42, Patrick Steinhardt <ps@pks.im> wrote:
-> On Thu, Oct 22, 2026 at 10:28:51PM +0100, Andy Koppe wrote:
-> > diff --git a/Documentation/git-update-ref.adoc b/Documentation/git-update-ref.adoc
-> > index 37a5019a8b..c775334230 100644
-> > --- a/Documentation/git-update-ref.adoc
-> > +++ b/Documentation/git-update-ref.adoc
-> > @@ -163,13 +163,12 @@ still see a subset of the modifications.
-> >
-> >  LOGGING UPDATES
-> >  ---------------
-> > -If config parameter "core.logAllRefUpdates" is true and the ref is one
-> > -under "refs/heads/", "refs/remotes/", "refs/notes/", or a pseudoref
-> > -like HEAD or ORIG_HEAD; or the file "$GIT_DIR/logs/<ref>" exists then
-> > -`git update-ref` will append a line to the log file
-> > -"$GIT_DIR/logs/<ref>" (dereferencing all symbolic refs before creating
-> > -the log name) describing the change in ref value.  Log lines are
-> > -formatted as:
-> > +If config parameter "core.logAllRefUpdates" is true and the ref is
-> > +HEAD or one under "refs/heads/", "refs/remotes/" or "refs/notes/", or
-> > +if the file "$GIT_DIR/logs/<ref>" exists, then `git update-ref` will
+On Fri, 23 Oct 2026 at 08:42, Patrick Steinhardt wrote:
+> On Thu, Oct 22, 2026 at 10:28:52PM +0100, Andy Koppe wrote:
+> > Replace "pseudoref" with "root ref" in the help text for
+> > "git for-each-ref --include-root-refs", in comments in refs.h, and in
+> > comments in the bash completion script, including the one for
+> > __git_pseudoref_exists(), which is also used for root refs.
 >
-> It's kind of hard to understand how the ANDs and ORs play together.
-> Like, does the config parameter extend to all subsequent ORs? That's not
-> really a new issue though.
+> I feel like this sentence is somewhat pointless, as you basically
+> just explain the diff.
 >
-> > +append a line to the log file "$GIT_DIR/logs/<ref>" (dereferencing all
+> > Update the description of pseudorefs in refs.h to match the glossary.
 >
-> Also, this infomation about "$GIT_DIR/logs/<ref>" is out-of-date, as the
-> reftable backend doesn't store its reflogs in there.
->
-> I wonder whether we should maybe just stop explaining how
-> "core.logAllRefUpdates" works and instead refer to git-config(1).
+> And this is again info that can simply be dropped.
 
-The whole LOGGING UPDATES section in git-update-ref(1) seems outdated
-as it assumes ref files and SHA-256, but I think that's out of scope
-of this patch series.
-
-> > diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
-> > index e6e77252ab..f0eb6d4137 100644
-> > --- a/Documentation/git-worktree.adoc
-> > +++ b/Documentation/git-worktree.adoc
-> > @@ -303,11 +303,10 @@ but others are specific to an individual worktree. One example is `HEAD`,
-> >  which is different for each worktree. This section is about the sharing
-> >  rules and how to access refs of one worktree from another.
-> >
-> > -In general, all pseudo refs are per-worktree and all refs starting with
-> > -`refs/` are shared. Pseudo refs are ones like `HEAD` which are directly
-> > -under `$GIT_DIR` instead of inside `$GIT_DIR/refs`. There are exceptions,
-> > -however: refs inside `refs/bisect`, `refs/worktree` and `refs/rewritten` are
-> > -not shared.
-> > +In general, all root refs and pseudorefs are per-worktree and all refs
-> > +starting with `refs/` are shared. There are exceptions, however: refs
-> > +inside `refs/bisect`, `refs/worktree` and `refs/rewritten` are not
-> > +shared.
->
-> It might make sense to have a bulleted list here, same as I proposed in
-> a preceding patch.
-
-Yep. Done in v2.
+Fair. Dropped in v2.
 
 Andy
