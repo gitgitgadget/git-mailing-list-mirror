@@ -1,94 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793521338;
-	b=SsQD18tchDCbO5to+o2O5hy1U6jSRq9h5JtQ3gT2Nr/bfAkejsc1xiSOGfx8wuYe0XRu
-	 xlpfbIYCfZlerH99Ukjky+n1CPpb402BOAFBjmVnk7RBymkDt8hIqAvCTwpPl7WFYCEku
-	 xjKDAQQN+mOUrujMViQtLDMo0tws1o1/sW8qiiit869YvF4cTydZ1TwgX/1FJq3pc0McC
-	 X1L8evnQhJbSSE0N+TpVWPche58ar1Oa4S+OBtN7XzIAHld3bQWt453c9nMmQQMVOKABN
-	 ptxSDy4HyFrSFzALA1FG7fK9/2vCnXIcdmN1FqwNM7JYUQSjrW9dZ8ozAoIlaYYs2rg==
+	t=1793521360;
+	b=x0a4qG4GKbsHW2d3XQ99RiPty7ZHlJ+i0nR5vkRQhtz+iuF8nuQ7TTA/fj7L+XPrkdpo
+	 FbPXQhScMDsEndrYMeMYmahGULHszJNUgH2Cubxic9JNL4QskaXzMgNsyfgDT08irx0Lc
+	 tZLymwvh1fgVB2oA729GWGXZC0PRThKKATW3P8WtH9YL5Y+dR+DEDnNBJAK1KCPsQmFDq
+	 LevP/TEwgYdTprWsd+HgnIYEhks0W1WaxcxYGFnyZfCtRn9CoBjcrkDQN26BNFTEzYYFl
+	 YJM1eFjfstIKkEz6LDW8bm6V0gb5odiM83D8ggBjz4g9yR/Uz66FWl/m+HpSx8BeDyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793521338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793521360;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=B8Jn+Qefs3oKAY5fijNl0bHoci1wbnahdzBLS3D4aww=;
-	b=nzYtQSHa5HyqSrcG1CkxJ9xk0lWa5XOwJkFfmoJHxx5zapG7HsrX0AaIRuTbzdXGoUGP
-	 DvKLqvVdR9RRRwWfq0AmstDtM455LifIW991oWYJyXrfc6RUISlCPhcf5Lgs6E0Ze6GvO
-	 fOzsEVmo6ZLe5ZsTxsJeV80nQfeJPNf0rObNAdGoQxzzk0VbmNeP+NX/QfVDL2pszauvI
-	 NG6vZq3SAwgXeKOyUBQO+a1rIlUrWdg5dj1ftUqVidEYuaEqv+aZBv6QV54u4x6Qh7Mqc
-	 kQpZtjreIrJn7+i8uH6tp6bI1DpQtjpwCYG8TL9sCzV8d/ES53lsHOjsT+GpWE1qbvQ==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=Q0359+pxSsVt6jBqqQfIwFuVIpEiAtLgtSOeANBda1c=;
+	b=fgH07PCpAKzLzxK587pJnlj+AxM6XF5ug8Kt/Ff7GNOPZDWgqsBp1kkPz9Y3EQDA1lXH
+	 6pU75fLBWGA3sdajhftV7LUiEvoEiTVSyF3wNoJ6dKvaRrfajBniq80c397U1aK+w+IYG
+	 N+sKV69xVXYqvq6rvIuzeiRXjmJ9CR4qDTAnjrVT28M6IrlZ4aVDkFtiXdC3gHhUPcXaj
+	 RuHWFaNiKxBV3vFTUv4oy7RHKeRY/mXUQrvSoToDet/R64xGPg7Zha/LzwafTyQSLyl2K
+	 asgPwt+A1l6ao2g6XKPBX2JjzsdYXuKGAwniEU+TvPwhw2pfm38HgoqWdcgLjH+XaZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o+meHLra;
-	arc=none smtp.remote-ip=74.125.82.178
-Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qWcga0Aq;
+	arc=none smtp.remote-ip=209.85.218.49
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7AB606A32D
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 08:22:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B7AB606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AC0606A325
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 08:22:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 93AC0606A325
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o+meHLra
-Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-3535a54bed9so3102915eec.1
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 01:22:18 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qWcga0Aq
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c43fbcb4393so305000166b.0
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 01:22:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793521337; x=1794126137; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=B8Jn+Qefs3oKAY5fijNl0bHoci1wbnahdzBLS3D4aww=;
-        b=o+meHLraVJjIgY4lGaGifZtvz5+OR91ZiA6DgrYlnWROrVytJ+jomE36hMzbCDyyfQ
-         VIYr+/MNrfPEZRwCmUIWITkoAje11KPsdK0PAC5cEyVD7Ii6+wkHkkK2ZFBY3sBjrvOy
-         R6Kzs9Plha7hGV8lyphdLU7tmnuy9qXexYM+keGL36FaBFD4tnaKH7J94H6Pjo87q2id
-         qVs9brxlJZL4ZKyWhkKrgKMm42LjJ5VAyTOUEv8ULcsBu8ubobmbNPE0kwQFF/5AbbPT
-         Elql3s86NBA4J0cPHZczruL7TPLiJz5ZeSoKh8juQXuVpNepYKHnTAG/mO/rCygf03AX
-         2R3Q==
+        d=gmail.com; s=20260707; t=1793521359; x=1794126159; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Q0359+pxSsVt6jBqqQfIwFuVIpEiAtLgtSOeANBda1c=;
+        b=qWcga0Aq0yU89JP0uIw8qICo0kYeNB6acViIIU29snuHIN3bYyYBoTQB7k6ReR/HTm
+         LDJ48gOfYUi06dZvsCg5bxpuaMT2oPev5Ccf3ArOX2kPyA3HwgGsd4CrLndwPtkXqXWW
+         y3PubCQYOKQeoSx3a2TTaL1PfgQPs0c0g+TtpqxdIjm4dTkch+iQxWN2D1FkD6uvFQ0Z
+         dhS39SgtJUP395AYDBNDpgAOffIWg64KZ+ZsLMvtPWHZfLq4hiIXxBSowUSArHuiCmlT
+         9ozPS9SqZHZHkDP6jpBn69hzCX1b2+fzWL88g8/n4nNsmdn+lacjuddKsyPKDQisgHzr
+         70yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793521337; x=1794126137;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=B8Jn+Qefs3oKAY5fijNl0bHoci1wbnahdzBLS3D4aww=;
-        b=NCx7uNND6NRctSYaA30v3+qGDYESHX0hql5pcFImQmmVDR2mHEO6xUQdO02QsrTp3P
-         tOF8L+hMl/dqf+kH3naHuSRK4lXmLtGI3MWVY5V7ivcTPV4/Hh6lPmFWmYNSF7oBo34u
-         y06SgfVcWKBoknuZFydzGV2GlKpjFDyhzk2hRpOUoQijNDK1bOTSeEY4LvqISH730ea3
-         Fsa6xPg8APXCDowy1YXeNgggAcZcp0+wizweD3ekp4eDuvlbtuoCw3oLAmIg5R/O9lZ5
-         bzC8esr+OJC+/K5UFQ2E0Eln48fTaU6infvdaV9OHe1QPNjncWkfm/jBOQd5BVHW2epb
-         T71A==
-X-Gm-Message-State: APuU4Z86D6DJLfec9EucUp3xrN6JLKbn3OKfnI3o4GrDCbVZVaro3Qfq
-	KCJ5FVmCj/lCEJ1oY3MARy+8PCCv8k9NCprlyHYOlvW1nXcUE5fmophY5xKqfF+d1Bc=
-X-Gm-Gg: AYBFou0jvUnwxXPTem/xbmYMygr4OLUtX9DAWA2ZhUkG7LTakaCbhZKrWb0l1V38y9w
-	nmG3qdwKbZDxLZLByJG6u+VVGk++K0nZnLHKMQCVqOEOAOt7fkaaKDyTkv8dUeMbQgFBNhLqLjQ
-	UT/uZdy7CyPKUDtgI80tOsCpN1E7LPMJWhBQcDNNbBhJAWOi5l2aXu/j49wvjsvhXs/rDXjKg9M
-	0QFBLYpG3yBytySYSZ+43NuoMZH9V9sEqVDLMURe3Tw1TsWC2vvNiSnKEcymJ/RMtHEIHzWndYS
-	MwV++OHHM+BObcAQZ0QfQHUKxTF3qAw4IILNJaPr+kf8TTLxk28s0+iiWeUiOQvPFOzcF26G5Hn
-	myMvTmLk5eqz4E2mKhOr1lpHFRA9pkOEdStx9tA8efJQQ8c1hTtyEAn1B+FLzQuT9U7pCcD2C+7
-	pDXSSs1mjS39XhOMvNJUhB8XSBgN/O58WmUq94ziyj5mnY3rChT0+10r8UKEW+hjTIDSNubl/L7
-	7qFBX7svZ51lTZjg7SEGvGNtRNtsUJXnUhxulwbWp3N5MBC//QVqyg4MqEJJ5ct097+5Ly/f3rD
-	ke9gbg9J1v/Sty0tgDSdQFu0JfDmITA=
-X-Received: by 2002:a05:693c:87cd:20b0:366:fbdb:2070 with SMTP id 5a478bee46e88-36a424de53amr11363814eec.34.1793521337167;
-        Sun, 01 Nov 2026 01:22:17 -0700 (PDT)
-Received: from [127.0.0.1] ([4.242.197.197])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a42a504c6sm25490391eec.21.2026.11.01.01.22.16
+        d=1e100.net; s=20260707; t=1793521359; x=1794126159;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Q0359+pxSsVt6jBqqQfIwFuVIpEiAtLgtSOeANBda1c=;
+        b=kIGUEAQM2ayjtMaJy6H1Kyn9DnpTGeA5hKyA3UojZ6bzG3xGUHDzSpLrXo4cFDbD7Z
+         71llHkPSNtOamdJFZ0x61kyyX35RDDVQ9IPC7abGFLMk4WKLY5u9i6gmud0lTQPtbcEf
+         JWzwD9DXf6oAMVecBuodSXZ8ARXnp0gWr3MWVry9vjSkNzZGFNRQHuo75iNXy/IFTt/W
+         gUoRzXcNVFKZywP/b+FTiV9ZH+oiiTgFCXjtBAnpYnQFybLSsAjzcosm20uSdWe1rsL/
+         GPf/50KB4Ir3EfcDRUTztrhtII7y5uzn0Z7LaNuXbnjvzXek0P0UPv8lVGpTB/vext1n
+         Wukg==
+X-Gm-Message-State: AFq9FYIQcgBUQEYGiKx7U58hIpAOmB+hemKYSn7ykxNzKOIeGa5QHE3+
+	ijWk5PjFOYaZvvos5Z0nWlbsi2hqRteFl3R2G/QeDL6+wE3GjSG7Cxqd
+X-Gm-Gg: AYBFou3UIh0u4T9PdXNxn7m85Eu90qaRvcNA7qFOdZCteyrN1yLYoHRTlAT76G3PMZv
+	4BFfjG1alIr7LpRS4Kd9f3t6fQU5Zn6Giy006fvOtKtUROGWjlJH/Ef3iR0iWKvtKPZLnfv4QE8
+	bneLoQhsX+GvVNDi1pnTTvz5jTvRT6ED5o6PtWNXW4OrIfqlcsTPDAK4GozXPBMMjGGVmzFHo4V
+	UgUTsW3FX93WHXc6DatBahjBIFbsIMTssxdrLiHUxvSB+UHRRLJqDQoQe69oj8dqpN927iyEFVN
+	KGSVyiJ62nymEHdWDJLJYXpxjLoWV4iWnBzlrZup8Z5wg2cihajDhUo3fAwbiEm0Sj79bIpOyyk
+	leCGKkkPG+SUJnmjQDcF9KbPFRbitKXZKLR2WdDWA3FNEJiwycjFq+ajwBPeItCmBsaSGTvOIvI
+	24bJ8J3V7WAn4B2Q9+/Ad9WMaMmUdyoXyo13V7w93A7AMktNqBg6g3Nym4dcXb1nL8svN9her+d
+	A6x72xKHZ5r44+u1YcSlEq4q4mpadxYrCK+sM4nuZe5/qQC8MaL7kY9DeIBIwbsqNhIylf2eNRU
+	ZOHhJqtvBo/TA1fkc/RsGioYpl2Vsg==
+X-Received: by 2002:a17:907:3e83:b0:c40:560a:462 with SMTP id a640c23a62f3a-c4ca7a848bamr577668166b.32.1793521358777;
+        Sun, 01 Nov 2026 01:22:38 -0700 (PDT)
+Received: from omris-tuxedo ([217.71.1.73])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4cabed8f04sm256709966b.75.2026.11.01.01.22.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 01:22:16 -0700 (PDT)
-Message-Id: <006a57d7d150d581c920e2d2933bd9d9faa43eca.1793521331.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2425.v6.git.git.1793521331.gitgitgadget@gmail.com>
-References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
-	<pull.2425.v6.git.git.1793521331.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 01 Nov 2026 08:22:11 +0000
-Subject: [PATCH v6 4/4] branch: let --delete-integrated find branches merged
- onto changed files
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sun, 01 Nov 2026 01:22:38 -0700 (PDT)
+From: Omri Sarig <omri.sarig13@gmail.com>
+To: omri.sarig13@gmail.com,
+	gitster@pobox.com,
+	taahol@utu.fi
+Cc: git@vger.kernel.org,
+	julia@jvns.ca,
+	me@linux.beauty,
+	phillip.wood@dunelm.org.uk
+Subject: [PATCH v6] doc: git-rebase: update incompatible options
+Date: Sun,  1 Nov 2026 09:22:30 +0100
+Message-ID: <20261101082230.141688-1-omri.sarig13@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261025110759.204336-1-omri.sarig13@gmail.com>
+References: <20261025110759.204336-1-omri.sarig13@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,236 +100,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Jasper Mayone <me@jaspermayone.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+A few options in the rebase manual page link to the "INCOMPATIBLE
+OPTIONS" section, but they are no longer incompatible with any other
+option:
+- Commit 1a66d8c6f6 (rebase: remove --allow-empty-message from
+  incompatible opts, 2023-01-25) removed "--allow-empty-message" from
+  the INCOMPATIBLE OPTIONS section, but did not remove the link to that
+  section from the option description.
+- Commit a74b35081c (rebase: drop support for `--preserve-merges`,
+  2021-09-07) removed the `--preserve-merges` option which was the
+  only one at odds with `--ignore-date`, `--reset-author-date` and
+  `--signoff`.
 
-A branch that upstream integrated with
+Additionally, since 414d924beb (rebase: teach rebase --keep-base,
+2019-08-27) the `--onto` option is incompatible with `--keep-base`, but
+doesn't link to the INCOMPATIBLE OPTIONS section.
 
-    git merge --squash topic
-    git commit
+Update the description of these options, to have correct references to
+the INCOMPATIBLE OPTIONS section.
 
-after upstream had also changed the files the branch touches is still
-kept by "git branch --delete-integrated". The squash commit has neither
-the branch's version of those files nor the fork point's, so the
-previous check cannot see that the work landed. This happens all the
-time on hosting services, where the "Squash and merge" button on GitHub
-lands pull requests this way while the main branch keeps moving. A
-rebase merge onto such changes looks the same.
-
-For each such file, merge the branch's version into the upstream one
-and treat the change as landed when that leaves the upstream version
-unchanged. This has to read the files, so in a partial clone it may
-download blobs.
-
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+Signed-off-by: Omri Sarig <omri.sarig13@gmail.com>
 ---
- Documentation/git-branch.adoc | 13 ++++---
- builtin/branch.c              | 72 ++++++++++++++++++++++++++++++-----
- t/t3200-branch.sh             | 42 ++++++++++++++++++++
- 3 files changed, 112 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index 6be28c8a4e..489a9d5fd0 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -240,11 +240,14 @@ remove it anyway.
- 	Like `--delete-merged`, but also delete a branch whose changes
- 	the upstream already has even though its commits are not there,
- 	as happens after a squash or rebase merge. Such a branch is
--	deleted when some upstream commit since the fork point has its
--	version of every file it changed, even if those changes were
--	later reverted, and the message names the first such commit.
--	It does not matter who made that commit. The same rules for
--	which branches are kept apply as for `--delete-merged`.
-+	deleted when some upstream commit since the fork point has all
-+	of its changes, even if they were later reverted, and the
-+	message names the first such commit. It does not matter who made
-+	that commit. A file counts when the commit has the branch's
-+	version of it, or when merging the branch's version into the
-+	commit's leaves it unchanged, which reads the file and may
-+	download blobs in a partial clone. The same rules for which
-+	branches are kept apply as for `--delete-merged`.
+Thank you for the review!
+
+Changes in V2:
+- Update commit message per the review comments from Phillip (Thanks for the
+  review!).
+- Add `--onto` to INCOMPATIBLE OPTIONS.
+
+Changes in V3:
+- Downcase "Update" in commit title
+
+Changes in V4:
+- Update the commit message per review comments.
+- Rebase the patch to be compatible with the maint branch.
+
+Changes in V5:
+- Update commit message, making it clear that the `--onto` option was only
+  missing the INCOMPATIBLE OPTIONS link.
+
+Changes in V6:
+- Update the commit message per the review comments, making it clearer.
+
+ Documentation/git-rebase.adoc | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
+index f6c22d1598..f1f675d311 100644
+--- a/Documentation/git-rebase.adoc
++++ b/Documentation/git-rebase.adoc
+@@ -217,6 +217,8 @@ OPTIONS
+ As a special case, you may use "A\...B" as a shortcut for the
+ merge base of A and B if there is exactly one merge base. You can
+ leave out at most one of A and B, in which case it defaults to HEAD.
+++
++See also INCOMPATIBLE OPTIONS below.
  
- `--dry-run`::
- 	With `--delete-merged` or `--delete-integrated`, print which
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 818c916791..477b4a92c4 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -33,8 +33,10 @@
- #include "diff.h"
- #include "diffcore.h"
- #include "hex.h"
-+#include "merge-ll.h"
- #include "revision.h"
- #include "tree-walk.h"
-+#include "xdiff-interface.h"
+ See TRANSPLANTING A TOPIC BRANCH WITH --ONTO above for examples.
  
- static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged] [(--forked <branch>)...]"),
-@@ -853,10 +855,17 @@ static int branch_pushes_to_upstream(struct branch *branch,
- 	return ret;
- }
+@@ -332,8 +334,6 @@ See also INCOMPATIBLE OPTIONS below.
+ 	and this option would override that behavior, allowing commits
+ 	with empty messages to be rebased.  Now commits with an empty
+ 	message do not cause rebasing to halt.
+-+
+-See also INCOMPATIBLE OPTIONS below.
  
-+enum change_state {
-+	CHANGE_MISSING,
-+	CHANGE_LANDED,
-+	CHANGE_NEEDS_MERGE,
-+};
-+
- struct branch_change {
- 	char *path;
--	struct object_id branch_oid;
-+	struct object_id base_oid, branch_oid, upstream_oid;
- 	unsigned short branch_mode;
-+	enum change_state state;
- };
+ -m::
+ --merge::
+@@ -487,15 +487,11 @@ applying (in terms of the author date).
+ 	Instead of using the author date of the original commit, use
+ 	the current time as the	author date of the rebased commit.  This
+ 	option implies `--force-rebase`.
+-+
+-See also INCOMPATIBLE OPTIONS below.
  
- struct landing_search {
-@@ -888,6 +897,8 @@ static void collect_branch_changes(struct landing_search *search,
- 			   search->changes_alloc);
- 		change = &search->changes[search->changes_nr++];
- 		change->path = xstrdup(p->two->path);
-+		oidcpy(&change->base_oid, DIFF_FILE_VALID(p->one) ?
-+		       &p->one->oid : null_oid(the_hash_algo));
- 		oidcpy(&change->branch_oid, DIFF_FILE_VALID(p->two) ?
- 		       &p->two->oid : null_oid(the_hash_algo));
- 		change->branch_mode = p->two->mode;
-@@ -895,25 +906,66 @@ static void collect_branch_changes(struct landing_search *search,
- 	diff_flush(&diffopt);
- }
+ --signoff::
+ 	Add a `Signed-off-by` trailer to all the rebased commits. Note
+ 	that if `--interactive` is given then only commits marked to be
+ 	picked, edited or reworded will have the trailer added.
+-+
+-See also INCOMPATIBLE OPTIONS below.
  
--static int change_landed(const struct branch_change *change,
--			 struct commit *commit)
-+static int merge_keeps_upstream(const struct branch_change *change)
-+{
-+	mmfile_t base, upstream, branch;
-+	mmfile_t result = { 0 };
-+	int ret;
-+
-+	repo_read_index(the_repository);
-+	read_mmblob(&base, the_repository->objects, &change->base_oid);
-+	read_mmblob(&upstream, the_repository->objects, &change->upstream_oid);
-+	read_mmblob(&branch, the_repository->objects, &change->branch_oid);
-+	ret = ll_merge(&result, change->path, &base, "base",
-+		       &upstream, "upstream", &branch, "branch",
-+		       the_repository->index, NULL) == LL_MERGE_OK &&
-+	      result.size == upstream.size &&
-+	      !memcmp(result.ptr, upstream.ptr, upstream.size);
-+
-+	free(base.ptr);
-+	free(upstream.ptr);
-+	free(branch.ptr);
-+	free(result.ptr);
-+	return ret;
-+}
-+
-+static enum change_state change_state_at(struct branch_change *change,
-+					 struct commit *commit)
- {
--	struct object_id oid;
- 	unsigned short mode;
- 
- 	if (get_tree_entry(the_repository, get_commit_tree_oid(commit),
--			   change->path, &oid, &mode))
--		return is_null_oid(&change->branch_oid);
--	return oideq(&oid, &change->branch_oid) &&
--	       mode == change->branch_mode;
-+			   change->path, &change->upstream_oid, &mode))
-+		return is_null_oid(&change->branch_oid) ?
-+			CHANGE_LANDED : CHANGE_MISSING;
-+	if (oideq(&change->upstream_oid, &change->branch_oid))
-+		return mode == change->branch_mode ?
-+			CHANGE_LANDED : CHANGE_MISSING;
-+	if (is_null_oid(&change->base_oid) ||
-+	    is_null_oid(&change->branch_oid) ||
-+	    oideq(&change->upstream_oid, &change->base_oid) ||
-+	    mode != change->branch_mode || !S_ISREG(mode))
-+		return CHANGE_MISSING;
-+	return CHANGE_NEEDS_MERGE;
- }
- 
- static int changes_landed(struct landing_search *search,
- 			  struct commit *commit)
- {
--	for (size_t i = 0; i < search->changes_nr; i++)
--		if (!change_landed(&search->changes[i], commit))
-+	for (size_t i = 0; i < search->changes_nr; i++) {
-+		struct branch_change *change = &search->changes[i];
-+
-+		change->state = change_state_at(change, commit);
-+		if (change->state == CHANGE_MISSING)
- 			return 0;
-+	}
-+	for (size_t i = 0; i < search->changes_nr; i++) {
-+		struct branch_change *change = &search->changes[i];
-+
-+		if (change->state == CHANGE_NEEDS_MERGE &&
-+		    !merge_keeps_upstream(change))
-+			return 0;
-+	}
- 	return 1;
- }
- 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 1fbb173ad4..d4ebbd0ae9 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -2122,6 +2122,48 @@ test_expect_success '--delete-integrated deletes a squash merged branch that was
- 	)
- '
- 
-+test_expect_success '--delete-integrated deletes a squash merged branch after upstream changed the same file' '
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		test_write_lines 1 2 3 4 5 6 7 8 9 10 >shared &&
-+		git add shared &&
-+		git commit -m "add shared" &&
-+		git checkout main
-+	) &&
-+	setup_repo_for_delete_merged &&
-+	(
-+		cd repo &&
-+		git checkout -b edits-shared --track origin/next &&
-+		test_write_lines 1 two 3 4 5 6 7 8 9 10 >shared &&
-+		git commit -a -m "edit line 2" &&
-+		git push origin edits-shared &&
-+		git checkout --detach
-+	) &&
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		test_write_lines 1 2 3 4 five 6 7 8 9 10 >shared &&
-+		git commit -a -m "edit line 5" &&
-+		git checkout main
-+	) &&
-+	squash_merge_upstream edits-shared &&
-+	squash=$(git -C upstream rev-parse --short next) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+		sha=$(git rev-parse --short edits-shared) &&
-+
-+		git branch --delete-integrated origin/next >actual 2>&1 &&
-+		echo "Deleted branch edits-shared (was $sha, landed as $squash)." >expect &&
-+		test_cmp expect actual &&
-+
-+		check_branches <<-\EOF
-+		main
-+		EOF
-+	)
-+'
-+
- test_expect_success '--delete-integrated reports a merge plainly next to an unmerged branch' '
- 	setup_repo_for_delete_merged &&
- 	push_topic a-unmerged unmerged-work &&
--- 
-gitgitgadget
+ --trailer=<trailer>::
+ 	Append the given trailer to every rebased commit message, processed
