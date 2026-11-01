@@ -1,93 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793547418;
-	b=1bIggp/vHVIVA/lMtP4pGhxAcpITLB0HsMP+0QpcxKt/volwMJwWuKWgu5WciWeJ+nfa
-	 CRcyB3chK5sv3iu0ZP4f2R/1AOBIFkA/zxYrWU8mjPoqsJqxxidECavn9u1bJPN2XEXI+
-	 LdOw7llp3+QdgD402DS2zE51T0XSokU36RipQfHO+vIQKMXZpHbsmKGgTbrup5jugWi5p
-	 Dn79LH+gwbMpRfPBhlhm0jdd5wKtSiSwR3aLWKqTlFC2fn5s6v/4rMPX6eeu5+N/CDw2c
-	 SAh5xkIajnBjsvtar6qMYPvI3urXoprQdUPiuWbrwEuOcBCwIqtJOnhEFFaXJ0DtWDA==
+	t=1793547419;
+	b=sYHGoNAHUoJHhKvXswgWmwX69TUmjgzcPJ54oVoT16bAww/4vy5rrXuh6274BGy+t4T8
+	 +FQ0zoyqsKPfUkcD6jtB+NnWjFC241q9jXY/kLPns9cZfGcl8ACT6Ah3/LtLZtl8Tw/RI
+	 JxkdoFyyxP14/0yyCMBJrKr5/9bf8HKkYA3txPez59ZLc6HFp/Zhm22CheL/YMzluQTRB
+	 jvZmC0kjK3TuUuFOxb/mAglNWD0nO/D6Lr2H+HQNh6C8G7dC9gWKTBtj1Xe2O4Io/XOes
+	 KGZHQdHh8muun7dkOIKRay7Zk+qjTa7Ffk8E2H1ocaPcKsbJrl3WeRzIY2ZTDCYE9UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793547418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793547419;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=YMh4c4VkmQ/yYv/XXlB4IurxkSbZBL5yqcukdWFeZHU=;
-	b=A44fLwnKvQskuN9YWQ0DlzKFR052JHy9cPgTEQwQDCO/f4bzJPAiPKMEgJoCqhmfc/Tx
-	 ReO9iwft83u93SlCd3Y/TbZ3+BAsES+iWbLxFVTmPZccL4N22YORWrOjD/le6ZkzDGn5s
-	 BLUNOAI9YWFTVr3F3X0y/nXjbDOiFd1A/dg1ZxMV9IX9UT78cQzOWei8S14ILPn0nCArf
-	 ncqCPiFcoY++rfLn32x1P4nlEQfHv0a6xDmT96Tdi/OLcGw54ivsQXYxAAQJ10xzU6kCy
-	 cmYG4cSFwQyEaW98swxP9KUrkzU8gEwzAXn2LSg2cFoWy5lz0R1BxdKq9t2MRnfv/Og==
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=dKrpCbQlg9048e0tn+Ci19OTMv+/9H1v9FqHqUqS9uw=;
+	b=pdaZ+/aIXKJ1y3ZLkmYdoN2OablkAL4Epqh/70gqHSX+JwqbE1g1UAT8ckuqkwzeTd5v
+	 Lh+fwqxh56mgHzriJBylUJaPoVhTFEf0DEJy6bZ4T07olpTCwoFkMMCU+XO+ENGIuzYei
+	 szmUsQgS+pIELqSIgPj6kA+2I6LXS1Kv2mqyfLRIBGj8vp+6v/Li0r3JLNbx0rlj/fUAj
+	 4tK9t9Q848Bu3TBQCdlnlhBbLafK4SmBe/pVFmLJmd8aZ9GB6fgqoYbqJos5Oiz6Cvhkc
+	 VJBbPax6uoi1diqgl1ITfYiP+VatTAOiLUr86RXOaOJAMUmW5rXE5aY2GE2jFTdmaLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VT+u4ttp;
-	arc=none smtp.remote-ip=209.85.221.47
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=scxbo0zR;
+	arc=none smtp.remote-ip=209.85.221.48
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AD1606A327
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 15:36:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73AD1606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B2B606A32C
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 15:36:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77B2B606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VT+u4ttp
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-48c4d870d54so1251204f8f.2
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 07:36:58 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=scxbo0zR
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-48c45111bebso902452f8f.0
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 07:36:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793547417; x=1794152217; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=YMh4c4VkmQ/yYv/XXlB4IurxkSbZBL5yqcukdWFeZHU=;
-        b=VT+u4ttpIRuZxp+BBBdUBFnB4j+NxXAv77KrquJj3gPA100/HOqZ6K9AkJjJit4aV/
-         6Dp1FeUMjf2qupb33vMaNM/aYosGm2O+f3Dnmp1VRmRkmRz54JGUuPsQzV6gNeIJVTC8
-         79Kd2TkRdCrQv4NI5JIlnqNUYaAYYioGcgFR8Cz6fqpLsT15l9mb9s5ka1Gnf2irtvI1
-         mNigu1BiM8yZKDW4JD71mMgZwMS/tTDSTpzhK83linr93mLNmQX7GWsUZy/r94Pi0UHO
-         pQM8pun2nRB/DXPe41rLn0hOPnVBj91lxU8+KNQJnIoQ7y8th8CpcdVHa2tg1LK1N3GH
-         Hs1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793547417; x=1794152217;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1793547418; x=1794152218; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=YMh4c4VkmQ/yYv/XXlB4IurxkSbZBL5yqcukdWFeZHU=;
-        b=lgTYDfITOZ8chDQEHbNd28jh1VFotTPrBwdwSM62InDNsHzkRdNhFADHHtUzNm6MGs
-         AS4OglWF2KToyskWR4d4t4CdWpp4zCmFB7vYxtWWjFIdpn6h9FNnUCDAQZqZgD/zAcN6
-         tszMF/325G4Sa8+9oFQtgFUJgI3pOWQbaEnu2QJdyADKcWRWnbt2auK2IluiTyKKNggi
-         PsrvYqab3DCdd6jAtpt2vnhkyGk/Krxe/G9hj7X69Mr5KNAyRZSyV4Q97MbNrv6S4knW
-         Gper3aTkraVisZq9K4ihr1qtPt/khKWldoQVrE1l19XaJJho6K6KL30wSo2H99sfVFVV
-         jwKw==
-X-Gm-Message-State: APuU4Z8+YHj1BDj6xnY8mt6QAxCJBu0x7jzSmtNYiDT9h3S5ZqZCgBm2
-	172zBatfyytF5vVam3mnaJ+ceKGMxiL9O0vi/OFvJK0Q82gG5joiF6W7cd6ukOD1
-X-Gm-Gg: AYBFou3f5ewZfr94b733VzsyqHjvdhHCwzdpOH/7nzrjHrYyDfzkBz+mdrRVU6WGNcF
-	tvdSdONus6NjLH4sCxN29/V2NWaTvsrWQ1lJC83zq8EUrGzoDFo5DjJCG6AxoIgLEPdg0OV4B60
-	GJRb4Wvyfl5vUcMIV4nkVdD9L+seTkk2AwqH8J1dh+L+6HrhFd+vfkHZbXVrKXHymuQ/jAh/7k6
-	rQ+fwXojxIrfWkln7le6WKhjnQgqV0h3Ta0hZ59E1GCOBgwtvG8im3M0JtNLL1FtWrcGHVzRSNG
-	VCiGQcVs8YHF30Ya9+dP2/LempKxPdOmNKhTgAZD1pPY1uFnh/MfhlYoPI8mtobLz7PFyKryZz2
-	H88l8JlF8zv8atjQfXSZHiijSaMe7BqRokVFfpGkhOEj/h/cwt+Lgiks+15CK1VzdndmXSlNsH5
-	mf1Ozjky+srrCO+zkFGN7PK0W1CwYlEi0lDOolXJXZScEoGDwDyihXuBMMfahgoZ/qEfe8ys73o
-	brgRcbWMTT+ZJBsjKdXkzA84qHelpi37SrrjBMzUWx+iIyEds8yIJKe4JR8Gas3gLt0LEQcRKDS
-	lfk7kNMCwVV0N5Z1gAh/6K3oLKHUH7KW9BoONvWlLVTzv8soXLjZOgsx47rv4b0=
-X-Received: by 2002:a05:6000:4b0b:b0:48e:1b11:7ed0 with SMTP id ffacd0b85a97d-48e6e2ff15bmr15563718f8f.33.1793547416626;
-        Sun, 01 Nov 2026 07:36:56 -0800 (PST)
+        bh=dKrpCbQlg9048e0tn+Ci19OTMv+/9H1v9FqHqUqS9uw=;
+        b=scxbo0zRuL7JCXLpjelhhJevUwnnLqgu3jXHIxS5DI70Ui3EjyXnYZ6GrwMqI/CLQu
+         MNFdcpfYeHDdjuSR/QxjPDc+SX3y1ygE/97QxN6ZtL7jIGdkF+MkyjBRRNK9Ural3gSQ
+         SVbdvWm4Tf0eQH2YgjsSBcfnj4tYRjP4UZvN3zvhVGuEHDrBjXeTm5Ed7hkJVLBjPynO
+         yZ2kR9U8e+e71hdr/d6mb0igyZ9V5wX3CLJND1q5O0a5hjbfk2QwbIha3CuyojDNgxWd
+         /OSWpq69ReOVyotF7IO8ts7QX/fmMWxr9R2iJKvyjmFBhLN9yLYDTzbPc2Z/B+F9ZV5Y
+         b7pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793547418; x=1794152218;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=dKrpCbQlg9048e0tn+Ci19OTMv+/9H1v9FqHqUqS9uw=;
+        b=eWU0bzfNnY6Rt01NCPb8iB0py55HXiBUIBlT7tpsx8jgBxAQomasGDgM3qFxWw7W6s
+         9Zpo3j5aXOC92ki/3KbV1HTUdqGK+os/8ZX6yPsi7uLlMyc4x+SQkcjq9F6hxPT7qxA2
+         eVBfFlG9prilct9iZIM14wVZYzZOf1jVuZJEmcQWS9zggr5XRuZnL3smmWqBf6Nt38PJ
+         egkD5//noKGkLQGAAeJVpfJDjvhXx4rgB3WXAqeP5Qbc7E2n1xhoGwM9ateOBMbpLZ51
+         vEHbMhQ9Mp2MTF+tOmcT9B4N3R2ONuTXp83Zn8EbAuPc4NdrxHhxJ3mINW3i1ZZgoW33
+         VPZQ==
+X-Gm-Message-State: APuU4Z/Zh7IiSxwcNNSmNxXwS9LZjJl8BX0vvdIfgzQJ1yBOk+JlnOXB
+	TrK/EgnPgWfrBLjM9CBALNdE5sXwBR7ldwFfYbYGeOZcqQpds7sjaY5DwiYhTTwP
+X-Gm-Gg: AYBFou1WEfmEGI6lqfr+8W+fxSl+RQ+MxHTfZTfeNz2Jmg4NYxEQk56NfrUFJ7Ii5Rx
+	mFURqv20gGEewrHMh2Lfy4YQ2MEwdZyPW2bIaHDxa06HfRz5NepAvvqZUaDi1+Np4ayYae4nlVT
+	nWY+VmaRwH9qVLshDI5TD13CH/acBFOpoZZ3qBRwKIOXziQN8kgrMCe/w4y2OVf+G8BiA6TbUUS
+	0cRx/BRqjjGoqvuYRg5spTkFLPNVfLfaizRDFh0KiMgdqsu9LQebOCOGe6m3UR1nqZIHp/Ux1ZS
+	fLvmJnicBMC2ELtbKdsg4rKFapsluhsZTnlVY0oTRnjqbugjmvgCeDUS2QkiuM7OSrg2S8paucj
+	GMq6AYCehMgUF4b9rxDcojig4FQ3nzrz0Cc0xJoBE6yQkoh8/Ud75Is47ePTnIwqUnj5RQbOdVM
+	Xvh63a9FhiUG8LPPIEZZLrmpQj+l+puxholBqsb6ZKYpFNs8hd7tQ7WC6Z1h1Ts4JsiN+WSPK5O
+	kCponTLHaOQeYQk/Ghc54fPUS54ytkPcvp9pcDbcmR4FwTtPwA3WKrflCi2VPiqos+NU2GmwJ+C
+	FhHu55m9e5uQi1SKuPqpCFYk+WuDLIMvcqpfAb+Ehc/sxMF6RmkiYRULWMAsQW4=
+X-Received: by 2002:a05:6000:128b:b0:48c:69bd:e971 with SMTP id ffacd0b85a97d-48e6e307437mr12635170f8f.16.1793547417626;
+        Sun, 01 Nov 2026 07:36:57 -0800 (PST)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b7246fsm14908450f8f.19.2026.11.01.07.36.54
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b7246fsm14908450f8f.19.2026.11.01.07.36.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 07:36:55 -0800 (PST)
+        Sun, 01 Nov 2026 07:36:57 -0800 (PST)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
 	Neeraj Singh <neerajsi@microsoft.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	Michael Montalbo <mmontalbo@gmail.com>
-Subject: [PATCH 0/3] use size_t for a few sizes that are 32 bits everywhere
-Date: Sun,  1 Nov 2026 16:36:48 +0100
-Message-ID: <cover.1793546752.git.gitter.spiros@gmail.com>
+	Patrick Steinhardt <ps@pks.im>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH 1/3] csum-file: use size_t for the count passed to hashwrite()
+Date: Sun,  1 Nov 2026 16:36:49 +0100
+Message-ID: <07baad46b153b255b6e70f2597f1bf41b9c48dfd.1793546752.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <cover.1793546752.git.gitter.spiros@gmail.com>
+References: <cover.1793546752.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,39 +102,54 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Unlike the previous series, these aren't about "long" on Windows: the
-types involved ("uint32_t", "int", "unsigned int") are 32 bits on every
-platform. They were found by scanning a native 64-bit Linux build with
--Wshorten-64-to-32. That scan sees the "unsigned long" -> 32-bit
-conversions that a Windows target can't see, because there "long" is
-already 32 bits.
+hashwrite() takes the byte count as "uint32_t" on all platforms. When
+pack-objects writes the entire compressed buffer of an object in a
+single call, which can exceed 4GiB if the object is in memory, poorly
+compressible and core.bigFileThreshold is raised accordingly, it writes
+only "count mod 2^32" bytes, corrupting the pack.
 
-- 1/3 hashwrite(): a corrupt pack when pack-objects writes a compressed
-  buffer of 4GiB or more in one call;
-- 2/3 count_lines(): a wrong diff -B --stat for files of 2GiB or more;
-- 3/3 hash_chars(): renames of files of 4GiB or more aren't recognised.
+This was verified using a 16-bit simulation, where "git cat-file" and
+"git fsck" failed after "git repack -a -d" with "offset beyond end of
+packfile (truncated pack?)".
 
-No tests, because they need GiB-sized inputs; each was verified by
-simulating the truncation at 16 bits.
+Make the count parameter of hashwrite() a "size_t". The internal loop
+already handles writing in buffer-sized blocks.
 
-The other results of that scan are bounded by the format or by the input
-(options, masks, line lengths, xdiff limited to 1023MiB). It doesn't
-depend on the other series in flight and merges cleanly with them. Based
-on master 50fe5cc63f.
+Triggering this requires processing an object of 4GiB or more, so no
+test is added.
 
-Elia Pinto (3):
-  csum-file: use size_t for the count passed to hashwrite()
-  diff: use size_t for the size passed to count_lines()
-  diffcore-delta: use size_t for the size of the buffer to hash
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ csum-file.c | 2 +-
+ csum-file.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
- csum-file.c      | 2 +-
- csum-file.h      | 2 +-
- diff.c           | 2 +-
- diffcore-delta.c | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
-
-
-base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
+diff --git a/csum-file.c b/csum-file.c
+index fe18ee1de3..26aa662637 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -102,7 +102,7 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
+ 	return fd;
+ }
+ 
+-void hashwrite(struct hashfile *f, const void *buf, uint32_t count)
++void hashwrite(struct hashfile *f, const void *buf, size_t count)
+ {
+ 	while (count) {
+ 		unsigned left = f->buffer_len - f->offset;
+diff --git a/csum-file.h b/csum-file.h
+index 6ed74d1637..f1c8a9df13 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -75,7 +75,7 @@ void free_hashfile(struct hashfile *f);
+  * Finalize the hashfile by flushing data to disk and free'ing it.
+  */
+ int finalize_hashfile(struct hashfile *, unsigned char *, enum fsync_component, unsigned int);
+-void hashwrite(struct hashfile *, const void *, uint32_t);
++void hashwrite(struct hashfile *, const void *, size_t);
+ void hashflush(struct hashfile *f);
+ void crc32_begin(struct hashfile *);
+ uint32_t crc32_end(struct hashfile *);
 -- 
 2.53.0
 
