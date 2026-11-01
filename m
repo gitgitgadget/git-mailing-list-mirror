@@ -1,98 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.52
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793575578;
-	b=qiksmaY5VuEYpJVIx96UffyLB0h2SUfMgxUOLfj4VaxbBuf2/cHpBz9TqzOYtDTfjFX/
-	 A5UzeiYZ51zxF5laujfl2nPWdB7GgQ5Ht0dlCs4lX2CPgYwHxYv2BFiljzCh8y1DLCglA
-	 6kGLppaOPmH2Gjr1lFrVuWnFJjejPEYtYvWKzftSDPr3Oc3ct/FjMw9QZsux5FdkB4ohy
-	 gAAykdREnF3NNeFU9U1aIO0KbgwjWNnWCdlG8ASwnPtrcAU5EYfjb5+PF0cIUzIWWbmdn
-	 dTfxhYw23dwpd5Kk/5wEMGAkd9Vh9X/OJ6kCj8JxkDZWxou/qs5Ba7X0VIp5hcwg8Nw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793575578;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793575771;
+	b=1DI+Yi1voCup7Bm0TIaIiR1StZA/YLpa2Cqu3z22aMz7K3bfGcwnGoa0UcuOHsOZ9koy
+	 K0YisZZ8FunRQPERV+N63ceViNMGzLnEUqP4vqJiErgYcBeOoLcoYANhzVKSY6M8zPJyU
+	 jKVEaBl/DGNH6O/oqhdRH46Jpc2Y1pO6KUsmT6inb9TndqyNX0dS4jcnHLxAalnxowg3i
+	 z+gTMsBT66LXXf8S1yeq+4Jb5Zjpr5TR4L5nJ+RNvuVSMnBRWQ4roxCGftY/ebUKLK9/n
+	 NlEdsXKz2dTMM9XjCJ3EsYjX7Os62fTOgG6bLsQKLg6Q2p8g0vHF9e61VHldv3IeS/Q==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793575771;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=kOfDBBxXmfS9f47HwlV2Iihrj9tOwV0/+5rBBD3l1Yg=;
-	b=KJScoe7g3OPiaoBYdYisbQgaOmWaaf3JPq3NgKrZewwPI3r7PTIOEjUVYL6GiRUuFQcY
-	 EqvfXDvf5hAH0H+sb2fbYRbdL1hDsV1op7CoLOSpka2+u9pkODz0hHs89kyykdWRZ10gq
-	 qI0BRTwKWgC8+sxdEzSAmPoIep2vpVdX/qNhGC5uGNpOEBjpyj7HK0tGEBP4YHHBvHeTV
-	 fVXPsfedVR9lrGIhpa10C6uk1mU+YdBPJueSEq4lqHhoDTZzu+dZETG3U0FpbMSJp2xCM
-	 fAg2sRZhxcMUiascWoO2YYhmDQSNSvKm40lbWSfCsYKH16ZdDBc4jxIBCpX1KswNQgA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
+	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=jM6We9XT6mltkx2hy2KWHTcrXFAkPdi84oNCzk+2jTk=;
+	b=C7wQLkbuadboSQQQDNMC9kB9LsaXJ50A9/BcVa22/wbn/qS52LTPByfGfpg/pup6YRd2
+	 ByYsTLnAlXbplm2MJRtzNIvbaJRY6DpUzlTp4wYojNX7TG5HIJLgzFR+WCAX56YXdawOd
+	 1UbdHN7N4ku3wCNCn+uEO3PrbVSnuoGF3AQq4PwHvY7zlNBROm68Jfi+HFYWSf2LAb0Qu
+	 dXnTgTNIOE7SIyZ/3oHNRcz0mVH5ueJpBY+icrKOkWowPUFH2lTLzaVxPOOhu0ACKhCdt
+	 giilCTP4uzlxrdxzNwHelDqr5nFwRauYp6Mj2m+OJU7iDq3vXjn0kx0GYdg7I7+8qdw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s7N3CwCj;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.52
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EcjgvEj8;
+	arc=none smtp.remote-ip=74.125.82.170
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2F6606A324
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:26:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E2F6606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BCD606A324
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:29:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87BCD606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s7N3CwCj
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-4a6bb779d13so1284932fac.1
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 15:26:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793575577; cv=none;
-        d=google.com; s=arc-20260327;
-        b=VTvO3FgO8Su5R6YFfpD/VeR++q+kdAef4+K4L4ukkPThxKMIFyka1liHdZKa1zfF3H
-         rMezLZzGU7Yx9L3hpMnSmdO3BthFix3evENoeYzg+xjusX6O6nOZIM9QC+RN5sRd3C3j
-         aB73JSXH8V7+t8ZL1HKvf6bETArennnjJTobXgIH2Cf2EbeYiWpASynLZjUdWZhViIsK
-         TH5NRHEF00S5gB+UzmOMPekF4IHZQViDtE26ptVYCu1RdjefVvtyQypxr3VBCbubh+S0
-         FAHlDp8WglGh1vx2ORwXaPFnYnelVR2VEWi3hzlvgPEBQ7763u7wRy5GzbdLndQn7AkD
-         rgeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=kOfDBBxXmfS9f47HwlV2Iihrj9tOwV0/+5rBBD3l1Yg=;
-        fh=+Ve7dG4yAo6b6IJAJcsfAVXuA3IHmj+18im/3KFY0tU=;
-        b=EXkJUjuN8CsBIw7dT3hw1GVh10x13FA/KCZQnfRcUnuBrZKcRvvXhsYE33cMzXCSvj
-         Wit6dsYbOfD8oc42zwsIypATzfxbkPngHnckjzN8rrcLZyC47t6lD3hRINA8JnqUJIgp
-         p9hqBDUn9EdV37j31iOjh6ZSpOW7t/yxyn6dtUuFlKALzNXWjd0xDcivPHAj9k7HE9yR
-         4qVV1FTihnS4Ae2ARc+XOpLESW4ROsXhxrdHDnhLIfCtV1aHuMrfkY4uB8Z8JWE/sdK+
-         MInqHt8iKTSMwlhRcYqDph7kcEI7p9Qu+8+7vef8jPvMRKSw0O7sqqIsT6ldQSy5mX4E
-         zu6A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EcjgvEj8
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-36a17a332ecso3983630eec.1
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 15:29:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793575577; x=1794180377; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=kOfDBBxXmfS9f47HwlV2Iihrj9tOwV0/+5rBBD3l1Yg=;
-        b=s7N3CwCj/xVTLA5Awx2P8uGUoVXtkZwnW83mr6bbz+KWVme56nDUoFLh1agsy2QaSh
-         Z3/NFc/wzsoGCNsWgGAk16x7JUyaKDhHiaXI+DbYlem7/HZ1xr6gKWRf3ivX4QE9mXVu
-         csgx8Zbk01QNPZrWRFh7IUJjvbW7XtQFD5OXANO1EahRo6v/XXF58aZQ9IHzKpDeOi5H
-         f7fv+1s0ot0/Dvs4iyAmkclJ70bN98GNE1+KRjd05HBDEShX5CLlkc94MzMd3c5S9OJI
-         SGYoSTK1cRgr+ZlBkoeNOP9Myey8GlYvjnTn/i3KLoY9l4Lj3H1OpYHghS9ZKrThdCSP
-         5veg==
+        d=gmail.com; s=20260707; t=1793575770; x=1794180570; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=jM6We9XT6mltkx2hy2KWHTcrXFAkPdi84oNCzk+2jTk=;
+        b=EcjgvEj8fpeHk+M7d4K+9kqazgp8nBHC/LJ+Upd5LpbTrGN9iFn7re7w5ZJxUhZCRi
+         0cTTP9H7PYPiRCRGs2eKXs4KSLO9H6kO9/IaaMclZ4dUwic3VAvDWFN+iPsRorsbxCJQ
+         cpp7k/QvjRPsVAKx14NzAkUyINJH80o0mMJbW8O4ImBvzl4dPH1N+kMQ8S+IAVg1/1Oq
+         aBwS/G3+ZJZcQwztSeForawsknkThGJqpWbWy9oKZnIw2FfGzne6kK0PactLgqappXdh
+         ZWkOC5BT0/uQiwcpl+6qsgYSTONhf5C8/p6CLKY1wxtDlzjHHIED+tNukal9DhAMTtqL
+         ewBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793575577; x=1794180377;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1793575770; x=1794180570;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=kOfDBBxXmfS9f47HwlV2Iihrj9tOwV0/+5rBBD3l1Yg=;
-        b=kpSzdZkdYez9xjKv0HEAvHNvHg28BmXiSw6xT1op5UA5JYEQ1AQqYN91kk2QpYyfDR
-         8ZPMJFBKYkScXh3UbgnJKBa/cYJbtp2JrMclDdWrgi6U/ISHiMfvhNoxCju/rFhODHLb
-         +kJEnQbbT8esWCLzOUJRQBqnLVuegRO8GSTWuGub3RcsdOsh0fAlzH+9YvvqTnAcFPaJ
-         MMwrizrW3fjCkpHFNmyFE9+63WW7QV+66hCNjS0Aj0COOdNyjiBtOahzLjRHOJv3K9dR
-         oEbbrHqL7x4tKym8cyMf15nbno94FoErdci5h8W8kopOreUkj1GvnYdFmwoApg/noeKG
-         NEPg==
-X-Gm-Message-State: AFq9FYLSIHdpf1sOZoSjWxBgI8l5/rg4lCBpYtnYJpxSRTgyZ76UBCed
-	1vHwzw0ZxjVCpgAd/jw7OC6NRKC0Z3nbj25FU1XOTB7adWXOuxk/rFpqEtbiHKMtBPAvNZS7cFm
-	7xBL2oyCLb6PCPcFUn0viZYPeaovfxZw=
-X-Gm-Gg: AYBFou3mf+T8i9hEs4XaGcDkgIKoWSG+fwH+WonPopX/NJiJi7TdMFnPCmXiVvg5fii
-	ZOlqcjTlEHJXFQYTE2ZRk6S7tH2gPhZA2mtThZVBRvrxMKDbxePSpQiqFkNHfVYp/JJ8eCmBfvN
-	LgC2cIHks7pKeIhYKWO6QyCaAZRoL769x/VtJTd2NWq5jWdFjbIleQP9/hLKP1jW0b7opVMSc9c
-	1CySMBUjNb6tvxc5a0/AxVhBKj8ariDvHgvY2uhBkYpx8gRTDE43XtihUjbHFfc2atN/hezFjHh
-	XO6+JVlsYocJbj4JYHwlBO44VrCL4M0FUBvlirEEwQXbkonTAsNuKp3Mq6rq8nzFZyveC/4ekm1
-	js15bAzBS1sVM+EwoUSWP59E++ZrrXxgmNLuG
-X-Received: by 2002:a05:6871:4410:b0:48f:e107:3185 with SMTP id
- 586e51a60fabf-4a90785935bmr5883722fac.56.1793575577028; Sun, 01 Nov 2026
- 15:26:17 -0800 (PST)
+        bh=jM6We9XT6mltkx2hy2KWHTcrXFAkPdi84oNCzk+2jTk=;
+        b=RVUlDsSU01kxZzgpmg1eJMQClSgCetwXhUllDFUVxovDTRIfpXxPJPPMTEqlbfxQGa
+         tMOlCPNHsZICuuTITU8hWaFBpItDF+q+UNS5qlbJaLoBw0W0vT5FD2meBvJegQN5+BP9
+         o18tYB8ACfzBt5bv8sRnI8fKVY9CwlG7SU91yk4Okj1SnDGk9+loq+na9N9qwBD2g08Q
+         lbPfFj7h47OeLBplJhbFLDwzgraUEu0eGOio3CeHp9ClvquKwtwbwROb9YKgpZfJCR8r
+         npFiNhny1kpSce5Pfkh8Dx/IzAwzLOVYc8iBzqIi2yJKs7+4MrKPkjsKIqRZdVtRQUdQ
+         hxfQ==
+X-Gm-Message-State: APuU4Z8wIP2RwyPYVUuzCvBHJ9XWRQGPlmlsPQX5U089WNRYp00QrsOF
+	HLjRHJj7VlrLPXQ/zWPGRWV0R9gWKD3JSe6VoMXcL8GsXvGfo+5aMptw
+X-Gm-Gg: AYBFou0l3GJ/mtdjnusXiP6iNYLPIsU51UXTdKEFtVhHZsL6z6JLL12T/jjT3hD4QJg
+	0vIUFx5YIYz54iE30LirfrueNY8XtZtjhK+dgdNoe9SQ48+CJbb4JSr58lDno0VWK0IJTxAWxx8
+	UNdMNJWNs3fZFVTtB6MVZczpgULoXQFvHQjZGnzHygMkUuZCxy/tiOVzK1k6EEZ/McvyybxCMTH
+	iV6SuU7ZkLmcwxEDAFoOG+2sQxa2ikLkdIlY7VrMF2w0O7mtD1P3g5UA9qBigZhGR0P1XFj1YKA
+	eDBK2kkzB3C1hmik63/NjV0ZAcj/1AgbQb+G3ibEYOPMBIkW9qy6bn5QxB4xeZA/VejFrSG3Yjw
+	gh22ok8ClHbCAr0/HxMNQMF4scrqoNo/Dq4EUFO+WJMvdkl9bqrTahstmwHzfEepkeRKsoAGY8S
+	SYktm80ZmsZxDdUOzcxTjt+rhKgxmD3AsBnD4lbvPLjCbSVd/7oTZGXmPQANSwHr6TXWbk1U1gq
+	FkTUulE3Vp2UH5EBBfOTM9Fb57O8KtZ8ofxOHzmiTP/MTCYa0DhKS3XSuWfX71KWqzB8Hzpr67O
+	MTzPHGthiXD2RQOSqn+eP6BKcKA/nm10MZ0o
+X-Received: by 2002:a05:7300:881c:b0:369:ec31:8fd5 with SMTP id 5a478bee46e88-36a42225546mr14336906eec.3.1793575770234;
+        Sun, 01 Nov 2026 15:29:30 -0800 (PST)
+Received: from [127.0.0.2] ([73.222.46.22])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a42a98f65sm30367724eec.28.2026.11.01.15.29.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Nov 2026 15:29:29 -0800 (PST)
+From: Farid Zakaria <farid.m.zakaria@gmail.com>
+Subject: [PATCH 0/2] credential-cache: fix two races when daemons start at
+ once
+Date: Sun, 01 Nov 2026 15:29:24 -0800
+Message-Id: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,71 +91,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022212903.177261-1-andy.koppe@gmail.com> <20261022212903.177261-3-andy.koppe@gmail.com>
- <atsPvF6wVdugtwrH@pks.im>
-In-Reply-To: <atsPvF6wVdugtwrH@pks.im>
-From: Andy Koppe <andy.koppe@gmail.com>
-Date: Sun, 1 Nov 2026 23:26:04 +0000
-X-Gm-Features: AclHuK_8c6mUOc1mO0Ae2eKY6Na6-PoCsvnQhHkM0WZXW9R-y7FBpsLd6sCLhd4
-Message-ID: <CAHWeT-be9+8vpjmj=NVYK3rjG5MrBqmSwuX+jJvvUhkKwvKF2w@mail.gmail.com>
-Subject: Re: [PATCH 2/5] doc: glossary: update per-worktree refs
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, Julia Evans <julia@jvns.ca>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMwQrCQAyE4VcpORvYlG0Pvop4WNOpjcgq2Spi6
+ bu7tccPZv6FCtxQ6Ngs5HhbsUeukENDOqV8BdtQTW1oe5EgPH5ZHQPybOnOmnQCe1Jw7EKsC+2
+ jdFTvT8don3/6dN5dXpcbdN56tK4/zBVeQHwAAAA=
+X-Change-ID: 20261101-fz-credential-cache-race-4504110c6415
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+ Patrick Steinhardt <ps@pks.im>, M Hickford <mirth.hickford@gmail.com>, 
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+ Jeff Hostetler <jeffhostetler@github.com>, 
+ Farid Zakaria <farid.m.zakaria@gmail.com>
+X-Mailer: b4 0.15.2
 
-On Fri, 23 Oct 2026 at 08:41, Patrick Steinhardt <ps@pks.im> wrote:
-> On Thu, Oct 22, 2026 at 10:28:50PM +0100, Andy Koppe wrote:
-> > diff --git a/Documentation/glossary-content.adoc b/Documentation/glossary-content.adoc
-> > index b2c582254b..eff6d23215 100644
-> > --- a/Documentation/glossary-content.adoc
-> > +++ b/Documentation/glossary-content.adoc
-> > @@ -494,10 +494,16 @@ exclude;;
-> >       interface than the <<def_plumbing,plumbing>>.
-> >
-> >  [[def_per_worktree_ref]]per-worktree ref::
-> > -     Refs that are per-<<def_worktree,worktree>>, rather than
-> > -     global.  This is presently only <<def_HEAD,HEAD>> and any refs
-> > -     that start with `refs/bisect/`, but might later include other
-> > -     unusual refs.
-> > +     A <<def_ref,ref>> that is specific to a <<def_worktree,worktree>>,
-> > +     rather than shared between all worktrees. All
-> > +     <<def_root_ref,root refs>>, such as <<def_HEAD,HEAD>>, are
-> > +     per-worktree, as are refs that start with `refs/bisect/`,
-> > +     `refs/worktree/` or `refs/rewritten/`.
-> > ++
-> > +<<def_pseudoref,Pseudorefs>> are also specific to each worktree.
->
-> Should we maybe also turn this into an itemized list? Makes it easier to
-> see at a glance which rrefs are per-worktree, and it becomes easier to
-> extend going forward.
+When no credential-cache daemon is running, two "git credential-cache
+store" which run at the same time each try to start a daemon.
 
-Done in v2.
+The second daemon unlinks the first one's socket and binds its own,
+which means any credential stored by the first one is lost.
 
-> > +See "REFS" in linkgit:git-worktree[1] for how to access the
-> > +per-worktree refs of other worktrees.
-> >
-> >  [[def_pseudoref]]pseudoref::
-> >       A name that can be used like a <<def_ref,ref>> to refer to
-> > @@ -788,5 +794,5 @@ and pseudorefs.
-> >       "working tree" and repository metadata, most of which are
-> >       shared among other worktrees of a single repository, and
-> >       some of which are maintained separately per worktree
-> > -     (e.g. the index, HEAD and pseudorefs like MERGE_HEAD,
-> > -     per-worktree refs and per-worktree configuration file).
-> > +     (e.g. the index, per-worktree refs such as HEAD, pseudorefs
-> > +     such as MERGE_HEAD, and the per-worktree configuration file).
->
-> This is a bit curious as you distinguish between per-worktree refs and
-> pseudorefs, even though you mention both of them as part of the
-> per-worktree ref section.
+By products of this race:
+  - "git credential-cache get" does not return that credential;
+  - "git credential-cache exit" stops only the second daemon, and the
+   first keeps the password in memory until it expires;
+  - when the first daemon exits, its tempfile handler removes
+   the socket of the second daemon, whose credentials are then lost
+   too.
 
-It's difficult, because pseudorefs are per-worktree, but they aren't
-refs. I thought they should still be mentioned under "per-worktree
-refs", without calling them refs.
+This can happen whenever two git commands store a password at the
+same moment, for example parallel submodule fetches over HTTPS.
 
-> I wonder whether we should simply refer to
-> that section without naming any examples.
+I found this with Rewind [1], a deterministic VM I am building that
+replays a program under many thread schedules until one fails. 
 
-Good idea. Done in v2.
+Context from some history spelunking with an AI:
+  Jeff noted in 2021 that the daemon's socket setup is racy [2], and
+  expected the worst case to be a daemon that waits 30 seconds for data
+  before it exits. That holds only if the losing daemon gets no
+  credential, but its own client stores one right after it starts.
 
-Andy
+[1] https://rewindvm.dev/
+[2] https://lore.kernel.org/git/YCK5K%2FnK4tGnTvou@coredump.intra.peff.net/
+
+---
+Farid Zakaria (2):
+      credential-cache--daemon: allow a concurrently created socket dir
+      credential-cache--daemon: do not take over a running daemon's socket
+
+ builtin/credential-cache--daemon.c | 43 +++++++++++++++++++++++++++++---------
+ t/t0301-credential-cache.sh        | 23 ++++++++++++++++++++
+ 2 files changed, 56 insertions(+), 10 deletions(-)
+
+
+---
+base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
+change-id: 20261101-fz-credential-cache-race-4504110c6415
+
