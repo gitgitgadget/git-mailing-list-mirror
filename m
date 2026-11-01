@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793530940;
-	b=oJVql6bqB170WdxCryCuR1FMoki/vyfTjn5aO3uX3wyrcpME5hhzdgUPnWcfd0ksnBKP
-	 +BZA1rraO4XAp2Atlsjh7HDIb6kpvsIN1qsBtXT00CYRjy1T16wcU4phmsOccV4zwyiFk
-	 1TNnkAV7O9iuGRJ5zEhGrNeozdXCJx/+lK5lyoNKtPU6eaHpKdqghsQkuQyxpWonSJNh7
-	 RwbkKvPaOJ7O57zwCgB2jCeld8rgrEZw5UErBzIzj03z5MSe0/Ev6A32zaUgjXBN7xRV6
-	 Jh3eJtwwa9OaCoZYo33zJZRkql7Mtf8pjxyXSfWHwxqsaWSaFjuu7hE+DefgUowhy+w==
+	t=1793530941;
+	b=XgjONDYJgEIHcJxab47wl5zdOM15CwTmdqYoYKXjcRH8hn/kdxDkOLboT/gScBYyDJCQ
+	 F+gfO1z/6t1It+KAhneiWXtreTVWQHtL2XaBHG1HkXP2eDo8LmpMJnqEGDcxC7Ik81KRE
+	 KxEPAe8EGJQH4u8Ag2G8JkxtGBsXMxu51W3pifBsnW079QsIIgrYUs4tYK25mPM/cxOFf
+	 PiFCYohrr4pnIjiztAImUzHvUgRYwx1+XildYdNJYJzUPS9Ty2D38eWMsf+UNyx/WntPv
+	 /9ZcDH7CCoQYHPG7Y6EtEgTlj0trX8j6mWAhlL0/vU7cBg9CaNZF0ZGMbhr50GBgDKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793530940;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793530941;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=k5SPawtAs0q6/ggFePqMfLegTZixtW+6tZQEDP5+O5E=;
-	b=DLjblOZKxToxu9t9xBT2igLNsTmNXRWlGTWZ7T757tgg8ZSsceu/t2HCC3ELLWGAeBbp
-	 CwJ0+fiwj/EAF9IsIWqH3vECty0JoHK7gjGygaeIMiReFGxB/APeiPkm3yzNewwXIo7qY
-	 XsEQCQ3r1yo4hwwgv4pcRQRKMt7A1CY+gwF5hgqRVf3QPR1RdIsd0C7FRe4D8pnkofoEc
-	 Fttq88efb0sDIl+bUN876DjdRP641gJa+gP5zrDjX4cTfHWNquv4YUQ4cWQm5LOybjyCr
-	 vaef4VsMVG/ASXoRo+h+W5jTl0WgpNX6pVF4tgrBfZ/Hz6kvX6ZtXh1vG20lZBpnunQ==
+	bh=vkPV6YSxtkYsoOzrdGHIvGfbh62bvhqTezdgydKu0gg=;
+	b=2bkz2FjJTyTv1EHk0/tg+AybhmcdV4aiiBPpDv3kyClUb2NFEVGWmn6k75xD20xY1Ubt
+	 cx8j2i8gAryLfT1Y9eaA7AmpG5ldpr5dL1W6YVusv0Npqli7vx8ocfRIyO3TJbp9EFDKA
+	 4VBSVnaSghcQgiFJbd3e+8tQCaSnGM81GL3nNIf63NxjCqWg0TdwG+qsSpls8B5Hb8T06
+	 Xm7QjdUFGyu8FV29fhaMBxlJGrjdHGGvCO9rkfgCOIjxNRTo1JPTMMZnbV0O3z1Y2lH7K
+	 mRv+saoGF2Egyk4VbdKPi+owBcIE+wJn8zGmvgZ7NSYoxq5bgtqrkEPBHuQEI5iSltg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lGe73Bb7;
-	arc=none smtp.remote-ip=209.85.219.50
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OqjOH2E+;
+	arc=none smtp.remote-ip=209.85.160.176
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426B4606A332
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 11:02:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 426B4606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D14A606A329
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 11:02:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2D14A606A329
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lGe73Bb7
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-91b54d1e9cdso18480386d6.1
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 03:02:20 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OqjOH2E+
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-53639b8903bso30158021cf.0
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 03:02:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793530939; x=1794135739; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793530940; x=1794135740; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=k5SPawtAs0q6/ggFePqMfLegTZixtW+6tZQEDP5+O5E=;
-        b=lGe73Bb7hR0OBjX4oqQYIHShinqu8y4zEGeCbiBXgQ+Q5R6wdCsEl3f+4iIq5zK0cv
-         aIpp8c6TWsnD8ghqREOrkC2F6i8Ax/2p4+kovctUjfyhllHIntvikSWYY3VsOcGud2YN
-         qJFLuiSahRZgyB7wny78wPLd75GBsDoEDd1e9rBE0bdydglzokiDIeiBd658UWkRCRH4
-         GwdHOQvYabo6GTLhpOt44QHS2i3xheEAGPu7L1NJHJcupZr5MGTqteCi7GGVuuSJi30C
-         bktC8iGf6tCDcqrtj89nJzlPJeS9zAaQvxo8LjpRi6AvhbcllANMBkC2GPFMxO6+J6uu
-         4x0A==
+        bh=vkPV6YSxtkYsoOzrdGHIvGfbh62bvhqTezdgydKu0gg=;
+        b=OqjOH2E+hLo2bnZYJYE+6z/sjLgcIL/KI55GW5tajdm8bTti0137c/i0O+gJBFCe/m
+         7wQK9vgMhtNLLbjEbBHx0mgGqnhP5s7j/M+X01gj/y9BVZNH9MFx6i3iUeexaxupLjUl
+         6eQ7BaG0VhjWBx6jCIePnMuHd25Iv31VlFm1kgDwbMSxfSSKtAkdQo6jeGvy3d7fJuY2
+         BVZHMpVIoqOCHGCf0RQu10z32aKNYL8wzRxsJOv4GNVTq61bYHFknFG09TOS/Tn8+KCX
+         UCiWLyZTCO+oTk/WAU48f/x1FubxFGEE+Ikvp6ihHLM/GFimCXQE5LfeSEMDm48Dt+jk
+         xwtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793530939; x=1794135739;
+        d=1e100.net; s=20260707; t=1793530940; x=1794135740;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=k5SPawtAs0q6/ggFePqMfLegTZixtW+6tZQEDP5+O5E=;
-        b=q/KEcrblrZPrit9Zzvm64AXMs99buSt105iwD1q0BNWCY7DgFygL3YUNGqSXu/BvR0
-         OHKDONLGOtP473sXbwRawEF/CHbjrUNH+yNbUhOOIYw9VryA2ZEcJRzVEIG65s2T3XZv
-         eShSsdz/w1Dv/MZ4ChC1HI7jI7+4nlfGwpBG6FGfD+RNxZOWQHwlUZKaCpEuFqiuF53A
-         ikMl8af1e8aJDPmGwxNHjFLkFxYkYRGWXkIztN8aXF5Q9Yo+wJhZQioLgaJIcIU+56tX
-         YlnVNTL6fOlDYnlaPiOMOJKCSAPDz/laWUXCEqTcE7XnadYMS1GnQqVtGgnmkRS84wkk
-         VtXg==
-X-Gm-Message-State: AFq9FYJkmFN4DIzwEvLQ+VKGvvreriV5e3kxK+ZY/Yv+OEeBT1Gp8aaK
-	vThONw0LwJorWD6lv5ceLccMx4cEp5wzAJ52IqQpbS1FS+l+oOxrHgkHfqzsNaFw
-X-Gm-Gg: AYBFou3ThG0MHpfNgq7sNwHwhwMYNk0YeZ3ibYKhLpXys3cIFYsfRfQqj3DDhDrNoaD
-	ye+jNEwm4kqAq1oOCOAm50biDTwsKpXdUGslucOS/mCaylAafXfAkpMiu/NOZDA1e+d/mAluYNj
-	WlunlOuK23jsjxdjsvKSmGIaFRxHBX9cLh1QIrJelqNJnB/h+lK6J9HdfZ8QPjVhucmgwxkBj4W
-	PiTGSLNVB5j1wm9SMRSyzBOGQSwUqUfIHsYMhIBsA08UQ+MVGw8XoxhCnozhuIBgmnTe6joirOm
-	6g1FzC1QLJyCPbFHzrG17rrYTvTeq1IpO9fe2g5Av9woa7q3oddREEpWIWMwwEL6aha0DRt/NbM
-	C7e/7qp1kVQNrRLKkWo13OAA30b8ugDGap/HTNt2k/wqjXDL9qSHkZsL7N59XV+1JBkPy81gOxl
-	bz/vLUj21201W/SS46TfpnM0w/D3fpGLm5/6a/CEymg7v3TWxg74F79jBmwvXe/U+UQVE51HKmp
-	aeI9mTBB9uNeYHdyosswd3rLABezOZ/Z/1lqTI6mimIRlwFYuKq5nvVj2SfO97PdbT0qEChcmjy
-	9axs+/bDXKHzpkoH+f8Ud4VJZSHMig==
-X-Received: by 2002:a05:620a:a410:10b0:944:ee18:4c08 with SMTP id af79cd13be357-944ee184d13mr372543685a.20.1793530939091;
+        bh=vkPV6YSxtkYsoOzrdGHIvGfbh62bvhqTezdgydKu0gg=;
+        b=pn4TZxlnQr/sLOT2zvScUg8iI8bisGoFkJJ9nWtw5BzD3Ba3wX4iu+angXunC/lHcD
+         MSdnpD0t3gKVgzkMFZsW5iFuiv+wWTnkt4wmTE+YA54r5b9LTzFwJsC7uqJILsFQ7urM
+         4Ygz8VEmuIAFIook98jbTRR3ytlWCr07gSScP18/YQaT/7q6h0IpedreqAvRgamfq/fy
+         nnGmPg5Cda/HjBo9/EN3MERjZWZuqrw0l+YR6SyE3edg5MXIr4uZXo/ggVjgmHSWegl+
+         jWoAiyAe6vf9zl/0D/tQXLelTeTrabnEs97Je2hvmjpDKm+XYflq1ZkomZn0KFAQEfl5
+         qGJQ==
+X-Gm-Message-State: AFq9FYKqGdpwF1fQq9V1y8d4X5NYVMGt7lgmRk5ZGTHvIhhvTTjlncvH
+	b5y6YYxbfrG3lnlSfZKGfCw65J1s8Yrug80HE0f7gdSQmkzsYvAT657YG87zho0K
+X-Gm-Gg: AYBFou3F177+sY8vFEO5y3DIZ0bMVy/Coya+7/Jy2nUlY8ou5FaX2PC+dRhuo08e90t
+	qspuPuO1Cknlt7C8Fo69F8cQCLyJBcfgPtAQGrQYYUBUsw4ZhZuFbRxfWoeCzytAylaXdoCuwDg
+	qz+jcm/Ei+cIuyn2iior5SNC8oybEJpAcmxkPj9PwT94hRO4369npREHvF7N6UZC3lCdHDtJ27L
+	NVrWryISj7pETap5GWef7wNPpzxUmQrlsKlKop+5eAnJRYcGB9eq+85vCQIuTZu8yYO+kCQ2sgV
+	5t0O7tKVvgebI2c65jlPt4uwT8u9DAX7vZjPbmIRZ9QXhkm8V8hSzeyuiXhxNm0YhEJCGoVkhjD
+	t7Q134zQ6PFZ784utncN/wZVjYVBgEcpq4/Ivucqu7eggNCn2U1fMAklZfqAhA3xUiF3HYLr5rQ
+	xQllEtc9cKkhOmwFkZIXSSPTAd0MqISrl436pIEpvtlSexcqlayIjPzKm8S8xkt7uFidLlTRSGd
+	qifUW4xaItETsfE1jQCeqFpIT/2k+hjGWO2UnexX1RWap/s08yv8SzQQbRiLRow34yKAk2O8Tcm
+	ULScI3Lzjl4jJ6UMrsgdhr/bgRgvLQ==
+X-Received: by 2002:a05:622b:29c:10b0:547:9b43:b1b1 with SMTP id d75a77b69052e-5479b43bf2emr3638951cf.12.1793530939994;
         Sun, 01 Nov 2026 03:02:19 -0800 (PST)
 Received: from [127.0.0.1] ([20.81.159.8])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-944258470cdsm579574685a.16.2026.11.01.03.02.17
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca804eee2sm63840866d6.27.2026.11.01.03.02.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 03:02:18 -0800 (PST)
-Message-Id: <0c9bfa3b840e4fa49f481f67e3e96bae1b911418.1793530936.git.gitgitgadget@gmail.com>
+        Sun, 01 Nov 2026 03:02:19 -0800 (PST)
+Message-Id: <15e79c5cfcd9eb59b79daa1aee7a54f433d8509b.1793530936.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2478.git.git.1793530936.gitgitgadget@gmail.com>
 References: <pull.2478.git.git.1793530936.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 01 Nov 2026 11:02:14 +0000
-Subject: [PATCH 1/3] ci: use apt-get in the linux32 job
+Date: Sun, 01 Nov 2026 11:02:15 +0000
+Subject: [PATCH 2/3] install-dependencies: work around a permission problem
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -102,32 +102,34 @@ Cc: Harald Nordgren <haraldnordgren@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-The linux32 job prints
+When replacing `dirname`, elevation is required, otherwise the command
+will fail with:
 
-    WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+  + ln -sfT /usr/bin/gnudirname /usr/bin/dirname
+  ln: failed to create symbolic link '/usr/bin/dirname': Already exists
 
-twice, once for "apt update" and once for "apt install". apt is meant
-for interactive use. Call apt-get instead, like ci/install-dependencies.sh
-already does.
+as observed in
+https://github.com/git-for-windows/git/actions/runs/40223871341/job/121274294974?pr=6473#step:3:909
 
+Based-on-patch-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- .github/workflows/main.yml | 2 +-
+ ci/install-dependencies.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index d488fd10db..b564927e2c 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -449,7 +449,7 @@ jobs:
-     steps:
-     - name: prepare libc6 for actions
-       if: matrix.vector.jobname == 'linux32'
--      run: apt -q update && apt -q -y install libc6-amd64 lib64stdc++6
-+      run: apt-get -q update && apt-get -q -y install libc6-amd64 lib64stdc++6
-     - name: install git in container
-       run: |
-         if command -v git
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 4b1733ad15..ed2d09a0a9 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -80,7 +80,7 @@ ubuntu-*|i386/debian-*|debian-*)
+ 	# See <https://github.com/uutils/coreutils/issues/10508>.
+ 	if test -x /usr/bin/gnudirname
+ 	then
+-		ln -sfT /usr/bin/gnudirname /usr/bin/dirname
++		sudo ln -sfT /usr/bin/gnudirname /usr/bin/dirname
+ 	fi
+ 
+ 	case "$distro" in
 -- 
 gitgitgadget
 
