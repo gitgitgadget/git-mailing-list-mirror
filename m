@@ -1,93 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793522701;
-	b=2tXA4QpW3YoMh1pcx3kZjENGvitC3nYvNFwfqJDcTBV6hp+tSTyyC7FPsjV9W1wqtSTQ
-	 Of5cTqViW//JhLcZ3D6/ndkfYNBtI4bjQMGPNpxZnbh+DoqOasijI+/qLsbISuO6MCVpw
-	 N4QOnUyB1/XUWhsf0saTFg6h5fdx8Tl5A+YGll0VFRZP4MIwwJD3jeWhr1YHIkb2gTqA2
-	 PfW4Gp9KZ/uqqGmncDgwnOq4TDrtTtA6rfmcP/Qo2xxhN6zLTYkCToG8gqe3elKQtp689
-	 CTtCpLKQD+wQXSwmWqHMVtE72vy9TQbhqmWoNoZjexqbopLmr7vNKIVZo52GhPcIhRw==
+	t=1793522702;
+	b=Rh0Tej0RuhDPoNezGIBIZWSE0ZBXCOYc4s/sDpl9oU9fPbiA82rjhn9auJKh3IwY0/e5
+	 Tc112dKcdbw2fCprBmO6rog4/zhXQjAKdImNpH8RE72F25eDLc/vc80WHulbenSF1SGL1
+	 uBp9ma1EfUFm5wHxCOQeJJMBp9UJETvaXM5clP480n5IFL3Mf6CAWbvAh3uoflhy1vtPJ
+	 bTbi1SxSck49BX4KVtlHyp+fAkoWO6Tti4GL9IGJmdN2Rf84tY7RLDv27COhr2XwhsSb4
+	 4a9U9Wy2dMOQ+FB3dtvlL3kRGEmEeXGiwVOaKKrvfGKQzbnPH6lyjSgqgk4Mdr2x3iw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793522701;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793522702;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=HG4jSdlIW6vaY9/8cWolqytCrm6nbtCOV9zrhEfw6l0=;
-	b=O76/jaafSTVSj3cMGW/2VQaZai9atMKChabSG+ePboYQX+ZOXuhSd/EO4He4jiJ41dfn
-	 /P5fd+vXV0pp+jVHU4lmYQazwCM7SDBrCRVf/eo4pFVBWcUNx404KN97MoCbOfqev5TI4
-	 1RwNQJezHqSjrwwBt3ppXXY0zPczOauLDLLbKFyPtm1vP9w+Rj3miIKWq+4l6SCbPcs5x
-	 ouTutm9xSdcYbn7jB6+BsloNBv+Vu9fzExVAw1hBvCdxZ2Y//hrvkWMJqmpC1Syv+yczu
-	 hnK1rNGFIbCaQJD+pBnK2J4kWe2gViz5cB8TDdWglyeeVygJiVhiQi4jSYUooyECWlw==
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=R8HwYrlKXNsNuZzZQSnKn4vJj9RrE056XnL6lkokTp8=;
+	b=Zx3+Mw6LWjmTolmis1FF04LpVWzQEkabWiZTHbSiU2X1i1neo2Erb7qYJp+eAGqSZDVk
+	 iYGsVGi6m1r2s1Tf3NmE8rlKKnok8IGCCAq3/Gc/RUXrLByOdY++tEV0zYuwmOwSxxEyB
+	 bS4STnL+U/bwcbJTNMKa22xo6k/mnbYJJVB8BFQ844/LIJzI0N99+c5hYVflecvbVeVtw
+	 qKNFDuvaR26xQuMLuHoqFugVyN6UrKlxatzHT6+8QLdGN18JLKXSGJPpb6jWDbgR7H0AK
+	 5I3nGG/k6X0QfSaoQ8wuzgbDmcIVQST+apwdtMaLNSpPC5mwq2BXaqg/XHiWDCqy9tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kj+3thyF;
-	arc=none smtp.remote-ip=209.85.221.45
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rnczWKeJ;
+	arc=none smtp.remote-ip=209.85.221.41
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2B4606A324
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 08:45:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A2B4606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E43606A32D
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 08:45:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88E43606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kj+3thyF
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-48dfc0421d9so1698009f8f.1
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 01:45:01 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rnczWKeJ
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-48c5358fc28so1606969f8f.0
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 01:45:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793522700; x=1794127500; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=HG4jSdlIW6vaY9/8cWolqytCrm6nbtCOV9zrhEfw6l0=;
-        b=kj+3thyFLsEQT9p9mWdsLexgZ00Y6odaz4b9w8y+wcWBOFyXSboTuSX+vUignzDgO7
-         wyo36OorFRf5fdRp6njU1fNn+TpJxgl8xy0MZUAgzzENZtRY2QyM6im6vdc3FOC+DnzP
-         S3Kvoib8zI65XBoWJNabGfb2A/3BQ5HiFxgknfpDQVJfltro/zLBFECsmmEG1UAnOdoB
-         slfwnD/k4ZwF+r/y3g0MR+mP0PTFQIV5hscSe5x2kpdSCKJH23tkpXW9J6lLSXR654yr
-         YfGgu1cqz6u12Slvl8TV/+bYmfJC+ETBUWVjtpHuS2tEiq1b5hd8lGrhB8Zm7pSncB+3
-         Xwjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793522700; x=1794127500;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1793522701; x=1794127501; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=HG4jSdlIW6vaY9/8cWolqytCrm6nbtCOV9zrhEfw6l0=;
-        b=eTl11wqZ7MEyJResuLMFygBstZhcYBv5Aso/P6SDoXt4Rwz9oBbhaCFq+D2FAOb4bj
-         fkdC6xGxKyqlDlhHVGWiv/w05fnDYcLCYMdZX/jL8As1BkEHrU2ZhphxOI5z+wo3xsLT
-         4j5I59btyjsto0MyFNroVYbgoB0HWknoYmQhQRV21g2SS2SV3FMgOv7plAvkKWA0LpVs
-         YHR+9ewVUrwtD0y+sbiNuFOgRZ9h1lpUCU/iCtNljSe9sC/GwSFoqC31faY7JSNYC1OI
-         ozlM1Z6Tc0XR3wnz4Ur49c4fhg7sn6YRr+UtTq9nC0J1zUxOYnDoUkcdlUhO0Eize1+t
-         PP4w==
-X-Gm-Message-State: APuU4Z+/DEHT2LSeCeCD3Gof0jBA+DY+gmgOOJVzI1zUVNKGwRgglEHu
-	0Yj32OxZKfXPAMI+0/wicEQCggAGNsw7sQ85aRyPY7xIMBECeVu1C/gqe45UZNM4
-X-Gm-Gg: AYBFou0aw0SqnLgD3oArV7cki/ncdTAfiXdtIvCkSZonihJVYgt+vohzLO2wY7vtrRC
-	4IoUCh5/tN6UkwWU1zN91QFMcqnFCOGqEBe+ZysiUIEdXIF0P5VZb1EVTdhX7ojbGu2WxcxCCB9
-	4VQEnTXVVz6nl9e+XRc/qpMBGQwE2UuGWHPT/jaKWTCGC2+FaIM1Lk3lYVmIFrt1qet8jEr2puQ
-	EcG9urmXaRk50LXZeLsa0g5ZgKOjenQPIj1ika9B7y99iAgehGCNQlE8mopAfKHS1mGJOwGmKgQ
-	G8uogB74JZhXktIkDKfifEKKpXpnOdUnnHD4uY/TMIdJAXKVceKzxNqX4m+3bY8WknWr7fNU6wP
-	DbqD0kcbskhPXbzoxQteS1tA7XPkdU/9s5aku92qBHMlBN4ETEI0a+n5gRvtlCfqVgQD6CC6WI0
-	S7JYDVK3Ub6n8nVTbIrCXHdXhHu/Pm+8vdJczAz0ugSzZct9l6tCGPL5EyZ6AXoll8z5UTmZK8R
-	rI6RED3qldYwM5OfzpUUqtXL4/SZLbuboDxXBd5L7fGHULGhBhul50fcZZpQvLG/FrmgpGz0B7P
-	8G/vhcZOHE+47H5l5i6dIsh2MO8SSByPVPmhj3VG+5VRCjmbx1Ea0I3XpglRlkw=
-X-Received: by 2002:a5d:5f85:0:b0:487:21be:dcc6 with SMTP id ffacd0b85a97d-48e6e5008a9mr15314407f8f.21.1793522699594;
-        Sun, 01 Nov 2026 01:44:59 -0700 (PDT)
+        bh=R8HwYrlKXNsNuZzZQSnKn4vJj9RrE056XnL6lkokTp8=;
+        b=rnczWKeJ9S5rNGD/cCSFOgOLfzj2oxsHEgGelHxqvy5qdpBffT61a+43fi7f9z2z8Z
+         Knr65MPW/ieLMLy+CdZXBCqh32xW5QHyQjJDey8ovMmgXOomP7FJPX5PpmO356vZPaN2
+         CNZMDSZaQSDyzTu4s60Gei/6sQ++EGMfCZGCZ8DHFqmp/eiosdEXLJlVFBuSFFO4Ov36
+         g/HnA67HiBtrvNZf7utehPCXDqWqTGgj/23H5Sgv3DNW8LCB6ji70qmZ0mXyb7zn6R1+
+         GTAPqIvZwJp8Y9XttSQSsjvAvtc8UX+cbJ1ygWpghQl6mg1dtjmyHTTNXkapdLlEtQF1
+         4f6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793522701; x=1794127501;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=R8HwYrlKXNsNuZzZQSnKn4vJj9RrE056XnL6lkokTp8=;
+        b=Jq1ABMqDAYBqdcDQE1eBW5N7yL/cvRTJoao9p5bWq/5LtEV9JlktjdzeN3Yy6zCmXC
+         qqINK/6clUdRTCJ26mOC836Y5vzE6w/3F0Lkg3+D14Su0zh+lkCQQnklVbE4Kf3dg8lr
+         yJpVjzvouLZ5Qg3uxZItxDOJ0fNm+oidEX6SHJLUKNe05W5n1bmzpHbHJe0jujfrkigi
+         oK+M58E33iO1g4EDCTbee7wmHpTXGGMXcWN11c0ZeN8LyMpLfAxkeXaS/SVuxWMiOKND
+         p+Nc2yTM/jC97o2KXMy47yNWNyMoA82UxwsCUOXVlMTMcZ992I5h6dZDl2VaJ0Ee1mnb
+         PKgw==
+X-Gm-Message-State: APuU4Z9pU+AI0AXzf778qP4o6YazsKdaE+lQzRpuyvUg6ug8qHByEM7v
+	iDJ3lI485UDZzmujA4tBK0jVqdRWFNi5y3HJXzdZPOrGHAmSk9FiSJ5LKbfAP141
+X-Gm-Gg: AYBFou2IGlpn+gQuRP4FM41583xEM0W+1skxTg8k2R76E1JMatIMU9casRAhI+WTQLD
+	xhMspCFlETa/PdEy+ZNGnOqpIEAXWsSSvwHk6L9M9d9XoWKJsPVJ2/ZWmgYz3jaEdUFvfLDkR91
+	YVjmYT+UAml0S9Le2gXKbJnyYZjl0lsLLdjaZ8Xvt6k05AAlWdqXyk8LGJwRxgYTYleFdgCS8FM
+	Qs4wAkTnB4hfDuwE/sF1GU9N0052VFZGNLkjCXHyb8/G+wYnnFqKWr9mPGtq59sXOT6vbRlDJxJ
+	6orjcfycS46g3jEDYafJnpcGIqczFeKvvs4G2CPZJC8BO5qq4EEetqf80Gu+eRuyQiU/CHNmuA4
+	r5hgCdH7fJO/xtCcGbuYSjEOWZ9hXbh9IH/CIV1LPEPj5a/tD9spqnduRlZ+kLBoJC/Qc/mmwT0
+	Yl6wji0uOE7+UXdRGYbzhnT74hDyZhxa5+7To7iUkIy/3r3jK8NmCLrlrSZWWzBBH/q8pUpRYYy
+	DqZGDOKrROLszZtKKD2rFu63lVawzj2AP8i1cksgMaJn7/TPn8XtpdvYu3A45aUhXvEfI0ZgTgv
+	SC03CAIFPkh0l65HTh1+ulunI05j4fXSRbJ5S7oGSBNqCuwEoLw3S2/kQyPHCOs=
+X-Received: by 2002:a05:6000:2997:10b0:48e:5e63:bd23 with SMTP id ffacd0b85a97d-48e6e2ef96fmr11473279f8f.30.1793522700727;
+        Sun, 01 Nov 2026 01:45:00 -0700 (PDT)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b80ecbsm13330965f8f.35.2026.11.01.01.44.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b80ecbsm13330965f8f.35.2026.11.01.01.45.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 01:44:59 -0700 (PDT)
+        Sun, 01 Nov 2026 01:45:00 -0700 (PDT)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
 	Hamza Mahfooz <someguy@effective-light.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 0/2] grep, diff: do not silently truncate sizes of 4GiB or more
-Date: Sun,  1 Nov 2026 09:44:55 +0100
-Message-ID: <cover.1793521916.git.gitter.spiros@gmail.com>
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
+Subject: [PATCH 1/2] grep: use size_t for the size of buffers to search
+Date: Sun,  1 Nov 2026 09:44:56 +0100
+Message-ID: <bdf2f51187093544959ba7028b86187b56b2dcaa.1793521916.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <cover.1793521916.git.gitter.spiros@gmail.com>
+References: <cover.1793521916.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,46 +102,122 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series continues the search for truncated sizes on platforms where
-"long" is 32 bits but size_t is 64 bits (64-bit Windows). This time it
-covers grep and diff, where a file of 4GiB or more produced wrong
-results without any error.
+struct grep_source tracks the size of the search buffer in an "unsigned
+long", while grep_source_load_file() reads worktree files into memory
+using size_t. On platforms where "long" is 32 bits but size_t is 64 bits
+(such as 64-bit Windows), processing a file of 4GiB or more truncates
+the size, causing "git grep" to search only the first "size mod 2^32"
+bytes and silently miss matches beyond that threshold. With gs->size
+truncated to 16 bits, "git grep" and "git grep --no-index" find nothing
+in a 100KiB file whose last line matches, while grepping the same file
+as a blob finds it.
 
-- 1/2 grep: on the working tree and --no-index, it silently missed
-  matches beyond the truncated size. Now it uses size_t and works,
-  for blobs too.
-- 2/2 diff: on the working tree, textconv, --no-index and combine-diff,
-  it produced a diff of a prefix, and a patch that truncates the file
-  when applied (as git add -p does). Now it dies with a clear error,
-  like the blob side already did.
+Use size_t for struct grep_source.size and across the internal matching
+engine functions in grep.c and grep.h. Additionally, remove the
+cast_size_t_to_ulong() call in grep_source_load_oid(), allowing grepping
+blobs of 4GiB or more to succeed instead of aborting.
 
-Of the remaining -Wshorten-64-to-32 warnings in the diff and grep code,
-these are the only reachable ones. The others are in xdiff internals
-(inputs limited to MAX_XDIFF_SIZE, 1023MiB), in buffer_is_binary()
-(which looks at 8000 bytes), or in places where the size can't exceed
-4GiB. Widening diff_filespec.size to size_t, so that diff actually works
-above 4GiB, is a much bigger change, left for later.
+Triggering this requires processing 4GiB or more of input on a platform
+where "long" is 32 bits but size_t is 64 bits, so no test is added.
 
-No tests, as they would need 4GiB of input on such a platform. Both
-effects were verified by simulating the truncation at 16 bits, and the
-commit messages give the details.
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ grep.c | 16 ++++++++--------
+ grep.h |  4 ++--
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-It doesn't depend on the other series in flight and merges cleanly with
-them. Based on master 50fe5cc63f.
-
-Elia Pinto (2):
-  grep: use size_t for the size of buffers to search
-  diff: die instead of truncating sizes of 4GiB or more
-
- combine-diff.c  | 11 +++++++----
- diff-no-index.c |  2 +-
- diff.c          |  8 ++++----
- grep.c          | 16 ++++++++--------
- grep.h          |  4 ++--
- 5 files changed, 22 insertions(+), 19 deletions(-)
-
-
-base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
+diff --git a/grep.c b/grep.c
+index 1d75d31421..a8c01b4737 100644
+--- a/grep.c
++++ b/grep.c
+@@ -864,9 +864,9 @@ void free_grep_patterns(struct grep_opt *opt)
+ 		free_pattern_expr(opt->pattern_expression);
+ }
+ 
+-static const char *end_of_line(const char *cp, unsigned long *left)
++static const char *end_of_line(const char *cp, size_t *left)
+ {
+-	unsigned long l = *left;
++	size_t l = *left;
+ 	while (l && *cp != '\n') {
+ 		l--;
+ 		cp++;
+@@ -1454,7 +1454,7 @@ static int should_lookahead(struct grep_opt *opt)
+ }
+ 
+ static int look_ahead(struct grep_opt *opt,
+-		      unsigned long *left_p,
++		      size_t *left_p,
+ 		      unsigned *lno_p,
+ 		      const char **bol_p)
+ {
+@@ -1567,7 +1567,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ {
+ 	const char *bol;
+ 	const char *peek_bol = NULL;
+-	unsigned long left;
++	size_t left;
+ 	unsigned lno = 1;
+ 	unsigned last_hit = 0;
+ 	int binary_match_only = 0;
+@@ -1735,7 +1735,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 			goto next_line;
+ 		}
+ 		if (show_function && (!peek_bol || peek_bol < bol)) {
+-			unsigned long peek_left = left;
++			size_t peek_left = left;
+ 			const char *peek_eol = eol;
+ 
+ 			/*
+@@ -1854,7 +1854,7 @@ int grep_source(struct grep_opt *opt, struct grep_source *gs)
+ 
+ static void grep_source_init_buf(struct grep_source *gs,
+ 				 const char *buf,
+-				 unsigned long size)
++				 size_t size)
+ {
+ 	gs->type = GREP_SOURCE_BUF;
+ 	gs->name = NULL;
+@@ -1865,7 +1865,7 @@ static void grep_source_init_buf(struct grep_source *gs,
+ 	gs->identifier = NULL;
+ }
+ 
+-int grep_buffer(struct grep_opt *opt, const char *buf, unsigned long size)
++int grep_buffer(struct grep_opt *opt, const char *buf, size_t size)
+ {
+ 	struct grep_source gs;
+ 	int r;
+@@ -1935,7 +1935,7 @@ static int grep_source_load_oid(struct grep_source *gs)
+ 
+ 	gs->buf = odb_read_object(gs->repo->objects, gs->identifier,
+ 				  &type, &size_st);
+-	gs->size = cast_size_t_to_ulong(size_st);
++	gs->size = size_st;
+ 	if (!gs->buf)
+ 		return error(_("'%s': unable to read %s"),
+ 			     gs->name,
+diff --git a/grep.h b/grep.h
+index 13e26a9318..0bd705dfc0 100644
+--- a/grep.h
++++ b/grep.h
+@@ -212,7 +212,7 @@ void append_grep_pattern(struct grep_opt *opt, const char *pat, const char *orig
+ void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const char *);
+ void compile_grep_patterns(struct grep_opt *opt);
+ void free_grep_patterns(struct grep_opt *opt);
+-int grep_buffer(struct grep_opt *opt, const char *buf, unsigned long size);
++int grep_buffer(struct grep_opt *opt, const char *buf, size_t size);
+ 
+ /* The field parameter is only used to filter header patterns
+  * (where appropriate). If filtering isn't desirable
+@@ -235,7 +235,7 @@ struct grep_source {
+ 	struct repository *repo; /* if GREP_SOURCE_OID */
+ 
+ 	const char *buf;
+-	unsigned long size;
++	size_t size;
+ 
+ 	char *path; /* for attribute lookups */
+ 	struct userdiff_driver *driver;
 -- 
 2.53.0
 
