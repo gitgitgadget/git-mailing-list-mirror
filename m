@@ -1,87 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.179
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793575771;
-	b=1DI+Yi1voCup7Bm0TIaIiR1StZA/YLpa2Cqu3z22aMz7K3bfGcwnGoa0UcuOHsOZ9koy
-	 K0YisZZ8FunRQPERV+N63ceViNMGzLnEUqP4vqJiErgYcBeOoLcoYANhzVKSY6M8zPJyU
-	 jKVEaBl/DGNH6O/oqhdRH46Jpc2Y1pO6KUsmT6inb9TndqyNX0dS4jcnHLxAalnxowg3i
-	 z+gTMsBT66LXXf8S1yeq+4Jb5Zjpr5TR4L5nJ+RNvuVSMnBRWQ4roxCGftY/ebUKLK9/n
-	 NlEdsXKz2dTMM9XjCJ3EsYjX7Os62fTOgG6bLsQKLg6Q2p8g0vHF9e61VHldv3IeS/Q==
+	t=1793575772;
+	b=l92m7DHmDmKIuePn+fffU8tPiCB0Eg6fX5i7cWRRz3rnR1vWGw8UCL7dN7VcO9MJTbjC
+	 ziAH9M/nZuWd97lNLJB3AEvE/SS+8kpZzlsFiVE/jWWxgAEpQDjm9pXrFXi8RHU57C0Ie
+	 X+HUG5PQ6AlWrTQ24a/UlMIxaWisNywIKVIx4zMT3kllyENp08bWhaWAS9nXM9hSMUo1e
+	 l7MbF7oYtNn3X3vR8Cn3JYXkPXnCK2VEaJRhHeK0IVc+waGO+iGec/Ra3tVPdC4gMKCbq
+	 nFNilQFuiryyObp9BXJk/qhcc91qz/20nSd2c1A+0mLQDW3ijbEnthP/hH+N9Cwf3Qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793575771;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793575772;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
-	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=jM6We9XT6mltkx2hy2KWHTcrXFAkPdi84oNCzk+2jTk=;
-	b=C7wQLkbuadboSQQQDNMC9kB9LsaXJ50A9/BcVa22/wbn/qS52LTPByfGfpg/pup6YRd2
-	 ByYsTLnAlXbplm2MJRtzNIvbaJRY6DpUzlTp4wYojNX7TG5HIJLgzFR+WCAX56YXdawOd
-	 1UbdHN7N4ku3wCNCn+uEO3PrbVSnuoGF3AQq4PwHvY7zlNBROm68Jfi+HFYWSf2LAb0Qu
-	 dXnTgTNIOE7SIyZ/3oHNRcz0mVH5ueJpBY+icrKOkWowPUFH2lTLzaVxPOOhu0ACKhCdt
-	 giilCTP4uzlxrdxzNwHelDqr5nFwRauYp6Mj2m+OJU7iDq3vXjn0kx0GYdg7I7+8qdw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 References:In-Reply-To:To:Cc:X-Mailer;
+	bh=PFdKUqeczDjuq0Caek3TqRcg/mtLPbJevkQUdjo2Fgk=;
+	b=nh/abOVQ6B5Rmy4Z6e99BJhYm+ZE+/Rlbad8gvNGB1NfZP+Ucsxqc3dwcbq+f8YhXTKr
+	 LqkLWoA3zIyVAkfX9bG2X99xfjvxkjFLfoSirHRrNKScosON2wE/ifhMz3aRc9KJF3YX4
+	 Kvhsx6dndouIwtuX+RIEyX/gZhei1h/m02CmYhxmHGpTJaNBlHu/jiGgviYcEvck/uvPK
+	 Qh60gvT3Ti3VKPxEVPnrYlW6ZCTp4zUVGzU2Xhuo0H4QihJIUKBTWeiMrcMazhnSwRYXR
+	 vkVLLJ3oLTJSFpKYqDflI/kuJjcm0xo97d/JrVkP9S/MXgCiy7SlNyYpZhSaGjy5k2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EcjgvEj8;
-	arc=none smtp.remote-ip=74.125.82.170
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qr2brWKf;
+	arc=none smtp.remote-ip=74.125.82.179
+Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BCD606A324
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:29:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87BCD606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6064D606A32C
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:29:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6064D606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EcjgvEj8
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-36a17a332ecso3983630eec.1
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 15:29:31 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qr2brWKf
+Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-36a1947498bso1796703eec.1
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 15:29:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793575770; x=1794180570; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=jM6We9XT6mltkx2hy2KWHTcrXFAkPdi84oNCzk+2jTk=;
-        b=EcjgvEj8fpeHk+M7d4K+9kqazgp8nBHC/LJ+Upd5LpbTrGN9iFn7re7w5ZJxUhZCRi
-         0cTTP9H7PYPiRCRGs2eKXs4KSLO9H6kO9/IaaMclZ4dUwic3VAvDWFN+iPsRorsbxCJQ
-         cpp7k/QvjRPsVAKx14NzAkUyINJH80o0mMJbW8O4ImBvzl4dPH1N+kMQ8S+IAVg1/1Oq
-         aBwS/G3+ZJZcQwztSeForawsknkThGJqpWbWy9oKZnIw2FfGzne6kK0PactLgqappXdh
-         ZWkOC5BT0/uQiwcpl+6qsgYSTONhf5C8/p6CLKY1wxtDlzjHHIED+tNukal9DhAMTtqL
-         ewBA==
+        d=gmail.com; s=20260707; t=1793575771; x=1794180571; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=PFdKUqeczDjuq0Caek3TqRcg/mtLPbJevkQUdjo2Fgk=;
+        b=qr2brWKf3c/ztg4AWGjkaTHPKIpipHb7JniAP48kv5oS8S0jevFswU/LjRQw+I93WJ
+         yfWN7/ppkWalWZp/uV/CDllx7VWo5bpKl0ResWcQF1L4Lu5Fe8wEAVR+DhbehYZ5PS0A
+         OxXf4XpMCbCtB+78XyVMQq2bI+a3XMAx3uBaG+rUWKXztozbjCDNK9KEErwTM/JLAQRH
+         Hqvlc6qrHBXgG5FJuhqpUpW92OiFm/50GkYdgMxSGUn5EEc9FiGOzqShJYQha163wt86
+         k/Lvy6KQMiGqBfTbcgo/IWbEYDYAMt90zW0zC6wuY08gXsCB0dgba9Cx25TZ7d+KePGv
+         bpHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793575770; x=1794180570;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=jM6We9XT6mltkx2hy2KWHTcrXFAkPdi84oNCzk+2jTk=;
-        b=RVUlDsSU01kxZzgpmg1eJMQClSgCetwXhUllDFUVxovDTRIfpXxPJPPMTEqlbfxQGa
-         tMOlCPNHsZICuuTITU8hWaFBpItDF+q+UNS5qlbJaLoBw0W0vT5FD2meBvJegQN5+BP9
-         o18tYB8ACfzBt5bv8sRnI8fKVY9CwlG7SU91yk4Okj1SnDGk9+loq+na9N9qwBD2g08Q
-         lbPfFj7h47OeLBplJhbFLDwzgraUEu0eGOio3CeHp9ClvquKwtwbwROb9YKgpZfJCR8r
-         npFiNhny1kpSce5Pfkh8Dx/IzAwzLOVYc8iBzqIi2yJKs7+4MrKPkjsKIqRZdVtRQUdQ
-         hxfQ==
-X-Gm-Message-State: APuU4Z8wIP2RwyPYVUuzCvBHJ9XWRQGPlmlsPQX5U089WNRYp00QrsOF
-	HLjRHJj7VlrLPXQ/zWPGRWV0R9gWKD3JSe6VoMXcL8GsXvGfo+5aMptw
-X-Gm-Gg: AYBFou0l3GJ/mtdjnusXiP6iNYLPIsU51UXTdKEFtVhHZsL6z6JLL12T/jjT3hD4QJg
-	0vIUFx5YIYz54iE30LirfrueNY8XtZtjhK+dgdNoe9SQ48+CJbb4JSr58lDno0VWK0IJTxAWxx8
-	UNdMNJWNs3fZFVTtB6MVZczpgULoXQFvHQjZGnzHygMkUuZCxy/tiOVzK1k6EEZ/McvyybxCMTH
-	iV6SuU7ZkLmcwxEDAFoOG+2sQxa2ikLkdIlY7VrMF2w0O7mtD1P3g5UA9qBigZhGR0P1XFj1YKA
-	eDBK2kkzB3C1hmik63/NjV0ZAcj/1AgbQb+G3ibEYOPMBIkW9qy6bn5QxB4xeZA/VejFrSG3Yjw
-	gh22ok8ClHbCAr0/HxMNQMF4scrqoNo/Dq4EUFO+WJMvdkl9bqrTahstmwHzfEepkeRKsoAGY8S
-	SYktm80ZmsZxDdUOzcxTjt+rhKgxmD3AsBnD4lbvPLjCbSVd/7oTZGXmPQANSwHr6TXWbk1U1gq
-	FkTUulE3Vp2UH5EBBfOTM9Fb57O8KtZ8ofxOHzmiTP/MTCYa0DhKS3XSuWfX71KWqzB8Hzpr67O
-	MTzPHGthiXD2RQOSqn+eP6BKcKA/nm10MZ0o
-X-Received: by 2002:a05:7300:881c:b0:369:ec31:8fd5 with SMTP id 5a478bee46e88-36a42225546mr14336906eec.3.1793575770234;
-        Sun, 01 Nov 2026 15:29:30 -0800 (PST)
+        d=1e100.net; s=20260707; t=1793575771; x=1794180571;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PFdKUqeczDjuq0Caek3TqRcg/mtLPbJevkQUdjo2Fgk=;
+        b=mccjQQyQ0uwcaicTSA+mX3d+FRmhQtfizGCIP+OwRwkM21wiu0kLBqkILKjh16pOeO
+         X7ovMkicCQEyWu7AV+Y7Z9yog7vsyAYsxekXMkJSo/Opi1u+y63x8Q0q+bxtKtVMVIZg
+         s7GTGVQFneMDhplRJZ5RjNOJdqaR8S2pTcIhCd1B/hZeUgOUlJxnjoXXxGAkcG3U2ztR
+         jH7PNx+d5TTsL8WwzA2S3cd9DVH3AOTZvNlGIvQDB4ff7WTi3KbBOQMZiL0hXNoYV9Nj
+         RjRh1SbrRUOyorSr6rG57pkpUIgD8J+dXzwQHX37jnSCEmaIhogDU3ebEQsE7OxJU0K7
+         7Leg==
+X-Gm-Message-State: APuU4Z9Q15t5fxVfH/0+VUSLYItA2AVy8B0TNZRESOBmkvT7uDSB48PW
+	Kc1Nw+mupSAPJ5FzgAnChkFW9K7dCAm63JKjfh3/fe8nUeY0TR8H2RYN
+X-Gm-Gg: AYBFou0N2+ax/cJNW7jq+H/mzN4MjhYDWmFUHC3uBodNwnBa4kvXRyqpbZb9WRLmP8A
+	TGG/UWoOY35bH3Ab3fzpCnDJZYiQRNbYaXH9o9JXPrEFCXu7+NXy7lDjQlU6zrC/vsWfrL79c09
+	Tbdj387mJl0NmnojLHNSyNN0Ye77k9IgJoxp25uMvP8NMiSGTv87qCNucsyqlQ/m+dNSUcSIgqr
+	wYGkkMlaQUr2PyPjUDgPp0ln2eiJRZHXMS+eKwfvkqXuQdj3E7yRq63g+Va84gvxFO4y0kDlFku
+	TUIWprYNJshIw0hipl6vXW4DJ9Co7dzoC5B/QNHNHe8KGJDOL6L/h+MqIfqBe3+N8zvusmhtney
+	uOnT+W0+f9o1ZS5dhvsfH/yGdge+wcFubTzLuimXhmw7U6h2CM8Qg2o6RcnEEm9lV8Myz8KAPRo
+	a3gJ1xt+oXwL1WoEesyo7KlM9jaVBHKSQBPohOGD1bS3sRFysTeNprQZ8SSL2qlNbNtGZln0ZUf
+	/1fWdGQDYGz/X4hkiZRVT0Exk27m+IphImFK78mdRzl9ztmGwBgBMlBoRD56tHhDFLxWzI9WhuU
+	Ap1sAtlypcU7AVj3DxIEbIc+cE65oz1E8NU=
+X-Received: by 2002:a05:7300:c00f:10b0:36a:5207:e58b with SMTP id 5a478bee46e88-36a5207e70fmr10146605eec.27.1793575771278;
+        Sun, 01 Nov 2026 15:29:31 -0800 (PST)
 Received: from [127.0.0.2] ([73.222.46.22])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a42a98f65sm30367724eec.28.2026.11.01.15.29.29
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a42a98f65sm30367724eec.28.2026.11.01.15.29.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 15:29:29 -0800 (PST)
+        Sun, 01 Nov 2026 15:29:30 -0800 (PST)
 From: Farid Zakaria <farid.m.zakaria@gmail.com>
-Subject: [PATCH 0/2] credential-cache: fix two races when daemons start at
- once
-Date: Sun, 01 Nov 2026 15:29:24 -0800
-Message-Id: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
+Date: Sun, 01 Nov 2026 15:29:25 -0800
+Subject: [PATCH 1/2] credential-cache--daemon: allow a concurrently created
+ socket dir
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,10 +93,9 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMwQrCQAyE4VcpORvYlG0Pvop4WNOpjcgq2Spi6
- bu7tccPZv6FCtxQ6Ngs5HhbsUeukENDOqV8BdtQTW1oe5EgPH5ZHQPybOnOmnQCe1Jw7EKsC+2
- jdFTvT8don3/6dN5dXpcbdN56tK4/zBVeQHwAAAA=
-X-Change-ID: 20261101-fz-credential-cache-race-4504110c6415
+Message-Id: <20261101-fz-credential-cache-race-v1-1-28f0bac51e11@gmail.com>
+References: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
+In-Reply-To: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
  Patrick Steinhardt <ps@pks.im>, M Hickford <mirth.hickford@gmail.com>, 
@@ -105,46 +104,48 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
  Farid Zakaria <farid.m.zakaria@gmail.com>
 X-Mailer: b4 0.15.2
 
-When no credential-cache daemon is running, two "git credential-cache
-store" which run at the same time each try to start a daemon.
+When no daemon is running, two "git credential-cache store" run at the
+same time each try to start one. If the socket directory does not exist
+yet, both daemons try to create it. The one that comes second dies:
 
-The second daemon unlinks the first one's socket and binds its own,
-which means any credential stored by the first one is lost.
+    fatal: unable to mkdir '<home>/.cache/git/credential': File exists
 
-By products of this race:
-  - "git credential-cache get" does not return that credential;
-  - "git credential-cache exit" stops only the second daemon, and the
-   first keeps the password in memory until it expires;
-  - when the first daemon exits, its tempfile handler removes
-   the socket of the second daemon, whose credentials are then lost
-   too.
+That client then fails with "cache daemon did not start".
 
-This can happen whenever two git commands store a password at the
-same moment, for example parallel submodule fetches over HTTPS.
+The fix is to ignore EEXIST from mkdir(), and check the directory's
+permissions the same way as for one that already existed.
 
-I found this with Rewind [1], a deterministic VM I am building that
-replays a program under many thread schedules until one fails. 
-
-Context from some history spelunking with an AI:
-  Jeff noted in 2021 that the daemon's socket setup is racy [2], and
-  expected the worst case to be a daemon that waits 30 seconds for data
-  before it exits. That holds only if the losing daemon gets no
-  credential, but its own client stores one right after it starts.
-
-[1] https://rewindvm.dev/
-[2] https://lore.kernel.org/git/YCK5K%2FnK4tGnTvou@coredump.intra.peff.net/
-
+Signed-off-by: Farid Zakaria <farid.m.zakaria@gmail.com>
 ---
-Farid Zakaria (2):
-      credential-cache--daemon: allow a concurrently created socket dir
-      credential-cache--daemon: do not take over a running daemon's socket
+ builtin/credential-cache--daemon.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
- builtin/credential-cache--daemon.c | 43 +++++++++++++++++++++++++++++---------
- t/t0301-credential-cache.sh        | 23 ++++++++++++++++++++
- 2 files changed, 56 insertions(+), 10 deletions(-)
+diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
+index 65cc619bec..0dfa11e2ec 100644
+--- a/builtin/credential-cache--daemon.c
++++ b/builtin/credential-cache--daemon.c
+@@ -273,8 +273,18 @@ static void init_socket_directory(const char *path)
+ 		 */
+ 		if (safe_create_leading_directories_const(the_repository, dir) < 0)
+ 			die_errno("unable to create directories for '%s'", dir);
+-		if (mkdir(dir, 0700) < 0)
+-			die_errno("unable to mkdir '%s'", dir);
++		if (mkdir(dir, 0700) < 0) {
++			if (errno != EEXIST)
++				die_errno("unable to mkdir '%s'", dir);
++			/*
++			 * Another daemon created it first; check it like one
++			 * that already existed.
++			 */
++			if (stat(dir, &st))
++				die_errno("unable to stat '%s'", dir);
++			if (st.st_mode & 077)
++				die(_(permissions_advice), dir);
++		}
+ 	}
+ 
+ 	if (chdir(dir))
 
-
----
-base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
-change-id: 20261101-fz-credential-cache-race-4504110c6415
+-- 
+2.55.0
 
