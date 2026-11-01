@@ -1,46 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=157.230.60.252
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793491221;
-	b=Mrr/tDIpi4OpnNFAVlBVgIg/4PSgEpTjJZoi+3/6eSU/6B0+LC33t9gmUH5gcaCESFea
-	 NKNfr3mr6SdtqQymKQ9TyHp9SkZrHVxPmGMamfoaK6agzUM28EiHFmAIuFzGaVuNIRnhr
-	 re5Sp5VgLOW7ZZYqWJ92BmB9CbtmofWYacayfa+hP7Wv0Ora+alnOEO0/gB1uMeWoX8fG
-	 hxcHQS///s221iFk4v5XTHEKO0v56gZzDVLndPCWypEjRTT+D5mRFx+uNF4n+BF7IxW4p
-	 o/0NL4Zy979KobEb5h1g5GxpkCan5Er59y4k7uCP+eau7mpK+E32CYXi2ferH09uJTQ==
+	t=1793494375;
+	b=escgBziUczAcXSOuM+c9+ibUEhwWfz9rH7tRt//wwqow5If2IQRnf8v2mTUunloiIGxx
+	 5RJmJlrLRk4dVgvOKQX68G5QtG/Dtaq7CjZNo/f5/WF2WL+I9v6Rz7hzFrURuyI/ZLmmN
+	 HzmydNCATrJ3HEjLyPfKGVdYs8WJ7oC9bGadIbfSQkLAOusUJejWDrHCEISlYnXAP/idt
+	 PLy1SMi0jY5aLvwlakQ8Fdoi/mkYwm+eq6ogaotmbos0tjZfw8QrldD+zV3gjPtFLxxwR
+	 PB5sHuJ1pR2OlhhdVKvvjqKZjUGTIhuQbDF0eMpUdvIhxenWgxr+a96hc/+SU1LIDdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793491221;
-	h=DMARC-Filter:DKIM-Signature:Received:Mime-Version:
-	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Subject:Cc:To:
-	 From:X-Mailer:References:In-Reply-To;
-	bh=tI8HDrU9llZWAQ7I4Bv1pGlzw+vGSkFTUK4QGXfRG2k=;
-	b=NXXEw6JY8Qeb4qiAzGRwGxFC36JZnu02qzYhTEqVdcl1yvQ1TAQojf3pPR4+yoM0hcpq
-	 k1pWHGQ0xNQLwVWL1tx0/OfMA7Cz3zPudoIZsuVizPps2swaqnsf85zHbTJhGoEoX5kke
-	 xfXeE6H/7WVN8BlhmMkcq05aMXLlzDoKFgsyYJSE0f9AMZHkcxtw1t1WLK66+/z6pDwyB
-	 IyWrCbhZch64EN/pz9zpJR5jaInePq55xh1N2v+ff88O8tVJFCpUJCttw+SYrm/SKJoDG
-	 Yj6TlopM5iz/WcOlrcLN/kVlhFbvH2hbkHAY6AIk7rZI/tW54TmH5BDL2LKL4Q0Y6mA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793494375;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=HhFn7PDpmXRkmDBGS58OgmSd8qngCB7iq/oBoTJe+uM=;
+	b=uOBGVzBlDF/EiD9+I1mlqLFk0wDcBb3uFMIl7DGqIYhvdH0W4QaEo9ZF2qG6soSOD9YI
+	 7lt4Pgr3iAIXhS8IfcJqx7/BfxYnO5DNfW8XNyFeMrf5BTbeaQIY98c//xVcGbFpgrPJm
+	 OTypULHe+Z82boI3ItXEqg7WlfxgV30hbJ3yozFGk+sfxAjLEIPtRYPnKD/EmeHl+xG1i
+	 0TVsg8K52NotZAKtoYBOdpRAJLVzUrPDDioZEQ08KOTWYEB38cQ4y/yCOUWWyhyl47F4a
+	 QX4/SgQdZOG6xkbWme+fl4LTOSne8h8cjWDul/CO4c9z3QHQA1WkkfomrTBk5gZdW/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=lfurio.us;
-	spf=pass smtp.mailfrom=lfurio.us;
-	dkim=pass header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=i99kBhJ6;
-	arc=none smtp.remote-ip=157.230.60.252
-Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=n9PMdJaK;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=fjK1BPfN;
+	arc=none smtp.remote-ip=103.168.172.144
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93E7606A320
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 00:00:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D93E7606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02B0606A31A
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 00:52:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C02B0606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=i99kBhJ6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
-	t=1793491213; bh=TRkc7yRePeZaTRZo7TOZl63JR7qEPkM4w1K1RKy2Zmw=;
-	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
-	b=i99kBhJ6pGL4J7FNgCzGqN2bZndszKPm1+pLfBR3Tp342OTbfeac+t/0hBejfYupd
-	 f8R/yrMzexB0WuTQ5wm7xZ/wPxlnWcIuBWJ0iefPruYqKshcz0apGAgEa1myDTWBWy
-	 /tCUVbLYaKYw24EhSZW8dQA5DoKiuX4+YzC2snCE=
-Received: by mail.normalmode.org (Postfix) with ESMTPSA id B3C3D61512;
-	Sun,  1 Nov 2026 00:00:13 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=n9PMdJaK;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=fjK1BPfN
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 044BDEC017D
+	for <git@vger.kernel.org>; Sat, 31 Oct 2026 20:52:54 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Sat, 31 Oct 2026 20:52:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793494373; x=1793580773; bh=HhFn7PDpmX
+	RkmDBGS58OgmSd8qngCB7iq/oBoTJe+uM=; b=n9PMdJaK9I1dMFDeEc6qfBY7XD
+	3i6hb/PTBTqAFzDWzbDcTO3mPB1qvL8y/jcGLmI9a7kKvMp/tk5zTR1prAB8+noD
+	2xu97y8Qk0n6P6zGPcJWvvN/7OQz5Oneasom40M0guatKfOnn6M/PHUPhjfhsflk
+	FObw1A5lRT0XN/lBfZ4YLzKWLJCFc0YkjEmCwd4nS74j4BtWJXowjUMn0Vi+mWFm
+	Ztb7WWomdYYSU1PEHhobeGrU+ujYOcOS3kGNuKwlJx0cLErk3/Z4b5WTbaOmt+Rr
+	UQMeAZEBLXpNxl7LNWP3T4mzhvtLBkxw1IFI2fgqA9fHRuE4tEoqbD34Hfww==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793494373; x=1793580773; bh=HhFn7PDpmXRkmDBGS58OgmSd8qngCB7iq/o
+	BoTJe+uM=; b=fjK1BPfNZR+FrHJiWpPPfJWrXvlZ1lQZ6tgdu2XTebQ1bQ8ou0M
+	NEePef+UkL0tlWGwxR4BCQry5+m6KIsjkd1XzJs1st4eoYcjF1ACB7HIDLnaKNoo
+	qQvwivAMZ1X8ucQmiWh/8DgPi/MZqEpSKX5SIxW7n4WwbL4TnXhrP54lAJyQ3xik
+	hqAYKln6Uv0N/vf8guGULgXqJKdr9a/f47SAMkIMCHF9fIcjNJYdH9G1hjNSLn0o
+	UDSmOwE1zrgUznktn67s3mwjU+cAlwdRqWXre7KKPrVVr1j92uQyr787a4Z4u7MX
+	KnA5qJz32a323C29nMPzPieR4hNWx9+4SAg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793494373; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:LLhp+UP2LeYErqaPKmy42yvF+iaxon4R1jNMsl14y7uYPU7
+	g9vCzkWzFpva4X88DArwiQEdwC9z9jyuN8eCBBSK0pxWdYHPRV6cDukVMTyI/2Jl
+	u+lv/3mpE3aub2Zv5EzC8zCitkRpfR5mOxUMGXUbfjSNEGu3i2VmOEP6qYuLpZ5+
+	S/hxbHknSLmNR/tvlmk3p4aUDXwYTU6e2rmvDtDg4Cmi52d3P9YRwt6hLo3y2Ah/
+	fjoeEmbgFkFx8oq41ur2Mj+hngFET73SSuNOnTpxSoGlA/ABDT/tRtxIiNb5ydjq
+	khOPcErnfKW2IO20TYFpPaahyGvNiGeAc7PHe+g==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:2czSUs8NJOfKDpWENtw3ooqaRH+fPjtaArj0gJD/2JU=:YL9t8+7H5ym8G90TqIAoXfmDxl1mNk8mP1XBmKtR7U0=;
+X-ME-Sender: <xms:ZY3mamBr6b1egtjm0BXPqcqubvtpEMAoS21tfNvrqd0DLFpOOFZqzw>
+    <xme:ZY3manbeh-oagEvuw-vHSPwHye0MmpJpR9y4_E5segeCQ3Hf_kA597vUYO1v7I2Jc
+    zEf-93OJRij-Mh3Hf4BCKUw1ThAKtROqsa_g5AnDB9XPza53PtoY2o>
+X-ME-Received: <xmr:ZY3mah5Pkvnkj8rL8imtCY3IwBP5-psdhPL82DC8z_ajy0AWKEwDAUNhHBmsMl_YuhcpC3sJLiCcykq0Z1AiRwczlxecGdaXH89A>
+X-ME-Proxy-Cause: dmFkZTEl7sj4Vx8ZMP9/wyMKcpe9K7KpQ0CtSjzUKxWGuNYMNNmrPReXn+3I+lg6er0pzI
+    npdLGeClyT3LxPTc7IvhXdvgwY5bPPWxotJy6ybaReIodd8xIfp6TDTmHdXPrE4vyQXOtR
+    +1pUVMfrqCBemouJ+6zpLbykaig9INh6ol/VWVPi1HyDyKbfhXIAmSs4Jvs5o/lmgIpADX
+    DtwBuRiKNlwen6zmSaG7zD4p8PnENe5jo/1TzYYltzq2BLp6e/S2nxP/kl574ODnQu7+o5
+    OH8PwEJpKfqwRzkLfSkFTokPk7BBnMLJpZHEwODm7tvafbkiKUTMbHlpky54piJzj/xOhi
+    /CmflNrCMmbICCJcseJUeOMkyzUCPV5jeNYTlFHFLzcvlO4gVr2rOh/DMiU5OgRyjykWQc
+    wZe108vnJgJGdSPZI5gFmyp4sZIv0kZr0kCCSSHjlRTnJOswwsUd1ia6u+T+tXse68l13d
+    5WLJjDWEY6xniOle50R4LoocxUJ9+pCb3VwnO0+4OKzkvGg2+QgAkd8/EpMJWB3CVo1g5Y
+    L0asbTas049HWCOLG0UN6p9koxbHEzCoEDaRPIG1ZgArwGzZpvYBLS+LzoJBR3p7+r0pUI
+    ZkCFXQOk2/fDRhGlNFoOOsYSHzW2JvKBptge1//K35keKcmZVAMl8eQ3GE3A
+X-ME-Proxy: <xmx:ZY3magbOqS9QXE8PCCAflpCPJqXKifU9d2Rk5iNgt3_eGJvgSMI_Fw>
+    <xmx:ZY3maojZAzF6VhQk633A0Cc3D2tWgjsf7-Vpr3mF7ZTqYzWr4y88Pg>
+    <xmx:ZY3map8ocNF6PQmB65hR3gJeLEfevk9wpRh3dRJ36rvUSsbdzBdViA>
+    <xmx:ZY3marptDZzckFxLWP-oOIeN8N6J01FKxqLHVLlIkMOuG7j1KLrLxw>
+    <xmx:ZY3maupcmb9XBkQJDi0sKww0-JJbOcHewPjs5gnQGXAmIU3VD1R5kGKt>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 31 Oct 2026 20:52:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Thomas Bachem
+ <mail@thomasbachem.com>
+Subject: Re: [PATCH] merge-ort: accept rename settings given without a value
+In-Reply-To: <pull.2284.git.1793441202854.gitgitgadget@gmail.com> (Thomas
+	Bachem via GitGitGadget's message of "Sat, 31 Oct 2026 10:06:42
+	+0000")
+References: <pull.2284.git.1793441202854.gitgitgadget@gmail.com>
+Date: Sat, 31 Oct 2026 17:52:51 -0700
+Message-ID: <xmqqjymx2x0c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -49,141 +124,48 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 31 Oct 2026 20:00:00 -0400
-Message-Id: <DMJFKJCI5DLL.12R7AMFO4DK2Y@lfurio.us>
-Subject: Re: [PATCH v2] remote.c: defer remote.<name>.followRemoteHEAD
- validation
-Cc: "Colin Hinton" <colinlewishinton@gmail.com>, <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-From: "Matt Hunter" <m@lfurio.us>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20261018235508.848-1-colinlewishinton@gmail.com>
- <20261023185007.21642-1-colinlewishinton@gmail.com>
- <xmqqecdezfr1.fsf@gitster.g>
- <CAHeTm9NOqLA=BfTU9ABDFt8+jOzaRDPRrMNP8thzAQN2NVZAew@mail.gmail.com>
- <xmqqmrrxdhox.fsf@gitster.g> <DMHZCS9LOW3N.ZJ3947HUCXZ8@lfurio.us>
- <xmqq33tnz0hb.fsf@gitster.g>
-In-Reply-To: <xmqq33tnz0hb.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Fri Oct 30, 2026 at 11:12 AM EDT, Junio C Hamano wrote:
-> "Matt Hunter" <m@lfurio.us> writes:
->> ...
->> I wonder if it makes sense to incorporate such a new helper function
->> into the existing 'get_follow_remote_head()', since it would be the only
->> place using it.
+"Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Thomas Bachem <mail@thomasbachem.com>
 >
-> I am not sure what being the only place has to do with avoiding to
-> split a helper function out to clarify the main logic flow, though.
-> And simultaneously, another topic wants to have this piece of logic
-> twice.
+> "git -c merge.renames merge" fails with "missing value for
+> 'merge.renames'", although git(1) says that "git -c foo.bar" sets
+> foo.bar to true. The same happens with diff.renames and
+> merge.directoryRenames, and with a setting written without
+> "= <value>" in a config file, which git-config(1) also documents as
+> true. Every command that merges through merge-ort fails this way.
 
-I should explain myself better.  I don't mean Colin should avoid
-splitting out logic from the main flow in do_fetch.  But the end result
-can be reached without introducing a new function.  I find needing to
-hold fewer functions in my head makes the code easier to reason about,
-though that is a subjective point.
+Searching the list archive for "valueless true" tells us that we had
+corrected a handful of instances of config_get_string() with a call
+to config_get_value() in the past half year.
 
-The idea in my head is below and is
-Signed-off-by: Matt Hunter <m@lfurio.us>
-Feel free to run with this or not.
+And this patch seems to be in line with the other efforts to fix the
+same misuse.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index bb59e70865ff..844ff5105f91 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -196,23 +196,44 @@ static int git_fetch_config(const char *k, const char=
- *v,
- 	return git_default_config(k, v, ctx, cb);
- }
-=20
--static enum follow_remote_head_settings get_follow_remote_head(const char =
-*setting,
--    const char *key, const char **no_warn_branch)
-+static enum follow_remote_head_settings get_follow_remote_head(
-+		const struct transport *transport, const struct fetch_config *config,
-+		const char **no_warn_branch)
- {
--	if (!setting)
--		die(_("missing value for '%s'"), key);
--	else if (!strcmp(setting, "never"))
--		return FOLLOW_REMOTE_NEVER;
--	else if (!strcmp(setting, "create"))
--		return FOLLOW_REMOTE_CREATE;
--	else if (!strcmp(setting, "warn"))
--		return FOLLOW_REMOTE_WARN;
--	else if (no_warn_branch && skip_prefix(setting, "warn-if-not-", no_warn_b=
-ranch))
--		return FOLLOW_REMOTE_WARN;
--	else if (!strcmp(setting, "always"))
--		return FOLLOW_REMOTE_ALWAYS;
--	warning(_("unrecognized %s value '%s' ignored"), key, setting);
--	return BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
-+	int ret =3D BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
-+	char *key =3D NULL;
-+	const char *setting =3D NULL;
-+
-+	if (transport->remote->follow_remote_head_seen) {
-+		key =3D xstrfmt("remote.%s.followRemoteHEAD", transport->remote->name);
-+		setting =3D transport->remote->follow_remote_head_raw;
-+	} else if (config->follow_remote_head_seen) {
-+		key =3D xstrdup("fetch.followRemoteHEAD");
-+		setting =3D config->follow_remote_head_raw;
-+		no_warn_branch =3D NULL;
-+	}
-+
-+	if (key) {
-+		if (!setting)
-+			die(_("missing value for '%s'"), key);
-+		else if (!strcmp(setting, "never"))
-+			ret =3D FOLLOW_REMOTE_NEVER;
-+		else if (!strcmp(setting, "create"))
-+			ret =3D FOLLOW_REMOTE_CREATE;
-+		else if (!strcmp(setting, "warn"))
-+			ret =3D FOLLOW_REMOTE_WARN;
-+		else if (no_warn_branch &&
-+				skip_prefix(setting, "warn-if-not-", no_warn_branch))
-+			ret =3D FOLLOW_REMOTE_WARN;
-+		else if (!strcmp(setting, "always"))
-+			ret =3D FOLLOW_REMOTE_ALWAYS;
-+		else
-+			warning(_("unrecognized %s value '%s' ignored"), key, setting);
-+
-+		free(key);
-+	}
-+
-+	return ret;
- }
-=20
- static int parse_refmap_arg(const struct option *opt, const char *arg, int=
- unset)
-@@ -1990,19 +2011,9 @@ static int do_fetch(struct transport *transport,
- 		if (transport->remote->fetch.nr) {
- 			refspec_ref_prefixes(&transport->remote->fetch,
- 					     &transport_ls_refs_options.ref_prefixes);
--			if (transport->remote->follow_remote_head_seen) {
--				char *key =3D xstrfmt("remote.%s.followRemoteHEAD", transport->remote-=
->name);
--				follow_remote_head =3D get_follow_remote_head(
--					transport->remote->follow_remote_head_raw,
--					key, &no_warn_branch);
--				free(key);
--			} else if (config->follow_remote_head_seen) {
--				follow_remote_head =3D get_follow_remote_head(
--					config->follow_remote_head_raw,
--					"fetch.followRemoteHEAD", NULL);
--			} else {
--				follow_remote_head =3D BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
--			}
-+			follow_remote_head =3D
-+				get_follow_remote_head(transport, config,
-+						&no_warn_branch);
- 		}
- 		if (branch && branch_has_merge_config(branch) &&
- 		    !strcmp(branch->remote_name, transport->remote->name)) {
+> +	if (!repo_config_get_value(opt->repo, "diff.renames", &v))
+> +		opt->detect_renames = git_config_rename("diff.renames", v);
+> +	if (!repo_config_get_value(opt->repo, "merge.renames", &v))
+> +		opt->detect_renames = git_config_rename("merge.renames", v);
+> +	if (!repo_config_get_value(opt->repo, "merge.directoryrenames", &v)) {
+> +		int boolval = git_parse_maybe_bool(v);
+>  		if (0 <= boolval) {
+>  			opt->detect_directory_renames = boolval ?
+>  				MERGE_DIRECTORY_RENAMES_TRUE :
+>  				MERGE_DIRECTORY_RENAMES_NONE;
+> -		} else if (!strcasecmp(value, "conflict")) {
+> +		} else if (!strcasecmp(v, "conflict")) {
+>  			opt->detect_directory_renames =
+>  				MERGE_DIRECTORY_RENAMES_CONFLICT;
+>  		} /* avoid erroring on values from future versions of git */
+> -		free(value);
+>  	}
 
+OK.  Since get_value(), unlike get_string(), lets us borrow the
+value as "const char *", once we used to drive git_config_rename() or
+compared with fixed string to turn it into an enum value, we can simply
+forget without calling free(), which is simpler.
 
-Admittedly, I haven't been following Harald's hn/fetch-refmap topic
-closely, but am more familiar with the affected areas now.
+Nicely done.
