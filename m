@@ -1,92 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793574280;
-	b=Al5mEoWu90esYxE+SpnRwnzegSkvwrdnOm0aM37uhYA12tk/ZHpM1ej7VQbDf/HiDUVE
-	 2UPwGVZQbo/ti7Uo9mcTlVe9Lf634lSjgbpUpjK8+3tUQtECH9MhwypiqqyP8RpOfJBgP
-	 6uGr+7oXCbcMGgGMAn7uZ3VR/yj4b/UF8vBhoTbo1cq7SdErdr8VZGxzIjPNDfpwdcQzX
-	 4rFY7NoUQaXtKohP39iWsd/AnrdZI5KcmmIDJ0jhwIxH1Yfp+Pu7glURJIBfQro6itrou
-	 IASbVll14wnhvNA6A/ANOO/yCwML+LInjdYCd853j2Vwq0wtgS9co+wHryKJuVFxPcw==
+	b=2bbN1o4QLHDE/Tb+ghQNO5GwPn/P1oH+ZBfgQq43dFFwmc+P5DvuQvU3aT06ThD4Gdjr
+	 kvgJCXPuFK7r3Sa4G7Wg/JQh8sTOdTc3kBLSFyZLkwH0DDxBHbPvWI0HimUT/TqHsRp1y
+	 EDkYhZBkoIMXtlajPzek/FIJ5nSPCMWLa6xuWspYeyaEIhh+iqEMIiZNWFyQB9JX2LMUU
+	 TMF3T2eLAXmRxPP2CqHYSaUvWeiCbbajjAs5o4ZEMHqHoxLsJ6r3vf0SGDLpD4czwn4Ec
+	 U2nHl5Ujdr+TjvwDTel3wk7QpgjxMyrBj/0/N9Xca8XTmzXWRbfz9y7aqbKliRVb2eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793574280;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=i7l4idxl14LcOmNx+JKISilP7kiuK4tFz6E8oxTPaGg=;
-	b=rRodNR3O1dg+UMh6H6D/TOSVdEssKLMJzvFA4uiYxBRDAU5x47PAmSgaNoJI7kKlPXAf
-	 82k3p727wxx042g5dnNTjjLsTnq/yTvDs4w/FsWi23hv99fZUm8mFnafT4ZkYR3M2Zxb0
-	 FkAXf3M98dOhYmFtwoo4DIndFSYjQ2j/wVmyZO0X2+jgJE/533UsdYHVCQJ9qr007e90g
-	 hqtW/0/wLwdE6oi6GB4ctS9SM8P1nmBhR6XYPkdVL0bIMwXGX7nB4qdwahsIuDxGDt+gr
-	 aYHz1cLwPIHokEpuDxj6lNDQpQc8oP6hgYRGGvCFOKdr2ncfcHkRUW7Vu516C85NzUQ==
+	bh=0AHZuqIfH9PvfSwHRnm0JWRWO+b5WZYSy6EGNxGG8UA=;
+	b=rffcl+b9zZQYwguZtX/ZDm/aHKm7J93/FZUUCrfrCwAOo1Z8qMkEq7q4uDnWOyfEsOEu
+	 GUERe/hteLqt9qcjKr6u+HGMdDvoVM/cTyshD3FwCA+4ecZkoPcu6Tbfx2RzeDqbrqDj6
+	 RK+dwYK6EmxpmWLLVO3DnRW8f5suuKT/yi6RaFezi/BTal3ENUej9rnJDOn8B8ojKPW8b
+	 a7g6UBMJVXR7v208oxS7Ao9mneBvgskvbT7iGcPMObKXEk1ZquKAtUTi2WRZzVGL2kcIa
+	 Cvommj2OnTF8612mVe86WO/1pa77Fs8CG3CkPTln0C9/I+9aJ5rg+ps2DTAJrsrOinQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="Gw/mWvaw";
-	arc=none smtp.remote-ip=209.85.128.44
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BvvnuY5t;
+	arc=none smtp.remote-ip=209.85.128.49
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96806606A332
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:04:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 96806606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F37B606A336
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:04:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6F37B606A336
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Gw/mWvaw
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a2d6cf958bso10270485e9.1
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 15:04:38 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BvvnuY5t
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a2d6cf958bso10270555e9.1
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 15:04:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793574277; x=1794179077; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793574279; x=1794179079; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=i7l4idxl14LcOmNx+JKISilP7kiuK4tFz6E8oxTPaGg=;
-        b=Gw/mWvawDOtzxQ10Ou87P+IUlcewg1GWDRVVZhaPlyE0MsDZBTge3hXuiNp0RyFYHT
-         4bVqhh8rjRC3LOwBflesH7sJZokFcKQTSKUJglgduYpHTiC7laQWTSkCS/hWnl//zR/y
-         9lb/hXu/A2LgiL8/qMnZeN0WjfPH9huR5lgeC0tZiwZQaQD1vPDoo4yAG3SG88eB34Uy
-         uQHjsUXds8cgdRowUGfr0lwa5kRcrMWUMYdaz8nBnoADGtiaXxdqMA0HbIPcK/2ADA72
-         pWr64QTjF98cjjbShFJvEUfdy4EiD/IWXG2WaNbh3fR6EjsEgRPZL1KNwC0fAmL1cx6r
-         w6Gg==
+        bh=0AHZuqIfH9PvfSwHRnm0JWRWO+b5WZYSy6EGNxGG8UA=;
+        b=BvvnuY5tfC/i1+jDqGXHGhn+JEnu0dV/5kGYRmCvFJALNLylRPp3USmCHeI/yQ07k+
+         yIGyCz2e8CDRlouCI71TjjJq4jYx2cv9GNA1CD9WL7AbMG1/FE6B/AAO/Qvx8OcXu5ku
+         CZrIBC6AXBfkPDTZ47/SnfKbiDyvzPhAw9zQ7bQwB5oPwfOVIkF4s4GEZ/VIfDlAho8r
+         vZ2Z38nCwE1cz1P82aV7cf/M/SKK3zVoK6ozEdcs/luFvNlPLRu5IlqtcFbIQcUS99+g
+         u+89EDS5H5+2s05pC00aeLu6rt3HwnGy9oI9k4TVL1OLn621wx1u1SJ3BgiW91Ftd7Kb
+         NXiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793574277; x=1794179077;
+        d=1e100.net; s=20260707; t=1793574279; x=1794179079;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=i7l4idxl14LcOmNx+JKISilP7kiuK4tFz6E8oxTPaGg=;
-        b=UDjpMLRpse04duu6rRF6eJRP2PNaxxhGvcsZKBojTns9GIchNICohz67yKC1+JTOAA
-         u0IpuOVc3nvn0mudQTNItAuzD23gH8JT81bsMjw4jrmwqiegoEhF5M+4BqBCjp9rc99d
-         JE05vFVWIZaLI0yPiZZ5uaCaJgyGGmO5mebNQYpZ08yutSqPupx7pMl0YfuuJEnW9zOp
-         ncdjGmQD7Yn+RdGIP49t9DoFJ9vaIMx1okeVng05etIwnN4vc2iJnW1noqYUrebK5iXo
-         Wkw+yjbIVsZnj01whtx5u3M9Qe59hEFau7pv7YfyFSnpSkHdPGnkQt4l4s34F6RmP3oF
-         Pc2w==
-X-Gm-Message-State: AFq9FYImp0X2OuDDKiV6U0A9tUihtZGBJcXpnfR7G3XP5coeFP8zsVcj
-	PGxC5h1WL8eB1N6T4c2C5WIHtwiHrWlqkbpumhpXi4phKHc7oRj+Gmt8wRfQ/gbt
-X-Gm-Gg: AYBFou0i+yrizDBR4uGFuWMQT1/jk8yvX1Ik95pGb9ebsOyUe+hxAINSrB1sJEtwoSt
-	3S8sYv0wRNOy9T2R/BXSNOuBMrAv6aAEeqLwnNNNVayrHzOQwR+QoIagn9serVfeyhIfBGBDFDn
-	dey9qO/3oendSVnwX7+upg3meS7bXeGlWtRW7/cofytjEGWizi7x94h/vAHZkLXZ6ARzNgXjpF1
-	dotjPG1G8ojwcItHrIJ2mKZgAez3SnD/NmKA4nIysxOdYHcfCZZzKI5gRtsG8qgCo2HRn34Ji7G
-	Ky7UxUW/VGi/IbxSPE7qOgoUGqdMH8gOi9r7+HEidWoyJdtI3YCrywRSc++6ko9Oi6xPyNmlSC+
-	N2aoSOr49hvoNX1W0iH/KfjB8Es1sCxdc26Z/FJQP0suzW/pKRs1L/qqpjyTs3q23v+heyMqw5d
-	xBSBxgBi4DjWedgwhkmxLUutmXr3XSjVRuOvmNNSibB2ijNlKZKxryVIt8+J7FI0WU34YRHlmVV
-	pJ5/D6kSVXScndOusTHoa1LhWqkt1Nl+LyYwtjVmA9qT8Y0dvg8mvd5gMpaA4TLZMm4MfjizOSO
-	JL2aKbML3+ksfTMbAiNkFU0W0cXpCTuYHhkwg5ERMkBf1Npr0Q+weH+b/6eO5PF6epkd6q5rMas
-	vt1DSrYhM6gMAtJmNvA3vaA==
-X-Received: by 2002:a05:600c:83c3:b0:4a9:18f4:925e with SMTP id 5b1f17b1804b1-4ac174711afmr187425235e9.18.1793574277470;
-        Sun, 01 Nov 2026 15:04:37 -0800 (PST)
+        bh=0AHZuqIfH9PvfSwHRnm0JWRWO+b5WZYSy6EGNxGG8UA=;
+        b=PjYHB+JicVPAPxvvCmCEn33ExF8Prlc+POpzUWEtvAZCt5oeOZy4ZxQD3deT/G5V6a
+         j269fziDBGerTFFQY1el8EtabJORd5GdXRZ7gYtqYisIwcyX7hguSRy6cYKHVMc1zjdj
+         Ei/2R5DmWBelhOJHdUl9Hsj5WlefSGNWYSYOM351dcCUqlyLnxoj9CG82KPebJ+q3x0J
+         Ag+5t+2u5NHfF3AiMzdn+kaPFDGpwQ9MnsfD+LnMv0JSYLr/nZo4lyL1q4Bv4IyXleOp
+         Q/iT8lC29uZLNlpsv3iBSl5Iu7+A3PzRmNIBbuPygUnw6rmZxjR5y28U/1FJczKhAaNP
+         aIwA==
+X-Gm-Message-State: AFq9FYI2lrP7tUZNsPHYUsQrIuzRVI5WX3+3bdBIwmB/7CGDNKkPgSwo
+	9DBzMa+U/7ZxDL2r9i2njqVYxRIjkZ0my3ol2yfc8RpLqXG2v3qtkRhMIOZUZEvc
+X-Gm-Gg: AYBFou19JvritGQY9HME6XV+FK27VmSo7poCwYISIsGwui138gO93iNDWX+aPsSwBOJ
+	CmOab9BIQpEpUgjoNz64YBsKHpeIbkKryBzxjcCIrQsgx67o58tTnGNGb6NNjHLr9sD7K1nNtuq
+	5ObRb60EHZx7c9+JO8AEPCGY2pvrLyThORfMtHzMrUZ0740UA470Fs6KP1wUd7llmy14NQ7LjBE
+	vYRWM0zHdn2L//i/crXeY4AOrnIKJJSNduyhmFGJU6PVqmOwU55R23N+JpqlkRCwohZPFHJPdbR
+	EUuixKQT/7NnWegAF56TXpcwuMHriWkQemsJOQSYWnQQYCKev1uAnanzK3X+na63p2vTqElA5gF
+	kI8rLG9ZbDrbhiQ8HvojhGK1/dFONYYf/WtdZ+hAqopnCxi23QPf0/w75JJzdf79I7cW9HVS8CK
+	BV88Uy3fq+D0uJsM5uuQPdubHnvOGwIuW3raYiqZaWotQOvQXhV5ttoXYspxOEwpkOdRC3jwPqF
+	OruM+PjSroMI3NU6hYW/gWZoYVJbU85Nw/vLgkbvki24Et+s5zYsPfVHg9veCB6x43R7c9ffDUd
+	Xc3w/3TqvSgusY34P68tl6/kRdF7ngmon6uKdBPjJhDtYmTwgc0rwi52j2vDvtrAnYbUezn+WF1
+	BgaypdEdTo0MjJbF2e6douw==
+X-Received: by 2002:a05:600c:638f:b0:4a3:59c2:b41e with SMTP id 5b1f17b1804b1-4ac150b304cmr195905725e9.4.1793574278657;
+        Sun, 01 Nov 2026 15:04:38 -0800 (PST)
 Received: from u.ad.analog.com (sgyl-40-b2-v4wan-169439-cust3365.vm6.cable.virginm.net. [92.234.157.38])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ac0b4df257sm135151125e9.4.2026.11.01.15.04.36
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ac0b4df257sm135151125e9.4.2026.11.01.15.04.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 15:04:36 -0800 (PST)
+        Sun, 01 Nov 2026 15:04:38 -0800 (PST)
 From: Andy Koppe <andy.koppe@gmail.com>
 To: git@vger.kernel.org
 Cc: Andy Koppe <andy.koppe@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Julia Evans <julia@jvns.ca>
-Subject: [PATCH v2 2/5] doc: glossary: update per-worktree refs
-Date: Sun,  1 Nov 2026 23:03:20 +0000
-Message-ID: <20261101230326.3675597-3-andy.koppe@gmail.com>
+Subject: [PATCH v2 3/5] doc: stop calling root refs pseudorefs
+Date: Sun,  1 Nov 2026 23:03:21 +0000
+Message-ID: <20261101230326.3675597-4-andy.koppe@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261022212903.177261-1-andy.koppe@gmail.com>
 References: <20261022212903.177261-1-andy.koppe@gmail.com>
@@ -101,63 +101,186 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The "per-worktree ref" entry says that these are only HEAD and refs
-under "refs/bisect/", but that has been out of date since a9be29c981
-(sequencer: make refs generated by the `label` command worktree-local,
-2018-04-25). All root refs are per-worktree, as are refs under
-"refs/worktree/" and "refs/rewritten/". Pseudorefs are specific to each
-worktree too.
+Several manual pages still use "pseudoref" in its old sense of any ref
+outside of "refs/", which the glossary now calls a root ref. Pseudorefs
+have since been restricted to FETCH_HEAD and MERGE_HEAD, which are not
+considered root refs.
 
-Bring the list up to date, and refer to git-worktree(1) for how to
-access per-worktree refs of other worktrees. In the "worktree" entry,
-describe HEAD as a per-worktree ref and MERGE_HEAD as a pseudoref,
-rather than listing them separately from per-worktree refs.
+Replace "pseudoref" with "root ref" in those pages, giving HEAD and
+ORIG_HEAD as examples. In git-worktree(1), say that both root refs and
+pseudorefs are per-worktree, and drop the description of them as being
+directly under $GIT_DIR, because that does not apply to the reftable
+backend.
+
+In git-ls-remote(1), describe --refs as omitting refs outside "refs/",
+since that is what it actually checks. In the example, refer to HEAD,
+which is the only root ref that git-upload-pack(1) advertises. While
+there, correct "symbolics" to "symbolic refs".
+
+In git-update-ref(1), drop the incorrect mention of ORIG_HEAD. HEAD is
+the only root ref that gets a reflog by default. In the description of
+core.logAllRefUpdates, correct the claim that "always" only applies to
+refs under "refs/". It applies to root refs too.
+
+Distinguish root refs and pseudorefs in gitdatamodel(7). Lowercase the
+"other references" list entry there to match the others.
 
 Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
 ---
- Documentation/glossary-content.adoc | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ Documentation/config/core.adoc          |  2 +-
+ Documentation/for-each-ref-options.adoc |  2 +-
+ Documentation/git-ls-remote.adoc        |  4 ++--
+ Documentation/git-update-ref.adoc       | 13 ++++++-------
+ Documentation/git-worktree.adoc         | 13 ++++++++-----
+ Documentation/gitdatamodel.adoc         | 18 ++++++++++++++----
+ Documentation/rev-list-options.adoc     |  4 ++--
+ 7 files changed, 34 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/glossary-content.adoc b/Documentation/glossary-content.adoc
-index f905b4467b..67fe49b26d 100644
---- a/Documentation/glossary-content.adoc
-+++ b/Documentation/glossary-content.adoc
-@@ -494,10 +494,23 @@ exclude;;
- 	interface than the <<def_plumbing,plumbing>>.
+diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
+index bdc74d291c..8f8fe36a58 100644
+--- a/Documentation/config/core.adoc
++++ b/Documentation/config/core.adoc
+@@ -376,7 +376,7 @@ core.logAllRefUpdates::
+ 	`refs/heads/`), remote refs (i.e. under `refs/remotes/`),
+ 	note refs (i.e. under `refs/notes/`), and the symbolic ref `HEAD`.
+ 	If it is set to `always`, then a missing reflog is automatically
+-	created for any ref under `refs/`.
++	created for any ref, including root refs such as `ORIG_HEAD`.
+ +
+ This information can be used to determine what commit
+ was the tip of a branch "2 days ago".
+diff --git a/Documentation/for-each-ref-options.adoc b/Documentation/for-each-ref-options.adoc
+index 54e2fa95c2..2b6d4ede0b 100644
+--- a/Documentation/for-each-ref-options.adoc
++++ b/Documentation/for-each-ref-options.adoc
+@@ -73,7 +73,7 @@ TAB %(refname)`.
+ 	using the same rules as _<pattern>_ above.
  
- [[def_per_worktree_ref]]per-worktree ref::
--	Refs that are per-<<def_worktree,worktree>>, rather than
--	global.  This is presently only <<def_HEAD,HEAD>> and any refs
--	that start with `refs/bisect/`, but might later include other
--	unusual refs.
-+	A <<def_ref,ref>> that is specific to a <<def_worktree,worktree>>,
-+	rather than shared between all worktrees. All <<def_root_ref,root refs>>,
-+	for example <<def_HEAD,HEAD>> and `ORIG_HEAD`, are per-worktree, as are
-+	refs with the following prefixes:
-++
-+--
+ `--include-root-refs`::
+-	List root refs (`HEAD` and pseudorefs) apart from regular refs.
++	Also list root refs, such as `HEAD` or `ORIG_HEAD`.
+ 
+ `--start-after=<marker>`::
+     Allows paginating the output by skipping references up to and including the
+diff --git a/Documentation/git-ls-remote.adoc b/Documentation/git-ls-remote.adoc
+index d71c4ab3e2..7ce7df3149 100644
+--- a/Documentation/git-ls-remote.adoc
++++ b/Documentation/git-ls-remote.adoc
+@@ -35,7 +35,7 @@ OPTIONS
+ 	with other git subcommands.
+ 
+ --refs::
+-	Do not show peeled tags or pseudorefs like `HEAD` in the output.
++	Do not show peeled tags or refs outside `refs/`.
+ 
+ -q::
+ --quiet::
+@@ -118,7 +118,7 @@ line shows the name of the object the tag points at.
+ EXAMPLES
+ --------
+ 
+-* List all references (including symbolics and pseudorefs), peeling
++* List all references (including `HEAD` and symbolic refs), peeling
+   tags:
+ +
+ ----
+diff --git a/Documentation/git-update-ref.adoc b/Documentation/git-update-ref.adoc
+index 37a5019a8b..c775334230 100644
+--- a/Documentation/git-update-ref.adoc
++++ b/Documentation/git-update-ref.adoc
+@@ -163,13 +163,12 @@ still see a subset of the modifications.
+ 
+ LOGGING UPDATES
+ ---------------
+-If config parameter "core.logAllRefUpdates" is true and the ref is one
+-under "refs/heads/", "refs/remotes/", "refs/notes/", or a pseudoref
+-like HEAD or ORIG_HEAD; or the file "$GIT_DIR/logs/<ref>" exists then
+-`git update-ref` will append a line to the log file
+-"$GIT_DIR/logs/<ref>" (dereferencing all symbolic refs before creating
+-the log name) describing the change in ref value.  Log lines are
+-formatted as:
++If config parameter "core.logAllRefUpdates" is true and the ref is
++HEAD or one under "refs/heads/", "refs/remotes/" or "refs/notes/", or
++if the file "$GIT_DIR/logs/<ref>" exists, then `git update-ref` will
++append a line to the log file "$GIT_DIR/logs/<ref>" (dereferencing all
++symbolic refs before creating the log name) describing the change in
++ref value.  Log lines are formatted as:
+ 
+     oldsha1 SP newsha1 SP committer LF
+ 
+diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
+index e6e77252ab..ba620d8ace 100644
+--- a/Documentation/git-worktree.adoc
++++ b/Documentation/git-worktree.adoc
+@@ -303,11 +303,14 @@ but others are specific to an individual worktree. One example is `HEAD`,
+ which is different for each worktree. This section is about the sharing
+ rules and how to access refs of one worktree from another.
+ 
+-In general, all pseudo refs are per-worktree and all refs starting with
+-`refs/` are shared. Pseudo refs are ones like `HEAD` which are directly
+-under `$GIT_DIR` instead of inside `$GIT_DIR/refs`. There are exceptions,
+-however: refs inside `refs/bisect`, `refs/worktree` and `refs/rewritten` are
+-not shared.
++In general, all root refs and pseudorefs are per-worktree and all refs
++starting with `refs/` are shared, except for refs with the following prefixes:
++
 + - `refs/bisect/`
 +
 + - `refs/rewritten/`
 +
 + - `refs/worktree/`
-+--
-++
-+<<def_pseudoref,Pseudorefs>> are also specific to each worktree.
-++
-+See "REFS" in linkgit:git-worktree[1] for how to access the
-+per-worktree refs of other worktrees.
  
- [[def_pseudoref]]pseudoref::
- 	A name that can be used like a <<def_ref,ref>> to refer to an
-@@ -791,5 +804,5 @@ and pseudorefs.
- 	"working tree" and repository metadata, most of which are
- 	shared among other worktrees of a single repository, and
- 	some of which are maintained separately per worktree
--	(e.g. the index, HEAD and pseudorefs like MERGE_HEAD,
--	per-worktree refs and per-worktree configuration file).
-+	(e.g. the index, <<def_per_worktree_ref,per-worktree refs>>, and the
-+	per-worktree configuration file).
+ Refs that are per-worktree can still be accessed from another worktree via
+ two special paths, `main-worktree` and `worktrees`. The former gives
+diff --git a/Documentation/gitdatamodel.adoc b/Documentation/gitdatamodel.adoc
+index 8d9be02036..6958ac033c 100644
+--- a/Documentation/gitdatamodel.adoc
++++ b/Documentation/gitdatamodel.adoc
+@@ -211,15 +211,25 @@ remote-tracking branches: `refs/remotes/<remote>/<branch>`::
+ default branch. This is the branch that `git clone` checks out by default.
+ 
+ [[other-refs]]
+-Other references::
++other references::
+     Git tools may create references anywhere under `refs/`.
+     For example, linkgit:git-stash[1], linkgit:git-bisect[1],
+     and linkgit:git-notes[1] all create their own references
+     in `refs/stash`, `refs/bisect`, etc.
+     Third-party Git tools may also create their own references.
+-+
+-Git may also create references other than `HEAD` at the base of the
+-hierarchy, like `ORIG_HEAD`.
++
++[[root-refs]]
++root refs::
++    Git may also create references other than `HEAD` at the root of the
++    hierarchy, for example `ORIG_HEAD` or `REBASE_HEAD`.
++
++[[pseudorefs]]
++pseudorefs::
++    linkgit:git-fetch[1] and linkgit:git-merge[1] create the so-called
++    pseudorefs `FETCH_HEAD` and `MERGE_HEAD`. They are not references as
++    such, as they are not stored in the same way, but they can nevertheless
++    be used to refer to objects in commands such as linkgit:git-log[1] and
++    linkgit:git-diff[1].
+ 
+ NOTE: Git may delete objects that aren't "reachable" from any reference
+ or <<reflogs,reflog>>.
+diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
+index bd9f345690..822604278a 100644
+--- a/Documentation/rev-list-options.adoc
++++ b/Documentation/rev-list-options.adoc
+@@ -350,8 +350,8 @@ Under `--pretty=reference`, this information will not be shown at all.
+ 
+ `--merge`::
+ 	Show commits touching conflicted paths in the range `HEAD...<other>`,
+-	where `<other>` is the first existing pseudoref in `MERGE_HEAD`,
+-	`CHERRY_PICK_HEAD`, `REVERT_HEAD` or `REBASE_HEAD`. Only works
++	where `<other>` is the first of `MERGE_HEAD`, `CHERRY_PICK_HEAD`,
++	`REVERT_HEAD` or `REBASE_HEAD` that exists. Only works
+ 	when the index has unmerged entries. This option can be used to show
+ 	relevant commits when resolving conflicts from a 3-way merge.
+ 
 -- 
 2.56.0
 
