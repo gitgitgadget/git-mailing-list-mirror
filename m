@@ -1,100 +1,46 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.48
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793484127;
-	b=Y8oajUUa1oN3OoQCm7gFT+DaAPOdjfVjD7V5CZiUTj758nHMyHRKoTtb++X+JZWi/8oS
-	 qXoqNHl5FyEVJ5lTaD4tJdl3yx7/YMBPHyO3uWqWRyC92hNfzaJSCsjAsw9+enlMXYo5j
-	 QVJcpKGF8iqNU3evNZX/R/g++xPH06Gira3N1m5qbtr5nj3ilGGyokfkM/CSVK1CP4K4H
-	 RP/mngo7KLthIQT1sUAN6J2+fMVnhHPOnfwt9ahlaoW3odueyBR1BqVImVpZ7tTciyQYr
-	 axTOYupG11on841zErlXm3WD/QySQVyd9EY2DyZpME5zPK9EWrgSjPRwmhdnx9O7e0A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793484127;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=nrq9WUZYc3roIL0ut4vu7BVSZVFPLEYhLtmPBFJ6BBk=;
-	b=BBBvfDFVg/+OtqRzkzj0SJhEKvYT8iBzQ5cWdjy+DpoPax2Ps96fAAfnZ7lX+7FKmLL0
-	 JPLCKi3uerlY0k0rGRxugb6F394Stp1ios1T3j+vbf1GJnzr0VL/JtgZesk9AS0eARbrr
-	 NbI9VPTj1XJNqhOc4Ga+4zisThUWVc2Ak8aQ0Fg1o9rG/2Nasqd5nnnsYcxIr8k4rLj3j
-	 /UoM83ap4bypw0E4ClBNekK7B3ruABCR5ETUD9dtmcV0Dvxz7PNiI6/k0ta+lXrAt9Len
-	 mPN4wrLPz66tHpEQzAhBawTyq6FAVNwwWDIFpta5XGbFPFHSpp6gde4GlPhGe23Rw+w==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=a1xkriQ2;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.48
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=157.230.60.252
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793491221;
+	b=Mrr/tDIpi4OpnNFAVlBVgIg/4PSgEpTjJZoi+3/6eSU/6B0+LC33t9gmUH5gcaCESFea
+	 NKNfr3mr6SdtqQymKQ9TyHp9SkZrHVxPmGMamfoaK6agzUM28EiHFmAIuFzGaVuNIRnhr
+	 re5Sp5VgLOW7ZZYqWJ92BmB9CbtmofWYacayfa+hP7Wv0Ora+alnOEO0/gB1uMeWoX8fG
+	 hxcHQS///s221iFk4v5XTHEKO0v56gZzDVLndPCWypEjRTT+D5mRFx+uNF4n+BF7IxW4p
+	 o/0NL4Zy979KobEb5h1g5GxpkCan5Er59y4k7uCP+eau7mpK+E32CYXi2ferH09uJTQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793491221;
+	h=DMARC-Filter:DKIM-Signature:Received:Mime-Version:
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Subject:Cc:To:
+	 From:X-Mailer:References:In-Reply-To;
+	bh=tI8HDrU9llZWAQ7I4Bv1pGlzw+vGSkFTUK4QGXfRG2k=;
+	b=NXXEw6JY8Qeb4qiAzGRwGxFC36JZnu02qzYhTEqVdcl1yvQ1TAQojf3pPR4+yoM0hcpq
+	 k1pWHGQ0xNQLwVWL1tx0/OfMA7Cz3zPudoIZsuVizPps2swaqnsf85zHbTJhGoEoX5kke
+	 xfXeE6H/7WVN8BlhmMkcq05aMXLlzDoKFgsyYJSE0f9AMZHkcxtw1t1WLK66+/z6pDwyB
+	 IyWrCbhZch64EN/pz9zpJR5jaInePq55xh1N2v+ff88O8tVJFCpUJCttw+SYrm/SKJoDG
+	 Yj6TlopM5iz/WcOlrcLN/kVlhFbvH2hbkHAY6AIk7rZI/tW54TmH5BDL2LKL4Q0Y6mA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=lfurio.us;
+	spf=pass smtp.mailfrom=lfurio.us;
+	dkim=pass header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=i99kBhJ6;
+	arc=none smtp.remote-ip=157.230.60.252
+Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AF3606A338
-	for <git@vger.kernel.org>; Sat, 31 Oct 2026 22:02:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 03AF3606A338
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93E7606A320
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 00:00:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D93E7606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=a1xkriQ2
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-6dd4f3f696aso858912eaf.1
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 15:02:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793484126; cv=none;
-        d=google.com; s=arc-20260327;
-        b=LCqtwPTT6giPxzV7UWyAtbf6T7m39jr52woHyqGlhIXt4oY7m7imA7/EkHN8FqCC3b
-         JyQmSDXanjPkas/MBKOZmM14Kmby+PzwfHR8/TwGhVwK36FAW7huFKWa+3wLJV6zNE+f
-         X/xcxW+IErPqm+mBBJG7v4a2lJoFs02NmbATqRRAPpF+ZDoGZFhOi6toq9DudbHSFy5Y
-         fdB3eJNGAJaWR6mM7YA3dnyJYQV0baLJ9PavOyuctXe5Q2BWuAmd+erBTwsjZHZfqf43
-         d1sqiUMQicsT8HpXPprSsZdmqa2q3YRVXskzwD4c1azvMfIQurovHRGFZYVse7sz94v7
-         5B2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nrq9WUZYc3roIL0ut4vu7BVSZVFPLEYhLtmPBFJ6BBk=;
-        fh=hz+/nn3ggLKvx7MVMCnEfhHO7zZTcWxbS8wudRGL11s=;
-        b=TDqCxl3sEwuRY0MEllN42g6fu4IKDt0yKnpozGhgWIIbjzNn7dY4+0M5N3xwf7TXuG
-         8D/kvGwyBGIRGWzCFo0S92mURVVWfpaBA2UBdUB+/n4qu+clpj4yK0p0GHheXhbFWl1D
-         OjFRvcvshmWZ7UFLgUmsPSK5Jpo6craA8tji7tcikOzBz3jqVhCT389g76VfVF3vkHpi
-         nQwo3qUsDJc4HoIfC9ZRIpHf0qXefEDQzzOyZ1+ZD5gZ1gUShC0Hs76PeihEHFxMv2dK
-         Ys1r4vggg1/cLCFpuxVIFxO/x0IVpRHQNSsedSXr52hUG1Iuw3O8I52TetSiY0CRkSVR
-         WPKw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793484126; x=1794088926; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=nrq9WUZYc3roIL0ut4vu7BVSZVFPLEYhLtmPBFJ6BBk=;
-        b=a1xkriQ2Q6KWNLdzOQN1VaQdBILg47Pk8w8aInRQujG4Yfxo/qgMsM6xr0FbI+d4Mp
-         w9GKYwTVKDaKm4nsp48aThRG6350D2gC9SvLKA639Qu6EqqYqi2KaWxcFfDiQHZ+fF0A
-         KrQJzPm0XNgHn/vOJGpMcR3Xi3uqLYbsLfsHPskZ6QYHXTD6nUs4Eerj7FvnoXxBOaiW
-         Tdi8tqZk+MlY/+pFWnT7XZTVD/lDixd0EFlwyIQjb5QyMXHBlcYU+FXde8zh7e988Gy7
-         pcHtXC2JJGw+hIBTk4Z/hpJ+41L/wJ1tLGGt6OYEd8shLd+6VQMG45F+VkkeBhW3qqvL
-         gVlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793484126; x=1794088926;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=nrq9WUZYc3roIL0ut4vu7BVSZVFPLEYhLtmPBFJ6BBk=;
-        b=Nmd+i1K5VFbQKh9xY/Nn9UMLv2RcLhYa1kQvhQeD5mjMkVfb3HMx/CqXpWwgQmjkUr
-         EckfXrh0v/sxqInsZu0TFDqYmfCEqK8zaRfBlR1wmHILnMDY4baeu6Z22jELDFz5glpb
-         PXKyBCg5hmYwGe/X7/bfFq1+s+QfZeWVD/jCwQX3oAgZE0Uq2ipiL0/RAR3xcViornJJ
-         wNJcBfh73lvNtqmfBoV5o/6wP0GAjONpb3diNatR2tdDIwAfXPxAMnuV+GF25z4tK7lZ
-         s3P9JVEpep31grPJr+6xNB4bnRuZgXQc+wR3lbskDyHV3F/diVGropxj1zVV3WggFex7
-         yFJA==
-X-Gm-Message-State: AFq9FYIs3vDy4dt/rmTl7SdZJyoAcqdUIgQk0gZhfGLnBSJ0/wIqBeqx
-	VnYyreA3iwpMgJzUwIXUl3l2R0Xb+4Nj8NdPThh+IjEuPab8EfejmvkjO9ntx2kc5g5vqKzVla9
-	iJ/wqGTSmyJvr9ju96w7PulwZ+LwV0kU=
-X-Gm-Gg: AYBFou2zhYqZue2sHHNvK2ohhmiP55RH7v19NRf2MCjd4+flv5rOHvW9uTUwGU9d2AF
-	Htm/nTibSmEP763Npk42sSdNnSGkHbxc3qYZN/3c/HR9S5WZgypEctE8ku105t+H45eexpJaKPr
-	OwzOFO7orHRjavvcjldJi8/gmPbMGNbaxsN0TJ1d43c6W/V/nRFKZjUtLhDn/AFJaf6Dv3E8Ano
-	eBKCc8Bgaoj0iKiT/0ZThKQXVsZ/tjGrnLt4Z5U/MnzGIUUsA16nTizy3BWY0w9qapao8brTN9D
-	XNEoppBUoP3Xfbb/mCBLTeBAhKlquYlSPdUtAtAK+MT3JJTN55MScQWTmRCkgAA0beEgktJrjyz
-	sygnmlZ9tmNArOiloUC/cKhb5EHJt46hDHsDbfRmrZffKyi2/kM2URbB+Jr/7PE7Crp9IvrbpBp
-	WyWbn32/ez8Lk5dDXju+IMJXMBOfmpKHyrsap59y7DLMnJKnM0KzRx
-X-Received: by 2002:a05:6820:a659:10b0:6ff:fcf5:40ed with SMTP id
- 006d021491bc7-714f2a97a1emr2246108eaf.90.1793484125863; Sat, 31 Oct 2026
- 15:02:05 -0700 (PDT)
+	dkim=pass (1024-bit key, unprotected) header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=i99kBhJ6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
+	t=1793491213; bh=TRkc7yRePeZaTRZo7TOZl63JR7qEPkM4w1K1RKy2Zmw=;
+	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
+	b=i99kBhJ6pGL4J7FNgCzGqN2bZndszKPm1+pLfBR3Tp342OTbfeac+t/0hBejfYupd
+	 f8R/yrMzexB0WuTQ5wm7xZ/wPxlnWcIuBWJ0iefPruYqKshcz0apGAgEa1myDTWBWy
+	 /tCUVbLYaKYw24EhSZW8dQA5DoKiuX4+YzC2snCE=
+Received: by mail.normalmode.org (Postfix) with ESMTPSA id B3C3D61512;
+	Sun,  1 Nov 2026 00:00:13 +0000 (UTC)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,56 +49,141 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-References: <20261029012616.139783-1-tangajoris@gmail.com> <20261029231621.48958-1-tangajoris@gmail.com>
- <123de4e4-3387-4eef-8a05-9ed1ad1fce30@gmail.com>
-In-Reply-To: <123de4e4-3387-4eef-8a05-9ed1ad1fce30@gmail.com>
-From: Tanga Joris <tangajoris@gmail.com>
-Date: Sun, 1 Nov 2026 01:01:27 +0300
-X-Gm-Features: AclHuK_NYAf_WrTmCCjB16uX3nnIzHf-ZXzTCul7nUqLHnt-HnCAv60de_i6ZRw
-Message-ID: <CAKrRMNoAALZ0V5fdKjZPQnCXuMP8y49vfUmxYnRt7UEeUTE7kA@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v3 1/2] parse-options: answer
- --git-completion-helper before command runs
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git@vger.kernel.org, l.s.r@web.de, gitster@pobox.com, 
-	christian.couder@gmail.com, siddharthasthana31@gmail.com, 
-	usmanakinyemi202@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 31 Oct 2026 20:00:00 -0400
+Message-Id: <DMJFKJCI5DLL.12R7AMFO4DK2Y@lfurio.us>
+Subject: Re: [PATCH v2] remote.c: defer remote.<name>.followRemoteHEAD
+ validation
+Cc: "Colin Hinton" <colinlewishinton@gmail.com>, <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+From: "Matt Hunter" <m@lfurio.us>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20261018235508.848-1-colinlewishinton@gmail.com>
+ <20261023185007.21642-1-colinlewishinton@gmail.com>
+ <xmqqecdezfr1.fsf@gitster.g>
+ <CAHeTm9NOqLA=BfTU9ABDFt8+jOzaRDPRrMNP8thzAQN2NVZAew@mail.gmail.com>
+ <xmqqmrrxdhox.fsf@gitster.g> <DMHZCS9LOW3N.ZJ3947HUCXZ8@lfurio.us>
+ <xmqq33tnz0hb.fsf@gitster.g>
+In-Reply-To: <xmqq33tnz0hb.fsf@gitster.g>
 
-Hello Kaartic,
-
-Thank you so much for taking the time to review this.
-
-On Fri, 30 Oct 2026 at 12:44, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> Just a gentle reminder about this portion of the MyFirstContribution[1]:
+On Fri Oct 30, 2026 at 11:12 AM EDT, Junio C Hamano wrote:
+> "Matt Hunter" <m@lfurio.us> writes:
+>> ...
+>> I wonder if it makes sense to incorporate such a new helper function
+>> into the existing 'get_follow_remote_head()', since it would be the only
+>> place using it.
 >
->    It=E2=80=99s good manners to reply to each comment in the mailing list
->    discussion instead of letting the next version of your patch be your
->    only response. Tell the reviewer whether you plan to make the
->    suggested change, keep the original, or pursue a different approach.
+> I am not sure what being the only place has to do with avoiding to
+> split a helper function out to clarify the main logic flow, though.
+> And simultaneously, another topic wants to have this piece of logic
+> twice.
 
-Thanks for the reminder about replying to comments. I'll do that from
-now on.
+I should explain myself better.  I don't mean Colin should avoid
+splitting out logic from the main flow in do_fetch.  But the end result
+can be reached without introducing a new function.  I find needing to
+hold fewer functions in my head makes the code easier to reason about,
+though that is a subjective point.
 
-> May be give a hint that you plan to do this in the following commit?
-> That might give someone without context (for example someone reading the
-> commit after a while) a hint about why you are worrying about marking
-> fast-import with the NO_PARSEOPT flag.
+The idea in my head is below and is
+Signed-off-by: Matt Hunter <m@lfurio.us>
+Feel free to run with this or not.
 
-Alright, I'll add a sentence to the commit message saying that the
-next commit removes the NO_PARSEOPT flag from fast-import, which would
-make "git fast-import --<TAB>" freeze without this patch.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index bb59e70865ff..844ff5105f91 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -196,23 +196,44 @@ static int git_fetch_config(const char *k, const char=
+ *v,
+ 	return git_default_config(k, v, ctx, cb);
+ }
+=20
+-static enum follow_remote_head_settings get_follow_remote_head(const char =
+*setting,
+-    const char *key, const char **no_warn_branch)
++static enum follow_remote_head_settings get_follow_remote_head(
++		const struct transport *transport, const struct fetch_config *config,
++		const char **no_warn_branch)
+ {
+-	if (!setting)
+-		die(_("missing value for '%s'"), key);
+-	else if (!strcmp(setting, "never"))
+-		return FOLLOW_REMOTE_NEVER;
+-	else if (!strcmp(setting, "create"))
+-		return FOLLOW_REMOTE_CREATE;
+-	else if (!strcmp(setting, "warn"))
+-		return FOLLOW_REMOTE_WARN;
+-	else if (no_warn_branch && skip_prefix(setting, "warn-if-not-", no_warn_b=
+ranch))
+-		return FOLLOW_REMOTE_WARN;
+-	else if (!strcmp(setting, "always"))
+-		return FOLLOW_REMOTE_ALWAYS;
+-	warning(_("unrecognized %s value '%s' ignored"), key, setting);
+-	return BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
++	int ret =3D BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
++	char *key =3D NULL;
++	const char *setting =3D NULL;
++
++	if (transport->remote->follow_remote_head_seen) {
++		key =3D xstrfmt("remote.%s.followRemoteHEAD", transport->remote->name);
++		setting =3D transport->remote->follow_remote_head_raw;
++	} else if (config->follow_remote_head_seen) {
++		key =3D xstrdup("fetch.followRemoteHEAD");
++		setting =3D config->follow_remote_head_raw;
++		no_warn_branch =3D NULL;
++	}
++
++	if (key) {
++		if (!setting)
++			die(_("missing value for '%s'"), key);
++		else if (!strcmp(setting, "never"))
++			ret =3D FOLLOW_REMOTE_NEVER;
++		else if (!strcmp(setting, "create"))
++			ret =3D FOLLOW_REMOTE_CREATE;
++		else if (!strcmp(setting, "warn"))
++			ret =3D FOLLOW_REMOTE_WARN;
++		else if (no_warn_branch &&
++				skip_prefix(setting, "warn-if-not-", no_warn_branch))
++			ret =3D FOLLOW_REMOTE_WARN;
++		else if (!strcmp(setting, "always"))
++			ret =3D FOLLOW_REMOTE_ALWAYS;
++		else
++			warning(_("unrecognized %s value '%s' ignored"), key, setting);
++
++		free(key);
++	}
++
++	return ret;
+ }
+=20
+ static int parse_refmap_arg(const struct option *opt, const char *arg, int=
+ unset)
+@@ -1990,19 +2011,9 @@ static int do_fetch(struct transport *transport,
+ 		if (transport->remote->fetch.nr) {
+ 			refspec_ref_prefixes(&transport->remote->fetch,
+ 					     &transport_ls_refs_options.ref_prefixes);
+-			if (transport->remote->follow_remote_head_seen) {
+-				char *key =3D xstrfmt("remote.%s.followRemoteHEAD", transport->remote-=
+>name);
+-				follow_remote_head =3D get_follow_remote_head(
+-					transport->remote->follow_remote_head_raw,
+-					key, &no_warn_branch);
+-				free(key);
+-			} else if (config->follow_remote_head_seen) {
+-				follow_remote_head =3D get_follow_remote_head(
+-					config->follow_remote_head_raw,
+-					"fetch.followRemoteHEAD", NULL);
+-			} else {
+-				follow_remote_head =3D BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
+-			}
++			follow_remote_head =3D
++				get_follow_remote_head(transport, config,
++						&no_warn_branch);
+ 		}
+ 		if (branch && branch_has_merge_config(branch) &&
+ 		    !strcmp(branch->remote_name, transport->remote->name)) {
 
-> The change seems to be fine but I wonder if it is worth a note in
-> parse-options.h about why show_usage_with_options_if_asked() is also
-> handling the '--git-completion-helper' and '--git-completion-helper-all'
-> arguments?
 
-Yes, I think that would help, so I will add a short comment above its
-declaration in parse-options.h explaining that it answers these before
-the command does any work.
-
-Thanks,
-Tanga
+Admittedly, I haven't been following Harald's hn/fetch-refmap topic
+closely, but am more familiar with the affected areas now.
