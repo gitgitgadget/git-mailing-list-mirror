@@ -1,95 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793522704;
-	b=yR7g7DQXypQ65HJmPYe/oK4997hVurDHIw+g9xhFwd4DT0K3QRnpQDgLm0FMl3eLVHgN
-	 IvySYtwGgaTHjULa9XfKDaGFO41Zn04YPYYVUh9pZxQJ01J0UuhdSeRjgFBaoG/A1QQN9
-	 y3qtrg+jXGB+WPfi5fqK301KKg7RpW4S72m/wgTy2p55z0SGSV5vKoQeRk2MAVU5IB4Ls
-	 SoN2PKhUcLPKimFxldAcDWA7DBdNMOvaUv6VEXKYfiTOm6uyQVDuXjq331u3n2b+MAq2+
-	 s3bITNW9Iew3FNmC1ZacWbk/H6gtlFbszQ/DHuVB2qFi82uP84iomXDpv8kEhcfnYdw==
+	t=1793524769;
+	b=QSOyeXf/rPtsBADIaXQQekLms74Ai1bBaym+U1jgZU0xpBU7PRnyxhNWE4Pw6p5j/7SD
+	 3iqQ0ifu4pmjCBDdqQmLkXVtNIct8/bo5X84jPBGOt0MAypEUNtCjHHuhvUAoVPS/Yiq0
+	 810FBygy6388IXzQbFulYEyM8yjwwlPgIZJhz0xPwOgoSFlti+8BOqBlBUAkbjN08crZG
+	 d/a8EEVb41r1aW2A/OUBQya2yznVS0xx3FICtGVNCekA/eidAQLXWN7o55Rf4rNdhQID9
+	 WgWS9tZ71jD2twRfIzHBwXfduqp8pyWtTPcxo+h+nIMs+2WUM3AloNWtAqAScOK1m4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793522704;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793524769;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=RsozYUpqCaIZZHHLQlHRioR0q3vuwHk6pMFPXoOWDEM=;
-	b=xlQPfTcEPTFbUIH7xKu/pm2f9t38Z5rrHlzR6ij3slhfHBREHXmSbX/v4OvZgGMjW2Oj
-	 WiWtwGi+rk65zU+LorAJMlJQwqq6Lhm3Lso4mvGEu5lQBvRvPxDdmDdM1YM77Ga+ZJqRF
-	 UjI1ivivcDzxVUOxSSPdDVLLntkiJxdQmKkBp985jI22LxzF/yAkAFIo3c2DvimUu3X/m
-	 11DEis8EgzYwKzEhTeERLqUwxU3fh6Vk6htw+6XXX6LUDQuflMtwFE/HpGt2PoKVdJcA2
-	 pjh56lndT/36GBG8notVNW4NGBcikt7ROghHbDFBbkOmbIRle83EgB0tXV01VjtTsnw==
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=FaW7MJlXz0YstGhZ7bIibR+mQfiRpmP8qv6qPV2HshM=;
+	b=AbGiO9k5xMjBW2O+sXtWGa9nk6xO1+bE7WkepNYKewcKRqXdCfEqsHc/S9CKAUOpyivp
+	 s5Kk44nPIxzlSSPjoeZf+W+CA4ajB27XJFMStdzT4NoU4YJknYJqUvwIE1m/5f2m46TFS
+	 TpBAOdHobAZYnsEQy6hD4CJZW1HxTFnx4+9E5zWDMjdp6b+Dj/UVM5rZqv8nSw8y0NIFq
+	 B8E+rJBbcfmS3l/mngpp/a7SBj89vwh1n8eulkGB/lH4HZzFJdlwdwHQU6A8YrsJYfief
+	 W1oQB07y4QcJyCl+37FMhFJ2lPGDfo3woIaCpq6fOSOiJ+E1PY8OiUX7grkqq901LOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uQMmXc0v;
-	arc=none smtp.remote-ip=209.85.128.42
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GbHx5rAZ;
+	arc=none smtp.remote-ip=209.85.221.46
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6564606A329
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 08:45:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6564606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0132A606A324
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 09:19:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0132A606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uQMmXc0v
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a210470b49so15896045e9.2
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 01:45:03 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GbHx5rAZ
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48e20edd106so1594814f8f.1
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 01:19:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793522702; x=1794127502; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=RsozYUpqCaIZZHHLQlHRioR0q3vuwHk6pMFPXoOWDEM=;
-        b=uQMmXc0va5I+FSw9DqxC6BlXJrA1Bky8d8hmETD37IUT27852l77sJXJtmPKzK0kfO
-         XZdlrn5HO4fgL8b5iBsbZ+gdzKs3LHEsb8i35/A7LSUROLSn9aJAGr1j6MeVrvVDOyv3
-         2Sd+j6RWDLJXFgi2RO0ew0beN0MEbSutl1Lbnlshl9j61WTdWkkniFS2U6+1zkZHQWnh
-         OKYULeJEiLGeL0b7wRDhIecOh53q+BLDevqJLgwNU0Tcn4/7r/AgZbJkL4aToSBZ+1/t
-         k6m5vB4f4oyC29SVe5w1nRaxJs8TUtAWxZCuHhuZhdtKSh0AB2gt9zT8Ww1ftblYwdFm
-         V5Eg==
+        d=gmail.com; s=20260707; t=1793524767; x=1794129567; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=FaW7MJlXz0YstGhZ7bIibR+mQfiRpmP8qv6qPV2HshM=;
+        b=GbHx5rAZkmPqYGHySDNp8WoLOL+4DRS/bOOv6KNCSwSLFKpvIXkcF9eV152v5zYOSn
+         p5l1rRuO2IvZVCX3qXON+QgIE+T31o3sgiI+9AOzRjz1pQsmzTTG4Ydzp9JYhYf6NhRS
+         KdDKPQTb85z+Em8RvF67Lv3Ysy20MuWaTgRuKki93RCA+mipQXnKm6n/K3ybt45l1EYH
+         MtBDtCo1OlAvpZDj9xTf46zoqNmmiXcW7AZ8thhNGceb5p+e6bpaLJmqxe7KYoNSOwt8
+         lpBtGmhLXDi51EjVYvCDNO7RCsRFRrNkU4KP2Fp72XdQ9Z8mhxV4LwbSVSySYP9U93bl
+         +4BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793522702; x=1794127502;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=RsozYUpqCaIZZHHLQlHRioR0q3vuwHk6pMFPXoOWDEM=;
-        b=eJiHFStzXISXIWiqU16oQocTlXI655Ao0PBT33D7qmUtQPev/kgawdMYymCpLy1wJs
-         R44RPTe36Fc+of1UvS3ixhlyHvS1kF5cVxfd+g9tL1W0zcYCV1uCgF3fJoqHAmFg+yi/
-         WrDFGyFBonIBRDXluUL18+JczBBCrDZCLMELoIuPI2GL6tvPpCaWq66ogYtdVYj9NWtp
-         6JWjP5Tkl6ciIPGWCLA9qGl9iRPuLoZcTpK2kxJd8b14uyT4xS8qRM3+4E/d4JiYAipH
-         MUkiLoJzHLmbtUgL27zCojVODtM1olnUTEQB4XFXYUrfX8rSaP0t6i1LoDIwQcpLj20l
-         q8uw==
-X-Gm-Message-State: AFq9FYIR+2UfX+YWQLQEUONRZIfVy7g1X01cXHr+U6ic2KUHJ1IZqAx7
-	arClhOCXfgHQz3w6C4ibqmmMcESd2pU3e9coo15radqP2l6S3r2TMeFNSWGY0qx4
-X-Gm-Gg: AYBFou2Ozvw5R2MQosGbq7Qv+8r/owmyOXA7bumv76burU2Pouzm1cQcfra/mzTizyh
-	1haxZy44dLMVyvkWRi8xAxIaV+iRPFzhXFOm8EE2jWyFB/aoDpMkY8n09AQFJSJVvFd9kByznOY
-	lfV1bFIYs/oeTCW6EkXKIBcfHkzhgpO2uX5n3KGMdClWn3W0ML8WU9tt8AgnMwzoD29QHbnruSH
-	JfUlCyFCaUDDmPIPmxGvduu5hfNNevVGzNT4QSj2KTqCvib80hj9Nb/nAlkziiy3wdiejEXT+TM
-	bZIsItE2GLZu1AlZ0uti5ZLrUWQnIqYUW+hPyLfuWlruRtUj6/E1FaLhx8B3lV1aLG9PUrFWfAE
-	oBUwNpKPA2YKKFS/+a8A63sn882YE5GkIyWbJaKjs+iiOGCjUrk9TSxFdkrij7qIPODaR14QsCr
-	FAfwQb7XCk3dQbZlaM6SqRrso92lpdVANGlfvw3NK/6De6gllQF1c1TzKrr+g6UpagwJ9RCPvuo
-	TBYP9Qwt5WLloMVAFEJKc5CxF4hFsjlMaJkpFfrZ7Vxy0+d5xRWp3oZqI8bxj5qAyOamyDE3sMu
-	8oj5BFM5boCTSWSFlQqmM0RAv5yiKuxCLBvb1rR6nQtnDwj5XcUr0NI7m5MRKiY=
-X-Received: by 2002:a05:600c:4e43:b0:4ab:e27d:e241 with SMTP id 5b1f17b1804b1-4ac180f28f7mr149896655e9.15.1793522701935;
-        Sun, 01 Nov 2026 01:45:01 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1793524767; x=1794129567;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=FaW7MJlXz0YstGhZ7bIibR+mQfiRpmP8qv6qPV2HshM=;
+        b=M7BVXP6k/R/y+y3DfdMZwB8WOhFxLAiBylrl+6sKNEzEWSyBcHIRJ+QZSKQ7Qjpj3O
+         drgSeaucPoQJT6QLSHtQATKtkeZ9g47DtxCW+DyP3p4wdzyHUoH7cZniYHjlgHDYT0Up
+         9V2ve4BlAuY+IEr8i5f5jK/vZaaS3WHs2xs5SlUeYnZ0SrFhU60DU9hCMzx2L9XmNWDb
+         knl+znDBr+V5uHmO7j6yVMJh/DvbF9NtfLoOie84CHuAwNtwz4zssKbynqO5fb0wzcRS
+         MTlkWHiFhsld52mQw+/iyYCQozp5vXweV6pV+IrZkQLsOX7gXK1kNpOOxxG5C8vkApGU
+         TeNw==
+X-Gm-Message-State: APuU4Z8zqc2nVEN2lckniksW+krHNhR7bsNFCMbCUidRnRWKA193aXBg
+	L5IylWPqofYCuCfVXjgm6iAfWnHCzxSLa7xX19SVoEk+GUk3Pcp2Bo3aHNqU/hz4
+X-Gm-Gg: AYBFou0VsaYXi4kwjSgFyCBHfn5Nz+swPBDCXg6gCW5IJzbzYA3BYJC9dyAoJ09PuLb
+	6ZjMnsKHVOZ0bX7CBTQIwMGknAuE1NBSSbArIUbizh62bIYmZyCHFhix99g9PeNVSqrhbq/3lPz
+	05tbmubYYxUHePRBGUqlR0RMui7rFew0iCSXV+KNPsxpQryYRjPiRgRUeNn05rZWKA8fh+GJKH7
+	MzBPZAkDHFqC4jf3EsprCE+JazZgjre0NKroxpZtyMqmKZx8DsKotvarqRAl7Hw/mOOKPK6lM5s
+	rJhGYVJnzdE1N5YcDWxJmglJgA/nFcA3zkScOlAZv9bAjYcN+D16tR9VB+EYc1srTfoq7nlJKmg
+	7MDgwvYRMk8FpiOtrtF6R0H0juIi48ZnCLUxWXJtP3chioOn3Gc3q9JsWmTLK1xPoi1PcVdeEuK
+	x63DjvxoEPy4X8G447teLtAnnplk9+P/J9fNkRF82hxi9/eLwfGHrMlJrHKeWCj6tEsz4Sq9gKH
+	exJYuZWOvEhmsprynygvcPr5VrClL6eDCe2Vem+sHXJu/ObXFsqlLMSLJEUpncSfyCtzSLN2AYc
+	jzUdGVEKDLwdlZK6/IOcLt4fbzOZAmdmakA2IHmtFu4RdYg4LyQ9zUQthL3ukXQWsnDwpFfqEAu
+	kWwvol6W5
+X-Received: by 2002:a05:6000:4559:b0:48e:752b:9f90 with SMTP id ffacd0b85a97d-48e752ba019mr7780885f8f.38.1793524767237;
+        Sun, 01 Nov 2026 01:19:27 -0800 (PST)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b80ecbsm13330965f8f.35.2026.11.01.01.45.01
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b8011csm14859390f8f.31.2026.11.01.01.19.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 01:45:01 -0700 (PDT)
+        Sun, 01 Nov 2026 01:19:26 -0800 (PST)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 2/2] diff: die instead of truncating sizes of 4GiB or more
-Date: Sun,  1 Nov 2026 09:44:57 +0100
-Message-ID: <93415b30f2ffdafbd8ce0e615b1ef1aa8bb0ad7d.1793521916.git.gitter.spiros@gmail.com>
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	"Matthew E. Luallen" <m@sph3r3.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] archive, apply: do not truncate files of 4GiB or more
+Date: Sun,  1 Nov 2026 10:19:21 +0100
+Message-ID: <cover.1793524457.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1793521916.git.gitter.spiros@gmail.com>
-References: <cover.1793521916.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -101,129 +98,45 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On platforms where "long" is 32 bits but size_t is 64 bits, such as
-64-bit Windows, worktree files, textconv outputs, convert_to_git()
-results, and temporary diff files of 4GiB or larger have their sizes
-silently truncated when they are stored in an "unsigned long", such as
-the size field of struct diff_filespec.
+Two more cases where, on platforms where "long" is 32 bits but size_t
+is 64 bits (64-bit Windows), a file of 4GiB or more is written truncated
+or corrupt without any error.
 
-This causes "git diff" to produce a silent incorrect diff based on a
-prefix, and commands like "git add -p" to apply a patch that truncates
-the file. With the worktree size truncated to 16 bits, "git diff --stat"
-reports 1 insertion and 5042 deletions for a one-line change in a
-7901-line file, and applying the resulting patch leaves 2859 lines.
+- 1/2 archive: tar and zip of a file written by streaming come out
+  corrupt.
+- 2/2 apply: the file being patched is written truncated with exit 0
+  (also with --index and git am).
 
-Use cast_size_t_to_ulong() in these code paths, matching the blob
-side, so that Git dies with a clear error instead of producing wrong
-results or corrupted patches. Widening diff_filespec.size is a much
-larger change left for a separate patch.
+No new tests; both were verified by simulating the truncation at 16
+bits, as described in the messages.
 
-Triggering this requires processing 4GiB or more of input on a platform
-where "long" is 32 bits but size_t is 64 bits, so no test is added.
+Regarding t5004, the existing test "zip archive with files bigger than
+4GB" has been excluded where "long" is 32 bits (LONG_IS_64BIT) since
+2017, because back then the object database couldn't read objects that
+large. Today on 64-bit Windows it can, and with this series zip works
+too. Thus, the guard could become SIZE_T_IS_64BIT to enable a real test
+on Windows. Since I haven't run it on Windows, I'm offering this as a
+follow-up or asking reviewers for an opinion.
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- combine-diff.c  | 11 +++++++----
- diff-no-index.c |  2 +-
- diff.c          |  8 ++++----
- 3 files changed, 12 insertions(+), 9 deletions(-)
+With this series, the search for these truncations is finished. The
+remaining warnings are not reachable: a 4GiB index, sizes bounded by
+config or by the format, commits over 4GiB that already die.
 
-diff --git a/combine-diff.c b/combine-diff.c
-index 717d537688..edf0427a80 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -322,7 +322,8 @@ static char *grab_blob(struct repository *r,
- 	} else if (textconv) {
- 		struct diff_filespec *df = alloc_filespec(path);
- 		fill_filespec(df, oid, 1, mode);
--		*size = fill_textconv(r, textconv, df, &blob);
-+		*size = cast_size_t_to_ulong(fill_textconv(r, textconv,
-+							   df, &blob));
- 		free_filespec(df);
- 	} else {
- 		size_t size_st = 0;
-@@ -1069,7 +1070,9 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 		} else if (textconv) {
- 			struct diff_filespec *df = alloc_filespec(elem->path);
- 			fill_filespec(df, null_oid(the_hash_algo), 0, st.st_mode);
--			result_size = fill_textconv(opt->repo, textconv, df, &result);
-+			result_size = cast_size_t_to_ulong(
-+				fill_textconv(opt->repo, textconv,
-+					      df, &result));
- 			free_filespec(df);
- 		} else if (0 <= (fd = open(elem->path, O_RDONLY))) {
- 			size_t len = xsize_t(st.st_size);
-@@ -1086,7 +1089,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 			if (!is_file)
- 				elem->mode = canon_mode(S_IFLNK);
- 
--			result_size = len;
-+			result_size = cast_size_t_to_ulong(len);
- 			result = xmallocz(len);
- 
- 			done = read_in_full(fd, result, len);
-@@ -1103,7 +1106,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 						   elem->path, result, len, &buf, global_conv_flags_eol)) {
- 					free(result);
- 					result = strbuf_detach(&buf, &len);
--					result_size = len;
-+					result_size = cast_size_t_to_ulong(len);
- 				}
- 			}
- 		}
-diff --git a/diff-no-index.c b/diff-no-index.c
-index a9151cc27a..dee80eb4ed 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -116,7 +116,7 @@ static void populate_common(struct diff_filespec *s, struct strbuf *buf)
- 
- 	s->should_munmap = 0;
- 	s->data = strbuf_detach(buf, &size);
--	s->size = size;
-+	s->size = cast_size_t_to_ulong(size);
- 	s->should_free = 1;
- 	s->is_stdin = 1;
- }
-diff --git a/diff.c b/diff.c
-index b4ac17f8ef..9b1c69b378 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4516,7 +4516,7 @@ int diff_populate_filespec(struct repository *r,
- 			s->size = 0;
- 			return err;
- 		}
--		s->size = xsize_t(st.st_size);
-+		s->size = cast_size_t_to_ulong(xsize_t(st.st_size));
- 		if (!s->size)
- 			goto empty;
- 		if (S_ISLNK(st.st_mode)) {
-@@ -4569,7 +4569,7 @@ int diff_populate_filespec(struct repository *r,
- 			munmap(s->data, s->size);
- 			s->should_munmap = 0;
- 			s->data = strbuf_detach(&buf, &size);
--			s->size = size;
-+			s->size = cast_size_t_to_ulong(size);
- 			s->should_free = 1;
- 		}
- 	}
-@@ -4662,7 +4662,7 @@ static void prep_temp_blob(struct index_state *istate,
- 	if (convert_to_working_tree(istate, path,
- 			(const char *)blob, (size_t)size, &buf, &meta)) {
- 		blob = buf.buf;
--		size = buf.len;
-+		size = cast_size_t_to_ulong(buf.len);
- 	}
- 	if (write_in_full(temp->tempfile->fd, blob, size) < 0 ||
- 	    close_tempfile_gently(temp->tempfile))
-@@ -7838,7 +7838,7 @@ int textconv_object(struct repository *r,
- 		return 0;
- 	}
- 
--	*buf_size = fill_textconv(r, textconv, df, buf);
-+	*buf_size = cast_size_t_to_ulong(fill_textconv(r, textconv, df, buf));
- 	free_filespec(df);
- 	return 1;
- }
+It doesn't depend on the other series in flight and merges cleanly with
+them. Based on master 50fe5cc63f.
+
+Elia Pinto (2):
+  archive: use size_t for the size of archive entries
+  apply: use size_t for the size of the result written out
+
+ apply.c       |  8 ++++----
+ archive-tar.c | 10 +++++-----
+ archive-zip.c | 16 ++++++++--------
+ archive.h     |  2 +-
+ 4 files changed, 18 insertions(+), 18 deletions(-)
+
+
+base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
 -- 
 2.53.0
 
