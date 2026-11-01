@@ -1,121 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793575846;
-	b=0uyuGJeoo+s9t9hIeAkvcc2LhOzbEfNC4hXtEp49hzbduFfBn/SbxW8GLahPQojTjUrp
-	 knsSBWBSNUflRRCnJexYHkSWyqjrU3lNbRYajC6I+4gQqSxNqWfqlVo+hZiNLtGNNXBRC
-	 Shpw4CJLTCQMz8pzUcye97RDvBDCns9m3pb5iKalUOH1DeRrFnCLdpLmYc5VRnCv9OqgL
-	 yMvLrhb9xjEagl4ZVB9e+ZCnjkmgbm4zPven97GgyqcvDODc6g+3BTAFuCCnloPYS1yii
-	 cBkTF1ataJ/ueE5LxbTZE2RkhQQUZpoiz5T5yF4gh0SZ5xWYSmehaCuflEaK1WSkkCA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793575846;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=BG3QLRFeGC4MmSvKE8vVKRpaaGdZsxCLKj8+rJxKPfQ=;
-	b=L/IBJOqnKtYZsG5GG6St8kR00r8ZYbZs9Nqv+Be62TUnSql8ebgmMGhqV/ZGYEFQaKvB
-	 4slzLt8pr2dBDLDM1CL2+HlsBpfH87SvWx0rOEVV6VIoDKfVcwVfiHsLTWWaW9x4j/kk7
-	 UQMxgxKCbwpnDiwnIiCqhDTnYFAO2Ws7evQ0qdYQWVSc2vYPPlCoKMmwkB27Sq0VC4tWO
-	 rWJdeamjCewXJqwNdzFiNOCl019fmyQ+aW6FvJuuoPszk8Bzlp5dJb+KB2GYfuXXbBVpE
-	 xdPC4apsbp1usjrFPVP6/DHcxox4KXBWRkLvzhzWrMwHqWMAW/zCptjxplq2QtlzHNA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ZKJCkeEX;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="Un/H2i10";
-	arc=none smtp.remote-ip=103.168.172.158
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793576706;
+	b=I0O+2abi/0MQoS+GdopmufNeSHmT35FX3nHH4DQ7uajuKdpfkABUsDqWQUZmjAQPr020
+	 IcH7/lGZWX/V1kcPL+HlTcGtKm9NOYHESjwv97P7lfV6KgveuxY4TSagZM2Rw1sa5dWNZ
+	 VpXE/WlHZ5N9drbbRb6xoz4ttkbIOoYFCLkN4x5OBBDSkTyJdnoSLIvspXGkOLii9TFjO
+	 s6FUL7e1Nqt4ULUpyn4tpa/1rqJWhPz41Y1pT57a8vf4MdVuTlEK6qtzwkERREYm/vcwk
+	 UzCIrxT4PExkVvX2Bwm5P8BUClna4rUYMKdxtcVl2tAEHiqJzMBqCgEkZrnmaYxmA0A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793576706;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=/aDzNsISMSaalB4/mSKq2yU4f1sldf7mcGv7ze4WWA4=;
+	b=ZEGARTx/ExIdA5M4IgJdrl5RVO8kkAr/j1XTlAHuCmB/jc3k1QKGxzkmKv85bTM8CuyV
+	 R5Hh/0VXpiNOaf4ILvNF5WoBgIIMafSV7nA/W5hx3w5ormrbFsoAWeMC0KyAYMIjYuQ5H
+	 E3L8V2uKUlfPC5eEV5H4y/WLJ/hptcH4viMg/FEqEN7uKrYU9qpuHEY2S8nxVc8QiSkAY
+	 3XsgkfPBeRSVc8Sgq4ssngY5B8yylR/5VTCXyClBGY+X2ur4MEbvgmcxUDInOIIGXePzI
+	 X+/g45rbCwODM5jW4+W/oF0rQqfGzB77/GTwVVC703AglmcTbWsW2iMaVxpAELoO9Zg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SBNEM+nQ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.50
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1837606A324
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:30:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A1837606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC43606A32C
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:45:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CDC43606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=ZKJCkeEX;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Un/H2i10
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D6D45140018F
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 18:30:44 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sun, 01 Nov 2026 18:30:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793575844; x=1793662244; bh=BG3QLRFeGC
-	4MmSvKE8vVKRpaaGdZsxCLKj8+rJxKPfQ=; b=ZKJCkeEX4M7Znhe+bCieEjgsj7
-	4YXsXwKHhfLKmbModh/KTlmVYi1Kv6NosOEMPE2rdJ5/bNTqLN0ys/U9HFpx8OhH
-	Iy8OY/V12ENncWVIt/yMVFZAKwATT24c1CshO5RfBEgA3UyV9GYSNiBugdU3jruU
-	0+dmDk/w8krp//GD4oxRkVwW0ml9tC1ZdJ+1z5JTLZDMG10YHFV8tTyjkH9JxJHf
-	pH8Z2jhIAZxbGeovSnAqoH8NJEMfd9iec6o1JaGN0DKSRq4mRPIEP32jjr+3LEzK
-	uMhwFIL2Ranrh6Xl26rb69EJDxhKKfOa+Kbmj2D+tm2jeTOYdsJ7ALEn9nlg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793575844; x=1793662244; bh=BG3QLRFeGC4MmSvKE8vVKRpaaGdZsxCLKj8
-	+rJxKPfQ=; b=Un/H2i10/RlS4X+vVDsOKH1D8utlx1PoYBuo6afzt6CTl4qQm8K
-	Efeu3X4msSJVyIaktBvLM6/g9OUer8EqcSI+nX2JFGu7LLXk1imM6km5Cj34yNVH
-	dtF56zdQDmjCgXejf+kw0DaQMlpxhD7UZyAoozOm0z55yQN1PNMLOHyyF2RHTj5Y
-	40qGbX62UxwCMJRDOktsuUIgq2Eya/5GV86n9umYaz7Q+CCS2G1ZpAjsmCLSdGS7
-	1w97txrMxG68QihmLtEdxfbNyTM/jbq+F+6hrk+MMHejUuV6D1rorsqwCJklzJT2
-	kXyJhbmA8HgXqUpT+jlmFA37wPxEHVmaHZQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793575844; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:ERMai+KVlZhsAW1xQvkvYunIW+qSZ1MiU4n0KRAhEVzMWsj
-	6Thyb066fGGWCk7WqwnvM+C02yAcjgA8BHHxyiAJpN+Lwi+t0Uu1EmADdv4visQO
-	NKDy22oN2krBrqfIjtEuYzi44dbqyG75QsfyhrapFPCxQ9U4sAEKg6poWaZtZljX
-	chv/Pj+kZg8kkNGOCVepxKUB+G1QuxLfZM8kt8/xdC3nCPrdUO/htDtWKruP3jVc
-	Cwq1NcJ85NvrX6V6iBr8AoOm/fVk8zozwAx+nWPeqvsqr2HlsN+ulGKRp9Yk+BS8
-	1gdpKoQ7zNpN/d7otQHger50laHZxg7x4DS31OQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Y2CaEqt7ngbwXWNUQe4y+PgoCfeC0Cmpkli+dDFkyeQ=:UHA0OumW0I901IqEX0X/Y9f6PbJLlY0YFdvERGN/pdA=;
-X-ME-Sender: <xms:pMvnag--DK9S8L4K3MAdoo6v2JlS5qDsLNiwICP5woanGhY9T9H5Ug>
-    <xme:pMvnavlML062hcYANzsTs4Eaj6YGXe0M57m_wzWdDBiw7XpINziTWWFQ9BbyuaJIs
-    m9cA_p6NqzjLDB6I5jmylgKOhzXFP-muBT6NgdZ262Qo5gzRJJ3MA>
-X-ME-Received: <xmr:pMvnauUO6k8f54rDUzbZIQta9UNmkv33uuGVUdAbZZSV-ns4g_VvdH_aF0xmZnozqZ7evc2OBvsnmSpdCNbbseaFkCsejbVbFpbB>
-X-ME-Proxy-Cause: dmFkZTFgEQ7A1dMfb3SQijpeJUdi+Pqs1SvoB/C7ir5OiBN1WbGOxhblhP+39C51YjxbUL
-    YYYtUB/QpgUSOhtvJ71w6LMnRJRu++adHPxA62bIxe8rQQ7bW41vz2ScTQKwSbRAcM/yGq
-    pHxj6qDX7wxwBh0bo30hexaimiXFgr+UH81Uc/fFlLzWdy7g93S5lzUqZqbyjtBKWSmZuZ
-    7eyakr39B75cOL3MFnA2xUN7aERsvBdUOKSdQRBkPwoLfmtrDfRRe9RxK7gGq9AblYZv5o
-    K9dl4NYkxF/RCpx1G4A0TPGN6F9TfMckfhX0QX+C2EYLLGyeYhzSrdQJuYZI+h1EaU4jLq
-    Gnp4U/zKYAMSaDZy8xrnn5poPJqZPBHEkqR2ymCcqO5JZoqy7DeQxTOBpQD59ERF9bmo6V
-    xNo20emLU4yKyBQrMM7sb5J13aRtmwH9TXWUW+gPyOWT+kixzj91IE6lWhsKzdJF70sCsC
-    j+tnOPPOvtSsH1a2O95vfEMJa0jg081a3WqOzy+UnSjHwWgwLBJL6cfjhOsOAO51RsK3Rq
-    Y3SmXSKdrCH0CXIul4gQRgqNCTsSU7nnAju8QEBJ4OjwB0j8sKxaQ4/5TJiE8tyKk6UKyT
-    51eQsTWvF3+wPdiAPPBaJoGxwD3LA2YaZkJQNL0gN49lkp/sohGLPQv4QXrw
-X-ME-Proxy: <xmx:pMvnasE_xyaV0fZ5NL-DB34VaiHKQ2zH-Fqcx24XIr7AiZGDXa5gbQ>
-    <xmx:pMvnaidIH99bBa-L9DRAQl64fSLW2UK-xCLWbZGP6rQDgd9DHZNxRQ>
-    <xmx:pMvnalIcFXWkO36yVERP5rdSnP9Umu2FLRZCbxo09N8lN_cCAHCqaQ>
-    <xmx:pMvnavECQF-KeJEgN5rYmf3X2k9sgb2vM6suFjmY9_0OGqb7DVyodQ>
-    <xmx:pMvnajV9KXFqod7gW_DsEr0HeeDFQMSPdp0Lbq2xRuFqzAs7wI-o8mmr>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 1 Nov 2026 18:30:43 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: jltobler@gmail.com,  lucasseikioshiro@gmail.com,  K Jayatheerth
- <jayatheerthkulkarni2005@gmail.com>
-Subject: Re: [GSoC Patch v7 0/8] add more path keys to git repo info
-In-Reply-To: <20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Sun, 27 Sep 2026 17:14:12 +0530")
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
-	<20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
-Date: Sun, 01 Nov 2026 15:30:42 -0800
-Message-ID: <xmqqld7cuo2l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SBNEM+nQ
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-4a77dcc4ca0so1348975fac.2
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 15:45:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793576705; cv=none;
+        d=google.com; s=arc-20260327;
+        b=SmMlQ/Ueypl5bE4He7RyATINd4rxByuAPtDbj+AJ4USSXgj5ViesTYQeX+WrvSAlbM
+         pxYWbzkLGm06Q1oie/sfUsS6suoyAsx74QcmgoqDgQrSjb83WiQP3jTfteDA+qC5NCRP
+         R31QuYKlfUKX2BnEML+7gEWUmOv0aVyKmQhtt1Db8CJe3uiEpENa7wHROo5skPtopNIi
+         pJ62cC3DUY5yuL9Zbq+3cuyXYcu3VRbGCRTBvTmqJJ6gP9z3C+bHQQNl9ct0eiBsHRJ5
+         r2mR4SUuEyhGk0JaA+3eT2Lgrx1SwDRCAa54DrE7MYP7rtsCTffU9y5ed3r2l7uCHvw1
+         oDCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=/aDzNsISMSaalB4/mSKq2yU4f1sldf7mcGv7ze4WWA4=;
+        fh=+Ve7dG4yAo6b6IJAJcsfAVXuA3IHmj+18im/3KFY0tU=;
+        b=qQl8jpewuS+2AcDvrPiXxWUe95lXiVYqaPLoZFmBft6T1FnVw7k1SB5YcI7JKsFWWX
+         TNyhldEdbPOjnLyNN3y9BRrgGKsHAolxRp8ECXKGxfHEI+H1HVwjB4wIwdUy9KMoJhD/
+         qSOFZgcOxTWHxUbFBH400Xi1t9fV/Kj8TCgnTDx3GSkQ43srOAJFqJbwEfivtqobuO2V
+         B4Leki1qK5FI168wk4OIzhaCkF/Ma/r98Mfb8ccvqcQkRYJYUnYH9kDFsZKgcDAXRn3Y
+         Olo7GrkJq2pkByC6E49ymyfpETUD4xbYAiT06wMmOCgDPftX4pMKIa054yuYIPtqwP8j
+         Ro6w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793576705; x=1794181505; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/aDzNsISMSaalB4/mSKq2yU4f1sldf7mcGv7ze4WWA4=;
+        b=SBNEM+nQlnGp9MHNN1KSK4WHn5cHI+CBYde56ZHxhgdU1F0EOLXq4yEzHEjkl8qew0
+         9HzpHJ67859qUXhz8XGoC2qZZjUkZ1hLRZoO2Ri+su9HCcLWkr3ZWpq7gAGur5jVR95G
+         t3yNyebN9Mx+tqr9/a+uwKj9IIFZKfA0o3zq6tYCeuKr8svXmkhIQecO4oRTniyEJG5v
+         inwiXAe8iVi9PWrT9Tgc7vVaq/dcPCua43ShIv1KvQQkQ3zB1/Xl1n6RT1PJFS1Cl/7Q
+         JuMNxksOQMPvwjBNDD8smNpWCYf1YwmHxzRE9oWQo+lgHDaHZX7+RgH7E1/mCWhBMv9N
+         W4kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793576705; x=1794181505;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=/aDzNsISMSaalB4/mSKq2yU4f1sldf7mcGv7ze4WWA4=;
+        b=ufuUDmJK8k5nWfJOiXEu6jEy99kdcWBI+aMNn/JDCannd5+ZJjY/foRs2zeccQ5fz9
+         XmcpP53xagFdOA2VvD8+R9bncyoI7+DVr3if8rBR08LZmzpRKKoeZUKbECHhsQd7ekYw
+         sM+PEL91QeFHe6LdGom/Tb2MfWK9lnYVN3rR8In4eecIu3EpS4Rwg8BFNy75euhlQwP/
+         HjFavCi64Ui8fbubH1L4TOOO+A3TQwPdfHwZ9fug702KOYl49MGqF1ulvZWnvgIw1c7x
+         3dg6JlXkVOQvHBx3KhCDT8b/N2WWSPfSc1GWKJeL7KdiHVdaHF+hOxPMD/4CdmIMq9XJ
+         tj0Q==
+X-Gm-Message-State: AFq9FYLZ6i6w5qvA6n/213GvhJWA6z4pi/Q5BRp63UqiwvpZk68IiyCS
+	wM4RQH2w6Z8FSct+fpst7jLnZkDxlCenRzowGqxSQt06cYg5sYL3YUTNaaoQsn5MjzCrRAdh2JS
+	eiKkTNZbU5Cm1SvtakHYVwaS9WRerWtbxaWWc
+X-Gm-Gg: AYBFou2GtjHtZIYfltu/cdKfEO3plkDtnTnvclsj0amE1I9TNRDMIng/ROo3btVlJ6u
+	n8SSyGhnK/yjTsoEzGDJ7W/Q7z4TwT5eobpfS/mUecySFgiPYIncAmmHc6L35KUASjU7fxFwYjm
+	RhE/5lvlqwFwP592Xxh52EvTvhvWTylCfr6RHFt8JjqQkZqKnTUeLCGlku5LqGStmOb8OrPbh0a
+	GVK3bTUre6arGvfqMqo/bkcJLGYy4oc2oHd7XS75bcn3RdwQ8jzQcLw1tNyXufMK+MQPkevwnkM
+	jI1GFs8LezavU8LaCTdnha+E/IQ/UIGmJR/ep/mrRia1htlBBSdn+21COoRH+tJDml21I2KmJ82
+	w3E9y/MZHCqguW5csmesERuKhv0bFrqSeiG4=
+X-Received: by 2002:a05:6870:8242:b0:456:5d8b:5681 with SMTP id
+ 586e51a60fabf-4a9072d45b8mr5483786fac.1.1793576704549; Sun, 01 Nov 2026
+ 15:45:04 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,38 +102,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261022212903.177261-1-andy.koppe@gmail.com> <20261022212903.177261-4-andy.koppe@gmail.com>
+ <atsPwpbD3YqmBds_@pks.im>
+In-Reply-To: <atsPwpbD3YqmBds_@pks.im>
+From: Andy Koppe <andy.koppe@gmail.com>
+Date: Sun, 1 Nov 2026 23:44:53 +0000
+X-Gm-Features: AclHuK9RQ6Y_Bm_TdPD7HFZunUHrTpmllp4Bq-3FWFlMF_AEXS6xkR0pBi5PsCg
+Message-ID: <CAHWeT-aa=6WByd4U9BB-6mMMUAxPQCC5GhyM1WMSSVVatvN0Tw@mail.gmail.com>
+Subject: Re: [PATCH 3/5] doc: stop calling root refs pseudorefs
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, Julia Evans <julia@jvns.ca>
+Content-Type: text/plain; charset="UTF-8"
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
-
-> Series adds keys to git repo info.
+On Fri, 23 Oct 2026 at 08:42, Patrick Steinhardt <ps@pks.im> wrote:
+> On Thu, Oct 22, 2026 at 10:28:51PM +0100, Andy Koppe wrote:
+> > diff --git a/Documentation/git-update-ref.adoc b/Documentation/git-update-ref.adoc
+> > index 37a5019a8b..c775334230 100644
+> > --- a/Documentation/git-update-ref.adoc
+> > +++ b/Documentation/git-update-ref.adoc
+> > @@ -163,13 +163,12 @@ still see a subset of the modifications.
+> >
+> >  LOGGING UPDATES
+> >  ---------------
+> > -If config parameter "core.logAllRefUpdates" is true and the ref is one
+> > -under "refs/heads/", "refs/remotes/", "refs/notes/", or a pseudoref
+> > -like HEAD or ORIG_HEAD; or the file "$GIT_DIR/logs/<ref>" exists then
+> > -`git update-ref` will append a line to the log file
+> > -"$GIT_DIR/logs/<ref>" (dereferencing all symbolic refs before creating
+> > -the log name) describing the change in ref value.  Log lines are
+> > -formatted as:
+> > +If config parameter "core.logAllRefUpdates" is true and the ref is
+> > +HEAD or one under "refs/heads/", "refs/remotes/" or "refs/notes/", or
+> > +if the file "$GIT_DIR/logs/<ref>" exists, then `git update-ref` will
 >
-> Keys output paths of repository components:
-> * path.toplevel: repository tree.
-> * path.superproject-root: superproject tree from submodules.
-> * path.hooks: repository hooks.
-> * path.index: repository index.
-> * path.grafts: repository grafts.
-> * path.git-prefix: prefix offset.
-> * path.cdup: relative path to top level from subdirectory.
+> It's kind of hard to understand how the ANDs and ORs play together.
+> Like, does the config parameter extend to all subsequent ORs? That's not
+> really a new issue though.
 >
-> Keys support suffixes for format.
-> Commits contain documentation and tests.
+> > +append a line to the log file "$GIT_DIR/logs/<ref>" (dereferencing all
 >
-> fix a superproject bug where it now takes repo parameter
-> instead of just depending on cwd.
+> Also, this infomation about "$GIT_DIR/logs/<ref>" is out-of-date, as the
+> reftable backend doesn't store its reflogs in there.
 >
-> changes since v6:
-> * The superproject bug fix is now a commit of its own.
-> * The dead code in index is removed, we simply rely on the helper itself
->   and not write any new conditions.
-> * cdup now works even when the worktree is outside the current working directory.
+> I wonder whether we should maybe just stop explaining how
+> "core.logAllRefUpdates" works and instead refer to git-config(1).
 
-This unfortunately has seen no interest and no review since it was
-posted for a full month.
+The whole LOGGING UPDATES section in git-update-ref(1) seems outdated
+as it assumes ref files and SHA-256, but I think that's out of scope
+of this patch series.
 
-Unless we see some volunteers to give it a final review in a few
-weeks, I will discard the topic out of my tree, as 'seen' has been
-crowded with topics that have been collecting dust without getting
-many reviews.
+> > diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
+> > index e6e77252ab..f0eb6d4137 100644
+> > --- a/Documentation/git-worktree.adoc
+> > +++ b/Documentation/git-worktree.adoc
+> > @@ -303,11 +303,10 @@ but others are specific to an individual worktree. One example is `HEAD`,
+> >  which is different for each worktree. This section is about the sharing
+> >  rules and how to access refs of one worktree from another.
+> >
+> > -In general, all pseudo refs are per-worktree and all refs starting with
+> > -`refs/` are shared. Pseudo refs are ones like `HEAD` which are directly
+> > -under `$GIT_DIR` instead of inside `$GIT_DIR/refs`. There are exceptions,
+> > -however: refs inside `refs/bisect`, `refs/worktree` and `refs/rewritten` are
+> > -not shared.
+> > +In general, all root refs and pseudorefs are per-worktree and all refs
+> > +starting with `refs/` are shared. There are exceptions, however: refs
+> > +inside `refs/bisect`, `refs/worktree` and `refs/rewritten` are not
+> > +shared.
+>
+> It might make sense to have a bulleted list here, same as I proposed in
+> a preceding patch.
 
+Yep. Done in v2.
+
+Andy
