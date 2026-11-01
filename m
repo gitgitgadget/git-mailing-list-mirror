@@ -1,97 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.171
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793518149;
-	b=Fgwr3t0Ga7PGw+nEqqnmuN7T+iIEzs4Q2Pv9FedTVl9rMRRWC99gisJtCW94r2g8jKD/
-	 VlN624WWGKOfVuw8swYfLIM8bvNLS5/ps80oKkVTjTsH7x0Y3pQYujvF9yN7zcDWMKzbb
-	 b2w0PnTjSOWD9yrqRgXg39YOoxNehWTgUPeA0wjIMQ8DKrWRXWHLbWYPc+50VfK0B4yn4
-	 b+4UPFuuJme3oipXTdrSmxYgh5b7ClA2dKt8LzBYyM5DFoevuAWevutNdHeLlqrC/GaWV
-	 DuLF/cxo1Zui3MlFGBQNpp53gHBuCwL1O3nb+fM4jnKI800Vqnw94YB7kiP55Z+UR7Q==
+	t=1793521300;
+	b=5gDMAvq0SITtkmMKA+IxIrXyyDAE03oPAh8T3FAtjZ/LzNWvuBGy3+uxBdZreX+g7eth
+	 l/U+I/Zv9vwEtwpfAmW2wg8G1A5T8WJPvKY9o5BlzT0ebsUSKA8OchjP4MTRgIxRUI6bN
+	 i0+ghynQxCJqESNel37w6xipNVMPH0+kIBmvWDKHE8U0Jjm3K/PNDzPGm23SYkE2bfG2G
+	 mLU+tfUsQimWnmyo6fbVj1MOMhMqAttRaJM1Zw8ri1l3HkUFUCoyHoN31ZOwLLznEW7yW
+	 G1Iy8Y4F7iOoBwgLCGel/xBVoPH7pAxGuHP5nGzVWP3moowAP9fMSqShT+MwtESYFlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793518149;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793521300;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=Qc4v2J/Wh5ir9BDpvZNh4x5rh0znAEQaxzbk6ey7IoE=;
-	b=vYdS6d9AbiXXclTKN19Eq5LHfv3BMQLK14E74GVOVjs9JRtCnY9GMkLTnYpAR7SAlYLJ
-	 KKlvj9XkgM8cZvEUX1no5HFFbgmszvr7qrB30wZE467qi+j5rwG8pr182DVODTwpQwE+U
-	 oqh76qUhsBUmYi0wcZF5DQVDoANfoMqipAmQDjXoK8/glNL1/d3FdibTCfwBPJkbXKpUB
-	 yxvXwPJz1Y7wK3MQ7/OfsKPGJVUAWKjxI2XWjfqZJqqM+O2xtAi3X9F34MGTU0qh+hVoX
-	 E5gutbsepQg2pkGHkCO6Yw1noi+tOtznBkzEVgffH2ybSRvDn96blJcaxq3w7fYe+rw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=MyQC+H+vA82ndXqdaEiYGHjhep2Ezq3UNSewBr3mbD8=;
+	b=QtuiMTkyVfbW/+PJTh2bQF9Ae3CJLzGBfxcAgGXM/FgR8IQAGKg0fmCR+MOFx/+kodhm
+	 K5dYNogo7HTjV82I5h1T0L/lRgPT90KXYbWof7OeW0+A7fjPjqoUcgo+Z/8byTJt5A6XV
+	 mZs/TfsIUzaWAgc3AEHOt6RxfmZ9Qsg+BeXYn7makccd1XmY+KGJfo0l6Iz8fhFuKXkD8
+	 4/eH2195IKFp4kFgEy/476mfeRPbEJPiNwvg2pnj70HwXZsqdutHhgHjB3XbXJRc9IcNY
+	 C7APDqulDcnTYSWxYTkdHWCoh/z+ljShCpYLuQBojKTFCgPAWqMUsCrO9ILy3yvdM/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SVWmpLoY;
-	arc=none smtp.remote-ip=209.85.221.43
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CcGJBwVX;
+	arc=none smtp.remote-ip=209.85.160.171
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3870606A324
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 07:29:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3870606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07161606A324
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 08:21:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 07161606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SVWmpLoY
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48df4f540ebso865840f8f.3
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 00:29:08 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CcGJBwVX
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-5364c951da4so20771541cf.1
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 01:21:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793518147; x=1794122947; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Qc4v2J/Wh5ir9BDpvZNh4x5rh0znAEQaxzbk6ey7IoE=;
-        b=SVWmpLoYqIxjrA2d7XO0iyn6cDo8dFYbCcYcymbGfvNpDx+/Scu2j7LUyzGW8vcjzO
-         7dG4m/2x5CuZb6xmcg8j+IMoh/US+K6XYq6CXDA0kbqp6tALEQnr/m1Z8H2XmceH9cJJ
-         ZiMOPonuDbdS1SvzQuQRmp5Rg3mTKzs5/RTX8ABKhXMpmn+Ro8/qmdl85zUaZJPg+2ku
-         pL5H6YfbiD/ysYaHYWp3ziin2RPZWeW+/OXhidHHae5HT/diSzsqQLjRJjQYbdL2NCej
-         nYoEgSQgUFDN+XZCi2JQrIY4HMXolkx3uprhIvM2al6YygyNtb3Po6piL4ncqRb8bxLx
-         aX1g==
+        d=gmail.com; s=20260707; t=1793521299; x=1794126099; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=MyQC+H+vA82ndXqdaEiYGHjhep2Ezq3UNSewBr3mbD8=;
+        b=CcGJBwVXiEIO/pAJXBWupPpXCwNlG1ijJFR12GNvpxN/0qtSrv7/56R30Tnge6bCRI
+         K+zbrd3oSm+GCvzeIEOrxloY9v7U2cyx7pkppwuJ5dgwOCQfX4fGxN3fS5sarpWZQEpl
+         21QcZHsKrWXIEUme31VEUEUVw436aLkRT4/s99TWoQmL1zYoZuWEvXdIsYo9G4zhuEz7
+         d3WHBGpowMth2Yb1lAqYQk1XjwOiCOV/djV3kRO9t5ycIzR6y/SljqRUH7CCfPsZDAAN
+         338/HKy7NZE6rUIWJa8h7sRLpD3a/mC9IUU050lTqeGnWiiAoSBfQVE51DpvU0VAAKvh
+         ysSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793518147; x=1794122947;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Qc4v2J/Wh5ir9BDpvZNh4x5rh0znAEQaxzbk6ey7IoE=;
-        b=MgjgCsOh7WMP+7kq2oyfpQz3PrNH9pSrljlFJvTYBS3ua9ej9BO8oUyQnGVA8705fl
-         mhcHPUD0lDNhpFsNTI+Fd8m/Dv7hx2v5VO9g7KZfyx7ALZ+/uOu/RvezFa6eL58OnbSv
-         OjZpHr+TBOoXrIJ5aW2wdfsvZ3hwbQMKwMD8wmrF3ge6j7G02akRczfGtP4Y6RMnyeSS
-         kBqsappRz9qcx8FP8aJFXHFVDh43Glv91XQg/rXPJVgTAfFpvOqT4S9AO3KFR46DEyNu
-         XiOG6sliIISIN9sLuzJgpYxV+pxRbsYXjUZrY3UHLIJa+hFCZzDUCdChIpp32YMS65cC
-         9kQA==
-X-Gm-Message-State: APuU4Z/uA956EWujTPcQR7CUtNuMc81Pv2oYPFmjO+EE+xIn7cru9gjf
-	u54ozeoqoPmQaCN/AAGIpDcq8Sycx8lUWjPTrxM0NTKWiRQ8IvA+2hikzrvr5jr4
-X-Gm-Gg: AYBFou1VxDaNKGuMz14Dx4k7mqZeVq6kkhQdeZwnN4oDMS/dqsS6wxOFDqkVVHQtW1m
-	WjuB673w0rCneD/EzQ9FMIDqozJZyXlrrKSn1z2Yrx4jqQYKxHFhYSajPDEmivInuwSmqNOharQ
-	P0pSJniqFkFgNdikUSzSyMMYjy6hjfveQhdaMhy84bq5phQIS+WKpEdf5zs6815Im5jvEsokLSo
-	1MyqF6o9BX9C0WzmUu4AnfLES+7jnz6PGaaxBk+JizlHXqMWf3usCm0H64uyU0D6GyXls9CmkyV
-	dBVvvIb1aZELAjDDZ0YybZYbNdpJsMrNjmZ4QCs+wE4dpmMbN96ME8getIlkY0wPdWCsTRiJzdm
-	P9lWOhWl/tweVlXiTLI2eFDD6T/fg4HFsr9pfaYGeuztzTWGZH27WmDKeyzwzxQ+NNgSoWXFZyV
-	ze28H0eI1YAlYrSeNpn42OE6Vw1XN1mgg/KiBh9Te3D/kWZEdJr/GTohs5d/C1fm31Ezrqm6vFt
-	ks+7FoBze52ohKG4nlCpIlRaAGudbdBsfUtwZGd+VAATW2ASnqcSfqZxpMlngf0Jwpo7CgEpaHY
-	7yoOpRw/DgTfjqVDT3E/DQpCL82CP5iGYcUjRZfUEIduyBkWKArmSIPWC3lW6dc=
-X-Received: by 2002:a05:6000:22c4:b0:48d:ff0b:9b52 with SMTP id ffacd0b85a97d-48e6e306ebamr15655808f8f.19.1793518146970;
-        Sun, 01 Nov 2026 00:29:06 -0700 (PDT)
-Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71ba2415sm13100417f8f.50.2026.11.01.00.29.06
+        d=1e100.net; s=20260707; t=1793521299; x=1794126099;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MyQC+H+vA82ndXqdaEiYGHjhep2Ezq3UNSewBr3mbD8=;
+        b=MMAM4NZCV0ClAMN5LGvey2pwfNtLu7DKUQxq2lwNDt7+EE2P1C/aGdF9ICfZ0mMvmf
+         /qOsUNePZ19UC1YIP2nW8XQ9njDhXyuSbwgOlKGxoxG0pgzIEKbfAZcXog+AXPddRfqW
+         h785ZemDZjIsP/d9VZCrJkF4ZZNYWSQ/Dk/Ze1hqH2e//5eAYYGuIqZcYNYRw0fQH8KS
+         4em3zBvDNYM3lzBSYlES4P881yBW06b8BnFe2PbUAeHhlXle3h4G8o2nOr7Mnoy4dNfK
+         /BGFLcuUdeTrMAwOS6o0UJXWeKWfZOWqBPIPV2Afhb9quysKXEmJkkg/Qa7Xz0JCnJqZ
+         jlJQ==
+X-Gm-Message-State: AFq9FYJbKtntu3uU5zvgWaisJq5mmr/UiW7JoSOPNdhZCfJ3+96C42al
+	8MJFXL7/3ES+/LIOWqU44IWR9kXMnBGwFd0LctoQRwmdIUPLzM8m4ZfFVCssxpFxUkc=
+X-Gm-Gg: AYBFou1uEbaGlP9ZYa+KK4zFKcCvD4qfpDLOGAd2NtGSt+uSKK/MRLPIxf3s8KLUJmn
+	NTS6ZH6h7Jsxs7Jn+1clBw/B4LBvoNKFMtrm2L9HmWAN+fGSxGHdqVCLtY/Fcp+sh+G5GpvR7D5
+	w7Wgx3it3mPDiCyhQq1tjGodpBQtf8p7do2YD+HD1PKS6p3VyBs4nmpe6SLgcP2ShiFE6n0ucUz
+	nssuVvui/W285YUBK9TeUFnBbu1qOWPWaDEkpmvKISbJG6i/o8S8a9KEs+K1n/hb+RXl63cPNvz
+	fSnlD8lCge88UNfgBjyvLNrkEdjMt/2K/eW1GjM1ZO5fUY/qKys5auLhRp3WWqoivuqFgrO6bEs
+	oK7iDSWrVfJAkmdbzH4MQGDNBs0Oez+m+dht0lWJGSVtmSWoflJhIWJOjbWwTL0S3eG392vOHdm
+	v8s7vUIesiCZlwS5Iy2TDzqG0s6iSd/M1FHxc8PGsS4ekdIvJ2Nrk5fDln5NX9XxIzSzA8cicQy
+	W4g6wG8mBilb1gqk3yIOSu5Lw/0I0GF+e1881Axwjlw2HMinJKnR5EGyhmt67CIjtZu3COXt6kT
+	x369UJT525qY73PGOZL9HvR23iqtjjNh
+X-Received: by 2002:ac8:5f85:0:b0:535:fc2d:b7c2 with SMTP id d75a77b69052e-542b7044dc6mr116750331cf.33.1793521298973;
+        Sun, 01 Nov 2026 01:21:38 -0700 (PDT)
+Received: from [127.0.0.1] ([20.119.79.64])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-54312a5da26sm56330761cf.25.2026.11.01.01.21.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 00:29:06 -0700 (PDT)
-From: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Elia Pinto <gitter.spiros@gmail.com>,
-	Simon Richter <Simon.Richter@hogyros.de>,
-	Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3] pack-objects: use size_t for streamed large blobs
-Date: Sun,  1 Nov 2026 08:29:03 +0100
-Message-ID: <20261101072904.274912-1-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261031183748.273957-1-gitter.spiros@gmail.com>
-References: <20261031183748.273957-1-gitter.spiros@gmail.com>
+        Sun, 01 Nov 2026 01:21:38 -0700 (PDT)
+Message-Id: <pull.2456.v5.git.git.1793521297.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
+References: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 01 Nov 2026 08:21:33 +0000
+Subject: [PATCH v5 0/4] imap-send: fix with reordered message headers
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -101,117 +96,123 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-In builtin/pack-objects.c, write_no_reuse_object() handles blobs
-exceeding core.bigFileThreshold by writing them in a streaming path. It
-takes the size from st->size (size_t) and assigns it to an "unsigned
-long" variable, which is then written to the pack object header, and
-write_large_blob_data() adds up the compressed length in an "unsigned
-long" as well.
+git imap-send rejected patches sent with git send-email, such as ones
+fetched from lore with b4, because it expected Date before Subject.
 
-On platforms where "long" is 32 bits but size_t is 64 bits, like 64-bit
-Windows, handling a blob of 4GiB or more truncates the size in the pack
-header while the data decompresses to the full size, corrupting the
-object. If the compressed data also exceeds 4GiB, the length
-accumulation overflows "unsigned long", misaligning the offsets of all
-subsequent objects in the index.
+Changes in v5:
 
-When running repack or gc on a loose large blob, the original loose copy
-is pruned, leaving only the corrupted packed copy and resulting in data
-loss. Truncating st->size to 16 bits, with a 100KiB loose blob reachable
-from a commit and "git -c core.bigFileThreshold=1k repack -a -d", leaves
-a corrupt packed object and no loose copy.
+ * End the header block at an empty line in a CRLF mbox as well, so headers
+   in the body or in later messages no longer count. Add a test.
 
-Switch the streamed path to use size_t for the object size, and off_t
-for the length of the compressed data, which write_large_blob_data()
-adds up while it writes the stream piece by piece, and for
-write_no_reuse_object()'s return value, like write_reuse_object()
-already does. Other truncations in pack-objects are not reachable
-because core.bigFileThreshold is itself an "unsigned long".
+Changes in v4:
 
-Triggering this requires processing an object of 4GiB or more on a
-platform where "long" is 32 bits but size_t is 64 bits, so no test is
-added.
+ * Store the tunnel as an allocated pointer, so it is only finished when it
+   was started, and drop the local tunnel variable
+ * Add a test for lowercase from:, date: and subject: headers
+ * Explain in the commit message why dropping the From git-send-email
+   special case is fine for mboxes written by other scripts
 
-Helped-by: Simon Richter <Simon.Richter@hogyros.de>
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
-Changes since v2: say that this is about platforms where "long" is
-32 bits but size_t is 64 bits, as Junio asked.
+Changes in v3:
 
- builtin/pack-objects.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ * Split concerns into different commits, commit message explains what they
+   do.
+ * Handle tunnel leak in the proper place.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index ca3a891dfb..24203b5359 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -412,13 +412,13 @@ static unsigned long do_compress(void **pptr, unsigned long size)
- 	return stream.total_out;
- }
- 
--static unsigned long write_large_blob_data(struct odb_stream *st, struct hashfile *f,
--					   const struct object_id *oid)
-+static off_t write_large_blob_data(struct odb_stream *st, struct hashfile *f,
-+				   const struct object_id *oid)
- {
- 	git_zstream stream;
- 	unsigned char ibuf[1024 * 16];
- 	unsigned char obuf[1024 * 16];
--	unsigned long olen = 0;
-+	off_t olen = 0;
- 	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
- 	git_deflate_init(&stream, cfg->pack_compression_level);
-@@ -513,10 +513,11 @@ static inline int oe_size_greater_than(struct packing_data *pack,
- }
- 
- /* Return 0 if we will bust the pack-size limit */
--static unsigned long write_no_reuse_object(struct hashfile *f, struct object_entry *entry,
--					   unsigned long limit, int usable_delta)
-+static off_t write_no_reuse_object(struct hashfile *f, struct object_entry *entry,
-+				   unsigned long limit, int usable_delta)
- {
--	unsigned long size, datalen;
-+	size_t size;
-+	off_t datalen;
- 	unsigned char header[MAX_PACK_OBJECT_HEADER],
- 		      dheader[MAX_PACK_OBJECT_HEADER];
- 	unsigned hdrlen;
+Changes in v2:
 
-Range-diff against v2:
-1:  185b9da891 ! 1:  02e682725b pack-objects: use size_t for streamed large blobs
-    @@ Commit message
-         write_large_blob_data() adds up the compressed length in an "unsigned
-         long" as well.
-     
-    -    On platforms where "long" is 32 bits, handling a blob of 4GiB or more
-    -    truncates the size in the pack header while the data decompresses to the
-    -    full size, corrupting the object. If the compressed data also exceeds
-    -    4GiB, the length accumulation overflows "unsigned long", misaligning the
-    -    offsets of all subsequent objects in the index.
-    +    On platforms where "long" is 32 bits but size_t is 64 bits, like 64-bit
-    +    Windows, handling a blob of 4GiB or more truncates the size in the pack
-    +    header while the data decompresses to the full size, corrupting the
-    +    object. If the compressed data also exceeds 4GiB, the length
-    +    accumulation overflows "unsigned long", misaligning the offsets of all
-    +    subsequent objects in the index.
-     
-         When running repack or gc on a loose large blob, the original loose copy
-         is pruned, leaving only the corrupted packed copy and resulting in data
-    @@ Commit message
-         because core.bigFileThreshold is itself an "unsigned long".
-     
-         Triggering this requires processing an object of 4GiB or more on a
-    -    platform where "long" is 32 bits, so no test is added.
-    +    platform where "long" is 32 bits but size_t is 64 bits, so no test is
-    +    added.
-     
-         Helped-by: Simon Richter <Simon.Richter@hogyros.de>
-         Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+ * Case insensitive header match according to RFC 822/2822/5322.
+
+Harald Nordgren (4):
+  imap-send: wait for the tunnel command to finish
+  imap-send: accept messages with Subject before Date
+  imap-send: check git send-email copies like other messages
+  imap-send: match header names case insensitively
+
+ imap-send.c           | 61 ++++++++++++++++++++-------------------
+ t/t9001-send-email.sh | 66 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 98 insertions(+), 29 deletions(-)
+
 
 base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
--- 
-2.53.0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2456%2FHaraldNordgren%2Ffix%2Fimap-send-header-order-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2456/HaraldNordgren/fix/imap-send-header-order-v5
+Pull-Request: https://github.com/git/git/pull/2456
 
+Range-diff vs v4:
+
+ 1:  8941ae12bb = 1:  cb27ac3a27 imap-send: wait for the tunnel command to finish
+ 2:  ad3158b336 ! 2:  fa90c64a5c imap-send: accept messages with Subject before Date
+     @@ Commit message
+          and git send-email writes Subject before Date.
+      
+          Accept the three headers in any order within the header block of each
+     -    message.
+     +    message, which ends at the first empty line whether the mbox uses LF or
+     +    CRLF line endings.
+      
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+     @@ imap-send.c: static void wrap_in_html(struct strbuf *msg)
+      +{
+      +	bool from = false, date = false, subject = false;
+      +
+     -+	while ((line = strchr(line, '\n')) && *++line != '\n') {
+     ++	while ((line = strchr(line, '\n')) &&
+     ++	       *++line != '\n' && !starts_with(line, "\r\n")) {
+      +		if (starts_with(line, "From: "))
+      +			from = true;
+      +		else if (starts_with(line, "Date: "))
+     @@ t/t9001-send-email.sh: test_expect_success $PREREQ '--compose handles to headers
+      +	test_grep "^Sending 1 message to INBOX folder" err &&
+      +	test_grep "(1/1) done" err
+      +'
+     ++
+     ++test_expect_success $PREREQ 'imap-send ignores headers in the body of a CRLF mbox' '
+     ++	test_config imap.tunnel ./fake-imap-server &&
+     ++	q_to_cr >crlf.mbox <<-\EOF &&
+     ++	From mboxrd@z Thu Jan  1 00:00:00 1970Q
+     ++	From: Example <from@example.com>Q
+     ++	Subject: Fwd: originalQ
+     ++	Q
+     ++	---------- Forwarded message ---------Q
+     ++	From: Someone <someone@example.com>Q
+     ++	Date: Thu, 1 Jan 1970 00:00:00 +0000Q
+     ++	Subject: originalQ
+     ++	EOF
+     ++	test_must_fail git imap-send --folder=INBOX <crlf.mbox 2>err &&
+     ++	test_grep "no messages found to send" err
+     ++'
+      +
+       test_done
+ 3:  919e38c31d ! 3:  8646185486 imap-send: check git send-email copies like other messages
+     @@ imap-send.c: static int count_messages(struct strbuf *all_msgs)
+       			break;
+      
+       ## t/t9001-send-email.sh ##
+     -@@ t/t9001-send-email.sh: test_expect_success $PREREQ 'imap-send accepts a sent patch from the list archiv
+     - 	test_grep "(1/1) done" err
+     +@@ t/t9001-send-email.sh: test_expect_success $PREREQ 'imap-send ignores headers in the body of a CRLF mbo
+     + 	test_grep "no messages found to send" err
+       '
+       
+      +test_expect_success $PREREQ '--imap-sent-folder stores a copy of the sent patch' '
+ 4:  5b4a08bbda ! 4:  e7d1d7cd72 imap-send: match header names case insensitively
+     @@ Commit message
+      
+       ## imap-send.c ##
+      @@ imap-send.c: static bool has_required_headers(const char *line)
+     - 	bool from = false, date = false, subject = false;
+       
+     - 	while ((line = strchr(line, '\n')) && *++line != '\n') {
+     + 	while ((line = strchr(line, '\n')) &&
+     + 	       *++line != '\n' && !starts_with(line, "\r\n")) {
+      -		if (starts_with(line, "From: "))
+      +		if (istarts_with(line, "From: "))
+       			from = true;
+
+-- 
+gitgitgadget
