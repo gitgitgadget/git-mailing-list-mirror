@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793521303;
-	b=5eB7pToFGSbnaHdz1F/VUlxnOGjqTr1c27GmA4y9ZjnKt7BHOqCfpFTR+sQp5aJG1agC
-	 2RoYgz+35Vz6D/+1gkLZ1skE4l0H88gD7NbCVaT+JrJEAvzdBQCEk2k896Zs9UBG/1G+W
-	 OO6Zlyr3TGVrxbs4W5z3GhzUDjn+3m7yB8PibiZw2eygCWt4wDMnf0PI4AD3+WLZ2kWmX
-	 13o2lT9K7/3m7KVFpJ2eZhn5Wtvpcmj9AOY5ZoNq16m5vwqXlGuHUFdZlqLZHM4z6H0FH
-	 l2DdbTu1N+ZpyzEkj9eWuP4GVhuZzWdhuKtKQzGNiFs4NwfH1wJNoi+ouf8FQv1Bxxg==
+	b=v5EMcTQB/S9oql3wqTZ1qyopWuFe+yqpi3o/aYuOaKyycNNFKvm/FTnZdv1u+mIK0WQp
+	 xhujjvxaVwPBL8k+NMrfu8ZAk+w7zGaWm5yjkHg0//losWHOJqmFruyuSRSK3r4qm/xJK
+	 wWFCCJkEQpBcQRo77x9e0lMZEHAdBAUbLdwlfrgksOo73zwubkS7pXOID1a74IvHnOYGZ
+	 39LCq8Sxm2KUZM3XE5zrmz/3btXzlXLzLq7z/knHmRGAyKRnpCuCfXK8x4gurMrNiByFI
+	 fH2jCGTIAa7Bslzig4/fn74KIsWkOs/6JAbXvu8a8DpGjlzQUogA6WwS2g9m/PEw5mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793521303;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=WeOf4DRqdt7xaaG+/C7UclMb4uK1l1Tp9C1jIGAET0U=;
-	b=aJngskGWVMQEytlmrnwDgET6ioVtVUkhGwbB4Ynck4ejfIlh5XUZY9ORcLBpoogKdZQ7
-	 13aB3V2WEHE8PzD7DzeTvMGvdMog01S17Nl1vyruf7IaVKPngqnpRqWW54jU2J5JfNODY
-	 fIP01xlnrzQ3szlNqC2mukGCRCGlUdfjncpA3WE91Y66sdtZMGCLBp6QvxCkt3ilOblDm
-	 2qQhQDzUWiu21Cf6Ns3vRKeG5nPjhcJs4xb31cyL1/VEutLHUOWiQUvywdT/+3eTicX+X
-	 FXjZJKZ7Ln8UMKKz4a/W+K22jP7JstHmznaiq3gqt4g6/IVHFJ32xtvHEjAyaOEYp8A==
+	bh=vDDOPHtG4qbmV4ha0GoG534v9zMp8A9WMn5dk+9bB1c=;
+	b=2rCkTnz1XtlKALmw+tAjYNwoGjQFgBKlH5VNcH18nsybmLxs2hWJn3Ongq4LXRf5AG2j
+	 jnIMSZopKgiZy90WhKAQpMK/cHx0vba7cZI1iU1DwgpjkL8fKJXEKZ8uX4XHlhjfEvQne
+	 IeKLX50L+tg14wYUrH7Qddo33do6TF8O/ZAYJjOWZs1ZWMv3rRk0FUNBMvMq/MFDYN4Id
+	 7QM8jIVIBD+s0HQUARV/rna4o4rrKB62fJ8rKotiKHn5wr8VzKixSqlVFwhospns7nl0a
+	 V5IUUJ5R/J/bPMfr7Z5C282mkGN0qUoniQ/FmUBBIGSv72j/eichdfbPK3Y9yeiDsYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pNsw0QKv;
-	arc=none smtp.remote-ip=209.85.219.41
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BRKE+V5p;
+	arc=none smtp.remote-ip=209.85.219.48
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F729606A324
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 08:21:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F729606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54217606A32D
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 08:21:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 54217606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pNsw0QKv
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-91c75be77c4so21293406d6.3
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 01:21:42 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BRKE+V5p
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-91c11468b5fso22591246d6.0
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 01:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793521301; x=1794126101; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793521302; x=1794126102; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=WeOf4DRqdt7xaaG+/C7UclMb4uK1l1Tp9C1jIGAET0U=;
-        b=pNsw0QKvRNXDvzbEhgt8hpMVTQ0Ld4Gayzezwc7aaeRq74Rm1uM8ZI0o97lUuNdagx
-         askGSghOyjSFF4f4ZwMCWd44oAqcwpFa0gij2f8CPdRVvwxCkQPEMrhyeSWzKOrO52Dg
-         3T513A4gHaL8tgNYLBvtgO5Qk0Ex35AratxpK2oJc3Ted6WBYd1cayiDoDRvo/VpbL3y
-         uDGf2ba5aQCRsglNtRQVkZT+7nM5jpS2LXboNHPcn/UHIz1pvamyLTvYSY7AkfJCN421
-         wUCTUriqpMS9v+vJ3TH2+1IpaG3GoGg9ERG6c9Wmuje9yVRSRT5inq12GJk4CSPZ2B6V
-         5Brw==
+        bh=vDDOPHtG4qbmV4ha0GoG534v9zMp8A9WMn5dk+9bB1c=;
+        b=BRKE+V5p4JlWbXEqCHW2MV+9uPNtIgl4tG7E0QO/TNHXvPuvATHfVIQkjz+gR0KgIr
+         qjEGsxlkvMyPFhLu6boNZJksaIpdv5JyUdgKCBM+ecMtxeZbC07qIWA11RouTMT2Yq1+
+         ACpwqyDPp54L88au5b/7kKUCJ5C0ItrDqw27q9HCbNHB0GazgIwujtdapPOvsqATQ7eW
+         8C+8YdpHrgT0Eygf9T9IepAsEsjPMFP4XFgDEByCC52Gi3BMN1JOQULoKyDadm8yYObf
+         7x+PWkKxLkPzhPe0AcyDxqzTvsEW9LlVlFMy3uI3+y9NiGoBNlJ9szvyxkwFU3OFpsWt
+         oaEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793521301; x=1794126101;
+        d=1e100.net; s=20260707; t=1793521302; x=1794126102;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=WeOf4DRqdt7xaaG+/C7UclMb4uK1l1Tp9C1jIGAET0U=;
-        b=rZbcBtSfAMEeeWZP9QP0su63LN+Yw9Jsm2YvFCOYpNAog1nJc8nI75yjJAiTt05y1b
-         16S2SHiLcAsuSXKrirG6inNNrwp6U1nfT3CKYo72gqzVXqJMyKQQV9FCUcTmFHDiQ4D5
-         f/riwzt99Q+Q2RoTJW4Gy6fW0K0MA9quoFklHoBa1mdF1IrXR0m3pdsp9Hn2bamlqaYS
-         pM+4luRevDjivI9Bfr3JXjNybnCK9hyUc3cUc23iakbZpD4hQQfaAzGAc3WPPE75ZGN8
-         GutfdfzzeMf8yGRUoH5Oi/aZQONBCa0zbFADghgcUfMsowDc/0Si4TG74kuBBhvlz/bW
-         6hyQ==
-X-Gm-Message-State: AFq9FYJuPedpY7QCge7iyhhod44jV+iMPFjWV7JhweRJKmjywGEMAs74
-	FoVxjJ4kHSnkXRSs6R6wSFosN/OsFmJ/s+qO0tM8bTHBXCcRRVnKiCtPT/yM1uSdsuo=
-X-Gm-Gg: AYBFou3/9V7avqER2sjfuelPB+1TcM+XsiPtOa7pT1rq0PMsbcypTtvYmy2JN8381Q+
-	BRgoEijxP5cSMc+xJKv0R6lOOSed6AZs9ZZo5RLpAwwZiasCoeCzxAYWt329OWfUOd35Y6lHzHt
-	1JvlhLD6UzbvMqVG0iRs08rsaHZHp1+ZtmZ/Qlb4vP6EzGNkoTMflbmlhH0+73VeLBW5pLTftAL
-	lMw8g5s4cIN/EhsHlZxOKGa/5PtXx6pFL8caSTBEcR5x5gi5HXk8yrBY7HttZbhILHLXsWTs8gs
-	fLRQIuXF2zyAlPcNVgJwCHXjP9rVUb+2kJq6vPr3PCuC8V6v4rFCZwTdHhLK3iVvkz8xaVzyxQs
-	tAlgnlF7pU4xr7H/7VkaoYwcN1Ub8VCyricdL8nhW0yiidNAysZBpxadx0UYfWMqK53iUPr8YPg
-	VuwcJnKIE0+mZ5P0/BivGbxKqqOg1q+FHyOOgocv/7Go1va+daItpEgSC0CiB8j1Gyqgyv4cWUF
-	tgNwAAVNw925uCI8NNsSPGPkETysK1alFEfDrPAFUynNg7cMj1cH3p/KGsMfOZqTusfrPowegSW
-	Jexvf32ua5OFS+I+OOZSZUIEXmNB+Fw=
-X-Received: by 2002:a05:620a:31a8:b0:93e:6c02:d181 with SMTP id af79cd13be357-9442161975cmr1198521185a.14.1793521301449;
-        Sun, 01 Nov 2026 01:21:41 -0700 (PDT)
+        bh=vDDOPHtG4qbmV4ha0GoG534v9zMp8A9WMn5dk+9bB1c=;
+        b=02Y8luhttGQMfOu1QXdvoMG8RPNzUC3kyVdYdpy9ceZXOltp+v8/AG7gKCnnmL3V9t
+         xDxYx/go/K1Qd5871RcbMO3hvW1X/PLKI7dYLeYeQhE8gNmlouJoNAPscdVoO2tjIqyX
+         TevrSirIcoHLi7+URtlyUeVcyNcHu8v3mMFdZ+m0kcP+W01t+1EkNGl9THRbsmmNZDdr
+         Lu3Ya/pEAdTigBK3v/VI5YnnGakKmG4boQzuqY8zcM0fUUPyX4nJY3UzidfgteEtqONa
+         8UFM7WzjGsTNRUHOGuzMWFTVv0b5uYT5wyIS6XEFPO0ZwJOcvu/0RZtdIC9Nwv0iSN9c
+         eYHQ==
+X-Gm-Message-State: AFq9FYL+4gtSp0zApm5ADzBKjQIwUa6udUC6eJqyIy0ekEM4MYfQNukM
+	vhJrKa+pG7DoXzUEYpfDabgTXSQengAG1D3kqucPhndndt73/RjUojBBwSNm+oXFwlM=
+X-Gm-Gg: AYBFou1JXqWs1xe7ArK2VMjP5EvPiz9cLoPG4Q+VSxSxpxiGzCWHCP0Q4v5U40i4f9f
+	xJwaH0iVO9R/GSQRa+DZbpUDB0G6aEuFSKNq0ZoXTWrXoOBIlqHX7jM4cAyITJgvcR4nQFcoCd5
+	U5gOFk6fJDicuwUT+6mDKQb0ny07Txos2R+eOOn+Iv5hV3XdAUWfYcZUhWxKvPjs5kPeAGDk6t9
+	qZzAH/4yda+6Z0K3v3mlLlrM0SBu3Eponc+UGLjqsZJ68Y3ywk03b51fzL5mFkNz+fUuB0zqmjX
+	3vBGYxvjkaSUtA/zSpgmcgJiydouze3jt5XGkS9uXVBn2xUZeIwh3TdAqvVynhf6iKkqFymKTeI
+	vl3enqCFGwavE6EwNm78KpL+3Y3pzGzcfyORJ51qqcxKJG+OCC6AUBg0EuCd+am/RDOa0pDELab
+	bvbHySfRgs2P2HQ5zX/pg5udsDcFZT/yOT15Aph85fjjoKXxs9kFooY1pa70UyexM0yoK/BXfWj
+	IMWIraSLc5+kylPrIBDnuAMmdJ9Xz6LGSAds0towipUdbxPXiLaxHi/3KeTZIG2K6+i5KtLXy1+
+	xxi4dmDP/bXsFNfndWrfCDBQQ7ZtuaE=
+X-Received: by 2002:a05:6214:5543:b0:917:aa8e:474f with SMTP id 6a1803df08f44-91ca4b1ab34mr106887066d6.23.1793521302360;
+        Sun, 01 Nov 2026 01:21:42 -0700 (PDT)
 Received: from [127.0.0.1] ([20.119.79.64])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-94425ac5322sm557501885a.39.2026.11.01.01.21.39
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca7f26f1esm61578716d6.13.2026.11.01.01.21.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 01:21:40 -0700 (PDT)
-Message-Id: <cb27ac3a27eb9b6d3b951d34422b6bb6a43b8626.1793521297.git.gitgitgadget@gmail.com>
+        Sun, 01 Nov 2026 01:21:41 -0700 (PDT)
+Message-Id: <fa90c64a5cab1964988a84b61f4b7af0d9e8b4ad.1793521297.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2456.v5.git.git.1793521297.gitgitgadget@gmail.com>
 References: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
 	<pull.2456.v5.git.git.1793521297.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 01 Nov 2026 08:21:34 +0000
-Subject: [PATCH v5 1/4] imap-send: wait for the tunnel command to finish
+Date: Sun, 01 Nov 2026 08:21:35 +0000
+Subject: [PATCH v5 2/4] imap-send: accept messages with Subject before Date
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -104,74 +104,115 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-When imap.tunnel is set, git imap-send starts the tunnel command but
-never waits for it to exit, and leaks the argument list it was started
-with. The isync code that imap-send was derived from forked the tunnel
-without ever reaping it, and c94d2dd080 (imap-send: use run-command
-API for tunneling, 2009-10-19) carried that over.
+Patches sent with git send-email cannot be fed back into git imap-send
+after fetching them from the mailing list archive, for example with
 
-Wait for the tunnel when closing the connection. By then imap-send has
-closed its end of the pipes, so the tunnel sees the end of its input
-and exits. No test sets imap.tunnel, so the leak checker has not
-caught this.
+    b4 mbox --single-message -o - <url> | git imap-send
+
+which fails with "no messages found to send". imap-send only counts a
+message when its From, Date and Subject headers come in that order,
+and git send-email writes Subject before Date.
+
+Accept the three headers in any order within the header block of each
+message, which ends at the first empty line whether the mbox uses LF or
+CRLF line endings.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- imap-send.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ imap-send.c           | 25 +++++++++++++++++--------
+ t/t9001-send-email.sh | 38 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 8 deletions(-)
 
 diff --git a/imap-send.c b/imap-send.c
-index bf1d2cf74d..7e74c37a72 100644
+index 7e74c37a72..391bd8b96a 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -118,6 +118,7 @@ struct imap {
- 	/* command queue */
- 	int nexttag, num_in_progress, literal_pending;
- 	struct imap_cmd *in_progress, **in_progress_append;
-+	struct child_process *tunnel;
- 	struct imap_buffer buf; /* this is BIG, so put it last */
- };
- 
-@@ -858,6 +859,10 @@ static void imap_close_server(struct imap_store *ictx)
- 		imap_exec(ictx, NULL, "LOGOUT");
- 		socket_shutdown(&imap->buf.sock);
- 	}
-+	if (imap->tunnel) {
-+		finish_command(imap->tunnel);
-+		free(imap->tunnel);
-+	}
- 	free(imap);
+@@ -1457,6 +1457,22 @@ static void wrap_in_html(struct strbuf *msg)
+ 	*msg = buf;
  }
  
-@@ -1163,19 +1168,19 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
- 	/* open connection to IMAP server */
++static bool has_required_headers(const char *line)
++{
++	bool from = false, date = false, subject = false;
++
++	while ((line = strchr(line, '\n')) &&
++	       *++line != '\n' && !starts_with(line, "\r\n")) {
++		if (starts_with(line, "From: "))
++			from = true;
++		else if (starts_with(line, "Date: "))
++			date = true;
++		else if (starts_with(line, "Subject: "))
++			subject = true;
++	}
++	return from && date && subject;
++}
++
+ static int count_messages(struct strbuf *all_msgs)
+ {
+ 	int count = 0;
+@@ -1472,14 +1488,7 @@ static int count_messages(struct strbuf *all_msgs)
+ 				if (!p) break;
+ 				p += 5;
+ 				count++;
+-			} else {
+-				p = strstr(p+5, "\nFrom: ");
+-				if (!p) break;
+-				p = strstr(p+7, "\nDate: ");
+-				if (!p) break;
+-				p = strstr(p+7, "\nSubject: ");
+-				if (!p) break;
+-				p += 10;
++			} else if (has_required_headers(p)) {
+ 				count++;
+ 			}
+ 		}
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index d1393ef197..4611e6d4a6 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -2863,4 +2863,42 @@ test_expect_success $PREREQ '--compose handles to headers' '
+ 	test_cmp expect msgtxt2.to
+ '
  
- 	if (srvc->tunnel) {
--		struct child_process tunnel = CHILD_PROCESS_INIT;
--
- 		imap_info("Starting tunnel '%s'... ", srvc->tunnel);
- 
--		strvec_push(&tunnel.args, srvc->tunnel);
--		tunnel.use_shell = 1;
--		tunnel.in = -1;
--		tunnel.out = -1;
--		if (start_command(&tunnel))
-+		imap->tunnel = xmalloc(sizeof(*imap->tunnel));
-+		child_process_init(imap->tunnel);
-+		strvec_push(&imap->tunnel->args, srvc->tunnel);
-+		imap->tunnel->use_shell = 1;
-+		imap->tunnel->in = -1;
-+		imap->tunnel->out = -1;
-+		if (start_command(imap->tunnel))
- 			die("cannot start proxy %s", srvc->tunnel);
- 
--		imap->buf.sock.fd[0] = tunnel.out;
--		imap->buf.sock.fd[1] = tunnel.in;
-+		imap->buf.sock.fd[0] = imap->tunnel->out;
-+		imap->buf.sock.fd[1] = imap->tunnel->in;
- 
- 		imap_info("OK\n");
- 	} else {
++test_expect_success $PREREQ 'imap-send accepts a sent patch from the list archive' '
++	write_script fake-imap-server <<-\EOF &&
++	printf "* PREAUTH [CAPABILITY IMAP4rev1 LITERAL+] ready\r\n"
++	printf "1 OK\r\n2 OK\r\n3 OK\r\n"
++	cat >/dev/null
++	EOF
++	test_config imap.tunnel ./fake-imap-server &&
++	clean_fake_sendmail &&
++	git send-email \
++		--from="Example <from@example.com>" \
++		--to=nobody@example.com \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		HEAD^ &&
++	{
++		echo "From mboxrd@z Thu Jan  1 00:00:00 1970" &&
++		cat msgtxt1
++	} >archive.mbox &&
++	git imap-send --folder=INBOX <archive.mbox 2>err &&
++	test_grep "^Sending 1 message to INBOX folder" err &&
++	test_grep "(1/1) done" err
++'
++
++test_expect_success $PREREQ 'imap-send ignores headers in the body of a CRLF mbox' '
++	test_config imap.tunnel ./fake-imap-server &&
++	q_to_cr >crlf.mbox <<-\EOF &&
++	From mboxrd@z Thu Jan  1 00:00:00 1970Q
++	From: Example <from@example.com>Q
++	Subject: Fwd: originalQ
++	Q
++	---------- Forwarded message ---------Q
++	From: Someone <someone@example.com>Q
++	Date: Thu, 1 Jan 1970 00:00:00 +0000Q
++	Subject: originalQ
++	EOF
++	test_must_fail git imap-send --folder=INBOX <crlf.mbox 2>err &&
++	test_grep "no messages found to send" err
++'
++
+ test_done
 -- 
 gitgitgadget
 
