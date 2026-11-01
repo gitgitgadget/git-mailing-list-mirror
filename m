@@ -1,93 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793515214;
-	b=FVJSpGNign26cZ8G5uijYFcE9EDJQaymRPGOv/sjIfu0q6eznT1Ye0cQ1mAxoWQb9EAM
-	 YR+cs5Dk0X0rSvxVCh/H0KtlN+RrFikWKsBpvhnqsC6i2gVAuIacnCO43ugLF22d9JM1y
-	 GaDHuBKxAPukkAQiTQnunFd8CkAEaiayujHRMIKYtkgBwKQQpcDWaBsgo653LF6dmY0CQ
-	 XC8CMsiX5RRdO1AsRQqTiW7XPnBAC/jQL/5EjwJQ43hwRa/6ilW+M15LsyJ4sDZmP92Ei
-	 MYt8VsKAhPHAALnDF8lYU4/2xf+r/zXvBwTqYYf3Y9BdIzTi1J7zoay9HLnYEBQ/o0Q==
+	t=1793518149;
+	b=Fgwr3t0Ga7PGw+nEqqnmuN7T+iIEzs4Q2Pv9FedTVl9rMRRWC99gisJtCW94r2g8jKD/
+	 VlN624WWGKOfVuw8swYfLIM8bvNLS5/ps80oKkVTjTsH7x0Y3pQYujvF9yN7zcDWMKzbb
+	 b2w0PnTjSOWD9yrqRgXg39YOoxNehWTgUPeA0wjIMQ8DKrWRXWHLbWYPc+50VfK0B4yn4
+	 b+4UPFuuJme3oipXTdrSmxYgh5b7ClA2dKt8LzBYyM5DFoevuAWevutNdHeLlqrC/GaWV
+	 DuLF/cxo1Zui3MlFGBQNpp53gHBuCwL1O3nb+fM4jnKI800Vqnw94YB7kiP55Z+UR7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793515214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793518149;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=e6f1o8fuEFuPdBn4idpxljQ4M60y8fTZnD9oREJ3Uxg=;
-	b=WFm3a2wpa1GJMtQEbrVeTHcHSFqNA5ri9SzMXVCE9XMz5sx1SEsDhZIivog/6ofJkfyy
-	 TxOolpL1aFr+yl7fkaCwSIiSt3Qn3AqRj9uduVhYbHcgaSIQt4MoXnk6Uh00cZbAb/n+t
-	 rCuT39Sa+iE6aPoz5VWLVZib0WoQMv5Qjjr5t+uXaBJ5XInslZs13bPYUJBU3lmw6XjhC
-	 4Uxe+M5jxvhQOg2/W40sVq5SKO/jC30frInh3ynxgufp0IBLPSvw0w+0okuCsIQCJ3Tvx
-	 1MT1eNNpnhFLoef9xKop6H5hym0gcFlx7TFBcrZ6t9sotag19GLFhKTNGUsHZ5FMSZQ==
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=Qc4v2J/Wh5ir9BDpvZNh4x5rh0znAEQaxzbk6ey7IoE=;
+	b=vYdS6d9AbiXXclTKN19Eq5LHfv3BMQLK14E74GVOVjs9JRtCnY9GMkLTnYpAR7SAlYLJ
+	 KKlvj9XkgM8cZvEUX1no5HFFbgmszvr7qrB30wZE467qi+j5rwG8pr182DVODTwpQwE+U
+	 oqh76qUhsBUmYi0wcZF5DQVDoANfoMqipAmQDjXoK8/glNL1/d3FdibTCfwBPJkbXKpUB
+	 yxvXwPJz1Y7wK3MQ7/OfsKPGJVUAWKjxI2XWjfqZJqqM+O2xtAi3X9F34MGTU0qh+hVoX
+	 E5gutbsepQg2pkGHkCO6Yw1noi+tOtznBkzEVgffH2ybSRvDn96blJcaxq3w7fYe+rw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yzgCVMTQ;
-	arc=none smtp.remote-ip=209.85.208.47
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SVWmpLoY;
+	arc=none smtp.remote-ip=209.85.221.43
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A10606A324
-	for <git@vger.kernel.org>; Sun,  1 Nov 2026 06:40:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5A10606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3870606A324
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 07:29:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3870606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yzgCVMTQ
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6b413b0a974so3060495a12.2
-        for <git@vger.kernel.org>; Sat, 31 Oct 2026 23:40:13 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SVWmpLoY
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48df4f540ebso865840f8f.3
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 00:29:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793515212; x=1794120012; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=e6f1o8fuEFuPdBn4idpxljQ4M60y8fTZnD9oREJ3Uxg=;
-        b=yzgCVMTQUwLtF3k/ybKqBfaO9dahk8yNtqmH/oBtM0ZjtGw35smcCU+NDt5lthcpLI
-         0IeNU8W3zfOMU1v7UNV8bUHgulJUaYJreJJbse8F7z0bHL/OwkdMW9NsB/1x1nobJRWd
-         nnlvt0wm/uMWmlUJXwiYHsY/Po4ce7IUHaIlOGsJHxMAu7q4arpsWIXkUnwgmH6acdqt
-         o5Ck0b0n7k6YDPqSuQTmDkHQqE3jZmEBfH7cY+KGiuANZXPaaeif5WY+72CLDn93MDJQ
-         WrtY3nzGjiHZG9dDxICqXmC4t0XExJZUkes2Q6cZtphcGH9qAeePEL1isJnZ3lRAujHw
-         4Wmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793515212; x=1794120012;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1793518147; x=1794122947; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=e6f1o8fuEFuPdBn4idpxljQ4M60y8fTZnD9oREJ3Uxg=;
-        b=v2xX8KHpf65ljfp6xRyZCjWOKTDFQp3eiF6c4uLZD9cm1gcBF2Va2XNmBaeWpDUjY9
-         XYZF4i/Pw/qVjjxrsNMU8j7whRJG9jOKeLIFyjfBBwhm91ntw51GGrNbVM5x+K+pQ0dN
-         VtsRbNLGw//XW0ovd5vRAHoi4RJzpx0BQLKq0ULyKhs6S6DioKi8ZMLPeyLGsHv7/QhG
-         Y6IGLYahVZOrYvCGq+cUs5HbfpCvAWP/dELZSG7PcMB1kDCNipIRC1II/Krzu6O0P0Q0
-         d9k7O1Q58lqjv66LCkRzUcI6lLTMfHC8ShiA+zuG75BM2l08Edn+lq3ZqyfrIwm/EOtW
-         3Syw==
-X-Gm-Message-State: AFq9FYJiHqo3uJSqRu4EUWW8HBXRJZLHgU2oZlOf8y2SCaGkgOU0X5Wo
-	RmLC7SqXKIwpG9P19bIVKP1FFve4HaanEqcuGtolQTgDzc2qBm5Iqq2P5+fYd3PmgpY=
-X-Gm-Gg: AYBFou2oK1K0D0301z9xtY1VAxhNZiqe+ytYX4zXGKwEftpn98LjRZbWpdqbf4HWuGS
-	bun7SS7mCrzzlSCgZ7Hu3AOePR4bb+v4eVHDMNW4OyjrVbh3W+HGzCcEdSEXg5k+5Ie2VDYk9Bd
-	wQyY7KJTH+oxfn1LXLBhLmYOU9ysmYsKktNRRWTnG8n3WktTJv54VmMj1NrpUOhU9+dMncdoL7E
-	MqowYiIfqcBb3ZWFq0bWVV6FKnKutaxhJqYc/E4BTZK9yzZF0XhupEvsETSthdJa4rhliDqiKN3
-	/dBegpOKmAlW2FR4/RZ2lSDF7QOo9ppchmd01aLGUW9Qv4q73QmV0Z+GlvNbkUYWY+PFYhpadLV
-	ejdn/sQqSbpbyFoJsOIVWCCfSk3PLyAufdAZKh9EABYBM1mwUUAqp4m5LkvqJoe//09nGVvgx/T
-	aJVwBlK83IAJqJw1cur9R/HYiVQ77r5PcyA2jD1UoGnNPcrntE1UzT6+4ULmOgIarxC6HF3ksfL
-	E2WNeaY3PI3lIgc/ZKXt+U3taR2eEo2u1vm8aaQceJ/u2MRq8mx/G2iWxHesDMQ+U4h92pN98m2
-	jW/FwBXzf9AQrClq23UpcHYGwzbMz0a26RAiR428LYLGvujwPfyJb6GFHQFfFV3gcgxkdijBDVe
-	dao/gIjezn8IdDCgarsp/mUcUl+PQtU9M2cpMeerpOBsxo1M7zxzVi/OHNKnJ9qBpXNFkqwfh62
-	/3a5y07jvXFfDIyncxNjUzkgAtqOyQ
-X-Received: by 2002:a05:6402:2355:b0:6b4:20bc:fa3 with SMTP id 4fb4d7f45d1cf-6b4d467bb11mr4871225a12.22.1793515211992;
-        Sat, 31 Oct 2026 23:40:11 -0700 (PDT)
-Received: from localhost.localdomain ([104.28.251.98])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b4ec9ee7c9sm1808594a12.7.2026.10.31.23.40.09
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 31 Oct 2026 23:40:10 -0700 (PDT)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+        bh=Qc4v2J/Wh5ir9BDpvZNh4x5rh0znAEQaxzbk6ey7IoE=;
+        b=SVWmpLoYqIxjrA2d7XO0iyn6cDo8dFYbCcYcymbGfvNpDx+/Scu2j7LUyzGW8vcjzO
+         7dG4m/2x5CuZb6xmcg8j+IMoh/US+K6XYq6CXDA0kbqp6tALEQnr/m1Z8H2XmceH9cJJ
+         ZiMOPonuDbdS1SvzQuQRmp5Rg3mTKzs5/RTX8ABKhXMpmn+Ro8/qmdl85zUaZJPg+2ku
+         pL5H6YfbiD/ysYaHYWp3ziin2RPZWeW+/OXhidHHae5HT/diSzsqQLjRJjQYbdL2NCej
+         nYoEgSQgUFDN+XZCi2JQrIY4HMXolkx3uprhIvM2al6YygyNtb3Po6piL4ncqRb8bxLx
+         aX1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793518147; x=1794122947;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Qc4v2J/Wh5ir9BDpvZNh4x5rh0znAEQaxzbk6ey7IoE=;
+        b=MgjgCsOh7WMP+7kq2oyfpQz3PrNH9pSrljlFJvTYBS3ua9ej9BO8oUyQnGVA8705fl
+         mhcHPUD0lDNhpFsNTI+Fd8m/Dv7hx2v5VO9g7KZfyx7ALZ+/uOu/RvezFa6eL58OnbSv
+         OjZpHr+TBOoXrIJ5aW2wdfsvZ3hwbQMKwMD8wmrF3ge6j7G02akRczfGtP4Y6RMnyeSS
+         kBqsappRz9qcx8FP8aJFXHFVDh43Glv91XQg/rXPJVgTAfFpvOqT4S9AO3KFR46DEyNu
+         XiOG6sliIISIN9sLuzJgpYxV+pxRbsYXjUZrY3UHLIJa+hFCZzDUCdChIpp32YMS65cC
+         9kQA==
+X-Gm-Message-State: APuU4Z/uA956EWujTPcQR7CUtNuMc81Pv2oYPFmjO+EE+xIn7cru9gjf
+	u54ozeoqoPmQaCN/AAGIpDcq8Sycx8lUWjPTrxM0NTKWiRQ8IvA+2hikzrvr5jr4
+X-Gm-Gg: AYBFou1VxDaNKGuMz14Dx4k7mqZeVq6kkhQdeZwnN4oDMS/dqsS6wxOFDqkVVHQtW1m
+	WjuB673w0rCneD/EzQ9FMIDqozJZyXlrrKSn1z2Yrx4jqQYKxHFhYSajPDEmivInuwSmqNOharQ
+	P0pSJniqFkFgNdikUSzSyMMYjy6hjfveQhdaMhy84bq5phQIS+WKpEdf5zs6815Im5jvEsokLSo
+	1MyqF6o9BX9C0WzmUu4AnfLES+7jnz6PGaaxBk+JizlHXqMWf3usCm0H64uyU0D6GyXls9CmkyV
+	dBVvvIb1aZELAjDDZ0YybZYbNdpJsMrNjmZ4QCs+wE4dpmMbN96ME8getIlkY0wPdWCsTRiJzdm
+	P9lWOhWl/tweVlXiTLI2eFDD6T/fg4HFsr9pfaYGeuztzTWGZH27WmDKeyzwzxQ+NNgSoWXFZyV
+	ze28H0eI1YAlYrSeNpn42OE6Vw1XN1mgg/KiBh9Te3D/kWZEdJr/GTohs5d/C1fm31Ezrqm6vFt
+	ks+7FoBze52ohKG4nlCpIlRaAGudbdBsfUtwZGd+VAATW2ASnqcSfqZxpMlngf0Jwpo7CgEpaHY
+	7yoOpRw/DgTfjqVDT3E/DQpCL82CP5iGYcUjRZfUEIduyBkWKArmSIPWC3lW6dc=
+X-Received: by 2002:a05:6000:22c4:b0:48d:ff0b:9b52 with SMTP id ffacd0b85a97d-48e6e306ebamr15655808f8f.19.1793518146970;
+        Sun, 01 Nov 2026 00:29:06 -0700 (PDT)
+Received: from ubuntu26lts1.example.com ([151.31.213.44])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71ba2415sm13100417f8f.50.2026.11.01.00.29.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Nov 2026 00:29:06 -0700 (PDT)
+From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Subject: [Outreachy PATCH] wt-status: use the repository the status already has
-Date: Sun,  1 Nov 2026 07:39:51 +0100
-Message-ID: <20261101063951.85427-1-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.56.0
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Elia Pinto <gitter.spiros@gmail.com>,
+	Simon Richter <Simon.Richter@hogyros.de>,
+	Taylor Blau <me@ttaylorr.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3] pack-objects: use size_t for streamed large blobs
+Date: Sun,  1 Nov 2026 08:29:03 +0100
+Message-ID: <20261101072904.274912-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261031183748.273957-1-gitter.spiros@gmail.com>
+References: <20261031183748.273957-1-gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,45 +103,115 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-wt_longstatus_print_verbose() sets up the work tree of the_repository,
-even though its wt_status already names the repository in s->repo.
-wt_status_check_sparse_checkout() receives a repository, but reads
-the sparse-checkout setting from the_repository.
+In builtin/pack-objects.c, write_no_reuse_object() handles blobs
+exceeding core.bigFileThreshold by writing them in a streaming path. It
+takes the size from st->size (size_t) and assigns it to an "unsigned
+long" variable, which is then written to the pack object header, and
+write_large_blob_data() adds up the compressed length in an "unsigned
+long" as well.
 
-Use s->repo and r instead.
+On platforms where "long" is 32 bits but size_t is 64 bits, like 64-bit
+Windows, handling a blob of 4GiB or more truncates the size in the pack
+header while the data decompresses to the full size, corrupting the
+object. If the compressed data also exceeds 4GiB, the length
+accumulation overflows "unsigned long", misaligning the offsets of all
+subsequent objects in the index.
 
-Keep USE_THE_REPOSITORY_VARIABLE because DEFAULT_ABBREV, which is
-still used in this file, expands to the global default_abbrev.
+When running repack or gc on a loose large blob, the original loose copy
+is pruned, leaving only the corrupted packed copy and resulting in data
+loss. Truncating st->size to 16 bits, with a 100KiB loose blob reachable
+from a commit and "git -c core.bigFileThreshold=1k repack -a -d", leaves
+a corrupt packed object and no loose copy.
 
-Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Switch the streamed path to use size_t for the object size, and off_t
+for the length of the compressed data, which write_large_blob_data()
+adds up while it writes the stream piece by piece, and for
+write_no_reuse_object()'s return value, like write_reuse_object()
+already does. Other truncations in pack-objects are not reachable
+because core.bigFileThreshold is itself an "unsigned long".
+
+Triggering this requires processing an object of 4GiB or more on a
+platform where "long" is 32 bits but size_t is 64 bits, so no test is
+added.
+
+Helped-by: Simon Richter <Simon.Richter@hogyros.de>
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- wt-status.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Changes since v2: say that this is about platforms where "long" is
+32 bits but size_t is 64 bits, as Junio asked.
 
-diff --git a/wt-status.c b/wt-status.c
-index 238bb48643..5bd1ecee10 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1208,7 +1208,7 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
- 		status_printf_ln(s, c,
- 			"--------------------------------------------------");
- 		status_printf_ln(s, c, _("Changes not staged for commit:"));
--		setup_work_tree(the_repository);
-+		setup_work_tree(s->repo);
- 		rev.diffopt.a_prefix = "i/";
- 		rev.diffopt.b_prefix = "w/";
- 		run_diff_files(&rev, 0);
-@@ -1895,7 +1895,7 @@ static void wt_status_check_sparse_checkout(struct repository *r,
- {
- 	int skip_worktree = 0;
- 	int i;
--	struct repo_config_values *cfg = repo_config_values(the_repository);
-+	struct repo_config_values *cfg = repo_config_values(r);
+ builtin/pack-objects.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index ca3a891dfb..24203b5359 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -412,13 +412,13 @@ static unsigned long do_compress(void **pptr, unsigned long size)
+ 	return stream.total_out;
+ }
  
- 	if (!cfg->apply_sparse_checkout ||
- 	    r->index->cache_nr == 0) {
+-static unsigned long write_large_blob_data(struct odb_stream *st, struct hashfile *f,
+-					   const struct object_id *oid)
++static off_t write_large_blob_data(struct odb_stream *st, struct hashfile *f,
++				   const struct object_id *oid)
+ {
+ 	git_zstream stream;
+ 	unsigned char ibuf[1024 * 16];
+ 	unsigned char obuf[1024 * 16];
+-	unsigned long olen = 0;
++	off_t olen = 0;
+ 	struct repo_config_values *cfg = repo_config_values(the_repository);
+ 
+ 	git_deflate_init(&stream, cfg->pack_compression_level);
+@@ -513,10 +513,11 @@ static inline int oe_size_greater_than(struct packing_data *pack,
+ }
+ 
+ /* Return 0 if we will bust the pack-size limit */
+-static unsigned long write_no_reuse_object(struct hashfile *f, struct object_entry *entry,
+-					   unsigned long limit, int usable_delta)
++static off_t write_no_reuse_object(struct hashfile *f, struct object_entry *entry,
++				   unsigned long limit, int usable_delta)
+ {
+-	unsigned long size, datalen;
++	size_t size;
++	off_t datalen;
+ 	unsigned char header[MAX_PACK_OBJECT_HEADER],
+ 		      dheader[MAX_PACK_OBJECT_HEADER];
+ 	unsigned hdrlen;
+
+Range-diff against v2:
+1:  185b9da891 ! 1:  02e682725b pack-objects: use size_t for streamed large blobs
+    @@ Commit message
+         write_large_blob_data() adds up the compressed length in an "unsigned
+         long" as well.
+     
+    -    On platforms where "long" is 32 bits, handling a blob of 4GiB or more
+    -    truncates the size in the pack header while the data decompresses to the
+    -    full size, corrupting the object. If the compressed data also exceeds
+    -    4GiB, the length accumulation overflows "unsigned long", misaligning the
+    -    offsets of all subsequent objects in the index.
+    +    On platforms where "long" is 32 bits but size_t is 64 bits, like 64-bit
+    +    Windows, handling a blob of 4GiB or more truncates the size in the pack
+    +    header while the data decompresses to the full size, corrupting the
+    +    object. If the compressed data also exceeds 4GiB, the length
+    +    accumulation overflows "unsigned long", misaligning the offsets of all
+    +    subsequent objects in the index.
+     
+         When running repack or gc on a loose large blob, the original loose copy
+         is pruned, leaving only the corrupted packed copy and resulting in data
+    @@ Commit message
+         because core.bigFileThreshold is itself an "unsigned long".
+     
+         Triggering this requires processing an object of 4GiB or more on a
+    -    platform where "long" is 32 bits, so no test is added.
+    +    platform where "long" is 32 bits but size_t is 64 bits, so no test is
+    +    added.
+     
+         Helped-by: Simon Richter <Simon.Richter@hogyros.de>
+         Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 
 base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
 -- 
-2.56.0
+2.53.0
 
