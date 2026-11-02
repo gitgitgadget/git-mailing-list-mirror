@@ -1,89 +1,125 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793635414;
-	b=Jk/4niui/TuMorBKMtgkbf3JykLg8NB7KH6vO+/+Kk4EVjR9wAPHj3vYlLvAEw4NvMGC
-	 L3kpr+tXJbtdMKa/2kuNXfF39MPLnkLKv1yncdpnOcvHd+qDvq6GB0m5vNZJFGZKEeoA+
-	 2Vn0G0fKD8smFFuq2SUDIkzyA2qYM4P+vinyvvKELbEZJ+LryzgkONIsxW1FfTx3q/vMA
-	 iy7qFL54s8Bv3kmCeAKPGV9FbLsDF44nCISqghznCVkOU2BiDVeGJpSiiGoaXMqCmSSdi
-	 hq7UsKIkZzh1S/W3VMVhJGfUwJldRJkO5dTx75ho+NEUSHFFch6FWoWX2+a31YEhZbg==
+	t=1793636254;
+	b=b0imhgNzaTbKEJLt7Bo1FrgNnblOCd2YL5L8knQwGRsBt1MrFPv0DLvO5MAUITwIPzE+
+	 EdKtqAjGoLOqpdAFA33+k0BSYgjjzeG1SfNTra6OR5U4uU9PY+C2JP/giHle2UxDzqJP1
+	 orqMZcLCahBXy0b1DPWnvXmxv3MCOW1jWdWUGc5lyCKbtacWaLEGFkp8ceNg8oTIjS4By
+	 mqbWKMbuGsiS6XOZ3m8MDhBsEud8dMfDHjCvqXcW1eO7B5nV+fj5nK6nsY4oc+/AtPDvn
+	 mZ2Q9SJrHYd/jrfcctkMECi/of0svNQwAr7c9oQn2xKqpeKpDtOqjKab3ig8eCth5gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793635414;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=ErINzw72vPV3j2EU0sbVvT+E831n5uc5A3LHW+kJg7Y=;
-	b=hq9FC2zmnLx8296MB5D82zBPjE4rTWeLjGt/S8rCVE5KZXhJtPqPqLVyIgiTegKMOlbE
-	 NRpSH86vMV7tzoMR2jzAXul17+zU6k6FzvCcbRHpYArKran4hvdmLR71n1u9lyLpMuxs3
-	 4o04eAodk/sw/dWRtR1x+C592Km1ubgyILDR7akCBI3O8teNkXR8hlX6BA+V/Ojy+Llir
-	 3PGpNaI1LFgC5Y+9ehD/Ny2AArhnLHkAvh+Ku5OVsUXrQhGKd2dY0WhpLcY799gXAp6jj
-	 PILN5F4YvkN5gsJd6IuvxKC8tszbI/p6SYm36wJphGZ9riFqtNimAqCvW7J4WF1uo+A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793636254;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=O1yK6210ltBr7cLShNsm94/Xgz7/J171rX0DGAQuWUk=;
+	b=X27+UHQ0CiHkIykLO8DVSK3Wx12elfof87qQhSY5DgvVRyLvLzw0fxRwXBy4pctmk6FC
+	 en21yygYu4Vd23DwR2jzKIJQjpUFX1aviKWd03sgfjdF88Fyn9rlatjTZ698dLkbpOxhK
+	 XKN0/KZzoIgMAYPtr6S4zL2fybg/XvHbfUZ9wlcqx4r+s1FxnER4dMXhOZSig2BqpQjzI
+	 LKNrSELUrYKABIXphPyIXzU6lBMvNxsW91fTID7/wNHnuBSqIn3FwRWc3yI1amf8tf3Gs
+	 3Lti4gShqVSOhPm55dOWh6vd7rwVR/vKSn4K09slhUSQcpZgDw1/lHUKlFwxscWBsKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GX39WGfH;
-	arc=none smtp.remote-ip=209.85.128.51
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=e1471Fak;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="fa/Dlsf4";
+	arc=none smtp.remote-ip=202.12.124.146
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872F6606C55A
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 16:03:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 872F6606C55A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C4D60716CE
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 16:17:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5C4D60716CE
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GX39WGfH
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a5087a5348so25899905e9.0
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 08:03:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793635412; x=1794240212; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ErINzw72vPV3j2EU0sbVvT+E831n5uc5A3LHW+kJg7Y=;
-        b=GX39WGfHe0lBH33j8EX6tq4bNsXsVemc6/QQS5aitmzL0Em3NdvVe2uYlaxTRZURki
-         sWKrxW13OHhPX/1+nbOUaOkPlomiTUbBRhKYVxECYPASRHvSZbZ3eVm4ZtJK4OnD0Vr3
-         8i3H+KmEoRIME0OSYR7/GDrS3UAL70Fjq2UX7EWcfEyHHa8zXg01uM30EwaIFA10BJwI
-         UZQbB9RYrULEpy0+MTcUifzOGjMMLM4zz7ZDte3IbrPcVpZXwBqJX8Zzhqbzm+bBbUlE
-         kVorFRkJtFBXFMz7EdCjIph9OpIg99KMiEex49FHpHSBOnOHj5eRwoJt3zcYqjvcsfMM
-         c+Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793635412; x=1794240212;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ErINzw72vPV3j2EU0sbVvT+E831n5uc5A3LHW+kJg7Y=;
-        b=s+GvqrZQRRBGtDsiQcqGdtkGKShy8/B9gwy2TuZYm0KG1FAlzEZuzpGECdANehTrAA
-         VzhvMa+qjJbJ1H6KhUASHKNHYGZ7x0I7+1wxZQXIp+nh9Lrm0ePSFbILEAEYEoFyqEou
-         n4phE3tbXer686YsyFJKMb/KaG2HFWxfR/F+K3Dh70m0OdltI1VxiWszssiHVxc2H1dr
-         6Zg9IcH1BLLeio/SH61FREp411OMjwWN+l4Yh9ywf0dvxrNx9OOfe+IZB+5jjriE8Hdg
-         T/WYOJotI34mD3I177BX9yv3fPZKu39i2c75+IPLH6m+G+9OMEEntoJ4wqZzi5G3udOu
-         vswg==
-X-Forwarded-Encrypted: i=1; AKwUvByKcFz68B1Ix79ke8k3VgkgQcFIyAWUoWH8HZp8i/sxBBHztt6pBiKwFiP0B7WlFK6SA2Q=@vger.kernel.org
-X-Gm-Message-State: AFq9FYL8t0lH4r3JDVqxlojjbd/+S8NoDyqaruhnULSWtiDTdDvfxR3b
-	jPzB0K4lbNZhofmK1FjZXVv9tfC0iliTqxyZ559QNatuJzdLiV5ADxMh2hWNrw==
-X-Gm-Gg: AYBFou1C9JXkuV7glC/WgTeT0SA03us0x+TjwvBK1XQ7w5y5JdhW/KPqKgg1cxWl/L2
-	Ee41WJqgt+6pQkU7hTEcMIXLNvO9byEQUCCSkFwpGOxtLLGSIBncl3RBBpIIZzB03cNwY+yM6qm
-	l30VZwvIqGUcIDIANSlR9cH7/LZj4IciAe9C+1xPSrDW45cB0/5ihX2gazdqNIg3IHBnQHAaNxd
-	rvWXZztELK/IiakFTGU3LOizopezQ/1KlWI/6obGIED0W/gb4OCPbftxd89zgpYzVrTFYiuU2XD
-	IvU+RDrA+J6+TieKG+89fcixgqB340djaIluKOGyjQAWiuYOaPrJMM4I/+MNEMjgxI6sSEGR/wI
-	ULhTNPCma+hWTD8pQ5ZXPl/3LTpZF/cFBSGM+7PAL0Kq8wCrNcFc/WQKzDuhdE0ohOw3Pk6jYBx
-	tBkc6sUDOkpJwuEHk878/a8F8U5f6gjbTwTcndq4AATp+9YtvnbAMHKMI2GPlcyF/qKKRJgNBKg
-	mdB9Xl2zXKrMgYSVRZCj44SZmSsTnHYXzojFa8ygXmPL9d/we1voMneZsF4zdDIOk/Iz2Nool36
-	q3EIpoA7vFM6WXklnc2atKHQ7KyXuSYm8s2Lbc6pajWAS5aPphYr0iMVm4v9jHhntINHs6vkfow
-	ElGZTMYvJ3GTLPy882fg9UfZSYSw=
-X-Received: by 2002:a05:600c:a49:b0:49f:e701:51c8 with SMTP id 5b1f17b1804b1-4ac17ffb2ffmr246144295e9.9.1793635412359;
-        Mon, 02 Nov 2026 08:03:32 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ac09cc3e9asm122656485e9.3.2026.11.02.08.03.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Nov 2026 08:03:31 -0800 (PST)
-Message-ID: <0b0a3de3-b758-4a1b-b8a0-9804b362b261@gmail.com>
-Date: Mon, 2 Nov 2026 16:03:29 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=e1471Fak;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=fa/Dlsf4
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 278CD1D00115
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 11:17:33 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Mon, 02 Nov 2026 11:17:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793636252; x=1793722652; bh=O1yK6210lt
+	Br7cLShNsm94/Xgz7/J171rX0DGAQuWUk=; b=e1471FakPAAL6vGTWEi+0JJMAI
+	t0xijzwi8TohIFRg2/vqkowTMgTYlCS5HzjFmIz5bM/jdCEgbZCAM5fFV0L8cw49
+	QKJNZxTnhHBf802wKa9f0ZlRDZ2BrQJf4mB+ek5UB6NkIJFtbVmnMxrlaQubLU+u
+	LQIZwE9C99d1U39sC6TH1TeJD/IZbrpQ8g5Ifp0HJ+DYorSt6I+UAWRQnfdDfl0Y
+	j1zSp4ruLn+shpZ/xP7BisKr+gp6XX9GOfv7Js0c3OpScEOE1MY13yBnqb/BsZHU
+	t7uafz+lkSKlvIIFUaW7Wr73ENkOrhYkuwpAYRtSl/9FNQLCGRDzZkPyp+aQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793636252; x=1793722652; bh=O1yK6210ltBr7cLShNsm94/Xgz7/J171rX0
+	DGAQuWUk=; b=fa/Dlsf4yiJcLK+W+yfRrBOvUmTPYfCytqVlKdIel1otKxPOiLd
+	lW2O8ZzFN9xTfbyJyecGAKh0tql9JjGcKwakfQLy8WfIaL5aRuoZqwCd9oTQ5mKT
+	DWAf5Typ9fFYw2iVO2ioZ/e2Ky0IST804MGxp65RMlAVRycDTXKR2bKtvtbXgrcV
+	ko1tkhL2DlI5s1A5CCPJnU22I6FtQ22NTNjeGhiCKp9bodTsfwulrT6gTY1+8OUW
+	kkw5c6lZtji7D+XE390inEz8JgEbdYxMGZAQGF87wPaUGWIJMorG6fqLcRFBYR6d
+	l1ZkdVCqx93l5ZegJdp+prw2tm1QgeXG/sg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793636252; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:EwFdKcIEhL1FzvKv+Sef+wlo6+i9/3C73s+mJZBzM0KvPV0
+	HjGJ1wDm/JE761vGtKeT/b8Ny1eWiLdPJPlDVmmoH994tP6iM4OPDgqVTnbhs33P
+	ujlmA9hub3l/4kxP1+9F0E0WeNxq/MkWJYmjF53eKG6ufjPxu1bpabWq4gKyBLSu
+	lt1FcCQt0CdRn3Cn2grgxOsBd0lQyuS7wZ/PC9M85P25/jTEwJwnCtt5ri8dRkYV
+	MkCANMfYY9linAMQQr0ncATpXOISchKs7IwL2ZDWxFRdqJQWiAYIeNMmq1pyJIXw
+	1ss0AJziQm65cHP4g0u3chweSuMQLOL6k6nuJKw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:IpH6vtpx3r43Os+Z+hLYBZKQ+xQQJsaYpo47ESJMNcg=:+GBfM3Oysx2SGzAbNwAtX4mLjVCAqf8/EMgXS46S6bY=;
+X-ME-Sender: <xms:nLfoaitqMhIACo8r_DJ8N7IRsIql9PwCCDj9nP90hSMlfdXUsLi-9A>
+    <xme:nLfoaueWrJcsOlT16aVVUMnAEVseaiMuztsP9hWbINjn2k6_WZmP3z_LPxvdz-vxp
+    -4C1NRsG-Zdilc0yQzhQd9bQyjIhCK7L6GGEbJswb-7B1jAKcMmNA>
+X-ME-Received: <xmr:nLfoaizY7YAnmDpjyBCK7vb8DFVHh816IuH8U9IFBRMyeBic09LPTLISlCC3dP6MY5gBqjITcNR-FjVlKbOkuBBI9qhSP55S6_eI>
+X-ME-Proxy-Cause: dmFkZTEYzXIorekTFdlsh5dWKLvL0ufF7yggC3IMHxbJKu+TV7QM58xVX5takU2ESiTx/i
+    p2WbltDKmFhJik9n8MrvcRTaGdr90fneTy4/EepdeQnTZWv/QSQ1fhb6n0l3OSeMWDGG1Y
+    4B/V8E2pMpOtHKA18O3bb9GCfSE/LrBVGNRPy//6yyJEauycWIVUev46OFm2kNvyJrN/7/
+    NhVv5Zrq779q6MgvDp79xsff9rj4lURykE1MdVzBIMe0WMbQpMpN80nuOOWNDtZLyxYkwT
+    DfSjAtscMfuTHtDYe94q0PvyuxhjCndJ32a9AJrjownHfs7TIZ3i8f/hhNYrtVOSWQU3Ov
+    cMoWZKfN6QvcdMGv67lqMMBzIfNsOD8KYZK8ed5rtfziy8wJFl8J0C6A7kE8kVKmkleJRp
+    0fztklpNVetG5+0zPv8x9e7YrqpGE/tyKegvUpvzkX1u2yjSiJmLpr02lZyVC/EPNpmOzp
+    RuoZjnIpztpaH+Vp0l8UxYIZM3vj/KKpFi4Cb540NNjYBEdqpWUXSkQ56X5DXccoHf46WP
+    2gYX6lMHBFxImZTwvMP0h4DJkXMmKaslIArCCi1/hJ5j4iA8YE/R79Huro7eziub5qul+3
+    s7+qH6mMCLbb/yS9EV65JPitS7xkPLjd2nyG3dQXl4RXgnuZfA9CFRZ+j+Wg
+X-ME-Proxy: <xmx:nLfoasGgLN9iD9PBmWerYMnHJR0Uwtfp-3Mw1fQFTcgIYS4VPwAwkg>
+    <xmx:nLfoauwNm1virAO5DJMBIuPYvNrzMOW6Afx3DZbSGyvHweK_M2gWQQ>
+    <xmx:nLfoaltDrRs-iuXraGEC336P7CkJWd7W_D-kHgUBt6scq20s3Ls2qA>
+    <xmx:nLfoaj2DGP2lfUxjDUvsQ9ioaA4b4vqwORB68z4km-C1c0qiO04t1A>
+    <xmx:nLfoamRtlFJGkDQOxBHJOlsuTsfrN9aak6bRVED5m_pBAlXdRypX03du>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Nov 2026 11:17:32 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: Ejecting things more aggressively out of 'seen'?
+In-Reply-To: <auhfD1ryB-7JwOYl@pks.im> (Patrick Steinhardt's message of "Mon,
+	2 Nov 2026 10:59:43 +0100")
+References: <xmqqfr15ruw7.fsf@gitster.g>
+	<f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com>
+	<xmqq1pclc210.fsf@gitster.g>
+	<414ebe62-c7f6-4d44-bde2-b689e35accfc@gmail.com>
+	<xmqqbjbpptzr.fsf@gitster.g>
+	<47bd0302-fc52-4df0-98a0-6fad7eb0fb05@gmail.com>
+	<xmqq1p93ofjx.fsf@gitster.g> <auhfD1ryB-7JwOYl@pks.im>
+Date: Mon, 02 Nov 2026 08:17:31 -0800
+Message-ID: <xmqqv76fjjhg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,76 +129,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/7] ci: consolidate test variables
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
- Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Toon Claes <toon@iotcl.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20261027-b4-pks-ci-test-vars-consolidation-v1-0-f28edf79bd6c@pks.im>
- <20261102-b4-pks-ci-test-vars-consolidation-v2-0-a5485c437c62@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20261102-b4-pks-ci-test-vars-consolidation-v2-0-a5485c437c62@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Patrick
+Patrick Steinhardt <ps@pks.im> writes:
 
-On 02/11/2026 11:17, Patrick Steinhardt wrote:
-> 
-> The series is built on top of 37b3475fb53 (The 9th batch, 2026-10-25).
-> 
-> Changes in v2:
->    - Drop the last patch, as the reviewers seemed to favor an approach
->      that's not compatible with my own use case for this change. We can
->      still discuss this separately.
+> One state that confuses newcomers quite often is "Will merge to 'next'?"
+> with a question mark at the end. If we were to document these we shuld
+> probably also document that state.
 
-Fair enough, this is ready for next as far as I concerned
+Hmph, really?  Just like the subject of this e-mail message, a
+trailing question mark is my way of saying "I am planning to do
+this, but if you think it is a bad idea, please stop me with an
+explanation why I shouldn't".
 
-Thanks
+>>  - A topic goes into the "Waiting for response" state once reviewed,
+>>    where it remains until the author responds.  After staying in
+>>    this state for a month or so, it is demoted to the "Stalled"
+>>    state, and eventually dropped.
+>> 
+>> We should probably have a rule that says "a topic that did not get
+>> reviewed for N weeks is ejected from 'seen'".
+>
+> I think that's reasonable. Becoming a bit more aggressive there doesn't
+> make too much of a difference anyway -- if a topic gets evicted from
+> "seen" and then later on regains interest then it can still be included
+> into "seen" again.
+>
+> By gut feeling I'd use the same rule as for "Waiting for response".
 
-Phillip
+An obvious alternative is to queue only topics for which I can, by
+judging reviews on the list, at least say "Will merge to 'next'?"
+with enough confidence.  It would reduce the size of 'seen' and the
+friction felt by contributors when their topic is once queued on
+'seen' and later ejected unceremoniously through no fault of their
+own, other than their topic being forgettable or uninspiring to
+others.
 
->    - Link to v1: https://patch.msgid.link/20261027-b4-pks-ci-test-vars-consolidation-v1-0-f28edf79bd6c@pks.im
-> 
-> Thanks!
-> 
-> Patrick
-> 
-> [1]: <20261008-pks-ci-housekeeping-v1-0-baf015c589c0@pks.im>
-> 
-> ---
-> Patrick Steinhardt (7):
->        ci: consolidate setup of test environment
->        ci/lib: always set GIT_TEST_USE_SET_E on Linux jobs
->        ci/lib: deduplicate test variables by pattern matching
->        ci/lib: merge switches for specific job names
->        t: honor default ref storage format
->        ci/lib: add another NO_RUST build using glibc
->        ci: don't override initial branch name in testbed job
-> 
->   .github/workflows/main.yml |  3 ---
->   .gitlab-ci.yml             |  3 ---
->   ci/lib.sh                  | 44 ++++++++++++++++++++++++++++++++++++++++++--
->   ci/run-build-and-tests.sh  | 44 --------------------------------------------
->   t/test-lib-functions.sh    |  2 +-
->   t/test-lib.sh              |  4 +++-
->   6 files changed, 46 insertions(+), 54 deletions(-)
-> 
-> Range-diff versus v1:
-> 
-> 1:  a8727388da8 = 1:  3ba3d58ea4d ci: consolidate setup of test environment
-> 2:  ea243343552 = 2:  52c9d8d575b ci/lib: always set GIT_TEST_USE_SET_E on Linux jobs
-> 3:  1751b336cbd = 3:  139a855e36b ci/lib: deduplicate test variables by pattern matching
-> 4:  b3ffcf0d81f = 4:  5c82ad5c76f ci/lib: merge switches for specific job names
-> 5:  db5d05f0743 = 5:  8329586dbb6 t: honor default ref storage format
-> 6:  0683eba847c = 6:  1f62c2fa8a4 ci/lib: add another NO_RUST build using glibc
-> 7:  8c2e6754773 = 7:  2f656a16971 ci: don't override initial branch name in testbed job
-> 8:  ea39ba888b8 < -:  ----------- t/test-lib: make feature-testbed job more accessible
-> 
-> ---
-> base-commit: 37b3475fb530c14109211faca33716a173db61ed
-> change-id: 20261016-b4-pks-ci-test-vars-consolidation-8d0c6a53ca28
+I do not know which one is better: educating contributors that their
+topics being uninspiring to others is something they should not feel
+bad about and giving our reviewers easier access to these candidate
+topics, or being strict and mechanical and queuing only topics that
+some human reviewers with a certain level of reputation have looked
+at and have not just shown interest in, but have said are ready.
 
+I can do either.  It is less emotional stress for me to do the
+latter.  Between hitting 'seen' and then later being discarded, and
+not getting any response or reaction at all, I am not sure which one
+our contributors find more acceptable.
