@@ -1,111 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793616673;
-	b=c+F69SQ5cOvRz7a6zf1muLN6ydapO5HxdgmHMp3yH3Yo/4Zalm4QfHbKW1Y0fGH0fVqr
-	 Zhn6GkwLiC9BVgoYz60/pFZHwedvqRilFsu9bcGe3TG3ihXYPhTEgeieT6xPxnFHXf7/K
-	 fBr32t6hfP2WQwj7eGJgDTQveUHYt34WxuDB4J83OowpY32eYpIrLp0Y4bKjfweVYNb/n
-	 kB87Oiy5g5ROauEAio9hsO2BJpmDoXXLByI2izJa36PcWWDCK4I1BHRMkAyslNkfJfUM1
-	 DsT75F+z0XMVNBu098E92nGfziEL4iKnsZiWRf2kjSHb2vsxL7H9tuWyd2ReTL32I8Q==
+	t=1793617307;
+	b=LeAbzUMS5yIIKR2beRtXhbcy8BP847ssiW+4jr0AY8AVFBWcYh02jIotGa7FrrK+fXMm
+	 7kGxC7WgitFGTBu8dvC0xKhFUECduQhaoh3hintuQEmW9u14sWaKDfUbolP2VLhGUvTfq
+	 3vLDHJ8v0UpbgEQFrOMrGKui4VgLPKzkbYhdENM7nhHRkcKb/gh9m0GZYYoKfzE+Br1ic
+	 CymOtXAsG/x4pRbTYAx5WFQhUsRyAIdGUR/7mWvGAv1vqEV9aPg0ghH6b6MJncsivzX6x
+	 6mPIDmrnFYVUIeVRUDHh3g8aOJh/DoQiPJDTj8umhrk9IVrc3vLek0YtPqpgw3HqLzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793616673;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793617307;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=qnibSezGsSOKhXIw5tsqvPfeYSIQuio9Y0smKkO9Swg=;
-	b=ScjllhMI9CWnVjdgb8bn6t5xkw2qJJKesP01ODeRV8eTW5RYvG7oKmmLPCnf1m0qMkMd
-	 WXylTs+VGIyikdxyOZkzeoflyRh3/2agbbjlwSRHwQwEMfr1PSTXJZLa7WcBWiewngGLf
-	 8yldcyy7r5fgmx2gnAEzDUrgCqWXqIGPehn8/GLRj1FXn8pzDqtygnjjfAf+Z/UY9rVst
-	 WbVbM1w19sc8CU3uMX9k/ILvnsy1cShs+hMz59ZIXD+bfKmvr985Q5TWRM81efituDZGn
-	 3qIz3wkaAfDikRT2+f8lXh4J821+uleNVBmAgKLYHdlKKlrwoI9Zumels2Tms5t91Ng==
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=b4lO4cxE4mN1WkKM3tgs819AU95l/hVllsIny4lzXyQ=;
+	b=iILD8YIRfPpTlWdnvxLeg/WyfeJ0tO6tHg2FRr6k7LrFZVIgDvPny/PovBlb/2sZJw2w
+	 yFoqQw8hnsoHJA8JK+3U21aNZixFrmOE9pMRyXach6/szGFnmyQdwuOz/EBQLOWSOc9o4
+	 rnB1Bl4m4eNX6suDztuBZH96Ww7QVhhxgAaNVJ+TMrWYQCHmzAOqLdWXdw5c6sF/qxmwE
+	 KrIQpWxqzhyPMde2qRiag7f3Da9WFM75nMgcIIXYBSa1u/fg2TAUwcaBl3QvEBmVTK3Qz
+	 uUXuHXx3epqtNDVYl/AN5UMRVUO9l6PosuZu4mT/22ldbyQB68oeIujbCpzTU/1DF5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=rq02zQn0;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=mKiXHWgL;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=H+YuO7yh;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=TdAE+nMT;
+	arc=none smtp.remote-ip=202.12.124.144
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D516C606A324
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 10:51:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D516C606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FB0606A324
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 11:01:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08FB0606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=rq02zQn0;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=mKiXHWgL
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.phl.internal (Postfix) with ESMTP id C7529EC022B
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 05:51:11 -0500 (EST)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Mon, 02 Nov 2026 05:51:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793616670;
-	 x=1793703070; bh=qnibSezGsSOKhXIw5tsqvPfeYSIQuio9Y0smKkO9Swg=; b=
-	rq02zQn0jACKVP22NxRzcs9nvGDrUnQIBqvLArvWIQlTt7Nz8gRZKyi7boG6nvGU
-	1AY8S538EwMjVZQDzniP54pKOGR5U4WG2Rkwik3N0xGwmg6dKfkrVZIMI2sl6U7Y
-	nBgfyuLQFJ4KRZ5Qncdu+TsOkntqu8ok4QrCQq3lVJSb0EM5ZcJc+Np+1qf7KRtG
-	2Ils8lf5ubtH/U7CgBcw8DFppqg5t0tVjC0E/sbUQ4VEGZuqZKQ6AJmA0PgOXcNp
-	tyNMNQdrfP1oj0SgK+O6PSzoXlHzRIiOw70FpNLAiA7TpKRvJEESrljgL92IfRc0
-	q7P2XrFxBFz+IKDUimBPMQ==
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=H+YuO7yh;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=TdAE+nMT
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 664381D0020E
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 06:01:46 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 02 Nov 2026 06:01:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793617305; x=1793703705; bh=b4lO4cxE4m
+	N1WkKM3tgs819AU95l/hVllsIny4lzXyQ=; b=H+YuO7yh6x2dmGE7q+ggwNGrkA
+	BJoXl/pHt6pT/NnHjkfFrY1az94rAD4R0GGEAjZhQxnhWpCjz7YCZw2LxIyqM2Qq
+	FLuOY3jLmjzqDyY0rNNeRLp8r7vuOiA6pcf3U/KFcSSwOWi3DPqzFwlH1Nxjb9H4
+	/YnOkpEjmXLmAzS/jF0BYZns/K4eZ0WLC37Q7emdCiEXACfEn1tZbmbdGvkAbO97
+	aRADPfU2S8keMtPLp6hT4e34YM/gqPJ1GEUtY2iG5Fvo1Djfnp6dApQL9xfM4SYJ
+	KcNYLI1LxUt4dhkBXasYqvloKPKm7rl3dS00z7/w6RzBbwvhtu3LwDKMParw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793616670; x=
-	1793703070; bh=qnibSezGsSOKhXIw5tsqvPfeYSIQuio9Y0smKkO9Swg=; b=m
-	KiXHWgL+RSN6m+qGMgnPLuCKlaFp+JALTu+LJejsE3PKiu5i9tiBLDzwXej9KFki
-	01VESLLOlLZ8vcMC+Z+7luSlXf8x0/9vhpUv0so0gtYo8Q/s3/dc7WErbvHQUpna
-	vzWnQI5dS9LzomVNFn8xqoc2u29KXpEK6UDhAYDz96rvD3dsQrk2SdijhlxNLmvU
-	KT2Sg05Z94ssNeaDYfUqwGO8d3+MJgE0k/V88Fw0UH2opBsbGMBd7aoPTAH2BJCL
-	dXOFt9N2KWeEntoHFXgjTwic1b8wwM4EyKcUBYALLKcVS+gND/i9b3iTYniD++M0
-	9UgvGZ1Q/QQ7JDgYKYLDA==
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793617305; x=1793703705; bh=b4lO4cxE4mN1WkKM3tgs819AU95l/hVllsI
+	ny4lzXyQ=; b=TdAE+nMT+wea4WXARbxihq5K+8E+o2ZKsbXQMiXiPezS89o30ja
+	iz4QerY99wlWiqn6F3Ed6wQlcWAeDqPeNrjUnBbaimjI4rYPB0+JPjHHx4BcX61V
+	eib8RU4tyna8Ep6WfsfQ2M86jj57fcjzarRKvE9VC7ZgHsn+uTZ5vJv6UT6An2/f
+	ygTieGOb3AMhJacrQgH6+050baESKpPNGpLpR0+jQErY+PoqUHAkofl7gX6Jmpsc
+	nMtKxWS6l12F7P2SNSfCZB3ov5FjBr3sHeyxa0D2rSLpqEFfgwkI/0Wl2wYOaGv6
+	Adwvsu53TxMjR8foyT/+wC8ISTgUTknH5jQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793616670; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793617305; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:O5+FncMG579IL6j8hesPM7qDMqJz1oeoTV0z8IoR/eYbmfp
-	7aq2QQcOWErvg3vBBRxUqL2HbA6mF4f2HKx55lxJclPrBQv88zPt6rgpovqf3FTB
-	wgFwNHT+fQ8dNXCKHsFl7/2Vg27Ha5+41PmpgQucnWZF1ozVrtPxRcoatc7mP99O
-	lRDcXwknWoK8vnRxbje37MzaUnrMdT6UY/qxZl5M25yKNkCyAA33Rq/GZwhZPjww
-	0vXiaSoMetehtXT6mmt7N+vXJm+A/0p/TsUyGShRaarZtG/ivn+/vl8MuN6ZGQc+
-	7LYYi8v0MeGLG4DOa0RD5RItrHgC8Buyz1QXSuw==;
+	s=fm2:rsa-sha256:u7Z9CDBB0l9PJ/xuyr1BQn9DOIV0d85QmyVWCblMXGEFISk
+	hAHpTKN9PC/OGosaBcLELY7Cco2xReLj2NGK5qkY9wnuks5mgw0fC2vxrE/M/Yln
+	PAZPJ8RLVj+ziWC3Z3oW3BH/SCpu9rqx1Nq6Re+MyDGR87yQtL4Ut+oWUe7hqFLk
+	pdfMOm8PWaBwL8xv3oNIYGsbxaDHFCnpwxhuQus8EkPR+aZVqgWYlEBQGZRsiX3U
+	XE+eno4klLYXAGMkEbgcmoCMuuqVGzvC8lh7R0boZY7toS80oEAEOMPB06dtzdVc
+	f7OVg5HbDRVxO83Zm/VCwoeyBeDO1AhufY8qd2w==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:WdU65Bzt49MQ4XolDEAzeOPmozMqDYOfivVn/hTfuXc=:GVG4C5vEsmkDODKUCcsPfhhLwW7m04FT2FCiniHp/ck=;
-X-ME-Sender: <xms:HGvoalJV-xY6dm4_w3pWByRydHkoDHYC4RaL-Ldt8FtLPghMz5Wv8FM>
-    <xme:HGvoar_T0TbfOpDIYinkp5j9lR1tzzH_kCMF2-4tEdMVCNL6iJAvaQlOrZ53O-8Ll
-    Hu6jazHGWrfbwNa556c2-EWDVCBn3IO3N1AO6zeKDUVBv2v29t76g>
-X-ME-Proxy-Cause: dmFkZTEtQcC5I3DLCjP1VUrBUn0uY6cfprhXKJVMcht7MPCi1wtNfJEay3UGf8pwVA0Otf
-    2JXcLJFwWYOZpyiPTGw3jFR2Jdx0kFKSgeyg060M39FrKKsEJDniLTNhnyCuH9TmgTuVUZ
-    LKHLyGJq+lmtIIWSyZ5olGVh5DWExqTsCuRgcdGMRryG8y7O6k9vpVaw16Apf3pbnsmjeV
-    LCAVli9jnwJyR1SxCbue64dDLWNNiQSl6MGX5vmiOlpn1q5xq6G/FKMbR+hDdZnOJLtfIt
-    gckswhM+tQV9b4/YS8rASCNpa2lAEmWIk3EC7RZbaEfxtUaWQqUIfqplYgq0FCbs1xOhPD
-    dhw+ODk6QSOiJ1ZbPUUgtoFMUu/5mNkaL+XYcX6HmjrPra3k8mPYw7qOmImBDGCmHpq3gv
-    H4ktjnyZ5gv2eyqpHlUAVg2DplA56Tp7nYxPgs3Bcgxyc89K+dx3LgN2t06KRnEMzk1SqX
-    PsMyA0PelWA+YX6nQr5OgVj50aewvu8sqlZ7vN8jbT0wHHTESm2J5kY/g1ujbJcoSZ2k9Y
-    rUmmcLGVLybADjD2i3hIX4iLIFyHgXmFAoO++EwQ0xQTN5BPCCRl8/k38e1moJkqbPMJL6
-    TDFQGqrY5dxjz4Dqnl5l253CnqXS297s3XyeKguAr0ODnZzZGq05liI5oO4A
-X-ME-Proxy: <xmx:HWvoapkc4QuNOjC2jhRGryZnttnle8nwO6v47tpxz63RKA7CFs7_pg>
-    <xmx:HWvoaskmYUJKtAVsuZzvHvdE0XKkmzPFu_uS48c2lH7gvG0aOsyuig>
-    <xmx:HWvoaiuV4wXFy1zZJUcQo_QRtPM-Kg1D0g1tf71afyuFuca6dp28IA>
-    <xmx:HWvoanmmINItJSoiEWgDOZzGaAIkOsS7ZYzPgWrZrpxtTB7xrZXCFA>
-    <xmx:HmvoarAamPEPFpHrCcqMbyJkRgJ8JB5BlyjHSgnSx_n5Xte9n6j7oPp8>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 463EE22C009D; Mon,  2 Nov 2026 05:51:08 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:ppRJeZVPFb1920LdrID55o4h/YMhz2uiO4So1C1furU=:7ptAh/v90jZ6Kgt/6xR4Is4Qg3aiqBHpJAcTvs0jd1Y=;
+X-ME-Sender: <xms:mW3oamFWDr9pekD2ilET2EVMWTQkPlNXoGokLDDVruyVM8Do9c6E_w>
+    <xme:mW3oarAuk_HmSUbuGiosQK3m3vgXcUsMopF2bsEoroaJG2DpdP0zZi4bg8rMFV2xx
+    0TqlDtUKbdkDhtXCcDEo7oN9xPyMV95U0ZiverIf3jDu9LzrQnoZkE>
+X-ME-Received: <xmr:mW3oap9boApNCuZzzb8Mt2neUjWNoAiqMwzWXcsTZiPBDgqXXkTwAftHcaQvOJGXwJ7aoQ>
+X-ME-Proxy-Cause: dmFkZTFkpFY9vpvJG5cwdH0kUnpsAnuvebzx9vSH/s0M5wCwHg0pGKohkqb5eJd0Fj+yQL
+    BLrFc4spWKsYpd8lRuW70Fdc5mRKYQzIMuqMw9TCuerd5n4WZosbdSEDk6bEzeTNh9i8FX
+    04ZGOKPOSrYnmqnL4bd7DLgKqjyQh2Y2SI4ItvHRc30cP8jjMjYlBbHXOCBUQ7QbQkvGA8
+    KL71AMvIP4P/p/rHuOlBb32fpbrwXBxaexfjdYdu51wukjNpG3y3SIYD3nrf2ohrjOvkXa
+    MGEuydZtznBWusXskvk69Va6USpaCVBBVo5u7sR8F4ibzcmEawaoQBpjBMenGkiJJ+1NAW
+    cLBDSuPuq7/MquQladi2x2qbyELfyW09d+VgbzlhxGoqPRmSprAbyo5HVIDSMoHZP/NCiK
+    gaUk2aZBoh+imxwX6a9/lQeeud5Iql2ARxYhmaVZdflvm5yf/GUrGzn3JsHlYs6ruN0IHi
+    rPyn5zlqjsHTnncctH9o6EoRFMtdBOiLKmqxWEQtIROhld0o909Z8kIin5wi0EcbdV+D48
+    hFea5nEbo1te0Ms3E80/bbjiFLIC4iSuN2/iY8RXOqwbOt0+V4daKiXmbiMXIZqBidJlgg
+    mDLsgXVngLk9WQwnWA/CMKaqheVLUth5BYE3mON/G3ur2ioAIv/gDVOx0GqQ
+X-ME-Proxy: <xmx:mW3oanBMGdWx5tykL9-uWbtttlIsFQlrMN07wnHq6YErvhyj5q0vww>
+    <xmx:mW3oauT6J3TXO7snsVCmv4JPT2vfeGD54qse0FDeUruICeQhMOK7LQ>
+    <xmx:mW3oauvJzvGaOpvEYvsoBgpl4uMMY8KS9Dph7LX-nPptd5hCgF1LsQ>
+    <xmx:mW3oaq2RIbueR3OPic5WEQ2Sd5qDUZHlF8Zl1YKVZo4ESIHq522XDQ>
+    <xmx:mW3oajRBrHm0Zw8rRSMVSMZC5XknxtY3mWkY2FuNSGJ0y3GyMyf79KDY>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Nov 2026 06:01:44 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id da2f70fd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Nov 2026 11:01:42 +0000 (UTC)
+Date: Mon, 2 Nov 2026 12:01:38 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com
+Subject: Re: [Outreachy PATCH] notes-utils: use the passed repository for
+ notes refs
+Message-ID: <auhtiZ86trLamccS@pks.im>
+References: <20261031104526.46711-1-okhuomonajayi54@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -115,53 +125,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AA0Zomq0_rWw
-Date: Mon, 02 Nov 2026 11:50:48 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <78d4b7c0-3a3c-4d4f-a9f7-4a6f7618ad88@app.fastmail.com>
-In-Reply-To: <xmqqo6c7mx9z.fsf@gitster.g>
-References: <CV_format-rev_three_more_opts.b80@msgid.xyz>
- <V2_CV_format-rev_three_more_opts.bd3@msgid.xyz> <xmqqse40ei5f.fsf@gitster.g>
- <xmqqo6c7mx9z.fsf@gitster.g>
-Subject: Re: [PATCH v2 0/5] format-rev: add --abbrev, --color, and --date
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261031104526.46711-1-okhuomonajayi54@gmail.com>
 
-On Mon, Nov 2, 2026, at 09:51, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> kristofferhaugsbakk@fastmail.com writes:
->>
->>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>>
->>> Topic name (applied): kh/format-rev-more-options
->>>
->>>[snip]
->>
->> Nobody is interested in reviewing these patches?  They looked more
->> or less OKish to me, but I am not the best person to review this
->> series, as I do not see much point in this experimental command.
->> It would be nice to see reviews from those who are more invested
->> in seeing the command work better than I am.
->
-> Second call.  Anybody?
->
-> Unless we see some volunteers to give it a review in a few weeks, I
-> will discard the topic out of my tree, as 'seen' has been crowded
-> with topics that have been collecting dust without getting many
-> reviews.
+On Sat, Oct 31, 2026 at 11:45:26AM +0100, Okhuomon Ajayi wrote:
+> create_notes_commit() and commit_notes() receive a repository,
+> but read and update the notes ref in the_repository.
+> 
+> Use the repository they are given.
+> 
+> Keep USE_THE_REPOSITORY_VARIABLE because
+> init_copy_notes_for_rewrite() still uses the_repository.
 
-For you all=E2=80=99s information, what was originally totally unrelated
-research has made me doubt whether this command is needed.[1]
-git-diff-tree(1) cannot do what this command does right out of the box,
-but it looks like some modifications can make it a replacement for `git
-format-rev --stdin-mode=3Drevs`.[2]
+I don't quite understand patches like this. They are _so_ close to
+getting rid of `USE_THE_REPOSITORY_VARIABLE`, but then they just skip on
+the final change that would make them work. I've already asked about
+this on one of your preceding patches.
 
-[1]: <ce69d94e-7329-449d-b3c3-47d4f3aa608c@app.fastmail.com>;
-    https://lore.kernel.org/git/ce69d94e-7329-449d-b3c3-47d4f3aa608c@app=
-.fastmail.com/
-[2]: <238e5652-e95b-4d44-a900-e16aa6ab81f0@app.fastmail.com>;
-    https://lore.kernel.org/git/238e5652-e95b-4d44-a900-e16aa6ab81f0@app=
-.fastmail.com/
+Also, could you maybe reduce the frequency a bit with which you send new
+topics? There's a ton of in-flight patch series by you in this vicinity,
+and it gets a bit overwhelming. May I ask you to maybe batch related
+patches into bigger series (maybe 5-10 commits) so that the reviewer can
+focus on way fewer patch series overall, and then have less series in
+flight at the same point in time?
+
+Thanks!
+
+Patrick
