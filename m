@@ -1,120 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793623623;
-	b=Ed9NwnjYermXt1qVsXvcFdsxzae8Ilzcy08B1n1YbWzGh0b1g244gJqNZ39LQ2129LRA
-	 6j64Gh0kzqj0JKjGT+Us8EYd0jYncXT2M2Q6riSV8X8jEGqJWJJPbyOYDmlf0odT5w4Y+
-	 ClOffrWzUX/0+q2+KWMTCpnCIEkfSRdtCieQDLqzq1Jtd+ZkJpH4bw2QzmcRLiF0Xex2Y
-	 dcBDv/6wSLytbnUaX1hmwg5wIEUJjej7zxYD868xDPlzjtFVezc0f+7izuOqB+5FvxmAU
-	 wgvmANOlrsI49yRmFjAMFf9uXO/oPY5rWvu2nR28E01/6tadyXIbjTW2yeFuc+eglqA==
+	t=1793623890;
+	b=PdWn1lAdamCeIzTCtBlSGCWr2EuCs4f1ej4+4ORFkB/wtlw/ZZ6YDoLwrF/gFQ6DxMdP
+	 zk5oy4ApAOeTCbISWLZVCD+PzURs8JUSI/P8zIF46DIbLj8EH3e6dUyvYozdcce+3cGvZ
+	 RpJh1dOEszhcILBNKKkAoKzmVAFMYOh+wPjwxk3UWwlC7yYBohboLU2Sf2AvD94NnGIim
+	 4GLW2ba+vLvlq5572m7WcZhB/Htw+X5wzintKwmnbWdN9xSJWJfqCbqr0opYMS6NYuE6w
+	 bMYvwbQ0gydzduv13NfiiYAffG+3nEaKdCiWRFcpM7YPzNxb6svRusW4uzK5cRz89kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793623623;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793623890;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=zhco/Ox4Y5giTkaZNxwPPlw3N3iAMAsZ/2K+obc7L5c=;
-	b=WFlWGjungPImCN2XOexvQDak/E6O6WCw1ZbGkTQLTSMzzQc/06jUjfd0KkYsB72EQXaf
-	 oRF3npAVf94sER3OrT+rrisdW3T6bvNXxTbr4NWsTlD5wYhvA3CAFrpMJv66lJho7zy+f
-	 ovjAZIRO6qzbIYS/Y8M4EUcpCCrYo1gmpN+zu+9ZRx1PuqPw0qiwBpUdbqiqiD3sIJiUY
-	 l9GvGoYfbwy/vbn4nOF6MGuTGfa0z9l7+W+Wc0gQDS+oYy2wJ+Na+HWDJKEvqxoRcqIlA
-	 Cdmz7GPCpTCtsbP9yWPRBzemlR4gIyHQ+JLIEYiXWMfq/t5MbPyfn1CwrhQ+5Azge5A==
+	bh=r5oORY9wsnfPK4aYXH1ki1pUTuZgetBvSOMfGZeUt40=;
+	b=D0XTl1Gx7ZmLtMPzJDiti08Sm3wFM45Yh+hUjt4hd+bG4fWL5fds4qk69ZeTmjeU59t2
+	 YmeLsweA1o4tycIPiAh88d2HETo56PUysbY/fmkezvKL2EwxIJ9GBoRV9MjEQgAqepl7B
+	 Dgr6/GMR3LJGda/ze5lrTrlcsJksKmrV3omZ/z+N5nxDPpOPVjOl0asDclrocHSgkbofU
+	 xSuu2fosFOL4j/uOPvSf4VETbOPb+JxtC5yudiE+mQKLddeKYRC6sQ9gtpVWVlJXXb3oz
+	 6i/7JSrC+VgcFvjIfF1XH01JwZZY2PCkXXeu/1i/I8fEZdk4Ajx80OBweRsj7kqVnhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OyccmHj4;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=dakEvb3r;
-	arc=none smtp.remote-ip=202.12.124.159
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=SVnVHTwo;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="L/UEo1NN";
+	arc=none smtp.remote-ip=202.12.124.145
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1495606A326
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 12:47:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A1495606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47375606A32D
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 12:51:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 47375606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OyccmHj4;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=dakEvb3r
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F2B207A012B
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 07:47:01 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=SVnVHTwo;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=L/UEo1NN
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9B63A1D00046
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 07:51:29 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 02 Nov 2026 07:47:02 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 02 Nov 2026 07:51:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793623621; x=1793710021; bh=zhco/Ox4Y5
-	giTkaZNxwPPlw3N3iAMAsZ/2K+obc7L5c=; b=OyccmHj4UACROvONloPiAcT9+r
-	sRzsxXM0e+WhrnUEsA1ZsH6vgUZwqpfynWP/CgH0QY4SgFt0avVzTSbQUpU/qnse
-	sv9NTRBYLtu+zSRM/UMH5WitVpSFZYH7uwmoLRKBpL8zmIuUtNyVOsb2u6lDaxoA
-	ceqyn/b8tR/mtqq66yCjdnc2Ct1G4YPNTkYOO0jNFS5VFaH8kqxp4nBP7p1diQKV
-	Ny0pAV0D4GRxxonU6pYPu3SW5pYgrB1gYy4ucOegnYKkdXyHxOA7DBmi/UJrLM93
-	rT/eU72wnzpfGcZ0UdVLtbDFtg2ZD+wtjUosU8eFgBJWjH3QRDoG3hxo0mcQ==
+	:subject:to:to; s=fm2; t=1793623889; x=1793710289; bh=r5oORY9wsn
+	fPK4aYXH1ki1pUTuZgetBvSOMfGZeUt40=; b=SVnVHTwoJjkQd+Qn9uEYrNLilj
+	cROeT4omTmZOyalRpJjEpF18Df5xxcz/C7TjXs2ikM9DwWUINwyLy+SAazUj2IyG
+	ELkHUUXGE3ofx0tMzBpmWMJUWnNkrK1U05l5Ic2LF8OkR4B+OS2gsC3dCCLMvQ9x
+	5myl0SNwnhMYoo+4hYbc8N2gQ458Tgm+TIMAgF2rqE/GiuPU+JZxXJ3fVBRD8hYX
+	MqmoTGckg4v2duuIwtCnsh/qW8JS+I6Q6MNFuFFCjXbKlIF2Mf0FCY6/wUIlC8VL
+	PHHM1+l3us4kvBiJmTGfBfhOUhg3o8sHztXC8I1654O3zGx/pYM3LsjzOWcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793623621; x=1793710021; bh=zhco/Ox4Y5giTkaZNxwPPlw3N3iAMAsZ/2K
-	+obc7L5c=; b=dakEvb3rWZnHPJqr8ulUtOgFfHSQh+Dg26VfzgdtsZw5a/EA1Zq
-	h6MnILLhtTxeQMGgFQoWVUxy66ilb5SuvIXPhgDawBiBqdV7gf3VYHSf81/v0coK
-	fQ2ZAarqZIVh/IqJoQXTaBAPor+X3hZXDxR7WR6RpepKlIxGmfZIC0HuDMf2b3+y
-	gK08sMMMV4pvVJCHQms+0OjmT3foXAe/U3nhRG6jEmKlR784P+mFtKz0hVFxvCIi
-	kCuQxqABoajAAFBURnUWy0JcIwLt2NwDyj9IzfBB89atfFIZ7dcMse6Fpuhmm1u/
-	V1PshAeyx27lLn5RxxH+wKXgI9oPe0euKow==
+	1793623889; x=1793710289; bh=r5oORY9wsnfPK4aYXH1ki1pUTuZgetBvSOM
+	fGZeUt40=; b=L/UEo1NN7t4ZS4fMrg2QtAvhu76SF1TvsYWF1+d08maZpHQjwky
+	FP0mGCz9qRxfvKgNG0ooPvebncqHk96bhNfFfIw80DRMCrbc4xJHDe2SsbZbnYK3
+	yTJnhZdrk5P3XVt0tjCrzzl5whk2JQnkNta/9ZNVR93pNL3jN1HHAwwcctFmTniz
+	ihL9pbTp2cWraBUbVJSTyirsa7y/zDAQ79VR99yIxjtOzB4pkrSGGjyGONM0Xk4U
+	y4oUT4MT6WQVn0kkIJVz8hMpbdfLJ0u0lHc4F58WNd7yUDIRkgXCDZOnUrVh5xc2
+	u6HdeVPAVHoqZYmcuNNExRDE6d/faLx5jeg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793623621; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793623889; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:VttLRN9cBZdNBBFJLLfGvehFyoCYn/5e/rvhrJwSlGgNt2B
-	UumFVB3R5uKZVTh2/9VlAOcHfm3NcvWRaRIInmaWrhITc0pgax8v5S5QVUiA112K
-	Wp2sO3wn31e2mVYNgPbUFNa1K/VXXD6pMP3M22m7LmTEHUzTK+4ITp+GC9tdBr0R
-	TzfgIaa356IRBNSf8+oWatkfkYgvNg/vzBU9CQhnXh3Hh83f7zpfvGsL5ImyBY9I
-	R29FGHomuXYRoJfptpR1p5QB5xcBqn+dX/TV1jVKH9osgIUorcqTzhI5PH5eWnRt
-	EKUIIPsb6TS8HgNhlfA9gYMyMFUfWCHkCPoK9Cw==;
+	s=fm2:rsa-sha256:OP52uXuUaOIVjXEXjH7DfkJoa99W9/TCDKw8Ddld8EElBpO
+	lqVS9PCAU8REAGeENA0RIDvnN3lZLgkjFPte6/zCgpu9drAZcAEsqmCVt85cxsb4
+	zH2v9yGoGDSF+pM5Mo5UqA/4ybPztve0JN7rJDy/AU4fDrMHfhoke/bK7iPGIoSQ
+	vac3LuSPxghubJcddsjbb8Umomdne16n8bCeCB3nfd6LDJX9oh/2RHdyKiMh/dzP
+	m4gN3zM3XSpFC//x2li6vXXYOd1FPmyQyFGz0+NAsPR3Rl3vCTYa2lfwcxqwvmw6
+	anTMCwCCiQGs4AGxTkTq3isSDpDzEXvN7ykTEcw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:sI2m+sqeiVcOE5UAwCVrtfbK24NDIrv8ocRNlv6YgXY=:mU4TujCtFwRpO8mNB74XhjQ1Y4ck+3NC7PVvdubBLJw=;
-X-ME-Sender: <xms:RYboaqE24vyj2Vx59t3_wmnOCLY_dvPoYDcLMpqz8GNVVk_uPSnDWw>
-    <xme:RYboaiWpAEe87BRXe6UiQ0m3HUKSFejPRPDLBnhkguGV6P0l8l1PNOEdXuNVhubhA
-    RqbN6ZxFC7eFtBK52JbfHWjNrZjcNzQ0mK_S-B2JL8Fpdsq1VQvtDM>
-X-ME-Received: <xmr:RYboapJQRUWn0gXbfLLoNeipH3nXwHr4_1BwXk-fHuPig8CzMmOdtXth78cZkbgyOgKQ6Q>
-X-ME-Proxy-Cause: dmFkZTE2WQBavtO8S9QaRBMIb3muJ7TW6e2vNATgGRfv3gVpw8g2uI3O2Ch1y2CQqj51C3
-    sZjmFkt0XYaQGu2uJBdBj6UP2bKMiZYpn02I+IsTvciL67vDVn3oBSFWvUDQev3VD0EXHc
-    fb15flJb2PMwYYz9LoU0bpR7r2GzzJ9ziQ0aPbR09rvARJMmEQ55y2HKJL9bANN2TLNfws
-    D9EX3TzWJIVSLaUaIeXoPKJw1L+NnX5ILjm1y5JfMCk08jRORpiiCDUHszkfjjeKPlXlcx
-    DzBWnJsx6D7vM7P2N5UqS6E9GbW5jbM1PFxg1WRsXsU6GwvzkeUVdy7NmFzIGeD0Z0ntOu
-    T8LFbnnUiGtraJ7+iOAs4nYO96C6TOE9GfTDap++BtDz9+bO+HF4x6nMJqjvdRJsR4Vjyo
-    nc1j7bELBRgUGzVQjYUqgUjq+i9PAq9+eZDDnXup03zx6r49eCnOdoxVVYC3YUkAkHUiKd
-    Kkq01TwAWjpTDPWS41ScQF53iCBAl2C/77nVMr4BG9jqmD1sUfa8LT5OVAFVt//+tEPKFe
-    eoD8P59D2ZgWD/I9vw0sINsjsxKMPUFN+f6I/wxEknvW6XHYdLHesCj/u2K79z3rf6zByR
-    PBLLGz+UyI8/s1a64EhpVVQhHnXwSyc64cPsHgVMVBNZJhQ8wWO5LvEKj3tQ
-X-ME-Proxy: <xmx:RYboai-InoDWt70xrWFp8TxTdjuweF2OdMI-VpkuOfov1ZIgeHLoNg>
-    <xmx:RYboasJrbyzCMb1mAtoFoOYUci1ZqLUQzMydMBdV3qLNPbvtjUbbZw>
-    <xmx:RYboanl7r-cWjrXy0nnOcXXMsGSCgIpy3t70_1tSoCytzJnaRhW4FQ>
-    <xmx:RYboagNcHZhTqart7NC5G5iS_DZfIzFapv01su_-EqCwXK7olZeL_Q>
-    <xmx:RYboag6tlUm4IzSTjtg04sPDdf6HXFlnfnGg9GwwtpoFzbvFFUntZLe9>
+Message-Instance: m=1; h=sha256:2GEL+NCOlCazsEe4E4IxSH+lYR5b/KvRRMDQetIOPvE=:XoW8I601f3pgJb4w81ZyNxrrsgKuMK2tQM8efLu2CmE=;
+X-ME-Sender: <xms:UYfoatQMk6as_E3HHr4tUXiA_HxaMI4tJT1vmPPqI4ssRsWfvYTqaw>
+    <xme:UYfoatrUv9Alb1NifyslMnGpt-V82ImMDAaVVGkWZDAejoAiyqKQoJLS9Pp7oGcaT
+    ew3kxjs0cUMNfbqA9AhTIsh736Z9pUcBFDAGINbQ2fW3aACTaUetKU>
+X-ME-Received: <xmr:UYfoarIP9CKaWeQlII1SrTrbG_iwProsvnM8QrkqooyrTkXt0i1SGc6YnpKVD3oc1dEyOg>
+X-ME-Proxy-Cause: dmFkZTGczaqE4Qdl1tHGB/WaBpIyG0r05pjYotsg515Vj5UlAtbKVzNFJXd/iTHo5LmZMm
+    NLjF92SDLbdeowlNTEsNAmIpGrMAgdL+6mLjUvuBLUKH0mxWJROeoQiOfes5/CWxZwoPP1
+    ehbSTTSOU3k1vBDckEDdp37eEXbl8kbddt89l33V/5y1mzgAZGmdyZIqSoEiXZVmUDucpQ
+    AwMOnZTe+Ra6csmDx+PFnhKn+dNUdnjyTD1QvEAiClY2YHMLWjl78krU2Sm+kP7piuFh5z
+    7wwWVikJskeoCzmjPLQ3UA8AlfwwszpU2Zhullv0J7NBENMYx9hL3LAFC9k3ZpO3d9Oldc
+    PXu/cTDqvhYCsIBCJPfh5YirpTHR0lD7eXVYFmOnlq+a2dz/KkWb5TMxg5HX+Q0W8YgChn
+    SL1tMnqxjQQ15j0cKMsDzz1ItaFNv+a6umk7w2hB1UXyONgBZAKhrEmA6QBcnW49F3LiE6
+    775nwtvPOk7S+a5MFUdGjQ+JFKRFTWtIwUrATxD/9mtCUroiIs+ZFPqI5jO6Krp7/vtyE6
+    AkYSR74t3n3r7Dsn4Kk5r7NFTtCQkLb1JAmFbaW4LdTwDBW8zdVTB1cn8O4y7TsvjMyRGI
+    J9QUE6lXYSXK4z3oVk0ZtAmN5ZgRPjL8K4ldtAl1wpXvV3VB8JAK9Pgfsxkw
+X-ME-Proxy: <xmx:UYfoagrFvYGY2u1bP2L6Dpk3wmhYMeBBecWTL-naKaGUNfBoryyDpQ>
+    <xmx:UYfoajyeIUOGBac9EvH39rDhxJcW4RWY8Cu5AvPF4a9tH-6eoQXs1g>
+    <xmx:UYfoakOhxrQyu_TwqEA1-4jdDcFzHoJrRoUFVC_JKvyDNfaJ5SSzsA>
+    <xmx:UYfoao4jcoc-miiCEZFUGW_twMqR-G8-WJiwoCNoh8NcASfLXjsi7w>
+    <xmx:UYfoaqBSLUaPG5TwRFiEEYbNVTCaxxU0xFXt59e7YtlofwFhfPrxDXCm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Nov 2026 07:47:00 -0500 (EST)
+ 2 Nov 2026 07:51:27 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f922d4fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Nov 2026 12:46:59 +0000 (UTC)
-Date: Mon, 2 Nov 2026 13:46:55 +0100
+	by mail (OpenSMTPD) with ESMTPSA id d5a4c1dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Nov 2026 12:51:26 +0000 (UTC)
+Date: Mon, 2 Nov 2026 13:51:23 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Linus Torvalds <torvalds@kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] describe: count the distance correctly when commit dates
- are skewed
-Message-ID: <auiGP4XhObUzC9vD@pks.im>
-References: <20261031065525.19883-2-torvalds@kernel.org>
+To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, mail@thomasbachem.com,
+	ttaylorr@openai.com
+Subject: Re: [PATCH v2] maintenance: improve handling of lock acquisition
+ failures
+Message-ID: <auiHS_439EeHCGH6@pks.im>
+References: <20261101105859.25579-2-pushkarkumarsingh1970@gmail.com>
+ <20261102122955.143018-2-pushkarkumarsingh1970@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,76 +127,69 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261031065525.19883-2-torvalds@kernel.org>
+In-Reply-To: <20261102122955.143018-2-pushkarkumarsingh1970@gmail.com>
 
-On Fri, Oct 30, 2026 at 11:55:03PM -0700, Linus Torvalds wrote:
-> From: Linus Torvalds <torvalds@linux-foundation.org>
-> 
-> The current merge window for Linux v7.4 showed annoying behavior with
-> 'git describe', where it doesn't actually follow the documented intent
-> of the result: the commit distance is miscomputed when the commit dates
-> aren't entirely reliable.
-> 
-> This makes the 'git describe' output not match what the kernel
-> calculates in its localversion:
-> 
-> 	linux$ git describe && uname -r
-> 	v7.3-19342-g2a500a04d6f9
-> 	7.3.0-19059-g2a500a04d6f9
-> 
-> and the kernel calculation is correct, and 'git describe' is wrong. The
-> number that 'git describe' gives (19342) is nonsense.
+On Mon, Nov 02, 2026 at 12:29:56PM +0000, Pushkar Singh wrote:
+> Changes in v2:
+> - Report lock acquisition failures for manual invocations as errors.
+> - Print a warning for automatic invocations while preserving successful exit status.
+> - Trace the reason for all automatic lock acquisition failures, not just EEXIST.
+> - Add tests for automatic and manual lock failure behavior.
 
-Out of curiosity, how do you calculate the localversion...? *goes
-checking* Ah, you seem to use `git rev-list --count --left-right $tag`,
-so you basically reimplement parts of git-describe(1).
+This really should be two patches now:
 
-Is there a reason why you use your own script, e.g. because of a missing
-feature? Besides the fact of course that git-describe(1) is buggy in
-this particular case.
+  - One patch that changes how we handle the failure to lock.
 
-> The fix is to take the commit generation number into account when
-> ordering the commits. That will still fail if the repository has no
-> commit graph, but it at least improves on the situation in the common
-> case. With that one-liner fix, 'git describe' gets the correct commit
-> distance on my kernel tree:
-> 
-> 	linux$ git describe && uname -r
-> 	v7.3-19059-g2a500a04d6f9
-> 	7.3.0-19059-g2a500a04d6f9
-> 
-> See also commit 1b600e659a ("Compute accurate distances in git-describe
-> before output.", 2007-01-27) which fixed a different issue in this same
-> area. Clearly the *intent* is that the distance number is actually the
-> real distance.
+  - One patch that introduces your trace2 string.
 
-Hmm. The big downside of this particular change is that you may now get
-different results depending on whether or not you have a recent commit
-graph. So you may get different results based on when git-maintenance(1)
-last decided to update it, and that would in turn result in highly
-puzzling behaviour for the end user.
+One note though: please wait a bit before rerolling again so that others
+can chime in first. You should ideally reroll at most once per day.
 
-So...
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 81cecf6b6c..9223409750 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -1402,6 +1402,8 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
+>  	enum auto_gc_hook_result auto_gc_hook_result = AUTO_GC_HOOK_UNDECIDED;
+>  
+>  	if (repo_hold_lock_file_for_update(r, &lk, lock_path, LOCK_NO_DEREF) < 0) {
+> +		int err = errno;
+> +
+>  		/*
+>  		 * Another maintenance command is running.
+>  		 *
+> @@ -1409,11 +1411,29 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
+>  		 * recursive process stack. Do not report an error in
+>  		 * that case.
+>  		 */
+> -		if (!opts->auto_flag && !opts->quiet)
+> -			warning(_("lock file '%s' exists, skipping maintenance"),
+> -				lock_path);
+> +		if (opts->auto_flag) {
+> +			trace2_data_string("maintenance", r, "lock/skip",
+> +				(err == EEXIST) ? "exists" : strerror(err));
 
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index c0abc931a5..2cd597d919 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -328,7 +328,7 @@ static void append_suffix(int depth, const struct object_id *oid, struct strbuf
->  static void describe_commit(struct commit *cmit, struct strbuf *dst)
->  {
->  	struct commit *c, *gave_up_on = NULL;
-> -	struct prio_queue queue = { compare_commits_by_commit_date };
-> +	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
->  	struct commit_name *n;
->  	struct possible_tag all_matches[MAX_TAGS];
->  	unsigned int match_cnt = 0, annotated_cnt = 0, cur_match;
+Why don't you use strerror(3p) for both cases?
 
-... I wonder whether we should also call `ensure_generations_valid()`
-here. That function is very expensive in cases where we don't have a
-commit graph as it backfills generation numbers, and it may have to walk
-the complete commit graph to do so. But isn't that better compared to
-silently yielding a potentially-wrong result?
+> +			if (!opts->quiet) {
+> +				struct strbuf buf = STRBUF_INIT;
+> +				unable_to_lock_message(lock_path, err, &buf);
+> +				warning("%s", buf.buf);
+> +				strbuf_release(&buf);
+> +			}
+> +
+> +			free(lock_path);
+> +			return 0;
+> +		}
+> +
+> +		if (!opts->quiet) {
+> +			struct strbuf buf = STRBUF_INIT;
+> +			unable_to_lock_message(lock_path, err, &buf);
+> +			error("%s", buf.buf);
+> +			strbuf_release(&buf);
+
+There's some duplication here with the auto-flag case. Can't we
+deduplicate that?
 
 Thanks!
 
