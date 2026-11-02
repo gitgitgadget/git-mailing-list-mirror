@@ -1,92 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.44
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793648433;
-	b=K9aYAUHSSGa1clwpFjnuCgUS6x4gyGrAGWCnEjMr5yrIb6ijxZ4RV05D1hbR1NYsEm82
-	 QLTGkjuJwObyIT4w/psodjmYAlRDX0ju7j/g8qBNfs4bpR5AQUhl5LboOiNxudqExy7rW
-	 wnFWGdaJolX8Tg2O2yG9p4t8pi2pZG0TRO4tEoLjRKSG0T3NRibAy3yjEpljJu9jJfZBp
-	 Od7jBfv85aeuj/xoKlAAqFvphSxCLWLRwKv2HV7vqmq3O7pPSc/VfAc7gRrn/x7STv3Bk
-	 wMXMkHvK45oJDSVKXISQkqEbQzhOZwmd8sjkD4eAjNcE2drOejkKm/9m/TDbGB1GqIQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793648433;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.47
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793648884;
+	b=NMg2rOtIJvhsDKioDBAt8l9vS8LYn5NKzJoktTqFWkNGdRPSBvIbJVWxi9ry7IS3OZEV
+	 UXHD+pnH3RbuLQIVoipYWHQ1I7ZwDF44kIEMhUDQaSNlqxBY+LwJevMMqNOVe50ujKTtc
+	 V0vmFK/9g9phpvgMEkcDwaPoMMfeVNsSENCe78VfQGats+Jm1FyGyoNMOi9k/FwnhG1vd
+	 V3VJ6HwZRxei7NhjLzeOkrpPmFPl5nsp/EFgSH7sG1qfPHCpaC29Qx7k9Fxl9mH1koo1R
+	 A4h/vMQILI3P84Imx9M3FW1KdwbYLPXdehorZaqFQiOv54/1CHbxUcVpX1UBv7INEtg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793648884;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=VZ9FN4F2voOGS+anACp0/i7FTxMbQeDSoQF3jtjms9U=;
-	b=py4USZc2zLwG7WZN7kC9gWepvl+6zEqtbhetsGaHIqstU3uLwmyOYCOIvspNLFov+pFl
-	 OEn2pKh9kfw03J9zupq6JS98oGQHQl5WjF9Q7YrfavyKOAlYwL2EcuBgKTQMO8SrYGLoh
-	 QXMUqlbSCXKkEo/+IJiheo6mWPIFQ37A4FNb9OfFsmI2Bas4q/8J6TOFr6kYm9/IrKp5Q
-	 GDmCpQ+DUld8nL/vhze41KjJbTdOrj3P6Wq7akiLsMcpTveFre5JHH2dpt3zjFQyFT319
-	 pylS/J7Ny1gjR+l1PAiYR5p75Q77LHaVKFA48uvud92fi/5Am5JHCDXDC7P3OELCSQw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=SqRdue9oPJgtX0JxUG0taojuWqE9Sjammd2Gj7pEL2g=;
+	b=V+PhKvVOKtdJDjQvJlxRZ7mlazdr1JUo8bvy/wrUzhS1SGLIk/2uPQz5jb3FtQ6t7b1x
+	 tpfuXj3OSQllatpZEFZu+Pn2An/NFMVAYtAJaozJQgWqrqDgvcNXmx2KZx34qyPiOjGUw
+	 WSjGVc2cjF7+tDj0wYmmBNJ+Zntabh04T/HwAb07esB6icKm7rUC5iOspBxWO3Fe9yrTl
+	 I3zLDD7gd8jqz/GVPXa1e0OGFFS+C04OaZO+SpfRRpyibP6LUT6ruaJlm67zNPhRVRPVn
+	 tJeFng81Hz5Iop9l+L3B3Ek1F1QFkLDCwaOtA6sHXDv3c+gyV1jhhuqaonmUnvQ8bLQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ug5g4pjl;
-	arc=none smtp.remote-ip=209.85.219.44
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Mh7SbVdS;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.47
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D00606EEBC
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 19:40:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A1D00606EEBC
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B332606A33A
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 19:48:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5B332606A33A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ug5g4pjl
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-91b55859245so52952486d6.0
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 11:40:32 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Mh7SbVdS
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-6f8a519e215so3429259eaf.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 11:48:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793648883; cv=none;
+        d=google.com; s=arc-20260327;
+        b=sAJ8SxB658mD5rdoccSaearhAbxxjxvPHwLa7HyDQKU+2oGKs5bDTVqaee1jEpu3qA
+         xiyPP7oK/XaGv7YV1QrQyVi7KEiy7GPmlXUzWQeIap3FmTg4PnVAPJQNwc3GMp8iwDEB
+         oPqLj15GB0ABlFL8qExnLr35EiaokhVB8xi3xq/aMeosZGpTFI2qZEMAbg2fE0Crz1tQ
+         NcaGn0Mf9v5l1PBfU6bmRgoGLWgoLlCKE/t0W5AVpndHHydXcSet0Fj0H/WLmlPriz1d
+         ZUgbdxaJYG+5NDA+aCt0wNYvPwYwBQtajl2OlgzLqzzUAWP8QsB61kohBcxwFl72Y56F
+         CfCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=SqRdue9oPJgtX0JxUG0taojuWqE9Sjammd2Gj7pEL2g=;
+        fh=5PFJeBr7a+nhkSJKkBd2FkDf8aw85ThIkZJzXtcSCYg=;
+        b=VBffjdveW45TvuibeudafZJWURQFLTFFT7Id9nifDj9S6SvsA1b3Ikzmm6KCy0ZU2b
+         WxGh2xQdgY9uGzqvPiNDbh38AJewU5YLjYHwu2CNJrea1cbDeTMOcKhEacF9t/arzoOb
+         +doOz/v9yYQKeWYjhM/+c4tkY73VXl2pL5AyNWRZLSFWDlmeBST/srZDgYQJG1c8q/cC
+         q4XMNV1KY8o1R0b8nUd//VO7989UKDXSxtbtvq/LwHrJcs7YtOFSGh8a6c/dVrOSHZ7P
+         jmWf7aq+9zCRlYNkRsDuiJ8bFtrqOYP2k6a+S/K2uUR3aNDpJvdxhGnRpJNOAi7J1Bzd
+         4gTw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793648432; x=1794253232; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=VZ9FN4F2voOGS+anACp0/i7FTxMbQeDSoQF3jtjms9U=;
-        b=ug5g4pjl/niIcZ4j9+qKnzEfw6e2Z6l8D1UHhvoDIq3ZkRpUufc6F/IeDNuv7k0Ozr
-         b/hCs+L8pdiYJNckHWxeAwQAn+saNBXZ/kQYUc+SEgQn40q50wTlzo4DmDafhexuzo21
-         7igSTDSZxqdGDl+Op/ur9TrUnJ3fEAQVJ/5ZkFF7cKn1bT2B7dNQgQ0momev2zb2nGTl
-         9YkAGB0pZ/VHD/qBOysnmGMkIzb+Wu778yc08Pu7gPgoJDtQEvsYXX8zPo1K/JDCXxR1
-         gribiygEC7XOKgJhCHDNFukjcYD2SWZi6jRpDAJUPOVnJ8eIKKtjLawPG5+9+xamYI11
-         V5sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793648432; x=1794253232;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1793648883; x=1794253683; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VZ9FN4F2voOGS+anACp0/i7FTxMbQeDSoQF3jtjms9U=;
-        b=GXSYcJWgRO4J5o9o+hecVAK8kHYOomiUlnCJCjI5Ipalv3mpi508o0bd/MiKYjmNfZ
-         OegY3OHbSiJkEVq6babV84r3TLsZlMpubTyeqtuRZI2z2PbHraf3Kw7b0D36aBSen+2d
-         5qLKofjTUuZS08spOHrQeS4CIKhPPulvoX51hlB2m+tHyLfPi5LEYwf2O00auNrKZ8pZ
-         fgwP9whAhI4eWIKqa/KbdhobYCyttZN7CUPZhQkmk+5jWu+7JkZbb0Oyg/Zp0g6DV7LZ
-         qVpU1cRYFrgppkVI1p+VvGSdSC86tCqL6Icxve6CTBZM5BvhKyXJop7NzKeLEEnIH0cV
-         ZT1A==
-X-Gm-Message-State: APuU4Z8RlyNOaPQ63ufIgAGGvC0FMpB410B1kfwLSjzmMT9chOpsn14Z
-	ETX/t2wZYkvMAOmP3yS/MSVb9OAO9z02/fTReyCIkw9m1eoO7kHy3mp7551U4XZq
-X-Gm-Gg: AYBFou0ra6uDgwH7EHCZEwEFO7glPU8Jcb5DQbTRKqfZgqgVEYVKjertm4gJUz9cIcP
-	qPiiIJb7pPDvfsVglGDPj7GkUT421LFzMMmLzNoiPxD/7fXMWohWM6zEvkrF9eohoLuChsP11g2
-	PoSsu8RE/TUKKezx3LjqFF0K46FBKlPU6SWfEYV697G1zTRIwQfBOr3pVddUYh3BjStzQmElF/x
-	bgy9R+NFjhoZ9VyrlRN/SIyBaF9nTYnLK5AWR9IFwCJHwcgHjeKZhK28MoM6kH8PHJL1Pe0mEQm
-	9tdRchayb3Tq1Cywm4FwuoBTd5/Uq5err3rlqKL2f1WKbLJIOx3vNyToO1xl7ZvUnTlo62krXf9
-	2ML+Io3xCAHF2zt++eVTC3otgVrclqWwhJDd1iPoSY7eeNm4mC7yDmBZ+pQhnCL+1BwcCVcgpQs
-	M5Dfyc5yLLMcg+37OzLGC2uABcaxJksQuGHvqYW3wsD76W2W5p80tTHylZqqsh77dCBJw4SiM14
-	s6oPgp/1f741kDf6VY9y525X8wyhhU9tRej6PluI5QxpDqhaPzcZIxIOX5ALOUA6qrQg7pIT0aB
-	Kyb/qfhtPfStueiJ+XTu0dsYgrErYOON
-X-Received: by 2002:a05:6214:2585:b0:91c:797f:1210 with SMTP id 6a1803df08f44-91ca4c0357cmr176830086d6.55.1793648431494;
-        Mon, 02 Nov 2026 11:40:31 -0800 (PST)
-Received: from [127.0.0.1] ([172.214.47.41])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca7f254acsm99770266d6.11.2026.11.02.11.40.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2026 11:40:31 -0800 (PST)
-Message-Id: <pull.2288.v4.git.1793648430.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2288.git.1793435149942.gitgitgadget@gmail.com>
-References: <pull.2288.git.1793435149942.gitgitgadget@gmail.com>
-From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 02 Nov 2026 19:40:28 +0000
-Subject: [PATCH v4 0/2] [Outreachy PATCH] t4041: use submodule repository for commit abbreviations
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=SqRdue9oPJgtX0JxUG0taojuWqE9Sjammd2Gj7pEL2g=;
+        b=Mh7SbVdSDf+CZJSw97AJ6xmMva6ojHSf6+2CBnq7Y+AqLkfqj3Bigi89/2oqsHiISM
+         huoY4NGJqgC4WnZNO9AA6gVzJM7QrR+xm4NzKEmtj8HCxcIeKcKJ+TQh7150hLMagqKB
+         8Fi7hWBlVTy7THTZ+RLX4FeNSc2LyVD9vCSNwCMJgSOWluQBCozm17CXqmtPNw19ib+B
+         OAbFXCDgnEnVk0WLkGWNLMLmZH4DQHwqZRArz0kVOyX377OZebD0ynxCYhhBVelp/NU3
+         Wy69Am2Wvdk6SoWOTkhuDMlzCKexlJ4XnJHvMdxqKSlzOtc1n3PeS9wktkhV2ixYQagA
+         1n0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793648883; x=1794253683;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=SqRdue9oPJgtX0JxUG0taojuWqE9Sjammd2Gj7pEL2g=;
+        b=lOB/VvpuRjp0LbM40PpjkA1nEq8wZli4n3DKbqNxPZ5UA7el9DqVeAxATEPskX2L8w
+         CIqhrSiFY4Shrhkmz5f0XGEUYRVopvx++uD6KuGdAmwX+aCgQ4E/rpn3iaby+b+eOIAE
+         NG3dljL2uhEWAoabDtWYFq0IWwpE4yTiJGvWee6DXWdOObBFVPme631wZSUV2LJsrAT0
+         gOs4eOxHhUOFRON2j3Y/yxkNIQhOlVUs0FMFiL8ixQBMtalG4VAE0LSMQsjUd8NH/OpT
+         apPXlaFc+txHce6tQv5deHI+984VpUfO/sRF7tPhTzD8FwxOgYFUn2tKVKxKLIjrDNKY
+         +LSQ==
+X-Gm-Message-State: AFq9FYIyEi2cfHuOskMoEFaooB+HUaIRlrQyiZGpxMz2HXERrJeQBpZ1
+	IBpyP7uZMErCKET8XN5C5tVsS5BS+e6ekmHdNI3s4FYdhWdFk3qWvBSU4/TzveZ+TjRy3yeIoaF
+	RYZgEJmXYD/RKPo7+z1ntM1b9uGEWs1gB+L9E
+X-Gm-Gg: AYBFou1KTiAHtpJlkb5RMcR8COu6GOouK+fHp0lTCyv6OKS2qDBIUmUd/h2N/eWMdhH
+	fcZ67IerVIsAqd1YDlDuiQX+0LLD1A8I+olSiwZPKm7EY+ch6uJTe3rshL9oKSRYqsMQVsGOquf
+	Wk/Em3GBsWkSm0e4f2mxqE2/8mttv1bD1Hjn+P1gktUgdlfJqlDFK3LIPL2lilXx/Rg87qbS8Fs
+	MQBce6UidiCqwLPLCZmXYvdVpOl9QxuTtHqJk16EC9g+ysh8XJeKUh4fONGqUL2RmqT9qYewM/J
+	qhBokU1OTFESIjCQjJv1VMBhry474r0D++gDZ/0BjpWN+ZytddYhE6h7+p538O23m2Vx4fQfGpI
+	tbjHiOMFsMDZZ6uWs+hPV7nNmolMK+wPbVh4=
+X-Received: by 2002:a05:6820:4d02:b0:703:6903:75f5 with SMTP id
+ 006d021491bc7-714ddf5e83emr7425726eaf.39.1793648882877; Mon, 02 Nov 2026
+ 11:48:02 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,28 +102,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>
+References: <20261022212903.177261-1-andy.koppe@gmail.com> <20261101230326.3675597-1-andy.koppe@gmail.com>
+ <840bc117-75e9-4d63-882e-3831156871a3@app.fastmail.com>
+In-Reply-To: <840bc117-75e9-4d63-882e-3831156871a3@app.fastmail.com>
+From: Andy Koppe <andy.koppe@gmail.com>
+Date: Mon, 2 Nov 2026 19:47:48 +0000
+X-Gm-Features: AclHuK9Z-yYKHXe6gS3KzaSyjzb1qLqIK2NL-Sd-IJQp4LGNI705G5U2eh9coek
+Message-ID: <CAHWeT-ZdZ0o=_rPWFPcXqCyc-WV=fzmKVRVx2LetfQzgYkKO0w@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] root refs vs pseudorefs
+To: Julia Evans <julia@jvns.ca>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Srujith A Poojary (2):
-  submodule: use the submodule repository to abbreviate commits
-  t4041: test SHA-256 submodule abbreviations
+On Mon, 2 Nov 2026 at 18:20, Julia Evans wrote:
+> On Sun, Nov 1, 2026, at 6:03 PM, Andy Koppe wrote:
 
- submodule.c                      |  5 +++--
- t/t4041-diff-submodule-option.sh | 23 +++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 2 deletions(-)
+> >     ++[[root-refs]]
+> >     ++root refs::
+> >     ++    Git may also create references other than `HEAD` at the root
+> > of the
+> >     ++    hierarchy, for example `ORIG_HEAD` or `REBASE_HEAD`.
+> >     ++
+> >     ++[[pseudorefs]]
+> >     ++pseudorefs::
+> >     ++    linkgit:git-fetch[1] and linkgit:git-merge[1] create the
+> > so-called
+> >     ++    pseudorefs `FETCH_HEAD` and `MERGE_HEAD`. They are not
+> > references as
+> >     ++    such, as they are not stored in the same way, but they can
+> > nevertheless
+>
+> When I look at my .git directory during a merge conflict, I see these
+> files:
+>
+> $ ls .git | grep HEAD
+> FETCH_HEAD
+> HEAD
+> MERGE_HEAD
+> ORIG_HEAD
+>
+> From the above, it sounds like ORIG_HEAD is a "root ref" and
+> MERGE_HEAD is a "pseudoref", but naively it does look like
+> they're stored in the same way. What's the difference?
 
+Good question. The differences certainly aren't obvious, and they
+barely matter to users.
 
-base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2288%2Fpoojarysrujith%2Fmicroproject-git-libification-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2288/poojarysrujith/microproject-git-libification-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/2288
+Root refs:
+- Can be stored in reftables instead of files in .git.
+- Contain either a single hash or a single symbolic ref such as 'ref:
+refs/heads/main'.
+- Can be modified with 'git update-ref' (generally a bad idea for
+built-in root refs) and listed with 'git for-each-ref' and similar
+commands.
 
-Range-diff vs v3:
+Pseudorefs:
+- Are always stored as files in .git.
+- May contain multiple hashes, and in the case of FETCH_HEAD, carry
+additional information about where each hash came from.
+- Are only modified by the commands they serve (i.e. fetch, merge and
+pull) and can't be listed.
 
- 1:  a8c54b9292 = 1:  a8c54b9292 submodule: use the submodule repository to abbreviate commits
- -:  ---------- > 2:  99a1234544 t4041: test SHA-256 submodule abbreviations
-
--- 
-gitgitgadget
+The big thing they have in common, apart from the *_HEAD names, is
+that you can pass both types to commands such as 'git log', 'git diff'
+or 'git checkout' to refer to a commit or tree, just like any ref
+under refs/.
