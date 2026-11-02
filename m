@@ -1,99 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793658010;
-	b=OGyOoFdUZnjc6RSgf4vZFbasI7jHcL/fU6YxZ47924sMfxax+eltZjXjEc9c0WX5VJhP
-	 iBg7QVdZopjIOo3kqog2bD/01StpuDB40eLQbiA870GGGRfpdw4ws8kOcpd+30MlScLv/
-	 WhpgfRwfG45w17d9FOk7sbU4UnbBSicXsvXoVc3iGWXLmLsJwPUgKs715+kKjVzYMSQzK
-	 Q96rEkpdyqCkedG4/VruA1XeCL7sl/hVpdG78330W/mPJHzDSeYooy4cOAxmDl/D78KLH
-	 cxJEAMuo9a5Kyd3o2X+J4Tuy9ARQHMsIIyBI0W4X+YI+rq4qfkQxgzTmEAWrT2t06bA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793658010;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.176
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793658744;
+	b=wnCNmRbIHiv9nodcfxNKl1oWwxugU6Tw6GNOdrRMLsMGJR644utMXh/Y/PFgv4NQOAfs
+	 zRdX3utGXSJzmCrD+XXLJfBLEOUTpJbI5bwmnaQCWnnTr9iU71/9Q0SYbXZ5Vi4Ea8N4L
+	 prI5D5iM8FO3SGU0cEQkTMJ5LH8jnY1MBlFJpQFe++Ui4Vo2c0hAA2TKBNfacCUqvq3Wm
+	 3PJXEWlFOmhq67qZhSo2VFD4oH5aq3k3QiISv1kK8DnthVI4Bbfov2Qf2C6LdBqBeZoHK
+	 RPn+w6qmkk+LWkvMBvjTaCRqh4LpFzWdFw7fcgbEK0vRdlei2DZfw127JnkV85/zXgg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793658744;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=k8MUG5oj8u8JQdfZ7rrhGRwlvxegorRYCeiucYhJn9M=;
-	b=fLsAATmJZo+Rtw7g3rGgqCsLAnz5eOVPbWXFdCDxcI8vebOpCpGJloh+WTfGrasWePM5
-	 ITpZZiM9xXoFgKlkyLA/lBscAk+0oXpEIFIO5gaohSI/hO/foEHuSVGHE7WlTLWpSqwBf
-	 4OvdqJUcbOGc0gb/7NnBtidcS0/AUBV2Mk3ZdkVFCz08igjVDqCEOGhgSbsD3FIU2OUbp
-	 BICTzU+7VtCmPdwx6LW5kusjbT86kyKQ/Ov8znDxlVioxMLYH2DPAHmEt4hCHDvZEPCPD
-	 BQG43+vmD8N2xnTmwGRaReikwCrpfDvcVJofN23m+wHEPr/KuMh+izvdaoNcWhcxjoQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=qQS5/cXNdBgcAPgXcoDIsdMuZRkpfbfkunYbHgb7iwY=;
+	b=ev8x4UT0xDoa1mPNiDe6ujDWzWImXiUQYzgtscrykxTnnnaFpDiEnTtaCUOS3tNI8m8n
+	 HVQqvIL7SmcIcxwti/OPDsL0CvJQWbVa68ylHEQuHL3+Q++ip+o7oJElTBE8UjG5O7mll
+	 7fMgbCQgnnTvqmg7dajtJNpo+2rSpX6CqJCMIry8L2DeCLQ7txdGMsRJ/zIgyx/7cLZco
+	 bKvvxr6aE0NmddHlewueaRiX2eBBryrGWvyO8pbsxZVhcYTlOnCnFy9So5O20kf3sjPpH
+	 qxSxdo8zDZnT6mgNv1FJtQz9JLc512rG9e1eV3/uiR4mdoJRhxxvCLYyzfUsbszbMnA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OrO2HTKG;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.51
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Bk67Xjhd;
+	arc=none smtp.remote-ip=209.85.167.176
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929BC606A327
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 22:20:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 929BC606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AC2606A324
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 22:32:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7AC2606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OrO2HTKG
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-43bf9548df4so3383039fac.0
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 14:20:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793658008; cv=none;
-        d=google.com; s=arc-20260327;
-        b=sy3kjj364UtetJbYDW9ezg++If/E/ZAGX88dmvKjGnPppm+rEES8JXwyXSXTj43JeO
-         tHERVypbDFLtC2aaeIIM22ydH5zWVNb01F/ijvRmysuCTT4eN1TSe4Xc7XmolBcSOzKc
-         aSWVJLDRnDDIU+kLF2JWEl698myecrWtxkMBAgfK9i8mtovYwHMxAi5F2893Abt6WuXl
-         YfP549gkfwavsd5LLUdq4HMZHgwmauHb/etOQ+LVRI0Zd8HokDLNUvaMYP8yFDazaJNv
-         aT3DvkdH4BmsPnuMqax9Oem5MvMTRezYxF5iWIoaFrUMdYXm5gY10s9qqwPscMuaFPg2
-         sKbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=k8MUG5oj8u8JQdfZ7rrhGRwlvxegorRYCeiucYhJn9M=;
-        fh=5PFJeBr7a+nhkSJKkBd2FkDf8aw85ThIkZJzXtcSCYg=;
-        b=q661KWzSuL+Hps974NzmB/VkSiHhhv8+v5j8w7d0F/oH72nAo85dvijpzxyU2kcKvN
-         xOyFovtizyr98sv8+Jp2zrzMNuW0hcS/LmCBGHKJLwVY4Hx2SYuyoicU4I+nJaXsjkwR
-         rpYeIW7r5v021zf1MyX3qg/TmlZkUFpdkX1FLNYOHSqsjNzDOPqX/sjFe8SUassxuKOO
-         XFdjmLcPm7CXRIM+yHAYf0qTNVeuc1yNx9jO0ZY+xmGT7qczQukxWqX+iG6RRF6hytf5
-         rwQtKTDe3jKi5FQnnzjEXu/rT+x4Bbb52jWHuK5w6ZOOG5LzInfbatfyP5pixHzkiivS
-         rD4w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Bk67Xjhd
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-4e4a4d77e5bso76283b6e.0
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 14:32:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793658008; x=1794262808; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20260707; t=1793658743; x=1794263543; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=k8MUG5oj8u8JQdfZ7rrhGRwlvxegorRYCeiucYhJn9M=;
-        b=OrO2HTKGM9w1LKqCtLw1sVu3a7tl/7ZRF3ie4cbrs/chPEKqyrf0C8+R2IWj/Sb1a3
-         dP7MjNdNVE/X1MK3oO2Bnn9Fhx/7mCoamAlknSJJR+lgHlAop71Ywlj5SHfxabL3iO5j
-         v9tjz03UDx8spRUIPog0m2GP8LkMlaMwmwY90HGxEvr6pOEcK/zlXzFrVoZEr/BZvzoB
-         mimof7yjL007qHCS6QCazsaS/q19U08Xf5dL0mn7ovBTldYj8dk2YQhA73BF5OUK2GAY
-         EJhjUbnD5jwR0fnQqqPjuT8iDQ3AnMmreJ6YBQmpOzS4FrpFm1ASPI2Hb46HsQh2yEcS
-         JbiA==
+        bh=qQS5/cXNdBgcAPgXcoDIsdMuZRkpfbfkunYbHgb7iwY=;
+        b=Bk67XjhdFTa5VEDGVU+0VhgI1yIEhm8wz72u/ZQIJ74NEGsNaDWkkbOKCUGUPMRZLt
+         E7Jcm4EaLfaCtv0eHgxq9E0iZpGuPpHce7br2Oo/VKWuYMBgOua7Xv7bZftFM/lGGqfY
+         WXaJ7damzgEy9CCtw61IE2NHEPuBbCADGNoBiSIkqGPnSPt18nZ74/6mCloJHraZtHd1
+         1nLRiRXT8HTyjom25lkdCAcnA4V3RWG5Be7XhBZ71mS5r+qiDD5Sa1VaE1gss27nDpG4
+         tfXLxIaEPxrEAzgM7EEuswGW+PCEC7BBlonThfhKjvTRCjkLvdHm03M3grTE9jw8BCfJ
+         oL3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793658008; x=1794262808;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1793658743; x=1794263543;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=k8MUG5oj8u8JQdfZ7rrhGRwlvxegorRYCeiucYhJn9M=;
-        b=Y6DmD+YAZZvFfYb4j3LQAvT/SoXp1eSM9QEIT8DbGDf3kFM3vliP3npxX2LNgHS0w2
-         XAnm4Gt7lrfgp74p+Ya9vssA7rck881OTqliaxnLr8eulc7AO2yPiY8wh2dUl/8q4rfP
-         n4iT20U4Gv2vJt9ALQ38yt78mBoPT6HBmLY3QjcM+W3rdsMZt+Bkh888OkPCwI3wOLwM
-         ZErkQtsiSPTQaOf0U7pZ3DsIYyAECohP6A/fhCSFrOK3CqB0K7Z2fd89bgD/oIOlE/jQ
-         0p66hjMEd2BRybza4qcV69+ctEOnWvxuSg6dtnLaA/o7VmlLTnJFGmz2oQkjVb/vZEFb
-         mpWw==
-X-Gm-Message-State: AFq9FYKokMpypQOtJ4p/5oyypeWaD3XtRW4NegsqqXHl5Ty6xeO8K3Ag
-	YDf4mq0ne8ocjuGBDNhw+BYbIjh7PArwmN88Sw7tXimX1qdhb/AS6W9C4YgHBxt2rKowS5vVf5b
-	TrJWSKLJK7k2WyatxbMEB7iNYtr+IR808Lqa8
-X-Gm-Gg: AYBFou2p7IKgOLND9ZQNs+jOxNqya1rzWczRcjLG51NR6JZPLQzdLKkh/DpBQ4KGw19
-	DPFTtTXAxuzidMeToRqcs8igy09TVyf22rEPyepQ6svLBMti+VxxvdiaG0bSjKOk86Koy8EgsaX
-	NwxSJAcQE/YEDGQLGcxnF7wnBMCWwt8PU/vLtXM49mBscFebOxwvtRlEIzgHkiwwEmXJzhALaZT
-	vXygb8QLhewgSmKgg8QncvCUcocqWCR7UVzc6BNcKQ+iuEYVDz52mUQxbHJSAIBp/Z+EQmwgAVu
-	kTOpQ6LN2bOTix+yJ64Kf9vwJz7uisaUOjcR2E1+XjPCNILIy5gi5WZ3K4nW7HBeU08GuruHy0n
-	aMCUXC4G2iGZv95jNY0FdFFrZxAk0qFFmXcyfNfC+K+q5MQF7pndHCA/RqQ==
-X-Received: by 2002:a05:6870:3341:b0:49d:e65c:34e4 with SMTP id
- 586e51a60fabf-4a9076c4fcbmr7522399fac.24.1793658008393; Mon, 02 Nov 2026
- 14:20:08 -0800 (PST)
+        bh=qQS5/cXNdBgcAPgXcoDIsdMuZRkpfbfkunYbHgb7iwY=;
+        b=pTHeRXUDbIXexUFEvLRSKg+VNLAaSJve/cBjddJwNbdlhe+SVpdNW7WMCTh+G9ef1w
+         FhqQOfjnxDzX8aZzYauf7rv8mK5mf4YjFQTxckV3a3PZVDW5vgt/0Lzbus5X7dfyWwRO
+         z8gUvtkb1rjO+ZqIqQra1lfzPC8cppeCmDbZ7xyzQNPz6XmuPmVQdZ+Wto0qAlOMevSC
+         fBJXcyyyVWovwlatY/hAooJ4wtPgpojriz3F0ZkhaysXwRD8XFrvJmtvx5OCOjxIe9fh
+         ZBL81QifhfW7qmX8rsRagB0Z4oELq1QTY1PWhEp23Zfx20FP94nueDpMUj7lGbU5tEqM
+         FJ6g==
+X-Gm-Message-State: AFq9FYKnmsPKdgKE/1QW+roXL5YWW9ck/KLLhQBhqVNvuFvbWHTimXnJ
+	huqZ4c/KJez9ngsnXNMedG0XnzqAkz7zFAGvjSs4FOkvLZkl1CD08SYHW2phfA==
+X-Gm-Gg: AYBFou0Q8mA/ccoRZ+28V1RAdHOAcwUAJnUVhoSxMgRhqBTmrD+4oIP/2fLB1oRxnUX
+	6EpdZ6Olr/IEZR0M0HGPQO8x97zcdiIQ6cz81Zkaryk/txXUI0qsAhqcbJjxJ4lR0V+dwggpU1v
+	7e4RdM7PQ77osRf0YmBkw2m65Ou8RnhnRAVgsOZtL2ipxABNC9TEBzW/UjlnLJs1atQpGsy1LFx
+	U6UaiQe12zIHgTpjonDwMcn33FZGmimhs05wtPqht89nRzIhYp1nhCNkyFpNSNF1u1xyFlT6nTj
+	nesNYwYo+SUq4GU0gP4JNIKgbdEeSkYAA6LwaEfjuKICfanbGML5RsO5+bGm1ctw5Aqrqd7opER
+	RmTMzEFujSUfPGqkHE347V4rPAzihaSSrOtiFMIpAj7bpOAp3rmsbHb0vAS3DhLgeGyhg0+Btsh
+	rjxSwoadNlCEto0fYK0UmBfiMtEKy8qlvubBZHRmeZGZKCX5d0tHSi66PuPXimF90hed4BsHjlj
+	1TvGsUY2JfiJIqf+NfKrCjbfAB+BufrhDRlqi81IuUGvtAJsPBFcoNUzX0BXH4fCJl/APgIuXXJ
+	UQYg0OxFACLoPgmg6pObEKSR/B6FOuQVJvNWnbyjhtqqg1rcopd7uz7J3TdUuuvffeLGz7KTGg=
+	=
+X-Received: by 2002:a05:6809:297:10b0:564:3e9e:b4b1 with SMTP id 5614622812f47-5643e9ebc20mr1805647b6e.18.1793658742569;
+        Mon, 02 Nov 2026 14:32:22 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-5640fc49923sm8786598b6e.1.2026.11.02.14.32.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 14:32:10 -0800 (PST)
+Date: Mon, 2 Nov 2026 16:32:02 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org, lucasseikioshiro@gmail.com, gitster@pobox.com
+Subject: Re: [GSoC Patch v7 4/8] repo: add path.hooks with absolute and
+ relative suffixes
+Message-ID: <aukHlEd5udC1gLYZ@denethor>
+References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+ <20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
+ <20260927114420.59724-5-jayatheerthkulkarni2005@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,75 +98,124 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022212903.177261-1-andy.koppe@gmail.com> <20261101230326.3675597-1-andy.koppe@gmail.com>
- <840bc117-75e9-4d63-882e-3831156871a3@app.fastmail.com> <CAHWeT-ZdZ0o=_rPWFPcXqCyc-WV=fzmKVRVx2LetfQzgYkKO0w@mail.gmail.com>
- <f194e2af-cffc-4867-9069-7070c86785da@app.fastmail.com>
-In-Reply-To: <f194e2af-cffc-4867-9069-7070c86785da@app.fastmail.com>
-From: Andy Koppe <andy.koppe@gmail.com>
-Date: Mon, 2 Nov 2026 22:19:53 +0000
-X-Gm-Features: AclHuK9xtAYoh_MKRKam_aUUGDXiybwiWk6MVe-DqSK8UHKRfe-PIJxOHMaMqXM
-Message-ID: <CAHWeT-YSK3xFA=Hztr3Uj5UW=L9JcC_0iOa5pUG-WGCpwng9vw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] root refs vs pseudorefs
-To: Julia Evans <julia@jvns.ca>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260927114420.59724-5-jayatheerthkulkarni2005@gmail.com>
 
-On Mon, 2 Nov 2026 at 21:01, Julia Evans wrote:
-> On Mon, Nov 2, 2026, at 2:47 PM, Andy Koppe wrote:
-> > Root refs:
-> > - Can be stored in reftables instead of files in .git.
-> > - Contain either a single hash or a single symbolic ref such as 'ref:
-> > refs/heads/main'.
-> > - Can be modified with 'git update-ref' (generally a bad idea for
-> > built-in root refs) and listed with 'git for-each-ref' and similar
-> > commands.
-> >
-> > Pseudorefs:
-> > - Are always stored as files in .git.
-> > - May contain multiple hashes, and in the case of FETCH_HEAD, carry
-> > additional information about where each hash came from.
-> > - Are only modified by the commands they serve (i.e. fetch, merge and
-> > pull) and can't be listed.
-> >
-> > The big thing they have in common, apart from the *_HEAD names, is
-> > that you can pass both types to commands such as 'git log', 'git diff'
-> > or 'git checkout' to refer to a commit or tree, just like any ref
-> > under refs/.
->
-> That=E2=80=99s very helpful. I think it would make sense to include
-> =E2=80=9Cmay contain multiple hashes=E2=80=9D at least, that on its own
-> makes it very clear what the difference is.
->
-> My impression is that FETCH_HEAD specifically is a
-> relatively popular pseudoref and folks would be interested to
-> know that it can contain multiple hashes.
->
-> If a pseudoref contains multiple hashes and you pass it to
-> a command, will the command use the first hash?
->
-> Also are FETCH_HEAD and MERGE_HEAD the only
-> pseudorefs?
+On 26/09/27 05:14PM, K Jayatheerth wrote:
+> Hooks are an integral part of a repository's configuration and are
+> commonly used by tooling to automate repository-specific workflows.
+> Currently, scripts typically retrieve the hooks directory by invoking
+> `git rev-parse --git-path hooks`.
+> 
+> Introduce `path.hooks.absolute` and `path.hooks.relative` keys to
+> `git repo info`. This exposes the hooks directory as a scriptable
+> config-like key using standard format rules, allowing scripts to
+> retrieve it through the same interface as other repository path
+> information.
+> 
+> Mentored-by: Justin Tobler <jltobler@gmail.com>
+> Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> ---
+>  Documentation/git-repo.adoc |  9 +++++++++
+>  builtin/repo.c              | 22 ++++++++++++++++++++++
+>  t/t1900-repo-info.sh        | 28 ++++++++++++++++++++++++++--
+>  3 files changed, 57 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> index e524a07f53..20836cf8f6 100644
+> --- a/Documentation/git-repo.adoc
+> +++ b/Documentation/git-repo.adoc
+> @@ -119,6 +119,15 @@ values that they return:
+>  `path.gitdir.relative`::
+>  	The path to the Git repository directory relative to the current working directory.
+>  
+> +`path.hooks.absolute`::
+> +	The canonical absolute path to the repository's hooks directory.
+> +	Respects the `core.hooksPath` configuration. If `core.hooksPath` is
+> +	set to `/dev/null`, that value is returned unchanged.
+> +
+> +`path.hooks.relative`::
+> +	The path to the repository's hooks directory relative to the current
+> +	working directory. Respects the `core.hooksPath` configuration.
 
-I think the pseudoref glossary entry covers these questions. As it
-appears in 'man' after v2:
+So if a repository has `core.hooksPath` set to "/dev/null", the relative
+path output here would be something like "../../../../dev/null". I
+recognize that this matches the current behavior:
 
-pseudoref
-    A name that can be used like a ref to refer to an object, but that
-    is not stored in the same way as refs. For example, pseudorefs can
-    be passed to git-log(1) or git-diff(1), but they cannot be written
-    by git-update-ref(1) or listed by git-for-each-ref(1).
+  $ git -c core.hooksPath=/dev/null rev-parse --path-format=relative --git-path hooks
+  ../../../../dev/null
 
-    The following pseudorefs are known to Git:
+...but I'm still not really convinced that is is a behavior we would
+want to carry over as it makes it harder to users to figure out when
+hooks are disabled.
 
-    =E2=80=A2   FETCH_HEAD is written by git-fetch(1) or git-pull(1). It ma=
-y
-        refer to multiple object IDs. Each object ID is annotated with
-        metadata indicating where it was fetched from and its fetch
-        status.
+I would suggest we print the "/dev/null" here even when the relative
+path is requested and document the behavior.
 
-    =E2=80=A2   MERGE_HEAD is written by git-merge(1) when resolving merge
-        conflicts. It contains all commit IDs which are being merged.
+[snip]
+> diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+> index eec576a1d9..1da5db4942 100755
+> --- a/t/t1900-repo-info.sh
+> +++ b/t/t1900-repo-info.sh
+> @@ -174,7 +174,11 @@ test_repo_info_path () {
+>  			cd repo/sub &&
+>  			ROOT="$(test-tool path-utils real_path ..)" && export ROOT &&
+>  			eval "$init_command" &&
+> -			echo "path.$field_name.absolute=$ROOT/$expected_dir" >expect &&
+> +			case "$expected_dir" in
+> +			/*) EXPECT_ABS="$expected_dir" ;;
+> +			*) EXPECT_ABS="$ROOT/$expected_dir" ;;
+> +			esac &&
+> +			echo "path.$field_name.absolute=$EXPECT_ABS" >expect &&
+>  			git repo info "path.$field_name.absolute" >actual &&
+>  			test_cmp expect actual
+>  		)
+> @@ -188,7 +192,11 @@ test_repo_info_path () {
+>  			cd repo/sub &&
+>  			ROOT="$(test-tool path-utils real_path ..)" && export ROOT &&
+>  			eval "$init_command" &&
+> -			echo "path.$field_name.relative=../$expected_dir" >expect &&
+> +			case "$expected_dir" in
+> +			/*) EXPECT_REL="$(test-tool path-utils relative_path "$expected_dir" "$PWD")" ;;
+> +			*) EXPECT_REL="../$expected_dir" ;;
+> +			esac &&
+> +			echo "path.$field_name.relative=$EXPECT_REL" >expect &&
+>  			git repo info "path.$field_name.relative" >actual &&
+>  			test_cmp expect actual
+>  		)
 
-    When a pseudoref contains more than one object ID, using it to
-    refer to an object yields the first one.
+From what I can gather, the code changes to this test helper is really
+only required for the "/dev/null" test case. IMO, this helper function
+has now become quite unwieldy and rather difficult to parse.
+
+I think we would be better off writing the "/dev/null" test case by hand.
+
+> @@ -213,6 +221,22 @@ test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
+>  	'.git' \
+>  	'GIT_DIR="../.git" && export GIT_DIR'
+>  
+> +test_repo_info_path 'hooks standard' 'hooks' '.git/hooks'
+> +
+> +test_repo_info_path 'hooks with core.hooksPath override' 'hooks' \
+> +	'custom-hooks' \
+> +	'git config core.hooksPath "$ROOT/custom-hooks" && mkdir -p "$ROOT/custom-hooks"'
+> +
+> +# /dev/null is not a real, canonicalizable filesystem path on Windows,
+> +# so path resolution for core.hooksPath=/dev/null cannot be expected to
+> +# produce a literal "/dev/null" the way it does on POSIX systems.
+> +if ! test_have_prereq MINGW
+> +then
+> +	test_repo_info_path 'hooks with core.hooksPath=/dev/null' 'hooks' \
+> +		'/dev/null' \
+> +		'git config core.hooksPath /dev/null'
+> +fi
+
+I'm not quite sure I follow here. Are we saying that the git-repo-info
+command won't work on windows if the hooks are set to "/dev/null"? Or is
+it just some issue with how the test is written? If its the latter,
+maybe this is something we can work around if the test is written
+without the use of the `test_repo_info_path` helper?
+
+-Justin
