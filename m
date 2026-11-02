@@ -1,100 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.49
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793654185;
-	b=AxKKk7pURsSIz91aUFkVVNpyfMwHrxESgVWja2dp8X54ub7FVEob4s23rGVqzXMGzQKJ
-	 gA1XgWMqS9fscTMwHSjA01o4mbKLAjkpuQZvMNi6PPCEP2SEaZP4/7sx01W0DryANCSBl
-	 28vAMLIVKMj8cPAqKtvCjvRiwiFH9ITVh2fcyWpEbd9oP9/JRhEKSStCDOtNpH/96uTMy
-	 MOmaSM6zsoqNJcaATqeov3F3Q0Cc4ukXsiL5/C9yNs59PvV7Nd2dmG0cqfV2bt+1ePxaC
-	 QvAyFvsUelT1jxne4xKAx8ASlFjOZv2UPCiFgbJ6prx3k22k9LeVAGSUtO47j1FYkcw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793654185;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.45
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793655381;
+	b=eFXDH9otuYyXA09uBdMRt2SMSx6vsU6uWxSuhMhqyzVA3UP3cd5ZIoEQakwgzLccSKYd
+	 JSOt2eng7sMQp+8N1hW27UI2yGJua6v3+lND4XIPOoYYyiXswBofIyl8JUCTY36CfXXWV
+	 /3/7PUc+ZdaYWcmmOq6Wm+RzNfGH3dQa6o7Zj2rItnh20pwdHGEVDl4wEtmCDg+QjlQ6V
+	 hRJSCK0sbrZMxcccMqa9lhargWV2yBluSYy2FKA2Ec60qks3jgevBV7ay/HPR9dHhD75f
+	 Pd1v4W8fQlj6Etva5LS/tQYpgQAo3XoEbqNPdZWJF/Ydqr2OmeU/ZUWoP6NGAASBycg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793655381;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=M5zK9fpcvKLS0pMD9MQidsxXTseaOTk60QAGtSzSoI0=;
-	b=nCxCzUMevZPQaMwabybat5yheZx00hol0ZpDSumlhKrmpeZyx8ONAwc9iHnAJfp7J54i
-	 LJeqyjQW9imQnsdUrUW2VmiqxBndqOq8hyxCHGvCTjvDO939vKRYaTeN/7uUeKi3O9SUD
-	 kiGeRxWQR1eaH89P6116BIiisEzkNWmlpv55pPVU5GwFwQyElxhQhhzYvSAbSMqiUR1wq
-	 lib9/nBarE61Il0YbPrELQtn7CoG5W0wBHnuHHwXT9zXT7rpKxXa7kNBZEsZMrovNJv1y
-	 u5hLz1cD/rUGfO3qIcwvtuHs9b+ZilPPeDUejyCN5fdo7VkSuk/f51T8yPfFHWPwoMQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=ajNYdMwHzcVR0q4KU+D29W1kSkgSg2E+sePdN9vSqLw=;
+	b=mp2kyZmuRF8bFFoWuWrjdmOuhBZC8c2EZCwEx9tgquFWmtevoP6a+ApT+rFJiBdJDVQ1
+	 t6lZ1+TGb77XdP8XfABCtbGVOK0hn1p/5Ox2FhEhV4pCzgz4+CXDz2FSt7iL3znG3pU24
+	 Qg4Dp+gxURox7rh+iUkhJ0+uX49n6vx4WNdtK8S99gMjr9317H+B9iIQlL4u6VQ+N1QPu
+	 TQygsnWcEVm5SGOYh4gkBtE7aI9I7bR6iPifQQol0jRp+M9QwwEAqIXt96NEexzrE7Igg
+	 WtaArzIW37NK73UcSBrzeoq/FVezVXtd9Z0um7zF0laznNKhDDwBcRpjJu/4GXFO27w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dsRgzlVn;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.49
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Gyi6M6TS;
+	arc=none smtp.remote-ip=209.85.210.45
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C31606A326
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 21:16:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30C31606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA19606A332
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 21:36:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6CA19606A332
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dsRgzlVn
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6b47c1a3c74so4775721a12.3
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 13:16:24 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793654183; cv=none;
-        d=google.com; s=arc-20260327;
-        b=HuoqOmRoc9umBFn1eOdgdA73sCaoWZ+RE/VERmZn5fYaCAmf5QRpvmS+n9dEeLKC1j
-         t8UjJ0+8nLPGR6SoE9Jy12x8OCO9ZgOxCtbGOR0hYN0YwXH/JdFq11uvTch1/VX9lgmG
-         V9XAy+W2PUeBYoQ2ZzfqlRro68qQW2BnlnLNL6qxmY9q5dCrq8HAWTkKaDcC2iEBREzl
-         hadRwtRhfhOe8/UMjrXuvKEneCshlpYKns5ESI88/TiLIOJQp/rUZnzL0kIm8Yx6R3Ft
-         d3m56fzqqGfmj1P+mzCWXQvU90wQYZNfamXRTk6sBTimIh0zIuOvSHDV/ysrzN+Mv5eb
-         BivA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=M5zK9fpcvKLS0pMD9MQidsxXTseaOTk60QAGtSzSoI0=;
-        fh=fPh0ArG6RixwTKfS8u2Cz+si7e3epBc8B9v5WMnviaM=;
-        b=S+oSXmew0izJVxbJJevDPdgf66RD+FK+5UXg9vXBjt5f/rBFQ+bUmTNVxZ7f/2VNdc
-         Keyd2IyUQFdsaTXHZGFbwcAoDWcjY0KerE32YOnwq9pyCb/78xcvavmIF7k+FzYOW8o5
-         H2If71K6OjqD2QaicziPuHgtsVuxJ1MXyxPd2BH4TP5KeO86eNe5e77Dw3P4ifDfmrph
-         qLjNcZZxQuE91ydvK3WL2xl1+gFHldZkdexwCOLsCe+findaK3/L9qkKawsFq/Cc8iXD
-         rAoJ3VSnJ4sQ4QRsPfhkoRBiYSpXUzquLku3pmooQBJwdRBugfILwO/UIJB+Ubm3R7nM
-         TxmQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Gyi6M6TS
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-84d5e56f876so2562985a34.3
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 13:36:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793654183; x=1794258983; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20260707; t=1793655380; x=1794260180; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=M5zK9fpcvKLS0pMD9MQidsxXTseaOTk60QAGtSzSoI0=;
-        b=dsRgzlVnZW95bqA6WG/g4PHKrVpAe1NCrbhJJDXqu4PfEu/CU2aS0GlHGM1u8zGHgn
-         Oj3zNPpQS2woeOFIwvNi1CI+MlBa4PxyikL0An+9o3rFGo5jiy4zR32P0ZfbFb4M2w1M
-         4PsmsVy4JU/LRsggcDhRnG5p909XpB+SLzJxKGUEAQnKxV76EaBUXz2SlGZRB24LbUp/
-         WLLtvYBElloB4nKkYh/Guv8wgcfmQLv42JhxNzsg+xP/R77EHAe83tbj9DMiDeNFcQoU
-         hR8dSqfGbCFnbPQRwC4+g1KFXHLHWFt8a7oc0JLYHikM0m5xtHBeMbJcrJ67Q/FL7+s1
-         DwWA==
+        bh=ajNYdMwHzcVR0q4KU+D29W1kSkgSg2E+sePdN9vSqLw=;
+        b=Gyi6M6TSKo1csM+yfbvWsBHZlvUaMY3DLgswwLl1Z/UYW1a6xm/qwbFT6Enq6eGlut
+         ou0bXxROP/F4FLmEZay1G942eF3WXgKOt91BDxO8aKBbfjgUrb+5h4yo7HcRedd7+cSv
+         SXEiN1BfNymyAalLp0L5u6LE25fpJcHOflNI1++0CsfLD4qXpXKQNSEeU5fUnszMpc62
+         +jRYHnify6St7X2D+55NJQPqv9k7Q9lNvSV/eJC7X0o+UXFUpXH/bLAI0puAh2/oSzZF
+         CJpixmDEuRULqinRWYhQDq4XGB5EEpKAcUKyws2zEDA87IAznKuOX+T7SiDmdEIrQ/bf
+         nVIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793654183; x=1794258983;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1793655380; x=1794260180;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=M5zK9fpcvKLS0pMD9MQidsxXTseaOTk60QAGtSzSoI0=;
-        b=ARK1A4enGRq5PpXWvIDoKX02CAWJ1buS8fWV6XG7cvlv1oGSCCp5PRp9UbQKGV8EJE
-         B3Q4wXasZPEHqlunfyc/72jg6XC0sRdcCI+JIcp89NkRZWZ5qpRKabOgdcx2hJbhk4O8
-         RFHoZt2sWh9XDphykXfOn1t9lQRVAsYVxqYmJjkt+mAnCTygPmn+bQMlankEGtFZmk0i
-         ypp4UgCx+m5gtc6+A3/KBcuqJHi7czcIxa3hyoKWGkq6Kt3M3mn/Xex7t3SnOMOuisMG
-         e0UiX1lmdeMrgPkxdOPXlEoBpVbCAi3eD+vtCvr52T/lEp2USgjHZKUvYdIAFHnheki0
-         efZQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxlQnuYLKR5P2Odso9YANcpZpDF2TML0TOQfRKIURYfScTh2e4cRtyxw/oUEgbvmzp+ozw=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+2oWNARPwxwVxc/BQ2KKLmXue93Go7Mwk4w3KoWwZ+LNoCx3o+
-	dOhCZeZRou93UowZeqdUkXwR4EHh/qQYw/6HDaTA6Koti0YO/rjtBBwbHYaHbN64XTn1JDpHfF2
-	APy1rhDQS03tpWY/4UyUIr1CKrDqL2CwxvhCF
-X-Gm-Gg: AYBFou21dyNGc4jooDLO/z/LiYEUbsZzBapt9YCXGOylbOqQByaT4BkQiA/IeIxwzTj
-	ds8UYWjNqLTIDPJH76k9VuCRfeOaIS/0tsaLTSW+C6tqST3aImK8noxypdQjWe3EzU2r0DrCk/h
-	GbRw4J7WFzCAHZx7zGiQ+BBE6KvLOZhEKz4eEV00ZXDk1I05eHaRxU0mE8WQtPQh4Zqtc3hsG8w
-	ej5Z+ylLyld3alB+NLfEz/NXFTUcIjEJ2VHsO+LSJlPh6ivJPMWxLR+J2q2O4/9Wmwco5y/r8Pi
-	aYRVIkSITA6S91Jr7XZ67wN/tGu6PwdDA+vChPMc+CZREFJhRW/8nZnSoTKBFfghwvPcrvGDpFb
-	nYvYq98joSrSEyFYwfAtC9YZHfzmZoOQXGPU/
-X-Received: by 2002:a05:6402:1e8a:b0:6b1:ef5a:6719 with SMTP id
- 4fb4d7f45d1cf-6b5338aeccemr1027796a12.10.1793654183550; Mon, 02 Nov 2026
- 13:16:23 -0800 (PST)
+        bh=ajNYdMwHzcVR0q4KU+D29W1kSkgSg2E+sePdN9vSqLw=;
+        b=mss74x+mhjIksLSsZ6xmLp8p55xCeoWFXXD5CxvcuwK/e7IDTK6mDmhwSjD82Yhurt
+         Xm/Ahq/ejk2i83ClQtG7bz7CwQQd9xcIcCtX9PV8si2FazlWTEDJdNc7My7ZJaBMsW+p
+         0kChiCjfB1aEv63krulkll9ArsF9wUzkye3yDOYZOjZsgqrS/X8ILJtYbXsFvq9V5Z2c
+         yI85Ad25OrrKM45tYBQ9kToe4WtkzBFR7HWQ1UswwSe9Y19PyNAFgwhH7xMOfqpDflkS
+         L4Zezx5oz2LMrT6QFEuKtLe8Y0nABjKCu+sx0jRNkCygBTgcvYaT8b3xE9OdwjOIu6XI
+         rTIQ==
+X-Gm-Message-State: AFq9FYJ/m1NQ7GrNGJRl6Zx6tdJvYawEk4jlkGxfNvXeuV4wtBt2Ye+D
+	0GiMd3eKgNehk/bVWdfciBgLAy2MFG0P4dCv+0IyX0CyyEXTMSLxz+ok
+X-Gm-Gg: AYBFou067VMMX4WFrjdgkqND4D3SMgTYDxWL3xtg1b3wWHdX1uhprJR4O1oTNcoXtK6
+	d7hzqSC7QqQQpga/mUySL8J7S9vgkRNhv4IkNUBddSOkuC343cqBzWZUBKt/vJJ9M+HUwl7OLXK
+	B63utK43QG3fnl4r2PjKNsuRXmwDI+G7epQC+j4Lh7hSvdz+s4rZwaPKK8vtFLuRsck23Z/VXmw
+	x2uUKGB3DUJ9t//qzfBfbLJBVXFjcujeonYM98gF+GsuzmXeV1u12Cjmlq2xiPeqTva2HIOaZcl
+	yM9btoDfixvioeiHS2BvptZQhdFcdsdQBPTaNotruvhNUzDFBM51HDU4DBicHr/37hqKUCGh5m/
+	/oECUSl0Xde69xZI7NPsCNYIS3hxxY0KmnuS+D510/XTCArhRE5Jwq1XoyYdMW+Sxm1FcMm0jCl
+	8raX3kMNa33CTTyUU1exz38T3eq7f2L462Auzqxw6B56hEju1dPJx6ycL7RnhFe7m4z+1pXIamI
+	sIQWvPhnbAnouNM1cQfRJFs26RpfqYDEgjBY/J1b2LrJYKmUamsDOX8aSJi/A7FaGGItK0wLI+a
+	ayb3vPU9hSOnFLt5Sxfclm9R441kmZCh+EJsfuNg8pAl7wK+YH3dS0Cb4GaT7E900CXxfWwfxQ=
+	=
+X-Received: by 2002:a05:6830:4acb:b0:81c:5aac:798a with SMTP id 46e09a7af769-85d363956eamr9833850a34.13.1793655380309;
+        Mon, 02 Nov 2026 13:36:20 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-85d354f2325sm10258139a34.20.2026.11.02.13.36.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 13:36:19 -0800 (PST)
+Date: Mon, 2 Nov 2026 15:36:15 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org, lucasseikioshiro@gmail.com, gitster@pobox.com
+Subject: Re: [GSoC Patch v7 2/8] submodule: use repository to find
+ superproject
+Message-ID: <auj3hhrRvyX9lus6@denethor>
+References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+ <20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
+ <20260927114420.59724-3-jayatheerthkulkarni2005@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,179 +98,149 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CAHwyqnVtN79Y7SAWb4YFRCqCO6+Jq9-9tZ9Jho4ec8pjVJR00Q@mail.gmail.com>
- <73E9A266-5224-43CC-ABC4-83FBC6B77F13@gmail.com> <CAHwyqnVbgHOvCbXjWAuV7CkXranyBAocfobH8Jerf_96iWzYkA@mail.gmail.com>
-In-Reply-To: <CAHwyqnVbgHOvCbXjWAuV7CkXranyBAocfobH8Jerf_96iWzYkA@mail.gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 2 Nov 2026 22:15:45 +0100
-X-Gm-Features: AclHuK-qMs0k4GOz2l6GpWj0iSUs3bxDChT2TY6HwKTEA5D_IPQUQypSVvc7kHE
-Message-ID: <CAHwyqnWPhgT54M2LL7SxSm0qufSaYDD-gGAJVTdOqaKy-CTA-A@mail.gmail.com>
-Subject: Re: [PATCH v3] range-diff: add --matched-only to skip one-sided commits
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260927114420.59724-3-jayatheerthkulkarni2005@gmail.com>
 
-Well, in this particular case `--left-only` solves it.
+On 26/09/27 05:14PM, K Jayatheerth wrote:
+> `get_superproject_working_tree()` currently uses `xgetcwd()` to
+> determine the repository whose superproject should be checked.
+> 
+> This is incorrect when `--git-dir` points to a repository different
+> from the one associated with the current working directory. In that
+> case, the current working directory may cause the function to return
+> the wrong superproject or an empty result.
 
-So maybe that's enough.
+Ok, so we are not taking into account here that the git dir location
+could be different than the current working directory.
 
+> Pass the `repository` to `get_superproject_working_tree()` so that the
+> superproject is determined from the repository being inspected rather
+> than the current working directory.
 
-Harald
+Makes sense.
 
-On Mon, Nov 2, 2026 at 10:03=E2=80=AFPM Harald Nordgren
-<haraldnordgren@gmail.com> wrote:
->
-> On Mon, Nov 2, 2026 at 5:47=E2=80=AFPM Ben Knoble <ben.knoble@gmail.com> =
-wrote:
-> >
-> >
-> > > Le 2 nov. 2026 =C3=A0 05:11, Harald Nordgren <haraldnordgren@gmail.co=
-m> a =C3=A9crit :
-> > >
-> > > =EF=BB=BFOn Mon, Nov 2, 2026 at 10:21=E2=80=AFAM Junio C Hamano <gits=
-ter@pobox.com> wrote:
-> > >>
-> > >> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > >>
-> > >>> From: Harald Nordgren <haraldnordgren@gmail.com>
-> > >>>
-> > >>> Reviewing a range-diff often means scrolling past commits that were
-> > >>> simply added or dropped, when only the ones that correspond between
-> > >>> the two ranges are of interest.
-> > >>>
-> > >>> --left-only and --right-only already each suppress one of those
-> > >>> one-sided groups, but they are defined as "only show this side" and
-> > >>> so cannot be given together, which is exactly why show_range_diff()
-> > >>> already rejected that combination. Give the "show only the commits
-> > >>> that correspond on both sides" behavior its own name, --matched-onl=
-y,
-> > >>> instead of asking users to reach for a combination that errors out.
-> > >>>
-> > >>> Extend the existing '--left-only'/'--right-only' conflict check to
-> > >>> also reject any combination with --matched-only, since all three
-> > >>> narrow the output in ways that cannot be combined.
-> > >>>
-> > >>> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> > >>> ---
-> > >>>    range-diff: add --matched-only to skip one-sided commits
-> > >>>
-> > >>>    Add git range-diff --matched-only to only show commits that corr=
-espond
-> > >>>    between the two ranges, skipping ones that were only added or on=
-ly
-> > >>>    removed.
-> > >>>
-> > >>>    Changes in v2:
-> > >>>
-> > >>>     * Update docs and commit message.
-> > >>>     * Use die_for_incompatible_opt3.
-> > >>
-> > >> This is more than 6 weeks old and looking at the archive, nobody
-> > >> (including me) was really interested in the topic.  Anybody wants to
-> > >> take a fresh look at the topic?
-> > >>
-> > >> Unless we see some volunteers to give it a review in a few weeks, I
-> > >> will discard the topic out of my tree, as 'seen' has been crowded
-> > >> with topics that have been collecting dust without getting many
-> > >> reviews.
-> > >
-> > > That's a bit sad. I wonder if no one is commenting on it because the
-> > > code is too trivial, meaning nothing that stands out to comment on.
-> > > All it does is allow left_only and right_only to run at the same time=
-,
-> > > and the majority of the new code is tests.
-> > >
-> > >
-> > > Harald
-> >
-> > I just skimmed the v3 message, and I=E2=80=99m missing the motivation.
-> > When looking at a range-diff, why would I want to hide the added/delete=
-d
-> > commits?
-> >
-> > I suppose when rebasing, I might want to not show the dropped
-> > fixup commits or something in a range-diff of @{1}=E2=80=A6, but
-> > I=E2=80=99m having a hard time coming up with another use case.
-> >
-> > Doesn=E2=80=99t mean there aren=E2=80=99t any! [But the patch might get=
- more
-> > and better reviews if it is well motivated?] Anyway, I=E2=80=99d be cur=
-ious
-> > to learn what motivated Harald, as it might be useful to my
-> > own workflows, in which case I might be able to review more.
->
-> For me, it's simple:
->
-> If we take this branch, and I do some other changes, and then rebase
-> against the latest master. Then when I run
->
->     git range-diff
-> pr-git-2401/HaraldNordgren/range-diff-matched-only-v3...range-diff-matche=
-d-only
->
-> I will have to scroll through 311 unrelated commits before I can see
-> what I actually changed. I want those gone.
->
-> ```
->   -:  ---------- > 282:  b2608c4076 t2104: avoid suppressing git's exit c=
-ode
->   -:  ---------- > 283:  5e106cb22b pack-write: make index-pack output
-> comment hash agnostic
->   -:  ---------- > 284:  21bb64feef pack-write: lift and expose
-> index-pack report parsing
->   -:  ---------- > 285:  dfb7f49776 object-file: explicitly write
-> ".keep" lockfile
->   -:  ---------- > 286:  b07099fff9 object-file: write ".keep"
-> lockfiles during transaction commit
->   -:  ---------- > 287:  91ef176b8f branch: strip refs/heads/ from the
-> --set-upstream-to hint
->   -:  ---------- > 288:  8f3d6ad89f checkout: use Q_() for messages with =
-counts
->   -:  ---------- > 289:  7e34d8174d The 8th batch
->   -:  ---------- > 290:  4ec5266711 branch: return an error from
-> setup_tracking()
->   -:  ---------- > 291:  ad74e02417 checkout: finish switching when
-> the tracking config cannot be written
->   -:  ---------- > 292:  d84678b8cf Documentation: describe
-> connectivity checking
->   -:  ---------- > 293:  97998dcfd1 p5413: add perf tests for connectivit=
-y check
->   -:  ---------- > 294:  d6d2d8557c connected: drop dependency on
-> `the_repository`
->   -:  ---------- > 295:  9e0207b50b connected: add
-> transfer.connectivityCheck config
->   -:  ---------- > 296:  43157175b5 connected: add incremental
-> connectivity check via rev-list
->   -:  ---------- > 297:  656be5948a connected: add "auto" connectivity
-> check mode
->   -:  ---------- > 298:  9dba0b87e5 rerere: stop using
-> `the_repository` in `rerere_path()`
->   -:  ---------- > 299:  f62947adf0 rerere: stop using
-> `the_repository` in internal helpers
->   -:  ---------- > 300:  a8b75e8eda rerere: remove redundant calls to
-> `repo_config()`
->   -:  ---------- > 301:  87ab289605 rerere: cache result of
-> `is_rerere_enabled()`
->   -:  ---------- > 302:  4f67f74fc8 rerere: stop using `the_repository`
->   -:  ---------- > 303:  ea54cda7c2 rerere: bundle global state into a st=
-ruct
->   -:  ---------- > 304:  b948c10c8b rerere: get rid of global rerere cach=
-e state
->   -:  ---------- > 305:  c3764d15e6 hook: make hook.<event>.enabled
-> cover the hookdir hook
->   -:  ---------- > 306:  3a7784d0d5 hook: accept .enabled and
-> .parallel given without a value
->   -:  ---------- > 307:  37b3475fb5 The 9th batch
->   -:  ---------- > 308:  8d1b215c01 The 10th batch
->   -:  ---------- > 309:  b9e5cff180 The 11th batch
->   -:  ---------- > 310:  50fe5cc63f The 12th batch
->   -:  ---------- > 311:  ebdc087dc9 The 13th batch
->   1:  ee195c14fc =3D 312:  f01d7e30ef range-diff: add --matched-only to
-> skip one-sided commits
-> ```
->
->
->
-> Harald
+> Mentored-by: Justin Tobler <jltobler@gmail.com>
+> Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> ---
+>  builtin/rev-parse.c        |  2 +-
+>  submodule.c                | 43 +++++++++++++++++++-------------------
+>  submodule.h                |  2 +-
+>  t/t7400-submodule-basic.sh | 19 +++++++++++++++++
+>  4 files changed, 43 insertions(+), 23 deletions(-)
+> 
+> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> index 43693454d5..e1a6da0076 100644
+> --- a/builtin/rev-parse.c
+> +++ b/builtin/rev-parse.c
+> @@ -997,7 +997,7 @@ int cmd_rev_parse(int argc,
+>  			}
+>  			if (!strcmp(arg, "--show-superproject-working-tree")) {
+>  				struct strbuf superproject = STRBUF_INIT;
+> -				if (get_superproject_working_tree(&superproject))
+> +				if (get_superproject_working_tree(the_repository, &superproject))
+>  					print_path(superproject.buf, prefix, format, DEFAULT_UNMODIFIED);
+>  				strbuf_release(&superproject);
+>  				continue;
+> diff --git a/submodule.c b/submodule.c
+> index 6fcb606f7e..4db90ef9b0 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -2610,34 +2610,35 @@ void absorb_git_dir_into_superproject(const char *path,
+>  	absorb_git_dir_into_superproject_recurse(path, super_prefix);
+>  }
+>  
+> -int get_superproject_working_tree(struct strbuf *buf)
+> +int get_superproject_working_tree(struct repository *r, struct strbuf *buf)
+>  {
+>  	struct child_process cp = CHILD_PROCESS_INIT;
+>  	struct strbuf sb = STRBUF_INIT;
+>  	struct strbuf one_up = STRBUF_INIT;
+> -	char *cwd = xgetcwd();
+> +	struct strbuf target_wt = STRBUF_INIT;
+> +	const char *worktree;
+>  	int ret = 0;
+>  	const char *subpath;
+>  	int code;
+>  	ssize_t len;
+>  
+> -	if (!is_inside_work_tree(the_repository))
+> -		/*
+> -		 * FIXME:
+> -		 * We might have a superproject, but it is harder
+> -		 * to determine.
+> -		 */
+> +	worktree = repo_get_work_tree(r);
+
+We now use the passed repository to get the working tree instead of
+relying getting the current working directory and checking if we are
+inside a worktree. Looks good.
+
+> +	if (!worktree)
+> +		goto out;
+> +
+> +	if (!strbuf_realpath(&target_wt, worktree, 0))
+>  		goto out;
+>  
+> -	if (!strbuf_realpath(&one_up, "../", 0))
+> +	strbuf_addf(&one_up, "%s/..", target_wt.buf);
+> +	if (!strbuf_realpath(&one_up, one_up.buf, 0))
+
+I was confused at first why we bother invoking `strbuf_realpath()` here
+since it's just an intermediate step, but I assume that is so we can use
+it in the error statement later on.
+
+>  		goto out;
+>  
+> -	subpath = relative_path(cwd, one_up.buf, &sb);
+> +	subpath = relative_path(target_wt.buf, one_up.buf, &sb);
+>  
+>  	prepare_submodule_repo_env(&cp.env);
+>  	strvec_pop(&cp.env);
+>  
+> -	strvec_pushl(&cp.args, "--literal-pathspecs", "-C", "..",
+> +	strvec_pushl(&cp.args, "--literal-pathspecs", "-C", one_up.buf,
+>  		     "ls-files", "-z", "--stage", "--full-name", "--",
+>  		     subpath, NULL);
+>  	strbuf_reset(&sb);
+> @@ -2648,14 +2649,14 @@ int get_superproject_working_tree(struct strbuf *buf)
+>  	cp.git_cmd = 1;
+>  
+>  	if (start_command(&cp))
+> -		die(_("could not start ls-files in .."));
+> +		die(_("could not start ls-files in %s"), one_up.buf);
+>  
+>  	len = strbuf_read(&sb, cp.out, PATH_MAX);
+>  	close(cp.out);
+>  
+>  	if (starts_with(sb.buf, "160000")) {
+>  		int super_sub_len;
+> -		int cwd_len = strlen(cwd);
+> +		int wt_len = target_wt.len;
+>  		char *super_sub, *super_wt;
+>  
+>  		/*
+[snip]
+> +test_expect_success 'path.superproject-root works with --git-dir' '
+> +	test_when_finished "rm -rf sub super" &&
+> +	git init sub &&
+> +	test_commit -C sub initial &&
+> +	git init super &&
+> +	(
+> +		cd super &&
+> +		git -c protocol.file.allow=always submodule add "../sub" sub &&
+> +		git commit -m "add submodule" &&
+> +
+> +		SUPER_ROOT="$(test-tool path-utils real_path .)" &&
+> +		MODULE_DIR="$SUPER_ROOT/.git/modules/sub" &&
+> +
+> +		echo "path.superproject-root.absolute=$SUPER_ROOT" >expect &&
+> +		git --git-dir="$MODULE_DIR" repo info path.superproject-root.absolute >actual &&
+
+`path.superproject-root` isn't introduced until the next patch, so this
+test fails at this commit. Maybe the test should exercise the existing
+`git --git-dir=... rev-parse --show-superproject-working-tree` caller in
+t1500 instead?
+
+-Justin
