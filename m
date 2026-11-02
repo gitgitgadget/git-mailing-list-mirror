@@ -1,125 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793636254;
-	b=b0imhgNzaTbKEJLt7Bo1FrgNnblOCd2YL5L8knQwGRsBt1MrFPv0DLvO5MAUITwIPzE+
-	 EdKtqAjGoLOqpdAFA33+k0BSYgjjzeG1SfNTra6OR5U4uU9PY+C2JP/giHle2UxDzqJP1
-	 orqMZcLCahBXy0b1DPWnvXmxv3MCOW1jWdWUGc5lyCKbtacWaLEGFkp8ceNg8oTIjS4By
-	 mqbWKMbuGsiS6XOZ3m8MDhBsEud8dMfDHjCvqXcW1eO7B5nV+fj5nK6nsY4oc+/AtPDvn
-	 mZ2Q9SJrHYd/jrfcctkMECi/of0svNQwAr7c9oQn2xKqpeKpDtOqjKab3ig8eCth5gw==
+	t=1793636499;
+	b=JF16/FxhXzQgACb9T6SOxR4H8JP3xJwuO5HFUNm1k8rg/yNOSaTANANBN/UM5sT1pnCg
+	 vI3rlnl3+bL/Ueu0mITZ0FOTbD5ZukCM1hpTP0I6qqJB5jrR0BM2YOQIaflwv8sBKmWbf
+	 L5mqI6niikhj5MeNNJYuZmC5KhWQT/7vyVpDWvVi0SLYYgpTgXUjOcoigyFqvPSRRfm69
+	 8yILloNl4YvbH+UqaORyGZnY6MBGwCNT8PFsJLnICKIalpmHGlqm0qvHiha4F7lUS2ARD
+	 0sfphGw+TFoEfkGd9R9n/tUDtlqS3neE8bi9LEENp5q8qmi4A2x2b/dD1KKzFTdrBYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793636254;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=O1yK6210ltBr7cLShNsm94/Xgz7/J171rX0DGAQuWUk=;
-	b=X27+UHQ0CiHkIykLO8DVSK3Wx12elfof87qQhSY5DgvVRyLvLzw0fxRwXBy4pctmk6FC
-	 en21yygYu4Vd23DwR2jzKIJQjpUFX1aviKWd03sgfjdF88Fyn9rlatjTZ698dLkbpOxhK
-	 XKN0/KZzoIgMAYPtr6S4zL2fybg/XvHbfUZ9wlcqx4r+s1FxnER4dMXhOZSig2BqpQjzI
-	 LKNrSELUrYKABIXphPyIXzU6lBMvNxsW91fTID7/wNHnuBSqIn3FwRWc3yI1amf8tf3Gs
-	 3Lti4gShqVSOhPm55dOWh6vd7rwVR/vKSn4K09slhUSQcpZgDw1/lHUKlFwxscWBsKw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793636499;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:From:Subject:Reply-To:To:Cc:
+	 References:Content-Language:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=dPnndEFt+kUc4cf3JVBDGKRYwtQzLOHnXJC58FAJQso=;
+	b=P78S23/uwhHrwOUZ+VcIS5fG6/paLRHfWiprXLD5+eOk8xUHEvsx2Ix0wh5zV3f9dPyD
+	 oyBG2/oR5QQDDkVYGY76ZMI4Fl10PgBbGZx+r0FwF3KwwMZxckToaIWLaBmgkW+A5F4VY
+	 hd+BhddsFZvj8wA+pDheXDRDgorR+jj1MgDKSGT0996xZtQj3hQIDwuXRuMEKeLytKWmC
+	 D56YO7+Q576pGv+EGEnVtWtQdkA6Mq82fcQvl7mXQ9UeOqpiD4cAMb9CPlI2esLRHQspb
+	 8ZzVuae5C0fNguA1wmk37//Bu1+YR1ePAPNRflCgEmmGSupV5ABkV9D4hosJcpbSzKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=e1471Fak;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="fa/Dlsf4";
-	arc=none smtp.remote-ip=202.12.124.146
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FyAaLLlf;
+	arc=none smtp.remote-ip=209.85.221.53
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C4D60716CE
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 16:17:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5C4D60716CE
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F359608441D
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 16:21:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F359608441D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=e1471Fak;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=fa/Dlsf4
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 278CD1D00115
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 11:17:33 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 02 Nov 2026 11:17:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793636252; x=1793722652; bh=O1yK6210lt
-	Br7cLShNsm94/Xgz7/J171rX0DGAQuWUk=; b=e1471FakPAAL6vGTWEi+0JJMAI
-	t0xijzwi8TohIFRg2/vqkowTMgTYlCS5HzjFmIz5bM/jdCEgbZCAM5fFV0L8cw49
-	QKJNZxTnhHBf802wKa9f0ZlRDZ2BrQJf4mB+ek5UB6NkIJFtbVmnMxrlaQubLU+u
-	LQIZwE9C99d1U39sC6TH1TeJD/IZbrpQ8g5Ifp0HJ+DYorSt6I+UAWRQnfdDfl0Y
-	j1zSp4ruLn+shpZ/xP7BisKr+gp6XX9GOfv7Js0c3OpScEOE1MY13yBnqb/BsZHU
-	t7uafz+lkSKlvIIFUaW7Wr73ENkOrhYkuwpAYRtSl/9FNQLCGRDzZkPyp+aQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793636252; x=1793722652; bh=O1yK6210ltBr7cLShNsm94/Xgz7/J171rX0
-	DGAQuWUk=; b=fa/Dlsf4yiJcLK+W+yfRrBOvUmTPYfCytqVlKdIel1otKxPOiLd
-	lW2O8ZzFN9xTfbyJyecGAKh0tql9JjGcKwakfQLy8WfIaL5aRuoZqwCd9oTQ5mKT
-	DWAf5Typ9fFYw2iVO2ioZ/e2Ky0IST804MGxp65RMlAVRycDTXKR2bKtvtbXgrcV
-	ko1tkhL2DlI5s1A5CCPJnU22I6FtQ22NTNjeGhiCKp9bodTsfwulrT6gTY1+8OUW
-	kkw5c6lZtji7D+XE390inEz8JgEbdYxMGZAQGF87wPaUGWIJMorG6fqLcRFBYR6d
-	l1ZkdVCqx93l5ZegJdp+prw2tm1QgeXG/sg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793636252; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:EwFdKcIEhL1FzvKv+Sef+wlo6+i9/3C73s+mJZBzM0KvPV0
-	HjGJ1wDm/JE761vGtKeT/b8Ny1eWiLdPJPlDVmmoH994tP6iM4OPDgqVTnbhs33P
-	ujlmA9hub3l/4kxP1+9F0E0WeNxq/MkWJYmjF53eKG6ufjPxu1bpabWq4gKyBLSu
-	lt1FcCQt0CdRn3Cn2grgxOsBd0lQyuS7wZ/PC9M85P25/jTEwJwnCtt5ri8dRkYV
-	MkCANMfYY9linAMQQr0ncATpXOISchKs7IwL2ZDWxFRdqJQWiAYIeNMmq1pyJIXw
-	1ss0AJziQm65cHP4g0u3chweSuMQLOL6k6nuJKw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:IpH6vtpx3r43Os+Z+hLYBZKQ+xQQJsaYpo47ESJMNcg=:+GBfM3Oysx2SGzAbNwAtX4mLjVCAqf8/EMgXS46S6bY=;
-X-ME-Sender: <xms:nLfoaitqMhIACo8r_DJ8N7IRsIql9PwCCDj9nP90hSMlfdXUsLi-9A>
-    <xme:nLfoaueWrJcsOlT16aVVUMnAEVseaiMuztsP9hWbINjn2k6_WZmP3z_LPxvdz-vxp
-    -4C1NRsG-Zdilc0yQzhQd9bQyjIhCK7L6GGEbJswb-7B1jAKcMmNA>
-X-ME-Received: <xmr:nLfoaizY7YAnmDpjyBCK7vb8DFVHh816IuH8U9IFBRMyeBic09LPTLISlCC3dP6MY5gBqjITcNR-FjVlKbOkuBBI9qhSP55S6_eI>
-X-ME-Proxy-Cause: dmFkZTEYzXIorekTFdlsh5dWKLvL0ufF7yggC3IMHxbJKu+TV7QM58xVX5takU2ESiTx/i
-    p2WbltDKmFhJik9n8MrvcRTaGdr90fneTy4/EepdeQnTZWv/QSQ1fhb6n0l3OSeMWDGG1Y
-    4B/V8E2pMpOtHKA18O3bb9GCfSE/LrBVGNRPy//6yyJEauycWIVUev46OFm2kNvyJrN/7/
-    NhVv5Zrq779q6MgvDp79xsff9rj4lURykE1MdVzBIMe0WMbQpMpN80nuOOWNDtZLyxYkwT
-    DfSjAtscMfuTHtDYe94q0PvyuxhjCndJ32a9AJrjownHfs7TIZ3i8f/hhNYrtVOSWQU3Ov
-    cMoWZKfN6QvcdMGv67lqMMBzIfNsOD8KYZK8ed5rtfziy8wJFl8J0C6A7kE8kVKmkleJRp
-    0fztklpNVetG5+0zPv8x9e7YrqpGE/tyKegvUpvzkX1u2yjSiJmLpr02lZyVC/EPNpmOzp
-    RuoZjnIpztpaH+Vp0l8UxYIZM3vj/KKpFi4Cb540NNjYBEdqpWUXSkQ56X5DXccoHf46WP
-    2gYX6lMHBFxImZTwvMP0h4DJkXMmKaslIArCCi1/hJ5j4iA8YE/R79Huro7eziub5qul+3
-    s7+qH6mMCLbb/yS9EV65JPitS7xkPLjd2nyG3dQXl4RXgnuZfA9CFRZ+j+Wg
-X-ME-Proxy: <xmx:nLfoasGgLN9iD9PBmWerYMnHJR0Uwtfp-3Mw1fQFTcgIYS4VPwAwkg>
-    <xmx:nLfoauwNm1virAO5DJMBIuPYvNrzMOW6Afx3DZbSGyvHweK_M2gWQQ>
-    <xmx:nLfoaltDrRs-iuXraGEC336P7CkJWd7W_D-kHgUBt6scq20s3Ls2qA>
-    <xmx:nLfoaj2DGP2lfUxjDUvsQ9ioaA4b4vqwORB68z4km-C1c0qiO04t1A>
-    <xmx:nLfoamRtlFJGkDQOxBHJOlsuTsfrN9aak6bRVED5m_pBAlXdRypX03du>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Nov 2026 11:17:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: Ejecting things more aggressively out of 'seen'?
-In-Reply-To: <auhfD1ryB-7JwOYl@pks.im> (Patrick Steinhardt's message of "Mon,
-	2 Nov 2026 10:59:43 +0100")
-References: <xmqqfr15ruw7.fsf@gitster.g>
-	<f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com>
-	<xmqq1pclc210.fsf@gitster.g>
-	<414ebe62-c7f6-4d44-bde2-b689e35accfc@gmail.com>
-	<xmqqbjbpptzr.fsf@gitster.g>
-	<47bd0302-fc52-4df0-98a0-6fad7eb0fb05@gmail.com>
-	<xmqq1p93ofjx.fsf@gitster.g> <auhfD1ryB-7JwOYl@pks.im>
-Date: Mon, 02 Nov 2026 08:17:31 -0800
-Message-ID: <xmqqv76fjjhg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FyAaLLlf
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48e20edd106so2479207f8f.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 08:21:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793636497; x=1794241297; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=dPnndEFt+kUc4cf3JVBDGKRYwtQzLOHnXJC58FAJQso=;
+        b=FyAaLLlf+GqyzrehgCgYHVH4WKjD3vlkCCE6V//JGlJP15W0qphC/CUmoZt3xKEfYU
+         XDn5YrvhQYwa/qWhAnsfvvA1/M0eoaxo0tiqM2GSsfA8jxaZ9d1mhUTw2DYyJHi5WdUw
+         0+2U7O1bbO8jy3doSyzffHxsU96WmupB2mM36vfjlro4KtY5a+bQi4eMZnj0/hxKW2P3
+         l3jG+kZ3L/wjBIlSP7mAF9we+z30OXR7Jal23ZggUxWkyzGYRKdosJLCpNiHyBVgl0Q/
+         5k4UKUPpW2Bluquxm7MXXbOoW2C3r87m1YH851LGzO6Cw8UhVNt6HkWqZIKALOunvz88
+         Mm0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793636497; x=1794241297;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=dPnndEFt+kUc4cf3JVBDGKRYwtQzLOHnXJC58FAJQso=;
+        b=kVQ1JWQkAjzW9pjwxcUcCpVeOwY/Y9j5TUITy4xWySg5hy9QIuGUOEostLQmJdM4qL
+         z41F1p/Z01cN8nOGSVvhWT2xIFdPOTTrT64sEB30CaDX1d7GxsDnD9Sg6K8DL61zQ9u8
+         UYwiWe/TxctrF6wxl2cKL48X0dglsA2oB9dPBk4qZJKaXvB1ypHB12lEdU5qt9lGj+vl
+         8qq3YQDtxgl7y2PK7HpzktJCDQZDyKXGDlKmr1ztF9COQqDs5Z38F7xJmuPSE0ZzxnV0
+         lphlZ0vPsfsAtpeF4zEDUgt88ZpJEZKSuyTxAzjpMStYVg9qawPvC+pH7a+IinvJ+4hk
+         58yw==
+X-Forwarded-Encrypted: i=1; AKwUvBwFo1iCvQEHvw+i8FcGMe+6MesarbR+dMw6IJl3DSMGXH3DkGYCBXV8QgTkSUw6aQHQtAI=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+B4h2zOKaU/K32AyibQ69xOtRgmq7U2xHnYt9p6REmLY09hHmC
+	V2bJOS87u5vpCxMwEUjSyONeXPgLBH9X/ZC+SYMZp/zHmhcwIMQ4EBbf
+X-Gm-Gg: AYBFou2blBJo7bV3kTzdzsELb6n7EmAvMxGeqQOUeTlOKbBKRWEpWjszDXRc1PpQ+th
+	9v+PZqmg2sBFe7roHiQkpfYQOgFhD+I8TMFR5BJZhK5sPPd9Z7ANbSyb/jjk4Zh/vq+htSmrOO6
+	PT6VxSz3UeoQpJoHiIdCnJU1w8cM/SgOHuJR5JFDzugj6qQgfgN9kycpEPYx1sVzV3p52Q8bfU9
+	/RsyvcwUZjnVkkiBb3Ft7V0eeJsqliZeJO3/Pfz9zGSWbLroFg2JKmqQejD8h4mlBKD2dbXe+BT
+	Ttb721EB+whKwep3h5mFtPaYS0KUGsB58slpqqvvCVQ+XR2ahwc5A+LF6LrD5xl/pJU0aUrlk7u
+	DZcPMBHggaFm/xGJD1ooFck19O9FJP3x7S1UlnOQ3jbFfyoeH9m/GrIuKznhKUjnCqUXix5irVh
+	JJLYVbHkRJ99rbap5c7V+amoR/jhKQMGvIfvsiw6z5s+NLMhZNkgTuOkaAz4zD/7yTCbDm1GdSH
+	vOLDRvqeQHR/wWmWN2ZGVIpEdASb2X/Wu4VlqCcm9ee5tka3y+4ABa5ssRkDnMdm6ZfTXegpkla
+	fgduzwpUPp2/Du7X+kAtQQZtc3vd4y13EudkeU/azcBLSS9uqrQUGJGoki1y82l42YHE0cOFkug
+	s0ItQvQ==
+X-Received: by 2002:a05:6000:4021:b0:48e:4300:c70e with SMTP id ffacd0b85a97d-48e6e304059mr22812992f8f.46.1793636496419;
+        Mon, 02 Nov 2026 08:21:36 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b8a5a7sm21893764f8f.37.2026.11.02.08.21.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Nov 2026 08:21:35 -0800 (PST)
+Message-ID: <6fb08241-74c4-445d-8c75-6ed5f4175f26@gmail.com>
+Date: Mon, 2 Nov 2026 16:21:34 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -129,50 +92,558 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v5] sequencer: honor --empty when a fixup!/squash! empties
+ its target
+Reply-To: phillip.wood@dunelm.org.uk
+To: Farid Zakaria <farid.m.zakaria@gmail.com>, git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Junio C Hamano <gitster@pobox.com>
+References: <20260709-fz-autosquash-empty-v1-1-84cb494c3613@gmail.com>
+ <20261028-fz-autosquash-empty-v5-1-a3cfb582fff5@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20261028-fz-autosquash-empty-v5-1-a3cfb582fff5@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Farid
 
-> One state that confuses newcomers quite often is "Will merge to 'next'?"
-> with a question mark at the end. If we were to document these we shuld
-> probably also document that state.
+On 28/10/2026 21:09, Farid Zakaria wrote:
+> ---
+> Sorry this v5 has taken a while; I got sidelined by other personal
+> and $DAYJOB work.  Thanks for the review, Phillip -- this version
+> addresses it.
 
-Hmph, really?  Just like the subject of this e-mail message, a
-trailing question mark is my way of saying "I am planning to do
-this, but if you think it is a bad idea, please stop me with an
-explanation why I shouldn't".
+Yes, this looks pretty good. I've left a few comments below, they're 
+mostly things that would be nice to have but I do think that we need a 
+couple of changes in commit_staged_changes(). I have to say I found a 
+lot of the code comments to be a bit hard to follow - they seem to start 
+at the end of the story and work backwards, rather than starting at the 
+beginning and leading the reader to the end in a series of logical steps.
 
->>  - A topic goes into the "Waiting for response" state once reviewed,
->>    where it remains until the author responds.  After staying in
->>    this state for a month or so, it is demoted to the "Stalled"
->>    state, and eventually dropped.
->> 
->> We should probably have a rule that says "a topic that did not get
->> reviewed for N weeks is ejected from 'seen'".
->
-> I think that's reasonable. Becoming a bit more aggressive there doesn't
-> make too much of a difference anyway -- if a topic gets evicted from
-> "seen" and then later on regains interest then it can still be included
-> into "seen" again.
->
-> By gut feeling I'd use the same rule as for "Waiting for response".
+This patch does not apply to master (I'm not sure if that's why Junio 
+hasn't pick it up) so it would probably be worth rebasing it when you 
+re-roll.
 
-An obvious alternative is to queue only topics for which I can, by
-judging reviews on the list, at least say "Will merge to 'next'?"
-with enough confidence.  It would reduce the size of 'seen' and the
-friction felt by contributors when their topic is once queued on
-'seen' and later ejected unceremoniously through no fault of their
-own, other than their topic being forgettable or uninspiring to
-others.
+> diff --git a/sequencer.c b/sequencer.c
+> index 65afd100d9..4524de3f8b 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> [...]
+> +/*
+> + * Remember what the commit that the current chain of fixup and squash
+> + * commands is being applied to was picked as, both in the sequencer state
+> + * and on disk so that it survives a stop for conflict resolution.
+> + */
+> +static int set_fixup_target(struct replay_opts *opts, enum fixup_target target)
+> +{
+> +	struct replay_ctx *ctx = opts->ctx;
+> +	const char *name;
+> +
+> +	if (ctx->fixup_target == target)
+> +		return 0;
+> +
+> +	ctx->fixup_target = target;
+> +	if (!is_rebase_i(opts))
+> +		return 0;
 
-I do not know which one is better: educating contributors that their
-topics being uninspiring to others is something they should not feel
-bad about and giving our reviewers easier access to these candidate
-topics, or being strict and mechanical and queuing only topics that
-some human reviewers with a certain level of reputation have looked
-at and have not just shown interest in, but have said are ready.
+It's a bit strange to only check if we're rebasing after we've already 
+set ctx->fixup_target. We only need to call this function if we're 
+rebasing so it make sense to check that at the beginning of the function.
 
-I can do either.  It is less emotional stress for me to do the
-latter.  Between hitting 'seen' and then later being discarded, and
-not getting any response or reaction at all, I am not sure which one
-our contributors find more acceptable.
+> +/*
+> + * A "fixup" or "squash" is applied by amending HEAD, so the commit it
+> + * produces is empty when the index matches the tree of HEAD's parent,
+> + * rather than the tree of HEAD itself that is_index_unchanged() looks at.
+> + * Returns 1 if amending HEAD would leave it empty, 0 if not, and negative
+> + * on error.
+> + */
+> +static int is_amended_head_empty(struct repository *r)
+> +{
+> +	const struct object_id *parent_tree_oid;
+> +	struct object_id *cache_tree_oid;
+> +	struct commit *head;
+> +
+> +	head = lookup_commit_reference_by_name("HEAD");
+> +	if (!head || repo_parse_commit(r, head))
+> +		return error(_("could not parse HEAD commit"));
+> +
+> +	if (head->parents) {
+> +		struct commit *parent = head->parents->item;
+> +
+> +		if (repo_parse_commit(r, parent))
+> +			return error(_("could not parse parent commit %s"),
+> +				     oid_to_hex(&parent->object.oid));
+> +		parent_tree_oid = get_commit_tree_oid(parent);
+
+For a merge commit (i.e. head->parents->next is non-NULL) we should 
+return 0. However, we only call this function when the fixup target is 
+NONEMPTY which is only set for "pick" commands so it is not a problem in 
+practice.
+
+> +/*
+> + * Drop the commit at HEAD by moving HEAD back to its parent.  The index and
+> + * the worktree already match the tree of that parent, so nothing else needs
+> + * to be updated.  "action" names the command doing the dropping and is only
+> + * used for the reflog message.
+> + */
+> +static int drop_head_commit(struct repository *r, struct replay_opts *opts,
+> +			    const char *action)
+> +{
+> +	struct commit *head = lookup_commit_reference_by_name("HEAD");
+> +
+> +	if (!head || repo_parse_commit(r, head))
+> +		return error(_("could not parse HEAD commit"));
+> +	if (!head->parents)
+> +		return error(_("cannot drop the root commit"));
+
+We should BUG() if HEAD is a merge commit, as we should only call this 
+when the fixup target is NONEMPTY.
+
+> @@ -2540,7 +2682,61 @@ static enum pick_result do_pick_commit(struct repository *r,
+>   			_("dropping %s %s -- patch contents already upstream\n"),
+>   			oid_to_hex(&commit->object.oid), msg.subject);
+>   	} /* else allow == 0 and there's nothing special to do */
+> -	if (!opts->no_commit && !drop_commit) {
+> +
+> +	/*
+> +	 * allow_empty() above only notices a commit that adds nothing to
+> +	 * HEAD.  A "fixup" or "squash" can also cancel out the changes of
+> +	 * the commit it is squashed into, which leaves that commit empty
+> +	 * instead, so check for that here and honor --empty for it.
+> +	 */
+> +	if ((flags & AMEND_MSG) &&
+> +	    ctx->fixup_target == FIXUP_TARGET_PICKED_NONEMPTY) {
+> +		if (!final_fixup || opts->keep_redundant_commits) {
+> +			/*
+> +			 * Keep the commit, even if it is empty for now, when
+
+s/when/while/?
+
+> +			 * more fixups are still to be squashed into it, as
+> +			 * dropping it here would squash them into the
+> +			 * previous commit instead.  Also keep it when
+> +			 * --empty=keep asks us to.
+> +			 */
+> +			flags |= ALLOW_EMPTY;
+> +		} else if (opts->drop_redundant_commits) {
+> +			/*
+> +			 * allow_empty() above may have dropped this final
+> +			 * fixup as already upstream, leaving HEAD as the
+> +			 * earlier fixups of the chain made it, so check
+> +			 * HEAD whether or not drop_commit is set.
+> +			 */
+
+All the talk about allow_empty() and drop_commit is bit of a 
+distraction. The important point is is the final fixup and we want to 
+know whether HEAD has become empty.
+> +			int emptied = is_amended_head_empty(r);
+> +
+> +			if (emptied < 0) {
+> +				res = emptied;
+> +				goto leave;
+> +			}
+> +			if (emptied) {
+
+This would be clearer as "} else if (emptied) {"
+
+> +				unlink(git_path_merge_msg(r));
+> +				refs_delete_ref(get_main_ref_store(r), "",
+> +						"AUTO_MERGE", NULL,
+> +						REF_NO_DEREF);
+> +				res = drop_head_commit(r, opts,
+> +						       command_to_string(command));
+> +				if (res)
+> +					goto leave;
+> +				drop_head = 1;
+> +				fprintf(stderr,
+> +					_("dropping %s %s -- squashing it in empties the commit\n"),
+> +					oid_to_hex(&commit->object.oid),
+> +					msg.subject);
+
+If HEAD has become empty we drop it - good.
+
+> +			}
+> +		}
+> +		/*
+> +		 * Otherwise --empty=stop is in effect, and "git commit
+> +		 * --amend" below refuses to make the commit empty, which
+> +		 * halts the rebase.
+> +		 */
+> +	}
+> +
+> +	if (!opts->no_commit && !drop_commit && !drop_head) {
+
+We only create a new commit if we're not dropping the fixup or HEAD - good.
+
+> @@ -3318,6 +3516,17 @@ static int read_populate_opts(struct replay_opts *opts)
+>   		}
+>   		strbuf_reset(&buf);
+>   
+> +		if (read_oneliner(&buf, rebase_path_fixup_target(),
+> +				  READ_ONELINER_SKIP_IF_EMPTY)) {
+> +			enum fixup_target target;
+> +
+> +			for (target = FIXUP_TARGET_PICKED_EMPTY;
+> +			     target <= FIXUP_TARGET_PICKED_NONEMPTY; target++)
+> +				if (!strcmp(buf.buf, fixup_target_name[target]))
+> +					ctx->fixup_target = target;
+
+Do we want some error checking here, rather than assuming 
+FIXUP_TARGET_UNKNOWN if the file does not contain one of the expected 
+values? If we ever add a new value to the enum, that would prevent old 
+versions of git getting confused if they continued a rebase started by a 
+newer version.
+
+> @@ -5057,9 +5266,25 @@ static int pick_one_commit(struct repository *r,
+>   				    peek_command(todo_list, 1));
+>   		return 0;
+>   	} else if (pick_res == PICK_RESULT_DROPPED) {
+> +		/*
+> +		 * When a "pick" is dropped HEAD stays where it was, so a
+> +		 * "fixup" that follows would be squashed into a commit we
+> +		 * know nothing about.  A dropped "fixup" on the other hand
+> +		 * leaves the commit it targets untouched.
+> +		 */
+
+I find this comment hard to understand. Hopefully it wont be too hard to 
+avoid dropping a commit that is being fixed up before we've applied all 
+the fixups once this patch lands.
+
+> +		if (!is_fixup(item->command))
+> +			set_fixup_target(opts, FIXUP_TARGET_UNKNOWN);
+>   		if (is_final_fixup(todo_list))
+>   			flush_rewritten_pending();
+>   		return 0;
+> +	} else if (pick_res == PICK_RESULT_DROPPED_HEAD) {
+> +		/*
+> +		 * The commit the fixups were squashed into is gone, so
+> +		 * neither it nor any of them were rewritten and there is
+> +		 * nothing left for the post-rewrite machinery to report.
+> +		 */
+
+This comment is also hard to understand. Maybe
+
+	All the commits listed in the rewritten-pending file
+	have been dropped, so they have not been rewritten.
+
+> +		unlink(rebase_path_rewritten_pending());
+> +		return 0;
+>   	} else if (pick_res == PICK_RESULT_CONFLICTS &&
+>   		   is_fixup(item->command)) {
+>   		return error_failed_squash(r, item->commit, opts,
+> @@ -5116,6 +5341,21 @@ static int pick_commits(struct repository *r,
+>   		if (save_todo(todo_list, opts, reschedule))
+>   			return -1;
+>   		if (is_rebase_i(opts)) {
+> +			/*
+> +			 * Only a commit created by a "pick" is dropped when
+> +			 * the fixups squashed into it empty it out, and only
+> +			 * if it was picked with changes of its own.  Remember
+> +			 * which kind of "pick" this is, and forget about the
+> +			 * last "pick" as soon as any other command runs.
+> +			 */
+
+There is only one kind of pick command, there are different types of 
+fixup targets though. I'm not sure how much value this comment adds.
+
+> +			if (item->command == TODO_PICK) {
+> +				if (set_fixup_target_picked(opts, item->commit))
+> +					return -1;
+> +			} else if (!is_noop(item->command) &&
+> +				   !is_fixup(item->command)) {
+> +				set_fixup_target(opts, FIXUP_TARGET_UNKNOWN);
+> +			}
+> +
+>   			if (item->command != TODO_COMMENT) {
+>   				FILE *f = fopen(rebase_path_msgnum(), "w");
+>   
+> @@ -5520,12 +5760,51 @@ static int commit_staged_changes(struct repository *r,
+>   		}
+>   	}
+>   
+> +	/*
+> +	 * If resolving the conflicts of the last "fixup" or "squash" of a
+> +	 * chain undid the commit they are being squashed into, honor
+> +	 * --empty for that commit just as do_pick_commit() does when the
+> +	 * chain applies cleanly.
+> +	 */
+> +	if ((flags & AMEND_MSG) && opts->drop_redundant_commits &&
+> +	    ctx->fixup_target == FIXUP_TARGET_PICKED_NONEMPTY &&
+> +	    !is_fixup(peek_command(todo_list, 0))) {
+> +		int emptied = is_amended_head_empty(r);
+> +
+> +		if (emptied < 0) {
+> +			ret = emptied;
+> +			goto out;
+> +		}
+> +		if (emptied) {
+
+As before I think "} else if (emptied) {" is clearer
+
+> +			ret = drop_head_commit(r, opts, "continue");
+> +			if (ret)
+> +				goto out;
+> +
+> +			/*
+> +			 * Neither the dropped commit nor the fixups squashed
+> +			 * into it were rewritten, so leave nothing behind for
+> +			 * the post-rewrite machinery to report.
+
+"so remove the list of pending rewrites"?
+
+> +			 */
+> +			unlink(rebase_path_stopped_sha());
+
+This is not removed by another conditional branch in this function, so I 
+don't think we should remove it here. Instead it is removed, along with 
+the other files that were written when we stopped for user interaction, 
+at the start of pick_commits().
+
+> +			unlink(rebase_path_rewritten_pending());
+> +
+> +			/*
+> +			 * Remove what "git commit" would have removed, and
+> +			 * clean up after the chain like its final fixup does.
+> +			 */
+
+I don't understand what the last half of that sentence is saying.
+
+> +			unlink(git_path_merge_msg(r));
+
+If a "squash" command at the end of a chain of fixups has conflicts we 
+write the message to git_path_squash_msg(r) instead, so we need to 
+remove both those paths.
+
+> @@ -6527,8 +6809,18 @@ static int skip_unnecessary_picks(struct repository *r,
+>   		todo_list->current = 0;
+>   		todo_list->done_nr += i;
+>   
+> -		if (is_fixup(peek_command(todo_list, 0)))
+> +		if (is_fixup(peek_command(todo_list, 0))) {
+> +			/*
+> +			 * The picks that were skipped never reach
+> +			 * pick_commits(), so record here what the last of
+> +			 * them left at HEAD for the fixups that follow it.
+> +			 */
+
+The phrasing here is a bit strange, maybe
+
+	If we've skipped a "pick" command before this command we need
+	to record whether that commit is empty or not
+
+The test changes all look good.
+
+Thanks for working on this
+
+Phillip
+	
+> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+> index 07a5a11678..45f396cf62 100755
+> --- a/t/t3415-rebase-autosquash.sh
+> +++ b/t/t3415-rebase-autosquash.sh
+> @@ -510,4 +510,168 @@ test_expect_success 'pick and fixup respect commit.cleanup' '
+>   	test_commit_message HEAD -m "something"
+>   '
+>   
+> +test_expect_success 'fixup! that empties its target is dropped with --empty=drop' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addX fileX 1 &&
+> +	test_commit --no-tag changeX fileX 2 &&
+> +	test_commit --no-tag later fileW hello &&
+> +	test_commit --no-tag "fixup! changeX" fileX 1 &&
+> +
+> +	git rebase -i --autosquash --empty=drop HEAD~4 &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	later
+> +	addX
+> +	EOF
+> +	git log --format=%s base.. >actual &&
+> +	test_cmp expect actual &&
+> +	git diff --exit-code ORIG_HEAD HEAD
+> +'
+> +
+> +test_expect_success 'fixup! that empties its target is kept with --empty=keep' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addY fileY 1 &&
+> +	test_commit --no-tag changeY fileY 2 &&
+> +	test_commit --no-tag "fixup! changeY" fileY 1 &&
+> +
+> +	git rebase -i --autosquash --empty=keep HEAD~3 &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	changeY
+> +	addY
+> +	EOF
+> +	git log --format=%s base.. >actual &&
+> +	test_cmp expect actual &&
+> +	: "the commit that was kept is empty" &&
+> +	git diff --exit-code HEAD~1 HEAD
+> +'
+> +
+> +test_expect_success 'fixup! that empties its target halts by default' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addZ fileZ 1 &&
+> +	test_commit --no-tag changeZ fileZ 2 &&
+> +	test_commit --no-tag "fixup! changeZ" fileZ 1 &&
+> +
+> +	test_when_finished "git rebase --abort" &&
+> +	test_must_fail git rebase -i --autosquash HEAD~3
+> +'
+> +
+> +test_expect_success 'squash! that empties its target is dropped with --empty=drop' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addS fileS 1 &&
+> +	test_commit --no-tag changeS fileS 2 &&
+> +	test_commit --no-tag "squash! changeS" fileS 1 &&
+> +
+> +	git rebase -i --autosquash --empty=drop HEAD~3 &&
+> +
+> +	echo addS >expect &&
+> +	git log --format=%s base.. >actual &&
+> +	test_cmp expect actual &&
+> +	git diff --exit-code ORIG_HEAD HEAD
+> +'
+> +
+> +test_expect_success 'a target emptied in the middle of a chain is not dropped' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addM fileM 1 &&
+> +	test_commit --no-tag changeM fileM 2 &&
+> +	test_commit --no-tag "fixup! changeM" fileM 1 &&
+> +	test_commit --no-tag "fixup! changeM" fileN later &&
+> +
+> +	git rebase -i --autosquash --empty=drop HEAD~4 &&
+> +
+> +	: "the second fixup! refills the commit the first one emptied" &&
+> +	cat >expect <<-\EOF &&
+> +	changeM
+> +	addM
+> +	EOF
+> +	git log --format=%s base.. >actual &&
+> +	test_cmp expect actual &&
+> +	git diff --exit-code ORIG_HEAD HEAD
+> +'
+> +
+> +test_expect_success 'fixup! that becomes empty, after its target has become empty' '
+> +	git checkout -f first-commit &&
+> +	test_commit two file1 2 &&
+> +	test_commit --no-tag "fixup! two" file1 0 &&
+> +	test_commit --no-tag "fixup! two" file3 3 &&
+> +	test_commit four file2 4 &&
+> +
+> +	git rebase --autosquash --empty=drop --reapply-cherry-picks base 2>err &&
+> +	test_grep "contents already upstream" err &&
+> +	test_grep "squashing it in empties the commit" err &&
+> +	echo four >expect &&
+> +	git log --format=%s base.. >actual &&
+> +	test_cmp expect actual &&
+> +	git diff --exit-code four HEAD
+> +'
+> +
+> +test_expect_success 'a commit picked empty is kept when a fixup! leaves it empty' '
+> +	git reset --hard base &&
+> +	git commit --allow-empty -m placeholder &&
+> +	git commit --allow-empty -m "fixup! placeholder" &&
+> +
+> +	git rebase -i --autosquash --empty=drop HEAD~2 &&
+> +
+> +	: "--empty only governs commits that become empty" &&
+> +	echo placeholder >expect &&
+> +	git log --format=%s base.. >actual &&
+> +	test_cmp expect actual &&
+> +	git diff --exit-code HEAD~1 HEAD
+> +'
+> +
+> +test_expect_success 'fixup! filling in an empty commit keeps a non-empty commit' '
+> +	git reset --hard base &&
+> +	git commit --allow-empty -m placeholder &&
+> +	test_commit --no-tag "fixup! placeholder" fileP content &&
+> +
+> +	git rebase -i --autosquash --empty=drop HEAD~2 &&
+> +
+> +	echo placeholder >expect &&
+> +	git log --format=%s base.. >actual &&
+> +	test_cmp expect actual &&
+> +	git diff --exit-code ORIG_HEAD HEAD &&
+> +	test_must_fail git diff --exit-code HEAD~1 HEAD
+> +'
+> +
+> +test_expect_success 'a fixup! not preceded by a pick does not drop its target' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addQ fileQ 1 &&
+> +	test_commit --no-tag changeQ fileQ 2 &&
+> +	test_commit --no-tag "fixup! changeQ" fileQ 1 &&
+> +
+> +	: "an exec between the pick and the fixup hides what was picked" &&
+> +	test_when_finished "git rebase --abort" &&
+> +	set_fake_editor &&
+> +	test_must_fail env FAKE_LINES="1 2 exec_true 3" \
+> +		git rebase -i --autosquash --empty=drop HEAD~3
+> +'
+> +
+> +test_expect_success 'resolving a conflicted fixup! by emptying its target drops it' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addC fileC 1 &&
+> +	test_commit --no-tag changeC fileC 2 &&
+> +	test_commit --no-tag otherC fileC 3 &&
+> +	test_commit --no-tag "fixup! changeC" fileC 1 &&
+> +
+> +	test_when_finished "test_might_fail git rebase --abort" &&
+> +	: "the fixup! is built on otherC, so it conflicts with changeC" &&
+> +	test_must_fail git rebase -i --autosquash --empty=drop HEAD~4 &&
+> +
+> +	: "resolve it by undoing changeC, which leaves changeC empty" &&
+> +	echo 1 >fileC &&
+> +	git add fileC &&
+> +	: "changeC is now gone, so otherC conflicts with addC" &&
+> +	test_must_fail git rebase --continue &&
+> +	echo 3 >fileC &&
+> +	git add fileC &&
+> +	git rebase --continue &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	otherC
+> +	addC
+> +	EOF
+> +	git log --format=%s base.. >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>   test_done
+> diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+> index ca8a10fbb1..eb6e503b0c 100755
+> --- a/t/t5407-post-rewrite-hook.sh
+> +++ b/t/t5407-post-rewrite-hook.sh
+> @@ -333,4 +333,24 @@ test_expect_success 'rebase with commits that become empty' '
+>   	verify_hook_input
+>   '
+>   
+> +test_expect_success 'rebase drops a commit that its fixup empties' '
+> +	git checkout -b empty-fixup A &&
+> +	test_commit --no-tag P1 file1 one &&
+> +	test_commit --no-tag P2 file1 two &&
+> +	test_commit --no-tag P3 file2 three &&
+> +	test_commit --no-tag "fixup! P2" file1 one &&
+> +	p1=$(git rev-parse HEAD~3) &&
+> +	p3=$(git rev-parse HEAD~1) &&
+> +	clear_hook_input &&
+> +
+> +	git rebase -i --autosquash --empty=drop B &&
+> +
+> +	echo rebase >expected.args &&
+> +	cat >expected.data <<-EOF &&
+> +	$p1 $(git rev-parse HEAD~1)
+> +	$p3 $(git rev-parse HEAD)
+> +	EOF
+> +	verify_hook_input
+> +'
+> +
+>   test_done
+> 
+> ---
+> base-commit: f78ce2f7b6df702f93d40b85d6bda92a3f65da79
+> change-id: 20260709-fz-autosquash-empty-b6692cf36c60
+
