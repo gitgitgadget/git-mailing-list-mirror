@@ -1,100 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.176
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793598677;
-	b=p/mYG0ryyPKL6Lgl0mGcCtblB97hGEArTGSbcUyyeIwpyQUxlmraB8/w/ch8RLPHKdkr
-	 lFo4s3VmtVSgaG6DJdov1F39ne8oFrK1mUaT3pSuzRRGQK83ifA3A86wYIStq8iJF+MhA
-	 Q9FKA8lDZYOV1XYJ/QQn92u9rNol8mbOEAQUknnIRMjGdb8T8YeiEiXjkqsXd9sG4kKjG
-	 7kI9xXKQapYShreScRYd4/k94FmZr1FOUwWTniezEJetdAWdP3rSaLj75S83u4TnkhYVU
-	 cu2HzTTAExKmV3YOBzpfDkxLqwh/dd0/HzmbiTJds5+RTdhFNsF8u9vWOYoWgEDJQyw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793598677;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793600289;
+	b=i3UZFhj9xFQjrG/g12WQmthUo0zj+0vcfkuZAm1AZ8ABsWe43vgLD8YWY0TSzGodo7N1
+	 rY/ieHFbZ1SakdsXMuQchY85mHNsoHDvT5tcxF1sNjpYbg3JWsb5MXOZV8W6pI0Q3UIYc
+	 fAr/ntPHfNmcRqTz5VKhZ2zniA4WjM/s9vl94pdOvNplLtFcA+4SmeH/DC2DsNrMC55+3
+	 1n1Y/brh7/LzB0ilMq/X198JKYmkiHQlgOIZdT/7Z+K4RODrIgKnaUFuQjk+VO65UY5cj
+	 ODa7H8ntTqwrrXdkqFRucuW21aYT6V1pa4Osdwrv7w1KAU1ee4dGT/I7G3EPDiBqLoQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793600289;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=BXQVwA7G0kjsLPegA23ZoMZrLPjOH4TBqosROihJkYc=;
-	b=dXuCmEeHQtFM2jnO7jYK2G5EVoFWp4jlr67833/mJXvLDXuIi+/f5JuPZneMtkTLIA1O
-	 v5AVqdRxymSK1QVUah7VlE6+cz3drLEML+IbQFXF3pdUVDKgstZ67yHYPso1F5RFFD1n6
-	 IfOjVoto6PgSM2q6/TIvs0GFJxlFch5rphW2Qsj7Ehzo9TnS4kRe3C/E287BMuZo/vKBQ
-	 1Ce1Vq/fzmOZn6Q3tq4oVYcDqTZ13Hj4y9vSCbtm9+vWjpCO9FQTAybpH3hf9Q54rOm9r
-	 vH9Uog7GgFopIgYVhjuqRsgjDJp9OrB29UN/AQptf1k2EsyRSapj5apt7n5fgafeUbw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=fMZiStBpdCAIDp23j3OJ2YGSht9I0oF3TeoNz0Y27+I=;
+	b=N4LChXLRPpsaL2MAvJ45aAwmOHdi3/HHUcfVPzyYcDa2QNDy5qXpRBV5ehPUKULsNvHK
+	 KtRu9Pw6peZeKbocW4AW1rXcTcUUJyirQZFlRpDlVYRx59qpW/SwJgk8bi254XjaBOSyL
+	 hsAah5c5VMELnsVsG8/SluI7sFSGWSt58dU6omZYOTu/uKB8ls5jntptYpQ8DwR7q2ayI
+	 hZFdsTjHRFdJW4aYyYDjA9/6QwKAV2ZGFT03egReRhQDaNOBpaq+roRugwjD9eHyWCNg2
+	 8MZ6hRehqhtKBg57ugz05VKoZp2gQWOEbwFIc+E1DYXw16hntA4xAa1HjlGW9er9VJg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fpTgXxcI;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.176
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ABgeiCjX;
+	arc=none smtp.remote-ip=209.85.128.53
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AB1606A324
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 05:51:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D8AB1606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A666606A324
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 06:18:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1A666606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fpTgXxcI
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-3a772ec8389so19714031fa.3
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 21:51:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793598675; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MhJD5cGBdKGxCPrECN6qjviSJpcM5wXexhlhw5wlmaIO9vUj+t3ni0CnG8FevJx7jM
-         5OQt6/PfeVqB76O70Dupdz9A1vKwcKSl5p+0epvFt59mx4CddWmbOGK0YUX7/EYdatXY
-         lIAW1nNsaDlV2JMT67QSciOO8aCbd/91l6XdI01clCAtEXZp7pQ455DfH15wkZL7pNsW
-         DyReL9o2E5+P5XjnUnwhlhkPQ991WTmxWOlGRXbhgVjnXlXY7aL2kAt4IvDyMhHLwM3H
-         SdtsgI46pvVjDNSDwcgGH9UPkOh7eJ9BL/awfJn9SUwpOcm82D2KuBpzdAH8Lhv/1vzc
-         tdxA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BXQVwA7G0kjsLPegA23ZoMZrLPjOH4TBqosROihJkYc=;
-        fh=fJAHXxZeP2buYEykQLIAC31rSg30qBXXnbeGxM0xcfc=;
-        b=iEtf3BInmXH9769+CNHe87XQZiZRVYSWwjtuGZ9qaR5UgIdxYrHdZtmA+dkUlx/vEU
-         JLp8R5O1zYq4W9uroyior4R2fWRFk6G+aA2aCQVdyQl4+On95Sd+z53atnjAX676xdwD
-         9dWoxrODtjWrcLBhWpoGh4u/Qo34nixvTOybEN2+rtctN2RtkhJ9MxTuuACLQUaT/XVN
-         W2O1gLCvjRGP9gSvKnb/wz/rOXjvRhfBJZSPBB0A88stQJTf4kdBb6IHpkYK5wXQcFmf
-         5wvJuNuJm7ckaE4I9eCr0JKNG1RLZ+tcLpCtsXTVAMVZl8EG4vZtULdm0dP3wccmpKcj
-         elHg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ABgeiCjX
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a9a8d6cea8so32989435e9.1
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 22:18:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793598675; x=1794203475; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20260707; t=1793600287; x=1794205087; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=BXQVwA7G0kjsLPegA23ZoMZrLPjOH4TBqosROihJkYc=;
-        b=fpTgXxcI3hR8CkF59jUelLvkFFA2JIcC6lnw6/8o3oUD5DgmB3JnUkXgmFAusyHaj7
-         FvyRAREkH/PGhSEvLCFrz0M9Ic35x6Ivkm+JZoZIHDRo5+6ApKUUKeZY0Wz6EiKVk87H
-         slHIMaGNo4zekPIGR4RlHpItWI0c3dsPE3kqNQFNGsyYHlW/9O0SdkMfuJR9t7zW575q
-         +Jk4qlYNqUO4D0Q8kS8tN54kjpANfIj9qESTaYEIoeY31OmPA96mcQtD3L+Cm4b2rhSq
-         LW2vo6M62oFP0jkRVExsLehQdI0QyC3Q6AeJnGckxMYuVBbmvD51UWomZ7uL5JnASR7u
-         MauA==
+        bh=fMZiStBpdCAIDp23j3OJ2YGSht9I0oF3TeoNz0Y27+I=;
+        b=ABgeiCjXo7DbAlnYlNtFY4QUp9/Kw+dmSUG63i3A8wCuSOtMIxhc7inNOL/qzZSlqO
+         m7vsj6TLTMAoelcZRN4kxXOQDqFVpZMamUPVGVUtP7Jvww/26fXkNPh4ojg4V9H9WSuF
+         t74mAn5AsFXH0Xm7sYKF1aNYNSVbP+PQ1UMNMTxsEKl16kgP5QBQuS8Yn/KXunTgoCxT
+         VibboR9Txme2lCTtCEaLI8bXeTvqWj0oCBtBirMVEGRSC+zD0Aaa2UNG+0B4qnGqSsNt
+         dvESmXyqqA+l3pX76AFhqX4RI4bC2X4qe/sV9gQRtEXKdB+gSuNbdoh2oFJjpTJb+5SB
+         7wug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793598675; x=1794203475;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1793600287; x=1794205087;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=BXQVwA7G0kjsLPegA23ZoMZrLPjOH4TBqosROihJkYc=;
-        b=RrJBFV3deHSclcQjtqg76/T8gx+lopiIOWwW2NMooEwMT3eyF5wjh6rzUlZvn5KQbx
-         d7iK8Dg9vmwExls3GW+NupDSE/+nRoepksRpzFpgBwdTMy0GNaTDB7Et+fUD+YRNP2O6
-         VMujuD9fDYgIFOFju+UvtbGXiGoVTsk7jGmudvN6TAz5pjH9aYFoefwpeAMWaUB+yKaw
-         Rl+E5FeXUtIeZlcByiYiWvKlEZd2yaN/dIZP0MQmv2XVQVByt3wAKhmPceilQtesnFAq
-         eeHZQe8qlT2GJMAoazFINP9SkNFz8sZ+mE1sDcC3uEWqF6fm0MgeQsRt0/I4aJH49Yeq
-         9K6A==
-X-Forwarded-Encrypted: i=1; AKwUvBwYLWjGOrkPygtSIb4jFtzskGiu3bKUnvL5cPwmR8HX1wqd0YbpDOCoKqimFxSbAIgMNW0=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9OMAKgwtZsO0CxFf5qwUFgwOtsuIUVrOLpIMIU/gi+TnLPNR5j
-	PNpjoedftDMB5rNk8bup/UNEms3IMiaHO4LjSLt/fOy66inM93AamibKMaBAc2UxLz3xlitSKW/
-	wpClLY7aHARkK1rKy5oFPeVt753S0HogPRBTPOlc=
-X-Gm-Gg: AYBFou2trlxWeIAizkqPuVJK085JQuKNky661deyn96XLDUoBQ1LHUMVzk1mCo8aiwr
-	SOrAu4gvj6Xththsu7Xua3sy80AhI95C6Tn0hclqgzstjQZLYA475HGol2Nt4wafwdXVrKx8hGF
-	B+xz1xaIJqjBrMmCpYWsOhmfZHXvasoPM8/R5E+GHoba3be6SAtKn19kfPMSJShdAIbLUjdJxPO
-	j16CdAk/8mnXFBvMHtrSqQ9vfQ5dpkDBmeZ4fP/L8fPWN9jjmidA07PXGX9ZtNabCmmjeafJfMS
-	oVtXIQbWhC9p/h1NMzHV3NGFBYeyGjdnrAmo2e8zQsGkYgGSx2Bq29OFgK4lExbcxUclKpXu2rB
-	BiVDgqO1AYSnjwThsZv6tYpzKGrXjcocWx12TEkeQDJe9ccKLfBAmgbCnGsp3EC4Tumek
-X-Received: by 2002:a05:651c:545:b0:3ab:1d89:4981 with SMTP id
- 38308e7fff4ca-3acb7a98ba1mr21045911fa.22.1793598674861; Sun, 01 Nov 2026
- 21:51:14 -0800 (PST)
+        bh=fMZiStBpdCAIDp23j3OJ2YGSht9I0oF3TeoNz0Y27+I=;
+        b=hk95phN6P71xqkYabpy3UPqlcVY6JnZUQDlgnRfOEQx8UrjR8by7Q2wBUMghphbLkh
+         FIZNCkfGwPnsH9sJOarLu01L2GBDXNwE8B6lb7M8ECAly4zXF0vcQQdpmx0JQvjkUdwA
+         1NohJ0KXTRKrf4Hlq/HaUlwFZztdPagUN5yEPajDjaiQyue7BjbyMD2qrSz+K/xxsvQB
+         LSGpzD6+CFzsbsisBAFcoVkDjtASC01z0utBHXJnDFOTDdfQJaEEI2TpRyAIglBUTBYe
+         C+cUXfMDKu2PCf9gTP+OiUB27qVDgzjgdnZtVm126KcWjb5+5ZaXsTLWO5/xFYrYMSwz
+         kEvQ==
+X-Forwarded-Encrypted: i=1; AKwUvBwM4U50Ut83cBLdJ3pkOH6Q4kChM1PX6r8ZxcssCT0JfrHUQNDE8wz8iA/CP/w5kuG6gR8=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKaZs0JX71DhmuHz0YzQgp6BU9Qh3PMM4THyIP6+XMmSSgYwF7L
+	4vMsCgvnGTCO2uMwPddn/JU4e9ySS/BRuPUCce93lWdQIXXRGf/yzQ5P
+X-Gm-Gg: AYBFou3UDsOFlyt48aQF/EIflw80X/euo25Yp//BZw51awensG8pH+pVLzLXWm7Q9dx
+	AAeMmBU8M+yQ00RpQO14WFUTGBpL5eS2VWXUpqA49DwL2Lsfx0mlW+f1Bu9S9H4yT0yj/wYTWjW
+	Kz03N4XLNfcben1bzCjmHFZ1VW5wkT0+NO7wB/9c+SzoufCOWQpolbzCz+aFm54D9NrxZhpz/gK
+	3Ooz4qP+eYHK0QZ1wbTf8bRe5q8KZFaG0KLBgzhxVeGsM1qwCbbMZfTFhAwHwLuMHqfS9xy4STT
+	NDYX+NF/H1BDKWsP2EcckQzDB+K0ELKdKjplQbJWXWzYRP+8ZjnyJ5bzd1zDWhHTTqgNxbORGPg
+	HIzvuZb/7hBaxSGnud4rkrTsceJdNqpI3m+4uTMVaC3cT3eNB+rp5TuGFeJAyW/myAP+g5cu5M5
+	5VcfALDSKZZ83uIsGY2NcQ6mcreh3MBSlwuWwmX2R4ruXTdGQ/ZJQ6qujCZgZ6PpGnLNiTD5xA2
+	EpwR+0ezo3+3fNdcer06bWOrdEJ9PGMzZR6/kMcdF/uEVCU+5NIzrRZvrVz+uC8qwFMbhITPXI9
+	WZZqLhLrxLNe9LcbRMfkZ9gx9B9igyMwlJswWnUCLoqqKLJxi8FTq6PeX9KNAmMsEXnPB4SrEnb
+	WXYf3rEk3gEc=
+X-Received: by 2002:a05:600c:c87:b0:4a1:efbe:529c with SMTP id 5b1f17b1804b1-4ac17567fe1mr216693125e9.12.1793600287177;
+        Sun, 01 Nov 2026 22:18:07 -0800 (PST)
+Received: from localhost (20014C4D41FE0C003B555A42F26DD69C.dsl.pool.telekom.hu. [2001:4c4d:41fe:c00:3b55:5a42:f26d:d69c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4abf751c2d2sm272956595e9.15.2026.11.01.22.18.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Nov 2026 22:18:06 -0800 (PST)
+Date: Mon, 2 Nov 2026 07:17:57 +0100
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Tuomas Ahola <taahol@utu.fi>, Linus Torvalds <torvalds@kernel.org>,
+	git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] describe: count the distance correctly when commit dates
+ are skewed
+Message-ID: <augrFe35Zci2mG+j@szeder.dev>
+References: <20261031065525.19883-2-torvalds@kernel.org>
+ <20261031123149.yxap3%taahol@utu.fi>
+ <xmqqa4nt2wch.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,36 +100,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CAKUOgLz3sefhypa9yzLszW43uQ=Jor_nRBAJaBXXv0d8M2ePBw@mail.gmail.com>
- <CAFpMFfA17dnuLSRt97BrM0u3cHAifJybr_Zc2ahr_zq2nspgsw@mail.gmail.com> <xmqq7bj02wak.fsf@gitster.g>
-In-Reply-To: <xmqq7bj02wak.fsf@gitster.g>
-From: Immaculate Mecha <immaculatemecha87@gmail.com>
-Date: Mon, 2 Nov 2026 08:51:01 +0300
-X-Gm-Features: AclHuK8m1bEhVZuRzG9zu8PsYLgfneIrTaNK7_HRNtX_MnKaKUOq6KA7nOcmWXk
-Message-ID: <CAKUOgLy8iSh8RtSNoTp6KtLhe0SkU04DcTstERdbnN7xSDb9bQ@mail.gmail.com>
-Subject: Re: [Outreachy] Microproject idea: modernize a file-existence check
- in t/t0081-find-pack.sh
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa4nt2wch.fsf@gitster.g>
 
-Hello, i sent this project request "[Outreachy] GIT_DIR inherited by
-shell aliases in linked worktrees" , and i haven't gotten feedback yet
-on whether i should proceed or not. I will appreciate your feedback.
+On Sat, Oct 31, 2026 at 06:07:10PM -0700, Junio C Hamano wrote:
+> Tuomas Ahola <taahol@utu.fi> writes:
+> 
+> > Linus Torvalds <torvalds@kernel.org> wrote:
+> >
+> >> +test_expect_success 'setup: describe a tag dated before its parent' '
+> >> +	git init skew &&
+> >> +	(
+> >> +		cd skew &&
+> >> +		git config core.commitGraph true &&
+> >> +		test_commit --date "2020-01-01 18:00" base &&
+> >> +		test_commit --date "2020-01-01 18:01" o &&
+> >> +		test_commit --annotate --date "2020-01-01 17:01" T &&
+> >> +		git checkout -b side o &&
+> >> +		test_commit --date "2020-01-01 18:02" B &&
+> >> +		git checkout main &&
+> >> +		GIT_COMMITTER_DATE="2020-01-01 18:03" git merge --no-ff -m x side &&
+> >> +		git commit-graph write --reachable
+> >> +	)
+> >> +'
+> >
+> > Just a clueless rewrite of the above.  I had quite fun writing it, so why not
+> > to share... it works and might even offer some not-completely-bogus food for
+> > thought.
+> >
+> > 	git init skew &&
+> > 	(
+> > 		cd skew &&
+> > 		test_config core.commitGraph true &&
+> 
+> Doesn't this barf when it tries to register a clean-up action from
+> inside a subshell?
 
+In both cases this is a freshly initialized repository, and the commit
+graph has been enabled by default for a long time, so why do we need
+to set this config in the first place?
 
-On Thu, Oct 29, 2026 at 9:31=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
->
-> > Before choosing a microproject, it helps to search the list archive
-> > at https://lore.kernel.org/git/ for the file name, and to check the
-> > "What's cooking" reports, to make sure nobody is already working on
-> > it.
->
-> Great advice.  Reading others' patches and reviews they have
-> received will prepare a newcomer to avoid making the same mistakes
-> as they already have made.  Reading Documentation/SubmittingPatches
-> would also help, but that goes without saying ;-)
