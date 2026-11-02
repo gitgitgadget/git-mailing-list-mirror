@@ -1,101 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.48
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.43
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793633805;
-	b=Pz4ZEOIzsGgfFEXIiovCWfHn5+ZVGcamCvf/yjh7oof3d2b0YKJNcZKfkIp5bz8sMq6D
-	 TnACqHpvOu0a3mUs6nbqbXKj1qr4q40fs/+Htv/6fOlt9Nt8R6Zxzpnj+MppZlOj1Huo0
-	 SghR7dntfyLZsB+ArIhR3FOaU9A/hvve7NYrelKdu8yQLrCAOyfnnXFNv77B0Lyk3pNqi
-	 KOL1bY7QvbU+XXhUvnYyHhjGy3W+H5l1M4FGqmtA9fq9mjexECTAxKf5zAYgFnyk357qj
-	 dx7xOayk8NOp5hUB1aa8k6ybJYiqZuiTEsqkErhWQYJlat3GnNa5PkPRIZg+zrZXtuA==
+	t=1793634289;
+	b=MhO65kk8csKMxBB5SIyt1CRDBGkV+nd37rP+C2/1c/oqG8HTAFXchDhQYIqBaHqjX7bu
+	 euKJAfcc7MjUsjzXx754li1box/CunelJmPibK5eqmoub0twfyWZg166pw6trAqIihvpA
+	 oE4BaWyu8UWf4ccgvMA9KdcdB+M+XoRw3+L/cpexHkYfOped9wCzvq23l7ExwCCiPr/te
+	 gLG7CZLZoqlJx178XzY2kaWjMn/f5ileJcSkFOaUt7RWM9Wo5odjZ9b+rJGaR7REJZ90m
+	 P8mi40BuHNdG7kTxdF7Qoq72k29zv6j/8dyi+0PTs444Mo+PKDlGVRcyRpp4Ui1PrCQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793633805;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793634289;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=gaSv7wmyVGwG29uWEWbGBoYMk9gKc63ur9oli218zvA=;
-	b=j28eGtdbd7YwqZqrLT71Y+ogtHgHObEV/OCyrgKjJaf/srabCCIpyqoWOgP7x5sTT3gw
-	 77Upp70aPob7U3hSgSUArTpq7bWFPUa9yb1D5RetkjnTjpcWl0nHQxVhnMsHsvgDvCh10
-	 NxMP78dLP+zZqahYGsS3pJEyD/jL6G9VQcwvSWTxmyggWY4uH2FN4fIZkOISmDzl3OSm0
-	 R/jbavEW2RlxRaKfLcMGwWAcPoE2d9ij0BR7JTbdgA871ledBpeS2k8u5DU8bsFEfUuRx
-	 VHPB+nFxxcX6r3GaNcsOuWWOLwcO7PQ1hndIVsnR/Xl42Ia1YuCP+Ybh2WMb1FUGZ1A==
+	bh=AcXpfOR5cykprlaHffBAbKOnaD9vzw9755T/yHHw94o=;
+	b=jg4DFAF6n7BuNS/eW+yqt58mXoi5X/eNY08LDFzCi0NicyYsua4JM7ZBhs3rWU9bOYHF
+	 C6Uq+PPL9ZAKNnkfJAFauZixYJXSX7IJqJVJYkZBFXoYEsX1Bwuc/wKC/JCEX6aRHvb4z
+	 9AyH39S20YpvnKnTZ3RI/qB/M77+AP+ZHmWEjsORKarobQTNLRyoTkfkO/7ApWXvScX4v
+	 FYAx7944pNoWvH8+h+G8pOh62kvqQ0V9aEoGNFmyRgH34u4QZCuuFG9kmLbinQO3faZpT
+	 yYcMVA0OStTEw7exy85+aIMzhYH55wZn6r1XveiLC90t/jRpHYIRo9AfI9aetFAUf9A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cf97UKMV;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.48
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="RjD/G+zK";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.43
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2AD60A5626
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 15:36:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A2AD60A5626
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1315606A32C
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 15:44:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1315606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cf97UKMV
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-18cdcfc05ffso3588462c88.1
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 07:36:45 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793633804; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RjD/G+zK
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6afafc89b48so5106142a12.2
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 07:44:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793634287; cv=none;
         d=google.com; s=arc-20260327;
-        b=RNuhHw3VxFSgqVnM24gqya7Tj2ahCrmR/YxlgyDYSVOalYb/GfDT64RuVH1r6osSPI
-         p7o+vBnCXw1DbecI1IV8Y/R0g4j5wmbXvDwsW1oYBZADfdMjLxzZSPab1P+MVdAwk/Mp
-         nbIwIEOB/9Mk3pj1CoX3tg0ybiRIxEonsrAkQ0re45KQ96ecMZWHORsdXDseqgu9w0PW
-         GnRBYZ4Bl2Lejn8lXrokUFEUxmjRDmXo9DdvspnGHUzE3AxfVx6PNCZGJLV/wdvirfqR
-         ImzzrN4gKhWy8E8mZP2yl7zObTOXf5ASv2ZTalM/WQuZBSiqaLBWD1XCI3ScsNPtEjb2
-         sgCg==
+        b=aoAkf2q/eIBhb5lfqC0VP4sg0iu3k9x4RPy1tYaG2b0yAFBL5Y0NRXvPuNuIhhDGoH
+         lPBpfX52UtTQzYpOE1rX2QBBnXQN8B//xKR2d7E6+t1lzhuOG8hocXXshCt6DIz9znI6
+         wnK90ejPdCyaSg7IZvnsM9X3qHvQgd/HMTNBMCogjH51SMlezJIvPgJ3JsSliIS+BK8d
+         S0yrAJjJKBNLb/tKBuHEz6RTayom/x8Su5sxuQdPRYyn1BEt31B//PA9Chw08zHgO9PU
+         5DLk4RvnPwULjbRB0ESaXcOjntzxOFdEPcUjN0avYFjLDpgxRpLQb0HedCWMnsaRcH2W
+         QQdg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=gaSv7wmyVGwG29uWEWbGBoYMk9gKc63ur9oli218zvA=;
-        fh=9Dtf5cvvlGVK6PLlUKwkyzVB/bvnsDqG6QPdMs1iRQM=;
-        b=jaR+kWjjOmGwYPJ2799YQXV86LNVi30KHPrzAU6HuCfjFdSCIL+OtolBtexLcX2Mcy
-         yJ6mAgDZ4ws9bXDFOt7eaAEpTQdQNo0BHVhmo0nAcaeWaU+rSCo4gPxFYEfOm/5aQL5u
-         IvP/5N1Aa7+Hz7WOtTCH+w192d0n1ou1K3okTz1H/Ef46wDb5/SZW2UfbQvMmk8Gl1+t
-         LQYvLz7U4bXOw79ErSgxeZE5rZ+OyZpOkgWNYM+egbwx2jATW6wl9DkuC60Ld1gntaAH
-         2kfy9F8YdKYrcjJuvZjwNlZiPs8jAJ1LtTnuXlowBqzXYakcl1z4oWSbsAaqsTJflNW8
-         1n0A==;
+        bh=AcXpfOR5cykprlaHffBAbKOnaD9vzw9755T/yHHw94o=;
+        fh=LrpCnZCoNbdARdfoSTNeqYGx9yzoW79/9vJyQsozmQk=;
+        b=haoCrjbX7KSo5YO6d5Yhzxd2s2LR+WFtyWTyT1T0IQ7IiqshAJdtscmZfZbrhYfSmY
+         7UR2N18IaRVmjxBVaeea3KVGM4DaaNiA3nTTA++b3mf4+sLns4Tmqq+FZhzUfaqUj5u1
+         SCh/aTvgJ/jwp27MIwwJkb6aCfhbBqXTtcrkfzqPuyB7TpW146+TK09568MjJyM2FkSz
+         1KzvE4tMnbeydliTRb7+R/HZNoTF2WDnwlbzRhk/+SuGtDnrwhGMtTONFSLMvhWkaKLV
+         jvcPLZyADLKA/sS/5hjCvNoehi7hVvYstPAD4u1QjSjU6QjjeTRhn35rfX2HseG5G/17
+         1oSQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793633804; x=1794238604; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793634287; x=1794239087; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=gaSv7wmyVGwG29uWEWbGBoYMk9gKc63ur9oli218zvA=;
-        b=cf97UKMVqYOxSW9Vm4zbliDUayDKT0YzeSzXNqoV1hOpeZiep2bCWVY4tnAOmOEvB+
-         wJ0/p/HWbKlO5zaBiqZDip6eOkjnc/AvbDPFuUNV236Og4k90sGVYqNpsV9eXWYyN3fX
-         uMuVo8u/NlgaHVttys+ukkvxInu5n1OMN6vXN87nXsylaqC02gwyuv9wix/RTpxyPvkp
-         D0ugIOkIaqn3Jhxwasfqm823z5INnxFD8NJdtcWvNK9VSfqWt6d9m3It7SkwSn6+VTuk
-         2JdtyJYbZ0HCSiHbkj7YUpadSF9uqaw8Ako29GNGGDDgOepLjWyUv8hUmtiaeY5bdjWC
-         hl8A==
+        bh=AcXpfOR5cykprlaHffBAbKOnaD9vzw9755T/yHHw94o=;
+        b=RjD/G+zK3bKqE70GW/6YTUIvX/3MmOEjKN8KOuQSTLpoNt6gfIHo0LoaZXfGGbefvk
+         ZNrVU2ie5x8lCHbbvF78L9SVxTxcXyPBxFMMIlO981qWVQrnGImkHaF5PGqDpoMYojPd
+         abcjwthBMgIkNHw+fir6a7ZLkiYrUhubtMT4bkkBIzGMj32aC+6XsHg+t+Y0+OR4LfJK
+         5e1cRkd7vF45D6+joxSTEi0lAGSZJRGGY6H0SJ8vQf1vBgt/s+jc/RPd89+E5Al4JM9c
+         0BGqRmXqyCvyKlY6/kWLACM8EkkRgBzTKX096sgomq+D/ut2oMKasBc4uetQqBJCmee2
+         v3vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793633804; x=1794238604;
+        d=1e100.net; s=20260707; t=1793634287; x=1794239087;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=gaSv7wmyVGwG29uWEWbGBoYMk9gKc63ur9oli218zvA=;
-        b=R/hrGEoS6IN5ENIVxtxB94UKiuRnVCeTaqfAg/EdgUd/6A694kVfXX/D6vPlSy4lrH
-         p9y2r681CmGj/4DMiUW7o+yyvHdwryOtnb4a00wqKjvfySnH6BguU59+smjsGdxYKIBJ
-         9Y8R4j7TbWEfJUdC1uZxwN10PXWwyyIMcrMhHLXppE8nE1ENTUlI0xYE2pORzuQvF6/Z
-         OnLW28WgElI5cO8EKMShTjk8fTqhOovNLrERmd5U+85VD2wrydtobaatuw4eWyeSUusO
-         KByS4KAYnt5EKEFP6MfbseY2b0Es+T6ld4IS3jqgABIkYFs/znlOb4F+uV4PWZxX1eNb
-         yiew==
-X-Gm-Message-State: AFq9FYKD/Q7AMAgqZdiw2pIlRnjR5zhzyPRoEtxWRwh85aLAjWfFOpIv
-	m6yqPE8cB7xlyMfpnQxLYDNl2DHGYsq6YD7THav/4YmO/2CS5DmjvXEGk/5ZRrys9U1IHDwytHV
-	L+hd1GG8O2dYT4ggog8cEasNwV7J2K0E=
-X-Gm-Gg: AYBFou2lE+aPJITJto9dBnVkeABx+GvBb9YLXR6YMz8NVikyn/9u3KhbO5NwghMnX3m
-	WDVknM3M4YOHujCSCSgZqZEFf2PvZ0RfB2fuUzyHkPW9y/JuVi4MkiVsqWRq3S64jJx2IHEiDwS
-	PA3T7PBFNIlN7dybcp3Suyn1MoEaGje+JsaDilW4XjqnBR4I072w09CwOE9VesWftHsflTjTHPn
-	VsjEK/fLnwQcQiPTbh5HPm5M4GvOAzcNYwN8ZPb5s0Hd0xefB39d0L2OkKyfkdax6oqXUC5oDIm
-	FgFFFQOkMCbCHGeyYz2wjngLmgmT+9qw7QY/q/k40+ZOavHYHDZeOeJ58lZqKaAAoNfhE4NTkdB
-	79J1QN352KxzsJKZUgLi9T0NRhgHokOxHtjqVtdFMyY91BrUPBRAOsZhA3YZG0Fih431ZMy7mJR
-	qg1x98qt1l+iB+N3rM7Es2R/VPyEfOhFbYR8dsVtkS3hxcqlmaLAJ45m4VKfPELR01qaiqTbomi
-	1xxfaGgiDun6ew8I6w0VQL64Q==
-X-Received: by 2002:a05:7022:d82:b0:191:444:425 with SMTP id
- a92af1059eb24-1ac56302334mr14838537c88.2.1793633804297; Mon, 02 Nov 2026
- 07:36:44 -0800 (PST)
+        bh=AcXpfOR5cykprlaHffBAbKOnaD9vzw9755T/yHHw94o=;
+        b=Hn1yawPu5pZl3ruQpExOwduzoHYSpDemQtiimSmzk5c1OZXpZkt5t3toh5Sc0KTyxr
+         Y0qPN/0EW/HpX2ySous6dmuyS1QbdYgw7+jEImEJ+SUuk8v4BZSWZkr9N6rOWUmCO0SP
+         XcuAswQ0vJIwEk/aVjF4jrYAoBrXEBIhyGc8JmIhDjPzfvISv2+JI6We6iFjHSk4GqZm
+         xM/5dGOcUlIMHPmTj3Y1KxG2ODiLPNp/556KZwzBfxt/XBXc1VC5qCmzDR8fCFTgzm8h
+         +J8Y7s2riL+dgTwU+feydF48TBfBq5uxpTrPhPOL/hOWi5wfs/UFMva5u1HpmTWbpLZj
+         Va1w==
+X-Gm-Message-State: APuU4Z8JySHsx/g86fbJUc8E9Z9lsasxFEgSaqyiKT8tyHQvm5EUoElZ
+	L013hl24eLJy9PWhLR8wuu2XNxlOilm2juKHBVB0UFfFv/camWnOD3vktOBcM/aTIyt0312dJPt
+	jXQ9LkkINpPLBuwHwit/kwmxVaa2rS8o=
+X-Gm-Gg: AYBFou2NqMnAukk2Ll18wZQ8+RMtHuCIIQYJbcfqI1aM+xrJCVj/vUDNSr53kWLfZ5I
+	BX0ItBE2rfhvkBsNEfnGQtkC5TBYz/wtgimOwgq8MEF1GwyH+GJqGRtJo//tEE4ZZ9qsZbN2RT+
+	sdJmIwcV2/bf/0kvC3jFqDVMjQOLs6rpQZ57EgNalQG8UEnF+OpW8FqvQfTrlYR7MDTtXMPOe0Y
+	Bvotz7fPD0deU4/XoGExLRrmC9wYXPKz74CktrnPvmyd+LTmxFtHBTRhhZ3eND0z+Eh4daCEUKT
+	IyVxw6BqC5SYZhsGywd65f5yYPHo7Vj7/VsrJ7Uq5PCemMIGA0/WeFpOGx4jneCPltvDe7Smg4O
+	BZIUNoDkuFVwOX+1jskRLJ0u4Tuji+U68IbR7EVVsgNkowLCvRwjH5/QBqXQ=
+X-Received: by 2002:aa7:c0d7:0:b0:6b3:d0a0:39e5 with SMTP id
+ 4fb4d7f45d1cf-6b4d438bdb7mr5392929a12.9.1793634286902; Mon, 02 Nov 2026
+ 07:44:46 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,123 +103,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261012074413.337183-5-christian.couder@gmail.com> <20261031142255.4941-1-herroyalpriestess@gmail.com>
-In-Reply-To: <20261031142255.4941-1-herroyalpriestess@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 2 Nov 2026 16:36:32 +0100
-X-Gm-Features: AclHuK_79vQD_ZbzXsXOP5C_FUBi4-AnBwVciSvjdrUtQrof9ZW8YwL37dIR-bg
-Message-ID: <CAP8UFD2m+wpcgqB2SasWLxyekY+5khrYyPkOuLoYwANqZws8fw@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] fast-import: use early_scan_options() for --allow-unsafe-features
-To: Cynthia Uche <herroyalpriestess@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, kaartic.sivaraam@gmail.com, 
-	ps@pks.im, newren@gmail.com, peff@peff.net, sandals@crustytoothpaste.net, 
-	Johannes.Schindelin@gmx.de, jltobler@gmail.com, cynthianuchepro@gmail.com
+References: <CAKUOgLzP0CSwOwLeoSpM94A+XCT2X_cVojHsLugDfw+tBZk9LQ@mail.gmail.com>
+In-Reply-To: <CAKUOgLzP0CSwOwLeoSpM94A+XCT2X_cVojHsLugDfw+tBZk9LQ@mail.gmail.com>
+From: Priestess <herroyalpriestess@gmail.com>
+Date: Mon, 2 Nov 2026 16:44:33 +0100
+X-Gm-Features: AclHuK99So4qx7w_ENBOBEvnLarPH3WOhy1v6TmND0S5HON9uhEzl8sX609l6HY
+Message-ID: <CAOcE0wLn5tU6Ok90EhPfyQ0f_atkaFPQyWFLh7JovRGjZ9aZAQ@mail.gmail.com>
+Subject: Re: [Outreachy] GIT_DIR inherited by shell aliases in linked worktrees
+To: Immaculate Mecha <immaculatemecha87@gmail.com>, christian.couder@gmail.com, 
+	Usman Akinyemi <usmanakinyemi202@gmail.com>, kaartic.sivaraam@gmail.com, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Cynthia,
+On Fri, Oct 30, 2026 at 2:40=E2=80=AFPM Immaculate Mecha
+<immaculatemecha87@gmail.com> wrote:
+>
+> I'm considering a small Outreachy contribution around repository
+> environment handling in external shell aliases.
+>
+> I reproduced the following behaviour:
+>
+> Create a repository with a linked worktree.
+>
+> Run an external shell alias from inside that worktree.
+>
+> Have the alias execute git -C ../TestBaseRepo rev-parse.
+>
+> The nested command reports the calling worktree's Git directory and
+> common directory, even though --show-toplevel correctly identifies
+> TestBaseRepo.
+>
+> I traced this to the inherited GIT_DIR variable. Unsetting GIT_DIR
+> before running the nested command makes all three results point to the
+> target repository.
+>
+> I found the earlier 2020 discussion about GIT_DIR inheritance in
+> aliases, but I'm interested in whether there is still room for a
+> focused contribution, particularly around regression tests for linked
+> worktrees.
+>
+> Would this be a suitable microproject for Outreachy?
+>
+> Thank you,
+>
+> Immaculate Mecha
+>
 
-On Sat, Oct 31, 2026 at 3:25=E2=80=AFPM Cynthia Uche
-<herroyalpriestess@gmail.com> wrote:
->
-> Hi Christian,
->
-> I read through the series and ran t0040 and t9300 on the
-> cc/early-scan-options topic, as in origin/seen (tip dabb68a20d).
-> All 118 tests in t0040 pass, including the new early-scan tests, and
-> all 261 tests in t9300 pass, including the new R: tests.
->
-> > +      * The scan uses the same options as parse_options() below, so th=
-e
-> > +      * two agree on which options take a value and on abbreviations. =
-In
-> > +      * case of doubt, the scan stops early, so unsafe features are th=
-en
-> > +      * refused rather than wrongly allowed.
-> > +      */
-> > +     early_scan_options(argc - 1, argv + 1, fast_import_options,
-> > +                        EARLY_SCAN_STOP_AT_NON_OPTION,
-> > +                        option_parse_early_allow_unsafe, &state);
->
-> The call passes EARLY_SCAN_STOP_AT_NON_OPTION, but the 3/4 header says
-> to pass it when parse_options() is called with
-> PARSE_OPT_STOP_AT_NON_OPTION or with subcommands.
 
-Yeah, the end of that header comment wasn't as helpful as it could
-have been. I have reworked and improved it. In the v4 I just sent, it
-looks like this:
+Hi Immaculate,
 
- * This requires the scan to be told about the way the later
- * parse_options() call treats its arguments though:
- *
- *  - when parse_options() is called with PARSE_OPT_STOP_AT_NON_OPTION
- *    or with subcommands, callers should pass
- *    EARLY_SCAN_STOP_AT_NON_OPTION,
- *
- *  - when parse_options() is called with PARSE_OPT_KEEP_UNKNOWN_OPT,
- *    which disables abbreviations there but not here, callers should
- *    not use the scan.
- *
- * Passing EARLY_SCAN_STOP_AT_NON_OPTION in other cases is safe, and
- * useful when the caller rejects non-option arguments itself."
- */
+I reproduced this on git 2.56.GIT. From inside a linked worktree, an
+alias running `git -C <unrelated-repo> rev-parse --git-dir
+--git-common-dir --show-toplevel` printed the worktree's git dir and
+common dir, but a toplevel of the target. Running the same command
+with `env -u GIT_DIR` gave the target repo for all three, so the
+inherited GIT_DIR is the cause.
 
-> That is not the case
-> here: parse_argv() calls parse_options() with only PARSE_OPT_KEEP_ARGV0,
-> and the table has no subcommands. Stopping at the first non-option is
-> the safe direction, and it matches the old loop, which also broke at
-> the first argument not starting with a dash. But the comment only says
-> the scan stops early "in case of doubt", and does not mention this flag.
->
-> With an input file containing
-> "feature import-marks-if-exists=3Dnonexistent.marks", I tried:
->
->   ./git fast-import --depth 5 --allow-unsafe-features <input
->
-> which succeeds (exit=3D0), and
->
->   ./git fast-import --depth 5 extra --allow-unsafe-features <input
->
-> which dies with "forbidden in input without --allow-unsafe-features"
-> (exit=3D128). The stray "extra" would make parse_options() fail with a
-> usage error, but that only happens after the stream's feature lines
-> have been processed.
->
-> To see what the flag changes, I replaced EARLY_SCAN_STOP_AT_NON_OPTION
-> with 0 locally and ran the second command again. It then failed with
-> the usage error (exit=3D129) instead, so the scan had gone past "extra",
-> seen --allow-unsafe-features, and the unsafe feature line was accepted
-> before parse_options() rejected the command line.
->
-> I would suggest adding a sentence to the comment saying that the scan
-> stops at the first non-option through EARLY_SCAN_STOP_AT_NON_OPTION,
-> even though parse_options() is not called with
-> PARSE_OPT_STOP_AT_NON_OPTION, so that readers know why the flag is
-> passed.
+Note that with the main repo as the target, --git-common-dir looks
+correct either way, so an unrelated repo is the better test. The
+correct --show-toplevel seems to be just the cwd after -C, since
+GIT_DIR is set without GIT_WORK_TREE.
 
-Right, in v4, I have improved the comment to explain why we pass the flag:
+handle_alias() in git.c has a comment, "Aliases expect GIT_PREFIX,
+GIT_DIR etc to be set", so the export looks intentional. That makes
+this more a design question than a microproject, and a test locking
+in current behavior could age badly. I'm not a mentor, so I've added
+them to Cc to say whether it fits.
 
-/*
-* We don't parse most options until after we've seen the set of
-* "feature" lines at the start of the stream (which allows the command
-* line to override stream data). But we must do an early parse of any
-* command-line options that impact how we interpret the feature lines.
-*
-* The scan uses the same options as parse_options() below, so the
-* two agree on which options take a value and on abbreviations. In
-* case of doubt, the scan stops early, so unsafe features are then
-* refused rather than wrongly allowed.
-*
-* EARLY_SCAN_STOP_AT_NON_OPTION is passed even though parse_options()
-* is not called with PARSE_OPT_STOP_AT_NON_OPTION, as any non-option
-* argument makes parse_argv() reject the command line, and the stream
-* should not have been processed with unsafe features by then.
-*/
+With the contribution period ending soon, a smaller microproject may
+be the safer route, and you could still raise this one afterwards.
 
-I also added a small test for `git fast-import --depth 5 extra
---allow-unsafe-features` as it looks like an interesting thing to
-test.
-
-> I did not find other issues in this patch :)
-
-Thank you for your suggestions and your review.
+Thanks,
+Cynthia
