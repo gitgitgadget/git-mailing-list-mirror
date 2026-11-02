@@ -1,88 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.173
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793641946;
-	b=NBupkukLRLmPatTYc1bWcq2SJGBVJWQQkAOIdmh9gctSRlkPhKheQImwuGoQd6ch4YhD
-	 n5fhQvSwWTpAjfyeZArh39IKooomdnheOnZLjZL6ADEQ3LJ/eq3mjVjbE1DZzezi8TwA3
-	 +GTDY/zJXjGS5FdvK+nofRZFS/SWmMYvUCicRnyFlO+gsDjjdoHB45gYUCQof8fEiUNQx
-	 gHje//GX04PTjFNfIq3VwNc2JnOQYjHH81PjTzS1Nakn2tu60YHMYDxuDGJIGfV4E+JFJ
-	 1Fs6rzEYQhVJjWgtUCMnrSTq76g9N9xnH10mZzBh2jt/yAMiXzqmo6gdq0mmkxcnELg==
+	t=1793642238;
+	b=PqG6ilcdL6AYlKmIAm8ZURfuAIUY1ZNGhLVcz2drKwd9zq8U6fLOPAU6m2BdKNZfztcp
+	 GPYcR1M8p0pOz8v+OnJOGXe58RZMp0frLD1W98vzfEJvqfP3EbH21sVTXOQbbUmDJRnsx
+	 CP0O+rs8yfBwrRzaVHjvZ1ZVJs5iGQUeNEwSqH3Wqi5pwZubxpd9Nd/3+N9JocQvNIQVy
+	 fAeQ9w+g+l0m9wItAVBsueQLspUTiu/tjyIG4SWQ9lucV/g0q2YPK7A4f6e2tucZ5j7ft
+	 6nEf0mMiWDDOxe+ZwYLag3a4Qf/ssolgMVFDc3IBhHsQT4au04RBXwZbyVO5EIIhuQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793641946;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793642238;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=v42zZgz8uknIn6Xp1Asx1VeFCvYGUHKEjk42ELEWTfY=;
-	b=xYKmY0dVSBQ2xr3Uqww6eo/EfkGk5lHnCJa3Ud9IhbjoyHtfNF2sUTPwnYL0+1+j7dHy
-	 +qcuFydySWpAC4Dl5/Y6tEwCAEHNWUeTIFvkWvmWZMWl3TorKlHh+orzJbpGiJ41qtzuA
-	 ZUWNlUFKhZl+NnGJCn39DLBExrickALuZZV5gj7cq2NGX6PY0PEfJCt1Ap4KXC3G7pN6m
-	 Evlp3WnQLVPnBlhwmfyflXl4/1Rh6F79WE5tP8WOFGXLjxrOdMHwIqldvngIvxCwR4cVZ
-	 3mJJyWa8UaVj363J1DyFFnfi1jWCSKIfQ2WcF4ACWPnYsUYU+zBWQg6ekpa4dHG/2hg==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=GoGIJ7dz2bS+cHMuDShEAsNtzVqGuDPc5sQDaPLR6oA=;
+	b=d+160CFJOI6v/ofvEyvJ3iKa9KbcbJFgIfHQCZI3O2J0iaBcgHjy0bcM01N9DlDPQkTl
+	 Xje/l1YDzcN9/JEaSa85gjJ8PY7ULuy/3Rq44ZXM+ddg2bgrskJIsOaMFXaZygK0s9UNl
+	 dVcw/ZaGtSH+K4aiGhPfRuLauOLSETcehGDp+ACn3pmtl3RNoUYpGLsSyjseBMbkm0QhH
+	 UC9fta5BzvJDak1ldzDleDEVnnjjF3Pm6POiA08DOTrXnRNq9pNAEos4yn3RfwLx5Nwt4
+	 OCPYGlC8VnINtJ+oIK1jaKvOLV+B6FhHJxqZFEsUsUaGLJt1NbOFguXBAYoVUq5qOTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yU5WDANF;
-	arc=none smtp.remote-ip=209.85.222.179
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+	dmarc=pass header.from=jaspermayone.com;
+	spf=pass smtp.mailfrom=singlefeather.com;
+	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=OYLIWJlE;
+	arc=none smtp.remote-ip=209.85.160.173
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56EC606AE9F
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 17:52:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A56EC606AE9F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6425606D825
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 17:57:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6425606D825
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jaspermayone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=singlefeather.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yU5WDANF
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-93e64d52949so293462785a.1
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 09:52:25 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=OYLIWJlE
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-53669f7b518so42096861cf.2
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 09:57:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793641944; x=1794246744; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=v42zZgz8uknIn6Xp1Asx1VeFCvYGUHKEjk42ELEWTfY=;
-        b=yU5WDANFAd6vwdgEAUcbaQniacPvsPdB+3fBqxdARePYKTbI3lFMk8OxGJZV4KDbye
-         FVs/yWLUrQ+OsyQoJFmYnCpEsduIK0Zc96jUjfiEc0nnB7MHHTHZ7KdzSVAmI0S4PqZV
-         UjIaffy66ySm6wg1Fip8fknhPMvW0BszeVZHr9OrFywTh7J4wlqcWGLFKn+vv31+aNbl
-         9eivFyMfC8MsdSpO1oDvchD8svZ8wK3cYtoKDljguQXKL343Xgcqy79IJzdqLEoP1P02
-         OqDAiGpleD+uGzg4go8irx9s+kcRxlU9A2EItUoHa4Grtmvt0QhFA8lxDhX89IMhsBZb
-         6PQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793641944; x=1794246744;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=jaspermayone.com; s=google; t=1793642236; x=1794247036; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=v42zZgz8uknIn6Xp1Asx1VeFCvYGUHKEjk42ELEWTfY=;
-        b=Kv5KzDlVplVmrt974yFCsXb2tMmmdzQngCy7DkILj6oMCTcjuPpa/1i6oxmUDwbDkP
-         cQ/WC/LjtkVHUR6QtinlOB7ASbiT6r+tpNZvMJ7U34rYoCQl6O3n9nxhmhO/6aVuI5oU
-         VvrJmYTrqspAJN+u6tpu6V2uxlmduLGM/KUZCTxG7CPLF1KGXl3f0PQtlLxQbFtiZR77
-         tRzzDDMrrdoaSPc5mFNzXTo/9p7yd03yhfidb3tQeFp5cayLrd51MdA1cHCpRC4LaCjK
-         YIUej9+RwZrKgaIqL015jGslTnqAHhoC+kiPAQRsQlVG/TvDilV1YZE/HXbzEOUWZMqA
-         q7Eg==
-X-Gm-Message-State: AFq9FYLYVFfm6r6P5sENWOYHWlchvLvr4Gm0QgCBD1ca9coqbsTm8Uaf
-	IjLUekH97ceD11g3rveY/iUr5YbaHXXkJHZ3YVFY4BsmOOfhEz1Ene9r
-X-Gm-Gg: AYBFou2VpUWz/kt/rNnkJRH1C7v53GMRSaaeamoj4DCz4q16TTfUVSRhyMMRHzGsK0F
-	DfnlQju076tAzsDw0u77b1Ei9UlTQ4aTguuUYRtvzljmU4IBp8hsMJPhb5mMQhpCHHwYQJ3vEF4
-	YK29rjnA+ESSIiYCioOFnRRXaWoiJeuVvL/7k6crIOgc9iwjSzuFf5u2xeyhySqOVRQxwVHtX4N
-	y3s7GhlAetJd+uCfAd/9K8NF8Q5CXeIacd2sleJk3s82aDGwkIZ6bdB+xyBw4TV/Yl7r2j3otVG
-	U8Q95vsbYUSmyJLQITB6o8czKSh9mva7AmMA+mlu5OzWLQ9B2axdZNHp2uE9b0uu9xdbEWosoeh
-	hifq2jnQasyOlcr3emr1jEtU+s8k3f8jaJ4COMGWevPdbWry2Tpfu3+Ecxcs9vr1OYCjcDzCUlb
-	X1NMhurJ5lk0fjsWhxlRHhhW7lOf7ooocHhAsQnySx7kORrFrhdXSVKfP+K8CEnC9Jnp4kuWVY/
-	vRC4ysqOLVHXMqqNkqlJDLZTjIPOWuNwl4dhSM2jNxxuD2b1o7LCB9wys0u/G+OfsMipm1CfBd7
-	CTIWY7PPddMepVkGmbGT5MfKoqdvm/2h7Jkh9M5vmdmif0r24HrvZv1lMF6LpDyToM5z3K2kUI+
-	ooEGCm4Vti7fa2vo+fUQKQXM9Pt0tciB83oJnmej0OywW/UqRpzA00TROUreHchbuzv+xanryAz
-	61V6snGPE0Hbx08mgyJO+eGYrmZYIKPznhO8J00smK0876+GxjjpPwWg==
-X-Received: by 2002:a05:620a:1a22:b0:93f:2d10:ea44 with SMTP id af79cd13be357-944217ef451mr1777408485a.52.1793641944504;
-        Mon, 02 Nov 2026 09:52:24 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca7e2749asm96173026d6.1.2026.11.02.09.52.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Nov 2026 09:52:23 -0800 (PST)
-Message-ID: <fd7da4e6-ed30-4d83-8c8e-233a778f9a19@gmail.com>
-Date: Mon, 2 Nov 2026 12:52:23 -0500
+        bh=GoGIJ7dz2bS+cHMuDShEAsNtzVqGuDPc5sQDaPLR6oA=;
+        b=OYLIWJlEwg4eNXMyn3cIJui6J2hZOWmW7UB++q2pV2uo34tZESNNoZ6gnLXUzxz43j
+         2mAxCIKCeeORliYIhYSGo8IfGrhoCIy1rKefj5m8EHrfhISMWHnFpQ1rVjzSB0EjHi2c
+         MfjSvVZ1ejke0PyQM0JU+R72xQXkFzGI5e34K74ZI9v5WgQTXynki0gS/O/G7i5uy105
+         4mVfUKigJaPRNqlFhrgp35pf2j7H78lbAnx96H2xYJ9KzkJ1dBim2G1vLj+8geh9M4xg
+         Y2cf+CIRGNxS9jkgjmDKgj+nZnqOIe47LekgppsEDOJXhxqFe+K1XqCrCe1K7YKr9Vtz
+         9obw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793642236; x=1794247036;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=GoGIJ7dz2bS+cHMuDShEAsNtzVqGuDPc5sQDaPLR6oA=;
+        b=uJVGyzvxRqjuj5j3LEqHJaJ0HeEkpHDaWK7+K1O7K5XM8WiQDAvrYOcTNDciXfyN8a
+         FFm5rPMZUOsun9oXN6M4lljRkjJEax8u3O4cMRKnRVQE2JFuJWJpST4R0iF1gLDz46ik
+         3ekkdFBtA+OUXqG6pS8kL+nIESwURG195wGBP8c5R8V0o/zbeJVgMERvE6pGgiOk0+pz
+         3hdYozxXocP8o6eyF2H/KFD9TuQQp6iJG++SU41I1Ktdq9Z1OSNcP330+LnVaIVMDFKX
+         c/fLjG5+s7fwxC+xG03oyiibcPbcudAiVk99pPGj6HMoHj6Yu8jkEh/fkpTLYS/tHBo4
+         mMUw==
+X-Forwarded-Encrypted: i=1; AKwUvByU1C54COtT6c3AIQGq5Urg48pT+IjYjklM7ZJSM35Szr/FL7BMI+DZc6jjWKrl+y70yKc=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8ySwCRMqvQT6vuuhyqrSc1VKPiCSvAoSYAFcs23KCliaB9Fj+j
+	Z6w2Z/IWSyaVSm6Yg5//F94+S6mS0F+LVdYTM3UalWwS2am43V6k79fIfW29viXa9W8E6DZwuts
+	pJr/yy0hx/z3C+BHzknQocgGAJN9Bvo5njxc21VFAKaRdU5OuAYmTJJHgta2hmj9T3nOmO4e4C+
+	ANtMPdRxvHnVqx56CTe/XixFTolB56G3hrQC9YESJjhUofRLk=
+X-Gm-Gg: AYBFou3nMyebRfXlZVQyYRuK5lgqSQjrNfiJ7F6JGt3JmVmshcTuJGQqEGwJ4opzZ4r
+	w7h/ief1FznrvdeFgh7EyLwTnIkaaeJ3lvLwRFnLCYccLSsJgcrFj/hh6BTcNvGX2ctDhG0OrwR
+	Wd4xmaxDPogpwfTOF8CxxDN5qbixH0B9P7DmMOWiFVaerNLzbw2iqMJelfa0nOS7TO+8F2dagYi
+	PjX4iQmBPnaPa1SfTy55u0Nb2TcBs1r1iw+Is71c+Odh0hT7XNfTNN04ktXtZ4+9T6vNS3LzLzK
+	/n5tnX4d7RoJOquRwzmxAOMi7XiDEzw52QRimG9R2K0haFKFhXK5OhiVts7qYMRGWFzXUSk8Gac
+	/79uAjYmiJb75nxvE1iS3b6jyxUIQ8Jp3HjjN9P7T2qRKshoQsSSq2KNMyrg847TZOp12EziKTm
+	L6rB/42gC/N7mv9slnOY7PG4dPt9B40iLR1/O3ji+y/l0esKfI+U8iHGip7Sq9IpqbZCXIQqXdR
+	EuiyPVU2SkSHTchGNHpmiaOp5KxdtL3Sd2ShAVkXVBSVKTEox2SfUhbXBRv3zraEC55pS8LMi6A
+	R0yPXyVA561tsrQc3F0QHUjloP5xL8UGMstf6NGa667308rbflV/t7qbYjNLUcJ/oGDixPwT6G6
+	b6t+12IjpIdKhw4HECZjKUVSQxPpC7BFCzyErEv/K50JMX6O3CWh9Ov5N6MzzLOxVwb3lOdjE0W
+	Yne0h64srwNqVJKbjLbRw2qfCgxtcrSfHZbxa9AgU7RjaQQo0DYuGGhEBcr9/7WXxuSDuL8JQ7J
+	boWDKOuXCcdUoemCzSffH+n/aDTg+HU9B/UFXj7dxQ2O9A=
+X-Received: by 2002:a05:622a:251b:b0:535:9686:b9e9 with SMTP id d75a77b69052e-542b405b6d7mr186585281cf.11.1793642236448;
+        Mon, 02 Nov 2026 09:57:16 -0800 (PST)
+Received: from remus.wildebeest-stargazer.ts.net ([69.43.66.31])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca7f25fc2sm97468096d6.10.2026.11.02.09.57.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 09:57:15 -0800 (PST)
+From: Jasper Mayone <me@jaspermayone.com>
+To: phillip.wood123@gmail.com,
+	git@vger.kernel.org
+Cc: gitster@pobox.com,
+	sunshine@sunshineco.com,
+	kristofferhaugsbakk@fastmail.com,
+	ben.knoble@gmail.com,
+	haraldnordgren@gmail.com,
+	Jasper Mayone <me@jaspermayone.com>
+Subject: Re: [PATCH 1/2] worktree remove: refuse a worktree in the middle of a rebase or bisect
+Date: Mon,  2 Nov 2026 12:57:07 -0500
+Message-ID: <20261102175708.75996-1-me@jaspermayone.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <bf554c5f-066c-4e58-a583-0f95aedecf95@gmail.com>
+References: <bf554c5f-066c-4e58-a583-0f95aedecf95@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,57 +107,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] describe: count the distance correctly when commit dates
- are skewed
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20261031065525.19883-2-torvalds@kernel.org>
- <auiGP4XhObUzC9vD@pks.im> <8fa4010d-d39f-4e78-ab01-be3e9d20a148@gmail.com>
- <xmqqqzh3jhcy.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqqzh3jhcy.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/2/2026 12:03 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->>>> +	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
->>>>  	struct commit_name *n;
->>>>  	struct possible_tag all_matches[MAX_TAGS];
->>>>  	unsigned int match_cnt = 0, annotated_cnt = 0, cur_match;
->>>
->>> ... I wonder whether we should also call `ensure_generations_valid()`
->>> here. That function is very expensive in cases where we don't have a
->>> commit graph as it backfills generation numbers, and it may have to walk
->>> the complete commit graph to do so. But isn't that better compared to
->>> silently yielding a potentially-wrong result?
->> I came here to say exactly that. Even when a commit-graph exists, it can
->> be slightly behind the object database and so we need to fix up the
->> newest commits with generation number details.
->>
->> The biggest downside is that it becomes very slow when a commit-graph
->> doesn't exist (it walks all reachable commits from the starting points)
->> but that's typically better than giving an incorrect answer.
-> 
-> When we ended up spending the huge cost by doing this in a
-> repository without existing commit-graph or with an out of date
-> commit-graph, I wonder if it is possible to recoup the cost by
-> amortizing it over time by writing a commit-graph out?
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-I do like this idea, as we could take the structure that was
-computed and write it out with relatively small overhead at
-that point. We are expecting the commit-graph to exist in
-more places, and it has been baking for several years now.
-Maybe it's time to make that expectation more explicit and
-have it become an opt-out instead of opt-in feature.
+> Cherry picking or reverting a single commit that contains no new
+> changes also looks clean, but there is still a cherry-pick operation
+> in progress as CHERRY_PICK_HEAD exists.
+[...]
+> Fixing that case simply requires us to see if CHERRY_PICK_HEAD, or
+> REVERT_HEAD exist.
 
-It does lead to some concerns that commands that are "read
-only" become mutators of disk state. This is something that
-could be rectified with appropriate guardrails.
+Good catch. v4 will check for CHERRY_PICK_HEAD and REVERT_HEAD in the
+worktree's $GIT_DIR as well as the sequencer directory, with a test for
+a single empty cherry-pick.
 
-Thanks,
--Stolee
+>> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+>
+> I'm not sure what I've done anything to help with this patch
 
+You are right, your help was on the other patch. I will drop it here.
+
+> A list of the conditions that require --force might make this section
+> clearer.
+
+Agreed. I will turn the `remove` description into a list of what makes
+a worktree unclean (modified or untracked files, submodules, and an
+operation in progress), and fix the "or" chains and "either" you
+pointed out.
+
+> If we're running a lot of consecutive commands in a worktree, it is
+> clearer to use a subshell
+
+Will do.
+
+> I wonder how hard it would be to extend the "setup" test to create a
+> branch that has conflicts when it is applied with am, cherry-pick, or
+> rebase, so that we don't have to set up the conflicts in each test.
+
+I will try that for v4. A branch that changes the same line as a
+commit on top of "init" should give a conflict for all three.
+
+Thanks for the review.
+
+Jasper
