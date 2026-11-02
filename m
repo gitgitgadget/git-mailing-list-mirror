@@ -1,124 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793613589;
-	b=0oiQmJ1Xx0BrkzLHNtsefSdH2W4wUzXK+27YRMXh8Z+9vNzfE30vNGzb9O1l3N8Wg7FS
-	 bRyQW4A2O8j92pVHyIsEAkfZCBB6Q/dDFR03H4xJJwR0A2epmiiLIXF5Hg7Sw0K+Ers7Q
-	 Uti/7/uIif5M9VWA5s8XH7XlA0Oc9sgNgGHczf6+R+JkoST4QeE7N92DKL4dUTFNJLYSU
-	 RINkKAyLk3dPdplSiMHgQkeACXp+yDtrZmngsuBnKC1ZgXSvrvo2yezhONKYfZhxKEzTP
-	 5N6sFIFty0fOsJ/jbm7p6gW9ykHNDnVHqlcQ3EBZ1uwYJOYVbyXz0qSMU9cvjbSGCkg==
+	t=1793613677;
+	b=hhOayd9AtY7y0mw52GqDJ+wYRh0NglAd/HNLf1HD5wezBpDW89+zO3Ilu3w5p68I/xVU
+	 ZKhRnWrxF6rq2YCnoDIYqOULgH4U8y9MPcRRfak1Zdf69N9Jf3N37SssN9/NuuBj1cmCE
+	 D8jUIR/mn6NwxepjJ5oyQlDzYMUCXG2sX3tIJyuKnrZp8DvXRic8EYkuu3m9fa9SuNqwF
+	 m/ixUbiN5wj92OqrMC3loREn3lkyD6OLtKd1+9zURKEIcx/cAtP7jH3dw6jeryJnjLbeE
+	 IiHA6W1h7+yUZ2eLY4RNFlKtC9c74AEsVMmRjsfoqGow0SaHL2kFJl/UEvTAklM2CKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793613589;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793613677;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=jNyq4d5kcQLKlj7YGgLTkN0cguzmkm579kl2hFqXgVM=;
-	b=cLgBx3dr+DnCmhOrQyS/8LDhzzHsajyguxxQPZHh/96JKlLQ6a6ALUlrp7n3qImY917n
-	 TFmuhNHYdvTtbju9VmpPF6NzezNIVMGuSSCnLXeoIUJfWHmpBOUGUr9nF9ACIvGLKq/fa
-	 TYmCQppbuhyM17JN/0cusAkwZfpLNd7o08SqN+bZxHLNrhCWvLHp/o4iu9+qbJR5Ogesl
-	 fuNYVn+oARmvSyxa0fqVLZgcWhrZiAmvFEJcg0Bv+p/6cflQbEpQw1w3FH8QW4nb1r1hR
-	 wZ9jF0beipltLeFhrh5lDMjsxstoCwW+ANHCI7+oS6XW57T0/KC7EMZxcQt2kbg+D9g==
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=uJ1H0wJ/netMRb3XaFQ58EykPiFcsD+EdnN8847+Nyk=;
+	b=TSjI/LpahoftxFpTqa+iPClpeAAXGOVBAEemOr30jXlti8uaxU2knU1kHxo0pw2N6BT1
+	 t1pN/LcnrO9EZhYl1IOlKm1aRaC0Zbb40oWL6Q8sgnTNm6s9OhuWluWBO87gz9GqyS6aN
+	 qVUfY1a+p7+zhshmnYYgbn3LOTzTUDClKJfZ/ZUotUK057Kck0vrXnvjc0vE5IUsUbXSG
+	 wQyZm4oX2S5O0WUuW4vqZp/HfAbL59gGh9IMTBFNvAfyJM9dL67W3XYEyZ9EufKmkmMBW
+	 isnMWPGdjYWiKYhqqMmbGXJFZx87A7qvM1IsoCUjC6i5pZX20aghtJSi16jMn/YRk6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=jV9r+m6J;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="F/dUdqRy";
-	arc=none smtp.remote-ip=202.12.124.158
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=HKJUfLEC;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=UF9Zvmua;
+	arc=none smtp.remote-ip=202.12.124.144
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757B6606A32D
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 09:59:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 757B6606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD16606A327
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 10:01:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3DD16606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=jV9r+m6J;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=F/dUdqRy
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=HKJUfLEC;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=UF9Zvmua
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BA5E47A01D4
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 04:59:48 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 02 Nov 2026 04:59:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	by mailfout.stl.internal (Postfix) with ESMTP id 807921D0022D
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 05:01:16 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 02 Nov 2026 05:01:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793613588; x=1793699988; bh=jNyq4d5kcQ
-	LKlj7YGgLTkN0cguzmkm579kl2hFqXgVM=; b=jV9r+m6JHVjreDzlffOLgGB37B
-	HyO6CgLX+tYSaVAN3DcZfx1v0xLE2qV8WjqNdfYWlhD01S8pH1JP8V4qo+H6kYD+
-	dkpOXD+k8AIbX2PtABjf24qzCpg7ejC8/vN/r1b3E8ohz0j6Ur/SEgzfAY00l+gh
-	uTCxEQOaUZIDCQqoyM6Dvq92JtFc/tmIoJIpnLjX9USq4NMfGCHMgX/WZ/qEU6ep
-	ceZKreiJhRTK5Nh4ENmS9yrioAYCIyrxLqZ7VdJMjBWOve95L0w3AE49cz9zpXSf
-	m4cIP6zxF6RU2cTMVl1I0oZ0OfaNd+L1tn+37Dm426pqdPB22Qc3ET6ulUJw==
+	:subject:to:to; s=fm1; t=1793613676; x=1793700076; bh=uJ1H0wJ/ne
+	tMRb3XaFQ58EykPiFcsD+EdnN8847+Nyk=; b=HKJUfLECHrWtSOhmZg9kvCugqk
+	rJY0rxWnoXNGZYMO/wJIuHZ7WKVIhvWj1h8FN4PMXag/5GE+XpWV+CU4/JofJGMN
+	B5540U5wQ6ljkLo12BA/PNyvxzIYr/0c8HQ3CK+b/tQ52atksTEhYtChOFRnYoVT
+	PwkIO4ajvhLSPyTH6OkHOtyQXhVG5YkqPyiVhusrW44X/NxBgHWKZsv+g85kWSUZ
+	/EcHuZwRi0IGXdtrHWWyxXCocaI1fjJatBAysGNtmn3mBTHJ6pjSOJyk6G2slQ/z
+	MUHtPsEhGdY69bYE9Mfhb8UAPeVq7FlG8ky+x9rPMbsVxmByqfyCBGQ8mpIA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793613588; x=1793699988; bh=jNyq4d5kcQLKlj7YGgLTkN0cguzmkm579kl
-	2hFqXgVM=; b=F/dUdqRyTtMOuNBmKJX02VdC9HP8M7XUANsoHrjJawmKeS1/ltx
-	Csr3y9V5Ae4CnzMv+fmmWw4F9Bxr1MoZOe2gMP5Je67EEngSLFlBOcOMI4Cjxvqj
-	M5uMuz1CsbXw2I3NrVnXCPsu6oDD8lXPqgTr30scEDkasBFIzqfniPryZrJEiiFP
-	gIPngoWMO6lnbogLojoAFzsoAfdC5VzinRPXm3C9mUM2fA7yiRCr31TBy7c3a932
-	cVJrlqJeN+bGQwrKLsFmQPOb2yHzHHXPhcrgsJ9PUITxlK+tOgVXNFI1Wq/W42pw
-	JuTF1JB8NTRR1Pdi+uaqFPakPpoemGNPNQQ==
+	1793613676; x=1793700076; bh=uJ1H0wJ/netMRb3XaFQ58EykPiFcsD+EdnN
+	8847+Nyk=; b=UF9ZvmuaoSayEcL2tMEt/Z/6k8Pw3EEkgCWFZkb5m/0XJRt+ZvO
+	Hv09tPCI6KXDuTDIMtT2Zv2GBrDrx603YpCvw841yuaRK/aYl7p8Rc+cD5XyyEkX
+	bhTnr2fbUfVeiQ5krE8DAdWAvytg6FidsnEG/KKq3TPrcFUmuDXEmOpONnzhYx1m
+	IRrDf0mHwh7SpSCzT50tdyo/VJlSpECCdd+77UCuuYcdF8DLhqPf3KiapDSVhv3x
+	4BVCwR9zKebpvBHYKjqT/0HSaUveB7r6MgBYcYeJezzpg04mfSKGHw2s+nLKTfpQ
+	06AQIMS4AtT4R8d2xo9UbnBcHI0BcoJINFg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793613588; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793613676; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:AXTfY9cjncBHhYvEHZj8gIIzDD26ubt5lISRvkgcyILIe6H
-	wYjYs7lZcPrbznFi8NG0j031FTNtXKXv72YAwJx5awbBdvR+4o/xkj0lCTneV1Xu
-	abdVEmV9B2eVDYPvKouzAplc224h3Hd88JBP6bU/uBWlYR/fCWwdqGRGnXYNtiVi
-	wizKAH2sA0dkNu88UbdW6d7eup2KNdJlbb4wy0CNZhdMxOrBY72I2H1PVxDv1QZ1
-	zKXlL0qYPRu7+kXcr+Y9Rb5FPxkP285TZlGY+KHwyn/kt8OQG1GWEU/3zU+Gcv8A
-	Wcm2xgCgtEkmt/H6lDen7czR4kLHu4BjuBSmLag==;
+	s=fm1:rsa-sha256:ISu4lQC58AzSUGjuebaloK9fa5Si/SJBlzNWvcBljoJC/dl
+	SM8/OtNN2a2CHlV4ugk/+JN1CtTa0jbY/gZLgonUXRUvJOUwUGS+ELxS6a3tcNCp
+	RfDFAXvPi9IozDo4lVIoDAoRKwZkD1sq+W3gDfx5JWdIu/XfAf0M/v+eLrIGx/98
+	UOjVIMoqfo3rw2Ecx6KoHoC+0HwRKzR9nfED5PVW3F7GPts0wt+Pp9bZbeWsul42
+	VjzRNxsUNvFZWvFELF/rr7MtVSCHJjbJdb5j9xI5gvEnX2SR+p4OrpDa3CRVoSPY
+	CvXDs3UJP+Apx5yhuzY32SfFaQdTHDbxxH33qJQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:VRvHtUqounrbaIdEX1z02i5Xian694UPC7Ajz09ze1k=:rri4crjTBHR6u0LYYbN1vJUNINQL0snV06ikJhXoLSI=;
-X-ME-Sender: <xms:FF_oam2Q_h_AXgGpNvf3tkbFBXae_93Jkb7aghnX3rfxOH0q23rYeA>
-    <xme:FF_oaghkc7Fx7yiLTaYZ2bKJ8cw1zRpGevMQmOCenGdhwpPbxSig8mArRSSnsQvYd
-    klLzR4S877_bN2U8SXydVp5WtJKj8J1F8JxqUVRRTVVKBwFMsDu>
-X-ME-Received: <xmr:FF_oasTP3pWVYLxFIyGhj3BIcvJ_cA1N-DW2Xaoyfw-QjLe6mR5CBwWv6xG5eEchy94orA>
-X-ME-Proxy-Cause: dmFkZTGdD+KkHXhUCe3R6sG2YrPfsLq9WccO/wjOtN5iRnKbAz/ZAZRj93yZxuWQD71NCN
-    qcXYtjFdio0OxgtCMaglnM3hLbhRtnXOIxcC8G6O+204ux6z+MrWYJ5FUl4ocEX8EumEan
-    o2fk00KBMPY+jQteDD3zFSoC1eUAFwhhmzc82vvGWjnffwmQ1zsmT9L9Sz2oQTx3i0/pMF
-    RvckrNWa0gVE+9mllf85N1g5bkQYNPs2t9/v0jIDYS7WsRQX8Sd9+A1BmdXXqiDQA8gPMz
-    x770Llu62STXv7W/snsCYkNbx6KaVizDPEP6bgbcVqYVhpSQsumrku3Hij+kLhRxJWald+
-    QveBnDu0xswdXGBpXFg7BTHabzt/2TDGKXul2B99NoWlbXNbESEtDLrWTaaKnU5C3K1Fa6
-    HaJc/IG7iPaxdVnywchxMDVONa0gdxofNkB0WDngWR0+4Xy4bfrA0pIDw1sc9OiXzT4myL
-    XkQ4Xm9SmUT51bd9fgGSpiVeZgq6irgZwb79sDlKCZheaVOhrFDevhM0MVl3H3cNBkCezL
-    thkumgeOncrmJTRv+hPVYGcoVOAQscVkIA5b2OWg2ZDM4WgCNxIPDBZVArz+/kBMQO2B6R
-    RdHA4RrUD0x5CachMDkOtyL1a+uwss7ITKC3oETlzLRBmZk9sYuv3eAAk1zg
-X-ME-Proxy: <xmx:FF_oahgSA2iDg1Krw_lTJBFXB8kgxSub1ZeYYL_XTd0SnF_KZwSbfQ>
-    <xmx:FF_oas6_EfSf_XwdPkvvMc0nGNmJ0fBu0u7heYKBDuSU9bj5M7ezoA>
-    <xmx:FF_oauA_W17U9WydXixgVa6cyEvsl2aRx8XfyeetUYpBBtEKmVi68A>
-    <xmx:FF_oajZ8kLgKLtZAOD8s7vy2XzIAwBbFxTAwnj98YBBLdvzi4FFxxw>
-    <xmx:FF_oakhoO5djtv86ocLBhUCb4GsYP3uDkI8PcPZwGQuIRAkvPK57z97C>
-Feedback-ID: i197146af:Fastmail
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:YYcHjXto1bZU5eGgdg//0MD2D4uGtWnZpudNaqSQnxw=:TIDLvChv/QOd5PI/oEseIUk4WpR6lwUNLV231f8M5/w=;
+X-ME-Sender: <xms:bF_oasnG679NVneI-kCm3xWk1eNaCMNSj8YkHkq83g-ruKDdZuUAzw>
+    <xme:bF_oajQxGs3HqLvoHirc2M_mP_q_SU4PsXr5VjRiLaf6cJPr19UnU-cA6jPoute73
+    Wx3WvZXEtwbEKOcdfjZYwZG7omj-ZOfWku0LWNr2vj6p0dCcxNTAg>
+X-ME-Received: <xmr:bF_oaoCzyYQVfftWIvYu7iGjVo-53hQKQugblfIxW7D_8KLPfA9I3r9mbmRYmivH4Ekq1QEWfqu9L83psJlE4R3sJB4Nrkf8q3Jc>
+X-ME-Proxy-Cause: dmFkZTEpvYP8W1IjmMhdykHQK1UPIYwGyHw1id88TJ7+2U4WQnFZ8hKDaw5k1Kr7mrR3gp
+    P64FIn5nSX09OMyqpDZYlS2OS04mjlI9VGdtCh+CxUVqALXlmbc4dKtvRJ/EUnL3Ccr9qD
+    +9AVNAclOLvoxPay1QDrsd8Wb71EsFqmDab/E1bJJ5wmKqlzD8eXBZHsviLe/c4sjMxYrb
+    tntGydE6wibQ8KqDhGWDhNh3BCJRgWDXu2Bh33syUu/9iLWQEZMsPUa7Gmjtch1Eo9WlM6
+    CFOc8bJkyGjp9dv134mYSsbLxr3xQp34Xd1+zyT4sOBDhCTti4LO5fHXz7tqHvCV1h8MFm
+    buGZnVFOfKoaVeWtx/MQLN+xj9nWjeRZetgyiwDYozRi1s/XoziAArzHnbd01MifzfDZw5
+    umrHvooWh9lecZks8piPwcWfxtBqZr5oTz4BJRi6wDf5zsC3TWKKq6J5cRzwQ+G9gbd8+d
+    1d8a8K99MCxzK4hqbM+qhXsRqTb/QC/sbmo1RDHGuPWadrpSwjvQU3ER8qalPbiKzCKvfi
+    YEL/j+8hL9yHHbE6oTWwZhyHayigxedUTZUXhwmi+eBIJuBKv2KIM7MFgklqLF+NXMfn2M
+    04ExAneoDqWVI8r/LOdcF40TG6XqndeojwosjnEhErwbxlK2bIOdVp40WBgQ
+X-ME-Proxy: <xmx:bF_oaiTx8CPeQmNTjA2y-ucrEsHE-UXvTn3vItY2eSqn3oY2AJuRKQ>
+    <xmx:bF_oaup_zrVcH3P90RsNuQgiYWy6uFUX_LZ-WW_oCw9vsOshphDfpw>
+    <xmx:bF_oaswzItJ2jDxo8QKit0aAdv6ZS4psVirgct528-Lo8UghiCRUOQ>
+    <xmx:bF_oarJf_EjOITLV3buG47Ppk8jqfNCwe46pPisA_WsNTpdT-DH3aw>
+    <xmx:bF_oanTkyVlZ5G8ZxKcYsfVf2rsueYS_w23e-kiufbvOhCgRsJppKVFj>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Nov 2026 04:59:47 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ffb5b7ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Nov 2026 09:59:46 +0000 (UTC)
-Date: Mon, 2 Nov 2026 10:59:43 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: Ejecting things more aggressively out of 'seen'?
-Message-ID: <auhfD1ryB-7JwOYl@pks.im>
-References: <xmqqfr15ruw7.fsf@gitster.g>
- <f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com>
- <xmqq1pclc210.fsf@gitster.g>
- <414ebe62-c7f6-4d44-bde2-b689e35accfc@gmail.com>
- <xmqqbjbpptzr.fsf@gitster.g>
- <47bd0302-fc52-4df0-98a0-6fad7eb0fb05@gmail.com>
- <xmqq1p93ofjx.fsf@gitster.g>
+ 2 Nov 2026 05:01:15 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Edson <edsonwasswa54@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v6] builtin/diff-files: convert ad hoc option parsing to
+ parse-options API
+In-Reply-To: <20261101192502.1920-1-edsonwasswa54@gmail.com> (Edson's message
+	of "Sun, 1 Nov 2026 22:25:01 +0300")
+References: <20261029203904.432-1-edsonwasswa54@gmail.com>
+	<20261101192502.1920-1-edsonwasswa54@gmail.com>
+Date: Mon, 02 Nov 2026 02:01:14 -0800
+Message-ID: <xmqq8q3blfh1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,71 +125,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1p93ofjx.fsf@gitster.g>
+Content-Type: text/plain
 
-On Sun, Nov 01, 2026 at 11:31:14PM -0800, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
-> > On 29/07/2026 18:48, Junio C Hamano wrote:
-> >> 
-> >> Perhaps the sensible thing for me to do is to stop taking any new
-> >> topics into 'seen', even if I've spotted them, until I see somebody
-> >> give them a real review.
-> >> 
-> >> Otherwise, it becomes too tempting for me to jump in, give them a
-> >> superficial read after seeing them linger in the "What's Cooking"
-> >> draft in the "Needs review" state for too long, and, believing I've
-> >> seen enough, mark them for 'next'.  If I don't queue a patch that
-> >> nobody seems to have read carefully, I won't succumb to such
-> >> temptation.
-> >
-> > Maybe, though I do find having the patches in seen makes it easier to do 
-> > an in-depth review as it means I don't have to apply them myself.
-> 
-> I have operated in "aggressively accept many things into 'seen'"
-> mode for some time since this exchange.  We ended up with many
-> "Needs review" topics, which nobody was interested in, sitting in
-> 'seen' for weeks.  Having these and other topics in 'seen' may have
-> helped other topics get reviewed, which might have been missed by
-> you and others if they were not in my tree in a readily available
-> form.  Thus, it is not entirely fair to declare this a failed
-> experiment.
-> 
-> Still, we need to decide, and better yet, establish a policy on, how
-> to deal with topics that remain unreviewed even after lingering in
-> 'seen' for quite some time.
-> 
-> A mechanically applicable set of policies makes it easier to manage
-> a large volume of topics.  Some of these are currently written down,
-> while others may have been guessed by those who read a few "What's
-> cooking" reports in a row:
-> 
->  - A topic that has spent a week in 'next' graduates to 'master',
->    unless there is a strong reason to do otherwise.
-> 
->  - A topic marked as "Will merge to 'next'" is merged 60 hours after
->    such a label is applied (in other words, people can stop me if
->    they act soon enough).
+Edson <edsonwasswa54@gmail.com> writes:
 
-One state that confuses newcomers quite often is "Will merge to 'next'?"
-with a question mark at the end. If we were to document these we shuld
-probably also document that state.
+> -static const char diff_files_usage[] =
+> -"git diff-files [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]"
+> -"\n"
+> -COMMON_DIFF_OPTIONS_HELP;
+> +static const char * const diff_files_usage[] = {
+> +	"git diff-files [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]",
+> +	NULL
+> +};
 
->  - A topic goes into the "Waiting for response" state once reviewed,
->    where it remains until the author responds.  After staying in
->    this state for a month or so, it is demoted to the "Stalled"
->    state, and eventually dropped.
-> 
-> We should probably have a rule that says "a topic that did not get
-> reviewed for N weeks is ejected from 'seen'".
+The loss of COMMON_DIFF_OPTIONS_HELP here gives us a regression in
+the help output ("git diff-files -h").  By replacing the single string
+with a string array and passing it to parse_options() or
+show_usage_with_options_if_asked(), the COMMON_DIFF_OPTIONS_HELP
+macro is omitted.
 
-I think that's reasonable. Becoming a bit more aggressive there doesn't
-make too much of a difference anyway -- if a topic gets evicted from
-"seen" and then later on regains interest then it can still be included
-into "seen" again.
+Since parse_options() or show_usage_with_options_if_asked() only
+knows about the options explicitly defined in the diff_files_options[]
+array (leaving standard diff options to be parsed by
+setup_revisions()), the common diff options (like -p, --stat, and -z)
+will no longer be documented when the user runs "git diff-files -h".
 
-By gut feeling I'd use the same rule as for "Waiting for response".
+You probably could shove COMMON_DIFF_OPTIONS_HELP into OPT_GROUP()
+or something that produces static text in the help output to avoid
+the regression if you really wanted to, but given that "diff-files"
+is plumbing meant for use by scripts, I am not sure how much value
+we get by rewriting its command-line parsing.  Being able to say
+"git diff-files --bas" and get it understood as "--base" is
+something we may appreciate if it were a Porcelain command, but is
+it worth the hassle for a plumbing?  I have to wonder.
 
-Patrick
+Especially when the parsing loop the patch wants to replace ...
+
+>  	argc = setup_revisions(argc, argv, &rev, NULL);
+> -	while (1 < argc && argv[1][0] == '-') {
+> -		if (!strcmp(argv[1], "--base"))
+> -			rev.max_count = 1;
+> -		else if (!strcmp(argv[1], "--ours"))
+> -			rev.max_count = 2;
+> -		else if (!strcmp(argv[1], "--theirs"))
+> -			rev.max_count = 3;
+> -		else if (!strcmp(argv[1], "-q"))
+> -			options |= DIFF_SILENT_ON_REMOVED;
+> -		else
+> -			usage(diff_files_usage);
+> -		argv++; argc--;
+> -	}
+
+... is not anything that is ugly or overly hard to understand.
+
+I dunno.
+
+
+> +	argc = parse_options(argc, argv, prefix, diff_files_options,
+> +			     diff_files_usage, 0);
+>  	if (!rev.diffopt.output_format)
+>  		rev.diffopt.output_format = DIFF_FORMAT_RAW;
+>  	rev.diffopt.rotate_to_strict = 1;
+> @@ -73,7 +74,7 @@ int cmd_diff_files(int argc,
+>  	if (rev.pending.nr ||
+>  	    rev.min_age != -1 || rev.max_age != -1 ||
+>  	    3 < rev.max_count)
+> -		usage(diff_files_usage);
+> +		usage_with_options(diff_files_usage, diff_files_options);
+>  
+>  	/*
+>  	 * "diff-files --base -p" should not combine merges because it
