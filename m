@@ -1,89 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793628901;
-	b=rc9iyPuwsuPucbfhcwT2sCQ1OU3Q7n67dlCHZL8pkXFIlEnAO2JIPiFEszzYSmbbU+/u
-	 F1GZVoHne7REf9rdzMNCOR3kPIWjCfnEjFQ2fOHBigXvsfH714alX2WTIrd4Rp2WWL532
-	 qzPB+jwZ7l86NUSgsjFXI85a5F6v8nQsOFxWlBHQa5cTaVYa9D7M4k2bZub1OFz1R51lp
-	 hdfS8KeJ5mKn6JejFbAsfzSTs9LLbVZ+wfjP8YoSOGeLls+hs//jReXxITZDriG33VT2r
-	 jnflL3IGIPv8Irqm3NcR0pN0ciVthTL0VcYEE1rDzVtpOIsUioWAhBwMWUkoorrGocQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793628901;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.171
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793628977;
+	b=uTZB5ITV0OgrAlGAnbez6GF8MRPyI5UcAaCkUY/EEsN95Yf0lCnx6TJGvcR8NT1DyrCE
+	 tTJu65/w0VX8eXIQQ5eFaF0ZN8ejXY0Te2F6UgRXUZZX0QTWGCe1e/ux/Ue9lV8kF+Iuy
+	 aPNh2JKwUhxNAZQ0sZi148tATSX3KJjajtbjoPTAtpyQeoRwEOZIBJG7BPukv/Rn1OcQe
+	 KO37cEgok++j7cLcc4TATvSoMlbATSE9E7KMXcr61orDIGTTAPaP2FkN656E2OD5TVq4W
+	 xCg+JeEG90M8BWwi5S6wxipElQeOWLG1qxK+YZAg+MSvNkBtjCiH/gPxMu1PnePEMeA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793628977;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=IGv3cIWTIDUsLw/5Ke59qnRTl7O2IP1ZZrrB3PPk0gs=;
-	b=3I1xdWiT8uLHetUrX1SX1mFhevQKuwpZtvABs+VZB5MbIiPpYrHvXixhDX5T6dnSKvjB
-	 aYFo1V5ZQ2kHgoNCfC3Uvwim/ggnKcbDbCTcsn7w9HcPobazJX6yDHE2DJCKIJxplRY8n
-	 3sB7cuQRQ6lf12pKx4BMTfIp11DU9H8nxA3ibgdiPJ8HqMYDRg1hw26O7wlFQhGnz6XHH
-	 sxOqa5w8RcBAMKtlHTxrhZvY9v9LJIrJrBF3pLEEONNEIOFdSfqD4tmDiuAcZgeps3IMf
-	 ROzRF1ShY/tYx7N/R8XMyENWQVluJsFwvDhgj4fH3mHphKtoNgDK/KJYYJX5Wv2YIPw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=wkBV2j78Fo/8eXWQjykaW3rF9RKT5B6Okz4Lp+YUVpQ=;
+	b=ZFhtHco8dT3FeyYS61lhSZxFm3GpAJfQryoWG1R96f07rsEPrEqEFENu95vhly7CS+eI
+	 UQJ/ee0Xl0H205xKMTsR/VoUAsXk4F/rxJ/esBH/Z34cGGMQ9Z++Uh9Gqsyfs2qy3rm3F
+	 XmMmbMtPcIGbEwbzYrJ6spatPnR8BjcnVHXuUrAmxCTv9FL1sg36ehHD3Zd421+brlw0a
+	 ez7kyW5xlxt6f6w3OHh5QqHelDFrKJfaqu2VONQdHUHbD4crc0Vc92Z0Mlrhv+UwPv9yL
+	 PCTNjxoxC8KJ5nD2HaNgWCDLqBxfQx93hLEOVBBMv2rGsMS+tocSB26PvOPDyVPzoyA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gDMktBqe;
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=B4kK0EfB;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.171
+Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2590606B5CF
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 14:15:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A2590606B5CF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123C6606A324
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 14:16:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 123C6606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gDMktBqe
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a4dc547987so15907445e9.0
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 06:15:00 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=B4kK0EfB
+Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-5e948e56af3so968261e0c.2
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 06:16:16 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793628976; cv=none;
+        d=google.com; s=arc-20260327;
+        b=lMTVVIPi46KTft4FqvzTh0SScgkgotTKLEncYCA8XEWSa9aBRQWov9Lh+D5lUItH+R
+         ruaJ5hKI/YjNbeTPMVPpr+ed10kSQMazJxz5JRZC47M5VXKu7dbcH4049tlkUzeeQ39o
+         mvj9bwQi+4skAmGg14p2TTx+DyY+6q89V3EEUal+YKa7nnUjDSdJ32LlNsITyZE7nZwH
+         aREdLroOxJR/PeqkpVWMnu/Rk0Lfe9i3JT3ziDRc7nF2KgeM86pkj/DqVhMIM89h2TGM
+         zXvW0acM4u5WLgsa6D0G2kFOaMVqB7iIyvu8kpK0361hY/e0DTzAfi4OBG0wsmPUNSRj
+         be2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=wkBV2j78Fo/8eXWQjykaW3rF9RKT5B6Okz4Lp+YUVpQ=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=nMeEsAQK8KNfHViss2bPLLHWaxycOvQKPpdjTdUshigfTB3ck+V5HEaY43+ADJd3oS
+         Dr9rM0de/0CkoqSUS1YRRyX4BIxh6R9awfXmbQl8h967BUX4lbUAIfbX46EbKMsU9KcW
+         MgjoRRsMaxuinh+4gHbIztdd+Z8pOm54pyvr7RkvUBUqwJvQym113Q4ogkdRLbDmS5tw
+         qUDS1uo/IktztYt+LUbV7dhVZ1VnhbGyyxOJkIwiiFU/nbXwdIKm4X7kxddoR/ScF48E
+         iwlqjW06oamoOrJY7N32KF3ZOJY9Egqf2h+8L+6qH/JU4jB889fhfxNRwbqDcrZ6t+Bd
+         qZNg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793628899; x=1794233699; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=IGv3cIWTIDUsLw/5Ke59qnRTl7O2IP1ZZrrB3PPk0gs=;
-        b=gDMktBqe3vPt2KslcGx8eovpi72FJqXOFjYRbpRyb1psJLggsgO4H1wCHwT1etSfSo
-         KEFSg6AUs3bWp1jJ9gc8siBZ1WjP2P/FwJi24u5K4GF6ZbqrkY3AgWsL1OR7VaHcZThh
-         klXRMsZbJ01B46yPqGV68mAXeY4Dswq0q1w5EZdQ4aZqsLBsuxroQR6/xGPy9ILkJRPp
-         iUgI3wGBFMVG1QlGvTYPsjLJ4hxx5gjcc+PxFcBtDzWQT76tV1TMvVFNexAQ7LH1GbIx
-         hxC5eA21qHUa8u666VW828ewnwOPCdreAsNB1NKn0r0EIDpGkO41xvc6tLPMLI1PHdNS
-         5IXA==
+        d=gmail.com; s=20260707; t=1793628976; x=1794233776; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wkBV2j78Fo/8eXWQjykaW3rF9RKT5B6Okz4Lp+YUVpQ=;
+        b=B4kK0EfBplIy/3bUibLDHALaItiWT0Ns3x/bhZrL2coSBH6pM++X3mLixrXwXpb35c
+         o6nl3VHFJjP2a77n8XpF+sZ1Yo3kf5ilCQVh+MYQXgphF5leQtnfl5rHVVugjk3G/rUw
+         nBlnuQO12m5krcHVdLFp7sBKqQxG8NaUsf4ew4CAwNZKVAC0BEGdoO2Gu2VqA0u4kjNU
+         /rJwCJOPj4eBtbVhELLXyKieaOc5MHf3XN7oTHTK/3V5bBOYVHvOJ56wuuBAfhS96V0O
+         lwIloL/+GyM3N8lIebkKsdSA3jlb6dFoCWCujPitdqw1SBf2l6B9wayXXCP2CfUXDmyM
+         pQTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793628899; x=1794233699;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1793628976; x=1794233776;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=IGv3cIWTIDUsLw/5Ke59qnRTl7O2IP1ZZrrB3PPk0gs=;
-        b=GjuXbKMYIte8RkCQK/rw7LZzEcImiSEYdl6Vs9ebq75N0Vf52x7w9v21/dHB+SLuUR
-         Gpzq0Y5L69JvfGROS/J+Z6V6dmMa2LgJW82VKdHKHqstHWEFe9uDeSZS+kpNWv8/VOFU
-         KYf9w43F6+7MgxQfpC7EY+w4D8sNyz8Lg+1A2ndr69xnTviOS713GffwpWRU/YUK2r+a
-         NWxsmKlnZ2nFjlsJh77sNRUfFzZDJBkqIjGDKTTtAAgYvfVH1N1oRpuyDXgCd/k/hDC6
-         3ODy8WuJplLfpQyh/OhHse7MyB1c+Y57VK0dKODyY3fpzjasLmiAqk8PuGfD+PjX8C7O
-         yRLg==
-X-Forwarded-Encrypted: i=1; AKwUvBwjj4GLuh6PeWRgmkESnvIpx58mSalg6DK+05PG6QuF8yuYDQZoFvglfXAjre79kRWqZkE=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIwLCXKqgLuJ8BzFdu/LaTlTfS1I3feJyUF3vF0PztJxle34IJg
-	cFUYrMgfeNxfppjd6hghBDHXPK3Zu9nb//xB4GVeD60ziQ8DjfPiiMjz
-X-Gm-Gg: AYBFou0JqEmMAhC46GumlbD5advntDVkY8Ck4BH06j5owQnU4c9YTdW5v119oA+ilQP
-	FYJN97mUi2dfJNSKo9dPdSM/IMp24pHVeo7mEhl9v5FbDEMBD8UWQObwPa7s9g6IyDElGpa0Rgc
-	JSHT2z44oIGx+2sWCBYUckohBirDld9LJ23/AoVySC88c1qfRmrGAfTmlAZaNAhv2sBmJVMrkyL
-	sWvyarWEsRYONsgiMxdYdXN+RMHjNQeo5HO27jSENpWvE+2+XAzsVj28pJV8BUcZPXuK8fQ9wZZ
-	Y4Syjw2y1EfulOGZAqf+eQ5DYCyvzoRyHUgeUTzSGjOhdlvHFqVwVUoXcl7CETEbsWhAAFgvtIg
-	CEYFd1NkRdgDI4tc81Vi/BostO2MGO9Pgr/LBSwJLPdQ+A8ovbuvqeFW+Mi0DbVkdPGTBPRb0+Z
-	bRZstjdEPMc0c4jbExnis6sc4k1QyfmkIdShRPCuBoeO1qmvhEVH7/Rds6WrJYy++/1r6T2YMxB
-	RgWr6vFc9tQXKcTWAmPHJHy/+2RsVgoVzdD6wcuoRJ0qM5YyxKgT4Jy9NJgXxN7NjR0+BX+zph4
-	IQlaiOE3C5t2egvL8cee5dD5nhCl4jsw7WfrJ5sU6/IK9sargISZzaWeP+JhHSvOi58TwRToQ3K
-	CgfL0Sw==
-X-Received: by 2002:a05:600c:5397:b0:4a4:4d57:8462 with SMTP id 5b1f17b1804b1-4ac18b7e65bmr232045055e9.24.1793628898963;
-        Mon, 02 Nov 2026 06:14:58 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ac0b4df257sm163673415e9.4.2026.11.02.06.14.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Nov 2026 06:14:58 -0800 (PST)
-Message-ID: <845be1de-8d12-41c9-996d-038886bde4cf@gmail.com>
-Date: Mon, 2 Nov 2026 14:14:57 +0000
+        bh=wkBV2j78Fo/8eXWQjykaW3rF9RKT5B6Okz4Lp+YUVpQ=;
+        b=a96rjdxnsYCHXJ99+3wroN6jhT7lWsVtJLqyc6pXI65byJglEj8nhQ0tVrWL8j/CQg
+         5yEOFX4MMAKjQ4D7XZVscNabYSXE38p+h2OtIX8w7HGsDlzbvgpl4jbKf69VFP5fQ24E
+         mnKIg9iByh5iGp2qxxtHxY6jBNxgUphYpGuyH1rrhTFg5Tsr5agfsiO4CaNVsXwkBrU7
+         8gJ0VGZQpIMdQQ3OAJeNU2ENkX8r7u9FeQfAmKHDit1GuYxdoG8bPUOBunFwwldtvq7G
+         xjx32YGhZOzrbhv+lOsZqA4s4v1puVeRZTewTxZpVa05CoLFqtvKXVRrYPztbzV5NP1e
+         vYlQ==
+X-Gm-Message-State: APuU4Z8NoGahb4ZKyR8mW2pN6DA7bK1nU0wpTSa8EzzSVepZT1H80ewX
+	lOiw+5etURD99rgGwCuQVxSI7iBKNlJz+dO+DOeHe9gxLJ9U45Cs58JoTr1fWFJ7Qbkzd5VKKjb
+	vX318rSJiGogC8NrCNeG3dgiphboARRQ=
+X-Gm-Gg: AYBFou1doB8sm1SYwKefaKxrLyKlt/ZwERtLXSYwL4Jl2lLziadVku8oLzieBDIAy83
+	30Pf8QIseC8h/KqqNsNGYdLqip6xiRCHLB7DAR0ri61YGt9Pa5Zh+hBanLZ7J1r4cDahzKKL4ji
+	KUPrX/0Em3Eh4EGIZqRoC2YgVabJNVRW1x46bXDZ3i79+oWzUHtvi63LtiX6ozYb25tnPbibzXC
+	jcKF/mVh8q5SfIju9Hj+th2ipGo+sYS8id7zUoom00W/RC4h5LirXIT6BZ2MZcBi+vi2ohL8xt9
+	n/HA5oICM7HK2vkhV+ojUxGfV6/eduwI2PntcYD0Y+rnpy4SsgFLYhUkWkPulgXQiaF3M1qGm5V
+	b2o9D/qzqajf7HKQ0362c0r4vOS44/nsLQSDY9/TaeFRQsCskeRi4kdEy0a2oFU542PK2LApC3m
+	CoAswQBRqle4MPZm5niZxGu30jq3D3Py5D+R+f62ickzTm7YmWCLdDhXoDbCRL/S/CYQZumA==
+X-Received: by 2002:a05:6122:3a18:b0:5c9:c60a:e9b6 with SMTP id
+ 71dfb90a1353d-5ec689be615mr4039942e0c.22.1793628975878; Mon, 02 Nov 2026
+ 06:16:15 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,146 +103,100 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] stash: reuse prepared state when creating stash
-To: jasmeet.bhatia.us@gmail.com, git@vger.kernel.org
-Cc: Deveshi Dwivedi <deveshigurgaon@gmail.com>,
- Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
- Leon Michalak <leonmichalak6@gmail.com>
-References: <20261031200107.285168-1-jasmeet.bhatia.us@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20261031200107.285168-1-jasmeet.bhatia.us@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20261029203904.432-1-edsonwasswa54@gmail.com> <20261101192502.1920-1-edsonwasswa54@gmail.com>
+ <xmqq8q3blfh1.fsf@gitster.g>
+In-Reply-To: <xmqq8q3blfh1.fsf@gitster.g>
+From: Wasswa Edson <edsonwasswa54@gmail.com>
+Date: Mon, 2 Nov 2026 17:16:03 +0300
+X-Gm-Features: AclHuK-H1aH98OpSyRfa1wcrQ1n-EN9QiHo0Twhrf1xDcZmJp5uTjm022jcytmA
+Message-ID: <CA+ew3JuD_FKhpw=pUT+p-r2750A0qyKTbTXZvxxvvNovjxLgyw@mail.gmail.com>
+Subject: Re: [PATCH v6] builtin/diff-files: convert ad hoc option parsing to
+ parse-options API
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Jasmeet
+Hi Junio,
 
-On 31/10/2026 20:01, jasmeet.bhatia.us@gmail.com wrote:
-> From: "Jasmeet (Jazz) Bhatia" <jasmeet.bhatia.us@gmail.com>
-> 
-> do_push_stash() already preloads and refreshes the index and calls
-> check_changes() before invoking do_create_stash(). However, Git then
-> repeats this same index preparation and change detection, including
-> rebuilding the list of untracked files when requested, which is
-> duplicate work.
+Thanks for the review. You make a good point about the value trade-off
+for a plumbing command - the loss of COMMON_DIFF_OPTIONS_HELP in the
+help output isn't worth the benefits parse-options would bring i had
+not seen that coming ......lol.
 
-Good observation
+I'll drop this patch and look for a better target to work on.
 
-> Instead, avoid this duplicate work by passing the already prepared
-> untracked file list to do_create_stash(). When the list is provided,
-> reuse it and skip the redundant index preload, refresh, and
-> check_changes() call.
+Thanks for the guidance.
 
-I've got some patches in "seen" [1] that take a slightly different 
-approach and keep the call to check_changes() in do_create_stash() and 
-remove it from create_stash() and do_push_stash() instead. That series 
-also removes a number of unnecessary calls to preload_index(). If you 
-have time to post a review that would be really helpful.
+Best regards,
+Wasswa Edson
 
-Thanks
-
-Phillip
-
-[1] The patches are at 
-https://lore.kernel.org/git/cover.1792767794.git.phillip.wood@dunelm.org.uk/ 
-and are merged into seen as branch 'pw/stash-change-check-only-once'
-
-
-> This maintains the existing behavior of "git stash create", which
-> invokes do_create_stash() without prepared state and thus continues
-> to perform its own index preparation and change detection.
-> 
-> Testing this using the p3904 stash performance tests shows a decent
-> performance boost.
-> 
->      stash -p, no fsmonitor
->      0.12(0.11+0.17) -> 0.10(0.10+0.18)  -16.7%
-> 
->      stash -p, builtin fsmonitor
->      0.11(0.10+0.02) -> 0.09(0.08+0.01)  -18.2%
-> 
-> Testing this on the Linux kernel on my system, "git stash push"
-> improved from 254 ms to about 239 ms, which is about 6%.
-> 
-> Signed-off-by: Jasmeet (Jazz) Bhatia <jasmeet.bhatia.us@gmail.com>
-> ---
->   builtin/stash.c | 25 +++++++++++++++----------
->   1 file changed, 15 insertions(+), 10 deletions(-)
-> 
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index e1a3a76bd0..58eb782597 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -1459,7 +1459,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
->   			   int include_untracked, int patch_mode,
->   			   struct interactive_options *interactive_opts,
->   			   int only_staged, struct stash_info *info, struct strbuf *patch,
-> -			   int quiet)
-> +			   int quiet, struct strbuf *prepared_untracked_files)
->   {
->   	int ret = 0;
->   	int flags = 0;
-> @@ -1473,14 +1473,17 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
->   	struct strbuf msg = STRBUF_INIT;
->   	struct strbuf commit_tree_label = STRBUF_INIT;
->   	struct strbuf untracked_files = STRBUF_INIT;
-> +	struct strbuf *untracked_files_p = prepared_untracked_files ? prepared_untracked_files : &untracked_files;
->   
->   	prepare_fallback_ident("git stash", "git@stash");
->   
-> -	repo_read_index_preload(the_repository, NULL, 0);
-> -	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
-> -					 NULL, NULL, NULL) < 0) {
-> -		ret = error(_("could not write index"));
-> -		goto done;
-> +	if (!prepared_untracked_files) {
-> +		repo_read_index_preload(the_repository, NULL, 0);
-> +		if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
-> +						 NULL, NULL, NULL) < 0) {
-> +			ret = error(_("could not write index"));
-> +			goto done;
-> +		}
->   	}
->   
->   	if (repo_get_oid(the_repository, "HEAD", &info->b_commit)) {
-> @@ -1493,7 +1496,8 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
->   		head_commit = lookup_commit(the_repository, &info->b_commit);
->   	}
->   
-> -	if (!check_changes(ps, include_untracked, &untracked_files)) {
-> +	if (!prepared_untracked_files &&
-> +	    !check_changes(ps, include_untracked, untracked_files_p)) {
->   		ret = 1;
->   		goto done;
->   	}
-> @@ -1529,7 +1533,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
->   	parents = NULL;
->   
->   	if (include_untracked) {
-> -		if (save_untracked_files(info, &msg, &untracked_files)) {
-> +		if (save_untracked_files(info, &msg, untracked_files_p)) {
->   			if (!quiet)
->   				fprintf_ln(stderr, _("Cannot save "
->   						     "the untracked files"));
-> @@ -1615,7 +1619,7 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
->   		return 0;
->   
->   	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
-> -			      NULL, 0);
-> +			      NULL, 0, NULL);
->   	if (!ret)
->   		printf_ln("%s", oid_to_hex(&info.w_commit));
->   
-> @@ -1698,7 +1702,8 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
->   	if (stash_msg)
->   		strbuf_addstr(&stash_msg_buf, stash_msg);
->   	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
-> -			    interactive_opts, only_staged, &info, &patch, quiet)) {
-> +			    interactive_opts, only_staged, &info, &patch, quiet,
-> +			    &untracked_files)) {
->   		ret = -1;
->   		goto done;
->   	}
-
+On Mon, 2 Nov 2026 at 13:01, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Edson <edsonwasswa54@gmail.com> writes:
+>
+> > -static const char diff_files_usage[] =
+> > -"git diff-files [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]"
+> > -"\n"
+> > -COMMON_DIFF_OPTIONS_HELP;
+> > +static const char * const diff_files_usage[] = {
+> > +     "git diff-files [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]",
+> > +     NULL
+> > +};
+>
+> The loss of COMMON_DIFF_OPTIONS_HELP here gives us a regression in
+> the help output ("git diff-files -h").  By replacing the single string
+> with a string array and passing it to parse_options() or
+> show_usage_with_options_if_asked(), the COMMON_DIFF_OPTIONS_HELP
+> macro is omitted.
+>
+> Since parse_options() or show_usage_with_options_if_asked() only
+> knows about the options explicitly defined in the diff_files_options[]
+> array (leaving standard diff options to be parsed by
+> setup_revisions()), the common diff options (like -p, --stat, and -z)
+> will no longer be documented when the user runs "git diff-files -h".
+>
+> You probably could shove COMMON_DIFF_OPTIONS_HELP into OPT_GROUP()
+> or something that produces static text in the help output to avoid
+> the regression if you really wanted to, but given that "diff-files"
+> is plumbing meant for use by scripts, I am not sure how much value
+> we get by rewriting its command-line parsing.  Being able to say
+> "git diff-files --bas" and get it understood as "--base" is
+> something we may appreciate if it were a Porcelain command, but is
+> it worth the hassle for a plumbing?  I have to wonder.
+>
+> Especially when the parsing loop the patch wants to replace ...
+>
+> >       argc = setup_revisions(argc, argv, &rev, NULL);
+> > -     while (1 < argc && argv[1][0] == '-') {
+> > -             if (!strcmp(argv[1], "--base"))
+> > -                     rev.max_count = 1;
+> > -             else if (!strcmp(argv[1], "--ours"))
+> > -                     rev.max_count = 2;
+> > -             else if (!strcmp(argv[1], "--theirs"))
+> > -                     rev.max_count = 3;
+> > -             else if (!strcmp(argv[1], "-q"))
+> > -                     options |= DIFF_SILENT_ON_REMOVED;
+> > -             else
+> > -                     usage(diff_files_usage);
+> > -             argv++; argc--;
+> > -     }
+>
+> ... is not anything that is ugly or overly hard to understand.
+>
+> I dunno.
+>
+>
+> > +     argc = parse_options(argc, argv, prefix, diff_files_options,
+> > +                          diff_files_usage, 0);
+> >       if (!rev.diffopt.output_format)
+> >               rev.diffopt.output_format = DIFF_FORMAT_RAW;
+> >       rev.diffopt.rotate_to_strict = 1;
+> > @@ -73,7 +74,7 @@ int cmd_diff_files(int argc,
+> >       if (rev.pending.nr ||
+> >           rev.min_age != -1 || rev.max_age != -1 ||
+> >           3 < rev.max_count)
+> > -             usage(diff_files_usage);
+> > +             usage_with_options(diff_files_usage, diff_files_options);
+> >
+> >       /*
+> >        * "diff-files --base -p" should not combine merges because it
