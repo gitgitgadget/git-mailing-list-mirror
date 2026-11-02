@@ -1,99 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.173
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793586445;
-	b=J/jIY82oh+9hjeI9NpOyg+QwSnNhFrYsTAe30Mzb9lVn+9yWhoujGZcvgsp1dLed14+/
-	 vzKGbpzHvp0txOA4HDiRmN5SRqbfhPuWkplILQhfuyiahsQd8KTvk2VsJJqzt+jiNhJ0A
-	 XQ4p8bZJsMOvO/lK3o6kSOFvaS18bCo4AKgAkCPaliu8x8eC4uPzRgJxGC7HTdJkG0+VN
-	 Qp4htWqZWIpAdnvLYimBek6zh5amql9bpIIU9/A3x1II/p391uNciZJc/Yzt47h+dc3X2
-	 hoYXm4NYO7Lv1gTdaM1+AQSajE1/8jupH1DbCG1RUMrkO4bySFixUQyD2IITDIWVHWQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793586445;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793587633;
+	b=f+VY6YfTjwKX4Zcv/y2JmHgvyBaV/p7f1T1vomxQdjb4ww4VRFt8L5wVIxaiE0SIJTDe
+	 q/MepR1MLfhJG56CT5QtWrcm98gpiZZq7NRmaReUH4XruEObdEiqf7GwCt45psPYyLuMZ
+	 UGJrz3Kxn/E021Slfb6g8068hGWZs9okVyVxlkPDugAc7fAuxj+G9SXTy4KG6n9xLLTlx
+	 x9HHBS18LNwY076m+/Cl9vAB0rdtPj+ZBtsNvE7GZUVVAXqiYm6EYwSW0DBK/4blso7A6
+	 JrBe96G9aP9ngwYXZuy0Tc7QJnyb7taPtlUSAVuQSmqy7FoexPqU6M95lFI2TCnpWSQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793587633;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=h6ZzEUlUPegSnBuJb7/4Kg2GPM5MbIOdR3TW7eKK6ng=;
-	b=IWXUDVOWp3BwB/w8Mef4Js2MXIb3KAR6SUYVgdsNu2OVg5HdaKFL1aGYUjOtSnRAwdi+
-	 0ARrI0NkW1laYq0WNR2CZLFQdmF9DK0u4JO3EJhc23lNL6IwRBzlNGDi5fYW682NfcL4M
-	 VMqbdo2nDbtsUhrkaEEkBhX0Rl3JGSaa/D7723k7EU6ZQ9BpjgCHsaZ1rzcChua3ppSu7
-	 bVh0tF6jYHj+E/5k7EaGqzijN119quMyjdR/w0LjnDgT/j1wqwAkE4Rpg6bHK1YhF5MDk
-	 DO2Zj5j96kvOHYYDqj3j+sklWSRuHTC1axzEiAMHC58WtrgKd3TMu9HjspCu0ijmKwQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=S6iorwpD11vZyN56HSHDhl+z9mJ1tBBdCj/8O5mmVHw=;
+	b=wMEWG7zqbrfDQHmcdi6jo+ZsS70DIBK2PJtdnI4H2G08TmYt2nR77Oj4cjdwW29rVAte
+	 6zaPLYJSkfqlfdvnpKEs0C883TjB03HJ8Arn3MuVdWe8/EJCkfrPLQhrWR1rgRVwfDOh4
+	 dx+FX1rmm5zVSE5scCw0RFMXfU9vUwQ88SxVTXK0IIrcoc8O7evm9aRRMeL3WZrmYgqyq
+	 dT2BnUGHJQ+zJu9qDCDjhiO8cwaHqE6XkOfQPdfopR3HwDT7bH2ZfdM7+cKxWUFVslqwG
+	 17flD5QmfO4ja+7EmUbQqzbFARNeuRkxLlj9GFm4ph6sX9jsj7LYzhVkxleJ1POKOAA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CLJU+ICM;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.173
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MLSy3Ckf;
+	arc=none smtp.remote-ip=209.85.221.43
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1B7606A324
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 02:27:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EB1B7606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C357606A324
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 02:47:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3C357606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CLJU+ICM
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4b28d9537bcso1850157b6e.0
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 18:27:24 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793586444; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PMQzDQwWvj1jDITEH33oqQTitkP6Vvx9rwdqf/TWGqQQ6TPqUjSpNwKMLe6EIybKDW
-         W6Y1KUwXCQiamN+tOrKeHoVKHtgGlykOi/IkC0CALA6cLGny0VVCTOotLJkxJQzaTgJq
-         Axgh/MexaaDd0Fux1wt41Tw7WOEWWPQjBwvQV1uYwo+zRCNRGXGGs5k00afPzdddyJ9L
-         M5qX+uKybJet7BaABb+d0dQSvdT2Xvpt5DCLS/rkr7ZLXyFPB+BaAy67+jwaDkFl3Rhc
-         8dPkmv88TqdSJE4MQKCjxz2ZdvPdEAP+a00K67z6kp5KXTbKJkm9SURvTFSt+4eEtGt8
-         7dow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=h6ZzEUlUPegSnBuJb7/4Kg2GPM5MbIOdR3TW7eKK6ng=;
-        fh=hz+/nn3ggLKvx7MVMCnEfhHO7zZTcWxbS8wudRGL11s=;
-        b=la7QtzXZ/pCcDeB73RIjXRcsAdPgGXQZr83Q6+9rdR/CJWVFWSmkQuOJHrQxkmeBnJ
-         R72tSigK/LlWD3ff/CIoWU6Aeu3AVMAtdc2qOGQGJsbRwcyj2BS2WFl6DFvjzlk5a24t
-         5RJEjUX8YF6qtMKQ5RiP+rEod4iMAfU8zWj7TTrZEpvAopgV0wwe3hKfqTnuSYHxlxn6
-         JKPsgP18Crc4g8ipqvtakjG4/dWO1sO7486DG+WfdyudP5N0d5gcEWvxTIehNjATnWNu
-         HIls0mBYlsY8ikiQHNxdWEgjsNPFJgV4hwXo1CCw+R+mzzITUpNEtyPljvz6z8vBvBFP
-         wt9w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MLSy3Ckf
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48e3b22e971so1177141f8f.0
+        for <git@vger.kernel.org>; Sun, 01 Nov 2026 18:47:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793586444; x=1794191244; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=h6ZzEUlUPegSnBuJb7/4Kg2GPM5MbIOdR3TW7eKK6ng=;
-        b=CLJU+ICMc3/Zp7L8AhWoCEm2E45IYZckO1h/dnsXKK7Y2lo7Lmftfu6G5yoJ+Aknlg
-         wu6x2Eh+dD8n3V58OgepA/UtR9Pf7Gg8tXR2LLHwxej51d7jSPMe6scbsrWm3bNqTP4m
-         gbt+rR7gd+DvJOIoEZBTpM4D3qgBTUUyz7rpBBNc/D5AcQhRfEiXEyj0sSyEXd+udR2g
-         lHCir2ihMLu2qykbse88IFqwvYDp7MhbKBpA616XkNr6PuVZRmGNIjKHpB2ajo0CD7Kf
-         2BJV0kNk5Liw2DrMmIkP3DQ4bEq3kTFh5z57p6gx/q3a75RvvyLHU46JT4g5Ki9cmCmg
-         Pqwg==
+        d=gmail.com; s=20260707; t=1793587631; x=1794192431; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=S6iorwpD11vZyN56HSHDhl+z9mJ1tBBdCj/8O5mmVHw=;
+        b=MLSy3CkfsykFgXw38eLfo0ZOj2uekWF9PvZfnktNQ/TpJz9iipjXQWOdiet+9jYhJj
+         7XoXQY/UNt7x1I52hKlGjX+vdh/g0A75RTIXN0X31nJTfZAje+8nDOdlI1WauPfbrnmt
+         vUST7eFFwU+UUlUc2piayvYTCXFgZxpWRLHdo4pFAPkSIFMYSStIzCBg3QX/vV9I4ASy
+         YM8NNXiHxKTymXr+h5m29ioL6cZDOfRdB1NDt6tUbQlKOw5wHfhTuu1Ld9ApWpSfiOli
+         6dPai4QHNybXEgOXCFirYsgj526qFmM7F5guUrpxJ1mBAPHUslnYA7r7hMYGGt2UHYQD
+         BQaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793586444; x=1794191244;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=h6ZzEUlUPegSnBuJb7/4Kg2GPM5MbIOdR3TW7eKK6ng=;
-        b=iVwd2+ZMKAmAm0LUBOWW5dy+gEE26/wd/P64vduzmyZCxV79ZxYNZ5Egp7ROexeizT
-         x2tnKeVRoQBUj4Cr/0EIQhWvjC8mB2zL78AYwkGyFBrGBwAx2KvZxoq38TQ4g+cw0sqO
-         JDxd4MXvZVkljZCDWiLD8gRFxHGdT9Vl7gGQrxgsDrIX2+RLmO8+cwu8KMN9N2DdQBCh
-         vS5hkJWrjHVABr/g90Nlh7cLm1g9IWm8Hj25TIoHKb3iE5qra/M1UExMCp0/D/LMmile
-         QiyOvnTAb4bLt2y4Gqq+UqC0S6MlBPW6ywPztmTXqdWmBewBj2S09gw8MC4lvZQDxOvS
-         gRIA==
-X-Gm-Message-State: AFq9FYLF+ZgjrdOR8pW0d3OAGp2AJ7l4HKc2E0h9/d/bzn905a9odfHu
-	iAfH7lIecSkUgt+pAkH1L0sk9V0lBhcvIMWgeGJe6aw0YE+qoAdPGc/Gw9xRTHK50AS8Dd5ecq1
-	0hRhBsK697LqqFY9HReUMUa6W8zxZlHk=
-X-Gm-Gg: AYBFou2NAGLwjcaXoAhjsoOR52poHlJHRVI0uXNJyB9fuFNNQzj3cuFWcJoPSjEZsmk
-	SEiQII30vbrFDy1n5D39Lhj198adxSWwtUW8Pb7m9VsC/WzN1fLS1HFDlLwWgZT16P6xzI4aPEq
-	+dgqZad6xLgT50wPr7SmjcSOJWpBhbvEwxpx9t6ZzYoAZ67LsZvjTWGEGh7qNXXKH+r9umA2YnQ
-	1kCK4QBTVSrTtsRJdC8l9ae138H4FdEaB/jWyLhoF5qXKgYKoi812JtGO5mfI7zhcMTjGkyUrS7
-	UY76l0sfiotXsPpDAIKc2oxPLWEaC6cjYPF7QZX1LGkIBFKrch1OOut0hZ3ngb8gcRFYIe/quv9
-	OD9fuNJlLwhkAm2ajGIlW3bX0tjzwoAzejCTB455d7udAqIPVA0oP3IJmXIERxaKK42M5ps/3ii
-	ExebOsekJmqVqw71JMCMcSpkaQxALtrXjE90jTyaBZ3dR43d7lNkXoJy0=
-X-Received: by 2002:a05:6808:1585:b0:4d6:9133:cfe2 with SMTP id
- 5614622812f47-563efbae72cmr5892014b6e.39.1793586443696; Sun, 01 Nov 2026
- 18:27:23 -0800 (PST)
+        d=1e100.net; s=20260707; t=1793587631; x=1794192431;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=S6iorwpD11vZyN56HSHDhl+z9mJ1tBBdCj/8O5mmVHw=;
+        b=ghf4s0VvLeXpJxO0UjcAARtUO0ImwXfgsGbZwDRH3QTZVIQlG+bwWghBM38VGaCHW6
+         EKy0EtHvFPVlx+SIjQRmnNbAQO0r5YvtuA/meePplG+f0uSZpzvkNNBbO1VBhogq+bJd
+         zeebfcYkW34rQRtIIKc1JmwB0c7QzIs9V9kuzn8rjlFX7VhZ6x8mZTYnFYh4IhbJnNUl
+         BJf8hCg/NUY9u4yklkJJ77D27DKt2VAaWRIVHnDWgod1/qD4gRql5WjCz4gxlYqVxV6w
+         NM5wj0KwCgLAQnQmEWGBWduwO/AI/FgzB4WBt8qfH/U+U5fQZ2bVAly9qBVyChXKGH9V
+         QjEg==
+X-Forwarded-Encrypted: i=1; AKwUvBztdz+pYv+Uw5pWT5hh6hP+XDUKZpKtONJh0BQer/TCbwekuSQ2EVMSaZzSDEhELkeuRsU=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLIQ14EqbHO3PsshRmDGmR2WwiNqhJ60ivKEOIWEumOzFEY2dzZ
+	O4TZL1wyyks+n8n5gpf6sfKEgYb1q3/x/SoJGS8wHHfAR3bnu6f+aJ/9
+X-Gm-Gg: AYBFou08+YZGXnFlYqzxqUCjCdsET5Pm5Bbg8CgaDvh3uC2CRDzm8iqIHdKz/oyqYjD
+	YOm68C9oX3t5GsdqtGl+qWTiQQpDjw6pTk4nrguZQVJZSurX6dMQSUm47uMPCFjjXZZ8lbrC7Zn
+	QZykmRo+F9+eSplDril+z0SRrUCEVTZWxnL6DWtSh4BhaOVU/I6OGm8UPerAQ+GV6pUtvQbF9/h
+	60C2RUXR336JSR8bH/1q6EPGp7X4UbFpPqOiXs0QmywFXlq3FVcemhfb9YNt3DRhggIJhh5LNKB
+	jJvxjTI4KRRhnUpPd1W/fr44yab7hprs+92lD1yb/CUT7VA0on6DmPAtFphIl/aDkt405hl7a1g
+	VR6EBpcLdf9HArhU1E13hm7lUYZOhKFSGe97By7A6GjdtT5VUFZSTrfvUSmAuOs7joR87jgm84T
+	G2ZOhW8QrIuvzpnRy5zEw5ef7MYMrtBzWiS5x6MDqyReCeNEVBhj7D2yra6OvUMo2Hm3nadQHvW
+	Os1TUiRiqvJyuH6y/qxuHuvnbD9HfjXJOaNjLJQ4s61Kqtckdy/iCkj2MF/wSEDGAAargacJTo3
+	Khc4kU65IiDBtvSD/8UO+/kDIzfoLELqML9q9KKn7GtVegYdfEUb06yxAxisgkxVezqQeDb5mw=
+	=
+X-Received: by 2002:a05:600c:638f:b0:4a3:59c2:b41e with SMTP id 5b1f17b1804b1-4ac150b304cmr202640605e9.4.1793587631463;
+        Sun, 01 Nov 2026 18:47:11 -0800 (PST)
+Received: from GODS-GIFT.localdomain ([197.211.58.221])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4aa80f04785sm312585265e9.4.2026.11.01.18.47.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Nov 2026 18:47:11 -0800 (PST)
+From: Cynthia Uche <herroyalpriestess@gmail.com>
+To: shashu8660@gmail.com
+Cc: christian.couder@gmail.com,
+	git@vger.kernel.org,
+	gitster@pobox.com,
+	kaartic.sivaraam@gmail.com,
+	gitgitgadget@gmail.com,
+	siddharthasthana31@gmail.com,
+	usmanakinyemi202@gmail.com
+Subject: Re: [PATCH v2] test-chmtime: use parse_options() to parse command-line flags
+Date: Mon,  2 Nov 2026 03:46:23 +0100
+Message-ID: <20261102024623.24897-1-herroyalpriestess@gmail.com>
+X-Mailer: git-send-email 2.56.GIT
+In-Reply-To: <pull.2280.v2.git.1793350341743.gitgitgadget@gmail.com>
+References: <pull.2280.v2.git.1793350341743.gitgitgadget@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,48 +103,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261029012616.139783-1-tangajoris@gmail.com> <20261029231621.48958-1-tangajoris@gmail.com>
- <20261029231621.48958-2-tangajoris@gmail.com> <d026d6a0-5b1b-4bbf-bd1f-5f41c9c2a4e4@gmail.com>
-In-Reply-To: <d026d6a0-5b1b-4bbf-bd1f-5f41c9c2a4e4@gmail.com>
-From: Tanga Joris <tangajoris@gmail.com>
-Date: Mon, 2 Nov 2026 05:26:47 +0300
-X-Gm-Features: AclHuK_VxMtsG09pazPCC3IN37T4-e4b6Nj8FrlK0IHrO27aDk-4PKGTTTl9OR4
-Message-ID: <CAKrRMNogw6rUsZzDsEPLmLAmjB6fvcH4njga+_qBz554x8oEwg@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v3 2/2] git.c: drop NO_PARSEOPT from builtins
- that use parse-options
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git@vger.kernel.org, l.s.r@web.de, gitster@pobox.com, 
-	christian.couder@gmail.com, siddharthasthana31@gmail.com, 
-	usmanakinyemi202@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hello Kaartic,
+Hi Shashank,
 
-Thanks for reviewing my patch 2/2, and for writing the test sketch.
+I built v2 (43c96de13e) with NO_RUST=1 and compared it with a build
+of the base commit (7e34d8174d). t0082 passes 3 of 3. Thanks for
+taking Junio's three suggestions from v1.
 
-On Fri, 30 Oct 2026 at 13:21, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> This looks good to me. I was wondering if it would be valuable to also
-> add a test so that any future commands that start using parse_options()
-> could be caught if the corresponding change does not also remove
-> NO_PARSEOPT from the command?
+> instead. Pass PARSE_OPT_KEEP_UNKNOWN_OPT so that negative relative time
+> offsets (such as '-86400') are not rejected as unknown short options
+> and remain in argv for timespec_arg() to parse.
 
-I also think the test is a good idea. It would definitely catch future commands
-that switch to parse-options but forget to remove NO_PARSEOPT.
+No test covers this. With that argument set to 0, t0082 still passed
+3 of 3, while "test-tool chmtime --get -86400 file" failed with
+"unknown switch `8'" (exit 129). Could you add a test like this one?
+It passes with v2 and fails without the flag:
 
-I tried your sketch on top of this series. Without 2/2, it fails for
-diff-pairs, fast-import and patch-id, so it catches the bug this
-patch fixes. With patch 2/2, it passes. I had to remove the
-'false &&' line to make it run, which I think was left over from testing.
+  test_expect_success 'negative offset is not taken as an option' '
+  	test-tool chmtime =1000000000 file &&
+  	test-tool chmtime --get -86400 file >actual &&
+  	echo 999913600 >expect &&
+  	test_cmp expect actual
+  '
 
-It does not catch var, though, because var only has short options
-(like -l), and the test looks for lines starting with '--'.
+Compared with the base build, I also saw three changes that the
+commit message does not mention:
 
-Currently, I am not sure how to make the test catch commands with only short
-options, because the helper only lists those with long options. Do you
-have an idea on how we could do this?
+  - "+0 --get f": base tried to stat "--get"; v2 accepts the flag
+    after the timespec and prints the mtime.
+  - "-g -v f": base tried to stat "-v" [and still printed the mtime]
+    and exited 0; v2 dies (exit 128).
+  - usage errors exit with 129 instead of 1.
 
-Would you like the test inside 2/2, or as a separate patch 3/3?
+Could you mention them in the commit message, or let me know if any
+of them is not intended?
 
-Thanks,
-Tanga
+Cynthia
