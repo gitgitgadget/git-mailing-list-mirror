@@ -1,93 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793655804;
-	b=Vcl8smt766FOzzqBt3LSbFxHHEWZHWXjs4zrixDDqRnsGmVzx6f3/O91vUEyHJGy+7Id
-	 LTpg1YkdpwBzCTXsHQ57728BNhqvZ31fqqxg7AF45VGOMWm1ThrCoArXn5Ba7p+PwSV1p
-	 LxFj+Wov3NSV1y0QKIv6Vkdo48Q2LkIptZiRleiJt+03WWpY6u7Tb1ZKF48GMu9BkDFVM
-	 iGVgrDVJb69guG9D2BWaKJw/QsDniYu9k1esHMzHyt04FLKG669Jw2aw4ZEOqF8RPhzNZ
-	 XFjgcRT1amytnSHftNsfmN1MD0ICkDcThaf5om8cQVqsqPJF4UavTlQiqw3jgXjiZ/w==
+	t=1793656144;
+	b=qYppmSstHpeT8i2vposp9VyZpC/Ym2sXIn1bQJZCKStBFcSF08hAN143H5wYYmmWHCCW
+	 qeGPlUGE8tfbk4AlJvttoM9gq9ItPj9JhQ+xwvqQODB3nkVbmtU7OK+CX52gpw9VsGQbb
+	 SG/oqEY2wC7UsNwIjP6qdTkDqmuQ8wAodskPO2FqcJTwKtIiWThUNzVVX2ehcXj9OJRkJ
+	 2E7I1bLWNnIZqK8rStUD7Md+dC+3LbBOSw/7WYLn0USbbVH9nEqQNkseLx6XbAwfI0SYO
+	 BSTdOMJzRYRGjZy7Ul2XDakuPCVgbZ+e/klwUuJ2YkCmkNfKLJ4Tpd+w9X2Avon15XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793655804;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=2NgHDpJIzU0hSpuJai2DAYiKwsMcvgn3OtjdvFBI6Ik=;
-	b=b4mtbzFF+xCRrk3+D8T2fOaz9O80AJO8jP/3BGjRnG9vOU3416QEPIk6Zdzu0eMVQ9Pn
-	 6CsKgIsj464kwizwIC5u9LVTRO7qV4EX0Nsh9tBFiY+6i+JIqN84wLx9wspwhDxHdLMKt
-	 rLQn3jiHpvvKOV876NChhiNfCGfyD1rNm+fpuyJQKUBoWMPWxE376no/Af9Rvc9pr08ru
-	 rpknx5ePeCFG2OkxHK5kQ7DZvKW5GLeFg+hAJKFXKCngTLF2VLh0XtD/pi2UTyEdyNeXE
-	 ++ukM0gSjvz1VyPVJmAqOMVQ3IGaKo/9x+WTtndijNPVCZhD4/75iO8AsfRESWHpvMA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793656144;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=iNgKb7wItWrl/3Tf6hscxxHrOlU6ylPisUvXenvBF5k=;
+	b=NGmVnhPzyBwLY7VNUhxwmU5w1aY2QLYmwLLY2Xz7Ml0bPlLVZEF/9YkxGbe2m08tXHs3
+	 YluVo9PSThtbPhFh8sVFC1eQxZalxhwaa+JK8E5P1Qaaqw8Frfr/Sp4tuShEworZLWUcn
+	 9q8oqxC5rId9TNAwX+z2FIQSrhepA4drG8i85ruWzUEVs8svjI+l3FtouhinXBvHe46nN
+	 95vx7Zw4x8iMFEAZKhesSe+BTYiQ8C8Ayhn+vObINO88yedL6iC3jB+kLbTRo+45eJxtC
+	 hcJbM9McWBHunu7wy9+9rsqhvLNcilJNuXEgRhyioZPgTTixErzBS8M1g5kMbgQnCKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VaAdJQfU;
-	arc=none smtp.remote-ip=209.85.161.45
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=FImYpeLJ;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=wsBP2tym;
+	arc=none smtp.remote-ip=202.12.124.149
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BD9606A327
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 21:43:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B6BD9606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56B0606A326
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 21:49:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A56B0606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VaAdJQfU
-Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-6b8e2d8df4fso2516299eaf.1
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 13:43:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793655803; x=1794260603; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=2NgHDpJIzU0hSpuJai2DAYiKwsMcvgn3OtjdvFBI6Ik=;
-        b=VaAdJQfUM+HWD8P4HC/13y3l5fIb+7FwdP5LHU/jz9CI64rQclumiY1/EXxUODVg8W
-         ZLuWxzm2ZyY5wpPuLOVyc75sTWYFifnj6X5ZSs9Ovkqzq/tDGgoRlVXS47C0rvPwgZaG
-         FXbN+6bXYs82EszxBYAVlNx0pdPM3w5XoTE0XXWE6oNffTGGue9F3IZH2LeZtChfQ3T3
-         DnGnPd6zwy67gqlRN1ObGEmTf129GgklqxKPf/V2Udj5rNReqMxe8Ek2UXdOFbjaYN16
-         TPgRum/sqXIcdJ4MLomr83H9FYGkEVyf5BhAQZqsZxf1XPP9giAO/9S1TfpGvRrFzYTb
-         Shyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793655803; x=1794260603;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2NgHDpJIzU0hSpuJai2DAYiKwsMcvgn3OtjdvFBI6Ik=;
-        b=lOzBhHZ3QMDaHDY77k7vYQ5RA6TkSj2DDqXmoOZwl3l47vXCQEhoHauYpEqQVegWcy
-         3G0sxu7fJm+gOZI0tLzNYFc2L4v7rWbik09mQH2TG8h0vZ/5Au2SVxwiasBkXO9VZa4l
-         Pagk+tfKLTYBHP6+MS0VSN3yaABSxwfDfFtA0+DB7+lPATDYZ/oSJdh1AuEdsgNHi64r
-         XzyeaQERjWbvW2cZtNeGd26uvR6Cc7Vh6obZ/fFe3W6tc7bPDfg4WfJei3tmVFKWKJSZ
-         Grv+J3tIVYGc5KwGzdzpP/EefU6+QVT106VJN5HvAW1bbnW77NrwuFnzj2l6QmrWk2R1
-         TPPQ==
-X-Gm-Message-State: AFq9FYKuEnYo4c6+d8/nyNix+vgpTBB+sUFazoxQwHS2PxV1mTSEkqp+
-	qSF0exnN2ql+UoSfC3Gl/fic9VCAcAsAzeg7nhXqzlW4IihcuPN3jHSC
-X-Gm-Gg: AYBFou3FzhzsbflWpIFA2MAledPYpQD+P1qBkr0YR+xOUGFfU2xNnEanTR2UsYGSmIy
-	sCHr35hnnbPHQchv74bewtB54vo3h/0rqZlTzztR6OLMNFApIvEOG2kEzTPr8g5PYql1eokK/zS
-	P6Vds1KvLlTxnr6mDqdVtRU3vPlY4uNcuCxtAc8BY3ppjcgnzrCzHgjDcr03ZGJ7+ZaI+D5Af55
-	rz2Xbx8SdczP6bY5cV+adUq4C164sG75qOvA6h1ZmfB+rmUVznDsfBj3R9E7CS1eTQMOeOk7ywf
-	Pvd4js1Qe4A/SeAilO/fVX6Rg/SBiC6lx9l1JeGgBrfeXLk1Fdp77zktq1qEI2eUYlv93QatEUL
-	OmQbS0NPyHcnmezkKN24+0my+CuOG1SGFC7ySLZva9RR52SylJh7EmVR6M+bN09KHQBvE29d+39
-	5t6GWe+rpRapZvUKErvshW6WZgZaWFFVkzfshFed/zqiAeZYmhNDMBwCMPyjQRrtpHBP+m/qSdz
-	crDp2WFPM8BJ6t5ul9KzygI327L/6cPCLjdP8GoiUd+Exbne4wj6OYTJ9gicbuPvaiTmhR68KAj
-	OtCUxX5wh2+842Z+w+h8OLIIM9DRGFYZlRX8U4Zl5dSA4m2UwlY6
-X-Received: by 2002:a05:6820:83dc:10b0:6d8:e4b4:2873 with SMTP id 006d021491bc7-714f294aa4cmr5156725eaf.29.1793655802455;
-        Mon, 02 Nov 2026 13:43:22 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4a921a80881sm8193897fac.17.2026.11.02.13.43.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2026 13:43:21 -0800 (PST)
-Date: Mon, 2 Nov 2026 15:43:20 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org, lucasseikioshiro@gmail.com, gitster@pobox.com
-Subject: Re: [GSoC Patch v7 3/8] repo: add path.superproject-root with
- absolute and relative suffixes
-Message-ID: <aukCnmlJzZmOTihM@denethor>
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
- <20260927114420.59724-4-jayatheerthkulkarni2005@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=FImYpeLJ;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=wsBP2tym
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id DE2671D0016A
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 16:49:02 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 02 Nov 2026 16:49:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793656142; x=1793742542; bh=iNgKb7wItW
+	rl/3Tf6hscxxHrOlU6ylPisUvXenvBF5k=; b=FImYpeLJOo9C05qk6ASAt9jF8Y
+	+i0Gfsc/EFoBZQlxWh7jCKu+lDQHKI6eE5nWBqPeI5vWfssr6yoOKglH3Q1pnemr
+	Qc5Iyjc79uyc29/xMkaLuDzyheMhBeesmbwh9JKfdAZY/VcY/BkTHlbpqrrWxRok
+	Y35+zYr7TEcpa0IZoBZMcm/knbBwnGam/ICA4zzhaPTGaG9iYxOg9ANoKQPBWAKo
+	iHDZ3Ljxv4npciK8O9Z07vvXv7FYgL4JYv9HX7nvyrDrWFum29WszNnNsQRNaUaf
+	GsK6OfzbfYZuh2s0ScaWoS936E7PBWGEZHjrez01hsUBa70SFOqYvk4KZBIw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793656142; x=1793742542; bh=iNgKb7wItWrl/3Tf6hscxxHrOlU6ylPisUv
+	XenvBF5k=; b=wsBP2tymzm25Yr3UexC3cj6+u5EJkIaRaGvPCXk3CHwTd0JBWjF
+	pGerRLCGskuIKRyt2ala7KMR9FAdpu4XoiBfWkzNnkVnsqOTM19dHKdD6qY9xSia
+	OEVu/vQNViqM+vzJ1EmwBWBEJVBq9igWlfSNxGcZi40zjeslKfBUVGTp3kn+dM4/
+	LdOJpd6LYoQ4dmEWEW6eX6uDWtpvLHm1MkH7UC3/KYQ2fkgi8H2K1miWwNAHNxly
+	nhxAaGUzo7ULcn6QbcnqF8Cidrk3ud6D5FY4K7HXRE9ngAfkVtc+PLASM838YOSi
+	hjbgQEQm5auvG9LtcQEHqxkIqPmsKcAiGVw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793656142; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:XRNj43OV/vnyhejM3tAlCLYqCTQ5JZ/gv4LosJ2K8GLIpqK
+	xZWWNsOpX0AWZfSP1hoLxOIrsZJ/H6kTWAPsnNuMgT2WtDwBt/kwFqO+63gsRFj/
+	n2HRR8O5HL6oJxmzG6fbIQxi21lQBnqc9tQqVQYuKgaJ462sNf0GQL+61bWG7kUl
+	nihIuJhrCDbdC2v7TbJpV3NsvtttDCJAp8PLLWXxZt+pRoLEw5e6pQ+E2RObwLIS
+	95aHwjlweV+lX9asrZ8sRQBHszOKLAVgVmkOCs1Ead5+sO7zhZEuoZ+QyREXkyXD
+	G4K8KzXIq3lLysMpCat2dmQSTw847jMYQ0NvF9w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:lkfZ+gcO5GdeOB3WmeY0OaahpEGDFAN+usyB4ZqNSh8=:8523Z0PKqjNU+QJEHFZeOdlWUaA0kvwCaeW+uS6zJq4=;
+X-ME-Sender: <xms:TgXpat3UZ8AFbDob54vbrigJm6_2UCex-9GmPo9xS8-BljXwDJsh5Q>
+    <xme:TgXpasiK819NBJDriUUBCAZV0wuXUCvqxnvE9aPNIwfs5axv5eaD5Ux9OqSr2NPXX
+    HHwDGUyVl5CPzRuuRTQG3ZlpOmqgH0ZkuDbG3dpjtgH3DfFaplsHPA>
+X-ME-Received: <xmr:TgXpauU2r-0Oj9M1647h53-S4MmwgEVCjJaHrEMObjDLZnWijrs5bQZ5YH1GNTIhXio0tK7LbKnLo3W06QttoLbaqQF2W768EyF0>
+X-ME-Proxy-Cause: dmFkZTGuFjsgL6LKIEvlZBfOjndWXRpH9Xvg/lCFsroY2RoCoGF4bgG7KzzfS9ONw40OpS
+    EyYVVl8tui5SSyXmN7VTe05KvydmFiB4At52AOH/nKcOQsHsSd2F0tM2ll/wxygZUojj7D
+    zGc4MX0+LoXWd9u8+VpRI3rw/MZS5M2ZACItq6v26J1rXN539l+wgeXecbqpgnZ9mM0V0F
+    ItpWrSfReRxIlVeMfeicip0Nmc6kJAFlFzzDaGcPt2TnntqpF7GfpYmKcOCtRI/3eiSgcD
+    CZsdOeYtW8qBTt4tUVTkrIo4TtJ+Ukt134g4Xs4JMM8ddKENvCnPdGqSddilgOV/k4aSQ6
+    ZnX0vbxbLAHx1LdX7QuJ1r/TH89NuPWlh/kp3Zzk1QXzAJF6I85p4gOus3O9EdcQ287Fjf
+    2t1jdLd9rXqkFuIDCHzXbxs296Nu0EqoaGbthD1OhYF4w1osGEAh9yW03xxGp+P62+6v5p
+    ygBqg6ugUTQHuxwfr4wxERHaj57pyZOxUsFfcPO5v6YpXZyavse/Nyn/6vPo1+p6N+l9QW
+    3WRxK0MDSDhmUBky2Uych0thtU1U/jCHhQjNEnrnVIrfHEpXRsvqsh6nNlyP02D2pltATt
+    K0xXna3u0I0Mj+vLHCXdF1/6Viyx2MtoZaR1TU8+usuKg2sbjn1C+wpDNf+Q
+X-ME-Proxy: <xmx:TgXparXsfTZQDe8UbMxb_UmB5eyHFiIRLjxYuGMo4ggzhPxhNG0HJg>
+    <xmx:TgXpauiFVBLI1-vQp4nlYIOnGwoU9jEJbS7CkgfIVZYy0zGm3B6lAw>
+    <xmx:TgXpambqM24F8MoqOInfDfhR-dlN9XI1K5rxl5V4nTZtwc84_7Nijg>
+    <xmx:TgXparp1iBnB5O8HTotF-59OP9Xo38h9NXBfXm4ofTDuggGCse10XA>
+    <xmx:TgXpahbslGFgcpw6yHkjG8k62pLIrWEcQBoxedtGXmpbYLWJI393LvVu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Nov 2026 16:49:01 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "Andy Koppe" <andy.koppe@gmail.com>,  git@vger.kernel.org,  "Patrick
+ Steinhardt" <ps@pks.im>,  "Karthik Nayak" <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 0/5] root refs vs pseudorefs
+In-Reply-To: <840bc117-75e9-4d63-882e-3831156871a3@app.fastmail.com> (Julia
+	Evans's message of "Mon, 02 Nov 2026 13:19:57 -0500")
+References: <20261022212903.177261-1-andy.koppe@gmail.com>
+	<20261101230326.3675597-1-andy.koppe@gmail.com>
+	<840bc117-75e9-4d63-882e-3831156871a3@app.fastmail.com>
+Date: Mon, 02 Nov 2026 13:49:00 -0800
+Message-ID: <xmqqcxsmhpkj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,48 +126,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260927114420.59724-4-jayatheerthkulkarni2005@gmail.com>
+Content-Type: text/plain
 
-On 26/09/27 05:14PM, K Jayatheerth wrote:
-> +static int get_path_superproject_absolute(struct repository *repo, struct strbuf *buf)
-> +{
-> +	struct strbuf superproject = STRBUF_INIT;
-> +
-> +	if (!get_superproject_working_tree(repo, &superproject)) {
-> +		strbuf_release(&superproject);
-> +		return 0;
+"Julia Evans" <julia@jvns.ca> writes:
 
-nit: The early return isn't really need here. This instead could be:
+... 200 lines of quoted material omitted ...
 
-  if (get_superproject_working_tree(repo, &superproject))
-    format_path(buf, superproject.buf, "", PATH_FORMAT_CANONICAL);
+>>     ++[[pseudorefs]]
+>>     ++pseudorefs::
+>>     ++    linkgit:git-fetch[1] and linkgit:git-merge[1] create the 
+>> so-called
+>>     ++    pseudorefs `FETCH_HEAD` and `MERGE_HEAD`. They are not 
+>> references as
+>>     ++    such, as they are not stored in the same way, but they can 
+>> nevertheless
+>
+> When I look at my .git directory during a merge conflict, I see these
+> files:
+>
+> $ ls .git | grep HEAD
+> FETCH_HEAD
+> HEAD
+> MERGE_HEAD
+> ORIG_HEAD
+>
+> From the above, it sounds like ORIG_HEAD is a "root ref" and
+> MERGE_HEAD is a "pseudoref", but naively it does look like
+> they're stored in the same way. What's the difference?
 
-> +	}
-> +
-> +	format_path(buf, superproject.buf, "", PATH_FORMAT_CANONICAL);
-> +	strbuf_release(&superproject);
-> +	return 0;
-> +}
-> +
-> +static int get_path_superproject_relative(struct repository *repo, struct strbuf *buf)
-> +{
-> +	struct strbuf superproject = STRBUF_INIT;
-> +
-> +	if (!get_superproject_working_tree(repo, &superproject)) {
-> +		strbuf_release(&superproject);
-> +		return 0;
+A pseudoref cannot be treated as a true ref because it can describe
+multiple objects.  If you force it to be interpreted as an object,
+you will still get one of the objects, but that is not the primary
+way it is designed to be used.  FETCH_HEAD even describes the nature
+of each object, e.g.,
 
-Same thing here.
+a018953...4		branch 'maint' of gitolite.kernel.org:/pub/scm/git/git
+8d1b215...8	not-for-merge	branch 'master' of gitolite.kernel.org:/pub/scm/git/git
+882cbad...5	not-for-merge	branch 'next' of gitolite.kernel.org:/pub/scm/git/git
+4231a2f...4	not-for-merge	branch 'jch' of gitolite.kernel.org:/pub/scm/git/git
+2fa90fe...8	not-for-merge	branch 'seen' of gitolite.kernel.org:/pub/scm/git/git
 
-> +	}
-> +
-> +	format_path(buf, superproject.buf, repo->prefix, PATH_FORMAT_RELATIVE);
-> +	strbuf_release(&superproject);
-> +	return 0;
-> +}
+The other kind, just like a normal ref, describes one and only one
+object.  The only special trait it has is that it is outside the
+refs/ hierarchy, so it may be a slight misnomer to call them "root"
+refs.  We do accept $GIT_DIR/ORIG_HEAD as if it were a real ref, but
+if we did:
 
-The rest of this patch looks good to me.
+        $ mkdir -p .git/foo/bar
+        $ git rev-parse HEAD~24 >.git/foo/bar/baz
+        $ git show -s foo/bar/baz
 
--Justin
+we would end up treating "foo/bar/baz" as if it were a real ref,
+too, with exactly the same mechanism used to treat ORIG_HEAD.
+
+The only difference between .git/ORIG_HEAD and .git/foo/bar/baz in
+the above example is that we _do_ create "root" refs ourselves,
+while we do not create such funky things like foo/bar/baz (hence
+they do not deserve a name, and such "use" may suddenly break
+without notice).
+
+By the way, *please* trim your quote.  Having to scroll past 200
+lines of material that are totally irrelevant to understanding your
+comment is a real pain.
+
+Thanks.
