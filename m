@@ -1,117 +1,117 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793618284;
-	b=AA+abvCddVuf3OEm4PkQmtLJK79EmfUFriApzQIZqwoY3xzj7ho1ncY/uTKG1NfYoVSb
-	 IGpsNbRjI0EoUFeqoTQQTq8x39Z3U+r/abGQAh6nj36DWQz7Te3pQeD67KXY9M4BRiBjQ
-	 JMx33l97DDYbH0VJw+r2hkEi/29uW59nZQmANnCfsgsAr1Yg1fuoAgfTQbHyP5S4a2HaP
-	 EPnyYUTXYLlBJw6zNr1/l1jXK1HIiYuGmM2gEImDRlkz1T89nnzkFc0gA8oO7Me/5fCSe
-	 7xauzJjQh8hhbjt3n6oJCEAtdPxA/xW5JpKI9bfWh/123d0ryWRCvG4tLQDfYiUiUhA==
+	t=1793618286;
+	b=KcSviQTSd+ahM03TfmKJ0bmDN/MrqKu/StDbHqlwdaOFKRUYC3S3iO/YDPhvxw8AnhqW
+	 3v8gKEuDFSPZDAQlL4njk/Q+O9i0mJLpaDDBjLN/gflRV74H84yIEoUyWPdwmC9PP/SyK
+	 51lVAJkXJGFJQF46QwIzQW2mDfnCH8vWZvKjvvoA6r7cGF78sLluXBodjL7Llt20NbI+F
+	 Vf0+m71EL8XUPw4xc4J471meYkh8t+2Mmf36m8Q1uNebIIUru2BwgrULOx6iVGFUp3h2o
+	 9O70bAx6RA9f276U7J+AvntQO4lt/hQbgQAVZttCwO8yf5fcg9ukc8lDo22yNevLkLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793618284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793618286;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=o5eMLtvjpzTqt8qgavVX9kvGV/DSDZ0rR8Tm7cuaj1s=;
-	b=caqWmfi3pDNGhxfsAdBbGpzIzbAAqmZtBBRVJtt373uyFqxKmyzBJWG1zOdk4LLa4fmv
-	 q9WzhjCwZbZE9dXHXx6aRmm+8MXvfDT8Me7XmEidSvA/RAMCu9Ahz4gZw+6CJlci/eqoY
-	 vnhi9r02e/Yj6Q5/s0gNtFurYJ6p/CrxDb8FKzEsSZXpFi/f/vxRezeJdYx7TfUzt/Cib
-	 sZ5rtH4EqvICgTo7ledCYwUP+6RnAsq3eGy4jSHxaq3IK5PhodhxryKpPNyK+yg3nc3p1
-	 AW4FEmaSBSpSttuqzbGSxgjZ4zeiB/qxn1KYK/toNAcIZxdUrwPkrb7UXPwUKCOWxHw==
+	bh=QLsMX+dZNVuKEGKLvy/X/EeJgP68D/7tDTDaqxb2Vvs=;
+	b=Ty8eGpxBeEUN11oqOeWgqqEuJB+DEobSoCxkoqpekDTzWP7nX6wFqNb2/Ga5AR4Tmno5
+	 sBESrQKAn9TUZAMkbHdvJ01Yq87gKOcI2+1IAzr9xtrVdnh0Mo0CUVMm49Q3WJDjL5mnV
+	 SA7y51qgHVWxBGKoMu7XKDtKtsci3ZemGSsTc1YiM3uLutAtCNMuTLSeM2dH7dS6TGfY5
+	 /RrtBlWrRvKPPxWfBkrcfzRq2Xql0ium0M7uteOyswyy5WdhU9V+Om/8FQI8eDhvKT0+/
+	 ctAaH/ibATIkkbRZdUx7HujcfAgjEKJIy2Fo9VAdxG/q3tQj8mMKwcAwGzV0SA3MupQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b="j1lPoAO/";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jyD9Pi5R;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=LAEgX8oj;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=muPPTI3L;
 	arc=none smtp.remote-ip=202.12.124.144
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8944E606A32F
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 11:18:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8944E606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA3860A261A
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 11:18:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9EA3860A261A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=j1lPoAO/;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jyD9Pi5R
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id DEF441D00229
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 06:18:02 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=LAEgX8oj;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=muPPTI3L
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2EAD41D00037
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 06:18:05 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 02 Nov 2026 06:18:02 -0500
+  by phl-compute-01.internal (MEProxy); Mon, 02 Nov 2026 06:18:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793618282;
-	 x=1793704682; bh=o5eMLtvjpzTqt8qgavVX9kvGV/DSDZ0rR8Tm7cuaj1s=; b=
-	j1lPoAO/UvfO/bSKCH8LT7CAAkPKbEEJ5K76+C1Hs/10q/Frw1MoA7w40aFNCHaY
-	wo3LfKAwXHoa20u4L5xD74B6LL853w2p/7sl9rZaHTluDbExI29OB0BQwt8rGd3g
-	UQiwxLMu4VXjkq76j5oTYuBoWHQF9jI8dAtr1sdrLhpMhPhyvNw1DD9ZgRBWfhUO
-	N3VkrF80TmcoGgifD+yYTGdnUtMJnOsuScIV6rwrjAu+/wPuA/hjcy/doiQMUd+a
-	aURVIiYUak7A1cZ82c3PFaKJQsL8RCeS/mO0lZO+9a6fMilFjJcqnsA/DT1+PS9U
-	Dp4yDfUE3+4X8VmvemVV1Q==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1793618284;
+	 x=1793704684; bh=QLsMX+dZNVuKEGKLvy/X/EeJgP68D/7tDTDaqxb2Vvs=; b=
+	LAEgX8ojFySyZyPHRluiZVL3WQNWvDbVMY8NgSvey3cy88qJ7biYhNtM3AUGa7MW
+	CyAlmYANyIT5OTcXp9dHjSJ7zkVJjyRX0tatz2lZXPPwRViT8EQAP93SDuc0VQfH
+	UPuZc98GVXXYpgUiJLDISSRsltNhQV+JEz+g7ll4Aul/4eSYskRlm/rygbPsi23L
+	QYmK9lX+bI23WK9V+S6zykfWRCRNsLNdG6UFRuX5gUFXRH0hWszQz1b3wRnmxBDi
+	HqbCHABvbcCfmlr5YeSDjokqVp+3ICpZM2QbBd9RY1oCxDXTnVxidIJGxVhPThNB
+	pmcp3K2wqhQm1+Lkq/65rQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793618282; x=
-	1793704682; bh=o5eMLtvjpzTqt8qgavVX9kvGV/DSDZ0rR8Tm7cuaj1s=; b=j
-	yD9Pi5RwLIRx3fS+tv+eRk3Ea67ZkCKnKD6L3Xfqjp0MwkHIDmQPctjAUoN5fy26
-	4lafHkzX5dk643jijlaj96eY9qGqkoo29vkgZUfbA+ev8AuzW0k38iAPRiT9HJVK
-	o1s6hRcWxnv4HniJT5Kr1J56jabJGj/Amq7i5IkcTT4aN6I4qN2p+4j9N4P5igus
-	zXrMiP/srf3kDt1K0VA64fkEZCncPV2IK5+AJHWiEnRNP2A+QZTWXEJE3A7mQbAM
-	gg2fFTt36QCWsJavR2X4iHbuSa5zwUW+a5vDA50M8uK+Y6J8vADCn1DDpFmohsj9
-	fRLzG4c1kwbqY7+Af1QiQ==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793618284; x=
+	1793704684; bh=QLsMX+dZNVuKEGKLvy/X/EeJgP68D/7tDTDaqxb2Vvs=; b=m
+	uPPTI3Lu3obGgy2WnxtuT7jdQOMxArpPqBYEG9LuLYXcMyiq6+hROZKbt5t/QFkW
+	vJCRMQOZCtioKqmd3lJGuoNaKA8q8Y7OwKvWUA/2GvrIyvQim+Rp/M3lBDUTkYDJ
+	b7TLAYcGMMQnktMJtwVMAON2HPVkVVKxx1Pr2jU/JdnKuLAanInJTXKIkUjLhxfT
+	wm32U9tVmjzeEbSDJDg/33GucWIV3ZBaUnlonH6oREIyoJDnF2dZzhRyYzQ4sCSu
+	L2jBwg9JKlejrHSgOnQnqNEDQNSYA/nCJpIDYhJiUTKXRLQWR+MsmSl8IsflS1la
+	6TiGT6mjmLCKriUwiOxVA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793618282; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793618284; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:nHClVR7wccs1CnYvPAVy7IQbhcZykZRD2ArRruZ14LoyMAJ
-	3GWWxpjKsf1I4oxuGN7KxYpnqBRMJZFNHc3WkpEDs0o0vKUFnnOrXktcI1x5ZiLS
-	WCYfzdYQk9d+Fc4qBM0psSlG3/M9IU88BDZqNRMCd2wq+HdcMtnArSREQLkAIoTA
-	3e2AXisWgmhWGJvYSDpvs9ni6Ep7uCzbp36EzTwGUIlVh3ITnaWtrWM9jAHXPcKI
-	OEpDbBUWLYx/VFFxDujvReawvtipDYBDv3fb4AfNQZy0ZNQ1AgeBhLjsHaCwdXQ8
-	x+/Zclv5VCFlmFIi9hjq5rR67kUx0qiXklPYlAw==;
+	s=fm2:rsa-sha256:ptV/UOlVK8yXrq/+InoD4/lHXq5dcqYpNxtFPh+tLJgEIz2
+	K3atBbge80ShsY+WKcSuit2TRrkIfIFQzymRSl9zugIheC15i4qNVir+WSeWgOpE
+	zKPIxB9dQb7sJrlaOkGL8ees8R5xdOGPAh+Cb3kmtFT5de4HE+jfUeoESqjbGwzw
+	2zvOq5SAQ8YOzQjHaYuhx6ZGYQKytgW4mmzbyPoEOsZnbfSg7ijU276qMHXSbkNj
+	0asD3oygScPyP1yytTUu5E0N9iq4KWrtzOkpDGCnmNAo29TYve6B3qN/ZwQ+r/Kb
+	odswfjrp2nBVNhkLDG5fMdkqAv6dEn2CMN30ZaQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:Rc5m0MWNVIG5LjNQruoKi+m4RCvm7vVkJLLM0sShhbI=:aKgw1V9KVQOJFMKql16uEFZaWDCfPehsj7zcqJwqNyQ=;
-X-ME-Sender: <xms:aXHoakYRp65kxHyHvlkRcQSk5ihQeIkX8I3fGns6oCzKJmj_7JHcKw>
-    <xme:aXHoaouuHPs4yYAMe_uarEY9k7NbEFfI203H_K88kOsrpq1XS2JYVDcFB9lpvHj3X
-    miinhDUp0ecM2rD0gBjYZ7hXe09qRw0D3eaqLCkIKWyngEaLwDPh7E>
-X-ME-Received: <xmr:aXHoamMCoYhiFjqqJM2vGSZqjDxBSoKCcUA5uHtvJlyP89-8fbA90vT0dKWFkrSHY-4oXQ>
-X-ME-Proxy-Cause: dmFkZTFYNdbPZ+EwG+SbhpDIqr6BLQ0Mn8d99oCbVfY2u4yGnvOncByysPxzXZCVhTCz7a
-    UB4nFiQrzgFG0Tqno2XI2b3dQghSp9B9AkCkvhc894LNI0295VB0zWg96Nio0pW+c/rwoa
-    A+vVlAccCUnS0ml4E0OszzJhFaVeaoMS/lLHebpaDJqRpvWqbV1cw+guBp/41uOZBzlb1T
-    eiPKGt3Ya0jqM+iY+mWuJp4Y0FeUBnLSp8uiO/K9sz8TjBHEK0deyry6IvoQeBAD4Lvn4l
-    LBBHGeBAorQldJ1E8LA36woEVZnhAzdXcrrVA/uvm2/XzsHa04YxEgI9r1AEv6CCUkpJge
-    VAheOKJR0uPhDvPwNLd1aG1CF/ABRyzm3r9KJZGuhbvprih1GZuTx8R+xmwufolYrIx0z0
-    iCMH+awuzCxX79fb9Snl+ajninWGnM9nEB0FlSHJgCqwcQrLEr8ZQaBUhVAVpPCNO8VdZU
-    YxytaneJxU6FHdLbERf4Y63g/xZq7t7kDntRIaQm0Yt4Wq9OwhE7AtBsMbhDj8p72hQk/6
-    jXMPXdZ5U5L9oFtgJqdUsTu/dzdiy9t2YBEp9/0FYgKTIIAMH43YZ3TMgNZkThI69SY54h
-    opd0mgNBS1XWQW6Keg2Af1/KQkjqudw2DpAy51fXzVUz4LX4ocAsDl+i3r/w
-X-ME-Proxy: <xmx:aXHoav4UJ3Fsr7vQ2LafUrPaKUDHqHlyQ4MPftnBX2MDutOW2oReTg>
-    <xmx:aXHoasSasPaTo2yAXqU_C5hZRzzHzpG2Ka8mtMfuMAjAsArj9UPeDQ>
-    <xmx:aXHoasABvFeUwErfYQk7BUjceP9LzvJ9l6DZfKKikQj5GUNVIXhxVA>
-    <xmx:aXHoasEa40yS8HCepbz379XtVj3WL9UZJe4dOCflP2DvhqATTeJA6g>
-    <xmx:anHoaoGpOJ-ouRY0xgMPn1_hxFM_6bhogfz1jODMvf-U4HTRvb2qMcj->
+Message-Instance: m=1; h=sha256:koxKBBf9mVf1wSj6rzpmkARMbgHHKGobC6ZVHUoG6/Y=:+dF/k8Fw1rgfsSsFDw5t4wIeqptD+dbwHkR27/2pMC4=;
+X-ME-Sender: <xms:bHHoajNaRAqWcZGpst4pitLVPSoOzOa23lDLDJTTWdYDOtmxwXGLaw>
+    <xme:bHHoanSpFQ2wLAIzy2iGIf5wWLwRfWlEXDu-QARwbTWHzGdHgMtsH9VB8phokyjOM
+    TP1AU8uokkvWsnmh5_64KsiKBJHal2qhBZpa5JV1wq_RYM5wTsG2Hw>
+X-ME-Received: <xmr:bHHoapgt3T1xTYVxMSYj060cgu-5YxpbcdQowOS6GEqFC7o8fbgYafdHi_4v7X4SOt_L6g>
+X-ME-Proxy-Cause: dmFkZTEXyuhHrrnb1gS/aM7tkRlNQcp8bibU3vAgVGavHNMWT6/jkpRLB5emEJHRPiClN3
+    ME/PMR2+hmJSyTlsXe5D2PDaoBSbU1APtpz6KlKGYqDUGSLjLskiL62loOhamsPeQc5AH2
+    168HRYHZluXKzaVKnNAUKQoRWJvILJ9fUmBGE1KA+IY4b8Aam9arfoWOZ73Jxak6bP3W3C
+    u7CbkpDmNzxmZ3aARVN9/njbookCGclpDLcz/zoeEO+adtBUAQLPA+tk8DozF3LOUA6ZBY
+    WpxueVw/5NkwbLZDrVr0wLRo5qgehigUsqQB8gnvuWyhJDBotL/qc+CstJU9OAWU+oxDg0
+    OL296yJiBnlqo10DHVHZdvczakloCv5yn73NXyDcE+5vU8emhiYUg7CZG4bVZm+cV63L3B
+    ad6RkIjClGZTwbCGrsGsOiSVO5b/nriV7UIIODdX4rcHDM8dn2UOjTmrd2qX6USu2DpLK6
+    h0NfUWrLsbwIuBWPjuLR/y+hLMpoBuVW1v+AEF8gmrL9+grM6ZutQhAdhN9z97yN8Web5h
+    hQQw5aEvyVRHV9H5SBqsBr1HkqYZ4QDAILcDaU4dYgjXbAoz4oXRrqn8S9bt3KKp1+12Q6
+    e66F5Jzm19GwpGWDNZLlG6xbZMDTSIm/MYQHkM9GTXnP/TsKY9u0jXISJsEw
+X-ME-Proxy: <xmx:bHHoao8Yc3XdRb0gIVIXPUJ9a6qWhCmV94sJqVKPJoy-25iS0MZUIA>
+    <xmx:bHHoaoFl7h1W8SfiU1TIeUs_l8IXYfAMP7rfmmh9f-dO-zrtU7VaFg>
+    <xmx:bHHoajkibV09gCYMMdecInUcGOOBCvhHbV08XtDgc9lBGOUFkvoVVg>
+    <xmx:bHHoakakBrqCEV3Kl4JCR7gKYMJjvty-WQPD_m_Or3HJiAlE5ts9EA>
+    <xmx:bHHoap63h3FHVT2E3cG18937hszN0ygatFLPQNSYi6XVlEa4w99eQ-TU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Nov 2026 06:18:00 -0500 (EST)
+ 2 Nov 2026 06:18:03 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c6f806fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Nov 2026 11:17:59 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id df4b9dcf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Nov 2026 11:18:02 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 02 Nov 2026 12:17:49 +0100
-Subject: [PATCH v2 1/7] ci: consolidate setup of test environment
+Date: Mon, 02 Nov 2026 12:17:50 +0100
+Subject: [PATCH v2 2/7] ci/lib: always set GIT_TEST_USE_SET_E on Linux jobs
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,7 +123,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261102-b4-pks-ci-test-vars-consolidation-v2-1-a5485c437c62@pks.im>
+Message-Id: <20261102-b4-pks-ci-test-vars-consolidation-v2-2-a5485c437c62@pks.im>
 References: <20261102-b4-pks-ci-test-vars-consolidation-v2-0-a5485c437c62@pks.im>
 In-Reply-To: <20261102-b4-pks-ci-test-vars-consolidation-v2-0-a5485c437c62@pks.im>
 To: git@vger.kernel.org
@@ -132,132 +132,50 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.15.2
 
-The setup of our test environment is split up across "ci/lib.sh" and
-"ci/run-build-and-tests.sh". It is not exactly obvious why that split
-even exists, and because of the split you have to know about both of the
-locations to be able to figure out the specific environment that applies
-to a specific job.
+The GIT_TEST_USE_SET_E test variable determines whether we run our test
+suite with `set -e` enabled or not. This works on all of our supported
+Linux distributions, but it doesn't work on macOS because the version of
+Bash used there is rather old and thus has some differences in
+behaviour.
 
-Consolidate the setup into "ci/lib.sh". Note that this is a pure move
-for now that results in some awkward duplication. This duplication will
-be cleaned up in subsequent commits.
+We currently set that variable for a bunch of distros explicitly, which
+is tedious to keep up-to-date. For example, our "linux32" job does not
+enable the test variable even though it could. Adapt the script to
+instead set it on any Linux distribution.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/lib.sh                 | 43 +++++++++++++++++++++++++++++++++++++++++++
- ci/run-build-and-tests.sh | 44 --------------------------------------------
- 2 files changed, 43 insertions(+), 44 deletions(-)
+ ci/lib.sh | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/ci/lib.sh b/ci/lib.sh
-index 2e63d652543..d0bd8113d35 100755
+index d0bd8113d35..560d785f67c 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -394,7 +394,50 @@ osx-meson)
- 	;;
- esac
+@@ -367,6 +367,12 @@ esac
+ CUSTOM_PATH="${CUSTOM_PATH:-$HOME/path}"
+ export PATH="$CUSTOM_PATH:$PATH"
  
-+case "$jobname" in
-+linux-musl-meson)
-+	MESONFLAGS="$MESONFLAGS -Drust=disabled"
-+	export GIT_TEST_USE_SET_E=yes
-+	;;
-+almalinux-*|debian-*|fedora-*|linux-*)
++case "$CI_OS_NAME" in
++linux)
 +	export GIT_TEST_USE_SET_E=yes
 +	;;
 +esac
 +
-+case "$jobname" in
-+fedora-breaking-changes-meson|linux-breaking-changes)
-+	export WITH_BREAKING_CHANGES=YesPlease
-+	MESONFLAGS="$MESONFLAGS -Dbreaking_changes=true"
-+	;;
-+linux-feature-testbed)
-+	export OPENSSL_SHA1_UNSAFE=YesPlease
-+	export GIT_TEST_SPLIT_INDEX=yes
-+	export GIT_TEST_FULL_IN_PACK_ARRAY=true
-+	export GIT_TEST_OE_SIZE=10
-+	export GIT_TEST_OE_DELTA_SIZE=5
-+	export GIT_TEST_COMMIT_GRAPH=1
-+	export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
-+	export GIT_TEST_MULTI_PACK_INDEX=1
-+	export GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=1
-+	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+	export GIT_TEST_NO_WRITE_REV_INDEX=1
-+	export GIT_TEST_CHECKOUT_WORKERS=2
-+	export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
-+	;;
-+linux-sha256)
-+	export GIT_TEST_DEFAULT_HASH=sha256
-+	;;
-+linux-reftable-sha256)
-+	export GIT_TEST_DEFAULT_REF_STORAGE_FORMAT=reftable
-+	export GIT_TEST_DEFAULT_HASH=sha256
-+	;;
-+linux-reftable-leaks|osx-reftable)
-+	export GIT_TEST_DEFAULT_REF_STORAGE_FORMAT=reftable
-+	;;
-+esac
-+
- MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
-+export TEST_CONTRIB_TOO=yes
- 
- end_group "CI setup via $(basename $0)"
- set -x
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 68b91e31439..b81d654b561 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -5,50 +5,6 @@
- 
- . ${0%/*}/lib.sh
- 
--export TEST_CONTRIB_TOO=yes
--
--case "$jobname" in
--linux-musl-meson)
--	MESONFLAGS="$MESONFLAGS -Drust=disabled"
+ case "$jobname" in
+ linux32)
+ 	CC=gcc
+@@ -397,10 +403,6 @@ esac
+ case "$jobname" in
+ linux-musl-meson)
+ 	MESONFLAGS="$MESONFLAGS -Drust=disabled"
 -	export GIT_TEST_USE_SET_E=yes
 -	;;
 -almalinux-*|debian-*|fedora-*|linux-*)
 -	export GIT_TEST_USE_SET_E=yes
--	;;
--esac
--
--case "$jobname" in
--fedora-breaking-changes-meson|linux-breaking-changes)
--	export WITH_BREAKING_CHANGES=YesPlease
--	MESONFLAGS="$MESONFLAGS -Dbreaking_changes=true"
--	;;
--linux-feature-testbed)
--	export OPENSSL_SHA1_UNSAFE=YesPlease
--	export GIT_TEST_SPLIT_INDEX=yes
--	export GIT_TEST_FULL_IN_PACK_ARRAY=true
--	export GIT_TEST_OE_SIZE=10
--	export GIT_TEST_OE_DELTA_SIZE=5
--	export GIT_TEST_COMMIT_GRAPH=1
--	export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
--	export GIT_TEST_MULTI_PACK_INDEX=1
--	export GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=1
--	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
--	export GIT_TEST_NO_WRITE_REV_INDEX=1
--	export GIT_TEST_CHECKOUT_WORKERS=2
--	export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
--	;;
--linux-sha256)
--	export GIT_TEST_DEFAULT_HASH=sha256
--	;;
--linux-reftable-sha256)
--	export GIT_TEST_DEFAULT_REF_STORAGE_FORMAT=reftable
--	export GIT_TEST_DEFAULT_HASH=sha256
--	;;
--linux-reftable-leaks|osx-reftable)
--	export GIT_TEST_DEFAULT_REF_STORAGE_FORMAT=reftable
--	;;
--esac
--
- case "$jobname" in
- *-meson)
- 	group "Configure" meson setup build . \
+ 	;;
+ esac
+ 
 
 -- 
 2.56.0.500.g5d06dc02cd.dirty
