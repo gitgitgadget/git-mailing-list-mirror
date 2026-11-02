@@ -1,88 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793642238;
-	b=PqG6ilcdL6AYlKmIAm8ZURfuAIUY1ZNGhLVcz2drKwd9zq8U6fLOPAU6m2BdKNZfztcp
-	 GPYcR1M8p0pOz8v+OnJOGXe58RZMp0frLD1W98vzfEJvqfP3EbH21sVTXOQbbUmDJRnsx
-	 CP0O+rs8yfBwrRzaVHjvZ1ZVJs5iGQUeNEwSqH3Wqi5pwZubxpd9Nd/3+N9JocQvNIQVy
-	 fAeQ9w+g+l0m9wItAVBsueQLspUTiu/tjyIG4SWQ9lucV/g0q2YPK7A4f6e2tucZ5j7ft
-	 6nEf0mMiWDDOxe+ZwYLag3a4Qf/ssolgMVFDc3IBhHsQT4au04RBXwZbyVO5EIIhuQA==
+	t=1793642248;
+	b=3jcL+YLPeO4PZnU2B5FKjzmq+rAZavtc1iAx9bp1eKVepMsbm0sKJ2kgTuee2By4zEcl
+	 Eh6r6jan99kb3Bqfi5HEJtd/oq2ZDrdDc0w3xHUEaeshfAYupXPk/rf3O1CUBTKR7u/Pn
+	 TA6Jua8Ssxbe7QUpkaSu1bzkujpEKTfLfDrIP6dyXgD56dELU9+AssbS2bcfu6QyyB9s2
+	 FgbzJqDhKjzlRyGXnJ+UQD3G99PI78CiJEXeu20JtZSkGHi1Nz3BzBwxAI02HgOfEP2MW
+	 quBmqUC9AGodigAhR/9ZM5Pii+tZe3kwxHHU/abybVW1FOee7IAsmDbw0xNvq3F6XBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793642238;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793642248;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GoGIJ7dz2bS+cHMuDShEAsNtzVqGuDPc5sQDaPLR6oA=;
-	b=d+160CFJOI6v/ofvEyvJ3iKa9KbcbJFgIfHQCZI3O2J0iaBcgHjy0bcM01N9DlDPQkTl
-	 Xje/l1YDzcN9/JEaSa85gjJ8PY7ULuy/3Rq44ZXM+ddg2bgrskJIsOaMFXaZygK0s9UNl
-	 dVcw/ZaGtSH+K4aiGhPfRuLauOLSETcehGDp+ACn3pmtl3RNoUYpGLsSyjseBMbkm0QhH
-	 UC9fta5BzvJDak1ldzDleDEVnnjjF3Pm6POiA08DOTrXnRNq9pNAEos4yn3RfwLx5Nwt4
-	 OCPYGlC8VnINtJ+oIK1jaKvOLV+B6FhHJxqZFEsUsUaGLJt1NbOFguXBAYoVUq5qOTQ==
+	bh=ftxVTehDyiV9GfRj+1wDfPULO95KrnZHkyi9ZG9/MC4=;
+	b=dkbvWq7ybsNGMUGcOvTomycwXU8no7Y5Ni++Rl5VhT+oisH6HqBrofCurjoMasPG6sHD
+	 z3AALdHnm1nKZ6MJLXwKPQGkfw9IIMEAaWrgmN5EC3rXd3BsLAk1PmgQO+y3fnhrKze5k
+	 IMggwRIefadF8R5mkfSVYGVWhXHZO9j6Bbd2esE5u/wZxDppspt5FHkKvINM9HjDKnRtk
+	 k4akIEzJjnKoiHbKPcy7a+eRi0QYv7Nd9RdXnzJqdfs4woqUmgqar7U6KPWD5ZuYZtaDn
+	 952W3FovzMKUO7UWnP+jPmWGRQanMe73Fk6AFzcN2MrDL7jtQ16GxDlJie2E0llnX1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=jaspermayone.com;
 	spf=pass smtp.mailfrom=singlefeather.com;
-	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=OYLIWJlE;
-	arc=none smtp.remote-ip=209.85.160.173
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=kSbMIoV7;
+	arc=none smtp.remote-ip=209.85.160.174
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6425606D825
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 17:57:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6425606D825
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA189606D825
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 17:57:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA189606D825
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jaspermayone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=singlefeather.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=OYLIWJlE
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-53669f7b518so42096861cf.2
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 09:57:17 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=kSbMIoV7
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-5365d725440so33737561cf.0
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 09:57:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jaspermayone.com; s=google; t=1793642236; x=1794247036; darn=vger.kernel.org;
+        d=jaspermayone.com; s=google; t=1793642247; x=1794247047; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=GoGIJ7dz2bS+cHMuDShEAsNtzVqGuDPc5sQDaPLR6oA=;
-        b=OYLIWJlEwg4eNXMyn3cIJui6J2hZOWmW7UB++q2pV2uo34tZESNNoZ6gnLXUzxz43j
-         2mAxCIKCeeORliYIhYSGo8IfGrhoCIy1rKefj5m8EHrfhISMWHnFpQ1rVjzSB0EjHi2c
-         MfjSvVZ1ejke0PyQM0JU+R72xQXkFzGI5e34K74ZI9v5WgQTXynki0gS/O/G7i5uy105
-         4mVfUKigJaPRNqlFhrgp35pf2j7H78lbAnx96H2xYJ9KzkJ1dBim2G1vLj+8geh9M4xg
-         Y2cf+CIRGNxS9jkgjmDKgj+nZnqOIe47LekgppsEDOJXhxqFe+K1XqCrCe1K7YKr9Vtz
-         9obw==
+        bh=ftxVTehDyiV9GfRj+1wDfPULO95KrnZHkyi9ZG9/MC4=;
+        b=kSbMIoV72GuTGPjvBLzSNEwInFW1kb9zU5AXuWdAEY9odb+oabC2mDaG4fmiFk6uus
+         Ytt2fB9ybfGiPpXtRd7yvJzc++/vGovTINGOoB0i8dX9z6E3qVb7xrOr8pqWfrdmbTg6
+         vURc/5OscQDE0Lyks9z+B4T9/KXTxfChaPWCxcMuN6WKEhV2qaRM76prVMRJ8TJrbZqR
+         C6AWpJQNaymmp6DWxDvzVBK0jSKNcDvLm0RQNC2DI0K5rvmh7EJbNkN771YS0tFz6dsa
+         F92+DKu5DD4Jjh9rb19CB+y2CiKwBzA0giM1JUErbV9O6xogo8Epx0Dspknn0YYsphvy
+         2kmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793642236; x=1794247036;
+        d=1e100.net; s=20260707; t=1793642247; x=1794247047;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=GoGIJ7dz2bS+cHMuDShEAsNtzVqGuDPc5sQDaPLR6oA=;
-        b=uJVGyzvxRqjuj5j3LEqHJaJ0HeEkpHDaWK7+K1O7K5XM8WiQDAvrYOcTNDciXfyN8a
-         FFm5rPMZUOsun9oXN6M4lljRkjJEax8u3O4cMRKnRVQE2JFuJWJpST4R0iF1gLDz46ik
-         3ekkdFBtA+OUXqG6pS8kL+nIESwURG195wGBP8c5R8V0o/zbeJVgMERvE6pGgiOk0+pz
-         3hdYozxXocP8o6eyF2H/KFD9TuQQp6iJG++SU41I1Ktdq9Z1OSNcP330+LnVaIVMDFKX
-         c/fLjG5+s7fwxC+xG03oyiibcPbcudAiVk99pPGj6HMoHj6Yu8jkEh/fkpTLYS/tHBo4
-         mMUw==
-X-Forwarded-Encrypted: i=1; AKwUvByU1C54COtT6c3AIQGq5Urg48pT+IjYjklM7ZJSM35Szr/FL7BMI+DZc6jjWKrl+y70yKc=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8ySwCRMqvQT6vuuhyqrSc1VKPiCSvAoSYAFcs23KCliaB9Fj+j
-	Z6w2Z/IWSyaVSm6Yg5//F94+S6mS0F+LVdYTM3UalWwS2am43V6k79fIfW29viXa9W8E6DZwuts
-	pJr/yy0hx/z3C+BHzknQocgGAJN9Bvo5njxc21VFAKaRdU5OuAYmTJJHgta2hmj9T3nOmO4e4C+
-	ANtMPdRxvHnVqx56CTe/XixFTolB56G3hrQC9YESJjhUofRLk=
-X-Gm-Gg: AYBFou3nMyebRfXlZVQyYRuK5lgqSQjrNfiJ7F6JGt3JmVmshcTuJGQqEGwJ4opzZ4r
-	w7h/ief1FznrvdeFgh7EyLwTnIkaaeJ3lvLwRFnLCYccLSsJgcrFj/hh6BTcNvGX2ctDhG0OrwR
-	Wd4xmaxDPogpwfTOF8CxxDN5qbixH0B9P7DmMOWiFVaerNLzbw2iqMJelfa0nOS7TO+8F2dagYi
-	PjX4iQmBPnaPa1SfTy55u0Nb2TcBs1r1iw+Is71c+Odh0hT7XNfTNN04ktXtZ4+9T6vNS3LzLzK
-	/n5tnX4d7RoJOquRwzmxAOMi7XiDEzw52QRimG9R2K0haFKFhXK5OhiVts7qYMRGWFzXUSk8Gac
-	/79uAjYmiJb75nxvE1iS3b6jyxUIQ8Jp3HjjN9P7T2qRKshoQsSSq2KNMyrg847TZOp12EziKTm
-	L6rB/42gC/N7mv9slnOY7PG4dPt9B40iLR1/O3ji+y/l0esKfI+U8iHGip7Sq9IpqbZCXIQqXdR
-	EuiyPVU2SkSHTchGNHpmiaOp5KxdtL3Sd2ShAVkXVBSVKTEox2SfUhbXBRv3zraEC55pS8LMi6A
-	R0yPXyVA561tsrQc3F0QHUjloP5xL8UGMstf6NGa667308rbflV/t7qbYjNLUcJ/oGDixPwT6G6
-	b6t+12IjpIdKhw4HECZjKUVSQxPpC7BFCzyErEv/K50JMX6O3CWh9Ov5N6MzzLOxVwb3lOdjE0W
-	Yne0h64srwNqVJKbjLbRw2qfCgxtcrSfHZbxa9AgU7RjaQQo0DYuGGhEBcr9/7WXxuSDuL8JQ7J
-	boWDKOuXCcdUoemCzSffH+n/aDTg+HU9B/UFXj7dxQ2O9A=
-X-Received: by 2002:a05:622a:251b:b0:535:9686:b9e9 with SMTP id d75a77b69052e-542b405b6d7mr186585281cf.11.1793642236448;
-        Mon, 02 Nov 2026 09:57:16 -0800 (PST)
+        bh=ftxVTehDyiV9GfRj+1wDfPULO95KrnZHkyi9ZG9/MC4=;
+        b=PXhWArVsXwVpkTZZ7yfT88Vc6UONevPmcc1MdRJYkj1P/p0ojVXnrRW0QE8NVFntvE
+         zz7SSiIAmWuG+xsryFl4bxk3MzGXZ5al27wC9ZKxPfEAVU+j+X12qTwxh/wL13sWtDEg
+         6YL7TRTqjIsCfxGVuI8ZfCtxqqAuuIrG2I5O9G3q+k1aX0Dxkfg8m7vka2JVntUvqEzx
+         ZJRhiJd2Ibarho4jeKfBriuum7skowoLa0uk8Zj6fmkHdYloU4moWECvm1BrFsje5PmK
+         /5AIqOg+7/hbeLFDd8tSlkJ7zHU9hpsgiU/i6pqVWFIileAqsp7zujz1juBfpZfo37Wh
+         sisg==
+X-Forwarded-Encrypted: i=1; AKwUvBwy07Thsf8pR76YWx8iNIHUMKm/TXss33UhgPDS6a7Hy1teOlu1IJjmha0gjlkaHtS+QWY=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+HGiN4R+HzZnOWvMJj5dKbyUGhtDrapFFgXWsB1XfGgDS5dQq9
+	qaDfBxf+EM/bKr1wbCLm4OOSni1ZROErBPbyudczOkiFYzU9curnEOv/aDx2r5EwUKDM/uW7afO
+	28XVvc00rnLiV+L30ydm59kSvtTc8UEGOtg90OjyEIhFEV/QYoDYevztaBuJM8vGaLiczkNo7Y0
+	pcZP9hGNWqFfk8hs4dOELfyDX4fXq/NWLhRZUMSH4GLAR7reE=
+X-Gm-Gg: AYBFou16OCG+umNCMvobLBYvvaywPZeIRpAdBTpvGXy+l5e/0plZLuVJ3JC0ajvDm1E
+	dqbJTDOtHJ1h6/uPa1kOrwwxfZlq4sxvjXrNZQh4lfySrZJSGWafCD4UfN6gyHbW9iw+UXxgjLP
+	XyyYrq5aFkALwkYVTL6PaXHZnaIRSzMsH5FIOQpygFgePvJisMXBk9feOmQ14ZQPRUpvZLe2KYW
+	nrKw5EoT/96zlvKdZStBBhENxSLwGRYCS9fF8bBlLQwoeN3iQL22l8R/CDs9qUEuEwa5P8srXiG
+	JI2wt6E0VeZV1ljULJd1n2igkeWS5mkkoFFI3X3Cr2/uYwMUm84blQZkPpEZjMcgMCLVoPq6bOc
+	PSKYxSJ34j6I1XT42z+0Fpxff9nR37ECVHYP6wsFj8B7ldSmJZcpu07Ea91/xBUphgSg8VGdViA
+	REVXy5tAViKZGRA2dkGNA6gRRD+7MgqymsmWdSmHuVT1a1RDohtfmghHlhjYgYyLAAgpysXz/tB
+	1HPdu3zWfm8gRK0mefpmdXCDN7GlG635eELfOMdrnczV+kAbtd/U52fXmXFlL0jtd91a+A6lfKz
+	XGIOdRulxtk2ruzJIgjHd8oMEVVULBvG/gu8nSb8eJPuMrRdJf7yzpCpwSWQVSkoFz3eSpU+UK1
+	q6G1Ow+Au4ERnFBAzpLwG0NxlQfo1fMzI0iofOeuqFo5yQJUyEt1yR1mSjiLtD+sEdf0gZbSXp3
+	4Z7DtObbUQCd9zZ7rjToR/rBo1pMMe2PbSsWHOhX800UBVDlcWTpk9fD0Bge+pJwONQKSYhZDVP
+	UL4TSIDnBcmgJIPboNNzZr1XorHr938Q0dWH8oULb6uowE=
+X-Received: by 2002:a05:622a:1394:b0:536:5a1a:e5c0 with SMTP id d75a77b69052e-542b7d07747mr178298771cf.53.1793642246663;
+        Mon, 02 Nov 2026 09:57:26 -0800 (PST)
 Received: from remus.wildebeest-stargazer.ts.net ([69.43.66.31])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca7f25fc2sm97468096d6.10.2026.11.02.09.57.15
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5498c08680dsm3590791cf.16.2026.11.02.09.57.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2026 09:57:15 -0800 (PST)
+        Mon, 02 Nov 2026 09:57:26 -0800 (PST)
 From: Jasper Mayone <me@jaspermayone.com>
 To: phillip.wood123@gmail.com,
 	git@vger.kernel.org
@@ -92,12 +92,12 @@ Cc: gitster@pobox.com,
 	ben.knoble@gmail.com,
 	haraldnordgren@gmail.com,
 	Jasper Mayone <me@jaspermayone.com>
-Subject: Re: [PATCH 1/2] worktree remove: refuse a worktree in the middle of a rebase or bisect
-Date: Mon,  2 Nov 2026 12:57:07 -0500
-Message-ID: <20261102175708.75996-1-me@jaspermayone.com>
+Subject: Re: [PATCH 2/2] ref-filter: name the worktree of a branch being rebased or bisected
+Date: Mon,  2 Nov 2026 12:57:22 -0500
+Message-ID: <20261102175722.76770-1-me@jaspermayone.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <bf554c5f-066c-4e58-a583-0f95aedecf95@gmail.com>
-References: <bf554c5f-066c-4e58-a583-0f95aedecf95@gmail.com>
+In-Reply-To: <37d53d40-66b6-46bb-a38d-0d3534ca112a@gmail.com>
+References: <37d53d40-66b6-46bb-a38d-0d3534ca112a@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -111,43 +111,67 @@ Content-Transfer-Encoding: 8bit
 
 Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Cherry picking or reverting a single commit that contains no new
-> changes also looks clean, but there is still a cherry-pick operation
-> in progress as CHERRY_PICK_HEAD exists.
-[...]
-> Fixing that case simply requires us to see if CHERRY_PICK_HEAD, or
-> REVERT_HEAD exist.
+> Those commands also reject branches that are being updated by a rebase
+> via "update-ref" commands. If we're interested in checkouts we don't
+> want to list those, but it means that "%(worktree)" will still give
+> different results.
 
-Good catch. v4 will check for CHERRY_PICK_HEAD and REVERT_HEAD in the
-worktree's $GIT_DIR as well as the sequencer directory, with a test for
-a single empty cherry-pick.
+Yes, that difference is on purpose. I will say so in the commit message
+and the documentation.
 
->> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+> I don't really follow this logic. At the moment neither "git
+> for-each-ref", nor "git worktree list" show this - there is no way for
+> a script to find out which worktree is working on a given branch. We
+> can choose to add it to one or both commands.
+
+You are right, that paragraph is wrong. No command shows it today, and
+this patch adds it to %(worktreepath) only. I will rewrite it.
+
+> If we want it to behave like prepare_checked_out_branches() we should
+> use that function, rather than copying some of it to a separate file.
+
+Agreed. For v4 I have added a small function to branch.c,
+
+    const char *branch_checked_out_worktree(const char *refname);
+
+which reads the list that prepare_checked_out_branches() builds and
+skips the BRANCH_CHECKOUT_KIND_UPDATE_REF entries. ref-filter calls it
+and drops its own hashmap, so the patch now removes more code than it
+adds in ref-filter.c. t6302, t3203, t3200, t2400 and t2403 pass with it.
+
+> That sounds a bit confusing - "* (no branch, rebasing topic)" already
+> tells us what we need to know, why do we need "+ topic" as well?
+
+I agree. In v4 "git branch" will not mark the branch with "+" in the
+worktree that is rebasing or bisecting it, since the "*" line already
+names it. The "also in the worktree" sentence in git-branch.adoc goes
+away with that.
+
+> It is not a new problem, but I think it would be helpful to add
+> something like
 >
-> I'm not sure what I've done anything to help with this patch
+>     As the path may contain a newline, [...]
+>
+>     Note that if a branch checked out in more than one worktree,
+>     `%(worktreepath)` will only show one of those worktrees.
 
-You are right, your help was on the other patch. I will drop it here.
+Thanks, I will add that as a separate documentation patch before this
+one.
 
-> A list of the conditions that require --force might make this section
-> clearer.
+>> +		if (wt->is_bare)
+>> +			continue;
+>
+> This is a change in behavior. We currently print the git_dir of bare
+> worktrees. I think you can argue that this change is a bug fix as the
+> user asked for the worktree path, but it should be explained in the
+> commit message.
 
-Agreed. I will turn the `remove` description into a list of what makes
-a worktree unclean (modified or untracked files, submodules, and an
-operation in progress), and fix the "or" chains and "either" you
-pointed out.
+Agreed. With a bare repository and a linked worktree, today "git
+branch" in the linked worktree shows "+ main" for the bare
+repository's HEAD, and %(worktreepath) gives the path of the bare
+repository. main is not checked out anywhere, and "git worktree add"
+already lets you check it out. I will explain that in the commit
+message and add a test for it.
 
-> If we're running a lot of consecutive commands in a worktree, it is
-> clearer to use a subshell
-
-Will do.
-
-> I wonder how hard it would be to extend the "setup" test to create a
-> branch that has conflicts when it is applied with am, cherry-pick, or
-> rebase, so that we don't have to set up the conflicts in each test.
-
-I will try that for v4. A branch that changes the same line as a
-commit on top of "init" should give a conflict for all three.
-
-Thanks for the review.
-
+Thanks,
 Jasper
