@@ -1,101 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.51
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.48
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793633144;
-	b=q/ib4Fdt7oLmzIUMciXWi0YmvadAF4txewgvP1N0tX+N1rjBGS4n3HxoDvq2y8KKT9uA
-	 w4Rw4GmpTjgUN9HtyFhFZzIF3DlQAO8Sr79vSAZhVCy5R6oj8VKPTS0qBJ1AjOApbjeDg
-	 RL6fXIUS5RxToq9RjLh3fjUgVYDfQO2+PKpv80KKWlxI5JX/6Hb5dA9uMmID2UGsycrLy
-	 mv7WDmVRe7Jngi/crBC2QZGCCeG+tHd5KjrDs5XmDhCu0bgeGHCl5QB0WO7MMycFOOa0Q
-	 y1N22T65yeJb6N0ptvHyi8X9TbFL2T1cS6DRcJSijCFnPrMR4/QHDf44c42Ix6Lg4Vg==
+	t=1793633805;
+	b=Pz4ZEOIzsGgfFEXIiovCWfHn5+ZVGcamCvf/yjh7oof3d2b0YKJNcZKfkIp5bz8sMq6D
+	 TnACqHpvOu0a3mUs6nbqbXKj1qr4q40fs/+Htv/6fOlt9Nt8R6Zxzpnj+MppZlOj1Huo0
+	 SghR7dntfyLZsB+ArIhR3FOaU9A/hvve7NYrelKdu8yQLrCAOyfnnXFNv77B0Lyk3pNqi
+	 KOL1bY7QvbU+XXhUvnYyHhjGy3W+H5l1M4FGqmtA9fq9mjexECTAxKf5zAYgFnyk357qj
+	 dx7xOayk8NOp5hUB1aa8k6ybJYiqZuiTEsqkErhWQYJlat3GnNa5PkPRIZg+zrZXtuA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793633144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793633805;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=K1hh7+4Am7snAkFxHJPrhYHBzOoJ3An4hv25RLtlJlA=;
-	b=Vu3jGwW/xCAeqO7KwKqdTNLqT7ZVxEr1/ie9hhbtiQJVxGTWpfvur5F7DT2tSso2cXKj
-	 Vko0xiJrpmFSty5TmB6WcSRT+ACj//jw+NRRAPaNao4txRTX88yNQSJ1vxYAhMtqGcxjI
-	 Mf+v4Q0rtd6u8e6wZc+GrKBv1MZMtK/yZH91FH0Hq593cTA+jOcOl6RXRzkwDzJMsO3za
-	 Cv1Sx/TrSZaNNrLPNsLZVEBOI/Bsdh0CRKyPnc3UBVfoyFjB1If8U9W1m6jhF2RewBceV
-	 Ni5bnvAwD+KTwnKf8hgwcG666H6GNISojE4WEvzJjNmwh2YirvhqvvdWZgCmqPLfIDA==
+	bh=gaSv7wmyVGwG29uWEWbGBoYMk9gKc63ur9oli218zvA=;
+	b=j28eGtdbd7YwqZqrLT71Y+ogtHgHObEV/OCyrgKjJaf/srabCCIpyqoWOgP7x5sTT3gw
+	 77Upp70aPob7U3hSgSUArTpq7bWFPUa9yb1D5RetkjnTjpcWl0nHQxVhnMsHsvgDvCh10
+	 NxMP78dLP+zZqahYGsS3pJEyD/jL6G9VQcwvSWTxmyggWY4uH2FN4fIZkOISmDzl3OSm0
+	 R/jbavEW2RlxRaKfLcMGwWAcPoE2d9ij0BR7JTbdgA871ledBpeS2k8u5DU8bsFEfUuRx
+	 VHPB+nFxxcX6r3GaNcsOuWWOLwcO7PQ1hndIVsnR/Xl42Ia1YuCP+Ybh2WMb1FUGZ1A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NXnUOcWU;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.51
-Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cf97UKMV;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.48
+Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95ED9609A701
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 15:25:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95ED9609A701
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2AD60A5626
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 15:36:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A2AD60A5626
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NXnUOcWU
-Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1a2761c69fbso4830527c88.0
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 07:25:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793633143; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cf97UKMV
+Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-18cdcfc05ffso3588462c88.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 07:36:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793633804; cv=none;
         d=google.com; s=arc-20260327;
-        b=IxEopws6BBc0VnBDFNGiSgvkBsZdpRM37W7btQ64VMSmsfRSuHDq1LAnL2ElGUY0o7
-         7Y0bUAKCm07YEnABKVL2URDPX9+FHMK82bdzIa0U0lZzhXmJ1u21yhbt5rJiQrbEIeVe
-         zWoBSW9CCURGCz1bezKY2cHX/28BAo63ucpuqWNvOhBB8GBhhJswubbtz8DTDzYYIOqF
-         HIpcoqmm02LIyjKBgTrxFrcND4P5+9NvdZrtC4N12C4wnh38hD0dnB+krmH7o+ydPe7y
-         Rv9fhDVQrUNW42SNczoiBbxmKo9jKOb079cI1LCszmZQO/KqzPlsXtqNFq8gr58T0vzi
-         J7ug==
+        b=RNuhHw3VxFSgqVnM24gqya7Tj2ahCrmR/YxlgyDYSVOalYb/GfDT64RuVH1r6osSPI
+         p7o+vBnCXw1DbecI1IV8Y/R0g4j5wmbXvDwsW1oYBZADfdMjLxzZSPab1P+MVdAwk/Mp
+         nbIwIEOB/9Mk3pj1CoX3tg0ybiRIxEonsrAkQ0re45KQ96ecMZWHORsdXDseqgu9w0PW
+         GnRBYZ4Bl2Lejn8lXrokUFEUxmjRDmXo9DdvspnGHUzE3AxfVx6PNCZGJLV/wdvirfqR
+         ImzzrN4gKhWy8E8mZP2yl7zObTOXf5ASv2ZTalM/WQuZBSiqaLBWD1XCI3ScsNPtEjb2
+         sgCg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=K1hh7+4Am7snAkFxHJPrhYHBzOoJ3An4hv25RLtlJlA=;
-        fh=AkwqM3nf6GiSuNMkyvTMJn2XhHysb/LIuV09ali4XeU=;
-        b=fRc8xeZQOFue1jHomuqeTnT/e8nhvE2KjujO3gfDgwR6DfvnYrzw3scBLJzUZ8irFk
-         e4QsPJFxA6XTpAfDalHb4j4Y3WDrzN8iH8SkzRt0rVLbPc+lK8D76LJ+amNQCy5zgfMc
-         CZs/LubtXnay872w9wr3yruKm0rGG4/4/cvyBAFRPwy9eAcR5yi3a3QOXjZRkzAW1zBD
-         o/E0DtMqxf6y+tLLV00xMl2XiTv3jrKcWgj/liHIUULHL2ORdApcAoMsBx+0y+QfFp/C
-         6MXo0QyesKoH+efPIrkrn3ViOdukoL1ey/Uq3+kCnLtoxHFvNmmoCoNWDBeUDVVuQ+O4
-         Eyjg==;
+        bh=gaSv7wmyVGwG29uWEWbGBoYMk9gKc63ur9oli218zvA=;
+        fh=9Dtf5cvvlGVK6PLlUKwkyzVB/bvnsDqG6QPdMs1iRQM=;
+        b=jaR+kWjjOmGwYPJ2799YQXV86LNVi30KHPrzAU6HuCfjFdSCIL+OtolBtexLcX2Mcy
+         yJ6mAgDZ4ws9bXDFOt7eaAEpTQdQNo0BHVhmo0nAcaeWaU+rSCo4gPxFYEfOm/5aQL5u
+         IvP/5N1Aa7+Hz7WOtTCH+w192d0n1ou1K3okTz1H/Ef46wDb5/SZW2UfbQvMmk8Gl1+t
+         LQYvLz7U4bXOw79ErSgxeZE5rZ+OyZpOkgWNYM+egbwx2jATW6wl9DkuC60Ld1gntaAH
+         2kfy9F8YdKYrcjJuvZjwNlZiPs8jAJ1LtTnuXlowBqzXYakcl1z4oWSbsAaqsTJflNW8
+         1n0A==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793633143; x=1794237943; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793633804; x=1794238604; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=K1hh7+4Am7snAkFxHJPrhYHBzOoJ3An4hv25RLtlJlA=;
-        b=NXnUOcWUA7jrmQ/ZNfmYTAGJxDGyyQm9nbv6Ny3SSZ1Vp5rGBzu9nEmF0Cp04sYFkg
-         gqfkqQuxQvm7BBPwTv9A0Vd3lw9pZfaRNNfKsN/q/ZtaFm77FgvlWambA+KmmZosV0tF
-         proO1bqgzit64qpOr1gXrmkYPPMLBP4tBuX2NlfI+1eK7GrH3nVSCFYUU4fv7Gg+79UL
-         TOi5ot+fnJvOsMW6XQZEXtTwv/hg7Twu31z9kKi2ttOb+dv+Pu3NVyAInWNul0ettiiy
-         f2PEylU8E1aFYw46/6dwlQRwPpIAnSOPqcKvu0246tVg4rkJGQbJ6YOHAVWb+60KaFf3
-         YusA==
+        bh=gaSv7wmyVGwG29uWEWbGBoYMk9gKc63ur9oli218zvA=;
+        b=cf97UKMVqYOxSW9Vm4zbliDUayDKT0YzeSzXNqoV1hOpeZiep2bCWVY4tnAOmOEvB+
+         wJ0/p/HWbKlO5zaBiqZDip6eOkjnc/AvbDPFuUNV236Og4k90sGVYqNpsV9eXWYyN3fX
+         uMuVo8u/NlgaHVttys+ukkvxInu5n1OMN6vXN87nXsylaqC02gwyuv9wix/RTpxyPvkp
+         D0ugIOkIaqn3Jhxwasfqm823z5INnxFD8NJdtcWvNK9VSfqWt6d9m3It7SkwSn6+VTuk
+         2JdtyJYbZ0HCSiHbkj7YUpadSF9uqaw8Ako29GNGGDDgOepLjWyUv8hUmtiaeY5bdjWC
+         hl8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793633143; x=1794237943;
+        d=1e100.net; s=20260707; t=1793633804; x=1794238604;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=K1hh7+4Am7snAkFxHJPrhYHBzOoJ3An4hv25RLtlJlA=;
-        b=L+MPv3NS13a+PLdZZwvY9dHn26ImeKK7UkjHP04bJYiyxNUqMYi6G4LQO/d7Y89aQy
-         t24R/b6LZlcwiKBrXpBfHejYxG06p5QeG3Jbwvm/V1VC8BkFgW7+SPUFx87Df9IdOKWB
-         ISdCc0d75us1wrDnb+9xgkfA4TVIm/KPvqHgzsoiX/0ogIbSQ/P1zf3nQERWLOgGehtt
-         rxNChXo8MPKdjE09ObgSzBNT/8ljOO3+K+UQgJhChd1hwDXipZFGCIwtjyvdNCjpjDFX
-         S3XP4FI4TKIhqTPrCrNflsyVm2hLGdwVMLzGV16ErRHbNuY8kAs76sB73G8PgmhRCCvm
-         o8Gw==
-X-Gm-Message-State: AFq9FYJX1EzyedUykmLgL2hxQq9+GDRDaHTuozvLyfC/LzyeO0PryYGl
-	chH3VxMm+ydYCNlGcB31nQeoYwVpPkff1sEd86ZBm7vTV/seV/Uxkea9GAQRILkHdS+BgYXXoeT
-	stNDODtTU1OaNnogHhCLx3Y2jg+1oZoM=
-X-Gm-Gg: AYBFou2fChNPY08wC8QKCh71K+QuY0rYc9tVyt7ln37QHj5sg3ocPcJrKM9dBgXwHnw
-	idr/sgzUXw0Exhay6aRQjVAnNSy3g2K7yVBlmeRV/nljuIVoKXejgvu52iD2G+XXFHJyxBBCXla
-	JC77OPs3nPJpd1dlkCA3w/DV2iZp5FXo/ITFfTZcTiu08ojnN9h28Wnjwb0gLTLbnndZlU63Yb5
-	vvZkpxy07xree5su7rpvVGygMBB8rCKUU9hRqQMSHQj4SDRo25gC1T/lw7nNduSAmmZOSQLM6Uv
-	11eMNqO+RX1RF14+LiYYZwycQK13clQwadTpvRk+kqzHmEhFOzLASPRnY9py0iJKsaGvkkbXwDQ
-	vgBLtRMFevaA6joMaIv9V+VVVaXRSHbNTWQh0CJN7e0yCuKPVtCzaYaiIudvt3Hr5C9ifyiivF6
-	qC1ijPEb/bTkLKb1ghuVZxUP+hyKQ5KHlV8kt9Ut79qpC6SAy08jQtnq4hZyBuFfi0Bhr7IwWjm
-	C0P+53o5y698GNyeCfuY+BC
-X-Received: by 2002:a05:7022:170c:b0:145:287:ce91 with SMTP id
- a92af1059eb24-1ac59dd30ebmr16441986c88.14.1793633141924; Mon, 02 Nov 2026
- 07:25:41 -0800 (PST)
+        bh=gaSv7wmyVGwG29uWEWbGBoYMk9gKc63ur9oli218zvA=;
+        b=R/hrGEoS6IN5ENIVxtxB94UKiuRnVCeTaqfAg/EdgUd/6A694kVfXX/D6vPlSy4lrH
+         p9y2r681CmGj/4DMiUW7o+yyvHdwryOtnb4a00wqKjvfySnH6BguU59+smjsGdxYKIBJ
+         9Y8R4j7TbWEfJUdC1uZxwN10PXWwyyIMcrMhHLXppE8nE1ENTUlI0xYE2pORzuQvF6/Z
+         OnLW28WgElI5cO8EKMShTjk8fTqhOovNLrERmd5U+85VD2wrydtobaatuw4eWyeSUusO
+         KByS4KAYnt5EKEFP6MfbseY2b0Es+T6ld4IS3jqgABIkYFs/znlOb4F+uV4PWZxX1eNb
+         yiew==
+X-Gm-Message-State: AFq9FYKD/Q7AMAgqZdiw2pIlRnjR5zhzyPRoEtxWRwh85aLAjWfFOpIv
+	m6yqPE8cB7xlyMfpnQxLYDNl2DHGYsq6YD7THav/4YmO/2CS5DmjvXEGk/5ZRrys9U1IHDwytHV
+	L+hd1GG8O2dYT4ggog8cEasNwV7J2K0E=
+X-Gm-Gg: AYBFou2lE+aPJITJto9dBnVkeABx+GvBb9YLXR6YMz8NVikyn/9u3KhbO5NwghMnX3m
+	WDVknM3M4YOHujCSCSgZqZEFf2PvZ0RfB2fuUzyHkPW9y/JuVi4MkiVsqWRq3S64jJx2IHEiDwS
+	PA3T7PBFNIlN7dybcp3Suyn1MoEaGje+JsaDilW4XjqnBR4I072w09CwOE9VesWftHsflTjTHPn
+	VsjEK/fLnwQcQiPTbh5HPm5M4GvOAzcNYwN8ZPb5s0Hd0xefB39d0L2OkKyfkdax6oqXUC5oDIm
+	FgFFFQOkMCbCHGeyYz2wjngLmgmT+9qw7QY/q/k40+ZOavHYHDZeOeJ58lZqKaAAoNfhE4NTkdB
+	79J1QN352KxzsJKZUgLi9T0NRhgHokOxHtjqVtdFMyY91BrUPBRAOsZhA3YZG0Fih431ZMy7mJR
+	qg1x98qt1l+iB+N3rM7Es2R/VPyEfOhFbYR8dsVtkS3hxcqlmaLAJ45m4VKfPELR01qaiqTbomi
+	1xxfaGgiDun6ew8I6w0VQL64Q==
+X-Received: by 2002:a05:7022:d82:b0:191:444:425 with SMTP id
+ a92af1059eb24-1ac56302334mr14838537c88.2.1793633804297; Mon, 02 Nov 2026
+ 07:36:44 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,63 +105,123 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20260923080928.1534413-1-christian.couder@gmail.com>
- <20261012074413.337183-1-christian.couder@gmail.com> <20261012074413.337183-4-christian.couder@gmail.com>
- <6782fa63-1e46-4ae9-b129-a157986c2556@gmail.com>
-In-Reply-To: <6782fa63-1e46-4ae9-b129-a157986c2556@gmail.com>
+References: <20261012074413.337183-5-christian.couder@gmail.com> <20261031142255.4941-1-herroyalpriestess@gmail.com>
+In-Reply-To: <20261031142255.4941-1-herroyalpriestess@gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 2 Nov 2026 16:25:30 +0100
-X-Gm-Features: AclHuK98K6dcL8HP39vu0mgMvInXWHEgtap8ZBAOcY3OEb5zLynemtWjcg1DReY
-Message-ID: <CAP8UFD1P1=HhuiKEDjBKdjauKUbeBYG6gT2_WZfq0qh93MN-LQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] parse-options: add early_scan_options()
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
-	"brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Justin Tobler <jltobler@gmail.com>
+Date: Mon, 2 Nov 2026 16:36:32 +0100
+X-Gm-Features: AclHuK_79vQD_ZbzXsXOP5C_FUBi4-AnBwVciSvjdrUtQrof9ZW8YwL37dIR-bg
+Message-ID: <CAP8UFD2m+wpcgqB2SasWLxyekY+5khrYyPkOuLoYwANqZws8fw@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] fast-import: use early_scan_options() for --allow-unsafe-features
+To: Cynthia Uche <herroyalpriestess@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, kaartic.sivaraam@gmail.com, 
+	ps@pks.im, newren@gmail.com, peff@peff.net, sandals@crustytoothpaste.net, 
+	Johannes.Schindelin@gmx.de, jltobler@gmail.com, cynthianuchepro@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 30, 2026 at 10:27=E2=80=AFPM Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
+Hi Cynthia,
+
+On Sat, Oct 31, 2026 at 3:25=E2=80=AFPM Cynthia Uche
+<herroyalpriestess@gmail.com> wrote:
 >
-> On 10/12/26 13:14, Christian Couder wrote:
-
-> > @@ -763,6 +765,8 @@ static void parse_options_check(const struct option=
- *opts)
-> >               case OPTION_SUBCOMMAND:
-> >                       if (!opts->value || !opts->subcommand_fn)
-> >                               optbug(opts, "OPTION_SUBCOMMAND needs a v=
-alue and a subcommand function");
-> > +                     if (opts->flags & PARSE_OPT_EARLY)
-> > +                             optbug(opts, "OPTION_SUBCOMMAND does not =
-support PARSE_OPT_EARLY");
-> >                       if (!subcommand_value)
-> >                               subcommand_value =3D opts->value;
-> >                       else if (subcommand_value !=3D opts->value)
+> Hi Christian,
 >
-> Would it make sense to also have these validations within
-> early_scan_options() just in case it is called before
-> parse_options_start() is invoked?
-
-Yeah, I think it's cheap and simple enough to just call
-parse_options_check() from early_scan_options(), so I have added that
-call in the v4 I just sent.
-
-
-> > +/*
-> > + * Called by early_scan_options() for each argument matching a
-> > + * `struct option` with PARSE_OPT_EARLY set.
-> > + *
-> > + * - `option` is the matching option,
+> I read through the series and ran t0040 and t9300 on the
+> cc/early-scan-options topic, as in origin/seen (tip dabb68a20d).
+> All 118 tests in t0040 pass, including the new early-scan tests, and
+> all 261 tests in t9300 pass, including the new R: tests.
 >
-> Would it be helpful to also convey here that the caller is not expected
-> to retain the pointer as the memory pointing to it would be freed once
-> the scan completes?
+> > +      * The scan uses the same options as parse_options() below, so th=
+e
+> > +      * two agree on which options take a value and on abbreviations. =
+In
+> > +      * case of doubt, the scan stops early, so unsafe features are th=
+en
+> > +      * refused rather than wrongly allowed.
+> > +      */
+> > +     early_scan_options(argc - 1, argv + 1, fast_import_options,
+> > +                        EARLY_SCAN_STOP_AT_NON_OPTION,
+> > +                        option_parse_early_allow_unsafe, &state);
+>
+> The call passes EARLY_SCAN_STOP_AT_NON_OPTION, but the 3/4 header says
+> to pass it when parse_options() is called with
+> PARSE_OPT_STOP_AT_NON_OPTION or with subcommands.
 
-Yeah, it looks like this in v4:
+Yeah, the end of that header comment wasn't as helpful as it could
+have been. I have reworked and improved it. In the v4 I just sent, it
+looks like this:
 
- * - `option` is the matching option, (may point into a temporary
- *   copy of the options, so must not be used after the scan,)
+ * This requires the scan to be told about the way the later
+ * parse_options() call treats its arguments though:
+ *
+ *  - when parse_options() is called with PARSE_OPT_STOP_AT_NON_OPTION
+ *    or with subcommands, callers should pass
+ *    EARLY_SCAN_STOP_AT_NON_OPTION,
+ *
+ *  - when parse_options() is called with PARSE_OPT_KEEP_UNKNOWN_OPT,
+ *    which disables abbreviations there but not here, callers should
+ *    not use the scan.
+ *
+ * Passing EARLY_SCAN_STOP_AT_NON_OPTION in other cases is safe, and
+ * useful when the caller rejects non-option arguments itself."
+ */
 
-Thanks.
+> That is not the case
+> here: parse_argv() calls parse_options() with only PARSE_OPT_KEEP_ARGV0,
+> and the table has no subcommands. Stopping at the first non-option is
+> the safe direction, and it matches the old loop, which also broke at
+> the first argument not starting with a dash. But the comment only says
+> the scan stops early "in case of doubt", and does not mention this flag.
+>
+> With an input file containing
+> "feature import-marks-if-exists=3Dnonexistent.marks", I tried:
+>
+>   ./git fast-import --depth 5 --allow-unsafe-features <input
+>
+> which succeeds (exit=3D0), and
+>
+>   ./git fast-import --depth 5 extra --allow-unsafe-features <input
+>
+> which dies with "forbidden in input without --allow-unsafe-features"
+> (exit=3D128). The stray "extra" would make parse_options() fail with a
+> usage error, but that only happens after the stream's feature lines
+> have been processed.
+>
+> To see what the flag changes, I replaced EARLY_SCAN_STOP_AT_NON_OPTION
+> with 0 locally and ran the second command again. It then failed with
+> the usage error (exit=3D129) instead, so the scan had gone past "extra",
+> seen --allow-unsafe-features, and the unsafe feature line was accepted
+> before parse_options() rejected the command line.
+>
+> I would suggest adding a sentence to the comment saying that the scan
+> stops at the first non-option through EARLY_SCAN_STOP_AT_NON_OPTION,
+> even though parse_options() is not called with
+> PARSE_OPT_STOP_AT_NON_OPTION, so that readers know why the flag is
+> passed.
+
+Right, in v4, I have improved the comment to explain why we pass the flag:
+
+/*
+* We don't parse most options until after we've seen the set of
+* "feature" lines at the start of the stream (which allows the command
+* line to override stream data). But we must do an early parse of any
+* command-line options that impact how we interpret the feature lines.
+*
+* The scan uses the same options as parse_options() below, so the
+* two agree on which options take a value and on abbreviations. In
+* case of doubt, the scan stops early, so unsafe features are then
+* refused rather than wrongly allowed.
+*
+* EARLY_SCAN_STOP_AT_NON_OPTION is passed even though parse_options()
+* is not called with PARSE_OPT_STOP_AT_NON_OPTION, as any non-option
+* argument makes parse_argv() reject the command line, and the stream
+* should not have been processed with unsafe features by then.
+*/
+
+I also added a small test for `git fast-import --depth 5 extra
+--allow-unsafe-features` as it looks like an interesting thing to
+test.
+
+> I did not find other issues in this patch :)
+
+Thank you for your suggestions and your review.
