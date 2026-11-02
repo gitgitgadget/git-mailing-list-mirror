@@ -1,123 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793604678;
-	b=4w2NeAQfc9mcm+/g0dJg85s093KRmMjfEVfHd4iTUtyN/M+ayNEJcH1K9bqPrkHEdnq9
-	 Xee1o9SS1NUEM9PLnHYvShHL+oZy5dQmLIiwOLjtPWGvDXCx6z+qjwLrsEyC/kE9j0T4e
-	 KDRx09B5NuB4Y6o2uJDtiVjqv7oBiZuJl2rwPxLAJIke3cYwR+n1+qnDW91BpECeW+gkj
-	 MHrBna5RZcXd9nofdLZS8g3DYK7Dmb8Joa2QsR5xzJK5J+/BU8os9HICvCLO89t80PO4t
-	 WZohYsHnNOOatm1B49LwjFVZSqpLztRyz9Fa460UXLLAM4bZZazuj55XFlQNDsJM6zA==
+	t=1793607307;
+	b=fqe5YWOJvwI/A2yGSJ4SZQwtdtnbyzzqBkKouo8WwXkIrU96aymmNPM5ue3p+DT9iw60
+	 iMUETtj9QnPvzaKLhxEqTDG8d9S0njXFvohM3oKuNFs4WRB6R4iejTpoKM0rpNCsdHurn
+	 2PBfS6Uh38dWoI5zVgU2RTYyI78sSYqnqM0CZ9QLt/VoDq21tbF76DAUXUcLzoaynXi5G
+	 Gl/lydNv8Nj4sTs6zBJy9IzEMJ2EA6Bm4dduzMNIVJWkpx7Uh8/pqgv1mE2ajzMFRb1EE
+	 JtaETrvPUx19NCljPIdbbT97IlDxFD5wigbFgkxCIfxBVzThRbCHIIJ38LB1nVdJVCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793604678;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=TkTZYzTMFpJ5WYtNoPSGKB/WrVgG3dFElchCLhwNR+Q=;
-	b=3N8yvqKrDo9qlxswkFQcLEuJV6YHGCSgTE0XMpnDqNgDl8LafyQEKzdBb0z61+FJrgbb
-	 GqcdMOJAaURoX2nFJ5/W3U2brPZBbaFwrrBp3NsoYZ/tFCUiJirZbTSZpPiIPlDVZ6+6g
-	 ooKphGwuWkMFNyaXRLbyYXimK8WTSAMS/bNnD1my6KgWMs8lxjdUwOJ4n0JW2v3TbAJAW
-	 VcBFeUkKlRJUoBZzHh/oNXR+WmOONcVzxQ2+LfnK0Dj1L6/BDp5YMlY0SCvTMpRQiPD5N
-	 4iGozzQfvbX3YGJnjhUIWMi2LVj1iHohjzTzvS8wlJdUmYLePwX8Z1+UaAJB/DssIuw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793607307;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=If5Q7z0rwLcIuSkUWpnH1Z8TXlmouVbH9faexxKfPSg=;
+	b=SayQtDhn8OURGeEf/0A62tBnRC6/ufJkPaA/4Czzoa3PsgBEPx07YvDVIELiPK0RWcp0
+	 gsAjVB4h+eiaerAgGdOCCU+4U4Sk3Zg9uo/s973RrOREMdw7i47czW0f+H10cfZ2rtCCk
+	 U6N3UmN9iflAXW2zr3I+2bo/suac621CxS7OVirW2hFcqk7mrGYbl4Y6Uz0L1A5vshaek
+	 ZkyLy4craQmjcFkEVtv5MuCPl0BMjWY6lgVErtUZT+gjoM1OSmVFz15SCE7mGi6RF5fNt
+	 Ts5lcZ640CRN8knVYlQM1f6ghurmJ8w9UAout7SDgbV1qJUZcb+L17yaOCxDT7zvFBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=CJ5d3D1W;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="yu/us4J6";
-	arc=none smtp.remote-ip=202.12.124.148
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xcy2Igwn;
+	arc=none smtp.remote-ip=209.85.215.176
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E3D606A324
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 07:31:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92E3D606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA10606A329
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 08:15:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9AA10606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=CJ5d3D1W;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=yu/us4J6
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id E0CC11D00064
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 02:31:16 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 02 Nov 2026 02:31:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793604676; x=1793691076; bh=TkTZYzTMFp
-	J5WYtNoPSGKB/WrVgG3dFElchCLhwNR+Q=; b=CJ5d3D1WidVdMxZA2xrCzEf78B
-	TqqZKmw9eivPy+biKNw47UGRs/SFZZhaNir4q1IhXs+aWVpLkV94MwznHlWbbJyq
-	ENw4JFW5B65ky1BUNHGXCs/6xThWjJd37Jnso4uzUzQ2jV1clsPiMiMhKMwH8psq
-	laJJSiw6FRBHYdmN+cnzsa51JmoaDLltZoCUPdyAJkbtyPDQe3TUtwQgEg9BxN62
-	9mIT/1mrmKfWV3qRYJSeqDFCPPG71aMleYOeiFVK6aggpajKKndk77Hm1/UXdCZi
-	r05WR28zAOBw3i5OrJjnp/VsQAXvyO74rJxe4TVclTVvj6uQH+qL4sxB92Xg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793604676; x=1793691076; bh=TkTZYzTMFpJ5WYtNoPSGKB/WrVgG3dFElch
-	CLhwNR+Q=; b=yu/us4J63BUXPNh6GB/IRL3O7/J3tHdG0OAuBSYF9NI1dG+jYYf
-	xshVBXC4TYehTDIOoQTVqmXl75K+8gKmRY1dRP8Ad1IEjI9lF3cECU3xVw1Rc/i+
-	LdlZRJdPqkhFmhO1i5pUj8O7LbqwgX9b/6F/ySft0RWaboJ7XYhBFQv+fokwufBD
-	IsRYfCRymHT6cdTwOczzKB3b+INdsdiHgTXtfnd9irQCwPQk7a++4gO5TOtSHqA1
-	iQXUaH8jANccB6LUXoDzWj7knCbJrwnvEPbM3nHxlI5SWSOzeQaHhPOLnrAz/PN1
-	EtwqmxxUv8SADCVnV5zEIMy//Im4chfZQKw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793604676; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:ZmEoD48Fnh5oABvOTFlpZZI/gd5AU8wBqayuievl9HdVnBS
-	8QNJfLZ5TEBfx12dt3mghz10ZIBZ9PrpwtDRdz9pJUHdf1IAJ9qUwSdZERe7CQI1
-	pMJJpWoQr/+gsN+aiPRmkgHueDWfh44ubecnQwMHNaUGVq7RhNCVmxjjmm2hiHuc
-	uOh4N68zEsnNADAIoYv1r2GAXXyDNOubT39qxA7mQn1rnJ0firXl9jBEIWGOE96y
-	wupm7IWbaKanFExJr0WsYK8TWIF/8EYj3+SfZce4pmfccA+2tjCzFNwdPyPWvigI
-	H30lttXJy5Hkub8OGWEb1H8OYa5NWYwrzNIxpVA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=11;
-	hn=content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:yKnvpmtfGUW0gDznfvel+dK6Lfn/iMnfYe7jW0mlteU=:Bv7+yc670gV7jH4d/ZQy2+cpZg+hNHxsfZ5vdYAevSY=;
-X-ME-Sender: <xms:RDzoanlTVjkvGL0CG8ePgpQ7OZQNWU4qJc9OOCNnT_cXTNCqpAqB9w>
-    <xme:RDzoaiQ4HozF8GJSliqrNxdLu2gNzj8RYS4XUi4VOTEgZtyTzQSeZ39vJkSrgNPCQ
-    hqnHPnryDwebBttz4WuFIgRoYQ31XzFpfhchugS_jR4mBfXLYXiPKE>
-X-ME-Received: <xmr:RDzoarBH_PyV1aBaIUQACQyiGOKvfn3RzvtmLMsLV822QT0EycVznG-kQH2mk-4DjPSCGYYVbmVG8h7pAHxLZFU4JmhwYGNEehEB>
-X-ME-Proxy-Cause: dmFkZTE6WN3fKNgUI8H10qi7EFbN+zDeLAbmKArdkFvEd0d0m42XwqhHCv1UtUNzvJqFTP
-    DkqNmGIpSfCQ91H1MepwChVhBw/OmGuSK7vD6S87rZWPJ94mBj8FSILzILxxtu2eW0vXwu
-    UWEyBvnH7gdynAteY/78LaLh8+L5TrfoS/RRA3ukPFOjNrVC7cEFDKyaj+Hsr6827dYX6e
-    Nczt9OkYbKK2LYmG+KLHe9Ekts8W8cn+GVpFKhfcuhqLHjfXGBGM9AGgAEzfRc2dASeFPb
-    DLQOX4lGJXMNjVixaINZ2y7FLDlOHX1rNQ0B1Am0n320IuziPf3YE8XX1pKm58BdlxZAAW
-    NlWxVpIImcOXLL52xXoMqVuVZRIUG6bXnETFN1cdG9OKJ5chsNHkFkoTzLGFp8I5PNiMdL
-    ze7+2cmvzl2DJpUKSk7fvwejLrzA0+XA6MnlB4atLtQ1ppSJ7DR7GQDaWo3JgS7Kg96uSp
-    B1rJiy+cN7DXiivqAxxHVOubbCTMiYDFe46M19Swo4lUzaqBpCsJLfgehphj+BAuly7av4
-    3FemgjcGySRhnUnD2A3gZMlWVMop5YCrKjVGZlmoCv1/Al8eVRyuqXwogNXxVxloPKVC/n
-    cZona2frJeVBFIRzFcGPQENI5DZL7v84xPZ9CFf1FkHubo/JGyOMR+Vivqhg
-X-ME-Proxy: <xmx:RDzoapQp3f4KJvFNab5zYx8FH8kAqVuCJls68GiAbMzvy5SvPe4Abg>
-    <xmx:RDzoaponV07w-XykKtAkpbrbn_pwn-g2lE5kIqcuMFAbzLXl0CrLiQ>
-    <xmx:RDzoary5OcFB9NAsUIHkxmXsWKPmpZhgu8as-teVcLwXD27Lsx03Iw>
-    <xmx:RDzoauIGltHxNpjhOJaerKDLdbMU7hyeROu_bPfNOBRSuZvCdFLDsw>
-    <xmx:RDzoamT3kUYEAUWs2AP8ztAlWrljc_X9z-eRfEiJoU7T9qndo2pXtatX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Nov 2026 02:31:16 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Ejecting things more aggressively out of 'seen'?
-In-Reply-To: <47bd0302-fc52-4df0-98a0-6fad7eb0fb05@gmail.com> (Phillip Wood's
-	message of "Wed, 5 Aug 2026 14:10:39 +0100")
-References: <xmqqfr15ruw7.fsf@gitster.g>
-	<f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com>
-	<xmqq1pclc210.fsf@gitster.g>
-	<414ebe62-c7f6-4d44-bde2-b689e35accfc@gmail.com>
-	<xmqqbjbpptzr.fsf@gitster.g>
-	<47bd0302-fc52-4df0-98a0-6fad7eb0fb05@gmail.com>
-Date: Sun, 01 Nov 2026 23:31:14 -0800
-Message-ID: <xmqq1p93ofjx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xcy2Igwn
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-cc147d86bebso1828613a12.0
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 00:15:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793607306; x=1794212106; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=If5Q7z0rwLcIuSkUWpnH1Z8TXlmouVbH9faexxKfPSg=;
+        b=xcy2IgwntrN4LhNBBL8kCTO8kkwBZk0Tb0CqqS5Yd3s7RXbuenH+somo333R4n0alE
+         J5BiTKSY/VMfPRHXCAWrGMM8vbFcwVtA26BhecTLBnSZtnh3fCdkirkwu27Ik41hICC+
+         XrFGsDoD/iLjSlNcMjsqT3hXyjJRxRPaDWF1Qugj2MtggWR529wxuDdrE5SA8XhBprXO
+         19McdsuSBCmNPhsZXkaLfHpB0DgxTDsTqVvD8hY+/jkEp1a/JBGGktofBrCUI9QwD/VO
+         BGdCu98xiV7XHyCW4dru3X3pg2OFXjrckCOvu3ou8v6UVGDUUWPHuvemj+n9F3j3NUJA
+         EtRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793607306; x=1794212106;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=If5Q7z0rwLcIuSkUWpnH1Z8TXlmouVbH9faexxKfPSg=;
+        b=byM5UEuwvRuKEtjjMLb6bmVsCXW3eNyKRiIdTrdXJH/A5taGLje6vYgOoYISUs3ozl
+         8HxW28uW9KoiEHyJ76ZlOmj+BivbvI7C1KLive6JJhOYKx/n0tEbJTn3z22qlnzN1qp5
+         JV68zkMLKhVe691mQAnmDQg3QUf2QBRP6WELUgkNmutH+9QWmmzWo2G3srYyBxxfI6WM
+         JeGsmcF+1vwqhtoklSzHiYZiohpQQ7RY7x1x2S6lmeCDxVQ9LNsNIgCxl1ClYaJnajac
+         r42cklkYZPPRpUO/D0RcQ9ZQ8v/VALl7q1J+Soaeg9J6dB4EKXD5uUoSTSO27oen+UX9
+         UreQ==
+X-Gm-Message-State: AFq9FYL/WTfu5XO402D9/BPTXosxdApMBTfLxJ/b3ZmrGHbr/Ixx/moH
+	VqI/xvcnB9XwJQ/a5Bg5f7uFGyBo2X51SxVMo9BCHp2T3C5X4h3nQnh1dZr0b/CX
+X-Gm-Gg: AYBFou0CNWczgcrgjUKl9rqGSOHxkASPgGBhz1ETV6/xqDbAUqN4nb53eFTE4AcNXGq
+	YJbVvxcpx1NYDi2fz3D5Z2LN1bD199aktDnK/GNO7QlNq2pYJaQV9g0h3B1AceRuFEL86ybMUFu
+	WugAFZrDLyMwtOvBm+82C/bmLip6VtE+hsOQnPRQD61jpyFtxZa6OCVx3MFRe2ZdGr8bOsgAnSZ
+	1+FM+6shyfX8ZimYaaFOLTSlGQ/F5F8u1kcM27ju7XiZLhs2RWf4fO8TjLkJYqx5nNqAJW0/zO3
+	cYFRuOPEIcaiO2MPE2+KAiOgUT2D8E5MOVM0pP5lSh3F39x54rsjEzRol1FSIf3DPfwToFqBEyb
+	ZSqVhorq6Kqgl0/Ndyn8FqFlwHSm9zmoweiKCrnltRFzyHhkhSmLbPEz3yz0atRG1NyQyeLx1VL
+	qxjVdQvxu8gl822C7VaWRp/bRXboPpRX1mZd3rV1EDQvy3Ff1Y2nVXVoxI+ylmyDyqDby0T+wyW
+	7lyAXZw1KpExdIdfc11JvKs+PRYByBPe5VnWSgLi9/3x0EPe2R1Il/17brk+f2i/v+GN83Z5BQ1
+	28lqELkVGa+e2Jopc8WZKqG69Z71W1UZLQ==
+X-Received: by 2002:a05:6a20:5493:b0:3e2:2a4b:1bfb with SMTP id adf61e73a8af0-3e913bc2b2cmr9925970637.29.1793607305696;
+        Mon, 02 Nov 2026 00:15:05 -0800 (PST)
+Received: from [127.0.0.1] ([40.75.133.103])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cdb09813a37sm2820415a12.23.2026.11.02.00.15.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 00:15:04 -0800 (PST)
+Message-Id: <pull.2289.git.1793607304156.gitgitgadget@gmail.com>
+From: "Ebele Lynda Okolo via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 02 Nov 2026 08:15:04 +0000
+Subject: [PATCH] environment: move diff_auto_refresh_index into
+ repo_config_values
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,59 +94,175 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Usman Akinyemi <usmanakinyemi202@gmail.com>,
+    Ebele Lynda Okolo <okolo.ebelelynda@gmail.com>,
+    Lynndabel <okolo.ebelelynda@gmail.com>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+From: Lynndabel <okolo.ebelelynda@gmail.com>
 
-> On 29/07/2026 18:48, Junio C Hamano wrote:
->> 
->> Perhaps the sensible thing for me to do is to stop taking any new
->> topics into 'seen', even if I've spotted them, until I see somebody
->> give them a real review.
->> 
->> Otherwise, it becomes too tempting for me to jump in, give them a
->> superficial read after seeing them linger in the "What's Cooking"
->> draft in the "Needs review" state for too long, and, believing I've
->> seen enough, mark them for 'next'.  If I don't queue a patch that
->> nobody seems to have read carefully, I won't succumb to such
->> temptation.
->
-> Maybe, though I do find having the patches in seen makes it easier to do 
-> an in-depth review as it means I don't have to apply them myself.
+The diff_auto_refresh_index variable is currently a global,
+which makes it difficult to use Git as a library since
+global state can't be isolated between different repository
+instances.
 
-I have operated in "aggressively accept many things into 'seen'"
-mode for some time since this exchange.  We ended up with many
-"Needs review" topics, which nobody was interested in, sitting in
-'seen' for weeks.  Having these and other topics in 'seen' may have
-helped other topics get reviewed, which might have been missed by
-you and others if they were not in my tree in a readily available
-form.  Thus, it is not entirely fair to declare this a failed
-experiment.
+Move it into repo_config_values so that each repository can
+have its own setting. This follows the pattern used for other
+recently migrated config options like trust_executable_bit.
 
-Still, we need to decide, and better yet, establish a policy on, how
-to deal with topics that remain unreviewed even after lingering in
-'seen' for quite some time.
+Add a getter function repo_diff_auto_refresh_index() that
+returns the value from the repo's config, falling back to 1
+(the default) if the repo isn't initialized yet.
 
-A mechanically applicable set of policies makes it easier to manage
-a large volume of topics.  Some of these are currently written down,
-while others may have been guessed by those who read a few "What's
-cooking" reports in a row:
+Update the config handler to write to the repo config struct,
+remove the global variable declaration, and update the caller
+in builtin/diff.c to use the new getter function.
 
- - A topic that has spent a week in 'next' graduates to 'master',
-   unless there is a strong reason to do otherwise.
+Add tests to verify the configuration can be set to both true
+and false without errors.
 
- - A topic marked as "Will merge to 'next'" is merged 60 hours after
-   such a label is applied (in other words, people can stop me if
-   they act soon enough).
+Signed-off-by: Lynndabel <okolo.ebelelynda@gmail.com>
+---
+    [Outreachy] diff: move diff_auto_refresh_index to repo_config_values
 
- - A topic goes into the "Waiting for response" state once reviewed,
-   where it remains until the author responds.  After staying in
-   this state for a month or so, it is demoted to the "Stalled"
-   state, and eventually dropped.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2289%2FLynndabel%2Foutreachy-contribution-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2289/Lynndabel/outreachy-contribution-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2289
 
-We should probably have a rule that says "a topic that did not get
-reviewed for N weeks is ejected from 'seen'".
+ builtin/diff.c         |  3 ++-
+ diff.c                 |  4 ++--
+ diff.h                 |  2 --
+ environment.c          | 10 ++++++++++
+ environment.h          |  5 +++++
+ t/t4000-diff-format.sh | 10 ++++++++++
+ 6 files changed, 29 insertions(+), 5 deletions(-)
 
-Tonight, I am sending a notice for each topic that has been in that
-state for more than a month (the oldest one dating back to mid-July).
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 18b1083e98..ed83959921 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -10,6 +10,7 @@
+ #include "builtin.h"
+ #include "config.h"
+ #include "ewah/ewok.h"
++#include "environment.h"
+ #include "lockfile.h"
+ #include "color.h"
+ #include "commit.h"
+@@ -522,7 +523,7 @@ int cmd_diff(int argc,
+ 	 * Otherwise, we are doing the usual "git" diff; set up any
+ 	 * further defaults that apply to regular diffs.
+ 	 */
+-	rev.diffopt.skip_stat_unmatch = !!diff_auto_refresh_index;
++	rev.diffopt.skip_stat_unmatch = !!repo_diff_auto_refresh_index(the_repository);
+ 
+ 	/*
+ 	 * Default to intent-to-add entries invisible in the
+diff --git a/diff.c b/diff.c
+index b4ac17f8ef..5f34ce91a9 100644
+--- a/diff.c
++++ b/diff.c
+@@ -65,7 +65,6 @@ static unsigned int diff_interhunk_context_default;
+ static char *diff_word_regex_cfg;
+ static struct external_diff external_diff_cfg;
+ static char *diff_order_file_cfg;
+-int diff_auto_refresh_index = 1;
+ static int diff_mnemonic_prefix;
+ static int diff_no_prefix;
+ static char *diff_src_prefix;
+@@ -400,7 +399,8 @@ int git_diff_ui_config(const char *var, const char *value,
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "diff.autorefreshindex")) {
+-		diff_auto_refresh_index = git_config_bool(var, value);
++		struct repo_config_values *cfg = repo_config_values(the_repository);
++		cfg->diff_auto_refresh_index = git_config_bool(var, value);
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "diff.mnemonicprefix")) {
+diff --git a/diff.h b/diff.h
+index bb5cddaf34..466a1230a7 100644
+--- a/diff.h
++++ b/diff.h
+@@ -767,6 +767,4 @@ void print_stat_summary(FILE *fp, int files,
+ 			int insertions, int deletions);
+ void setup_diff_pager(struct diff_options *);
+ 
+-extern int diff_auto_refresh_index;
+-
+ #endif /* DIFF_H */
+diff --git a/environment.c b/environment.c
+index c83cf44839..2947e558d4 100644
+--- a/environment.c
++++ b/environment.c
+@@ -152,6 +152,13 @@ int repo_has_symlinks(struct repository *repo)
+ 		: platform_has_symlinks();
+ }
+ 
++int repo_diff_auto_refresh_index(struct repository *repo)
++{
++	return repo->initialized
++		? repo_config_values(repo)->diff_auto_refresh_index
++		: 1;
++}
++
+ const char *repo_excludes_file(struct repository *repo)
+ {
+ 	struct repo_config_values *cfg = repo_config_values(repo);
+@@ -778,6 +785,9 @@ void repo_config_values_init(struct repo_config_values *cfg)
+ 	cfg->has_symlinks = platform_has_symlinks();
+ 	cfg->use_nanosec = 0;
+ 
++	/* section "diff" config values */
++	cfg->diff_auto_refresh_index = 1;
++
+ 	/* section "sparse" config values */
+ 	cfg->sparse_expect_files_outside_of_patterns = 0;
+ 
+diff --git a/environment.h b/environment.h
+index 49c86e8879..b6304d2e5c 100644
+--- a/environment.h
++++ b/environment.h
+@@ -150,6 +150,9 @@ struct repo_config_values {
+ 	int has_symlinks;
+ 	int use_nanosec;
+ 
++	/* section "diff" config values */
++	int diff_auto_refresh_index;
++
+ 	/* section "sparse" config values */
+ 	int sparse_expect_files_outside_of_patterns;
+ 
+@@ -203,6 +206,8 @@ int repo_trust_executable_bit(struct repository *repo);
+ 
+ int repo_has_symlinks(struct repository *repo);
+ 
++int repo_diff_auto_refresh_index(struct repository *repo);
++
+ const char *repo_excludes_file(struct repository *repo);
+ 
+ void repo_config_values_init(struct repo_config_values *cfg);
+diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
+index 74dec7d34a..1fa98d1456 100755
+--- a/t/t4000-diff-format.sh
++++ b/t/t4000-diff-format.sh
+@@ -122,4 +122,14 @@ do
+ 	'
+ done
+ 
++test_expect_success 'diff.autorefreshindex can be set to false' '
++	test_config diff.autorefreshindex false &&
++	git diff-files
++'
++
++test_expect_success 'diff.autorefreshindex can be set to true' '
++	test_config diff.autorefreshindex true &&
++	git diff-files
++'
++
+ test_done
 
+base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
+-- 
+gitgitgadget
