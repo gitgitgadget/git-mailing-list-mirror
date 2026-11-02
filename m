@@ -1,100 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.50
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793628696;
-	b=XjXtsv2h6+69UfUHGR1b5D3Rj6KkuB7SJJOdLHCti+Ok0wyBC4Webeq1qHWBJ+l2RjkQ
-	 0KTmvvSMSe8KShrDQhnDhGM5W00Pdjs0RK4q6WixERiVWodx48anI8H5xFdiG0bEEVKt/
-	 NQEmLDR8pQjdpFJF9QvigNnaP336CyPWkrhOv1YBnqeJvr4+7GiAdOSOnWoTVRSmRadDR
-	 CeeHdqzf5uifAX43PpYVLYH//IojvxwyIXQA59rYxqO4sDCSOmNyU1n3EENp3h74Ah6FB
-	 KLk0/o9fJGfDfqVlaljv8XB6juzyuyR59YLPOiXIdRO9dlOCkmI7XaBB8k5DuhcxRVg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793628696;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793628901;
+	b=rc9iyPuwsuPucbfhcwT2sCQ1OU3Q7n67dlCHZL8pkXFIlEnAO2JIPiFEszzYSmbbU+/u
+	 F1GZVoHne7REf9rdzMNCOR3kPIWjCfnEjFQ2fOHBigXvsfH714alX2WTIrd4Rp2WWL532
+	 qzPB+jwZ7l86NUSgsjFXI85a5F6v8nQsOFxWlBHQa5cTaVYa9D7M4k2bZub1OFz1R51lp
+	 hdfS8KeJ5mKn6JejFbAsfzSTs9LLbVZ+wfjP8YoSOGeLls+hs//jReXxITZDriG33VT2r
+	 jnflL3IGIPv8Irqm3NcR0pN0ciVthTL0VcYEE1rDzVtpOIsUioWAhBwMWUkoorrGocQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793628901;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=RBOeAxdh7aZB9EUM6G45uKssMPplKUfhkjNTDxLvVvY=;
-	b=hRGTi9hq7rq/VXEfF30/zuYIlm5firM4pWez/5K329Yzt59LycDi8Aty+z39WCRHe84K
-	 w4H0Z8iaKGv+BvFHIdpVPkeC4dRn0BSHO+CezKNDtXsTdtY0aXwfNjzOjcil1vC9fgsgc
-	 n4Y+x8EuyBeFFhPJRdnktOveHM3wvBoUwvqwOUsO43okyQzj49ATvHL1TqKjZqfulzk92
-	 3wXfCLDhiJ+IJ0BiexqKF8UcGKHYD1es6R+uzm2lQXIdZA3tnkQnZL9faFcU0KJbWZHl0
-	 L5Fks+/UHWqfcSfcz+C9mSMTD42GzTRZY6/MEBu3R2mSz/PMSqjTG3yb2yE/CvzucSA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=IGv3cIWTIDUsLw/5Ke59qnRTl7O2IP1ZZrrB3PPk0gs=;
+	b=3I1xdWiT8uLHetUrX1SX1mFhevQKuwpZtvABs+VZB5MbIiPpYrHvXixhDX5T6dnSKvjB
+	 aYFo1V5ZQ2kHgoNCfC3Uvwim/ggnKcbDbCTcsn7w9HcPobazJX6yDHE2DJCKIJxplRY8n
+	 3sB7cuQRQ6lf12pKx4BMTfIp11DU9H8nxA3ibgdiPJ8HqMYDRg1hw26O7wlFQhGnz6XHH
+	 sxOqa5w8RcBAMKtlHTxrhZvY9v9LJIrJrBF3pLEEONNEIOFdSfqD4tmDiuAcZgeps3IMf
+	 ROzRF1ShY/tYx7N/R8XMyENWQVluJsFwvDhgj4fH3mHphKtoNgDK/KJYYJX5Wv2YIPw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Fn56P7Rl;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.50
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gDMktBqe;
+	arc=none smtp.remote-ip=209.85.128.52
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5927C606A326
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 14:11:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5927C606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2590606B5CF
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 14:15:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A2590606B5CF
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Fn56P7Rl
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6afa651700eso4428234a12.2
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 06:11:36 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793628695; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Dl/fdAo+S3xrpb3T+u/fhRmsI1Zrp02bKzBMHVdSg2dWWiJzBgKc5sq6m3Vu0z7Trt
-         h/grH/7T79ahC7Hf2pwuuF6wCmeh2LxJZuZUmyeexWmhzXOU8hUSB2FGDtD2dgIb0+f+
-         FFrM5AlXq8XgFlnaTYuGAlHsbwKUFr74N+4vtK/DM0glqZHXm8fNOjM1enz56sS/QS+0
-         ffJYndRHp3qtG/ejcxxpxM9qFW4jOOCrummoB5C158RsoqP4HmnV8ioj2x2VuS+W0snU
-         5AZ0yzlA6ILaiNa6YCJA4TVMKx8Y8QFinWn4vlsozNLuG7pa/gLWjTsiBNr7sFaMiXio
-         4w2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=RBOeAxdh7aZB9EUM6G45uKssMPplKUfhkjNTDxLvVvY=;
-        fh=I2CGhO1/5wJl1eL3+xyAAPpLAZoeYxlVfznXWHahQxs=;
-        b=sPCRgIOyKw/iDnEKeY6fpPKxOV/o00H5yMw/2FWKYH3Yy8e/TmP1a5qVczBBUuE6yT
-         Bx387QTPXETjfVD3Y2DjtJZcv/5htzSuEziGw9ZEpuWELGAkpktcQiWXV3BkVpEmca5v
-         VUFOwc9v1gIDNTP7Q/xzA4ZjtGspVYhsf6AzWFeEn8SrZ8tBq4ssQ6HNo4TM0yVotLTL
-         GpT1mh6kM6qVCC+7+X1W9QApxhcqLs5ZKN+h2NIaWeEcFxFPKzIOU/yReBv4qgLfEfQk
-         oOJ0N6OIb8w7ymPg14Y3J8x5GTJ5ashuD58Dw/xNxqsoirDO5szrVJidXoVKF8KJmqKR
-         qKEw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gDMktBqe
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a4dc547987so15907445e9.0
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 06:15:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793628695; x=1794233495; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=RBOeAxdh7aZB9EUM6G45uKssMPplKUfhkjNTDxLvVvY=;
-        b=Fn56P7RlIL92wJSqIa7Z0CeFbdujnOKxBeJmN7KUYbJ4aKsNAqaIL7vQYc/geoY2ID
-         0sJUaHO6dw/EUsdbnmpa3fL+8z32DZnnbKAW9R8BIdHyVqTZH2MgfpAXOzU/J80WLcH8
-         P03O92FxzpOF8XxnB9KGHzaWpZqwq5Y4TzD47sWjHLSEuhGFfzQ2MU5aD1ACNmrjoP3o
-         ZLr/ZMnuzdbDkTcdx3QYas1ZpD1IIXInw2IXtEADTQ0AJLo0bFxdtDqGnhn+Y8P0iBIk
-         21+8vY/Qd/zNLB7+Ci1owabvCDsaJZWp2lYyz2NFMmIf20a9354AvH3QN1ZbdGALBVhO
-         Dp0g==
+        d=gmail.com; s=20260707; t=1793628899; x=1794233699; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=IGv3cIWTIDUsLw/5Ke59qnRTl7O2IP1ZZrrB3PPk0gs=;
+        b=gDMktBqe3vPt2KslcGx8eovpi72FJqXOFjYRbpRyb1psJLggsgO4H1wCHwT1etSfSo
+         KEFSg6AUs3bWp1jJ9gc8siBZ1WjP2P/FwJi24u5K4GF6ZbqrkY3AgWsL1OR7VaHcZThh
+         klXRMsZbJ01B46yPqGV68mAXeY4Dswq0q1w5EZdQ4aZqsLBsuxroQR6/xGPy9ILkJRPp
+         iUgI3wGBFMVG1QlGvTYPsjLJ4hxx5gjcc+PxFcBtDzWQT76tV1TMvVFNexAQ7LH1GbIx
+         hxC5eA21qHUa8u666VW828ewnwOPCdreAsNB1NKn0r0EIDpGkO41xvc6tLPMLI1PHdNS
+         5IXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793628695; x=1794233495;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RBOeAxdh7aZB9EUM6G45uKssMPplKUfhkjNTDxLvVvY=;
-        b=G1IZ7RwqKsmUJ8MiKhqkPQG0FiTmbuR8oiXTK4xLVYjoUienAqTJr/nYambD/6UPbn
-         IApZytEw7+U4ctEsw1gYiHt0aszAsf77Jw/qqgjXvlqNpqesWYLfvqh17PPe9k9Ody1e
-         U3h7MF94Ws/cNmG6G7vNtw5Rcc7+znQF9ML+nWCFRv4/+JAb08xN5G9fToKnqHmYXBv2
-         EJSCof33ZKH275AM+qFoJZzYcZUHw5mUxMI/63MD1JcqOVIvqkq/JstsC9ni/4/8B9jm
-         RVJU1gd/MOCE6EequML+511GhH2M/8kq0xrA6EsFAnGTqBeOO6IRkuwhRMH6Y7zxcBkW
-         nMBg==
-X-Forwarded-Encrypted: i=1; AKwUvBxhOVnAzoaGprXNRwjcYQ/XQr7qg02CesM03jMf8APyhMj9QD6yaQyz0dgBMckabiru8Jw=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+Ia+gjkJ6315B2/sLUZNuw8r+gIiTzoD2lbGjMyCTfAAnGYF1h
-	ah0SpbGLUteplKVwq9Vv2j+MtfKW8j9FJYPlhRTwQqRRDAjcn8ROrh5ZGnjrcZdHSMWAvfXigEY
-	D6Su/i/Sp6scTwmhWKxNQ0DBB085vv7M=
-X-Gm-Gg: AYBFou0pnEiLY2MA2U6SZcuWfY7fGxlergKkdSXppS/JDvmdHakGQouQT++aJnhnnS4
-	EmLunV1v78kkhbN6+dWSne3bNJh+rAW7zrTxfP41MWHYHAcyS/j6yCgIWBMAbEHtQ4rREnR+5Ck
-	rxk6ARTzoG484J+SZ5XlI0Gvn7Ei9nsZ5f+qprNa7P228h34x7vcRXIqMXbjdm+5vx4L85WmXZc
-	qXbsJiMtrhsgrlYgRdMB4d3UKwmyDEY6lTWuSrqn356iOYXsi4sMfDZwuNUgna6RRISPnJQLWet
-	aSKwsSWq2o97hfmGpSYuml8Vk8OYi5z4tiEdhpi1C4CzicU0Iq6EZdcDOyN37UhBtDSrvDmaTnK
-	ruZ6ab+fKNOqlUTucPt6hbLvd0hXVm6aJsuTtf6D0QMrP/xQlj9IsFZ7P3g==
-X-Received: by 2002:a05:6402:223a:b0:6b1:827c:af27 with SMTP id
- 4fb4d7f45d1cf-6b4d42901d5mr4759279a12.14.1793628694728; Mon, 02 Nov 2026
- 06:11:34 -0800 (PST)
+        d=1e100.net; s=20260707; t=1793628899; x=1794233699;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=IGv3cIWTIDUsLw/5Ke59qnRTl7O2IP1ZZrrB3PPk0gs=;
+        b=GjuXbKMYIte8RkCQK/rw7LZzEcImiSEYdl6Vs9ebq75N0Vf52x7w9v21/dHB+SLuUR
+         Gpzq0Y5L69JvfGROS/J+Z6V6dmMa2LgJW82VKdHKHqstHWEFe9uDeSZS+kpNWv8/VOFU
+         KYf9w43F6+7MgxQfpC7EY+w4D8sNyz8Lg+1A2ndr69xnTviOS713GffwpWRU/YUK2r+a
+         NWxsmKlnZ2nFjlsJh77sNRUfFzZDJBkqIjGDKTTtAAgYvfVH1N1oRpuyDXgCd/k/hDC6
+         3ODy8WuJplLfpQyh/OhHse7MyB1c+Y57VK0dKODyY3fpzjasLmiAqk8PuGfD+PjX8C7O
+         yRLg==
+X-Forwarded-Encrypted: i=1; AKwUvBwjj4GLuh6PeWRgmkESnvIpx58mSalg6DK+05PG6QuF8yuYDQZoFvglfXAjre79kRWqZkE=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIwLCXKqgLuJ8BzFdu/LaTlTfS1I3feJyUF3vF0PztJxle34IJg
+	cFUYrMgfeNxfppjd6hghBDHXPK3Zu9nb//xB4GVeD60ziQ8DjfPiiMjz
+X-Gm-Gg: AYBFou0JqEmMAhC46GumlbD5advntDVkY8Ck4BH06j5owQnU4c9YTdW5v119oA+ilQP
+	FYJN97mUi2dfJNSKo9dPdSM/IMp24pHVeo7mEhl9v5FbDEMBD8UWQObwPa7s9g6IyDElGpa0Rgc
+	JSHT2z44oIGx+2sWCBYUckohBirDld9LJ23/AoVySC88c1qfRmrGAfTmlAZaNAhv2sBmJVMrkyL
+	sWvyarWEsRYONsgiMxdYdXN+RMHjNQeo5HO27jSENpWvE+2+XAzsVj28pJV8BUcZPXuK8fQ9wZZ
+	Y4Syjw2y1EfulOGZAqf+eQ5DYCyvzoRyHUgeUTzSGjOhdlvHFqVwVUoXcl7CETEbsWhAAFgvtIg
+	CEYFd1NkRdgDI4tc81Vi/BostO2MGO9Pgr/LBSwJLPdQ+A8ovbuvqeFW+Mi0DbVkdPGTBPRb0+Z
+	bRZstjdEPMc0c4jbExnis6sc4k1QyfmkIdShRPCuBoeO1qmvhEVH7/Rds6WrJYy++/1r6T2YMxB
+	RgWr6vFc9tQXKcTWAmPHJHy/+2RsVgoVzdD6wcuoRJ0qM5YyxKgT4Jy9NJgXxN7NjR0+BX+zph4
+	IQlaiOE3C5t2egvL8cee5dD5nhCl4jsw7WfrJ5sU6/IK9sargISZzaWeP+JhHSvOi58TwRToQ3K
+	CgfL0Sw==
+X-Received: by 2002:a05:600c:5397:b0:4a4:4d57:8462 with SMTP id 5b1f17b1804b1-4ac18b7e65bmr232045055e9.24.1793628898963;
+        Mon, 02 Nov 2026 06:14:58 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ac0b4df257sm163673415e9.4.2026.11.02.06.14.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Nov 2026 06:14:58 -0800 (PST)
+Message-ID: <845be1de-8d12-41c9-996d-038886bde4cf@gmail.com>
+Date: Mon, 2 Nov 2026 14:14:57 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,29 +93,146 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2413.git.git.1789898013916.gitgitgadget@gmail.com>
- <pull.2413.v3.git.git.1790189759802.gitgitgadget@gmail.com>
- <xmqqtslzlhbm.fsf@gitster.g> <CAHwyqnVzsvsGXzVj4P=rXJJTvfeQt0D39Aj7R1PTyQVkJbm4DA@mail.gmail.com>
- <4836126b-e630-45cd-8757-861133ec233c@app.fastmail.com> <CAHwyqnUP_aeKSwj03be0PVdqLX=UYhwW22kBtoWU9Oy2XoaFLA@mail.gmail.com>
- <e1ed2066-5cb5-460c-9c1c-0177d338f7fc@app.fastmail.com>
-In-Reply-To: <e1ed2066-5cb5-460c-9c1c-0177d338f7fc@app.fastmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 2 Nov 2026 15:10:56 +0100
-X-Gm-Features: AclHuK8ZfDprIIOFDM7KR5eq7O_5gF45PQWusebcKcASCQu5y7Jpyjw4MNsl8dY
-Message-ID: <CAHwyqnVMb1BtJ0Eb3HqQx9SNyB9oWkhC7OH2_j=xZSiuwreK1w@mail.gmail.com>
-Subject: Re: [PATCH v3] object-name: explain why <rev>~N fails in a shallow clone
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	"D. Ben Knoble" <ben.knoble@gmail.com>, GGG <gitgitgadget@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] stash: reuse prepared state when creating stash
+To: jasmeet.bhatia.us@gmail.com, git@vger.kernel.org
+Cc: Deveshi Dwivedi <deveshigurgaon@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Leon Michalak <leonmichalak6@gmail.com>
+References: <20261031200107.285168-1-jasmeet.bhatia.us@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20261031200107.285168-1-jasmeet.bhatia.us@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> I=E2=80=99m not much of a C programmer.
+Hi Jasmeet
 
-I'm quite taken aback by this.
+On 31/10/2026 20:01, jasmeet.bhatia.us@gmail.com wrote:
+> From: "Jasmeet (Jazz) Bhatia" <jasmeet.bhatia.us@gmail.com>
+> 
+> do_push_stash() already preloads and refreshes the index and calls
+> check_changes() before invoking do_create_stash(). However, Git then
+> repeats this same index preparation and change detection, including
+> rebuilding the list of untracked files when requested, which is
+> duplicate work.
 
-Is the Git code so sacred that even the reviewers are not in a
-position to review? :D
+Good observation
+
+> Instead, avoid this duplicate work by passing the already prepared
+> untracked file list to do_create_stash(). When the list is provided,
+> reuse it and skip the redundant index preload, refresh, and
+> check_changes() call.
+
+I've got some patches in "seen" [1] that take a slightly different 
+approach and keep the call to check_changes() in do_create_stash() and 
+remove it from create_stash() and do_push_stash() instead. That series 
+also removes a number of unnecessary calls to preload_index(). If you 
+have time to post a review that would be really helpful.
+
+Thanks
+
+Phillip
+
+[1] The patches are at 
+https://lore.kernel.org/git/cover.1792767794.git.phillip.wood@dunelm.org.uk/ 
+and are merged into seen as branch 'pw/stash-change-check-only-once'
 
 
-Harald
+> This maintains the existing behavior of "git stash create", which
+> invokes do_create_stash() without prepared state and thus continues
+> to perform its own index preparation and change detection.
+> 
+> Testing this using the p3904 stash performance tests shows a decent
+> performance boost.
+> 
+>      stash -p, no fsmonitor
+>      0.12(0.11+0.17) -> 0.10(0.10+0.18)  -16.7%
+> 
+>      stash -p, builtin fsmonitor
+>      0.11(0.10+0.02) -> 0.09(0.08+0.01)  -18.2%
+> 
+> Testing this on the Linux kernel on my system, "git stash push"
+> improved from 254 ms to about 239 ms, which is about 6%.
+> 
+> Signed-off-by: Jasmeet (Jazz) Bhatia <jasmeet.bhatia.us@gmail.com>
+> ---
+>   builtin/stash.c | 25 +++++++++++++++----------
+>   1 file changed, 15 insertions(+), 10 deletions(-)
+> 
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index e1a3a76bd0..58eb782597 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -1459,7 +1459,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+>   			   int include_untracked, int patch_mode,
+>   			   struct interactive_options *interactive_opts,
+>   			   int only_staged, struct stash_info *info, struct strbuf *patch,
+> -			   int quiet)
+> +			   int quiet, struct strbuf *prepared_untracked_files)
+>   {
+>   	int ret = 0;
+>   	int flags = 0;
+> @@ -1473,14 +1473,17 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+>   	struct strbuf msg = STRBUF_INIT;
+>   	struct strbuf commit_tree_label = STRBUF_INIT;
+>   	struct strbuf untracked_files = STRBUF_INIT;
+> +	struct strbuf *untracked_files_p = prepared_untracked_files ? prepared_untracked_files : &untracked_files;
+>   
+>   	prepare_fallback_ident("git stash", "git@stash");
+>   
+> -	repo_read_index_preload(the_repository, NULL, 0);
+> -	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
+> -					 NULL, NULL, NULL) < 0) {
+> -		ret = error(_("could not write index"));
+> -		goto done;
+> +	if (!prepared_untracked_files) {
+> +		repo_read_index_preload(the_repository, NULL, 0);
+> +		if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
+> +						 NULL, NULL, NULL) < 0) {
+> +			ret = error(_("could not write index"));
+> +			goto done;
+> +		}
+>   	}
+>   
+>   	if (repo_get_oid(the_repository, "HEAD", &info->b_commit)) {
+> @@ -1493,7 +1496,8 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+>   		head_commit = lookup_commit(the_repository, &info->b_commit);
+>   	}
+>   
+> -	if (!check_changes(ps, include_untracked, &untracked_files)) {
+> +	if (!prepared_untracked_files &&
+> +	    !check_changes(ps, include_untracked, untracked_files_p)) {
+>   		ret = 1;
+>   		goto done;
+>   	}
+> @@ -1529,7 +1533,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+>   	parents = NULL;
+>   
+>   	if (include_untracked) {
+> -		if (save_untracked_files(info, &msg, &untracked_files)) {
+> +		if (save_untracked_files(info, &msg, untracked_files_p)) {
+>   			if (!quiet)
+>   				fprintf_ln(stderr, _("Cannot save "
+>   						     "the untracked files"));
+> @@ -1615,7 +1619,7 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
+>   		return 0;
+>   
+>   	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
+> -			      NULL, 0);
+> +			      NULL, 0, NULL);
+>   	if (!ret)
+>   		printf_ln("%s", oid_to_hex(&info.w_commit));
+>   
+> @@ -1698,7 +1702,8 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+>   	if (stash_msg)
+>   		strbuf_addstr(&stash_msg_buf, stash_msg);
+>   	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
+> -			    interactive_opts, only_staged, &info, &patch, quiet)) {
+> +			    interactive_opts, only_staged, &info, &patch, quiet,
+> +			    &untracked_files)) {
+>   		ret = -1;
+>   		goto done;
+>   	}
+
