@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793632528;
-	b=0Dy7CqknK9LJv9llsfMrboTL/VQLZf/LIpyZjcKlsZjM9bJgvLK89GH6mRqj6U43XCWJ
-	 ZuKS6Mp7o0WGJ+DL3BMoXixPzLSAw0WeCQNWl7B2tLuZKy7MmAuR6Kqy3SwDn4IRmzyqT
-	 OBf3AdphnDrTNzIJxtbsEgwhNihTbYgK89MH9Ove3f4bOw9JTzYg2wd9HKZ523dFDM0yC
-	 /3i3mvbxjt3h7EbCdKwO/yD2iaiZtG+ePvMIT+ukyGWic+UE2otFRl/BvGceIwQBKv/Og
-	 qXckgHNfxzKmRJIWbfx9Nl/bcxOS2Fhnf0m1SeSNT12eYiyTPalbW6kwOORHfABb09g==
+	t=1793632533;
+	b=SGMFUWMtjlXKSrjq/CM7FoC8CF+XQJr/Sgh66QBEJay2nDyVfUrPjGPetFZVDk6J+l2K
+	 3CRcYIbv/5zyvMoGsqWxud0BpYzUc334YgElwPGPAjnWD6UK9QZGZFl9AGYcLwgk+VjfR
+	 JfIdQUuesMyD5Jl/1YT8kDgSf3UYHc2ixL9RdQbsjzcL+tg1mRLJtu94srhrd/iEKDi5L
+	 0hNMM/JVoQHP1Tzv92CKhZ08c/va1WRCFXzzbNj0QMaUtPHRChOcx4kKMsF8nBNnpOkSq
+	 Rh0+8a65fpfrFFb7tZ0k6Vb48luznI7phH0LO2kDvF7W0UbPErHeqn2JQXwA7cOnfAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793632528;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793632533;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=4AFTmnF4RMgQGLWwR5ylUGr+CozS1nWR48wgT6sCoLU=;
-	b=NtZTL1l9hCPQXpQ1ekHH8ZMII2QIBxMGCmP3Si1T3gtcNUTsTITcydo7gc/2VzzGKNPN
-	 afmPDm8trsCzMV+AirZUniIzoht2wCJCpE1GZZHz/SnzcTsGqUuU6hnA3D3Uz0CDNIdVD
-	 Gy0W4E5SRWI1mQvxLNnsy+1XMBHTGtk/ASSUAwKdh0MJDPx49wbdcYCjYqWj0NbrPQuzR
-	 aw5AfG+6xgwDYJ2qw3pSBwFw2jO3/Lc/e1kMyJTF82cCU1/L735PrZr5Mae5zbqHDHvQi
-	 JCxOkYdEe4uAH+0pSr+sZ1YnbOiLZ6tN17F2l6u2W6YMqIYEL2+k7ogQT8yYsARDFnQ==
+	bh=fmJAD8PKzERx3pdbUSqheFcCdGvssWIjAF3WuHOQhRI=;
+	b=VGB9V4QnaJquo/bLS97i3DTJFCeoO03G4kWoXlRwFfI+D4uBem+BZGh/zuOP/1SZQ479
+	 cdEBReXzLpvzftKIkkXaFwxbqBFsAS8/zekI5Dccf7Z719wy933512vFilqESZyVg2La4
+	 a4n7q1WY4/He0Se9/1KDFoHcQE37cMXBqdiXWsTY+TIsizzRfmr0dSBHopSkAYKDpjRFa
+	 1E0J6stY54jL0EHmx3DvVY7hAhgB54NuCoEfWPwIWStvaD2wmUS73Mix9cwWqwkXCSmN6
+	 bI1wbCxklvv+HEwtvlxA06eWzlD0433K5NRsPwOQji3EnCoSGQpCUP37QTP0TaVGxpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Pf3w3jPE;
-	arc=none smtp.remote-ip=209.85.221.45
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kWMvIERT;
+	arc=none smtp.remote-ip=209.85.221.47
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998E16079077
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 15:15:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 998E16079077
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09737607B443
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 15:15:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 09737607B443
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Pf3w3jPE
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-48bbb06e746so1426193f8f.3
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 07:15:27 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kWMvIERT
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-48df8fe8513so2703962f8f.0
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 07:15:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793632526; x=1794237326; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793632531; x=1794237331; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=4AFTmnF4RMgQGLWwR5ylUGr+CozS1nWR48wgT6sCoLU=;
-        b=Pf3w3jPEa3765o/Bq80P2ovzRts7aj1UVnjGFGGVXhzXT9NhrCb8Q7VEq+mp0gC1Lu
-         b8HsBaR5W+SZo/jipzqtLKhBSIHcnJCfWUpIhpVQY4gJHtW8wEAgBrAwr8ETGxBTUyg1
-         WTvTBlRF1NyN9sRQX+CuHa7W2b9WVr+V6+4zOoJesMQBG+sMv5qBd8tWJu/FqQpyKiA/
-         QUQ7+kem15vaob8RLg//5Hs5tCwLtuhlrjp/WpxoDcgfMNn0xR5cJvqe1IZQ1ZZPAFg9
-         sIMsSu9gGTt7Sx+ycW6G6mVK3cmNVzdN4nSirxuVJXSudWDO/hBRS8tZSiih30LKyqNN
-         RR3A==
+        bh=fmJAD8PKzERx3pdbUSqheFcCdGvssWIjAF3WuHOQhRI=;
+        b=kWMvIERTWbQ7ZGzFIBgcJfTSNY787boKhjBLV/ylCD8CnonvRDCY0WaNH/k9Vm8oR+
+         eKBGT4osTGVwxtVPngO2CF9GXp8AI1n4kdBUM2ElErWLpgZMElJ7UjjmBeVJDt0fFr+K
+         CdipSglC+AOv6xXWwBq/L4gbr54xSeWlM5hd4CuOEsaumtF1uIsYTmfB8+I4F14Myb71
+         hp1MFCjbNM+nVz8P362tw9I/f2O70G7WjTZ3IP6sflnSxKaRMAoKL8g6ACtvU1RneQgw
+         q6ZSMfEqFsdJ82svREH4dz/ZRYQyZIDgc9Qvgiw8neQsVdJgVyzAuq1K7Xr5GXQ8SjUi
+         TPrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793632526; x=1794237326;
+        d=1e100.net; s=20260707; t=1793632531; x=1794237331;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=4AFTmnF4RMgQGLWwR5ylUGr+CozS1nWR48wgT6sCoLU=;
-        b=MTAPqoHm/MHZEA/cI40cSlWWSPLyB5kVClgPVAiCYlhQFVTc8NkLzhx24PgiirjLDJ
-         EXkFeZYKKaeH/vQzHwxEw3S+eKboYNzmwaVbXIMbtY8IeN6cl5T3PsVaDDHauGqw06CF
-         meqwdBAGBAYySQ+befA4Nkp+GH0TQrHKHi17n8U9zHti0tb9TM7zXZacUKrkyIH2+tB2
-         s0CNvhlukXwnQz4Y3ljB/XVFSamBfezus1vogmqi5+K1shmys6uPuBFxtp8ReoeAybXD
-         bV41oKujOSYAAKQtwibCRuQXJGhw9bGe72qtbXqxCfXBH2NDcFlcOI032mIReCdcdz8s
-         Gt8Q==
-X-Gm-Message-State: AFq9FYIN+qS0XIufz0akrp9X3LhzADKQHBV/mxnef5oip06wB0+WA9LC
-	VxJDLXPcDodA9sXABE7vX8TrHsgk0f+bfrOgTGbiNw2c8evtLH/fSKZOkSEMRg==
-X-Gm-Gg: AYBFou22GWJzMaIQnk6YHuWBtWxOTfHZAvKyopBxSeH7sJLvD6yanHWu+JQkEc5BGtY
-	xWSNFZlbrAKbIrQdIGZUgiBqHIhEb6FUHcE3PNfGbLwUAe+ZnxzIkTZ9jj5cSW1k0eB6FHbg9R8
-	rDK2y7sernwsqQTlMF9gSqXIxJ1XC755BCB2nIgCkTaczEdYD7XEAZYGChdLWi3kJDNztcxIPZk
-	8vkXnUFy4+TecDsQQkJccrRcK8lH6Dnjjkm+VmHJocRJw8v3Ryrve/iQ+vGZFuW9WpupwkjIWhz
-	mKNMxRMKWsHXOPi70r1C1JpToqlP+1pgW5ZN7+kdNXAhoolozTPY1P90P/ekDhTYIdrcFtfeQod
-	QUhmB9anqBrcON09+k2PLEjVS9qs9ZZ/dwXv80uURtJakgvEpuPf399D9F8578/7vYX/OpE6NNm
-	VToCm4naN2jU6AlD8x8M8udvmZ0Kr6BuJQAaIlmLK4F0M17TDm/zL2Xe/gm9y6Prx0TAtMXxQhB
-	anBpUFANP6ypUOy6/AGUx75w0Xtol/uaqozT+nyJoFozxip8EOjaYLzJg8HYlyqNK/TPyvJgmhC
-	Fexant+BM55y7cWFZ5zg1M5+Xepc8Obw9tXkXBWeXJ5fqg1QEhcMnPvQHGILMJjzbwcU/Js32jZ
-	Ch83RK0xmNr0kFasXAi+uFs5y+OKT654/LawYmO6sxv7Gmjg7OvRMgof0VOXEoYcBUz9x7bZYup
-	/ZEseK0iUmOB/hkOxUlgiM7OwwqfFGGGDfu978IRg=
-X-Received: by 2002:a05:600c:674a:b0:4a1:fb23:68f0 with SMTP id 5b1f17b1804b1-4ac14ec788emr236909885e9.3.1793632525775;
-        Mon, 02 Nov 2026 07:15:25 -0800 (PST)
+        bh=fmJAD8PKzERx3pdbUSqheFcCdGvssWIjAF3WuHOQhRI=;
+        b=OPEngodQUg9AEEro9xNuyZPZITGfHocLwZZq0pIpIoQ3v3tj3YDvJAl4cjbTqkXIN/
+         m4a+tdXIcYvc3e1OKLubr2uB+2O6XNyGAth5K52MrxkWIMGxLaU57xgVaGtgK4x98zk8
+         K4vjUSN5M/8zZXM+6Z9QeuI197/qXGjtO0ALDKW5BZtQ11jvvDarsRN+Bhg/8WpYRC+U
+         qQlR8ZkVkqDnyxhUDBeUPpPxOOaMUMw1TBCWnjgsh4z3zOKBDGdasgod7EsQinwrNeQD
+         IaDqcg0iF7aJixYXrY2mudQj5xP2SEXd19i4XLrCFR2keq6im6Le4kFkwjs/z+v9+4Js
+         CBcw==
+X-Gm-Message-State: APuU4Z/TgDUCwg59bJyS2Vx5uTiFxsAv9F/FMEcPnXT68VnXF3ZHingo
+	8brL0TBS4/oDJLgZIaEGPZHD40toIJKxcqvdmGjyfee6DUg+SU/ouqArK5ZXnw==
+X-Gm-Gg: AYBFou0lpEd+eHccC6KBGDJHi2NTK7U+lW43SmvKn+1HCmFi8zaUlafVmDf0d30dBXY
+	+U8QDPmkIFVL/YMVvx51q5z3Ol1YKNG67yS7wHnpIh/cB3f+4JC++HDIimDca9KsIkmpZ1zhztT
+	RaObuoLTpnLnMdtZlRPh8kjQ0naWnWQMUERV0uAY7JR5H/NAvs98sdIMTMolAEJetF8VEj9sY8G
+	3uC9wobS8J2aXg3b0brKgKcxpprckjUJ9WSSdarDEJEPeK6n7WNZSjBJRsGIe8V423ZJ4kZka19
+	zkJvQmHBilVkh/JYj1KIGCfadydX9jImL/AJ1+ETZeVCMPNP85xSuY7/GkMYsPWnTM24PZliW0K
+	4vZSPeHPk0MysQYt3YYRzlLTGcVtkXLHdyZYlpwxdMBr5YflcmNZ3vBCbxQpNYvnszCVruxE2In
+	ZU0C0XJba5Gt+8j/uA/TP/9yMPEpPZ+o9cgAFBTiJfZokF4XFwN3vU6ccpbmrGtj7Fx5ldQ5PUP
+	Ze6Ws479xvDzpnv3wBTYLgWTyVmolrGjdq4QVh9H8U3aEUu72Lpvlc6AN1t6reilvsiYuG6RHZS
+	+fVbn4jUeRutBAK+/FlSJnQev0QeulaY/1uc+oWYLjLRkGwxwOglPKe8djnglKMm/caGmPfCa0t
+	6KAahOO0Zc8NFv4wR8VUd8ZhywExGTq3GFgAb8zRSpXkNfgPzCANx/mAwz3RBkcj4//AIElhCgo
+	IeICvvYK4Sf6Lww9+zOdz90v+WYfw7PYynzD+WsAzm
+X-Received: by 2002:a05:6000:290d:b0:48e:75f:477d with SMTP id ffacd0b85a97d-48e6e2dba63mr22006345f8f.7.1793632527261;
+        Mon, 02 Nov 2026 07:15:27 -0800 (PST)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b80eb1sm21851553f8f.34.2026.11.02.07.15.24
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b80eb1sm21851553f8f.34.2026.11.02.07.15.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2026 07:15:24 -0800 (PST)
+        Mon, 02 Nov 2026 07:15:26 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -91,9 +91,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Justin Tobler <jltobler@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 3/4] parse-options: add early_scan_options()
-Date: Mon,  2 Nov 2026 16:14:51 +0100
-Message-ID: <20261102151447.734680-9-christian.couder@gmail.com>
+Subject: [PATCH v4 4/4] fast-import: use early_scan_options() for --allow-unsafe-features
+Date: Mon,  2 Nov 2026 16:14:52 +0100
+Message-ID: <20261102151447.734680-10-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.56.0.4.gceeb21e89e
 In-Reply-To: <20261102151447.734680-6-christian.couder@gmail.com>
 References: <20261012074413.337183-1-christian.couder@gmail.com>
@@ -109,838 +109,178 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some commands need to look at a few of their options before they can
-parse their command line for real, for example because the result
-decides whether a repository is needed at all, or how the beginning of
-their input should be interpreted.
+The "feature" lines at the start of the stream are processed before the
+command line options are parsed, so cmd_fast_import() scans its
+arguments early to find out if `--allow-unsafe-features` was given.
 
-Such an early scan has to know which options take their value as a
-separate argument, or it mistakes such a value for an option. Several
-commands get this wrong, as they just walk their arguments comparing
-them to the few option names they care about.
+That scan doesn't know which options take their value as a separate
+argument, and it stops at the first argument that doesn't start with a
+dash. So it disagrees with parse_options(), which accepts values
+separated from their option by a space, for a command line like
+"--depth 5 --allow-unsafe-features": the scan stops at "5" and never
+sees the option, so unsafe "feature" commands from the stream are
+refused even though the option was given.
 
-Let's add early_scan_options() to help with this. It walks the
-arguments using the very same `struct option` array that the command
-already passes to parse_options(). It looks up long options with the
-lookup_long_opt() helper extracted from parse_long_opt() in a previous
-commit, so that negated forms, unambiguous abbreviations and aliases
-are recognized the same way, and it uses the
-parse_options_takes_argument() helper added in another previous
-commit, so that the scan and the actual parsing agree on which options
-take a value.
+Let's fix this by using early_scan_options(), which scans the very
+same `struct option` array that parse_options() uses, so that both
+agree on which options take a value, and by marking
+`--allow-unsafe-features` with PARSE_OPT_EARLY so that the scan
+reports it.
 
-The options the caller wants to be told about are marked with a new
-PARSE_OPT_EARLY flag, so that nothing has to be spelled out a second
-time, and so that the mark cannot drift away from the option it refers
-to.
+As early_scan_options() looks up long options the same way as
+parse_options(), the two also agree on abbreviations now. So
+`--allow-unsafe` allows unsafe "feature" commands, while
+"--quiet --export-pack --allow-unsafe-features" refuses them, as
+parse_options() takes `--allow-unsafe-features` there as the value of
+`--export-pack-edges`. (The old scan wrongly allowed them in this
+case, as all the arguments start with a dash.)
 
-Using a per-option flag for this is not new as that flag space already
-holds flags that the parsing loop itself ignores, like
-PARSE_OPT_NOCOMPLETE and PARSE_OPT_COMP_ARG, which only the completion
-helper looks at, or PARSE_OPT_HIDDEN and PARSE_OPT_LITERAL_ARGHELP,
-which only the usage output looks at.
-
-The scan is deliberately kept much simpler than parse_options(),
-instead of teaching the latter to perform a side effect free "dry
-run". Such a dry run would have to avoid writing through `opt->value`,
-calling option callbacks, dying on an invalid value, handling `--help`
-and tracking command mode conflicts, so it would be a much larger
-refactoring. If parse_options() learns to do it in the future though,
-the commands converted now would keep both their option array and their
-PARSE_OPT_EARLY marks, so their conversion would not have to be redone.
-
-One consequence of staying simple is that the scan doesn't try to
-handle what it cannot reliably skip, like short options, unknown
-options, ambiguous abbreviations or options with a low-level callback,
-which may consume any number of arguments. It stops at them instead,
-so that it never takes an option's value for an option. This matters,
-as for example with:
-
-  git fast-import --quiet --export-pack --allow-unsafe-features
-
-parse_options() takes `--allow-unsafe-features` as the value of
-`--export-pack-edges`, which `--export-pack` abbreviates. A scan that
-just skipped `--export-pack` as an unknown option would wrongly see
-`--allow-unsafe-features` there.
-
-So the scan can fail to see an option that parse_options() would
-accept, but it doesn't report an option that parse_options() would
-not, and its callers can safely err on the side of not having seen an
-option. The differences with parse_options() are documented in
-"parse-options.h".
-
-In practice, despite these limitations, early scans using
-early_scan_options() should still be safer and cleaner than the
-ad-hoc hand-rolled scans they are meant to replace, which don't know
-about option values at all and therefore disagree with
-parse_options() in ways that create plain bugs.
+The note about having to spell the option in full in the
+documentation is therefore removed, and so is the NEEDSWORK comment
+about it.
 
 Helped-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Helped-by: Cynthia Uche <herroyalpriestess@gmail.com>
 Signed-off-by: Christian Couder <christian.couder@gmail.com>
 ---
- .../technical/api-parse-options.adoc          |   5 +
- parse-options.c                               | 139 ++++++++
- parse-options.h                               |  98 ++++++
- t/helper/test-parse-options.c                 |  96 ++++++
- t/helper/test-tool.c                          |   1 +
- t/helper/test-tool.h                          |   1 +
- t/t0040-parse-options.sh                      | 321 ++++++++++++++++++
- 7 files changed, 661 insertions(+)
+ Documentation/git-fast-import.adoc |  7 -----
+ builtin/fast-import.c              | 42 ++++++++++++++++++------------
+ t/t9300-fast-import.sh             | 36 +++++++++++++++++++++++++
+ 3 files changed, 61 insertions(+), 24 deletions(-)
 
-diff --git a/Documentation/technical/api-parse-options.adoc b/Documentation/technical/api-parse-options.adoc
-index 95b7924e84..f59d8e90a5 100644
---- a/Documentation/technical/api-parse-options.adoc
-+++ b/Documentation/technical/api-parse-options.adoc
-@@ -197,6 +197,11 @@ are the bitwise-or of:
- 	Internal flag, set on options that were expanded from a
- 	configured alias. It should not be set by callers.
+diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
+index fd165e11d2..7c5900e048 100644
+--- a/Documentation/git-fast-import.adoc
++++ b/Documentation/git-fast-import.adoc
+@@ -65,13 +65,6 @@ Only enable this option if you trust the program generating the
+ fast-import stream! This option is enabled automatically for
+ remote-helpers that use the `import` capability, as they are
+ already trusted to run their own code.
+-+
+-Note that this option has to be spelled in full, and has to appear
+-before any option whose value is separated from it by a space, for
+-the unsafe `feature` commands in the stream to be allowed. So
+-`--allow-unsafe` or `--depth 5 --allow-unsafe-features` still refuse
+-them, while `--allow-unsafe-features --depth 5` and
+-`--depth=5 --allow-unsafe-features` allow them.
  
-+`PARSE_OPT_EARLY`::
-+	Report this option to `early_scan_options()`, which looks at a
-+	few options before parsing the command line for real. Ignored
-+	by `parse_options()` itself.
-+
- `PARSE_OPT_NOCOMPLETE`::
- 	Do not offer this option for completion.
- 
-diff --git a/parse-options.c b/parse-options.c
-index d94d6fed93..7e8b406129 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -730,6 +730,8 @@ static void parse_options_check(const struct option *opts)
- 		     opts->long_name))
- 			optbug(opts, "uses feature "
- 			       "not supported for dashless options");
-+		if ((opts->flags & PARSE_OPT_EARLY) && !opts->long_name)
-+			optbug(opts, "uses PARSE_OPT_EARLY, which needs a long name");
- 		if (opts->type == OPTION_SET_INT && !opts->defval &&
- 		    opts->long_name && !(opts->flags & PARSE_OPT_NONEG))
- 			optbug(opts, "OPTION_SET_INT 0 should not be negatable");
-@@ -767,6 +769,8 @@ static void parse_options_check(const struct option *opts)
- 		case OPTION_SUBCOMMAND:
- 			if (!opts->value || !opts->subcommand_fn)
- 				optbug(opts, "OPTION_SUBCOMMAND needs a value and a subcommand function");
-+			if (opts->flags & PARSE_OPT_EARLY)
-+				optbug(opts, "OPTION_SUBCOMMAND does not support PARSE_OPT_EARLY");
- 			if (!subcommand_value)
- 				subcommand_value = opts->value;
- 			else if (subcommand_value != opts->value)
-@@ -1314,6 +1318,141 @@ int parse_options(int argc, const char **argv,
- 	return parse_options_end(&ctx);
+ `--signed-tags=<mode>`::
+ 	Specify how to handle signed tags. Behaves in the same way as
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index fbd919982c..863938bb27 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -4120,6 +4120,18 @@ static int option_parse_quiet(const struct option *opt UNUSED,
+ 	return 0;
  }
  
-+/*
-+ * Look for `name`, a long option without its leading "--", among
-+ * `option`, the way parse_options() would. Return true if it names an
-+ * option exactly, or as an unambiguous abbreviation that is not
-+ * disallowed, with `found` set to that option and its flags, and
-+ * `stuck` to the value stuck to it, if any, or to NULL.
-+ */
-+static bool find_early_scan_option(struct parse_opt_ctx_t *p,
-+				   const char *name,
-+				   const struct option *option,
-+				   bool disallow_abbrev,
-+				   struct parsed_option *found,
-+				   const char **stuck)
++static int option_parse_early_allow_unsafe(const struct option *option,
++					   const char *value UNUSED,
++					   bool unset, int pos UNUSED,
++					   void *data)
 +{
-+	struct parsed_option other;
-+	enum long_opt_lookup result = lookup_long_opt(p, name, option,
-+						      found, &other, stuck);
++	struct fast_import_state *state = data;
 +
-+	switch (result) {
-+	case LONG_OPT_EXACT:
-+		return true;
-+	case LONG_OPT_ABBREV:
-+		return !disallow_abbrev;
-+	case LONG_OPT_AMBIGUOUS:
-+	case LONG_OPT_UNKNOWN:
-+		return false;
-+	}
-+
-+	BUG("unknown enum long_opt_lookup value '%d'", result);
-+}
-+
-+struct early_scan_state {
-+	struct parse_opt_ctx_t ctx;
-+	const struct option *option;
-+	enum early_scan_flags flags;
-+	early_scan_fn *fn;
-+	void *data;
-+	bool disallow_abbrev;
-+};
-+
-+/*
-+ * Look at argv[*i]. Return 'true' to go on scanning, with *i on the
-+ * last argument consumed. Return 'false' to stop, with *i set to the
-+ * first argument not consumed.
-+ */
-+static bool early_scan_one_option(struct early_scan_state *s,
-+				  int argc, const char **argv, int *i)
-+{
-+	const char *name;
-+	const char *value;
-+	struct parsed_option found;
-+	bool unset;
-+	int pos = *i;
-+	const char *arg = argv[pos];
-+
-+	/*
-+	 * parse_options() always stops parsing options at these,
-+	 * whatever its flags, so nothing after them is an option.
-+	 */
-+	if (!strcmp(arg, "--") || !strcmp(arg, "--end-of-options"))
-+		return false;
-+
-+	/* non-option */
-+	if (*arg != '-' || !arg[1])
-+		return !(s->flags & EARLY_SCAN_STOP_AT_NON_OPTION);
-+
-+	/* short option */
-+	if (!skip_prefix(arg, "--", &name))
-+		return false;
-+
-+	/* unknown, ambiguous or disallowed abbreviation */
-+	if (!find_early_scan_option(&s->ctx, name, s->option,
-+				    s->disallow_abbrev, &found, &value))
-+		return false;
-+
-+	/* A low-level callback may consume any number of arguments. */
-+	if (found.option->ll_callback)
-+		return false;
-+
-+	unset = !!(found.flags & OPT_UNSET);
-+
-+	/* parse_options() rejects these, so don't go further. */
-+	if (value && (unset || (found.option->flags & PARSE_OPT_NOARG)))
-+		return false;
-+
-+	/*
-+	 * Like get_arg(), take the next argument as the value when it is
-+	 * not stuck to the option. When there is no next argument,
-+	 * parse_options() uses the default value of an option with
-+	 * PARSE_OPT_LASTARG_DEFAULT, but errors out for other options.
-+	 */
-+	if (!value && !unset && parse_options_takes_argument(found.option)) {
-+		if (pos + 1 < argc)
-+			value = argv[++*i];
-+		else if (!(found.option->flags & PARSE_OPT_LASTARG_DEFAULT))
-+			return false;
-+	}
-+
-+	if ((found.option->flags & PARSE_OPT_EARLY) &&
-+	    s->fn(found.option, value, unset, pos, s->data)) {
-+		/* the option, and its value if any, have been consumed */
-+		++*i;
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
-+int early_scan_options(int argc, const char **argv,
-+		       const struct option *option,
-+		       enum early_scan_flags flags,
-+		       early_scan_fn *fn, void *data)
-+{
-+	struct early_scan_state s = {
-+		.flags = flags,
-+		.fn = fn,
-+		.data = data,
-+		.disallow_abbrev =
-+			git_env_bool("GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS", 0),
-+	};
-+	struct option *real_option = preprocess_options(&s.ctx, option);
-+	int i;
-+
-+	s.option = real_option ? real_option : option;
-+	parse_options_check(s.option);
-+
-+	for (i = 0; i < argc; i++)
-+		if (!early_scan_one_option(&s, argc, argv, &i))
-+			break;
-+
-+	free_preprocessed_options(real_option);
-+	free(s.ctx.alias_groups);
-+	return i;
-+}
-+
- static int usage_argh(const struct option *opts, FILE *outfile)
- {
- 	const char *s;
-diff --git a/parse-options.h b/parse-options.h
-index 589f8d9008..14e8568989 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -51,6 +51,7 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_NODASH = 1 << 5,
- 	PARSE_OPT_LITERAL_ARGHELP = 1 << 6,
- 	PARSE_OPT_FROM_ALIAS = 1 << 7,
-+	PARSE_OPT_EARLY = 1 << 8,	/* only for early_scan_options() */
- 	PARSE_OPT_NOCOMPLETE = 1 << 9,
- 	PARSE_OPT_COMP_ARG = 1 << 10,
- 	PARSE_OPT_CMDMODE = 1 << 11,
-@@ -502,6 +503,103 @@ static inline void die_for_incompatible_opt2(int opt1, const char *opt1_name,
- 		BUG("option callback expects an argument"); \
- } while(0)
- 
-+/*----- Early scan: scanning argv before the actual option parsing -----*/
-+
-+/*
-+ * Some commands need to look at a few options before they can parse
-+ * their command line for real, for example because the result decides
-+ * whether a repository is needed at all.
-+ *
-+ * Such an early scan has to know which options take their value as a
-+ * separate argument, or it could mistake such a value for an
-+ * option. The functions below allow performing such early scans
-+ * without being fooled by option values.
-+ */
-+
-+/*
-+ * Called by early_scan_options() for each argument matching a
-+ * `struct option` with PARSE_OPT_EARLY set.
-+ *
-+ * - `option` is the matching option, (may point into a temporary
-+ *   copy of the options, so must not be used after the scan,)
-+ * - `value` its value, or NULL if it doesn't take one or if its value
-+ *   is optional and wasn't given, as with PARSE_OPT_OPTARG, or with
-+ *   PARSE_OPT_LASTARG_DEFAULT when the option is the last argument,
-+ * - `unset` is 'true' for the negated form of the option (like
-+ *   for parse_opt_cb()), in which case `value` is always NULL, and
-+ * - `pos` the index of the option in argv.
-+ *
-+ * Returning a non-zero value stops the scan right after the option and
-+ * its value, if any.
-+ */
-+typedef int early_scan_fn(const struct option *option, const char *value,
-+			  bool unset, int pos, void *data);
-+
-+enum early_scan_flags {
-+	EARLY_SCAN_STOP_AT_NON_OPTION = 1 << 0, /* Stop at any non option */
-+};
-+
-+/*
-+ * Scan `argv` for the options described by `option`, calling `fn` for
-+ * each of those that have PARSE_OPT_EARLY set. `argv` is not
-+ * modified.
-+ *
-+ * `fn` may be NULL when no option has PARSE_OPT_EARLY set, which is
-+ * useful to only find out where the scan stops.
-+ *
-+ * The scan always stops at "--" and at "--end-of-options", as
-+ * parse_options() always stops parsing options there too, whatever its
-+ * flags. PARSE_OPT_KEEP_DASHDASH and PARSE_OPT_KEEP_UNKNOWN_OPT only
-+ * decide if the terminator is left in argv, not if it terminates.
-+ *
-+ * Returns the index of the first argument not consumed by the scan,
-+ * which is `argc` when the whole array was scanned.
-+ *
-+ * Long options are looked up the same way as parse_options() does,
-+ * so their negated forms, their unambiguous abbreviations, unless
-+ * GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS is set, and the OPTION_ALIAS
-+ * entries standing for them are all recognized, and their value is
-+ * skipped when they take one.
-+ *
-+ * To never misinterpret an option value as an option though, the scan
-+ * stops at any argument it cannot reliably skip, that is:
-+ *
-+ *  - a short option, or a bundle of them,
-+ *
-+ *  - an unknown option, or an ambiguous or disallowed abbreviation,
-+ *
-+ *  - an option with a low-level callback, as such a callback may
-+ *    consume any number of arguments,
-+ *
-+ *  - an option with a value stuck to it that parse_options() would
-+ *    reject, like a negated option or a PARSE_OPT_NOARG one,
-+ *
-+ *  - an option requiring a value when it is the last argument, which
-+ *    parse_options() would also reject.
-+ *
-+ * In all these cases, the scan can fail to see an option that
-+ * parse_options() would accept, but it doesn't report an option that
-+ * parse_options() would not, so that callers err on the safe side.
-+ *
-+ * This requires the scan to be told about the way the later
-+ * parse_options() call treats its arguments though:
-+ *
-+ *  - when parse_options() is called with PARSE_OPT_STOP_AT_NON_OPTION
-+ *    or with subcommands, callers should pass
-+ *    EARLY_SCAN_STOP_AT_NON_OPTION,
-+ *
-+ *  - when parse_options() is called with PARSE_OPT_KEEP_UNKNOWN_OPT,
-+ *    which disables abbreviations there but not here, callers should
-+ *    not use the scan.
-+ *
-+ * Passing EARLY_SCAN_STOP_AT_NON_OPTION in other cases is safe, and
-+ * useful when the caller rejects non-option arguments itself.
-+ */
-+int early_scan_options(int argc, const char **argv,
-+		       const struct option *option,
-+		       enum early_scan_flags flags,
-+		       early_scan_fn *fn, void *data);
-+
- /*----- incremental advanced APIs -----*/
- 
- struct parse_opt_cmdmode_list;
-diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
-index f181f0c02d..de3dd5751c 100644
---- a/t/helper/test-parse-options.c
-+++ b/t/helper/test-parse-options.c
-@@ -383,3 +383,99 @@ int cmd__parse_subcommand(int argc, const char **argv)
- 
- 	return parse_subcommand__cmd(argc, argv, test_flags);
- }
-+
-+static enum parse_opt_result early_ll_callback(struct parse_opt_ctx_t *ctx UNUSED,
-+					       const struct option *opt UNUSED,
-+					       const char *arg UNUSED,
-+					       int unset UNUSED)
-+{
++	if (!strcmp(option->long_name, "allow-unsafe-features"))
++		state->allow_unsafe_features = !unset;
 +	return 0;
 +}
 +
-+static int show_early_option(const struct option *opt, const char *value,
-+			     bool unset, int pos, void *data)
-+{
-+	int *stop_at_found = data;
-+
-+	printf("found: %s at %d", opt->long_name, pos);
-+	if (unset)
-+		printf(" unset");
-+	if (value)
-+		printf(" value: %s", value);
-+	putchar('\n');
-+	return *stop_at_found;
-+}
-+
-+int cmd__early_scan_options(int argc, const char **argv)
-+{
-+	char *a_string = NULL;
-+	int an_int = 0, a_bool = 0, a_short = 0;
-+
-+	const struct option option[] = {
-+		OPT_GROUP("early scan test options"),
-+		OPT_BOOL_F(0, "wanted", &a_bool,
-+			   "wanted option taking no value",
-+			   PARSE_OPT_EARLY),
-+		OPT_STRING_F(0, "wanted-value", &a_string, "str",
-+			     "wanted option taking a value",
-+			     PARSE_OPT_EARLY),
-+		OPT_STRING(0, "skipped-value", &a_string, "str",
-+			   "option whose value has to be skipped"),
-+		OPT_ALIAS(0, "alias-of-skipped", "skipped-value"),
-+		OPT_INTEGER(0, "number", &an_int,
-+			    "option taking an integer value"),
-+		OPT_STRING_F(0, "optarg", &a_string, "str",
-+			     "option with an optional value",
-+			     PARSE_OPT_OPTARG),
-+		OPT_STRING_F(0, "lastarg", &a_string, "str",
-+			     "option with a last argument default",
-+			     PARSE_OPT_LASTARG_DEFAULT),
-+		OPT_STRING_F(0, "early-optarg", &a_string, "str",
-+			     "early option with an optional value",
-+			     PARSE_OPT_EARLY | PARSE_OPT_OPTARG),
-+		OPT_STRING_F(0, "early-lastarg", &a_string, "str",
-+			     "early option with a last argument default",
-+			     PARSE_OPT_EARLY | PARSE_OPT_LASTARG_DEFAULT),
-+		OPT_BOOL_F(0, "no-early", &a_bool,
-+			   "early option whose name starts with 'no-'",
-+			   PARSE_OPT_EARLY),
-+		OPT_BOOL('s', NULL, &a_short, "short only option"),
-+		{
-+			.type = OPTION_LOWLEVEL_CALLBACK,
-+			.long_name = "low-level",
-+			.help = "option with a low-level callback",
-+			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-+			.ll_callback = early_ll_callback,
-+		},
-+		{
-+			.type = OPTION_CALLBACK,
-+			.long_name = "ll-value",
-+			.argh = "str",
-+			.help = "option with a value and a low-level callback",
-+			.flags = PARSE_OPT_NONEG,
-+			.ll_callback = early_ll_callback,
-+		},
-+		OPT_END()
-+	};
-+
-+	enum early_scan_flags flags = 0;
-+	int stop_at_found = 0;
-+	int stopped;
-+
-+	while (argc > 1 && *argv[1] == '-') {
-+		if (!strcmp(argv[1], "--stop-at-non-option"))
-+			flags |= EARLY_SCAN_STOP_AT_NON_OPTION;
-+		else if (!strcmp(argv[1], "--stop-at-found"))
-+			stop_at_found = 1;
-+		else
-+			break;
-+		argc--;
-+		argv++;
-+	}
-+
-+	stopped = early_scan_options(argc - 1, argv + 1, option, flags,
-+				     show_early_option, &stop_at_found);
-+	printf("stopped at: %d of %d\n", stopped, argc - 1);
-+
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index b71a22b43b..5d2f5877d9 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -50,6 +50,7 @@ static struct test_cmd cmds[] = {
- 	{ "pack-mtimes", cmd__pack_mtimes },
- 	{ "parse-options", cmd__parse_options },
- 	{ "parse-options-flags", cmd__parse_options_flags },
-+	{ "early-scan-options", cmd__early_scan_options },
- 	{ "parse-pathspec-file", cmd__parse_pathspec_file },
- 	{ "parse-subcommand", cmd__parse_subcommand },
- 	{ "partial-clone", cmd__partial_clone },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index f2885b33d5..071306d52d 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -43,6 +43,7 @@ int cmd__pack_deltas(int argc, const char **argv);
- int cmd__pack_mtimes(int argc, const char **argv);
- int cmd__parse_options(int argc, const char **argv);
- int cmd__parse_options_flags(int argc, const char **argv);
-+int cmd__early_scan_options(int argc, const char **argv);
- int cmd__parse_pathspec_file(int argc, const char** argv);
- int cmd__parse_subcommand(int argc, const char **argv);
- int cmd__partial_clone(int argc, const char **argv);
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 449fff4d34..c44b12e46d 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -845,4 +845,325 @@ test_expect_success 'u16 limits range' '
- 	test_grep "value 65536 for option .u16. not in range \[0,65535\]" err
+ int cmd_fast_import(int argc,
+ 		    const char **argv,
+ 		    const char *prefix,
+@@ -4184,7 +4196,7 @@ int cmd_fast_import(int argc,
+ 		OPT_HIDDEN_GROUP(N_("Advanced")),
+ 		OPT_BOOL_F(0, "allow-unsafe-features", &state.allow_unsafe_features,
+ 			   N_("allow unsafe mark commands from the stream"),
+-			   PARSE_OPT_HIDDEN | PARSE_OPT_NONEG),
++			   PARSE_OPT_HIDDEN | PARSE_OPT_NONEG | PARSE_OPT_EARLY),
+ 		OPT_CALLBACK_F(0, "export-pack-edges", &state, N_("file"),
+ 			       N_("dump edge commits to <file>"),
+ 			       PARSE_OPT_HIDDEN | PARSE_OPT_NONEG,
+@@ -4218,23 +4230,19 @@ int cmd_fast_import(int argc,
+ 	 * line to override stream data). But we must do an early parse of any
+ 	 * command-line options that impact how we interpret the feature lines.
+ 	 *
+-	 * NEEDSWORK: This scan only matches the exact "--allow-unsafe-features"
+-	 * spelling and stops at the first argument that doesn't start with a
+-	 * dash. As parse_options() below also accepts unambiguous abbreviations
+-	 * and values separated by a space from their option, the two disagree
+-	 * for command lines like "--allow-unsafe" or "--depth 5
+-	 * --allow-unsafe-features": parse_options() accepts the option, but
+-	 * this scan doesn't see it, so unsafe features from the stream are
+-	 * still refused. This errs on the safe side, but should be fixed by
+-	 * teaching this scan about the options that take a value.
++	 * The scan uses the same options as parse_options() below, so the
++	 * two agree on which options take a value and on abbreviations. In
++	 * case of doubt, the scan stops early, so unsafe features are then
++	 * refused rather than wrongly allowed.
++	 *
++	 * EARLY_SCAN_STOP_AT_NON_OPTION is passed even though parse_options()
++	 * is not called with PARSE_OPT_STOP_AT_NON_OPTION, as any non-option
++	 * argument makes parse_argv() reject the command line, and the stream
++	 * should not have been processed with unsafe features by then.
+ 	 */
+-	for (int i = 1; i < argc; i++) {
+-		const char *arg = argv[i];
+-		if (*arg != '-' || !strcmp(arg, "--"))
+-			break;
+-		if (!strcmp(arg, "--allow-unsafe-features"))
+-			state.allow_unsafe_features = 1;
+-	}
++	early_scan_options(argc - 1, argv + 1, fast_import_options,
++			   EARLY_SCAN_STOP_AT_NON_OPTION,
++			   option_parse_early_allow_unsafe, &state);
+ 
+ 	rc_free = mem_pool_alloc(&fi_mem_pool, cmd_save * sizeof(*rc_free));
+ 	for (unsigned int i = 0; i < (cmd_save - 1); i++)
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index d9de2ef0d8..9a5964c7ad 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2344,6 +2344,42 @@ test_expect_success 'R: export-marks options can be overridden by commandline op
+ 	test_path_is_missing feature-sub
  '
  
-+test_expect_success 'early_scan_options() finds a wanted option' '
-+	test-tool early-scan-options --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 0
-+	stopped at: 1 of 1
-+	EOF
-+	test_cmp expect actual
++test_expect_success 'R: --allow-unsafe-features found after a value' '
++	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
++	git fast-import --allow-unsafe-features <input &&
++	git fast-import --depth=5 --allow-unsafe-features <input &&
++	git fast-import --depth 5 --allow-unsafe-features <input &&
++	git fast-import --date-format raw --allow-unsafe-features <input
 +'
 +
-+test_expect_success 'early_scan_options() reads a stuck or separate value' '
-+	test-tool early-scan-options --wanted-value=one >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted-value at 0 value: one
-+	stopped at: 1 of 1
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --wanted-value two >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted-value at 0 value: two
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() skips the value of other options' '
-+	test-tool early-scan-options --skipped-value --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --skipped-value one --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 2
-+	stopped at: 3 of 3
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --number --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() stops at a last option missing its value' '
-+	test-tool early-scan-options --wanted-value >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 1
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --wanted --skipped-value >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 0
-+	stopped at: 1 of 2
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() always stops at "--"' '
-+	test-tool early-scan-options -- --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --stop-at-non-option -- --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --skipped-value -- --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 2
-+	stopped at: 3 of 3
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() always stops at "--end-of-options"' '
-+	test-tool early-scan-options --end-of-options --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --stop-at-non-option \
-+		--end-of-options --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() can stop at a non-option' '
-+	test-tool early-scan-options --stop-at-non-option \
-+		arg --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --stop-at-non-option \
-+		--skipped-value arg --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 2
-+	stopped at: 3 of 3
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() matches unambiguous abbreviations' '
++test_expect_success 'R: --allow-unsafe-features can be abbreviated' '
++	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
 +	GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
-+	test-tool early-scan-options --wanted-v=x >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted-value at 0 value: x
-+	stopped at: 1 of 1
-+	EOF
-+	test_cmp expect actual &&
-+	GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
-+	test-tool early-scan-options --wanted-v x --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted-value at 0 value: x
-+	found: wanted at 2
-+	stopped at: 3 of 3
-+	EOF
-+	test_cmp expect actual
++	git fast-import --allow-unsafe <input
 +'
 +
-+test_expect_success 'early_scan_options() skips the value of an abbreviation' '
-+	GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
-+	test-tool early-scan-options --skipped --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual
++test_expect_success 'R: disallowed abbreviation of --allow-unsafe-features' '
++	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
++	test_must_fail env GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true \
++		git fast-import --allow-unsafe <input 2>err &&
++	test_grep "forbidden in input without --allow-unsafe-features" err
 +'
 +
-+test_expect_success 'early_scan_options() stops at an ambiguous abbreviation' '
-+	GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
-+	test-tool early-scan-options --want --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual
++test_expect_success 'R: --allow-unsafe-features as the value of an abbreviation' '
++	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
++	test_must_fail env GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
++		git fast-import --quiet --export-pack \
++		--allow-unsafe-features <input 2>err &&
++	test_grep "forbidden in input without --allow-unsafe-features" err
 +'
 +
-+test_expect_success 'early_scan_options() stops at disallowed abbreviations' '
-+	GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true \
-+	test-tool early-scan-options --wanted-v=x >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 1
-+	EOF
-+	test_cmp expect actual &&
-+	GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true \
-+	test-tool early-scan-options --skipped --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual
++test_expect_success 'R: --allow-unsafe-features after a non-option' '
++	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
++	test_must_fail git fast-import --depth 5 extra \
++		--allow-unsafe-features <input 2>err &&
++	test_grep "forbidden in input without --allow-unsafe-features" err
 +'
 +
-+test_expect_success 'early_scan_options() stops at an unknown option' '
-+	test-tool early-scan-options --bogus --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() resolves aliases' '
-+	test-tool early-scan-options --alias-of-skipped --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --alias-of-skipped x --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 2
-+	stopped at: 3 of 3
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() does not skip an optional value' '
-+	test-tool early-scan-options --optarg --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 1
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --optarg=5 --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 1
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() skips a last argument default value' '
-+	test-tool early-scan-options --lastarg --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --wanted --lastarg >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 0
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() matches a stuck optional value' '
-+	test-tool early-scan-options --early-optarg=one >actual &&
-+	cat >expect <<-\EOF &&
-+	found: early-optarg at 0 value: one
-+	stopped at: 1 of 1
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --early-lastarg=two >actual &&
-+	cat >expect <<-\EOF &&
-+	found: early-lastarg at 0 value: two
-+	stopped at: 1 of 1
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() does not take a separate optional value' '
-+	test-tool early-scan-options --early-optarg --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: early-optarg at 0
-+	found: wanted at 1
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() takes a last argument default value' '
-+	test-tool early-scan-options --early-lastarg --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: early-lastarg at 0 value: --wanted
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --early-lastarg >actual &&
-+	cat >expect <<-\EOF &&
-+	found: early-lastarg at 0
-+	stopped at: 1 of 1
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() stops at short options' '
-+	test-tool early-scan-options -s --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() stops at low-level callbacks' '
-+	test-tool early-scan-options --low-level --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --ll-value x --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 3
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() stops after what the callback consumed' '
-+	test-tool early-scan-options --stop-at-found --wanted --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 0
-+	stopped at: 1 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --stop-at-found \
-+		--wanted-value x --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted-value at 0 value: x
-+	stopped at: 2 of 3
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() reports negated options' '
-+	test-tool early-scan-options --no-wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted at 0 unset
-+	stopped at: 1 of 1
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --early >actual &&
-+	cat >expect <<-\EOF &&
-+	found: no-early at 0 unset
-+	stopped at: 1 of 1
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --no-early >actual &&
-+	cat >expect <<-\EOF &&
-+	found: no-early at 0
-+	stopped at: 1 of 1
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'early_scan_options() does not take a value for negated options' '
-+	test-tool early-scan-options --no-wanted-value --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	found: wanted-value at 0 unset
-+	found: wanted at 1
-+	stopped at: 2 of 2
-+	EOF
-+	test_cmp expect actual &&
-+	test-tool early-scan-options --no-wanted-value=x --wanted >actual &&
-+	cat >expect <<-\EOF &&
-+	stopped at: 0 of 2
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
+ test_expect_success 'R: catch typo in marks file name' '
+ 	test_must_fail git fast-import --import-marks=nonexistent.marks </dev/null &&
+ 	echo "feature import-marks=nonexistent.marks" |
 -- 
 2.56.0.4.gceeb21e89e
 
