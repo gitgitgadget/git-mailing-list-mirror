@@ -1,99 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793587633;
-	b=f+VY6YfTjwKX4Zcv/y2JmHgvyBaV/p7f1T1vomxQdjb4ww4VRFt8L5wVIxaiE0SIJTDe
-	 q/MepR1MLfhJG56CT5QtWrcm98gpiZZq7NRmaReUH4XruEObdEiqf7GwCt45psPYyLuMZ
-	 UGJrz3Kxn/E021Slfb6g8068hGWZs9okVyVxlkPDugAc7fAuxj+G9SXTy4KG6n9xLLTlx
-	 x9HHBS18LNwY076m+/Cl9vAB0rdtPj+ZBtsNvE7GZUVVAXqiYm6EYwSW0DBK/4blso7A6
-	 JrBe96G9aP9ngwYXZuy0Tc7QJnyb7taPtlUSAVuQSmqy7FoexPqU6M95lFI2TCnpWSQ==
+	t=1793592484;
+	b=Yhwmauio4zlbvK9uCo1jJvVXQQ2vija+ZT/VPUmJ3y1CGYZW8ywVpQi1D8hmyZWVtW2s
+	 JvHI6hvodtnoBTcyODdcJRE84EJDd/VnP9fqPTA+AMhBBq4JtGX8KQcPJ8xWuzfPLh2Y8
+	 L6j7qn0FBGsJ4+e+3oXEOG/7fAFlt/npYTGHDdsPOShg/jgOtNev/dsPlHgcsUdiN1cK3
+	 tVlZweihJGpE027YWUy25QR9L0rJks4AcD40jc4A7u8CaDAXGD+VpFWgc7J9ln8vbZ4JA
+	 IWpk1rKJfnu7/a/DFC0jukBK1/ul7CTzi2qllquBv5sT/KngCXoylY56aX3z5Rn2lWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793587633;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=S6iorwpD11vZyN56HSHDhl+z9mJ1tBBdCj/8O5mmVHw=;
-	b=wMEWG7zqbrfDQHmcdi6jo+ZsS70DIBK2PJtdnI4H2G08TmYt2nR77Oj4cjdwW29rVAte
-	 6zaPLYJSkfqlfdvnpKEs0C883TjB03HJ8Arn3MuVdWe8/EJCkfrPLQhrWR1rgRVwfDOh4
-	 dx+FX1rmm5zVSE5scCw0RFMXfU9vUwQ88SxVTXK0IIrcoc8O7evm9aRRMeL3WZrmYgqyq
-	 dT2BnUGHJQ+zJu9qDCDjhiO8cwaHqE6XkOfQPdfopR3HwDT7bH2ZfdM7+cKxWUFVslqwG
-	 17flD5QmfO4ja+7EmUbQqzbFARNeuRkxLlj9GFm4ph6sX9jsj7LYzhVkxleJ1POKOAA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793592484;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=4I1CF0hlZUPuJJ+WMFmjUFgZ74ZXDkhwyCICDgq2t2U=;
+	b=rloiqUwZmyADNorVuD1IA6cJhgECNJ2zHFsyWynHuoLWedwxgAJezmVzmd+Idayy2Wac
+	 0aLfIQ/VN5wPisf4H6NXwXxa7YWeZkdlI4fgq1XERXmcSAR7FFk+1rzmGDx2ejrMJayeG
+	 T3u86xDlgJZiJK84n0bxk4OjrLeEW3LPh6pK/6uSsqvsC0JTBpWq3G57A/+rCQAtM3dUy
+	 MInC1jq7imLp68Ql0zYUh3uju3ux5zLJpprch7ATySvjd2KzJ1qzqyXS3zZ85hES1mU6C
+	 9jZaa6atT9gJgCy7Qwk1+9zu3Ymu218Qy/YWP2wAHes8CGnG8gJ1CYyNldyfE7ci7PA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MLSy3Ckf;
-	arc=none smtp.remote-ip=209.85.221.43
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b="KP0/7q8c";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p13d7ecB;
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C357606A324
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 02:47:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3C357606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64931606A324
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 04:08:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 64931606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MLSy3Ckf
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48e3b22e971so1177141f8f.0
-        for <git@vger.kernel.org>; Sun, 01 Nov 2026 18:47:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793587631; x=1794192431; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=S6iorwpD11vZyN56HSHDhl+z9mJ1tBBdCj/8O5mmVHw=;
-        b=MLSy3CkfsykFgXw38eLfo0ZOj2uekWF9PvZfnktNQ/TpJz9iipjXQWOdiet+9jYhJj
-         7XoXQY/UNt7x1I52hKlGjX+vdh/g0A75RTIXN0X31nJTfZAje+8nDOdlI1WauPfbrnmt
-         vUST7eFFwU+UUlUc2piayvYTCXFgZxpWRLHdo4pFAPkSIFMYSStIzCBg3QX/vV9I4ASy
-         YM8NNXiHxKTymXr+h5m29ioL6cZDOfRdB1NDt6tUbQlKOw5wHfhTuu1Ld9ApWpSfiOli
-         6dPai4QHNybXEgOXCFirYsgj526qFmM7F5guUrpxJ1mBAPHUslnYA7r7hMYGGt2UHYQD
-         BQaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793587631; x=1794192431;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=S6iorwpD11vZyN56HSHDhl+z9mJ1tBBdCj/8O5mmVHw=;
-        b=ghf4s0VvLeXpJxO0UjcAARtUO0ImwXfgsGbZwDRH3QTZVIQlG+bwWghBM38VGaCHW6
-         EKy0EtHvFPVlx+SIjQRmnNbAQO0r5YvtuA/meePplG+f0uSZpzvkNNBbO1VBhogq+bJd
-         zeebfcYkW34rQRtIIKc1JmwB0c7QzIs9V9kuzn8rjlFX7VhZ6x8mZTYnFYh4IhbJnNUl
-         BJf8hCg/NUY9u4yklkJJ77D27DKt2VAaWRIVHnDWgod1/qD4gRql5WjCz4gxlYqVxV6w
-         NM5wj0KwCgLAQnQmEWGBWduwO/AI/FgzB4WBt8qfH/U+U5fQZ2bVAly9qBVyChXKGH9V
-         QjEg==
-X-Forwarded-Encrypted: i=1; AKwUvBztdz+pYv+Uw5pWT5hh6hP+XDUKZpKtONJh0BQer/TCbwekuSQ2EVMSaZzSDEhELkeuRsU=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLIQ14EqbHO3PsshRmDGmR2WwiNqhJ60ivKEOIWEumOzFEY2dzZ
-	O4TZL1wyyks+n8n5gpf6sfKEgYb1q3/x/SoJGS8wHHfAR3bnu6f+aJ/9
-X-Gm-Gg: AYBFou08+YZGXnFlYqzxqUCjCdsET5Pm5Bbg8CgaDvh3uC2CRDzm8iqIHdKz/oyqYjD
-	YOm68C9oX3t5GsdqtGl+qWTiQQpDjw6pTk4nrguZQVJZSurX6dMQSUm47uMPCFjjXZZ8lbrC7Zn
-	QZykmRo+F9+eSplDril+z0SRrUCEVTZWxnL6DWtSh4BhaOVU/I6OGm8UPerAQ+GV6pUtvQbF9/h
-	60C2RUXR336JSR8bH/1q6EPGp7X4UbFpPqOiXs0QmywFXlq3FVcemhfb9YNt3DRhggIJhh5LNKB
-	jJvxjTI4KRRhnUpPd1W/fr44yab7hprs+92lD1yb/CUT7VA0on6DmPAtFphIl/aDkt405hl7a1g
-	VR6EBpcLdf9HArhU1E13hm7lUYZOhKFSGe97By7A6GjdtT5VUFZSTrfvUSmAuOs7joR87jgm84T
-	G2ZOhW8QrIuvzpnRy5zEw5ef7MYMrtBzWiS5x6MDqyReCeNEVBhj7D2yra6OvUMo2Hm3nadQHvW
-	Os1TUiRiqvJyuH6y/qxuHuvnbD9HfjXJOaNjLJQ4s61Kqtckdy/iCkj2MF/wSEDGAAargacJTo3
-	Khc4kU65IiDBtvSD/8UO+/kDIzfoLELqML9q9KKn7GtVegYdfEUb06yxAxisgkxVezqQeDb5mw=
-	=
-X-Received: by 2002:a05:600c:638f:b0:4a3:59c2:b41e with SMTP id 5b1f17b1804b1-4ac150b304cmr202640605e9.4.1793587631463;
-        Sun, 01 Nov 2026 18:47:11 -0800 (PST)
-Received: from GODS-GIFT.localdomain ([197.211.58.221])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4aa80f04785sm312585265e9.4.2026.11.01.18.47.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 18:47:11 -0800 (PST)
-From: Cynthia Uche <herroyalpriestess@gmail.com>
-To: shashu8660@gmail.com
-Cc: christian.couder@gmail.com,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	kaartic.sivaraam@gmail.com,
-	gitgitgadget@gmail.com,
-	siddharthasthana31@gmail.com,
-	usmanakinyemi202@gmail.com
-Subject: Re: [PATCH v2] test-chmtime: use parse_options() to parse command-line flags
-Date: Mon,  2 Nov 2026 03:46:23 +0100
-Message-ID: <20261102024623.24897-1-herroyalpriestess@gmail.com>
-X-Mailer: git-send-email 2.56.GIT
-In-Reply-To: <pull.2280.v2.git.1793350341743.gitgitgadget@gmail.com>
-References: <pull.2280.v2.git.1793350341743.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=KP0/7q8c;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p13d7ecB
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 721587A0190
+	for <git@vger.kernel.org>; Sun,  1 Nov 2026 23:08:02 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Sun, 01 Nov 2026 23:08:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793592482; x=1793678882; bh=4I1CF0hlZU
+	PuJJ+WMFmjUFgZ74ZXDkhwyCICDgq2t2U=; b=KP0/7q8cPF0sBY7Dml2DmtmlyK
+	DxpwH1N10NutKunTZyZphPzKC1q2Ccp/KZmkWz+AyELEH3ZakfP57Ooi5O45sNqW
+	c5Gx8Mun+HGd1XT58JET0C+q6H/ccjwEe+8ZD86m8USbo8DPdbTZoMtdmftIXgJ5
+	xQ0SZ9T+R3ElqEjTMqJKhGswfBO57CwMERegUKt2zBtC0zmy40C26rbLE6re0fWa
+	h0iVwUJFNmI1xphuB0C8pObk6XaHuxLtAyaG9n9UBukr6rx44v1w0qlMnn/nFC4e
+	Euvd1Dch3zpKIGt6a1RwwxYSruxNK+SUgMUDntYFdQ4UF+ujp9PuP9nkfJ9g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1793592482; x=1793678882; bh=4I1CF0hlZUPuJJ+WMFmjUFgZ74ZXDkhwyCI
+	CDgq2t2U=; b=p13d7ecBt0UmkDYC4LNTPBinorZn/H5PHDn5k3HJY/IQzkgk1rE
+	W8NeVlTrLtp5nzDx2P8oVM8QQlQSoo+YcgiwWJZK0Ga3t6NlvMlxKjUrlLvDxNkX
+	lMMJgH13QMqM6YKq0PyGYdRAgij9K6v7sGK2gK1JNW8wypart33BY9EHDETIa1+t
+	n5gSEXXBCFFCAISlSQnLBFh9drmXZBze/cWQzNFAD5XjAKwk2xkBGq+gesNDsH6X
+	QX26Z+CPcbxLlkHdmDDwxsRNSrGSv9PmN4mUhpZZVhsAo+wRgTSJq4IWHMa2N6ok
+	cNmzrxnSDhLxxWRv4rSpBeZhXcbByoRdT6A==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793592482; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:LzKSzwoqCkffZ4nTY2DFCgKW/9JW/wj0bKpoghcGGtt4PPI
+	YXaj8/iTTWkPWmkzUkDp4s8pQ3EB2kdu5CGPrbzuZgZjUJPvVDifixvqzA1Zj30l
+	7jgPykwBGGsw7C0gtezFas6+HhY29v7xmG7ICcIInr5kUAy+DDwEKc2C6Cqicf1A
+	1pRtvVbB/Rv5iun6oLNOdSpB0xXKUa/4rfQ+lhX7k06HIkhafdYIgS6S3/9h8f8u
+	KlXniQN65wiBplXjg3hpeYWMcAmz0SSGeEeMZAtkxZzU9gy/9pgiNhWcZkEipopm
+	us17Jx/Xa+1GU40iQIQbipORR+2HgFbqF4SsiGA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:b2/TMJaImT/S9OrAfmClBrh8kObOCkffdQxZ9HTkXLw=:8PGHvXG/Q6E48kyZP2SKtugjsTEiPN4zLQEgifzu9Dw=;
+X-ME-Sender: <xms:oQzoat9b2d_JsMItHPk6GUMHphghi0pqbTSExFxK1Fw95fzM0e5eaA>
+    <xme:oQzoapJvfF3vfdcwiuMksvEjR4UhKNB8QdbRtM5DYvZl9divwaVSp8lGXcz0MGIyr
+    E9q_B49KPOHLCaaxenmbHsm6SgJbUkAXbz8VPOPZFGbN88QI_lYwQ>
+X-ME-Received: <xmr:oQzoaoa1TkUjedKMAyTXtVCDCFW5RwlOP0DWAiorXdVrlOz9-_DPIuOOSC81HJj4e3U_0yp53jRa2-kwgiPKqO3hTxXWNM9z0zdK>
+X-ME-Proxy-Cause: dmFkZTEjVoxbfsi39jDaUuDfw3wIkS19s1La/j7F741dJBML+ecWthUTlOsKX8fmvQdJ6X
+    n3lFLeaW1Yz8iXHzYutAlRxN/JV9xX389T/o0QG3rI8vt2suE+oIyOjCV9BWKbjEI3VbHf
+    91cP2pEgp0maFDbF1m+OWYHOR9Nw+7GZrH0D+lOJM7GRdt9R5IcmKVECyTYhFnqsT13Whr
+    pkHw/1E/2o5KA/6paI7rHaspeGGTTEPWPMXt724SaGanqj8TXVnBiTeDTFp+L5TDe0CM5M
+    GeJ8CrC9gb+7Sax/z3xpMmvO4DjBpbJXQDKk0tnS9tVvyxt0tlzC5kdT3Syq15ROfbUvVB
+    z7EZxDnU93JHYwAIcqJ9RkTkfQgtPz9etxi9f5c0oZ28/AOy0T95e5baEE2iPtnKQ5EVSZ
+    +Jc1Nve+RS8e/N3pNRp/MLK715IH+FYvSGzvWyt9jPJfVfHYldMlRB+hUIlu9PU43JHxpN
+    wda7PSwdBLrYK+/tjUM0P+e9r8Pu60r7GSaqoPdwqAX08RBPvANzYrDGe4JEomLwpnawS4
+    UMvmzNF+Dqh5TFsuzPwYvnJj3KvcwDr0Y5kcqPj31Y6jdw1KvlW40+me8tuoOA5abMu5Db
+    xp4/3ncOu7gx/3kKD9O39VVj/AdKOLRwq45X7l6DuMAigFFHsU0k6PP2vPCg
+X-ME-Proxy: <xmx:oQzoarIx7K0LTKyq0Hm-mNsTv-7F2RV2BJS715Gp_zbekU04Z8i4Jg>
+    <xmx:oQzoamCQsNh776jDPUCPlmm7gvq6YgJKKUt6aDiRKGdZn7y_8ezgPA>
+    <xmx:oQzoago69Ude2tbJYrto6xL5qe6Hm74IwUXKCtG_Qd20QCxgy9fg5g>
+    <xmx:oQzoahi8mZBkHgKRguICtx2ZZ12-TgyDVWn6difgeRPX0b6KF9XoIw>
+    <xmx:ogzoar27npYRl_f2vjiLSbCK-0SpJL5mlIynJUMYzfUCNgaCOXShAg1y>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 1 Nov 2026 23:08:01 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH] CodingGuidelines: update the required Perl version
+In-Reply-To: <20261101185846.24208-1-taahol@utu.fi> (Tuomas Ahola's message of
+	"Sun, 1 Nov 2026 20:58:46 +0200")
+References: <20261101185846.24208-1-taahol@utu.fi>
+Date: Sun, 01 Nov 2026 20:08:00 -0800
+Message-ID: <xmqqjymvooyn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,40 +123,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi Shashank,
+Tuomas Ahola <taahol@utu.fi> writes:
 
-I built v2 (43c96de13e) with NO_RUST=1 and compared it with a build
-of the base commit (7e34d8174d). t0082 passes 3 of 3. Thanks for
-taking Junio's three suggestions from v1.
+> 702d8c1f3b (Require Perl 5.26.0, 2024-10-23) bumped Git's Perl version
+> requirement.  Update CodingGuidelines accordingly.
+>
+> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+> ---
+>  Documentation/CodingGuidelines | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index c06f5d3071..9b17ab34db 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -703,7 +703,7 @@ For Perl programs:
+>  
+>   - Most of the C guidelines above apply.
+>  
+> - - We try to support Perl 5.8.1 and later ("use Perl 5.008001").
+> + - We try to support Perl 5.26.0 and later ("use Perl 5.026000").
 
-> instead. Pass PARSE_OPT_KEEP_UNKNOWN_OPT so that negative relative time
-> offsets (such as '-86400') are not rejected as unknown short options
-> and remain in argv for timespec_arg() to parse.
+Is this in line with what 702d8c1f3b did?  Shouldn't we say
 
-No test covers this. With that argument set to 0, t0082 still passed
-3 of 3, while "test-tool chmtime --get -86400 file" failed with
-"unknown switch `8'" (exit 129). Could you add a test like this one?
-It passes with v2 and fails without the flag:
+> + - We try to support Perl 5.26.0 and later ("require v5.26").
 
-  test_expect_success 'negative offset is not taken as an option' '
-  	test-tool chmtime =1000000000 file &&
-  	test-tool chmtime --get -86400 file >actual &&
-  	echo 999913600 >expect &&
-  	test_cmp expect actual
-  '
+"require v5.26" instead?
 
-Compared with the base build, I also saw three changes that the
-commit message does not mention:
+commit 702d8c1f3b5377a64670b0f22add157b0bfc33dd
+Author: brian m. carlson <sandals@crustytoothpaste.net>
+Date:   Wed Oct 23 00:45:59 2024 +0000
 
-  - "+0 --get f": base tried to stat "--get"; v2 accepts the flag
-    after the timespec and prints the mtime.
-  - "-g -v f": base tried to stat "-v" [and still printed the mtime]
-    and exited 0; v2 dies (exit 128).
-  - usage errors exit with 129 instead of 1.
+    Require Perl 5.26.0
+...    
+    This change was made with the following one-liner, which intentionally
+    excludes modifying the vendored modules we include to avoid conflicts:
+    
+        git grep -l 'use 5.008001' |
+	grep -v 'LoadCPAN/' |
+	xargs perl -pi -e 's/use 5.008001/require v5.26/'
+    
+    Use require instead of use to avoid changing the behavior as the latter
+    enables features and the former does not.
+    
+    Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+    Signed-off-by: Taylor Blau <me@ttaylorr.com>
 
-Could you mention them in the commit message, or let me know if any
-of them is not intended?
-
-Cynthia
+diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
+index 636add6968..3d061bc0b7 100644
+--- a/contrib/diff-highlight/DiffHighlight.pm
++++ b/contrib/diff-highlight/DiffHighlight.pm
+@@ -1,6 +1,6 @@
+ package DiffHighlight;
+ 
+-use 5.008001;
++require v5.26;
+ use warnings FATAL => 'all';
+ use strict;
