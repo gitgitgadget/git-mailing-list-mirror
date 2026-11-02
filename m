@@ -1,99 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793631218;
-	b=HMNg7TS+4cq6cY+YU7CzaruQnekDg4ghPZG6B5RQB8y1gBwJPkMomKbwLhKr1Rhmpbyx
-	 PKhDQp6Fl14FFGBxZ+917Kz0/TKp7fMYiUgVDBh1ZfwskmACASZ9ZTZo6F230GsaUcKud
-	 ar11N1VkUTiV+t7eNSBLrwkRlR7P6KsboeZeVKN/VrRzBnTxqn6byl+6IFFH08tqHvT21
-	 hmJ5haDHH0k1LdTqVGF56oyorOSETYymPI5Yg9YT8P7RBChYeli2g+gDtGyykuEF5mi6v
-	 zBYGtWK/AYGLKLjqgXOCq0J5Zag9e9ydj0s49qrP3r5m71WBzoY1qewdKTn2d9mty7w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793631218;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.170
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793632438;
+	b=opUKSoXU/+QzXYShZKDzqhqJT1hiDe9OzH8HLdXvLD/KDAFAOVx74cDvBYEjFP42y6Ya
+	 2yWC42Feu1PrkMVuwq4VBTez/NaZI6QvKGZ7BQ8UD91t4yteNVFKUBJa8YfAWnl+dziky
+	 L7RJy0ehGPgidMA3/pwqakbEsYKhnbzFvo4EnHA55b9mqBB6wiX33jXK8MuFPzXHHA1tE
+	 nttOm3R+6uod2uY7+j9SEqyMy4nEqP3+62apH/jnr4YZ6MPmUbdLjUDnaRMacY/+yh8v6
+	 gpBE5egNiXZYgpq0Zo99BpaJTj1R7chQ0nOpk9XAYmUdYSuTcDru+8/WW5n4TTrjHHw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793632438;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=q/9YJvFJ+nbXAGYeW9C7nzPx050uKYbBSpkeDQgzIT0=;
-	b=AV8E+9t6oSnemh7xnCuchOPFE2u0IWVr/F4xtU7hKMkZGaNFOV9mIov7ylOlirYQl1kB
-	 uyVlqRjmVmFw3Scy/5NgvoGKbs2N80ek9SdlX60dz+J5vIYptvStW1N6TTliF560jNe/E
-	 Ji7CiXUttJA8VkI7SFDROf00ZqCf70uEtSZrx7xszOSjIdr3EnOtW+omrVy3y1b1uhzFR
-	 P2g5aZ6lwb2J1Cf2pKfvuPpoKa8Q8Un0rfhFbbO4Ufrixb2PuI6Qa83TuBwCR1Q/JRFBk
-	 UEmhCN6tAEnGUAPu8Ei7H5oa1DzM3gycg4p3NsFoHDoRasc6LDZa7Qrn4Ntr2Z5Fbiw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=cU74aHM7jlNfSAz77KMkGZe5zvTTb6/VQO7v88VA7fM=;
+	b=iZaI/vdGS7e9SyPMKqM1iqU64tSu5WrIvO8TKX04ukdS82jm438TnoTQSvfD2Yy+DrA/
+	 JZaA8gx4Kd4e34pIiHvP4ua9ymfcRTRAOGfquYNr1CKyEdxYc/Yap+I8PRmpEI5tqbXdt
+	 gtfKdFwEH1v0E2zWKgqTLkreEoCHhFkUGC8gYyGunvjasbw4VwcKyj4fWEME/y3pcmYQL
+	 1bm7Wy5l+TFYTFEyBR7Vv+7A10geZFAhey2sKiMG3MovHD/zpRslinSwqcXH/fjDhV7Ea
+	 hTM/Yf+8Uk4vOpZBdgnS5xSipscOni3ZflPLAnHx15QYL1xvMT+qUqb9xJN9hqyA+aw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dx+Jg8W+;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uuliPGCU;
+	arc=none smtp.remote-ip=209.85.222.170
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35499606D821
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 14:53:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 35499606D821
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0928F60B0167
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 15:13:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0928F60B0167
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dx+Jg8W+
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6b1afcd2d23so4349121a12.1
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 06:53:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793631216; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Gh7RCDJQHn5HYKuDGU1TKnW/V45nT/isRXw+RQx2zBW/+B4Be+zIi4UHju5Wa5DbMU
-         x1q7Bd/Q/gpsnOyC4fdox/eI2Y4eBzC0Aq40SITpSsVLMZMsrjteyTcfft6nKtY9D9BU
-         9eaSL9ychjjc8fAxKo16LNUHgRsn8e20Hoqnp3x7ik3gG3ph5tGHz1ngJ93HQckzdnzZ
-         Y/is/91SIDHmLTBDnkmQmisGrc1OFwaFy4ewQaGi7p18CsQPnL9OgDk2M8CHgWFmHY90
-         g3VbRo2GgLfNltQ/iXm5eJTCUqS4N6aLCdgfUIMEzUm4VX1QpHgA1WzO6QQcJEl2WXIv
-         h5gg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=q/9YJvFJ+nbXAGYeW9C7nzPx050uKYbBSpkeDQgzIT0=;
-        fh=QP5+gFeuOyEMKdtzdgTBnnHDAN4JUc5c6VOv6CUaddM=;
-        b=a4/r5ZAcdy4p0qvlO42eYDyf7a+wBsYwqV1SR/I341S9TTEMCJh/HH5zSHdjJXX5gT
-         vddAYfKnWqhoJZk7cPo0dgjqtL6XWVhatgD+qG0es8JN5zmpPzBqzNa3MnoerxO/nSyC
-         xKjXj5w057otLgumYAgUKagUOZdiPzxuby+rgk7myoGa9deKfT6qnD7oDyKDtNKW0wl1
-         TyjwJzpJw0n46t+fNS4RD1S9hHYXmJ7CXPuBOLnmS2nNN4EVEXfK1TYUPNnJTadz85ju
-         qsTD1yP/d737EGVQwXsUyVgu2n6ZzaO3QH08ph+O6tQL0o9QyrxweaIEWWc0rdxYsLL8
-         yiqw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uuliPGCU
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-93e55db58cfso309258585a.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 07:13:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793631216; x=1794236016; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=q/9YJvFJ+nbXAGYeW9C7nzPx050uKYbBSpkeDQgzIT0=;
-        b=dx+Jg8W+jnc2aMT1kL7+7tjfM8y82BfwHjoahm3g4vHI2SeN84Fi/6FHDpfCeYbekM
-         NrN2zax4oleDZ1YsvbB/wOLN09w8HJKffYnHt3/klQS1MZdxkx/JaG7uL2nSAeheDF2x
-         San6E7K0+JaHl5BiTjTGhhr/NtvlJmYzYO2KHXcj1l7aD5upkNQbEcncQqK/KFriBLQk
-         7rAHTnh3o31AaakIWj+pbeKjooapTD5E4nM82oURaOdqBVzGek6I4DsPsr2Gw4bD3DLU
-         OdxJb93wX/353iO7vEny1SMcpSC9v2VWoIuCSgMrwb69o/tZQsRS6B8MRPLOcf8ES6Ru
-         wFZA==
+        d=gmail.com; s=20260707; t=1793632437; x=1794237237; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=cU74aHM7jlNfSAz77KMkGZe5zvTTb6/VQO7v88VA7fM=;
+        b=uuliPGCU3YqA4cuwPij8OJIMmeu0rI/x1Z+60qMEfL6tDyvl3SxLpH7IqQXc6aq0xU
+         lddFt4dQFxvzqi+Fg7qPyeKkiWuOuEe2Ka8WIb6vVCx1qbmDufq2rOcsyKo6cgJtkcW/
+         PyiYh8a1Dk9U0yY9ZJVymI4JaGYX9eacD3/x9xj9ZDzS2CZUM8UDVx7/tidweMpvOiq6
+         uYFH+qCiaFsEBnvmLvOeOsrghZvy3S/+2uMcbZNEPk1+PuLwfoKlB0xm+xYLIMHHvH+5
+         Zhme249rH4hlWfV25BRkE4+YfN3Kc2g30bhXfGBDw8JEy2RoRkmQgjSQ2jXksCpl/1DT
+         zDOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793631216; x=1794236016;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1793632437; x=1794237237;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=q/9YJvFJ+nbXAGYeW9C7nzPx050uKYbBSpkeDQgzIT0=;
-        b=aw/rjFFpGEdVrto8BU6Avx5Y3rpl+/LsnXLLBKoT7Cu1IEg9DWxG2LyFaViAAUNRND
-         uciDFqHInwObDaz01Q0E/xf0l9pNnsJ37IaqdCid2ZYXEj96XCNMDsNPWwfgT+x3eo9E
-         ApCjBBqis5lWSJEprjoO3y1KkNWeeeStvUPyGlZZYLK/IBxHNZpC5KsPCdvnytcEDOc7
-         zi6fcPepocWvrNE/gDyHRSn9UKPjpMUX9vB3iV0h86nNQylwSgJwjcrpbzB32MngTD5y
-         bBPAT5x1sIFUx1whseZe3X+cxl878lMc2awZKClXKLKSuPs5/A++byVfDqNgS+DY5OtO
-         SLTw==
-X-Forwarded-Encrypted: i=1; AKwUvBzlSHcZiV7jrJ8beg3G0nmgnshcMezXOMIoXSMMKhrBF3KhMo9+Jo1BJiuomLcLQkZmcDc=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9OIuGoA+I9x0pxOXX42cb5IgvNKpiiddAs3aDCI7nX9MuAPSBM
-	Y+JoIr2v85NytplX1CJDKyF+2kSfnFIXtg3EODpu/OL0gXOD1UDX4dLjTkGUnXhtBkb8JUpXics
-	73teUHzcbBD8M3z+D0+poaZuMp0aPU8w=
-X-Gm-Gg: AYBFou2SLz+QNmy+Zh7lOyCh7dyROTna/5QEg3h0HxePNE5zDwL5UFzo7oB+h/ZE7Mp
-	aUQT3lzlNfD/lDtg4jKS+/Lo2WG535QmeyMtYC2wq58JCk1ZrFI3MmeTEFH6WfcK97SF3biUhm6
-	+qDvl2D/uJzhiVY7C1memXNKPSCkKoPaBZcnARhMacSkAsMXkknEG8dFAcTWfqvk7yMWYx6jdAM
-	xdORBZhE8ddGn1GCo0GVQPP9tGAFzSfhoyTHe0OC2iCuKSiud8OICfBL5vwMybFrf3+9Ll43A6E
-	etm1RRIl3mFVYHJfwc64O1rWkAkrC9i7+IO/0fiH12ii2D9iCsTTQQpxBp+ofBhwTtOeby4NbU9
-	T+Ioos11i2ZT0E7RqkpqterPsdx8G6qPEFL6/
-X-Received: by 2002:aa7:da4c:0:b0:6b1:497d:1c64 with SMTP id
- 4fb4d7f45d1cf-6b4d5ee7bc2mr5359699a12.45.1793631216470; Mon, 02 Nov 2026
- 06:53:36 -0800 (PST)
+        bh=cU74aHM7jlNfSAz77KMkGZe5zvTTb6/VQO7v88VA7fM=;
+        b=bAn1haz4bncVYgMVDo7M/zaDwDWPWTINrue4IXVkp57yaYzLng5lLVfWqMRsuZzmSy
+         gUeQBuh9wvhqpeUK0Kd3UTpus+FT3FEG62LrIx9l046YSFByJQeIwc0gLYKHijMig1Iz
+         u9ejSwB8QazWbHotnHILi4o/MR5lDoYB7GrnsDa3JVqVi/o+J7tEPhTF/Nh3cTBQP0xU
+         w8Oi3ayAlOq1bME9tmoyxMv0pgPqq2TWyCCSmik890J2xoN+MDvcU/FLMoqHDCPhB2lw
+         qRDm6XY0OHWae8JqawdpJQaEsxTZTuemJSo8FHLMhmKRs1RP+AlR2hinkDvhhtDfQNoi
+         a7DQ==
+X-Gm-Message-State: AFq9FYKwLbFoaamRR0NCs9QUhIBFTv5uLbl8z9wK2H7TLdEPCq9euVIr
+	21gpphQh6AWTa5JVLeTX/nrL9tUVhUAoK0nMaw/FGKNDIm1UZyRV/Mkldid4zbfc
+X-Gm-Gg: AYBFou2x8fquQs+9XCzG1JLdxDNZBIcE13b0zW6lHgtvcHrmO4ipxYK06qrAo/cpY9t
+	PXJX2xUcenpnksCebdd3JqW0QZQqwHrzfAG0dQNAijjR9bmF+h4lgpPqiq+8964Nj0VcxVIWiTx
+	C+U7UiEAWScTtaNaxo9TSqEnbC6WV7fFkPSZOswEswEMUlCExmSDJkfNBJknqorqDGgMK7qyrDB
+	mQqdRjrZLe1V/BUfju4L5T4pNlJuOYBm47z1YSAbYB29Lvc3qebdm/p8DBTtO0ls2dzTfkWtmUE
+	hW0Q74Lobm3wERHgF+3cdU6aWp+v79tugx4Ut+yo13GsnxH9vzgfRQUDne7j8SMlLdrSg54V5V5
+	p+wOjeXqU8yiBdzkP6oVPxXS41qEC5kfOMXWq4ezQpqUG3R0zBmxUHx1pHwVTB5CIy4O0hsyVNF
+	UfV5+DP+TjhdQ+7mm0dOvMZ6REsJEjXoB/Z5SCnE60so3A5NhCU5nty3GPJLni3SAnvxnDWMj8g
+	+81YCvGhzmkpI2MVE0FpTiUInVXQy0bqChANDMSZqXtOYI+y6x6rYOXwmpWBs6h/rHXgCS+IGGC
+	bCXMTNqqTvojbeGCQPitwunE/aLLFr5izA==
+X-Received: by 2002:a05:620a:4586:b0:93a:1b82:4962 with SMTP id af79cd13be357-9442178c78amr1772581685a.47.1793632436890;
+        Mon, 02 Nov 2026 07:13:56 -0800 (PST)
+Received: from [127.0.0.1] ([52.188.198.105])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-94425ac6bddsm856297885a.37.2026.11.02.07.13.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 07:13:56 -0800 (PST)
+Message-Id: <pull.2479.git.git.1793632435937.gitgitgadget@gmail.com>
+From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 02 Nov 2026 15:13:55 +0000
+Subject: [PATCH] doc: document the current project governance
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,38 +93,171 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2413.git.git.1789898013916.gitgitgadget@gmail.com>
- <pull.2413.v3.git.git.1790189759802.gitgitgadget@gmail.com>
- <xmqqtslzlhbm.fsf@gitster.g> <CAHwyqnVzsvsGXzVj4P=rXJJTvfeQt0D39Aj7R1PTyQVkJbm4DA@mail.gmail.com>
- <4836126b-e630-45cd-8757-861133ec233c@app.fastmail.com> <CAHwyqnUP_aeKSwj03be0PVdqLX=UYhwW22kBtoWU9Oy2XoaFLA@mail.gmail.com>
- <auiBFhXI_xiBTPbg@pks.im> <50c6229a-336e-4488-9289-183f5ffc47cd@gmail.com>
-In-Reply-To: <50c6229a-336e-4488-9289-183f5ffc47cd@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 2 Nov 2026 15:52:58 +0100
-X-Gm-Features: AclHuK_u7B6tl-l3jSvGP179dXcg5RSiIi-AGpdbWlpOGzVjAo3wRu1pOm7fPgg
-Message-ID: <CAHwyqnUiZeh=cM5b1okrDZoX3HD2MAnwMNp+dnvKFNy96zuzQg@mail.gmail.com>
-Subject: Re: [PATCH v3] object-name: explain why <rev>~N fails in a shallow clone
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	"D. Ben Knoble" <ben.knoble@gmail.com>, GGG <gitgitgadget@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>,
+    Antonin Delpeuch <antonin@delpeuch.eu>,
+    Antonin Delpeuch <antonin@delpeuch.eu>
 
-> The CI checks that the tests pass. It does not tell is if there is a
-> sensible amount of test coverage for the change that's being made.
-> Stolee used to run a coverage report which was helpful to highlight any
-> glaring holes in our coverage but I think he stopped running it because
-> it was quite time consuming to maintain.
+From: Antonin Delpeuch <antonin@delpeuch.eu>
 
-It certainly shouldn't rely on a single individual.
+The social structures and conventions in place in the project are
+not necessarily obvious to its members, especially to newcomers.
+Misunderstandings about the expectations of the community concerning
+certain processes can potentially lead to conflicts or friction.
+The ways in which the Git project functions could potentially be
+improved too, but identifying areas where improvement is needed
+is more difficult if the existing conventions haven't been spelt out
+explicitly.
 
-There are tools like Codecov, that can be hooked into GitHub pull requests.
+Document the existing project governance in a new page of the
+technical documentation. Describe our current ways of working
+without claiming to set those in stone as policies.
 
-> it was quite time consuming to maintain. Even having that doesn't tell
-> us if someone has added a million pointless tests that slow the test
-> suite down - that still requires someone to read and understand them.
+Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
+---
+    doc: document the current project governance
+    
+    Hi all,
+    
+    Following our earlier discussion 1
+    [https://lore.kernel.org/git/1aee1829-d7ad-47e2-b7d1-1a946bd59991@delpeuch.eu/],
+    I have attempted to describe the existing governance of the project and
+    am submitting this as a patch to get your feedback on this draft.
+    
+    There are a number of aspects that I couldn't figure out myself, so I
+    have left some questions in the document, formatted as "admonitions". Of
+    course, the patch isn't mean to be merged as long as those questions are
+    present. I'm hoping that I can replace those by informed answers after
+    your reviews. I expect that the answers to many of those will be along
+    the lines of "there is no agreed-on process for this, we would make one
+    up if the issue arises", which is perfectly fine. In that case I think
+    it still makes sense to describe that as such for now (which might
+    prompt the project to prepare for those situations better).
+    
+    As suggested by Junio, the purpose of this document isn't to be a policy
+    but to describe the status quo. So if some processes described here feel
+    accurate but inadequate, I suggest that the discussion about what they
+    should ideally be happens in separate threads, similar to the one about
+    the voting process 2
+    [https://lore.kernel.org/git/summit-2026.94e33e9ddf234334.06@ttaylorr.com/T/#m7b0180985c2ea6325078119406d09a4e4f0b9481].
+    
+    Thanks,
+    
+    Antonin
 
-Yes, but this is still a subset of all cases.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2479%2Fwetneb%2Fgov_doc-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2479/wetneb/gov_doc-v1
+Pull-Request: https://github.com/git/git/pull/2479
 
+ Documentation/Governance.adoc | 85 +++++++++++++++++++++++++++++++++++
+ Documentation/Makefile        |  1 +
+ 2 files changed, 86 insertions(+)
+ create mode 100644 Documentation/Governance.adoc
 
-Harald
+diff --git a/Documentation/Governance.adoc b/Documentation/Governance.adoc
+new file mode 100644
+index 0000000000..b1f0a21203
+--- /dev/null
++++ b/Documentation/Governance.adoc
+@@ -0,0 +1,85 @@
++= Governance of the Git project
++
++This document describes the social structures in place in the Git project. It intends to be neither prescriptive, nor express a judgment on the merit of those existing ways of working.
++
++== Scope
++
++The Git project develops a free and open source distributed version control system.
++The scope of the project covers https://git-scm.com/install/source[the git.git repository],
++associated repositories hosted under the https://github.com/git[git GitHub organization] and the <git@vger.kernel.org> mailing list.
++Other spaces are considered external to the Git project for the purposes of this document.
++
++[NOTE]
++====
++Not knowing exactly what is considered part of the Git project or a third-party project, I have left the following repositories and initiatives out of the scope of this document for now, but I am not sure about this choice:
++
++* https://github.com/git-for-windows/git[Git for Windows]
++* https://github.com/j6t/git-gui[git-gui]
++* https://github.com/j6t/gitk[gitk]
++
++====
++
++== Roles
++
++=== Maintainer
++
++The maintainer is the head of the project.
++Their primary responsibility is to select patches submitted to the mailing list and integrate them in the git.git repository, to which they have an exclusive write access.
++The maintainer is Junio C Hamano, who was nominated by Linus Torvalds in 2005.footnote:[https://lore.kernel.org/git/Pine.LNX.4.58.0507262004320.3227@g5.osdl.org/[Meet the new maintainer], Linus Torvalds, 26 Jul 2005]
++
++When they take a break, the maintainer delegates their responsibilities to others. There are no firm plans about what would happen if the current maintainer was to retire, but
++there is interest in preparing for such a possibility.footnote:[https://lore.kernel.org/git/ZwAIM6GO3VtoG3ZM@pks.im/[Re: the latter half of october, the maintainer goes offline], Patrick Steinhardt, 4 Oct 2024]
++
++=== Project Leadership Committee
++
++The Project Leadership Committee (PLC) liaises between the project and the Software Freedom Conservancy, Git's fiscal sponsor.
++They coordinate on a private mailing list reachable at <git@sfconservancy.org>.footnote:plc[https://lore.kernel.org/git/20180816224138.GA15490@sigill.intra.peff.net/[Git Project Leadership Committee], Jeff King, 16 Aug 2018] Their responsibilities are:
++
++* to approve project expenses footnote:plc[]
++* to oversee the use of the GIT trademark, following the https://git-scm.com/about/trademark[policy] footnote:[https://lore.kernel.org/git/CAP8UFD3WQ64FuXarugF%2BCJ_-5sFNBCnqPE0AEBK-Ka78ituKTg@mail.gmail.com/[Handling the Git trademark], Christian Couder, 13 Sep 2022]
++* to enforce the code of conduct footnote:[https://github.com/git/git/blob/master/CODE_OF_CONDUCT.md[Git Code of Conduct]]
++* to produce an annual report of their activities, sent on the mailing list footnote:[https://lore.kernel.org/git/aNblfuTDdtxLdImC@nand.local/[Git / Software Freedom Conservancy status report (2025)], Taylor Blau, 26 Sep 2025]
++
++The committee consists of at least three members, who currently are:
++
++* Junio C Hamano
++* Christian Couder
++* Ævar Arnfjörð Bjarmason
++* Taylor Blau
++
++Those members are renewed by cooptation, after consultation with the community. When doing so, the over-representation of an employer in the PLC is avoided.footnote:[https://lore.kernel.org/git/20180821020849.GA2527@sigill.intra.peff.net/[Re: Git Project
++Leadership Committee], Jeff King, 20 Aug 2018]
++
++NOTE: Is there any existing process for leaving the PLC? (for instance, if someone has become inactive in the project or is in conflict with the rest of the project's leadership)
++
++=== Security team
++
++The security team triages vulnerability reports sent to the project.
++They do so on the private mailing list <git-security@googlegroups.com>.
++This team also includes people operating widely used git hosting sites and packagers.footnote:[https://lore.kernel.org/git/xmqqbj9d3y9x.fsf@gitster.g/[A note from the maintainer], Junio C Hamano, 1 Oct 2026]
++
++[NOTE]
++Is the list of subscribers to git-security public? +
++How does one gain and lose access to this list? +
++Does Johannnes Schindelin play a particular role in the security team? https://lore.kernel.org/git/5cc325c6-579e-4fed-7071-a3ff98d51ccb@gmx.de/[He seems to
++have the lead in triaging vulnerability reports], but I can't really tell to what extent
++
++=== Localization maintainer
++
++Jiang Xin coordinates the localization of Git by maintaining https://github.com/git-l10n/git-po[git-po].
++
++NOTE: How would their successor be appointed?
++
++=== Website maintainers
++
++The https://git-scm.com[git-scm.com] and https://git.github.io[git.github.io] websites are maintained by members of the https://github.com/git[git GitHub organization].
++
++NOTE: Under what conditions does one get added/removed from there? Are all members of the GitHub organization entitled to maintain all repositories there? Who has "Owner" access to the organization?
++
++== Decision procedures
++
++The decision process for technical changes and the venues for the associated discussions are documented in `Documentation/DecisionProcess`.
++
++There is no firm process yet for decisions on policy changes. There is ongoing discussion about adopting a voting process for such
++decisions.footnote:[https://lore.kernel.org/git/summit-2026.94e33e9ddf234334.06@ttaylorr.com/T/#m7b0180985c2ea6325078119406d09a4e4f0b9481[Documentation: propose community voting process], Emily Shaffer, 21 Oct 2026]
++For now, decisions are taken by the maintainer, who is expected to follow the consensus emerging after a discussion on the mailing list.footnote:[https://lore.kernel.org/git/summit-2026.94e33e9ddf234334.06@ttaylorr.com/[AI contribution policy], Taylor Blau, 6 Oct 2026]
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 1747f4a00b..b2b58aa9d0 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -112,6 +112,7 @@ API_DOCS = $(patsubst %.adoc,%,$(filter-out technical/api-index-skel.adoc techni
+ SP_ARTICLES += $(API_DOCS)
+ 
+ TECH_DOCS += BreakingChanges
++TECH_DOCS += Governance
+ TECH_DOCS += DecisionMaking
+ TECH_DOCS += ReviewingGuidelines
+ TECH_DOCS += MyFirstContribution
+
+base-commit: ebdc087dc99d68bb340c282b2ba5f722def28d19
+-- 
+gitgitgadget
