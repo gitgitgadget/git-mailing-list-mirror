@@ -1,121 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793657120;
-	b=cMTV2cY0f8mUQ1p06jWyKpA9olAuF54CbVwE5q1FAq5EzwL5kjuqTPHkJrFbAcCFbzlF
-	 gAm/+UQ9Fk7RbfCJT9v7FwOItm6P6Sf3rYc8/F4VvUysrLHCJ8yEG2UmH+EmiHK3UYPX2
-	 Z+RqcWDUHpU2rClRK2bafFWu2sXsaZqS5b7vJ2iuIGdkriOHHEuGAiaYLT7SMUJNPaSOz
-	 TioYMt8/27hYE3Uimwqe33FmFzRivdYqM46NNhZg3S44A/XtpJQTaL2ecvgRDasHMYE/k
-	 WMWKVGnuWx1bNRO4+v/GImeFqCJGr44rPW++Ygi2yP4IJuJKFDa07OgW4f0vE4kL9cg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793657120;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=AwOblIaU6zlGjH6OsFXiOgI2Wl1PeDWj1JR/WU27Dgo=;
-	b=j1S6QM01fW4uwFlB+o2jBVbkax5kx8sWa0GJXumKDZ9RzQFMpnUvjDfNCeeV8S0EpZpg
-	 kZf365Qx8BdNGvMAfa+VAZMusKdfq3ESNRHmLACbqJDTYsWl128cNQgxV30fdmtSWvHxh
-	 EnWpCEE5VJS1TtosGn4f2n+c+K/ZaHxgoSjtBmytVlZtDwVgX38YLxdUwb0H98nOPTbyA
-	 ucvdewGJxwb6Ul/JDZ4IroC14ZiBmBLQ9WddLd6yr/jbed37of25/ub9La2k76vV6xG4O
-	 6V4/m9ZseoJZNdKJ+X7CJhFRlWF58oq9G2kQr3pa9/6CLLg01Mz8fFr7Azez1TX7mjQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Yyb47ibr;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=aPqyuJyP;
-	arc=none smtp.remote-ip=202.12.124.149
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.51
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793658010;
+	b=OGyOoFdUZnjc6RSgf4vZFbasI7jHcL/fU6YxZ47924sMfxax+eltZjXjEc9c0WX5VJhP
+	 iBg7QVdZopjIOo3kqog2bD/01StpuDB40eLQbiA870GGGRfpdw4ws8kOcpd+30MlScLv/
+	 WhpgfRwfG45w17d9FOk7sbU4UnbBSicXsvXoVc3iGWXLmLsJwPUgKs715+kKjVzYMSQzK
+	 Q96rEkpdyqCkedG4/VruA1XeCL7sl/hVpdG78330W/mPJHzDSeYooy4cOAxmDl/D78KLH
+	 cxJEAMuo9a5Kyd3o2X+J4Tuy9ARQHMsIIyBI0W4X+YI+rq4qfkQxgzTmEAWrT2t06bA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793658010;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=k8MUG5oj8u8JQdfZ7rrhGRwlvxegorRYCeiucYhJn9M=;
+	b=fLsAATmJZo+Rtw7g3rGgqCsLAnz5eOVPbWXFdCDxcI8vebOpCpGJloh+WTfGrasWePM5
+	 ITpZZiM9xXoFgKlkyLA/lBscAk+0oXpEIFIO5gaohSI/hO/foEHuSVGHE7WlTLWpSqwBf
+	 4OvdqJUcbOGc0gb/7NnBtidcS0/AUBV2Mk3ZdkVFCz08igjVDqCEOGhgSbsD3FIU2OUbp
+	 BICTzU+7VtCmPdwx6LW5kusjbT86kyKQ/Ov8znDxlVioxMLYH2DPAHmEt4hCHDvZEPCPD
+	 BQG43+vmD8N2xnTmwGRaReikwCrpfDvcVJofN23m+wHEPr/KuMh+izvdaoNcWhcxjoQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OrO2HTKG;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.51
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7384F6082BCD
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 22:05:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7384F6082BCD
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929BC606A327
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 22:20:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 929BC606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Yyb47ibr;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=aPqyuJyP
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id B8CCB1D000D5
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 17:05:18 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 02 Nov 2026 17:05:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1793657118; x=1793743518; bh=AwOblIaU6z
-	lGjH6OsFXiOgI2Wl1PeDWj1JR/WU27Dgo=; b=Yyb47ibrdVkfNTDIimB6i9OUPB
-	pHeQ6beF4FEx52xzKs9T7QPHXfPdgxv3guzfjYT9IBB/3R4C6tlQzXvrYx+aY+KV
-	MKY5X/nGvG7MTb2II64iDT0NnOIFrZes80qdJkXYPUxa28Q4ZLQK2Nlo0BCZcMjZ
-	mMvtkGL0hXbCswdDGwEArtFUMNUDg0FwiC0pG6b6ruYCz41Sw79m81u3bbUTZLA7
-	a87HEBC3dk0iaGOmhE17/G0HmCm0aOqyxUUAu99qnm6inw4AN7reZ0MH4XlJ2hpF
-	+DNRSVTSoweQJ8KUIhK7mEkEnjB+tsEpK1VN4BoQQTBFweq56e7HiPnN81hw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793657118; x=1793743518; bh=AwOblIaU6zlGjH6OsFXiOgI2Wl1PeDWj1JR
-	/WU27Dgo=; b=aPqyuJyP2UfVzDl4nxta4Jxit7iCzShxr0L/OcaV6uZvAnyomeY
-	zkZ39NMwrP58HYaIEOKnW4aT1uMVpnCVVa8pA+mVIyjHWVPX6zXG6gwqsKt523r4
-	dxNOewZBdaul8CJ6/BA7XjsLgGlfw7wKkW2rryB+S9igYdnEpy4c6Evb3oWm0B5f
-	W6uVyUxGPAvdfY2k9Ja6fSOY60v+Qnca88hGxoCL7JinMpfT94YWq9XFiy4EgPe3
-	rCIO1aCacEM6t/zQ9cWOYIoywbzlp/vvWrh5nhjkBMzSl8jxMbP1eXe3bfGcDqCk
-	P003/gs+0BEi41RIpWEnAYosKOTP4jvY00w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793657118; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:A57Di++TQ3FyEaZBIZ+UjjgrxCDBjEX2ZTNJGI2II50TWSZ
-	Y8YBh/ziS1+hEghqEVtC1ThNeHgdIBbax4FBa1ZwVnHQAFbVDIONTGksGxDWJwPP
-	yhBWmG9GI/BJz87ggSywJDAO8zT6sCAfPuWmJfjXfiOh21K0hpO3E/cv27Pwccgl
-	i1t7sBKrgyVYza/b1LBhtoHM4X267s1QexXeGHXoOhMvgzareILtrGq1Ll87uD5P
-	RORoVhm/ZCA0uaniAsY2HBu4nTMpAD2qiEzSNmS1iSZStwkIrGx+KUXQ+3zhCcL4
-	+mnl2DLrz39xA73a42hGw+Rcha+oiuScTbzPXxw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:0JDEYh9EurZ7D8WJMV46U5N2cHmZhPmSNQQ5xjn8KxE=:ZjWpM2oF8a5kqm8N7hOD+pLJEJtcuz3vn3w/pe//Fiw=;
-X-ME-Sender: <xms:HgnpatBjce7l5igQs3B_sWW8DUDTrc2qqNx4dDk_m3zyPkQLTD6FRQ>
-    <xme:HgnpaiZG4eShx-UVg3Fdop9cQJlI55pdO2QLF7doB7IOgNYLJoDKOUsBJG55BMGK9
-    bV33keyoFPEXSBSHpp46J94tmjzR8-HaUJyB3qDUJI20Y-wrLOwgpM>
-X-ME-Received: <xmr:Hgnpag6VCxtMW9AMCxbmy9zMLJHivtu6pvpwR22GPnxATqX3kRq356iuoFtCNmSfL1V3lDZ8-qK4fjyZHWaRmSWR1qmBLmUVLNPe>
-X-ME-Proxy-Cause: dmFkZTEP5BC7oBD1moiBo2AixAlzvx88eE/sguqzS2QxX/eB/2xGuYg2k4iSJ/vg2XNDWk
-    /ttYISUR7zNM46f/s8CibHUM5DwARI9qiWJTqsOb8yhzFNOu9IKfAXzWObkEvpTx8EeYNk
-    xUazw8wTaS6AFkYWdXVSMowutvMY4cNiAbRxYXvP46R+xeWGXa4cicOtThoMbISpre0mDL
-    IzhQ74itd5UQGLHzYeFZn/MDt5YvAE0KKvFVYgrVmyJlj2gDmtkl/v7iLEBIDxhR8PgcNQ
-    ScEY+kAUNzoBFR5TqPDX068uIhZ0hTBc+6VK7i7/9WzqK1S3TCU4A81VGo5LU6fU8DYkcd
-    uBgh0Hk5iLz273kaQLm/AQj1LO2xw9v3GzgviMk9aM0LE2Js/pWJ6RKuAE6SXRyLKtvyaN
-    /JpExWAlkQAsw0aReDuWikIYFkw9/D2t2vYnDXKHUt8HJ7KX181iM0C3B38qiKqlOvoqXj
-    23czNUWvMvGttEOmaCdDNytwqV7IkDPo1hWAAvYLeV9XIoUSnukzXEiGaPL+wkwrtp0s8M
-    kid8s+7WBzVjDvWK9xKuBB+MEYPWfAkPAdsjgOhFDteZSuJHdmyjk7BG+Rowu1U5yYhQpL
-    JnNhDCoiButWn39mFqSDUQobdKXrKF4T1Noo6Y82cfqOKmVeXdd5umKHzZCA
-X-ME-Proxy: <xmx:HgnpajY1Yv6zWBpFwdH-BMhHZUSaIdzoLiztks6Owtf-nSoN-YSZ5g>
-    <xmx:HgnpavjofKI-JAsFJteY38G8pNd3R6eEI_AMbvu6UCb_od9MYJys9g>
-    <xmx:Hgnpak9bGkHgsGCugTCyai_Qj-MwXLu3BVi-nlxitLHemBKQrkQgPw>
-    <xmx:HgnpaqoiT2uLl0RBGC7h7mFs-Nal4H8Gg6XjC-7zPGvDWGPMqxd0Kw>
-    <xmx:HgnpapaougIP9683E-8vTUazmJpfo4geOQVSqmpvOXvl0x21TIQxL0cQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Nov 2026 17:05:17 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Christian Couder <christian.couder@gmail.com>,
-  Kristofer Karlsson <krka@spotify.com>
-Subject: Re: [PATCH] rev-list: ignore replacements in the connectivity check
-In-Reply-To: <pull.2279.git.1793634429929.gitgitgadget@gmail.com> (Kristofer
-	Karlsson via GitGitGadget's message of "Mon, 02 Nov 2026 15:47:09
-	+0000")
-References: <pull.2279.git.1793634429929.gitgitgadget@gmail.com>
-Date: Mon, 02 Nov 2026 14:05:16 -0800
-Message-ID: <xmqq4idyhotf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OrO2HTKG
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-43bf9548df4so3383039fac.0
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 14:20:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793658008; cv=none;
+        d=google.com; s=arc-20260327;
+        b=sy3kjj364UtetJbYDW9ezg++If/E/ZAGX88dmvKjGnPppm+rEES8JXwyXSXTj43JeO
+         tHERVypbDFLtC2aaeIIM22ydH5zWVNb01F/ijvRmysuCTT4eN1TSe4Xc7XmolBcSOzKc
+         aSWVJLDRnDDIU+kLF2JWEl698myecrWtxkMBAgfK9i8mtovYwHMxAi5F2893Abt6WuXl
+         YfP549gkfwavsd5LLUdq4HMZHgwmauHb/etOQ+LVRI0Zd8HokDLNUvaMYP8yFDazaJNv
+         aT3DvkdH4BmsPnuMqax9Oem5MvMTRezYxF5iWIoaFrUMdYXm5gY10s9qqwPscMuaFPg2
+         sKbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=k8MUG5oj8u8JQdfZ7rrhGRwlvxegorRYCeiucYhJn9M=;
+        fh=5PFJeBr7a+nhkSJKkBd2FkDf8aw85ThIkZJzXtcSCYg=;
+        b=q661KWzSuL+Hps974NzmB/VkSiHhhv8+v5j8w7d0F/oH72nAo85dvijpzxyU2kcKvN
+         xOyFovtizyr98sv8+Jp2zrzMNuW0hcS/LmCBGHKJLwVY4Hx2SYuyoicU4I+nJaXsjkwR
+         rpYeIW7r5v021zf1MyX3qg/TmlZkUFpdkX1FLNYOHSqsjNzDOPqX/sjFe8SUassxuKOO
+         XFdjmLcPm7CXRIM+yHAYf0qTNVeuc1yNx9jO0ZY+xmGT7qczQukxWqX+iG6RRF6hytf5
+         rwQtKTDe3jKi5FQnnzjEXu/rT+x4Bbb52jWHuK5w6ZOOG5LzInfbatfyP5pixHzkiivS
+         rD4w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793658008; x=1794262808; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=k8MUG5oj8u8JQdfZ7rrhGRwlvxegorRYCeiucYhJn9M=;
+        b=OrO2HTKGM9w1LKqCtLw1sVu3a7tl/7ZRF3ie4cbrs/chPEKqyrf0C8+R2IWj/Sb1a3
+         dP7MjNdNVE/X1MK3oO2Bnn9Fhx/7mCoamAlknSJJR+lgHlAop71Ywlj5SHfxabL3iO5j
+         v9tjz03UDx8spRUIPog0m2GP8LkMlaMwmwY90HGxEvr6pOEcK/zlXzFrVoZEr/BZvzoB
+         mimof7yjL007qHCS6QCazsaS/q19U08Xf5dL0mn7ovBTldYj8dk2YQhA73BF5OUK2GAY
+         EJhjUbnD5jwR0fnQqqPjuT8iDQ3AnMmreJ6YBQmpOzS4FrpFm1ASPI2Hb46HsQh2yEcS
+         JbiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793658008; x=1794262808;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=k8MUG5oj8u8JQdfZ7rrhGRwlvxegorRYCeiucYhJn9M=;
+        b=Y6DmD+YAZZvFfYb4j3LQAvT/SoXp1eSM9QEIT8DbGDf3kFM3vliP3npxX2LNgHS0w2
+         XAnm4Gt7lrfgp74p+Ya9vssA7rck881OTqliaxnLr8eulc7AO2yPiY8wh2dUl/8q4rfP
+         n4iT20U4Gv2vJt9ALQ38yt78mBoPT6HBmLY3QjcM+W3rdsMZt+Bkh888OkPCwI3wOLwM
+         ZErkQtsiSPTQaOf0U7pZ3DsIYyAECohP6A/fhCSFrOK3CqB0K7Z2fd89bgD/oIOlE/jQ
+         0p66hjMEd2BRybza4qcV69+ctEOnWvxuSg6dtnLaA/o7VmlLTnJFGmz2oQkjVb/vZEFb
+         mpWw==
+X-Gm-Message-State: AFq9FYKokMpypQOtJ4p/5oyypeWaD3XtRW4NegsqqXHl5Ty6xeO8K3Ag
+	YDf4mq0ne8ocjuGBDNhw+BYbIjh7PArwmN88Sw7tXimX1qdhb/AS6W9C4YgHBxt2rKowS5vVf5b
+	TrJWSKLJK7k2WyatxbMEB7iNYtr+IR808Lqa8
+X-Gm-Gg: AYBFou2p7IKgOLND9ZQNs+jOxNqya1rzWczRcjLG51NR6JZPLQzdLKkh/DpBQ4KGw19
+	DPFTtTXAxuzidMeToRqcs8igy09TVyf22rEPyepQ6svLBMti+VxxvdiaG0bSjKOk86Koy8EgsaX
+	NwxSJAcQE/YEDGQLGcxnF7wnBMCWwt8PU/vLtXM49mBscFebOxwvtRlEIzgHkiwwEmXJzhALaZT
+	vXygb8QLhewgSmKgg8QncvCUcocqWCR7UVzc6BNcKQ+iuEYVDz52mUQxbHJSAIBp/Z+EQmwgAVu
+	kTOpQ6LN2bOTix+yJ64Kf9vwJz7uisaUOjcR2E1+XjPCNILIy5gi5WZ3K4nW7HBeU08GuruHy0n
+	aMCUXC4G2iGZv95jNY0FdFFrZxAk0qFFmXcyfNfC+K+q5MQF7pndHCA/RqQ==
+X-Received: by 2002:a05:6870:3341:b0:49d:e65c:34e4 with SMTP id
+ 586e51a60fabf-4a9076c4fcbmr7522399fac.24.1793658008393; Mon, 02 Nov 2026
+ 14:20:08 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,117 +103,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261022212903.177261-1-andy.koppe@gmail.com> <20261101230326.3675597-1-andy.koppe@gmail.com>
+ <840bc117-75e9-4d63-882e-3831156871a3@app.fastmail.com> <CAHWeT-ZdZ0o=_rPWFPcXqCyc-WV=fzmKVRVx2LetfQzgYkKO0w@mail.gmail.com>
+ <f194e2af-cffc-4867-9069-7070c86785da@app.fastmail.com>
+In-Reply-To: <f194e2af-cffc-4867-9069-7070c86785da@app.fastmail.com>
+From: Andy Koppe <andy.koppe@gmail.com>
+Date: Mon, 2 Nov 2026 22:19:53 +0000
+X-Gm-Features: AclHuK9xtAYoh_MKRKam_aUUGDXiybwiWk6MVe-DqSK8UHKRfe-PIJxOHMaMqXM
+Message-ID: <CAHWeT-YSK3xFA=Hztr3Uj5UW=L9JcC_0iOa5pUG-WGCpwng9vw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] root refs vs pseudorefs
+To: Julia Evans <julia@jvns.ca>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> The connectivity check follows replace refs, but other operations
-> that depend on the repository being complete, such as fsck, prune,
-> pack-objects and upload-pack, do not. They were taught to ignore
-> replacements in dae556bdb1 (environment: add global variable to
-> disable replacement, 2009-01-23), as they must work with the
-> original objects, and check_connected() came later without doing
-> the same.
+On Mon, 2 Nov 2026 at 21:01, Julia Evans wrote:
+> On Mon, Nov 2, 2026, at 2:47 PM, Andy Koppe wrote:
+> > Root refs:
+> > - Can be stored in reftables instead of files in .git.
+> > - Contain either a single hash or a single symbolic ref such as 'ref:
+> > refs/heads/main'.
+> > - Can be modified with 'git update-ref' (generally a bad idea for
+> > built-in root refs) and listed with 'git for-each-ref' and similar
+> > commands.
+> >
+> > Pseudorefs:
+> > - Are always stored as files in .git.
+> > - May contain multiple hashes, and in the case of FETCH_HEAD, carry
+> > additional information about where each hash came from.
+> > - Are only modified by the commands they serve (i.e. fetch, merge and
+> > pull) and can't be listed.
+> >
+> > The big thing they have in common, apart from the *_HEAD names, is
+> > that you can pass both types to commands such as 'git log', 'git diff'
+> > or 'git checkout' to refer to a commit or tree, just like any ref
+> > under refs/.
 >
-> Teach the connectivity check to ignore replacements as well, so
-> that it verifies the same objects that the commands relying on its
-> result will read.
+> That=E2=80=99s very helpful. I think it would make sense to include
+> =E2=80=9Cmay contain multiple hashes=E2=80=9D at least, that on its own
+> makes it very clear what the difference is.
+>
+> My impression is that FETCH_HEAD specifically is a
+> relatively popular pseudoref and folks would be interested to
+> know that it can contain multiple hashes.
+>
+> If a pseudoref contains multiple hashes and you pass it to
+> a command, will the command use the first hash?
+>
+> Also are FETCH_HEAD and MERGE_HEAD the only
+> pseudorefs?
 
-Sounds like absolutely the right thing to do.  We might want to say
-that we check both the original and the replacement, i.e., instead
-of ignoring replace refs, we ensure that the commits, trees, and
-blobs reachable from the replacement objects all exist by treating
-those objects as if they were also at the tips of the connectivity
-graph.
+I think the pseudoref glossary entry covers these questions. As it
+appears in 'man' after v2:
 
-> This is not a problem seen in practice, but the
-> two can disagree. If a replace ref names an object that is not yet
-> present locally, the check follows the replacement instead of that
-> object when it arrives, and accepts an incoming pack that lacks
-> objects below it. fsck and repack then fail. Such a replace ref can
-> be the result of fetching refs/replace/* without the branch that
-> contains the replaced commit, which fsck does not complain about,
-> but it still takes a sender that sends an incomplete pack.
+pseudoref
+    A name that can be used like a ref to refer to an object, but that
+    is not stored in the same way as refs. For example, pseudorefs can
+    be passed to git-log(1) or git-diff(1), but they cannot be written
+    by git-update-ref(1) or listed by git-for-each-ref(1).
 
-...
+    The following pseudorefs are known to Git:
 
->     The case described in the commit message, where the two disagree, is
->     tricky to trigger in practice, so I do not expect it to be a common
->     problem. The main benefit is logical consistency.
+    =E2=80=A2   FETCH_HEAD is written by git-fetch(1) or git-pull(1). It ma=
+y
+        refer to multiple object IDs. Each object ID is annotated with
+        metadata indicating where it was fetched from and its fetch
+        status.
 
-Good.
+    =E2=80=A2   MERGE_HEAD is written by git-merge(1) when resolving merge
+        conflicts. It contains all commit IDs which are being merged.
 
->     Shallow boundaries are not affected, since they use the graft mechanism
->     internally, not replace refs.
-
-In other words, they do not introduce more links that need to be
-checked.  They just declare "behind this commit you do not have to
-check as nobody is allowed to traverse past it".
-
-> diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-> index 285fb3809f..b2c0d394ab 100644
-> --- a/Documentation/rev-list-options.adoc
-> +++ b/Documentation/rev-list-options.adoc
-> @@ -1107,6 +1107,7 @@ It is an error to use `--missing-only` without `--missing=print` or
->  	(For internal use only.)  Used by `check_connected()` to
->  	select the connectivity check algorithm; see
->  	`transfer.connectivityCheck` in linkgit:git-config[1].
-> +	Replacement objects are ignored, as with `--no-replace-objects`.
->  endif::git-rev-list[]
->  
->  `--no-walk[=(sorted|unsorted)]`::
-> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-> index 071a0e3cb5..bf66d2c9ae 100644
-> --- a/builtin/rev-list.c
-> +++ b/builtin/rev-list.c
-> @@ -30,6 +30,7 @@
->  #include "strbuf.h"
->  #include "tree-verify.h"
->  #include "parse.h"
-> +#include "replace-object.h"
->  
->  #define INCREMENTAL_MAX_COMMITS 1000
->  
-> @@ -807,6 +808,8 @@ int cmd_rev_list(int argc,
->  			revs.exclude_promisor_objects = 1;
->  		} else if (skip_prefix(arg, "--connectivity-check=", &arg)) {
->  			parse_connectivity_check(arg, &connectivity_check);
-> +			/* Check the original objects, like fsck and pack-objects do. */
-> +			disable_replace_refs();
-
-OK.  This is straightforward "we want to verify the underlying, real
-objects".
-
->  		} else if (skip_prefix(arg, "--missing=", &arg)) {
->  			parse_missing_action_value(repo, arg);
->  		} else if (!strcmp(arg, "--missing-only")) {
-
-> diff --git a/tree-verify.c b/tree-verify.c
-> index 25db76d30b..c228235150 100644
-> --- a/tree-verify.c
-> +++ b/tree-verify.c
-> @@ -133,7 +133,6 @@ static int verify_blob(struct repository *repo,
->  	vs->blobs_checked++;
->  	oi.typep = &type;
->  	if (odb_read_object_info_extended(repo->objects, oid, &oi,
-> -					  OBJECT_INFO_LOOKUP_REPLACE |
->  					  OBJECT_INFO_SKIP_FETCH_OBJECT)) {
->  		if (vs->exclude_promisor_objects &&
->  		    is_promisor_object(repo, oid))
-> @@ -163,7 +162,6 @@ static int read_tree_object(struct object_database *odb,
->  	oi.sizep = sizep;
->  	oi.contentp = bufp;
->  	if (odb_read_object_info_extended(odb, oid, &oi,
-> -					  OBJECT_INFO_LOOKUP_REPLACE |
->  					  OBJECT_INFO_SKIP_FETCH_OBJECT))
->  		*bufp = NULL;
->  	if (*bufp && type != OBJ_TREE) {
-
-So are these two other hunks.
-
-We can address the "shouldn't we make sure that replacement objects
-used when the resulting history is in use are backed by objects
-reachable from them?" issue separately.
-
-Thanks.
+    When a pseudoref contains more than one object ID, using it to
+    refer to an object yields the first one.
