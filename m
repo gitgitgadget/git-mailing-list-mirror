@@ -1,120 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793612690;
-	b=w5LbIYtJNAcm9pHCFc9eaHhC59RpxuqZaDIY804l+LzzpFk9kVPP4lQvet1h+ciQMYSu
-	 GCtxJboqwkTPjNiZKPiwQOuuT1avPmrvQ8RSlGR0gJNojwkueeLOjXQKHHUMw3kERdO/T
-	 x1mdTVN72W6xVSlWHS3PgNw4+feU7jU4yfJDETtS3NDQxGNEkcVV/zKFefH2EIwD6GNR7
-	 z3Aw+D693NxU+j8bmJfrbO0F+qjB74zpJTCwMmofN7wXqR+PkNwP980OnL/lH3yU0CoB0
-	 Kt8uzXiCUqqwMrMa8z3BKwAyoHmVaQThnL8ObR3uc0IJBfGosV9HKspZ8lJ1iIipfRw==
+	t=1793613207;
+	b=XayZdEj9C281dSueVuwDVknD8tWGPK1Z6EJ83mhlIdoQzMI2R8L2cfQFpxr9FVbfATO9
+	 p0il8YwU9EcvgP3zM97IqjMX17ik8WRlBYxbXB1NExiET5+ze13xTbXSmhxUx5tIffiWG
+	 xHD1wvEXetIEPTLobLWOmnB2MUea9gz2wDd5Fs3IICdwAzDCWLj7FwDLY5bTVabBeWBd7
+	 DjF9FyyAGu7xP+JOZdBPbtG+GPuSqtYXX+CnZmnN+KG9nRenc6dpCUxaa3q0EGjyDLwlt
+	 XhLSuG3mFjx8VWHogU2wmcGYwct7/vMkIZEJg5ZGFzQRo1cBBjAPntAXMeQy6XfFAWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793612690;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793613207;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=eP720fiG2dP/jYFqM/a1zG7Cxw2S+5YtP4GC7cIRyqo=;
-	b=5iZBhUVZR41CO4fLlD7nsdBSdRJ73JXSeXfPcueUx7//2Pi7T/I3hzptDYvN0ugLN+52
-	 dHoFiCSfuQNh0B/oHKrgVKTO3AJ90u3HgqofotWF+XJxtxH9KVJdg3l47fMeCvHz5Sg/U
-	 XxTxVTbrf49D5V+nRBb4tcniDOQ8akXCSlN4ASX1aNXmh9LfP2CJ4Zc2IigsuR/NfR0Du
-	 hTrDDJf8YdveiHZjKo0VfD/a55vYrMolFOtiI1pEnrhV9QvxJdrfYdF2qX1Svja/637iw
-	 ssQwMmr+86pQbFQ5dDyTohiaO/X2jNB6UscpJ4iAPMXnbhXS+EXpoKYTjVQjKAy6wAQ==
+	bh=jrFgZwDxIZNnryENlBbHI7VeZEFBcJdEhNTTekuNMtI=;
+	b=pOW9tnJ4nAYLPoiRm+0DCVRruWekc/F+Q1t6hnrOnToEAKB1XaB94PVi9UA7BgengOI/
+	 1VnGB2Oi7Nf2b+XGHOQ3HsdFPbDPxfPqzlh3GJj5Dpd/n5x/VrCOVm1MRUmJ305u/dQQX
+	 SKvfTeb5qTuoA8zth+jmGq4EyEIhGaKnLCngvb+Ro4yvibOZlgnnkbGzy8Nq0jm6ZBzy8
+	 BTIRasjP4f0T8lpIBaxoBktytFjMN2Gl/DA4tz6VlLVw6O75zWqZFVzDn6RoyiEBzEdWr
+	 4IG8x126K4dE0SJXeIosc2ZFM/vt6B7767SWucGlWE55H/wP0FET4VhAHoul1dwzwqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=kgacoMJK;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=sYXoxHVE;
-	arc=none smtp.remote-ip=202.12.124.149
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=cIfmBByX;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=B4PKmDfq;
+	arc=none smtp.remote-ip=202.12.124.144
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD3A606A324
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 09:44:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AFD3A606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69D6606A324
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 09:53:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D69D6606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=kgacoMJK;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=sYXoxHVE
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0C4E81D0020A
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 04:44:49 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=cIfmBByX;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=B4PKmDfq
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 180641D0015C
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 04:53:26 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 02 Nov 2026 04:44:49 -0500
+  by phl-compute-08.internal (MEProxy); Mon, 02 Nov 2026 04:53:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793612688; x=1793699088; bh=eP720fiG2d
-	P/jYFqM/a1zG7Cxw2S+5YtP4GC7cIRyqo=; b=kgacoMJKfhPYxMThCqZGxXoBUf
-	ioUKHJ5IWqwe8wu2BkIF59ysv+rvkDWHGusuPEF/eLHHMxShF0Y2/oPDCSh1sfEZ
-	7a16e7rfVx6cRxr3hEBSSsTPpDhjPKveyt3NGc4wp6i6GcstrpKRcAo5VnqIKHFP
-	crJO/icoMTWnOxWBuVCAw96Iime+vIbgGjkHMhXXc8ofjvH4ddkvBoiLgWjYntPR
-	rCMnMUUuLtSkikYgBRkftk8FkmTI+u1MSiwWywOQ0V9VzJd8RnNBJhCMrm/kjlfI
-	NmiXBp2ImJwPua1FnCqGJJ5R1+Bs5aCvpat/SkOFONa0lxJPHyzvXlKz5kEg==
+	:subject:to:to; s=fm2; t=1793613205; x=1793699605; bh=jrFgZwDxIZ
+	NnryENlBbHI7VeZEFBcJdEhNTTekuNMtI=; b=cIfmBByXzbkmZm0OJ7V8lWpr0/
+	9xIpyIUNF1RPGcMVHcpzPb8lPe4fTlJGQtrm6QD5UCMRLIWrs/H5IkP/fehyXs2k
+	FuwRjeM/9Q/xl6RgzwDze+a289RQl7XM46FfcZvv1EWlfO+Z0baFpwIWI8GhyIfL
+	ac+hROKXS/P8GtHaFlzi9ohEEyj6ePbi9uOMv6bl41Au26s6oG47bzdNXCFi4YCL
+	VCVQuS4cTdlz+o+jLh55SeEaW2muscci2hSs9UYIDOSQnQhKmHLFkW+8yNYRx7q3
+	87UJXoLauvMwU/NT5iI85nIQ7ZY7lVrfhdzuoD4YNANTQ2uv7P9539LIXZ3A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1793612688; x=1793699088; bh=eP720fiG2dP/jYFqM/a1zG7Cxw2S+5YtP4G
-	C7cIRyqo=; b=sYXoxHVElZ/Jo+457NZJolMSH1yMU1HgjLUhsZK/a7uHF/gPAHQ
-	bjYlmKX08dNAPueRZ7CKZJKy9axQQ4FqzIjDY64Y8znslqsXh3xw4Mp4CHj3xyMt
-	ceGNeqY9J0vvfJps3G1MmLlnHGnTQoHckwEZHAhSWxNhC7gB0cXaNddB5rHyPphW
-	sz4XCXCouZBvNpz9Zhza1mKsiN2FFFhz2fCTpl0GuMzf2/EjqrZfc6FmGyHYD50m
-	2loK4fJH5A+UduDPbE9/fMPy1/ZgS52lW9En+u7LnnO1wnS5BT2m24nGflAr9h79
-	DGgJ9zAyVxcpwOjXWsQB5/N/MvdRmFgQrdQ==
+	1793613205; x=1793699605; bh=jrFgZwDxIZNnryENlBbHI7VeZEFBcJdEhNT
+	TekuNMtI=; b=B4PKmDfq8UENDgJhVnMRwk5auQHulq1qtbXXzQTVfvmuAlnedVk
+	pCPxmU7YiwWgKYLRYV1LohFMhlZa6x81ibYOftHmsqfTWLmw9Gn3CT+a15xxlwOl
+	4hXeBtykI1WrnTrh07AIS1vb0kb8zLU0ARbwF5TemiMRfsoiq52plvNRdvjZuUEz
+	gyKrKGNr5V+Hw/MNHKC4PCWetiDVCJFFmeAxUbSEUXgG2WfyAxzLi4Ge1lEhWLXg
+	8ySea4LRNnv/fGVf8Rd5wsx/1GTGlZJj2BLqYimGvfd1luG83Dji2Bil6bwAPPNz
+	V/+gi+MCCHdbdbrN1FzI2b6mHJYItstfTlA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793612688; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793613205; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:gh6hLufNhTwIOQkYrLHp5PvSb4KP1rky2i/LcduHr++BYau
-	WoIlCk/EsM+cDjxpE06u3W2VgMwXdhBySTtktNN9wBkmErpmI3GNHmxa5PIoV2z1
-	eGPjpbuNn5GOZPLZtiFjADWI60QNJxZwP4MtXhLf2/7p9MhPPaOAgIs7z1J9RRGG
-	tY9CiiElGMFNWZcC1U3q4JrcgBAhfm2wjzFdhM+QKkZeX6HD4vsEoA9QVj+HC2eO
-	FLWFvVNNyjc7Gfapfis+H3vt4ggwsQhTj7FWaZ/uufvM0CR8bTLsyq+d9LprUGO6
-	IJ9HTBJdV7OMS9bhO6lG7oenKRenYPBXVQK+Gyw==;
+	s=fm2:rsa-sha256:HBrk8i3A2tDxzdoZVjmbEPyH2ODHg4j3n8+R8N6lylW3wBD
+	vr83t2yKJmRiMlfee1nY74VaRohvynPvJZHjJJ0TJqEBhy7aR/ddzpzXLRx9tufD
+	WxRaRakAe6oiMKrQXaqAx1AdkuDJPAl5jMcCs/Zuus7o2xm3NHIwL8DKwxqsxDKR
+	kCxkUIlMCmdyYJFv1M8G0xd60MhvRbH2d6L0BS6a/XKUm/t+T4c1rtYsFMhB+JcU
+	gWjXox7nD/nVCcOx3n1RPHvhxu5tajBJPldKcGkZIRRDc4GUmdNW5VhOiZunrzHz
+	bj1D0DNSQ1Dkae5IDn9c6eGRKqu/qD/wH8LzEKQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:LXuJC006+qemyLwTBRvX0gp4hjHtaD7+wMi0ctt/v9U=:ukjVxBpMyzFgYNDI0yFdCobmIwfHJ0QmHAZ67BWUilU=;
-X-ME-Sender: <xms:kFvoambRLhogiVwOWE1ru3clnY-5I1zQGu8rzScYlGvYDX7Aqb9k1g>
-    <xme:kFvoavZrrIz5vQqbchyo_pIX2jBW6MNOAmokCqqzgXqj1K2ni6PIZilVIM-SKgU_4
-    lJCorcdmOjr_VHsBiBV8JFRksTYcZUFnwyuwSE3q2r48janCr-3sC0>
-X-ME-Received: <xmr:kFvoaunxed21zIXRYZouwt8QyYfSgwP25CJ4DybuZDdkPeclkCmaLSKnySrUbri9kchscg>
-X-ME-Proxy-Cause: dmFkZTFmsdtEk8TGrrQNcHFrnV69JEUCziAmBlEmKZFOyBPUs0DOg8PT+jSvjfHwpOIpvl
-    5DHNbwsBV//Xasaz77PQ/m1ulCnsB7LWbuFq7TY7sM8ei+1eNspIujwBTT/176uCaGV8zq
-    MH4FC/oTNtOeQq5dmJd/+8G5Ifof8veKp9NBk7rJwBR9NTiY00KmX4KvT43QCNVP3EvNRy
-    Ct2aXV7diq8ZePKzgOD/lALemXpiGUOiYSjAF6APl8NZmqWAaOLbTB69d7DSYCjQAqzYjJ
-    GA2RBBrBVxe/fGsnlj6NRpDQelrw8gF7ZKxzbIro0erBbaAzWGa5bslli1zOArtkl3AHm/
-    O9VNkzcE7lUYlqlSdX0H+XVm8346zfR5b+FJrNXLeBZbiKx5kiOEND8A4nL3ADJVwq7LRf
-    72i+tu3fpmsIjrEYD/toehjVYCEAMOVjcWCb2O6flCEhc32n8CNRVpCFXj1kQ9x63mCuIC
-    Bqk7eQ4fKWGvmiQhWdmJaFqKskXch23weDQugz6zGO59JW8eEPe6p9GUzWRM8HbYLs3afy
-    y7RTb9nw+iPituGOQ0TF6QeDXul4mGobkCiUCFITKqeGYob+xMGZHcRfrw6jIRcW1harXf
-    aBxx4GXvAYHLrqmbqdn8UlSUAccSG9HkO5qFXaEq13DF/8qmndFnMrobi3Eg
-X-ME-Proxy: <xmx:kFvoajyf6RTSQvVenD5YdZp-LaRuFXWOtui5bSNJlf-23xWBvWbVUg>
-    <xmx:kFvoakMyn4l4nE-dRKHjZy9SXYVmG9kBG4TFk_vRZBO5jpmoPr--Bg>
-    <xmx:kFvoavSDTK2Sr09L_VbzBOfEp3VicctOc6cVRGGZcMJU-bYmlEaocQ>
-    <xmx:kFvoaqYZpqBT8aoDBTiBLKjqY0FVUcMwyUr3kZ78BAVLH4tLydwsMQ>
-    <xmx:kFvoapyKttfkaYCjB4PHf1s_0Kx5tfc4kjnXVtB7o1wkZUreaMUVH3Sw>
+Message-Instance: m=1; h=sha256:XPmy1OTg6CC9gr3/6UxV9x0TNEvat/lunS48L8BqZLE=:Yh4ZpuxKD7/zLXgoddMKkrms2tjLpllxOyEBXNftZXk=;
+X-ME-Sender: <xms:lV3oaqzhzE_OOoKH8H3o-EaqIfPPXDTx34Cwcdn6mt7M1N6i_dta4A>
+    <xme:lV3oap_f_TazfKfd_bdSSgSebcdtZbS9hHXwqnnQKfJGhnNJjNxfZ6vlB9qz8FIwA
+    hCSWLZhWkq94slgGSgwStZ_Lpfh1GEZFH3rp60ekzobj7onXVncChs>
+X-ME-Received: <xmr:lV3oamJrWNKTNtvmyPwKZEvAs7cNOxSeAdTakbALl0WGqMquyZlyQoBfhWa7cLqp16qJYw>
+X-ME-Proxy-Cause: dmFkZTGkVnPVsM83b1XK/E2CPOeUd4dDK9yeT2zPOKJIAkg/HJRz6ULzaTcbL1myaZ4j3Q
+    pxVXJhKZgNrWOYfaSq4uqhjLniCYLZqHyFNmTKDvdSUGfUxRuHo/DUMKEMlSBJXE97NZX4
+    3i3I7E+NdZXVBFiC0gDiPuyc4/Jo33nbInYyNwzuY3VdDzv/wkspJa5Fbqi+2oz+wPlO0w
+    +S6g+iHu4WRzyuqrnSWhOxVS+SP4kY99B2PmhhgfO4McW6itVePovwSOEpNNHg/xrq0rVA
+    ds7TBZaaxxpjCqJNj+EqWw59nMW5X4sozOrKJOFnkZ9HYuWt6EQrhC6IEmGkbwpbj5lprk
+    FHPvG3H1tuLtuFkaNfwkp1r2cag+rIMBY8vlUN0/HIYJT2NNMswYiqsUBiNIlPENE1atkg
+    t8ZvCEFiX1gXW/raRXhL+ic3F9YeNy8ftYoDZ8ZB4/WKOjncnSurEGSqxqjpckcSqtmhi0
+    L2ScFCyo6KKm6h0iit0rhTYuhOVb66iKdVaq2/7891UmDhtCZuZjUwJEAlN64SJTg/AvJ8
+    MBq5OlaA+nGE2zy66h06jzvaLqXXVH7phoajoSOoNqeRXdzXELsK//LrpqHISg4tkjk3dT
+    G/MmDe6hHVT6cnEUhdgkPf+xpI+H5xy+Gz0+bBHpO6sp5FGmYvvbt3BudQRA
+X-ME-Proxy: <xmx:lV3oanc0Zd4MmrcaB0npLlc2dpmv7Yhv0bbdjnr6tbQKYuSTFij5dg>
+    <xmx:lV3oat8PZJQs8E3duvvQdKzXpWJoMnoJY1YQ0S3MZDY-PKXZGNGV7g>
+    <xmx:lV3oaso6oafzU7skYCBNnZOUTQoY2Q999lSoHOIodiIsnTyGdBNtxQ>
+    <xmx:lV3oaqD6t6Y8R3E-Qv_qIWQqSNFwVpVOPzlcZ79C84alF5Oahg-Zyw>
+    <xmx:lV3oalAzVWUJO2AoQ2pjsdZnu7-YJl2iFESzt4sZg3YELyvBdKuRolsp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Nov 2026 04:44:48 -0500 (EST)
+ 2 Nov 2026 04:53:23 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 883d0184 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Nov 2026 09:44:46 +0000 (UTC)
-Date: Mon, 2 Nov 2026 10:44:44 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 61f3721d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Nov 2026 09:53:22 +0000 (UTC)
+Date: Mon, 2 Nov 2026 10:53:19 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] read-cache: hide refresh_cache_entry()
-Message-ID: <auhbjFvD8CNXYcgQ@pks.im>
-References: <xmqq4ie58syl.fsf@gitster.g>
- <auRm0Ohkg3OQIbWE@pks.im>
- <xmqqpkwrxkbq.fsf@gitster.g>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 0/7] Git 3.0: restrict hex object IDs to lowercase only
+Message-ID: <auhdjw9w1lcoFIiC@pks.im>
+References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
+ <20260907195941.1024289-1-sandals@crustytoothpaste.net>
+ <xmqq7bivmwct.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,50 +128,24 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqpkwrxkbq.fsf@gitster.g>
+In-Reply-To: <xmqq7bivmwct.fsf@gitster.g>
 
-On Fri, Oct 30, 2026 at 08:46:33AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Nov 02, 2026 at 01:11:14AM -0800, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 > 
-> >> Hide the low-level implementation detail again by making it a
-> >> file-scope static function.  The external callers would indirectly
-> >> call it when they call make_cache_entry() or rename_index_entry_at()
-> >> external interface, which "ort" (the successor of "recursive") does.
-> >
-> > Seeing all these patches dropping public declarations I wonder whether
-> > they should have been part of the same patch series :)
+> > As far as I can tell, Git has always emitted hex object IDs in
+> > lowercase, but our object ID parser accepts both uppercase and
+> > lowercase.  This leads to much software relying on hex object IDs being
+> > broken because it doesn't handle uppercase object IDs and this can even
+> > lead to security problems when people assume that an object ID has a
+> > unique hex form.
 > 
-> Perhaps ;-).
-> 
-> >> +static struct cache_entry *refresh_cache_entry(struct index_state *, struct cache_entry *, unsigned int);
-> >> +
-> >>  static const char *alternate_index_output;
-> >>  
-> >>  static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
-> >
-> > Could we avoid this forward declaration by moving the function around?
-> 
-> As refresh_cache_entry() that has mere one line in its body calls
-> refresh_cache_ent() that is a screenful and defined nearby, both of
-> them need to be moved upward, so it becomes a rather unsightly
-> change, even though nobody would care when they only look at the end
-> result X-<.
+> As far as I can recall, this had quite a lot of discussion during v1
+> (or was it RFC?) but nobody seems to have been reacted to this
+> round.  Can anybody give it an eyeball (or two) and tell us that the
+> iteration now is in line with what was discussed during the review
+> of the previous round, so that we can mark it for 'next'?
 
-Well, people probably know by now that I myself tend to err more on the
-side of fixing up stuff, even if it's a bit more on the painful side of
-things. So I'm not going to surprise you by saying that I think that
-would be worth it.
-
-In any case, I don't feel strongly about it.
-
-> By the way, I tried "history fixup" to make this change, and noticed
-> that the subcommand ignores "[notes] rewriteref = refs/notes/amlog",
-> just like "git history reword" does.  Again, I wonder if this is a
-> known limitation, or a deliberate design.
-
-Yeah, I already replied in the other series, this is a known limitation.
-I've created an issue to track this that we may have capacity to work on
-in the next release cycle. But I wouldn't mind anybody else beating us
-to it.
+I've added this to my todo list for this week.
 
 Patrick
