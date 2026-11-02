@@ -1,131 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793622303;
-	b=ss1RyCi3QHQZqD8KXOr7souMqrtD0XfN9/aMfA4P6WIVxkL3lZuLi28YoSE3xL3OVbZB
-	 7vScTZVp59H5lgEAe/k+fRpxleSgE56kDqYiZvEuiWrCdQ1QiifHP93ALl2WW0qwe4cv5
-	 lPfQcxRUfWxjiQCW89JFJNLFx5iJ7KghyOSJPk0dH4KgA50KR2RvM93btuld+sbMyqsrb
-	 JY7ApXqFgc/NbKEX/rj8ZzDcYOxbo2b4VGTeFd5CLmHFn5efa4R3CCbbj1TEuw7UISTOQ
-	 Km9Db/CrErMcSM5iQBhFbupcPOcHuws7k2deaJOctkRwVMUuBEuVVSEIXFPJhIjlPRw==
+	t=1793622633;
+	b=rqHvsT+oxZnM57YyyV4uDzFgmP0DxVu5y414Vs58LA8BJcVw8/83UQWNtKuU5QexwjZ0
+	 Qp+4Y8SgFxymHL/QB3V+VAmNcJadu1zzUHYlVoFnUOGEMnTzGP+j8t1qos+AherWxVRFi
+	 fRyF8S4+XhQ6LougJ8xC6S2motWmzhuawsHc54qZ+tjDi4+sXJuWwLaWEL1ULfF1F4aTc
+	 cGrFNyr8C9i4XRdoRcMqiaTO5bO5lA5TimV2wafdFqOdksO1oMmgWXpTnpvZLShkPM2Xk
+	 iPuI4I+mCFgmWfHkEujU9t0gdW8DeIPZJf715ahTVOYUPMldCAWcc5/t/B0aVaB5SGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793622303;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=IJBDPDBdqT8+0s6IE4BGvNkWIo2aw0wEGCAO+yTwd+c=;
-	b=xjYXzsZFwIDqFSK1vrKKm6p0qxwwa2hNj3EKP6azt5deUh/d+BZzO4kHL5Rq1SdYd1sA
-	 +alUhU2o+5eJoLn/3P72lJPzIxcIsHq5kuCRZFWoC1GtbZ5Dq9fmRrhPos8LSthf1LJ2H
-	 UJ/L51458MaurViYj+3A9ZKQC907L0cXqIviIjzQ16Z5SpEbb1PrYOM6lIk8Yqhdl/2ZM
-	 6F9zypmcYX6yRX8JIrvAXdiPYvjPrZk+rVWdQOBdPKRUjw+YlM/giXFnDAiSQiO9TrCkP
-	 xr2nudN1L038tJ7nvuelJM0tbNvNyCPkkMzHIuhPihuegLZOV2LHq67jo/7YhEgukRg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793622633;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=uUtr+yZKrqdINMLxZosLA70QbqgFBP8B9JV89981zNc=;
+	b=IlU3vsF61l0+NGqeI8FelpY66Vd9V+Q8UuW0Ub+ymu7GlEfYGTBxpSPkQ4u+fRimYwgn
+	 MJLJn4h6Ybu0vrJLuaGBGBN0G3U4wu+sVQsruR4ZmxPJ9Cz1zrTzd0q2ihrnHgxE0gmas
+	 /rXBzVtMYhNsT2G3ll0VV8iUtAtiHSeAfzujnvu9Rw1YWYRJ7eGYLLfwtkRpkWPMCOy2/
+	 Lg8KwYKNOTsieFuWTV0HAxto4o4nVXyLb3CKYsaszBCmQUxnc38aRH5R2DfZI8E0/s5JH
+	 1uE586fafwHVnmP0z7VFOHT2jRtz2Q1uVu/IbzVWV+vpHD2thdnwehZiCjz9qgOPxew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=J2RzL0Lk;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZukNni2l;
-	arc=none smtp.remote-ip=202.12.124.159
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cpBPtAHV;
+	arc=none smtp.remote-ip=209.85.160.181
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753CB606A336
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 12:25:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 753CB606A336
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D97606A329
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 12:30:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 70D97606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=J2RzL0Lk;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZukNni2l
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 86EDD7A012B
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 07:25:01 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 02 Nov 2026 07:25:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793622301;
-	 x=1793708701; bh=IJBDPDBdqT8+0s6IE4BGvNkWIo2aw0wEGCAO+yTwd+c=; b=
-	J2RzL0Lk9Lug4uFhYnucQ5uwmpCacv0OxwUgS9q8D62FqvOrvGNBC+I/9DAqfA3U
-	cleyoucsDj+6Kdwy9SOGKW8zbkNSOpDPnuBDRDH40C23nx4G0JFfVtbZubUp0j/g
-	CU6jUsBCbfRO5NpbKXM2XuO7sYICbWTj2ZukiSzj7sGEl8O9jk60f0Vj0ZoHOFcF
-	Z1iPrF3e6xqthEXpRZ7d4j9QS0bJ1AD0QRvlvVDhajM4Rhk3E8nFeC0PdoCrjFeK
-	Twp+JkPmvMjgthzZuB35VtvWFakrhAzlQgF4gj2+SqhStal02YRbQu9mTvUP632f
-	UPYbvWypFOm1BbP4zMbMpg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793622301; x=
-	1793708701; bh=IJBDPDBdqT8+0s6IE4BGvNkWIo2aw0wEGCAO+yTwd+c=; b=Z
-	ukNni2lPo1E/gbAMOO79KCWCTP0tjy4OcGYLwA5QERi3yhRrD/lng5RAc97yRhJg
-	KlfuBiNkLZK4LmeLcDv2H0we62OzELP4mYniyUee8pJ/9f7T9yDsR0fJyK9szpwO
-	V8PAtWHgmsKMuOIgXDtlgKCxgqpVkPrdHreTFv+jeTCdz63JFgHbnfdo5nVj3ots
-	oWsmeRs5ketNy3PmLoWzyCa9oInMLGIbUiWUYUS++oQ3wziZJpBn+8vEh2Aw//Da
-	iHqIAI2vrfuV0R/KOST5U5+QCO5DKkDZ9ges1jzpF6V9jSSzcZQ0oC6eKQ+ee0rz
-	WH8rNl95KDqeRyBKYTYSQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793622301; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Ue2Fl/7gyZlNvV+Th5HdglUYsmaphZTYSEgUhra3nf3G4CD
-	eMnkiobgjAQUCJRKbj/lDlSERR4DrtOYvNoLFzAgIRuKrlrK+D6fK+J3RPXUnfKb
-	IcdVHoNssZmNwv5SLY0Bz5Ikyr263bpxrfI8ODPQJ8LA3awu90emTT7cdGRnp2/T
-	gTIEr7WkRyS/PtZbY68VMYrfG6+hX1kA8Z5qzcPrMd4+s8B9ooFwm1odkGfRZN1p
-	VdxSPCIqUk/GdXHK691NxfPTiOZLzmXfr2RIKNLg0UVRgu4UuSPEnOpKCtUbeMnx
-	QPaQJcJNz27H/GpLi9tU6urIhoqfMRxl1N3q81Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-disposition,content-transfer-encoding,
-	content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:BWK+gqXMM0WA5NrzqTsvDxL8sYZKxlTtptwrxozomtQ=:vgutdZpy5n1wSBTW10JRWlfn5mxDyL0DmuqUKXxeZxo=;
-X-ME-Sender: <xms:HYHoakpEzUh-zfseZfyUqXnYj32hq4KQU_bnSIXlxFxryQS5TwMoiA>
-    <xme:HYHoauXQaYJ3EuAvXNxmm8u4TwNgFRqebR_xq_5y91tsWY6fHVylVPHW8mWdUCTaB
-    kz0Jpv-uRPk5Z4Y7VXvabFk2PS5OIJ_V-E7XOA7Lp79F6-_ZfjwmQ>
-X-ME-Received: <xmr:HYHoajAKmwqHR04kMoecuE2ENx6D0jTZDvaTzg5xuQYi1F57Wb_YUmWaAPSqyJHjPVwUAg>
-X-ME-Proxy-Cause: dmFkZTFJUhUpYfNTYfaSBPcS+yWzqaS6+jgEuvv8nBaAMH3hfwwitKpt2n22r9gADKSPGH
-    b9KECqm1aOc++fUsfdcNCseY0UikOtOIuuEU2SLG8PD5vVicC7KeW64jU1wsHHddkiegaR
-    +4ELulp5wLP1P+LGf3R8j+d6Y9HOTi4TqWNwg+YhFvB6FBlfu8B4UdmSnlpUdHlixD+KUt
-    qxXuvMMVjhLF56BnNrGr7O6Q5O06cqUu2P30ydjfN6KU4x448naGSQN6KZ7oQ6iVDSliL/
-    Fm4SY2JI1Eu3boXz3L3e9YbQ9nIh/IqkVOkMwsOYrc9XgOhkSc4eHADCzZPPrhzUW5B8Ug
-    e7beppBMhJIK6dxacxkD95JXukP2nhGVeSMKWyYF7eD10nqLBXKyURuahlxw/dhC+6Jnf2
-    5Pjck1hL+TfvfCJLwxH77zQpWPf5xTkn5r1RtWpP+3g5kyeO7CflV7J9nKnC5I/hcj3EN/
-    DqRcfeumTUpdX/pZnuQf9R1ON7Sbk5qfyu+feWnbIFrfr2s59l65sO1LzGe3Hbxubw/2yX
-    NzrqI0WlWCIdsuIV68zvKgjk5od+AyiCNN/locaT5ZKAfA2qJv4+TfdD7Zy8RMaevedAeo
-    NUTmGktsLP8x2ig/RVToyoyCb+LmdRty+EGIuIsik362U7kKr2AqrYYiwQ1g
-X-ME-Proxy: <xmx:HYHoai3mV7ectqZc-z8fxbdbcKV6GJb4KgNwzjN_lgnK3160Bywckg>
-    <xmx:HYHoal0-K6fMJXNAP9u4NVANIowfNV4-LsRxmvxA4Gy_nSed1YmEGQ>
-    <xmx:HYHoanA6Xbq-am7e8vMtAd90VzVwPcwxJpBoqxk0glkx9lYG9KGSpQ>
-    <xmx:HYHoak74eiluNGhq5RgeAZDbRnKE-aa20VF8-Xew5KNK8r-6-aEcLA>
-    <xmx:HYHoasOYkvgidtNhwcdebvk5z69u5Cn7UgXInRlZFEN9z5Kkcplk1xJz>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Nov 2026 07:24:59 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 64c90467 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Nov 2026 12:24:57 +0000 (UTC)
-Date: Mon, 2 Nov 2026 13:24:54 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	GGG <gitgitgadget@gmail.com>
-Subject: Re: [PATCH v3] object-name: explain why <rev>~N fails in a shallow
- clone
-Message-ID: <auiBFhXI_xiBTPbg@pks.im>
-References: <pull.2413.git.git.1789898013916.gitgitgadget@gmail.com>
- <pull.2413.v3.git.git.1790189759802.gitgitgadget@gmail.com>
- <xmqqtslzlhbm.fsf@gitster.g>
- <CAHwyqnVzsvsGXzVj4P=rXJJTvfeQt0D39Aj7R1PTyQVkJbm4DA@mail.gmail.com>
- <4836126b-e630-45cd-8757-861133ec233c@app.fastmail.com>
- <CAHwyqnUP_aeKSwj03be0PVdqLX=UYhwW22kBtoWU9Oy2XoaFLA@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cpBPtAHV
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-5351d76e1baso34824321cf.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 04:30:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793622632; x=1794227432; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=uUtr+yZKrqdINMLxZosLA70QbqgFBP8B9JV89981zNc=;
+        b=cpBPtAHVfOcyqZ3nvzHwlrQVYZ2OtAhW2J8TiyzGi0ayXmDTtOFMwKuc1PST5tkhUb
+         cV0d6NaFaLNcijT5lAleSvUMgWDIMP/xiWEvAcjDzAw0/QgjVcRsZtUl+gzYIrCM+nB2
+         xtKWBw94V7AJdLT5/UQAr94UO6GJ8MKXADCzQyGgCBUGkQ489pGzICi13Me44/jH82Iw
+         Y+gDIJ4MyLa11/6kW+JJCBi+0mBOFmdZvFj4vszRK6SalO3GM9DzNnxN0EXJGG/vjkZY
+         surs0jQNRv0AbWH6bPQsfJEOLvdSICXzQhVpju1/AbFaCFjRUYlO3Enet/sNugxaiTwB
+         LuGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793622632; x=1794227432;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=uUtr+yZKrqdINMLxZosLA70QbqgFBP8B9JV89981zNc=;
+        b=I1rcI2Ie0WXkVfxopzWgCYXK9pDpkqYpTL5/2gRDjo7OFeanm3WRr6vmJZw8NTCdGK
+         EQx/skIPA+Ylu6Is3izqSqKpvQR6EAdg/Y9g+kwMwcMgqofGLMSRfJY+rKDJlp+k08u6
+         aLEwiVY+JZ5044O5Hhdj2BVvIs2njPi2iaKhI7RVSoZhfRtPkHzWLc4jCDUO3MBXejqx
+         MzJWWBCBsm51yrEYMHlTVub83iXtSwsssZ+NW8JNKZfegUW+h0AkhYbHeRZLfpxETHWO
+         g+xalpRpm2Ff1xPmiUNMBLAu3bLyM0KuZVo5Jo5YwUYnCHz5c6sXbsU5RX86vFfPc9et
+         htTg==
+X-Gm-Message-State: APuU4Z+6tgmTiiKFUtECxKKK9YBgdwLVYBYSst+5CBQ5xtNEQUKqWEzX
+	nvYXB6Zwr6J69JDkw3XereDLsdp0TUKUF7/fSAhmhY6df+cIXEqbovKY
+X-Gm-Gg: AYBFou0OXTAgwlwKackHNzwiHwXF9OBaWFqL8h3+OHFXc0H0Ip4UmfUV44xXuRW46Sj
+	PkBtIsB6qv9HyCcOb/K0+/YVBXKrufsqckw/E6riXZG9tqwJX5bzSOFZr17Vu8nkZggt3NTpCAo
+	ARFCHQS4QeV8OpgUDDXiPmt1i8zWlB/jhKWT9SIyQEzeaFnrpAYt8e4ClRceUiDxEDISrC4hgH7
+	ZcR/gqoGcXhgXhHTNH1oMaC6TwoXvUnC7xQMDNMC5rqTEcxQvvM3gAL2tf8WRVo/JywLK5TjI09
+	QX3b12pg/koo3q5qrkPWCAbBMbW3f5GOwWyz/6dI1eCYCcqp+BU5HNS/JGFpa9AV5CWoRCW17OW
+	GCKHYwgsqh00QRWC+OMzx8Qd46oMVV5J09h4kYcCWOb+mgTJd6uxkuq7O/239iDV8IkbBDS1mO3
+	q9K8bYSr8MW2xsyXOHd5W1av96rcqzHBkboc+TpyO0tZGCUcaHJcVrgzuiw1WfwApD/mdcHq4+T
+	lmhSXejXMY7dEiNqu4DgyUr/KUQDQtdzuOr56HVvHRIgGZOUbFTcy8Dre6TrJkYh+7j+caDbg+d
+	sn7hozw8M+EO3zbeikA7Mm/Ietoo10uwrAI=
+X-Received: by 2002:a05:622a:48a:b0:536:64ee:73e8 with SMTP id d75a77b69052e-542b6973680mr156998101cf.8.1793622632050;
+        Mon, 02 Nov 2026 04:30:32 -0800 (PST)
+Received: from HP-V15.xu.edu.in ([125.22.10.135])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-54311a89ba2sm84860141cf.4.2026.11.02.04.30.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 04:30:31 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: pushkarkumarsingh1970@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	mail@thomasbachem.com,
+	ps@pks.im,
+	ttaylorr@openai.com
+Subject: [PATCH v2] maintenance: improve handling of lock acquisition failures
+Date: Mon,  2 Nov 2026 12:29:56 +0000
+Message-ID: <20261102122955.143018-2-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261101105859.25579-2-pushkarkumarsingh1970@gmail.com>
+References: <20261101105859.25579-2-pushkarkumarsingh1970@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -135,48 +99,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHwyqnUP_aeKSwj03be0PVdqLX=UYhwW22kBtoWU9Oy2XoaFLA@mail.gmail.com>
 
-On Mon, Nov 02, 2026 at 12:07:29PM +0100, Harald Nordgren wrote:
-> > > Is it possible that maybe the review process needs to change if too
-> > > many things are getting stuck?
-> >
-> > The regular reviewers have been talking about review work being scarce
-> > compared to contributions (contributor work) for at least several years
-> > now. How can this be changed if there simply aren’t enough people to
-> > review everything?
-> 
-> We can loosen the requirements on perfect code, as long as it does
-> what it's supposed to and doesn't have security backdoors.
-> 
-> Many things like tests, leaks and linting are already handled
-> automatically by GitHub CI. It's a good time investment to automate
-> more, because it frees up resources long-term.
+When git maintenance run --auto fails to acquire the maintenance
+lock, emit a Trace2 data event describing the reason for the
+failure. This makes it easier to identify cases where automatic
+maintenance is repeatedly skipped.
 
-Even if we automate more of it, that would still not fix our bottleneck.
-I do no trust automated reviews enough to just merge patches without a
-human review, as part of the review is also the conceptual direction
-that we are moving towards. And that can only really be reviewed by
-someone who is familiar with the project overall.
+For manual invocations, report lock acquisition failures as
+errors and return a non-zero exit status instead of silently
+succeeding. Respect the --quiet option when reporting the error.
 
-Now automation could of course still help us. For example, if
-contributors started to self-review their patch series before sending
-them out, or if we had a tool like Sashiko [1]. If so, the human review
-would happen on a patch series that is in a better shape already, and
-that would likely require less of a time investment overall.
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+Changes in v2:
+- Report lock acquisition failures for manual invocations as errors.
+- Print a warning for automatic invocations while preserving successful exit status.
+- Trace the reason for all automatic lock acquisition failures, not just EEXIST.
+- Add tests for automatic and manual lock failure behavior.
 
-Granted, at times we err too much on the side of polishing the last tiny
-nits. But quite often that's also us trying to train newcomers to write
-proper commit histories in the first place.
+ builtin/gc.c           | 28 ++++++++++++++++++++++++----
+ t/t7900-maintenance.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+), 4 deletions(-)
 
-What I would very much like to avoid is reducing our standards just
-because "carving in to AI is inevitable". I've heard that argument way
-too often by now, and I don't think that it's a reasonable stance to
-have. It is very much not "inevitable" that a project must move faster.
-
-Patrick
-
-[1]: https://sashiko.dev/
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 81cecf6b6c..9223409750 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1402,6 +1402,8 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
+ 	enum auto_gc_hook_result auto_gc_hook_result = AUTO_GC_HOOK_UNDECIDED;
+ 
+ 	if (repo_hold_lock_file_for_update(r, &lk, lock_path, LOCK_NO_DEREF) < 0) {
++		int err = errno;
++
+ 		/*
+ 		 * Another maintenance command is running.
+ 		 *
+@@ -1409,11 +1411,29 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
+ 		 * recursive process stack. Do not report an error in
+ 		 * that case.
+ 		 */
+-		if (!opts->auto_flag && !opts->quiet)
+-			warning(_("lock file '%s' exists, skipping maintenance"),
+-				lock_path);
++		if (opts->auto_flag) {
++			trace2_data_string("maintenance", r, "lock/skip",
++				(err == EEXIST) ? "exists" : strerror(err));
++
++			if (!opts->quiet) {
++				struct strbuf buf = STRBUF_INIT;
++				unable_to_lock_message(lock_path, err, &buf);
++				warning("%s", buf.buf);
++				strbuf_release(&buf);
++			}
++
++			free(lock_path);
++			return 0;
++		}
++
++		if (!opts->quiet) {
++			struct strbuf buf = STRBUF_INIT;
++			unable_to_lock_message(lock_path, err, &buf);
++			error("%s", buf.buf);
++			strbuf_release(&buf);
++		}
+ 		free(lock_path);
+-		return 0;
++		return -1;
+ 	}
+ 	free(lock_path);
+ 
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 9d610a29fe..c0763cb6e2 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -387,6 +387,32 @@ test_expect_success 'loose-objects task' '
+ 	test_cmp packs-between packs-after
+ '
+ 
++test_expect_success 'auto maintenance warns and traces existing lock' '
++	test_when_finished "rm -f trace.txt err .git/objects/maintenance.lock" &&
++	: >.git/objects/maintenance.lock &&
++	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
++		git maintenance run --auto --no-quiet 2>err &&
++	test_grep "Unable to create.*maintenance\.lock" err &&
++	test_trace2_data maintenance lock/skip exists <trace.txt &&
++	test_path_is_file .git/objects/maintenance.lock
++'
++
++test_expect_success 'manual maintenance fails with existing lock' '
++	test_when_finished "rm -f err .git/objects/maintenance.lock" &&
++	: >.git/objects/maintenance.lock &&
++	test_must_fail git maintenance run --no-quiet 2>err &&
++	test_grep "maintenance\.lock" err &&
++	test_path_is_file .git/objects/maintenance.lock
++'
++
++test_expect_success 'manual maintenance with --quiet suppresses diagnostic' '
++	test_when_finished "rm -f err .git/objects/maintenance.lock" &&
++	: >.git/objects/maintenance.lock &&
++	test_must_fail git maintenance run --quiet 2>err &&
++	test_must_be_empty err &&
++	test_path_is_file .git/objects/maintenance.lock
++'
++
+ test_expect_success 'maintenance.loose-objects.auto' '
+ 	git repack -adk &&
+ 	GIT_TRACE2_EVENT="$(pwd)/trace-lo1.txt" \
+-- 
+2.53.0
