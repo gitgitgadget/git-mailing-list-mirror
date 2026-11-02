@@ -1,89 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793632438;
-	b=opUKSoXU/+QzXYShZKDzqhqJT1hiDe9OzH8HLdXvLD/KDAFAOVx74cDvBYEjFP42y6Ya
-	 2yWC42Feu1PrkMVuwq4VBTez/NaZI6QvKGZ7BQ8UD91t4yteNVFKUBJa8YfAWnl+dziky
-	 L7RJy0ehGPgidMA3/pwqakbEsYKhnbzFvo4EnHA55b9mqBB6wiX33jXK8MuFPzXHHA1tE
-	 nttOm3R+6uod2uY7+j9SEqyMy4nEqP3+62apH/jnr4YZ6MPmUbdLjUDnaRMacY/+yh8v6
-	 gpBE5egNiXZYgpq0Zo99BpaJTj1R7chQ0nOpk9XAYmUdYSuTcDru+8/WW5n4TTrjHHw==
+	t=1793632524;
+	b=0ZphY8oo/HufWZLkiHHJTWLMxgCaIfYxOBERuhR5vXaJ25iYozYAb8OPDNYfOdvS/xho
+	 5NRz0lY9n9maAZr0Rvlin3RgsNPzbLCD6dSd2RN+zX9KTXMQJwBS+V0ZV2j8JQrICY+rD
+	 bCEEko+DszlaGUGYwqjZ6T0oDnCIj31/NbydM9yTS9mBej3+KK0Z4Zq46cijU5Wvqo0kH
+	 KC5mt4vwDcLpbgb/3kDu0hqPUUrbcqUV8PTGf5/N1toic5aqbFW+XDkL1m87nkwH2xSN7
+	 XvCnhbJ/5lWltpY5J0FhzUNOVNnQjqho+11k/o3xpU/8m9ka8Sr4JxAiKJI76kQ6jiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793632438;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793632524;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=cU74aHM7jlNfSAz77KMkGZe5zvTTb6/VQO7v88VA7fM=;
-	b=iZaI/vdGS7e9SyPMKqM1iqU64tSu5WrIvO8TKX04ukdS82jm438TnoTQSvfD2Yy+DrA/
-	 JZaA8gx4Kd4e34pIiHvP4ua9ymfcRTRAOGfquYNr1CKyEdxYc/Yap+I8PRmpEI5tqbXdt
-	 gtfKdFwEH1v0E2zWKgqTLkreEoCHhFkUGC8gYyGunvjasbw4VwcKyj4fWEME/y3pcmYQL
-	 1bm7Wy5l+TFYTFEyBR7Vv+7A10geZFAhey2sKiMG3MovHD/zpRslinSwqcXH/fjDhV7Ea
-	 hTM/Yf+8Uk4vOpZBdgnS5xSipscOni3ZflPLAnHx15QYL1xvMT+qUqb9xJN9hqyA+aw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=Z1QEJw8dMvWu1RH2yAPNw+2dWpH9cLinbJfyFG6oI7E=;
+	b=0zv1+MyaryVDi1AHptkr54N9X3i4jSulcH2dBKDvjUXmCCO1obO7Bi6cXLg1ec9Yoe5X
+	 Mv0WqyBDoNKrOqx44m5YpGVLVuSYoUWbO+WieNiY/OFWYFbcJ4NJArCiKNdc5F5V1lmrR
+	 dAawNcgPiWHiA7aBUaf1NzvM83DIQ13fDxetTwLBbCm7/iAE88O08Sc4dLE8M3TewBSOF
+	 G6DpwaMs9nnat4iSWLE9zmd+HxrSaFQN+fgkDQ5d0wVRMskYzdrHtLRzf4xzahTSXQyDB
+	 SkREtIKRYuYcl+HRPS6KqEvZVE7AYbmU9Ts43/Q8yEt0R2cLTE4UbOloY8Cub4T6ucA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uuliPGCU;
-	arc=none smtp.remote-ip=209.85.222.170
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WsOsf+Ym;
+	arc=none smtp.remote-ip=209.85.128.43
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0928F60B0167
-	for <git@vger.kernel.org>; Mon,  2 Nov 2026 15:13:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0928F60B0167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB7C607A8AA
+	for <git@vger.kernel.org>; Mon,  2 Nov 2026 15:15:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8CB7C607A8AA
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uuliPGCU
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-93e55db58cfso309258585a.1
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 07:13:57 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WsOsf+Ym
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a2072b9832so19509405e9.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 07:15:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793632437; x=1794237237; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=cU74aHM7jlNfSAz77KMkGZe5zvTTb6/VQO7v88VA7fM=;
-        b=uuliPGCU3YqA4cuwPij8OJIMmeu0rI/x1Z+60qMEfL6tDyvl3SxLpH7IqQXc6aq0xU
-         lddFt4dQFxvzqi+Fg7qPyeKkiWuOuEe2Ka8WIb6vVCx1qbmDufq2rOcsyKo6cgJtkcW/
-         PyiYh8a1Dk9U0yY9ZJVymI4JaGYX9eacD3/x9xj9ZDzS2CZUM8UDVx7/tidweMpvOiq6
-         uYFH+qCiaFsEBnvmLvOeOsrghZvy3S/+2uMcbZNEPk1+PuLwfoKlB0xm+xYLIMHHvH+5
-         Zhme249rH4hlWfV25BRkE4+YfN3Kc2g30bhXfGBDw8JEy2RoRkmQgjSQ2jXksCpl/1DT
-         zDOg==
+        d=gmail.com; s=20260707; t=1793632522; x=1794237322; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Z1QEJw8dMvWu1RH2yAPNw+2dWpH9cLinbJfyFG6oI7E=;
+        b=WsOsf+YmJ3a3mG4TsLdPvoaiMKxzh+ZgnAi6U7bYT6wYF6QIPjjQvU0J1dlVwsbSZu
+         36/idln2EMM7EdmOiDX+d6dztOgBzIrJxkBkXw3lz9VS5xuVA5wdOn5LTVJq872m+rwN
+         5vS8WfeQY4NcPMENTfBVO8s9dZKZabfTSOA6TsFtYnNy/r9xiNsDqVcfuQYs3BQSyfjZ
+         sfKPESsmSdSbJhUHNrgJHE7DXiN1DTJ+tA6Jib54/CE62fXSNU+/hVcO7HlffwRf60fu
+         +x5bTjztNxcU3BwXyIYYgZjB3tYehpqzBhvYLHnzp2GEleMuU+0za1RH6IPBmar0RCR5
+         aDeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793632437; x=1794237237;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=cU74aHM7jlNfSAz77KMkGZe5zvTTb6/VQO7v88VA7fM=;
-        b=bAn1haz4bncVYgMVDo7M/zaDwDWPWTINrue4IXVkp57yaYzLng5lLVfWqMRsuZzmSy
-         gUeQBuh9wvhqpeUK0Kd3UTpus+FT3FEG62LrIx9l046YSFByJQeIwc0gLYKHijMig1Iz
-         u9ejSwB8QazWbHotnHILi4o/MR5lDoYB7GrnsDa3JVqVi/o+J7tEPhTF/Nh3cTBQP0xU
-         w8Oi3ayAlOq1bME9tmoyxMv0pgPqq2TWyCCSmik890J2xoN+MDvcU/FLMoqHDCPhB2lw
-         qRDm6XY0OHWae8JqawdpJQaEsxTZTuemJSo8FHLMhmKRs1RP+AlR2hinkDvhhtDfQNoi
-         a7DQ==
-X-Gm-Message-State: AFq9FYKwLbFoaamRR0NCs9QUhIBFTv5uLbl8z9wK2H7TLdEPCq9euVIr
-	21gpphQh6AWTa5JVLeTX/nrL9tUVhUAoK0nMaw/FGKNDIm1UZyRV/Mkldid4zbfc
-X-Gm-Gg: AYBFou2x8fquQs+9XCzG1JLdxDNZBIcE13b0zW6lHgtvcHrmO4ipxYK06qrAo/cpY9t
-	PXJX2xUcenpnksCebdd3JqW0QZQqwHrzfAG0dQNAijjR9bmF+h4lgpPqiq+8964Nj0VcxVIWiTx
-	C+U7UiEAWScTtaNaxo9TSqEnbC6WV7fFkPSZOswEswEMUlCExmSDJkfNBJknqorqDGgMK7qyrDB
-	mQqdRjrZLe1V/BUfju4L5T4pNlJuOYBm47z1YSAbYB29Lvc3qebdm/p8DBTtO0ls2dzTfkWtmUE
-	hW0Q74Lobm3wERHgF+3cdU6aWp+v79tugx4Ut+yo13GsnxH9vzgfRQUDne7j8SMlLdrSg54V5V5
-	p+wOjeXqU8yiBdzkP6oVPxXS41qEC5kfOMXWq4ezQpqUG3R0zBmxUHx1pHwVTB5CIy4O0hsyVNF
-	UfV5+DP+TjhdQ+7mm0dOvMZ6REsJEjXoB/Z5SCnE60so3A5NhCU5nty3GPJLni3SAnvxnDWMj8g
-	+81YCvGhzmkpI2MVE0FpTiUInVXQy0bqChANDMSZqXtOYI+y6x6rYOXwmpWBs6h/rHXgCS+IGGC
-	bCXMTNqqTvojbeGCQPitwunE/aLLFr5izA==
-X-Received: by 2002:a05:620a:4586:b0:93a:1b82:4962 with SMTP id af79cd13be357-9442178c78amr1772581685a.47.1793632436890;
-        Mon, 02 Nov 2026 07:13:56 -0800 (PST)
-Received: from [127.0.0.1] ([52.188.198.105])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-94425ac6bddsm856297885a.37.2026.11.02.07.13.56
+        d=1e100.net; s=20260707; t=1793632522; x=1794237322;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Z1QEJw8dMvWu1RH2yAPNw+2dWpH9cLinbJfyFG6oI7E=;
+        b=tI+yWkeoilcQ6ti0hdJcF+YLt8cIl7mU1qPG8wZeFX04gLsIWw0CUlV92FNFBWFfr3
+         pAAAZ+plkJ9VsZcWmH8RFLFpwYNYaAu5XEkQSFT1SHAMXQZWt3RtNoyDFoTd6XraCVS3
+         3mkBLAz0Ohi9k2R+SjLKuLmv9PuKNXSCjlWwAHDrQyYtbOrd/a5oW7batIte7+twDol+
+         tiZSogiVHXvmQjEpqi3rkfKVqNKOxqb28v81VIvacT0bzqE/B9ZLGYPShUmFIER0ZjTT
+         66PpIyrqzSsD6qyOG4rmMS02vkr3A9hMIJkYh05gpWibIBJ2lgQCxIj7X6wQX/cLIj9T
+         WygA==
+X-Gm-Message-State: AFq9FYLPGOXPicpeQiejz48vmvH/x/WKOpHxl50b/Lti3QM6daUQo3SR
+	YNrTnhRHaAOGV0UfLo9/k/qOs+bAOvKPEAzPOmwIB1QAcjJGqm5vHy4wu1ta6g==
+X-Gm-Gg: AYBFou2+aDahE2K/5jA61+4z5l95FDdWTYvnFwLmwCaCRxOIW+rX4TwlDYWwIXcpDn5
+	MWvurIG/Ukf+mBAqyJzyARC8zJIjLWQjlApVZ5OnksQVNeCxVWD2hHsLgeVpV8yDzKXZBVWF7e9
+	bQP/6pjV1k2O1OS+OV0CV9b5NhH3c5avVFS3fWDcPy/Lh5RpH+ZZuVRLnGSxsoTNA5aFKyyoGF6
+	xegkyJ92keQX8fbm24mFFSYuSE4dc59kr6wbTc5jLKiTNbP4U7SB0UKA8cq6wsnd6eCUOMSYF04
+	bWsN5/+kGyoVXeFd1cQHYSOQTz5UusCX30ITzN5TnEGqKqPgqAv4NHhGJyaBHB/gP6wlK85OEld
+	fkMA1L2TDVgwNgBScz3JwDBd1xC7iCUI5TT6cjXS+EKoD14ln+yEPSFs3aer2vh+gMCatZD1z/n
+	WW8/hkzxEUCCoZZ89NVPQASGyRrbV4vklT/o/NRvOhKA86Ng1r7JVWHhOi5EUmTCRQJsJyEzuEV
+	s+8e4nInxtcbPeitniIq4zVjYnruU/GvT+ytrFk7UfwRC+7HnFThnaWeveBwCvUyLNqI044oS9X
+	aT4Gu+PLOhTGIpIoaw4cGPGOmsUpIfY2ungsU08cP5wW5AfzsEkFzEBLFdF3a57ewHsp/9wAJfD
+	KNGBM9t960sdOeFjkza4iq5d5lldf9m0e2ZwbF9kCbPvdkSudXYdfOB+XPPa14EzbovCljNjEdI
+	9Ce3BmVZJiOeQlYM4/sTHv+QVZ4p93ueAlvOJOhXQ=
+X-Received: by 2002:a05:600c:4687:b0:4a2:10f9:37db with SMTP id 5b1f17b1804b1-4ac16fa4dadmr238577235e9.7.1793632521661;
+        Mon, 02 Nov 2026 07:15:21 -0800 (PST)
+Received: from christian--20230123--2G7D3 ([62.35.114.108])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b80eb1sm21851553f8f.34.2026.11.02.07.15.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2026 07:13:56 -0800 (PST)
-Message-Id: <pull.2479.git.git.1793632435937.gitgitgadget@gmail.com>
-From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 02 Nov 2026 15:13:55 +0000
-Subject: [PATCH] doc: document the current project governance
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 02 Nov 2026 07:15:20 -0800 (PST)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+	Cynthia Uche <herroyalpriestess@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Justin Tobler <jltobler@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v4 0/4] Standardize early option scanning
+Date: Mon,  2 Nov 2026 16:14:48 +0100
+Message-ID: <20261102151447.734680-6-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.56.0.4.gceeb21e89e
+In-Reply-To: <20261012074413.337183-1-christian.couder@gmail.com>
+References: <20261012074413.337183-1-christian.couder@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,171 +106,364 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>,
-    Antonin Delpeuch <antonin@delpeuch.eu>,
-    Antonin Delpeuch <antonin@delpeuch.eu>
+Content-Transfer-Encoding: 8bit
 
-From: Antonin Delpeuch <antonin@delpeuch.eu>
+A number of commands perform an early scan of their arguments to look
+for specific flags or structural separators (like `--`).
 
-The social structures and conventions in place in the project are
-not necessarily obvious to its members, especially to newcomers.
-Misunderstandings about the expectations of the community concerning
-certain processes can potentially lead to conflicts or friction.
-The ways in which the Git project functions could potentially be
-improved too, but identifying areas where improvement is needed
-is more difficult if the existing conventions haven't been spelt out
-explicitly.
+These hand-rolled early scans are often fragile. They especially fail
+to account for options that take their value as a separate
+argument. This leads to disagreements between the early scan and the
+actual parse_options() pass. For example, the early scanner might miss
+a special option entirely, or mistakenly treat an option's value as
+the `--` path separator.
 
-Document the existing project governance in a new page of the
-technical documentation. Describe our current ways of working
-without claiming to set those in stone as policies.
+To allow these commands to safely skip option values during their
+early scans, this series introduces a new "early-scan" sub-API into
+the existing "parse-options" API.
 
-Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
----
-    doc: document the current project governance
-    
-    Hi all,
-    
-    Following our earlier discussion 1
-    [https://lore.kernel.org/git/1aee1829-d7ad-47e2-b7d1-1a946bd59991@delpeuch.eu/],
-    I have attempted to describe the existing governance of the project and
-    am submitting this as a patch to get your feedback on this draft.
-    
-    There are a number of aspects that I couldn't figure out myself, so I
-    have left some questions in the document, formatted as "admonitions". Of
-    course, the patch isn't mean to be merged as long as those questions are
-    present. I'm hoping that I can replace those by informed answers after
-    your reviews. I expect that the answers to many of those will be along
-    the lines of "there is no agreed-on process for this, we would make one
-    up if the issue arises", which is perfectly fine. In that case I think
-    it still makes sense to describe that as such for now (which might
-    prompt the project to prepare for those situations better).
-    
-    As suggested by Junio, the purpose of this document isn't to be a policy
-    but to describe the status quo. So if some processes described here feel
-    accurate but inadequate, I suggest that the discussion about what they
-    should ideally be happens in separate threads, similar to the one about
-    the voting process 2
-    [https://lore.kernel.org/git/summit-2026.94e33e9ddf234334.06@ttaylorr.com/T/#m7b0180985c2ea6325078119406d09a4e4f0b9481].
-    
-    Thanks,
-    
-    Antonin
+This is deliberately implemented as a new simple and fast scan. A full
+'dry run' of parse_options() would have to avoid writing through
+`opt->value`, calling callbacks or dying. Instead, the scan reuses
+only the long option lookup of parse_options(), and stops when unsure.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2479%2Fwetneb%2Fgov_doc-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2479/wetneb/gov_doc-v1
-Pull-Request: https://github.com/git/git/pull/2479
+This allows negated options ("--no-..."), unambiguous abbreviated
+options and aliases to be properly handled. The early scan also agrees
+with parse_options() on which options take a value, including those
+with PARSE_OPT_OPTARG or PARSE_OPT_LASTARG_DEFAULT.
 
- Documentation/Governance.adoc | 85 +++++++++++++++++++++++++++++++++++
- Documentation/Makefile        |  1 +
- 2 files changed, 86 insertions(+)
- create mode 100644 Documentation/Governance.adoc
+To never misinterpret an option's value as an option though, it stops
+at any argument it cannot reliably skip:
 
-diff --git a/Documentation/Governance.adoc b/Documentation/Governance.adoc
-new file mode 100644
-index 0000000000..b1f0a21203
---- /dev/null
-+++ b/Documentation/Governance.adoc
-@@ -0,0 +1,85 @@
-+= Governance of the Git project
-+
-+This document describes the social structures in place in the Git project. It intends to be neither prescriptive, nor express a judgment on the merit of those existing ways of working.
-+
-+== Scope
-+
-+The Git project develops a free and open source distributed version control system.
-+The scope of the project covers https://git-scm.com/install/source[the git.git repository],
-+associated repositories hosted under the https://github.com/git[git GitHub organization] and the <git@vger.kernel.org> mailing list.
-+Other spaces are considered external to the Git project for the purposes of this document.
-+
-+[NOTE]
-+====
-+Not knowing exactly what is considered part of the Git project or a third-party project, I have left the following repositories and initiatives out of the scope of this document for now, but I am not sure about this choice:
-+
-+* https://github.com/git-for-windows/git[Git for Windows]
-+* https://github.com/j6t/git-gui[git-gui]
-+* https://github.com/j6t/gitk[gitk]
-+
-+====
-+
-+== Roles
-+
-+=== Maintainer
-+
-+The maintainer is the head of the project.
-+Their primary responsibility is to select patches submitted to the mailing list and integrate them in the git.git repository, to which they have an exclusive write access.
-+The maintainer is Junio C Hamano, who was nominated by Linus Torvalds in 2005.footnote:[https://lore.kernel.org/git/Pine.LNX.4.58.0507262004320.3227@g5.osdl.org/[Meet the new maintainer], Linus Torvalds, 26 Jul 2005]
-+
-+When they take a break, the maintainer delegates their responsibilities to others. There are no firm plans about what would happen if the current maintainer was to retire, but
-+there is interest in preparing for such a possibility.footnote:[https://lore.kernel.org/git/ZwAIM6GO3VtoG3ZM@pks.im/[Re: the latter half of october, the maintainer goes offline], Patrick Steinhardt, 4 Oct 2024]
-+
-+=== Project Leadership Committee
-+
-+The Project Leadership Committee (PLC) liaises between the project and the Software Freedom Conservancy, Git's fiscal sponsor.
-+They coordinate on a private mailing list reachable at <git@sfconservancy.org>.footnote:plc[https://lore.kernel.org/git/20180816224138.GA15490@sigill.intra.peff.net/[Git Project Leadership Committee], Jeff King, 16 Aug 2018] Their responsibilities are:
-+
-+* to approve project expenses footnote:plc[]
-+* to oversee the use of the GIT trademark, following the https://git-scm.com/about/trademark[policy] footnote:[https://lore.kernel.org/git/CAP8UFD3WQ64FuXarugF%2BCJ_-5sFNBCnqPE0AEBK-Ka78ituKTg@mail.gmail.com/[Handling the Git trademark], Christian Couder, 13 Sep 2022]
-+* to enforce the code of conduct footnote:[https://github.com/git/git/blob/master/CODE_OF_CONDUCT.md[Git Code of Conduct]]
-+* to produce an annual report of their activities, sent on the mailing list footnote:[https://lore.kernel.org/git/aNblfuTDdtxLdImC@nand.local/[Git / Software Freedom Conservancy status report (2025)], Taylor Blau, 26 Sep 2025]
-+
-+The committee consists of at least three members, who currently are:
-+
-+* Junio C Hamano
-+* Christian Couder
-+* Ævar Arnfjörð Bjarmason
-+* Taylor Blau
-+
-+Those members are renewed by cooptation, after consultation with the community. When doing so, the over-representation of an employer in the PLC is avoided.footnote:[https://lore.kernel.org/git/20180821020849.GA2527@sigill.intra.peff.net/[Re: Git Project
-+Leadership Committee], Jeff King, 20 Aug 2018]
-+
-+NOTE: Is there any existing process for leaving the PLC? (for instance, if someone has become inactive in the project or is in conflict with the rest of the project's leadership)
-+
-+=== Security team
-+
-+The security team triages vulnerability reports sent to the project.
-+They do so on the private mailing list <git-security@googlegroups.com>.
-+This team also includes people operating widely used git hosting sites and packagers.footnote:[https://lore.kernel.org/git/xmqqbj9d3y9x.fsf@gitster.g/[A note from the maintainer], Junio C Hamano, 1 Oct 2026]
-+
-+[NOTE]
-+Is the list of subscribers to git-security public? +
-+How does one gain and lose access to this list? +
-+Does Johannnes Schindelin play a particular role in the security team? https://lore.kernel.org/git/5cc325c6-579e-4fed-7071-a3ff98d51ccb@gmx.de/[He seems to
-+have the lead in triaging vulnerability reports], but I can't really tell to what extent
-+
-+=== Localization maintainer
-+
-+Jiang Xin coordinates the localization of Git by maintaining https://github.com/git-l10n/git-po[git-po].
-+
-+NOTE: How would their successor be appointed?
-+
-+=== Website maintainers
-+
-+The https://git-scm.com[git-scm.com] and https://git.github.io[git.github.io] websites are maintained by members of the https://github.com/git[git GitHub organization].
-+
-+NOTE: Under what conditions does one get added/removed from there? Are all members of the GitHub organization entitled to maintain all repositories there? Who has "Owner" access to the organization?
-+
-+== Decision procedures
-+
-+The decision process for technical changes and the venues for the associated discussions are documented in `Documentation/DecisionProcess`.
-+
-+There is no firm process yet for decisions on policy changes. There is ongoing discussion about adopting a voting process for such
-+decisions.footnote:[https://lore.kernel.org/git/summit-2026.94e33e9ddf234334.06@ttaylorr.com/T/#m7b0180985c2ea6325078119406d09a4e4f0b9481[Documentation: propose community voting process], Emily Shaffer, 21 Oct 2026]
-+For now, decisions are taken by the maintainer, who is expected to follow the consensus emerging after a discussion on the mailing list.footnote:[https://lore.kernel.org/git/summit-2026.94e33e9ddf234334.06@ttaylorr.com/[AI contribution policy], Taylor Blau, 6 Oct 2026]
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 1747f4a00b..b2b58aa9d0 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -112,6 +112,7 @@ API_DOCS = $(patsubst %.adoc,%,$(filter-out technical/api-index-skel.adoc techni
- SP_ARTICLES += $(API_DOCS)
- 
- TECH_DOCS += BreakingChanges
-+TECH_DOCS += Governance
- TECH_DOCS += DecisionMaking
- TECH_DOCS += ReviewingGuidelines
- TECH_DOCS += MyFirstContribution
+ 1. a short option, or a bundle of them,
 
-base-commit: ebdc087dc99d68bb340c282b2ba5f722def28d19
+ 2. an unknown option, or an ambiguous or disallowed abbreviation,
+
+ 3. an option with a low-level callback, as such a callback may
+ consume any number of arguments,
+
+ 4. an option with a missing or stuck value that parse_options() would
+ reject, like "--no-<name>=<value>".
+
+So the scan may fail to see an option that parse_options() would
+accept, but it doesn't report an option that parse_options() would
+not, and callers can safely err on the side of not having seen it.
+
+This holds as long as the scan is told how the later parse_options()
+call treats its arguments: EARLY_SCAN_STOP_AT_NON_OPTION should be
+passed when parse_options() stops at non-options or has subcommands,
+and the scan should not be used with PARSE_OPT_KEEP_UNKNOWN_OPT, which
+disables abbreviations in parse_options() only.
+
+The early scan is performed by a new early_scan_options() function
+which takes a regular `const struct option *option` array as
+argument.
+
+This requires that the command already uses `struct option` and the
+parse-options API to parse its arguments. As the majority of commands
+performing an early scan don't use the parse-options API yet, they
+will have to be converted to use it before they can use
+early_scan_options().
+
+In this series, only `git fast-import` is converted to the early-scan
+API. Its hand-rolled scan disagreed with parse_options() in both
+directions:
+
+  - `git fast-import --depth 5 --allow-unsafe-features` silently
+    ignored `--allow-unsafe-features`, refusing unsafe features from
+    the stream, and so did `--allow-unsafe`, its abbreviation,
+
+  - `git fast-import --quiet --export-pack --allow-unsafe-features`
+    and `git fast-import --end-of-options --allow-unsafe-features`
+    allowed unsafe features from the stream, while parse_options()
+    takes `--allow-unsafe-features` as the value of
+    `--export-pack-edges` in the first case, and as a non-option
+    argument in the second one.
+
+All these cases now agree with parse_options().
+
+Overview of the patches
+=======================
+
+ - Patch 1/4 refactors some existing code into a new
+   parse_options_takes_argument() helper that will be used in patch
+   3/4.
+
+ - Patch 2/4 extracts the long option lookup code from
+   parse_long_opt() into a new lookup_long_opt() function, so that the
+   function can be reused in the next patch.
+
+ - Patch 3/4 introduces early_scan_options(), the early scanner that
+   will be used instead of hand-rolled ones, along with the
+   PARSE_OPT_EARLY flag and tests.
+
+ - Patch 4/4 uses early_scan_options() to fix the early scan for
+   `--allow-unsafe-features` in `git fast-import`.
+
+Changes since v3
+================
+
+Thanks a lot to Junio, Kaartic and Cynthia who reviewed previous
+versions.
+
+There are a number of small changes since v3:
+
+ - In patch 2/4, a `switch` statement is now used in parse_long_opt()
+   to process the result from lookup_long_opt().
+
+ - In patch 3/4, a parse_options_check() call has been added to
+   early_scan_options(), after aliases are preprocessed, so that the
+   options are checked before the scan relies on them, rather than
+   only later by parse_options().
+
+ - In patch 3/4, in "parse-options.h":
+
+   - the comment before early_scan_fn() has been improved to mention
+     that the `option` argument may point into a temporary copy of the
+     options, and
+
+   - the end of the comment before early_scan_options() has been made
+     clearer and now mentions that EARLY_SCAN_STOP_AT_NON_OPTION is
+     safe to use even if PARSE_OPT_STOP_AT_NON_OPTION is not passed to
+     parse_options().
+
+ - In patch 4/4:
+
+   - the comment before the call to early_scan_options() in
+     cmd_fast_import() has been improved to explain why
+     EARLY_SCAN_STOP_AT_NON_OPTION is passed,
+
+   - a new test has been added to check that unsafe "feature" commands
+     from the stream are refused when `--allow-unsafe-features` comes
+     after a non-option argument, which parse_argv() rejects anyway.
+
+CI tests:
+=========
+
+Some failed, see:
+
+https://github.com/chriscool/git/actions/runs/41450228024
+
+but the failures in t5550 and t5540 on ubuntu:rolling and
+alpine:latest are unrelated. They come from recent curl stripping
+credentials from CURLINFO_EFFECTIVE_URL, and are fixed on master by
+jk/http-curl-strip-creds.
+
+Patches
+=======
+
+Christian Couder (4):
+  parse-options: add parse_options_takes_argument()
+  parse-options: extract lookup_long_opt() from parse_long_opt()
+  parse-options: add early_scan_options()
+  fast-import: use early_scan_options() for --allow-unsafe-features
+
+Diffstat
+========
+
+ Documentation/git-fast-import.adoc            |   7 -
+ .../technical/api-parse-options.adoc          |   5 +
+ builtin/fast-import.c                         |  42 ++-
+ parse-options.c                               | 291 +++++++++++++---
+ parse-options.h                               | 109 ++++++
+ t/helper/test-parse-options.c                 |  96 ++++++
+ t/helper/test-tool.c                          |   1 +
+ t/helper/test-tool.h                          |   1 +
+ t/t0040-parse-options.sh                      | 321 ++++++++++++++++++
+ t/t9300-fast-import.sh                        |  36 ++
+ 10 files changed, 844 insertions(+), 65 deletions(-)
+
+Range-diff since v3
+===================
+
+1:  57c48ab0fe = 1:  57c48ab0fe parse-options: add parse_options_takes_argument()
+2:  38243ce8bf ! 2:  1c001e577e parse-options: extract lookup_long_opt() from parse_long_opt()
+    @@ Commit message
+         when disallowed only if there is no exact match, and the ambiguity
+         error message is unchanged.
+     
+    +    Helped-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+         Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## parse-options.c ##
+    @@ parse-options.c: static enum parse_opt_result parse_long_opt(
+      	}
+      
+     -	if (disallow_abbreviated_options && (ambiguous.option || abbrev.option))
+    +-		die("disallowed abbreviated or ambiguous option '%.*s'",
+    +-		    (int)(arg_end - arg), arg);
+    +-
+    +-	if (ambiguous.option) {
+    +-		error(_("ambiguous option: %s "
+    +-			"(could be --%s%s or --%s%s)"),
+    +-			arg,
+    +-			(ambiguous.flags & OPT_UNSET) ?  "no-" : "",
+    +-			ambiguous.option->long_name,
+    +-			(abbrev.flags & OPT_UNSET) ?  "no-" : "",
+    +-			abbrev.option->long_name);
+    +-		return PARSE_OPT_HELP_ERROR;
+    +-	}
+    +-	if (abbrev.option) {
+     +	if (other->option)
+     +		return LONG_OPT_AMBIGUOUS;
+     +
+     +	if (found->option) {
+    -+		if (*arg_end)
+    + 		if (*arg_end)
+    +-			p->opt = arg_end + 1;
+    +-		return get_value(p, abbrev.option, abbrev.flags);
+     +			*stuck = arg_end + 1;
+     +		return LONG_OPT_ABBREV;
+    -+	}
+    + 	}
+    +-	return PARSE_OPT_UNKNOWN;
+     +
+     +	return LONG_OPT_UNKNOWN;
+     +}
+    @@ parse-options.c: static enum parse_opt_result parse_long_opt(
+     +	enum long_opt_lookup result = lookup_long_opt(p, arg, options,
+     +						      &found, &other, &stuck);
+     +
+    -+	if (result == LONG_OPT_UNKNOWN)
+    ++	switch (result) {
+    ++	case LONG_OPT_UNKNOWN:
+     +		return PARSE_OPT_UNKNOWN;
+    -+
+    -+	if (disallow_abbreviated_options &&
+    -+	    (result == LONG_OPT_ABBREV || result == LONG_OPT_AMBIGUOUS)) {
+    -+		const char *arg_end = strchrnul(arg, '=');
+    - 		die("disallowed abbreviated or ambiguous option '%.*s'",
+    - 		    (int)(arg_end - arg), arg);
+    -+	}
+    - 
+    --	if (ambiguous.option) {
+    --		error(_("ambiguous option: %s "
+    --			"(could be --%s%s or --%s%s)"),
+    --			arg,
+    --			(ambiguous.flags & OPT_UNSET) ?  "no-" : "",
+    --			ambiguous.option->long_name,
+    --			(abbrev.flags & OPT_UNSET) ?  "no-" : "",
+    --			abbrev.option->long_name);
+    -+	if (result == LONG_OPT_AMBIGUOUS) {
+    -+		error(_("ambiguous option: %s (could be --%s%s or --%s%s)"), arg,
+    -+		      (other.flags & OPT_UNSET) ? "no-" : "", other.option->long_name,
+    -+		      (found.flags & OPT_UNSET) ? "no-" : "", found.option->long_name);
+    - 		return PARSE_OPT_HELP_ERROR;
+    - 	}
+    --	if (abbrev.option) {
+    --		if (*arg_end)
+    --			p->opt = arg_end + 1;
+    --		return get_value(p, abbrev.option, abbrev.flags);
+    -+
+    -+	if (result == LONG_OPT_ABBREV || result == LONG_OPT_EXACT) {
+    ++	case LONG_OPT_ABBREV:
+    ++	case LONG_OPT_AMBIGUOUS:
+    ++		if (disallow_abbreviated_options) {
+    ++			const char *arg_end = strchrnul(arg, '=');
+    ++			die("disallowed abbreviated or ambiguous option '%.*s'",
+    ++			    (int)(arg_end - arg), arg);
+    ++		}
+    ++		if (result == LONG_OPT_AMBIGUOUS) {
+    ++			error(_("ambiguous option: %s "
+    ++				"(could be --%s%s or --%s%s)"),
+    ++			      arg,
+    ++			      (other.flags & OPT_UNSET) ? "no-" : "",
+    ++			      other.option->long_name,
+    ++			      (found.flags & OPT_UNSET) ? "no-" : "",
+    ++			      found.option->long_name);
+    ++			return PARSE_OPT_HELP_ERROR;
+    ++		}
+    ++		/* fallthru */
+    ++	case LONG_OPT_EXACT:
+     +		p->opt = stuck;
+     +		return get_value(p, found.option, found.flags);
+    - 	}
+    --	return PARSE_OPT_UNKNOWN;
+    ++	}
+     +
+     +	BUG("unknown enum long_opt_lookup value '%d'", result);
+      }
+3:  c36cae4e44 ! 3:  9e2d7fc5d6 parse-options: add early_scan_options()
+    @@ parse-options.c: int parse_options(int argc, const char **argv,
+     +	int i;
+     +
+     +	s.option = real_option ? real_option : option;
+    ++	parse_options_check(s.option);
+     +
+     +	for (i = 0; i < argc; i++)
+     +		if (!early_scan_one_option(&s, argc, argv, &i))
+    @@ parse-options.h: static inline void die_for_incompatible_opt2(int opt1, const ch
+     + * Called by early_scan_options() for each argument matching a
+     + * `struct option` with PARSE_OPT_EARLY set.
+     + *
+    -+ * - `option` is the matching option,
+    ++ * - `option` is the matching option, (may point into a temporary
+    ++ *   copy of the options, so must not be used after the scan,)
+     + * - `value` its value, or NULL if it doesn't take one or if its value
+     + *   is optional and wasn't given, as with PARSE_OPT_OPTARG, or with
+     + *   PARSE_OPT_LASTARG_DEFAULT when the option is the last argument,
+    @@ parse-options.h: static inline void die_for_incompatible_opt2(int opt1, const ch
+     + * parse_options() would not, so that callers err on the safe side.
+     + *
+     + * This requires the scan to be told about the way the later
+    -+ * parse_options() call treats its arguments though: callers should
+    -+ * pass EARLY_SCAN_STOP_AT_NON_OPTION when parse_options() is called
+    -+ * with PARSE_OPT_STOP_AT_NON_OPTION or with subcommands, and should
+    -+ * not use the scan when parse_options() is called with
+    -+ * PARSE_OPT_KEEP_UNKNOWN_OPT, which disables abbreviations there but
+    -+ * not here.
+    ++ * parse_options() call treats its arguments though:
+    ++ *
+    ++ *  - when parse_options() is called with PARSE_OPT_STOP_AT_NON_OPTION
+    ++ *    or with subcommands, callers should pass
+    ++ *    EARLY_SCAN_STOP_AT_NON_OPTION,
+    ++ *
+    ++ *  - when parse_options() is called with PARSE_OPT_KEEP_UNKNOWN_OPT,
+    ++ *    which disables abbreviations there but not here, callers should
+    ++ *    not use the scan.
+    ++ *
+    ++ * Passing EARLY_SCAN_STOP_AT_NON_OPTION in other cases is safe, and
+    ++ * useful when the caller rejects non-option arguments itself.
+     + */
+     +int early_scan_options(int argc, const char **argv,
+     +		       const struct option *option,
+4:  515f13df83 ! 4:  ceeb21e89e fast-import: use early_scan_options() for --allow-unsafe-features
+    @@ Commit message
+         about it.
+     
+         Helped-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+    +    Helped-by: Cynthia Uche <herroyalpriestess@gmail.com>
+         Signed-off-by: Christian Couder <christian.couder@gmail.com>
+     
+      ## Documentation/git-fast-import.adoc ##
+    @@ builtin/fast-import.c: int cmd_fast_import(int argc,
+     +	 * two agree on which options take a value and on abbreviations. In
+     +	 * case of doubt, the scan stops early, so unsafe features are then
+     +	 * refused rather than wrongly allowed.
+    ++	 *
+    ++	 * EARLY_SCAN_STOP_AT_NON_OPTION is passed even though parse_options()
+    ++	 * is not called with PARSE_OPT_STOP_AT_NON_OPTION, as any non-option
+    ++	 * argument makes parse_argv() reject the command line, and the stream
+    ++	 * should not have been processed with unsafe features by then.
+      	 */
+     -	for (int i = 1; i < argc; i++) {
+     -		const char *arg = argv[i];
+    @@ t/t9300-fast-import.sh: test_expect_success 'R: export-marks options can be over
+     +		--allow-unsafe-features <input 2>err &&
+     +	test_grep "forbidden in input without --allow-unsafe-features" err
+     +'
+    ++
+    ++test_expect_success 'R: --allow-unsafe-features after a non-option' '
+    ++	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
+    ++	test_must_fail git fast-import --depth 5 extra \
+    ++		--allow-unsafe-features <input 2>err &&
+    ++	test_grep "forbidden in input without --allow-unsafe-features" err
+    ++'
+     +
+      test_expect_success 'R: catch typo in marks file name' '
+      	test_must_fail git fast-import --import-marks=nonexistent.marks </dev/null &&
+
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
 -- 
-gitgitgadget
+2.56.0.4.gceeb21e89e
+
