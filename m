@@ -1,122 +1,121 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793703654;
-	b=UiWjalt6RL/UctgN9JYBsaXF92LWLMzISTJis1JjTB8xsqHO8rBbN0VT1x+KYL8TkJ7m
-	 5qHkwPHDulVlVagJwwrZ6s1O/nuyGi9qZe44a0iLuysy3xkbq4/KqQlgDydGv/EBNhmqg
-	 SDsryEFtI1xjeNvt9SWEUH6N7hqqSLviSLnfDsq8WFi3m4JQCP/E5elkzkuNKaEfggdd8
-	 7nJxMT+nPBTfJMuIwLcMZ0lg7Gonq74MP2R4XMMDTnvKOmdkP1R5hC6vgo2QsDwgorCCd
-	 VpO+DjsLxdk1+U7dSxahdnY7DeyAukijJCU58qT1dbgt6QR2wLGI7n/3wqdqJOTgrgg==
+	t=1793704013;
+	b=hL/hvZP0yZYO+hoS4zha1Sm+9k9wQ/C/BerGchI0xMcSA5VOHRwOzFypdYFwt0+MyNpi
+	 BTtH5aBttsxYTxZOYrKuprL+aGidF6TloHsmYpawn4Sa555CVUtnBFF1BACH0FNOPrC5h
+	 4Z6JOPKEHCOo3bGRiXCUBgP/5N63gu1q0va4zWoOfuKfWoKvuddAq9Z0i9VfQjvonLQd2
+	 JIRDg8lfpDcBW2hnNwOY/MiUH4eLpKIpETp6K0hVNT8FzIAc5ugBf7wpiSuGDOl8MSSV9
+	 g/JZetYqUQs0HukIM+kyutzxTLWEHOGX6KYqHTzOqTk9Y/T9d+WSJsYq80+LCTiizgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793703654;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793704013;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=UYG2V/XG0HChn6BDQ08EIbXaueebG70GjotpiWcbpic=;
-	b=KWMS3DxeBm3T3e1k7qsW5V0dCaT8NWnrnl7r2InveZERVbz997K4ROIpMH+ouPK2QWTq
-	 fUH/gs1BRk6foqkVJWA/QupwmCy9Vd9M+udiFooXfvXiuS9+YJPwa9+VVGODFuXHkRA+g
-	 9hNX8r4nZIwmjbfCl3CsBIzHg0SM6b6LGDWkLAp1g4tjZ7B8zZ41GcQ9mQ6e9Jry2oKKt
-	 zw9vvbNTM8sBR/tMfZcRZnn/g5IpdwxbUozGNagX/S6e3VOhcmRrekUNEe9cSuqbfDjJ7
-	 RK7nSXpfJFBiaJ0Zm7MgOqs+dbIOsdcP9KMZ6rETrfAzowO5kj+HAAvnkdrR/w/21BA==
+	bh=mwnKzjy9aNxlhRWoQJ4ppOtkvsyxmQ04+kvbFp5hcGo=;
+	b=somySsSQ+fxLk/d+5qbrHVnWTYGQNp//mJW0u+FuBnVkf99myMp85h1TZBHGSag3zWpk
+	 CLrNeBE8bI05SAeFcD1cxeq3xU9bUOmZDi58KiPIEuCacjVVX22buBWrtSQG1c0br/rQo
+	 H3d/y19D6x/Bqq3rNk72e5mVQQMxDPkT3zJ+zuJp9rpDS+KZyfq4NLkpLFzg5PDfuAdz1
+	 bL3Kzr31ZDUtEL6wmwRINYOYov0UloVyYSZez7gO3LwialqUnCMlfMd1F6v/ZScy+Drmb
+	 Jg5wgvrkINtHjLtsj6L6PjsqQPALikqTtegfHeYG/XBZLS2dSWp6QFWGZG37VECHTmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=n3JMdjKc;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TGAk0aSI;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=c4B8BYJ7;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=wC1Gg6lm;
 	arc=none smtp.remote-ip=202.12.124.154
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EC0606A32C
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 11:00:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1EC0606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC17607008E
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 11:06:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EAC17607008E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=n3JMdjKc;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TGAk0aSI
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 23CBD7A0161
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 06:00:53 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=c4B8BYJ7;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=wC1Gg6lm
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 44C927A00A3
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 06:06:52 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Tue, 03 Nov 2026 06:00:53 -0500
+  by phl-compute-03.internal (MEProxy); Tue, 03 Nov 2026 06:06:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1793703652; x=1793790052; bh=UYG2V/XG0H
-	Chn6BDQ08EIbXaueebG70GjotpiWcbpic=; b=n3JMdjKct/gFU7xx4Lse4Iuojn
-	yzjemKIPjDidvWNHvGoQC9f/MT4BDuO91lUUKdXN8VIvwGzKnmKu3L0XjOrM+6hW
-	JWkT0OQfjkOSA0dSBY4pds+4WcInz6wqkJTmtuC+U/aNdHBRTFP7KjELII5/mKlL
-	261aY10b68SsPKWKfNTyN0XHiT9RKQ0WLu2WI/yN96LPupkRHZI5LQLskRxfGy44
-	vV1NFfin1XkEDjCiEU6jyxbFSQnerWKAEW+6L3EQHlotf3mtZAve1K+/Zut/RL6v
-	60J4eEJwP+1EMqYPZe5jQPept1WF5bWZpi1ZlTKgpwz3bh7hEHswCrCw98Pg==
+	:subject:to:to; s=fm3; t=1793704012; x=1793790412; bh=mwnKzjy9aN
+	xlhRWoQJ4ppOtkvsyxmQ04+kvbFp5hcGo=; b=c4B8BYJ7YcSu8ZKiWS4i4zgJPD
+	SaYHvrmzjaSPLjLxyUmvOd87hSBqynHoElb5fpCO0GXL3ndNaeRlNnovK6nRt+Jh
+	pw81a7QbABINePN2qlPna9YrWmaN0kqo/59kcAKDyMUHgFYKq70cQVlXWaCptoIJ
+	UtMaDH4jIu2JVoyW5w7/NsEvv79td9pBRaan/RZa0bYT/pWPkP0RZepY17RPgQgg
+	MGA5ct4umRyff7jJcl8soHdtYY/nUQ//f3aQVAcNXVZU0X/79vPokiPYLP3PCzR3
+	JmhYBDGcKTGkQsbLJNAi/7vYJ4dyAOp4440Zb/fhz4wUOB0J+OkX5zidux/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793703652; x=1793790052; bh=UYG2V/XG0HChn6BDQ08EIbXaueebG70Gjot
-	piWcbpic=; b=TGAk0aSI5dfAv+qFWKV7biz0oHRKThiW0jISS6aTQxcAkLKv2Ru
-	cS3ydJoE/yyoffsKA6RkhDPO+FnrN90LEqqFsWBZJj8VYUzuY9rzRzKGM2nUyYoN
-	TlXAtNku7me17lUgE7A9urvLyxcJNpF3FlLtHZIrPwzEYsjSiXJYvLq6zirPkmIE
-	LC3tTo7OgfkYs2OOdfuOQUv3yTYzNeACXhlc7VLvW5C8UMKkDRT83Dliu8H1UCL0
-	Yf3iPN5FKiZd48PCOqjeQm+d5wzo603vOOHbl4AO4808+bXoxMQsPdhBoIp/Y7a2
-	0FHUSURBW9Du079BxHg+JZrzuY7gT0viM3g==
+	1793704012; x=1793790412; bh=mwnKzjy9aNxlhRWoQJ4ppOtkvsyxmQ04+kv
+	bFp5hcGo=; b=wC1Gg6lmq9xyKaseGQRGFbN/Qmu4XlAgIdsIkOed1BZr4L0owq1
+	F3JGoZKzpnsao8a9tDTX4i0+DiD+0oUBL3eP7iwwzSwkdpQa6H7IKjrEVBmpQo+k
+	n/6Xj/i436hwgJgUAWFc6UFNrE8D/aWMAKCB1nGnXsjJzv+nOoWAKsqcch8fiZSg
+	mdGVl25mHusY+fCn7iMaKl29iMLBEkgC0JqutoiPzg+davIit0NNHxNJwUsBnap0
+	KKbfQYq3PzXNO/A7Wr9eCNqF6JoiH1s3yDZ9GkG3bkzteQZTbJP73Y43/ET29U5r
+	NKIL9BqUNd536A8GGWx8itjp2XzG8gDOqUQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793703652; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793704012; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:P5jB2MPSqDRF1dIsbWuDBmM4QJYWMMtL/KaUfqHqSUc2aKM
-	ckTjYENWXXI5Uy+Ba+yTcTlPYOmQoVvajiisFiohwMEA+vdAm1lL/LsaGLumQ9kX
-	5jrKKM9gPKhBvhFL8k1D6Al9Ifyo36eTi/1opz+BGMTdrnwAPgh22d8uUuXGUmKZ
-	SGhMo5AtoFbQArdErILrgFcDM+p+QBCBexaIeNh5RHXabzdwOfPZ5u7cQdQ3KIbE
-	aZTvq33NvtXcwVQ2TlQCq3x600gNBp6A032RQ92IsKjpANbaf8tOldzyVMIB6SRX
-	t28rvjI4mneE4OBxCcnzFMMvXXEdbWLV1OJFH+Q==;
+	s=fm3:rsa-sha256:G4KXW9gN90i3ZVq0TjopfhDdoszMRsHkx/2Ixz+SeRgv6Ka
+	xXcRSlx23FVVIuFhpXdrQwvAmXfO9DKlQM7uGa0sVicnFCsK45nDnov8SkLP3JV5
+	IF/s7RDFghhGQYsp4U2VCuj0aIsxy7iBtM3/hpON5FiU39bwV8be5eQuvxCnhbO2
+	iY06T+VPeoprDp2civUltN0Qf2F4pI7JVaFheXCFRWtUcEkBBnDAAtQaIM2XAF7T
+	pZtklIbPs/inPGbyDy/bbHnMewyfSg1xo4Kyj5NnIAK4cT7MKZVOccPF7eEyq09D
+	rL1YJOHT/A+ZGvCXaI5XOBBPk+DzyPnI7PVYiow==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:wPelpzoQwTQDmN3gQe2Af1cizJpU8Grf+lsuAyWjpIg=:7SNKxL4oZ8fYmbDpCVg2Tfr9lpkYvxy1XcTbCa9UB0w=;
-X-ME-Sender: <xms:5L7pat47RuYwAiPHKjJI8aT5uMa-TELCvdjOlic6v9jlqMu8RjyvgQ>
-    <xme:5L7pahzYhfWlo26OFwsX2oQOpbta5vgh-FZEsCOicqtUkEPcHQ9zjMXLYd2bCPtXA
-    VaqjEmMXztrRoIzrj2fS9LQ124N6MqJS6xhofpS137pU-yinlyeHpQ>
-X-ME-Received: <xmr:5L7pasy-CO_Q2litBp6UIqUeOP6zezAhunYelWRwooiwbkbFuTygAA>
-X-ME-Proxy-Cause: dmFkZTFAMQtCt/AMHd8MCjNQWEtXTxCSuaW6VMZXMnh8oGtSIkM8Jx37ZB89PcB00KsHw9
-    v9INO+//DI0mN0mntGNODhVoBlS2gQkIPsQpkrbC9Y3ZF3zlmUI7wVkJrNyBkwL2g3COoL
-    /yTo+pFUszaHFr4nBHqYKj8gyhhYyGYpWjGchWoH77+93kt2/Zxv4w5H2cxetzYpTNx7qU
-    9huwZJywQo5T0SyXLdrJBrfrpFOoooEf5A8OviNvvaVm98PEgcM3GJGUH7qQ36rKetfxZC
-    5/tI1Onx7LROFvTl0nwkjuvRTwlCq1qD466pdsN+s+i6lxeIbnbDFz0EPOJXeOpHFVl2tk
-    OJfofQ9pTrkv16ocF8TYi0aQCDuAsZFw77lkyoFO/MxKZ9I7ZRAoI65Uulkk3qzl+UXFC7
-    VktbvWIZQUkWFJUIh8vWzOGnOqrp09BNQbzBlGvqzVnenBgNWq4yv0/T+RJLE7GyQc8aom
-    MUJYS/DNpsDGYGki3Ixwe8Waj6r8Tq6K2lvWwimTTRbMyrY19ONHDdiM5Vf9ONYBSFn2ZL
-    7poLRGR/iFRez9wAilKivCBzvUtnI46aejZuW19qAKQ0QCpLZoEKAX1IiLJPBSCyi2PJSf
-    rlNvCsiX+psmBJ2Pxctp6v1xxvQpvdwXEKGt3rOvSSzew1KPfXBFODLlzoMQ
-X-ME-Proxy: <xmx:5L7pahyv1fN8j3temuhWkLxTSAlz8AIVQD5plIYmYz_2BdvugksaHg>
-    <xmx:5L7pauZzNLhad2l4qD4mYbjDheQPjt0DTvblSUjrlAFbYrqx-HFMJg>
-    <xmx:5L7paqVWet6bR91mUFDR-7BMSaKg9EoKTRHkiQmPpScOuUK2S0oh4Q>
-    <xmx:5L7pakhqRPCCo4XLY6v1RdhC4CupEF0hH4yX7rDWkjoT_I136E7Jow>
-    <xmx:5L7pauT8_rfqhdmFOGiNcjuSW9jWudm6W478-zELv42zTjs1ZK7kOA9n>
+Message-Instance: m=1; h=sha256:QNqjqYHsLZouf5/BVV1sc3C6lPoOyOPySqthwhVXtuE=:U+I6fwhgQnj2fEgfaVtGEEyMKdI9BQzar+CIMCOA1hA=;
+X-ME-Sender: <xms:S8Dpava8y__9AEHVDjMNhQgOW_yfldljlfQaRczwKFGqCMLfehsmKg>
+    <xme:S8Dpal1wHi7lHvTsEGNHk18xNuXWOiFOAbHFXOmva7Ay5GVckHn1gPUmqDLY-K2w_
+    Dr-LG4qA063L7gG07ln6n_XnWGqrTRrK0CHwIrHaRuDW23-BGFoDTg>
+X-ME-Received: <xmr:S8DpavVtI2yqNULPb1aP_P3AYkVBoOk5t89YDiyEL2M96U55skgBVw>
+X-ME-Proxy-Cause: dmFkZTEtDY8AostULUsBMc2xX3pQFtspHdPmlme8yqEr71koF3yYNXOe9ISy+/Gi7ODyAV
+    2eEfLbFkk8FJYJVwH9GPBveBr/O/9IkuoTNl7GhtlCNCE976w0Nu1+Ep3Mpa07YRUuC3DL
+    cHPEt1D2vH1lS5bjLLw61ttzLmY4eMtfF6eONGJGdiyj2V8m6lRpqTmQW7cOWr9CEaOJgC
+    n8d+LhL3YhMXXEu5L16xjTlu8o2W4n4iOehg4SxQmrYoU+eCqC0BxZh7bVI7jN4nUHSp82
+    9xkFswmOBx2zGmAxA6BneSy95SnIOSfYglOyRc5At6PfKskE5DzLHcGcFkOAFyd/oeMQJ9
+    uCMczfWXpzu1uPmJzFiTdde0MpGqqJNYjSgRlXD38UyZaGKgPAbgs6rsTKH0PAKo19x2/g
+    atD6VB9cU3rOTOhMCeGE2thDnHvVg3ZD3m2e1eOYi63w4oxKuG78ObqQDRHzD7F47iij6o
+    5RZx8wmSn+MQU9baTfYD1W4E0K+0iE98N5RW2hp+u00c+knZhdz/cYeeiR4KU0jmN6X/Tg
+    CEhMydozhPsZSCtcIS1mQg2glR8LA2qzSzhyKutOUgG2oItRPlHPjG75e8VVpve2ahDO11
+    3eutmTKom4kcPfETCuHeLr0XEL8nlwgZYMviVQNW0p21mVm81VfOfTHrPP5w
+X-ME-Proxy: <xmx:S8DpavVyhpxJJEnq_LSPJZmRq0V_DffdYVvrn1KlqoGx_OkllzGyAw>
+    <xmx:S8DpaueLxEqP2mg4YTNprch3s841T-Lf3HJv0lCIzosX-kH2OFY8rw>
+    <xmx:S8DpaoWc5sC1PScOIzNiA7UEoL--7C9Zu7_QBNU9vm35TdPLvuIBTg>
+    <xmx:S8DpancsP2Hcia7RpOWgcTN8mCJp22MH1A2JVt2vOIQ9lGWq6okGGw>
+    <xmx:TMDpat1QHCjqQoONYD_yCOXr36nq-vL-mf1Oaf66bx2xv8hjRisjYujx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Nov 2026 06:00:51 -0500 (EST)
+ 3 Nov 2026 06:06:50 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ed93e025 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Nov 2026 11:00:50 +0000 (UTC)
-Date: Tue, 3 Nov 2026 12:00:47 +0100
+	by mail (OpenSMTPD) with ESMTPSA id c0c383a0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Nov 2026 11:06:49 +0000 (UTC)
+Date: Tue, 3 Nov 2026 12:06:47 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Justin Tobler <jltobler@gmail.com>,
-	Kristofer Karlsson <krka@spotify.com>
-Subject: Re: [PATCH v2] odb: do not list our own refs as alternate refs in
- the quarantine
-Message-ID: <aum-34I8KZvTfDRT@pks.im>
-References: <pull.2285.git.1793200705017.gitgitgadget@gmail.com>
- <pull.2285.v2.git.1793619933300.gitgitgadget@gmail.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Root <rootminus0x1@gmail.com>
+Subject: Re: [PATCH 1/3] builtin/grep: read submodule trees via their
+ repository
+Message-ID: <aunAR67MHppLt--N@pks.im>
+References: <20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im>
+ <20261030-pks-grep-recurse-submodule-v1-1-d4eb5c87d8fb@pks.im>
+ <87fqxnyx3s.fsf@dev.null.iotcl.com.invalid>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,79 +127,57 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.2285.v2.git.1793619933300.gitgitgadget@gmail.com>
+In-Reply-To: <87fqxnyx3s.fsf@dev.null.iotcl.com.invalid>
 
-On Mon, Nov 02, 2026 at 11:45:33AM +0000, Kristofer Karlsson via GitGitGadget wrote:
-> diff --git a/odb/source-files.c b/odb/source-files.c
-> index 5b4277fbfd..223af45dd9 100644
-> --- a/odb/source-files.c
-> +++ b/odb/source-files.c
-> @@ -348,6 +351,45 @@ static int read_alternates(const char *object_dir, struct strvec *out)
->  	return 0;
->  }
->  
-> +/*
-> + * Our own object directory is <commondir>/objects, or the parent of
-> + * GIT_QUARANTINE_PATH, as an object quarantine is created directly
+On Fri, Oct 30, 2026 at 05:25:11PM +0100, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > The function `grep_tree()` searches for a specific string recursively in
+> > a tree. It can recurse in two different ways:
+> >
+> >   - It may either see a subtree, in which case it recurses into itself.
+> >
+> >   - Or it may see a submodule, and in that case it recurses via
+> >     `grep_submodule()` which then again calls `grep_tree()`.
+> >
+> > In the latter case we continue grepping in the submodule repository's
+> > object graph. Historically this used to work by linking that submodule's
+> > object directory into the main object database. But in 93cd344e34f
+> > (builtin/grep: stop registering submodule ODB as source, 2026-09-11) we
+> > stopped doing that and instead expect to read submodule objects via the
+> > submodule repository.
+> >
+> > This logic is broken though: while we indeed know to read blobs via the
+> > submodule's object database, we didn't adapt trees in the same way. The
+> > result is that Git fails to read the object:
+> >
+> >     $ git grep --recurse-submodules -e hello HEAD
+> >     fatal: unable to read tree (935cff11a11f8734cf4e0d40955d1e0e5c12038e)
+> >
+> > This went unnoticed because our tests only cover submodules that contain
+> > files at the top level.
+> 
+> Should we mention this is a regression in 2.56?
 
-Or it may be derived from `files://<payload>` with the object storage
-format extension.
+Fair, can do.
 
-> + * inside it (see tmp_objdir_create()). Anything else, including a path
-> + * that cannot be resolved, is borrowed.
-> + */
-> +static bool is_borrowed_object_dir(struct odb_source_files *files,
-> +				   const char *path)
-> +{
-> +	struct strbuf real = STRBUF_INIT;
-> +	struct strbuf objdir = STRBUF_INIT;
-> +	struct strbuf self = STRBUF_INIT;
-> +	bool ret = true;
-> +
-> +	if (!strbuf_realpath(&real, path, 0))
-> +		goto out;
-> +
-> +	strbuf_addf(&objdir, "%s/objects", files->base.odb->repo->commondir);
-> +	if (strbuf_realpath(&self, objdir.buf, 0) &&
-> +	    !fspathcmp(real.buf, self.buf)) {
-> +		ret = false;
-> +		goto out;
-> +	}
+> > diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+> > index 3d149d34c15..f51c5181805 100755
+> > --- a/t/t7814-grep-recurse-submodules.sh
+> > +++ b/t/t7814-grep-recurse-submodules.sh
+> > @@ -631,4 +631,27 @@ test_expect_success 'check scope of core.useReplaceRefs' '
+> >  	git -C base grep --cached --recurse-submodules C
+> >  '
+> >  
+> > +test_expect_success 'grep --recurse-submodules with tree-ish and nested directory' '
+> > +	rm -rf sub super &&
+> 
+> Small nit, shall we use test_when_finished here?
 
-So this here isn't fully correct as it does not account for all cases.
-We'd have to read the object storage format extension to figure out
-where the primary object directory lives.
-
-> @@ -1256,15 +1299,19 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
->  	struct odb_source_files *files;
->  	char *object_dir = NULL;
->  	char *alternates = NULL;
-> +	char *quarantine_path = NULL;
->  
->  	if (flags & ODB_NEW_HONOR_ENV) {
->  		object_dir = xstrdup_or_null(getenv(DB_ENVIRONMENT));
->  		alternates = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
-> +		quarantine_path =
-> +			xstrdup_or_null(getenv(GIT_QUARANTINE_ENVIRONMENT));
->  	}
->  	if (!object_dir)
->  		object_dir = xstrfmt("%s/objects", odb->repo->commondir);
->  
->  	CALLOC_ARRAY(files, 1);
-> +	files->quarantine_path = quarantine_path;
->  	odb_source_init(&files->base, odb, ODB_SOURCE_FILES, object_dir);
->  
->  	hashmap_init(&files->dirs_by_path, odb_files_dir_by_path_cmp, files, 0);
-
-This makes me wonder whether the better fix would be to stop modifying
-the primary object directory and instead we simply append the quarantine
-directory to alternates. The presence of `GIT_QUARANTINE_ENVIRONMENT`
-could then serve as an indicator that the child process is not allowed
-to write objects.
-
-That's a much bigger change in semantics though, and the risk of causing
-a regression would be quite a bit higher. But the upside is that we
-wouldn't have to juggle alternates anymore, and your case with alternate
-refs would "just work".
+Normally I would, but in this case it would have felt weird to have "rm
+-rf sub super && test_when_finished "rm -rf sub super". We have to
+delete the old repos because they exist already, so arguably the correct
+location to add the `test_when_finished` would have been that preceding
+test. But I'd propose that this can be done at a later time?
 
 Patrick
