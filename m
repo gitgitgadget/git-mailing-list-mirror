@@ -1,99 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.180
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793738607;
-	b=co1oOeCOYFBywypyND5POCg8Nm/ogNc2es9RyULJPqmcG03au4hmSETCTxsEkK3X7U+U
-	 qmSEBVCMyBmcaNTbUHsSXEEAUJkn/+85LfgvPAZ0eDuHdUSWWKdmWbuppPg6uK7QWrEUY
-	 4BCeaEc+eOgx3hQ6XrttqM/MUok55B9Al1C4EPtAUKJZdD+UAO+1jqllCw9hY6mVNZWVX
-	 5w1w1NwxXqL3v6KVqwrL8AJy0Z4D6kdXISgZ/krnm69LSUaDdl68YGxKeYb48ceZjmfK3
-	 y7jwNRYGGDV/+HKGwMHVGgY1obRlALjQvfsobM8/n0sgFODhNzm8J6xTUM1scSjENwQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793738607;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=gYwZCtBSuZpbDzY34pRtunDq1xn0PXw18jALH6cL6Zc=;
-	b=Clu5K2lzuT7AmVMPpdwhpE7BBF1eNG6tiWyxhGETWPXkeqU3zQfdFD+WyUlSDeO2jjgd
-	 oTry7IrFcWPKKzHjvquyamMVeVzwo2j9jsuzGYnfFBfQEY1kAxoo2PrMpsD/JobwT6DcF
-	 sFgCAClCo3x3Mf4o1PfGzx0udEgpo+s5LvnS37XdCllTAeEDlmY2BSlufl7VrItaOA3uO
-	 gV9fRjwKMgP52/VCcYLadyZQttpbIYDtedGEX+P0a40i3P+BWY6Ji6v52gYaJFm8sSb3v
-	 UvbppuI99PtwX68GAGuu+Bk8gnhhUMXfULgfE8wCIEQLP6NA/4+iHwR0AsCS8MC0/Ug==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EkG9hCH6;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.180
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793738745;
+	b=toWCpRqGE5ShtWAU1a1MvAjUVOlsYEQXqEdoMrJ7fl/lj1qRqBAGJEyA9w3VI5cvYT04
+	 gzv4/JXJniljc69m/xq55BCYY97ej9pkyd927t0vfruhpE59DCL6AIn3W5aBkFTyNDLmC
+	 zMWFERHrcBILheQ2AD95PiffL6dt4upVl2sbVEzEw6IGWhhs0S/On0kpRnhOyTd30JU7r
+	 cAaQWRPz8Pt0oC65dWnUfjI4w6UbulSMU1e8M3uMWSoPUjl56TiILg2cc+lFErHqdcjWQ
+	 OoKEBS0krxcfP4ZuipgoYJ4ji7v0a5yxVZht7Sjg6Xg8jBGBc2S/g8TD040IZMcn2cQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793738745;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=LcgBx6zw8So2gsxeH8SlYuzAwxkwuky1YY3nP4pCFLI=;
+	b=fzuiYxJ1WrMni5xlZc6B6ouMNk1s43T2aODhtjVrC0Wq6K4XfqMbHjlsEwjEMyjvcJok
+	 KgM3Jxe/RmvO8bHNyg99Pl889Or4OUaStlhByf8vUj3kPYEcSKuImpLpI/nOeL07bqgRE
+	 tRwf8CEJh7XsMyyzyMBJf642+kXTubdMXPCVPnjjjn4VcLdN7gowtm72YZp3bl40E1ddP
+	 K7SYUJrnP1s9AGOsYlHmkeKm0cJU20ISVOLgvBjAEZTUnuesWU2kXIFJjF7JiAGil578M
+	 GQBxRPe6HkBZ9UtN1gvU2XfaQa22bgiARZY5cpRoLheK8HgUKzcvJVfXZOqfXrh/6bg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=XtyZ1FRe;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DGWRyk3P;
+	arc=none smtp.remote-ip=202.12.124.147
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4E0606A324
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 20:43:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7C4E0606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03B3606A324
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 20:45:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F03B3606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EkG9hCH6
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3ab27e45e7cso331111fa.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 12:43:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793738606; cv=none;
-        d=google.com; s=arc-20260327;
-        b=VHrvKyc6Kvxa1cnqrjJEnmUI9z9KxCr/fu3hTFbxX9q1YYesbEheOgpsPB/c3e6SLH
-         0munCx5I97rijYdE2DgfQv72a1xQzJjMjn71wYP5ezuOeMbChU93cZcrQkfBcbg6KXVy
-         zBQIKGniy6eanDNA1onQtbT5prXRjfQKoIxV//zHUXyzGFNGL9Ga2JJh9KqP8uwTySWp
-         TKWtAvAlYIffoUaaUmJIHz3y4L5PS7vL6P3iNCeHqmoveuh5gDfIbTqW1lCEugBJSDY9
-         bNjcG88p3oxetfau3QGSoEn8fs36Dw4mFIrdjvxDLKfYYul/9v7//8HaEVNPO/ni0Sch
-         XrzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=gYwZCtBSuZpbDzY34pRtunDq1xn0PXw18jALH6cL6Zc=;
-        fh=tHh6quu8HNzKaDn2OQxcxXJCS98jQRtIMGB2GGmyP1E=;
-        b=rg4oCwLYmlex7y239FKV55nQl9y6m4/puvS0qz/IaV6rXmoA74ZjvhSwLtpezKwPJw
-         +8O/dRxbm2RKfq774j4EG+P3yXYbWT1d4JyXtIaVv4Pc/m9drBBdfkzuHcANeZruwLZb
-         bau/8IMtCcWIWKNniAwDfL4UN810SCl8aCd38ulgVAnDkAIH5okMQzmAoXuUN3WPaG51
-         emNJS2/WD5e4xQx+bkiFoXb/WpHqV3WIwF+te7vIO8pAQIYoURiJW5USrLBMX7g/wUfU
-         MIoWuXDAJpLcvSSOBANinG5s3NdfgFT75fbaTII69CmQLevb8SyAgIlovY3/Ypij14xI
-         HTpg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793738606; x=1794343406; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=gYwZCtBSuZpbDzY34pRtunDq1xn0PXw18jALH6cL6Zc=;
-        b=EkG9hCH6nSdhq9kf0CiWLE+0F3G/rrbArRC76Q/0m87GzCAGAWmgT2GOPrS/YhYFaC
-         eavUejSKMdcCw4+7GL8VegLpBiELO0DWvkFxyDtkq0XtIWbtHqhTAjiDD1wanGtxV1H0
-         RwMtbe+yDSPSLrio+EM11/w2pN2cI9nAB3aM7UdUGnj3w0Qn7l72GU0VxJ+A6eYuQt85
-         aD+EA2qUlA+BjjcZ1CbJRjvQ1/R00RtFuUGzXyEnyZN0BdTTD7Hp4hONo5+5Rn7pDVgn
-         eMqHOjOgSlQshqrSo0LcjIk9w0g1Tk8Mib0S/0N372ZrRCJug2bY0bB1r1OKu3IbQmb5
-         axZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793738606; x=1794343406;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gYwZCtBSuZpbDzY34pRtunDq1xn0PXw18jALH6cL6Zc=;
-        b=LmffjLww+c3FcjLMqnLt8LR1EmpYb6DYrbMD9knM26+j7Z3/WtPaaDKSh9wgMQzQYg
-         hIT9t/ocWHcLh5g0Kcygi+e2XCgbHIEuVvaF3koK3hh1vNAHLGGWdvzO4Dlt28Zazt5i
-         K0PQoLjrwqyotGPHDRsdIqbCL2K9/CFGYkYl4x1SFqoC2vXTk3hyagXJNT1k0RUOYot2
-         AhfB32HGd3Rk25msBFgsnKea4DIvEZmS4XbB68CaMZqnBhcGKf1qM1cd7eVfAukuB18J
-         4v4fmte5QwRTAKImZQsHEmXGPszxsgJWYYgrNYGesw000uCGU68Mrn/TpPTU/OOD6fgX
-         hWKQ==
-X-Gm-Message-State: APuU4Z/XpZ8w6WXzD6K19tnd1WBz7jDzKiMMhj0pkT4kd4SHYJ+qAc3q
-	RKvPGYV1OoKlz/U4AppMdJb8f+dfy4d92f2co3OsjGMLHLDv6rnBMn/hT/16/NPKzysdg5AeMbc
-	cT7iUSMwZP4PPrAYSaN8pDF+ivDkADt4lIg==
-X-Gm-Gg: AYBFou03x5hFHe9h8ZRi9id66lupcsBVWxfpcbMsF61V252/dV99z8cuDZLcESkoCxR
-	+XZgl6qVFXN2SAIoYGFWgk+V68uJu1KJr7jP+r8sPS+5surqjPHuAzZY3PbZbEB+EnZV95dSCwq
-	jVhf6zHEUohgBXe54+21WB4qK8An+sWoTSYuiJMKhgFe9EKQCH08WL0RlP3KndUzh52n8FWDUKo
-	w1g9zEmhp0L5HPmVDOc8CKe3C4ifQvy74T4IiYQhIMUQeHHEUDTDSliNAK6q9KdcvZf37D70LBR
-	ejp3wAsb/aULtDc+hAZGNk+uO/en4O8vmg5G7bzgJTPM7MUVfU971ZSmgCOjX3bFBiZB0FiakjU
-	uPx/UhvXJuXWFu+KpWk0zP0VVtKc5wv0J3XuVsXo=
-X-Received: by 2002:a05:651c:41c7:b0:3a9:d756:bfdd with SMTP id
- 38308e7fff4ca-3acb7a9ea86mr33325051fa.7.1793738605383; Tue, 03 Nov 2026
- 12:43:25 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=XtyZ1FRe;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DGWRyk3P
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 387211D00152
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 15:45:44 -0500 (EST)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Tue, 03 Nov 2026 15:45:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1793738743;
+	 x=1793825143; bh=LcgBx6zw8So2gsxeH8SlYuzAwxkwuky1YY3nP4pCFLI=; b=
+	XtyZ1FReARy4SsioVaQi/6hybxukIIf+PvlcTueiaXydM86Y++st5Isz26nB/aZn
+	DKsHPBPJQeU2I2PcrcrgT836BFvuwKuWFIuKs9IYhy0NYSEFftArM6H1Tnv3qPJ9
+	6uBXuW2sWPjtOTyXHJk5wuGnMgTI7rMqNGR0Y0EoWUvrmIpH5AW+g03q8CXCIYDR
+	kt6WuYeKVo4svSuCNriWiBE2aEKmWooe7dQtqxMnrH7/QW088HIlBAcV50vQNaWA
+	hyDxWR3RthcRxJ0q7tEJ+3MwGAlZ4cKAysB6gwe42vLmI+P8qCFogimsATs2uWBy
+	Sc9jSzqIwELEkWRnPIgQog==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793738743; x=
+	1793825143; bh=LcgBx6zw8So2gsxeH8SlYuzAwxkwuky1YY3nP4pCFLI=; b=D
+	GWRyk3PANokvYHFN1Qt8garyV+2vjkWUglLR2+XASlb5U9AaawQGE5HUyONVMku4
+	qNnwVDe4OGZmnjryQX8LGKCbTZtjLc/BRFn4Ht0U3+FSViALmiPU9SXiSvUWxoNR
+	pUTMRHUuhdmZnnMDjq4oKGXaBbJu1CerFPELTpzsDa6BAuAQYm/y85AMTYpozVri
+	oBoFfA9D1YXF015frAhBmht2yzkgzOOcL1xNi8p9FaCeHjAEM31ldhjcQkpL7I0y
+	Ir1wkAKALeGGdbjUwB0/EvtdHiwhTqxIkWxszpwuvyP+jrpTVXQwNkTVQ2zTJCrG
+	LmFBUlHs1f3IL9hw0ztuQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793738743; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:hAvd58nQgdqYOsJpuj3GZi/nJgnirLKRldKgeYOaimC526C
+	J2QwOZvCepfzOSZWOLUTsOD9PuE8fLE+7cY148aOL6qzWTPvFetsYSV2hGpKrIwW
+	Ss/kdZeDILj2R6Y+mL0thTiiVVxaARPbBJtJvyrknC1N64xztbKzPUc793HUl1I8
+	KH8CUz6dJLjExwwZiyLoy6xuzrQuB9nh6t17S98lN7wS1AuqxJUJVGH7nDxX4O7W
+	72bbFdsJH82ZW71NTl0JuJDdMXiIyKBRfHoaUeKtBOc7Jl98meT/BJcn8KJ9bRnp
+	btK6BJkor4Bov3/OnBnwShPX4kiFrWI9o2vRZLw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:xf/tyvt5FzI9umhY3dM2sHG8ioz9v4deYbPYdHzWC14=:o6uaUT/0Z0RAzqmil+Vo2N8ysbQasV3KzJiLmV2ye7M=;
+X-ME-Sender: <xms:90fqavJjFL_2En-3X3PpHrAl4LfisYAmx9FXoteuPaEUJKgIKYHi8Q>
+    <xme:90fqat_NIIjxjgJT4f6ubXBrxp0Qs7Rq569RaHdMy2Sx3XKZhKF2s1O5XkgfTK_hu
+    FyQZpG1rl_QQeZLHy4veqkpt-kuI25acSu6gUt0ojjzHe2jBmiD1CA>
+X-ME-Proxy-Cause: dmFkZTGOr5VLgqg5pvpKW0xScVUtR7K8v6s014G/U8dmsOwjxI/9zQgnSb286WH2Fw1ZgL
+    uPo4uv5IFytk9nyO2qXmvgL4cL5rqyj3dlPlHojDk3XBbxoXvbn8jBgG1na2BG+BgLhyyQ
+    w9yMSH3NGqb6SXemkb2OCiMHlUvf5gsP5AV5GaBzEQhKp/beUzEE6z1rDLnyElkJwQC8iM
+    O9drasDcQ4mopwVypwSE7E4KJN5vxeAr3z0FXqgBHCmVMg/Sm37NUPeZ506mJFhxgolNX+
+    wztEDTkFEI8nvL21+ZOZI73hL8L5AuEYPsAc3XcNn4sAueviqiTPizRsi/NyJD2CIviIXI
+    kjzYl4gZ36SI2cTjvx+8qOV71ehNtFAGNQQOV0MjljO/LNQRySCLwM9JdLz5hqwjYOgJDR
+    adrUa69dIOQmED8rkVs2BBRbjbEOQAFdzD9FrmqON+SuM8uPy6T/HFGkzOiiXa/GI1X5K/
+    QqTr3b8k3pP5qSGGtMjZHuRTZzyPdaEdplrK7mcOtAswrNVeiBnJXRUkJf53uqCN9bAtav
+    ZIh5WeYcKfewENh3ce1mszf2tsXoqttI9OPZkjWUclOw98xlWTuGjpcXxhnevLVV+0oTJh
+    TxRBo5Zy0ZpD2zpv1dCy5pkcrqAVAUysZadyAGi+EWXILiYjavBd4hDNkJUQ
+X-ME-Proxy: <xmx:90fqanyPqpm7Ix8JBy7CC27tJOaGbYPPD7n4eySKFVyiidKhKDwj8Q>
+    <xmx:90fqatGN-FHy1krnHm0hlQHSm_5BuWfgOJgkB_4kvuIX0u8jLZDXug>
+    <xmx:90fqarxdK95CqYA8JlW89oHO00-0S-wB1HOWI6VOzwgnnvN8TkL98w>
+    <xmx:90fqauselE4GB0Ibf9KPxvLdWDTS5LeDImdgkmGh6esA70KC9SD4yQ>
+    <xmx:90fqap0CrG5sMZ4viMRL9P4FsbBt1Lxmn2Lq5yuf_fFxLXBXVSkV6ELm>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 6E1C878273C; Tue,  3 Nov 2026 15:45:43 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,76 +114,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CY8PR17MB6236D16AD8CD80720FF1342DAE692@CY8PR17MB6236.namprd17.prod.outlook.com>
-In-Reply-To: <CY8PR17MB6236D16AD8CD80720FF1342DAE692@CY8PR17MB6236.namprd17.prod.outlook.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Tue, 3 Nov 2026 12:43:13 -0800
-X-Gm-Features: AclHuK-wJfRCsofssIColAsvk4blajDLakTdXjdWu4zyQSKU8SyR2hgDAQVVIcA
-Message-ID: <CAPx1Gvd3H2-e5RBoH9e1r0cWqe2uo1tm-eUSop0ffNBc2Pj6tg@mail.gmail.com>
-Subject: Re: Interaction between pre-commit hook and git commit <pathspec>
-To: Kevin Lyles <klyles@epic.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-ThreadId: AEuMsLfrft43
+Date: Tue, 03 Nov 2026 15:45:22 -0500
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+Message-Id: <ff8c1473-aaf0-4737-9ddc-5275e6ef70a2@app.fastmail.com>
+In-Reply-To: <xmqqtslx64em.fsf@gitster.g>
+References: <pull.2293.git.1793720007182.gitgitgadget@gmail.com>
+ <xmqqbj857l9r.fsf@gitster.g>
+ <9a6ae876-78d5-4513-8c75-c4c071c3db6a@app.fastmail.com>
+ <xmqqtslx64em.fsf@gitster.g>
+Subject: Re: [PATCH] doc: git-diff: rewrite EXAMPLES section
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 3, 2026 at 12:00=E2=80=AFPM Kevin Lyles <klyles@epic.com> wrote=
-:
-> The documentation for the pathspec option of the commit command claims:
-> "The contents of these files are also staged for the next commit on top
-> of what have been staged before."
-> However, that appears to only be true if the pre-commit hook doesn't
-> modify the index contents.
 
-There's an implementation detail here that makes this tricky.
 
-Git documentation talks about "the" index / staging-area.  Or, more
-precisely, there is one such entity per work-tree: the work-tree's index.
+On Tue, Nov 3, 2026, at 3:33 PM, Junio C Hamano wrote:
+> "Julia Evans" <julia@jvns.ca> writes:
+>
+>>>> +|Show staged changes
+>>>> +|`git diff --staged`
+>>>
+>>> Do not sneak this change into an unrelated "change the format to use
+>>> table to make it readable" topic.  Doing this change to just this
+>>> single example would be a severe regression.
+>>
+>> I can change it back, I didn't realize it would be an issue.
+>
+> Changing this example alone without checking its fit in the wider
+> context is what made it problematic.  I do not personally support
+> "cached to staged" because I consider it mostly a meaningless
+> churn, but that is different from saying I will veto it.
+>
+> I just wanted to see a bit more consistency; without changing the
+> main text, the change to the example made it look like a very odd
+> thing to have there.  You see the option named "--staged" but it
+> is explained nowhere other than being a synonym to another option
+> that is much more widely explained.
+>
+>> I dropped it because I wanted to start with just the commands that
+>> people said they found useful, and it can be hard to introduce
+>> too many "new" commands that aren't well-known already.
+>>
+>> That said I think `git diff AUTO_MERGE` seems useful and I'm happy
+>> to put it back.
+>
+> FWIW, what is in the current document was added by choosing what
+> were found useful.  So you would want to think twice (note: this
+> is very different from "do not change") before removing existing
+> ones or replacing them with something else.  After spending a
+> significant amount of effort on these documentation updates you are
+> making, if a new person came and rewrote them again without
+> understanding or paying much attention to your reasoning behind how
+> you arrived at your version, I would imagine that you would feel
+> terrible.  Please give the last person who wrote these documents
+> the same courtesy and respect.
 
-But when you use "git commit --only" or "git commit --include", well,
-now there is a big problem to deal with. If the commit is accepted,
-the ("the") index / staging-area should be updated accordingly. But
-if it's aborted, the index should roll back to how it was before you
-ran "git commit [--only | --include] <pathspecs>".
+It's very hard to understand from the Git history the reasons for
+adding examples that were added 20 years ago, for example
+in 803f498c03b where these were added, especially since the commit
+messages from 20 years ago tend to be a lot more terse.
 
-In order to make this work internally, Git actually needs two or
-even three index-es (indices?) / staging-areas for the work-tree
-in question: the one for "before the commit", possibly a separate
-one for "making the commit" (when using --only), and one for
-"after the commit succeeds, assuming it does succeed".
++Limiting the diff output::
+++
++------------
++$ git diff --diff-filter=MRC <1>
++$ git diff --name-status -r <2>
++$ git diff arch/i386 include/asm-i386 <3>
 
-To get a little bit more concrete (which makes describing the
-underlying process a lot easier), let's note now that "the index"
-is really a simple file.  The main one is ".git/index".  (I'm ignoring
-extra complications like a split index here as they don't affect the
-result, so this is purely an internal implementation detail, but if
-you ever dive into the Git code, it's something else to trip over....)
-
-Git handles the "old version, temporary intermediate version
-if needed, new version" problem by creating two or three files
-total. One of these is named ".git/index.lock", which serves as
-both a locking file to prevent two "git commit" operations from
-running at the same time and stepping on each other, and
-also "the future version of .git/index, should the commit succeed".
-
-(The third file, which doesn't apply to your specific case,
-has a funky temporary name with a unique set of characters
-sprinkled in.)
-
-If your pre-commit hook attempts modification(s) of the proposed
-snapshot for the new commit, it may need to update more than
-one of these files to make all three conditions hold, and in general
-it just can't. (It's too hard to know what the correct names are,
-since they're different in a work-tree and the "--only" name is
-randomized.)  So pre-commit hooks are restricted to "ok" or
-"not ok" actions.
-
-> It's possible that there is a better way to achieve my goal than a
-> pre-commit hook.
-
-Instead of running "git commit" directly, why not run a script
-that does the appropriate "git add"s, then runs "git commit"
-for you?  The pre-commit hook can then inspect to be sure
-that this has occurred, and if not, remind users to run the
-script instead.
-
-Chris
+I do hear that AUTO_MERGE was added more recently.
