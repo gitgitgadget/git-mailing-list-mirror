@@ -1,124 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793689529;
-	b=SyvS0H8GnuFIxpWRyZ0QHsCzgrHEvZMkCzxu0VcjQvngbOQmSXfKGkJl9T7uja3FQe8f
-	 60CanzzI+00hDeT7GEc4Shy9rBYth7VINsK3urPgyt3fEJGE2h3oym/GX7uaVL5K7S9GR
-	 g0b2vryyh8hgJOItKmEPSv96j1DMWnABqcpYkV3QeAL+HeoubiphmAJIJeqEj1d8DvtLV
-	 T7Y6cz+a4us7ITjUaYZRY5KQfhgM2Bv827D8+C2WbbK+/CDXbuzlrbw3EJpi+JddEfgwo
-	 ctIHEFTLd3t7UOXTKLV3Uzk8+ph5U7iSU+l9LUKURXMIXwHb0Fso5QNjZa38OWgwbJA==
+	t=1793690211;
+	b=FqGNaslV4FYGvAGVpPn3yeKRQMWif7HJoeiGpHqIwHOcSPVD5o9Q8aY6ZtBzC1+tASpF
+	 P/KwwqIlw828Pz8J3PSS+u9VIkYTY9OvlQLOcUTwRf7gViewi2FDWVytcxN4BK69uLjcV
+	 sKG63ThMpXrvkEWaUYBL0KISnxNdVVoDIWkjIfoI/3W0tu22tyERQbtQrsbWGjaEMbt7Q
+	 Frq9oRy3F1JqOgFw500wvmclAYCe7+gVEi8qrBYVyHLFHJiQ9428V8ZzTEQ3PMNX0bWkG
+	 lsbHK1dXW3pcCsDGfEuYN3T0Crubnja4Ji9u4z3JyArKWADj7UBtAGnLSLXM1y9qaSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793689529;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793690211;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=bGdD5Dr17X8p3xrhBEgoK7bhLX+Hzbv/TtlB3YYncHI=;
-	b=g9Ee3t25E2+5C/cGkHXoYhwaxQvsiJKGabv2/rk8vf0NwcZyfSAaSfQWc+Cgo65ePRYe
-	 FL3+B0IlLC1aiqwi0SAmsMOqjR17ooNMMJMA4QVRqO6PaFg2Jt82R3bkRCFuPkWZ+RmpK
-	 fe/fYIWizGVuG4qoqrK+E1bcoBhFxQIHUXj00MhL2hKGPORd2eCNFM08Hkwm3/6xY3Agk
-	 oi+1ypCsM0xQYn7VofnlR/q18d8lYFEqmP3Qi62HBx9v2bO9Q6NfZpVrazblZ0yTcU8Ni
-	 Jkz5B4CiwfY+V5T3V2itM5ZQqx91a5jAXrytSyRZXK3ne7qEicgqhqtGG6zVSiyG/vA==
+	bh=l37IUT6aPrZ0MQOyjhrqbeVIWjErH9+S6h5sNYS/r18=;
+	b=fkocK+y4fgPVGIULdxzC479HpHWtXARtJ8TP5zxQDjaiS/UfxiuztprawOY18uFwrdo7
+	 75+8SSdIkKbA6IvqW+ZGtxCmLBPhcWcAdnZq4zG763J+pDRo5HWrvbgb7g4Jimzu2TVHv
+	 IThfWmmwP7U0wtJ9rCw++UaLhe0bAOfcqpgW4+PIbzzN+ThItWijghmAPuabJeeT8arsd
+	 65i8te5qODZmS0P+PVqHkiHb2IxrHwckvVpMdFezyWxGgA7O5fT9ZX3C79GQjaZUvAQ5x
+	 CEQcgDxnzTOlkYkVO51iDErJpMw2vn8Wi7VPnk47THLP6d4t247NFk9PLBrBSBsB7FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=tNBxDRu5;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="01b9M/Tm";
-	arc=none smtp.remote-ip=202.12.124.147
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=oTHfNUAX;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Mt4GOQja;
+	arc=none smtp.remote-ip=202.12.124.156
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930A6606A329
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 07:05:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 930A6606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A10C606A32C
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 07:16:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0A10C606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=tNBxDRu5;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=01b9M/Tm
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id DADAB1D00123
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 02:05:27 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 03 Nov 2026 02:05:27 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=oTHfNUAX;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Mt4GOQja
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4CF0D7A0019
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 02:16:50 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Nov 2026 02:16:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793689527; x=1793775927; bh=bGdD5Dr17X
-	8p3xrhBEgoK7bhLX+Hzbv/TtlB3YYncHI=; b=tNBxDRu5h056mEYIIC2Xi59w4I
-	B1BW8kmYzOcyl7I1HReikEdOD1PQnDNvLpYKoxeIb9Ocb3L0KqMIn5tvTn5bLifB
-	gijyTpEck00a3uAWUwpTQ4XCtbMuVbJ1Oot7ACGMBauBHLmbWnGrDsk89LOYGqv9
-	73fnuoixAQ5XE8OMjiAwDbdXqPEi3c5qiuJSl1yE8OARDWcRqzerZJO2Ygz3yROm
-	fSyNCgrkx5GgXUHF+0/JG+acmwShfW2LgkDd7ehjbYzxeBfrO+kY2BkF5whBJmPL
-	j/bFwKpVifkU8RR8U1cUyeQ4CUzEvAA+JyV9FlgWrn/dNDlrfLQsklX0+OmQ==
+	:subject:to:to; s=fm2; t=1793690210; x=1793776610; bh=l37IUT6aPr
+	Z0MQOyjhrqbeVIWjErH9+S6h5sNYS/r18=; b=oTHfNUAXwLiLLWKl8tvkB1yGax
+	Pbu8uFUcTQrcE9pWru/NSBPI7fa9DRwKiHTxSLCG/9d2SoVD9RRBGDLQDnwdHDeU
+	eQFOGYLYGwY7mGVutDeZuq7Ewydy/knS8dhQFWYaJtQtOFD1GMDTEunvupxcnL90
+	WDJSRx8tGEEf4S6j3iIp8NMGbTGNsBwc4mNVA2Iz9+WgZHCDbNViSBBenjCOX2E6
+	zjPsZ9HKEZhMAHYiqObRyFJQGZwk+9JVOn1ZIlw4FSpemYcCZuLMwU7s/QfCXAO1
+	SjPvtvuj9DNsCmE2nlRrWOOiWqBHTB7sLrEWb+DLqyoTPIx6i9aNSilJHw7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793689527; x=1793775927; bh=bGdD5Dr17X8p3xrhBEgoK7bhLX+Hzbv/Ttl
-	B3YYncHI=; b=01b9M/TmL6wHClLOPw3g3O8zr4Vzzef70g26uJOofcofSNq09Kg
-	yNj0fvrLW69jR0zJDbNBeHhu9kwfmd8sgrNYFx43uoyWOtTnnUn+P7/D8nCcKlB3
-	mYEQN8VTdOqwwTTPlpN6O1AulsjR02fCLkRNkfNgOrl89L2xm1+ErDA37Cy2hxzu
-	6HXwusYV9wzm2yBQpFSf1frhEtW9odwmyYfLHSrmTgHzbs6yPIq1EfDMjZjXI1VZ
-	BesJvM6broun5DoZayOhYKepns8nJ7IJQNv32wJ3vT8xdeRnfSQo0FhGacaCyyg0
-	wZ3a2n65dd5pZN6wNClqn7h8DDRbXplBWAw==
+	1793690210; x=1793776610; bh=l37IUT6aPrZ0MQOyjhrqbeVIWjErH9+S6h5
+	sNYS/r18=; b=Mt4GOQjafIrI015DYkV43VOanfev6BAYWbtjZtBulO+TVYae6cN
+	eln39hnDx7GS0bQIAqH6Iw6Z4bO2kDxmlKZnhskKKpSBisYsZHZaGD4N8WxZSkBE
+	BHm/J3+gM8bTOPProQyGEyiRw5kJ/z4mCtNSlfCN4zauD4V1UECPsf1Lv4QGfly4
+	yKL0ql+O2x1Bh0h6eAnH8KJkuBfS/TaLsW3fQEi2iMvzgsbQf1WCKlKK9AmbAik0
+	FTDGK2UHCoYvmG+G0fa/7b+CUtDP/Zj4uVZT3ifZ3gMFeInpUodB8xW5EAJnFklW
+	x5vkEGQkSXxyMZr9YNIfZJdqYydnYUETlCQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793689527; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793690210; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:rgnM30MMBgSqt+Iw136RKIS7XZdnYTY6mHSytv6V9z6RR8x
-	Csra5eD2T3xKrhqy8P1rFE20aP95xuffvuUX/6RLjQwxzkn3mfY+1wztTBwlWhEn
-	jAl1MvBNnGX1rK5Zghq0tE3Qlj1zm0Lkex9qY6VJXSMeJCuNyhoINUX0gf1jbhwG
-	F55dNFF2YUaf1uPtLmVY5Xa8hoXmwVxN9XUDDljLkgg0Da9BU6TF/YusDAQcw9S+
-	cp/yWSVydpLtCioXl2AgX+F1jPltT67mQPfxW2LvmHUanil2oi/TQiP88ibMjfcA
-	T402oQkPiGRsrpAhqfpOtpoORUZAvgAmrDeAfCw==;
+	s=fm2:rsa-sha256:TvOvk6F9Wb0xuBZi+1iZl62vz2bvxGtCBnSQ4S7JGp01elh
+	O/yWI7el8Jy3tsj8qJXI7QvvxGMbM5GaNy6OCLjEn4SbJTM0SP74yyM94Dumw98F
+	xBxtt7hUWMJ5rNs7fWDWKB+EJeBIlO1LRoH1oXadtnx7O0OGESkHSwl2JSm2LeNb
+	pDEE6w0OD8tZ3ux5OJa+tEoZR8BbMgAEiyjhpPQrZbaq8fazcSMw9pADvxVKKuub
+	vH1BXjCsPFXKpzKFSXajpAGNsUymI78k8xOiEVaEs0RjNc51WotT9CZDUsCNT883
+	yIW6DT10mMyXuqrT+Ic7Akk7jT7zLH2YWNjI0TA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:R5X1tb89glYzPmH7okH7AobdLfDCcXQVZ+adSItBETE=:5sX9U+zgiHDJoPt4XQ6ZZu78ACgFF9Yq7UiC1s9IAHg=;
-X-ME-Sender: <xms:t4fpalqeClmMeUDdLcjnpz5TfrVPZEtrCZBNKxG22E2JZKIo7BU9eQ>
-    <xme:t4fpavE_lCxJhC4iKufNsRrICOUNk24VDcIzEcDBez3IscdNfIuR7cIHlkOKqy_aT
-    75Gy7ve3P2vDkhwrfRjOSVNpZNw17TsiH3KzxbP29UNuRk540UtGqBC>
-X-ME-Received: <xmr:t4fpavnHO1G2HPCsqmu0690aKMwTiPFKTjecROxBzrsYFje-YavQnw>
-X-ME-Proxy-Cause: dmFkZTFbrXS5JHaqcN8lzRSjjeSOnQX96EbJdEFXWrM0igtMp66p/cyHaaUdmh6tVAIs2h
-    qqTQSzWgu+xydy+ItEveSI81yhJJTRgmp2IcjiqO/Hrtm/BAE2d6LUo5Lsac0CRXr+z9+f
-    M4mJpWBDorLUduo0OxZ3KnwGATnSaP3GPvxAoENBpjb7/UP2OOHSGaXX5ry+oNifubQatI
-    x0NxAjrfWqFbDhIJNXoQvYnqXgHO6a61emGNm7TykKl21dNqJzGpMt0w86b19081Xcopu6
-    fHa/7T+7llHNSxDRrt2DqITQ5CgJ0nBiH655jLODfcYDXOj7/jPAS/+dDSZ8tsKvIlqTUf
-    vQ1/xVc3IwpKtinWc/YYHQj9WvEn/c7rlN9eTu0JbIryL5EJHffXoR6m8c9R1b6hVdELwK
-    u8mOoeHuuB71FyFfOtJYaBi8urvr5P1iyDblhz9uqbqtKxUKPLMbE1DMN/FJgOMXCh5S1R
-    97RS7ENlv7Pz9UJQgvwFqjeOZdtNVmsy2/zuevZ05UAMGP2TG9BcR2osyJGjYyei3rIyew
-    vGLLLE9raDrX0OBjzSieB0MfEIB/SQS8+FaHMSbZ2VZSF7QD1WXcVqo7KDydoD21Msab1E
-    UQoEwjEQbC66r/PhmroGxiaMBmrn9io7k1dq94G2JogLQlJxAsdTOdGOcxxg
-X-ME-Proxy: <xmx:t4fpaqledHwLDnf7fUYaXnmeU864abaJR-eg-fa-Y_5ZMZg5enKbCw>
-    <xmx:t4fpaoufxcbomddsnP4DUgurNV33XIB5UeLRiZutGeOHRpzPFz9_1A>
-    <xmx:t4fpallRMdhLJJAWlnFknTpqg6SOTNjMaNS8UXmaHNW2-daJon4d_g>
-    <xmx:t4fparui9PWxOYNrGh_gVOYPTZ4FOQRJUGvtt1RsZDwSH_VeeboCmg>
-    <xmx:t4fpaqQgZwSQW7d4pcR8l_8LVJFM_UaEKjsJcraq6ZBMLU7SqnPmJyWx>
+Message-Instance: m=1; h=sha256:75PLke7FEjv++EDUDcJgNR/huUv5/nnUTxKD5ukugmY=:5EOWxN9wueWNjl9rEmlUi7KlVEWi5Kn53vFltcwcSXQ=;
+X-ME-Sender: <xms:YYrpar2kofr8mfnFpzViMGln-2_dPiIT6sxtm7mvPyJzeTKwX3gJ2g>
+    <xme:YYrpahjq4mZDJycuGE55ZP6TkE8_8O9LeOPdmHvRhMV3OANSCEX2IcxgSICFN6ygJ
+    Gp1C0V0FM6d6AEn9Bl0VSpQ5UKmqL_D62r9C-82WIuigUCmm8fhkBI>
+X-ME-Received: <xmr:YYrpapREjX8rPEp8AIBGkauT-G2WwirnJmhQiVFYTzwm1WrZ9RroJg>
+X-ME-Proxy-Cause: dmFkZTF6IJ3gRBnoiEiqtIjRjJvnWc/FDA3iplpbevw1nkhUpTgxtyfHJjB957Et8WYykm
+    ZLuz6SnXgzT9ltDPUwDimUtG6qtUNE5ogy+4lHrMMQcxdqsX+fwEWEo0iCXdFT1A0v7Tn9
+    nEhuhUODH328BspoUy/+zZ5MSepNL547pUSDUToWyexFPH1uXXbw79vihE5YIYH8U+Z6P2
+    SqI57PiuTyDNgINcDdHkKxpyrxNGN6BlfSzJsNtjEwbZb/GtGi0VIY97aSNG53sS+dwDNL
+    p6f2asDOZGs8youq/pJh9dlAECovk2HPNyoqq6bCbfPWEAszPemu28qRqGrEHq2nt0RobT
+    SwbpdXxf6EYHHcNNbJy2iM1W2wJTRBEaxBKHakoTsGGm0KwX6prWVD55SrK7NBvl3u3YEx
+    875Pl4WJHdJrH6p5UR/lTvsmRj6b8q7CYYTimEVp/lCcz+cGD9CmdUPd1knMz2HapT033s
+    DRj4PB/NZ//q4OzQiyqAvgq2UcMHz5bSIp63PP50i8aeKJQlmC3ioy47hZkAZMEWWo56GL
+    bbtbLqNPA3wCenMI6fl2O6wO35F/ebyJPnQuQkthkiaN8Mr+h+25nnfWlU0/fow1zR2YQ6
+    HYC35ua3br32s7GbSxjap4m7WMpbtKKWyGcUdSwJEilyd1Oau5TtE2+qiipw
+X-ME-Proxy: <xmx:Yorpaqiu_bNooZqjhJHy2CFraxMvHi4kGj0ZgwzdGurGu_ngtFotYA>
+    <xmx:Yorpah7JL6u6Dlg9FYWnDeZID1VMLhrml9tCcaHN73ROb-CW4lFT6A>
+    <xmx:YorpavAWQ0hRbhQsXLnVywvET9SVo1BDYWKjYndC0kPER4Jj6Qwxnw>
+    <xmx:YorpagZuP75Y7eUUNnF13k5Tqqpu54Pw__qQoF4pnBogxj4XmHDQ1A>
+    <xmx:Yorpalgi-TBQhyu1jjUKMmm4j_qtWF6a9JGk82ynJV2Pk9JTOtkMCau0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Nov 2026 02:05:26 -0500 (EST)
+ 3 Nov 2026 02:16:49 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 30f38683 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Nov 2026 07:05:25 +0000 (UTC)
-Date: Tue, 3 Nov 2026 08:05:22 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 5c895088 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Nov 2026 07:16:47 +0000 (UTC)
+Date: Tue, 3 Nov 2026 08:16:45 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Tian Yuchen <cat@malon.dev>, git@vger.kernel.org
-Subject: Re: Re*: [PATCH v3 0/3] environment: clean up repository config
- handling
-Message-ID: <aumHsqTV61ryUJYv@pks.im>
-References: <20260805115342.3939931-1-cat@malon.dev>
- <20260807085932.3958759-1-cat@malon.dev>
- <anW7wHfUxYj9cj0P@pks.im>
- <xmqq1pc9eivn.fsf@gitster.g>
- <anlmwaEtwcCPse1N@pks.im>
- <xmqqh5hzjdwr.fsf_-_@gitster.g>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] describe: count the distance correctly when commit dates
+ are skewed
+Message-ID: <aumKXUS7_x0i7ZU1@pks.im>
+References: <20261031065525.19883-2-torvalds@kernel.org>
+ <auiGP4XhObUzC9vD@pks.im>
+ <CAHk-=wijLfduoJyOM+AW6FS6c02cuEFRAuQWLE+uf7SGhj8jXA@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -130,104 +127,47 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqh5hzjdwr.fsf_-_@gitster.g>
+In-Reply-To: <CAHk-=wijLfduoJyOM+AW6FS6c02cuEFRAuQWLE+uf7SGhj8jXA@mail.gmail.com>
 
-On Mon, Nov 02, 2026 at 10:17:56AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Nov 02, 2026 at 10:37:57AM -0800, Linus Torvalds wrote:
+> On Mon, 2 Nov 2026 at 04:47, Patrick Steinhardt <ps@pks.im> wrote:
+> > Hmm. The big downside of this particular change is that you may now get
+> > different results depending on whether or not you have a recent commit
+> > graph. So you may get different results based on when git-maintenance(1)
+> > last decided to update it, and that would in turn result in highly
+> > puzzling behaviour for the end user.
 > 
-> > On Fri, Aug 07, 2026 at 02:11:08PM -0700, Junio C Hamano wrote:
-> >> Patrick Steinhardt <ps@pks.im> writes:
-> >> > On Fri, Aug 07, 2026 at 04:59:29PM +0800, Tian Yuchen wrote:
-> >> > Somewhat unrelated to this patch series, but I was wondering whether you
-> >> > plan to drop the limitation in `repo_config_values()` that requires that
-> >> > the passed-in repository is `the_repository`. ...
-> >>
-> >> Hmph, that is an interesting point.  What is our plan to really
-> >> enable the use of repository instances other than 'the_repository'
-> >> here?  They of course need to be initialized with repo_init(),
-> >> but is that enough to sensibly use the embedded 'repo_settings'
-> >> and 'repo_config_values' structures?  (By the way, it is not
-> >> entirely clear to me why we need both and how we sift variables
-> >> between them.)
-> >
-> > Yeah, this split is adding to the confusion indeed. I think that we
-> > should make it a goal to unify those going forward.
-> > ...
-> > I've been wondering for a while whether we're operating at the wrong
-> > level here. Both `repo_settings` and `repo_config_values` indicates that
-> > we're operating in the context of a repository, but as you mention that
-> > may not even be the case.
-> >
-> > I don't think the approach is inherently flawed though. From my point
-> > of view, the best way forward is to merge those two and then generalize
-> > them into something like `git_config_values` or `git_settings`,
-> > depending on which of both variants we want to retain. We would then
-> > have two levels:
-> >
-> >   - One on the repository level as we have it today.
-> >
-> >   - One truly global variable, because that stuff in fact _is_ global.
-> >
-> > We'd then adapt `repo_config_values()` so that it knows to populate
-> > either of those variables depending on whether or not the user passes a
-> > valid repository, and returns a constant pointer to the respective
-> > structure. Callers MUST NOT modify that structure -- if they want to,
-> > they'll have to make a copy and pass it down the calling stack.
-> >
-> > The last part about not modifying that structure could be quite a bit
-> > painful though, as it would mean that we might have to adapt call chains
-> > to pass down a `struct git_config_values` instead of a `struct
-> > repository`. But arguably, that's the right thing to do anyway for at
-> > least some subsystems that are independent of repositories.
-> >
-> > As you say though, none of this is really related to this patch series
-> > at hand, and I don't think we need to resolve this discussion before we
-> > can merge it. I just want to make sure that we have a plan for how to
-> > get rid of `the_repository` instead of only shuffling stuff around.
+> Well, honestly, no more puzzling than the odd existing behavior. But:
 > 
-> Even after we punted on this and stopped the side discussion in
-> early August, there still are topics that want to move things into
-> repo_settings, or even worse, repo_config_values.  Until we have a
-> plan to fix repo_config_values() to take an arbitrary repository,
-> should we freeze this part of the code, perhaps like this?
+> > ... I wonder whether we should also call `ensure_generations_valid()`
+> > here.
+> 
+> I suspect that is just *way* too expensive in the bad case, but I
+> would hope/assume that any big repo already has generation numbers in
+> it, so maybe it doesn't matter.
 
-Ah, thanks for tackling this. I had it on my todo list but didn't get to
-it yet.
+We nowadays generate commit graphs by default, yes. So usually
+repositories should have one, but there will of course be outliers where
+they don't exist because of whatever reason.
 
-> ----- >8 -----
-> Subject: repo_config_values: freeze the structure for now
+> Maybe add a "--exact" flag ot something to force it, and just document
+> that without it, you can get slightly odd numbers.
 > 
-> The configuration and settings per repository is currently in an
-> unfortunate mess.  Especially given that repo_config_values() cannot
-> work on any repository instance other than the_repository, moving
-> more members into this structure is unwelcome.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  environment.h | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git c/environment.h w/environment.h
-> index 9e175e410e..03b1b35d6a 100644
-> --- c/environment.h
-> +++ w/environment.h
-> @@ -124,6 +124,13 @@ enum object_creation_mode {
->  	OBJECT_CREATION_USES_RENAMES = 1
->  };
->  
-> +/*
-> + * See https://lore.kernel.org/git/anlmwaEtwcCPse1N@pks.im/ and later
-> + * discussions.  Until we figure out what to do with this and
-> + * repo_settings, and allow them to be truly usable on a repository
-> + * instance that is not the_repository, do *NOT* add any new members
-> + * to this structure.
-> + */
->  struct repo_config_values {
->  	/* section "core" config values */
->  	char *attributes_file;
+> Becasue rigth now, the numbers may be consistent, but when they can be
+> consistently *wrong*, I don't think that's a good thing either. It
+> took me a week of annoyance to even start looking at *why* they were
+> wrong.
 
-Thanks, this looks good to me as-is. I'm very much in favor of merging
-this so that we don't need to push back so often, and so that newcomers
-don't waste their time and get frustrated because of it.
+I fully agree that being consistently wrong isn't great. I just wonder
+whether being intermittently wrong is even worse because now the actual
+result depends on timing. And consequently I'm a bit hesitant to
+introduce an "--exact" flag and have people opt-in to a consistently
+correct result, because they won't even know that git-describe(1) may by
+default produce incorrect results.
+
+An alternative that might be worth considering here is to instead make
+users opt-out with "--no-exact", and then make that discoverable by
+emitting a warning in the case where we don't have a commit graph in the
+repository.
 
 Patrick
