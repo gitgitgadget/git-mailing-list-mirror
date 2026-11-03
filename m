@@ -1,78 +1,78 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793741057;
-	b=BkKMYXeG9YqXuvNNgChbJyapSoQkEyzWUqwHcQaDvVacU3c4zPEN3pBu7JkWBGAi8OoX
-	 CEKhZVhSD3iE8d96rLWV9vXxU2UYjOhveGuwT4rLcH7YU4UDq8gYGU9BIr8IjBvT7ZNYF
-	 hEdxjwLcuuRgUeX1c4BZ8LJOUkVq/0jyOZefLxV+50FpSLRL2rK5Khs08HCd9hDXInyBs
-	 7MXWUfszpyX0OpKrnUNnVowaxAaAIhXMsiIGII7Sxhi1ciZEuxVX/jjOki37NyPZPdfMO
-	 8cUcJ0uvUsF0+FUtSG8GhazuDdnpaU1Afl3qD+IIdEHeUuSjzTdElV4aMLpMbIlH7eA==
+	b=ckp3nNyTqYHbKRl3trAZwE9BrwF21NZOdBU6BOL8E3jUiueQDjJDXjlEUswl9kJB2jFx
+	 MeQmPKF7zz/y4jV+je5dTXMHyQF3odEbZbVWO+gxZ1WTSu/7K90+30+IXXwImrQnEx9ZZ
+	 N+Xjxd8kh563p/bHRoXtmMilwRo+pqHpM2tuSvNkN6+7aFOOzLB0rZQXspTIfWHERwQqE
+	 OUIBENeMw/4QeVsRimht2ef1rA4rXtrgpoMWU7nOPGPZ2cbBLp5YcuuBbLA4wg0sG6iCJ
+	 CNhz09HRxeeDwM10oLVk5us24OeEe/gqN89zTguvjIgMN33vOxhFHjQEoCbDn9xWsRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793741057;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=Nk8OQF+9E6Q+dHuLRIfmN2aCerDRhChgOGmIx/N4w3U=;
-	b=GRhP6DseOjdT3bs69dxvziv/q4svP+yOlkQiBpgxln31tAmvTutlypdJHFBZG6nvupUC
-	 xGYJuTa5yfIP6BxlgVKqrHaWnFWHkYJWAzidkGjJTXYGB3+T5CdPBBp/mCcpLJPUzPvGn
-	 n0Z1zl9GcOF95LfTNARPdjU/Z6qxzZSXilNeJcu78zMvXkZsV/heP5qMtmf6Jxzlfxzeh
-	 vryFIY138W/W5EXTWTyXCtZmzuqehyAgdm69yGJb22W3W5ih2UI+RBnDKrDuJIlAYiKOW
-	 PX/iXZyZ8x4VHa1ZNIxbJXSuUEVycOewxeYQBcf1EOfMS30dpbnvxALx4BxTRobyC+Q==
+	bh=y8dPjdUAy3k5k46yIciIjl0P3kjY/GqfP66BCK5Bfdo=;
+	b=u74UCp2GUm/n64jyXBO6YwSWXx78p6rISAkexD55tGukJLWUYJDRheesZrLgeHVptvev
+	 hhFKc3n6J/tUEe3byx+RAHEBtBYqqrqw+7HjdIzHMkBLzvJJ+sizjB8SOZ0P2WYyPq75h
+	 7eB6F8DbFjVwEZSHMHpBJbScqI1wE2Cuz2ujluiibOGgeJwwp4tUMfl0IPf7CBW09ES6j
+	 BL1lzM+K66EkFjlCXdocX3GxDTj3C3bVAcGaPORssFv2BohbBa4krWnFd3AcEH3SadZOa
+	 iTMFxRXtEZp/0QAAYjhyKgO+LNuzXpg9t/mrn4dfKjbGlhG2IkxHXqggwB+kHWYsYWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uZYXRm+n;
-	arc=none smtp.remote-ip=209.85.167.171
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=baNo1VdD;
+	arc=none smtp.remote-ip=209.85.167.177
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A389B606A31B
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 21:24:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A389B606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CC1606A329
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 21:24:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 66CC1606A329
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uZYXRm+n
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-55651e7de9bso40523b6e.0
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 13:24:16 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=baNo1VdD
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-4f66bb2ab57so19247b6e.3
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 13:24:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793741055; x=1794345855; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793741056; x=1794345856; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Nk8OQF+9E6Q+dHuLRIfmN2aCerDRhChgOGmIx/N4w3U=;
-        b=uZYXRm+n7FGpIsS/+DGlgbDlVItwE8S3S0jHYb8rir9uuK1zkZN3WPI2QAuZIa2KPw
-         b3xy39TWeUV5DUShvnLKbr2V5EgOeebv3bSLpilheLscdznrjYWbVwuZ7lUZvbm9024D
-         jot7yxMjqb9hwS1o6UyAlOJyd+Uxdus4P1P+EB5xUTDW6NiOTUP2kP/vkclEDSHUMv8d
-         Th7NPkNcc3k7Ed4CuypSkTiRSze4Ed7zv8hfCKzp3cNj2sXKneOKh7/Huz7FA+Dtv5ZO
-         gwdi78CwdsNADhE2jadUDRwYgV8C9tNF9GNpbo7NS+iif4yDwdf+R9NvE4BNJoZ3Ot2j
-         OuQg==
+        bh=y8dPjdUAy3k5k46yIciIjl0P3kjY/GqfP66BCK5Bfdo=;
+        b=baNo1VdD9RJo1SLDIKpSztS8Ur3GkI8H2T07/AJ6Sh9Osgfa5hLxwwUuuQZAi7AYzQ
+         fhCX5rdv070e+Ynhubn5X9wamwngQux2zEXOXwMPdARHVz3976tFty//3/hQucVVrjCH
+         sSzawmFyjwXUKux3Le8HvG1XQLBEiAnda6QHF8xJ6RE4oOFQgX1jOmGoW1rxk2028Le4
+         MxGJ7piwmCvsamJxe4iQHreu6KeXQfR1izH8hZpIutqrWRhJGVKrOtUjuJSpVvPW0/4H
+         M5gSseEx1VJdtYkZpHg5h6xSviMguU+QfEUcD9xbFS/xkATy3AOx1I45tKE44ENZqBST
+         kxkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793741055; x=1794345855;
+        d=1e100.net; s=20260707; t=1793741056; x=1794345856;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Nk8OQF+9E6Q+dHuLRIfmN2aCerDRhChgOGmIx/N4w3U=;
-        b=o/voy07yGEp8XLjOAEvItYhb1ha8e4GhdugwgcrgB8plFsoShDc6PWFjA/JzZxwOb9
-         DFEvCchk41xyoQQA8iMxWJ4FLRuh9LvWqo1olmR19yOpQpTRT30rZ3zba8S9E6X0o4hK
-         v6dUbu7MvCI3WoWsBBUV2XecK3DVzFRJnt6mp48JHVrV0V0q+uMc6sm1LcF8TSjLPp91
-         kmlH8do5+SaujnoaFPdkml8mA2HWSSyr/u17EbZA8aZzLIfxUjN8O9G2nGC0j0k3oZo7
-         4bYQVMdWCVROm6OdPLdZYEyzVlFn1mqTWCRjPbL2Tv06ndm3on9K89fpNd8VPwNCdGnY
-         DaSg==
-X-Gm-Message-State: APuU4Z8NGzRfiwMHi1iJC4AkKtLG5gr13+sMZyyERemsK9uGW3vXEGQT
-	yHNMz41H6lupfI7aXrZX4l8hpGda5iV7TzdlF+BUsKc/blB5GgCGT6tETdMiDQ==
-X-Gm-Gg: AYBFou1Glo2PgjuDAwrRt+4wFF8eyH8IAOJO2ZidW3j9YA2siov1IgoXhf2YISs9P+V
-	1yuHbZ1HXL3gPT1+sUcDlcFD1TXwN4Wkj7PvUn+4tmvC1CybmBbwgPhHiwSMaRNh2yleZeY5fgt
-	JT5ZH+Hdq6P0pGeaEqzr2XOxr7u0Uvo8Xui8EJlCT9tMsLLQpJDcHwuhNLFrl+HMOWJM/SvvL7N
-	Zo0ZcyQnmj+UdetVNBNjY8dZHW6sVnmCKIEcnGQsl9seyipUlgtQjRgJWD4LGwE2Q276cc5TGXy
-	unvDxipoN+q3pSR4ECut5gvl1tx0Amq1UFqjukUjJNmTdSbLpIkpfh2hZ9isMT/4HsXodqjrgOh
-	RVW8LTc48bI84HuOwgaNCzNR2mv25sCljYPL8zEdfjvuvUzsJfZaB9UQ1QbByVewpOp/DaqNpMT
-	hyxNRyAxc5eUoGcsUzBnw+h7UXYEraqiZ34e47OHT62icbgwn8Mny9wtITyzPRyoezWTE4h6Jmb
-	qNbBh5jmFK18bXDqMdRnJ5RisT7lis/PlUoavTIaQ3HeqM+Ofb209rtmz2ctpIhe5pPYK5yC2NL
-	iFyeCX5Hl33jaJUcGtso5vQd9ToZLBXPlzN8q+1WQZECpSu8H31ueiUghyOBehYYXeGsqw==
-X-Received: by 2002:a05:6808:1383:b0:4d5:27da:a496 with SMTP id 5614622812f47-5640dea5a02mr10319831b6e.48.1793741055654;
-        Tue, 03 Nov 2026 13:24:15 -0800 (PST)
+        bh=y8dPjdUAy3k5k46yIciIjl0P3kjY/GqfP66BCK5Bfdo=;
+        b=mSIkmlZL7DgpWRKQIYY9FiQqgYqRLMOv4cpDI1xG0FMdpR4qGNc3ofNwdMtWfBnsmg
+         epF55bqBQnA/TKZYyJlKyKSdDY7RwxA5fA83Vr4qdbmxhmABNDgozscRBKyWj8xpbhNv
+         0MOxxP2FOSj6AzaKBrSRXnn2oLuaSffGSSrV2ss+OPsYMg5oE9+3RisrEDAM7HCynWp7
+         3S1tqp254P+UaEuqsha9c2Rphim0Z3v+68xQJ+cW0P9cDWZfV4Xcf4eYcZZjcxysITHy
+         QNltqwb1j+kbV1v/bikLTlZk9UFu7PcR6XYMrM9pTmMW/5fpp7MT03zEzv77RERczfl+
+         kCpg==
+X-Gm-Message-State: APuU4Z97GiWum9O8apROoTclIb9mAGz70KDT2gsjMwOv9uMtwh4XMEVI
+	6zSDEVP0OrPNtvoQH8J9fmDDcA6HXNF3cBKXsy4Qi/x/S5d/ibBwVI/UiO1fgA==
+X-Gm-Gg: AYBFou3xh0CsaiW4+pA3WiMOM2v8RsEuQW5zIdqHxRT0ZZ7M16oguaAALipIrHrsCDE
+	Lb2EaylJXzIykLTY8NQPwmhria+3d4LC33pEeATs/FkYsTJoIImf8S4CvRCblRRIOpgprzgmkH2
+	kQ/RLxUbHuRTQ7qCfDWN+CsB7wOZVZZoeiMPJy9Pk1XS8rMlxSCW9dS8Giqg05SdfXCepD9w7sZ
+	tN5F1onZ6KQfoZV/NroAWmoLFS5jOWy7uejwxQlbSLaPtKfEzzcrlPLp/C3oI1gCkI182iUWgNd
+	W7FKdV/V4vqkwKH4R02UXriE9kBio89x47bJNFJHGfLoyrznR0bRBv61w3zWmXKEEl/RBEvvb5z
+	apGkclulE6oAZBJ+mqzfuZ2xPuwKH0bLOg/gjDJPHKX978Z7p1zoca/bxAF6B6w9UC3/WHFmMKv
+	KHhnkeJdH3nwRUJsP3smnW2LX/VcnVitKliGHD8IMTPvK2PCzy591u5yq3NeRT6g80QnXC2QHGt
+	ArSHDisFhIMTdh0ke9CY84T4XCpmHsIv9JLTJbKfUBpmKM0D5oGUgrI3fbJqkkeiTwYVY/ae/Vf
+	UiiZzUkjnOfWlye+RNNMWy0cGNxSE33zT/sJ8jIRvgWOa/Ie8EcfeIH5iTcU2JnpZTTv
+X-Received: by 2002:a05:6808:130a:b0:4e9:4aab:be24 with SMTP id 5614622812f47-5640def1723mr9369397b6e.48.1793741056379;
+        Tue, 03 Nov 2026 13:24:16 -0800 (PST)
 Received: from denethor.localdomain ([136.51.44.64])
         by smtp.gmail.com with ESMTPSA id 5614622812f47-567a9c7bbcesm15628b6e.1.2026.11.03.13.24.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -80,9 +80,9 @@ Received: from denethor.localdomain ([136.51.44.64])
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 1/2] object-file: warn on failed unlink
-Date: Tue,  3 Nov 2026 15:24:09 -0600
-Message-ID: <20261103212410.1389988-2-jltobler@gmail.com>
+Subject: [PATCH 2/2] object-file: return error on index-pack abnormal exit
+Date: Tue,  3 Nov 2026 15:24:10 -0600
+Message-ID: <20261103212410.1389988-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.56.0.173.gf57c9a7388
 In-Reply-To: <20261103212410.1389988-1-jltobler@gmail.com>
 References: <20261103212410.1389988-1-jltobler@gmail.com>
@@ -97,46 +97,81 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When the "files" ODB transaction cleans up a temporary packfile or
-".keep" lockfile on an error path, any failure to unlink the file is
-silently ignored. A ".keep" file left behind this way prevents its
-packfile from ever being removed by housekeeping.
+When git-index-pack(1) exits abnormally after reporting the packfile
+name, `odb_transaction_files_write_pack()` records an error message in
+`err_msg` but still returns success. Current callers ultimately discard
+the return value, so this does not cause any issues at present, but the
+return value should still reflect the failure.
 
-Use `unlink_or_warn()` instead so that such failures are reported.
+Update `odb_transaction_files_write_pack()` to return an error value in
+this case accordingly. While at it, simplify how the child process exit
+statuses are checked.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- object-file.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ object-file.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index 132aaab6f8..a9800143bd 100644
+index a9800143bd..e04ce0bc11 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -823,7 +823,7 @@ static void flush_packfile_transaction(struct odb_transaction_files *transaction
- 	if (state->nr_written == 0) {
- 		close(state->f->fd);
- 		free_hashfile(state->f);
--		unlink(state->pack_tmp_name);
-+		unlink_or_warn(state->pack_tmp_name);
- 		goto clear_exit;
- 	} else if (state->nr_written == 1) {
- 		finalize_hashfile(state->f, hash, FSYNC_COMPONENT_PACK,
-@@ -1276,13 +1276,13 @@ static int write_pack_lockfile(struct odb_source *source, const char *pack_name,
- 	if (write_in_full(fd, contents.buf, contents.len) < 0) {
- 		ret = error_errno(_("unable to write '%s'"), lock_path.buf);
- 		close(fd);
--		unlink(lock_path.buf);
-+		unlink_or_warn(lock_path.buf);
- 		goto out;
- 	}
+@@ -1429,8 +1429,7 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
+ 	struct pack_header hdr;
+ 	const char *hdr_err;
+ 	int err_fd = opts->err_fd;
+-	int ret = -1;
+-	int status;
++	int ret;
  
- 	if (close(fd) < 0) {
- 		ret = error_errno(_("unable to close '%s'"), lock_path.buf);
--		unlink(lock_path.buf);
-+		unlink_or_warn(lock_path.buf);
- 		goto out;
- 	}
+ 	hdr_err = parse_pack_header(&hdr, pack_fd);
+ 	if (hdr_err) {
+@@ -1462,12 +1461,13 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
+ 		child.in = pack_fd;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+-		status = run_command(&child);
+-		if (status) {
++		if (run_command(&child)) {
+ 			strbuf_addstr(err_msg, "unpack-objects abnormal exit");
+ 			return -1;
+ 		}
+ 	} else {
++		int report_err;
++
+ 		strvec_pushl(&child.args, "index-pack", "--stdin", NULL);
+ 		push_header_arg(&child.args, &hdr);
+ 
+@@ -1487,24 +1487,24 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
+ 		child.in = pack_fd;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+-		status = start_command(&child);
+-		if (status) {
++		if (start_command(&child)) {
+ 			strbuf_addstr(err_msg, "index-pack fork failed");
+ 			return -1;
+ 		}
+ 
+-		ret = read_index_pack_report(repo, child.out, &pack_name, NULL);
++		report_err = read_index_pack_report(repo, child.out, &pack_name, NULL);
+ 
+ 		close(child.out);
+ 
+-		status = finish_command(&child);
+-		if (status) {
++		if (finish_command(&child)) {
+ 			strbuf_addstr(err_msg, "index-pack abnormal exit");
++			ret = -1;
+ 			goto out;
+ 		}
+ 
+-		if (ret) {
++		if (report_err) {
+ 			strbuf_addstr(err_msg, "index-pack failed to report pack name");
++			ret = -1;
+ 			goto out;
+ 		}
  
 -- 
 2.56.0.173.gf57c9a7388
