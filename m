@@ -1,123 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793717251;
-	b=vLx8iEg2qsHx7vn0Fji8ZO8BD2cwggKJKtm5sil5a4bXXlXONAiMlAjuIbFbRaa2Dpon
-	 5udkiEToFSdEBL2a2jYzxpos3g+gBn2647Dfwj3MT1/Y1/V2QgSE3z+esWI2z0V6363Ej
-	 kcUrFfPvQknpq92lZxlb+B46U+07kR+PJan5m2dbsHgoE+nB3J10yEaN6wo4cXGU3QF5b
-	 hBQ4eqoD0M1fkfa10OGJT/xExPFGZ0M/g4AzfX26KkGK6QuevM5Oelu/9GJ/jast5QYPh
-	 AYWbh5WM4nlR3XW0PvDTKfPqIvLwcMoJbHbHjgcsm9qyMxGwUxlAaiofIdwCI/aThHA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793717251;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=zdxE3pNrt5hoJNcWNvvibFDefpepIkGFYwE2K8p7fsU=;
-	b=bPiJn9EJ359JqRVtqplN6pAAaffKB/bhnQfE9bL70xbWJkr2aD4y2khqXMEY3SDAFUQA
-	 zzdJDNKAOG3K+jZ04oiMtS+b3Gr7+BL764ggQ4qXmYpwIT+SY7+yb1PcEyMySj+5sSYm2
-	 Bgk+4CioH45MCwv0fRTDvhAhXOIqE1CxxR+CZI8KCL0qr8HJmCUEwSPT+A73XLQnqhwXD
-	 XAQFhf6bA5bnHkG69njmImQYqwJzBEFMSzijw/yOLeZH1E1CUbSPwVa2nYzQSyBaByt99
-	 5j37dyWeRNumRjiTtF9oflVde5JUqhx6CI1onZD6+Rsy/C6ZXF/uqbMsbMibuP2MpNw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=WPr9+Rjy;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Dmv3nyy0;
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.181
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793717735;
+	b=aNW3r7HeAcdQXh3gWSG4mf/yifoW6rMMJmE2kcd+XOdD+PG9mq+7L8aGXEBj4Qjq95Ha
+	 JvEDyvSTX8lEJrVu7BllpKM0cV04yHk6dvPucF0NNHWW+Q+ZAov8sXEfhXKKV7QN9pJ8I
+	 8Gg8UpfQ25mkw+hZw7ObuIRSMcOaDGFcDbaGeyH0i47xZ0QsNYIaJltJOO0fhu4nvT9d5
+	 6KNO9bBinRbV2Ua0oXiKge6SFWwMYovoGgmhszp9+HDYNZWpGOzzqSTDk+5P9QJhq0OwN
+	 U1+xQVOFrJ8nFdtUvTshr/E+rH0Dvg412UBhloTSJU3ixclzvhreSZoUQzR8Tqj1B6A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793717735;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=cxoCh3dYSr613wafseK373M/7cuzF55kUjSHjpqEaFM=;
+	b=G0CPKHAV+68gCF/M8E3hPIcQ5MviFdzoCwTAhSWl+7LKln2u2r9aYm9MU5tPAQG8dWfh
+	 na85tV3o990/MMNJV+Sv7mGv5n8/5lZWU8coXL5xTR7FqOk4xlayg7pWCs2uJB/N7UiPQ
+	 R6HPuNxOVacI/1A3H7Sz9h22ECVm7ElsksrnDDaQwuepEjOi9n+Om/vpOlAyloSQFzW7z
+	 cxtg2gHP93noCcBnSLVLBPB/PwrwtAG3PyIC07YdMsyX3+HOJVZfZ94xBXY2vlnhlGOtr
+	 GTYxeZpL5nvu8Bs7ljc5BkMHr/d+E2ZnFCiUZNvjZl+AJf72U6fX5mxt+X1oE9yzXjg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hkQVIIQp;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.181
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED47606A335
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 14:47:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3ED47606A335
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEB0606D807
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 14:55:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3DEB0606D807
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=WPr9+Rjy;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Dmv3nyy0
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7CBC7EC012B
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 09:47:30 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 03 Nov 2026 09:47:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793717250; x=1793803650; bh=zdxE3pNrt5
-	hoJNcWNvvibFDefpepIkGFYwE2K8p7fsU=; b=WPr9+RjypIQHSwpdnK04D/qtup
-	JjXyxDgZAn+muk8sBXF+VxaU3NL1q22JMqLxQ6DlAC52vP61Rvxr7iGmoXHUfkR/
-	GoVRXTKJdRrQEeCyCIc45nViB8vZ3OT4kcJ5mDpN0dojk6dA3/FDxbpsXKAR4oEU
-	DBwTmC3JMwBZALyVlcFmUvWXy+uL5Rs/hgoF1108xwZPgo75yW55vn/strtOUarD
-	u/CZ13idysMcZqYQapfDmvthN2tFp3NprkRT8BLvWzKKrRhaHUwphbCXzTJWnxxy
-	pD2GvAiLlRNBtlSFbxQNzNpQn2JIQL13j+EaZvccP4H41GiocFaYI//v6Yug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793717250; x=1793803650; bh=zdxE3pNrt5hoJNcWNvvibFDefpepIkGFYwE
-	2K8p7fsU=; b=Dmv3nyy0zTUsTnGihscCIo+jxaZBGEHMQ18dk2kz0Ip6wuXsHhG
-	o8D7bF76OZt8eBXkYtLt5X7eRuUju7CzR568ddi0so45+LQ/erYmVnfZqskLM7uj
-	tZ/z4EtLVl207kb7nkxhlD17hbxWPO+u5RVUZdzhgI2oMfRdcgk6eIwTy1dZ8lWF
-	ZeT/4UhWShcKnf0MFCHeVSjMMsNtjOvp7LCVsvxkwxfkwIKExhu94QJ7o8DLWpmK
-	sBZ/lbD38dVrQ4PVyNnk0O8zgU8ax2XLrxSeZleWESEA6XMmLFVNKsKSIOkscWmR
-	8jt4p1SaaquR2vx7f61ODrc9Kc+FldM/Cfg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793717250; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Zrb50bhriduZ8X6wxed/LFQ6WLl/3dFTHBWM1SuCXXq8F0c
-	wuj7SiEirfhkijikyKcpKkL2hv97zmy046AtMxn/ktUg3qJbEzsVyh0vAyCA0afJ
-	A16BSsB/dweyyD6irdx7+827QMh8NpNi8yvFQC8hnsQeFHkttPtsT9DAKdBz3SeZ
-	TSG6kWw6SPswO4OpU7A/nG8GkuEbw9CmVkNkyeIy8Sb2JvGhxTcsKe5stb3eee/U
-	cTNRl00aU8beGfJCwve8hSM1olNib5HznTadwt+CWL9vUytY6zqyH1h4pqTuifvU
-	jO2VlQ+Igw4qSOnCRxQy3MxAoHjyeNv1FsBeqIQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:SlFopcjjE518TsXr4WcMN8ydsSH6fene/VDCrBa5Qmo=:ZAqGcOhkLgcuPlRaGyCYjmr/XHWy09AcvQpTlz9rwQc=;
-X-ME-Sender: <xms:AvTparVt5cScAcz7ntuaJZSVue6HMkzMBTGl3w7IU7hDfF4d3PH_kw>
-    <xme:AvTpal1Y6g0MZC-JaetDQgOiiJZuTGyT1yo4Ra4FcyjtiL4_jH09e6FWhEiMbO-F3
-    WT3QvYaEE9AEjZ0jjhQd88GjbpM5wfI1Itm738aBDm1mlM1NnmRPwm->
-X-ME-Received: <xmr:AvTpapoJK39eUkbreVreh_IMXxkGKG8MUsnnvfu-35dRQVzv24G68F81g2PMQgDddkv1J5XDBItZ6X7-CunvtRWYLL2yZYtU-cu8>
-X-ME-Proxy-Cause: dmFkZTFZEAuaMEZ3XWWPBc5aFFw1T0ka4Xr9EBZehb1AQv0ixb+/iyUsURd893SQR6FE0G
-    FTcl8RWp/LDoiY6LNdNH5qAFNraBfUkHiUs4//GVfz6yEEOYsSUJpBXJyo7k8HuMEL1tEY
-    h7ZNxt2cGY9ZVZWP9B+9yAlLEmOUMhOyFb2Pd5DtLyIe+SR2jrSGNhWnFw0hfjFufz4hVI
-    JtZiHUm3+0tX4ZUGSLjRUyBh262ZA+SSwQefx/sZuEPxw/eIyUopZnRu9ZlEgDC33ysTB7
-    CrLUHt5zLrnEdVd7f3JUSRy/InGt61V1+7sMyAo7pIzJPDwLzytbjDNjTzxWk4eWwiWAkn
-    1CZHqqeqXKn+kJUqlOl9Rq4HHnYQhuMyWAYe9exxmhaZlPH4tCbLQ5tjwg8jcp9kQRXWfY
-    PtGfjcGJWHcQ9430CwMpg9J14BvzIE3Fb3d1/o3D1rLsGYnhDwj/lB9zAlmTh3aTT82182
-    /lMUSgJgqWnO+CPvg+ufKgF+4A12d+vi4Rqkc/L5VfyY+HvIDFX9f2vBEnuncdi4A0tbqN
-    18rEfeMXonZol8hdZ8vLBubuhY4Gl+t63y7pv1QRHAV4YZgGZRq0rL7S1iJhGR4uHKUxmW
-    HPs5/8qoXR8ZuEM/mZbq9o7qWTXPo4MfUhKfyOQqhjLVQni0GZNJGUULXOqQ
-X-ME-Proxy: <xmx:AvTpasXgmsQ4nK-8vT40-2bSWLSvIVam3VFEGBBTlJaKGRjpp_QCYQ>
-    <xmx:AvTpakaGMy_J_-z--h9FwzgeUGvPaFlTULgUVDCi2MmthgPEwJ4Dqw>
-    <xmx:AvTpapdvaDIUDfnq0_tVrmR4_0bsO5PUmhkXwYf9s7UWYkE77vp-dQ>
-    <xmx:AvTpau2Ix4_7_0tglYzn4DItHA2CaA_gsEhEIbSdu6oEhE2MKrrq7Q>
-    <xmx:AvTpao1ciajluF-sz7Y9bUD9YLmVD0k9MrRKd9PSW8nf3okEEa4PEfi0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Nov 2026 09:47:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
-  Patrick Steinhardt <ps@pks.im>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Ravi Mistry <rmistry@google.com>
-Subject: Re: [PATCH 4/4] remote-curl: retry transient HTTP errors in post_rpc()
-In-Reply-To: <52819accc894e760a0fd06730d20f46cc8da9914.1793462224.git.gitgitgadget@gmail.com>
-	(Ravi Mistry via GitGitGadget's message of "Sat, 31 Oct 2026 15:57:04
-	+0000")
-References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
-	<52819accc894e760a0fd06730d20f46cc8da9914.1793462224.git.gitgitgadget@gmail.com>
-Date: Tue, 03 Nov 2026 06:47:28 -0800
-Message-ID: <xmqqh5hyas5b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hkQVIIQp
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-8b0f59a5fdaso39043397b3.3
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 06:55:35 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793717734; cv=none;
+        d=google.com; s=arc-20260327;
+        b=BXg8MiiRlzK5aStxaiRQoZCOo3S3WzqUVqA+tk2558eVOpsDRqXd07l229RceoFKb7
+         U0iKAaOa+AeN/YyFG6gxEM80Eyj3ELZorWOwr/E6ivrtFKT0C7uyVJ24ugs9n+CsDRUd
+         8X3RiBsp2zpOlSRSdN53pGjM/e9e5B/j5XRwjOClSrxF2fldH+VuTRrIqMni5kgFzgdZ
+         BcmZfrB9lCAc92L6/W2sasnSFRqQX+3Q+9ZOei9wN/IY0IhDFe1myC/Oo6IBDTBfwSIp
+         A7YYVk07bTMqcfm+W3gxhBG3dPBGPqe7fsDsiVE5jZUqM3rc5H02HsY0Zl4spzR7auhj
+         DMMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=cxoCh3dYSr613wafseK373M/7cuzF55kUjSHjpqEaFM=;
+        fh=PAjj1C9K1hPPM4TqmxTyFadGtAoFxDNtbjsyY4NMbPQ=;
+        b=LsSmvCqFVvlwKyUDKN7+dWrbAxYwZsESEMgbBo/Wvc02Bo33Ko1HfA79aTbpxBj2qO
+         bve8j6jLC0FhbW6jvoVr8/C8XOchB9A205XQQo0IBDz/w7Kbd+N2le50SuUYcejdjvZb
+         BhimbZBEYS5oczzbSxgwZT8Qyhl/wa2SlQn8b2nQwP9WgPfrQcNR/cCmeatf2nQ6wHf6
+         FQBG2jqwz2nfbMdzTcBEIFWezaPggFgUhfnkl4uNe5JuoQg9VmfWbXAhmV1RyQkw/GjA
+         39JRX4b5J/TW9a1VsN2Qke0sM6DCLrASYBKzmpImvfidHpktuHtUXXJYgn5cqzb+hNiS
+         q6FA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793717734; x=1794322534; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=cxoCh3dYSr613wafseK373M/7cuzF55kUjSHjpqEaFM=;
+        b=hkQVIIQpQ15SnhWTudDP7Z+Pgb6sgGmx5cC9s8G0GOl50tqbjOe6TYycFDJ+OoY47t
+         odn1VxI8QTdFtYp2KC3sKebZDzWikT5mdSncBhQ84ePreK004Xr6EfTM+lWalDLmKs2X
+         Uzvh8GGoIQ+YiUMHP9YI6MUSzDLCS1H8BnIMvvslFvbfszRUjcwUl/ZXpaUl6xoD+Zqt
+         Eu35BCwlo7Xpitqqxyr7TbC0CUKfUaKIqh10I5yU8kOkDNTtPrAFmN4R4lSGcwGmablw
+         ZfIMAIzN0dK9nP9xjQxXKm8/yPz9fj10GM0UE+OwdjKL0DS1T5XwJSlkxsaio/O09mNH
+         QvAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793717734; x=1794322534;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=cxoCh3dYSr613wafseK373M/7cuzF55kUjSHjpqEaFM=;
+        b=yLZDZRXTRBlRzI60b7jQZU9zmcDoKCkDvkcMN2+r4Q/+xf0M0oul5dmcSWLI2/4obs
+         tKkmiA8y28unY3mV+w7nyIi7FuqCtXOjLyxdfFDHIWSkZqE4yfTbvf3c8eLsopdpyWXJ
+         g2IcgnyzS4KsK9h/QdwP2wGbdFV1UTbVuNvgqKuRnMcBL8WuVFsufbT6jz3sg+I6D93i
+         fHwiNavYV02h0umlCR/rhvQsIChjhVQV7kSQXeQrRk0byban7rzfyiXVK3KBOeCDl8TU
+         2+DjHaoUjdnCCKse1pUnZfuRAwkrXZeiOqqpDzSu9aAATT0Khy9C5reeJCVx34mMwtG1
+         fVHg==
+X-Gm-Message-State: APuU4Z/yfXuBCPO+WAdtGZnABeHAEvxCSEgRvjV6FscW2mqixpfbNTTY
+	pIaHfRtQzvgfylWtBAz2qWZKoJujVr//U3UerZui6jON4eyMBTeigZ03ROrB+8MI5C5Q32bKt2s
+	TUvDlHmMd/TgUg0GV1CspheZk+GGlrniP0jR9r+Ju8TS6
+X-Gm-Gg: AYBFou0+cbEdIrpVs2LJQATwjLN3WlKxhtxd2lcEcHs+QQVzjhflc4vyCjeecJIt9NY
+	wLCfrmHUjWUEIUEqfR6gOSGCepejHq7XFlTsiRO3279HSwNBFvLkfhWnrc8lxHka7/ggc3EoLBn
+	4rqwmQMJ/cWxOuLDAyJCSJMdceusGFBkplelx/JYaML8mzoO1Mjv3GLJ74Um8vUUB41EQyFzzRE
+	3yh6QB4zSbOWZiucgGbgP8xayrQvr/m30ELwuQ3KDT9+WPxxAirIMEoltlIZ9yxkPUPABqONOVW
+	wcZXzvbXbHZH5P57e0Pd3Dx7sLAAgpdL+ImLVoRuDOztzAxreD8cs2ltEbczJwoeIy/yWJeGg28
+	aaV2ERJIn6BA3Sek6hDaatV9nnmiTnh9fI2VHl2NUgLXSYUe51Srw0QgRHLfGUvlOLoVzZtxdHH
+	i1d/OTd6d5bqwNHPa4Z2D3/y4DWymUBH7zNzyy00exvAik/+jcmZaIw5SNr/XIOks5JD3L64tqP
+	1p3F99GUZscaSULsl/Unjx02keyp7pCaFT8Wg==
+X-Received: by 2002:a05:690c:d91:b0:8b0:cee8:53cf with SMTP id
+ 00721157ae682-8b2b6597d49mr96154627b3.3.1793717734135; Tue, 03 Nov 2026
+ 06:55:34 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,98 +105,167 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261029141818.40193-1-okhuomonajayi54@gmail.com> <CAP8UFD1VUCTeXNbb4YKGkZRWY8i56Zms_=qkR2oqF7e1Aagy1Q@mail.gmail.com>
+In-Reply-To: <CAP8UFD1VUCTeXNbb4YKGkZRWY8i56Zms_=qkR2oqF7e1Aagy1Q@mail.gmail.com>
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Date: Tue, 3 Nov 2026 15:55:22 +0100
+X-Gm-Features: AclHuK9VazGFofGx-_3cwnIDPxbqFp2OR-cV4w0Wev8m3G6ekuy-KbXyk1RaXsQ
+Message-ID: <CAFpMFfCX_VcBhyivh2f7vppYC4xLoYvUywAviW_73_nmOEkaeQ@mail.gmail.com>
+Subject: Re: [Outreachy][Proposal]: Reduce Git's global state to enable Git's libification
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, usmanakinyemi202@gmail.com, 
+	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Christian,
 
-> diff --git a/http.c b/http.c
-> index 950e2bbffa..36b559e596 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -2476,6 +2476,34 @@ static long handle_rate_limit_retry(long slot_retry_after, int attempt)
->  	}
->  }
->  
-> +int http_retry_wait(long http_code, long slot_retry_after, int attempt)
-> +{
-> +	long retry_delay;
-> +
-> +	if (http_max_retries <= 0)
-> +		return -1;
-> +	if (attempt > http_max_retries) {
-> +		trace2_data_string("http", the_repository,
-> +				   "http/429-error", "retries-exhausted");
-> +		return -1;
-> +	}
-> +	retry_delay = handle_rate_limit_retry(slot_retry_after, attempt);
-> +	if (retry_delay < 0)
-> +		return -1;
-> +	if (retry_delay > 0) {
-> +		if (http_code == 429)
-> +			warning(_("rate limited, waiting %ld seconds before retry"),
-> +				retry_delay);
-> +		else
-> +			warning(_("HTTP %ld, waiting %ld seconds before retry"),
-> +				http_code, retry_delay);
-> +		trace2_data_intmax("http", the_repository,
-> +				   "http/retry-sleep-seconds", retry_delay);
-> +		sleep(retry_delay);
-> +	}
-> +	return 0;
-> +}
+On Tue, Nov 3, 2026 at 2:46 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+> It's a good idea to focus on library code. You might also be
+> interested in what Junio says about code in "builtin/" in:
+>
+> https://lore.kernel.org/git/xmqqmru76ybk.fsf_-_@gitster.g/
+[...]
+> In the discussion I mentioned above, Junio says that the code in
+> "builtin/" isn't reusable library code at all, and that it would be
+> useful work to move that code into library helpers.
 
-This code looks familiar.  Beautifully extracted from ...
+Thanks, I'll read that discussion and add moving code from builtin/
+into library helpers to the plan in v2 of my proposal.
 
->  static int http_request_recoverable(const char *url,
->  			       void *result, int target,
->  			       struct http_get_options *options)
-> @@ -2483,7 +2511,6 @@ static int http_request_recoverable(const char *url,
->  	static struct http_get_options empty_opts;
->  	int i = 3;
->  	int ret;
-> -	int rate_limit_retries = http_max_retries;
->  	int attempt = 0;
->  
->  	if (!options)
-> @@ -2506,9 +2533,8 @@ static int http_request_recoverable(const char *url,
->  	}
->  
->  	while ((ret == HTTP_REAUTH && --i) ||
-> -	       (ret == HTTP_RATE_LIMITED && http_max_retries > 0 &&
-> -		rate_limit_retries-- > 0)) {
-> -		long retry_delay = -1;
-> +	       (ret == HTTP_RATE_LIMITED &&
-> +		!http_retry_wait(options->http_code, options->retry_after, ++attempt))) {
->  		/*
->  		 * The previous request may have put cruft into our output stream; we
->  		 * should clear it out before making our next request.
-> @@ -2533,35 +2559,15 @@ static int http_request_recoverable(const char *url,
->  		default:
->  			BUG("Unknown http_request target");
->  		}
-> -		if (ret == HTTP_RATE_LIMITED) {
-> -			retry_delay = handle_rate_limit_retry(options->retry_after, ++attempt);
-> -			if (retry_delay < 0)
-> -				return HTTP_ERROR;
-> -
-> -			if (retry_delay > 0) {
-> -				if (options->http_code == 429)
-> -					warning(_("rate limited, waiting %ld seconds before retry"),
-> -						retry_delay);
-> -				else
-> -					warning(_("HTTP %ld, waiting %ld seconds before retry"),
-> -						options->http_code, retry_delay);
-> -				trace2_data_intmax("http", the_repository,
-> -						   "http/retry-sleep-seconds", retry_delay);
-> -				sleep(retry_delay);
-> -			}
-> -		} else if (ret == HTTP_REAUTH) {
-> +		if (ret == HTTP_REAUTH)
->  			http_reauth_prepare(1);
-> -		}
+> I wonder if blog posts on Medium are accessible to everyone.
 
-... existing code around here.  It always feels good to see that an
-introduction of a new function is accompanied by replacing many
-lines of existsing code with a call to the new function.
+Good point, Medium can ask readers to sign in. I'll move my blog to
+Hashnode / GitHub Pages so that anyone can read it without an
+account.
 
-Thanks.
+Thanks for the review.
+
+Okhuomon
+
+On Tue, Nov 3, 2026 at 2:46=E2=80=AFPM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> Hi,
+>
+> On Thu, Oct 29, 2026 at 3:18=E2=80=AFPM Okhuomon Ajayi
+> <okhuomonajayi54@gmail.com> wrote:
+> >
+> > Hello,
+> >
+> > This is my proposal for the project "Reduce Git's global state to
+> > enable Git's libification" for the December 2026 Outreachy internship.
+>
+> Thanks for your interest in Git.
+>
+> > Past Experience with Git
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+> >
+> > I have been using Git since I started coding, for my own projects
+> > and when collaborating with other developers.
+> >
+> > This is not my first time on the Git mailing list. I applied to
+> > Outreachy in October 2025 and sent about ten patches in about a week
+> > (patch-ids, commit.c comments, builtin/patch-id.c, gpg-interface)
+> > [10]. None of them were merged. I was sending too fast, my subject
+> > lines had doubled prefixes like "[PATCH] [PATCH v2]", and my commit
+> > messages did not follow the project style, as Junio and Christian
+> > pointed out [11].
+> >
+> > This year I slowed down. I read SubmittingPatches properly, wrote
+> > my commit messages in the present tense, and sent one change at a
+> > time. The hardest part was still sending new versions: keeping each
+> > version in sync with the review, the right thread and the notes on
+> > what changed since the last version. This time my microproject was
+> > merged to master, and six more topics are in 'seen', some of
+> > them marked "Will merge to 'next'?" in What's cooking.
+>
+> Nice.
+>
+> > Reviews and help to other applicants
+> > ------------------------------------
+> > + list-objects-filter-options: pass repository to partial clone
+> >   helpers (Dorine Tipo)
+> >   My reply: https://lore.kernel.org/git/CAFpMFfCu6JrUC8i453qBP=3DAktqcG=
+_9sGX=3D1-1ekEDCYm_+pkUw@mail.gmail.com/
+> >   Description: Dorine asked whether USE_THE_REPOSITORY_VARIABLE
+> >   could be dropped. I applied the patch, removed the define and
+> >   checked that the file still builds, so it can go in the same
+> >   patch.
+> >
+> > + Microproject idea: modernize a file-existence check in
+> >   t/t0081-find-pack.sh (Immaculate Mecha)
+> >   My reply: https://lore.kernel.org/git/CAFpMFfA17dnuLSRt97BrM0u3cHAifJ=
+ybr_Zc2ahr_zq2nspgsw@mail.gmail.com/
+> >   Description: Pointed out that Shashank S had already changed that
+> >   exact line, and suggested searching lore and "What's cooking"
+> >   before choosing a microproject.
+>
+> Thanks for helping with reviews.
+>
+> [...]
+>
+> > This project reduces that global state step by step:
+> > - removing the_repository from library code by passing the
+> >   repository explicitly through the call chain, so files no longer
+> >   need USE_THE_REPOSITORY_VARIABLE;
+> > - moving repository-specific settings from environment.c into the
+> >   repository, mostly struct repo_config_values and struct
+> >   repo_settings;
+> > - and, where a value is only used in one place, passing just that
+> >   value down instead of the whole repository.
+> >
+> > A lot of progress has already been made: many settings that used
+> > to be globals now live in struct repo_config_values, and many files
+> > no longer need the_repository. But there is still plenty left.
+> > Over a hundred library files outside builtin/ still define
+> > USE_THE_REPOSITORY_VARIABLE, and environment.h still has globals
+> > such as git_commit_encoding, git_log_output_encoding and
+> > comment_line_str. That remaining library code is where I want to
+> > focus.
+>
+> It's a good idea to focus on library code. You might also be
+> interested in what Junio says about code in "builtin/" in:
+>
+> https://lore.kernel.org/git/xmqqmru76ybk.fsf_-_@gitster.g/
+>
+> [...]
+>
+> > Roadblocks seen in earlier work
+> > -------------------------------
+> > - Not every global belongs in struct repository. When Ayush
+> >   Chandekar tried to move core.attributesfile into repo_settings,
+> >   Junio questioned whether attribute data belongs to a repository at
+> >   all, since attributes come from the index and the working tree,
+> >   and compared it to how index_state is passed around instead of the
+> >   repository [7]. The config value was later stored in struct
+> >   repo_config_values instead [5].
+> > - State used during early startup cannot simply be moved; the setup
+> >   code has to change first. Patrick did this for
+> >   is_bare_repository_cfg and git_work_tree_cfg in his "setup: drop
+> >   global state" series [8]. have_git_dir() is still left, and
+> >   environment.h says it "should not have to exist at all".
+> > - builtin/ commands: the "repo" argument of cmd_foo() can be NULL
+> >   (e.g. "git foo -h" outside a repository), so blindly replacing
+> >   the_repository there causes crashes. Library code is the safer
+> >   target.
+>
+> In the discussion I mentioned above, Junio says that the code in
+> "builtin/" isn't reusable library code at all, and that it would be
+> useful work to move that code into library helpers.
+>
+> [...]
+>
+> > Blogging
+> > =3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > I will blog on Medium (https://medium.com/@okhuomonajayi54) and
+> > post weekly updates on my progress, what I learned and the
+> > challenges I faced. I will share each post on the mailing list,
+> > like previous interns did.
+>
+> I wonder if blog posts on Medium are accessible to everyone.
+>
+> Thanks.
