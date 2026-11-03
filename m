@@ -1,85 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793745650;
-	b=oI+gTrLkGFrML8XDEmaWsrcAdmLn+SMfmkZrB+TiIyMeHuotiU4siKUD7W7A0aP2xq+c
-	 k9AoiXCzpPEUGipdL0XDPSscw8a64lNE4JggYwuDzkefiOZJqCtOB0O6PWYN+aDfIGdz0
-	 3TvaLaU3J6v3nugltJm8VIpPFxWiIUFBHsPipKdMMfmZ7bvOdQRbS9/l3jJIHfTE3LlKW
-	 pM4CZ3s4DDt9iyRKzxo/oHAoVMEAQPTx62dk4OwMcyfaOQNO5WqIptBfjtm4E7EUqb7Rc
-	 Waa2M+4564AU/f/iQ1RXOFbKKBNcZyrA6+2r4M9CINmr9LD/6uG9p5Q1kqjXxRCyzqw==
+	t=1793747524;
+	b=ExpiUUDy+LIjNDgkLOdjKgP+/kkaCLRb8THZWN39oh5xWrPcPMJF7XvdQlCxT/qk6kiQ
+	 /VmXJqhQVW/vJVi9bIJztVYILHGOk3NlbssuoHbndLFvg3ZwrGRcl8xKya+LTOKZPMO+h
+	 QLOBhNM6nAe1rVlexWWpZk5DGMhT+QF1eaN8GNAjSeF0/C5quyRP94I1yd9glShuRPawf
+	 j5GPFf005kjBlY6YgvkxUqxf2s/o7+lGmQ0rj/Z/ThIzyfHqqwQ2pZ2jN/wBuNiGKE0TD
+	 7SFkOoxCafJ7r+J7H1ocjdGJfm89mmCqqfM66StRHnr6k1C27KB3pwJD7l8wo/xWgIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793745650;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793747524;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Mime-Version:
-	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:To:Cc:Subject:
-	 From:X-Mailer:References:In-Reply-To;
-	bh=rk4Otd7BiX8AmnGx/rD4THrbfbuN0vGymiFp3CDosus=;
-	b=DUlWuksZGm1HGkXkpuygvYVa4YIlOsbn2qGZL/r0m/6vn5XNpLT1gjGGR8HVzHfaUReR
-	 bDl6UgdYQnCJaCV7rUiQJCM9kuQDYITWW9AvJk2alwwEqIxtiIiJj4MrPdfcJ0kl1f5fr
-	 s+MIw1jC44rSSTj9lvHnJriphwwuc0FqGlhKM8uJhxKo12pI/RBV1viwjXe/vG/tFLRCn
-	 KSPZCpLPXsfUJAkSvTJ9bmC0TCcbjaD3v8Z9Nv9NEwQrLLSbgNkoyGVbjlkVlJaW/COQJ
-	 MaSiv+NINQsVKkxt6eTM2ti70k7RNxLD6osrh/sE7WlCER0Fd6SgKYuSrcEfHfJLl3A==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=KIUf8k1/UJuvhkldYefB8C6xRY/ivTOoegS6+hsbCSw=;
+	b=nd7vSXAFQNdPBWyrYqrdRCyCeVQJoPVCs428kozGQrIdBAPkUQwRk6bGYk2ZjPyGXI/W
+	 xPX8W4fFU7jqonmCvn0dPzrIe89hY/zvZ6IWbjz/2erL4z3qxyTclv9JcBfa2x1aDfoow
+	 3D5NSOi19mHfjBg/ZImBqeiN1CluHafW72dv4oLEQ7KYzPzDWiHzL3USUhUCDWOdwnx2F
+	 Nr+2wiuAOrbD/41iTQVmvcXUOQMgCnlCeWd0u7xkMj4uwHk+ZXionCM+/WpiYvcNM0xeB
+	 lmHXPxLaQ2QYsUWq9YmNxYBRNxuTnGW8P1VAitr4Q/JFAkDKPSgwjXIDbTzLp1OC9SA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KX63weoi;
-	arc=none smtp.remote-ip=209.85.221.49
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xr5tc6X6;
+	arc=none smtp.remote-ip=209.85.128.43
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AA8606A31B
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 22:40:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3AA8606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B243B606A31B
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 23:12:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B243B606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KX63weoi
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-48afbd2c386so45572f8f.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 14:40:49 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xr5tc6X6
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a35a60499eso557735e9.0
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 15:12:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793745648; x=1794350448; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=rk4Otd7BiX8AmnGx/rD4THrbfbuN0vGymiFp3CDosus=;
-        b=KX63weoiib/kvSEsBhTx1ewBSWbr45hdWwuE2HygRIpDNdAiAQ/0tQNuro9dtytaB/
-         m0dWbk+Wa32rFbeB8dyVtmNPAx8a0jNW0LlphrK2NlQOJAUCQNve5+mFef1f+4GbWdrl
-         XQVWKKeT0OouMuYB8VrDWaLDee6qRToxxhGCwQsSJAX9VjWH5lhQbcylQcVi6DDS8xGK
-         4BNkQmLwdjN74c2J0wxSenLNgOGImqnetePql3sn2X7CGGpxxICKjXbwIoVG+SpE1pMB
-         6orf/pPXN4zqHV678sM91/enjpo/YmDr2M7C2OjENMW8HynI/GUzmEDLKi+cbks4Ojh7
-         8Vtw==
+        d=gmail.com; s=20260707; t=1793747522; x=1794352322; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=KIUf8k1/UJuvhkldYefB8C6xRY/ivTOoegS6+hsbCSw=;
+        b=xr5tc6X6KrgXPFQpZMjNMax72vFJ4QjSjnt0/ZByTwt+Nn3/nIORI2MMA6f5kjzr7O
+         5+Ly8bzT/EoSY+vn3EzGaCwsSUtsV9DaptEqODtNtx70ygAAUow8UTEXY+l/drofucMs
+         IjptO6F6uotoaimblpR7g6v3NVUaYTzuzURJxLBdxDcQCoUXGglBLAQguwEOXDqnzw2j
+         eeGf+hGWxsfD3N2WZ3T9+RCtd9zU6BCDYStSij/FGQAYqYJouiH3ALu1hhyzxbV0z+VI
+         69cv+fwPE+OfDCHYVw8JUyW7gvVJuGtYYELcxolXLMO0sJSYGITq+rHHyB0oT5unzima
+         BKiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793745648; x=1794350448;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rk4Otd7BiX8AmnGx/rD4THrbfbuN0vGymiFp3CDosus=;
-        b=mRRz5JqF2UyefL3uHELNf+yd0MYMNwMIuHfMZiPv90PtTNGBLycdmrKXftf/pLLJVN
-         6s+53PlIecn1PFyjM/3BXu2GVvmEW+c7DdSUv/R9693HZMl2VJtEMqzI/XC5mUtwXWvY
-         mY9/KOBz6fg6FR5irpJj4n33XLoun6uNrzbT+wyWGttA+n7BfUkAV4U4wWOhpb0A3j1n
-         qVGgost9dZwvo1+95B1GsK/UFtXZ0+4mzIXScNuLEkwYlhdCaQRIfMnV+i/t9eFjSkqA
-         fbZzjfDNcrNazeP5hDsmhVgoDxaIx2UgsJEV+fq1miV+6Ti3v+onRT/uybTi5kOti4eR
-         mMvw==
-X-Gm-Message-State: APuU4Z8UoaeGexiD8WpWodDDL4lNxcCIZ2cCh7zW6IY+PRcQfrEMPDCS
-	61c3XJBPDWu8gHNr4l7FmSh1uzozZ6mXoEL6Lu3GyK+dwkp/okIrz/Dj
-X-Gm-Gg: AYBFou27YHadw+Hww2daXNJdFRrGy8jwl+0w+AFwceFdea/+Sn23bsjieXMO3AyvwWf
-	rMUtysQtZqFo2VlaCq9wPfbUEOHcEHDn8q7rryb6MWWOkZccfEajYrisMyTKWOSkYYxin+J5UQF
-	G8Gn2MOa6fQaQr5oKh/vA4OOLyc88TMohRMItfyTWA/YNJVd6v9OUoUB7vNmr9oyOEVApYvA0gj
-	PMNDF+RGk9ojakfUgy2NVzHiWKpw6NZUITX5UFmB8mlovJPgCUp4oFKZXhylE2TUjDymlpZMnyq
-	HMlGiStkvjP9pZy4qHvZ+a23+5Brtn9bPsT9Iq1h2XZVFOm8xPr3YgSJEjZh1KTr93Qr3WOJkvY
-	MWKNlFrkweW8Al3wpbj3MJJbR9N75bvywzIp2DNrpTdahBO07ZZnDYxZ4ldkIfbTdjGi0BpkTUS
-	p7n3ehgicGtVYyBkfi4W0WCGv0UdQJx6t8LDmqGpYnGyzRiWTQxfW2rAjEYoq0V9qpHuFrFmizY
-	IQRf8+2IXii6RA3Z138XwsVY5mWLGmAKPCa31KRgqnaYNvM8Ch0GVXnqljmJKu39b2pPIxpmuMF
-	2y9pEl5IT2bF9wH1jo/RU0E6T8bqXnOx3o4WHPDpW+i9bKjQ1CJaIMSZGHEvoV4EbG5uLZgPKgi
-	PeOEmXQWtKQFtVrZiNyKmm09T8xa3gL6xoazNdYtxh7I4NvfdLu5bIGZTVANPfBHwhSliVc/oSY
-	roLf/2IK6DwHMzWgxzFyEsHgvYj9b7D55PySz/Bl4PxgbdnvKWyjPglg==
-X-Received: by 2002:a05:6000:4013:b0:48e:6264:c388 with SMTP id ffacd0b85a97d-48e6e2ff911mr30688579f8f.23.1793745648078;
-        Tue, 03 Nov 2026 14:40:48 -0800 (PST)
-Received: from localhost ([2001:818:c665:a700:a4bc:846:cdd6:3f8])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48fec9cd43bsm423137f8f.14.2026.11.03.14.40.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Nov 2026 14:40:47 -0800 (PST)
+        d=1e100.net; s=20260707; t=1793747522; x=1794352322;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=KIUf8k1/UJuvhkldYefB8C6xRY/ivTOoegS6+hsbCSw=;
+        b=AcU8tGUNRVwJHDPeIBXvicO9OnP0Zmf/lZP2s6qUjmbn2dfsJ+o5TWrpMxEVUDrwyI
+         RnaaFcRUbgMmbycH7H72sOm0cTsTiRz94zmK3xX6aJmCJMOCopLrWflxtKUfM9Hb4n63
+         lyW5m8JyxrhP0U8KPRtz92O9TOeeCSWWETeHw5APp7sbhroh8ST+lArih9pubK/oxk0C
+         X5DFz/kocvBb4gD9Q4Fms4W2+EmfUuP0dsICWYjnaZzwgc52m8kaizK5X2x3D4zHufJb
+         sy2IoiZG3Iea4+eW+IajzT5qnOFE6txdvw/aqOSHQMHRRu3KM+MRydyTVJd2USsYV8Xj
+         HuXg==
+X-Gm-Message-State: APuU4Z+QY53TOc88n26xtddfEAezwzquzmoVx1/H2hFqXK3jh1f91YA5
+	lJmVjrV3sRAzIhwFe1OtGnCQag38INUPRFoU1uHv5bLvKaShEnc+IEg8DW8E0CQd
+X-Gm-Gg: AYBFou2T7681QjnEQABIuST+esRlkGt2XnkOrqAfl/sdgGMORSgRVpuVuxm+53612h4
+	f79V040BPGGzuR37lfKvP1aPlnPQot15q0acY2Pwso2pEwTLIK2T0gphKpOLu2Vi7c8d8j+shX3
+	EZMHQ6nKZm03pUSJUdpHC8VYRgKS7wHJbzpDTFnDr0WBvJV17+2audL58A0Z6q+wOwyFQZwVX3t
+	Amhx1AGmYCfH6E+5Zs53svcI59UurBB8LTo9p2wveVCjxq/PX9TRHd+LcOIdb8u4Aip1J7D7G1p
+	qirryK76xIviVK2xmk2yUpfXPvo8bcX/mB14iFHUx6HT4YHnrXh8Zb8iQ8Be0/NV3vcTWQzGCtS
+	UoyIGibVVCj4JY335CCdVejVx55l+ygbo/K6RZhXGKW3kJqiuq9/eGW9ZITXfSig62eQl9aMz8M
+	P06L53JljVnstEfkhqw1QJznYUcYD+3/Rg/R1cMhVSCTVTgPwc5Yx8XkkfY7hU+8JdCFOfD20i+
+	xsovCxt43FIkJmglVoIriwLWYzx4tzCoWzKH5qJfqR+rh7TQZaJeQOnQoeIrcxZ4Q77sYray2fJ
+	gTqLdtoY9vjHXGy1THa1elMAeciHCweWJFKzM73DszaiTUK3AgyO117tXvQY0/af6C4GTqLEM5E
+	OeSg8UoH9VXh+WymPvMXdgEjtFfxDyQ==
+X-Received: by 2002:a05:600c:1987:b0:4a1:6517:ccf1 with SMTP id 5b1f17b1804b1-4ac16fa2edbmr334840085e9.9.1793747521842;
+        Tue, 03 Nov 2026 15:12:01 -0800 (PST)
+Received: from KURSA (ipservice-092-208-105-158.092.208.pools.vodafone-ip.de. [92.208.105.158])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b4104d600fsm14452415e9.0.2026.11.03.15.12.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Nov 2026 15:12:01 -0800 (PST)
+From: Caspar Duregger <caspar.duregger@gmail.com>
+To: git@vger.kernel.org
+Cc: pabloosabaterr@gmail.com,
+	gitster@pobox.com,
+	krka@spotify.com,
+	karthik.188@gmail.com,
+	chandrapratap3519@gmail.com,
+	Caspar Duregger <caspar.duregger@gmail.com>
+Subject: [PATCH] graph: do not indent visual roots with columns to their right
+Date: Wed,  4 Nov 2026 00:11:53 +0100
+Message-ID: <20261103231153.289762-1-caspar.duregger@gmail.com>
+X-Mailer: git-send-email 2.56.0.windows.3
+In-Reply-To: <CAFzd1+4Jx_sWvMrV10gi9400BBNJOUXW0WwsypiM7yCh5x8fow@mail.gmail.com>
+References: <CAFzd1+4Jx_sWvMrV10gi9400BBNJOUXW0WwsypiM7yCh5x8fow@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -88,31 +100,110 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 03 Nov 2026 22:40:45 +0000
-Message-Id: <DMLXRHPI0V08.3JFJGR1LRDGXU@gmail.com>
-To: "herr.kaste" <herr.kaste@gmail.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>
-Cc: <git@vger.kernel.org>, "Karthik Nayak" <karthik.188@gmail.com>, "Chandra
- Pratap" <chandrapratap3519@gmail.com>
-Subject: Re: log --graph draws an orphaned branch with parents
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <CAFzd1+4Jx_sWvMrV10gi9400BBNJOUXW0WwsypiM7yCh5x8fow@mail.gmail.com> <CAFzd1+5s6V+YC3onNjYQmxRPVnsMROpsVi=qy1mg2=LOAnU+gg@mail.gmail.com> <DMLW72EXMN1K.3IXVPHWNYQ3EH@gmail.com> <DMLW93TBSOXK.2OLM5O3HGK1ZY@gmail.com> <CAFzd1+6fiuT1R3B7aK6mN842g5+EiQ4Qt2_GCS1YFMVs+mXFaQ@mail.gmail.com>
-In-Reply-To: <CAFzd1+6fiuT1R3B7aK6mN842g5+EiQ4Qt2_GCS1YFMVs+mXFaQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Tue Nov 3, 2026 at 9:51 PM WET, herr.kaste wrote:
-> From 48bbcf965dc630251cc32f38d7efca5e6fb77c5e Mon Sep 17 00:00:00 2001
-> From: Caspar Duregger <caspar.duregger@gmail.com>
-> Date: Tue, 3 Nov 2026 22:38:22 +0100
-> Subject: [PATCH] graph: do not indent visual roots with columns to their =
-right
+Since a34c00d96 (graph: indent visual root in graph, 2026-07-14), a
+visual root that has a child is drawn indented, connected to its child
+by an extra GRAPH_PRE_ROOT line.  When there are columns to the right
+of the root, this breaks the graph:
 
-Thanks for the patch, but it's wrongly formatted so b4 shazam can't find
-it to apply it, could you sned it with git send-email?
+	*   M
+	|\
+	 \ |
+	  * | R
+	 /
+	| * T
+	|/
+	* B
 
-Regards,
-Pablo
+graph_output_pre_root_line() writes the extra " " for the root column
+without shifting the columns to its right, so they are drawn between
+two columns.  graph_output_commit_line() then pushes them one column
+to the right, but the following GRAPH_COLLAPSING line is computed from
+the mapping, which knows nothing about that offset.  The column next
+to R does not continue into the next line, and with more columns to
+the right of R one of them goes nowhere.
+
+But in this situation the indentation is not needed in the first
+place.  The columns to the right of the root collapse into its column
+once it is rendered, so the collapsing line always leaves a blank
+right below the root, and the next commit cannot end up vertically
+adjacent to it.
+
+Do not consider a commit a visual root when there are columns to its
+right, which gives:
+
+	*   M
+	|\
+	* | R
+	 /
+	| * T
+	|/
+	* B
+
+Signed-off-by: Caspar Duregger <caspar.duregger@gmail.com>
+---
+ graph.c                          | 12 ++++++++++++
+ t/t4218-log-graph-indentation.sh | 18 ++++++++++++++++++
+ 2 files changed, 30 insertions(+)
+
+diff --git a/graph.c b/graph.c
+index 28bef1b88..95eef3a95 100644
+--- a/graph.c
++++ b/graph.c
+@@ -969,10 +969,22 @@ static int graph_is_visual_root(struct git_graph *graph,
+ 	 * already a column, so it will not be rendered below, the
+ 	 * current commit has to act as the last commit and omit
+ 	 * indentation.
++	 *
++	 * If there are columns to the right of the commit, they collapse
++	 * into its column once it is rendered, so nothing can be rendered
++	 * right below it and there is no need to indent it.
++	 *
++	 *   * | <- visual root with a column to its right
++	 *    /
++	 *   | *
++	 *
++	 * Indenting it would also push these columns to the right, but
++	 * the collapsing code does not know about that offset.
+ 	 */
+ 	return graph_is_visual_root_candidate(graph->commit, graph) &&
+ 	       !(graph->commit_in_columns &&
+ 		 graph->columns[graph->commit_index].is_merge_parent) &&
++	       graph->commit_index + 1 >= graph->num_columns &&
+ 	       flags->is_next_visible &&
+ 	       (!flags->next_has_column || graph->visual_root_depth > 0);
+ }
+diff --git a/t/t4218-log-graph-indentation.sh b/t/t4218-log-graph-indentation.sh
+index 24dc9b497..b3b9f7c14 100755
+--- a/t/t4218-log-graph-indentation.sh
++++ b/t/t4218-log-graph-indentation.sh
+@@ -449,6 +449,24 @@ test_expect_success 'two unrelated merges' '
+ 	EOF
+ '
+ 
++test_expect_success 'visual root with columns to its right is not indented' '
++	create_orphan _70 && test_commit 70_A &&
++	git checkout -b _71 && test_commit 71_A &&
++	create_orphan _72 && test_commit 72_A &&
++	TREE=$(git write-tree) &&
++	MERGE=$(git commit-tree $TREE -p _72 -p _70 -m 72_merge) &&
++	git reset --hard $MERGE &&
++	lib_test_check_graph _72 _71 <<-\EOF
++	*   72_merge
++	|\
++	* | 72_A
++	 /
++	| * 71_A
++	|/
++	* 70_A
++	EOF
++'
++
+ test_expect_success '--max-count treats the last visible commit as the last commit' '
+ 	lib_test_check_graph --max-count=2 _8 _9 _10 <<-\EOF
+ 	  * 10_A
+-- 
+2.56.0.windows.3
 
