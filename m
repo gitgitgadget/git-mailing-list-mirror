@@ -1,100 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.173
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793730446;
-	b=lGCwO42G8SUlXeoukgXVvimsJCAGg3zeJ2yxfwDoFK1iu1G9hQo1Y1um5FIosqjqMU3h
-	 lW7MSfEu2OJKlDLYzF4UiNeJqRrWN1DotYdqRbXvWbfxMLPSPZCp8ozmcZ7+E5l2n3/ud
-	 TEXWrRNULNPGGjhBaS01p5mRGyuOaH8gtwPxw3UHNVYTvYWHGGmJwXkkGZUoNKWXFp/op
-	 AJmyWCq3PNd6Kr/pHKcNERxblfsGevIqZDwPjyk4z+TQYooN01lXmfnirvRFFgJSGrdwS
-	 RpP5f4aVY23FAOar/LdTkg6j2UjY4JJaEQWMN9O+x3CjHSM7nz2o/60IkZml5ZicfFA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793730446;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=+kaD69hIrPIrUZzwYMb7S/GNpGazAIKC5jeCdJ+GlfU=;
-	b=p8YpBcUH3jGFZ4EUg/PSmrUD8r+L+7hGO4s5TODhK9LqDntstp3Saq0cPNDEOOcmEOOZ
-	 Geh9B036rc8yMmrs4XNG2KMb/3pG5+Ry1MxV3Gd3OzzbkfDycw+DAgPniAX9vf/5q86Ix
-	 LFRyS09C5iB6P192k72CbC/FA+UB47zB9VNue89iGwgLg4UWIVcXWeFqBvajh+pcPOSPe
-	 Jxc34ShqrKb4YaeU4XU3RuHxQC/PoWrGSnARUKu2t4byHrKQgIjTmaG6+kqWrMpaSnWG5
-	 aDLmJEk+7Rc6nUUbmXexe9NB2rKu/XIkU11nu3KY91fX2wUhtrnFddlr6IbCSN7YkjA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ElzkqytV;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.173
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.152
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793730628;
+	b=B7NDx2BMCK0iYivG8YjP1KNKHl5veqloZ22G2dWZrg/SEZ/sXs5AwDYuIXwc015Hhr3f
+	 HwPHQ3FkqJaE3nehGh/WIDOa8eq6tPqDOrq22fTjU6VUnNiUJ5V8Wu2RV65PfH3GmJH9i
+	 rl2CRBnZ2hjwLeAx5VfJBNpjB+ozemk+dDTdMaZphmpZ3oglpWwgs47k957dCOmUMUI1s
+	 fE/0ixNvfTP0/6USxp6KcugO0GTdI/9LjLEjvtoC0XRCieewzOrzVAVSugYLljdN2gccH
+	 rKQoI6rxSXLwecAhZALmqadhFs4NJgg+XxdoTinJ6vd8IDIO7ykOelXvV5uHt0FD+jg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793730628;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=O4HkHzOT/4axWuDJFjbRIUoAiXShDInnEc9JR1VJhbA=;
+	b=Bgt+g1+1VkbjulNoOQx7pnr36SPMIrKhnyQ3vf8+jQqdjQs1v7m6K9PXq8kiQjkIBiUQ
+	 R7Imy4DWgHz0yZ8kFlGX9ibiNiWets1zFlo7RrjKqEHlRTT70d+cY62hyuhlfZySUkmdS
+	 hBZHX5DLRAObKkAb/5wS587JqvrUo0GeN3+SCNqqMgKmcHHOOtXgEIpAh3+ztvqsLQuSS
+	 aNAqDjrDE6kB/vyckVxSJTSqE7ZN3ezb6FOgnjon3+fv3sGTlBthtogjxyZYI1IixNjOO
+	 CX5KbEA800UryigTzV+EzzFmkpKS+zTOeCWASkelDV6BL9slQtNBEQogh6/Me1x9l3w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=N6VXT7Q8;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bmL+Ys3I;
+	arc=none smtp.remote-ip=103.168.172.152
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562F8606A31B
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 18:27:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 562F8606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A5F606A32E
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 18:30:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1A5F606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ElzkqytV
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4d198f1a591so2527095b6e.2
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 10:27:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793730445; cv=none;
-        d=google.com; s=arc-20260327;
-        b=BhhiZ4NPZJWMtq1cJIb0MnHDAbWOcfmx0Ya3k45N9wDYfSg7MJ1dj0q05Ehhpf0F5f
-         KqsPX9rQg7McqX9O2DTJfuzZpatLS/SwRfoCtVKY2jsaG9R+6U7XKnVFXs1c9BSTsxTx
-         0KDxIhXAcKUfQGE5e667Y+daEaigV3dpiE8aH57xrtgAopHLrw4wsXQkQq8jMM8LTp5Z
-         OveKYCCAHEoFu8EHIHtNuw94tKGoe5HjxmLL3ovFDHECrBPNgFdsDuZVS4Aa9MTZi7XQ
-         IRlCb9Aow5WD5oECsXJqqIvdoMV2AoBbQvQG+7jvW7wo42ao+lv5NfPznDisB9V9v3AE
-         FEww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=+kaD69hIrPIrUZzwYMb7S/GNpGazAIKC5jeCdJ+GlfU=;
-        fh=mv5zqN92u4yGkXYcJT4eDsfhsA+TdzFjZ8yY/QsyRCY=;
-        b=pn/NexpZz3rBI5UFCotWxsvQJM2bGn0lYsNdBfs6Qtr/RRPhjksgTTEc1um4L+V87F
-         AgqX1JUTw1Wz5hhCMYXtnM0XBUk/QDnGtTIfMoD4cmV6G8Zu0Hf2SPOTuM5vq4X/v8A9
-         5L6wqQELZrasJ4h1g2/4WDrVbv4zR1DrgJD1VGJ6WysPZ2zPgUfV5Df6bCj1eV0h+NLI
-         B6CRpY3cyoilH/A4hsadyzy2bjdXt1mKy19bm5ZGmm8zZ0LXSAAOQQ+LHceJLzFkXL8f
-         pK761CFM0wtRxR+NSUs6yr0JbjTEorr0WXqdzSubbVi18yKQvNLQS//bwedLRmpw1aHX
-         678Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793730445; x=1794335245; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+kaD69hIrPIrUZzwYMb7S/GNpGazAIKC5jeCdJ+GlfU=;
-        b=ElzkqytVjTdZn8i1l3sQdtRQ4HS8t6/6l2VuM5RF/iVZzgHtwA1ChpSlsslZXqU3pz
-         3CGne47DZclWzmeOXGXwmtMuCyZJEyWdQiRP2CNE3mzjrnrk2pikbh2L9NIFpEaYSTL7
-         2mNH2+09QTWyBdiRZocrt83y0alGyF6rIhKw7b8R0JZmDnRtXB+EzQj2AFyfZ35utULG
-         yuK4ZW0MII/zodD3fRmGL+riWH6dpObb6djlzcj2pCftj98HB+2Fs+negHCi4jF1Mq7o
-         jxBZOYf5QJqll6hrt6QUNWOta/TUQSs6nxCvoozOwNaUVawZlM+FP071iGEt3jzOgdZS
-         UpGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793730445; x=1794335245;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+kaD69hIrPIrUZzwYMb7S/GNpGazAIKC5jeCdJ+GlfU=;
-        b=EBa9HTTfROH7rC6EdmJ1mfod+QtjkqiEB8gkRU8PVod145rDFYlryMwLzxQjOvaTHm
-         uJqvHSy9atxDMpaFcq/R9+bLBxntdoYEz/1bnZt/J4kRKYQDPLj3mbn4+rx8RuIh7FUe
-         XQX/rJXSxj9llSYUsLCvffBHc37fAM8saFYmnKMg2+ikofOv/ejkwu9TaKNU57jiI/8g
-         mmZGjCE3ga4c4UE1Hn4SohFVpTxNhl24UtInlAaXZN/F+XsG1P6gd0DO4xTuATEucj9Q
-         y9rtDN1zRgWQ7UKJ4bpN7V0CgvZ4Gxuk8w6Mo0D69lw/Ap6TfAKY21uYxuDCQZPQZbJK
-         GRxA==
-X-Gm-Message-State: APuU4Z+1QCq17I1lUkybuxExXWP6UhsSZRK9Y0PHO9ZCe1aQyxUo5YkM
-	ZgCSPc6M1+C/lJgNBPfh1hTnasVBXo7bVkSYw9Adati4HBIl51yLCVGQELIfiMh57ALFoaA0CDU
-	VAUTmGROBDXbqO98RfSoe3q3L4GKSoUD26w==
-X-Gm-Gg: AYBFou2xhJLUlZ+kFV1B83RjLeDmtwYA/DCiWsUR4FB5IM9woKsQDd05xfW1BVy08ez
-	uNWfVX33IgaUtyCziJaBAdYG3DACulvlyLmlM8UBZ7S1wiTye0mZUhWWLmm9aLdqihX7zpZmQTS
-	v0pYTqpmrtJQTRc6IHN2wsUBWdX+T98SlylEWV/Q5gOytWs7ZQwaJThvUtwE5f0qfzJuAQ/REV6
-	iXHURaLxdodROZfyc6m9aX4j2OMtxI53GZb5KqzzE1euSNLVqBETdIX6KpcQX4Y5KnMI3hYjuys
-	hUfniUjuq/ymdOnl68V03T1fVZM3GsMNDqZvgO4PPsMhE75sWacUV91BbRQiY7wRe/GA2wo5JK3
-	X/95UTh29b4wl8BBguZT9/AX2oinTJxInqmooFBhIi7De8ys8yaPbp/t5GqBonu4aCkV4kL58OC
-	0053RHXXFOuVksPmm+lxnZa07dXFSOmLqESFpNi9oPlEi9OGnkZukVkyU=
-X-Received: by 2002:a05:6808:13c7:b0:4fb:ac9b:b06c with SMTP id
- 5614622812f47-5640d973571mr10476368b6e.1.1793730445079; Tue, 03 Nov 2026
- 10:27:25 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=N6VXT7Q8;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bmL+Ys3I
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1A884140011C
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 13:30:27 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 03 Nov 2026 13:30:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793730627; x=1793817027; bh=O4HkHzOT/4
+	axWuDJFjbRIUoAiXShDInnEc9JR1VJhbA=; b=N6VXT7Q8JypPSQkuswfs2sHKxq
+	/ChvOZOpAPtY4fuJKGPMRFVlMcSsCbI+JDFI313PEdUtRj6ENQ0I0y6a4KeG3CHr
+	dkpIvKXWRULGtjvGG9LTd2BvT+l/hAPSW3RKEtUPqit3DGfli3OKeME5katR9F2W
+	KN8gRCMNaxQbWkXaXwfEh/nUCDNExgtPlr9gi739OMvOPpIyVXDV7pfC2HKWg7Jk
+	cUfknEPNtefHS5Lkh9YKfixRl9RwuXk7d3Z3KJXGON358R7VJ7/aAljB6LY/hpN6
+	z0LkRjgJkIXBcUaaIgxTgTCEDPgOTIjK1kWM9UrmqbMA5TApH9fQRuEsq5rA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793730627; x=1793817027; bh=O4HkHzOT/4axWuDJFjbRIUoAiXShDInnEc9
+	JR1VJhbA=; b=bmL+Ys3IXZhiXc6lsuOEefOq7Xt4+gGueuI2XvA7EY/4y7fSgM0
+	X8XRBg8lHzzJ+la6ucBBMbThpqiB374u1DVFt+HSWB6jCJN5e0A7iKsCukfd1AJR
+	TQU+WG3B6YF/Hox8jDN4GRPNgvE3Jx5NR7+3QlVpLc7EXE/y6AIQhR8UooGCjef1
+	liBU9YhoyNOKRfaaclgeN5HgDGhLg0DH0Yn1AYH9N9T0xOlpp3WHf16ezxl8WCO8
+	+aQ4CSNULwsvHPOkum8SuW5mk3tJi7Zxn9oQdmv9DwPdo2hroBIEZvyRega6aZNP
+	F/4sLGSyl6UoKJqtFEvY/955GR6MHy6J4+g==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793730627; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:knzq/a9/igJDh6jWldXMVdShZB1zP931UbFuw+4FhmsOKDp
+	A/Gfv9gFfPc7SAkfwdyeAnSKrVICPCaQBsNvehwvlVUuO8DHlXB2T0rv3PcgD8FL
+	bVV9mJUhpXoYMEykDxFdk8Pwbzw17GM0ibm+rbQ0RYZD7KmUvQUZ3cP3jXMAlBXp
+	XQ4ycbfHYv62XFQlvG0B7kllgUsOztZGlvo5wX+bdfZ8/cLGKlcdlkMkiftcL9nT
+	4N7dUjOiULTG2M1hxPS4znMqyR0XkSkGbEX0XmR0lZCtVR+ERhZzFRh15LvRpeBA
+	cCvX2PaXrF8H0RxHIs2EjYIItytuwo9EIBBkLhg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:f2SBsZyDrK8bMCzuDSlyt0uFhTmgfUyK7N0qOzKi5UY=:DHsoOay2HFwSJNhy2hfezwfXMLyU38y0/951TuCR3pY=;
+X-ME-Sender: <xms:QijqasfQhPWOolH3DDuRrgMiaj-zVr8c0q1KmtF79SUp_cGzL7UYIw>
+    <xme:Qijqah7wBN5LzVkMNQqQgaFGOUVXKs-T_jZrsLXSZD4LaqWB-eKjpwJUFUO_i-9Bc
+    lxfXh7hu26NeOivn_6xGX69ptWpsUCcsyM3l3go2FzrOtWDEZ7g594>
+X-ME-Received: <xmr:QijqanWLQKAmzeZ3dFEHcv4Z6HVZTAXMYHdB3X_NtuCsIYkWqJiY-NLFWKQuOw3hC2SyCFp4rl0Z67zZ7Jd6KBxinlwhfH-jiH8I>
+X-ME-Proxy-Cause: dmFkZTFUh1oRo59MPDKgA1+Mch8Uc9YFziqtF5y8vIgPSRcBYx8KkR6BjvJv27/FVhSwJO
+    84hfEz1B4hYdBHojuJ1udBUMo69ID3a1jfL3tg8vuKSKf7ygkCvrY/aTNYhdRWLZuomaE3
+    JK+JnLYFHDdZeoXRSUFoqmG96TuBqrUuA7E25NFyZr8s40iveqM4WDUCjRJFtMXeZGmZwB
+    YjFTJMlWllRBHRH6ko6WmsZqobUV1np5R9RLqBhJC9N97M43Sd0DZHYsjRudBFSOVs0ZYd
+    6+5VUio8nENAYCiuVcVH7lmqO9KuSAV2xIQxSE8Qou3YquADw948kuzuuRoqCZDhWITxa4
+    smvaYYMmar9DtxblJ/0y+d1Zq/RdjfOnU31HpZR6uYVr/+/OcFx3EcFEETbj1pkZ2w4n0T
+    K8ZaT/CYauGklQLcapQjRULhqTc0UoMGS3i0mq35P7pnDKNjTnwvyf3fnlvTxHLxU1YrAz
+    1+k6NusP4xl23LPLhEuRkj+vPzbhizZhGLMdt8h0B3ab5dKzpdwTc7oHUDtYY8WvVzFGl5
+    C/tKqHPbcMbcHa7Z49s6urmuM44tGgoxK7qqAVwRQArUjw0MCIjyZMd4weOZrFMn/x2Gwv
+    RFI4UDVroY2yCuHt1sc8QAcD0HaUCuahxaf1wvmlL4bobfg9JQcoU+g/0Grg
+X-ME-Proxy: <xmx:Qijqao7ujyLFFkOkNYxUmdEDyykcLR9Kd6jnMUPKFkrtckxe1qMCxQ>
+    <xmx:Qijqaqr1-Xxk1IfDuhfhPZKZFBAc8Fi49_96xO5PLwN8moiopzZtOg>
+    <xmx:Qijqajl0DD3ND_VdeSpSA4AkZncrc2grQvm1s9lDVAM7-D7wyjyMWA>
+    <xmx:QijqauMoTc82qh3U6nCmTi9ECubCudUdJHtpqLlFqXal5Gwpguk5Bg>
+    <xmx:QyjqalCSxd26x6MJdNf9O2Od6b5ow5TdGw3preOqJgqQrCKDMEB4k8OY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Nov 2026 13:30:26 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Andy Koppe <andy.koppe@gmail.com>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2 1/5] doc: glossary: add root ref and clarify pseudorefs
+In-Reply-To: <aunFqykTV0QHCmV3@pks.im> (Patrick Steinhardt's message of "Tue,
+	3 Nov 2026 12:29:47 +0100")
+References: <20261022212903.177261-1-andy.koppe@gmail.com>
+	<20261101230326.3675597-2-andy.koppe@gmail.com>
+	<aunFqykTV0QHCmV3@pks.im>
+Date: Tue, 03 Nov 2026 10:30:25 -0800
+Message-ID: <xmqqecd1939a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,69 +126,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
- <20260927114420.59724-5-jayatheerthkulkarni2005@gmail.com>
- <aukHlEd5udC1gLYZ@denethor> <CA+rGoLeSfwSQs6hOyGxjRhyCLqjWBMQ4yfXUYWiCz+MHqsgWAA@mail.gmail.com>
- <auoHYyR7WMfqosDq@denethor>
-In-Reply-To: <auoHYyR7WMfqosDq@denethor>
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Date: Tue, 3 Nov 2026 23:57:14 +0530
-X-Gm-Features: AclHuK8EMp-Fbk_YjI0cVHTkUeAsb7R5j3Cq9uJO1gf1q-mQ2nlfkzS4ZbZPDWo
-Message-ID: <CA+rGoLcoZcPO3nLbS41v_p0HPAw6r9C+ocnfU8BVKsuMd6axuw@mail.gmail.com>
-Subject: Re: [GSoC Patch v7 4/8] repo: add path.hooks with absolute and
- relative suffixes
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, lucasseikioshiro@gmail.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Nov 3, 2026 at 9:46=E2=80=AFPM Justin Tobler <jltobler@gmail.com> w=
-rote:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> I'm still not entirely convinced by this change, as it only focusses on
+> the difference in storage. How about this instead:
 >
-> On 26/11/03 08:01AM, K Jayatheerth wrote:
-> > On Tue, Nov 3, 2026 at 4:02=E2=80=AFAM Justin Tobler <jltobler@gmail.co=
-m> wrote:
-> > >
-> > > So if a repository has `core.hooksPath` set to "/dev/null", the relat=
-ive
-> > > path output here would be something like "../../../../dev/null". I
-> > > recognize that this matches the current behavior:
-> > >
-> > >   $ git -c core.hooksPath=3D/dev/null rev-parse --path-format=3Drelat=
-ive --git-path hooks
-> > >   ../../../../dev/null
-> > >
-> > > ...but I'm still not really convinced that is is a behavior we would
-> > > want to carry over as it makes it harder to users to figure out when
-> > > hooks are disabled.
-> > >
-> > > I would suggest we print the "/dev/null" here even when the relative
-> > > path is requested and document the behavior.
-> > >
-> >
-> > I am more inclined with you, and
-> > I see how returning "/dev/null" for the relative key makes it
-> > much easier for scripts to detect when hooks are disabled.
-> >
-> > One thing I wanted to check: in a follow-up series, Junio suggested
-> > extracting a common helper library to share implementations between
-> > `git rev-parse` and `git repo info`. If `git repo info` special-cases
-> > "/dev/null" for `path.hooks.relative` while `rev-parse --git-path hooks=
-`
-> > continues to relative-format it, would that divergence be an issue for
-> > sharing the underlying helper, or should we special-case it only in the
-> > `path.hooks` getter?
->
-> I don't really think that would be an issue. Regarding the follow-up
-> series, I figure you could just not use a shared helper here if the
-> behavior is diverged, or special case it some way.
->
+>     [[def_pseudoref]]pseudoref::
+>         A name that can be used like a <<def_ref,ref>> to refer to an
+>         <<def_object,object>>, but that has different semantics: it can
+>         record more than one object ID and may carry additional metadata.
+>         In contrast to root refs, pseudorefs are therefore not stored or
+>         handled by the ref backend. They can be passed to commands like
+>         linkgit:git-log[1] or linkgit:git-diff[1], but cannot be written
+>         by linkgit:git-update-ref[1] or listed by
+>         linkgit:git-for-each-ref[1].
 
-Sure, then setting a case for /dev/null makes sense I suppose.
-I can always as you mentioned make it a special case.
+Between the two I would prefer yours.  I would replace "different"
+with "additional", because a pseudoref can be used as the name of
+the first object it contains in a fully compatible way as any other
+refs, I want to avoid "different" that implies "there are additional
+things it can do but there are things it cannot do" Venn diagram.
 
-> -Justin
+Then replace "carry additional" with "carry extra", just to avoid
+repetitions of "additional" due to the earlier change.
 
-Thanks,
-- K Jayatheerth
