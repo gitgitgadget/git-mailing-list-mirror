@@ -1,101 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.43
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793713613;
-	b=xOvbFUfbsxStbveS6WBic2+Vey42wYsrEFgsGRU86jm6VmZ8NYxS5E2G8EneTtBKIjIP
-	 gRxiyVgMdajtOh6GaBaf/SvziozNSEysUre9Sqi4iq91ervx8ESxmUAyzR3lc8oKYU581
-	 I0efeDbTTTvUWnOZkKV9RyDVFbC/RvZEHN+00X1rmnNIXK4ECtGctg61HS+hoUSPFXj6B
-	 BC58ee2LanZIxXN6lT3DkRFlEa6vUz3YqTgluRkmWxHPCisiHb1BoyI4jNnZS0ZFs3eRp
-	 3/GfLMf3TEBsUxO4tdu99NEa2zpzmzCh1mgrHO4j2mBPeKk2L6qE9cZvgOtj2G+zuQQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793713613;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=IXWh3d/+dtC5luOt9IRo6MnDU/gjep23XSY7BbKYXwc=;
-	b=gbMCgXa48qgSRSRdspcWyjCK1UpA6acP2baMAZWZZO1qq9PwmIWA2jfrFBFfow/c2dAl
-	 kQ3VZqU2x2C1zgpIk/myygqvxU89OUF3gAkDVPGAtMhF5luHEornIv9WSE6jfrkdnvLZH
-	 /DmgnmnaU08fnG+PZUIbamf87Fb0iOrTTDBTWsZqqoA2gtlKlhSlkKUSJxlaLmR6WZN+K
-	 952CCxcKWxESKhAW1NlWhtzUiIPRToLwbydA1fNGblfUZ5Zbg3lePV11Uo8VYAOHeqFSG
-	 8hXATBc63IEoMOzkkck/kfKFxKVCeaQ7g6jjQbF/uHfj1p1/sQGHXGf+W98On7IC7ag==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KQS2CwrC;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.43
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.126.133
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793715260;
+	b=czY7C6mLwjeboZYvwJWTXRvVh4tVMXWPcpOY0KmGkiZKJvMGKs4mD2ui300B+LhD0xeK
+	 VvtKWqFUnoXpc+YoMA3REtL9/n9gIoC1i764Kk2baVtXEzTqsTPt/Y0MNomlMesE/30or
+	 YSaImIczLNs5t3nUprHIu08pCfJdQz9eOY8MuXpjt07qeP0hICo+1biNV+oG5wAOYU2O3
+	 JLOL6RButXRxESAOveX3F1obXnKAKd+vmRg5Q64JSgRqK9ppnM2OBYjJ5xx2qTJ82MzK9
+	 14F9F1cQi8AoSqP/xrMPobhnpwVnRzAmLSe1cB4WaOoY8GuetrMAOIeM5dBsKTDUOZQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793715260;
+	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
+	 Subject:From:To:Date:Autocrypt:Content-Type:User-Agent:MIME-Version:
+	 X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
+	bh=rPO5+t0xAg/Cr0JBtpxu6xzLMSNudJJgXO6Uc35ytRI=;
+	b=V7i0mf+C2DDLPVlQRGmzSaxP9lI8II9eTmrO37HvB0YycCTBlKcOS3egUX1HKZG4gWyf
+	 sTZ/q+2gIYUT8cogDpiuu5x5KjtdRRxGFcEGun0mLUgs+H49T+ECmfcG9d9I7RAb7ubEv
+	 vFbNmMDiNEUE0vpzvXsp4XNQ54jvSO9HJ5WYInUC+s3V+DAIOdqZFixD2hxgu0zdPTEfm
+	 ilKBzs5OceGLDPAxZAzwT6rr1E6mV+/qn6w9xEf2av8hNkG1ojTknOls1vgawOR/JSzqP
+	 vFgLRwTC8TPd7CBmL02hre7clHPoJq4LOLiIZqycvzqbsOfSFfbvu22zzoq/Hi7mVIA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=abou-samra.fr;
+	spf=pass smtp.mailfrom=abou-samra.fr;
+	dkim=pass header.d=abou-samra.fr header.i=jean@abou-samra.fr header.a=rsa-sha256 header.s=s1-ionos header.b=2K9MEg+z;
+	arc=none smtp.remote-ip=212.227.126.133
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1722606A33A
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 13:46:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1722606A33A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA02D606A326
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 14:14:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CA02D606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=abou-samra.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=abou-samra.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KQS2CwrC
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-70b875f6f1fso3884214eaf.2
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 05:46:52 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793713611; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mbpbZDW0EIR5l0ckWMXKtbP5EiATGku7qkI3IFdLi1fqhlm7cLYYWQDBtakRSl1/CX
-         LkWleSRYqQoPZxDFSzLDk3lY+n5iW6YHNfe1B5UIz7XK0155Bn4VyeeyNERKsY/iXxtw
-         JCGowsLvlY3uLYKBnmW+d00r2VeQ1Jt2nQDMbTpZgDsItBgZJegHfdXVrfsRUpuf9t3x
-         kmzCT44qcB/mXkX88deaNOvaPjskALoA+SoWoqOIX0t0daG9vEdtbxZOYYoPXLjhE3gl
-         vBpWHeIaHUhVnqxNIgWYyXeRsDhHdrHH2Bdo8a1IDzoBQydsJMfYab8VdtU8aAt94wB/
-         qnyg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=IXWh3d/+dtC5luOt9IRo6MnDU/gjep23XSY7BbKYXwc=;
-        fh=M0bpdXiSTXdD+3QsRqpLy8Sf9mfMfWjg6PwNpY05g9c=;
-        b=XjT/Qpr2XbdUJyt6JWRJ8zJo3/EAIxTtDuvVZOkUQblpNvrB/BgeM1F3MCkmr5NMre
-         tHuF2VVssUxGvP2Wr1+0tySgaFBme7J3mLmZeKt+d7yOI309evF8d0KwyPd2ZtgDUXSe
-         EB4WMz/fiHxQC5mPDM285Yw4lHTcoxl839eWa0zoba6aZecRuPkEGIEkI1rtQuPMOBmp
-         C0ASMpgUhNl4E38r5sD9nty0X/wv7yaWmPWdeT4579EU/dg3H9uKQ1dyIJY+4h7M/kka
-         ylSZqItiDLATH+CdQh7VE6Tz1TA4vjU11qC3YJxeRlqP7Zx5nRK67kO+Y1Pr+hzjyq7v
-         T4oA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793713611; x=1794318411; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=IXWh3d/+dtC5luOt9IRo6MnDU/gjep23XSY7BbKYXwc=;
-        b=KQS2CwrCRctAQaJP22jYoRSoGmLmAGAjeBTfBQGB48YJEff4VdZcoyckfPl+pZvnBX
-         Dv5Fj3cGmY2UcPUVQW7avveTSvvRSya77i7sag6cpkJz6k/NPCHhzoAOqJP5AMsZXbv/
-         HzjezAZT6NzmT8zLnTADg0UB6n2U1ZVhKc0neXPw40LMJg9Jcv3VCqaL89T95EcYOtaC
-         Rchdbv579BMf7i92FaQhhtQZacMPVB+i3Zt+XIpuC8QrynUCZ9zd/Q6KlUYoCehhSC2x
-         kWLj2nvR1fwFzu4jq0itAFm1h2P7vSC8fz4QR3tZwtTMSaXYCS7APfJRCU+JeItaguTP
-         rGbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793713611; x=1794318411;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=IXWh3d/+dtC5luOt9IRo6MnDU/gjep23XSY7BbKYXwc=;
-        b=Fe91JMJsDfBWhuLnt4pO9D1NNIkmXgmjQM77yxk+mpq2OQhpb4DPnKnFnO3a9ib5sg
-         Gvdzj92yyYkz5s8fZyMWjQiB0AjgDYKoIgRi4s4CC6TT8QOI5kcIOrPTdnYypMa/oueX
-         u3Wx291N14/wqD32LvpQLLk81rjVYUrYluqW4I2D4y66LSfPjNRxUOx9fiYQpVPOqdHW
-         5Hbe1sVrQIFlSjdgvO/7YjrT58qW8z7s5OP072FQN3p9LbZx3MYPvDNU5/n1v4FOW7Re
-         ARoShydOGTJ/XV1W6meSyfLUELJ6yEa7MA27IOUgvYo/ow3JiAAVkfiMkg+BwAQkwpDX
-         OwGg==
-X-Gm-Message-State: APuU4Z+rCKo/L90jNZXh9GWHiGieSgfPFopEn/ry2TxlJrOyfKuFQpTk
-	kR3My43SFc8lTn6fJ88sNy3BVZR1G4hBfYjqIcE4xh+pWCL5f6YhaHLpZl3Z0sL7y0GKnmgr01Q
-	GWDFdRdEsdyY1w4UhciFNO/O+LFMl3qw=
-X-Gm-Gg: AYBFou1YoLeqWkx9yAsBzu0JBUl/6AoIk1cRYACEP6vs8iGmRu7IiYu4DCCCe2aitEJ
-	lse0H8SP+jjLqV/DOq3+AeTegV8EreZ7RmNsG0BCI4LExKNcGAipaBiTa4LJ5jeEiDA9CCPdpXZ
-	AZXnuv9vWJlqjfb7uhgAyNZsg695yrruLdGx5CNnLWAzpgrbmXGsZl5hJv/7HDb7xNAJ/4nf+Zy
-	ch9MSbuPuurrfKaCUA1pocJeh8SHTcwS5swmxIwR0QmTYRZM8AiFj+v9SGeR3s49yeuITX7Od7J
-	kN3K+mQHFMffmiuWvaES1vt38jZEYBofENHFIix845JJJkzvaHHl+Nstnv4eqNvXow5wulSmYfY
-	J6c7ThewyRcwJ9jSQmvyKmxv4lpPj90QOPfVcHhAp4fnM15pGvCJx/73PLOC21m6sjWot6QEhv2
-	RGehd0eCRU/cskieWCQTiveaxtMGv/xDRlmtm5nxy5tx6vH1ba/AH441I2yZVO7GmpVsIq1tv1C
-	NuCSD68gr4d7MQ7FdWGXHb5
-X-Received: by 2002:a05:6820:169f:b0:6b7:46fa:1693 with SMTP id
- 006d021491bc7-714f29aecbcmr7213928eaf.40.1793713611413; Tue, 03 Nov 2026
- 05:46:51 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=abou-samra.fr header.i=jean@abou-samra.fr header.a=rsa-sha256 header.s=s1-ionos header.b=2K9MEg+z
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=abou-samra.fr;
+	s=s1-ionos; t=1793715256; x=1794320056; i=jean@abou-samra.fr;
+	bh=rPO5+t0xAg/Cr0JBtpxu6xzLMSNudJJgXO6Uc35ytRI=;
+	h=X-UI-Sender-Class:Message-ID:Subject:From:To:Date:Content-Type:
+	 MIME-Version:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=2K9MEg+zsK70zQznm3iuZ3F/esfdJQDOtfiMbT+s/98fHztJVYRbVy8FdrVG20DY
+	 4axgQaMa+zc9f9ZaCgN0jN5UOXvKTFUWbKHkJGNr7gG9n52l7jjItlR5mrrAKxpMy
+	 RoYNNHe9uazD5ZIPXFEAphI8smLniqJ3ZIasddDYYSqSJAi5EBpYA0Xqw6dq+e8yd
+	 rHmTmcE66QMFnL5A5Rtg/ncgzwmPMLbsLSXObEHW2LVgvpQLlwyDOjqjzTm+XdX+C
+	 thWK7fICEaWOjmUEibRoXXHnPzekaPsILEX/2qipZ6lOLwA0YgHhzbvGP1A/iamc3
+	 cXQM4kLo4hAZkKTvUA==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue011
+ [213.165.67.103]) with ESMTPSA (Nemesis) id 1MVMqF-1wz7NP2Rrr-00HzXF for
+ <git@vger.kernel.org>; Tue, 03 Nov 2026 15:14:16 +0100
+Message-ID: <4dd76eef8a2a355ba435e8c784c1e37f3fe47074.camel@abou-samra.fr>
+Subject: Strange word diff
+From: Jean Abou Samra <jean@abou-samra.fr>
+To: git@vger.kernel.org
+Date: Tue, 03 Nov 2026 15:14:14 +0100
+Autocrypt: addr=jean@abou-samra.fr; prefer-encrypt=mutual;
+ keydata=mDMEYz8qHRYJKwYBBAHaRw8BAQdAKa699V3Pc3AOAg40hnai7Ljs1uAOxkeopSA7uz+TN
+ /q0JEplYW4gQWJvdSBTYW1yYSA8amVhbkBhYm91LXNhbXJhLmZyPoiTBBMWCgA7FiEEme0ysZyhsg
+ bwY8wZo/D2C4kzl/4FAmM/Kh0CGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQo/D2C4k
+ zl/5MjQEAzHgLjZqtPK4nM5d4a+c03tUmYTKsGnfiHYPbSwD7V2cA/1kL/iF8C8wN/K//1+8vRd4i
+ uv1jrPbpLv11LHWg+EkM
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-ldBXJgrwJBYkXqcbGkjY"
+User-Agent: Evolution 3.60.2 (3.60.2-3.fc44) 
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,137 +72,495 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261029141818.40193-1-okhuomonajayi54@gmail.com>
-In-Reply-To: <20261029141818.40193-1-okhuomonajayi54@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 3 Nov 2026 14:46:39 +0100
-X-Gm-Features: AclHuK-LOY8rY4xKbWWLQAVOXIKz6YlsnpNC805uDX3EEHgycP_0d6iVEg7WOss
-Message-ID: <CAP8UFD1VUCTeXNbb4YKGkZRWY8i56Zms_=qkR2oqF7e1Aagy1Q@mail.gmail.com>
-Subject: Re: [Outreachy][Proposal]: Reduce Git's global state to enable Git's libification
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org, usmanakinyemi202@gmail.com, 
-	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com
+X-Provags-ID: V03:K1:+NUoWtB3JCgHPWU2U6BKa7XJoFv86wXTDzAtLuwqf322vezdJHx
+ RCsvsUWgb8IGAVVOq79+T3Z/xXoS3rObfrMBhNsQqctwm6AAWmOPGYcVlkVCjT/B0iEH9Ja
+ bQI6XwIVnkbr4DlkQS5IW1v4vOnRgYdqgCyuvXdOMeDfospz4noP9loi+bbRzid6+zEWx/e
+ dQoE1k2++rGXfBpMC76lw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:m0Tb7QShcRg=;IMZF/P8dCSwr/f366EQ9unxlV1P
+ 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
+ w+XYRTye39jdnAaBfsCjuwD7gYCcp3g=
+
+
+--=-ldBXJgrwJBYkXqcbGkjY
+Content-Type: multipart/mixed; boundary="=-wGv9YnAbelJyyW3pl8xY"
+
+--=-wGv9YnAbelJyyW3pl8xY
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Thu, Oct 29, 2026 at 3:18=E2=80=AFPM Okhuomon Ajayi
-<okhuomonajayi54@gmail.com> wrote:
->
-> Hello,
->
-> This is my proposal for the project "Reduce Git's global state to
-> enable Git's libification" for the December 2026 Outreachy internship.
+Attached is an archive with three files. file2.txt differs from file1.txt
+by just a few words, as correctly reported by git diff --word-diff (using
+Git 2.56.0):
 
-Thanks for your interest in Git.
+```
+$ git diff --no-index --word-diff file1.txt file2.txt=20
+diff --git a/file1.txt b/file2.txt
+index a9eaedc..a75008e 100644
+--- a/file1.txt
++++ b/file2.txt
+@@ -1,4 +1,4 @@
+\subparagraph*{Context}
+Our object of study is an extension of Turing degrees where the oracles can
+feature certain forms of non-determinism, as in this riddle. We call these
+generalized degrees the \emph{Arthur=E2=80=93Nimue=E2=80=93Merlin degrees},=
+ owing to their
+explicit description by Kihara using a three-player game whose players are
+conventionally named Arthur, Nimue and
+Merlin=C2=A0\cite{KiharaLT}.\footnote{In=C2=A0\cite{KiharaOracles}, Kihara =
+uses the term
+=E2=80=9Cextended Turing=E2=80=93Weihrauch degrees=E2=80=9D. We prefer to e=
+schew the association with
+Weihrauch's name since we never deal with [-call-once oracles.}-]{+oracles =
+that
+can only be queried once.}+} Whereas Turing degrees are defined as a quotie=
+nt of
+oracles which are functions $\N \to \N$, Arthur=E2=80=93Nimue=E2=80=93Merli=
+n degrees are a
+quotient of a richer set of oracles, namely functions $\N \to \P(\P(\N))$.
+Informally, when a program that uses $g : \N \to \P(\P(\N))$ as an oracle m=
+akes
+a query $n \in \N$ to the oracle, a set $P \in g(n)$ is chosen in a benevol=
+ent
+way (=E2=80=9Cangelic non-determinism=E2=80=9D), then a value $v \in P$ is =
+chosen in an
+adversarial way (=E2=80=9Cdemonic non-determinism=E2=80=9D), and the progra=
+m receives the answer
+$v$. The mathematical meaning to =E2=80=9Cbenevolent=E2=80=9D and =E2=80=9C=
+adversarial=E2=80=9D is made precise
+by introducing a game where Arthur, a player restricted to computable
+strategies, is allied to Nimue, the player choosing $P$, and both play agai=
+nst
+Merlin, the player choosing $v$. (The details of the game are recalled in
+\autoref{section-arthur-nimue-merlin-games}.)
 
-> Past Experience with Git
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> I have been using Git since I started coding, for my own projects
-> and when collaborating with other developers.
->
-> This is not my first time on the Git mailing list. I applied to
-> Outreachy in October 2025 and sent about ten patches in about a week
-> (patch-ids, commit.c comments, builtin/patch-id.c, gpg-interface)
-> [10]. None of them were merged. I was sending too fast, my subject
-> lines had doubled prefixes like "[PATCH] [PATCH v2]", and my commit
-> messages did not follow the project style, as Junio and Christian
-> pointed out [11].
->
-> This year I slowed down. I read SubmittingPatches properly, wrote
-> my commit messages in the present tense, and sent one change at a
-> time. The hardest part was still sending new versions: keeping each
-> version in sync with the review, the right thread and the notes on
-> what changed since the last version. This time my microproject was
-> merged to master, and six more topics are in 'seen', some of
-> them marked "Will merge to 'next'?" in What's cooking.
+While [-this game was-]{+Arthur=E2=80=93Nimue=E2=80=93Merlin games were+} i=
+ntroduced recently by
+Kihara, [-the concept-]{+they are a concrete description+} of [-
+Arthur=E2=80=93Nimue=E2=80=93Merlin degrees is-]{+objects that arose+} much=
+ [-older, having
+arised,-]{+earlier,+} in a different guise, in the study of realizability. =
+To
+reassure the reader unfamiliar with realizability from the outset, this pap=
+er is
+meant to be accessible with only a background in basic computability theory=
+,
+except for \autoref{section-topos-theory} where we explain how the proof of=
+ our
+main result can be understood from the point of view of realizability.
+Nevertheless, let us recall the historical link.
+```
 
-Nice.
+The only change between file2.txt and file3.txt is the addition of a
+blank line:
 
-> Reviews and help to other applicants
-> ------------------------------------
-> + list-objects-filter-options: pass repository to partial clone
->   helpers (Dorine Tipo)
->   My reply: https://lore.kernel.org/git/CAFpMFfCu6JrUC8i453qBP=3DAktqcG_9=
-sGX=3D1-1ekEDCYm_+pkUw@mail.gmail.com/
->   Description: Dorine asked whether USE_THE_REPOSITORY_VARIABLE
->   could be dropped. I applied the patch, removed the define and
->   checked that the file still builds, so it can go in the same
->   patch.
->
-> + Microproject idea: modernize a file-existence check in
->   t/t0081-find-pack.sh (Immaculate Mecha)
->   My reply: https://lore.kernel.org/git/CAFpMFfA17dnuLSRt97BrM0u3cHAifJyb=
-r_Zc2ahr_zq2nspgsw@mail.gmail.com/
->   Description: Pointed out that Shashank S had already changed that
->   exact line, and suggested searching lore and "What's cooking"
->   before choosing a microproject.
+```
+$ git diff --no-index file2.txt file3.txt=20
+diff --git a/file2.txt b/file3.txt
+index a75008e..81c3eb9 100644
+--- a/file2.txt
++++ b/file3.txt
+@@ -1,4 +1,5 @@
+ \subparagraph*{Context}
++
+ Our object of study is an extension of Turing degrees where the oracles ca=
+n
+feature certain forms of non-determinism, as in this riddle. We call these
+generalized degrees the \emph{Arthur=E2=80=93Nimue=E2=80=93Merlin degrees},=
+ owing to their
+explicit description by Kihara using a three-player game whose players are
+conventionally named Arthur, Nimue and
+Merlin=C2=A0\cite{KiharaLT}.\footnote{In=C2=A0\cite{KiharaOracles}, Kihara =
+uses the term
+=E2=80=9Cextended Turing=E2=80=93Weihrauch degrees=E2=80=9D. We prefer to e=
+schew the association with
+Weihrauch's name since we never deal with oracles that can only be queried
+once.} Whereas Turing degrees are defined as a quotient of oracles which ar=
+e
+functions $\N \to \N$, Arthur=E2=80=93Nimue=E2=80=93Merlin degrees are a qu=
+otient of a richer
+set of oracles, namely functions $\N \to \P(\P(\N))$. Informally, when a pr=
+ogram
+that uses $g : \N \to \P(\P(\N))$ as an oracle makes a query $n \in \N$ to =
+the
+oracle, a set $P \in g(n)$ is chosen in a benevolent way (=E2=80=9Cangelic =
+non-
+determinism=E2=80=9D), then a value $v \in P$ is chosen in an adversarial w=
+ay (=E2=80=9Cdemonic
+non-determinism=E2=80=9D), and the program receives the answer $v$. The mat=
+hematical
+meaning to =E2=80=9Cbenevolent=E2=80=9D and =E2=80=9Cadversarial=E2=80=9D i=
+s made precise by introducing a game
+where Arthur, a player restricted to computable strategies, is allied to Ni=
+mue,
+the player choosing $P$, and both play against Merlin, the player choosing =
+$v$.
+(The details of the game are recalled in \autoref{section-arthur-nimue-merl=
+in-
+games}.)
+=20
+ While Arthur=E2=80=93Nimue=E2=80=93Merlin games were introduced recently b=
+y Kihara, they are a
+concrete description of objects that arose much earlier, in a different gui=
+se,
+in the study of realizability. To reassure the reader unfamiliar with
+realizability from the outset, this paper is meant to be accessible with on=
+ly a
+background in basic computability theory, except for \autoref{section-topos=
+-
+theory} where we explain how the proof of our main result can be understood=
+ from
+the point of view of realizability. Nevertheless, let us recall the histori=
+cal
+link.
+```
 
-Thanks for helping with reviews.
+And yet, comparing file1.txt with file3.txt with a word diff gives a strang=
+e
+diff that matches a few words here and there while missing unchanged entire
+long sentences:
 
-[...]
+```
+$ git diff --no-index --word-diff file1.txt file3.txt=20
+diff --git a/file1.txt b/file3.txt
+index a9eaedc..81c3eb9 100644
+--- a/file1.txt
++++ b/file3.txt
+@@ -1,4 +1,5 @@
+\subparagraph*{Context}
+[-Our object of study is an extension of Turing degrees where the oracles c=
+an
+feature certain forms of non-determinism, as in this riddle. We call these
+generalized degrees the \emph{Arthur=E2=80=93Nimue=E2=80=93Merlin degrees},=
+ owing to their
+explicit description by Kihara using a three-player game whose players are
+conventionally named Arthur, Nimue and
+Merlin=C2=A0\cite{KiharaLT}.\footnote{In=C2=A0\cite{KiharaOracles}, Kihara =
+uses the term
+=E2=80=9Cextended Turing=E2=80=93Weihrauch degrees=E2=80=9D. We prefer to e=
+schew the association with
+Weihrauch's name since we never deal with call-once oracles.} Whereas Turin=
+g
+degrees are defined as a quotient of oracles which are functions $\N \to \N=
+$,
+Arthur=E2=80=93Nimue=E2=80=93Merlin degrees are a quotient of a richer set =
+of oracles, namely
+functions $\N \to \P(\P(\N))$. Informally, when a program that uses $g : \N=
+ \to
+\P(\P(\N))$ as an oracle makes a query $n \in \N$ to the oracle, a set $P \=
+in
+g(n)$ is chosen in a benevolent way (=E2=80=9Cangelic non-determinism=E2=80=
+=9D), then a value $v
+\in P$ is chosen in an adversarial way (=E2=80=9Cdemonic non-determinism=E2=
+=80=9D), and the
+program receives the answer $v$. The mathematical meaning to =E2=80=9Cbenev=
+olent=E2=80=9D and
+=E2=80=9Cadversarial=E2=80=9D is made precise by introducing a game where A=
+rthur, a player
+restricted to computable strategies, is allied to Nimue, the player choosin=
+g
+$P$, and both play against Merlin, the player choosing $v$. (The details of=
+ the
+game are recalled in \autoref{section-arthur-nimue-merlin-games}.)-]
 
-> This project reduces that global state step by step:
-> - removing the_repository from library code by passing the
->   repository explicitly through the call chain, so files no longer
->   need USE_THE_REPOSITORY_VARIABLE;
-> - moving repository-specific settings from environment.c into the
->   repository, mostly struct repo_config_values and struct
->   repo_settings;
-> - and, where a value is only used in one place, passing just that
->   value down instead of the whole repository.
->
-> A lot of progress has already been made: many settings that used
-> to be globals now live in struct repo_config_values, and many files
-> no longer need the_repository. But there is still plenty left.
-> Over a hundred library files outside builtin/ still define
-> USE_THE_REPOSITORY_VARIABLE, and environment.h still has globals
-> such as git_commit_encoding, git_log_output_encoding and
-> comment_line_str. That remaining library code is where I want to
-> focus.
+[-While-]{+Our object of study is an extension of Turing degrees where the
+oracles can feature certain forms of non-determinism, as in+} this [-game w=
+as
+introduced recently-]{+riddle. We call these generalized degrees the
+\emph{Arthur=E2=80=93Nimue=E2=80=93Merlin degrees}, owing to their explicit=
+ description+} by [-
+Kihara,-]{+Kihara using a three-player game whose players are conventionall=
+y
+named Arthur, Nimue and
+Merlin=C2=A0\cite{KiharaLT}.\footnote{In=C2=A0\cite{KiharaOracles}, Kihara =
+uses+} the [-
+concept-]{+term =E2=80=9Cextended Turing=E2=80=93Weihrauch degrees=E2=80=9D=
+. We prefer to eschew the
+association with Weihrauch's name since we never deal with oracles that can=
+ only
+be queried once.} Whereas Turing degrees are defined as a quotient+} of
+{+oracles which are functions $\N \to \N$,+} Arthur=E2=80=93Nimue=E2=80=93M=
+erlin degrees {+are a
+quotient of a richer set of oracles, namely functions $\N \to \P(\P(\N))$.
+Informally, when a program that uses $g : \N \to \P(\P(\N))$ as an oracle m=
+akes
+a query $n \in \N$ to the oracle, a set $P \in g(n)$ is chosen in a benevol=
+ent
+way (=E2=80=9Cangelic non-determinism=E2=80=9D), then a value $v \in P$ is =
+chosen in an
+adversarial way (=E2=80=9Cdemonic non-determinism=E2=80=9D), and the progra=
+m receives the answer
+$v$. The mathematical meaning to =E2=80=9Cbenevolent=E2=80=9D and =E2=80=9C=
+adversarial=E2=80=9D+} is {+made
+precise by introducing a game where Arthur, a player restricted to computab=
+le
+strategies, is allied to Nimue, the player choosing $P$, and both play agai=
+nst
+Merlin, the player choosing $v$. (The details of the game are recalled in
+\autoref{section-arthur-nimue-merlin-games}.)+}
 
-It's a good idea to focus on library code. You might also be
-interested in what Junio says about code in "builtin/" in:
+{+While Arthur=E2=80=93Nimue=E2=80=93Merlin games were introduced recently =
+by Kihara, they are a
+concrete description of objects that arose+} much [-older, having arised,-
+]{+earlier,+} in a different guise, in the study of realizability. To reass=
+ure
+the reader unfamiliar with realizability from the outset, this paper is mea=
+nt to
+be accessible with only a background in basic computability theory, except =
+for
+\autoref{section-topos-theory} where we explain how the proof of our main r=
+esult
+can be understood from the point of view of realizability. Nevertheless, le=
+t us
+recall the historical link.
+```
 
-https://lore.kernel.org/git/xmqqmru76ybk.fsf_-_@gitster.g/
+Is this a bug? It happens with all --diff-algorithm option values.
 
-[...]
+Best,
+Jean
 
-> Roadblocks seen in earlier work
-> -------------------------------
-> - Not every global belongs in struct repository. When Ayush
->   Chandekar tried to move core.attributesfile into repo_settings,
->   Junio questioned whether attribute data belongs to a repository at
->   all, since attributes come from the index and the working tree,
->   and compared it to how index_state is passed around instead of the
->   repository [7]. The config value was later stored in struct
->   repo_config_values instead [5].
-> - State used during early startup cannot simply be moved; the setup
->   code has to change first. Patrick did this for
->   is_bare_repository_cfg and git_work_tree_cfg in his "setup: drop
->   global state" series [8]. have_git_dir() is still left, and
->   environment.h says it "should not have to exist at all".
-> - builtin/ commands: the "repo" argument of cmd_foo() can be NULL
->   (e.g. "git foo -h" outside a repository), so blindly replacing
->   the_repository there causes crashes. Library code is the safer
->   target.
+--=-wGv9YnAbelJyyW3pl8xY
+Content-Type: application/x-tar; name="git-word-diff.tar"
+Content-Disposition: attachment; filename="git-word-diff.tar"
+Content-Transfer-Encoding: base64
 
-In the discussion I mentioned above, Junio says that the code in
-"builtin/" isn't reusable library code at all, and that it would be
-useful work to move that code into library helpers.
+Z2l0LXdvcmQtZGlmZi8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAwMDA3NTUAMDAwMTc1
+MAAwMDAxNzUwADAwMDAwMDAwMDAwADE1MjcyMzY1MjQ0ADAxMjE0NgAgNQAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAGplYW4AAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAamVhbgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABn
+aXQtd29yZC1kaWZmL2ZpbGUxLnR4dAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAwMDY0NAAwMDAxNzUw
+ADAwMDE3NTAAMDAwMDAwMDM3NDUAMTUyNzIzNjUyMjUAMDEzNzE3ACAwAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHVzdGFyICAAamVhbgAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAABqZWFuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFxz
+dWJwYXJhZ3JhcGgqe0NvbnRleHR9Ck91ciBvYmplY3Qgb2Ygc3R1ZHkgaXMgYW4gZXh0ZW5zaW9u
+IG9mIFR1cmluZyBkZWdyZWVzIHdoZXJlIHRoZSBvcmFjbGVzIGNhbiBmZWF0dXJlIGNlcnRhaW4g
+Zm9ybXMgb2Ygbm9uLWRldGVybWluaXNtLCBhcyBpbiB0aGlzIHJpZGRsZS4gV2UgY2FsbCB0aGVz
+ZSBnZW5lcmFsaXplZCBkZWdyZWVzIHRoZSBcZW1waHtBcnRodXLigJNOaW11ZeKAk01lcmxpbiBk
+ZWdyZWVzfSwgb3dpbmcgdG8gdGhlaXIgZXhwbGljaXQgZGVzY3JpcHRpb24gYnkgS2loYXJhIHVz
+aW5nIGEgdGhyZWUtcGxheWVyIGdhbWUgd2hvc2UgcGxheWVycyBhcmUgY29udmVudGlvbmFsbHkg
+bmFtZWQgQXJ0aHVyLCBOaW11ZSBhbmQgTWVybGluwqBcY2l0ZXtLaWhhcmFMVH0uXGZvb3Rub3Rl
+e0luwqBcY2l0ZXtLaWhhcmFPcmFjbGVzfSwgS2loYXJhIHVzZXMgdGhlIHRlcm0g4oCcZXh0ZW5k
+ZWQgVHVyaW5n4oCTV2VpaHJhdWNoIGRlZ3JlZXPigJ0uIFdlIHByZWZlciB0byBlc2NoZXcgdGhl
+IGFzc29jaWF0aW9uIHdpdGggV2VpaHJhdWNoJ3MgbmFtZSBzaW5jZSB3ZSBuZXZlciBkZWFsIHdp
+dGggY2FsbC1vbmNlIG9yYWNsZXMufSBXaGVyZWFzIFR1cmluZyBkZWdyZWVzIGFyZSBkZWZpbmVk
+IGFzIGEgcXVvdGllbnQgb2Ygb3JhY2xlcyB3aGljaCBhcmUgZnVuY3Rpb25zICRcTiBcdG8gXE4k
+LCBBcnRodXLigJNOaW11ZeKAk01lcmxpbiBkZWdyZWVzIGFyZSBhIHF1b3RpZW50IG9mIGEgcmlj
+aGVyIHNldCBvZiBvcmFjbGVzLCBuYW1lbHkgZnVuY3Rpb25zICRcTiBcdG8gXFAoXFAoXE4pKSQu
+IEluZm9ybWFsbHksIHdoZW4gYSBwcm9ncmFtIHRoYXQgdXNlcyAkZyA6IFxOIFx0byBcUChcUChc
+TikpJCBhcyBhbiBvcmFjbGUgbWFrZXMgYSBxdWVyeSAkbiBcaW4gXE4kIHRvIHRoZSBvcmFjbGUs
+IGEgc2V0ICRQIFxpbiBnKG4pJCBpcyBjaG9zZW4gaW4gYSBiZW5ldm9sZW50IHdheSAo4oCcYW5n
+ZWxpYyBub24tZGV0ZXJtaW5pc23igJ0pLCB0aGVuIGEgdmFsdWUgJHYgXGluIFAkIGlzIGNob3Nl
+biBpbiBhbiBhZHZlcnNhcmlhbCB3YXkgKOKAnGRlbW9uaWMgbm9uLWRldGVybWluaXNt4oCdKSwg
+YW5kIHRoZSBwcm9ncmFtIHJlY2VpdmVzIHRoZSBhbnN3ZXIgJHYkLiBUaGUgbWF0aGVtYXRpY2Fs
+IG1lYW5pbmcgdG8g4oCcYmVuZXZvbGVudOKAnSBhbmQg4oCcYWR2ZXJzYXJpYWzigJ0gaXMgbWFk
+ZSBwcmVjaXNlIGJ5IGludHJvZHVjaW5nIGEgZ2FtZSB3aGVyZSBBcnRodXIsIGEgcGxheWVyIHJl
+c3RyaWN0ZWQgdG8gY29tcHV0YWJsZSBzdHJhdGVnaWVzLCBpcyBhbGxpZWQgdG8gTmltdWUsIHRo
+ZSBwbGF5ZXIgY2hvb3NpbmcgJFAkLCBhbmQgYm90aCBwbGF5IGFnYWluc3QgTWVybGluLCB0aGUg
+cGxheWVyIGNob29zaW5nICR2JC4gKFRoZSBkZXRhaWxzIG9mIHRoZSBnYW1lIGFyZSByZWNhbGxl
+ZCBpbiBcYXV0b3JlZntzZWN0aW9uLWFydGh1ci1uaW11ZS1tZXJsaW4tZ2FtZXN9LikKCldoaWxl
+IHRoaXMgZ2FtZSB3YXMgaW50cm9kdWNlZCByZWNlbnRseSBieSBLaWhhcmEsIHRoZSBjb25jZXB0
+IG9mIEFydGh1cuKAk05pbXVl4oCTTWVybGluIGRlZ3JlZXMgaXMgbXVjaCBvbGRlciwgaGF2aW5n
+IGFyaXNlZCwgaW4gYSBkaWZmZXJlbnQgZ3Vpc2UsIGluIHRoZSBzdHVkeSBvZiByZWFsaXphYmls
+aXR5LiBUbyByZWFzc3VyZSB0aGUgcmVhZGVyIHVuZmFtaWxpYXIgd2l0aCByZWFsaXphYmlsaXR5
+IGZyb20gdGhlIG91dHNldCwgdGhpcyBwYXBlciBpcyBtZWFudCB0byBiZSBhY2Nlc3NpYmxlIHdp
+dGggb25seSBhIGJhY2tncm91bmQgaW4gYmFzaWMgY29tcHV0YWJpbGl0eSB0aGVvcnksIGV4Y2Vw
+dCBmb3IgXGF1dG9yZWZ7c2VjdGlvbi10b3Bvcy10aGVvcnl9IHdoZXJlIHdlIGV4cGxhaW4gaG93
+IHRoZSBwcm9vZiBvZiBvdXIgbWFpbiByZXN1bHQgY2FuIGJlIHVuZGVyc3Rvb2QgZnJvbSB0aGUg
+cG9pbnQgb2YgdmlldyBvZiByZWFsaXphYmlsaXR5LiBOZXZlcnRoZWxlc3MsIGxldCB1cyByZWNh
+bGwgdGhlIGhpc3RvcmljYWwgbGluay4KAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZ2l0LXdv
+cmQtZGlmZi9maWxlMi50eHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAwMDA2NDQAMDAwMTc1MAAwMDAx
+NzUwADAwMDAwMDA0MDA1ADE1MjcyMzY1MjM1ADAxMzcwNwAgMAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAGplYW4AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAamVhbgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcc3VicGFy
+YWdyYXBoKntDb250ZXh0fQpPdXIgb2JqZWN0IG9mIHN0dWR5IGlzIGFuIGV4dGVuc2lvbiBvZiBU
+dXJpbmcgZGVncmVlcyB3aGVyZSB0aGUgb3JhY2xlcyBjYW4gZmVhdHVyZSBjZXJ0YWluIGZvcm1z
+IG9mIG5vbi1kZXRlcm1pbmlzbSwgYXMgaW4gdGhpcyByaWRkbGUuIFdlIGNhbGwgdGhlc2UgZ2Vu
+ZXJhbGl6ZWQgZGVncmVlcyB0aGUgXGVtcGh7QXJ0aHVy4oCTTmltdWXigJNNZXJsaW4gZGVncmVl
+c30sIG93aW5nIHRvIHRoZWlyIGV4cGxpY2l0IGRlc2NyaXB0aW9uIGJ5IEtpaGFyYSB1c2luZyBh
+IHRocmVlLXBsYXllciBnYW1lIHdob3NlIHBsYXllcnMgYXJlIGNvbnZlbnRpb25hbGx5IG5hbWVk
+IEFydGh1ciwgTmltdWUgYW5kIE1lcmxpbsKgXGNpdGV7S2loYXJhTFR9Llxmb290bm90ZXtJbsKg
+XGNpdGV7S2loYXJhT3JhY2xlc30sIEtpaGFyYSB1c2VzIHRoZSB0ZXJtIOKAnGV4dGVuZGVkIFR1
+cmluZ+KAk1dlaWhyYXVjaCBkZWdyZWVz4oCdLiBXZSBwcmVmZXIgdG8gZXNjaGV3IHRoZSBhc3Nv
+Y2lhdGlvbiB3aXRoIFdlaWhyYXVjaCdzIG5hbWUgc2luY2Ugd2UgbmV2ZXIgZGVhbCB3aXRoIG9y
+YWNsZXMgdGhhdCBjYW4gb25seSBiZSBxdWVyaWVkIG9uY2UufSBXaGVyZWFzIFR1cmluZyBkZWdy
+ZWVzIGFyZSBkZWZpbmVkIGFzIGEgcXVvdGllbnQgb2Ygb3JhY2xlcyB3aGljaCBhcmUgZnVuY3Rp
+b25zICRcTiBcdG8gXE4kLCBBcnRodXLigJNOaW11ZeKAk01lcmxpbiBkZWdyZWVzIGFyZSBhIHF1
+b3RpZW50IG9mIGEgcmljaGVyIHNldCBvZiBvcmFjbGVzLCBuYW1lbHkgZnVuY3Rpb25zICRcTiBc
+dG8gXFAoXFAoXE4pKSQuIEluZm9ybWFsbHksIHdoZW4gYSBwcm9ncmFtIHRoYXQgdXNlcyAkZyA6
+IFxOIFx0byBcUChcUChcTikpJCBhcyBhbiBvcmFjbGUgbWFrZXMgYSBxdWVyeSAkbiBcaW4gXE4k
+IHRvIHRoZSBvcmFjbGUsIGEgc2V0ICRQIFxpbiBnKG4pJCBpcyBjaG9zZW4gaW4gYSBiZW5ldm9s
+ZW50IHdheSAo4oCcYW5nZWxpYyBub24tZGV0ZXJtaW5pc23igJ0pLCB0aGVuIGEgdmFsdWUgJHYg
+XGluIFAkIGlzIGNob3NlbiBpbiBhbiBhZHZlcnNhcmlhbCB3YXkgKOKAnGRlbW9uaWMgbm9uLWRl
+dGVybWluaXNt4oCdKSwgYW5kIHRoZSBwcm9ncmFtIHJlY2VpdmVzIHRoZSBhbnN3ZXIgJHYkLiBU
+aGUgbWF0aGVtYXRpY2FsIG1lYW5pbmcgdG8g4oCcYmVuZXZvbGVudOKAnSBhbmQg4oCcYWR2ZXJz
+YXJpYWzigJ0gaXMgbWFkZSBwcmVjaXNlIGJ5IGludHJvZHVjaW5nIGEgZ2FtZSB3aGVyZSBBcnRo
+dXIsIGEgcGxheWVyIHJlc3RyaWN0ZWQgdG8gY29tcHV0YWJsZSBzdHJhdGVnaWVzLCBpcyBhbGxp
+ZWQgdG8gTmltdWUsIHRoZSBwbGF5ZXIgY2hvb3NpbmcgJFAkLCBhbmQgYm90aCBwbGF5IGFnYWlu
+c3QgTWVybGluLCB0aGUgcGxheWVyIGNob29zaW5nICR2JC4gKFRoZSBkZXRhaWxzIG9mIHRoZSBn
+YW1lIGFyZSByZWNhbGxlZCBpbiBcYXV0b3JlZntzZWN0aW9uLWFydGh1ci1uaW11ZS1tZXJsaW4t
+Z2FtZXN9LikKCldoaWxlIEFydGh1cuKAk05pbXVl4oCTTWVybGluIGdhbWVzIHdlcmUgaW50cm9k
+dWNlZCByZWNlbnRseSBieSBLaWhhcmEsIHRoZXkgYXJlIGEgY29uY3JldGUgZGVzY3JpcHRpb24g
+b2Ygb2JqZWN0cyB0aGF0IGFyb3NlIG11Y2ggZWFybGllciwgaW4gYSBkaWZmZXJlbnQgZ3Vpc2Us
+IGluIHRoZSBzdHVkeSBvZiByZWFsaXphYmlsaXR5LiBUbyByZWFzc3VyZSB0aGUgcmVhZGVyIHVu
+ZmFtaWxpYXIgd2l0aCByZWFsaXphYmlsaXR5IGZyb20gdGhlIG91dHNldCwgdGhpcyBwYXBlciBp
+cyBtZWFudCB0byBiZSBhY2Nlc3NpYmxlIHdpdGggb25seSBhIGJhY2tncm91bmQgaW4gYmFzaWMg
+Y29tcHV0YWJpbGl0eSB0aGVvcnksIGV4Y2VwdCBmb3IgXGF1dG9yZWZ7c2VjdGlvbi10b3Bvcy10
+aGVvcnl9IHdoZXJlIHdlIGV4cGxhaW4gaG93IHRoZSBwcm9vZiBvZiBvdXIgbWFpbiByZXN1bHQg
+Y2FuIGJlIHVuZGVyc3Rvb2QgZnJvbSB0aGUgcG9pbnQgb2YgdmlldyBvZiByZWFsaXphYmlsaXR5
+LiBOZXZlcnRoZWxlc3MsIGxldCB1cyByZWNhbGwgdGhlIGhpc3RvcmljYWwgbGluay4KAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZ2l0LXdvcmQtZGlm
+Zi9maWxlMy50eHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAwMDA2NDQAMDAwMTc1MAAwMDAxNzUwADAw
+MDAwMDA0MDA2ADE1MjcyMzY1MjQ0ADAxMzcxMQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAGplYW4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+amVhbgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcc3VicGFyYWdyYXBo
+KntDb250ZXh0fQoKT3VyIG9iamVjdCBvZiBzdHVkeSBpcyBhbiBleHRlbnNpb24gb2YgVHVyaW5n
+IGRlZ3JlZXMgd2hlcmUgdGhlIG9yYWNsZXMgY2FuIGZlYXR1cmUgY2VydGFpbiBmb3JtcyBvZiBu
+b24tZGV0ZXJtaW5pc20sIGFzIGluIHRoaXMgcmlkZGxlLiBXZSBjYWxsIHRoZXNlIGdlbmVyYWxp
+emVkIGRlZ3JlZXMgdGhlIFxlbXBoe0FydGh1cuKAk05pbXVl4oCTTWVybGluIGRlZ3JlZXN9LCBv
+d2luZyB0byB0aGVpciBleHBsaWNpdCBkZXNjcmlwdGlvbiBieSBLaWhhcmEgdXNpbmcgYSB0aHJl
+ZS1wbGF5ZXIgZ2FtZSB3aG9zZSBwbGF5ZXJzIGFyZSBjb252ZW50aW9uYWxseSBuYW1lZCBBcnRo
+dXIsIE5pbXVlIGFuZCBNZXJsaW7CoFxjaXRle0tpaGFyYUxUfS5cZm9vdG5vdGV7SW7CoFxjaXRl
+e0tpaGFyYU9yYWNsZXN9LCBLaWhhcmEgdXNlcyB0aGUgdGVybSDigJxleHRlbmRlZCBUdXJpbmfi
+gJNXZWlocmF1Y2ggZGVncmVlc+KAnS4gV2UgcHJlZmVyIHRvIGVzY2hldyB0aGUgYXNzb2NpYXRp
+b24gd2l0aCBXZWlocmF1Y2gncyBuYW1lIHNpbmNlIHdlIG5ldmVyIGRlYWwgd2l0aCBvcmFjbGVz
+IHRoYXQgY2FuIG9ubHkgYmUgcXVlcmllZCBvbmNlLn0gV2hlcmVhcyBUdXJpbmcgZGVncmVlcyBh
+cmUgZGVmaW5lZCBhcyBhIHF1b3RpZW50IG9mIG9yYWNsZXMgd2hpY2ggYXJlIGZ1bmN0aW9ucyAk
+XE4gXHRvIFxOJCwgQXJ0aHVy4oCTTmltdWXigJNNZXJsaW4gZGVncmVlcyBhcmUgYSBxdW90aWVu
+dCBvZiBhIHJpY2hlciBzZXQgb2Ygb3JhY2xlcywgbmFtZWx5IGZ1bmN0aW9ucyAkXE4gXHRvIFxQ
+KFxQKFxOKSkkLiBJbmZvcm1hbGx5LCB3aGVuIGEgcHJvZ3JhbSB0aGF0IHVzZXMgJGcgOiBcTiBc
+dG8gXFAoXFAoXE4pKSQgYXMgYW4gb3JhY2xlIG1ha2VzIGEgcXVlcnkgJG4gXGluIFxOJCB0byB0
+aGUgb3JhY2xlLCBhIHNldCAkUCBcaW4gZyhuKSQgaXMgY2hvc2VuIGluIGEgYmVuZXZvbGVudCB3
+YXkgKOKAnGFuZ2VsaWMgbm9uLWRldGVybWluaXNt4oCdKSwgdGhlbiBhIHZhbHVlICR2IFxpbiBQ
+JCBpcyBjaG9zZW4gaW4gYW4gYWR2ZXJzYXJpYWwgd2F5ICjigJxkZW1vbmljIG5vbi1kZXRlcm1p
+bmlzbeKAnSksIGFuZCB0aGUgcHJvZ3JhbSByZWNlaXZlcyB0aGUgYW5zd2VyICR2JC4gVGhlIG1h
+dGhlbWF0aWNhbCBtZWFuaW5nIHRvIOKAnGJlbmV2b2xlbnTigJ0gYW5kIOKAnGFkdmVyc2FyaWFs
+4oCdIGlzIG1hZGUgcHJlY2lzZSBieSBpbnRyb2R1Y2luZyBhIGdhbWUgd2hlcmUgQXJ0aHVyLCBh
+IHBsYXllciByZXN0cmljdGVkIHRvIGNvbXB1dGFibGUgc3RyYXRlZ2llcywgaXMgYWxsaWVkIHRv
+IE5pbXVlLCB0aGUgcGxheWVyIGNob29zaW5nICRQJCwgYW5kIGJvdGggcGxheSBhZ2FpbnN0IE1l
+cmxpbiwgdGhlIHBsYXllciBjaG9vc2luZyAkdiQuIChUaGUgZGV0YWlscyBvZiB0aGUgZ2FtZSBh
+cmUgcmVjYWxsZWQgaW4gXGF1dG9yZWZ7c2VjdGlvbi1hcnRodXItbmltdWUtbWVybGluLWdhbWVz
+fS4pCgpXaGlsZSBBcnRodXLigJNOaW11ZeKAk01lcmxpbiBnYW1lcyB3ZXJlIGludHJvZHVjZWQg
+cmVjZW50bHkgYnkgS2loYXJhLCB0aGV5IGFyZSBhIGNvbmNyZXRlIGRlc2NyaXB0aW9uIG9mIG9i
+amVjdHMgdGhhdCBhcm9zZSBtdWNoIGVhcmxpZXIsIGluIGEgZGlmZmVyZW50IGd1aXNlLCBpbiB0
+aGUgc3R1ZHkgb2YgcmVhbGl6YWJpbGl0eS4gVG8gcmVhc3N1cmUgdGhlIHJlYWRlciB1bmZhbWls
+aWFyIHdpdGggcmVhbGl6YWJpbGl0eSBmcm9tIHRoZSBvdXRzZXQsIHRoaXMgcGFwZXIgaXMgbWVh
+bnQgdG8gYmUgYWNjZXNzaWJsZSB3aXRoIG9ubHkgYSBiYWNrZ3JvdW5kIGluIGJhc2ljIGNvbXB1
+dGFiaWxpdHkgdGhlb3J5LCBleGNlcHQgZm9yIFxhdXRvcmVme3NlY3Rpb24tdG9wb3MtdGhlb3J5
+fSB3aGVyZSB3ZSBleHBsYWluIGhvdyB0aGUgcHJvb2Ygb2Ygb3VyIG1haW4gcmVzdWx0IGNhbiBi
+ZSB1bmRlcnN0b29kIGZyb20gdGhlIHBvaW50IG9mIHZpZXcgb2YgcmVhbGl6YWJpbGl0eS4gTmV2
+ZXJ0aGVsZXNzLCBsZXQgdXMgcmVjYWxsIHRoZSBoaXN0b3JpY2FsIGxpbmsuCgAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 
-[...]
 
-> Blogging
-> =3D=3D=3D=3D=3D=3D=3D=3D
->
-> I will blog on Medium (https://medium.com/@okhuomonajayi54) and
-> post weekly updates on my progress, what I learned and the
-> challenges I faced. I will share each post on the mailing list,
-> like previous interns did.
+--=-wGv9YnAbelJyyW3pl8xY--
 
-I wonder if blog posts on Medium are accessible to everyone.
+--=-ldBXJgrwJBYkXqcbGkjY
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-Thanks.
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSZ7TKxnKGyBvBjzBmj8PYLiTOX/gUCaunsNgAKCRCj8PYLiTOX
+/l/jAQCwSYl+jnlQ98HY/cBO+dVYJ5gsoCdwqkzHE/nxCYJXqAEAppf5fjgQOACC
+cgHDJ0kftb+vAXedShoHosgcWB37gAs=
+=zbAt
+-----END PGP SIGNATURE-----
+
+--=-ldBXJgrwJBYkXqcbGkjY--
