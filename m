@@ -1,128 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793689182;
-	b=0af23w182arWGOmWczsaoGMhEP/+JrePjvDOAWgNEScunw+K7gvB6ZVTcoJqQpkCdpFT
-	 fRVSnQ/7mV01Jy1jyN5bH+6PwtxVLKWdsc5Q/SqAJg1h4c21H+S+qEFIr8x2k4f6qV4Bm
-	 qyyjMrcLX/HCh3xCYlSAPVvkFOYG1r3lEcaBd884yRfhwZB7XzRCRrosvXLKLNOlg7qUt
-	 NFlS35PweCH1qoyZkX3Ob+Dp2J2+caXDyDuInmy8R6tT8h/4z+rTkBZi4YwPslmk/clKx
-	 VX9xIirt2tJgmohgdGvsdPA5Ch0nzUwi1iSbLvr4ttco8wC4mnWaa4iTxmuB+L89ohg==
+	t=1793689529;
+	b=SyvS0H8GnuFIxpWRyZ0QHsCzgrHEvZMkCzxu0VcjQvngbOQmSXfKGkJl9T7uja3FQe8f
+	 60CanzzI+00hDeT7GEc4Shy9rBYth7VINsK3urPgyt3fEJGE2h3oym/GX7uaVL5K7S9GR
+	 g0b2vryyh8hgJOItKmEPSv96j1DMWnABqcpYkV3QeAL+HeoubiphmAJIJeqEj1d8DvtLV
+	 T7Y6cz+a4us7ITjUaYZRY5KQfhgM2Bv827D8+C2WbbK+/CDXbuzlrbw3EJpi+JddEfgwo
+	 ctIHEFTLd3t7UOXTKLV3Uzk8+ph5U7iSU+l9LUKURXMIXwHb0Fso5QNjZa38OWgwbJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793689182;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793689529;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=tE8Y3pFm1wcxCYrvIx/zEXJUIfjamAaCmAwxz5yukD8=;
-	b=HMnrAwv04Z7Y7dXARYzliUNgltS+YhwhIgYIlcijD8yBICJVPIG/OC7oyVQfnc17BXcA
-	 X8f1QFW4HJr6jPAolrZ0tzEZV9KVQcqqkLbEcTCy4fj/BnZmMqXHBXk2rQspmp8HRsmSe
-	 OGj+Iwpq3cRStMa8jvN/VI46NBuMlrml55xcdvdr8mJXkuiS6CCVYN22yWJX4WQIB3XeW
-	 Po2cYxvPysPF9jycELPFagFDM6+3Gf9HvMUedol0W18aNs38Swb+b4XDErto63Gj7yHYl
-	 QNUBU+994c7KtJ+NtZdoGdiuYyvi0B4hOjbjfGJlxaQ2doAH2O48mKLMBOE3To+CNHg==
+	bh=bGdD5Dr17X8p3xrhBEgoK7bhLX+Hzbv/TtlB3YYncHI=;
+	b=g9Ee3t25E2+5C/cGkHXoYhwaxQvsiJKGabv2/rk8vf0NwcZyfSAaSfQWc+Cgo65ePRYe
+	 FL3+B0IlLC1aiqwi0SAmsMOqjR17ooNMMJMA4QVRqO6PaFg2Jt82R3bkRCFuPkWZ+RmpK
+	 fe/fYIWizGVuG4qoqrK+E1bcoBhFxQIHUXj00MhL2hKGPORd2eCNFM08Hkwm3/6xY3Agk
+	 oi+1ypCsM0xQYn7VofnlR/q18d8lYFEqmP3Qi62HBx9v2bO9Q6NfZpVrazblZ0yTcU8Ni
+	 Jkz5B4CiwfY+V5T3V2itM5ZQqx91a5jAXrytSyRZXK3ne7qEicgqhqtGG6zVSiyG/vA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=imciL63m;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=IA3LoLLW;
-	arc=none smtp.remote-ip=202.12.124.156
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=tNBxDRu5;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="01b9M/Tm";
+	arc=none smtp.remote-ip=202.12.124.147
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A2B606A324
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 06:59:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88A2B606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930A6606A329
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 07:05:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 930A6606A329
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=imciL63m;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=IA3LoLLW
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=tNBxDRu5;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=01b9M/Tm
 Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5CE607A015F
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 01:59:40 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id DADAB1D00123
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 02:05:27 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 03 Nov 2026 01:59:40 -0500
+  by phl-compute-08.internal (MEProxy); Tue, 03 Nov 2026 02:05:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793689180; x=1793775580; bh=tE8Y3pFm1w
-	cxCYrvIx/zEXJUIfjamAaCmAwxz5yukD8=; b=imciL63mIht2tWP/BHgve+pRwN
-	Byo6X6qr9hZ0Q4RwzscEij175H7dNIgQ+InV6x2KOc/n8v1DbjIY15BxxSD3+Okd
-	CkQYN84z9RVvY8ETGiUV9PR1sujhAoGloJgpYtigZlyeTcs6uRXvab/tbggwlV/6
-	DwGB4HN2wf9ii8ZJVc/sN2LFX/dU07tLhotRtqOZqUWwHVtrUWnSMzy55rzW126+
-	K36aPApQGW0nBdkdJ8fDhWMVtJrbAyoMPnOn/Jc5qDsXfMAcjamedMqff9Xfe7Y8
-	34rjXutdIW/tL80WPnehbuHqm+5ORG09mM+9mVuRjCUg9RV7QOvXpqVp9jvg==
+	:subject:to:to; s=fm2; t=1793689527; x=1793775927; bh=bGdD5Dr17X
+	8p3xrhBEgoK7bhLX+Hzbv/TtlB3YYncHI=; b=tNBxDRu5h056mEYIIC2Xi59w4I
+	B1BW8kmYzOcyl7I1HReikEdOD1PQnDNvLpYKoxeIb9Ocb3L0KqMIn5tvTn5bLifB
+	gijyTpEck00a3uAWUwpTQ4XCtbMuVbJ1Oot7ACGMBauBHLmbWnGrDsk89LOYGqv9
+	73fnuoixAQ5XE8OMjiAwDbdXqPEi3c5qiuJSl1yE8OARDWcRqzerZJO2Ygz3yROm
+	fSyNCgrkx5GgXUHF+0/JG+acmwShfW2LgkDd7ehjbYzxeBfrO+kY2BkF5whBJmPL
+	j/bFwKpVifkU8RR8U1cUyeQ4CUzEvAA+JyV9FlgWrn/dNDlrfLQsklX0+OmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793689180; x=1793775580; bh=tE8Y3pFm1wcxCYrvIx/zEXJUIfjamAaCmAw
-	xz5yukD8=; b=IA3LoLLW2f5jtpdGfO7LjfovEPF8DlATrzA0hwYr3WsZXjS4vgM
-	vhrKQdaci8CXzVV9nf/ZNiZGIUyqgYUzjwHa1R+RtTonXgaFDZdeJx6pJLGIHPNE
-	V7OXFwINAFKoFv7h+MkorRhfl3Rw32NvPfVYfz3AYADnuehSjjx0QB2rOHX/5oWi
-	jhh6yifa2eKXdbx0l4qwzx9T5ErpjbiDsAhoSmPDrN4FgvR+hliYio/4POEUOnry
-	utmjFiWfu4I3y6qjcF8+gkzJE0c6zIwDleHNpM332YxCOR+v0y69VmRbepiZSTsS
-	T45tvvdDKKAapApdtpoAPBndVF1BNPW/43A==
+	1793689527; x=1793775927; bh=bGdD5Dr17X8p3xrhBEgoK7bhLX+Hzbv/Ttl
+	B3YYncHI=; b=01b9M/TmL6wHClLOPw3g3O8zr4Vzzef70g26uJOofcofSNq09Kg
+	yNj0fvrLW69jR0zJDbNBeHhu9kwfmd8sgrNYFx43uoyWOtTnnUn+P7/D8nCcKlB3
+	mYEQN8VTdOqwwTTPlpN6O1AulsjR02fCLkRNkfNgOrl89L2xm1+ErDA37Cy2hxzu
+	6HXwusYV9wzm2yBQpFSf1frhEtW9odwmyYfLHSrmTgHzbs6yPIq1EfDMjZjXI1VZ
+	BesJvM6broun5DoZayOhYKepns8nJ7IJQNv32wJ3vT8xdeRnfSQo0FhGacaCyyg0
+	wZ3a2n65dd5pZN6wNClqn7h8DDRbXplBWAw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793689180; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793689527; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:utsKuHbK7uJ+ahiu+e3ggKdTNp4nUfTqRvQbQ6wpEuw3zcD
-	R8nM6hMKH/4xcVcvxYFXlPmXrFfrWFkud4afSc24NoSPEV70z07sRTrpUVxdCghg
-	hGXsJpV7vDjotBl+XNn+s0sx8oUFONL4v9+4OYUnxl76i9FGo9ej7gB3ma8HOQoR
-	aKFmS/U9Wwy6ELsSHCJ0tPk3LRJCX90uE7c+ZnUyb8KQyXrITiGg6KOHYcqv2Cbj
-	7yazeiqj8UD552jfNlcBQqrGAdfTGiShD9jkQdDQgHh1yioyWQnFM88LonoZ51Uq
-	HVoizUYOr4b+T85kPOp2hqQu8yacQptmoOduZ5w==;
+	s=fm2:rsa-sha256:rgnM30MMBgSqt+Iw136RKIS7XZdnYTY6mHSytv6V9z6RR8x
+	Csra5eD2T3xKrhqy8P1rFE20aP95xuffvuUX/6RLjQwxzkn3mfY+1wztTBwlWhEn
+	jAl1MvBNnGX1rK5Zghq0tE3Qlj1zm0Lkex9qY6VJXSMeJCuNyhoINUX0gf1jbhwG
+	F55dNFF2YUaf1uPtLmVY5Xa8hoXmwVxN9XUDDljLkgg0Da9BU6TF/YusDAQcw9S+
+	cp/yWSVydpLtCioXl2AgX+F1jPltT67mQPfxW2LvmHUanil2oi/TQiP88ibMjfcA
+	T402oQkPiGRsrpAhqfpOtpoORUZAvgAmrDeAfCw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:AXXayiZV9jzpemOQJyPgERTljw7Tk7AnjGFo8UOjEIA=:hPg2BvRXHNCO/gWupdBX3GRgSCdbNrZqoMhoKRFBjgs=;
-X-ME-Sender: <xms:XIbpao2eQtXSxY87hbXTXiHhc2vJeriPDSZ-cAR5kGpw9aYxY6jR8Q>
-    <xme:XIbpamxxPQ-HPGayze_TPUAgk7bSqF-RYRxjXgT0tVFnExN8udTFIBFfDG_hMSHkI
-    cVOjb-XaTtwyAH86y_mQHQnkiaMNIBbuJ32ZwBo4knR34FddmPqEQ>
-X-ME-Received: <xmr:XIbpaqutYzG1Gg9bmRjRaPXYXRQm_DaCKDnHW8cFptsreeBwNPxogg>
-X-ME-Proxy-Cause: dmFkZTFBhgGgNhsYcwAimRbtfIT2erpjoR2bQFHRwCzwPmH4WJCfDkDxBuyk61DbC9gIqs
-    pbDZMXy4chJxHuhmvwXcZK8vJWitVesPkQ66vGAa47xcrkJra8bdNxRQH2bfH6pONgSUJP
-    RagT1UWWrTE2bNEIPjxbRXo6gfnWhuxdFItUN+XpZnuEczpsbk6Yy0qk+Gxlffezbd4Goi
-    /PL4v4152OY6OR86cegieBhuUBqjl5f0sVti4lQCMB2l4BomOGA7fmaBGC7RARiRnEov5c
-    Y0ArLyevoVuiCnqFuo+QxYOVmmGhWkx0BmE6DS2Qz0X2fzduFpRKlek64JDhVc1OWGNjSE
-    U0Cl1SMRzwuujdxBE1MvvzOAMdnTCmvKSMTm5WdhU/R+A/liGMGICv0Q9R195MnpXTwZNE
-    qCsoNspR8WAbyuiZHNBLUANLd7XgCFkyz7CGrZBJeUavbWva4Ri0rW3GjQI2cuO+d9pnxX
-    44l/GDcb76JziE3ogMYpvoRkzQqT9ISWliLmvxM/UsGNMF4skVUOApJgvI7kTa/F76JSHD
-    r7GH8kpInJLlIq4CxJ8ujqU0dm0VJP8sdSGD/WdzEOiMeMfD8sYhbTIEFYarUIJIQCOnwz
-    Ob+n44BYkb9vrC7G/hx09tX5WDRdiJw3rE2v2iw6U5Ddq3kfxQcF/h5225sw
-X-ME-Proxy: <xmx:XIbpaowDCt3a-vnJ8lS76pOxfl_5We2QOALgnSINoAl2zQD_vxh3Ew>
-    <xmx:XIbpatAZ-S8S0AizcC4-zELcpLOoGPeia8yLvq8MkpYYOGz7qqxULQ>
-    <xmx:XIbpamf8MPXk_tPoayQOCYhdrJ8AbarnfmJpwaihkoy7p7WfLRouow>
-    <xmx:XIbpanl4nHfa_NenH4jdpNmgrMgeM3YY1azMpb_s4e6FSMebWYtWcQ>
-    <xmx:XIbpav_pr2vwi2ZHQmb0L-hKwb8yxFD8H-REZ8sv8ELCe-Azon9hL4Y7>
+Message-Instance: m=1; h=sha256:R5X1tb89glYzPmH7okH7AobdLfDCcXQVZ+adSItBETE=:5sX9U+zgiHDJoPt4XQ6ZZu78ACgFF9Yq7UiC1s9IAHg=;
+X-ME-Sender: <xms:t4fpalqeClmMeUDdLcjnpz5TfrVPZEtrCZBNKxG22E2JZKIo7BU9eQ>
+    <xme:t4fpavE_lCxJhC4iKufNsRrICOUNk24VDcIzEcDBez3IscdNfIuR7cIHlkOKqy_aT
+    75Gy7ve3P2vDkhwrfRjOSVNpZNw17TsiH3KzxbP29UNuRk540UtGqBC>
+X-ME-Received: <xmr:t4fpavnHO1G2HPCsqmu0690aKMwTiPFKTjecROxBzrsYFje-YavQnw>
+X-ME-Proxy-Cause: dmFkZTFbrXS5JHaqcN8lzRSjjeSOnQX96EbJdEFXWrM0igtMp66p/cyHaaUdmh6tVAIs2h
+    qqTQSzWgu+xydy+ItEveSI81yhJJTRgmp2IcjiqO/Hrtm/BAE2d6LUo5Lsac0CRXr+z9+f
+    M4mJpWBDorLUduo0OxZ3KnwGATnSaP3GPvxAoENBpjb7/UP2OOHSGaXX5ry+oNifubQatI
+    x0NxAjrfWqFbDhIJNXoQvYnqXgHO6a61emGNm7TykKl21dNqJzGpMt0w86b19081Xcopu6
+    fHa/7T+7llHNSxDRrt2DqITQ5CgJ0nBiH655jLODfcYDXOj7/jPAS/+dDSZ8tsKvIlqTUf
+    vQ1/xVc3IwpKtinWc/YYHQj9WvEn/c7rlN9eTu0JbIryL5EJHffXoR6m8c9R1b6hVdELwK
+    u8mOoeHuuB71FyFfOtJYaBi8urvr5P1iyDblhz9uqbqtKxUKPLMbE1DMN/FJgOMXCh5S1R
+    97RS7ENlv7Pz9UJQgvwFqjeOZdtNVmsy2/zuevZ05UAMGP2TG9BcR2osyJGjYyei3rIyew
+    vGLLLE9raDrX0OBjzSieB0MfEIB/SQS8+FaHMSbZ2VZSF7QD1WXcVqo7KDydoD21Msab1E
+    UQoEwjEQbC66r/PhmroGxiaMBmrn9io7k1dq94G2JogLQlJxAsdTOdGOcxxg
+X-ME-Proxy: <xmx:t4fpaqledHwLDnf7fUYaXnmeU864abaJR-eg-fa-Y_5ZMZg5enKbCw>
+    <xmx:t4fpaoufxcbomddsnP4DUgurNV33XIB5UeLRiZutGeOHRpzPFz9_1A>
+    <xmx:t4fpallRMdhLJJAWlnFknTpqg6SOTNjMaNS8UXmaHNW2-daJon4d_g>
+    <xmx:t4fparui9PWxOYNrGh_gVOYPTZ4FOQRJUGvtt1RsZDwSH_VeeboCmg>
+    <xmx:t4fpaqQgZwSQW7d4pcR8l_8LVJFM_UaEKjsJcraq6ZBMLU7SqnPmJyWx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Nov 2026 01:59:38 -0500 (EST)
+ 3 Nov 2026 02:05:26 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7682cf85 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Nov 2026 06:59:36 +0000 (UTC)
-Date: Tue, 3 Nov 2026 07:59:33 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 30f38683 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Nov 2026 07:05:25 +0000 (UTC)
+Date: Tue, 3 Nov 2026 08:05:22 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 4/4] convert: use size_t for text statistics and ident
- counts
-Message-ID: <aumGVZKfsCvdZ1T4@pks.im>
-References: <20261021101640.329990-1-gitter.spiros@gmail.com>
- <cover.1793352943.git.gitter.spiros@gmail.com>
- <84e9e38a3e63a2b135847471a13ea36d37bd64d4.1793352943.git.gitter.spiros@gmail.com>
- <auSDKKHJONZjx2LX@pks.im>
- <20261031101619.172770-2-gitter.spiros@gmail.com>
- <auhvUm4VwXyWNhsE@pks.im>
- <xmqqzevrgfb0.fsf@gitster.g>
+Cc: Tian Yuchen <cat@malon.dev>, git@vger.kernel.org
+Subject: Re: Re*: [PATCH v3 0/3] environment: clean up repository config
+ handling
+Message-ID: <aumHsqTV61ryUJYv@pks.im>
+References: <20260805115342.3939931-1-cat@malon.dev>
+ <20260807085932.3958759-1-cat@malon.dev>
+ <anW7wHfUxYj9cj0P@pks.im>
+ <xmqq1pc9eivn.fsf@gitster.g>
+ <anlmwaEtwcCPse1N@pks.im>
+ <xmqqh5hzjdwr.fsf_-_@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -134,118 +130,104 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqzevrgfb0.fsf@gitster.g>
+In-Reply-To: <xmqqh5hzjdwr.fsf_-_@gitster.g>
 
-On Mon, Nov 02, 2026 at 12:16:03PM -0800, Junio C Hamano wrote:
+On Mon, Nov 02, 2026 at 10:17:56AM -0800, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> >> You're completely right. I used AI tooling to help draft that commit
-> >> message, and it definitely shows. Fair cop.
-> >> 
-> >> To clarify my involvement: I review the code, check the cases, run the
-> >> tests, and take full responsibility for what gets submitted. But the
-> >> wording here missed the mark. For v3 I rewrote the message myself,
-> >> keeping it much shorter, focusing on a single example (lone LFs), and
-> >> dropping the heavy-handed explanations.
+> > On Fri, Aug 07, 2026 at 02:11:08PM -0700, Junio C Hamano wrote:
+> >> Patrick Steinhardt <ps@pks.im> writes:
+> >> > On Fri, Aug 07, 2026 at 04:59:29PM +0800, Tian Yuchen wrote:
+> >> > Somewhat unrelated to this patch series, but I was wondering whether you
+> >> > plan to drop the limitation in `repo_config_values()` that requires that
+> >> > the passed-in repository is `the_repository`. ...
+> >>
+> >> Hmph, that is an interesting point.  What is our plan to really
+> >> enable the use of repository instances other than 'the_repository'
+> >> here?  They of course need to be initialized with repo_init(),
+> >> but is that enough to sensibly use the embedded 'repo_settings'
+> >> and 'repo_config_values' structures?  (By the way, it is not
+> >> entirely clear to me why we need both and how we sift variables
+> >> between them.)
 > >
-> > Sorry, but is this reply to my ask to proof read what AI generates and
-> > make it sound less AI generated repeating the _exact same thing_ that I
-> > just asked you to change?
-> 
-> [*]
-> 
-> > To put it bluntly: behaviour like this is what will make me ignore your
-> > patch series altogether going forward. It is frustrating to me, and I
-> > only have limited time to spend on reviews. So I will much rather spend
-> > my own time on patches where I don't feel like I'm talking to a meat
-> > proxy, because I'm a (somewhat) social creature that prefers to talk to
-> > humans.
+> > Yeah, this split is adding to the confusion indeed. I think that we
+> > should make it a goal to unify those going forward.
+> > ...
+> > I've been wondering for a while whether we're operating at the wrong
+> > level here. Both `repo_settings` and `repo_config_values` indicates that
+> > we're operating in the context of a repository, but as you mention that
+> > may not even be the case.
 > >
-> > So please reevaluate what you are doing here.
+> > I don't think the approach is inherently flawed though. From my point
+> > of view, the best way forward is to merge those two and then generalize
+> > them into something like `git_config_values` or `git_settings`,
+> > depending on which of both variants we want to retain. We would then
+> > have two levels:
+> >
+> >   - One on the repository level as we have it today.
+> >
+> >   - One truly global variable, because that stuff in fact _is_ global.
+> >
+> > We'd then adapt `repo_config_values()` so that it knows to populate
+> > either of those variables depending on whether or not the user passes a
+> > valid repository, and returns a constant pointer to the respective
+> > structure. Callers MUST NOT modify that structure -- if they want to,
+> > they'll have to make a copy and pass it down the calling stack.
+> >
+> > The last part about not modifying that structure could be quite a bit
+> > painful though, as it would mean that we might have to adapt call chains
+> > to pass down a `struct git_config_values` instead of a `struct
+> > repository`. But arguably, that's the right thing to do anyway for at
+> > least some subsystems that are independent of repositories.
+> >
+> > As you say though, none of this is really related to this patch series
+> > at hand, and I don't think we need to resolve this discussion before we
+> > can merge it. I just want to make sure that we have a plan for how to
+> > get rid of `the_repository` instead of only shuffling stuff around.
 > 
-> Sorry to interject but recognising the name as a rather long-time
-> contributor from the pre-AI era, I am not sure what answer from Elia
-> would have pleased you.  Instead of saying that the initial work was
-> done by AI, and that the human involvement was to sanity-check the
-> product of the machine and tweak the messaging to reduce the
-> machine-generated look, what do you want to see in contributors who
-> work with AI?
+> Even after we punted on this and stopped the side discussion in
+> early August, there still are topics that want to move things into
+> repo_settings, or even worse, repo_config_values.  Until we have a
+> plan to fix repo_config_values() to take an arbitrary repository,
+> should we freeze this part of the code, perhaps like this?
+
+Ah, thanks for tackling this. I had it on my todo list but didn't get to
+it yet.
+
+> ----- >8 -----
+> Subject: repo_config_values: freeze the structure for now
 > 
-> My question is not specifically about Elia's recent topics, but
-> would apply more widely.
+> The configuration and settings per repository is currently in an
+> unfortunate mess.  Especially given that repo_config_values() cannot
+> work on any repository instance other than the_repository, moving
+> more members into this structure is unwelcome.
 > 
-> Also, I had hard time to parse and understand [*] above.  Did you
-> mean "I asked you to proofread what AI generates so it sounds less
-> AI-generated, and yet this very e-mail reply of yours is doing the
-> exact same thing I just asked you to change", meaning "the message
-> I am replying still sounds AI generated", or something?
-
-Yes, my issue is that it is still obviously AI generated.
-
-> Thinking aloud and letting my thoughts wander a bit.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  environment.h | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
-> A contributor lets a machine generate a solution.  Then he reads and
-> understands every bit of it, writes a description of the solution as
-> a commit log message from scratch without looking at the machine
-> output, and from that message writes the code change from scratch.
-> It is more like using the machine output as mere inspiration for his
-> own iteration.  I would imagine you do not have an issue with that.
+> diff --git c/environment.h w/environment.h
+> index 9e175e410e..03b1b35d6a 100644
+> --- c/environment.h
+> +++ w/environment.h
+> @@ -124,6 +124,13 @@ enum object_creation_mode {
+>  	OBJECT_CREATION_USES_RENAMES = 1
+>  };
+>  
+> +/*
+> + * See https://lore.kernel.org/git/anlmwaEtwcCPse1N@pks.im/ and later
+> + * discussions.  Until we figure out what to do with this and
+> + * repo_settings, and allow them to be truly usable on a repository
+> + * instance that is not the_repository, do *NOT* add any new members
+> + * to this structure.
+> + */
+>  struct repo_config_values {
+>  	/* section "core" config values */
+>  	char *attributes_file;
 
-Yes, that's totally fine. I wouldn't even mind if they didn't rewrite
-everything from scratch. The important part to me is that I need to be
-able to recognize that a human is involved. But especially AI-generated
-messages have a very uncanny feeling to them, and one is very often able
-to tell them apart from a message that is written by a human.
-
-For code it's a different story: AI is very good at imitating the style
-that we use in our code base, so my take is that you often wouldn't be
-able to tell apart code written by AI and code written by humans. So the
-only useful signal that I have left to identify whether an author has
-invested time thinking about their changes is the prose that encompasses
-the code change.
-
-To me, this means that commit messages are becoming more important these
-days with the current capabilities that AI has. Commit messages are the
-one place where the author can demonstrate that they understand the
-change they have submitted. So when the author submits a message that
-"looks AI generated, that sounds overly formal or bloated, that looks
-like AI slop, that looks good on the surface but makes no sense", then I
-will push back because I get the sense that there was no human involved
-that understands the changes.
-
-And that extends to messages that get sent on the mailing list, too.
-
-> Now, which part would we find problematic in the above sequence if
-> the contributor "cheats"?  Perhaps he scans the machine output and,
-> without understanding the most crucial bits, can still describe the
-> outline of the solution from a superficial reading.  He passes the
-> code along as-is, together with the description he wrote with only a
-> superficial understanding of the problem area.  When the patch gets
-> submitted, it would not look any different from the work of the
-> earlier contributor who used the machine output as inspiration to
-> write his own solution.
-
-The pragmatic stance here is that I find none of that problematic: the
-moment the author can prove that they understand their submission by
-properly describing and explaining it I'm okay-ish (well, assuming the
-code itself is of course fine). As said above, for many submissions it's
-almost impossible to tell apart code written by AI and humans because AI
-is able to imitate coding style quite well, and consequently I won't be
-able to tell them apart anyway.
-
-Now there's of course nuances here, and I'm still quite concerned about
-copyright for AI-generated code. But especially for small contributions
-I hope that's not going to be a huge liability going forward.
-
-> However, if we later ask deeper questions when problems arise from the
-> change, the latter contributor may not be able to provide as useful an
-> answer as the former one who understood it deeply himself.
-> 
-> But that is something we cannot easily tell just by looking at the
-> submission, so ...
-
-Yes. The moment they cannot answer questions or where those answers or
-the descriptions of the change themselves are very likely written by AI,
-that's where I start to question the submission.
+Thanks, this looks good to me as-is. I'm very much in favor of merging
+this so that we don't need to push back so often, and so that newcomers
+don't waste their time and get frustrated because of it.
 
 Patrick
