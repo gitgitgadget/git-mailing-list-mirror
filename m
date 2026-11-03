@@ -1,123 +1,69 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=130.232.247.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793726854;
-	b=XiOXwe7rfr5nds2H1ukArH40bAbBgLFxYtdVc3T5pjeax7CRMr/T0w8TGw8ARJqeEmdD
-	 5lljzEWqPYG5JSQ35wQ48s1RNdL7csS2DEFXzICQz4Y3vISrczERqj8UPeUJa97ZoAyNQ
-	 SgCeVoVEV3iyKrFvqUd9km2/dlVfM4Az+0kravn9pFD1oqmsQanmj8sj44GQ9WhbUS09F
-	 705UxBRwVjYjcOHzhEcHPfR0OfKDb7Z95D1XbwSXlOHMyz3Lz/mh4Nt3xHZVzTijEkc3n
-	 jKTuZhknwiMsO+AAm1q3Pjyy0pLd59jZmF5jDzRy5KS9Fc5otosgJ0JOGSbxlEWEqnQ==
+	t=1793726992;
+	b=CbJl0iye+5fIceqaBXnnJcSTu7VWebiTokdHhPTIhWKVSkmlTfUz3v7Bj12H7DemNPyZ
+	 F1Pm/uRvmzlLRHybNLZueJEfM99rguP3QAlc0ubYX+H0JP4p7MNgv4xPK73PwwsTi7WYY
+	 iBv33EJWigUbv4T0znHqLUFZ5R/DKG8gN982bLyXJexexh/h7SU6MZU1CQ4+NnvsWx3/9
+	 VCc1CfbaW14yP7MK49IoWAGgEUpGuLPWBZVbqpSfc6DXY6/1StF6o6WpNUx68xXOZAXBE
+	 zqxCZbPw4oZMBHA9bRuHPVYHkgcxg+vZ9csM2ouO4XIc6r6XxtXQOEySZMoo3MUOX/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793726854;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=v/3w5rKdrdAK/j3FSL2+DWckR+ZJzz+auC2Eyz51+IQ=;
-	b=qZEKSHBNaiki2zW/rhDJJasaypxXevbpi8w11Jmk6XnAkCofCW77zX08klfErO162xAO
-	 KV5YLkdGKZCCfnEHErrk/xScXLiHgn378gg4i8BCZhqBTkthXC0C+t0YdIhWotflxTX38
-	 Qj/t9CSHcFfIlxoF8aKL0KZBDvYnkXNr0cpMnGrKkgNPbNdFT8IHOoXKUcZhdQIn2G6+W
-	 TWCO1/IFtF2Y3yOQrwSfJOKhmS6GeXAEhWmY/sALSX5dZ22M8pb3QhmPh8q1MzcFOCKZN
-	 0giE5oP1hadV67AjvMTC6teUQVSEZVBLJZvZCVt2QwGjSNR1BPfnOLc8T/Z4cX6sbEg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793726992;
+	h=DMARC-Filter:Received:Received:Received:Received:Date:From:To:CC:
+	 Subject:Message-ID:In-Reply-To:References:User-Agent:MIME-Version:
+	 Content-Type:X-Originating-IP:X-ClientProxiedBy:X-FEAS-BEC-Info:
+	 X-FEAS-Client-IP:X-FE-Last-Public-Client-IP:X-FE-Policy-ID:
+	 X-FE-Hostname:DKIM-Signature;
+	bh=qsyJCAM0gdLCi4al8232IaiY7SC64pTyyxU4PbKo0Ko=;
+	b=rpaau8oi0YHOA8RuArqtrtVF0tUtnUaW+jwluNkQ6ZjPj0oaVjKL9XaqFjChYEvR0iAT
+	 PuYFy9ObeYFYwFa5wmRSVGZ1zSzf/sN9e/A8yaYInE48zEBfYLiEX7st1cbdth4WyJoX8
+	 8zRLmRIqAX7OPH3SJy9Wu0XJ9ozraOHRV+smUSBMeW3c3X09wj4RyxOFBYtzd2lGMrEJB
+	 3oruY+KtzSKs6UfEaxNgt1q7pBuzHIW5xnGhlyR6nGeCnx04/9lMTOZ1xUyL/3mM8wRdu
+	 1aLNTsl/rjq45zVRTGFv1iajHcOH/cEHuqtjRha0TytcuWz7mpaekxrz3YzdsgPTocA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=g4Iy5NrQ;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ouLfvGEL;
-	arc=none smtp.remote-ip=103.168.172.159
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	dmarc=pass header.from=utu.fi;
+	spf=pass smtp.mailfrom=utu.fi;
+	dkim=pass header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=fKUfYKhP;
+	arc=none smtp.remote-ip=130.232.247.4
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F248606A336
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 17:27:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F248606A336
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D28F606A31B
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 17:29:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1D28F606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=g4Iy5NrQ;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ouLfvGEL
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 93D5314000B4
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 12:27:33 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Nov 2026 12:27:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793726853; x=1793813253; bh=v/3w5rKdrd
-	AK/j3FSL2+DWckR+ZJzz+auC2Eyz51+IQ=; b=g4Iy5NrQV39Y8KFKTcmDqG21/3
-	zcCYW6uIE4DybTPsGiF/drdVT6qU+5OjkT9QZg7KyEVJs07WEgJL3FVXx7ZL+Uh3
-	P5+Yu40NdhsjrkPBTWE3MLVhelBZo7FXv0DWYMgZ9iAq+86dCXbRVIGqigknOru6
-	QgjGoqiNqunopai1Zv1qJRghpGcfkKN78UUbZsWzGAfpsACJ5JQkEbP/FQM0KKY4
-	zuZb8WJB6tYCej1+onFN8d95l2ir6d1Jtvo8D/oQFRgQqT8hgaX8/FGSUJn2V6Tz
-	qcRBII9GBsrVsbRiZiH7ecFFFWZTvYDCf8iV6frkuhsX8q+ltbYZXVSdi2Dg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793726853; x=1793813253; bh=v/3w5rKdrdAK/j3FSL2+DWckR+ZJzz+auC2
-	Eyz51+IQ=; b=ouLfvGELew6/HpyAOytjJWsTEo2Ek12eJpRQ4cnBIMKYkvpXA+1
-	fsey0O69qopNaX18uiE/9uw5ds4t7cpYvGg6J27yZ3Yd+iCupkrq2Z7k7sSn+F1E
-	5WgOrBvyS3n5tr4tfc4qIqutw7UnodHV8ZidCi79gI/1tv/fjJetO6V/KkAdGTjT
-	ODSCajauBwL3jdh4ijhwurlPYcUOnBhL61YTD1nvY47TJcJvD1YEzYInccfGCAx9
-	6mMFKbuL+5bzVOmZimhs5z9lql4STmNQ5ziPB7ljq5lIjvfZJTMdthGFTHSEx2yx
-	3pXKUXWwPrnUEOf1fr0TCRSWpjO+u96QzMg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793726853; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Uk19P58Gty/PrPykKJfsm6GKo5/4dAtNNmj3pK635tho32R
-	EFlEsLBK3HLsjOfHNGycGOmEigO/rLYBjLWEIKtoknsHi+m+zghel5vPnjPjSljH
-	Ai26QlzuvGAQj2dqgIXoRUIzT+NYoH+IW9HI7v73WkA1tpnskpyhUitkMFxv1YL1
-	3fzc0G7MeovOP2FNv9udUoCtacShoEz2sVG/mgU6qkQh+JT6syX38WuPYF/a+3e+
-	c1VADiseveYcLLTdHTGoZFdBzUvPmxpSK7lnYa9376HiGw018H1LrRAX52vGiS5p
-	KEtApvGfrTcM3pepX2oGaLY/PA3YKfe5v2UmEJA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:g4FURWCKNF+CzQ3n/1jGKySmLicewmGcImma7Cu0Sgw=:4nXlAc14Y6dyUX9jbN4sZQ7bQV5XM8csCXetZLsPsgE=;
-X-ME-Sender: <xms:hRnqar2-bK2ulkP3SNBLVHnJJLlyGr6NGDW6nnVTmiYHI17Z8ha81A>
-    <xme:hRnqag_rE2JgLmHOD9YgxsCASTm5JkLNrBYo7bKDWDqLtksgIbuECrjYgz0q0ay2T
-    Ycal4ruRhtVrl436LA-pNaE-pa6dxmYACyFWB74eJV1_8W76rJp_XY>
-X-ME-Received: <xmr:hRnqakMikf7ACHpqd7IqMLUSx5jrx1cf28rH0oY8tR2Czrg-qrH-okRx8IwsvuruAHYNP2K_4faEcoVjqmCsxTkWF3xoxBQ88XuK>
-X-ME-Proxy-Cause: dmFkZTGqhx78fk430icmHFCcxzrKasXOWL+7GGwngHCazKDVkBi/z/7Sr0GlHg5lL62rmO
-    zmcDWaaNNTE7g1cojkwNwgfbuZ/x+1mChDEWe/QuzEAEHfFCGBApRqhvWCbhJRieHusd8/
-    H99NyBEciOkhlbXg60DRyBHBBmy2bvQuyNKh3/8cUbxRnGx9FaeGd/TT9nwO4Md4+cj7m4
-    U3IYPOT4ZeHf95Jo4M+CieyBDaIt1s/z4g/4veSxooNY+GsH7PcPsEbLJahwyEz+Hhs78B
-    dZVOgXzbXISLkpgF/kT8tUt3IvF2lW77a7OYGH0SR560TPmQCKvuq+tJ0iErxGFBuYYqTy
-    k/kbhEFiJtILbPosG2KCpPIt/+5iazjdlGkcE0XbJWEQecq7/8SBfXFv3Z2Xj0bwfuahTU
-    Qn1fOP4sxwrueahIQAG8qh/Pn84BD5VqSxq/+IRRmDjp7roWPa/EywsSgGrqmcC6ADOvTJ
-    Q2kLN7fu00Xgs46lgA923HysXUvP2tgDQ5aCrHJpnx27YGwOMRROK0DMA2wLEu8RIH9tHT
-    74n7a+XMyFdJE6ZIXfagQ70styPxolCwh+j0QleIuOxrzKGPuJ9FT6Jyskg80dr4DBLlad
-    /5zQCba1t1HCTZ6wDsMiZVmXJcD/BeLhKwA7zw6dp3ERn1/RRDgr4C1knMVw
-X-ME-Proxy: <xmx:hRnqasfy-P2HG_CyHGG4O5ISc9edIDGDja0zdP1uioArCCWzvn7X3g>
-    <xmx:hRnqarXlp2N3TDCCtIS6fXPlZE787lef7IdYbd0ed52h8zFqTN5i5A>
-    <xmx:hRnqasjFtQMCXA1nz396IovFhdq5eRnS7jhAhPbAKqfNUf8CTaIKSA>
-    <xmx:hRnqai8usP6KBdux4fq0Qd9YkzxHilbzaBm5FwAjcDvLyv9CkDcjFQ>
-    <xmx:hRnqarvzkLFqa5ylOdTSK-TqOM05Z1MCetzJjVaKz03dm1lRit1Wibrh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Nov 2026 12:27:33 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Okhuomon Ajayi <okhuomonajayi54@gmail.com>,
-  Srujith A Poojary <poojarysrujith@gmail.com>
-Subject: Re: [PATCH v4 0/2] [Outreachy PATCH] t4041: use submodule
- repository for commit abbreviations
-In-Reply-To: <pull.2288.v4.git.1793648430.gitgitgadget@gmail.com> (Srujith
-	A. Poojary via GitGitGadget's message of "Mon, 02 Nov 2026 19:40:28
-	+0000")
-References: <pull.2288.git.1793435149942.gitgitgadget@gmail.com>
-	<pull.2288.v4.git.1793648430.gitgitgadget@gmail.com>
-Date: Tue, 03 Nov 2026 09:27:32 -0800
-Message-ID: <xmqqbj85akqj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=fKUfYKhP
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 6A3HTiPj004243-6A3HTiPl004243
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Tue, 3 Nov 2026 19:29:44 +0200
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1xOIKO-001cDp-8M;
+	Tue, 03 Nov 2026 19:29:44 +0200
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Tue, 3 Nov
+ 2026 19:29:43 +0200
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id cd0e2c86;
+	Tue, 3 Nov 2026 17:29:43 +0000 (UTC)
+Date: Tue, 3 Nov 2026 19:29:43 +0200
+From: Tuomas Ahola <taahol@utu.fi>
+To: Junio C Hamano <gitster@pobox.com>
+CC: "Windl, Ulrich" <u.windl@ukr.de>, "git@vger.kernel.org"
+	<git@vger.kernel.org>
+Subject: Re: Q: .gitignore and asterisk "*"
+Message-ID: <20261103172943.DKwn8%taahol@utu.fi>
+In-Reply-To: <xmqqzevpald4.fsf@gitster.g>
+References: <07b3498d83424cac87221724b371839a@ukr.de>
+ <xmqq5wyjxgyn.fsf@gitster.g> <20261103073317.DATcL%taahol@utu.fi>
+ <xmqqzevpald4.fsf@gitster.g>
+User-Agent: s-nail v14.9.22
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,30 +74,60 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
+X-ClientProxiedBy: ex19-15.utu.fi (130.232.247.55) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZXEgdRh8BBgwEKB0DGkYMDUhY
+ SFpIWVxIWVtYRlpbWkZaWF9GXF9IUEhYSFhIW0hYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWEhZXEgdRh8BBgwEKB0D
+ GkYMDUhY
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
+ bh=qsyJCAM0gdLCi4al8232IaiY7SC64pTyyxU4PbKo0Ko=;
+ b=fKUfYKhPqELWA5ci1khzHvFCcojsutcv38tE12yyxn/iuCgZ7rLqvtC5ZuXhoxhM6nekcKb3n+Vi
+	XsnDIKYDO5epRpj/+nG4b0UvXYzFIm0B6EFxd9MG7s5fwVkAp2IAXon4A2Oq4T0HbIp6cDi7A5eG
+	4+wUYCTBQEvd1CzCjqIB/mFPjW/I3UlkB57NECTychBPxrKdbOX63eEeaO/SEX/354kM32CJKDFP
+	3f78czY3b0JtTubYHkcecLhwpUIMsmpFGe92q3tHWRQVCAzkG82qsHJ9Xc8YLqiUE94T8gcqKHw5
+	Hv38GTs5fkPRciWKg0fHcxiRwbbQFK+NT2hUQg==
 
-"Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> Srujith A Poojary (2):
->   submodule: use the submodule repository to abbreviate commits
->   t4041: test SHA-256 submodule abbreviations
+> Tuomas Ahola <taahol@utu.fi> writes:
+> 
+> > Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> >> "Windl, Ulrich" <u.windl@ukr.de> writes:
+> 
+> Please trim the lines that do not have any relevance to what you are
+> going to comment on from your quoted material.
+> 
+> >> - - An asterisk "`*`" matches anything except a slash.
+> >> -   The character "`?`" matches any one character except "`/`".
+> >> -   The range notation, e.g. `[a-zA-Z]`, can be used to match
+> >> -   one of the characters in a range. See fnmatch(3) and the
+> >> -   FNM_PATHNAME flag for a more detailed description.
+> >> + - An asterisk "`*`" matches string of any length, and a question mark
+> >
+> > It's not unreasonable at all to call the empty string "a string of no length",
+> > so it is still a bit ambiguous whether it qualifies as a string of any length.
+> > I would suggest s/of any length/of length of zero or more/.
+> 
+> A string of no length falls within the set of strings of any length,
+> so I do not see any ambiguity there.
+> 
+> "A string of length of zero or more" is a roundabout way to say "any
+> string" as by definition there is no string of negative length.
+> Perhaps that is good enough?
 
-If you are sending a cover letter, you are expected to summarize the
-changes since the previous iteration(s) in it, so that those who are
-joining the discussion in the middle can tell the history behind the
-current iteration.
+As you wish, although I would like to point that both Linux and BSD versions of
+glob(7) are quite explicit in their wording:
 
->  submodule.c                      |  5 +++--
->  t/t4041-diff-submodule-option.sh | 23 +++++++++++++++++++++++
->  2 files changed, 26 insertions(+), 2 deletions(-)
->
->
-> base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2288%2Fpoojarysrujith%2Fmicroproject-git-libification-v4
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2288/poojarysrujith/microproject-git-libification-v4
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2288
->
-> Range-diff vs v3:
->
->  1:  a8c54b9292 = 1:  a8c54b9292 submodule: use the submodule repository to abbreviate commits
->  -:  ---------- > 2:  99a1234544 t4041: test SHA-256 submodule abbreviations
+	A '*' (not between brackets) matches any string, including the empty string.
+
+and
+
+	*  Matches any sequence of zero or more characters.
+
+(Just thinking aloud.)
