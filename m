@@ -1,100 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.50
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793674261;
-	b=Mqf9MjeBNkvv9x3DxkZ2XWpohD5GZQyb/d5Fj3y4yTqf5n16KTxeCSfm7FuK+BwpXHer
-	 ZHNdyGOs/8uRGlQyGY79HsiQiq0mzAslHQQ2BlVWy6Mk7jKydiA59ySOXowSyvP68004J
-	 ji6u6RALpgEgE1jiJJkvqPsI9AWFKO6y+nvC8iwqKFd9HAmBhciCTApH+g56u8BJc59oX
-	 ibu+W5kQgYMlevglMKxgwcNrUP5i/RTwmrEoZuajsCZhQclWT6lJPSGWGnE/tw5SEru40
-	 t2lvTiNbTBaUblY7bcsigqVSUrik/ngdHETE273vsJY/CBAmXFnlumJSAnABTCdpKLw==
+	t=1793674474;
+	b=jEeAMABkBRFidCqGHndxorhOhmkUxP8NWb++hes9nqaSt5qntW+4cI+GecwFBqB3eHXP
+	 iyhpXNB/vMjhHdBjGdnXW4oxfuHzy9dbkKPifYZdBHw3Ys9yPuO617TCpjM4XmPt068kQ
+	 JH+4i/zAOYV1z7WGSuNByHZ+wFuAbMbLVfu8JNH77KZ3ge9m0IsJpLSSr2piSaKKd+EHo
+	 C+zkaPVcuD7cshrbh9+vIjDPl15T2hLH8ZSpMTqNOaBIRPVrk08ldWx18/l6OywQ5aCbr
+	 gHIuOZ9gGITb7dv/0DcVf1ca4GEujW7yBff9TO6tSH8kkwUoO7HDPZCZZEr+IeT/lCw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793674261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793674474;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=9bnyP2+Y/YBgAFcOBaGmfvAagZAIxf2cgdjvH0fF+Pk=;
-	b=wxrcir97gosgQre6NAVR/YoBLU3ZxPQeCeSlV1Nj65RZsLdldRYl9JyF5jwINgN5shq4
-	 Eobd5oLdZEWNfnUdVQwgAYFOkXV4paTrhI+c1zStFGHFka0dBImuKT7kZV6HIPgg4dZG9
-	 /0Pen1BLyT9QjHLr/c366pQS082urFQECk9zX8fPa8tyfmKptqixGhToPJqlxrTxi45I9
-	 l4Epnw2Ym9o5OHvSQsPGRcavgGDysvHzgOsK1hdStkZWZ2zxOBD5S/xl9I90Wkkf+kbcm
-	 a6q4QVy37INaIYiS95nMC/t9HA6OmG9oQaHCh65yPNiKNomE5nB2g5DrVSRNz1R2lCQ==
+	bh=Xtop4pxLVrYJA+tp7+HwGYaPCIGd4wH4jyO2UR3VJo4=;
+	b=1OsNhUfSA5fejrSNC6ajMxtsmU63Wihzculnot8Fh2AukCQIyowkbbu7WM5E35O6LCrC
+	 QkogF2OxlpXWhDTOPAVcOgdm59u7g6yKlMvuOisz+aHgi0YHkSFU6EzMVr9UVBcdORMsK
+	 scNHg0/d1e6X/BtNiUuu1dS+7o0h6lpbPQfW/sk9ASmQGij36FgBTg2uPRO11wmQuUVyg
+	 +L5Wbyn6hAvHNrXPLQ8vSyrlpMOyb6MOzzsLQHXFzpInt134ChenzDzD889I/nZVMjpMK
+	 zo/Kal52pYxpmIiL/qJeJAIonswbDsk0TmzG5eXjKW8v8wneK48N8OriGBUufG9k1dg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UjEbcJdI;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.175
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=icHVGxU4;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.50
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CF4606A324
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 02:51:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55CF4606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0580606A32F
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 02:54:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0580606A32F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UjEbcJdI
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-4f48d91ba7dso2203678b6e.2
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 18:51:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793674260; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=icHVGxU4
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-49ddddefadbso1682118fac.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 18:54:33 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793674473; cv=none;
         d=google.com; s=arc-20260327;
-        b=TBwmU2qtNpMb8v+k2v53ikUBf9gBN9JOMXQYQTE0Jad9NJKVdIV8NO1u/B2lKtbEoS
-         85lIqJUemHYRibWQoEwTxX3kGEoAitGh5Us71Dvf6JnJpmJkbLYZsh2tY6A8OxZewvWw
-         5F8nNErOnIEu29HfKsHmt0QBEr51eejBie6s8mXXVrnm3JHeyCNc38MR1GYhzU91MkDi
-         JCDJiaU+aQMH13LcpwvE9Fnm2VLKRiM3ruGkaiP38eIaAU0duDdXbBaMwvKIVDLIpDAU
-         MvzDwgTAZOCu7Jdt1xg1atmA8GszM004DqcRuFGKU3dQ7L0ADtnTi4Pcy/2E0Stl3mup
-         Ny0g==
+        b=oFl6dx23Kd/UjvnuY5aIfibwT3M1l1xk2xV/U3DH4zq/pX8yAXtx7M8apEYrh1jDys
+         7T0QfmIwFD6buDd2XMlCEJr+IEimg/LLpHfZ35i83OavF4PFiQhPQVyjQq0E8O37J/rj
+         yhRmRE1ld0AnF2nftEFCzD1fIuwyHkT2Cbc+ZjjEBGTxmyP7RKXAY0y8RVlgMhjj1h/Z
+         /5Gn3RA/MvsbXI3KKa73RcMwSq+bj1Ci4dCmYEQhWzSB3CKKkqVSsz+NYN4kAtc/SC1S
+         wiECfnEZbPA91/NnBsHSt5YsCPFdwjI6q7wMDJsECvFM3oEs2qTPx2gzsS64MpfiV39h
+         nrQg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=9bnyP2+Y/YBgAFcOBaGmfvAagZAIxf2cgdjvH0fF+Pk=;
+        bh=Xtop4pxLVrYJA+tp7+HwGYaPCIGd4wH4jyO2UR3VJo4=;
         fh=mv5zqN92u4yGkXYcJT4eDsfhsA+TdzFjZ8yY/QsyRCY=;
-        b=rNOdskQYVFSNQIFEDC3gBS2AQEJcWp/oQTpkhGU6KbXH/9erGpmGDBoL87SRLhehnb
-         MaWc60Yp4MC/44kE7PEj0aXWTsjJnNMrTU3VnI2NpWBt18BmnBZUkAZGL7LT+tGRaNVU
-         +bdygYK3RknSZ/FvyTDQS8QIRnXX4TF0tLRCvLXcTL7zClMkDVHlZL3tfVTzNIyd60H0
-         hB4FWnCAhxqXzv/buinWW8PPkkt4G7MmBPvRImyCnbbwU0dPDEyF1Lg1P2k06SqQrgOO
-         6VswMQGW+14mTQFcM4XFj2Te3V/92dNLbBBytXBwV96lmRwmosQS5q9vDpMfrQUZg909
-         YjKw==;
+        b=KVsfwSV3YFkuxAfG087EkxiUt/wUvP66TAFbrY621vSL67BEynD1BeJAOZuTiuc8Vo
+         udlGu4uv2PqZvo8rZcqUW6rO3w8yY6700Nykh5YRWiEkSfe7RbdzlxSwqqfczznHa+BA
+         wCVxdSwE7qpXFkIl7IKAFoMDkmrx4OqkvlOx6mtwghsEgZWc7wB6+bAfvycV4LQck5jg
+         H11b6mkjIbLf6ghWqtDzLv147Z3N2x84/mr2XLVzGtW2DVpoa1cgQ/3Dy0zZVPpFIkq/
+         cl5s0yUlWQ9IrFV5Jc3FEM/4qjjkWZgnlXU7o/QVtjOyE6NIeKSjwufoi7E+rxT5R+jg
+         D+xw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793674260; x=1794279060; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793674473; x=1794279273; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=9bnyP2+Y/YBgAFcOBaGmfvAagZAIxf2cgdjvH0fF+Pk=;
-        b=UjEbcJdIllcldyDxznIAeLnKrhHRfF7bUTdCVmUu9W5iZOB7N6hBAX0u3DOnONC7wo
-         rCGq+bGIewPsrAPNmujRJVWjuFy+CJ0dA1uFBJcgtCD30hfdD/Bak5eVEdbNyqwCC8Up
-         goc1AMeFEDJC3ymPgWaJ9a5C92W5n4jhTVi0D5FNr1iQ3pMfj0lxTBLnK1xM2qyOrpsM
-         2MvrgVhVvWeuxmYYhvWd2zVB0iXtTlSsd5k1DO9J19I8NEb3vxdDzGU0HOYIzIugc7Hf
-         CCmdFkOSTonEc0Wx2XJyfFun4yyO4bCCx39zsVXALT1aRPbY6mDC0MM8APUSFZxkyRrJ
-         a2KA==
+        bh=Xtop4pxLVrYJA+tp7+HwGYaPCIGd4wH4jyO2UR3VJo4=;
+        b=icHVGxU4cAuqNBsBAXv7ptmxOzdU0DTRJ83AhV4loURwAjR3OthjELeWZ6padAvdAV
+         RylUOxicNelGugAQNRflU1WVIR42OAijQfiKtceJd05OgFOGvaYdD8EZabFNZC5tDRYr
+         DE/7Dk+RXFJMsaA+hgLEEGSBMjBvnHVM85UnL8FDSwXORpY9htV8ruVkKFBKbtAahTXE
+         i3qYHT/OuMpxIgiNqqTEy10JOfSsOYJ/6Q4juh+goJS3xHYkAoDjyqTiyJS6kzB/o1ds
+         mt4OsvD6CtIeCuMurEHGwm83nYyjOBUyR5BCixf7wXQ8JqluJTQYV8KhGIpMHuupSmDQ
+         st/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793674260; x=1794279060;
+        d=1e100.net; s=20260707; t=1793674473; x=1794279273;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=9bnyP2+Y/YBgAFcOBaGmfvAagZAIxf2cgdjvH0fF+Pk=;
-        b=zaHiu4M/E0/Hlv2FldfBgFI09a/Y7gFvmzmi6vXJ+H11fgoogHOtrNyf0s7ZWeXCa+
-         aoqGaZtIEV34huXr0FD4xquDzzAOwgtYA/UB05katDnLvV7aGgv4sO01krvAK3xHURDL
-         aTNO+CgilA0SNtjXDS29sBkycQ2Dwm4ksvgnk3HrmdUe6LgbkiIS+47C3nhG7uDnVGc2
-         LZnMRZ/kUjDawzI7VfuRG4HXUJqBgaFS82NfXjMUGtJ/bWx25aPybbMMg4ZqXb9NVtx8
-         j0L/Ar3XcGgzAdM9nxVyda9L9X14+l0HaAE4XtZy3AGHrxe+gBWssGWtdr52rWk6PiKI
-         lP6Q==
-X-Gm-Message-State: AFq9FYJ8Wzs3jggHB1JjW8rpjEYA2jXa2qSUeGaz136x2tFb0bx7gkQG
-	qn6tjHJ+nMPNzsvoZ2oiC3ogEvvecPZD2RFqN/lA7fhg/mU1Kbyie0MhIttGyW4sVucjXqIbuk/
-	Iotk1byDj+jVjrlJAubwJNtrrFABGdqRBaA==
-X-Gm-Gg: AYBFou26mbixmD/TVMfDogNSnhQJ+qzg1dIo2EKAUccnrPHjLQpeWx63oJiAs3qE5Dm
-	Bzm6p6qyyD/SvfOYwp2VpmO49KVOwYA9i85S0YvGf82IaG0tPAM3MCH/FPKJW0EHBGHfZBDrgAO
-	Fqbm7UO25rthJiVaWbJ/NEqaIPjT00ck4qAwaW9cPNoAhwINE0kAF6JcQ35txiuSpZoXqGA5l9P
-	U0IyHcsfy/0jwtzHdyBX+Ns6G+HI+ttgCD1s/R5IFK3qlMjyzybN8SrT3z1KgKMlTyNnymigHYm
-	kCcWVbB2PI2ljQ9lKqjVA53dmflGRQwrEk6d7Aqe51QU+riMbrl7mrxvl/wuI1BH6gFM0VULcGK
-	0/igaVoMTjVocrGS6ruSBd5sMq4DQwHcYU5pDscqXu2dW5vLCkp4vwoLWtJSaHxEPY+VA/tqKXF
-	qfPgG0pHWUZE3CpCYJVeTyBhDSqRg2RxW2xLZlbQ0r7YJQeS1xpAHHXzjc
-X-Received: by 2002:a05:6808:5090:b0:4f4:8bec:ace3 with SMTP id
- 5614622812f47-5640df40c87mr9049102b6e.57.1793674260138; Mon, 02 Nov 2026
- 18:51:00 -0800 (PST)
+        bh=Xtop4pxLVrYJA+tp7+HwGYaPCIGd4wH4jyO2UR3VJo4=;
+        b=nmcEbvdcP9fvLlr0qsI0M/9GHGW6AVtDpYeSW7WZYae5E1dVFWOHGAxbqG/h0BbrrZ
+         r4h4W3jsNkE3w+Atv/3xN892tY0A6XJUN0bjZ6eHfqCKyFwdydXY8AsO904/bCqM7ZS6
+         qGKlGm0syDD7dmnV//8Uvn8SnJPc0rTwVJ3KsbE0VBZL3yKwBHo+kYnT4MzUZ6zj+8Y7
+         9kWdSXWeh9rg2vjR20XSCdbeCmctY20CRdMBPtx0Sxva7scSmvym6m1onzFQ8Ew+sE4l
+         LV382i111iAdXaDCyTCFDNGeIAtedIUugVrt2VJkVyipdqH/UTxmZiAf31Jqg5amZ5xn
+         CqtA==
+X-Gm-Message-State: AFq9FYIveYF23E7gQCsNuEM28HJgiU5th8cFcf/7gMLMrhVFgQzg8bnV
+	p5FJHQXtFz/7H3JZZHc/qpiYmiv3T7hc2IRPIq0Kvze7COMH7Un9O98zdv1+gta/GmQScwcPjm5
+	1jVBPTruteCFr1Dpjao8OTvFJhYx613g=
+X-Gm-Gg: AYBFou1uIXd9eZplYWdLDaOlJWQ8O1utFFswKVVp9HgBXfstE9hWopLtVTf43PNENR3
+	TXGmW3ZEbOFb4ErZua8KL8zXqTRDKEVO36J6CtuTlFRkRVMPwbwRXFfxj6bLsyC8pvbIf2urojc
+	hJcJq6nNtbdMsONsBYSwdI0nIPMX0kGR+IsZGVMz/l7YjswjD0PGLtkSwSNgo1tRhmg7tUHS+Y0
+	6vIZc7NENayzH3IognScUeZOsgoqQacNN3ERT6V208JEM9ZTHqB0MgNpM/g+H9wmCozxo3O0ZAj
+	oHe4uMHbPica3iiyZVb1IUqnwzZx0W09TxGymjB7FUDeDil5V3UrjFerrDIrEN8XUzbhLFf33Ki
+	66UnAgAhn9fga11JJ5ZM6Xm3QKgsMzpZUjqhCLP+SSZJuKPbRIa2BEyppV5Jt5ntT3FjzBo5k92
+	z18tfxCfAYXUN1UcfQo6lWOHMdD29zAHuN8fUBe8lrfhWkSARRm5mRph4g
+X-Received: by 2002:a05:6870:2886:b0:4a2:4c6c:c9bc with SMTP id
+ 586e51a60fabf-4a90765f8b5mr8282455fac.19.1793674472796; Mon, 02 Nov 2026
+ 18:54:32 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -106,71 +106,83 @@ Precedence: list
 MIME-Version: 1.0
 References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
  <20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
- <20260927114420.59724-7-jayatheerthkulkarni2005@gmail.com> <aukQWTUKWwmCQwi5@denethor>
-In-Reply-To: <aukQWTUKWwmCQwi5@denethor>
+ <20260927114420.59724-9-jayatheerthkulkarni2005@gmail.com> <aukYVs2nVla0yuSV@denethor>
+In-Reply-To: <aukYVs2nVla0yuSV@denethor>
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Date: Tue, 3 Nov 2026 08:20:48 +0530
-X-Gm-Features: AclHuK-6hG62CKr7lh1IjdQWyVBTDDMi0K2Hkm8t1C7A4FF5-WAi1kJk13v5nl0
-Message-ID: <CA+rGoLdcO94KGFg-qeUmbXHmRPz5UaOjeBd4_c_HuppquM7XTw@mail.gmail.com>
-Subject: Re: [GSoC Patch v7 6/8] repo: add path.grafts with absolute and
- relative suffixes
+Date: Tue, 3 Nov 2026 08:24:21 +0530
+X-Gm-Features: AclHuK9zPD3veAyKzm1_zyqv_ddvlDBzoYXFcvReG0R3DAMCZ5CL9_E3GIsgQWc
+Message-ID: <CA+rGoLd7=sx61dWcC6RFD-Q-88KNd9YgEES-jLDqiTmKMMLf9g@mail.gmail.com>
+Subject: Re: [GSoC Patch v7 8/8] repo: add path.cdup
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, lucasseikioshiro@gmail.com, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 3, 2026 at 4:17=E2=80=AFAM Justin Tobler <jltobler@gmail.com> w=
+On Tue, Nov 3, 2026 at 4:50=E2=80=AFAM Justin Tobler <jltobler@gmail.com> w=
 rote:
 >
 > On 26/09/27 05:14PM, K Jayatheerth wrote:
-> > +static int get_path_grafts_absolute(struct repository *repo, struct st=
-rbuf *buf)
+> [snip]
+> > +static int get_path_cdup(struct repository *repo, struct strbuf *buf)
 > > +{
-> > +     const char *graft_file =3D repo_get_graft_file(repo);
+> > +     const char *pfx =3D repo->prefix;
 > > +
-> > +     if (!graft_file)
-> > +             return error(_("unable to get graft file"));
+> > +     if (!is_inside_work_tree(repo)) {
+> > +             const char *worktree =3D repo_get_work_tree(repo);
+> > +
+> > +             if (worktree) {
+> > +                     strbuf_addstr(buf, worktree);
+> > +             }
 >
-> nit: Similar to Junio's comment on the previous patch in the previous
-> version, `repo_get_graph_file()` already BUGs if `graft_file` is NULL,
-> so the error isn't really doing anything here.
+> nit: The curly braces on a single line if statement are not needed.
+>
+> Also, should we just return early if we are not inside a worktree?
 >
 
-Right, I am going to depend on the original error check.
+We should just return early. You are right.
+I will do that.
 
-> > +     format_path(buf, graft_file, "", PATH_FORMAT_CANONICAL);
+> > +     }
+> > +
+> > +     while (pfx) {
+> > +             pfx =3D strchr(pfx, '/');
+> > +             if (pfx) {
+> > +                     pfx++;
+> > +                     strbuf_addstr(buf, "../");
+> > +             }
+> > +     }
 > > +     return 0;
 > > +}
 > > +
-> > +static int get_path_grafts_relative(struct repository *repo, struct st=
-rbuf *buf)
-> > +{
-> > +     const char *graft_file =3D repo_get_graft_file(repo);
-> > +
-> > +     if (!graft_file)
-> > +             return error(_("unable to get graft file"));
+> [snip]
+> > +test_expect_success 'path.cdup cwd outside the working tree' '
+> > +     test_when_finished "rm -rf repo" &&
+> > +     mkdir -p repo/tmp/x &&
+> > +     cd repo &&
 >
-> Same here.
->
-
-Yup, will change.
-
-> > +     format_path(buf, graft_file, repo->prefix, PATH_FORMAT_RELATIVE);
-> > +     return 0;
-> > +}
->
-> The rest of this patch looks fine, but I do wonder if it really makes
-> sense to include this patch at all because graphs are deprecated feature
-> and also slated for removal in "Documentation/BreakingChanges.adoc".
->
-> Maybe we should just drop this patch?
+> This cd isn't in a subshell, so it changes the working directory for
+> every following test, which I don't think was intended.
 >
 
-Ohw, that's an interesting question.
-If they are being removed, then probably not including is a better choice.
-I remember including this because on the idea page they added this
-also I am a bit hazy on where but there was a discussion to include this.
+Oh whoops, that wasn't intended.
+Yeah this clearly just cds into non test env altering common files.
 
+Will fix it.
+
+> > +     git init test &&
+> > +     (
+> > +             echo path.cdup=3D$(pwd)/tmp/x >./test/expect &&
+> > +             cd test &&
+> > +             GIT_WORK_TREE=3D../tmp/x &&
+> > +             export GIT_WORK_TREE &&
+> > +             GIT_DIR=3D$(pwd)/.git &&
+> > +             export GIT_DIR &&
+> > +             git repo info path.cdup >actual &&
+> > +             test_cmp expect actual
+> > +     )
+>
 > -Justin
+
+Thank you for the review!
 
 - K Jayatheerth
