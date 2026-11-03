@@ -1,93 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793710126;
-	b=pneLJv6rvg6Ntq7nWEeGK7pZrLdRe+CNGnGEsBuPgJA8UkC5whw5EJokhs9qHB1fdQI6
-	 91/X27VfJ7n8yMB1hgjD089MtkYdDwoUSr8hWvexypa6wDnXc5LcqEp+7kviJpMWXgnl6
-	 o756+GP7AKO2GYKoycT5ueXU1BPirz+Ea5As8FNhPU+Gfhd/3LgZ2wGNeUYUnVIDzzwC+
-	 yseospHAcP3B8rFrgxWzpj33jadx5g9OF5VQF91ben0q9Sf6um2eqP32m6m5/6p5q7WQt
-	 NFariqU3MjA3GtrvH34zNNwJaro42rNCaECQCnk/EpySPqswVjuq48pe3jE1/vB/iBQ==
+	t=1793711096;
+	b=tbem4O19IWg9z/aI6vvuCJrutql0j+32V6EwVxqyat60fknW/1e6LbPGFKvV3kQvRk4k
+	 tfM5kWXt0i0taMMz8aRzUjmA1jG/b/uYItFBnZHWSNQIgcEXLqbdjpOOCSqqEMtSbaEHP
+	 zWyZGpqP2e1Whx1pkP4GHFoXpnN5Zb38L8SIU7dSCdVh8n4lXSM3NzYb0BnFovJCTviiI
+	 B1hUO9BMvI+3wGfpmRHYl0CN0bUmXrOB+fEQNTO0jLQ/AuZdGRZPpHxgPF90OIjZ086km
+	 WxQ3ytYO4lsqLaeNrMv5gf2P5V+EI3e4BjlBdrzs6yE934tVrznGDEUVpW2JSweYGhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793710126;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=RFs0hSlv90sd3ashD55+FVRZv4kgb67zAtvvsx9sQ6A=;
-	b=Uj6z2ysZX8NxIgSztBKNBvTsQDNoetMKTZdq0p+PgM/+j8wJUhiwDeLCt4ErRcb6xAx7
-	 N3Uqt3WEjldjBRtni/zAzeHUXTLtUN8E2jISwyxfOrd5DWv0HhceGqO9+DLZQAfWCgMbZ
-	 jorFgWJ2vEWObtgN5q67P3eCu8D8DQRBVqa7x/3/HpF2ghUunVFm3O416cqi8po/ejgui
-	 mdbM/eHIFAosGKAKMj4wp1Bcbz5cZZOTdp2gvSsNI3Puac+bGzd/0EBRJfcRqY8bR1Tka
-	 ZtcSxY8dFVFQ3LcuWSGWqlDgU/VnzEU3ObOfrKF3q+FtTb3YbE01xeEq6WZxqgFmEQw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793711096;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=pYbMG2JT2xn6wmR7Frt3YWJWaoAR8z5GeGGyVoROxog=;
+	b=5CMt/75lu4eO1E0nMy0QcyJ7PRsSo6lRE1crVlLFRlUnYjPeIQp+ZcWKLoJaBDmd8qil
+	 XXu8q0ylujuZTA5xLONtsvx+NKDHq3e/UFFTVCZmTaQd2BcPeNSDVMhnfcAk8Lo+ghbW9
+	 yKbpsN6bSvW9qC9NA5rpjl+g1LALDWIxMom3F8ojgHBphG0YWgSf8uSHalLXL/ho5I5bu
+	 7jh+9+YWYFIYXV8IYKRPsiIPwuPpMejN3I24rxuowwtPM02D6BbYcQv43J+cS2pkDOq9b
+	 Q3QF+JZCXx7xxFzQonY83J8GaAxphNTrdKSmAmfMSgHCJ9jWc/ii07xlpTiqn0fXsJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=job7g1S+;
-	arc=none smtp.remote-ip=209.85.160.51
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b="t/DKoozg";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=N2ikstlX;
+	arc=none smtp.remote-ip=202.12.124.145
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A568606A33A
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 12:48:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4A568606A33A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E0A606A324
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 13:04:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81E0A606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=job7g1S+
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-486f013db83so1048491fac.0
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 04:48:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793710125; x=1794314925; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=RFs0hSlv90sd3ashD55+FVRZv4kgb67zAtvvsx9sQ6A=;
-        b=job7g1S+Ko7NG22tiKcbmoANfogGo3+VjA9EPRS+bbp4x0v9UhoKH2AaKj68Zeg8jW
-         Fm8D5a9c/bM6ITnVBXL9Jv2EEekonWZX5WTK5nA0JUAoQZLmWmgMsy5Q2mPoIKOyv8Eh
-         XvWKnElQPCvcoqr42y67T6PfOodrR1weqBcPsW404yrxhnsWHszlWsZGvXxhS64wMDoT
-         EiMmiRESERvO4efxb4hWi8maL85YM1ATBlgh2JM0NaIjAgM5Zk38l8XN0EEiPQj3VA2Q
-         tNDXKvzcbtEDqS9OWcA9zc/kjegr/H2QXOA6pzL84jN4XO1ZD+607nD4T33AKvsOqYJN
-         8cMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793710125; x=1794314925;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RFs0hSlv90sd3ashD55+FVRZv4kgb67zAtvvsx9sQ6A=;
-        b=AslT8FmwuYTbK45zXhTg/8NBwMJ2Yous+nuDAG2yzg44re26I1SdO5eR+zKETmor1e
-         4vaMA9j11xiZPN7mGstV/7IbfEpyaArM4gIf7qXSAWT5I3zFwB0JwNbKGXpkTb4gBQXc
-         +11j9tsMD4m7Nfzbe9+Ml+rW6eN752vPkzoFSgcBLRqZE4I/CAZ6FyO91dJ4aEEu71pd
-         n/B3pfh5acKErJCZ4iidTx/RE/8slnGsly7zVgorMhE2+JhqAoJXollCYQLGXVfyiH/r
-         UcEJwlot9oTMuH3HesXVG1UhmVOvrF90L2CunamzV71pliFSwYU+ho+yahDONcKVKIV4
-         /tyw==
-X-Gm-Message-State: APuU4Z+DUmIHzWYRa1TN6nNiMmWrw0Akp6XCslZJ5DUYHrxUwvkTTRzg
-	Ag1OQdHKTbje7Xequ6H1l4eBWAP6C0ml9g++CGtFsEAyyrd3ffS2W3U+3/SyGC/2LM8=
-X-Gm-Gg: AYBFou37z5TGlW06pkp2BdFArDdCUfHMbm+x7/Vi/B4AbQbzXXOsbm/LUXAV3n1fzPn
-	Qq2PXuC8pieBl7Qv3I/CIYsxOZe+JPvguKBaAZyc7/S3Y0FdhQGhhiKlxAfvDUYx3DTjkT0Y2HQ
-	Ar8/qQR3Wfb7Pv3buGuZTZRV6XoJrDliGBqomKAv2yWMcxKuOtHF8Lx4UpTf8MTHrUjkZf1yowB
-	caWrleotLUP5EHMuqzSPrvF+SOF7BCKtVPJ+zIrbYYNnEQvCWDyk+V8MzIdYbuBjDQq6Q876Cno
-	bW0ITNQNKVaF2HW4S5aMTovJ+aJm+50OL7ERKgQhY2D1JCDRS9mKQFW5mch1+eWZelUjCrHYZTr
-	TRd9PDFBe0WSxtVdKgRJ2JuRfEQTW/KLVZ0PZtUimioSZA7ddDMl704PTA0sfp8kVbNaRdzAxBU
-	q/h+qgKbYrPMWB2Qn++SK6uflT3w/93KCy2wawEXpA6l6grDrlWnvGohkFXQbD8EYNj4anGtILp
-	663wY2gUUiVKUtCcukGmqLILRSeAuqJFu12dtW0rZZY7JyB+vOF5wzduMRP48EBcJr7Z6LxH/3r
-	ez2n3jHwaaZ8bMW+NDwlTCqxiYS3JvU=
-X-Received: by 2002:a05:6870:204b:b0:475:a112:1276 with SMTP id 586e51a60fabf-4a9076ca59bmr7314078fac.35.1793710125255;
-        Tue, 03 Nov 2026 04:48:45 -0800 (PST)
-Received: from [127.0.0.1] ([20.64.66.196])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4a9219f28b9sm9827203fac.12.2026.11.03.04.48.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2026 04:48:44 -0800 (PST)
-Message-Id: <ba34e82a0a6a99181637e2fe33be5506f2a1bdd0.1793710118.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2271.v3.git.1793710118.gitgitgadget@gmail.com>
-References: <pull.2271.git.1792522587065.gitgitgadget@gmail.com>
-	<pull.2271.v3.git.1793710118.gitgitgadget@gmail.com>
-From: "Joy Gundu via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 03 Nov 2026 12:48:38 +0000
-Subject: [PATCH v3 2/2] config: move pack size limit into repo config
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=t/DKoozg;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=N2ikstlX
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id DF9231D00233
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 08:04:54 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Nov 2026 08:04:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1793711094; x=1793797494; bh=pYbMG2JT2x
+	n6wmR7Frt3YWJWaoAR8z5GeGGyVoROxog=; b=t/DKoozgDDbmY4LaJb4ds0X9vD
+	vjO066s8y8jOPYhxX0022jgieZHiL1yDgqgTgPd03SKgdwopO0eg+JIfN0Vemn1v
+	pcoKJCH9YRfsPno3GC+GN3a79ZuZTWliXxGme1Ks/hL48JD/DIqdPX1yAsTX4V9L
+	qhlnpPx3fzT9TJ0Gh/MiJIIT/Vnsp/fCWtHT0gTxl37owv7FWAfhJnpmxrHYU+Lv
+	3pckH/GQUPmQQPP19gwOVpjDXWTVbRmBFv9n64GCXKkWIVX1WpnNO/A00cwAqKPw
+	rSieiHh+Iq1+g2q3lNqxOo5JU4Z6M25lqYUVlrCg3qNcwDMcV32HEZ68vtCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793711094; x=1793797494; bh=pYbMG2JT2xn6wmR7Frt3YWJWaoAR8z5GeGG
+	yVoROxog=; b=N2ikstlXsw5ipS8D+lI/NP/bdsHhv2Q8KWci3tEpgXsF+2hT1WX
+	2ipbFarpwpHcpa5bZTTYTV3hZfVWn0uNE04eRtvUrujJJDoPbGUtdmgMgh9O34kv
+	kjmxrqOo2/2pDty3mvndQCKONnJpzAykbRMwhCGs0uenKHJWLpgLPVFyCxBBDjuM
+	eTMqwvb6T4Jmf+sTcTtsnCCWJ1A+to1SCyqaudChm1wF2ZHeUG3DkvTP88Jmkksl
+	7eDuysebIEG2ash4w8UcQnmkr4lTrX4TGd56uFnHZcHcK9zyN/691c0uTvGNYhX3
+	6j1puFs+QgIy0W7/LZJFngdstWhp6QGd7Uw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793711094; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:DoPQx+b2kDNlL5plH2PHzMrVu8c+N21I1tGKRWo9QR2q3Qh
+	X+APw9zzAe+1PGk8sa70BD85HeL/2CHTc23ZbkmRKn4ECQfDUQUC5MPm+4FK1IMe
+	lOD151YFwLmYGezzKH2KLuYUntwyYwKGHYDXJIygiaB4etYUP78BOk0mWG/ZzuBU
+	lXEmF/8SIub9qSkAIg8bS2WWnENf4Q5iGP2CKzzXM+jMSKceb0mFFTgcRFArFwOM
+	SPWUOV6HOG3DP4ZxCUUw01qanE0tFVL6K5n5oyJ7YU36G1aBAkM6u54Lq/1+lsTQ
+	lt/oQvHhzIBjCFHPEw8GJXycA851y76Ipl54X9g==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:6bq0rbx1kef17tOfHDfP7uA4M40VcbsNPUriruEzRTA=:tlqHa0kjKcdXz0uMtn9ZKZNmnPn8gWVlfrXz0vB74c8=;
+X-ME-Sender: <xms:9tvpardxZckb3Ph85OIrjp61I9gfOI8yOhPdmsm5gN5qRsOCgXTvdA>
+    <xme:9tvpaoOVPs4l964AvZe4GcIHFc0MwaJAFG6x793kSPIZYLpr2f77dpT4FzwEKD68s
+    q0tWIeSO26wJdXHapbElhRmGppwAiHu6ZBBJUmXajom-P6i9Iub7w8F>
+X-ME-Received: <xmr:9tvpaphop-fmI_RYSnY0qr2Hb3jIv2V_2cWJ8ZdoBg9AAUMTKSTkGQ>
+X-ME-Proxy-Cause: dmFkZTGvmm7MlB10AyBNKjM+xdJswTI8mxuQxeN1wXVFSx+z+J03yuAmbCUV/rdUujx2XW
+    jRyNwvaYi+Y8SAB55u3sWhXB0Z4TNB2m37Gh8pgsJx1bIYfvUsKqpvVpTEW4aOUzRYkHJ4
+    RiRtQkveuBwRkx248jaYY3U5vVpr9oIhjMY3QSVJaICOia19V+p50Rpkaz5LYlHAzXuS88
+    uHGgd7OBtp7rR67HzS4WCkjx3E5jnmwunDipMa/Fen0h2HgGUy4nTEtlX0ZRaQCC0PWlBN
+    IREd1uskK9f+MV67+XIpJsvu6TEgEFEMAbEppVkfd55MaB/QLzzuK8FQ4ykNsRKi1W1oXh
+    ypoWwZpx0pwqUJyUMcATi4IjEZgWTA3rH60wWF5lSriy38mSEWNwjP5Z4mWjVuKSnpMiE/
+    Ms7s+QeRgart31wqs8zOJ7KPl3gYTi6iesn9EwiOQHrFgQBapVN3vla9L3Z1VXPbs+jJDw
+    dr1b08yindJ/GGy14lsKSmk5Jz/k4JMApRJaKj6L6jEKSxnbdAsymsBMna9+pwDs0b4/LZ
+    Y57j6KV5r24za2U7498LmOt8bA4AAq+7rUoIYCOig3Is5s8mUAKfLqTpm7AM9c1QPiJ0zl
+    82qhCzSq7weB8t0d5DdEQaDutbyVve0gQIQQYB6TdlizwD2sP8taoAuxsA7w
+X-ME-Proxy: <xmx:9tvpar0mgB8Mlyitj9psK0kvtkJlMezF14GemGT-PKNcF45s62oMNA>
+    <xmx:9tvpajiC29WEdhupFbmofaPA3UWDscLcujoYGPDSEkkNjcWJNMozPg>
+    <xmx:9tvparcPqy9813tX3TcjHLhNxzphqya54ueHO8olosmLjfrhxOACew>
+    <xmx:9tvpamkuk7Jw6-WA8F1CjTKHuNv8KDoPnrscQoEBTw4iZn5KUxm95w>
+    <xmx:9tvpatA80p7dMogX0wbZ_lZsRt3n4jiQpDDFzQoqGMSVtxkiooCnccQx>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Nov 2026 08:04:53 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c52b6aff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Nov 2026 13:04:52 +0000 (UTC)
+Date: Tue, 3 Nov 2026 14:04:49 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Aniket Gupta <aniketgupta3001@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] bundle-uri: do not die on unresolvable relative URIs
+Message-ID: <aunb6OjWKWLyl-mp@pks.im>
+References: <20261028115818.410-1-aniketgupta3001@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,122 +123,120 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "Patrick Steinhardt>" <ps@pks.im>,
-    "Kristoffer Haugsbakk>" <kristofferhaugsbakk@fastmail.com>,
-    "Christian Couder>" <christian.couder@gmail.com>,
-    "Usman Akinyemi>" <usmanakinyemi202@gmail.com>,
-    Joie Joie <soniqjjj@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Joy <soniqjjj@gmail.com>,
-    Joy Gundu <soniqjjj@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261028115818.410-1-aniketgupta3001@gmail.com>
 
-From: Joy Gundu <soniqjjj@gmail.com>
+On Wed, Oct 28, 2026 at 11:58:18AM +0000, Aniket Gupta wrote:
+> relative_url() calls die() when the relative URL has more "../"
+> components than the remote URL can absorb. bundle_list_update() calls
+> it on URIs taken from a bundle list and a single bad entry takes down
+> the whole command.
 
-The pack size limit is currently stored in a standalone global
-variable, even though it is repository configuration.
+Which command?
 
-Move the value into repo_config_values and update the configuration
-parser and pack-writing code to read it from the repository's
-configuration values.
+> Add relative_url_gently() which returns NULL and records the reason in
+> a strbuf instead of dying. This will keep relative_url() as a wrapper
 
-This removes one piece of global configuration state and helps
-make Git code easier to reuse as a library component.
+s/will keep/keeps/. We're in present tense.
 
-Signed-off-by: Joy Gundu <soniqjjj@gmail.com>
----
- builtin/pack-objects.c | 2 +-
- environment.c          | 4 +---
- environment.h          | 3 +--
- object-file.c          | 6 ++++--
- 4 files changed, 7 insertions(+), 8 deletions(-)
+> that dies so the submodule callers are unchanged. Use the new function
+> in bundle_list_update() and report the problem as an error like the
+> other malformed lines in a bundle list.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index ca3a891dfb..1bd6b2d566 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -5370,7 +5370,7 @@ int cmd_pack_objects(int argc,
- 	if (!HAVE_THREADS && delta_search_threads != 1)
- 		warning(_("no threads support, ignoring --threads"));
- 	if (!pack_to_stdout && !pack_size_limit)
--		pack_size_limit = pack_size_limit_cfg;
-+		pack_size_limit = cfg->pack_size_limit;
- 	if (pack_to_stdout && pack_size_limit)
- 		die(_("--max-pack-size cannot be used to build a pack for transfer"));
- 	if (pack_size_limit && pack_size_limit < 1024*1024) {
-diff --git a/environment.c b/environment.c
-index 5a2eb8b2e4..b004029025 100644
---- a/environment.c
-+++ b/environment.c
-@@ -57,7 +57,6 @@ char *check_roundtrip_encoding;
- #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
- #endif
- int grafts_keep_true_parents;
--unsigned long pack_size_limit_cfg;
- 
- #ifndef PROTECT_HFS_DEFAULT
- #define PROTECT_HFS_DEFAULT 0
-@@ -728,7 +727,7 @@ int git_default_config(const char *var, const char *value,
- 	}
- 
- 	if (!strcmp(var, "pack.packsizelimit")) {
--		pack_size_limit_cfg = git_config_ulong(var, value, ctx->kvi);
-+		cfg->pack_size_limit = git_config_ulong(var, value, ctx->kvi);
- 		return 0;
- 	}
- 
-@@ -769,7 +768,6 @@ void repo_config_values_init(struct repo_config_values *cfg)
- 	cfg->trust_executable_bit = 1;
- 	cfg->has_symlinks = platform_has_symlinks();
- 
--
- 	/* section "branch" config values */
- 	cfg->branch_track = BRANCH_TRACK_REMOTE;
- }
-diff --git a/environment.h b/environment.h
-index b336459e90..070314f7ef 100644
---- a/environment.h
-+++ b/environment.h
-@@ -132,6 +132,7 @@ struct repo_config_values {
- 	int check_stat;
- 	int zlib_compression_level;
- 	int pack_compression_level;
-+	unsigned long pack_size_limit;
- 	int precomposed_unicode;
- 	int core_sparse_checkout_cone;
- 	int warn_on_object_refname_ambiguity;
-@@ -235,8 +236,6 @@ int have_git_dir(void);
- /* Environment bits from configuration mechanism */
- extern int minimum_abbrev, default_abbrev;
- extern int assume_unchanged;
--extern unsigned long pack_size_limit_cfg;
--
- extern int grafts_keep_true_parents;
- 
- const char *get_log_output_encoding(void);
-diff --git a/object-file.c b/object-file.c
-index c049bf13f7..7f55e6331f 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -882,6 +882,8 @@ static int odb_transaction_files_write_object_stream(struct odb_transaction *bas
- 								 struct odb_transaction_files,
- 								 base);
- 	struct transaction_packfile *state = &transaction->packfile;
-+	struct repo_config_values *cfg =
-+		repo_config_values(the_repository);
- 	struct git_hash_ctx ctx;
- 	unsigned char obuf[16384];
- 	unsigned header_len;
-@@ -903,8 +905,8 @@ static int odb_transaction_files_write_object_stream(struct odb_transaction *bas
- 	 * the difference between the inflated and on-disk size is limited
- 	 * to zlib compression and is sufficient for this check.
- 	 */
--	if (state->nr_written && pack_size_limit_cfg &&
--	    pack_size_limit_cfg < state->offset + stream->size) {
-+	if (state->nr_written && cfg->pack_size_limit &&
-+	    cfg->pack_size_limit < state->offset + stream->size) {
- 		flush_packfile_transaction(transaction);
- 		odb_reprepare(transaction->base.source->odb);
- 	}
--- 
-gitgitgadget
+These "bundle lists" are quite abstract here. It would help the reader
+if the commit message briefly mentioned where such a list even comes
+from.
+
+Even more importantly though, do we now only print the error and then
+die or do we continue? And if the latter, why is it fine to continue
+even if we have failed to retrieve the bundle? And is it fine to
+continue for both callers of this function?
+
+> diff --git a/bundle-uri.c b/bundle-uri.c
+> index 2bb2eb99e4..1f198ef9a9 100644
+> --- a/bundle-uri.c
+> +++ b/bundle-uri.c
+> @@ -210,9 +210,17 @@ static int bundle_list_update(const char *key, const char *value,
+>  	strbuf_release(&id);
+
+Okay. The only other allocated variable was released already, so nothing
+that we'd have to do in that case.
+
+>  	if (!strcmp(subkey, "uri")) {
+> +		struct strbuf err = STRBUF_INIT;
+> +
+>  		if (bundle->uri)
+>  			return -1;
+> -		bundle->uri = relative_url(list->baseURI, value, NULL);
+> +		bundle->uri = relative_url_gently(list->baseURI, value, NULL,
+> +						  &err);
+> +		if (!bundle->uri) {
+> +			error("%s", err.buf);
+> +			strbuf_release(&err);
+> +			return -1;
+> +		}
+>  		return 0;
+>  	}
+
+Looks reasonable. There's already other branches here that may return
+errors, so any caller that wouldn't know to hanlde such an error would
+already be broken right now.
+
+> diff --git a/remote.c b/remote.c
+> index 49ee2ea318..7472c426aa 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -3073,8 +3077,16 @@ char *relative_url(const char *remote_url, const char *url,
+>  	 */
+>  	while (*url) {
+>  		if (starts_with_dot_dot_slash_native(url)) {
+> +			int chopped;
+> +
+>  			url += 3;
+> -			colonsep |= chop_last_dir(&remoteurl, is_relative);
+> +			chopped = chop_last_dir(&remoteurl, is_relative, err);
+> +			if (chopped < 0) {
+> +				free(remoteurl);
+> +				strbuf_release(&sb);
+> +				return NULL;
+> +			}
+> +			colonsep |= chopped;
+
+The error handling does get a bit unwieldy in this function by now. It
+would have been great to maybe add a preparatory commit where we adapt
+it to have a single unified exit path that releases memory. But I won't
+insist on it.
+
+> diff --git a/t/t5750-bundle-uri-parse.sh b/t/t5750-bundle-uri-parse.sh
+> index 70ae94c4d0..0f0ac29565 100755
+> --- a/t/t5750-bundle-uri-parse.sh
+> +++ b/t/t5750-bundle-uri-parse.sh
+> @@ -68,17 +68,16 @@ test_expect_success 'bundle_uri_parse_line(): relative URIs and parent paths' '
+>  		uri = <uri>/bundle.bdl
+>  	[bundle "two"]
+>  		uri = bundle.bdl
+> -	[bundle "three"]
+> -		uri = <uri>/../bundle.bdl
+
+Why do we have to drop these lines here? Interestingly, we don't seem to
+use this file at all in this test.
+
+>  	EOF
+>  
+> -	# TODO: We would prefer if parsing a bundle list would not cause
+> -	# a die() and instead would give a warning and allow the rest of
+> -	# a Git command to continue. This test_must_fail is necessary for
+> -	# now until the interface for relative_url() allows for reporting
+> -	# an error instead of die()ing.
+> +	cat >err.expect <<-\EOF &&
+> +	error: cannot strip one component off url '\''.'\''
+
+This error message doesn't really look useful to me. In the current form
+the user wouldn't be able to figure out which URL specifically we failed
+to strip. It's a preexisting issue, true, but do we maybe want to fix it
+while at it?
+
+Thanks!
+
+Patrick
