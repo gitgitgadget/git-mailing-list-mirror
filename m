@@ -1,110 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793716599;
-	b=JpKuJS9xqG1xSL1l7RT78HM1xiFc8yot0MuD6Mg53W4He/QM0pK+rRN3gEWgSniYKFPh
-	 iaPGZfwEivs2jZ1YV+FY8UQg8dNLDjuzLwifQmATrVEJZ+0a72U56o07u9Q3UAq8LWkB/
-	 K0rnscUfWXra+yW63XPmPCtph2AIsv9OV1jQ3vGGOZZ7Mzc7uyk+9cpGLkMTkxn3w5I/X
-	 MjTUnQGmF+GwWcqSfKksEgd1b/1cXREwK4v3pYPnncnaG+MZTwAwP9JB20ZaQRNKMoGCj
-	 MBSz6WSBWiprMS2N3Dnk6aG36ChU4WdbmBrsuG0pdDyL2lnpLCg2dniXL+pai/cbo8A==
+	t=1793717251;
+	b=vLx8iEg2qsHx7vn0Fji8ZO8BD2cwggKJKtm5sil5a4bXXlXONAiMlAjuIbFbRaa2Dpon
+	 5udkiEToFSdEBL2a2jYzxpos3g+gBn2647Dfwj3MT1/Y1/V2QgSE3z+esWI2z0V6363Ej
+	 kcUrFfPvQknpq92lZxlb+B46U+07kR+PJan5m2dbsHgoE+nB3J10yEaN6wo4cXGU3QF5b
+	 hBQ4eqoD0M1fkfa10OGJT/xExPFGZ0M/g4AzfX26KkGK6QuevM5Oelu/9GJ/jast5QYPh
+	 AYWbh5WM4nlR3XW0PvDTKfPqIvLwcMoJbHbHjgcsm9qyMxGwUxlAaiofIdwCI/aThHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793716599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793717251;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=5Fp9fYMrjzyP5O6dcjWrG4QeI0Gb8Gqao7NDAOlsNTE=;
-	b=OlbAmnNqySiqpoHkPVXtqegTQNZh6CARmA859vOTwaXMTM0TI6tYY1ym8x9wGU7V96Ca
-	 WF0k5TDkJ1MGETilT5I7acdawgmVenVTgo2rjtEXZl+D0kmRNA8wrrZEUqzuWutCh73vo
-	 sFO2Ruzb0JcoTSPSRpfKNycMMnRo10EOTowoCaj3hmZRDkR8qMFSOkmmiWiMSzmWfvQ0k
-	 soLiASdjBH/08DLjEhLl1Tz9chS/1eXNLX3nBTNZpnyqztRMcJqxXqRvvZPRMq1B8rt2W
-	 pQhb+Q7OpNMi6z8LqNAVMhvnCuxHMjCyqlKaF7pGjBsuJROR/y5VWd2KuwVMhXdQV4Q==
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=zdxE3pNrt5hoJNcWNvvibFDefpepIkGFYwE2K8p7fsU=;
+	b=bPiJn9EJ359JqRVtqplN6pAAaffKB/bhnQfE9bL70xbWJkr2aD4y2khqXMEY3SDAFUQA
+	 zzdJDNKAOG3K+jZ04oiMtS+b3Gr7+BL764ggQ4qXmYpwIT+SY7+yb1PcEyMySj+5sSYm2
+	 Bgk+4CioH45MCwv0fRTDvhAhXOIqE1CxxR+CZI8KCL0qr8HJmCUEwSPT+A73XLQnqhwXD
+	 XAQFhf6bA5bnHkG69njmImQYqwJzBEFMSzijw/yOLeZH1E1CUbSPwVa2nYzQSyBaByt99
+	 5j37dyWeRNumRjiTtF9oflVde5JUqhx6CI1onZD6+Rsy/C6ZXF/uqbMsbMibuP2MpNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=jvns.ca;
-	spf=pass smtp.mailfrom=jvns.ca;
-	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=dh++cC8G;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=OY18bzuI;
-	arc=none smtp.remote-ip=103.168.172.154
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=WPr9+Rjy;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Dmv3nyy0;
+	arc=none smtp.remote-ip=103.168.172.146
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3A4606A324
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 14:36:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F3A4606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED47606A335
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 14:47:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3ED47606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=dh++cC8G;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=OY18bzuI
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C9B9F14001E5
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 09:36:37 -0500 (EST)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Tue, 03 Nov 2026 09:36:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1793716597;
-	 x=1793802997; bh=5Fp9fYMrjzyP5O6dcjWrG4QeI0Gb8Gqao7NDAOlsNTE=; b=
-	dh++cC8GeiQc3vidvMETvQa9XDvKM02r6d/343PWr0S6hadspfMLAm9gmX5nHZ5N
-	B3ZMHo3xSDMZvvHwPTWdWgjJMg3VrbCJhFD0zY56NIugw06J3+mB0j7RiR2uO78h
-	lyZrG0D6FO3NBqqFBMCp/NncvVdS3sXz8o6+kbvZowQskKSnjAdV6ZcGcwztJP/7
-	KPXm+8ct8gI1NXQd+ftYyWf3CjyfV/ygvuqUnUhW7BMfpRAGBsBPoIL8m9y9nF8e
-	sLxkjp6uJlk2w9B6a0evqFCv0Uwl9yZMNt2Wp/znV1x1KPkO9CgJW/8OXa+l5JlB
-	tokvhIycQzB42SjOlXizXQ==
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=WPr9+Rjy;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Dmv3nyy0
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7CBC7EC012B
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 09:47:30 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Nov 2026 09:47:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793717250; x=1793803650; bh=zdxE3pNrt5
+	hoJNcWNvvibFDefpepIkGFYwE2K8p7fsU=; b=WPr9+RjypIQHSwpdnK04D/qtup
+	JjXyxDgZAn+muk8sBXF+VxaU3NL1q22JMqLxQ6DlAC52vP61Rvxr7iGmoXHUfkR/
+	GoVRXTKJdRrQEeCyCIc45nViB8vZ3OT4kcJ5mDpN0dojk6dA3/FDxbpsXKAR4oEU
+	DBwTmC3JMwBZALyVlcFmUvWXy+uL5Rs/hgoF1108xwZPgo75yW55vn/strtOUarD
+	u/CZ13idysMcZqYQapfDmvthN2tFp3NprkRT8BLvWzKKrRhaHUwphbCXzTJWnxxy
+	pD2GvAiLlRNBtlSFbxQNzNpQn2JIQL13j+EaZvccP4H41GiocFaYI//v6Yug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793716597; x=
-	1793802997; bh=5Fp9fYMrjzyP5O6dcjWrG4QeI0Gb8Gqao7NDAOlsNTE=; b=O
-	Y18bzuI9/REdzaPnhjtnhk1FsdTIs+gbIpEqSLBrAeg+YbwhQTJz19qrsXEB17Vi
-	OEx5+vPV3AMxavj95I/cIkEmwYnqOroO/sftkyqx/U7WkGIz0cm5TUFs8L2KAa5I
-	VkSv4kQsAajuZ7mG3B/RJ65EPzJtRfb/nOE4WvVMEK2A9h3Onyof1szBTBjzQsGS
-	R5gzYpWKWvrvOkWQnIiyuwjPEw27O255FEHIVswqRUF9llAsGrNsRkIT6IW8B264
-	VaNsOPqEEame4fYc03lIouLbpe5YDMyfkMMjn7wpUSK8vAocTFTvrNNta2HiwiLG
-	f+0ULvfOiXyjwZE88pvAA==
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793717250; x=1793803650; bh=zdxE3pNrt5hoJNcWNvvibFDefpepIkGFYwE
+	2K8p7fsU=; b=Dmv3nyy0zTUsTnGihscCIo+jxaZBGEHMQ18dk2kz0Ip6wuXsHhG
+	o8D7bF76OZt8eBXkYtLt5X7eRuUju7CzR568ddi0so45+LQ/erYmVnfZqskLM7uj
+	tZ/z4EtLVl207kb7nkxhlD17hbxWPO+u5RVUZdzhgI2oMfRdcgk6eIwTy1dZ8lWF
+	ZeT/4UhWShcKnf0MFCHeVSjMMsNtjOvp7LCVsvxkwxfkwIKExhu94QJ7o8DLWpmK
+	sBZ/lbD38dVrQ4PVyNnk0O8zgU8ax2XLrxSeZleWESEA6XMmLFVNKsKSIOkscWmR
+	8jt4p1SaaquR2vx7f61ODrc9Kc+FldM/Cfg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793716597; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:Kt7tGywH1tKKnz/rIWjOydmlyw6jhMaNHz4hb4gLXwVZv9u
-	OB/7hniTpWo4c8FPyW3Uxr62MwaMb5tr26XQVkXt5b2Svgy3uuPDUz5TAMs3bJ0A
-	u000E9dwwO2sam3OwjqDSutXS7CP7AyXzLQGSMkrUaNByvEThFGy04jQ/y+wGsgw
-	EyhkcG+RrLyXzuCXxu89AhfSCBoT4Ox/DhRyKL8fAj/o9kpsA2HPWik8mBMO381s
-	ebUd1Zyq7NFmJDZtLnSNY6AnLENePyMljRxARVTnaG3945UaolkYvAVH78h88y7J
-	X7XBA3XMjUG9Sp3hug8e7w2lkKrSrqqY/T2Z+2Q==;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793717250; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Zrb50bhriduZ8X6wxed/LFQ6WLl/3dFTHBWM1SuCXXq8F0c
+	wuj7SiEirfhkijikyKcpKkL2hv97zmy046AtMxn/ktUg3qJbEzsVyh0vAyCA0afJ
+	A16BSsB/dweyyD6irdx7+827QMh8NpNi8yvFQC8hnsQeFHkttPtsT9DAKdBz3SeZ
+	TSG6kWw6SPswO4OpU7A/nG8GkuEbw9CmVkNkyeIy8Sb2JvGhxTcsKe5stb3eee/U
+	cTNRl00aU8beGfJCwve8hSM1olNib5HznTadwt+CWL9vUytY6zqyH1h4pqTuifvU
+	jO2VlQ+Igw4qSOnCRxQy3MxAoHjyeNv1FsBeqIQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:So6kFxUmAE7hESGlQG4vLuqVHo6be1Qtq2jEMomXV4Q=:U2et4x1Or8kAR+irSIkD476RPFZaU4xAM6wC1jSEbCU=;
-X-ME-Sender: <xms:dfHpatnj7Lze1GPZpUz__fsDy3qViSmcQFG6bRLFEHoFK7rvIoa_Zw>
-    <xme:dfHpajrNLFsTdLin_kwmlPaawL93Jj2NduFVW8VAmf_i2jnwoeUDbBT-vGx6HL7W1
-    qAHTxkPwrBIPyjFmGuNbQbSt9A-lXEsIiB9ZXmTk38amkAeDN66pZOt>
-X-ME-Proxy-Cause: dmFkZTGRtH7hLP10RaYI/Gc0Rvqx4wTAwFrMs0ZtzdckIy6Y2VJnnqNGXb02YmNU/lq3d6
-    RI7xqK9H0ThWpsg9xTK0Uma6SF1teapXgNiU0nbk6ietFBPNiFJJTir+cRlYWwXupAShYI
-    C4Q8bxNdwpiDMWLuPXuUzWXmrGTGwQKA5SFHS+JWUSU3zx/1Ze9amO/P2fNcAPPnmMwC9d
-    dcl3CCXs39/haqu6kIxkXRJ2sW9V1E7kfxgXsluCN51MK5fI/RuSxlO4AFmZMA44kTOEVu
-    D6IUKPpvK4M76JlgS8efXyl930tfh+gYZM8KnxrWm9/PHLU3VD7i1hv4XVRIh5vpZCyxPF
-    LN2zS8VbHBhJyqIquk17Qg9sbtiG3J+Jooo0vIaPRdtKCj6xo5cTZYv8hcI/1lPkeuYGjA
-    ca2Ccyglq1LM9khIiWVxmAUsnPPltQ3JdE8WbvwaaEI9DLAaIFfAaDTj4MhGgsTlMV6mPq
-    bAzOrWc5mn5j1De6QoRD+QlpwwRy8dB69KK3vp8CG9nY7vLSLcbLGrQFC4dvM73Axd/oCN
-    fBsDqr2a9eVSQ+EJfwO25wQOODlpqFwhBLp4T2XzOIbqhHzUJue02LYD2rpcwBCua8khkp
-    E+qf6iv1ggwPqdP/mzcYz2doIQM/6DuzODlZPx0flhJ+7s+AdH+OwzwabxQg
-X-ME-Proxy: <xmx:dfHpanP229BRhb4uH2ZwbPmS4mrGO9OlggTLrXu2ekYcEAjf_5fw3Q>
-    <xmx:dfHpavxON1LtuNSnLas-7IbzrCeDplwFsw2yIymbgoweh7U6NlAg7w>
-    <xmx:dfHpags_FLjJLSuKhg0YvIGLq2SDR6SBU6J98G1OGpih6zneSTmH0Q>
-    <xmx:dfHpao4H_YdX7gRnkn8yHvZ3zU_gCEGiiO4RoBj9wwHmmwqX4KxmhQ>
-    <xmx:dfHpatDk6uic675VAOBfNeLzPM-Br2SRdjo97nT4c738vmvi1gF5KWGv>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 89E24782738; Tue,  3 Nov 2026 09:36:37 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:SlFopcjjE518TsXr4WcMN8ydsSH6fene/VDCrBa5Qmo=:ZAqGcOhkLgcuPlRaGyCYjmr/XHWy09AcvQpTlz9rwQc=;
+X-ME-Sender: <xms:AvTparVt5cScAcz7ntuaJZSVue6HMkzMBTGl3w7IU7hDfF4d3PH_kw>
+    <xme:AvTpal1Y6g0MZC-JaetDQgOiiJZuTGyT1yo4Ra4FcyjtiL4_jH09e6FWhEiMbO-F3
+    WT3QvYaEE9AEjZ0jjhQd88GjbpM5wfI1Itm738aBDm1mlM1NnmRPwm->
+X-ME-Received: <xmr:AvTpapoJK39eUkbreVreh_IMXxkGKG8MUsnnvfu-35dRQVzv24G68F81g2PMQgDddkv1J5XDBItZ6X7-CunvtRWYLL2yZYtU-cu8>
+X-ME-Proxy-Cause: dmFkZTFZEAuaMEZ3XWWPBc5aFFw1T0ka4Xr9EBZehb1AQv0ixb+/iyUsURd893SQR6FE0G
+    FTcl8RWp/LDoiY6LNdNH5qAFNraBfUkHiUs4//GVfz6yEEOYsSUJpBXJyo7k8HuMEL1tEY
+    h7ZNxt2cGY9ZVZWP9B+9yAlLEmOUMhOyFb2Pd5DtLyIe+SR2jrSGNhWnFw0hfjFufz4hVI
+    JtZiHUm3+0tX4ZUGSLjRUyBh262ZA+SSwQefx/sZuEPxw/eIyUopZnRu9ZlEgDC33ysTB7
+    CrLUHt5zLrnEdVd7f3JUSRy/InGt61V1+7sMyAo7pIzJPDwLzytbjDNjTzxWk4eWwiWAkn
+    1CZHqqeqXKn+kJUqlOl9Rq4HHnYQhuMyWAYe9exxmhaZlPH4tCbLQ5tjwg8jcp9kQRXWfY
+    PtGfjcGJWHcQ9430CwMpg9J14BvzIE3Fb3d1/o3D1rLsGYnhDwj/lB9zAlmTh3aTT82182
+    /lMUSgJgqWnO+CPvg+ufKgF+4A12d+vi4Rqkc/L5VfyY+HvIDFX9f2vBEnuncdi4A0tbqN
+    18rEfeMXonZol8hdZ8vLBubuhY4Gl+t63y7pv1QRHAV4YZgGZRq0rL7S1iJhGR4uHKUxmW
+    HPs5/8qoXR8ZuEM/mZbq9o7qWTXPo4MfUhKfyOQqhjLVQni0GZNJGUULXOqQ
+X-ME-Proxy: <xmx:AvTpasXgmsQ4nK-8vT40-2bSWLSvIVam3VFEGBBTlJaKGRjpp_QCYQ>
+    <xmx:AvTpakaGMy_J_-z--h9FwzgeUGvPaFlTULgUVDCi2MmthgPEwJ4Dqw>
+    <xmx:AvTpapdvaDIUDfnq0_tVrmR4_0bsO5PUmhkXwYf9s7UWYkE77vp-dQ>
+    <xmx:AvTpau2Ix4_7_0tglYzn4DItHA2CaA_gsEhEIbSdu6oEhE2MKrrq7Q>
+    <xmx:AvTpao1ciajluF-sz7Y9bUD9YLmVD0k9MrRKd9PSW8nf3okEEa4PEfi0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Nov 2026 09:47:29 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
+  Patrick Steinhardt <ps@pks.im>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Ravi Mistry <rmistry@google.com>
+Subject: Re: [PATCH 4/4] remote-curl: retry transient HTTP errors in post_rpc()
+In-Reply-To: <52819accc894e760a0fd06730d20f46cc8da9914.1793462224.git.gitgitgadget@gmail.com>
+	(Ravi Mistry via GitGitGadget's message of "Sat, 31 Oct 2026 15:57:04
+	+0000")
+References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
+	<52819accc894e760a0fd06730d20f46cc8da9914.1793462224.git.gitgitgadget@gmail.com>
+Date: Tue, 03 Nov 2026 06:47:28 -0800
+Message-ID: <xmqqh5hyas5b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -114,65 +127,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AXlNo_7mn8GF
-Date: Tue, 03 Nov 2026 09:36:17 -0500
-From: "Julia Evans" <julia@jvns.ca>
-To: "Andy Koppe" <andy.koppe@gmail.com>
-Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>,
- "Karthik Nayak" <karthik.188@gmail.com>
-Message-Id: <d3878168-95b9-4b4b-bfd8-85d459122e5f@app.fastmail.com>
-In-Reply-To: 
- <CAHWeT-YSK3xFA=Hztr3Uj5UW=L9JcC_0iOa5pUG-WGCpwng9vw@mail.gmail.com>
-References: <20261022212903.177261-1-andy.koppe@gmail.com>
- <20261101230326.3675597-1-andy.koppe@gmail.com>
- <840bc117-75e9-4d63-882e-3831156871a3@app.fastmail.com>
- <CAHWeT-ZdZ0o=_rPWFPcXqCyc-WV=fzmKVRVx2LetfQzgYkKO0w@mail.gmail.com>
- <f194e2af-cffc-4867-9069-7070c86785da@app.fastmail.com>
- <CAHWeT-YSK3xFA=Hztr3Uj5UW=L9JcC_0iOa5pUG-WGCpwng9vw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] root refs vs pseudorefs
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
+"Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> pseudoref
->     A name that can be used like a ref to refer to an object, but that
->     is not stored in the same way as refs. For example, pseudorefs can
->     be passed to git-log(1) or git-diff(1), but they cannot be written
->     by git-update-ref(1) or listed by git-for-each-ref(1).
->
->     The following pseudorefs are known to Git:
->
->     =E2=80=A2   FETCH_HEAD is written by git-fetch(1) or git-pull(1). =
-It may
->         refer to multiple object IDs. Each object ID is annotated with
->         metadata indicating where it was fetched from and its fetch
->         status.
+> diff --git a/http.c b/http.c
+> index 950e2bbffa..36b559e596 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -2476,6 +2476,34 @@ static long handle_rate_limit_retry(long slot_retry_after, int attempt)
+>  	}
+>  }
+>  
+> +int http_retry_wait(long http_code, long slot_retry_after, int attempt)
+> +{
+> +	long retry_delay;
+> +
+> +	if (http_max_retries <= 0)
+> +		return -1;
+> +	if (attempt > http_max_retries) {
+> +		trace2_data_string("http", the_repository,
+> +				   "http/429-error", "retries-exhausted");
+> +		return -1;
+> +	}
+> +	retry_delay = handle_rate_limit_retry(slot_retry_after, attempt);
+> +	if (retry_delay < 0)
+> +		return -1;
+> +	if (retry_delay > 0) {
+> +		if (http_code == 429)
+> +			warning(_("rate limited, waiting %ld seconds before retry"),
+> +				retry_delay);
+> +		else
+> +			warning(_("HTTP %ld, waiting %ld seconds before retry"),
+> +				http_code, retry_delay);
+> +		trace2_data_intmax("http", the_repository,
+> +				   "http/retry-sleep-seconds", retry_delay);
+> +		sleep(retry_delay);
+> +	}
+> +	return 0;
+> +}
 
-I found "Each object ID is annotated with metadata  indicating where it =
-was
-fetched from and its fetch status." to be very hard to parse, and I had =
-to
-go look at .git/FETCH_HEAD myself to understand what it was talking abou=
-t.
+This code looks familiar.  Beautifully extracted from ...
 
-It might help to instead describe `FETCH_HEAD` with an example,
-especially since we already aren't giving a lot of details.=20
-Maybe something like this:
+>  static int http_request_recoverable(const char *url,
+>  			       void *result, int target,
+>  			       struct http_get_options *options)
+> @@ -2483,7 +2511,6 @@ static int http_request_recoverable(const char *url,
+>  	static struct http_get_options empty_opts;
+>  	int i = 3;
+>  	int ret;
+> -	int rate_limit_retries = http_max_retries;
+>  	int attempt = 0;
+>  
+>  	if (!options)
+> @@ -2506,9 +2533,8 @@ static int http_request_recoverable(const char *url,
+>  	}
+>  
+>  	while ((ret == HTTP_REAUTH && --i) ||
+> -	       (ret == HTTP_RATE_LIMITED && http_max_retries > 0 &&
+> -		rate_limit_retries-- > 0)) {
+> -		long retry_delay = -1;
+> +	       (ret == HTTP_RATE_LIMITED &&
+> +		!http_retry_wait(options->http_code, options->retry_after, ++attempt))) {
+>  		/*
+>  		 * The previous request may have put cruft into our output stream; we
+>  		 * should clear it out before making our next request.
+> @@ -2533,35 +2559,15 @@ static int http_request_recoverable(const char *url,
+>  		default:
+>  			BUG("Unknown http_request target");
+>  		}
+> -		if (ret == HTTP_RATE_LIMITED) {
+> -			retry_delay = handle_rate_limit_retry(options->retry_after, ++attempt);
+> -			if (retry_delay < 0)
+> -				return HTTP_ERROR;
+> -
+> -			if (retry_delay > 0) {
+> -				if (options->http_code == 429)
+> -					warning(_("rate limited, waiting %ld seconds before retry"),
+> -						retry_delay);
+> -				else
+> -					warning(_("HTTP %ld, waiting %ld seconds before retry"),
+> -						options->http_code, retry_delay);
+> -				trace2_data_intmax("http", the_repository,
+> -						   "http/retry-sleep-seconds", retry_delay);
+> -				sleep(retry_delay);
+> -			}
+> -		} else if (ret == HTTP_REAUTH) {
+> +		if (ret == HTTP_REAUTH)
+>  			http_reauth_prepare(1);
+> -		}
 
-  Git has 2 special pseudorefs: `MERGE_HEAD` and `FETCH_HEAD`.
-  Unlike references (which can only contain an object ID or the name of
-  another reference), these have their own format:
- =20
-  - `FETCH_HEAD` has a list of entries like this:
-    `d4c5f27105ee2e44366d718dbc5db95bbe99c714 not-for-merge branch 'exam=
-ple' of https://example.com/x/y`
-    with details about what was fetched by linkgit:git-fetch[1].
-  - `MERGE_HEAD` has a list of commit IDs
- =20
-  These are stored as files in the `.git` directory. You can pass a pseu=
-doref
-  to `git show`, `git log`, etc, and it will use the first ID in the lis=
-t.=20
-  Pseudorefs can't be written by git-update-ref(1) or listed by
-  git-for-each-ref(1).
+... existing code around here.  It always feels good to see that an
+introduction of a new function is accompanied by replacing many
+lines of existsing code with a call to the new function.
 
+Thanks.
