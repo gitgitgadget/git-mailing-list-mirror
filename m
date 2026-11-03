@@ -1,125 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793726421;
-	b=rPPtxkyDeJriZ9MS9hqP4egFtmMe4GmceexwZeA1/KF+hfTpxzg3aQzagEySVEt0ndRY
-	 1DsBi8NEvpQ91nPZOlykljLxqjCJfoRfdtF5qpvAebk++3QQG0SiJXoxbjn2tz5sgUXML
-	 fSCuY/QVIcpaeQ2FoojOVto4aE2C3WM9n2dJYnG31LvLrv5USsWz38N1yPJBK/Br26FUn
-	 KBGu6nM0oPRJYCTZTil9aXsmg7e6Vs6H9VHvf0oU7BTJu8A9qn+OSbUuQ590N90ysPsfN
-	 QYc14KSZEGxVYj6lmOB/3ysL9sAenL0CxIkcGM89XnoPpI5ATKLhqroF8tY9GSWa5sA==
+	t=1793726656;
+	b=ZCv60JbVTJOG3YmqmVs7udj05IEBupQ2hrTi5crNXxDsJ8NIbKpeSKNgVdX6NXmtcUdk
+	 C1mziUqTn2ywwt1g6e8Lwz60D9MujS7uTu7z83IrfSoN0GyYZG5MMMYnA7pQ3tbFAAJn6
+	 lNlWh927Z7t7ehvfJYb7tNr6QdNy2sg0RzuJxCNlSTeJON/FTwUi0p7//nfleeKf4+f7U
+	 AAbZlUjVeslIxNmmDkZuqv0SodfuEe0I+zQzXTyCkeDTu2PDvxiidsiQ8yzA/dbo0QJ1t
+	 PQM1Hm+kiZboVQtuHKdPEHZQF9BFKP3JnZpYUqdEVBm+QU8lxIQKkkKd/ucOZmvvWmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793726421;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793726656;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=vpojMrrxuRRT0l923Rqm1EE1c2F60pRfCzRPWb3LQQ8=;
-	b=tMBCH5Ook9bpb9iA/9pYSSYPbSPI19XjJzdKjkJ29GKTdYdGhCIaBRFZQN+B06PWUU+a
-	 6ZEx0ZQHsEkWpzuQd1Pbn8fSESk7aHhB4akTQSW6gssKVQncbN0M7QJvMe++9yg4xG9Ac
-	 9DEMnDPYH+rF0hKUyuus4DASai5U7BFptGpbDwndmceuj3yrSSKrbMgwvrNg0wAk+M1GP
-	 J4vRlb6PdWAShDLZP9tqgbyiRttAREufPXiQsjYB6QechYv2zkt/NLK3Vb3hBp62eaY0r
-	 bfhDVkqgYqG3sKvMMjJJSWIR6MrwWF4vvzDZQJsWfcE6WT8OgnybM1i0VPbXXr5991g==
+	bh=Lp2DVGaIdKDE93WZDPnAe+viiiSbB2+cD2cNXdUFRVM=;
+	b=fw2H4kLlvOF+YDPUFWYTeuZCuFYr974FhbU2cxX6931eBkwpOC2MggSjCpmSBRMkGHT2
+	 tMKVr4MMDc1GaY9W89wFi8f4YHV3Kt4Mkp4f70plUTFvBMGc+anTKGQN+/tstRpCrYOR5
+	 mk2GQ0sk9DDRn/nadtJkYadise3X4M9u2uXhSr8eC/z5gvfToUK6NXhhsfmzVkjJHlksz
+	 gg8Zp4oeAuGo2R69DsiKwlfGfkDhIufAFxCRgAjYqoxk+IHX+D+qxrGbqy/0VPCmYIkl+
+	 7dIMbMs17QuwdYbwZz51Gy7jnmTZZpTYH/xfzmuZj97SB36FKH6wtn3WU4l/nvvealQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="PJFkC/ou";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=2EIk8P5z;
-	arc=none smtp.remote-ip=103.168.172.144
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ibhRzkMy;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FitTP35V;
+	arc=none smtp.remote-ip=103.168.172.159
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188DC606A32C
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 17:20:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 188DC606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A10606A31B
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 17:24:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 22A10606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=PJFkC/ou;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=2EIk8P5z
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 433FBEC00A5
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 12:20:20 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 03 Nov 2026 12:20:20 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ibhRzkMy;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FitTP35V
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5122A140014C
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 12:24:15 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 03 Nov 2026 12:24:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793726420; x=1793812820; bh=vpojMrrxuR
-	RT0l923Rqm1EE1c2F60pRfCzRPWb3LQQ8=; b=PJFkC/ouGsQ3Pno0QkVZvFG5Rm
-	pnKumAwU8yzUjTskn+d/78VnW5wWPcgfiWBDoPhhZut9395AsbeErWrIzo9wcIxq
-	eisy+yEbaed/wAyctzQMMf3pTOBl/gGcSuTOlY6cb57Mu0LVUAKk+kz+NbhgyzOY
-	T6Gk5tuiqP9qRpPwk3Wo0tbfuCVljm5gyGPXfj6L8++F7lH/VLjPOgh3mKIINnkk
-	of8AlbGH2UDB12iMMBIk6gJ98uAbmwdDeJ8BU0PVF/dZe0CmfDojkPajP3ZZ3DB5
-	5r0yOBCpGnbu3Wl24z5MPK++2kaanlnsuQ48Fys6z8HdS5v8lZR711JlbkOQ==
+	:subject:to:to; s=fm2; t=1793726655; x=1793813055; bh=Lp2DVGaIdK
+	DE93WZDPnAe+viiiSbB2+cD2cNXdUFRVM=; b=ibhRzkMyeQOu9uNIulyvBFmZOd
+	XZlog3swkSJXE8aAm3YhUV7M2ixDsGSNjdhC4ykSjuhDZ91uqlbvDOK0chL+ndbH
+	CDAIsGf6cpfX/ceZbHaQYZfiv04iF+hVHiRGoTjp29JkgpRChf9h3CTiAzNYiLmn
+	H1u589grhhaW0uEy3F2qEFqJI4fm4CwQQjK9XBgNFvqgaU3bBUvF8fT3rDLnRv53
+	0qXLYFModTIWpt0T26OKzzkGnjQXXdqV6onY7q/U+6QHC8W6fr/j9YhWNoQOukAT
+	BmORo4PJ8EiIi1TOX8cyQtkibtUwv1Ieh4n4WhWaH1StAzD2jlXNkyNzen5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793726420; x=1793812820; bh=vpojMrrxuRRT0l923Rqm1EE1c2F60pRfCzR
-	PWb3LQQ8=; b=2EIk8P5z9w7ykZiwKpjIK4CCvpdqRNWyT6ieX5dDu5DjidNv0W/
-	BiHLHcVRLFvEtT8HEKWMvqKKRBDWgrBbxZjzM4j78qt+pL3JpT3pU+muz44UlPal
-	GCIDI84Tzi28cP1k3sFArUG9UTT6DGzSSgC5YbA9xq0irS39MDUvjRuDVnxaMA/e
-	3pJXEb0wlGAI0B3ztV+Nsj3BN7JZfEOX5ztPau60ycMS6xwJLroh2b2c18sd9HLc
-	XTpNwyiEXppFas4RQhqoFFDv7BdOpqnn2iEcjEB8U6XDUEYpes5GqfHwYN0NikpM
-	OsE5Dc1DYGlq/4K+JfF1O3vV46Sk38sREtg==
+	1793726655; x=1793813055; bh=Lp2DVGaIdKDE93WZDPnAe+viiiSbB2+cD2c
+	NXdUFRVM=; b=FitTP35VDUVkDEXPUYk0t3v8FvYo4nSVGUTEFmHAK4apFeW4pKQ
+	UfXKdHIJjqht417P/0nKFPmQEG2bvur79zKAkjztmJKk3+fDSnN6rrt2/o7Hd5iw
+	kEKB1Dq02iPqJkP9pUf5i2T9kTOcbcTuoio7f6BY8L5+V0BXObmR9sdul2wGmtKf
+	UPHBjb19WpwZUrH79d+IF8jb6qNyDz+G6X7blgJYZaB0l7OT2yoWtsZAK9Bh/Nw9
+	YhAaDGyWJ7UO+65YHKaxv/i8ob3J6D3xNshNFg9uEBQjojDdSZAYbRpy4Uxy5K/w
+	jqugBM5IcfqJ47DT0PhXX47rBxr6bTP5dVw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793726420; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1793726655; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:E9Mrpddc3AhZxDs5LaoCNDGWeJgImq1ydkQ6W4dWeZiO4No
-	pwTXS5LEkSqL2zN/381LAsFT7It7UMUJqsKNs12dw8wF4V1fuPZRoi0epHyeoOY8
-	cNhZMjM6XqA0mV3rWTF26c3JwuLvK2zFfCVQkENwRnmEpoa44nQf6deAR7qfq0KL
-	P77k6iwCNDRcra9nZ8EyukWNbnoNFiqNmFmrW0QghcXm+rHN2KpJNpuEjK9tQnnA
-	9nfh9r/5HCkdmkTM/RtYa8Z0JJh+ZZMUtos9D/4UDsbNBxvS8U+LmHU1ef6AOX33
-	RJ1JZO2AJh1t4OW7YziQItGvLLy/OkQKqiosI7g==;
+	s=fm2:rsa-sha256:eSKYVB9H0tFDYZxqYxldwx997Av+u0SkFWqk09VcLqN/46E
+	pUXZq6Bn44wjSwcbkJz55hfhFsboATBlEcX72X4O/urGEvW59Eg3dHXlsmCR8Q4f
+	0uxKc/VPgvH3D17keMhpap/vAXd4DGxq+rz8iqZa/JsbVTyWAgoi+9jExNiQUuGO
+	r/McHEjfEp9X5n14pubaBcnasQUecLXd3fQruJ2lPVgoqVpOpkFMVvHTI2C7pzTf
+	bwgOke0TWgP5F6J3VN2sI03j+HG9r60HV1ru250yDm4eFG/eGE0gtnmH0uzKcQUK
+	TTxmguxK1nxiuMxO2wIoMc1ErypJo/BotFBXIvQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:oU0OiyG8pJcwR+Ofz9y/9EAC++V7PBn3IJZFDIBjTis=:0e4rIEc9DkvKvCKzF4F1xGkdzoJOB41PHCLhlTK+P8k=;
-X-ME-Sender: <xms:0xfqaoRX6vlg5LsB_ltSC5tRV_FDhn1JGkKaVRAUjb3KP1tnSGM7Kw>
-    <xme:0xfqaledkqIeunitNpOV4bbBSP9mik6VWc6nuMhIjcWUXz8oG57ieZ_Qn0QMta-D3
-    zsd5FJL8kvE4zfIhoGRzdWTMaKzttMiLNEW-pOpt4gI9akbPgI9tnkS>
-X-ME-Received: <xmr:0xfqaheuddJWgkeBBuwtE79FMUwoF5n_KoC_AIDRUKcGK-uQiWrFp6f6u6FJOVw6Pyx5p0jnOgGLofXdyVc7QHyMiaSAUs06q8Zx>
-X-ME-Proxy-Cause: dmFkZTF2e4jvy3YfIPWjnl37u0HF73uXNzI05O/KBz9tGtBGL+yqi/SqKnJ+vE7LGcGvYQ
-    F1f0Vdv9BlU4PPZs4YOujGM3XUttStGzHrNY02zszfa7q96b5Ri5qhumPnsKlA5a5mQ6mQ
-    K6bW+0y15gRQsQiIPmMQuS8EfIfhiy5wwSkC+UbLHMZ9uFFIziY5ffjghUbJTMhw/VjVQu
-    YIaMEBlwtG+7uQ+pgBI1eW6iNPy80Lyef3bPYllJwlfsSjaGX4JjZWqid8oemXiJ6o3ZHm
-    /FjUEERwNJfycLj37bqcqCf/LQ/90ivMuVMFrnGqOdDgUX9xAftGal0eXHMA5SZn/0adpq
-    yCOcqKucOiGuydSxEvzMeccwuT8L1Rl2aZeapa8XJR1rLb6IBUZvg0TKtINyT0PEZEYqzB
-    CTKo7nQhIMq2InJ2WHJqACBBIlkcg9JyDWbJHal5y86mynCxnljGrdcjlrNJ9Z4gLb1tDS
-    xq8LCgzBYsxniuPTekxPBPXs16G0G+M+kA48Vh5SwxdsDSAJeRgjlPRpvoSnxYyzK80n6z
-    u4aYfLqwavwW+3nFzE9IBAaT/7U/z4/gRaq4knfu5FuQ3bWmYX6wfYaK3tZyzjQ2mNNZCB
-    ZcKdl+d6Gb/V/55cm8VraPaI8ePMKlt9NeQpKZ3ZP1RrVrl1VEv047jFSW/w
-X-ME-Proxy: <xmx:1Bfqan0NBr3oCZ2MpiIe_J6SOGErCUtTwi2IFJOv3ZiqxJyUoQvVIA>
-    <xmx:1Bfqah_f0re3CURZdz4iHe_POEjVI0SnyFyZJg5DXPyRHXRFUkkGLw>
-    <xmx:1Bfqak71nRsN_XX9ZUhTWy4H8jjzX8P6EcVTCGSUJzDhCNAzPhzv3g>
-    <xmx:1BfqahvxvjEA8jHn8FDFBZ0Dkn3rBOFjV_pVXRw_4ygPMrE4z1mEkQ>
-    <xmx:1BfqaqVUcv7DB9Y3YBhPLiVOadNIB6LUm4nEowE4VtsE-vNK6NILyMCb>
+Message-Instance: m=1; h=sha256:8eVpWHOo7OPa8zY2f8UFxjxoxJr+lbSqKfUD3tV/kes=:7k2PmMKFhO5feArKncTQVdBf400JNqbEznDyf9SN8G8=;
+X-ME-Sender: <xms:vxjqah6N9pjtFw9UuQOWULda6xmqeYXY3YbdQ-YWIoTKs4acmkxtEQ>
+    <xme:vxjqat8E1E0EEF9WV0O6KFfSKC4tUOr6VxXjf4XoK0i0muS8_F8b-lvidmtCA9vBV
+    4bNQF8NTWQh1tdn8vwnuAbmp7Pp1U1we-lX0gEe2plmCjTJztm-vEDh>
+X-ME-Received: <xmr:vxjqauoqxxISLS9t6QKZ-3Yuy03sFVxfeyPqAVnBeXk3fSxY03XOlf0tfOUCNFjInGZ0D7bYJfeNp7sJijgNk3omEb0q966FH6-Z>
+X-ME-Proxy-Cause: dmFkZTGzAANFv//H54Rh9WxPy4AB5cx5twbWPvBy80ahnsyUdzzrVaSkk2xgSbAzIQRzpu
+    H8It6HkyaGAZmiXiH0sTEouYRhhWrF3rkNAM4jK5tN327VaWTR0egdfOFVrDMelKBR+xmR
+    s7Gfr+4F7Rndk3eysbmNONqNazYf0imqR7l6kVew1RVVg4rqizHeMgufQUsRVNIPBR/Yj8
+    Ft7bDhn4rKtF52ChnInPlrXUrj7ARkrZQoy0W7cxWGYeRGVcN1F0So4eClZPfiOmFuM1iH
+    Tt3/rVyOWqL72QlLyJNEOsr40W49918es257XhRvtpMRu5s1hut8Q8Ae3eT60GPjRvNdbD
+    fSuBxwRaK5wFOBH4M4DK7OL1hdDEh2+VRB/BdKNMIHjC2i3OCo52Zec8IYcvBOth+bm4ZT
+    1iFpKc7je5IPnSX1OUIGv1xYN99m9VjY3fkbO0d373ikInFYxmmlQpZPWxBXbZ6uldj50c
+    24MybD/N5WbtxPhRhhA/Fty6VmXwJU3EU+gCPlfyHTlshycIEOkfBxqG7EWMApqJUinzgr
+    aYj+jUaVBKDhuB4Uzkt/++W0c7UXa+YZReNEtWSWtcUZZFYjEK04lSzH0O6U4/UIj7iY7P
+    c2dj5K0HKx1Z1mA6aVfXX1LgiJY1w0qqE4Uv0rY0TBFnNwAMg6K9bJFdO6yQ
+X-ME-Proxy: <xmx:vxjqamqf_N_Yd3ifLWqbR-rNw-cYJrAguCu_3tIIK8V9_lg3x11aJQ>
+    <xmx:vxjqap2qv19KrhWXB2DehHCqN3i7ID72Mx-h-07gRi2E4Ifn7GRcrw>
+    <xmx:vxjqasGwWEe5S4Iu2sWtsIowCauaUnnH9_p8_IDzxvSGYLOn2Zfgxg>
+    <xmx:vxjqasH4P-KRpaeLuKYlQCORmlKR0owcr3GrT5Es0WMBzqS6N-OxYQ>
+    <xmx:vxjqajsfKE9GXBpS0mw3aGEtTWKjYyRGmhBc1TGtNJgaNX04iFS58Ibl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Nov 2026 12:20:19 -0500 (EST)
+ 3 Nov 2026 12:24:14 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
-  Cynthia Uche <herroyalpriestess@gmail.com>,  Patrick Steinhardt
- <ps@pks.im>,  Elijah Newren <newren@gmail.com>,  Jeff King
- <peff@peff.net>,  "brian m . carlson" <sandals@crustytoothpaste.net>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Justin Tobler
- <jltobler@gmail.com>
-Subject: Re: [PATCH v4 0/4] Standardize early option scanning
-In-Reply-To: <faf0b5e6-1c63-4c68-9f23-42a452879854@gmail.com> (Kaartic
-	Sivaraam's message of "Tue, 3 Nov 2026 13:24:52 +0530")
-References: <20261012074413.337183-1-christian.couder@gmail.com>
-	<20261102151447.734680-6-christian.couder@gmail.com>
-	<faf0b5e6-1c63-4c68-9f23-42a452879854@gmail.com>
-Date: Tue, 03 Nov 2026 09:20:18 -0800
-Message-ID: <xmqqv76dal2l.fsf@gitster.g>
+To: Farid Zakaria <farid.m.zakaria@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
+ <ps@pks.im>,  M Hickford <mirth.hickford@gmail.com>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Jeff Hostetler <jeffhostetler@github.com>
+Subject: Re: [PATCH 2/2] credential-cache--daemon: do not take over a
+ running daemon's socket
+In-Reply-To: <20261101-fz-credential-cache-race-v1-2-28f0bac51e11@gmail.com>
+	(Farid Zakaria's message of "Sun, 01 Nov 2026 15:29:26 -0800")
+References: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
+	<20261101-fz-credential-cache-race-v1-2-28f0bac51e11@gmail.com>
+Date: Tue, 03 Nov 2026 09:24:13 -0800
+Message-ID: <xmqqik2dakw2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -132,18 +129,53 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+Farid Zakaria <farid.m.zakaria@gmail.com> writes:
 
-> On 11/2/26 20:44, Christian Couder wrote:
->> Changes since v3
->> ================
->> 
->> Thanks a lot to Junio, Kaartic and Cynthia who reviewed previous
->> versions.
->> 
->> There are a number of small changes since v3:
->> ...
->
-> Thanks! This version looks good to me!
+> +	/* Remove the socket at exit only now that it is ours. */
+> +	socket_file = register_tempfile(socket_path);
+> +
+>  	printf("ok\n");
+>  	fclose(stdout);
+>  	if (!debug) {
+> @@ -244,10 +259,11 @@ static void serve_cache(const char *socket_path, int debug)
+>  			die_errno("unable to point stderr to /dev/null");
+>  	}
+>  
+> -	while (serve_cache_loop(fd))
+> +	while (serve_cache_loop(server_socket->fd_socket))
+>  		; /* nothing */
+>  
+> -	close(fd);
+> +	delete_tempfile(&socket_file);
+> +	unix_ss_free(server_socket);
+>  }
 
-Looking good.  Let me mark the topic for 'next'.  Thanks, all.
+Is it sane to mix unix_ss_* API with tempfile like this?  For Unix
+domain sockets managed by the unix_ss_* API, isn't
+register_tempfile() unnecessary and architecturally undesirable?
+
+If the daemon exits abruptly without cleaning up its socket, it is
+entirely harmless.  The next time a daemon starts, unix_ss_create()
+will find that the socket is stale (is_another_server_alive() will
+return 0), and it will safely unlink() the stale socket before
+binding.
+
+E.g., fsmonitor--daemon.c calls ipc_server_init_async(), which is
+implemented in ipc-unix-socket.c by calling setup_listener_socket(),
+which in turn calls create_listener_socket(), which in turn finally
+calls unix-stream-server.c:unix_ss_create().  In that function, we
+check if somebody else is listening or if the on-filesystem socket
+is stale, unlink and rebind by calling unix_stream_listen(), and
+continue.
+
+By invoking register_tempfile(), the Unix socket would be managed
+by the tempfile API.  At normal exit, delete_tempfile(&socket_file)
+blindly unlinks the socket file.  If the daemon is killed abruptly by
+a signal (e.g., SIGTERM), the tempfile API's signal handler will
+similarly unlink the socket blindly.  Doesn't this completely bypass
+the safety built into unix_ss_free(), though?  The API deliberately
+calls unix_ss_was_stolen() (which checks the inode) to prevent a
+dying daemon from unlinking a socket that has since been taken over
+by a new daemon, but delete_tempfile() has no way of knowing that.
+It runs first (or runs in the signal handler) and blindly unlinks
+the socket, defeating the safety check, no?
