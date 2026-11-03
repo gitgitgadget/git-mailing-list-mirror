@@ -1,99 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793695790;
-	b=5DWuI5GJe8grpYn7Q7Wd4WsmajwmaXd3Zayf2hMKcPN4O18RBbJYylQHKgqux4bU08f2
-	 nZzfxmhR+OxmxCrTPIiByYnbWMwcWQpwZu+nTJ9belRwdrKHxkP+dG8DMRPQSYnBQ3P5C
-	 lm4LZ4k1bDoMUd0Fi81OE7b2TqGhyj9TxVSzu5bVfMxrr+SY3nu8B+V2AyKZbDH3Y1AYg
-	 nKXuyLfniYqvnbjT3G99xtPDB0Nofn78glUwzt8WSPeSkb0fqqKarmBg3W8ot0/wdEe5Y
-	 A3WyA2un/urICeTw2dGlLAANXPiGppP3LYSmCqTklO3RMcrtk1h/0VGN40pT/eesnTA==
+	t=1793697928;
+	b=BKevLb2iYmsr5hp+dco9Ga5bH44XVOqsc640Qa9Yedhjc9sFDUv1q7RvJNXtxrLqPqBy
+	 737w/ewisBoqaHFfpJJGi7pfk0ObHIB9ITdyuDDDw73ma/x1Qd3CoUvIDKdNZp6eS3ByO
+	 G5MQTwRSG8wn6VkNq5Fa7ElaMUju1l2qMYU8nSxhAUmURBLYmu68raKBXJR4zQ4aKJMbF
+	 18XH0iMP08GdXkT1gqfZlX5KGwA9qHX4dIMVta56jOuaywDMyIEDfJ2fL3UQiPSTHqZSH
+	 pDdRHnH1Pd5WlpEESOT4sJouLjvqGDMOBN40Q8ShFCLd3J0l00GxdzVHtLiSbYFJMSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793695790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793697928;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=FIuU/iFAK6VrZknQdbQ6wVEQF2JkFhiRVKtHjCw6xsw=;
-	b=Ni674DngLlwZ+pJayaSvbs6/MkXu/q1QK12+Mmb85mS8sN4jZEikViAYmwfwB3aaK+sk
-	 YUUlv61N6kWGk/q3hlJxbJgfhXHzQdX6iI30ttOtFcCzmZHCaKpPHVAiOwenMidOl3EYb
-	 3j1mf8juCuDLRW1b0DHd3PIDhr7lqOsWmLXgLPNz/40Nd/CggiQGjHkqCatoLaT1ikx4E
-	 vGPr+XHyOYRhhGvDeljlhsFERpu7WMtapkoln6uFNhqqSxoFT3Ul9iTuPgm0eocOYH3da
-	 FtXDHClxC3wydhnOQ5GlDMT8QtS3cgezKG95aswArSZPc1yGhHEVXA0I7wr3ZBavC1Q==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=w1/bZK8jxGYsYg64fI289yODXnzvAyk0sTT8K2yAySw=;
+	b=z0lxAmciuFtVShecNG6Iatsr0gY/OMRuafRFfb62Sfa+oz5xMHTVLHZzwvBA0nMbWxxB
+	 lKEy9aZ1inlYnKOmwEsPwKuQGvb92iWMYBBv54DNu+nf3d8046WT4pNf6q5vcylf0x4E/
+	 uh+qWiYFfUBxrtW09AUB5e90LMdfgMp6zbVAAtt+8oCefD5fldbqXqTCks5Fss0zfMx66
+	 2D87/DVv8/6d2aQ44+aQiEfzyKKCasU3zE8CRJeXBKs6VhUEW4Fkok24wCUR90MsmkpeP
+	 kP6G9PsM51/zCB90XaCwzsVrF9jCH+TGQOTf3sKKnSn0yRrHk+yXyYnfAV5LumwxZXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NXy5DT23;
-	arc=none smtp.remote-ip=209.85.218.50
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qXwMkwya;
+	arc=none smtp.remote-ip=209.85.128.47
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FF7606A326
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 08:49:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20FF7606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73EF606A32D
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 09:25:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B73EF606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NXy5DT23
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c4550d8ab15so467405266b.2
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 00:49:49 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qXwMkwya
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a210470b49so31102145e9.2
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 01:25:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793695788; x=1794300588; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=FIuU/iFAK6VrZknQdbQ6wVEQF2JkFhiRVKtHjCw6xsw=;
-        b=NXy5DT23yns5ytvUk/cj6SPu7t2YMAuXIhXTF0pWM36BKxDaDEgpB2D+OlDk38qUUH
-         WcHLQYABUx8PjOxwL/rt5znnIpmfc/PyMjOTo9lEJ4MxkKNsJe/5/ZJxB8J9m0szMAxw
-         eIvNI79L+ZTQeaP+XYNgEzKcj6EZhPn0ZPeL4lE846pBoJVZ7sd1pzG2c3Z7zZn8N5wf
-         6FNAGgD/MqP2Ze9BOQqaN+81buk7ANIoAozE9PSE+Z9NGMgWGcTk57/tNxRXTffx1jaP
-         NZU6PSy4JrwHUaNmiGxKSNUGMU5tUwI0joviCIrAZLhpXWZAh5elyhhyYci9lWI97pbu
-         Dzig==
+        d=gmail.com; s=20260707; t=1793697926; x=1794302726; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=w1/bZK8jxGYsYg64fI289yODXnzvAyk0sTT8K2yAySw=;
+        b=qXwMkwyax3J4V1U82RqkgqUoEKRlC4It/9xeQPFeFMXEW4tkgmp8bo77lunTS5MNcT
+         0rCWuXqiOvPmDcUOI+9U2w5HAAoGMqeAipw1OCNQJvJd6OuZIMFABSkgOJxNakepM/MH
+         4U/ieLzwssp2Dcqpz51aPxJhbRMFda+AfYzOXAInVSw4MrMMf1yNv2GU5oRrZyp+fHlz
+         5N3sVyOoWi8BdoGMfXhYUpBO9J2wpl/SCEdHEaVHf/Xks2MY0J5bLR1xn8wtpixx0kQT
+         y9sG22j/HhWllJ4vTnv9/H37tcRJZj2RQVraLRdNQelysSwVcLWflcY/dYsbwe+vA1a4
+         DGpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793695788; x=1794300588;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=FIuU/iFAK6VrZknQdbQ6wVEQF2JkFhiRVKtHjCw6xsw=;
-        b=ZqdBVzOheQdbEyynN8/U8T1KGd7x+nwBVDGILN/t8Ep6qUcGjnadcPpY4TotqDEkQN
-         e48kCtQjmUtXBev9q2b4Tkzm6qEV/XGR25aHsK7RSUt4GdK5VxOY20MFxzX7/UQZv2fh
-         RecyiLj76HeyC2PrrHOPbaaAmCvjCfEzLyZqpuzCBeNrI8UMWMkrrb3oKCHSCkO4sor6
-         Q1IqAhyORc1KxtaX7ADGBAGMkeTdipVC/H4RoaqP0OIJSjRhJ8CP23PgWc7kEfV8BvUq
-         LIZuLHOFXFP+X4wt5jWESSk5FQuFY3Mtk8hoUaVEFyM09g7+/pgiq7FktgTHx43jVQud
-         wTcw==
-X-Gm-Message-State: APuU4Z+EpMdkgJbC9FcT6FmBs1S3HQGPJGJmsfntKH6DYHUotgH9rLkT
-	oCrL5XKuCwq0tykDTnyyBZIFQYer10dBTiu1VX3sU4GM5GRqcDagq9AouxqtvlLHn+E=
-X-Gm-Gg: AYBFou2Y+8C26hFEJnUINZ9MCRjGwDAY5FL91l1O6mgb7P4ehBOl/Tpy28RfgbW5lVa
-	lDqI8TD/LSffvp25Y84jKEXue2/3NEossz9Q5jlZDgx/5TVK1h6X4Udpzbu75K3CmweJ5SCp1jy
-	0pg27iBdV8q9qgBXtZXFjMvRoD63pG4/7m0JbCUN0O7CkpjeDupCJOWIK9aqc13ybP7RW6ilRSc
-	Jj7Exn/7grE5nYgmLAc1X5QoWsRHRyFJC2V7ln/oSLYjQ4R/cvAndWouI4GgqlovlFloDMhJRoP
-	4wpf+PYaQWdbWdFaSlcKsjCK/mMA80oXGkIffw1JeTy3IYvIEImjMP0mIkzePq8mVX352UfQHLs
-	5gFpHfJUwF51lor57aXXHuHhe0M42aYJORdnFMRiUfPfwK7Zvi2dauSt8YIiLdDsUFSYgBgaPa+
-	RD9TTxJ/DU7kB/CBia5MHfOlsgJlLJJuVEv1Z9rtyFHDiKQ6xMHWm71RiI3Azwovmlt26eftlCw
-	PxUN4r2vx7lIkOc0SksMgnKbKT17PxYrl3jdyY1r9TNBC+UmvTBkr6Mg7uv5tAWdam4R8qsXSd9
-	AWm4iBx5ubgKJaNpQIEhtK+mCqSHLIXjRmyboBOsVG/ziexa5JGcyvZVpSiRQ8R7iTfmzER8mTo
-	eWekRymrTqe2JCfLQxW+1rvcQl18XroQfRBYauuVWOKh4x8Po6FhI8KkBB8CKGdCzx+RvomDmcZ
-	tJranoQZCUL9aO5GLph+BYWOXYNqdJ
-X-Received: by 2002:a17:907:f20b:b0:c4c:eb17:3da with SMTP id a640c23a62f3a-c4ceb17053emr176724566b.22.1793695788468;
-        Tue, 03 Nov 2026 00:49:48 -0800 (PST)
-Received: from localhost.localdomain ([104.28.251.99])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4cec15a904sm64611766b.70.2026.11.03.00.49.46
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 03 Nov 2026 00:49:47 -0800 (PST)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-To: git@vger.kernel.org
+        d=1e100.net; s=20260707; t=1793697926; x=1794302726;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=w1/bZK8jxGYsYg64fI289yODXnzvAyk0sTT8K2yAySw=;
+        b=RblIGppeU6O1Ke9Z+zmTt0ILiUhNBEvnkXtBqf0WNPh1vzCXDldmwI/i3MQJuaosEr
+         fHvx941LBP/88X74nnBQFhcKCnpr8G3F5ZjwhyaIiT9pjDxw84GQRBVdnYIzMxyohE5V
+         +ODxnd0D0Gp5BS+YluhxZDjTEDTcBKogmxziDO+bV6KC/wVidBEJwhCrolUguTCIM0ui
+         UGxzasED6bRsqRuZ93WtxrOf6GZekx5WgvQfJdF45ve2X4vAr8jIr9Nqm66HLjIQmJmM
+         3PmpzyBeNy56seJN3P6nG8sipjJWvoIXE8nKo1by0u32bHKNomtLY9yWbQUg3mqCEQhG
+         a0iw==
+X-Forwarded-Encrypted: i=1; AKwUvBx4t2xtit5V1+YitFLXm/be2nS4WOyCDd6h8IcqSXSRSSevqvwkiImfxmqQ9xVzomK0XXw=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+7NcahCKV0TuaQN47MWPCwK3MN3yq1O6AYACYZqRKpnctrdx9F
+	tMoco6dw6PNUZXHfBJl82g5bbnBD5oFk2mHzBfdBqEq1y+n2Vp0QGXe9
+X-Gm-Gg: AYBFou2EeZ+l+RrvHn1veTcPlb72MIntKC2E7EKKZsXto+AMlULKuHX3/QngOQstSAh
+	Mfcsb0ZWT+InstDXk69wr/BWFgujDhYNHzH94UET7t80qiwBcrByMIl3VaGY/4zbHH5XsZ6JDrt
+	yw+ViJ4CvIEVL7UhcPDMOIntzvDxrhIQBEbNda8cdiLifaxoKXZ2TQXIBYeses73ld3gdetuekB
+	lCd6V2Xi+03maXbwOhsoELQ4ksKg+cTQyun/32QuWUzU3VH4JsJbAtu+NnYInGpc9bj3b7CQsrD
+	PddWrcf2v0VhJSb0R/qu5CuVGNznlR6IUNlPmvJY27GfDwk9MxqqHP9MZWoXBaW41YMDaViwiLz
+	hVv44uD9tpujiqWZsz2DoF0/iRy6kueJo7KhxsxwM0Ky/viW81mV4WO6S0rodcORCF1e7IXClkB
+	vBuFiQmccr7DP5sR60KGJEj2AFvExl8c/4BIZhiB4vfejI2m2Koe98oRxEha8YmHbe2JOYwMyWQ
+	pssf3FOM6sCFHFxjt2fY17CcmB2AccZGUBlqFVp7MLBBVmHdUTaEslD0beKxNyzraa9DXV6Rw4Q
+	HOE7wxDBsmRw0r5fIa9eAugSepzgC9P/FudYW2KTDZBtsG70tX4=
+X-Received: by 2002:a05:600c:6099:b0:4a1:992f:d0e7 with SMTP id 5b1f17b1804b1-4ac180f2ac5mr264029025e9.16.1793697925837;
+        Tue, 03 Nov 2026 01:25:25 -0800 (PST)
+Received: from GODS-GIFT.localdomain ([197.211.57.56])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2a82cf248sm66754205e9.2.2026.11.03.01.25.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Nov 2026 01:25:25 -0800 (PST)
+From: Cynthia Uche <herroyalpriestess@gmail.com>
+To: tangajoris@gmail.com
 Cc: christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	siddharthasthana31@gmail.com,
+	git@vger.kernel.org,
+	gitster@pobox.com,
 	kaartic.sivaraam@gmail.com,
-	ps@pks.im,
-	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Subject: [Outreachy PATCH v2 2/2] notes-utils: pass the repository to init_copy_notes_for_rewrite()
-Date: Tue,  3 Nov 2026 09:49:30 +0100
-Message-ID: <20261103084930.15532-3-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261103084930.15532-1-okhuomonajayi54@gmail.com>
-References: <20261031104526.46711-1-okhuomonajayi54@gmail.com>
- <20261103084930.15532-1-okhuomonajayi54@gmail.com>
+	l.s.r@web.de,
+	siddharthasthana31@gmail.com,
+	usmanakinyemi202@gmail.com
+Subject: Re: [Outreachy PATCH v3 1/2] parse-options: answer --git-completion-helper before command runs
+Date: Tue,  3 Nov 2026 10:25:01 +0100
+Message-ID: <20261103092503.14872-1-herroyalpriestess@gmail.com>
+X-Mailer: git-send-email 2.56.GIT
+In-Reply-To: <20261029231621.48958-1-tangajoris@gmail.com>
+References: <20261029231621.48958-1-tangajoris@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,110 +103,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-init_copy_notes_for_rewrite() reads the notes.rewrite* config from
-the_repository, as it is not given a repository. This is the last
-use of the_repository in notes-utils.c.
+Hi Tanga,
 
-Add a repository parameter to it. commit_post_rewrite() in sequencer.c
-already has one and passes it on. The callers in builtin/am.c and
-builtin/notes.c still use the_repository, so pass that for now.
+I applied v3 1/2 and 2/2 on top of master (ebdc087dc9) and built with
+NO_RUST=1. t9300, t0012 and t9902 pass. On master,
+"git --list-cmds=parseopt" lists none of diff-pairs, fast-import,
+patch-id and var; with the series it lists all four, and the first
+three print their options with --git-completion-helper.
 
-Drop USE_THE_REPOSITORY_VARIABLE, as notes-utils.c no longer uses
-the_repository.
+On Fri, Oct 30, 2026 at 12:17 AM Tanga Joris <tangajoris@gmail.com> wrote:
+> +		} else if (!strcmp(av[1], "--git-completion-helper-all")) {
+> +			show_gitcomp(opts, 1);
+> +			exit(0);
 
-Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
----
- builtin/am.c    | 2 +-
- builtin/notes.c | 2 +-
- notes-utils.c   | 7 +++----
- notes-utils.h   | 3 ++-
- sequencer.c     | 2 +-
- 5 files changed, 8 insertions(+), 8 deletions(-)
+Since this affects every caller of show_usage_with_options_if_asked(),
+I ran "git <cmd> --git-completion-helper" and the "-all" form with
+</dev/null for every builtin in an empty repository, with builds of
+master and of the series, and compared stdout, stderr and the exit
+status. They were identical.
 
-diff --git a/builtin/am.c b/builtin/am.c
-index e9623b8307..daa4b601b6 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -536,7 +536,7 @@ static int copy_notes_for_rebase(const struct am_state *state)
- 
- 	assert(state->rebasing);
- 
--	c = init_copy_notes_for_rewrite("rebase");
-+	c = init_copy_notes_for_rewrite(the_repository, "rebase");
- 	if (!c)
- 		return 0;
- 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 9f1f0ec840..20f7bb8377 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -366,7 +366,7 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
- 	const char *msg = "Notes added by 'git notes copy'";
- 
- 	if (rewrite_cmd) {
--		c = init_copy_notes_for_rewrite(rewrite_cmd);
-+		c = init_copy_notes_for_rewrite(the_repository, rewrite_cmd);
- 		if (!c)
- 			return 0;
- 	} else {
-diff --git a/notes-utils.c b/notes-utils.c
-index d4606bc576..3a3b84f79c 100644
---- a/notes-utils.c
-+++ b/notes-utils.c
-@@ -1,5 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "config.h"
- #include "commit.h"
-@@ -134,7 +132,8 @@ static int notes_rewrite_config(const char *k, const char *v,
- }
- 
- 
--struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
-+struct notes_rewrite_cfg *init_copy_notes_for_rewrite(struct repository *r,
-+						      const char *cmd)
- {
- 	struct notes_rewrite_cfg *c = xmalloc(sizeof(struct notes_rewrite_cfg));
- 	const char *rewrite_mode_env = getenv(GIT_NOTES_REWRITE_MODE_ENVIRONMENT);
-@@ -162,7 +161,7 @@ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
- 		c->refs_from_env = 1;
- 		string_list_add_refs_from_colon_sep(c->refs, rewrite_refs_env);
- 	}
--	repo_config(the_repository, notes_rewrite_config, c);
-+	repo_config(r, notes_rewrite_config, c);
- 	if (!c->enabled || !c->refs->nr) {
- 		string_list_clear(c->refs, 0);
- 		free(c->refs);
-diff --git a/notes-utils.h b/notes-utils.h
-index c54b1fe141..ef3c0f6732 100644
---- a/notes-utils.h
-+++ b/notes-utils.h
-@@ -45,7 +45,8 @@ struct notes_rewrite_cfg {
- };
- 
- int parse_notes_merge_strategy(const char *v, enum notes_merge_strategy *s);
--struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd);
-+struct notes_rewrite_cfg *init_copy_notes_for_rewrite(struct repository *r,
-+						      const char *cmd);
- int copy_note_for_rewrite(struct notes_rewrite_cfg *c,
- 			  const struct object_id *from_obj, const struct object_id *to_obj);
- void finish_copy_notes_for_rewrite(struct repository *r,
-diff --git a/sequencer.c b/sequencer.c
-index 508ec71792..a40243c56b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1366,7 +1366,7 @@ void commit_post_rewrite(struct repository *r,
- {
- 	struct notes_rewrite_cfg *cfg;
- 
--	cfg = init_copy_notes_for_rewrite("amend");
-+	cfg = init_copy_notes_for_rewrite(r, "amend");
- 	if (cfg) {
- 		/* we are amending, so old_head is not NULL */
- 		copy_note_for_rewrite(cfg, &old_head->object.oid, new_head);
--- 
-2.56.0
+The new t9300 test fails without the parse-options.c change, so it
+guards the fix, but it only covers the plain form: with the "-all"
+branch changed to show_gitcomp(opts, 0) it still passes. Could you
+add a test for that branch? This one fails with that change and
+passes without it:
 
+  test_expect_success 'R: --git-completion-helper-all does not read from stdin' '
+  	echo garbage | git fast-import --git-completion-helper-all >all &&
+  	test_grep -e "--allow-unsafe-features" all
+  '
+
+Cynthia
