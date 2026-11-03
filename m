@@ -1,96 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793702333;
-	b=i33RqfMDdKz0aRWu0XRz1hqay7BEBlw246u8kxtUSOP+BisdBD/5tZQ6E8z8eD94PYil
-	 4PiJjfpy9yAnQpWcvWcLfDqMQSphu3I6F0jrEY62P3udoua66znPUpD33VsmiFXr8qSXV
-	 DNDrBU0ocztT7UjzHPoR4KGoWmPioEeiSOfcLOUc4VrPUHpKd98Ful3+WeYwEMF87tfd9
-	 33dDVEOK97odKnU7nJJHMdMx6/poWVAFAQkAbk0eGphe53uEWD6525Y83yvP47BLkr4lt
-	 ZpZgevT2A0wZJWGjLjdRvHnHwtt8+kEZsvyOql9mCDqbX1VFeYaLOGl6gMo4J7aHnHw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793702333;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=JrfNG6K8NRHtHGCcqkNUr+MITIlnNblDVBm9Rpq4Vnc=;
-	b=CdZzh3iq7yGLeiWzn4JEY9biDP/clIFF01o2wWG14g34DoPBefTE7k9UP1sIqBLj+YHY
-	 T0snemW78PanCaBB8XwkQpC2T+80SxaWBTnf4IFcIMikbbeBf5ro8JQzKW1t+TU27ZFbw
-	 UMxf/PuhKm2mLAN+/r0jZIkVkCOpVxbf9/5w2a1Fw9tURyeutrUssMRo+CeYQYO4g/9Qb
-	 7UFfIUsfKe5Z/MWLxqENyNetd+xwIAJiuRZA+g9FYajGZpWU0YWraerSXX5tmoFc7NWNm
-	 kiqUTSEJQNXjpGtPEt4KJ4iSbpGjL2h1q4kt3RB+ApQb6K2+0/LNv5G3STKfRAPBkDQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=spotify.com;
-	spf=pass smtp.mailfrom=spotify.com;
-	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=X+bDHWsn;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793702776;
+	b=sLoIeSsqCe/Kjp6dtSnTGrMCQZEyOHwbpGpU0wsryqIqyDdcEYKyhcb+JSdGRnyfDbZo
+	 zwWLa88DNZnPC9e8xd8ZWV6PeMMMRYh+bd1yi58t/eYZ1U6xISSWJZ1tcC/TL32ln6T5b
+	 eVN4MkvdevLiI4rG0fX8WON3M4/B+6u/ru/nOBonsmQKsvtJR9qbuDAUtZGBW+d+73wM8
+	 qHFG9IJpOUBVsxuxV1SQkJ0WgQyRohSxHcgI8Ys95ezB+3AE/9NKGrF/cL1t91ftIbbef
+	 l+0Tfng8/xlkgphZvpxnpMNGapNUd4knL75H1HMVK3aSvQO0HpP7JGtCCgcZ5UCQExQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793702776;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=8mNJFbG/hVBfTHkXNKTQS2Fxh32zxoLEJwd6WAAk7dI=;
+	b=yRtrbTXcXM4UHrCnUHjUzsS0RUaN7RW7rJNUKbMUIpkKvnvgUk/0fhsjZMcaJHkNw9wh
+	 vcmpfsM9spx2riQYbyLYGslL6xKLPCyK4SQ5mA3vsqovP4Dihif8qeAhZXcm0IyrNc+NY
+	 +sKqZH+mhrOy29ugjxgA9YbPcOIvlO1jJEvW/RRc/N8wGMAhetJRCw/aSDUUloG/GzeL+
+	 hd59LeflF97oRHwKKa1IxevywXBIUfR4NZqbesPbhScuOAsfnmUZpGrnqvVohK8KDfaAq
+	 5cMovPAuEG1ff0XmvkgDoImuJAOnZVTTLqltWEm+hwTV9YYKNdmCEXKTamXVXGJ30Nw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=hSnfZO+3;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=X2cPYPMn;
+	arc=none smtp.remote-ip=103.168.172.156
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69BA6074A2C
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 10:38:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A69BA6074A2C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5CB606C5AE
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 10:46:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B5CB606C5AE
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=X+bDHWsn
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c450ab1483cso662186266b.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 02:38:52 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793702331; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YajpNSDXMAbAREMJDqQ7MS+Y0ckeeepRIbReAOBz3dyZzoaB9xzNry8zUjUvS1GNN7
-         xU+i3cq1KZOuoRFgDpJl9D2sgTg/33LrRQWboIpM//hvj11gycIkEyOwLhCYybdNIWNo
-         2tlxJhUXc76CnndoNTRERjwUYkXKCwyxv9oF9UGKJbAwXI4XtQ/lOkhdST7jdKpRYunQ
-         npARNSeerUXd98K5uOlBUfUPSOb1D98kXvvKMBNZbZ27rdkW5vOlKhmNdzjcFstesjv0
-         sledNpvXHuXCzyzXosizD4UqLYRWXQyl6whtXPktwHa1dtMWmbLqL7jsIUA+yRNEXC6Y
-         S7AQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=JrfNG6K8NRHtHGCcqkNUr+MITIlnNblDVBm9Rpq4Vnc=;
-        fh=W/J1SiISQEApwmOXYgX7Q2J2cou0N6u/MkPSsuSB8Uo=;
-        b=LRE/lbyVmy3GJkq5ElGPO6E7er0S8OAV6lob8uRX465oM3ZQ+MWFJwe7HKEoSaI9FN
-         Myf6201Ty5SaXrjBRt0n9rk4LdtDHhC2Tz6/EN6FkWnbF5BTM4lqbnXr6DTEjJ3w9OmG
-         X8oI5tdlgiZ4jzznP24G0ypyc146UL+Z9av6iEKbdBOjNeL51ivAUyA9E7qsmkHstsL3
-         m6sixfvuwPFEyho6oksdUmA4YRtT70WVihal5O0wco1oLVjxzCaTLso36NRRAsltIMTT
-         XsM5bOpvsOr4myKmX5v8Q/0ZmvFkTejhEg50/96Xc3AGEj3QgdMsjUdV3U0iBY5/z3VV
-         IVIQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1793702331; x=1794307131; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=JrfNG6K8NRHtHGCcqkNUr+MITIlnNblDVBm9Rpq4Vnc=;
-        b=X+bDHWsnkGPmSE67E6asfQ2Xnsxs0dTTKa6DahOkGImfaHrOB3DwaYDjTNp0Tu4nvY
-         Ec2o49CosAVO75wgcuCKSEEmzV2sgYVwnEylDzktkqYbxv9N/RkBfmbP+8isKnfVhD4/
-         yIMHOkfddqvqHi/GE7NDrydzoeDMI1b/MkXuM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793702331; x=1794307131;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=JrfNG6K8NRHtHGCcqkNUr+MITIlnNblDVBm9Rpq4Vnc=;
-        b=Cr+mg66pKgjwWUHaoKyBeiVQroFBrDG5SRKg1NG3fQrshYqCTlFktFhhovqeqyiJoK
-         lq7cG2rkr5SwMhtscwsPNf5a+9igfkbCTetdVubl1+tHEqmVIYozH2Ql7Z1b8+xpbnLm
-         5pHaH5ReXr1wyczGZ3Xr6PQkMtf4NG9JLRwZBS6ewbkPuNgQlLOn8p2fSK5hHTWneJCx
-         9uD5oroRxkNtk365Lkr3oCZob74wcabsmVb5TAoxMSOg1N/upj7zqQg+LMqKfVMlDRQI
-         ZFvtsXs+WFQkC9OyQjjiLRQH2QVHlrP3L3scxcT4Ab0WCKKJJQBBk+9M3LGWErVu0Q03
-         mrfA==
-X-Forwarded-Encrypted: i=1; AKwUvBxYphOv7vkfISQDEvWwQZgWLfzJ9VTZv7+ifqYQvnerWT673TA4oJ1VGLVhyrS29nPf2nc=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9EjY96kjUwERD8ylg/9nIGC8Q+c651nVaOfxHc6drHf6YcO1r2
-	PxNvucRYD6olmNf8rIO15iq4g4K4yMMX0bD3NrejEEL9/aa3c/EQ6MVLNqnwyglkQrFHlbHFrUu
-	TaEQjv0SbBcsumj31oXspi2Xfb9mP7At0wPcuyiadUg==
-X-Gm-Gg: AYBFou11ZPzVZyRHvLFy3cTra2zcYfEscCmdAB9OUpm70QYI6QY5/CocWqhCY92WSmy
-	cTk2CYP4GJFp5qLDO31wQqq+5ivch92e5ziUgnDfxw7EUnzjNLsYSs02CPG7bU5Vo5BKemaYUdp
-	5GOojPF0TinEbqcsItur+JrNg0BAkR+T+R/9AJwuypmmB8j39a2yjYhXS3A3XFvSUdZE7VBNzh7
-	QFtPIq+zikbS6YX6hSiFUudkMd40s/kg9gnR9StA70OrgdGNZFV28zzISckx8g9TnZQfIGjPxi9
-	cdNnThONFVLhizn5o2iC/P7kOQ5IjR5uPpSyjcbsNyDztnSiuyyLpP586IKtlCq5i5OaoMuleiJ
-	ZTVqgq3NTlLjTj8TmR6luuglkZin9czz32eyOIA==
-X-Received: by 2002:a17:907:9811:b0:c25:2688:8212 with SMTP id
- a640c23a62f3a-c4ca74209fcmr1020151966b.0.1793702330937; Tue, 03 Nov 2026
- 02:38:50 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=hSnfZO+3;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=X2cPYPMn
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1ED3014000F1
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 05:46:15 -0500 (EST)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Tue, 03 Nov 2026 05:46:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1793702773;
+	 x=1793789173; bh=8mNJFbG/hVBfTHkXNKTQS2Fxh32zxoLEJwd6WAAk7dI=; b=
+	hSnfZO+3MsCHTpswIRhZtWWKgbk8HRadSgv3f0iDER20IMdBhaAkc5BBzG+K1cKT
+	2+QPa81GW1Mb7hweiBJlLivbg36Klzw6TslcjXY5I6EHf7UGkRBVFN5fYUu3DvjW
+	mbui3f5Wj5LPjnbFB53AmESDMkWqkVwOTcsflqIhP0oaMTWWXK5Kl55AJkwxLvT9
+	hDC3YAwNHj3IlZjONKHFoxXUGr9W2QqiEjCEEM83tyF5MMLK5vR13xEGCOVO1Ybf
+	8FGMY3ocLKI0/tpQ+pKGqlDGkDMzaDXa7eYelnc/uYaN/bdbjd+NtPCdHE/xg5uD
+	tgWg5U5/raO8CjOyHuAczQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793702773; x=
+	1793789173; bh=8mNJFbG/hVBfTHkXNKTQS2Fxh32zxoLEJwd6WAAk7dI=; b=X
+	2cPYPMnFZAnkhZQrTr6F9COo3ErcqZFPiYHHh+35G5mtE5KbGLihprJgjFS3FhvF
+	YmhJAeVXyzVjgS8cTuIAnfZlpqtWju/EJBB1f8brmXSUEtly+8q2/4KFetJbcr8y
+	Ahq7uYiK0SQM8DtDDZC0hRnGwTHI4o6hvECGtTyKLiuRr6x3UI9tE8kRNuylKwCg
+	J8hfU/Un2bjMHl9xR82/YSpFaUKXohAPo2VMEP+1N4V1pcTXAG7wwaFUIgMLzXkj
+	BJBwP6mu5fV8Tc1yBqTj5KGHJoQA+fieme01RoZ+DTLMU4wVy9AbYMoOQ/T3H9QR
+	6H88fnDMiqP9smy965/tA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793702773; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:VQczwyLpBULcCgJpVLpDbAPrZIYx179pjA7XnQy+ww4pYAz
+	RYVqEmeFtcIAA1BOEECTO14aZH1nWOrnJihzSSq6/XKH5/9A00P/oFh40XcG4UYN
+	h/sQpGKh5KjsUedBzxM0aHHxiP1gsVltVvsuTsos/STWbK9UDZeHRhbR2gjhUVRe
+	ug+BxAsD3i8QEHQHfntPXHBivWaLz8EYG7Jqo8o+49OUWPOGCuaFG+kI1FIgn2vg
+	81y9Pk5lwSx9bp1n/rCPahUaZP6h9rUzQKp5G6/yy0svbiehH4CPjLh7bmXM/Ms8
+	C1cbUtaN8+daaVVOVDBYXNn6WdZYJx1ohQoGpvg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:5O9uvOnY5E4PIoVPfGrLYvHfkk2kvKCyWsqhOW+ySWA=:Ok0TnssYqOxYMuinqAolEV/i9d6PiJjw4vJtkgW1dDA=;
+X-ME-Sender: <xms:c7vpaiZGTAZQ1OTtAdZIKAqe2VSfRho1UojmHez9pLYPeYB2woHifYE>
+    <xme:c7vpagPWFrAoJH2cXyficeaOtFK8uStpq1DSAB8BqItzV8SigWVYqsErI5v3HURVL
+    gy-1RJf2MQ04ad0Sxu3LaH9nsE9RJMux8ccaTcCrT7EDruF6Pc7vPM>
+X-ME-Proxy-Cause: dmFkZTEUs+wKssLfmbMDkWtCLzGsGY+voSIR0zD0UpCUg/gmc4mkKwawtU/dve2ZpOZa2i
+    d1+BLODPF/YA74VRS6vHfV2eSIcs4VmuGXNtlg9ulkMWKbzEvikAl8tQHoqGMQ24CspMrp
+    Ji1WdL5y67qeJ0r3YslNsuwRH7Zi19yXqw5yOeFXJ793dzMGSmm/mK4C4os3ofKjL9WASy
+    0PyoEu13D4E1G1yGCoVVSblizN2UD3GVhOKbSZVvFq+kEZgxHJr1c1iEUXWzZioTDUlgR/
+    Qw9Qlx6tB6TuY5paL58qpk7s3xM4tG3s2VpwzUTP5nLzWr6u3UhejMDh01Uw6m8wjzXlGK
+    7pgYXuI34v/K3FqHv34/CqxMLv07lahzf8qRq7nWgiUDBQKoiUt7zXH8Z7+lkexq2zUlL0
+    SzkxCgYEuNTKuJZ/jv9FyHmaLrPNfC3/o2ahCEt+MAQsmNdZv6ImIStH6rAu1Jfczb3qwy
+    fW/9LNUzS/Uw/ND0GWWTBBioDmZjfoc1xc0LIy8s/fPSoDCxPsqg/d5VTtZfRWNbKxH5wR
+    x8Wmf/l/0lp9j3v3064QstaU70DNph1NXg7FAkeNdP30MJRL+hHJvyVX/Kc7LnP3FDEWIL
+    riTpSF9BZ506OmlzOLYTeI448MCgH5Dx+R9usYC3SH1/iA712GuoHZD38osg
+X-ME-Proxy: <xmx:dLvpas2b8FlwSFdhC6F4YtlZHhCD0XMUsmlq_zbmEKCWjZsX-ikJPA>
+    <xmx:dLvpau0HM8cXGc8FXK4rFxoKTVf-Hq21h8GbLEMQ2x9hEwfGvVtDVw>
+    <xmx:dLvpan_Jtujj3l7QhGmeLz5WSYvMvsQwYVRBwosXukw1HZyKoC8M0A>
+    <xmx:dLvpaj1mgTw3w5kuMw0qut8JDT0KPmm9UCRzoXN5AepdjcQxvwVXVg>
+    <xmx:dbvpasSSrY9Y8VsJgUUBqybkR56y_sZ7zWITTamZfGiMQsUl5vdjmW3h>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 4134C22C009C; Tue,  3 Nov 2026 05:46:11 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,83 +115,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2279.git.1793634429929.gitgitgadget@gmail.com> <aum0sTUAqc27DU_W@pks.im>
-In-Reply-To: <aum0sTUAqc27DU_W@pks.im>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Tue, 3 Nov 2026 11:38:38 +0100
-X-Gm-Features: AclHuK9onEzQAOkQZ0badC3AbH0a7aEDCndj3TeGXrqxfGD8pP11kMxDsjK1_gI
-Message-ID: <CAL71e4M4qBJ6aHu-vr9Ex53LQsrpxjn9GRtkgNa8KSOSYWo4Lw@mail.gmail.com>
-Subject: Re: [PATCH] rev-list: ignore replacements in the connectivity check
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: AA0Zomq0_rWw
+Date: Tue, 03 Nov 2026 11:45:51 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <528139f6-db92-4061-be0a-88d4c376d252@app.fastmail.com>
+In-Reply-To: <2A1E1423-8C1B-48FA-B1BD-DBD422748623@gmail.com>
+References: <78d4b7c0-3a3c-4d4f-a9f7-4a6f7618ad88@app.fastmail.com>
+ <2A1E1423-8C1B-48FA-B1BD-DBD422748623@gmail.com>
+Subject: Re: [PATCH v2 0/5] format-rev: add --abbrev, --color, and --date
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 3 Nov 2026 at 11:17, Patrick Steinhardt <ps@pks.im> wrote:
+On Mon, Nov 2, 2026, at 17:49, Ben Knoble wrote:
+>> Le 2 nov. 2026 =C3=A0 05:51, Kristoffer Haugsbakk <kristofferhaugsbak=
+k@fastmail.com> a =C3=A9crit :
+>>
+>> =EF=BB=BFOn Mon, Nov 2, 2026, at 09:51, Junio C Hamano wrote:
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>[snip]
+>>>
+>>> Second call.  Anybody?
+>>>
+>>> Unless we see some volunteers to give it a review in a few weeks, I
+>>> will discard the topic out of my tree, as 'seen' has been crowded
+>>> with topics that have been collecting dust without getting many
+>>> reviews.
 >
-> On Mon, Nov 02, 2026 at 03:47:09PM +0000, Kristofer Karlsson via GitGitGadget wrote:
-> [snip]
-> > The t5413 test that expected the check to accept a commit whose
-> > original tree is incomplete because a replacement is complete now
-> > expects a rejection, and the test that disabled replacements
-> > explicitly to get one is redundant.
+> Sorry for not getting to it :/
 >
-> This here makes me pause a bit. Do we know whether this specific test
-> was introduced intentionally to make a specific edge case work?
-
-Both the t5413 test and tree-verify.c were introduced as part
-of my (recent) incremental connectivity check series.  I
-noticed the replacement "oddity" back then, but deliberately
-kept the existing behavior -- changing the semantics should be
-separate and intentional.
-
+>> For you all=E2=80=99s information, what was originally totally unrela=
+ted
+>> research has made me doubt whether this command is needed.[1]
+>> git-diff-tree(1) cannot do what this command does right out of the bo=
+x,
+>> but it looks like some modifications can make it a replacement for `g=
+it
+>> format-rev --stdin-mode=3Drevs`.[2]
 >
-> > diff --git a/tree-verify.c b/tree-verify.c
-> > index 25db76d30b..c228235150 100644
-> > --- a/tree-verify.c
-> > +++ b/tree-verify.c
-> > @@ -133,7 +133,6 @@ static int verify_blob(struct repository *repo,
-> >       vs->blobs_checked++;
-> >       oi.typep = &type;
-> >       if (odb_read_object_info_extended(repo->objects, oid, &oi,
-> > -                                       OBJECT_INFO_LOOKUP_REPLACE |
-> >                                         OBJECT_INFO_SKIP_FETCH_OBJECT)) {
-> >               if (vs->exclude_promisor_objects &&
-> >                   is_promisor_object(repo, oid))
-> > @@ -163,7 +162,6 @@ static int read_tree_object(struct object_database *odb,
-> >       oi.sizep = sizep;
-> >       oi.contentp = bufp;
-> >       if (odb_read_object_info_extended(odb, oid, &oi,
-> > -                                       OBJECT_INFO_LOOKUP_REPLACE |
-> >                                         OBJECT_INFO_SKIP_FETCH_OBJECT))
-> >               *bufp = NULL;
-> >       if (*bufp && type != OBJ_TREE) {
->
-> Nit: this might have warranted a separate commit as it isn't even
-> related to the connectivity check, is it? Did you also vet all the other
-> sites that that verify objects?
+> I saw these come through, and I=E2=80=99m not sure where you landed.
 
-tree-verify.c is only used by rev-list
---connectivity-check=incremental, so the flag removal is part
-of the same change: without it, the incremental check would
-still nominally ask for replacements while the process has them
-disabled.  The behavior would be the same, but it would look
-confusing (why ask for replacements if they are always globally
-disabled when this path is reached?)
+That git-diff-tree(1) just needs to learn to optionally NUL-terminate
+diff and log output.[1]
 
-This patch is intentionally limited to the connectivity check.
-I did review the other users of OBJECT_INFO_LOOKUP_REPLACE, but
-none of them seem related to it.  Longer term it would be nice
-if each caller stated whether it wants replacements, rather
-than relying on the global switch, but that is a much larger
-change.
+I looked into it after that and the code has turned out to be too
+difficult for me to make sense of.
 
-One of them does look like a separate issue, though: mktree
-checks that each entry exists, following replacements, but
-writes the original oid into the tree, so a missing object can
-pass the check without --missing if it has a replace ref.  That
-could be looked at separately as a bugfix maybe?  I have not
-looked into it more though.
+[1] <238e5652-e95b-4d44-a900-e16aa6ab81f0@app.fastmail.com>;
+    https://lore.kernel.org/git/238e5652-e95b-4d44-a900-e16aa6ab81f0@app=
+.fastmail.com/
 
-Thanks,
-Kristofer
+> I was mostly interested in the stdin filter mode that turns hashes
+> into references; is that supported by your alternative?
+
+No it=E2=80=99s not. `git format-rev --stdin-mode=3Dtext` still has its =
+niche.
+
+>> [1]: <ce69d94e-7329-449d-b3c3-47d4f3aa608c@app.fastmail.com>;
+>>    https://lore.kernel.org/git/ce69d94e-7329-449d-b3c3-47d4f3aa608c@a=
+pp.fastmail.com/
+>> [2]: <238e5652-e95b-4d44-a900-e16aa6ab81f0@app.fastmail.com>;
+>>    https://lore.kernel.org/git/238e5652-e95b-4d44-a900-e16aa6ab81f0@a=
+pp.fastmail.com/
