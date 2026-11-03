@@ -1,89 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793723886;
-	b=OtpK2anh81YSIDwCWZ3ots8nJcglMF9gR/nGQa9MkbzovqnhsJiUu+kUV8CokuZhCStn
-	 Wb1Ojm9dEE3FeZaDyfqOXU+1CntDl14iegFOE1ZBrufleFSfzuBmfpPqm6HVtlU2/+yYt
-	 vqcMOfPZst//YXDAJyfXsoIPaGY6NiiV5Uxp7iLglPKr3yEGBSwL+4uGm43hz4Lj4IXRs
-	 F9wN6P/gbSKUmD+0GtrswRIdAVN8JGILnII+E6lA/ZCwzi2J1cilZLa6CiZ1wo8Qa6qkC
-	 AJRi5o0fsSK0xYLgA3w0BXfTRF9Mqqn9G/ldWme/jHkIMRmSxDJadQHYDA4x686DycA==
+	t=1793725312;
+	b=vRUFRwztcm71d6TpzWlK/4ksEnz92yIKoo1Z5GKNj92NV8EfLehoXDOkcmknSTK/qrDP
+	 E1X0IQCIW1G4aufRGchywAy+U1bj68eQj2PR6bAy4xenqNbHExfG7MkiE2sFLk4O3nPIG
+	 kV8Xm3qnKujfPKhfaR4LqysMbohOxySZUsDAG2Yta4t78X0p7CggrOzUhwWPciRJhqYET
+	 TSGeEiu6LB1zYxW8DhbuQ+7R62ZAeVfO/Nw11vWVDgkhgvWJxjzyb6LkluHtaaKLyZxsc
+	 U89uVr5aIW8kppdxxzvANw1V2y1FSup080k90bcAIlaOOZ45M/8wN6Y44OmybzZpPlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793723886;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=Md94lRjsTJNzxA5wOiPj6JUbBKz0gu1PDUGkIWGGkr8=;
-	b=nUmrsggEtsYPyKfpJFnnbO6F8z6UlkHX7QV+06BY8UBkBf0xGLPkPQPygCNTCCS4AOmq
-	 +5yj3g0JdV0j9UXq+mgL0d2h8tj4oGRB92utwnnuH/RyiwV3uxyU9Eguh96m5DBMJuJSd
-	 8dHYWtGZHudKDj2VmeZwKNzlk1jzWJtfV3lyzDlAgmRvX3qd82xOf4DJZRVvcF9Kv4CiA
-	 2AsxVrA3yfwZ4rFxcnXWh/SY6DwVq53ehlkICTUSRuG5bxdxd796BTYeMtXdN2x7YqxPO
-	 7x4bJFh+yMQwu6MOX8e4gYEzEfAUd+QuVtsBrtOnCd6wewHclk289MJWRlgSgquMwLA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793725312;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=alHvWS1+fp/XoPEWJpAotpybjI2rHZdt8VZUygY12p8=;
+	b=dlkou0SzjKMzngerL5wpBCApmHER3vo6shIYyLEI2v9gGquEb0bvR/rjTd/5Ne/c+b21
+	 SBNpshud0mdXMYraikqoIafNMsjUfC9J7brUpSVgNNegeC9cOCBZSaGpLUjANa8mkHigJ
+	 Z5QBbcCylkilPlziR/QV6ZnvygHuwepstS1XjgpJFLpzQsYqqagTFF1nQDY4/Q/f9LyIW
+	 aVkrmQTB5gqPgppUMy1uvdnJlYFFvPdC2FRWNHj+M0zsM/yAlC7VAxRfVHM4glSPsOVPK
+	 1vh7Y9B0/pT1mwph1Z86n1IM+K/V7o5Yr02l/3MrL16votvHhhBKSgiKkTlZQtY8BjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tHMFeVbj;
-	arc=none smtp.remote-ip=209.85.128.45
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=DxfKWbHV;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=h2BSwxdH;
+	arc=none smtp.remote-ip=103.168.172.144
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67989606EEBF
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 16:38:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 67989606EEBF
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E036606A328
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 17:01:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4E036606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tHMFeVbj
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a35db1f202so45956275e9.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 08:38:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793723885; x=1794328685; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Md94lRjsTJNzxA5wOiPj6JUbBKz0gu1PDUGkIWGGkr8=;
-        b=tHMFeVbjyOk7RlUAxuIQ+1FzRiKZPSbd0AHQISxY2BFc/IExuuEYyFIHWNxmsmPzag
-         ++G52xuld93t1LEBsK/7Awbhmc7NBvmx+WlQWMF12pZRSpnNJzMp+vSJG2S5kE9vPdIp
-         TPsUxoA4DK9ZARgqyyBXfbwLPb1cx5AsdY3Yb2psiwRVR7IVhtQHTaufBuGwGG+8544E
-         Q06tZ2p+72xhxWIhSRpyrmf0MhmS8srkGt3HiPIoSl5tSphDJcDr044wpLGg4AJMHtST
-         ArX8m/743Iy7S6EOJ27QA1nlwNghPVwkkB9KnAI1w8CaCNCtOk4ErlREcRsGzC89dJt7
-         rSIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793723885; x=1794328685;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Md94lRjsTJNzxA5wOiPj6JUbBKz0gu1PDUGkIWGGkr8=;
-        b=nwYIcIzi21QnnLX6GsRH3qGcIUDOTfe2g1OVTQvWjztf/g/bmjv5yl4Mdl0K0bxpBP
-         2/xWGtY2lk8CT59yP/AlcwVOFrroy8qN0j2RthbzmFmQ6gcgl1yQBTA4SGQwBw2QGIJW
-         fNlBAzKquFBLuPrm1gVr+b2Aclq4MSBYAxLDH0+f/MCX0fHFZTm25L01n5+am3k75scs
-         Eqw9ohTrdtypF89M4VtRqdW4/0VNfnjVJdUH3Hi7Z9HU1ZkoD2w/rbOo60bbsxQ3oCSF
-         bWCTLWZIELvNJpyfea5cHpqAV5PrIAmzRlMCy7Zi1L4JUqLzyETdeC+sTW2N76AVDy1v
-         tIiQ==
-X-Forwarded-Encrypted: i=1; AKwUvByMVw2rK1K+r3F+iFoQYe72oZGT3krPDrhZdwYgnvl/LQ3Ske18Bktp0yv9D72CRVWaZO8=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8uyrZdTmwNEuEqzCNzibNasolhHFJ0qCDnBK9db4v5t+BcGOte
-	I2WHn1wAE7WvsszCMPFPD79hTy5xSVP6yCNA9OkZdmlWur9509MC5+zc
-X-Gm-Gg: AYBFou3soVNrj0x31Uc7LVKDtL+22gM65Fouxdbk5Mq5lFLUNUWrrU9R8/+BGnlnZ4G
-	KhWfm6cIbS2oG0mIRAm3FEYTqJPfLk1pMRppyWnHrsmwqPkmFCj303sbFu61aoaBx8VE9IYlNuC
-	wJfCSdc4VwxRFEXhOeJaun8YkAnag+IMGKfQngVzO9OBSaSU3vnND1S70+j6zoQvBTLykP5/6Ik
-	+t1+o5ll8//4aBA8jRzoWlNg/qavob2gef2/dd7mXlh6yEA1oifJ16Dh0ZCIbKsMEir45h33UoC
-	ecA4ETDrof2oZ2SioT7BwEoNnv7oYnSl+wbCZLjTCZRKtZTYrNRqLfnzt78BS00xuzxU1b4pc7O
-	OaMrHFSGFaETgHgP3GPCUpELV3FJt3tNJbTBYzLMZRmP+upRIFbIbJYrU7j/c2bice/kUmHO0t0
-	ShwAglmm1AiPQ0oM1PTXVQIjB/N86JQIZFE+FSvSuXwivo3o+6L0wIo6B1Qiz+gIwnkThmjTWCg
-	0TxEAoqaYsNkCfcrHY0AoSVZKgcDxDMBJe9VL9lqpj8kWWBINv2u2XcAk2pq2UbjQNh40LRAqqR
-	AEHD54ORC/xDLbTlBca4rFx9n7MNGQkwBw8dRahdF5QuhM9gK1pTSMje23DaoLxDSAiNe2/kAzr
-	GmFD5hQ==
-X-Received: by 2002:a05:600c:4e43:b0:4ab:e27d:e241 with SMTP id 5b1f17b1804b1-4ac180f28f7mr301039505e9.15.1793723884568;
-        Tue, 03 Nov 2026 08:38:04 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2a555e59dsm78870455e9.0.2026.11.03.08.38.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Nov 2026 08:38:04 -0800 (PST)
-Message-ID: <9fb1cf95-1cfb-4bc9-a722-e98d0a0664df@gmail.com>
-Date: Tue, 3 Nov 2026 16:38:03 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=DxfKWbHV;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=h2BSwxdH
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 89C79EC0094
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 12:01:51 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 03 Nov 2026 12:01:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793725311; x=1793811711; bh=alHvWS1+fp
+	/XoPEWJpAotpybjI2rHZdt8VZUygY12p8=; b=DxfKWbHV6fJ3qbD37o0N/PWzuH
+	WZwVgr8TA+FCLuazoZJpo2AzN6X9X5zkvRavZEyZarGcLrk26Alx7eoIH3T8iui1
+	3NC/MV1YCkiV+cLS+TayFmFphQjE0KLkLckRSmMxhcMc4FA54ZK+kl5LN9PBR52f
+	5avhwNjw3CzHNBbrVDYkAyqsamNnBvMrxVnWBamjR4gghvsbqXPTQnP+RVscWYI5
+	ORFyx8odz3uDH7lKMGoxpxp1joTHgfLO7fYuUZyOMoxYKEqiH15WucfOg21pdWfU
+	bc4GUONJwEnSWX4gFNU0DLUiQGgoWmT4m1Pvgm4Oyn4VTzfm1orRvD8UtN3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793725311; x=1793811711; bh=alHvWS1+fp/XoPEWJpAotpybjI2rHZdt8VZ
+	UygY12p8=; b=h2BSwxdHXez5y2J7LeiqVSm5GdJQG4zhi7vzEmeDPepWnoMNJ06
+	zOXGUE/MMTmIo125ZpUuAOsu4mBvtx9GwoSDn7hbeO6zpKI+TJG4hKYcb2ELKoML
+	y5rS9hIUQkYrD3bk4AEPeiVjhEO5GAk3s+5tJQTshqYW2ZS1BcdAgcArWHUjAqEy
+	n/egwwSHpCggBohJTIeZ4qX0Ozb+Xxp/2gLKXubuV3i3Sz7J4bMgw2XXLmqvjOoo
+	skAB6r4EQ9eNm/taqiSv+Jz506ccRkatngdTc3zvzlyyT8ooGfbPT+Oc5tiFShf+
+	iAQ7Hmj/ZUJ4h8XrtDVegDAcOFQe7jF8I2Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793725311; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:FNXG9e8t7erVDrUYMYSlXEV4B204Nq6CQfVwN9uJim/0CRv
+	LM+yJ1A8D/GDzgsRA8SY/jCnYSOIukjkFoBtNoSgh5HZ5hjx3FeqPkm5OCVwxdie
+	OYSM680jwMsiAtseZXM2OLUDro3K/8wRGR7eOirR1fU1thq+fxYIByaxbBnMd+wM
+	xdXx6aYtVOFsqVxJ9JM1vCWSD3slXrWJ9bWfbhZZ28GX85ehbZ5lm+1h0sLmZ3D7
+	M9+66NpRziENh556BAUph50kYE7Eejsd+/HePEQNEMBZr+62lxlxgmQR8BtJmpqD
+	8IJv7yrqM6mljNTH+ojqC1AHnDwGSmcym3blu8g==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:IVI1RUxyiFX5gL4fA8Kh86v4RyBaGi/DaeYor1dEle0=:6GHqsO+ECKtqL8U5LyTezuAfVsMQ6L/2Ld71KvVQ7UI=;
+X-ME-Sender: <xms:fxPqaiJXgwrxI9Qd82YkABAIuKKx_oO6eXefFkZyOvD4D0T_9h33ng>
+    <xme:fxPqapOg9ddXaa7ku6n2u9lBoh2EIT1Km7FJeP30LerPKqpRFu7IYX3SUIm_Vez2w
+    UYCUoWKmrJFvDw5Sz8fyG0ReI4_TyAoenFZKOGc8xI0kANF_EprzbY>
+X-ME-Received: <xmr:fxPqao4u6rYBTFE8oTSsWgPmodieFpUT5fsnzQtJo-1PO6UZgIxfX_JRbyB6hgaRNd8q5XyFXj2tHmp3T8OH9gRK_81uE8HeCo0->
+X-ME-Proxy-Cause: dmFkZTGaN79W2d8NLsb4R0Egv+nAiRQgkl7rLvPhHd3kIPlOKI9iIsQCh0OI03J+WS1nWf
+    7Zw8R8WPbVh+rLBsOH+8JHbuvoKsMtbXCxQy71o3OVgxQFpnJ2/Dwv1Ylgkza/CB8o+GTU
+    dgSjHlmAjVIcY5K2DBlY2sO1Df2mCR8YEnhewkx7GCtI3Cl8MqtRkvNKietOHZRu1pgdT1
+    9URi+6qy0nEubH5BwvDEIVwakrvcfFo71+UZcv0fkuEHsiGRwPmoibn5HTatKENiIweI2k
+    oy/6JuGmNiceyRAeJjAEaIXTkCEtj9Vd3Jn9tpUSmjsLlxF8f76r+vtj0EeGXr7fYaZMYr
+    BXUa/FI1lQzXN6O1y2WdaJj0wuVi1L45fOP9/7bwvGZnIH6WvofteP9nhJ0JARhE37uKQa
+    ja4toHYr7U6gOICUCjdV5Gs0skVQi7iArXU2Ncdu6ijkJH96WuHyI9wlMpypL+gUvofmFW
+    5Z24T/VIPNK7dwKeiCcjx7OMtDu6aR5zDiv/7KPqLJRQjHJ0s2+v11QxZcIMjkWpAah6Ue
+    2LxtbVhgkCisrxguFm3pur2i0R8Nd7+gfJvPMPGaDJC7kC1AoAt2v84kEWimHlmUjN4fci
+    OhooDM0t4qSjeBogp1dtv4IfEaO4qpjEd0ywI2rDmM9lhS68vVPcONj1pPqw
+X-ME-Proxy: <xmx:fxPqaj6EWsuWt4lWMZnObykpuhnkW5Faah581wlCninUFifsmAk1ww>
+    <xmx:fxPqauGQwL2rpI-C9HGNl9fWofsej7hwdZX9mo-qCNP3yAlWI_hGdw>
+    <xmx:fxPqarXTS1u_6pAasL6bkD2_QcLVMWSbVYfXjnYZeBdo-XIMKRFdjA>
+    <xmx:fxPqaqUSHaMWcnsu6Pi1hqfgn9XCPSElvDe8eIocXHZW9TSJt8IDkA>
+    <xmx:fxPqat1VlO7Y76_6ihiLumY6gnL4Kk-1sUQNZvOxf3SpTQj32g4tPF-4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Nov 2026 12:01:50 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Aniket Gupta <aniketgupta3001@gmail.com>,  git@vger.kernel.org,
+  christian.couder@gmail.com,  cat@malon.dev,  belkid98@gmail.com,
+  phillip.wood123@gmail.com
+Subject: Re: [PATCH 0/4] environment: move line ending config variables into
+ repo_config_values
+In-Reply-To: <aumOHhbTVW0bT3We@pks.im> (Patrick Steinhardt's message of "Tue,
+	3 Nov 2026 08:32:46 +0100")
+References: <20261024220012.486-1-aniketgupta3001@gmail.com>
+	<at9HOXZhVcl53CGX@pks.im> <xmqq4ie8tq3u.fsf@gitster.g>
+	<aumOHhbTVW0bT3We@pks.im>
+Date: Tue, 03 Nov 2026 09:01:49 -0800
+Message-ID: <xmqq7bitc0hu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,214 +128,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Strange word diff
-To: Jean Abou Samra <jean@abou-samra.fr>, git@vger.kernel.org
-References: <4dd76eef8a2a355ba435e8c784c1e37f3fe47074.camel@abou-samra.fr>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <4dd76eef8a2a355ba435e8c784c1e37f3fe47074.camel@abou-samra.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi Jean
+Patrick Steinhardt <ps@pks.im> writes:
 
-On 03/11/2026 14:14, Jean Abou Samra wrote:
-> Hi,
-> 
-> Attached is an archive with three files. file2.txt differs from file1.txt
-> by just a few words, as correctly reported by git diff --word-diff (using
-> Git 2.56.0):
-> 
- > Is this a bug? It happens with all --diff-algorithm option values.
+> On Mon, Oct 26, 2026 at 08:53:57AM -0700, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> 
+>> > While these patches _look_ like they libify Git more, they actually do
+>> > the exact opposite right now and tie us more and more to
+>> > `the_repository`. So I'm inclined to say that we should hold off merging
+>> > these patches until we fix that issue, or otherwise we paint ourselves
+>> > into a corner.
+>> 
+>> Could you please volunteer to add a quick patch to add a comment
+>> next to the problematic structure to tell people stop moving things
+>> there (for now) and point at the message I am responding to?
+>
+> Sorry, I planned to do that but haven't yet gotten around to it. But I
+> see that you've sent it by now via [1]. Thanks!
 
-Yes and No! I think the diff is correct, but it is also pretty useless 
-if one is interested in seeing the word-level changes. The problem is 
-due to the way git calculates word diffs. To calculate the word diff, 
-git first calculates the line by line diff which looks like
+Ah, I completely forgot about this exchange when I did [1] myself.
+Anyway, I'll take it as an Acked-by for it.
 
-diff --git a/file1.txt b/file3.txt
-index a9eaedc..81c3eb9 100644
---- a/file1.txt
-+++ b/file3.txt
-@@ -1,4 +1,5 @@
-  \subparagraph*{Context}
--Our object of study is an extension of Turing degrees ...
+Thanks.
 
--While this game was introduced recently by Kihara
-+Our object of study is an extension of Turing degrees ...
-+
-+While Arthur–Nimue–Merlin games were introduced recently by Kihara...
-
-then, it splits the line diff whenever it sees a context line and diffs 
-the words in the '-' and '+' lines it has seen up to that point. As git 
-has chosen the first blank line as a context line, it looks like the 
-entire first paragraph has been deleted which messes up the word diff. 
-We had a similar report a few months ago. I think the solution is to 
-feed whole hunks from the line diff into the word diff instead of 
-splitting the hunk when we see a context line.
-
-As an aside my local git installation uses a modified implementation of 
-the patience algorithm that removes the fallback to the Myers diff when 
-it cannot find any context lines[1]. That algorithm cannot find any 
-context lines in this example and so gives a sensible word-diff.
-
-Thanks
-
-Phillip
-
-[1] 
-https://github.com/phillipwood/git/commit/7eda9d836c8db76ad49b6cc8b5760ff458d81e9c
-
-> ```
-> $ git diff --no-index --word-diff file1.txt file2.txt
-> diff --git a/file1.txt b/file2.txt
-> index a9eaedc..a75008e 100644
-> --- a/file1.txt
-> +++ b/file2.txt
-> @@ -1,4 +1,4 @@
-> \subparagraph*{Context}
-> Our object of study is an extension of Turing degrees where the oracles can
-> feature certain forms of non-determinism, as in this riddle. We call these
-> generalized degrees the \emph{Arthur–Nimue–Merlin degrees}, owing to their
-> explicit description by Kihara using a three-player game whose players are
-> conventionally named Arthur, Nimue and
-> Merlin \cite{KiharaLT}.\footnote{In \cite{KiharaOracles}, Kihara uses the term
-> “extended Turing–Weihrauch degrees”. We prefer to eschew the association with
-> Weihrauch's name since we never deal with [-call-once oracles.}-]{+oracles that
-> can only be queried once.}+} Whereas Turing degrees are defined as a quotient of
-> oracles which are functions $\N \to \N$, Arthur–Nimue–Merlin degrees are a
-> quotient of a richer set of oracles, namely functions $\N \to \P(\P(\N))$.
-> Informally, when a program that uses $g : \N \to \P(\P(\N))$ as an oracle makes
-> a query $n \in \N$ to the oracle, a set $P \in g(n)$ is chosen in a benevolent
-> way (“angelic non-determinism”), then a value $v \in P$ is chosen in an
-> adversarial way (“demonic non-determinism”), and the program receives the answer
-> $v$. The mathematical meaning to “benevolent” and “adversarial” is made precise
-> by introducing a game where Arthur, a player restricted to computable
-> strategies, is allied to Nimue, the player choosing $P$, and both play against
-> Merlin, the player choosing $v$. (The details of the game are recalled in
-> \autoref{section-arthur-nimue-merlin-games}.)
-> 
-> While [-this game was-]{+Arthur–Nimue–Merlin games were+} introduced recently by
-> Kihara, [-the concept-]{+they are a concrete description+} of [-
-> Arthur–Nimue–Merlin degrees is-]{+objects that arose+} much [-older, having
-> arised,-]{+earlier,+} in a different guise, in the study of realizability. To
-> reassure the reader unfamiliar with realizability from the outset, this paper is
-> meant to be accessible with only a background in basic computability theory,
-> except for \autoref{section-topos-theory} where we explain how the proof of our
-> main result can be understood from the point of view of realizability.
-> Nevertheless, let us recall the historical link.
-> ```
-> 
-> The only change between file2.txt and file3.txt is the addition of a
-> blank line:
-> 
-> ```
-> $ git diff --no-index file2.txt file3.txt
-> diff --git a/file2.txt b/file3.txt
-> index a75008e..81c3eb9 100644
-> --- a/file2.txt
-> +++ b/file3.txt
-> @@ -1,4 +1,5 @@
->   \subparagraph*{Context}
-> +
->   Our object of study is an extension of Turing degrees where the oracles can
-> feature certain forms of non-determinism, as in this riddle. We call these
-> generalized degrees the \emph{Arthur–Nimue–Merlin degrees}, owing to their
-> explicit description by Kihara using a three-player game whose players are
-> conventionally named Arthur, Nimue and
-> Merlin \cite{KiharaLT}.\footnote{In \cite{KiharaOracles}, Kihara uses the term
-> “extended Turing–Weihrauch degrees”. We prefer to eschew the association with
-> Weihrauch's name since we never deal with oracles that can only be queried
-> once.} Whereas Turing degrees are defined as a quotient of oracles which are
-> functions $\N \to \N$, Arthur–Nimue–Merlin degrees are a quotient of a richer
-> set of oracles, namely functions $\N \to \P(\P(\N))$. Informally, when a program
-> that uses $g : \N \to \P(\P(\N))$ as an oracle makes a query $n \in \N$ to the
-> oracle, a set $P \in g(n)$ is chosen in a benevolent way (“angelic non-
-> determinism”), then a value $v \in P$ is chosen in an adversarial way (“demonic
-> non-determinism”), and the program receives the answer $v$. The mathematical
-> meaning to “benevolent” and “adversarial” is made precise by introducing a game
-> where Arthur, a player restricted to computable strategies, is allied to Nimue,
-> the player choosing $P$, and both play against Merlin, the player choosing $v$.
-> (The details of the game are recalled in \autoref{section-arthur-nimue-merlin-
-> games}.)
->   
->   While Arthur–Nimue–Merlin games were introduced recently by Kihara, they are a
-> concrete description of objects that arose much earlier, in a different guise,
-> in the study of realizability. To reassure the reader unfamiliar with
-> realizability from the outset, this paper is meant to be accessible with only a
-> background in basic computability theory, except for \autoref{section-topos-
-> theory} where we explain how the proof of our main result can be understood from
-> the point of view of realizability. Nevertheless, let us recall the historical
-> link.
-> ```
-> 
-> And yet, comparing file1.txt with file3.txt with a word diff gives a strange
-> diff that matches a few words here and there while missing unchanged entire
-> long sentences:
-> 
-> ```
-> $ git diff --no-index --word-diff file1.txt file3.txt
-> diff --git a/file1.txt b/file3.txt
-> index a9eaedc..81c3eb9 100644
-> --- a/file1.txt
-> +++ b/file3.txt
-> @@ -1,4 +1,5 @@
-> \subparagraph*{Context}
-> [-Our object of study is an extension of Turing degrees where the oracles can
-> feature certain forms of non-determinism, as in this riddle. We call these
-> generalized degrees the \emph{Arthur–Nimue–Merlin degrees}, owing to their
-> explicit description by Kihara using a three-player game whose players are
-> conventionally named Arthur, Nimue and
-> Merlin \cite{KiharaLT}.\footnote{In \cite{KiharaOracles}, Kihara uses the term
-> “extended Turing–Weihrauch degrees”. We prefer to eschew the association with
-> Weihrauch's name since we never deal with call-once oracles.} Whereas Turing
-> degrees are defined as a quotient of oracles which are functions $\N \to \N$,
-> Arthur–Nimue–Merlin degrees are a quotient of a richer set of oracles, namely
-> functions $\N \to \P(\P(\N))$. Informally, when a program that uses $g : \N \to
-> \P(\P(\N))$ as an oracle makes a query $n \in \N$ to the oracle, a set $P \in
-> g(n)$ is chosen in a benevolent way (“angelic non-determinism”), then a value $v
-> \in P$ is chosen in an adversarial way (“demonic non-determinism”), and the
-> program receives the answer $v$. The mathematical meaning to “benevolent” and
-> “adversarial” is made precise by introducing a game where Arthur, a player
-> restricted to computable strategies, is allied to Nimue, the player choosing
-> $P$, and both play against Merlin, the player choosing $v$. (The details of the
-> game are recalled in \autoref{section-arthur-nimue-merlin-games}.)-]
-> 
-> [-While-]{+Our object of study is an extension of Turing degrees where the
-> oracles can feature certain forms of non-determinism, as in+} this [-game was
-> introduced recently-]{+riddle. We call these generalized degrees the
-> \emph{Arthur–Nimue–Merlin degrees}, owing to their explicit description+} by [-
-> Kihara,-]{+Kihara using a three-player game whose players are conventionally
-> named Arthur, Nimue and
-> Merlin \cite{KiharaLT}.\footnote{In \cite{KiharaOracles}, Kihara uses+} the [-
-> concept-]{+term “extended Turing–Weihrauch degrees”. We prefer to eschew the
-> association with Weihrauch's name since we never deal with oracles that can only
-> be queried once.} Whereas Turing degrees are defined as a quotient+} of
-> {+oracles which are functions $\N \to \N$,+} Arthur–Nimue–Merlin degrees {+are a
-> quotient of a richer set of oracles, namely functions $\N \to \P(\P(\N))$.
-> Informally, when a program that uses $g : \N \to \P(\P(\N))$ as an oracle makes
-> a query $n \in \N$ to the oracle, a set $P \in g(n)$ is chosen in a benevolent
-> way (“angelic non-determinism”), then a value $v \in P$ is chosen in an
-> adversarial way (“demonic non-determinism”), and the program receives the answer
-> $v$. The mathematical meaning to “benevolent” and “adversarial”+} is {+made
-> precise by introducing a game where Arthur, a player restricted to computable
-> strategies, is allied to Nimue, the player choosing $P$, and both play against
-> Merlin, the player choosing $v$. (The details of the game are recalled in
-> \autoref{section-arthur-nimue-merlin-games}.)+}
-> 
-> {+While Arthur–Nimue–Merlin games were introduced recently by Kihara, they are a
-> concrete description of objects that arose+} much [-older, having arised,-
-> ]{+earlier,+} in a different guise, in the study of realizability. To reassure
-> the reader unfamiliar with realizability from the outset, this paper is meant to
-> be accessible with only a background in basic computability theory, except for
-> \autoref{section-topos-theory} where we explain how the proof of our main result
-> can be understood from the point of view of realizability. Nevertheless, let us
-> recall the historical link.
-> ```
-> 
-> 
-> Best,
-> Jean
+>
+> Patrick
+>
+> [1]: <xmqqh5hzjdwr.fsf_-_@gitster.g> 
 
