@@ -1,122 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793701631;
-	b=GJE9jXZ0EAovT4HUNgTqMYXUJ2p2dtwjo/TzrrIvmHzyN4LHurF9/5py1KexcdRwvf0i
-	 5FAaC7x0xM71M4+UeOr+Dyd+XonIwaOjT6528GSx11jZUjqpQhYuEiHlS/T4iGfrcD/B2
-	 I1PCvIzko4jzl5MkkFKn0E7ZU8A8DGKxlyky/bol0c0bL/w/gEYvvMqS+MfxL+84f8m7d
-	 rW725TgjJOuRR/uvJAYPw83xOk/YbGm89xDkI6mfDzken5IWYS70T+kNDh2tH6hkTC7QV
-	 paSt7AzCdMLc3jaVMWnOLR4xO3vjwDcNLsqZuX8f+bqQONvON3I+gCzr6qlErMhuK4A==
+	t=1793702060;
+	b=TQqpaCKfbseHYEcbY0248eAx7dTddY2GLlCOp0/tZYPMNcK9pFS3w0eMTedSBd4FC/Hb
+	 cnD/H7mSozk4sdTj4p5w4jo/9dxlfE4PMsY5nO+VIIkQcbhvF71Tazc062DuS0PYguRYp
+	 Ok+J++q6X+BJlj+Kb44lcNkGG4kNTUTwaMpWa+LwDxutplwtvvVpk9I+Lr3P3lPp0wNkT
+	 TjK+cQ97Y9fFNOGU23LnwMHyhplkkO/EAMHctgQTpZohj89OV3G7j3GCIuzBv2GM4B0VK
+	 0km3gHCuK5b5+aFs0V1vr4PlWHM1IFHFv3CUIoNmyUpZfRcboBQLFIake4njMMzXr3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793701631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793702060;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=ERSIu5KfuhxtX18SND87GTIqy7b9M2dtCAMcWbhS/fQ=;
-	b=NLVB5miRhDmwpuecnEpi2GCWHL7Ep3E/erwO2D4cgVWTVvdTIFpwNlIxQ35PgUdcDL0M
-	 ChXrVW3T3HmcUMXnyyO3X6xz2t0zeqmunnwRIsrGcQA8yVMIsJf1449izrUtrWYAoBi/M
-	 MMMIxru71pIdt9LahLt08E2WEV/prJj9nnAzhGIMAmwaAmIEZiv+obYYq9uLHYfESc48p
-	 Ov+QvGauT/Dy52WU0T9wRXF61DOdgGpPskrjHySmTuS+vGD8rXmUHIWm7HDpUEIHo56rB
-	 AT68UTfS+jT8/njKBH5D5jzdULnsp+3T5RNLlKJyRQ3OoH0FCNvymkoh7uJlMuEpqHA==
+	bh=xoxL+A5HLhStJIzen3bH+vn4l5jIJiQ3YXYoTEN3kiU=;
+	b=SMHu12pHSErleHlvqIE5ow2YWgAG4fGPi9iH6pn9Ru0dhuwmhwkPL7hYtJlTVqzovLSp
+	 VAcq5+qhLKW9jFvJbHvRPiivOf7iQqe9GbgGBmuppY+Kpu56xZ7ZT3aR2RPlgGTqQLGtc
+	 jNzxfEilLY3pe3cZ2dx0/Vr4F9sjg1ErFmIsnuRXvzdmHvb7J0L1ekKA2+4Iw1wZue/Jv
+	 rW4AOF6zmy4tcIQ/RF4LpwQmYyvTN23g9Z6XJRdmXJpvRSaOdwNFDuFF20jvbda5zgV4i
+	 d1dPvA6afWZ+qmiYgyFWZwAX6GKLi8qPw4Zxak0UhXEnmXVZekPl8dATh12y3NvjTjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b="cVQXH/Yr";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZphOYIfN;
-	arc=none smtp.remote-ip=202.12.124.154
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=Ht0acWi3;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="b/BN/Nue";
+	arc=none smtp.remote-ip=202.12.124.149
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51E160736C6
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 10:27:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C51E160736C6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1108E6072BEB
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 10:34:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1108E6072BEB
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=cVQXH/Yr;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZphOYIfN
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 376487A015E
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 05:27:10 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Tue, 03 Nov 2026 05:27:10 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=Ht0acWi3;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=b/BN/Nue
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 538501D0011E
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 05:34:19 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Tue, 03 Nov 2026 05:34:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1793701629; x=1793788029; bh=ERSIu5Kfuh
-	xtX18SND87GTIqy7b9M2dtCAMcWbhS/fQ=; b=cVQXH/YrZYHK3xAdTVleVh890m
-	fMyI2GCTZB8APlTCM8LAufBnGO3YTV88NxKtY4WZyW4shO4YoibCobk+Dq3fSjFn
-	xP0+cL1aeKRK9uGYruDorZu3Gq9NnKTefP2/66ES1Ps1Ilx9iB3NQRWhh3TsHS6j
-	q9CwLqyRBpaSiWFuwQwG0ItK32P80lcf33YlOGq4W4TWVjJSx18kyD9tfwMLgkgs
-	xA5T8nVUJUX7UJt0fgoTZUSLG8ltNwE1OQTRVeRYlQ8DuShK8ToxF3N2IOXy408F
-	+oa5eNBN6NIdnrPStKgiGj5SUSpJJ3DtVTws0E8I6ivM3ujRu1KVI9+z1/cA==
+	:subject:to:to; s=fm3; t=1793702059; x=1793788459; bh=xoxL+A5HLh
+	StJIzen3bH+vn4l5jIJiQ3YXYoTEN3kiU=; b=Ht0acWi3iLJ8533FEKvaDGIl/C
+	LIG4E6UJeawaF7xxueraz1chPfPU0rlFLkPCVk2j2VD3BOx57xit0NMN/3JQw7BE
+	hpUHylSJTnRNsyDP8p76cmEUPZ/8NZ+8yWnQK3hJNEzb94hsZeQxhinFS0dfTT70
+	Ka59cz8ebcbsL9Oiaj7h0imQ4KYb1hrERvlp0Wrga0OaTiZPtQZjxMaVFEJ7J8OE
+	LJeKbTYXzgYG9DxNhQMPlgyo6vufqH9vOcUNoiG07kZbG9cQ2K7s50kGAHQKa94A
+	WDbkrmoZgGsABLEJNgVu2DtGsgCtEJBOdzH4Y1KwRh4qLRZrIhNsEeYkFLSQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793701629; x=1793788029; bh=ERSIu5KfuhxtX18SND87GTIqy7b9M2dtCAM
-	cWbhS/fQ=; b=ZphOYIfN4/SXj3LySA4p3SirYHqUf3OGoGR0ZqV6ZLfCkbrPwK6
-	1VnMKLL/LRBBKieHv69+Hlo3otPOKerEpw9U99GeuDsumONgKNRH5X7doPllZqu3
-	kYb9t0pZNsxKYyf1QwnAc9XWZjUkTqAA4LHDQnalS3dyyNkP5wPTCI6mtZjumD+Z
-	8hBkderUPwMjXTjWFMkmb8EIngvsIh4tzXrzy7diSKL7FSJZSCIlLLJswvwttouq
-	4yYAC1WPj1eEQxiVNc9GPo5vKnVgiXWV4Vhm/crm9rJKgAx/Me1F48lqFUK7SgqO
-	L7UcmRioxzvsV0c0XO/WV1yWeE6QsFD1iXA==
+	1793702059; x=1793788459; bh=xoxL+A5HLhStJIzen3bH+vn4l5jIJiQ3YXY
+	oTEN3kiU=; b=b/BN/NuebqFhgkOR4E55ge0sbPjucdjmo+VoolAfPWJt/e6MoiI
+	lyTb3Kwr0pUDZcwNkLQzRLayPIqH90jzF4SARFiMjd9sWWjKOaoohZkuVzleK4hm
+	eC1G3CYg8y3wREBazuU0yYJuOILUEvkRQTcImM/svkAyWI6i7FmIOvnrdEQkJmz6
+	sRKDjqSw0bHptxxgZ6hdT5vZwf+DxVa0E7uMqxk1cJpfzVqnTH5SGJSutDO4P4EV
+	kyjx8DCoQ3/awJIPqXONGZIfVbQkkvvqltt4YVX6caqBMx9fUmTLc670FtrmRxD+
+	TCOHHjNR0bZQw/E/S7h6fptyXaiBCFkiM+g==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793701629; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793702059; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:CG3dpB3Lrzg8HzsVQ+h9EWYiAkFdlb3hNUiLiCHwAvvdLjY
-	oB06JaHEbw8k4b6asQJ66GeUsb5yLF9xenzPQrbK8y+UKqx1VteDKICihC7SXqai
-	x68HNsYbH5WO6V9mkQutFO9qHKXTbu4J+rheDcW/38lbgPaezL2nu4aZoLrxTr2w
-	vEaODBhFCfRg4R0dlS2bsx1ZdAnOevZuCWDWaShBTsLKdzCjlss/mGaXUX9YApqC
-	ACtP2lcRDb+PBaHn9O4Fc7FUHdiLKEbFQys8B/bkNDGM/+STxvEZUAin9rVSSkdg
-	GYbmY4xG0nuUqPqUZpBOV1pgRtTmSUDToL2WR0g==;
+	s=fm3:rsa-sha256:sWcabsmQqbnNxnArgqM94qPe1BzbqGDWc/80i3Pr6Gm7iQP
+	/pEy4Ec2abVXkR2O/zxp+i3v0ZsgpbZs6trj1doj/Q595HxK6aTmXHEJSh22Qcst
+	m7YRsJGIZtw3jIezuyWgWcmWtpM5qCukyk2UUITU3T26lTlgli1Eq4eSA5VKlLeR
+	Y1NphJXzWEh/ccX/jZIUEThTaKBqgfqSWDav+UEFN3EmXoYOxDJ+zfF0U70IZst6
+	jzE6EAgsioUb/DgPAbTCQTfq+t/7vZEIfbgMU1KIFkg/S6wD3cjS0vQJyuEwVU30
+	w5OGRObszaz5zMRia2Pz84DAjoEb5XDFouScbFA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:unIWI+FfrMSHKWSIIvoO2iZNz/8e34XUxgG6nQ97MeU=:ETvyPbtwvW7RKoqUpJrvwEnVN8OjnPaIwNrc//1sdXc=;
-X-ME-Sender: <xms:_bbpakC55jNl7k5umz2bTDnvJjPBTboDRa-UVvktabg14yANA--dkA>
-    <xme:_bbpaoxkeqml5ke7q24-4R5EcnyaqPbHIgin9jLdT8mlbjtgh-IrdpWnyF5dcWHA2
-    rvGSMT40BeN7PK5oHfnSH1L3axVEP4nag3DHaz9KVC_y28kMOeb4Dg>
-X-ME-Received: <xmr:_bbpap1zxiNpGGZKHW1nHwZ6aW3qRmC-u6wmlo3v9Cww8T46e3F7EA>
-X-ME-Proxy-Cause: dmFkZTE16ldJBBbpPtJaH6QFwguifPKJV2z5jFDw4BCqRE2Fj8YEPTSP3V3XXuKR5nWpmv
-    A1FBRbnRHiealV7n18T+IN9z3D9Lrzk2GolKBnXiDS4csJ2VwDc0i1y02lZfihbv2Tzjht
-    qVFITBEmIJ/D9pw4vBW7qhjtEk5XO1EhewaIBb+/hOHmIkFJ/vhEQBmrKMvzmJ+5Oy+Suf
-    4zPcY4KdRQgAnNmly6zxhKDDAG7CkEloGw6w6Gw69xQq5O+fX66AzLi4RghXjPpwuiTl0O
-    lP2czi3WH2Hn1+LsgxLkVRGgTUPR/8dgC10BWCyQBCrQcoxrktlhgEPGn6+mDTsfGhKlXY
-    8UdCU6kJK37pyvJmdeYwtTaS9i4cmbJHKoKtfVvMeJ5QMIm/23URLCXcNVHj0aq1PfGWW3
-    i6+sB0T1OthPuejpCvn1NAp4Xgsi5A2xX1rrjq9gLki6O+LRszItExTMGv+Js/VqhcRWYv
-    vATes1/Mhz6iER/ll93NPIK1vHtjfZNL831FJ+xqeOTN83gyYvT8/esRwqhBWdCEEUoR0m
-    j8gpnYc7Q7Or/+ZjRKmuiu4H81Nro/zHHo5XN5ZcyRfLj2APzbXM5DZVKDc7ZpOyG1ammn
-    WnJtN4gQepItN08YvcUgzexGymUsFLNEN0c8eTXY/e8vjK4o5vXozJxfTKyw
-X-ME-Proxy: <xmx:_bbpagy2ydC9bA2mQgEJjGhQ-EGxG4yNFVxeirvq74NlaS8LMsfghw>
-    <xmx:_bbpaoEfNqIXw53rgRi5IH_G7Kx6jpAdJ6RARP8UsYRWFxhoZ4PKng>
-    <xmx:_bbparavkuxIG4uM5XV2WMOuDGvNOgioKhCrlQIDzMqI-oQMyAJqlw>
-    <xmx:_bbpaiCw9MdIwa8f_-4jlxCIeH1pamcyNbiqIAAH1EamU1O62XY6Ug>
-    <xmx:_bbpavR-TPbl8TzLNBMePjifpzLHfMcPCFa-lqhJOSqSDF0VlNY8VZbu>
+Message-Instance: m=1; h=sha256:6eJvq7GWnxRNX+slXjZTzhNHRuG6++q/kQkGDPB0Mbw=:2Ul8s9uQkf9IPi5W1mIhZWDUSkcn6gS70Xjk4UkGPd4=;
+X-ME-Sender: <xms:q7jparEQVQhnT0JkL7OvsoGYgXPk--0fNGs5XRyjda342EvFL4o2eQ>
+    <xme:q7jpauXA9rLTIA2wVWL-vslvEyQAD6fE1cZBD2YTgVeSC6KOa0GiV5o-FYdLi-jGn
+    9FwmsTs_8QnyM0lE9p5A9lqKv4oEP3gIFIpXoYXIjdphxk1PcaGQmc>
+X-ME-Received: <xmr:q7jpaqzVwoGorlLjZmUNncdQetO3F4uHUTYcDzTbBLagTl0GZWv1WA>
+X-ME-Proxy-Cause: dmFkZTE0gS5XOz6dUjX2WxTvKbLlC8Wj574AW7CIHzbJkGAwjLt0iqeM70jeZj4a6clHL8
+    LB4Ot9G/hgA8/LtpE5zbhXoHYTI+nNNtnKwu2oTjkCyMQsqZV0GfZPApFB74chxxsEkbCu
+    G1dwyCDe+0bVM364AJVGt1BVLdFgdadtH+1W95Igv7iy6rQ3xqd8GDAX/wmKimLuk7ASmI
+    sooVXe6pkgZ3qN7qECHoMjSgq3PaiCW4k35C4a2yJ8ZdcyUVGno5hz3RiqbGTq0EEx007a
+    PPP+Wk1JrriAAblMjz3H6V9gkHsq7FPrRUGTT51EMUcWfnC+SBWv0EzAFkyrRO6ypTJrH6
+    Z9EdSa/dGfxxYKrQIpe0ZsfeTHNhGcDKm8z2hFE66p8mORUyv829txnpfAOH6XHPRcF9ur
+    X1yq0PM1GgNLf0Cai8MkqCefQ6BG3O7XL6ftCjCsftulQzI9ExLdNatA7Tx6+436RcZz27
+    ggpsi1WlCB8Mga9ZjCTCer6aRxJPdW5zvNuKvu2gxNraCMfh3kk1wkVijrZJ4Q2U9hSSk7
+    JC2so7BbjK35QzYkGBfcLTbuqWp+O1186BMH/J1D/Ch4fT9haiqfj6zQ7XzNB/+zhYb5hb
+    3rj8OsY5DHo0dmLzf4ooo3GFWBXImatReQsBafvRxauvciJaQvfJNOoTTS+w
+X-ME-Proxy: <xmx:q7jpakPLV5bTIJqE5bO2RBE_0J869feCBd2UoJV_aliwsYlUt7tFcg>
+    <xmx:q7jpaj47ikn-FuVAVVr_jC1eBEuCYDqbtf8jBhIPEZvPBnB9N2rpWA>
+    <xmx:q7jpatPY1H9JcrAxv2lq0BNaiLWHbK-yfHv3vyqxHSVOhM_AQsI1iw>
+    <xmx:q7jpapmWhmA-a8XDKdh60Eof3Wmv0iVJQUS9Np9MzGYtxY3miAuuZQ>
+    <xmx:q7jpamdLXZxC5_p2soogkflpMjGsm2f__ekfg0GBTH6pkJG-4h9lx5qQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Nov 2026 05:27:08 -0500 (EST)
+ 3 Nov 2026 05:34:18 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6d955fd7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Nov 2026 10:27:07 +0000 (UTC)
-Date: Tue, 3 Nov 2026 11:27:03 +0100
+	by mail (OpenSMTPD) with ESMTPSA id ae67b163 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Nov 2026 10:34:16 +0000 (UTC)
+Date: Tue, 3 Nov 2026 11:34:13 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com, usmanakinyemi202@gmail.com,
-	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com
-Subject: Re: [Outreachy PATCH v2 0/2] notes-utils: stop using the_repository
-Message-ID: <aum29zvhcsj41yHz@pks.im>
-References: <20261031104526.46711-1-okhuomonajayi54@gmail.com>
- <20261103084930.15532-1-okhuomonajayi54@gmail.com>
- <CAOLa=ZTAEVcKj-Y5QCGsAFAMUSh665E1fmQrEnuuufTLLbn3Wg@mail.gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] config: honor file permission bits
+Message-ID: <aum4pZp5P0ZRC-cf@pks.im>
+References: <xmqqbj8p7okv.fsf@gitster.g>
+ <xmqqa4o0v76o.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,29 +125,64 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTAEVcKj-Y5QCGsAFAMUSh665E1fmQrEnuuufTLLbn3Wg@mail.gmail.com>
+In-Reply-To: <xmqqa4o0v76o.fsf@gitster.g>
 
-On Tue, Nov 03, 2026 at 03:48:01AM -0600, Karthik Nayak wrote:
-> Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
+On Mon, Oct 26, 2026 at 07:59:43AM -0700, Junio C Hamano wrote:
+> When dotfile sources are kept under version control, you might
+> protect installed files like ~/.gitconfig from accidental changes by
+> making them read-only.  This fails because updating a file writes a
+> new lockfile, copies and tweaks the content, and renames the
+> lockfile over the original.  The original file's permission bits are
+> ignored in this process.
 > 
-> > This series removes the_repository from notes-utils.c.
-> >
-> > Changes since v1:
-> > - Add patch 2, which passes a repository to
-> >   init_copy_notes_for_rewrite() and drops USE_THE_REPOSITORY_VARIABLE
-> >   from notes-utils.c, as Patrick suggested. v1 stopped one step short
-> >   of that.
-> >
-> > The callers in builtin/am.c and builtin/notes.c pass the_repository,
-> > as those files still use it everywhere. copy() in builtin/notes.c
-> > does receive a repo that could be passed down instead, if that is
-> > preferred.
-> >
-> > Thanks, Patrick, for the review.
-> >
+> Teach the configuration writing machinery to inspect the original
+> file's permissions with access(2) and avoid replacing it when the
+> file should not be writable.
 > 
-> Overall the patches look good to me.
+> This implementation targets configuration files rather than the
+> lockfile API layer.  While in-tree files like .git/index do not need
+> such protection, out-of-tree files like ~/.gitconfig and its XDG
 
-Agreed, the patches look good to me, too.
+Nit: a curious reader might wonder why such in-tree files don't need
+such protection.
+
+> counterparts are unique in this regard.  System-wide configuration
+> like /etc/gitconfig is typically in a directory already read-only to
+> normal users, making the issue irrelevant there.
+
+Thanks for adding the motivation.
+
+> diff --git a/config.c b/config.c
+> index e0bb29b53d..2b84fb215c 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -3066,6 +3066,28 @@ int repo_config_set_multivar_in_file_gently(struct repository *r,
+>  	if (!config_filename)
+>  		config_filename = filename_buf = repo_git_path(r, "config");
+>  
+> +	/*
+> +	 * Do not allow updating a read-only configuration file; it is
+> +	 * annoying and alarming that "chmod a-w $HOME/.gitconfig" does not
+> +	 * prevent the global configuration file from getting clobbered by
+> +	 * mistake with the usual "create a new lockfile, copy the original
+> +	 * while setting a new value, propagate the permission bits to the
+> +	 * lockfile, and then rename it to replace the original" dance.
+> +	 */
+> +	if (!access(config_filename, W_OK)) {
+> +		; /* happy: we can write to it */
+> +	} else if (errno == ENOENT) {
+> +		; /* happy: we are creating this file anew */
+> +	} else {
+> +		/*
+> +		 * most likely EACCES but other errors also indicate
+> +		 * that we cannot write to it anyway.
+> +		 */
+> +		error_errno(_("file %s unwritable"), config_filename);
+
+Should we quote '%s' here? The function is quite inconsistent, where it
+sometimes quotes and sometimes doesn't. I'd say that quoting is the
+better choice though.
+
+Other than that this patch looks good to me, thanks!
 
 Patrick
