@@ -1,123 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793692880;
-	b=JF6N/sX3I6kd3ls5aNWe4owFg6vfAus4MNTMU+xbT8Fx3A/3n+iPpPk2SzjH1d+EsoUR
-	 J8ZDc76C/5gbeiZIGHDQRSsh/BNa6Rl1+BrceymiC7dtlbsmqrIClJygzFYrKD5u84k+n
-	 UBCGDwwATpEWzBGYO8FdI6MTflbG+ctA5G4GFqKhg7YHNr32WuFXPKxYX2lbp8X8aA2kH
-	 +U4gcXvEOWD4nZvLJuI2P0zmVqwE/w6B7nh1B63Ocm/wCkPH5ZCYnq9w/6ckiJqDbd9pv
-	 w6Sb22kodeoeGNUKBuBwD8s3pYrDwZrW5Mzu1J1yiN2ptuZBGuXnNTh/4Ek804oR0qg==
+	t=1793694818;
+	b=36Bvy5H5ksStf4vjPr7QtETUclTO0zBWKQ/bHJOKaHoMJWWhPh1xST1FV7nhJPHs4nd1
+	 NaB1yVo3/9mwCeTMWu+3Zy1CdF8ic/muNXjGBze48q1ZYzx9ialIyCWocP9uzw9J03+qw
+	 FNOuKS2FuM51nBRrhGOV6LPM7XewLEcrzl/ORrPVyyxjG5Z68XIoiNtUnsMzQ7frrLmgx
+	 jFrjWgPnZISK4heaC1TvGCNTGzSHzk17CPDnA4+XKYmf07FD8WZLIO4NlBg1O4BF1JdQT
+	 y9GHgpSc34mylYITRD+mBaxdmG4LcqamlxslK8YH2dvTj2uIugJ4gPsSHQYN3Z03N4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793692880;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=ehwzOpY+5iVE3j6WVm2TXcLNJINME3okxxCBbLDAVE8=;
-	b=O0wnakoUWoyL9YZIXV7eWcWyPBJP39miNx6STtw5rXEAb0W+v6sFQEO4KRAi5+ildCZK
-	 z8EkWLaHMkWcSjOnsXBuV+2QxGjkLsRilyHyCDe/ua+4j/HwkP5rquEHn2PMJrjX1+qR6
-	 w5F4z8F4CHylhnNnZu7bWFsHyrB9COvd9sZMMdP3PDzDrZSqvxdReWV5mexng8Ovg5PqM
-	 d03zsTVZxnRrddqKtKfmGwNjic03hxy1uDGMY6aKgkHpqebUSMPL13fJgB3l5isE7yjqS
-	 NjsBH8bKJyOdL0yc9w5SKr6NeBlfJGEgHjC62KXF4+b2p4JQR1IwUxzZ3PmHWoGyE8w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793694818;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=+MngY9dah/x26kMsJryyjRHG0SyAu4uP9xkz02vdgpc=;
+	b=nJpwRwb2UHqM0TvKqP3g+leJnLJUjqv5xxCZrcbnXQfVAyO4CUR/H9iaPjxqRcL2SxH4
+	 WPfBo1wvg+06285DzIi0me/OXtJF3NGFekKbJQsqILEuXZ0S4181b9A7YypXVr1YNSC6B
+	 kWxIIzaIG+lY/hTzJqiLSf30sPyCDODVLPCLRSLrAqpoOnBbawEFgqukrEMCbZ8RBOhRo
+	 fieK+RLl+3q9tqDpDlEavHCxOxwAxS5ddz2hjm05pywhvtTrO8b9kR5WiRlb+TF8z70yB
+	 rC+WfavGkvZsNfsCqE4o2hwJcyymnelLs7MhdIszsPasMCshJljaA8bFmLfAOC4jjpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=LuuHQnCE;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=JTep0TxT;
-	arc=none smtp.remote-ip=202.12.124.156
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BFspNVuN;
+	arc=none smtp.remote-ip=209.85.161.50
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF11606A32E
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 08:01:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0AF11606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40077608362F
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 08:33:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 40077608362F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=LuuHQnCE;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=JTep0TxT
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5BDD87A0062
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 03:01:19 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Nov 2026 03:01:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1793692878; x=1793779278; bh=ehwzOpY+5i
-	VE3j6WVm2TXcLNJINME3okxxCBbLDAVE8=; b=LuuHQnCEH3e9nhvdqIxUoGa1QS
-	f6cVYqUKnh6KogfzoYg/y/kCFWUP64lpWbtgSxdiRolIWpKeO+wb2U4N49t3xgf3
-	ffvkpUjB7KFGyVdY6Y3V/uci88WU/5mPVQxW9Nfqj9oHwz0dlPrFfqxVFmAQXL+w
-	IBgDebqTWDq+YxwYUn+G9cnQPqBYcKNTlB2PpGEQGr2eR49fAazC0vpxY8w1RNue
-	+d9JQfZyj5WDzhqmCb3944Tyg/a9sKwOg4rsdcXa/C0NhWVIYrVF0egriD7Owb4v
-	HWR5fL12cH4ReZ3T4dtZZ0WNesXSL+S7j2PN/eH5JLglClmBg9qSOmQS08Aw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793692878; x=1793779278; bh=ehwzOpY+5iVE3j6WVm2TXcLNJINME3okxxC
-	BbLDAVE8=; b=JTep0TxTQt04UNxNFrEpI6IabM7oS2u+xqCw8ia+gSjuiTNvip+
-	N6+KbQ+rgY141NKrspI0NguFg57ocg/yym9ykKaqznkETihrt9r+5tT0PtAxhlbU
-	KP7daibF9p55qS68b0OEU9xQZkFp1kd1ubsfanp7V9OE2MzO53D+sKdz7BMojF0F
-	hIef3QKivRbjfFsyltkb+sHLnPObjoLIyTfWRNqaQ/dQeyEXzTdc9xfYr2NDTUtd
-	ZhXirGNggJmPuO1uglefadvV1yopzmVwSD3nmO8FlF10F8Kyouac5OLsOG0XQDVh
-	mgXORCH8KUFM1YSIYSHauGHALhVTN+MQpxQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793692878; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:0PitDT0s/qG8u5aiT3hrglw3IXwZM1RSwS/lO71Q7njZFba
-	XepnqcHmoEPOCJbTS297ReNyGkabqRwMzFYalFZbjrynPzM6NlPnNnzHzKIohnAy
-	nI23ass8NK3TlY6pGEzb9eztJCMs2w8fTfDtUW6aT0PHoB6qIZKic6hDL7BJJ8m7
-	CEIZGddqoL6WUXm6QepHvS8ivTs8CV59h1Hpx8xQb6Ewzs/9XDi6MR414NWkDzl3
-	y9xJFZlDrBYi3p+2fu6j5abE/dEhS7L/AFGrLfsIUNpfc0sNajFX+H7aeZZYJ0nn
-	OPJMxWh3g9nEu+/+Uz73BLC6gcivHtTAGCVd0lA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:q8ymcYiYtNlXMcvQ+oHzFbqnE1qC8WUxwhRh/ckwL8w=:6JYDcodP8FEHHZA+YAyZJTXtrH2cdmCmG9iw4SnQxes=;
-X-ME-Sender: <xms:zpTpan4SEpnh2OS8UxdkM0Xaid7Q6IF6-y9N5dTXM-TVl38gskBB4Q>
-    <xme:zpTpavIXRbglcPap6jONy_-qYVrKNdWlYYqqarP7kClnQDFAiDN8lH4xTKIW5MPwt
-    vD1TF1ALd6Q6cW_VAMsJxCmgovOb_e6NsLu9mfDlZAiIRxVtoVUww>
-X-ME-Received: <xmr:zpTpagt6SmMs-_NCTRymnPWHvF6hf32A6WQQuMxUlBaUZMnLjbADvw>
-X-ME-Proxy-Cause: dmFkZTGohUvRIOQRnm96HqDsmycmc9NfNQ0PahCCGPhwlMhYdBIJRJAWgGQII9a5kw+L5x
-    4NcEOTDAsfDGjAdH7LrisAnNIqzqlfqXu3kPvt9Uvc+m1i3kOxg274XdYzSkRBBBrVDPQD
-    j0F49ReoAGXOzCPmFOcMsC5AqcnaP8v3QV4s/L7+HaGvZULqE9gR5TycUMScLYLkmMjAbv
-    6n1lZbvRsIhYBGP++OhCKXdrp4rjfIFinPz1a/zaqMy2Em0ta1ovYml9J21Z9UxCIBvnek
-    uHJheUIYFSgTaWKbvtqdn8cDjVWgi/CkYE8ieefcyZxJFaW7mYcoPfr8SLrZeMfck0WuaC
-    OWitDXqBj1Ej+eSrSe20RtiglukyinyQqH89Evtr1wEMbXWijaL6LdYiZKI+bYen7xvcTU
-    s+huYgAtDXunpDTKtPtF1ckjm5d9sWNrDY1Gxzq5XsmZkay89ldlcJgLGuOEGmGgnGM8Ul
-    bUpxd9vxVMsKDDa6zj/tKSXJ4f47oprQtHSv6wmDLIUe0BCsN5oH2OwK8vuHm0HiRaPH5H
-    bk6hwjxW26BUQ/vn4goD+PwGKZ+VNyD/F4q+GXafbiSR05qgwQN8JOIXKbZf/47E9rr25J
-    8Ip56OsSYYhRah2UDYBGJs+H5FHQwV84G97x53reQzrNDdAHTuc8258kBqgg
-X-ME-Proxy: <xmx:zpTpauJGL8uqhXo5NOamO99LcRnAlXMIoYvaxMk54PVVmuSN5E3vVQ>
-    <xmx:zpTpap8O3ZhQJNkEEv44B4EI3dkLwCach5iED8WQeRuim5ZRkrVGVQ>
-    <xmx:zpTpanxzI2BhBsH5Lw5ESOPqDoo8x2lkDuBYPXlpO0CLTRtM4paYZQ>
-    <xmx:zpTpam7vAzvm7OOla1hUCVcCWglQ66BDREYfnRtr0kMglrh9VHFvHg>
-    <xmx:zpTpag4tYkpCsbNIeOwaVdZKjhFNOzSYPpOB8ETfVCSgqR9sOzx1NVDK>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Nov 2026 03:01:17 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 75170568 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Nov 2026 08:01:17 +0000 (UTC)
-Date: Tue, 3 Nov 2026 09:01:14 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Farid Zakaria <farid.m.zakaria@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, M Hickford <mirth.hickford@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH 2/2] credential-cache--daemon: do not take over a running
- daemon's socket
-Message-ID: <aumUyl6MQa43OFBs@pks.im>
-References: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
- <20261101-fz-credential-cache-race-v1-2-28f0bac51e11@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BFspNVuN
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-6de2f213b7aso1671136eaf.0
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 00:33:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793694817; x=1794299617; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=+MngY9dah/x26kMsJryyjRHG0SyAu4uP9xkz02vdgpc=;
+        b=BFspNVuNgXiBCRMGTWE5OiZxLYIhCOruEE6zHRCZm1LtsPrGyif50VkrFtPZHcsxHS
+         +YTDcafvQDrSjqFJR3WSp3p3GJ18sym/4AkR1BmzTP43KOMI10ed1+nLDAfMROnVki2s
+         dd3/IYW9wnWXZyQHhXrw47k1fhnTzmDw1XFWzmtvyd/yDnMPCd+Mm/YPTiZk/IcAupNO
+         crU8iWnmIpLyYvYeMnKVF4uysEU2xNQEl7vyWV1hKl5L4JIynEX1FBEgw4n43sXQYj/3
+         cq7IdVk7tcdQaHwuDLsPchyGnVqilTrY01WJrnIxen02F32wOXGaaDfkPJEdnJO9A3o7
+         6BQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793694817; x=1794299617;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+MngY9dah/x26kMsJryyjRHG0SyAu4uP9xkz02vdgpc=;
+        b=IaBk0y4zux3hffhT3K1COOGY03SqFBFktQjiqiwIn3QMuMUkpuDHvDAVIFPrbfptSV
+         lv2IJsKpNhu4fepzJpxhag6X5WKnWZyQEM0bw8zvWnp4Vlh9caFu670tKPVU1f1KmEwp
+         +D5ZOzCr6WMsjqouMGSNI5fcb6A9m4cIdlhZi2A80dX5Y6CpmlaJscazp7zo9t4GHOZD
+         OUYSbBouQONB+racyDVjQoxEDIKZHMrYkCIq7/IjW9x1vjiR2CKJh5weY5XJQDCrV2eq
+         ypjTxWgkRnoZNJZrjK95VhPG8J+pLemxp1cLAecmAh7ZEG2Qe8ttoApX87X9CMeoyt5+
+         FbCw==
+X-Gm-Message-State: APuU4Z/vv3vE66qh/d3raY5bvzXMlDDQJNIHoLI+tWumsuLbstzCJ/3o
+	/Qjm4fE1AWViId5G2zM7CML2AGISvodjkaOfJpmRFMS4uuHJLXv8NQtvQ3bWSVn/Mmk=
+X-Gm-Gg: AYBFou1ThAP8DmZSLSTDrgz0BvlkvnpPJRFHACYzwwbVLK0pftzhf6L6ehhS6qfCIsT
+	XtOBBJQ1x1UEykmqSfoiaJK4Xxt/NIgaRngKz2NyCHS9Ue2VDnCB2b4saafh5wEyAwD9Tb0lSDL
+	eCzzoPAz9cZjXXkZ0ffMzH3lpHCmIAK3qyPDs1z1VTiP8SNp/Qmv+z5rbQJrcVAeN4IHj6WHDvg
+	DVs9mic9nXGgWH8qagKG7VjuHJoO5bO3u0EZhWfdl60raLAlRGsCEsKAeeO0TNMs77aYLlO+g3Y
+	zLDAbbp0+2UWygqHfFGkynarrUiuv4a25WU/luozjSqa7fsXqYdjVSCPNN9y+6c4yyFlUaqZ1uN
+	Zg5mmsAtpT3CQki9sQ8OoNE/GMXb/nTbJPtyyNAn7ie5LnxejZXOCZKjDk91YGaxhDMt2+wnTdV
+	YAIxFKscEPIB1HNwqC1RnDAFLmdqqTe0wJP4MEjpnIMVVGoa7Vtqtjj7/zYQvEMgggwhqhT1vnk
+	xrA52FlZvITiNh+ZYq5Eas93ig+/xwlqvN4ZmgoIQJDC5mvaIKp+sm/ELSZkxmOQ4LI/nChfn8A
+	je/XeIZj+PlXILmHxebhLszD3D1DUqyFmQ==
+X-Received: by 2002:a05:6820:2206:b0:714:75fd:7758 with SMTP id 006d021491bc7-714f2a2ca2emr6819014eaf.66.1793694817073;
+        Tue, 03 Nov 2026 00:33:37 -0800 (PST)
+Received: from [127.0.0.1] ([64.236.131.249])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-714f2d1b4d6sm10357154eaf.8.2026.11.03.00.33.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Nov 2026 00:33:35 -0800 (PST)
+Message-Id: <pull.2470.v2.git.git.1793694813386.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2470.git.git.1793298807397.gitgitgadget@gmail.com>
+References: <pull.2470.git.git.1793298807397.gitgitgadget@gmail.com>
+From: "Husain Sitamuwala via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 03 Nov 2026 08:33:33 +0000
+Subject: [PATCH v2] check-ref-format: use parse-options API
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,71 +96,235 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261101-fz-credential-cache-race-v1-2-28f0bac51e11@gmail.com>
+To: git@vger.kernel.org
+Cc: Husain Sitamuwala <husainsitamuwala21@gmail.com>,
+    Hussain Sitamouwala <husainsitamuwala21@gmail.com>
 
-On Sun, Nov 01, 2026 at 03:29:26PM -0800, Farid Zakaria wrote:
-> When no daemon is running, two "git credential-cache store" run at the
-> same time each try to start one. unix_stream_listen() removes whatever
-> is at the socket path before it binds, so the second daemon takes over
-> the socket of the first. The first daemon keeps running, but no client
-> can reach it:
-> 
->  - the credential its client stored is lost;
-> 
->  - "git credential-cache exit" does not stop it, and it keeps the
->    password in memory until it times out;
-> 
->  - when it does exit, it removes the socket of the daemon that is
->    still running, losing that daemon's credentials too.
-> 
-> The fix is to create the socket with unix_ss_create(), which the
-> simple-ipc server already uses.
+From: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
 
-We usually write commit messages as if instructing the code to change.
-So: "Fix that by using `unix_ss_create()` instead...".
+The command parses its options by hand, comparing each argument
+against string literals. Use the parse-options API instead so that
+option handling is consistent with other builtins and the help
+output is generated from the option table.
 
-> diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-> index 0dfa11e2ec..de6720c276 100644
-> --- a/builtin/credential-cache--daemon.c
-> +++ b/builtin/credential-cache--daemon.c
-> @@ -231,12 +232,26 @@ static int serve_cache_loop(int fd)
->  static void serve_cache(const char *socket_path, int debug)
->  {
->  	struct unix_stream_listen_opts opts = UNIX_STREAM_LISTEN_OPTS_INIT;
-> -	int fd;
-> +	struct unix_ss_socket *server_socket;
-> +	struct tempfile *socket_file;
-> +	int ret;
->  
-> -	fd = unix_stream_listen(socket_path, &opts);
-> -	if (fd < 0)
-> +	/*
-> +	 * Two clients may each start a daemon at the same time. Bind only
-> +	 * if no other daemon is listening yet; otherwise leave the socket
-> +	 * to that one, and our client will talk to it.
-> +	 */
+Keep the existing behavior: --print stays a hidden, deprecated
+synonym for --normalize, only --allow-onelevel can be negated, and
+parsing stops at the first non-option argument so that options
+after <refname> are still rejected.
 
-This explains what you do without giving much context why you do it, so
-this comment is somewhat useless. Most importantly...
+Drop the early show_usage_if_asked() call, so that -h is handled by
+parse_options().
 
-> +	ret = unix_ss_create(socket_path, &opts, -1, &server_socket);
-> +	if (ret == -2) {
-> +		printf("ok\n");
-> +		return;
+Two minor differences come with parse_options(): unambiguous
+abbreviations of long options, such as --norm, are accepted, and
+"--" may now precede <refname>.
 
-... you mention that you write "ok" in your commit message, but you
-don't explain why that's the right thing to do. So why should the daemon
-pretend that everything was alright in the case where it fails to start?
+Signed-off-by: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
+---
+    check-ref-format: use parse-options API
 
-> +	}
-> +	if (ret < 0)
->  		die_errno("unable to bind to '%s'", socket_path);
->  
-> +	/* Remove the socket at exit only now that it is ours. */
-> +	socket_file = register_tempfile(socket_path);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2470%2FCodeWithHusain%2Foutreachy-microproject-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2470/CodeWithHusain/outreachy-microproject-v2
+Pull-Request: https://github.com/git/git/pull/2470
 
-This comment doesn't really add much value, if you ask me.
+Range-diff vs v1:
 
-Patrick
+ 1:  9f05296454 ! 1:  991ca870fe check-ref-format: use parse-options API
+     @@ Metadata
+       ## Commit message ##
+          check-ref-format: use parse-options API
+      
+     -    Use the parse-options API to handle command-line options
+     -    consistently with other Git builtins.
+     +    The command parses its options by hand, comparing each argument
+     +    against string literals. Use the parse-options API instead so that
+     +    option handling is consistent with other builtins and the help
+     +    output is generated from the option table.
+      
+     -    The command currently parses options manually, duplicating
+     -    argument-handling logic. Using parse-options makes option
+     -    handling consistent with the rest of Git.
+     +    Keep the existing behavior: --print stays a hidden, deprecated
+     +    synonym for --normalize, only --allow-onelevel can be negated, and
+     +    parsing stops at the first non-option argument so that options
+     +    after <refname> are still rejected.
+      
+     -    Replace manual option parsing while preserving support for
+     -    normalization, branch names, and refname validation.
+     +    Drop the early show_usage_if_asked() call, so that -h is handled by
+     +    parse_options().
+     +
+     +    Two minor differences come with parse_options(): unambiguous
+     +    abbreviations of long options, such as --norm, are accepted, and
+     +    "--" may now precede <refname>.
+      
+          Signed-off-by: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
+      
+     @@ builtin/check-ref-format.c
+       #include "setup.h"
+       #include "strbuf.h"
+       
+     - static const char builtin_check_ref_format_usage[] =
+     +-static const char builtin_check_ref_format_usage[] =
+      -"git check-ref-format [--normalize] [<options>] <refname>\n"
+      -"   or: git check-ref-format --branch <branchname-shorthand>";
+     -+	"git check-ref-format [--normalize] [<options>] <refname>\n"
+     -+	"   or: git check-ref-format --branch <branchname-shorthand>";
+     -+
+     -+static const char * const builtin_check_ref_format_usages[] = {
+     -+	"git check-ref-format [--normalize] [<options>] <refname>",
+     -+	"   or: git check-ref-format --branch <branchname-shorthand>",
+     ++static const char * const builtin_check_ref_format_usage[] = {
+     ++	N_("git check-ref-format [--normalize] [<options>] <refname>"),
+     ++	N_("git check-ref-format --branch <branchname-shorthand>"),
+      +	NULL
+      +};
+       
+     @@ builtin/check-ref-format.c: int cmd_check_ref_format(int argc,
+       	const char *refname;
+       	char *to_free = NULL;
+       	int ret = 1;
+     - 
+      +	struct option options[] = {
+     -+		OPT_BOOL(0, "normalize", &normalize,
+     -+			 N_("normalize refname")),
+     -+		OPT_BOOL(0, "print", &normalize,
+     -+			 N_("print normalized refname")),
+     ++		OPT_BOOL_F(0, "normalize", &normalize,
+     ++			   N_("normalize the refname and print it"),
+     ++			   PARSE_OPT_NONEG),
+     ++		OPT_BOOL_F(0, "print", &normalize,
+     ++			   N_("deprecated synonym for --normalize"),
+     ++			   PARSE_OPT_NONEG | PARSE_OPT_HIDDEN),
+      +		OPT_BIT(0, "allow-onelevel", &flags,
+     -+			N_("allow one-level refnames"),
+     ++			N_("accept a refname with a single level"),
+      +			REFNAME_ALLOW_ONELEVEL),
+     -+		OPT_BIT(0, "refspec-pattern", &flags,
+     -+			N_("allow refspec patterns"),
+     -+			REFNAME_REFSPEC_PATTERN),
+     ++		OPT_BIT_F(0, "refspec-pattern", &flags,
+     ++			  N_("interpret <refname> as a reference pattern for a refspec"),
+     ++			  REFNAME_REFSPEC_PATTERN, PARSE_OPT_NONEG),
+      +		OPT_END()
+      +	};
+     -+
+     + 
+       	BUG_ON_NON_EMPTY_PREFIX(prefix);
+       
+     - 	show_usage_if_asked(argc, argv,
+     -@@ builtin/check-ref-format.c: int cmd_check_ref_format(int argc,
+     +-	show_usage_if_asked(argc, argv,
+     +-			    builtin_check_ref_format_usage);
+     +-
+       	if (argc == 3 && !strcmp(argv[1], "--branch"))
+       		return check_ref_format_branch(argv[2]);
+       
+     @@ builtin/check-ref-format.c: int cmd_check_ref_format(int argc,
+      -			usage(builtin_check_ref_format_usage);
+      -	}
+      -	if (! (i == argc - 1))
+     +-		usage(builtin_check_ref_format_usage);
+      +	argc = parse_options(argc, argv, prefix, options,
+     -+			     builtin_check_ref_format_usages, 0);
+     -+
+     ++			     builtin_check_ref_format_usage,
+     ++			     PARSE_OPT_STOP_AT_NON_OPTION);
+      +	if (argc != 1)
+     - 		usage(builtin_check_ref_format_usage);
+     ++		usage_with_options(builtin_check_ref_format_usage, options);
+       
+      -	refname = argv[i];
+      +	refname = argv[0];
+
+
+ builtin/check-ref-format.c | 49 +++++++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 22 deletions(-)
+
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index fd1c9c0e0c..d698da99d9 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -5,13 +5,16 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ 
+ #include "builtin.h"
++#include "parse-options.h"
+ #include "refs.h"
+ #include "setup.h"
+ #include "strbuf.h"
+ 
+-static const char builtin_check_ref_format_usage[] =
+-"git check-ref-format [--normalize] [<options>] <refname>\n"
+-"   or: git check-ref-format --branch <branchname-shorthand>";
++static const char * const builtin_check_ref_format_usage[] = {
++	N_("git check-ref-format [--normalize] [<options>] <refname>"),
++	N_("git check-ref-format --branch <branchname-shorthand>"),
++	NULL
++};
+ 
+ /*
+  * Return a copy of refname but with leading slashes removed and runs
+@@ -58,37 +61,39 @@ int cmd_check_ref_format(int argc,
+ 			 const char *prefix,
+ 			 struct repository *repo UNUSED)
+ {
+-	int i;
+ 	int normalize = 0;
+ 	int flags = 0;
+ 	const char *refname;
+ 	char *to_free = NULL;
+ 	int ret = 1;
++	struct option options[] = {
++		OPT_BOOL_F(0, "normalize", &normalize,
++			   N_("normalize the refname and print it"),
++			   PARSE_OPT_NONEG),
++		OPT_BOOL_F(0, "print", &normalize,
++			   N_("deprecated synonym for --normalize"),
++			   PARSE_OPT_NONEG | PARSE_OPT_HIDDEN),
++		OPT_BIT(0, "allow-onelevel", &flags,
++			N_("accept a refname with a single level"),
++			REFNAME_ALLOW_ONELEVEL),
++		OPT_BIT_F(0, "refspec-pattern", &flags,
++			  N_("interpret <refname> as a reference pattern for a refspec"),
++			  REFNAME_REFSPEC_PATTERN, PARSE_OPT_NONEG),
++		OPT_END()
++	};
+ 
+ 	BUG_ON_NON_EMPTY_PREFIX(prefix);
+ 
+-	show_usage_if_asked(argc, argv,
+-			    builtin_check_ref_format_usage);
+-
+ 	if (argc == 3 && !strcmp(argv[1], "--branch"))
+ 		return check_ref_format_branch(argv[2]);
+ 
+-	for (i = 1; i < argc && argv[i][0] == '-'; i++) {
+-		if (!strcmp(argv[i], "--normalize") || !strcmp(argv[i], "--print"))
+-			normalize = 1;
+-		else if (!strcmp(argv[i], "--allow-onelevel"))
+-			flags |= REFNAME_ALLOW_ONELEVEL;
+-		else if (!strcmp(argv[i], "--no-allow-onelevel"))
+-			flags &= ~REFNAME_ALLOW_ONELEVEL;
+-		else if (!strcmp(argv[i], "--refspec-pattern"))
+-			flags |= REFNAME_REFSPEC_PATTERN;
+-		else
+-			usage(builtin_check_ref_format_usage);
+-	}
+-	if (! (i == argc - 1))
+-		usage(builtin_check_ref_format_usage);
++	argc = parse_options(argc, argv, prefix, options,
++			     builtin_check_ref_format_usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
++	if (argc != 1)
++		usage_with_options(builtin_check_ref_format_usage, options);
+ 
+-	refname = argv[i];
++	refname = argv[0];
+ 	if (normalize)
+ 		refname = to_free = collapse_slashes(refname);
+ 	if (check_refname_format(refname, flags))
+
+base-commit: b9e5cff1803ab24582201ef059516eb16014b9d9
+-- 
+gitgitgadget
