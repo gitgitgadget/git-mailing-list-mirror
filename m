@@ -1,107 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.42
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793700062;
-	b=phu4BDu+Z3Sv7ICFttuwD5sp/QJxYC4XAW10CfDO/cGbpkepuHCActW6G2WJX+ZJ/Nbz
-	 bijsauo1VXobOIAt1UxEUaMUsdbmy6MKIckqfQU6rwKpZjUXd/sdCJZEl93gZo/EYLMCD
-	 QFue4sZWu4mwgfBZvSsvUnhgPJ+h5Pv3UNjp0ZvYpaSB83X+cJoCBT55KpnIVzu+UWlws
-	 3xaBeFmtTQQl08tVV89Ad+BDK6AhWB4wMlq5AiAb0ONCQ7YKGjV8+bpQeTtvs3kM10Q7y
-	 BvwEXBpTPs+7LmyOlkIIEceWQvbvcjfF8dXzPvN/53AFi7Fd1zn4zny7WJ7xfNbm+Bg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793700062;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Received:From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=SufCO5vXmOofjrNc8DxAFwJiS5DhDr/MoaIEp3PctGY=;
-	b=XKrL3iSrTUEmZO3GlWeAP5X5vRCDr28b/5VVoZh+07gdmyA6T++UEeW870pWc76DqQY4
-	 z6cafqapQcW41e+whoumDTGAyHGwPXCYNdtwsbqSZHdnNPxSRn8Fk19Q9p8ypkDTXz1Gj
-	 akT3R2VcqhVRTASAMzq2STRxZdfWfMtFP6YXiPJxtyYcJQImPHU/ojqpls/NW6lJFvk6x
-	 UKtxiURFxF5vcac8TycDJ0Yt6glRCq0V9ERi3JTZYhfXhTZoZmpPtezXn0K3O3/DIEL62
-	 YkhhSryY+0diZlSxS6tnmrnSE4k+i5F9kSsSej+2VisT8w2RB6OqieFcJrYsbkVf93A==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ai86AIuu;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.42
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793701045;
+	b=SRHIsTiCj0aIedXpXWRjqwxoJaPmUO3zopLXZDnpA6ISvEzBrbrIt2EBWt9K6gD173js
+	 bHYIPjWOWGqjpogaSMaVG02YSx/KREbOv56eGqL9ejuyVZeIHUkO6Eq8fJH4/JZRpcuz9
+	 /46ta0JwV4lQrZ3P7ap4i9R1HRaTe9coV13mPYdlupVKVNBLJ+ZxQHwKqkPxanz1p1SF3
+	 KUhRvEAMacwTeArtnHT1/1FLMQjZ0GgWJ2xprsYsncjwllbIZ4dMyZ3JUt+9kJtQ7wwWp
+	 /2UVK4PrEF1v2SidR07v06Rl5lQ/CH/Q+3UxYz/MqiFDFt66/BFvmEZkNHMWvQx6OFQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793701045;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=c7QkNcxmvKq2IMvQ3l8BE7/iMCwwQkLcn6U025jNQJg=;
+	b=AFcX7BgYVOjg++zvsyIn4LNFn4pY+DWr4fXrxjSA4iPElq67QAl3HNGOxxIhNP4saIYc
+	 qxFJ7RbIZMWTlWsxVRcXeEEZeko6HGkhxkZ0FBiufLCuUVfLM2OxnvqotYh5kzxVoiR4y
+	 szLSpoFbvAVThRShdxIg6EnKj63HxsTyo6XWGznat7uDWMXAIDWFWUWLRpfzIaFYwZyvZ
+	 0Y9M8KD0mbHpd5RYJU+L83idVCDYuUKUWpxqXeRvOEDKbzd+X7To5kXdiymM27qv4IO42
+	 yk8iJQBNw6NGrTpW6FxboeljO5TNzKlLRzWz6VCOA6USqmfYOjbWzSUefwpQobgXrYA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=hCOVVgZS;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KkBxaoZl;
+	arc=none smtp.remote-ip=202.12.124.149
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97557606B355
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 10:01:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 97557606B355
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBDB606B119
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 10:17:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BBBDB606B119
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ai86AIuu
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-97ccbba8e86so932953241.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 02:01:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793700060; cv=none;
-        d=google.com; s=arc-20260327;
-        b=bPOSIZI3XmYdQF6jdIQNW8AE9ehV0CvhPT+/vMzbhPenPnZQaR+Q+A44SEf4zZwHv1
-         lnML8aTwY+Va5vN2ob0gEWfSyTn7E82rjQSU+zOHC0B5bZ5yYMUfZqpvQrVhBZ1ddpH2
-         1ETNLuxqAm714FEK47LucJUmfS+kGT5My/zZW72LJL7PP2SlN6SiNbXhotxjCpMLOHfT
-         YXPZxNzTyxpNzP+XBfHfSWoQKdR5nOzGstvZUXau9DAYoRiGrzhvNr30jCq1p1N7eXH/
-         vO6mkCO+DFfps1UUCw1OKFL+tJYB2JxiAZLCeY//FlPTXYuIh7x0uPeWBO/zMxj0EXIQ
-         KJPA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=SufCO5vXmOofjrNc8DxAFwJiS5DhDr/MoaIEp3PctGY=;
-        fh=MqLSLQvXULoGitqjW/cQkDcXLZlXO+Bls23DzTn9+eU=;
-        b=EfkdfpcqpqGnxTWDNLhAaChR/hF8fmYuj6sKspwPE41vddN4FSpDrrsj7ftsppaVmT
-         o4sgvGCgdGud4BYlskSu4p6SQfaJRFdLoglUFvloDlhJTPP+oMEb9gCV/IcI9JQtQ8Hu
-         h6KV9KrW4V3q20WqEaYTYsguI8saLU84bD1BoivAn5u0514cmFZ+A6pzbRvJZwfoXA2G
-         Gv/6Z8UTADSM9zbwZUSpYAV4xwnWtDztJAlXkrR+QhQFTL1EgUiQoZ2YWf71YPO0MmzY
-         UQD+Dka3WeD1hpi4bnpPRAjQSk2wq0t0/bEkVYqQ1VxuPLlbSx4MqpNyheDCrjqbGYg2
-         OT5A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793700060; x=1794304860; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SufCO5vXmOofjrNc8DxAFwJiS5DhDr/MoaIEp3PctGY=;
-        b=ai86AIuuIWWMf0o/xHVHb6dYUKp3lRELBH8dAo+1nGpUH+21cseGnCOzGF9bX3w6sY
-         rXucBJyKZNW3wnDabCnT8hl7eByrNy3+Bj+Vr+DoiaZnvz8QqsNMs0GDyXMMDib/uWeg
-         grsEkXEmTRSvzVICJn9LgC/5jgU+gCo0MNVRJKgg+ivMRoi57lEeMd+LcK5sA25J82cL
-         2k5FezG/PN4/AsLrw1uESF5F7vljtiidKtm6jHKMAVklhrIB4iCb3ZsfOWWBQgYVvYuo
-         ZWNcz4BfzkaYDTSQ+kojYxyW+JUq1d7Q5IlHGRjEekfm++MUPaYeZ7wYqqO7AznBoiGn
-         0HYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793700060; x=1794304860;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=SufCO5vXmOofjrNc8DxAFwJiS5DhDr/MoaIEp3PctGY=;
-        b=U5RYZG82pFiEshqy6PmQzaAXuVpOggLZseImvzzHlfYSX3W187Ww6JDQTz7LO6GLU7
-         IR5WvAjiOQyHks1KWCNBZWJQo3QfTaRvnZ5tLtVTTk2xPfQBhKkQ8JksVrtInRWp83Ih
-         98z1lrM5Tu//1NOoeT69+s8qtd9tU3SQylGP29k60A2bg2o4YcIDwBpBL+K2Q5Vq9X2q
-         QEHTk+8tvEzAlubVz4qLJMgR5y7/CPxOJmm3U2380vn26iI0wf9jzkg9FtTrRj6Tc1rm
-         GNScCFMvJrPQmroEVqxHhefJeizLDQk9PKD7mO7M6hX98O250OQaKNUkG1BFLA5n44iQ
-         mOXA==
-X-Forwarded-Encrypted: i=1; AKwUvBw2pe7n/B0X1zdUS6X7IRS5X9Du9/ef0xtyY9JymMyY6qEvHb4rBzNegdOl4USk8ItRz7w=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/yk7DzKKbve82A3Xrha7cZeaBwlRFeys3axP2AQYiuZrYrWIpg
-	OB3tf2TQpNAG6IxUy460GwOPWTi31pzJHFpQ0/ZqD5iIE5smMrdAdGEEKaK6n7k5/k5FWsAq8+R
-	fviG1B19QMSS22Ke4+HiyDfqrmGil+CkcKQ==
-X-Gm-Gg: AYBFou3csAPwSW3DtAR50bDUVXeqTDeWoVedeHpEPskyfiQOIb/RagKDo1BzAsJPvwU
-	05Y5vGMB6sBWotonxSW+qhbv8NEqro23jdiPukSO6SuBu1lG5HykmDwVvo5nFHrGXKYi9N/3LhC
-	Enjd2Z1HyivfdcFZYqsCryE9udE1EjIbNYA7JkrFXLKj8ZcZ0sDSjirnQ5NB0pgSefWemMrHiep
-	JoZo4ZwbP03zXP/BHdrJHnmG10TQWAOkTWPSbDrsBg+Iv7YpKxE29jWhTIwrBdlgHTqcWiOgdYu
-	Pu24k9adZzc31GZVJ2l8J5brnrE79m3J2C9D3CQBAPJWvZWxVt36T+H6g+cmPBVDrTkWykkrx1l
-	/d4RFvquHJWsblsNPs5QKu8/1Pln2lsWq8MomMi5VvIb3B5Lfa/1p3B09bEfxI8X3hdIS9AF9tz
-	6l1B3YtOcPHr3M2AqQi6rB+GPpbzA=
-X-Received: by 2002:a05:6102:6cc:b0:7b5:7cd5:2a1b with SMTP id
- ada2fe7eead31-7d072634fbamr4225240137.10.1793700060373; Tue, 03 Nov 2026
- 02:01:00 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 3 Nov 2026 05:00:59 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 3 Nov 2026 05:00:59 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <pull.2470.v2.git.git.1793694813386.gitgitgadget@gmail.com>
-References: <pull.2470.git.git.1793298807397.gitgitgadget@gmail.com> <pull.2470.v2.git.git.1793694813386.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=hCOVVgZS;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KkBxaoZl
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0C75D1D000B9
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 05:17:24 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 03 Nov 2026 05:17:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1793701043; x=1793787443; bh=c7QkNcxmvK
+	q2IMvQ3l8BE7/iMCwwQkLcn6U025jNQJg=; b=hCOVVgZS3dgESJGm9Ow/s+XAFn
+	5kQZEJZtCYDPETP1DC/Ww3iuDo5nwmFqaEvNMeYEfbxBGKooo1BNWHUoki2AUFa9
+	k6jgyY1l0QW+Pumgmvnq910A5IYytRgAFz/vX7q+FFweiFQeDWVf2Bxp908C6QhB
+	IRP0lsx2JpY6U/8yVVrws8L6R4Aoqxq7pIVaihufDXUxaEZi+bM9DwgiTZhx3ZFO
+	6qqibvZFrAwh8tSQOWgBgvlOtKf3FuJ4mTEa93sSE1eIQYc3qFnQD+cyVapTKfX7
+	UDpWggUXRYGsfXkN0mO3DP5St2egiD4b2UzPYJMrVL+QfJ3W0L/ygPMQX76g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793701043; x=1793787443; bh=c7QkNcxmvKq2IMvQ3l8BE7/iMCwwQkLcn6U
+	025jNQJg=; b=KkBxaoZlUeKTWSndd1LUAooRQPKZffyFzMnTqEv4jT9r0XGZM8X
+	xhwVdcHf0LWfHWO3DFt5K0gy4kIShSLotZpEu4LWekDAU8IVn4Re9sn2qsL/oBr+
+	3YtPpb+FBuVyXIsyyOsArvlwhmxUL/Ho2J7gkY55cc9ZTJXMtOlAHZU+iW18xFDM
+	jmQbA+VQV2QCaSZm6mmJpF6JXPnqMKZBj2YfLtm4zXFrdKZHQzEk9L4XMlGWG2M5
+	F3GcNqZDl6HwnQ30kfXCCy7TBt6xxmmka9wHJcaOdI8nvGpoTuydNAtF1icTgAlN
+	ElDDYUTaQz8b8euO3Flkf3Xf8sydaQnqLNA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793701043; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:Vni9fHgrvu3Ep+caTrvMC7C3adi9tcVyAKw4jmPNuCFVM2I
+	jLlp7Hqc+WxMl+oj64go3ArRO6krefG+xvgqvcrp7ruexB3ht7FXDwo8IMg2DDAc
+	Il5L2O2orZzE0diUFxY21KyBWmEU6smvVW2Rk5G3w2paxswBOvhn3kwaBDiB6biG
+	HLH6rPl3q+Uwjj/VaGzLp84GC5z2+5mfzq6in7RXx1KYrMm4jFPmvVsbrErCLU7v
+	u2CZwT1NX4URjJbbQwSuH2LwytmYS63ECZDIMz2+zrC+RGMC+miwEoT6DlqJwbzs
+	IXgbnZPL2oG4AnFLOyy4MtH8TF1r34+G+iUXZ6Q==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:pZkP0rgWLIGmKdioJ3MZpOl5FiVekLBNlPZbAYZu7F0=:DTzgc7frLCUI05EMO9IYLi9wkIHopuUsCeYs7WR/ypE=;
+X-ME-Sender: <xms:s7Tpah-eMlSSoOhtUialcfEpWd_FDL0IJXPYXslewlBtFfxCfWosbQ>
+    <xme:s7TpaskTXhUYoT2Unn6pqooqa1ypUBOhPrBkPSzlFahLMz6k91cnw3NjRoszMaGRd
+    P8A7o4HrJURyr4K_6F6LNJ5amphE6X_Ymh13uo1V_n61WsZfKkJTmM>
+X-ME-Received: <xmr:s7TpanWVM82muVRZtu_FSKDfzN5y8JSwtQWtjJScwyu8RVCihd4s2Q>
+X-ME-Proxy-Cause: dmFkZTErF9kKBUv6Loq9o4X/AF/Uh28bOqZDJb4zVatY+USv59LDODSHeJt4BMPW7PnNfE
+    S+7fSY9HcZxyf0HmwBkAwKTYkxoktCUfD6FxkDy4Ek/6f5czWlk1hvUVeVJdKBpyLyOEcw
+    kGg+SDP4CdRjr58EqRasJZWGSOXrnTuO9JaBJow35bH+rm7eejfym09pbseZdq+bTne19/
+    HiYa7lyDaDRLHqfDE535aqoEIPKJDbaVS8IrBbO3efrgl9ZQaEvXKRiTXC5uy27L4jTpjB
+    jy7m481W6GcNm6V1Tkzo6fnby1ZAPBGT+xFoDoBeLeVigI6CeFU+LN6BzFh9rVr/O2jvjl
+    G8WpQSLmcO8W0Eaay2nme4sLXpOmruwPk1wN/xwbaWEuIQ9q5WcBdrzyBQz2LuZbsGglEL
+    p1X2YXxTJTYu0dqL1fJ149uJ/1qVGZnv77wqJO53KL/DgnXvwYDFWpKMI19YIGnIC7kqVX
+    gvJsYfUp5/thJV1Vy7Jb/fPayV35DQdzSRtxsAj1SQNX/XVAA7sBjfu+0hY3ydm5bkDFEt
+    VC9MMR5vNePkQEgCVNenCG6BzYQNsnKuiq3kD33uOdTHLKBg8Slm2j2BNGQH7/3MLFB5ox
+    Gg93UqFVIdAMud3ry+vRNkMwj/Euz2iBrXM4Xh0dyFMm02mxzeAQud8e5xjQ
+X-ME-Proxy: <xmx:s7TpahHrunp4cfDDZQQ4BWxxxmjxHkynbYxgeItY5eoRQPWmt_GDVA>
+    <xmx:s7TpajcZidc_jArREbh2HpANC1y8zuTKr2PrQErenGRBUJCewd7axQ>
+    <xmx:s7TpaiKAt-aDDPSE5eOq9s5YL1ffDEi0WuMKJU36CC8PQT5rKi8o1Q>
+    <xmx:s7TpaoFi0QrlOk4Gn1QdRcurvJPDVFUUNIwZdJxAI4iC1e6wZ1nGHA>
+    <xmx:s7TpaiEHcC7azktdm8GXbIWlQNmI05EUWg9FcQx8fDaUhJ2bODKdroNO>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Nov 2026 05:17:22 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4f1ccf02 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Nov 2026 10:17:19 +0000 (UTC)
+Date: Tue, 3 Nov 2026 11:17:16 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] rev-list: ignore replacements in the connectivity check
+Message-ID: <aum0rJ6T-OFWrMqW@pks.im>
+References: <pull.2279.git.1793634429929.gitgitgadget@gmail.com>
+ <xmqq4idyhotf.fsf@gitster.g>
+ <CAL71e4M7yFnTzYD0eVVGRmzkzSXbU0KZ-JScQOyB4-dB5xkAHA@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -111,75 +126,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Tue, 3 Nov 2026 05:00:59 -0500
-X-Gm-Features: AclHuK8ooZI4aeDL9vS44LajJdQwWIv_3Q5RMlfasWP3WtLwRaXR1gWzo9Ei3Xo
-Message-ID: <CAOLa=ZS3ULcNVjV1DMO-iB+LcC2Gnw+9oU2_7VXKoLvgiVRnbg@mail.gmail.com>
-Subject: Re: [PATCH v2] check-ref-format: use parse-options API
-To: Husain Sitamuwala via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000eec411065f5c56b5"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAL71e4M7yFnTzYD0eVVGRmzkzSXbU0KZ-JScQOyB4-dB5xkAHA@mail.gmail.com>
 
---000000000000eec411065f5c56b5
-Content-Type: text/plain; charset="UTF-8"
+On Tue, Nov 03, 2026 at 09:35:07AM +0100, Kristofer Karlsson wrote:
+> On Mon, 2 Nov 2026 at 23:05, Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+> > writes:
+> >
+> > > Teach the connectivity check to ignore replacements as well, so
+> > > that it verifies the same objects that the commands relying on its
+> > > result will read.
+> >
+> > Sounds like absolutely the right thing to do.  We might want to say
+> > that we check both the original and the replacement, i.e., instead
+> > of ignoring replace refs, we ensure that the commits, trees, and
+> > blobs reachable from the replacement objects all exist by treating
+> > those objects as if they were also at the tips of the connectivity
+> > graph.
+> >
+> > [snip]
+> > We can address the "shouldn't we make sure that replacement objects
+> > used when the resulting history is in use are backed by objects
+> > reachable from them?" issue separately.
 
-"Husain Sitamuwala via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Yeah, I was wondering whether we shouldn't verify both original and
+replacement object. Previously we checked the latter, now we check the
+former. But is either of those variants the correct thing to do?
 
-> From: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
->
-> The command parses its options by hand, comparing each argument
-> against string literals. Use the parse-options API instead so that
-> option handling is consistent with other builtins and the help
-> output is generated from the option table.
->
-> Keep the existing behavior: --print stays a hidden, deprecated
-> synonym for --normalize, only --allow-onelevel can be negated, and
-> parsing stops at the first non-option argument so that options
-> after <refname> are still rejected.
->
-> Drop the early show_usage_if_asked() call, so that -h is handled by
-> parse_options().
->
-> Two minor differences come with parse_options(): unambiguous
-> abbreviations of long options, such as --norm, are accepted, and
-> "--" may now precede <refname>.
->
+> I have not fully thought this through yet, but I'm happy
+> to follow up with further strengthening if there's a gap here.
+> 
+> My preliminary thinking is that since replacements are
+> implemented as regular refs (refs/replace/OLD -> NEW),
+> their reachable objects should already be covered by
+> ordinary connectivity checks when those refs are fetched
+> or pushed.
 
-If you follow our 'Documentation/SubmittingPatches' guidelines, it
-states:
+That's fair, I guess. The question though is whether we can rely on that
+property when the replace ref was already written locally. But I'm not
+sure that we even _should_ care about that. It's arguably the
+responsibility of the user that wrote the replace ref to make sure that
+the new object is valid. And in the context of the connectivity check
+done as part of a push we always assume that existing refs are fully
+connected anyway.
 
-  It is often beneficial to allow some time for reviewers to provide
-  feedback before sending a new version, rather than sending an updated
-  series immediately after receiving a review. This helps collect
-  broader input, gives reviewers in different time zones a fair chance
-  to comment, and avoids unnecessary churn from many rapid iterations.
-  Waiting also encourages you to polish each version before sending it,
-  so reviewers can focus on substantial issues rather than typos or
-  other small mistakes.
+So overall I'm aligned with this change.
 
-Seems like Junio's review went unanswered. Which makes it hard for me to
-consider dedicating time to do another review of the newer version. I
-would suggest that you engage in the process before sending new
-versions. I'll hold off reviewing till then :)
-
-[snip]
-
---000000000000eec411065f5c56b5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 1ff54c3c122df4a6_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ycHNOa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNi8vREFDRFhrLzJ6UUZXVVhuUVIvRjRVWmRkanFNWQpPQkpBWDJlNC9R
-dU5uaE41MXBjc2c5ZWdraC9GQ3ZGdXBCRWRucGU2OWd0bytMdnF0VnRwQThoREtOR3pQUm14Ck9u
-aEMxU2lMMTRtZTJVYTVTNVkxaC9VSTRXdjFwWWVwaFMyMVoxb2UwaDJjejJhNi96VmFTM0lCSnpX
-V1AxYjYKSnBTMmNBaEh1d3dkZEZlYnd3V3pyV3ZRbG5VU1lIajc2NXk4SmtITXBYSWVLSHFsdkcr
-eUNiM3FINFBaamo1bgo2YSt3QWRjeGxGUHc5SXVtakxwVVpZOU4xQjBFWURCS2FsSE1URWxycHBa
-Z3JXbnlIVjhremJ4ZktZbDNldFJTCkRrOFlUQU5HVjVTYi82MjFrU2FpK0dXSUR6eXdxaVJYdVl1
-UHppZThYYkx1UG9CVlo3b09zK0IySjVjRjQ0eWMKamsrOVlOTmMwVGo5V1VYYVd5MUdMY3FCZU1N
-UlNYRFQySzhMK0t5WnRCM2hTMzVnN2hPVWVLdVpZOTE1QllkegpRc1BOYXRSNjFwYjVDNkJYeXVP
-dXdCdDI3T1VWVWxsaGtqWGYyb1lmMElpNlBkSDIyeTYzdHNUZnR6WVZkbDVvCmNmRWJPYlBGTDB6
-Wnlja1dUY1BpS05YRmMyU0J5cEN1OWxEVXRIND0KPUFzNXUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000eec411065f5c56b5--
+Patrick
