@@ -1,101 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.49
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793709690;
-	b=WobHyE+J0iUYC+JmM4V60pOnJ9voq5Nm8oPJDZOp3IqYh4qU7+xDPADw3+C0Yv05vpcL
-	 qYYJaOSLDPn4sNt+MaaI3VuPXD92Wt0+1Id9zndSK3zxG7Do2+a+lMdjJvKeXa2rgQWnD
-	 6VPYLCHMEQrRTmX+Vr9ARQNaf37L780PJhEKoJaS9J6TqcdX/cmKGZ+oDj3AiVLojJPfN
-	 CuyR1arCh84OwmoL1iArsqUtrci6CE3xUJ3yeQNytgJUIFGSrUiuBNUk1r1IUTRv1py+0
-	 5ULUvE+vZ+cFYRPOPa/Iw8pk7uI5n2jGEjfWlUM0oH+7voTkPhcOBjxhvtUldz2FBFg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793709690;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=cTOIkxhEwG7sAL9ywHTrj1+NZZTW90Pf5ujz+eQhMPo=;
-	b=X0yfFpTxP9JXYxtnQTqCg6KkZ2q5i/zT5i3NWoDYA6AICzVdHFaNk2D6JP7odlnSNI0k
-	 xu5WRY0y5orTVZSbRGSo1J2cSexeXbXddkdxKj8dCOmKDkwhQ3eCnE0zTXOaGPYsFuoG3
-	 f1JtHv1ljt9qzcG0OlrqzYjw2QkKce9JIRGWV+BX0BfZ9jSSIc3K3UIXXFtMuteby1oMR
-	 J/0QjPDFH8oykevNWYET7RHONNbPw0pf3r9ib7tLt0/BxPiLqbE6WDgzKE2sWEpX3OsiX
-	 0eZwYwNHgWtn8qAeyRh46S9kEEqoIS6dSQBdH5Ip+IXpljSyL2Wj19SiU+EkLdRm5TA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uGrElGNv;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.49
-Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793709814;
+	b=5mtYrFsJmElm46RzaE8QcsxMYPO91n1kP9VFknctqjJ/pGEF94kCzGNnt2zR2ZKgdC+4
+	 d3vNcnyCx0mXSs2G3Jlur2ZMu6rzRsht5X6tJ3VycfR48xv4l7l16sfqYecDsXD/78smb
+	 dnTC3MA+VmUdLT764CpFvAlGF4YlXvY0CLjllkFnDGpp8F0AZVRyOv4sgyenWPuF+rnQl
+	 GPFwyTAWNVjEv9tME0SX3ivUQLOAPgac9b4fA6mJxC2PGK2806OISxRx9NKwgeNYDVCsQ
+	 WFSuoXXumb11cvGJo4SEX/K71i/xW5RK3WliHAkM77N4FoUU5oTmTBq1Ah2YXERSdHw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793709814;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:From:Subject:Date:Message-Id:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:
+	 In-Reply-To:References:To:Cc:X-Mailer;
+	bh=kDo9XP4iHtmaS3AKOUtJitTTZAO5dHqnwYPSk8IhaOk=;
+	b=x+5eEVIDmED0PBIV2LQUEs4lfNQJl87SbL04j4TQJoSCc41Idjh3e9Dx1Tjx1y7NBihs
+	 +He9tv70ZYcChGkfClZ699h+jSGCew2++BgKGJb62QLodFBwW0rv2hahHO1SIDUPf8UcQ
+	 PD1U3TlIDdLN4zQjObkS7nx3Dk0Pv6jcGWwJrgRBkGEhkvyAb9aqrNsmyuGWZYg6eP7a8
+	 zveUX8haDqxtH6sGY8VM7FHe8GsK3hDWyhlIkzqWvC67C80PXBmgnwi1J4pRKzs4FRckf
+	 CERXUWOzuJdUpSFZWIedkrszierW03P74aLTTStCb2wz94Uk+pL05f5Ew6ktOaXPkbw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=otL6iJK8;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="A9mO/njl";
+	arc=none smtp.remote-ip=202.12.124.144
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF02606A327
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 12:41:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7BF02606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5892A606A33C
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 12:43:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5892A606A33C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uGrElGNv
-Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-14fc585291cso3234602c88.1
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 04:41:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793709690; cv=none;
-        d=google.com; s=arc-20260327;
-        b=UCWgbTSB84u2bVert92bq6cINKOKD1n6AWSDyy6X0iOvP2tZOoPa7Pp//2PYHaoRyJ
-         jcgBFVlxOlEPqzsSx7zRAyulBdqU+OxTC9aiuBaeIMnojdISV8XAYa6trl3iVaoKM/TC
-         h2qjC5aw3I2+Q85Xu/MypXfiBRZl8Tt2hF0ryht2iya/5LylNsD7Krw+e0VDsJIKXm5a
-         ojXk6Op0wZYU0TCcSVV/ucYNAlVFUeSJ4K9ybf/Gu0pRlj2aQtLbh0TPB/PXX2SvESqg
-         qQyVeT48Qsl+NXvEntJql81x/kJj5G2xJu81JOgVlqUhNDf57Z14Lg6gdsmD/1nVGdCW
-         UXTQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=cTOIkxhEwG7sAL9ywHTrj1+NZZTW90Pf5ujz+eQhMPo=;
-        fh=rkAHztmZN93LcLjDXebhO72ditiWDqveITA4irEn0Qg=;
-        b=Hw8Z+alohJytKwiJ5Fe3NNXG2ZuOX6TLl6xG0MaMZJV0wdEZK+8MrZGUH9r6kErpPd
-         p8nVvS5ZQhSf1Df8QSfAopNFWVUzmeLZXJvGY7XVdfs3tjO6PJ9LHywkpbHFEX71+cFk
-         ANtcUDZEmtSnaVszHNl5UNVnZp7LDwt8H4rINBVGN3iXu4PeScxZvSTYPkK0Q+ixwCZ9
-         j622SyoSfsgDFROuzw40vIQBow2nWzZ3490aec/0mbznJFHQKDWKKHQnyZ/0sIohLQ2G
-         YT6h1kKcvblOUKuFTgPlBOJVjmPPwQBhMN3YzxZKljpyw1Py+hF6m3QEjE5O8OSQBrgC
-         ho7A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793709690; x=1794314490; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=cTOIkxhEwG7sAL9ywHTrj1+NZZTW90Pf5ujz+eQhMPo=;
-        b=uGrElGNvVn5PAIqvZuYbEXL3G6PiODzVK3JTssy3MMhi0gBBaPURIB5zVEnONptRNr
-         EtIXEcGrgU/bDF50GC8v9ukvfK4bVEmF90lZ8Lrrh6wMIzwEdu6SS4iVpImiunP+R6bm
-         FpgM7Fb5sgsdbWu7dAaMMQDEcjCQ4Gv7dcvWE02RvDPtrcHcbEx9OnxqqCvpDKKCDuNE
-         SXXNdEDiLZTXCJwhiKR6RiKD5vSiWpMtn49swRhrPa50RsrXwLejgIjh2Pt3vUGw6IaB
-         PKj3uTXHnjSX930w1sXhuYeixG+JMc+xPpxmcVHe6BfvRErcqW+OWpcOLOQXEDqYSt/T
-         Ugeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793709690; x=1794314490;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=cTOIkxhEwG7sAL9ywHTrj1+NZZTW90Pf5ujz+eQhMPo=;
-        b=YBx2fmoMkHD63d9osJsYYpIs8K/mBpUTr2jOxpHY80kkI2qyyi7cIycVESQc7+0n9e
-         v6zhYNuwzvuc2kTbig/3cmTsu5Yc3zy1pwSnXgqkO4WefxFoh80EJmx2t0SY/u0j+zrb
-         C4asrrlg1aNqBkQ4K7ZQst5BJv7J8mUcSxxOH1+DjC4CPZqQogvnQkOqwLaZudNRq68t
-         jI0OZCbs12mN+IHqvFMeZnWPRlAVugR9RpB7aXtJb4WImS33pzyKgRcFQ5HmAjQby87E
-         nSWMZAmBYU1eGIDAaj5/YLTWzfhC3MmXD14YCOQQuyNeYmZBhBF0Y7QyuhBX0/tT94x4
-         FjoA==
-X-Gm-Message-State: APuU4Z8+QMFE2Wj+MjJFvQu1IzdUO+OIpi74CpZuWIzTqbmUzHtMWL3x
-	WvYco0lf+3IeYDKKpB7KrKVw+Xjb/KvKRjjye7DEZJt1F4AjgPOBq3I2fB748MPSqa6D6RNxe6I
-	Z2O3ryfOHfTLliAB5efIQY7XNc5ZwkEo=
-X-Gm-Gg: AYBFou1B0pJA4/9FbLtET/uJVYWiERBdaOEo1HjZmuKFnhnptE/YgT3rekBJ4pGU5PW
-	Ugzt+htq1SqbGsVXBAwG5G+JfHIvq9mo0XAz2vFoZXfPpKQAUVYtNmbz2uuyE0LQrziPl/8jF4x
-	k6iBQcWw5B7hTlWKgl41ZfPafUPYD2YP8RkidsEmBSE0GMQeZ1YxHDirrQHrjYmr6S20ktfbDeY
-	n63Xb7jOoLsFlz5dChSsOxiVDoRemtCDMFSBszu7xQi53IA12zyjK4FzIOFbsfvgVfMVeI/MDE4
-	DnXuI5jmXTAA+8Z//AlvFlWVZH0BsN21tGu2yBSNQBl2xItaXvz3OWnMgb6clAqokf0VDLACRmK
-	9My2WL7hNTxX0jVSpAy32Ow0RmLL/NJihWRp2q3u94FvK+Wy8C12w4+fBdVXMNu+bbQ+xBTQl3j
-	DsjDfVM38IaoxOA0WJ4SegT/YiacZqwgp2azGGE/461py0y1aAKVQF1RmXa/5+4A5BC7lIanryO
-	FoDN1P5nc1Ntune2xuTneKb
-X-Received: by 2002:a05:701b:240f:b0:199:e38c:29a0 with SMTP id
- a92af1059eb24-1ac5de53bd3mr18522345c88.31.1793709689572; Tue, 03 Nov 2026
- 04:41:29 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=otL6iJK8;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=A9mO/njl
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 72A801D001AF
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 07:43:33 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 03 Nov 2026 07:43:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1793709813;
+	 x=1793796213; bh=kDo9XP4iHtmaS3AKOUtJitTTZAO5dHqnwYPSk8IhaOk=; b=
+	otL6iJK8nXb2n6E7X6JBrHScJvRkXhA8uyMEWIar6iOPt6tAysnPBJ3F7lj44lpW
+	ibzt0iR0QMN8x36zG3qFP4LIOGjeqtlqmHpwuTUT9yle0dwYxqSXOXd6rEoWgV4u
+	XxUKJGziEAUZqU70ZDjbRhPryTmLLx1+EYp0jgxEQG4I5E+g2lwT5v8XLGwKG+L5
+	qg4Plb9eOI6kTaysFhOGePv8kxvz9mSqLYUJyKmYM0aZkgBdLJ3UERoBqBumXnm5
+	6m9L3O9GwqVQPZ2goFps3/xxaHf5DnaNtK5Ab1ELgEk5eqIubtKAo1+Ye/rraa3Q
+	saCw+/VpoWe1D6lwijRaAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793709813; x=
+	1793796213; bh=kDo9XP4iHtmaS3AKOUtJitTTZAO5dHqnwYPSk8IhaOk=; b=A
+	9mO/njlLwdoSrxCoZu5hchAuLj9QQzOPmUbBh7JSwppfu70c2/yNSg1fK2cgVoKQ
+	EHN8dlmP+X9p4uk4MkakD6/Ynw1otwUoOWWfdpxxajY6xcvpiPk1BTqZqe7tgxwZ
+	CA3RNRyTXlsrcmtN2i+rIjafA0D264JTBXSTYiEykMCUg6FIrUL+Uy+NgX8UHPSp
+	YL1F42CN7euj42Ye3mTvauXDb38gMwd9TFwe4wlECQy7pzY75zdidIb/Dn8+0BM8
+	mQoSPlvP0wQc/E8yF2/tVQZG3KY4DAqn1K3cTszH0lc9m2R7dND7LOFUkJqqS6VJ
+	hHPIKtdzrnrS+As1spfHQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793709813; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:rTuKL/0OFj7wzoKg1aEnJrfTDM5/XLiMb1KHdXddPcvPxsD
+	I2VRLi3lhKjTsLWehmK4NlroCwE9vr+VKyCGIzD64Aw8xyLw0d5CDdvijBmynZgI
+	PSlMZRvI/zP0bhrqCgIrBe9AQOssDVWCTkbyCWQu/8SrRwUcnEhD0DoPSesCz+XT
+	7g7G2c9vY3jN6rfWNp/a3wRFlavGUSGByt55N4tpKUUJUIy0DyjxqzG8Ru//UnPy
+	PN92+gJO13MwK/M9D8a2e9vCJo2w61acGXmIT02C8ypqvIOQhSUnR60Zb7kZ2nvv
+	IF9b4eEqqFIoWYu4A7J3ESjotXRObGu7h/sShzg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:R7c4bT4L/J2kfPA/MzXXO0yzZ09zCYjbFJflby6YDNI=:pYJKfqQSnuVzJrEmvNl2RHh5kvvnC5SnBuh/yryGORg=;
+X-ME-Sender: <xms:9dbparaio_2RPbWuOGPWZJaMdpAbNmikFyDruhXPH9vP_Aofl_RnrA>
+    <xme:9dbpah3DdYiBMCNkJokL8JNC9e4niVvlw9CK7mKAidCPwcXG_jwm3lbbbpXpoHWA3
+    cPK-SUbKRTlfV9nXUvcM6m_nZiRnCBaram44g2luNMmlbVIQY_eKmc>
+X-ME-Received: <xmr:9dbparUpqiCQRruvoBVA2ByPRlobsyf8oKeXc-DMmaAm5B690qgUcQ>
+X-ME-Proxy-Cause: dmFkZTEkvssONOL3UdGQTa+2QEBwikzzpH85sNo03RExgc53HSjRpS4n4YWyE2VOMFwceX
+    bGrJH7sX9TjCRjf1HoQF5ASgaNnRAF6tFR4mr613x2QLEgFQQM0fcC/UUwVmvLV6pWy5ol
+    uyCCutInvJ6ydfsecxwui/22Ss2eStwSBflUEwet6shcuA/rMDZeGofpmLHeCs+xn6Y3rS
+    q/J07BAc/AG/ycrOyGYW32qkzTmZ1kSX65EIPhjnB9HHSOtENk2FRM0SA99hswSy+rBTOC
+    PkLpU6D/nsieZiZmpdQ3sj9PqfdqNp1ts9oJcuWuM5FmB8iPApmAGB0trw78lRFe0zIaZm
+    0tQtagpgJ3AL1HTCPJ0wqyJ9C8sa6A0CRBdNzAjBOimDcYFqo/i3/isBuLhedMv/BlSG87
+    wq2mqxLbA8fM4PbO3TZy9ZcDwco1oePzuE7bZA/fWYoUZEHaakkVVeXTxMMeiQe7kVIHTb
+    czlyADU0DfTfCeHUq2puKXF1Z+nHEOP8nFfKxsqdvMMfl0JhWszDRZinaYnj89qJs+O/qO
+    dXYCFibcqjpYEl8pARgrwJYnGyAHecrONglNuXpkHLixJRElp3/Tmf6Mu15gchjrbZmfhb
+    kujwijGS91BybbDaeI/ke79PMO+AkU2C7Xsoim3C5hGjr/YI8BwlHDcPb0eA
+X-ME-Proxy: <xmx:9dbparXjkhvyWXx7gA6enIWlPD_VGCi89LPK66bplk9kc6tMcnmrlA>
+    <xmx:9dbpaqcNXQFnh7cQUWIt-k2kiAZqtbgkzAFmxwt33igij5ry0M0fFQ>
+    <xmx:9dbpakVbaKGbc0Z58tOw0A-DQa3WPWzvPXB2KHY_CNJcKL0nX6tldg>
+    <xmx:9dbpajfk3eK_HAu90PvfcxFNWrI2J9mVWcul3cg6L_cnTgg_5D_OMQ>
+    <xmx:9dbpap2TDo_g3PIvP0qcGdgQEpTuMDMDTtdjqP7qtvtEI8Beo17UEOKG>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Nov 2026 07:43:32 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 98ce3b4d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Nov 2026 12:43:30 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 0/3] builtin/grep: fix reading objects from wrong
+ repository
+Date: Tue, 03 Nov 2026 13:43:19 +0100
+Message-Id: <20261103-pks-grep-recurse-submodule-v2-0-b00e3b3dc865@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,51 +123,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022105641.68963-1-okhuomonajayi54@gmail.com>
- <20261023211533.73433-1-okhuomonajayi54@gmail.com> <20261023211533.73433-2-okhuomonajayi54@gmail.com>
-In-Reply-To: <20261023211533.73433-2-okhuomonajayi54@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 3 Nov 2026 13:41:18 +0100
-X-Gm-Features: AclHuK8r9t6N_f3VBd_WsGAGmdz7bNYvstw3fcbDBuMU9RDcu1HD4GYhSfGGwhU
-Message-ID: <CAP8UFD2_msUwNf1Opvt95jFWBoPi5H8jNCpQcH0ohYh26F4fLg@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v3 1/2] remote: add repo_for_each_remote()
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, usmanakinyemi202@gmail.com, 
-	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42NSw6CMBBAr0K6dkxb0aIr72FYyHSAUflkCkRDu
+ LsFL+DyJS/vzSqQMAV1SWYlNHHgro1gd4nC+t5WBOwjK6vtyeiDhv4ZoBLqQQhHCQRhLJrOjy8
+ Cq41ziM6dU1Qx0AuV/N7it/zHUX4QDmtxNWoOQyef7T6Z1ftrNBnQ4FMqjpg5n5XFNcp7blS+L
+ MsXEaurf9MAAAA=
+X-Change-ID: 20261030-pks-grep-recurse-submodule-20177cc7794c
+In-Reply-To: <20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im>
+References: <20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im>
+To: git@vger.kernel.org
+Cc: Root <rootminus0x1@gmail.com>, Toon Claes <toon@iotcl.com>
+X-Mailer: b4 0.15.2
 
-On Fri, Oct 23, 2026 at 11:15=E2=80=AFPM Okhuomon Ajayi
-<okhuomonajayi54@gmail.com> wrote:
+Hi,
 
-> -int for_each_remote(each_remote_fn fn, void *priv)
-> +int repo_for_each_remote(struct repository *repo,
-> +                        each_remote_fn fn, void *priv)
->  {
->         int i, result =3D 0;
-> -       read_config(the_repository, 0);
-> -       for (i =3D 0; i < the_repository->remote_state->remotes_nr && !re=
-sult;
-> +       read_config(repo, 0);
-> +       for (i =3D 0; i < repo->remote_state->remotes_nr && !result;
->              i++) {
->                 struct remote *remote =3D
-> -                       the_repository->remote_state->remotes[i];
-> +                       repo->remote_state->remotes[i];
+this small patch series fixes the bug reported in [1], where doing `git
+grep --recurse-submodules` with nested submodule trees fails to read the
+trees. The only patch needed here is the first one, the other patches
+are only belt-and-suspenders as I've been checking whether we use the
+wrong repository anywhere else.
 
-It looks like moving from `the_repository` to `repo` could be a good
-opportunity to unwrap some lines. For example something like:
+At the end of this patch series we only use `the_repository` in
+`cmd_grep()` itself. Ideally we'd adapt "builtin/grep.c" to get rid of
+`the_repository` altogether, but unfortunately it's a bit on the
+involved side as we also have to worry about the case where git-grep(1)
+is executed outside of a repository with "--no-index". So I skipped that
+refactoring for now.
 
-        int result =3D 0;
-        read_config(repo, 0);
-        for (int i =3D 0; i < repo->remote_state->remotes_nr && !result; i+=
-+) {
-                struct remote *remote =3D repo->remote_state->remotes[i];
+The patch is based on v2.56.0 so that it can be easily backported.
 
-keeps lines under our 80 characters limit and is a bit nicer to read.
+Changes in v2:
+  - Mention that this was released as part of Git 2.56.0.
+  - Link to v1: https://patch.msgid.link/20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im
 
-Thanks.
+Thanks!
 
->                 if (!remote)
->                         continue;
->                 result =3D fn(remote, priv);
+Patrick
+
+[1]: <CAMtVYEjWd2XwJpXdk3PV2jbNdoOaqS3x+08EMu5byy55RxfRmA@mail.gmail.com>
+
+---
+Patrick Steinhardt (3):
+      builtin/grep: read submodule trees via their repository
+      builtin/grep: read sparse directory trees via passed-in repository
+      builtin/grep: read ".gitmodules" via passed-in repository
+
+ builtin/grep.c                     |  6 +++---
+ t/t7814-grep-recurse-submodules.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 3 deletions(-)
+
+Range-diff versus v1:
+
+1:  e9ffa0cdee5 ! 1:  46d165815b5 builtin/grep: read submodule trees via their repository
+    @@ Commit message
+         In the latter case we continue grepping in the submodule repository's
+         object graph. Historically this used to work by linking that submodule's
+         object directory into the main object database. But in 93cd344e34f
+    -    (builtin/grep: stop registering submodule ODB as source, 2026-09-11) we
+    -    stopped doing that and instead expect to read submodule objects via the
+    -    submodule repository.
+    +    (builtin/grep: stop registering submodule ODB as source, 2026-09-11),
+    +    which was released as part of Git 2.56, we stopped doing that and
+    +    instead expect to read submodule objects via the submodule repository.
+     
+         This logic is broken though: while we indeed know to read blobs via the
+         submodule's object database, we didn't adapt trees in the same way. The
+2:  dfe45977b15 = 2:  f7516e29f68 builtin/grep: read sparse directory trees via passed-in repository
+3:  4b914d9d07d = 3:  dc19e6589d4 builtin/grep: read ".gitmodules" via passed-in repository
+
+---
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+change-id: 20261030-pks-grep-recurse-submodule-20177cc7794c
+
