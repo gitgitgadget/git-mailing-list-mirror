@@ -1,120 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793738338;
-	b=AUwtg44dEx8PB/7qZoaGbb8Pa/UZX3DIj2qk+SLmJ4PZ1C9yA3SfMS8/So7jxQG4YwWt
-	 I3i2SWXf4NOjXoMY0O7kndWobNxzjDbLbrTzWXOe8xV3kU8y0i3RumRmPDT2R7a/UIbt8
-	 0YRv7FcMa8UotQrxAUp+c1XDpE82++VJA5sjGiF680RrxmynC4bp/Fm4dxLSuGlH8wimH
-	 RPEaA5LSYydn0KHrzuRCt2u8EqSXt5t1TUd/IWPOC2asAcBrJObKnFyDwJ5aCy8zBkZX+
-	 05eOKBd/Ypee2juYfYuKLo/hjE8D9O7jWkAx6KYtlDGue9oKt4D9cXW2ybnEKWyjqsg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793738338;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=0QDewXXrgeLN9agI6YKcvjaYsBRk8hKmN5yKvVlpvxc=;
-	b=XXGQqdaiD/XuRuTmXQmwXMp3XZmRPTT8F70+oOymQdbDjuVyINJ0e1Knto4m+VE3GNtW
-	 wOaPrRPBUHTatCnHci1niKKPOQYAOTHM72dyqBscwKM9978s+1ltH7+5TnetEs8dwC+lB
-	 rUSd2Lt/lBP0jTdDR1emzKFWiKLxUawMTMMNJndIAUl5ROeDJYkuoRG4x05jnUoFC5+If
-	 zNuTY1nw777PvScuqiZY7IOlXbkpxB5FU92q4Xqz6id1dZEK0xRx/KjHF64jXtKtI18+F
-	 vPkwV/JPdjYThdqeJGESEC0PQorLw8vH3O8G5ymIJmB9MdrHY56xht104j1HA0MqIhg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CasCt9FA;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=26i7Th5r;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.180
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793738607;
+	b=co1oOeCOYFBywypyND5POCg8Nm/ogNc2es9RyULJPqmcG03au4hmSETCTxsEkK3X7U+U
+	 qmSEBVCMyBmcaNTbUHsSXEEAUJkn/+85LfgvPAZ0eDuHdUSWWKdmWbuppPg6uK7QWrEUY
+	 4BCeaEc+eOgx3hQ6XrttqM/MUok55B9Al1C4EPtAUKJZdD+UAO+1jqllCw9hY6mVNZWVX
+	 5w1w1NwxXqL3v6KVqwrL8AJy0Z4D6kdXISgZ/krnm69LSUaDdl68YGxKeYb48ceZjmfK3
+	 y7jwNRYGGDV/+HKGwMHVGgY1obRlALjQvfsobM8/n0sgFODhNzm8J6xTUM1scSjENwQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793738607;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=gYwZCtBSuZpbDzY34pRtunDq1xn0PXw18jALH6cL6Zc=;
+	b=Clu5K2lzuT7AmVMPpdwhpE7BBF1eNG6tiWyxhGETWPXkeqU3zQfdFD+WyUlSDeO2jjgd
+	 oTry7IrFcWPKKzHjvquyamMVeVzwo2j9jsuzGYnfFBfQEY1kAxoo2PrMpsD/JobwT6DcF
+	 sFgCAClCo3x3Mf4o1PfGzx0udEgpo+s5LvnS37XdCllTAeEDlmY2BSlufl7VrItaOA3uO
+	 gV9fRjwKMgP52/VCcYLadyZQttpbIYDtedGEX+P0a40i3P+BWY6Ji6v52gYaJFm8sSb3v
+	 UvbppuI99PtwX68GAGuu+Bk8gnhhUMXfULgfE8wCIEQLP6NA/4+iHwR0AsCS8MC0/Ug==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EkG9hCH6;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.180
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23092606A31B
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 20:38:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 23092606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4E0606A324
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 20:43:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7C4E0606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CasCt9FA;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=26i7Th5r
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 320B9EC07F3
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 15:38:55 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 03 Nov 2026 15:38:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793738335; x=1793824735; bh=0QDewXXrge
-	LN9agI6YKcvjaYsBRk8hKmN5yKvVlpvxc=; b=CasCt9FAFFY6djf2tpqWR4PZp2
-	E98kzu4RHoyumI3D0ksg9a6rffDdWRHuGoiyZYER4xEwzHrsUTh2kAbph5dn7Y3F
-	obIIUms4jSUDpNVpyc58TzbJzqSPWUq/l5kvR5Ra/3LIzElr1vLs1RNDM4hJf4xv
-	dcQy13Dl8X1BkJ+Ntj2QAsEym7lGBO+qKNIT/dT6oOy7Bc+QInGl2GM7gVDCC+z+
-	bAVqR0WXODBUlhlVszUDX2gE1M7zsesN3T9MW3uYf1VDvf98RhrpuO8SbGDmLtjV
-	3TU+n2DRt8viXdwYw3CQa9VqS/RrgSnjLqH45AEsIvkN4ULwnFLLq9tYioPA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793738335; x=1793824735; bh=0QDewXXrgeLN9agI6YKcvjaYsBRk8hKmN5y
-	KvVlpvxc=; b=26i7Th5r5MXm+pwbmNIDaqTTre++yfgvWB0lzp8hsjpFvi0hVAY
-	ICuVWpBo7v+hEl/DakV4XRn1LGYyzT4V3MTeCRu6gqsNqNJJ5ySB8w55jxC4vzM5
-	mF0Wv/P0Ddis/65QzlqNvkjp40JS7+IfZqyCO2brPTopqcedihOeYCGdWA0Qnei4
-	MGd2ITRlL4gMTKtJPlwohd/WC/fmzJW+miIbfhP87ID6Karxtha5fcwXhBgIddV1
-	fc9od+bBaUfATbloxJ6Tkmwc3YmWO1i2T5WGJZSreopu6Yi6ReClLjoukVUWvsKP
-	OCm7kMbjWwgYEH2YFNmz8/dXjGldpW5ZiHw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793738335; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:SWHfST4LEZw2qsYZs9AQeZhic09H1F5NfrbNqo6MH/PzUrQ
-	KK4hUbdyjinxZYWzVM7BPccsHINst8Giz+788xeGckKNOfTEawO6synUiKOKgN+J
-	fhAXPgBBuCoEMJ5EGxClWDt40CvCBADo4xOt2CYR6tW6Dz8y9HphCMv+zkjwAp3G
-	OSo+lqIfoIRB0HHsGUh7tCZSc/y2Vi6TVwZctYPi0niSGdEOcRXBaLtAtQ+jD0j8
-	CDQtQ/b+sHe49FTVwyxON5pDd7Wwssdfmkk/yD8d3ioq3UOyLkczzADj7T/zZ6vq
-	DHjJS+Byp2rmH5V+7pk8xXT2vrM1T11vx6jtvEA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:ah7gDWwbzIgRDbKOnujrYXbjIJagx+5Y9TgkGbPwnko=:540nnmf7STJZfpJTkUWraNhf7jl1nYO9ugDtK7I3Zqs=;
-X-ME-Sender: <xms:X0bqagMiNwtEp3bpyu_u5f9DcMp6dFTEuiuGFw74_MvW6OGgHPQCNg>
-    <xme:X0bqauYknvVwj3FzsfXH7MBtkFBRlC0JNPgFDuymox7MgcC-rsE_8ekB2tidZTZZK
-    I1ngdMlAoR5pd5V6G_ICBVJxn9dRB3vsyi9jisdQZmHxXHZ9WTJJy4>
-X-ME-Received: <xmr:X0bqakpiAlYv6HCHBpvUrcxQuhJcHMrkp6ATZH3uAVjDxYqe-BtSWRT3FuiWKVVNR-AqWBFCaAbnQfdpBPLgj6g9UNak8SlB8csp>
-X-ME-Proxy-Cause: dmFkZTEyPFnzIxvyn3JCI+Xgd5bjgIK9a6Y7XEvdhelGSqkQ1W7/PB0uW7f+J8IyetWAWi
-    +NpTzb4iisn3zD4rpXFWwmvQp6l6FCvJzK7PGtAlbf/vSEYbeLduHbQ1EdpQHtKTVVUif8
-    MEzWSxsL3tHVljX99uwpOU3U5ZeQrTAprBaduFwV1BIk6g5PSIr2A5AnxW3eRy5pdIoGKO
-    0nnGnuPuPUbnTLdJr3qpQmu0bSXW28ftnpmOerDhzvfruKcJQWJC5agcfLNoZeAVpizZIa
-    x10De9DeiPQ0ilvS4wQt3tp+Kd17V5IRL5wD0cNx/WrlEP7ir9BXx/LeINFOv4S15k0LdK
-    3/KidpuRrP8Y4o1fAmnmWYsOej79C6JZjOber5hz81vQeyzkeQ6Mz9mC/cWXCHInDKYGLO
-    RL0ZFFLsAFxHm9mIv2UZkrCug1Aiblo4B0VbxxNEwcT5FUAw/ZRbWAWJjFxezK06dHb/fb
-    WvLlQBx3a6Ylzw5Z9nzyswZkdZYmOKbPEBJdCssD8B8eueDiwgeUQYcHSmdbRH/Ay/VXc5
-    zc+gOcBaIpx3VwcY/sB8fi/dKJM6pbn7JVCx/Yu4A2SBdBRp86OFF+q9AwSvSCTkPkWDnN
-    Hsa/b+8r5KTscf5JwXC+fukXy+PuGirf6N6v5cUREwBn2gHf9B+nTlRXCr+A
-X-ME-Proxy: <xmx:X0bqaibZVHRf3n1v311QyLIe-u3anQ2a7UTQGjt8BbE6tlROEpMyWQ>
-    <xmx:X0bqasQUolAfYUeDYX3zumqerw4Zk2CAaJvERyYBZYlOJ7AiQ0OPuA>
-    <xmx:X0bqap5w7BoTFBvXuEBe2pmMMWbt-OvVLQehcpakFrRTmgDd3_xMXg>
-    <xmx:X0bqahzxVCel0kaIfZf6ldQKLc9inoYR829nV4T2Iz3NWuwG_aCDng>
-    <xmx:X0bqauj9u2iwOzxX8CDhKgqpnR7f0egrF4Pub48wW8IWTtFPYJMzPUrL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Nov 2026 15:38:54 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Interaction between pre-commit hook and git commit <pathspec>
-In-Reply-To: <de4f4f35-500f-4d82-acfd-ca601444f2d2@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Tue, 03 Nov 2026 21:13:37 +0100")
-References: <CY8PR17MB6236D16AD8CD80720FF1342DAE692@CY8PR17MB6236.namprd17.prod.outlook.com>
-	<de4f4f35-500f-4d82-acfd-ca601444f2d2@app.fastmail.com>
-Date: Tue, 03 Nov 2026 12:38:53 -0800
-Message-ID: <xmqqmrrp646a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EkG9hCH6
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3ab27e45e7cso331111fa.3
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 12:43:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793738606; cv=none;
+        d=google.com; s=arc-20260327;
+        b=VHrvKyc6Kvxa1cnqrjJEnmUI9z9KxCr/fu3hTFbxX9q1YYesbEheOgpsPB/c3e6SLH
+         0munCx5I97rijYdE2DgfQv72a1xQzJjMjn71wYP5ezuOeMbChU93cZcrQkfBcbg6KXVy
+         zBQIKGniy6eanDNA1onQtbT5prXRjfQKoIxV//zHUXyzGFNGL9Ga2JJh9KqP8uwTySWp
+         TKWtAvAlYIffoUaaUmJIHz3y4L5PS7vL6P3iNCeHqmoveuh5gDfIbTqW1lCEugBJSDY9
+         bNjcG88p3oxetfau3QGSoEn8fs36Dw4mFIrdjvxDLKfYYul/9v7//8HaEVNPO/ni0Sch
+         XrzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=gYwZCtBSuZpbDzY34pRtunDq1xn0PXw18jALH6cL6Zc=;
+        fh=tHh6quu8HNzKaDn2OQxcxXJCS98jQRtIMGB2GGmyP1E=;
+        b=rg4oCwLYmlex7y239FKV55nQl9y6m4/puvS0qz/IaV6rXmoA74ZjvhSwLtpezKwPJw
+         +8O/dRxbm2RKfq774j4EG+P3yXYbWT1d4JyXtIaVv4Pc/m9drBBdfkzuHcANeZruwLZb
+         bau/8IMtCcWIWKNniAwDfL4UN810SCl8aCd38ulgVAnDkAIH5okMQzmAoXuUN3WPaG51
+         emNJS2/WD5e4xQx+bkiFoXb/WpHqV3WIwF+te7vIO8pAQIYoURiJW5USrLBMX7g/wUfU
+         MIoWuXDAJpLcvSSOBANinG5s3NdfgFT75fbaTII69CmQLevb8SyAgIlovY3/Ypij14xI
+         HTpg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793738606; x=1794343406; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=gYwZCtBSuZpbDzY34pRtunDq1xn0PXw18jALH6cL6Zc=;
+        b=EkG9hCH6nSdhq9kf0CiWLE+0F3G/rrbArRC76Q/0m87GzCAGAWmgT2GOPrS/YhYFaC
+         eavUejSKMdcCw4+7GL8VegLpBiELO0DWvkFxyDtkq0XtIWbtHqhTAjiDD1wanGtxV1H0
+         RwMtbe+yDSPSLrio+EM11/w2pN2cI9nAB3aM7UdUGnj3w0Qn7l72GU0VxJ+A6eYuQt85
+         aD+EA2qUlA+BjjcZ1CbJRjvQ1/R00RtFuUGzXyEnyZN0BdTTD7Hp4hONo5+5Rn7pDVgn
+         eMqHOjOgSlQshqrSo0LcjIk9w0g1Tk8Mib0S/0N372ZrRCJug2bY0bB1r1OKu3IbQmb5
+         axZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793738606; x=1794343406;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gYwZCtBSuZpbDzY34pRtunDq1xn0PXw18jALH6cL6Zc=;
+        b=LmffjLww+c3FcjLMqnLt8LR1EmpYb6DYrbMD9knM26+j7Z3/WtPaaDKSh9wgMQzQYg
+         hIT9t/ocWHcLh5g0Kcygi+e2XCgbHIEuVvaF3koK3hh1vNAHLGGWdvzO4Dlt28Zazt5i
+         K0PQoLjrwqyotGPHDRsdIqbCL2K9/CFGYkYl4x1SFqoC2vXTk3hyagXJNT1k0RUOYot2
+         AhfB32HGd3Rk25msBFgsnKea4DIvEZmS4XbB68CaMZqnBhcGKf1qM1cd7eVfAukuB18J
+         4v4fmte5QwRTAKImZQsHEmXGPszxsgJWYYgrNYGesw000uCGU68Mrn/TpPTU/OOD6fgX
+         hWKQ==
+X-Gm-Message-State: APuU4Z/XpZ8w6WXzD6K19tnd1WBz7jDzKiMMhj0pkT4kd4SHYJ+qAc3q
+	RKvPGYV1OoKlz/U4AppMdJb8f+dfy4d92f2co3OsjGMLHLDv6rnBMn/hT/16/NPKzysdg5AeMbc
+	cT7iUSMwZP4PPrAYSaN8pDF+ivDkADt4lIg==
+X-Gm-Gg: AYBFou03x5hFHe9h8ZRi9id66lupcsBVWxfpcbMsF61V252/dV99z8cuDZLcESkoCxR
+	+XZgl6qVFXN2SAIoYGFWgk+V68uJu1KJr7jP+r8sPS+5surqjPHuAzZY3PbZbEB+EnZV95dSCwq
+	jVhf6zHEUohgBXe54+21WB4qK8An+sWoTSYuiJMKhgFe9EKQCH08WL0RlP3KndUzh52n8FWDUKo
+	w1g9zEmhp0L5HPmVDOc8CKe3C4ifQvy74T4IiYQhIMUQeHHEUDTDSliNAK6q9KdcvZf37D70LBR
+	ejp3wAsb/aULtDc+hAZGNk+uO/en4O8vmg5G7bzgJTPM7MUVfU971ZSmgCOjX3bFBiZB0FiakjU
+	uPx/UhvXJuXWFu+KpWk0zP0VVtKc5wv0J3XuVsXo=
+X-Received: by 2002:a05:651c:41c7:b0:3a9:d756:bfdd with SMTP id
+ 38308e7fff4ca-3acb7a9ea86mr33325051fa.7.1793738605383; Tue, 03 Nov 2026
+ 12:43:25 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,26 +103,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CY8PR17MB6236D16AD8CD80720FF1342DAE692@CY8PR17MB6236.namprd17.prod.outlook.com>
+In-Reply-To: <CY8PR17MB6236D16AD8CD80720FF1342DAE692@CY8PR17MB6236.namprd17.prod.outlook.com>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Tue, 3 Nov 2026 12:43:13 -0800
+X-Gm-Features: AclHuK-wJfRCsofssIColAsvk4blajDLakTdXjdWu4zyQSKU8SyR2hgDAQVVIcA
+Message-ID: <CAPx1Gvd3H2-e5RBoH9e1r0cWqe2uo1tm-eUSop0ffNBc2Pj6tg@mail.gmail.com>
+Subject: Re: Interaction between pre-commit hook and git commit <pathspec>
+To: Kevin Lyles <klyles@epic.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+On Tue, Nov 3, 2026 at 12:00=E2=80=AFPM Kevin Lyles <klyles@epic.com> wrote=
+:
+> The documentation for the pathspec option of the commit command claims:
+> "The contents of these files are also staged for the next commit on top
+> of what have been staged before."
+> However, that appears to only be true if the pre-commit hook doesn't
+> modify the index contents.
 
-> Reading githooks documentation for pre-commit. To me it reads like
-> the use case is validation/checking, not any mutation.
+There's an implementation detail here that makes this tricky.
 
-Yes, the hook was written exactly for validation, to preempt an
-undesirable commit from being created.
+Git documentation talks about "the" index / staging-area.  Or, more
+precisely, there is one such entity per work-tree: the work-tree's index.
 
-We might want to do two things:
+But when you use "git commit --only" or "git commit --include", well,
+now there is a big problem to deal with. If the commit is accepted,
+the ("the") index / staging-area should be updated accordingly. But
+if it's aborted, the index should roll back to how it was before you
+ran "git commit [--only | --include] <pathspecs>".
 
-(1) clarify the documentation to say that the hook should not try
-    mutation, and
+In order to make this work internally, Git actually needs two or
+even three index-es (indices?) / staging-areas for the work-tree
+in question: the one for "before the commit", possibly a separate
+one for "making the commit" (when using --only), and one for
+"after the commit succeeds, assuming it does succeed".
 
-(2) detect and error out when the hook does try to make any
-    mutation.
+To get a little bit more concrete (which makes describing the
+underlying process a lot easier), let's note now that "the index"
+is really a simple file.  The main one is ".git/index".  (I'm ignoring
+extra complications like a split index here as they don't affect the
+result, so this is purely an internal implementation detail, but if
+you ever dive into the Git code, it's something else to trip over....)
 
-I am not sure if (2) is feasible, though.
+Git handles the "old version, temporary intermediate version
+if needed, new version" problem by creating two or three files
+total. One of these is named ".git/index.lock", which serves as
+both a locking file to prevent two "git commit" operations from
+running at the same time and stepping on each other, and
+also "the future version of .git/index, should the commit succeed".
 
-Thanks.
+(The third file, which doesn't apply to your specific case,
+has a funky temporary name with a unique set of characters
+sprinkled in.)
 
+If your pre-commit hook attempts modification(s) of the proposed
+snapshot for the new commit, it may need to update more than
+one of these files to make all three conditions hold, and in general
+it just can't. (It's too hard to know what the correct names are,
+since they're different in a work-tree and the "--only" name is
+randomized.)  So pre-commit hooks are restricted to "ok" or
+"not ok" actions.
 
+> It's possible that there is a better way to achieve my goal than a
+> pre-commit hook.
+
+Instead of running "git commit" directly, why not run a script
+that does the appropriate "git add"s, then runs "git commit"
+for you?  The pre-commit hook can then inspect to be sure
+that this has occurred, and if not, remind users to run the
+script instead.
+
+Chris
