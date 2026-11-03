@@ -1,92 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.50
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793694818;
-	b=36Bvy5H5ksStf4vjPr7QtETUclTO0zBWKQ/bHJOKaHoMJWWhPh1xST1FV7nhJPHs4nd1
-	 NaB1yVo3/9mwCeTMWu+3Zy1CdF8ic/muNXjGBze48q1ZYzx9ialIyCWocP9uzw9J03+qw
-	 FNOuKS2FuM51nBRrhGOV6LPM7XewLEcrzl/ORrPVyyxjG5Z68XIoiNtUnsMzQ7frrLmgx
-	 jFrjWgPnZISK4heaC1TvGCNTGzSHzk17CPDnA4+XKYmf07FD8WZLIO4NlBg1O4BF1JdQT
-	 y9GHgpSc34mylYITRD+mBaxdmG4LcqamlxslK8YH2dvTj2uIugJ4gPsSHQYN3Z03N4A==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793694818;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.41
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793694923;
+	b=2AxPQ2dvhgMoUkSWaDeFCMhtB2k4aOBUUACJp2je8ZcKaSDBgl93Ua4hWhdeE9WbS0ln
+	 JVaxS00PgVDFHFUKDVDYZ3xHKsdgBYzb+nx5lNJW6rI1hIVk2XlsK8S9zMVeipxTV8Dt5
+	 XJBhYFTzac2C8MphwWyZhoqTFWSoNzUl7WVnUAbBJTln+Qf2rQKagEPbcQcnF3+XvDOBQ
+	 ibHjdtnjjptvn2JD+V3VH+PmHdNZbUDp27IjDrtHhBewfUYk2TJ4v1W88mjtsY6t6kEia
+	 JpRa0/pW0TcnesuFlFekllnvfzabcCmMQ/haF3bH6WOCDS+2oQbx707oFCqg9nsHaOA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793694923;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=+MngY9dah/x26kMsJryyjRHG0SyAu4uP9xkz02vdgpc=;
-	b=nJpwRwb2UHqM0TvKqP3g+leJnLJUjqv5xxCZrcbnXQfVAyO4CUR/H9iaPjxqRcL2SxH4
-	 WPfBo1wvg+06285DzIi0me/OXtJF3NGFekKbJQsqILEuXZ0S4181b9A7YypXVr1YNSC6B
-	 kWxIIzaIG+lY/hTzJqiLSf30sPyCDODVLPCLRSLrAqpoOnBbawEFgqukrEMCbZ8RBOhRo
-	 fieK+RLl+3q9tqDpDlEavHCxOxwAxS5ddz2hjm05pywhvtTrO8b9kR5WiRlb+TF8z70yB
-	 rC+WfavGkvZsNfsCqE4o2hwJcyymnelLs7MhdIszsPasMCshJljaA8bFmLfAOC4jjpg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BFspNVuN;
-	arc=none smtp.remote-ip=209.85.161.50
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=DAHmJfK7+SYDgCM6SrUuD1u3HtvrrQ8Ca56hlQ5/lTY=;
+	b=H7bac4hjoSVW8BxDYDneW4tYVYRJLzQgfJ/3HwEtiKv8MI8Z3u26ZyUOPX1g4ZeLjtfK
+	 TN+27+i4UowOPLoxMFTDtN4BR0Clt3XYbhqqezNNyaBf3Sw6KVJ8BYdEwXXeOb3dLkyt9
+	 JQUum6QEdwkDaLdk0AlqoDz7FZLb0MobC0nF7REAByW5jiM+mt4TyBXObUgrmsnnA1khF
+	 slux8HFQN34JeJcjjMJJlG8IEV2OYD7p0z0cltqSvHb41waki8jho3Q7b4QbjwTpAEO/i
+	 MMb3SbV9W7aIB1FlsDjL9D8Z3nIQLbtk4SkgCxHQRr2aVqpxnQTohtnU5hZy8cCczTw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=HQLCeI1K;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.41
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40077608362F
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 08:33:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 40077608362F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6D8606B6E8
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 08:35:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8D6D8606B6E8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BFspNVuN
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-6de2f213b7aso1671136eaf.0
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 00:33:38 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=HQLCeI1K
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c34bff61551so642799066b.2
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 00:35:22 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793694921; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YK2griFiVSdiyytFPt8Ty5aH7a495P+Eb3+3QHqzM/PqN3ROa1wqZyV1xa118l8fg6
+         mBgbvJAW+7rRpBGRRUXsbJcG+0hhyt9bQmyjUAYCOkAMOwReLiyOT8VRVvRU7SDXnONE
+         PQg9nOAjBTNlp4lleVJzjPLvE5Te718ICJB5UicESFsGnAV93lErKD36OMAENFxSqLtI
+         QnNPkuPMLzJly86XigqZAwSpen8z9G3+TOUc2RHQxkTymj08akyZ43RqIASKACK5Nyt+
+         RDaDwZPQR+HcRUkEMNAnqH53sf+5BzCeZZ/5JAPJBgU/MS29WLSGTspR+YYNDnbp4L+n
+         uZrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=DAHmJfK7+SYDgCM6SrUuD1u3HtvrrQ8Ca56hlQ5/lTY=;
+        fh=/+3Lm9w01x77KNw9Pn64lvqJ9Co+hbIOQJSIen2Miig=;
+        b=KLZflHpnyBnZ6/Sp5/P9yQ7d8SYU62VIIGAd3vzpAbCC4mk59Y7o2gJfQSbQ9iT+mn
+         lqFl1hCou6xy3F6W7GHbP2PGCkHTqMDyP92kS2x7urF2EjvX2iz4Jh0Zzbj/GZh6vy6O
+         EuD0f1AwYf2uU3FZTzqEDfjCHn6eVJ4fe30XXUAVolIwXlV8omN96VNX0sBDCNRnify2
+         4CrONRu4sH/616Qki7UwDwwZ45t+KdgJ23ugqSCn7Knxf3JfWF9oyBffJnsoyqI7dwr8
+         ev52GYToMiP69GDGUEwWzivzJcLnDavxJjX0k1lE/r5YRTDcC5UYbNygd1BNwAItxS1J
+         YLMQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793694817; x=1794299617; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=+MngY9dah/x26kMsJryyjRHG0SyAu4uP9xkz02vdgpc=;
-        b=BFspNVuNgXiBCRMGTWE5OiZxLYIhCOruEE6zHRCZm1LtsPrGyif50VkrFtPZHcsxHS
-         +YTDcafvQDrSjqFJR3WSp3p3GJ18sym/4AkR1BmzTP43KOMI10ed1+nLDAfMROnVki2s
-         dd3/IYW9wnWXZyQHhXrw47k1fhnTzmDw1XFWzmtvyd/yDnMPCd+Mm/YPTiZk/IcAupNO
-         crU8iWnmIpLyYvYeMnKVF4uysEU2xNQEl7vyWV1hKl5L4JIynEX1FBEgw4n43sXQYj/3
-         cq7IdVk7tcdQaHwuDLsPchyGnVqilTrY01WJrnIxen02F32wOXGaaDfkPJEdnJO9A3o7
-         6BQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793694817; x=1794299617;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=spotify.com; s=google; t=1793694921; x=1794299721; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=+MngY9dah/x26kMsJryyjRHG0SyAu4uP9xkz02vdgpc=;
-        b=IaBk0y4zux3hffhT3K1COOGY03SqFBFktQjiqiwIn3QMuMUkpuDHvDAVIFPrbfptSV
-         lv2IJsKpNhu4fepzJpxhag6X5WKnWZyQEM0bw8zvWnp4Vlh9caFu670tKPVU1f1KmEwp
-         +D5ZOzCr6WMsjqouMGSNI5fcb6A9m4cIdlhZi2A80dX5Y6CpmlaJscazp7zo9t4GHOZD
-         OUYSbBouQONB+racyDVjQoxEDIKZHMrYkCIq7/IjW9x1vjiR2CKJh5weY5XJQDCrV2eq
-         ypjTxWgkRnoZNJZrjK95VhPG8J+pLemxp1cLAecmAh7ZEG2Qe8ttoApX87X9CMeoyt5+
-         FbCw==
-X-Gm-Message-State: APuU4Z/vv3vE66qh/d3raY5bvzXMlDDQJNIHoLI+tWumsuLbstzCJ/3o
-	/Qjm4fE1AWViId5G2zM7CML2AGISvodjkaOfJpmRFMS4uuHJLXv8NQtvQ3bWSVn/Mmk=
-X-Gm-Gg: AYBFou1ThAP8DmZSLSTDrgz0BvlkvnpPJRFHACYzwwbVLK0pftzhf6L6ehhS6qfCIsT
-	XtOBBJQ1x1UEykmqSfoiaJK4Xxt/NIgaRngKz2NyCHS9Ue2VDnCB2b4saafh5wEyAwD9Tb0lSDL
-	eCzzoPAz9cZjXXkZ0ffMzH3lpHCmIAK3qyPDs1z1VTiP8SNp/Qmv+z5rbQJrcVAeN4IHj6WHDvg
-	DVs9mic9nXGgWH8qagKG7VjuHJoO5bO3u0EZhWfdl60raLAlRGsCEsKAeeO0TNMs77aYLlO+g3Y
-	zLDAbbp0+2UWygqHfFGkynarrUiuv4a25WU/luozjSqa7fsXqYdjVSCPNN9y+6c4yyFlUaqZ1uN
-	Zg5mmsAtpT3CQki9sQ8OoNE/GMXb/nTbJPtyyNAn7ie5LnxejZXOCZKjDk91YGaxhDMt2+wnTdV
-	YAIxFKscEPIB1HNwqC1RnDAFLmdqqTe0wJP4MEjpnIMVVGoa7Vtqtjj7/zYQvEMgggwhqhT1vnk
-	xrA52FlZvITiNh+ZYq5Eas93ig+/xwlqvN4ZmgoIQJDC5mvaIKp+sm/ELSZkxmOQ4LI/nChfn8A
-	je/XeIZj+PlXILmHxebhLszD3D1DUqyFmQ==
-X-Received: by 2002:a05:6820:2206:b0:714:75fd:7758 with SMTP id 006d021491bc7-714f2a2ca2emr6819014eaf.66.1793694817073;
-        Tue, 03 Nov 2026 00:33:37 -0800 (PST)
-Received: from [127.0.0.1] ([64.236.131.249])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-714f2d1b4d6sm10357154eaf.8.2026.11.03.00.33.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2026 00:33:35 -0800 (PST)
-Message-Id: <pull.2470.v2.git.git.1793694813386.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2470.git.git.1793298807397.gitgitgadget@gmail.com>
-References: <pull.2470.git.git.1793298807397.gitgitgadget@gmail.com>
-From: "Husain Sitamuwala via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 03 Nov 2026 08:33:33 +0000
-Subject: [PATCH v2] check-ref-format: use parse-options API
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=DAHmJfK7+SYDgCM6SrUuD1u3HtvrrQ8Ca56hlQ5/lTY=;
+        b=HQLCeI1K39Lr9ZEuJB+S+UMhTmSLXJokC+TCKjasQNNInA2/VMw7Edx6qGiKL0Czka
+         s/N9KJ5iPHqt7O+xibbm1YWtx1O1/6ah34M4WpL0x0XXLKTCS3JQKqSqSBv5P6OKSwcj
+         /ixu2enp/POHcl4yWmlTXKMXGHftwBroZTMZo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793694921; x=1794299721;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=DAHmJfK7+SYDgCM6SrUuD1u3HtvrrQ8Ca56hlQ5/lTY=;
+        b=0r3HVqtqpLoQX8vJrHeEv3wRculkvToXqxIkr2KaohL8vr3LY5XGSHpQxpqm1IZj71
+         hxZMCNQf99RTsZgA1chnYpZDoukOFTi6awnHecCYQejN9XffArnE/xcom+TZ6vPu3zKh
+         c6odAl3vncggFD5kDjvAr8BeqGurSobDaBayWdzQS6HM8xCcBCFFtKhZmaQ98gCScgTV
+         I6HIk2OeEcMjPI5EmJpTIULBBpTitZssIkQ5h+WVkJBegnG92TCNJ4elmPAMLn5aw9ZN
+         uiwhf+uEXHt3ZkyLITKq7uCDVX9NvNgPA0ck9l12s5N1oeDxzrRATrlKA8ownIA3w64s
+         mx+g==
+X-Forwarded-Encrypted: i=1; AKwUvBwAAtrRBEY3G4CW2MVGyQW5/hX+9dfFiFFeqx8Voniu1wQ0UJBQjV06Ms+tYmT2eBS2gz4=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9rCtS1ACRjo/DNPOuBFHts1UpZf7NF+D4MziHP7qqxm0ElkSvE
+	tOIjyOru28Lb2v/HQhdODg7bYqRu/lbN9fw6yGGotH2QnkApQ86Tmk95X3FzjAeAr0hPAfvt/AP
+	0uY4qAU132AOeX7NOzQMmYh8KxwMIhKdJpC75kT4olw==
+X-Gm-Gg: AYBFou3zbHMHass426PvaAI8ImgM0NpjnqoE21yGXN3PKCKohA93aUE015bUAla1Pc5
+	c5AkjXowuBu2OSkMqI4/ouLhvqQNa96cT/rUQ/TtnyvOKLEuGAK/kRrC6TmFCaXiqnRX1VjMA4p
+	lfLNnfqcAsTRc00yjJdzCjs4lm4Z5OsL4VdNchY+Ec/p7r2FAE/+olB8e/Mvn6Eqk7VQoPYfUi4
+	3V5x1vMiqLHll7p9ynjiTrF1Q94WNipUtWagF+S4217SL6mpaqoQysYglmwLke6nr3899DPMR+v
+	VDVwwWYmjrhJ46fTDZT8Q/ZC7UCvHHjaDhSVd01p7iS+Dxn+DvWxNPV3DdklvmrcoxivqrO3rku
+	n+7aXsALEM4uKetYPadtDnGQfjIOzZgpOuRbj
+X-Received: by 2002:a17:907:d91:b0:c31:7495:e5b with SMTP id
+ a640c23a62f3a-c4ca7a4bd85mr1003051066b.10.1793694920915; Tue, 03 Nov 2026
+ 00:35:20 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,235 +100,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Husain Sitamuwala <husainsitamuwala21@gmail.com>,
-    Hussain Sitamouwala <husainsitamuwala21@gmail.com>
+References: <pull.2279.git.1793634429929.gitgitgadget@gmail.com> <xmqq4idyhotf.fsf@gitster.g>
+In-Reply-To: <xmqq4idyhotf.fsf@gitster.g>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Tue, 3 Nov 2026 09:35:07 +0100
+X-Gm-Features: AclHuK_yLtpaC0VwVzEJOcv9eQCF_hZvfnUzNsoxsNIgRxxqg_DDUAaGWW0l5Us
+Message-ID: <CAL71e4M7yFnTzYD0eVVGRmzkzSXbU0KZ-JScQOyB4-dB5xkAHA@mail.gmail.com>
+Subject: Re: [PATCH] rev-list: ignore replacements in the connectivity check
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
+On Mon, 2 Nov 2026 at 23:05, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > Teach the connectivity check to ignore replacements as well, so
+> > that it verifies the same objects that the commands relying on its
+> > result will read.
+>
+> Sounds like absolutely the right thing to do.  We might want to say
+> that we check both the original and the replacement, i.e., instead
+> of ignoring replace refs, we ensure that the commits, trees, and
+> blobs reachable from the replacement objects all exist by treating
+> those objects as if they were also at the tips of the connectivity
+> graph.
+>
+> [snip]
+> We can address the "shouldn't we make sure that replacement objects
+> used when the resulting history is in use are backed by objects
+> reachable from them?" issue separately.
 
-The command parses its options by hand, comparing each argument
-against string literals. Use the parse-options API instead so that
-option handling is consistent with other builtins and the help
-output is generated from the option table.
+I have not fully thought this through yet, but I'm happy
+to follow up with further strengthening if there's a gap here.
 
-Keep the existing behavior: --print stays a hidden, deprecated
-synonym for --normalize, only --allow-onelevel can be negated, and
-parsing stops at the first non-option argument so that options
-after <refname> are still rejected.
+My preliminary thinking is that since replacements are
+implemented as regular refs (refs/replace/OLD -> NEW),
+their reachable objects should already be covered by
+ordinary connectivity checks when those refs are fetched
+or pushed.
 
-Drop the early show_usage_if_asked() call, so that -h is handled by
-parse_options().
-
-Two minor differences come with parse_options(): unambiguous
-abbreviations of long options, such as --norm, are accepted, and
-"--" may now precede <refname>.
-
-Signed-off-by: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
----
-    check-ref-format: use parse-options API
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2470%2FCodeWithHusain%2Foutreachy-microproject-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2470/CodeWithHusain/outreachy-microproject-v2
-Pull-Request: https://github.com/git/git/pull/2470
-
-Range-diff vs v1:
-
- 1:  9f05296454 ! 1:  991ca870fe check-ref-format: use parse-options API
-     @@ Metadata
-       ## Commit message ##
-          check-ref-format: use parse-options API
-      
-     -    Use the parse-options API to handle command-line options
-     -    consistently with other Git builtins.
-     +    The command parses its options by hand, comparing each argument
-     +    against string literals. Use the parse-options API instead so that
-     +    option handling is consistent with other builtins and the help
-     +    output is generated from the option table.
-      
-     -    The command currently parses options manually, duplicating
-     -    argument-handling logic. Using parse-options makes option
-     -    handling consistent with the rest of Git.
-     +    Keep the existing behavior: --print stays a hidden, deprecated
-     +    synonym for --normalize, only --allow-onelevel can be negated, and
-     +    parsing stops at the first non-option argument so that options
-     +    after <refname> are still rejected.
-      
-     -    Replace manual option parsing while preserving support for
-     -    normalization, branch names, and refname validation.
-     +    Drop the early show_usage_if_asked() call, so that -h is handled by
-     +    parse_options().
-     +
-     +    Two minor differences come with parse_options(): unambiguous
-     +    abbreviations of long options, such as --norm, are accepted, and
-     +    "--" may now precede <refname>.
-      
-          Signed-off-by: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
-      
-     @@ builtin/check-ref-format.c
-       #include "setup.h"
-       #include "strbuf.h"
-       
-     - static const char builtin_check_ref_format_usage[] =
-     +-static const char builtin_check_ref_format_usage[] =
-      -"git check-ref-format [--normalize] [<options>] <refname>\n"
-      -"   or: git check-ref-format --branch <branchname-shorthand>";
-     -+	"git check-ref-format [--normalize] [<options>] <refname>\n"
-     -+	"   or: git check-ref-format --branch <branchname-shorthand>";
-     -+
-     -+static const char * const builtin_check_ref_format_usages[] = {
-     -+	"git check-ref-format [--normalize] [<options>] <refname>",
-     -+	"   or: git check-ref-format --branch <branchname-shorthand>",
-     ++static const char * const builtin_check_ref_format_usage[] = {
-     ++	N_("git check-ref-format [--normalize] [<options>] <refname>"),
-     ++	N_("git check-ref-format --branch <branchname-shorthand>"),
-      +	NULL
-      +};
-       
-     @@ builtin/check-ref-format.c: int cmd_check_ref_format(int argc,
-       	const char *refname;
-       	char *to_free = NULL;
-       	int ret = 1;
-     - 
-      +	struct option options[] = {
-     -+		OPT_BOOL(0, "normalize", &normalize,
-     -+			 N_("normalize refname")),
-     -+		OPT_BOOL(0, "print", &normalize,
-     -+			 N_("print normalized refname")),
-     ++		OPT_BOOL_F(0, "normalize", &normalize,
-     ++			   N_("normalize the refname and print it"),
-     ++			   PARSE_OPT_NONEG),
-     ++		OPT_BOOL_F(0, "print", &normalize,
-     ++			   N_("deprecated synonym for --normalize"),
-     ++			   PARSE_OPT_NONEG | PARSE_OPT_HIDDEN),
-      +		OPT_BIT(0, "allow-onelevel", &flags,
-     -+			N_("allow one-level refnames"),
-     ++			N_("accept a refname with a single level"),
-      +			REFNAME_ALLOW_ONELEVEL),
-     -+		OPT_BIT(0, "refspec-pattern", &flags,
-     -+			N_("allow refspec patterns"),
-     -+			REFNAME_REFSPEC_PATTERN),
-     ++		OPT_BIT_F(0, "refspec-pattern", &flags,
-     ++			  N_("interpret <refname> as a reference pattern for a refspec"),
-     ++			  REFNAME_REFSPEC_PATTERN, PARSE_OPT_NONEG),
-      +		OPT_END()
-      +	};
-     -+
-     + 
-       	BUG_ON_NON_EMPTY_PREFIX(prefix);
-       
-     - 	show_usage_if_asked(argc, argv,
-     -@@ builtin/check-ref-format.c: int cmd_check_ref_format(int argc,
-     +-	show_usage_if_asked(argc, argv,
-     +-			    builtin_check_ref_format_usage);
-     +-
-       	if (argc == 3 && !strcmp(argv[1], "--branch"))
-       		return check_ref_format_branch(argv[2]);
-       
-     @@ builtin/check-ref-format.c: int cmd_check_ref_format(int argc,
-      -			usage(builtin_check_ref_format_usage);
-      -	}
-      -	if (! (i == argc - 1))
-     +-		usage(builtin_check_ref_format_usage);
-      +	argc = parse_options(argc, argv, prefix, options,
-     -+			     builtin_check_ref_format_usages, 0);
-     -+
-     ++			     builtin_check_ref_format_usage,
-     ++			     PARSE_OPT_STOP_AT_NON_OPTION);
-      +	if (argc != 1)
-     - 		usage(builtin_check_ref_format_usage);
-     ++		usage_with_options(builtin_check_ref_format_usage, options);
-       
-      -	refname = argv[i];
-      +	refname = argv[0];
-
-
- builtin/check-ref-format.c | 49 +++++++++++++++++++++-----------------
- 1 file changed, 27 insertions(+), 22 deletions(-)
-
-diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
-index fd1c9c0e0c..d698da99d9 100644
---- a/builtin/check-ref-format.c
-+++ b/builtin/check-ref-format.c
-@@ -5,13 +5,16 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "builtin.h"
-+#include "parse-options.h"
- #include "refs.h"
- #include "setup.h"
- #include "strbuf.h"
- 
--static const char builtin_check_ref_format_usage[] =
--"git check-ref-format [--normalize] [<options>] <refname>\n"
--"   or: git check-ref-format --branch <branchname-shorthand>";
-+static const char * const builtin_check_ref_format_usage[] = {
-+	N_("git check-ref-format [--normalize] [<options>] <refname>"),
-+	N_("git check-ref-format --branch <branchname-shorthand>"),
-+	NULL
-+};
- 
- /*
-  * Return a copy of refname but with leading slashes removed and runs
-@@ -58,37 +61,39 @@ int cmd_check_ref_format(int argc,
- 			 const char *prefix,
- 			 struct repository *repo UNUSED)
- {
--	int i;
- 	int normalize = 0;
- 	int flags = 0;
- 	const char *refname;
- 	char *to_free = NULL;
- 	int ret = 1;
-+	struct option options[] = {
-+		OPT_BOOL_F(0, "normalize", &normalize,
-+			   N_("normalize the refname and print it"),
-+			   PARSE_OPT_NONEG),
-+		OPT_BOOL_F(0, "print", &normalize,
-+			   N_("deprecated synonym for --normalize"),
-+			   PARSE_OPT_NONEG | PARSE_OPT_HIDDEN),
-+		OPT_BIT(0, "allow-onelevel", &flags,
-+			N_("accept a refname with a single level"),
-+			REFNAME_ALLOW_ONELEVEL),
-+		OPT_BIT_F(0, "refspec-pattern", &flags,
-+			  N_("interpret <refname> as a reference pattern for a refspec"),
-+			  REFNAME_REFSPEC_PATTERN, PARSE_OPT_NONEG),
-+		OPT_END()
-+	};
- 
- 	BUG_ON_NON_EMPTY_PREFIX(prefix);
- 
--	show_usage_if_asked(argc, argv,
--			    builtin_check_ref_format_usage);
--
- 	if (argc == 3 && !strcmp(argv[1], "--branch"))
- 		return check_ref_format_branch(argv[2]);
- 
--	for (i = 1; i < argc && argv[i][0] == '-'; i++) {
--		if (!strcmp(argv[i], "--normalize") || !strcmp(argv[i], "--print"))
--			normalize = 1;
--		else if (!strcmp(argv[i], "--allow-onelevel"))
--			flags |= REFNAME_ALLOW_ONELEVEL;
--		else if (!strcmp(argv[i], "--no-allow-onelevel"))
--			flags &= ~REFNAME_ALLOW_ONELEVEL;
--		else if (!strcmp(argv[i], "--refspec-pattern"))
--			flags |= REFNAME_REFSPEC_PATTERN;
--		else
--			usage(builtin_check_ref_format_usage);
--	}
--	if (! (i == argc - 1))
--		usage(builtin_check_ref_format_usage);
-+	argc = parse_options(argc, argv, prefix, options,
-+			     builtin_check_ref_format_usage,
-+			     PARSE_OPT_STOP_AT_NON_OPTION);
-+	if (argc != 1)
-+		usage_with_options(builtin_check_ref_format_usage, options);
- 
--	refname = argv[i];
-+	refname = argv[0];
- 	if (normalize)
- 		refname = to_free = collapse_slashes(refname);
- 	if (check_refname_format(refname, flags))
-
-base-commit: b9e5cff1803ab24582201ef059516eb16014b9d9
--- 
-gitgitgadget
+And thanks for the review!
+Kristofer
