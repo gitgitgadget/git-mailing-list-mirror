@@ -1,101 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.182
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793717735;
-	b=aNW3r7HeAcdQXh3gWSG4mf/yifoW6rMMJmE2kcd+XOdD+PG9mq+7L8aGXEBj4Qjq95Ha
-	 JvEDyvSTX8lEJrVu7BllpKM0cV04yHk6dvPucF0NNHWW+Q+ZAov8sXEfhXKKV7QN9pJ8I
-	 8Gg8UpfQ25mkw+hZw7ObuIRSMcOaDGFcDbaGeyH0i47xZ0QsNYIaJltJOO0fhu4nvT9d5
-	 6KNO9bBinRbV2Ua0oXiKge6SFWwMYovoGgmhszp9+HDYNZWpGOzzqSTDk+5P9QJhq0OwN
-	 U1+xQVOFrJ8nFdtUvTshr/E+rH0Dvg412UBhloTSJU3ixclzvhreSZoUQzR8Tqj1B6A==
+	t=1793717803;
+	b=131yYb3gDvVGyIvZT9Um7O7LMu9YnfAT/pUJIvA9m+30WcnNc+knM8+nrWZ6YPMSOQJW
+	 nph0jyT+Fv7QKYroFBPruzRvBBTg053hPRwg0hEOgF/07xNIwoxiHf8WTKREpMbKdaBMS
+	 gjyTUG6MpzgI2No2SRkFt3oxEEpi4bvHwZtX2upLMUUkn92l871wXgYr+GWyq9mlGjNLf
+	 hey0behJfC7sor3gAA1Uz4YDXhUm1AjYeoB+vl9M/S/6Y2vfUyBEv+yH6OeEIqo/kOeS0
+	 9biOSTGCzUhRVK4ESS4iHuDNl6VEisVaAzzoyzl3IR5nU2qryoHqqp5m3Rp0phxFDCQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793717735;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793717803;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=cxoCh3dYSr613wafseK373M/7cuzF55kUjSHjpqEaFM=;
-	b=G0CPKHAV+68gCF/M8E3hPIcQ5MviFdzoCwTAhSWl+7LKln2u2r9aYm9MU5tPAQG8dWfh
-	 na85tV3o990/MMNJV+Sv7mGv5n8/5lZWU8coXL5xTR7FqOk4xlayg7pWCs2uJB/N7UiPQ
-	 R6HPuNxOVacI/1A3H7Sz9h22ECVm7ElsksrnDDaQwuepEjOi9n+Om/vpOlAyloSQFzW7z
-	 cxtg2gHP93noCcBnSLVLBPB/PwrwtAG3PyIC07YdMsyX3+HOJVZfZ94xBXY2vlnhlGOtr
-	 GTYxeZpL5nvu8Bs7ljc5BkMHr/d+E2ZnFCiUZNvjZl+AJf72U6fX5mxt+X1oE9yzXjg==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Content-Type;
+	bh=XaJsglCJUtiu3AlCalyz17XFivAYwY9bfyLi1YuZGPE=;
+	b=TAXQlEzgDl/wBEgkWS/CcgDLlDpr3UTjDbWDL98ldaEVYtyub5vchq4ijRjsijVZDEhU
+	 X+YZmkanI3gA7ISCkyOKIuwVy1WTvFKZlWobwggJYftB4glZzvWt3fRyrakTzcBR7cj9S
+	 zuLFVPZuGUEyS/tc7m2qDRvwvjSat3Hr1IQx4ivirIv451iPPNcDe/MxFLLRkIMeDMake
+	 JvS3F2wMpwtO15VMHF/5TgJ0Z8UdVgFJsd7WwY/ovcW78CgLCw0ogXCn26OOHASPYcF3h
+	 DzAxXI81BOi+NzwLUrWPo0Z4vrxGG/xn0Ye55KvhneVKSlnzGB7UitBsQuz8gHb6sTA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hkQVIIQp;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.181
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MArtgNJ2;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.182
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEB0606D807
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 14:55:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3DEB0606D807
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20760606B240
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 14:56:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20760606B240
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hkQVIIQp
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-8b0f59a5fdaso39043397b3.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 06:55:35 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793717734; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MArtgNJ2
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-8b305e10ac7so2289587b3.0
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 06:56:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793717802; cv=none;
         d=google.com; s=arc-20260327;
-        b=BXg8MiiRlzK5aStxaiRQoZCOo3S3WzqUVqA+tk2558eVOpsDRqXd07l229RceoFKb7
-         U0iKAaOa+AeN/YyFG6gxEM80Eyj3ELZorWOwr/E6ivrtFKT0C7uyVJ24ugs9n+CsDRUd
-         8X3RiBsp2zpOlSRSdN53pGjM/e9e5B/j5XRwjOClSrxF2fldH+VuTRrIqMni5kgFzgdZ
-         BcmZfrB9lCAc92L6/W2sasnSFRqQX+3Q+9ZOei9wN/IY0IhDFe1myC/Oo6IBDTBfwSIp
-         A7YYVk07bTMqcfm+W3gxhBG3dPBGPqe7fsDsiVE5jZUqM3rc5H02HsY0Zl4spzR7auhj
-         DMMQ==
+        b=Pl1/4SLvvnzabCFDjuz6tR44jBp1wEFGEOsDmAO01s5oQybZPRKiyrgLyRjATRVMcB
+         fUtNjpH11jYoC2hpTrjmfiXjgcx8YqDzKF61tATOlYAqx5MCuB3GyNF5j4htZSFf1gAX
+         GyQ3leTpeKJafqal6EJLnur4/koNtvd8TT3LtF8IDPoaOI6psGRZhcKv91cYFbuB8oKA
+         6EQ3OJ4z6fdUYnrTgMyio7LNrfLp296BE25buDoKnqdqogaDu3DnW36Bi9Yk4AVuvS9T
+         XH1Q8i0GXDv7fmxnYnfw889y4R9ylelw/PZ9d8horS+DJM/d1RoGPvLcN9b4Aro+xCJM
+         +buQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=cxoCh3dYSr613wafseK373M/7cuzF55kUjSHjpqEaFM=;
-        fh=PAjj1C9K1hPPM4TqmxTyFadGtAoFxDNtbjsyY4NMbPQ=;
-        b=LsSmvCqFVvlwKyUDKN7+dWrbAxYwZsESEMgbBo/Wvc02Bo33Ko1HfA79aTbpxBj2qO
-         bve8j6jLC0FhbW6jvoVr8/C8XOchB9A205XQQo0IBDz/w7Kbd+N2le50SuUYcejdjvZb
-         BhimbZBEYS5oczzbSxgwZT8Qyhl/wa2SlQn8b2nQwP9WgPfrQcNR/cCmeatf2nQ6wHf6
-         FQBG2jqwz2nfbMdzTcBEIFWezaPggFgUhfnkl4uNe5JuoQg9VmfWbXAhmV1RyQkw/GjA
-         39JRX4b5J/TW9a1VsN2Qke0sM6DCLrASYBKzmpImvfidHpktuHtUXXJYgn5cqzb+hNiS
-         q6FA==;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=XaJsglCJUtiu3AlCalyz17XFivAYwY9bfyLi1YuZGPE=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=HJZcKWyOOXvNw02vQlfFxlxNAKdLrF0Dwyvc26jiwuGKSdFUTMKW1YMC+57axaPVgG
+         kWhRT6dl7ShPaSIaK6+z7dXE50AT0BaoNoDbTFud1lozw/3i/FhR1Q2sDspyviNzHvbS
+         dXhKCnuZpHEPaAqxiY/00XzzyFB7rZaEkRukB0ZrIla09WGxseCViS3i0e8Htu0oBEt2
+         pxQMzv/oy/QhI00nK7n/OJSObdphYrBU5NMiP+XF9t8O6/yyFPZTNhndHNUKkE94Ncx8
+         7qx2dEzrOKbu/C9hN/yoxGZ81uXS8kI9bjM9v53fsNdK1Zuwq9goyZ0gzUzLCelICnAg
+         tE+A==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793717734; x=1794322534; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=cxoCh3dYSr613wafseK373M/7cuzF55kUjSHjpqEaFM=;
-        b=hkQVIIQpQ15SnhWTudDP7Z+Pgb6sgGmx5cC9s8G0GOl50tqbjOe6TYycFDJ+OoY47t
-         odn1VxI8QTdFtYp2KC3sKebZDzWikT5mdSncBhQ84ePreK004Xr6EfTM+lWalDLmKs2X
-         Uzvh8GGoIQ+YiUMHP9YI6MUSzDLCS1H8BnIMvvslFvbfszRUjcwUl/ZXpaUl6xoD+Zqt
-         Eu35BCwlo7Xpitqqxyr7TbC0CUKfUaKIqh10I5yU8kOkDNTtPrAFmN4R4lSGcwGmablw
-         ZfIMAIzN0dK9nP9xjQxXKm8/yPz9fj10GM0UE+OwdjKL0DS1T5XwJSlkxsaio/O09mNH
-         QvAg==
+        d=gmail.com; s=20260707; t=1793717802; x=1794322602; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=XaJsglCJUtiu3AlCalyz17XFivAYwY9bfyLi1YuZGPE=;
+        b=MArtgNJ2w06BTK3ksXyOsJD630y37sNwRjomglJ2hVRJsaJiYFS2ZUUzTcgVAYDegu
+         2txN5PlZIakrhGhCbJChEPgq3Jbe/r0qBujeDiac1EoCXlxJViHj1QL/ivxdmqgiRKGR
+         AkCcyY5/e62jDvgTiyk+4FTpolTbFenoYC3AjesXGAXv7wozEDxJxYLQYPzL6PWaaC9z
+         8J/RjX1mxyMiH/bPCix5WfUpDz3tnVNZDLbd9zaZ246UEEBIY9kNCffrDoYV3dEnec3W
+         bkGgjc2TtwlvJlNpx+ZSQqydBQ7+67zA/MPgTPWaadzdeUggmwduASSK0vfYr/nbg7aj
+         mcjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793717734; x=1794322534;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1793717802; x=1794322602;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=cxoCh3dYSr613wafseK373M/7cuzF55kUjSHjpqEaFM=;
-        b=yLZDZRXTRBlRzI60b7jQZU9zmcDoKCkDvkcMN2+r4Q/+xf0M0oul5dmcSWLI2/4obs
-         tKkmiA8y28unY3mV+w7nyIi7FuqCtXOjLyxdfFDHIWSkZqE4yfTbvf3c8eLsopdpyWXJ
-         g2IcgnyzS4KsK9h/QdwP2wGbdFV1UTbVuNvgqKuRnMcBL8WuVFsufbT6jz3sg+I6D93i
-         fHwiNavYV02h0umlCR/rhvQsIChjhVQV7kSQXeQrRk0byban7rzfyiXVK3KBOeCDl8TU
-         2+DjHaoUjdnCCKse1pUnZfuRAwkrXZeiOqqpDzSu9aAATT0Khy9C5reeJCVx34mMwtG1
-         fVHg==
-X-Gm-Message-State: APuU4Z/yfXuBCPO+WAdtGZnABeHAEvxCSEgRvjV6FscW2mqixpfbNTTY
-	pIaHfRtQzvgfylWtBAz2qWZKoJujVr//U3UerZui6jON4eyMBTeigZ03ROrB+8MI5C5Q32bKt2s
-	TUvDlHmMd/TgUg0GV1CspheZk+GGlrniP0jR9r+Ju8TS6
-X-Gm-Gg: AYBFou0+cbEdIrpVs2LJQATwjLN3WlKxhtxd2lcEcHs+QQVzjhflc4vyCjeecJIt9NY
-	wLCfrmHUjWUEIUEqfR6gOSGCepejHq7XFlTsiRO3279HSwNBFvLkfhWnrc8lxHka7/ggc3EoLBn
-	4rqwmQMJ/cWxOuLDAyJCSJMdceusGFBkplelx/JYaML8mzoO1Mjv3GLJ74Um8vUUB41EQyFzzRE
-	3yh6QB4zSbOWZiucgGbgP8xayrQvr/m30ELwuQ3KDT9+WPxxAirIMEoltlIZ9yxkPUPABqONOVW
-	wcZXzvbXbHZH5P57e0Pd3Dx7sLAAgpdL+ImLVoRuDOztzAxreD8cs2ltEbczJwoeIy/yWJeGg28
-	aaV2ERJIn6BA3Sek6hDaatV9nnmiTnh9fI2VHl2NUgLXSYUe51Srw0QgRHLfGUvlOLoVzZtxdHH
-	i1d/OTd6d5bqwNHPa4Z2D3/y4DWymUBH7zNzyy00exvAik/+jcmZaIw5SNr/XIOks5JD3L64tqP
-	1p3F99GUZscaSULsl/Unjx02keyp7pCaFT8Wg==
-X-Received: by 2002:a05:690c:d91:b0:8b0:cee8:53cf with SMTP id
- 00721157ae682-8b2b6597d49mr96154627b3.3.1793717734135; Tue, 03 Nov 2026
- 06:55:34 -0800 (PST)
+        bh=XaJsglCJUtiu3AlCalyz17XFivAYwY9bfyLi1YuZGPE=;
+        b=JznWwpTOJJMvf9Uv6Gs4wS/uv/AYp97MRCpx7fGpG4VAdrSyQ9b8VsWGpXjgQlQTU6
+         TXDONSUO36zE2UH0HaGhTJ84SAuc56gPa7+iADGK40HctzCkuZvWXTn5z9P3a1JxYJjn
+         v3ubQJS7th3C/00LUuG9EDhye6LSZuvhUM8CTJCdLXr36ArjHs8HmBvjl8purnkJVLEE
+         H24YSMWjZUlaVG7+MldW6MQlhDTwxZzOUwNscqghDRIzpMrMrgdyKz6TB7WUGyW8pF3m
+         rRd/OqgttePL8IK/MkKw2AZDw40hFbsfrs6Bix6fmMXfqM+0WZHwzLvPJg0HlWIpbP+b
+         QgGg==
+X-Gm-Message-State: APuU4Z8lbPp16WXGklP/1Q7HNHUSCie1q62ozBjqnuG0z0t4pTG0c0ea
+	aLQ2ncQICodVY6XYQjBYffZ+uQ9Zu5OeiBFePPJeYIyzXUM3dXDz2hlMGyoN7WQsg8b2k774J3I
+	Vle3HMqPRtw5JewvR0TG05o4DZFoE4gklenwI7wQ=
+X-Gm-Gg: AYBFou1aw/Qfwu9v6t2GuB61+DhuRK+wBS7nrEC9qB+ynzgk9mrtXLZh6D5ebEh3svL
+	mCICmGmTmMyJOAkA1TwoRhZlLV5QYIQU6V05nighSbeRPy1TclSPXwHfRe74zwza9FJO5pDVl0U
+	Ey4nmp7D+T4JlbY2jqzRwlHnlxgczBeCWdeDkD9c04tiqztKff+YAEmqaeSUc3tDZK5+e0eq53L
+	ukN9Yq+t0TOWOts7QaQ1yxGKuiz9N3oZDVs5NLTUvFQT7AMIOXdB6USnj7lxKPlluJ13LOLRKeY
+	7jcT2bXtz12LlmOy2KbMk/m0JcGgCgnKvC4+I0iVYF9PIZAIwXqJqcf3ZJN7Ec7NBo0bhaap/4l
+	L76ChzP0L+nbcpiuO0cp8u1EpLO4lmjZfMKIV
+X-Received: by 2002:a05:690c:e204:10b0:8b0:ac08:d6f7 with SMTP id
+ 00721157ae682-8b2b671012dmr65011027b3.18.1793717802129; Tue, 03 Nov 2026
+ 06:56:42 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,167 +99,124 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261029141818.40193-1-okhuomonajayi54@gmail.com> <CAP8UFD1VUCTeXNbb4YKGkZRWY8i56Zms_=qkR2oqF7e1Aagy1Q@mail.gmail.com>
-In-Reply-To: <CAP8UFD1VUCTeXNbb4YKGkZRWY8i56Zms_=qkR2oqF7e1Aagy1Q@mail.gmail.com>
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Date: Tue, 3 Nov 2026 15:55:22 +0100
-X-Gm-Features: AclHuK9VazGFofGx-_3cwnIDPxbqFp2OR-cV4w0Wev8m3G6ekuy-KbXyk1RaXsQ
-Message-ID: <CAFpMFfCX_VcBhyivh2f7vppYC4xLoYvUywAviW_73_nmOEkaeQ@mail.gmail.com>
-Subject: Re: [Outreachy][Proposal]: Reduce Git's global state to enable Git's libification
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, usmanakinyemi202@gmail.com, 
-	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com
+From: =?UTF-8?Q?Patrick_Pero=C5=A1a?= <pa3ck.perosa@gmail.com>
+Date: Tue, 3 Nov 2026 15:56:29 +0100
+X-Gm-Features: AclHuK_di-CkuygNWWfjMOqrnSa4ZpEHljoT6NZEqXOYqChK_6pPCTkevg8Zdkc
+Message-ID: <CAByu3etmpxF+zNqDQ0VJ5DZs_qxdnvQxxmeaMcGRGf36+8Oqww@mail.gmail.com>
+Subject: [bug] push: bare --force-with-lease ignored on remote groups
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Christian,
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-On Tue, Nov 3, 2026 at 2:46 PM Christian Couder
-<christian.couder@gmail.com> wrote:
-> It's a good idea to focus on library code. You might also be
-> interested in what Junio says about code in "builtin/" in:
->
-> https://lore.kernel.org/git/xmqqmru76ybk.fsf_-_@gitster.g/
-[...]
-> In the discussion I mentioned above, Junio says that the code in
-> "builtin/" isn't reusable library code at all, and that it would be
-> useful work to move that code into library helpers.
+Pushed a non-fast-forward update to a remote group using the bare
+--force-with-lease option (no <refname>[:<expect>] argument).
 
-Thanks, I'll read that discussion and add moving code from builtin/
-into library helpers to the plan in v2 of my proposal.
+Minimal reproduction with two file-based remotes grouped as "both":
 
-> I wonder if blog posts on Medium are accessible to everyone.
+    git init --bare RemoteA.git
+    git init --bare RemoteB.git
+    git init -b main work && cd work
+    git remote add RemoteA ../RemoteA.git
+    git remote add RemoteB ../RemoteB.git
+    git config remotes.both "RemoteA RemoteB"
+    echo 1 >f && git add f && git commit -m one
+    echo 2 >>f && git commit -am two
+    git push RemoteA main && git push RemoteB main
+    git fetch --all
+    git reset --hard HEAD~1
+    echo 3 >>f && git commit -am three
 
-Good point, Medium can ask readers to sign in. I'll move my blog to
-Hashnode / GitHub Pages so that anyone can read it without an
-account.
+    GIT_TRACE=1 git push --force-with-lease --dry-run both main
 
-Thanks for the review.
+What did you expect to happen? (Expected behavior)
 
-Okhuomon
+The --force-with-lease non fast forward push to happen to both remotes.
+     + d30bde7...c21af72 main -> main (forced update)
 
-On Tue, Nov 3, 2026 at 2:46=E2=80=AFPM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi,
->
-> On Thu, Oct 29, 2026 at 3:18=E2=80=AFPM Okhuomon Ajayi
-> <okhuomonajayi54@gmail.com> wrote:
-> >
-> > Hello,
-> >
-> > This is my proposal for the project "Reduce Git's global state to
-> > enable Git's libification" for the December 2026 Outreachy internship.
->
-> Thanks for your interest in Git.
->
-> > Past Experience with Git
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-> >
-> > I have been using Git since I started coding, for my own projects
-> > and when collaborating with other developers.
-> >
-> > This is not my first time on the Git mailing list. I applied to
-> > Outreachy in October 2025 and sent about ten patches in about a week
-> > (patch-ids, commit.c comments, builtin/patch-id.c, gpg-interface)
-> > [10]. None of them were merged. I was sending too fast, my subject
-> > lines had doubled prefixes like "[PATCH] [PATCH v2]", and my commit
-> > messages did not follow the project style, as Junio and Christian
-> > pointed out [11].
-> >
-> > This year I slowed down. I read SubmittingPatches properly, wrote
-> > my commit messages in the present tense, and sent one change at a
-> > time. The hardest part was still sending new versions: keeping each
-> > version in sync with the review, the right thread and the notes on
-> > what changed since the last version. This time my microproject was
-> > merged to master, and six more topics are in 'seen', some of
-> > them marked "Will merge to 'next'?" in What's cooking.
->
-> Nice.
->
-> > Reviews and help to other applicants
-> > ------------------------------------
-> > + list-objects-filter-options: pass repository to partial clone
-> >   helpers (Dorine Tipo)
-> >   My reply: https://lore.kernel.org/git/CAFpMFfCu6JrUC8i453qBP=3DAktqcG=
-_9sGX=3D1-1ekEDCYm_+pkUw@mail.gmail.com/
-> >   Description: Dorine asked whether USE_THE_REPOSITORY_VARIABLE
-> >   could be dropped. I applied the patch, removed the define and
-> >   checked that the file still builds, so it can go in the same
-> >   patch.
-> >
-> > + Microproject idea: modernize a file-existence check in
-> >   t/t0081-find-pack.sh (Immaculate Mecha)
-> >   My reply: https://lore.kernel.org/git/CAFpMFfA17dnuLSRt97BrM0u3cHAifJ=
-ybr_Zc2ahr_zq2nspgsw@mail.gmail.com/
-> >   Description: Pointed out that Shashank S had already changed that
-> >   exact line, and suggested searching lore and "What's cooking"
-> >   before choosing a microproject.
->
-> Thanks for helping with reviews.
->
-> [...]
->
-> > This project reduces that global state step by step:
-> > - removing the_repository from library code by passing the
-> >   repository explicitly through the call chain, so files no longer
-> >   need USE_THE_REPOSITORY_VARIABLE;
-> > - moving repository-specific settings from environment.c into the
-> >   repository, mostly struct repo_config_values and struct
-> >   repo_settings;
-> > - and, where a value is only used in one place, passing just that
-> >   value down instead of the whole repository.
-> >
-> > A lot of progress has already been made: many settings that used
-> > to be globals now live in struct repo_config_values, and many files
-> > no longer need the_repository. But there is still plenty left.
-> > Over a hundred library files outside builtin/ still define
-> > USE_THE_REPOSITORY_VARIABLE, and environment.h still has globals
-> > such as git_commit_encoding, git_log_output_encoding and
-> > comment_line_str. That remaining library code is where I want to
-> > focus.
->
-> It's a good idea to focus on library code. You might also be
-> interested in what Junio says about code in "builtin/" in:
->
-> https://lore.kernel.org/git/xmqqmru76ybk.fsf_-_@gitster.g/
->
-> [...]
->
-> > Roadblocks seen in earlier work
-> > -------------------------------
-> > - Not every global belongs in struct repository. When Ayush
-> >   Chandekar tried to move core.attributesfile into repo_settings,
-> >   Junio questioned whether attribute data belongs to a repository at
-> >   all, since attributes come from the index and the working tree,
-> >   and compared it to how index_state is passed around instead of the
-> >   repository [7]. The config value was later stored in struct
-> >   repo_config_values instead [5].
-> > - State used during early startup cannot simply be moved; the setup
-> >   code has to change first. Patrick did this for
-> >   is_bare_repository_cfg and git_work_tree_cfg in his "setup: drop
-> >   global state" series [8]. have_git_dir() is still left, and
-> >   environment.h says it "should not have to exist at all".
-> > - builtin/ commands: the "repo" argument of cmd_foo() can be NULL
-> >   (e.g. "git foo -h" outside a repository), so blindly replacing
-> >   the_repository there causes crashes. Library code is the safer
-> >   target.
->
-> In the discussion I mentioned above, Junio says that the code in
-> "builtin/" isn't reusable library code at all, and that it would be
-> useful work to move that code into library helpers.
->
-> [...]
->
-> > Blogging
-> > =3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> > I will blog on Medium (https://medium.com/@okhuomonajayi54) and
-> > post weekly updates on my progress, what I learned and the
-> > challenges I faced. I will share each post on the mailing list,
-> > like previous interns did.
->
-> I wonder if blog posts on Medium are accessible to everyone.
->
-> Thanks.
+The same as would happen if the pushes were done individually
+
+What happened instead? (Actual behavior)
+
+Both pushes are rejected as non-fast-forward and the command exits 1:
+
+     ! [rejected]        main -> main (non-fast-forward)
+
+What's different between what you expected and what actually happened?
+
+Both pushes failed, seemingly not receiving the --force-with-lease flag
+
+Anything else you want to add:
+
+GIT_TRACE showed that a bare --force-with-lease does not forward the
+flag to the child processes that are spawned to execute the push on
+each remote.
+
+12:10:42.376196 git.c:506               trace: built-in: git push
+--force-with-lease --dry-run both main
+12:10:42.376772 run-command.c:673       trace: run_command: git push
+--dry-run RemoteA main
+Pushing to RemoteA
+12:10:42.377701 run-command.c:765       trace: start_command:
+/root/git-builds/next/libexec/git-core/git push --dry-run RemoteA main
+12:10:42.380551 git.c:506               trace: built-in: git push
+--dry-run RemoteA main
+
+The issue does not happen when an explicit <refname> is specified
+
+12:10:42.420633 git.c:506               trace: built-in: git push
+--force-with-lease=main --dry-run both main
+12:10:42.421239 run-command.c:673       trace: run_command: git push
+--dry-run --force-with-lease=main RemoteA main
+Pushing to RemoteA
+12:10:42.421423 run-command.c:765       trace: start_command:
+/root/git-builds/next/libexec/git-core/git push --dry-run
+--force-with-lease=main RemoteA main
+
+The issue also does not impact the normal --force flag
+
+12:10:42.437825 git.c:506               trace: built-in: git push
+--force --dry-run both main
+12:10:42.438310 run-command.c:673       trace: run_command: git push
+--force --dry-run RemoteA main
+Pushing to RemoteA
+12:10:42.438508 run-command.c:765       trace: start_command:
+/root/git-builds/next/libexec/git-core/git push --force --dry-run
+RemoteA main
+12:10:42.439223 git.c:506               trace: built-in: git push
+--force --dry-run RemoteA main
+
+Reproduced on:
+  - git 2.56.0.windows.4 (Git for Windows, where I first spotted the bug)
+  - git 2.56.0 (built from source on Linux/WSL2)
+  - git 2.56.0.341.gebdc087dc9 (master, built from source on Linux/WSL2)
+  - git 2.56.0.506.g506a7eabc5 (next, built from source on Linux/WSL2)
+
+--dry-run is used above only to make the reproduction repeatable; the
+same rejection happens without it.
+
+[System Info]
+git version:
+git version 2.56.0.506.g506a7eabc5
+cpu: x86_64
+built from commit: 506a7eabc523d0811286b66193419658da95cda5
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+rust: enabled
+feature: fsmonitor--daemon
+libcurl: 8.18.0
+OpenSSL: OpenSSL 3.5.5 27 Jan 2026
+zlib: 1.3.1
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-storage-format: files
+default-hash: sha1
+uname: Linux 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC
+Thu Jun  5 18:30:46 UTC 2025 x86_64
+compiler info: gnuc: 15.2
+libc info: glibc: 2.43
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
