@@ -1,86 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793679697;
-	b=iDJAhuC7JXO6p8FAW6TTugEAAfi0Yp1CV4BDVMBdhy0IJsd2Kw+GjYE4X2zYmxwTlZAI
-	 vNpjdgySxGDOKmDaPBDQwReDCLOpacaQNZ4Q4qVHv1xy8SBZ2xw7yG3xX6ZVrg39kDtF5
-	 UWQDuiqn2b+OpUTGZLBDVbaD3bspC7rpjOjhZXVXzh/qlEYQs1vo2J966Hnzm4S7t3Xab
-	 gKnKEZg/cYx+Mc+3/wFcv2fKBJHXxsTK6WvIo36+oU+dbXh/KSVEb7pE4zIaXLvnmm4ze
-	 U98sOl+dI3SM0ASs327jpGJuTXT+QahBuevizEwSVQSsv3og38RgTFDu4Y4OltUDF1A==
+	t=1793680715;
+	b=2jvIFGyfvHDhFEaH97GF0K8WX0+q+CGt5mNvvL1XI+T6YErZgsZhew02nArg/sGfk2cK
+	 dC7XDIXq2ItDctYhyd06+QM68745lN4UF4alPYAkelE5rvHO0H58s1eeyK4iYs9F2STGd
+	 LQotkmcudAqG/i8JwaJ3um/IhIi5gcFwboCrmtFNsuT60X7nFooasLhPSo9wTvDmXJwKl
+	 NcDXS93K6dnGsfjey8BqO69Vo2fbxKJP9+/dXJEKV3JKDPrmxIBsJpOciq3XN7AiPdCzw
+	 wKlUahlzY7TUN3d+LgaAZaWx1kP1q/weAi3AGCJfUGX1xd+BDIRpBgQAuWwYGs36ZiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793679697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793680715;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=s54Bun+Z6iCnsO9DLT29cu1c+g3mHonlMxfKkowbEcI=;
-	b=bigkYZ7RO8DbfkKHtLslTcdmGPopGPnzX+6MVRekbArZXbXwSTmOl010WYl9+LEcqa4D
-	 nk1pW49evRiMeKsrXIGZfho/3RCURKMyT9UcUlh6KTkcqjIaiqlZYK8y4tN8DlJskR01v
-	 dvcyox/Px1Tj7SwPg7CtY9XtVQGNPTufNH8yRAsXMk753LllOOyNlt/ByGCvl6WQlyy2x
-	 nQmUsEeP+sCuTD/cU7NT8a+Zhz0Qr+nGmo93I3DYFXjaU1W844JKRtnWG07UzsInCeY14
-	 LxuOKCUgHDF4jjGYtfoV25fzTM1aQnjr92GV0NxfhRFve1UI8MiXCluU7LaB19cbeGA==
+	bh=0ekCuR1ZjnrGTTfblKFcSvakF6+6ZLwhGsD3Que8QCw=;
+	b=qCHaLho7S95fkqsBuMXVuSXdjppj+zPnMa6NyO3GTCkA4+3/zoZv3dOmzHA6sKafwYda
+	 93jqsBQf8HB2dWt+awoFBIbCkP4yEApO91wpqmYUQgnygsGfITqNECn94VGKm3qs4Jkky
+	 BY3KpzftLXy7mFVy7CLmoHhwnZHHEEirt9kOoKQvZH28bwKoe+b9usMIKgGeU23r3ZRHi
+	 xH6EOXZuJ3eaUNBPK+fTbLM1GlOqS4ISezSu2nZxqS4fdEzSIioHtvRu+azJTkot58MPC
+	 u775YdELz1jwL3htnLpop4xF4p/PFQ4MLLvV4/PzrFsy+icvYoQlBqS+pDJKND7OLGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TkMqDe4n;
-	arc=none smtp.remote-ip=209.85.221.53
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VeaDc9C7;
+	arc=none smtp.remote-ip=209.85.128.46
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17695606A327
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 04:21:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 17695606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F7A606A324
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 04:38:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 15F7A606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TkMqDe4n
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48e20edd106so2843150f8f.1
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 20:21:36 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VeaDc9C7
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a3517554f7so27839695e9.2
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 20:38:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793679695; x=1794284495; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793680713; x=1794285513; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=s54Bun+Z6iCnsO9DLT29cu1c+g3mHonlMxfKkowbEcI=;
-        b=TkMqDe4n/Ohg1FMRfOenkn5GdljBNYobmwvRmgbvbU0JV4dyWQoJrtBuI/AqKYXjqw
-         KiMct8g76ptswedgOEOwtzxQ/7sj3Z8hBmooCiW30nWtYZ7PCPxKDbwtyXt73Aufiqt7
-         B8H5p/wUeJ4GrMZBMb8xsEKRE2ICzvrE7qBoW2ayelrtYwECshbq+ZPymXeBUBu8Gu8Y
-         X4Qheqbbx0cfycwYnSZjYnd5ZLG2yLonto2OzbyhegFW+o2KxEJKm+fWS8aZDGsXeAUm
-         zetcA42TvSbC60ICVcKrwB0/WiJI+nEZoj48b1YCJbRMUwecfPVZPgfndl8WUgxf+Q7d
-         blUw==
+        bh=0ekCuR1ZjnrGTTfblKFcSvakF6+6ZLwhGsD3Que8QCw=;
+        b=VeaDc9C7+HK/l49Ws/R3NRkj0YwZsMRZbAfQkR8lgZp8iAUPhq6fR2YZcsyUJQyNmU
+         uyQmSvhVo+1SBI3WoahLCQzTCRdBE1UX9MBl9QUYC85IaSOpilsyzTLzzHGAc/HMc2dA
+         74KiS5TO4JlCHFp9i82cVp5WyOjYGLnPd0GIxbmrQc+RgXI3KUEsmLQZwqsDIkK1S1Yf
+         vDP/EkMRCsNNtES7Xy6I9ryxQ0YMvJP0NrDu+qZPmwqXWMb8izTcO6o6OB5oWqh5SQFG
+         ZX+bMkejW1nz3Q8j6lFIYZEQJwBOwul13ciNyyKs9fkh1I72a0q7qdY/x0C+weGFcxyO
+         tpcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793679695; x=1794284495;
+        d=1e100.net; s=20260707; t=1793680713; x=1794285513;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=s54Bun+Z6iCnsO9DLT29cu1c+g3mHonlMxfKkowbEcI=;
-        b=Wo4LaakQ5kkSYcKwNZ8yep4llGTxxxw7WmL55UK44FrPMzu6rksoMzXyq0hoZaCNkV
-         pQkNw9LdUmF0o3CzSdGYDlUc4iHNPhT0tudF89aJDUs5LiJppB6vFMxbLdYfK8PtO7fD
-         NrOZbx1WQn6F3Mn7o/4/z6VW1H/dp7UTLXXMdBTbSmaxPwZMOOtCbKIOUujcikcAxp1N
-         DmTt6vff85O1XmmSePYbKengku3UkPwpEmSlP2ax4R+OWLuzkxdIx0jk9IZlNRrDi/pI
-         8vsyO+khfI/KUV723CUuBiJ4pv/rj8v4K0eyiX9Q1OFjralNQm54vMtqmTmVEEtHTKUd
-         8l9g==
-X-Gm-Message-State: APuU4Z8ww8BB9BQ3MBCs11EVM81vc+g1MkccmrykRaIYQ5fiIkvfVzvO
-	SbgHEu6aTB7Bkg2ibNGSJp6N6nZch5lkMznnmoY98FPQXSM4zwZJZdoH/WQADCQ=
-X-Gm-Gg: AYBFou18dn6Pv94dFYoZpn130hhnPrZn1fBNx1mvXoWKdb702tZRAOkZwAeS22T957u
-	8Ez6AO2q5b05ACeGD50oCAJjafQeW1Ca+Yg9vWiAcjY507dQXPbVa8CdIFsv7rB787QvRGkXppS
-	i5X6Vg74RhHx1ERbQGRsN4w+mT6HX7P8Jo5zN9ca/hFAyX1ekzbYpLrFWFABKpXSk2r2lAowdUE
-	O1OAymK3wONO7JpvOZr1B+wqD/l4QpCI3k4Vfst6HIctqVSJWhIe7ld/Wvw5OtnbO4fy6grmqfF
-	LXG5I5+7CdaQ3PS88J5RU23ET7bAFTcVmLO9R6gySPpPCLzql/hgi2AqipQ9ug/LBhTD9KKYTp+
-	LPDtSCTRPjNYFZ9MPGYibzQZnOzyzcfrwZIl2wWnHaa2Y4BTVQZcHnrFRwpajl/QAT1cOq7a/38
-	u/wu9JiBit1DxZmJXCbP+fY8PkUyjYofhPk2EWP4xnpzlLxBDkO89TBsbif12r/LxvqzovjPj+w
-	Mueco0egXIdQ7DJ6KI9OeN5zgBD2qH3TKmV5HKUlxfLmzBAMw8U2PAxkf1q9IaFnM1FFHfp4/sR
-	Y3Bj2BXgNW6afH82o1Gc4hFJ8zEBYJdy6YK2n2hn89ESx3+9HH3d3Q==
-X-Received: by 2002:a05:6000:1449:b0:48d:ff71:dd9d with SMTP id ffacd0b85a97d-48e6e2ef786mr25134265f8f.23.1793679695191;
-        Mon, 02 Nov 2026 20:21:35 -0800 (PST)
+        bh=0ekCuR1ZjnrGTTfblKFcSvakF6+6ZLwhGsD3Que8QCw=;
+        b=n8J9G4XIP9+omMGabtTvh1rXM7YdUgb5NKVzutcWcCnAsbOZHvFIOIjzIzhzkDm3Hm
+         /id1ZU5aF57rq6qC+MQv91hL0JNC/meAy0Dkt6BsdxAyr3jUb1geLIqBkut365Lh00eh
+         jPJeX2SE9xQX6pMMsDKPzZlhU0AmpTmxRTpc+NmDbxexzxw54nDxYGzOX9wkV/1+RAo6
+         8qyO87dH+CMn+Uy69tbdWKPuv0Cfw8JQigLiWVUiN+bJvNFPaRQiMj1q3WvsEPpGBrPP
+         Bt1Oxe9lWY5zjLk5FqRYWg2ISrQ54HVNgcGA0rlxOYUCFnSw++AEojW/cG1aA+mTF0SR
+         C9pQ==
+X-Gm-Message-State: AFq9FYJPqJ5/jsr3eNUqeavsrw2kZmThJm+R3H7MwJDSaMk35CIaDCHa
+	JodTPQyeVO89vTx/0fDxivbp6M3PqPJgiRrkKTYr7J6baNmSymL25xvTLGbWYQQ=
+X-Gm-Gg: AYBFou3/Ab5/hSBwJIRx1xkiu1zr4RL28o2KkEM/XSwKhPWR6YvwRs7wftKttRIlkqt
+	+2f/Ue4u87jQUGNkuYdPuw1Ni8Bq41aFVOA7ZHK/rpuU0pTaUfh6TF8JkVOllSk+qlIF1CG4lB4
+	MigxiKwctvg6N3epzhnpoIHEPbmAaBk/K+ucNulATaJhScGqk7YxFn5giBc7mvx2iDbdl3n0suf
+	Fi+b0y9BkmLrSb1T78D3ufGTMZwD0hJJu3AGD+G1KY32ljf2Br66KPXv69ndjTe+iwGG7H40jiE
+	pV2tiTLzU62zWKDHWSZIUA5RSLcfqppcCk6QC/1oZTISlG9mkydlk3ZfVjivfmxzIKnhco5wAyW
+	eDKaf1qoAz+bd7bOACygwtUwVXYqOiKaVVh2H++JFWkjAKSPRMthDKCbOKqYYPy9S8fbe3On/QC
+	sUpoAS+72nAys7XVLmgpIWG+Hev9+Cu/4A/UqaJtyI+i1heYYRdqGauYS9/VG1C4CERyEVswjpG
+	phtVkHnjr3bAr+tuDHkE6qtFGyUBpD+4ZkeLrlSdqMlMrNWyjuyjyTH+MjDJTLdeyhP4CB+0etU
+	mrwSH6Hm/5SkO1eFQmR1MK+YVBTF85SfDqvLrdwqB8aX0S/6ZMWjjg==
+X-Received: by 2002:a05:600c:46d1:b0:4a1:df52:3e36 with SMTP id 5b1f17b1804b1-4ac17b2cdc2mr271277795e9.27.1793680713369;
+        Mon, 02 Nov 2026 20:38:33 -0800 (PST)
 Received: from shrimech.1337.ma ([197.230.48.178])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b964desm22638751f8f.46.2026.11.02.20.21.30
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2a80e0fe6sm34571855e9.1.2026.11.02.20.38.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2026 20:21:32 -0800 (PST)
+        Mon, 02 Nov 2026 20:38:32 -0800 (PST)
 From: shrimech <eddinen77@gmail.com>
 To: git@vger.kernel.org
 Cc: shrimech <eddinen77@gmail.com>
 Subject: [PATCH v1] hash: handle invalid algorithms when formatting object IDs
-Date: Tue,  3 Nov 2026 04:20:42 +0000
-Message-ID: <20261103042042.39999-1-eddinen77@gmail.com>
+Date: Tue,  3 Nov 2026 04:37:56 +0000
+Message-ID: <20261103043756.61627-1-eddinen77@gmail.com>
 X-Mailer: git-send-email 2.47.3
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -108,8 +108,8 @@ Signed-off-by: shrimech <eddinen77@gmail.com>
 
 Notes:
     Base Ref: v2.56.0
-    Web-Diff: https://github.com/larsxschneider/git/commit/c95530cf38
-    Checkout: git fetch https://github.com/larsxschneider/git fix/objectid-display-invalid-algo-v1 && git checkout c95530cf38
+    Web-Diff: https://github.com/shrimech/git/commit/c95530cf38
+    Checkout: git fetch https://github.com/shrimech/git fix/objectid-display-invalid-algo-v1 && git checkout c95530cf38
 
  src/hash.rs | 27 +++++++++++++++++++++++----
  1 file changed, 23 insertions(+), 4 deletions(-)
