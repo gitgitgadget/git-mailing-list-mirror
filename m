@@ -1,100 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.50
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793674474;
-	b=jEeAMABkBRFidCqGHndxorhOhmkUxP8NWb++hes9nqaSt5qntW+4cI+GecwFBqB3eHXP
-	 iyhpXNB/vMjhHdBjGdnXW4oxfuHzy9dbkKPifYZdBHw3Ys9yPuO617TCpjM4XmPt068kQ
-	 JH+4i/zAOYV1z7WGSuNByHZ+wFuAbMbLVfu8JNH77KZ3ge9m0IsJpLSSr2piSaKKd+EHo
-	 C+zkaPVcuD7cshrbh9+vIjDPl15T2hLH8ZSpMTqNOaBIRPVrk08ldWx18/l6OywQ5aCbr
-	 gHIuOZ9gGITb7dv/0DcVf1ca4GEujW7yBff9TO6tSH8kkwUoO7HDPZCZZEr+IeT/lCw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793674474;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793679697;
+	b=iDJAhuC7JXO6p8FAW6TTugEAAfi0Yp1CV4BDVMBdhy0IJsd2Kw+GjYE4X2zYmxwTlZAI
+	 vNpjdgySxGDOKmDaPBDQwReDCLOpacaQNZ4Q4qVHv1xy8SBZ2xw7yG3xX6ZVrg39kDtF5
+	 UWQDuiqn2b+OpUTGZLBDVbaD3bspC7rpjOjhZXVXzh/qlEYQs1vo2J966Hnzm4S7t3Xab
+	 gKnKEZg/cYx+Mc+3/wFcv2fKBJHXxsTK6WvIo36+oU+dbXh/KSVEb7pE4zIaXLvnmm4ze
+	 U98sOl+dI3SM0ASs327jpGJuTXT+QahBuevizEwSVQSsv3og38RgTFDu4Y4OltUDF1A==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793679697;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=Xtop4pxLVrYJA+tp7+HwGYaPCIGd4wH4jyO2UR3VJo4=;
-	b=1OsNhUfSA5fejrSNC6ajMxtsmU63Wihzculnot8Fh2AukCQIyowkbbu7WM5E35O6LCrC
-	 QkogF2OxlpXWhDTOPAVcOgdm59u7g6yKlMvuOisz+aHgi0YHkSFU6EzMVr9UVBcdORMsK
-	 scNHg0/d1e6X/BtNiUuu1dS+7o0h6lpbPQfW/sk9ASmQGij36FgBTg2uPRO11wmQuUVyg
-	 +L5Wbyn6hAvHNrXPLQ8vSyrlpMOyb6MOzzsLQHXFzpInt134ChenzDzD889I/nZVMjpMK
-	 zo/Kal52pYxpmIiL/qJeJAIonswbDsk0TmzG5eXjKW8v8wneK48N8OriGBUufG9k1dg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=s54Bun+Z6iCnsO9DLT29cu1c+g3mHonlMxfKkowbEcI=;
+	b=bigkYZ7RO8DbfkKHtLslTcdmGPopGPnzX+6MVRekbArZXbXwSTmOl010WYl9+LEcqa4D
+	 nk1pW49evRiMeKsrXIGZfho/3RCURKMyT9UcUlh6KTkcqjIaiqlZYK8y4tN8DlJskR01v
+	 dvcyox/Px1Tj7SwPg7CtY9XtVQGNPTufNH8yRAsXMk753LllOOyNlt/ByGCvl6WQlyy2x
+	 nQmUsEeP+sCuTD/cU7NT8a+Zhz0Qr+nGmo93I3DYFXjaU1W844JKRtnWG07UzsInCeY14
+	 LxuOKCUgHDF4jjGYtfoV25fzTM1aQnjr92GV0NxfhRFve1UI8MiXCluU7LaB19cbeGA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=icHVGxU4;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.50
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TkMqDe4n;
+	arc=none smtp.remote-ip=209.85.221.53
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0580606A32F
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 02:54:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0580606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17695606A327
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 04:21:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 17695606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=icHVGxU4
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-49ddddefadbso1682118fac.1
-        for <git@vger.kernel.org>; Mon, 02 Nov 2026 18:54:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793674473; cv=none;
-        d=google.com; s=arc-20260327;
-        b=oFl6dx23Kd/UjvnuY5aIfibwT3M1l1xk2xV/U3DH4zq/pX8yAXtx7M8apEYrh1jDys
-         7T0QfmIwFD6buDd2XMlCEJr+IEimg/LLpHfZ35i83OavF4PFiQhPQVyjQq0E8O37J/rj
-         yhRmRE1ld0AnF2nftEFCzD1fIuwyHkT2Cbc+ZjjEBGTxmyP7RKXAY0y8RVlgMhjj1h/Z
-         /5Gn3RA/MvsbXI3KKa73RcMwSq+bj1Ci4dCmYEQhWzSB3CKKkqVSsz+NYN4kAtc/SC1S
-         wiECfnEZbPA91/NnBsHSt5YsCPFdwjI6q7wMDJsECvFM3oEs2qTPx2gzsS64MpfiV39h
-         nrQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Xtop4pxLVrYJA+tp7+HwGYaPCIGd4wH4jyO2UR3VJo4=;
-        fh=mv5zqN92u4yGkXYcJT4eDsfhsA+TdzFjZ8yY/QsyRCY=;
-        b=KVsfwSV3YFkuxAfG087EkxiUt/wUvP66TAFbrY621vSL67BEynD1BeJAOZuTiuc8Vo
-         udlGu4uv2PqZvo8rZcqUW6rO3w8yY6700Nykh5YRWiEkSfe7RbdzlxSwqqfczznHa+BA
-         wCVxdSwE7qpXFkIl7IKAFoMDkmrx4OqkvlOx6mtwghsEgZWc7wB6+bAfvycV4LQck5jg
-         H11b6mkjIbLf6ghWqtDzLv147Z3N2x84/mr2XLVzGtW2DVpoa1cgQ/3Dy0zZVPpFIkq/
-         cl5s0yUlWQ9IrFV5Jc3FEM/4qjjkWZgnlXU7o/QVtjOyE6NIeKSjwufoi7E+rxT5R+jg
-         D+xw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TkMqDe4n
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48e20edd106so2843150f8f.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2026 20:21:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793674473; x=1794279273; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Xtop4pxLVrYJA+tp7+HwGYaPCIGd4wH4jyO2UR3VJo4=;
-        b=icHVGxU4cAuqNBsBAXv7ptmxOzdU0DTRJ83AhV4loURwAjR3OthjELeWZ6padAvdAV
-         RylUOxicNelGugAQNRflU1WVIR42OAijQfiKtceJd05OgFOGvaYdD8EZabFNZC5tDRYr
-         DE/7Dk+RXFJMsaA+hgLEEGSBMjBvnHVM85UnL8FDSwXORpY9htV8ruVkKFBKbtAahTXE
-         i3qYHT/OuMpxIgiNqqTEy10JOfSsOYJ/6Q4juh+goJS3xHYkAoDjyqTiyJS6kzB/o1ds
-         mt4OsvD6CtIeCuMurEHGwm83nYyjOBUyR5BCixf7wXQ8JqluJTQYV8KhGIpMHuupSmDQ
-         st/A==
+        d=gmail.com; s=20260707; t=1793679695; x=1794284495; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=s54Bun+Z6iCnsO9DLT29cu1c+g3mHonlMxfKkowbEcI=;
+        b=TkMqDe4n/Ohg1FMRfOenkn5GdljBNYobmwvRmgbvbU0JV4dyWQoJrtBuI/AqKYXjqw
+         KiMct8g76ptswedgOEOwtzxQ/7sj3Z8hBmooCiW30nWtYZ7PCPxKDbwtyXt73Aufiqt7
+         B8H5p/wUeJ4GrMZBMb8xsEKRE2ICzvrE7qBoW2ayelrtYwECshbq+ZPymXeBUBu8Gu8Y
+         X4Qheqbbx0cfycwYnSZjYnd5ZLG2yLonto2OzbyhegFW+o2KxEJKm+fWS8aZDGsXeAUm
+         zetcA42TvSbC60ICVcKrwB0/WiJI+nEZoj48b1YCJbRMUwecfPVZPgfndl8WUgxf+Q7d
+         blUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793674473; x=1794279273;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Xtop4pxLVrYJA+tp7+HwGYaPCIGd4wH4jyO2UR3VJo4=;
-        b=nmcEbvdcP9fvLlr0qsI0M/9GHGW6AVtDpYeSW7WZYae5E1dVFWOHGAxbqG/h0BbrrZ
-         r4h4W3jsNkE3w+Atv/3xN892tY0A6XJUN0bjZ6eHfqCKyFwdydXY8AsO904/bCqM7ZS6
-         qGKlGm0syDD7dmnV//8Uvn8SnJPc0rTwVJ3KsbE0VBZL3yKwBHo+kYnT4MzUZ6zj+8Y7
-         9kWdSXWeh9rg2vjR20XSCdbeCmctY20CRdMBPtx0Sxva7scSmvym6m1onzFQ8Ew+sE4l
-         LV382i111iAdXaDCyTCFDNGeIAtedIUugVrt2VJkVyipdqH/UTxmZiAf31Jqg5amZ5xn
-         CqtA==
-X-Gm-Message-State: AFq9FYIveYF23E7gQCsNuEM28HJgiU5th8cFcf/7gMLMrhVFgQzg8bnV
-	p5FJHQXtFz/7H3JZZHc/qpiYmiv3T7hc2IRPIq0Kvze7COMH7Un9O98zdv1+gta/GmQScwcPjm5
-	1jVBPTruteCFr1Dpjao8OTvFJhYx613g=
-X-Gm-Gg: AYBFou1uIXd9eZplYWdLDaOlJWQ8O1utFFswKVVp9HgBXfstE9hWopLtVTf43PNENR3
-	TXGmW3ZEbOFb4ErZua8KL8zXqTRDKEVO36J6CtuTlFRkRVMPwbwRXFfxj6bLsyC8pvbIf2urojc
-	hJcJq6nNtbdMsONsBYSwdI0nIPMX0kGR+IsZGVMz/l7YjswjD0PGLtkSwSNgo1tRhmg7tUHS+Y0
-	6vIZc7NENayzH3IognScUeZOsgoqQacNN3ERT6V208JEM9ZTHqB0MgNpM/g+H9wmCozxo3O0ZAj
-	oHe4uMHbPica3iiyZVb1IUqnwzZx0W09TxGymjB7FUDeDil5V3UrjFerrDIrEN8XUzbhLFf33Ki
-	66UnAgAhn9fga11JJ5ZM6Xm3QKgsMzpZUjqhCLP+SSZJuKPbRIa2BEyppV5Jt5ntT3FjzBo5k92
-	z18tfxCfAYXUN1UcfQo6lWOHMdD29zAHuN8fUBe8lrfhWkSARRm5mRph4g
-X-Received: by 2002:a05:6870:2886:b0:4a2:4c6c:c9bc with SMTP id
- 586e51a60fabf-4a90765f8b5mr8282455fac.19.1793674472796; Mon, 02 Nov 2026
- 18:54:32 -0800 (PST)
+        d=1e100.net; s=20260707; t=1793679695; x=1794284495;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=s54Bun+Z6iCnsO9DLT29cu1c+g3mHonlMxfKkowbEcI=;
+        b=Wo4LaakQ5kkSYcKwNZ8yep4llGTxxxw7WmL55UK44FrPMzu6rksoMzXyq0hoZaCNkV
+         pQkNw9LdUmF0o3CzSdGYDlUc4iHNPhT0tudF89aJDUs5LiJppB6vFMxbLdYfK8PtO7fD
+         NrOZbx1WQn6F3Mn7o/4/z6VW1H/dp7UTLXXMdBTbSmaxPwZMOOtCbKIOUujcikcAxp1N
+         DmTt6vff85O1XmmSePYbKengku3UkPwpEmSlP2ax4R+OWLuzkxdIx0jk9IZlNRrDi/pI
+         8vsyO+khfI/KUV723CUuBiJ4pv/rj8v4K0eyiX9Q1OFjralNQm54vMtqmTmVEEtHTKUd
+         8l9g==
+X-Gm-Message-State: APuU4Z8ww8BB9BQ3MBCs11EVM81vc+g1MkccmrykRaIYQ5fiIkvfVzvO
+	SbgHEu6aTB7Bkg2ibNGSJp6N6nZch5lkMznnmoY98FPQXSM4zwZJZdoH/WQADCQ=
+X-Gm-Gg: AYBFou18dn6Pv94dFYoZpn130hhnPrZn1fBNx1mvXoWKdb702tZRAOkZwAeS22T957u
+	8Ez6AO2q5b05ACeGD50oCAJjafQeW1Ca+Yg9vWiAcjY507dQXPbVa8CdIFsv7rB787QvRGkXppS
+	i5X6Vg74RhHx1ERbQGRsN4w+mT6HX7P8Jo5zN9ca/hFAyX1ekzbYpLrFWFABKpXSk2r2lAowdUE
+	O1OAymK3wONO7JpvOZr1B+wqD/l4QpCI3k4Vfst6HIctqVSJWhIe7ld/Wvw5OtnbO4fy6grmqfF
+	LXG5I5+7CdaQ3PS88J5RU23ET7bAFTcVmLO9R6gySPpPCLzql/hgi2AqipQ9ug/LBhTD9KKYTp+
+	LPDtSCTRPjNYFZ9MPGYibzQZnOzyzcfrwZIl2wWnHaa2Y4BTVQZcHnrFRwpajl/QAT1cOq7a/38
+	u/wu9JiBit1DxZmJXCbP+fY8PkUyjYofhPk2EWP4xnpzlLxBDkO89TBsbif12r/LxvqzovjPj+w
+	Mueco0egXIdQ7DJ6KI9OeN5zgBD2qH3TKmV5HKUlxfLmzBAMw8U2PAxkf1q9IaFnM1FFHfp4/sR
+	Y3Bj2BXgNW6afH82o1Gc4hFJ8zEBYJdy6YK2n2hn89ESx3+9HH3d3Q==
+X-Received: by 2002:a05:6000:1449:b0:48d:ff71:dd9d with SMTP id ffacd0b85a97d-48e6e2ef786mr25134265f8f.23.1793679695191;
+        Mon, 02 Nov 2026 20:21:35 -0800 (PST)
+Received: from shrimech.1337.ma ([197.230.48.178])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b964desm22638751f8f.46.2026.11.02.20.21.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 20:21:32 -0800 (PST)
+From: shrimech <eddinen77@gmail.com>
+To: git@vger.kernel.org
+Cc: shrimech <eddinen77@gmail.com>
+Subject: [PATCH v1] hash: handle invalid algorithms when formatting object IDs
+Date: Tue,  3 Nov 2026 04:20:42 +0000
+Message-ID: <20261103042042.39999-1-eddinen77@gmail.com>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,85 +91,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
- <20260927114420.59724-9-jayatheerthkulkarni2005@gmail.com> <aukYVs2nVla0yuSV@denethor>
-In-Reply-To: <aukYVs2nVla0yuSV@denethor>
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Date: Tue, 3 Nov 2026 08:24:21 +0530
-X-Gm-Features: AclHuK9zPD3veAyKzm1_zyqv_ddvlDBzoYXFcvReG0R3DAMCZ5CL9_E3GIsgQWc
-Message-ID: <CA+rGoLd7=sx61dWcC6RFD-Q-88KNd9YgEES-jLDqiTmKMMLf9g@mail.gmail.com>
-Subject: Re: [GSoC Patch v7 8/8] repo: add path.cdup
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, lucasseikioshiro@gmail.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 3, 2026 at 4:50=E2=80=AFAM Justin Tobler <jltobler@gmail.com> w=
-rote:
->
-> On 26/09/27 05:14PM, K Jayatheerth wrote:
-> [snip]
-> > +static int get_path_cdup(struct repository *repo, struct strbuf *buf)
-> > +{
-> > +     const char *pfx =3D repo->prefix;
-> > +
-> > +     if (!is_inside_work_tree(repo)) {
-> > +             const char *worktree =3D repo_get_work_tree(repo);
-> > +
-> > +             if (worktree) {
-> > +                     strbuf_addstr(buf, worktree);
-> > +             }
->
-> nit: The curly braces on a single line if statement are not needed.
->
-> Also, should we just return early if we are not inside a worktree?
->
+ObjectID::algo is publicly mutable, so an ObjectID may contain an algorithm
+identifier that is not recognized by HashAlgorithm. Display previously
+unwrapped as_slice(), which returns an error for such identifiers, causing
+formatting to panic.
 
-We should just return early. You are right.
-I will do that.
+Format the full hash storage for invalid identifiers and append an
+invalid-hash-algo marker containing the unsupported identifier. Add a
+regression test covering this case while preserving the existing output for
+valid algorithms.
 
-> > +     }
-> > +
-> > +     while (pfx) {
-> > +             pfx =3D strchr(pfx, '/');
-> > +             if (pfx) {
-> > +                     pfx++;
-> > +                     strbuf_addstr(buf, "../");
-> > +             }
-> > +     }
-> > +     return 0;
-> > +}
-> > +
-> [snip]
-> > +test_expect_success 'path.cdup cwd outside the working tree' '
-> > +     test_when_finished "rm -rf repo" &&
-> > +     mkdir -p repo/tmp/x &&
-> > +     cd repo &&
->
-> This cd isn't in a subshell, so it changes the working directory for
-> every following test, which I don't think was intended.
->
+Signed-off-by: shrimech <eddinen77@gmail.com>
+---
 
-Oh whoops, that wasn't intended.
-Yeah this clearly just cds into non test env altering common files.
+Notes:
+    Base Ref: v2.56.0
+    Web-Diff: https://github.com/larsxschneider/git/commit/c95530cf38
+    Checkout: git fetch https://github.com/larsxschneider/git fix/objectid-display-invalid-algo-v1 && git checkout c95530cf38
 
-Will fix it.
+ src/hash.rs | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-> > +     git init test &&
-> > +     (
-> > +             echo path.cdup=3D$(pwd)/tmp/x >./test/expect &&
-> > +             cd test &&
-> > +             GIT_WORK_TREE=3D../tmp/x &&
-> > +             export GIT_WORK_TREE &&
-> > +             GIT_DIR=3D$(pwd)/.git &&
-> > +             export GIT_DIR &&
-> > +             git repo info path.cdup >actual &&
-> > +             test_cmp expect actual
-> > +     )
->
-> -Justin
+diff --git a/src/hash.rs b/src/hash.rs
+index e1f2d31fc3..87242d58b1 100644
+--- a/src/hash.rs
++++ b/src/hash.rs
+@@ -78,13 +78,19 @@ impl ObjectID {
+ }
+ 
+ impl Display for ObjectID {
+-    /// Format this object ID as a hex object ID.
++    /// Format this object ID as a hex object ID, or mark it if its algorithm is invalid.
+     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+-        let hash = self.as_slice().unwrap();
++        let hash = match self.as_slice() {
++            Ok(hash) => hash,
++            Err(_) => &self.hash,
++        };
+         for x in hash {
+             write!(f, "{:02x}", x)?;
+         }
+-        Ok(())
++        match self.algo() {
++            Ok(_) => Ok(()),
++            Err(e) => write!(f, ":invalid-hash-algo-{}", e.0),
++        }
+     }
+ }
+ 
+@@ -366,7 +372,7 @@ pub mod c {
+ 
+ #[cfg(test)]
+ mod tests {
+-    use super::{CryptoDigest, HashAlgorithm, ObjectID};
++    use super::{CryptoDigest, HashAlgorithm, ObjectID, GIT_MAX_RAWSZ};
+     use std::io::Write;
+ 
+     fn all_algos() -> &'static [HashAlgorithm] {
+@@ -439,6 +445,19 @@ mod tests {
+         }
+     }
+ 
++    #[test]
++    fn invalid_object_ids_format_without_panicking() {
++        let oid = ObjectID {
++            hash: [0xab; GIT_MAX_RAWSZ],
++            algo: 0,
++        };
++
++        assert_eq!(
++            format!("{}", oid),
++            format!("{}:invalid-hash-algo-0", "ab".repeat(GIT_MAX_RAWSZ))
++        );
++    }
++
+     #[test]
+     fn hasher_works_correctly() {
+         for algo in all_algos() {
 
-Thank you for the review!
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+-- 
+2.47.3
 
-- K Jayatheerth
