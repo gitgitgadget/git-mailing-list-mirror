@@ -1,122 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.175.194.182
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793707216;
-	b=QUzjiMJZ8BZSdjXxleSgT9XAG2QKDDB/X2031ZEy+yKgjmBEOHaRYnTULOC2B7bzmnLn
-	 BYau3SbbgcskTuG7ByCEGexVNBqDcB1erhB5EKgikiPru+9S999BW5PSKNQMj5h5jp3Gd
-	 ynSbnxVCMhBQCPtE5aAwM8XMGLWXngQmzw0rbFp4FJlB3HXHnNPP+ASY/CCv51eH1LWcg
-	 KBfCU/ZKFC5Kl4zFdB1b7jVHWIdZDGng0SWJa7cgPVI8Nzm5jYaiGQ3lBkqsG3FqiTkwb
-	 wsOtlP7/vcEuE89mSdHWi7GazSO4eHJrMqiLt08YinHzVMBQKbdxBWio2GALh3f6NeQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793707216;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-Signed:X-URL-LookUp-ScanningError:X-ThreatScanner-Verdict:
-	 X-IronPort-AV:X-IronPort-AV:Received:Received:Received:DKIM-Signature:
-	 X-CSE-ConnectionGUID:X-CSE-MsgGUID:X-ThreatScanner-Verdict:
-	 X-IronPort-AV:X-IronPort-AV:Received:Received:Received:From:To:CC:
-	 Subject:Thread-Topic:Thread-Index:Date:Message-ID:References:
-	 In-Reply-To:Accept-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 x-originating-ip:x-tm-snts-smtp:Content-Language:MIME-Version:
-	 Content-Type:X-SM-outgoing:X-SM-Actions;
-	bh=6NcfMk9+suk2xleF6zL6TZ7WuaKbXY/XDix6UGXDP3E=;
-	b=UYh9xHb0aUbqqfr8rP7+NlqbBuL6doDJAXkW5XuH519QT92DbyoqJkAI0u6V0tTIPKHn
-	 gHiT4nCgOWtd8pziLkKXt7ZWf6AdW8Xr3cUTCazkDyM1oQf+Uz7IJPelOkQYpFHkwBsEH
-	 tqJWqGtOEi08v5zjH3x5NFT/yzHmmYtXXwYAPqqkIWsu6SzRzKlvLOw4LLOeOa5nCt5fT
-	 sSdPQGo3CTvt718VYDtEVGZuGDpS2OjyPnmX5cDLOu0j6QGVw9FHiYNVqglLv1gHm7mwn
-	 9Ob0GOgRl8XxVL+sWZCa4UQTSz5Hr+rTgoQaUPlB2VNV8W2CMd4qjZSw9ESLg0KkcqA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=ukr.de;
-	spf=pass smtp.mailfrom=ukr.de;
-	dkim=pass header.d=ukr.de header.i=@ukr.de header.a=rsa-sha256 header.s=ukr header.b=BRJR+Bfx;
-	dkim=fail reason="signature verification failed" header.d=ukr.de header.i=@ukr.de header.a=rsa-sha256 header.s=ukr header.b=SmbCqC1c;
-	arc=none smtp.remote-ip=193.175.194.182
-Received: from mail02.ukr.de (mail02.ukr.de [193.175.194.182])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793707546;
+	b=mRsHI5aky+FgMNZ8AQRV7Jc/k8Ks4jsU1nIh8ZtbWy02nQeWXvnTng0mx/BJHkIKoqhv
+	 MAebNMwpQfLwDOtUGPTPiQ6rQtR057E/ak18cPzzQnuJ2qxfK3T67Ss2YQgKJPa4jsQNQ
+	 Gs3Ic9W4EEU97mTRfwDCurjZctqgRmsdosDmu8e8YC1UDMFDQcEv2tRk7hR9e6nSAOFYV
+	 Z2nobeqsaqu0ixZ0ABSwaap3Wpy/9GHdyg7VA2FEx2abmTDVNKQ5QMKhH/U2Y48kPlSki
+	 NnA5tRYNocBUJ29syA6w/4KAVAnR+54R/Wi5zpuGaYVZ7FLzdogNFVYjiwV5lKkma+A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793707546;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=PdnbObIuzkavxgmniaGOcLvqTzZyHpgksNmFNLmJwNI=;
+	b=AGOzfjcwILu9S+YRjt8Io/8LhgvdlyZNBNk3ydLCFuxXKh2SQ1vmixeqq7QF1P7sWcsU
+	 XY09eqZLZfrxeWQz/+p1oUVM2VcTZh+e0KIDyog1Qps9Ypbe2mciZAdzg9gekXsEVubVt
+	 3+4TqMh4+gO7hkMJCY+R/DWbLLTc0doMjbLnkIkpdsp30cx8QB3VZQ9A/lN2cD51LWL5C
+	 m4F9pFyl7X4QbUsFCT/PVIdLR7+OgT+L05/2ggLNhr2C5rknGBEBx+0rWSiy5cw3kFLkn
+	 /4syy9yemvOo1GKfXcHlc18FPtD1QJFqbe79RON1jAc/FjbKd8nyBajsJCzODtMXt3w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=DzFdijOY;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8ACE606A333
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 12:00:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8ACE606A333
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ukr.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ukr.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37729606A326
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 12:05:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37729606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ukr.de header.i=@ukr.de header.a=rsa-sha256 header.s=ukr header.b=BRJR+Bfx;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=ukr.de header.i=@ukr.de header.a=rsa-sha256 header.s=ukr header.b=SmbCqC1c
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=DzFdijOY
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c434376dbebso140178166b.1
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 04:05:44 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793707543; cv=none;
+        d=google.com; s=arc-20260327;
+        b=dULdWPyXP1PawXT5N0u0c+0UqvTHRcm7u+4JU4N8QnjZhvx+YFogwMrzw7gCtMsnKd
+         eheqNLOksCwZOJw7iXuC9clBTZrWiWSYeqOIqG5dQt7CsQtTtjEVxqBN14Qdl8oE5g3d
+         C3JWjsMg70qVGLM/ERo/ehuXJGaDdA7D9QmP0mLPMgOOk6VFD+gBNDzVjdGxFxLMQywu
+         rT/5WiF+SHcF6tph9NhBbFUICltlgwLFPgWLXRhaIxqqGbx12cGXQF9uBqhWfu1AyndV
+         oRFr/Ontdgmp1MidCq2KmoQigJWEng7YiePFD5ox2S1/juwedGR188maOC+B16iUc+zj
+         xleQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=PdnbObIuzkavxgmniaGOcLvqTzZyHpgksNmFNLmJwNI=;
+        fh=kWJL4kofnD6Te/kKq779zYe6pxVPBtDpYoK/WoMqLug=;
+        b=Pywk2EgkxidCqLkBUNeCyECuAnzhgFZBHyqAoSHUvDyFCX/kSHqvAj5DEdZhMFBsmC
+         NV66OlnGuFN+boxKM12xyuo0CjmHCQTLOeVTSKNpfdHSeoj89GYTyVlxrniTx+HZMEMp
+         Gunyf807lbJSZPQukOXONxI9x2JnfNCX0vGuKrawiDSX3uAHCx0hAie18cWfYyHQpQ5Y
+         jgSVYYXtNWhPYc+mkUIjGopYL8c6UcHF2ohXn1iDiUz+/QIBjq0BNEqij8kd9Xlj5B0U
+         yMxvOFBJk9so6pSGGvB7xxIJYID2PAGdMIH/FM2rQNnpYtoNDfs4e1LMZaKN56qNh4fK
+         123A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=ukr.de; i=@ukr.de; q=dns/txt; s=ukr; t=1793707215;
-  x=1825243215;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:mime-version;
-  bh=6NcfMk9+suk2xleF6zL6TZ7WuaKbXY/XDix6UGXDP3E=;
-  b=BRJR+BfxNQ80pp9WbYs+JdQiXlodgvAjN7k5GYOxUsX8oRdgCBFkvOwp
-   ojZERDFNbCpsGk3GHfb1pjSdCeoNff58WejIpUDe14bxrnzL2YkYRBHKH
-   7G1lJoykiB6DXSmO8ED6n9SxuOIJ92oVgLJ1nzpWZL/XrLwHq87NyndV9
-   ZSkFRwfIfjI3WoP5d/LYBpl8dg5T65NcypAdVGgawmbImMshbHe1y3LRY
-   r6nKGn8rWwX0JJF6Nf4vqOCschdMMH7Gj/L3BFHz+KmdGTJEECdoIoTqS
-   nzit+iWnQ9/4P0yyjdJLfUw9IXxJRcST8GXZQEEvtRLyhqk0CRQ+Yhgf6
-   Q==;
-X-CSE-ConnectionGUID: wW5eNGL5TVajM77NP3hBuw==
-X-CSE-MsgGUID: IXHbR6dwSpKJgZ42/iXcaA==
-X-Signed: true
-X-URL-LookUp-ScanningError: 1
-X-ThreatScanner-Verdict: Negative
-X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="14611515"
-X-IronPort-AV: E=Sophos;i="6.27,193,1787004000"; 
-   d="p7s'346?scan'346,208,346";a="14611515"
-Received: from unknown (HELO dmz-infsep01.ukr.dmz) ([192.168.236.68])
-  by dmz-infcsg02.ukr.dmz with ESMTP/TLS/TLS_AES_256_GCM_SHA384; 03 Nov 2026 13:00:07 +0100
-Received: from dmz-infsep01 (localhost [127.0.0.1])
-	by dmz-infsep01.ukr.dmz (Postfix) with SMTP id 4jJnFL5vVYzKYsC;
-	Tue, 03 Nov 2026 13:00:06 +0100 (CET)
-Received: from dmz-infcsg01.ukr.dmz (dmz-infcsg01.ukr.dmz [192.168.236.66])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by dmz-infsep01.ukr.dmz (Postfix) with ESMTPS;
-	Tue, 03 Nov 2026 13:00:05 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=ukr.de; i=@ukr.de; q=dns/txt; s=ukr; t=1793707206;
-  x=1825243206;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=oqe/7OttmHwJP2I0qsdtBbK4lPDwZQQQpg9mmbDRLzA=;
-  b=SmbCqC1ccUjzClTVdmf6niaNshzMuns8t7VikLSK7+uMpTl+LfcGXyc6
-   fI4zPp9dTD+fNOWYcLtyjFaCwDtH3VYjOeYRe8hc8V/UJS5LJgq5EtyDz
-   5FREmB0ja5M9X241SN995VX80NqG09LNn5wL46dqkueiFqGbQn9dJDeUR
-   EW3IKxUGdVB21V1C0zxz8j7I6i18WYiMxC3apbq3xUJvTs+lkqnqKCbyC
-   1TZbP85HSrL1kNK/R0xRIaoYGIf+yxMnd72p1hSPcUj8lBY6HCJjUTX8Z
-   t+zniEw++Y2bf5mzzuSvttzDwXRv+eBGbNjd0hqTkmcB0EodAS7Vupebh
-   Q==;
-X-CSE-ConnectionGUID: DCjzSykaQWG2EAEdvUWf4A==
-X-CSE-MsgGUID: awEMDHY6SKSC0RmwMBHiKw==
-X-ThreatScanner-Verdict: Negative
-X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="14645880"
-X-IronPort-AV: E=Sophos;i="6.27,193,1787004000"; 
-   d="scan'208";a="14645880"
-Received: from unknown (HELO ukr.de) ([172.24.2.108])
-  by dmz-infcsg01.ukr.dmz with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 13:00:06 +0100
-Received: from ukr-excmb07.ukr.local (172.24.2.107) by ukr-excmb08.ukr.local
- (172.24.2.108) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Tue, 3 Nov
- 2026 13:00:05 +0100
-Received: from ukr-excmb07.ukr.local ([fe80::4dee:3e0b:b33f:60ac]) by
- ukr-excmb07.ukr.local ([fe80::4dee:3e0b:b33f:60ac%8]) with mapi id
- 15.02.2562.056; Tue, 3 Nov 2026 13:00:05 +0100
-From: "Windl, Ulrich" <u.windl@ukr.de>
-To: Tuomas Ahola <taahol@utu.fi>, Junio C Hamano <gitster@pobox.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [EXT] Re: Q: .gitignore and asterisk "*"
-Thread-Topic: [EXT] Re: Q: .gitignore and asterisk "*"
-Thread-Index: Ad1oWxeTogpFgIDeSbuRePGsSlmGkAANOigyALNNZ4AACz8/sA==
-Date: Tue, 3 Nov 2026 12:00:05 +0000
-Message-ID: <ea470151c8c6448caec64f26c3d35498@ukr.de>
-References: <07b3498d83424cac87221724b371839a@ukr.de>
- <xmqq5wyjxgyn.fsf@gitster.g> <20261103073317.DATcL%taahol@utu.fi>
-In-Reply-To: <20261103073317.DATcL%taahol@utu.fi>
-Accept-Language: de-DE, en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-tm-snts-smtp: 280D32687DD0246C95C8947C395CE0FAE541447A4F893C83271166F186F01B0C2000:8
-Content-Language: de-DE
+        d=spotify.com; s=google; t=1793707543; x=1794312343; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PdnbObIuzkavxgmniaGOcLvqTzZyHpgksNmFNLmJwNI=;
+        b=DzFdijOY5EzVndwoU4BPknu77987paYZXA4r6Qg0WPWjsYEb7zMLX4+0HjfsXgQOYR
+         RlXBeGx8f9B9VKJt3Oe3M7a04UX4ISYTpu/AjlOMRQm1BLZHgwFQTu5rjAP+oQKOcycB
+         Cr7E4lr7GfMpoydLpsdfMPWD6E9Xd8AMDB7ec=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793707543; x=1794312343;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=PdnbObIuzkavxgmniaGOcLvqTzZyHpgksNmFNLmJwNI=;
+        b=10FTwZhevXFP/Yaj0Cx1Wkaz4Pa0bsLqO/KJYikRut/kNsd9qZDrkj2EbSRD+WGhSq
+         +HE4bCDCmZQEbqmUCcmp58p85+Q70efMBaWZO8hPOflEmuV7TVhUg8P7D3ZfnSoDuJg7
+         1TlR05HvVDvpD+1BerI+1A0+OzrdqbAwmmWZBgz9urdxKimdJk8+39KxpSvcoUXqfDC3
+         DypZtztDMrAH2+1gTcPmEcyyrtncV+f9Zkjv9MbsihZryvbH+B5KeT0L2cwhdrwHR+wR
+         ahXRCkrYWHzmDt+eccjoF59FgtqSlcE6RwNkI1ihZurA2/3FqKRq8UfPxDkGTxXaLqwk
+         yiZQ==
+X-Forwarded-Encrypted: i=1; AKwUvBzWDhx5Xi9Oyp3HCElWBx2Nv6Vzk9I8AECmxqjcyS1An3Gmz6zFWZt0g8HsqHbY22hyUiQ=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/FBs3vNa07i5VoIiXGQ+CWiRDcpFPK3VtsKxul5259ElGIw6QX
+	xnJ/tUEK2Pxuvc2jTjhm1odKjKfuhBr523c2/7u9V7bQvIKk6BQEGwhgNxxYPiCt1sqtKpuJpRU
+	x3wPK147b5/uVqRPADBWhW4Qgm04+LlEkBbI+06qE1A==
+X-Gm-Gg: AYBFou04Uto7Z9B/fRNE5B58mIZVmyCCj/obl8OZu4i49mDIUzrvl+N6omH5PmhAq1X
+	RNmZk9cLk4F/QYN93Y3hqi1vxEGAv08YJcKiGCPodgBtAOvZ/TPlN/XPIGLaxi4vOSlbrwNvo+d
+	51snWwXX7/jC2Ewzo4hH0Ssg04JqUFai29vqyPYz94oof6Uy7QWdxTA24c8aAJkSOFLtv5XudRo
+	pW50k/5Fspygp/cyXoTNtEdGzxRuTpAIQJ1var0mFrdLLExmwhQ6zJ9iEmseKontnaw62+13LfQ
+	RVG2qrBcX8Vyi9fhRc7OZp/ZEuAFQmCIJo7+rS11qqJAl80l9ajbHIm/9TslltQrzHujd1z9uCp
+	VhCJVQeBeyAmKzXJzZpGn3wI22XPRk0dEw7vBpg==
+X-Received: by 2002:a17:907:2d14:b0:c3f:2:6faa with SMTP id
+ a640c23a62f3a-c49d10fcf82mr1380250266b.1.1793707543538; Tue, 03 Nov 2026
+ 04:05:43 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,221 +100,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg="sha-256"; boundary="----0AE6B8D30F993CE14A4D1CFAAE6542A8"
-X-SM-outgoing: yes
-X-SM-Actions: SMIME_SIGNATURE_ADDED,DKIM_SIGNATURE_VERIFIED
+References: <pull.2285.git.1793200705017.gitgitgadget@gmail.com>
+ <pull.2285.v2.git.1793619933300.gitgitgadget@gmail.com> <aum-34I8KZvTfDRT@pks.im>
+In-Reply-To: <aum-34I8KZvTfDRT@pks.im>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Tue, 3 Nov 2026 13:05:29 +0100
+X-Gm-Features: AclHuK9qZSw2Z8nQHU32TtgoMO3T9jjoWugjuMss6dg-RtizSlultx5yutYUTyI
+Message-ID: <CAL71e4McZzVJqFHnmpoQkC6+hUkhz9_HtEy7dqC5rDyXdV6oaQ@mail.gmail.com>
+Subject: Re: [PATCH v2] odb: do not list our own refs as alternate refs in the quarantine
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	Justin Tobler <jltobler@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-This is an S/MIME signed message
+On Tue, Nov 03, 2026 at 12:00 PM Patrick Steinhardt <ps@pks.im> wrote:
+> So this here isn't fully correct as it does not account for all cases.
+> We'd have to read the object storage format extension to figure out
+> where the primary object directory lives.
 
-------0AE6B8D30F993CE14A4D1CFAAE6542A8
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-version: 1.0
+Good point.  I can rework the patch to make it easier to integrate
+with your ps/odb-object-storage-extension topic, by having the files
+source remember its default object directory in
+files->default_object_dir where it decides it, and comparing against
+that instead of hardcoding <commondir>/objects in the check.  Then
+your topic only has to change how the default is decided, and the
+check follows.  Something like this, if you want:
 
-SGkhDQoNCkkgdGhpbmsgdGhlIG9yaWdpbmFsICIgbWF0Y2hlcyBhbnl0aGluZyBleGNlcHQgYSBz
-bGFzaC4iICJraW5kIG9mIHN1Z2dlc3RzIiB0aGF0IGlzIGhhcyB0byBtYXRjaCAic29tZXRoaW5n
-IiAobm9uLXplcm8gbGVuZ3RoKSB0byBzdWNjZWVkLCB3aGlsZSB0aGUgcHJvcG9zZWQgInN0cmlu
-ZyBvZiBhbnkgbGVuZ3RoIiB3b3VsZCBpbmNsdWRlIHplcm8tc2l6ZSBmb3IgbWUuDQpTdGlsbCwg
-dGhlIGxhdGVzdCBwcm9wb3NhbCBpcyBqdXN0IGFzIGNsZWFyIElNSE8uDQoNCktpbmQgcmVnYXJk
-cywNClVscmljaCBXaW5kbA0KIA0KS2xpbmlrdW0gZGVyIFVuaXZlcnNpdMOkdCBSZWdlbnNidXJn
-DQpJVCAvIEluZnJhc3RydWt0dXINCiANCkZyYW56LUpvc2VmLVN0cmF1w58tQWxsZWUgMTENCkQt
-OTMwNTMgUmVnZW5zYnVyZw0KDQpUZWw6ICs0OSA5NDEgOTQ0LTEzODE2DQpTb2Z0cGhvbmU6ICs0
-OSA5NDEgOTQ0LTgwMTE0Mg0KRkFYOiArNDkgOTQxIDk0NC01ODgyDQoNCj4gLS0tLS1PcmlnaW5h
-bCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogVHVvbWFzIEFob2xhIDx0YWFob2xAdXR1LmZpPg0KPiBT
-ZW50OiBUdWVzZGF5LCBOb3ZlbWJlciAzLCAyMDI2IDg6MzMgQU0NCj4gVG86IEp1bmlvIEMgSGFt
-YW5vIDxnaXRzdGVyQHBvYm94LmNvbT4NCj4gQ2M6IFdpbmRsLCBVbHJpY2ggPHUud2luZGxAdWty
-LmRlPjsgZ2l0QHZnZXIua2VybmVsLm9yZw0KPiBTdWJqZWN0OiBbRVhUXSBSZTogUTogLmdpdGln
-bm9yZSBhbmQgYXN0ZXJpc2sgIioiDQo+IA0KPiBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2Jv
-eC5jb20+IHdyb3RlOg0KPiANCj4gPiAiV2luZGwsIFVscmljaCIgPHUud2luZGxAdWtyLmRlPiB3
-cml0ZXM6DQo+ID4NCj4gPiA+IEkgdGhpbmsgdGhlIGRvY3VtZW50YXRpb24gZm9yIGdpdGlnbm9y
-ZSg1KSBjb3VsZCBiZSBpbXByb3ZlZCByZWdhcmRpbmcNCj4gIioiOg0KPiA+ID4gSXQncyBub3Ig
-Y2xlYXIgd2hldGhlciAiKiIgbWF0Y2hlcyBhbiBlbXB0eSBzdHJpbmcuDQo+ID4gPiBTbyB3aGVu
-IEkgaGF2ZQ0KPiA+ID4gZm9vLmxvZw0KPiA+ID4gZm9vLm1zZw0KPiA+ID4gZm9vLnNoDQo+ID4g
-PiBmb28td2hhdGV2ZXIubG9nDQo+ID4gPiBmb28td2hldGV2ZXIubXNnDQo+ID4gPiBXb3VsZCBl
-LmcuICJmb28qLmxvZyIgY292ZXIgYWxsIHRoZSBsb2dzPw0KPiA+ID4NCj4gPiA+IFRoZSBtYW51
-YWwgc2F5czoNCj4gPiA+ICAgICAgICDigKIgICBBbiBhc3RlcmlzayAiKiIgbWF0Y2hlcyBhbnl0
-aGluZyBleGNlcHQgYSBzbGFzaC4gVGhlIGNoYXJhY3RlciAiPyINCj4gPiA+ICAgICAgICAgICAg
-bWF0Y2hlcyBhbnkgb25lIGNoYXJhY3RlciBleGNlcHQgIi8iLiBUaGUgcmFuZ2Ugbm90YXRpb24s
-IGUuZy4NCj4gPiA+ICAgICAgICAgICAgW2EtekEtWl0sIGNhbiBiZSB1c2VkIHRvIG1hdGNoIG9u
-ZSBvZiB0aGUgY2hhcmFjdGVycyBpbiBhIHJhbmdlLg0KPiA+ID4gICAgICAgICAgICBTZWUgZm5t
-YXRjaCgzKSBhbmQgdGhlIEZOTV9QQVRITkFNRSBmbGFnIGZvciBhIG1vcmUgZGV0YWlsZWQNCj4g
-PiA+ICAgICAgICAgICAgZGVzY3JpcHRpb24uDQo+ID4NCj4gPiBWZXJ5IGdvb2QgcG9pbnQuDQo+
-ID4NCj4gPiBUaGUgcmVmZXJlbmNlIHRvIGZubWF0Y2goMykgbWF5IG5vdCBtYWtlIHJlYWRlcnMg
-dG8gY29uc3VsdCB0aGUNCj4gPiBkb2N1bWVudGF0aW9uIGZvciB0aGUgbGlicmFyeSBmdW5jdGlv
-bi4gIFRoZSBzeXN0ZW0gdGhleSBhcmUgb24gbWF5DQo+ID4gbm90IGV2ZW4gaGF2ZSAibWFuIi4g
-IGZubWF0Y2goMykgb2Z0ZW4gcmVmZXJzIHRvIGdsb2IoNyksIHdoaWNoDQo+ID4gdHlwaWNhbGx5
-IHdvdWxkIHNheSB0aGF0IGEgJyonIChub3QgYmV0d2VlbiBicmFja2V0cykgbWF0Y2hlcyBhbnkN
-Cj4gPiBzdHJpbmcsIGluY2x1ZGluZyB0aGUgZW1wdHkgc3RyaW5nLiAgVGhlIHJlZmVyZW5jZSB0
-byBGTk1fUEFUSE5BTUUNCj4gPiB3ZSBoYXZlIHRoZXJlIGlzIGFuIGF0dGVtcHQgdG8gcmVmZXIg
-YmFjayB0byBmbm1hdGNoKDMpIHRoYXQgd291bGQNCj4gPiB0eXBpY2FsbHkgc2F5IHRoYXQgdGhl
-IHdpbGRjYXJkIGRvZXMgbm90IG1hdGNoIGEgc2xhc2guDQo+ID4NCj4gPiBIb3cgYWJvdXQgcmV3
-cml0aW5nIHRoZSBlbnRyeSBsaWtlIHNvIHRvIHJlZHVjZSBleHRlcm5hbCByZWZlcmVuY2VzPw0K
-PiA+DQo+ID4gLS0tLS0gPjggLS0tLS0NCj4gPiBTdWJqZWN0OiBnaXRpZ25vcmU6IHJld3JpdGUg
-d2lsZGNhcmQgZGVzY3JpcHRpb24NCj4gPg0KPiA+IFRoZSBkb2N1bWVudGF0aW9uIGZvciAnLmdp
-dGlnbm9yZScgbWFrZXMgcmVmZXJlbmNlIHRvIGZubWF0Y2goMykgYW5kDQo+ID4gRk5NX1BBVEhO
-QU1FIHRvIGRlc2NyaWJlIGhvdyBhbiBhc3RlcmlzayAiKiIgYW5kIGEgcXVlc3Rpb24gbWFyayAi
-PyINCj4gPiBiZWhhdmUuICBFdmVuIHRob3VnaCBpdCBzcGVsbHMgb3V0IHRoYXQgdGhlc2Ugd2ls
-ZGNhcmQgY2hhcmFjdGVycw0KPiA+IGRvIG5vdCBtYXRjaCBhIHNsYXNoLCBpdCBkb2VzIG5vdCBz
-YXkgaWYgYW4gYXN0ZXJpc2sgbWF0Y2hlcyBhbg0KPiA+IGVtcHR5IHN0cmluZyAoaXQgZG9lcyku
-DQo+ID4NCj4gPiBSZXdyaXRlIHRoZSBzZWN0aW9uIHNvIHRoYXQgdGhlIHJlYWRlcnMgd291bGQg
-Z2V0IGEgbW9yZSBjb21wbGV0ZQ0KPiA+IHBpY3R1cmUgd2l0aG91dCByZXF1aXJpbmcgdGhlbSB0
-byBrbm93IHdoYXQgZm5tYXRjaCgzKSBhbmQgZ2xvYig3KQ0KPiA+IHNheXMuDQo+ID4NCj4gPiBT
-aWduZWQtb2ZmLWJ5OiBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+DQo+ID4gLS0t
-DQo+ID4gIERvY3VtZW50YXRpb24vZ2l0aWdub3JlLmFkb2MgfCAxNSArKysrKysrKysrLS0tLS0N
-Cj4gPiAgMSBmaWxlIGNoYW5nZWQsIDEwIGluc2VydGlvbnMoKyksIDUgZGVsZXRpb25zKC0pDQo+
-ID4NCj4gPiBkaWZmIC0tZ2l0IGMvRG9jdW1lbnRhdGlvbi9naXRpZ25vcmUuYWRvYw0KPiB3L0Rv
-Y3VtZW50YXRpb24vZ2l0aWdub3JlLmFkb2MNCj4gPiBpbmRleCA3OTc5ZTUwZjE4Li42NzFhNWE0
-Yzk5IDEwMDY0NA0KPiA+IC0tLSBjL0RvY3VtZW50YXRpb24vZ2l0aWdub3JlLmFkb2MNCj4gPiAr
-Kysgdy9Eb2N1bWVudGF0aW9uL2dpdGlnbm9yZS5hZG9jDQo+ID4gQEAgLTExMCwxMSArMTEwLDE2
-IEBAIFBBVFRFUk4gRk9STUFUDQo+ID4gICAgIGFuZCBgYS9mcm90emAgdGhhdCBpcyBhIGRpcmVj
-dG9yeSAoYWxsIHBhdGhzIGFyZSByZWxhdGl2ZSBmcm9tDQo+ID4gICAgIHRoZSBgLmdpdGlnbm9y
-ZWAgZmlsZSkuDQo+ID4NCj4gPiAtIC0gQW4gYXN0ZXJpc2sgImAqYCIgbWF0Y2hlcyBhbnl0aGlu
-ZyBleGNlcHQgYSBzbGFzaC4NCj4gPiAtICAgVGhlIGNoYXJhY3RlciAiYD9gIiBtYXRjaGVzIGFu
-eSBvbmUgY2hhcmFjdGVyIGV4Y2VwdCAiYC9gIi4NCj4gPiAtICAgVGhlIHJhbmdlIG5vdGF0aW9u
-LCBlLmcuIGBbYS16QS1aXWAsIGNhbiBiZSB1c2VkIHRvIG1hdGNoDQo+ID4gLSAgIG9uZSBvZiB0
-aGUgY2hhcmFjdGVycyBpbiBhIHJhbmdlLiBTZWUgZm5tYXRjaCgzKSBhbmQgdGhlDQo+ID4gLSAg
-IEZOTV9QQVRITkFNRSBmbGFnIGZvciBhIG1vcmUgZGV0YWlsZWQgZGVzY3JpcHRpb24uDQo+ID4g
-KyAtIEFuIGFzdGVyaXNrICJgKmAiIG1hdGNoZXMgc3RyaW5nIG9mIGFueSBsZW5ndGgsIGFuZCBh
-IHF1ZXN0aW9uIG1hcmsNCj4gDQo+IEl0J3Mgbm90IHVucmVhc29uYWJsZSBhdCBhbGwgdG8gY2Fs
-bCB0aGUgZW1wdHkgc3RyaW5nICJhIHN0cmluZyBvZiBubyBsZW5ndGgiLA0KPiBzbyBpdCBpcyBz
-dGlsbCBhIGJpdCBhbWJpZ3VvdXMgd2hldGhlciBpdCBxdWFsaWZpZXMgYXMgYSBzdHJpbmcgb2Yg
-YW55IGxlbmd0aC4NCj4gSSB3b3VsZCBzdWdnZXN0IHMvb2YgYW55IGxlbmd0aC9vZiBsZW5ndGgg
-b2YgemVybyBvciBtb3JlLy4NCj4gDQo+ID4gKyAgICJgP2AiIG1hdGNoZXMgYW55IHNpbmdsZSBj
-aGFyYWN0ZXIsIGJ1dCB0aGVzZSB3aWxkY2FyZCBjaGFyYWN0ZXJzDQo+ID4gKyAgIGRvIG5vdCBt
-YXRjaCBhIHNsYXNoICJgL2AiLg0KPiA+ICsNCj4gPiArIC0gQSBwYWlyIG9mIGJyYWNrZXRzIHRo
-YXQgZW5jbG9zZSBjaGFyYWN0ZXJzIG1hdGNoIG9uZSBvZiB0aGUgbGlzdGVkDQo+ID4gKyAgIGNo
-YXJhY3RlcnMsIGFuZCBhIHJhbmdlIG5vdGF0aW9uIGluc2lkZSB0aGVtLCBlLmcuLCAiYFthLXpB
-LVpdYCIsDQo+ID4gKyAgIHdvdWxkIGJlaGF2ZSBhcyBpZiBhbGwgdGhlIGNoYXJhY3RlcnMgaW4g
-dGhlIHJhbmdlIHdlcmUgbGlzdGVkIHRoZXJlDQo+ID4gKyAgIGluc3RlYWQuICBXaWxkY2FyZCBj
-aGFyYWN0ZXJzICJgKmAiIGFuZCAiYD9gIiBsb3NlIHRoZWlyIHNwZWNpYWwNCj4gPiArICAgbWVh
-bmluZyBpbnNpZGUgYSBwYWlyIG9mIGJyYWNrZXRzLCBlLmcuLCAiYFsqXWAiIHdvdWxkIG1hdGNo
-IGFuDQo+ID4gKyAgIGFzdGVyaXNrIGFuZCBub3RoaW5nIGVsc2UuDQo+ID4NCj4gPiAgIC0gQSBi
-YWNrc2xhc2ggKCJgXGAiKSBjYW4gYmUgdXNlZCB0byBlc2NhcGUgYW55IGNoYXJhY3Rlci4gRS5n
-LiwgImBcKmAiDQo+ID4gICAgIG1hdGNoZXMgYSBsaXRlcmFsIGFzdGVyaXNrIChhbmQgImBcYWAi
-IG1hdGNoZXMgImBhYCIsIGV2ZW4gdGhvdWdoDQo=
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ static bool is_borrowed_object_dir(struct odb_source_files *files,
+- strbuf_addf(&objdir, "%s/objects", files->base.odb->repo->commondir);
+- if (strbuf_realpath(&self, objdir.buf, 0) &&
++ if (strbuf_realpath(&self, files->default_object_dir, 0) &&
+     !fspathcmp(real.buf, self.buf)) {
+@@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
++ default_object_dir = xstrfmt("%s/objects", odb->repo->commondir);
+  if (!object_dir)
+- object_dir = xstrfmt("%s/objects", odb->repo->commondir);
++ object_dir = xstrdup(default_object_dir);
 
-------0AE6B8D30F993CE14A4D1CFAAE6542A8
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
+  CALLOC_ARRAY(files, 1);
++ files->default_object_dir = default_object_dir;
 
-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
-011B0PXgi45EuGxENQ==
+Either way, the check should not make things worse where it is
+incomplete.  A directory we fail to recognize as our own stays
+borrowed, so --alternate-refs lists its refs just like today.  The
+opposite mistake would need a quarantine inside another repository's
+object directory, which seems unlikely, and even then it would only
+cost some negative tips: the traversal walks further, but never
+accepts a missing object.
 
-------0AE6B8D30F993CE14A4D1CFAAE6542A8--
+> This makes me wonder whether the better fix would be to stop modifying
+> the primary object directory and instead we simply append the quarantine
+> directory to alternates.
+[...]
 
+That does sound like the cleaner fix.  Since you are already deep into
+this area, I would be happy to drop the fix and wait for that instead.
+I expect very few users to be affected in practice: mostly git hosts
+with many hidden refs, which is the case bcec6780b2 was about.
+
+In that case I could send just the tests, with the hidden refs case
+marked as test_expect_failure, so that it is covered once a long-term
+fix lands.  Or, if you would rather have a short-term fix in the
+meantime, I can send a v3 with the change above.
+
+Thanks,
+Kristofer
