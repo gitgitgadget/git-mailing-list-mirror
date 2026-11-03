@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793695787;
-	b=u9k1RTH6yJVrl5ZqKgbKJ6d4pUlPpPLghzIp9EIpboHcWgQuV7Sk48KogonlPPHN+GgW
-	 XZuPeMZAnQClhZvYv9lcmerNDiwiudXdQQIHxJpXY+RTN91rV9jMx3u0fD+kfym2rtsF1
-	 9VcClF+KlGjQnrKdVp1sVultnuw4ARhy4F+HsG6LZCAg2UjRzdM0UlV6DUNmPmtclWB1j
-	 DTkkcvuJkY1wHyF8AsmfYBuQp1VEoKUVc+gnChrFKxJMKFC6+h3hAd7Cq/Mjh1kWvKuR3
-	 zexaMlPkV3O0v6Eqm79d31hxoLdknFJXjMDyzSgrisGjp55dw6vw5lrx5KSOhntD7jQ==
+	t=1793695790;
+	b=5DWuI5GJe8grpYn7Q7Wd4WsmajwmaXd3Zayf2hMKcPN4O18RBbJYylQHKgqux4bU08f2
+	 nZzfxmhR+OxmxCrTPIiByYnbWMwcWQpwZu+nTJ9belRwdrKHxkP+dG8DMRPQSYnBQ3P5C
+	 lm4LZ4k1bDoMUd0Fi81OE7b2TqGhyj9TxVSzu5bVfMxrr+SY3nu8B+V2AyKZbDH3Y1AYg
+	 nKXuyLfniYqvnbjT3G99xtPDB0Nofn78glUwzt8WSPeSkb0fqqKarmBg3W8ot0/wdEe5Y
+	 A3WyA2un/urICeTw2dGlLAANXPiGppP3LYSmCqTklO3RMcrtk1h/0VGN40pT/eesnTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793695787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793695790;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=Itdb9hfNkDz6r3G+/UN1msnVDpEsNrOoiNHnIPMsMx0=;
-	b=s16MeILZzrZPxJEJREbHS2gUytUCsQdSzhfCzPuuSmQuRuCGxqM1+TKo2a7DySPJ9Msp
-	 KrqzzlWOc+WoKp3vFP/7QFQmpSjiP3xHr5EWUVkXshJbq+jy8/sSVdUrSTkNa3lyqTeNU
-	 UQP5dfVL4BDCWoX+rRpz9eszHaQKtNzoRZ7x15IiJ8dm6lLM5YVUi0O5p1DdhnpGZYZF9
-	 fayq2xn01iLL4MPcHygkiWcNOpeASEOTyqjd0pgwH4Buquqzafd0RLmjTQEfMCyLFWwZ/
-	 SqrrtCRNi+85zSUvpIyzJd9RmawiGtV8cL7SCHwJuNIpsjfYD2QehOF4lxmZNHWQu0g==
+	bh=FIuU/iFAK6VrZknQdbQ6wVEQF2JkFhiRVKtHjCw6xsw=;
+	b=Ni674DngLlwZ+pJayaSvbs6/MkXu/q1QK12+Mmb85mS8sN4jZEikViAYmwfwB3aaK+sk
+	 YUUlv61N6kWGk/q3hlJxbJgfhXHzQdX6iI30ttOtFcCzmZHCaKpPHVAiOwenMidOl3EYb
+	 3j1mf8juCuDLRW1b0DHd3PIDhr7lqOsWmLXgLPNz/40Nd/CggiQGjHkqCatoLaT1ikx4E
+	 vGPr+XHyOYRhhGvDeljlhsFERpu7WMtapkoln6uFNhqqSxoFT3Ul9iTuPgm0eocOYH3da
+	 FtXDHClxC3wydhnOQ5GlDMT8QtS3cgezKG95aswArSZPc1yGhHEVXA0I7wr3ZBavC1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HuT6VCR3;
-	arc=none smtp.remote-ip=209.85.218.43
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NXy5DT23;
+	arc=none smtp.remote-ip=209.85.218.50
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AF5606A326
-	for <git@vger.kernel.org>; Tue,  3 Nov 2026 08:49:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 75AF5606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FF7606A326
+	for <git@vger.kernel.org>; Tue,  3 Nov 2026 08:49:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20FF7606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HuT6VCR3
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-c4ced671398so82534666b.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2026 00:49:47 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NXy5DT23
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c4550d8ab15so467405266b.2
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 00:49:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793695786; x=1794300586; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793695788; x=1794300588; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Itdb9hfNkDz6r3G+/UN1msnVDpEsNrOoiNHnIPMsMx0=;
-        b=HuT6VCR3RIdWlYOV7m1UlDRVK5rZmvDw3C/Q6wH3Ledxi5IwqpxDPJO3mil2Mz+DBW
-         jtS1sDzRk1crafoEL1gaZEufUGtCnsaQxp+RiIOPF4TzpDSEUgk/OWNYRnHnoviZTO4p
-         T8eSUlcrlvEliv6MbWybU4MOelqty2rqCG/elrEPLKQ/O7EZtm2himBbshw4DIX4GBo2
-         393MwIP/c0t1Eb8qhmGeOid8H47lFvqw/yHbp2q1ajcqbX1d0JJflmpPjROEheQ2BEK3
-         XM+i6vkg7/Tege7fm1kCo95gRE9cM5alYkkW592qu9H4ukiTocQ8FPBVio5ZZjFl1x88
-         CmcQ==
+        bh=FIuU/iFAK6VrZknQdbQ6wVEQF2JkFhiRVKtHjCw6xsw=;
+        b=NXy5DT23yns5ytvUk/cj6SPu7t2YMAuXIhXTF0pWM36BKxDaDEgpB2D+OlDk38qUUH
+         WcHLQYABUx8PjOxwL/rt5znnIpmfc/PyMjOTo9lEJ4MxkKNsJe/5/ZJxB8J9m0szMAxw
+         eIvNI79L+ZTQeaP+XYNgEzKcj6EZhPn0ZPeL4lE846pBoJVZ7sd1pzG2c3Z7zZn8N5wf
+         6FNAGgD/MqP2Ze9BOQqaN+81buk7ANIoAozE9PSE+Z9NGMgWGcTk57/tNxRXTffx1jaP
+         NZU6PSy4JrwHUaNmiGxKSNUGMU5tUwI0joviCIrAZLhpXWZAh5elyhhyYci9lWI97pbu
+         Dzig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793695786; x=1794300586;
+        d=1e100.net; s=20260707; t=1793695788; x=1794300588;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Itdb9hfNkDz6r3G+/UN1msnVDpEsNrOoiNHnIPMsMx0=;
-        b=cUl23sJ0GobzhPRP/erijD2ZwMS2JxaOeuy7sv4JCLKdLXd3xhi0v009+vlCLBMORj
-         9bgBCKX81kyQsGrcO+QkCoynIRJraESve7XZ9XZ+8zxkCyHO+2DSctWH6vnnYIFyfWJn
-         G2SwvuPXaHDpYq2MOVNU+Ej3nOTaw9WG9Tkjhkv317zuV2FhjWO0BwJiqLnyi20JIDgi
-         iDeDdfpqtnkYrs+WQixS1q76xDl341Cp7/0PfwheXuuMTGc/Fh4uU105goiKWRpplRzA
-         Jx/XqNgmIm/Skyvg6DW+6MFXJFSnTO2u1EoqfAOouBlta5XZVwVPatsvPbvg/mPfYPNo
-         Yw3Q==
-X-Gm-Message-State: APuU4Z/w0gn3M3+s3+E35Cbj/rqPF9BOu1YNHH78BZTsOiXHIZF7dhux
-	06UrHR5U5/+aK6y36OEaLwtD8opZM5mhl2wS4jVxXQCQk4t9AVZAGlgMBTjSTSTgiBo=
-X-Gm-Gg: AYBFou2SfSleFuKaUXPkxtROyZ5TIayK9PM0cpGhzGZ9lTJKI8+MEY0c7mk5/N9RM2X
-	fJ3Y+g4H25L3M06+CQOM9/Ww3z/6YGpAR7BTcMnAZ1kvRuAfTyp+y17VsZzClVVRkirPbtR2Ekm
-	Fq1tR8mWyLebuLs6RP/aO+A3pDbN+6exY+bQAX7xAPrd4puMHUjnprH0J9oLI/AV2GgeMShyreg
-	2TY1bAxQZ8AahAFiM0XXlz23kpYuycFjNaPdlub6fP12G2JfdoOkB0aujGbFMdvnoSxer9Zlb3B
-	qhaXKPbdFjbOKOzV9UPn68xCTFBjeh8vknNPKd+jn8egDpy8NpYANSvSP62QWqHR/yGkQDWpG4r
-	DAyIG5DVzJUtw5KfjWVpyY82S4l0pGbJMvgGj7LOCWXWw7cJcr4vNW3myBZvB+ySv6sZyGkpK+J
-	K53adO3u5fLWqtnBiUcoUtRxmun0gm2COPwIaIkz8p6GfjUaCOy/6IcgBX/EFyL+Pm+tubFWcw7
-	0diavkaDB9VKAPaPR0nqRUxu45tWZLGKFpmSBOcK2JEEbW7nq3Tl6GKxx1CmiG+YHFl6BWij93F
-	xntl4UvXG9wQe62ZMAT83AvfpAylGZIxr1j1ZVYfHE9biBsTiU1oyTGMMWPamdJ6oiTEdfSfNmf
-	TISdvZZ9eQ5LKCsVIo+wzwSuMzgVPEHlhv/mV3lTd464kiooucLj7JWhfFQq4Z+CfwXCjcmJN0t
-	zXeSs8/zyuw1xpTsdlH2NDI6HeUciN
-X-Received: by 2002:a17:907:7253:b0:c29:6400:ef8e with SMTP id a640c23a62f3a-c4ca7aa5303mr1014438066b.42.1793695785701;
-        Tue, 03 Nov 2026 00:49:45 -0800 (PST)
+        bh=FIuU/iFAK6VrZknQdbQ6wVEQF2JkFhiRVKtHjCw6xsw=;
+        b=ZqdBVzOheQdbEyynN8/U8T1KGd7x+nwBVDGILN/t8Ep6qUcGjnadcPpY4TotqDEkQN
+         e48kCtQjmUtXBev9q2b4Tkzm6qEV/XGR25aHsK7RSUt4GdK5VxOY20MFxzX7/UQZv2fh
+         RecyiLj76HeyC2PrrHOPbaaAmCvjCfEzLyZqpuzCBeNrI8UMWMkrrb3oKCHSCkO4sor6
+         Q1IqAhyORc1KxtaX7ADGBAGMkeTdipVC/H4RoaqP0OIJSjRhJ8CP23PgWc7kEfV8BvUq
+         LIZuLHOFXFP+X4wt5jWESSk5FQuFY3Mtk8hoUaVEFyM09g7+/pgiq7FktgTHx43jVQud
+         wTcw==
+X-Gm-Message-State: APuU4Z+EpMdkgJbC9FcT6FmBs1S3HQGPJGJmsfntKH6DYHUotgH9rLkT
+	oCrL5XKuCwq0tykDTnyyBZIFQYer10dBTiu1VX3sU4GM5GRqcDagq9AouxqtvlLHn+E=
+X-Gm-Gg: AYBFou2Y+8C26hFEJnUINZ9MCRjGwDAY5FL91l1O6mgb7P4ehBOl/Tpy28RfgbW5lVa
+	lDqI8TD/LSffvp25Y84jKEXue2/3NEossz9Q5jlZDgx/5TVK1h6X4Udpzbu75K3CmweJ5SCp1jy
+	0pg27iBdV8q9qgBXtZXFjMvRoD63pG4/7m0JbCUN0O7CkpjeDupCJOWIK9aqc13ybP7RW6ilRSc
+	Jj7Exn/7grE5nYgmLAc1X5QoWsRHRyFJC2V7ln/oSLYjQ4R/cvAndWouI4GgqlovlFloDMhJRoP
+	4wpf+PYaQWdbWdFaSlcKsjCK/mMA80oXGkIffw1JeTy3IYvIEImjMP0mIkzePq8mVX352UfQHLs
+	5gFpHfJUwF51lor57aXXHuHhe0M42aYJORdnFMRiUfPfwK7Zvi2dauSt8YIiLdDsUFSYgBgaPa+
+	RD9TTxJ/DU7kB/CBia5MHfOlsgJlLJJuVEv1Z9rtyFHDiKQ6xMHWm71RiI3Azwovmlt26eftlCw
+	PxUN4r2vx7lIkOc0SksMgnKbKT17PxYrl3jdyY1r9TNBC+UmvTBkr6Mg7uv5tAWdam4R8qsXSd9
+	AWm4iBx5ubgKJaNpQIEhtK+mCqSHLIXjRmyboBOsVG/ziexa5JGcyvZVpSiRQ8R7iTfmzER8mTo
+	eWekRymrTqe2JCfLQxW+1rvcQl18XroQfRBYauuVWOKh4x8Po6FhI8KkBB8CKGdCzx+RvomDmcZ
+	tJranoQZCUL9aO5GLph+BYWOXYNqdJ
+X-Received: by 2002:a17:907:f20b:b0:c4c:eb17:3da with SMTP id a640c23a62f3a-c4ceb17053emr176724566b.22.1793695788468;
+        Tue, 03 Nov 2026 00:49:48 -0800 (PST)
 Received: from localhost.localdomain ([104.28.251.99])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4cec15a904sm64611766b.70.2026.11.03.00.49.42
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4cec15a904sm64611766b.70.2026.11.03.00.49.46
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 03 Nov 2026 00:49:45 -0800 (PST)
+        Tue, 03 Nov 2026 00:49:47 -0800 (PST)
 From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
@@ -87,9 +87,9 @@ Cc: christian.couder@gmail.com,
 	kaartic.sivaraam@gmail.com,
 	ps@pks.im,
 	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Subject: [Outreachy PATCH v2 1/2] notes-utils: use the passed repository for notes refs
-Date: Tue,  3 Nov 2026 09:49:29 +0100
-Message-ID: <20261103084930.15532-2-okhuomonajayi54@gmail.com>
+Subject: [Outreachy PATCH v2 2/2] notes-utils: pass the repository to init_copy_notes_for_rewrite()
+Date: Tue,  3 Nov 2026 09:49:30 +0100
+Message-ID: <20261103084930.15532-3-okhuomonajayi54@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261103084930.15532-1-okhuomonajayi54@gmail.com>
 References: <20261031104526.46711-1-okhuomonajayi54@gmail.com>
@@ -105,41 +105,108 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-create_notes_commit() and commit_notes() receive a repository,
-but read and update the notes ref in the_repository.
+init_copy_notes_for_rewrite() reads the notes.rewrite* config from
+the_repository, as it is not given a repository. This is the last
+use of the_repository in notes-utils.c.
 
-Use the repository they are given.
+Add a repository parameter to it. commit_post_rewrite() in sequencer.c
+already has one and passes it on. The callers in builtin/am.c and
+builtin/notes.c still use the_repository, so pass that for now.
 
-Keep USE_THE_REPOSITORY_VARIABLE because
-init_copy_notes_for_rewrite() still uses the_repository.
+Drop USE_THE_REPOSITORY_VARIABLE, as notes-utils.c no longer uses
+the_repository.
 
 Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 ---
- notes-utils.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/am.c    | 2 +-
+ builtin/notes.c | 2 +-
+ notes-utils.c   | 7 +++----
+ notes-utils.h   | 3 ++-
+ sequencer.c     | 2 +-
+ 5 files changed, 8 insertions(+), 8 deletions(-)
 
+diff --git a/builtin/am.c b/builtin/am.c
+index e9623b8307..daa4b601b6 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -536,7 +536,7 @@ static int copy_notes_for_rebase(const struct am_state *state)
+ 
+ 	assert(state->rebasing);
+ 
+-	c = init_copy_notes_for_rewrite("rebase");
++	c = init_copy_notes_for_rewrite(the_repository, "rebase");
+ 	if (!c)
+ 		return 0;
+ 
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 9f1f0ec840..20f7bb8377 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -366,7 +366,7 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
+ 	const char *msg = "Notes added by 'git notes copy'";
+ 
+ 	if (rewrite_cmd) {
+-		c = init_copy_notes_for_rewrite(rewrite_cmd);
++		c = init_copy_notes_for_rewrite(the_repository, rewrite_cmd);
+ 		if (!c)
+ 			return 0;
+ 	} else {
 diff --git a/notes-utils.c b/notes-utils.c
-index 5c1c75d5b8..d4606bc576 100644
+index d4606bc576..3a3b84f79c 100644
 --- a/notes-utils.c
 +++ b/notes-utils.c
-@@ -26,7 +26,7 @@ void create_notes_commit(struct repository *r,
- 	if (!parents) {
- 		/* Deduce parent commit from t->ref */
- 		struct object_id parent_oid;
--		if (!refs_read_ref(get_main_ref_store(the_repository), t->ref, &parent_oid)) {
-+		if (!refs_read_ref(get_main_ref_store(r), t->ref, &parent_oid)) {
- 			struct commit *parent = lookup_commit(r, &parent_oid);
- 			if (repo_parse_commit(r, parent))
- 				die("Failed to find/parse commit %s", t->ref);
-@@ -61,7 +61,7 @@ void commit_notes(struct repository *r, struct notes_tree *t, const char *msg)
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "config.h"
+ #include "commit.h"
+@@ -134,7 +132,8 @@ static int notes_rewrite_config(const char *k, const char *v,
+ }
  
- 	create_notes_commit(r, t, NULL, buf.buf, buf.len, &commit_oid);
- 	strbuf_insertstr(&buf, 0, "notes: ");
--	refs_update_ref(get_main_ref_store(the_repository), buf.buf,
-+	refs_update_ref(get_main_ref_store(r), buf.buf,
- 			t->update_ref, &commit_oid, NULL, 0,
- 			UPDATE_REFS_DIE_ON_ERR);
  
+-struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
++struct notes_rewrite_cfg *init_copy_notes_for_rewrite(struct repository *r,
++						      const char *cmd)
+ {
+ 	struct notes_rewrite_cfg *c = xmalloc(sizeof(struct notes_rewrite_cfg));
+ 	const char *rewrite_mode_env = getenv(GIT_NOTES_REWRITE_MODE_ENVIRONMENT);
+@@ -162,7 +161,7 @@ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
+ 		c->refs_from_env = 1;
+ 		string_list_add_refs_from_colon_sep(c->refs, rewrite_refs_env);
+ 	}
+-	repo_config(the_repository, notes_rewrite_config, c);
++	repo_config(r, notes_rewrite_config, c);
+ 	if (!c->enabled || !c->refs->nr) {
+ 		string_list_clear(c->refs, 0);
+ 		free(c->refs);
+diff --git a/notes-utils.h b/notes-utils.h
+index c54b1fe141..ef3c0f6732 100644
+--- a/notes-utils.h
++++ b/notes-utils.h
+@@ -45,7 +45,8 @@ struct notes_rewrite_cfg {
+ };
+ 
+ int parse_notes_merge_strategy(const char *v, enum notes_merge_strategy *s);
+-struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd);
++struct notes_rewrite_cfg *init_copy_notes_for_rewrite(struct repository *r,
++						      const char *cmd);
+ int copy_note_for_rewrite(struct notes_rewrite_cfg *c,
+ 			  const struct object_id *from_obj, const struct object_id *to_obj);
+ void finish_copy_notes_for_rewrite(struct repository *r,
+diff --git a/sequencer.c b/sequencer.c
+index 508ec71792..a40243c56b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1366,7 +1366,7 @@ void commit_post_rewrite(struct repository *r,
+ {
+ 	struct notes_rewrite_cfg *cfg;
+ 
+-	cfg = init_copy_notes_for_rewrite("amend");
++	cfg = init_copy_notes_for_rewrite(r, "amend");
+ 	if (cfg) {
+ 		/* we are amending, so old_head is not NULL */
+ 		copy_note_for_rewrite(cfg, &old_head->object.oid, new_head);
 -- 
 2.56.0
 
