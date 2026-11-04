@@ -1,89 +1,69 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=130.232.247.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793815226;
-	b=oVVUfsGy55ZgN80hclR5/b25rR0KiIFtjeRPZAx1Yabt9wIUvGlLbh4GA3uaPoNUwyIB
-	 e61aTo2u2D0ADUvl8KFL14alR1/wbzrS1jzymlTWjZZ9dWxhH58DeN3PkexophSWOWfYy
-	 7fRFYWy73IqvrUqwVhEfloiu+v50JUNXIFmUuUggCKFz3ysOX6TH48mkNPSaVxSxlItY6
-	 0AUjCjD4bGdqItuK/4TT0PvQb7GQDee9Doit162EUA19H1Bqa4wS4sskg5rgW3PFhdl5o
-	 IU5DsW0Iue1ogfBJMWNmO1yZ+8c+FaDnUtWq1Wz7hzo9p83wS3PBDaJOLcE0Iyey3ng==
+	t=1793815334;
+	b=qHYIO/gONgynLfd7vytqArbXV9RZXyuizbYN/00uViMSW5Q5unI0vaqo85yB9heM+P9U
+	 vgVKqHx2FThPIPgYXr2E+d/XnctnEww0xL3eU7HP4I9X29OhP0zK77c9zjBULI2lw6Qsw
+	 hDB1a/hdOjpDVLkLyWpIAzWvCZD5KA1prOPwh6L9gQdDAyy8HqIM8zypJmTb+IL04FyJV
+	 JObhYFafPIKx9qWyyhUrSUWfwhI6G21pO8d3Vk8XrWi74uX3LX9S7zHkJMnnVTimu3Prs
+	 4DBHzY+JiMiKIeqc1hPutLcgHitlLKbznFYT6LIwICQYJw3mUC42NsuGQ6jDjSR2cvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793815226;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
-	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
-	bh=fvNFVERz7t2+FGoMC5GdMPQeOCuWIBAx0J7PIzdfCPg=;
-	b=SAcIMwN+nttL52ezpf9kIlN3yF1zzHgWB9+qW2ln5HzH9XDwo5x0Yde0DsTb5izQrr6E
-	 fuAQuTmtu4UbCeA7A8FojiDqP80boC99XRRjoQnvIxsASZ4fbjQ6/Gtyu5QxIok6TwExB
-	 I5r9BiRcUyzSYUwhvXfQQNOt+8szBg9VZJY5SD7GmBQ6lbSBCWdfgTpCsdU9cMsFFEGYv
-	 sNXZSveTaICHY+eBDekIYBovPwdFqAHPRg1HO3yPazTt+G1KK+EvH3zqZpFH3Bm+wa8H+
-	 7WSy7GbTIecCeH1Eyc4gKzPQdEYNe8TaUBdP5RSQ9EciiQ4TtYrGdNQeIMBorGZ3EKg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793815334;
+	h=DMARC-Filter:Received:Received:Received:Received:Date:From:To:CC:
+	 Subject:Message-ID:In-Reply-To:References:User-Agent:MIME-Version:
+	 Content-Type:X-Originating-IP:X-ClientProxiedBy:X-FEAS-BEC-Info:
+	 X-FEAS-Client-IP:X-FE-Last-Public-Client-IP:X-FE-Policy-ID:
+	 X-FE-Hostname:DKIM-Signature;
+	bh=0DtrZwcGww5zqPLIkAyjw9aAiCGV+3VpMEbU476+hmU=;
+	b=jsO2UFDJScX8ZB2SDA8MyzmSWI+4dDnBOx6dqF+80/qaVNm2GrHxQ071roVpM+W/lSA2
+	 U8gf9YYW34zh1+lRjdGrWnD09wupsJH3eT9TOfF2f/Ajfuv3xwUCZHo/egN6nTqnJlpha
+	 hXlu2H/DEBQc8+5htvp6XBzi5m6Vj/mPsKuC916c6Ie/bffZmTIaldVtVh/C2cHVT3FRn
+	 0iJc4lS7lqg0xNMb8oVJxen+6212MrLi6nY7/4IO9SPDVcUIlJXvUunlmxG/pZtEjeZwY
+	 nD21Oa8I8k82IlIR6ug0E3stRKq6GaCEmSvZYWEISWhGGmrCZ1LDXCNpqntaA+JQrCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ovVebp8T;
-	arc=none smtp.remote-ip=74.125.224.51
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=utu.fi;
+	spf=pass smtp.mailfrom=utu.fi;
+	dkim=pass header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=YZilQ13e;
+	arc=none smtp.remote-ip=130.232.247.4
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2446074A50
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 18:00:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0A2446074A50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186A0606B206
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 18:02:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 186A0606B206
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ovVebp8T
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-679a2297c55so1404632d50.1
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 10:00:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793815225; x=1794420025; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=fvNFVERz7t2+FGoMC5GdMPQeOCuWIBAx0J7PIzdfCPg=;
-        b=ovVebp8TwkYlxTXe5mYojLQ05y6I/42S9rHSHh3IS6UrzMCCIiz5LVLi8OeeDqw8AM
-         PKI2/Da+VnFHNSb2X53dHSbM69wnrZ9EQMsShyhtENkZ9RtZMNE6foOotQ4n8c5DQB8Z
-         z+6NrpdwLG0OcDQhKqA22bfRV0yP5AJITPp5Nb/21mf1wMfLLgzFuYILUaGvGsx0ZfTs
-         vFBFfHyR5gUVZE9dwgB6flJFOu4+UiItssrtY35VEEJQScm5TKMgyPxMbZA7UCQ2HqjI
-         G4wsxuLaSjzrxZS+IVgMxi4DMXQ63KlUlNqmzi9alQM24ern1h4w/Mz78e7x7LJDI4tN
-         qyqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793815225; x=1794420025;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fvNFVERz7t2+FGoMC5GdMPQeOCuWIBAx0J7PIzdfCPg=;
-        b=f7qH1ZMnj03CZSxdEJaPw+Nr+BQQPaxHedTBBn5qHUoCgGBeyPfJy8ZBGU2sntr+en
-         6PusVICdR6seprbpEUA9Ln+Lbutio2FYbKm0+896ZHh3Azjwa9wRdQ8qLdkfTDI5hZuh
-         1SwdkW34D1BZ0x3oei81XEV50K2S0ru9vpxyskcm/terTWc0kpf1NZcYZkOHu6SDcyih
-         gUT5/6/Fz6bREt8HRALUuqKigClp7fB49ffDxoxE8KC2MSSTsypsHdZo0NXnAFwgq6XL
-         ecCjQIgZIv6ojk76vHWQvXZ4UOUlgF25T7HuN4oPlwS4C+qwvG45Xje0mTy/lwdaWIuY
-         cuHg==
-X-Forwarded-Encrypted: i=1; AKwUvBwfGQ2gpUBVD2CXPD++vRv+fvL50DRAIheiL6CWzX3DWvQOtFrQEtMZDyEo+n8F2SIrOWk=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/VaFoVy0Ve3xq35rOY3unWmWINFzK9pv/4l19OTimr8R2LebCF
-	/p919vbOUs7fXKStkB2alj67jvDyTC8SEIHjJ8FiC74obQ3qgisPz4KmMOY1tA==
-X-Gm-Gg: AYBFou1neswIaQWEyWV5aqvrvbsocQ6QJRfNe0Y6vBtwNYtNLi0sGhQjBhegYNX1qtU
-	lXhwv5H5UCSf98u4I7jhOO8YZNGsmRyTJLbHoidFobb/kqG72qokc7bxKA8GUJo3zfKp2PcE6jP
-	Lv8sbhMV3fLy1F9+SKDOJyOMmhOIzH0GiL2tEK7X/mq9oQvRth/HLIhU8q8JF0RxNPn555ajDPv
-	6z7SYV+lC0PnPWoL72v44uqnAt/VbCC6337Q1fsbAO1y2ksxODVg2jjNwDLfHTZREIE6aZqBFkC
-	ay91QfIH/m8cgQA0TlAYaFckQPxRaz1GvrL2iFEGGanWMc2eK9tA+milDluO9mTVBQhjeH5yP/U
-	5ABdagZ69fjwevQZ7FR3KRZa6qOkZrXAa9KkpMwTdIlc8H2r317qSlxeCfJHjsPv9uu54zQwc1R
-	C5XZGaaxNBP4TzNBLdNaA2XDqn17yGsDdcYdlAUQQBIAzotaqpR9/LwvfowjxoKFJ4LxTdWY6an
-	466pYALoxkHQS99fl4p1AkzaDhR1D7JOVL4fbB6QQ/FGk7BcvLBUc3C3jM3w18BoVVO4yKaYGfA
-	BTcHwLjNkcBJWPsLvuV0KnJydlqyqzBt0vLbSxuUiKxroRMoQysPNMh4khhpD56MRtcPvRFQFu/
-	CQLyHgO1AwkWI0RfC030fv2aJnqi8QIy0VSWI7dnprPM1XovVhI2rlxdjny/cT7nhs45a0IBVZ1
-	+CnQ==
-X-Received: by 2002:a05:690e:4410:b0:675:6f9d:dd5c with SMTP id 956f58d0204a3-67ba5074c9fmr9226615d50.73.1793815224648;
-        Wed, 04 Nov 2026 10:00:24 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:9d46:600:c5d0:c9f2:df6f:9145])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67bee273e69sm1947952d50.14.2026.11.04.10.00.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2026 10:00:24 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=YZilQ13e
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 6A4I1rUo019948-6A4I1rUq019948
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Wed, 4 Nov 2026 20:01:53 +0200
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1xOfJ3-003gTB-B6;
+	Wed, 04 Nov 2026 20:01:53 +0200
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Wed, 4 Nov
+ 2026 20:01:53 +0200
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 75c50f7d;
+	Wed, 4 Nov 2026 18:01:52 +0000 (UTC)
+Date: Wed, 4 Nov 2026 20:01:52 +0200
+From: Tuomas Ahola <taahol@utu.fi>
+To: Patrick Steinhardt <ps@pks.im>
+CC: Carlo Arenas <carenas@gmail.com>, <git@vger.kernel.org>, Ed Maste
+	<emaste@freebsd.org>
+Subject: Re: Is anybody using .cirrus.yml?
+Message-ID: <20261104180152.BksDw%taahol@utu.fi>
+In-Reply-To: <auskIPBRorDxDj6N@pks.im>
+References: <20261102204151.MA00I%taahol@utu.fi> <aumQMJLMeI4sfeNI@pks.im>
+ <CAPUEspg_9CGMtakHO3Stj--exd5nRNv7i3vW5tmMF0Arzmo=zQ@mail.gmail.com>
+ <20261104095752.2rs5_%taahol@utu.fi> <auskIPBRorDxDj6N@pks.im>
+User-Agent: s-nail v14.9.22
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,68 +72,59 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v3] range-diff: add --matched-only to skip one-sided commits
-Date: Wed, 4 Nov 2026 13:00:13 -0500
-Message-Id: <2D59CFA3-B1A6-49E3-A930-C3057D97D507@gmail.com>
-References: <62095245-8121-4698-b1aa-ff239286d9e9@app.fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Matt Hunter <m@lfurio.us>,
- Harald Nordgren <haraldnordgren@gmail.com>, git@vger.kernel.org,
- GGG <gitgitgadget@gmail.com>
-In-Reply-To: <62095245-8121-4698-b1aa-ff239286d9e9@app.fastmail.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-16.utu.fi (130.232.247.56) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhRSBgbKBgDG0YBBUhYSFpIWVxI
+ WVtYRlpbWkZaWF9GW1hIUEhYSFhIXEhYSFhIWEhZX0gLCRoNBgkbKA8FCQEERgsHBUhYSFlQSA0FCRscDSgOGg0NChsMRgcaD0hYSFlRSA8BHCgeDw0aRgMNGgYNBEYH
+ Gg9IWEhRSBgbKBgDG0YBBUhY
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
+ bh=0DtrZwcGww5zqPLIkAyjw9aAiCGV+3VpMEbU476+hmU=;
+ b=YZilQ13eyL8NnzpHFCAVMEGUeamgMAsgoMIXkN5UtaS+1CA9MzSQrkcnoWaAZodkm2htmAv62cHa
+	PeWk2d41KlMFqn1UJh3eeQMnbVjetF6etz7G3e8uLiz9Q03H6tVPaXpmcqHWKZdZkRPnGbqNk7kd
+	nvAJ+PitpzkT16KokbN9OaXDBa+2s1oacrZeQwnr7Dq62j6YjpK0jecXnP53fAvBaH4ToMXKklFv
+	UPHWIItMIRorkMAP93e3DB1N6o+Zl2MUlY4typZjAjOOWrRTntNzcR7ryj3AX1JEScZ00mWozKU3
+	FnOsAxUPi6Uev+JKJh8+QuEqDjxJCQm+WceUOA==
 
+Patrick Steinhardt <ps@pks.im> wrote:
 
-> Le 4 nov. 2026 =C3=A0 06:27, Kristoffer Haugsbakk <kristofferhaugsbakk@fas=
-tmail.com> a =C3=A9crit :
->=20
-> =EF=BB=BFOn Tue, Nov 3, 2026, at 02:10, Ben Knoble wrote:
->>>> Le 2 nov. 2026 =C3=A0 19:16, Junio C Hamano <gitster@pobox.com> a =C3=A9=
-crit :
->>>=20
->>> =EF=BB=BF"Matt Hunter" <m@lfurio.us> writes:
->>>=20
->>>> Wouldn't invoking as
->>>>=20
->>>>   git range-diff origin/master
->>>>       pr-git-2401/HaraldNordgren/range-diff-matched-only-v3
->>>>       range-diff-matched-only
->>>>=20
->>>> address this case?
->>>=20
->>> Three-rev form where <base> and two evolutions <rev1> and <rev2> are
->>> given, and <base>..<rev1> and <base>..<rev2> are compared?
->>>=20
->>> I thought Harald's case was to take the patches from the previous
->>> round of the topic and rebase them on top of a different base (e.g.,
->>> updated origin/master), so there is no suitable single <base> for
->>> the three-rev form, but I may have misunderstood his example.
->>=20
->> I think origin..old-topic and origin..new-topic
->> would both select only the =E2=80=9Ctopic=E2=80=9D commits as long as bot=
-h
->> bases are reachable from origin (which seems to be the
->> described case, to me).
->>=20
->> I agree with Matt that better selection of inputs to range-diff
->> makes this specific case better :)
->=20
-> I use the
->=20
->     base..old base..new
->=20
-> Form as well.[1] Then it indeed does not matter if you have rebased or
-> not, as far as unrelated commits are concerned. You won=E2=80=99t get unre=
-lated
-> commits.
->=20
-> =E2=80=A0 1: The repetition seems a bit inevitable and annoying, but I use=
- a
->     script for assembling all of the options to git-format-patch(1).
+> On Wed, Nov 04, 2026 at 11:57:52AM +0200, Tuomas Ahola wrote:
+> > -----8<-----
+> > Subject: [PATCH] CI: delete defunct Cirrus CI configuration
+> 
+> s/CI:/ci:/
+> 
 
-What repetition?=20
+Sure.
 
-    git range-diff base old new
+> > Since b5a9d7afcd (CI: add FreeBSD CI support via Cirrus-CI,
+> > 2019-12-20), .cirrus.yml has powered Git's VM-based FreeBSD CI.
+> > 
+> > However, with the shutdown of Cirrus CI on 2026-06-01, there
+> > don't seem to be any drop-in solutions available to support our
+> > usecase---while there exist tools in general to run Cirrus pipelines
+> 
+> The three dashes are a bit funny, but okay.
+> 
 
-;)=
+An ersatz em dash.  Might be a subtle Junioism I've picked up.
+
+> > locally, managing FreeBSD VMs doesn't appear to be covered.
+> > 
+> > That renders .cirrus.yml completely nonfunctional.  Delete it.
+> > 
+> > Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+> 
+> Other than that this looks good to me. As said though, might make sense
+> to send this via a separate thread so that it becomes disocverable.
+> 
+
+Thanks, I'll resend.
+
+> Patrick
