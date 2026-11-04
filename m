@@ -1,121 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793814478;
-	b=tsOd5WsqY0COdWa8z537HUyk1wASeeMvGqtReu1WhGyLkUatNz60tLKPvB/5LTLZMs4Y
-	 xWviWKO/AZKc72SBIn39BuwXs0IVXH+gnFyWAVTh+Up4koK6MT3fSUl2IcH1KJmg6g1pk
-	 biOs1YYKSHSNIxj0yLVAClesVtQiDP9GhZ2i8KvHJGWVYk2PUydeuOnCvwTtnI9qebmMW
-	 XXEfhq+NqXZ2Xm1kMxj/cHaBj8hGCrJL0yPIpCHNt2MlKqXiOWxrsb3X7MohEUSW/ZOrK
-	 TNXdRqX+u6DjUE/Qt08a+KFVCmGkHdORUoda+iN3sgeh+l1A3S911fzOOZXQT3Kp1Cw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793814478;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=2jyUyyWI3woQoPrOaS9Ox5pRyBlCVD6Nc7iSG0+QlDY=;
-	b=1RYiGim8Z+w3NVzLHvKj4IlHJN1+BrNTCPtefiQ5TbGWxnqwfZM1oe4e+9H0LtsulXIX
-	 8GABzyIE4+UFGr2//HbH3hmkfJu0VLsm48xdBnykwc92wsqhki42wfy3eFy0FCtvI6TcV
-	 070N0l0yPh2CAtnCnl7fJuynosyIODHWCY2pXyCN77T5PyxSJsNArRcMVqA4J77N1LgKZ
-	 MAK+OBQRnMhU2Yfek8uyKmC1hj5ryKypiMnXVX5sMIhvbItICnPQ+uINJru5TkIHljkLs
-	 hvXnilpYEP9QbvfPXW0atiMwFsbjpMt/MPHcYy64TjMsintXEQp6EFeWqTwpSlEx11w==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=temperror header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=OmBlPwoR;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FQmWv10e;
-	arc=none smtp.remote-ip=202.12.124.151
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.53
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793814607;
+	b=ZDpc3GyK/wkDubqNm1Y2pJWP7cNuXWflh6QrTzClzmHAiCg8tsMvzBA/X4XhIe47MuUO
+	 fANFF6eNBfnqMkGZWnkp2BDiyLcJXh9su/cjJPBRNjmmdhogXRFbUR+Izr11YYUCG3v6S
+	 bmIukZUvR+eXtKMYSfFcoRvmIViixgta+qQYJy8xMDpVHv0LTDuHKJuguL4VloejtRYV9
+	 /Suey/INb5Xpx4+SBYDBOYwI/esTleGVzllouRKFeycvVXidxVceN3IIdVGUEOGGWtW2J
+	 4LLjTOAm6dPn1dIvuwUF+WQo/LDbSNs2EDBmH3ovaRQhIhfmUP5nzZDnK8iHxTQGAKQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793814607;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=UkQPPR0k8s8VWI85tMlw8swmbVjKmaKXWzIrndprjQg=;
+	b=tF6vMyn+5LGbIxxsMJNiE3ZMiCrJFQWQF8MDU9wq88G1vTdfP7X3k+9TXEc3kYvPey1V
+	 zZcue2A2Jkmu75Vgv9kpw8qQPBQvNU2XPRJQU8Q8eQEjkL773ISl/zJ9i5gJWmyUjHLZh
+	 hvMA4tR316BnR2GyUvvYB+/j46YTSuTbXapBWUOm4O2scj/2C9VNsP/kV0CxII2OTFq2e
+	 grtJsWj3B3FKi1labschlg6VAfiGiBfoijwmrkBf4cYQv01zCf7DzoEMHBB37228/Owwv
+	 Ztr60Av5Q34u02e6RdgiCnCGOkltcwUU6GlbEzV3ppHgO1jNLknvtXzFuOdzjfIzosQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=Kd44ggKq;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.53
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6BF606A328
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 17:47:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5D6BF606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A336083615
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 17:50:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A8A336083615
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=temperror header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=OmBlPwoR;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FQmWv10e
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id C50961D00100
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 12:47:51 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 04 Nov 2026 12:47:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793814471; x=1793900871; bh=2jyUyyWI3w
-	oQoPrOaS9Ox5pRyBlCVD6Nc7iSG0+QlDY=; b=OmBlPwoRrxyexK3M46px3o04Y2
-	fsiFHK/Mq9Hjm/hboedWnv+KrvT3aAJEBOQdHmobQ6O/9bKh54noSfr2o7bKRI7l
-	SH/H8zfW9VYqso9IQatWAAN+NjGRY5em+x1xa3bQk/eqxTAgQUkKAlaoLAxeFMf1
-	g4/ofGOlaJWY/+a0HekGDw9GF18Co54vOpQCcLXzcmAQUz3gGAB7peBL4AH9fQsO
-	owtxOnrwKHFiFU1XknbQ99vq79pEVPYp5vSoYnbtsGMb0JuxVW3UPk5PM5kztU8I
-	zQcCj6zNEXzdMLyMnFEzyFFD0zC0hHfXe0hPTJVTjdtbB8q7Vf9e/K4Oltlw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793814471; x=1793900871; bh=2jyUyyWI3woQoPrOaS9Ox5pRyBlCVD6Nc7i
-	SG0+QlDY=; b=FQmWv10egSABT8/0/tRcHOY74LJF8GO5whgy8S7tbZOW6PKdM14
-	m50s5jzMY6/K0/x6yK0cY9XzmH2IjWsXcapHc/TrQ2aHEasc8HxxpZ/RU0GinZoG
-	JKQmMqj4gB4tHfbW/Hz8iFba9PzpQNi4iNiAISp+OdJBLP/8xxWYJ304h0guAzV/
-	+XSefIgJNh3hURzfQrhAyth3E+WWt9TITRXAoPbH4TUTUDEQ6TyTMJdCmMaWAzFr
-	yH2yjbSgyUPPjOidwZhhLzHs8PTj8YG4OsgWfOFXam0Pl/E9WztepW+lKLdiiQk8
-	X3B1pqWiS+Scyddkb9l7hhDL5g8A5O+qfcQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793814471; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:fWYl8LwXWQb1bgrgm0B4GV4hhoULJvwBAIIlTq1VHR2w7nm
-	5U0Zy7/cE7OgdFqvkE1z/nbZSnNCpP6A4lAPd4gaSo1gNYFk2gg4QUNPsZ6P2to0
-	51LS2m5MiwFtdPDCCE7WQgQowOjc2G8/xH8U0Z8aWcU0ouqTuv1oyZsF5Ft0vSzX
-	dChev0Yjp+lU/nLJL9koYXzB8pKKKYpoWyeSWQJQla8lJTXCDa2s9V0UvVgmWi1h
-	vrqEAhW0td31hB7kv8t6g6bm6JMgtXa+Hz5vJFUOIyhDAsw86GuQEit/YJwO/Kev
-	yJGzGFCMcXKFeG9PzZeiIw2kFh1jM/xJk/gRdCg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:u1Ra7QNTfMBr71TX3T/L6OzwxUi6k66MKOmPgaI8qk8=:Ylr1Mio2/ZBbFwiUEh5lx1MCksqjG6IeqNlS+31raLY=;
-X-ME-Sender: <xms:x2_rapv-5haw6isrKRmXquJOS69fP2KLJssR8oupFzTXWPB8Sz16Xw>
-    <xme:x2_rapdqLM188XjqvY4KcYTrfS7weD77UVTxMIDQ5nlvbaDQFM4f-Atuuk7MYBqVC
-    HPfOaqcArT-nGDX8i3NnB2KS4Ph01ePQ-8J98DKDsLCbTo-6D_7jGM>
-X-ME-Received: <xmr:x2_rahway-bi7w-DdKkfGxr4BunaOxT5oiphPUFWpj_ngeLdnTImjI0e4ThHKJgEzSyNelgix8jkgjwnnhYOzlQtV6CwkeCkfVtj>
-X-ME-Proxy-Cause: dmFkZTGz4Y7VGY+GN4Ysnq9xXYtijMlJO/Q0hIcS6ECMVvXsCv3cQ9j5jSldOdM6sDUZaK
-    7QNOx/YIb96yvUVX7YBDkXS+m7YlCKjFDjPGJlstuK7wtSlQp2kV48ltmaslX7xYSv4OrQ
-    EMrkTT21lhgaHeRksMHC41Zi7d41Ka8M2svr4igVC0FdCZirGSeWti0kxzfF2O7Y5pci5C
-    0IywSr3z02lk5oKQobgbp2QZopDAYi1pK4CrBKaBuH2jLnGMCozwiRG+oIbBTU9FXbKYnz
-    VfPDckEgfEDelolvlU/iNSH1QMK9Cz+7Ye7AHS9mw/6CSkjsCio1RK/ZfShNDESIPgbsOb
-    GmtTNeuLcfH60s9TnsJewOz+dq+IdgyFXdkjNQ9a9pADOK4IUHnKBoLiHX9PjKxKT0QdHa
-    sxmhZkonMIavXPqTcfnBXVOF5/rzswxlLYS+su17fnXdWdxFabGLov+kIQSrblSp7eRQGr
-    X6ZvMncFUyNvZXbzsyNdwBoxFR5Vh7mpSHTLvm3ZGzklhZU/bpy6htKvD8d4ebzZaS4aPU
-    y1lFzDFnZTe4ixevTckzIxuMTFM9xmpOWrUEbFWi+P/lbE2rWAhMj5MsbBCjI8Om3yInpu
-    pjr2RISBTDYH2SbpvNCYf+6A1v/NkNYvvs1UAmHRRyfttEkkiuxIGXWMXlxg
-X-ME-Proxy: <xmx:x2_ravFT3_Bk9k-Tk3eW1xMYaeLDEQp7rrNQuY1ezPq6VWp7CJ_OLg>
-    <xmx:x2_ralx57kGYc_tbHma0WUtDhWdsina8DSpqaoqC3_XG_QIVyTk-Rw>
-    <xmx:x2_ragui-EoQ_VtuOtmqr4k2Xd--0u9v13KWBrVQ0NS1IC5P7tG87g>
-    <xmx:x2_rai30gcHn-TtVfIVxOCj13i1-g1ptMEwUPxERjs8jAaDfyf8f2g>
-    <xmx:x2_rauuhuTFaODExgshmWJQxXdo6dhdQk3J5Hoc4VVTz3Tgx-X9mh8pv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Nov 2026 12:47:50 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Patrick Ohly <patrick.ohly@intel.com>
-Subject: Re: [PATCH 2/2] odb/source-loose: fix existence checks for newly
- written objects
-In-Reply-To: <20261104-pks-odb-loose-stale-cache-v1-2-a00d5cdb5e7d@pks.im>
-	(Patrick Steinhardt's message of "Wed, 04 Nov 2026 13:16:35 +0100")
-References: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
-	<20261104-pks-odb-loose-stale-cache-v1-2-a00d5cdb5e7d@pks.im>
-Date: Wed, 04 Nov 2026 09:47:49 -0800
-Message-ID: <xmqqfqxg32uy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=Kd44ggKq
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c4550d8ab15so153711866b.2
+        for <git@vger.kernel.org>; Wed, 04 Nov 2026 09:50:06 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793814605; cv=none;
+        d=google.com; s=arc-20260327;
+        b=D9FgX1V2OdgZz9e0i4s0vV2/Jhd5bPIMNEi4ezm+xKjtL4ImBIFO9PH7Zut9lpsnlD
+         FZ5dM1DM23JflrVtm+Dcgn4SpYz5wcNkYK06XG4I6Xc5cf9LKE+/Tn2JFmoygsdbnNt2
+         gmVHA3eSofAd7qge+5fd6SNR7r2Ec/3s24dJESzWA8nibpHD6dT2ASdNU69FQeb5MY63
+         x37rrWVT+VAkP+tPRIvLLsBPBwzt2b1dY9bVIhCyvJWGVEs0+nyr+TX6a1iNcsNhJV7S
+         V5hMufs1EUFDrHkR1r4aZABHtcPhLl4QiCYAcsE/9VDflOWaD5VMK5oQ7spdy1h0CF7y
+         h3FA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=UkQPPR0k8s8VWI85tMlw8swmbVjKmaKXWzIrndprjQg=;
+        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
+        b=SR8BHAMdM+D9mZtom2jI6ty+mzgblhZwlr92hIYUwF5YAernxhfNvF8H3pCg7rsGC+
+         Q+YMhmFmMsyxG5Nb89nh3p/Ysb+mQF+piR8FD4ZuH7iFA+km+OGCdGI7uBcP9RPNcvCu
+         2RbYALyyz7UgR4SwlhX/yGwrNcccN2UJC8gmVuiUbTGdsXUrnH9bDRSP2Fi7cDvb/Spo
+         XVW7F91eZh0ZVvwH98tjLABe7AW7sULbFZG57mwTw9kLqc6v0yAyJqqjeycaZly+d0Tb
+         ucOrVDrxP0eo/YaN/VecJYtvmiMen/STmmhxJvt23f6RknYKVIHiYZ4dr7rbrephp/WE
+         lfpA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1793814605; x=1794419405; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=UkQPPR0k8s8VWI85tMlw8swmbVjKmaKXWzIrndprjQg=;
+        b=Kd44ggKqBdrb6aJbdFlpedCQ4vST9NZghijtl37tMK3We56idQgp+VyrB/phLDpRe/
+         4udAWrXCtIEs/KsKVEUcRxpRybOuRWUrrFOU78QEvcRYA62rh78hF8zdf8trk6hRfRAd
+         PQ5LRt0p/3AeSTjjSiISK5obqkmstkVp7OX+U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793814605; x=1794419405;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=UkQPPR0k8s8VWI85tMlw8swmbVjKmaKXWzIrndprjQg=;
+        b=ahQe031HWNeRBSXvpiU0CeGhnc34D3aFkoF00VnCRj5FzhD5LcGuytBCLcu/uxu0Ms
+         pOL3Ve3vTROC+2LRTsv75SouMmYfjXlJWDS8yM8gDPQ0d5tCRkExysHNTnoFzlXdSRgT
+         qAF0mZTaLz77S6JbSXITATc3RxSbgDLAmRVgWn2MXC76lWC4AU0eEXA3nEZC0YztxMBU
+         6LWaVpfB9Wc6v8XNbDHWWDc3DFLIcucwxbggpCcPPDwkJ8Xa0Yq6+4ViXIkuHJiYvJRI
+         /tWxyWXdOtYzS1q49fy8y4rsE4C/6oQi5Rflby8u9XpawMASy/b4ciJ3Ks6qwXrnDCmV
+         lHvg==
+X-Gm-Message-State: APuU4Z/wXJfQlm+N38IvPGzhORMXkY/kluGua+wlDvCPkn/oZQ5JEA61
+	XiRRNmEN11sn9ebRjUkJgqH8m0A4UubRLaVHYlJAVA+rLsdBf3YYn1Q8dkkzshprfrEnaD8IVmJ
+	y/4qBDuHinlwLlRYy/rRLhg2uxovYHD/Wph6YIY9ZIjZ0uALWB6kFcbU=
+X-Gm-Gg: AYBFou2uFlaXlbBJA5isr6vvFQsJ9jJnaO8DcztAwmTONlCJjg9A5d0Vq/dwgN73IPU
+	PgPRl1eihCTKBOvr91bRRKaMt09j+3lT9MKSnav5dsuxdqQbPH8oMrFAERHmNf1HORoRibkOnpH
+	kq/Q2FWAysyU7Be17O+mI2nTpdYXziU8RMMcZAAXJtYzGRZUidAJBiLRu5vL8Tl81KVrfn2KGo2
+	SbinvD6jIEGuwOiUWCLYibIPBHPiaxi1vBywxTMN2m3nnmBck6g/KQRP6f50ayvk24RvHt92BJx
+	ej6c3RZhnDwIJg3ofWGwiTc9N3TF/wGw734Eoi7vN7HpQaQEvIUQOVNFO6cJJQZ+IwKbn+qAj39
+	KWgYynZrap8q4fO4fKoeSaV5OK3sMeEGd4vUL9g==
+X-Received: by 2002:a17:907:84b:b0:c49:8f1e:af0a with SMTP id
+ a640c23a62f3a-c4ca795e453mr1438721766b.7.1793814604937; Wed, 04 Nov 2026
+ 09:50:04 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,49 +99,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261104-pks-commit-graph-write-refactorings-v1-0-d013d9401a59@pks.im>
+ <20261104-pks-commit-graph-write-refactorings-v1-6-d013d9401a59@pks.im>
+In-Reply-To: <20261104-pks-commit-graph-write-refactorings-v1-6-d013d9401a59@pks.im>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Wed, 4 Nov 2026 18:49:50 +0100
+X-Gm-Features: AclHuK_ZX1ZXyYVjAmYK9DtwrhVAUcI7DwTu4y3DjUupOeEzubiiivmUCZ5QjWo
+Message-ID: <CAL71e4N4BvO=eMfO0wnJ9=gGbfTRz5ayWFZULoN1dGSF7uCZAA@mail.gmail.com>
+Subject: Re: [PATCH 06/10] commit-graph: move remaining write parameters into options
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Wed, 4 Nov 2026 at 17:15, Patrick Steinhardt <ps@pks.im> wrote:
+>
+>                 if (graph_write_mode != GRAPH_WRITE_TIPS)
+>                         write_opts.flags |= COMMIT_GRAPH_WRITE_REACHABLE;
+> +               else
+> +                       write_opts.commits = &updated_tips;
 
-> @@ -824,8 +837,13 @@ static int write_loose_object(struct odb_source_loose *loose,
->  			warning_errno(_("failed utime() on %s"), tmp_file.buf);
->  	}
->  
-> -	return finalize_object_file_flags(loose->base.odb->repo, tmp_file.buf, filename.buf,
-> -					  FOF_SKIP_COLLISION_CHECK);
-> +	ret = finalize_object_file_flags(loose->base.odb->repo, tmp_file.buf, filename.buf,
-> +					 FOF_SKIP_COLLISION_CHECK);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	loose_cache_mark_seen(loose, oid);
-> +	return 0;
->  }
->  
->  static int odb_source_loose_write_object(struct odb_source *source,
-> @@ -967,8 +985,14 @@ static int odb_source_loose_write_object_stream(struct odb_source *source,
->  
->  	err = finalize_object_file_flags(loose->base.odb->repo, tmp_file.buf, filename.buf,
->  					 FOF_SKIP_COLLISION_CHECK);
-> -	if (!err && compat)
-> +	if (err < 0)
-> +		goto cleanup;
-> +
-> +	loose_cache_mark_seen(loose, oid);
-> +
-> +	if (compat)
->  		err = repo_add_loose_object_map(loose, oid, &compat_oid);
-> +
->  cleanup:
->  	strbuf_release(&tmp_file);
->  	strbuf_release(&filename);
+Ah, this touches on my previous patch cef2d8c4cb
+(fetch: write commit-graph using updated refs only, 2026-10-07).
 
-Not about this change but the lack of "if (compat)" stuff in the
-previous hunk puzzled me.  It turns out that the logic to write a
-single loose object is so big that write_loose_object(), which is
-the subject of the previous hunk, helps another function,
-odb_source_loose_write_object(), by being its helper function, and
-this caller has the corresponding "if (compat)" logic to produce
-the hash interoperability data.
+My only nit would be that the if/else also covers the skip case,
+so one of the branches always fires for it.  A switch would make
+each mode set exactly what it needs:
 
-Looking very good.
+  switch (graph_write_mode) {
+  case GRAPH_WRITE_SKIP:
+      break;
+  case GRAPH_WRITE_REACHABLE:
+      write_opts.flags |= COMMIT_GRAPH_WRITE_REACHABLE;
+      break;
+  case GRAPH_WRITE_TIPS:
+      write_opts.commits = &updated_tips;
+      break;
+  }
+
+It doesn't matter for correctness since the skip case never calls
+the writer, but it looks easier to reason about to me.
+
+But that's just a preference, I don't feel strongly about it.
+
+>
+>                 if (graph_write_mode != GRAPH_WRITE_SKIP) {
+>                         trace2_region_enter("fetch", "write-commit-graph",
+>                                             the_repository);
+> -                       if (graph_write_mode == GRAPH_WRITE_TIPS)
+> -                               write_commit_graph(
+> -                                       the_repository,
+> -                                       the_repository->objects->source->path,
+> -                                       NULL, &updated_tips, &write_opts);
+> -                       else
+> -                               write_commit_graph(
+> -                                       the_repository,
+> -                                       the_repository->objects->source->path,
+> -                                       NULL, NULL, &write_opts);
+> +                       write_commit_graph(the_repository,
+> +                                          the_repository->objects->source->path,
+> +                                          &write_opts);
+>                         trace2_region_leave("fetch", "write-commit-graph",
+>                                             the_repository);
+>                 }
+
+I really like this unification of the call sites and the patch
+looks great overall!
+
+Thanks,
+Kristofer
