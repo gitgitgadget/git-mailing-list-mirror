@@ -1,120 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793818746;
-	b=DoeiXCcZceE65lJyL5qQAZP7M8AtyTTkofn/C6GM4xeatnFgQCsRcV3dxWfvn7LPC756
-	 iJdHCgPYkp3lrkJ9A9bTR4V3hA8X6nYb5Z3yFSrN6FttDpDadrWU+cjIdbt5QjbVkpNnl
-	 v9xRGco9UNll4udtfY8dqIQvs8DCcGOH1mTJvhTLI+T3vzCln+0PuvmlvJy0n2qbcbrib
-	 s1wtOsPNXE3ad49rB/57FTWsXTefcUuQTxVPYVXrWf4Lg37hg2PexgriFrB1GiS80o7Um
-	 /ipOYlyKKkdgBcYjbib/AWru4cetiKW56tKn3CHhnNYjoGeqgkn5shA5jwBBwbZsKJQ==
+	t=1793819271;
+	b=DgDPo9OL2mYaCRt7MszRWIjhfvzlwyrRgvdxmfXQmRIIqn7AwzSbdnnQzns/GYQM2qZ+
+	 9PBFX/4tKjMxKSc2cCMpNjhM4o6FDMtXj2xN3q77MfPzAlbVG5hEDqzW4UOP9bJlGIdbI
+	 5G/n4TOdpaQiLGBtot6v1r/GzNbRMl6UgWsLx0fhleM9HXNr14uAYp+Fytu+2wkF+/Muc
+	 SQXMjIBnhreoIWpg9U3sgTf8ALl/IW3M/mrMK6xchf9F+cPDWNtVwend/uIwk52P5FOJv
+	 cRUJcEwHc8xsDEQ/dnPkua9v0jNXsdNL3VO/1WibROYIj/++squ6CpwIMIVBCMzsJVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793818746;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=8QGfZRxl3XMwzUzthpm7P+5ehDVE6z77Y+Id7TZ6liE=;
-	b=4/jmEF8dVzHFxcbvQzUkado6YwNZ0/850N7pUaUM9cEkI4H2Usnzcm1vJs9MN2QeTvPL
-	 cm20LHCoKB4mbFDhwaw8SXwBfkwWWxK8D0xn94VCy6pixLthkWynHa0VyaKRhUAP/Gce3
-	 gA0hXZnz4dtUCiBf0qjYMyuZfDWBP8AaFXr5u1NHXct/msiAM0A6MsD904ls8Q/dWlyKi
-	 rucsCnkc/E6XwZt4BVXHPg4H8uRZHlG3x80FrfghNFc9ceCWrdw1FPCxgQbSS0clo/xEc
-	 jYoOkCCHeUtgK8J40RfeIuHZY1IObgqGbK0iABI3gQog1sytAglEhV68KZrIpK8Hw9g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793819271;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=I2cN0IaGnS/X8hoVG5d41wt0T6rw4T9Ehvrg15pw6c8=;
+	b=hdUxESqV5wZoiMvrfccztHP3S0PQ1Cpld/bY1Hjb4aQFP5ilITKGi9ikGvXByHPYk1vI
+	 RC1X1ghDgiGkfW1EGzs3+TjGUGNYgnaAa5GQzfU0dF86fG/b1hn3Oede9O0DwCpqiSVj8
+	 +eRasqUswmbxsJhmMQ/+M6ADbOUYLV/fwvEoFfcv/QwC9zc117GFITEs87ReVx6xxOSrm
+	 WSBXYAfRFu6awrH/RGQyinzWeZsxlo+HWS/RGHQCCw1tjascCFZYw4iSZ9BFXHZk6LJKA
+	 EbZ1R9Cja2WZZH1zdjgxsVX7K3k/LXIkCbQUabyxBUS1U6oqE2usOqq5uUONlq2RaKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=K0z4wrdC;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="TB/U58Nu";
-	arc=none smtp.remote-ip=103.168.172.148
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=p+59IPbs;
+	arc=none smtp.remote-ip=74.125.82.49
+Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BC4606A32E
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 18:59:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7BC4606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD983606A31B
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 19:07:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD983606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=K0z4wrdC;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TB/U58Nu
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 39BAAEC24ED
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 13:59:05 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 04 Nov 2026 13:59:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793818745; x=1793905145; bh=8QGfZRxl3X
-	MwzUzthpm7P+5ehDVE6z77Y+Id7TZ6liE=; b=K0z4wrdCQSW+96c8Qj9+0SnJx4
-	fA6zltMbbdS93tMf3+S/Ky7bYVb1l6SeNpUa6B/Tqh0tdIVnpWJJhmzoCY4Rs56I
-	Z//30ox0AJNi7MrruhqkgeHWJKaw/5HJ+3tjN9u5WE5BX/SUkYZO5hG720762MDv
-	Gbx3OmrDl+nq4p2XDJj5MNZLWnq+XVCgQbKWG3fuOvmT/MS2k4EmvAB1rcj97HKK
-	mLtbINokmPdvaqtOcrOvBWN7iiuS6HEhL8WfYiAc9BDO/qxq0XZZcmyKRT5cmTFU
-	Gj0vbgDEqdcmeoi2rq8PZg2QSskpYHN2YH4at2EkUc+2pxQ9iusuThrRnqyQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793818745; x=1793905145; bh=8QGfZRxl3XMwzUzthpm7P+5ehDVE6z77Y+I
-	d7TZ6liE=; b=TB/U58Nu0sAfWwRiQEdt2onLaq1hwIdku229px3AbC+6q3GW4wl
-	sNSI3EzGmr1vpvriZ7pp68NsavQgG0Jrqd2pfiAMdS5WcAYH/2FoCabqwHMFUYRa
-	FC1auLtihcALFbu6hwfWkoPyjWWJ4tsQ/lAs6Q8f2nYatsvRHd4RESSA0SKGTV8N
-	gUXhREeFsVrW/SCyxXA1dYnO7jK0dXzX+lKxRwXlZmHI9yl34MulkFp1QHwAkih+
-	9HwuRFMhk0CDWszcC9QBoJZKyBGj1N5KpY3tvtuj0qdtbJjevmVmrkDEWDNCqk1Q
-	Gw4UmangRkMEfiHjxHfKQTFMhWqaNaoXXFQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793818745; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:MUUfYbfy/uerQt0Z4HmXd1GROZHRII11vI4eXGT+bC3ci5c
-	fOYRqo8PQbS2F/EQYh3ToJFRQXkbdR8RWUo6W9Y2Vugl9ZzGyDm0JIgjnw2FtIbi
-	GSnnuJ8lCoLqCng76jEVulUxFNKu4ROrEf0f/88Gu8WaPwYSvs3HtJYEE+qErArO
-	4paF02MinHvmfbbOR8oTXHDLqJYIxNn7lhy1ZTQQUpND7USCqkRSZXu/I2XlYCvV
-	BtunBB/3vzn0ujcWPXyIj+pfM9KoN63DPUUSnfz8Cqvb3TWMkJu6f2KbLhTff6tA
-	cdkByBfUAj5v9ahwG3uF/ABsWghc07WJfke8A+Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:H6LtPCANFlEgCAxAHlgbc65UvSEZzSxSZlqq+M+E+hQ=:WAQIZpJAWfSuDYZC8IgHglOdAxRzKKeaeCmDHdpiRGU=;
-X-ME-Sender: <xms:eYDrasS8ZBn6qDEbchuRb-UwhaKiiCTmrM1yfo8WFYCrQ0IkXzjn9g>
-    <xme:eYDrahNv_v9nk0hyvvRoJsNaWsY_-hLm6AimW6LpOA3hHSc-WjDOYMTmoMZQe6vyz
-    2mCK6ZpnDbYejXBx7BqMkPMakUbSkU3orMGnQVr1KK7BSY4MR_nPR4>
-X-ME-Received: <xmr:eYDranNlIque-KNQz3jHO0NacC0IXEh9I8mv0j6hHJa_9KtMKmZeXWOYF984nMXzpan1nDyGeaLHIkWq0vZZtYdD1MfyXeFScICA>
-X-ME-Proxy-Cause: dmFkZTGj9bd/ZtLCFyDxP56eRHkAgVhItwGr+2qksOObrOySb2d37bMdqwOgcdTvwa8T0I
-    xC3wJwW8vAp4xWa70COpayO0Lbkrzzu4Vuc4MdYVoIr74LriQ2M2v5Ti9zRvcMY5MreTjP
-    UOSKbz2JiJzGu0YXmUVxv+zukvhcfAMw7P7a/0CjREm2xkmG2PAZ78FY9wyj8Wc/EeYIX5
-    dYki6UYn4pis3OiAC1WzR9EchYBikLmGc3WAwvmTiO3p1KrflBShXE8blcMsA84gtp4sK3
-    oG1wRhxRsnwfmgnV29nq1crMXC6hkM8DyhXo35EZKEd/sNGydlX/MVsNraB/rzeV+ps7GH
-    tWMfKSBmnz+MX/+QBRvX3dIOD2roDYw3RPNG+zCytehqDpf37CqTujECIZJvndWlM5aQjh
-    OQ5EynJkcu2sCtUWPx0L00y+Uq3fUtMOufjZvbQZuGGRFuYBproFUW7FI/92kAfdNE9aR8
-    E0FJcqbKZ4N0btPwhx+6xvQ1ruw8stp7jKiFZvm4BPE7jleglmrXZt8pF0FCYp6+av2zsG
-    5UIpCRA4tfOJQo0QCKdx9CW6EFcDGEs63a2Ed24w8+QKZGw8WosyuIvz6L7k3YfLWkXR4Y
-    Z9nFKnrVSgwFs5RwtIdM2p6B9lbfVVlr4VSFbqgNmhQYTb7quCYbvHVGfNIg
-X-ME-Proxy: <xmx:eYDrapsHme1EPiyEtREtimdtLpsQXx0EXrHNaSojmOwyh8upMh-DFw>
-    <xmx:eYDrapX6Qn5bZ_GyyfVft4gdmgl16fp_q9lpfaKf8glIJZ6lt6oXTw>
-    <xmx:eYDrapsQlDFBzE61pt4nauuE8c8Hdvh2_3BW9iixUoQ7sm3v9JlScg>
-    <xmx:eYDratVdrUm1JS_Sg2MmM_dCQHO5MhO5eDz6oRLGBxDR5d7c1kChSg>
-    <xmx:eYDraraXxs1c3ZfMN_YlCCL8PHLtnJXVTzn6l_fT3SQBTIMrAwJbRROt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Nov 2026 13:59:04 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH] CodingGuidelines: update the required Perl version
-In-Reply-To: <xmqq5wyfohv9.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-	01 Nov 2026 22:41:14 -0800")
-References: <20261101185846.24208-1-taahol@utu.fi>
-	<xmqq5wyfohv9.fsf@gitster.g>
-Date: Wed, 04 Nov 2026 10:59:03 -0800
-Message-ID: <xmqqecd01kzs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=p+59IPbs
+Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-1ae18eb9b69so1023609c88.0
+        for <git@vger.kernel.org>; Wed, 04 Nov 2026 11:07:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793819270; x=1794424070; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=I2cN0IaGnS/X8hoVG5d41wt0T6rw4T9Ehvrg15pw6c8=;
+        b=p+59IPbs5ZA6PcYC/EExO5P+QlPsolIO0bCMEn9fSI8vCf36Y0KXuXNmq7h+XgGWXJ
+         XdiaQ3Uj9PDB6TSg3IwVfZU0jNkL5JupP586tx5URRsY8UJoUIS8E/wJmsLYIF3jugi6
+         393qDhjQ1Feo04WL/z6TfgqgyWcgWiLV3dPhUG9UuP2Z4Czh7B2bZPYvjC8wlddAn+eG
+         xkbRAejlFZWdYpHQbyGCkO1BpFsNN1tABchTOeoHSwu1rf0ucmWF9zCQyhJnOIrlvhNg
+         eOzbiQxMr37PFsC/RDhEQX3Gg/S4IdkYgFBzmcJijj4/SBIRnWgLOaDLDi7zB/Ra1w3c
+         +HsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793819270; x=1794424070;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=I2cN0IaGnS/X8hoVG5d41wt0T6rw4T9Ehvrg15pw6c8=;
+        b=FVGkMx8zvLfI7oCLM/gZ1tlOzyXnnvf3VDtj+WQW/n77R0golzlnqIa+OuDK1NJRL8
+         LNdn0LxrNNH/V/889n2YeA21C37u3qftBsUTAaAW/VWmPlZdgyLdlZ+NTCxa8xb0uoHt
+         YlOLF+WH93esvpRFY1K8V50g6+g+rMd7OQXq82UkFjg/o7AsYbcg6zB78+9CLzcXrdNP
+         qsr8Wb3ryPnyOGHT+E6gQEwL0AGN6KAnfgzHiKkQ4RL5nHpmztG8uOLQIF7olx8J74nM
+         0vzoK78aZfGbttuALzbooXUHyFDZLQd87bYbJccG+uGpstzEa7sVQFvv4VsRJ0YO1Zl8
+         4srg==
+X-Gm-Message-State: APuU4Z9Aqm+2Fe0u6B55uOl8gSlOYItMFsJVpsW+6W21Q9tYe0CitP0E
+	o+NpqS7DbR5BTen46LYw4ITJqz/3Wrce9aRbJ/hZBIfDLYb2eMZEsWae2UXchBB9Z/M=
+X-Gm-Gg: AYBFou1FJ71EwyuVrw9jd29MG2dNZ5Pe5TAXleQWBnXyjrWtLG5Lx8Apphg0oKOUETM
+	+J3heKYxLbA7x0o3gCMBTMQYVwaGK1+8Z8BdJRk4MaChCrTXQr/JeJahG8faIpkfyxHn0tv0/WY
+	yfpe6RaLA8ipy2Gkq2o40DlrEyAX+9phvizqHCyQaYKXY3n5bWk5BciWGV0XnQ8ZFM33Y86HlDD
+	lQ6RY4xhrr8fbEuJF9wRspOZtVlY6T9z/WjF9tUEZFvKWaxRk9cRQqfZNc1aoAaXuGP5fm3YAHv
+	0f40odFni186v8YpI2l464tG4pk/tIDvWj+Te8Na564OrLwlZ8EG57LK7STKejwF0RkJi1E1sGD
+	GX9AOUxCzRtADr8hkPYvNL7kMID9PRAwJYceVA0M4hRnV0HRHe+LjzZrazhqQrQBlxrP22Cg3L/
+	qA7nXa2MSxE3a/9PDw6RenzLfpP409xDkRTflNyictdH+yTfH84QPwkYFXaPp6FGlw9YVn+71c6
+	xYl05ZiNsbNgRh8jqaQiheBURXgr1IKa9fv7m20Bv7wXbhB7YUxWZchkWXoG9vNCgKx5XVaOFDC
+	k3TH/k2XNcwLONN+eMZwLJmlrO/Zuw==
+X-Received: by 2002:a05:701b:2310:b0:1b2:4e79:bfb0 with SMTP id a92af1059eb24-1b24e79cc85mr822515c88.23.1793819269786;
+        Wed, 04 Nov 2026 11:07:49 -0800 (PST)
+Received: from [127.0.0.1] ([57.154.4.160])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b245c1c272sm9419407c88.8.2026.11.04.11.07.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2026 11:07:49 -0800 (PST)
+Message-Id: <pull.2296.git.1793819268371.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 04 Nov 2026 19:07:48 +0000
+Subject: [PATCH] path-walk: allow revisiting paths from tagged trees
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,25 +93,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    ttaylorr@openai.com,
+    Derrick Stolee <stolee@gmail.com>,
+    Derrick Stolee <stolee@gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Derrick Stolee <stolee@gmail.com>
 
-> Tuomas Ahola <taahol@utu.fi> writes:
->
->> 702d8c1f3b (Require Perl 5.26.0, 2024-10-23) bumped Git's Perl version
->> requirement.  Update CodingGuidelines accordingly.
->>
->> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
->> ---
->>  Documentation/CodingGuidelines | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> Makes sense.  Thanks.
+When adding support for tree-depth filters, 5111520e2a1 (path-walk:
+support `tree:0` filter, 2026-05-22) moved tagged root trees into a
+separate batch. These trees are expanded after commit root trees and
+their root-level blob batches.  If a tagged tree introduces another blob
+at an already consumed path, push_to_stack() refuses to queue that path
+again because path_stack_pushed remembers every previously queued path.
+The final remaining-path drain makes the same check and also skips the
+blob, leading to a repository with missing objects.
 
-Oh, no, not so fast.
+This regression was first released in Git 2.55.0. The torvalds/linux
+repository has such tagged trees that revealed the bug.
 
-I'll mark the topic as "Waiting for response".
+To resolve this issue, remove a path from path_stack_pushed when
+consuming its queue entry.  The set then suppresses duplicate pending
+entries without preventing new objects from being visited at a
+previously consumed path. This preserves the existing visit priorities
+instead of reordering tagged trees relative to other batches.
 
-https://lore.kernel.org/git/xmqqjymvooyn.fsf@gitster.g/
+Add a regression test with a commit and an annotated tree tag that
+contain distinct blobs at the same path. After an initial repack to
+clear loose objects, repack everything with path-walk and run an fsck
+connectivity check to reveal the error without this fix.
 
+Assisted-by: GPT-6.1 Sol
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+    path-walk: allow revisiting paths from tagged trees
+    
+    While exploring potential future improvements to path-walk repacks, I
+    discovered this regression. It's slightly subtle in a way that the
+    existing tree-tag tests didn't catch, due to needing to revisit paths.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2296%2Fderrickstolee%2Fpath-walk-tree-tags-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2296/derrickstolee/path-walk-tree-tags-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2296
+
+ path-walk.c       |  5 ++++-
+ t/t7700-repack.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
+
+diff --git a/path-walk.c b/path-walk.c
+index 9ca3248ea8..e3a5ba201c 100644
+--- a/path-walk.c
++++ b/path-walk.c
+@@ -62,7 +62,8 @@ struct path_walk_context {
+ 	 * like a stack and performs a DFS within the trees.
+ 	 *
+ 	 * Use path_stack_pushed to indicate whether a path
+-	 * was previously added to path_stack.
++	 * is currently queued in path_stack. Tagged trees can
++	 * discover new objects at an already visited path.
+ 	 */
+ 	struct prio_queue path_stack;
+ 	struct strset path_stack_pushed;
+@@ -309,6 +310,8 @@ static int walk_path(struct path_walk_context *ctx,
+ 	if (!list)
+ 		BUG("provided path '%s' that had no associated list", path);
+ 
++	strset_remove(&ctx->path_stack_pushed, path);
++
+ 	if (!list->oids.nr)
+ 		return 0;
+ 
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index f0a390e3c6..338f622614 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -904,4 +904,27 @@ test_expect_success 'pending objects are repacked appropriately' '
+ 	)
+ '
+ 
++test_expect_success '--path-walk keeps blobs from tagged trees at already visited paths' '
++	git init --bare tagged-tree.git &&
++	(
++		cd tagged-tree.git &&
++		GIT_DIR=. &&
++		export GIT_DIR &&
++		old=$(echo old | git hash-object -w --stdin) &&
++		tree=$(printf "100644 blob %s\tfile\n" "$old" | git mktree) &&
++		git tag -a -m "historical tree" tree-tag "$tree" &&
++		new=$(echo new | git hash-object -w --stdin) &&
++		tree=$(printf "100644 blob %s\tfile\n" "$new" | git mktree) &&
++		commit=$(echo new | git commit-tree "$tree") &&
++		git update-ref HEAD "$commit" &&
++
++		# collect all loose objects into packs
++		git repack -adf --no-path-walk &&
++
++		# now confirm that --path-walk keeps all objects.
++		git repack -adf --path-walk &&
++		git fsck --connectivity-only
++	)
++'
++
+ test_done
+
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+-- 
+gitgitgadget
