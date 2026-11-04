@@ -1,96 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793790135;
-	b=XlZXWPm0OA/UmJlMrW/7EVuHloeHr8da174WxRvgeJbKwJs/EzC6eH9tli4x2OOHU8S4
-	 tM6k2c5AjY7sM/hR06WI+d7hk5gnBgCXHd0rzwKm9Q//Vhi7vSIwty+WZpChyS2V8Uh3f
-	 sSejMAwy/GvX4RMAFOoOBG1s2gHSeXYorEv6Cl9MwJvYnPLdlMCBp8k2CK6Nh7KXUfIRe
-	 C1FBYoFtpJXfUO35fRy2fuXRvRR5aUDW0mrhwJzhfe02eM/F5jkl9Ay2OmMjkUaf2neiW
-	 AnV8Iplw2jSf1REExqw3gZL6ajQo4fxfuVllE0Ge4gLnnM1aKuq5UdGc3LrfkRTNDYQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793790135;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=cgtYzTtvOQqkOZGMBiu7HHbF+elKruQJQj5KCZVOPZ8=;
-	b=i7kLkaR/PWVHmtvY16/RGuZs3p4GuBxSKy4Wiw7V7d6IH6VJIXna4ycI7Dh8u2oXUWE0
-	 lymnmmxA7DI6ehkP2VoWRDzkngMCB+N8eqaZO9JL6wHkerYca3aOWR6heM3+ww79XnGap
-	 PdZhqp2LWSebDmozB4Vk5DjqQfO9pvZSaxLJ5SP7GEF+yWVKJtERgjm8CZs1hWsgF9mvF
-	 r3pjivifM8FHA0/iwC/WIoXgKyBmtXcb0pbuMrSKOPIEw40WgMlSuctMnmL2MpDB2PwRQ
-	 /OW63oFsNJ0ZGgOvhFkfUNLVArbwsJljhRaUjPU1N47OyHecl3KIwNRJBAN7lvUsGew==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=spotify.com;
-	spf=pass smtp.mailfrom=spotify.com;
-	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=At9z6UPx;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793791627;
+	b=ulZunCeq5+3q4cF5gAXnXpm0m7hNVAiXr0X6ux3x00vQlxuQ2pJrYy4t5519IUaVHG41
+	 XLYzyAysIGXWI/YNDyxd3svpVFFr4iKt93vcY/3okwODHTKiyrv4HDp0YOZl1KFlcYCFa
+	 TA2dmAHRAtQ5TESNxf+ejFAfaWdV+RVleYnqrlYcfi/R7t8apzKsGdaiLziMPwqLyxbSZ
+	 QpjRthi60NEKdMCLuxHJTs0QT7LindFUgOA7Kx0dnWSDkTeKYDiMmRMOOmIft6JxogkVi
+	 oGguOb19SKXth0u0DE+ZOXnVJvTFuku8k/9LjJBsKnwiRrEe9tHNxBXlhVMNdR6UviA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793791627;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=553J/K2G5Az5JsdIcejDsPy9KLsKzHZ8e6muZLCG/Ek=;
+	b=WuVo0tfdP1RusHRu0HVIR6AXBBHS85DpVGuhZEnSEfX91wqIm8OHbcMMhLmEwc51TxP4
+	 vL+jqXN7R6mCNvN/23dDgpqbkMJ/UR1OtxTJ2GV5HCu6A9SQMa11fDEqwgftNbHulQssA
+	 hj7ylBvQUyMyDOfvQowcP7FB4/wbXJt1X4I9kDKKVb5w/CYe4+MyRVM/zp7uLLDOAB5/+
+	 5VPQVBjSeUL5BlEDUa9pWR0QN88oqWCG+9kn05L/adRGkuvOCynElkTh6hEFbYB62V8AH
+	 oQ9d+hfLUcAPU3cfhgH2zqSd4SBELpMeG3Ie57CZvx98wQDx0oJHWqol4k8KI3c98gQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=CmwDQ5ZR;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lCgj7qww;
+	arc=none smtp.remote-ip=103.168.172.156
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FF2606A31B
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 11:02:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62FF2606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A707A606A326
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 11:27:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A707A606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=At9z6UPx
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c3f04e0e65fso81805866b.2
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 03:02:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793790133; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Ms6mV3TiCr6D9aBe5DvkNfhyM4ad3/Mf6V2cNAMSKFH40/wbimiKH7/FUiGYBj8lrZ
-         HIGHDXa4ZTiEeB6qIbXZvLKBWTYPcjqdl+ym3Uodnl2N8vCRTxZc5FNmHovdbLP+snYZ
-         AuFBVK04lNjmU9ObAEY1DTI/rXKkdA3GN9cGitSCXPQVG/cAtF30UUIFsYrTMP1p4hlN
-         2Mo6ug0R0ZfoOETct2lda3Yb8lTPU1HweRS61x0uJSV8HKBz4e9RrPayiehLbc/xyVkT
-         clom8TeU62APfUK+B1UTHCBnIVLYrPT1YjBjd5cPlkiV0Q2h150S+1ww1WZuL2UZJr6A
-         /+hQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=cgtYzTtvOQqkOZGMBiu7HHbF+elKruQJQj5KCZVOPZ8=;
-        fh=XFXdqdUIo3+pA2Q2YhulAXrnnNhVRPb+Yy9g9cVlqVM=;
-        b=Rh3Z92A8sZI0zYu5jHaDi81Q+0F+nbvBCUMH+6cW0oDvpqI+679LNYP3JKrT19wpu9
-         tnPQQ0U1EXtcXSm8+hiPeOwQnSkqUQMItmwT5kyvM/a4ojxbRKrqXtaFTj2zdHPLgKbi
-         tF+e6Z/5gzJ+LDGGXgQH8TrcKKBWcqhq9pACcsR6CL6c04Axm8IDQOGlbrThwjmz/GeM
-         SjfRDhGIFyStM+16I+W9mD8wfkQkPDUGVHrkI0w8tizSkulUqalL3S2lMWeAMt+7pWIa
-         Gs4hklr4/0ODGA7TloOPnpldhnunxRpLd5bsW7Oql6kIU5ETlhAQXfRWdJXzESoSuwLb
-         kx6Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1793790133; x=1794394933; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=cgtYzTtvOQqkOZGMBiu7HHbF+elKruQJQj5KCZVOPZ8=;
-        b=At9z6UPxppV9Ze14XHlN8B9JIjZ0UqKKBHl/AJbRMezjl/JBCRDQAJqcB+p5Hki3o4
-         dtMhp6ER0/G4/oHdxbC4GqVNK3y9QWU7uS6g3K3Q4IQzuhW4VwtBSE69175hQ4VhgJXd
-         44s3WBWb8yz96SYwu0vyIE1/tbE2WLlHFRFBs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793790133; x=1794394933;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=cgtYzTtvOQqkOZGMBiu7HHbF+elKruQJQj5KCZVOPZ8=;
-        b=qVMg8AzCAcQkS8FYgYkTp17JQpjtYMhUCxVYh08QlDkqcWliOVCCQfEYFD9le7E4JW
-         +sFYIevOopUeTf4CKdNkj4XY4ZRbnoo6YMT/EyVhmmWRX/Nx9xjjXKiuBiD081OOle5d
-         rkwpS7Sd+F81niuImhZEZjs0+xrgvBgyOo4w5wo6NmpvM1jX592HcdCYYGAg6+CvduFK
-         FdzgCh8ncwP5ocxt+9jpyVUckLQRpPR4CpTEfLUJPhk5YmAtC7CK3F5grauFcKd1OEnf
-         2QGGnKhkLj43YL45uzUmR3hw5RzyB2wyo6i4c2kUQFAy2F/QerIW9AERSvaRjGPBk0i7
-         6NFA==
-X-Forwarded-Encrypted: i=1; AKwUvBwuZqjsOAmdQg3J0uDrShHpIrCbgFkAYkHahOTKon9EcVxzZ8I/HJ2J4TtjtsPonP9bRHU=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9+IDFaIpFljPeXP8YhyW4dXJXYcZqDTjZwxunAZCcuT+fH6Y9/
-	xBMqzaXX6CnwgIz4AT4t8IsGdlbPgRqDsNzro+/2dvYqKpDaMFXHujsymqRDUoRCDSj3oVpdhVf
-	Oj+PnjUztVW0P0WQdE08jRfxF8KFcmmgDcK0+zETyR/72PNm2lqpt7O9Y8w==
-X-Gm-Gg: AYBFou3ITZqNmAbi1KqBr5gMC17adYvDLxOcvK9dvYFA4dvV2/RLrtFkEeO6aCwd08Y
-	ShlP8yjjkgPunwwnrHU9rOvlgNhwAjIDvuUyd8V6UMFXSZUc+Bx96RdQu2m5aKfwB+fPcIhIVsX
-	NC9SIuNXX8D7JivI4Xk+Eu3TxFES/Q+1CpJQQ8UrdrjSEUSo1Ts3iW1ADuksueuoABNZep3OPsL
-	J4hIVLWvF2JGJf1vI1Em7FAzan0xAKUVfsRYnVo3vENrj7M3MxIE2T1DDIkOoAGNcHS0BgyK+xw
-	frTU62fmx977zlx7+uFYDNKM4qLzDCslQDfrzf/yShRRdhOda5RD4x7m5SBPS0SU+nwkElyI1tC
-	JAZUUNPscZxcHiHbmzcJqWOlHxZ0SgpgTrg0jdQxDcIpiHDGelzWqI8tI96E=
-X-Received: by 2002:a17:907:6d21:b0:c2a:fcb7:62f2 with SMTP id
- a640c23a62f3a-c4ca7a4e848mr1542878966b.19.1793790132656; Wed, 04 Nov 2026
- 03:02:12 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=CmwDQ5ZR;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lCgj7qww
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BF6B51400041
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 06:27:05 -0500 (EST)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Wed, 04 Nov 2026 06:27:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1793791622;
+	 x=1793878022; bh=553J/K2G5Az5JsdIcejDsPy9KLsKzHZ8e6muZLCG/Ek=; b=
+	CmwDQ5ZR/X/BGgh+3AJiQDI7pvN+vvlBJiaOiUYFBpvqSRcBt9BdvrTYWvjyUMKh
+	esXCP4/F7sEOcYV20tp1//eYnlG4BgY5pkFXmbNsOf798N0xAJu2O/+gFBCsG80j
+	w5WDoAuwiYZyHgCgY2x5haIHAIl5OE0rri8Fm/hfkIYkEyMaD+kYem3PPU5CZex/
+	u3letPNjxkO6L5D5oaDdKSXYrri2QOk51sVV6+oAma8MJBpSMadCtqcLtJ+3nf4R
+	L8ADBJiVAslNrqRG6iUnAoqNQQUP3fFBnnC+F1t+CpmXi6gP7xqfH32nSUfz9Cnl
+	wn4YAr39lNCZutHg/PIOHQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793791622; x=
+	1793878022; bh=553J/K2G5Az5JsdIcejDsPy9KLsKzHZ8e6muZLCG/Ek=; b=l
+	Cgj7qwwZfIuOb0137AjXHOfBsfPdSY8kshCvoZjNoAtFTUpGL3N8pEgB/34j5b1v
+	UzgtcTo7bTuoVcoCagLdCwlkKpoTpDEJEkhNphoHUhCe2sjo8mQlcNrfWyZqfGWj
+	n4NVVQvezg3pdXBi1XjdS9sJZGWu79DXTft4QcmhnKaPHdRV28sTNjWIGHIz9q7Z
+	qexeugE+7cHCDxDeHHBug1Hko4PFRbsFNSoOuEe/hKBQMWCDsa0qGyX35/gwKClh
+	wmivM1w+NQ7S3UjiPeboEbpxBHNat1Lo0/vaoxI/hcPBRBfb/3w49yGs+C61PYgp
+	0VL/IiLItRPmKvSv1DPHw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793791622; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:HWZtdgD3ti/xvoMflkdt0ERLeDB0CZZIWvEd8jokWhSrS5N
+	+IOpwLF29Py/KKPubvbNBfbkkuOsFfyBBBjlP5pABmhTVQPEg1TSniJyAkZlNiDf
+	8KOInxDwj9DC/cEvrg6fmr/m3nR6/QPeRGGxsJxyjr0P/SrXHhTUzvwp5dDyJt0/
+	AsON68u3SjINEJXHL+DhMfJvJMVj1oYx+oiSIAKKt2W9lBKQm0twu7HeG4OsxwUJ
+	J8QpVhFP5iA70Wz6Be2AZjtoyRVT1Y7fTdsYCJKDg5p98J+uH1Fvr9Tp2alf48u3
+	DbCo+RZoNXOdLgHMr/hUmnv4hwfEG39AzM8q9Bw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:L3bTtkjoGN/KoQlQd2Npuf2skvJlYMjaiKMg4eiVlkY=:dZY2Q8wBN4Dbps5Y885fwFzzPvx9VfZ7gg0M+mXC7oA=;
+X-ME-Sender: <xms:gxbrai-VcSUukzTqtUDvQznXZutax_rAb0Wb5tHLc3gE8aLdGoh6598>
+    <xme:gxbratiSRyLd5vdrcCo1awF5AVNMvJ73DOL1Ss4gtglAtTlb07MQzLBMV3Y9hfRPW
+    -xy9VmLMUBGm6yqa92V9YuNdVgZsAx5KBR-5lyzsTcSm-0aO5py3g>
+X-ME-Proxy-Cause: dmFkZTF6q2lMJiU+8qXvTYU43lwcepY31jlI/qP7P7RGnXqe0IVfjMXyzmwajjsPs/QNk+
+    O7YE0VyqR7XF2v2Gj1Ynsm0KD1lLL8DCbdCK/zY5ISnhGJP1F3Tb5kT7+ZWYvncW/gMI9i
+    sHQ6FmwvPNdgNfvR831mc+KVxP3L26f8Di5yn4lxbTwoYK1IWZZbUqLYv3YwWM9/Ww7dcD
+    OHxJ2auoZiayTwta9A2QqEA75tFhPOvnhSO7ShOv/QBqxPPjJnv1qU5yFup2DS7uS15iZB
+    M+WMxEoL/EOOxwKzqHcPu9fXhklzGT9tg30gcjunei7BPZNmeedg9I76X1ETqF8tsJHNo/
+    NlKANlomPs4CfgZ6krGFyeKOrnOcOxvwTlwNQ53LKosfcR5twD+Y7ZRsF61dArxsDofLJw
+    v9gB8tt/GtV8ByCA0Ag8ssaB24ThfUVLXts8Pv63BY96j1ZK+2qW/GpooEvu4pDq/pJLzJ
+    XUDl751lMpbD3CVlaiQpuPnx6yv4dpSVFekSc/jp8pG2M4U5WpRz5RtI+gEhsUGBraldZj
+    ZzLnJcLJ3GqDHMTqatIlnhOQeKG3FbnCL/yzeVyxrg2E8APQUt8XB5rEEJu3u5mGpM1/mW
+    ByRGN4+4g+nHKcYrTONB1w0T0tnmYXIBT2pQSw8eXNfH30yp/tqu2tX6SkFA
+X-ME-Proxy: <xmx:hRbrakpEPRBFWKX3D1Ldd1SQ-HPlU-YLuPjy6L1aRL_YOpTwGf99gQ>
+    <xmx:hRbraj__lfl2Pm03ghJIyWoo0OtMUrg-Dis0tlCr5O-aPFZcBn31Rg>
+    <xmx:hRbragcXul6u4Cw4OxhzfqNamxTyG44ytJaDyLlwZabYVmLMobuX5Q>
+    <xmx:hRbratI2kGFdLuEeAR9AzFt7mY5uMH3babAirclY8s7km0yqpZLyEg>
+    <xmx:hhbrau8GgSy1RvAVqCrKByp6j-Ly0XIWX_07tRX7EuhMYIJQ0NXelRE2>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id DA6E322C009C; Wed,  4 Nov 2026 06:26:59 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,77 +115,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261031065525.19883-2-torvalds@kernel.org> <auiGP4XhObUzC9vD@pks.im>
- <CAHk-=wijLfduoJyOM+AW6FS6c02cuEFRAuQWLE+uf7SGhj8jXA@mail.gmail.com>
- <aumKXUS7_x0i7ZU1@pks.im> <xmqq5wyd4epv.fsf@gitster.g>
-In-Reply-To: <xmqq5wyd4epv.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Wed, 4 Nov 2026 12:01:58 +0100
-X-Gm-Features: AclHuK8zaPhOD7pa_U3aQaeHejzwsxXCiMhLBtKtEM5D4WyA7uSz_8P0D3FUk4A
-Message-ID: <CAL71e4PqEQkGoont3tL5wJWd1_itsaaxfX+DOkLj64x-S7xR1A@mail.gmail.com>
-Subject: Re: [PATCH] describe: count the distance correctly when commit dates
- are skewed
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: AC1ZdHX1Xr-V
+Date: Wed, 04 Nov 2026 12:25:57 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>
+Cc: "Matt Hunter" <m@lfurio.us>, "Harald Nordgren" <haraldnordgren@gmail.com>,
+ git@vger.kernel.org, GGG <gitgitgadget@gmail.com>
+Message-Id: <62095245-8121-4698-b1aa-ff239286d9e9@app.fastmail.com>
+In-Reply-To: <427F4BDB-B21B-468E-9C6A-4A7FE3F13688@gmail.com>
+References: <xmqqcxsmg473.fsf@gitster.g>
+ <427F4BDB-B21B-468E-9C6A-4A7FE3F13688@gmail.com>
+Subject: Re: [PATCH v3] range-diff: add --matched-only to skip one-sided commits
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 4 Nov 2026 at 01:34, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Nov 3, 2026, at 02:10, Ben Knoble wrote:
+>> Le 2 nov. 2026 =C3=A0 19:16, Junio C Hamano <gitster@pobox.com> a =C3=
+=A9crit :
+>>
+>> =EF=BB=BF"Matt Hunter" <m@lfurio.us> writes:
+>>
+>>> Wouldn't invoking as
+>>>
+>>>    git range-diff origin/master
+>>>        pr-git-2401/HaraldNordgren/range-diff-matched-only-v3
+>>>        range-diff-matched-only
+>>>
+>>> address this case?
+>>
+>> Three-rev form where <base> and two evolutions <rev1> and <rev2> are
+>> given, and <base>..<rev1> and <base>..<rev2> are compared?
+>>
+>> I thought Harald's case was to take the patches from the previous
+>> round of the topic and rebase them on top of a different base (e.g.,
+>> updated origin/master), so there is no suitable single <base> for
+>> the three-rev form, but I may have misunderstood his example.
 >
-> Patrick Steinhardt <ps@pks.im> writes:
+> I think origin..old-topic and origin..new-topic
+> would both select only the =E2=80=9Ctopic=E2=80=9D commits as long as =
+both
+> bases are reachable from origin (which seems to be the
+> described case, to me).
 >
-> > An alternative that might be worth considering here is to instead make
-> > users opt-out with "--no-exact", and then make that discoverable by
-> > emitting a warning in the case where we don't have a commit graph in the
-> > repository.
->
-> That would work as an escape hatch.  Sounds like a good plan.
->
+> I agree with Matt that better selection of inputs to range-diff
+> makes this specific case better :)
 
-Sorry for being a bit late to this thread; I have been playing
-around with a local prototype for this problem, and I wonder if it
-would be possible to make the escape hatch largely unnecessary, by
-making the depth exact (or very close to it) without generation
-numbers, at roughly today's cost.
+I use the
 
-The problem today is that the walk eagerly increments a tag's depth
-for every commit it visits that does not carry the tag's bit yet,
-but if the bit reaches that commit later via another path, the
-depth is never decremented.  My prototype instead keeps one counter
-of all visited commits, and per tag a counter of visited commits
-that carry its bit.  The depth is then the difference of the two,
-whatever the order in which commits were visited.  When an already
-visited commit gains a bit late, that tag's counter is bumped and
-the commit is enqueued again, so that the bit keeps propagating.
-As bits are only ever added, that happens at most once per commit
-and tag.
+     base..old base..new
 
-What remains is knowing when to stop.  With the queue ordered by
-generation number, as in Linus's patch, that is exact for commits in
-the commit-graph.  For commits outside of it, it is exact as long as
-no commit is dated more than some epsilon before one of its own
-ancestors.  That is a sufficient condition, not a necessary one: on
-linux.git the worst such case since v6.0 is about 60 days, but a
-miscount also needs the skew to be right where the walk stops, and
-an epsilon of a week gave exact depths for every commit I tried,
-including the ones right around the skewed spots, at no measurable
-cost.
+Form as well.[1] Then it indeed does not matter if you have rebased or
+not, as far as unrelated commits are concerned. You won=E2=80=99t get un=
+related
+commits.
 
-A nice property is that this also works well with a partial
-commit-graph.  The commits outside of it are visited first, and only
-those rely on the epsilon; once the walk reaches the commits in it,
-it can stop as soon as the depths are final.  So the commit-graph
-does not need to be fully up to date to help, much like with other
-walks that use generation numbers.
+But I don=E2=80=99t rebase topics here since I was told to not do it unl=
+ess it
+is needed. And also because then I get to use the often more readable
+`--interdiff` output as well.
 
-For 2a500a04d6f9 it gives v7.3-19059 with and without a
-commit-graph, in about the same time as master, and it matches
-"rev-list --count" on the ~450 commits of the last merge window.
-Both expected failures in t6120 pass with it, with and without
-GIT_TEST_COMMIT_GRAPH.  The change is about 120 lines added and 60
-removed in builtin/describe.c.
-
-Would this be worth pursuing, either instead of or on top of
-Linus's patch?  If so, I would be happy to clean it up and send it.
-
-Thanks,
-Kristofer
+=E2=80=A0 1: The repetition seems a bit inevitable and annoying, but I u=
+se a
+     script for assembling all of the options to git-format-patch(1).
