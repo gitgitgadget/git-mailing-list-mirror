@@ -1,69 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793815334;
-	b=qHYIO/gONgynLfd7vytqArbXV9RZXyuizbYN/00uViMSW5Q5unI0vaqo85yB9heM+P9U
-	 vgVKqHx2FThPIPgYXr2E+d/XnctnEww0xL3eU7HP4I9X29OhP0zK77c9zjBULI2lw6Qsw
-	 hDB1a/hdOjpDVLkLyWpIAzWvCZD5KA1prOPwh6L9gQdDAyy8HqIM8zypJmTb+IL04FyJV
-	 JObhYFafPIKx9qWyyhUrSUWfwhI6G21pO8d3Vk8XrWi74uX3LX9S7zHkJMnnVTimu3Prs
-	 4DBHzY+JiMiKIeqc1hPutLcgHitlLKbznFYT6LIwICQYJw3mUC42NsuGQ6jDjSR2cvg==
+	t=1793815411;
+	b=SPKlntFU1I6/Wpg+EYCD3x094VL/t68dx7eTywMwXMOFAryvsD7LWgQLFQmV+dnB/6oO
+	 2kZYuswxB/1pidDUpmLiF3jhsZxyuZ3eqp+jGJNLW2nOOD8KipgduSz7pXnzUacV/TXPG
+	 GvofIJR3Qd9j4a0pHMUmwxJXmI+Jhm7t9IFQxd+CYEHohLcQ4K7SfkB/+vRZDThwnhLZR
+	 pHbZbk0ERx84S4asbxEsXJgzAbTx/rW1EykY73PXOjindx12edWEBS3TNywSuVhaIjqm0
+	 jqsLXhFXOLfRWfTZvlywuOsJjviqr9dwOC05d2XsxtVEx8YBtzh428cOR1TaTpsC0xA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793815334;
-	h=DMARC-Filter:Received:Received:Received:Received:Date:From:To:CC:
-	 Subject:Message-ID:In-Reply-To:References:User-Agent:MIME-Version:
-	 Content-Type:X-Originating-IP:X-ClientProxiedBy:X-FEAS-BEC-Info:
-	 X-FEAS-Client-IP:X-FE-Last-Public-Client-IP:X-FE-Policy-ID:
-	 X-FE-Hostname:DKIM-Signature;
-	bh=0DtrZwcGww5zqPLIkAyjw9aAiCGV+3VpMEbU476+hmU=;
-	b=jsO2UFDJScX8ZB2SDA8MyzmSWI+4dDnBOx6dqF+80/qaVNm2GrHxQ071roVpM+W/lSA2
-	 U8gf9YYW34zh1+lRjdGrWnD09wupsJH3eT9TOfF2f/Ajfuv3xwUCZHo/egN6nTqnJlpha
-	 hXlu2H/DEBQc8+5htvp6XBzi5m6Vj/mPsKuC916c6Ie/bffZmTIaldVtVh/C2cHVT3FRn
-	 0iJc4lS7lqg0xNMb8oVJxen+6212MrLi6nY7/4IO9SPDVcUIlJXvUunlmxG/pZtEjeZwY
-	 nD21Oa8I8k82IlIR6ug0E3stRKq6GaCEmSvZYWEISWhGGmrCZ1LDXCNpqntaA+JQrCg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793815411;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
+	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
+	bh=YvjThXor/NKDTbGrE23zY0+D0kNFCTMnkq4ZbNvakUc=;
+	b=CBoklt8PlULls2Jq1T+HxKTxrj+bwJTGHLlWG3KjnQH71Ty/S8p8CAsGL6EvEtz9/w2X
+	 UfspdBUyA3bDucWTd7qG5RY3bP6fpwitc1I9+8Lx9kwXD1devqq8EoRd1O73xwCr04D+M
+	 40ZdP2IMtOaDoGUnt7/SxgDEvuWcPFYtKIKqKNrz3br1ipAb1ITKVk0GqI+YHlZ5/JDo3
+	 BfTZ+GP6NDlU4ze8wxWt5mJQwKxapct+OcjUm5j77PI0d36H2mQ8eYuHxL+bFewTSlgCr
+	 DKMXXpqkTo89Tc9koBTjmS8HNywhvDm/bUfxEiXQlguqEVF/D838dO34igREoTxOOKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=utu.fi;
-	spf=pass smtp.mailfrom=utu.fi;
-	dkim=pass header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=YZilQ13e;
-	arc=none smtp.remote-ip=130.232.247.4
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="HbZzi7m/";
+	arc=none smtp.remote-ip=74.125.224.50
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186A0606B206
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 18:02:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 186A0606B206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D7F606A328
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 18:03:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E6D7F606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=YZilQ13e
-Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
-	by fortymile.utu.fi  with ESMTPS id 6A4I1rUo019948-6A4I1rUq019948
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Wed, 4 Nov 2026 20:01:53 +0200
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1xOfJ3-003gTB-B6;
-	Wed, 04 Nov 2026 20:01:53 +0200
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Wed, 4 Nov
- 2026 20:01:53 +0200
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 75c50f7d;
-	Wed, 4 Nov 2026 18:01:52 +0000 (UTC)
-Date: Wed, 4 Nov 2026 20:01:52 +0200
-From: Tuomas Ahola <taahol@utu.fi>
-To: Patrick Steinhardt <ps@pks.im>
-CC: Carlo Arenas <carenas@gmail.com>, <git@vger.kernel.org>, Ed Maste
-	<emaste@freebsd.org>
-Subject: Re: Is anybody using .cirrus.yml?
-Message-ID: <20261104180152.BksDw%taahol@utu.fi>
-In-Reply-To: <auskIPBRorDxDj6N@pks.im>
-References: <20261102204151.MA00I%taahol@utu.fi> <aumQMJLMeI4sfeNI@pks.im>
- <CAPUEspg_9CGMtakHO3Stj--exd5nRNv7i3vW5tmMF0Arzmo=zQ@mail.gmail.com>
- <20261104095752.2rs5_%taahol@utu.fi> <auskIPBRorDxDj6N@pks.im>
-User-Agent: s-nail v14.9.22
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HbZzi7m/
+Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-6774639a8a4so1098814d50.0
+        for <git@vger.kernel.org>; Wed, 04 Nov 2026 10:03:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793815410; x=1794420210; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=YvjThXor/NKDTbGrE23zY0+D0kNFCTMnkq4ZbNvakUc=;
+        b=HbZzi7m/goI/zUAFHpvXcFZYmxKaYL0e9TsJ/6oWEC5YNqU6hqW6p7dZ4cDMybZJ9V
+         JbMpod+dcd3p96ZTNncwDiOCrVQS15wUoOOoBfbUqxJnxU46dgua4Jf6cnlXsFjVAoh2
+         MV1h5lN0NRfHakand84uYWCFmSgjS2TGGJjRdTdcxwS7fSudun5/5DhnxXkX2t6dfZiw
+         OOwPbkyw96YGaAvYjZXABL+IjlsmvHtmX9sKFygKmHEzSs2gbgq4h7gmecdnJTbXhgzo
+         o4AJlFtC9bK2MIoqjaxjHbGF9oemmk1I4RwiHFGrauB8EWPezKVAni97tJgOsxjn/pnq
+         EV0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793815410; x=1794420210;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=YvjThXor/NKDTbGrE23zY0+D0kNFCTMnkq4ZbNvakUc=;
+        b=a/5llkiENUXR8ajwpasQtcLNXXLsEe6cRhadkbOdu7jsWHe04tgLfc7mINjALMN+Io
+         eHdi3hYUgRX1zLw5BjSAtXfNaxiUEkPrEdqkWPOH19mTLgytf99oI/ZSruYRb1ocKh6R
+         emM3Hx1e5ovx3Wy59yVPY3W/IH+66fdDrrdneSIyiJCPK42rlwIHXSgk6M2VFEmUtfd3
+         zuzFzX0poM3i7J7LIvlbRzKt8gn4mRtpT6DvDub0PKdsJqvn22wKmXFyxUZy23wRQj4z
+         p2RPDJQsfPbRUqySpWIaM/H+OEkBWoEl6JHIhAxrrg4a7KFo3xYFUkuq+muVBEDrDTbL
+         rfnw==
+X-Forwarded-Encrypted: i=1; AKwUvBz62ns8WlmfNTud0xPxys4nKt34QDsz8WrpEb2Rq27/osLtbXsulevVBa1FwDTDKYsN/d4=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+txJjQrVVH6ARL+gguSVNmAmpf8gEp4uRx3JfqE9zeLRNqXEl+
+	gvDii3m1htsYk1+X+zqkQ32ZSoHMZP98JRNr+9s1VEqSKZQcSZn+2fv3QKRFdg==
+X-Gm-Gg: AYBFou1tO2vYdwS+db6Us2C163kEpaWjuQWi8r6zXEmJrsTbm7o3vcN2T4ceO/J9Ch6
+	NyDOJ9Ks9vWMatvV6XOCj+huiwpowFfDh0hzLVDNHem+8DJXo1CK1Zj4aH4Pr9FMxkdZFOJ0Eva
+	ULtd/tFibLS9F1ovmD9ByFPCdaI34F+ivKmXtf/DT8hBE5NsfNYndTfvQcHUSbdLrFnHp9DhSej
+	GoB4xUoHypptCAjEFjnZD53NcC4RVKaFUNNquGVi+XPC7BW40LAcN3pIOZOZ/ossap9nBTSbOKV
+	tfIA5U7QxfAhyUQMQVEmXo2sSJWjjZ+0JwV92/1/xaWVdDCXKJnJCiDAvmlmT3is+SbKQG4hAHS
+	HzAftuTiU7BMqyrHGJLsY4yO6yjIWhbpEicWrrtL8XlyhpQU3SGNdBee+/Q/O7lAjZy7qyaSbfE
+	kUK+8jUSsIZv5R8pBjO913q0Uqppj6kK7xN1hcdj9AW3ENMo2c0hDqpqeNcbfDnPNR7996hLvu3
+	4/jCl9ZCd7FI/BTL+jdlmSaU+lPiJUjfc/d1Xm9nzlYR/wgKzirA0hZl4IcXn/lF3/KSpD4qMDB
+	mu6Cvl5OxMircVY0h7suOO2knoe//BbTy9ycJJXJsfwj/S+CdjLZqLw51hK8z4fvZZdUa2neYny
+	7+FluVpUqbBvjyewZERskvcUHVmkKg5QeBRBtVs6MOBBD4u7t/Q6Vmqok/3kPP7HRdFQ9IFeSpv
+	rRxw==
+X-Received: by 2002:a05:690e:16df:b0:679:5a5a:727 with SMTP id 956f58d0204a3-67ba504058dmr7098105d50.95.1793815409948;
+        Wed, 04 Nov 2026 10:03:29 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:9d46:600:c5d0:c9f2:df6f:9145])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67bee273e69sm1953077d50.14.2026.11.04.10.03.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2026 10:03:29 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -72,59 +92,31 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: ex19-16.utu.fi (130.232.247.56) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhRSBgbKBgDG0YBBUhYSFpIWVxI
- WVtYRlpbWkZaWF9GW1hIUEhYSFhIXEhYSFhIWEhZX0gLCRoNBgkbKA8FCQEERgsHBUhYSFlQSA0FCRscDSgOGg0NChsMRgcaD0hYSFlRSA8BHCgeDw0aRgMNGgYNBEYH
- Gg9IWEhRSBgbKBgDG0YBBUhY
-X-FEAS-Client-IP: 130.232.207.30
-X-FE-Last-Public-Client-IP: 130.232.207.30
-X-FE-Policy-ID: 3:5:2:SYSTEM
-X-FE-Hostname: fortymile.utu.fi
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
- bh=0DtrZwcGww5zqPLIkAyjw9aAiCGV+3VpMEbU476+hmU=;
- b=YZilQ13eyL8NnzpHFCAVMEGUeamgMAsgoMIXkN5UtaS+1CA9MzSQrkcnoWaAZodkm2htmAv62cHa
-	PeWk2d41KlMFqn1UJh3eeQMnbVjetF6etz7G3e8uLiz9Q03H6tVPaXpmcqHWKZdZkRPnGbqNk7kd
-	nvAJ+PitpzkT16KokbN9OaXDBa+2s1oacrZeQwnr7Dq62j6YjpK0jecXnP53fAvBaH4ToMXKklFv
-	UPHWIItMIRorkMAP93e3DB1N6o+Zl2MUlY4typZjAjOOWrRTntNzcR7ryj3AX1JEScZ00mWozKU3
-	FnOsAxUPi6Uev+JKJh8+QuEqDjxJCQm+WceUOA==
+Mime-Version: 1.0 (1.0)
+Subject: Re: Is anybody using .cirrus.yml?
+Date: Wed, 4 Nov 2026 13:03:18 -0500
+Message-Id: <185E9620-34CE-4FAC-935B-7C9C68D3563D@gmail.com>
+References: <auskIPBRorDxDj6N@pks.im>
+Cc: Tuomas Ahola <taahol@utu.fi>, Carlo Arenas <carenas@gmail.com>,
+ git@vger.kernel.org, Ed Maste <emaste@freebsd.org>
+In-Reply-To: <auskIPBRorDxDj6N@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: iPhone Mail (23D8133)
 
-Patrick Steinhardt <ps@pks.im> wrote:
 
-> On Wed, Nov 04, 2026 at 11:57:52AM +0200, Tuomas Ahola wrote:
-> > -----8<-----
-> > Subject: [PATCH] CI: delete defunct Cirrus CI configuration
-> 
-> s/CI:/ci:/
-> 
+> Le 4 nov. 2026 =C3=A0 07:28, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
 
-Sure.
-
-> > Since b5a9d7afcd (CI: add FreeBSD CI support via Cirrus-CI,
-> > 2019-12-20), .cirrus.yml has powered Git's VM-based FreeBSD CI.
-> > 
-> > However, with the shutdown of Cirrus CI on 2026-06-01, there
-> > don't seem to be any drop-in solutions available to support our
-> > usecase---while there exist tools in general to run Cirrus pipelines
-> 
+>=20
+> =EF=BB=BFOn Wed, Nov 04, 2026 at 11:57:52AM +0200, Tuomas Ahola wrote:
+>>=20
+>> Since b5a9d7afcd (CI: add FreeBSD CI support via Cirrus-CI,
+>> 2019-12-20), .cirrus.yml has powered Git's VM-based FreeBSD CI.
+>>=20
+>> However, with the shutdown of Cirrus CI on 2026-06-01, there
+>> don't seem to be any drop-in solutions available to support our
+>> usecase---while there exist tools in general to run Cirrus pipelines
+>=20
 > The three dashes are a bit funny, but okay.
-> 
 
-An ersatz em dash.  Might be a subtle Junioism I've picked up.
-
-> > locally, managing FreeBSD VMs doesn't appear to be covered.
-> > 
-> > That renders .cirrus.yml completely nonfunctional.  Delete it.
-> > 
-> > Signed-off-by: Tuomas Ahola <taahol@utu.fi>
-> 
-> Other than that this looks good to me. As said though, might make sense
-> to send this via a separate thread so that it becomes disocverable.
-> 
-
-Thanks, I'll resend.
-
-> Patrick
+It=E2=80=99s a typewriter convention for an em-dash, which is difficult
+to distinguish from a hyphen or en-dash in fixed-width fonts.=
