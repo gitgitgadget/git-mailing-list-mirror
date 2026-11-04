@@ -1,88 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793809675;
-	b=QJzxTOUqG6thqWNk5UfL1hFz/F6B7XAbJxy5rgnFLM/ZGzNrqggath+unnFQIAzC11m7
-	 CA2+sqIC7TgiwCFDIXSrI50CaLuDCAHmZGg/gsw+XNpTSEopgE6ePKqzhQA69S/yYiUG0
-	 hJHUyjtv/Yw6zZZN6WpqCNgnBwgCStsa3PWK5PeQ9QQoAF4OuoOiiarQYL2xMXYLpGDBZ
-	 DMx91W8x6x33gZAg4rNytXjo0wv5QdyAwSCRonhsAMg0D8KI76dFFhjgvRoDqRTHWn8h8
-	 1ov2WKFKRtwmZAtklbGHajZjyGdJoMSOrydG8QZlB4AvTlR9Hc+H3cF0XUrS21xd+vA==
+	t=1793809993;
+	b=b34SFJkpPDNF3GY79Yt3bvyMoSIX9GjAF1PAhDlHnQjdhHv2TkVL1lgkLR5ya7gtMApK
+	 QMB+EcRAc/F5cbcNiZl3DldexqSPf/JuHX8dsW4ez48g5LO6Bx+pdkzyr2P0DoixleKce
+	 fir7FxZH7h6LCMeaPABI2WTdjvfT46FuskpUxEYhdiAuFV7voN0jYyGFb0qMMJZJsHARA
+	 3q+C5saTMiFBr2XbxboAtzE8+UsYjlhsfWSBj+O2kz2Vs89llwOZ5cI2j3ye4UyyJv5zi
+	 0xJb+nG6SquZ6iRYmvQNEAiEykk30UfLS5NqJgL2Nkd6mnlaLx6LEy7/0vdkJWw90ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793809675;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793809993;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
 	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=PbXWM3jNLo1ZqwtJvPB5VpZ2GiYBvg5NG55UXdGyz9E=;
-	b=AfAUi8S1L6eQofECMFDtJ4gyfoMmiAGEFEIuVHRvSkb3up6S+P+4iEuwO2DSg598mqMm
-	 iwW1heSNVfgNmAH0zo3zlafu9Fbyg3DzDTThZEr+xRXvKykmOQ+f4zdF96ZCyZxazlpEU
-	 xrXGWPqCOQUMjtGjccUIaepamdEnBRwN65Yv9uBEZzmMgAGkft0ldWrgGU7AyJdE5MQQ3
-	 45JMS0UFI8AW5BphVUVqwASDwj0WgwD3Jd8PyyWcEu9igK4LcRwA0WoBsH76xDTCLQxe8
-	 HZqYjT6xeo9Bade/u7trHAAMS1PqyQZ3IAB+e9nkA7NH6xosbJ0vA2AW8hHGhH4zgVg==
+	bh=dMqNS4Zq9+1VDYW+MgkC5/i/I446jAAXuMOMG2PQZR0=;
+	b=DQDgKYnBLT5QsGOeWQmpDve6PBxcHcrhhZqizF/u3fZPdzLbRaMi3HdkRDuFiSiprtc+
+	 avtyH5JymQagQyvbb7XVWyRLQGk71doz8Ni1b29ai48yvCKwmZBlY9vBEU1B7wwT8ZXQW
+	 +KZ/ZROCE6Xc35s5VEqPm7c/1SmvMzSab7kARClr1vuzWwfTR3ZHilZEoaUSzHyFGnh/D
+	 56tNmv54BgyBVbLquDzD7poWbDR4zkavGez1aljm8B5s+r9/IXuLLNXhEiOrFfSAkSw2M
+	 J8zbEPet8mKSYoFLquQ6A0E2j9kJSTMb7FFJeQenHlO/8q9WDKQ81yyAp624CpJ8Mww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vXZYG0Ur;
-	arc=none smtp.remote-ip=209.85.219.50
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oSIgTcxD;
+	arc=none smtp.remote-ip=209.85.219.41
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6E3606A32D
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 16:27:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA6E3606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52744606A334
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 16:33:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 52744606A334
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vXZYG0Ur
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-91b54d1e9cdso8449966d6.1
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 08:27:54 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oSIgTcxD
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-91ccfb88e4dso9555656d6.0
+        for <git@vger.kernel.org>; Wed, 04 Nov 2026 08:33:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793809674; x=1794414474; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793809992; x=1794414792; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=PbXWM3jNLo1ZqwtJvPB5VpZ2GiYBvg5NG55UXdGyz9E=;
-        b=vXZYG0UrTo8wNQ6ZYtvCUf0W2Fl94jgDYHHEJhPIUYiZrFchuV3os0/zYJTueACLh2
-         v9ScVY9n8ibRLyJbJ+agIJqLb2oLRMz93ZJrpLTvTl5P8NgLgSUqKCsmr3ypy1dHO8Tg
-         ljisNIsdayinVNlcYSlhZrOyWqc9NNQsrwJV7dm37CgRoonV5zU++OJb1eDDE9UP4Sdy
-         +Gh47q6DQcEmfypXtMHwFiFjb74ht/ytvRwVqLeibMrdK05oOg/3EHnF+ecZZCetuS5A
-         fD09KUHmVmKHYiRl2+ByK5wCMkx6Amp1V1Oz7ce4G9SDUIzQzBqkGSuJICvtag44Ybwd
-         kDVQ==
+        bh=dMqNS4Zq9+1VDYW+MgkC5/i/I446jAAXuMOMG2PQZR0=;
+        b=oSIgTcxDWAbyovJdO5AuNaMn7WVxu6/VibqSkdK75RkRwjCItvwfP/AsNQYuDnn+f0
+         mWtjfs1lvd/RYWYxLBSSCQhmPjhXn7hqHAPbq425AmyDUcwMg05pGWnEfO3PmquvpeeO
+         Wt83jheLZTTRiKxh2uk9kNFeYHXJeTmxyYG2LP5oCTQ+LW8TFN9pDt5Z6ETsffvUVWN4
+         4f/Ewu4xXWSh/oUIHlUbDYYJATxIhX4Prt5rFtpEZdbykGMImH+eqholFSjOurGjLIqp
+         O0RTl8qFf3ah6fgfizPPZqWRjrHZlbLSj0Rscjso2xqXbIdyrhEFM5i3vExUYMJu9kzl
+         9+2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793809674; x=1794414474;
+        d=1e100.net; s=20260707; t=1793809992; x=1794414792;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=PbXWM3jNLo1ZqwtJvPB5VpZ2GiYBvg5NG55UXdGyz9E=;
-        b=tAAdmqqa00BcFM1Pq3qKAr4DrPNRXsBF1vz2AeAZ9H8m6iE4axOaEXdUJo505bEziV
-         DSeKmh+r6cXMGaZpha6TU1ytHXJFk2mHfx1LAGzkPSYU+rJYPGvpciwScxI9/TXAWrNT
-         Dqt482e08BVtjetX6a8f1y/9QtR7PvrC+tC7J+xC7nSprI4k8Qtp79hndnsjUStXo6CY
-         wi5bCfx5r5iROwBgmkTsmFQkqFCx8fkuFxovup6NMDGbrDkbCIq2pDhsL+1pESf8MkSc
-         pet9TqC7Xra2PSOnBWxzmyQbofYWpIwZOO/w3S+LTZcthfSrZpSk7jxJM19S8vjktEye
-         ucxA==
-X-Gm-Message-State: APuU4Z9rg7Gd7X0hOf5FuRQmEG3PIpQbcBsSaAPgO/D1yBnBmGp+nuAR
-	Y6BRVjwu+7BWI2Me7NGgnfRaKf+PPTp0gbnSaHgsGlmxnBu1h9wmLY/Qwwt++A==
-X-Gm-Gg: AYBFou3OM4qeyg6YpWTi0IolyZynEG0BT3A/6rzTNf0fRcLMFoUdnyDVJq11WdZeaoE
-	Vg9jaAh12WcZvthwN6WoMPL5A2aEY9KW62+0kyimkd5eJKD4LOzEMN7aJUH8DGaQpvXKv0yGYWo
-	eyZCJnaDuyFTl1ElKxYyxXRGQtAMTIpkpdlwtj/bvW+EcvT7NkSe0o1ufOmalXHD3IxIY5zv9VC
-	vAyOQywVjmJXNAi0RmmLbyfiA6W2lSIl2DiMXLaTf2T3bMewcO2DZmIyVBMNDUiJBdg6Ao+O2O/
-	5DtIo9bU6tBPZ+lUAM+q0EFCjt/4ds/x/q207pYO0YiROQf2jQKjdXzF1uOM/occd/xcYwJ2ZAa
-	6LDjUa3zVNVtq59irlozhpyMcenYmwtEaOvsAcAdNrjzvXJCdtVDsRFHc3zAz7lXdQqmmeczn5n
-	1smfsXLFguXSOwY3aNFcLdxtXThAtK1KZT6KI7IKeHdZj+bfaDfEx7/UTqk4VAyxEA3VmrbEL1I
-	RcCGB2SBGycrX3f21BK2t8dP56jGtzmS1tfvdDAbvW072Bo6oi7MExg6azUF89vOIQMINfY3hos
-	2Dr2d/kPLDuW+zSyeM+TxskaTb7u6rsCKK8TXMnbRtOEANGpbEsImyNUYkMlcwuJYUdICrMPbxK
-	z99AJiuLVZBCEfCiLGPUzh7CUpX17I9ZXOcgYylIU3iPfIDchrQPgt45aeFc9Q5RjVIOdLPt+4t
-	W1q3hJMtwqv8xHDy++Jqm1OEjqa2fKcTif1qKebp772RS8V0aqi+jg
-X-Received: by 2002:a05:6214:311d:b0:91e:7e89:c8fc with SMTP id 6a1803df08f44-91e7e89ca54mr46237286d6.47.1793809673512;
-        Wed, 04 Nov 2026 08:27:53 -0800 (PST)
+        bh=dMqNS4Zq9+1VDYW+MgkC5/i/I446jAAXuMOMG2PQZR0=;
+        b=HUBm4gOGOQWVfwAzc++7Er8eaAfVkP5Ih3K6fQwm621GRplzrfNKcHBUi+krkOENSc
+         2x9fCl2IpR6CPXrE44qyTaf+u8k7TKn1+225pr1i7QgF5e0GXUTIDSLmgkhSoCACzh+F
+         /B2WlGPBZpfH56ZAnzN3loHylhBYe+cq6/uRGL6VXb/CM4IKnysL4pLwldB2xz4KGfni
+         +9+7mk+VlGk5RsFcX73CGFrSf/QwhRWwNeRBRgNbbCA2wqukTDv9ktVi5+82mSd0n5/E
+         L1bJatQm73EUa+2hTBBxQnyzYZ+wq9mRUc2AtE2QEXDh+ZwIK7xz9JXuJHwy70J4uyfu
+         dpXg==
+X-Gm-Message-State: APuU4Z+33qrVbFKbr39JWExStki5EWTF8NeYmN6BIRL25hsdQ7CpY20j
+	HCaLpWmNhdAV68FIe/AxOspU/zSWsESQYDOLVyQ9+omlaaRjtMUgqzQYoqaH6w==
+X-Gm-Gg: AYBFou0yFvdCubMwaz/byN6Ur0SWVPCZErheieYxTSVZHmQ7CqRwT1KOvgyLwUKC8Gk
+	1PFGRUhFknbG1a1Fwq8TTNhZLMKuYrkZSjVSz0Lyfj0Ect9FdewRDcHFBdiypioXwCUWQIEzr07
+	xQjdhWtmLBt6oqk81H8yVrq4xPbghZ+pkztomxL+LT2Ey6EDoy/KznMdqXCnqv3hnWFyz1UdXht
+	4FZNBz90pOJ/xHpApBBStaIVeFltPjccWkA9Zm6kDxjUxsW0+dPfArWWKIOXGiUOtqcSe08q6GI
+	pZle2ESyQjaCMbQt1ZxtdxZxQVAQ652s7N1G7g+vecF18NaNJM0K/tmHq0UKYZaoC+ZUdEmKK4i
+	5EDmtY4RU9FE3PkJ+wS0Yz3G7xh3msoEqsB0uLRw7kKQcLvqzJxQegELpCkYATo7UH2W7mU75w3
+	WF1+Dl9oq7B+kCdnoPddAdrZ2JWvC67xslCvg5cKR+9kaOWGA081ow7hhbTpI/84aDgHI0NsLuK
+	+W9uPX1Ddp0gOgwr2FWQI05FPksBAE4bJUu+53EN3v6FYczaQcrR+tAHm9qyd3AiWJtU2paw00N
+	LMesKnr78+0iYdqaLrO2gwfZ/xob7Tkfs+a7DhOAWIENF2omZA092Hsu1A+ue0wlOqMJjrGfG6+
+	sT9gf1nLq6U4tgBcid8C6jXkWk9HdwTRfMbtjDy+B0ZGpY8C3/YS9BW/B9yIcUZC4mSD/mFZIlk
+	npwk+0oTWI8dcWuIDNQC9qv9TmUXeakKtFKhB/1Vz0PAfdp2IO2cPh
+X-Received: by 2002:a05:6214:2c0c:b0:91c:8f30:fa3f with SMTP id 6a1803df08f44-91ca4b75870mr284619226d6.46.1793809992060;
+        Wed, 04 Nov 2026 08:33:12 -0800 (PST)
 Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91e896f09e3sm12488206d6.25.2026.11.04.08.27.52
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91e7dfb3aadsm22653556d6.8.2026.11.04.08.33.11
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Nov 2026 08:27:52 -0800 (PST)
-Message-ID: <55e14977-dfc2-4acc-bc71-a91915fa251f@gmail.com>
-Date: Wed, 4 Nov 2026 11:27:52 -0500
+        Wed, 04 Nov 2026 08:33:11 -0800 (PST)
+Message-ID: <9a97d8ca-e7c9-4e57-905b-109df92a9eae@gmail.com>
+Date: Wed, 4 Nov 2026 11:33:11 -0500
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,39 +93,37 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] odb/source-loose: fix failing existence checks caused
- by stale cache
+Subject: Re: [PATCH 05/10] commit-graph: merge the two commit graph writers
 To: git@vger.kernel.org
-References: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
- <CAL71e4ONN4OQUZ2S==0TRWqZgA8ogT0smRL3Rk46voTm+0Tihw@mail.gmail.com>
+References: <20261104-pks-commit-graph-write-refactorings-v1-0-d013d9401a59@pks.im>
+ <20261104-pks-commit-graph-write-refactorings-v1-5-d013d9401a59@pks.im>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CAL71e4ONN4OQUZ2S==0TRWqZgA8ogT0smRL3Rk46voTm+0Tihw@mail.gmail.com>
+In-Reply-To: <20261104-pks-commit-graph-write-refactorings-v1-5-d013d9401a59@pks.im>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/4/2026 7:57 AM, Kristofer Karlsson wrote:
-> On Wed, 4 Nov 2026 at 13:17, Patrick Steinhardt <ps@pks.im> wrote:
->>
->> Hi,
->>
->> this small patch series fixes the bug reported in [1].
->>
->> In summary, when git-merge(1) writes merged blobs it may be unable to
->> read them back because the loose object cache does not get updated.
->> Consequently, we may think that the blobs do not exist locally, and thus
->> in a promisor remote we may perform a backfill fetch. But as the remote
->> doesn't know those objects we'll fail.
->>
->> Thanks!
->>
->> Patrick
+On 11/4/2026 10:57 AM, Patrick Steinhardt wrote:
+> We have two entry points for writing commit graphs:
 > 
-> The fix looks good to me, and I verified that the test fails
-> without it. My own local fix is logically equivalent,
-> which is a good sign, though perhaps that biased my review.
-I also think the fix looks good. (I haven't verified it locally
-like Kristofer did, but the test is good.)
+>   - `write_commit_graph()` either writes a commit graph for all commits
+>     in the object database, or for the commits specified via its options
+>     struct.
+> 
+>   - `write_commit_graph_reachable()` writes a commit graph for all
+>     reachable commits.
+> 
+> It's somewhat pointless though to have a separate entry point for
+> writing a commit graph for reachable commits, as this use case can be
+> trivially satisfied via a flag.
+> 
+> Introduce that flag and drop the separate entry point in favor of
+> `write_commit_graph()`. This ensures we have a single entry point for
+> writing commit graphs, only, which will make it easier to eventually
+> introduce pluggable commit graphs via the object database.
+The previous four patches were immediately obvious to be correct. This
+one takes a little bit more work, but is a valuable simplification
+that will lead to better code reuse in the future.
 
 Thanks,
 -Stolee
