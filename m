@@ -1,95 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793818238;
-	b=btlKv/Kw/eszi6mXfqsBjmwQiAgJTgFcA+gGLCHQ3/Euc9x4gnAO6KLazFXX++4qnKW/
-	 R66Ec61C8mOwy468nQA4en7ddYK/XTogU80xsUpJdE+DsQXC8g7XQ6A/QHcex0xs7g6ga
-	 Ouc8us59VYj6/ty5rBE4IixCxyYkWGvtfVJ/WPrTi1/QoVpSRi3YLQwSjjfqgSvVKEfWI
-	 81+dNsTn0Rn3f04yvj+aLV7tvwfVQLJgAiCuJ3L/0v3bJggZvfIIWwYcKz6RaYthRd60Z
-	 Kx2f426pWT3TIcjf2ryrAzJ6vUhXuzvqitjGamghXipM9t0mY2V8r9KOPAeHiDIMfCw==
+	t=1793818746;
+	b=DoeiXCcZceE65lJyL5qQAZP7M8AtyTTkofn/C6GM4xeatnFgQCsRcV3dxWfvn7LPC756
+	 iJdHCgPYkp3lrkJ9A9bTR4V3hA8X6nYb5Z3yFSrN6FttDpDadrWU+cjIdbt5QjbVkpNnl
+	 v9xRGco9UNll4udtfY8dqIQvs8DCcGOH1mTJvhTLI+T3vzCln+0PuvmlvJy0n2qbcbrib
+	 s1wtOsPNXE3ad49rB/57FTWsXTefcUuQTxVPYVXrWf4Lg37hg2PexgriFrB1GiS80o7Um
+	 /ipOYlyKKkdgBcYjbib/AWru4cetiKW56tKn3CHhnNYjoGeqgkn5shA5jwBBwbZsKJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793818238;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=kC8AMGu++iS/uJq/laoFgHzwyS8Vpk87DdZJK90thkI=;
-	b=XwYGPfTy368nWqxFx1KkBudZv7gcApu+7MKDSDwfdnP5Cxz0n5AqOhFEbQpGlmp59uwj
-	 DF+8XsDOgsSH1zuITDWOO8l2MHBwa3xYOiNl9piTaw770xtqmrOLRO7/VwyVXutj2iC+t
-	 Q+Arm2xGmO/MEqHAja08x94VNuMdKWajbbGBg4xQhEvrg5fXUEACzXcJt7JLB11pKP3vF
-	 MQSJjJZxkpt6dczd4ItBkeI7BLenKx+u6E+Q59jCnhyhnUC7VBSi4c+S8QBK48Ta2oPb2
-	 ljJX81DjDyq5clWDBAaLV/mXIHcncgOZa5SiJ8Sg2y4YiI7pyUFmpRUHZlfpvbCBZpg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793818746;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=8QGfZRxl3XMwzUzthpm7P+5ehDVE6z77Y+Id7TZ6liE=;
+	b=4/jmEF8dVzHFxcbvQzUkado6YwNZ0/850N7pUaUM9cEkI4H2Usnzcm1vJs9MN2QeTvPL
+	 cm20LHCoKB4mbFDhwaw8SXwBfkwWWxK8D0xn94VCy6pixLthkWynHa0VyaKRhUAP/Gce3
+	 gA0hXZnz4dtUCiBf0qjYMyuZfDWBP8AaFXr5u1NHXct/msiAM0A6MsD904ls8Q/dWlyKi
+	 rucsCnkc/E6XwZt4BVXHPg4H8uRZHlG3x80FrfghNFc9ceCWrdw1FPCxgQbSS0clo/xEc
+	 jYoOkCCHeUtgK8J40RfeIuHZY1IObgqGbK0iABI3gQog1sytAglEhV68KZrIpK8Hw9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=tylercipriani.com;
-	spf=none smtp.mailfrom=tylercipriani.com;
-	dkim=pass header.d=tylercipriani-com.20260707.gappssmtp.com header.i=@tylercipriani-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=KSfRvos9;
-	arc=none smtp.remote-ip=209.85.160.53
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=K0z4wrdC;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="TB/U58Nu";
+	arc=none smtp.remote-ip=103.168.172.148
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D19C6082BD9
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 18:50:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8D19C6082BD9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BC4606A32E
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 18:59:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7BC4606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tylercipriani-com.20260707.gappssmtp.com header.i=@tylercipriani-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=KSfRvos9
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-4a76f63b243so1670873fac.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 10:50:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tylercipriani-com.20260707.gappssmtp.com; s=20260707; t=1793818236; x=1794423036; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=kC8AMGu++iS/uJq/laoFgHzwyS8Vpk87DdZJK90thkI=;
-        b=KSfRvos9+nrmNr2a2O2fFASor1WC6LL9vdqMVTdziSnBF5EXvRYVI5xAcmqWk8TaLo
-         RZX9E8dD6hipe0FmviB1w+Puoz4eLYXALaYD9QF/ymV+hrrhCT2N1lp+U7suZZ+QQ2Pe
-         AZa0kbbrwqFoqHsFO793KMj5oSSyEtGJiPUMXiUKx8XWwNkxQw8fOPX5HEBMBwaVmFQ3
-         wMwo8sxgE+vVxLZpx27IMKNLw+FafXwhe6WrK2bGrMp8DxpZMgPpB0UnnJ3T4QHqwZiT
-         5L1EKeQ2PETkaJW5X0dirRgxvQj/u87s4C2KUISQQg4R8OggHjto2ktQlPbvVqwQDOAk
-         uEpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793818236; x=1794423036;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=kC8AMGu++iS/uJq/laoFgHzwyS8Vpk87DdZJK90thkI=;
-        b=szcbOwmzFZ0FMgkX02kdQuVsoAquSNyDm2mqnYoQIlNRYaeW6uU/MhqEFFpCMvnNSu
-         n3NkqsN5vYrkFm5+R5IiLQxfSf6sQNCSA4Ma7e5RIMFifvpN2J4++wrWXWO1ZykAL5ew
-         VCqlvqw+lJE7UnI89s0VGKwSN6Mm+dxAYfU8W7qfn92v9P6KrsGrgY4NQ7zkrnGxlF8A
-         K2+A3w5kQgH40IgbjPASaWn64I/8LIa/yAwY0qFtg3Lb0Ya0rZprOM85JG8YMpqgj3Nw
-         Xxf0l7Jw1Nv8ZXlERBb2lQOtI6xLxueIQyAxgjXJNhftJu+qtRU7jt1FMgKafeDYpSgS
-         RGbA==
-X-Gm-Message-State: APuU4Z/m6kdqNaagkxeq9G9QpOZD2JDP5XJ5Xyi4D0huqpzNfX6pyq90
-	3adgl/J3ctEFI4rYiz5a9n7Dg/19nLhH+f7PcSBCuSY6Pkmc4QZwWQJXm3fOHvE84zs=
-X-Gm-Gg: AYBFou0Q18VwbwHr2Xi/nkCM5S24uYA052Tlu228taJty1WsZToeLNh7GbXQ7i0dXx8
-	luniaZRN42ubKFvr063SUHv4oXl99wy9PyUwzuquuYUsIfzkIdbbAzkl6pyP8n3qNxp8sA2d287
-	G6A9WnxjLKxoh/A0JJEbYmBNomd4rFTtiIgY+ky4GAxvbbv/jZGE5HOJxpEP8fTM9n6Y+AwI7pL
-	rvcBfSsoKSsGjBOztL6jNn7OicAux94e19Jx/XrY/E17sibuE5xS7L9u0RZSOf3rYAcKW9MFnte
-	jKH0jm0iUe1+LXBppSMa8VNYfRxmFJLDbyozSNV6bK5fIQ23DSrJBB4yj5iehB+tNqVMsQHJ817
-	23HquGKbpBjvc9TDXtErZuEhroLzSdznpJEgPclSTMiMaalksU5LVhfkSxWK6w5nIf6tgRUvBCe
-	6E0sfnuow78/Dj1HCGiGS5SXg00RRLr+8LoPhB+mSGdGkMEJwSU8tY/n4vFig2zhVf89pXhHHKc
-	kzgPfZxd7tETOJWXMoX8932E9tR+EgWprE6tOtIZzFjrQ52M/goMjsOhEfZK07WNkABypv3J4uX
-	D5EAM4gCPivf7XahreN6movxoVOxbbw=
-X-Received: by 2002:a05:6808:1807:b0:4af:aaca:7be3 with SMTP id 5614622812f47-567be4075acmr220325b6e.12.1793818236416;
-        Wed, 04 Nov 2026 10:50:36 -0800 (PST)
-Received: from localhost ([161.97.204.248])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-567a9fdc42dsm2349412b6e.14.2026.11.04.10.50.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2026 10:50:35 -0800 (PST)
-From: Tyler Cipriani <tyler@tylercipriani.com>
-To: tyler@tylercipriani.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	pa3ck.perosa@gmail.com,
-	usmanakinyemi202@gmail.com
-Subject: [PATCH v2] push: fix --force-with-lease forwarding in push_multiple()
-Date: Wed,  4 Nov 2026 11:49:50 -0700
-Message-ID: <20261104184950.403069-1-tyler@tylercipriani.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261104002721.304153-1-tyler@tylercipriani.com>
-References: <20261104002721.304153-1-tyler@tylercipriani.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=K0z4wrdC;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TB/U58Nu
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 39BAAEC24ED
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 13:59:05 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 04 Nov 2026 13:59:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793818745; x=1793905145; bh=8QGfZRxl3X
+	MwzUzthpm7P+5ehDVE6z77Y+Id7TZ6liE=; b=K0z4wrdCQSW+96c8Qj9+0SnJx4
+	fA6zltMbbdS93tMf3+S/Ky7bYVb1l6SeNpUa6B/Tqh0tdIVnpWJJhmzoCY4Rs56I
+	Z//30ox0AJNi7MrruhqkgeHWJKaw/5HJ+3tjN9u5WE5BX/SUkYZO5hG720762MDv
+	Gbx3OmrDl+nq4p2XDJj5MNZLWnq+XVCgQbKWG3fuOvmT/MS2k4EmvAB1rcj97HKK
+	mLtbINokmPdvaqtOcrOvBWN7iiuS6HEhL8WfYiAc9BDO/qxq0XZZcmyKRT5cmTFU
+	Gj0vbgDEqdcmeoi2rq8PZg2QSskpYHN2YH4at2EkUc+2pxQ9iusuThrRnqyQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793818745; x=1793905145; bh=8QGfZRxl3XMwzUzthpm7P+5ehDVE6z77Y+I
+	d7TZ6liE=; b=TB/U58Nu0sAfWwRiQEdt2onLaq1hwIdku229px3AbC+6q3GW4wl
+	sNSI3EzGmr1vpvriZ7pp68NsavQgG0Jrqd2pfiAMdS5WcAYH/2FoCabqwHMFUYRa
+	FC1auLtihcALFbu6hwfWkoPyjWWJ4tsQ/lAs6Q8f2nYatsvRHd4RESSA0SKGTV8N
+	gUXhREeFsVrW/SCyxXA1dYnO7jK0dXzX+lKxRwXlZmHI9yl34MulkFp1QHwAkih+
+	9HwuRFMhk0CDWszcC9QBoJZKyBGj1N5KpY3tvtuj0qdtbJjevmVmrkDEWDNCqk1Q
+	Gw4UmangRkMEfiHjxHfKQTFMhWqaNaoXXFQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793818745; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:MUUfYbfy/uerQt0Z4HmXd1GROZHRII11vI4eXGT+bC3ci5c
+	fOYRqo8PQbS2F/EQYh3ToJFRQXkbdR8RWUo6W9Y2Vugl9ZzGyDm0JIgjnw2FtIbi
+	GSnnuJ8lCoLqCng76jEVulUxFNKu4ROrEf0f/88Gu8WaPwYSvs3HtJYEE+qErArO
+	4paF02MinHvmfbbOR8oTXHDLqJYIxNn7lhy1ZTQQUpND7USCqkRSZXu/I2XlYCvV
+	BtunBB/3vzn0ujcWPXyIj+pfM9KoN63DPUUSnfz8Cqvb3TWMkJu6f2KbLhTff6tA
+	cdkByBfUAj5v9ahwG3uF/ABsWghc07WJfke8A+Q==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:H6LtPCANFlEgCAxAHlgbc65UvSEZzSxSZlqq+M+E+hQ=:WAQIZpJAWfSuDYZC8IgHglOdAxRzKKeaeCmDHdpiRGU=;
+X-ME-Sender: <xms:eYDrasS8ZBn6qDEbchuRb-UwhaKiiCTmrM1yfo8WFYCrQ0IkXzjn9g>
+    <xme:eYDrahNv_v9nk0hyvvRoJsNaWsY_-hLm6AimW6LpOA3hHSc-WjDOYMTmoMZQe6vyz
+    2mCK6ZpnDbYejXBx7BqMkPMakUbSkU3orMGnQVr1KK7BSY4MR_nPR4>
+X-ME-Received: <xmr:eYDranNlIque-KNQz3jHO0NacC0IXEh9I8mv0j6hHJa_9KtMKmZeXWOYF984nMXzpan1nDyGeaLHIkWq0vZZtYdD1MfyXeFScICA>
+X-ME-Proxy-Cause: dmFkZTGj9bd/ZtLCFyDxP56eRHkAgVhItwGr+2qksOObrOySb2d37bMdqwOgcdTvwa8T0I
+    xC3wJwW8vAp4xWa70COpayO0Lbkrzzu4Vuc4MdYVoIr74LriQ2M2v5Ti9zRvcMY5MreTjP
+    UOSKbz2JiJzGu0YXmUVxv+zukvhcfAMw7P7a/0CjREm2xkmG2PAZ78FY9wyj8Wc/EeYIX5
+    dYki6UYn4pis3OiAC1WzR9EchYBikLmGc3WAwvmTiO3p1KrflBShXE8blcMsA84gtp4sK3
+    oG1wRhxRsnwfmgnV29nq1crMXC6hkM8DyhXo35EZKEd/sNGydlX/MVsNraB/rzeV+ps7GH
+    tWMfKSBmnz+MX/+QBRvX3dIOD2roDYw3RPNG+zCytehqDpf37CqTujECIZJvndWlM5aQjh
+    OQ5EynJkcu2sCtUWPx0L00y+Uq3fUtMOufjZvbQZuGGRFuYBproFUW7FI/92kAfdNE9aR8
+    E0FJcqbKZ4N0btPwhx+6xvQ1ruw8stp7jKiFZvm4BPE7jleglmrXZt8pF0FCYp6+av2zsG
+    5UIpCRA4tfOJQo0QCKdx9CW6EFcDGEs63a2Ed24w8+QKZGw8WosyuIvz6L7k3YfLWkXR4Y
+    Z9nFKnrVSgwFs5RwtIdM2p6B9lbfVVlr4VSFbqgNmhQYTb7quCYbvHVGfNIg
+X-ME-Proxy: <xmx:eYDrapsHme1EPiyEtREtimdtLpsQXx0EXrHNaSojmOwyh8upMh-DFw>
+    <xmx:eYDrapX6Qn5bZ_GyyfVft4gdmgl16fp_q9lpfaKf8glIJZ6lt6oXTw>
+    <xmx:eYDrapsQlDFBzE61pt4nauuE8c8Hdvh2_3BW9iixUoQ7sm3v9JlScg>
+    <xmx:eYDratVdrUm1JS_Sg2MmM_dCQHO5MhO5eDz6oRLGBxDR5d7c1kChSg>
+    <xmx:eYDraraXxs1c3ZfMN_YlCCL8PHLtnJXVTzn6l_fT3SQBTIMrAwJbRROt>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Nov 2026 13:59:04 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH] CodingGuidelines: update the required Perl version
+In-Reply-To: <xmqq5wyfohv9.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
+	01 Nov 2026 22:41:14 -0800")
+References: <20261101185846.24208-1-taahol@utu.fi>
+	<xmqq5wyfohv9.fsf@gitster.g>
+Date: Wed, 04 Nov 2026 10:59:03 -0800
+Message-ID: <xmqqecd01kzs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,140 +124,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-8ea8281665 (push: support pushing to a remote group, 2026-05-03) taught
-push how to handle a remote group, but mishandled --force-with-lease.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Fix two bugs with remote group --force-with-lease:
+> Tuomas Ahola <taahol@utu.fi> writes:
+>
+>> 702d8c1f3b (Require Perl 5.26.0, 2024-10-23) bumped Git's Perl version
+>> requirement.  Update CodingGuidelines accordingly.
+>>
+>> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+>> ---
+>>  Documentation/CodingGuidelines | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> Makes sense.  Thanks.
 
-- Non-fast-forward --force-with-lease is always rejected because that
-  option is never forwarded to the remote group. The bare option sets
-  cas.use_tracking_for_rest without adding a cas entry; only cas entries
-  are forwarded.
+Oh, no, not so fast.
 
-- Using --force-with-lease=<ref>: (i.e., expect that <ref> is absent on
-  the remote) could overwrite a remote branch if <ref>'s remote-tracking
-  branch is up-to-date with the remote, which is the usual state
-  following fetch.
+I'll mark the topic as "Waiting for response".
 
-Reported-by: Patrick Peroša <pa3ck.perosa@gmail.com>
-Signed-off-by: Tyler Cipriani <tyler@tylercipriani.com>
----
-Based on maint since it's a bug in 2.56.0
-
-Changes since v1:
-- Fix incorrect name in Reported-by trailer
-- Fix confusing sentence with mixed verb tenses in log message
-
- builtin/push.c      |  7 ++++++-
- t/t5533-push-cas.sh | 42 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/push.c b/builtin/push.c
-index 2377b5af55..7f0091206a 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -627,6 +627,9 @@ static int push_multiple(struct string_list *list,
- 		strvec_pushf(&argv, "--push-option=%s",
- 			     push_options->items[i].string);
- 
-+	if (cas.use_tracking_for_rest)
-+		strvec_push(&argv, "--force-with-lease");
-+
- 	for (i = 0; i < cas.nr; i++) {
- 		if (cas.entry[i].use_tracking) {
- 			strvec_pushf(&argv, "--force-with-lease=%s",
-@@ -636,7 +639,9 @@ static int push_multiple(struct string_list *list,
- 				     cas.entry[i].refname,
- 				     oid_to_hex(&cas.entry[i].expect));
- 		} else {
--			strvec_push(&argv, "--force-with-lease");
-+			/* <ref>: means expect ref not to exist */
-+			strvec_pushf(&argv, "--force-with-lease=%s:",
-+				     cas.entry[i].refname);
- 		}
- 	}
- 
-diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-index 2e14aecaa2..6a56aa46d3 100755
---- a/t/t5533-push-cas.sh
-+++ b/t/t5533-push-cas.sh
-@@ -168,6 +168,48 @@ test_expect_success 'push to update (allowed even though no-ff)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'push to update (allowed even though no-ff) multiple remotes' '
-+	setup_srcdst_basic &&
-+	git clone --bare src src2 &&
-+	test_when_finished "rm -rf src2" &&
-+	(
-+		cd dst &&
-+		git remote add src2 ../src2 &&
-+		git fetch src2 &&
-+		git config remotes.multi "origin src2" &&
-+		git reset --hard HEAD^ &&
-+		test_commit D &&
-+		git push --force-with-lease multi main 2>err &&
-+		test_grep "forced update" err
-+	) &&
-+	git ls-remote dst refs/heads/main >expect &&
-+	git ls-remote src refs/heads/main >actual &&
-+	git ls-remote src2 refs/heads/main >actual2 &&
-+	test_cmp expect actual &&
-+	test_cmp expect actual2
-+'
-+
-+test_expect_success 'push to update (protected, expect absent) multiple remotes' '
-+	setup_srcdst_basic &&
-+	git clone --bare src src2 &&
-+	git ls-remote src refs/heads/main >expect &&
-+	test_when_finished "rm -rf src2" &&
-+	(
-+		cd dst &&
-+		git remote add src2 ../src2 &&
-+		git fetch src2 &&
-+		git config remotes.multi "origin src2" &&
-+		git reset --hard HEAD^ &&
-+		test_commit D &&
-+		test_must_fail git push --force-with-lease=main: multi main 2>err &&
-+		test_grep "stale info" err
-+	) &&
-+	git ls-remote src refs/heads/main >actual &&
-+	git ls-remote src2 refs/heads/main >actual2 &&
-+	test_cmp expect actual &&
-+	test_cmp expect actual2
-+'
-+
- test_expect_success 'push to delete (protected)' '
- 	setup_srcdst_basic &&
- 	git ls-remote src refs/heads/main >expect &&
-
-Range-diff against v1:
-1:  28266d5d24 ! 1:  f5553bf99a push: fix --force-with-lease forwarding in push_multiple()
-    @@ Commit message
-     
-         Fix two bugs with remote group --force-with-lease:
-     
-    -    - Bare --force-with-lease always rejects non-fast-forward pushes since
-    -      it was never forwarded. The bare option sets cas.use_tracking_for_rest
-    -      without adding a cas entry; only cas entries were forwarded.
-    +    - Non-fast-forward --force-with-lease is always rejected because that
-    +      option is never forwarded to the remote group. The bare option sets
-    +      cas.use_tracking_for_rest without adding a cas entry; only cas entries
-    +      are forwarded.
-     
-         - Using --force-with-lease=<ref>: (i.e., expect that <ref> is absent on
-           the remote) could overwrite a remote branch if <ref>'s remote-tracking
-           branch is up-to-date with the remote, which is the usual state
-           following fetch.
-     
-    -    Reported-by: Patrick Perośa <pa3ck.perosa@gmail.com>
-    +    Reported-by: Patrick Peroša <pa3ck.perosa@gmail.com>
-         Signed-off-by: Tyler Cipriani <tyler@tylercipriani.com>
-     
-      ## builtin/push.c ##
--- 
-2.47.3
+https://lore.kernel.org/git/xmqqjymvooyn.fsf@gitster.g/
 
