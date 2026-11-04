@@ -1,95 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.54
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793787098;
-	b=2lA5CgcKsyM+++6GyOeasZKQUBhuxu10Z9hAJL50erpEeaMdIM5j6cwjTYwrjE6P8B3e
-	 XUTAntF+21DXK1HqERSucQC+oiIkI30hjUaUdy237U3xCaPzB2yG+iyiEI/TPPQQW0/T8
-	 wch3VOmFDI4e25Bfbb10OOEX8WUSXvzBjFWYoxr002DrFniztNkEBWufp5u07cKFtI/BA
-	 2ZvHyT7HFipOw62eeF0f0nq2dmas+sl35uKISUHS4zZirPzoot4A8SGhGvGnGRotwJtz2
-	 KZorIKw4hVkHKhD1Jx5JXg4w59TbofalmddiOeE9vuzVt+UCyGyaBtGqkPc7zcuAZ6g==
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=209.85.208.43
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793787953;
+	b=J3TN6y3FWp0F9esI8qcf2TeZTuUWD6Tt/RSYcD2d8dJbYyki5hozFXl5eGh0HdSMHnOW
+	 86O7U2hVuVXXCnbBLFH9mQEY5DA4T4LW7eTqiWluKowxRB9n00la1O5yhYvcgpGESPQKT
+	 cOxOE+W2xwLWwWjJ2Z728yq6KjtHmTNj11o5d3Fm0kN0KEDhoMP5rl/mu8iEPE2iDAsyn
+	 IeFAEcArnqdWSJhJt8tgfkJh8Lcl+MGgSisWk75umUwCENgahnauuPAGeAXbhrEZc8C0D
+	 L+UB4jmZSS1nyoSzjO/jo0vlCdfU1Ts1E1Od2cmtrnNpnEzb0Zrz7nBVNqUAklyIQnw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793787098;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793787953;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=2TcXW1lhelh4I5Fkl9kyK1ue0HzxYJg8V7dbbBYToiQ=;
-	b=tLQgAy5yEBQIppbKi1Lb2BNFsxqcVBRxk+x04Tj9/banLz3tfhbBoHrO+OYmvynfrUao
-	 KS4zS7zIBQmciuNjT0Hkjm7e+t5Kxx+NWufHzBYvMPZMb2L4pNZPPK05IhiG3PDCkN5LU
-	 2MZZTgF8SJ4yeGoQeEUOSY8/B4Lm1nvkWXo30Qeg3jgkEKu9OxB/m02gdfq0H7KozUEim
-	 yWl6DHQIk0mBdp3+LkdVGef1luuVVLUl1c9Pa9i2XGUT1DF+G/S3aaOM9VA0UWb/7dhGf
-	 JrGO/kvdidGuqBP5VUsuuEiR01lXq6S8oEIk9ODjEo26gfNlS0SUrV8jZo4tJP7Pk3g==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=hQJyBYcB7GLvWeI1pyzuvuyDKc7HIrS4/nSGsELuh4A=;
+	b=jOuqNz/AkfIhcE90bbeNAxsg/JKT7oFjr7md22ZfSoiQGuzFZbax3IBY+tQA8adraXBZ
+	 ZHxKN7bfEqy6ptf4LUReww0F08rMfScOF39gs5IX12+5oc3aYNXe2hGPgFFWO7mNGSBc0
+	 RNFLD9926i1DgZvUGGSb/f9ec5pPpUt3YzXYD4Vo0VbXfU2Nm9KoqXfLoy/D/QAm1RuP/
+	 9i280SFFGdQNDuHxd7wZBeZ8CZjuOFtY84v3A03hLVX6Rdlb5zAQlcly5a83VURizBLqL
+	 UzG9mb79GJub07S1+iTmgTmN6cy+l2Vj2JtxGP2EwcOChA+Dk5mBdEWPtS+9E0DDVjg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=spotify.com;
 	spf=pass smtp.mailfrom=spotify.com;
-	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b="CpQpW/w/";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.54
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=BHxdsCpf;
+	arc=fail smtp.remote-ip=209.85.208.43
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872D9606A31B
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 10:11:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 872D9606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7234A606A328
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 10:25:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7234A606A328
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=CpQpW/w/
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c4322d310e7so78408666b.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 02:11:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793787096; cv=none;
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=BHxdsCpf
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6ae305e3bd9so883686a12.0
+        for <git@vger.kernel.org>; Wed, 04 Nov 2026 02:25:52 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793787951; cv=none;
         d=google.com; s=arc-20260327;
-        b=kZdVk++2nMc2RxCoPu8hbn4ck5+V9Opcex4ko88weQg1XY4Oy9mTyCbhj+4V64wCBt
-         OMBYxmztXcC3Y7Q04BMrCwmkudZqoMIL2DlnxqIB+ppSV8vms96x/OnIJ9b/l0LJBEZo
-         SHEGiUnJEcJqFuXFKf+kKpRIx0GQVYV9nURjtyiZsWQy2W5aexfYsr+sU+l8uu8Xtf+6
-         09tHo2KtQxZ9rsnKjvAj+y5s7IlYC2FWmmP2RrK1uk3WABtFWnWQrx7OeQuzcnTtF5ax
-         yd6JD1o+3bacsCx/4gyII2olsgAdCA8ucgdVw5nKFEF7O8otYh3g2h3RZBQsA8WdpSun
-         GHAg==
+        b=n6iM0ZVlJKXJvf1VnOxIasUpkhOumpSYoETfgHlDemuanHugc1URnRU/Ks4VEX2MdH
+         pnndspvWHADajZvBEkYmqowmnfVVTlxrc5jzOEEwIFF4Z3vSvWItuwTEv5t7kZPh3DeQ
+         FVbuMjHOz3DRL0JF1YTr+6EtoogimuFB00JqmNcdcnXwolWGq68XX0ES3OsDO1VB2CV3
+         lnV8hEmWnIZ0lAGl30+6TusXvX2NvqLwvpkFxO69OH69rwwYcyb+zksUhHKoQLF3TlFG
+         vcVECskySfCorhkf1YhXtnhIITYm3Z3BEQjVlJDIVgKyWKj47VFLIP4vGQ3d2XiLXwCQ
+         +OTA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=2TcXW1lhelh4I5Fkl9kyK1ue0HzxYJg8V7dbbBYToiQ=;
-        fh=NTG/ErkP67SHubsfent+TdcPuFLXJPx/1xSvqS4pvCs=;
-        b=D+ND2sYJmPj1MiSypbEKXoDEd1R/HaFmDw0KnyLRDVj/btcgSl4lahgWUKQjxYI+f2
-         8rTMVhHvJ770rJOdFbrTotFNo0SC2qRipOAdKPSHrsQv0AfOY+TqA57NOCF0t5Vbg0oX
-         sC+BeCiLKdKj7OWGE4noVmBTeslx5nsBCqgt0lEXFiFaJP8hl0F0DzA7rFwYoHppogWW
-         +Y7tls7W6ct1mkAFpqAHdfubBvwY6uFseEySfSFIZQGKFbnhyGkF45eda4vr70JChVhB
-         ht/PqKeM5rfYN9AELD0GkYDK+/g9Bsb2RtBUH6eOcb/gj+37CEmT+h5RR3vddpt6dEp8
-         KHtQ==;
+        bh=hQJyBYcB7GLvWeI1pyzuvuyDKc7HIrS4/nSGsELuh4A=;
+        fh=nlPMMkihcGe7OC8eFJQ6rrqArhFtr8zkO1r4hB2opI0=;
+        b=fBXZIigkyAcceIjMYyX6/UWqGr8dXG0KSwuERNhi6o0zUAeUKxE5BZqDY8GtBwOF0T
+         Tm0hYIAE/zRBEm7fbyuEQ3YATUqfGHdJJj5WRz9CFckxrqIEKyNB324c45TqvMrjlImv
+         VOCMzAaO3Rh33dxrLpCZ1eG4p/48GMCAIwoGu5pKaAPkIAdKS5lgDKRWtwt2s0kibRE5
+         UvSYF6R9TGEbXDJdHHft2z62CE8VtdLYMTXKcPmP83HocMiXgG/IVGIOP4wOCsGbYZoi
+         B5P7KJ1syhnQ81l8bUKc1WfXkFNAXFPbzRPp7TlGUonsT5yx/MDCmWBciIkabPupMVN1
+         19xg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1793787096; x=1794391896; darn=vger.kernel.org;
+        d=spotify.com; s=google; t=1793787951; x=1794392751; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=2TcXW1lhelh4I5Fkl9kyK1ue0HzxYJg8V7dbbBYToiQ=;
-        b=CpQpW/w/PagEveF+dRfYw1frTvAeOmqr4Yc6HtIfpI0QbL2cL7mqUEu+ya3/3S4K0C
-         6XvcgvAfsDHc9cRoOrADITE7I0Ia21dnFtRGVUQBL1XiW+y544F0YT5Z/YTH4zZYplPi
-         mUwN/O1nLb8bDO9OMCoL+L/Lnjs8vhs3VhsZw=
+        bh=hQJyBYcB7GLvWeI1pyzuvuyDKc7HIrS4/nSGsELuh4A=;
+        b=BHxdsCpfCj2kGZQDNoPlpwr+rApqzD4LVNQE1QJ+JNnmhfw0nV5UXaCMJwCOcjtX9q
+         qLevYKX/NIhYo19b6Rty7uLbJyQn+rLesF+NwsElpcgUdpY26NgKlL1GuGxmnrPFkU0j
+         1IlH8meqm/HtwT2AkHiQGNfSsdt5t5HBrEiLw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793787096; x=1794391896;
+        d=1e100.net; s=20260707; t=1793787951; x=1794392751;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=2TcXW1lhelh4I5Fkl9kyK1ue0HzxYJg8V7dbbBYToiQ=;
-        b=zeOQHQYM/ZGXQWOgD8UghGI393IG0zvTsFr8Zczml1Kzr7UFI0Z4USiCW4/tLaoQFS
-         RpGgX5eX49YYdQLHKoFxZtEATAAGFJCgbXu9EG9IeBPt21VJOheUVUF/e+bjR9JzWNQ/
-         IvcgclLFmCQG/4xol0kSpn//I/fhi8dxKE1josY4eNo08m3tUCd3exueLN8ZFpKeb8Ig
-         GdObYvf9qHOdEDXDYiORp637uEee8BMpHvWY7YvIBct6RS1KZHAGUIfqZ97RsjUU6NBR
-         MtjbYJLsM75K0ThSSSGayr02vC43Zsa3/Kz5S8vuXomMqlWYzzsSyvTIICHjq+mMqMwn
-         kgZA==
-X-Gm-Message-State: APuU4Z9Z6y7CHR0C5tviqTiNwv5EwQZdNRHfelHFxmT/36zVx16c46bm
-	yJd30BEsJ+ZpxHrH7JAAv16jnE0qDLGPwsxds2mxbS0ql1m7QGluBT9RnzvpX1Kr6NZOvlfc2/t
-	UL589/XHCJ0iEK0xL0k+bO+uRbwUc29OMd/0jJLbPzQ==
-X-Gm-Gg: AYBFou0UqK3/u9GyjhMMPZWlreh8MhjbZkKz4GSnaesdabdVgB7GISIFFc896glrcNN
-	f23G477nbBSwFZxRCUJd3vKLy1Aw5TCqU2+rSjvuUs8AjkL9bN1wcHaMBxSIfjUE3Rja3qkyioU
-	2k7BAAbgcHMYjr5W3uce+lI3wO2/pkZ1+JcZSA8kUDvuc4cILyqbCCFvPhx6cnKujE/3p2X1Jtb
-	OBQ9UzararKERMylmQ5FurUWb6bqhX2YrqhVHL00v7Zqnmus7aMZGA2nwiCt8eAqBqH0lesaR+c
-	nnv1FIr/GQO1o5cNCP5Oonp7u9AIdpSdnR/nbkz0HwPk5fFUO8o3PmMTBg5lMqKnkP4I29L7Ut6
-	Es/LZapUrokprJQCGdih02htb+uy7Gqwv4zE/6w==
-X-Received: by 2002:a17:907:2da2:b0:c2b:4142:2db1 with SMTP id
- a640c23a62f3a-c4ca7acc1b2mr1407689566b.40.1793787095935; Wed, 04 Nov 2026
- 02:11:35 -0800 (PST)
+        bh=hQJyBYcB7GLvWeI1pyzuvuyDKc7HIrS4/nSGsELuh4A=;
+        b=V0IoMQBw/hpo4K/1fqVY37RmunDNKRweL0SLEXIhPpaeJp6R/3gOF8qnfktwuO7GlW
+         JBuJHW/OBQTMqcHtYQ+TZxv6yDj/aCfVxvLThuAM/AMlulBJu2EALxMSLd6aHYPSrnrc
+         K32aOSMhh7tUn+OJcNnjNh35h1hb6JP+txOIEjA0jlsPluGgQUV6IhysYCPbTehp8fae
+         y5u/eib2EQ7SCBdnHg1H63EoR0AXlMChyemcxT1HypZYMUTidsd2KWPaC0JRy5zR2ooL
+         q0dVkHfIXQ6TCg5tHv0zI+KX7P3oA5iItw8rr1hpqTS6X/ObGSCuAyPUszKkIRUVKA6w
+         Tl3g==
+X-Forwarded-Encrypted: i=1; AKwUvBwIoqDtdT7wxwLbESxDn9zmLgP2xtysJ9W5VERRDaXPVNoBU18LN97ceahY3Vt5y4oKlIg=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+Oio/hv9AZSd56M+Lwt1u5h1rntKWXK4YNwrSIdorbIoTTq3op
+	vplm+4PmOB50RocA/SjA9fRTeI9ODgLNUI/3hOaB2+C3h3MJ1c8wcMBGnpd+HBKg3rp7kwXYEq3
+	Q3aCH//aQBTx1qHws4OVzXxpmyzH62EESG1a6RMiLwQ==
+X-Gm-Gg: AYBFou3Tko3w3Fsr0OYxwLucJtb19vSgIxZ2ijQRlUzjhPbmP6xKK2sy0O3FQXqo70V
+	t7ujkMA/PA0c1ezks44bmdj7LT8wE5HSx9c4SoiQTaEIhmlspZCFjVxxXh1bXsrHUi2iEPZiQJn
+	469mV1PilZY/SD8aza5XS6WpTSftSvdoWtrleNmBB+gUu1Mo7+Id1um2wmTZmKkrFQnfRI8vCJg
+	LoShA8GgG3/GY+Edc62snrMmEKYiHC26SiMNcVCvpeJY03cHD/124ii7NiSg1j79PfSCsJme0AR
+	9vskp2tfrkaO7kciL3gfwlry+hboN1JEhZ7IuQJZ0VvjrYSTZOveVsYHTvcNoqDGV6fLzEXzUOJ
+	4rfl44EgnY+vcs1wYUlpQ9ZHPZ0ilN1GN1Ks1/Q==
+X-Received: by 2002:a17:906:dc8a:b0:c46:7645:861 with SMTP id
+ a640c23a62f3a-c4ca7936230mr1330321166b.7.1793787950816; Wed, 04 Nov 2026
+ 02:25:50 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,87 +100,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <yrjh1p92qc7w.fsf@pohly-mobl1.fritz.box>
-In-Reply-To: <yrjh1p92qc7w.fsf@pohly-mobl1.fritz.box>
+References: <pull.2285.git.1793200705017.gitgitgadget@gmail.com>
+ <pull.2285.v2.git.1793619933300.gitgitgadget@gmail.com> <20261104024806.GA1492379@coredump.intra.peff.net>
+In-Reply-To: <20261104024806.GA1492379@coredump.intra.peff.net>
 From: Kristofer Karlsson <krka@spotify.com>
-Date: Wed, 4 Nov 2026 11:11:21 +0100
-X-Gm-Features: AclHuK8Le3Z941VBdwL3AQhFv5yFZWSw82alVLx2PK_5Lac_CxF5EMnf4YYl_nM
-Message-ID: <CAL71e4MqMdGk5ryhNxvVNN6Z02+45B933ZfUuvj4hM92N5a6hA@mail.gmail.com>
-Subject: Re: [BUG] Lazy fetch in partial clone fails with "not our ref" since
- 5946a564 (odb/source: make read_object_info() pluggable)
-To: Patrick Ohly <patrick.ohly@intel.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Date: Wed, 4 Nov 2026 11:25:38 +0100
+X-Gm-Features: AclHuK_VAMgZRhGQofyEGSyE-l8sUP8D7uVs46XoPsOiaEa0D2ItnXKo0Zka50M
+Message-ID: <CAL71e4OreARF+dbCU3S8-_umrFEptPLPUiPDH3SYBx6OYjVpfg@mail.gmail.com>
+Subject: Re: [PATCH v2] odb: do not list our own refs as alternate refs in the quarantine
+To: Jeff King <peff@peff.net>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Justin Tobler <jltobler@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 3 Nov 2026 at 14:31, Patrick Ohly <patrick.ohly@intel.com> wrote:
+On Wed, 4 Nov 2026 at 03:48, Jeff King <peff@peff.net> wrote:
 >
-> Hello,
+> I.e., I'd expect the code part of the patch to just be:
 >
-> "git merge" in a blobless partial clone fails with "not our ref" while
-> lazily fetching a missing object. This started to occur today in the
-> Kubernetes CI, completely breaking the merging of PRs. We should have
-> been using git 2.54.0, the affected version, for a few days at least
-> without issues, so it can't be ruled out that this is at least partly
-> caused by a change on the GitHub side. We are about to revert to git
-> 2.52.0 to unblock the Kubernetes project.
+> diff --git a/odb.c b/odb.c
+> index 2c93a9490c..f9ab5c8e7f 100644
+> --- a/odb.c
+> +++ b/odb.c
+> @@ -183,6 +183,7 @@ static int refs_from_alternate_cb(struct odb_files_dir *alternate,
+>                                   void *payload)
+>  {
+>         struct strbuf path = STRBUF_INIT;
+> +       struct strbuf repo = STRBUF_INIT;
+>         size_t base_len;
+>         struct alternate_refs_data *cb = payload;
 >
-> [...]
+> @@ -198,10 +199,16 @@ static int refs_from_alternate_cb(struct odb_files_dir *alternate,
+>                 goto out;
+>         strbuf_setlen(&path, base_len);
 >
-> I bisected v2.52.0 (good) to v2.54.0 (bad). The first bad commit is:
+> +       /* XXX could realpath once in caller as a mild optimization */
+> +       if (strbuf_realpath(&repo, cb->repo->commondir, 0) &&
+> +           !strcmp(path.buf, repo.buf))
+> +               goto out;
+> +
+>         read_alternate_refs(cb->repo, path.buf, cb->fn, cb->payload);
 >
-> 5946a564cddc0bf471f27ae4c3fe205441e3ef65
-> odb/source: make `read_object_info()` function pluggable
+>  out:
+>         strbuf_release(&path);
+> +       strbuf_release(&repo);
+>         return 0;
+>  }
 >
-> The parent, 3bc3177ad7 ( 2.53.0.185.g3bc3177ad7 ), is good.
+>
+> and keep it totally local to the path hackery in the alternate-refs
+> path.
+>
+> Or am I missing something that requires more complication?
 
-Thanks for the detailed report.  I think I have found the cause: I
-can reproduce the failure with your steps and make it go away with a
-small change to the loose object cache.
+No, I think you are right.  The quarantine parent only matters when
+the object directory is not under the commondir, which is rare.  Your
+version is essentially my v1 without the "this is a hack" framing
+(and also cleaner).
 
-The problem is in the semantics of the loose object cache, which
-answers quick existence checks.  It is a two-layer cache: a bitmap
-keyed by the first byte of the object ID, recording which
-"objects/XX/" subdirectories have been listed, and an oidtree with
-the objects found there.  The intended invariant is that once a
-subdirectory has been listed, the oidtree holds every loose object
-in it, so that "not in the oidtree" means "does not exist".
+> > This is safe: alternate refs only serve as negative tips that are
+> > assumed to be complete, so dropping some can only make the traversal
+> > walk further, never make it accept a missing object.
+>
+> That's how _we_ use them in the internal callers, but it's a rev-list
+> option. So we can't say how they are used elsewhere. That said, I think
+> this is a totally reasonable tightening of the definition for general
+> use.
 
-Writing a loose object does not update the cache, which breaks the
-invariant if the subdirectory had already been listed.  In
-practice, that means a quick lookup of any object in the same
-subdirectory earlier in the same process.
+Good point.  I will reword that part of the commit message so that it
+does not rely on how the connectivity check uses them.  It also seems
+in line with what we already do when loading alternates, where
+listing the object directory itself is ignored as a common mistake;
+inside the quarantine, that check just compares against the
+quarantine instead of our own object directory.
 
-In your example, the object the server refuses, 27b64cc8, is not in
-either parent nor in the merge base.  It is the content-merged blob
-that the merge itself just wrote as a loose object.  merge-ort's
-prefetch had already listed "27/", so the checkout of the merge
-result thinks the blob is missing and asks the server for an object
-that only exists locally.  The server rejects the whole batch, and
-we then die on the first object in it that really is missing,
-3c804b88, which is why the two OIDs in the error differ.
+Justin suggested fixing it at the transaction layer instead, so I will
+wait to see where that discussion lands before sending a v3.
 
-The bug is older than 5946a564cd (odb/source: make
-`read_object_info()` function pluggable), but that commit, which
-matches the bisect result, is what exposed it.  Before it, any
-non-quick lookup that missed called odb_reprepare(), and that also
-threw away the whole loose cache.  A merge does such lookups between
-writing the merged blob and checking out the result, so in practice
-the stale cache was discarded before anything could use it.  Since
-that commit, the retry only reprepares the packfile store, and the
-stale cache survives until the checkout.
-
-I think the fix is to maintain the invariant: after a successful
-loose object write, if the subdirectory has already been listed,
-insert the new OID into the oidtree.  (Clearing the subdirectory's
-bit would also work, at the cost of listing it again.)
-
-I have a local fix with a unit test for the loose source.  An
-end-to-end test is awkward, since it needs a merged blob whose first
-byte matches one of the prefetched objects.
-
-I could polish this into a proper patch, but since Patrick
-Steinhardt has been reworking this part of the code, I think his
-thoughts on the approach would be useful first.
+It looks like the remaining options are:
+  1. Go with your proposed version.
+  2. Do nothing until the long term fix.
+  3. Just add a regression test for now.
 
 Thanks,
 Kristofer
