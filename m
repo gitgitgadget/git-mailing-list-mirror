@@ -1,97 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793781231;
-	b=d0VZ/EBSmPUdIgJBA8jgLaXM2CWBQZE9lNsSVhs+RniS64zCE35wKeyCn+TkoOX1+V3v
-	 3y7fZSihjP4qwzxotuiYvZWpOc1//WlImRS7pKpxpuMWkrUNnVLToJU97/Z/OQNY5XDR7
-	 2pGpKU3hMJD9mnoPIObaFSTK0E9nteLz0vv5enrkzxLG7qfBtFHwUWcMy9TJNll3sZsRm
-	 PEq/y1onhbPijeJcbixpf/5i5dL3AUcngvBMy8ReF+GT45EwvaC0ZsfwphUzK8d3+Xnkb
-	 TlMmLIsb6ZZ2s1Zo/9U/E5YDKHrAGesvfAxA2vL1peMgzC5OfzWNdVLzsOeybgmeAZA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793781231;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793782705;
+	b=hRwXB7KpB4sL/uEYL33zrViqMZdMJ0mTEWjTjPzPaVkCFmZ/8GY0WvN18HDKNLEmMDpI
+	 a7bz2aj70qCtvDAD3MUvhK57QCDFdvngeUWlX6cJdGJ/fvkOLO0v1PWkbaT28HJCRxX2Q
+	 LXM78w5feYS1nh0wNYcp5Fg+NyhjK92MnHgQ3vdbsRFgP1sA4AOQAW3Xc+JPyk7rz8Dni
+	 jxJDWNfW95HSx+Md9U2zFTq4KGEkikGQ1hcPir3eiUQYRF5Lh+FIVcCwxhziFxtPwiEIv
+	 R2yssLQURNSotZWYgG8B2TA1rsIUnwHNdrIjm9pqUN2U47HrDQs0eM7LevABnmh6u6Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793782705;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=mFtVqTSX5VZj6yP5DMK96XmmuHO8vMp9gIdYgvy2Dg4=;
-	b=lbgnhZZG0CsYNMTPSFTpdL1RbJxxHEJmTUCIa3sJbp9VPfMDFO+SZNDjOKB5+ClR96ha
-	 XKVzQDfjC0rJTIhZykZXXfLJu1bLOEXt3vt00IX5ld0mUPqZvpGqzYCyamOxAM0fs9pRy
-	 vu71smyjIZAPvwEVkwhdtALu+a4gPzt24eIRMxuie5L9iHt2Uitv7pivjIjhGDKCptvm2
-	 bJB60LjWkZ826LDSKiIs/xc9CKwJ/2Cg7UGddryL0NTOkswisMnF8PWw6d0p2mPTWJk/E
-	 aMAfd9As2ZtaZtZtH5oM9o8wKbuVIIVp0C6+XymR8HsAsT7qIo1xH8j1nRLeLA8Yqsw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Content-Type;
+	bh=ficUrWX2w+Npe4F5PPXl3GNQjdXHHWp8V/iQsB6LD9U=;
+	b=T4SU0z12SkJARFL2yHiYf3XR1D3oeBI0BjYA7U7VQJpHkyX6RZhtF6uQFmO5AIOwVI2+
+	 hW8CFiwm1eDS3kzA5Fw/qp7O16BzmivY0T2sSGbZoe9DXn7cDqH8wXiRJnVhdZLBEDNX1
+	 Zf+pJ7oLKRjmAGlgAnEKlm+X5kIc7I0B7AoEjPgcUBDRu3JAaeGUfbJ+Fs5FanVdMgW85
+	 9c4iQcAyqX5mq0utaCnQhyLf1nHi0EW8zcorW9Qyh2LKx3VgS6C7zFQk6CHCpgBa3vgrd
+	 rG1Cx4BNZk03iT+ZifQK3WCwiCGy8nbNgdiTGaeTpp7J8c67/JZi/f4eaumti6CMDFA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PqyT4jJj;
-	arc=none smtp.remote-ip=209.85.221.53
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gOnx9QUH;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.50
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8035A606A31B
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 08:33:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8035A606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2BE606A31B
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 08:58:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F2BE606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PqyT4jJj
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48c4d99c32bso343881f8f.1
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 00:33:50 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gOnx9QUH
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-990835cec4bso276115241.1
+        for <git@vger.kernel.org>; Wed, 04 Nov 2026 00:58:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793782704; cv=none;
+        d=google.com; s=arc-20260327;
+        b=lG4vazCupCq2E/cVGuzIB57HO8bnt58m3xgb0epnqyDXrgG4cHndiUeApmlMCrT1w4
+         kKCbT0051FLp4Ohf/fNbWgA7Gx2kbfynePHQtnlpHsIT0AtSbTcsLb/6bqIo/vdcV+tb
+         fFEKGicNoidSUq4SPEQVxpxC6UCna7eyOrgqHQnTMtQPT8uBVL/oeo+WF45Wi4XDPoBX
+         TU6azg/snw/bz2k7WhOPlH7kut01GpfaBIANCoLMesaH101JAvOraAmALi/iRcimaK+U
+         CvpwyiDNgT9Juhn1keYUW+zNcqQehEaxdBwOvq6JKD1hMxI+/d2dPCCZ6pUKciGIJOxG
+         CepQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=ficUrWX2w+Npe4F5PPXl3GNQjdXHHWp8V/iQsB6LD9U=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=DMzqINh+VobkAYjuom7vFOR2yQV4RIHVOLx4vVIsd1NFqta6l7d3HzJ55KhcJQ6l9o
+         35QPpO6fXvb11VOYY2nApUlZxJeL9unfxqQueeJtIS2Ru+MVMhR0cmBjftZI7WokROJ5
+         GVb04ixPB0LAcMxgtRxQqcH47Exg5i7aCKTQfaef6P8l5t9t93DVFE2E48l5pAqed4kd
+         ktx56aAUMO9YuJdOTciOrfZYmGEGH7ABssuTq23JXmlwtKxDQluTnv05UAWguLq/VUPc
+         WpKxWHcS22G6A3x/mWoR/cIPE1WBLufuWCzgOQUBgg0iXoiJIjfGvh0uQIXSPKBKMrcL
+         6zxw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793781229; x=1794386029; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=mFtVqTSX5VZj6yP5DMK96XmmuHO8vMp9gIdYgvy2Dg4=;
-        b=PqyT4jJjtnND4/InaZ/Ph/Yn5E0KsqWse/a4/ZtraSREkGAXgTkNTMVFU2Rr+IcqFr
-         ElR0sTJAw2P4yJbhAkHoAhRRmZgbiHhydj9yqCzUydXktPc/kjP9qMzVr7BGaNyoSFoY
-         hereYczBBB2rfxEDTPCytOpIhR/59FUXD6iszCwW+nx7LncU4oYmBbzCn6PP9s5EnK4+
-         4FgmuRHTfK/yKYfJXuHF9ykyXB07H1OOigJEttEokB3gohkhaNdaPJzzR2fqIZHC3m0j
-         v2tU8dX6QczIGohL4Wqsd5WoTKP08ctOs6+ZlQpL/H4LRPcg8rjlz6+29g04xsuGaqfa
-         mb3A==
+        d=gmail.com; s=20260707; t=1793782704; x=1794387504; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=ficUrWX2w+Npe4F5PPXl3GNQjdXHHWp8V/iQsB6LD9U=;
+        b=gOnx9QUHHK50D/RKRQDtRla5q6XLPTEEkyuTcZjtBsu0wRbLMKo9MqQjXOcmX0s7sL
+         iRMMBo+8ZEHbsa6mCFpLfG8+mHUIV5ntUF+KbVYY1xHla8BeKqJDh/5XW9HUCUTPvgjU
+         SrD0bTxESWLYoI5jeTAbYeYVtXpV4PjbnfDgwx7e/uLx8OgGgku+5Chn/n3YmMYc9Tar
+         NMnwsqp1NCS4X3+UDhQYDUOmw363tcnIegICYOcEPxlHbQVpzLCAQYImljn4dZeLFrP0
+         aPA/AURSH+OFT5y0MD0XafG3B8qcqMjrGPYBMxPDBQtPB2bvKlUtbUFXlnSVwTlzC/dO
+         +5Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793781229; x=1794386029;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mFtVqTSX5VZj6yP5DMK96XmmuHO8vMp9gIdYgvy2Dg4=;
-        b=E3gS4JMenoVr6l0P5tczBMNXNHFSL7NN19onAk/AGZx5ZWFtzWQAgD2foVCV8DxBS7
-         eahjX4BgMlbTg6V0VAwS6opwkET2rhljE2+cjro6O9LPQvj53SqelF2ZQiEhoade6JHW
-         GOzLPCGtyMNFc1Obam4NWiWBNppTI2FJuSyOXhpxrun9TkJP55Ibzh9Vt5jeS/tUgdbs
-         dW8/vrE8tp3mrXYKnKUzYL145CdIl4X1OysjE/MeohdZAemdcz9ESiU/bSJAg8P32CHx
-         VfQEguoSsS0XY/a8USciv6bOSn4wKEfWLWPqe7DyPa4BM5yFoLXwrgjk2LJ0B+AYOkJk
-         bSJg==
-X-Gm-Message-State: APuU4Z9d4dWBwMQ3ES8uaHVtLWWQxMjf9uR/dhk0FXDe5bbgqcJ4n4lR
-	yDa4SCv+/o4AhNsWoMno5Wl1lvJYZcAME2Q0qN9hOls2H4MM7WBUOJViGpcNr2vxmAY=
-X-Gm-Gg: AYBFou2r6POb7SMrsIULDcfhyPqXyDUrYS5QVMurWzcQoDlELi0pPceDOfzkGwgaC6i
-	woTzS/CnmEdQ/iZa0gdZl1hzKC22JazNDS3UuyiZBa+xEylbDh6X8Z4BERzP35hiUSSn3HQQO0l
-	UECjaETcfETiLx7k3uqkNpF6hlVXhJCiTMQ+PL1qDTJ9qDO7s2jZY2AQbRe6/4Lg8AvHQMQZjT5
-	wXngcXMGLFEaFXs1WIlCmCmNPue0vHnLasAsUX4ZSYKAjAdZRB8yUqIbCVFuymOCaxdmbsvouDi
-	qj0oBW1pvmuNYjBFKJH1oYkEZ2yV8eqTvZpWRgF66LLlMuqNW+FFv3bnWr+3GcckJrQQlQnnaAH
-	Jby2R3LW/bEna+MkMP/WZL88Uwxe3gw8LxWdsSjwkCzL5ssG3HgDKY2vAjPqLK+XsvGP8jCaZLa
-	/at2yF7NVRc182LGrVlOsrraksG2MDGXE9+/y2jw2kAWGBOxNifmVKdhDRg1ljOIaxuMN5Jk9tZ
-	BwDMbiM/FF3NYlu0EKNv/y8/u5KXwfICcZhlKWUrtewbmUPqo5WrjdQijtV7zay49Hi9nwbwzcW
-	BE0GpMx31OPSjIbQgCSOO/1AIxj9JjrIlYgTqhZnSJEh7oK/Uy+h4n+9wBYtkGPMVc1yACKTA+w
-	SN73mvAUn+Q2aAoR8fEWFKSzsMSjd/7WHfDslVnjKWnETCz8Xv072PAPWgtBqymvxMRPZATI/eR
-	pCm0RUWPVYJtImwtJ2dEZb8ewiJMLJ
-X-Received: by 2002:a05:6000:40cf:b0:48d:c29e:40c3 with SMTP id ffacd0b85a97d-48e6e5008f5mr35779497f8f.33.1793781228229;
-        Wed, 04 Nov 2026 00:33:48 -0800 (PST)
-Received: from localhost.localdomain ([104.28.251.97])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48fed0844e2sm1973075f8f.28.2026.11.04.00.33.36
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 04 Nov 2026 00:33:47 -0800 (PST)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Subject: [Outreachy][Proposal v2]: Reduce Git's global state to enable Git's libification
-Date: Wed,  4 Nov 2026 09:33:22 +0100
-Message-ID: <20261104083322.80687-1-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261029141818.40193-1-okhuomonajayi54@gmail.com>
-References: <20261029141818.40193-1-okhuomonajayi54@gmail.com>
+        d=1e100.net; s=20260707; t=1793782704; x=1794387504;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ficUrWX2w+Npe4F5PPXl3GNQjdXHHWp8V/iQsB6LD9U=;
+        b=p+sGPxLh6c8bYHap46RXqkZ8gdM6psqf5+/WFP/XBQAm9Xan6/l37knoxZn7Tf3SAN
+         K7zNuxXZrVD2QrNQzpO5yA0PQ5tK/ZvtVYh6Fw0rgTIecWm0/2WYehgBd7V9kN7do78F
+         Jdenuqx5uLjRAoqOCjzn6Gdxajgvhffh8b8rBGLvQow6TuFqSHgq3D5C5lsoCPMTAQ5Z
+         cHHw416tED7ywFwvsy8c41XR3cL8H632XM9byQn0UP7ECeENmwbUwKFzi4rUojSeBpor
+         cMJcWMo3mLsZtuRm5PC63PmQhn0ST3qYZ9b4VrzvKF6aGLBSpqZa8iErPTeUXiFsylxe
+         JQMw==
+X-Gm-Message-State: APuU4Z8JWUVJdRZuEg86JLaJD9fDItd2Vz4Ir1/AQIS6J1lAZMZ3rsge
+	95EnJBAiSUUG9Cj7Wctjeglw5+BgYHbhuxeri0pIZCOTHOCGs3jxojKFWa67LMquUsnySh9PKgO
+	nZWtD/II4LObpX14j9Z4IQfmrDlLp5gjUhQv1Bg4=
+X-Gm-Gg: AYBFou2+3fFLUleirJp/OB6nBTWvWyPBRRqd0KOI51oStr9a6WxBdY5/VasXVbyodGb
+	Qg5f9jiaxc9p+ZsXVkU5EuuDelbf5Oz9J/RbTrftpR6Gm3BlqcJArgyst98CFaXV+60Ry4zK5sg
+	dygByu7Gp+rikcFZOoBthz7vfb+0ZqyARhiExo1rsYuEl6iSmBkiqP1cV6O0Td9Yy9LcLuS1fO0
+	1xISEDrvXY386QI3vC19VaQftIViFzFO2UfU4Rjt3h4TeDZB2U326v+4NG+I9k2M0AenmbBopfW
+	emHn/3r2r/DjL2ot3tcA2klhN1ff1x4FzDuqWChsLw5HfTOkiWucG2kRlC/viZlTrSXd1JTv48T
+	QzoFTHaC4nXo1E15bKjfqTF2B/qba4G4/Yjboryt9vF4xY/EZBeFHKu8OCDqYgCT8q2dRi/7skz
+	uHKDPQ/sdTd2/f7+BMXdZRDGQ8FgvkuuSTLTs9/eibN5QAmyQh
+X-Received: by 2002:a05:6102:644b:b0:7cc:971a:61ee with SMTP id
+ ada2fe7eead31-7d072bb37ddmr6855260137.10.1793782703989; Wed, 04 Nov 2026
+ 00:58:23 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -101,553 +100,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-Hello,
-
-This is the second version of my proposal for the project "Reduce
-Git's global state to enable Git's libification" for the December
-2026 Outreachy internship. v1 is here [16].
- 
-Changes since v1
-----------------
-- Blog: moved from Medium to Hashnode, so that posts can be read
-  without an account, as Christian pointed out [17].
-- Plan: added moving reusable code from builtin/ into library
-  helpers, following the discussion Christian pointed to [18].
-- Plan: I will send related conversions as one series instead of
-  many small topics, as Patrick asked [19].
-- Contributions: updated statuses, added the patches sent since v1,
-  and what I learned from the notes-utils review [20].
-- Reviews: added my review of Srujith's submodule patch.
-
-I'd appreciate any feedback.
-
-Personal Information
-====================
-
-Full Name: Okhuomon Rosemary Ajayi
-Email: okhuomonajayi54@gmail.com
-GitHub: https://github.com/six-shot
-Blog: https://hashnode.com/@okhuomonajayi
-Location: Lagos, Nigeria (WAT, UTC+1)
-
-About Me
-========
-
-I am Okhuomon Rosemary Ajayi, often known as "sixshot", a
-self-taught software developer from Lagos, Nigeria. I am obsessed
-with robots and intelligent mechanical systems. C was the first
-programming language I picked up, before I moved into frontend and
-mobile development. Working on Git during this contribution period
-has brought me back to C, and I have enjoyed working at that lower
-level again.
-
-Before Git, I contributed to other open source projects. In Servo
-I fixed clippy warnings in the script crate and improved some
-documentation [12]. In the OCaml ecosystem I added Deflate support
-and horizontal differencing to ocaml-tiff, and worked on raven and
-YOCaml [13]. In LibreOffice I worked in the C++ core, fixing a bug
-where Infobar keys reached the document and cleaning up unit
-conversion code [14]. In Mozilla Firefox I fixed layout bugs in
-vertical tabs and split view [15].
-
-As a woman in tech, I know how much it helps to see someone like
-yourself doing the work. That is why I volunteered to train girls at
-Edunity for Girls, helping them get started in tech.
-
-Honestly, I would like to be part of the Git community and keep on
-contributing to open source. This project lets me do that in C, the
-language I started with, and my patches on the_repository so far
-have shown me how much there is to learn here.
-
-Past Experience with Git
-========================
-
-I have been using Git since I started coding, for my own projects
-and when collaborating with other developers.
-
-This is not my first time on the Git mailing list. I applied to
-Outreachy in October 2025 and sent about ten patches in about a week
-(patch-ids, commit.c comments, builtin/patch-id.c, gpg-interface)
-[10]. None of them were merged. I was sending too fast, my subject
-lines had doubled prefixes like "[PATCH] [PATCH v2]", and my commit
-messages did not follow the project style, as Junio and Christian
-pointed out [11].
-
-This year I slowed down. I read SubmittingPatches properly, wrote
-my commit messages in the present tense, and sent one change at a
-time. The hardest part was still sending new versions: keeping each
-version in sync with the review, the right thread and the notes on
-what changed since the last version. This time my microproject was
-merged to master, three more patches are in 'next' and marked "Will
-merge to 'master'", and range-diff is on its way to 'next'.
-
-Contributions to the Git Community
-==================================
-
-Microproject
-------------
-+ delta-islands: use Q_() for island count
-  Thread: https://lore.kernel.org/git/20261013203042.58610-1-okhuomonajayi54@gmail.com/
-  Branch: oa/delta-islands-i18n-use-q
-  Status: merged to 'master'
-  Commit: 60e16b0387 (merge commit 7ac84b7267), listed in the
-  Git 2.98.0 release notes
-  Description: The island count in a progress message was built with
-  a plain _() so translators could not handle plural forms. Use Q_()
-  instead. v2 moved a reviewer note below the --- line after
-  Junio's review.
-
-Patches related to the project (the_repository)
-------------------------------------------------
-+ merge: stop using the_repository
-  Thread: https://lore.kernel.org/git/20261015142532.48175-1-okhuomonajayi54@gmail.com/
-  Branch: oa/merge-without-the-repository
-  Status: in 'seen'
-  Description: Pass the repository already available at the entry
-  points down to the helpers, removing the_repository and
-  the_hash_algo from merge.c.
-
-+ merge-blobs: stop using the_repository
-  Thread: https://lore.kernel.org/git/20261017105244.90295-1-okhuomonajayi54@gmail.com/
-  Branch: oa/merge-blobs-stop-using-the-repository
-  Status: in 'seen'
-  Description: Use the repository reachable from the index_state
-  instead of the global.
-  Usman suggested renaming "r" to "repo"; Junio preferred the short
-  "r" used elsewhere for "struct repository *", so I kept it [9].
-
-+ diffcore-break: remove USE_THE_REPOSITORY_VARIABLE
-  Thread: https://lore.kernel.org/git/20261014114904.85300-1-okhuomonajayi54@gmail.com/
-  Status: in 'next', marked "Will merge to 'master'"
-  Description: An earlier commit removed the last use of
-  the_repository in diffcore-break.c, so the file no longer needs
-  USE_THE_REPOSITORY_VARIABLE. Drop the define.
-
-+ checkout: make unique_tracking_name() use the given repository
-  (2 patches)
-  Thread (v3): https://lore.kernel.org/git/20261023211533.73433-1-okhuomonajayi54@gmail.com/
-  Status: v3 in 'seen'; Christian suggested unwrapping some lines
-  now that they are shorter, which I will do in v4
-  Description: Pass the repository to unique_tracking_name() and
-  carry it in struct tracking_name_data, so checkout.c no longer
-  needs USE_THE_REPOSITORY_VARIABLE. Usman asked for a clearer
-  commit message in v1. In v2 Junio pointed out that the function
-  still walked the remotes with for_each_remote(), which only works
-  on the_repository, so v3 adds repo_for_each_remote() first.
-
-+ diffcore-rename: stop using the_repository
-  Thread: https://lore.kernel.org/git/20261024221341.92086-1-okhuomonajayi54@gmail.com/
-  Status: in 'next', marked "Will merge to 'master'"
-  Description: diffcore_rename_extended() already has the
-  repository through its options. Use its hash algorithm when
-  checking for empty blobs, pass it to start_delayed_progress(),
-  and drop USE_THE_REPOSITORY_VARIABLE. Patrick reviewed it and
-  said it looks correct.
-
-+ notes-cache: read the cache ref from the given repository
-  Thread: https://lore.kernel.org/git/20261026102603.32377-1-okhuomonajayi54@gmail.com/
-  Status: reviewed by Junio, waiting to be queued
-  Description: notes_cache_match_validity() already receives the
-  repository but read the ref from the_repository. Pass it to
-  get_main_ref_store() so the check reads the same repository.
-
-+ combine-diff: use the repository from diff options
-  Thread: https://lore.kernel.org/git/20261026111303.92117-1-okhuomonajayi54@gmail.com/
-  Status: sent, waiting for review
-  Description: show_combined_header() and show_patch_diff()
-  already have opt->repo; use it for the hash algorithm,
-  abbreviation and gitlinks. The file still needs the macro for
-  DEFAULT_ABBREV, which depends on the default_abbrev global.
-
-+ negotiator/default: stop using the_repository
-  Thread (v2): https://lore.kernel.org/git/20261103155038.87456-1-okhuomonajayi54@gmail.com/
-  Status: v2 sent after Christian's review (use the local variable
-  I had introduced, and take the repository as the first argument,
-  like most functions)
-  Description: Give default_negotiator_init() a repository,
-  store it on the negotiation state and use it to parse commits,
-  clear marks and walk refs. Drop USE_THE_REPOSITORY_VARIABLE.
-
-+ bundle-uri: stop using the_repository
-  Thread (v2): https://lore.kernel.org/git/20261029131325.79176-1-okhuomonajayi54@gmail.com/
-  Status: v2 in 'next', marked "Will merge to 'master'"
-  Description: unbundle_from_file() unbundles objects into the
-  given repository but read and wrote refs in the_repository, and
-  fetch_bundle_uri() used the_repository for tracing. v1 used the
-  given repository for both and was reviewed by Karthik. Patrick
-  then pointed out that only two more uses were left in the file,
-  in find_temp_filename() and copy_uri_to_file(), so v2 passes the
-  repository to them too and drops USE_THE_REPOSITORY_VARIABLE
-  from bundle-uri.c.
-
-+ range-diff: use diffopt->repo instead of the_repository
-  Thread (v2): https://lore.kernel.org/git/20261029084720.93221-1-okhuomonajayi54@gmail.com/
-  Status: queued, marked "Will merge to 'next'?"
-  Description: output_pair_header() and patch_diff() receive a
-  diffopt that names the repository, but still used the_repository
-  and the_hash_algo. Use diffopt->repo, and give get_filespec() a
-  hash algorithm parameter. v2 rewords the commit message after
-  Pablo's review.
-
-+ pseudo-merge: use writer->repo instead of the_repository
-  Thread: https://lore.kernel.org/git/20261029194116.63464-1-okhuomonajayi54@gmail.com/
-  Status: sent, waiting for review
-  Description: The functions in pseudo-merge.c receive a
-  bitmap_writer that names the repository, but used the_repository.
-  Use writer->repo, give push_pseudo_merge() a repository
-  parameter, and drop USE_THE_REPOSITORY_VARIABLE.
-
-+ name-hash: use istate->repo instead of the_repository
-  Thread: https://lore.kernel.org/git/20261030183218.32630-1-okhuomonajayi54@gmail.com/
-  Status: sent, waiting for review
-  Description: Three functions receive the index but read
-  core.ignoreCase through the_repository. Read it from istate->repo
-  and drop USE_THE_REPOSITORY_VARIABLE.
-
-+ fsmonitor: stop using the_repository
-  Thread: https://lore.kernel.org/git/20261031111450.66192-1-okhuomonajayi54@gmail.com/
-  Status: sent, waiting for review
-  Description: refresh_fsmonitor() gets its repository from the
-  index, but the helpers it calls used the_repository. Pass the
-  repository to fsmonitor_hook_version(), use the one the other
-  helpers already have, and drop USE_THE_REPOSITORY_VARIABLE.
-
-+ wt-status: use the repository the status already has
-  Thread: https://lore.kernel.org/git/20261101063951.85427-1-okhuomonajayi54@gmail.com/
-  Status: sent, waiting for review
-  Description: Use s->repo and r where the functions already have
-  a repository. The define stays because DEFAULT_ABBREV expands to
-  the global default_abbrev.
-
-+ notes-utils: use the passed repository (v1 -> v2, 2 patches)
-  Thread (v2): https://lore.kernel.org/git/20261103084930.15532-1-okhuomonajayi54@gmail.com/
-  Status: I will drop it, see below
-  Description: v1 made create_notes_commit() and commit_notes()
-  use the repository they are given. Patrick asked why I stopped
-  short of dropping USE_THE_REPOSITORY_VARIABLE, so v2 also passed
-  a repository to init_copy_notes_for_rewrite() and dropped it.
-  Karthik found the patches good and dug into the history of the
-  file. Junio then pointed out that dropping the define is
-  misleading: the functions in notes.h that notes-utils.c calls
-  still only work with the_repository, so notes.h has to be
-  cleaned up first [20]. This taught me to follow the calls down
-  before claiming a file no longer depends on the_repository.
-
-+ environment: move commit_encoding into repo_config_values
-  Thread: https://lore.kernel.org/git/20261021155608.58509-1-okhuomonajayi54@gmail.com/
-  Status: v1 reviewed by Junio; v2 in progress
-  Description: v1 moved the global into struct repo_config_values.
-  Junio pointed out that only commit.c uses it and suggested passing
-  a "const char *" encoding down to the functions instead of the
-  whole repository. v2 will do that.
-
-Other patches
--------------
-+ credential-store: add lockTimeout config option (#leftoverbits)
-  Thread (v2): https://lore.kernel.org/git/20261016212216.58000-1-okhuomonajayi54@gmail.com/
-  Status: v2 sent after Junio's review, waiting
-  Description: Junio noted in the rerere thread that
-  credentialStore.lockTimeoutMS is the only timeout setting with
-  the unit in its name, and suggested a synonym without "MS". Add
-  credentialStore.lockTimeout; the old name keeps working.
-
-Reviews and help to other applicants
-------------------------------------
-+ list-objects-filter-options: pass repository to partial clone
-  helpers (Dorine Tipo)
-  My reply: https://lore.kernel.org/git/CAFpMFfCu6JrUC8i453qBP=AktqcG_9sGX=1-1ekEDCYm_+pkUw@mail.gmail.com/
-  Description: Dorine asked whether USE_THE_REPOSITORY_VARIABLE
-  could be dropped. I applied the patch, removed the define and
-  checked that the file still builds, so it can go in the same
-  patch. Dorine added it to v2 with a Helped-by trailer.
-
-+ submodule: use the submodule repository to abbreviate commits
-  (Srujith Poojary)
-  My review: https://lore.kernel.org/git/CAFpMFfALb1KbEw-dc4wYCxS4PXfDBwzQOD6YPRe52_bpRnGt9w@mail.gmail.com/
-  Description: Confirmed that the new test fails without the fix,
-  and suggested describing the problem first, naming the code area
-  in the title, choosing the repository once, and falling back to
-  o->repo instead of the_repository. Srujith applied all of them
-  in v2. On v2 I pointed out that "git log" on submodule.c always
-  writes the area in lowercase, which he fixed in v3, and Junio
-  queued the patch.
-
-+ Microproject idea: modernize a file-existence check in
-  t/t0081-find-pack.sh (Immaculate Mecha)
-  My reply: https://lore.kernel.org/git/CAFpMFfA17dnuLSRt97BrM0u3cHAifJybr_Zc2ahr_zq2nspgsw@mail.gmail.com/
-  Description: Pointed out that Shashank S had already changed that
-  exact line, and suggested searching lore and "What's cooking"
-  before choosing a microproject.
-
-Git Rev News
-------------
-+ Proofread edition 140 and fixed typos in the Developer Spotlight
-  interview (https://github.com/git/git.github.io/pull/878). It was
-  merged, and I am credited in the published edition.
-
-Learning resource
------------------
-+ "Learn C by reading Git" -- a zero-to-hero guide
-  Link: https://six-shot.github.io/six-shot-git-c-zero-to-hero/
-  Description: C was the first language I learned, but I had not
-  used it in a while. I built this guide during this Outreachy
-  contribution period so I could understand C well by learning it
-  with Git itself. It teaches C from zero using real code from
-  git.git (repository.h, merge-blobs.c, git.c, ...), with
-  exercises. It covers the patterns this project depends on:
-  structs and pointers, passing "struct repository *" down a call
-  chain, and why global variables like the_repository are a
-  problem. I hope it also helps other people who want to start
-  contributing to Git.
-
-Project Overview
-================
-
-Git keeps the state of the repository it is working on in a single
-global object, the_repository, which is a "struct repository". A
-lot of internal code uses this global directly instead of taking a
-repository as a parameter. On top of that, many configuration and
-environment values are stored as global variables in environment.c
-rather than in the repository they belong to.
-
-This design assumes that a process only ever works with one
-repository. That is not true for things like submodules, and it is
-one of the main things blocking the long-term goal of libifying Git,
-where a program could open several repositories at the same time.
-With shared globals, two repositories in one process would read and
-overwrite the same values, which can lead to wrong behaviour that is
-hard to debug. It also makes the code harder to read and test,
-because a function's dependencies are hidden instead of being
-visible in its parameters.
-
-This project reduces that global state step by step:
-- removing the_repository from library code by passing the
-  repository explicitly through the call chain, so files no longer
-  need USE_THE_REPOSITORY_VARIABLE;
-- moving repository-specific settings from environment.c into the
-  repository, mostly struct repo_config_values and struct
-  repo_settings;
-- and, where a value is only used in one place, passing just that
-  value down instead of the whole repository.
-
-A lot of progress has already been made: many settings that used
-to be globals now live in struct repo_config_values, and many files
-no longer need the_repository. But there is still plenty left.
-Over a hundred library files outside builtin/ still define
-USE_THE_REPOSITORY_VARIABLE, and environment.h still has globals
-such as git_commit_encoding, git_log_output_encoding and
-comment_line_str. That remaining library code is where I want to
-focus.
-
-Review of Previous Work and Strategies
-======================================
-
-From reading past series on the list and from my own patches, I see
-three strategies, and the right one depends on the variable:
-
-1. Thread the repository through the call chain, bottom-up.
-   Patrick Steinhardt introduced USE_THE_REPOSITORY_VARIABLE so files
-   that still depend on the global are marked [1]. Work then goes from
-   the lowest layers up, removing the macro file by file (objects [2],
-   path [3], packfile by Karthik [4]). My patches to merge.c,
-   merge-blobs.c, diffcore-break.c, diffcore-rename.c, checkout.c,
-   notes-cache.c, combine-diff.c, negotiator/default.c,
-   bundle-uri.c and range-diff.c follow this pattern.
-
-2. Move repository-scoped config into the repository.
-   core.hooksPath and core.sharedRepository moved into repo-settings
-   with accessors [3]. Later, Olamide Caleb Bello's Outreachy series
-   added struct repo_config_values, with repo_config_values(repo) as
-   the accessor, and moved core.attributesFile, core.sparseCheckout
-   and branch.autoSetupMerge into it [5]. Others, such as Tian Yuchen,
-   have moved more values there since.
-
-3. Pass only the value the function needs.
-   the_hash_algo was replaced by an explicit
-   "const struct git_hash_algo *" in csum-file.c [2]. Junio asked for
-   the same thing on my commit_encoding patch: since only commit.c
-   uses the variable, pass the encoding string instead of adding it
-   to repository config [6].
-
-Roadblocks seen in earlier work
--------------------------------
-- Not every global belongs in struct repository. When Ayush
-  Chandekar tried to move core.attributesfile into repo_settings,
-  Junio questioned whether attribute data belongs to a repository at
-  all, since attributes come from the index and the working tree,
-  and compared it to how index_state is passed around instead of the
-  repository [7]. The config value was later stored in struct
-  repo_config_values instead [5].
-- State used during early startup cannot simply be moved; the setup
-  code has to change first. Patrick did this for
-  is_bare_repository_cfg and git_work_tree_cfg in his "setup: drop
-  global state" series [8]. have_git_dir() is still left, and
-  environment.h says it "should not have to exist at all".
-- builtin/ commands: the "repo" argument of cmd_foo() can be NULL
-  (e.g. "git foo -h" outside a repository), so blindly replacing
-  the_repository there causes crashes. Library code is the safer
-  target.
-- Naming: Junio prefers a short "r" for "struct repository *"
-  parameters [9], and most functions take it as their first
-  argument.
-- Hidden dependencies: a file can pass a repository everywhere and
-  still depend on the_repository through the functions it calls.
-  For notes-utils.c, the notes.h functions underneath still only
-  work with the_repository, so dropping the define there would
-  have been misleading [20]. Before dropping a define I now follow
-  the calls down into the other files.
-
-Can there be clear criteria? Only partly. My working checklist:
-  a. Who reads and writes it? (git grep every use)
-  b. Is it per-repository, per-index, per-subsystem or process-wide?
-  c. Is it needed before a repository is set up?
-  d. Does only one file use it? Then pass the value (strategy 3).
-  e. Search the list for earlier attempts and objections first.
-Anything still unclear goes to the list as a question before code.
-
-Example: git_log_output_encoding
---------------------------------
-This is the encoding Git uses when it shows commit messages. It is
-the twin of git_commit_encoding, which my commit_encoding patch
-works on, but it is harder:
-
-- It is set in two places: from i18n.logOutputEncoding in
-  environment.c, and from "git log --encoding=..." in revision.c.
-  Other revision options like --reverse are stored in struct
-  rev_info, but --encoding writes the global. The parsing was moved
-  into revision.c in 2006 (7cbcf4d557) so that rev-list and
-  diff-tree could use it too, and at that time the rest of the
-  code read the encoding from a global anyway.
-
-- It is read through get_log_output_encoding() 15 times in 12
-  files. Many of these callers (log-tree.c, bundle.c, submodule.c,
-  sequencer.c) copy it into
-  "struct pretty_print_context.output_encoding", so that struct
-  already carries the value. That points to strategy 3: fill the
-  context once from the caller and let the pretty-printing code use
-  ctx->output_encoding instead of calling the global getter.
-
-- Some callers do not print a log: remote-curl.c uses it to
-  re-encode an error message from the server, and sequencer.c uses
-  it when building the todo list. So the value is really "the
-  user's display encoding", not something that belongs to one
-  repository. That is a reason NOT to put it in
-  repo_config_values, which is also what Junio said about
-  commit_encoding [6].
-
-My plan for it: first do commit_encoding (single caller), then
-propose on the list storing the --encoding value in struct rev_info
-and passing it through pretty_print_context, and ask whether that
-design is acceptable before writing the series.
-
-Internship Plan and Timeline
-============================
-
-The internship runs from 7 December 2026 to 8 March 2027.
-
-Before the internship (now -- 6 Dec 2026)
-- Finish open patches: commit_encoding v2, checkout v4 and the
-  others waiting for review. No new topics until those are
-  reviewed.
-- Keep reviewing other applicants' patches in the global-state area.
-- Build a list of remaining globals and USE_THE_REPOSITORY_VARIABLE
-  files outside builtin/, ordered by how low in the call graph they
-  sit.
-
-Weeks 1-2 (7 Dec -- 20 Dec)
-- Agree the list and order with mentors.
-- First series: a group of related library files off
-  USE_THE_REPOSITORY_VARIABLE, sent together instead of one topic
-  per file [19].
-- First blog post.
-
-Weeks 3-6 (21 Dec -- 17 Jan)
-- environment.c globals that only one subsystem uses: pass the value
-  down, as Junio suggested for commit_encoding.
-- git_log_output_encoding next: it is read in 12 files and also set
-  by "--encoding", so agree the design on the list before coding.
-- Ask on the list before touching the comment_line_str group and the
-  abbrev globals, since they are read in many places.
-
-Weeks 7-10 (18 Jan -- 14 Feb)
-- Continue bottom-up removal of the_repository in library code,
-  one subsystem per series.
-- Move reusable code out of builtin/ into library helpers, which
-  Junio describes as useful work because builtin/ code cannot be
-  reused [18]. Agree candidates with mentors first.
-- Look at a harder item if mentors agree, such as have_git_dir(),
-  which still depends on the_repository.
-
-Weeks 11-13 (15 Feb -- 8 Mar 2027)
-- Land rerolls, no new big series.
-- Final report on the blog and the list.
-- Update the "Learn C by reading Git" guide with what I learned.
-
-Throughout: related changes batched into one series, reply to
-reviews within a day or two,
-weekly blog post, weekly sync with mentors.
-
-Availability
-============
-
-I can give 40 hours a week to the project during the internship.
-I am based in Lagos (WAT, UTC+1) and can adjust my hours for calls
-and reviews when needed.
-
-Blogging
-========
-
-I will blog on Hashnode (https://hashnode.com/@okhuomonajayi),
-which anyone can read without an account, and post weekly updates
-on my progress, what I learned and the challenges I faced. I will
-share each post on the mailing list, like previous interns did.
-
-After the Internship
-====================
-
-After the internship I want to continue as an open source
-contributor to Git: sending patches, reviewing others' work and
-helping new contributors get started, the way Usman and Junio
-helped me. I also want to keep the "Learn C by reading Git" guide
-up to date so it stays useful for future applicants.
-
-Appreciation
-============
-
-I want to thank Usman and Junio for always helping out during this
-contribution period. I also want to thank Patrick, Karthik, Pablo,
-Christian, Siddharth and Kaartic, who reviewed my work and gave me
-feedback, and everyone in the Git community for being so welcoming.
-
-References
-==========
-[1] https://lore.kernel.org/git/cover.1718347699.git.ps@pks.im/
-[2] https://lore.kernel.org/git/20250306-b4-pks-objects-without-the-repository-v2-1-f3465327be69@pks.im/
-[3] https://lore.kernel.org/git/20250207-b4-pks-path-drop-the-repository-v2-14-13cad3c11b8a@pks.im/
-[4] https://lore.kernel.org/git/cover.1733236936.git.karthik.188@gmail.com/
-[5] https://lore.kernel.org/git/cover.1771258573.git.belkid98@gmail.com/
-[6] https://lore.kernel.org/git/xmqq33tyn5qi.fsf@gitster.g/
-[7] https://lore.kernel.org/git/xmqqwmcw97z2.fsf@gitster.g/
-[8] https://lore.kernel.org/git/20260611-b4-pks-setup-drop-global-state-v2-0-a6f7269c841d@pks.im/
-[9] https://lore.kernel.org/git/xmqqwlrcrqaz.fsf@gitster.g/
-[10] https://lore.kernel.org/git/20251009214445.1190274-1-okhuomonajayi54@gmail.com/
-[11] https://lore.kernel.org/git/CAP8UFD2sdvkv_ZqiLZU9k5zF+tM3UTQ8+mJjziRZGzOra6dMFA@mail.gmail.com/
-     https://lore.kernel.org/git/xmqqo6q5z6iu.fsf@gitster.g/
-[12] https://github.com/servo/servo/pulls?q=is%3Apr+author%3Asix-shot+is%3Amerged
-[13] https://github.com/geocaml/ocaml-tiff/pull/80
-     https://github.com/raven-ml/raven/pulls?q=is%3Apr+author%3Asix-shot
-     https://github.com/xhtmlboi/yocaml/pulls?q=is%3Apr+author%3Asix-shot
-[14] https://gerrit.libreoffice.org/q/owner:okhuomonajayi54@gmail.com+status:merged
-     https://whatsnew.libreoffice.org/25.8.4/
-[15] https://github.com/mozilla-firefox/firefox/commits?author=okhuomonajayi54@gmail.com
-[16] https://lore.kernel.org/git/20261029141818.40193-1-okhuomonajayi54@gmail.com/
-[17] https://lore.kernel.org/git/CAP8UFD1VUCTeXNbb4YKGkZRWY8i56Zms_=qkR2oqF7e1Aagy1Q@mail.gmail.com/
-[18] https://lore.kernel.org/git/xmqqmru76ybk.fsf_-_@gitster.g/
-[19] https://lore.kernel.org/git/auhtiZ86trLamccS@pks.im/
-[20] https://lore.kernel.org/git/xmqqjymt94l3.fsf@gitster.g/
-
-Thanks for reading.
-
-Okhuomon Ajayi
+From: Tatchou Yopa Nelly <yopatatchou@gmail.com>
+Date: Wed, 4 Nov 2026 09:58:13 +0100
+X-Gm-Features: AclHuK9ASPvbK4wK_QvH5aJfZdFYfK-ElbvWT0PurxnN0TFWgiIhjdL6poPnCbA
+Message-ID: <CAG7jffxDguporrsGrB1Wv6K1DPVa4zbRpNjYNn9B1Nytp06RqA@mail.gmail.com>
+Subject: [Outreachy] Config shape for promisor fetch ordering some thoughts
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+Hello everyone,
+
+I'm Yopa Nelly, applying for the promisor remote fetch ordering
+project with Kaartic Sivaraam. I've been reading through
+promisor-remote.c and t5710 to understand what happens today, and
+before I start writing anything I wanted to get some feedback on
+the config shape. The project page says to float it on the list
+first, so here I am.
+
+What I think happens now: remotes are kept in a linked list in
+config order, and the extensions.partialClone remote gets moved to
+the end. Then lazy_fetch_objects() goes through the list twice
+once for the remotes the server told us to use and once for the
+rest. As far as I can tell there's no way for a user to say
+"actually, try this one first" other than moving config lines
+around.
+
+So the two options I keep coming back to:
+
+  1. remote.<name>.promisorPriority = <number>
+  2. promisor.fetchOrder = <comma-separated list>
+
+I think I prefer the list. Numbers feel fine when there's one config
+file, but once it's spread across system/global/local it gets hard
+to look at and know what the order will be. A list is easier to
+read, and it's easier to override in a later config file without
+having to pick a number that beats whatever was there before. It
+also maps pretty directly onto the linked list we already have, so
+hopefully it's not a huge change to sort it.
+
+The thing I keep tripping over with the numbers approach is what to
+do with remotes that don't have a priority set. Zero? Infinity?
+Something in between? With a list, "not listed" means "after the
+listed ones, in the usual order," which feels obvious.
+
+A few cases I'm not sure about and would love an opinion on:
+
+- If someone names a remote in promisor.fetchOrder that isn't
+  actually a promisor remote, is that an error, a warning, or just
+  ignore it?
+- Does extensions.partialClone still go to the end, or can an
+  explicit entry in the list override that?
+- Do we expect to want different orders depending on which remote
+  we're fetching from later on? If yes, that makes the per-remote
+  number look more appealing.
+
+I'd rather sort this out now than write something and then have to
+redo it. Any preference, or anything I've got wrong about how it
+works today?
+
+Thanks,
+Yopa Nelly
+GitHub: https://github.com/YopaNelly
