@@ -1,87 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793822007;
-	b=LOS2rg47MaIgfQi0PAmgehuuU+anwCpqhsErc9P+Kze4umHfl8lQC2PaSc3M9Wis5lCP
-	 c5QIhBp4X8GZySWRfC+GPkDc4uQy7IZjdDcUxuUkCwSO9ir0P9Tk8xQOLTEKQ/7cHo3Pg
-	 EGkvbCU1P6OOJ74I780914VqwqpXjwIJy6ZXB/p8ITioVHejt4XlrBxlndmsOTTPzie4I
-	 qJSkSMpAwCdCPMytsy2zBPYeuupJMzrHtpVcf9+SJ/nTGCbqvi2Q/3m/Zpf/UU4dAY2G0
-	 cKb+4/XvuoSGUzDMs6nK+ru8Vz7MJcv0j7e+U/ZtIsSA2RHc1tTYW0P8iiR3/WItVfQ==
+	t=1793822221;
+	b=3w4oHA1gE0is7VhoePNkk1NS35I0aTt/i357PV/keF55i/1xFMyJR0o/NvoqixCindYq
+	 pfb1N0Cm52+0vrvdBr8M3GHLVQ0b2TelloAgqOJBYGyoUqkURFhSi0yuHPYdMO0zo0G8M
+	 oKuMdA7Ji56YWNsLH3s37ji9UN8HILjEh573SDLL50NFXPIFyQrwgz9mSIGNSKvTemniO
+	 CfX1Y5mC6K038E6mcXRO97gH3pRhT/xqIxIKJbhq/najNk/dEshWqzA4PxxZMXjcYzNDE
+	 MYmp4fEN471g9HGEas2dkUQ4kKhQtVL8grz0a8Kya591z4ScjP+E4/q8EdXEJroGIMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793822007;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 References:In-Reply-To:To:Cc:X-Mailer;
-	bh=5aj+gybRWnZcO5jirgnBYuv2kZcBZ1AEMGtJ4gEhpes=;
-	b=lEyCYugVS1F4KaYLOgy9vFR9Q8LmA9P8RGKAz1NZxOyJE0I7pvyJE3FsyZDxUp625ti2
-	 ikmqmyYOyFpZYU9TmI3USsfh6/1tQfuYQSd/5Xsql6WdDTqcaJa1yDZowBzzKasu5d1mN
-	 H6ngn7ej37N63tOCByx9Jd53DOPt80oA8iROwVmncDye4klMLIZjKAK3/LnF4hOB22i9y
-	 gNRnTV+VORnyxP36TXU4kMo/lVBhqx2WzApu4TLK3UlPtVeW4LX44c/efQ+TGjbBnETLY
-	 tgAni7GvCT4O890KnHD5rSB1DHThQygqG7a0cBhu0+iygBe34dCmXsN4X+SObR4BAow==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793822221;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=aZjAsiUn2ZMnFk/23PdaIv+flWo+97iozVhtNn92mbQ=;
+	b=cy7tivDid7fZu1A6OSd9/Bs/fN/fa4fS8y8ZGakFnzTq781Jwp6iyOy0LF4yWL22rab7
+	 yzcZnzPEEO3G1QST/WrYFPhvmSPaadViAjz3c0Zw953br6QRvpHq7QQgAEWKQwhITU72e
+	 5bbsACM4xmPZMA31qEcm8JlXFHNut99S6QknfpNFMzpmFmqjTEI3qecZzBFVAvJhd2TAR
+	 Is0jQq6E7vtEZ/MSLedLi/cTsNH5KfgWwh/MXN0fDcFex9pPDizLw8wUonM6iN+G9cSAs
+	 i6JOY2T4Kw5g9smMsPFr/6Z8mpQuLbyWobuRQ7xzmwxd6kVH7KpcxttQyToqiyA17Vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QOwx7knG;
-	arc=none smtp.remote-ip=74.125.82.180
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=D4HBO4AV;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=E6bnZarp;
+	arc=none smtp.remote-ip=103.168.172.148
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D496097649
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 19:53:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 96D496097649
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84E0609DC93
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 19:57:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C84E0609DC93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QOwx7knG
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-36d6e342f98so1170293eec.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 11:53:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793822006; x=1794426806; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=5aj+gybRWnZcO5jirgnBYuv2kZcBZ1AEMGtJ4gEhpes=;
-        b=QOwx7knGUYlO33GYZBJDlYlRS64aYewhOWAQDCW13gYf9+Yb1ZEjfhhItrDAPlJCFz
-         zHf/p5ImZlPvsImsSUCSGmQKAIsdlp8Q3XpDCVcIYpga0S+uJV5/S2OmGB4616wsnzxt
-         kj4v4x3sTTV2dBciU2KB4TxG90F6Co1E2ATypKzYM2XAyfCnwKYodqPhOtX5p4so9uvQ
-         4tQ9PTGrFdAgSDEwvtUdeYZnEufo1G5FThYjvagid7+gF2zLCCkL6MZd32RU9RXU0mXL
-         UTVhVkaJqCZiVkgqALdVOfC0+QF4em51m82peKz+Kw0h7lRLPcJtp3+xCafcNNFoveRk
-         Srjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793822006; x=1794426806;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5aj+gybRWnZcO5jirgnBYuv2kZcBZ1AEMGtJ4gEhpes=;
-        b=vgqKM5s7oxIRUooLPe4O7gLRB22UB7YwsGvdvi9dwCXWZX4FzDy9XrR7D93X4IpAZQ
-         q+W52imQtX0Ljv+nyh2g7a6eJx919UZKgjkmdZrtYulMhLbH2DuCP6TQSn8k9rAYjWDE
-         UAQZC802DdRVzizKg7SMgOttzeLzIC9izXBCffwsPnfryxMXXLAQjhNHojaZvZ0f41zT
-         dKkHqhPmmX92CK9y71Y7VTfU+Fn/wXB0yQ6tsetOnLpIjuFy//8FSg5eGKwneDVPFjAR
-         3yGtjJmKR0Ybz9yx5A3zXmyf8PsAQGlxfuF6uesWPSC5C5SzlvE8QQZILETW7+bZjIPV
-         E5dg==
-X-Gm-Message-State: APuU4Z9lTZOOEnkohp7ZVAi3HfVU6EVQAsGFBRdMcoTMPHeFyJx6f1R5
-	xHHq98b4lBEou3WfNKcRiPXO8JLrd3biT8hmvpyxAe7OINoAs6uz6OzJ
-X-Gm-Gg: AYBFou3cU+i8+Pcjr/sg+72Zp82CXsNRpKlZKu+/aDyslrLFVA2ea1RkCzKnwqGWyso
-	tWTZwzm0SkEhcGQJlEtXznzRf2K6cvleYRq6bh8pgFAlT6/Dt2dWOYNhzv6f41nbOPIZ/6aptXp
-	IXJHjKcgKKn04T/6UM1nyAeaEXVwSxQ9AOe8Umq4EsfdFNGzKPZ5k/OIQ6N6ijjBV7cLQnsXTI7
-	icZQYa/6UAr+SGWh9NMAbln7adxos9f1Ex+1LPj0lyT19LwXRx1teTWIBxkEn5hZrYOHDasp/WL
-	T11IOhOw3p0+S3ugxcSVNO2rvWp3GWnTUhyceW1I/aIYbW9AE3yMzEbMttSRsEi7XvBOSnhPhRi
-	NWcUKs8xR1FJ2dvvSUR55zD4eaNKIHkMgVg9eQ5Ot9qR+JUQWEroRKZbFbM2kMS9xsxeVHocEqL
-	VV+Q97h6m2UwYv7b6rv+GDpvmKuVHlZyr1D2ig97Xj541Kvd81+zV1DucSngT2UfOtLgvp49ePY
-	PIcLrTIRnBwwiHrEY40YwHY6/L5HNnCwSqZZrXjPP7Ug61yTo8snhaopg5UyLP3XUqgsLvP2Mko
-	iI1aylTB/PMg9xqw6D7D9bih/qEpmNMsvC4=
-X-Received: by 2002:a05:7300:c00e:20b0:35d:4e41:d2c2 with SMTP id 5a478bee46e88-36a4241b0b2mr29274798eec.33.1793822005391;
-        Wed, 04 Nov 2026 11:53:25 -0800 (PST)
-Received: from [127.0.0.2] ([73.222.46.22])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36ca3788bffsm9598670eec.1.2026.11.04.11.53.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2026 11:53:25 -0800 (PST)
-From: Farid Zakaria <farid.m.zakaria@gmail.com>
-Date: Wed, 04 Nov 2026 11:53:16 -0800
-Subject: [PATCH v2 3/3] credential-cache--daemon: do not take over a
- running daemon's socket
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=D4HBO4AV;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=E6bnZarp
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 19F6DEC0077
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 14:57:00 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 04 Nov 2026 14:57:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793822220; x=1793908620; bh=aZjAsiUn2Z
+	MnFk/23PdaIv+flWo+97iozVhtNn92mbQ=; b=D4HBO4AVe4W/yPV2BYqSivQZsz
+	GpJHX/1Ogl+EcYFe0KIU+DiYNCIdkPmHXuGWAR6+d8izWjtonb6UQNGYRnk8Mhog
+	tycgFj/Lrs2H5338Qpobe1f3Qcxxkl91/8m2uvZBuzOXdhz+aKXH+W4llOuzzHWx
+	bEEUU7jSyfa9xcy6LrkQ/OtvKuI/6y/AvrcbllN5CrQaoi/NnJW6lktFNZO9eZ1v
+	wgaqhoksI+GTXV9YQQbOJd/DoKaxnSpvAKsiN6KuP6IdhLiayT8MrpnTR1K33TKR
+	6p8BBL2YckDniqpx4LopsVH6eW2f1s8wxV1bTa3Fk7A1Winy6Oa0lymlinYg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793822220; x=1793908620; bh=aZjAsiUn2ZMnFk/23PdaIv+flWo+97iozVh
+	tNn92mbQ=; b=E6bnZarp8OLAnQB13Ih1JS4AGjcIQLAWUgsPBcZpX+kA8YhJesU
+	f711Z1d9gs8M8RXAEyPKgucUjTB4fN77yRJ9KcIOXCowCilkcy1ul/LLUEFdR235
+	p7UFuKidp2KQPD4PVyrBfVoL72lqvcqGKywLgbPYHAQYQ8kXRovyl3xzGOgrKRm7
+	jELYqZm7rg6tv6iEtzjOZN6bPaFParO15f9yUxnqr9bANg69JiuLzvE8WWOtA+9W
+	DCQjfrcuxCrY2NqwMJ99MvPXh/rh57sgyZV+dEtbv02KL3QRxZNOUchjNDi3ggkx
+	ex8Jb55xP/2K6iAqqofBemDRiU+ktGuNY5Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793822220; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:hDN9jNaZRflR3veLDW/77GQNNfT/UGa8jPD5WqkvlNw5gfJ
+	gtqUiuhZr+sJy3pfflndpDE63eCbdE2jGZhVlMQNuwVgMhWgcwUDc4x4NJWywei1
+	nPgI2pslok+Cal5/x7HVTKOkCyjhIE9GEY8A6Uj4pIyylmcwCSotdKBqPijlb88d
+	I/FkBL0VTnzu8ELf+/JGzRQBRFlggu1B4rq94kkdz1kieySxJbAgmPZn7WYKbiN0
+	jzOGDaAHlH/jW2jdVclX2/7ZI8GRz2ZvMpCTD8RNZRqEccCWMuKgmAjxa39ayqXA
+	rL8HbDCbxG58VUNUN49UNavytMFVZuqCQfJETWw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:OQ73f0Q76GA7nRBvHHthcsOlxHo3kbdI8veR7E0iNfs=:xBbrq5PRqsbam95w232vZryl8TNVqqlMHCmmMDtcCNI=;
+X-ME-Sender: <xms:C47rapqpl2hQ-vv1tYtA7JAWTI4Py8qzfzjHqVevHidO4Vn2No-Ggw>
+    <xme:C47raipTGhTcd1QKZ83aDCYmf_RT2QM-NDW6BBaFmmk8LibgSFdVT-zCLCfaw7PFT
+    _Ba_cr-UFFjBVAgtVaBj0GoMeWdGXIkSl9lzKIEx1vaBlxfPZJhig>
+X-ME-Received: <xmr:C47rarMyj7ptlmNi-ljc-h2GR08luhsPQrWnfH395r3lYYso2iVGhanwnpwX0c5PNXsf7mAR0mLe6-Gz-7HJD_JtJUhPrpVbD1gO>
+X-ME-Proxy-Cause: dmFkZTGEFL9X2kOfwt5Em4ks48F7ccfvb6m1W6HzeOHT2canu4bUNwCWvaNgnfnJlJt6n1
+    FoWPyFPm7LhmTL2/QySjB1e9osoz8A2WzihN3m7X1oR80EHQa0RtbhIrawv6+yfW18YKpN
+    zcDR8Z96jVglqa1vvk0EyVPIuE5KZgrqwFfAc3EDi23bw98dEzaulzpHlb92KTKbNjKm2/
+    u1efcf4MOUE+a+kKBA39vXRNPxZWqfbxqNjCr3RfMsVVFgbcQ6F0PuD3eM2AYVosMnkIxI
+    P4nnDEpGbpeYGsTrhpH+JAQX9oLP2C/Vs1LCn8qhSwdl3U+DkU7oBvks4ZV2WCOySPwsSZ
+    xIVkxpze/RnYbdRJOXauki0NJD98D6OK5Wj0aoIKKPCKmBu/FkTBl0DzR/4C6n+9Gre6OP
+    zngTBoeREyVjR/eJgZA0IzC5NRRjh6W5zT7sBBBUwf+tiBMlCbymXMLZ5tyMgnobvUNPJR
+    FWwptAZTm7wO6sP8JXYeFTo7FGM05vr4PEEHCsjEKOdCy81pDc9Qg29aiwOtitWO14S3KG
+    7Hgd/yRPQaVpS0HrFZ1MXNw1Me6ULtZdT6AmII3ee3nAoe2Rv0RxWraALCWLLonm9dcqQ7
+    C74yJ+ELlaYUJqqfRmO43s0XTaoPlZEXG5bMtnsJdIJ8S8a3YgQ+qqWeUYFA
+X-ME-Proxy: <xmx:C47rajx2qeZp597Lyy1porl3GdV7nz6xoIYbcUFaALnTBwsJUwtkww>
+    <xmx:C47rakt18iqPygqlWagBniBUgw5ZCv4yyS_uO4ISRWqIUAGwMNnWgQ>
+    <xmx:C47ras6gV5ggyK3NuLjjREklFR8Ug5b8ivew5xb96HJeTDyZUNuj1A>
+    <xmx:C47rajSfmwEOyqxfpFXO-bCC5GNdqJTjvM9sXzqVGmZmeLmASD57Aw>
+    <xmx:DI7rahKsDFZtbft1zyUIXDJccvQn4pVei9f32NQpB4wz0wTipFd84PJX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Nov 2026 14:56:59 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: <git@vger.kernel.org>, "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] CodingGuidelines: update the required Perl version
+In-Reply-To: <20261104193450.XvTBf%taahol@utu.fi> (Tuomas Ahola's message of
+	"Wed, 4 Nov 2026 21:34:50 +0200")
+References: <20261101185846.24208-1-taahol@utu.fi>
+	<xmqqjymvooyn.fsf@gitster.g> <20261104193450.XvTBf%taahol@utu.fi>
+Date: Wed, 04 Nov 2026 11:56:57 -0800
+Message-ID: <xmqq5wyc1iba.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,157 +124,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261104-fz-credential-cache-race-v2-3-ddccd0831eba@gmail.com>
-References: <20261104-fz-credential-cache-race-v2-0-ddccd0831eba@gmail.com>
-In-Reply-To: <20261104-fz-credential-cache-race-v2-0-ddccd0831eba@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
- Patrick Steinhardt <ps@pks.im>, M Hickford <mirth.hickford@gmail.com>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- Jeff Hostetler <jeffhostetler@github.com>, 
- Farid Zakaria <farid.m.zakaria@gmail.com>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain
 
-When no daemon is running, two "git credential-cache store" run at the
-same time each try to start one. unix_stream_listen() removes whatever
-is at the socket path before it binds, so the second daemon takes over
-the socket of the first. The first daemon keeps running, but no client
-can reach it:
+Tuomas Ahola <taahol@utu.fi> writes:
 
- - the credential its client stored is lost;
+> Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> Tuomas Ahola <taahol@utu.fi> writes:
+>> 
+>> > 702d8c1f3b (Require Perl 5.26.0, 2024-10-23) bumped Git's Perl version
+>> > requirement.  Update CodingGuidelines accordingly.
+>> >
+>> > Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+>> > ---
+>> >  Documentation/CodingGuidelines | 2 +-
+>> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>> >
+>> > diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+>> > index c06f5d3071..9b17ab34db 100644
+>> > --- a/Documentation/CodingGuidelines
+>> > +++ b/Documentation/CodingGuidelines
+>> > @@ -703,7 +703,7 @@ For Perl programs:
+>> >  
+>> >   - Most of the C guidelines above apply.
+>> >  
+>> > - - We try to support Perl 5.8.1 and later ("use Perl 5.008001").
+>> > + - We try to support Perl 5.26.0 and later ("use Perl 5.026000").
+>> 
+>> Is this in line with what 702d8c1f3b did?  Shouldn't we say
+>> 
+>> > + - We try to support Perl 5.26.0 and later ("require v5.26").
+>> 
+>> "require v5.26" instead?
+>> 
+>
+> Frankly, I don't make head nor tail of such Perl minutiae.  I would find that
+> parenthetical much more useful if it told exactly when we are supposed to use
+> such incantations.
 
- - "git credential-cache exit" does not stop it, and it keeps the
-   password in memory until it times out;
+I do not claim to be intimately familiar, but you can consult the
+commit you cited as the reason why you decided to make this update.
 
- - when it does exit, it removes the socket of the daemon that is
-   still running, losing that daemon's credentials too.
+    $ git show 702d8c1f3b
+    commit 702d8c1f3b5377a64670b0f22add157b0bfc33dd
+    Author: brian m. carlson <sandals@crustytoothpaste.net>
+    Date:   Wed Oct 23 00:45:59 2024 +0000
 
-Fix this by creating the socket with unix_ss_create(), which the
-simple-ipc server already uses. It takes a lock and binds only if no
-other server is listening on the socket. The lock is held only while
-binding, so a stale lockfile left behind by a crashed daemon is
-unlikely to need manual cleanup.
+        Require Perl 5.26.0
 
-Signed-off-by: Farid Zakaria <farid.m.zakaria@gmail.com>
----
- builtin/credential-cache--daemon.c | 28 ++++++++++++++++++++--------
- t/t0301-credential-cache.sh        | 23 +++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 8 deletions(-)
+        Our platform support policy states that we require "versions of
+        ...
+        Use require instead of use to avoid changing the behavior as the latter
+        enables features and the former does not.
 
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index 9e6ed9c922..03d314f19f 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -11,6 +11,7 @@
- #include "tempfile.h"
- #include "credential.h"
- #include "unix-socket.h"
-+#include "unix-stream-server.h"
- 
- struct credential_cache_entry {
- 	struct credential item;
-@@ -231,12 +232,25 @@ static int serve_cache_loop(int fd)
- static void serve_cache(const char *socket_path, int debug)
- {
- 	struct unix_stream_listen_opts opts = UNIX_STREAM_LISTEN_OPTS_INIT;
--	int fd;
-+	struct unix_ss_socket *server_socket;
-+	struct tempfile *socket_file;
-+	int ret;
- 
--	fd = unix_stream_listen(socket_path, &opts);
--	if (fd < 0)
-+	ret = unix_ss_create(socket_path, &opts, -1, &server_socket);
-+	if (ret == -2) {
-+		/*
-+		 * Another daemon is already listening on the socket. "ok"
-+		 * tells our client that a daemon is ready, after which the
-+		 * client connects to the socket and talks to that daemon.
-+		 */
-+		printf("ok\n");
-+		exit(0);
-+	}
-+	if (ret < 0)
- 		die_errno("unable to bind to '%s'", socket_path);
- 
-+	socket_file = register_tempfile(socket_path);
-+
- 	printf("ok\n");
- 	fclose(stdout);
- 	if (!debug) {
-@@ -244,10 +258,11 @@ static void serve_cache(const char *socket_path, int debug)
- 			die_errno("unable to point stderr to /dev/null");
- 	}
- 
--	while (serve_cache_loop(fd))
-+	while (serve_cache_loop(server_socket->fd_socket))
- 		; /* nothing */
- 
--	close(fd);
-+	delete_tempfile(&socket_file);
-+	unix_ss_free(server_socket);
- }
- 
- static const char permissions_advice[] = N_(
-@@ -303,7 +318,6 @@ int cmd_credential_cache_daemon(int argc,
- 				const char *prefix,
- 				struct repository *repo UNUSED)
- {
--	struct tempfile *socket_file;
- 	const char *socket_path;
- 	int ignore_sighup = 0;
- 	static const char *usage[] = {
-@@ -331,13 +345,11 @@ int cmd_credential_cache_daemon(int argc,
- 		die("socket directory must be an absolute path");
- 
- 	init_socket_directory(socket_path);
--	socket_file = register_tempfile(socket_path);
- 
- 	if (ignore_sighup)
- 		signal(SIGHUP, SIG_IGN);
- 
- 	serve_cache(socket_path, debug);
--	delete_tempfile(&socket_file);
- 
- 	return 0;
- }
-diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-index 6f7cfd9e33..8e07e55520 100755
---- a/t/t0301-credential-cache.sh
-+++ b/t/t0301-credential-cache.sh
-@@ -51,6 +51,29 @@ test_expect_success 'socket defaults to ~/.cache/git/credential/socket' '
- 	test_path_is_socket "$HOME/.cache/git/credential/socket"
- '
- 
-+test_expect_success 'a second daemon does not take over the socket' '
-+	test_when_finished "git credential-cache exit" &&
-+	check approve cache <<-\EOF &&
-+	protocol=https
-+	host=example.com
-+	username=store-user
-+	password=store-pass
-+	EOF
-+	git credential-cache--daemon "$HOME/.cache/git/credential/socket" >out &&
-+	echo ok >expect &&
-+	test_cmp expect out &&
-+	check fill cache <<-\EOF
-+	protocol=https
-+	host=example.com
-+	--
-+	protocol=https
-+	host=example.com
-+	username=store-user
-+	password=store-pass
-+	--
-+	EOF
-+'
-+
- XDG_CACHE_HOME="$HOME/xdg"
- export XDG_CACHE_HOME
- # test behavior when XDG_CACHE_HOME is set
+        Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+        Signed-off-by: Taylor Blau <me@ttaylorr.com>
 
--- 
-2.55.0
+    ...
+    diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
+    index 636add6968..3d061bc0b7 100644
+    --- a/contrib/diff-highlight/DiffHighlight.pm
+    +++ b/contrib/diff-highlight/DiffHighlight.pm
+    @@ -1,6 +1,6 @@
+     package DiffHighlight;
 
+    -use 5.008001;
+    +require v5.26;
+     use warnings FATAL => 'all';
+     use strict;
+
+It looks to me that the "parenthetical" you called was designed to
+be useful by telling you what to have near the top of your Perl
+source files.  Replacing it with "require v5.26" is exactly in line
+with that, I would think.
