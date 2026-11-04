@@ -1,100 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.54
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793786737;
-	b=x3DZx7QQqzy5zbLoCxDbUR3i6rdA66KA0jrOf0pPY8vnj9b2znNz/MDbYKyzbjLH4lvZ
-	 nTGSry9WiyDNIpvCdFgvvqJzEXiSHR/FMWfG9j11DeGfsDE8/pFNiKqDUmm+H6aMIr8lF
-	 fF8BE0vkyPsJQ9jMssqcgmloJPfDnqVa9Vuv4UMjPLGPiIN/GJX3SGFh7eNCBCwwfB/6w
-	 Csu84gE71hEyAmNRhLEGDMVpPqaVO/h1CRZxGsofzHbbKANmVhf8dDAmV9IlHnpOxKz+K
-	 1j+O8rheLMtfKLm9R5j5sHsGPCyq311VDE7eR1DpTNVGqNs5RAuunDHnbc+j/3pQnWA==
+	t=1793787098;
+	b=2lA5CgcKsyM+++6GyOeasZKQUBhuxu10Z9hAJL50erpEeaMdIM5j6cwjTYwrjE6P8B3e
+	 XUTAntF+21DXK1HqERSucQC+oiIkI30hjUaUdy237U3xCaPzB2yG+iyiEI/TPPQQW0/T8
+	 wch3VOmFDI4e25Bfbb10OOEX8WUSXvzBjFWYoxr002DrFniztNkEBWufp5u07cKFtI/BA
+	 2ZvHyT7HFipOw62eeF0f0nq2dmas+sl35uKISUHS4zZirPzoot4A8SGhGvGnGRotwJtz2
+	 KZorIKw4hVkHKhD1Jx5JXg4w59TbofalmddiOeE9vuzVt+UCyGyaBtGqkPc7zcuAZ6g==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793786737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793787098;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=n9cL6tJQr2U8K1AlisarPnDBboHF0BEOhDBs7FJhko0=;
-	b=EYOtw56fficqJDwnzAKdx5wPLXVNXpyc0AfqJw6FDkIdB5hNpctuj80DmcU79vem4Tes
-	 wf1OvJcuyi5j3+CH2pjNfNO91/wdSXgOaO/ir0+GCGKjKUPPxGKonVxGdBv8R+6LHQIt4
-	 QL1pM4/WZ2fJgDGXGHzJKKOCqTBcgLTjOlCWYTj6wzByC4IhtWM7SUFSk5p0W9esGAxrP
-	 bTQyD2Bku6cu0iN5SiOmbnaLRGEPWzM4jx+Xdljkj0hhQVila6K59VVb/WrWBt/bOtaqS
-	 apHr6mPw3p8pB3fkeYTjcDVrEIDeTZIAwuxh1WCygA4IhwoiVB8Ez++9VCUUdwU8dZg==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=2TcXW1lhelh4I5Fkl9kyK1ue0HzxYJg8V7dbbBYToiQ=;
+	b=tLQgAy5yEBQIppbKi1Lb2BNFsxqcVBRxk+x04Tj9/banLz3tfhbBoHrO+OYmvynfrUao
+	 KS4zS7zIBQmciuNjT0Hkjm7e+t5Kxx+NWufHzBYvMPZMb2L4pNZPPK05IhiG3PDCkN5LU
+	 2MZZTgF8SJ4yeGoQeEUOSY8/B4Lm1nvkWXo30Qeg3jgkEKu9OxB/m02gdfq0H7KozUEim
+	 yWl6DHQIk0mBdp3+LkdVGef1luuVVLUl1c9Pa9i2XGUT1DF+G/S3aaOM9VA0UWb/7dhGf
+	 JrGO/kvdidGuqBP5VUsuuEiR01lXq6S8oEIk9ODjEo26gfNlS0SUrV8jZo4tJP7Pk3g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=V70noMHx;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.180
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b="CpQpW/w/";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.54
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCC8606A31B
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 10:05:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ACCC8606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872D9606A31B
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 10:11:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 872D9606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=V70noMHx
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3ab53a99771so4317061fa.3
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 02:05:36 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793786735; cv=none;
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=CpQpW/w/
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c4322d310e7so78408666b.0
+        for <git@vger.kernel.org>; Wed, 04 Nov 2026 02:11:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793787096; cv=none;
         d=google.com; s=arc-20260327;
-        b=bizuEy60acHH1vM7bZT7gLiGydXhn8Y5YUX2g6x17zbRQy0B3lNskSxpE/WrzGHfcg
-         47h5Kp7fA2xSod70Xa0+/UzIPc1IVnehTLvaLH/2PAyAV14OPvIa2fHFKad4nKdYsq9l
-         OhkBLi/FmxC8xqGyacu7+ce3R2pPKgy9zJcsjv65VuG+5m9YNoJacR4974XJSzD4FWEL
-         pJld6kYIte3uYWhgKnwC0dEqO80FFY44EnycOBGpjQJxbw7qSq9tVXOruZ21ESCX4G+i
-         MLDOe3Fym/zdGqQfktJqJf3ZOsRNZQi2ffFaRdcG8K8BQrj/55dlthRu9sUCD2VGb4Ik
-         QMEg==
+        b=kZdVk++2nMc2RxCoPu8hbn4ck5+V9Opcex4ko88weQg1XY4Oy9mTyCbhj+4V64wCBt
+         OMBYxmztXcC3Y7Q04BMrCwmkudZqoMIL2DlnxqIB+ppSV8vms96x/OnIJ9b/l0LJBEZo
+         SHEGiUnJEcJqFuXFKf+kKpRIx0GQVYV9nURjtyiZsWQy2W5aexfYsr+sU+l8uu8Xtf+6
+         09tHo2KtQxZ9rsnKjvAj+y5s7IlYC2FWmmP2RrK1uk3WABtFWnWQrx7OeQuzcnTtF5ax
+         yd6JD1o+3bacsCx/4gyII2olsgAdCA8ucgdVw5nKFEF7O8otYh3g2h3RZBQsA8WdpSun
+         GHAg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=n9cL6tJQr2U8K1AlisarPnDBboHF0BEOhDBs7FJhko0=;
-        fh=DNa5Z5Ecl41IFdgSjt5z6SXHaDRIsrxbGohFO5QnuAk=;
-        b=V6bnDrX1784Pwqigw0im03C9BE5UOUEmqQ8oRCRlzbPXv1ljtbBQyVDmIaE404bIZx
-         7RwmDGoIqc9/xPIz8LkpniYwE/QPC34EFhGOskywAQo/cbSqE3GBzI0ylYwB4EgVYcq9
-         vFPcsW8rpswPZ6DXK0FdmijJL3XTG0ZY+wWTwsrdD8r14/lPaiQrqdPFKr+7f3wsxXrT
-         1MHI3A9drNXfcdWK4r7fyqOGMkdJxjhrpmgreSisqA7YU7hjFBi41ZHQIDTOfXcMDS0J
-         SgK97AX+O/Q5zZiBXTQEd9EApRHXfHklc41VVnwPfwhBwue5Glkss1K/moByTSdM3Czp
-         09gQ==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=2TcXW1lhelh4I5Fkl9kyK1ue0HzxYJg8V7dbbBYToiQ=;
+        fh=NTG/ErkP67SHubsfent+TdcPuFLXJPx/1xSvqS4pvCs=;
+        b=D+ND2sYJmPj1MiSypbEKXoDEd1R/HaFmDw0KnyLRDVj/btcgSl4lahgWUKQjxYI+f2
+         8rTMVhHvJ770rJOdFbrTotFNo0SC2qRipOAdKPSHrsQv0AfOY+TqA57NOCF0t5Vbg0oX
+         sC+BeCiLKdKj7OWGE4noVmBTeslx5nsBCqgt0lEXFiFaJP8hl0F0DzA7rFwYoHppogWW
+         +Y7tls7W6ct1mkAFpqAHdfubBvwY6uFseEySfSFIZQGKFbnhyGkF45eda4vr70JChVhB
+         ht/PqKeM5rfYN9AELD0GkYDK+/g9Bsb2RtBUH6eOcb/gj+37CEmT+h5RR3vddpt6dEp8
+         KHtQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793786735; x=1794391535; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=n9cL6tJQr2U8K1AlisarPnDBboHF0BEOhDBs7FJhko0=;
-        b=V70noMHx0aBrg6a7p4QUBvpygzbuBfqml5fqXafvV5J36dzoEC3Ol64JFoAVNS05y6
-         rphP88dC7bv6xP6dh2CTzoAqgxEcBG52mZVKPU7T84N8A73PWhdVnqncvI7iIh4y74Uf
-         +rNEtQbgWc84SoTUt9s9G0iWXH6pLfBNP/EayNFbcOtXlb3VfDFqvpW2ZoPOf23jLtzv
-         A1VYiHEiL4rOSDn3DivnmDqm5xyshUayrhCt0e/jJ/ECFnohNx+BGOAhIMDKF4U5BWjU
-         +ZqT3GfpXoti5xJWl9jbGrQ89kOn6THYavOCT6Uerag5MkK4Hf2Z85Z3Z6OUcP3YeFc3
-         K4LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793786735; x=1794391535;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=spotify.com; s=google; t=1793787096; x=1794391896; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=n9cL6tJQr2U8K1AlisarPnDBboHF0BEOhDBs7FJhko0=;
-        b=1v0gR+PfbRC0qmA5TQADVSCbdCO7z029uiznXpkRXg07VV/mN3xpP+5QsIP9po5jnU
-         6kNu57Ujz5+4ERGkHbjB7E5mn0vV/NPjYdXiK6+qYVo3LBsi5CWhm73iXoFWxXvtbb6V
-         SNLRmS8FUDO28Aj0/5w2wiLBWZoowLy6QtCtcHtAKxlHkeGq58RcHWEcaRmJfpWFSM01
-         P5m9Oc3pvHj0w+JhdDS++jnQ5Di4rv44FCuiJdqF+bX1CCNfYhGls4Wq6rfWl7nor06J
-         R4H19TyW+vmT+yy3oJXkZp8THuAmoTn5lOdoAyE6Cfnwi7aCMsJlQdlS+Sb0JJ0Mwyzt
-         OkAw==
-X-Forwarded-Encrypted: i=1; AKwUvByrzZTOa7qujXYPbJFOM5P57NE/0en5r7FdFUQlQlAHWsYVMd3YICriE+Of+CkDlXL3VQA=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+j3GHIQKoY9DXXAkKDPv9AMVrAlRbc/etg35zcpbuLCoCeDb/D
-	8nctLsom/80r0KTBEwOQAaLVbsq3Al9bZofzaPR4Qy2cwmNPme43d/Nbt0TywEiNfujxXWPyMJC
-	SHB7ngp/ULk8u7ezZKeG+G/BW0CSLMi0=
-X-Gm-Gg: AYBFou2Pez37Yx2gua4utQhEF+mtBMCrhcWAeQN556rbJ8K4dMtOb0wy8nVZX7L3AkJ
-	ZYZUxt4g3KrNh6SJNgRHFzC8yR1TzOyyabo9I2F6Myf44UACbt6v9NnIIjJgU2K+1kdKZiQDFeO
-	nlMiqeB3y9BO8bV2efzxgI1cI1QFCYjgMTkBHFMejcXInaVSzqYW4MWH5PxkmTIXLhffkwctScr
-	n0Xa+d9oLvk2j7LeuCokUVV1Mxy+AF7UjRP/twMTVVBtyG3q7v3Xjsdn9C9A5O/b80dED5rtDBK
-	wnsBc7la+9oL7FUPZMBM0VwYrPNYkncQaX9pdBl6kHjK39ASoVXDUBUjySJt0cuHPgJfnh++0Wx
-	VycAQUT7QAML6vzjhsW/TATVGUP37kk6H8coTXUUdDnw+tSjQwUV2p4MdHVyrTTAdEmI=
-X-Received: by 2002:a2e:a552:0:b0:3ac:df0e:5059 with SMTP id
- 38308e7fff4ca-3acdf0e50c5mr2639231fa.12.1793786734655; Wed, 04 Nov 2026
- 02:05:34 -0800 (PST)
+        bh=2TcXW1lhelh4I5Fkl9kyK1ue0HzxYJg8V7dbbBYToiQ=;
+        b=CpQpW/w/PagEveF+dRfYw1frTvAeOmqr4Yc6HtIfpI0QbL2cL7mqUEu+ya3/3S4K0C
+         6XvcgvAfsDHc9cRoOrADITE7I0Ia21dnFtRGVUQBL1XiW+y544F0YT5Z/YTH4zZYplPi
+         mUwN/O1nLb8bDO9OMCoL+L/Lnjs8vhs3VhsZw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793787096; x=1794391896;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=2TcXW1lhelh4I5Fkl9kyK1ue0HzxYJg8V7dbbBYToiQ=;
+        b=zeOQHQYM/ZGXQWOgD8UghGI393IG0zvTsFr8Zczml1Kzr7UFI0Z4USiCW4/tLaoQFS
+         RpGgX5eX49YYdQLHKoFxZtEATAAGFJCgbXu9EG9IeBPt21VJOheUVUF/e+bjR9JzWNQ/
+         IvcgclLFmCQG/4xol0kSpn//I/fhi8dxKE1josY4eNo08m3tUCd3exueLN8ZFpKeb8Ig
+         GdObYvf9qHOdEDXDYiORp637uEee8BMpHvWY7YvIBct6RS1KZHAGUIfqZ97RsjUU6NBR
+         MtjbYJLsM75K0ThSSSGayr02vC43Zsa3/Kz5S8vuXomMqlWYzzsSyvTIICHjq+mMqMwn
+         kgZA==
+X-Gm-Message-State: APuU4Z9Z6y7CHR0C5tviqTiNwv5EwQZdNRHfelHFxmT/36zVx16c46bm
+	yJd30BEsJ+ZpxHrH7JAAv16jnE0qDLGPwsxds2mxbS0ql1m7QGluBT9RnzvpX1Kr6NZOvlfc2/t
+	UL589/XHCJ0iEK0xL0k+bO+uRbwUc29OMd/0jJLbPzQ==
+X-Gm-Gg: AYBFou0UqK3/u9GyjhMMPZWlreh8MhjbZkKz4GSnaesdabdVgB7GISIFFc896glrcNN
+	f23G477nbBSwFZxRCUJd3vKLy1Aw5TCqU2+rSjvuUs8AjkL9bN1wcHaMBxSIfjUE3Rja3qkyioU
+	2k7BAAbgcHMYjr5W3uce+lI3wO2/pkZ1+JcZSA8kUDvuc4cILyqbCCFvPhx6cnKujE/3p2X1Jtb
+	OBQ9UzararKERMylmQ5FurUWb6bqhX2YrqhVHL00v7Zqnmus7aMZGA2nwiCt8eAqBqH0lesaR+c
+	nnv1FIr/GQO1o5cNCP5Oonp7u9AIdpSdnR/nbkz0HwPk5fFUO8o3PmMTBg5lMqKnkP4I29L7Ut6
+	Es/LZapUrokprJQCGdih02htb+uy7Gqwv4zE/6w==
+X-Received: by 2002:a17:907:2da2:b0:c2b:4142:2db1 with SMTP id
+ a640c23a62f3a-c4ca7acc1b2mr1407689566b.40.1793787095935; Wed, 04 Nov 2026
+ 02:11:35 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,103 +99,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CAKUOgLzP0CSwOwLeoSpM94A+XCT2X_cVojHsLugDfw+tBZk9LQ@mail.gmail.com>
- <CAOcE0wLn5tU6Ok90EhPfyQ0f_atkaFPQyWFLh7JovRGjZ9aZAQ@mail.gmail.com>
-In-Reply-To: <CAOcE0wLn5tU6Ok90EhPfyQ0f_atkaFPQyWFLh7JovRGjZ9aZAQ@mail.gmail.com>
-From: Immaculate Mecha <immaculatemecha87@gmail.com>
-Date: Wed, 4 Nov 2026 13:05:23 +0300
-X-Gm-Features: AclHuK_Bkxq2wGY9ZlrxKFJNNv96391DJnzlz5ZVnO3Z0M1byBnQplmLAHtio9Y
-Message-ID: <CAKUOgLzN-7-ywvdPnpNF+KPbPovHko5iqZ2X6VaJvZjAaaZGkA@mail.gmail.com>
-Subject: Re: [Outreachy] GIT_DIR inherited by shell aliases in linked worktrees
-To: Priestess <herroyalpriestess@gmail.com>
-Cc: christian.couder@gmail.com, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	kaartic.sivaraam@gmail.com, Siddharth Asthana <siddharthasthana31@gmail.com>, 
-	git@vger.kernel.org
+References: <yrjh1p92qc7w.fsf@pohly-mobl1.fritz.box>
+In-Reply-To: <yrjh1p92qc7w.fsf@pohly-mobl1.fritz.box>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Wed, 4 Nov 2026 11:11:21 +0100
+X-Gm-Features: AclHuK8Le3Z941VBdwL3AQhFv5yFZWSw82alVLx2PK_5Lac_CxF5EMnf4YYl_nM
+Message-ID: <CAL71e4MqMdGk5ryhNxvVNN6Z02+45B933ZfUuvj4hM92N5a6hA@mail.gmail.com>
+Subject: Re: [BUG] Lazy fetch in partial clone fails with "not our ref" since
+ 5946a564 (odb/source: make read_object_info() pluggable)
+To: Patrick Ohly <patrick.ohly@intel.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-Thank you for reproducing the issue and for explaining the design implicati=
-ons.
-
-Given the contribution deadline, I would like to use the reproduction
-and investigation as my Outreachy contribution.
-
-The investigation has helped me understand how Git handles repository
-environment variables in external shell aliases, particularly when
-linked worktrees and `git -C` are involved.
-
-I understand that changing the current behaviour may require a broader
-design discussion. I would appreciate the mentors' guidance on whether
-this investigation is suitable as a contribution for the Git Outreachy
-project, or whether they would prefer a small follow-up task.
-
-Thank you for your time and guidance.
-
-Immaculate Mecha
-
-
-On Mon, Nov 2, 2026 at 6:44=E2=80=AFPM Priestess <herroyalpriestess@gmail.c=
-om> wrote:
+On Tue, 3 Nov 2026 at 14:31, Patrick Ohly <patrick.ohly@intel.com> wrote:
 >
-> On Fri, Oct 30, 2026 at 2:40=E2=80=AFPM Immaculate Mecha
-> <immaculatemecha87@gmail.com> wrote:
-> >
-> > I'm considering a small Outreachy contribution around repository
-> > environment handling in external shell aliases.
-> >
-> > I reproduced the following behaviour:
-> >
-> > Create a repository with a linked worktree.
-> >
-> > Run an external shell alias from inside that worktree.
-> >
-> > Have the alias execute git -C ../TestBaseRepo rev-parse.
-> >
-> > The nested command reports the calling worktree's Git directory and
-> > common directory, even though --show-toplevel correctly identifies
-> > TestBaseRepo.
-> >
-> > I traced this to the inherited GIT_DIR variable. Unsetting GIT_DIR
-> > before running the nested command makes all three results point to the
-> > target repository.
-> >
-> > I found the earlier 2020 discussion about GIT_DIR inheritance in
-> > aliases, but I'm interested in whether there is still room for a
-> > focused contribution, particularly around regression tests for linked
-> > worktrees.
-> >
-> > Would this be a suitable microproject for Outreachy?
-> >
-> > Thank you,
-> >
-> > Immaculate Mecha
-> >
+> Hello,
 >
+> "git merge" in a blobless partial clone fails with "not our ref" while
+> lazily fetching a missing object. This started to occur today in the
+> Kubernetes CI, completely breaking the merging of PRs. We should have
+> been using git 2.54.0, the affected version, for a few days at least
+> without issues, so it can't be ruled out that this is at least partly
+> caused by a change on the GitHub side. We are about to revert to git
+> 2.52.0 to unblock the Kubernetes project.
 >
-> Hi Immaculate,
+> [...]
 >
-> I reproduced this on git 2.56.GIT. From inside a linked worktree, an
-> alias running `git -C <unrelated-repo> rev-parse --git-dir
-> --git-common-dir --show-toplevel` printed the worktree's git dir and
-> common dir, but a toplevel of the target. Running the same command
-> with `env -u GIT_DIR` gave the target repo for all three, so the
-> inherited GIT_DIR is the cause.
+> I bisected v2.52.0 (good) to v2.54.0 (bad). The first bad commit is:
 >
-> Note that with the main repo as the target, --git-common-dir looks
-> correct either way, so an unrelated repo is the better test. The
-> correct --show-toplevel seems to be just the cwd after -C, since
-> GIT_DIR is set without GIT_WORK_TREE.
+> 5946a564cddc0bf471f27ae4c3fe205441e3ef65
+> odb/source: make `read_object_info()` function pluggable
 >
-> handle_alias() in git.c has a comment, "Aliases expect GIT_PREFIX,
-> GIT_DIR etc to be set", so the export looks intentional. That makes
-> this more a design question than a microproject, and a test locking
-> in current behavior could age badly. I'm not a mentor, so I've added
-> them to Cc to say whether it fits.
->
-> With the contribution period ending soon, a smaller microproject may
-> be the safer route, and you could still raise this one afterwards.
->
-> Thanks,
-> Cynthia
+> The parent, 3bc3177ad7 ( 2.53.0.185.g3bc3177ad7 ), is good.
+
+Thanks for the detailed report.  I think I have found the cause: I
+can reproduce the failure with your steps and make it go away with a
+small change to the loose object cache.
+
+The problem is in the semantics of the loose object cache, which
+answers quick existence checks.  It is a two-layer cache: a bitmap
+keyed by the first byte of the object ID, recording which
+"objects/XX/" subdirectories have been listed, and an oidtree with
+the objects found there.  The intended invariant is that once a
+subdirectory has been listed, the oidtree holds every loose object
+in it, so that "not in the oidtree" means "does not exist".
+
+Writing a loose object does not update the cache, which breaks the
+invariant if the subdirectory had already been listed.  In
+practice, that means a quick lookup of any object in the same
+subdirectory earlier in the same process.
+
+In your example, the object the server refuses, 27b64cc8, is not in
+either parent nor in the merge base.  It is the content-merged blob
+that the merge itself just wrote as a loose object.  merge-ort's
+prefetch had already listed "27/", so the checkout of the merge
+result thinks the blob is missing and asks the server for an object
+that only exists locally.  The server rejects the whole batch, and
+we then die on the first object in it that really is missing,
+3c804b88, which is why the two OIDs in the error differ.
+
+The bug is older than 5946a564cd (odb/source: make
+`read_object_info()` function pluggable), but that commit, which
+matches the bisect result, is what exposed it.  Before it, any
+non-quick lookup that missed called odb_reprepare(), and that also
+threw away the whole loose cache.  A merge does such lookups between
+writing the merged blob and checking out the result, so in practice
+the stale cache was discarded before anything could use it.  Since
+that commit, the retry only reprepares the packfile store, and the
+stale cache survives until the checkout.
+
+I think the fix is to maintain the invariant: after a successful
+loose object write, if the subdirectory has already been listed,
+insert the new OID into the oidtree.  (Clearing the subdirectory's
+bit would also work, at the cost of listing it again.)
+
+I have a local fix with a unit test for the loose source.  An
+end-to-end test is awkward, since it needs a merged blob whose first
+byte matches one of the prefetched objects.
+
+I could polish this into a proper patch, but since Patrick
+Steinhardt has been reworking this part of the code, I think his
+thoughts on the approach would be useful first.
+
+Thanks,
+Kristofer
