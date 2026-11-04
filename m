@@ -1,92 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793803074;
-	b=bV7856yDKHzrr+/IzR5CpRV50hgJ0xGQDy0ftT9gp7Ovp0Vopkd7fFxyynUXWJqxUFo6
-	 w5yCAYJGO6pnAxay4DU1HU0X/MzhFbC+E2mjzXJTzKHchbqKgWeBCdIuywEKz13Vg7eZW
-	 sQDHrn7m2ZsjskU0ib1RHnnDs+U/Yel6XqiDRgRqiK7HatRxIj1v7YASj5wMvcFSANpYf
-	 H7SVvP6K0RAGP9zGZHyt6PhxmzBITfmqbE0bvRtg/FA+ZDU7OxV242H65gbPW5yxavEHr
-	 PfavmdJ5JYtvJR/JaStFeHmxLwzigeSZpG/uPkSyfFL6qnpz2blkc6F69Snb+Bp9aWg==
+	t=1793803123;
+	b=hRNFfzBALryeBkrLssviNDsYzrQLa9OGqlO7v67cTp5Dhe/RCZ0HdTpafl5hhHnqARMx
+	 8a3l24/x8hIGm7IUzl8vB9fjtpOM4POlZEN94HC0LAJmVWY+E7QIBsg952j/oHEo3JVC3
+	 ow6a/ezMqbMvuyRosBCdvNVVNHPXxWZI6bSYuQ5KMqVGKR48o0rkNMdVcokQt0uXY5sb5
+	 ubz2BBzslU3Rwn94O7yIBJs/vqW6z1aDc9fIEDdP3vIMPaN3vt583RBRg0Z5T1WPf1Yzl
+	 cNV2lTdRjVh3KBxCgCD4y7QbcYUhzAlbLEHQC+zXA+t6SBLayKVQ4fp+Wsw+6LjeKHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793803074;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=GYBNI2+Rt3yuc4hMxF3uZoB0Q4ol78p7dQK0qRAzOSY=;
-	b=QsEfpPNb54hKOiWMIBxqIf/WXb6eertpMPtnhAIi3HO5WgtnzRnPAGxtMhPhCWPDclHO
-	 Gtc7FSVYBPiqW0g16BHm/IUTAz4mNvyvf4qRezg00xCnvqe6QOMyxCF6hlAZi/czC9sEQ
-	 kE714JnGgw3Ql6AfPaTqwLk9ka6vUE+V5vPnxYXEjGPbzMUn8N3KPxW0cSJ7ydZkkSewq
-	 CE7kyJngz659R1v/vmbhXyIjJez0fq+Ke8RW4tab2IMgEvoNNedsR9n7PZoUBxf8cRGiU
-	 Qrobm2F9M064+UIdMj2FTP2NCiA7YGf7xyJzaMJLjRKpBvkiRvOq3Kj4v/AF78XuIeA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793803123;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=oNMFKKIIyphQBofn7wJUOYrJvLb7BuR7zhK6nubd80o=;
+	b=iZBnBszPGt+0lj64RRi6++pFhMQT5vjB7J3jvoM3be3QQzjlkKwQ5ypOdNiaGMZ23b0D
+	 1oZOLJjXcF5JWzXbSTWizt32ZKS22E0fWwRcCrfjXLe2+hDKrq/jddBi8qe7FS/CEbJnB
+	 jndWjywhx3hjpVI+xe23/7Po+HsAhBdeiz1Lnma/1m4wCKu1pf4Xn+DSV3+NinjYXn33+
+	 pBn8rjMuc7M0mP9xNl6kv0zgjzvQkYM7MY/jGNB1QHQRu4/cnKrBi1pgAu4M9Yas9SKrB
+	 z9iXMuRHBCIrzr4mIhPIrH6qfZC11rp4I9nkoZIo6utzn3cn8neSbqiYcOwY3a7h2NA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jBraCCzG;
-	arc=none smtp.remote-ip=209.85.128.49
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=EvlhR5Hb;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Abnmw0qV;
+	arc=none smtp.remote-ip=202.12.124.158
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57199606A31B
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 14:37:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57199606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58D1606A31B
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 14:38:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B58D1606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jBraCCzG
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a207b02a2cso5394395e9.1
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 06:37:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793803073; x=1794407873; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GYBNI2+Rt3yuc4hMxF3uZoB0Q4ol78p7dQK0qRAzOSY=;
-        b=jBraCCzGArTBKQ5tgTq8ofdc8NARr88Etu/J/9N5wgo2PPofZNgy8SNka2GmK7fdOe
-         WbpeqOgbAqZzzxR4n2iv4ljGK0OjUdV1IPzG8VtesVaQkbaa5SGEWFu3rp9yRaPY72VO
-         C2Eq/GMykID0vjsI/hUV9AArTjpKxaUoAf1t5r0mckJjgAQHKVOkyQrsCniN74D7ENGM
-         mzOOfd47U662MVJwZMF3ig4/ZAWjx8Lze7C/s1pSmOzeiskHP/UE2DBIwhQoeWt168If
-         PV5LF7zlKbDVp5u9T//TLBdStOT6xYfUl/7I+fTp9CS3qTvNoVEPGisinnmKUn2nIPVU
-         MIhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793803073; x=1794407873;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=GYBNI2+Rt3yuc4hMxF3uZoB0Q4ol78p7dQK0qRAzOSY=;
-        b=YK6XaE6GJGmGamQIvArI2M1h2u8OsGjWELWYGrRtxoAhRkTMwQkMc1yDRdcg6SDAMj
-         InvBk+UALB1Il/Yi95Hxd6+lAfuo0rCMH0VntMK81OtVl7TwvGbmW3xBulXdqp8Jo5UK
-         bIdeSdkk4a8Oi5VlKf7mvTb8EgQwzSx0UDEiy2Y11VG2OlbwZcmt7LqqD4D1Fn8asZZ5
-         nPz/7OkfLN95d9beC3VOmvVItvPipkHo7JHWPjonZs4vUldokcOmnUqpUjeOQJ4PXqgY
-         f9G29d/KXPLcq+B3becEP5E7HF1LYb/fA8KJ5FIhqdsfggv+zYS1UYpbxBESIq633YAu
-         fcMg==
-X-Gm-Message-State: APuU4Z/seRmjqu10t2QTACxtzZ+XKt4i+FsbLGgIqDJLyIQGOTvfmwYf
-	ea0H1tWUzzLZxzHeEsDf+oihZaCEeols5rk8D/J5ZUGkER+Jw09pgGsZ8vsNFw==
-X-Gm-Gg: AYBFou3/5wTgVfIP6H6GnFkQ7yTqWh02V1L8VZdBmuYPNb8a6PdZe3B55DliiifsigN
-	FHPzjcTr1mVx8sGJWwST2To9uHdTpTsPe5Ujr1tPA5qVFmV/7rs6ofPsOISM0sl3fFb6z2hwTal
-	j86NPULFwGLce957XVpdMAs2lmV/Cc1bmIzN0vp9e/TgIfcaQE4nElNhPhJiIt8KoqFM7n4BzC2
-	gPV5BQHhXZD1zntBtJWmBg/PUjWfqZPRbSf4CZQ18V/evGWepOkEa3v3CmmmJ0P8Lc49TCDi7Yx
-	W7z0SdXRReoN60dKmIjQRIqbGDiUXTrBfi7hdonBwYuue6fkZosZssnQONDjHdH2PaLKzTgyhG4
-	SfUNEs91KATNpODekj1Hup3RBscTerDOyFVZj/ZvIf1e72Ic9PVPr9m8JmyDejRiy8sVBhpsHds
-	gp+JCGB8jQzHn2pa1XUv7I5GyICg1wAjvaKiYHIXVnPziHclrxLsMCD8lKFCDnct3snPWalBvIK
-	w5DA+YBNhAN/WZhvY7xKQT5kUQBIigDzcvnbGB/BXg8gU6U49bq5Rmvce8LpqrxkabtmrF6akmj
-	VA/J8dnA4Q3GqnCbd3zQpECG5JyRfqFSi5mUZV1lPp42pNhxONleTQ==
-X-Received: by 2002:a05:600c:8b46:b0:4a0:4a8:d444 with SMTP id 5b1f17b1804b1-4ac18c73238mr380796435e9.33.1793803072416;
-        Wed, 04 Nov 2026 06:37:52 -0800 (PST)
-Received: from DESKTOP-0SUCFI3.localdomain ([129.0.81.249])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2aaa4b85fsm131696215e9.10.2026.11.04.06.37.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2026 06:37:51 -0800 (PST)
-From: kerylefondji7@gmail.com
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	phillip.wood123@gmail.com,
-	christian.couder@gmail.com,
-	siddharthasthana31@gmail.com
-Subject: [OUTREACHY][PROPOSAL] Improve how command arguments and options are scanned and parsed - Keryle Fondji
-Date: Wed,  4 Nov 2026 15:37:41 +0100
-Message-ID: <20261104143741.654-1-kerylefondji7@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=EvlhR5Hb;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Abnmw0qV
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 10C117A0149
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 09:38:42 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 04 Nov 2026 09:38:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793803121; x=1793889521; bh=oNMFKKIIyp
+	hQBofn7wJUOYrJvLb7BuR7zhK6nubd80o=; b=EvlhR5Hb5qkkJXSauMsfi3l7UH
+	26S8XezeNh71txMrkFxAViWOBrNlRCbn7s7Na/5ARCLsAnYamMUVBAt/g/xVRoQv
+	w2J0N+DWIJxTBu+1U8d7nV6IQv3UMGC4mxfiKw9YnA1p+f9xQ44Gkma3TesGdqZs
+	WeEb3ZaBrMSdXfr4TgITzOCGd7vdwkt1c8Nuc192iRi0E3CAWGPp3U42Sf5lVnPO
+	dyRTBubghpFcYAliVAqfJsnUP9PVRjitkiO5k3Dbfs2s+o33uY+RerHk9tDmwZZ7
+	WxUQ/vn6wACaWM/gre1Vy4UwasL0wIZa1ymULTAV5GJYuE/C+6iBnC2VCgJw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793803121; x=1793889521; bh=oNMFKKIIyphQBofn7wJUOYrJvLb7BuR7zhK
+	6nubd80o=; b=Abnmw0qVAX7A+B20OgUMlvuLtx0+KxGdpFe3/TlFTj3w65CAiw7
+	Eta+kCKch71IHr1a49Xnwm8iUnJ+EYgkHF31osRY51A216VXpzs72ZSPOlscQ2u/
+	iNUu0O2CZDNguZn6UXpTd+sqt7Gkly/ZFWSY0vf4aqLMUAr8zURih7HrosTi+ZXt
+	QVfBIkb0QgOFzKqe7r9XTFJaDT68QeeKMuPITfTXPlGU3ApgSMM3mSRmK1FlumK1
+	XbGi0cIwaJudd7dVCmiRn4z9F7YXEjRMexXmkul+sYi/e8eQg4DitOeUiCynhgr3
+	DDsPSQIKFjNG1CzBABo+89ClycZk+01f41g==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793803121; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Kof96Pw0gHLH5fQlUQKYkTG6gc0gqAEMEekjBUUyEo6k5J2
+	F6i81rOjz7HScrvAerhIbw/3k0QUbJbp/sQjGiPhawBiOX6iovWjVbcvTHdQRv8k
+	+u7MwhWfI7wMKM8eKBco0ytpmR+9CaZFmlAul5OCbWG/A0nQDTlknPF4hBUN2SkQ
+	pTr6ipdXlZpsKUKcP+Yq+vtGy6uZMo+EIAVfMxoLZc6dCW+4MwIM6uAP/k8J1T1k
+	u9t8P63d429Jzaq8gpfevQXj1aK4cf80IDOT1Sc9CFX7y+iLKQ6VNbAurPeHnjic
+	mydROSvilEQpg8bs1MnWCE52Bu/S+ha1mPsBedw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:CI+wVuFpOjb/Xbqmd9WKICgxSK4k9PPWuXJ5Q79thwQ=:E7Cb+Tfda9qcvPKLX8LyV2zTnh4IH20aoUv1VfUGRNQ=;
+X-ME-Sender: <xms:cUPranG3IGaPtAELg592dt7U8WCqPAIIphphl79SjSGZr52tNot1QQ>
+    <xme:cUPrarOHFhbMQsedcir_EAs0yhs8Vih1-kRmezdiIA1m2eCbHQ_fI1Ul8h8WP7Yq_
+    QsFjFLZ-7kWYcFXKgC27YdJh21QaMgb1FmXdepnuj1-qpMh9aAcaA>
+X-ME-Received: <xmr:cUPrahcsmZuWvsZzsIQnMtewVywGDKOISAYj-lIbTe2W_mRs7UG9PYxpCAaTxMcnJ0VkPCxVO_awR7fcjGKfFXIg1wiulxw2gRoG>
+X-ME-Proxy-Cause: dmFkZTEXE0ZutMAZ+y9R0Sq9Vt1+EiVSSiCzb5rjWBS+i4W5VIbLENf/HkaVMTspc0ICCO
+    jv57pRFg89yn38X0do8v4MqCoRdUWEVmYhJP4+HuMzN6pkY9Od+ZmRgDyulFehTKVzH9Sz
+    eNTbxM9I1Em3PQIAWZUE9NvN+StCYtjRDi/I8Me2QvdAJ2v9jqIuXRLakxzXlMzakCr5Uq
+    3Hhm7JVCJx8KmRAJBePjHXK+LmYBim4EkGkhs+gAnPubOe2QzbVnrSFbLgGgOEvTXdDJHT
+    vwJ+o3rwTS+GSbErBdd1O+hl0KnGDSq5yaM903JPryKznWJ2j+prXuFhoJA5XJz9gXlwcG
+    /ULbAQzmOq5QsTBMEmvAaOQhA+EzKeXTTqk6EvtXYIM14YvXN9Nj2HOTsINwU1d+mu3jSD
+    W4qlJaVnD6xc4GpuUuRdTZPPdRRACp4Eni9iwgkh1lgLlyqI0EILSnAKiM5rD9ns99wIP1
+    AqzWzoo0q1sNrg0lisyiDz425bhcX2Y4cvWHOV7bZIrcGiTwWq/0ndVtNw1yN2io2sH8/I
+    Pij0faKyT5KM0Kr+rCQCAZ8p9Hu9ePRYN4lUUWtfKeGRKDHK+zplEZxHLy4gA5DSTxN8vR
+    kLtUHjMMNEaGmx9cnvIjA64kYULXoliq3niyLeaBo2cwkTkanyqMobb62rIw
+X-ME-Proxy: <xmx:cUPraguaqfpZDGVgMcQaMhWRKjEljuAc6pEXtKyzWaGvqiO4tq_cSQ>
+    <xmx:cUPraqk11tszAKujHG66s6VSvxhfDDnQGkjXQpGbwDOKoUs2PMuy0w>
+    <xmx:cUPraqwIMxie9VAFijNsv-CkY5CtVpzeZncwkzycvoghoQ9ZJYgRLw>
+    <xmx:cUPrakOBTqTpH1CgW0aH8rz8Zx48ExBeHPrIQNPix2B0XXaNW8rx8w>
+    <xmx:cUPrav_XHfn63ay1SOzysQKFVP4QnoYbp91WV7r9VS3HHGdEAu65rOr4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Nov 2026 09:38:41 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Okhuomon Ajayi <okhuomonajayi54@gmail.com>,
+  Srujith A Poojary <poojarysrujith@gmail.com>
+Subject: Re: [PATCH v5] submodule: use the submodule repository to
+ abbreviate commits
+In-Reply-To: <pull.2288.v5.git.1793763781129.gitgitgadget@gmail.com> (Srujith
+	A. Poojary via GitGitGadget's message of "Wed, 04 Nov 2026 03:43:01
+	+0000")
+References: <pull.2288.git.1793435149942.gitgitgadget@gmail.com>
+	<pull.2288.v5.git.1793763781129.gitgitgadget@gmail.com>
+Date: Wed, 04 Nov 2026 06:38:40 -0800
+Message-ID: <xmqqwlqs3bm7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,177 +127,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi mentors and the Git community,
+"Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Here is my Outreachy proposal for the project "Improve how command
-arguments and options are scanned and parsed".
+> From: Srujith A Poojary <poojarysrujith@gmail.com>
+>
+> The commit IDs shown in a submodule diff header belong to the
+> submodule's object database. However, strbuf_add_unique_abbrev()
+> uses the_repository, so it checks the superproject's object
+> database when abbreviating those IDs.
+>
+> Use the submodule repository when it is available, and fall back
+> to the repository from the diff options when it is not.
+>
+> The expected abbreviation for a submodule commit depends on the
+> repository's hash algorithm. Use test_oid_cache to provide the
+> expected value for each algorithm and remove the SHA1 prerequisite
+> so this test runs with both SHA-1 and SHA-256.
 
-I would appreciate any feedback from mentors and the community.
+"remove"?  What are you talking about???
 
-Personal Information
---------------------
+Above the three-dash line, decribe the change to those who read
+_ONLY_ this iteration, not any earlier ones, because that is what
+"git log" readers will see.  Perhaps write it more like
 
-Full Name: Fondji Tamekong Keryle Blondeau
-Email Address: kerylefondji7@gmail.com
-Location: Kribi, Cameroon (WAT, UTC+1)
+    As the expected abbreviation depends on the hash algorithm used,
+    the test uses the test_oid mechanism to switch the expectation
+    between SHA-1 and SHA-256 repositories.
 
-About me
---------
+or something, if you want to help readers who are not as familiar
+with our system and its test infrastructure as you are understand
+what you did.
 
-I am a self-taught C developer with a background in computer science,
-interested in low-level programming and open-source development.
+> Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+> ---
 
-My journey into open source began when a friend introduced me to open
-source and shared details about Outreachy.
+Here below the three-dash line is a place for you to describe what
+changed since the earlier rounds in your own words.  Range-diff is
+added to aid it, but not as a replacement.
 
-When I first tried to apply to Git years ago, I struggled with the
-codebase and could not finish a patch in time. However, I remained
-motivated to learn. I spent time studying Git internals and improving
-my C programming skills.
+Changes since v4 is to squash two pieces into a single patch, as far
+as I can tell.  Such a change is not visible in range-diff as #2
+goes away, readers cannot tell where the additional material in #1
+came from.
 
-Returning to Outreachy this year with better preparation, I was able
-to follow the mailing list workflow and complete a merged contribution.
-Working on Git's parse-options API confirmed that the "Improve how
-command arguments and options are scanned and parsed" project is the
-right fit for my 13-week internship.
-
-Project Details
-===============
-Applicant: Fondji Tamekong Keryle Blondeau
-Mentors: Christian Couder, Siddharth Asthana
-
-Contributions Summary
-====================
-
-Contribution #1: started Oct. 17, 2026. Not accepted or merged.
-
-Patch: [PATCH v3] builtin/var: refactor to use parse-options API [1]
-
-Details:
-On October 17, 2026, I started working on converting option handling in
-builtin/var.c to the parse-options API. I sent three patch revisions
-(up to v3), updating the option structures, flag logic, and formatting.
-
-Context, Learnings & Outcome:
-During code review, Phillip Wood explained that git var had already been
-converted in commit e19f0779c67 in September 2026 [1]. Even though the
-changes were already upstreamed, this attempt was very helpful. Phillip
-noted that the main goal of microprojects is to help candidates practice
-sending patches, using the mailing list, and handling reviews.
-Through his response, I learned how to run the test suite, search the
-mailing list archives [6], check the 'seen' branch, and use microproject
-documentation [4, 5].
-
-
-Contribution #2: started Oct. 26, 2026. Accepted and merged into 'next'
-(marked "Will merge to 'master'").
-
-Patch: [PATCH v7] archive-zip: refactor 'path too long' error message
-to use Q_() [2]
-
-Details:
-On October 26, 2026, I started working on the error message in
-archive-zip.c for pathnames that exceed maximum length limits. I updated
-the code to replace _() with Q_() to handle plural forms correctly for
-internationalization [2].
-
-Context, Learnings & Outcome:
-I submitted seven patch revisions (v1 to v7) on the mailing list [2].
-Thanks to clear feedback from Junio C. Hamano, Phillip Wood, and
-Kristoffer Haugsbakk, I gained practical experience in:
-- Internationalization (i18n): Using Q_() to handle plural forms across
-  different languages.
-- Git Coding Guidelines: Following indentation standards, aligning
-  function arguments, keeping lines under 80 characters, and using tabs.
-- Patch Workflow: Structuring commit messages according to
-  SubmittingPatches.
-
-On October 29, 2026, patch v7 was accepted and merged into 'next'
-(commit ae25f6f799), and included in Junio C. Hamano's "What's cooking
-in git.git" report marked as "Will merge to 'master'" [3].
-
-
-Availability
-============
-I am committed to 40 hours per week during the internship.
-I am based in Kribi, Cameroon (WAT, UTC+1) and can adjust my hours for
-calls, syncs, and reviews.
-I have no conflicting work or exam commitments.
-
-
-Internship Blogging
-==================
-I will publish regular updates about my progress, technical notes, and
-challenges on a schedule agreed with my mentors, and share post links on
-the mailing list.
-
-Proposed Timeline
-=================
-
-Pre-Internship Period (Now – Dec 6):
-- Continue studying the Git codebase and internal option parsing APIs.
-- Work on another microproject or cleanup patch on the mailing list to
-  keep practicing the patch workflow.
-- Discuss initial target builtin/ commands with Christian Couder,
-  Siddharth Asthana, Phillip Wood, and Junio C. Hamano.
-
-Weeks 1–2 (Dec 7 – Dec 20): Onboarding & Command Selection
-- Set up local test setups for target commands.
-- Confirm the first group of builtin/ commands needing option parsing
-  refactoring with my mentors.
-- Submit a first setup or documentation patch for the workflow.
-
-Weeks 3–6 (Dec 21 – Jan 17): Option Parsing Conversion (Batch 1)
-- Convert legacy option parsing in the first set of builtin/ commands to
-  the parse-options API.
-- Update or add tests in t/ to maintain test coverage.
-- Send patch series to the mailing list and address review comments.
-
-Weeks 7–10 (Jan 18 – Feb 14): Refactoring & Cleanup (Batch 2)
-- Work on the second set of commands assigned by mentors, including
-  subcommands and complex flags.
-- Update error messages according to Git coding and internationalization
-  standards (Q_() / _()).
-- Follow up on review discussions on the mailing list.
-
-Weeks 11–12 (Feb 15 – Feb 28): Testing & Integration
-- Prepare final patch revisions based on maintainer and reviewer
-  feedback.
-- Run full test suite checks on all modified commands to ensure
-  stability.
-
-Week 13 (Mar 1 – Mar 8): Documentation & Final Evaluation
-- Complete documentation updates and submit the final Outreachy report.
-- Outline post-internship contribution goals for Git.
-
-After the Internship
-====================
-After the internship, I plan to stay active in the Git community by
-sending patches, reviewing code, and supporting new contributors.
-
-Appreciation
-============
-Having my first contribution merged into Git has been a meaningful
-achievement for me. I would like to thank Usman Akinyemi for the warm
-welcome when I joined the mailing list.
-
-I am very grateful to Junio C. Hamano, Phillip Wood, and Kristoffer
-Haugsbakk for their patience, reviews, and guidance on my patch
-revisions [1, 2, 3, 4]. Finally, thank you to my mentors, Christian
-Couder and Siddharth Asthana, and to the Git community for helping new
-contributors learn and progress.
-
-References
-==========
-[1] https://lore.kernel.org/git/d748915d-c50c-4143-8140-ae885a6ba604@gmail.com/
-[2] https://lore.kernel.org/git/20261026192803.1985-2-kerylefondji7@gmail.com/
-[3] https://lore.kernel.org/git/xmqqcxsmejd9.fsf@gitster.g/
-[4] https://git.github.io/SoC-2026-Microprojects/
-[5] https://git.github.io/General-Microproject-Information/
-[6] https://lore.kernel.org/git
-
-Best regards,
-Fondji Tamekong Keryle Blondeau
+Overall it is looking good.  Thanks.
