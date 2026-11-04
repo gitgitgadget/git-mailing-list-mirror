@@ -1,89 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793819271;
-	b=DgDPo9OL2mYaCRt7MszRWIjhfvzlwyrRgvdxmfXQmRIIqn7AwzSbdnnQzns/GYQM2qZ+
-	 9PBFX/4tKjMxKSc2cCMpNjhM4o6FDMtXj2xN3q77MfPzAlbVG5hEDqzW4UOP9bJlGIdbI
-	 5G/n4TOdpaQiLGBtot6v1r/GzNbRMl6UgWsLx0fhleM9HXNr14uAYp+Fytu+2wkF+/Muc
-	 SQXMjIBnhreoIWpg9U3sgTf8ALl/IW3M/mrMK6xchf9F+cPDWNtVwend/uIwk52P5FOJv
-	 cRUJcEwHc8xsDEQ/dnPkua9v0jNXsdNL3VO/1WibROYIj/++squ6CpwIMIVBCMzsJVQ==
+	t=1793819920;
+	b=2ZgPTdEWYa+PmYbDMeZXyv2KoveIq4CSX8ARzKk0FCkpEXPOEuDwz/X3l9et5uyLjATp
+	 pwxHFouBx1yH2paNtxfRJTejhKasq0Vul69YRPgsRXosxGh+OIW0PB+Xm3P5PQTbMCVUs
+	 pzWHeuQpFZKj3/SC4GKOX1emb7FoJNv4KxsetW18+1x9xDs+2qSYgYlF4uS3ziM0YjIe2
+	 m5TgWzU1r0LvANjT0CWW+tCNbJuU2ER0RkHjb7YD8q02j5Nl3ITxbQAvK+6P6FwtOg9Ap
+	 lWuPY3wNmNVMCnfuGNIE+4wODaO8+r1Gg43LpHz7AgWF/kTs1qDd3+Rs1rajvvALtIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793819271;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=I2cN0IaGnS/X8hoVG5d41wt0T6rw4T9Ehvrg15pw6c8=;
-	b=hdUxESqV5wZoiMvrfccztHP3S0PQ1Cpld/bY1Hjb4aQFP5ilITKGi9ikGvXByHPYk1vI
-	 RC1X1ghDgiGkfW1EGzs3+TjGUGNYgnaAa5GQzfU0dF86fG/b1hn3Oede9O0DwCpqiSVj8
-	 +eRasqUswmbxsJhmMQ/+M6ADbOUYLV/fwvEoFfcv/QwC9zc117GFITEs87ReVx6xxOSrm
-	 WSBXYAfRFu6awrH/RGQyinzWeZsxlo+HWS/RGHQCCw1tjascCFZYw4iSZ9BFXHZk6LJKA
-	 EbZ1R9Cja2WZZH1zdjgxsVX7K3k/LXIkCbQUabyxBUS1U6oqE2usOqq5uUONlq2RaKA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793819920;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=r/vHTaMM+mNksITVLDWHYl1Mk9j4UK3c9rKdlkguC1c=;
+	b=Zp3PfQEMZfCZB8O5mmDmf8so/b3YOWf6mWnjaonDLelTt6/r1SaiPfkqDu4nM4U2u+/H
+	 2BgImHQ1v/z63LAedirU6n5TDUeAsbC/V8sIniVSbJS/tluQG+IHMkqlxrl/9dnTYnXYe
+	 QHBU9d2qNhPyp80k/cwsP91GII6HcYsFLOX6v0peiupSRsaCLVLyMjsdByf7JdbbH3fqi
+	 yr31KhJgDWE6IzIFU3uytrorZaleqkq8dDpE3fmNAPl2mfUAo9cnD0qbB/8BPix2Jh+jF
+	 OXmrrfm87OeyYDC73wy+B2U/loN+b+oVJ1r/HyDbF9zRHHew9b7Qq4zR4ftoXnPWw6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=p+59IPbs;
-	arc=none smtp.remote-ip=74.125.82.49
-Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="cFfDzm/F";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GJ1qVm5S;
+	arc=none smtp.remote-ip=103.168.172.148
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD983606A31B
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 19:07:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD983606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B63606B2D5
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 19:18:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30B63606B2D5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=p+59IPbs
-Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-1ae18eb9b69so1023609c88.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 11:07:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793819270; x=1794424070; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=I2cN0IaGnS/X8hoVG5d41wt0T6rw4T9Ehvrg15pw6c8=;
-        b=p+59IPbs5ZA6PcYC/EExO5P+QlPsolIO0bCMEn9fSI8vCf36Y0KXuXNmq7h+XgGWXJ
-         XdiaQ3Uj9PDB6TSg3IwVfZU0jNkL5JupP586tx5URRsY8UJoUIS8E/wJmsLYIF3jugi6
-         393qDhjQ1Feo04WL/z6TfgqgyWcgWiLV3dPhUG9UuP2Z4Czh7B2bZPYvjC8wlddAn+eG
-         xkbRAejlFZWdYpHQbyGCkO1BpFsNN1tABchTOeoHSwu1rf0ucmWF9zCQyhJnOIrlvhNg
-         eOzbiQxMr37PFsC/RDhEQX3Gg/S4IdkYgFBzmcJijj4/SBIRnWgLOaDLDi7zB/Ra1w3c
-         +HsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793819270; x=1794424070;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=I2cN0IaGnS/X8hoVG5d41wt0T6rw4T9Ehvrg15pw6c8=;
-        b=FVGkMx8zvLfI7oCLM/gZ1tlOzyXnnvf3VDtj+WQW/n77R0golzlnqIa+OuDK1NJRL8
-         LNdn0LxrNNH/V/889n2YeA21C37u3qftBsUTAaAW/VWmPlZdgyLdlZ+NTCxa8xb0uoHt
-         YlOLF+WH93esvpRFY1K8V50g6+g+rMd7OQXq82UkFjg/o7AsYbcg6zB78+9CLzcXrdNP
-         qsr8Wb3ryPnyOGHT+E6gQEwL0AGN6KAnfgzHiKkQ4RL5nHpmztG8uOLQIF7olx8J74nM
-         0vzoK78aZfGbttuALzbooXUHyFDZLQd87bYbJccG+uGpstzEa7sVQFvv4VsRJ0YO1Zl8
-         4srg==
-X-Gm-Message-State: APuU4Z9Aqm+2Fe0u6B55uOl8gSlOYItMFsJVpsW+6W21Q9tYe0CitP0E
-	o+NpqS7DbR5BTen46LYw4ITJqz/3Wrce9aRbJ/hZBIfDLYb2eMZEsWae2UXchBB9Z/M=
-X-Gm-Gg: AYBFou1FJ71EwyuVrw9jd29MG2dNZ5Pe5TAXleQWBnXyjrWtLG5Lx8Apphg0oKOUETM
-	+J3heKYxLbA7x0o3gCMBTMQYVwaGK1+8Z8BdJRk4MaChCrTXQr/JeJahG8faIpkfyxHn0tv0/WY
-	yfpe6RaLA8ipy2Gkq2o40DlrEyAX+9phvizqHCyQaYKXY3n5bWk5BciWGV0XnQ8ZFM33Y86HlDD
-	lQ6RY4xhrr8fbEuJF9wRspOZtVlY6T9z/WjF9tUEZFvKWaxRk9cRQqfZNc1aoAaXuGP5fm3YAHv
-	0f40odFni186v8YpI2l464tG4pk/tIDvWj+Te8Na564OrLwlZ8EG57LK7STKejwF0RkJi1E1sGD
-	GX9AOUxCzRtADr8hkPYvNL7kMID9PRAwJYceVA0M4hRnV0HRHe+LjzZrazhqQrQBlxrP22Cg3L/
-	qA7nXa2MSxE3a/9PDw6RenzLfpP409xDkRTflNyictdH+yTfH84QPwkYFXaPp6FGlw9YVn+71c6
-	xYl05ZiNsbNgRh8jqaQiheBURXgr1IKa9fv7m20Bv7wXbhB7YUxWZchkWXoG9vNCgKx5XVaOFDC
-	k3TH/k2XNcwLONN+eMZwLJmlrO/Zuw==
-X-Received: by 2002:a05:701b:2310:b0:1b2:4e79:bfb0 with SMTP id a92af1059eb24-1b24e79cc85mr822515c88.23.1793819269786;
-        Wed, 04 Nov 2026 11:07:49 -0800 (PST)
-Received: from [127.0.0.1] ([57.154.4.160])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b245c1c272sm9419407c88.8.2026.11.04.11.07.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2026 11:07:49 -0800 (PST)
-Message-Id: <pull.2296.git.1793819268371.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 04 Nov 2026 19:07:48 +0000
-Subject: [PATCH] path-walk: allow revisiting paths from tagged trees
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=cFfDzm/F;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GJ1qVm5S
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6AAEEEC24E1
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 14:18:39 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 04 Nov 2026 14:18:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793819919; x=1793906319; bh=r/vHTaMM+m
+	NksITVLDWHYl1Mk9j4UK3c9rKdlkguC1c=; b=cFfDzm/FpLdHD8FguiJSF81T6X
+	9ljuhySt6+1h8dNmD8DSy2bNMbEpLe8k1KUFD8j9j6eYW4ZIXYgdYoyJ37KEjpbr
+	AFxAngCPp3NKXlppSSjCVf5k0n26aEPuRMCMLnxFTGqhgiGlxUlUPVN0xNxMluCH
+	2UfVGtAPavzQZAZtySb3lDw/7zmRqnuuLOxHBuFQMSnmyg21qdNOZI1mV6E9RF2O
+	1WdDBvImVdL/CiNPkN0pJ9WeYmDMa4p2tqBjIv9U/jP0Mc5RIAiOsk/ttjDvIog8
+	3tJhm85LzAR04XeS6m5cgI9tl4uf8EWbkaernRA3/UH3KBEt7R/Dy9VEdmRA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793819919; x=1793906319; bh=r/vHTaMM+mNksITVLDWHYl1Mk9j4UK3c9rK
+	dlkguC1c=; b=GJ1qVm5SS334dfhkjDxzCgsAIIF7N20kcOX6ErZNnlxcV290h75
+	PNu7hZfCk9FUwtmRyyEefOOiWXNnEaK/gVx98KbQ3+b6Rshnrq0SsI7xBOGaROmo
+	XnzDE5bMocvSnsMlifCBj/o03yCgJV4wDcZTWPQ0iA9IUZwxZ9ViT/lfnUzXql18
+	vPLy49wW6L/Uet+WPi+iakZGowd5vIVbxCOs2gZDLraqrQ4CTIPgaurmt5TwJ7Je
+	sABMI03etN79XawQDl6UM0SqStZWnqSb862OSmPcRqUZI3r0RRm+mV5BkfzXPePQ
+	6wBspe6wP8YS6LHKl5CL/uvgE9q/4Evny8Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793819919; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:RSOUwdMisLhzMhtT1LTpVmsQk6Fk2cqboIQ1dkKv7raDPhD
+	YYofauKt5TslgVzgAKLm0TrbahRiPBJaMF3M0mkalrsIs/j7Una4rOXDVY9JgZ95
+	pI2vT0dA2MqIdfrVSqJvtSJcrwEHaJndTDxml4yJ+MGXe6apojFR3uofy5B6IZjo
+	0msFbotKHPLUZiLoJkdtKrWrvb82GB+qmDhZovX+v3MCfH/WftjicBm8f0OT2fNc
+	WphPBQXJbt/5e48fQhXRvuAXpmyTkRyAZE62ebXWnDo60R15uw5hOYiBXU6HKlhk
+	PEFhpJLkTUMtByqnV9eiz9TC0vyakifx1JRGVCQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
+	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:Htwbl0qztUuAvN1/2bcLNm8yMyDDUKTEigbD8jxFhKc=:exM4fkgj+CY5Ondi7ZGI1VorThs0J3fYP/n1SBPDRb8=;
+X-ME-Sender: <xms:DoXratWdIPI0pOV3qIXsBdOXGxPdmfwCYUTV-7lPkPft2GqkxBOhfg>
+    <xme:DoXralCJ3k1Ms7nHVcwo2Hv-GPdAQmz9KdNE1uwcUp_QIQHIrn6bXT107yFh9Tt4f
+    BGGkKBFGc5jFYWDqI030wIcEIMXFMKdPaPzU_RsRS3jRNBMOnQ0QnQ>
+X-ME-Received: <xmr:DoXramxfXEHDMHKlZxN9-VpX54xzytq6gVNcjCqtUk5dNAzOJPdxpb07eDDlbDOSTvkKe7mqgls6PaVImiToMqi5TN0PaVZu-_w6>
+X-ME-Proxy-Cause: dmFkZTGI+8MMQISbwp+dMWbx908svbMzhQ8Nx8T6oOqTJoK+eQywqffx894U43pt/lEg9S
+    /Q7+oSZBLqy1ygmDeTXHq+t2a7ZUl+w/fxVH1ahrtG/xX6EFylGBVrKNRo6k4A8Kj8NSQB
+    cWLnKrjbuCz+OekeoJ0wyE/OSpAtxhJGp7rMLGSZAjc1Mpusv3EKjApzqq50bAJMmo8rLT
+    W7AIyil4S2xSsdQQaOkDbiGarYsb4paPUnRUMBDTPvVnPbk4KfVAZxn1FHLP598DZLUK0D
+    QHZx+hip3vRcDgaav+wBvmYZbLr0lZ9oZ5U7H29Fm+k4C7mBtK+84gYx+D/7sA4nRILPOW
+    0O+nuHGtJ6qiwNdGw6xQrLa64EYodmLLkmgNki1brWbNUQOCwMy9BR+TVJNTioNANesKft
+    mxuwAtC3LhH6SVpCtC2zSr4mPojrWgU4Al9xeGTTYhAeBkl0zhhRZ4eX9iKoiQEqiJ62W0
+    QOmmLtqILlF33Fs1qXRjXPqNNr8pWLXwaT0M+GA4YvLK1fVNx9DK4WNvqY96zB3+U0Bltd
+    p1vxcZeXcsHB1IJvYVqLWKS7WMymICGjPJ8xmFhAl0ECgnVqV+Z7mzzDU9ocdpIgCs8X0A
+    O1tsZH42+EYl/kfPjJaiJmQG9Yj4RQpCCPPniZ8/GU9ykiXMLT1B8BRDIlVg
+X-ME-Proxy: <xmx:DoXraqAsaloCHHbiHukBd9ZnKoGgq7cQtfKv5g_55WMpwJFxieb2tg>
+    <xmx:DoXrarY7LjFUG1C09bjG95r5qTd5qYTXwUGACO18ZsfN2qe3XgEYgQ>
+    <xmx:DoXraqhxrmQRCflvLomqjxDUc4QLUQmnsw39gzyhbV31P2Bp3XWOdg>
+    <xmx:DoXral5eFn12Opj1nGZ3yZjDNwN4-D1FkpG1Jz0T0EtyeGzQvmE3cQ>
+    <xmx:D4XralLfKINukNqaf0I1svPHkCwAuIvWFjoxWw4yflgCGLx1n0dlqskQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Nov 2026 14:18:38 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 04/10] commit-graph: drop redundant flags in write context
+In-Reply-To: <20261104-pks-commit-graph-write-refactorings-v1-4-d013d9401a59@pks.im>
+	(Patrick Steinhardt's message of "Wed, 04 Nov 2026 16:57:26 +0100")
+References: <20261104-pks-commit-graph-write-refactorings-v1-0-d013d9401a59@pks.im>
+	<20261104-pks-commit-graph-write-refactorings-v1-4-d013d9401a59@pks.im>
+Date: Wed, 04 Nov 2026 11:18:37 -0800
+Message-ID: <xmqqa4no1k36.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,110 +124,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    ttaylorr@openai.com,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain
 
-From: Derrick Stolee <stolee@gmail.com>
+Patrick Steinhardt <ps@pks.im> writes:
 
-When adding support for tree-depth filters, 5111520e2a1 (path-walk:
-support `tree:0` filter, 2026-05-22) moved tagged root trees into a
-separate batch. These trees are expanded after commit root trees and
-their root-level blob batches.  If a tagged tree introduces another blob
-at an already consumed path, push_to_stack() refuses to queue that path
-again because path_stack_pushed remembers every previously queued path.
-The final remaining-path drain makes the same check and also skips the
-blob, leading to a repository with missing objects.
+> In the preceding commit we have moved the flags that control how we
+> write a commit graph into its options structure. As a consequence we
+> have those flags implicitly available in the write context, too, as it
+> already contains a pointer to the options struct. This makes a couple of
+> individual flags that we track in the write context redundant as they
+> are a simple alias of the flags.
+>
+> Drop these redundant flags.
+> ...
+>  	struct write_commit_graph_context ctx = {
+>  		.r = r,
+> -		.append = opts->flags & COMMIT_GRAPH_WRITE_APPEND ? 1 : 0,
+> -		.report_progress = opts->flags & COMMIT_GRAPH_WRITE_PROGRESS ? 1 : 0,
+> -		.split = opts->flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0,
 
-This regression was first released in Git 2.55.0. The torvalds/linux
-repository has such tagged trees that revealed the bug.
+OK, so these are the most important lines in this patch; everything
+else is there as a fallout of this change, and as a result, the
+remaining code has become much easier to follow.
 
-To resolve this issue, remove a path from path_stack_pushed when
-consuming its queue entry.  The set then suppresses duplicate pending
-entries without preventing new objects from being visited at a
-previously consumed path. This preserves the existing visit priorities
-instead of reordering tagged trees relative to other batches.
-
-Add a regression test with a commit and an annotated tree tag that
-contain distinct blobs at the same path. After an initial repack to
-clear loose objects, repack everything with path-walk and run an fsck
-connectivity check to reveal the error without this fix.
-
-Assisted-by: GPT-6.1 Sol
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
-    path-walk: allow revisiting paths from tagged trees
-    
-    While exploring potential future improvements to path-walk repacks, I
-    discovered this regression. It's slightly subtle in a way that the
-    existing tree-tag tests didn't catch, due to needing to revisit paths.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2296%2Fderrickstolee%2Fpath-walk-tree-tags-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2296/derrickstolee/path-walk-tree-tags-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2296
-
- path-walk.c       |  5 ++++-
- t/t7700-repack.sh | 23 +++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 1 deletion(-)
-
-diff --git a/path-walk.c b/path-walk.c
-index 9ca3248ea8..e3a5ba201c 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -62,7 +62,8 @@ struct path_walk_context {
- 	 * like a stack and performs a DFS within the trees.
- 	 *
- 	 * Use path_stack_pushed to indicate whether a path
--	 * was previously added to path_stack.
-+	 * is currently queued in path_stack. Tagged trees can
-+	 * discover new objects at an already visited path.
- 	 */
- 	struct prio_queue path_stack;
- 	struct strset path_stack_pushed;
-@@ -309,6 +310,8 @@ static int walk_path(struct path_walk_context *ctx,
- 	if (!list)
- 		BUG("provided path '%s' that had no associated list", path);
- 
-+	strset_remove(&ctx->path_stack_pushed, path);
-+
- 	if (!list->oids.nr)
- 		return 0;
- 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index f0a390e3c6..338f622614 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -904,4 +904,27 @@ test_expect_success 'pending objects are repacked appropriately' '
- 	)
- '
- 
-+test_expect_success '--path-walk keeps blobs from tagged trees at already visited paths' '
-+	git init --bare tagged-tree.git &&
-+	(
-+		cd tagged-tree.git &&
-+		GIT_DIR=. &&
-+		export GIT_DIR &&
-+		old=$(echo old | git hash-object -w --stdin) &&
-+		tree=$(printf "100644 blob %s\tfile\n" "$old" | git mktree) &&
-+		git tag -a -m "historical tree" tree-tag "$tree" &&
-+		new=$(echo new | git hash-object -w --stdin) &&
-+		tree=$(printf "100644 blob %s\tfile\n" "$new" | git mktree) &&
-+		commit=$(echo new | git commit-tree "$tree") &&
-+		git update-ref HEAD "$commit" &&
-+
-+		# collect all loose objects into packs
-+		git repack -adf --no-path-walk &&
-+
-+		# now confirm that --path-walk keeps all objects.
-+		git repack -adf --path-walk &&
-+		git fsck --connectivity-only
-+	)
-+'
-+
- test_done
-
-base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
--- 
-gitgitgadget
+Nicely done.
