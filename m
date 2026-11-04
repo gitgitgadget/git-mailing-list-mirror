@@ -1,88 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793808795;
-	b=UBxlgo+oSO3cIAOpHcu9o23PnWLb7h73KUzpwEwlqLSUCCFZoDDcN1+wffmU6MaLXCjT
-	 c/tPm8nvRlrltSNrMA8XubD9va/jhjsc+UmEYkbFbSBWD8jDreShsA2iDGWPNa+TYf4rz
-	 RaspoxosH1n5HnueI2mnfhgVpx0wfEp93q2u3oBrFqieoNsOnQ47KeSrOzy1rzHgeJnY8
-	 WEOTh58jhD0dHYJWiteq3kq4hdIhaFNEvB6zaldwXJfBUTSFj7yRgfnC+V4oEgnb6ovyS
-	 poHhrlnZZQ+dDh75pBxw4VgxN26NchUCBIpd6/I1N/8s53CZQK7StqsksCr0jdDWZ9w==
+	t=1793809675;
+	b=QJzxTOUqG6thqWNk5UfL1hFz/F6B7XAbJxy5rgnFLM/ZGzNrqggath+unnFQIAzC11m7
+	 CA2+sqIC7TgiwCFDIXSrI50CaLuDCAHmZGg/gsw+XNpTSEopgE6ePKqzhQA69S/yYiUG0
+	 hJHUyjtv/Yw6zZZN6WpqCNgnBwgCStsa3PWK5PeQ9QQoAF4OuoOiiarQYL2xMXYLpGDBZ
+	 DMx91W8x6x33gZAg4rNytXjo0wv5QdyAwSCRonhsAMg0D8KI76dFFhjgvRoDqRTHWn8h8
+	 1ov2WKFKRtwmZAtklbGHajZjyGdJoMSOrydG8QZlB4AvTlR9Hc+H3cF0XUrS21xd+vA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793808795;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793809675;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
 	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=BAU7P9jVZyJJebTJ7suoJ6RtffvtpwKQYNh79iJsCC4=;
-	b=Pc2meZB4cR9jinwWNbqPAGmip+Nmlhy7Vfdk5hsb0KRO1zpOhQRHochS8ZM7TKzh6Iq0
-	 xAiudKfvLlgQvpJ4dWpbk5x6+coAFMPJq1q47iYYCiA7Kv4hF0OK9F3JzbE5vWB0E9ABg
-	 JEWjY4ZPghTvqRI0gEYAhDNdN6TJGFKiUlLCLQ3QMp3dZwqLCs/i/oAes8BCUYcKoDG5s
-	 XU0jFutWU0RwbecBx+4Vnv88e3HwiLEDwB3R8GePjbTkM58GWokPa4qnNWb1arV4jYhoM
-	 bJFNP6aH7JyzNlUWxDHhb9WMg6fxkEnZ4GE2bZz+BguvTbkVgDzDQ7S8lR6yl6zLnkg==
+	bh=PbXWM3jNLo1ZqwtJvPB5VpZ2GiYBvg5NG55UXdGyz9E=;
+	b=AfAUi8S1L6eQofECMFDtJ4gyfoMmiAGEFEIuVHRvSkb3up6S+P+4iEuwO2DSg598mqMm
+	 iwW1heSNVfgNmAH0zo3zlafu9Fbyg3DzDTThZEr+xRXvKykmOQ+f4zdF96ZCyZxazlpEU
+	 xrXGWPqCOQUMjtGjccUIaepamdEnBRwN65Yv9uBEZzmMgAGkft0ldWrgGU7AyJdE5MQQ3
+	 45JMS0UFI8AW5BphVUVqwASDwj0WgwD3Jd8PyyWcEu9igK4LcRwA0WoBsH76xDTCLQxe8
+	 HZqYjT6xeo9Bade/u7trHAAMS1PqyQZ3IAB+e9nkA7NH6xosbJ0vA2AW8hHGhH4zgVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=teupVV5G;
-	arc=none smtp.remote-ip=209.85.160.179
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vXZYG0Ur;
+	arc=none smtp.remote-ip=209.85.219.50
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FD3606A335
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 16:13:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 38FD3606A335
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6E3606A32D
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 16:27:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA6E3606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=teupVV5G
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-5351d76e1baso8288641cf.1
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 08:13:15 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vXZYG0Ur
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-91b54d1e9cdso8449966d6.1
+        for <git@vger.kernel.org>; Wed, 04 Nov 2026 08:27:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793808794; x=1794413594; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793809674; x=1794414474; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=BAU7P9jVZyJJebTJ7suoJ6RtffvtpwKQYNh79iJsCC4=;
-        b=teupVV5GWKDSxElUeIbcUG1vrTiJb8b+VJkMOcIiba7rim9kv68u74ccvJcWsxZld6
-         iF+m23WCy5mVUqIuaJ8+vnCV3k7EKZioXtuakHX+WBDTpYopK2Rmvh3Fhn6AD3zHtjCL
-         BPh9cKCAZWx9XAkO6cTEnjF/SaBaX91T67rqar9y8ruh64kyIDSG/xjQPY1QojiDSi6b
-         S624jFIPFQOTV6UfmKUipzKHeVRoW+YlsRWabgZczvpDSXaVpChJCoUAM/5OhwocVKE2
-         AV+m3Ax+liY+aauTh7MS1ar9SivN8LXBz7y9MxVTykuB8cN/PRfhTBoT2TUUYLdPh9fU
-         KTeg==
+        bh=PbXWM3jNLo1ZqwtJvPB5VpZ2GiYBvg5NG55UXdGyz9E=;
+        b=vXZYG0UrTo8wNQ6ZYtvCUf0W2Fl94jgDYHHEJhPIUYiZrFchuV3os0/zYJTueACLh2
+         v9ScVY9n8ibRLyJbJ+agIJqLb2oLRMz93ZJrpLTvTl5P8NgLgSUqKCsmr3ypy1dHO8Tg
+         ljisNIsdayinVNlcYSlhZrOyWqc9NNQsrwJV7dm37CgRoonV5zU++OJb1eDDE9UP4Sdy
+         +Gh47q6DQcEmfypXtMHwFiFjb74ht/ytvRwVqLeibMrdK05oOg/3EHnF+ecZZCetuS5A
+         fD09KUHmVmKHYiRl2+ByK5wCMkx6Amp1V1Oz7ce4G9SDUIzQzBqkGSuJICvtag44Ybwd
+         kDVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793808794; x=1794413594;
+        d=1e100.net; s=20260707; t=1793809674; x=1794414474;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=BAU7P9jVZyJJebTJ7suoJ6RtffvtpwKQYNh79iJsCC4=;
-        b=xslcV0bsfIY2RCvQkgu3M6JcUHeaI0lhMkR6GrCBVeR/NaCGdZJdRUQNK/KXtizMd7
-         QBTjaP5c4SZ2SXpd9nkaMlg51vOmDTka/HeroTipzdDF0MNpEsywil34kidx/ddz8cD/
-         Dc9NjPinEhbidHX8nNGuJrnjNkaL2bu80V17hI0y5nYshUwztIs26Eq3Na08Uae1N2Yk
-         R3bAqkpoNfRhe2C68YacrfS2vc0mb8Gm28IWyTie/FjT9sDqvmmWHmuc9DyNo+V/FGei
-         NP/FyZDMLHmQ4x+onj6TsYiKBQXLUI80S8wsNsH28ZNr8Zp2D6IPXxVrGPaJux87Ag80
-         hMZw==
-X-Gm-Message-State: APuU4Z8g1+hwQRwTPjlrYOp6G5LkB26oN9AXDOGy2NdBFOmkKTXglQjk
-	3M4nd4tnVTvGoicxjI3aH5HJJ5hWmykYhRCNd2T2dZpMV8JLPTvqu8WR7iJt2w==
-X-Gm-Gg: AYBFou3lA3Dl19BVDbnvSVNpPS2McwwJ9Lo1CLTnvtaIvkLWp28xTn6g5ZpR8NYpinW
-	tZ9OLTCFUPB6I3sFIndsRZPPUxrXmQ6pKPhDYONUKAbdJdZgiaUNBN+7KaXaWSLP/++6hgLV+/R
-	7t+L6G7oFY2ozsZSbAYPD6BxVJTuh+omLp17LtmoOZg3s3aUiL4l6Qt/cwWVIappMmE7oBKoZ3n
-	CFn45EIAVGP8NoxVoGmq5zUu2FMDRM+mGSI7SFyBm+zdpu3Xsp2SObJ0mKK9J8EItBZEL9xxSwX
-	6WZ+0L9X3dnNOMq+2TgNHFDMPmvgTTeDJ8h7lzT1NiFdnJmB9bdjmzdHRq2VGdOp+l8cXUvfwCU
-	ZM/TG3J1V3ro1ADzCJw5xkHx+c1yacpK0M37nEEUcLRivauYoiM0z9U373p6IYyEYRhqKwIsX8q
-	m9EIis00nGOys3BihGq0DJ0oH70TJiv48/sES9GMzz6RYMM/wBsnxRdKS3BXZeZvRWaytL7poJN
-	aAonnShjbKZNmzuYcu2R6fKhlZvzbRi5SyXb196+Xw9QogThMbNGSBWqJlCzvZDfogRn7SsWomM
-	Sx9WuLEP6QaTp8pcVFKs2X3LOGgciqHg+dTSKHSw/acoR+tp7m0uljOJwvESeq58gt8Qcs2IUqd
-	KlPkR2yOrfa5gQbQoC9iluMU33Cl7xCGfZtafGEy0mt9NKn5rDAfO2W4erwd/zZFxMZBkWyORAo
-	0x/fABH/Jz4gkdD74IRy9oFiFLJjggCvCfu4dquVAfuPVFPdcmFU3rgA==
-X-Received: by 2002:a05:622a:514d:b0:536:68ca:af40 with SMTP id d75a77b69052e-54121738e1dmr302585241cf.36.1793808794061;
-        Wed, 04 Nov 2026 08:13:14 -0800 (PST)
+        bh=PbXWM3jNLo1ZqwtJvPB5VpZ2GiYBvg5NG55UXdGyz9E=;
+        b=tAAdmqqa00BcFM1Pq3qKAr4DrPNRXsBF1vz2AeAZ9H8m6iE4axOaEXdUJo505bEziV
+         DSeKmh+r6cXMGaZpha6TU1ytHXJFk2mHfx1LAGzkPSYU+rJYPGvpciwScxI9/TXAWrNT
+         Dqt482e08BVtjetX6a8f1y/9QtR7PvrC+tC7J+xC7nSprI4k8Qtp79hndnsjUStXo6CY
+         wi5bCfx5r5iROwBgmkTsmFQkqFCx8fkuFxovup6NMDGbrDkbCIq2pDhsL+1pESf8MkSc
+         pet9TqC7Xra2PSOnBWxzmyQbofYWpIwZOO/w3S+LTZcthfSrZpSk7jxJM19S8vjktEye
+         ucxA==
+X-Gm-Message-State: APuU4Z9rg7Gd7X0hOf5FuRQmEG3PIpQbcBsSaAPgO/D1yBnBmGp+nuAR
+	Y6BRVjwu+7BWI2Me7NGgnfRaKf+PPTp0gbnSaHgsGlmxnBu1h9wmLY/Qwwt++A==
+X-Gm-Gg: AYBFou3OM4qeyg6YpWTi0IolyZynEG0BT3A/6rzTNf0fRcLMFoUdnyDVJq11WdZeaoE
+	Vg9jaAh12WcZvthwN6WoMPL5A2aEY9KW62+0kyimkd5eJKD4LOzEMN7aJUH8DGaQpvXKv0yGYWo
+	eyZCJnaDuyFTl1ElKxYyxXRGQtAMTIpkpdlwtj/bvW+EcvT7NkSe0o1ufOmalXHD3IxIY5zv9VC
+	vAyOQywVjmJXNAi0RmmLbyfiA6W2lSIl2DiMXLaTf2T3bMewcO2DZmIyVBMNDUiJBdg6Ao+O2O/
+	5DtIo9bU6tBPZ+lUAM+q0EFCjt/4ds/x/q207pYO0YiROQf2jQKjdXzF1uOM/occd/xcYwJ2ZAa
+	6LDjUa3zVNVtq59irlozhpyMcenYmwtEaOvsAcAdNrjzvXJCdtVDsRFHc3zAz7lXdQqmmeczn5n
+	1smfsXLFguXSOwY3aNFcLdxtXThAtK1KZT6KI7IKeHdZj+bfaDfEx7/UTqk4VAyxEA3VmrbEL1I
+	RcCGB2SBGycrX3f21BK2t8dP56jGtzmS1tfvdDAbvW072Bo6oi7MExg6azUF89vOIQMINfY3hos
+	2Dr2d/kPLDuW+zSyeM+TxskaTb7u6rsCKK8TXMnbRtOEANGpbEsImyNUYkMlcwuJYUdICrMPbxK
+	z99AJiuLVZBCEfCiLGPUzh7CUpX17I9ZXOcgYylIU3iPfIDchrQPgt45aeFc9Q5RjVIOdLPt+4t
+	W1q3hJMtwqv8xHDy++Jqm1OEjqa2fKcTif1qKebp772RS8V0aqi+jg
+X-Received: by 2002:a05:6214:311d:b0:91e:7e89:c8fc with SMTP id 6a1803df08f44-91e7e89ca54mr46237286d6.47.1793809673512;
+        Wed, 04 Nov 2026 08:27:53 -0800 (PST)
 Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91e7dfdfb5fsm22507426d6.16.2026.11.04.08.13.13
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91e896f09e3sm12488206d6.25.2026.11.04.08.27.52
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Nov 2026 08:13:13 -0800 (PST)
-Message-ID: <cfa38152-2fca-4734-94df-bcac44fb499d@gmail.com>
-Date: Wed, 4 Nov 2026 11:13:12 -0500
+        Wed, 04 Nov 2026 08:27:52 -0800 (PST)
+Message-ID: <55e14977-dfc2-4acc-bc71-a91915fa251f@gmail.com>
+Date: Wed, 4 Nov 2026 11:27:52 -0500
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,30 +93,39 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] repo_config_values: freeze the structure for now
+Subject: Re: [PATCH 0/2] odb/source-loose: fix failing existence checks caused
+ by stale cache
 To: git@vger.kernel.org
-References: <xmqq1p917kwl.fsf@gitster.g> <aurSZcNENBrgxowu@pks.im>
+References: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
+ <CAL71e4ONN4OQUZ2S==0TRWqZgA8ogT0smRL3Rk46voTm+0Tihw@mail.gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <aurSZcNENBrgxowu@pks.im>
+In-Reply-To: <CAL71e4ONN4OQUZ2S==0TRWqZgA8ogT0smRL3Rk46voTm+0Tihw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/4/2026 1:36 AM, Patrick Steinhardt wrote:
-> On Tue, Nov 03, 2026 at 11:52:10AM -0800, Junio C Hamano wrote:
->> The configuration and settings per repository is currently in an
->> unfortunate mess.  Especially given that repo_config_values() cannot
->> work on any repository instance other than the_repository, moving
->> more members into this structure is unwelcome.
+On 11/4/2026 7:57 AM, Kristofer Karlsson wrote:
+> On Wed, 4 Nov 2026 at 13:17, Patrick Steinhardt <ps@pks.im> wrote:
 >>
->> Acked-by: Patrick Steinhardt <ps@pks.im>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> Hi,
+>>
+>> this small patch series fixes the bug reported in [1].
+>>
+>> In summary, when git-merge(1) writes merged blobs it may be unable to
+>> read them back because the loose object cache does not get updated.
+>> Consequently, we may think that the blobs do not exist locally, and thus
+>> in a promisor remote we may perform a backfill fetch. But as the remote
+>> doesn't know those objects we'll fail.
+>>
+>> Thanks!
+>>
+>> Patrick
 > 
-> You already got my Acked-by, but let me state explicitly that I'm happy
-> with this change. Thanks!
-I will also contribute my +1 to this. This has grown organically, but
-clearly needs a redesign from first principles to avoid making the
-situation worse.
+> The fix looks good to me, and I verified that the test fails
+> without it. My own local fix is logically equivalent,
+> which is a good sign, though perhaps that biased my review.
+I also think the fix looks good. (I haven't verified it locally
+like Kristofer did, but the test is good.)
 
 Thanks,
 -Stolee
