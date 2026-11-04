@@ -1,118 +1,119 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793807880;
-	b=ZU5SGkILfuYxv85Bx+0saDhGfOVHPp6cKMoV3s41aR4qDlaVa0NaCDIbLnvCOdEq5uKD
-	 nwzf7lpZjwKT4voBaYZcVfutoy189XJZbNHedkBx6qn/m1GhghzJGSAlsiC+QaE4LtssU
-	 kDo3uSkqxYfzfuj5Zrhh18fxovynh2x5mtFknKkoWpKXRif8gUODaRkDqURax10C4QiQ4
-	 BpFueqfDrP3v+y39h74iajU5O80LbYDk0bt05XrscCQqaixOx+CjhL5OxS7pZ5I4+knDy
-	 Vd47G+d5q5x49aOdXS1R8iOp71+SG6Pgo4Ltf8XqdgNa+YonopQVj/6NRvxyn7g6TJA==
+	t=1793807883;
+	b=aW7INaAmn1w+bHswXwiCQJ9qtqS8j3JX/nam8s1P0Q5WJdbSgunxErwmbygzRhDqzLwL
+	 OM4Gp2733a3HXgQGfcgQTzRuxPxrQXM4DpVI9u6AmfxmbwxTvclFCYkr7V4pRVVu4afnh
+	 hlqMU4R2xO9l6TvX53iaqzDPdiBa0WLhSY9j3cODMX0Hfl+Dfk/ovqc7q6p0wnXQjc/NT
+	 pxePqqlUi8F5GYSM0S15Fa1fp6VE+TfRrFEn/MMGK/ZMSVL2+4tGDL2LuwxCWEgAcxFiY
+	 8k4aUNnnEAdv40mzjmic7ji1TI43O5W1fMt734GrmE7XjiYChiqluVijvqtNfo1UD4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793807880;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793807883;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=DoXu/zXfHLoaB3R/BUi7W7AQxuB+YIUNj38BKut5LjI=;
-	b=TFT7g1ux1W5ytKbku8m2f6pZTAI2NkVKflJo5Fid+CLI6/QqVqROkQ92lQfCdb9LqrZR
-	 5K4tZwEOUQy2uZd8gU5nvUcGFe7os2Y0IOBVezUEti/PJaheCaLLBqVamXy+26fuQCBfx
-	 OmjDDg0LawRSSMpoCA33eJgvRlfKt0RrI17O+o0N5Y+x+VEZnVhU6JyFal5AMXVZKJG6d
-	 Qg2QfKOf11dRx1xz/j6ElmOi6KpCY6ApQQmykE52yedpHtBLtDm2TlLEVfOsPM9ju7UGu
-	 3rtqHpAboStGX7bKFBvgy3KgWaWN4n+znBne73bSb/JjeflF1avitbejFl105nvJsvA==
+	bh=z4kd1QmgLkZBItet8SFFoiUkIDIr11TOfRIB7AfqGwg=;
+	b=wWTlmpvythSMNpbtMQNgRDSNHEgUqoR9wgCVikSWbMHDBuGYIWYi1pHkJrPnNKk64BuZ
+	 K/HFw4X8wgwEdFJVYnfiwLBMpIHqSKH3quVqtyuyKrw8jgcbKuMkwrBSvdS9Mby4K+ngN
+	 7Ur7TSY25y3FU4p8Ugq+GlKJJTMHVAFja5jWzlLJgoR5thecLZPOhnGbQ5xjpo2PXKLX0
+	 PbeydvLgfyyU+5R6eTLOyXXQwfJE8F/VnC5D7Sc6ZQ1jMLabnpjTCBzLjk0JXp5d2dtBg
+	 bnYfk0/oAg0heYQPpMAAWSMdzajPwfjuiBwCsbsI3Gv3hgz+1Plb5YSYlrLl+k8rGRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=NjwhHky9;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=S4b6t0ra;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=MgEfe+TZ;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lR2UYVfz;
 	arc=none smtp.remote-ip=103.168.172.154
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DF36082BD6
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 15:58:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 26DF36082BD6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32036082BDB
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 15:58:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D32036082BDB
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=NjwhHky9;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=S4b6t0ra
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=MgEfe+TZ;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lR2UYVfz
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 753BF1400171
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 10:57:59 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1EA891400171
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 10:58:02 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 04 Nov 2026 10:57:59 -0500
+  by phl-compute-05.internal (MEProxy); Wed, 04 Nov 2026 10:58:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1793807879;
-	 x=1793894279; bh=DoXu/zXfHLoaB3R/BUi7W7AQxuB+YIUNj38BKut5LjI=; b=
-	NjwhHky9zDfUslVCSukNXfcAZr1pv7kbsYvLAyxsS/rypbDBW3ZGPtZLyhdL7idg
-	aLSank2PFe5IOT9IAZYxXUyA4Zol5zv1CQZgNg3KIXxv8gTDkk/9gkzN0wf1EwXi
-	1WwRQpVOc1oMNxxovWuwUXzduB3ACJCkXMSR87AUyBDmetfzi+NXwg6pRoTDyvWZ
-	jW6VNdz8bsotVK91o0M1mSSqF7TxtWYApJciX1b3J6v+kJQwXn3KcuW0qeZnqIOy
-	zQGKII/6+q6RgYOHqUAyLZ4NtbzQ18c7u10bRyIwDOw6O7AJL9uAh64xqMGUHqWx
-	u3wFdC+caaCTi2RGwFIWGw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1793807882;
+	 x=1793894282; bh=z4kd1QmgLkZBItet8SFFoiUkIDIr11TOfRIB7AfqGwg=; b=
+	MgEfe+TZfaD+9hJq02W2U1WH8gyWdeDa0LKKKyDWW79XqVV08bl6T5Elq9MrFKzv
+	bbxpveeQsO4yia7rmMyxJZANiEIMnFdu2OkEyRe8lyEtNKH0E0uirlIHHayn4nsg
+	K6hcQOIK5tY9Ps9hanksholYNTYVGa1DHl73cmnXJiQXuIQnMNHXDuHDQf+/RTNu
+	nwDlI1XdqA/8RtFz4QFzqbYIngWy2svY9TySf5cJ+yh8Y+YV+YzPNtl50tHM1DT6
+	beIA7KCDBQ8g4P3o87GqQGwaI8e0GQ/er0h+51GErI5wZZ6ezZdE0Ziu39kdgyXv
+	KxMplvHBs8WJXnfCfOTN+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793807879; x=
-	1793894279; bh=DoXu/zXfHLoaB3R/BUi7W7AQxuB+YIUNj38BKut5LjI=; b=S
-	4b6t0rau6ssaYP7KpzXsr1UYJOZyG7Ou3leXle468tI/1x34CLZh1uXj+/bC2/J+
-	9e2KWVcjicBB0Jphwcg6GZipL7M9/qeXCZCHtBvh3/BpYkjzayXBGuGNXtC5t1EC
-	nBaqnlTXDydwgf8CaqtWI/NoiU/mpclOBqKyyinl+8cXMHKqdxsBWcyeOLU4HpIh
-	JzEsdPd3iAqpyInF6/kcNFI+lndu1mCxl/1Z2PC01X/5aBB0gYTs8BUBK7h0Ht0H
-	b6llWx5FAs/M1gpdgmDejmJgiHSVN9HQ5GCzeSFub0JOjr6zV+RnuCR0OnSQi7eL
-	o0p8mInTi9ugm9UkW54nA==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793807882; x=
+	1793894282; bh=z4kd1QmgLkZBItet8SFFoiUkIDIr11TOfRIB7AfqGwg=; b=l
+	R2UYVfz5WgZO+xvOZbG7adXGF5NpmQ3h9zTitXU3msE41Oz79gVJ5mWAIqWEVHPp
+	tDd7srtsD8pR4rvNHr8GoD6gszR7rgr7Us7hIDP7TTY+YMcNnSvf+M0XYDMW3Z13
+	e5WdzKximCPUfETLhviiV2GOKJWOWtp4OYabsOmMVBA2RozMUHqCexTIoVFE1rfk
+	TM18MWYyAI4E0Iw0rGoRfnj3j/VInvC5WhL5xhmetO/P7ng/ESXodH/g4LHRRd95
+	QPwx5h12GG8dSTZ+Ym0IC31pF80Yi2nolROrql4RDLuJA8WayI3TAK5QPUCTmFtY
+	jrJHfNzu/tv3FaKYmQLLg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793807879; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793807882; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:uSu9Wd11fAXRjqKUI2Effgi4Z4x4gY632BlkcUgybk1DGTJ
-	/voaRD7mN2G1kS/6tNnvxDY8wUCseXbpV55KIjXdD2KVRDIIvvmXS93sge7NIJ0W
-	JGlErLOsk/7loMV4vjOjO/1TPrQtkDYynJmSv9v19BundZd6YQWqXJAFbS+Hq/GA
-	P2HcYej1mtnZyGz7Kx3u0VrGzRJmEK/0I03vlm7JMTwE3jcb260h4fhGuRFP4ciF
-	emeXMr5axecplbKg7cbSDBvK925S7eDaURsUB5dkBGXvEdMI4pRd0RRVFeeYoAIf
-	oPKL5of90vRVvP2OsH6p1lW8WfA6PhPNkoopjbw==;
+	s=fm3:rsa-sha256:o8d2kFpfbPmhx3vsZHEfyglA76xJlBgGF62NiJgylXEEcoK
+	bieSiNhfRUsHDWNUUKxjzaebUWYtHswY5NNvtcRBElu4Vjg0z0aqs76OjrcYyVDF
+	Ki8JAuzBDvInn9ZIzuToVXddH+l1cXuCUT6IdKvTzgmoOPAuDJNa0gpwQKS1MI9R
+	eAVXZFohke+RTNvKBDQVh/l7dbCEvM/z8+PUlqnfLZUdi+ijcNLp8SewFCDNl2jB
+	jwjx/Sg+I5l5ShL+W2AUcrwCC7vo8rSro6HYB4UpWjkd1ND+c8tVPOGCW1EjI6vW
+	AwzHWDMiz+zdp0+vjXR7ftIydxKGP5srwJg11Mw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:/bZtdhhqC1TBgdL/wOVD4k/Weg9a/5BUS248XXsWARs=:cTZUZXaz1w1o3kscB3G5c2BwI98hBsi6IwIm4Gcw1eY=;
-X-ME-Sender: <xms:B1bralPWcY0skbaUAhLK7Yu6XJCIJILTsi2eDrl1Eca_ISPdXT9GqA>
-    <xme:B1brau7nKrUQBFMHmOHgnBlWSQr3b6eOl_CCMB3Ds-ZSUVzPr5qY2NPDEGyLYoNvI
-    W7mBLb9dIFyD01V9Y4LjeUerWa_wZ0RQghJCHXXeF7yTrqllTwJ9o8>
-X-ME-Received: <xmr:B1brap7_Ll8KTS14fWTVAqQeG67-O8KkeNXZ1uoXVdXM6Moko7bOJubXrQSW4vNH4jVk8B4>
+Message-Instance: m=1; h=sha256:f2s7YZ8+i8kWhHqbtkqegxwwr+QUEHTFopBdobrMbNs=:Jg1dohCz8kULFkWELFL+FuwFdP2fPtgS/wBWa/hBCrM=;
+X-ME-Sender: <xms:ClbrapoIeBikbhifKlpchrBTCccBYkFvtugmd6IYtBDszhGhsuQ5Cw>
+    <xme:ClbraikabmNPZhNOT0YSQwfDzUgwAgsXHKezjrcN7ggLx_i5By6g2UpZebDiJmLI2
+    53kC2YbBXLMg_fAlDNLE4QWibaPb5Z_PXKtx4J0HnRwNGz4K1Uzg2Y>
+X-ME-Received: <xmr:Clbrar1kUGkaRbOdj4hEs2rCm8SaJOWV1oJtRdXNfQcYWLkvA8Z0vQVInJPAQWhb2Lelrks>
 X-ME-Proxy-Cause: dmFkZTEijChPbfh12L7GHgr1wrlICXQjT2WvPmwEzxfsGQeLnPBN5oSEwqQKp1JrSMf4h2
     DTN/FhucVO/TQWnw9AZiUtvh8J+fsiLopNU0yraxvKr/Q5k6FwxtXHmQHlwXcQwI9Lgxa2
     KpQciHVAjeQsDLrFiis2meieS5nomLtKrrgC2Bfp/5mKeU/162bo79wFoJ0Cq01G8nOoTz
     k5sL5HSaBb+b4flS4nj1fvAsLywsdoo6Dhiicp1vKE1NVHIIUp/v+/Aah8Go+J72JZTS+p
-    B8AZs+BBkJIvGkshYWCxV+sfbpqUheUXpJxmAzqikWEJhVTHdVWlEIBaAQ/FD3Gk7XlqeC
-    TJC6v0WfPcg66vPsRpcmAqJvJeRMcY4xbvFHLR4dDX8JMM0s9f3C5RoX5L2aiIikc6sB1s
-    7Ln47EZ1+rYDx+BWjPWfC90Z9xic7AInFZaTGyJeA8g6WxqrHua5ULF0oaRFlV2DWGNzoi
-    IKBtHcNVPTdM9P2TJEShXOgF8x5vgfBI64JxLhEuGuavGkqhgDVBX6qsPYh5R1nIYyTADE
-    QOzkF1XWBdSMytOB/Od4bPBm0kxDtpWUq9P3xGPbREUpY4E6Csg7pbIi+awDMTIlkhaI1X
-    ZvaGxUXeZ0dMOLHNO1So5nCwQUugAm69nR/iDPZXq4Se0VKxDLoXjmCvYMSA
-X-ME-Proxy: <xmx:B1bram1LyNK-BzRre0Ojgca8hHeGnk5KG5Lp0mnU8cQCUpHBOOhyxA>
-    <xmx:B1bratUArWK1qslljd1byOWuE84BvrZDJfv05QmyQTdtOqP6HPMdSA>
-    <xmx:B1brap6lb6488Abe3AIW4SzBPWA20p5GDMa8h80V71Yt72sqVonPpQ>
-    <xmx:B1brasKB_FQYvJyM1WNE8Y1O5YPBktm795xWJCzkNHElaPdHnP_Bww>
-    <xmx:B1brah9QyoT7evagb5qmSa1fJcfR7tn9LWcP9wID_XjTvemAVVN64866>
+    B8AZs+BBkJIvGkshYWCxV+sfbpqUheUXpJxmAzqikWEJhVTHdVWlEIBaAQ/FD3Gk7XlqSL
+    5r0zOEEkauVxxOHH7Ls8A9TqMbArnSFOEB+lF642pYAONIxklK1KZScvTpn791q3+kRn9j
+    wSjyh25q4yK4UHbV13Bt2IFu+Mxy7zVZd2dbglxeFBEilqcXuk2/XKPzwDDkRz/8x8N8rt
+    MCcPxKrkc7iC4NciYXPR8aeniY6leXoROOI8lhXxEZSdCci2ezGcLVKwm5PD3HP1W7WD3f
+    94k00vFgdXEUnurHInEBc4o4q0YUG7riqQUa816UQTNae9k7YucdevQGlz5OSPCG9e0UPj
+    N0Lbl8f6y9RPDZsUf016xygCkQqFW/S+pmQlmOPSliroS0hMrKsv1lXBSmDQ
+X-ME-Proxy: <xmx:ClbraqAzbj4vnzCciD-FYothHMzACpaYxNuwSCZhjkBQpQ8EtvF-IA>
+    <xmx:Clbraoyw8o_69Ty1P88F36Bf7zQC35_lWe7n3w4AWVISWDhdolI6lw>
+    <xmx:ClbraongrT8caqAEVmZ7vsO1qvNW4v0spD7XSSITVP16PS926Q8MbA>
+    <xmx:ClbratG5DjDQyFpw_1e04xJlAPbjwZe3zKQlmWfNqFTE0CRZppAazQ>
+    <xmx:ClbrahKr1nyTwALkEJMwNzrUxy89FF_vpkyyfg6rd53svROvToh6wWKm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 4 Nov 2026 10:57:58 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 4 Nov 2026 10:58:01 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 71f55dd4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id df0b7413 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 4 Nov 2026 15:57:58 +0000 (UTC)
+	Wed, 4 Nov 2026 15:58:00 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 04 Nov 2026 16:57:30 +0100
-Subject: [PATCH 08/10] builtin/commit-graph: set flags directly
+Date: Wed, 04 Nov 2026 16:57:31 +0100
+Subject: [PATCH 09/10] odb/source-files: verify commit-graphs as part of
+ fsck
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,178 +125,134 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261104-pks-commit-graph-write-refactorings-v1-8-d013d9401a59@pks.im>
+Message-Id: <20261104-pks-commit-graph-write-refactorings-v1-9-d013d9401a59@pks.im>
 References: <20261104-pks-commit-graph-write-refactorings-v1-0-d013d9401a59@pks.im>
 In-Reply-To: <20261104-pks-commit-graph-write-refactorings-v1-0-d013d9401a59@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-We have a bit of an unnecessary indirection when parsing flags for both
-the "write" and "verify" subcommands: instead of setting the flags
-directly via a local flags variable, we instead populate them into a
-`struct opts_commit_graph` only to then set the flag. This is awkward
-and unnecessarily verbose.
+git-fsck(1) verifies commit-graphs by downcasting the object database's
+source to the "files" backend and spawning `git commit-graph verify
+--object-dir` for each of its object directories. But starting with
+14bf3a43f8b (Merge branch 'ps/odb-pluggable-fsck', 2026-09-15) we have
+adapted git-fsck(1) so that the verification of the object database is
+pluggable.
 
-Drop the separate flags in `struct opts_commit_graph` and set them
-directly via `OPT_BIT()` instead.
+In a subsequent patch series we're also about to make commit graphs
+themselves pluggable so that a backend can choose where exactly a commit
+graph is stored. As part of that, we'll also have to make verification
+of commit graphs pluggable in the same way.
+
+Move the verification into `odb_source_files_fsck()`, same as we did for
+multi-pack indices, bitmaps and all the other auxiliary data structures.
+Same as when we adapted consistency checks for those, there are a couple
+of consequences here:
+
+  - Commit graphs stored in alternates are only verified when
+    `ODB_FSCK_FULL` is set, which is the default for git-fsck(1).
+
+  - Commit-graphs are not verified with `--connectivity-only` anymore,
+    as that mode skips the object database checks altogether.
+
+  - Failures are reported via `ERROR_OBJECT` instead of a dedicated
+    exit code bit, same as we have dropped `ERROR_MIDX` et al. Those
+    error codes were never documented or exercised anywhere.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/commit-graph.c | 54 ++++++++++++++++++--------------------------------
- 1 file changed, 19 insertions(+), 35 deletions(-)
+ builtin/fsck.c     | 20 --------------------
+ odb/source-files.c | 25 +++++++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 09b09d6ac5c..218c30ed3ed 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -42,13 +42,8 @@ static char const * const builtin_commit_graph_usage[] = {
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 710780e35a8..c4558efcf18 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -46,7 +46,6 @@ static timestamp_t now;
+ #define ERROR_OBJECT 01
+ #define ERROR_REACHABLE 02
+ #define ERROR_REFS 010
+-#define ERROR_COMMIT_GRAPH 020
  
- struct opts_commit_graph {
- 	const char *obj_dir;
--	int reachable;
- 	int stdin_packs;
- 	int stdin_commits;
--	int append;
--	int split;
--	int shallow;
--	int progress;
- 	int enable_changed_paths;
- };
- 
-@@ -62,24 +57,23 @@ static int cmd_commit_graph_verify(int argc,
- 				   const char *prefix,
- 				   struct repository *repo)
+ static const char *describe_object(const struct object_id *oid)
  {
--	struct opts_commit_graph opts = {
--		.progress = isatty(2),
--	};
-+	struct opts_commit_graph opts = { 0 };
- 	struct commit_graph *graph = NULL;
- 	struct odb_files_dir *dir = NULL;
- 	char *graph_name;
- 	char *chain_name;
- 	enum { OPENED_NONE, OPENED_GRAPH, OPENED_CHAIN } opened = OPENED_NONE;
--	enum commit_graph_verify_flags flags = 0;
-+	enum commit_graph_verify_flags flags = isatty(2) ? COMMIT_GRAPH_VERIFY_PROGRESS : 0;
- 	int fd;
- 	struct stat st;
- 	int incomplete_chain = 0;
- 	int ret;
- 	struct option options[] = {
--		OPT_BOOL(0, "shallow", &opts.shallow,
--			 N_("if the commit-graph is split, only verify the tip file")),
--		OPT_BOOL(0, "progress", &opts.progress,
--			 N_("force progress reporting")),
-+		OPT_BIT(0, "shallow", &flags,
-+			N_("if the commit-graph is split, only verify the tip file"),
-+			COMMIT_GRAPH_VERIFY_SHALLOW),
-+		OPT_BIT(0, "progress", &flags,
-+			N_("force progress reporting"), COMMIT_GRAPH_VERIFY_PROGRESS),
- 		COMMIT_GRAPH_COMMON_OPTIONS(&opts),
- 		OPT_END(),
- 	};
-@@ -94,10 +88,6 @@ static int cmd_commit_graph_verify(int argc,
+@@ -913,7 +912,6 @@ int cmd_fsck(int argc,
+ 		fsck_enable_object_names(&fsck_walk_options);
  
- 	if (!opts.obj_dir)
- 		opts.obj_dir = repo_get_object_directory(repo);
--	if (opts.shallow)
--		flags |= COMMIT_GRAPH_VERIFY_SHALLOW;
--	if (opts.progress)
--		flags |= COMMIT_GRAPH_VERIFY_PROGRESS;
+ 	repo_config(repo, git_fsck_config, &fsck_obj_options);
+-	prepare_repo_settings(repo);
  
- 	dir = odb_source_files_find_dir(repo->objects, opts.obj_dir);
- 	if (!dir)
-@@ -152,7 +142,7 @@ static int write_option_parse_split(const struct option *opt, const char *arg,
+ 	if (check_references)
+ 		fsck_refs(repo);
+@@ -984,24 +982,6 @@ int cmd_fsck(int argc,
  
- 	BUG_ON_OPT_NEG(unset);
+ 	check_connectivity(repo);
  
--	data->opts->split = 1;
-+	data->write_opts->flags |= COMMIT_GRAPH_WRITE_SPLIT;
- 	if (!arg)
- 		return 0;
+-	if (repo->settings.core_commit_graph) {
+-		struct odb_source_files *files = odb_source_files_downcast(repo->objects->source);
+-		struct child_process commit_graph_verify = CHILD_PROCESS_INIT;
+-
+-		for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+-			child_process_init(&commit_graph_verify);
+-			commit_graph_verify.git_cmd = 1;
+-			strvec_pushl(&commit_graph_verify.args, "commit-graph",
+-				     "verify", "--object-dir", dir->abspath, NULL);
+-			if (show_progress)
+-				strvec_push(&commit_graph_verify.args, "--progress");
+-			else
+-				strvec_push(&commit_graph_verify.args, "--no-progress");
+-			if (run_command(&commit_graph_verify))
+-				errors_found |= ERROR_COMMIT_GRAPH;
+-		}
+-	}
+-
+ 	free_snapshot_refs(&snap);
+ 	return errors_found;
+ }
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 5b4277fbfd3..224b47e38b1 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -1215,6 +1215,30 @@ static int odb_source_files_generate_pack(struct odb_source *source UNUSED,
+ 	return 0;
+ }
  
-@@ -231,7 +221,6 @@ static int cmd_commit_graph_write(int argc,
- {
- 	struct commit_graph_write_options write_opts = COMMIT_GRAPH_WRITE_OPTIONS_INIT;
- 	struct opts_commit_graph opts = {
--		.progress = isatty(2),
- 		.enable_changed_paths = -1,
- 	};
- 	struct commit_graph_write_config_data config_data = {
-@@ -245,14 +234,15 @@ static int cmd_commit_graph_write(int argc,
- 	int result = 0;
- 	struct progress *progress = NULL;
- 	struct option options[] = {
--		OPT_BOOL(0, "reachable", &opts.reachable,
--			N_("start walk at all refs")),
-+		OPT_BIT(0, "reachable", &write_opts.flags,
-+			N_("start walk at all refs"), COMMIT_GRAPH_WRITE_REACHABLE),
- 		OPT_BOOL(0, "stdin-packs", &opts.stdin_packs,
- 			N_("scan pack-indexes listed by stdin for commits")),
- 		OPT_BOOL(0, "stdin-commits", &opts.stdin_commits,
- 			N_("start walk at commits listed by stdin")),
--		OPT_BOOL(0, "append", &opts.append,
--			N_("include all commits already in the commit-graph file")),
-+		OPT_BIT(0, "append", &write_opts.flags,
-+			N_("include all commits already in the commit-graph file"),
-+			COMMIT_GRAPH_WRITE_APPEND),
- 		OPT_BOOL(0, "changed-paths", &opts.enable_changed_paths,
- 			N_("enable computation for changed paths")),
- 		OPT_CALLBACK_F(0, "split", &config_data, NULL,
-@@ -268,14 +258,16 @@ static int cmd_commit_graph_write(int argc,
- 		OPT_CALLBACK_F(0, "max-new-filters", &write_opts.max_new_filters,
- 			NULL, N_("maximum number of changed-path Bloom filters to compute"),
- 			0, write_option_max_new_filters),
--		OPT_BOOL(0, "progress", &opts.progress,
--			 N_("force progress reporting")),
-+		OPT_BIT(0, "progress", &write_opts.flags,
-+			N_("force progress reporting"), COMMIT_GRAPH_WRITE_PROGRESS),
- 		COMMIT_GRAPH_COMMON_OPTIONS(&opts),
- 		OPT_END(),
- 	};
- 
- 	trace2_cmd_mode("write");
- 
-+	write_opts.flags |= isatty(2) ? COMMIT_GRAPH_WRITE_PROGRESS : 0;
++static int fsck_commit_graph(struct odb_source_files *files,
++			     struct odb_files_dir *dir,
++			     struct odb_fsck_options *opts)
++{
++	struct repository *repo = files->base.odb->repo;
++	struct child_process commit_graph_verify = CHILD_PROCESS_INIT;
 +
- 	repo_config(repo, git_commit_graph_write_config, &config_data);
++	prepare_repo_settings(repo);
++	if (!repo->settings.core_commit_graph)
++		return 0;
++
++	commit_graph_verify.git_cmd = 1;
++	strvec_pushl(&commit_graph_verify.args, "commit-graph", "verify",
++		     "--object-dir", dir->abspath, NULL);
++	if (opts->flags & ODB_FSCK_PROGRESS)
++		strvec_push(&commit_graph_verify.args, "--progress");
++	else
++		strvec_push(&commit_graph_verify.args, "--no-progress");
++	if (run_command(&commit_graph_verify))
++		return -1;
++
++	return 0;
++}
++
+ static int odb_source_files_fsck(struct odb_source *source,
+ 				 struct odb_fsck_options *opts)
+ {
+@@ -1227,6 +1251,7 @@ static int odb_source_files_fsck(struct odb_source *source,
  
- 	argc = parse_options(argc, argv, prefix,
-@@ -284,23 +276,15 @@ static int cmd_commit_graph_write(int argc,
- 	if (argc)
- 		usage_with_options(builtin_commit_graph_write_usage, options);
+ 		ret |= odb_source_fsck(&dir->loose->base, opts);
+ 		ret |= odb_source_fsck(&dir->packed->base, opts);
++		ret |= fsck_commit_graph(files, dir, opts);
+ 	}
  
--	if (opts.reachable + opts.stdin_packs + opts.stdin_commits > 1)
-+	if (!!(write_opts.flags & COMMIT_GRAPH_WRITE_REACHABLE) + opts.stdin_packs + opts.stdin_commits > 1)
- 		die(_("use at most one of --reachable, --stdin-commits, or --stdin-packs"));
- 	if (!opts.obj_dir)
- 		opts.obj_dir = repo_get_object_directory(repo);
--	if (opts.append)
--		write_opts.flags |= COMMIT_GRAPH_WRITE_APPEND;
--	if (opts.split)
--		write_opts.flags |= COMMIT_GRAPH_WRITE_SPLIT;
--	if (opts.progress)
--		write_opts.flags |= COMMIT_GRAPH_WRITE_PROGRESS;
- 	if (!opts.enable_changed_paths)
- 		write_opts.flags |= COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS;
- 	if (opts.enable_changed_paths == 1 ||
- 	    git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
- 		write_opts.flags |= COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
--	if (opts.reachable)
--		write_opts.flags |= COMMIT_GRAPH_WRITE_REACHABLE;
- 
- 	dir = odb_source_files_find_dir(repo->objects, opts.obj_dir);
- 	if (!dir)
-@@ -323,7 +307,7 @@ static int cmd_commit_graph_write(int argc,
- 		strbuf_release(&packname);
- 	} else if (opts.stdin_commits) {
- 		oidset_init(&commits, 0);
--		if (opts.progress)
-+		if (write_opts.flags & COMMIT_GRAPH_WRITE_PROGRESS)
- 			progress = start_delayed_progress(
- 				repo,
- 				_("Collecting commits from input"), 0);
+ 	return ret;
 
 -- 
 2.56.0.500.g5d06dc02cd.dirty
