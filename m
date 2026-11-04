@@ -1,60 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793761676;
-	b=AL8Go6HaXE56/0nXnaHhHG64g0KFjl/uaYKi7i3I3YT3iBtfw4W5InptrzHL0IXjLUSd
-	 Qg1Qr+D/oyso2j70MEg5I/pmFRRu4TJ+eQmxVoC6fxpWjibYLN4AgdP+QxpiIGYKiTn59
-	 IsMKzfb1PMDQjkXsvoYi6KYKSEQr3W6tWLqxCorZ1OQXz1GNLymVX8WK78MxEPDkBWCb5
-	 D3IyGRf7b6Vx3LX6iw+JmDXCivWvWEpOFHxYqSB35KRXibowBbIKgo8EAPsY6DfjZdRT9
-	 J0HgNM33fn/CRWC64dgq+Vyqxwo7JovZeUfHHBxvOksfWEyZ9YVe2/lkeDOzDBjoxJA==
+	t=1793763784;
+	b=gvVNju5XdDGoQIprVPxsID3LyVWj4NtNHl3rvIiNOhQI044i6SoGVK6Vy0EtZ3318W9X
+	 KyKuDgeSDa43SoEGXd4QKlvgIH2yebTsttWjfLo3NRIq4TZmwEqt8Mgc/kg0EpplBYu5b
+	 djTqbEHBtxR85sY+GRWSXSXG1wKR8Pu7D50OHcvYEU6uRUVlm8hhzjPzwWvZ70dwblPv5
+	 eaTtSSziTImuOkAZIo0LNZf2iOUEjp2s6wtpOnDDvJEdP3GsH902cbJuXvuQgvAR/YYZX
+	 1b/xMt/SNEOlrHdItnFBKmbtdWu3TA5NQ8Bo3bSt0CkN3Frskv9/nO8j+1L7/0kW83Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793761676;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:Date:
-	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=Zhr4NBWh1l431YurzklqVPde/oZ4GzRg9Ckfn8d7ADo=;
-	b=trtmBqTSSmn/v3ehE1BRM/vwvUQzaTyMfxXr0wY4eGyZKu4m6arDUOcoLYFtkG8fT7da
-	 VTDwm6V+mHNzqjemGC5jLCSw212oEDheTlK3aQeX0/RCyyayz5kUE10LbxxveiTjBoInK
-	 eAPYUN8P396NKW6dmoUalQAYmWlLyeWJHh0wY26FTzgM3qIRm+4BO7vo0sY6psVctElta
-	 spTklMnd6EWMAF/7KPX+/5LC6OA9Ks4gct2NbV21MJQOHcQE3A3eKtK0/kIjMINZWrIwf
-	 445iB8B31q2KshHr+jesHRGL5IMH5ESfPIASmxxPUsHD+AD0AXxrSmNPY+Sz6izs9Nw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793763784;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=Iz14B1hWRNn/Q7JlfzYpblfXoKrpsflaZTNFhPVx+8k=;
+	b=cGxNNSY/PKyDRYHrR+CloecfoQFCmMf35Yoc+Uh9pjud5v1l9Qo38025ulyJ9NOXXCb+
+	 njrz5NQQYLqU4Vgr10MWAB4svRJxKbXwLSnmHX9uRi2ToT2XYljYD87lj2pvZfDvIFhIj
+	 QknS6P9rg4nWm9UMBgFS6ORsPKT5loXDA1Ot5+2IHTLmJyTmCXDABKy0E9hlNxZVKZeC8
+	 bjSQig9kxlMgE4DXPAi/Oi6AKdUTqFj9HZZSwq7BS4hqvelR5QQqHRIofGkhqXnnQb4Jf
+	 j7JKETz24KoBaIsdW+ws9+w71NMPhfDDOaT/bOouRV2OxZO+XVDV1jgXIh0Y7ShTWjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=peff.net;
-	spf=pass smtp.mailfrom=peff.net;
-	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b="X17IEhR/";
-	arc=none smtp.remote-ip=217.216.95.84
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o6+bo8+x;
+	arc=none smtp.remote-ip=74.125.82.44
+Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF50606A31B
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 03:07:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5CF50606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5E8606A31B
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 03:43:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EB5E8606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=X17IEhR/
-Received: (qmail 11525 invoked by uid 106); 4 Nov 2026 03:07:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0+7OF/XLnAI5zav/1zhdzMRJf58pmahb6XV9GrSD3wM=; b=X17IEhR/5OWVBxkLu1cjOeDiFxV291cufO2Jbk+lKcdNpAL+B4KBbh2komHmRZqEHhWlmV4GqHeSRM5lRrFeH4qiMhaNuz64+JBqvs+jNbzyPYqFhBHtCXbdR/5w7dH+Ph4Yo5BR+N0nYKwdRlHoonRYe6tyOLlyGmoYVZYhH4wgby26YHWaYIKEyPLBgHUA6sUswY/M70uhjzr9/3O7TK5Wrz3TfJgcWE/rRDjfF0SarM1DDTdEYowBE6IzPGIEW6OfDv1m/wb60crwJIHFoYhjDEBUkmMTfEY1LvJ/1hhQfQflHyyPpJTaNhQnr1Kn8G1y6ciMqJP0mokMICaEsw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Nov 2026 03:07:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27617 invoked by uid 111); 4 Nov 2026 03:07:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Nov 2026 22:07:53 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 3 Nov 2026 22:07:53 -0500
-From: Jeff King <peff@peff.net>
-To: Farid Zakaria <farid.m.zakaria@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	M Hickford <mirth.hickford@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH 2/2] credential-cache--daemon: do not take over a running
- daemon's socket
-Message-ID: <20261104030753.GC1492379@coredump.intra.peff.net>
-References: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
- <20261101-fz-credential-cache-race-v1-2-28f0bac51e11@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o6+bo8+x
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-1ae18eb9ad0so293046c88.1
+        for <git@vger.kernel.org>; Tue, 03 Nov 2026 19:43:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793763783; x=1794368583; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Iz14B1hWRNn/Q7JlfzYpblfXoKrpsflaZTNFhPVx+8k=;
+        b=o6+bo8+xcvQOOUEoPlgVpDkt6h4IZRPE9iLtPA9pYIWJOsSCnXjSf/HEY87X6S9EtD
+         lUuDsOEvVwoKpROZ4nRBgkcOffQNIFLDqYnl5MyFZolwZfYHBlWAeSWO1UhN7s7+8RUo
+         gnnZDJ/QumL3/DElKNaUIKuPi4jSCM1pBkOP4ht9ODg9ngOsUJHsRiSWRDPXdz7YOMpq
+         p513P4hk5rwfbGUv8BJJyJDZKRA+m+ullD3wU1qHGA6DYW3U028xF0RjqdL8jJDfqcjD
+         nKPS9QetLP6ZQl6D7o/XndF6C5lotS5cPUFXxMMIdTDRC04s0doViNR1ohWp/ixGg5CO
+         EYMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793763783; x=1794368583;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Iz14B1hWRNn/Q7JlfzYpblfXoKrpsflaZTNFhPVx+8k=;
+        b=Svp9IBeHs8ZkkvffoN+ZxMFh988eDZZwg9mpPcWll/0arBmtra8Ufw1t3Z4cufo1DE
+         bFR61Gus2HqQRSs1CB8asRyCEZiyia9cgVqiWRUQPze76p19QBmZ9/B3Rqjbw9QdlOkQ
+         nSh0RnwCuWsOA1/+jyr5xk1psyQaJm1zHyUd6bc3c6Dr9bXkoyC2QG+yd7JzwgWrzCoO
+         Bgol24pLjk6QjHYIpKVcsubiGjMGiXAH4Fa+YviukuIr6WYjMLtEnPyta5WqtVvlWbWz
+         WGczw8NrEQOf0iwPGP/Dn53CMyE9n9yUknUSIhYl/OOYtzihIM69eULrgtcEE1r4F1p4
+         yj4A==
+X-Gm-Message-State: APuU4Z8Osxy+wJMHp9z9gV17HExe2x/FLTIFKPFO+w7uXAyCDU26R+QP
+	MPAPlsANe94EZAcEzK9MdLzReQuubXzgd7gjHbVtb7U18dQtKGKMjq/MZoaBbSLgcmc=
+X-Gm-Gg: AYBFou2LGWPAEDDzbfiSMPenXvtfQqAV5saj9szBiJI4Z8+Kq/oI/zM7xAkQnL3gfcK
+	RX7EETy0UspTSRP851t0urczSmIM7rQWYhyv75eDh+Q61QX4iAUlEKfswC6QpQ4GHKbVVbGKhzR
+	H6wV2eP8XstTg9W8MWQEY55N690tR4RW8zfkPzTZr6B31oLAQCDpF446+7X2g7w+0lWEJGM53P4
+	TDEhukdmyPxWB6MGi5HvcCGQQGZCH5mkCowIFo2fqR89w1OnNS7tm9LVHPGxiQUIpKygzEUrrvw
+	t3+S9FNR7T4nVGdeVC40EvDXMOFKqiIC38cVJxi9eHGpmiyA1OtaQSryknoSBNpTwJp83QgaxXd
+	KDB3kBDrs/vPL6GBjFSpP0JAqpGnhHGoIjPuEukODU9GFK8pVG71RP8HKhjuV/YawxVxeklm/jZ
+	pwymg0K/BGtCkbEXPFzRqClbNYbfunvf6Pt7+UXI1CmpDarcsTkvZN48jmSZMZEtn++bxZI9cjT
+	vu6YgpY3Sw6Hi0Op8u6PsdNGQuMdj6WijHaLKPWfMZM+E2cwS71WZZh82+WXQBvUWHIj5do7IVd
+	xyLGtltyZmLBVCvDOf9Rg586BkdFGZTI
+X-Received: by 2002:a05:7022:f507:b0:190:d9bb:281f with SMTP id a92af1059eb24-1ac5e3225aamr21381379c88.18.1793763782520;
+        Tue, 03 Nov 2026 19:43:02 -0800 (PST)
+Received: from [127.0.0.1] ([13.71.227.161])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b245c2c2ddsm3453523c88.10.2026.11.03.19.43.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Nov 2026 19:43:01 -0800 (PST)
+Message-Id: <pull.2288.v5.git.1793763781129.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2288.git.1793435149942.gitgitgadget@gmail.com>
+References: <pull.2288.git.1793435149942.gitgitgadget@gmail.com>
+From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 04 Nov 2026 03:43:01 +0000
+Subject: [PATCH v5] submodule: use the submodule repository to abbreviate
+ commits
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -64,105 +97,139 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261101-fz-credential-cache-race-v1-2-28f0bac51e11@gmail.com>
+To: git@vger.kernel.org
+Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>,
+    Srujith A Poojary <poojarysrujith@gmail.com>,
+    Srujith A Poojary <poojarysrujith@gmail.com>
 
-On Sun, Nov 01, 2026 at 03:29:26PM -0800, Farid Zakaria wrote:
+From: Srujith A Poojary <poojarysrujith@gmail.com>
 
-> The fix is to create the socket with unix_ss_create(), which the
-> simple-ipc server already uses. It takes a lock and binds only if no
-> other server is listening on the socket. A daemon that finds one prints
-> "ok" and exits, and its client talks to the running daemon. Register
-> the socket for removal only after binding it, so a daemon that loses
-> never removes the other one's socket.
+The commit IDs shown in a submodule diff header belong to the
+submodule's object database. However, strbuf_add_unique_abbrev()
+uses the_repository, so it checks the superproject's object
+database when abbreviating those IDs.
 
-OK. One of the reasons the original did not take a lock is that a stale
-lockfile might force the user to clean it up manually (rather than
-everything eventually Just Working).
+Use the submodule repository when it is available, and fall back
+to the repository from the diff options when it is not.
 
-But unix_ss_create() only holds the lockfile briefly to make the socket
-acquisition atomic. So I think the risk of stale files is negligible,
-and worth the tradeoff to avoid races.
+The expected abbreviation for a submodule commit depends on the
+repository's hash algorithm. Use test_oid_cache to provide the
+expected value for each algorithm and remove the SHA1 prerequisite
+so this test runs with both SHA-1 and SHA-256.
 
->  static void serve_cache(const char *socket_path, int debug)
->  {
->  	struct unix_stream_listen_opts opts = UNIX_STREAM_LISTEN_OPTS_INIT;
-> -	int fd;
-> +	struct unix_ss_socket *server_socket;
-> +	struct tempfile *socket_file;
-> +	int ret;
->  
-> -	fd = unix_stream_listen(socket_path, &opts);
-> -	if (fd < 0)
-> +	/*
-> +	 * Two clients may each start a daemon at the same time. Bind only
-> +	 * if no other daemon is listening yet; otherwise leave the socket
-> +	 * to that one, and our client will talk to it.
-> +	 */
-> +	ret = unix_ss_create(socket_path, &opts, -1, &server_socket);
-> +	if (ret == -2) {
-> +		printf("ok\n");
-> +		return;
-> +	}
+Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+---
+    [Outreachy PATCH] t4041: use submodule repository for commit
+    abbreviations
 
-So if we found that somebody else beat us to it, we still say "ok",
-which makes sense: we tell the client that _some_ daemon is ready for
-them to talk to, even if it's not us.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2288%2Fpoojarysrujith%2Fmicroproject-git-libification-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2288/poojarysrujith/microproject-git-libification-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/2288
 
-And then conceptually we are done and can exit. The return here does the
-same thing. I think that's OK, but it might be more obvious to add a
-comment for the "ok" and just call exit(0). I am happy enough either
-way.
+Range-diff vs v4:
 
-> +	/* Remove the socket at exit only now that it is ours. */
-> +	socket_file = register_tempfile(socket_path);
+ 1:  a8c54b9292 ! 1:  f94aa2476f submodule: use the submodule repository to abbreviate commits
+     @@ Commit message
+          Use the submodule repository when it is available, and fall back
+          to the repository from the diff options when it is not.
+      
+     +    The expected abbreviation for a submodule commit depends on the
+     +    repository's hash algorithm. Use test_oid_cache to provide the
+     +    expected value for each algorithm and remove the SHA1 prerequisite
+     +    so this test runs with both SHA-1 and SHA-256.
+     +
+          Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+      
+       ## submodule.c ##
+     @@ t/t4041-diff-submodule-option.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+       
+       . ./test-lib.sh
+       
+     -+test_expect_success SHA1 'submodule commit abbreviation uses submodule object database' '
+     ++test_expect_success 'submodule commit abbreviation uses submodule object database' '
+     ++	test_oid_cache <<-EOF &&
+     ++	submodule_commit1_abbrev sha1:0000000000e
+     ++	submodule_commit1_abbrev sha256:24c81a5
+     ++	EOF
+      +	test_when_finished "rm -rf collision-super" &&
+      +	git init -q collision-super &&
+      +	git init -q collision-super/sm1 &&
+     @@ t/t4041-diff-submodule-option.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+      +	git -C collision-super update-index --add --cacheinfo 160000,"$commit1",sm1 &&
+      +	git -C collision-super commit -q -m "Add submodule" &&
+      +	git -C collision-super diff --submodule=log >actual &&
+     -+	printf "Submodule sm1 0000000000e..%s:\n  > child\n" \
+     ++	printf "Submodule sm1 %s..%s:\n  > child\n" \
+     ++		"$(test_oid submodule_commit1_abbrev)" \
+      +		"$(git -C collision-super/sm1 rev-parse --short "$commit2")" >expected &&
+      +	test_cmp expected actual
+      +'
+ 2:  99a1234544 < -:  ---------- t4041: test SHA-256 submodule abbreviations
 
-And then tempfile handling moves in here from the caller, because we
-might or might not actually make a socket. Makes sense.
 
-> [...]
+ submodule.c                      |  5 +++--
+ t/t4041-diff-submodule-option.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-The rest of the code changes look as I'd expect.
+diff --git a/submodule.c b/submodule.c
+index 6fcb606f7e..1302c11ddf 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -543,6 +543,7 @@ static void show_submodule_header(struct diff_options *o,
+ 		struct commit **left, struct commit **right,
+ 		struct commit_list **merge_bases)
+ {
++	struct repository *repo = sub ? sub : o->repo;
+ 	const char *message = NULL;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int fast_forward = 0, fast_backward = 0;
+@@ -599,9 +600,9 @@ static void show_submodule_header(struct diff_options *o,
+ 
+ output_header:
+ 	strbuf_addf(&sb, "Submodule %s ", path);
+-	strbuf_add_unique_abbrev(&sb, one, DEFAULT_ABBREV);
++	strbuf_repo_add_unique_abbrev(&sb, repo, one, DEFAULT_ABBREV);
+ 	strbuf_addstr(&sb, (fast_backward || fast_forward) ? ".." : "...");
+-	strbuf_add_unique_abbrev(&sb, two, DEFAULT_ABBREV);
++	strbuf_repo_add_unique_abbrev(&sb, repo, two, DEFAULT_ABBREV);
+ 	if (message)
+ 		strbuf_addf(&sb, " %s\n", message);
+ 	else
+diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
+index 4dd4954260..4539d6bba5 100755
+--- a/t/t4041-diff-submodule-option.sh
++++ b/t/t4041-diff-submodule-option.sh
+@@ -14,6 +14,29 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+ 
++test_expect_success 'submodule commit abbreviation uses submodule object database' '
++	test_oid_cache <<-EOF &&
++	submodule_commit1_abbrev sha1:0000000000e
++	submodule_commit1_abbrev sha256:24c81a5
++	EOF
++	test_when_finished "rm -rf collision-super" &&
++	git init -q collision-super &&
++	git init -q collision-super/sm1 &&
++	printf "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n\nb1rwzyc3\n" >collision-super/sm1/a0blgqsjc &&
++	git -C collision-super/sm1 add a0blgqsjc &&
++	tree=$(git -C collision-super/sm1 write-tree) &&
++	commit1=$(GIT_AUTHOR_DATE="1112911993 -0700" GIT_COMMITTER_DATE="1112911993 -0700" git -C collision-super/sm1 commit-tree "$tree" -m a2onsxbvj) &&
++	commit2=$(printf "child\n" | GIT_AUTHOR_DATE="1112912053 -0700" GIT_COMMITTER_DATE="1112912053 -0700" git -C collision-super/sm1 commit-tree "$tree" -p "$commit1") &&
++	git -C collision-super/sm1 checkout -q "$commit2" &&
++	git -C collision-super update-index --add --cacheinfo 160000,"$commit1",sm1 &&
++	git -C collision-super commit -q -m "Add submodule" &&
++	git -C collision-super diff --submodule=log >actual &&
++	printf "Submodule sm1 %s..%s:\n  > child\n" \
++		"$(test_oid submodule_commit1_abbrev)" \
++		"$(git -C collision-super/sm1 rev-parse --short "$commit2")" >expected &&
++	test_cmp expected actual
++'
++
+ # Test non-UTF-8 encoding in case iconv is available.
+ if test_have_prereq ICONV
+ then
 
-> diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-> index 6f7cfd9e33..8e07e55520 100755
-> --- a/t/t0301-credential-cache.sh
-> +++ b/t/t0301-credential-cache.sh
-> @@ -51,6 +51,29 @@ test_expect_success 'socket defaults to ~/.cache/git/credential/socket' '
->  	test_path_is_socket "$HOME/.cache/git/credential/socket"
->  '
->  
-> +test_expect_success 'a second daemon does not take over the socket' '
-> +	test_when_finished "git credential-cache exit" &&
-> +	check approve cache <<-\EOF &&
-> +	protocol=https
-> +	host=example.com
-> +	username=store-user
-> +	password=store-pass
-> +	EOF
-> +	git credential-cache--daemon "$HOME/.cache/git/credential/socket" >out &&
-> +	echo ok >expect &&
-> +	test_cmp expect out &&
-> +	check fill cache <<-\EOF
-> +	protocol=https
-> +	host=example.com
-> +	--
-> +	protocol=https
-> +	host=example.com
-> +	username=store-user
-> +	password=store-pass
-> +	--
-> +	EOF
-> +'
-
-I'd have thought this would pass even before the patch, but perhaps not.
-Usually we rely on the "credential-cache" client doing a ping to avoid
-starting a second daemon, but here we do it explicitly. So probably it
-did just take over the other one, but nobody would really hit that case
-outside of the race between the client pings and the daemons actually
-starting.
-
-So overall, I think the patch looks good.
-
--Peff
+base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
+-- 
+gitgitgadget
