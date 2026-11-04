@@ -1,56 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.216.95.84
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793773923;
-	b=whym3xkAWh/vjy/rCgdWPG1VL+MaCz4rlz0bhYLeFogz+3MhplW6129uGxmRuG63SZXC
-	 BY9FAseZE+pHoGME2q7uX93kfbwwt+xmgiAoaDX6zVHqKVKxx/61GHJv+LotuySIdteBF
-	 YPehPPC1NL5Z1tAAwhE5byAHB9q0gGPincpFXe9z39n1ZwNDwpMSwK1gUyuegYaHiJzY8
-	 UxYbrtyLrEJibPug2KxuSgrIrseQnURgtIG+rWQ1qqxYqF+JSZlTcdfFr/vjyNBMuENpM
-	 LlFgLbZ6YCsb2s7mfoW0xY8ktrlSEf7Z/b7hLJ70m4zHaGJjJeF/S5x7x2+ojJDSe2w==
+	t=1793774059;
+	b=rYtzeuU1rMh7qMs4Bjzy2K9Jnl8zkffcQ8iz5JzZSf25OKMrdiXkjr5irxd3l+f7ZiBW
+	 DfYSsPPnKzAv8pxBhSpWOtWpCKLN5G+XakkOdh4f0w6WUqWGO455S+b4qb1W/RwL1cM2V
+	 jSPBmBdPNSF4eWt+DMaLu6MBXZSk7TIVig6uoC2wb3vtmeoCy/BPXPjHflAhav4FQ14zh
+	 FEUXdGqIfiTZf8GvF77pvjT8y/N91YvYyt78CBRZXIM0yKrRdO6503HOeTmRPgt6ZIaCp
+	 y8L2WDNjHXtk/+RjwLJmnyT+uDLVy9til+4GR9isvzQiH7YMP0d07H6MNtY4bNX5XYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793773923;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793774059;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:Date:
 	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
 	 Content-Disposition:In-Reply-To;
-	bh=vj77j+s5yK0YMclbQ8MGXwRxks4A2TZRvUC+dYJgiTg=;
-	b=N/9BIVmaPtUL07eNZ3VjgqKaKAnI/oSAxL+slZiwJOj91oQPtycLzh3RDUBMXvVLEOR5
-	 1MI34DkTsno1QxuSPMzWik1BaVaqAMjaEY/Y5ex4AGSxswA3eCfn23BWAzYKNglCwJ3m4
-	 SnnLqqF8ZvNkieB27V7HKlfGhBy4nvI36w8goCs+V9KEh6Golpx0jD6cu3RotlG666VEl
-	 9UJEu2i0iN+7gAWrsLE3i+jVokG2o1BWGSnGAr2psMsk92fj0TM6dMKdtoJueGDkh/9Sy
-	 dQKhK8sGwZtLESeN/Nyz8QH0m1rfMgfnlkkKRyq/Q9PzCxa5qrunD9WLWEmZdF07WiA==
+	bh=vSIqCp/FEoWHPl/CuOXbVOD1hEplsI0SiZ+XeO61940=;
+	b=IHb9Nt78spYlCtTK8hTmrnHFgCKfU2cROa8FfRWc4yhU+DiOc2b1boKVY0VEx7HonmNV
+	 f0CYmscctBo1Y1RpWx2SISrKJsCYUwHlWtgSqU4ItIvZToKE0rI5h/aBE9ad/VBgQeqCS
+	 KH0BjqGG3kNulZJCKP6WMKLTU81KDiM+/akto6DopM/mT8S3xhZbMCQ/7Ka2E3veFBwTk
+	 /BIqR6A6I/Etb5iLnjeElLv9/x4p81jLy+W1QLIs1Lgxn8Z4xjJ8F3EPoQWm5udtWR2iO
+	 MxUnGDcrJPK4B7BdjpyhCAFyjfcjj7v26VwVoz01dSkbmcfuIuEvjoZY08BEP4xgOYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=peff.net;
 	spf=pass smtp.mailfrom=peff.net;
-	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=SwgecYSv;
+	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=XwH+ZdyK;
 	arc=none smtp.remote-ip=217.216.95.84
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A3F606A329
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 06:32:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20A3F606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE22606A31B
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 06:34:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1AE22606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=SwgecYSv
-Received: (qmail 12285 invoked by uid 106); 4 Nov 2026 06:32:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=mO82G0NAIOdOK+hQ1Euz+/oiiGHjrnK4L0xRnNLY6Tg=; b=SwgecYSvMXlkpoKarNYZi42XAu0PeZ3N85X3m4uLFduADpc9vcSPRDSLeOjmMcy+l47PvR8darbjd/G2aFdWj6moQpJuwe7hyb3HZ7NnwCM/lJ/NIcWMksDbqPy4JHzmO18JeYGDEVpQPUuxDq23YwRYXVY9dS4KGgy0jkDhWvS5QKehK6daIEpe4/DoX1Enf423hI0h6kqiystTzXKOg+z2mW6edJZxQV4ocaqPLHhGJmpAOQHnlOaYRd0pEs+W44+8afsZ0gRAx3cVDBwqBe0aE+MHillxiMYXmaWl8wRK+VtrOCgph9NlQLvZYKPuofduQIzoaNdrPphjwlJoZQ==
+	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=XwH+ZdyK
+Received: (qmail 12305 invoked by uid 106); 4 Nov 2026 06:34:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=c7wURPimiTEbKvMhsKQwhBzza34VXasqTWb9un/DDLs=; b=XwH+ZdyKutYay4Zojg0VmeChG9Da6ArxSG3jcGZx8XnIIyJ/mry+0vtNRnoTlOc1oND2gKuWFwJ7x1spmLgdcSPmmfSPiPw3/fodaZfX/keMTcS8zI2JeNMoR5gFNee+cMuoKcb/WyuZW7BN8T0d//EBbZuCIu5V0B2bv8CnyymGkdX7+feiDlmVg1+9B3UdbawbdROJsDGK62PgVF12XJsV80Nqpw72LFUUpY8a9m5BYMEZsA5WY21vWGcoq234qtaWX4F3X1Ngty79oFFjx0rXiBElxD3uvVWcniZKLrEdpjk7fmConnWkvGhk/CDjJfXD9qZKCoA9wPo+2C8RnA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Nov 2026 06:32:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Nov 2026 06:34:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29571 invoked by uid 111); 4 Nov 2026 06:32:01 -0000
+Received: (qmail 29578 invoked by uid 111); 4 Nov 2026 06:34:17 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Nov 2026 01:32:01 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Nov 2026 01:34:17 -0500
 Authentication-Results: peff.net; auth=none
-Date: Wed, 4 Nov 2026 01:32:01 -0500
+Date: Wed, 4 Nov 2026 01:34:17 -0500
 From: Jeff King <peff@peff.net>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] t5702: be more resilient to env quoting
-Message-ID: <20261104063201.GA1543013@coredump.intra.peff.net>
-References: <20261031002550.GA626623@coredump.intra.peff.net>
- <20261031020318.tLesiElF@teonanacatl.net>
- <87jymy5uek.fsf@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Emily Shaffer <nasamuffin@google.com>, Tuomas Ahola <taahol@utu.fi>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH] Documentation: propose community voting process
+Message-ID: <20261104063417.GB1543013@coredump.intra.peff.net>
+References: <20261021200341.378978-1-emilyshaffer@google.com>
+ <CAJoAoZnhc6Tjm9m9dmTA6UD18HzkxAv2_ifB5x74ectqX8YieA@mail.gmail.com>
+ <b36dcec9-ad9c-4ddd-b3e1-e246d2fc093e@gmail.com>
+ <xmqq4iedc99a.fsf@gitster.g>
+ <20261024111856.8s8qu%taahol@utu.fi>
+ <20261026011731.GA3575069@coredump.intra.peff.net>
+ <at8IBMQZtJP3bQ9-@pks.im>
+ <CAJoAoZnqzKv8ocsi1a-nC6LaRnpKKCO0Bxt-Pdn0dDUziEcpAg@mail.gmail.com>
+ <20261030180016.GA7582@coredump.intra.peff.net>
+ <auha0Ze6xksBXaVx@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -62,49 +72,44 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87jymy5uek.fsf@gmail.com>
+In-Reply-To: <auha0Ze6xksBXaVx@pks.im>
 
-On Fri, Oct 30, 2026 at 10:08:35PM -0700, Collin Funk wrote:
+On Mon, Nov 02, 2026 at 10:41:37AM +0100, Patrick Steinhardt wrote:
 
-> Nice catch on the NEWS entry. Sorry to you both for the extra work. I am
-> at least partly to blame for those changes.
+> On Fri, Oct 30, 2026 at 02:00:16PM -0400, Jeff King wrote:
+> > The "X commits and active in the last Y years" one covers you, I think,
+> > but probably excludes Linus (depending on the exact parameters).
+> > 
+> > At some point, though, I think there are are always going to be weird
+> > exceptions and it is going to be hard to come up with an algorithmic
+> > rule to get the right set. Perhaps there needs to be some human input
+> > ("we all agree this person is an important part of the community, even
+> > though they do not technically meet the metrics"). If the metric gets us
+> > 99% of the way there, then that keeps the human scaling part down.
 > 
-> In coreutils-9.12, we made 'env' and 'printenv' quote their output. This
-> was to make the output more robust in the case of whitespace, special
-> characters, and in particular, newlines in environment variables.
-> Specifically, any program that parses the output of 'env', without -0,
-> will certainly mistake environment variables with newlines in them as
-> multiple environment variables. See the following example of the output
-> before coreutils-9.12:
+> One counterargument though: is it really that unexpected to eventually
+> exclude people from the voting process if they haven't been active in a
+> long time? I think that the ability to cast an _informed_ vote will
+> quite often require context on how that certain topic has been impacting
+> the community. And sure, a person that hasn't been active in a decade
+> can of course try to discover that context before casting the vote, but
+> that only goes so far.
 
-Though it created some extra work here, I think this is a good change.
-There's another spot where we use "env" in the test suite that I was
-looking at a month or two ago, and I was mildly terrified that it would
-allow variable injection (though probably not a big deal in practice for
-our purposes). So I'm happy to see the situation improving.
+Yeah, that was my gut feeling in the original suggestion, and I could go
+either way on the logic of it. Linus might be an extreme special case
+there.
 
-> In all of the cases that I have seen where the 9.12 behavior caused
-> problems, quoting only when standard output is a terminal would have
-> avoided all of them.
+> > Of course that opens the can of worms of: how does the human part work.
+> > Which humans? IMHO I would be comfortable with Junio or the PLC just
+> > saying "these people also get a vote" (with probably a big initial list,
+> > and then periodic updates).
+> 
+> If we do that it needs to be fully transparent though: who has been
+> added to the list by whom and what is the specific reasoning behind it.
+> But as long as we have that and as long as it's made public well ahead
+> of time so that it can be discussed (and challenged, if needed) I'm fine
+> with such a process.
 
-Yeah, but then we lose the injection protection. :)
-
-What a complicated world we live in.
-
-> Note that some distributions may have also picked up the patch adding
-> the --quoting-style option [6] (I think Slackware did, not sure if
-> anyone else did). But that hasn't been in a release yet, so you probably
-> don't want to use it.
-
-Yeah, I don't have it here yet. I do agree it's good to have, as it lets
-the caller be careful when they know they're going to eval the result.
-Though of course it creates its own headaches, because we might not be
-using coreutils env. :-/
-
-> Sorry again for the extra work of having to investigate that behavior
-> change.
-
-No worries, and thanks for the explanation. I think the revised code in
-git.git is better for not using "env" anyway.
+Yeah, that is along the lines I was thinking when I said the above.
 
 -Peff
