@@ -1,122 +1,126 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793794944;
-	b=p03dng/AC2yTD1l0Ss0rhXv4KPTxg1kDB6sYRoCKiotzfXm24kUoo7vxrJ3KmXx8d17W
-	 vCgkRkXkMQjrsyg2AdPk0vkCnWM8IncA3yCWA8ZXYymRuPsgrC0EmMLdFc5e16VSfFkY6
-	 EYkrZt4mjv4LZrN/noMsSayCEyOawQ+jSoxWym0p8BhB7Q2NXy3twH3WjfAQuiIM4YilK
-	 Xk0sVgaCrDlgzIhV33OHI9RB4VrPz4JBuieHQkzwjiisOekDrcxX2hK9Va/mTviEfgoXR
-	 VngkNmC8yFrGAfTBlF0P8snRNiRUK/y/WWO5d7XyQgLz0oLpXpP3St2WVMkpLZcxIVw==
+	t=1793795111;
+	b=V94gTwzXLQ3tI1W/SHfz6Ubv3+koFK6fxce19OuHqUBfRZi/ihnYNFdwPXzOVc9UwefA
+	 lOAz+VFOfFn5X8qrHpw1oc4FlpxpIVjNoFwoOK+e2rDm4WR1EBpLxP9cRzZLy4MZPMoz9
+	 e8u8qkA7q3p/S3km9ZXdoVCsRtSfUAj4+2cFY44FIio7wkz0yytxNBO4wnrcOHbXj9Ncb
+	 j55qcbTiG7dtXIwZpA/74Jdi9LHRNLhvdqE2ZftaqFyEyzwSQwHFNGUIXT+5b87SZnJ5X
+	 m2xCg1WnWNELbIO3cI15/THklHwN7DnA56sGbvPCQN+Bzl+MdF9k9+Sl+QmkXXqdMVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793794944;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793795111;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=MG3VHagkHGGzQaDuw335Wz+F0vgTNl56k+S/3nOb83A=;
-	b=cyL75sg02Wyb4usctvkZikhA5D/YW0PB8nUiq0gMv/K1rPFbFFLbgGFRSI4ubMgh2stx
-	 GcZsXQ3GgDqExprQoO9fk61S8zAM2XdJhUc4zInC+rZg7bbyOul6Hgn74aZSagmFcX4wk
-	 Tf8SZ3mrJUEhCfgnBWOayTNornPzX7bY55ovxahvf8jhfwkVctVlOLhyn7DwFQaxstt38
-	 68k9sOVdjYcMZCpoleoI2PyGsuCStQ2SwpeI1S28Lf40JiUSciQ5VYYJzI+Y/5r+mvajx
-	 a7weFJMMhEsemu0SpvGYgUVOppimhd4U7+pGQD4pzzR2bVyFwIquLM9ija6hajP457w==
+	 MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=zVzVEpRCDU+mSIOAGV5hhp4ORCBwW7h4CdtyMn3RkDM=;
+	b=yBlPedH6KHXLlT3qmOdmqoTEjgYlaWV6Jvy9OwbXQRjl6HIv/V8HGjwianySmGgix+R0
+	 wMk4QonZaEXt3Q5aVQzBLWTyu0zRC3ti8KlZtMSbx/Ctu9qQEXmlOQxUbtHr5vxVRYTYe
+	 ResUPqDYNeAA41PPN7lR+fyz5kjBLHgSVIx1m7NcoScu064WO09ZVf67Qt+UrjPxNpRp8
+	 HWumWyzgNTLmGgkByOYrofchZhK97VCbdug6sP3sufokZHZpMZAjweNoc+PBlr+1/BtFg
+	 sDNeMGzeFA7eIZa6RfmdrpGdt1SZr3lnUy7r/e0OvMgt+9gtzWG/jaXJc26Jo6KjRaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=xTTU8Yep;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=UgqFu6HX;
-	arc=none smtp.remote-ip=103.168.172.147
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b="cX223/E2";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="FV6rA/bX";
+	arc=none smtp.remote-ip=103.168.172.156
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D68E606A334
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 12:22:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2D68E606A334
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDDC606A31B
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 12:25:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8FDDC606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=xTTU8Yep;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=UgqFu6HX
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 78797EC00D7
-	for <git@vger.kernel.org>; Wed,  4 Nov 2026 07:22:23 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=cX223/E2;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FV6rA/bX
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D38BC140014E
+	for <git@vger.kernel.org>; Wed,  4 Nov 2026 07:25:09 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 04 Nov 2026 07:22:23 -0500
+  by phl-compute-07.internal (MEProxy); Wed, 04 Nov 2026 07:25:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1793794943; x=1793881343; bh=MG3VHagkHG
-	GzQaDuw335Wz+F0vgTNl56k+S/3nOb83A=; b=xTTU8YepVOlH+9h2kdmLm6+5IJ
-	VukUVSEzsGs+iK5ZpLYfDpQfEh4SSd1926MH8mC7DbuyvQZ8tsFeHqYnd4U9eCt0
-	Dg+WuUhzGH4BBqw84tHD05NwDNBhlGV1IwnYMh+FBIvOvDyWqUJv1VMZ/a4WJc0a
-	goZh/qXEyQNMUjJ2n8Pv/q3Db81sU7aGqJwkXuNMLGq0L4qTXt8KH4VsN/m6hOYg
-	+l+y932QLGjDixQnapMUbMUYdoTkeAjFi1HlIBmjYDuPUObHs8z0gOAmp8cUxv9Q
-	jpw3NgxWQBeVerv4ghmnL78TTo2OkYcRcgtpu6f+cMl6G872l3dZD51Y2uhw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1793795109;
+	 x=1793881509; bh=zVzVEpRCDU+mSIOAGV5hhp4ORCBwW7h4CdtyMn3RkDM=; b=
+	cX223/E2Kd7NoH5dtbvrg84AgF1W48h8vVBqK95hEa1JMrloH3M2aH+OuupiuYCO
+	wE6MecLkXs433ZGZXCyiALMUDJMwCvDt+hGM8Zpee9Vf5K7gs88zvr7WOs22pTew
+	XYX1vv7GHk8tkcjrqd7AYwHt3aSYB1tjaOYalsk3sd6uEEtZ/usslaEl85Ho3k4H
+	YT4EOcLRlacKuVVEcme5b1NhT5jHQaUOSi89iQPpRpJO7VBVTVT8+KbknlDubFGD
+	wGfumSbX8736zFSObB6fym+E3R4tjUfqQW8sM7RrB18AR+/baNqhPGubqH9XDAQa
+	/zr2kcESXTY8R7dDT58IMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793794943; x=1793881343; bh=MG3VHagkHGGzQaDuw335Wz+F0vgTNl56k+S
-	/3nOb83A=; b=UgqFu6HX8krcbFQbyNA59QEk8IKuvOke/bNbNJdKcwKzDSiW0/0
-	PRKFT+JRcvACRlKPCmRHzlaWab0ypLPByjRcQDJkLwZbUEnGR+am7r8HdEQIInS6
-	OhAeIj+zs9Znhl4aAOBIxFWtSPbyRktCgu1/vy8oo+GxhTutWOu/nDeAiSFpHtET
-	TLIf51Yc9CBqp0WXnhMUAKRHsh7lwCRf2zrRHVXO363pDxMnsUAmrZh+ttbWPoVJ
-	GB5MOKqFA53ISDgG+NlyrC0EwUKfZyZvGjFMVOJigjGWdS+Ojy0ae7m1SyFoDwIC
-	RSh6cbSA6d980dYFvkLnIRJfbcfWbo94juQ==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793795109; x=
+	1793881509; bh=zVzVEpRCDU+mSIOAGV5hhp4ORCBwW7h4CdtyMn3RkDM=; b=F
+	V6rA/bXyXFVWho+GyquoI9NMam9+WUwAnIo7gmhZ7vMKHcdtI2DFHtrxqW0n9/KV
+	cxbU1quClTm92XXUeaiLp7m/KSWxelKXQruMNdG8RZc4l3o5yOPRtTk7pSV8U3lk
+	KU8yHp9CYdtfIbvuR8x5KxqHtaHTkI3vzsQGb/YBxr8PcHyLlbLs+pTE5G5XCaFf
+	eCU3WK/87NwfV2MbKdUO2RDqBwGXXuBtW0j94y0aJPHWBw43zHPt6X6XNtcFbwSN
+	cfd0l3Mo1W/KJeAugQitBfoxAUYjhygimPJKfYn46QJscP7rAauYdugqzkITGT/8
+	h+HjeSMaj5gF8IU6XnRNA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793794943; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793795109; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:wq2Iy0cEYM1FFsNidC7Peahqc9J+cN0Ia8TKiQkT0RN+Qlg
-	ED3/V+VbDz7QXhDaMAN+/MYoqXlk8Arzre9Gc7MjUhInOrznqiCmb7/EWUDl0Iu1
-	Ww9QojisMQsZOD6Kb99qc4gGZ0Kp7xSSWNEt7RxOQM80FPwqwB6PgjgJlOZb5l37
-	HgtmKxEfBBvoSrMsPikJa8kJBs0cEW4AS7uGU13mPPuF6PhqtdP2XtkToi6NA2kj
-	wHzsQUkGGLd0kmqFKjgUSIvVRzWFf8gHJJlmpaeceGhZMPGsKOQTvBrBFCPgtCpM
-	Rn6cf+EDtugDAQjDPIznLg5KK+1pFu2eTIYfX7A==;
+	s=fm3:rsa-sha256:qoBqcj1QJZX/M7SEMRrT0j2Q1lFZ94dt8zrytFWoGiaxw1n
+	TcaT9Xzbtp6QSxgAlBzfGAigrgWe59Q3idABTjgWGm/bJieLRR1IaF+zQQEJH4pl
+	Mvn86Dvr91SvXK6WoPlYFsjcRQJNMEqsft/Twocsxcn1hpp8gbjULamv0zC2G7iU
+	uIaaCgguK9TPtUt+mLNrpQnD6eb6WDFrdM6hLweJb1mqFthGHpKD6fyg/9rTVCej
+	TjHgmIXLclSJU+cv+ft0Z/kH31m0HtBATZbKOrHVzDlh/vxl8ZAziD0xDHFlpzIQ
+	5mWlXHR64qs6waJ8T+ffNTYUh+YNNihaK/f7zIQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
 	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:kyxp0OOY8CxevL71t17gI/vKAC9lnZGkG44YQlr6Vlw=:g+fVTDHd2mSXV7rexoteEgaq22y6hB4IicP4lJQI6GI=;
-X-ME-Sender: <xms:fyPraoO2KCCxRVqdJp9IpPLmRZZNmRL3EtYFvW3ZDS0810GhAoDesQ>
-    <xme:fyPral8oQoOaM-bjnLJXD6KuA8gweA84YHlaVeYidt4MhwthCbFScl1nI44a2otUE
-    p97rClr1KibozW_WQYjgT7xiNYKHs145xiNhkHaonO0ebQODTQ53w>
-X-ME-Received: <xmr:fyPrakSY7lqity6mZPgGVIwI1Dilp9HNDgpCttffAs04ZWgqBSKeislP7jUxlq9wDsfFqIg>
-X-ME-Proxy-Cause: dmFkZTEBvXpQ/AaijNR10qGAiGRzsogqCmdrZiG1Xl3qfRn88I4yQ2XcVKjvgmd11ugF1A
-    u6IUjUAd4mKhV7YMnZXLrMpR4PL4ovOI2TzGTztF1UpvZnplgZvitVbn8RWbq5r9DhEShE
-    C4f3BujMubs6lS/leJ7RNaT15Ti/43N9sa7nGs/oAlizHxFtrG048uePeA05VYAZhVOFk1
-    wBHGE7/0SZkp22rtVj0djzf+Q/zwZzvqjZc5CPLw6EcgRI8Spjr18eiwTz8WYQPL+dBi0Y
-    n4qDH2RGbC9/vZUJio/ZTniUnozwQPgSG7X/Nkcxyc+S+zE7i49fuOnkYINqQf2B2rMsiX
-    glTube8wCP1lkVNKJ8GSCKX6eZrs6lQ3H4UCl7fLFM0vAbTs/D9aoDxOHW6+ZsdMqPkip2
-    OfaWWcBwBFPFNvLHjs9iWioUzWg+RaiXnDT1hpav1EnltS+lqvvH8sQfsnq+ZJ4E86Vyg/
-    CcCbpg28qEmPqIvbcDOyW+rcWP3CPvyOezvedT9/hC9pnzHjkEgUfr8OM2rcJ+z3/Z5VRV
-    wsNKAlWweNtgOGogsnCEqZuG9/3ejaRqjpQ6Xu8xWebN7D9UH308Bom/wX7S2v7ISmJpmL
-    Mvt72ByMf3GJHhZ/nYsUpoRDyIs43u9V5V44ixy/JIobARYgBCkFpi0meU9A
-X-ME-Proxy: <xmx:fyPravn6M0Sd_NZdtdaBQ1a5ju3q2xHEvejYJrihVdz5_wfNe_4t_g>
-    <xmx:fyPrasTHarb5HTD_L7zb1w1ASj-ZhNN7P3RlGBgpsdmpAWU1y8ncYg>
-    <xmx:fyPralN0Nwr5drYU3wIXt5aKTJxV-Ax1pfM4niOAd0HU_rhkMfuqZA>
-    <xmx:fyPratUsjuqCkIw92BaREfLDmUTiW0UqLtG9eB44n9YnKX7EwcCc1w>
-    <xmx:fyPrasT4pLRGgq9AEChmARkvQqn3Wx3WPMTt2KholuwxnpnPadLE23bk>
+	action=mi-m=1; hc=13;
+	hn=cc,content-disposition,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:dxFyoLHqlcFiABmOPz6QBGQ5SjJXssi5KTqfyEyKS1o=:Zd6pnYSs3tx4qEsIfFl276oZiqHJtMAMmA7b3+AUKf0=;
+X-ME-Sender: <xms:JSTragdrwyqGzukdwkeCb7zy_9RfXPjK7vIoMQiDBPNHN7u0AIV1dA>
+    <xme:JSTrapOc_-aGq8-XUsfi_s2ElOFG84iF3L0qcGl9U5dU_RGgmbG9EAoCdk41LNKLd
+    5NHFUGm3HxX6N3XEIM97NNhCo5YWyE0N5swSauKLpsmvxpgsQQ6gw>
+X-ME-Received: <xmr:JSTramjK70Bro_5xL_21uDK6n72MKdtEEpbf23EgbB6SmD_Of_ECtuB-_vDShZaNhBh1TMg>
+X-ME-Proxy-Cause: dmFkZTELKTHhEJ4LpS+awbLMFpiv7OLu6iPghG13frpcwe7bnNOU4xOFp0EAo0kgdcvU3D
+    oBH4f7vO2U2KzfEfyBT/sN99tmRYeFLJHUwXP6L88gp0YeTdVJCVUlu6hZeDXxlhVe9egV
+    srO7iWGRuWafXlO2wCwrQldXZ9Zg/4+nOMWNgFwQWWAnSugAnJmpepna1bPhi/OtwfuHny
+    iyt8RJGKKyJnXCRGJ0+rX60CTBoTsGyGce+62fXEWg/WDIMOgT7YH+4jx5eWQRN+sl9gnX
+    wGVTZVaPf/vKe/3lVZYkHIjoJF2sQwrqNRJkN5HfwqB/qj2QycZQ47SEBVQ9A9Q3sDr5Ux
+    v3mSvVpbzxS43fN+zcGW9EExSqjTQtUDUnnGZ8BoNCdmQCjFoxQT7uYYvcwRitPkhjdA6O
+    c3V9WMvWZ08SUYgErPD5MReoM6N1KtWpg5qaAWmR7N1YpfdVhnJmzMx97FnbTWCqQ9ie4U
+    ylXUg4V+djkfZ6EkCLQYLcEwYx1I8GxUgUM9VSMVAY1IwFIC7tIpJZSJpf9GN7R4UeWrSQ
+    vi6x2zXStVmNnSM41eICc6xDHCbJmqvuMTRSvByK1d4J5EQKOx5OrSDYnkAERTfUh1adzf
+    NyGgcDCDHYn5FNzatrxWqHH8JBSbALNUq51wDe5Q33TtEc6+bGdB3EDYIByg
+X-ME-Proxy: <xmx:JSTrak2s8rYWZWd7Xrbxr8xKiUC30IPQrQ39BOmLDYHEZchNp27ylg>
+    <xmx:JSTraojAXTaITyKCbAtke5FKbJfFm5iv4OjOIMBpkeSKMp_LagukAQ>
+    <xmx:JSTrasd32xyldusqeuNTHllirYS6olqS5sOqxSeOyDvSOSxXgdDaNw>
+    <xmx:JSTrajndbfxjU1Ur8mXH7LJp_a0YL4DO3-CqbMPHgysJpDWWL1c9Uw>
+    <xmx:JSTramfAA2wX8Gm-FM3IaE_4lUPPMyGjuWcK3aP246C9oX2k13IGCoKO>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Nov 2026 07:22:22 -0500 (EST)
+ 4 Nov 2026 07:25:08 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 39ff8ae4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 4 Nov 2026 12:22:21 +0000 (UTC)
-Date: Wed, 4 Nov 2026 13:22:18 +0100
+	by mail (OpenSMTPD) with ESMTPSA id b4c7e960 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 4 Nov 2026 12:25:07 +0000 (UTC)
+Date: Wed, 4 Nov 2026 13:25:04 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Patrick Ohly <patrick.ohly@intel.com>
-Cc: Kristofer Karlsson <krka@spotify.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Lazy fetch in partial clone fails with "not our ref" since
- 5946a564 (odb/source: make read_object_info() pluggable)
-Message-ID: <ausjegMf8AM-URB2@pks.im>
-References: <yrjh1p92qc7w.fsf@pohly-mobl1.fritz.box>
- <CAL71e4MqMdGk5ryhNxvVNN6Z02+45B933ZfUuvj4hM92N5a6hA@mail.gmail.com>
- <yrjhld78q06y.fsf@pohly-mobl1.fritz.box>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+	Ed Maste <emaste@freebsd.org>
+Subject: Re: Is anybody using .cirrus.yml?
+Message-ID: <auskIPBRorDxDj6N@pks.im>
+References: <20261102204151.MA00I%taahol@utu.fi>
+ <aumQMJLMeI4sfeNI@pks.im>
+ <CAPUEspg_9CGMtakHO3Stj--exd5nRNv7i3vW5tmMF0Arzmo=zQ@mail.gmail.com>
+ <20261104095752.2rs5_%taahol@utu.fi>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,58 +130,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <yrjhld78q06y.fsf@pohly-mobl1.fritz.box>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261104095752.2rs5_%taahol@utu.fi>
 
-On Wed, Nov 04, 2026 at 12:56:53PM +0100, Patrick Ohly wrote:
-> Kristofer Karlsson <krka@spotify.com> writes:
+On Wed, Nov 04, 2026 at 11:57:52AM +0200, Tuomas Ahola wrote:
+> Carlo Arenas <carenas@gmail.com> wrote:
 > 
-> > On Tue, 3 Nov 2026 at 14:31, Patrick Ohly <patrick.ohly@intel.com> wrote:
-> >>
-> >> Hello,
-> >>
-> >> "git merge" in a blobless partial clone fails with "not our ref" while
-> >> lazily fetching a missing object. This started to occur today in the
-> >> Kubernetes CI, completely breaking the merging of PRs. We should have
-> >> been using git 2.54.0, the affected version, for a few days at least
-> >> without issues, so it can't be ruled out that this is at least partly
-> >> caused by a change on the GitHub side. We are about to revert to git
-> >> 2.52.0 to unblock the Kubernetes project.
-> >>
-> >> [...]
-> >>
-> >> I bisected v2.52.0 (good) to v2.54.0 (bad). The first bad commit is:
-> >>
-> >> 5946a564cddc0bf471f27ae4c3fe205441e3ef65
-> >> odb/source: make `read_object_info()` function pluggable
-> >>
-> >> The parent, 3bc3177ad7 ( 2.53.0.185.g3bc3177ad7 ), is good.
-> >
-> > Thanks for the detailed report.  I think I have found the cause: I
-> > can reproduce the failure with your steps and make it go away with a
-> > small change to the loose object cache.
+> > On Mon, Nov 2, 2026 at 11:41 PM Patrick Steinhardt <ps@pks.im> wrote:
+> > 
+> > > Anyway, if nobody runs it anymore we should remove it. But let's wait a
+> > > few days for Carlo to answer in case he still does have a usecase for
+> > > it before we send a patch to drop it.
+> > 
+> > Thanks, but there is no reason to keep that file around AFAIK.
+> > 
+> > Carlo
 > 
-> Any idea why this suddenly started to occur?
-> 
-> We were using 2.54.0 for several days without issues prior to the
-> failure. For example,
-> https://storage.googleapis.com/kubernetes-ci-logs/pr-logs/pull/batch/pull-kubernetes-cmd/2117551425255903232/clone-log.txt
-> merged several different PRs for
-> https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/batch/pull-kubernetes-cmd/2117551425255903232
-> using
-> us-docker.pkg.dev/k8s-infra-prow/images/clonerefs:v20261028-c06373a3e
-> as environment. It contains 2.54.0.
+> Thanks both.  May I have your acks please?
 
-The issue here depends on the actual objects IDs that you're merging.
-You need to merge at least one object with the same first two hex
-characters into a newly written object that same first two characters.
-If so, you can trigger a stale loose object cache that makes Git think
-that the object does not exist locally, and it then tries to fetch it
-from the promisor remote.
+I think it would help if you sent this as a separate patch. Otherwise,
+this patch here is going to be very hard to discover for anybody who
+isn't reading this thread.
 
-I've sent a fix for this bug via [1]. Thanks!
+> -----8<-----
+> Subject: [PATCH] CI: delete defunct Cirrus CI configuration
+
+s/CI:/ci:/
+
+> Since b5a9d7afcd (CI: add FreeBSD CI support via Cirrus-CI,
+> 2019-12-20), .cirrus.yml has powered Git's VM-based FreeBSD CI.
+> 
+> However, with the shutdown of Cirrus CI on 2026-06-01, there
+> don't seem to be any drop-in solutions available to support our
+> usecase---while there exist tools in general to run Cirrus pipelines
+
+The three dashes are a bit funny, but okay.
+
+> locally, managing FreeBSD VMs doesn't appear to be covered.
+> 
+> That renders .cirrus.yml completely nonfunctional.  Delete it.
+> 
+> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+
+Other than that this looks good to me. As said though, might make sense
+to send this via a separate thread so that it becomes disocverable.
 
 Patrick
-
-[1]: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
