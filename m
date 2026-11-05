@@ -1,121 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793918981;
-	b=hWUzxaitJDRgF8fAA4ittJPgfIMcQX1F7hFuWI6LCy02FMLm9XxDe8vMov7kqUprB13r
-	 MfDcd9hoIF1s+3+HrAFkCjr1wCfN5LkjzglraelRLkkbD4TXTHa75+eHCN5C1napO1RIZ
-	 qWvxdV45y+hlm784QDq+tkFCbvydDWZHaB4LFMlCqE0LDKkLSw3cIOepmerSGwfEkUZ+9
-	 ltlBYENX0IcGcVdQYfm6JjuRHj5Tl7z9J3eUsbjqNLr5izjCisYKVFGwSIIZ4WlkscQOi
-	 SV99KLzQEk9mE91mvQclxTAkC9aJPtBfMXXsr9nHTCmaY22X1izhcOnX0kAfPdh07iw==
+	t=1793919221;
+	b=iWZPf1AQ0B16bqLt8Y+DUtqj6c82BByUsv7yY5u1K7SZQFxWh32OM6jWpYL7W9S38Ikp
+	 6i+RLiiIWqLIE4fcg50vJZ3Jarw991vpqqvRHg7lTEmR57e1yTMFCwp7du1AFHyy07bQy
+	 DJl3pfjlYpeMneRF49Sum+IUceifSTn1QQWZ+yCJvG/wsbYbqdeU0Yvw/zDMv4/3SZFON
+	 /RFCrrSCpAabS3ccqCYjQMzpvaiRQ8tsvM3J5bAaqSNzY4fd53ZLse0kfAoWEgTLZR2/f
+	 phzFQTrjLCxjeLI/qAZKYjOdRD4bEphfsJ12ptN4BTooVPoAM7gOzkf5aVgdKTq8yFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793918981;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=lD9y0WBqy4kkacEX88lNly7WXONGNNcb/+rWfpYiT+I=;
-	b=5AxrCbggSEcJ66gB5oM7KBl0uEC939lNV8bzcY1vfxXC+sqQpZE6rvxVedTxEhOUBWs+
-	 Yfpp/SsBcwJl6QiIE23pdpn3Uyr0oCnNhkWb0YVEC3d7h7F2+6D94qij8ey2Ijm2uO4EP
-	 xQPBvAfkG7/wzbR0V8OtYB/afQ2nadQgY4ckUC1baF7ULYaWU9BqSoNeB8uKU4kUada2S
-	 787lVTRmTIWPXzRxum9tks5gQBKHoKhiJN/9fzoZjWJVAjsJZnaCfrE1NGVWFVlJvc8xU
-	 nrWohgMW5LHI+I8ktiUKJC8W7cI9m052LDdEiJL9wB7X9HeM971DJSCRGUSoemuLgqA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793919221;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=zkPRbjA6Ah+NoxFSgRByl7i2xxH5BJbfkTTZA4I1ql8=;
+	b=Ykx0zgUBRx+4zw4/5RGVcTv4zuv7wdbwlQJSsRObI5q3EobKsFrmJQ+vFTD7vjfNeEOz
+	 6y+uY/yBsFIWyegrnlaf2w3WHvg+IDCHe6pxBRcMSLESvUN+wT08uQkjP7qq7poFE4trR
+	 W9JuKkbmEt9g3OvYFzb66H1gtNToRh5OR/PZ3DhvS95ryIyCfrMTdAWbXpSIdFLv9AD/z
+	 9I8qrIj4NqaBqO2ejfk2imH1onpnFIh5wcLeseh427OU3CshigK7a5X+5bLMJvQWtGlAD
+	 bh5qYXcPd7Y1IVVzZkEunGtOpghccbw9Tscua+RP5lRlnji8hDfeF1ljcm2PaDsYEOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=NICTAF6l;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=SlNyBbSr;
-	arc=none smtp.remote-ip=103.168.172.153
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ccnGvvyj;
+	arc=none smtp.remote-ip=209.85.221.53
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0571F606A32C
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:49:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0571F606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1D0606A31B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:53:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BF1D0606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=NICTAF6l;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=SlNyBbSr
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 33D0314000EB
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 17:49:40 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Thu, 05 Nov 2026 17:49:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793918980; x=1794005380; bh=lD9y0WBqy4
-	kkacEX88lNly7WXONGNNcb/+rWfpYiT+I=; b=NICTAF6lQ4z5C+hFYdJEcY+/Q8
-	k3birzdS6ua53LPjU5iq4815sDr71Y8xblfazu5EiIS+810uSl9Ro84gwzlydVEQ
-	zCWH6kQlOcNKCSuVSo8xXFpLzbbhnWwCA/1Y8MSiKPM/bO8BxWtoHxQ31Itj4KL9
-	yPs/fzGimzrGBe17oSaFblk2TVW74uxkVWGJyP46lOPbIOzY26hxg+OAaSBrDNrH
-	0/lCwFD55EddNjNrWNB6hEMKeKTvhD/yBq2Bog28D7RZ78iSd+puauu3CDLYgUzV
-	Jb+3j5RO+/3Uh1KmrmczJAQXCrwZst3Nz3XKi959xh+fypgCqNtDZIMR7PZQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793918980; x=1794005380; bh=lD9y0WBqy4kkacEX88lNly7WXONGNNcb/+r
-	WfpYiT+I=; b=SlNyBbSr/KJpBTKcoI1nYuGp/3PRuF7s9/u16xu+NdVRo4iqtVC
-	XrdJ1tWfnCv1VPAwfCDCC9OHWVhwSW4NCim6Sob9g6LeY3gkvGrzgV6oo4h6N9ng
-	UdIV1NStwlNkcEm5/z+Q4MwKlRqnq4Zv/JTdVxFIiwBCntVXNdiR0AvCzerY12zh
-	GjleY0YDBU1VFxLbt7FgfbqTQ3/YFrERt1PP9iPNrD5OhiNZWwAJ2bmRA0Vtfbwt
-	BWtEqsgRWzeLsTVPrYYR9G2TdD5ridlkhJUmYaOU88i1H0SCcevgC3svhZIyAhqc
-	wTy59XPtt/Qpf/Y/bS06IQE4gAZJ1CFlK2A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793918980; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:NLNs/0efE/MtaiBWKf6a4drz17vDimjQpcnXFT9w4zYmd5H
-	4kWYrCKpcqMKlfQJCvQukX/I5+3cnTRGfgSxAqlPjZsRHdLLg66Qu9LQS3LmQbNg
-	GZPDSq8UeskvPWJ33GYDv0oJnirG5Jgdzk62O0JakA3EL7ZUvZ17UGZj8777sxvA
-	Fvwd1Y3uCxfWutVF6UJW+ZKvPvihS780UkKYLDK47FXp4WtNG3CcJGHgmitAzmqq
-	N9ijKWdnsPn4oaVOxv4xe9bEDR4qpXwkkDXKf+Y4Ez57oxYVLcRnFqmRwzWbCD7D
-	YMDDqOFJh6Y1uonWnfcq4t3qMqerWsiObVLUBAg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:c5WdUrL1eW9l5i1u+vY+xhSvu7hRNtoFShbvFe3DdOY=:8Bmn39NZFUQXB0T58Mgx68uLirfjHM9RMgG85hgTjd0=;
-X-ME-Sender: <xms:BAjtal9zwJJkChrAkR4CtzoRuEh6POFYKOePKaPhMQehJWJUFyRrPw>
-    <xme:BAjtahJx_tIIBu6PS3Q5Atr9UUpio3gccjMyyuNDZwv53d1RCMZ1GrCshVm03bsoi
-    _7sYWKJxhsBX97rOjn3Su9LRRjPztVADZhrqKC6vGQ1QEvddZvM_eI>
-X-ME-Received: <xmr:BAjtagZZAn3gzd38B1ox7l9oSG1KvD_oTnsx0AIc3s-yCMgH0-RuXmsFkwNzSQtvblYJxDYX5Bczil1NwQRY3ggXNaOIOiYt2Y0Y>
-X-ME-Proxy-Cause: dmFkZTEt0jINh/AgyK49edBh0d3AN8nxulsrOLOtu60lcgVI+xm6uW1k+3ASZ5XpqMxiwc
-    RXewS3nn00SbO4ibtPkPSlzwnj3/vHni6sAljX1Sopekst3WroIMtj0wG1MBNkbCUkaysd
-    5zAlwr7baaGLx8Xr2dIYeRjfVfhKSeZbt8fzQ2otSayC6KXgPwLgKUGHD3sMJX/m8oXuPZ
-    fhd96dF0nXH8Ue60C/Pdw6cwvANzga8g4q2l66nQILr/nnu1slY3lXYTED0NZLUfjxhZu+
-    U3aK76S3txo7w/HmCxit7QQh9DFzXPqH/bhtgUilj0g04YCyb8ekcYsL9LUbH7kNLTUqVw
-    D5jNwKNpUSOE3XvVbJKH7hO3zChKqlMTghCZrfXw4YCTM5fKe4SCEiNm7CO5SLivzaDwtc
-    1R0Qfep4bmhnE8nLYbqt3gAYp/psKKVp7+tiiLyOBLPvHmO1akZeqAGhmFHUBg9fr/s+8O
-    1T6gU3DUO/5J8vu2Nqg76qoZZnO/akoQKRNBxFyP55tyTOQ84+wp/Av5WcB28aTQQDzQRR
-    a3r14AjJItasfJELH4G11e56rDyWZRjEwcQPm0Glv56kcoX5WVPr4GSdjzvZ7ZzFnf+dXu
-    7wadmZzd5S/AEf2G8//nktbJPdaK1Pqx8TegxopBqxGZajHDZuIv+D8fExVw
-X-ME-Proxy: <xmx:BAjtajLPTYRdgpjQhYdQD6PYH_K2733rgz5j6dw0r6_tiSI3wmJAJw>
-    <xmx:BAjtauCfwQU871PMDJLtQAxLJM_FBK5gwSVk4vYfxHF_xcxWZjU8WQ>
-    <xmx:BAjtaorTJRYaGAR4OoEO_XZ8K7sSzkXBsydCezHpcTDi30BaYcSmbQ>
-    <xmx:BAjtapgXNIeiNqXigmdMNREwgsIgXensDWOsnHRCTtQ1xx_B8xXpCQ>
-    <xmx:BAjtakzLlGcEwgwn-lIbV0HbGs3fh9OnqUtZzsd7ml9BoGYWoK8IVSSh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 17:49:39 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jon Simons <jon@jonsimons.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 12/12] remote: use strmap for apply_push_cas()
-In-Reply-To: <20261014031347.50433-13-jon@jonsimons.org> (Jon Simons's message
-	of "Tue, 13 Oct 2026 23:13:47 -0400")
-References: <20261009192953.81794-1-jon@jonsimons.org>
-	<20261014031347.50433-1-jon@jonsimons.org>
-	<20261014031347.50433-13-jon@jonsimons.org>
-Date: Thu, 05 Nov 2026 14:49:38 -0800
-Message-ID: <xmqqik2aq4fx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ccnGvvyj
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48fd2e38825so49917f8f.2
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 14:53:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793919219; x=1794524019; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=zkPRbjA6Ah+NoxFSgRByl7i2xxH5BJbfkTTZA4I1ql8=;
+        b=ccnGvvyjGOzBdJqrOU8bwg34l7VANCKuYvEQEqrIlZ5h+qt8CvboguSrkOQfbjUz3X
+         roPOe2tvMi+IretNNHiw7Z/oNg6Z0cdourEAeQ4Ri+NvUnxmIeHwFS4wqWKi2GXNYWDg
+         wYYbFQDZAb7Ekrrrrjg8FXG2vG7DnumT/ZOnVtlT/MUvxhWOpCleVgmKMB7bF7NBBe4o
+         SSzFox4qKhkhB0Xv2cpvaNvU7qel1FaKjJoKY7itrfOFg3MsRJd63EwajnHdJYgpdz5j
+         oiyamcL51vUx5M0HI0MBMPV/5OFO7L2kfVMsD1NWEv2C5q8iWxckO3uxTzP60oXaM47H
+         Gcag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793919219; x=1794524019;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=zkPRbjA6Ah+NoxFSgRByl7i2xxH5BJbfkTTZA4I1ql8=;
+        b=0MAOjG7xR4yHbEwwTniWifs+CNvdqSa+vQJuIWX17RU160fw3i/gtaYvxF11wfEto0
+         jj6Cx8uBa+m5x3nnt2kr36n8ZUDOLLGozjj9MH2AZI7Ltb0ut/PIapf6iiO6ITjejOga
+         l5uvJ3d0wLl0M+pmfHtBFQ1b+cJPFirnvcdVZo8tB4ghHPu4EBOdJY35aFmN749ogoMG
+         tvmR/utsuFtGFb2Zadh4ZyZmS8lTwEyQvgmstpwmSoyzv2wYOHyZZjeEauxwIFnH/PUn
+         FjzqsFvYEVgX0e/sQjh8lpV3qFOwvPqOPDG4u/jZuk5/adfWHx5SAdIOhCHcGeeXgHtV
+         Uofg==
+X-Gm-Message-State: APuU4Z+ux863KsT7lQSnRjJpaAiEqwxJ3mYP51oqBDs8eCi5chW6+wKH
+	rFWI8onatZ3VaDdP/iEoc8iODV+ckIOaJgUoTSoMeWcpCXnocrgaYC2qL2ygm6kk
+X-Gm-Gg: AYBFou3zVpYa0p3Aa9+a63BjCEVmBlXTDVQKYVQ1DM5VkDqPesWMsjfVBjSD3Lzw8wh
+	9II2IagAaq7UXpNtafj+diO+RT22ZJ2A+uKWZYuleeHesGbUAmzAFCtO/zOajxZ/3VtTWKymJWE
+	ZDTf4WarfzXLsORV4nnsyUeFngFYq4SvUuvDu34dUE0F+LcbQ6xYeGjaIEavXmlBsqA3VXqufin
+	lMbIZ5d6wJeDDEm4rafegwB+78/a3Q0jv9fw0cXQ7AesRnkZZ2gHXJv7ZwCcQwVtExHPSX9se/c
+	U/K8tBkVVXBfWsmq8VHp7bONaHPPGT2F5I21X2Hkb7UPlOICTKciD6Bdv5g6lvIbd6a9oFOmMhY
+	XZTFEOXwkfGBBYCuue3EDoY/hy41tktx48tDNw/6kDywhnh0FwWTMijE5fAx0Kiu4ixlZVL+rh0
+	BF2+72Im0WeLoOfYI7XAnNlkEnGhDpG6MsLCKjU5qKK2dnUaE5K815wEpzKrUtjPVOtzz6RnzRa
+	m9A+E33inVcPlLlSe/MjTt7xa5lrNjC1TUm8H8ilaRytBSNN9xuKcIBSVpIZ4SBTwUHCrrnCG70
+	k7Ltn9AUjoIcE1wkECWZG89P5vCA3oh/myVy8LfxUS6VdhWzVOIS0Y+fCKXdXysa3CS8svudb8z
+	eO82/zqqre2/JlFufJVYQZ3ZkCLvv04QNkArc82MrUv4PhCwI+gAOhz72+FfkdUG6mPcHVVyRg9
+	UTaA==
+X-Received: by 2002:a05:6000:2489:b0:48d:ff71:dd87 with SMTP id ffacd0b85a97d-49275fe4e84mr1915184f8f.17.1793919218866;
+        Thu, 05 Nov 2026 14:53:38 -0800 (PST)
+Received: from ngadou-Latitude-5580.. ([129.0.60.185])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d809df21sm81475f8f.54.2026.11.05.14.53.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Nov 2026 14:53:37 -0800 (PST)
+From: Yopa Nelly <yopatatchou@gmail.com>
+To: git@vger.kernel.org
+Cc: tangajoris@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	Nelly Yopa <yopatatchou@gmail.com>
+Subject: [Outreachy][PATCH v2] promisor-remote: honor promisor.fetchOrder when trying remotes
+Date: Thu,  5 Nov 2026 23:52:23 +0100
+Message-ID: <20261105225223.1163975-1-yopatatchou@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261104172434.691381-1-yopatatchou@gmail.com>
+References: <20261104172434.691381-1-yopatatchou@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,41 +99,241 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Jon Simons <jon@jonsimons.org> writes:
+From: Nelly Yopa <yopatatchou@gmail.com>
 
-> Optimize apply_push_cas() by replacing a linear traversal of all
-> advertised remote refs with strmap lookups.
->
-> Before this change, applying N explicit --force-with-lease entries
-> to M remote advertised refs entails O(N * M) calls to refname_match()
-> in apply_one_cas().
->
-> After this change, we build a strmap of remote refs O(M), and use it
-> for O(N * rules) lookups of the lease entry refnames.
+When a repository is configured with more than one promisor
+remote, Git tries them one after another until the missing
+objects have been fetched. The order is currently determined
+only by the order in which remote.<name>.promisor entries appear
+in the configuration. There is no way to say "try this remote
+first" without moving config lines around.
 
-OK.  We may be checking multiple target refs, and we may be checking
-with multiple cas rules, but the order of check does not matter, so
-we do not have to be linearly scanning the remote_refs list at all.
+Add a promisor.fetchOrder configuration variable that takes a
+comma-separated list of remote names. Remotes named in the list
+are tried first, in the order listed. Remotes not named in the
+list are tried afterwards, in their original configuration
+order. The extensions.partialClone remote is still moved to the
+end of the list by promisor_remote_init() unless it is named in
+fetchOrder, in which case its listed position wins.
 
-> The refnames are resolved by issuing one strmap lookup for each
-> candidate rules pattern generated with expand_ref_prefix(), as
-> with earlier strmap conversions.
+The order is applied inside each of the two passes in
+lazy_fetch_objects() first the accepted remotes, then the
+rest so the existing "accepted before configured" behavior is
+unchanged. Within each pass, the fetchOrder order takes
+precedence over the configuration order.
 
-That trick is clever and apparently very effective ...
+The parsed list is stored in struct promisor_remote_config and
+is re-parsed each time the config is read. Instead of sorting
+the linked list at fetch time, try_promisor_remotes() walks the
+list twice: once in fetchOrder order for the remotes named
+there, and once in the original config order for the rest.
 
-> p5516 timings show the speedup:
->
->   Test                        HEAD~1            HEAD
->   --------------------------------------------------------------------
->   5516.16: empty:lease:1      0.13(0.07+0.10)   0.14(0.08+0.11) +7.7%
->   5516.19: empty:lease:10     0.16(0.10+0.10)   0.14(0.08+0.11) -12.5%
->   5516.22: empty:lease:100    0.45(0.39+0.10)   0.16(0.09+0.11) -64.4%
->   5516.25: mirror:lease:1     0.16(0.09+0.11)   0.17(0.10+0.12) +6.3%
->   5516.28: mirror:lease:10    0.19(0.12+0.10)   0.17(0.10+0.11) -10.5%
->   5516.31: mirror:lease:100   0.49(0.42+0.12)   0.19(0.11+0.12) -61.2%
+Signed-off-by: Yopa Nelly <yopatatchou@gmail.com>
+---
+ Documentation/config/promisor.adoc |  11 +++
+ promisor-remote.c                  | 108 +++++++++++++++++++++++++----
+ 2 files changed, 107 insertions(+), 12 deletions(-)
 
-... which is very nice.
+diff --git a/Documentation/config/promisor.adoc b/Documentation/config/promisor.adoc
+index c1f3d766a6..ccc0925800 100644
+--- a/Documentation/config/promisor.adoc
++++ b/Documentation/config/promisor.adoc
+@@ -31,6 +31,17 @@ This list has no effect unless the "promisor.advertise" config
+ variable is set to "true", and the "name" and "url" fields are always
+ advertised regardless of this setting.
+ 
++`promisor.fetchOrder`::
++	A comma-separated list of promisor remote names. When Git
++	needs to lazily fetch a missing object, it tries the remotes
++	in this list first, in the order listed, then the remaining
++	configured promisor remotes in their configuration order.
++	The `extensions.partialClone` remote is tried last unless it
++	is named in this list.
+++
++See linkgit:gitprotocol-v2[5] and the "Partial Clone Design
++Notes" in link:technical/partial-clone.html[Documentation/technical/partial-clone].
++
+ promisor.acceptFromServer::
+ 	Controls which promisor remotes advertised by a server (using the
+ 	"promisor-remote" protocol capability) a client will accept. By
+diff --git a/promisor-remote.c b/promisor-remote.c
+index 316d9950aa..c664a48f88 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -19,8 +19,11 @@
+ struct promisor_remote_config {
+ 	struct promisor_remote *promisors;
+ 	struct promisor_remote **promisors_tail;
++	struct string_list fetch_order;
++	int fetch_order_initialized;
+ };
+ 
++
+ static int fetch_objects(struct repository *repo,
+ 			 const char *remote_name,
+ 			 const struct object_id *oids,
+@@ -120,6 +123,29 @@ static int promisor_remote_config(const char *var, const char *value,
+ 	size_t namelen;
+ 	const char *subkey;
+ 
++    	if (!strcmp(var, "promisor.fetchorder")) {
++		char *value_copy;
++
++		if (!value)
++			return config_error_nonbool(var);
++		/*
++		 * The list is re-read from scratch every time the config
++		 * is parsed, so start by clearing any previous entries.
++		 */
++		if (config->fetch_order_initialized)
++			string_list_clear(&config->fetch_order, 0);
++		else
++			string_list_init_nodup(&config->fetch_order);
++
++		value_copy = xstrdup(value);
++		string_list_split_in_place_f(&config->fetch_order, value_copy, ",", -1,
++					     STRING_LIST_SPLIT_TRIM |
++					     STRING_LIST_SPLIT_NONEMPTY);
++		free(value_copy);
++		config->fetch_order_initialized = 1;
++		return 0;
++	}
++
+ 	if (parse_config_key(var, "remote", &name, &namelen, &subkey) < 0)
+ 		return 0;
+ 
+@@ -157,6 +183,8 @@ static int promisor_remote_config(const char *var, const char *value,
+ 	return 0;
+ }
+ 
++
++
+ static void promisor_remote_init(struct repository *r)
+ {
+ 	struct promisor_remote_config *config;
+@@ -180,6 +208,7 @@ static void promisor_remote_init(struct repository *r)
+ 		else
+ 			promisor_remote_new(config, r->repository_format_partial_clone);
+ 	}
++
+ }
+ 
+ void promisor_remote_clear(struct promisor_remote_config *config)
+@@ -193,6 +222,9 @@ void promisor_remote_clear(struct promisor_remote_config *config)
+ 	}
+ 
+ 	config->promisors_tail = &config->promisors;
++	if (config->fetch_order_initialized)
++		string_list_clear(&config->fetch_order, 0);
++	config->fetch_order_initialized = 0;
+ }
+ 
+ void repo_promisor_remote_reinit(struct repository *r)
+@@ -262,6 +294,8 @@ static int remove_fetched_oids(struct repository *repo,
+ 	return remaining_nr;
+ }
+ 
++
++
+ /*
+  * Fetch the remaining objects (given in '*remaining_oids', which
+  * contains '*remaining_nr' object ids) from the known promisor
+@@ -279,6 +313,24 @@ static int remove_fetched_oids(struct repository *repo,
+  * Return 1 when all the requested objects have been fetched, 0
+  * otherwise.
+  */
++static int try_one_remote(struct repository *repo, struct promisor_remote *r,
++			  struct object_id **remaining_oids,
++			  int *remaining_nr, int *to_free, int depth)
++{
++	if (fetch_objects(repo, r->name,
++			  *remaining_oids, *remaining_nr, depth) < 0) {
++		if (*remaining_nr == 1)
++			return 0;
++		*remaining_nr = remove_fetched_oids(repo, remaining_oids,
++						    *remaining_nr, *to_free);
++		if (*remaining_nr) {
++			*to_free = 1;
++			return 0;
++		}
++	}
++	return 1; /* all fetched */
++}
++
+ static int try_promisor_remotes(struct repository *repo,
+ 				struct object_id **remaining_oids,
+ 				int *remaining_nr,
+@@ -286,24 +338,56 @@ static int try_promisor_remotes(struct repository *repo,
+ 				int depth,
+ 				bool accepted_only)
+ {
+-	struct promisor_remote *r = repo->promisor_remote_config->promisors;
++	struct promisor_remote_config *config = repo->promisor_remote_config;
++	struct promisor_remote *r;
++	size_t i;
++	int fetched;
++
++	/*
++	 * First pass: try the remotes in the order the user listed
++	 * them in promisor.fetchOrder.
++	 */
++	if (config->fetch_order_initialized) {
++		for (i = 0; i < config->fetch_order.nr; i++) {
++			r = promisor_remote_lookup(config,
++						   config->fetch_order.items[i].string,
++						   NULL);
++			if (!r || accepted_only != r->accepted)
++				continue;
+ 
+-	for (; r; r = r->next) {
++			fetched = try_one_remote(repo, r, remaining_oids,
++						 remaining_nr, to_free, depth);
++			if (fetched)
++				return 1;
++		}
++	}
++
++	/*
++	 * Second pass: try the remaining remotes in their config order.
++	 */
++	for (r = config->promisors; r; r = r->next) {
+ 		if (accepted_only != r->accepted)
+ 			continue;
+-		if (fetch_objects(repo, r->name,
+-				  *remaining_oids, *remaining_nr, depth) < 0) {
+-			if (*remaining_nr == 1)
+-				continue;
+-			*remaining_nr = remove_fetched_oids(repo, remaining_oids,
+-							    *remaining_nr, *to_free);
+-			if (*remaining_nr) {
+-				*to_free = 1;
+-				continue;
++
++		/* Skip ones we already tried in the first pass. */
++		if (config->fetch_order_initialized) {
++			bool already_tried = false;
++			for (i = 0; i < config->fetch_order.nr; i++) {
++				if (!strcmp(r->name, config->fetch_order.items[i].string)) {
++					already_tried = true;
++					break;
++				}
+ 			}
++			if (already_tried)
++				continue;
+ 		}
+-		return 1; /* all fetched */
++
++		fetched = try_one_remote(repo, r, remaining_oids,
++					 remaining_nr, to_free, depth);
++		if (fetched)
++			return 1;
+ 	}
++
+ 	return 0;
+ }
+ 
+-- 
+2.43.0
 
-Thanks.
