@@ -1,122 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793892812;
-	b=BG5x30hdo4lopultnUyuSbMVtEjbLNOjDugZnjR4x9O2/hEJkwXJKb1RUTWPcf9wTsHu
-	 AZqmQGHnOl3jFj0HFYiCXeuMp1+No+nDbWYPP+Z83jfZ2EnLDsX1BNZRb5AVtDQHmxpcP
-	 vx+9/QWDT1e5DK6Mqr7AgbxIAkpakBIOqtyedopF71FLlgL4Jl7VWrpoc3pQ1vQfj6Ryd
-	 E0Ngfefu/0uAN8uo/1FzoqUo1lNJ3Jm3vu14Gnz11g1OjaQhOULzf5aMJQQQHB2DVDPPw
-	 cIR+x0UlfGacl5csIBvRjw+g14hB2B60/xZcYP3kUUTTA2fjM3dIFGqPHfYgwCs+e7w==
+	t=1793893222;
+	b=D1YKychKKkfhk8CN/mnPPEnR5pXuj1l8L3LBLYw9K6LpaLLm7eEydH3fspu66z9Sxfts
+	 lTtVCZ62DzJsuqu0AObrcU5pvmMUSqsgSBHIQkW8EZ8A+wn6Yh+a5bKybPoT60V5h+uGf
+	 mm+pD4WrQk91Cien4seLOwHvQwhXb2oQ1Xt0Cccjj48NQT/OX/b+JECrBnNTyshHzU8M5
+	 e/EqZtbKv0Cw9ct/CS2ToY95RZgDI3uzssO9hoD4S9eQqiVB3ULHXhXwker4ROymRyay4
+	 j4XPtslJIPTJyMJW24a10S+DL0LmV6gPn8v6E6UnqBrQ5ZFvSqahlHiBz10XTJjYCQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793892812;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=YLCa05qhjBDa0BiW0/mUCwGmDyAmTq7vX1IW1ZlofKQ=;
-	b=CNSIDR+bMuaO0AaVaNqL2/Zq7R6M1o4aTA/XF50nOlDCGRzhFvm+mf1tyH4X9xtCU2Ge
-	 YeTFH69c9sgjoO0fArYi+SLbVwv58oJZBWSaSrnhEVvJ6BMWwvVqS+qGv9qTbRIY4Eiy4
-	 X/9AlbFmvaYCd1gqxHRUgTQp00go15rd5XdtIlm9EnJW1+/KX6ydML17EPwsdo3QjN4sE
-	 4KZCvqQKK2F+Dt9sXtD3z/RUwKqHTnUVlq797a3EuhZRRVx62mEsy7EIhtYf27veXdJ62
-	 lB6Cd3q837xA0ycXgiGGGL8a+g2k++0WHEvfCH2GZ88RafSIxO8bKj3IOR+13tIG0RA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793893222;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=+IDxlC7MHMTNL4Hbh5Odzmy4SzKYLACPRF64GHj/exo=;
+	b=cvL0CCkUtrgXTXbTVbVuB1d489wvn8fiZT5AJPHEnvPTFGQOprBnXAL8FCDVbTCoNkHB
+	 NBYsC/e9GpI6eehT+fiTFcHqk6aDSw+RJPCOt1hZ0TMMQsnsli0BbIXWu/ajozs7Vogth
+	 Q+O9QN8BtoJkxU1wwg+7xof/QbvMusjqL/zxqMmI6ZH8fO+sPN4qKXmq4gcp51zMYaJYw
+	 NfhTLAyb0kyAcLXHzFw51bQAt4O0X0seGGLZ+HP/he2L0vqSF7GI7OnDb8DulLDeYon0+
+	 AlxfCoOsGp1mIavthD8ojUELJbD4dRhp9+sSi9KbqFf0E2Cz/pc6A2MiVEnzUzyl/Rw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=woTojZ0Q;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=H2UOuky+;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ja14eWsa;
+	arc=none smtp.remote-ip=209.85.219.44
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB252606D815
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 15:33:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DB252606D815
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FAB606A331
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 15:40:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C6FAB606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=woTojZ0Q;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=H2UOuky+
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 04A26EC0081
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 10:33:31 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 05 Nov 2026 10:33:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1793892810; x=1793979210; bh=YLCa05qhjB
-	Da0BiW0/mUCwGmDyAmTq7vX1IW1ZlofKQ=; b=woTojZ0QlD92B23Ajsq2URWQc9
-	JKdjl6lTntVOHJ0fJ0vaM8W7/yiJQvBGCXhFpHiEzZF1uuCvRl69ATOTPU3uZTUT
-	lY67d4E7PEoZOJDPAVHMb5mXBUUwGS/XrfS5lQ7phk77NY+63KDnuezYRzb+uWzp
-	Ehic48Xk4IK7WxJ2UYP3+Cd2SBDBoDP75VekrI1W582RGP5juTCQjKSmPPCwKyQj
-	bTbFvhVDl4Zdto7/yo8Zn8svQbHZUo92AJKU3/BZ+jSHRU/kO1FSV+G2nHmAYiMp
-	EUmQS3MEDuLsS6O3n6/fWw8xsb6JvypJddzFqVQpztmgedEJ36yM3XJxvO/A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793892810; x=1793979210; bh=YLCa05qhjBDa0BiW0/mUCwGmDyAmTq7vX1I
-	W1ZlofKQ=; b=H2UOuky+kWArhigTrPedaEDy8uvfp9nqdtfn/sHz1luCJ7+CAgq
-	sBWY+qBK1eYjFlLxk3HjxlRYfw5nKXpbLGnQBTW+mZ/Yc+i/UBVo2JQUxrQ+73WX
-	m5qDrWhkeh12vUQQ8YLYD1idEkv2u8L2O29KncMFXHyShab+zNb0jhDzIDqjrEkI
-	CO4KRRhGl8HI1DM4xm5+cHaiaTtVf37oDzLJCTY5qU9iSAlItNTireLVWMERpF5I
-	cdoR8ZaWfaHFFHWQW5bGuw1GUXMS+Ajpwfpnn/Oi5gYt0IbRQpTy+3PIMJ75PPiH
-	14R4EJNrQzCvSItbxhHQq+ZNbEcg4FiyB+g==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793892810; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:BqUSTETYXScUCd4+PDYMYWumk62+/3BDsWyAxFnKrT75+mS
-	7t+JFdSAnIvS8p3o/u9vwuUDmZKhi6jQknEYr/IhnGsPggijdXEqNjQFbZ5aqmba
-	T5NpIDldtYO+en8I+7BDUdaWNwh4gg46F2Ubf0P+LaZPTRZbNc1W6KPAVbFJTXsN
-	t6BvHotg3iMdxfYrJM5IfZRiImzJTEO/LCxIMG3Z/rGbEKcyzA1NWkOVnz3lCl6G
-	bld8ss0HmFpub4XKpsdkm9iLX4QmT1hZdEAFsmdGRtl04FSyQ3fLWwagqekXrQJW
-	9ZJuJ5+Z8MHBEmEK3DexgpZkcHQNj9/VD2mimhA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:TB8ToUw7kolLYvyu49e2xc6pA2hLYaYSrsS53OUD/sc=:u8ftRuhRqGInNPHl8VwHt4z6iDV0mkUBXeNv/HBdVwA=;
-X-ME-Sender: <xms:yqHsauYlcXkSXvdxTL_JLIk4ti3cZC4PthS9jUfMWnG7KQFkGKjTcg>
-    <xme:yqHsanZm1Znuk7EPjeTuYEm7BFtqqBkFH5Lne6hJ3Q0DY-NrE0y08lvrbo09fdn79
-    71_QeSN6_658ABw0V-KnCJC4VxzLKLk-5fT9PL2s5Jf9diEfwBI6QmC>
-X-ME-Received: <xmr:yqHsamma-zZPQ-TpCD_7zhbMrwDeZ2m0yUmR8c5-BMVE0AolhgLmPA>
-X-ME-Proxy-Cause: dmFkZTGC4e0U3AKZwkNsyL6gpgfU7wiHJIxySTlJ51huPsK7dSTJgWs16sHVXTjDs7r+5I
-    t6dmwjVlPReKMurP3LiUsw2pUxG04QMClKW1gKYU5li5lulVkdemYlg5k/TGU9ZNe7goFr
-    AdT9LSHm6vKfRoP8g/AXhGYJaT9BVdYjpPJoLGaGSdDANrz1oWuo9Jsr/VLWbyt0pAZJAN
-    n1C934b7TbGUcXZki48jwUTp7BFPIjJ3EhRlW7HmtM2q1uLvXhTG7n7KI6To4H8foGQBig
-    3o2xULOc6+OqsGN7JH6PmhzdxO3k97kiGG0X8gV/1nvp/8Cs3GUFOIRjET60HQhXMpeAY0
-    y1ijTcLpLQw8AfxhQ9dsZ7i5b5SvMqfkv/J5U+1RgvIRCc/LX/5tBwQK6E+lltP8SMyVtl
-    0dsndnOv8pVP114qSZG6+YDFw/wQgYpRbeG0AIcWL3WJtluggcpp5Iy+d4nXeodxcX7ncA
-    WKUHtud0QBRJrS1kDyQxKaXwIFi8vL8FFdUX6O3EFFlJN7NKi6DAI+jM5UTp1ReTSJ80YY
-    S69jSAfzbnrDEOztvAUuAgkNClY1ZxWhSRosuslk2vmD69WnUD8k7Eq8+V77XxSi5fCqz+
-    2D78akRA4aUbnSouC9rEatvra2f/6BRF2wP4cBhekRrg8FDi9E5NAZqLs5ZA
-X-ME-Proxy: <xmx:yqHsarxdgQS4RNzJ3UtjIO0O0eK6-UCDY04qqYcLiQJumNn1nUdWbA>
-    <xmx:yqHsasNOYoAXWEqOtNyq65t9xHvCzzGBYlyIGb-nPPkV36MnNA2i2Q>
-    <xmx:yqHsanSm-k_yQb8knB4aUFj4VZ7WL7xOZAHeFbMZabAUEbEX5okBkQ>
-    <xmx:yqHsaibKySUf_eUgxLeJkpwj8Ba1cAamiGEBQ-o1Y50nlwTAPlRlTg>
-    <xmx:yqHsaqrqNEyVeTitgrBJrcHRKBpJf8qKi9lYMBqNUAedf8p5nfxZ0Dur>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 10:33:30 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 16d5136a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Nov 2026 15:33:29 +0000 (UTC)
-Date: Thu, 5 Nov 2026 16:33:26 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/10] commit-graph: several refactorings for writing
- commit graphs
-Message-ID: <auyhxtMFUwrDJdHT@pks.im>
-References: <20261104-pks-commit-graph-write-refactorings-v1-0-d013d9401a59@pks.im>
- <0e74f6c3-2f43-4829-a071-27e96ab5e87b@gmail.com>
- <auyLRZ8TWeqdIaRm@pks.im>
- <ca5986e3-8f66-4628-9f06-eb2416378bef@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ja14eWsa
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-91ea5600c9cso560076d6.1
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 07:40:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793893221; x=1794498021; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=+IDxlC7MHMTNL4Hbh5Odzmy4SzKYLACPRF64GHj/exo=;
+        b=Ja14eWsa+IlCFbsH8CVoHBRn/Db2myFRD2mHq1SwbkXPKzwc8IAdVqSAM2OAblMYq+
+         NhuA4HibLDuki7pLJSSzUIFD5TLcu3vN7qHI6xs9TLESnZvUxBjrC9r7CiZOicfybwXD
+         rksTq5xOvUOgWS70Ox+XWawxmNiCBYb9Kr9ZTi+2VshJRwHyKKGgf+gJ+pJdvAVz1QC8
+         6f9Q1MctTSGRZUnhlh+OBbLSzfFcK4LFK4YmcBpxmsOenKoHDS9Fq4Vp08w3l1oPq6az
+         uRI2DY9SYkla6RE7vpnH7nYAeFG0NU/nl6mwEZPk4q9b3G+IkNlKm+UPt/yglgOv/szN
+         PExA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793893221; x=1794498021;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+IDxlC7MHMTNL4Hbh5Odzmy4SzKYLACPRF64GHj/exo=;
+        b=zTM1+Agjoeehi015oBD+JJBJlA2nlgZowsIW0qQN07tW1IWtPCVNzPngg0wJWIdKr5
+         o/AsrDWGzip2Ru+q/6SMznnXcvuA5pG7nm173rjdC15dnM6ndDZ8wU4sJ30Ydou7KHfy
+         NTAPL2AKjKsgE7VZ5woiyivHAQD+QJA7S3YuSDnDBWSijEbfxvS8EAxSLwcemzmaEG1o
+         SBUULBIxO+y5xcGzYEnmWgO/Xbz7SqihjhPTslV0biFtLztjerTZCkc1kpQNqTdnrdu7
+         m1Pwfo+fEHILR6UxyKPoV6x/1B3PiWylYXFL2hRMUk/kcbU8JeTGN3+xHEnrYAH2rG/N
+         n0ww==
+X-Gm-Message-State: APuU4Z8hgqLlc6m5bXV8J1f/iDbUpZuQPE+jFqeGFYS29GNAcrp56jGP
+	3GMDG9YJxsF24E5HTjNJJTwLO7nhF1U4KGGyseXfbTEZaHje/+uxmatp+JNpG0HBMtY=
+X-Gm-Gg: AYBFou3Q/lRfy6WPCh5f9cDV6UoylsKs7czhG8AZsUpVbZhmxbFuPVW98fm/VVsFU5j
+	ZMGjlpMda5N838TZmgPp6hPer5EGsm9vzhSiM/PRT8XXnEuXjSccysYSYV9bC7Qv/hB35y02BBK
+	m+2BLlhA0W8Y+QLtO18ePWse/A7QtZoJ1l4U/OhklC7s75qcZS9pg/D+vlWuQq7rdXrQ19NP/oC
+	I96FOqtlmpi8mS2PaSTa+rMFytvaA9re0iw5yaiLV6mx1n1vLIjAFG3OEClSRUeTFDiaH/UxMuS
+	6eV9339/jc/1vf9LnNg5polxpKJsQPhdVqqUcakbXNMHr8/K8Rro0eK9dM7cFfo3v1ZgqrSIm21
+	6ogZvAB74kMVXd7ickTVyQ2FuAMI6iwHd1G6NM/37whHUes5Lq18jq0bxVaSSdjEb/26xIhajtB
+	TtjC5R2NYGRVUajAY8moQTsh9h1CWUlU8VWWu1N+Cjlz9G38/4ZfYh+/JKv2B7+zfTv3OoCC5tp
+	EI6HNjwtOKRmjzdp3Og8zrN64BZUZq3xNBdTwnvTTEPfH6+KljdD71HoBjlGguMPmXkBsEoFuH5
+	N9Ti+BzJmqKFplhhRUuAHlu9GzKFEXoexbo=
+X-Received: by 2002:a05:6214:d0e:b0:91e:9295:a94c with SMTP id 6a1803df08f44-91e94477561mr46423276d6.24.1793893220206;
+        Thu, 05 Nov 2026 07:40:20 -0800 (PST)
+Received: from [127.0.0.1] ([135.237.130.159])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91e9a5d0656sm16727206d6.16.2026.11.05.07.40.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Nov 2026 07:40:18 -0800 (PST)
+Message-Id: <pull.2293.v2.git.1793893217889.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2293.git.1793720007182.gitgitgadget@gmail.com>
+References: <pull.2293.git.1793720007182.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 05 Nov 2026 15:40:17 +0000
+Subject: [PATCH v2] doc: git-diff: rewrite EXAMPLES section
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,34 +96,552 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ca5986e3-8f66-4628-9f06-eb2416378bef@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Julia Evans <julia@jvns.ca>,
+    Julia Evans <julia@jvns.ca>
 
-On Thu, Nov 05, 2026 at 10:18:51AM -0500, Derrick Stolee wrote:
-> On 11/5/2026 8:57 AM, Patrick Steinhardt wrote:
-> > On Wed, Nov 04, 2026 at 11:37:11AM -0500, Derrick Stolee wrote:
-> >> On 11/4/2026 10:57 AM, Patrick Steinhardt wrote:
-> >>> Hi,
-> >>>
-> >>> this patch series includes several small cleanups for the interfaces for
-> >>> writing commit graphs. Most importantly, the series refactors options so
-> >>> that they all get passed via `struct commit_graph_write_options`. These
-> >>> cleanups are split out of a bigger change to make reading and writing
-> >>> commit-graphs pluggable via the object database bakcend.
-> >> These cleanups look great. They are carefully constructed to be as
-> >> simple as possible at each step. It's good to bring some of these
-> >> conventions into a more modern style and to simplify things in the
-> >> process.
-> > 
-> > Ah, by the way, one thing I forgot: I noticed this recently already, but
-> > you don't reply-to-all and thus lose the Cc's on your replies. That made
-> > me miss a couple of your replies already, so I'd appreciate it if you
-> > could keep them.
-> Sorry about that. I learned that Thunderbird replaced the "Reply All"
-> button with a "Reply List" button that led to this unintentional
-> behavior. I'll figure out how to change that default.
+From: Julia Evans <julia@jvns.ca>
 
-The joy of random UI updates.
+The top piece of feedback users always give about man pages is always
+that they want better examples that are relevant to them.
 
-Patrick
+The EXAMPLES section's structure has remained mostly unchanged since
+2007, which was before we knew how people were going to use `git diff`.
+Update it with ways of using `git diff` that are popular with Git
+users, gathered by asking Mastodon users for their most commonly used
+incantations. Keep the example that was added since 2007
+(`git diff AUTO_MERGE`), rewording it to use the more familiar term
+"merge conflict" instead of "textual conflict".
+
+Add a note about the EXAMPLES section in the DESCRIPTION since otherwise
+readers are unlikely to know it's there. `git diff` is a command where
+it's more important than usual to have examples because the command has
+so many different forms.
+
+Some design choices:
+
+- Mention both `git diff --staged` and `git diff --cached`, because
+  "staged" is the term the Git user interface uses and several users
+  said they find it easier to understand. Add an entry for --staged
+  saying that it's a synonym. Like with `git switch`, and `git checkout`
+  it's useful to leave the older version for folks who are used to using
+  `git diff --cached` since we've seen that many people who are used to
+  using a command don't see any value in changing how they use it.
+- Use a definition list for the examples instead of the footnote style,
+  so that the description and the example are right next to each other
+  and it's easier to read.
+- Use `--merge-base` instead of `...` since several users said they
+  find .. vs ... confusing. It's much more obvious what --merge-base
+  does.
+- Link the options in the examples to make them faster to look up
+- Use sub-subsection headings for the different parts to make
+  them more visually distinct and easy to scan.
+
+Co-Authored-By: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
+Signed-off-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
+Signed-off-by: Julia Evans <julia@jvns.ca>
+---
+    doc: git-diff: rewrite EXAMPLES section
+    
+    changes in v2:
+    
+     * Switch from tables to a definition list, to avoid wrapping but still
+       staying relatively compact.
+     * Mention git diff --cached alongside git diff --staged so folks can
+       use whichever version they prefer, and update the commit message with
+       some notes about that. It's an example of one of many situations in
+       Git where what's best to recommend for new users and what's best for
+       long-term users is not necessarily the same.
+     * Put back AUTO_MERGE (thanks to Junio for pointing out that it was
+       added much more recently than all the rest of the examples)
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2293%2Fjvns%2Fdiff-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2293/jvns/diff-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2293
+
+Range-diff vs v1:
+
+ 1:  46728e7b7a ! 1:  ec565ce334 doc: git-diff: rewrite EXAMPLES section
+     @@ Commit message
+          2007, which was before we knew how people were going to use `git diff`.
+          Update it with ways of using `git diff` that are popular with Git
+          users, gathered by asking Mastodon users for their most commonly used
+     -    incantations.
+     +    incantations. Keep the example that was added since 2007
+     +    (`git diff AUTO_MERGE`), rewording it to use the more familiar term
+     +    "merge conflict" instead of "textual conflict".
+      
+          Add a note about the EXAMPLES section in the DESCRIPTION since otherwise
+          readers are unlikely to know it's there. `git diff` is a command where
+     @@ Commit message
+      
+          Some design choices:
+      
+     +    - Mention both `git diff --staged` and `git diff --cached`, because
+     +      "staged" is the term the Git user interface uses and several users
+     +      said they find it easier to understand. Add an entry for --staged
+     +      saying that it's a synonym. Like with `git switch`, and `git checkout`
+     +      it's useful to leave the older version for folks who are used to using
+     +      `git diff --cached` since we've seen that many people who are used to
+     +      using a command don't see any value in changing how they use it.
+     +    - Use a definition list for the examples instead of the footnote style,
+     +      so that the description and the example are right next to each other
+     +      and it's easier to read.
+          - Use `--merge-base` instead of `...` since several users said they
+            find .. vs ... confusing. It's much more obvious what --merge-base
+            does.
+     -    - Use a table format instead of the footnote-style formatting since the
+     -      footnote style is quite difficult to follow. It's easier to follow
+     -      if the description is right next to the command it's describing.
+          - Link the options in the examples to make them faster to look up
+          - Use sub-subsection headings for the different parts to make
+            them more visually distinct and easy to scan.
+     @@ Documentation/diff-options.adoc: endif::git-diff[]
+       	`--word-diff-regex` below.  The _<mode>_ defaults to `plain`, and
+      
+       ## Documentation/git-diff.adoc ##
+     +@@ Documentation/git-diff.adoc: SYNOPSIS
+     + --------
+     + [synopsis]
+     + git diff [<options>] [<commit>] [--] [<path>...]
+     +-git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
+     ++git diff [<options>] --staged [--merge-base] [<commit>] [--] [<path>...]
+     + git diff [<options>] [--merge-base] <commit> [<commit>...] <commit> [--] [<path>...]
+     + git diff [<options>] <commit>...<commit> [--] [<path>...]
+     + git diff [<options>] <blob> <blob>
+      @@ Documentation/git-diff.adoc: between the index and a tree, changes between two trees, changes resulting
+       from a merge, changes between two blob objects, or changes between two
+       files on disk.
+     @@ Documentation/git-diff.adoc: between the index and a tree, changes between two t
+       `git diff [<options>] [--] [<path>...]`::
+       
+       	This form is to view the changes you made relative to
+     +@@ Documentation/git-diff.adoc: files on disk.
+     + 	difference. All such pathspecs must be relative as they
+     + 	apply to both sides of the diff.
+     + 
+     +-`git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]`::
+     ++`git diff [<options>] --staged [--merge-base] [<commit>] [--] [<path>...]`::
+     + 
+     + 	This form is to view the changes you staged for the next
+     + 	commit relative to the named _<commit>_.  Typically you
+     +@@ Documentation/git-diff.adoc: files on disk.
+     + 	do not give _<commit>_, it defaults to `HEAD`.
+     + 	If `HEAD` does not exist (e.g. unborn branches) and
+     + 	_<commit>_ is not given, it shows all staged changes.
+     +-	`--staged` is a synonym of `--cached`.
+     ++	`--cached` is a synonym of `--staged`.
+     + +
+     + If `--merge-base` is given, instead of using _<commit>_, use the merge base
+     + of _<commit>_ and `HEAD`.  `git diff --cached --merge-base A` is equivalent to
+     +-`git diff --cached $(git merge-base A HEAD)`.
+     ++`git diff --staged $(git merge-base A HEAD)`.
+     + 
+     + `git diff [<options>] [--merge-base] <commit> [--] [<path>...]`::
+     + 
+      @@ Documentation/git-diff.adoc: section "3-Way Merge" for detailed information.
+       
+       include::diff-format.adoc[]
+     @@ Documentation/git-diff.adoc: section "3-Way Merge" for detailed information.
+      -    branch was started off it.
+      +Diff uncommitted changes
+      +~~~~~~~~~~~~~~~~~~~~~~~~
+     + 
+     +-Limiting the diff output::
+     +-+
+     +-------------
+     +-$ git diff --diff-filter=MRC            <1>
+     +-$ git diff --name-status                <2>
+     +-$ git diff arch/i386 include/asm-i386   <3>
+     +-------------
+     +-+
+     +-<1> Show only modification, rename, and copy, but not addition
+     +-    or deletion.
+     +-<2> Show only names and the nature of change, but not actual
+     +-    diff output.
+     +-<3> Limit diff output to named subtrees.
+     ++Show unstaged changes::
+     ++`git diff`
+     + 
+     +-Munging the diff output::
+     +-+
+     +-------------
+     +-$ git diff --find-copies-harder -B -C  <1>
+     +-$ git diff -R                          <2>
+     +-------------
+     +-+
+     +-<1> Spend extra cycles to find renames, copies and complete
+     +-    rewrites (very expensive).
+     +-<2> Output diff in reverse.
+     ++Show staged changes::
+     ++`git diff --staged` or `git diff --cached`
+      +
+     -+`git diff` will show the files from the "before" column as deleted and
+     -+from the "after" column as added.
+     -+
+     -+[cols="1,1"]
+     -+|===
+     -+|Show unstaged changes
+     -+|`git diff`
+     -+
+     -+|Show staged changes
+     -+|`git diff --staged`
+     ++Show all changes since the latest commit::
+     ++`git diff HEAD`
+      +
+     -+|Show all changes since the latest commit
+     -+|`git diff HEAD`
+     -+|===
+     ++Show changes made to resolve a merge conflict::
+     ++`git diff AUTO_MERGE`
+      +
+      +Diff a specific file/directory
+      +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     @@ Documentation/git-diff.adoc: section "3-Way Merge" for detailed information.
+      +diff to that file/directory. You don't always need to put a `--`, but it
+      +makes it unambiguous.
+      +
+     -+[cols="1,1"]
+     -+|===
+     -+|Show how `file.txt` has changed since `main`
+     -+|`git diff main -- file.txt`
+     ++Show how `file.txt` has changed since `main`::
+     ++`git diff main -- file.txt`
+      +
+     -+|Show unstaged changes for `file.txt`
+     -+|`git diff -- file.txt`
+     ++Show unstaged changes for `file.txt`::
+     ++`git diff -- file.txt`
+      +
+     -+|Show unstaged changes in `dir/`
+     -+|`git diff -- ./dir`
+     -+|===
+     ++Show unstaged changes in `dir/`::
+     ++`git diff -- ./dir`
+      +
+      +Diff branches or commits
+      +~~~~~~~~~~~~~~~~~~~~~~~~
+      +
+     -+[cols="1,1"]
+     -+|===
+     -+|Show changes on the `topic` branch since it branched off `main`
+     -+|`git diff --merge-base main topic`
+     ++Show changes on the `topic` branch since it branched off `main`::
+     ++`git diff --merge-base main topic`
+      +
+     -+|Show changes between the `topic` branch and the `main` branch
+     -+|`git diff main topic`
+     ++Show changes between the `topic` branch and the `main` branch::
+     ++`git diff main topic`
+      +
+     -+|Show changes between commit `ff11cc` and `HEAD`
+     -+|`git diff ff11cc HEAD`
+     -+|===
+     ++Show changes between commit `ff11cc` and `HEAD`::
+     ++`git diff ff11cc HEAD`
+      +
+      +Options to summarize the output
+      +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      +
+     -+[cols="1,1"]
+     -+|===
+     -+|Show how many lines in each file were changed
+     -+|`git diff` <<stat,`--stat`>>
+     ++Show how many lines in each file were changed::
+     ++`git diff` <<stat,`--stat`>>
+      +
+     -+|Only show names of changed files
+     -+|`git diff`  <<name_only,`--name-only`>>
+     ++Only show names of changed files::
+     ++`git diff` <<name_only,`--name-only`>>
+      +
+     -+|Only show filenames and whether they were modified/deleted/added
+     -+|`git diff` <<name_status,`--name-status`>>
+     -+|===
+     ++Only show filenames and whether they were modified/deleted/added::
+     ++`git diff` <<name_status,`--name-status`>>
+      +
+      +Options to display the diff in another way
+      +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      +
+     -+[cols="1,1"]
+     -+|===
+     -+|Ignore all whitespace changes
+     -+|`git diff` <<ignore_all_space,`--ignore-all-space`>>
+     ++Ignore all whitespace changes::
+     ++`git diff` <<ignore_all_space,`--ignore-all-space`>>
+      +
+     -+|Show which individual words changed instead of the whole line
+     -+|`git diff` <<word_diff,`--word-diff`>>
+     -+|===
+     - 
+     --Limiting the diff output::
+     --+
+     --------------
+     --$ git diff --diff-filter=MRC            <1>
+     --$ git diff --name-status                <2>
+     --$ git diff arch/i386 include/asm-i386   <3>
+     --------------
+     --+
+     --<1> Show only modification, rename, and copy, but not addition
+     --    or deletion.
+     --<2> Show only names and the nature of change, but not actual
+     --    diff output.
+     --<3> Limit diff output to named subtrees.
+     - 
+     --Munging the diff output::
+     --+
+     --------------
+     --$ git diff --find-copies-harder -B -C  <1>
+     --$ git diff -R                          <2>
+     --------------
+     --+
+     --<1> Spend extra cycles to find renames, copies and complete
+     --    rewrites (very expensive).
+     --<2> Output diff in reverse.
+     ++Show which individual words changed instead of the whole line::
+     ++`git diff` <<word_diff,`--word-diff`>>
+       
+       CONFIGURATION
+       -------------
+
+
+ Documentation/diff-options.adoc |   5 ++
+ Documentation/git-diff.adoc     | 140 ++++++++++++++++----------------
+ 2 files changed, 74 insertions(+), 71 deletions(-)
+
+diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
+index e605d28678..2dc54fa00e 100644
+--- a/Documentation/diff-options.adoc
++++ b/Documentation/diff-options.adoc
+@@ -201,6 +201,7 @@ diff" algorithm internally.
+ 
+ include::diff-algorithm-option.adoc[]
+ 
++[[stat]]
+ `--stat[=<width>[,<name-width>[,<count>]]]`::
+ 	Generate a diffstat. By default, as much space as necessary
+ 	will be used for the filename part, and the rest for the graph
+@@ -318,12 +319,14 @@ Without this option, pathnames with "unusual" characters are quoted as
+ explained for the configuration variable `core.quotePath` (see
+ linkgit:git-config[1]).
+ 
++[[name_only]]
+ `--name-only`::
+ 	Show only the name of each changed file in the post-image tree.
+ 	The file names are often encoded in UTF-8.
+ 	For more information see the discussion about encoding in the linkgit:git-log[1]
+ 	manual page.
+ 
++[[name_status]]
+ `--name-status`::
+ 	Show only the name(s) and status of each changed file. See the description
+ 	of the `--diff-filter` option on what the status letters mean.
+@@ -417,6 +420,7 @@ endif::git-diff[]
+ 	Ignore changes in amount of whitespace.  This ignores whitespace
+ 	at line end, and considers all other sequences of one or
+ 	more whitespace characters to be equivalent.
++[[ignore_all_space]]
+ `ignore-all-space`::
+ 	Ignore whitespace when comparing lines. This ignores differences
+ 	even if one line has whitespace where the other line has none.
+@@ -432,6 +436,7 @@ endif::git-diff[]
+ 	used to override configuration settings. It is the same as
+ 	`--color-moved-ws=no`.
+ 
++[[word_diff]]
+ `--word-diff[=<mode>]`::
+ 	By default, words are delimited by whitespace; see
+ 	`--word-diff-regex` below.  The _<mode>_ defaults to `plain`, and
+diff --git a/Documentation/git-diff.adoc b/Documentation/git-diff.adoc
+index 272331afba..f15e56633e 100644
+--- a/Documentation/git-diff.adoc
++++ b/Documentation/git-diff.adoc
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [synopsis]
+ git diff [<options>] [<commit>] [--] [<path>...]
+-git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
++git diff [<options>] --staged [--merge-base] [<commit>] [--] [<path>...]
+ git diff [<options>] [--merge-base] <commit> [<commit>...] <commit> [--] [<path>...]
+ git diff [<options>] <commit>...<commit> [--] [<path>...]
+ git diff [<options>] <blob> <blob>
+@@ -23,6 +23,9 @@ between the index and a tree, changes between two trees, changes resulting
+ from a merge, changes between two blob objects, or changes between two
+ files on disk.
+ 
++The <<EXAMPLES,EXAMPLES>> section has examples of the most common ways
++to diff.
++
+ `git diff [<options>] [--] [<path>...]`::
+ 
+ 	This form is to view the changes you made relative to
+@@ -44,7 +47,7 @@ files on disk.
+ 	difference. All such pathspecs must be relative as they
+ 	apply to both sides of the diff.
+ 
+-`git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]`::
++`git diff [<options>] --staged [--merge-base] [<commit>] [--] [<path>...]`::
+ 
+ 	This form is to view the changes you staged for the next
+ 	commit relative to the named _<commit>_.  Typically you
+@@ -52,11 +55,11 @@ files on disk.
+ 	do not give _<commit>_, it defaults to `HEAD`.
+ 	If `HEAD` does not exist (e.g. unborn branches) and
+ 	_<commit>_ is not given, it shows all staged changes.
+-	`--staged` is a synonym of `--cached`.
++	`--cached` is a synonym of `--staged`.
+ +
+ If `--merge-base` is given, instead of using _<commit>_, use the merge base
+ of _<commit>_ and `HEAD`.  `git diff --cached --merge-base A` is equivalent to
+-`git diff --cached $(git merge-base A HEAD)`.
++`git diff --staged $(git merge-base A HEAD)`.
+ 
+ `git diff [<options>] [--merge-base] <commit> [--] [<path>...]`::
+ 
+@@ -160,78 +163,73 @@ section "3-Way Merge" for detailed information.
+ 
+ include::diff-format.adoc[]
+ 
++[[EXAMPLES]]
+ EXAMPLES
+ --------
+ 
+-Various ways to check your working tree::
+-+
+-------------
+-$ git diff            <1>
+-$ git diff --cached   <2>
+-$ git diff HEAD       <3>
+-$ git diff AUTO_MERGE <4>
+-------------
+-+
+-<1> Changes in the working tree not yet staged for the next commit.
+-<2> Changes between the index and your last commit; what you
+-    would be committing if you run `git commit` without `-a` option.
+-<3> Changes in the working tree since your last commit; what you
+-    would be committing if you run `git commit -a`
+-<4> Changes in the working tree you've made to resolve textual
+-    conflicts so far.
+-
+-Comparing with arbitrary commits::
+-+
+-------------
+-$ git diff test            <1>
+-$ git diff HEAD -- ./test  <2>
+-$ git diff HEAD^ HEAD      <3>
+-------------
+-+
+-<1> Instead of using the tip of the current branch, compare with the
+-    tip of "test" branch.
+-<2> Instead of comparing with the tip of "test" branch, compare with
+-    the tip of the current branch, but limit the comparison to the
+-    file "test".
+-<3> Compare the version before the last commit and the last commit.
+-
+-Comparing branches::
+-+
+-------------
+-$ git diff topic master    <1>
+-$ git diff topic..master   <2>
+-$ git diff topic...master  <3>
+-------------
+-+
+-<1> Changes between the tips of the topic and the master branches.
+-<2> Same as above.
+-<3> Changes that occurred on the master branch since when the topic
+-    branch was started off it.
++Diff uncommitted changes
++~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-Limiting the diff output::
+-+
+-------------
+-$ git diff --diff-filter=MRC            <1>
+-$ git diff --name-status                <2>
+-$ git diff arch/i386 include/asm-i386   <3>
+-------------
+-+
+-<1> Show only modification, rename, and copy, but not addition
+-    or deletion.
+-<2> Show only names and the nature of change, but not actual
+-    diff output.
+-<3> Limit diff output to named subtrees.
++Show unstaged changes::
++`git diff`
+ 
+-Munging the diff output::
+-+
+-------------
+-$ git diff --find-copies-harder -B -C  <1>
+-$ git diff -R                          <2>
+-------------
+-+
+-<1> Spend extra cycles to find renames, copies and complete
+-    rewrites (very expensive).
+-<2> Output diff in reverse.
++Show staged changes::
++`git diff --staged` or `git diff --cached`
++
++Show all changes since the latest commit::
++`git diff HEAD`
++
++Show changes made to resolve a merge conflict::
++`git diff AUTO_MERGE`
++
++Diff a specific file/directory
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++You can usually put a filename or directory at the end to restrict the
++diff to that file/directory. You don't always need to put a `--`, but it
++makes it unambiguous.
++
++Show how `file.txt` has changed since `main`::
++`git diff main -- file.txt`
++
++Show unstaged changes for `file.txt`::
++`git diff -- file.txt`
++
++Show unstaged changes in `dir/`::
++`git diff -- ./dir`
++
++Diff branches or commits
++~~~~~~~~~~~~~~~~~~~~~~~~
++
++Show changes on the `topic` branch since it branched off `main`::
++`git diff --merge-base main topic`
++
++Show changes between the `topic` branch and the `main` branch::
++`git diff main topic`
++
++Show changes between commit `ff11cc` and `HEAD`::
++`git diff ff11cc HEAD`
++
++Options to summarize the output
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++Show how many lines in each file were changed::
++`git diff` <<stat,`--stat`>>
++
++Only show names of changed files::
++`git diff` <<name_only,`--name-only`>>
++
++Only show filenames and whether they were modified/deleted/added::
++`git diff` <<name_status,`--name-status`>>
++
++Options to display the diff in another way
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++Ignore all whitespace changes::
++`git diff` <<ignore_all_space,`--ignore-all-space`>>
++
++Show which individual words changed instead of the whole line::
++`git diff` <<word_diff,`--word-diff`>>
+ 
+ CONFIGURATION
+ -------------
+
+base-commit: 0ffa3e35c7c82ab8d0de226149fb03b3f7674d05
+-- 
+gitgitgadget
