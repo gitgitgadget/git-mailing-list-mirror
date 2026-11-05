@@ -1,122 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=130.232.247.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793903046;
-	b=UY2mA0k4MGxc6r9WZ9qaoOUNGHuAvhHpknMFqV8Np/FOebyOgsNxIMR0UnV9uJt96DvU
-	 TU3dPfiNSmL+rnIYIBvyG7FUjkO6IbGQYp/EWvOsTpKcW8Xga+4HqJSFrRhR2iSA8Edkj
-	 xQuSOZB32WDlCE0cnq2hJhXJh8E9WNLvWOyDdE9MlP25L0V87SHMyI8z/rqSwI0OpKuSf
-	 Mg9aQubkfUQpMaO9120Y2Wn1tZqrMbGL13NcvXMLiuC0dVsG+SNdo2CwxIte14r7QxYJt
-	 bvF08u9MtKnMixs3g/G4cVBj8w4IW6eOTr97ZpBAPI3ir8qHVDnfSurldaAmllRcBBg==
+	t=1793903969;
+	b=zU5nuYhCU8Qx2g8lLLhjeI5Kh2MAkn4tuxV5ZlJItd5nPzsbEbvPLFNO6cHGlselF41G
+	 grPaXf98Dsh2zyRehCsCzF5A7nw2fvP3HVehqLaEEvb9FvIjJk+AS4J+FqzheliiJN8di
+	 tvBbERjvBDDMoiF9L2UdvAFcniyKjwBhZ7HrQfGabaso7VLUw5resjjqPzs2rDdUkdXtC
+	 KAfgG2Q9dERp38ZW0ngKaqH64ZjZtAzYEPXzzp3KgSiSa81FYcDb1jI5Cc/93HtiyQ8KH
+	 zgQjzhBeJ1nnaKLQnQEJEO3yjsPWW1jid/+JSKQwi0u6Q2JOeEb61mqXV5nyYahAP5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793903046;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=XPrpzR4e9wyjExaWjWzuPChqiQw1vIFOVEAZhOEe/J4=;
-	b=pyES4uiOnihtf84vRUIJb+cGhwNUBSeT68lO0cFTrgH2RcnwTd19Gs+TmBOrEHuT2ZqR
-	 Op0vOwxNzSpQbcKLVnpYfBw2IK4ISs0xiUm6fMafwrHNQOJ8BG7h3dlEeMjjnYYdGjbZ8
-	 YLfClU7IUlul8hnWkfrcBP4g9LYboHFL7Dqa7mIz1ABzgfCqbk6NwEh6aEpw7/3mCdace
-	 bhYlJH4dlHL8tZejlLsjvIKRANkR2Y4h7mwydocy9a4bF5lYCbPPWgHNfk12MvH/KXUGa
-	 Ijz9AHxH180D83pzZ5aNPf8khAQboqJv0I264QC6Xme1oXFgav/GzXWE8oUhXcCso9w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793903969;
+	h=DMARC-Filter:Received:Received:Received:Received:From:To:CC:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type:X-Originating-IP:
+	 X-ClientProxiedBy:X-FEAS-BEC-Info:X-FEAS-Client-IP:
+	 X-FE-Last-Public-Client-IP:X-FE-Policy-ID:X-FE-Hostname:
+	 DKIM-Signature;
+	bh=E9zMZRphkpAL10VRfrni4apyLjglYhXD1MK31rwQo+U=;
+	b=AWizV4GT2+nRRltXvtilvFfFUeQxG/5naGq8yuhAkmmXP0gcJtI8yqfQzi7Y06i9YL/o
+	 hmclQfH5ZHDs+ZyKtPuryRVAFiDemUM/3KBpXlTUG++suh4OHgx6n7eRZVYQWB7cf0ysW
+	 BwgSn7z09BEMiLqtbkOzCRJwobnEKQkrlmltlSleP4Bl718f2uNZ1KW0/eVBpjRjjveQA
+	 u8o8etiaaTJjRXAJ2p7MmxQeDO6TqApYlfUFjAWhSNAIz62uU4WP6mR4GGH36/zjyAMYz
+	 3bu3mhkVtnU4E5gXhxvH8LFXOyryvIVHU1C1rX0fkPOfnKzZNYD4l1yNi61T9+AT22A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=b+9jCAvT;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=QJtRwZRB;
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	dmarc=pass header.from=utu.fi;
+	spf=pass smtp.mailfrom=utu.fi;
+	dkim=pass header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=lw0+AXTn;
+	arc=none smtp.remote-ip=130.232.247.4
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47578606A32F
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 18:24:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 47578606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444E2606A326
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 18:39:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 444E2606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=b+9jCAvT;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=QJtRwZRB
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7E0A0EC0202
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 13:24:05 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 05 Nov 2026 13:24:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793903045; x=1793989445; bh=XPrpzR4e9w
-	yjExaWjWzuPChqiQw1vIFOVEAZhOEe/J4=; b=b+9jCAvTRYwaqVJDkPfL2wvgCQ
-	jwBQCy+zUTx9x2XEWkb3pW+h4qWMh5EKOVeBOwQrzv/oo+YlkSLQisYtCjJDx118
-	MPOcln6DQICxnqAyHBLu3depsSDeAdAzM6Mw7AARFYTzW9FTmdywONJFrSqGkYJv
-	WeQLUQjK9sGz9HMMeMrbdJET5LP7vxhAJPai6nfzhB9jqxT9Q5lYAHTkSIDNK6gO
-	TXxmXjCiiO0Zb7k0ppX1+lzB4Ycz9tgfQBe/ZdqOzlRyxTFyHKQk8IhmP195AvL/
-	bLhFojc2HRIjSRlxcx0WKpv/7gQ23rcl579HZ8ZZmCh20gI2c1RS4aBr01ug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793903045; x=1793989445; bh=XPrpzR4e9wyjExaWjWzuPChqiQw1vIFOVEA
-	ZhOEe/J4=; b=QJtRwZRBe44rTXWlQMo9TFeMSr1WXT4jj5Ka8D+zpdlZNz/BRRF
-	76hyStLC8aWRfDYm1/a3X/8Z+JOyY0uw1EvQvOEgwAViL8gKgID8up3+O//g1t6W
-	7tXvUOu4yEuLOJS44+nx/DDwMouA7sA+RgigJ2+PeEG3QAD3aA4pOREtEUjigNFD
-	K7EAqvDWbyfbvVj3KzfuEq7fa0s/071h89sTj8uZ639Nqy9+ObhelQvd72cMYl0g
-	xGXhPXkuyZv+Njk9iQtnOnVT/PyKGt8MkLMLsHwQNp6xWUZjuKO7uD0ci0BvCit9
-	6eBKSLPEkE1jQrCryTRuJrLc3ZbtG3MFd9Q==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793903045; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:kZc5ZTa4SHHsUFpZrL39YBpfxbJNN7ByUXa1wZ/KuuzXdmk
-	iB17+1g+hI6mq6XtSPmL37kCBux57LmGrrDb0dwN8PETFwwJlX3Ysw73QzWy8JY5
-	8uIuaXa4Pz5VAfZiQiU5vFiX2+5TOqpo1crfNItlajuUL1pAnqyOcepBtS670NY5
-	Eovw4oUXeG8p4I5JwMpSVbU5sqW1mWm4jxJKGvSMHDxECHbguMOIRLciEnX7T4vt
-	REgOOZ2iy2MLBOrLuIvPmNsgAGjpdifYOAjme/Ff/XBcq9YIPgrll/xfdBSJ2KDP
-	ewIxnRUTJkNss7LLF7bsPQ89DiIj14DSIFMCJYg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:jvaS+vbD05Gp80D/coqcRW8Uc9AIAUgWuzUEExdUtZ0=:2M5Yrq+4fVw2+7SQ3GiOLPvCwbvYkxdjC+TLY5AA994=;
-X-ME-Sender: <xms:xcnsao9hcSGAj9HyooyX3EeGUv1s_h1Ytd3WZ5BOIfykgYYTEuBq4A>
-    <xme:xcnsannq7Sf2TIJsaaowr6_mDJwDZBYNliNUfasBMsoDm50jSmIYbDkCvwaCdHG5C
-    pW0x9qyk2YLDbqdzupwVOKmKIahrmvw0llh6Ko11GlzCa9uJiTIJg>
-X-ME-Received: <xmr:xcnsamUelHkEw844PqyMTT7xFjxEGm2sGFY6vD350d5RbNol9NaXSrQiTJoLNX20O1YuB5Xa5GHDkHnsVUIsMBHzsld_xD_wDGmz>
-X-ME-Proxy-Cause: dmFkZTGOXhElmp+tY+7btIDwi/d/AnFcWJ+gm19gd8yBB8SHL+TGiDILY5cMPy8JXPX9bE
-    WIDudIHrghEJbFlODZGOV0bxic4oZsdqnhCCLjAszSREDdb5snbSl/0ponLzFQFZ4omWIX
-    XBuVmPO/HjdNbe4udF9PBU91cq3OEUNV02MQZT+lisGtTPKhdloehXzFA8vzHVCq8Zao2O
-    eonA1RD3kcFZx0TpmQWhZwaVGztRp15RaofjUVQG87bute4mArUcRa+FFzUY0qdTB1xW/O
-    hgfW7cOLlKIVJA8+u8q6nx+GoJk6c8ThaqBCEHFtmmETtuGALDzAWN1t3OUiGU6kUHVHZq
-    zhuTzcLLdzWkH7bH98c6JN6taIVOgCt7DCRJgFjCZPrpO7YjuimlIjvd187r9eXKkncaxA
-    uB1tFOhlfFOQheLfdIyEqjcymEdw0Bqz4JTlumF3cHqiWI7ZFcyv/RsRM9NR+05nyQGPZN
-    JafdghMdz2B+whZ1dnq7GH86w3jrWshYr5VBWhc60NBQzOkTyo0IA/BJsaqGKj6hN4L7Uw
-    iZUuq4xhJIkjZmDB/Z5wpJebE3WSZlvmF865itrNb/hKSDJtU8doF1v1KvfdnydB+ICKHb
-    U6QdgAyMSfTFfOfbjeH2s5u1L7IdNbQl8rb5JWEuPueYoEKxofCfjDV4DbyA
-X-ME-Proxy: <xmx:xcnsakHZHPhh2OwDJUo3A5guXtfJK80S89AgQGk1n2AvA953HiqZgQ>
-    <xmx:xcnsaqejemq8WgOt-VU1yMUC-wUrSuNe_-5nXUm6KYB7yKZ_70Stzw>
-    <xmx:xcnsatIRMDl7PMUL7dPIY98gvAS35AqZzqz6gCW-yZQ5OPi4Cyv5fw>
-    <xmx:xcnsanGKS2mvNjk6AhIr2qTTJEJcHZblDPPflUUNyqNWIXBg_XGHZw>
-    <xmx:xcnsarX2baIGAucUbHQEQJa3K6S6c1ahlz43xWc4eHWl79FDOrbZFdOt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 13:24:05 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Ilia via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
-  Ilia <ki.stfu@gmail.com>
-Subject: Re: [PATCH] fsmonitor: check the untracked cache after a trivial
- response
-In-Reply-To: <c724ab00-dfb8-4e81-8bd7-89702bea51b4@gmail.com> (Derrick
-	Stolee's message of "Thu, 5 Nov 2026 10:01:52 -0500")
-References: <pull.2247.git.1791127155614.gitgitgadget@gmail.com>
-	<c724ab00-dfb8-4e81-8bd7-89702bea51b4@gmail.com>
-Date: Thu, 05 Nov 2026 10:24:03 -0800
-Message-ID: <xmqqld77uofw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=lw0+AXTn
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 6A5IdHFv031889-6A5IdHFx031889
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Thu, 5 Nov 2026 20:39:17 +0200
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1xP2Mn-005F9m-C8;
+	Thu, 05 Nov 2026 20:39:17 +0200
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
+ 2026 20:39:17 +0200
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id bca31b6d;
+	Thu, 5 Nov 2026 18:39:16 +0000 (UTC)
+From: Tuomas Ahola <taahol@utu.fi>
+To: <git@vger.kernel.org>
+CC: Junio C Hamano <gitster@pobox.com>, Tuomas Ahola <taahol@utu.fi>, "brian m
+ . carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v2] CodingGuidelines: update the required Perl version
+Date: Thu, 5 Nov 2026 20:39:00 +0200
+Message-ID: <20261105183900.28597-1-taahol@utu.fi>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20261101185846.24208-1-taahol@utu.fi>
+References: <20261101185846.24208-1-taahol@utu.fi>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,44 +72,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
+X-ClientProxiedBy: ex19-14.utu.fi (130.232.247.54) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhaUEgbCQYMCQQbKAsaHRscERwH
+ BxwAGAkbHA1GBg0cSFhIWkhZXEhZW1hGWltaRlpYX0ZbWEhQSFhIWEhbSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWEhZX0gPARwbHA0aKBgHCgcQRgsHBUhY
+ SFpQSBsJBgwJBBsoCxodGxwRHAcHHAAYCRscDUYGDRxIWA==
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
+ bh=E9zMZRphkpAL10VRfrni4apyLjglYhXD1MK31rwQo+U=;
+ b=lw0+AXTn/LkItpFRiINqvodurj6GyT2bEUxnaAs6ZZMGDSB40uR5h2HlldgV7ZUOl/7bh/36Fo2L
+	UURfgqYOh93STDMTeCvffcIcUMy3FP/GjNXlB8YeNCWkLvz3+W8NJBUke8Oe12M10aB4/yKt++g/
+	y7TIi68mqTr8RfAExK7UgeHMM0quQzJpi3P4aWVpL4GeHYMTJOk6+vsKE7WxeJzxFO2U5vnoXvld
+	TtIg7L1CnblRAffqUlQbuYtNAKJQuPJfuKXcrNGXpEVZsyK6ifM9FqAaxY3XE5oeHKknQtb3gfdR
+	cz24iQMOSPhktqfCaHT2cwzASC8gdjsf5vByuw==
 
-Derrick Stolee <stolee@gmail.com> writes:
+702d8c1f3b (Require Perl 5.26.0, 2024-10-23) bumped Git's Perl version
+requirement and migrated the codebase to use "require vx.y.z" in lieu
+of "use x.y_z".  Update CodingGuidelines accordingly.
 
->> +	for (i = 0; i < ucd->dirs_nr; i++) {
->> +		/* not written to the index, see write_one_dir() */
->> +		if (!ucd->dirs[i]->recurse)
->> +			continue;
->> +		strbuf_addch(path, '/');
->> +		strbuf_addstr(path, ucd->dirs[i]->name);
->> +		nr_invalidated += invalidate_stale_dirs(uc, ucd->dirs[i],
->> +							istate, path);
->
-> I'm conditioned to worry about recursive calls without depth limits, but
-> I suppose that we are limited by the untracked cache data structure itself,
-> which was presumably created recursively without hitting stack limits.
->
-> We could make this iterative using a stack-based data structure, but that
-> would be more complicated than this is worth, probably. These are not used
-> in server environments and the .git/index file shouldn't be considered
-> "unsafe" or else we have bigger safety problems.
+Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+---
+Intervall-diff mot v1:
+1:  d18ca7697d ! 1:  70e2656643 CodingGuidelines: update the required Perl version
+    @@ Commit message
+         CodingGuidelines: update the required Perl version
+     
+         702d8c1f3b (Require Perl 5.26.0, 2024-10-23) bumped Git's Perl version
+    -    requirement.  Update CodingGuidelines accordingly.
+    +    requirement and migrated the codebase to use "require vx.y.z" in lieu
+    +    of "use x.y_z".  Update CodingGuidelines accordingly.
+     
+    +    Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
+         Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+     
+      ## Documentation/CodingGuidelines ##
+    @@ Documentation/CodingGuidelines: For Perl programs:
+       - Most of the C guidelines above apply.
+      
+     - - We try to support Perl 5.8.1 and later ("use Perl 5.008001").
+    -+ - We try to support Perl 5.26.0 and later ("use Perl 5.026000").
+    ++ - We try to support Perl 5.26.0 and later ("require v5.26").
+      
+       - use strict and use warnings are strongly preferred.
+      
 
-Good reasoning.  Thanks for spelling it out.
+ Documentation/CodingGuidelines | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->> +	/*
->> +	 * The index is also read and written by commands that do not
->> +	 * run in the top-level directory of the worktree.
->> +	 */
->> +	worktree = repo_get_work_tree(istate->repo);
->> +	if (!worktree)
->> +		return 0;
->
-> I wonder if this is the right response if we fail to get a worktree. Maybe
-> we should invalidate the entire untracked cache in this case, along with a
-> warning that we couldn't evaluate the worktree? Or should we return -1 to
-> signal an error?
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index c06f5d3071..bc0470c154 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -703,7 +703,7 @@ For Perl programs:
+ 
+  - Most of the C guidelines above apply.
+ 
+- - We try to support Perl 5.8.1 and later ("use Perl 5.008001").
++ - We try to support Perl 5.26.0 and later ("require v5.26").
+ 
+  - use strict and use warnings are strongly preferred.
+ 
 
-It probably is safer to invalidate and continue.  If there is truly
-not a worktree, untracked cache entries do not matter ;-)
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+-- 
+ta/cg-require-perl-5.26.0
 
-Thanks for a review.
