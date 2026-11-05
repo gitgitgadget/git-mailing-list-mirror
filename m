@@ -1,95 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793919221;
-	b=iWZPf1AQ0B16bqLt8Y+DUtqj6c82BByUsv7yY5u1K7SZQFxWh32OM6jWpYL7W9S38Ikp
-	 6i+RLiiIWqLIE4fcg50vJZ3Jarw991vpqqvRHg7lTEmR57e1yTMFCwp7du1AFHyy07bQy
-	 DJl3pfjlYpeMneRF49Sum+IUceifSTn1QQWZ+yCJvG/wsbYbqdeU0Yvw/zDMv4/3SZFON
-	 /RFCrrSCpAabS3ccqCYjQMzpvaiRQ8tsvM3J5bAaqSNzY4fd53ZLse0kfAoWEgTLZR2/f
-	 phzFQTrjLCxjeLI/qAZKYjOdRD4bEphfsJ12ptN4BTooVPoAM7gOzkf5aVgdKTq8yFw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793919221;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.54
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793919363;
+	b=0jWdNqW52di9vBBfQxeF251Anvg+jySL53/UUQxkl5SKMvBnPqUJok/F2UacBTJdaYUT
+	 TwVLwbmF+Af5FTdQgEDp22s7Ym5RsVIKWDFovSddpzHK+1Hiirrb0tshih70LBYOM/7/g
+	 sRxAIsaQUQJTlcDviU4peKktO8wjdmEW2GVoxNu1gRbaIkxdngeXImrvGkTfLrN1XuInY
+	 vEa20qThDt/9kyqIM+Bw8mYo2WSh2Hri2q9gdaUsNBRamjDsRQvukb4vNDaxUIYpzhx1m
+	 934PQ3k9+wB4ALnG6SYSXS+wQmWX9th9UD0JaA6urT2TiIxvIqr8Wpol6Mg+BOcyeZQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793919363;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=zkPRbjA6Ah+NoxFSgRByl7i2xxH5BJbfkTTZA4I1ql8=;
-	b=Ykx0zgUBRx+4zw4/5RGVcTv4zuv7wdbwlQJSsRObI5q3EobKsFrmJQ+vFTD7vjfNeEOz
-	 6y+uY/yBsFIWyegrnlaf2w3WHvg+IDCHe6pxBRcMSLESvUN+wT08uQkjP7qq7poFE4trR
-	 W9JuKkbmEt9g3OvYFzb66H1gtNToRh5OR/PZ3DhvS95ryIyCfrMTdAWbXpSIdFLv9AD/z
-	 9I8qrIj4NqaBqO2ejfk2imH1onpnFIh5wcLeseh427OU3CshigK7a5X+5bLMJvQWtGlAD
-	 bh5qYXcPd7Y1IVVzZkEunGtOpghccbw9Tscua+RP5lRlnji8hDfeF1ljcm2PaDsYEOQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=U/WGAfesl7JMmyoo8JsB37Ve3GC5hycVsFqfEu6Tp7o=;
+	b=A3ephNth+F7sS9lYjO4OsLjAXD5Nwm8bSejE/zN7RgpV4i9rPg1L3u4JAk+Uz/UyrgZ9
+	 7HzFRCveZ/XBxLz3qdbOoLIihmHcJL0JOf1kpznBeyx9GXe957dQWzKjgAezHSN+6OTZ7
+	 TLUwNjQVvFoi3bhEM9YbDg2qgNwxVzo57o8MQfyhyagxyxuNjksd4JFDzsg/27/bRw0n6
+	 DHLzSAKP3p5Rhl9SwrE1F+pmio+HZB8iodtreXaRfx0HS3DJ+M5+xiU85A6D6zyIkKosl
+	 SUliehtNQqzqOHjX/CkDVQCWm+cAS6FEFJYu01IXrT6DJjpj2N27mB6lPomlhE4ugFA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ccnGvvyj;
-	arc=none smtp.remote-ip=209.85.221.53
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FQDt9Lb6;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.54
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1D0606A31B
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:53:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BF1D0606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16AA606A31B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:56:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E16AA606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ccnGvvyj
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48fd2e38825so49917f8f.2
-        for <git@vger.kernel.org>; Thu, 05 Nov 2026 14:53:40 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FQDt9Lb6
+Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-99806b7d89aso1101529241.1
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 14:56:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793919362; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qY55wLtV7afgJM1eIno9P0UbAUQatfK/BGNCMn7SJWTSGftd/09Iuc8PWfDoXo6gJt
+         A8YbpwA0nl2rvdwkyMLmf/aEPDPOlPpeCi2a7DFsh6EZWhvEuuOFIKK43yaw7GqKkGBq
+         RnjZaBGIxmXNRq5/gUtesipgb9cEwVbwSRIcSgbb34YZa7veZdkH8MVc9XX3ocXzTx3m
+         pQHP57Wz09QaZs4GuYrM0Ol/tbN4I/MrScffrlh4LrNg3Pjvu4coPq79leAr2wuV//Qo
+         uUWYFcjALY2AK+tYYpljAqa+K8Jw+PUaqTreNNzf6wzG0pHYXuXQNAMtWEdEuMHudSiX
+         l4Lg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=U/WGAfesl7JMmyoo8JsB37Ve3GC5hycVsFqfEu6Tp7o=;
+        fh=wQgUnpXGUIJk3O3LwnS1894ThlxCNh3Gq2z4w+1V8nM=;
+        b=ovIPML+IDBOkWsMATjD5Jy8D+xifUYMWk3WaOyG9CGZpVAUhqGREd5sObHKnTVRu9f
+         gDMKI7MXF6a7sRUaKZNQ3V8qLeIttxUVOyCK09QG2OdlnYj2eM3/yVrxOEP/AKHAA0jr
+         YnbQAXsrngGU84u9QJbOUtxFYshrEycs5l7UabVY1qLmm8qgeOho5D/K+jMDJdMyLnKT
+         BIwm6BS1vHrpRyH6zmYOXGZLzs9LxnE2/ley0Z/ATmppHIh/F/2a6QNlGAdYJ7GdyiaI
+         OjZCCmsS4nKjnSmcJAm5X+ug2udDMKsVVPPTS1uRV3EmxzRn2Uhmp3UsXCq7hMb2j9HZ
+         Lp1Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793919219; x=1794524019; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=zkPRbjA6Ah+NoxFSgRByl7i2xxH5BJbfkTTZA4I1ql8=;
-        b=ccnGvvyjGOzBdJqrOU8bwg34l7VANCKuYvEQEqrIlZ5h+qt8CvboguSrkOQfbjUz3X
-         roPOe2tvMi+IretNNHiw7Z/oNg6Z0cdourEAeQ4Ri+NvUnxmIeHwFS4wqWKi2GXNYWDg
-         wYYbFQDZAb7Ekrrrrjg8FXG2vG7DnumT/ZOnVtlT/MUvxhWOpCleVgmKMB7bF7NBBe4o
-         SSzFox4qKhkhB0Xv2cpvaNvU7qel1FaKjJoKY7itrfOFg3MsRJd63EwajnHdJYgpdz5j
-         oiyamcL51vUx5M0HI0MBMPV/5OFO7L2kfVMsD1NWEv2C5q8iWxckO3uxTzP60oXaM47H
-         Gcag==
+        d=gmail.com; s=20260707; t=1793919362; x=1794524162; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=U/WGAfesl7JMmyoo8JsB37Ve3GC5hycVsFqfEu6Tp7o=;
+        b=FQDt9Lb6cPTPHwq03o7Ry4jv2dHVIV0CxPIlHRK7bcD1dcMjqxvAB9zcql4PtWE6i2
+         coV8N/6Wiv7Q3YRcrFct7fyGxwOIt2sAHGdIXuIuXce7n26+utIQk+XfMD4HApMj/mQo
+         ZOWeeRmMqMhijgxozdP/ANY2VGlkmZWDfMXYdaA/oJhI7jIUnOg2NMjqcQkZhLFxxJlr
+         Ha2X48eLNg7ncOtV1/ipFDtkIFTmlJQPvNTY7WD60cPGhXPt7YGqNLDKOsuS/xGEa+f5
+         7p4mvBdINuWzZ2vvZFwEpEoLNgxFEwc0T1H70pWEyahtQ/Z7e71HFp3q2Ej6udIudnpP
+         d1Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793919219; x=1794524019;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=zkPRbjA6Ah+NoxFSgRByl7i2xxH5BJbfkTTZA4I1ql8=;
-        b=0MAOjG7xR4yHbEwwTniWifs+CNvdqSa+vQJuIWX17RU160fw3i/gtaYvxF11wfEto0
-         jj6Cx8uBa+m5x3nnt2kr36n8ZUDOLLGozjj9MH2AZI7Ltb0ut/PIapf6iiO6ITjejOga
-         l5uvJ3d0wLl0M+pmfHtBFQ1b+cJPFirnvcdVZo8tB4ghHPu4EBOdJY35aFmN749ogoMG
-         tvmR/utsuFtGFb2Zadh4ZyZmS8lTwEyQvgmstpwmSoyzv2wYOHyZZjeEauxwIFnH/PUn
-         FjzqsFvYEVgX0e/sQjh8lpV3qFOwvPqOPDG4u/jZuk5/adfWHx5SAdIOhCHcGeeXgHtV
-         Uofg==
-X-Gm-Message-State: APuU4Z+ux863KsT7lQSnRjJpaAiEqwxJ3mYP51oqBDs8eCi5chW6+wKH
-	rFWI8onatZ3VaDdP/iEoc8iODV+ckIOaJgUoTSoMeWcpCXnocrgaYC2qL2ygm6kk
-X-Gm-Gg: AYBFou3zVpYa0p3Aa9+a63BjCEVmBlXTDVQKYVQ1DM5VkDqPesWMsjfVBjSD3Lzw8wh
-	9II2IagAaq7UXpNtafj+diO+RT22ZJ2A+uKWZYuleeHesGbUAmzAFCtO/zOajxZ/3VtTWKymJWE
-	ZDTf4WarfzXLsORV4nnsyUeFngFYq4SvUuvDu34dUE0F+LcbQ6xYeGjaIEavXmlBsqA3VXqufin
-	lMbIZ5d6wJeDDEm4rafegwB+78/a3Q0jv9fw0cXQ7AesRnkZZ2gHXJv7ZwCcQwVtExHPSX9se/c
-	U/K8tBkVVXBfWsmq8VHp7bONaHPPGT2F5I21X2Hkb7UPlOICTKciD6Bdv5g6lvIbd6a9oFOmMhY
-	XZTFEOXwkfGBBYCuue3EDoY/hy41tktx48tDNw/6kDywhnh0FwWTMijE5fAx0Kiu4ixlZVL+rh0
-	BF2+72Im0WeLoOfYI7XAnNlkEnGhDpG6MsLCKjU5qKK2dnUaE5K815wEpzKrUtjPVOtzz6RnzRa
-	m9A+E33inVcPlLlSe/MjTt7xa5lrNjC1TUm8H8ilaRytBSNN9xuKcIBSVpIZ4SBTwUHCrrnCG70
-	k7Ltn9AUjoIcE1wkECWZG89P5vCA3oh/myVy8LfxUS6VdhWzVOIS0Y+fCKXdXysa3CS8svudb8z
-	eO82/zqqre2/JlFufJVYQZ3ZkCLvv04QNkArc82MrUv4PhCwI+gAOhz72+FfkdUG6mPcHVVyRg9
-	UTaA==
-X-Received: by 2002:a05:6000:2489:b0:48d:ff71:dd87 with SMTP id ffacd0b85a97d-49275fe4e84mr1915184f8f.17.1793919218866;
-        Thu, 05 Nov 2026 14:53:38 -0800 (PST)
-Received: from ngadou-Latitude-5580.. ([129.0.60.185])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d809df21sm81475f8f.54.2026.11.05.14.53.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 14:53:37 -0800 (PST)
-From: Yopa Nelly <yopatatchou@gmail.com>
-To: git@vger.kernel.org
-Cc: tangajoris@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	Nelly Yopa <yopatatchou@gmail.com>
-Subject: [Outreachy][PATCH v2] promisor-remote: honor promisor.fetchOrder when trying remotes
-Date: Thu,  5 Nov 2026 23:52:23 +0100
-Message-ID: <20261105225223.1163975-1-yopatatchou@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261104172434.691381-1-yopatatchou@gmail.com>
-References: <20261104172434.691381-1-yopatatchou@gmail.com>
+        d=1e100.net; s=20260707; t=1793919362; x=1794524162;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=U/WGAfesl7JMmyoo8JsB37Ve3GC5hycVsFqfEu6Tp7o=;
+        b=COX0NIynnVxveFkeCc1GBfrS066Hd44ud0Bf9J5TBZuO6D9EXteX5PcoWvHlZ6Yi1x
+         9D/DTyzZwk+hy3cJAEJwHAZSr12aXsQcjd3oPydI6HkQjgGyfkXq7DzTYQbS76dDYIJ5
+         ANRrm5ipHcGFreXg3FaFOY93cH0RSw9B2CkKXTZXeqGAYaXJBhPoZ2VoDjvaUTA9gd+Y
+         tQ8b4h1st3hziSRUZj6L3wXml8NtryW1IQ4ZHpAetBCtM47t8bVJjwW9kTYxacISZ1Ph
+         laVclnIVD2NM/dqX9R1wEHjT/fG73HtItK6A8kVYJiStR1Il+n2wMVwZBeD/dBYfdUPq
+         N6WA==
+X-Gm-Message-State: APuU4Z/qIc0qHfCWp7oaSqP3Mf41iWYjEc091/ukADbwzaaWF82uh4rT
+	Swhbjh93gnC6+YvJKFlOoJZ6IE1CG9mQYs2CYRaxKKc0sKUE1FjrlnJ7qminx4dQt39VzxmO3De
+	BEIqD9YyB2JID8vPSlKi4tG2iefvzsCRIDEM/
+X-Gm-Gg: AYBFou2xEwPUhg5Me+vznxUAOl4rd26DthSqkWeiUCuAnbCp4WYcTHLjsmrEynh3vW9
+	pkcl+g/LcuxLlfutgHRo+M3gSh6s8B43wvbkHD6tYQJGxSS55qrCeRzOnrI+8QtDkRiOClatzqM
+	9XzV687N3ymHAFRLy9pna53O7c8Jx8Ctu1S2auPNrqyUFQwJGZYqVc00Ddl1NL08zehjvFm//V1
+	jSCXsGL3hrVJYhjVZIU1iSLSpdEpJ+H6bq9WSV/iLw83HAja4zMdxee5LfYLGKm6BtiXa2CdOJW
+	HpxLH3mXVr0QP+5Tq58BmGbA9BDYa5/JBJUUoLK7mLiMFjdjXd6Ve1e7cN8Ny7wGskvxcdJzH4T
+	/mjm19eo/0AQDumEEBjRyYTTiDldK8kp5FpNtOd67DoN/JExsHBTAMHy4qDET9vV8S1Ix5HtadF
+	kPsaX8V8v6P9nrNjAZluvogUpSyjhnt3pyw27Shk4ggTv/6cMM
+X-Received: by 2002:a05:6102:6448:b0:7c0:115c:14ca with SMTP id
+ ada2fe7eead31-7d28674445bmr2414086137.5.1793919361766; Thu, 05 Nov 2026
+ 14:56:01 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,241 +103,124 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261104172434.691381-1-yopatatchou@gmail.com> <894327d9-57b5-4adc-b300-25d946211606@gmail.com>
+In-Reply-To: <894327d9-57b5-4adc-b300-25d946211606@gmail.com>
+From: Tatchou Yopa Nelly <yopatatchou@gmail.com>
+Date: Thu, 5 Nov 2026 23:55:42 +0100
+X-Gm-Features: AclHuK-cL4kzo58rY9fTaZWhqMmAfzO8CMh-0fYntirQrzbdwwJOViQq6RlV7eQ
+Message-ID: <CAG7jffxRscX3ntX3p8L1GwGbs7WJmj6WoKPRGUuz3wcCS0NZag@mail.gmail.com>
+Subject: Re: [Outreachy][PATCH] promisor-remote: honor promisor.fetchOrder
+ when trying remotes
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Nelly Yopa <yopatatchou@gmail.com>
+Hi Tanga,
 
-When a repository is configured with more than one promisor
-remote, Git tries them one after another until the missing
-objects have been fetched. The order is currently determined
-only by the order in which remote.<name>.promisor entries appear
-in the configuration. There is no way to say "try this remote
-first" without moving config lines around.
+Thanks for the careful review you caught real bugs. I've sent a v2
+that addresses all of your points:
 
-Add a promisor.fetchOrder configuration variable that takes a
-comma-separated list of remote names. Remotes named in the list
-are tried first, in the order listed. Remotes not named in the
-list are tried afterwards, in their original configuration
-order. The extensions.partialClone remote is still moved to the
-end of the list by promisor_remote_init() unless it is named in
-fetchOrder, in which case its listed position wins.
+- fetch_order is now in struct promisor_remote_config, not a
+  file-static, so it is per-repository and gets cleared with the
+  rest of the promisor config.
+- The list is now initialized with string_list_init_nodup() on first
+  use, matching what string_list_split_in_place_f() expects, so the
+  BUG is gone. I reproduced your exact sequence to confirm.
+- The docs entry is added to Documentation/config/promisor.adoc.
+- The whitespace is fixed.
 
-The order is applied inside each of the two passes in
-lazy_fetch_objects() first the accepted remotes, then the
-rest so the existing "accepted before configured" behavior is
-unchanged. Within each pass, the fetchOrder order takes
-precedence over the configuration order.
+I also dropped the linked-list insertion sort. Instead,
+try_promisor_remotes() now walks the list twice: once in fetchOrder
+order for the named remotes, then in original config order for the
+rest. That's simpler than sorting a linked list at fetch time, and
+it keeps the accepted/unaccepted two-pass logic unchanged.
 
-The parsed list is stored in struct promisor_remote_config and
-is re-parsed each time the config is read. Instead of sorting
-the linked list at fetch time, try_promisor_remotes() walks the
-list twice: once in fetchOrder order for the remotes named
-there, and once in the original config order for the rest.
+I didn't add a test yet. You mentioned t0410-partial-clone.sh already
+has a test with two promisor remotes ("fetching from another
+promisor remote"). I'll look at whether the ordering can be verified
+there, either as part of a v3 or as a follow-up.
 
-Signed-off-by: Yopa Nelly <yopatatchou@gmail.com>
----
- Documentation/config/promisor.adoc |  11 +++
- promisor-remote.c                  | 108 +++++++++++++++++++++++++----
- 2 files changed, 107 insertions(+), 12 deletions(-)
+Kaartic, I've also re-read SubmittingPatches#describe-changes and
+rewritten the commit message to describe the change rather than
+address the reviewers directly. On the RFC point: I treated the
+Phase 2 config work as the micro-patch and skipped the RFC step
+you pointed out. Should I step back and send the design RFC first,
+or keep the current patch as a prototype while we discuss the
+config shape on the list?
 
-diff --git a/Documentation/config/promisor.adoc b/Documentation/config/promisor.adoc
-index c1f3d766a6..ccc0925800 100644
---- a/Documentation/config/promisor.adoc
-+++ b/Documentation/config/promisor.adoc
-@@ -31,6 +31,17 @@ This list has no effect unless the "promisor.advertise" config
- variable is set to "true", and the "name" and "url" fields are always
- advertised regardless of this setting.
- 
-+`promisor.fetchOrder`::
-+	A comma-separated list of promisor remote names. When Git
-+	needs to lazily fetch a missing object, it tries the remotes
-+	in this list first, in the order listed, then the remaining
-+	configured promisor remotes in their configuration order.
-+	The `extensions.partialClone` remote is tried last unless it
-+	is named in this list.
-++
-+See linkgit:gitprotocol-v2[5] and the "Partial Clone Design
-+Notes" in link:technical/partial-clone.html[Documentation/technical/partial-clone].
-+
- promisor.acceptFromServer::
- 	Controls which promisor remotes advertised by a server (using the
- 	"promisor-remote" protocol capability) a client will accept. By
-diff --git a/promisor-remote.c b/promisor-remote.c
-index 316d9950aa..c664a48f88 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -19,8 +19,11 @@
- struct promisor_remote_config {
- 	struct promisor_remote *promisors;
- 	struct promisor_remote **promisors_tail;
-+	struct string_list fetch_order;
-+	int fetch_order_initialized;
- };
- 
-+
- static int fetch_objects(struct repository *repo,
- 			 const char *remote_name,
- 			 const struct object_id *oids,
-@@ -120,6 +123,29 @@ static int promisor_remote_config(const char *var, const char *value,
- 	size_t namelen;
- 	const char *subkey;
- 
-+    	if (!strcmp(var, "promisor.fetchorder")) {
-+		char *value_copy;
-+
-+		if (!value)
-+			return config_error_nonbool(var);
-+		/*
-+		 * The list is re-read from scratch every time the config
-+		 * is parsed, so start by clearing any previous entries.
-+		 */
-+		if (config->fetch_order_initialized)
-+			string_list_clear(&config->fetch_order, 0);
-+		else
-+			string_list_init_nodup(&config->fetch_order);
-+
-+		value_copy = xstrdup(value);
-+		string_list_split_in_place_f(&config->fetch_order, value_copy, ",", -1,
-+					     STRING_LIST_SPLIT_TRIM |
-+					     STRING_LIST_SPLIT_NONEMPTY);
-+		free(value_copy);
-+		config->fetch_order_initialized = 1;
-+		return 0;
-+	}
-+
- 	if (parse_config_key(var, "remote", &name, &namelen, &subkey) < 0)
- 		return 0;
- 
-@@ -157,6 +183,8 @@ static int promisor_remote_config(const char *var, const char *value,
- 	return 0;
- }
- 
-+
-+
- static void promisor_remote_init(struct repository *r)
- {
- 	struct promisor_remote_config *config;
-@@ -180,6 +208,7 @@ static void promisor_remote_init(struct repository *r)
- 		else
- 			promisor_remote_new(config, r->repository_format_partial_clone);
- 	}
-+
- }
- 
- void promisor_remote_clear(struct promisor_remote_config *config)
-@@ -193,6 +222,9 @@ void promisor_remote_clear(struct promisor_remote_config *config)
- 	}
- 
- 	config->promisors_tail = &config->promisors;
-+	if (config->fetch_order_initialized)
-+		string_list_clear(&config->fetch_order, 0);
-+	config->fetch_order_initialized = 0;
- }
- 
- void repo_promisor_remote_reinit(struct repository *r)
-@@ -262,6 +294,8 @@ static int remove_fetched_oids(struct repository *repo,
- 	return remaining_nr;
- }
- 
-+
-+
- /*
-  * Fetch the remaining objects (given in '*remaining_oids', which
-  * contains '*remaining_nr' object ids) from the known promisor
-@@ -279,6 +313,24 @@ static int remove_fetched_oids(struct repository *repo,
-  * Return 1 when all the requested objects have been fetched, 0
-  * otherwise.
-  */
-+static int try_one_remote(struct repository *repo, struct promisor_remote *r,
-+			  struct object_id **remaining_oids,
-+			  int *remaining_nr, int *to_free, int depth)
-+{
-+	if (fetch_objects(repo, r->name,
-+			  *remaining_oids, *remaining_nr, depth) < 0) {
-+		if (*remaining_nr == 1)
-+			return 0;
-+		*remaining_nr = remove_fetched_oids(repo, remaining_oids,
-+						    *remaining_nr, *to_free);
-+		if (*remaining_nr) {
-+			*to_free = 1;
-+			return 0;
-+		}
-+	}
-+	return 1; /* all fetched */
-+}
-+
- static int try_promisor_remotes(struct repository *repo,
- 				struct object_id **remaining_oids,
- 				int *remaining_nr,
-@@ -286,24 +338,56 @@ static int try_promisor_remotes(struct repository *repo,
- 				int depth,
- 				bool accepted_only)
- {
--	struct promisor_remote *r = repo->promisor_remote_config->promisors;
-+	struct promisor_remote_config *config = repo->promisor_remote_config;
-+	struct promisor_remote *r;
-+	size_t i;
-+	int fetched;
-+
-+	/*
-+	 * First pass: try the remotes in the order the user listed
-+	 * them in promisor.fetchOrder.
-+	 */
-+	if (config->fetch_order_initialized) {
-+		for (i = 0; i < config->fetch_order.nr; i++) {
-+			r = promisor_remote_lookup(config,
-+						   config->fetch_order.items[i].string,
-+						   NULL);
-+			if (!r || accepted_only != r->accepted)
-+				continue;
- 
--	for (; r; r = r->next) {
-+			fetched = try_one_remote(repo, r, remaining_oids,
-+						 remaining_nr, to_free, depth);
-+			if (fetched)
-+				return 1;
-+		}
-+	}
-+
-+	/*
-+	 * Second pass: try the remaining remotes in their config order.
-+	 */
-+	for (r = config->promisors; r; r = r->next) {
- 		if (accepted_only != r->accepted)
- 			continue;
--		if (fetch_objects(repo, r->name,
--				  *remaining_oids, *remaining_nr, depth) < 0) {
--			if (*remaining_nr == 1)
--				continue;
--			*remaining_nr = remove_fetched_oids(repo, remaining_oids,
--							    *remaining_nr, *to_free);
--			if (*remaining_nr) {
--				*to_free = 1;
--				continue;
-+
-+		/* Skip ones we already tried in the first pass. */
-+		if (config->fetch_order_initialized) {
-+			bool already_tried = false;
-+			for (i = 0; i < config->fetch_order.nr; i++) {
-+				if (!strcmp(r->name, config->fetch_order.items[i].string)) {
-+					already_tried = true;
-+					break;
-+				}
- 			}
-+			if (already_tried)
-+				continue;
- 		}
--		return 1; /* all fetched */
-+
-+		fetched = try_one_remote(repo, r, remaining_oids,
-+					 remaining_nr, to_free, depth);
-+		if (fetched)
-+			return 1;
- 	}
-+
- 	return 0;
- }
- 
--- 
-2.43.0
+Thanks,
+Yopa Nelly
 
+
+On Thu, 5 Nov 2026 at 17:31, Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+>
+> On 11/4/26 22:54, Yopa Nelly wrote:
+> > From: Nelly Yopa <yopatatchou@gmail.com>
+> >
+> > When a repo has multiple promisor remotes, Git just tries them in
+> > the order they happen to be in the config. If you want to try one
+> > remote before another, the only way is to move lines around in the
+> > config file, which is awkward, especially once you have per-worktree
+> > or system/global configs in play.
+> >
+> > This adds a promisor.fetchOrder config variable that takes a
+> > comma-separated list of remote names. Remotes listed there are tried
+> > first, in the order they're listed. Remotes that aren't listed are
+> > tried afterwards, in their original config order. The
+> > extensions.partialClone remote still ends up last (that's done by
+> > promisor_remote_move_to_tail() in promisor_remote_init()), unless
+> > someone names it in fetchOrder, in which case its listed position
+> > wins.
+> >
+> > The sort happens inside each pass in try_promisor_remotes(), so the
+> > existing "accepted remotes before the rest" behavior is unchanged.
+> > Within each pass, the order from fetchOrder wins.
+> >
+> > I put the parser in promisor_remote_config() next to the other
+> > promisor keys. It stores the parsed list in a file-static
+> > string_list. The per-remote order field is set in
+> > promisor_remote_apply_fetch_order(), which runs at the end of
+> > promisor_remote_init() after the partialClone remote has been moved
+> > to the tail. The actual sort is a small stable insertion sort in
+> > promisor_remote_sort(); order == 0 means "not listed" so unnamed
+> > remotes still sort after named ones without losing their relative
+> > order. It's called once at the start of try_promisor_remotes() and
+> > is effectively a no-op on the second pass if the first one already
+> > succeeded.
+> >
+> > I didn't validate the names in fetchOrder against the set of
+> > configured promisor remotes. A typo just means that remote doesn't
+> > appear in the list and keeps its default position. That's how other
+> > list-valued config variables in Git behave, and it keeps the parser
+> > small.
+> >
+> > No test, and I want to be upfront about why. The t5710 fixture
+> > always has the server satisfy a filtered clone from its own
+> > promisor remote, so the client never actually triggers a lazy fetch
+> > inside that test, which means the ordering change can't be observed
+> > there. I'd need a different fixture, one that gives the client two
+> > promisor remotes and keeps the server out of the picture. I'm happy
+> > to write that as a follow-up if that's the right direction.
+> >
+>
+> To be honest, only part of the commit describes the change. The rest of
+> it reads part like you're talking to the people on the lis. You might
+> want to give the SubmittingPatches section a read:
+>
+>    https://git-scm.com/docs/SubmittingPatches#describe-changes
+>
+> Also, this patch kind of tries achieve a part of the project without
+> actually going through the RFC part of it. That feels a bit strange. Did
+> you possibly misunderstand what a microproject is supposed to be? Did
+> you possibly read the following guides and have some difficulties with
+> parts of it? If so, I'd be glad to hear more about it so that we can fix
+> the same.
+>
+>    https://git.github.io/General-Microproject-Information/
+>
+>    https://git.github.io/General-Application-Information/
+>
+> --
+> Sivaraam
+>
