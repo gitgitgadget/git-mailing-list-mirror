@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793910852;
-	b=T6gj7PlDvBiGDemhpFhAgAFHa8E4OvEuJqYko5YiKzdJ+6SHsjL4sLU4CC3I253lJcg0
-	 dngb6Htg0E90MXlsfEUKKZ3hqxuvBcG3UdeEwrdgZhxpwTvJf1sBWZ9Cf2Bi4JIKxh1HU
-	 D2iFNjbuYPMa4Mqszc2JnE27+5a/PsVyh182Lbe747oerVYAi3m26I+m8ume4h6lQ4/e3
-	 8j1gTdA5C/Mg1jd/ciVzxAKhRoM1ZIWlccTZI28gi+mDA0RwB+dB6UkWakdu2FJC4Wxgm
-	 dGDiXuENJ8aAIX08LqDcUmAeXVX8WWFl3fxuE39wJ4AwhATsaFRigVNasseyfX/XLKQ==
+	t=1793910856;
+	b=jNB95MXd+sZOqDVKwjEWUW8D1/ZomQ0w+aU6tELT2F0mwciDz+6UAeDrWXLSZG2bf/Hy
+	 24MnlvrzHv/A1Rxh1CWrJ9tiPkIWUjQaMXTA4AA1A6PEPnV2PuaFTQ1Tv6OxjQTAHyoYL
+	 VLRwoinyPYTVdzb9q/qkEJmrqEkMhgyGI3IaECB3QNZiKHyhVzcIFzq2q20N1KDqH4XWK
+	 TgmFpodSK9qetApBGF1Kcj/yjsN9CbznklFzj3B7E5bj7uIz1m+bKXOKXYTgk83ukwKD8
+	 bLJt7swLW7Kbpryn4WGxEVcihFV32/YZu/FFwA/wfu11PsfUW+UX1Jl+H9G6NuWnGhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793910852;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793910856;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=lCywf9YNPnjxxmLlnG6R2eQ4wEC8mzBvkmtIxI59emc=;
-	b=zyl1Fz9j2hgrpZQNHjfa547wQe4Y9Yeq1Ng31//zobsv6caYf+FtaZdWC6juaRcbBByG
-	 oALWB/g0rFyM0anLxBnD4hLv7Vflu9qefboBfK/PIenKgo+J/m7aguWX2HHqsjdnYxJxg
-	 3mpV8dezSPm/TcKZKVPlHnxfFaZ2HiKjClrB7ge8skvpAOn4/v5re4ynP0a0erf1IPIhz
-	 Ii30zP5HvRmgoo+RpDNEDk0AvM+ZkPWXIiVwSyBk4jLx5x7K/Pw9DNpUf57CTBszrJ4a8
-	 IT7p2gyfA0isyJGx98XqkdTL171S7Ga0Dnn4qfQ9t27Lmbg5dwivY6y8l1VYxUnK0aA==
+	bh=9A7UNn6T+CNt8GYt1PniUzHOMMjpCT2bNGUd+dcoYCs=;
+	b=Mlxpxgu+64t3QfYQdfgi73z1qij+c9Y/SOSf8M0/yylQxLUedIIYv8vIa+msFfB8bNS8
+	 TzIxSP1YMfOPbnt0ZXKgi9ORl+hp6yZGvVF4zvDfxZ6PGRatgKXQn3smHLLdTafG0G77o
+	 79YG59T9DsZh2/n6Lb4ofE4bKGGtJbcgv2tdnny/W7w48FnZqWDo3PN2jm7oHc3nWoS8J
+	 Bg7eJx+uPyhLFiOJD4GQqVqREFdokXiHLTJYpQJ3y7NxrhhFvmC9kNDmSEZxgdEdjPbXl
+	 WULxv6c5oJMhyWkrh1uBU5CIUEgemvTbiAz3y3kjwkskN89zZaWxd4OWjWRF3CyybBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hfbahP7F;
-	arc=none smtp.remote-ip=209.85.208.49
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZxuHBQMu;
+	arc=none smtp.remote-ip=209.85.208.53
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D88C606A329
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 20:34:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D88C606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B99606A329
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 20:34:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 42B99606A329
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hfbahP7F
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6b5973a4b4cso97628a12.2
-        for <git@vger.kernel.org>; Thu, 05 Nov 2026 12:34:11 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZxuHBQMu
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6b408f2d936so2971153a12.1
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 12:34:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793910850; x=1794515650; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793910854; x=1794515654; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=lCywf9YNPnjxxmLlnG6R2eQ4wEC8mzBvkmtIxI59emc=;
-        b=hfbahP7FWMiNfngYQMrV7yxDp/bG5fTnScwef2E2+hXKfbsjPk5MwxocmMPQW0ryoK
-         cwe44vFR5tj0JQ8ZR50VuZ1CG/aJ2gH1Kg5t7cJDCCu8Y3LvVyzuQx5M9pRi2vZR6PnA
-         glnGKz1KVYHx8PnLyrk5qlDNOTW8EUOUARjG44kygDqs1w4wXu9U27HibZKANctEWZpu
-         QXj0YUDFLjOAQ0hzZUIislQ/YnOZSS0YJgKPCYH2wvLloXX2xIjcBbrgFvcVTnwNvh78
-         qbz3jAt7yVZrB7qeNkunD1Gs5WB49mjvZyKcDnkO4m+mMbSMvafPzgq/JlIGw5hR53EM
-         KpRQ==
+        bh=9A7UNn6T+CNt8GYt1PniUzHOMMjpCT2bNGUd+dcoYCs=;
+        b=ZxuHBQMuigWoXxBLOVzWRtNqRdiyqat9ux9s79pzJr16ofGubsYtVsCprKXEBbfoBX
+         4n1mec2Wvfa9s+zcJOxc6uLFxlsbciVn1af1j0XQygXdslPNgYpXm28vTlUk4Wh5RhLg
+         kEyLFxdMG9ZlHWAswmOPRGgu7OkH4LCHKDWsVGdXVD4Z4hMbk3aluEsWTknvvPnp2GZD
+         dYdIjzy8OrhF9Ilw6EGjCuLAH6h2sPfRUM2zZkHF1LWRYkUusbr02QJRov81CoINC1gM
+         qk664XBtk1KAwD7Cz0IEKQXFuOuzWyclkHFhnFjKghui7m/gj4GGECAyUH44+YhgyjZN
+         Y77A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793910850; x=1794515650;
+        d=1e100.net; s=20260707; t=1793910854; x=1794515654;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=lCywf9YNPnjxxmLlnG6R2eQ4wEC8mzBvkmtIxI59emc=;
-        b=CL4Xcozk5s3ep5UV2SLSYKV+idBewWy9uqVtpe6ZfNVo8TjRRSDkUahR/Em4Amqbuf
-         jgKOU9neTUwzICuRqYd8r2q2c9SS3VttEExl4Kuup4hXdK1fPgBV41FfuuoYr7DowPnl
-         PV4q3viZ6nFOtGQ2u+1nlXaddTz90rCqw3ftPXHb7q3qRxAdxbTLxrSwcuuaTxv9X9SI
-         hcTA8Crw1Xpn9ZNaN/2MCTisCbIkrZdbzk1oZWShw9yfkT6GBfssu/8BDViuWbhqwuXM
-         B1mcc/Sx6UjBHtP8o+Oc85mfPxp63PTlMCIL1wvJ3IqaYDVzwI8JcVTglpAlIyyQD7SX
-         dsWw==
-X-Gm-Message-State: APuU4Z+ryX9D/zrus43VqAtileeyg9b0LV85N++cmKA0iM6vNyPeC+Js
-	LyQGf5ex6OXu9dWUuAYZq2k6Niep+wcA8/8Q1UHGG2ul9nRmQX+LxuJpOH6OMGKMtF+Qbw==
-X-Gm-Gg: AYBFou0UOUDVCQWgOyort3vB/tR2M8j74/jjmGuaGoUUaQh7ymxrfZgbUbKl1HcPwYk
-	V2qJBoi6HMCBUdbx5DjOIoZnmYkE/4dcGLdTJ4qeEYd74gi1zae21VeD3ovJvyFI1aj3zqx9toH
-	O5IsoZ6oBc7qGeL80q9A3jSC0GUnFJ9zzyKhM/oiQVZeT19YaTbAmJ1a0WrWJ9lJCjwnxw7PjsR
-	lY4S1x34grsfeRA+XOcsOSEdUbljD0uHHM9hdoJrA0Rc90r1fd43D2Wm1MyMwIk64AA9B242xEN
-	kmxYuxD/fxOJR7fSrgPkI+Z1rvnY94p0LoEXfaS67aCfbwBekjj9rkfiaXZlgDGmrt/ajomRxxW
-	n6At4JxeVlWW5MUCDg/Pq/wgmOWUQJtrYGrpQK2X22PucTjOfMXMmJxrJaRj8jfMa+pLlbrZCPJ
-	tkrByUrwMlnU6saD59XFk1e8FwDcduve/b1birGhXDBiEkk8rGFijc0/lqgOq3nCfFtOZ0vGe8k
-	0PlM97XeUrdJ8onthsLCqgXJnAhuEj9c1yR6A/Zv8oNEry70nCo6Q+QCopKWv2OwNQuviorLjvE
-	PzFLQ4C7iAzlMfBSRvfkRnhlrD3p/DC9aMAfV8LWtd8diZVSGt3wcldpG6s6mKkKiB4cuoNgZxi
-	flAx+ZH+lz7qqWzAdCyh9vMCMmQJbJSC03JAuZxQa4eF+ni0CehXR5Sn7VT3HUurDueTIT5a8Bx
-	j41TEuwuAPJCGhIGq4X6PvPBPFMCLw
-X-Received: by 2002:a05:6402:5d5:b0:6aa:f0e:a168 with SMTP id 4fb4d7f45d1cf-6b5977e7587mr312854a12.21.1793910850380;
-        Thu, 05 Nov 2026 12:34:10 -0800 (PST)
+        bh=9A7UNn6T+CNt8GYt1PniUzHOMMjpCT2bNGUd+dcoYCs=;
+        b=U7yzYp7ckc2iTVV1C1mHMv+fgLsVPIl/IdGI2gMoKm+CAyi9ek+UioImO/Lvi5VTqa
+         RWGBUcR0EZaYKHT1Q3en/3SV/buQ5cg/vzR1uEkdtDFPJ79H1k7FY6dtb09/yn5k0Gvq
+         RJr+/IoxgvoNiRsURbjLMS+VmCaBh2u2Xz5goH0wtaXehCPjTU9462MJ5JidFA77lLie
+         q9D9EZDg9EubVSwXFgLYHWWV7lxkDEfg6L4cMikLqMW83Kt3LKGVaoVeEAVJL9A2AEcE
+         pCwBc0Vvcab6N++u+JKpGG2W0VeaOUNyjsdmdg0px70BedoIKd3YpqVm+S9/z4Vj8dbM
+         HM4Q==
+X-Gm-Message-State: APuU4Z8FnSfG2iKmocrH/Zhk9epay2ZMIHiMHwNqOa2T9lrbMtvWPNTB
+	viJU9MXZcwLORZJr1oNzalAv3gmH2NOdZLHMd53pvSktcSqCTIfpwvVDPsxnATroitRCyQ==
+X-Gm-Gg: AYBFou2TocpW1fzV16EwiDJow0v2fTVa1jRBYVuSeEVWNQpQEuUlZh8Ly71rdIyRioh
+	OM+Y/dJsgKXW2luxGDEXcF/NUZL8l3emh0/cgy/yjQmejXdd7AgBHZRVEcslLOK0u1x1XfQPLVy
+	X+re0RMiJM/xuisrzp3Sd168ql2iQ+ndqwb6/p2DuTBJFkFh+aFKBa+o4jwKgkNahZ7855mI2od
+	naTBYbKpyHdd3hjYh91fVIjE5irUDlC3m12yzo/ETnCr/8dx+EMqIksZIOgWhLgOm1zDk8nYQ6J
+	Wt4OD9/wRNz4g/lb27+/yxZ4Bkkhv3XCBdGWzeYCgJ6GC4qcBgiuCBLh7zcjBRqm6xltZWCtsof
+	mY5ObwaZc9H2OqpKyww9otUTVQn/pVnx3stmuugaL8ulzJuaDjO81EjWxGk8UgvcDn7OjE9Efsu
+	elMPlYQUMCTPVJoXxKscebn+0nbrkY8m+q5QyGTIWvwp5PCQ6ZJa/5u1kbHomNhgsiy5x3gXvIK
+	xpyBPeFFfCtthcQugr/QwT9H4AlTEtKZ6Jsc226JLQ6VTssupwcEz5xnji4KUk/VoMHYf1GXfIs
+	bl6j/j+FsXI1UwrLBj43yALX8Td49SXy3onCX3otVai2hhlXPEv2aIJW/jIp2zU4ovq/Z9FtHb+
+	4CaDTs3N68TKg6zDmvt9fWzxEQ8pmlAyIaCY2Owj0re+xWirjerNLHj3F8Sl85F6FNH7ve4njrB
+	8Ps3cuuFj7GFy1yJ7AIzu18L0mykxe
+X-Received: by 2002:a05:6402:1ed5:b0:6b5:7037:eacf with SMTP id 4fb4d7f45d1cf-6b59783040dmr271634a12.42.1793910854483;
+        Thu, 05 Nov 2026 12:34:14 -0800 (PST)
 Received: from localhost.localdomain ([104.28.219.97])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b5853e0536sm702689a12.31.2026.11.05.12.34.06
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b5853e0536sm702689a12.31.2026.11.05.12.34.10
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 05 Nov 2026 12:34:09 -0800 (PST)
+        Thu, 05 Nov 2026 12:34:13 -0800 (PST)
 From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
@@ -88,9 +88,9 @@ Cc: christian.couder@gmail.com,
 	ps@pks.im,
 	gitster@pobox.com,
 	karthik.188@gmail.com
-Subject: [Outreachy PATCH 3/6] notes: use the tree's repository when writing and pruning
-Date: Thu,  5 Nov 2026 21:33:41 +0100
-Message-ID: <20261105203344.48513-4-okhuomonajayi54@gmail.com>
+Subject: [Outreachy PATCH 4/6] notes: pass the repository to the ref glob helpers
+Date: Thu,  5 Nov 2026 21:33:42 +0100
+Message-ID: <20261105203344.48513-5-okhuomonajayi54@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
 References: <xmqq1p8zw49g.fsf@gitster.g>
@@ -106,183 +106,143 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-write_notes_tree() writes the notes tree into the_repository,
-and prune_notes() looks for missing objects there too. Both
-already have the notes tree.
+string_list_add_refs_by_glob() and
+string_list_add_refs_from_colon_sep() walk refs in
+the_repository. The caller already knows which repository
+that is.
 
-Write through t->repo. tree_write_stack_finish_subtree() takes
-the repository, passed down from the tree. prune_notes() hands
-the repository to its callback in a small struct.
+Take the repository as their first argument. Callers pass
+the_repository for now.
 
 Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 ---
- notes.c | 59 ++++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 35 insertions(+), 24 deletions(-)
+ notes-utils.c |  6 ++++--
+ notes.c       | 21 +++++++++++++--------
+ notes.h       |  6 ++++--
+ 3 files changed, 21 insertions(+), 12 deletions(-)
 
+diff --git a/notes-utils.c b/notes-utils.c
+index 404e9a5eea..70c619269e 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -123,7 +123,8 @@ static int notes_rewrite_config(const char *k, const char *v,
+ 		/* note that a refs/ prefix is implied in the
+ 		 * underlying for_each_glob_ref */
+ 		if (starts_with(v, "refs/notes/"))
+-			string_list_add_refs_by_glob(c->refs, v);
++			string_list_add_refs_by_glob(the_repository,
++						     c->refs, v);
+ 		else
+ 			warning(_("Refusing to rewrite notes in %s"
+ 				" (outside of refs/notes/)"), v);
+@@ -160,7 +161,8 @@ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
+ 	}
+ 	if (rewrite_refs_env) {
+ 		c->refs_from_env = 1;
+-		string_list_add_refs_from_colon_sep(c->refs, rewrite_refs_env);
++		string_list_add_refs_from_colon_sep(the_repository, c->refs,
++						    rewrite_refs_env);
+ 	}
+ 	repo_config(the_repository, notes_rewrite_config, c);
+ 	if (!c->enabled || !c->refs->nr) {
 diff --git a/notes.c b/notes.c
-index 5c2e8815f8..c83bcc29ad 100644
+index c83bcc29ad..cff63a4410 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -673,16 +673,17 @@ static void tree_write_stack_init_subtree(struct tree_write_stack *tws,
- 	tws->path[1] = path[1];
- }
- 
--static int tree_write_stack_finish_subtree(struct tree_write_stack *tws)
-+static int tree_write_stack_finish_subtree(struct repository *r,
-+					   struct tree_write_stack *tws)
+@@ -958,25 +958,27 @@ static int string_list_add_one_ref(const struct reference *ref, void *cb)
+ /*
+  * The list argument must have strdup_strings set on it.
+  */
+-void string_list_add_refs_by_glob(struct string_list *list, const char *glob)
++void string_list_add_refs_by_glob(struct repository *r,
++				  struct string_list *list, const char *glob)
  {
- 	int ret;
- 	struct tree_write_stack *n = tws->next;
- 	struct object_id s;
- 	if (n) {
--		ret = tree_write_stack_finish_subtree(n);
-+		ret = tree_write_stack_finish_subtree(r, n);
- 		if (ret)
- 			return ret;
--		ret = odb_write_object(the_repository->objects, n->buf.buf,
-+		ret = odb_write_object(r->objects, n->buf.buf,
- 				       n->buf.len, OBJ_TREE, &s);
- 		if (ret)
- 			return ret;
-@@ -695,9 +696,10 @@ static int tree_write_stack_finish_subtree(struct tree_write_stack *tws)
- 	return 0;
- }
- 
--static int write_each_note_helper(struct tree_write_stack *tws,
--		const char *path, unsigned int mode,
--		const struct object_id *oid)
-+static int write_each_note_helper(struct repository *r,
-+				  struct tree_write_stack *tws,
-+				  const char *path, unsigned int mode,
-+				  const struct object_id *oid)
- {
- 	size_t path_len = strlen(path);
- 	unsigned int n = 0;
-@@ -711,7 +713,7 @@ static int write_each_note_helper(struct tree_write_stack *tws,
- 	}
- 
- 	/* tws point to last matching tree_write_stack entry */
--	ret = tree_write_stack_finish_subtree(tws);
-+	ret = tree_write_stack_finish_subtree(r, tws);
- 	if (ret)
- 		return ret;
- 
-@@ -733,6 +735,7 @@ static int write_each_note_helper(struct tree_write_stack *tws,
- }
- 
- struct write_each_note_data {
-+	struct repository *repo;
- 	struct tree_write_stack *root;
- 	struct non_note **nn_list;
- 	struct non_note *nn_prev;
-@@ -748,8 +751,8 @@ static int write_each_non_note_until(const char *note_path,
- 		if (note_path && cmp == 0)
- 			; /* do nothing, prefer note to non-note */
- 		else {
--			ret = write_each_note_helper(d->root, n->path, n->mode,
--						     &n->oid);
-+			ret = write_each_note_helper(d->repo, d->root, n->path,
-+						     n->mode, &n->oid);
- 			if (ret)
- 				return ret;
- 		}
-@@ -779,7 +782,8 @@ static int write_each_note(const struct object_id *object_oid UNUSED,
- 
- 	/* Weave non-note entries into note entries */
- 	return  write_each_non_note_until(note_path, d) ||
--		write_each_note_helper(d->root, note_path, mode, note_oid);
-+		write_each_note_helper(d->repo, d->root, note_path, mode,
-+				       note_oid);
- }
- 
- struct note_delete_list {
-@@ -787,23 +791,28 @@ struct note_delete_list {
- 	const unsigned char *sha1;
- };
- 
-+struct prune_notes_data {
-+	struct repository *repo;
-+	struct note_delete_list *list;
-+};
-+
- static int prune_notes_helper(const struct object_id *object_oid,
- 			      const struct object_id *note_oid UNUSED,
- 			      char *note_path UNUSED,
- 			      void *cb_data)
- {
--	struct note_delete_list **l = (struct note_delete_list **) cb_data;
-+	struct prune_notes_data *d = cb_data;
- 	struct note_delete_list *n;
- 
--	if (odb_has_object(the_repository->objects, object_oid,
-+	if (odb_has_object(d->repo->objects, object_oid,
- 			   ODB_HAS_OBJECT_RECHECK_PACKED | ODB_HAS_OBJECT_FETCH_PROMISOR))
- 		return 0; /* nothing to do for this note */
- 
- 	/* failed to find object => prune this note */
- 	n = (struct note_delete_list *) xmalloc(sizeof(*n));
--	n->next = *l;
-+	n->next = d->list;
- 	n->sha1 = object_oid->hash;
--	*l = n;
-+	d->list = n;
- 	return 0;
- }
- 
-@@ -1213,6 +1222,7 @@ int write_notes_tree(struct notes_tree *t, struct object_id *result)
- 	root.next = NULL; /* last forward entry in list is grounded */
- 	strbuf_init(&root.buf, 256 * (32 + the_hash_algo->hexsz)); /* assume 256 entries */
- 	root.path[0] = root.path[1] = '\0';
-+	cb_data.repo = t->repo;
- 	cb_data.root = &root;
- 	cb_data.nn_list = &(t->first_non_note);
- 	cb_data.nn_prev = NULL;
-@@ -1222,8 +1232,8 @@ int write_notes_tree(struct notes_tree *t, struct object_id *result)
- 		FOR_EACH_NOTE_YIELD_SUBTREES;
- 	ret = for_each_note(t, flags, write_each_note, &cb_data) ||
- 	      write_each_non_note_until(NULL, &cb_data) ||
--	      tree_write_stack_finish_subtree(&root) ||
--	      odb_write_object(the_repository->objects, root.buf.buf,
-+	      tree_write_stack_finish_subtree(t->repo, &root) ||
-+	      odb_write_object(t->repo->objects, root.buf.buf,
- 			       root.buf.len, OBJ_TREE, result);
- 	strbuf_release(&root.buf);
- 	return ret;
-@@ -1231,25 +1241,26 @@ int write_notes_tree(struct notes_tree *t, struct object_id *result)
- 
- void prune_notes(struct notes_tree *t, int flags)
- {
--	struct note_delete_list *l = NULL;
-+	struct prune_notes_data d = { 0 };
- 
- 	if (!t)
- 		t = &default_notes_tree;
- 	assert(t->initialized);
- 
--	for_each_note(t, 0, prune_notes_helper, &l);
-+	d.repo = t->repo;
-+	for_each_note(t, 0, prune_notes_helper, &d);
- 
--	while (l) {
-+	while (d.list) {
- 		struct note_delete_list *next;
- 
- 		if (flags & NOTES_PRUNE_VERBOSE)
--			printf("%s\n", hash_to_hex(l->sha1));
-+			printf("%s\n", hash_to_hex(d.list->sha1));
- 		if (!(flags & NOTES_PRUNE_DRYRUN))
--			remove_note(t, l->sha1);
-+			remove_note(t, d.list->sha1);
- 
--		next = l->next;
--		free(l);
--		l = next;
-+		next = d.list->next;
-+		free(d.list);
-+		d.list = next;
+ 	assert(list->strdup_strings);
+ 	if (has_glob_specials(glob)) {
+ 		struct refs_for_each_ref_options opts = {
+ 			.pattern = glob,
+ 		};
+-		refs_for_each_ref_ext(get_main_ref_store(the_repository),
++		refs_for_each_ref_ext(get_main_ref_store(r),
+ 				      string_list_add_one_ref, list, &opts);
+ 	} else {
+ 		struct object_id oid;
+-		if (repo_get_oid(the_repository, glob, &oid))
++		if (repo_get_oid(r, glob, &oid))
+ 			warning("notes ref %s is invalid", glob);
+ 		if (!unsorted_string_list_has_string(list, glob))
+ 			string_list_append(list, glob);
  	}
  }
  
+-void string_list_add_refs_from_colon_sep(struct string_list *list,
++void string_list_add_refs_from_colon_sep(struct repository *r,
++					 struct string_list *list,
+ 					 const char *globs)
+ {
+ 	struct string_list split = STRING_LIST_INIT_NODUP;
+@@ -987,7 +989,7 @@ void string_list_add_refs_from_colon_sep(struct string_list *list,
+ 				     STRING_LIST_SPLIT_NONEMPTY);
+ 
+ 	for (i = 0; i < split.nr; i++)
+-		string_list_add_refs_by_glob(list, split.items[i].string);
++		string_list_add_refs_by_glob(r, list, split.items[i].string);
+ 
+ 	string_list_clear(&split, 0);
+ 	free(globs_copy);
+@@ -1002,7 +1004,8 @@ static int notes_display_config(const char *k, const char *v,
+ 	if (*load_refs && !strcmp(k, "notes.displayref")) {
+ 		if (!v)
+ 			return config_error_nonbool(k);
+-		string_list_add_refs_by_glob(&display_notes_refs, v);
++		string_list_add_refs_by_glob(the_repository,
++					     &display_notes_refs, v);
+ 	}
+ 
+ 	return 0;
+@@ -1132,7 +1135,8 @@ void load_display_notes(struct display_notes_opt *opt)
+ 		string_list_append_nodup(&display_notes_refs, default_notes_ref(the_repository));
+ 		display_ref_env = getenv(GIT_NOTES_DISPLAY_REF_ENVIRONMENT);
+ 		if (display_ref_env) {
+-			string_list_add_refs_from_colon_sep(&display_notes_refs,
++			string_list_add_refs_from_colon_sep(the_repository,
++							    &display_notes_refs,
+ 							    display_ref_env);
+ 			load_config_refs = 0;
+ 		} else
+@@ -1144,7 +1148,8 @@ void load_display_notes(struct display_notes_opt *opt)
+ 	if (opt) {
+ 		struct string_list_item *item;
+ 		for_each_string_list_item(item, &opt->extra_notes_refs)
+-			string_list_add_refs_by_glob(&display_notes_refs,
++			string_list_add_refs_by_glob(the_repository,
++						     &display_notes_refs,
+ 						     item->string);
+ 	}
+ 
+diff --git a/notes.h b/notes.h
+index 0f50020816..b571ecede4 100644
+--- a/notes.h
++++ b/notes.h
+@@ -327,14 +327,16 @@ struct notes_tree **load_notes_trees(struct repository *r,
+ /*
+  * Add all refs that match 'glob' to the 'list'.
+  */
+-void string_list_add_refs_by_glob(struct string_list *list, const char *glob);
++void string_list_add_refs_by_glob(struct repository *r,
++				  struct string_list *list, const char *glob);
+ 
+ /*
+  * Add all refs from a colon-separated glob list 'globs' to the end of
+  * 'list'.  Empty components are ignored.  This helper is used to
+  * parse GIT_NOTES_DISPLAY_REF style environment variables.
+  */
+-void string_list_add_refs_from_colon_sep(struct string_list *list,
++void string_list_add_refs_from_colon_sep(struct repository *r,
++					 struct string_list *list,
+ 					 const char *globs);
+ 
+ /* Expand inplace a note ref like "foo" or "notes/foo" into "refs/notes/foo" */
 -- 
 2.56.0
 
