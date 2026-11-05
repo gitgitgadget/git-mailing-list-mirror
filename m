@@ -1,100 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.49
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793907737;
-	b=K43W5+UHWefiLM185jNnc1RawDgmKkkjMeqVXIU/uJ6pt6KbmexwkIerM3SypxFhYihu
-	 qTK8UYd+aYFTIFQPutkAWmCbRlDv8RFpe0qj/7svy1Ux6dVsIuqpPGElGmMxPz6gdeNWM
-	 AIPvvsyDIbLIuZiIiu9qWt44xPC61Dk61U83VTCkK9CPlSw26A85prdf3mFpyFISLLDM1
-	 DwI59SNrwLk+AgeHsgOM2k7cCTdzeTcz1DnLf2rFdcvBRx817ugrc+Px26W04XGVuCnRS
-	 vECrUj4pFKTEHf1QyUD26q7HIcOC6HP6rXkVO4MqetCOTtxvvv93HCrLq2Z4OOHiZ6g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793907737;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=Vj/o2UH4DrzLJBTI3x/RnZeNQDKlle0fo1AOXdyRB5w=;
-	b=lD2syokwGUk0IoujatIYz2X8V/k4RPsXv15InviN9WRa559rXXCOLyQ1dXuS07aN7Hrj
-	 REEpzXNOWcknKRDSqzbmjQesXCRIRLGtceViSthQFHegCKf+u4RPKC4JuJw5BcU3GVPr/
-	 UkpA5GvhK2ZANbdpD6aqqkKmYxPfjVhbPJ9Afh8xSOeOaDIaLtMbCthVBvxUZf0WI9Fj2
-	 F8BMyi67OudjLRZPArZKS4SxcqvpMIKpSA4OdtOL/Anu0Nzl5TcHyO3iJTxhdZQ97yOcJ
-	 nvPLnHlD14qNwgJGYUXMopKV3HomQrybHQcPmGsUmjYMwVoa5olf5XkFRMZo14oEOJg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YQe1F2cT;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.49
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.216.95.84
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793907797;
+	b=P/Y349llf5JZci6lEshTR0+5HrKll8a78SQmwUUBQVvWUn6o6qJUMVZA1gMbEpX0fTPV
+	 MjMGTkKXlD0bwFO8Y7VTe52pBqzfLttWW5Hxgv/UDV7QZPff0l8NnlBIUmg4BtKB/Amui
+	 gAlQN+W0NM9+cWM44drV1PV9SkL4gMAinLpG7UPrpO03zN/aRVbOSFtj6sqF6fyYu1vvp
+	 NwqTO793r0V98aa72u2RnvvT7wxuOVu7ra6XCVH3rOYLxgmoE1sZ5H0k1BQg8njTU4Dyb
+	 yeOZHRUR690aWlNX3jvOSkpsk9o9b6iITc2W8jCqwFA46cNtotVL++BnBHVLuIXgi7g==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793907797;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:Date:
+	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=XPGFWO8fOQByD7vJN9FsR5gg0CnhzYCMoM6KLpEdIzs=;
+	b=y5BXUwFJ0cHpQJ3aANwTttPGCdN2WZuM9DNByuRHYd+e1FumZ/1WzsoUWmmqqOeNN8Js
+	 v2zZ+0DYKJuNSjHYLWJuhZ59DriHpEh5q70eq4on5+HAH0A1nmNLUoi+X6ien/6pZ23ou
+	 ktYlqd/Gd+e/p5PVk960UHCtQGzEgExAPVOpsrNbgmfsIqJUjVUw9Pv/6pphMawKKAQZj
+	 5ByPmfn0egeHwhv+9zA4iTKEI8ZyICYXdeC64JepYdFL5Tmuyqb167se04Mw6RbCydD6K
+	 Qr1qKP4ircgK/c73Y5rVHXqr24BNY0tN44ypVXekjDg1qPZ/1WGHvmYeIJnBIGxcoJw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=peff.net;
+	spf=pass smtp.mailfrom=peff.net;
+	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=AcwIDE2A;
+	arc=none smtp.remote-ip=217.216.95.84
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BC2606A33A
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 19:42:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A7BC2606A33A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2B3606A6C4
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 19:43:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F2B3606A6C4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YQe1F2cT
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-7d06ecaf709so1219664137.1
-        for <git@vger.kernel.org>; Thu, 05 Nov 2026 11:42:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793907735; cv=none;
-        d=google.com; s=arc-20260327;
-        b=etx4iasjY6P3nVJF4rcBKBa/JFljMra5qbeKnGA160P/2N6gDrtSwBiqcVgADW7JCr
-         ItCdKV2FYOdWBONSxkpKI/TT/qU9W/9XlwaPsG/9yQgy7vUzpHiWLj6TTAPXcFZS5dJw
-         o8e/VB07QvbtXeCYkBncQvD/hZGZV8IpytAjwzUrZqNRVoAfG8ke1CWf697pV2lklRX2
-         IjJHFbckST59bE2lX7o7f9yb/0V+0XzMxtaFj+JkrEDELdvEXlAkIqyozRryKwbwC+Ss
-         lIAUS5kXYpnVCkvL/zMZ3kkmv6PIh0c3mts613ihtN+tIgSNYDE0Y0VpL2ecc3uFJOjZ
-         NJoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Vj/o2UH4DrzLJBTI3x/RnZeNQDKlle0fo1AOXdyRB5w=;
-        fh=oTqOgLCFqaxKzggvcHWRoGGQZTP5AgfaOx7rGU36fEY=;
-        b=fOY4Ves0z/T4CIoWRVaffvwtu77dQQY6dt5TxiAISR4BbFgd9G8dL52k35tU2KycR5
-         weW7A6lT0KQgi8Xp7gXxmkzASUQI9Wlf0tcdUfYSjAU6M+oY2VRJSCj3ajpWCE6WhmZT
-         me8MAE6iOiI21Tw/iORrawgDObPyjcotxkfL3iLdEzyCTGSj9DLG1jgM7LhnZh8BNQb4
-         BO7yKYCCjEYDO+AakKxbzTnoAfG1CbaFAbo3RWyT6YxlYUSg98i+JIgXnoRY+D8qK50n
-         Y5KgFtIvikkHJox9N86NPzhtdX3TrPtOhNxbV1k+eJh3InoXqUah31zQTE/3vnD7dwt8
-         c0gQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793907735; x=1794512535; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Vj/o2UH4DrzLJBTI3x/RnZeNQDKlle0fo1AOXdyRB5w=;
-        b=YQe1F2cTCoC0THL70ulaCgQuikTnv5IaTlvPuk+vK9YOwvrmsx8oRoyRGvJG5GWIkp
-         A63HBfzZJbrGRgLmznCWEUpwWmhA+me3I8VvDCSJ+BxKcoQihmYrPXv60nKHHVuyzi5v
-         UJov3DAGZucoXf5f3pRwigz17NkakEBJN0Xk6nCc7llU8NZjJbTk/cfMUuZa2CToyKw2
-         sTIPSa5R7DhL2Nar2vrIER+UA/A0F+Ngi6x7kEEDqAt8eNYCH5snmbuaMO47Czl55fX+
-         VnC/d2JOPYSLpDUrV4nXitIGEx6gJd31+gQnXkqhtFf03QpBULGdKHd0yn6JZQmhW0HA
-         N1WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793907735; x=1794512535;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Vj/o2UH4DrzLJBTI3x/RnZeNQDKlle0fo1AOXdyRB5w=;
-        b=PFvA2GxSUTOcJFjm/02SKkeanAj5fLDt7NYO5Xkxn87tu6raE6hX0lwIapzBDoxN/+
-         9mTf7wT9/2tAKALXdafjYv9WopeqpAiWv6cWPZzzNlY8qleFMjN2KRVFaslsb1jivSRU
-         yE+4WZeFOuDPOkB1tHR/8+Ixqlvk7WCyd3MtabJUoOhReBVIpBoUMyfXFFReaWj6sPeE
-         Jz3JoozB2+RzTcEBPpkffc0LrL4ae+nJeTpBcMwtwDrqlmHOWD+6speQURmtEtN+8AUt
-         PIM15pebd8ckBgNgMee7wSYS/E4c9Wv8ZsSr2mL8C/j2ZIEBpkFSrygX7NClOmnaA0dw
-         0wlw==
-X-Gm-Message-State: APuU4Z+Ab9es/ejfCJ1Nk+tdZ5tZmWlWtWXZIkfETzDA561Q9uVPVTB6
-	VAjgRJKoHWbXG2UXvpmXTJNewJ/wbSVjYvc9a8WwSSiDYxFqGW4wcGHsYGIL0DNIPmcx6dbLVUD
-	STgBekbMs1pO1TtEjohQUIfhq8617Qe4=
-X-Gm-Gg: AYBFou2BdAMv0ITKZzUEPLKnpljyh/SurTtAnJSTThvnTvvLswwaPzKd1MqomiiYkFs
-	h0S0efr9dvDhg0Qy63NuDGkewI0KrgAm0rFAmQbl/MxpWTcW2FamLiX1TzDawaXyZWVhvWhDFgk
-	JTdwy0o+lKOpkcJQecvzgLhNvRaNACfxj+qZTcwwx+j9x6zJmoCfWVAnvEbM0mO+ke3NLhXDjwv
-	iz21M95dpgni/9h6sR/OYuiXBIo8ikd+85Oq4hvFQaogWOe0+CxPtvLzcHiGzB4n+LLqmJTddYW
-	NJ6KxsJTYdVVyKVIQeuQgmSWn8Ru42/vf+/+KyZsHk9QOOnJzcWdIzn4p3lDRHCcadoWmOaWiAd
-	Z9sVJgfV8zrFxXpaQSr138cVkqy1Tk8C5zMnRSzTj/RfblCLaqvmQ9zGh9owfS08PLPAFXhTeEv
-	6iuJy/da0nyYMFzsMtEV3vMwo56nF7ohAHE5eP9sc6C+KUiw==
-X-Received: by 2002:a67:e118:0:b0:7cc:1b19:9258 with SMTP id
- ada2fe7eead31-7d2a12f2c6amr463105137.3.1793907735407; Thu, 05 Nov 2026
- 11:42:15 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=AcwIDE2A
+Received: (qmail 31807 invoked by uid 106); 5 Nov 2026 19:43:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=74TpPSHJ/ehD79b09Hp2NY1Le3mLxRbDTRQnzLlbVX4=; b=AcwIDE2AgBkCkz0osiUqONX7Tb4HSnpTRnKBpp5zdbj/Wgnq8OYydDEbB23D6Qne1SLzIVXscUf4rsggteVsAI4zJPBIqE+LiHMsQULDifpOp/iZHplyXzKkqJ2k57/ZoE9j7SZP2Ha4s1VNsMnHBXAmnIi9kTOdHZflkUe2peqLQWqGpG/ha8ZSEEa/smkkqhZb0+8nmuZrhLxMoCoYlJhwVoUiTJUH5izKuKtpScY/Tdyi07Cvigw65/dpZSfg47RWCRpKiPF9PYhcZgsg7nDd/hV99ciY0pDJ8CRSPQDcENYDS3j+1IsCxch77K4H5hvlUkmZIEvOusThrwvU7Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Nov 2026 19:43:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 62887 invoked by uid 111); 5 Nov 2026 19:43:14 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Nov 2026 14:43:14 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 5 Nov 2026 14:43:14 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Patrick Ohly <patrick.ohly@intel.com>
+Subject: Re: [PATCH 2/2] odb/source-loose: fix existence checks for newly
+ written objects
+Message-ID: <20261105194314.GB2898829@coredump.intra.peff.net>
+References: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
+ <20261104-pks-odb-loose-stale-cache-v1-2-a00d5cdb5e7d@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,231 +60,143 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CANHmUQTDpwW7N7axexos32PxvPBPB10NFSpM1bUiKAbk3SMSyw@mail.gmail.com>
- <CANHmUQSBs=Mq1Y1GTY6P9FtyCQz58bDWFgJPgwv4r5rLP3C1Bg@mail.gmail.com>
- <CANHmUQSZqXtqXsiDQs+1unGcyEuaPhaF8__E_Cy4fWNqxapY5A@mail.gmail.com> <b818b1ed-5034-4588-8d48-64b7f9efa764@gmail.com>
-In-Reply-To: <b818b1ed-5034-4588-8d48-64b7f9efa764@gmail.com>
-From: Shashank S <shashu8660@gmail.com>
-Date: Fri, 6 Nov 2026 01:12:03 +0530
-X-Gm-Features: AclHuK81pA5uePEtzwJObQ8gb9Q6S_TfI_iiV6TZeg9_hMmJzx8Fd1pLJJoTojE
-Message-ID: <CANHmUQTnOkunfkSiDS4uVQHxKHvGruG=F7__Wed75QDt9pF-Jw@mail.gmail.com>
-Subject: Re: [Outreachy] Project Proposal [v2] : Implement promisor remote
- fetch ordering
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>, 
-	Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261104-pks-odb-loose-stale-cache-v1-2-a00d5cdb5e7d@pks.im>
 
-On Thu, 5 Nov 2026 at 21:53, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
+On Wed, Nov 04, 2026 at 01:16:35PM +0100, Patrick Steinhardt wrote:
 
-Hi Kaartic,
+> This issue can cause git-merge(1) to die in a partial clone because we
+> try to fetch an object that we have just written, as reported in [1]:
+> 
+>   1. `prefetch_for_content_merges()` performs quick existence checks for
+>      all blobs that need a content merge to figure out which ones need
+>      to be fetched from the promisor remote. These lookups populate the
+>      loose object cache for the respective sharding directories.
+> 
+>   2. We lazily fetch the missing blobs, which writes a new packfile.
+> 
+>   3. We perform the merge and write the resulting blobs as loose
+>      objects. The cache is not updated, so for all blobs whose sharding
+>      directory was populated in (1), the object existence checks will
+>      fail.
+> 
+>   4. When checking out the merge result, `prefetch_cache_entries()`
+>      performs existence checks for all index entries that need to be
+>      written to the worktree. But due to the stale cache, the merged
+>      blobs are reported as missing, and consequently we try to fetch
+>      them from the promisor remote. This fetch fails because the remote
+>      will most likely not have them.
 
-Thank you for the detailed review. I appreciate the questions; they
-made me realize that I had repeated the task list too closely instead
-of showing my own reasoning and technical judgment.
+I don't doubt this sequence of events, but it feels like it is pointing
+to a separate underlying bug.
 
+Anybody who is passing QUICK should be prepared to get a false negative
+and recover reasonably. That's what QUICK is for. And anybody who is not
+passing QUICK will not use the cache (as you note, they do not use the
+cache at all, but it would also be reasonable to use it and fall back to
+a refresh).
 
+So it sounds like somebody is using QUICK who should not be in this
+path. At first glance, it makes sense for prefetch_cache_entries() to be
+QUICK: it is just a prefetch, so it's happy to get a wrong answer.
 
-> > 3.  prune-packed: remove USE_THE_REPOSITORY_VARIABLE
-> >     Status: Reviewed and marked ready for integration by Patrick Steinh=
-ardt.
->
-> I think the appropriate status per What's cooking is "Will merge to maste=
-r".
->
-> I'm not sure why you removed the link to the mailing list patch. You
-> could keep it.
->
+But as we've seen, a false negative here can be a problem because it
+actually tries the fetch. The most obvious issue is the one we saw here:
+if the fetch fails because the object is in fact local-only, then rather
+than say "oh well, I guess it is not something we can pre-fetch" we barf
+at the lower level, in promisor_remote_get_direct(). It feels like that
+low-level function should be informed that the caller is in "false
+negatives are OK" QUICK mode and quietly return failure.
 
-> > 4.  test-chmtime: use parse_options() to parse command-line flags
-> >     Status: v2 submitted.
->
-> Ditto.
->
-Thank you. I will use =E2=80=9CWill merge to master=E2=80=9D for the prune-=
-packed
-series and restore the mailing-list link. I will also restore the
-mailing-list link for my test-chmtime series and state its current
-review status precisely
+But even that is tricky. Our fetch request is all-or-nothing, so one
+missing local object means we can't prefetch anything. Not great. Plus,
+even a quietly-discarded fetch attempt is expensive to do, when we could
+much more cheaply get the object by just looking again at the
+filesystem.
 
-> > Internship Plan and 13-Week Timeline
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > The internship runs from 7 December 2026 to 8 March 2027.
-> >
-> > Weeks 1=E2=80=932 (Dec 7 =E2=80=93 Dec 20): Phase 1 - Visibility and Ba=
-seline
->
-> I'm a little unsure if this needs 2 weeks...
->
-I initially allocated two weeks because I expected that making the
-current behavior observable in tests=E2=80=94potentially through Trace2 or =
-a
-test helper=E2=80=94would require substantial setup. I agree that this shou=
-ld
-not be treated as two weeks of isolated work. I will aim to establish
-the baseline and send any small documentation or test patch early in
-the first week, while reserving the remaining time for review, active
-upstream changes, and the initial design/RFC discussion. The tests are
-important as a safety net for subsequent refactoring, but their scope
-should remain focused on the existing behavior.
+So I kind of wonder if prefetch_cache_entries(), along with any caller
+doing an OBJECT_INFO_FOR_PREFETCH check, ought to omit the QUICK flag.
+It would mean that the normal case of having missing partial objects
+(about to be fetched) would cause us to re-scan the local pack list, but
+that's not _that_ expensive, especially compared to the fetch we're
+about to do.
 
-> > - Goal: Document and lock in Git's current behavior to act as a safety =
-net.
-> > - Tasks: Submit a docs-only upstream patch defining the current
-> > fallback rules (accepted before configured, extensions.partialClone
-> > last, fallback on failure). Develop automated tests utilizing
-> > GIT_TRACE2 to definitively lock in and prove the current sequential
-> > fetch order.
-> >
-> > Weeks 3=E2=80=935 (Dec 21 =E2=80=93 Jan 10): Phase 2 - Client-Side Orde=
-ring
-> > - Goal: Implement local configuration for promisor remote priorities.
-> > - Tasks: Introduce the promisor.fetchOrder configuration list. A list
-> > is preferred over per-remote integers as it composes cleanly across
-> > config files.
->
-> I think choosing between list vs. per-remote is not in scope of this
-> application. It is better done in a separate RFC in the mailing either
-> as a small patch or as a discussion that covers pros and cons of either.
->
-> Also, I think you do intend to send this change to the list during this
-> week but it may be worth mentioning that explicitly for clarity.
+Possibly we'd want some logic to avoid doing the re-scan for every
+object (so if you are about to prefetch for a million objects, you don't
+want to trigger a million SECOND_READ re-scans, but rather do it once).
+That would require some refactoring.
 
-I completely agree. My proposal wrongly treated promisor.fetchOrder as
-a chosen design. I will not pre-select a list over numeric per-remote
-priorities. Instead my first step will be to begin an RFC on the
-mailing list to compare the two approaches. the discussion will cover
-configuration layering, duplicate or unknown remote names, unlisted
-remotes, interactions with "accepted" remotes, and whether explicit
-local configuration may override the current extensions.partialClone
-fallback rule.
+But it would fix this problem, along with any other related ones. In
+particular, I think your fix here is leaving lots of cases with the same
+problem. Missing our own loose write in the cache is an obvious problem,
+but it's not the only reason we might fail to see a local object: it
+could be in a pack now, or it could have been written as a loose object
+by some _other_ process.
 
-after reaching an agreement, I will send an initial implementation
-series early in the client-side phase rather than waiting until the
-end.
+So I suspect you could cause the same problem racily by running "git
+log" on some local-only commits while somebody else is repacking, with a
+sequence like:
 
+  1. git-log scans the odb and builds an internal packlist.
 
+  2. git-repack runs in another process, migrating loose objects to
+     packs. git-log doesn't know about our new pack.
 
-> > - Tasks: Draft an RFC proposing the protocol v2 explicit priority=3D<n>
-> > fields. Implement server-side advertisement gated by a new
-> > promisor.sendFields configuration.
->
-> It is a bit interesting that just drafting the RFC is covered in this
-> phase and not discussing this on the list (like how it is mentioned
-> below). May be you intend to but haven't communicated it clearly?
->
-> Also, isn't `promisor.sendFields` already exist? Do you mean to say a
-> new field that the server sends when the promisor-remote is advertised?
->
+  3. git-log tries to diff a commit. In a non-partial clone, the diff
+     code eventually tries to read that object, realizes we can't find
+     it, and does a SECOND_READ. But in a partial clone, we try to
+     prefetch via diff_queued_diff_prefetch(). That uses the same
+     FOR_PREFETCH flag and will try to fetch it.
 
-Yes, I intended to discuss the RFC on the list, but I did not
-communicate that clearly. I will correct the timeline so that the
-protocol RFC and mailing-list discussions happen before and during
-implementation.
+I'd guess most such cases are going to be racy, though you can imagine
+ones that aren't. E.g., if mktree actually did pre-fetching, then
+something like:
 
-You are also correct that promisor.sendFields already exists. I had
-misunderstood the phrase =E2=80=9CServer advertises it, gated by
-promisor.sendFields=E2=80=9D: =E2=80=9Cit=E2=80=9D refers to the proposed o=
-rdering
-information, not to promisor.sendFields itself. The work would not
-introduce that configuration variable. Subject to agreement on the
-RFC, it would use the existing promisor-remote mechanism to support an
-ordering-related field that a server can advertise, together with the
-required protocol documentation, validation, tests, and
-backward-compatible handling of unknown fields.
+	for fn in $files
+	do
+		oid=$(git hash-object -w $fn)
+		printf "100644 blob $oid\t$fn"
+	done |
+	git mktree
 
-> > Implement the client-side parser,
-> > strictly adhering to the "ignore unknown fields" rule to maintain
-> > backward compatibility.
-> >
-> > Weeks 10=E2=80=9312 (Feb 8 =E2=80=93 Feb 28): Phase 4 - Upstreaming & P=
-recedence
-> > - Goal: Secure mailing list approval and resolve precedence rules.
-> > - Tasks: Settle precedence conflicts (Recommendation: local client
-> > config maintains absolute authority, while the server's advertised
-> > order sorts unranked remotes). Split Phase 2 and Phase 3 into a clean,
-> > reviewable patch series. Route through at least two rounds of mailing
-> > list review.
-> >
-> > Week 13 (Mar 1 =E2=80=93 Mar 8): Polish & Stretch Goals
-> > - Goal: Finalize documentation and explore dynamic caching.
-> > - Tasks: Write final release notes and user-facing documentation.
-> > Stretch Goal: Implement runtime memory of failed remotes within a
-> > single process to skip them on subsequent lazy fetches to reduce
-> > latency. Submit final Outreachy report.
-> >
->
-> To be honest, this plans seems mostly reiterating the "tasks" section of
-> the project. I would love to see you dive a bit more deeply into the
-> nuances with your own judgement. While discussion is necessary to
-> achieve consensus, knowing your thought process helps us understand how
-> much you've understood about the project.
->
-> Also, it may be worth mentioning what kinds of potential difficulties
-> you expect while implementing the plan? What open questions do you
-> expect to settle in the RFC discussions? etc
->
-This is great feedback. In my revision, I will focus on the questions
-that drive the design rather than repeating the project phases.
+might run into similar problems. It needs to know about newly written
+local loose objects, but they were written externally. You might even be
+able to find a similar case where git-merge ends up writing the objects
+via a helper process, but I didn't check.
 
-My current understanding is that Git has deterministic baseline
-behavior but no separately user-configurable priority mechanism:
-accepted remotes are tried before other configured remotes, configured
-remotes follow configuration order, and the extensions.partialClone
-remote is moved to the end.
+So I dunno. This is fixing a real case and not making anything worse, so
+maybe it is reasonable in the interim. But it's the tip of the iceberg,
+I think.
 
-The important open questions I expect to settle on the list are:
+> We could in theory fix this by flushing all the loose object caches
+> again, like we used to do before 5946a564cdd. But that wouldn't address
+> the root cause: the cache would still be stale unless somebody does a
+> non-QUICK read for a missing object. Instead, fix the bug by updating
+> the cache whenever we write a new loose object.
 
-- Whether a list or numeric priorities compose more predictably across
-configuration files.
--The behavior for duplicated, unknown, and unlisted remote names.
-- Whether accepted remotes retain priority over a client=E2=80=99s locally
-specified order.
-- Whether extensions.partialClone must always remain last.
-- whether server preference can order only remotes without a local
-ranking, or if it can override local policy.
-- whether advertised ordering data should be stored after the operation.
+I agree that the object cache flushing was only fixing this problem by
+chance. But I think it might be worth reconsidering the change from
+5946a564cdd. Flushing the cache (or not) should always be an
+optimization problem, not a correctness one (assuming the rest of the
+code is bug-free and using QUICK sensibly). But a SECOND_READ fallback
+is a good indication that information about our odb is stale, and it's a
+good time (from an optimization perspective) to flush them.
 
-The main implementation risk is preserving the current two-pass
-behavior for accepted and unaccepted remotes while introducing an
-ordering mechanism. The protocol risk is defining a field that older
-clients safely ignore and that malformed values cannot make fatal. I
-will include these judgments and risks in the revised proposal.
+  Side note: I do think there is a correctness problem with caches going
+  the other way, with false positives. We might say "we have object X"
+  because we saw that it was loose earlier and cached the result, but a
+  simultaneous maintenance job then pruned it. So imagine something like
+  a fetch, where we opportunistically optimize by saying "oh, we already
+  have X".  Later, when it turns out we don't, the fetch fails, even
+  though it _could_ have succeeded if we realized from the start that we
+  didn't have it.
 
-> > Availability
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > I can commit 40 hours a week to the project during the internship. I
-> > am based in India (IST, UTC+5:30) and can adjust my hours for
-> > synchronous calls, pair programming, and mailing list reviews to
-> > overlap with my mentors' timezones.
-> >
->
-> That's good. If you have any other commitments like exams / planned
-> vacation etc., kindly share them upfront.
->
+  But that is a general problem with racy pruning in Git, and it affects
+  both packs and loose objects. Nor would flushing the caches solve it
+  (though it could help reduce the race window in some cases).
 
-I will add my confirmed availability and disclose any known exams,
-travel, or other commitments
+  So not something to solve here, but I just wanted to qualify my "cache
+  flushing should never affect correctness" claim. :)
 
-Since sending the previous proposal, I have also completed further
-Phase 0 work. I built Git from source and ran the relevant test
-scripts: t5710-promisor-remote-capability.sh passed all 33 tests, and
-t0410-partial-clone.sh passed its 39 reported tests. I then built a
-local blob:none playground with origin, cache-a, and cache-b promisor
-remotes. Trace2 showed Git fetching a missing blob from cache-a before
-origin when extensions.partialClone=3Dorigin was set. In a separate run,
-I intentionally made cache-a unavailable and observed Git cleanly fall
-back to cache-b. I will state carefully that my manual test verifies
-configured-remote ordering and fallback; the accepted-remotes rule is
-being studied separately through t5710, protocol documentation, and
-promisor-remote.c.
-
-Thank you again for your guidance. I will post a revised proposal
-shortly that reflects these corrections and explains the design
-questions, risks, and mailing-list discussion plan more clearly.
-
-Shashank S Mogaveera
+-Peff
