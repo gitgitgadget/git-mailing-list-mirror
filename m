@@ -1,120 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.217.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793887052;
-	b=1yTsJf+OxIYomG14EZF+3UwLQl4AvvfVCPoXSApFZZPLqioquqcX77NU+7x8OEFmoitR
-	 pPmAsOwTCAEeDfvhsL9C7yhprAhek1IfyFbwKO4bZ5rnZVSbZ1XuV205ijRBlwUw7qVU8
-	 0uOXAQTsJLqgQtzDQ8aAIARwnBBp0o7TftvY3Uj0JlCgVmPmPJYPHlhPjKr+WEGz5mNyz
-	 cji5NuuCG/wWz0vtIW886wztyjzf9fV28LbAk71ifJfJLZ1xxCB0EHXEIt5T4OhAbA6DM
-	 2F3GrRM378YdFDjWCuzyMUmMMCHnbJp74JBu6NO+ezcLBkIJ7mqZyOleQfYNo/ZKXaQ==
+	t=1793887713;
+	b=VKBKMCKOR4E3DeykwIgm8Si9dnu4rxydMud87/vdOELuiu0tqgznCgV97pheCwuolq1f
+	 ft911x319lTX/obDilXwZUTW3bLqEr7u29uH6QQ8QGE+pFpAged1UFO0M4gOuDp7c5l2H
+	 lGTOnJoSCZCAseDuvzBP8dK5EmHgDkdK6W2DRZGHBqhJxvT4KJ0jXwTaa4XgsyyCwF0cJ
+	 ZTLWuUMYmyOZ7j79s9Dg9yTyPDZ1ZbI+SilTZrQEqvLiVUcnb9aORykKb1evsMeg/pC9L
+	 xY4cvISOKnTAduobjY2zpZicViePoi4EmYrfK/lvGwIxaR9Lkf9SvRDiOLHXyFvU/Zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793887052;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=PC1sM3t1WPM028gYnHNIIJ9b5YhA9YCnnn3JO1QdzCw=;
-	b=MFLmyDi1Lrmu9ysLQLf7vxGtJBOk05Rqd6Lb3AkqJvrbSyJNGPy/E6YTKUzQ2dDZ8Tt1
-	 I6GRA3MbTx8BUGDKeGUU0SWHMSFVGl3/kXkOi6dpUTnViXSF1LOTYCqwQeg49b8iJp2AM
-	 qceXd6zYypjUX06I4AarDzukECOBO/pafeWxefaStBlPk8o/SDs1PHGSJGS08RoiL14MD
-	 p2oIAkvB0pEmDTd2dM6byx6g3HW+0GyGG0dwrUexMhhg9dJJaGzi24NtF8ArcW8yelqGs
-	 J+RBS3LyFtajmlowtYRsnDgXChLw7nz+MIuuPXmhEhVQW88b+bD++a+sZCuga2z5JWg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793887713;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=zXqHaiuScfRJ4vwvXqPtaE3e0t/YUFjd804gG14vF9s=;
+	b=w9pmbDXDQTlzOiFG+bvJFK7ZveVPTBXM3no7L+kBWmnUH/kOGOIUxL1q8o9N6pHptP1b
+	 hPenclphhfsawesyOWIe8GpIdLk16epnf387Gw8LJNtDwLDu2Lfyk03GclNQ0Kl3kolfm
+	 Cp6HJc5Kw7UoDp1IgVavMh9yhZLqLQymgxyllfv9XcJrnPfLOXQKERw6WlDmvRRDzdpeF
+	 zpY4SJflR+9q4jXZOiD32LaWZMKu1NU4tgoq+fP3ULLkKSDBmC0X481VsHyVhU6M5OyhI
+	 fSWy10jHHSEdZ0I/XatRYzGjy1m0qmKqeWrf6basp5dr7HMtboVNUrFFn8WJJmAwOkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=i7dsOaQl;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=5LbarVaS;
-	arc=none smtp.remote-ip=103.168.172.147
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qqHBoQ3E;
+	arc=none smtp.remote-ip=209.85.217.41
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCE56082BE4
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 13:57:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ACCE56082BE4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CD6606A328
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 14:08:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 85CD6606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=i7dsOaQl;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=5LbarVaS
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id E3C98EC00CA
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 08:57:30 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 05 Nov 2026 08:57:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1793887050; x=1793973450; bh=PC1sM3t1WP
-	M028gYnHNIIJ9b5YhA9YCnnn3JO1QdzCw=; b=i7dsOaQlNTkty3SGOvp0llwoeO
-	mD7EUwKd1zEASRHu2SofbnN3wS8t0yxkXRERbUCK4fPTN84QrTucSiMCdc4C5I/O
-	jEvgOEGlzPbk6GZi+gvyxNPDZVC0RtQTXII2wQg/tmVJquDxA/J7AMiuFlmm/itF
-	ZtmTl42YEJaZc+kRDqh9/7eZZ9zcFPJ4wPOJAmmps34a++DCKYDasW0vcD2BZk5r
-	cbriVEQSeG7lMhLT/RiGl+NmWOynhV1VGvzLZ+OYeMSo+pFZX4PK66+yQ69lZiwe
-	VnQaeXTavoU/xySCyfVS/JWQEVY+9vVL+R12GFPuUvNj9kU6mREl8jLuIbaw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793887050; x=1793973450; bh=PC1sM3t1WPM028gYnHNIIJ9b5YhA9YCnnn3
-	JO1QdzCw=; b=5LbarVaSGOZXLOUJu5DmWUD/OfxhWNW+w5iseYmhjm5NuR5Q+Fe
-	N+ZU1Ird/StjQ5JDfli4ICTpVEJsrOuZaMQ/Nk1NwlRX11wcO307MhvKXF6Q7wQZ
-	ISkrZEWb4TqVdpfIFU9iWCegwsvdHTmbn8jfpzl/raLmU1E61Wd9tE0sN0K80cWf
-	teTxxdrbdDZWx5YLEK3JkA2qD+8oR9epKXRzycZCOthVm805Vr90WCbUszalIqFT
-	MRj3BvqhjOXF78u1of5PVf7tQgXPFXffrhMnu0eIUq9wfXbZ5dJEol5YB+7qUWt6
-	5YO4PJciMxYDbtaqoX4tTwAL+vlaTeFzZCQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793887050; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:V8bzXzAohYyEI+hp4Zt9y68ByQoKgRDFdEk7oaEtcw7NaeG
-	wHVEIfanOsjBm4TKuBHFkX5BqGeJq5MS0Fcjr6leBHcWpulyMuVSFOVOURVhAHFc
-	lrlFuDHiAEsGdzr3LgiUixSud4s0PNMxvJYYOsqRrdSOzSLZa/rPGl3pIw9S8G6S
-	NbV1F1q96kYh/99/IXDxPUENhYi7LFPMZNLYEhgy5YdqyPAdiK32wqq5Gkn1qAkI
-	G2rxM0J/OcI+ppADXGC404GYIyg7eDtocTL9Do11AYiRg6G3FhNdZnUaetrP3Bge
-	eBlZlyoTn5B0Fo/T1RHO5cTjFCx+AoHU4Vet0Mw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:SqnPU9/mOacQCA8p4GH/jZr44Eowha2L7jIvy2gvZ6w=:gju8by2HwosuXAYotiiEmyrv2PAtPvCM1DPW5URfAXs=;
-X-ME-Sender: <xms:Sovsaoa3lr0JFeIEGie_dsQPAjNzDO66lmijYOiZWW1X0M_PT6SnfA>
-    <xme:SovsapYnKl5Lk3_zVDPChwgDyxEZjmaCskcRGlZR3j9f69cUcAa1wTEHDf8vFFLYd
-    HwiLSkMDK3-jeDPmmdtafQhka9R5PnNg7beiwOfqAsL7LEFkSxkBg>
-X-ME-Received: <xmr:SovsagmVFL4OYJ7ngMQ59PKDEVmb_nCeKKhumJp3rndwcP0BKsqqhA>
-X-ME-Proxy-Cause: dmFkZTF/5u05dS3OZIK4owA5/IO2++n0/fubvYmUtt6gWOknluPdzugDHboNJmWMcaIyCY
-    WaaW4wFXHv6f2rx2n9HDO6mscIun5H03OafSD3WL28FVqn+9T107OBFpNin34iBavlpQRq
-    7Nwc9Yiesat19fHZ1mcanyJDQ28a7BCjMqWUEteF8+tVYvjcrQ8v1weSOMwJ7Fod8C33Z4
-    JWMOuSAHte0n3Pa2HyZ2emftKbyt+u3pw9pBB/YHhcjTsA7aZSlWP3AZULt6nRbOdqZaha
-    snbTO6HrB+XIpqizt4/lbbJ7BvCuFww/p1M8RPVBLNcryinyj6UJ936+OUPo5lzx9hsocN
-    SYlIJHXpJR3zMiDZdNczLlzOVJm2G3cJ16P78XsbLAKvKzrsbmjCJ6H7FD8W7M2wLN3xHI
-    Rik7F0K0bE/v7/B5hGO4fJUL2sd+aQgFYLnG0/R8ptQL8tunft0b6iE3rDtU3tfuq5JOkx
-    UyFRlKXuoXWzGlrLdk/IdbQ9qg1BK3/ZqYPpgjOxxYLjaAUFO3Nb+ZXXUNRJXP53fwhRBt
-    Fsw6Wi+L6zidv57h4IXmqNXpLvNEkoDozcS/7tpPnSBvroJlM/BB3ZS9DP6pjwQzUYHE5q
-    sPnHwBr8b4OgDNVDia5AJGFHmpk9NZzEiOtBMQP1V6D5XxlNCGbBTeFsRoLw
-X-ME-Proxy: <xmx:SovsatzTz8arSJ9A4lUh8QiirXYqKMEUTfusgNNIMAq0h9eoVAp2qQ>
-    <xmx:SovsamNaa1971DrfzQ6haTflxOQlAo13DI02V3U7Kxyky8Czs24E3Q>
-    <xmx:SovsapRZxt5Zuv86PIX5mXVn_dX7FX133pbW3myakkQuxxQL-bbtaw>
-    <xmx:SovsasbO89bGEHJjiXzYi9SJ6T2V4UNwCFLOi_eSYiTcLJ0Z9rqKIA>
-    <xmx:SovsauI6X3C_iIk-J6_9N_QV6_4CGgmigVbf3_bgJ_rsH1ih6JgBzEls>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 08:57:30 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 74ec09c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Nov 2026 13:57:28 +0000 (UTC)
-Date: Thu, 5 Nov 2026 14:57:25 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/10] commit-graph: several refactorings for writing
- commit graphs
-Message-ID: <auyLRZ8TWeqdIaRm@pks.im>
-References: <20261104-pks-commit-graph-write-refactorings-v1-0-d013d9401a59@pks.im>
- <0e74f6c3-2f43-4829-a071-27e96ab5e87b@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qqHBoQ3E
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-7d06ecaf709so1013898137.1
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 06:08:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793887712; x=1794492512; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=zXqHaiuScfRJ4vwvXqPtaE3e0t/YUFjd804gG14vF9s=;
+        b=qqHBoQ3Esba8PonREwNpOTeCeY/gPfpvmVMtbR5FIVKmn3KiDAtX/KGEhPiKJYE5to
+         XWnbe2mhb5BQd45jMjlkQFJ60Q3tVrt7vVNv194mP0abhbgxOyysDwvIOR7ntnWxr8Qu
+         ZSDa+b8VtE7XMawZ0ME6dtIIoYW/H1F5BUr86YLxEvoyF2BByCdyFxtpTXcphrP+IDtz
+         SuA4slaztBJzJMuTM9w+zeh94CTAU3YxFhHhiOlnv4JRgh35O6qDoQ+LaB9+wWIAucZs
+         S7MOoIHAzP89EQ8C+49fquNiVtJb/DZ8FxGmGa8kaiwcmxPDFwVm2DoA454dQrwO1Mf/
+         gMgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793887712; x=1794492512;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=zXqHaiuScfRJ4vwvXqPtaE3e0t/YUFjd804gG14vF9s=;
+        b=l2G0x0jJ2FOUfe6pGV9636gDwf+ltYHkwZ6F5E+4JF3Qs0UmuiCXs5HkpDN4N4jT5W
+         5jGINc1vqh/Lkf/EnapAUF/rhi7+yTIMOEdOgApvPVE1CQs4AOCMo3LCFnp8EiXc1GI8
+         PI/fdfc7WNnzZ8tTGiLfuB8TB0hK7UQnJ0g5zaXpctQZpG4lqmLfEM+yUf8oFDxAqrP7
+         GCf+voMmfgM/mUooGdRVOj+0985DLluYPtLC/y2iKgTJ0j4nh5LZVwt4MVheCP48IMNc
+         TRjoT2ioC6oWN4Ndm1JDF17t7J/nTptoMIEggPT4TxuDlBW4v08I6Npfo44xQYQy2/YT
+         8J2A==
+X-Gm-Message-State: APuU4Z84RTgRI/1mDdux03JkwQKQM5ugxLoppb1LEhLVavN4gkOdeVbN
+	bFUDUUj4NMbVop3jOPil3z/1w3A3wvaQeEe1IsCyG/2yA8ZaSBQwb9x65NUsmg==
+X-Gm-Gg: AYBFou1PyzE9aIK/L85+kOYGgnfpFj18GUI0d2pikPNzXriHlnrALgmtSyATw3DXS2c
+	rpUgfo9yoXPgbmVn6VE94zE/3cz0azZSp+PdItep6qGovmWR5cvOqGuoK4CK39r3b/vUAZdkxFl
+	1DBnI42spbp8PfcSuEC2kJ2Ja95oavecJfTRr6CS2wn911IRMEuloTCKzc0NQ9o4n9BrJXQgbaV
+	dBBJmcPMWrm0R7/L4t0ucseR/hf1Ek8bvnutwovsr1ryrI8p6anbeD+CCdSSv/937QW6Obbm7rm
+	GpQzG8bjIG0l+0u6156M1yhCknHR2hlyJz/UXtKB1aZHUBCYF69d9P6o007rLz0FMNLvE74R2gV
+	F0XQe//jhSRIcV4gHSqZ0qBbK1PmN0K0+jGiCeRVPUQFHYao1icOtRiupdlHzKSAcGPNQEXknny
+	0Y084zplV5jYiQ7OhS2XO2Sv6NSCgRB2+q7t1TNuNYF8SWfeD7XD85Xcjb2tdLoS1TRgkj/Bpbw
+	qWDfXj9WQIguRQZF/4yWj+JFeA+BA2Ic9F7S1dmakyNCgChLntcaRCLlYAZ5A/c3Zmm0iL1YQ5i
+	KANdqNYZVLzpyTCbxETezR9LrcBs7sU3213MWk24cDNJ/qgBECmHPCwfyVUkcJtXegpaRYeLIrC
+	961WsM2pDQcInG+gWCw4xUBwK8UnOpr3hlJ6UM4Udgy2pzci4g34yu9TySfZjOGcuWWrDJMpe64
+	EW0BhSd45HlQOzdy9aFkdY7p6AOjW8n9R4YFI7aPbcTM73xh0RtkJc
+X-Received: by 2002:a05:6102:30c6:10b0:7d2:8dd0:2ed with SMTP id ada2fe7eead31-7d28dd0052dmr1392351137.10.1793887712299;
+        Thu, 05 Nov 2026 06:08:32 -0800 (PST)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-7d296415719sm849998137.8.2026.11.05.06.08.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Nov 2026 06:08:31 -0800 (PST)
+Message-ID: <3d62a579-5bf1-4431-8bfc-757c3c873d80@gmail.com>
+Date: Thu, 5 Nov 2026 09:08:30 -0500
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,29 +92,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0e74f6c3-2f43-4829-a071-27e96ab5e87b@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] fsmonitor: invalidate untracked cache after losing
+ history
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de, ki.stfu@gmail.com
+References: <pull.2295.git.1793806679163.gitgitgadget@gmail.com>
+ <xmqqmrroyztr.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqmrroyztr.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 04, 2026 at 11:37:11AM -0500, Derrick Stolee wrote:
-> On 11/4/2026 10:57 AM, Patrick Steinhardt wrote:
-> > Hi,
-> > 
-> > this patch series includes several small cleanups for the interfaces for
-> > writing commit graphs. Most importantly, the series refactors options so
-> > that they all get passed via `struct commit_graph_write_options`. These
-> > cleanups are split out of a bigger change to make reading and writing
-> > commit-graphs pluggable via the object database bakcend.
-> These cleanups look great. They are carefully constructed to be as
-> simple as possible at each step. It's good to bring some of these
-> conventions into a more modern style and to simplify things in the
-> process.
+On 11/4/2026 5:52 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Ah, by the way, one thing I forgot: I noticed this recently already, but
-you don't reply-to-all and thus lose the Cc's on your replies. That made
-me miss a couple of your replies already, so I'd appreciate it if you
-could keep them.
+>>     A user of an internal monorepo reported this behavior, including an
+>>     AI-assisted powershell script to prove how it worked. I used an agent to
+>>     assist in porting that to a Git test script and a code fix, but then
+>>     applied significant human editing and validation on top to get it up to
+>>     my standards.
+>>     
+>>     Thanks, -Stolee
+> 
+> Would this be a viable replacement for ik/fsmonitor-untracked-cache-trivial-response
+> 
+>   https://lore.kernel.org/git/pull.2247.git.1791127155614.gitgitgadget@gmail.com/
+> 
+> that has been left unreviewed for a month?
 
-Thanks!
+Thank you for pointing me at this. I didn't realize there was already a
+patch working on a fix for this issue.
 
-Patrick
+Ilia's patch has the stronger approach of trying to preserve as much of
+the untracked cache as possible, which has some performance improvements
+over my change (in the "rare" case of the fsmonitor failing).
+
+Let me first see if we can take that patch instead of mine. I'll start
+some review over there.
+
+Thanks,
+-Stolee
+
