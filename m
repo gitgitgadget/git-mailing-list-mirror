@@ -1,100 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793918146;
-	b=NvX4jXJZbIETaazV2uEq8/Td48henp0bba5Yirnh7K3+KK7S9gxlqd3BKHSq1WtT/0Ag
-	 N5hq1VcRKUKqbTHHqXMXzrhXDmoTCrwwUsCiLRijjZxea7xNaD20I768BVVcYC7HTORBM
-	 gU+fqedFl4lTCtyyyhMJaKu9kvas1SzOYD92Gi3CCCBbuK7WEkUzHKY7mm5pHYMi6Xmyz
-	 2jNPSPxtYx0BowgrAjXyd2K4GEWgZPtwvMl0pt/l3t8juxMRUuEgU3tyr0dCTkkEcwAJ3
-	 YPnYcYceS8AUCTAV2Or5XV8BvL6HRS7f+zdU+FPXm7fg34gHuRFqUKxa56i2P0G1qPA==
+	t=1793918471;
+	b=pudYXZ2djilTH59R2gJEttxr1nAIWGS81rQZKpoeimxgFUvZPiluG5AmgLj/bN+Pl9T9
+	 DiLlE4hjPgkIVfQ73s39litR41qUYXSap5jRtB2gZCA+ppxwztMoHaYrhXEnJ1GD2dczm
+	 ImjbYRkB8OvMSUWBypRVtLyas7MNWtTA53uPmLLLgbxwaMtB2dycqo/lb9+t2e5bh50P3
+	 ZAT2Icn10wfa/5kscgkXq2Ky+okmwfhap+zEsnnCEC2uMQhv8YMWdwxdLz3h3SIg9gFqU
+	 SL2vFCn0TgNFvhIEeRu+GIv7bAKG96J6+qsZOepfqp5XUv1fxjwLEfjqXtrf/v26Dmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793918146;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=zocq7yfGbTzYHcG/8OtApMhRy8jzy2uGTHW6gAXZAEs=;
-	b=otDMgA0L4h/sdBs/xPSemko8pkTCVqQXlj6NkZMDlJBTfajb0wipEkETEPELu673wfTr
-	 lt2MBe6A11r6NPLW7vkE5vUV7copv0iVV3728WoaT4AiUjmchXC09RPXbNUKoTInTA1H6
-	 VradOwVG0xzcel8IzfFgs7jva/mJEONGfeRuHrrmUycsjc+t4AlIEq69kqaIWEP9a0veQ
-	 CKenuX/yhJUjBppZSnudBe0OSwpBxO9GoMjAEYzziOn6F8B9BdjdLviofDbabLraInmME
-	 eZ8Lye6Js/MTtGPmnr0WTGkWF+Qu6qJTSnQENgGp4PXtg1QxZURwDasSeITzbq/v6pg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793918471;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=YXKS7LusyXXsOscBov/Q76lb49QoD82Lq9o/A8Xiyn4=;
+	b=FIOqE6qZcKTzRtcLV3CGeZFJpgfWqOtqPDtN9r/RU0cxiAtuh3xk1EVE7xUQeP2tjAOr
+	 fw5b++uv7+R5edFKQ91ZZ0/90XTsIat5mHJo7xTGeL+HP2BU2/9Y+vNoI9ktJUWlC1t4S
+	 vIDl1KWbS39QzovjdkR4azLKC9Wx8jKKIpD4U9TD99oUOS9I8w6RAADXITjnJVClTrJ94
+	 ct4c1HH3ZKh72L3dNPFDiTL/ljvfyvOEcHdImIIfr0FoVO2QuTye1y5PDlZpA6glA9bLM
+	 Lfns93RrPd2ermPbv8QuILvhGEf3qsA4L5wfMIoeY/8ErC/oHYlLWxptTHyoXl5Kivg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Qkyrvw4a;
-	arc=none smtp.remote-ip=209.85.218.51
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=YrAi8dyP;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=LwrfRIV7;
+	arc=none smtp.remote-ip=103.168.172.148
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BC0606A31B
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:35:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 36BC0606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7B9606A31B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:41:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB7B9606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Qkyrvw4a
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c4395d31228so3305566b.1
-        for <git@vger.kernel.org>; Thu, 05 Nov 2026 14:35:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793918144; x=1794522944; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=zocq7yfGbTzYHcG/8OtApMhRy8jzy2uGTHW6gAXZAEs=;
-        b=Qkyrvw4aZp7ncgSwpoaUt420bDFZq3lugRHf7CI58gPd4xmmtOwpuo/d1fxh+3JbjJ
-         x6ycW9+ypunvSox13gxqeQM/TSaQ2doSynW58U0hV3JQUa+aVcpngQVPir3qJ5vTAF8D
-         7hr7d6+++yuS/DMRIcjgAntaB5/vQb/mdnFBm2eXABuP9eUJZ2e9N0h7IX9wWxh3Rr6y
-         brwK6+FNBhiSRW+odSKP3cwbYG2yy76q42RiZRGeUZEVsSe01gwdd7PDwp9ksqnXMMih
-         bEtKiqTERHqKvNtJ40ZCAAHfb6b95w+MPHUmtDIVkh/AD1qOlQLBl1mWdLVoIAXJaCgR
-         y1+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793918144; x=1794522944;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=zocq7yfGbTzYHcG/8OtApMhRy8jzy2uGTHW6gAXZAEs=;
-        b=tg7gLV56k+/RmfCaBnGLqSUs8bY7mDFwZSwnFu72VTMU0mFieWcaFISUSwqJVE4wab
-         01tJNV/T6IdTxRDx7kjmCOGVS5sGJPRom/hBlEtod24yw3GqNu5ISb2dednnjmIg+NSi
-         LS11AlYVI3nTn+oNHdzGey67VbMEaEVMUY+LKP0YZcsxSPRAa0prAhR4GqXwkBrhVYZs
-         Cp1jzWTOCkCLhduRXSAkV9haO00s33hrcBnxAVDW+3kj0lkbxBd5/DGIJ6lEgNxiP5+d
-         eP9+cGybjXLrgWA3hJLyQPAtfGovNmFTUjqdhVzphydcxOxt3AL81XxEESdj5/gDaoIh
-         uFXg==
-X-Gm-Message-State: APuU4Z/lH8KyYXYqEXjZQGVb2yAVnCiRXrbo4fBOXnearjvWIFHUnl77
-	2vUxA3+waVwSm+nZzqq6jTl6ESEyQlyXpoEOVOjGE/CiM6mtkKFBGYPDf01OWlW7
-X-Gm-Gg: AYBFou169FIW3iNxP+yM59DpWvWzO24APSXbsRc/YDTCY8EwwTjE3zGId+UqYlw83fG
-	kulCb1eUUkstVc/6JbeagTA7pL8tnzcSHz3Y6kw8l7tuDStVHBw3psNL1K0xbncE/mYb2/Zjj/W
-	pdcEbpGN7sQaChmkioSng3dvAS6eekbc1kwU5O5pPUsyOcDKFGI5n5C6EBlxt31ZpAt/iDxF8g6
-	3lg0w3tPwlpncHwqnDV6RP/6IDGE/cgAwkUbAxtM6Rnlw2RBg7VfVhNb97JZIGWlqep6Z1U/sF0
-	qb2MxNaQEYfRwk64rHXKdu2+e+/b21qbncOIshxBHxF3r8/jlyH/02a9CbXPkZ6LXqJqhwo8gW6
-	6LVBbfDgv9ahsWe5GLtATGDRj8UoiVMfuI1JFaTAMCu8hGa8sHdc1NazEzh2aJROJNLsMh3TBWA
-	l8S/erROJDA7+xrH6puruiOnoL3/g4b1SfSBOuQheeALF4FD5WD9Avj9XII5/Qehg/IIMZmqakz
-	sVA8TsqVFmbpExm5PxzhcLfk7tvYSQvXxCImZH3Ce6C1F+j96UcpG3zgoAEu3yV444VbZlVSQ+u
-	YkEB0smsbQYVrnXaVSQJyOCBo/aD6FB49iVICDIMCf9alv9C48XEEUdGfuX+QsF4DWDQARaRKA6
-	HiRNcfUKdBG0FU2jdi4ntZ0i7Il+jo4Jmf+HQ
-X-Received: by 2002:a17:906:f044:b0:c2e:2baa:a642 with SMTP id a640c23a62f3a-c4d354cf6b2mr64160366b.30.1793918144427;
-        Thu, 05 Nov 2026 14:35:44 -0800 (PST)
-Received: from HP ([105.163.158.39])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4d3569e638sm23826666b.48.2026.11.05.14.35.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 14:35:43 -0800 (PST)
-From: Tanga Joris <tangajoris@gmail.com>
-To: git@vger.kernel.org
-Cc: l.s.r@web.de,
-	gitster@pobox.com,
-	christian.couder@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	usmanakinyemi202@gmail.com,
-	herroyalpriestess@gmail.com,
-	Tanga Joris <tangajoris@gmail.com>
-Subject: [Outreachy PATCH v5 3/3] t0012: catch builtins that keep NO_PARSEOPT after conversion
-Date: Fri,  6 Nov 2026 01:34:58 +0300
-Message-ID: <20261105223458.1534785-3-tangajoris@gmail.com>
-X-Mailer: git-send-email 2.56.0.388.g09a996e1ff
-In-Reply-To: <20261105223458.1534785-1-tangajoris@gmail.com>
-References: <20261105003914.708836-1-tangajoris@gmail.com>
- <20261105223458.1534785-1-tangajoris@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=YrAi8dyP;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=LwrfRIV7
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id DDB5FEC0604
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 17:41:09 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 05 Nov 2026 17:41:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793918469; x=1794004869; bh=YXKS7LusyX
+	XsOscBov/Q76lb49QoD82Lq9o/A8Xiyn4=; b=YrAi8dyPg8Ap8Fqn0Enar8MMnB
+	+xRIrsgmsRU3mKezAXB8+vTlvs4d/tt7wvck0eH4jfmPnwb7PlfMTJvKCuRm+Xgj
+	kT9ORAFIAyVEohzLzj5VILvp2zo2XKMRiLoI96Sezes/iyMn51ExMdebvXh7qM8c
+	RjWiXceERkAUY2kwYrydZEJpdNkP/TcMj3BuI3C3Pa4IGqY1E840oKLJZ1jI+ZSm
+	Hljb/2MyDG90g9akAAXY8fa4dW49TUR0aOy51ycmJQsggg2w0OTZD6jqTwtucYkm
+	yDhgdUun37cOB1ms3bsE82EdhODdg8dy18lKuAYvAXDGReBDnzrluCqW841g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793918469; x=1794004869; bh=YXKS7LusyXXsOscBov/Q76lb49QoD82Lq9o
+	/A8Xiyn4=; b=LwrfRIV7XmcgLkEWbX0OrRFsVPrdh6QKNujdJa0U9f/n5ALHtgV
+	4/mngJgJjDCTQ7JRuw1EgeeVpwmfC7TZrOtbNDhH9oG4uZ960rUBvY6D+YYNVJi/
+	FLst0122uzmQmvJ4bOKz5tKrXqzc+wWNx+9oXZbnYZ3It4TDhLSCNniv87H7yaGB
+	H8xHCcD5W3hppci7GhtqObbk/HGda7bq1R+EVHobxh1yom/ePhcM/N91F9YjB3r2
+	zcAgBaHbvnZUunx5kOZiZqQ6oK6u/JV08Hia1U7j3KCWfRyv1Gs05TvvJSDOgQ+r
+	1GTQ1vRAc3WBZrQx2paxSfNNI6tGSnWIy4g==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793918469; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:JwnG+Eofe+/KW21pZmd64eX/yFIhnrWH2UQ8d1uWWwko3NR
+	f5EV0D3LuBYWdQotetEIeHjevAiyvcHSfp9wrxdPgJqrhKTf48a/fifabP+/RecN
+	2oss/bw3tMta3JhygRjavut6ToRB+evXesGSS1ffrJlbszNEQ3fM1OJodY8z8nzw
+	7BgX6n/sxUZBvd6GRncpUUDICxGKEJqFmyosv4ha/R8iFoP2yRNm1azQ/A8kIeCK
+	8ubIfrzGSFtNjYMpRmeYp5ahcQSKtuTvulWqQSKW6uWTJmrHd8xtvXE6wsfyYVpk
+	GZPykqHDvIVDrIrC38+HqeWrg93RxxkYRkDHKpA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:cWfZ/stGfJPWizJnfTfexyI1i+GgTdANZerU9MFf4ps=:hK3a+QjaTQtu1CUXo3GKy6ue6YR4VlWYTA1T5qImk6Q=;
+X-ME-Sender: <xms:BQbtahnjJOQxkHDqaH_zajucER42qf7fOUNdR_Dyk1rg_onvbnaBXQ>
+    <xme:BQbtakQfmwJ9EKm029LOZIfPdbvFT_x88z-GgQiKFWwbiNuI4KDHC_PeikqRpu2eM
+    JpGvgDiHPuT6IURIZviKoAMw8G6n7onZX3HBkc9jVZc3qSI-3Pb8TU>
+X-ME-Received: <xmr:BQbtalBwUXmBZwND6uVwWULJLtx3EKXFpcbJkijKcbRALEyGTESyZF2nUNDaC5kQXzuI0VUlp02qBAfeuNDyF-xwaD5Eu3o0telH>
+X-ME-Proxy-Cause: dmFkZTEYVCCvquDF4fJUIqHLtC0lMczT/3alyhH92ct0nR1knhnkqetxfqFOKogtbE2Iag
+    BaUJXJXcjE/cbEBqWX2EtWK+r0MjLmTIuB2osn2WhPlQNQeY31QeVEDpJV8T6mfuzmE5wn
+    0ze7fOwwyuMRyFniUrgnmzjbZB6rIkjo6uCDcQvg3Guq53HzW8yavm1W4/CRJc3ZkMacvK
+    GxNNu6Qj6L5IApxEOzTJwF+vIA6Gpwt6xDcT8Ax+NHeK14pf590U07nvR8/NtnQqiO1SYZ
+    Kr9bpQZUbYSrRTAhcAYVJPV9d6saPyg+hv4khHiZ6JOfl8xfmweus3ZHMjf2RgoEs7rsHR
+    NfwXh33/46YIEQCCrIKbmxpPwUTvVdpXa+rKzC7vjrTGGFXlLOn9P1ODvXcx+xyoO6u3PG
+    4Y0tas2UcLjJiRvBcMI676zZMwaFx0ClTi22up7bXcHG6OgoVocX7OFReJL8irQJLd9H23
+    orZOJ9azEIdSvvL0w+q52AYhyL/zmMdsdLjU8lfp/NOi4NJa6ihQfj1JrPziUNiildayjX
+    ZxD5H5s9QHtNAkdFFrEU7hNeWYGTZDwwLGufHzawTkRszqWfhF9zoamxGXGNsM013sOBPH
+    r5Se/em7Fovblc/waamTwwvCW4jb4eyXHYXyC696yuSfQm5USsFVqEbLr/iw
+X-ME-Proxy: <xmx:BQbtarQ1H6WnwK0javqunc0agKdZpO_59UuAD9JhNebUzOF_02jkCw>
+    <xmx:BQbtajoR21yDYJHNPR4H8FE4MC_QGMkHvTYA_4s0Up4wBjEBHFf1Pg>
+    <xmx:BQbtatzyyZJ9vwB1Zca1xhFKoWCew9iU-CBITInN9mLyWMQYChSmGw>
+    <xmx:BQbtaoIZ0QjBdVFOcl2GhPPtPYzjclCy6WW8OidieQo95q_UNgdzyw>
+    <xmx:BQbtat7zhzUL_Wn40gKC-Gui6Vmy-r2dEyzRzodn3v-N8i3Fw71-DKaS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Nov 2026 17:41:09 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jon Simons <jon@jonsimons.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 09/12] remote: use strmap for match_explicit_refs()
+In-Reply-To: <20261014031347.50433-10-jon@jonsimons.org> (Jon Simons's message
+	of "Tue, 13 Oct 2026 23:13:44 -0400")
+References: <20261009192953.81794-1-jon@jonsimons.org>
+	<20261014031347.50433-1-jon@jonsimons.org>
+	<20261014031347.50433-10-jon@jonsimons.org>
+Date: Thu, 05 Nov 2026 14:41:08 -0800
+Message-ID: <xmqqmrrmq4u3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,62 +125,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-When a builtin is converted to parse-options, the NO_PARSEOPT flag in
-git.c has to be removed by hand. No test checks this. The previous
-commit removes the flag from four builtins where it was left behind.
+Jon Simons <jon@jonsimons.org> writes:
 
-Add a test that runs "git <cmd> --git-completion-helper" for every
-builtin left out of "git --list-cmds=parseopt". The test fails if the
-command prints an option starting with "--". Without the previous
-commit, it fails for diff-pairs, fast-import and patch-id.
+> Optimize match_explicit_refs() by replacing two linear refs traversals
+> with strmap lookups.
 
-The test skips diff, diff-files, diff-index, diff-tree and rev-list,
-because they print the diff options. It also skips rev-parse, because
-it prints the argument back. It does not catch var, because var only
-has short options (like -l) and the helper only lists long options.
+Ahh, an obvious thing to do for performance.  And the ...
 
-Suggested-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Signed-off-by: Tanga Joris <tangajoris@gmail.com>
----
- t/t0012-help.sh | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+>
+> Before this change, matching R explicit refspecs against N local refs
+> and M remote refs in match_explicit() entails O(R * N) and O(R * M)
+> calls to refname_match() for sources and destinations respectively.
+>
+> After this change, we build a strmap for local refs O(N), a strmap for
+> remote refs O(M), and use them for O(R * rules) lookups of the refspecs.
+>
+> Refspecs are resolved using count_refspec_match_in_map() introduced
+> earlier in the series, which issues one strmap lookup for each candidate
+> rules pattern generated with expand_ref_prefix().
+>
+> The match_explicit_lhs_map() function introduced in a previous commit
+> has now been recombined into match_explicit_lhs(): all call sites are
+> now using the new strmap variation.
+>
+> Timings show benefit where one or both of the client and remote have
+> many refs, and multiple refspecs are specified:
+>
+>   Test                           HEAD~1            HEAD
+>   -----------------------------------------------------------------------
+>   5516.3: empty:refspecs:1       0.13(0.07+0.10)   0.14(0.07+0.10) +7.7%
+>   5516.5: empty:refspecs:10      0.17(0.10+0.11)   0.14(0.07+0.11) -17.6%
+>   5516.7: empty:refspecs:100     0.47(0.41+0.10)   0.15(0.08+0.10) -68.1%
+>   5516.9: mirror:refspecs:1      0.17(0.10+0.11)   0.17(0.10+0.11) +0.0%
+>   5516.11: mirror:refspecs:10    0.23(0.16+0.11)   0.17(0.10+0.11) -26.1%
+>   5516.13: mirror:refspecs:100   0.87(0.80+0.11)   0.18(0.11+0.11) -79.3%
 
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index b0a3fdbbbc..41197c67e2 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -267,4 +267,29 @@ do
- 	'
- done <builtins
- 
-+test_expect_success 'generate list of builtins without parse-options' '
-+	git --list-cmds=parseopt >parseopt &&
-+	tr " " "\n" <parseopt | sort >sorted-parseopt &&
-+	sort builtins >sorted-builtins &&
-+	comm -23 sorted-builtins sorted-parseopt >no-parseopt
-+'
-+
-+while read builtin
-+do
-+	case "$builtin" in
-+	# these answer with the diff options
-+	diff|diff-files|diff-index|diff-tree|rev-list)
-+		continue ;;
-+	# rev-parse prints unknown arguments back
-+	rev-parse)
-+		continue ;;
-+	esac
-+
-+	test_expect_success "$builtin does not answer --git-completion-helper" '
-+		test_might_fail git $builtin --git-completion-helper \
-+			</dev/null >output 2>/dev/null &&
-+		test_grep ! "^--" output
-+	'
-+done <no-parseopt
-+
- test_done
--- 
-2.43.0
+... numbers do look promising.
+
+> -static int match_explicit_lhs_count(const int count,
+> -				    struct refspec_item *rs,
+> -				    struct ref **match,
+> -				    int *allocated_match)
+> +static int match_explicit_lhs(struct strmap *src,
+> +			      struct refspec_item *rs,
+> +			      struct ref **match,
+> +			      int *allocated_match)
+>  {
+> -	switch (count) {
+> +	switch (count_refspec_match_in_map(rs->src, src, match)) {
+>  	case 1:
+>  		if (allocated_match)
+>  			*allocated_match = 0;
+> @@ -1239,24 +1239,6 @@ static int match_explicit_lhs_count(const int count,
+>  	}
+>  }
+>  
+> -static int match_explicit_lhs(struct ref *src,
+> -			      struct refspec_item *rs,
+> -			      struct ref **match,
+> -			      int *allocated_match)
+> -{
+> -	return match_explicit_lhs_count(count_refspec_match(rs->src, src, match),
+> -					rs, match, allocated_match);
+> -}
+
+It is a bit unsatisfactory that we lose the callers to the linear
+count_refspec_match() in this file, but still need to retain the
+function itself for external callers.  It may be outside the scope
+of this series, but are these external callers also benefit from
+having access to the _in_map() variant (which would probably need to
+expose not just that function but the ref_map_init() machinery)?
 
