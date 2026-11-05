@@ -1,94 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793892538;
-	b=3542FgkIosRHEYMk6vDElEZBrhSMTNv6ah0HeTeZjAG0bGFFcpjS0DLbV5gREcAO9ztR
-	 RYGDs4NzWeR4ygkplZ2eS2MKMGfyTjk+uItWnzT4AdOQk1Vp1hpQhbm85cqk5HxojfU/C
-	 4dyYNpvkB8tg9UhjtBu5lA4Z9p1bwv2g7P31jIT8hZu9fCYst843Y8r5nV+8w5jv7hYb0
-	 KYaZYW6E7/JHE45aQCh+Um4iPZufswlazLsOY3KozTqG1RMv3z68DhWnjgZ1A3DeX0S9Q
-	 Ff/tHzwR/g19WtcitlQdasFljGn9LfOMFoZhkiIjsHDt4UTjja9yBa82F1ry4Rg8VKA==
+	t=1793892553;
+	b=YKRoOliw/ITLksgdXshLGfHYo3qfjfdWgt626JhLxM0KNSVFqxPda8SL4jmoKOfYPoq0
+	 /15ZKVdPgAVe9+S9YMaGbLVKSzsv18jM3H9TLVQVnNkKLXaQ0/7SEK9zU7zQeXjw4Z1S1
+	 pgm3Dq0g1wG6guuYWHmF9OR4F0GBg3orNT7oQ3HrVRhSl3na/xg+h3zHPt7tw2zTZIn6G
+	 tds1jt6IzpXLrhqSaXVuAkYTRSVvsWYfb9MrlZ/+6ah5QWy36mqYnGCTK1jHJ2zPfOmKF
+	 Ube3BzeQGSDpe6AZRSyZAq8eHJWul63TRgo0/Qpzz6Wt93Q04Ldz7NS+CqFRozi6ZzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793892538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793892553;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=4bLQBdI7z259atoeN1vilEAiSpS1f4bpFXzDQzTg2k0=;
-	b=47c2XZne410Gxk2fQ5MsCKgg5Ds2mK4dmR8+jsSTFZLbjhERNgr5KQCEekDa7/aTv7xb
-	 qmTLXybcJj/00PBohGgSD67FwuIh2TYDashs9m8WbwLF4iYa4VQEo7tqsw4RzHoJmq96N
-	 JNvMSo12GCJqAZVdz7ueYhYSB884ec6u2E66UoKTlhMNfHmGWZXn/mfDPn5oTaUvZLcDQ
-	 9ImVT7is/dmwxB1fZVuVddXwEY4mm/W3xmZOi3HN3jJoEepEnX97adGuF4bzNfJg8ajMu
-	 nYqSEaNhNjDnaPAPNaaVoJibN7F5rNTkVSNFA1pIqogwshQCN2IX2x/JV56q/Ssy/9Q==
+	bh=I14qm4NL9Khxw09aasjuBNbfxmhixlobad3145zqRFQ=;
+	b=06Hvbk0GpMZ5rncyAQuHODNqGtxKMeBr8EVFHuZNlLQeoqAeVaM3sv954px+BBEqhRzm
+	 B/3lE8YGMv3l16+1e1IcUzai+urttotNTTD69BMYqbcTA9wKTF64kVDUGP+OII7skLEGT
+	 u7ZXeLmgu/mjSRNOznp6F0qoAsU+oaPBYBQuPuVZgbAkLFp8JCcXYaPpPonrxRplb7axC
+	 MQxvW6XmqGwICrDRVElj9uyZFzqKW6U/XO/0SergsKNaz/ur6sS5fUJ7VVGC3ikseyER/
+	 PuSN04n1g5oE7yvUgzdE6Uok101hvlUHRbwjOjovpS0m99y+tnTCmZ8nwWX1dhkj43A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XCTlJVHH;
-	arc=none smtp.remote-ip=74.125.82.172
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hxpl0ZXP;
+	arc=none smtp.remote-ip=209.85.216.51
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37945606A31B
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 15:28:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37945606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE47F606A329
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 15:29:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EE47F606A329
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XCTlJVHH
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-3535a54bed9so2644543eec.1
-        for <git@vger.kernel.org>; Thu, 05 Nov 2026 07:28:58 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hxpl0ZXP
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3b09a65c76dso1512055a91.1
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 07:29:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793892537; x=1794497337; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793892552; x=1794497352; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=4bLQBdI7z259atoeN1vilEAiSpS1f4bpFXzDQzTg2k0=;
-        b=XCTlJVHHLUoJTFnfLTJfDR8NM2w5mB9TxIpfVvWqXmyEhzREYL0zpWcZmTy8aCTQnH
-         fretLg4dmTxHxdewXAUs2+EQb+LT0tkyfUYfXgeWO/fErS0Xh/fJI0/IVVKlbJqgKHRn
-         Xt2lQwNosYQVschhZ30j96X6u6tQd41bJVmprZ3lfdH8Se2QBQva66r+csFk30f96ys6
-         YbS1Tl9CYDlukzxF6r/LTaYEiMJ2NoRhy6cJoy5JLMO/cxgYyrbdcpjwadoWdPUAObo6
-         01hFmxlPQz7vae58tRs91DnLtl8F0/G9ryVj8sn2VqhGBDmc31JH24hst6BWrD9exKzl
-         Jthg==
+        bh=I14qm4NL9Khxw09aasjuBNbfxmhixlobad3145zqRFQ=;
+        b=Hxpl0ZXPT7dtZZhI+OrIlmceHvGoi/t7Npph0cY2GmdXiGRiqQuZoxxfPvzx0PXFcC
+         ud32jJWhnxumBTClGb7NoxCYWSF2buc3bmCsTv8V5YVR6pkSKr8cK2uKRUbNwrhUzfuL
+         nTVBxr0mEGJTD485tKvMVs9Nsr6ljHYItQ+cgEEEjE6feNkEvSL8Vkhm5+E3YHjrbcfC
+         phf4dIMXHJhY+onbF+MAAirkabYXekRczquXKGOZhmaZQT9zyQvpW1fdebY7WTF+THPZ
+         +A3kN9vG2KrSn+FmTWWVNh84mTRcOpsI2tti+VeTCyXiMXKXI3/UzUJ13nnIlUEVHkAs
+         DmkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793892537; x=1794497337;
+        d=1e100.net; s=20260707; t=1793892552; x=1794497352;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=4bLQBdI7z259atoeN1vilEAiSpS1f4bpFXzDQzTg2k0=;
-        b=Hxo6etfOz5FxrcEQXJg3fB4fV4dFggslXnxgiLU7p2dF1fNJB2pPOOaAjuQEFAwZHu
-         MWbnaByPTna3oDsK2wG+GckVeSpvXc8VGx60aW/eA009F+4URHIey+DWFXojwkJbHIbE
-         y7h3bhGUUpHZ3DxIxHGhNcakbY7GSeHYFFpjsfKFAcu0J5ZA1QQtz3WNG7UllW4mU3Nd
-         ISGL5/8Kqtue064dM5lIMAjNkzgY1yWXnNFIo4VYKYEMpXd6Ka8W8ixPCJtN5zFe+BUS
-         m4fBcGJkZ6I/b8c0TP6e7jgU3bRjL01TF4pqtdyMP5lxK9ufJChRu3Skn+KhRRoYOczX
-         ENWQ==
-X-Gm-Message-State: APuU4Z8dNA9cYCi4WG10ZKq5RAexxSa3X2cm7PWmk+rD1tlZe7FHZ48m
-	kCuuECeugXpgSfcD3GytvRgqGy/mLnc0WrT/2FP9188vU7+3UWIuHxmkIjVLs2C8JdA=
-X-Gm-Gg: AYBFou3IicX0GMBAv5wiVZPj/04oYLVBaIztPnM7tl1sVrDBvAECQrayISWXLVHMryM
-	HwNig0raoy8jJ7E2Zr8+TywiWf6Nxi/Mp9AwQRVtnMJC4PNqhVberm2gDQICCzWen9lZ1Tb1zuC
-	JrrLzkRmHL2hdhnWEh2DszXiIlHDH+gQkZ0Or5aNLfjjAPwC+45Du4oUf8ljX7OtUAeV5LLej+O
-	bseAL0TenNp78AGe0wyOXdNkv/iklfbd9DtmOlbtCS+pGhGgauMNENxEBHMi0Ux5H4R3ZehBmcW
-	bULsL2brr8Egj8Mg1GECon56Wr25f1VtvolAyJNG/z3SggR+H2/Re/Alc3Rn1Gu//LSZd7Yvv3z
-	V7erKhNSMcK/CRJ1KmZtVDoNnuyU4T2Z3vgemRcqsldUJ2ad0hjeuKMTH5ngqWiMp8zEWvKSWVu
-	ijcor17hZWlHcSq8bZv08LhEz2LIzUJrlD4Po3H1khLNbWh+VN1XeqmmYPoDjdTJf4LSih5/6Mg
-	8C4sQHqUH2oCfN2O9MpA2WbzYbBFdUS+T5CTSEQobqbHywx2qwEfhVWeuNeFJfFJ7q7ynpY4EPB
-	b4mNZW6yWjTclaUb3TKWNjgnn6bDeDkZWlJ/W9hI/04FA7BvM4nkjp9gACTCt759zc1I0naQsg=
+        bh=I14qm4NL9Khxw09aasjuBNbfxmhixlobad3145zqRFQ=;
+        b=dbNMuhinJwy2dPmnYYjQ9/UfA8fY+UM+DfjgtqZUHNp1tJ0I0D6vct6PK+g0TqqEq9
+         lqLy+6k/BRr6o3IxyQiza3COJzkQAGX20fudiOUa23kZS9HJZM6LtaW31TVXhF1ayPO/
+         WWFwCUBf6L3/Q9brkW2QaXA7120gUQu7ZLHHdTvW3AjUzSJLu9/QfF6fxCkVd/zLb3OK
+         5uVHUstNrDwnnURzj+RpWMGloyAEccbg83MBaqS6OkPqvmW17HcUaWwgGnFMtZwNeWQC
+         GWf29VLEL7W9KgEUxKsZ8c20MvDk+tp9z8ErVP77wjaK1XwpUYz+g5ZmkZPXQn1IWfKs
+         ds7g==
+X-Gm-Message-State: APuU4Z8JDvzaoH8HOY9TqcHiO0CHKUhlnizkdZsItb0MSp5YYG2/+/QN
+	8OIHVDlXcQ/E2unSyJmfTYyw29mw1QcQutG0xTMpYdiG8gN115Y7eZ4T
+X-Gm-Gg: AYBFou04tBcU14iZeZneXEzB1uywY7BnW7YE3XHXgxPITjJjAFI30LE1F018kaomWc2
+	f1UuxkJDzwauMGx493fmaaKaX3quptkfGeV4hlBg8uias3bvHwDutljPASSjGirlXsjrnXG7WB/
+	7l3Sj8B5GwljIeLX5Iut54fYZO7+BomwWiamu7Y27wAGdbwZ5NJpaWrejo06ogegQnh61zWNGvP
+	u3WzMpFSzZAWZQ77+EAq4JRX+Rld6o1+qVtsQuY6m2FIQ88TvNvO8V/seDVP8Ry+3u0ATFn2rEw
+	qbuse8IUKNcPxERrw8zKPz+tZXCsBpRIWXuUY8gl61ysKfd/r/jdoYupPUKO60bevZeGuHRUHUk
+	S5ZXiMI7krgubR6Qsr6EBa/fs45NUby/kEwBHXlDs4CTVY21VFLP0Fa2kms0FDNj+StgU8w5whc
+	QYc91iO4dBUDuUilZUcpy9kWPs6nyw/BP5v38YGMa55a7/Spw4FYkEaCcMCFe7Lz6bl25AoWv6W
+	XPz4XT7XRkNHGY5tpu+MZaLnecbTbnPiBSPBVZ1MOGT8sVHxGVzzkaYKQOremg0qSSSH7wRbU77
+	5W76i25ILGZ576MvlK4sGgmWPYtAgzJ4edRefqkSvX8RdLUjd1Rr6e/3OQzc+HfUJMA3BqYb8A=
 	=
-X-Received: by 2002:a05:7301:4e8a:b0:36d:9322:b7fe with SMTP id 5a478bee46e88-36d9331fd06mr7802252eec.29.1793892537016;
-        Thu, 05 Nov 2026 07:28:57 -0800 (PST)
+X-Received: by 2002:a17:90a:cb18:b0:3aa:fdad:7d6e with SMTP id 98e67ed59e1d1-3ae897eb520mr13117350a91.10.1793892552196;
+        Thu, 05 Nov 2026 07:29:12 -0800 (PST)
 Received: from LAPTOP-PVRSMPQK ([223.190.82.143])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36ca39972d4sm32391113eec.26.2026.11.05.07.28.54
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b0b319f2c9sm4252229a91.10.2026.11.05.07.29.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 07:28:56 -0800 (PST)
+        Thu, 05 Nov 2026 07:29:11 -0800 (PST)
 From: Aniket Gupta <aniketgupta3001@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Derrick Stolee <stolee@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 3/3] bundle-uri: do not die on unresolvable relative URIs
-Date: Thu,  5 Nov 2026 15:28:42 +0000
-Message-ID: <20261105152842.566318-4-aniketgupta3001@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2] bundle-uri: do not die on unresolvable relative URIs
+Date: Thu,  5 Nov 2026 15:29:06 +0000
+Message-ID: <20261105152906.566363-1-aniketgupta3001@gmail.com>
 X-Mailer: git-send-email 2.56.0.344.gfa103ac04e
-In-Reply-To: <20261105152842.566318-1-aniketgupta3001@gmail.com>
-References: <20261105152842.566318-1-aniketgupta3001@gmail.com>
+In-Reply-To: <auyH8BGzIsipPAJG@pks.im>
+References: <auyH8BGzIsipPAJG@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,76 +100,27 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A bundle list, either advertised by a server or given to "git clone
---bundle-uri", may contain relative URIs. They are resolved with
-relative_url(), which calls die() when there are more "../" components
-than the base can absorb, so one bad entry aborts the whole clone.
+Hi Patrick,
 
-Resolve them with relative_url_gently() instead. When that fails,
-bundle_list_update() reports the problem as an error and leaves the
-bundle without a URI. The download code already skips such a bundle,
-so the clone carries on with the others.
+Thanks for the review.
 
-This resolves the TODO in t5750, so update the test to match.
+> This sentence is weird as it adds context that doesn't make sense
+> standalone. [...] Saying something like "relative_url() is now a thin
+> wrapper around that new function that continues to die, so existing
+> callers continue to behave the same" would be way less surprising.
 
-Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
----
- bundle-uri.c                | 10 +++++++++-
- t/t5750-bundle-uri-parse.sh | 15 +++++++--------
- 2 files changed, 16 insertions(+), 9 deletions(-)
+Makes sense, I used your wording.
 
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 2bb2eb99e4..1f198ef9a9 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -210,9 +210,17 @@ static int bundle_list_update(const char *key, const char *value,
- 	strbuf_release(&id);
- 
- 	if (!strcmp(subkey, "uri")) {
-+		struct strbuf err = STRBUF_INIT;
-+
- 		if (bundle->uri)
- 			return -1;
--		bundle->uri = relative_url(list->baseURI, value, NULL);
-+		bundle->uri = relative_url_gently(list->baseURI, value, NULL,
-+						  &err);
-+		if (!bundle->uri) {
-+			error("%s", err.buf);
-+			strbuf_release(&err);
-+			return -1;
-+		}
- 		return 0;
- 	}
- 
-diff --git a/t/t5750-bundle-uri-parse.sh b/t/t5750-bundle-uri-parse.sh
-index 70ae94c4d0..8abf8f31ae 100755
---- a/t/t5750-bundle-uri-parse.sh
-+++ b/t/t5750-bundle-uri-parse.sh
-@@ -68,17 +68,16 @@ test_expect_success 'bundle_uri_parse_line(): relative URIs and parent paths' '
- 		uri = <uri>/bundle.bdl
- 	[bundle "two"]
- 		uri = bundle.bdl
--	[bundle "three"]
--		uri = <uri>/../bundle.bdl
- 	EOF
- 
--	# TODO: We would prefer if parsing a bundle list would not cause
--	# a die() and instead would give a warning and allow the rest of
--	# a Git command to continue. This test_must_fail is necessary for
--	# now until the interface for relative_url() allows for reporting
--	# an error instead of die()ing.
-+	cat >err.expect <<-\EOF &&
-+	error: cannot strip one component off url '\''<uri>'\''
-+	error: bad line: '\''bundle.three.uri=../../bundle.bdl'\''
-+	EOF
-+
- 	test_must_fail test-tool bundle-uri parse-key-values in >actual 2>err &&
--	test_grep "fatal: cannot strip one component off url" err
-+	test_cmp err.expect err &&
-+	test_cmp_config_output expect actual
- '
- 
- test_expect_success 'bundle_uri_parse_line() parsing edge cases: empty key or value' '
--- 
-2.43.0
+> Would it have made sense to split this out into a separate commit?
 
+Yes, I think so. It is three patches now: add relative_url_gently(),
+hide the credentials in its error message, and then use it in
+bundle-uri.
+
+> Wouldn't it make sense in this case to grep for the exact URL
+> printed, as the intent is to verify that we print the correct one? At
+> that point, we can probably just compare the full message.
+
+Agreed, the test compares the whole message now.
+
+Aniket
