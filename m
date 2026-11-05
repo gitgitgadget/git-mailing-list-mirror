@@ -1,121 +1,120 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793900532;
-	b=i42NMGgnhE00FIe8QWx4b/BXt1aMNpg3tRYthMRyDQ9Clos7abgUBLJd+PXRx7UvAxbc
-	 YJ0PSXXi8jn2dxj0xvaLMDqdria9Chhl55veSH1wQ3kLM4tk6Ip+Iwh0mYvXAQC/V7OW8
-	 CASrdx+CYxko5cls0zCfMWCgqXCk5Rq4/KcrhDF8hAMq6OOYLT+1CMjqUJDx/5hSSTogB
-	 woqpYwAF/SFDL5kGEur5KUNo2q1I9nt64kFmInJQ2HIcb23NhKqoYWCCjv4zlwiqxRZkt
-	 MOjy4pqFVTdj9xz+Fmp1qfxa5PVmbDOejhOXEFrJn9nwNtm8BXdbMgQeHlqOb7aF8dw==
+	t=1793900580;
+	b=decQRN1pQWstZ2zsIZPJjoKmGpTupqLBagfXDpyzot1MtrOIF81+rWw3msXUShjvZZ8c
+	 gJJO0wOc1TZZGxjzge9GGwZ4+tL0eJtFgopCOrDjSl1ROXjxjzSYwqsphvkHjp5ALNey6
+	 vAeMfY50As0h0miYNVMke3rlmpid/oZa4Cx/4b4BMvT66jV4ityxvpFhTcfNsHxyuBIA6
+	 KFiTnUTeR3rivG1PoR8sFLnsYpNORADCeTTm07nt7vmwuHFIpOSQqLpY1tTy4HTm5DCiy
+	 Azv7qe8Tn9pWkdMK5ILwG43N2pkvpEP3FzTJDmS4F5yhB1yY2Xhk8Fp4whnlGyO1N+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793900532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793900580;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=ciBA078OXH6pAXB1ZkAaYBtsvQaL877qy+nMQl4nq+E=;
-	b=cTAEcg/PFJY28/3x6R9AKmjUXtjmANddhbKc0QjNSFCsFffhQqt7sFqeITxwal+HYxQj
-	 U9lvmJjTMgJmQb9TR0I3qG33RdU4eZEJdKdzuYr/Lz5ki3Z3bxv9FgUW7tDwtNOLvESjc
-	 vIbLlJJr4MWRK6LZ6L2VwIU3Ao1N8Ss69X8QundRn/cadCH8pzEUheyiLzXeysDR8Fugy
-	 GtEVRetXcBcjQz+jMYZ80xbC3e09JC/2s/HfT/2SOHBGlfK+Hgq8mSIiJ4Zi3jh0orgJL
-	 Ro88OAKRnLhr+3yPrleBcKIgv21zTvIHyq4XtQ85XISYz/Y6z5zeFia6LDcRqzbhkbQ==
+	bh=DZgroA1gPXIOB8aJQ79YvvaQ+GQEzdaTK8KlloJ/l/E=;
+	b=mCJxDUhSHdhUnPAjOo1TxooSvMCl0+fxIMAcxMo0qR7XAlg4zkfIKXAol8JKSgZWs/k/
+	 HYYTvCeU2pLmsGp3hFKkBrJB2aVjE/wfyu7h1vO+s++7fPUjR2EL7B8UjbEiyEQ/q/Tks
+	 TA+fZJayoiRJy10lmd/L81rvdxduRCgYJzDGaP/oGTHNvU9I1E5TOsshNkWJzIKRFbNBD
+	 EPlr+d/bN3LIWP8v4EIjLeBMddAmZXwh0SdB6u15OEtioAIytffBQfAUXI9rVLTEh1/wd
+	 zGOEzNRFaVrowYXKNa2ZkF3W5LGWAombmCbIsIboUisWe0AcrybakLIyHBgzah2etig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=YD+1jHFF;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=T9H19lSf;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=XnutJBXG;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=thPT5nNz;
 	arc=none smtp.remote-ip=103.168.172.151
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17D8606A32F
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 17:42:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B17D8606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC33606A326
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 17:42:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CDC33606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=YD+1jHFF;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=T9H19lSf
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id E6DBFEC01A2
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 12:42:10 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Thu, 05 Nov 2026 12:42:10 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=XnutJBXG;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=thPT5nNz
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0A95BEC01F6
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 12:42:59 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 05 Nov 2026 12:42:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793900530; x=1793986930; bh=ciBA078OXH
-	6pAXB1ZkAaYBtsvQaL877qy+nMQl4nq+E=; b=YD+1jHFFxp00qvuuTf2OZt7NN+
-	iPlUVPlVirv8GRO8OWiojtRmDYbHd01xD3cMFrybybc/2mjEw5OQ51xYiKMaOzZ9
-	0dylkGkFOw62NWwtSeSFuLAK47vMGdx/dMFP3sS1A8XK+LEuOSpQ3sI/iOsAX1wk
-	rlcLo80hgrpaS7GhSpD6RyrUXzkC2dmsPQxbxVU5Kb5/dnsygRLG1tBUCHhoSHml
-	3n13yrAsNyvR8FdlkOTrHNVFljGuRR6P/dr4k7VAfjdwhJdkR1sxStSVnyj3eZnr
-	xA6NhjLSS17la/OC+ia/KER9cwY8rss1Yw0P5zofOtX6fv4EKNdCNzKmbRqA==
+	:subject:to:to; s=fm2; t=1793900579; x=1793986979; bh=DZgroA1gPX
+	IOB8aJQ79YvvaQ+GQEzdaTK8KlloJ/l/E=; b=XnutJBXGAwW/pq00FhiiG7eO4P
+	8wpJ8HhBh9ETn4N5wjWjzrZeic8AcyJksEswPRawJ7ycnxfVm3dx+1LIgDbE9cTT
+	7Gr8oPlOh6squ9LZ/x8wuCj54ZcMnrKIK7Jx5a2WaoQiLBhzd/fDCPQ2nsiBgmNA
+	lCp5YqVzj1HE/5jduMISs6EqwtBIFhAlUA+g6RL3t0v+Lo+K4to8aBD/8aDrpOeF
+	LobQqstg59mnXK2LynlmUTwSxOQeBxZJvcEiig9d+TAMcK2U5EcmkF02FY1CnuWj
+	i/I9Dt1X+kBXJyCcrL3Odmsnw1Vc/MEtsTsX/K/oIhUlvG7TXM9JVNGD3Tbg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793900530; x=1793986930; bh=ciBA078OXH6pAXB1ZkAaYBtsvQaL877qy+n
-	MQl4nq+E=; b=T9H19lSfgfubivBT2do3XXpsrfC+dwMhaTPI6NqSR8+o1ce5dNU
-	lGQA/DOdxCtAAsAYjsDYxymM+ROFJPIIdRkJ3zFQ8brlCvKU/HZuJKiskPAVD1Iq
-	Mg50zwDYByrroX+WqhKTrD5aPLI5w5p/RlfFvYi2n7snxGJccSLq3LiZT1BhkJni
-	sTtWTEkGV4EpFA8bdJqS6mLDsIquUaS8QkK1yaXsL5HyqT/MFBCfDQdreM0Nx+Ot
-	AxiSlYWQRd5QCjGhdME83wIGvSpdP3POtQ7brAt0AUQMf2HcW4Ei7bZsi1uTzcyo
-	N86wDkD5LC3kGr/140RKPLV6KPlsTmRRkqg==
+	1793900579; x=1793986979; bh=DZgroA1gPXIOB8aJQ79YvvaQ+GQEzdaTK8K
+	lloJ/l/E=; b=thPT5nNz7yWyhJIk7eyJ/OTSg9ErMYMS24YHGnZrWQsI/pO6LdR
+	rrE8apCmuk1xVKOo8Fv5wepTsck08PsvQXDtHfmoRxKlEhxbZqr1+Qa1/UvaVJsG
+	hvcfi+dXzLHlngroYU87rkXGWpiFq9x/Mf99cpSEYO0NfIywpUqVNV+vJRP9jX0U
+	1RMCSW9/NVHOFZ0iJwzHGusgD+pKMeMDH+bnx6HAb5mVq3gPlXR/6tbAIseQhtM8
+	gDe3O+RHHbJunjQUp9kXcDnF/Cf1t5ZhWh558us+aqAJ6Ua/a9aboW5WReMP8UF6
+	we4fYYqEbbaluoFrTS4kNXnsPhWNzHGJ2fg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793900530; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1793900579; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Qg/POi2pntMYPkTjJ9kM/MWWnha92/RPnASf10NARNkdco6
-	n2cHVJiTrIA7m1i+Y9UW6XZnhSoUo3X150cHrqYSksBbxSl65P4TlYQv6mIcFeXE
-	HX6V4phHDKi+Knx46p8KIMneV7OqhLHaT6MTB6q3rCkaERARqDO8c/+px0CN9HER
-	u94VOFWMtzQQhc1QuN1lRYBsCEBZXUSiKt1Q5LfB3pmaxpO8az3nf0Sb/eowji/a
-	y7VvwmD53gPcZsijc7aaoF+Ezvg5fvo0AQUe3ox3AAse9k5MmFTKtCerfaZaE2qW
-	N0uwFC4pr50GN3mxMUdsRIv0wJvWrGeYkl369SQ==;
+	s=fm2:rsa-sha256:KjeoGt/B1H7sRKsAPas6nNJ6qdIEmV9CvCDEBVlXBpY8B58
+	AQMMgcsda/J0yL3462jVAYegw6nYeYyzgwLcMYacvKDE1XcL2YogpRtRB+Sc6A4f
+	W0/u50iE/jHgxv/P8CcjuZJFGBloR7FpVoyrBxkQuP1ihSmEqUhEVzrEt3s+vada
+	R+5MnT0cYWBK2cj/XJ1HR3p6sorg1C89/x5TrT+2Mz2zly8KvjHycyjz2ae9SfiM
+	QY5+vXKPwIhIgQIoAuV1RfmGDba5Le7tnkZIajB5BRLGJwF+OY1fNtXDfY9SU+09
+	zYI/5bzHpVWUQVQ0mINrhXZBS2HRHlsPw+71MQQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:G5fLQA2KosviTOR4G0MSmBUXQhOLOjmVf/aVNrmYeSY=:XDeibkstTxOwPZPGAxvaKXilgNeiK0ALauo/q3D4qCU=;
-X-ME-Sender: <xms:8r_sam6nrr9vqwjl5JJ07HlqIvZisjYHNShgDnRGTZZTOAqplNUo-w>
-    <xme:8r_sam7eYKh-I1uNG-P4EL1taxMP7AqaOz0X2zFt8PBwvPAV046v6W566iH_JmRKY
-    acgHEVwooRl6RjfWF9_a7Mp80cDDedpsOtL5bDl3lS6620IR9eX3w>
-X-ME-Received: <xmr:8r_saqeWZ5jXN7HcZGQ6ossXxuovdsVE9OCdEVUboAiJh3gmfgaLw45Qcj73tmkP8SA9SdYdwOtAWNryTooFebThp-nQfLf4Gn-E>
+Message-Instance: m=1; h=sha256:Xo7+NgJI3l74NppL/V1ROWMLdXWA8FINN3VYG0MURFU=:LfNX5KMTsiGh4lnX2uHQqfIajTx1snWkV1YwGF4hPb0=;
+X-ME-Sender: <xms:IsDsatD1fb3eyMo1rWtgxe9oWb8PMs_2ONoEQKRuX-tk60l4qmZ5Mw>
+    <xme:IsDsaiZwZ_C1-vr_VmgCWLzN_utPQrpT39p79_laMHGvyGdYeFoASBFaAaLJCyLAP
+    1-nvkYl50BhWAX4tDdwtJDxXc2NkwtyZZ3JPvKpei-HrI_nrdGuXA>
+X-ME-Received: <xmr:IsDsag5350QANHxMY-4hENDPsBUnmWtpGbyI8iBoMQ5kYhcroYo_sdQgkUO_G18vad_XQXL_ixCRwOP-lmOdltL6uKLNTmTBigWq>
 X-ME-Proxy-Cause: dmFkZTEaWADjM+Qb8XcL1hGku96c0MAArNdpiqmiSM6t2dzU7yfGwoyfX29N0irQyUG0v2
     f7wZ9FuBnHsqlkGdOtBmT/62R3lQ7PS+d9dfLrfYQpqPJR3xMXZz4bz8EMYjTW7R7enSRP
     lSh+xm6wtOeJpZkeDLwtU4MqpYAF5WPGBL/P6W+RUlIR5vjOkzw9OhobDpbybfamvnDA3y
     pvZf3l8NiButSdhYftCK3k65eRmzC+A9hW3Heg+6wKUN5+ml3pJaPEg3ywUsj5XlBmzDwO
-    tfF7VgYyVFvQBJ+0fF97+H4POyXoS4XpS8gX0QWjvde3eszlVAwETYv9Wgc4r7URQ1dxbM
-    uyLbfbOImz3Od4VpmdIb5x7JGkvKA/2X6u9kHcwUQOo8VqtmzNU0HLmfKmQCVhXELpcKiP
-    Q6pAiS2If90PvZuRq5biBP0ZHXlw/62m9kkiuE83it3WzM17brLb/1CDo/6DLsQhT55XyK
-    p1qJLwwiL6svu3JiHuOfOBg1DdbGSGL2ElV9wWySsjWwxBn4hM+w8TPvf/AHmSN1f3rkdP
-    JFq1P4aoBXVoSwqIZnSTDDgtPwJlVfvAPo/IrQFsye6NV7IaC8+Hu713Stxe4/7rkW/bOO
-    P8bs2/jEPQkVk9t0c5TfVFZaJxxG1yUqMO1Stq6iLNJIEnac9Sn87viRU6lA
-X-ME-Proxy: <xmx:8r_saiA9iYIfBz6-8b5RiZ9q6PFbsxNVKONWuEAJcwrzRGDsS3bdqA>
-    <xmx:8r_sal_8Gqj8RuMlcDuz1jgrk20O-UG-7ywckfmPa7eOcUgVMQNHRw>
-    <xmx:8r_salIcZSol4GUX_brw3jHGSkhx8O-FBw7LKVQ6ctte9W5OMwp4ZA>
-    <xmx:8r_samjOAaQUodogDBRhiK6sg1priuDwcqWbRapw0Y9FiIn-V3oziA>
-    <xmx:8r_sasb3BPMdOvnyKV8jNZ_kP7OQu2BDYg8jZFqZSWPMfinrsZHBAjuj>
+    tfF7VgYyVFvQBJ+0fF97+H4POyXoS4XpS8gX0QWjvde3eszlVAwETYv9Wgc4r7URQ1dxf7
+    VW9EgMn7Iw1pY96q4gFmd3+diXIWTWIogN4TUEqnLXmdm0H55GUqVwHIF2KTLYXaE894Lq
+    wauVxzgJ0mYPSdvuNuLnba8P8AAzwI8sdQyME/2rn03i9jc0lJGc3oE5bABOEmyO34Psyu
+    HGEChRzR5t6qC9UQVF9nq67FoSQgHo35oxhIIC0+7XgXaNtHWpK/5otGkZLiwsBVVFB2uz
+    FojhzWwyaUbjVCfYw8ii+yq2eK5OM2w6TBK+PjIV5ICYL5cZ/O+EHADydcBE1D3Smh6c4p
+    4Fql9V+6f3OKzKTg1KIidToDweKJEbYSDLss1B1hhZWCtqc2FP0Ul1agCvMA
+X-ME-Proxy: <xmx:IsDsajZvDbbdIBvMbneonsZjyN-roTTLP7CwNqJzADTEsVK1f1AvlQ>
+    <xmx:IsDsaviagCSWoaMS6_jW1GdpEd8jYVi3E5bDQ7aozKistdpwBRf4cQ>
+    <xmx:IsDsak8lmQZMvb86OHi8wYS6QC-1FyynylVmcsCU5QiXVkoCS9Mkqg>
+    <xmx:IsDsaqokx6P6-dtoY3jp8V2EU5MsNuue2o5XIxlvAGub0WXdv0f77A>
+    <xmx:I8Dsav4QHjd3ZWHeHuii4bqeZaLB-_dhFj6zs0pVXGyWak8YO01RmN6S>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 12:42:10 -0500 (EST)
+ 5 Nov 2026 12:42:58 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org
-Subject: Re: [PATCH] CodingGuidelines: update the required Perl version
-In-Reply-To: <auuxjhaauAQ7Vtjs@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Wed, 4 Nov 2026 22:28:30 +0000")
-References: <20261101185846.24208-1-taahol@utu.fi>
-	<xmqqjymvooyn.fsf@gitster.g> <20261104193450.XvTBf%taahol@utu.fi>
-	<xmqq5wyc1iba.fsf@gitster.g>
-	<auuxjhaauAQ7Vtjs@fruit.crustytoothpaste.net>
-Date: Thu, 05 Nov 2026 09:42:09 -0800
-Message-ID: <xmqqik2bw4y6.fsf@gitster.g>
+To: Taylor Blau <ttaylorr@openai.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] path-walk: allow revisiting paths from tagged trees
+In-Reply-To: <auuvwlhhRpA0T2ml@com-79390> (Taylor Blau's message of "Wed, 4
+	Nov 2026 16:20:50 -0600")
+References: <pull.2296.git.1793819268371.gitgitgadget@gmail.com>
+	<auuvwlhhRpA0T2ml@com-79390>
+Date: Thu, 05 Nov 2026 09:42:57 -0800
+Message-ID: <xmqqecczw4wu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -128,39 +127,13 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Taylor Blau <ttaylorr@openai.com> writes:
 
-> On 2026-11-04 at 19:56:57, Junio C Hamano wrote:
->> Tuomas Ahola <taahol@utu.fi> writes:
->> 
->> > Junio C Hamano <gitster@pobox.com> wrote:
->> >
->> >> Tuomas Ahola <taahol@utu.fi> writes:
->> >> 
->> >> > - - We try to support Perl 5.8.1 and later ("use Perl 5.008001").
->> >> > + - We try to support Perl 5.26.0 and later ("use Perl 5.026000").
->> >> 
->> >> Is this in line with what 702d8c1f3b did?  Shouldn't we say
->> >> 
->> >> > + - We try to support Perl 5.26.0 and later ("require v5.26").
->> >> 
->> >> "require v5.26" instead?
->> ...
->> It looks to me that the "parenthetical" you called was designed to
->> be useful by telling you what to have near the top of your Perl
->> source files.  Replacing it with "require v5.26" is exactly in line
->> with that, I would think.
+> On Wed, Nov 04, 2026 at 07:07:48PM +0000, Derrick Stolee via GitGitGadget wrote:
+>>  path-walk.c       |  5 ++++-
+>>  t/t7700-repack.sh | 23 +++++++++++++++++++++++
+>>  2 files changed, 27 insertions(+), 1 deletion(-)
 >
-> As mentioned above, you want `require`, not `use`, with Perl versions.
-> The latter enables the relevant features, which include Unicode strings
-> as of 5.12, and that will change the behaviour of our code in ways we're
-> probably not expecting.  That didn't happen in 5.8.1 because features
-> didn't exist, so the `use` for that version was okay.
->
-> You effectively always want `require v5.26` or something equivalent such
-> as `require 5.026` in our codebase.  The former is nicer to read,
-> though.
+> Nice find and fix! Thanks for looking at it, this patch LGTM.
 
-Thanks.  Let's see the final version that can immediately be marked
-as ready for 'next' then.
-
+Thanks, both.
