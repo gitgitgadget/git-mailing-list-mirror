@@ -1,77 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793917981;
-	b=iMR2ddL0ur3u6pkDPIPhtuXbyKNmbH79fSqzl5bkmx5D7z/R675pRUm3D2C/SabXVmWk
-	 A5LBoa0uAQzsSltdg0YnTl2uzd7YqsPCXBLto6j4M7zsduZKn4GsWjyCk98ZVHyWRx6WO
-	 +4RYwZI2Fzp0ipF2ZSreSj+oKIQXAH9/X5eDYgXHmAtUyzFZwgjwKCha7XbdH2lS4wMlP
-	 XuCVOLrww0BJjjW8jKkSlD0S90wCTWMniQMxJuuXOIrT8Zy36SF2lh2YbZhSFSSocrqUn
-	 yFbwTCD2PprP8X4UoFllGro9bp7J6ftNmcN7KFrxGV4e5wt7pQjUHWL6byE3Dr8U2rQ==
+	t=1793918131;
+	b=KVkwwJAc8mwZwiEhw9DUVxFn0lPY5nJA/u/GfnM7yOa+D7JUJdVnZsrHNUvq1v6Z36LM
+	 +I/17K4jWQdc5JRLlSwPlKaAlw9tMYxm21sajwXnACUEz4RyeOtqBKVd9I14FHsKdN8f+
+	 alV0nsB3h6SXPOvl83AWe1GLNJp/+MZc7qztzpj7hp6/HCpf9H3mygRT8sQnNf2rFCuxZ
+	 nwK0KZsDab/kci4PO2Uc8fvy/T348rWGrM4P7Kel5CxiguNKoG0xLXzMv1uRDt7IBjgY0
+	 0cHzVjqmp9V5mBhbHHxjfnw+x35vKVRo3+VN+3xDxMVHzwguj8WsTiwSva7/nJ+txbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793917981;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:User-Agent;
-	bh=ud9cB0Lc5pB6H00qNAuhu0Jec5NgnYGIND5YF35BjMw=;
-	b=jqiRL97QmSvg44b2R7UK7grZOZqcTE+1BliPV9n1YST7gcFwZvmY5b3GeR/azkZ6lVJ8
-	 Ymbb+beTmnwnNZX2/8fU01ARiZHTbthvjfRkw4s1zUTcRFdCkdw5pQBaAxh5egNsw2M8N
-	 CKkR+GFzl3g2NudPQaAv3L5PtySyPOLcGTQO8bntscEb6ewLww61cfMOZXKz0XPKiberT
-	 5d1spESurK7Kv+kroJTwzMKOtaspaSN6k90OlA5S+6GYuAKep0vZ9vno1n0aWW9gfT2SF
-	 L8y/0Q5HQMaLEARFC4OmjJyIwpSvYZb+0nj2M/RtS+Wvxu9Fv/5CQlm4lZxvq4rIyfQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793918131;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=rC9BbVpEcPxmUYJ/AzgYmPVa6ALH99Gq+D/3SDB+5dI=;
+	b=xvjVUBDy2C8ID5mR53YCRmz8KK1m+2O94UwypuRixMKcvZ7NknP3HgSbX9fmup9p2Hz4
+	 z5YswoXS4QsnclIzDYWoDYnWTh8ijdRZegbj4Wdfje69C3Ks9Kj9hGBdGPHli3dvRbCSn
+	 tPnik5z/7v4LWE0oA8BdLycd01UXKTjrzeH9lCnw/NTJaFi95p07QnQEACru69daG3T/N
+	 J3DdNGGd0fhqXhbwwBPJKDmOaRWUWRcmwaFNAZtMCUtcePe+mvtlCXYZMreeoIRR/bHmN
+	 e5RBfeZ2UzE1ETe/z+zuqd4MeIMVn8d1cjQecfaJ+OjEfl32gK6bq3vTU5M1UUm2xwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=crustytoothpaste.net;
-	spf=pass smtp.mailfrom=crustytoothpaste.net;
-	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b="hLQT/JUl";
-	arc=none smtp.remote-ip=172.105.7.114
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="NW50Hx/R";
+	arc=none smtp.remote-ip=209.85.208.47
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3073A606A31B
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:32:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3073A606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BF5606A31B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:35:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 86BF5606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key, unprotected) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=hLQT/JUl
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1793917973;
-	bh=RJdFnxu0F9Z/8/fFb2DcRyE8v9iIewO3+AF+VufjnSw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=hLQT/JUlDMNmQNcEKsn+PB3+gHBA989UDNUMWrrf2r9czncP1F+gwLE9ejvTgqoYz
-	 cTxnJ5yxgkWI22dObZWo9q5RUiqKdhu5tKC3p6X7kztGOaBESs+z29MoevysVp0mVE
-	 Pn+lEoDDJJOQ92P+150ge3gDMrZ+oMpIipozWo3K7OfljUzwMOrWZ78eCfBbkPeEVB
-	 V9i/lAutiH6ZrckhM7GH/TfYfNUZozzYcXyt0ikbYeiLI6DkcrCdZErke0pB+VSKk2
-	 4lfTPtk77Nr0sROjjdOf7IPPO6QMWjFO9KImYPZq/b+cgX8osNh1h/VUWcHtxNyS8W
-	 MRVDsYsWD29Bzy+W+OhXyYKg5RhHA09waS0BUJYvraCt6jnR/KNYWpldJIqARePkzk
-	 qEI67RdKoOIvrICmDtUecq433jhXx0kOWXi/0GZEkIG5sg8reiQ337VMtjMEhdVpw+
-	 sgMqXlKeYGxLsc3kgg2BfSsni22IBnrbGy+uhOU7HZyZIgtzZ8T
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:e965:3ca0:f550:a37e])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A76BA20069;
-	Thu,  5 Nov 2026 22:32:53 +0000 (UTC)
-Date: Thu, 5 Nov 2026 22:32:52 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Ravi Mistry <rmistry@google.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 2/4] http: add exponential backoff without Retry-After
-Message-ID: <au0EE96afsApvfZM@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ravi Mistry <rmistry@google.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
-	Patrick Steinhardt <ps@pks.im>
-References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
- <pull.2287.v2.git.1793732247.gitgitgadget@gmail.com>
- <fe1e847dede7579da911b5a9ba16c806b5332723.1793732247.git.gitgitgadget@gmail.com>
- <auusPUaYRmUBDsdI@fruit.crustytoothpaste.net>
- <CAF+mdifcp+qkESZzd=8SmrL6eckxAQXR-4nxxSuL=xCV48OhVQ@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NW50Hx/R
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6b561b60b78so1704198a12.1
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 14:35:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793918130; x=1794522930; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=rC9BbVpEcPxmUYJ/AzgYmPVa6ALH99Gq+D/3SDB+5dI=;
+        b=NW50Hx/R0dGdQPgDCk9sD54HPaqlNLim3spk3bgSg8lPZI1MHMBkVNSwbq2Ot8JHZl
+         0hX/xwAKJ8YHxOgoepj6TWJYEn9btBipofFuk1/B7ccFm0MJYn9uQzNqYqoS+axGyhBr
+         1n5sNoV4JwBNUFeTbsVNtQhdX5SVvq3Qo97I8ZlzLzMpHQTv6PROZ1IGkkBIcpi+aq9M
+         BbkbiFUql1I5l3+Yp5c/DpmImZULiR0RpAV/dmvntTVgXPfMXbiychHSej8/AuRWqZFP
+         qKD3khjUp9b6XDcoiqhpifxZhJ5M4KOaf7AKBPwAhk3Nis/1gHcQqrm4pal+dJb4m27E
+         PyDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793918130; x=1794522930;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rC9BbVpEcPxmUYJ/AzgYmPVa6ALH99Gq+D/3SDB+5dI=;
+        b=t8IoORCL4xvq8r6dkKqK/3i4GjyHRPng2df8MAIYH2n3OYOtTZbHqNcoLhOd45J9B8
+         leFWiy2jldqeNhUeF37gRnWTD68TTYpownLjsZkJ4WLW4RcnnzxjbADtxVB8l0ca9frS
+         xxD8Auo/kp8SJw9NWxNPR40SotW+XPI8pFfk9V1waxPSQ0iYA3zGq0cK3/vC6mTV2/nL
+         GblWSPBiwSLaOKz96vclWmlUoF6Shs7CSLoconrcIACeOayGCEl4RutNh9RDfcY1z4qC
+         nLa/Rj4GvGJfozdwNZB7ySg/jRbzhW70lOOZbYkP5PHrugXqjsMQ+jqAHrzDoF+moJOD
+         6D1A==
+X-Gm-Message-State: APuU4Z/S6QMYjv0jUrWJkqaOQxyAJDzXyYNb5C9i9qrBOFptIrq9BNvF
+	o2Wik4BXxlRDkrc31PjmUMYFQqHzJ5atVS4Lq1RV7g6i9ucBjxEJExJP9J0LjcxI
+X-Gm-Gg: AYBFou3I1q2M2gGYZX6vohmhtdKPP4zbYcyf+30pM3FBmH1TfS+nSPhCezfO741Y9RD
+	T8qfc/xwYD4E+prpP+XL81NEj4ST8Y6zqI2hIcXEDOJMxkIYGC9g7yuLa9Mupl/w+brhyAl/ftN
+	/Z17TZiyKng1G90V4XRLkdCDgkZ1GhByspoGwRfNtjgrSXX7NHcixu0IxykDUULWj2Fa7ebgvW2
+	O+g8grm+pLCjZa3aNryy3M6f9RWlcmC+6Kh+J+fN2HFSfazE3akqQw3iHQo3B2xEGNMMu/pbx0k
+	Suj4ja3lGdkZHMuWQLRyYQAM3dTmFjHkzHNIa3x03OBtLQUuWP3ofgJU07xx44SNuIyns2roe2x
+	D83J7H7dBcYaQDjKEtTXG3CiY+E5UtcYheXLkHR3NL0kyGcGkL8/kPh3nRrE4vQxi0vBGhvPNxW
+	zL+eP1RLopzlZDXKoaRDH12EGsRxQA2OB7pLOc/Lw6GY7tPGZUhbT2L21MlAca5Igk6mMBmCqzS
+	xg1/DmGSO9bcS5q86pK2MkLKygP9d4jx5BnWJK8jd/hXhPlyaTYX6GZomo920l6Fqb0obEzhHkT
+	TlEZvROgG6dsdEqKqQy0lg12bsF0Xemd8xJ7QfnaJVGJDNjtqgHVRA11fUciHyiyA/eIO2+lDmT
+	/uWN2NKr8ngoqDWHzDtvmuGWjXSpvfjA5zYQ=
+X-Received: by 2002:a17:907:d40a:b0:c3e:d0ca:d30a with SMTP id a640c23a62f3a-c4d35447db5mr69028166b.4.1793918129633;
+        Thu, 05 Nov 2026 14:35:29 -0800 (PST)
+Received: from HP ([105.163.158.39])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4d3569e638sm23826666b.48.2026.11.05.14.35.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Nov 2026 14:35:28 -0800 (PST)
+From: Tanga Joris <tangajoris@gmail.com>
+To: git@vger.kernel.org
+Cc: l.s.r@web.de,
+	gitster@pobox.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	usmanakinyemi202@gmail.com,
+	herroyalpriestess@gmail.com,
+	Tanga Joris <tangajoris@gmail.com>
+Subject: [Outreachy PATCH v5 1/3] parse-options: answer --git-completion-helper before command runs
+Date: Fri,  6 Nov 2026 01:34:56 +0300
+Message-ID: <20261105223458.1534785-1-tangajoris@gmail.com>
+X-Mailer: git-send-email 2.56.0.388.g09a996e1ff
+In-Reply-To: <20261105003914.708836-1-tangajoris@gmail.com>
+References: <20261105003914.708836-1-tangajoris@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -81,66 +104,100 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+Q6zDRKNsLLUhIsW"
-Content-Disposition: inline
-In-Reply-To: <CAF+mdifcp+qkESZzd=8SmrL6eckxAQXR-4nxxSuL=xCV48OhVQ@mail.gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
---+Q6zDRKNsLLUhIsW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+fast-import parses its options only after reading the "feature"
+lines from its input, and it creates a temporary pack file before
+that. So "git fast-import --git-completion-helper" waits for input,
+and each run leaves a tmp_pack_* file behind.
 
-On 2026-11-05 at 00:10:10, Ravi Mistry wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > We should not immediately retry on a 429 response, even if that's the
-> > behaviour we have now.  The server told us we were being too aggressive,
-> > so the exact thing we should not do is to continue making requests.  As
-> > a server operator, I definitely don't want this behaviour; instead, we
-> > should pick something sensible if no Retry-After is given, such as 30
-> > seconds.
->=20
-> Makes sense. Junio noted on v1 as well that defaulting http.retryAfter
-> to 0 does not mesh well with exponential backoff.
->=20
-> What do you think about defaulting http.retryAfter to 1 second, matching
-> curl's --retry behavior (1s, 2s, 4s, ...)? Because the delay doubles on
-> each attempt (and Patch 3/4 also reuses http.retryAfter for opt-in
-> transient 5xx retries), starting at 30s would turn 3 retries into 30s,
-> 60s, and 120s. Starting at 1s avoids hammering the server immediately
-> while ramping up on repeated failures.
+bash completion runs the helper with the terminal as input. The next
+commit removes the NO_PARSEOPT flag from fast-import, which would make
+"git fast-import --<TAB>" freeze without this patch.
 
-I can't imagine a situation where 1s is a reasonable backoff for a 429
-response since I can't imagine how the load could reasonably decrease in
-that amount of time.  I suggested 30 seconds because that's a reasonable
-amount of time to back off and allow load to go down (and I think that
-30, 60, and 120 seconds is a reasonable set of timeframes), but I'd say
-it should be at the very least 10 seconds.  I've seen cases where users
-retry very aggressively and it increases the load on the server so they
-just get rate-limited way, way more than if they'd been more gentle and
-waited a little bit longer.
+show_usage_with_options_if_asked() already answers -h and --help-all
+before a command does any work. Teach it to answer the completion
+helper too. Then fast-import, and the other commands that call it,
+reply without reading input.
 
-Note that the curl binary often makes very cheap requests, such as
-static pages or small files, but we are making what are almost certainly
-very expensive requests requiring a substantial amount of server
-computation, so the curl defaults are almost certainly not right here.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-Speaking for myself only
+Reported-by: René Scharfe <l.s.r@web.de>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Helped-by: Cynthia Uche <herroyalpriestess@gmail.com>
+Signed-off-by: Tanga Joris <tangajoris@gmail.com>
+---
+Changes since v4:
+ - Reworded the comment above show_usage_with_options_if_asked()
+   in parse-options.h, as Junio suggested.
+ - 2/3 and 3/3 are unchanged.
+ 
+ parse-options.c        |  6 ++++++
+ parse-options.h        |  6 ++++++
+ t/t9300-fast-import.sh | 16 ++++++++++++++++
+ 3 files changed, 28 insertions(+)
 
---+Q6zDRKNsLLUhIsW
-Content-Type: application/pgp-signature; name=signature.asc
+diff --git a/parse-options.c b/parse-options.c
+index 283a0f1dc2..f2a23b79a4 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1536,6 +1536,12 @@ void show_usage_with_options_if_asked(int ac, const char **av,
+ 			usage_with_options_internal(NULL, usagestr, opts,
+ 						    USAGE_FULL, USAGE_TO_STDOUT);
+ 			exit(0);
++		} else if (!strcmp(av[1], "--git-completion-helper")) {
++			show_gitcomp(opts, 0);
++			exit(0);
++		} else if (!strcmp(av[1], "--git-completion-helper-all")) {
++			show_gitcomp(opts, 1);
++			exit(0);
+ 		}
+ 	}
+ }
+diff --git a/parse-options.h b/parse-options.h
+index f68b51ceca..775a028f10 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -427,6 +427,12 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ NORETURN void usage_with_options(const char * const *usagestr,
+ 				 const struct option *options);
+ 
++/*
++ * Programs that call parse_options() early do not need this function.
++ * If your program has to answer help requests (-h and --help-all) or
++ * the completion helper before parse_options() runs, call this
++ * function to answer them.
++ */
+ void show_usage_with_options_if_asked(int ac, const char **av,
+ 				      const char * const *usage,
+ 				      const struct option *options);
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 73c6e3d448..1305614381 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2914,6 +2914,22 @@ test_expect_success 'R: blob appears only once' '
+ 	test 1 = $n
+ '
+ 
++test_expect_success 'R: --git-completion-helper does not read from stdin' '
++	find .git/objects/pack -name "tmp_pack_*" >before &&
++	echo garbage | git fast-import --git-completion-helper >out &&
++	test_grep -e "--date-format=" out &&
++	find .git/objects/pack -name "tmp_pack_*" >after &&
++	test_cmp before after
++'
++
++test_expect_success 'R: --git-completion-helper-all does not read from stdin' '
++	find .git/objects/pack -name "tmp_pack_*" >before &&
++	echo garbage | git fast-import --git-completion-helper-all >all &&
++	test_grep -e "--allow-unsafe-features" all &&
++	find .git/objects/pack -name "tmp_pack_*" >after &&
++	test_cmp before after
++'
++
+ ###
+ ### series S (mark and path parsing)
+ ###
+-- 
+2.43.0
 
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmrtBBMJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ0U6h02lCf/FSbTajAb/O+upkNQQapXSnSyIZ8eMEOF2
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAK5UAQDL7kgJz6Jx9vlg0xZzZh2fv3Aj
-mglAd5w9zUAi5np4BgEAhAf5ow1S9bSbGWgTu6DyNn0nYot1xAJWfy3Q4hXmjgw=
-=EoA6
------END PGP SIGNATURE-----
-
---+Q6zDRKNsLLUhIsW--
