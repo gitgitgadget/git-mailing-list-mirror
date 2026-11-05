@@ -1,100 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.53
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793839190;
-	b=mtJ4w1WGQ4LU+usBpAEPqCDn9k2qgyonNfzJG3IdQDTKXjXMV6AcCxesovv5SP2Bs12r
-	 tAFi6o/lLMc1NhfSe25N2fO0H9FgSjxS9NkvgMKZjuFnO3hIHQy86t7VoebwqtJFiuwhZ
-	 hzYxI6y79rCh7U98cVu2YftstZC+uAHDcA5Qm7714DGwmkKQEdkQUMI9j0LceNHafTwI0
-	 xtrZMsc8v1F1m3gS5LbZIEkjkvGT4aaVq9/Rjug4ABHvHZPmKVX0vlDvekGr8Oo8K2/ox
-	 Olf9UNsenSlLlPEy0DbBeRH9Sj/1L31dpn4tQ1ptdX12qpMBmtuPGUuC/ybKHXHFGMw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793839190;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.48
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793840157;
+	b=4dTj+5NpgzsWhHVl3b4f4IfNN+JziW8x8wUTyH9qgeXIv9iAoW31iqC+cUMKl/lXsa/7
+	 8G8BaTDuLRbgfPmPTv1/Zsug5oLKHjfd0CCB69CJt8AyH2ZaRKpFXnWimAgMXRqEnAosM
+	 WfZvwvuiy/1ICp33386efTafDtV7V/AdGatf03xgbZWzOZChfBi118qZAeQ2kamCvfedY
+	 1KxCmsqk7cc0RDkOU2CpD2nYa8emF5crXzPNVu5xE6TvMurJKt7lbHnLt0WoyMkpEJCoK
+	 NI+aO6o3yYtMB97Id2nbMtuFWy9AZwypD56ICYJeXMnk8N4c7BD9nqd4TrN7kYc6ujw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793840157;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=WZvDDKyU5EkjWfIn5aQ/UfSYFyXMmdIHP6nXIS0iXd0=;
-	b=SbpVNqhZoK+f4PXtRws/czGdtxlDTi2YK5yvHkW+L2/ciFkfSrk+oT58qPwUWODr1uJh
-	 8/RzqhcDve0+oL5gk1XFMfkRU1YhULCzckZ3bPGPJ+w54baUuytekUyw5Y3DVbgmaCQrj
-	 9ThD/lOxX/son0COC7ng4PzzkHYb1Kc2qyQgdnc/7RMqcfy6cmYR31qZ32DeakIsXAX+3
-	 mWa3C/F+k4xxXWAydntAOJXe3ki83zzLUQ03c7x+aKccN0SKOKq/zXJkSkzJnhKbTqjPY
-	 /4syc31kdMs1Vfco/RVxEQecaOX0/ClaVhPj0suiraLrDfpNuAHnHLAot6I+XCS9h2g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=2N4tXSYyNJhVoPBUtEUwnL5pVlC7LD9ihuXv5+EzHCw=;
+	b=sxP2bcIUVpran8z9LsekJtMtzUMS0EywEze0obBYf26WKCFJ7FeTY2Ay2OE7K4LWxaC5
+	 jGV4uTYhZ/BDiF6rteX6bdJj+WtYMTeb9Jvr7erlqMtbMfzpiPxbIQImPS9J0QLNRDcWu
+	 YXFz3Gl4Cd2x7mkkX1gMIm05r7BTEybeutvuO6dYl4D4YSgEEBEzJ6zEkRR+tjjo0kAFO
+	 uBqwg39jxmGsN1r50wES1S7MVL4W2SbIFSK2xE77xy6lAsdP9MKq23swH4oCz1QqHblAQ
+	 Yzvqr+raPS+QJ+j2Sd1fvFV27ar9pq1agg9eO6lgpN+B8qtZJLH02qYVGuGjayPL3Rg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wxJufyja;
-	arc=none smtp.remote-ip=209.85.208.53
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XCL+ntyj;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.48
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117D6606A31B
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 00:39:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 117D6606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90E6606A331
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 00:55:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D90E6606A331
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wxJufyja
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6b2237b596cso2690283a12.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2026 16:39:49 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XCL+ntyj
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-c4550d8ab15so207390666b.2
+        for <git@vger.kernel.org>; Wed, 04 Nov 2026 16:55:56 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793840155; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LgLWtq+tWDtPGzBIHWDtuHDdxZmTFAA4eP4vb9WJ/WSq8MiaLuAnCVaGCNK9zv493V
+         LeIFqrbE6lLhcYvFJDrGP5ypFussLIKVeQvURnTcgZHeIUSSKdlWKmjPkP5/eBWHRkHJ
+         923qhp0G4clZkARCag80kqV0X4lgDvKX59R1x5rnYwNqzp9+nnG332X/W3dgqoqiNYx3
+         cZ42QTiGaU+a0ogSvX03aBQLSY4l3X1vXHMpoCHVAfmnFxkl40d3/c5TKOcgMn/uBcs+
+         HmTPRQr509ctjgBDO1Zf/Mg1xIH/PMHtJfu4TIkrnuurIbpYwc5fzxAxEgWNWJ/7+DEH
+         srQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=2N4tXSYyNJhVoPBUtEUwnL5pVlC7LD9ihuXv5+EzHCw=;
+        fh=xct+iGG4b1LwuXoxK5VB4+y71YE7hTgcJFCPJmdmGL8=;
+        b=UcBjEuC09Y2JzdEYbEN7v6huDfMu4Rtx/nDHBYAUuqrSITJ/J9sOONBDJ+NhdVlfIq
+         F5Hvd1JQO4GrHAr6pGy6BkFw5LrdQlYyMedvcad5RoL01sPAlxh1KV9eejTYnRoq0rJU
+         9dsmI1w2U+CLWyl3iZwbj6jUz4ORlTmh+Pwf5lNz3WWYyDs24Ts6sJ/GBPMZaHfO01pY
+         l9667WKuoW6tNGVbIE8ILpXyDLwgt4+VGLF8ByS74l5GF9fHR1kVX+wiD5PI7COv+dwM
+         mqPzf2/hzaZHzV80bqtIkmO9jqoDgjZ54rU84f+ehYYuTR1DOB8N1hfi3mo6lpduCniP
+         SdAg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793839188; x=1794443988; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WZvDDKyU5EkjWfIn5aQ/UfSYFyXMmdIHP6nXIS0iXd0=;
-        b=wxJufyjacw3Oy2sIbTjngkeoN3/UUSPh6a958K6jxuc+GiS7M7xt7VplBF2wRIV2qt
-         ZWZXhll8Hr8iue3a7iUxInbLn8UaSfisCUFDo1VuiVaSevN9nlgxK1/EGakwAdLRKBNp
-         JkHH5tlgP92NNmXaVqhafga3AdQuv09ipbx3E3HlzbklgzYrC8ynbbNchcaQLl3UyWf/
-         A1+AziOIMXUeq6CtyKbeJ1/o4/4X0FlbbZbYj95bh9zQymS6QntYy9RFYMzRvRIcnpm0
-         kC7qtumMbBklegNjt4XYzwkrTleyrgQaZW4C43Ge9229/9sCqGyWPOx6X29ZeojMv5g4
-         twLg==
+        d=gmail.com; s=20260707; t=1793840155; x=1794444955; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=2N4tXSYyNJhVoPBUtEUwnL5pVlC7LD9ihuXv5+EzHCw=;
+        b=XCL+ntyjKeDXr/pNiElXMinUY3SBGLpcQYgUWBb13M1Xjuw4MqVxzv5Jc/R3soFqRw
+         XMvlpnC6mFCQS+ui7xJQk9Uo8i52mgM8KvAnQaSGIS1271kE2xmIYeWaNIM0D3CpwDbZ
+         ZNvI0mQfnZrBU9PEidKvIFxs/s03KspxgbJAENggEMRdy2DIhcLXiuk9auaLHpwzvDzv
+         WWBfIyreMv/9N+fw7ApgfgVQ8erq8IDz6OmuWJMrJxdQbHVliQPTj8rY+Xtqketyn/X/
+         tNL2e85KmZYsH+UQURhNux6RSo4c2fSZ4Fr/cOgolkUN5xpDhET21UccNJT+KNRM3aJZ
+         9A8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793839188; x=1794443988;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WZvDDKyU5EkjWfIn5aQ/UfSYFyXMmdIHP6nXIS0iXd0=;
-        b=oqNkd0TYoFwBsBqDhJfIOb3d+xIMbzqJmMU82MwyXb/c4dbZkpCndY3TR84QHk/1QK
-         UJmXIFMvfVBL52cZtwdrUVZPCRHSe89Fhr8uYrH5hgtlqAmk9ikCp4mb+SPZupQxM33S
-         T2PG+M+hzGS7F8I7omoqufUrH4kN2kEguArmGL4sl9Ea1AlRd4cLr9zLQNFOrCJA7+1B
-         W7oLPWsNNStittLoLihiooZnR2o1WYDQWgsE4hWak6JtgrQJjDyIKVdP0gcCwXPvzKKw
-         293xDo+F5waCMxtbdDTEQ2su0GMmqsRxNAOiPXp133uoRt1WgnggR7Chkdw7jEWoWVgy
-         uUwA==
-X-Gm-Message-State: APuU4Z/1DpR9v1+qzsdXVm5ZjgzYgT42yqAjIOFsn65NWzWzgFRA7WZs
-	7fTeHGibD2jgVnbIo2Fehkpz3l3bPKdp41qpjbmXpIWJJavHVySbLDjMymB9UUEv
-X-Gm-Gg: AYBFou1SY9slel9GbSun5tMVRa0pqO/MCEkSXqL8MbCdwVh9Gt2dPMW6e4wLygkTihf
-	XPtyJpRnoVmGRO/+42zedmTR/HZwHyNKeu+5wndLsdnTyYmDIBBqyEZG54lg8soxILWJ/6TK4en
-	mkWz4OnC8uk63+0EsRsP7V1GTbCTwizehKmnOrUrgstSunHhXrxAbY7iarllxtnRsWWC5gSHGDP
-	cbx0NdS5WSf83Hcki9hLsjFW8iiYDpZAt4NUNJH1LuDY55Y6XrD92vk75+v2Xj1RHQhu8AdcbUs
-	HfTLls6zoOgJ63lwtJ///kMUOW289RGSyfJnMle39Dmza36YF8nt78PcIWBHXlY+uV+SZqceDD7
-	jd1zXD8izkd6Fouckh2McNrBijpvLPheupxWd2aBZY4KTj8ULtWm5ZykFOLs9XQLad82lnXT6o3
-	YGOuGxDLEBVMKgJDTpoOsQ2ddkb6vNS011PCEBy+svIX4aRkCZVYSqbsTId7Nhn8TTRpNBh13pJ
-	larPY9QyqzxPdB3uk34I/cUst/rsQ0oQ3ihDKRBd2gqx+kYJwUL8KMCEOShHY3cYyUxs0EGPvro
-	ueaJ5iiNNb5zHGgICzFqbXnB0dZ3QXqNHtXruChCkb6D4iEMApFdh5twPVx5yNGov2g/zyjLef0
-	JvURrTzQuMA7jORhr1b252pIFSUt0em3CFKGJ
-X-Received: by 2002:a05:6402:5020:b0:6b3:d0a0:3a2d with SMTP id 4fb4d7f45d1cf-6b4d3370d36mr13387902a12.1.1793839188301;
-        Wed, 04 Nov 2026 16:39:48 -0800 (PST)
-Received: from HP ([105.163.158.144])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b55ac7fa76sm1236883a12.28.2026.11.04.16.39.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2026 16:39:47 -0800 (PST)
-From: Tanga Joris <tangajoris@gmail.com>
-To: git@vger.kernel.org
-Cc: l.s.r@web.de,
-	gitster@pobox.com,
-	christian.couder@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	usmanakinyemi202@gmail.com,
-	herroyalpriestess@gmail.com,
-	Tanga Joris <tangajoris@gmail.com>
-Subject: [Outreachy PATCH v4 3/3] t0012: catch builtins that keep NO_PARSEOPT after conversion
-Date: Thu,  5 Nov 2026 03:39:13 +0300
-Message-ID: <20261105003914.708836-3-tangajoris@gmail.com>
-X-Mailer: git-send-email 2.56.0.299.g39a9a95557
-In-Reply-To: <20261105003914.708836-1-tangajoris@gmail.com>
-References: <20261029231621.48958-1-tangajoris@gmail.com>
- <20261105003914.708836-1-tangajoris@gmail.com>
+        d=1e100.net; s=20260707; t=1793840155; x=1794444955;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=2N4tXSYyNJhVoPBUtEUwnL5pVlC7LD9ihuXv5+EzHCw=;
+        b=dn92OEf+Su2doRWkk/RyatspPlJLKes4+5VFlJf1DxS8nMADj/QfynmCKITsav9GyY
+         I/bAFLVHLNYTWdjF4WpkerJY5O5flxlYc0EfgiX7/4QaUgTo23Tt2dyrkhfNVgTwE3Jd
+         0cM97VRJape8N7xfFxfm1peQ9ugOJaGRcFAskrLzKx/HMlK0Bgly5LKjSXAYCWBncbyq
+         jUW4BQM90Nbul7QSythKbpyUSEQa3LkA3jZ8hPzVz7I7+Zmvlx0hcNJV4I8ZJlE/KM3w
+         3CwRDN2zY9azqKwJqsKvZ20dlrT3c5LELhhsv6Q9amx0J5WgATNd0TZNXBNxS1W1nqVX
+         TqYg==
+X-Gm-Message-State: APuU4Z/igid2YsoX6ZDgCuDJ6R7JKfVPQ4tmAIApkpcigHTphTrC1HE4
+	iZfs9CbXaI9oM4jnyD21qD3Ze1/T1lLu2fchiKOha6BXVzPIqkRd3oF/cSkrt+3eJIOlkkWjZuB
+	iPnVku9A3Bk8kQnNQkcFjfXH72kwfkug=
+X-Gm-Gg: AYBFou14ElHA+clhqa+Cb7rc+SW6L7dhq+mTtRaJSIvHoivY9FIMXZS+LG3zwM028MZ
+	TDOJ78j5qDn0jqhCXUSLebzp3LlSDb+Xz+IkFH8keI54mibYT4Y48DBcgkpZ/YntfGNHK4lEIeQ
+	msBwb7m3gmFddCPBlT2kH3lJ/7hViR+hE1BdYbGSMzxkMTkXB1fjhNliBkiBnRGAMaJNU7DjZkv
+	kjfAGc38zt+tRdWjomXwdtvsJyfUDPIcEstpxIK3HT/z2dYUiIYchrNjw5wmceL6pQ6tSZHYzVi
+	YLrIaJNCwWQy+fRhMvyD1qiKBqo7YiaQpcWAXDWrcarVbhG7urJ1wI9efRiCdxBaErIx/jBrdMA
+	p1VN083350gxxnlnBBf5SyWVgfGSHL6aFx5YWaA==
+X-Received: by 2002:a17:907:e849:b0:c35:d50a:1352 with SMTP id
+ a640c23a62f3a-c4ca7a55635mr1462893466b.11.1793840154962; Wed, 04 Nov 2026
+ 16:55:54 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,65 +103,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261101210623.622-1-herroyalpriestess@gmail.com>
+ <20261104025340.7799-1-herroyalpriestess@gmail.com> <CAPSxiM8E3LrJeba_f1gj3mxRVUYapp-nSgj+++pcgJEUJpxeLQ@mail.gmail.com>
+In-Reply-To: <CAPSxiM8E3LrJeba_f1gj3mxRVUYapp-nSgj+++pcgJEUJpxeLQ@mail.gmail.com>
+From: Priestess <herroyalpriestess@gmail.com>
+Date: Thu, 5 Nov 2026 01:55:44 +0100
+X-Gm-Features: AclHuK9GYkbvC2H4csAIiflfuZUVdvWKUybUuK8-ehP5DxEuTEXZzKwLKz0RtFI
+Message-ID: <CAOcE0w+5jVvq9ZJW+3ZjJ3WGAnSHTj5wpNvbx7ZC2a0_aEtyxA@mail.gmail.com>
+Subject: Re: [Outreachy] Proposal draft v2: Improve how command arguments and
+ options are scanned and parsed
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, 
+	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When a builtin is converted to parse-options, the NO_PARSEOPT flag in
-git.c has to be removed by hand. No test checks this. The previous
-commit removes the flag from four builtins where it was left behind.
+On Thu, Nov 5, 2026 at 1:08=E2=80=AFAM Usman Akinyemi
+<usmanakinyemi202@gmail.com> wrote:
+>
+> Hello,
+Hi, Usman
 
-Add a test that runs "git <cmd> --git-completion-helper" for every
-builtin left out of "git --list-cmds=parseopt". The test fails if the
-command prints an option starting with "--". Without the previous
-commit, it fails for diff-pairs, fast-import and patch-id.
+> Thanks for your proposal.
+>
+> Do not forget to submit the application on the Outreachy page.
 
-The test skips diff, diff-files, diff-index, diff-tree and rev-list,
-because they print the diff options. It also skips rev-parse, because
-it prints the argument back. It does not catch var, because var only
-has short options (like -l) and the helper only lists long options.
-
-Suggested-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Signed-off-by: Tanga Joris <tangajoris@gmail.com>
----
-Kaartic, I put your test in a separate patch for now, so it is easy to
-find. I'm happy to squash it into 2/3 if you prefer it there.
-
- t/t0012-help.sh | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
-
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index b0a3fdbbbc..41197c67e2 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -267,4 +267,29 @@ do
- 	'
- done <builtins
- 
-+test_expect_success 'generate list of builtins without parse-options' '
-+	git --list-cmds=parseopt >parseopt &&
-+	tr " " "\n" <parseopt | sort >sorted-parseopt &&
-+	sort builtins >sorted-builtins &&
-+	comm -23 sorted-builtins sorted-parseopt >no-parseopt
-+'
-+
-+while read builtin
-+do
-+	case "$builtin" in
-+	# these answer with the diff options
-+	diff|diff-files|diff-index|diff-tree|rev-list)
-+		continue ;;
-+	# rev-parse prints unknown arguments back
-+	rev-parse)
-+		continue ;;
-+	esac
-+
-+	test_expect_success "$builtin does not answer --git-completion-helper" '
-+		test_might_fail git $builtin --git-completion-helper \
-+			</dev/null >output 2>/dev/null &&
-+		test_grep ! "^--" output
-+	'
-+done <no-parseopt
-+
- test_done
--- 
-2.43.0
-
+Will do. Thank you for reading and reviewing!
