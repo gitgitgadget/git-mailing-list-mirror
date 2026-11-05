@@ -1,123 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793864354;
-	b=qc1QyirzWr1ZF7iwO8TThilIk83ABHerc/d5x07oOPYrGeFroyrYWVos3bj0BbqAJ2jl
-	 SqYFcEf5Cg98jkRocmGWxNXV0Q47IJVgrvLO1DIWivRZ6CScNVnF+XPgxdCcgog0uz7Jm
-	 axW8Of0m9pokZymEpJozpATvHEhiSTRQY8gQ45shWWQfF4dRG+zES8zTClmrBjcLyFNbJ
-	 YvTX3kla2sZjxBsHU4c22o2jQC/4hv788vKRBkWGgmS+Lw6+WJPyF9/cEkX2gsafIOg6t
-	 +6gq0TJpZ2i9Y40LyYF51qVaM6wekvCW1AXaHA2QXEUtCNzM31Fqmbl+9+K3c1y1HqA==
+	t=1793864606;
+	b=gN4cLVA/ewnNgRqxR0ka0wvNKun1DYU3d0mCdYsl6UB6qgZCBEwU2fNohQJuNrKycvpo
+	 lnLsu2ahngXBjD/htd7n8WEY2FIFBXOgvxLl3NMrrF/ko1tlejRyQ+hvmXkd2GBdPqjbT
+	 6YoJ2ZzaPrhnurau/Z7uZ5d+BiTrAvbBEB18fxffck0mc88bwp3nK6Jgk48zan+p6ccHs
+	 Ij6iEYg7peBnIdGdi9MrQctgzSUl2fIoQMKr1jicSrJD/+ohFSlwotqnfqO9PQHg6Prtf
+	 yCJDL6CUBJv4eZWXH+KjVTrLJOH90y3uCR4hSbRh+3NzP4k0mn0P84G5rw9yKGg1vYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793864354;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=cMz9dbeYc5LJr8dDvVSyUJrIgIFyf4MejGgf4XDPulE=;
-	b=EkkOCzhKT3bJ/hUeGQ+dD0oDWyTHMb2FrHHLhkWw+c9+e8wWbV0mb+nKRKnkCmHlWb+v
-	 /8OlUh4msef5xL3m8qa4H7pedp31A2+vbx/oT3NmwKUQYNqp09F29z30mb/eEYPamF1Ce
-	 UyFLx+NheW5eZSiAQ9T3Afq1S5q6jmL+G+OeWlCWzFHI3HKeZy0XyRx0nYl/4qI9bb9Dw
-	 x7kDMqNDCTlETRb4J9Ze+fT3mJvpfb8SIPux6SRUe7CnuIkZQNFCFrL7Jb/ErUJDnir5p
-	 l3+D5GbB1ozb1Efrabl7kB3I+JsLyTNG2DrWWaflAgqAALadSUmZZybRuTrWGWrq1qQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793864606;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=68VzJbJnuyEnxtIDAocLaoCHb8UGSgBXfSsBnTiGqg4=;
+	b=dXkImo70bdcxHl8ifjwnA38aLw9R+tiI4CX1g6vwL3IeKerGnxaNEu9k9I0yTjSxDffN
+	 OgJTGTNw782ig7SqJQK1WhoqrIzmTD54FH/GyZDP4fcfr+Dhhrwr8IuitmYTALyvYt4Z/
+	 8+eKRx1u5NMWxDArJZbVp4+I0ePsw3oHXVXiiMWpqv/jr5Pg/mCyfYCX7bzja0bI1BH9+
+	 QHiiz5mqtp0BE9R8WPRmaYlbr5PYEp/xxTZqjddAuNeWpTuy0LLImJtzKKULqKRA2Y5AU
+	 8JHvOSSAyJPbV6BOxcWWpyi7UuH2zcvT2r9x3hOm80Zog3FsSB2taOq35QGGoeexfIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=f1NusdLO;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yGNLhFtF;
-	arc=none smtp.remote-ip=202.12.124.151
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xsqmboa9;
+	arc=none smtp.remote-ip=209.85.161.50
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13348606A326
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 07:39:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 13348606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE89606A328
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 07:43:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1BE89606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=f1NusdLO;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yGNLhFtF
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 58B121D00135
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 02:39:13 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 05 Nov 2026 02:39:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793864353; x=1793950753; bh=cMz9dbeYc5
-	LJr8dDvVSyUJrIgIFyf4MejGgf4XDPulE=; b=f1NusdLO/BWhOvEwlQe5uUPvg8
-	MA5rDJD1b1upx+vbAqtxJPDj1YWblnPKt3nFpr4LWun0IJmGo7rqIj+Gfe4QSJs6
-	ZZpH61rm/syCpJCbZ9SZlQ3Bm4cCLDaXL7t3A5YNqzp+COGRTV+D+b3NowAA0z1Z
-	VxjTZat/7dVZXV/qHfAHIUKEDdUAHWWqzY5AcF6p7dwWCuyXlv2ZAHDMRXJvhnmz
-	E2WBLrnzajn9atU+F3xJpNcVhRAChX7gAj99Uh+8L9vJH3G+Wtj9C8Yh0gVnSl55
-	oKUvD8ZTymFlBXTbrlPdL4e4XqkbNnhSUeIupN31Fji7zCukWmPtjq0riy+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793864353; x=1793950753; bh=cMz9dbeYc5LJr8dDvVSyUJrIgIFyf4MejGg
-	f4XDPulE=; b=yGNLhFtFcnpELcnXozE6OgxWAHYttpGldQhJ9i9gcrNSjdxTYev
-	K0x4i5P5I42zY/5GJkj1la/Zacvre9mX/EU3gVPSstf2IBpsWX6MyosdAyDZqqct
-	FtK6E2BsRdfmMupB4toLDFyyyI6hhfb/fNhsE4FAbbD2iVIv2wQp0rvI2IAQ551b
-	DE6bK4XLsjNXdlve2iVI1691XZzk2kawTHcbVTnOlIZQo61D9ZhDNPpej2psTVfE
-	hPjOKjKh+1lwulfx1pxK0f5eXPmDMKR7eJzV7OqnI86J439Cf319ACOiK2EGw6Y3
-	Qnzm3LRQvoVzORiZzellx4EHMguE7oPp55A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793864353; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:nZYnllggPZvY2b5Nnd1p2xamkwgehNL7HiDmyzyUCw7Ef7h
-	JhoC1d2Dg+JQ095s2xNGVqwYP3dtOK7LQ5JpW+wq5c/RUoMycDx1WGZn0jgcAAV6
-	C3lKvfCAa+ZLcu6k9/qW9w4dXCXot/Qp2VwlyT6F5EJuN8xxxVl/kdqAEVwI1VMe
-	NDau7bMCBsqUmxntaIRYZp1XZ6osyxjoVkhF5t/NQNvJ/6Oo+kQErWSlQ3/QHPwn
-	0KxtLq1R7JenB2rBHusxbhwgVCNpbDfuXnXjc6VWHM6iBk/N2kY7ihYa01YkZPqv
-	5cemgLw8tXyDfj+AmWnNdZG6h++8EYyn7lpF8GA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:mKgy3pckQx1B4nX101tcMZUNytTTVLyg5AKLQ7tZV7o=:fC34nbm5ksU3MPvVlobswzWYqiC1H08z29dzJ4ecgIg=;
-X-ME-Sender: <xms:oDLsaqwUXjJITYo0ju8U6mz_NJnqLJHTmD5EZGk1KaBUbg4k4IKWlg>
-    <xme:oDLsalVQmr3-8M_PFb5oq9doAxsJ5rVWL6eDmRvsjZIDY2HjN6aWFXlLtjHdzJU-C
-    LQPUagVSJ2cWPbODKr3HUtTXZYzOXgcgIk5KgX2O2_Jo-pZR_2GnbfX>
-X-ME-Received: <xmr:oDLsaihQybY7MbxKveNKrjgfZ7lwtBqmsjB1ayUaQPCcpywuVAe5BuIUJptetgYPpuLLepRuX-uIbYwEqSe5OIlngNc0k6YrJRv6>
-X-ME-Proxy-Cause: dmFkZTFBfGmxQWOOsmvl4stDqhowM2MSbRJpUf35ChVXTVksMWquhpO7EqvXkCV0IVDrRg
-    P8V4nR7ZOaxKJniR5aCnEVWW4r/R7Zc20n9Pi4gDDaUel6LbjXk40041BMXMj2kNM7jy8U
-    ba0ZasGCMzH4asrG1SM1JPf4jg8nvGFoMiP4HIl/+U1x/TFJDQAipVmTGIomD0sxHn+uSr
-    RRzYO7pPA0GxYkaVm5ulkqonDeHxO7gfYbWfhTVBE09wRdYVhX5CXWvbyCJteKteBDNwbE
-    Na99iMrkL6KhA/aQX0NSpnCNwtC/qnuOR2mgKRXRK77WQi08KdOukL6Q00YjLCwCb90NcU
-    xhDtYg/5tSW56uWUKYChEuSzVtFn6yfDCkKs38sOadNlVmb8wU6SioB+pdkshbidKmXRkn
-    VzEU0+yKHh/ClAFHarppJYAUIKOVBQZO7t4q5jflHh1BvpeT/FG9rFNNR/BYrXJPGELMw5
-    GDiWBjaRbCpquNwj9Twgu+RL7Vq3d4m5qoBi2KuDUvgoufEVN+zrqPS1lreeNWwgiTacXd
-    Xsh4zPwYxtvNm+C7OvkizeTmhRvqkYBc0XxrKDNGok58U3t9qtRIW55obf85Cg2oHG67lK
-    jqmKLZzM/fjavug3kP+lMU7CVdj1OkMIN+6OQNqirF/leKofFexKgJXAbzcA
-X-ME-Proxy: <xmx:oDLsatAuhLvO_QX51PwyX54Nvqm6_11PJG6KxU_toMlOmhSHC48b7Q>
-    <xmx:oDLsagtdVUlxLp6q-76DkmnRepWI7m3CO02mGxdGsBZ-PO5jQZTkyQ>
-    <xmx:oDLsapd9zBur2lM3j9GcfRrUJwP5WjV5bqgPAJdzJC4FtjUxivMRRQ>
-    <xmx:oDLsat9z3srT2j6Z5UbiZA072zQ4ePGTDbBJ0WWBhLph-WD5pvmIrQ>
-    <xmx:oTLsam-kDccsbZF6P9zfpjp-EeRz-9QdrPDvkz_PG5vCj6Ac6O5Ouw27>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 02:39:12 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Farid Zakaria <farid.m.zakaria@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
- <ps@pks.im>,  M Hickford <mirth.hickford@gmail.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH v2 0/3] credential-cache: fix two races when daemons
- start at once
-In-Reply-To: <20261104-fz-credential-cache-race-v2-0-ddccd0831eba@gmail.com>
-	(Farid Zakaria's message of "Wed, 04 Nov 2026 11:53:13 -0800")
-References: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
-	<20261104-fz-credential-cache-race-v2-0-ddccd0831eba@gmail.com>
-Date: Wed, 04 Nov 2026 23:39:11 -0800
-Message-ID: <xmqqik2bybfk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xsqmboa9
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-70bf1671c21so999128eaf.1
+        for <git@vger.kernel.org>; Wed, 04 Nov 2026 23:43:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793864605; x=1794469405; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=68VzJbJnuyEnxtIDAocLaoCHb8UGSgBXfSsBnTiGqg4=;
+        b=xsqmboa90PkFa/H/KHIuhNYUL8edNyGIT4uR/bPfgSdM7qx1V+OCFwUPFVeFx+Y4OQ
+         8iJjMn7dCU453qx63b+7wGYW2/kRyTNVqbJs+EUzlbqsD92wh1C0ronQwdQgtsqLA3Eb
+         xyLmsbKwH63lwHdvFDrsppwrPAxcMC6urzeMZy9JQDmgEbTMQwHYzyKvlM2Ns8HwR7yn
+         emd2qRyS7evfz/1rfsnKd2nIJKVOh5YNRiaXph5YGGVH/juHXy5DzD1oTXqHQTEmQyBE
+         ezKov17UiDokkcMKeOCk6E4Yu9EwT06h5m17vAi3Oy8DuW9ze1gNeNYHgx2yMvrVVQ2w
+         GKig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793864605; x=1794469405;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=68VzJbJnuyEnxtIDAocLaoCHb8UGSgBXfSsBnTiGqg4=;
+        b=z7MBAJvMxR3xFdQoI5FmXXYsB2qaccg26ijUX840R2Wh4xT843XhZhK27sh1Arm0bl
+         AVKQh51/OepejGjIOOazf/8zntV8sYLnDkIdNI1TqP4k5gN7TSUECC21jpANsyKKnqtf
+         0NLpLPWin7TTkXwEJ9Sp5MIxSdsZ9dYc6JyMSDCV4HODDjqu/RXKgUsSBYpJ28MtqHH3
+         REO2FuDc3EI+jokTCgwwePcnFjExcwsVZun68OfCog7nU7ro8HnlLKstLzTaDoMVLmYU
+         4yWjKQ22VozZ8x9Af8hacGS5jD8SNngQx9E+M4Mcktwrw/HcIwdOkDxMGa4tV7bKubXM
+         qIgA==
+X-Gm-Message-State: APuU4Z8DEvcBHuQEC+zwe8bIjt+4c6mB/c+tcBBb3w152VjFq3NANBZ6
+	EJdWlk9UjTN4lSkX5ixHafbgLH3W3C21lXqCOSihG5ol5kMNxM2WlCiq/HjQbYVDhATjKg==
+X-Gm-Gg: AYBFou09hh/ubGNh4R9mUqUPyMXpoc5oYA+Tq4gSBhCo51IhpiF8t+FnBBNZBEgspX7
+	5OWhz35Wfqc7oEkwNQgEsJtEAMzpnsPLJ4mQmXw0M67EYpo2aCqzQdUbPzo0gO6JtGqUUU840JS
+	ZkxCCAZEQbOUyTq/X6Z/rDG2j8n4rLlBJIFscVKnVdVsTLRfVf9xB38kTBov0jYF7gjWuTs131q
+	LT1W245Vs1/7sM88wXWjQg21KfoOxuEokdMERrUFSviZ4n8l5eV60ovW9tkuOrxHZLlJvDfvEar
+	1aNHZy4IOx2aLvXt3lLlA695NadGUjaAIPwzaqHebeZuSJ21zwOB7Cgy3UJTssd0yBm7U4vyira
+	NjJ/q2hikiM80cSbr+/8i4f3NMYXaE/2tGNH3JJopRzhnqRW4M/IVUBl4lV41+VIZsV6dduq8+b
+	fCaLreOd1ywwGzykakwIRlKEt+EM5X+ZinNomquyHq5OYU09eEWvLPBBHxLjXuA6Xxw8BM2vBuR
+	LxrBnVe/Une6E9BN/z9N0m7tNywMujTcjVDdk/FjN/UjRsE4gQTpQMSP6K2XguPX6N17tlda5Io
+	sBC7EtmTP+XFzSjiwPbXB4rJKhMUHgXA
+X-Received: by 2002:a05:6820:3397:10b0:716:d48a:ee93 with SMTP id 006d021491bc7-716d48b1058mr543941eaf.61.1793864604670;
+        Wed, 04 Nov 2026 23:43:24 -0800 (PST)
+Received: from [127.0.0.1] ([20.15.230.243])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-716c1020ea2sm3526671eaf.2.2026.11.04.23.43.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2026 23:43:24 -0800 (PST)
+Message-Id: <pull.2285.v3.git.1793864602482.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2285.git.1793200705017.gitgitgadget@gmail.com>
+References: <pull.2285.git.1793200705017.gitgitgadget@gmail.com>
+From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 05 Nov 2026 07:43:22 +0000
+Subject: [PATCH v3] odb: do not list our own refs as alternate refs
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,24 +96,579 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Jeff King <peff@peff.net>,
+    Justin Tobler <jltobler@gmail.com>,
+    Kristofer Karlsson <krka@spotify.com>,
+    Kristofer Karlsson <krka@spotify.com>
 
-Farid Zakaria <farid.m.zakaria@gmail.com> writes:
+From: Kristofer Karlsson <krka@spotify.com>
 
-> - Not changed: the socket is still removed at exit through the
->   tempfile API, which unlinks it without the unix_ss_was_stolen().
->   There was a discussion with Junio about this. I can do that if it's
->   a requirement in a V3.
+Since 722ff7f876 (receive-pack: quarantine objects until pre-receive
+accepts, 2016-10-03), receive-pack writes incoming objects to a
+temporary object directory.  Child processes see it as their primary
+object directory, and tmp-objdir passes the repository's own object
+directory to them via GIT_ALTERNATE_OBJECT_DIRECTORIES.
 
-Sorry, but I do not recall having any discussion on this.  
+The connectivity check passes --alternate-refs to rev-list since
+39b44ba771 (check_everything_connected: assume alternate ref tips are
+valid, 2019-07-01).  Inside the quarantine, the repository's own object
+directory is one of the alternates, so --alternate-refs runs
+for-each-ref on the repository itself and lists all of its refs.
 
-I just pointed out a potential problem, and you sent this version
-out without responding to my review, so I cannot tell why you
-thought it was OK not to address it.  Which means I cannot answer
-"if it's a requirement" question.
+That includes hidden refs.  bcec6780b2 (receive-pack: only use visible
+refs for connectivity check, 2022-11-17) added --exclude-hidden=receive
+to the check so that repositories with many hidden refs do not have to
+load all of them on each push.  The hidden refs are excluded from --all,
+but they all come back through --alternate-refs.
 
-Perhaps you had a solid technical reason why the "stolen" detection
-is not necessary, in which case it might be OK.  Perhaps you were
-too lazy to think the issue through, in which case it might not be
-OK.  Or there was some other reason why you thought it is OK not to
-address the issue.
+Our own repository is not a source of alternate refs: its refs are our
+own refs, which the caller already lists as it sees fit.  So skip an
+alternate whose repository is our own when listing alternate refs.
+This does not depend on how the alternate came about, so it also covers
+an environment that makes our own object directory an alternate by
+hand.
+
+Since --alternate-refs is a rev-list option, callers other than the
+connectivity check may use it too, so this tightens what it means
+rather than only fixing the connectivity check.  It is in line with
+what we already do when loading alternates, where listing the object
+directory itself is ignored as a common mistake; inside the quarantine
+that check compares against the quarantine instead of our own object
+directory, so our own object directory slips through.  Document the
+tightened meaning, too.
+
+Add tests that our own refs are no longer listed, by the connectivity
+check, by rev-list run from a pre-receive hook, and by rev-list with
+our own object directory passed in as an alternate by hand, and that
+the refs of a real alternate still are.  Add a perf test pushing a
+single commit into a repository with a visible branch and about
+200,000 refs hidden by receive.hideRefs, and into a copy of it that
+hides nothing:
+
+    Test                           HEAD~1            HEAD
+    -----------------------------------------------------------------------
+    5552.2: push, hidden refs      0.29(0.31+0.06)   0.10(0.07+0.03) -65.5%
+    5552.3: push, no hidden refs   1.20(1.02+0.68)   1.00(0.83+0.59) -16.7%
+
+With hidden refs, most of the time went to the for-each-ref child that
+listed the alternate refs.  Without hidden refs, every ref was listed
+twice, once for --all and once for --alternate-refs.
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+---
+    odb: do not list our own refs as alternate refs
+    
+    When a repository hides refs with receive.hideRefs, every push still
+    loads all of the hidden refs in the connectivity check, even though
+    bcec6780b2 (receive-pack: only use visible refs for connectivity check,
+    2022-11-17) excludes them from it. With many hidden refs, that is most
+    of the time spent on a small push.
+    
+    I stumbled across this while working on the boundary walk of the
+    connectivity check (the follow-up to kk/connectivity-check-incremental),
+    when the walk loaded every ref during a push even though it should only
+    have looked at a few of them.
+    
+    Changes since v2:
+    
+     * Went back to the approach of v1, as Peff suggested: skip our own
+       repository in the alternate refs code itself, with no special
+       handling of the quarantine. The "borrowed" flag and the check for the
+       parent of GIT_QUARANTINE_PATH are gone.
+    
+     * The commit message now describes this as a tightening of what
+       --alternate-refs means, in line with how loading alternates already
+       ignores the object directory itself.
+    
+     * Kept the documentation note and the tests from v2, except the one for
+       a quarantine outside of the commondir.
+    
+    Changes since v1:
+    
+     * Changed the rule to "an alternate that is ourselves is not a source
+       of alternate refs", as Peff described it.
+    
+     * Added a "borrowed" flag to alternates, set when they are loaded,
+       which says whether they come from another repository, and used it for
+       --alternate-refs. Our own object directory is recognized either as
+       commondir/objects or as the parent of GIT_QUARANTINE_PATH.
+    
+     * Documented this for --alternate-refs.
+    
+     * Added tests for rev-list --alternate-refs in a pre-receive hook, for
+       our own object directory set up as an alternate by hand, and for a
+       quarantine outside of the commondir.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2285%2Fspkrka%2Fquarantine-altrefs-bugreport-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2285/spkrka/quarantine-altrefs-bugreport-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2285
+
+Range-diff vs v2:
+
+ 1:  bac15042c0 ! 1:  35ab373cd4 odb: do not list our own refs as alternate refs in the quarantine
+     @@ Metadata
+      Author: Kristofer Karlsson <krka@spotify.com>
+      
+       ## Commit message ##
+     -    odb: do not list our own refs as alternate refs in the quarantine
+     +    odb: do not list our own refs as alternate refs
+      
+          Since 722ff7f876 (receive-pack: quarantine objects until pre-receive
+          accepts, 2016-10-03), receive-pack writes incoming objects to a
+     -    temporary object directory. Child processes see it as their primary
+     +    temporary object directory.  Child processes see it as their primary
+          object directory, and tmp-objdir passes the repository's own object
+          directory to them via GIT_ALTERNATE_OBJECT_DIRECTORIES.
+      
+          The connectivity check passes --alternate-refs to rev-list since
+          39b44ba771 (check_everything_connected: assume alternate ref tips are
+     -    valid, 2019-07-01). Inside the quarantine, the repository's own object
+     +    valid, 2019-07-01).  Inside the quarantine, the repository's own object
+          directory is one of the alternates, so --alternate-refs runs
+          for-each-ref on the repository itself and lists all of its refs.
+      
+     -    That includes hidden refs. bcec6780b2 (receive-pack: only use visible
+     +    That includes hidden refs.  bcec6780b2 (receive-pack: only use visible
+          refs for connectivity check, 2022-11-17) added --exclude-hidden=receive
+          to the check so that repositories with many hidden refs do not have to
+     -    load all of them on each push. The hidden refs are excluded from --all,
+     +    load all of them on each push.  The hidden refs are excluded from --all,
+          but they all come back through --alternate-refs.
+      
+     -    An alternate that is ourselves is not a source of alternate refs: its
+     -    refs are our own refs, which the caller already lists as it sees fit.
+     -    Mark each object directory added via alternates with whether it is
+     -    borrowed from another repository, and list alternate refs only from
+     -    those. Within one process this needs no guessing, as tmp-objdir
+     -    links our own object directory in itself. But a child process rebuilds
+     -    its object store from the environment, so when an alternate is added,
+     -    recognize ourselves in two ways:
+     -
+     -     - as our <commondir>/objects, which also covers an environment that
+     -       makes our own object directory an alternate by hand;
+     -
+     -     - as the parent of GIT_QUARANTINE_PATH, as the quarantine is created
+     -       directly inside our object directory (see "QUARANTINE ENVIRONMENT"
+     -       in git-receive-pack(1)); this also works when the object directory
+     -       is not under the commondir.
+     -
+     -    Document in --alternate-refs that our own object directory does not
+     -    count as an alternate repository.
+     -
+     -    This is safe: alternate refs only serve as negative tips that are
+     -    assumed to be complete, so dropping some can only make the traversal
+     -    walk further, never make it accept a missing object.
+     +    Our own repository is not a source of alternate refs: its refs are our
+     +    own refs, which the caller already lists as it sees fit.  So skip an
+     +    alternate whose repository is our own when listing alternate refs.
+     +    This does not depend on how the alternate came about, so it also covers
+     +    an environment that makes our own object directory an alternate by
+     +    hand.
+     +
+     +    Since --alternate-refs is a rev-list option, callers other than the
+     +    connectivity check may use it too, so this tightens what it means
+     +    rather than only fixing the connectivity check.  It is in line with
+     +    what we already do when loading alternates, where listing the object
+     +    directory itself is ignored as a common mistake; inside the quarantine
+     +    that check compares against the quarantine instead of our own object
+     +    directory, so our own object directory slips through.  Document the
+     +    tightened meaning, too.
+      
+          Add tests that our own refs are no longer listed, by the connectivity
+     -    check, by rev-list run from a pre-receive hook, by rev-list with our
+     -    own object directory passed in as an alternate by hand, and by rev-list
+     -    in a quarantine whose parent is not under the commondir, and that the
+     -    refs of a real alternate still are. Add a perf test pushing a
+     +    check, by rev-list run from a pre-receive hook, and by rev-list with
+     +    our own object directory passed in as an alternate by hand, and that
+     +    the refs of a real alternate still are.  Add a perf test pushing a
+          single commit into a repository with a visible branch and about
+          200,000 refs hidden by receive.hideRefs, and into a copy of it that
+          hides nothing:
+      
+              Test                           HEAD~1            HEAD
+              -----------------------------------------------------------------------
+     -        5552.2: push, hidden refs      0.31(0.33+0.08)   0.09(0.06+0.03) -71.0%
+     -        5552.3: push, no hidden refs   1.23(1.06+0.68)   1.01(0.83+0.61) -17.9%
+     +        5552.2: push, hidden refs      0.29(0.31+0.06)   0.10(0.07+0.03) -65.5%
+     +        5552.3: push, no hidden refs   1.20(1.02+0.68)   1.00(0.83+0.59) -16.7%
+      
+          With hidden refs, most of the time went to the for-each-ref child that
+     -    listed the alternate refs. Without hidden refs, every ref was listed
+     +    listed the alternate refs.  Without hidden refs, every ref was listed
+          twice, once for --all and once for --alternate-refs.
+      
+          Helped-by: Jeff King <peff@peff.net>
+     @@ Documentation/rev-list-options.adoc: explicitly.
+       
+      
+       ## odb.c ##
+     -@@ odb.c: static int refs_from_alternate_cb(struct odb_files_dir *alternate,
+     - 	size_t base_len;
+     - 	struct alternate_refs_data *cb = payload;
+     - 
+     -+	if (!alternate->borrowed)
+     -+		goto out;
+     -+
+     - 	if (!strbuf_realpath(&path, alternate->abspath, 0))
+     - 		goto out;
+     - 	if (!strbuf_strip_suffix(&path, "/objects"))
+     -
+     - ## odb/source-files.c ##
+      @@
+     - #include "blob.h"
+     - #include "chdir-notify.h"
+     + #include "abspath.h"
+     + #include "commit-graph.h"
+       #include "config.h"
+      +#include "dir.h"
+     -+#include "environment.h"
+     + #include "environment.h"
+       #include "gettext.h"
+     - #include "hex.h"
+     - #include "lockfile.h"
+     -@@ odb/source-files.c: static void odb_source_files_free(struct odb_source *source)
+     - 		files->dirs = next;
+     - 	}
+     - 	hashmap_clear(&files->dirs_by_path);
+     -+	free(files->quarantine_path);
+     - 
+     - 	odb_source_release(&files->base);
+     - 	free(files);
+     -@@ odb/source-files.c: static int read_alternates(const char *object_dir, struct strvec *out)
+     - 	return 0;
+     - }
+     + #include "hashmap.h"
+     +@@ odb.c: static int refs_from_alternate_cb(struct odb_files_dir *alternate,
+     + 				  void *payload)
+     + {
+     + 	struct strbuf path = STRBUF_INIT;
+     ++	struct strbuf repo = STRBUF_INIT;
+     + 	size_t base_len;
+     + 	struct alternate_refs_data *cb = payload;
+       
+     -+/*
+     -+ * Our own object directory is <commondir>/objects, or the parent of
+     -+ * GIT_QUARANTINE_PATH, as an object quarantine is created directly
+     -+ * inside it (see tmp_objdir_create()). Anything else, including a path
+     -+ * that cannot be resolved, is borrowed.
+     -+ */
+     -+static bool is_borrowed_object_dir(struct odb_source_files *files,
+     -+				   const char *path)
+     -+{
+     -+	struct strbuf real = STRBUF_INIT;
+     -+	struct strbuf objdir = STRBUF_INIT;
+     -+	struct strbuf self = STRBUF_INIT;
+     -+	bool ret = true;
+     -+
+     -+	if (!strbuf_realpath(&real, path, 0))
+     -+		goto out;
+     -+
+     -+	strbuf_addf(&objdir, "%s/objects", files->base.odb->repo->commondir);
+     -+	if (strbuf_realpath(&self, objdir.buf, 0) &&
+     -+	    !fspathcmp(real.buf, self.buf)) {
+     -+		ret = false;
+     -+		goto out;
+     -+	}
+     -+
+     -+	if (files->quarantine_path &&
+     -+	    strbuf_realpath(&self, files->quarantine_path, 0)) {
+     -+		strbuf_strip_file_from_path(&self);
+     -+		strbuf_trim_trailing_dir_sep(&self);
+     -+		if (!fspathcmp(real.buf, self.buf))
+     -+			ret = false;
+     -+	}
+     -+
+     -+out:
+     -+	strbuf_release(&real);
+     -+	strbuf_release(&objdir);
+     -+	strbuf_release(&self);
+     -+	return ret;
+     -+}
+     -+
+     - static void odb_add_alternate_recursively(struct odb_source_files *files,
+     - 					  const char *path,
+     - 					  int depth)
+     -@@ odb/source-files.c: static void odb_add_alternate_recursively(struct odb_source_files *files,
+     +@@ odb.c: static int refs_from_alternate_cb(struct odb_files_dir *alternate,
+       		goto out;
+     + 	strbuf_setlen(&path, base_len);
+       
+     - 	alternate = odb_files_dir_new(files->base.odb, path, false);
+     -+	alternate->borrowed = is_borrowed_object_dir(files, alternate->abspath);
+     - 
+     - 	/* add the alternate entry */
+     - 	*files->dirs_tail = alternate;
+     -@@ odb/source-files.c: struct odb_source_files *odb_source_files_new(struct object_database *odb,
+     - 	struct odb_source_files *files;
+     - 	char *object_dir = NULL;
+     - 	char *alternates = NULL;
+     -+	char *quarantine_path = NULL;
+     - 
+     - 	if (flags & ODB_NEW_HONOR_ENV) {
+     - 		object_dir = xstrdup_or_null(getenv(DB_ENVIRONMENT));
+     - 		alternates = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
+     -+		quarantine_path =
+     -+			xstrdup_or_null(getenv(GIT_QUARANTINE_ENVIRONMENT));
+     - 	}
+     - 	if (!object_dir)
+     - 		object_dir = xstrfmt("%s/objects", odb->repo->commondir);
+     - 
+     - 	CALLOC_ARRAY(files, 1);
+     -+	files->quarantine_path = quarantine_path;
+     - 	odb_source_init(&files->base, odb, ODB_SOURCE_FILES, object_dir);
+     - 
+     - 	hashmap_init(&files->dirs_by_path, odb_files_dir_by_path_cmp, files, 0);
+     -
+     - ## odb/source-files.h ##
+     -@@ odb/source-files.h: struct odb_files_dir {
+     - 	 * repository. Directories added via alternates are not local.
+     - 	 */
+     - 	bool local;
+     ++	/* Our own repository is not a source of alternate refs. */
+     ++	if (strbuf_realpath(&repo, cb->repo->commondir, 0) &&
+     ++	    !fspathcmp(path.buf, repo.buf))
+     ++		goto out;
+      +
+     -+	/*
+     -+	 * Whether this directory is borrowed from another repository, so
+     -+	 * that its refs are alternate refs. Not every directory added via
+     -+	 * alternates is borrowed: inside an object quarantine, our own
+     -+	 * object directory is passed to us as an alternate, too. Only set
+     -+	 * for directories added via alternates.
+     -+	 */
+     -+	bool borrowed;
+     - };
+     + 	read_alternate_refs(cb->repo, path.buf, cb->fn, cb->payload);
+       
+     - struct odb_files_dir *odb_files_dir_new(struct object_database *odb,
+     -@@ odb/source-files.h: struct odb_source_files {
+     - 	 * determined by "core.ignoreCase".
+     - 	 */
+     - 	int dirs_paths_icase;
+     -+
+     -+	/*
+     -+	 * The value of GIT_QUARANTINE_PATH when this source was set up from
+     -+	 * the environment (see ODB_NEW_HONOR_ENV), or NULL.
+     -+	 */
+     -+	char *quarantine_path;
+     - };
+     + out:
+     + 	strbuf_release(&path);
+     ++	strbuf_release(&repo);
+     + 	return 0;
+     + }
+       
+     - /* Allocate and initialize a new object source. */
+      
+       ## t/perf/p5552-push-hidden-refs.sh (new) ##
+      @@
+     @@ t/t5618-alternate-refs.sh: test_expect_success 'log --source shows .alternate ma
+      +		git rev-list --alternate-refs >actual &&
+      +	test_cmp expect actual
+      +'
+     -+
+     -+# A quarantine is created inside our object directory, so its parent is
+     -+# ourselves, even when that is not under our commondir.
+     -+test_expect_success 'parent of the quarantine is not listed as an alternate' '
+     -+	test_when_finished "rm -rf store.git" &&
+     -+	git init --bare store.git &&
+     -+	git push store.git refs/remotes/origin/one:refs/heads/one &&
+     -+	quarantine="$(pwd)/store.git/objects/tmp_objdir-test" &&
+     -+	mkdir "$quarantine" &&
+     -+
+     -+	git rev-parse origin/one >expect &&
+     -+	GIT_OBJECT_DIRECTORY="$quarantine" \
+     -+	GIT_ALTERNATE_OBJECT_DIRECTORIES="$(pwd)/store.git/objects" \
+     -+		git rev-list --no-walk --alternate-refs --stdin </dev/null >actual &&
+     -+	test_cmp expect actual &&
+     -+
+     -+	GIT_QUARANTINE_PATH="$quarantine" \
+     -+	GIT_OBJECT_DIRECTORY="$quarantine" \
+     -+	GIT_ALTERNATE_OBJECT_DIRECTORIES="$(pwd)/store.git/objects" \
+     -+		git rev-list --no-walk --alternate-refs --stdin </dev/null >actual &&
+     -+	test_must_be_empty actual
+     -+'
+      +
+       test_done
+
+
+ Documentation/rev-list-options.adoc |  5 +++-
+ odb.c                               |  8 ++++++
+ t/perf/p5552-push-hidden-refs.sh    | 37 ++++++++++++++++++++++++++++
+ t/t5547-push-quarantine.sh          | 38 +++++++++++++++++++++++++++++
+ t/t5618-alternate-refs.sh           | 12 +++++++++
+ 5 files changed, 99 insertions(+), 1 deletion(-)
+ create mode 100755 t/perf/p5552-push-hidden-refs.sh
+
+diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
+index 285fb3809f..6e4c487d1e 100644
+--- a/Documentation/rev-list-options.adoc
++++ b/Documentation/rev-list-options.adoc
+@@ -223,7 +223,10 @@ explicitly.
+ 	Pretend as if all objects mentioned as ref tips of alternate
+ 	repositories were listed on the command line. An alternate
+ 	repository is any repository whose object directory is specified
+-	in `objects/info/alternates`.  The set of included objects may
++	in `objects/info/alternates`.  The repository's own object
++	directory does not count, even when it is passed in as an
++	alternate, as happens inside the object quarantine of
++	linkgit:git-receive-pack[1].  The set of included objects may
+ 	be modified by `core.alternateRefsCommand`, etc. See
+ 	linkgit:git-config[1].
+ 
+diff --git a/odb.c b/odb.c
+index 2c93a9490c..0f78ffed6a 100644
+--- a/odb.c
++++ b/odb.c
+@@ -2,6 +2,7 @@
+ #include "abspath.h"
+ #include "commit-graph.h"
+ #include "config.h"
++#include "dir.h"
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hashmap.h"
+@@ -183,6 +184,7 @@ static int refs_from_alternate_cb(struct odb_files_dir *alternate,
+ 				  void *payload)
+ {
+ 	struct strbuf path = STRBUF_INIT;
++	struct strbuf repo = STRBUF_INIT;
+ 	size_t base_len;
+ 	struct alternate_refs_data *cb = payload;
+ 
+@@ -198,10 +200,16 @@ static int refs_from_alternate_cb(struct odb_files_dir *alternate,
+ 		goto out;
+ 	strbuf_setlen(&path, base_len);
+ 
++	/* Our own repository is not a source of alternate refs. */
++	if (strbuf_realpath(&repo, cb->repo->commondir, 0) &&
++	    !fspathcmp(path.buf, repo.buf))
++		goto out;
++
+ 	read_alternate_refs(cb->repo, path.buf, cb->fn, cb->payload);
+ 
+ out:
+ 	strbuf_release(&path);
++	strbuf_release(&repo);
+ 	return 0;
+ }
+ 
+diff --git a/t/perf/p5552-push-hidden-refs.sh b/t/perf/p5552-push-hidden-refs.sh
+new file mode 100755
+index 0000000000..e9aa206298
+--- /dev/null
++++ b/t/perf/p5552-push-hidden-refs.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
++
++test_description='speed of push into a repository with many hidden refs'
++. ./perf-lib.sh
++
++test_perf_fresh_repo
++
++test_expect_success 'set up repository with many hidden refs' '
++	git init --bare dst.git &&
++	test_commit_bulk --ref=refs/hidden/base --id=hidden 1000 &&
++	git rev-list refs/hidden/base >commits &&
++	for i in $(test_seq 200)
++	do
++		sed "s|^\(.*\)$|create refs/hidden/$i/\1 \1|" commits || return 1
++	done >input &&
++	git push dst.git refs/hidden/base &&
++	git -C dst.git update-ref --stdin <input &&
++	git -C dst.git pack-refs --all &&
++	cp -R dst.git dst-visible.git &&
++	git -C dst.git config receive.hideRefs refs/hidden &&
++	git symbolic-ref HEAD refs/heads/main &&
++	test_commit_bulk --id=visible 1 &&
++	git push dst.git main &&
++	git push dst-visible.git main
++'
++
++test_perf 'push, hidden refs' '
++	git commit --allow-empty -m new &&
++	git push -f dst.git HEAD:refs/heads/new
++'
++
++test_perf 'push, no hidden refs' '
++	git commit --allow-empty -m new &&
++	git push -f dst-visible.git HEAD:refs/heads/new
++'
++
++test_done
+diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
+index 6c14dfc42b..3426aec531 100755
+--- a/t/t5547-push-quarantine.sh
++++ b/t/t5547-push-quarantine.sh
+@@ -125,4 +125,42 @@ test_expect_success '.keep file created outside of process is not removed' '
+ 	test_path_is_missing "${keep%.keep}.pack"
+ '
+ 
++test_expect_success 'quarantine does not list own refs as alternate refs' '
++	git init --bare hidden.git &&
++	git push hidden.git HEAD:refs/heads/main HEAD:refs/hidden/one &&
++	git -C hidden.git config receive.hideRefs refs/hidden &&
++	write_script hidden.git/alternate-refs <<-EOF &&
++	echo "\$1" >>"$(pwd)/alternate-refs.log"
++	EOF
++	git -C hidden.git config core.alternateRefsCommand ./alternate-refs &&
++	test_commit hidden-push &&
++	git push hidden.git HEAD:refs/heads/new &&
++	test_path_is_missing alternate-refs.log
++'
++
++test_expect_success 'quarantine lists refs of other alternates' '
++	test_when_finished "rm -f alternate-refs.log" &&
++	git init --bare other.git &&
++	git push other.git HEAD:refs/heads/other &&
++	echo "$(pwd)/other.git/objects" >hidden.git/objects/info/alternates &&
++	test_commit hidden-push-2 &&
++	git push hidden.git HEAD:refs/heads/new2 &&
++	(cd other.git && pwd -P) >expect &&
++	sort -u alternate-refs.log >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rev-list --alternate-refs in a hook skips own refs' '
++	test_when_finished "rm -rf altref.git" &&
++	git init --bare altref.git &&
++	git push altref.git HEAD:refs/heads/main &&
++	test_hook -C altref.git pre-receive <<-\EOF &&
++	git rev-list --no-walk --alternate-refs --stdin </dev/null \
++		>../hook-alternate-refs
++	EOF
++	test_commit altref-push &&
++	git push altref.git HEAD:refs/heads/new &&
++	test_must_be_empty hook-alternate-refs
++'
++
+ test_done
+diff --git a/t/t5618-alternate-refs.sh b/t/t5618-alternate-refs.sh
+index 2fb6d549d3..e64e190c48 100755
+--- a/t/t5618-alternate-refs.sh
++++ b/t/t5618-alternate-refs.sh
+@@ -58,4 +58,16 @@ test_expect_success 'log --source shows .alternate marker' '
+ 	test_cmp expect actual
+ '
+ 
++# Our own object directory as an alternate is not a source of alternate
++# refs, but the alternates it brings in with it still are.
++test_expect_success 'own object directory as alternate lists only real alternates' '
++	test_when_finished "rm -rf other-objects" &&
++	mkdir other-objects &&
++	git rev-list --remotes=origin >expect &&
++	GIT_OBJECT_DIRECTORY="$(pwd)/other-objects" \
++	GIT_ALTERNATE_OBJECT_DIRECTORIES="$(pwd)/.git/objects" \
++		git rev-list --alternate-refs >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+
+base-commit: 750f5de7dfe9a4062f95088212b063f189d50e91
+-- 
+gitgitgadget
