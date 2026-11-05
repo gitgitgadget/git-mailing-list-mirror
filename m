@@ -1,62 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=62.204.172.141
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=130.232.247.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793860896;
-	b=sK+JvHOfpIPQS8AqcDN12rkw4c5oAcPrcW4QGAtkDgApTwXq0O5/q2CjfNOwMQIqOf26
-	 KGNkwRz//yDTqarwK7Sx71JaSPbbHFeQwjYYausTzXXDj7H3UeHcUz3rfaI5vH9kswB44
-	 9vsrUvVcap/WFnUD4q0zAXLpYttgUvqzXwStEU5gI58MoPaHl/8Utc2XgJtI8NN1iXGOw
-	 WjpOIXIOt52f7k7nJgwpPWQlAMNGbVnaczsp01YOXPkKhojhfYRAso5q4VaU9fsKMlLV5
-	 CiOhVCLU8I4lXil3EVNQjBVRtOdu5TnNkrfx6yo2ER4JqueNi13zMpadyDG+cMvPhag==
+	t=1793861859;
+	b=PbyraBv+jPqCVpDNLUGnp2W+fgS6p8iDAnn44n8Rx3TQJUBE2b0Lj8iyuUGpjM72mGSS
+	 Ed33MpAC9Rhxe+Qac99s+17H9yViI+ZfwQy3+N/49q8SNLRyqVZNNeAiCizTecqy7btLU
+	 c69bTozYMifc4NcYWKqgFp1SZ/zHHT3J2H7vl1JFeDzCKzgrDGZRbwRHvLzMcTsOJAdG6
+	 vbz2FNZYWdHgC9pa9EO72iPWUy3FeV3FGLTtLjDjZGVcB+fJx9XZcLO2NJPovgvjmdKnl
+	 IpAhP0VfokBNyjJUPoi2KNOiLRGxYl01XSLxhoTrUqAJltl1u2CQKSXGPu48GhPa1zg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793860896;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
-	 User-Agent:Content-Language:To:From:Subject:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=s5MEzhRNE5nmftWJfbbFGuCepnUuk5nA5XllHvX95OA=;
-	b=HrRnALKwnzLtKtunl2WWrWXvjmcZUWAnUSoCQyIeZ4WeYVMVygFvOgO/rO1BwFUf875Z
-	 GcEZ2leHt0TFpC7rLtW3bnmx/TG9+6dcw3UwZJ5Y0wdL0ZlQyvRhiqSsnktfqPOkXCHAt
-	 BuO5NjErxGTyfrCDce918lPXntqIsW27lGKMuS6DYnFvuSA1vKJk3FRqim4E904sbag8O
-	 uj1iOsb1CCjd5AhCuI3aeQovPXNTe8QziYpKZORZ/TiJJ9glcEIGv/p8bvwS67ZXakOzh
-	 qfRsZbOWMQ6gQLasAHzsgzdUS8y0z6NRkAhXl1nU0XXY4B2MC+uJb7wk9dC02d1z7cA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793861859;
+	h=DMARC-Filter:Received:Received:Received:Received:Date:From:To:CC:
+	 Subject:Message-ID:In-Reply-To:References:User-Agent:MIME-Version:
+	 Content-Type:X-Originating-IP:X-ClientProxiedBy:X-FEAS-BEC-Info:
+	 X-FEAS-Client-IP:X-FE-Last-Public-Client-IP:X-FE-Policy-ID:
+	 X-FE-Hostname:DKIM-Signature;
+	bh=mo+jWWIUp511QzGNbrjy1+yLYPUYE3Alch1Rapl4Pw4=;
+	b=X7dQIVlvA4FGQ1r0A79NchypjF5kIVbS6tjfVag47VCUPR0oC94ZaZng00ldmrz3Gajn
+	 o8BTyNF9WTfl399teQei/pvLGhGX7xZWVy1Sr/GVzvEw0FD019bHnGtmk1o1OygeUFS5G
+	 ODHA3evxGLdO4mipLKAex1Ot+ohC3sEikGiIMb/wDoHLVorsVjhRiPT5rwc20e+zBqtCO
+	 16+misv3WQgLaY9QFqE/eJequS15IMg28XCxIpEg9DtE3REPZVOfYh5RLDGhy0Fb7d/Qs
+	 E+O7EEUBb68xNzj40RnYogjpdKvJKadxD6aBXionU6pQ744jMwJRMndfNFn3ya/c76g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=wsoptics.de;
-	spf=pass smtp.mailfrom=wsoptics.de;
-	dkim=pass header.d=wsoptics.de header.i=@wsoptics.de header.a=rsa-sha256 header.s=2019 header.b=QdDmsF5Y;
-	arc=none smtp.remote-ip=62.204.172.141
-Received: from mail.hq.wsoptics.de (mail.hq.wsoptics.de [62.204.172.141])
+	dmarc=pass header.from=utu.fi;
+	spf=pass smtp.mailfrom=utu.fi;
+	dkim=pass header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=aeEgWxv5;
+	arc=none smtp.remote-ip=130.232.247.4
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEBE606D809
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 06:41:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EEEBE606D809
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wsoptics.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wsoptics.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78C7606A31B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 06:57:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D78C7606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key, unprotected) header.d=wsoptics.de header.i=@wsoptics.de header.a=rsa-sha256 header.s=2019 header.b=QdDmsF5Y
-Received: from [IPV6:2a02:f90:269:fc00::be2] (unknown [IPv6:2a02:f90:269:fc00::be2])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.hq.wsoptics.de (Postfix) with ESMTPSA id 7D79D117183
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 07:41:26 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wsoptics.de; s=2019;
-	t=1793860886;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=s5MEzhRNE5nmftWJfbbFGuCepnUuk5nA5XllHvX95OA=;
-	b=QdDmsF5YBgEP9cjBZDkOZJrLiHOwkhokQJQLy2AhDQpkqybHriskjQ25X5MMJxWrZDBczT
-	T2dyu/59qi+jbl/uRGwqhAiRFggVXYlla/JCVAKj3tQKI1CSvyz41i4BU3XBnXOarhEuJC
-	0Pg5sXuV236D4Y4UZ5h5GLvuXxd1G58fWP68Xoxx55iUGFruQppbztBInr5umO+X6ZRwbo
-	xbDp0rbaP/p603XX5oUdZvvnjRTyUoj/4WYEUYnMwnnL+uiwoyVWPFiR2nDyCNUXzDj0nm
-	aclJYQ3Jbht9ghA4wOHHuo0bKbgg1Z8Ia9eKu47W3+KSYl5KFEBiLUCNw43K+eDrK9dAIs
-	sGDryoeoWMcKDkNWKvHn5Uwz/R2Ywn3yS0DCA+HuwsTI1bMb+l0NBslGbTvAm0RDPqIBIm
-	5liSD8yIECx0swcwDXXgeCbtUsoNw/r7QpUzftvCPhuYos+7NesCnawo8J7ZI7EyJC1qBD
-	iPb/HBJtHqBi/FnHDFdEIxIrQ9XbmrhDGEfErzFQ4F5dXIpCn7TNQ5f3ZaY+/4yFNBkvGc
-	83y5d4yxgR/xI1OGS/TCJHtsBiN1S9pzdk/Qo+rrM/n9d8xUKcdb7KaFmoeZ/O4o31sxH2
-	W0z9ENVW8coOzm6RUOpRHLEdqTdJkMu+jq8xPUqJGB+F6iLMg86bA=
-Message-ID: <ba964c70-60ab-4b7a-a0fa-6e028e401a09@wsoptics.de>
-Date: Thu, 5 Nov 2026 07:41:26 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=aeEgWxv5
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 6A56vONZ028732-6A56vONb028732
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Thu, 5 Nov 2026 08:57:24 +0200
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1xOrPY-004ATf-Ak;
+	Thu, 05 Nov 2026 08:57:24 +0200
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
+ 2026 08:57:24 +0200
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 0a04fd18;
+	Thu, 5 Nov 2026 06:57:23 +0000 (UTC)
+Date: Thu, 5 Nov 2026 08:57:23 +0200
+From: Tuomas Ahola <taahol@utu.fi>
+To: Junio C Hamano <gitster@pobox.com>
+CC: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+	<git@vger.kernel.org>, Kristoffer Haugsbakk
+	<kristofferhaugsbakk@fastmail.com>, Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2 0/2] [doc] Remove gittutorial-2
+Message-ID: <20261105065723.Q3ED0%taahol@utu.fi>
+In-Reply-To: <xmqqfqyieokd.fsf@gitster.g>
+References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
+ <pull.2241.v2.git.1791231610.gitgitgadget@gmail.com>
+ <20261006055002.M9X9O%taahol@utu.fi> <xmqqfqyieokd.fsf@gitster.g>
+User-Agent: s-nail v14.9.22
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -66,74 +74,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, de-DE
-To: git@vger.kernel.org
-From: Christoph Weiss <weiss@wsoptics.de>
-Subject: [BUG] Geometric maintenance prunes commits without updating
- commit-graph
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-08.utu.fi (130.232.247.48) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsH
+ BUhYSFpIWVxIWVtYRlpbWkZaWF9GW1hIUEhYSFhIXUhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWlpIDwEcDwEcDwkMDw0cKA8FCQEERgsHBUhYSFlfSA8B
+ HBscDRooGAcKBxBGCwcFSFhIWVtIAh0EAQkoAh4GG0YLCUhYSFtaSAMaARscBw4ODRoACR0PGwoJAwMoDgkbHAUJAQRGCwcFSFg=
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
+ bh=mo+jWWIUp511QzGNbrjy1+yLYPUYE3Alch1Rapl4Pw4=;
+ b=aeEgWxv5rnDBxI5jbLNpaIUTVsBJ5+6rlsKnp8zIQVb2aJ9UCZgNr4/jtjONK8ljpr3hxvZB3JpC
+	rRaf2+oCQffzaFK/Ffa2FgSixVR0xkzbtZtXye+/F4poWpG03RdDNkiw8wFUrBPilNxNviqlBZh3
+	NcD4G29C3F5yW2xqJEY+4tPa0po/cADSq8rh9Eb1fEgbUlfT7nxTUXQh8H7P9qyrksllpu4I/uQm
+	LQ37MN4gI4pjblfa6m11BCENUOn57un4sqvolkzJltJfBLp2STw69Ti/HPx+EnyMVAZ1FqOIRFCc
+	GKEZUfjsZiiFpUlsh3K64P94npUKoJ+1w7h41w==
 
-Hi,
+Junio C Hamano <gitster@pobox.com> wrote:
 
-After updating our internal Forgejo instance from 16 to 17, many of our 
-repositories' health checks started failing.  This appears to be due to 
-the update entailing a switch in Git from 2.52 to 2.54, which in turn 
-changed the default maintenance strategy from `gc` to `geometric`.
+> Tuomas Ahola <taahol@utu.fi> writes:
+> 
+> >         gittutorial(7)
+> >             A tutorial introduction to Git.
+> >  
+> > +       gittutorial-2(7)
+> > +           Obsolete tutorial.
+> > +
+> >         gitworkflows(7)
+> >             An overview of recommended workflows with Git.
+> >  
+> >
+> > And let's not worry about that exception you mentioned.  After this topic hits
+> > 'next', I can rebase mine on top on of this, and deal with all necessary
+> > integration work.
+> 
+> OK.  So ...
+> 
+>  - I'll tentatively eject both topics out of my tree,
+> 
+>  - Julia will send in a replacement that does not add gittutorial-2
+>    to the command-list, which will be merged to 'next',
+> 
+>  - and then your topic will be queued again with an evil merge (by
+>    me) to add gittutorial-2 back to the command-list file.
+> 
+> ... and both topics will be happy?
+> 
 
-The following script hopefully reproduces the problem with `geometric`:
+This topic has graduated to 'master', so we should be more than ready for the
+last bullet point.  Please pick up the rerolled ta/command-list-guides-sync-lint
+at <20261029184834.2273-1-taahol@utu.fi>.
 
+$ git cherry -v origin/seen ta/command-list-guides-sync-lint
++ 9a1ba61ac0e4491a4f028250be478cfcf05c9ef4 command-list.txt: add gitformat-loose(5) and gitpacking(7)
++ 5d36d7585956d17172012c8e42d77597524708e8 lint-docs: check the guide list in command-list.txt
 
-#!/bin/sh
-set -eu
-
-unset GIT_DIR GIT_COMMON_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_CONFIG
-unset GIT_OBJECT_DIRECTORY GIT_ALTERNATE_OBJECT_DIRECTORIES 
-GIT_CONFIG_COUNT GIT_CONFIG_PARAMETERS
-export GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null
-
-repro_dir=$(mktemp -d)
-printf 'Repository: %s/repo.git\n' "$repro_dir"
-git --version
-git init --quiet --bare --template= --initial-branch=main 
-"$repro_dir/repo.git"
-cd "$repro_dir/repo.git"
-git config user.name Reproducer
-git config user.email repro@example.invalid
-git config core.commitGraph true
-git config gc.writeCommitGraph true
-
-# Use `gc` here and no error occurs.
-git config maintenance.strategy geometric
-
-tree=$(git mktree </dev/null)
-base=$(printf 'base\n' | git commit-tree "$tree")
-obsolete=$(printf 'obsolete\n' | git commit-tree "$tree" -p "$base")
-git update-ref refs/heads/main "$base"
-git update-ref refs/heads/obsolete "$obsolete"
-git repack -ad
-git commit-graph write --reachable --split
-git update-ref -d refs/heads/obsolete
-
-# Avoid waiting for Git's default two-week pruning grace period.
-touch -t 200001010000 objects/pack/*
-first=$(printf 'first\n' | git commit-tree "$tree" -p "$base")
-second=$(printf 'second\n' | git commit-tree "$tree" -p "$first")
-git update-ref refs/heads/main "$second"
-# Packs with three and two objects force geometric maintenance to 
-consolidate both.
-printf '%s\n' "$first" "$second" | git pack-objects objects/pack/pack 
- >/dev/null
-
-printf '\nBefore maintenance:\n'
-git fsck --full --no-dangling
-
-git maintenance run --auto --no-detach
-
-printf '\nAfter maintenance:\n'
-git fsck --full --no-dangling
-
-
-Best,
-Christoph
+--Tuomas
