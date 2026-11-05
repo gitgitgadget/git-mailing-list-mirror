@@ -1,99 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.54
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793919363;
-	b=0jWdNqW52di9vBBfQxeF251Anvg+jySL53/UUQxkl5SKMvBnPqUJok/F2UacBTJdaYUT
-	 TwVLwbmF+Af5FTdQgEDp22s7Ym5RsVIKWDFovSddpzHK+1Hiirrb0tshih70LBYOM/7/g
-	 sRxAIsaQUQJTlcDviU4peKktO8wjdmEW2GVoxNu1gRbaIkxdngeXImrvGkTfLrN1XuInY
-	 vEa20qThDt/9kyqIM+Bw8mYo2WSh2Hri2q9gdaUsNBRamjDsRQvukb4vNDaxUIYpzhx1m
-	 934PQ3k9+wB4ALnG6SYSXS+wQmWX9th9UD0JaA6urT2TiIxvIqr8Wpol6Mg+BOcyeZQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793919363;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=U/WGAfesl7JMmyoo8JsB37Ve3GC5hycVsFqfEu6Tp7o=;
-	b=A3ephNth+F7sS9lYjO4OsLjAXD5Nwm8bSejE/zN7RgpV4i9rPg1L3u4JAk+Uz/UyrgZ9
-	 7HzFRCveZ/XBxLz3qdbOoLIihmHcJL0JOf1kpznBeyx9GXe957dQWzKjgAezHSN+6OTZ7
-	 TLUwNjQVvFoi3bhEM9YbDg2qgNwxVzo57o8MQfyhyagxyxuNjksd4JFDzsg/27/bRw0n6
-	 DHLzSAKP3p5Rhl9SwrE1F+pmio+HZB8iodtreXaRfx0HS3DJ+M5+xiU85A6D6zyIkKosl
-	 SUliehtNQqzqOHjX/CkDVQCWm+cAS6FEFJYu01IXrT6DJjpj2N27mB6lPomlhE4ugFA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FQDt9Lb6;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.54
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793919790;
+	b=r16WqLme5MPNXhHlybRZ0WPOqoxbKd7zpBS8gV2Sd3yr3txSTvez2ETo0v8Cbp9kKjbr
+	 lT1EM8vtMUrbTgveAG5JtA9oxDYKydtjftA5lAlijjYzJOVvnvvsEXGFV2iR/3gTybyxz
+	 hlQ9lGImLUOjYIXfBjul2qJomulG+kCapS5CrW9WWjHj2/MXW8ozNqngRY1Kt1DARXkWe
+	 g1wo+aSvzZ/u5EHhkm3Q9EVg0HIgMdWFpuAfxm/dq+87PLy3wP8hQwvuHH6G78rGmzMe5
+	 Xkz2mOaXonCHT0N0W1y7jbsyOgUu2zLP6nOzMuxSxwBXt/xlRkG1O+hAoHU7jSUI4uQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793919790;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=5Ccz43muVZv39bedDkSkX54RUFuf7Hc5LWfrPieKi10=;
+	b=PulwczVRaIONrJzmZ3REDGuZIrFNKCqLbi1GSXQ6d14GRWc6cRqKG4YpSQILMS8JJPKO
+	 UlFMisAPzPIFU4jTGkWygQXFNlmITiPqn0gtqe6HUP949K6rEximCjxsV7XeXLQhX7/cR
+	 m9nVOys5GaS+XpF268Hit6mLCtfogVRBDhgixaSjngkqi+QmaB0uBEELS3Br/95xBajq9
+	 ZZOog2C/AqBRZ9nUhsM/kICxV7m6r+hwSSIVpG5sFa/UUaP/A05cXTLNFbCUOah5HXX1A
+	 pru3SGTn934YC+TzcfChHcoyMthXCCz81Ub2qKPsQQ26wwE+TT3Le2fOfcpW24NXC9g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=cYuTaQPV;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Zwxd6O2P;
+	arc=none smtp.remote-ip=103.168.172.150
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16AA606A31B
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:56:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E16AA606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F9D606A31B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 23:03:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 53F9D606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FQDt9Lb6
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-99806b7d89aso1101529241.1
-        for <git@vger.kernel.org>; Thu, 05 Nov 2026 14:56:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793919362; cv=none;
-        d=google.com; s=arc-20260327;
-        b=qY55wLtV7afgJM1eIno9P0UbAUQatfK/BGNCMn7SJWTSGftd/09Iuc8PWfDoXo6gJt
-         A8YbpwA0nl2rvdwkyMLmf/aEPDPOlPpeCi2a7DFsh6EZWhvEuuOFIKK43yaw7GqKkGBq
-         RnjZaBGIxmXNRq5/gUtesipgb9cEwVbwSRIcSgbb34YZa7veZdkH8MVc9XX3ocXzTx3m
-         pQHP57Wz09QaZs4GuYrM0Ol/tbN4I/MrScffrlh4LrNg3Pjvu4coPq79leAr2wuV//Qo
-         uUWYFcjALY2AK+tYYpljAqa+K8Jw+PUaqTreNNzf6wzG0pHYXuXQNAMtWEdEuMHudSiX
-         l4Lg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=U/WGAfesl7JMmyoo8JsB37Ve3GC5hycVsFqfEu6Tp7o=;
-        fh=wQgUnpXGUIJk3O3LwnS1894ThlxCNh3Gq2z4w+1V8nM=;
-        b=ovIPML+IDBOkWsMATjD5Jy8D+xifUYMWk3WaOyG9CGZpVAUhqGREd5sObHKnTVRu9f
-         gDMKI7MXF6a7sRUaKZNQ3V8qLeIttxUVOyCK09QG2OdlnYj2eM3/yVrxOEP/AKHAA0jr
-         YnbQAXsrngGU84u9QJbOUtxFYshrEycs5l7UabVY1qLmm8qgeOho5D/K+jMDJdMyLnKT
-         BIwm6BS1vHrpRyH6zmYOXGZLzs9LxnE2/ley0Z/ATmppHIh/F/2a6QNlGAdYJ7GdyiaI
-         OjZCCmsS4nKjnSmcJAm5X+ug2udDMKsVVPPTS1uRV3EmxzRn2Uhmp3UsXCq7hMb2j9HZ
-         Lp1Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793919362; x=1794524162; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=U/WGAfesl7JMmyoo8JsB37Ve3GC5hycVsFqfEu6Tp7o=;
-        b=FQDt9Lb6cPTPHwq03o7Ry4jv2dHVIV0CxPIlHRK7bcD1dcMjqxvAB9zcql4PtWE6i2
-         coV8N/6Wiv7Q3YRcrFct7fyGxwOIt2sAHGdIXuIuXce7n26+utIQk+XfMD4HApMj/mQo
-         ZOWeeRmMqMhijgxozdP/ANY2VGlkmZWDfMXYdaA/oJhI7jIUnOg2NMjqcQkZhLFxxJlr
-         Ha2X48eLNg7ncOtV1/ipFDtkIFTmlJQPvNTY7WD60cPGhXPt7YGqNLDKOsuS/xGEa+f5
-         7p4mvBdINuWzZ2vvZFwEpEoLNgxFEwc0T1H70pWEyahtQ/Z7e71HFp3q2Ej6udIudnpP
-         d1Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793919362; x=1794524162;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=U/WGAfesl7JMmyoo8JsB37Ve3GC5hycVsFqfEu6Tp7o=;
-        b=COX0NIynnVxveFkeCc1GBfrS066Hd44ud0Bf9J5TBZuO6D9EXteX5PcoWvHlZ6Yi1x
-         9D/DTyzZwk+hy3cJAEJwHAZSr12aXsQcjd3oPydI6HkQjgGyfkXq7DzTYQbS76dDYIJ5
-         ANRrm5ipHcGFreXg3FaFOY93cH0RSw9B2CkKXTZXeqGAYaXJBhPoZ2VoDjvaUTA9gd+Y
-         tQ8b4h1st3hziSRUZj6L3wXml8NtryW1IQ4ZHpAetBCtM47t8bVJjwW9kTYxacISZ1Ph
-         laVclnIVD2NM/dqX9R1wEHjT/fG73HtItK6A8kVYJiStR1Il+n2wMVwZBeD/dBYfdUPq
-         N6WA==
-X-Gm-Message-State: APuU4Z/qIc0qHfCWp7oaSqP3Mf41iWYjEc091/ukADbwzaaWF82uh4rT
-	Swhbjh93gnC6+YvJKFlOoJZ6IE1CG9mQYs2CYRaxKKc0sKUE1FjrlnJ7qminx4dQt39VzxmO3De
-	BEIqD9YyB2JID8vPSlKi4tG2iefvzsCRIDEM/
-X-Gm-Gg: AYBFou2xEwPUhg5Me+vznxUAOl4rd26DthSqkWeiUCuAnbCp4WYcTHLjsmrEynh3vW9
-	pkcl+g/LcuxLlfutgHRo+M3gSh6s8B43wvbkHD6tYQJGxSS55qrCeRzOnrI+8QtDkRiOClatzqM
-	9XzV687N3ymHAFRLy9pna53O7c8Jx8Ctu1S2auPNrqyUFQwJGZYqVc00Ddl1NL08zehjvFm//V1
-	jSCXsGL3hrVJYhjVZIU1iSLSpdEpJ+H6bq9WSV/iLw83HAja4zMdxee5LfYLGKm6BtiXa2CdOJW
-	HpxLH3mXVr0QP+5Tq58BmGbA9BDYa5/JBJUUoLK7mLiMFjdjXd6Ve1e7cN8Ny7wGskvxcdJzH4T
-	/mjm19eo/0AQDumEEBjRyYTTiDldK8kp5FpNtOd67DoN/JExsHBTAMHy4qDET9vV8S1Ix5HtadF
-	kPsaX8V8v6P9nrNjAZluvogUpSyjhnt3pyw27Shk4ggTv/6cMM
-X-Received: by 2002:a05:6102:6448:b0:7c0:115c:14ca with SMTP id
- ada2fe7eead31-7d28674445bmr2414086137.5.1793919361766; Thu, 05 Nov 2026
- 14:56:01 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=cYuTaQPV;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Zwxd6O2P
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 84E77EC020B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 18:03:09 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 05 Nov 2026 18:03:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793919789; x=1794006189; bh=5Ccz43muVZ
+	v39bedDkSkX54RUFuf7Hc5LWfrPieKi10=; b=cYuTaQPVRs375k8jdMce5jbg9c
+	D1fjWat18pS5Shu+QO+wUfaNBruAE7jKUUHd/OnvpWd7yDJ0GetFNmCGtxFpF2pv
+	cNXa6s9EPXLhLksZXDBNsclNLKWBRy5NTms3dEYLmJnW0cCB82eKaeu1l4kgNS+/
+	kYMDgGAbVtYyqEzAzdEpCMfqA1aBf4lvzZ+2V/q48h4ytrPuzgOJ+EnuSWtaC8yO
+	/aBhlgZ4WVIX21q/EdAiTxZeqP9ehHDUKgwdOC8wbU9jckuWCjFMExsZml1NWfrk
+	yJ7MBkTjs2GJUnbyB3nsHAcbiT/HLv3hmZmpqosz+rOuX8+Uyapg8hbLFp8A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793919789; x=1794006189; bh=5Ccz43muVZv39bedDkSkX54RUFuf7Hc5LWf
+	rPieKi10=; b=Zwxd6O2PDxqjV/OTU/apH85KSSUN21YcZuIZ9C0mcPJB9H5UxMv
+	wtAmSiHQead/mNYmhGfYpiqrsM2o6uUZQLtXrNTlHYQaPHW7SnZxCcSocZbRxvJl
+	GYbszZVSyW6zuGtHl72pbPYEoBX5OrhAFEm7WICqCHxZQ8H0WnlJp3WkggiIZy3U
+	LuCZZ/iXe6gPE9846Xpd00UITktQAebjhFn7sTcZwqKZTMpBW0yk50uQ/3xigScv
+	GNc7geKYUukoEkOW1geXanrnHW9uAdtOs1GwDQREtlRbUoOxEjcemPFYeINy5+wJ
+	xJNLohT6pF/hajYObWpLgxxkNT7FvArmWNA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793919789; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:mtY2/GlmneIEDjxiVB3PTYPMuw1lC1HEdd6nPu6putP0m7i
+	xpoDeCCqjzhNU9XHHk9oGjf4mo3Xwzp0fYwvUq0fozT2uD4at2cbnIZJb44x6dM5
+	2zkEkE8OiNfzTYBZZOVkt7NRrnyimEtOznQ6u1P7mARApYDDjb3oqlFNdUYcGXgX
+	4FfOpoUOXGC3Tw70YM3E6JUK7GJIsZ/pPs1ia2qL1vbUDFBuc/F40AZ5mnSOpe3j
+	42rBt7YBOa5Y48EmJUeCNTnwywPnVCHxY5GM9l+qrXbESWV4ZOHrqX1vErKybUzW
+	U7fxRK9dmfZ01OueFyWuZwbjY2H52JWq/nDMkcA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:aPmiZv2ipUVba9hT8ZKNMgv5SvKkqIbtC8CGAgo4Y4E=:+KJL8Hzaq+8pd540AcWnUK0E3hb/nCAcqLGcIWwTR1I=;
+X-ME-Sender: <xms:LQvtats_Uiz1LEhJybrbhgM2vBu7bC9l-jlVcXzG7z-gjeJRoD_5Ag>
+    <xme:LQvtat7pGT5eWaGEoHgTz2Q9Z3qXoS_R2LTWSjW6v4ZGd0RwtU5XglcDIQ4_TPLVD
+    X61KSb_JjuiGv-FVEx95jnP-DEFO-KEDnDKSP5Rx5eYEAZW7__NJ10>
+X-ME-Received: <xmr:LQvtauIPTAoornLssg10Gt09g0QHMm5wOUR55l_umKG40vNK09ceKAhThc99EcV5uSal5h3_xV0UR8RawZNJ_np4faaSdE_1Mu2X>
+X-ME-Proxy-Cause: dmFkZTFueFx/+VLJJ6lxkFF0u2zy1zsGGFW7fxgcrRH1bd8yMDvP7o0GMSMueUC65tXgXg
+    zJfy2sd5V34KI85OKSC94K8kbNLjd/mwlVXTXcVA0hqu53N/FU1qh3/aehf9JGXYcvWUBX
+    PPzqvYAO42gWsnE4AMG1H/z7wJSe5okKMtQgv2aVxXtPNxASyj/KWJuWPp8wHw0c5cUe7i
+    40vE8zFVF/INOFzAAq6Lw6V/0ackIeaqmUQWu3eJxl+TqumzeqgJUhUEQB2D6pTaI8+N2T
+    FFz/NTwfIYFucI/M5Gklo+0UR3Us5+1kUQijU67pwmT84PsHpPJ1d54ZJOjYpcXDOEVrBJ
+    HzjA1kIeagFc3o+ojNrIG6tQYx06ZRedpR823AC/pZTn0mjhwbWqAHxtsLKv7ebPV41fQ3
+    kOamGgnA6xwoNkKQPViCjugxytIaSbaNBCR2u6OepWvvneYkTW0nUKjEsDPcO5r/fzEC5C
+    Lxr2wAvPh54HoqhxW8Wk6PgY1F+j3UY/4fo9KPrVEfmFd+eqDpboaDFwgFjgH3jehTOSfj
+    Rb88mQRG2l+nhciQmF7h7dm/pTpzDiAHq3pqXimzSBcOPOJZsJJBDBiF2/c6UcSIXN38Uw
+    phCFetnaGfSQeDVgh3JO3jUtYSg5WxXJS3Nl8td0LFEpBBnlbrgBZsifn46Q
+X-ME-Proxy: <xmx:LQvtat5SykERxgtHxUWuF1PV5VF13uv2tdMFTUFdXfgOxBsnDrhw7w>
+    <xmx:LQvtahw4ohwAvRWzMJ_Y_VtQ7TaJT2zzBY5PL0s1owuGtRSypapqIw>
+    <xmx:LQvtahaN3Pvv45Q2KQNaErimtv8Tw4XivAO1Qja2q7FFc4fwajmAQA>
+    <xmx:LQvtajTgxPU8ENrKoQ91yDkgjsL9omrAUfjzPT-aTwcThM0qadPd_w>
+    <xmx:LQvtanatS4d10KpWyTWe2DcJn_PTOLaItljWWt-bn9aWzdl9oD1UUqPg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Nov 2026 18:03:09 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jon Simons <jon@jonsimons.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 01/12] remote: validate --force-with-lease <refname>
+ argument
+In-Reply-To: <20261014031347.50433-2-jon@jonsimons.org> (Jon Simons's message
+	of "Tue, 13 Oct 2026 23:13:36 -0400")
+References: <20261009192953.81794-1-jon@jonsimons.org>
+	<20261014031347.50433-1-jon@jonsimons.org>
+	<20261014031347.50433-2-jon@jonsimons.org>
+Date: Thu, 05 Nov 2026 15:03:07 -0800
+Message-ID: <xmqqcxsiq3tg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,124 +126,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261104172434.691381-1-yopatatchou@gmail.com> <894327d9-57b5-4adc-b300-25d946211606@gmail.com>
-In-Reply-To: <894327d9-57b5-4adc-b300-25d946211606@gmail.com>
-From: Tatchou Yopa Nelly <yopatatchou@gmail.com>
-Date: Thu, 5 Nov 2026 23:55:42 +0100
-X-Gm-Features: AclHuK-cL4kzo58rY9fTaZWhqMmAfzO8CMh-0fYntirQrzbdwwJOViQq6RlV7eQ
-Message-ID: <CAG7jffxRscX3ntX3p8L1GwGbs7WJmj6WoKPRGUuz3wcCS0NZag@mail.gmail.com>
-Subject: Re: [Outreachy][PATCH] promisor-remote: honor promisor.fetchOrder
- when trying remotes
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi Tanga,
+Jon Simons <jon@jonsimons.org> writes:
 
-Thanks for the careful review you caught real bugs. I've sent a v2
-that addresses all of your points:
-
-- fetch_order is now in struct promisor_remote_config, not a
-  file-static, so it is per-repository and gets cleared with the
-  rest of the promisor config.
-- The list is now initialized with string_list_init_nodup() on first
-  use, matching what string_list_split_in_place_f() expects, so the
-  BUG is gone. I reproduced your exact sequence to confirm.
-- The docs entry is added to Documentation/config/promisor.adoc.
-- The whitespace is fixed.
-
-I also dropped the linked-list insertion sort. Instead,
-try_promisor_remotes() now walks the list twice: once in fetchOrder
-order for the named remotes, then in original config order for the
-rest. That's simpler than sorting a linked list at fetch time, and
-it keeps the accepted/unaccepted two-pass logic unchanged.
-
-I didn't add a test yet. You mentioned t0410-partial-clone.sh already
-has a test with two promisor remotes ("fetching from another
-promisor remote"). I'll look at whether the ordering can be verified
-there, either as part of a v3 or as a follow-up.
-
-Kaartic, I've also re-read SubmittingPatches#describe-changes and
-rewritten the commit message to describe the change rather than
-address the reviewers directly. On the RFC point: I treated the
-Phase 2 config work as the micro-patch and skipped the RFC step
-you pointed out. Should I step back and send the design RFC first,
-or keep the current patch as a prototype while we discuss the
-config shape on the list?
-
-Thanks,
-Yopa Nelly
-
-
-On Thu, 5 Nov 2026 at 17:31, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
+> Use check_refname_format() to validate the <refname> component of
+> 'git push --force-with-lease=<refname>[:<expect>]'.
 >
-> On 11/4/26 22:54, Yopa Nelly wrote:
-> > From: Nelly Yopa <yopatatchou@gmail.com>
-> >
-> > When a repo has multiple promisor remotes, Git just tries them in
-> > the order they happen to be in the config. If you want to try one
-> > remote before another, the only way is to move lines around in the
-> > config file, which is awkward, especially once you have per-worktree
-> > or system/global configs in play.
-> >
-> > This adds a promisor.fetchOrder config variable that takes a
-> > comma-separated list of remote names. Remotes listed there are tried
-> > first, in the order they're listed. Remotes that aren't listed are
-> > tried afterwards, in their original config order. The
-> > extensions.partialClone remote still ends up last (that's done by
-> > promisor_remote_move_to_tail() in promisor_remote_init()), unless
-> > someone names it in fetchOrder, in which case its listed position
-> > wins.
-> >
-> > The sort happens inside each pass in try_promisor_remotes(), so the
-> > existing "accepted remotes before the rest" behavior is unchanged.
-> > Within each pass, the order from fetchOrder wins.
-> >
-> > I put the parser in promisor_remote_config() next to the other
-> > promisor keys. It stores the parsed list in a file-static
-> > string_list. The per-remote order field is set in
-> > promisor_remote_apply_fetch_order(), which runs at the end of
-> > promisor_remote_init() after the partialClone remote has been moved
-> > to the tail. The actual sort is a small stable insertion sort in
-> > promisor_remote_sort(); order == 0 means "not listed" so unnamed
-> > remotes still sort after named ones without losing their relative
-> > order. It's called once at the start of try_promisor_remotes() and
-> > is effectively a no-op on the second pass if the first one already
-> > succeeded.
-> >
-> > I didn't validate the names in fetchOrder against the set of
-> > configured promisor remotes. A typo just means that remote doesn't
-> > appear in the list and keeps its default position. That's how other
-> > list-valued config variables in Git behave, and it keeps the parser
-> > small.
-> >
-> > No test, and I want to be upfront about why. The t5710 fixture
-> > always has the server satisfy a filtered clone from its own
-> > promisor remote, so the client never actually triggers a lazy fetch
-> > inside that test, which means the ordering change can't be observed
-> > there. I'd need a different fixture, one that gives the client two
-> > promisor remotes and keeps the server out of the picture. I'm happy
-> > to write that as a follow-up if that's the right direction.
-> >
->
-> To be honest, only part of the commit describes the change. The rest of
-> it reads part like you're talking to the people on the lis. You might
-> want to give the SubmittingPatches section a read:
->
->    https://git-scm.com/docs/SubmittingPatches#describe-changes
->
-> Also, this patch kind of tries achieve a part of the project without
-> actually going through the RFC part of it. That feels a bit strange. Did
-> you possibly misunderstand what a microproject is supposed to be? Did
-> you possibly read the following guides and have some difficulties with
-> parts of it? If so, I'd be glad to hear more about it so that we can fix
-> the same.
->
->    https://git.github.io/General-Microproject-Information/
->
->    https://git.github.io/General-Application-Information/
->
-> --
-> Sivaraam
->
+> apply_push_cas() will silently ignore a lease entry that does not match
+> any remote ref.  And today "./refs/heads/main" will happen to be matched
+> with "refs/heads/main" due to refname_match() usage of mkpath(), whose
+> cleanup_path() strips leading "./".
+
+Technically this may be a regression, but hopefully nobody would be
+insane enough to have used such a refname.
+
+> An upcoming commit removes mkpath() from refname_match(), after which
+> there is no unintentional match in this situation, so that the lease
+> is ignored instead of applied.  Reject an invalid refname now to make
+> this situation fail fast both before and after that change.
+
+In other words, we would be introducing the same (technical) regression,
+so breaking this calling site is not a huge issue ;-)
