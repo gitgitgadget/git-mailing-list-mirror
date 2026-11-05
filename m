@@ -1,56 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793907797;
-	b=P/Y349llf5JZci6lEshTR0+5HrKll8a78SQmwUUBQVvWUn6o6qJUMVZA1gMbEpX0fTPV
-	 MjMGTkKXlD0bwFO8Y7VTe52pBqzfLttWW5Hxgv/UDV7QZPff0l8NnlBIUmg4BtKB/Amui
-	 gAlQN+W0NM9+cWM44drV1PV9SkL4gMAinLpG7UPrpO03zN/aRVbOSFtj6sqF6fyYu1vvp
-	 NwqTO793r0V98aa72u2RnvvT7wxuOVu7ra6XCVH3rOYLxgmoE1sZ5H0k1BQg8njTU4Dyb
-	 yeOZHRUR690aWlNX3jvOSkpsk9o9b6iITc2W8jCqwFA46cNtotVL++BnBHVLuIXgi7g==
+	t=1793907958;
+	b=lBTFo470QaFZcSucXhBuGTp9abUYwkdCjwRB+pKAiczGuiQkb27ZciA0DnlnByPs284i
+	 iKdTctTsI2odx/FztFWjZN6rIdVaxoEFjKHHY2DpczPZZOxYMz/LowUHefxD7XnrmcLah
+	 YC1Ex5umx/XiFjbxJaiOVSe9p//XQHtungKm4D1/VEZYb+z72gaObe8geX0VvaJI0hmc3
+	 lv/Snzi8X2H5jNX//fQyqW2BnqQsodtEnc7NYD0iymJOi4lLLEXaNyzw2ww7LeFb2KRFC
+	 wqIVcn0/aWMc5apRHfaF8X6uhwMXMWjt5Q5T2MxwRYmLWHpwQzmk2/5ctkh47zLl6+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793907797;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:Date:
-	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=XPGFWO8fOQByD7vJN9FsR5gg0CnhzYCMoM6KLpEdIzs=;
-	b=y5BXUwFJ0cHpQJ3aANwTttPGCdN2WZuM9DNByuRHYd+e1FumZ/1WzsoUWmmqqOeNN8Js
-	 v2zZ+0DYKJuNSjHYLWJuhZ59DriHpEh5q70eq4on5+HAH0A1nmNLUoi+X6ien/6pZ23ou
-	 ktYlqd/Gd+e/p5PVk960UHCtQGzEgExAPVOpsrNbgmfsIqJUjVUw9Pv/6pphMawKKAQZj
-	 5ByPmfn0egeHwhv+9zA4iTKEI8ZyICYXdeC64JepYdFL5Tmuyqb167se04Mw6RbCydD6K
-	 Qr1qKP4ircgK/c73Y5rVHXqr24BNY0tN44ypVXekjDg1qPZ/1WGHvmYeIJnBIGxcoJw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793907958;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=wGHJVApLX+zeeZpERIBrb9rFU74qzx4CHrlB125oa1w=;
+	b=an1osBqCW9ilxZd5Q509kaKUCYpz3fW2g1C+A8g04ZGj0cmB9B9/Gvaut6byKU3YwCGt
+	 oYbanonroET9L4IPh6+qEfNLDpXVph1jjD2oAV4H7sSk3UI2y9eYChToNyYesVhfFna3k
+	 BYo7HgoUxqlg9FGKnu1Due96Wc3W1+h0cAZcUs5DQkQu9gnVNIDIxqW6eWpYSpUhKrd2c
+	 bJ18bXtRd1w797KmF1k3TCBfpHh1G9Wqb6OJNONgwJtd8SQa+5tjAyGr0KDy1Ibmsvnsh
+	 biIDHDVGDY9T5ExWR1FUrnuMkqNvKejsfqSBXzL5PVhXFwg4UYl+nzDKhGe/I5gYmAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=peff.net;
-	spf=pass smtp.mailfrom=peff.net;
-	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=AcwIDE2A;
-	arc=none smtp.remote-ip=217.216.95.84
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Q5o1S2wA;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=3ZYzZCjo;
+	arc=none smtp.remote-ip=103.168.172.159
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2B3606A6C4
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 19:43:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F2B3606A6C4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290A7606EEA4
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 19:45:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 290A7606EEA4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=AcwIDE2A
-Received: (qmail 31807 invoked by uid 106); 5 Nov 2026 19:43:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=74TpPSHJ/ehD79b09Hp2NY1Le3mLxRbDTRQnzLlbVX4=; b=AcwIDE2AgBkCkz0osiUqONX7Tb4HSnpTRnKBpp5zdbj/Wgnq8OYydDEbB23D6Qne1SLzIVXscUf4rsggteVsAI4zJPBIqE+LiHMsQULDifpOp/iZHplyXzKkqJ2k57/ZoE9j7SZP2Ha4s1VNsMnHBXAmnIi9kTOdHZflkUe2peqLQWqGpG/ha8ZSEEa/smkkqhZb0+8nmuZrhLxMoCoYlJhwVoUiTJUH5izKuKtpScY/Tdyi07Cvigw65/dpZSfg47RWCRpKiPF9PYhcZgsg7nDd/hV99ciY0pDJ8CRSPQDcENYDS3j+1IsCxch77K4H5hvlUkmZIEvOusThrwvU7Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Nov 2026 19:43:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 62887 invoked by uid 111); 5 Nov 2026 19:43:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Nov 2026 14:43:14 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 5 Nov 2026 14:43:14 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Patrick Ohly <patrick.ohly@intel.com>
-Subject: Re: [PATCH 2/2] odb/source-loose: fix existence checks for newly
- written objects
-Message-ID: <20261105194314.GB2898829@coredump.intra.peff.net>
-References: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
- <20261104-pks-odb-loose-stale-cache-v1-2-a00d5cdb5e7d@pks.im>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Q5o1S2wA;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=3ZYzZCjo
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 600801400170
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 14:45:57 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Thu, 05 Nov 2026 14:45:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793907957; x=1793994357; bh=wGHJVApLX+
+	zeeZpERIBrb9rFU74qzx4CHrlB125oa1w=; b=Q5o1S2wAgGNs0duWMDumh3cbAh
+	9bc1JsHbP7XC2kK6MuJSA1djVgvysKe3CHhFMmv2JJeEfNgGxKIlimQ9WeDp2BZ8
+	L85NPQnpeEveJ7GJmx+EtwfpBAG74NQd27Q3b0Fq/XAIHfRz4WUZa5VKiANavhUb
+	MnnfCezKSHvcU/SlteVElS4I4jP/V946Cm1IFXkgz4ki+8g4XCh+9jgBHU0VD6Pa
+	zSP03QNzWP2EyeaOcv13JrEbs1mP8vENvokjf/f2kjbuuAaxjFDbZDeAd5eMI1vq
+	kKTNFJlSfR69L07Bi67m14eto+W6S4o3yaD5v9k+pOXOSBemLsLyoIgDFBfQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793907957; x=1793994357; bh=wGHJVApLX+zeeZpERIBrb9rFU74qzx4CHrl
+	B125oa1w=; b=3ZYzZCjoqvS0SAoPYt5jkbyMI5MuPdwBZGrr+WOxccRN8i6uRCP
+	mKYdOuTaWt9pMR4cdYrjtINA31bOzkwI1dBTw5zm/2pb/Kqtcrkkpjj10ZL3Km17
+	kf0+YxrKJ3o2FL5zBR8yqFNUFREoPDnnJqivc6pic4KKTroO+rCD24kLQjk7iWgP
+	zxh5HYQi23LTK667sQmetmcdhpJIA4bncZAi1NvOndaAG/lAAdv096fCKShOdXYt
+	BqxJ93KvnYbkwE4+DAjoUqLXq19k2wjYmMkqnLmDr1OKVmlYKKD76D/VwwrmghUb
+	LtPFu9d1/IUvNY2zaAaUOhoE5tOBbBg79hw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793907957; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:bJhfiGsRQmenOUIMjlx5M5eE4UMgxCMIYH11yVPjc31NZT2
+	He+jfzdcUEYdRrdCvIK6ahABaCthpDzCPz9p+6kMcjrykmPXSue/M9KWFmUVp2sv
+	AMOS0a/Q8EFWhnHqr4i5ncDLxPD1hHfRKWnXMt8TAN3X4NYKj3avYsBI8nKKeiFO
+	oWEdGxdFMo04Ftw7nf9LwAmi75eulRiOBdA3ou7pDi/C8RdcThp80hcwRTfLHAFs
+	U5HsIIOuUGrXPXKM6T5bWAVjCH8W/cRpNfloCio4uWf6xKD259cy12zxIkKBNPFg
+	x95LN0MhQ9v8oDAJ64+Do3QBljH/5mGdzdLdiPA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:f6PMCkGh2t9jVzyyovz2Zg+ZLwETnc5vUWpxCBTizDY=:4SMQt1HoEmFqQOyl4TfhWBZNaYA9Joh5b9k4ZMV+GM8=;
+X-ME-Sender: <xms:9dzsapMhdBYe-grPA1PTXz13MJrGemEpq8YrQ37S7Z9A_VMiJXCmSw>
+    <xme:9dzsavqekUqc3XtBSMjrDa_YIwkoU_8stTBb0A9fx1aeBnkAFkcXege52jneo3Knd
+    bBrLT5cCY4hxovXd9wwk8iWmC_Ov3I400V4fBB-33uRQHq935kTfA>
+X-ME-Received: <xmr:9dzsaiGnEDgbtDDyGT5zw0EkmMoFpgU6mVlTxYKb-5AanyvYaE6GWAoJh-loGk5WpBMmoSY4Hd8fhGEU2sec5UyAcYlyegnKfKWv>
+X-ME-Proxy-Cause: dmFkZTEHlAoBFy1iXW4zUfRBfuUChww1cEjiySGt8Jf9mq9kkDf+vosSEqn/5jITMsspz3
+    W9mkvHqTgXDWppqeY/ldja/VOxHFcGuGAI75g/NS2zJKWGNSrwofdiNFIOkC6XK3iX9icf
+    rLCYbqUyOZ+SFNbndSJjGK3IoFargpiswZ6iLe70mcewVPZHOEoS+VHN7Avw9nj4Tm8fvp
+    PfQjojav+n4aXbduKG5+V/W3+3ewCtxRGI/k00LxlgXLMFd9VvJt6jAVYHwcS9/6hc0XzP
+    Y/4ejKW0hBUgVKJEMDemGCd1RwcN6ZWR26A4RgfQAbYwkWifO5sSLOxuuKxpRmKZJESaFA
+    aBLx+LQhoggu5kvygV2yshLxjh/A9YgA39aDalY4eBsf3WdtyiSTZcYsF5CfuwY6oE9Wan
+    J8r5Fh9fuw6nHf7ql/tFG6804rwO4j2SFV4UCanlTKBKfD04fNJDtdN9bcjvVXKoEZ8nxL
+    ne7GQUFm3JCgaMlfK+nPP7jKdZ9ZHeeEQXTduvZha9oBQiR3+ZKGTxPD0oTkKrVdRcZpF2
+    Pj8TkNe7sBaZtOJtpnJ8BGddYDWKVq0Qhar26MMgoufeWELRozrPOCWzmPlmCTAsa8V1i4
+    henJVvx8egKpDcxVGArT9dGhRymFpzqs7RxQrB6eeOk33VyFtJB3mq3ZyR1g
+X-ME-Proxy: <xmx:9dzsaso-mGnHov-A7jEYKnW1NtluqpRUWdpG_Dst1017f_pk5Jg1YQ>
+    <xmx:9dzsajYH6jLZMqTuPmm-TxzdPbBcNgIzJcwb2SCg0x0Sk7dARq9eAg>
+    <xmx:9dzsatW0F_k2zm9xhQDHNvT1BVi4EvfLDNKctHm4JeGfXH1QzYTRVg>
+    <xmx:9dzsak_T89OLTS0AlqihUlbuYbQ_sl-lnKwYkBXXbYfvc6_K45TxUw>
+    <xmx:9dzsar4ngZg8RYQKNmoG5VkV2-oEbsqQHzaeNA1y6xMMx-msDSWyrzKk>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Nov 2026 14:45:56 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+  <git@vger.kernel.org>,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Julia
+ Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2] doc: git-diff: rewrite EXAMPLES section
+In-Reply-To: <20261105172358.HxmMJ%taahol@utu.fi> (Tuomas Ahola's message of
+	"Thu, 5 Nov 2026 19:23:58 +0200")
+References: <pull.2293.git.1793720007182.gitgitgadget@gmail.com>
+	<pull.2293.v2.git.1793893217889.gitgitgadget@gmail.com>
+	<20261105172358.HxmMJ%taahol@utu.fi>
+Date: Thu, 05 Nov 2026 11:45:55 -0800
+Message-ID: <xmqq8q37t630.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -60,143 +127,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261104-pks-odb-loose-stale-cache-v1-2-a00d5cdb5e7d@pks.im>
+Content-Type: text/plain
 
-On Wed, Nov 04, 2026 at 01:16:35PM +0100, Patrick Steinhardt wrote:
+Tuomas Ahola <taahol@utu.fi> writes:
 
-> This issue can cause git-merge(1) to die in a partial clone because we
-> try to fetch an object that we have just written, as reported in [1]:
-> 
->   1. `prefetch_for_content_merges()` performs quick existence checks for
->      all blobs that need a content merge to figure out which ones need
->      to be fetched from the promisor remote. These lookups populate the
->      loose object cache for the respective sharding directories.
-> 
->   2. We lazily fetch the missing blobs, which writes a new packfile.
-> 
->   3. We perform the merge and write the resulting blobs as loose
->      objects. The cache is not updated, so for all blobs whose sharding
->      directory was populated in (1), the object existence checks will
->      fail.
-> 
->   4. When checking out the merge result, `prefetch_cache_entries()`
->      performs existence checks for all index entries that need to be
->      written to the worktree. But due to the stale cache, the merged
->      blobs are reported as missing, and consequently we try to fetch
->      them from the promisor remote. This fetch fails because the remote
->      will most likely not have them.
+> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> wrote:
+>
+>>  --------
+>>  [synopsis]
+>>  git diff [<options>] [<commit>] [--] [<path>...]
+>> -git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
+>> +git diff [<options>] --staged [--merge-base] [<commit>] [--] [<path>...]
+>>  git diff [<options>] [--merge-base] <commit> [<commit>...] <commit> [--] [<path>...]
+>>  git diff [<options>] <commit>...<commit> [--] [<path>...]
+>>  git diff [<options>] <blob> <blob>
+>
+> Sorry, that breaks the test number 0450.218.  Please change the synopsis of
+> "git diff -h" as well.
 
-I don't doubt this sequence of events, but it feels like it is pointing
-to a separate underlying bug.
-
-Anybody who is passing QUICK should be prepared to get a false negative
-and recover reasonably. That's what QUICK is for. And anybody who is not
-passing QUICK will not use the cache (as you note, they do not use the
-cache at all, but it would also be reasonable to use it and fall back to
-a refresh).
-
-So it sounds like somebody is using QUICK who should not be in this
-path. At first glance, it makes sense for prefetch_cache_entries() to be
-QUICK: it is just a prefetch, so it's happy to get a wrong answer.
-
-But as we've seen, a false negative here can be a problem because it
-actually tries the fetch. The most obvious issue is the one we saw here:
-if the fetch fails because the object is in fact local-only, then rather
-than say "oh well, I guess it is not something we can pre-fetch" we barf
-at the lower level, in promisor_remote_get_direct(). It feels like that
-low-level function should be informed that the caller is in "false
-negatives are OK" QUICK mode and quietly return failure.
-
-But even that is tricky. Our fetch request is all-or-nothing, so one
-missing local object means we can't prefetch anything. Not great. Plus,
-even a quietly-discarded fetch attempt is expensive to do, when we could
-much more cheaply get the object by just looking again at the
-filesystem.
-
-So I kind of wonder if prefetch_cache_entries(), along with any caller
-doing an OBJECT_INFO_FOR_PREFETCH check, ought to omit the QUICK flag.
-It would mean that the normal case of having missing partial objects
-(about to be fetched) would cause us to re-scan the local pack list, but
-that's not _that_ expensive, especially compared to the fetch we're
-about to do.
-
-Possibly we'd want some logic to avoid doing the re-scan for every
-object (so if you are about to prefetch for a million objects, you don't
-want to trigger a million SECOND_READ re-scans, but rather do it once).
-That would require some refactoring.
-
-But it would fix this problem, along with any other related ones. In
-particular, I think your fix here is leaving lots of cases with the same
-problem. Missing our own loose write in the cache is an obvious problem,
-but it's not the only reason we might fail to see a local object: it
-could be in a pack now, or it could have been written as a loose object
-by some _other_ process.
-
-So I suspect you could cause the same problem racily by running "git
-log" on some local-only commits while somebody else is repacking, with a
-sequence like:
-
-  1. git-log scans the odb and builds an internal packlist.
-
-  2. git-repack runs in another process, migrating loose objects to
-     packs. git-log doesn't know about our new pack.
-
-  3. git-log tries to diff a commit. In a non-partial clone, the diff
-     code eventually tries to read that object, realizes we can't find
-     it, and does a SECOND_READ. But in a partial clone, we try to
-     prefetch via diff_queued_diff_prefetch(). That uses the same
-     FOR_PREFETCH flag and will try to fetch it.
-
-I'd guess most such cases are going to be racy, though you can imagine
-ones that aren't. E.g., if mktree actually did pre-fetching, then
-something like:
-
-	for fn in $files
-	do
-		oid=$(git hash-object -w $fn)
-		printf "100644 blob $oid\t$fn"
-	done |
-	git mktree
-
-might run into similar problems. It needs to know about newly written
-local loose objects, but they were written externally. You might even be
-able to find a similar case where git-merge ends up writing the objects
-via a helper process, but I didn't check.
-
-So I dunno. This is fixing a real case and not making anything worse, so
-maybe it is reasonable in the interim. But it's the tip of the iceberg,
-I think.
-
-> We could in theory fix this by flushing all the loose object caches
-> again, like we used to do before 5946a564cdd. But that wouldn't address
-> the root cause: the cache would still be stale unless somebody does a
-> non-QUICK read for a missing object. Instead, fix the bug by updating
-> the cache whenever we write a new loose object.
-
-I agree that the object cache flushing was only fixing this problem by
-chance. But I think it might be worth reconsidering the change from
-5946a564cdd. Flushing the cache (or not) should always be an
-optimization problem, not a correctness one (assuming the rest of the
-code is bug-free and using QUICK sensibly). But a SECOND_READ fallback
-is a good indication that information about our odb is stale, and it's a
-good time (from an optimization perspective) to flush them.
-
-  Side note: I do think there is a correctness problem with caches going
-  the other way, with false positives. We might say "we have object X"
-  because we saw that it was loose earlier and cached the result, but a
-  simultaneous maintenance job then pruned it. So imagine something like
-  a fetch, where we opportunistically optimize by saying "oh, we already
-  have X".  Later, when it turns out we don't, the fetch fails, even
-  though it _could_ have succeeded if we realized from the start that we
-  didn't have it.
-
-  But that is a general problem with racy pruning in Git, and it affects
-  both packs and loose objects. Nor would flushing the caches solve it
-  (though it could help reduce the race window in some cases).
-
-  So not something to solve here, but I just wanted to qualify my "cache
-  flushing should never affect correctness" claim. :)
-
--Peff
+Ah, good point.  Thanks for noticing.
