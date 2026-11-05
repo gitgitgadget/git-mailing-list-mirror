@@ -1,120 +1,106 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.147
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793886922;
-	b=UJ6V1aUYCJT9isO4fofAMUE+wJ9tYzPh4OAzI1M2FDY6LrC+xsKDenNh9IX/FTni2vG/
-	 7olQy2WTSdHNj+dWkx85ev2KcRnef4LDoHLvWAs5rwccvnXa6R7DM/4RtBR9zMvFLwXD/
-	 vycb07Ci8YopRtbls55VnnX51lOGsQvHKhsYVV8rUljudwuBov1xpNOUYzw8oiA/hWj2X
-	 n69NQf5qbgTv68t09uymJS079OzSwXc261g/uM3ySsjVeO8U76tTTYBVFQkL/ML6x8U+J
-	 BKuYKHwLEqnDbUga8KqgF/WUYAyZ4VDJyRAoKXYrl2mWynRRl7We58iizzRbEhzvyBw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793886922;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=rQ8UGXhx8O1TR0bHm7xxhAcMfNnPlf53eGboL+W12ZQ=;
-	b=bnni7kYUtR/+IiSGKdpMgnp0cWSmUA8x7AihnKlE+CqghpEnEXBKpO/Md/ylHtbB7RFR
-	 nJojDQ4VU7M97VKTvJX+FX6+oMzD/7vPI7Q7ZSvbSX4bvuLYx7vc/K3nlRoRAr4q+HQ7z
-	 80rVEr0nk4b7l8FtQ+HpzJRxeeoW203cEGzWynE2tkZWDGip1odZYsuiz1IYswwLsH7qL
-	 WK0US0iBvUO4RE/T+FIWnlIN4oza9v80K8Ju4FxtSpRsycX0QcBnIwlgxg7cCSofj8uzX
-	 yHyS+yrY/4fbWeLiCtsGPzWpJB2xmDKERKO98A+4nIZvKyrXMi40+qc59TjXDaPCNxQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=VO1+7WZD;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=u38BKwvu;
-	arc=none smtp.remote-ip=103.168.172.147
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.177
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793887018;
+	b=ok3Gz/foq/XwlkhZXb+Jgq87o+zOF0hQxAU+H7VmQtgBVqf8Axf9OhdwY0YAZ+5nE/9R
+	 yNvN+qBG+0cMValwZQh1hgj4mXwEaKOTUxMqEEt7Pkr5fayDmKYPjtI0xq1mKVaKnoGXk
+	 YrQqKg1Lu8uCX816TvPPBzCJlUt9H4iFPB6GNzw1QvjQuXWZnQUYTTDkEKw9h/t0nXWsW
+	 0igeBQeSKHzF7MwpFRnfrmQi5ZkZS0h2c1OR2TqF+hg7UjYYi30qlAJAZltGmnmTCbW9d
+	 Z/IFyperuxYnEbiMkxkwESLcnlkurmIbwk6MWdW8ulyrqCBjMR/khaayrTjwqkYntTA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793887018;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Received:From:
+	 In-Reply-To:References:MIME-Version:Date:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type;
+	bh=ESpBjzUQ4h+G3fOrq/5xw1RMYAG49BHS21NjCOWxtYI=;
+	b=YoNNx/AXpPI/5G6sjhBHLpJ1bABi2CwpQWgXss1XJWu4QOtISh9gw621x9i5I2jfQRRp
+	 u8jLHEXfSYBCdNGfyj6K2fPHqNAIfZ1ND6G9Rj8nd5EM4cs7vOycqnYGJi5XVzh0NE4d3
+	 1XyiWe42hIeRntzKcc0p/CkKg3v+OjlGBlzM6ubLT7TNhv7hYpbIrs1BlTALUv6nNoYqT
+	 4vQeE0eVzN4pHg4bpQ6xCoYUqvHmuYdkN56118rh2ods3vLsm7c0NBrYH97/piXIbohgf
+	 3Sn2tHX+6AJO1jt3LpTFxuUxDT/APrSbmIG6lZmLd1qbnu9W/k8cU0YjdWUtxsBywTg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ntOmQPj6;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.177
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD31C606A326
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 13:55:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD31C606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C88606A326
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 13:56:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4C88606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=VO1+7WZD;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=u38BKwvu
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1A17AEC0609
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 08:55:21 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Thu, 05 Nov 2026 08:55:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1793886921; x=1793973321; bh=rQ8UGXhx8O
-	1TR0bHm7xxhAcMfNnPlf53eGboL+W12ZQ=; b=VO1+7WZDD5H0yPnI3NsFhsybhl
-	dsu7erRt+RfB6YUrJb61KexO82kRKTbjD+lq95aBJFc8LnB88thtByQp9wCvHy9F
-	XNa2gRnLy51Zek+p1V1NFq276gCUWSe37mnmH3rDE0r2QeKuTZa7aSps8rDIFCYi
-	UdbDeUEM0jPt9v84TcY3uuu2+rT05qvBEsxAVeTKy0sfKAPqyjMatPTNT6yZyaV6
-	NKkTpPO7wTaatZiyZD9p48yQ2syvq7RlGNAHikoBix3FMtkZusUrGO+Xza+kiL7/
-	2kr36ZY8u5dIku1p9f13k9mcEgMMWnSS7jZaksANQdJxnXQc9mOvI6T+lcGw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793886921; x=1793973321; bh=rQ8UGXhx8O1TR0bHm7xxhAcMfNnPlf53eGb
-	oL+W12ZQ=; b=u38BKwvuCTek0nPPgMCYVj9DLQWEUYYu54nuyY0svLiXwkiFgXQ
-	dbcH1T5SBxCv0SWL+ttshYN00Ee8UWn7uxQtdceoJCBHzWNOsZ3srWUCz8gWOdtW
-	r4NYkvy55NfdGBuH/R61cleJMhyssMpP5gk9m7myMwg8Opp1pKdIFW463NSyRoBM
-	lEw4An2gqLmCf0xwljLZKpxTZUDABI+BA0nsmyp65Mxt1VNTJpEE+B3jrUlFWlNC
-	k221OnPrUQ5AfhyxT7cZv/kXJ8GRCBCZAhGGC2ac8QHQxRcoTAyTgspstlvNFb0X
-	L8Iz5vtdWBWcblMEdIqA+KZqQYASQOAzuow==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793886921; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:XI1/5R8eHgQ6n1g6DbLYg7t3b0GpkbnvxZtc0PZi9Atni9f
-	lnWJRVANwh2vstiXhBjF8ZrdG/HQXZXA1yd6R5xaIXXwiOCvUsr701wcuoNusDeo
-	GZfgzMznM+4yqMMHR1NE0haMYKYrYEx3s4HoOE2uJABtHrxU10Yo9YdCr/dr+zwm
-	ZzGdAWFRJGxib2ios97/jFVt89eOyvEPTQi1fueRKISQ8zhrkZZYW8iW+dVizENL
-	Rq/JV7zU6LbABZ3jg8BvYUnC9LsO1gDzH00deZONYtLbb+6RItziTJVKDFg7WrX9
-	Lw1pysNFl9Utpj01o2JdmgrWuOslNWfHJ3ifUDg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
-	repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:8e8EnrwW0cQ83hM2Y2QUDUz1rILbk1dna9Q9wRCdZxw=:a/CLgdaNoFxWYKsijcsScLkEK4u7QQVMPLtuD268KJ0=;
-X-ME-Sender: <xms:yIrsag8QBKfPln16DcRQ6POon3NYB34tIkM-j1E3iKuTtytcAsX7rA>
-    <xme:yIrsauvvj2tY43N1_PiqdgpYzOBjtBrzwNI-vY_9hdT2lJChSxxPsw4XDR4-oP8QH
-    KWLAdgRGk5Nc4ALc_d5HcyLySFTeVsNVEJdjo5DhqZJX8v0-bpeOeQ>
-X-ME-Received: <xmr:yIrsajo_w0jAlIM0zu8bMMleyCG5ax078aNvZjL3X2lXzIqUB3-h-g>
-X-ME-Proxy-Cause: dmFkZTF/5u05dS3OZIK4owA5/IO2++n0/fubvYmUtt6gWOknluPdzugDHboNJmWMcaIyCY
-    WaaW4wFXHv6f2rx2n9HDO6mscIun5H03OafSD3WL28FVqn+9T107OBFpNin34iBavlpQRq
-    7Nwc9Yiesat19fHZ1mcanyJDQ28a7BCjMqWUEteF8+tVYvjcrQ8v1weSOMwJ7Fod8C33Z4
-    JWMOuSAHte0n3Pa2HyZ2emftKbyt+u3pw9pBB/YHhcjTsA7aZSlWP3AZULt6nRbOdqZaha
-    snbTO6HrB+XIpqizt4/lbbJ7BvCuFww/p1M8RPVBLNcryinyj6UJ936+OUPo5lzx9hsoh/
-    3+N/7408KJEFtIIIAOa8ERIE7aNGe7xjNK2CXShwnGT7RlbPehIpc8tRXk+tsYyiAQz4Xu
-    uxC9A7QGrCx2i2VyYbuZnb8d+QTiP4GC5pH34s+RRj4/FbitwQgkDp5Xzy9jnCofm+JcCQ
-    ocNHALkx3PKgOPfR/4Icu6fXdRqs7UCz8g58xFvVdX+SdtFXK8bgoJaF9OOZootQQF+FsU
-    avj98TkOs1xyDHOclMtEgxFtOHqOexsiV3e5StTdVnbiWFu1p+hcAIoD2JKLiEyeIT9bSp
-    3vKVj1Xg8217eeRrgq+Zgknr1RM8RaCUFLa0Imh9PZxGXuAAHp3G8mT5NsCw
-X-ME-Proxy: <xmx:yIrsarlQQiNpYG44JqK4GQ7Rgj7R2z5X2LvoIjg9HNks_-XAilZW4g>
-    <xmx:yIrsanwSFVpUND7l-phmq-ScKGSOdbso8V0LtzYGvpENFr09m5H9hw>
-    <xmx:yIrsajkyfHkZIye9CeihUJEAuUiS5kmvQEi9__4-nPxA3jgGnvtPzg>
-    <xmx:yIrsagdLIeVJk6mdDfU4RCyFj_M118EvA8xoBkPeFlUUQ9itPDYioQ>
-    <xmx:yYrsavsz2U__ti7wezKzNsOEqqrOwwv1Omu5Rbvs3SL9Jp7DJhM38tTD>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 08:55:20 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5f707f17 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Nov 2026 13:55:19 +0000 (UTC)
-Date: Thu, 5 Nov 2026 14:55:16 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/10] commit-graph: several refactorings for writing
- commit graphs
-Message-ID: <auyKxKX4l3QmGG1y@pks.im>
-References: <20261104-pks-commit-graph-write-refactorings-v1-0-d013d9401a59@pks.im>
- <0e74f6c3-2f43-4829-a071-27e96ab5e87b@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ntOmQPj6
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-5eac7220e9cso644728e0c.3
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 05:56:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793887017; cv=none;
+        d=google.com; s=arc-20260327;
+        b=TUKghZErvKBnJb+l1cKtviCEQcVUJf/Pzwu3hnJO1O7qff1bC+UHzUhkPuUaUvwEls
+         ejcvCdEjS7oUJJIirPhv7oSATwQ8B3HbWXiPVjdLU/C4g5cIQZeLZP8svVOOwd5nVe5i
+         Fep4cJcY6O6cbMtewQz/Zv+NZlGDfTmaov91HzkkfVVFCOtPxy2FX8sGX8nHyulM9kOj
+         nHk7gyfjc09Sm6ZBHxEBhqBm0wsiMw8om7pSInflmvjNcu0cDk3HMqXPHMQf+ZRp8Cgz
+         pehOwJh4l6owI0OhEJn9gzSty6vSd+syPr0wVxv1NJHjnAWJ9nlmqW0v+XkQuw5ng/5M
+         vMig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=ESpBjzUQ4h+G3fOrq/5xw1RMYAG49BHS21NjCOWxtYI=;
+        fh=ypDDCT5+de1Yg7Bg+Z6H/2Eq1+3Bw3LF/HLkbCTbqfk=;
+        b=d8NcVzmgd7YSnMVBgVQnPGakH6vFrNyTDVbTfbdol027Vu5CmkoEBgOlJ6B5LWgUnu
+         Hz74SjcA7xB+NfiPS3WSE0YPxrwrzI3cO6u8XPqVbI1EvPXp1ALfUVFHDxuQzpgCXJlL
+         p7g2c9CPJAw0ZluXCAFzS/5A77XIV4LKbVAPUorNrYC/JhZgR9BVRCot+X0rb2RdCLlU
+         eOBzKDqJU7LzcgsIftAPO/aAOkSXxFQayGry3dqJQxC1Q5f9oYt3/atSzPkw8zcn9o6q
+         bMccrp7ULpXuIkPsdtNH7VU/RMmTeG/s6GEtqtE/2dkIsi0znMjflqYUIswmVf8JbJ12
+         lhog==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793887017; x=1794491817; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ESpBjzUQ4h+G3fOrq/5xw1RMYAG49BHS21NjCOWxtYI=;
+        b=ntOmQPj6vzhf5m00iy6ROqJYkda4fUc9iD2yvRlt9MiTOys99TYucE8HafqaeeissY
+         WRaMGowH0IJyX/SrUNPto0X16n4bsLYxjas1RfWJEVlsAutpNLsiJAteV8PRi1tt+EBL
+         cXx2O8O71DIVP+3b5rwacG9wW5NHTrLwla4a+4PIqK0zgkqM69SxIwW2ajPsN1QU16O7
+         VJV4KUqyWAQWXT8h9z0/YMCCAJsiIKkyfZSu8IkNG3cuCxKIMpxiW9AGcQ8xN2Dv7rAc
+         1dRzqESMiVvlrus00N+QlBqQFb/H4SRY4Nkxh+zjy9+9FVTpPCCgGfu+/njXmKtStT++
+         3GkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793887017; x=1794491817;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ESpBjzUQ4h+G3fOrq/5xw1RMYAG49BHS21NjCOWxtYI=;
+        b=mjjypkI4o81R7Ymk9Du71ItESazrMdWYgRX4wXKzie9p17Y+TS4q9sezdZao8frekG
+         BuCiz/oIhUyR0QJCrigROHb2BnB0CDnyVon3wgOW9HgWQP0tofuEyO1QfcumeC7rkxzb
+         YuNv9lwc68uOPECYO66vM5Vga70/ZL5KyfT135pKPcWvtE+EVw05BRBosWVxG2N0lB6B
+         AiI3rgXaBcoTRMKUrh3aJBjbDaJ6HMNZ7ACqBODwl2Y5fm4bfgiZ/wTlj8D+d2ONbjhD
+         YIXNGsd4p/kJuj+uj1lxan3vcR1NRksPqfi2XhgQA/ld3KcGtfz6MDW6HIYBUTnVr1uw
+         Xn5A==
+X-Gm-Message-State: APuU4Z9f2L7qREXg0/wk04Z67Kneo4QiQi/fH1zUTK3bw//ez++Wsu5d
+	o1sXgptulsIVqirANxr1zQFZy737K6FRxMCqSRlUIyh9wLoI6Q3Z/9wY0nC7qniwDAUb45M2blS
+	PQcMc4cLFyeAt9Zt4pFkJZvoH7hxma1NZiQ==
+X-Gm-Gg: AYBFou2gGYcdKWRfloaO2Xxxfav+wg2NHwIBqTKhatGj/s8G5F2mMl9pEj+T+C3kCJK
+	NPnzGjH41tp3RAR23hxhvvKsBPIl4vmNoi18pepQE7EoN8Fm72PfO9HXyUaJHHKMyOPQ3eVAwY8
+	n2LAX7Uv86NoUNnIbsYNsJ/kfLlqfaAhv7wEZbIGzRmASW8ZdQhoPr/qzYbAGLI4wh8ZRklff/G
+	eg9K674fvAgDGau9gpJH/uG8gv8SCJdGDYSwHeaXVTjNJw9sx0BGWRy9u5lrzB0vFyNqausGa/9
+	q1J2YWX2ck5jy7FFkXcoY/Auh56T4j87hAn2cASY7euDTZlfcwCs1/WTTHZoaAiTvhTk2tdBJPF
+	SDy6Z4JP2jEO+rbj6tqwAh5m7fPTEe6kBVN0bA1rsIysLIvkAvBELpIRxvK7MQgFvklkRmVQoGX
+	uOXiuiRLggiUtKUXBp+1pnje6iSj0=
+X-Received: by 2002:a05:6102:549e:b0:7a7:196a:84ea with SMTP id
+ ada2fe7eead31-7d072719b19mr8149361137.34.1793887016790; Thu, 05 Nov 2026
+ 05:56:56 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 5 Nov 2026 13:56:55 +0000
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 5 Nov 2026 13:56:55 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20261105122532.391-1-herroyalpriestess@gmail.com>
+References: <20261105-kn-parse-options-doc-v1-1-403edda5947a@gmail.com> <20261105122532.391-1-herroyalpriestess@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,24 +110,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0e74f6c3-2f43-4829-a071-27e96ab5e87b@gmail.com>
+Date: Thu, 5 Nov 2026 13:56:55 +0000
+X-Gm-Features: AclHuK-QIbp3y4k9mFr1qMUVyuL3tjTWiZFQGMEsR3CmgiVuIem9gl1tBdGw9bY
+Message-ID: <CAOLa=ZSfNPt03R2F_xG930pBmXCJ-CcC-GnTTLA5AgWoZm8eaQ@mail.gmail.com>
+Subject: Re: [PATCH] api-parse-options: add missing flags and macros
+To: Cynthia Uche <herroyalpriestess@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000675386065f87de23"
 
-On Wed, Nov 04, 2026 at 11:37:11AM -0500, Derrick Stolee wrote:
-> On 11/4/2026 10:57 AM, Patrick Steinhardt wrote:
-> > Hi,
-> > 
-> > this patch series includes several small cleanups for the interfaces for
-> > writing commit graphs. Most importantly, the series refactors options so
-> > that they all get passed via `struct commit_graph_write_options`. These
-> > cleanups are split out of a bigger change to make reading and writing
-> > commit-graphs pluggable via the object database bakcend.
-> These cleanups look great. They are carefully constructed to be as
-> simple as possible at each step. It's good to bring some of these
-> conventions into a more modern style and to simplify things in the
-> process.
+--000000000000675386065f87de23
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for your review!
+Cynthia Uche <herroyalpriestess@gmail.com> writes:
 
-Patrick
+> Hi Karthik,
+>
+> On Thu, Nov 5, 2026 at 11:37=E2=80=AFAM Karthik Nayak <karthik.188@gmail.=
+com> wrote:
+>
+>> Also add the follow missing macros:
+>
+> nit: s/follow/following/.
+>
+
+Will swap out.
+
+>> - OPT_NO_WITH
+>
+> The message lists OPT_NO_WITH, but parse-options.h defines
+> OPT_WITHOUT, which is what the diff documents. The diff also adds
+> OPT_BITOP, OPT_STRVEC, OPT_UYN, OPT_NOOP_ARG and OPT_COLUMN, which
+> the message doesn't list.
+>
+
+Ah right, let me fix all this up.
+
+> I applied this on its base (8d1b215c01), built the docs with no
+> warnings, and compared the descriptions with the code on master
+> (0ffa3e35c7). OPT__VERBOSITY, OPT_UYN, OPT_BITOP, OPT_COLUMN,
+> OPT_CONTAINS, OPT_NOOP_ARG and the two new flags match
+> parse-options.c and parse-options-cb.c, and the git-add[1]
+> references resolve via diff-context-options.adoc.
+
+Seems like I forgot to update the commit message after making some
+changes. Will update it.
+
+Thanks for testing.
+
+> OPT_ALIAS and OPT_ALIAS_F are still undocumented tho. I wonder if that
+> is on purpose.
+>
+
+We don't add the '_F' versions as we talk about all such variants at the
+top. But will add in `OPT_ALIAS`.
+
+> --
+> Cynthia
+
+--000000000000675386065f87de23
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 888bd8e65e61271e_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1yc2l5WVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOEdHQy85dzVOZTVDWXlaSUtzcDd6Wm85Z25uZERsOQpiclBUN1VIVXZv
+eVU0ZXp0NEpwVnFTNzg4OElNSGZIRUR4eWdpMWdHdVJ6Skw2YXJIWVpuK2EyV2ZPN3hwWmJKCmlx
+SWUveUdPZ1AraFNVMVlLSVlzNisyci9OcXJhU3NRTkxDMXNyTzBwT0paUndQQlRQaXIwV241dWd2
+b1pRSlAKL2dDNG9LS2tUbXozckhUWTBVTkkyZlkwSzhseU1OYXNJNERWS1lkOUhkSS83QlZtTnFR
+Vzh3WjJkcng0REpRZwpGYVVLT3Z5N1VMZG9sVms3bllkMnA5N2Z1aEoxNWdjZkVzcUtqaTU2NTVP
+Z3BNQzg5VHM4RUZ5dGdnVVJKNXhUCjRpY21jcG9YYmt1RFVEbXRPeXlMRWZUMDJvaUh2OTJZVVA3
+WkxpaUF4NnRZMW1Jc1JhWmlBSkV1UkdMYzNZRy8KYjFPaTcxWXFxQUtEVXMwR2E0NDhoaEExd0lP
+Z056cC9HSENCWWJjQ2U2SU9STndtVy9nN0VVTC9GUENKL3d1UwpjcUp0KzgvSG81SFcvbEtGRjRs
+OGNYY2dtNmo3Vys0eVluM1dUZHdoK0JPNGRKbDR2bXlqQWF3RzVkamZuTEN6ClVvYzNCZi9La2Zj
+R3Nvem1UYnpyZVRGenJlZENyRkZjdkQwT0Flcz0KPVR2ZUUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000675386065f87de23--
