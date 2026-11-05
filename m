@@ -1,88 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.217.42
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793890959;
-	b=jefbMkONobUV2jVHTep+QzUPDcvvwTBCMjjUuT0QBjz1V224p/jDDOMlM7bB1/kXpzAm
-	 sRJ7XcouZsn0jf6lbkcLkJVfsIryeCusZ8H6QVjyoJm5+iFyVJOUgym+Rs/CaaKM1OYvN
-	 5bJerrLXQBF6g50PWnSdidVUAe5E3m1lqNdprgt3RcT06L5O5dC9p6RWTdZBEAEJGhm9e
-	 AK1sCkNqD90QzWlSwBIH2IQUwhy+Md92C6Aii7Hn5v2Gn2DRloZQkGrDNx9r6tYpq0ktz
-	 nrzNmIrbrnX5EDXHMYPBe1B8HY23fwyDwTWROjmGeXG9YGuDVfWolhJTR3bxUHWvHYg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793890959;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793891253;
+	b=uLRekUNlP/x7h8AUJ3lPc5ClaAzXlFvvTPO64TSCoz4xTsq34ALKoe4LPjVusvP9gEmM
+	 d2KsJwKHQPTt2g/LxyLijpZjN/y87k+s8dw4Nv0nMjFFRRK/KCTnvGHlX86e8ZWWbNjXm
+	 VPerr+iwexYQYkprm0onJ9ZH6QGDaxNSUczYDJqPEfrJvqVs+lL4iTM1FwFt3gArGezI9
+	 lGSyDxJJhv0muhrvgeTTnQ5H5Fw1eAW57onyX2fioexLtKt3Ub7jtEt1zEabp9xJvC3GJ
+	 wlcWOMdIKVfEC+x+Oii0G5LvgnJNG+8/BCV07S1YL0HGFe4SbsQmSPJx2vQRFiNDBag==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793891253;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:From:To:Cc:References:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=DCmT0HUnppTU7Uxj2cNp16KNjYDpB34l9z/DOMnLSQ8=;
-	b=G6g23OR/Bf56CvmVG9fG53yRD8ZRS0nKMJDYW6qsu197We3cWLE2FeTtbtcGELkZjeiS
-	 wVt7NPsd88oUWfN8gzWIgSUOP4yAYAq1rI8FnQkQqaDceHblv5kO4mfrS48Vc703uivB2
-	 eJNkloPJX5jzgsDJvoSdo9JGSjk82iIBLydnOVbv9Jx/ZWHarU0eTJO1sPBlahDBf8c+g
-	 zJwvk2/p6B/Z5L1itBCIUTizEYVWx9oo+95K+TKLUkS+jsrSPb40uDe2O7Gh5oSWXAASD
-	 mAk97JgpUE3pM3UjChR275dQlei7kmoVj75sGkd4uMDNQ1gIKbN22GVNkAjYkN1gAXQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YH9ZbRhX;
-	arc=none smtp.remote-ip=209.85.217.42
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=MfEilovptnYwF1sqKFQtI7i1mMVWGm/FZ+K3LZHiAsk=;
+	b=rA67fEj5xeo+MVqeALdpk6zJPjeO3qKwRHLeI6bF8p5/dvPVyHSHsfst4dhYYkTyV2j/
+	 qeYzd0MLnVPFmJhpKdyJiMWXQLgtO58W31kmy2NaUa6En0l1uO3HLVz+Mq4/NUxc6DtvY
+	 VGGxsum2MgtH+F//15LxoJEemVvVim9BvmmOreXkrJ+MMRunweR3mpK9qHLnYWujKJUDj
+	 sKd10x/vg2SNmzfgdk0cglzHiMigpogrXf60TdzEy5Iaf98zKytMOlqWjRoKTpBO+oyc1
+	 LWU6yTv/tL5BwpJgKi0kAkta/L1bAXcHb8Hcx7luUaBM2tVaq1NucGQIqSTFBuEvRMg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=Qjw5DywK;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.50
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2583606D817
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 15:02:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D2583606D817
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08309606A333
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 15:07:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08309606A333
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YH9ZbRhX
-Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-7ce645a1c6aso1141944137.3
-        for <git@vger.kernel.org>; Thu, 05 Nov 2026 07:02:38 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=Qjw5DywK
+Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-67be1e468a8so1122708d50.0
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 07:07:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793891251; cv=none;
+        d=google.com; s=arc-20260327;
+        b=FlyatOZGYnC0r5YH09rwZcSwHkvvqJAZdPaHzC4CgpoqUgUqdwIrgvbdDgayuOF7go
+         DK9QtQQY2LEfoZC0gnEqZvuFkRZ0yTjrc4WZVA80TTWpUzPK08Q3C76fQz0s5o/MCqDz
+         oEeGBYhHJLeJyCslajwkJ9sXTFxy4rzGrc78x/lcIGYsLuqjW65BoT3QkInre9UmKPpE
+         T6USJJgdq2/6xfXCuLdfAf9h+OrmP9jgjGYAJ+MDfvLQwdpqSaRGaM8zRRMfwWlWRucV
+         4VtMaU+7W8WXBqWzTR6TyfbCyg9Mv8ginuoBDKpww6RmCnyBADb13icAU2xJX1m9N5OM
+         r5bQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=MfEilovptnYwF1sqKFQtI7i1mMVWGm/FZ+K3LZHiAsk=;
+        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
+        b=pZyEKCqWuFRtg80ViP822C+m+Ex0v0Z6rr+C38HJLZ1PXD0wvLmk8/eyy5O7oeDMTo
+         FB469bnH/Gb3jJdghnZh57RbpnJsu1zPpzH7sCI6H7bhisjegiGTeX7izXPwh8hBsThs
+         1TAbruPsua4MW2WJvKqfQtP8IA5qPlzF0FRFy1JuotTrIXqedwRVnL6ijSji9urSECX5
+         FnNMCpa7RGO3Ssqqwf5WBSkGLFcDcGOlMt3V2ZKhdYAU3oFx/rYGkTJJCzfwd/vT4CvG
+         8HDPXSL+MyTeZAepFPY6XlCmEM/jKqsxg3rorI/J0Hj/hZPKmZ4ApqhJIlmAdUMXXv3s
+         gR0g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793890958; x=1794495758; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=DCmT0HUnppTU7Uxj2cNp16KNjYDpB34l9z/DOMnLSQ8=;
-        b=YH9ZbRhXdXntiPKPnjz3Mc4ehSjZSQ03RX18j0dNZhePDl4fjXi74WQv3vWEDPG6hz
-         G8yl+aIa+fQbhcQ5Ukjnk/fUv90r8FeT6GxDyJsJw4CGTwOSrQ2dz+TYA/ZK74RQM+0N
-         iDLf4m4Me6oxByn/ra1+VKadCr9XWClRhBIv/2Mrm6LVTu0B/ZTJy+MgbZWFSCaT+e6D
-         Dd3dmzINne2R5POnwOMKMhh9nZa+cF1904hl3EprIlHUF0r1VI1YTJNQc5NfMY8KLVjW
-         9PeJP06XcQ1VA2qnkNzegcQalgqIuMfBUbHIUxDHV3yBp4cKIv6t8WU13I/V4SJ9FIKZ
-         eybA==
+        d=spotify.com; s=google; t=1793891251; x=1794496051; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MfEilovptnYwF1sqKFQtI7i1mMVWGm/FZ+K3LZHiAsk=;
+        b=Qjw5DywK7x9Rj/NE94AwiEfpKsPTdm7n/Rf6ye/vT7TdVxq3/qf27gngaK7oYkxF/P
+         Gs7oBRWt+sz5DIKo/gL/kMdMJ0UkOv7EoN2ZR2ohO17N9LyXuu+h75imjmzoLyn4nr4k
+         fvs5UNkUMFGMYmDf3KNB2PKl3jVUQjiAbkt0Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793890958; x=1794495758;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=DCmT0HUnppTU7Uxj2cNp16KNjYDpB34l9z/DOMnLSQ8=;
-        b=A5y8YpOi3OQHIqoeh0yrmIvtNh8ynjY8p++mtmjQ9cKx3I6gutz01xq8UC/5rW3gAy
-         nJe6RINNsS1+k1xX4CHl4Rk0KN5F9XdKvwADlTHGqkVs8Suzlie58LBiEn9TmTpsfLXd
-         WNc2RD1jM4udTwYTUJIgsY4u5PyqTrrgiIv1hHDYL1Lka1s36003kfs1vCmzuPR0tKCz
-         oh8E6W3fAGaEFRWvXcInELEwxTFbPpEOEq0l0hW/0a6yfWdrpMMPWUDjFf3RHbQdwnpX
-         UuzRHQW5sP7v8bM+6FDnBNvqn0LTcpKnpgZz8JwV0Xz3K+cl17RqXmVuK3NiecvMaWqM
-         cB3A==
-X-Gm-Message-State: APuU4Z+6wDdn1XdQXeQRcxCt9PXwRno6sWL9HvcSsxOrzu4Bz3Y6u4nX
-	l+2SOx3X89JCmIjqIiQv/tU2WzF+VrdIauW0vpgqN7Q7oFm3dHZGHKpY
-X-Gm-Gg: AYBFou0BvzmvAJGHVcIabAZzpC8RRCQ/EyejQvvgkamBGY3B+l+CPGw3Q6Vx/Udv4Gx
-	vItKpx2o/PG50PjMhprBoKBF3Ej6He7RWSisYiAVtjJ3/pgltZi/cxfR4ykDkp3sl5IQ2yB9iHs
-	3TAZj37HwmJrSadJXkLD0JDjhahVffUkV9lbv57AobdECZe1WbtoVQJ9VXlELu7Ln+W5ivAiY2g
-	jgL37l+uKOcZNE5GpI3B23QnHyl6GAMlIYUS9eKSKriub+ysopbzgs3W6pc98n4wRZW19hbMRtF
-	gxVw0ekgJZf893orAq4hCS7zUQ06Buxdk/ieQMbhnFMB03VZufyz58FOrlYtw2Um4KVOuRCG3+y
-	t36YVg0WaSDh3YRkiNK7i9K30pOHao7bthtWWn4FMnM2BC9gowYSKDNHrnnChc7qje/RJkOkhsl
-	tta86tuw8cyiJd1jda9C44zF/4EQkqLTfVA4gbuTwu16rOWY0png8+h6BquwaT4a+fSIX2oaCvO
-	LGEhQH+qo+t816liL3xecfp0M5XOrNQflCEgZLiGY2SEPQusITJnkoXZlLZpdY31s3HFFqSr+40
-	bZ1BhAIA0kVxTAvYplwcdqrUr/Tr86ZqQMCvFmtVdxb6z6euySzzVUMS3yv+TbxIB13aE0JGkDE
-	57q63khTP5xghEK6ZV997OlXo6ygJXXgTNM156jRAaks/UwXrrs7VK7eq+UMzkbm9Xdw/lT91Uu
-	W1if3ifDBQ/Eeu506q5k/BitfaFdfYSpc0rruqXPcb/GocR3EHZqcIQ9czuwxj+EwZxLAccWJ/d
-	w==
-X-Received: by 2002:a05:6102:c01:b0:7d0:5688:f507 with SMTP id ada2fe7eead31-7d072c596c4mr9143805137.20.1793890957341;
-        Thu, 05 Nov 2026 07:02:37 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-945d488e442sm477361385a.40.2026.11.05.07.02.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Nov 2026 07:02:28 -0800 (PST)
-Message-ID: <dbdf0592-6819-4063-b62d-22e2d6df1050@gmail.com>
-Date: Thu, 5 Nov 2026 10:02:27 -0500
+        d=1e100.net; s=20260707; t=1793891251; x=1794496051;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=MfEilovptnYwF1sqKFQtI7i1mMVWGm/FZ+K3LZHiAsk=;
+        b=oREkRUJwliV624RGOZc1twYqUUi+oWDLipOr1Wyn5uS4bg/EUIpnp1BKTMLa69uajb
+         dVztMqnMK1IgLsuLohfEYOwJzZ0gM2ZNeYAqKFUhhAo2kctgT092e/23AQ9GFSI8ofnJ
+         t7E8PlH/lRCebTREsVsP+jhFDgq+ve3Eh5WavMPB5ENpJC0VukMI6zkVqJcpbNGW7HsO
+         oTqR33vedFf6e5QZAJgZEZr3uYMsFG038672FyrRhMiFcPv8m8cGdpA0iv4XfMi/Iuda
+         GIhkTrKJtSKzriooRwGVv0kqF+xDk93PbRN5IZdM8rHOUE2GAOzy6vXvtw5gPZt4P0FG
+         YBUw==
+X-Gm-Message-State: APuU4Z/irtdj1hwYqb0vLlg5/KJkCMmJX71Q1+mVGPLn0hqLcxE4wTfA
+	6XyIflPQ/g7GY1S6jy062eaPgyiy+HOl+ViY5vC0XRBdqEIT3vYBJQynGwK8X4ZA4WaPaaKYqEF
+	nItGFCkLmEAxS1uubfFS1A+G/dwRRebdwvavPcZjSyeZrsE8cvzkrnD81uQ==
+X-Gm-Gg: AYBFou2evq/z/JUQmpNPszI8zpNH6a7DhMid0B9PkJ1KA3URRZddA6IGW90ijC2mqrE
+	LQbXraW7J8zGvxGOEYp4217jUHncoTfgD6acqCZMGhgq+9HX/+5v1FZ/Q6aCJAD+QeuzE1ZYJ9x
+	HoJzlPI73sPAAeVj89CvK5f8/EMmyd40x1sx9Su2rL3xwGqufutzNr1XGuDpgcmaVX5SyUbS5go
+	g0e+DMDs3O/E4vC6Kwo8SSsHzpPzDu1WxVa6+p1XD1WWShCaOTDLykCWDtAd2t3HoYXJrgJ7QZe
+	/21gLJbSGbkABAEs4+6amrNIB0r+Zx2m9nYaQwVzYdhF87mOzcD7ErIvRroJ0I0kBjSZbyVB3QW
+	Fft1S9l7jdzePcq7wK5M2q4nso1stLbEUc8YeX6AA6xbTGQQ2CLhi/CmW/Ug=
+X-Received: by 2002:a05:690e:1201:b0:67c:cd5:f5ae with SMTP id
+ 956f58d0204a3-67c0cd61623mr574955d50.95.1793891250899; Thu, 05 Nov 2026
+ 07:07:30 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,50 +99,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fsmonitor: invalidate untracked cache after losing
- history
-From: Derrick Stolee <stolee@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de, ki.stfu@gmail.com
-References: <pull.2295.git.1793806679163.gitgitgadget@gmail.com>
- <xmqqmrroyztr.fsf@gitster.g> <3d62a579-5bf1-4431-8bfc-757c3c873d80@gmail.com>
-Content-Language: en-US
-In-Reply-To: <3d62a579-5bf1-4431-8bfc-757c3c873d80@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20261104-pks-commit-graph-write-refactorings-v1-0-d013d9401a59@pks.im>
+ <20261104-pks-commit-graph-write-refactorings-v1-6-d013d9401a59@pks.im>
+ <CAL71e4N4BvO=eMfO0wnJ9=gGbfTRz5ayWFZULoN1dGSF7uCZAA@mail.gmail.com> <auyCsmn6Hx_uc6zq@pks.im>
+In-Reply-To: <auyCsmn6Hx_uc6zq@pks.im>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Thu, 5 Nov 2026 16:07:18 +0100
+X-Gm-Features: AclHuK9MUl3jSDHUQwkNKv29n3mqcJ4p9PzJa349xeDh4K-eWDbRCduxnNkq4G4
+Message-ID: <CAL71e4PxNKffAmmB2XbV8mksUe_nJ9uS2JQhpbm2X1jtG=z9SQ@mail.gmail.com>
+Subject: Re: [PATCH 06/10] commit-graph: move remaining write parameters into options
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/5/2026 9:08 AM, Derrick Stolee wrote:
-> On 11/4/2026 5:52 PM, Junio C Hamano wrote:
->> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->>>     A user of an internal monorepo reported this behavior, including an
->>>     AI-assisted powershell script to prove how it worked. I used an agent to
->>>     assist in porting that to a Git test script and a code fix, but then
->>>     applied significant human editing and validation on top to get it up to
->>>     my standards.
->>>     
->>>     Thanks, -Stolee
->>
->> Would this be a viable replacement for ik/fsmonitor-untracked-cache-trivial-response
->>
->>   https://lore.kernel.org/git/pull.2247.git.1791127155614.gitgitgadget@gmail.com/
->>
->> that has been left unreviewed for a month?
-> 
-> Thank you for pointing me at this. I didn't realize there was already a
-> patch working on a fix for this issue.
-> 
-> Ilia's patch has the stronger approach of trying to preserve as much of
-> the untracked cache as possible, which has some performance improvements
-> over my change (in the "rare" case of the fsmonitor failing).
-> 
-> Let me first see if we can take that patch instead of mine. I'll start
-> some review over there.
-Review complete. We should take Ilia's patch instead of mine. Consider this
-patch retracted.
+On Thu, 5 Nov 2026 at 14:21, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> I was wondering whether we want to maybe introduce a tagged union where
+> it becomes implicitly clear that some of the options only apply to a
+> specific mode. Something like this:
+>
+[...]
+>
+> I wasn't really sure whether that complexity is really worth it, so for
+> now I decided to not pursue it. I think I still tend to stick with that
+> decision for now, but it's maybe something to keep in mind for the
+> future?
+
+Yes, I agree that it's already clean enough.  If this code ever
+moves to Rust, an enum with the relevant data would be nice though.
 
 Thanks,
--Stolee
-
+Kristofer
