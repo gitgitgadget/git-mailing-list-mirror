@@ -1,63 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.120
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793896580;
-	b=QIfC6tvDKKm0a9aW5RdrQtCfYkX2ncUYz4zkKL6JA8x0iEKi1NsIt7Osv3+EtB/CGNIk
-	 maYb3QJiY+fAeBBiuQoa0SRFLKVmZE+EM6YsCZNKTcsa8cXLgOmoXQEFIqOWwsE8dFQxl
-	 STkjGX0TcNj9N/CzL07QXwVU/PHGuR0cmJsqfSLBe8hS7TvWqKX6KyOClbLhdqIwabnue
-	 qCj2/uGJVU6J+ZXhX0cxXvEWY4frfnvpWfM55wCySe4llzzgRwm0g+ctZDuVuD5ogtJ7f
-	 /vcEKh6yQ9aPU+OxekjFj57jeqtwCa2lhJB0LHca0P/1ocfSCqXuKO0zJfofHa9fzLQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793896580;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=mZeHz4zTdgKqAURdRW/+j0IWElLe8PycZfpNnfG9BEg=;
-	b=1RpK6+IolC/4x8aAWZr72gNIMuyTdebMJrCMZn71cp40lNETPzQOfmRSsuCYIDHN91Hm
-	 JxeJ1w9C62rKh0ndnsn7Cj/AJc/FqxGd8nvrhkNnksWfKv81eTbSMYyQi5/pPAEt7jgNn
-	 C+YkxN3PPO43HWxqevg2J587gMxLUL7my/u3h2SoVeVXVgYEgPd8+Pus2S08Gp/qd0JA0
-	 ZJf3aVKPMI23IGVtsLIpVxwQBom2uUmoPcQTopXD13exd1F4nJ8GXXCEusGS4nZFd+JLU
-	 xb27r+eWpSXXRwfuZCOFMi4+kN0bd17CiX25IN88l6IJkhpIzzzTaCYoq/w7IUgq+cg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=collabora.com;
-	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=I5up3f0R;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.120
-Received: from sender5-pp-g120.zoho.com (sender5-pp-g120.zoho.com [165.173.182.120])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793897223;
+	b=FCuaDbHhFU7Lfd68cw+dKNryDquZBU5HXfTEtD0lfyWqLMMaJahP32RwX2ozvfo0y/6J
+	 7sXrZzCMuAScq+J/tWC7F5yS3a7VdoeXDk0rtL0sYv+oy0H85kUIbQkWLU0q5AeTue0zY
+	 rDf8lnQ2a/Ln850c1WIRMfPvk3fZ1HsqxTxVcHixPHmEqevgNPqh8meY1emSK9h6EhKEW
+	 3xec8S8elGg7++6ovoIkKlVAz20KG7fMuzYDYv7PA9+nX7bQt1ejdogdozJI4Qfz0bqkg
+	 S1vkr3S29z4MZ4lC2o+QWKvq3MCgyy982qf0SLwYa3cpRL3TTO0Yp7j8sHcASHYabDA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793897223;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=/1F/nQ5xYgevqi1vpIcrewBa6laJPhHv4fOEtmKlnf0=;
+	b=uFjq41cClbg2It1ugLCQGJw9l7lV1OGZm0ukvS9xPjNy1EVvRI4fYF1pR+pR7Aeo179/
+	 fYx4UqymxKdrUwR2QsdURayNdM+6PuygsSeXr8rUB9gBKDjT65rdMVuSg/hCHpKiSm3uv
+	 nAZp9LzJl85uk7DmKeBGWqd4n/4lVU15hlp8XOHo3w/eGRP8AITxT+63IJySiLlNzzwx5
+	 yU22HUQpU2oPqXfy0aALY2hegigOgbeTavNC4ak4o6Nyl+d+YejIC+WWEJmRMOqcrGagS
+	 PoZ942E1CgOVC+YqxKhk1Dn7iTdG1N9zHIAfjLBEsmdIpZyWu3S5NCIUkHtDBwIamYQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=GoPr57+d;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=EzbXKCft;
+	arc=none smtp.remote-ip=103.168.172.158
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC53606B3C2
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 16:36:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2EC53606B3C2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D212606A31B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 16:47:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5D212606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=I5up3f0R
-ARC-Seal: i=1; a=rsa-sha256; t=1793896564; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=hAmwn4BkEVeaxozYpA/VwFi80EI4JlnYHr0l5jD4SKCJBEeN97cTsWTWuWiqpioEuKan2oktyrIBxApZpp5yXtuLalQKAp7Es1YkPh14MxlumxU42sDpcbV7riA9+dxcloV1MxSvw5OL7gKe20BOzSasIXhNNqfonQf1XNI0bQU=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1793896564; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=mZeHz4zTdgKqAURdRW/+j0IWElLe8PycZfpNnfG9BEg=; 
-	b=XI+McmfKOYhFRb5qSBvl3DTnxpkDPX0PLMkVoIhCF0Bh2V2RsYIbHsNvy2qp6dANuOZbxbE4QmTTXGieMZtXHQEvfv2GqHboxd3tiNzD1j40GxP9xgT7VMjAcN5sT5wvFXpxiHxHuIkgEkzR5gHdglnRpWj6rGqVpDvnW5zNOzA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: a=rsa-sha256; b=I5up3f0RcuZUUr8fS2DmY5W2ifr7sDd3Qj4hgHcKKMKh7MdMYTNHZBdbQw9snUOP2xB/kaeAmFrnpmitFDV7Dg7BUkCYY/tpjj/kpLKAc9IuS1ClKj2m/nS4Dl8vkAAbUnO5za6Er6zzhERRhzisfd+mabYVxLOjhme/Q4ts5LE=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=mZeHz4zTdgKqAURdRW/+j0IWElLe8PycZfpNnfG9BEg=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1793896562485184.01729688739943;
-	Thu, 5 Nov 2026 08:36:02 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, "brian m .
- carlson" <sandals@crustytoothpaste.net>, Axel Rasmussen
- <axelrasmussen@google.com>, Emily Shaffer <emilyshaffer@google.com>, Josh
- Steadmon <steadmon@google.com>
-Subject: Re: [PATCH] ls-remote: add --show-object-format
-In-Reply-To: <auyO7lmLKD2OSwnD@pks.im>
-References: <20261105104541.790881-1-adrian.ratiu@collabora.com>
- <auyO7lmLKD2OSwnD@pks.im>
-Date: Thu, 05 Nov 2026 18:35:57 +0200
-Message-ID: <87cxsjxmky.fsf@collabora.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=GoPr57+d;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=EzbXKCft
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A43AD14000B7
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 11:47:01 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Thu, 05 Nov 2026 11:47:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793897221; x=1793983621; bh=/1F/nQ5xYg
+	evqi1vpIcrewBa6laJPhHv4fOEtmKlnf0=; b=GoPr57+dXQMU8wYyFkMgYAObZA
+	30dX3gzAHh0uYMJlW40jwihQs8FBzgO7zqRS+ThX6S8SBEMA+G5LE/fJ56IVIKSq
+	3h1eRZOkupWL5TEBemHcA5msMPgfs5PqF2tM9VJuow0O6dZ7Nw8yRdajoTmclepL
+	TzzjgODmlQQFzlhERQHn+zmfPyExGy5WTzWIYXaEGEKecSVcttBBgteVBjrq6pXB
+	uoP4QfDfJk+S7QOVyNHYSuEN0oL9E6UH9zjZfc+hsxUiFSP0BPu+PLMP4Y7fy5yp
+	ugdcajSVVWONQ2NnPVzI9mW2BwGHdE6c2nscpLKhYt+4IfSipTb5vBaBhViA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793897221; x=1793983621; bh=/1F/nQ5xYgevqi1vpIcrewBa6laJPhHv4fO
+	EtmKlnf0=; b=EzbXKCftDJ6OAO1aOFekG/KnLSi8N8yIQ6MKhzm8irbiQluk0CN
+	hDOrRWCGA5BaBeMNZALlH8V6S/J1NJVHpHrd31+mAkU/wc7CfHOdL7GWLDDbvuns
+	xqhgg3JL4YNw4o9g3rjhctJEYoNh+AXUzz9PRdNcummuvIEyh1DqIAphJQbTRZ0i
+	Nar6wWHV/CMcnpZIL5nI11O50dq1f3tpIZcyRFpl13V8WPhvBoNY/c5Hdcg8RaP3
+	ByNnSAzHRZ3PcnZEg8Bg5N+3KpqROznlQ9WA5kVjUXScq6CYBTpL8tY7LzANac54
+	FCOf+9cjB8/jHFzUVfbpvTiUweBles+Jd0A==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793897221; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:i0i2vv8l0FC3s5+jpm2wsGJ8rN93HrdnvRQG5ZwBBFBh3UG
+	1oG1BrnbE+anszNpjOeEmwgzMNslmczAZDqDjOl4ICtvpMYXiipSZHVJ0cGpSJR4
+	w9PvVzsoVIZDro3mw8GDvMgLbDJkKfgo915627YMy+idjOspPzbA9MYqEHAbf+/+
+	pBNW8jd1Qbm8TWpR22EifsKln0u1lpS469bXKuMdiRZ1d7wGeU/D1zKAnRzHFgxG
+	WSjI0rx0AzSjfi11ZsHoWeH+eY9M0U88F9AAapPj5GTDPfbBil/TWaOF830nTfwb
+	Ku9aKgNRbKSXn4bzf0vjUiUBE0fcZWBdWw5/rdw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:3VJdtSkSWCj2IGVFDslZZY8dYpOa5RJt8k63VCnGcHI=:5oYX30sbW3TOMuzFFlmIMuJyv6xbYSr0mfXN3cwh5Iw=;
+X-ME-Sender: <xms:BbPsasaAkIYKevaxf2OB6U1SepetjQkqOUlctwfrWjbssDBeBsFZuA>
+    <xme:BbPsauSe7aSD5mOYlZVefoqw1H2Me7RO3oZtPGal2HU5Wdq8e3W8wFvC06NyEQaHc
+    jER8VRYBUknSKOtrKaWrudqy85dztRQm5fzt0Xkb0WTOUbsoldXAA>
+X-ME-Received: <xmr:BbPsavQRMIvUhMt04-3MkAuTdzaPrnevOU0BwDKW9XaSdqBSecORbAEsta--iShi8ZUQztPlf1eSXw9PJSCoPEDv9Ozz8kudI5wk>
+X-ME-Proxy-Cause: dmFkZTGPZGPCOcr9Z6cIVKbgUh9Yhhfm7RQ5GAEGql+Huac6PCZpBHWkUUMHqIGI6NPMxM
+    KE5pIkD2GfNj6AFmI3Z3Jhkob7a7taC8C+oONMD4q/fWcvwgSW3KwgE+uiyaHNHHjWwaq8
+    E4hWHEUWP2T9/KM/DE2rcO9HMK6UXe5a4btXkmPn8ZedgVM0hbr3NEWkOmnz8YV3YR20Bt
+    EIhDaFYhKUSYbk44ji+xVBKbzwpg5QVRWNxO0fVQHYggXDZyp5ElUOY/AjGNDmumahVWm8
+    EqSoQJUzF0iCl1LQIyeZiKnw8GhDqxfKcS6oas9snOKjEtu+aOQB3ndc41/OzUx5CXaZWc
+    h2bF6xaY+JO98U9ZfhSv/PFRZ/qCz0brfl+Iqs74hQPyLgtdLK6MeLRhFUfc9kQs+UButI
+    zghlBpdlKgUEc6t2qUdUYjacHSZCQ+nLvawMNuwV7mPDYNsShgyDBj3Pq+I10y+Vf+TXOt
+    kKScuTnbMhYZbt7JDppCr+74hBHbnkfS31IM8tki7NyPzksleUzVOEary8QOqeil3KputM
+    4tkfc67mEVfNHXDGgQPD+/s8qsuTefJgGibWR7s2EDX34jGhF5WJQgRkPLbF0qTXXpsSUb
+    dRshbevdmDous2OsmwzH9oiLxBIDFCOVBYJ0LZAddLc4U2CwjM24Wrx6NczA
+X-ME-Proxy: <xmx:BbPsaiQHKh68IaOSzOmYhAtPsFKEfOuXgUSgYKbIXkjwz2ib7V18qg>
+    <xmx:BbPsak4flZyRXndyLSFWm5VjvIELcO9lzKsQoR9CLPQJ3Czyo1sqLg>
+    <xmx:BbPsau3BgilcwO4YY4SkAYWxcJ0GG6tc-iap9dsZ-aKzw-4b5ZxqbQ>
+    <xmx:BbPsavDHnMlrnPwbpiHYTCSTxsaTZRTpls95r-NH2vREpr4S9lVW2g>
+    <xmx:BbPsalg-xynjbH46XBcYhIDV6bBZVLDlQcNgeVWVS15BwCz8LgIRJItw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Nov 2026 11:47:00 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Julia
+ Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2] doc: git-diff: rewrite EXAMPLES section
+In-Reply-To: <pull.2293.v2.git.1793893217889.gitgitgadget@gmail.com> (Julia
+	Evans via GitGitGadget's message of "Thu, 05 Nov 2026 15:40:17 +0000")
+References: <pull.2293.git.1793720007182.gitgitgadget@gmail.com>
+	<pull.2293.v2.git.1793893217889.gitgitgadget@gmail.com>
+Date: Thu, 05 Nov 2026 08:46:59 -0800
+Message-ID: <xmqq33tfxm2k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -69,119 +127,37 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Hi Patrick and thank you for the awesome review, as always.
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I'll let this sit for about 1 week to also give others a chance to
-review, then send v2 addresing all your feedback.
+>      +-git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
+>      ++git diff [<options>] --staged [--merge-base] [<commit>] [--] [<path>...]
 
-On Thu, 05 Nov 2026, Patrick Steinhardt <ps@pks.im> wrote:
-<snip>
->> diff --git a/Documentation/git-ls-remote.adoc b/Documentation/git-ls-remote.adoc
->> index d71c4ab3e2..1abf7b60b7 100644
->> --- a/Documentation/git-ls-remote.adoc
->> +++ b/Documentation/git-ls-remote.adoc
->> @@ -64,6 +65,13 @@ OPTIONS
->>  	upload-pack only shows the symref HEAD, so it will be the only
->>  	one shown by ls-remote.
->>  
->> +--show-object-format::
->> +	Show the object format (hash algorithm, e.g. `sha1` or `sha256`) used
->> +	by the remote repository before printing the references, on a line of
->> +	its own. This also works for a remote repo without any refs, which is
->> +	useful to find out which object format to use for a local repository,
->
-> A bit curious that you first say "repo" and then "repository". I'd just
-> drop "repo".
+This goes against what you said earlier, which was
 
-Initially I wrote repository twice then the lines didn't fit, so I cut
-repository -> repo to make them fit. :)
+> - Mention both `git diff --staged` and `git diff --cached`, because
+>   "staged" is the term the Git user interface uses and several users
+>   said they find it easier to understand. Add an entry for --staged
+>   saying that it's a synonym. Like with `git switch`, and `git checkout`
+>   it's useful to leave the older version for folks who are used to using
+>   `git diff --cached` since we've seen that many people who are used to
+>   using a command don't see any value in changing how they use it.
 
-English is also not my first nor second languege, so I tend to keep
-rewriting multiple times before sending. It's still not "good" on the
-Nth read, tbh.
+Perhaps (--cached|--staged) or have two lines (i.e., turn the range
+diff into
 
-I'll try to improve this further to avoid redundancies, for e.g. I just
-realized I wrote "--show-objoct-format" then immediately I repeated "Show
-the object format on the next line". =)
+>      + git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
+>      ++git diff [<options>] --staged [--merge-base] [<commit>] [--] [<path>...]
 
->
->> diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
->> index fe77829557..6d961f9961 100644
->> --- a/builtin/ls-remote.c
->> +++ b/builtin/ls-remote.c
->> @@ -150,6 +154,8 @@ int cmd_ls_remote(int argc,
->>  
->>  	if (!dest && !quiet)
->>  		fprintf(stderr, "From %s\n", remote->url.v[0]);
->> +	if (show_object_format)
->> +		printf("%s\n", transport_get_hash_algo(transport)->name);
->
-> Should we maybe make this a tiny bit more extensible by not printing the
-> object format without any kind of prefix? We could for example instead
-> print "object-format: %s", which would allow us to add more fields in
-> the future without the need to make parsers be order-dependent.
+or something).
 
-Yes, this is a great idea, will do in v2.
+>      +@@ Documentation/git-diff.adoc: files on disk.
+>      + 	do not give _<commit>_, it defaults to `HEAD`.
+>      + 	If `HEAD` does not exist (e.g. unborn branches) and
+>      + 	_<commit>_ is not given, it shows all staged changes.
+>      +-	`--staged` is a synonym of `--cached`.
+>      ++	`--cached` is a synonym of `--staged`.
 
-(I just need to know the sha1 vs sha256 information, the format can be
-anything at all, no strong preference on my side).
+And this is the other way around.
 
->
-> Also, one more question I had is whether we know that the hash algo will
-> always be populated here. I would assume so, as we have this logic a
-> couple lines further up:
->
-> 	ref = transport_get_remote_refs(transport, &transport_options);
-> 	if (ref) {
-> 		int hash_algo = hash_algo_by_ptr(transport_get_hash_algo(transport));
-> 		repo_set_hash_algo(the_repository, hash_algo);
-> 	}
->
-> But in theory, this logic would also work alright if the hash was
-> NULL.
-
-Yes, the hash format will always be populated by the time we call
-transport_get_hash_algo() here.
-
->> diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
->> index 2e1d4f7586..7e82154fe4 100755
->> --- a/t/t5512-ls-remote.sh
->> +++ b/t/t5512-ls-remote.sh
->> @@ -332,6 +332,52 @@ test_expect_success 'indicate no refs in v0 standards-compliant empty remote' '
->>  	test_expect_code 2 git ls-remote --exit-code --upload-pack=./cat-input .
->>  '
->>  
->> +# Run "ls-remote --show-object-format" with the given arguments over
->> +# protocol v0 and v2, and compare its output with "expect".
->> +test_show_object_format () {
->> +	for version in 0 2
->> +	do
->> +		git -c protocol.version=$version \
->> +			ls-remote --show-object-format "$@" >actual &&
->> +		test_cmp expect actual || return 1
->
-> It's a bit weird that we expect the caller to already have written
-> `expect`. A better interface would be to have them call the expected
-> object format as another parameter.
-
-Ack, will do in v2.
-
->> +	done
->> +}
->> +
->> +test_expect_success 'ls-remote --show-object-format with empty sha1 remote' '
->> +	git init --bare --object-format=sha1 empty-sha1.git &&
->> +	echo sha1 >expect &&
->> +	test_show_object_format empty-sha1.git
->> +'
->> +
->> +test_expect_success 'ls-remote --show-object-format with empty sha256 remote' '
->> +	git init --bare --object-format=sha256 empty-sha256.git &&
->> +	echo sha256 >expect &&
->> +	test_show_object_format empty-sha256.git
->> +'
->
-> We could easily deduplicate these tests by looping around `for hash in
-> sha1 sha256`.
-
-Ack, will do in v2.
+Other than that, the rest, including the resurrection of AUTO_MERGE,
+looked OK.
