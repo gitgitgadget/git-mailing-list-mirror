@@ -1,119 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.216.95.84
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793904593;
-	b=ZIZWstJzn75aR48RtzaF7UrMCbwfAVWazpJQhrQPEmLFFPOLKe4HVILf/gexINwAI15P
-	 gEjJ9NM7NDifQUGLxJheZGHDuFfOIa+/gf52Dhik/iVEIv+bMoCkHb7+Oluei8JprlUXc
-	 7MelUrFUHx21zV7MbQkbipwcbz7/HT0DVwzyzk+7ix3ac9u4H4aSlvNLbZKLT9efYQJwK
-	 Gike16RjTwsrJHvZT+Xgeod3ODnH9yDcVJuyNtAH02A5TeAtxiCSvcFHYrPUlpgO0Yoea
-	 Ttk9SnXiEBgibBy9B8p7bSeZwzmy390KyvlG7cCDqmRVi4EQ100w1U/JvawAh9NwYuw==
+	t=1793905002;
+	b=cY/LQvu7RKvlYst9MoMjhpcprr23wAkDC3XkL7unWqc87OhPLsLqD7oHSMD4iDKbD6Hv
+	 ca3MIM4brCyaPicZM6RMazAa/xyCWwjQb3zuH74RcyNqW7MK8ZRcZJuAi1aWBhaoxHTa7
+	 3IdbYaHtd5NI3Ca+kgkvgF4HPIpCHkfNQOpj43CtHUWP/LOuBDVlVPBdMbNwJmWfQOCs/
+	 TWNZo8VyMvM3VXQckHOlueNVmo/k4C+4WNtRGqny8dkkiR9JMFV/WvPHs245nsYajncXy
+	 69X/ngbEG3EfTvV4sdJatkpoRkLp6QNlFKN6MG1kfFaXZGjXSZzES259fAHsmJ5QEPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793904593;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=AT8CpSStfTAiLDUJtZqpiwfbQ6pYtmS9GAcHigQxwps=;
-	b=EU0UvN6HZP/GOy47zwodGsX9LQTno1fSTp+iv/+7KqJYqnpgpAWQVGoLUZczKTK4q254
-	 NOR8Um3MDK+Iqwawk8xcuVI8IkeZOhIvep46RtAXZOkIOVIcqdfP1r1alMzLh2e84wtoP
-	 gLwy6hD2m1PEHifn7QIaogBOL3urKXhWwT5PnuE+NpQRCRMlHK4Lgsx2llOo4Fzd3DDkC
-	 4Azp8af+AtBSrJYnwlGB79CVve1dmrHt6fcD9WhRvj5iHjry7EjEOosJffB98kW7kiB1h
-	 wi99xK6SrFKbX//JkpQ4K510X6KTl55GWr6BD37GQ6fDAS+5CajzfYN8PG9u/xrjZog==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793905002;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:Date:
+	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=CLOdfMPElHq0eCmP6SlhRlpszwJbLMKXrQQGz29j+1A=;
+	b=F2XBywOYXE+ffOo5EDLLpVdYchEFPqzsZxh6HqlYFEaO/DFTgnYnIZgSoAR1N/XGtlFC
+	 Yo5Wigv5DiNJC+ss8piDNZU+JB+LZhKc0kGnOBjn6zDyLpFFLujYuJyhzYbo8UT2f8eO6
+	 sCla5Jfebj61merWCmf82M8micW+CUvrFTUu9rE+GR04gAfDs1bf25d5Th+Xm42YypkQR
+	 l2NLtr7kvh183HncF7Tc3/TIstqNJEmIkVnUoekxxYSwZ6hCaBVNhlhLmnUityT3Fw/PT
+	 VyJcom2EseQbrWoA1osvJjsCSdkdc5JfzrEklHVnMkDxgJoAR7AmVZ6QRIu3cENWuOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="Q/gm4VL9";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=T2VFqib1;
-	arc=none smtp.remote-ip=103.168.172.159
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	dmarc=pass header.from=peff.net;
+	spf=pass smtp.mailfrom=peff.net;
+	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=Ug4cbLJv;
+	arc=none smtp.remote-ip=217.216.95.84
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54320606A31B
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 18:49:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 54320606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1CB606A31B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 18:56:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7C1CB606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Q/gm4VL9;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=T2VFqib1
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 673E314000B3
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 13:49:52 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Thu, 05 Nov 2026 13:49:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793904592; x=1793990992; bh=AT8CpSStfT
-	AiLDUJtZqpiwfbQ6pYtmS9GAcHigQxwps=; b=Q/gm4VL9SiOTjSDMJqSW27hDgg
-	WcILhTsaejN9UPePyMjYrTzv00awxDptW5OjKc6m6RYAZ7FD6cZm46+R4L1464TR
-	R8OGIEJRpnYsNGIgjzsIWknymh6e3D8nhq8N/F/zgsLqMEx5dUL4M5ZLGkmrmBa6
-	cjrQPgMGk8H5bhYrFFLuky3S8gM2KlbgZ7kPjs/pa9jfRq12gfRo/Ifd/idvXiND
-	Gj1QJev1oaFT4/FUYw6eNWNNYkCVrMaPPn6wL/v/yqRdafwcOFQMeDCaq2cpVjl8
-	s0M7/ixwnau0CgLenHmPR7K8Th0AlesD/ocFysyQS/OSMDmSv396c5tY/w7w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793904592; x=1793990992; bh=AT8CpSStfTAiLDUJtZqpiwfbQ6pYtmS9GAc
-	HigQxwps=; b=T2VFqib1Nn0Klsc4KGgcwtizonxWwYDK13EWzhR5GDh3P9oLcjn
-	yQFfKcvUX+wegUAsTP0S9m/ncQVkZL3lXvl5VcoiYLGc21uiW2mutW8JqQxIa5em
-	WkqxSIzYEYrItrWi5lFyszysBx1xrGCtYpr7PP8BJVguwGnDg1XS4/cuwlyWjGjk
-	ScwditxLMx0FYddtFxCBJzvu79h4uEwcFAJAOZCBnQ5mhexRTTqGEEYhvHdqQgmI
-	ydCJAjORIt9+KFK9H6SehgLwIjGV1m4VbP0Y7ei/E8vLjCPCSI1Ivkfns4AVd9rP
-	/1QdjzC+0cTpxQxZElCKPAQewwaSHmN9Xfw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793904592; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:SvEGJC06pDndJorfLWaAK4hnRJaYHN5noG4L84r5ilu1OQV
-	ZKEagGGsm+S0AkA2x4NVK+A8Qp4RoRmVvbZQTAYrsKg6Zgkj5Pe6z8uwSRKJ7HHa
-	CSmhpeXDAbvvlvv2DMhcBBZqTmakeeIdUHIfvq4TUENevLO8cQJUdsqRmtuDslmK
-	uIcVImAkTIFWBXx+lwBvMY9iBlXqerUAAYFWfanzzBz9GNpYeFnJQWMCkVnXmGHJ
-	gUfGLTQdVAKwVmrQVd2qJK0WDau1rhapDHlVo042EAhYrdyLFar7Fm/W8mo1jrOd
-	BOOX3fVqFdTwTAh3DakfIRFvYOkz7icZ+qMNXVA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:y7/gx+iZPKRmmiT0ObvDCuMJqo7uKMAgqb6kA4eS3YU=:Sq4N99uCsrWYiPQ+IBXR20qsbPZQtngXhSLvCRDqu8g=;
-X-ME-Sender: <xms:0M_sajM0p322kgEgKr3qTQ6Q04sbbsHWmtKKBJH3n9m57UiAXHyUlw>
-    <xme:0M_salYD7cOBz1Tyy2eTxMfo_Dl1T9IoO7tHT51nKa1fRD9Vs1IY_HTGDwFmHj8LL
-    2qoek5EdHhTvuBEngfDlwLSWFzHulIorePnqn1hO9uq2vXFLzuXuA>
-X-ME-Received: <xmr:0M_savq3rziJB5BUCV5JBX_reWjR8i_vkN2wfO6Rr2qGjRwnObHYcB-1gqc1ZfG-mVx7aLzx1aFvBATaNytlZFepnlo-vhGEHt6z>
-X-ME-Proxy-Cause: dmFkZTE3cf/M0J1Hk1kIATIA1POX0EsBve8aVRwzUUGGCyNHCwSBKOE4bQvKcx/5wqfSL9
-    4UPGw1CQqYmTPPIH2Ci78eXXuMUxMo191C3vW6vetzAi+NQ5gTOq2LK+uNDJp/j773Xz+L
-    rZ4jtH8ome1Pq141fIBe7jh8jeQq0M+6DLfqQhY9Vu7lkleeROVR/dzjLeo/dQbJvbPSgG
-    23BidnWC9qRsmvAc98Mzz8XcyL+Mh11MO3ysGjLmf9ddPlolT9LLp6lSr0S9kt9l7VJeY9
-    73NRJDq4TbtlUEEF/7ZaXQwPqXU+PZlDFEcHQIy4dVHqrO4GMwM2YNnuvSJ20ITm+clmP2
-    k+EMNZeTaFVGh/u194EyMeFEW8x/x5AdfkCnHWSQc7ttGSLMSeOWAk4U7SgHfm2FUDDn/f
-    WaqYlCBxEfJPmqK8DZsz7bqL0O++j06E500XfG36QsKkODqNMnB0GlArytfFE6LJmnYT3B
-    LA0x5gicXnrwPHRJhwVin4R71pleW7YDu1TLRd50H6PB2SlK+SripzL4fiKCjXt2NT5xOr
-    f51qzOvBrE3OZRAW0Ep3DsIPjQU2lLWzibYONBJOIuWmu5GYPH2zuUm3vfGq5DT+04bd+k
-    2DZAWI3PX+G8VQGj/9q4lojz5s8+FA4rISXdiYsZrCabLuMpKFO2eMACFtpg
-X-ME-Proxy: <xmx:0M_sahZ1XlF_ehqc0P1w6tDCnjDAGEw1YqL-DR5X2f0EUH452UK0Gg>
-    <xmx:0M_savQZE_Ee2M1eVf2fVm3AwCTzKfDxv48p4g-VYhj9gFhmecrTow>
-    <xmx:0M_sag7G9F0NmqeN30bo28kYifaSmEnXnUtIyhPVBbdzxG8iN290kQ>
-    <xmx:0M_saszx4xG1Bvpxf-VtiTzatVdGQUdyJcKS7njtB97aJcXOP8vkQQ>
-    <xmx:0M_samHzNurCkE9WSPlZtJh-kuT9uZoqcwy2lDjZNfGrp3Cn4JBHk8-8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 13:49:51 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Nov 2026, #02)
-In-Reply-To: <20261105072959.nzvWu%taahol@utu.fi> (Tuomas Ahola's message of
-	"Thu, 5 Nov 2026 09:29:59 +0200")
-References: <xmqqmrroxdzs.fsf@gitster.g> <20261105072959.nzvWu%taahol@utu.fi>
-Date: Thu, 05 Nov 2026 10:49:50 -0800
-Message-ID: <xmqq7birun8x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=Ug4cbLJv
+Received: (qmail 31359 invoked by uid 106); 5 Nov 2026 18:56:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6PNMPURRo/3VHzAIqF+Ig3baK6Yn9xTKYVVMNNSHjaw=; b=Ug4cbLJvxldGvoAAKxW+bRivk5xuI/xNVSN52zkL50QlK6PYWOS+GdK0uYeYs0ufhoV16zrIc14QyOMBsfYh+H8US8H4FxHUyRGXfqbQFFj0BlpV4MwTTIOFNEzeGBH1oo4QiOCo7dvxx/35UmmszHhAU9Fb1wkrYwZE/zaFHIwkbCKSgX1qNdNdAm+pZlz8015/g5oTLW42C9q/nzyxU/belnHJhx3oAFVFSE8fBtjV0ggdVYulWhkm7k1OhN8acDJzQGvZCXxkYT6ieaqxg+LFItCjxBtcwwJvhfC9xnVOU63lKX6mT5MgXeJET9l/FGBH5HRzuWZRzl1TnZKaxw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Nov 2026 18:56:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 62053 invoked by uid 111); 5 Nov 2026 18:56:33 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Nov 2026 13:56:33 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 5 Nov 2026 13:56:32 -0500
+From: Jeff King <peff@peff.net>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2] odb: do not list our own refs as alternate refs in
+ the quarantine
+Message-ID: <20261105185632.GA2898829@coredump.intra.peff.net>
+References: <pull.2285.git.1793200705017.gitgitgadget@gmail.com>
+ <pull.2285.v2.git.1793619933300.gitgitgadget@gmail.com>
+ <20261104024806.GA1492379@coredump.intra.peff.net>
+ <CAL71e4OreARF+dbCU3S8-_umrFEptPLPUiPDH3SYBx6OYjVpfg@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,30 +64,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAL71e4OreARF+dbCU3S8-_umrFEptPLPUiPDH3SYBx6OYjVpfg@mail.gmail.com>
 
-Tuomas Ahola <taahol@utu.fi> writes:
+On Wed, Nov 04, 2026 at 11:25:38AM +0100, Kristofer Karlsson wrote:
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->
->> 
->> * os/rebase-doc-incompatible-options (2026-11-01) 1 commit
->>  - doc: git-rebase: update incompatible options
->> 
->>  Outdated cross-references to the 'INCOMPATIBLE OPTIONS' section in the
->>  'git rebase' documentation have been removed, and a missing one for
->>  the '--onto' option has been added.
->> 
->>  Needs review.
->>  source: <20261101082230.141688-1-omri.sarig13@gmail.com>
->> 
->> 
->
-> Reading <xmqqjyncxrur.fsf@gitster.g>, I would have expected that this topic
-> would've been rooted on the v2.56 tag, but that doesn't seem to be the case:
+> No, I think you are right.  The quarantine parent only matters when
+> the object directory is not under the commondir, which is rare.  Your
+> version is essentially my v1 without the "this is a hack" framing
+> (and also cleaner).
 
-'master' has advanced since then, and this is not exactly a "fix"
-that is worth the trouble of including in a maintenance release,
-so...
+What we really want is "where are we reading our local refs from" (to
+avoid reading them again). So even if you have an object directory not
+under the commondir, we would not find our repo again by looking at the
+parent of that directory.
 
+But I also won't be surprised if there is some arcane working tree setup
+that I'm missing.
 
+Anyway, what's in your v3 looks good to me. Thanks for fixing this!
+
+-Peff
