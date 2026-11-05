@@ -1,122 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793917957;
-	b=0Cz3j4Z+fBqkPeEyAfWTQOap7Mf2D7gb37A6ule02zfumq1dN0kHIEwTyrVIvnyJR0tR
-	 SnA6BR3EKp2jXV8b/LlU3wj62i41BHJ2125lka/H1bsrgDNUlpEqvWMiGVTej0ilPZ5F+
-	 lT/8RS2t+H0zpxacyevPEOiaJh2kAK6rF6Smv1yNyyPd5ICY47j7uXc/mXcSyWC+bvrip
-	 ZqpV1z7gz6yDU5+jh4H9jhTreD2ZnO98IcBq8Js4pCVqnEGUoH065tu2KFDJP+AG87Jq5
-	 9eBeO5n9CkFXdhWXDRQP3f5i/IMURsVNrVNNMY8Qb0SfAlgoju+wh/kMJccr+tVRKDw==
+	t=1793917981;
+	b=iMR2ddL0ur3u6pkDPIPhtuXbyKNmbH79fSqzl5bkmx5D7z/R675pRUm3D2C/SabXVmWk
+	 A5LBoa0uAQzsSltdg0YnTl2uzd7YqsPCXBLto6j4M7zsduZKn4GsWjyCk98ZVHyWRx6WO
+	 +4RYwZI2Fzp0ipF2ZSreSj+oKIQXAH9/X5eDYgXHmAtUyzFZwgjwKCha7XbdH2lS4wMlP
+	 XuCVOLrww0BJjjW8jKkSlD0S90wCTWMniQMxJuuXOIrT8Zy36SF2lh2YbZhSFSSocrqUn
+	 yFbwTCD2PprP8X4UoFllGro9bp7J6ftNmcN7KFrxGV4e5wt7pQjUHWL6byE3Dr8U2rQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793917957;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=8mRpL5CpcKHrVS3H+Jt1Bu8I0/udWwJC833g6p/TNbo=;
-	b=0a8RkpsxqMBHnf6haxI1OJryqmVV15fRe5v6QEPTAdWsB2ohc4OpZIf2b10RN6iEfdDj
-	 bDPx+RrVA3BaiKlNTAFoPdj3coAvhAvGhcn9KFAcBrS+24mJZeIF54whHHT63VNRM98I9
-	 O0joReL2q8F3eJTfphmwZp0u/AlK/Y0Tlv5VVyUWMZCUhN1W7HrbImf7HHVX4QDtJ789p
-	 ax+Dtns9Lt56A9IpYQZmTK5Xg03coFDCPwy0Hnbzd08ptUKQhFCuCspKYnMUrjGwHhdPy
-	 kOw9s7XYWj8FHuStB4k7Ov2VrMzmpijE8lYa7K9V+4gyVK2rXBlAN6t12YUGgc7O9BA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793917981;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=ud9cB0Lc5pB6H00qNAuhu0Jec5NgnYGIND5YF35BjMw=;
+	b=jqiRL97QmSvg44b2R7UK7grZOZqcTE+1BliPV9n1YST7gcFwZvmY5b3GeR/azkZ6lVJ8
+	 Ymbb+beTmnwnNZX2/8fU01ARiZHTbthvjfRkw4s1zUTcRFdCkdw5pQBaAxh5egNsw2M8N
+	 CKkR+GFzl3g2NudPQaAv3L5PtySyPOLcGTQO8bntscEb6ewLww61cfMOZXKz0XPKiberT
+	 5d1spESurK7Kv+kroJTwzMKOtaspaSN6k90OlA5S+6GYuAKep0vZ9vno1n0aWW9gfT2SF
+	 L8y/0Q5HQMaLEARFC4OmjJyIwpSvYZb+0nj2M/RtS+Wvxu9Fv/5CQlm4lZxvq4rIyfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=HzTUsVVq;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nQCHHQ6T;
-	arc=none smtp.remote-ip=103.168.172.153
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	dmarc=none header.from=crustytoothpaste.net;
+	spf=pass smtp.mailfrom=crustytoothpaste.net;
+	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b="hLQT/JUl";
+	arc=none smtp.remote-ip=172.105.7.114
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE08F606A31B
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:32:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EE08F606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3073A606A31B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 22:32:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3073A606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=HzTUsVVq;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nQCHHQ6T
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 45E1014000F2
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 17:32:36 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 05 Nov 2026 17:32:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793917956; x=1794004356; bh=8mRpL5CpcK
-	HrVS3H+Jt1Bu8I0/udWwJC833g6p/TNbo=; b=HzTUsVVqeJ/qzxYU/gcDbmxiVd
-	o5prsHWZpHzdB6LhLUkqPkHb0+Cw5s3EnrwfVrqSestt7zmbvzMpeJmr44pjKt4/
-	WNDv5vSQlfOWoVVjREkSPtjxoKdhXTrHK2w9hUgbOb3o+MY6MQEAqqj7f1Ch36tj
-	8qRGLeYQCJzMVkmAoBasy4GV6/IUNCR/cay3+1Wxo5ZCKWVx7TPyhsi+txcGX4N6
-	t/V+j/zQ4FO6Wt+sHKTx7pE+2tT81hEILuu1m3cEmJy45XO291D9Mlx5VNl4qlIW
-	rvVXuEwNz3hOgbKxSsBNaAhLo/zqdU13knQOwyWZuzc9cybHGGzzdA+U3KhA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793917956; x=1794004356; bh=8mRpL5CpcKHrVS3H+Jt1Bu8I0/udWwJC833
-	g6p/TNbo=; b=nQCHHQ6TKlxFac0hOyDS91sXL3lObHoOrkKDdl0MaavuSrv8pEo
-	4B2Z1gXMzOGfZBaFSV1ajiJ626j+qc05KfgHWOF05dBXTc9VTrfr8poes2MVArgF
-	X1vyuF40ZnFVHv0uKMCVObohAzr3fRmZrvYL+BapsgDbJ00TI2tU495E7bBiSFIl
-	d5GSC63irzeStDaExRR+dUmtud/Y6TC+ct1GfSC5QwXFDJ4GqZoqsXks2nxHK6vK
-	loOUQbqSMtsVViQAdzjxcGaLT1/mc73Y1svWEJJu+rHvUtHf9zSEawrvnkPHymT9
-	fvN/bC5L0uA7/CmllGrPA6hBpdrnXqtn/6Q==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793917956; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:UFpAvunu15iryz8u0Ay9KWDI+4+EXWm9mb3za0qMAQFmjvm
-	q3vBNNFBldXJjJWEyRrdLKc9UHb+CNW7SLyUX/gCOUCRT4/jl6v6PY3JRO0p2oHK
-	ybp+cFKC4DB5opGEUQQgQZEHl+aLKClZpgpgUcFJ6IcpPQpS/8Dz0HYngPNr+pZV
-	Csrqj4UbK9Zwpy52xvX57QFGYjGyvYXkFcPFxnjebY7s/YZTSwkkcIx3r6E3HXYY
-	YShg3yU7uwEIyS0+PEYArIuxHH9wKh7pXy3fAbUymNriBQFADwgAIKa3WjAUXQbI
-	J6mCv/qY0xFwtvPThu7CuWpcxnQuJdf4TCZZz1Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:TQrril/+ZRmPoLeVOqWinfnMYIfAlkxug+C+/eUhlB4=:aU1tEaRddPxu6gz/6sVod2A6ylZL7iutJxPfFIIFNAs=;
-X-ME-Sender: <xms:BATtavWPOF-AUa65GcVxnXk_Ovt5lPJwACtJPBHBcwcwO6J_2dLBsw>
-    <xme:BATtavBgGTpY1xQI0oR1oRWXm41Cb3UtqKeT3BB40tu5XOP6W2UtntWw6ZxR65Ct-
-    1MUCMg1IPOxb_l1zF8Vak9soVKQU8nUXD-bsFx8Zc_ZuhJzHQFEoVw>
-X-ME-Received: <xmr:BATtaozuozuwvju_HFkfk2jBLYgqz97W5fqVtcP5FhmnyHp1mAIXp46EkO6T8BUvZC_clqsRQIaHMgR7PcfG6hTGUyyZ9TBW7z6k>
-X-ME-Proxy-Cause: dmFkZTFJmtaqye5AwQjhZ3CKkQcs+/Kug6UfqRH/7OgPvos6aN4nQiegLwYwgEWCSTZPmX
-    zFbSYPFAavocLXCI+iyavPFAbVCSSx3sUtwd0bsVfpdLP7CT/kXxiGR/j562dHZmRiCoSK
-    XIxAPAmOTS4FkSeubyjtAM6K8ckqR3a0y2fynbPLSicrU2Byk1rzQRJEYN+YGHmDwQ4y1S
-    Sg8bpk4U8deR1hpnYXyt7z4k96rdgsXAiPzWhLO8KWlgQUr4UBvqZ2N/KABL1CL+o+HWgg
-    E1g2CRge6JHnQ3QogkM5txAARHjnxgdO7Ky9UeA5Y/PvWYy+W5DVHELkW/wepg/Pe1DLHC
-    t3FQV3Z6ElAu3bWZIekcjWG2OPtfRxYcN/VHN8aaU5q9ECpqERkBqoy4rbFyKR/W6lIt1x
-    GEMUY7yqV2r9qd9vtS2s1wWqq+5i8xTVzUvbu+0/WmOLPooGF0xwTirqHrxt541Sl8nTbk
-    t/o97znn7rMyuhW6WI6PJc465iUTkgnyq/467uj5HXc4rk3n7iLgpn1B9yGEXNXiPzDZP0
-    b5OQfNWN0WDw7nL+GFENEMp0t3dIEltUNVxOfaABzj3g2xxlvptsl8fIvhc4FDfF6anBAq
-    xIDUSzRTxRveb2ZkJwwFooNtUE5celUoFq1xgWgAMdpqYToUIte8ooyIJPlw
-X-ME-Proxy: <xmx:BATtakDd-OZXTV-GsmBcM_I3W-ohTnxsdYCMV1XuMHHYeO1kOEVJvQ>
-    <xmx:BATtatYvH9A-y8-GF5QJaEGi_k8B7xwhMEAy30z0EkQbdhxgxacrXg>
-    <xmx:BATtakgjG1rYTGmC2gcEqB-eX20NkRFzFJtJ78SGODwCegEHwYraHA>
-    <xmx:BATtan6_cyN0nLXdU_b1Y-YWvo7VYTzQgdQNKgpCGWScZG5WgoQ3bQ>
-    <xmx:BATtasqruYjQHQHcwKI6LPwQmCJwocAYSPBfez0zbKSI5r9xm6cGuWfU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 17:32:35 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jon Simons <jon@jonsimons.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 08/12] remote: reject duplicate destinations on an
- empty remote
-In-Reply-To: <20261014031347.50433-9-jon@jonsimons.org> (Jon Simons's message
-	of "Tue, 13 Oct 2026 23:13:43 -0400")
-References: <20261009192953.81794-1-jon@jonsimons.org>
-	<20261014031347.50433-1-jon@jonsimons.org>
-	<20261014031347.50433-9-jon@jonsimons.org>
-Date: Thu, 05 Nov 2026 14:32:34 -0800
-Message-ID: <xmqqqzgyq58d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key, unprotected) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=hLQT/JUl
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1793917973;
+	bh=RJdFnxu0F9Z/8/fFb2DcRyE8v9iIewO3+AF+VufjnSw=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=hLQT/JUlDMNmQNcEKsn+PB3+gHBA989UDNUMWrrf2r9czncP1F+gwLE9ejvTgqoYz
+	 cTxnJ5yxgkWI22dObZWo9q5RUiqKdhu5tKC3p6X7kztGOaBESs+z29MoevysVp0mVE
+	 Pn+lEoDDJJOQ92P+150ge3gDMrZ+oMpIipozWo3K7OfljUzwMOrWZ78eCfBbkPeEVB
+	 V9i/lAutiH6ZrckhM7GH/TfYfNUZozzYcXyt0ikbYeiLI6DkcrCdZErke0pB+VSKk2
+	 4lfTPtk77Nr0sROjjdOf7IPPO6QMWjFO9KImYPZq/b+cgX8osNh1h/VUWcHtxNyS8W
+	 MRVDsYsWD29Bzy+W+OhXyYKg5RhHA09waS0BUJYvraCt6jnR/KNYWpldJIqARePkzk
+	 qEI67RdKoOIvrICmDtUecq433jhXx0kOWXi/0GZEkIG5sg8reiQ337VMtjMEhdVpw+
+	 sgMqXlKeYGxLsc3kgg2BfSsni22IBnrbGy+uhOU7HZyZIgtzZ8T
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:e965:3ca0:f550:a37e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A76BA20069;
+	Thu,  5 Nov 2026 22:32:53 +0000 (UTC)
+Date: Thu, 5 Nov 2026 22:32:52 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ravi Mistry <rmistry@google.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 2/4] http: add exponential backoff without Retry-After
+Message-ID: <au0EE96afsApvfZM@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ravi Mistry <rmistry@google.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
+	Patrick Steinhardt <ps@pks.im>
+References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
+ <pull.2287.v2.git.1793732247.gitgitgadget@gmail.com>
+ <fe1e847dede7579da911b5a9ba16c806b5332723.1793732247.git.gitgitgadget@gmail.com>
+ <auusPUaYRmUBDsdI@fruit.crustytoothpaste.net>
+ <CAF+mdifcp+qkESZzd=8SmrL6eckxAQXR-4nxxSuL=xCV48OhVQ@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,50 +81,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+Q6zDRKNsLLUhIsW"
+Content-Disposition: inline
+In-Reply-To: <CAF+mdifcp+qkESZzd=8SmrL6eckxAQXR-4nxxSuL=xCV48OhVQ@mail.gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Jon Simons <jon@jonsimons.org> writes:
+--+Q6zDRKNsLLUhIsW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> diff --git a/t/t5408-send-pack-stdin.sh b/t/t5408-send-pack-stdin.sh
-> index 7af350f01c..1e34880323 100755
-> --- a/t/t5408-send-pack-stdin.sh
-> +++ b/t/t5408-send-pack-stdin.sh
-> @@ -97,25 +97,25 @@ test_expect_success '--stdin refs are sent after cmdline refs' '
->  	verify_push A bar
->  '
->  
-> -test_expect_success 'cmdline refs written in order' '
-> +test_expect_success 'two cmdline refs for the same destination are rejected' '
->  	clear_remote &&
->  	test_must_fail git send-pack remote.git A:foo B:foo 2>err &&
-> -	test_grep "multiple updates for ref ${SQ}refs/heads/foo${SQ} not allowed" err &&
-> +	test_grep "dst ref refs/heads/foo receives from more than one src" err &&
->  	test_must_fail git --git-dir=remote.git rev-parse foo
->  '
->  
-> -test_expect_success 'cmdline refs with multiple duplicates' '
-> +test_expect_success 'three cmdline refs for the same destination are rejected' '
->  	clear_remote &&
->  	test_must_fail git send-pack remote.git A:foo B:foo C:foo 2>err &&
-> -	test_grep "multiple updates for ref ${SQ}refs/heads/foo${SQ} not allowed" err &&
-> +	test_grep "dst ref refs/heads/foo receives from more than one src" err &&
->  	test_must_fail git --git-dir=remote.git rev-parse foo
->  '
->  
-> -test_expect_success '--stdin refs come after cmdline' '
-> +test_expect_success 'cmdline and --stdin refs for the same destination are rejected' '
->  	clear_remote &&
->  	echo A:foo >input &&
-> -	test_must_fail git send-pack remote.git --stdin B:foo <input &&
-> -	test_grep "multiple updates for ref ${SQ}refs/heads/foo${SQ} not allowed" err &&
-> +	test_must_fail git send-pack remote.git --stdin B:foo <input 2>err &&
-> +	test_grep "dst ref refs/heads/foo receives from more than one src" err &&
->  	test_must_fail git --git-dir=remote.git rev-parse foo
->  '
+On 2026-11-05 at 00:10:10, Ravi Mistry wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > We should not immediately retry on a 429 response, even if that's the
+> > behaviour we have now.  The server told us we were being too aggressive,
+> > so the exact thing we should not do is to continue making requests.  As
+> > a server operator, I definitely don't want this behaviour; instead, we
+> > should pick something sensible if no Retry-After is given, such as 30
+> > seconds.
+>=20
+> Makes sense. Junio noted on v1 as well that defaulting http.retryAfter
+> to 0 does not mesh well with exponential backoff.
+>=20
+> What do you think about defaulting http.retryAfter to 1 second, matching
+> curl's --retry behavior (1s, 2s, 4s, ...)? Because the delay doubles on
+> each attempt (and Patch 3/4 also reuses http.retryAfter for opt-in
+> transient 5xx retries), starting at 30s would turn 3 retries into 30s,
+> 60s, and 120s. Starting at 1s avoids hammering the server immediately
+> while ramping up on repeated failures.
 
-So these were already failing, and the only changes are the messaging?
+I can't imagine a situation where 1s is a reasonable backoff for a 429
+response since I can't imagine how the load could reasonably decrease in
+that amount of time.  I suggested 30 seconds because that's a reasonable
+amount of time to back off and allow load to go down (and I think that
+30, 60, and 120 seconds is a reasonable set of timeframes), but I'd say
+it should be at the very least 10 seconds.  I've seen cases where users
+retry very aggressively and it increases the load on the server so they
+just get rate-limited way, way more than if they'd been more gentle and
+waited a little bit longer.
 
-Regardless, making sure that a push or a fetch that updates the same
-thing in a potentially conflicting way fails is a very welcome
-change.
+Note that the curl binary often makes very cheap requests, such as
+static pages or small files, but we are making what are almost certainly
+very expensive requests requiring a substantial amount of server
+computation, so the curl defaults are almost certainly not right here.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+Speaking for myself only
 
+--+Q6zDRKNsLLUhIsW
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmrtBBMJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ0U6h02lCf/FSbTajAb/O+upkNQQapXSnSyIZ8eMEOF2
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAK5UAQDL7kgJz6Jx9vlg0xZzZh2fv3Aj
+mglAd5w9zUAi5np4BgEAhAf5ow1S9bSbGWgTu6DyNn0nYot1xAJWfy3Q4hXmjgw=
+=EoA6
+-----END PGP SIGNATURE-----
+
+--+Q6zDRKNsLLUhIsW--
