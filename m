@@ -1,94 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793908673;
-	b=qWM8sZOkoQdGq9onhKWL80xp9JWfdho7JxWrPLDePvqi8nGYQPF36EJN/V7+oAITsWFm
-	 ilu801Ov0qRRSZb9NhpSv1ppl/Z9+QjpJmeectCzX3ZNeq8Dlzi1lC5WU6+d1XR4Sxr/e
-	 yUUYD+PHhiydtOFmgKpNLJ9CJkf8me8RXvNj41DsjxogGV3OX+NL2xb9jBKSAckx1tbxf
-	 iyMZpwLlVsXTh0Pxdxnwh3TYyRoFhjmGNwDrARlkQFPpggL36fnwEVC/U884ghOCzIhJ1
-	 QPLpHeYCsOZYvgMR3LTjCjWv9iCan6zMqpMRRfo5Fnwu2VS6dH92mHfh+nW89ek285w==
+	t=1793910841;
+	b=Uvpbmc4v2bFom0YUXD5HJ3cD/wF7Z1ZVfWObKFrvuVL4Hdxh6sEKU1HNX6q2ox00rjjn
+	 D7cXS/JWpOpbGxoO+Te/zSYpO8vGJ1MXJCZM+0FHoX6+errfgTP8li+Hu7SuDlGuU3K+l
+	 IQk9qArCuHOwjPLF99MkWJVVe1Dj6Gjv5VBljS0CozZp6nQ2JOeBOr1coEcX4GRK6wdmB
+	 NntCZg6I/SSzGGlSvbzRiJ03poD03DWZTCrXatq3kjO0Jbs1r0/5pkXAs1lgqNAm9FX9q
+	 FuK1pwHoJ+xfSUTCIbChyXk5ZjMQTVAdqqmPGWCNIzvpKxOp19jYnYFZauqCAdqfXtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793908673;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793910841;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Type:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=m05ZrW0LahIFkJ+JGDjuDvziIBnBUxhXlEzuUCq4qRQ=;
-	b=axpHZRA0jX6Vpx3Wf9GwTrZzSYZOb4AHgXU4de+2X/9rUXYDa+a+0f+tBT1Y7WET2d4L
-	 tyJAKwbH0XySIJ8iMgLDCN0iOnYIU0SD0UoDapgWLBdxiEFlm3SYOBIYIHcStg9eEzCR4
-	 LSSE5z8N1UBrWenyjDtyygKhu9tpdpUZ6kmI8XfpCAiGfnIliDJxdISkJbKV0d6DOH2sN
-	 lj1O8p+0Qc4ZAWvy+V7uChG0LCpPS98UWttyoGc336wj9Ke6UMNvznmRHmM+9P8UliTC1
-	 MQm7quFS+setV1Z5MHiU5VwqSU2AvVlDdEeUvxBQMad/NB1SqJ0FJpvwUnLiMEJ9NZw==
+	bh=nT1xKlywmPWxsyV85QF6+L59g1T6i+SGwGbFVlMFaO4=;
+	b=05/D62f7KHZLO97Fgu22vYXQOE49sojMNjMYdzbkwENoD4Pwu0EhmnblYOaSnIekMVqB
+	 Qvo8daSwOkJ2ldd1o4ZtuGlk+HKYuivZSDzpz/4bYq2Rvm5KqDYNpR6czJvlB2DHaDn91
+	 1tyv4A28JEfsb9JCZO6QlxIBDQnGi+7kvFyzfXcrmhOiY06kARNpBodDcS0Y62oQRTHWT
+	 LMIFVHT872IONNvjHe/tC7xZJ7L8jtbKZ5oQzOs4TbpldYI9zjlzKDcd5B0HLcWGV4i0m
+	 ewedzR5Iea0HhjCEuD87Vz9E5tEh24V1Rw/8z2bBKeX2bAhMdPv6ywx+hZod4R5ntSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XZKUPwNP;
-	arc=none smtp.remote-ip=209.85.218.47
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oK5SkNQI;
+	arc=none smtp.remote-ip=209.85.208.41
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46220606A332
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 19:57:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 46220606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDC2606A328
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 20:34:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EBDC2606A328
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XZKUPwNP
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c450ab1483cso23854666b.3
-        for <git@vger.kernel.org>; Thu, 05 Nov 2026 11:57:53 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oK5SkNQI
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6b561b60b78so1562454a12.1
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 12:34:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793908672; x=1794513472; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=m05ZrW0LahIFkJ+JGDjuDvziIBnBUxhXlEzuUCq4qRQ=;
-        b=XZKUPwNPup7lMPbfWJ3dA39JIVwI6wmOy0QdeNc9Cmfw5D1CC4iCBVeKCg58lBlVwu
-         il3nv67ZzZQZGVligXyTnjQkyubw6IlQigHqXUUswraYFu7UJG3TrOzQAJ0rinDqEqFT
-         UyJfOtoRRHGxAQDaJN+6wt9yxA9f3yoOBmOcKlgyWRHdvbortKiD+nwHuGwOV4KZ91Sk
-         RFT/Wrn9u7UnRigECyoC2qoxZ3eKrFqSTpiL3akoJez1mxWSySPNgRzZNLludJUZGLPJ
-         QO7b+g3c5RQ2eBmFKuRGWLK2FWhkTWpkg9UktEske9RhNDaVcyfF+m4QfZjKSL1RVCMK
-         kRrg==
+        d=gmail.com; s=20260707; t=1793910839; x=1794515639; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=nT1xKlywmPWxsyV85QF6+L59g1T6i+SGwGbFVlMFaO4=;
+        b=oK5SkNQI9rQ7+tnOxLYkpC6dPxe/XXvErSlzVmTKEdbnAriPXDSWSwWjmIaVC9qayf
+         xGvxUtBrEow/9pTHiAcp3Zrf8/QfKnEDi/wYFgp/HsDisOq6RN9rhIyWAPmYZGnqLjn1
+         IwHrp7FHgJK+9fv6pDK3Hoeqpk5hGZlUIElg1C2pSe+jNsmbhs9HDfTTFkxeEBZzLru5
+         92fziEh6J7TmqoNm2R2KC7GwJY+IRbyj3Tjg+1f5xmJ8AL5/glcnXEV51Ze6uMWcBLTc
+         GUL8pWnCxDaTUshJlxc5PEDG0GAFWaMAXKXA82e3GgKLHHHZSqsC1Ghpt8Dx48ZfljMB
+         jbgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793908672; x=1794513472;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=m05ZrW0LahIFkJ+JGDjuDvziIBnBUxhXlEzuUCq4qRQ=;
-        b=JFLlmbjy6hBJup+3hXW9yCdjo5M7AD95FVnwKb8WhB5t89hUok/6kRjKs1qVI0Kgog
-         23XC1qT1SxJtVsJ48bYYKEO2t2ENtwTscnbzthfdh1TzcCll0Ieod6v9BNma7HFRrGIM
-         bbBuPVNPYveHXlJ3IYE6XNKUvnXVDINKRPcgH3TZH8k8Xk5AoILA6Aedyww2WkXRLFVb
-         nNjFwQCE7EBC70pBdqxz9V32IyZw5wr6Y4ZIA8l8xs7hm1X8xAY7UEvmrDOyrwH1tNFo
-         mRi3nzM1Uh2fExZ8MinwjHyFGi4AmCTnMEmPW4nvuG4OTUcRCMy6cAywEAQAIWf24zJX
-         1RgQ==
-X-Gm-Message-State: APuU4Z9JM+fpTpCzbHwKN25BeBzQ5zpZEq7SAorS/9UafbKdZzOw3aav
-	WM5LbV++yx/jT5H/OWG7xgDjTKXUYM25OMXirl82+f/6k97+/2OLrXzgPcOLYdL4
-X-Gm-Gg: AYBFou2wPyb5OP66RrKRiSagX4Zx3ANmAH9oy2ul2fXdJH0NWxnO65l1HMrbaOSQBA6
-	jw3sOzP+jlbK44yvuIhZ9ZonGOKUpT/tycUrLRYyDIwPwiaEORfp90qoDBdbCuuXsscGe/sppYR
-	qnuczWs03sRcH6ozfybWtjh2qQSGqDFN6KRLpeugzUx5YPX8/TDupT2q+8XFqRi2nwgiSeSj7S2
-	VZHjFAW8AJ1668iV0o7Fde24k9eOqk6Za+ELtZKk6jruN2Sv40OB55vJOp7QFXJGh++rGYChabG
-	l+1J7fLqsI6pEDXPOuAwXyT2pWA42CQLKO91w1qksfmJLNAj99aNMZXzvIVp/QLvQZdNaOIBXDu
-	AIe2wPUxsFW+mcYvfQY3Qiou2Ch59DgLuRq8iMTQ6ctBCH69OEoVOd0sXAQhBD1JIciqnVK9g2C
-	IIli4uaYeBjT1bwoHW8UCtDEsqX8MDocZmz64bZVWHpQgH9n+njxlCZOeAa/7OmB1yUHNjF9mIz
-	Caln7DkD4WZqBcTr5X2XV95rPLdEY0veR/XPDS+5RkV1e09GeFbF6ub8w4sY7D04FzKWsD9QIcl
-	1EjWM9ZNEsz1xC0n305J9Hlwcp6P6/A86WyMtngXk/7it6QyBFP0Ef7UgpnrranmGuUEfpa8OvS
-	XlT8db5xzsSXSTKwgLIRg00gPMrbIYDoLfzI=
-X-Received: by 2002:a17:907:6d0f:b0:c29:f5d8:9c78 with SMTP id a640c23a62f3a-c4d353a7a05mr42770066b.39.1793908671257;
-        Thu, 05 Nov 2026 11:57:51 -0800 (PST)
-Received: from HP ([105.163.158.39])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4d356a2760sm12770166b.57.2026.11.05.11.57.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 11:57:50 -0800 (PST)
-From: Tanga Joris <tangajoris@gmail.com>
+        d=1e100.net; s=20260707; t=1793910839; x=1794515639;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=nT1xKlywmPWxsyV85QF6+L59g1T6i+SGwGbFVlMFaO4=;
+        b=SsN0ml+PezD65v0vW3hWyPD+d33tuRK7TY52dsWfMePLRZJ3yAy05D4+3CfarqxaiB
+         36MUYHQL9YLh677NyY4jSgTITEmMKTuOe0RHCQqC8+siAesF7tYZ1QqarznncKRd7X69
+         8yftgsLDAQ2QFF+t77AxmOPHyWcMqciszg9v1wSjAUCJ2Awhl2mVyN9aWivUQBAMd+Qo
+         H8QQpFkPg6BwIkmAaPuIuBMvDcpqQQWHEDcg1sQeFHQq/nHiEAe4tx7T9s9DiAnBHbqa
+         YOoOI6xMjbFHtFkovEo9IuiDI5Geg87SQAGMugSsMoGgZQIM9uwUYKGXz8gEi9VkFxPy
+         TP2A==
+X-Gm-Message-State: APuU4Z/vFOcxR31t5XF0UHokP/sFcbIRt7mHkEz5o6u6umaoLmZX/qg7
+	KxqzAEtrS7Lg0jS9Nu1lBCNkFLMpj4y6u+pt+uOaM77O0JhiKApO49fHFejsdVbHg94DGQ==
+X-Gm-Gg: AYBFou36YAbj3VHMsupYoc2MCu9cNl2FT6qZELqRUWSKa4FEc+r792yMlwWYu4z5xqv
+	EUoK0poJ8+H5XceO1QXoaVuPhUruI1G+twjUIjqIXfw2RcLhWcD2uJiXnYIvq7Oc0nqL/qM3l8J
+	W7dy4WwcUXQ/WgPRTTrpfS5IQZSmDevaxfg7zFCYT9PkOi+ExtNTcLw58zpIumZG5pv3n3wszJJ
+	rgD/uopSmorhU74xemdXXRdZPyYrXIi0nJdl0MFoBNjr7QhEDBwrBJ+HmkUzgA1NKYEi9xaBwpr
+	2D+wncKCArMSXPuqQoGA9Yk08ki1P2xQJ5M7i7oiTdZoxeTmSglmJqkJx3/ueSWIWuCHkVnMqgh
+	3JW7APwP+CpT6kTrRyaxTSfmnNmGEHFR9lSvMfnLQC82Iw4Ac3UqEyLBIFCCsHqcaCnLWahA6Dx
+	LozepWjYN5Zvcb9AxIRZGv/MGH834WB98B2jWtOlWVRDGQYjIpskOJOfz/rnB3bKnWbQ/uTy1LE
+	zb4M+rZ6ioWsUBft3RFvDrr+KUhdcoI7XH4vuKbLtmgFjh92dxe95iemBXIN+/eBAj4yVW/2tdA
+	2dT3ElChgwAb0GCtKhh1N4YzsZNUB4w4l1fo43tiy9Egi1eYOo8GXlMDTBIMtPwQt9xQESG8GZN
+	GJXfZB2E1S2aslPX/rFbCyxv1ura/nht5/LXI5vbTIh9pRDO1OKGeNWAt7ssUhLOZRYTCBfUpTZ
+	zoxAcf0gbKTBb8CQU9+GXD1cNmJCeyiFLt6IKYfJd9LHOacS1kbw==
+X-Received: by 2002:aa7:c719:0:b0:6ac:ac15:f14b with SMTP id 4fb4d7f45d1cf-6b576fb553dmr2072754a12.0.1793910839085;
+        Thu, 05 Nov 2026 12:33:59 -0800 (PST)
+Received: from localhost.localdomain ([104.28.219.97])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b5853e0536sm702689a12.31.2026.11.05.12.33.56
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 05 Nov 2026 12:33:58 -0800 (PST)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
 	siddharthasthana31@gmail.com,
 	kaartic.sivaraam@gmail.com,
-	usmanakinyemi202@gmail.com,
-	Tanga Joris <tangajoris@gmail.com>
-Subject: [Outreachy] Proposal draft v1: Improve how command arguments and options are scanned and parsed
-Date: Thu,  5 Nov 2026 22:57:30 +0300
-Message-ID: <20261105195730.1518433-1-tangajoris@gmail.com>
-X-Mailer: git-send-email 2.56.0.386.gfebd08c307.dirty
+	ps@pks.im,
+	gitster@pobox.com,
+	karthik.188@gmail.com
+Subject: [Outreachy PATCH 0/6] notes: use the repository stored in the notes tree
+Date: Thu,  5 Nov 2026 21:33:38 +0100
+Message-ID: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <xmqq1p8zw49g.fsf@gitster.g>
+References: <xmqq1p8zw49g.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,281 +103,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi everyone,
+Patrick suggested fixing notes.c instead of hiding notes-utils.h [1],
+and Junio pointed out that removing the_repository from notes-utils.c
+is not enough while the notes.c helpers it calls still use it [2].
 
-This is the first draft of my proposal for the project "Improve how
-command arguments and options are scanned and parsed" for the
-December 2026 Outreachy round. I would be grateful for feedback,
-especially on sections 4 and 5.
+This series stores the repository in struct notes_tree when the tree
+is initialized, and uses it in notes.c wherever a tree is available:
+reading and writing notes, pruning, and the combine_notes callbacks.
+The ref glob helpers take the repository as an argument. With that,
+notes-utils.c can use the repository it is given and drop
+USE_THE_REPOSITORY_VARIABLE.
 
-In short: before a command does any real work, it has to answer
-requests like "-h", "--help-all" and "--git-completion-helper". Today
-that happens in three places that do not agree. On master, all 120
-builtins that use parse-options answer "-h" outside a repository,
-but only 31 of them answer "--git-completion-helper" there. I would
-like to make these entry points behave the same for every command,
-guard that with tests, and then move the early scanning of options
-towards parse-options itself.
+notes.c itself still needs the_repository for the display notes
+code (load_display_notes() and the default notes tree),
+expand_loose_notes_ref(), and a few uses of the_hash_algo for
+sizes. Most callers outside notes.c still pass the_repository.
 
+This replaces my patch "notes-utils: hide functions that still need
+the_repository" and the earlier notes-utils series.
 
-1. About me
------------
-Name: Tanga Joris
-Pronouns: he/him
-Email: tangajoris@gmail.com
-GitHub: https://github.com/tmjoris
-Blog: https://tmjoris.github.io
-LinkedIn: https://www.linkedin.com/in/joris-tanga
-Location: Nairobi, Kenya (EAT, UTC+3)
+[1] https://lore.kernel.org/git/auyRGpaHb5rdVP0d@pks.im/
+[2] https://lore.kernel.org/git/xmqq1p8zw49g.fsf@gitster.g/
 
-I also meet all the Outreachy eligibility rules.
+Okhuomon Ajayi (6):
+  notes: store the repository in struct notes_tree
+  notes: use the tree's repository when reading notes
+  notes: use the tree's repository when writing and pruning
+  notes: pass the repository to the ref glob helpers
+  notes: pass the repository to the combine_notes callbacks
+  notes-utils: use the given repository
 
-I am a curious developer who loves playing around with systems.
-Identifying and solving technical problems is my jam, because it
-gives me the sense that I am making an impact somewhere. I am about
-to graduate from the United States International University - Africa,
-where I study Applied Computer Technology. I've had the luxury of
-playing a lot with C during my time learning at ALX, where it was my
-introduction to programming.
-
-I first met this kind of parsing problem in my own project, kiln
-(https://github.com/tmjoris/kiln), which is a Go CLI and daemon that
-runs code in Firecracker or gVisor sandboxes. Its main() parses
-the global flags with flag.Parse(), which stops at the subcommand,
-and each subcommand parses the rest with its own flag.FlagSet. So
-"kiln -addr host:7070 run" works, but "kiln run -addr host:7070"
-fails with "flag provided but not defined: -addr". Git has the same
-question of who looks at an argument first, and what they do with it.
-
-Availability: 40 hours a week from 7 December 2026 to 8 March 2027.
-I have no classes, exams or other work during the internship.
-Nairobi is UTC+3, so my working day overlaps with European hours.
+ builtin/am.c    |   2 +-
+ builtin/notes.c |  10 +--
+ notes-cache.c   |   3 +-
+ notes-utils.c   |  20 +++---
+ notes-utils.h   |   4 +-
+ notes.c         | 160 ++++++++++++++++++++++++++++--------------------
+ notes.h         |  38 +++++++-----
+ sequencer.c     |   2 +-
+ 8 files changed, 141 insertions(+), 98 deletions(-)
 
 
-2. My Git work so far
----------------------
-Microproject: checkout: use Q_() for messages with counts
-  https://lore.kernel.org/git/20261022004834.246892-1-tangajoris@gmail.com/
-  Topic tj/checkout-orphan-more-plural, merged to master in
-  a04194e134. v2 reworded the log message as Junio suggested and
-  also converted "only one reference expected, %d given." after
-  Tuomas's comment.
+base-commit: 0ffa3e35c7c82ab8d0de226149fb03b3f7674d05
+-- 
+2.56.0
 
-Series: drop NO_PARSEOPT from builtins that use parse-options
-  v1: https://lore.kernel.org/git/20261024052449.95869-1-tangajoris@gmail.com/
-  v4: https://lore.kernel.org/git/20261105003914.708836-1-tangajoris@gmail.com/
-  Topic tj/drop-no-parseopt.
-
-  patch-id, diff-pairs, fast-import and var use parse-options but
-  were still marked NO_PARSEOPT, so bash completion never asked them
-  for their options. René noticed that once fast-import was
-  unmarked, "git fast-import --<TAB>" would wait for input, because
-  fast-import reads its "feature" lines before it parses options. My
-  v2 special-cased that in fast-import. Junio found it "way too ugly
-  to target this so specifically" and suggested teaching
-  show_usage_with_options_if_asked() to answer the completion helper,
-  which v3 does. In v4, Kaartic's review added a pointer to the next
-  commit, a comment in parse-options.h, and a t0012 test that catches
-  builtins that use parse-options but are still marked NO_PARSEOPT.
-  Cynthia showed that my test did not cover the "-all" form. When I
-  tried her test I found it still passed with the fix reverted, so I
-  added the leftover tmp_pack_* check to it.
-
-  The lesson I took from Junio's comment is the one this proposal is
-  built on: when a command has to answer something before it starts
-  working, the answer belongs in the shared place every command
-  already goes through, not in one command.
-
-Patch: annotate: pass the arguments to blame unchanged
-  https://lore.kernel.org/git/20261105073101.1449292-1-tangajoris@gmail.com/
-  cmd_annotate() put "-c" in front of the user's arguments, so
-  "--git-completion-helper" was no longer the lone argument and the
-  diff option parser answered it instead. "git annotate --<TAB>"
-  offered the options of "git diff", without --porcelain. I found it
-  while trying to make the completion helper work outside a
-  repository (section 4.A): with only that git.c change,
-  "git annotate --git-completion-helper" segfaults there.
-  Junio: "Nice simplification." ... "Looking good. Thanks."
-
-Bug triage: "Git crashed on `git apply --check`"
-  https://lore.kernel.org/git/CALdwsC1cMKZgRPZA+pBaJe4PPs9q9W0K9CQLmM2bgUCyysTB-w@mail.gmail.com/
-  I reproduced the assertion failure and found the trigger in the
-  reporter's file: a blank line after the "diff --git" line of a
-  new-file section. An indented "new file mode" line and a
-  "--- /dev/null" before "new file mode" crash it too. All three still
-  crash on master; the fix is my next patch.
-
-Reviews:
-  rev-list: skip --grep argument in early scan (Azuama), v3
-  https://lore.kernel.org/git/CAKrRMNrnd2+HxTxadKaha+K9ASWi_oN4h7gdjVYAGmyODwmi=w@mail.gmail.com/
-  The tests fail without the fix, but --author, --committer and
-  --grep-reflog still have the same problem, and the NEEDSWORK
-  example above the loop becomes stale.
-
-  promisor-remote: honor promisor.fetchOrder when trying remotes (Nelly)
-  https://lore.kernel.org/git/CAKrRMNpAW+f2XXMFqpB8ffZsTdyPsaFtHe8dku=JVXACp1M3Hw@mail.gmail.com/
-  Setting the new variable makes "git show" in a partial clone die
-  with a BUG() in string-list.c, because an in-place split is used on
-  a list that duplicates its strings.
-
-  hash: handle invalid algorithms when formatting object IDs
-  (shrimech, Rust)
-  https://lore.kernel.org/git/CAKrRMNrLvPck5psPpKX1eWe26To5srfFSLFObZ4zTX09RE551w@mail.gmail.com/
-  "cargo test" passes and the new test panics without the fix. I
-  asked whether algo 0 should be printed the way the C code does it.
-
-  config: move pack size limit into repo config (Joy), v3
-  https://lore.kernel.org/git/CAKrRMNqzOX=vUUMrMf5P_Atar8_qCSbGdtBktfT+iL4hJfFX-Q@mail.gmail.com/
-  2/2 adds a member to struct repo_config_values, which Junio's
-  jc/freeze-repo-config-values asks not to do for now, and v3
-  conflicts with cc/pack-index-v3 in 'seen'.
-
-Blog: https://tmjoris.github.io ("From git config to git
-send-email", about my first weeks on the list).
-
-
-3. Where commands look at their arguments today
------------------------------------------------
-Before a builtin's real option parsing runs, its arguments can be
-looked at in three places:
-
-  1. git.c, run_builtin(): decides whether to set up the repository.
-     A lone "-h" or "--help-all" turns RUN_SETUP into
-     RUN_SETUP_GENTLY, so "git cmd -h" works outside a repository.
-  2. show_usage_with_options_if_asked(): called by 15 builtins that
-     must answer before doing any work (fast-import reads its input,
-     others need a repository). With my series it answers -h,
-     --help-all and both completion helpers.
-  3. parse_options() itself answers them for everyone else, but only
-     when the request is the lone argument.
-
-Then there are the early scans: commands that read a few options
-before the real parse, such as fast-import's
---allow-unsafe-features, column's --command, and the hand-written
-loop in rev-list (the one Azuama's patch touches, whose NEEDSWORK
-comment calls it "utterly broken"). Christian's cc/early-scan-options
-gives them early_scan_options(), which reads the same struct option
-array as parse_options(). Junio's view on its first round is the
-direction I want to follow: "in the long term we would rather see a
-properly refactored parse-options machinery perform the prescan
-(perhaps with some kind of 'dry-run' option given to the machinery)
-than yet another ad-hoc parser".
-
-Junio was also clear, on the diff-files conversion, that converting
-a parser is not worth it on its own for plumbing "meant for use by
-scripts". So in this proposal every change has to fix something a
-user can see, or remove a place where two parsers can disagree.
-
-
-4. Plan
--------
-A. Make the entry points agree (weeks 1-4)
-   - Teach git.c to set up gently for --git-completion-helper and
-     --git-completion-helper-all, as 129b3632f3 did for --help-all,
-     so that completion works outside a repository. This needs my
-     NO_PARSEOPT series and the annotate fix first: with the git.c
-     change alone, annotate, am, ls-files and checkout-index
-     segfault outside a repository, and branch, commit, merge,
-     rebase, status and update-index hit a BUG(). With all three,
-     all 124 parse-options builtins answer there. Add the case to
-     the per-builtin loop in t1517-outside-repo.sh.
-   - Look for other commands that rewrite their argv before handing
-     it to another cmd_*(), the way annotate did.
-   - Turn the checks I ran by hand into tests: t1517 for "outside a
-     repository", t0012 for "parse-options users are not marked
-     NO_PARSEOPT", and a check that no helper reads stdin.
-
-B. Conversions only where there is a concrete reason (weeks 4-8)
-   - merge-index: -o and -q are only recognised in that order. On
-     master:
-       git merge-index -o -q cat -a   -> works
-       git merge-index -q -o cat -a   -> fatal: git merge-index: cat
-                                         not in the cache
-     Parse the leading options with parse-options and
-     PARSE_OPT_STOP_AT_NON_OPTION, and drop its NO_PARSEOPT mark.
-     Tests in t6060.
-   - Early scans that disagree with the real parse, like the
-     rev-list loop above, but only with a reproduced user-facing bug.
-     column, bisect and check-ref-format are in Cynthia's plan, so I
-     would not touch them.
-
-C. Towards parse-options doing the prescan (weeks 8-13, RFC first)
-   Christian's series already lets the scan and the real parser look
-   options up the same way. The scan still stops at short options and
-   at options with low-level callbacks, because it cannot run them.
-   I would like to study what a "dry run" mode of parse_options()
-   would need (no writes through opt->value, no callbacks, no die()),
-   send that to the list as an RFC, and implement the first step only
-   if the design is agreed. Otherwise it becomes the final report's
-   list of open problems.
-
-Every change is tested first: the test must fail on master, every new
-branch must make a test fail when I break it on purpose, and output
-and exit codes are compared with master. That is how I found the
-annotate bug.
-
-
-5. Timeline
------------
-Now to 6 Dec   Land tj/drop-no-parseopt and the annotate fix. Send
-               the git apply fix. Keep reviewing parse-options patches.
-Weeks 1-2      git.c gentle setup for the completion helper, with the
-               t1517 test. First blog post.
-Weeks 3-4      Turn the outside-repository checks into tests; look
-               for other argv-rewriting wrappers like annotate.
-Weeks 5-8      merge-index; early-scan fixes with a reproduced bug.
-Weeks 8-11     "dry run" study and RFC on the list.
-Weeks 11-13    First step of the RFC if agreed, otherwise the open
-               problems report. Rerolls, final blog post.
-Every week     A blog post and a written update to the mentors.
-
-If I fall behind, I drop C's implementation first (keeping the RFC),
-then B's early-scan items.
-
-
-6. Communication
-----------------
-Design questions go to the list before code. I answer every review
-comment on the list before sending another version, as Kaartic
-reminded me to. I will blog every week at https://tmjoris.github.io,
-which anyone can read without an account, and link each post on the
-list.
-
-
-7. After the internship
------------------------
-I want to keep working on whatever is left in the final report,
-especially the parse-options dry run, keep the entry-point tests up
-to date as commands change, and keep reviewing parse-options patches.
-I would also like to help the next group of applicants the way
-Kaartic, René, Junio and Cynthia helped me.
-
-
-8. References
--------------
-[1] Microproject: https://lore.kernel.org/git/20261022004834.246892-1-tangajoris@gmail.com/
-[2] tj/drop-no-parseopt v1 and René's review:
-    https://lore.kernel.org/git/20261024052449.95869-1-tangajoris@gmail.com/
-    https://lore.kernel.org/git/8b60c7f6-4a1c-495a-a594-aaf322279539@web.de/
-[3] v2 1/2 and Junio's suggestion:
-    https://lore.kernel.org/git/20261029012616.139783-1-tangajoris@gmail.com/
-    https://lore.kernel.org/git/xmqqy0bg2xj5.fsf@gitster.g/
-[4] v3, Kaartic's and Cynthia's reviews, and v4:
-    https://lore.kernel.org/git/20261029231621.48958-1-tangajoris@gmail.com/
-    https://lore.kernel.org/git/123de4e4-3387-4eef-8a05-9ed1ad1fce30@gmail.com/
-    https://lore.kernel.org/git/d026d6a0-5b1b-4bbf-bd1f-5f41c9c2a4e4@gmail.com/
-    https://lore.kernel.org/git/20261103092503.14872-1-herroyalpriestess@gmail.com/
-    https://lore.kernel.org/git/20261105003914.708836-1-tangajoris@gmail.com/
-[5] Junio on the early-scan v1 cover (long-term direction):
-    https://lore.kernel.org/git/xmqqpkyviizc.fsf@gitster.g/
-[6] Junio on diff-files v6 (value of converting plumbing):
-    https://lore.kernel.org/git/xmqq8q3blfh1.fsf@gitster.g/
-[7] 129b3632f3 (builtin: also setup gently for --help-all, 2025-08-03)
-[8] cc/early-scan-options v4:
-    https://lore.kernel.org/git/20261102151447.734680-6-christian.couder@gmail.com/
-
-Thanks,
-Tanga
