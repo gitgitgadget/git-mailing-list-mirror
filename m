@@ -1,123 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793888546;
-	b=VgVHtXB7pCFTuJ6xc5eHpyXt7UZriooT1shL9uwcmnNF1MoZo8zDIqB+LRsIr9ixhWLw
-	 1OKeQP1I8HJL5pFMmXPlDEHKOYc0EHM2M5LnjxJiI5t986QbmLHaWwKjc2un3/FoZH1Z+
-	 3GFJsQREcdmUrY73FF7h246yCthJN4qPFTGR+JBoX5xOF+CQ7kPITfT60w9TOUPIHcXdq
-	 5JCQnT33MUc0sxfOWo84x1qAkIUDKTPYGeajCjlE3aY9jOCqC+gg/QrYWGUPPLUdsT8sJ
-	 wvaaC0ZN4RwC5PG/cAgZ/TYmB+CBA5eKn4SnvF8AjxkQoi7Ju3RtxmfJ1vaH5MTTGwQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793888546;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=2Z0ZmUngT5iIdRMQT6b+VfrlZ+KKN3trMWzCsXTvEu8=;
-	b=ffylIjA+Om6FzYYW3pHHZgcMzsx1Ucv709CPrXg3OO41eoXJKMrgls8TUvmsz0pA+q9/
-	 wZjLv2c4S4w0Gv4t4pNZ/keaqOyTqWjYlpivfNyohRzIsIONhwptjQDHfyuk9f9IpARqT
-	 HYlGPKnGehbT5GRUd2I5AdLpgEanvbH696DICVWtvIl5kwL5Ly3LUQMETLE11BU4OdAoF
-	 KPqCTEJdx/wLTuXbm4EdomyqtvORvEub0+Kq8nS3XlpoOzpfvJ5zhgvU5Om4sH0r8nxkV
-	 iuMRoWzcbth8KQ3K6mTK/qKQHuxGXXPFPoQzh2JH5SR8I/MZqJ5DyABxoMfV9ydwfnw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=h0fMJb3z;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="lu/ZpIVv";
-	arc=none smtp.remote-ip=103.168.172.157
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.48
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793889071;
+	b=aGwlCydlpz46WXw5EbS1/QHGftNd6YqcCIwuD4Xe52DqMK70MZGBuULsNhi+i98a57Pa
+	 LvVJqtaNse25mviM5TPi5ds+XWlf7hsx7AshcgXPvqzcJhRqE7VDr5VDdffkFHLHluryx
+	 sHR7j9XDKzDpu2OpVLoZS2TLs6bc2IgurU+3O6WImxgEJW3Ox9PrrtbP9NVrbz2r7nnyX
+	 3IPtJiz4ftA8aOcA4ntrhfYOESDHoD8H2Gd8yS3O8nCDLIH+ATA4i9VhEXopxoGPI4JLH
+	 1rRFtNvupaTzOcZxqr+SwiV7L5nwW4Wej+vA4BT6ytc5iIwlcHMS+TPASOQXHrwRiOw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793889071;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=PzRZCT/tPG0Z34ndweAfJaDBJNpku85DbWLzMxOC2l0=;
+	b=V39cyhyDimDmy47YYOlVAgZUyWcJ4PdEif4Tf+RcQQ4nU/SfKYUwyNuKHPrgdTUNfxXb
+	 idMJpoj2PTIILkMsL5MkGNayvOl4TW0Ggsp6E6ngUEEKDhVhO/nMjgGAlPDKMtrhcWODw
+	 rdCA5GWQKaMDsg6twIrBCrQdxoH3Dy4/DykldhHCYeePVqAivtPUc5PPIrt3/hLB3JANY
+	 Ib6OsyVNBq+T8J3vB+Hl6eMep6OD4x9GJJr7gxwv0ykxg1euJbmHKGDHyEtgVfLjMsY68
+	 tntXjwBFhDN574GDNJ77TQ44rDb3s7ah4xd41QqFbEanXNIttVhgeCLikdgdy2SGV+g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OIwSgJDo;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.48
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A34606A31B
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 14:22:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27A34606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0BD606A31B
+	for <git@vger.kernel.org>; Thu,  5 Nov 2026 14:31:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A0BD606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=h0fMJb3z;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lu/ZpIVv
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4DBC81400126
-	for <git@vger.kernel.org>; Thu,  5 Nov 2026 09:22:25 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Thu, 05 Nov 2026 09:22:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1793888545; x=1793974945; bh=2Z0ZmUngT5
-	iIdRMQT6b+VfrlZ+KKN3trMWzCsXTvEu8=; b=h0fMJb3zb661IsppnSWEYGEemg
-	cuObGdV1/xLPNOJP14ek5IASRGtQO9ePPoT00FYCBGBJWHR5QvNvn7avVae7mtuH
-	1YIZclaDJfwRbMAruCilCmuMo/IHZUTyHGpkBelw8Zeh37Ji8sqtaBbJ1/CKs+DM
-	biPhc7U1DOqYWLkIS2PSiveWgZuvmA0oQmivc1V1Ri+DZT9pgqfCn5kMUe8LIYpc
-	p1NoAkWFoJoaM1youMBwaHYmgw1A7fMA/3CQ84MIVZQ/zpVTgNoZ0QzliTUHSKJn
-	v8BRvCBiMRjL+HXYIkOoKoqLpt59sBpFbEG0gjmM5JHG1CP6G3Riho+mIHnw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793888545; x=1793974945; bh=2Z0ZmUngT5iIdRMQT6b+VfrlZ+KKN3trMWz
-	CsXTvEu8=; b=lu/ZpIVvw90Iw18VtwONVCNFTwSLQZbP2PUHUaEL1WgE3jn/w+l
-	fJuNQ+vypzRyFy3uVBhuLB0VCy2nfZNYck6YgJ7hTIryMaAvLGWGs9eVQ1ZvtsP4
-	4b1PTlkRKkQvFKFizH3SDisJBvkqk+wriyoqlKRYUOPFU4wUqsbeA/9Z2twmuAfB
-	xUGzWB8yDNeNjzf+/xnf+X2gl9NlrDoisfPWCn5Uf1s5hxUXLFjqmfb/NhuVah1t
-	dfTgkVk+Z1M2TnZCoo3wKatRDKp7xMIHFu7MRrUEyQ/4jpl21BEvwL6uUFi80bY6
-	DYG+z2zm09xK3bnVNWY4m+F5oos1vE0pq2g==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793888545; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:az5hQNf2ewlgTXgkqNLHhnkYiwrXtp4Q1gIJDA2usI5vtT/
-	a4AjWJy2MTrb2ywMqNtNqaEexfvuBqAHJUlzJ7no5L0Q0iGuQDtNU7PZXEO9H9GJ
-	5mmnASOzCMIcW+g1a+WUFk0jBaAfa4fL9xxrDS1Ndcntiv4hxr0h4uJrkkNQ5A4r
-	LzMyndy1BkJP5iuSisGAAVSV+KuqBh6XngNX2mkuH/PEFXm9B9jcjsAk0Xr+lItl
-	Npz5Nd56iqVM7SKV4YOfBKU17d3Sfn40tpETnb3ADd0arOtto9M/3mAPfdye29Gt
-	Ij4vDASKrR2CBYdCW9PvlYpWYJ9yWNq2WliEcbw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:gtt/TDxH/kjvYMYxYjvcimpQe37fbuUpoTjD1lXd1b0=:XE6O5zYPKJrqZhnrA+uds1PszOHDkBksipYrMZEUneI=;
-X-ME-Sender: <xms:IZHsai1kC6eoRCKAkwhExlOAOpJ6yxLcbff76qpuuCw4G_N8eH28-A>
-    <xme:IZHsakIQv0mDsGGOtXEQMq7RbAz5hHBA1F_zniT4u281FXMRDxKjrhDCGtEGm5cXE
-    NS8QJedta12fZeecXZSUw0r3cNWhCsKyKZ4VUeuSORS-d9O1U4chw>
-X-ME-Received: <xmr:IZHsahH2WdvUc5jE1jysslUQ5WnicRrSnbNQIO8iQ9wIUyguQhC6iA>
-X-ME-Proxy-Cause: dmFkZTGyx3PRk0ruKkD704WaM4BAaq6rLF13Df2Y4VRxnSbmnK6mS4JysAP/WJQg9kxSmD
-    uS2R2XRkst2pLpGYdxZDDjMcnkpJGA+UIjX+Nb4D3ub/PLrb92Yz8EZfdHrb3SbqcTfTkJ
-    /WmtekMNwypfLKIl5fcWwZTrzGoBBhVBcK2zB1NWQGeUDxpI3uvK6PzfbOEsn3gAwka393
-    FffOODCny0m/Yh75dJoz9m+Tahk1P9kgWVkCEFaHjANNNi/RsjAvjpV9X3SQyboyKfArI+
-    NcxseeTP4YVqB2CM29GMqStUuoKjI81/HhoCUqmx6BVS7ZnkAqmljsSw6+5MZWTly4m1SC
-    x+Xj+nHy5gKYY16ZFqcBggU1eu/BN8dXsq/RXI5j86Rk0h8hmxFZqZcj56bcjmvxPdaN1v
-    bYmT/9aD91x0V3OqGQhUIl1kASXZ8SJjvrpbcCrnJz9CDHwk6azpZkNPVyjtdT+feacNFV
-    kiCJoAKaLL5WJGuvFLySyzv+Q4qdxgY86FDGbkz3iN1hkSLmET2YMqUo8j5Rikkc7dRtUs
-    wJkQeRJqRTwE7NGg1Ii4fTG+EwqZLhB+vikna4L/MiQRrGtzE1RPxtFZuuvHCLBlnn6yox
-    athgg7HOXkEGOtdjDHbhTHctfLI9/tcPL2lKSuGfZQF2rvGSA73fJUDRaabw
-X-ME-Proxy: <xmx:IZHsagUp9kJ8WKBbQfrGirJguh_KFu4TKP-L7zJu3sP_7nR93k2N9A>
-    <xmx:IZHsapyDhPqsY9mMI3u5tw82X6JC_PqpPGeVHBrDIyt4bVCBECdoqg>
-    <xmx:IZHsalQvMjUcY_cTS9dhQXUO5dY5HhUW9dCnZr5PLoNEt5h4lcQu_w>
-    <xmx:IZHsaljvFrldQRfcZgKAn1aRyXXffNX1IkoussW_82LOxd4LnGwXWw>
-    <xmx:IZHsatVzusgnOfgS0rcW0niaewFzMOa5W2ywrKBajcpIj4hb1lhLq-N5>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 09:22:23 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 076dd093 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Nov 2026 14:22:21 +0000 (UTC)
-Date: Thu, 5 Nov 2026 15:22:18 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com, karthik.188@gmail.com,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Outreachy PATCH] notes-utils: hide functions that still need
- the_repository
-Message-ID: <auyRGpaHb5rdVP0d@pks.im>
-References: <xmqqjymt94l3.fsf@gitster.g>
- <20261105074333.16756-1-okhuomonajayi54@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OIwSgJDo
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-6de2f213b7aso891366eaf.0
+        for <git@vger.kernel.org>; Thu, 05 Nov 2026 06:31:11 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793889070; cv=none;
+        d=google.com; s=arc-20260327;
+        b=dVU2l+PEowdROFNaVLxgmRnPvam8HI876/vVqlGsgBiDbUXl+01lm/NzACjWBC34/o
+         2S1BkdAI52S12/pNLkbgPHGkhlOXeMkE1adb5/RKvLBmVY8XKm8JwvK/rQUZKDUajDpM
+         uPT48GxdV4FyVEglXZBG3/gJpCu1mcx9RQ/QVYKVBgR1lv8F3rwpUOqpA8UtTGgcOLxE
+         r5/htvcril3qLfLmyYptqeEjPMQYRpte88MEHpCfxBzEVulrKLmfebtLePfxFL7aP96k
+         Y0vOEdWU2TmPs6+9V00PK6I4kbXh2LmyjWExoiEROyxobfgHzIiRDuzawVcjMethbz2R
+         YXDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=PzRZCT/tPG0Z34ndweAfJaDBJNpku85DbWLzMxOC2l0=;
+        fh=t2tfTzhi4uNSt8SobEJkE/vnMGTPovY6UcZ/twvETWw=;
+        b=Ij97fa2+NIiqy00xREKfnKlpnoNrTTTwUIY/YEOhgS3mnfHrzqwuM8VViLrWNhuMiP
+         huzXAY3mC9Xuehvash748owW8ut8wSYNhkd8jABd68YBvVU+a65Ckcs9jj+gU/8zQCyG
+         RKXNMSLfjAotNvkxijpnQC+T/7BZLkmUnKtMjCBVyNBqktRHazumOWUY8hcrwxQrdAti
+         Li3rbGjqbhDtWAwwWHG4TGkVcFXReG5GRR+5Cppq3wRN8wxLSZwI1OdH1Q9hw/A8v3nA
+         mK7SSP3tUZj/cyyupgTs3/EqilWzV6K5d3jT+5ui4roToyl4YNX/eRRBGDW1JokfV47C
+         4g5w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793889070; x=1794493870; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PzRZCT/tPG0Z34ndweAfJaDBJNpku85DbWLzMxOC2l0=;
+        b=OIwSgJDo0Uuh89dr12nnA9R5iSG+cHFpec0jGFdKxv3nYrJc94u1ecwnVpbpOqiVNL
+         RF035ztMQLS8aVcOhELlZ6niT0WwhSJl9D2yLnb+ilmho6m0ULKbrrOF492XfKBaM3lE
+         2ExqEG4dVU0gnfHURihRrYC1YOhxTTo+upLrtzE0trtV9ztEbOv1n0lYnEFCXmcU+ked
+         n3QhYxr5hgW+tQ/EIr6CJN2wwUtcC8Hf4NIVl3k1kS/Zrl4OMc/0HAAeziGut+xn725c
+         J6Rgba68AWZUGXanVdWj3KQM4wL3upzxoWbtJ5QCmyEjESz50DiHAKvzKrmQCHmMVVGB
+         o62Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793889070; x=1794493870;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=PzRZCT/tPG0Z34ndweAfJaDBJNpku85DbWLzMxOC2l0=;
+        b=yiOnD/irOfvLSZx26t8zzg8Doh2HoBlX6lifapYv73hSv7930RU++/syeHtk07QyZc
+         HMW5ZBOLFjGpIeI33H//WZtOO7XIHaLLDkfmXdD+AmhoO7wMadVj890TejYpQCweJ5+v
+         Vfl6FKh95rqlqj1TAtfdpYaihr9gx8JwyOQoph8HDYQ+5whhKjYzh3mHklQSaTpW2CBH
+         RR0Dw4m9lo42ngSZZufw1KqtjaW1CAB1t1hJkgK9uCRlEoqqJXvq3CCBnff3QzJU5Q9U
+         yZMlBR0l8KyskNRODPHWGH7rxp5BRCC+MVdC1cBhSabnpryZCsR3Gnh7rj4Oe4IHKUgB
+         kIow==
+X-Gm-Message-State: APuU4Z+XTCGOU8PhYIC4BMUVt5fZEqDstmwl1XrK7mamYs1rI9EtjUJf
+	dsqY8xdrZxvNJaS2uuFFSqxX4mZMbsoe5m7YklHsaGpBw8WzL8FVUPXR4RXISXo5EdOroT4hnxa
+	E6UoTxYH+WQHSjTC713mErKu34SkSceAmOlzZeMI=
+X-Gm-Gg: AYBFou0ah1zNpMzynZmls6U3+iqdqgj3aaps/QzxUgL0B8ic6B06yLnsprYej+HrfTg
+	FUUxGnarnqInLSRzPSBoy9iaNtV6lzdf7HGfSezRmzs8TVew/pcwbvTblNgDnO6Vd8Z8RkmLhxh
+	0dqevNzEubzG1SgPbydhmeWlgVIbkh78pJetYFiyjfjEFoEyftP8zTyUcqVu9gokiShhlt5ydRq
+	ZvjRB8KbDDKZxxGodAeAAa3GFQM1Z3SuL0Kz2JcVxBAVlAKbJVIsjrmNwyCbAkiFHQpjDKKy+MM
+	o//UxsbHplYvBAP2G5O3iHNcWqz9Xr+itR0l8yIHz2H/a6ScPI5uMPBVcJxjHV50sa+1kD/6o1P
+	dYfmcG7DEM+QRh5dO7jflBDuX9dE+t8tDREX+e1glGuFy5XxRTqP+ujnBlpbFds5g9XOeoyyLR6
+	ZgmTJ1nbJ7+vnHUiblKoEEvyvwd7zaJlMddG4fOFs0EjswfJtwWQkKNBaw
+X-Received: by 2002:a05:6820:625:b0:709:529a:4775 with SMTP id
+ 006d021491bc7-714f6e7ffc6mr10309591eaf.50.1793889069867; Thu, 05 Nov 2026
+ 06:31:09 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,43 +103,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261105074333.16756-1-okhuomonajayi54@gmail.com>
+References: <20261104172434.691381-1-yopatatchou@gmail.com>
+In-Reply-To: <20261104172434.691381-1-yopatatchou@gmail.com>
+From: Tanga Joris <tangajoris@gmail.com>
+Date: Thu, 5 Nov 2026 17:30:33 +0300
+X-Gm-Features: AclHuK8oKz-Yt-TBoZuIJwy7HCmooGza8f-eC4x674ICdoiHEP5fMyPjDaUgPrc
+Message-ID: <CAKrRMNpAW+f2XXMFqpB8ffZsTdyPsaFtHe8dku=JVXACp1M3Hw@mail.gmail.com>
+Subject: Re: [Outreachy][PATCH] promisor-remote: honor promisor.fetchOrder
+ when trying remotes
+To: Yopa Nelly <yopatatchou@gmail.com>
+Cc: git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	christian.couder@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Nov 05, 2026 at 08:43:33AM +0100, Okhuomon Ajayi wrote:
-> The helpers declared in notes-utils.h call into notes.c, which
-> still only works on the_repository. write_notes_tree() writes
-> its tree into the_repository->objects.
-> 
-> Passing a repository argument does not make these helpers work
-> on another repository yet. Guard them with
-> USE_THE_REPOSITORY_VARIABLE, as environment.h and repository.h
-> do, so code that has dropped the global cannot call them by
-> mistake.
-> 
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-> ---
-> This replaces my notes-utils series [1], which I'm dropping after
-> Junio pointed out that the functions underneath, in notes.c, still
-> only work on the_repository.
-> 
-> The guard also hides the enum and struct that notes-merge.h uses.
-> All current users define USE_THE_REPOSITORY_VARIABLE, so nothing
-> breaks today.
+Hello Nelly,
 
-Hmm. Wouldn't the better course of actions be to instead fix "notes.c"?
-It feels a bit weird to me to just make the whole header a pointless
-include, and we don't do that for other headers, either. We have tons of
-subsystems that still depend on `the_repository`, so what makes
-"notes-utils.h" so special that we need to drop all of its functions?
+Thanks for working on this, being able to choose the order of
+promisor remotes sounds useful.
 
-What we indeed do sometimes is to mark some very small subset of
-functions in a header as depending on `the_repository` in case the blast
-radius of fixing all users is simply too big to do it in a single patch
-series.
+I tried your patch on top of master (0ffa3e35c7) in a partial clone,
+and I think there is a problem when the new variable is set:
 
-So I'm not sure whether this patch goes into a sensible direction.
+  $ git config promisor.fetchOrder origin
+  $ git show HEAD:f
+  BUG: string-list.c:340: string_list_split_in_place() called with
+strdup_strings
 
-Patrick
+On Wed, 4 Nov 2026 at 20:48, Yopa Nelly <yopatatchou@gmail.com> wrote:
+> +               char *value_copy;
+> +
+> +               if (!value)
+> +                       return config_error_nonbool(var);
+> +               value_copy = xstrdup(value);
+> +               string_list_split_in_place_f(&fetch_order, value_copy, ",", -1,
+
+Without the variable it works fine. I think this is because
+fetch_order is created with STRING_LIST_INIT_DUP, but
+string_list_split_in_place_f() is used on it. Maybe
+string_list_split_f() would work here instead?
+
+Also, each time the variable is seen the names are added to the
+same list. The list is never cleared, so values from several config
+files pile up.
+
+It also looks like the list is file-static, so every repository in the
+process (for example submodules) shares it, while the rest of
+the promisor config lives in each repository's struct
+promisor_remote_config.
+
+> No test, and I want to be upfront about why. The t5710 fixture
+
+Thank you for being upfront about this. I noticed that
+t0410-partial-clone.sh already has a test with two promisor remotes
+("fetching from another promisor remote"), so maybe a test for the
+order could go there. It would also catch the crash above.
+
+I also could not find the new variable in
+Documentation/config/promisor.adoc. I suggest adding it there
+too.
+
+> +    if (!strcmp(var, "promisor.fetchorder")) {
+
+One small thing: this line is indented with spaces instead of a tab.
+
+Best,
+Tanga
