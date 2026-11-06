@@ -1,91 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793975799;
-	b=mbGqaJphF5eTW5qqlItqLoJmuqEf6bZsIvKdAiXe0bea0jOm7J+t+ZwXMMtGjNGkmLVJ
-	 oFc9QGYmzkr3Uvb7Oyk29yZyHPUqt1tXaDYQ1Lvb5EtPmmCLCRJViFF7UKM5Cd/QUyhLZ
-	 r56GLEzDcui5zVQlewouTr6Z6uPTSaqnWib+U6z8b9FX7LyXNDOLVFIT9O0D27JoCLn+2
-	 rLqx2Np9nIX9Wu6SGct9Au63EE4HckQRSzwVKkqzPKk+R1Tog/kJuie5kZ7VLpUTkKdl9
-	 aV5Tv5kLNjE3VIEKn94uVfzse4CO6rF+aCD+m0v+11fePKxMWS/ZJJOohFNHyQw7Y1Q==
+	t=1793976232;
+	b=aeb1HX0CWvvIt5EfKAKJbxQbERDYtMBCQMtSspAhmxk+Kw7TsxT7gBHeTStmrh00/3Vj
+	 VPHdXpZRFahAwGgZ03HWwXqNhH02uFWLsVgn1htYtzDTzWA1aALWxrjk0Hk5JdaPpdQDQ
+	 gVzh0InCK1DjHryZuG1wUvbSDgOcrV6SEXdgZXXKqMUHD4W5ztjJdtabbDNDZ7N7MBtlq
+	 XKZ9tjGoWCcuz0zn5gECOrSMYCORaP+7/hqaNgpf6aqNIJU6pkzbxh2pjQuG52lkIKVXL
+	 1qGnYo6sZNxeZ3k1As6o0gCS+jyBExdbSGWm7W4ntCEv5qrNW9ELQ+sw81Os7rdhTEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793975799;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793976232;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
 	 Content-Language:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=Bhj8vw7RASgIekVIKLa9upALsmg2j0H9ikSn1icBRI4=;
-	b=sWQ96NOW0CJR9oamrkqDv3DnjaPASpmIbjW4A/60Mf1tEX82xKX967wLgLL+hBVSNdq1
-	 7xKx4Y+4zC+0nkV2RW8l8GybYboJMYO6UnC/8xINFtgt8lMsUDywubtgbmWyhs/qFdxFN
-	 +QG79KjOC9lQFOykV8VUdelfzOkFXYxdyar1ImZAM4anN5Rr9tpuxYg5xcOjat0cubT6N
-	 GxL/D7z0U8lLwCaF5TMnJNI8jaDFvFSNiRFaqKPKVpeZ+iFdhxWQ8aJpDIc3dCeVfXc1r
-	 XyPQIU/e0z//Q5JbYJ6+z8K40MM9IMxgjuvy8airgIajZ6vBW7Fvp0vR3Zcnciqs2tA==
+	bh=Wl+Z0fUh7rzm76vXOj6kXjgtPeVu5w4qnQhtV/8J4wY=;
+	b=tLLBMwr4eM50qltvPsXvO+E2yNT8dXOqYZhAopyYUAKXosRZSEzQL87leQQMsZ79FWaC
+	 GRf40HX+HwXTGL+ZNcxA5Eq38IVQbbZuDBsYgjk7aqyFY+rwJH/GUzuWMLS0QLa73cl35
+	 GeQYxJYIUfnkhKcp0nygk6kvwqpVVDKHsf9jQ8j+t11HU4+dxJ2WHrBOZJ7gLuEwJiGlU
+	 T1J1Dol4TXL6+HDrkDkn3B1W8NOah27vanvoo2RGKqfMuosg0msJQmkDgtSoQI/rka2aj
+	 QtDGwjn4trUBhJ+cThViMBwABQPbn4Ziyaxr7tjqo3Q4lGGTPnyjR+7vdlcEpSCOwJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Exoe0T7u;
-	arc=none smtp.remote-ip=209.85.219.51
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CKUuC6S5;
+	arc=none smtp.remote-ip=209.85.219.52
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74150606A32D
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 14:36:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 74150606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8432C606A326
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 14:43:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8432C606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Exoe0T7u
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-91c847584b8so7717766d6.0
-        for <git@vger.kernel.org>; Fri, 06 Nov 2026 06:36:39 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CKUuC6S5
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-91791ec1b83so5172246d6.1
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 06:43:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793975798; x=1794580598; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793976231; x=1794581031; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Bhj8vw7RASgIekVIKLa9upALsmg2j0H9ikSn1icBRI4=;
-        b=Exoe0T7uoZuiYDb6Y9PpKLdthm+38pr2dKJC1zj6Olt0D1rQAFGFLmrV9WsU/UPrjh
-         7KOd7FHAz8bjB19qyPbPGK0TVvcjww9GJDqMoqAKG/1l87Un8WaFh4R556azWuIw39Qk
-         6qrUMhpjN51z8xIWmlGQa5c16DeQU+4i4qa9GJ8IXTGHeNEnWX/sJ4FWaDRqN2itBeAH
-         HxmN/8Hw2PopysioGzdVXWY4cqeSBLRSW16dxBaPd9i5yQ0SiY2jQjo3ELJGffHiQrSD
-         FqNqVFVkjZ0vBz1Ze2LGxBb7WQwqOrbQiv4gbRhgAduTkJQyeOOKqwPeW7eN9oglL18H
-         zwHA==
+        bh=Wl+Z0fUh7rzm76vXOj6kXjgtPeVu5w4qnQhtV/8J4wY=;
+        b=CKUuC6S5PJ5jA9jcmMvGpwqdDd1mx6jxBpePyk0/dfd7gSLn1x9K3VKLau0qLTRiVE
+         H8YLiP+3j4ruS24Y8PgzhU0otg+J38fSpOOxDBsAOBQtIfrtbfcBurHCfkAknW45V2gk
+         lpbqt5yZ3Zw/e0tB79wocKh+UjzcIMp5LUAhckwYtNUYfmnQ2TESfFeY0nSJ4SVaWtop
+         aIN6gXwFSc2OSZV776EN1zhRP3YRPrbcH7R5PoZd5zTVCHdd9ePp77PmxH+0ALg5lnmb
+         8olVKKJg/5222ITijoPds1kXMHQdB3DTzuVwFkNSJvl09Grw9k8xfHsLIXjO+Mf3cREd
+         2BEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793975798; x=1794580598;
+        d=1e100.net; s=20260707; t=1793976231; x=1794581031;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Bhj8vw7RASgIekVIKLa9upALsmg2j0H9ikSn1icBRI4=;
-        b=vr/+Ckh7pJOoBB7dIp2hDpxnroad4f9Nw/bmA0ZyPRTW2sqWHo/qztNVx8kkOVOFxy
-         hy3EF958u0GqRQJpDWSKV/f2F9FHANn456+1p6+jHMe+CA2KTMZiiHw9TRpVRNCoOtc9
-         X2Z92nn+N5Bt6O04Ost0dYnmOUmT8SKHNcKTp+LaPc/jrFQq9yjs+zHqVqdcv9YEp24L
-         XmZOKhdOpUDQ+5XBsIgzIDXpli54qQKbNeAevSNVUNjOU5etEnAQSU9l0JzQGiveWfmu
-         mlU2UdMYyqjO8MF5eUgswzQQzPtBY1fKCAQAFGbLU5d8wSlDbW9Qko83pyoUI8nJyk9T
-         /0hg==
-X-Forwarded-Encrypted: i=1; AKwUvBw9cG1if1QA18ahCViP2iPu3ofxrKqhYIgCfZzo6D/SnJ/og/q7eVDflowMi7xogtohU3M=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8CgSJSjuyWmHbav0/yn4DTs6aajG+3N53Cp5keDqQjyNTcbKOR
-	4D0PEG0b73AhE5Q2pyhvdGHexcWXgof3bk63y37v+Ykfw+yz8Rt7iQYy
-X-Gm-Gg: AYBFou1HmtV7VB/WB+S30ayPdRvtqjLPiuCXtMoIYdpAjXb4wsfdO/jaP3eJy+TOz7C
-	IMFB1Nd0jjc1RJ/HKI+XgS/Aoca1yjJAA11GKT8797LRizSafKyN54BZ6FwBa+NWwiMUDW8DEVe
-	cofTR9pddP35GRWOOWKbd2GHes/Ti6aWwCbRt+0L3tonTaVf89NxFuzILyCkQZoZLUzvLV1mYz+
-	ZC1PZdv8TEGm6KEU/HCjVPtWBEdSkhQhijkHg3O9rgqerDZPpDr/uNc95UEs89H0xXD8mvU6pox
-	nVgoJz+9hh2gMVXkfIn1QSywfibtstzpRTonjrvzKkLxEr20GQys9fooeGJEFfkp1jo1BRwpHt+
-	uGJCU9+3EOKSb9c4CH9gGz7/w5KulPAwYhOMviuxnGTOpMu0dBlEuYLeqm9TI87xy9JxILTGbHA
-	avAHQQY2OF1nmT3bpyAudCGG8a4+wE4cyyHzgWmk6HpAC/nfhbOlXK9+aT5CHLw/jpVTkyF1nEf
-	YvqEH67wC08JhdBobUCRSQHg6T3kwKj/Nx3rHOg0zzgCMABI+swcSHTq2A34d92/DcDCVfze9Oc
-	Dl/Mbhw74RycEu00bZD+kSeQoj+/SRju9RTCvVUKQNAcnMUCZisLOq4/fH3XNSy4kfr5NdBsWJE
-	ENfiaQS/ylqDWwTrjdaCWq94sEgv+nOlSbu7HFu1GRVirZ1/W754iCk+lb4uSM1h98wnjZpmsbA
-	swYzeT1XD7ZO1P6ltInJv47b+HweWzAfdDWMAkgavig7Wx2gOBf0know/ssVK/qfoNB3hYo+bGE
-	pA=
-X-Received: by 2002:a0c:f40d:0:b0:91e:9e46:c152 with SMTP id 6a1803df08f44-91ea9620ea5mr34756896d6.6.1793975798231;
-        Fri, 06 Nov 2026 06:36:38 -0800 (PST)
+        bh=Wl+Z0fUh7rzm76vXOj6kXjgtPeVu5w4qnQhtV/8J4wY=;
+        b=NPlkW0mESTPEl8g6NZQMKv71w+L0PwYrFSc/bZKylLXAeK1S/195vWR4+jdMdfw57D
+         m4U+c4/VVQt9yLnPDUZ0dKK5lMoC0HQn4YXqzIR3z061G9b6CB5xh99s7Few095VwaA0
+         Xgx0GzRJePG3Zl8g09L1KWq/R9wGg6BvVO6pKlSp5DeExfTkKF/5ZwfIp5PUSYqIL96T
+         muFRv41A2xz2TnsFUQtFfpRC0mTf32CmtJCY/aTT5AEvfobmCfjd6UxA5iu21D8ddGu+
+         sJbSL6w2zgvg8d0S6PT9W4ogp2wlCHK7ah9wq2ZV9bWPsbkzhoSmMiIbFGXpZphVMmr9
+         Pu8w==
+X-Forwarded-Encrypted: i=1; AKwUvByXDWJ3j0ayul8vsizWMU0gKCITmKk3zxd/jAul3DK+/Wq7NnYySreLJQUeGh+DWpFmTQI=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/O743egHzij7QTj2OcymmS3qXXWuz7Jxh9gZTmgD98SKhtgoW7
+	VPDWiEe9+VSHChoS+EC8R+W74+G+nAl9Da5qb8zZZQeM5hBVpuf8A3wSSb8iAg==
+X-Gm-Gg: AYBFou0VRnuw5DdJfwJ6rb7jYjiV2T4vJtPgj1MAxa5Wz7OZtccTGPR7iJPGQ6mcstL
+	O1q/+lXPecyQgpJhwbqbNZYNE4oqF/cg625WbIP8SbSUMoIw0g6GDBKbrQUuIM/GQ8WRh1bJyQq
+	YvsvFJKSsbsWx5RpkkTLsier07lHL03HMiUQ0EFx6inw2gCb5kwapXoFEF0bzQ6Ly5/wG8zbCos
+	YLRd7mdwJRgQQfXf6ttIekj7R14aqMvr+pm7NLAhu7WXng21KKePqlJ0I23MFe9fkhDkb9lh/i+
+	z2ZmdfSg+ifXSMzurtOdovIe9cqn68FXmMWe17PRt1jRZEwDfMjkiBptgdANOF2vgB2zA5CPm7p
+	i6V7/lKqB/wpLO1xUUBjtggnp0W5RHc7p0yFOTdKpCrhZ1J2F22HoxUEZPhN70Y5ofieWaRG8Zk
+	SqUOFjuImcGROY3snKnmv9wDGTyUpmmTC6gtHjUlHO8aqMgiGfTrlL3S92JAQpmlDR4kJcXbWdN
+	1Wfc5RteVOHtOajBhnH5QrL/K50hQHhKJq7h/NERDy2I302d7WrAvuramsx2wpBCIMMVxbZuZx9
+	eQdwzXDyBEAUQh3HETEC/c5F/CAbAlQ/5GiJTSiJU86LE0cWqYAxrOAd5MmYKrwz4EuUy5OoaDg
+	sxeGBYVNbHIk9c/g69BQ5CY4UuWEI3wp96/aqCO85uC2Y5rD4RCw45Nx43R23lMXAkFQplojmIv
+	Y9yC/SGWtKmsTu+PZIFQKuqSlSnJDDG/F22kRF2EwUzco6x9aDi4WH
+X-Received: by 2002:a05:620a:46a1:b0:944:6c7:c88 with SMTP id af79cd13be357-945f355a8f1mr398652885a.54.1793976231310;
+        Fri, 06 Nov 2026 06:43:51 -0800 (PST)
 Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ea6a64fe4sm21933136d6.21.2026.11.06.06.36.37
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-945f5bb9bfesm156498685a.19.2026.11.06.06.43.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Nov 2026 06:36:37 -0800 (PST)
-Message-ID: <aa2063a2-3fab-453c-9f88-86861432eede@gmail.com>
-Date: Fri, 6 Nov 2026 09:36:37 -0500
+        Fri, 06 Nov 2026 06:43:50 -0800 (PST)
+Message-ID: <85924f20-298f-401e-88f7-7fb3f949d0fe@gmail.com>
+Date: Fri, 6 Nov 2026 09:43:50 -0500
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,35 +95,69 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] remote: add relative_url_gently()
+Subject: Re: [PATCH v3 2/3] remote: do not show credentials when
+ relative_url() fails
 To: Aniket Gupta <aniketgupta3001@gmail.com>, git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
 References: <20261105152842.566318-1-aniketgupta3001@gmail.com>
- <20261105152842.566318-2-aniketgupta3001@gmail.com>
+ <20261105152842.566318-3-aniketgupta3001@gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20261105152842.566318-2-aniketgupta3001@gmail.com>
+In-Reply-To: <20261105152842.566318-3-aniketgupta3001@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 11/5/2026 10:28 AM, Aniket Gupta wrote:
-> relative_url() calls die() when there are more "../" components in the
-> URL than the base URL can absorb. A caller that would rather carry on
-> has no way to do so.
+> When relative_url() cannot resolve a URL, it names the URL in its error
+> message. If the URL contains a user name and password, both end up in
+> the message, and from there in terminal output and logs.
+> 
+> Pass the URL through transport_anonymize_url() first. Also name the
+> URL that was passed in rather than what is left of it after some
+> components have already been stripped off, which is what a user would
+> recognize.
 
-I agree that we should have a mechanism to allow users to know about a
-broken bundle URI and to respond somehow. 
-> Add relative_url_gently(), which returns NULL and adds the reason to a
-> strbuf instead of dying. relative_url() is now a thin wrapper around
-> it that continues to die, so existing callers behave the same.
+I'm less convinced on this factor. I understand anonymizing the URL if
+we are sending it to a location that is perhaps "less trusted" (like
+trace logs) but the user asked us to operate on a given URL that caused
+problems, so they should know the string that caused problems.
 
-This method is good to have, in general, and is written well.
+In environments that store stdout/stderr logs, those systems already
+need to be careful about such strings in the commands themselves, let
+alone the output strings.
 
-The only question here is if we should be changing the behavior for
-bundle-URI clones from halting on bad data to skipping bundles and
-doing the full operation from the remote.
+And back to the bundle-URI application: if the bundle list uses such
+URIs for its child bundles, then that's not a safe mechanism for
+communicating those credentials. This isn't going to protect secrets
+like that from being exposed.
 
-(But there's more about this in patch 3, so I'll defer until then.)
+This is just my opinion on the necessity of this change. If we _do_
+want this change, then I continued my review: the patch accomplishes
+its goal.
+> @@ -3078,9 +3078,12 @@ char *relative_url_gently(const char *remote_url, const char *url,
+>  			url += 3;
+>  			chopped = chop_last_dir(&remoteurl, is_relative);
+>  			if (chopped < 0) {
+> +				char *anon = transport_anonymize_url(remote_url);
+> +
+>  				strbuf_addf(err,
+>  					    _("cannot strip one component off url '%s'"),
+> -					    remoteurl);
+> +					    anon);
+> +				free(anon);
+>  				free(remoteurl);
+
+This code looks good, assuming taht we want to make this change.
+
+> +test_expect_success 'relative_url() does not show credentials when it fails' '
+> +	cat >expect <<-\EOF &&
+> +	fatal: cannot strip one component off url '\''https://host.example/a'\''
+> +	EOF
+> +	test_must_fail test-tool submodule resolve-relative-url "" \
+> +		"https://user:secret@host.example/a" ../../../../../../x 2>actual &&
+> +	test_cmp expect actual
+> +'
+Thank you for including a test that demonstrates this change.
 
 Thanks,
 -Stolee
