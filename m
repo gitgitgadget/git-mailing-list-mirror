@@ -1,90 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793976232;
-	b=aeb1HX0CWvvIt5EfKAKJbxQbERDYtMBCQMtSspAhmxk+Kw7TsxT7gBHeTStmrh00/3Vj
-	 VPHdXpZRFahAwGgZ03HWwXqNhH02uFWLsVgn1htYtzDTzWA1aALWxrjk0Hk5JdaPpdQDQ
-	 gVzh0InCK1DjHryZuG1wUvbSDgOcrV6SEXdgZXXKqMUHD4W5ztjJdtabbDNDZ7N7MBtlq
-	 XKZ9tjGoWCcuz0zn5gECOrSMYCORaP+7/hqaNgpf6aqNIJU6pkzbxh2pjQuG52lkIKVXL
-	 1qGnYo6sZNxeZ3k1As6o0gCS+jyBExdbSGWm7W4ntCEv5qrNW9ELQ+sw81Os7rdhTEA==
+	t=1793976313;
+	b=YiDc2a5vfzvFIJ///GFXljM/Gkj/t3fUIr7w2ROV9O0dF35493jECkrOdcHYzIvhUTll
+	 YSIy5d4Wm9MyncVtS831DH4rbkCSUseyhyxZOsGXYCJ+IKdrFN8LNVZZFHfNAxzoALwoV
+	 XUMe51gBkViQmkO3/DIcPSY1PetfSrZPA5cNx2aMHbTVU/TGdmvIQ1WrFCIEJJxTimOZB
+	 YnjZrNTxXDH2pPbwQ/tJ8SB3FICBfYvFVbwqR/qUKlb4c0tCGyVUR6AEdkZLwTGk2yvaI
+	 rjqafFe/TfqnG5Oro1xdWG0ZapZ6PovCro7nk7iRo2WjfoLl1xt/SbB407q4FlwRJuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793976232;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=Wl+Z0fUh7rzm76vXOj6kXjgtPeVu5w4qnQhtV/8J4wY=;
-	b=tLLBMwr4eM50qltvPsXvO+E2yNT8dXOqYZhAopyYUAKXosRZSEzQL87leQQMsZ79FWaC
-	 GRf40HX+HwXTGL+ZNcxA5Eq38IVQbbZuDBsYgjk7aqyFY+rwJH/GUzuWMLS0QLa73cl35
-	 GeQYxJYIUfnkhKcp0nygk6kvwqpVVDKHsf9jQ8j+t11HU4+dxJ2WHrBOZJ7gLuEwJiGlU
-	 T1J1Dol4TXL6+HDrkDkn3B1W8NOah27vanvoo2RGKqfMuosg0msJQmkDgtSoQI/rka2aj
-	 QtDGwjn4trUBhJ+cThViMBwABQPbn4Ziyaxr7tjqo3Q4lGGTPnyjR+7vdlcEpSCOwJw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793976313;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=0j3qjE9VcGmvXaV4s+zbubl2dAsuejKfsvLEpGePtBw=;
+	b=Z1/cP9KG581WlvCLLUzNxtpzdCdBj8Vu8DXNE5Dm4LSJzT5PTlsDHRMw5JIFRQGJoE6s
+	 o0ti/aqZJNuRKzNmej1FfhfyBe2qeZ+XcAjVB/TSLY6yaJ+tAdZTX41H0EsNrZMvktBkY
+	 1LdzRyb9AmkLgBdk0MEloy2Mfaq/PGAAG1fk26bIt+t0stz/xODFexTkSlpTGE/yYQdcE
+	 09QH+ZdoFsRAvfz58dvJe/lUCftPGSiw2rz0cI2cD0V3STZRYf21t3hna8cHp6HCfCcDY
+	 mlQJYifwBsblDNvjJonaVv/iYNxUrBuHxjr2YYBymKRw9Mc8/31xGcW24Yj4uQC1udQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CKUuC6S5;
-	arc=none smtp.remote-ip=209.85.219.52
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DhvymPyL;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8432C606A326
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 14:43:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8432C606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F65606D805
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 14:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CKUuC6S5
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-91791ec1b83so5172246d6.1
-        for <git@vger.kernel.org>; Fri, 06 Nov 2026 06:43:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793976231; x=1794581031; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Wl+Z0fUh7rzm76vXOj6kXjgtPeVu5w4qnQhtV/8J4wY=;
-        b=CKUuC6S5PJ5jA9jcmMvGpwqdDd1mx6jxBpePyk0/dfd7gSLn1x9K3VKLau0qLTRiVE
-         H8YLiP+3j4ruS24Y8PgzhU0otg+J38fSpOOxDBsAOBQtIfrtbfcBurHCfkAknW45V2gk
-         lpbqt5yZ3Zw/e0tB79wocKh+UjzcIMp5LUAhckwYtNUYfmnQ2TESfFeY0nSJ4SVaWtop
-         aIN6gXwFSc2OSZV776EN1zhRP3YRPrbcH7R5PoZd5zTVCHdd9ePp77PmxH+0ALg5lnmb
-         8olVKKJg/5222ITijoPds1kXMHQdB3DTzuVwFkNSJvl09Grw9k8xfHsLIXjO+Mf3cREd
-         2BEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793976231; x=1794581031;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Wl+Z0fUh7rzm76vXOj6kXjgtPeVu5w4qnQhtV/8J4wY=;
-        b=NPlkW0mESTPEl8g6NZQMKv71w+L0PwYrFSc/bZKylLXAeK1S/195vWR4+jdMdfw57D
-         m4U+c4/VVQt9yLnPDUZ0dKK5lMoC0HQn4YXqzIR3z061G9b6CB5xh99s7Few095VwaA0
-         Xgx0GzRJePG3Zl8g09L1KWq/R9wGg6BvVO6pKlSp5DeExfTkKF/5ZwfIp5PUSYqIL96T
-         muFRv41A2xz2TnsFUQtFfpRC0mTf32CmtJCY/aTT5AEvfobmCfjd6UxA5iu21D8ddGu+
-         sJbSL6w2zgvg8d0S6PT9W4ogp2wlCHK7ah9wq2ZV9bWPsbkzhoSmMiIbFGXpZphVMmr9
-         Pu8w==
-X-Forwarded-Encrypted: i=1; AKwUvByXDWJ3j0ayul8vsizWMU0gKCITmKk3zxd/jAul3DK+/Wq7NnYySreLJQUeGh+DWpFmTQI=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/O743egHzij7QTj2OcymmS3qXXWuz7Jxh9gZTmgD98SKhtgoW7
-	VPDWiEe9+VSHChoS+EC8R+W74+G+nAl9Da5qb8zZZQeM5hBVpuf8A3wSSb8iAg==
-X-Gm-Gg: AYBFou0VRnuw5DdJfwJ6rb7jYjiV2T4vJtPgj1MAxa5Wz7OZtccTGPR7iJPGQ6mcstL
-	O1q/+lXPecyQgpJhwbqbNZYNE4oqF/cg625WbIP8SbSUMoIw0g6GDBKbrQUuIM/GQ8WRh1bJyQq
-	YvsvFJKSsbsWx5RpkkTLsier07lHL03HMiUQ0EFx6inw2gCb5kwapXoFEF0bzQ6Ly5/wG8zbCos
-	YLRd7mdwJRgQQfXf6ttIekj7R14aqMvr+pm7NLAhu7WXng21KKePqlJ0I23MFe9fkhDkb9lh/i+
-	z2ZmdfSg+ifXSMzurtOdovIe9cqn68FXmMWe17PRt1jRZEwDfMjkiBptgdANOF2vgB2zA5CPm7p
-	i6V7/lKqB/wpLO1xUUBjtggnp0W5RHc7p0yFOTdKpCrhZ1J2F22HoxUEZPhN70Y5ofieWaRG8Zk
-	SqUOFjuImcGROY3snKnmv9wDGTyUpmmTC6gtHjUlHO8aqMgiGfTrlL3S92JAQpmlDR4kJcXbWdN
-	1Wfc5RteVOHtOajBhnH5QrL/K50hQHhKJq7h/NERDy2I302d7WrAvuramsx2wpBCIMMVxbZuZx9
-	eQdwzXDyBEAUQh3HETEC/c5F/CAbAlQ/5GiJTSiJU86LE0cWqYAxrOAd5MmYKrwz4EuUy5OoaDg
-	sxeGBYVNbHIk9c/g69BQ5CY4UuWEI3wp96/aqCO85uC2Y5rD4RCw45Nx43R23lMXAkFQplojmIv
-	Y9yC/SGWtKmsTu+PZIFQKuqSlSnJDDG/F22kRF2EwUzco6x9aDi4WH
-X-Received: by 2002:a05:620a:46a1:b0:944:6c7:c88 with SMTP id af79cd13be357-945f355a8f1mr398652885a.54.1793976231310;
-        Fri, 06 Nov 2026 06:43:51 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-945f5bb9bfesm156498685a.19.2026.11.06.06.43.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Nov 2026 06:43:50 -0800 (PST)
-Message-ID: <85924f20-298f-401e-88f7-7fb3f949d0fe@gmail.com>
-Date: Fri, 6 Nov 2026 09:43:50 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DhvymPyL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3229E1F0089F;
+	Fri,  6 Nov 2026 14:45:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793976312;
+	bh=0j3qjE9VcGmvXaV4s+zbubl2dAsuejKfsvLEpGePtBw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=DhvymPyLMGZRsAC8DZ+9H3cTLJgwEevD1QviESFHv94mpUigD2xo3CRg5CfP5w8wr
+	 bRPDlHmblWt9+4PqogdbZkTcOezLxdsaaUhfvbUkHI5RpHcAY0ZPoKbrQfgXg3icbF
+	 cMvWJwVeCiMTI+rshd/DR9Rqutx6njCErHTJlVpDD6M2BGI9R7D3RQBY5fQiJQ6S4x
+	 rlni5BTN7+1KceHg1MfOrLtSXazMGIEBXiDEHqS9fmzL1iIT+uHz63KG/jmQOZ6YLt
+	 kHzYiHDbh+vU2JXWbWaJJvCbaI0oi9HuMHpsd3VoG9L1u/stEFGeUQqWLRODa9f2Nz
+	 xLecCVH4Q8Bgw==
+Date: Fri, 6 Nov 2026 15:45:08 +0100
+From: Alejandro Colomar <alx+git@kernel.org>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Andy Shevchenko <andy@kernel.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: git-ls-files(1) avoiding symlinks
+Message-ID: <au3lu4jYwZ5hBZSy@devuan>
+References: <au3Tyaz_LoYDuskn@devuan>
+ <CALnO6CB-b2XuvwkQ9pJp5ENuc12oGMdgbcwz1VKD_i3KWfKuHA@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -94,71 +57,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] remote: do not show credentials when
- relative_url() fails
-To: Aniket Gupta <aniketgupta3001@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-References: <20261105152842.566318-1-aniketgupta3001@gmail.com>
- <20261105152842.566318-3-aniketgupta3001@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20261105152842.566318-3-aniketgupta3001@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="laphslwwjce62gru"
+Content-Disposition: inline
+In-Reply-To: <CALnO6CB-b2XuvwkQ9pJp5ENuc12oGMdgbcwz1VKD_i3KWfKuHA@mail.gmail.com>
 
-On 11/5/2026 10:28 AM, Aniket Gupta wrote:
-> When relative_url() cannot resolve a URL, it names the URL in its error
-> message. If the URL contains a user name and password, both end up in
-> the message, and from there in terminal output and logs.
-> 
-> Pass the URL through transport_anonymize_url() first. Also name the
-> URL that was passed in rather than what is left of it after some
-> components have already been stripped off, which is what a user would
-> recognize.
 
-I'm less convinced on this factor. I understand anonymizing the URL if
-we are sending it to a location that is perhaps "less trusted" (like
-trace logs) but the user asked us to operate on a given URL that caused
-problems, so they should know the string that caused problems.
+--laphslwwjce62gru
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx+git@kernel.org>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Andy Shevchenko <andy@kernel.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: git-ls-files(1) avoiding symlinks
+Message-ID: <au3lu4jYwZ5hBZSy@devuan>
+References: <au3Tyaz_LoYDuskn@devuan>
+ <CALnO6CB-b2XuvwkQ9pJp5ENuc12oGMdgbcwz1VKD_i3KWfKuHA@mail.gmail.com>
+MIME-Version: 1.0
+In-Reply-To: <CALnO6CB-b2XuvwkQ9pJp5ENuc12oGMdgbcwz1VKD_i3KWfKuHA@mail.gmail.com>
 
-In environments that store stdout/stderr logs, those systems already
-need to be careful about such strings in the commands themselves, let
-alone the output strings.
+Hi Ben,
 
-And back to the bundle-URI application: if the bundle list uses such
-URIs for its child bundles, then that's not a safe mechanism for
-communicating those credentials. This isn't going to protect secrets
-like that from being exposed.
+> Date: 2026-11-06 09:15:22-0500
+> From: "D. Ben Knoble" <ben.knoble@gmail.com>
+>
+[...]
+> > A problem with git-ls-files(1) is that it doesn't have a way to filter
+> > files by type.  That is, it will list symlinks, which will affect the
+> > search.  With find(1), I can control that with '-type f', which makes
+> > sure I only search in regular files.  I'd like to have some feature in
+> > git-ls-files(1) that allows me to print files of the specified type.
+> > Since git(1) knows the type of the files, this should be doable without
+> > much overhead, right?
+>=20
+> Perhaps something with "git ls-files --format=3D'%(objectmode) %(path)'
+> -z"? Of course, your examples already omit -z, so if you can assume
+> that it might be simpler.
 
-This is just my opinion on the necessity of this change. If we _do_
-want this change, then I continued my review: the patch accomplishes
-its goal.
-> @@ -3078,9 +3078,12 @@ char *relative_url_gently(const char *remote_url, const char *url,
->  			url += 3;
->  			chopped = chop_last_dir(&remoteurl, is_relative);
->  			if (chopped < 0) {
-> +				char *anon = transport_anonymize_url(remote_url);
-> +
->  				strbuf_addf(err,
->  					    _("cannot strip one component off url '%s'"),
-> -					    remoteurl);
-> +					    anon);
-> +				free(anon);
->  				free(remoteurl);
+Hmmm, that could work.  Thanks!
 
-This code looks good, assuming taht we want to make this change.
+	$ git ls-files --format=3D'%(objectmode) %(path)' \
+	| grep -v ^120000 \
+	| sed 's/^.* //' \
+	| grep '\.[ch]$' \
+	| xargs grepc creat;
 
-> +test_expect_success 'relative_url() does not show credentials when it fails' '
-> +	cat >expect <<-\EOF &&
-> +	fatal: cannot strip one component off url '\''https://host.example/a'\''
-> +	EOF
-> +	test_must_fail test-tool submodule resolve-relative-url "" \
-> +		"https://user:secret@host.example/a" ../../../../../../x 2>actual &&
-> +	test_cmp expect actual
-> +'
-Thank you for including a test that demonstrates this change.
+With -z it becomes a bit tedious:
 
-Thanks,
--Stolee
+	$ git ls-files -z --format=3D'%(objectmode) %(path)' \
+	| grep -zv ^120000 \
+	| sed -z 's/^.* //' \
+	| grep -z '\.[ch]$' \
+	| xargs -0 grepc creat;
 
+But, indeed, I don't care about files with spaces often, because I don't
+create them in my stuff.
+
+I expect git-ls-files(1) could make this much simpler, though:
+
+	$ git ls-files --type f \
+	| grep '\.[ch]$' \
+	| xargs grepc creat;
+
+
+Have a lovely day!
+Alex
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--laphslwwjce62gru
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrt5+oACgkQ64mZXMKQ
+wqnMFhAAviRiAIYgNWavnKkIHllRqEmYQ72tiJhjx71KI5UEuLquzCZms7TqJ9UW
+M1IlZSpNtKZU4hlOP08EiwWNe7fFty7VZk9pvkfKG3pmQtL1ZEI3gXLN7cJjr5i4
+MnIAxM3cl4j5V7NTstfvj1PeiQCCgs9aF8z0ixWeWqetpeL+xhrLX73sBv65PERp
+mLVRZlnQ1SQczZg0lWV264opxyZwNlTayEZV4ALXPLTGDbmL7RunRW4nq4TY4je6
+ZNdqVTsxv4BKbtUfT65PXnAA9HoyzcfAD2XQOc4h1poR/CMkVy6a/AxOD/hJ48go
+qMq1FPOfu0DTUZQsB+BCmtI4P7IPpIAGyKselAdMZ2QzPEsRP9wBVipCwUPDCKQP
+6FxK2+EI7bssAjofrrhUAziATpgY67Wglg87hjsIDKXZH32OHLw8nB7xlIARQr/s
+O33eNfXe8Mif8k6vzIErOobB9yB0r3j3T1/O+OX9kik7OF53BcgD90da5SrFvx1t
+ICUYJfy6vHprIOMSo7sXeB9WxJPC8/Il3DV+7F/IXIuHRRWLaCZNzp+U4PM0XAao
+b9hNECzNnwR9RrLP/SXHQZxBsobCFh3hacFVD2LyuYqOOAdSmaQIzwnl3YIPdCQf
+rRW24EqIK+CqXl+693wOm3yZKgfi8G/wt13QTHLFNnn1iJaCiqc=
+=C42d
+-----END PGP SIGNATURE-----
+
+--laphslwwjce62gru--
