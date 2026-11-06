@@ -1,90 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.171
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793969480;
-	b=1l4rKA1uwBPP5J8k+zOIi0ZFdjX6jOW8ohPQqXiihRrGIMt9TGpMuhOqfKL576kSq311
-	 gmn/UXIgaThfPFKVn+QQai6xAmZJ/nd5uInjdntBdX75f9wUXSGjd2jWiY3kA5vsyHOzR
-	 c7KLn0BQvQjpMe7AI+f+7anUKbFru/tgqUp4VdGji4/tfXTg+WkaLFLTuGuguAYCsKVsP
-	 h7L2bTrp7Saye302QaZsdZGGPRXl1QUjntQpaUSzh7BVkugtAY4xt3BIWfaiR5BwR0ZhY
-	 zzSa5FyC9Sfsha3Z+irhtudQjN9/ftktKy7/TmPkAgBe+k67s8bbgNYDZZIQPhC2QTg==
+	t=1793969479;
+	b=pZmtX668mVUNTdgg4x/hJt1jt+f+JK5Ef2gZ1ZStkbWA51RM0Q1jzLD/X4PBBwDFNczo
+	 PmTOzD1SJneDyAiTq9qG6J/48m1DwMs+9wnBVxBAUEKd+DVvYrolco/WSPZmyUxvPwYtz
+	 ewd9HkOaDSYu5751r9OMo+C7v0Jo/MZEax6hAVw47Yp9gAfUu42bAOMoASzO5+AYy17qZ
+	 s8ddkUx4+B4lVECyqhoPmldPTxe1kBleGbSuz9b7MnTc+8792bIHvog+SltxXEI4n0U2+
+	 6Ls6xq4yqmoaCwwN5MpgMMgkGHlc0iWbWFGVIbCk6fHB8WjVnIK0RF/IxoCVLo44h+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793969480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793969479;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=XveudT9Sng61F4uI1BHGYoX2inGsUSwNWkJBhio50JY=;
-	b=WFQsW0h4YyDahGnny4lpKnc0eJa9BY9xBdowFF+qfSLFteZ+kQDEYnmCVbcuKnQ4mUX/
-	 D7k2L9LX8cJSl2mABzpMcmI5p/9xIlUe1okJ6s02L+sW+vijuMnfpOAFLev83bIJkOnxp
-	 bXtp3BkDB+4rgKDfYIV61+NLKTAc3aDyXL7PwF32yffzCzhYjiPCcESeuaSyAlxeJOtqS
-	 0359PcgSm7TRGoXn1TWTQP5m0iv6EX6BIMbrfNGx6hRmjCK/FRgI3f8l4u1/c9nLX1Gud
-	 CQt599hXHpLMQONjtnaxJF4IQ/8K2bIVSxFTEwbENQ6gudE9i8Ih32tUziLfJ7a8nUg==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=2nYbfqCPZV8sh7oasyvGieVPZiqqy0MlRRyxEDZuIIA=;
+	b=hvwD/sjWM2Jl949NpQJFWFuyXtLuiFTJsKZQ3KzdgzGG5epJB3dRpU/WrAr4ubC17W+z
+	 MqA+fVk9TUK0lbjhEN55ljdBNU0kZaqP3Wc9QDC4i5MCmCgZqI13X3dU7TBFw63NeQ9F1
+	 Z3Hz+YYIZg27BWoz2YbjWrjVprCyLf8IM/Bn+nEtMMw990AH2pwmoindJ+yH6LtEtvF4Q
+	 vI9Nqe4QsH8YYnL1C8DWye1oCnUbhEd2K3/kGthyMvkjGE1WnGsuhSKa6oOXRdq5MXs4i
+	 BrmQbINrzN+msGTaPDegSMi7cJlDGBeutFGF9NuTRzKHGO0vivwy47Zpwn0CIbjzcvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=beQUmZoI;
-	arc=none smtp.remote-ip=209.85.219.46
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qjIPvaxr;
+	arc=none smtp.remote-ip=209.85.222.171
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677CC606A32C
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 12:51:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 677CC606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4224606A32E
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 12:51:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B4224606A32E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=beQUmZoI
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-91c162febb9so5950886d6.3
-        for <git@vger.kernel.org>; Fri, 06 Nov 2026 04:51:20 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qjIPvaxr
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-93f259cdc86so53950785a.3
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 04:51:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793969479; x=1794574279; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793969477; x=1794574277; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=XveudT9Sng61F4uI1BHGYoX2inGsUSwNWkJBhio50JY=;
-        b=beQUmZoIJdOkRVYYczV6OwZNKG2t8//6MjqtjfP65DDANtVXMZ7oEF+w6BAhaJpW2a
-         DQ7tSfh/rjirrAFw4nfFWFQFRXUDnKDZuYvPfh4vOxRw2BbouuvrxkUe3crJrpqc0c9+
-         Z0Kbn1rphhKKIORhlGR73HFcskjX9bzK5JFwKhG7patNnLGowdcwxFwce3j2vp/rHF/S
-         wLTzwOFgz4JvKrnJ7wUPayPTiWEqwQvzVmKcqo2YYNxFKrJ6VGGwn2Nq/DdhErdUwyMd
-         mufAs9ytgIKKbzXqnR9roByH56DdFbCHXE/5IytgagAu0+/Ymc67VG7uY25rjhwHdk71
-         UiYQ==
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=2nYbfqCPZV8sh7oasyvGieVPZiqqy0MlRRyxEDZuIIA=;
+        b=qjIPvaxr5TsMktGET7rNvwae3GGBx+ERf/j1GpiPy+BmXOibGZL/trYFxqlW/Uyb//
+         Ren30A3xkl1XnwOSejJ5v6jSqMg+FrdS20uKI8PzFl1kmmgh8oZXbHcQRRjMkR27bJWG
+         KRvGNVcWuowhUN+h8ZbSn8A9/QpbuclSdWm+D985D/Q/uLFIXfyYGTJuTqI8dSPDh1dd
+         JoVvodPAV7omR5D5JYGYIswT6NjGA1KYSJ1nBDj7KI3Kubge3N/3J3E5O3s58rxUKO7O
+         qiSf1rlyLsVg4/S5kzRblZwcC4aLUju/o3ygrcJ5DNcQI3jkRP1S3lkFWAnv/y4B9Gyp
+         hlYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793969479; x=1794574279;
+        d=1e100.net; s=20260707; t=1793969477; x=1794574277;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XveudT9Sng61F4uI1BHGYoX2inGsUSwNWkJBhio50JY=;
-        b=jfoxDAH9xZG5T3b+jr1dGf+M3y39Ff4mnv7RUQkSQAOiy7V47W71F59IJfW6z0ObYy
-         FNm8D9zehueb0HDsvCiYQoPLcHT/8daDNmHshKgqG1fed+71+1HUiGFarik7vXNS1wpu
-         nd986rvlmYnhgXUXqCfmV3zSvArFHQKH4GL/AgZUcQYe3PjjtNoVcCXns04wInOrkLb9
-         QrYFq9HWu4PtsBrlz6uDEdMhu7LvT5yg5c93MZUysuqsD6s3EgoAcxBqWvzqN5QJbifd
-         nMNrdnS/HidAjc+ASyyfs/K0456yqw58yKJsWP1lOo8N96hsSX2V8cqgItOBarCTtUl1
-         9x+A==
-X-Gm-Message-State: APuU4Z/herErByn3wzg2jdCyoFW0RWAPmw14AM3YBMmTs6SAq0HLl9D3
-	8yKxfvShv70s5/JuzObzHlHJGfAE9Wp4skOZV8khp6BHDwLOh9fmFtLvMLgda+VP
-X-Gm-Gg: AYBFou3Jqdrf9W0UI3AXTuAa03meE+9RcVbqZEiLwW8GMEKSE3xVJNZN+zaKi+/YYPL
-	yU+x6jNjM1b3JxzKjZd60U0FT3Dnl44g4zujcqV4XnVf3VnSHTgtrKIETY2jGkeCzZx0BPJTkUs
-	RjEiKvRtwBw1we5Q1gcWrHnTVDm9WVdcPUk0eTc2wtSR9vejypofVQNp0HD1qM7/jhvysOAoA9U
-	T+00uhuBxHjWDtMR0/aAif/oo6P2JFGyJqcsl2Xk5nD/4O4z3bRg6CG2KnzgZyzqUE2adGBoepu
-	9/S+D6jOmU+Nu+7l1gqA1EHtsGE1vLSohyzgOze9n+MyGfAPL4MGiNyREHRJ4SBnEgjij6fR4rI
-	Z3KQ3MqoZ4fCRxwm9GdP3Vw2pa7ywl5DV6I0Y2oLOglHjpUT8wcvbmD+H6SbSLeFdEDaVedDXie
-	UNEPEfuGuBNgS7vabnFf4FqJf+XiB/0io4e9fSZbDudPCdvadbB0XAXf3p8a5BR+PEnTiR+9FOn
-	YvPIMgSGgvOUUNuVaQyQG8I3sYd7OUANkrG4kSSEji3YnA0v62HM5KvEv+7fnKD3DdJZ5hTM/47
-	i4am6AE9Qdgp3RHhRvg9K+V4pfogZMnuMsAKgQ7F8o/cCHYQeXHL
-X-Received: by 2002:a05:6214:3011:b0:91b:98fe:d2ca with SMTP id 6a1803df08f44-91ea96a69d4mr30503396d6.23.1793969479240;
-        Fri, 06 Nov 2026 04:51:19 -0800 (PST)
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=2nYbfqCPZV8sh7oasyvGieVPZiqqy0MlRRyxEDZuIIA=;
+        b=xjNPUf3AFYcc64HBQjDMsQGzufPQU8hTStiz7dbWCzcEuVhCPjTTCXGzMpaKcen1hA
+         dNy4o1Ag06FHgFE5x2rcB8BJ4aa3vWQEIwGPvdTRInA7rRjtNzf60I6qFziMFcQVdGnU
+         6oIO84Q0r/nRq2DgcVu5OBYQxZsLgXGtzrM/0kICtPPEDZBvZ7JDuu9ccanOQl663NBQ
+         LhL3Yc3EdYXtzwlibVtQ8amSOtjPsiJ8K4kOm7tT2f/09dVJqGe6Qr1/1JGu6Y9Ps4yk
+         /ZVk5oNzPnIPwxZtwRcRYCF1x7+0NI/lODz0DNJl1MhMuvKrZDvqRh87iBS+zGbPTJTB
+         35Vw==
+X-Gm-Message-State: APuU4Z+d+dsocl1C6Bnjrs3e5Yo9Zd1lsHsTFBywNhF6gQjmtrw2a6yd
+	pedm1Sisfk9X5taeodixxsInG4pxTb9cc418sr+Xy7uKahQymFlfA9cSvLKM/4s4
+X-Gm-Gg: AYBFou1NTerNQ5cZQhw/ZWAX+o1zpMYIBVTGijW/81CJWxdurEhHS7jD7FKiSi5aPf+
+	my2mutJF4ACtc7N0T/wOxdJ4PiEvsMb4e6es051hWTSjnl9z8pYCYJ0HA23tfViQuaGj9D9sobK
+	GY0PTmfqgfH+PQJOpyVGAawoAh5s76+ljDkTuZi8HX9U4DEtyLM6VGNOUDK13PSMprnx05E7caE
+	LN8dnHbFADC6fWIXKWuZ+WLAB+Km1F6MIMkidf1fdkcn/BsdKbYjsNoLo7H0HALft9Sdro4yDE3
+	o+YFCOhTKrp7t7dxHXUq5TOkNNFQAdITtiaXQNN+0G8wTzM1EiPBCtK6PR829e7tL+9EI1gVBfy
+	fOlsq4tmo75oAPJ1+nDEvHplBPRA+1pC9rG1VMPVaU/dzX+rIht93zlWIg6fnbnEV2VfGMwi5Ld
+	zgJGo2g6qvwRMFXbUV9F2GEK7whjUKyCmRtIMpfkzDYpTEg3Fm/ftTLMSiw5w65luIDJWpFa0D5
+	2z7I7/mQQZqL2pVrUK3Ji47mAqJa4QFznoNlH5J6YphDzxgeaH8hqoCAshFMIzCnrmD5axnayvH
+	sAA0QFgOX1wBrzaY+O8VIwB5laCJG0o=
+X-Received: by 2002:a05:620a:2694:b0:93e:fd69:9a93 with SMTP id af79cd13be357-945f3506c56mr322529985a.31.1793969477491;
+        Fri, 06 Nov 2026 04:51:17 -0800 (PST)
 Received: from [127.0.0.1] ([20.55.15.233])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ea6a887c0sm19789886d6.29.2026.11.06.04.51.18
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-945f599bd5fsm137013385a.9.2026.11.06.04.51.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Nov 2026 04:51:18 -0800 (PST)
-Message-Id: <6c6abee65cb3987978b982e69f227e408c0bf408.1793969476.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2299.git.1793969476.gitgitgadget@gmail.com>
-References: <pull.2299.git.1793969476.gitgitgadget@gmail.com>
+        Fri, 06 Nov 2026 04:51:16 -0800 (PST)
+Message-Id: <pull.2299.git.1793969476.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 06 Nov 2026 12:51:16 +0000
-Subject: [PATCH 2/2] t5608: assert that the packs involved really are that
- large
+Date: Fri, 06 Nov 2026 12:51:14 +0000
+Subject: [PATCH 0/2] t5608: assert that the packs involved really are that large
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -99,174 +95,30 @@ Precedence: list
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Kristofer Karlsson <krka@spotify.com>,
     Kristofer Karlsson <krka@spotify.com>
 
-From: Kristofer Karlsson <krka@spotify.com>
+I was looking at which tests take the most time in CI, and t5608 stood out
+when (unscientifically) spot-checking a single run. Profiling its setup
+showed that it does not actually create the >2GB pack that the test's name
+promises. While adding assertions for that, it turned out that the
+unpack-objects variant of the >4GB test never runs unpack-objects either.
 
-t5608 was added in ca31f0b5c2 (Add an (optional, since expensive) test
-for >2gb clones, 2009-03-06) to construct a repository larger than 2GB
-and clone it.  It already anticipated that the setup might stop doing
-what it is meant to do: "Should that break in the future, e.g. when
-pack v4 becomes default, there is a commented-out call to
-test-genrandom which can be substituted".
+Once it does, it fails on Windows, because unpack-objects narrows the size
+of a streamed blob to "unsigned long" on its way to the object writer. The
+first patch fixes that.
 
-It did break, silently, with d9545c7f46 (fast-import: implement unpack
-limit, 2016-04-25).  The setup writes only 24 objects, which is below
-the default fastimport.unpackLimit of 100, so fast-import does not
-keep its pack but turns it into loose objects.  Since the blobs
-compress very well, the repository has less than 10MB of loose
-objects, and the bare clone merely copies those.  Only the file://
-clone still deals with a pack larger than 2GB, because the sending
-side generates a new pack from the loose objects.
+Kristofer Karlsson (2):
+  unpack-objects: pass the size of a streamed blob as size_t
+  t5608: assert that the packs involved really are that large
 
-The ">4GB object" tests added in 4b220cafbe (t5608: add regression
-test for >4GB object clone, 2026-05-08) have a similar problem.  They
-are meant to cover a fix in both index-pack and unpack-objects, but
-"git clone" always keeps the received pack, so setting
-fetch.unpackLimit in the unpack-objects variant has no effect, and
-both tests use index-pack.
+ builtin/unpack-objects.c |  2 +-
+ t/t5608-clone-2gb.sh     | 54 ++++++++++++++++++++++++++++++----------
+ 2 files changed, 42 insertions(+), 14 deletions(-)
 
-Nothing noticed any of this, because the tests only check that the
-commands succeed.  Add assertions on what each test relies on, so
-that it fails when its setup no longer does what it is meant to:
 
- - the pack created by the setup, and the packs of both clones, are
-   larger than 2GB;
-
- - the synthesized pack with the >4GB object, and the pack written by
-   the index-pack clone, are larger than 4GB;
-
- - the unpack-objects variant really runs unpack-objects, as seen in
-   its trace2 output.
-
-Some of these assertions fail with the tests as they are, so fix them:
-
- - Set fastimport.unpackLimit=0 in the setup.  fast-import then
-   keeps its pack regardless of how few objects it contains, so the
-   repository, and the bare clone that copies it, have a pack larger
-   than 2GB again.
-
- - In the unpack-objects variant, use "git fetch" into an empty
-   repository instead of "git clone".  Unlike clone, fetch honors
-   fetch.unpackLimit, so with five objects and a limit of 100 the
-   received pack really is passed to unpack-objects.
-
-As a bonus, keeping the fast-import pack also makes the test cheaper,
-because unpack-objects no longer hashes and compresses all of the 2GB
-of data a second time.  Locally, the time spent in the setup is
-roughly reduced from 80 to 40 seconds.  The test runs in all CI jobs
-via GIT_TEST_CLONE_2GB, and is among the slowest tests there.
-
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
----
- t/t5608-clone-2gb.sh | 54 +++++++++++++++++++++++++++++++++-----------
- 1 file changed, 41 insertions(+), 13 deletions(-)
-
-diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
-index 5d56debf1c..9d7152486e 100755
---- a/t/t5608-clone-2gb.sh
-+++ b/t/t5608-clone-2gb.sh
-@@ -9,12 +9,28 @@ then
- 	test_done
- fi
- 
-+size_2gb=2147483648
-+size_4gb=4294967296
-+
-+# The tests below are only meaningful if the packs involved really are
-+# that large, so check it explicitly instead of trusting the setup.
-+test_has_pack_larger_than () {
-+	max=$(test-tool path-utils file-size "$1"/*.pack | sort -n | tail -n 1) &&
-+	max=${max:-0} &&
-+	if test "$max" -le "$2"
-+	then
-+		echo >&2 "largest pack in '$1' is $max bytes, expected more than $2" &&
-+		return 1
-+	fi
-+}
-+
- test_expect_success 'setup' '
- 	git init 2gb-repo &&
- 	(
- 		cd 2gb-repo &&
- 		git config pack.compression 0 &&
- 		git config pack.depth 0 &&
-+		git config fastimport.unpackLimit 0 &&
- 		blobsize=$((100*1024*1024)) &&
- 		blobcount=$((2*1024*1024*1024/$blobsize+1)) &&
- 		i=1 &&
-@@ -39,14 +55,20 @@ test_expect_success 'setup' '
- 	)
- '
- 
-+test_expect_success 'setup produces a pack larger than 2GB' '
-+	test_has_pack_larger_than 2gb-repo/.git/objects/pack $size_2gb
-+'
-+
- test_expect_success 'clone - bare' '
- 	test_when_finished rm -rf clone-bare &&
--	git clone --bare --no-hardlinks 2gb-repo clone-bare
-+	git clone --bare --no-hardlinks 2gb-repo clone-bare &&
-+	test_has_pack_larger_than clone-bare/objects/pack $size_2gb
- '
- 
- test_expect_success 'clone - with worktree, file:// protocol' '
- 	test_when_finished rm -rf clone-wt &&
--	git clone "file://$(pwd)/2gb-repo" clone-wt
-+	git clone "file://$(pwd)/2gb-repo" clone-wt &&
-+	test_has_pack_larger_than clone-wt/.git/objects/pack $size_2gb
- '
- 
- rm -rf 2gb-repo 2>/dev/null
-@@ -59,24 +81,29 @@ test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'set up repo with >4GB object' '
- 		4gb-repo/objects/pack/test.pack) &&
- 	git -C 4gb-repo index-pack objects/pack/test.pack &&
- 	git -C 4gb-repo update-ref refs/heads/main $head_oid &&
--	git -C 4gb-repo symbolic-ref HEAD refs/heads/main
-+	git -C 4gb-repo symbolic-ref HEAD refs/heads/main &&
-+	test_has_pack_larger_than 4gb-repo/objects/pack $size_4gb
- '
- 
--test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'clone >4GB object via unpack-objects' '
--	test_when_finished rm -rf 4gb-clone-unpack &&
-+test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'fetch >4GB object via unpack-objects' '
-+	test_when_finished rm -rf 4gb-fetch-unpack &&
- 	# The synthesized pack has five objects, so a large unpack limit keeps
--	# fetch-pack on the unpack-objects path.
--	git -c fetch.unpackLimit=100 clone --bare \
--		"file://$(pwd)/4gb-repo" 4gb-clone-unpack &&
-+	# fetch-pack on the unpack-objects path.  This needs "fetch", as
-+	# "clone" always keeps the received pack.
-+	git init --bare 4gb-fetch-unpack &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace-unpack" \
-+		git -C 4gb-fetch-unpack -c fetch.unpackLimit=100 fetch \
-+		"file://$(pwd)/4gb-repo" main:refs/heads/main &&
-+	test_subcommand_flex git unpack-objects <trace-unpack &&
- 
--	# Verify the large blob survived the clone by comparing its OID
--	# between source and clone.  We cannot use "cat-file -s" because
-+	# Verify the large blob survived the fetch by comparing its OID
-+	# between source and destination.  We cannot use "cat-file -s" because
- 	# object_info.sizep is still unsigned long, which truncates >4GB
- 	# sizes on Windows.  OID equality proves content integrity since
--	# the clone already verified checksums via index-pack/unpack-objects.
-+	# the fetch already verified checksums via unpack-objects.
- 	source_blob=$(git -C 4gb-repo rev-parse main^:file) &&
--	clone_blob=$(git -C 4gb-clone-unpack rev-parse main^:file) &&
--	test "$source_blob" = "$clone_blob"
-+	fetched_blob=$(git -C 4gb-fetch-unpack rev-parse main^:file) &&
-+	test "$source_blob" = "$fetched_blob"
- '
- 
- test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'clone with >4GB object via index-pack' '
-@@ -84,6 +111,7 @@ test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'clone with >4GB object via index-
- 	# Force fetch-pack to hand the pack to index-pack instead.
- 	git -c fetch.unpackLimit=1 clone --bare \
- 		"file://$(pwd)/4gb-repo" 4gb-clone-index &&
-+	test_has_pack_larger_than 4gb-clone-index/objects/pack $size_4gb &&
- 
- 	source_blob=$(git -C 4gb-repo rev-parse main^:file) &&
- 	clone_blob=$(git -C 4gb-clone-index rev-parse main^:file) &&
+base-commit: 0ffa3e35c7c82ab8d0de226149fb03b3f7674d05
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2299%2Fspkrka%2Ft5608-real-2gb-pack-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2299/spkrka/t5608-real-2gb-pack-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2299
 -- 
 gitgitgadget
