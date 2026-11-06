@@ -1,117 +1,117 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793961023;
-	b=2DMu1nBdrtD7xI69wY9wy1mSoDASeEDIyjU5hw8SNHU5r5fsOqsZwk97co8TnNutZ/ca
-	 2Qgf8wQ239pm55PbIo8b2ynzrWJpFa/60zWbqryKG9sdX+eup862d4zE5oEiFMSQ32w37
-	 DpWLbmmT1YXHR2zlf/sXzVUs2D7y34V1jZsfBvcYTsg0WuazTC1AtygCi1ZDv+y3aZVzy
-	 s05x0DX8NZyyUwZhswzl4EQRo9CW8fmNay3axwons4GmfYwhdvKl5WwEspPpZGBVRHFgk
-	 MySCVX3m3gybJmrOK2y6fNiocmGXWUjEg4T4pypIgZ+KMzlIOJjbj+s6rl95+61F5Eg==
+	t=1793961025;
+	b=JkriTNYMMtHtOr0tAANH0s5A6pkZggTBnhH5bKB/9NKfQPARhlrx1pnWXvcAGgjCQNTN
+	 vGsERwxhe2ler5eG6Yzt/w6C8qtXqFE5qllZ/OsJMAKTaS75jS3Tnb0UpFESnrsdxMx5u
+	 C130dZyvzH0WtNDpTy5Ypx1rIy0Y+nmK6mbDLixG5qT/8zG6Mg/0oG9hNGpvD+M2ZfVxH
+	 r/hlHFfBrgpqwJA4xJ2NA1rgNDuFHz36sBuDEyBx1cqUZmks0Xfx/4HG7dQWv/yaR1/SG
+	 T8ErBqh0wHCoD5u9Wf1mpxhvX1kBN7mIFgYrgdQt8L+wspacq5VJCD3IbRfZFzNkZIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793961023;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793961025;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=HntYHZhnxgVoSTq18MjE21rv2IeygyLNe1LD+ORt2w0=;
-	b=czafIoFAKmFrUQlgNIju8F7aDKf2Y3059/5pRSVmB4WCY2h6EVag8gyyzZYwigOJinO8
-	 ClF5xUoMIq14KLp60lO/CnX12NAiipc8MUhlTQWmyLljgfOZjY9XKPefPPxhA2ukcQv6w
-	 N+smkhj07+8wauSzYGG0aeLIYUCtJyA8KNqQ+iA4Eq8JNfcWZLYTvngZCoP9wwcQsVHzU
-	 m9h403NfM0vC95tz6brXL76O8l4yVL4Xc0y+otzCZ1Kb1+nA1FoleQD1A1f00+25HCGye
-	 Ufvr3S7GX1TTE/dkXMkxVCVt5oxvwn0BUvviEXRXxY2+Bpr6oerr18AU/jj9HeOWk4A==
+	bh=qJVxtg9WI7tzVs149wNlOzOn7KIOn7fXY33h7TI3cg8=;
+	b=qdbLkGISec/EbarBmr5J/fVzuHmacdAacggsN0+3q1X6sj7fI5a4ozpOxA6QvZa7VUuM
+	 MT/bvYCmt+NrI4NzLvtHYJIXuvX7quC8SHAP8iRjCwIKZ+/bRdr9LQ9LYmCzhBLdGoSpw
+	 SfEfB35B0h4QP1GYxc8jTWJDeM3vn8x9ivnq7xNfnu0hHKCM4MwXgvPoGqVffxsDec49A
+	 X3qWBYvVPv3EK6egcC0WToT7kTHdVbZsguKvJf3oX8NootFmGIA20my8DiQTnRn1Epxyy
+	 nlUwb5BHHPRxHlhUaAh61ye8WbkB66KK2Be36J4wOTo6VvD6i+7NXmlwwHPQTC2cYSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=rOTkXLf9;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nS5j+Ppi;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=GJuNildN;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=pYf6MkAV;
 	arc=none smtp.remote-ip=103.168.172.148
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7B2606D807
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 10:30:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB7B2606D807
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D553606D807
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 10:30:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4D553606D807
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=rOTkXLf9;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nS5j+Ppi
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id B84ABEC01EA
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 05:30:21 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=GJuNildN;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=pYf6MkAV
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 857F9EC01F1
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 05:30:24 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 06 Nov 2026 05:30:21 -0500
+  by phl-compute-02.internal (MEProxy); Fri, 06 Nov 2026 05:30:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1793961021;
-	 x=1794047421; bh=HntYHZhnxgVoSTq18MjE21rv2IeygyLNe1LD+ORt2w0=; b=
-	rOTkXLf9MHPTJUJxYw715nJZ0vxCUbjZMO5ncgi2mpsMo7cnWar294IEFJs1j+7C
-	BaW8U3WggCDSl8Y3mFTnDa2cVgg4a6UWUz1+PRVDad97yTpYwU7pBkukax6QHHPQ
-	vYuuDrRfs++JB61Ga/b2T2Ot6WS7O5zezdxl5I28JO4EvHrKr+vhneGtMv9rxHD+
-	DFDPwZspxfwKQyCdJydSi/nz3BDQkSQgibAATqYpVDy+JW2f1uP6hVJmU3zxXqPv
-	NTcXMuJmT1WTsV6VfrvPtF7GWh8WCvDnbNdc/K8mhp7Pghhm00txt7Q9AsBJvwZn
-	z4B/zVegN3UujMgXa1yrqA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1793961024;
+	 x=1794047424; bh=qJVxtg9WI7tzVs149wNlOzOn7KIOn7fXY33h7TI3cg8=; b=
+	GJuNildNE/K500MiNBJChzB7JQMbwrGJ+ITB3mAt1k/ulFMEF815YjWZYvmqWUgc
+	jpAzEKnD/khY1udAk/k5Oh4LndQzjamx5H5lQyk8e2YsexfEzzv0ILubVnClQPgE
+	IraMGj6P9o/neWJnf9tOK8vEuQvSjOa0jex0lG0wUKlHtuYrzxSxduU0fZZXcOW0
+	77HPG2z6+hqky6EYIRZkODBh++UcP4hqQhZMOR+3+scygvLRbp+x1pRvXWxRfvw3
+	o3r/y46DNYJtcwHQMSC8WHRpA3EXOLPQI/O9mIdoy0E9b6UYw1iTzCONgJHpwxjv
+	r0E0dl4kBybL87THViNYbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793961021; x=
-	1794047421; bh=HntYHZhnxgVoSTq18MjE21rv2IeygyLNe1LD+ORt2w0=; b=n
-	S5j+PpiidWgSihvZUpKhkp0TwxRqXPEpMgYjR0L6wnBXHfTOOMRQO7hk7vjBKcO8
-	Qt4MxmZBMpFAOsLfhgBhMBFFEBPgohJNBIrhODjFQ8Gb4JNvQVZP24EMuqjaDS2Q
-	ZLEmx+gjZSU8ELQs0OR1Iywj0omCefcxmPRp3SKRhTTDrqKNVp/aks1XoFqhRrGd
-	ecjkz9C5jd63wgOHO8T1AN3QgEImw7iFWsiFX8P2m9un4isBM9q5RjKzoWMWYddX
-	GtygwL35KpFmY0rgGdD/g4D0LeQy+9SMYnnjpJkh/hZ3djbciKN30DRM6+99HwK+
-	sZTYN1wPajhLo3b5xml6g==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793961024; x=
+	1794047424; bh=qJVxtg9WI7tzVs149wNlOzOn7KIOn7fXY33h7TI3cg8=; b=p
+	Yf6MkAVKZzkQQA2WHW9mgMlUkgbAj5ReyItYyTbosC9zwIPJwPbeinB40319kt7R
+	rGmMd6QAYKRTmBc3aDVjN0aJShZs9xPUqfpVfV8XwdPo3werQ1dLDHrYC0+wfCqQ
+	q6IeLmgb0DEI4NBgcdArq86MiwFYyjACQS3S5hNehop3F2Pfn1FbU5SIQgKw22YA
+	zzFlCUmHkwZbg9ZC9GmUKTh1EnXYwL4i4Jl4MiSCys9ZsZnCIqg9lW/4/n4YIbx8
+	/4NWwmlqou5l886N/wQeidzTNLYq8ybWPjCrR41DlolKUruy29m8q8KaQVEq6IIR
+	pXEkO9xSLy9PLn5iWZO2g==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793961021; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793961024; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:SQxVbCz6h1XQjVExjJ7XQttyllzDT9ArrXw+a4FvkkkZJPv
-	rx4gsUQhoCEH26Q7VE73vBxIIyYpDU+8H9meJYvtQxtE9ctWz0qh38wr0Ro+hYxY
-	HSDI58VTjf9Z5lnu7FQttTxT3tT1+rtFwz/YrGYspdjtu54LvivCT2JQK2v4kn2r
-	RwRjGvIky7QtKM12Wx+XezRRvkLu5Be3zLaU1kWyH/c8hPC2DnhnHHli0d/gyGPJ
-	/V5Gv2uD+VtghqoBYQUoChlnpHODbIJOcnM+h9pAbdQcTvbgzH0w5WwIH3gh9ExS
-	wbhfS1iDOTxwDKdv5qXYvv8MZ7L5mWEk3uXSeGQ==;
+	s=fm3:rsa-sha256:tU/2hrt0ftldt3Tf03pnWKRSjK7dwufAvO1HD1T6ekgidhO
+	N5NR88U808Yx0klzhJTgsDgv+DWKKw8ZzDsEzb/NUSC2qeDovA6yyB8GtLT1OJpb
+	+hLzV9vcKRuxLx6ErWESwZaqj/BWPld3OnGLZZoEuesY8qgoZAtm3+vkNb1FGCN4
+	F7S5VdZzWJRryhG7RlpXDbw5g2xUfYgSDQmwCcWMVmz0l6eroBqK8PEl4QR6y2wm
+	g/qyJukVL2w7juh9bwIHc5+IsIO1mCg++LPEmpXym9Z2OnrvkZBnNbECM2O2kgFD
+	ZQANHNMRWfXf4t5dXIkW6YOjUgLaiGfT0TiaaIw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:7CWhoQFv8LeRi+cjxtSUuxS5qaprGlIdrKYgFIuUtC4=:BGfcnL1hoXb+sBNnZd6dgKbPjLKZAMRPbKeU95yhEbA=;
-X-ME-Sender: <xms:PaztalGf0G3mZQsf78sxFpx7O5SO3RMPHSRJk1kdEkHSpnRkCepS2Q>
-    <xme:PaztagU7NibfiRAsgOYPaWpRuUHF7WATXepupkxH-ZXsH4_VnXoO9Uqv06rmmzAiW
-    F_o-duMeqCNeKWYUawEopmzSpN1lAChREFGzV8jj2Db7Tb9RplCqlI>
-X-ME-Received: <xmr:PaztakyVAvGHUsCd72L58nkD27aIKm0iBpJnrodnCr4fKDndgPCl7hskBrSlSdPrz-gQTA>
-X-ME-Proxy-Cause: dmFkZTGy77yXrjJS9/3QcuR7pa91rjJ1dPHPAmws2vnFDxHmVCZo6/qAJbB8zn+b2xX8hx
-    2jNUqL0gYmXt9xXzGKEDcwA1blLEETl+6XVOGQtnMu+Ta9t5IU46E5JxbMAmgkNiHg1MGN
-    VAG4GvEz1F1J+wueIPkWbgt24Ugo1ngfnHYpa/Z3EAxOam9qrqbygvrjFqLNScL/8IhS+8
-    sTI/RoIWbNkQFt1lWWykvjNhwEwEtIvQSYAsoyoJmt+rvTiqMJnjy+sOSK4vZskVf8VYle
-    aeqGxJm9Exev1XYrfNyRB45oA9OHchQZMN9BaUT+E5s4Qy1+zrAarY0O0PGLzMMK99ucB4
-    zMWXTk8Tn2eZt2dyCiZfnXOdgpNXYHGlq8qLyRKqY9wtjXWN/hMOZKWdlSo94S0G0AKv9L
-    XQm64wSExgbQlfPyirtzn3py6rKmp/Nroo7GNa4FMz+JL+rzGP8cu+b7yWxhjWinxcPdXY
-    84rUXSB3pk0WWQurtBqvJ1eJJHw1+ukNlXtgTtzQurFzoFg+IBo0mpJbe+PUjx3r5yN9Gp
-    N9m6RfXWThUuR+1j6I7ODow3dE+D1ws0lIkYPGYBZroJ9LIzX43PuL1rXcTwa7iGLTdbbn
-    WzFSn+hqYuxcgnv5LGJkaASFJWKbRujKJHmHk5SxWAM69U/aturbs7uZEvig
-X-ME-Proxy: <xmx:PaztamMiJqL52VHrW8TreKLDL6_uGPZ5i65spAlx3xdP6QwYORArqA>
-    <xmx:Paztat4TLMQeXZt5DruXLA3jYKaeTALeLQf7y-3DYvgSrx8BuZhtKA>
-    <xmx:PaztavPU3ZIAcBTTMoeauCc4Ah6K83O3BZFP7Qmvq6KvnBjE7_bHWw>
-    <xmx:PaztajmwXruz2QcJwFdDf5HkosdFL_N9zJhDPEeyn4ash7Fk8V00rA>
-    <xmx:PaztaiqjX_1P85XUi-CsQuIzlHrBh9ZDa2WC7l9P1_Nnxqo9M41OqPcu>
+Message-Instance: m=1; h=sha256:y0tnOxpHZN5NnZWEbmXOL1aWACA/TAcR6SaRBEoaCAc=:lENN1i5doFkQ7wzsEVy6rJx6PnCQjPM+3c3mzQHcso0=;
+X-ME-Sender: <xms:QKztaj6JJ8K9oRXxUPJ3WKbgsy7q2zltPVDlS5tdbjvQSJGFnuahNQ>
+    <xme:QKztau7C3lGtCmCml7wewZzlP46C9XqY8L8-ieijAH34lLmXsaMrnF16jsXwkh0l5
+    SUa9Z5JdmfgO4zTQ2uE0dgMXVs2cIpbeQZEuJ4L6HW4xGIPJXtfvaM>
+X-ME-Received: <xmr:QKztaoHJq0rRnwnoJPGe-1extPpzgwah_zcNgOpK7NQ0jbrwnot1xVdy5W_GLNnpXwVsaw>
+X-ME-Proxy-Cause: dmFkZTGAohKhTI20WoVqgI/VaFyawJHaD/3N4tsoMJr6M/rD0dE26f+p0+0Otw5132GQRn
+    lHfMN6Vk1yMWEiArpti53C8RZ7GKYPVwdm8W1T9rrtKrcxk/cY9aDnr8SlaSK1nlAlS74O
+    AEVHFUL0bARxAKdgeX8rA54iaDrp4WNqn5FPKIy9bLmizMl8shAoTP5GNMYz6d4igjjO5A
+    ujhmdUa3H7AQnblMG9eMNm71pQJgeeSCHwxJP0XB3IbwzZADIWyOVR8dUVA/yvBdaCfSRj
+    oxT0b03eE/bjFK+VKIYWBSt05yr5Dfg1jcUfEH9V4dPcD9nSQ+/u846RF8FwD6lyOQWjH5
+    DpZGLWD7ScOXti4LHAfqmkV6DgefeENjOTn5LWdGauAgRPZORxLXJHnA7fWfnD+ixdFAaL
+    y8G+Q2xxP+NEaKqe2ED6y/CKY3c9BPtrjNmgiGE02I1GNijjN7nA0n8t2v4gyIYHlRI/83
+    D2kMny7wzRr8TxZjMhfSD14sJfKdJaygeRETKeTiB/cziTVN2aOMEtWfniLs4n72WKUg9w
+    lBBWjjhTe7UbwT6sNH17ZvfKuC/vJAatZy4I67EBET1h7xfVt2rC6CeBV9eoe8w62Ou74d
+    Pc7ApVMlAgTesIE3ubHyQkKoxO5eoav/scju3so8Qa+ONvhMvavElZwklKsw
+X-ME-Proxy: <xmx:QKztavT69OqvmhZQg9q9x6A8UmY7uJJGHKU5CAv_TJDPCS1W6n2WFA>
+    <xmx:QKztapuPfP7TWLbxGZsOhJJ-2UcGWo7PDpjHltQ4xLPh9dAGjZPdlg>
+    <xmx:QKztamxSiq6dl6SdFQkdFv1P7jtqN6bXcgxcL7s-fnorKPqzyLItzA>
+    <xmx:QKztar7SFhb5dnbA3ZI1sb0TMw0cxCLybV_AREfnEv1cGmA2vSqOEA>
+    <xmx:QKztamfBkVk0Ld246IxZh-IecW3Y8TbQeyoK2EZrCOWyk0xRT4nDNetj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 05:30:21 -0500 (EST)
+ 6 Nov 2026 05:30:23 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f1a34bf2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Nov 2026 10:30:20 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 0d159679 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 6 Nov 2026 10:30:23 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 06 Nov 2026 11:30:05 +0100
-Subject: [PATCH 5/7] t0027: cache expected output files
+Date: Fri, 06 Nov 2026 11:30:06 +0100
+Subject: [PATCH 6/7] t1092: set up repositories from templates
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,67 +123,87 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261106-pks-gitlab-ci-speedups-v1-5-1fa0374c7287@pks.im>
+Message-Id: <20261106-pks-gitlab-ci-speedups-v1-6-1fa0374c7287@pks.im>
 References: <20261106-pks-gitlab-ci-speedups-v1-0-1fa0374c7287@pks.im>
 In-Reply-To: <20261106-pks-gitlab-ci-speedups-v1-0-1fa0374c7287@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.15.2
 
-In the preceding commit we have optimized one aspect of t0027 already.
-Another inefficiency is `compare_files ()` and `compare_ws_file ()`,
-which are both called more than a 1000 times.
+In t1092 we verify the behaviour of sparse checkouts. We use three
+different repositories to do so: one with a full checkout, one with a
+sparse checkout and one with a sparse index, and then verify that the
+result is the same across all these configurations.
 
-These functions will repeatedly generate the same expected outcome even
-though there's only a small handful of input files that the expected
-outcome is computed from. Recomputing those every time is of course
-quite pointless.
+Those repositories get set up via `init_repos ()`, which initializes
+them from scratch every single time with a bunch of processes. The
+function is called more than a 100 times though, so the overhead adds up
+quite a bit. While the tests only require around 30 seconds on Linux,
+it takes more than 10 minutes on Windows.
 
-Improve this by computing the expected outcome once, only, to reduce the
-number of spawned processes. This reduces the runtime by around 20-25%,
-and on Windows the runtime decreases from 480 to 380 seconds.
+Optimize this by instead creating the repositories once, only. So
+instead of recreating them from scratch, we can then just copy the
+template repositories into place and thus save a bunch of processes.
+This speeds up tests on Windows by about 3 minutes.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0027-auto-crlf.sh | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ t/t1092-sparse-checkout-compatibility.sh | 34 +++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-index eefb346d11f..25ed6b33704 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -5,22 +5,23 @@ test_description='CRLF conversion all combinations'
- . ./test-lib.sh
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 05b54062b3b..5d81ec54c23 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -141,28 +141,34 @@ test_expect_success 'setup' '
+ 	)
+ '
  
- compare_files () {
--	tr '\015\000' QN <"$1" >"$1".expect &&
-+	{ test -f "$1".expect || tr '\015\000' QN <"$1" >"$1".expect; } &&
- 	tr '\015\000' QN <"$2" | tr -d 'Z' >"$2".actual &&
--	test_cmp "$1".expect "$2".actual &&
--	rm "$1".expect "$2".actual
-+	test_cmp "$1".expect "$2".actual
++test_expect_success 'setup template repositories' '
++	cp -r initial-repo full-checkout.template &&
++	cp -r initial-repo sparse-checkout.template &&
++	cp -r initial-repo sparse-index.template &&
++
++	# initialize sparse-checkout definitions
++	git -C sparse-checkout.template sparse-checkout init --cone &&
++	git -C sparse-checkout.template sparse-checkout set deep &&
++	git -C sparse-index.template sparse-checkout init --cone --sparse-index &&
++	test_cmp_config -C sparse-index.template true index.sparse &&
++	git -C sparse-index.template sparse-checkout set deep &&
++
++	# Disable this message to keep stderr the same.
++	git -C sparse-index.template config advice.sparseIndexExpanded false
++'
++
+ init_repos () {
+ 	rm -rf full-checkout sparse-checkout sparse-index &&
+ 
+ 	# create repos in initial state
+-	cp -r initial-repo full-checkout &&
++	cp -r full-checkout.template full-checkout &&
+ 	git -C full-checkout reset --hard &&
+ 
+-	cp -r initial-repo sparse-checkout &&
++	cp -r sparse-checkout.template sparse-checkout &&
+ 	git -C sparse-checkout reset --hard &&
+ 
+-	cp -r initial-repo sparse-index &&
+-	git -C sparse-index reset --hard &&
+-
+-	# initialize sparse-checkout definitions
+-	git -C sparse-checkout sparse-checkout init --cone &&
+-	git -C sparse-checkout sparse-checkout set deep &&
+-	git -C sparse-index sparse-checkout init --cone --sparse-index &&
+-	test_cmp_config -C sparse-index true index.sparse &&
+-	git -C sparse-index sparse-checkout set deep &&
+-
+-	# Disable this message to keep stderr the same.
+-	git -C sparse-index config advice.sparseIndexExpanded false
++	cp -r sparse-index.template sparse-index &&
++	git -C sparse-index reset --hard
  }
  
- compare_ws_file () {
- 	pfx=$1
--	exp=$2.expect
-+	exp=$2.ws-expect
- 	act=$pfx.actual.$3
--	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" |
--		sed -e "s/0000*/$ZERO_OID/" >"$exp" &&
-+	{
-+		test -f "$exp" ||
-+		tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" |
-+			sed -e "s/0000*/$ZERO_OID/" >"$exp" ;
-+	} &&
- 	tr '\015\000abcdef0123456789' QN00000000000000000 <"$3" |
- 		sed -e "s/0000*/$ZERO_OID/" >"$act" &&
--	test_cmp "$exp" "$act" &&
--	rm "$exp" "$act"
-+	test_cmp "$exp" "$act"
- }
- 
- create_gitattributes () {
+ init_repos_as_submodules () {
 
 -- 
 2.56.0.500.g5d06dc02cd.dirty
