@@ -1,117 +1,117 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793978073;
-	b=1GeD//q/5Wx3mksneoA1ZTvzBzRFTuGYfVRlVuQ+aoIbG2z2rvKHdaxZfm5mkYmNmLw/
-	 f8rNeGj19J/mi+9//OOhYlBrZjm9bhuiI1zt+/L0rHXM8tCWcM22BL9Gxy3wMvYYV+GI5
-	 0r/KDPGp9N3a95+IEfB1K57kIH4l49ZWBMPHU+Gyys1jzsV9SLWdzaR6/yFkdyieSAFc4
-	 obc08kGeeULHv8sQ2iJWeFZpvcBp6Sk694NTIyN3AcVNLrMb1O/rrbBHQyxhVdKiTxJWa
-	 asHn/m32NA6Fu8W1aKy7Aj/kPeEVo1VL3qhCoDjxihu3Xk+S4sSSd/2Vx6neh9GNXlg==
+	t=1793978076;
+	b=iI6dYgdxKdYyC0g8H9kcHXsN7FNXDWtNwwA+48Oj/VOBwaXfE5ppCTkrlDiK+sqNd7MA
+	 9YVWfvd0ZHucNGC1q9aRTTNTFaKnU332EsGiBptEvR0AjRDRafxpTr+GwU5g3IVILPdU2
+	 o2jKv0/AeZy3ytOZ0Gr/246d0qrO6scUnz7u0l3WeVmrogelyNqCPJVFhNbiTgUaFjZFK
+	 9ZFgEMBJNYaUWs1KQ8WuzAb8Y92dALFdfFC81Lr++4znLyLTwu6Y9S2HpQouEj+CSzphe
+	 tTXFrREvOWmS5prFmVMWsrXYlDhzICvI1moe8b3toA17dzF91fzv0kT0r+sIOWeFW3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793978073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793978076;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=AOQ8Z7fMWZBHR6kxSXbUlIxGnSrR6DZ79MtFKW17Zls=;
-	b=HUBYCzuBF2nk8CbxqyyD5BWOboVRWL3JVN4IpESYjOx/sfV6Za4XUZMKBAzCL0rdJYmX
-	 xiqew/tl/1sW/AcA3Na/909hIn4C4o5mET0ySntJWBQhnsntgnFV9TJeDxhefVbVUBTyx
-	 r5lZkb1yNffKMAAikEHVRXuV9uZ/o//GSxyn6CVdAbZoiz3r/T47rfnC9SLJTStP//MLT
-	 CdqjHScLMJQyRORpHvW2W4DnbtbnROZrOKdRv/ZKtcis1N8T99g07RVS7CrquA4I7y0yW
-	 unskH8+9rW20pq58OHjziCXx3xwlVcvvj0b6CRj6HsogMz1+P7OLvcsnGK9af+4VFRA==
+	bh=PGj5884lZ0vyB3ox7oEIgjyl8cz1nLgNIK/DG/Jh8/0=;
+	b=Vg66bjag172FWcMhbXdENWciPN522obcKGOC0EbeBzChJB8/Ir3xz6CQD8lJh8iwP+ts
+	 k/pRyv3qwfvit/E2yUE49XjvcqwjwLzsz2qgmmJOcL5Tn3zDeKu+B1FMNf/gp/q7mYTy4
+	 U+6g+SANj520LaN99EoVXLlq2cqc3gkIqrkxWivC2YNlffVleGBKrff2swX/PAqtIvwcw
+	 H0ksxg3yBbvQAhryqM31slAtX2MQVCyNHtLgWb6ov91DoeMStZNWk3Psey2cM9tzA7JyZ
+	 UrUopHqOzsBwWK9eOsKcLpUKBMMK5r68W4y1uLe8wrbd9gY6BmaunE9Gv7xWtvKLnmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=FpzFM7tj;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="ZmGo/meG";
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=a2l4Ze9m;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=WwgqbxoM;
 	arc=none smtp.remote-ip=202.12.124.157
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1A4606D808
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 15:14:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F1A4606D808
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD124606D812
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 15:14:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CD124606D812
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=FpzFM7tj;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZmGo/meG
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5F54D7A008A
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 10:14:32 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=a2l4Ze9m;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=WwgqbxoM
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1CC597A00D3
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 10:14:35 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 06 Nov 2026 10:14:32 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 06 Nov 2026 10:14:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1793978072;
-	 x=1794064472; bh=AOQ8Z7fMWZBHR6kxSXbUlIxGnSrR6DZ79MtFKW17Zls=; b=
-	FpzFM7tjWD3MGlyr7i6dOypFTFqAWglYDZwkx/zd4PfYQn5hHMB8rjvp40fmjcva
-	GaMgZfv7cXhpt6gtwLS+f3MStagHLJo5PPp7W1OLJvOgLD6DpBiXC3gOtTdfodhE
-	iiky9CoItF3/lpAEygO+89FQ4SiwI8A1z0N4v9YLRzKUvDqrblc0KsrVNpgoN7IC
-	WjR1NmUyrINP8NYGBCjWSE1zyagz+ZTl6tq182ToEH6st1NWRxIsb7fzj24wWgGo
-	gwtGiGdshharUzUt3bXy8if6pfOESE9JO3OdXGSnxHs3gvOeKAO8hSRO57KuYR//
-	zr1OJ4vQ7e8W5aklzLYbqg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1793978074;
+	 x=1794064474; bh=PGj5884lZ0vyB3ox7oEIgjyl8cz1nLgNIK/DG/Jh8/0=; b=
+	a2l4Ze9mvXDDxMKBc34D66JNYZ46XBFTvefJ2+YfvKYaLdbwIX4/MlZxlnqD/r2y
+	9wlGg7PqqRbGi0JjPQM/S2cIcSNNf0JHxvr4pzS+X2e2O0dt9i+YRVICx7Smzz0I
+	TgTAZF7yE0v1VWc3NqtCBbuyQcRC0WPZeBGoFOcSYDlJTq8S+MgU5uhtRjddV1rZ
+	IXOeXoB6eb76AExwxgQQ8sXygY4zVAfSAlUudvlTFChZP9ihvu7FxUMdVezBhd84
+	8Zy4AffvCakbgupQL4w0jWUgJ4/HMVdjgbPA2sSH9LObFBOVnmhv9cZzVSUtcOlw
+	yiO+amftpCGOpTwjXeKM3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793978072; x=
-	1794064472; bh=AOQ8Z7fMWZBHR6kxSXbUlIxGnSrR6DZ79MtFKW17Zls=; b=Z
-	mGo/meGtOocapEEdFRj0fimuJATOPwEVbwT19olCDg4/8wbgEWKWka1dtM2MMAMn
-	4FPwj2vqmXaU7pZg/FMJD++Tf4l+WFnYMAKxIXs8yECfzEJ/ukr7EX9rPFKm2U4I
-	5mDeHM1w9R3faQXr3PYeyEINFvseqRQByeCb0nJiecc4o8Kbc8Rs/HB1qLkP0ocJ
-	EbhtmAsozcz6fpEfjYVqy6o3jk4b7qoQV8JfgGuNyvjV1Nn2y1feDwC+tZ1/jBgW
-	knEm84kznjQfhJLudxlkGRqBiiPi5ZLWARKwfey3WEICN6O+IYUEk+JVGk82nNJ9
-	1dD1FgJBWw0Wu3+gYl6bQ==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793978074; x=
+	1794064474; bh=PGj5884lZ0vyB3ox7oEIgjyl8cz1nLgNIK/DG/Jh8/0=; b=W
+	wgqbxoM9Un0N/Hl4MWYnLoyacr9qItafT2WJG5Ma9x6/TTfJ8Ct2KNUQ+JIKRyvP
+	K2rPkRL3tBzN2N6bHJ5biK0V/EF9R7OLkFZ9dJpgSA2gjqvoZAvrRiPKBrfytrrL
+	EWFKyo482F9SqwA8/J0fodb9gWyxEosQRAIWLHJKp+4hJKvCDjlxMJGc9PaCakWu
+	m3sqkgTgilq4/RYxOfN3XDkXU+IT8guqkK+h0wuz9D2oS1XltJSdZpH0jlJAwPjR
+	LlhJSZTrtIozYm+56a4/9kyseI5AEqbojLvlr8bgrGC0Zyhc5HCDw3ip9FKipwUz
+	vo0kmSv3psz3s8/o332fQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793978072; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793978074; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:y4lZ/Vx63NCRAyf0jqd5/ntbw9xToClZI2Cm2DEHBhAfYhb
-	W395r6eIQvoYjOz+oSsjkwqt7dd6+2ghNaCxmHmaj0vAYQSEAKaaf+Sxs4ibWmi1
-	73VFP11eEGKWKyE2O3wAHpac9tKlztOAKk3pjAXfE9GfGfTP7lgNqyCw3Lk54194
-	Iy18/aHuyYzNlSkKhiXGyQecvncLjFcsKsYLimET+g7xPyXG5YdcDOPbwdMS9DSn
-	Qd/PW8OKf0AjK13x/XhaZ6Auoe1FiRi9OVQluuNXIh3RfvePy1M5upHmNQ5xpfm/
-	YuACg1prmo8jYjLdBcil8nHDnh5SSuPJyRB35Kw==;
+	s=fm3:rsa-sha256:sxAesUm8+b4vOv1POBdCkLeiVW99dFNKqcofW+8J9JiFvVf
+	F6NMZ3RcD1KSyuWk4EZEi8vhUIbxgbMBSVmauxF6XRNnJf4zP8JU0rGbUrZprmAH
+	lke0M67aGvv8IwrRArNjk2eYvnsjqeQt2j+AcolffDNiSG/S5gepqa8o8FFIVS3S
+	wC8RvV1LRJg+BQ4+ZqTKkeGErZik8Tow6rgR1f/D1igFRfWsZE9DYcZ5gsqsgEuK
+	NbhA7LoshWxINLQNXHQnHGmXAP5Xk8ELDiIGto/7s520dAkhxCbunXqI2Ou9HSKQ
+	QZTE6el3sYxESCOUDKVHFcGT3k+Ed0c4kseNpIQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:bBZjA+7ujUhb1mKF8ykPuEZll1pTaJXuooixyNfvRH0=:lEekShppJmBuAGct56Zclmz4iqBAp9gUoCkjWeWbX1k=;
-X-ME-Sender: <xms:2O7tagp7wz7iaQx5eDEZSVIkxh1bMPqtspGSeIypj2xRSjFb7PQdLA>
-    <xme:2O7tatofLdYeOnbA48spiGS3mTPLjgoeemi3fZ2LC6P7PUgYTQxw5VGWXQZA2G7n5
-    0PGs6oK2yCF0o8s6ypV4XErjSlJ1lFKuzn7zUiGNSESVOCZxwAKn6A>
-X-ME-Received: <xmr:2O7taqN5tpIBBTV6dOyHC_ptQQ7LbnuAuJuMSmDskuL_qyc8YlBmcXgvr9svovUhfAAiIA>
-X-ME-Proxy-Cause: dmFkZTGiZi4I3D3CFJhnJomFWQgm7nh8fATounvHJJfJTKhJBDSXwFkf1UTNQevRgOo/XS
-    B0fO+LwfdZ/bVUfdSuMB1rI9hxrRIUUzGqtg5r0mZwU9GqbnYsAJ9TYE84IT8txAPorJbn
-    NHN8gdy0sDIRzMTLMfTG1SxQ9FhHmC4Yb+T18pDVlgOMkbZViM13BXioSzd+HshVnOA4CA
-    hqqMmliZ65/IjfPQyvweLauBA9UpUdkd9ioUeNq/OTed1TrI2A1Y22k4iBYwYD8kqUFvJc
-    Bt5wfnc3+XBqzyHwL4SNO5UZ/abkYXxesxYHlJVHJguw+GJ9QeFSxn3NE/5/+bILf359Yz
-    6jYBTZyXxvoyY8hogIgwY2FYh96OX1rsGDgZg/BuMMNCjXT/Y7NDqAwwq+iFxnvZyWILbN
-    Q7ukqOtADyhrNb6KqrRI1JPJ7u0Ide4iMvJeuYJALHzsc5P5BrIKNbsHjwcQB5jtBRxYQA
-    Kqf1+iryAe1JIy84EMGxYyl6Hzz58H0o7bW1LMEvlglXjOO3chQ57mMa/lYb1pIGCGB1rL
-    eaLmd1RobKsZebpjLyfFl4ACK0WFoHLTzoou3tBvq6Z993yvs/A1M0tB1PLYDHYP/J4w+z
-    EyWwpZ7KBdCVbr4Bzes2SOWYvq9QyT5DdA8V2Fj1UQdEzbdXfPmfC2BXHacA
-X-ME-Proxy: <xmx:2O7tamxKXr6K4rTkEg9ZmwlEJvdTVDWnqvvOucC5TwOrJV2X-RzuIA>
-    <xmx:2O7tarvt07VQeGXMvtFpY_WYD8Zty6s3Mw3UkX9SuJcte0aEu3UZYg>
-    <xmx:2O7tan6IzHN0EniGG9T_wkXOOQpkufY2qvtZSPTZ4TjjF-Zi7HTKXQ>
-    <xmx:2O7taiRlyrDIm7yQCohLnBpm_yzjaJ7xN4kvTnH0YTF4wS0t0QdWcA>
-    <xmx:2O7tapvpER-Dv3MbFk_U8mfFliSMBkvv_2a6td83fV93DRenU-5b0YFr>
+Message-Instance: m=1; h=sha256:/WUYJ8qIAqq5CyYK1qqyYskuHPvzeFOWYDDPrcrVUY8=:2SPYAO7aRmwEQkPIDu7QK9rk4Efi4Vd/jKFIXRaMuiw=;
+X-ME-Sender: <xms:2u7tajxjIyXZ9WdTzDE_7tAqC36CGt3fItGLIQ27e97GHafYN842Zw>
+    <xme:2u7taiTpt4ECBGURkaxt_lxGzrP2EZFRL5c1Jm9AULLSyIvXt7R4IYmKFCjbKBVoC
+    2A149dKgY2JyOs-4Z3eT81gXWdBC3qJhAkvIVw4IUld2nKCbYTDdZk>
+X-ME-Received: <xmr:2u7taiWq3glH9GFbbsOdrePxnYVgjeZheCQAZwc49SojKrFlSKjVkYEvdhEp_LMIIf_xzA>
+X-ME-Proxy-Cause: dmFkZTFrh/TYsN9X3M6/W7LWYSld34ixz2P3sqbeW+RU0KnNh51jSjcUBLq6dVFakTvypR
+    +oIFJUCi4sLSMniPkDCbUBH6DgK1mr75Mei90UNXnvWRJcIuVgYOgSrpTX6Qz2kmn75w2Z
+    cXDwyWateJlawhK9qjx/6+DBJuqi5LPMBMFoqc7HN9exSAKrkmhEF3I+jewFotFELHc1/I
+    Iljar1cOWObQ2Daa4BTbrAWG+IKiDeUq6R7SZuUzLsXkMC47PgjgFtiixuv20h78Tcu9NI
+    +NC/T0/0Om9Dvp98r5R6xJvGHhz+LJxyC8KOyMgW4jxmcJzPAfBmsreYJaNtFyrIELweln
+    +8hfpzYUJjy69adnuZoxrF9BUgyLk0LS49gYstQp18BqQwh7+C/Uis8S1ChYPo/Z6FSZG/
+    aUgTlR+Kt/Y4GvBe2xzGydVcbJM6W0KpPsxkQVI8zW3F2odfUOYKSwuy5CqxrJfhH/npQD
+    +0akJftLRu3eeD64NCbKNR3H/MezEi3F4XRWLe8POKkQd5HN9tyg1kWty23jk/wgZc6qve
+    GtnE3RDTVK6BTFmxpCvoLWN0HftFvIQVZMdsGwTwaYcLK3rIheN/BDu8AX6ie7zm2lhjp0
+    EXK2p7JDVHisaPDenEl1sO8I5P/comUcp82XtgipS4HIQxJ5gEg37Zn9aZdg
+X-ME-Proxy: <xmx:2u7tasa95wlnJ4iHcbbUm7EKWeedVDtUnjgF3jbDuSprdMtYCcEesA>
+    <xmx:2u7tag3n9L-Z6cpyGTRSKuM-eTRLMnETM-toe0hUH7c0ycAzucW2pg>
+    <xmx:2u7tamhcblebDAFwlJCteDJSZAZVEXDmkkJ-WqORe7jGbd-mC2cQXA>
+    <xmx:2u7tasbbzUgEcrR9_vtYgu2Vpw1i75EXMU1XMuNTu4cdHNGKwcu8OQ>
+    <xmx:2u7tap0QacKGLJt9nVKq-ur_iF4WjTik66krKPQCl4ek1PKCT3d1JpJs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 10:14:31 -0500 (EST)
+ 6 Nov 2026 10:14:34 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ff79f1f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Nov 2026 15:14:30 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 2a3a04e2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 6 Nov 2026 15:14:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 06 Nov 2026 16:14:02 +0100
-Subject: [PATCH v3 08/12] builtin/rerere: turn "remaining" into a proper
+Date: Fri, 06 Nov 2026 16:14:03 +0100
+Subject: [PATCH v3 09/12] builtin/rerere: turn "diff" into a proper
  subcommand
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -124,7 +124,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261106-pks-rerere-subcommands-v3-8-4ff164d8fb81@pks.im>
+Message-Id: <20261106-pks-rerere-subcommands-v3-9-4ff164d8fb81@pks.im>
 References: <20261106-pks-rerere-subcommands-v3-0-4ff164d8fb81@pks.im>
 In-Reply-To: <20261106-pks-rerere-subcommands-v3-0-4ff164d8fb81@pks.im>
 To: git@vger.kernel.org
@@ -134,73 +134,87 @@ X-Mailer: b4 0.15.2
 
 As explained in a preceding commit, a subsequent commit will introduce
 proper subcommands as supported by our parse-options subsystem. Refactor
-the "remaining" subcommand to use parse-options as a preparatory step.
+the "diff" subcommand to use parse-options as a preparatory step.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/rerere.c | 42 +++++++++++++++++++++++++++++++-----------
- 1 file changed, 31 insertions(+), 11 deletions(-)
+ builtin/rerere.c | 56 +++++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 37 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/rerere.c b/builtin/rerere.c
-index 2bcd270a1f1..3f82bcbeb10 100644
+index 3f82bcbeb10..40bae5cb9cc 100644
 --- a/builtin/rerere.c
 +++ b/builtin/rerere.c
-@@ -94,6 +94,34 @@ static int cmd_rerere_forget(int argc,
- 	return ret;
+@@ -72,6 +72,40 @@ static int cmd_rerere_clear(int argc,
+ 	return 0;
  }
  
-+static int cmd_rerere_remaining(int argc,
-+				const char **argv,
-+				const char *prefix,
-+				struct repository *repo)
++static int cmd_rerere_diff(int argc,
++			   const char **argv,
++			   const char *prefix,
++			   struct repository *repo)
 +{
 +	struct option options[] = {
 +		OPT_END(),
 +	};
 +	struct string_list merge_rr = STRING_LIST_INIT_DUP;
++	struct strbuf buf = STRBUF_INIT;
++	struct rerere_cache cache;
 +
 +	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
 +	if (argc)
 +		usage(_("too many arguments"));
 +
-+	rerere_remaining(repo, &merge_rr);
++	if (rerere_cache_setup(&cache, repo, &merge_rr,
++			       RERERE_READONLY) < 0)
++		return 0;
++
 +	for (size_t i = 0; i < merge_rr.nr; i++) {
-+		if (merge_rr.items[i].util != RERERE_RESOLVED)
-+			printf("%s\n", merge_rr.items[i].string);
-+		else
-+			/* prepare for later call to
-+			 * string_list_clear() */
-+			merge_rr.items[i].util = NULL;
++		const char *path = merge_rr.items[i].string;
++		const struct rerere_id *id = merge_rr.items[i].util;
++		if (diff_two(rerere_path(repo, &buf, id, "preimage"), path, path, path))
++			die(_("unable to generate diff for '%s'"),
++			    rerere_path(repo, &buf, id, NULL));
 +	}
 +
 +	string_list_clear(&merge_rr, 1);
++	rerere_cache_release(&cache);
++	strbuf_release(&buf);
 +	return 0;
 +}
 +
- static int cmd_rerere_status(int argc,
+ static int cmd_rerere_forget(int argc,
  			     const char **argv,
  			     const char *prefix,
-@@ -160,17 +188,9 @@ int cmd_rerere(int argc,
- 			  skip_locked ? RERERE_NOWAIT : 0);
- 	else if (!strcmp(argv[0], "status"))
+@@ -190,25 +224,9 @@ int cmd_rerere(int argc,
  		return cmd_rerere_status(argc, argv, prefix, repo);
--	else if (!strcmp(argv[0], "remaining")) {
--		rerere_remaining(repo, &merge_rr);
+ 	else if (!strcmp(argv[0], "remaining"))
+ 		return cmd_rerere_remaining(argc, argv, prefix, repo);
+-	else if (!strcmp(argv[0], "diff")) {
+-		struct strbuf buf = STRBUF_INIT;
+-		struct rerere_cache cache;
+-
+-		if (rerere_cache_setup(&cache, repo, &merge_rr,
+-				       RERERE_READONLY) < 0)
+-			return 0;
 -		for (size_t i = 0; i < merge_rr.nr; i++) {
--			if (merge_rr.items[i].util != RERERE_RESOLVED)
--				printf("%s\n", merge_rr.items[i].string);
--			else
--				/* prepare for later call to
--				 * string_list_clear() */
--				merge_rr.items[i].util = NULL;
+-			const char *path = merge_rr.items[i].string;
+-			const struct rerere_id *id = merge_rr.items[i].util;
+-			if (diff_two(rerere_path(repo, &buf, id, "preimage"),
+-				     path, path, path))
+-				die(_("unable to generate diff for '%s'"),
+-				    rerere_path(repo, &buf, id, NULL));
 -		}
--	} else if (!strcmp(argv[0], "diff")) {
-+	else if (!strcmp(argv[0], "remaining"))
-+		return cmd_rerere_remaining(argc, argv, prefix, repo);
-+	else if (!strcmp(argv[0], "diff")) {
- 		struct strbuf buf = STRBUF_INIT;
- 		struct rerere_cache cache;
+-
+-		rerere_cache_release(&cache);
+-		strbuf_release(&buf);
+-	} else
++	else if (!strcmp(argv[0], "diff"))
++		return cmd_rerere_diff(argc, argv, prefix, repo);
++	else
+ 		usage_with_options(rerere_usage, options);
  
+ 	string_list_clear(&merge_rr, 1);
 
 -- 
 2.56.0.500.g5d06dc02cd.dirty
