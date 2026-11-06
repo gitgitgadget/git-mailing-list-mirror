@@ -1,88 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793963290;
-	b=UVu8KdZ42vvnj9UehwPamYaOh2kKDbpWMyhq51+mJRVT1VQBSAEXTrUmdW8UDgJrofu/
-	 qo9JyKq5DPdmZjo1TA2QHvxIL0cEePoLqqwwqCMTGFDR9WDjeA3m5JlDGahsGXOgqrZQ8
-	 LahRMTdNOqwYb/XbpsWYl3XhKE3T2n9I1xyaMqKsWg8akvYZ7bsrX+PjZAJ6dzbEOmPz4
-	 vyluBMbFULZ80KXNIJLMEeW1YRMHPNaFldFCu/01+oCwsw4ldrqlLDY2+mvRbHZe9/Fm5
-	 evn8E2jck4vIG85eTOaSKcw3ZPBzVO1kb3SNc0TJqcZ3SVSOgzj1JN69ZC8wic9wdAQ==
+	t=1793963812;
+	b=pcEyHbiWG0+sRGYd5Q6vs+DyuoN1ol5RATFEGG79slv2l/QNSTzlsrshnRyalbX7Gb3O
+	 h+S7it0OGouvB8p06doAoi9GomuaKEmIfC87KQzcNjKehD+5zN62gjDlKzZZvoeFlqcLx
+	 Z/qQMcL8+Snnrqv6TIXu9zmdtjgNEFpafPjDUazE9GDIYm8FneNY4vPqKy3LQ6L+/i+cq
+	 +lflP85IoGWIseqmqYPrY5AiSR3N9vs4UbZgTMADw/h4i8fkEHHJgdCXxGxnkJo29xOAw
+	 1rbqbnT0Hzw6VBQ2Q9OP95/lRvBnHNC5KkDTFeCV1KXOcFNJanj6LYzAUsdxdQGP/+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793963290;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:From:Subject:Reply-To:To:Cc:
-	 References:Content-Language:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=JhRwWGKQenl0Q47HgKGmeepxG2B637uYyStzHObsjFs=;
-	b=VLUuJWapjy6QYETSqtdYP1Tl5m+aPUv0R59k1bNBfrhPYlFfRLqmaRK/rO8MMw5A3wBU
-	 ofkXOcl1ekcxgW6aU/VyjQOopKdhAQo+0XD6NAjbI4EJL9DsTKzFsNxlBA2WiHiXwicIW
-	 lyyk7eZBzYgoH/M5qYflHXUeak6fuQMTMU7qnVewDMfb3TUsRFUEyiwQb9q0HSg3Q4Sy0
-	 XiztLMVE2jh5X70DCxTPuTGezDkUiWskRApRxUY/STduj89iQnkydK6m23PBq3OGWb7KC
-	 kO1ybz7rE/a2wZWBCrt6i+uwnH5VYVnuRGEvV6xdhrd7mJm0e4ealSfF0tPyGrcXpNg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793963812;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=3g7toC8Sv+pI9+k5VtnNYf3VgWuwOe2EOU08UcVLPjw=;
+	b=fZp80eQXFGmovZ7zJYdoroX0ge93kcP7wBnRe1xothN2We2jQSZtQsgEAXh/lVo8yNUC
+	 3xttwsye7cTwVATxr/tS3r84keBbADfNAow4AgwrTBsdeNwuXIRWEqD9+cMVp2gQ9ORvm
+	 Ll9ROiGjRwqmmFEoZwqKUFKQc+u6R48I+jx+MzuMZJ4zcCly1bA559KqlgEkq4duDOWTM
+	 JJB16NSAh1uYtzmoCWp0MzcI8vriWFTwJCzoS0+vOxZSDOUV2VFb1rgfATBRLp/kIi1hn
+	 m8uS2zIE3wttiQw+2JKO2truQA5aJuo7j6DUaRj11BLUxz7rSnVBPgpfr71jhHdnEYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Rv2TTOeO;
-	arc=none smtp.remote-ip=209.85.128.49
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=0PSNlbOK;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=mQDZZqN4;
+	arc=none smtp.remote-ip=103.168.172.153
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0137606A32C
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 11:08:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C0137606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CF9606A32C
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 11:16:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 31CF9606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Rv2TTOeO
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a35a60499eso3968845e9.0
-        for <git@vger.kernel.org>; Fri, 06 Nov 2026 03:08:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793963288; x=1794568088; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=JhRwWGKQenl0Q47HgKGmeepxG2B637uYyStzHObsjFs=;
-        b=Rv2TTOeOBRipClSAzZETWYt/xX/F9qaM8Q99SDfS69CrfUH+QRnYado3rYJ6hNVktp
-         088DhgqFhmZxJzDwbSRmowaEvkAc8KnbsycXl7z+VpOa36Ny8sfRj3SdsR7SdX43ox4H
-         kctXMTlkicHJG9Y+vbwiwQjiuqNawa/jfBvenwPNxLeo2Lf3GXvkP8uNc8tRbwSqJ0ER
-         2Oq2IJkIpQGFRsU7bN0ZREd4IUqmLIHtEn48SgGK5H9FUF4l7+UNGRCTuscQe6hrWqG+
-         ExD9Yq6mpy6Wk9W2GQGH3jP0nhRcwW/CWUl7NC7Bl6mzrffo67ZzqTxGJzp074ZB/wvZ
-         Bc/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793963288; x=1794568088;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=JhRwWGKQenl0Q47HgKGmeepxG2B637uYyStzHObsjFs=;
-        b=vFMaCHOTSfj6JAEdvDXVF5xdDnDEhvELrNRw8nI/C4dBz4FmDpE7vYXCKaepgRmMKS
-         R3zZstO/BnOu2NlwALMGrL+NKI6UznFdEmfsHpZ+2SU6YyVf9/vxLVN5nKdGypKJgEIP
-         +XHTN6EXqma8OC8MKHpdf34ezkPPXDwbMAdluBjBZhedKwm2/ZCajovOrwVCSy5PX0Ii
-         6QMjFPwqcQGqf7ohHRYEGrPUepbcI+goephKLvoFkxnZhkDOVMDz2+3QysPsyGemltQK
-         GQlEKG1EMP2qZzw+8wQKN96aWd2uh+AwAMp24WlWNfB4KiTFg5VkMEgmb2FykUNXT129
-         pVrQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzJ7hcapQszJ9dcFRsEW46TpQYANxyFsnSQSKtYocU+e3PNVe4Fku1EC5uALFt6rF4LWPE=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/XztTtsVM9b0HtoGZ3GAVk3TpOJ7QjDCage7Bfi+15Fz9B+blw
-	NXxWIVXZ+bANi/7ToPs4OOZU1l4lqqOe4EuopuvlfASUGZtbxWqj2h87
-X-Gm-Gg: AYBFou0pqxwHtsQfQe65xBHAnF7JzuHbflskpnK6tqqaXFjqdLDxSihCJx7aroHPF2x
-	63uvGcaUAf6vFN/QV4v/B/Z7B3e2nCaz3A14t3tOteogUsYWK/I9t8gH1VH+p1mYranxLJO4tMY
-	85qFqZHxk3fFIZPPWbkj4DqE5UUwDCXSTtvOgadAaK152soijz6WKEE4NWkzqfhVXZzSAREeSAo
-	R6B3znIOSaeOjev68wANph3CSoihEGS62YqXaotsNjgmuIbWXjrhu9L4hAi4XrhySjQ3tFPXWYq
-	VrRlvgQFtdKgjF6ayh2YMi0Kx0BDZP8MipcR+SbyYhFTx7AyD8b9/AKv/EPmEcj9rKBpnhMynJl
-	acCDdvZwULIKwT9e+Dr6t28yV0JDonncPZ4h5Q6AgVFNcVi4tuLjEJJ+k6epAy93Bjm+32+F1Qb
-	6ccZwUY8pi1SWpyudVpuY5JYAbErXZrLaMTBdGjrK09qenhS/Oli8Ze/3W+jdnoKSaDPro0vWlS
-	3Q8Wgw7rsnedlOV65oNtP5VoAOKP+ZZWV6qObQNm5tTbLhspzdh+bV+ck52knkphNoBXDpq91bk
-	NUiusupdb60M+9P/VaO5jnxRnK3N3Ioy3D3wROLppTV2yfNWuzMh5kg4eR9FnO3iEleASu8vWPi
-	air29D03IX2U=
-X-Received: by 2002:a05:600c:a06:b0:4a1:811c:8078 with SMTP id 5b1f17b1804b1-4b6e035ed75mr35657695e9.26.1793963287126;
-        Fri, 06 Nov 2026 03:08:07 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:6ce5:fd8b:2061:d7f5? ([2a0a:ef40:724:6601:6ce5:fd8b:2061:d7f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b5725061e1sm143325945e9.7.2026.11.06.03.08.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Nov 2026 03:08:06 -0800 (PST)
-Message-ID: <edd1c36a-bd2a-4bcf-a6b1-3e08dfcda344@gmail.com>
-Date: Fri, 6 Nov 2026 11:08:05 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=0PSNlbOK;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=mQDZZqN4
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 72DD214000E5
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 06:16:51 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Fri, 06 Nov 2026 06:16:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1793963811; x=1794050211; bh=3g7toC8Sv+
+	pI9+k5VtnNYf3VgWuwOe2EOU08UcVLPjw=; b=0PSNlbOK7ynzjdoRM5nRs9A2hy
+	JYcrH2sa4FyIwB/KrapOxPJ7v6vmNiUktL0VI1Jnh+lGm1j186mKS0p3YasZQo+/
+	8VxlHbGtWv0S25S+sf4X+B+bJdepCv2RB47/oI4wDF+zn63aanPh8ychmPtDL9ZJ
+	3XY50zV1I8md0KS6dysF6xTABzesdrm+IkWQOhFNCMvOpBXsc8kvRKgr2+U8gbn2
+	f4wZh3Bb5OQGI+G3oxrPu+lllKhz20nHUwPya2qV2BkJFYPu7pV3Yx7dAawd2+gb
+	EZHHICChDliOeHce+XVzJiXb8BVcQ9Qk5xBaf+OfApUqx9J58FTZbDbWpRww==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793963811; x=1794050211; bh=3g7toC8Sv+pI9+k5VtnNYf3VgWuwOe2EOU0
+	8UcVLPjw=; b=mQDZZqN4t2v3s1f0TyuqZxr/gV+wfZ2+1mPtQxK45xgVP4uxcfh
+	e+z1GNAjMciQTZqzDwY2UZ77Qn2vSS00Zn5MmMR+JT1z7Mby2NDQjfv51SdDucQ+
+	ksBZoAryZHU8ZiKm/fEPLgnslo31Yih7EcLAnl2ibYhJgyIIzgT9jm+1qHieAxhb
+	f5bWhmroszGJGmjmhpKcPCbDdKx6bHouZGxTqzG+zWyQUmntFTpzTjfnbyNFi6dP
+	ye/LZK0ViXktyfZLHAr+QB6msN5ep+p1tjUJMHE+s/3I/hpz2LUrClrcLK1go2SH
+	/qhdT9g9dvN5tXIy1CzwegRSU2MkNwFJzJg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793963811; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:L0pM/fOEI9lTnnOgl03FIJ3wyYxYmCoF9B57gxqGgaDetrJ
+	UH9i0ukrlvm8uLKfEwYM21fY5OCFs+i9X/hekcWLVIs4VSy5cJLj+OQOFgcijLtk
+	/dBQnsteUxXXJHMRo1f8IAjMNqq5x7MIfChQ+nTUCOBAYUQslniJZE+3vCGJcahM
+	20LNx3VIp8qr3lD5afLUFmEhpDCgS9SG9F9ODH9x1M4s5L/agXdfmXDVhIp7dsNP
+	clZJ5i2KiOc/kLQ5TZGGkVC9t2i9ANrGNmVzMxpb6r7QdXL1LRe7TbrLpLUqivZX
+	0P1etpNhGMHFW6pcpiuLLCgNmUGF1jIRI1dvJHA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:vSVaZ1NJsxGuJJedFYQJWFhTBlhjN+vMr85+lPJcjmY=:FM0b45qlfZFtDIerOMSwYe0Ru719TVoZWfvgjah55E8=;
+X-ME-Sender: <xms:I7ftasSLmn5z_QwFctPUBG5DX6LkNSbXzhcCzuvPP9Y5ipJxwW4MoQ>
+    <xme:I7ftahOS4UP3WOJXISCcB4TOS5DsYH9V0j46lViBRH1SOAUweLzirYmpR6YDrYDv1
+    bb1quYv8YozDNZ77nhzJGU-T__SzLRkPWXTzyy5q1RkLm4KpARorOM>
+X-ME-Received: <xmr:I7ftanNMSuh9gLsKPlZqXh5-KRXm7QehMh_kRrh14YlGvyP5FDrSkEeB6wCFCXR1mhPd4Q>
+X-ME-Proxy-Cause: dmFkZTFwzX4MsbU8yZZZl+y3FfZhDR60gOrU0L8vHjB4Mmt/2jpgetjqII/hcZXeepzRIN
+    bODbo5ZiqR9xNE5B7YpG1jMXpSCRjb/V2Tb1W7IVPLId7HQyCBTFdsNYKokYg05I25Q52r
+    q66MBjPJC/FKSDSakhdx+VreMplw7heZNybgvwE2Kbl3oian3n0VITFtnfFk+a7qDmX97T
+    pgnYCI9XrK4jML1PpyyMUfU7y0ATez2jSn+eKUc7iYqzCbBNYIf3+HbdrSwiEvSy+EMXku
+    Tkr8po77Wh32ljY1x0011pL5Yts9qRXFMerBFGdWMAS4EYE8bSz3FnSXxQWB0VrosT4jq+
+    3o7FZc07hhX5Vv3QfXMW5Ui8YhutECXNZTuQiKLMMR+ADkwlqyTsvr2hO472dsFBrd8aEA
+    I4prE2S+wwCYJ3kgAmcjbjbYOK54DZ+oVuvnKFjSusxCaprzBNZUUQa5RsyXPMIHHWMjol
+    1AwneaK9DATWnuafEFiRzCJqF32qtIBF73nYN1eriwv1u1JIDSkSVyF3h/37LJnMeatrEP
+    W/Q2yT4ogLEw3NEY/brWww1BTtFdFuAp9ShcCEN4ywUCx5avfMv/MpUS93iqdoJzan/3rO
+    yaSQuuuIEuR9xDWe8adQbeuOfZLpT2V6oAP373Y8o66j8mU3CN/JQXCZ3WLg
+X-ME-Proxy: <xmx:I7ftaptiIMUcgI52XPRY-vYs-mvk7zSuJ92xdSvJzvzQ1IjH9lUmcQ>
+    <xmx:I7ftapW5psJ2nP5d4KG1RkwBFSKxvOr7-9q6-wwYfNWjl5rU5OJGQA>
+    <xmx:I7ftaptjpgE827sybyRUya9Y_RGNz9VGc5u-sUl_Izz-THdmrb1U1A>
+    <xmx:I7ftatW0DNz6IYR4zcVJmTsQtvDPl8nw3ZHyvlCQIo-BFQm9EfzqsQ>
+    <xmx:I7ftallusPr2pOvO7lcJ2wJ0lxjp0_7XX2mWZuwNES14QnuIbG0k0izR>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Nov 2026 06:16:50 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2c52a747 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 6 Nov 2026 11:16:49 +0000 (UTC)
+Date: Fri, 6 Nov 2026 12:16:46 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Patrick Ohly <patrick.ohly@intel.com>
+Subject: Re: [PATCH 2/2] odb/source-loose: fix existence checks for newly
+ written objects
+Message-ID: <au23Hvzp09yrym9s@pks.im>
+References: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
+ <20261104-pks-odb-loose-stale-cache-v1-2-a00d5cdb5e7d@pks.im>
+ <20261105194314.GB2898829@coredump.intra.peff.net>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,232 +125,149 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v4 0/2] reflog: add format %gb
-Reply-To: phillip.wood@dunelm.org.uk
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>,
- Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
- <pull.2448.v4.git.git.1793826938.gitgitgadget@gmail.com>
-Content-Language: en-US
-In-Reply-To: <pull.2448.v4.git.git.1793826938.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261105194314.GB2898829@coredump.intra.peff.net>
 
-Hi Harald
+On Thu, Nov 05, 2026 at 02:43:14PM -0500, Jeff King wrote:
+> On Wed, Nov 04, 2026 at 01:16:35PM +0100, Patrick Steinhardt wrote:
+> 
+> > This issue can cause git-merge(1) to die in a partial clone because we
+> > try to fetch an object that we have just written, as reported in [1]:
+> > 
+> >   1. `prefetch_for_content_merges()` performs quick existence checks for
+> >      all blobs that need a content merge to figure out which ones need
+> >      to be fetched from the promisor remote. These lookups populate the
+> >      loose object cache for the respective sharding directories.
+> > 
+> >   2. We lazily fetch the missing blobs, which writes a new packfile.
+> > 
+> >   3. We perform the merge and write the resulting blobs as loose
+> >      objects. The cache is not updated, so for all blobs whose sharding
+> >      directory was populated in (1), the object existence checks will
+> >      fail.
+> > 
+> >   4. When checking out the merge result, `prefetch_cache_entries()`
+> >      performs existence checks for all index entries that need to be
+> >      written to the worktree. But due to the stale cache, the merged
+> >      blobs are reported as missing, and consequently we try to fetch
+> >      them from the promisor remote. This fetch fails because the remote
+> >      will most likely not have them.
+> 
+> I don't doubt this sequence of events, but it feels like it is pointing
+> to a separate underlying bug.
+> 
+> Anybody who is passing QUICK should be prepared to get a false negative
+> and recover reasonably. That's what QUICK is for. And anybody who is not
+> passing QUICK will not use the cache (as you note, they do not use the
+> cache at all, but it would also be reasonable to use it and fall back to
+> a refresh).
+> 
+> So it sounds like somebody is using QUICK who should not be in this
+> path. At first glance, it makes sense for prefetch_cache_entries() to be
+> QUICK: it is just a prefetch, so it's happy to get a wrong answer.
+> 
+> But as we've seen, a false negative here can be a problem because it
+> actually tries the fetch. The most obvious issue is the one we saw here:
+> if the fetch fails because the object is in fact local-only, then rather
+> than say "oh well, I guess it is not something we can pre-fetch" we barf
+> at the lower level, in promisor_remote_get_direct(). It feels like that
+> low-level function should be informed that the caller is in "false
+> negatives are OK" QUICK mode and quietly return failure.
+> 
+> But even that is tricky. Our fetch request is all-or-nothing, so one
+> missing local object means we can't prefetch anything. Not great. Plus,
+> even a quietly-discarded fetch attempt is expensive to do, when we could
+> much more cheaply get the object by just looking again at the
+> filesystem.
+> 
+> So I kind of wonder if prefetch_cache_entries(), along with any caller
+> doing an OBJECT_INFO_FOR_PREFETCH check, ought to omit the QUICK flag.
+> It would mean that the normal case of having missing partial objects
+> (about to be fetched) would cause us to re-scan the local pack list, but
+> that's not _that_ expensive, especially compared to the fetch we're
+> about to do.
 
-On 04/11/2026 21:15, Harald Nordgren via GitGitGadget wrote:
-> 
-> It follows branch switches, branch renames and rebases, including "git
-> rebase ", rebases of a detached HEAD and rebases of a branch that was
-> already up to date. When HEAD was detached, the entry shows "detached at ".
+Yeah, that's a valid point. Honestly, by now I'm almost urged to just
+drop the QUICK flag altogther. It's a source of bugs, and the longer we
+look at it the more cases we find where the existing users thereof are
+buggy in specific edge cases. We just recently removed one user of
+QUICK, and this here is another dubious case. I wouldn't be surprised if
+we could find edge cases for the other, remaining users, as well.
 
-The "detached at " labels show the commit before we switch away from a
-detached HEAD, not the commit where HEAD was detached. The parsing of
-"rebase: checkout <revision>" is still not quite right - it treats
-"origin/main" as a branch name and is confused by commits where the
-subject starts with "checkout " (I think the way to avoid that is to
-check that the reflog message does not match the commit subject [1]).
-Here is a failing test for those issues which also checks we handle
-':' in a url in $GIT_REFLOG_ACTION correctly.
+> Possibly we'd want some logic to avoid doing the re-scan for every
+> object (so if you are about to prefetch for a million objects, you don't
+> want to trigger a million SECOND_READ re-scans, but rather do it once).
+> That would require some refactoring.
+> 
+> But it would fix this problem, along with any other related ones. In
+> particular, I think your fix here is leaving lots of cases with the same
+> problem. Missing our own loose write in the cache is an obvious problem,
+> but it's not the only reason we might fail to see a local object: it
+> could be in a pack now, or it could have been written as a loose object
+> by some _other_ process.
 
-test_expect_success '%gb labels branches and detached HEADs' '
-	test_create_repo origin &&
-	(
-		cd origin &&
-		test_commit O1 &&
-		test_commit O2
-	) &&
-	git clone origin downstream &&
-	(
-		cd origin &&
-		test_commit O3
-	) &&
-	(
-		cd downstream &&
-		test_commit L1 &&
-		git branch side &&
-		test_commit L2 &&
-		git pull -r "file://$TRASH_DIRECTORY/origin" &&
-		test_commit L3 &&
-		GIT_REFLOG_ACTION="sync switch" git rebase -i FETCH_HEAD side^0 &&
-		H1=$(git rev-parse --short HEAD) &&
-		test_commit "checkout main" L4.t L4 L4 &&
-		git rebase FETCH_HEAD side &&
-		test_commit L5 &&
-		git rebase origin/main origin/main &&
-		H2=$(git rev-parse --short HEAD) &&
-		test_commit L6 &&
-		git rebase main refs/heads/main &&
-		H3=$(git rev-parse --short HEAD) &&
-		test_commit L7 &&
-		git switch side &&
-		test_commit L8 &&
-		git checkout origin/main &&
-		H4=$(git rev-parse --short HEAD) &&
-		test_commit L9 &&
+True. I think it's a valuable fix regardless as it ensures that our
+cache reflects what we ourselves just did, so it's a simple improvement.
+But there's definitely more edge cases to this whole thing.
 
-		cat >expect <<-EOF &&
-		commit: l9 (detached at $H4) &&
-		checkout: moving from side to origin/main (detached at $H4)
-		commit: L8 (side)
-		checkout: moving from $(git rev-parse L7) to side (side)
-		commit: L7 (detached at $H3)
-		rebase: checkout refs/heads/main (detached at $H3)
-		commit: L6 (detached at $H2)
-		rebase: checkout origin/main (detached at $H2)
-		commit: L5 (side)
-		rebase (finish): returning to refs/heads/side (side)
-		rebase (pick): L1 (side)
-		rebase (start): checkout FETCH_HEAD (side)
-		commit: checkout main (detached at $H1)
-		sync switch (pick): L1 (detached at $H1)
-		sync switch (start): checkout FETCH_HEAD (detached at $H1)
-		commit: L3 (main)
-		pull -r file://$TRASH_DIRECTORY/origin (finish): returning to refs/heads/main (main)
-		pull -r file://$TRASH_DIRECTORY/origin (pick): L2 (main)
-		pull -r file://$TRASH_DIRECTORY/origin (pick): L1 (main)
-		pull -r file://$TRASH_DIRECTORY/origin (start): checkout $(git rev-parse FETCH_HEAD) (main)
-		commit: L2 (main)
-		commit: L1 (main)
-		clone: from $TRASH_DIRECTORY/origin (main)
-		EOF
+> So I suspect you could cause the same problem racily by running "git
+> log" on some local-only commits while somebody else is repacking, with a
+> sequence like:
+> 
+>   1. git-log scans the odb and builds an internal packlist.
+> 
+>   2. git-repack runs in another process, migrating loose objects to
+>      packs. git-log doesn't know about our new pack.
+> 
+>   3. git-log tries to diff a commit. In a non-partial clone, the diff
+>      code eventually tries to read that object, realizes we can't find
+>      it, and does a SECOND_READ. But in a partial clone, we try to
+>      prefetch via diff_queued_diff_prefetch(). That uses the same
+>      FOR_PREFETCH flag and will try to fetch it.
+> 
+> I'd guess most such cases are going to be racy, though you can imagine
+> ones that aren't. E.g., if mktree actually did pre-fetching, then
+> something like:
+> 
+> 	for fn in $files
+> 	do
+> 		oid=$(git hash-object -w $fn)
+> 		printf "100644 blob $oid\t$fn"
+> 	done |
+> 	git mktree
+> 
+> might run into similar problems. It needs to know about newly written
+> local loose objects, but they were written externally. You might even be
+> able to find a similar case where git-merge ends up writing the objects
+> via a helper process, but I didn't check.
+> 
+> So I dunno. This is fixing a real case and not making anything worse, so
+> maybe it is reasonable in the interim. But it's the tip of the iceberg,
+> I think.
 
-		git log -g --format="%gs (%gb)" >actual &&
-		test_cmp expect actual
-	)
-'
+No arguing there. I'd propose to still move ahead with this particular
+fix here as it addresses the original bug report and addresses the
+regression. But I agree that we may want to invest some more time into
+this problem space after it lands.
 
-Thanks
+> > We could in theory fix this by flushing all the loose object caches
+> > again, like we used to do before 5946a564cdd. But that wouldn't address
+> > the root cause: the cache would still be stale unless somebody does a
+> > non-QUICK read for a missing object. Instead, fix the bug by updating
+> > the cache whenever we write a new loose object.
+> 
+> I agree that the object cache flushing was only fixing this problem by
+> chance. But I think it might be worth reconsidering the change from
+> 5946a564cdd. Flushing the cache (or not) should always be an
+> optimization problem, not a correctness one (assuming the rest of the
+> code is bug-free and using QUICK sensibly). But a SECOND_READ fallback
+> is a good indication that information about our odb is stale, and it's a
+> good time (from an optimization perspective) to flush them.
 
-Phillip
+It may be, but it may just as well not be. In some cases we may truly
+not have a specific object, and the caller would want to know about
+that. And in that case we should avoid flushing to only those cases
+where it's really necessary.
 
-[1] https://github.com/phillipwood/git/blob/c11b0dcb38d4dbe26c41053569d4fae27fdf0de6/object-name.c#L1301
-
-> 
-> Changes in v4:
-> 
->   * %gb now names the right branch when git rebase <upstream> <branch> runs
->     with GIT_REFLOG_ACTION set.
->   * Reworded the %gb commit message.
-> 
-> Changes in v3:
-> 
->   * Dropped --operations.
->   * Replaced --historical-branch with a %gb placeholder for --format, e.g.
->     git log -g --format='%h %gd: (%gb) %gs'.
->   * %gb names the right branch after git rebase <upstream> <branch>, a rebase
->     of a detached HEAD and an up-to-date rebase.
->   * Named the returning to and checkout reflog strings in reflog.h too.
-> 
-> Changes in v2:
-> 
->   * Move the "historical branch" rightward in the display for cleaner
->     alignment.
->   * Improve commit messages.
-> 
-> Harald Nordgren (2):
->    reflog: name the strings that mark switches, renames and rebase steps
->    pretty: add %gb to name the branch of each reflog entry
-> 
->   Documentation/pretty-formats.adoc |   3 +
->   builtin/branch.c                  |   3 +-
->   builtin/checkout.c                |   3 +-
->   builtin/rebase.c                  |  19 ++--
->   object-name.c                     |   3 +-
->   pretty.c                          |   4 +
->   reflog-walk.c                     | 167 ++++++++++++++++++++++++++++--
->   reflog-walk.h                     |   2 +
->   reflog.h                          |   8 ++
->   sequencer.c                       |  13 +--
->   t/t1414-reflog-walk.sh            | 137 ++++++++++++++++++++++++
->   wt-status.c                       |   3 +-
->   12 files changed, 340 insertions(+), 25 deletions(-)
-> 
-> 
-> base-commit: 750f5de7dfe9a4062f95088212b063f189d50e91
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2448%2FHaraldNordgren%2Freflog-operations-v4
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2448/HaraldNordgren/reflog-operations-v4
-> Pull-Request: https://github.com/git/git/pull/2448
-> 
-> Range-diff vs v3:
-> 
->   1:  4d779e8da3 = 1:  f960a24b8b reflog: name the strings that mark switches, renames and rebase steps
->   2:  dee548f9b1 ! 2:  99a1047702 pretty: add %gb to name the branch of each reflog entry
->       @@ Commit message
->                1a2b3c4 HEAD@{3}: (main) commit: fix typo
->                5d6e7f8 HEAD@{4}: (main) checkout: moving from topic to main
->        
->       -    The branch is read from the entries that branch switches, branch
->       -    renames and rebases leave behind. The entries of a rebase are named
->       -    after the branch being rebased. When HEAD was detached, the entry
->       -    shows "detached at <commit>" with the commit HEAD was at when it
->       -    moved on. When nothing older in the reflog says which branch a rebase
->       -    started on, the rebase is taken to have started on the branch it
->       -    rebased. For the reflog of any other ref, "%gb" is the name of that
->       -    ref.
->       +    The branch is read from the entries created by branch switches,
->       +    branch renames and rebases. The entries of a rebase are labeled with
->       +    the branch being rebased. When HEAD was detached, the entry shows
->       +    "detached at <commit>" with the commit HEAD was at when it moved on.
->       +    When nothing older in the reflog says which branch a rebase started
->       +    on, the rebase is taken to have started on the branch it rebased. For
->       +    the reflog of any other ref, "%gb" is the name of that ref.
->        
->            Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
->        
->       @@ reflog-walk.c: static void complete_reflogs_clear(void *util, const char *str UN
->        +	return p;
->        +}
->        +
->       ++static const char *skip_rebase_checkout(const char *message)
->       ++{
->       ++	const char *p = strstr(message, " (");
->       ++	const char *colon = strstr(message, ": ");
->       ++
->       ++	if (!colon || (p && p < colon) ||
->       ++	    !skip_prefix(colon + 2, REFLOG_CHECKOUT, &p))
->       ++		return NULL;
->       ++	return p;
->       ++}
->       ++
->        +struct branch_move {
->        +	const char *from, *to;
->        +	size_t from_len, to_len;
->       @@ reflog-walk.c: static void complete_reflogs_clear(void *util, const char *str UN
->        +		   skip_prefix(to, REFLOG_RETURNING_TO, &to)) {
->        +		move->from = move->to = to;
->        +		move->from_len = strcspn(to, "\n");
->       -+	} else if (skip_prefix(message, "rebase: " REFLOG_CHECKOUT, &to)) {
->       ++	} else if ((to = skip_rebase_checkout(message))) {
->        +		move->to = to;
->        +	} else if (!skip_rebase_step(message, REFLOG_STEP_START)) {
->        +		return false;
->       @@ t/t1414-reflog-walk.sh: test_expect_success 'walk prefers reflog to ref tip' '
->        +	)
->        +'
->        +
->       ++test_expect_success '%gb follows "git rebase <upstream> <branch>" with GIT_REFLOG_ACTION' '
->       ++	(
->       ++		cd branches &&
->       ++		git switch main &&
->       ++		GIT_REFLOG_ACTION="sync switch" git rebase main topic &&
->       ++
->       ++		cat >expect <<-\EOF &&
->       ++		(topic) sync switch: checkout topic
->       ++		(main) checkout: moving from topic to main
->       ++		EOF
->       ++		git log -g -2 --format="(%gb) %gs" >actual &&
->       ++		test_cmp expect actual
->       ++	)
->       ++'
->       ++
->        +test_expect_success '%gb names a detached HEAD by the commit it was left at' '
->        +	(
->        +		cd branches &&
-> 
-
+Patrick
