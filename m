@@ -1,116 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793961012;
-	b=Zc0t9p2c/bxFdpPASuZF6j0t8xRPwqvi/PNwb+7KjF9+jGHktzlOAtTwfAVeS0G9rd6N
-	 Zk4/gSxig9IwbWeuG+fXBkyx9Fpoie1ZaUD0C0z+EF4Dlq7oRW4dXOrdhrRxDU+rrbR6W
-	 +gNwqRMb3vOn7LTRpMMPYTZuMIMxcAZynQp06xyZEW0IKd9EusqxbjeVQV+nzUSi/49Xl
-	 J/uMcK//hgnGPfWsMLZahMOnUB2Ok1dkAv7axjRyEizzNrfXg2zf2oat6ACuyOJUj2Dmj
-	 whzIxWjNW7ePuf7hCEFWItA7Bx0Iii9dPxjPgdJJQ3EAi5Dc3YAYFEOUyhpb3/vzVpw==
+	t=1793961014;
+	b=zEogxyI5yuGFDntbO7K/3NWsRi5id0XM+XZlNqNdWLTG4AgfkHnzR8EGNi3AwM+p6Eai
+	 FrC8N+E0SvKndax6PBi6yl2p1K/0SV3lzpJFQNfwNvvfDPz2iRbJZX8o2OwGeTCRsmemz
+	 X20Ds1DUKCM7CxW8O4rKrKG9l//zS2Ynz8L3Q3SUwMPsLl/WltcLnJ2f5XMNevl+zbwOo
+	 0G1ayrrq1qWJXwO792LeyEqTd2wQ6jAF8LtOMd6MxM8ExnBoaxW4kVTZjrjZnf950Ogn5
+	 Ti3MsVscYiMBrPFF8NwL/n74nTNv1a8RifFjpOhXbvKKWxqikk33LLdZ1afAPg4isRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793961012;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793961014;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
-	 Cc:X-Mailer;
-	bh=J1xtgRa+Sp7P1aQxVifUEqraHjgvxgRrv+nRLurphtU=;
-	b=2PxOZfN5bEm5XhUA5ZA2a+Gl/fzwhF38u2viIluN36hi/UnQwKd4db1FqPo/CybUbbjv
-	 iEf6n4LU4TmIs8UDiWE0gBSUI/6BRSVe/k29tHzsptfnC9WCNR2kMS+GNWlvYR3oyjKxH
-	 r6i/V99Wd6poTZrWl/80DC8a4azpZBf76Hv0PH3iANK71j8IpioQh1gsB07Ae8SuzlMqo
-	 TqRBW6N2iR5lA2FSzb7NB1P+IrF5LMOB3lso7uK7NYkTj/eSodddzcgEYxhYgz4rIpthX
-	 +WvW7GPuOP2cucNH2cjyu/2Mmx3NBbb7vtrcUe4MWPPoLBHuA9iWrKJqDzyRzPJj4YA==
+	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+	 X-Mailer;
+	bh=bEq/r7hg9oPcYDVDAZcghRgs28ExRMrQIdTk3Ck0m6Q=;
+	b=gip1/GHqmARwvH/0XbNUMW+6rhJuolEgVBZnwGIloK1zIWWbpSz16Usmr6exSh6zhemf
+	 ompIsvtYs8ujnZewMX7wCsN0wrKMnKbK5zb9Ei7F3NJ8WekKIUhuU/mAyr/ZntvLsXRDh
+	 AldH3uBcqQarm2tEoh+pfh8cUh3ACz1jOVLa6yNgH5qqAY9oi4kIqD/XftxV0G40cEX6L
+	 AS4yZnz2UolRpnukzBTrJ3Q5JurhiSy1Yeow0YhQ/6XOnM/6h6Ohsuvdbjz0U8C3n+i5O
+	 rcTFTbUHBWGuxBuNR7TTZNSIsGoNM14yn86qmdwlKBJ3a8U9NUTZssUiaDuJICRbYLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=xdpPqJhq;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="m82qX/Oz";
-	arc=none smtp.remote-ip=103.168.172.152
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=WmFXo381;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nO54kXMm;
+	arc=none smtp.remote-ip=103.168.172.148
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162A7606A32E
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 10:30:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 162A7606A32E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2472C606A32F
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 10:30:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2472C606A32F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=xdpPqJhq;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=m82qX/Oz
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4466614000FB
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 05:30:10 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=WmFXo381;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nO54kXMm
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 55C08EC020D
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 05:30:13 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 06 Nov 2026 05:30:10 -0500
+  by phl-compute-04.internal (MEProxy); Fri, 06 Nov 2026 05:30:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1793961010; x=1794047410; bh=J1xtgRa+Sp
-	7P1aQxVifUEqraHjgvxgRrv+nRLurphtU=; b=xdpPqJhqDOoD/1Jl646gIM6ir2
-	zDe7TMErt5ZzG1hqKVYEammRtxBHxH+aJWjmxPgR63BlB/byKK2nF9l/j8BMr+lw
-	9q36LOjVyzNTfzYTqhMC4UWZOxp/aoKRldE296yV9pj6SKIAvo7OEy4jKDBn0uX9
-	OT+JT8JCETec3klxlRddKXpw5+UaSujl0wz8DLqNSrpOqpWk1Cg6ZXI9mngILKXH
-	KCJAqFSKcw5J8ELXOLgckPNi8PQNXNsVGfeTMpHTKSnWlUNLrI2Up7V1FlAvN5nz
-	8iJWmKEw6ZG26zR7u8zYNSu8fOh58JOwXUhv9OS2frrlA/EYH4bUMG7MdEqw==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1793961013;
+	 x=1794047413; bh=bEq/r7hg9oPcYDVDAZcghRgs28ExRMrQIdTk3Ck0m6Q=; b=
+	WmFXo3818Yt+eIuN7dSOqNjVHEUpWWbzD7ro59FcwImuajTnPucCInb98HbcmI9K
+	4ZBDeEDNNS3FS7USlTyud+IQLmZFdPNSxNuJoRB/3MJiExzcouYefgzLt/TijCCH
+	mdyx7pr+v55s07C//+ErsdaiwOwW2NqTfiicn8msR+fimGHdVdn1izRKw19k8FKZ
+	fg13NdoHDmLmlMkdqm+hXjs/nHDzPtRN4PhCia/9tz2LzYomIlT/PGp3l7UHr5fx
+	m21IYRxnEegGjTXFU38M+y/Dj/MUfy1pHGWPdR0H1HZlzRn9yWk3P97sYCUzhxTm
+	xgef3mYxR2h3JgMI4JABLg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1793961010; x=1794047410; bh=J1xtgRa+Sp7P1aQxVifUEqraHjgv
-	xgRrv+nRLurphtU=; b=m82qX/OzkCDIeKYTLPZCYN316/RNLztEObVdfMsDIVEP
-	Go4fRFuuYQ/8HYv9eNdxO3z29LrOF1CdJlm4/onL1y9X4ruUvbOEx5xLotPPzr1k
-	pC9hNhNyt1l1b3izUg1rm0C9e7KwU/Twq3vMTwS5d3adW4ig1zWwPs4No9z7lNwn
-	vQb5zcafQukV1/F8C6yOACWD2kR5AYdRLwx31/4z8MKtQ+Cd+AWrMk+uz1DKQZwe
-	1708q/sPfC9lPYxCUhtXm/aJ8DEpA+L2ofjrwdIzQJQaTcbpNlXfhNxr3k8SP0rl
-	L94nbveM9jbIefCFmVM4l+h+94ulI6vsTfUjqD5qCg==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793961013; x=
+	1794047413; bh=bEq/r7hg9oPcYDVDAZcghRgs28ExRMrQIdTk3Ck0m6Q=; b=n
+	O54kXMmTFrEdgYXH5NK9KgLAnbIpFGCAXxiVXhNO69CO9sY/80A86XLi/VTj5B9G
+	w3l1DAIGMsBuJDJvVVN+fnPhKj4r8lcC0NWwHYZsRZO5/EQj/Qs8lOuNsP5seAFN
+	j0Hw8Hv6qZbc6qsBG/+cMS5/Qmc5zi5p0WePrhbNOZtnLX4z2E2Mb6pfTB23OXEU
+	oBu/rL4qBPmGff3GTuwIuJsFML8Ctq4l1Whmho+B3HXJkA7PXaGH6MEAwC2SpBup
+	MIPNJ6Z7s7sqnfdg1+8trg+cMZJZ9ABVwvtaVASt6bRJ7RTponU+cQG2wIRqA+gg
+	fjNeJt238GA97H0mE0KnQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793961010; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1793961013; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:ZlnhMObBGalV6IqQU1qHn3AYcWOkNIB66nXLdyt2F6BpY5n
-	WXIsvvh4xqDBuOpHppE6ZGBOT8pTliqu/TWwtKp0w4C6c754uzTjgIcBfJvpDLxo
-	15E+iCvGNXaSq4+3TLpbTR4ez0xct8j3SHgefzNiPwI8fHZFLNqz+dXaFxF7n0/1
-	SjeP0Z2BR9Mgg7pSMns1ZdmY4CCl20O5nIVSc0XqY7+A+5WnW2ETDkvgN2Kgt9ED
-	BQndCAcSIiy5/JxAwSDXLtKZWZlmScQZvfAFnSCW79mkauftQ7VNfKRbwUfyXI2z
-	ijmtHNB38y0pr+w01c9QYWMae2PoI8/MxPtbg3A==;
+	s=fm3:rsa-sha256:mGyxncssVx9oOy0XnBoeS0HTCrmtJJhizivc6yo0U1Yw1HK
+	ITmC+xOjWe74Wt8y6WopNY121aPbaoSHKXbVtyAAFwzE/1XjTETsFIe7bwFebavs
+	hopZ96D7U3ufscExOvhLkzV0EIGT/0lHJhu+9wYzBxTt7VZ5hkVDj7DOF3BPBYTa
+	ORbVp8J93bi6qQ3jO4lXugUtzOFATRIxwsEIU8y8Ue+ULgTzFU8UCeLg96D3DeHa
+	54/j4juISNUVTL2zaiKUplKTsqh1AHGHqgftb3izPf03BtjtFrFo+oBSJrs8f6tI
+	epz82KkcThjS+i7fM0j+s4tTJDbkbjBR7dEDoeQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=10;
+	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,message-id,mime-version,subject,to;
-Message-Instance: m=1; h=sha256:ClS9cIQ9lJD3DGIYnysZCR3duT5aftEJCilgQZGAPKk=:P+bfbCFlHzjzSP5r7Itw3Q2IMkkfp0lhVtf8UPZo3V4=;
-X-ME-Sender: <xms:MqztakTuIuzdsGslPuhQcwuSbbs_OpY6Sy1hgxu3O5KG32vbw1B0mA>
-    <xme:MqztanwqNGQApBO3evtQAu9QJ5uEtJ7qVKG-z9aMIQeqnep0JI2Yqm9-i-6YhvdkS
-    8MbNQFn02nES1Q-mh79V_e7r8z4EP9Em4kkbVGBz7UO_4zq7v63lXg>
-X-ME-Received: <xmr:Mqztavd0-m51TRTYc9zIoPaF7N1-sHOf2LkYG29wJoqI0oB4Tn5ODAIjv8K5dE2tZ6WGSA>
-X-ME-Proxy-Cause: dmFkZTF8Xhv0RkxN1CaTM5ybizA/iM7WByP7Eshd4QIJoeMDqhcI0Ny5s2l1nbvkvPtFIz
-    93j69I6+NR1NHRlZGx7DLrUX72OhOv0bQge4nA00XA9MnxGXaEk5OkW+mlYKD3BzsQI7R2
-    osGwIJqpHxOWjuopC8yf7OCuSUFi+DJUQsFfocR7XLiHu+zivJ6NT3UdRpZN/2V+egTWwN
-    s72KtYuCcizc2GUwr8APJlNBxNuomWkxga0YF9W9m+aSjkZrBg3KvUnjELq0h1muGTTw+V
-    Dw86nnBiL/FYqFmOoJcPZ/i70Z2WS+r3jrj4zeBOTt6zgxiCcSokbew+9LmNARpGf+OZo8
-    W5eQtKC3iG2HxbA2WIioERwA9hV1z4s1gGrrg0XSiPH+8yfxUJBlGe7rkw0SmoR0WaPIB/
-    0oqVGL2lwEs1s4ck5IzAh6ICNaukBVr2aBh1lD1ccgmC2RtEdS9EGKkmxwM5NHJAqs1GW0
-    FzqBiqu/7V7GzXH8znjjcBsd0OJNA73aME9m1xJcvXw0wWk9z8du7YTnVuGP/b+XU7ZjE+
-    /LTxcmwfV2TWWzwjAOcDCkpjMC1vRRzo41sCvYsq95k42V3HoVmQ0HprM2CkQVAS4vVkyQ
-    VxkJczz90sZiL9ieTzkq3Z0mY6EIWwdMu7ZIKYdKF7DKd25UuNaGxhGQUgcQ
-X-ME-Proxy: <xmx:MqztajIASHMPs51poKrpHFLur7NxJ-FO_Yfgtl7t3aNWDJwLvNTiMQ>
-    <xmx:MqztagF_sznq4G5ZO85oTmTeeW4dy-wD7a4ouLvlt9QhVKRYXaELaQ>
-    <xmx:MqztatrkC2ZFlxPytx9E1KGbH9Lco_1EytuE5fJXOxyligpTBG6xEQ>
-    <xmx:MqztapT_OAM_y21QK_1g0CfTlhNImO0RaDAFDI3UPoVVt1MVBhhEcg>
-    <xmx:Mqztas1bYpiueyERs77bIZPVR5oO_XP7n-Vo4gWDNUWTYGqJrWK2woo4>
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:SOvDyWZzVGSaQ0RIXgxNAQFGDm5WQJAOZS6MrS6b3HA=:yHe48ndlEDqEjaPoWvnbBS4FD6C808A9lhwHk6hcNCE=;
+X-ME-Sender: <xms:NaztajX5grXMK9zo2ZwNq5zZGZg_EHi9WurgG1xjjjVUP6ZV4C0YsQ>
+    <xme:NaztahlZGYBI6A3XPdl0IqciDUeXbuTCsLvWt8Zpn9g_byUIU7IyvRo4TbFt6Qftl
+    7hkMeQtiWUd5bGrqy80rU3C7xAyVQz_ukNy6zo5sq1x-0bG29nKw_Q>
+X-ME-Received: <xmr:NaztatBbLFZ_7KwQNMKLmPheXsvEwjxmO0LR7MXNnIKCKHUHFh_ceIKsGpgT3zLcNrhaSg>
+X-ME-Proxy-Cause: dmFkZTGy77yXrjJS9/3QcuR7pa91rjJ1dPHPAmws2vnFDxHmVCZo6/qAJbB8zn+b2xX8hx
+    2jNUqL0gYmXt9xXzGKEDcwA1blLEETl+6XVOGQtnMu+Ta9t5IU46E5JxbMAmgkNiHg1MGN
+    VAG4GvEz1F1J+wueIPkWbgt24Ugo1ngfnHYpa/Z3EAxOam9qrqbygvrjFqLNScL/8IhS+8
+    sTI/RoIWbNkQFt1lWWykvjNhwEwEtIvQSYAsoyoJmt+rvTiqMJnjy+sOSK4vZskVf8VYle
+    aeqGxJm9Exev1XYrfNyRB45oA9OHchQZMN9BaUT+E5s4Qy1+zrAarY0O0PGLzMMK99uciw
+    LHcOjSeel5QR9ff4qaPrxImQ7ACipbzrsIh1BKKx5sThfQk2WwNKpIEBuW9GS9W+a2rqfg
+    Qj+kcC0Wj6tXv3gbnIAeaGR8ulCl33WfbVevrxfV8jmbinjMHhSMkDBT8+rmHgL+vVRWFh
+    o9OfZJpWni10iV440VWQtkAd/0S3h9s3JsirymO+ZVN1j4irW9Agu9dsLUz3Kq1M2thI2+
+    O3BrRRFscdnSXuggzWc/gHGetL1Gl4FHfsdewUn7DhuUJ6czECp1s9N568IEzVvjF8lSyu
+    7SXQj4xRtoLH5pHZ/TTZ5KxuQvr1bHoWGtaYLnroXkWgvqMPm/GPlISRa1uw
+X-ME-Proxy: <xmx:NaztapdA-rbHopQrAybKhgXWtzHGUv_UIi2O1wu6prd9nfZfHKNGZQ>
+    <xmx:NaztagKojyVcW23Iu8lsm_RykWumrIQ7mIebJUT9YudMSDveKaYlrw>
+    <xmx:NaztakdAjEqFCXhiwlkneBQKC-7aeAdmKKt5Pnr3BaE3lqrKUl6NUA>
+    <xmx:Naztav3af27jnK8V7gmmjwN466bYkyIwRIJtw79gT1PQmmIEToJmsw>
+    <xmx:Naztak4ZdGXIOihv_kSJ8Sfj2xA70X8pIf8ew3oGBY6CjIF6N6D2kHZM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 05:30:09 -0500 (EST)
+ 6 Nov 2026 05:30:12 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d288a4c5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Nov 2026 10:30:06 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id edd2e672 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 6 Nov 2026 10:30:12 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/7] ci: some speedups for slow tests
-Date: Fri, 06 Nov 2026 11:30:00 +0100
-Message-Id: <20261106-pks-gitlab-ci-speedups-v1-0-1fa0374c7287@pks.im>
+Date: Fri, 06 Nov 2026 11:30:02 +0100
+Subject: [PATCH 2/7] gitlab-ci: exclude intermediate outputs from Windows
+ artifacts
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -122,74 +124,44 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ6CMBBG4auQWTtJBw2gVzEuaPmFUYNNBwgJ4
- e5WXX6L9zYyJIXRpdgoYVHT95ghh4LC0I49WLtsKl1ZibiK49O41+nVeg7KFoFujsbuHI7NSeC
- lbijHMeGu6298vf1ts38gTN8b7fsHQbg1EHoAAAA=
-X-Change-ID: 20261106-pks-gitlab-ci-speedups-09c3841eb178
+Message-Id: <20261106-pks-gitlab-ci-speedups-v1-2-1fa0374c7287@pks.im>
+References: <20261106-pks-gitlab-ci-speedups-v1-0-1fa0374c7287@pks.im>
+In-Reply-To: <20261106-pks-gitlab-ci-speedups-v1-0-1fa0374c7287@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.15.2
 
-Hi,
+As running tests is very slow on Windows we shard our CI tests across 10
+runners. To avoid rebuilding Git on each of those runners we have a
+preliminary step which builds Git and then passes on the build artifacts
+to the test jobs.
 
-I was staring at CI way more often recently, and that got me annoyed
-real fast because it's just painstakingly slow. So I decided to have a
-look and try do something about it, the result of which is this patch
-series.
+This archive contains a ton of intermediate "*.obj" build artifacts that
+aren't needed by the test jobs: the artifact contains ~2300 files, out
+of which ~1800 are "*.obj" files.
 
-The series contains a couple of bits that are specific to GitLab, and a
-couple of fixes that are generic. Some highlights:
+Exclude those files from the build artifact, which reduces the time it
+takes to download and extract them from 34 seconds to 17 seconds.
 
-  - Installing the Git for Windows SDK speeds up from 3 minutes to 10
-    seconds by using tar(1) instead of Extract-Archive.
-
-  - t0027 speeds up from >10 minutes to 6 minutes on Windows by avoiding
-    the overhead of spawning redundant processes.
-
-  - t5551 and t5559 both speed up by a factor of 10 on macOS, going from
-    20 minutes each to 2 minutes each by using reftables in a repo with
-    100k refs. "osx-meson" and "osx-clang" thus go from 29 minutes to 18
-    minutes end-to-end.
-
-  - "fedora-breaking-changes-meson" speeds up by a factor of 2, going
-    from 35 minutes to 16 minutes. Turns out our SHA256 implementation
-    is quite slow with "-O0".
-
-Unfortunately, our Windows runners at GitLab are still atrociously slow
-by themselves. So the critical path only improves by about ~10 minutes,
-going from 60-70 minutes to 53 minutes end-to-end. But hey, at least the
-other jobs now give feedback a bit faster. And I guess on GitHub it may
-be a different story because Windows runners are way better there and
-are typically not on the critical path.
-
-A test run can be found at [1].
-
-Thanks!
-
-Patrick
-
-[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/734
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (7):
-      gitlab-ci: speed up installation of Git for Windows SDK
-      gitlab-ci: exclude intermediate outputs from Windows artifacts
-      ci: build optimized binaries with Meson
-      t0027: optimize how we reset repository state
-      t0027: cache expected output files
-      t1092: set up repositories from templates
-      t5551: use reftables for repositories with many refs
+ .gitlab-ci.yml | 2 ++
+ 1 file changed, 2 insertions(+)
 
- .gitlab-ci.yml                           | 13 ++++++++++--
- ci/install-sdk.ps1                       | 26 ++++++++++++++++++------
- ci/run-build-and-tests.sh                |  1 +
- t/t0027-auto-crlf.sh                     | 33 +++++++++++++++++--------------
- t/t1092-sparse-checkout-compatibility.sh | 34 +++++++++++++++++++-------------
- t/t5551-http-fetch-smart.sh              |  6 ++++--
- 6 files changed, 74 insertions(+), 39 deletions(-)
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index 15419a954b3..036d2f3c7f2 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -194,6 +194,8 @@ build:msvc-meson:
+   artifacts:
+     paths:
+       - build
++    exclude:
++      - build/**/*.obj
+ 
+ test:msvc-meson:
+   extends: .msvc-meson
 
-
----
-base-commit: 0ffa3e35c7c82ab8d0de226149fb03b3f7674d05
-change-id: 20261106-pks-gitlab-ci-speedups-09c3841eb178
+-- 
+2.56.0.500.g5d06dc02cd.dirty
 
