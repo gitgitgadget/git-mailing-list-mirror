@@ -1,53 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793993800;
-	b=Js0Uc5ojWPhWde6Xb/QAatCfKnEavO0YiWZCVxUe5atRlLRSWuiCpLLBiT8iOrzqqlVR
-	 4siQuNXDPQWvNlEczmJ/y0CIGvEKXn8hUp4QQxD7p8iN11Rjn/l9K0SECIvz+iY9k+gls
-	 UJzyY2ZpHGHRF7B+52DyasGXjNEXyOAN8Cnag/Ja3ZZvuCIRG5ao8nUUNGFdiCnbPDeTR
-	 dBbAryuZgmhgQ6RGjSZrg7WBjNo1hDI53TYKJedAmK555FpijHG9Pkll7bhZQnPfoBDDH
-	 jEBsgjim9Jxo17WBKhRSc6Z69LRjxt12jE6YDW3GXnyLKAKIELNwMZGCF31kavpBHvQ==
+	t=1793994812;
+	b=pAvQgvf4NRH3/qLzZ7oQoqUeldgjSRrhxuT3Bz2aTCfEOJNa0QYMALhOxcfM8/Hi0F0/
+	 PRYKhrF2vR9MMnBn1CPwdWqGKb1iiuP9Tgm3JoPz90NWTQ/nntf57LpAC2kggYfz1tS16
+	 ChuWs/SE3poQ1w1wi7cYYQzPiwxzexaEUI/eJEUfNyKlBf0A4Omkl3ZVnA0xWjAIOGwur
+	 Gq8QU4ctG5oXFRwZyQYjKkWZYHqdcsqAPsoqyG+68a6j0+aME08cqVFvLpTxLMVUVf1rT
+	 WoWahYBTF87ZwVcSfpsJPi7M4Tq0tS7zrs5SojP2JanFah8Z0rtttAu8iOSM18u9UUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793993800;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=g4vgkadlBzwY4REghO8cfzqssIfOOmOwnfp055pgPik=;
-	b=hOU5su32V21ZfM4ol6IzRxU3REyJEsFAaAtMk+EtuCFcUa2lbHrXCOZka6GXtZxxw+bu
-	 fuqrV3uI/aE6YwvvcZGy36WIDNW2zgyqTvvV4CPxHY0wQPXQ6knh++Td4Fhq7RMxtE6fi
-	 W2dE8fJiXLOjJuWb2AdC6pvlCHtzWhV7szmKAHavHP2aSJahcQ1z2gSwuX481cvk9Tm+s
-	 28CEAMdQnEapwPwBeBhXFuExA/dnDZRYOwXfC73Ayi9m/UAUMg3Qdtvfw+m2VuN9LwpvJ
-	 m0pjnW5Ft3huCQaqTL9usRUaAFmJfHrGPTh0nWYkyrRM29/m/jDL9DAxVp83xlrV85w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793994812;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=xzJ1BHBjOEY4CFITVJnemZ0BRAxWPNg0g46UizlUnTw=;
+	b=mhHYHmO70YW/fehDhf684XyjviMgtK8WAaHARhRRKVve6szsVwlcZb9Ko8DQYBnsNYLP
+	 iT1+N26HEYolpV+0oShXaJQv7DV9V/wjejffQmIid4Juoc9CuOzLFVseHxCi+o3WtTaQo
+	 56PWvbD4quoZk0M78+jSJ2zC5uvcDw89Y1IijAJE9s9GLnuPr64mmV3kA/McY7QoMY4bx
+	 UPNUFZDgI1NZLcDht/8b7wL/ffp2AXoks3FGnHVQ3lbJWFxiOITQ1j4MGkcnyX+UtOKrI
+	 g3L8iKIM3LmLeJNkS1psMAzdG+/GCVm8tjVwc8qUJKmmOQqMnyBzxVDKea6PWOm3pcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dvnZJag1;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="QRfoKMu/";
+	arc=none smtp.remote-ip=209.85.128.53
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF526606A32C
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 19:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CBE606A329
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 19:53:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1CBE606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dvnZJag1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189961F008BC;
-	Fri,  6 Nov 2026 19:36:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793993799;
-	bh=g4vgkadlBzwY4REghO8cfzqssIfOOmOwnfp055pgPik=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=dvnZJag1trF2pwXgc/ES4Hw6e7WQcF6z2LTOgqPDFfZVfaSFkK88pV3mvXwNW5xqI
-	 Pj1T7kUfVwHT3xjjAHj18nd7rhro+VfzteuHAVrSrfAWH1hItmAPBd1KXOkKbK584r
-	 sDsEz6pqIudIGMJNfka20Bb55LtTmxtam6STqlnf94uGi4JsPlIipVEguhCLID4ll1
-	 138Rh73Dbqn3+8LZmjZ1dtrraSMsr2gbtljgZRqh5MXtPvnhTfuPJdNPEKHwWdZARY
-	 KneIFcbN2KKx07SpSSFbh0HhMPMSezXkWF86UNtKgK0vRqw42rn6TkOBqruwM0QRV2
-	 StwGm8R2n/SSw==
-Date: Fri, 6 Nov 2026 20:36:31 +0100
-From: Alejandro Colomar <alx+git@kernel.org>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Andy Shevchenko <andy@kernel.org>, 
-	Linus Torvalds <torvalds@linux-foundation.org>, Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: git-ls-files(1) avoiding symlinks
-Message-ID: <au4rmQRjRtIv1Oru@debian>
-References: <au3lu4jYwZ5hBZSy@devuan>
- <AE63992D-7BEA-413D-A372-78708CFA8F6F@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QRfoKMu/
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a207b02a2cso7233225e9.1
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 11:53:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793994810; x=1794599610; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=xzJ1BHBjOEY4CFITVJnemZ0BRAxWPNg0g46UizlUnTw=;
+        b=QRfoKMu/G3llzebgVgaReUJUyNump3Nq8zDlH6G8pmKUFeLqkB1Cl3EgB9mtARVkR+
+         r3eFX9YOO7Oq0P67fNZLVBXLIhcPzYWQ0/W7KffPOABdFx+dZpiXB98VlB6wYBgzu259
+         1wFT75ExDBx4mBHs4xD7RMRK4GKRiETRZ04ZTyMTpqm+VOvJjn7bvic913tiEYagPIuf
+         DV5qjpXN3Nqy82muwcFHnqvdkv0eA9u2iyNluBSQbHPWg1w0z/8zmulos5qYzNlK4/oU
+         sdUky16+1gQozh6376EfuI/s9bWeKjthyXAl5uRD0pnQ44n6jPVhsN+tjlpRb82r4D1Q
+         OlyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793994810; x=1794599610;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=xzJ1BHBjOEY4CFITVJnemZ0BRAxWPNg0g46UizlUnTw=;
+        b=1AxK+HbDlgy43IVE4PzwFs8P+Bwe24kIoooWxLSP9xfLLYamfVHZYi2RbIm34vsSBM
+         ewfttU9BefZEllH1+Dgc/47cSN/8/TnJgIpsy3b+hHnoafLt77Yf1mzsq/3l5+sd+o6Z
+         ACIlr5KEwD78RislewqagSaPe49lVjnXZIrFykYWSJi5sMRIOtT3WQpPNVm7EK3XwAuW
+         /Y3f+GqfuDbyEgfKN3hvnWJBTJUoNRoqG8Yk+6vdqEFF33pK3eDkteMlRJyBh2e0QYEb
+         gVITp12VqStPkOE33O64E6RU7Z3f/ySWKIXF5Kq+Y4ii1Eu723AaGPPf6NbHNpl2zcXz
+         pR0Q==
+X-Gm-Message-State: APuU4Z8d/H41Xy8JBSsns9UTt5LhzJZvpUP0y1nSG2M5feGPUhFz95YJ
+	Jq6Yw2k6R4bcBBRbW0yRXCRPuHlST1NnguHoUv+TlXGtyxKShUWZR5Tn
+X-Gm-Gg: AYBFou1L7YkT47F66WvnRB2VPpYsilD5S3gJvwznZ+fG3UeihMtGsvHaAjhGazX7lWb
+	wt4F9xP4i61Vi6keKsHDEMaYiGjQa/l1Elp8+ZyJ1AeTEVQI8yitFwx9g7Q+Ni9wlrm4LmYdAni
+	scASYCMi9UMlXrbeDwt+kggRzouUc6VO507zS9lpMdBvVNpWfofU3MzkmM797YvJM8zVOeIS8fc
+	wJ5HE5OPKvsoPSQutDmruXU6ybdjzQKOGzMGlAbfA6ANdtsyyh9UuSYPrJCRcWXUqqDYrU5NQ4X
+	/cBxiRLHj2ei9hPwW9gJ4dtqq+HcAyM3aTShE4Tddcv56T0iHZqRwGwXW9HYooIotA0/TG5IslR
+	w9rB5RnhRbYJzZz7WyL7IndW3Kycgj3RpnI22aSGY+FXgx3/+Y7Vy5qJEtTXdv5zr611Z4rQL01
+	VJSEVOsr6/M5jsM5SgKOeCRE+jptrHNPFIx6R5TQDfDEvcKD0T3QYp8yDYz7JAcXi/7j2GZwjo5
+	fPxQa3tEuy0SfsQs03pp9Ls5ptQtxgcSOe/46xGUbg3f2G/68I5Tj6L8JQUEh5QNbxXHp+74xp0
+	6ofS0YQuLInQexiDSR3se92aW9BLc2lIhxWt2PMqZuBgO8ac+Lc=
+X-Received: by 2002:a05:600c:46c8:b0:4a1:fbd2:f689 with SMTP id 5b1f17b1804b1-4b6dea69526mr64286485e9.7.1793994809921;
+        Fri, 06 Nov 2026 11:53:29 -0800 (PST)
+Received: from GODS-GIFT.localdomain ([197.211.57.92])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b7d54d6f93sm8345925e9.0.2026.11.06.11.53.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Nov 2026 11:53:29 -0800 (PST)
+From: Cynthia Uche <herroyalpriestess@gmail.com>
+To: karthik.188@gmail.com
+Cc: git@vger.kernel.org,
+	herroyalpriestess@gmail.com
+Subject: Re: [PATCH v2] api-parse-options: add missing flags and macros
+Date: Fri,  6 Nov 2026 20:53:13 +0100
+Message-ID: <20261106195313.1015-1-herroyalpriestess@gmail.com>
+X-Mailer: git-send-email 2.56.GIT
+In-Reply-To: <20261106-kn-parse-options-doc-v2-1-453ee7155348@gmail.com>
+References: <20261106-kn-parse-options-doc-v2-1-453ee7155348@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -57,95 +96,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wiyvbp77ygcid7vz"
-Content-Disposition: inline
-In-Reply-To: <AE63992D-7BEA-413D-A372-78708CFA8F6F@gmail.com>
+Content-Transfer-Encoding: 8bit
 
+Karthik Nayak <karthik.188@gmail.com> writes:
 
---wiyvbp77ygcid7vz
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx+git@kernel.org>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Andy Shevchenko <andy@kernel.org>, 
-	Linus Torvalds <torvalds@linux-foundation.org>, Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: git-ls-files(1) avoiding symlinks
-Message-ID: <au4rmQRjRtIv1Oru@debian>
-References: <au3lu4jYwZ5hBZSy@devuan>
- <AE63992D-7BEA-413D-A372-78708CFA8F6F@gmail.com>
-MIME-Version: 1.0
-In-Reply-To: <AE63992D-7BEA-413D-A372-78708CFA8F6F@gmail.com>
+> +`OPT_ALIAS(short, long, alias_source)`::
+> +	Introduced an alias to another existing `alias_source` option.
 
-Hi Ben,
+nit: s/Introduced/Introduce/, to match the other entries.
 
-> Date: 2026-11-06 12:34:20-0500
-> From: Ben Knoble <ben.knoble@gmail.com>
->
-[...]
-> > Hmmm, that could work.  Thanks!
-> >=20
-> >    $ git ls-files --format=3D'%(objectmode) %(path)' \
-> >    | grep -v ^120000 \
-> >    | sed 's/^.* //' \
-> >    | grep '\.[ch]$' \
-> >    | xargs grepc creat;
-> >=20
-> > With -z it becomes a bit tedious:
-> >=20
-> >    $ git ls-files -z --format=3D'%(objectmode) %(path)' \
-> >    | grep -zv ^120000 \
-> >    | sed -z 's/^.* //' \
-> >    | grep -z '\.[ch]$' \
-> >    | xargs -0 grepc creat;
->=20
-> The filtering for C files can also be done by Git, I believe:
->=20
->     git ls-files =E2=80=A6 '*.[ch]'
+Also, parse-options.h names the third argument `source_long_name`,
+which says what to pass; using that name here might be clearer.
 
-I prefer regexes over globs; they're more powerful, and they're hot in
-brain memory.  :)
+Otherwise this looks good. Thank you! :)
 
-> > But, indeed, I don't care about files with spaces often, because I don't
-> > create them in my stuff.
-> >=20
-> > I expect git-ls-files(1) could make this much simpler, though:
-> >=20
-> >    $ git ls-files --type f \
-> >    | grep '\.[ch]$' \
-> >    | xargs grepc creat;
->=20
-> I believe the expression is =E2=80=9Cpatches [scratching your own itch ar=
-e] welcome=E2=80=9D ;)=20
-
-Nice!  If the idea is welcome, I can certainly work on a patch.  :)
-
-
-Have a lovely night!
-Alex
-
---=20
-<https://www.alejandro-colomar.es>
-
---wiyvbp77ygcid7vz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmruLD8ACgkQ64mZXMKQ
-wqmv4w//WOK6c9yElT/g4r7756NLSXotHAqfEafLb1jML5x0muIIgek+p1rDkbKs
-X/TygZDIFYIolX6JHQb6ALrgfF1l6805QjFP+TOrRgVvod0YUb+hva+EUR8ntahC
-XdElmjObRoc7XCMHX3b1sBgAfc+vo5Tqbi+/Ho12vtiaUZjkMYZYxG7zo0NK1l4A
-D4vFYlXUDzjKBm4OWyJ65q0sLC5V4o+5YsVIKOGcD+FFUmHJT2gfEMyP0Opl6qt7
-DBEgf45pXV/eSBkpJhLyxS+/aSQm9fTw5PO/6GNl1r/9ZdtfsnEW6Zvr1d8/DVfr
-9T1pZNDS3hbY6wgVCFd7KuqdI3i2i7I1MBCQvFLMWJhqtjGg6Ren8Oqs+Z04Qe6N
-QsXc0Tu+YAa8qC/Sr2ahtQAiUsqsgTeHE8VDu0k8MCBf/M2X6pUtHWp9szKeTKE4
-fV3DbsysMF24jBCVbYGUNFtb1puSin7anifZbyuYamwEH3O//FeLDN3mhdbeT7AK
-aUEOo5kgRU4e1/qFSw2JF34Urg3n2IsbREF5TVo86Un/k+aMcuT02KIxz6MpKBHR
-4kGf5a8dWJgtGlC5agWLeotesJ4NrY+KZR57xISftmBYCsnjhmmVEG4nbYtPUpnJ
-5aWsfGMU47A+YRJtn96ix197WMqUy09v9M7LwdoiCfIrOhs/g7k=
-=4ZDg
------END PGP SIGNATURE-----
-
---wiyvbp77ygcid7vz--
+-- 
+Cynthia
