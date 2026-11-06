@@ -1,123 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793989877;
-	b=kYBG9V1yHhw7pBWVHg2/Bq5FZe7swKvU4mKDnFMkmL1RpTw82HWH4SHWMxt3i+sbjl2K
-	 +18enHTHAAv4Sn1M0m9WkMw6f67sT77BFBAm9bgiYYMOZICc9J1tf0nt3kiGjOA83MbX5
-	 i9RhrvQV9xZkhrtzdn3KBMvq1nDAhUznEzrRf7oHZZAdTIBXx3o5NsLZ+wHSKka/ZqM22
-	 RbsaGyhkPUeSzg7dCfdJJKNiPJgRdDl9OThjAmGeEqxfTmKD7QRE4ubUkwSrqH3E7uUGV
-	 BPnupzc/1GbyG5xVbshW3Oa3EGsp33S3MpQXbNOPpDGfD0AXP9QzF8xq0LhZ5STdoig==
+	t=1793990730;
+	b=J2sTnDywa7TuAmaKWLtjl6O1khzFX6y1Z9PgAgk6f2aZFqdtF5B6euHT+LvCqkl7tuwc
+	 IcZka95xELB6qxyJ0/gMWqSrqwAiD+hCBY1zP5r8KtzEQM2J1ZPNZ4zu2GT4XlDlqrJJv
+	 HaewST03jS25ENGzkpVXTMQMiEZr9knxVmkcbtmiLr0b2ZLpFON81wSe4VcQt9cXT0eKp
+	 6Lnt1VX4JZeW4ueqalp+EvT1vaOnoFKu27QyAWXbrJKPaL+ukSdcWUqPPSQtagDRvErP1
+	 QztmEHdvBvMkyO3yuqPuPLFEmjXzL7UCq16Bj4i1/0ObVrzDTr+n5GZFYvvXyeR1ZIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793989877;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=6KdFjRnomxMnTcRoCGQ7x9s7YHmARnpmjluOUt9zgw8=;
-	b=Hl1pqBbD/w2wYH9HMirwtZeloKZQEvt1y3JxiDSzAMH14dbVFG1+bormCB35cHp7V23H
-	 EONKzdl4sfM0kLo/pbJBNlIIolMW+kai4Sh+Bi7Wh3PBiP2Jyl8Ptoj8F2+quPcAO9Bpq
-	 k7WPf1t0scXP+ZUwHNCPgJPInnOu11Uvu3XMJ+e2E4OLeQqJo0Uo4CZZQVocplZEPS4r1
-	 E2WS4ERomdNEFqDI8+2qM4gtichFdaNJMZVmMGEA9kP7xnPvemS4fFznn27GVakBUsH+8
-	 MYpJGiI6GEIuLUHKsmYoKVIpqzQXYfFSNgcjHxSWHLkqyIEmbYaPqEJinQR7fi21BzA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793990730;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Mime-Version:
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:
+	 From:To:X-Mailer:References:In-Reply-To;
+	bh=7r3xK+CMyPUpqGqJ77IMHQzLjuf+1DNhJ1DgmTFBrPc=;
+	b=d8YzexpX8YfjIOldm/N8Arn1F4k7uqJcfFaraF6jRzRvsoISUJkq9tzWu2jNfDYwulS1
+	 noNZYhBBVFWNMErArcAIX7d1ifDTB2ZrgMUcjemguVDGVWa5sn0eHy7TlkKePt9DxjLQ9
+	 Y/hCR7e2HTl7jDlSTf1wN2m1yghs4YhtV0Yxav5eMcEqCUmHEatRjkVaSvKMh4IuH5C8k
+	 P9gaKP20HqxrXYEch5asuhHI2Dx1CULFIBPVkVFo5jUJGs/kb0QZhUWkstKczIDxl2u2a
+	 J64MgtSlL07Ib050uq+fRL0Haq2a0u4kskVVr9azCjeM0VshdqUtsA89SGVn3zB8gyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=mLqNjtTP;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cbk9Q1rB;
-	arc=none smtp.remote-ip=103.168.172.151
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=M3eDBiQC;
+	arc=none smtp.remote-ip=74.125.82.47
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3422606A32C
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 18:31:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F3422606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A515B606A32D
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 18:45:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A515B606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=mLqNjtTP;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cbk9Q1rB
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 43B2DEC020B
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 13:31:16 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 06 Nov 2026 13:31:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793989876; x=1794076276; bh=6KdFjRnomx
-	MnTcRoCGQ7x9s7YHmARnpmjluOUt9zgw8=; b=mLqNjtTPCvHNobUoTkLzeZEHGu
-	RvouELRXDSLVHK/TtDPHqriwtfQbprTA37OV2QL5zLZUDdkZRigJyy4AVrjcEIzh
-	avVCRWYmn4oBX6abd2oqlXq8zebLJOyV3kCwX5fNZ2zd6SmTx9MGCfxZiwPdC3tH
-	P6ny/5U4dWfLYtuO36KxHtpD6XAe1lJ2TjwiEMkCcMSxdVjIVOHqybMr37EODxv2
-	L8u8fSpMOnMgLY/CKIPKVKvjV+Sd4IqT/EW+r9fr0SNh00I85YYsVJMgVQxbg88d
-	JoyeCH/bLeCg0FUyvYpUDCDj8g6Uve942/9iu1+8q2ilnJQ9hb4CTiLQhHgA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793989876; x=1794076276; bh=6KdFjRnomxMnTcRoCGQ7x9s7YHmARnpmjlu
-	OUt9zgw8=; b=cbk9Q1rBxjfRcESAk3Mmp2xWn37VCIXey6bMBsUpI9bD8ETa4CH
-	USQBFJJ4BatpTu9Rlakj9siS0Mq34oh5/mfaOu8HxmH38Ttschmr0HqSiP4VgJiI
-	cRa0ZT4olzVp9SlkPrfTtlzSGL0BAF5PD36xfTv80Xv8wJGUgS893HpHSgq/6V5p
-	AW3Aii4Az42cxQ0Ri0yCJQfVh/+L/V4SCYTmSUni3SPQieDzUUcu1m1nZUexA49l
-	0Cok+F3XrwR+53Gmzl7R7xQY3uaDPpCXg924QIk12UNSxcQVzd39cyq5LzXZ3H/c
-	a9gAtduFz731sZipu2NVKYA9v0yr1yAL6jg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793989876; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:c9pQAO01IOCTK20FTouUMfDxyzNjXL6oX8MI7y5r0GAI+P9
-	qUNYYOnyf7agVZR3urLp0SzQPWZrKcMoLMJSnsC1+ycNx93oFJZL15YGYb0gzYAj
-	ZYmonS0joeBJw1OMyci++1+uSIQAjPsfFauJOAwtXO9Er3brOMVWTZTreA/H2zmr
-	ScXRFX0EZoHZwt/Wayn3UmeB301aKpcNHCvv4woCkAvdDoCJiGnMmbBwzdBXke23
-	sKvArYdPF1XajZPMUIF7ewLRlLKrNnnrYCPuSz+RJnMjZfYdb4wuycwvVfpHlFrw
-	fDBaOy78f17vNHv/J4WRAMLdjXs1uGaKLj2rjNA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:3YnopSLJJTCKKnGqoEhvK1x5PlFFogzLNGObyjIk2fw=:p0jM2VsBdqJ5NVX2G7r53bVMACi/wfImsAp1z/zvydg=;
-X-ME-Sender: <xms:9Bzuat_CuYzuEQ99NN_pWoz2F7KBuQf-c6M43LcEdUwjNj7Gorl87w>
-    <xme:9BzualaUMc8wAWY9wvZTTgwHD13tLUY20Iwy1KpiwHFdEuNYJZzT3tkETp5uQJV19
-    mQaZOGJ9kECiyKmkoazmng41lghqDisy5JWqK4nx4N8AILUr61P0Wg>
-X-ME-Received: <xmr:9Bzuak3HbF8zkn7U94yn8tL7VS1FweQaCjBpv_2iWecRAGkEZj7h-Y7PAwIYaFfM2pYV__WGjJ9p0xGfXCXOGr6XwCYPESVCdBxo>
-X-ME-Proxy-Cause: dmFkZTGr1f8rP66Hl7Bpw6SLvzt4BPye5FQcv583FiJtKYyM+Gff1KHAOAfV37cQdGLce4
-    qJbdj6E4eR0iUIvQJkCDJXUMx1Z/HO32nxt3s0Sb3FiMy8THytLbuVnb50LBl7X6d83z8R
-    Q8S2NXaRXfsljVweh1f8SrOSa6db7+iNMJ7JCB5NxsA8z1lNZotC3JDwGznMYsEaizCMNk
-    N0nKeU5DYyRwKaCWJHgJ4miL7KrsNcmR2bQi/9OGiKL0shLrCDLJCLxNNymVQocvbOmTDM
-    9f4rp9Y0Hr2qp8Wuz47Waxo/CKVTRZFv3BEbfc/xFHbh4dKVcD7lSb0+QSJMXM/xDKRKqC
-    5PtfEeupqPhjVwywoH8wV5WCFIOnDQBEh3IDGdUUzfKqNOdONYwL1f6l8GVz+z20F9RyUF
-    diIjPxtwchI4rp1evu6Dzoz+E+KATlLL/nmdIhhCz09X2ng7CmY/Fm7tFIWTGjIhqTRY0G
-    xzY1fNTW7xFP/wDw0vpoqNaVBNPg29D+9YP+UcKHEEqGRnE8xVblpM84/uNumV7lfgWO9+
-    kHBHK79GawNIfwftTPmmg5sTnsbpjTqydWy/xUmtea5lcrHKIqD448+QsbJicrqoP2khR3
-    vp7MSq3rDBy2otWC79yt7VHuQFX63jCdeIISryM6vjtZvHzzoaCTOwCaZtvg
-X-ME-Proxy: <xmx:9BzuaoZ5ScFj9KqR-LU8D6kCUoQK9F7DLMaWrJZ4Z0wWzkB3qb4jgw>
-    <xmx:9BzuakLxdPHzuXCGhSts_9PqqgzE__5wUhJQYGTU45u-HJsFbVi5eQ>
-    <xmx:9BzuavEjlBOmhovsVSZYeFZ8nFGLeSCMdXnduH9pFoWqH-cAprpPjQ>
-    <xmx:9BzuajtKkpzD2Q5ycYgpB2xI41c0Bgi8gMIbdaFXRAV1Y95es8IBpQ>
-    <xmx:9BzuajRaYDRLhtrGk7v0W_0eED6UcLsr2gFO8uy7UKB3g2jdOrdP2SYv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 13:31:15 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Antonin Delpeuch <antonin@delpeuch.eu>
-Cc: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] doc: document the current project governance
-In-Reply-To: <e977b49f-8462-4b63-bdff-daee75994a36@delpeuch.eu> (Antonin
-	Delpeuch's message of "Fri, 6 Nov 2026 13:10:24 +0100")
-References: <pull.2479.git.git.1793632435937.gitgitgadget@gmail.com>
-	<xmqqmrrqg7uf.fsf@gitster.g>
-	<e977b49f-8462-4b63-bdff-daee75994a36@delpeuch.eu>
-Date: Fri, 06 Nov 2026 10:31:14 -0800
-Message-ID: <xmqq4idtke19.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=M3eDBiQC
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1b244fb7fffso1620703c88.1
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 10:45:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793990729; x=1794595529; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=7r3xK+CMyPUpqGqJ77IMHQzLjuf+1DNhJ1DgmTFBrPc=;
+        b=M3eDBiQCFAvP80jZVrPNsyY/JshOwrXiPL9jp3AJEdXqHHHs5OL5fiPHjmosJcbDbw
+         O9FRgPA74G9/junG7qVC4WGqaScJ3o4r8rX4sfilSby9qHieAUC7y2PTSB4/DtO65uQa
+         /O6HXfrPrje20JRDe5HHijpdA27IURDDJSLgFhQA14h5HXWAiBPT2c4QK035g7gx+e/W
+         i/xVcorlI4h03VH/M1th9pWm3idjcZbW9zAqgFIrUK+YQWa6YWpyOE/GPoR4cyg72Zgx
+         P8thyLUC9yRYHtMyaqk7dbpGtK9yLuMiVGpSdKLk84IuNDFECiENsmT8dar4Bwwc4EYf
+         0t9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793990729; x=1794595529;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=7r3xK+CMyPUpqGqJ77IMHQzLjuf+1DNhJ1DgmTFBrPc=;
+        b=tpX4ndU/qbuQX715FleseFlZANyjNZaU1KETTijjQSXpiIRHmKAnXJ8R7YEh66SwEN
+         GDCTXSNLeconORhsp4FuolKhuCsesDFUYDut459vO6NJbvTI/eYbX4QO2aaSLD0hg4fP
+         oktyEk84VIQGbWrtsqPYdKJnO/kdFq8pEqybvlBrZHtfjTPeLAQ1Mm28D3AXjPn/buzp
+         nkW4LctoiCxEr1IgWt13FDfVMHZBjjgB5D8UyhQv3wv2cFM/gJWwPNLHaZgrm7j2GRmC
+         u9K5rnpRYcs7LVmSW1J2p7RPdX7Tcv3o2uga7OlSd/EtEwSXWw8voUQ9Cqmt8bGRZjaT
+         wUyw==
+X-Gm-Message-State: APuU4Z+3Z8Fg1Njtx7kyB8BJff+04SlhQmI/wKxbRjeEj0cyixYZjNTF
+	p3nMyiQ6Hlz6z2uZ65ZurkqUkjMProykUt1EpqzH7bU+VuKQ6m9wsLoEp/LZ8RnPlHypWw==
+X-Gm-Gg: AYBFou115iTu++JyEeBlJrdc1fCTnWj7Z32k+TQMAvfZCg4RmWP+1Xis8VAseRD9KeO
+	dIywIlUxBn/+u822E+OpkHAwSQiuei85zDC7oX5ESsfytkmcpvChp8S6YITPjflC8oFnLsTqoDK
+	3OZo0EHrDdVPig9OQ+XwBjG32PtVxCfkZn1QELpU/JhiyNa4QcDMO0SCrdge9yefBN+nBAcRauO
+	WAju5zAg/wn37I3Kgy7XiNWn9orL/zLNuh6Bwh7qCLHvppyhsTVaJ5tDbOF5c1hj6MFITD5Se0g
+	IJhG0MN5VFNeVC0J5hvEqP98KIV5GxXG8aPyIsLmItVbXBeDNCDIwf0DyBWE07iYS8hj+AeEgpk
+	e+mpPwAwxlfDdgd3Plq6jsz2B0wpapFhgCLEek1xNFMwTG8OrB3wm4gjoMRQpuFbUK5Y+/9kqHT
+	rQbq0of2d0dVpzJqfYcMl1vhFW9z7sUXBrUQpnGpd4SFtBBicgyt2/0fSqqduCLDOw8xQYO6A+2
+	FpXuM4Ihws4Yxrr8Fz/WbskXuQQ/EYSxhi0EwMEIyuNivH1nwKNN4Y1ys9PWsohJmLrXHtbkoby
+	t1sdB4hYnrYfYHOhnJOl4aInJZdvUzut
+X-Received: by 2002:a05:7022:f513:b0:1ad:e740:e51e with SMTP id a92af1059eb24-1b25d3a268cmr3076396c88.42.1793990728332;
+        Fri, 06 Nov 2026 10:45:28 -0800 (PST)
+Received: from localhost ([73.222.46.22])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b25e4840f3sm14439883c88.5.2026.11.06.10.45.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Nov 2026 10:45:27 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,65 +86,54 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 06 Nov 2026 10:45:24 -0800
+Message-Id: <DMOCMXGWSKK6.13UR9RHCJY3SI@gmail.com>
+Cc: <git@vger.kernel.org>, "Jeff King" <peff@peff.net>, "Patrick Steinhardt"
+ <ps@pks.im>, "M Hickford" <mirth.hickford@gmail.com>, "Johannes Schindelin"
+ <Johannes.Schindelin@gmx.de>, "Jeff Hostetler" <jeffhostetler@github.com>
+Subject: Re: [PATCH v2 0/3] credential-cache: fix two races when daemons
+ start at once
+From: "Farid Zakaria" <farid.m.zakaria@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Farid Zakaria"
+ <farid.m.zakaria@gmail.com>
+X-Mailer: aerc 0.22.0
+References: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
+ <20261104-fz-credential-cache-race-v2-0-ddccd0831eba@gmail.com>
+ <xmqqik2bybfk.fsf@gitster.g>
+In-Reply-To: <xmqqik2bybfk.fsf@gitster.g>
 
-Antonin Delpeuch <antonin@delpeuch.eu> writes:
-
-> Do you know who moderates the IRC channel and the Discord server? Is it 
-> also the PLC?
-
-No and I do not know.
-
->>> +=== Project Leadership Committee
->>> +
->>> +The Project Leadership Committee (PLC) liaises between the project
->>> +and the Software Freedom Conservancy, Git's fiscal sponsor.
->> We are a "member project" of SFC, which acts as our "fiscal sponsor"
->> for us, providing non-profit administrative, financial and legal
->> infrastructure.
-> Is this a comment, or text that you would like to see part of the 
-> document? I think it's a good idea to make the term "fiscal sponsor" 
-> more precise as you did, as it's a confusing term for many people (who 
-> might otherwise think that SFC funds the Git project).
-
-Exactly.
-
-> Thanks. I think it would be worth documenting who is able to add 
-> subscribers to this list. I am assuming you are, but are you the only one?
-
-You ask for membership for the security mailing list and access to
-other resources necessary for the security related discussions and
-reviews, and releases by asking <git-security@googlegroups.com>.
-You will get a response for by somebody, then join the security
-mailing list (or not).
-
-I do not know if it is necessary to advertise anything beyond that
-to the general public.
-
->>> +=== Localization maintainer
->>> +
->>> +Jiang Xin coordinates the localization of Git by maintaining https://github.com/git-l10n/git-po[git-po].
->>> +
->>> +NOTE: How would their successor be appointed?
->> Not limited to this, but there is in general no "appointing"
->> process.  If there becomes an open seat that needs to be filled,
->> it will stay vacant until somebody volunteers.
+On Wed Nov 4, 2026 at 11:39 PM PST, Junio C Hamano wrote:
+> Farid Zakaria <farid.m.zakaria@gmail.com> writes:
 >
-> Makes sense. Here again, I should have asked my question differently: 
-> who is able to give the necessary permissions to a new localization 
-> maintainer? Are you an "Owner" of the https://github.com/git-l10n org?
+>> - Not changed: the socket is still removed at exit through the
+>>   tempfile API, which unlinks it without the unix_ss_was_stolen().
+>>   There was a discussion with Junio about this. I can do that if it's
+>>   a requirement in a V3.
 >
-> Or would you just stop pulling localization changes from this repository 
-> into your tree, and point it to another repository, where the new 
-> localization maintainer would have the necessary permissions?
+> Sorry, but I do not recall having any discussion on this. =20
+>
+> I just pointed out a potential problem, and you sent this version
+> out without responding to my review, so I cannot tell why you
+> thought it was OK not to address it.  Which means I cannot answer
+> "if it's a requirement" question.
+>
+> Perhaps you had a solid technical reason why the "stolen" detection
+> is not necessary, in which case it might be OK.  Perhaps you were
+> too lazy to think the issue through, in which case it might not be
+> OK.  Or there was some other reason why you thought it is OK not to
+> address the issue.
 
-It is something to be decided when the time comes.
+By "discussion" I meant you had flagged some concerns. I considered your re=
+sponse=20
+a discussion :)
 
-Jiang volunteered, set up a repository, and I respond to pull
-requests from there.  When Jiang wants to hand it over to somebody
-else, the successor may have to be somebody who are already well
-known in the community around here that people trust, or perhaps
-there is some effort for the successor to gain the necessary trust.
-The successor may inherit the current repository or set up a new one
-to be pulled from.
+It was not clear to me as someone unfamiliar with the codebase whether the =
+complexity
+of handling it was worth it. It seemed like it could only occur during
+upgrades (old git version).
+
+My comment was meant to say: I did not address it but I can if we think
+it's necessary.
