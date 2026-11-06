@@ -1,120 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793985851;
-	b=nhNcyqOy0TOvs5e2iElOsKStf/YjRZuDxXnJKAWuK4QUT2nnaO5+r4vTqNoqciT8kn3N
-	 rfcPmVjuHUdwAb3qFxqvTxRiT/uzSjdCWNs7GyRxKUfK33jMlVdaS6AeikPhvzUrrR+s4
-	 NjXZnpP5ernk4bnX3M1iaZin7exRCuoM6fdTIL5SOe9/JWKlhT9TbEIHgfETPUbh8b8Xa
-	 qE6LQLRDGH7Se0gUcxC+X8TGkfAfzft5dVl3PGwMxSj0IkO3ejkK2tARdfRKGwHM2wuR4
-	 6SQMkXORXiWvhbY3Xfxdn0sp1eUR49rhsJggZgHPNTjJ75upYm+FRrIPSs74V13lobA==
+	t=1793985941;
+	b=Ed8vJH5Im6fRagT0voU38TIU5+nVF1NEqVBeWnvh5mcpycT0TZZ1PVz0vYTwehSERX3L
+	 vZUJYogwA04PkayAwm0KfBQPT5x6jRqKsh+atVASlRw3woMGVSYMu33J6pLzUuCvubw/n
+	 TvmXnuClGvmWsfUIOJHQCLcN9x6YjXSwPWmSwxdGZ3qdh+tx8i5VXsdrlfQT7wVErL7tR
+	 lVVc+M/A/TPJp892CTKj1M7tATpQxvBL6IWOIbHUT8B07rFb2NOInNxKR6oOciNhpVY1q
+	 QYQ7rpank5MmpPuxprYoIVkT99y1noBU05hnxBtdyRqXozniNsuqqsDuSExdrGJrjSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793985851;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=jbazdm46v/mu7W9l0tDqIPPZmc61fZoGWe/ZGxXecOA=;
-	b=h+a7h+0yh2iaj5wYGCS2oFwdAu4UpNI2uuwqnTYqut0zfsQ3UNp8l6Eo13ix5l8XepjT
-	 CiiVX1t/H+VRwl+J8OHYqoGR670j1AwAgfkmXyVaYBloxGeNLRN2PVQ6JiRiVWj4Qwk7x
-	 sXnDG3vfDFBc7EkD/BBrl8+EiRtmyUJX/TdzKB7/fwx5M5FFogEFoc9iVsCQs3nuoitn8
-	 TASn2trfAyUTS0PoxN41HX0xKgDJyAQO9AhPCKvBabkipbWyxARnoVBRQrsrl8BJaMY97
-	 USBD24AoUOJAePbNzBeRcnC/5OjzME0jFgM0BsKkgoN3OJyMXbf8w47JmRYrrcmkEhQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793985941;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=ZDdLrZt977+zcStHE0qLlhD+yFm9Dn+6dZXPflHoSWw=;
+	b=eeqaL9tyO81IIHmjKeT8hK2AsMCG8SDdLbvvsUBApOw+tXETTLTYDmb6H8QTxsc5MIi+
+	 rByOVx1eYjMQEY31vPR2BahxaUFf19Sl2KO+05YIkDO7mB5w+ZQweRqZEzLmt8Ron5FQW
+	 XdmUjiwFRMWEsNzL7hojxHsXrwoxfADLVZ/HoXytZfTppe6Vb/LFVLl4DkOTpbtcv2PB/
+	 yq6HRNE4/RFihC/41xFlkMBVxJz6ya7B8fM14k4d3EJ4pUs+G0ucaXWVnyFR2mdTtCv/9
+	 90mzKeNXEsNoXYrupBu5rtqm6xNubzvjGusrMueVofsuqRZgD8162vRBrJbNE46T4xA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="X/EHnZPT";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=qYHnrvx3;
-	arc=none smtp.remote-ip=202.12.124.158
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CqUzONoQ;
+	arc=none smtp.remote-ip=209.85.216.47
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EFE606A326
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 17:24:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 82EFE606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32692606A33B
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 17:25:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 32692606A33B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=X/EHnZPT;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=qYHnrvx3
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CDB0C7A00A7
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 12:24:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 06 Nov 2026 12:24:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793985849; x=1794072249; bh=jbazdm46v/
-	mu7W9l0tDqIPPZmc61fZoGWe/ZGxXecOA=; b=X/EHnZPTg4+giBS60W6+N2UfpA
-	p3rSC2c3yH/WYPAYXn2T4RHPxeFT16AB76o/Ql/udMlbaNnicEh027Kwa3tzTITA
-	IqzH1NLv8+Q4ttbDALGGPTW1dEs+pP3alooUmfjLvGeUz/72rfF+TXzL79dy9nWE
-	YdgwOY9lyrEQBvc4wDAmKPBGMVQ/V3keUg8LUd9mOv6eu/K26puT+uDe+uqYflv1
-	MIDDOGZB1lrBJEHrqoSlDyLMwxSAdRc7lOTgkpB/mvKPP+jg/ZEUccBLQP2RAnS+
-	wLAlpBwPBIbhuozvOBX287+q4RvHNcLl2jmIxn/CJWiHPgx3h4gQLujh0z2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793985849; x=1794072249; bh=jbazdm46v/mu7W9l0tDqIPPZmc61fZoGWe/
-	ZGxXecOA=; b=qYHnrvx3ejARA0ruoxAoB+HGWSScB1J0WV9OD9lEF/EQiq8bW23
-	RBUUP3n5CNkc19DBMyuZ2zGPvM1vPsF/74C6LDjKlGOm6Dkj7+XBUfwy59TqNHoH
-	nfMreDx/Te4E1ec6RV6qXHjRIyPW8PKeYxdpkqYbP8BoMxzByv4Sq03Dc0FT13jZ
-	df9EdwJe8oT/RPPPAm9y3sNBBst9kei2DPxGCtzuWbxNSDUtHeQvPuWdKYF5JszS
-	vVILSCGy+gidqCrmLmcLNzj+LA/nFTD4ZAT+GtUY5mtvT5FHlAqFdDLGFxWIjtOZ
-	U9fdfln0t0Zu6d6kuAkcgRh4T/lllXWB22A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793985849; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:SOhEfToAGysypFZ1WK41Xnu7XrWV85FLQUZgY4h7qT5pwS3
-	G5gw23mOlhr54w+gqUuv78HDfDQF9OR0MFwZ6MT4yP7wOVr9d9o21jlyGB7Y417G
-	8IEzQrfJmZBSUWBGDgmPC251HQZoMi3R275/2AC+Bv2jxg4hJqM7Uw57tlrLJJyY
-	zaiS4+M3ZNmTnfQx9TA0hWZ2G0ND5FNa3/1QBg5JQWSFZi4W6UL2TYnPXGHMDUG2
-	W4PmAW7MLTYFubR1kbmF52DJkU/xqt2KLQ4HvrrShkuhRZV7YFKWCob03gCw32Av
-	8sfeN0JsxWX7Wtdn1re1W1CnyRmUQuUlezFQ7mA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:/VQtlSL4EpMkXJypi2tC6uxm6u+mPbAG6NAdCO8Dp6A=:uewPuBMv26ioGx6y/VeCPjre8/ypB7f4FEmwkrNBRQA=;
-X-ME-Sender: <xms:OQ3uavvELTeDxAuFoq5lkaXNQmPjfwTqFgNIrDaxlJhIQUHA_r3LmA>
-    <xme:OQ3uanchCUJ0I9aE0lT6l8SVsjty8UMHiIw8EAtTiHn-MfJ7uYRwUMf4hKw6fHuyk
-    5_giJ783pJurE8QzedAfogZ3E05d2Iov-klwz57cqiMn9Kqlp-6GS95>
-X-ME-Received: <xmr:OQ3uanw3kst0dCO_EyffLQ6jIaw5vVtfRz7tDsyHShfdVqXEI9BMNtAgwRdcwhA3V7T824bBHgDbLmOCO3Nmj7YR9rF_2DCu-Vp5>
-X-ME-Proxy-Cause: dmFkZTG3n/fmCl8dbAIXEPODCXNcr6e0Vr0lpqSyy3nszzzMdku5XzOnDZTlmCqBuPRjkh
-    x+1AwqxdhP5ESzPzmrn6X+CamndNXjmsU8/Zq5JlXKY+fLwqjFSd50ZWTYixS468/R5bOe
-    3JyBp9ZHTovpjpv0soJ0ZdS8Y+xkUvdqEId+UsEF3RynCyVTvMiSsX3reUI8fX3zaYjMts
-    /7PCVQ+ahxHudiDvxH3IC8fghq1pEMg77DaB0pULLxO7I9QEbAr2tAd+k/SGNtNTHe3o14
-    9wcvOcO7MQOdAG/QhYUklmW1ladK4gEz7FNeh/Dm1cHSBqR64VLDeMz0g/MWN2IHh9/Ks6
-    gRo3fwLnXS832OdQzoCSS1Alw2vAKQ985emHm8KU1Yr2Rlj4D3BqBM//KBURnh0PT2RRRv
-    90JGE//5lgfrg8jfIjn25wFGPZiwu2MhhMA4vvucmyizP7HDXLA6puxoTp4+XVLnPn1jEM
-    ZfJ5umBsKUqXLeLzVKDbeOPdULTF7ySfXVccV99Qmzk9OgRrM6ypyrrdCCu86R9z/qOx1Z
-    L1259QfsufXZIePtRtKJyJOpmZqw94IWoyAdQcnq7zwYv39mmj1gfHwBQshIXcpJScCm6p
-    rJMvr163kM93tKSMtWY3utTdBbU1h0pl5HctVzeHehqHT1K8HRveBw5Ilyrw
-X-ME-Proxy: <xmx:OQ3uatEVi5Lq_HCSgoAYw-jswIJb0oP1OHPWD2ZBWNauTZvb3tbEow>
-    <xmx:OQ3uarxFv2J3D0m82-PU5OR4DtC3_j06UtJt_-4o4vilZYop5hXdtw>
-    <xmx:OQ3uauvm_YNJ7xiGxi4IB4QfSKMN7wFfctzyy2TOZWJv62B-CjEUCg>
-    <xmx:OQ3uao2HIYOdc7DgUqzsGfh5sUZ5byF3gQAAik3vnHTfhn0EJ-Zyag>
-    <xmx:OQ3ualv41YMVNzeynhxyhOXj9XCOQqjs3QER5u_awlj94uxRg-LtxPqz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 12:24:09 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/7] ci: build optimized binaries with Meson
-In-Reply-To: <20261106-pks-gitlab-ci-speedups-v1-3-1fa0374c7287@pks.im>
-	(Patrick Steinhardt's message of "Fri, 06 Nov 2026 11:30:03 +0100")
-References: <20261106-pks-gitlab-ci-speedups-v1-0-1fa0374c7287@pks.im>
-	<20261106-pks-gitlab-ci-speedups-v1-3-1fa0374c7287@pks.im>
-Date: Fri, 06 Nov 2026 09:24:07 -0800
-Message-ID: <xmqq5wy9lvpk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CqUzONoQ
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3b09a83d12aso596095a91.2
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 09:25:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793985940; x=1794590740; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ZDdLrZt977+zcStHE0qLlhD+yFm9Dn+6dZXPflHoSWw=;
+        b=CqUzONoQrW9ZFmcFFJ7GDDwaFh0+vRcgqt9E9P6Us27XEE0CF42ThsojJJfjP08Lxu
+         +zhE2OndFmoSCzl9h3n7YWc3AUZPI1WDXpEPJKG1jyR/2b9H2whlV5R9lxUzjNx403b8
+         cmfCRAS4jVONualMQz4TY/YEQGxtEJENyl5zi9XVkrwfd8cMdMkXhPFfSvMgfmAG8UL9
+         xEi0bPP9ai1rp5bx58RWLUr81S3Vmq9XpQLlimllDlsOVKgZGlPPnVTuly9mlkRUUPiE
+         O6UKI6tNB5Sw3CccPGXsSpYV7ERsS9s+oKpe1atHLi3jipZO96G+wI0Y6/sNlj79H+3q
+         BPMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793985940; x=1794590740;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ZDdLrZt977+zcStHE0qLlhD+yFm9Dn+6dZXPflHoSWw=;
+        b=lHVDK1t8WbWD/DkWDcQgKjgdxVEPHP18i2GBuib806xomkMpAPJIGSU8m95p64lxwK
+         zg5iKKe4QXoo6zMC4N0qZV6r8P86MrAW3Id3AUYOmRQHkNivdtAZTOCIIWlHaVoDqSI1
+         wq+OaAuPGBRPpvU7FUa5/lkTEPmAkZzkAX98blB5PP/AoSrwXQiZgLLK2Fd6W/f36q/Z
+         foGcUC+cBDcgR+JRxd5xbleWQDoh6V4n8kd0uZTdg6K903jFDQEcGo0gqYw8I1uqwRqQ
+         htSQiRkZt/EoRVTjkXJelkVS1/FgFAHgZFaGkPaKKcN809smI69LU3zt9e0HxtCbzDfH
+         XBpA==
+X-Gm-Message-State: APuU4Z+SEmWX6A/87a56nl9ZV75zdZwcdRULPPRBUHkJwotyxu8fyM1U
+	oyiHXhex5nHfU9xUseL5pH6BkQDMSi87UWGTn1WRV809gIYsSWIB3+RU
+X-Gm-Gg: AYBFou2pQfSzyU0Q+PhFUId8DUdejyJroLSO/HIBa3x+/SGWaxweWGeQB/mJMT1+gQk
+	PpXfzuRDAJuE6giD/Cxsz5H7u0xngCeI6+MN4els+oHUsJxW19H9rfG+mmHW5cX6B3trc9SA36z
+	d61KuRNaxcZdaEglD0VHknr7mU0ncBRxBXiHlnuPzbljYkXe44HjOoU98+OwLzImtdvULGdDR3O
+	//3igCJFa7GxXv+iUk3qxkabqJsxKPchbShUi5o4TVnRX/Sez8JsvOYgqBAb+uEcvYSGwOqOUoR
+	rdld+bWecj5jSnSI6+GP18kWSr6rVdrtVjRRx6RB2AdZmYidzKW6910ekUsR1grxS07vB7TIKBj
+	dlKyt487fEPMu41D3NOLrFIOxdfHQJX9OVBbqrNjwK1DFaHvuh41UugpKwQSXRORzi7qbJQ3pHc
+	rW1wLDyvP10Og2jeNAfQ7QW33HmRRg3PsRdZxrzQTp1DgT6odfnhV7p/FXpKFqByFOIAkRG4q+Y
+	+fy89Lly+ohDf7V6xgdgmdjPN1JLJYGPRFBB+DoFMEQUdLshPgcugCgzZNt76afuFd5r9S09V/m
+	3LiHIQkENKG4q047hKPagqKFZrqG7s1Iq1aDfZP+vK3Z+C9huMm+wJ5TTksW/+DVmWUtaST1FQ=
+	=
+X-Received: by 2002:a17:90b:4a48:b0:3ab:4f1:4f7e with SMTP id 98e67ed59e1d1-3b0db6c9e8dmr3428078a91.28.1793985940387;
+        Fri, 06 Nov 2026 09:25:40 -0800 (PST)
+Received: from LAPTOP-PVRSMPQK ([223.190.82.143])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b0f3cc9144sm1591204a91.12.2026.11.06.09.25.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Nov 2026 09:25:39 -0800 (PST)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 0/3] bundle-uri: do not die on unresolvable relative URIs
+Date: Fri,  6 Nov 2026 17:25:33 +0000
+Message-ID: <20261106172533.612673-1-aniketgupta3001@gmail.com>
+X-Mailer: git-send-email 2.56.0.344.gfa103ac04e
+In-Reply-To: <25a32212-4906-467b-9b1b-301b38ca0e2d@gmail.com>
+References: <25a32212-4906-467b-9b1b-301b38ca0e2d@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,50 +98,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Stolee,
 
-> Speed up executing the tests by using the "debugoptimized" build type
-> instead. This reduces the runtime of "fedora-breaking-changes-meson"
-> from 2100 to 1000 seconds. Other Linux- and macOS-based jobs benefit as
-> well, but they only speed up by around ~10%.
+Thanks for the review.
 
-That is an impressive improvement.
+> I'm less convinced on this factor.
 
-> On Windows though this is a bit more muddy, as the build step gets
-> almost two minutes slower, whereas tests only run ~10% faster. Combined
-> though the total run time is roughly the same before and after this
-> change.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  .gitlab-ci.yml            | 2 +-
->  ci/run-build-and-tests.sh | 1 +
->  2 files changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-> index 036d2f3c7f2..df82cd3a5df 100644
-> --- a/.gitlab-ci.yml
-> +++ b/.gitlab-ci.yml
-> @@ -189,7 +189,7 @@ build:msvc-meson:
->    extends: .msvc-meson
->    stage: build
->    script:
-> -    - meson setup build --vsenv -Dperl=disabled -Dbackend_max_links=1 -Dcredential_helpers=wincred -Dtest_output_directory="$TEST_OUTPUT_DIRECTORY"
-> +    - meson setup build --vsenv --buildtype=debugoptimized -Dperl=disabled -Dbackend_max_links=1 -Dcredential_helpers=wincred -Dtest_output_directory="$TEST_OUTPUT_DIRECTORY"
->      - meson compile -C build
->    artifacts:
->      paths:
-> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> index 68b91e31439..fd8136af342 100755
-> --- a/ci/run-build-and-tests.sh
-> +++ b/ci/run-build-and-tests.sh
-> @@ -55,6 +55,7 @@ case "$jobname" in
->  		--fatal-meson-warnings \
->  		--warnlevel 2 --werror \
->  		--wrap-mode nofallback \
-> +		--buildtype=debugoptimized \
->  		-Dfuzzers=true \
->  		-Dtest_output_directory="${TEST_OUTPUT_DIRECTORY:-$(pwd)/t}" \
->  		$MESONFLAGS
+Fair point. I tried it with a password in the remote URL but the "failed
+to download bundle from URI" warning prints it as is. I think this patch
+will only cover this one message. The reason I did it is that git
+already hides the password when it shows a remote URL. For eg. in the
+"From" line of fetch. It is a separate patch so it is easy to drop if
+you and Patrick think it is not worth it.
+
+While checking this I noticed that my commit message for patch 3 is not
+accurate. It says that the clone carries on with the other bundles, but
+the list is only used up to the bad entry (not at all for a list given
+to --bundle-uri) and then the clone fetches from the remote. I can send
+a v4 with that fixed if its fine
+
+Aniket
