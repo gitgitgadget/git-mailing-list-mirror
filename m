@@ -1,53 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.173
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793976313;
-	b=YiDc2a5vfzvFIJ///GFXljM/Gkj/t3fUIr7w2ROV9O0dF35493jECkrOdcHYzIvhUTll
-	 YSIy5d4Wm9MyncVtS831DH4rbkCSUseyhyxZOsGXYCJ+IKdrFN8LNVZZFHfNAxzoALwoV
-	 XUMe51gBkViQmkO3/DIcPSY1PetfSrZPA5cNx2aMHbTVU/TGdmvIQ1WrFCIEJJxTimOZB
-	 YnjZrNTxXDH2pPbwQ/tJ8SB3FICBfYvFVbwqR/qUKlb4c0tCGyVUR6AEdkZLwTGk2yvaI
-	 rjqafFe/TfqnG5Oro1xdWG0ZapZ6PovCro7nk7iRo2WjfoLl1xt/SbB407q4FlwRJuw==
+	t=1793976688;
+	b=3qKa8m0PZGmk9RDA8jauoFYDer+2zVj581fHZnjnC2/S0gHdtaH5sSnoRKrbLnLl/Zuq
+	 ad6WGwlk/00jKNKmr3jiTZwJL2yDrCZmN/MyvW1qnFhvXJoQ0mO6uBiP/3qzh4wUBMEDW
+	 LiNMrHk7ECHo98P0vZVZRYyUnuLwiGGnFUPZVT1mmlHHQGiMb6AC9iBcqtQpFx66WHXS0
+	 or00bMvbXQMx1G/JlxURthVRJ2OibnoIT5h0ORRybt/80fbo9CImysPlBnbsEbtUp1+ib
+	 1Mz8iA2z0DeHhv03BvvdIIagn+AsuP/nxSJ7lPbud9b3fQsOn5BhA5P7+6Kjx8XLx4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793976313;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=0j3qjE9VcGmvXaV4s+zbubl2dAsuejKfsvLEpGePtBw=;
-	b=Z1/cP9KG581WlvCLLUzNxtpzdCdBj8Vu8DXNE5Dm4LSJzT5PTlsDHRMw5JIFRQGJoE6s
-	 o0ti/aqZJNuRKzNmej1FfhfyBe2qeZ+XcAjVB/TSLY6yaJ+tAdZTX41H0EsNrZMvktBkY
-	 1LdzRyb9AmkLgBdk0MEloy2Mfaq/PGAAG1fk26bIt+t0stz/xODFexTkSlpTGE/yYQdcE
-	 09QH+ZdoFsRAvfz58dvJe/lUCftPGSiw2rz0cI2cD0V3STZRYf21t3hna8cHp6HCfCcDY
-	 mlQJYifwBsblDNvjJonaVv/iYNxUrBuHxjr2YYBymKRw9Mc8/31xGcW24Yj4uQC1udQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793976688;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=rCuirL97yZZLnBO5Y1xZcCivORfOw9CTHiyk2LjCJF8=;
+	b=p7ZvQJOlPUAmKaYKemiQZWbX7LcCY4v6ohHFpPIY4YkhblLPfIQqpg6ws9SYtKy+402q
+	 bRZWxxo/u8Zytkxsy7E57pmhEWYZhGYEhliczx5qSLeJxbRv4Nts6kc5biXbJ/n34n15F
+	 DCgiG16Qu0V5Xh5q1+OYBGLyHYlYzS6IdVdMcRS7OjTnP9kWPsTS/YYB5cwPmnRpjFH7T
+	 LIaV0VPwrR2zxUZMGHvky5iKM18jHmuwHKFnxqgPtC2GFQQIYptH7rsP8eJ0jD41wYN0I
+	 FgsUcflijIx+4Okw7u7jvoceJjXoIknAIAtPxXT5p3y127/FQK9pqPp5ldLt96kOKsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DhvymPyL;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uynD+mhe;
+	arc=none smtp.remote-ip=209.85.222.173
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F65606D805
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 14:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B597606A326
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 14:51:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7B597606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DhvymPyL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3229E1F0089F;
-	Fri,  6 Nov 2026 14:45:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793976312;
-	bh=0j3qjE9VcGmvXaV4s+zbubl2dAsuejKfsvLEpGePtBw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=DhvymPyLMGZRsAC8DZ+9H3cTLJgwEevD1QviESFHv94mpUigD2xo3CRg5CfP5w8wr
-	 bRPDlHmblWt9+4PqogdbZkTcOezLxdsaaUhfvbUkHI5RpHcAY0ZPoKbrQfgXg3icbF
-	 cMvWJwVeCiMTI+rshd/DR9Rqutx6njCErHTJlVpDD6M2BGI9R7D3RQBY5fQiJQ6S4x
-	 rlni5BTN7+1KceHg1MfOrLtSXazMGIEBXiDEHqS9fmzL1iIT+uHz63KG/jmQOZ6YLt
-	 kHzYiHDbh+vU2JXWbWaJJvCbaI0oi9HuMHpsd3VoG9L1u/stEFGeUQqWLRODa9f2Nz
-	 xLecCVH4Q8Bgw==
-Date: Fri, 6 Nov 2026 15:45:08 +0100
-From: Alejandro Colomar <alx+git@kernel.org>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Andy Shevchenko <andy@kernel.org>, 
-	Linus Torvalds <torvalds@linux-foundation.org>, Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: git-ls-files(1) avoiding symlinks
-Message-ID: <au3lu4jYwZ5hBZSy@devuan>
-References: <au3Tyaz_LoYDuskn@devuan>
- <CALnO6CB-b2XuvwkQ9pJp5ENuc12oGMdgbcwz1VKD_i3KWfKuHA@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uynD+mhe
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-93f259cdc86so65434485a.3
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 06:51:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793976687; x=1794581487; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rCuirL97yZZLnBO5Y1xZcCivORfOw9CTHiyk2LjCJF8=;
+        b=uynD+mheV3WDCdLZ0fvPB5ZzpRn+5ERJs2YCIgBxWp9/Y/o6e484C3lS6IRmAnFiNh
+         CpjuClG7Oi/Uu6pN0hqQlXIA8oyRHoIMABkuOvVo5gloyKNDpYco+/vz4orWBRoZdTIJ
+         iqIqe5ScUL6M36hQWCVbXYhAPsivyJbFeeB6YelE02j2LylZPl8cXhPCV45VzeTuaij5
+         0AN7Dud0EHs987yY6UFAieORNUAs3fQISNA3/6JP0fe7HBVdm4F896aXSTbf2ZBYQBH6
+         dDt+rAk1seUmIQOps5d0WeDjo+7XrDV543QQazROnkidaN3VgKSlHuP7Kf19Yn58PnES
+         WIWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793976687; x=1794581487;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rCuirL97yZZLnBO5Y1xZcCivORfOw9CTHiyk2LjCJF8=;
+        b=1QtpgszCaLy/Fk3tL/rAkeRB03Bc7HjG/Oyu/tEmlIomniZa7zVym3h3sWrwUntiD9
+         Vhf3ssCtrCES0OrwF8kThAXDqGa9SgQZCiT0Of6dlWIZBmfd2gRZmqpWug0tXVv+mVi8
+         BdzIwGW7a/mtKK3HOYuMxvrdykey84F/dCHKuHLZU4/knOSw/0guyFNHBRW0uxRvyuYD
+         4J+7+JledLNmGwhukaPcw7DcnKgzU3GzREamcGEPzNlHvbHQWows3H+DCJqTxChs+T/Z
+         TyRJG+14PeOJ/Ljf06jkJIU0ALwC1qJ2SnG2cTtt92xqVsKB8mcQ01s0lUiOFryDcWzL
+         YH9A==
+X-Forwarded-Encrypted: i=1; AKwUvBzk0TdbWecP1qmMewuxc0sVIeq/rm2ZiF6gCQAv2zFqVujoYYL34OOpXMMc2SR3mpwtqaQ=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+8R6VCOsuncuRzRT9hjv2CcrugGb2aFx5izR/8wGB6pJc7+WMc
+	GSPWXTELgGkIkF+nYMHEd5BJMw98jktZwBeFG/OiQdWCi0Vx3RCgavxE
+X-Gm-Gg: AYBFou21wKvG6jQlu/PRB/CMoUHF9C/n0D/tt5Gtml2XqBrai15Y0w1GOiKBEUdwGNu
+	+beFgtvbCVkvB5Zm4WNx69gsYJi7C9i0RV6+0Pxy6TustaHxbOm4SuJhJpuLjEpaSZbDbeBmDpe
+	flbwzSdj/vwq0KIb3Rt2YGgIYNown+la47YT8cmrHAtZb843pusUxkXrJrIwFwrgEKW6JznL+B4
+	16/vtgonRiHIcA+2U5nEz2aEP09uwXIZGGda6Xiv/3REG+MfyrVXoXMimwiWxTUcgsg+DhWJFH5
+	56060yrky4UTQLa7yUq62suEp1PjX4LIvh4fbsUcDWzxtxWRo/76S+z9DL0yJOXrTWymSkvuz7p
+	ZL3fyZ/8sCz6iMsVn4ISK29yo34ulJAtW5Lm4n88QdtM3Lb136MY+cP5xW0RF2a+hzJFusBSnSF
+	aKcXBFclFpEzHr4q5MVDi2q7n1tF20+bO28YSM07Qf/eDTh6iDZusBkaOAwZ2gw31G9diQMDLFj
+	WPIDq4HQ6QlhPcaWuRGQQvZc1QbkXcZch2Bmo5gaOAkmxILb71m6ePbqiTMeLEmJH6yT3Y1eDKE
+	3xq+Q8dQzL5SeEU2s960afXma6sCgCYlQ9O7wRlfV77brgCFbBORSwqSiT8SvUA/b1vFTU0nD75
+	epJSnjWwCalptkBsh/wsyXZiPppqkX/+Nm3obwySmFx9NMx0ALjKtEKO+rU7jr+I+IwaNTUK/Ku
+	xHhfXnr8HcBLE0u2SSyxcCuoLD+gw8EO68ohFlw6Le1/EokkuNIAr/toIddxTFXa5e3ZJ+LohU8
+	Q==
+X-Received: by 2002:a05:620a:2b92:b0:93f:3e45:a419 with SMTP id af79cd13be357-945f3537dbemr388027685a.38.1793976687245;
+        Fri, 06 Nov 2026 06:51:27 -0800 (PST)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-945f5a95e82sm157717985a.12.2026.11.06.06.51.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Nov 2026 06:51:26 -0800 (PST)
+Message-ID: <0ad84940-b107-4015-849b-f91f1e4ac1d3@gmail.com>
+Date: Fri, 6 Nov 2026 09:51:25 -0500
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -57,95 +95,108 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="laphslwwjce62gru"
-Content-Disposition: inline
-In-Reply-To: <CALnO6CB-b2XuvwkQ9pJp5ENuc12oGMdgbcwz1VKD_i3KWfKuHA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] bundle-uri: do not die on unresolvable relative
+ URIs
+To: Aniket Gupta <aniketgupta3001@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+References: <20261105152842.566318-1-aniketgupta3001@gmail.com>
+ <20261105152842.566318-4-aniketgupta3001@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20261105152842.566318-4-aniketgupta3001@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 11/5/2026 10:28 AM, Aniket Gupta wrote:
+> A bundle list, either advertised by a server or given to "git clone
+> --bundle-uri", may contain relative URIs. They are resolved with
+> relative_url(), which calls die() when there are more "../" components
+> than the base can absorb, so one bad entry aborts the whole clone.
+> 
+> Resolve them with relative_url_gently() instead. When that fails,
+> bundle_list_update() reports the problem as an error and leaves the
+> bundle without a URI. The download code already skips such a bundle,
+> so the clone carries on with the others.
+> 
+> This resolves the TODO in t5750, so update the test to match.
 
---laphslwwjce62gru
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx+git@kernel.org>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Andy Shevchenko <andy@kernel.org>, 
-	Linus Torvalds <torvalds@linux-foundation.org>, Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: git-ls-files(1) avoiding symlinks
-Message-ID: <au3lu4jYwZ5hBZSy@devuan>
-References: <au3Tyaz_LoYDuskn@devuan>
- <CALnO6CB-b2XuvwkQ9pJp5ENuc12oGMdgbcwz1VKD_i3KWfKuHA@mail.gmail.com>
-MIME-Version: 1.0
-In-Reply-To: <CALnO6CB-b2XuvwkQ9pJp5ENuc12oGMdgbcwz1VKD_i3KWfKuHA@mail.gmail.com>
+This TODO was added in ebc39479558 (bundle-uri: allow relative URLs
+in bundle lists, 2022-12-22) by _me_, so clearly I thought that this
+was a good change at the time. I should retract my concerns about
+the change from patch 1.
 
-Hi Ben,
+The only thing that is different now is that the feature has existed
+for a while, so maybe some depend on this behavior that we're
+changing. That's unlikely to be important.
 
-> Date: 2026-11-06 09:15:22-0500
-> From: "D. Ben Knoble" <ben.knoble@gmail.com>
->
-[...]
-> > A problem with git-ls-files(1) is that it doesn't have a way to filter
-> > files by type.  That is, it will list symlinks, which will affect the
-> > search.  With find(1), I can control that with '-type f', which makes
-> > sure I only search in regular files.  I'd like to have some feature in
-> > git-ls-files(1) that allows me to print files of the specified type.
-> > Since git(1) knows the type of the files, this should be doable without
-> > much overhead, right?
->=20
-> Perhaps something with "git ls-files --format=3D'%(objectmode) %(path)'
-> -z"? Of course, your examples already omit -z, so if you can assume
-> that it might be simpler.
+So I'll officially say: thanks for contributing this cleanup!
 
-Hmmm, that could work.  Thanks!
+> @@ -210,9 +210,17 @@ static int bundle_list_update(const char *key, const char *value,
+>  	strbuf_release(&id);
+>  
+>  	if (!strcmp(subkey, "uri")) {
+> +		struct strbuf err = STRBUF_INIT;
+> +
+>  		if (bundle->uri)
+>  			return -1;
+> -		bundle->uri = relative_url(list->baseURI, value, NULL);
+> +		bundle->uri = relative_url_gently(list->baseURI, value, NULL,
+> +						  &err);
+> +		if (!bundle->uri) {
+> +			error("%s", err.buf);
+> +			strbuf_release(&err);
+> +			return -1;
+> +		}
+>  		return 0;
+>  	}
+>  
+> diff --git a/t/t5750-bundle-uri-parse.sh b/t/t5750-bundle-uri-parse.sh
+> index 70ae94c4d0..8abf8f31ae 100755
+> --- a/t/t5750-bundle-uri-parse.sh
+> +++ b/t/t5750-bundle-uri-parse.sh
+> @@ -68,17 +68,16 @@ test_expect_success 'bundle_uri_parse_line(): relative URIs and parent paths' '
+>  		uri = <uri>/bundle.bdl
+>  	[bundle "two"]
+>  		uri = bundle.bdl
+> -	[bundle "three"]
+> -		uri = <uri>/../bundle.bdl
+>  	EOF
 
-	$ git ls-files --format=3D'%(objectmode) %(path)' \
-	| grep -v ^120000 \
-	| sed 's/^.* //' \
-	| grep '\.[ch]$' \
-	| xargs grepc creat;
+In the context of this diff, this looks like you are removing the
+bad input, but this is actually the expected output of the test-tool.
 
-With -z it becomes a bit tedious:
+The input is a few lines earlier:
 
-	$ git ls-files -z --format=3D'%(objectmode) %(path)' \
-	| grep -zv ^120000 \
-	| sed -z 's/^.* //' \
-	| grep -z '\.[ch]$' \
-	| xargs -0 grepc creat;
+	cat >in <<-\EOF &&
+	bundle.one.uri=bundle.bdl
+	bundle.two.uri=../bundle.bdl
+	bundle.three.uri=../../bundle.bdl
+	EOF
 
-But, indeed, I don't care about files with spaces often, because I don't
-create them in my stuff.
+>  
+> -	# TODO: We would prefer if parsing a bundle list would not cause
+> -	# a die() and instead would give a warning and allow the rest of
+> -	# a Git command to continue. This test_must_fail is necessary for
+> -	# now until the interface for relative_url() allows for reporting
+> -	# an error instead of die()ing.
+> +	cat >err.expect <<-\EOF &&
+> +	error: cannot strip one component off url '\''<uri>'\''
+> +	error: bad line: '\''bundle.three.uri=../../bundle.bdl'\''
+> +	EOF
+> +
 
-I expect git-ls-files(1) could make this much simpler, though:
+But this err.expect matches.
 
-	$ git ls-files --type f \
-	| grep '\.[ch]$' \
-	| xargs grepc creat;
+>  	test_must_fail test-tool bundle-uri parse-key-values in >actual 2>err &&
+> -	test_grep "fatal: cannot strip one component off url" err
+> +	test_cmp err.expect err &&
+> +	test_cmp_config_output expect actual
 
+And now we're actually seeing the list match the expectation (minus
+the broken item).
 
-Have a lovely day!
-Alex
+LGTM.
+Thanks,
+-Stolee
 
---=20
-<https://www.alejandro-colomar.es>
-
---laphslwwjce62gru
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrt5+oACgkQ64mZXMKQ
-wqnMFhAAviRiAIYgNWavnKkIHllRqEmYQ72tiJhjx71KI5UEuLquzCZms7TqJ9UW
-M1IlZSpNtKZU4hlOP08EiwWNe7fFty7VZk9pvkfKG3pmQtL1ZEI3gXLN7cJjr5i4
-MnIAxM3cl4j5V7NTstfvj1PeiQCCgs9aF8z0ixWeWqetpeL+xhrLX73sBv65PERp
-mLVRZlnQ1SQczZg0lWV264opxyZwNlTayEZV4ALXPLTGDbmL7RunRW4nq4TY4je6
-ZNdqVTsxv4BKbtUfT65PXnAA9HoyzcfAD2XQOc4h1poR/CMkVy6a/AxOD/hJ48go
-qMq1FPOfu0DTUZQsB+BCmtI4P7IPpIAGyKselAdMZ2QzPEsRP9wBVipCwUPDCKQP
-6FxK2+EI7bssAjofrrhUAziATpgY67Wglg87hjsIDKXZH32OHLw8nB7xlIARQr/s
-O33eNfXe8Mif8k6vzIErOobB9yB0r3j3T1/O+OX9kik7OF53BcgD90da5SrFvx1t
-ICUYJfy6vHprIOMSo7sXeB9WxJPC8/Il3DV+7F/IXIuHRRWLaCZNzp+U4PM0XAao
-b9hNECzNnwR9RrLP/SXHQZxBsobCFh3hacFVD2LyuYqOOAdSmaQIzwnl3YIPdCQf
-rRW24EqIK+CqXl+693wOm3yZKgfi8G/wt13QTHLFNnn1iJaCiqc=
-=C42d
------END PGP SIGNATURE-----
-
---laphslwwjce62gru--
