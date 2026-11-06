@@ -1,83 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793990730;
-	b=J2sTnDywa7TuAmaKWLtjl6O1khzFX6y1Z9PgAgk6f2aZFqdtF5B6euHT+LvCqkl7tuwc
-	 IcZka95xELB6qxyJ0/gMWqSrqwAiD+hCBY1zP5r8KtzEQM2J1ZPNZ4zu2GT4XlDlqrJJv
-	 HaewST03jS25ENGzkpVXTMQMiEZr9knxVmkcbtmiLr0b2ZLpFON81wSe4VcQt9cXT0eKp
-	 6Lnt1VX4JZeW4ueqalp+EvT1vaOnoFKu27QyAWXbrJKPaL+ukSdcWUqPPSQtagDRvErP1
-	 QztmEHdvBvMkyO3yuqPuPLFEmjXzL7UCq16Bj4i1/0ObVrzDTr+n5GZFYvvXyeR1ZIw==
+	t=1793991543;
+	b=y8A28Nh1If/n9IWZ6mBdiEtuZZ22aCNsoXQHv8OOSgtR8g5Og7YgmKEnoDBMwFOFp0rL
+	 JrtfQdm7uofdoeNM4FfnY+V9a3e51rxPhqr8wxdyrpunEuf5cIEHyXLa8/SDgZ2T5um2E
+	 rEGBtSyEs35PSp+ZacAq/WhbOQZByeYy3YeaZjhfjXhmrShunGF3fgi9pgpv4j8trt5VJ
+	 bWc60IVzZimh10xcjc3OeZWPPNRKNoiH6JCBfcZZkQdlHA6m6OTUWM1n607HeuNzEwVQC
+	 1wIfju3naM7nOgi2aUOwtMtdy9+Cov8AMhyrWTppofTTduD7XJVOEY8+UmXZSXse2Wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793990730;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Mime-Version:
-	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:
-	 From:To:X-Mailer:References:In-Reply-To;
-	bh=7r3xK+CMyPUpqGqJ77IMHQzLjuf+1DNhJ1DgmTFBrPc=;
-	b=d8YzexpX8YfjIOldm/N8Arn1F4k7uqJcfFaraF6jRzRvsoISUJkq9tzWu2jNfDYwulS1
-	 noNZYhBBVFWNMErArcAIX7d1ifDTB2ZrgMUcjemguVDGVWa5sn0eHy7TlkKePt9DxjLQ9
-	 Y/hCR7e2HTl7jDlSTf1wN2m1yghs4YhtV0Yxav5eMcEqCUmHEatRjkVaSvKMh4IuH5C8k
-	 P9gaKP20HqxrXYEch5asuhHI2Dx1CULFIBPVkVFo5jUJGs/kb0QZhUWkstKczIDxl2u2a
-	 J64MgtSlL07Ib050uq+fRL0Haq2a0u4kskVVr9azCjeM0VshdqUtsA89SGVn3zB8gyQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793991543;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=eCodVTBWTUil6djODZJ0BBHRL1iot35Mzhb/wJh2whY=;
+	b=0esxjCDrZLbWWp8ZzG+ILYEr9vYck9mD4wWutjt24IJrMXIuIwz/t0qrQFKv2fAAYoLx
+	 nHbE2hRfLt7IL9qzbFNRQsBQxMvoQ8xY8FC3aLv8BexGgaHKYQBY3SKCtDzyzELNFOnwc
+	 mBAn8jETST2CNsSHYVUDBx2yRHvQ5EQ1fVFCkivrJJBEEt9jp+UVqy1GxlAJBBC0Qg6F2
+	 aS9UIczxx2PReBUbRjh7jV7Kk90cnXUxO70vbBRL+Wk9GAyq254woypMLpaunt2A5jxvB
+	 dtAOni9epuF6xKngHeV2PgPZIB2DV0aD+3C7QC0tDYsD+9cLzVemWJjXPsMSKv4QeKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=M3eDBiQC;
-	arc=none smtp.remote-ip=74.125.82.47
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="lxx8/GmA";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dbImt4pw;
+	arc=none smtp.remote-ip=103.168.172.151
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A515B606A32D
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 18:45:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A515B606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC3B606A326
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 18:59:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ACC3B606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=M3eDBiQC
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1b244fb7fffso1620703c88.1
-        for <git@vger.kernel.org>; Fri, 06 Nov 2026 10:45:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793990729; x=1794595529; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=7r3xK+CMyPUpqGqJ77IMHQzLjuf+1DNhJ1DgmTFBrPc=;
-        b=M3eDBiQCFAvP80jZVrPNsyY/JshOwrXiPL9jp3AJEdXqHHHs5OL5fiPHjmosJcbDbw
-         O9FRgPA74G9/junG7qVC4WGqaScJ3o4r8rX4sfilSby9qHieAUC7y2PTSB4/DtO65uQa
-         /O6HXfrPrje20JRDe5HHijpdA27IURDDJSLgFhQA14h5HXWAiBPT2c4QK035g7gx+e/W
-         i/xVcorlI4h03VH/M1th9pWm3idjcZbW9zAqgFIrUK+YQWa6YWpyOE/GPoR4cyg72Zgx
-         P8thyLUC9yRYHtMyaqk7dbpGtK9yLuMiVGpSdKLk84IuNDFECiENsmT8dar4Bwwc4EYf
-         0t9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793990729; x=1794595529;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7r3xK+CMyPUpqGqJ77IMHQzLjuf+1DNhJ1DgmTFBrPc=;
-        b=tpX4ndU/qbuQX715FleseFlZANyjNZaU1KETTijjQSXpiIRHmKAnXJ8R7YEh66SwEN
-         GDCTXSNLeconORhsp4FuolKhuCsesDFUYDut459vO6NJbvTI/eYbX4QO2aaSLD0hg4fP
-         oktyEk84VIQGbWrtsqPYdKJnO/kdFq8pEqybvlBrZHtfjTPeLAQ1Mm28D3AXjPn/buzp
-         nkW4LctoiCxEr1IgWt13FDfVMHZBjjgB5D8UyhQv3wv2cFM/gJWwPNLHaZgrm7j2GRmC
-         u9K5rnpRYcs7LVmSW1J2p7RPdX7Tcv3o2uga7OlSd/EtEwSXWw8voUQ9Cqmt8bGRZjaT
-         wUyw==
-X-Gm-Message-State: APuU4Z+3Z8Fg1Njtx7kyB8BJff+04SlhQmI/wKxbRjeEj0cyixYZjNTF
-	p3nMyiQ6Hlz6z2uZ65ZurkqUkjMProykUt1EpqzH7bU+VuKQ6m9wsLoEp/LZ8RnPlHypWw==
-X-Gm-Gg: AYBFou115iTu++JyEeBlJrdc1fCTnWj7Z32k+TQMAvfZCg4RmWP+1Xis8VAseRD9KeO
-	dIywIlUxBn/+u822E+OpkHAwSQiuei85zDC7oX5ESsfytkmcpvChp8S6YITPjflC8oFnLsTqoDK
-	3OZo0EHrDdVPig9OQ+XwBjG32PtVxCfkZn1QELpU/JhiyNa4QcDMO0SCrdge9yefBN+nBAcRauO
-	WAju5zAg/wn37I3Kgy7XiNWn9orL/zLNuh6Bwh7qCLHvppyhsTVaJ5tDbOF5c1hj6MFITD5Se0g
-	IJhG0MN5VFNeVC0J5hvEqP98KIV5GxXG8aPyIsLmItVbXBeDNCDIwf0DyBWE07iYS8hj+AeEgpk
-	e+mpPwAwxlfDdgd3Plq6jsz2B0wpapFhgCLEek1xNFMwTG8OrB3wm4gjoMRQpuFbUK5Y+/9kqHT
-	rQbq0of2d0dVpzJqfYcMl1vhFW9z7sUXBrUQpnGpd4SFtBBicgyt2/0fSqqduCLDOw8xQYO6A+2
-	FpXuM4Ihws4Yxrr8Fz/WbskXuQQ/EYSxhi0EwMEIyuNivH1nwKNN4Y1ys9PWsohJmLrXHtbkoby
-	t1sdB4hYnrYfYHOhnJOl4aInJZdvUzut
-X-Received: by 2002:a05:7022:f513:b0:1ad:e740:e51e with SMTP id a92af1059eb24-1b25d3a268cmr3076396c88.42.1793990728332;
-        Fri, 06 Nov 2026 10:45:28 -0800 (PST)
-Received: from localhost ([73.222.46.22])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b25e4840f3sm14439883c88.5.2026.11.06.10.45.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Nov 2026 10:45:27 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=lxx8/GmA;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dbImt4pw
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id E3906EC0210
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 13:59:01 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 06 Nov 2026 13:59:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793991541; x=1794077941; bh=eCodVTBWTU
+	il6djODZJ0BBHRL1iot35Mzhb/wJh2whY=; b=lxx8/GmA/frHJlGzLzSAY/oIng
+	oKpfjpe33Hgt7w1+49UO/ZI3kCBhTuatm4cjORvmZSmkHUMFwcnN8MpY33eEDvTP
+	2MkAMnU/WtTZyYf1lboD4y/I4+o/130+3kIsEPyKI35u+BbsoR3s1OhcJvML6oF9
+	aYGcrecuv9S4OBxatrnBiAHU0nK49FHBYD5wTdzeZ9kUn98rs5RoGnnE4De/lUuM
+	K6fS5RFifA51kflU4G8RfIK3jo9ojIqlnOSSQIrYyEdqfkgkXJ7fucauPzxJ8nc4
+	b8NafdTYm+MkYOgsZIeOWc9xoX63LTXoU3Xdiw7OP9d6OqiiWuqZiqzrdMpg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793991541; x=1794077941; bh=eCodVTBWTUil6djODZJ0BBHRL1iot35Mzhb
+	/wJh2whY=; b=dbImt4pwJLktsI8qm6EHTWiiAS7I7gZyx9ZzhovOmwW0YIGC6N2
+	JEJlUpzu22ZwWsIs7PhqWsXZbF2FVWNKjGimcKCy+N2aSJyo8pqsCGBvH2bxlTfU
+	1EsbhIosOZ7qhqeYSBcW284rSyvEeuCgpm0Z+swq4Jyq9AbhTBBDUHUDAVJai5rF
+	UYL3LLAidMSNqT7VxfvBitsLl44T+5bg487XHYlh8AK9PasZPBjvhErzYjdWp+ni
+	SKuK3lrZCOTfQsqrjBBtXN7q8gRGn277/+poTPOgXyPkCfDzLJsss8/xq3GEHKuN
+	syy7CZV3FR1TcEqe5Iz1PhcpOG35HR+0DAg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793991541; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:gc9/TPF7lmkvyA8R8RT6fpfR+O/yRUkDDgUzXt/XmB42iOG
+	v6Q4m7b9XGRte6VV4mKsQYBE0c/mLJgU5AqQl0uolMubNNPt2KI20uQykPjXbMH1
+	1sazqnIo27bbv8phlAducPaURJGgNVxeK4/9vvT03g3FzbVR88dpssnOrXucyTo4
+	W0avWq/HU3SjkcpqhZLoa4RcsMCiosGASKsxOFI52jIf/W8bh3L18nbY1xeiRXuk
+	GaOodtopInvB7A1xQT0jV8YChro8f5SpfxQfKFY+aD9l9snnRp5CFC4bjSxFbU9z
+	ByqNuO1dfd7w6VwanoA3ql6RyuNt5l+V8FB6KmA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:zLY5kppdv5Znhz1Q/+DFs5G8ALW4jrqr83F0I8q2doc=:bs241Hj7mL2AxSRlD0jW4QqLXYeKybGGUgPGbEAeZ/Q=;
+X-ME-Sender: <xms:dSPuanZdwlPu8Bv8dLpZv_ANXnXX8VJuI42iMwptU6ErKHpP2vsQ9g>
+    <xme:dSPuat3GU3hGxaABI6Dh_y60fPko0kxDLMStEYHtwqtjnCfe-J0TBwwiYjFOeMHHX
+    EgIwXyav-IQ8Waj46ytdgX8LHDZCuQBOLiCWbwoet4k8KyZGivTTQ>
+X-ME-Received: <xmr:dSPuanVCkK4_q_6CS88vJ_9xvy7rTA2OOYdgQwAxxzC_Yelnyzja9UtKQmWllV_DKN6J_iQsGTxeX2OXSu5d6fpPuoH1rel_qb2x>
+X-ME-Proxy-Cause: dmFkZTGM50yJa4I+aWMP/595N9SePcAi2nQeiVxDRKaDKTs1OeEjHAboUauZ5M8HoSQYYU
+    Wvu7ZdkB8+LLrYuWFZj9WEm8qIo/o/rjgcWFQW6JklsWCKKZG/4ytEVyZncekTuC8Kj4Hy
+    zym2VO3+D4eerZ7LU/rjB3lg2zVVtElJ8eHKfaibBKVLl1C9wcadN0pTjomSNzFVvfNNiJ
+    xUy+gCmu7THLJuvqqXqgK3bfbzivM7ji9VVtXYKWaXojXiQirW/aHod2oNHStYokLk2M/W
+    UcYim8SQZu2eZedmavQHGnI76dQiPjS4wk/zuXQ024bEhVMsuFHtkW90ocTL6Z1zTL6nfG
+    2Kjhj9s1M1yFZq65MR3hVSGAgiF6BfC2hmRHPdPmZCbzWzX3Q/Yw8Qg0nNHV5W5WvwLaot
+    2TW8KsVzZEQZ0NBTJr1+chQ05Cs4PVqh0xt/5oQSiyxhEuipvkFcWGQ30r5ZcTU7/fxOYF
+    goJJT+w9GuzO+SIyf2CHJ68ky5o1VaqKAG75xht4Pb3UU1VtSZQL2n552M+VPkc0r7Iv+6
+    q8jd1wXOGpSmpxquqt6jxREPSD7Kd8nor3uFcOJNjnVbbvMzvSHE7R/SbFRYaEIlsuEVvM
+    PBDQ+l+8l/k0gcAgS9Z5RxtOISG7wDViotrow2tDT8VW+Y0IKiM+2sxMJ/LQ
+X-ME-Proxy: <xmx:dSPuanXtx5Gl4CGkNNcp6LV5YcTXLo9QaIHH9jJgo-eXquTrZX-jOw>
+    <xmx:dSPuame0tHlg4zYgFNhL4_58RpV_VHB9Ekr9VNbKbx2mCMGVPeyLYQ>
+    <xmx:dSPuagXbitcbSp_AwOGMmFVDIFyNGtoT5eCsMxcRilGbTZRtT3uzdQ>
+    <xmx:dSPuavfIVDMlfi2g6RfeIELe7no9Kj6q8f6u-XPjziPLpFZhslbPIQ>
+    <xmx:dSPual_nlE6w1xw3f0As_YrITxeXp1Qtdwpn6h29I5uyfkEuQ5FDSIrg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Nov 2026 13:59:01 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 5/5] t: allow testing with a non-default object storage
+ foramt
+In-Reply-To: <20261105-pks-storage-format-improvements-v1-5-870bb4212518@pks.im>
+	(Patrick Steinhardt's message of "Thu, 05 Nov 2026 16:02:06 +0100")
+References: <20261105-pks-storage-format-improvements-v1-0-870bb4212518@pks.im>
+	<20261105-pks-storage-format-improvements-v1-5-870bb4212518@pks.im>
+Date: Fri, 06 Nov 2026 10:59:00 -0800
+Message-ID: <xmqqzevliy6j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -86,54 +124,35 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 06 Nov 2026 10:45:24 -0800
-Message-Id: <DMOCMXGWSKK6.13UR9RHCJY3SI@gmail.com>
-Cc: <git@vger.kernel.org>, "Jeff King" <peff@peff.net>, "Patrick Steinhardt"
- <ps@pks.im>, "M Hickford" <mirth.hickford@gmail.com>, "Johannes Schindelin"
- <Johannes.Schindelin@gmx.de>, "Jeff Hostetler" <jeffhostetler@github.com>
-Subject: Re: [PATCH v2 0/3] credential-cache: fix two races when daemons
- start at once
-From: "Farid Zakaria" <farid.m.zakaria@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Farid Zakaria"
- <farid.m.zakaria@gmail.com>
-X-Mailer: aerc 0.22.0
-References: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
- <20261104-fz-credential-cache-race-v2-0-ddccd0831eba@gmail.com>
- <xmqqik2bybfk.fsf@gitster.g>
-In-Reply-To: <xmqqik2bybfk.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Wed Nov 4, 2026 at 11:39 PM PST, Junio C Hamano wrote:
-> Farid Zakaria <farid.m.zakaria@gmail.com> writes:
->
->> - Not changed: the socket is still removed at exit through the
->>   tempfile API, which unlinks it without the unix_ss_was_stolen().
->>   There was a discussion with Junio about this. I can do that if it's
->>   a requirement in a V3.
->
-> Sorry, but I do not recall having any discussion on this. =20
->
-> I just pointed out a potential problem, and you sent this version
-> out without responding to my review, so I cannot tell why you
-> thought it was OK not to address it.  Which means I cannot answer
-> "if it's a requirement" question.
->
-> Perhaps you had a solid technical reason why the "stolen" detection
-> is not necessary, in which case it might be OK.  Perhaps you were
-> too lazy to think the issue through, in which case it might not be
-> OK.  Or there was some other reason why you thought it is OK not to
-> address the issue.
+Patrick Steinhardt <ps@pks.im> writes:
 
-By "discussion" I meant you had flagged some concerns. I considered your re=
-sponse=20
-a discussion :)
+> Subject: Re: [PATCH 5/5] t: allow testing with a non-default object storage foramt
 
-It was not clear to me as someone unfamiliar with the codebase whether the =
-complexity
-of handling it was worth it. It seemed like it could only occur during
-upgrades (old git version).
+"foramt" -> "format".
 
-My comment was meant to say: I did not address it but I can if we think
-it's necessary.
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index a893963f86c..7fdd8272162 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -576,9 +576,13 @@ export EDITOR
+>  GIT_TEST_BUILTIN_HASH=$("$GIT_BINARY" version --build-options | sed -ne 's/^default-hash: //p')
+>  GIT_DEFAULT_HASH="${GIT_TEST_DEFAULT_HASH:-$GIT_TEST_BUILTIN_HASH}"
+>  export GIT_DEFAULT_HASH
+> +
+>  GIT_DEFAULT_REF_STORAGE_FORMAT="${GIT_TEST_DEFAULT_REF_STORAGE_FORMAT:-files}"
+>  export GIT_DEFAULT_REF_STORAGE_FORMAT
+
+This unrelated change created unnecessary conflicts.
+
+No need to resend.
+
+>  
+> +GIT_DEFAULT_OBJECT_STORAGE_FORMAT="${GIT_TEST_DEFAULT_OBJECT_STORAGE_FORMAT:-files}"
+> +export GIT_DEFAULT_OBJECT_STORAGE_FORMAT
+> +
+>  # Tests using GIT_TRACE typically don't want <timestamp> <file>:<line> output
+>  GIT_TRACE_BARE=1
+>  export GIT_TRACE_BARE
