@@ -1,91 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.174
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793977064;
-	b=ccU1i6Ikn0p2k8tjQXwBZybMQFxi0r7xqZYgkBUPotpkx6cdhq+bXb4E7zcmQcgBN5TZ
-	 +iPqpACRUamQjTQb1xrjTPUhJWcteZg6PtRZpqmT12ZCXrgo5RYVQwDQ3QHZtnHqv1FII
-	 Dy5gfCeN8+lCzpmd1AHD2hWYMUjJpTTGVARHbRqBbp5bIMVQhi1/iVYUdOt3ZEny4K8+m
-	 x8jlUUHJo2m0xQkdBc4HjCDw1BeJFeYMKtaSKuRax9QfHmbWs9v1i1pS4Oyf1mFVaG6lI
-	 rRTiouRKiP0+xiq8Hf2X1dbYlRIsYM1xPzxycpYdXfSuW+J5dlAw7iP/0zfnSpPXN5Q==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793977064;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.53
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793977973;
+	b=WJ9CSfJd0wHtUAsRsZKixgRhd6vfpZvtPYBbZCwXU8tqT0HaRg7Zmig3HRRyLh8QE7nz
+	 WQceTQ4JN2Lp6SFoe0vkPMxqWg3iY5Hqaar5kK0SCUqkAREqNVugKey/h8wH1i2OYnkgT
+	 3K/VMRYKkCg4yrTuZKQiCDZmDaAS+AReVzO7p36L6t+6+9dhrG76UXyXqOZRfKoAD2gST
+	 /zAYeXVNCbG1dLF+mXyW5EKdTmmcEEr0Nyru76x47tVoYTS/rwgYyUOE30jD6nvsk7w+e
+	 nJJNjYzBcctMFZUPmQggs5iUpg/vmtSpir0qnhetfTg0hvFh+l4Ku011i2EtkAOspmQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793977973;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=YBetL2534tKF92D90YkWH/dPxgbVXaA1RZt0MV8U7T4=;
-	b=45UzQnVeubj9OT+2cfisnmDIZa7KCANtiyDGkY5w6ChRvYyFuCsePlPAsi0PipdTcr7c
-	 oAG1W46AKep/M9nWrTsDJCvl8iZmLuFjwWyMfMEfC6LhxGFu4tGFNQJlVpybdrJB3lcQD
-	 flVQFfshWrSicR0LQief3jjHHBaRqOS5D4sIuoD9XzzB4gB5gkMKHZSezqAz3xJ5eOssQ
-	 i6J+/7yhd1WO2yLODcUS2Y8oKIuqay0VmFyubHmZGpkw/y1yj7keuRmIFWWSrLABC9ugd
-	 fBuAO/sAoeQ9tuqkX16oIGun3qTsWmI3FUhBiumAkLoNP0TiOzXw5fbSjnjGaMvcVvA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hl8Blnyw;
-	arc=none smtp.remote-ip=209.85.160.174
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=V4i9eAuYO9KQev+QRNf3goj7b7pNTluG8WV8p8VtWEA=;
+	b=17RJ/wscbA2bvjwqcj8wNsDhNnPPh3SHv0tg7uUUZQFx0CEX6tRm0Rn1FQgThKY2Dvsc
+	 ns4bCQ/j2HCXbQCsujbwhCoMMooOsUpLXwltVW96CtkF69vZPexEzXxm0X+B1NvICvWP4
+	 ifVNi2TXz9xcxYMoaWUg02btmsHOCFG4ZXMq64B0nEZDamti/HUQ5vKTggDgiqYSCXaCs
+	 bwkL66TwqKaxRLZzGpJEK90oSb7TeCYw21zw9yHgY87RgCT6L7LZHWbmBEL2XKfTyaFey
+	 Vs+gSAbZniRp9LJ+/Tk3FSigMGERnXDQNG2J6nA7EzkrnQKL9bFFnu57520/YSCmeAg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=FZITRPwM;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.53
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8451B606A326
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 14:57:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8451B606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBF7606A32C
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 15:12:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DFBF7606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hl8Blnyw
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-535179e995bso7176231cf.0
-        for <git@vger.kernel.org>; Fri, 06 Nov 2026 06:57:44 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=FZITRPwM
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c40e30c26a4so154110566b.0
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 07:12:52 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793977971; cv=none;
+        d=google.com; s=arc-20260327;
+        b=VWvVIzT6OKaWe69EY4Mp5Szhmy9R6CjyWqTsQsYUIfbpNJ2M1TKe9smz1b4fYokeHe
+         WPV6VVU9K4S8oKJnCTw3J39eqjmRwqJ/eDmNQdWQwEQzLWQbr+4JjP/+tVfTXh6OicpK
+         zYWTdTKpG6O380yyFCatiP6D8LvS1tseYdEkKtTXU4gKvCWsm4UTXqHpyVsNHdPyjTD7
+         9hXl2EM2oWxDrODZkpJHOr0kH/NrJRLeFy0nI2XZLspH5xllupn4y7I7aSvy9dqDgf77
+         i2n4PN9CdpStqKICuVMjpRMFqbtVfpil1e/8N3n5jW2BXJjVonTDyEODe1tSH/HQDuwW
+         ci1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=V4i9eAuYO9KQev+QRNf3goj7b7pNTluG8WV8p8VtWEA=;
+        fh=7CDHtSG+LSrDPODPrdSZ+yURph134Kme/j08n06YFGM=;
+        b=LuoCw6JQUY4MUeOoovj1z9SP+m/i0UDodFdYleXBeejfRlTii9bXIuKwBJ1QSfkU+G
+         bfSIOEuko/V3nwE7oPZQLQa08fgikUuFiA3B5naC7kci42luf4EJ34Tc37WQajybIBAt
+         cKJU3G9aJ4gk1u9C1q6dny55ED1kD/hIItSJO+VWGl3KI5fNOzJphjjuFOQZuKiHwVEL
+         7//fWVDXxWl0glTKufjtAfOTLdHWhcdPpa3nCFLwxbwUvNxjI1O9Dfx6C1zG4x5DwrzE
+         f6C2He16+4jtX5q6pi8wlAQblKI1reLMJzg5nMLgu98b38nmjuMWBdz2XRNSZHbE8Grn
+         IiaQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793977063; x=1794581863; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+        d=spotify.com; s=google; t=1793977971; x=1794582771; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=YBetL2534tKF92D90YkWH/dPxgbVXaA1RZt0MV8U7T4=;
-        b=hl8BlnywwovA3/EB8JmS/sRmuHw7BYoVrRYpn0UIIxMFJKUmdBiwBecXthPnNGKscB
-         OkFgNJSVETGo6N9w1ss9Bb0YF6mhB6r8N3W1cCz+Yx56tabJCNdlNFoTKFJO8sPG39+S
-         QxI+OxiG6caNkbRDjTNrPHxplffSK7AiRc5G0UF9rj9x7U51k02wx3iuKuY62E18E5e4
-         hP89KFBuc+IdfNaDIvgW/bdxRtAe1Q0/FdOvSYOY+XAdVH5Ofq64YUANbeZ98fmzXahy
-         VyzOTqJN4y4B6I8R2VCoklH77nTZpvrNIR/t0CoaTgpX/m13Qp2AdBkYawr46ne7qlaH
-         i2Bg==
+        bh=V4i9eAuYO9KQev+QRNf3goj7b7pNTluG8WV8p8VtWEA=;
+        b=FZITRPwMa3FfsYXLIhJBXGcFX0/MNBtgbwmbNSK9YqLUn0BotD0g7JNNADmu0i4AMm
+         FGf3P7oYjG4jGZ8SaEm8eIu3/LxIrEk2ZsJNgm1IQ3dXuSKVOAyORyaaKJWLtaARqsgH
+         Afb4G30MM0Y2TsYV2zYNHlEZaASnoyHlaAtLU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793977063; x=1794581863;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=YBetL2534tKF92D90YkWH/dPxgbVXaA1RZt0MV8U7T4=;
-        b=CSsLAp9/FNe5K8+fQ64kufVY23VnqRYGP8rF/btboPQf3YayfhGce4xxSFuUugD3es
-         kcqGYEKV8E2TfRmPNCJPfIZthSySTArN+teC//q2PdYsild8V/NtlU4yq+J25YxpNhYm
-         MCOWlP9Y432+QKcCwvRH7p3yWk5Sx0P5pIfGzB/GtaYOf38oXfu/1x1RPiPN7TDZKM+6
-         QodBJsO84NquW0ZZn3l5rPDX2k5IgHqTI+ZCgBJaHqt6sO+SJHXX14SVK/go/znhPoYL
-         vu+43NKZbB/UZo5LD4TcVBFxxqLfbxLKkKgdBuNLY6smh0ImcE9IzBZvYrLTQG/ZdDk3
-         pEvg==
-X-Forwarded-Encrypted: i=1; AKwUvBwxkbyDD6dbaIHJeGhdwOIgL5pSIvi3zZnDfDPS8vk/GxkPUi4hNfdVnA3QkTNEMwLQaNY=@vger.kernel.org
-X-Gm-Message-State: APuU4Z87pdP/gJlkpClgj8dUD4zTNoXGA5+V4RY7HgpiE4W3gCOIIbS4
-	H5IuUMtYPEwuYbyZWASKZ1Twt/mbgnh3WDbrpgnkzpq18Dc5w1+IK7KxUloEaQ==
-X-Gm-Gg: AYBFou3PFDWTDNEBE/b826WMr3psWYHbpEOVPuu2s5iYFq7bNg6w3D2cb6eGOZULBdL
-	12RITIq8jVB7RhWe6v3k1DIDoZbaexFTrOLlRro54fdN8vAhIjsH7Ns1cGNFhqwIezFSf0J+3wC
-	TPRjXb6WkAUDQhNF1kpsyZIlgRdYnKcfG3AG4L9AYCeOGgOeZx2/4Rq+SxEY/5Q7DLxrVLwdi8b
-	GaW3jFUzO9rx49iRnoSGta4on5pQgAMIKd5qaxCxCXaq8CfVADWvN2y53drboYZp/AFNIUM4TCV
-	q3SrUCWVnGB4K5LpCfoAofKB0AiaSdu+ClsPKLs8v+rG2dHcNz27rZfSf37tf+bl2yKVScz325u
-	hUbG59ssNIRfW8Q4TYlfLmjI16tgLRTpKXl+MReRYpQCznY+tJZOOY8645tCYc1zmjq0i6SxZOH
-	ZGh4fkP4YNKEpg6nkT6942Id2wHJDpRGdDigiK7xFKRiA6mkxZfh/NdMYrZgy7k1rfJWCDJ3iw+
-	pQNxaM3Om86Ueejp0N5fZqlMR5rXxevv7/erS30+Dc10ogIrS1FYLmOobbzOeYIsdRXtQcxANPb
-	FhNdhUYJxq9OVFwaJ77ETI86hejyD58u9iSZVOCF71ELym6Y8St/kyDovvrYgIsligDlpj6PuTv
-	rFlhz//lj7YQY2W0qP75ySQxiP4e/Dl243Ud6/qUQT7QpJQkQBcZ158iulvTwi+X7EnqSIv2Aba
-	uMq8JcQoxctHaY/mt0KoocG4Ue0i7RY0jgDAlc3y76LLgBERiQfUEcuRJRTSBDdGfIsTZUMxASQ
-	w==
-X-Received: by 2002:a05:622a:1c19:b0:535:2e9:e474 with SMTP id d75a77b69052e-54e0ffe4eb1mr40805251cf.4.1793977063334;
-        Fri, 06 Nov 2026 06:57:43 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-54e26835bf8sm22023601cf.19.2026.11.06.06.57.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Nov 2026 06:57:42 -0800 (PST)
-Message-ID: <25a32212-4906-467b-9b1b-301b38ca0e2d@gmail.com>
-Date: Fri, 6 Nov 2026 09:57:41 -0500
+        d=1e100.net; s=20260707; t=1793977971; x=1794582771;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=V4i9eAuYO9KQev+QRNf3goj7b7pNTluG8WV8p8VtWEA=;
+        b=RoZH3WPuA0kZkDorJ75THh77/S/FA+Erwl3bKNALEFxDVEto/qdxeYh9VGB2nctKQa
+         EwTRSdFW3aMbTQgfBsOeXX+wwzefdpbc/sbhz0SoNrLF2WARkkgtcZn4aCEGzsbs6/mN
+         kRVQmPZbiKdyJFt2P0c+kQJYUOWHVgpoNyiT5qxIwsNxjBXiE3GvDJ/L3YnphZ/J3G3w
+         sDuDM2sLA/jrvZXk9fIRyLigzws+ap4AoUdtxnkz6qCB5O11oQgkps/mibf8aFP/3Ii9
+         JqDDFtSh7ykm+puBhr5lZUQWbMCXd0I20e9V7Z67MJxGcaAhXiQEWoozdGTGb7jJmmwn
+         6cGg==
+X-Forwarded-Encrypted: i=1; AL+hErEs7lETGPr94WdFs+3FAapi0cMvCNSPvjpc7EKT7iHMnBPF8eo0FOJSJ5z1QOSDGI37rUs=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/oIVh88dxdIaLkjd4xumKt47IPr63+YZloWrSSKPO3yXKywsyP
+	ghMl+jIogihCLmPER+436AP1qyK27Z+t3TvHGyvxMOipSBsaXJQn+YII3qkiSfu9vhZLxJBAP4P
+	sc4GrtjXkaJJVOIz1t7VSOP2F9ToaPTBDSPsK5f3aFvJxrP+J3oTwCeka/Q==
+X-Gm-Gg: AYBFou10WCnWtZ0Lz/BxMp8VMZl5VoZAPVofJKU5BdMkcQyuQ3f3QJoxKyp3Qqd+k0J
+	gx8JIZ900C+w7kjueJxiYQo9ZfmUjuRL5U8jHfu2Set9Pdi/PlVeZo0MB+2zuOO5cKSAsLjJd/S
+	b6BGwBwOkHIQOoE2gcRYXK4LsJFuGHE62IeY480BQ+2TRWZJ+yu7qWI37irUqfzMfLhCM9BYgMU
+	l0GEszAjQNh1TyMCzu5R0PScMBhB3GgcimGT41Ek8SIsXR0T3ky4YZMdhHFLq99qxJixv7dEtvF
+	BL/Zx9l5NfbI0EbsLQiEE3Rz1vEL96L+GUNLeN05o7ws/yy+sr1Ed1i3I5l4LOVTti4+ePP58wf
+	LetXWmdk4x2wOFM0QzqVAH7lePmUmTzPFDFEWxJ4=
+X-Received: by 2002:a17:907:d30a:b0:c2e:62af:b6fe with SMTP id
+ a640c23a62f3a-c4d35447ff1mr216347866b.8.1793977971059; Fri, 06 Nov 2026
+ 07:12:51 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,40 +100,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] bundle-uri: do not die on unresolvable relative
- URIs
-To: Aniket Gupta <aniketgupta3001@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-References: <20261105152842.566318-1-aniketgupta3001@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20261105152842.566318-1-aniketgupta3001@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.2299.git.1793969476.gitgitgadget@gmail.com>
+ <6c6abee65cb3987978b982e69f227e408c0bf408.1793969476.git.gitgitgadget@gmail.com>
+ <au3qKLWlM45rByWg@pks.im>
+In-Reply-To: <au3qKLWlM45rByWg@pks.im>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Fri, 6 Nov 2026 16:12:38 +0100
+X-Gm-Features: AclHuK-e0X6v1FWKbEgd27PD1GrxLLTbRCDvChJ4q06PKNFT3SAGF4cYuXhxXRw
+Message-ID: <CAL71e4PmJ1an8jwJNRGmU9w_HAM7WHC0Xk3rMKqQFxB_KNTA0g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] t5608: assert that the packs involved really are that large
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/5/2026 10:28 AM, Aniket Gupta wrote:
-> A bundle list can contain a relative URI that cannot be resolved, and
-> today one such entry makes the whole clone die. This series lets the
-> bundle code report it and skip that bundle instead.
+On Fri, 6 Nov 2026 at 15:54, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> > The ">4GB object" tests added in 4b220cafbe (t5608: add regression
+> > test for >4GB object clone, 2026-05-08) have a similar problem.  They
+> > are meant to cover a fix in both index-pack and unpack-objects, but
+> > "git clone" always keeps the received pack, so setting
+> > fetch.unpackLimit in the unpack-objects variant has no effect, and
+> > both tests use index-pack.
+>
+> So this test in particular never exercised what it was designed to?
 
-When reading patch-by-patch, I initially was concerned about the
-behavior change. However, patch 3 removes a long-standing TODO
-comment _that I wrote_ so I'm inclined to take the change. I
-didn't see anything critical to change about these patches.
+Yes, I think that's the case (though I could be wrong about it).
+In any case, I think regardless of if it was broken from the
+start or not, it makes sense to ensure it can't be silently
+broken by any other future optimization that shrinks the
+pack file sizes.
 
-That said, we may have something for #leftoverbits:
+> And the preceding patch fixes a third assertion that we'd otherwise have
+> seen fail here, I assume?
 
-How could we create a toggle to re-enable the die() if desired?
+Exactly, I would have preferred to just send the test
+improvement but it turned out that fixing the problem
+was easier than making the test more flexible, so I
+added that as a prerequisite patch.
 
-Perhaps a user _wants_ to fail on bad URIs instead of spending
-time on an incomplete bundle advertisement and expensive fetch
-from the remote.
+> > +test_expect_success 'setup produces a pack larger than 2GB' '
+> > +     test_has_pack_larger_than 2gb-repo/.git/objects/pack $size_2gb
+> > +'
+>
+> Nit, not worth a reroll: I would have folded this into the test itself.
 
-Such an option could be a follow-up, now that you've implemented
-the _gently() version and the bundle URI machinery could decide
-for itself whether this is a hard failure or not.
+I did consider that, but figured this was not too much
+overhead, and made it slightly easier to read.
+That said, if I need to reroll for other reasons,
+I can definitely inline it into the setup instead.
 
-Thanks,
--Stolee
+> > +     # fetch-pack on the unpack-objects path.  This needs "fetch", as
+> > +     # "clone" always keeps the received pack.
+>
+> This is a bit of a surprise to me, I thought that it would apply to both
+> git-clone(1) and git-fetch(1). Did you by any chance check whether this
+> is intentional or whteher it's another bug?
 
+It appears to be intentional (and old). In the commit ad89721508
+(fetch-pack: -k option to keep downloaded pack., 2005-12-14) says:
+
+  We earlier had something like that on clone-pack side once, but
+  the list discussion resulted in the decision that it makes sense
+  to always keep the pack for clone-pack, so unpacking option is
+  not enabled on the clone-pack side, [...]
+
+and the builtin clone kept that behaviour by always setting
+TRANS_OPT_KEEP, since 8434c2f1af (Build in clone, 2008-04-27).
+So the unpack limits have only ever applied to fetch.
+
+> Other than that this looks good to me, thanks.
+>
+> Patrick
+
+Thanks for the review!
+Kristofer
