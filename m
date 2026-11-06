@@ -1,125 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793993766;
-	b=gUx+UAdKDE48XQoouM4Gxqcg4LQNvzyD3frpynGWAEOwdqNUAO8QAu6EhkiW1+XwSb0s
-	 Rp82Y0C7n0cmcfZNOeV3ZjD9+U6kTyJNgXJVckW5XaK7t7mmqkH6ai2+KhKbS8sVpphCD
-	 HvOMiUoHLy/2v4/4RYJsbrbW/tihGWOeosvsJe5o1de3rAb1LLlWHZQAQ1uprA8EU/MkC
-	 6dFouu53Mpus2uiMabSiIUfd9FSxqVMp6WXl3qZt9VUt+Ht7YI1aLeM+DP2hHgCq11uVB
-	 S+NRdEDCLw2RdNImKIFb5Y5WYMKCAhPeU0mZRBfsU1yOm6T0gJR3C90y8o7D8BAQuww==
+	t=1793993800;
+	b=Js0Uc5ojWPhWde6Xb/QAatCfKnEavO0YiWZCVxUe5atRlLRSWuiCpLLBiT8iOrzqqlVR
+	 4siQuNXDPQWvNlEczmJ/y0CIGvEKXn8hUp4QQxD7p8iN11Rjn/l9K0SECIvz+iY9k+gls
+	 UJzyY2ZpHGHRF7B+52DyasGXjNEXyOAN8Cnag/Ja3ZZvuCIRG5ao8nUUNGFdiCnbPDeTR
+	 dBbAryuZgmhgQ6RGjSZrg7WBjNo1hDI53TYKJedAmK555FpijHG9Pkll7bhZQnPfoBDDH
+	 jEBsgjim9Jxo17WBKhRSc6Z69LRjxt12jE6YDW3GXnyLKAKIELNwMZGCF31kavpBHvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793993766;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=kx/W0NvZakzeftx3E96JLhiQG0JZn9+khZz3habdfs4=;
-	b=DV9nj7SDRxDgyoY17Ygzbk1w7iwKEBeOUFASyKe13rAFfsawGY4yqcF9OzbN2Dt5syMV
-	 FZ9lGc+mQCX0/wTsF4SbPRqjTVB4sweQmqi62kcRbiwN2YzCJaewwHzfmvp/E8YJ+jxh6
-	 73ZUwYSGFSQJeo/howkXqCCKrurvKJrXAtBq7WZ0dqiCHA7Li6+9YSfY+P7NtXYrIM9G4
-	 mX1zFyKbTWmnZB35PIbsRbe8KmHAZ3a6HAdAM5RPpIkpLl4351PHgzDX71V7zsc+kZBZf
-	 DbuzpzHPNckV0p++AS4bdQlPPdv9xs6z5rDMqQidlmCx3H9IHOaR5bz/J4wALI9PTCQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793993800;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=g4vgkadlBzwY4REghO8cfzqssIfOOmOwnfp055pgPik=;
+	b=hOU5su32V21ZfM4ol6IzRxU3REyJEsFAaAtMk+EtuCFcUa2lbHrXCOZka6GXtZxxw+bu
+	 fuqrV3uI/aE6YwvvcZGy36WIDNW2zgyqTvvV4CPxHY0wQPXQ6knh++Td4Fhq7RMxtE6fi
+	 W2dE8fJiXLOjJuWb2AdC6pvlCHtzWhV7szmKAHavHP2aSJahcQ1z2gSwuX481cvk9Tm+s
+	 28CEAMdQnEapwPwBeBhXFuExA/dnDZRYOwXfC73Ayi9m/UAUMg3Qdtvfw+m2VuN9LwpvJ
+	 m0pjnW5Ft3huCQaqTL9usRUaAFmJfHrGPTh0nWYkyrRM29/m/jDL9DAxVp83xlrV85w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=aXo5Ipbk;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=OCgGsz8P;
-	arc=none smtp.remote-ip=103.168.172.151
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dvnZJag1;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DB7606A326
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 19:36:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30DB7606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF526606A32C
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 19:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=aXo5Ipbk;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=OCgGsz8P
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 79140EC0858
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 14:36:04 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 06 Nov 2026 14:36:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1793993764; x=1794080164; bh=kx/W0NvZak
-	zeftx3E96JLhiQG0JZn9+khZz3habdfs4=; b=aXo5IpbkB2UV0fjV8UdaEj+HP7
-	wLosI2iVd5uamuChRIvXMrL9RaDokYl3SjSkMvUU7IVZYFf7/l2A2v/pezQCn74m
-	yVyKDK+ZEcG1aF+tu9hJsZ7da4/DqGIU457DEW+zlvqqtqYCkHFmmYybZqoQbdX4
-	t9GPrwJu1av1BY6wqiy4RaA3OopgjzsfROVrEQoF4sayeLl/Uh6ghJPI9Yam7Il8
-	AldzIVvcpmTYOQUoLQQMsKaWBbbouA9qDWGk3Ncw8CHkZdqkIsEi+/59S/6hWqV1
-	q6yFQ08CIKzdWGDd7+a4e2Di8iBFdlw+4dQTtpcG56zVMlDOEoGzJY2l4VAQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793993764; x=1794080164; bh=kx/W0NvZakzeftx3E96JLhiQG0JZn9+khZz
-	3habdfs4=; b=OCgGsz8PZ2LPkXEUGxg/cYQcTXuzEnfQzJ3/l4bLq3iL3tDrcy1
-	JRVyuLid/SSeHgz2DTj8IHXtPdLAChUHz2UM0Tdcj6OlFvUejgn3xU0D79Zo4mSB
-	GtshuPr4betiWXev8d5Zru5/KlETChMK7r/gfOKlbWSlgUEQ84bRsKYlg7ShQZ5D
-	hEeUFker8r7GxPsMKasA6lyxIL1kIYDmdJLbqjyebRNUdgrRoNggac9d18atriK1
-	sujNwZ4V0T8RccuzYtehTaIHahoUiVjzryx2GCOiuiJ6Dku/xizWD3Y9SjiNI+0U
-	bUXO9vFCvwuHekTR9BffUXx8ZPtDRoRQ4Dw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793993764; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:SWVO4A+IX4iRBZnPFW1hejEfZqyPEGxiaTfMqHuehXRFSGP
-	pMfrrPM536Eq8Ckon9RfKR7FiMmTApwjyDVHRqGekVO5t7eKTgwxY+VJEH7UXA6I
-	whD7nUoqLACwyKxsEUub3ZPHxjDSyUcuFQcNl5cImRasSDDDEDrJyeePeUAJPili
-	YYQKHcX+f3rg3KlqUSOaX03jo9ZRRu6itjQgD/0N1YsY4sWOGOkbJoCt0CHzy2zA
-	FxKaJn41TfC5DxekngeIfUUXEaDnotAtUDaSujqg7sX6hHwL4VEVz4NVmtuh2I9P
-	B6eeqVIWW1DIewEnXTgzziqeDreWG1SssNaLxkQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:D4nroy4XWTRFGAA1xkevjALWKYRrqAF7WzRmuRnr5FI=:FvBd4LCfGOPFP86FL1xVhAaa1RusYbVgWCoBO5j5r4g=;
-X-ME-Sender: <xms:JCzuaqOb0TPvmqvLiKzjAZcUJ6VSrKR8JyZeJr8_--pVicx3m89UEg>
-    <xme:JCzuariWC2mK5eX2YWS9fkr7GAQDWmix9HxQgJdk4A2DdwNJ2AKmeHoi--FPgivoT
-    l_Kdew90bveymnFeQG877g_FDxSxke2nhZmyrQHlG2OTzP6ZjscSBQ>
-X-ME-Received: <xmr:JCzuak5RFixLKOqgFfqwCOM_ZCDoVMmS2OQ8OqSc9qAaYWAF8PfBlJT25Vmfti4EJK_4KFe6hYYUnn3zYo-E-AHGUdNk6W90Yy4E>
-X-ME-Proxy-Cause: dmFkZTGalsaXe3OR2pJoh08Ceh50jMFdu7irl0/38iYtxSsL8eMErmg2N/ewMJoia2dB90
-    OMLFbnzlQ++Z4xJMlKaIuOts2YbeHibXXfnR6y/E8h4vfMvY8TVg19goSkyyAC435ND6u2
-    HI7Zex2ll/qLvJyvYYqptzVa7LdFoSqbf6QtNUhQJ46Lsg4i56jW+8W7QHyvH2B1uORLuY
-    53eGl3HW8BN+DnjOMTXNlIG3xBknhmTXT0XMrNv2fhdJJBOIkxhAaDAYsKpLZ6fb2BHmXN
-    RiIFk4uBEy/gCrrLLXB30wAG7vC18WTFtiJUfIXlCWHwcQDl2r1948wNNBYiZkGzZOUXc4
-    v6iYUs/BjyfO4KR35OY7fNS9COAR7xz+iZ2NzReNhIonECGIhjCwf2UGBzuBbqbwU1jRf9
-    GJxfbkkikb6xlFtpl4GU36WGBcyVNbUEmAgbO5yC9/885cJ4KMYNzSCthv4f6U4n+itomQ
-    DtSMxS7qzYwh6WSVZ4aabEB9dxFuRgWXG/epVDJpEg6IIqKilPgi3gVk90ppKnYP2paqC7
-    tc64niBn4OoGCRRLuA72lnCuvfYpRfl88pwmjQdYBVf9wUBDx7/UOo3bc5FkiSJ8rBjmYl
-    TZ35/zHbmxYFpZ+jFD1xd5A4o5YdFkYgQvKrb7Z1lnYr9u6MJAwhk8C9YKRw
-X-ME-Proxy: <xmx:JCzuaq1nAXgFDDHYXqu8iIG9Eu0k1HrDWB5E6_t1Ih4vSHFkqPhnuA>
-    <xmx:JCzuanvCunaNYB4S3xTYkiPq98m1T0mXkKA9o6eydmY3j5Y3QIZ3OA>
-    <xmx:JCzuao4GRV1J4RoeDfomRyb6Qewn6DOw20D_umPVKoJDNIPnISJ4qQ>
-    <xmx:JCzuardaNrLra1Gq26ccb4IMybpAS_yQ8mCuZF69IdRDdo40oolxDQ>
-    <xmx:JCzuamThzJdqPJFO0Ho1kzpOufYWcGdug1Vo76fi5L0YC0JSjgT3EvIe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 14:36:03 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Joy via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
-  "Kristoffer Haugsbakk@imap.fastmail.com>"
- <kristofferhaugsbakk@fastmail.com>,  "Christian Couder>"
- <christian.couder@gmail.com>,  "Usman Akinyemi@imap.fastmail.com>"
- <usmanakinyemi202@gmail.com>,  Joie Joie <soniqjjj@gmail.com>,  Tanga
- Joris <tangajoris@gmail.com>
-Subject: Re: [PATCH] repo: zero-initialize configuration values
-In-Reply-To: <au3hVGPuDyGVwOw8@pks.im> (Patrick Steinhardt's message of "Fri,
-	6 Nov 2026 15:16:52 +0100")
-References: <pull.2298.git.1793966368860.gitgitgadget@gmail.com>
-	<au3hVGPuDyGVwOw8@pks.im>
-Date: Fri, 06 Nov 2026 11:36:02 -0800
-Message-ID: <xmqq7bipiwgt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dvnZJag1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189961F008BC;
+	Fri,  6 Nov 2026 19:36:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793993799;
+	bh=g4vgkadlBzwY4REghO8cfzqssIfOOmOwnfp055pgPik=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=dvnZJag1trF2pwXgc/ES4Hw6e7WQcF6z2LTOgqPDFfZVfaSFkK88pV3mvXwNW5xqI
+	 Pj1T7kUfVwHT3xjjAHj18nd7rhro+VfzteuHAVrSrfAWH1hItmAPBd1KXOkKbK584r
+	 sDsEz6pqIudIGMJNfka20Bb55LtTmxtam6STqlnf94uGi4JsPlIipVEguhCLID4ll1
+	 138Rh73Dbqn3+8LZmjZ1dtrraSMsr2gbtljgZRqh5MXtPvnhTfuPJdNPEKHwWdZARY
+	 KneIFcbN2KKx07SpSSFbh0HhMPMSezXkWF86UNtKgK0vRqw42rn6TkOBqruwM0QRV2
+	 StwGm8R2n/SSw==
+Date: Fri, 6 Nov 2026 20:36:31 +0100
+From: Alejandro Colomar <alx+git@kernel.org>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Andy Shevchenko <andy@kernel.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: git-ls-files(1) avoiding symlinks
+Message-ID: <au4rmQRjRtIv1Oru@debian>
+References: <au3lu4jYwZ5hBZSy@devuan>
+ <AE63992D-7BEA-413D-A372-78708CFA8F6F@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -129,54 +57,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="wiyvbp77ygcid7vz"
+Content-Disposition: inline
+In-Reply-To: <AE63992D-7BEA-413D-A372-78708CFA8F6F@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> In any case, the patch is obviously correct and is a good improvement in
-> my opinion. So this looks good to me, thanks.
+--wiyvbp77ygcid7vz
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx+git@kernel.org>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Andy Shevchenko <andy@kernel.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: git-ls-files(1) avoiding symlinks
+Message-ID: <au4rmQRjRtIv1Oru@debian>
+References: <au3lu4jYwZ5hBZSy@devuan>
+ <AE63992D-7BEA-413D-A372-78708CFA8F6F@gmail.com>
+MIME-Version: 1.0
+In-Reply-To: <AE63992D-7BEA-413D-A372-78708CFA8F6F@gmail.com>
 
-It however does not look good to me.  I would prefer to see
+Hi Ben,
 
-	struct foo foo = {0};
+> Date: 2026-11-06 12:34:20-0500
+> From: Ben Knoble <ben.knoble@gmail.com>
+>
+[...]
+> > Hmmm, that could work.  Thanks!
+> >=20
+> >    $ git ls-files --format=3D'%(objectmode) %(path)' \
+> >    | grep -v ^120000 \
+> >    | sed 's/^.* //' \
+> >    | grep '\.[ch]$' \
+> >    | xargs grepc creat;
+> >=20
+> > With -z it becomes a bit tedious:
+> >=20
+> >    $ git ls-files -z --format=3D'%(objectmode) %(path)' \
+> >    | grep -zv ^120000 \
+> >    | sed -z 's/^.* //' \
+> >    | grep -z '\.[ch]$' \
+> >    | xargs -0 grepc creat;
+>=20
+> The filtering for C files can also be done by Git, I believe:
+>=20
+>     git ls-files =E2=80=A6 '*.[ch]'
 
-if everything is zero initialized, or if there are some members
-initialized to specific values, C99 designated initializers to be
-used:
+I prefer regexes over globs; they're more powerful, and they're hot in
+brain memory.  :)
 
-	struct foo foo = {
-		/* Comment on this stuff */
-		.object_creation_mode = OBJECT_CREATION_MODE,
+> > But, indeed, I don't care about files with spaces often, because I don't
+> > create them in my stuff.
+> >=20
+> > I expect git-ls-files(1) could make this much simpler, though:
+> >=20
+> >    $ git ls-files --type f \
+> >    | grep '\.[ch]$' \
+> >    | xargs grepc creat;
+>=20
+> I believe the expression is =E2=80=9Cpatches [scratching your own itch ar=
+e] welcome=E2=80=9D ;)=20
 
-                /* Comment on this other stuff */
-		.branch_track = BRANCH_TRACK_REMOTE,
-	};
+Nice!  If the idea is welcome, I can certainly work on a patch.  :)
 
-Now this is overwriting the passed in structure members, so how we
-write the initialization is not the whole story.
 
-Since we have avoided assuming the universal availability of the
-more recent "compound literals" syntax, which is:
+Have a lovely night!
+Alex
 
-	*cfg = (struct foo) {
-		... an initialization with designated initializers ...
-	};
+--=20
+<https://www.alejandro-colomar.es>
 
-we seem to (ab)use struct assignment, e.g.,
+--wiyvbp77ygcid7vz
+Content-Type: application/pgp-signature; name="signature.asc"
 
-	static struct foo foo_template = {
-		... an initialization with designated initializers ...
-	};
+-----BEGIN PGP SIGNATURE-----
 
-	*cfg = foo_template;
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmruLD8ACgkQ64mZXMKQ
+wqmv4w//WOK6c9yElT/g4r7756NLSXotHAqfEafLb1jML5x0muIIgek+p1rDkbKs
+X/TygZDIFYIolX6JHQb6ALrgfF1l6805QjFP+TOrRgVvod0YUb+hva+EUR8ntahC
+XdElmjObRoc7XCMHX3b1sBgAfc+vo5Tqbi+/Ho12vtiaUZjkMYZYxG7zo0NK1l4A
+D4vFYlXUDzjKBm4OWyJ65q0sLC5V4o+5YsVIKOGcD+FFUmHJT2gfEMyP0Opl6qt7
+DBEgf45pXV/eSBkpJhLyxS+/aSQm9fTw5PO/6GNl1r/9ZdtfsnEW6Zvr1d8/DVfr
+9T1pZNDS3hbY6wgVCFd7KuqdI3i2i7I1MBCQvFLMWJhqtjGg6Ren8Oqs+Z04Qe6N
+QsXc0Tu+YAa8qC/Sr2ahtQAiUsqsgTeHE8VDu0k8MCBf/M2X6pUtHWp9szKeTKE4
+fV3DbsysMF24jBCVbYGUNFtb1puSin7anifZbyuYamwEH3O//FeLDN3mhdbeT7AK
+aUEOo5kgRU4e1/qFSw2JF34Urg3n2IsbREF5TVo86Un/k+aMcuT02KIxz6MpKBHR
+4kGf5a8dWJgtGlC5agWLeotesJ4NrY+KZR57xISftmBYCsnjhmmVEG4nbYtPUpnJ
+5aWsfGMU47A+YRJtn96ix197WMqUy09v9M7LwdoiCfIrOhs/g7k=
+=4ZDg
+-----END PGP SIGNATURE-----
 
-in a few places as a fallback in the existing code (DI is C99,
-struct assignment is C89, so it has been a safer assumption than
-assuming compound literals).
-
-But I do recall we made this update to our CodingGuidelines document.
-
-   . since late 2024 with v2.48.0-rc0~20, we have been using compound
-     literals, e.g., (struct foo){ .member = value };
-
-So perhaps it is time to switch this to assign a compound literal?
+--wiyvbp77ygcid7vz--
