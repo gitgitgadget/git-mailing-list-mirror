@@ -1,101 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793988871;
-	b=onw5VErzgS6JaVmG0lGfp55CtHCaxiTXdp2VkCrsG2ynuOXNhBKYs5G/Mp3lgRMO5z5V
-	 SL61f5/n+8rq/ohicC3YxeZk0evsNUClII6xloGpvBAZn94wfBCPSngbVVnCiP54q2tiK
-	 zOiagJvFL8KtHTMK4J2JMZ43vCf0WuY/MbcOOayvd+vfPE97jvXAtf8qzberHuK8AYjkw
-	 O3ReB0SRFx8XmO5onbTniesnwMEVQZJuc3LkNATEDX5SLwHOhSJWxRqagXXsv4MydGkpn
-	 H741DnLellfgQz4kj9tzwnmuQVmMJPrlZ9ffxUfq8WeIKkNffaPQExJFh116zpLTyvw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793988871;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=4IajLsQQvuN1e3SYxp8qgBVALHRmoJai74GyB38qW2M=;
-	b=GHlqbye+p9XmnMlpFmCvmoa7/xvFG08zYqRFnLwqag7zSq6STcdT2SDr3nL7YPizMxTT
-	 EA05U99y7xm+cSi1J5l2HBX5QtFKRwGUbRnbnAZqufEcFMxXOMHn3YNpMDMSHeZbV5oDL
-	 +QtOGIEmEcwV6rGC1hWGkOemLjb5EwuZIHe0r7yFaa+Tu8vMyrgpB4IaBA57Yk90ojuj0
-	 vheO6I+CSo/9YJ3L2rCBmcOGXLYVNMOYNXlyXVYk1tRI3US3LIFqv2OMWDWU6QClTB6dn
-	 wpRi58D/JTyZPJmzjZrK27J1h1HtNRDo/5ewKoy78LQKai49Wh492yeE1sBAZ7Yu1VA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Fv1MbY+9;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.46
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793989142;
+	b=vPdf+T8Bf7R9NLlNUmt6gsVjKw2dyZvaY0Ou9dK1axI4PV7srDzdOzs1tWx0Eg1S27ft
+	 nVyGqyH2yTYBEuC9gY2X+L0cU4KzMm2wmNF6MzXhU2G71th5o5bdkQWPKc0iRLGV+8Lp7
+	 U8bARVOZIbxlsK05aD9OKCQ8g97r5FoWFODhINMDG1rb1YE82H3OSA7aY+s8YEw2j2cBe
+	 en2+aqVmxHfcZG4mCYg0wXi0mwKAhMbVnPJwDLfu3peZk3OHD6EJX0qapaNV73cWuEjdo
+	 iVx/JL7NwJdtsFLoa5EXUgN7LRs/mjXop0C1u4n7z3DqkObPQ5RLuKnOabsxA/0YzUw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793989142;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=HgFHtc3vpS75sXxDau4YA1sKVAfJ4MaaaTvsDAPPhXs=;
+	b=rRSTBfLQ5yrv25rg3341KAQ8XsDXGsqetDo37ZvRnSzIB4zVH1r2B6wp2pVU1Ml1GkdO
+	 anmWmQIwbkISBRVA7/zHNyH6SYLaVAwU+Vfe4f1rLosGXojuo/E2ul0ogUFyqFyhDfBh1
+	 6OqX0ZcATlo3rNMnsj+1pEtFC7obW6jt7vWk5xo/fzBraPEksFDOQzZ005wyx88fbnDPh
+	 gDaQVu9G6lub8jzKQVZgikvrst++dag0Skr8YbWZGGYKTiwM3XM5E8VFaJcJr+STXXw0H
+	 nZE7Go2oUeuHUjSS2toqGx4HBNYUXIhfK//W0cXeAJwdEpmA8mTcTGaGLj4vsUQh/Ew==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=G7iBixhv;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="1+px/92E";
+	arc=none smtp.remote-ip=103.168.172.154
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDF0606A329
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 18:14:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5BDF0606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362AF606A329
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 18:19:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 362AF606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Fv1MbY+9
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-91c79f306e9so11324496d6.3
-        for <git@vger.kernel.org>; Fri, 06 Nov 2026 10:14:31 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793988870; cv=none;
-        d=google.com; s=arc-20260327;
-        b=jBfTxb96n5u41hD1ZWBxPSSYzZNlPaqyWkBz6wOF94iLyz3zEypPKwRoB/nzUXGt+2
-         Sro0DSefOkEMf63yOWI6rgsegGc4qwzscc6nKxUMVjgO0ARgy6ZUdg7xAy1azCyDEZQ2
-         LGWu/9u8sweAiMB69mjr0kklrXmuJFjQW63YT41xJl3+CSA0NVJt2lBdeNIEQq2A/M2z
-         zwkh2gb4gi9AGLXFUo/yBdzMjr7pdIEuesiOsxkqQXuEKHckWoBFi6rANXGQGQM/zfjv
-         Kn1zI2WAAPQPLjeBoctEhVzRe5yc4qrXk24c44FdePi2dAH4NUDluPNBu6xR2kJKU+2S
-         HBiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=4IajLsQQvuN1e3SYxp8qgBVALHRmoJai74GyB38qW2M=;
-        fh=1b1C0YuqjfbX5kRQF25fXvHWTfksFVKM/nGajhrXZsQ=;
-        b=DYSLVAuT4BgdwBOFejkRNlMA6wD6fP1AaySaX9qii390pkqv0OVDQsXf6YwirKXsob
-         3BV24hzl5B0bK7sZhWAB1eoHfTXDYpblVcukiOmf89BuTUCE8yrtjMKf13drY6hiOhks
-         KCX8vqPm+T1MsXMB1W77A0fsm9iGgzF1aa/eoGW2/OMBZqjAX+3csjMqc9I23L42HAeO
-         PRYiQWocdSRBq22aaz8grqtKnfGjvXT5JF3stU6ZUyEaAoIbY0oIwtnCy3+JMovGSkw4
-         dVAwVRpYsFI+ZBcoLZGLJ3IH5saG7/gasdwuyz1e9toKoQeWAMtfrybS6burgE3/3kak
-         HitA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793988870; x=1794593670; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=4IajLsQQvuN1e3SYxp8qgBVALHRmoJai74GyB38qW2M=;
-        b=Fv1MbY+9BA0dYAi9EMoFLYM9EggmWRcQSjBsmQVCGoqVL2aqERQui/onAFPaidq1uK
-         qV81ZlXL04xY38/PRg05yrbDe2ZOzF8FuV/Vb10lt82O3mWOQKbhRJSGIEOvv8Ud+OOP
-         gDqVjdeYvp9kNfexNfrfXmQYX7OadJ0vddEoi046aC8vXRRcU4YE2RHk1w4ESMhIkDd9
-         ta0Li+1tlGNJCUh9k1DCPaQwN2yKj4Syb3G9LQhRzBYXrqk+BJkJKvKWbZTniPLn4t4/
-         CwfKMU3evKNiyERYYRRTVxMYwDhCpvWPF0HaMxZV6fvlJYaChlwjQ+G/SyglwC14TGao
-         Gm1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793988870; x=1794593670;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4IajLsQQvuN1e3SYxp8qgBVALHRmoJai74GyB38qW2M=;
-        b=nfeXCODhcKnUW4UJvfEXKar68l6vLSQNpRtSFd+oj2TprOdMEmY/Z+mEZjVWgV/rBN
-         p6g0sJMMMovQCwGX/a4Jla5kkZ8Nmh3wTN1aLgEvuvgbPhAjSjObA2qJ073c1RCJDXGU
-         H3MpVwQTA/83gHBMBAuDX10dlCnDWteGKh1yKgoxIpvTs3ykf/Dm/FESSE9sJbqGp2I2
-         vnvXe2/oVMp/7uxJSZBUfWK3PAzLcjmi3IVRQHdiQ5hkakT4taaHIBus8zpUn6e+/RyG
-         ybgVpobiCLaT1O7SmFWhXIXnuwFbbYVL7xhPil30uC4w96MCb11IRrVemS1D+YfsaLLz
-         z4qw==
-X-Forwarded-Encrypted: i=1; AL+hErEZxuDDhe6hgNUd30VD+DzIkVLc//qOcl6MkGp6AYJAq0tlLwszKdRKGPvwiCLINMgmFUY=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+3th6k8t9ZqTPYR6LvOEkThZ1By2hsIl9JMjMUJLuuuFVQMf61
-	TvCcMZUxdSBQVUHHJAVL97mMv0QuQmg6NuBa2mZMyMa/LrguB09AUdGRsnev8zQQV/Asfy491hw
-	vp7yB0NJhc3rYpC/4Ql8z1bZBZYViZ2Q=
-X-Gm-Gg: AYBFou12tQRAB98q1kNPB3aeDDtA+lOwS3axFrXKvJNOuUVqcKYaGaw3PQ4J5Udy+5z
-	3DScm56dkMePI1lqFJ1BP8kFLvE+yxrLg141AEpJQsrjHQj0G/IO6QVLjEbx640Ik9S2GgcH5Gl
-	WfXxXB437DhANZrawd7igqPCnnnJF8+SEIXfhPSV0+67T7lPca1BGjKMF4nBJZAk7WewJtXwlc1
-	ETZtlDZgV7b+KdbCB2Q1JkxBgS0nOgug1yvfsJ7CHpBVp1/VB0s3zApRgCAtwr+EqYoCLNlokuK
-	FTl/o9tImsOqGGMXt0CHomaEWM+kka8drEH97WofvWKqgVn2I7AqmfteB/txzUszTFJ1r5OEEPc
-	8SXQZOIf2Upil9Sisq5VnvzM6kwYb70au8vhIWXA4xOpWa1/hz4jyK3tgqVuIloDLZY00XuWGEn
-	SuFDToD6qOvDRzRWsgiAF13D+VVbVbSXQbcBufZOiRfUUYcLbQnx0v0qA=
-X-Received: by 2002:ad4:594a:0:b0:91c:73c6:2d68 with SMTP id
- 6a1803df08f44-91ea92f3c5bmr46642256d6.5.1793988870205; Fri, 06 Nov 2026
- 10:14:30 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=G7iBixhv;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1+px/92E
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7889014000ED
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 13:19:01 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 06 Nov 2026 13:19:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793989141; x=1794075541; bh=HgFHtc3vpS
+	75sXxDau4YA1sKVAfJ4MaaaTvsDAPPhXs=; b=G7iBixhvvhULKq4couBFW8uNH0
+	yeUtcygMzf6J+l5wkzC8ghNjy6TMG7raJYRk3CwHrmRqxmqgTWlrp1MokS1Ke7av
+	sh5v36An0fasQdTb6orJXnGGa1K3RwhuQ7MunFjtfebgSAxqqn6Hc+FBL26J+K51
+	H1FBNnuIPi04wSSFBiBrG/qfWFZvLgcpJRER42NfU9x+kXIAkCnplwe0DYgRP6oj
+	Yx3NoeU1856A+FKtYscz8Em4U0rrfRC1OhxUcUV3OUUsZTx7I/eSPQpY90lSl49G
+	YfK/A88jq2mvB282kGW4/XGe9GmpBsfma04MMdhS9f4pcAmaGTmexzKFWGew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793989141; x=1794075541; bh=HgFHtc3vpS75sXxDau4YA1sKVAfJ4MaaaTv
+	sDAPPhXs=; b=1+px/92EODK0FMf/JlgTidjphEgeiFrji1SFYJkQwAGEmHz1OdJ
+	ovKVy3X/iePrJiT1Ks3zMrf4llaeIqTfefqOyKQtdKTYBF0WzODzN5qG5cBKUqG3
+	BM4S3h2PcC6x6bu3EMAZNukot5dvalVjjRmlOk1YOG16EMPX+0FP4/Zd8dIQ1Qca
+	JDGzDyp3eNT3HJO6fSWXA7dSnF8HyMV189hYn8ojF0B/BRMGneDA9IvrGHh+BGOY
+	n6ivGzknVZ6boH50CWhR9RyiGFu2wFX9ovdvdkAaVnLDFlT1KU+CLTPrRE22oiEp
+	6xHLf0/sKTl1SbA7RlRMs1UvlqUO7zjiH+Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793989141; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:ZO1Pc8Kk4h/TXqOPSKH6exTGKtN0lnBEVYGzbVGA6Cxbim0
+	ECCkmvSZubRyW4qmMWDZOCn/DujlZLroSw1Fgp/aQawlBXPvR3M/D+9XWf5QM92P
+	zpOIHgyTJ5nqc1utDCmBR8brLZj/I3zQbGps6QNOf2UrrOKJPHUDHdnZaS5wR5K4
+	qS8Xrv2fwSXFnZKV9WZaiQAM1Fop3diy5WpW3n8WUGAo2CjN1jyGGA1fH9OBpJf/
+	8GGzfXoPnu5nISBZ4r8Om/H6naSTrZlFyRx/gpQjh/s4h1fJ8Zz1mFrjW+3arxcx
+	I9eCCL2S48LiaxXCCA0eqZWPD477HX/iF6hL0Wg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:H4YeTtDyuCYbRgFpnLzj2Az8UfCfjY3m1BFa7n0XNFo=:VIdxAsBfxH7yPBVSwQTX0GSKrgtyY1HHNpXj86yUZjc=;
+X-ME-Sender: <xms:FRruarLgJsRS8gJuqluYHyDLXyHqyZvPScj24ngnM02UwznLLilMbw>
+    <xme:FRruai3Z9ukRdUlHeWN8nJlFS1QDMjZybMuLwcMEfuP9e9mQzeoZ2pricDKUPCquI
+    LBmPghNbFEdIKYXQivdEqhoENJlhopqkCRa1ZdJ9zNnuo17mdFlVRUs>
+X-ME-Received: <xmr:FRruathAeOmInB5jFsnyn2z7LWUHB8q-k_Spso5LjHnf8iuPQEhI27ps-dZaumqdSdlvxPNPOWL2lIC6Y-O-VY4Tr0YW4674Luxk>
+X-ME-Proxy-Cause: dmFkZTEeixv+cekEKj/1wDbKvtJBtJU/xUHuBENgpbwrxweTg0jO0vBbBLt7nX4L3IthyP
+    SLnd5A9xZjJpAF0DYB59uoxBc9wyIKTpSjjFTvoGRvx6mFt1sbP54y8N1jfH7OpkrEE6Il
+    wG9dJSNMDD0KyWmyfpcI1cywlGQCyR8T4JbVUQDC+0loZhyB6+MWToDaMbjuvzKJnXMlWv
+    zvOzoXUjXYpvR0UyzZSN7ImHwUbfzLxu60vZGfzPYUW9O+B6ovs8pVymAkKaNda+9IcnqY
+    FBwi1F9RyyDnBKZUyqfH0UgUvZWo3/wRynk72ejcmH7DZd2vQGzHDHRRktJiqhtsJFh6Lw
+    +twGUZTuC2BMkvS5KW+w3sbWDd3Sq0GBPEiBrfY9c6ogdHaA53lRYd6D6CtVKCSZdaRzKc
+    DlHiLexwuDkNFb5sKuI/ZoQIRs9bA6g1kbj7c4dsK7UM122+63RXJzWwUblMdGXLs32mdK
+    9Q43G7rz5kuKymvjbTOfUAoqKpWxX0qPYmXxntmOYDTmRq89PMD6mnOwUj5LWzuKaboPIM
+    7w7tjEkTiW7f6hmpBJzIdoUlAWFwVhJIE2/rgA2a9QGhyaZ4rWSrLip9Z2uRH6V0IwvLT5
+    3CT8Xy8rA5/73aMilS8PMzKKbdyxN7vuan+YcTAohcHyIWcfxDrFgQpuU9KQ
+X-ME-Proxy: <xmx:FRruarUbg23MInFyDjYlgcWOQuKJTBIfAtuf3v1sEmwLq7SLDAE_Xg>
+    <xmx:FRruakU5CVPI0tRbqIFfzx-djXKarr-C98Wre2iLckH3Crew9yG_gg>
+    <xmx:FRruajh_LdUVn8K3IZBdIRhNNcRIw_Njc-ccUsscdK9ZowtMaQAepQ>
+    <xmx:FRruanbxU4qhXFbZWN0mIdqoWhmgE5Jv3wvXpyPzBZ7yXIq1oaasCw>
+    <xmx:FRruaqtFuEtNyR_nI4nPP4LFYtMG_Flnx-8ootBYnEtjLU1eVhP0GTfN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Nov 2026 13:19:00 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Azuama Odinaka Maximus <azuama69@gmail.com>
+Cc: git@vger.kernel.org,  tangajoris@gmail.com,
+  pushkarkumarsingh1970@gmail.com,  christian.couder@gmail.com
+Subject: Re: [PATCH v4] rev-list: handle arguments in early option scan
+In-Reply-To: <CAPki72HBWEP8t9mu1zuKBA33SU1Oj-4bL4SQTqrn0G-H0P+g=g@mail.gmail.com>
+	(Azuama Odinaka Maximus's message of "Fri, 6 Nov 2026 14:25:56 +0100")
+References: <CAKrRMNrnd2+HxTxadKaha+K9ASWi_oN4h7gdjVYAGmyODwmi=w@mail.gmail.com>
+	<20261105120937.10269-1-azuama69@gmail.com>
+	<xmqqwlqqokxr.fsf@gitster.g>
+	<CAPki72HBWEP8t9mu1zuKBA33SU1Oj-4bL4SQTqrn0G-H0P+g=g@mail.gmail.com>
+Date: Fri, 06 Nov 2026 10:18:59 -0800
+Message-ID: <xmqqa4nlkelo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,61 +127,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2288.git.1793435149942.gitgitgadget@gmail.com>
- <pull.2288.v6.git.1793821554097.gitgitgadget@gmail.com> <xmqqecczxq2y.fsf@gitster.g>
-In-Reply-To: <xmqqecczxq2y.fsf@gitster.g>
-From: Srujith Poojary <poojarysrujith@gmail.com>
-Date: Fri, 6 Nov 2026 23:44:19 +0530
-X-Gm-Features: AclHuK8F1OUQy3J2hbzVY_3UQEB_DqsDbfoxYRHoaij0SOkdACb6FjzN6EvOQpM
-Message-ID: <CABh_KWg-j35OrpnQvn9L4P8qpWHv=GGhaEJe1MHV_eH010itOw@mail.gmail.com>
-Subject: Re: [PATCH v6] submodule: use the submodule repository to abbreviate commits
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Nov 5, 2026 at 8:50=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > Range-diff vs v5:
-> >
-> >  1:  f94aa2476f ! 1:  01c3cc2573 submodule: use the submodule repositor=
-y to abbreviate commits
-> >      @@ Commit message
-> >           Use the submodule repository when it is available, and fall b=
-ack
-> >           to the repository from the diff options when it is not.
-> >
-> >      -    The expected abbreviation for a submodule commit depends on t=
-he
-> >      -    repository's hash algorithm. Use test_oid_cache to provide th=
-e
-> >      -    expected value for each algorithm and remove the SHA1 prerequ=
-isite
-> >      -    so this test runs with both SHA-1 and SHA-256.
-> >      +    As the expected abbreviation depends on the hash algorithm us=
-ed,
-> >      +    the test uses the test_oid mechanism to switch the expectatio=
-n
-> >      +    between SHA-1 and SHA-256 repositories.
-> >
-> >           Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
->
-> Very good.  The patch text was already good at v4 and hasn't changed
-> since then.
->
-> Let's queue and mark it as ready for 'next'.
->
-> Thanks.
+Azuama Odinaka Maximus <azuama69@gmail.com> writes:
 
-Hi Junio,
+> I've investigated the relevant parsing paths further:
+>
+> 1. Revision options are handled by handle_revision_opt() in
+> revision.c. It already determines argument consumption through helpers
+> such as parse_long_opt(), which returns whether an option uses an
+> attached or separate argument. However, the function also applies the
+> option's effects to struct rev_info, so calling it again purely to
+> determine argument consumption would be unsafe.
 
-Thank you for reviewing the patch and for your feedback. I appreciate
-your time and support.
+Correct.  There is no dry-run mode for this.
 
-Thanks,
-Srujith
+> 2. Revision pseudo-options are handled separately by
+> handle_revision_pseudo_opt().
+
+Yes, this is called from various code paths.  No dry-run, either.
+
+> 3. Diff-merge options are handled by diff_merges_parse_opts() in diff-merges.c.
+>
+> 4. Diff options are defined through add_diff_options() in diff.c,
+> which provides an existing struct option table. This includes options
+> such as --src-prefix and --dst-prefix.
+
+Correct.  I do not think there is any dry-run to any of these.
+
+I am not sure if the above is exhausitve, though.  I didn't check.
+
+> This suggests that the early scan needs to obtain argument-consumption
+> information from the same option definitions or recognition logic used
+> by normal parsing, rather than maintaining another list of option
+> names.
+
+It is what the NEEDSWORK comment boils down to, I think.  I do not
+see how the above survey helps with that conclusion, though.
+
+> One direction I'm considering is separating option recognition and
+> argument consumption from option application, so that the early scan
+> and normal parser can share the recognition logic without executing
+> parsing side effects twice.
+>
+> I have not settled on the implementation yet, particularly how best to
+> accommodate the hand-written revision and diff-merge parsers alongside
+> the diff option table.
+>
+> Would you consider this a reasonable direction? Or do you see an
+> existing Git parser interface or abstraction that would be preferable
+> to extend for this purpose?
+
+All of the above assumes that we want to keep a separate "early
+scan", but I wonder if that is really a good direction to go.  If
+you can clearly identify the problem the "early scan" wanted to
+solve, and can come up with a way to solve that problem without
+scanning the list of arguments twice (i.e., not involving an "early
+scan" at all), would that give you a cleaner implementation?
+
+If the default of an option (is it '.fetch_if_missing' alone, or are
+there many other settings involved?) needs to depend on other
+options, perhaps fixing it is simpler if the presence of an explicit
+option that sets '.fetch_if_missing' is recorded in a separate
+member of the struct, and then at the very end after all the command
+line options have been seen, take these other options and the
+explicit option setting for it into account to synthesize the
+result?  If '.fetch_if_missing' was explicitly set from what the
+user said from the command line, there is no need to look at any
+other options, and if not, then the settings left by parsing other
+options that the misdesigned "early scan" pays attention to can be
+consulted to decide what the desirable value should be.
+
+Just thinking out loud.  It seems that this started at df11e19648
+(rev-list: support termination at promisor objects, 2017-12-08), and
+then other needs may have been piled on top, but going back to that
+original commit may be a good place to start understanding and
+reevaluating if the "early scan" was the best approach to solve
+whatever problem it was trying to solve.
+
+> Thanks again for the guidance.
+>
+> On Fri, 6 Nov 2026 at 01:36, Junio C Hamano <gitster@pobox.com> wrote:
+
+Never top-post.
