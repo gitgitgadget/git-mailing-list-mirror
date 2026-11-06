@@ -1,99 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794002589;
-	b=IIoz5VSiqMblR7V8ohjU5dtkTPNkhmX3QxFRxJ6bcmtfX+97MrLR6i4yTuWUNnqYPR9t
-	 SJYjiZu4/PHEJzrUXWBfYbLYikFTviHYuN2SbPA/jeVQdv6kcx6/3WeCUb/8+NVOXYx9M
-	 ReAV+ZgsoirZr1JJjWmxtwy8LCopD/xai7k5iR0GZjaV2E3myxyIQ9OL2najHnsarrSQY
-	 8YVYhdSo4r5toT5vuV3dTkIjsqR3Ao92Ktd85Tm6tE6j9j9nJtQAfR8oQwMjWNUf09ZD0
-	 IFFlcUjyQ2SQSmisQ+YWRzXebhip8pYfYP6BY69ZXOfogWM01zzY2IrMKLxaYCvQ7/Q==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794002589;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=r+QCqOKxWOhhY/GIfXxzMY6nwm+/we648G6PGvPZQgE=;
-	b=uF1cU/DPsPdGQcqSv8JJ50Ebx7OLbLcdDbPJjiglVoIxkKL41HE5UP/vFjRWr0dUyYre
-	 gvdsAPCtIhKOgzVPRqyx/UP6yDmoHYu8zKWT2s+Dy886XAyoXCuNI37Te7viguMCBEP9Q
-	 YE6HleSVWC/3yEuge8RLEEROv+VMCEHFZTKS2j7SIgeQxqekVdmHG6qkvcYUG4IUtdTfr
-	 kJgDsGtZ3v7vugpZzUdqkcffJNxWef5+4K2fJU5Jdv/yFr0Eju4wJof5Hhg0mnS2kACLq
-	 +KWSrfsZglgJTVA/eZPvShwZOm2kk6TXZ5OOxHf10LjsFvD/c5GpldswhDPkxMo3BpQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VoBEydmN;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.44
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794003222;
+	b=vrUwQO9I2ooh6ltwrJDJ/UPYmzRR6MzgCu+/b2JyKi2y1tv1PfxvMJk/9FvJ0BDBv77z
+	 Whd5owi0csliS19tbDPJdGFvHUtqGqX/nngRt2Zw81nWtJ10msn8xeBrTo2LahqCSCt3H
+	 6e3l/ezZVWUYkd2W1oYsU1vxNNruNppRd+TCsWuhMO1LxvHULXVfyq+7bMOAmCNbrsbYk
+	 8iwWUhduErH5aN1eLbcj8lPtj4r9CDFAYREE/o4feR0yBaQlY9eQ7Ab3WMMRRyE+76/Ci
+	 gsKHzy+YBDfbYG5JLglvYN3QF3UQqhnY0ioP6qa5+9TmFBiXtIat625YKB3U+iNubUg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794003222;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=0jBrw85QF1ktqzclm/eSHNUuc0bVjPh/jp/WxnTdtxI=;
+	b=Ss+PHpiLWHSXokraQCaipRVXDR6er48Uqhz6Zi88eJtGjqb/W4ZAMcwWRUdkJ9KPnPik
+	 VM+wMV6tsef4BjHMDnWgxByfOtyMZWS9ffqKU62fiNUMCL5AiZzzWNFbuE7fejoh+/bqf
+	 0W3nji9HobUcfRkZM13IFaAxBcGLklBv2In7B920GVjE/aEjSsgnmzXuTz7lmG1vi193y
+	 3iexLbaR8b+jqecUlJ0mILgXreB5ZhJKL6HUnZGzbMagIHG1qoUSRnwvsMwOGR5SFaoQ1
+	 5dtD16vns0qZV5FKD8wFH6IZVCwD4rv3bVhzuo3VD1WaPLBwbKdUmW0xWuHMp/6bAog==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=bgdV7bQ2;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=MVZGuk4o;
+	arc=none smtp.remote-ip=103.168.172.144
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617B5606A326
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 22:03:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 617B5606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0060D606A32F
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 22:13:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0060D606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VoBEydmN
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-4ad881b6517so716288fac.2
-        for <git@vger.kernel.org>; Fri, 06 Nov 2026 14:03:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794002588; cv=none;
-        d=google.com; s=arc-20260327;
-        b=BjzKnFBtAirnmIdRd42kiGOkgi3UM9N39hq5wraBT/gtLgdqg8UsC5H+VxcEmdhJ8V
-         PctzbFeanHhldL+MmWCWeO8+W6aZDMK8TGLPtXkti7uEfR1Ms+vNMpBObRSBKFtfhZlu
-         FEJBA5Et6Wy6xMIAW10NMRXihsZOLhqc5/OSCJ3SYjMHGKHTZ+ThwN5OcTW1iMXkAYMH
-         7SjIyukF/EcOzVCRarY08JcigteZ7kZ3vrKnDWal3brCkA7I/Y6+BsbK7b20CUmLCq7A
-         sgBC1BgZvkUHsIEVcPmzTLpOh9wPaQExCYZmgKDpOKrA+4IPWY5zqRsmGIVtBaXtYci6
-         Vc2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=r+QCqOKxWOhhY/GIfXxzMY6nwm+/we648G6PGvPZQgE=;
-        fh=5PFJeBr7a+nhkSJKkBd2FkDf8aw85ThIkZJzXtcSCYg=;
-        b=JPkn72wVqUSxI1LYNkF6rUl9uCjE+k4SzU3TukWd4eAREPA4FMpqNSz1ZVWEpmP6xk
-         Tul7PenzA6zk/QX80uJ7yDpTQFaT1QJeeb30UlolH0/bVW01Mp1Fwuc7j3/srVFmx4oL
-         3/tBcF/ty/Oa8JG+HSMLMzt7A0/K3TcM8QqYWWfm2ebXS3fBtbxbn96KyvjSALYa9xiM
-         Q04rr2QIWvrGs565fPALJSoirbxRVMvU4RzhMfDLOdCfZvwgS53OJZvSEjsYMRBnazo3
-         D8Jwdn8VPcRKEFQrIhfA8J3ZgwAb29fiZap5ataHA4yVCU12JLr7b5GzlBFpTuf5Wipt
-         RuHg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794002588; x=1794607388; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=r+QCqOKxWOhhY/GIfXxzMY6nwm+/we648G6PGvPZQgE=;
-        b=VoBEydmNVsx/zS8O9gnX6x/8SMZj5MEpJg0frqvbgzOSC/8CuvvHrJJZcC7+S+IlDu
-         y03e5jS2N1KO67oyhglt3CcHNRy2YFkRYrnPEwnboQjzHvvrZYfQu0BAO9gTCO0yoRP7
-         zNLzZ+82XP0UABs4bbwIcaWqucOc4dmZBRauiNe3c+9usE51xnDPKjvxZJ/v3JeIbSvs
-         CE2h4hsKq93rAJwfNOmooOe5hECRqmOdAd4+KEYqzA+w/tf4S2tdsv/0FrlYnTiS2dEm
-         1w56pcRDYIcetDxMXOmUdrU9WEnXEEI6ZYP1T+OZpSGwTvajPqmEv49ylKvx8SJULB4S
-         7bAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794002588; x=1794607388;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=r+QCqOKxWOhhY/GIfXxzMY6nwm+/we648G6PGvPZQgE=;
-        b=SksQybT8WhlxyJQV7pTY+5O1S9LKgkVWCcoXA8GgQPaOPjV4VHR0l4YwhH71FFyfY6
-         QlZ1C69PqNb2twUzce4YurKu9azj1NgNKtbaUIw7Cnn1cL2UoR38R1pTyn+tJcjH9zsP
-         E/H/EhnUG2GzLU4RIUt4Lgh3RuWMqXHtG5sv2Bd9NyhXNEg5jlF67Qn9A6ZWJ4n9ExWu
-         YQ6zToYThYrPlLAxDCZ7Jtx15keCJAipfOH5qSQFAsc7W4NHISa1I28yIcqTmCNOqOjw
-         qvb4GDh1UdESPHkcWz15KeKdv1cC9Y8tmw8Xj/ZwaaaaJfjZNUt6PyLNOabZyf/59nHU
-         pv9w==
-X-Gm-Message-State: APuU4Z9XVjPlLKz5OXZpG9/uM688cCo9PigxmFnMQeEYw4RYv/wv373h
-	sf339fr5VNAK9ObvY1ET3WPJWBeR6SxY8HUx9VlM5r1d1DuXdNQ8VivmiMQwZZib4IjVvMuBlCP
-	mc8AcUZOE9evfF6wm5n6DYI8P9W4jONEhS1HM3Os=
-X-Gm-Gg: AYBFou0Ry000XrmnQhnFDcBlaAwcGCQy0yHBoStnGH0LEu2+h8UKyFa/krl7jHI9WW6
-	WINW8yTWvyDWgLxfZaIUp2LbTUJmn9Gk0hLjdGRPe9cAv/55m4sad/rYPPBJO5K7Q4F6Np2erQU
-	9GFnDpz4mOJA+A8CdJFpd78uS2S3b9DMx2crNI3zGCvsQD6uXtXOgTKIEJVzzd5OghpKNrygpEy
-	NhOgo/8O3quC7ac/qGqtrLwoJZmYg2q3HXPd+NLKWfjFz2iNef/Hk3ZFVlUX/qtedndu5YLuN3y
-	QzwxOJUif0a0cXF36TyY6j2hTo30Y+oZE2f7qJ3mQFIHyETmaY3D0tOtFJNHHYvxAfpvTUSqg9P
-	O08U8PEBQmHcXGJeJqPFxY4prW3u7mIViiEg=
-X-Received: by 2002:a05:6870:16c2:b0:475:e235:907 with SMTP id
- 586e51a60fabf-4ad98de632cmr2477916fac.37.1794002588140; Fri, 06 Nov 2026
- 14:03:08 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=bgdV7bQ2;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=MVZGuk4o
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 19A4EEC017D
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 17:13:36 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 06 Nov 2026 17:13:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794003216; x=1794089616; bh=0jBrw85QF1
+	ktqzclm/eSHNUuc0bVjPh/jp/WxnTdtxI=; b=bgdV7bQ2pgFaDcvczEBcHYkcYk
+	El9weX/HaGSQjnWlgoSsen8Xm84Vm6lTcRvd8FUYbH1/rh5+BNQYyj5g4hAsrVD9
+	c4A8SUpLkE65JU0M9RJGUNlSsdvNvLZpGyBfAkJLFSVOHwo6xxiZzrEGu5TpiEiY
+	hGvVDaxywSl2XmIyDO/+qYLKEWWxy8B6ityHB+JceX9xY2LITv0cxy2drWvwUI0O
+	YQZEPqZ6qrwosoRbcJvfmAu3oNFpbRrkmRnqCaEhzBIZf+jJMet9eDZKmfDS5X4T
+	weO9/EcUYs3FbczmMUwZOV77lNiQa9hWbpcZptyFoZTCql7o+yu4attjYRZg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794003216; x=1794089616; bh=0jBrw85QF1ktqzclm/eSHNUuc0bVjPh/jp/
+	WxnTdtxI=; b=MVZGuk4oqe0pyzc/NkP2JmAW2OmDMtClTqoUUWvZzrERz+8UwlW
+	kYd+1eWvqQhizDL40wYDOCaomfLwRXpAAeCEAGaMfTVR+hULR81P+lRnwb3p06bB
+	bl6wyQ2169i2FAUI5PMOjNwismqCCfmkNa5l9AO1rYriJ74bWwL6f+Gc1AxLij4q
+	parMURrS3VIGimoGWGtyGIccbMdznffxxLcR4SpUhJFY1dRo0vkjBhYMOw+Vxekz
+	971+1EDr4Sw+RjtWQ6J3/lLLlMA18WdBTym8k3spfECzBkXf7BCbDanX3VTYsvGl
+	QGF8+jxox4zIwaik2JEvsj8fwuAC4pXJlyQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794003216; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:KsJkChDrhkjTTrtJxOTil8/89SRXilbZgTQ2f7AMDXYJ8eT
+	sqsyw0X0XyRXhxl2lABbwN0MPWYpWVEWmsSxmzDGAq+clx95fmD1e4Ci17jLZShL
+	tv18RVjSYRQhiCw5he+63flQdcoWapxdPB/WJWOUdSi8VDjYzKZ3yG7kuKzvACsZ
+	tMneL4vpkjsUy4t07lnSuGj4pruBlVbq9j2pYJ4lJzmJRCKBiSmNI9uN7l+WBGRD
+	oJHHPxRwsP5CVyg76mUGrPECETNioHa+AFB7lbuY25jlUiC9ddJtBeuRGS+5nweN
+	sXH5iqMpDrp++Um1ulVRZQxWiWwPHuE8AeARatg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:ogbi55XILswB6kP+7i7/FJGKao6yupBFKGmnL6Z6Z6M=:tE/GX+B5udQpna4Xc+LAHjr1WYuL8GPX3dJ8yZQoxwE=;
+X-ME-Sender: <xms:D1HuapqHb6T6Lnlo_Gj5R084R_ysODXFONh3OHwzeGbPhJwVEDI-AA>
+    <xme:D1HuavVZurw1Hv4BGDX0M765sKb2n8z3qdED7kg9JKhIsFZgbOtYtkuCSRjg4acKv
+    S8Yq80WPahZVFL81ngbsstqKIAvWyQNPQWCYvZoaDrNkJI3vmGMgyo>
+X-ME-Received: <xmr:D1HuagDGyXRONN_hAjLv4FejVPUGw5yegT8FSQe3JPywVvbJA0qTzWed-B9gYfSi-X_nipAUizQeXSh6STNlTj6iLwRE7WL-cSMO>
+X-ME-Proxy-Cause: dmFkZTGLG8eNgIDTOMYz+ZOtyGbUS8IoKE7mP7srJzy2KhLB/j785iOatUeGDxT90qSW74
+    bwoVBz3qbeffVLTPFuX1mlLE9BNeSCByStHqwuWjPzFualMyLy7aiFKMx3cDaghSAyosoG
+    f/olW0FqzHr/NJA0kKFUfikjRNpFl9yVA1y+m7rAvcqUNNjq4t03wqO3JEwwwY9xuDmOay
+    4spTD0UAqGTumYa6FlYszxy2nTkMN4F7eaEfGmndHnG25tCpol4sIrieeAYteX68HDH1eg
+    55o7HeAYWNeZ97/iCj05RM6RKOYdGtReWz3CEDJumSnjF7MSqzXvFzCOGpDmqAeJHllYKc
+    L+YDErlfqg0Uv2ZdgvL89Qar/ThyJXTau1POSJf12BR55tnfLyCUn3PtdPAlVhpcqbeV2V
+    I3Tox8E3fD0cbPbSWdj7FTbzEjwNgiv0Bvb5heX4z4P6wor/IV5BnaWGoltXRnoBdE28WE
+    hVHq5x7lev3BfQl/PgfDa59wFhtmWssb3LqtCTGMs+hsh12sUKbeayrvG9Q7kyloQgdSUl
+    HEw6IQTPgQ7AOrsqAMYRKO+JhlcotP6jdL10F/tvsrCje3A49sLzlnvPmiN8Ddj7kkUp9K
+    adbZY2g3/efzS+q2k8/37ttclsjLO4SU+q3qhnzqJ+NgqWcaEEcK6WjQy3bQ
+X-ME-Proxy: <xmx:D1Huar29um3tTNiprsF7Ktzu00P9jzS2YXTjjci-9zObPHZkA4AzUA>
+    <xmx:D1Huaq1mrLV5lEbSd4ZjoybpqnVqff1TPlNd48rT4mvhrEEp9TTw5g>
+    <xmx:D1HuaoBEU3uHL7SYi6SUhsZjeE-Ca1g2iAECL8Y-QDg5dmQZG0H7AA>
+    <xmx:D1Huah6hB4aoa1UjPmc4MFuV5UIsi8uU9jOwLpiKOTCBG2UOhdVbcA>
+    <xmx:EFHuahNFq8rDP0kDv4yDSXiyQdBAp7i2t3ILyMgOftvn6NeRFbKtS-9j>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Nov 2026 17:13:35 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Andy Koppe <andy.koppe@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v3 1/5] doc: glossary: add root ref and clarify pseudorefs
+In-Reply-To: <5630c671dbfc4a017e6698674c4b3f09d45cda54.1794000450.git.andy.koppe@gmail.com>
+	(Andy Koppe's message of "Fri, 6 Nov 2026 21:31:04 +0000")
+References: <20261022212903.177261-1-andy.koppe@gmail.com>
+	<cover.1794000450.git.andy.koppe@gmail.com>
+	<5630c671dbfc4a017e6698674c4b3f09d45cda54.1794000450.git.andy.koppe@gmail.com>
+Date: Fri, 06 Nov 2026 14:13:34 -0800
+Message-ID: <xmqqzevlehgx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,91 +126,111 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022212903.177261-1-andy.koppe@gmail.com> <20261101230326.3675597-1-andy.koppe@gmail.com>
- <840bc117-75e9-4d63-882e-3831156871a3@app.fastmail.com> <CAHWeT-ZdZ0o=_rPWFPcXqCyc-WV=fzmKVRVx2LetfQzgYkKO0w@mail.gmail.com>
- <f194e2af-cffc-4867-9069-7070c86785da@app.fastmail.com> <CAHWeT-YSK3xFA=Hztr3Uj5UW=L9JcC_0iOa5pUG-WGCpwng9vw@mail.gmail.com>
- <d3878168-95b9-4b4b-bfd8-85d459122e5f@app.fastmail.com>
-In-Reply-To: <d3878168-95b9-4b4b-bfd8-85d459122e5f@app.fastmail.com>
-From: Andy Koppe <andy.koppe@gmail.com>
-Date: Fri, 6 Nov 2026 22:02:57 +0000
-X-Gm-Features: AclHuK_y0PHtuTVnU_n-CPu61-tMc4rCXjntl-2pbdsKI5gBiOGpbwTYqw9x-oc
-Message-ID: <CAHWeT-ZR=WbR90NZarUqvPLOr3AQBBynp8JL=ZK87Hm=npkQ8Q@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] root refs vs pseudorefs
-To: Julia Evans <julia@jvns.ca>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, 3 Nov 2026 at 14:36, Julia Evans wrote:
-> > pseudoref
-> >     A name that can be used like a ref to refer to an object, but that
-> >     is not stored in the same way as refs. For example, pseudorefs can
-> >     be passed to git-log(1) or git-diff(1), but they cannot be written
-> >     by git-update-ref(1) or listed by git-for-each-ref(1).
-> >
-> >     The following pseudorefs are known to Git:
-> >
-> >     =E2=80=A2   FETCH_HEAD is written by git-fetch(1) or git-pull(1). I=
-t may
-> >         refer to multiple object IDs. Each object ID is annotated with
-> >         metadata indicating where it was fetched from and its fetch
-> >         status.
->
-> I found "Each object ID is annotated with metadata  indicating where it w=
-as
-> fetched from and its fetch status." to be very hard to parse, and I had t=
-o
-> go look at .git/FETCH_HEAD myself to understand what it was talking about=
-.
->
-> It might help to instead describe `FETCH_HEAD` with an example,
-> especially since we already aren't giving a lot of details.
-> Maybe something like this:
->
->   Git has 2 special pseudorefs: `MERGE_HEAD` and `FETCH_HEAD`.
->   Unlike references (which can only contain an object ID or the name of
->   another reference), these have their own format:
->
->   - `FETCH_HEAD` has a list of entries like this:
->     `d4c5f27105ee2e44366d718dbc5db95bbe99c714 not-for-merge branch 'examp=
-le' of https://example.com/x/y`
->     with details about what was fetched by linkgit:git-fetch[1].
->   - `MERGE_HEAD` has a list of commit IDs
->
->   These are stored as files in the `.git` directory. You can pass a pseud=
-oref
->   to `git show`, `git log`, etc, and it will use the first ID in the list=
-.
->   Pseudorefs can't be written by git-update-ref(1) or listed by
->   git-for-each-ref(1).
+Andy Koppe <andy.koppe@gmail.com> writes:
 
-I agree that the FETCH_HEAD and MERGE_HEAD descriptions are difficult
-to parse, but I don't think the rather cryptic FETCH_HEAD example
-belongs in the glossary.
+> Reword the "pseudoref" entry so that it no longer calls them refs,
 
-I've taken Patrick's and Junio's suggestions, moved up the point about
-reading the first object ID, and rewrote the FETCH_HEAD and MERGE_HEAD
-descriptions, ending up with this:
+Very very good.  They are "pseudo" and are *not* "refs".
 
-pseudoref
-    A name that can be used like a ref to refer to an object, but that
-    has additional semantics: it can record more than one object ID and
-    may carry extra metadata. In contrast to root refs, pseudorefs are
-    therefore not stored or handled by the ref backend.
+>  [[def_pseudoref]]pseudoref::
+> -	A ref that has different semantics than normal refs. These refs can be
+> -	read via normal Git commands, but cannot be written to by commands like
+> -	linkgit:git-update-ref[1].
+> +	A name that can be used like a <<def_ref,ref>> to refer to an
+> +	<<def_object,object>>, but that has additional semantics: it can
+> +	record more than one object ID and may carry extra metadata.
 
-    Pseudorefs can be passed to commands such as git-log(1) or git-
-    diff(1), but cannot be written by git-update-ref(1) or listed by
-    git-for-each-ref(1). When a pseudoref contains more than one object
-    ID, using it to refer to an object yields the first one.
+Good.
 
-    The following pseudorefs are known to Git:
+> +	... In
+> +	contrast to <<def_root_ref,root refs>>, pseudorefs are therefore
+> +	not stored or handled by the ref backend.
 
-    =E2=80=A2   FETCH_HEAD is written by git-fetch(1) or git-pull(1) to rec=
-ord
-        the objects that have been fetched. Each object is annotated
-        with the ref and repository it was fetched from and whether it
-        is to be merged when pulling.
+I am not sure if we need to contrast this with root refs, though.
+Normal refs are also handled by the ref backend after all, but we do
+not contrast pseudorefs with them, either.
 
-    =E2=80=A2   MERGE_HEAD is written by git-merge(1) or git-pull(1) to rec=
-ord
-        the commits being merged while a merge is in progress.
+Can we get rid of "In contrast to ..., " and start the sentence with
+"Therefore, pseudorefs are not..."?
+
+> +the hierarchy, in which case they must follow the naming rules for
+> +<<def_root_ref,root refs>>.
+>  +
+>  Different subhierarchies are used for different purposes. For example,
+>  the `refs/heads/` hierarchy is used to represent local branches whereas
+> -the `refs/tags/` hierarchy is used to represent local tags..
+> +the `refs/tags/` hierarchy is used to represent local tags.
+>  +
+>  See also "REFERENCES" in linkgit:gitdatamodel[7].
+
+Do we want to mention remotes and notes hierarchies, I wonder.
+If we do not mention remotes, calling things in refs/heads
+specifically "local" branches is not very useful.
+
+> +[[def_root_ref]]root ref::
+> +	A <<def_ref,ref>> located in the root of the ref hierarchy, outside
+> +	`refs/`. Root ref names must follow these rules:
+> ++
+> +--
+> + - The name consists of only upper-case characters or underscores.
+> +
+> + - The name ends with "`_HEAD`" or is equal to "`HEAD`".
+> +--
+> ++
+> +The following irregular root refs are exceptions to these rules. This
+> +list is exhaustive and shall not be extended in future:
+> ++
+> +--
+> + - `AUTO_MERGE`
+> +
+> + - `BISECT_EXPECTED_REV`
+> +
+> + - `NOTES_MERGE_PARTIAL`
+> +
+> + - `NOTES_MERGE_REF`
+> +
+> + - `MERGE_AUTOSTASH`
+> +--
+
+Good.
+
+> +<<def_pseudoref,Pseudorefs>> are not considered root refs, even though
+> +they follow the naming rules.
+
+Again, I am not sure what the value of saying this is.  It somehow
+feels like elephants are not rhinos even though they are both gray.
+Why should a confused reader expect it to be considered root refs?
+We already said that pseudorefs are not even refs upfront.
+
+Other than these "do not contrast pseudorefs with refs or root refs"
+suggestions on two places, the patch looks ready to me.
+
+Thanks.
+
+
+This is a tangent but is very deeply related to how "root refs" are
+handled by the code, so I'll mention it.  Random things outside refs/
+are usable as if they are refs in the same code path that handles
+the root refs.  E.g.,
+
+    $ git update-ref out/mister refs/heads/master
+    $ git for-each-ref ;# not shown just like root refs
+    29f5d436870d37a2e36388e96e9175e0a5bf53e9 commit	refs/heads/master
+    $ ls -l .git/out/mister
+    -rw------- 1 gitster gitster 41 Nov  6 14:01 .git/refo/heads/mister
+    $ git show --oneline -s out/mister
+    eddc71c initial
+
+We probably should tighten the system to forbid them, not just from
+creation side by tightening update-ref but from blind application of
+the first element of rev_parse_rules[].
+
+In other words, things "outside `refs/`" that are not at the root
+level should not be treated by the code as if they were.
+
+As solving this (or leaving it unsolved) has no impact on the status
+of this patch we are discussing, I'll just leave #leftoverbits mark
+here.
+
