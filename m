@@ -1,98 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793983843;
-	b=rK2RzFmZRtLw8NnHE5n2SrdDr0Hli9x1SRnRanQteGBOv8zegO34blOXk3JbwVI9BP2l
-	 FlTOOtXJQn1kNNBSXZd7JtvsXZZo6YcWKH/jkXtdPu3Msi75Z48G65kG1G0KmF/Zq5BvR
-	 12VXCmoK1ZhviuEedj6pNJV0GLqXETfo1+TKGlF3/hl73r+ItI6bujelvm95CevWQzXz/
-	 d6wxNSdxIqZ0lR6Kng82imvWYGU9iJ7ukEZpS27d+uL8MfXl3fs5r45R28DOqTFUHmUtp
-	 d11U6qWt8YYdV0LJ9li9rT5XjCzIOOpqrtOEmN+UHH6hz/sQSawYpiUDiXoFNpzUj9A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793983843;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
-	 X-Gm-Features:Message-ID:Subject:To:Content-Type;
-	bh=iyM4srfhoU/9+Z/rbkQp4qqxvEABReup3nOqpQKqid8=;
-	b=l3vQImG5th0NcAAbsciaudnXVgpy22CpvfoEeug19zDGJF8jGCVIYQmymcINZHHPmMQL
-	 f83IyOcrF+gH/3cfjJEg7VZZfDGKS1UkMU81QKQzuMTPhpeADwjbgGKyAUfZA1iQorfbB
-	 +dKPkBPtAFkKW/r3UfXxhHGsfuhswZMk5Q2j4som4TW8f7kOBkqlBbY9xHe+eHWJVbwX7
-	 Am9RZVg1/IYARPVz4jUEjBDqwvpVgySRxHC+gIIHHApXplzlSpUxQn1esCmL3fnH5OOVQ
-	 cpIKvzd8LltR+RcqkE11UzHvVWunDVzcmoDAErKyjPJtfFnPkWedJOhlUvU9x+qlRdA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=dinwoodie.org;
-	spf=pass smtp.mailfrom=dinwoodie.org;
-	dkim=pass header.d=dinwoodie.org header.i=@dinwoodie.org header.a=rsa-sha256 header.s=google header.b=VvkPeDKH;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.44
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793985661;
+	b=DaHp1nUA6fWV9fd4+KWmPM4zAnO+/nEpV2wBvu5u/co/7iRu6/quv5SzVCEqNUGtI7ER
+	 USy2eVao9/SJe9p5dLPHGvxIDAubOsDEOFmD2b38zaiTJerLHnfbOfbYoG8iJ2vE3lTpF
+	 RTMlWJ5ho0MY0FilWAIZa9O2YCfAUsf2/XRcwXEJjIjeKpcIKcWkxypgMQoh7owUM+3AS
+	 wXkkHMK/cxBPmEkpt93qE/RIBjkC53w2SG9wZS05U72Gv++IDhfIE7DG4ifY9Dj9rrVFD
+	 QsJ7gw8HhsEG7TmrerCu0nLaXGLsc6zXBgz+qvAFHIdWai0O/op4a41CMhwZtFL79ug==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793985661;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=jnNb9x6Bx7dPKO1E6ruoX9y1upV0PUsQld4MrT+CbwA=;
+	b=vCjRa5evwkacHQYQFPLry9Lm3RRoKrt8d6c3CaBJquFRpjJT9Zqm+AUoiNY6wSVAbjGg
+	 rV2w5EuIA6yCOEE/lErbUFFO10we5pTikNtkY8tAuM7wYpiI3DkK5h5Kq/p33b0N3vays
+	 zHnS2E8XW8VXJXEFvhpo0KP1KaHwZh19OCWt8d6E6ArK4tQ1gTkSCQp6cxQK1nWr9uX2S
+	 VpEf6B5T+aAbxvG+UsMYIhZgB+6aRahgCCjvi3Scdo9n1ddge8qa3Wu/iz/AO0LJxaoWw
+	 9wS/vUExDU1iGvX/muwQD3UrSUpOmjSjHNDYdrSr72rSrs1VODxxfGwp19YFg0W+WNg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ArjCvKql;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=zF3pOb40;
+	arc=none smtp.remote-ip=202.12.124.145
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4A7606A326
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 16:50:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3F4A7606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dinwoodie.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dinwoodie.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FBB606D801
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 17:21:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0FBB606D801
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=dinwoodie.org header.i=@dinwoodie.org header.a=rsa-sha256 header.s=google header.b=VvkPeDKH
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6b6e7a05225so943533a12.0
-        for <git@vger.kernel.org>; Fri, 06 Nov 2026 08:50:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793983840; cv=none;
-        d=google.com; s=arc-20260327;
-        b=rBRQT3+LTFA46W3lSO8tYGm/Fgn1GbX7YaRumxv98Z1fcLjZC4dy0Wusxl/LGI7SDI
-         NtSO+NtdaxNHqyUnPj/ysm5M/5yMvZ2xSX1g2Oq93uWO2IWqWZkUz4UmW6tE57BpH0At
-         9bNDB+T6K+/wbe7U26f0aAKkY7LSDyCN7GscMnmdeCvFdG1K1ydV1mBIsaMMuDaQDJbC
-         KynUXTh9cS/pqJNW9iLP/4IX/uJAAOsPFERyouXCTLN0Wh5Cvp/IUkpPZv/QNJbzJ7Ra
-         cVXQNjHDz0ffG6DnG4e3woEQo1MvqOpQ2rbZARyJDFIvurbeTEu3dNaV7OPbOB+rBXJn
-         QFrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=iyM4srfhoU/9+Z/rbkQp4qqxvEABReup3nOqpQKqid8=;
-        fh=BuW9i8pcHqMLkQXv+ndvaIANn5EyFbPqLAWkY6rS8cQ=;
-        b=pq7pcqwM9ejsBMx6qyUp/miqa8TZVWCDJcrX3O3DpkeQWSL1jcOzEHppz4Qcs0SmCG
-         nvVpf02q77Vs1H5kFoUc2OpUywgPOdnIGhswA4PqKff00L2xZB8/qxsDWh2hW/p03Ig+
-         t1hHEC5U5XhryciNJPXU8ED4JjIsr2/OUO5xkv3O+Pc3uwt96ybP67dgvphX4GeCVk2y
-         tJn1aiXLRMabfAZ2F8cBY+ZrGRW13VFtoE/c29MXRk+obJymMbqzynNsgPc/YQ8lqetT
-         SlYI0Lrp3pMzdsdRM5DzLiOb5J5WNWfTT7psbZuCAWmVSacKeS0OrCEZCD7HCWqgHPTd
-         5FPw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google; t=1793983840; x=1794588640; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=iyM4srfhoU/9+Z/rbkQp4qqxvEABReup3nOqpQKqid8=;
-        b=VvkPeDKHtpkxWNSS1fjMAxAUccI5lzJtWO5bcVIZqT4hpeoM6S6h1WtvkD5rF6kSS2
-         65RjNYlzRuVq6I4vZgCc3/RW1LJ1s9QIXXyez7FDKeSlzr1SVDVQ6eMfRLHMQ5H7TJJl
-         g35l/RbSQv9sGjDmaSwF3jnQJIVt4DS8oNI8upJovOoiW0N2YARLrDX5wJ30ojCuAzqK
-         1ylekqPofnd0kUjsZ91IF46XfdYibJx4cBB9wYOd19O8Anut4eWCLZT3bgjl2n8SAnW8
-         IQP3smDTvqg2D3rTuAZLMjfvBek24ZTp1Y5PMxkY5NZruDrZ3t16NDbkuJBBovr929HQ
-         yehw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793983840; x=1794588640;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=iyM4srfhoU/9+Z/rbkQp4qqxvEABReup3nOqpQKqid8=;
-        b=KWPyuOgvnTVfs++tMgmFfnko/oSyWgqxYuLFephpvtzBw7ydv4AzruXDMeu+AvhtP+
-         FZ9lZiLzF65Qr/UhHMv+p1gma9LFh7AcTYmRP277v5Fmr886VofWZfL+uy3aijqD8s0c
-         tE7Klfq52D7PfKymuGaQ7+PjqGYiPajWWo+eHG9AV36lKYuqSfgAUhlVeHYLfpeJp0TT
-         M1ZAaH8iwXThUINFe9QRBrxTGkXUFeAQozM4mP//VE+8dgxg+xYWJz2aRuPo21Q64nNU
-         kbdIs7+8WZ1DJEF2TNAiVYXu++XpFAYKOV+XnBre2DWmUMYYyo/MG0ghv4YLchRGxpYF
-         9zgw==
-X-Gm-Message-State: APuU4Z+Kf95RdeNZIjQNZrz+6Au8ZI0Y5J0jvGwfs1ar1oNjdWZBO/lo
-	9rIv5tgKS4gu2iwSlv3MWX+fnPGRc3L9yycd0CXstoEhSZuJY5PtxjaBayaeGVnRcUL8T4BOLyl
-	elrwpGlM2Gn04AXBFs979VodEEZVhthwLHqwqugsH7Hcb90OJf3xVbQ1n
-X-Gm-Gg: AYBFou3/q9WCcNth/FA9bmEbwMzttrfvedjPR+K0CMlXrN6hY2kcJp2nWyPyNnV7EbZ
-	S5K01HfkGMPG86KuH7hwzLCf2OOxKfbTLEH4SCDwTVMWxKv/zcFGocSUCwEnzfStRT8k6MXzku5
-	E3JrUsFnqGBS1ztrG8DojaUJJMDD89d7SOrMp0Atqiv8ovvcbTlfX3HTOGx9WkxFl8KqzCQwsRE
-	FzRWSjbMpZqRN/z1+XzC0/MhnSHjJY9u7VviDefB8S+n9qLTGaA38xVp3OrDqttAJB5tabyeDlO
-	xRSHvdvSsbOFs2JWMS/boO/ArQ4fmdq1zSn8VdBzqzpGnCOJQDTjFQhPUjeG/b5HI2AtyMuPEr+
-	8nUplXZUh5i5n/HNOzqZjTCw9mLNsZyfiklQToPvksTLcJ40Z0hd4CGO1tVOt7MKk7d+e6k4XUZ
-	mzGWuaLo91u5+S9FUaNsMnspFVTFExnhOYvMrAZ2WH0Hl84ekmUW/vUhz2s7OiQGiJdoo+aeqjG
-	VkiaokcnqqJ8YlvZkT5r1yHqN+uMwQfT+qTtBl4GSUU4C6WSaojk70UbQdQH1bcxX6rMCnDGWUM
-	FSa9WYDRv+ELSmHHYZnO6Fe4DAtvdOv1Mqz+SVzR/S0=
-X-Received: by 2002:a05:6402:550d:b0:6b4:1916:965c with SMTP id
- 4fb4d7f45d1cf-6b5977d332emr2224927a12.18.1793983840283; Fri, 06 Nov 2026
- 08:50:40 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ArjCvKql;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=zF3pOb40
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 025A71D0016F
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 12:20:59 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Fri, 06 Nov 2026 12:21:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1793985659; x=1794072059; bh=jnNb9x6Bx7
+	dPKO1E6ruoX9y1upV0PUsQld4MrT+CbwA=; b=ArjCvKqllJo48KM6A9axcDhWKW
+	PZpyNaWejAY9Sz0NhZHBkceN9TOWjDn7/l31hZ2+X3+RrSJb5itz6Wgn0CCEQeJp
+	dR8eBDO8rFm9KI9Vyp3P/j2lsuyGPriNow4Xz2DwtSgtJFc1d6C8TiC90vjLis/D
+	iw8/U6pkDptFEB1S3o1YayvK2RwTubAQeQ94D9EbaghoC7eZZ1MsD9h/pmoMeOly
+	LZQE+lMGPnN6D8a2GT3TqxGaxSlITgrDkLwo8YQPrO31FvPEoWrh88xlpBTv4QPH
+	8zDSwkaEp0H0O9Wrjptaqwjlm5FBLg3BqW+e9VazBZ+5ZU/WGmPHPq6sLu6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793985659; x=1794072059; bh=jnNb9x6Bx7dPKO1E6ruoX9y1upV0PUsQld4
+	MrT+CbwA=; b=zF3pOb40aqu9i8t4NDF8J3g3feMPDlDnAFsWDmTCtm0euPmjgoz
+	GmYAB2Ag8vuHFstY2veCA6yktt0SH9miZGuEJK5VpN1s0DfewxKteBDop1DDQGi5
+	tVdfSn7Ac+FlDBzhoDs+UNEJvJUwTyrRe/qDeUBBxjaLtF5zHrlcZpeI6H0eSZJC
+	SmfZngbMjSdefHv9ekEMoS+1aXLVAeG1j9ou3DqnzPBVp4qNf1XfskNZ3RdK3XW7
+	1Xoc65nX6WnkQ7NJ27ImPdEDK/1SDsQgXy/R7CN5NNsLTnz3WSjLuji3C3WF2rRB
+	z8AmV3Ymh5MJiua+9zihzD6Qhg6AFvDKNvg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793985659; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Z22BaYmdnOtt9oBlHN9+bZmMH2a2ckVnslg3BCWatlSkA30
+	TyfwAkQkViXkFvLmnnpavd8pyCj1nJBsP+pCBQvKIpvuf3ExZ/xSf05Myvr5Excl
+	mBC4zCU00/gmnfIF7hu1ecmFkH18n/2Xl3REov4p35pabU2dYUGOgsFdei04TEI4
+	SG19Q+JRymFpqQmPTzLNwIJf+c8kuTELoZ2rDIXyxgXxU0dgFB1tpfXVthlqqve5
+	VKiczTmKyoLYl2JGrTKiyE8hdJbTLzwFGkIL9+SxrptwMjNUZPHPVSc+DR0lE04y
+	BFnAurZxf5Dygzp/czkt8oJ3Hdtl8RLtQ5v849Q==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:hnWJ8W9MAuYwj2tBtSAnwnGE17R34Zg6/t3EYM4wWWI=:opsqifeOOsfu5fLsluUsPxfjkohjFLYwqGAX1FDfofY=;
+X-ME-Sender: <xms:ewzuakP8o2rfWKvr0S4t_cAZfu6FJpXaKvGB-o1ZhhINmxhQntA2UQ>
+    <xme:ewzuah9bacey5Y-6MUld2T2EIDqTMCghtebr9nOtwH6nu4EpWPH-mrFySWXmRgIST
+    6tqT3F1X8PLsdtutSR4nJ5mDsYI4cmR_I7oDE_DspRgkjVf0ZLMzao>
+X-ME-Received: <xmr:ewzuagS0N-BFrb637gx4jVsQW9AtCwXoGtftnNxgjzGlF73VSC5sI7Z76eJtbmCKGzMU5kM50CYZCPhm_0_eNUu_1BGc5XWa9sgy>
+X-ME-Proxy-Cause: dmFkZTG2AZsztUPeVO2V3LbujkGJjqv8LsSqQTAj+T92piGXwEEdAtc1n5FO3ZK+ErjxrV
+    czaFhq4JigSylBUbSYf64qpminAgN0wDEU+LgNQgWyVMJf5ofvWMlPPTPSe/m4amoTnfoe
+    XOs0TbmT0NtacKsGdA50kv5c13jT1Kf8HwvmQ/SW1qvircvEtIVKQi4Kbf6f1LkZojPPfh
+    0Fw6AFnty44KjE+5lgHmiuI/nVg+OppL1b5+CPQhi1CWKEwFtypMBejAbsNMXWOXFjgP7v
+    wsb/wrtnSpRq+vkZmN7GY0qOl4ubE+G9zNOlproQDLOxXe9Jp/w/GinSwxkKEjA4m/u6KC
+    I+jUs/bp2kki+OWXZhSUV6ibMhbxIzsPDISRI0nRMx5dMFvNhoRLTUjz/EvNKutwdN7nDg
+    iWlFv6hMYJOZBN/fANdNfBgaExqtupvqOP1lOzN5m+SBelY+XUy7s/8PI0qFgzLYMLwOxh
+    b2ZqI1uSDlLeTAW/VLs4EBRKfg3B1RclV/8jEKfk7qEQ9ncfExXHhj/DyDvz94/ti74Cos
+    qePkeXkILNwUKjpjoumj2A++xQYdVWumPOlAkEcs5X8KifR2NAsYK6JPgyBOYzA9v/Nk7S
+    NDhOXJ12mGd106vQbFhVzXUufRwtxdhAOdjwY6d1ed4Cc5j0qinwsTdDCqEQ
+X-ME-Proxy: <xmx:ewzuarlLQ8iP920Ok7noJAXfqfJoWqUZ8j4TN6QOvwJJeMBS2Hc6Ww>
+    <xmx:ewzuaoSpfKQkX8DDzJqIMfK4mBq2QvIYIFjUqAZCpkwhW6HBcB_SKg>
+    <xmx:ewzuahMTpxX0-_GPP_zefo5RkGqg-sV4vuk6q6zFakRejug96tPjqw>
+    <xmx:ewzuapVEteoVQj6rm-MQeRqY4O4VeyEUmb_bk2ZjARoqqnjarT6m2A>
+    <xmx:ewzuauOK1f4IM1FIe98iYdTpmLcSYoK57qphzkfeN_TxYeejyFSznX3F>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Nov 2026 12:20:59 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/7] gitlab-ci: speed up installation of Git for Windows
+ SDK
+In-Reply-To: <20261106-pks-gitlab-ci-speedups-v1-1-1fa0374c7287@pks.im>
+	(Patrick Steinhardt's message of "Fri, 06 Nov 2026 11:30:01 +0100")
+References: <20261106-pks-gitlab-ci-speedups-v1-0-1fa0374c7287@pks.im>
+	<20261106-pks-gitlab-ci-speedups-v1-1-1fa0374c7287@pks.im>
+Date: Fri, 06 Nov 2026 09:20:57 -0800
+Message-ID: <xmqqa4nllvuu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,79 +125,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-From: Adam Dinwoodie <adam@dinwoodie.org>
-Date: Fri, 6 Nov 2026 16:50:03 +0000
-X-Gm-Features: AclHuK8OEEeRZ9hHQOhEFdq28lU7m-Zi-4sjoBFwoDvdxdU3_dBrDPPnAf5vlsE
-Message-ID: <CA+kUOampvjU3=VK3VGhYw2L5-E+LBsk=Q0UrAxhhR7hC5SUdJg@mail.gmail.com>
-Subject: Default object format for new repositories in Git v3
-To: Git Mailing List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="00000000000088b7c7065f9e691f"
+Content-Type: text/plain
 
---00000000000088b7c7065f9e691f
-Content-Type: text/plain; charset="UTF-8"
+Patrick Steinhardt <ps@pks.im> writes:
 
-Hi folks,
+> The "build:mingw64" job on GitLab CI downloads the minimal Git for
+> Windows SDK on every run and then extracts it via `Expand-Archive`,
+> which is expensive.
+>
+> Improve this by caching the SDK and by using tar(1) instead of
+> `Expand-Archive`.
+> Note that caching actually only gives us a win of a
+> couple seconds. The bigger win here is using tar(1), which speeds up
+> extracting the archive from 3 minutes to about 10 seconds. Regardless of
 
-As part of preparing for Git v3, in particular for Nixpkgs, I've been
-running a bunch of tests using Git built with
-`WITH_BREAKING_CHANGES=1`. Somewhat to my surprise, `git init` seems
-to still be creating new repositories using sha1 rather than sha256.
-Is this expected?
+Wow, is a tool to move the bits from one part of a rusted iron
+surface to another part really so much more expensive compared to
+another tool to move the same bits, to make a difference that is
+worth doing this?
 
-For reference, I've attached the test script I've produced as a repro
-that can be run from the root of a Git checkout, although it does
-require Nix. I've confirmed the behaviour at v2.56.0, next
-(972d6e3ab651d838b30a8d5d70d8ef6ced05a986) and main
-(0ffa3e35c7c82ab8d0de226149fb03b3f7674d05).
+> that though, caching the SDK feels like a sensible thing to do as it
+> removes one step that may spuriously fail.
 
-For a simpler repro that doesn't require Nix, build Git with
-`WITH_BREAKING_CHANGES=1`, then run:
+One thing that may make readers curious is if we need to worry about
+this cached copy going stale.
 
-```
-git init tmpdir
-git -C tmpdir rev-parse --show-object-format
-```
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  .gitlab-ci.yml     |  9 ++++++++-
+>  ci/install-sdk.ps1 | 26 ++++++++++++++++++++------
+>  2 files changed, 28 insertions(+), 7 deletions(-)
+>
+> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+> index 9b7698a0037..15419a954b3 100644
+> --- a/.gitlab-ci.yml
+> +++ b/.gitlab-ci.yml
+> @@ -127,9 +127,16 @@ build:mingw64:
+>      - saas-windows-medium-amd64
+>    variables:
+>      NO_PERL: 1
+> +  cache:
+> +    key:
+> +      files:
+> +        - ci/install-sdk.ps1
+> +        - ci/install-dependencies.ps1
+> +    paths:
+> +      - .dependencies
+>    before_script:
+>      - *windows_before_script
+> -    - ./ci/install-sdk.ps1 -directory "git-sdk"
+> +    - ./ci/install-sdk.ps1 -Directory "git-sdk"
 
-This will print "sha1", when I'd expect "sha256".
+Is this change essential to understand this patch, or is it an
+unrelated general clean-up to follow some style rules?  I notice
+that ...
 
---00000000000088b7c7065f9e691f
-Content-Type: text/x-sh; charset="US-ASCII"; name="test.sh"
-Content-Disposition: attachment; filename="test.sh"
-Content-Transfer-Encoding: base64
-Content-ID: <f_mw57m6jw0>
-X-Attachment-Id: f_mw57m6jw0
+>      - ./ci/install-dependencies.ps1 -Mingw
+>    script:
+>      # The minimal SDK's profile resets PATH.
+> diff --git a/ci/install-sdk.ps1 b/ci/install-sdk.ps1
+> index 66f24838a40..1dbcef04a18 100755
+> --- a/ci/install-sdk.ps1
+> +++ b/ci/install-sdk.ps1
+> @@ -1,12 +1,26 @@
+>  param(
+> -    [string]$directory='git-sdk',
+> -    [string]$url='https://github.com/git-for-windows/git-sdk-64/releases/download/ci-artifacts/git-sdk-x86_64-minimal.zip'
+> +    [string]$Directory='git-sdk',
+> +    [string]$URL='https://github.com/git-for-windows/git-sdk-64/releases/download/ci-artifacts/git-sdk-x86_64-minimal.zip',
+> +    [string]$DownloadDirectory='.dependencies'
 
-IyEvdXNyL2Jpbi9lbnYgbml4CiMhbml4IHNoZWxsCiMhbml4IC0tb3ZlcnJpZGUtZmxha2Ugbml4
-cGtncyBodHRwczovL3JlbGVhc2VzLm5peG9zLm9yZy9uaXhvcy91bnN0YWJsZS9uaXhvcy0yNi4x
-MXByZTExMDUwMzcuMWM4OTA4M2U0NTFlL25peGV4cHJzLnRhci56c3QKIyFuaXggLS1pZ25vcmUt
-ZW52CiMhbml4IG5peHBrZ3MjYmFzaCBuaXhwa2dzI2NvcmV1dGlscyBuaXhwa2dzI25peCBuaXhw
-a2dzI2ZpbmR1dGlscyBuaXhwa2dzI2dudXNlZCBuaXhwa2dzI2F1dG9jb25mIG5peHBrZ3MjZ251
-bWFrZSBuaXhwa2dzI2djYyBuaXhwa2dzI2NhcmdvCiMhbml4IC0tY29tbWFuZCBiYXNoCgpzZXQg
-LWV1byBwaXBlZmFpbAoKdG1wZGlyPSIkKG1rdGVtcCAtLWRpcikiCnRyYXAgJ3JtIC1yZiAtLSAi
-JHRtcGRpciInIEVYSVQKCiMgR2V0IHRoZSBwYXRocyB3ZSBuZWVkIGZvciB6bGliLW5nCmV4cG9y
-dCBOSVhfUEFUSD1uaXhwa2dzPWh0dHBzOi8vcmVsZWFzZXMubml4b3Mub3JnL25peG9zL3Vuc3Rh
-YmxlL25peG9zLTI2LjExcHJlMTEwNTAzNy4xYzg5MDgzZTQ1MWUvbml4ZXhwcnMudGFyLnpzdApu
-aXgtYnVpbGQgJzxuaXhwa2dzPicgLUEgemxpYi1uZyAtQSB6bGliLW5nLmRldiAtbyAiJHRtcGRp
-ciIvemxpYi1uZwp6bGliX2xpYj0iJChyZWFscGF0aCAiJHRtcGRpciIvemxpYi1uZykiCnpsaWJf
-ZGV2PSIkKHJlYWxwYXRoICIkdG1wZGlyIi96bGliLW5nLWRldikiCgojIFdvcmsgb3V0IGhvdyBt
-dWNoIHRvIHBhcmFsbGVsaXNlIHRoZSBidWlsZHMKam9icz0iJChucHJvYykiCgojIE1ha2Ugc3Vy
-ZSB0aGUgYnVpbGQgcHJvY2VzcyBjYW4gZmluZCB6bGliLW5nCmV4cG9ydCBDUFBGTEFHUz0iLWlz
-eXN0ZW0gJHpsaWJfZGV2L2luY2x1ZGUiIExERkxBR1M9Ii1MJHpsaWJfbGliL2xpYiAtV2wsLXJw
-YXRoLCR6bGliX2xpYiIKCiMgU2V0IG9wdGlvbnM6IGRpc2FibGUgZmVhdHVyZXMgd2UgZG9uJ3Qg
-bmVlZCBmb3Igc3BlZWQgb2YgYnVpbGRpbmcsIHVzZQojIHpsaWItbmcsIGVuYWJsZSBicmVha2lu
-ZyBjaGFuZ2VzLgpleHBvcnQgWkxJQl9ORz0xIFdJVEhfQlJFQUtJTkdfQ0hBTkdFUz0xIE5PX1RD
-TFRLPTEgTk9fR0VUVEVYVD0xCgojIEJ1aWxkIGdpdAptYWtlIC1qIiRqb2JzIiBjb25maWd1cmUK
-Li9jb25maWd1cmUKbWFrZSAtaiIkam9icyIKCiMgTWFrZSBzdXJlIEdpdCBjb25maWcgZG9lc24n
-dCBoYXZlIGFueXRoaW5nIHVuZXhwZWN0ZWQKZXhwb3J0IEdJVF9DT05GSUdfR0xPQkFMPS9kZXYv
-bnVsbApleHBvcnQgR0lUX0NPTkZJR19TWVNURU09L2Rldi9udWxsCmV4cG9ydCBHSVRfQ09ORklH
-PS9kZXYvbnVsbApleHBvcnQgR0lUX0NPTkZJR19DT1VOVD0yCmV4cG9ydCBHSVRfQ09ORklHX0tF
-WV8wPXVzZXIubmFtZSBHSVRfQ09ORklHX1ZBTFVFXzA9QWRhbQpleHBvcnQgR0lUX0NPTkZJR19L
-RVlfMT11c2VyLmVtYWlsIEdJVF9DT05GSUdfVkFMVUVfMT1hZGFtQGxvY2FsaG9zdApleHBvcnQg
-R0lUX1BBR0VSPWNhdAoKIyBNYWtlIHN1cmUgY2FsbGluZyBgZ2l0YCBnZXRzIHRoZSByaWdodCBl
-eGVjdXRhYmxlCmV4cG9ydCBQQVRIPSIkUFdEIjoiJFBBVEgiCgojIFNldCB1cCBhIHNpbXBsZSBy
-ZXBvc2l0b3J5IHdpdGggYSBzaW5nbGUgY29tbWl0CmdpdCBpbml0ICIkdG1wZGlyIi9yZXBvCmNk
-ICIkdG1wZGlyIi9yZXBvCnRvdWNoIHRlc3QtZmlsZQpnaXQgYWRkIHRlc3QtZmlsZQpnaXQgY29t
-bWl0IC1tICdkZW1vIGNvbW1pdCcKCiMgU2hvdyBldmVyeXRoaW5nJ3Mgc2hhMSByYXRoZXIgdGhh
-biBzaGEyNTYKZ2l0IGxvZyAtLWZvcm1hdD1yYXcKZ2l0IHJldi1wYXJzZSAtLXNob3ctb2JqZWN0
-LWZvcm1hdAo=
---00000000000088b7c7065f9e691f--
+... we are making a matching change here to upcase the parameter
+names here.
+
