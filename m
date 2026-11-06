@@ -1,120 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793974463;
-	b=XSLZVZpBywx2nDBCPYgF6usrjdSqQxXMEha25z6jmyPpRYsnmUR0fHCCFG1NGshQjgkm
-	 pHdNa6hFu0WgluJDlZRKhI6loJHthdMZYkzwEm05Vspi/MrPd1bDj/7nwqf1QRVmIcPKt
-	 DaBzpNEVQVWL+Bdkfuj2j91MUfb5uSuNcq1xqP3qwNayCZlqgHSY1A9SAFUiy7VH5m4AF
-	 5O5t39xSYZQUMTEgEkfd9rgvb3dOdcKCwO2lMGf6qRQWrHoe/isWFYiqxKi9qv2Y12k0a
-	 j9PeeqcvPCq3baPXozvjnu0lqb0O9Dzs3iqk9WNKzll6oogIUNawO1oJauW1HGeph6Q==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793974463;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=aeIQCW1/2sUU/Jtr47ZxS8qaYR87i/YriuW9M4WSo5k=;
-	b=UZGHzTEOMiyVU4CQy21ntrtjxy/oZo0iTwKbg9PLXNVDTeNoz6LQluA4FY41dbu2N6c+
-	 FCMPQlydk5QqIg3+z5+Qer8sHqqNJjaNilcNBiuqffJGysxKbnH5mLmpwd3l/iNPd4eao
-	 14NVklP5GkMlMTIGODwywbFCzcRHwZ85+n4D4mzwJU37XCizEy73fL2Z4ude3xWhRomN9
-	 kSi/LBTOI6Jfm9daTc6iLjQZIyG7SZvkRqBqgSbAMFsYuURzpxKPNhRImi8TOWxqRREEM
-	 Fe7AHelkSAZEvM8TAHAKnu/dO6SI+E3d4gQ7bXQQLOcfwH3mvUo5N7pna27hWpV9QHA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ko7PSTOU;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=LJpjgyev;
-	arc=none smtp.remote-ip=202.12.124.149
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.177
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793974535;
+	b=YakNCi2UKSr3FgYxG+xn9AL+QU+6XJIS/A2z3eENzJgKAJlmNQeZ1hpka/G5y4ahC6mW
+	 751tvJh6Vx9bz6plUc54MQ2wqqG4kWkjoIpxwCApEmMIczq/mcPMz+RnICId2nLAj8JrE
+	 CGVB6mDxXSpvUBjuaVQ6MuF34iAdimMov/JuonH45aY+JVhKk+RzDAD8+EST6+LfQvnQ/
+	 eYl79QCFOchoOyt07OIaAdtZf6Ko2Eu5CFXRosl+KD+MgrvOQlA1ZX6iPBZEi2lyKtWUk
+	 53VnyzGoI0TLb9diE4mdxCGGqBzv/KrGOr0qirG6DkPztoaHvvGi9HWEDtO5oBEHKNA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793974535;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=8HrerOgz/pM+Us8Cn4KUf/RWXE+y2enJTsRHMaVITq8=;
+	b=sl4lgcn68cvR69ICupx+1d5hiF6lVgq88SuL+Yo2hD6M/NdKNfRtnhaRPw8K5KcjutkM
+	 FvUneQbyeAQvYfOaDPbBS737lxFUk6WZ4LLtUVSmLIOpsX636OmGETPCBc0yC4jzAFxKz
+	 3sC69TAOFUs+IEGLsc73DZYbf1ylXUsz8pYwTwzlppXCc9KnMg54cXzkISgRcrlKtZ7ON
+	 pl9MrECm0XL/ajjNf7Qt4DAv6J41dIorZlWqB9Y7SNEqHZuhX/M0/dVExxZSpNE4m50bg
+	 6/WdLfu/auX91q6ZiakWMUgDjCoYgE4dn11QwuuixL+St44sdEyZJeyB84Ud7WWBg/Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Rb9eG8fr;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.177
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F895606A33E
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 14:14:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F895606A33E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E945A606A326
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 14:15:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E945A606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ko7PSTOU;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=LJpjgyev
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6AD5D1D0002A
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 09:14:22 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 06 Nov 2026 09:14:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1793974461; x=1794060861; bh=aeIQCW1/2s
-	UU/Jtr47ZxS8qaYR87i/YriuW9M4WSo5k=; b=ko7PSTOUcsSgBiQS+CKUgrBcuW
-	fUPqsn6wjDulnG/U6NGkQOoh/SD3+nzHVKzMy1glu/X+GbKtF8MfS9C/T3CvSRb2
-	TDnRj25aJd3TumWwF3De7S0KTKIEx874oF6SwoGIwgJkxuZTz1V+iwqbKhAKtRw1
-	HjAAbK5blhlDPYMNXAr2Ebzd3Csc7ft7t5JvJ/UBjwpt3dFWyF3Gzw6BpxFTDjte
-	iPPXGgYJ/CTRVZWdpYPzTT+ML+xiyMRG+mjjeYVpjQB84iuyIaHBoqLgF88izkx9
-	OMc2AWkdBIXtD6PuI94u405+AZHKexE1XVVL/+9i5fLCgpd01zdJ/Ijw+3fA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1793974461; x=1794060861; bh=aeIQCW1/2sUU/Jtr47ZxS8qaYR87i/YriuW
-	9M4WSo5k=; b=LJpjgyevtNe9lLHVKvuFPcSJq+Luz+xJjPVxZstuev51l0HiIgu
-	Wf38SjK3EzO8wRqRmxcE1Jk3hVg9Iiblg4MwLjDUT+7wa9MIqiMoIeS+ZPIpBxqk
-	iC4dKXHM9kn2gm483JEgTGDxmkV6tp7Fh3EyqXIPewwPR3BMGkEZNNi7WSOlDQgY
-	8rVMzb2JCdU4xv84YE+tQa3I7eA6Gq8ktHTkXN1y7QJWuY8Ptc/t0Urti/BigNzq
-	zm/ZAxK9rhalxhyDDk8+yCsxJ/t7ADESE/JtCGugifyjXkXxfZRw8AMtbPgQrTwu
-	gFPWLuu75j6gNw1oLxVn9Vjc6PtoyA2O0fA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793974461; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:sU+nY4GGVGoDxlo75oNJDZau8HMKWhPScxyitTmoiP1GT+m
-	BhiHZFDg3b17nsSAjOjdWyp6lEXpXlIak42rjlzMxerl5ed508LmBn6SI+/QEoKn
-	SQClgFEvuTMTLGuVKWnWh/a2yyW23Kz7nqkjAj7Xvbv+Fd6CDSmMRdSXxePb5rmI
-	h3OcL20jLL18pVBzdWNr+RzItrHIU355JmR/H3sQ3M9yJYpZ/FJqbtr/DZ2IwgHQ
-	CQXltP2GHrQ2XMdlwC2pNYjdFglHgjqyU8toadIyR5lJOREQhYiTFviNEF26rGm7
-	V1HF2HrjVxzp2YB0J60SUj8Xo8oV4r2OaKEcyEw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:demgJrIwfZE3sOQ7cC002a26QNC2NgxRWfb3O90o6sk=:beph+51PW//M4knIcXCpeC1Af3XU0DgnWL1YVDp+IN0=;
-X-ME-Sender: <xms:veDtaiDkHhVxq1l9keriP3ZcNSuQR1_DDc9N04eNGeBQd1qp-CLFnA>
-    <xme:veDtajiiyi-CA-OU9GS27DCCAJ7ao30emIl1rL3aDgfYwGbWT9krjkjaZIyThFoiB
-    79UL9ruvNwVHKViwz8xVXbPjSiaA8UvrpittdyTBlwWrRL0_EqE39v_>
-X-ME-Received: <xmr:veDtaqlvj_DpMuw2MA23ZIgBRSrO359C6kA1YKjviv-rnwtGQno1CDcGzjEjtKnYaLnBxg>
-X-ME-Proxy-Cause: dmFkZTF67bGEiyXC0ZPfuj6Su8SS8719tThVeavWC+k2eDrHPDI7hPyOxqCBxu8EP3lo7B
-    lHP5BS76uw6gI4Drxmq759qvoM3Y1v+dEg0sv9rAMFvxpfOrEKh68CREJQ91GTI15hRCDG
-    975cJVlDR8OuAbYynNbgZFhoTeF0ixRhiy4qXtlXTan9FSfj8cI8GoHN7oOG0XjDcCN7b4
-    rw+43TCi7/IcRZ1kA8ebfP7M/NSqG8DnsYbxtub4ksDsDzSbnZUWlAs48V137vun+kx4O0
-    HT9Ivy77x4ehJAhKcRUdjXdO9FpAHw4xZRYt8PHe2Dki2PB+/tKe/yeuyTQGe0Bu0cw+Ut
-    MifDL9ix3I22dk1WjhqOHJvErK9yqMT+u+SLKpqyMiwmBtart5Qsf6kVaZ+gqtW3zoJFGE
-    tzLDqqJqjmIv3buF7PK8Fs6mdA/22/qhayVoEE+dZPprFu/yE/H8ka+9fnzfo8/PUKF3Pu
-    T7H6NOivSulGEGZkmQs53IZIE2HT10ssCTyTacHdZghunYKcd1ReD1j52GcOhtkEQjmxsK
-    pfRTWC48uKlFN5MEk2gEtAttyJhZiZ7jeeETT/hOa/c3Si3RC56rPtnJnOGsrF8dKjqkin
-    6aP2G8MAczi/sVYj1XSdhrahrK7OxUlJmuVPabzXGhPJexOZDpse9cjiaSmQ
-X-ME-Proxy: <xmx:veDtavpuUKLiIqnwBl_eVJk7QiOT4qOiin8CDfqwo3kNs7xfeAvACw>
-    <xmx:veDtajESrSf6dUpOCjWG21RL_nhf2yfT45ro-AGT1cLDsB8Tv6b_LQ>
-    <xmx:veDtarwSy_TWgUnlgQ5nSAFhZgGc3IDOC3_2sKzznMZpxUS5kyx6KQ>
-    <xmx:veDtaor1hoLZ8lk32joQuZizs_yJjFhfaRC1pbmAhMbasfgJO8-Qkg>
-    <xmx:veDtav09nyNzlWL0ZcXUEwC3TgSfAX552RVzD3HWll7RbBbv1Vu0Mhh8>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 09:14:21 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2b1acea6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Nov 2026 14:14:20 +0000 (UTC)
-Date: Fri, 6 Nov 2026 15:14:17 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Miklos Vajna <vmiklos@collabora.com>
-Cc: gitster@pobox.com, szeder.dev@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH v4 6/6] log: fix --follow following an edit on a side the
- merge did not take
-Message-ID: <au3guSIBfekx7gNL@pks.im>
-References: <cover.1793298331.git.vmiklos@collabora.com>
- <7be8cfb3ba58a4d4dc040fb2f229524599524b78.1793298331.git.vmiklos@collabora.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Rb9eG8fr
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-8a07078200fso281179b3a.2
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 06:15:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793974534; cv=none;
+        d=google.com; s=arc-20260327;
+        b=BDyAGPc7REAunturdCMmJwiE0iSHFzLmUYYC1bA1dkqAibZ4+udpd1ZTlMZPrQBS3Z
+         KkMEx5XUaF14b3uSzQH2mqm8Q8UmoyGQOwNB59Xrt4pDeBLR8EzmQT0NXDiSSoqOvYZY
+         th4lDfoAOkg3aDLrWnq5mVmUgV9cmOm6g4ZLdAPBQowgfVI1uJ4AaZzA7DkLpDSMwEo2
+         jfHDEimG5D13ERxySLDFTjjVk54kzRC2M2V7cXSJejByD4+1fv5G9MqkNCanegiuCZ/f
+         sIanM29taeNBc3ZO9uWfx8l+fVz/WPofuaFXUTGSk1FZO3qDOyYyKi96oi1SRo3CmSfE
+         d+FA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=8HrerOgz/pM+Us8Cn4KUf/RWXE+y2enJTsRHMaVITq8=;
+        fh=ozSzZTRsR0tpagYTcIL6twFTby+b5cy/PyfyqRZDZX8=;
+        b=i4QWew83D+zgU3yISEzSqGyfVCads8J7UauGCETAdg2wX2joYX43uMwZFtgO/sFywD
+         CoU7bjCQq83fhvKeJHh8qYlMp1oL7gPe0KcP8YsIPjKjqn/f5R2qr6+pAH1UE5FDFN8K
+         wJjn7R2FrL4QLXBzgsOgSQ7tcDjypKqX4QfqqI7t3dukp3JZqTqQjTpVMk20TMA9jsnC
+         WBNSYhjtd7zDpVegFbSNyXBfryV27wegkFDqLbNUxtcxJshAVVGCUALno/zGPORc6bk5
+         HpITU3ghvI5Mv627ADrhsBaFAwsbpzTBqnZli+EhtzI4ZExa2SvTQzAbRuKgJLKi4CLb
+         +jDw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793974534; x=1794579334; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=8HrerOgz/pM+Us8Cn4KUf/RWXE+y2enJTsRHMaVITq8=;
+        b=Rb9eG8frf6CeHewkif5rWwUpmj8WB2h3cATZLyAkSNnon1mPSBQnssZicOe5TIAuAW
+         1KnSdifZP9RH5fpzC5Mo8DAtPlcWvZeePzInZWhTM+AGG+dnWm3TdNNw50agLDiRV4qC
+         lu3dwpEZdhbXXWDRZL9kCs48tO545oJKsTGqjoGUbdKWgyI+ZQiTd5+0+WILczESVcvt
+         xnhFa3CsK40Qcwjr3Gj752eu4ogsZnNNvCd0de0XmxQuuwErxGFH6HMf/u4D9a3RunbO
+         xabgRSG0GTl45x+l0R5chQgFEFAoeNwKXRL/27TTusVOyHp4oRM0S5MByQiNau8JLQno
+         clVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793974534; x=1794579334;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8HrerOgz/pM+Us8Cn4KUf/RWXE+y2enJTsRHMaVITq8=;
+        b=QhNZqkCdotK017kYorvz3UEsr63uWjvvrdEHvWhEOqrKmLbDOLM+CQarv1nBECUeOf
+         erBsnMCpp2mMfu6rOKm3rt8S3ojnyIONu+SN/oggpoiSIBN+OBsehFBpcZb2GJBaKHeh
+         EspRFYkwYEOcVAw5GtNLoZIup9TxCbVHwiSVFZkiCtsy2ThGjzvCT2PmwJgjX2VYCcT+
+         sMXP9U+XWnVKz1+CsZpnv7dsZpJ6xjDD72kLzolflS4922+RMit967H8cctc/ZIGBkVj
+         Th5UiUN7vWVCMJZQwPyvnFYl52sS2e05lAglpJlrws0MjpYCcGZoE0OHH1RozzFRSAqf
+         8qLA==
+X-Gm-Message-State: APuU4Z8MSE7FbclGxKLBS32CRb72cev3QILbd5Zs2Mep+b5qAqxlLF0k
+	znGMuDdQkOeWCEDmyhklYvj0Npg2kCZ9FGCALVVDlkm4CdxqQMdb4uWMyMxjlxLSFqo14MV6n3T
+	iQDAT8ZxD99EeJqouV/yH5LR0pF0whCc=
+X-Gm-Gg: AYBFou1NA5XlRDdWaKrsvbyY8IH+78agd/nZeteHIsbd/bgIlm4ISFYn3iBBgXBfaEk
+	9JbMOFWpXJP+K3q20tpvC/KjrcGjXh4iN9vc1YG9Gf99vB+naFMOmTDNgLJEQFpMK+vcnzMFPQg
+	z+T0Otji2JVhxDXRgxFpSQYmp/kr5KJNcsa87s1Bw/N2AhmsBlEj4N5+r0zAPKHblombVu9IG7X
+	K4NeWCYNbcPY2dNd+sUAgRHggxmiNI88LljQ/QcYgPob6121gKBf8KOIQR4HV/Zrv8OG0CkMkIC
+	l9OfdWyr3C5S2TWlbuzDP7mTEvlkYu22NaEqbTIZmTWz/EzocrUAbG/8nYen5M3c8VnU7Z06IVy
+	nr7FlWXkK5RvvjN7NAmzafVOt3/whHOjwUl6A4OjvaX2unEmvKaVHyAZiThRowRfhfgKKYdLcCh
+	/8N3syRa9q0q8PhlNz5dcVyrxThcWVxJ2UBfjOsKNmFMn2XxET3XeMncULokO8C1I+C2Zvxl3Nx
+	11UazlEP8pQ0wA=
+X-Received: by 2002:a05:6a00:2e13:b0:89e:959:348a with SMTP id
+ d2e1a72fcca58-8b37cdf6afemr2768322b3a.55.1793974534134; Fri, 06 Nov 2026
+ 06:15:34 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,77 +105,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7be8cfb3ba58a4d4dc040fb2f229524599524b78.1793298331.git.vmiklos@collabora.com>
+References: <au3Tyaz_LoYDuskn@devuan>
+In-Reply-To: <au3Tyaz_LoYDuskn@devuan>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 6 Nov 2026 09:15:22 -0500
+X-Gm-Features: AclHuK_5YJ8LP4asn0-1-EaUZH1aSD09FEOpIOYuHcGN852oIBwgie5vX7gO8Yw
+Message-ID: <CALnO6CB-b2XuvwkQ9pJp5ENuc12oGMdgbcwz1VKD_i3KWfKuHA@mail.gmail.com>
+Subject: Re: git-ls-files(1) avoiding symlinks
+To: Alejandro Colomar <alx+git@kernel.org>
+Cc: git@vger.kernel.org, Andy Shevchenko <andy@kernel.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Krzysztof Kozlowski <krzk@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 30, 2026 at 09:10:14PM +0100, Miklos Vajna wrote:
-> Take a history where F is renamed to G on master, F is edited on a side
-> branch, and the side branch is merged with '-s ours', so the merge keeps
-> G and drops F. Here 'git log --follow G' doesn't show the edit of F on
-> the side branch, while it did before the previous commit.
-> 
-> The problem is that follow_needs_renames() only searches for renames in
-> a parent without the path if the merge base still has the path, which
-> covers the case when the parent renamed the path. Here the other side
-> of the merge did the rename, so the merge base only has the old name.
-> The parent is then told to follow G, which it doesn't have, and the
-> history of F on its side is lost. Searching for renames in each parent
-> that lacks the path would fix this, but that is the expensive search
-> that the previous commit avoids, e.g. 148 merges hit this case for
-> include/linux/rsc_table.h in linux.git.
-> 
-> Fix the problem by also searching for renames when the merge base
-> doesn't have the path, but the parent changed a file since the merge
-> base that the merge no longer has: only such a file can be the old name
-> of the path that still needs to be followed in the parent.
+On Fri, Nov 6, 2026 at 8:35=E2=80=AFAM Alejandro Colomar <alx+git@kernel.or=
+g> wrote:
+>
+> Hi!
+>
+> Yesterday, we were discussing alternative methods for grepping source
+> code.  Here's a list of similar alternatives:
+>
+>         $ find . -type f | xargs grep ARRAY_END;
+>         $ git ls-files | xargs grep ARRAY_END;
+>         $ git grep ARRAY_END;
+>
+> The version using find(1) has some problems: it is slow, especially
+> after having built a kernel, when the directory is full of temporary
+> objects.
+>
+> The version using git-grep(1) without IPC is the fastest, and doesn't
+> have any problems, but it is limited to just grep(1).  If we want to use
+> sed(1), or any other programs, we're out of luck.
+>
+> A common program I want to use is grepc(1), which searches source code.
+> See for example this code for finding the creat(2) system call:
+>
+>         $ git ls-files | grep '\.[ch]$' | xargs grepc creat;
+>         fs/open.c:SYSCALL_DEFINE2(creat, const char __user *, pathname, u=
+mode_t, mode)
+>         {
+>                 int flags =3D O_CREAT | O_WRONLY | O_TRUNC;
+>
+>                 if (force_o_largefile())
+>                         flags |=3D O_LARGEFILE;
+>                 return do_sys_open(AT_FDCWD, pathname, flags, mode);
+>         }
+>         include/linux/syscalls.h:asmlinkage long sys_creat(const char __u=
+ser *pathname, umode_t mode);
+>         tools/include/nolibc/fcntl.h:static __attribute__((unused))
+>         int creat(const char *path, mode_t mode)
+>         {
+>                 return open(path, O_CREAT | O_WRONLY | O_TRUNC, mode);
+>         }
+>
+> A problem with git-ls-files(1) is that it doesn't have a way to filter
+> files by type.  That is, it will list symlinks, which will affect the
+> search.  With find(1), I can control that with '-type f', which makes
+> sure I only search in regular files.  I'd like to have some feature in
+> git-ls-files(1) that allows me to print files of the specified type.
+> Since git(1) knows the type of the files, this should be doable without
+> much overhead, right?
 
-This isn't true though in the case where you copy a file though, is it?
-E.g. the following test case is exactly the same as the one you add in
-this commit, but instead of using a rename we use a copy:
+Perhaps something with "git ls-files --format=3D'%(objectmode) %(path)'
+-z"? Of course, your examples already omit -z, so if you can assume
+that it might be simpler.
 
-diff --git a/t/t4219-log-follow-merge.sh b/t/t4219-log-follow-merge.sh
-index a85fb78ca28..c67d9481ab5 100755
---- a/t/t4219-log-follow-merge.sh
-+++ b/t/t4219-log-follow-merge.sh
-@@ -297,4 +297,36 @@ test_expect_success '--follow follows an edit on the side the merge did not take
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'setup merge keeping the copied path, other side edited the original' '
-+	git init keep-copied &&
-+	printf "line 1\nline 2\nline 3\nline 4\nline 5\n" >keep-copied/F &&
-+	git -C keep-copied add F &&
-+	test_tick &&
-+	git -C keep-copied commit -m "O: add F" &&
-+	git -C keep-copied branch B &&
-+	cp keep-copied/F keep-copied/G &&
-+	git -C keep-copied add G &&
-+	test_tick &&
-+	git -C keep-copied commit -m "A1: copy F to G on master" &&
-+
-+	git -C keep-copied checkout B &&
-+	printf "line 1\nline 2\nline 3\nline 4 T\nline 5\n" >keep-copied/F &&
-+	test_tick &&
-+	git -C keep-copied commit -am "B2: update F on B" &&
-+
-+	git -C keep-copied checkout master &&
-+	test_tick &&
-+	git -C keep-copied merge -s ours -m "M: merge B, keep F and G" B
-+'
-+
-+test_expect_success '--follow follows an edit of the copy source on the side the merge did not take' '
-+	git -C keep-copied log --follow --pretty=tformat:%s G >actual &&
-+	cat >expect <<-\EOF &&
-+	B2: update F on B
-+	A1: copy F to G on master
-+	O: add F
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
-
-This test passes on master, but fails with your patch series.
-
-Patrick
+--=20
+D. Ben Knoble
