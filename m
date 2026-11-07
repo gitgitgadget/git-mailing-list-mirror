@@ -1,102 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.47
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794082975;
-	b=uYSDKxsAzp6tom4gNHlIVtqXMQUswA3Lx++b88MY+B8XC9PKOqpBwPLjvV0ftGugELtm
-	 hNUUKgD6X3gQd7mShpC6H7cFf7ROu+yXfgf2PNd3rurqW26S94BUiY7Dcurg3XorK7Ic3
-	 b1U7nkwR11XSieUJDDLiEBj0R+CNBJjJpv4pDxWjpaDRh+GVxmqTJPFaKqqzyw71RUZrM
-	 4y8TJIBbpKIulau8QYrE3Qp0f7R4tK0IH4Vjme4tCN8WldWLagOSJ55VBc4ocgXiljte/
-	 eZaKgZbEGr5VIHzwe1k37mAUteCgI0Vb1ypdcIgSfFQH+XmEYTkr9DQxLzvW5Rs3egQ==
+	t=1794085875;
+	b=LSa/Fnc5iN/U5DHQ1NvPQrHQumbvRf5oz+rNFo6v7LYnzevnUWoI3ibPnrbAw6eKdzGW
+	 XCWx7rJv/cFB2Fm1Mxp5O8kvd86VSzOhIeyhdAg6NQqHPNd88wS+G+VVfqbOhMot4PR09
+	 Y+CCdc06UfoiIsbfmZc4LP15Vv9A+TxmrIkFh7OWaWdlUZJ3C9VlRT/opuGhnC6J9ZO/n
+	 7zMotkZvsytzVmvLE4WTusw6d1kp50VRJM96D5dPjDGra1j/HLANe+FDMxN8jEcVO8OW2
+	 E7/n+37vjHsexo+UZzhmqeV/HrW27XXOahwRd2PlEtTl2+GjJW8Ph01FRD7uRLBXUNg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794082975;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794085875;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=JOkwIywIqPzz1HzdqKqVgUAr4pH1jFgDjphBe7/Ofv8=;
-	b=mjfyphrjFjATQHvUb+XuHkvFnAkXzJaGu0Wq9TGx1Cc34As15ngYpRzskAjKDzcxdwJg
-	 d9t72tQ1pYFhMdpU7roCPl5hHRoPQ+7XId9cnQemggfr5hxnmAoZ/Xvx7UTsZ0iUsXIp0
-	 2z238/K1wCG8rvtDlXrdZL4mm2aO8a3/nUE01A3pm8UI1GsIREvyU7lcF/7vc55q4G4tQ
-	 Mrf4OZRNovL/LToRVJQYE8A2UFTAajKdZvxduMdfLD2f4makEt7ZWwufEfDYtWmNkAJHu
-	 nCO6tdgJoqTlzf05kMZuovjz/JeMk6btG6j3OG34MSxCStnFCF/K15XHlLxcGve3Idg==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=1kfSisbQylpCbT+K6GwaJ0J0zdzgWoYDzgStDrosgDg=;
+	b=hVkcnsv4X8W5tv+ct/buLvTWapZx4mDwsbPA/S7OaLJid3oq4nV2N08GgeIO/VUPNxHT
+	 ncPtNSoDAR3A/UD48L3E4QoJDj5W38DCIkTj8omSZ+kLI4adloK6qzj7Sahu+3n+czIfU
+	 LEzDNlIbl/fWZXVw1HPdDPi98akbb9S+447m0gw1kMNf1ixX523T6XRmxX20VqwOfSXvs
+	 HjXBrcvu3fvJBFi8moxE4x9E7XWaozlI1VnyllNMsinasKHe5a81z/nQwJbG9NnQUOyGy
+	 ThtwwIUsbqx61VXrmWJixakgh4qPE1ubRA5raxRcRPJbeCVz52MJ80+UcmCHGu5Eg7A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bPDix7Z9;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.49
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="cm6Ek/l1";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.47
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59881606A32C
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 20:22:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59881606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F6C606A32C
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 21:11:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D4F6C606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bPDix7Z9
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-3ae2b7e1e17so7917a91.3
-        for <git@vger.kernel.org>; Sat, 07 Nov 2026 12:22:55 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794082975; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cm6Ek/l1
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-4ad587ba293so22666fac.0
+        for <git@vger.kernel.org>; Sat, 07 Nov 2026 13:11:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794085873; cv=none;
         d=google.com; s=arc-20260327;
-        b=M1CKquGsHDsAu5FmxTOo/FRc9TgjLSJOZqhHDY+DgOKubr6n81iqMgHD7Ay/9Y0uKB
-         Kp3bseoEZ7I5eZGA+7vAtr/eLx1avl+CGSKBhhb6TvZAP78N4m+LI7ickDCtlgcXI+6U
-         50rnPx/MWSoeBR6z84EiVFQSoSMlGrpNV0N3CLB5l0Q+6R4Ict7X62BsydtkOXEldFpa
-         0ksFgEbmuDHrAr3RtwpFVepVksUqamJnofzzMiTTN86Jaffq/LxJY8NCAdgS6+t9WcGR
-         wcnkP3AwHUZz8mquijdcIZzR+EN29TPTcJcgbq7Fd1Y4fWt6n29n/74jI5482qc4UKFV
-         QkMw==
+        b=MqxkQZLYWCKrznMjLQomfFFHvr93U6dCWldodcHcDFMhrSvel1OQgUSXkwVAmiwkpo
+         ORZ6U8DA+u6CHHwZs4AR2kum1KWJtQVJVoNjZWCHKBXx5MalyWdUjpW+GoTTqhozSbrN
+         wsIFn6IOUfbCqbV2XGxmKHlvaF9nEUikaytfeIi+SGqqwbz+wP42yueRehD8bgGNaLtD
+         kJtV7NVPU7bKj9EXhqQWSJRuyEz7mjMrBs1tYP1HpCpyoI/dTjUAcv7MQGpjwmnIDdDb
+         s7fuXIpXre+X06lTqR5sCim6js3Bh2wTMB3SG7j+bwV6j4XUZ0/QaNJywr9/Xjhz6V3y
+         N9Tg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=JOkwIywIqPzz1HzdqKqVgUAr4pH1jFgDjphBe7/Ofv8=;
-        fh=Pfqtozic0s0JshYzqx+RPsNBG9mXb5Sb/3g+nM8CA+0=;
-        b=OZLW7d1CIKrLtZAnzm05yFsX97YCI9zFUMH7gJQuGshBjQng/1geeQIs3wdB+8zvjZ
-         fRKw/3cYL0ySyq3dWiXu80DmTroOnnM01g1D5T2icuUz3+ssYFcpsrZj19AKiqgBDkEV
-         SQG8Ag+vmiaYvECmqiicm/0XHi4c78UTMlIpK9cSbTjE98wRxJSI20bAnqYWzklqbhKo
-         289e0vDKdhSmCY7vcr4bCHOWNwTuzrhErYHwp9JY/Q4k+qzSWItJEiq334C0R/zK2tv8
-         xJzLs5dnKxZxXW70bs9CJi3xYWCohzusRZp79H60SuhROJiYQc/dFPS1Xns+9A/rjMJv
-         C2iw==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=1kfSisbQylpCbT+K6GwaJ0J0zdzgWoYDzgStDrosgDg=;
+        fh=uLroqYqcx80GBCiwIGXxfGNsg5J6DEKTsHj898AfvWc=;
+        b=LoRNYbYuklGcznpfpGilm511GxFkXU5fYFac2tERK6CMD7SXl/che84Y+Ww/QHgsFj
+         eon8+s8/TM2Y2bVcaKLbMuGszlA69WO7D5SyCi7TGBfLMtEULrXkNFnrOHBup5+sIz+v
+         ox555vN6hga0nc73Wx5vtOEn16c5o3gJqd40IPlNFD2oJRrtnvxlwxOdTXqe0cXc1cnL
+         Vcui9LGS1kBjaTvn6CPVk07CL5qLK4eKaGkuXE+IANOBvMzjzORvxfUYnIyFHHFhP7Y2
+         PHAtP5CJrza6HnrP6KXyNhOZyiWb8cNjZUvOjO0rStavCHRpAN3oSvLzXMCsDYqoOnyN
+         RbZw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794082975; x=1794687775; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=JOkwIywIqPzz1HzdqKqVgUAr4pH1jFgDjphBe7/Ofv8=;
-        b=bPDix7Z9sEAAroJhU7IQM2WltiSGDwx+rcfVzMFYGgc1xcpLGcmNmeaMyLAW3cPptJ
-         oCQxUoSs25Wa3zK5Doiwb04d1RuyVBGL7CHI5d9HXuSWk2Xe9bCtNTkxFkZxrmLwFeHG
-         1Hm3gCeqZTtY2yylFnTZl6Lq0n1nADnbydSu7WVPknfmNCFsQ/wpKU1sbQect6SrYw+K
-         uQBNYVTreUcx/i9gTFg9KpyHoM6+oHxiEABQiqBN2wZZR2MC9gf+LZeUrmCo9/8Z4UMY
-         XnOgQuLxofT/GhcCGl1hVtoM27Q3mksNcrNdbdeot8b6L/AnLI0tZx5SIKqfQSgWJYnd
-         RTXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794082975; x=1794687775;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1794085873; x=1794690673; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=JOkwIywIqPzz1HzdqKqVgUAr4pH1jFgDjphBe7/Ofv8=;
-        b=1Hd4f+mtEaPJPoj5EICNr75OlTjIFDkynj2A+hi9ho8Y5281JxIk32tusBMSWfunVF
-         bbQKAxw+jfhbBEtZLGPdCOSiHGIMh3uo2BDZgKHIUQR+c/zVhuKOmgwH5IZlskPtUdms
-         rWneHE7HiLrvTmY716XdSA36rSP7hK2bxijRBxA+4SG9w4XQGls2Q5GhydHqXyVthQG7
-         G51GWkhKrc9lnKUtA7MR35FGcTHHMCoG4BelF0QFJyiOup7hNqDgvUt24ZQAZzDHX8sZ
-         nbLh7xmst1KLkypbWlWR+hvw5HYWrS+iaVtmHU04+Ce962HjkoWQUdg2Kdk2sLzrgG1A
-         qNGQ==
-X-Forwarded-Encrypted: i=1; AL+hErH1njWKTQCsu86IjGmuxFunkmWNpSi+ASgygkuZtbO4yov0ZFzlHaXfBl3+Ih8619WPirE=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/2DfLpluab/XfiUCwBSbkXLM2DdF0gP2m5hlL5mF4vIj1dLalm
-	71897HDQHulKo4J56iG6ZJcG0UG8ilOPyJq7RVokIPioIrE6F9+ddR5ZD2lEGzB+42M6PdkJY20
-	tSH2Uz/1WRJnWo3Lh40X6JSBKd404fmA=
-X-Gm-Gg: AYBFou2A/nrdWt1a0yEGPBu7NvoIloGv8C7ZomdnwDBDlgO53EQeUz9SQMwTfxVcs+3
-	fzF5CxDyoqPSkD7pE69R8HC66AvzVdwJ9JLg1MIAKaA288vFgkHyXi/PLrEe0tDax2GOxtVNXox
-	onAGzcaqbpT3d3K2Lk8Qn3FLp0P+JZsRC9SVqOiY2JQR19hEr6o5azQR9zHxlDtC5i/nAXBSo0N
-	voNUdO7KKHj7ZYiLiNIoFx33ff4tDhIx+TOBpjHZps43QRTK8wp9uTGRERZkOiBnLYPiRzIr4CV
-	nSLP8NFqc5g+Zc6FyWb8CPce/AH7lGgc1egBpjTkmnZX56L04UnAcyIcYKFAWhQL0MFbbl3Cg/n
-	B32aPZborVVEcnoXNJrHL0Dnw4oBQqKZUbc6F6DS+KRrtJwY7ivrB33uXP4v6p0rqxdPkrNmFig
-	OaHnkSce2h3Y/DjGL5CN7MICOcZnNIJoSmzoQz5EkL5zAT1/JqvHaDprNHsSknLfhDJ2AxIGl1b
-	qsYX9PnlwFdPFk=
-X-Received: by 2002:a17:90b:4b0b:b0:3ac:b145:8f4 with SMTP id
- 98e67ed59e1d1-3b0db6f7ffbmr7199833a91.41.1794082974660; Sat, 07 Nov 2026
- 12:22:54 -0800 (PST)
+        bh=1kfSisbQylpCbT+K6GwaJ0J0zdzgWoYDzgStDrosgDg=;
+        b=cm6Ek/l1AVcebJrOAVwE7nTUuymRfg1ejc6mVJLAdWC2NC8nrxfVqJrq7f+X4jt0iA
+         96sMvqGuZQfcrH2jNkLBKproZ95K2S7c0P7DA2ZpwzSJkCm+V9w2o449FeNe7KoYAN3V
+         oaWiBSXqYDAbCFOkj7v2ao7HHtKMBF5He2L6e31S6KZtWOaAzGOxDUOBhitMtOpoVVVv
+         XWOvdzKYDbv1Pl+Hw/e34bXMyz5SjIY+Jc0pozgyIQi/7plebwNGu5G8uPCE4DtYjgO6
+         QOAF32FT7nmr5Q7nWGBjIfu9XXxsBXC4KsS0gestlsGnzfPH5BJtkeRd3Xfi1FKvGQ8y
+         JRQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794085873; x=1794690673;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=1kfSisbQylpCbT+K6GwaJ0J0zdzgWoYDzgStDrosgDg=;
+        b=J8dGOKDPKMK2SkwQEu/l/Jg4ezcnrez8kVSX65/GcHX6vkhTyL9/qMZkBC+tsXvi66
+         0HFZLu47kfUp0z73EAplb+VROq2qvUMZg7jTzn6BDlCVWkDOQdwSq1JQflfGhM4RnPDd
+         RuYdoYfCEU1LpyD19K0Q3wJ+qJ4k+15XchIHO3NF6DFGhOWB7XlPZ6p2wKGl1brHFZn2
+         HraagJEMUH012mxovrrBzN1vhcEJINh/SCdXXrtDcOh82vArYptaSFQKg6APxm0RZNv+
+         20LQKJ8xuA+C05wJklj9oXX7ZiAnPrGzDAcrM/surYN6+5Ihtcczx7HA4JKIoIQmc3Rm
+         V9sw==
+X-Gm-Message-State: APuU4Z8EGm/zUxvM16M4aCe6Lu10yGcwbydZWZwTsduJdbLL1g3GdXgP
+	GOLDp4mA3SU5PT/i6Gf6oW6Y8Cj3h+ypu8WAYowBLamyIDvJpcFayjgPFUsoTuQhg/G1fyR/jG8
+	1fJrLLEqqiH2jRTw6yKWegUvvCIPTGzgF1A1S13RG8g==
+X-Gm-Gg: AYBFou0Eyzro19UwWjiTV4iV86J2/7nltwSwz1pZjkCSehiXFj8jTN6zD+joF2Y60ek
+	1mfAxsQSH4Qx6zkXBiLzQb57ON9zDjNSTMM4u3rfU1FTSVswvRLc4wgXlEwlyWXQbPKvX3ZoBa0
+	r/BsRLSF3WZCx5x3U/W516XWALyxE1sE3SUBOauiqRomPRAaOWQismnd1T3sTwszJZU399VVdoQ
+	rfvCAG6Gxun5P35I14V28c+qtlAItoIyeOyFzn/hD5T+bAW/yUBd44OYE5OPXECfrVZn/djKgvX
+	284UA4u0b2rZZbiF96Df54hpMhdMDHVae/Hk3suE5C985cRhSoHnuvwqQCtqQM+P6pdu7ob9LRa
+	4ZxALzxdyLq9VWlNS/r0aU4Gsf33ZGQ1vPbe9omEWXQY51SaREOBEHNggQoEOtrne5tgKPVtC9W
+	uK5lkzbqB72cLm9/2MWy56gCnqWfeo95TQH9Bt/ro9oRZjs8VmatY8
+X-Received: by 2002:a05:6871:c920:b0:488:5278:e2f5 with SMTP id
+ 586e51a60fabf-4ad98b4ffb0mr3561100fac.30.1794085873591; Sat, 07 Nov 2026
+ 13:11:13 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -106,70 +103,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <78d4b7c0-3a3c-4d4f-a9f7-4a6f7618ad88@app.fastmail.com>
- <2A1E1423-8C1B-48FA-B1BD-DBD422748623@gmail.com> <528139f6-db92-4061-be0a-88d4c376d252@app.fastmail.com>
-In-Reply-To: <528139f6-db92-4061-be0a-88d4c376d252@app.fastmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 7 Nov 2026 15:22:42 -0500
-X-Gm-Features: AclHuK-E9lZts6vdyYViwpwIvQKtJtgwKWqfUcouMSEIGlrwJeQVFXGWMyCr3SQ
-Message-ID: <CALnO6CB9LKjJ+NeSacJCUNrhWLNj6CM2Oo+JR9c7ZdohQPJWow@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] format-rev: add --abbrev, --color, and --date
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20261107121119.2995843-1-andy.koppe@gmail.com>
+In-Reply-To: <20261107121119.2995843-1-andy.koppe@gmail.com>
+From: Tanga Joris <tangajoris@gmail.com>
+Date: Sun, 8 Nov 2026 00:10:36 +0300
+X-Gm-Features: AclHuK_3tbBZ-6zRwa3vAK5Wv6c8R-FsCeqLclbodm7Au5VVUgfXPpc-QsWDjvI
+Message-ID: <CAKrRMNpaBrOybe0hw_B+RTZ5GWeUASpR+sRte0OLL2x6xJba8g@mail.gmail.com>
+Subject: Re: [BUG] splitIndex with skipHash corrupts index and crashes status
+To: Andy Koppe <andy.koppe@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 3, 2026 at 5:46=E2=80=AFAM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
->
-> On Mon, Nov 2, 2026, at 17:49, Ben Knoble wrote:
-> >> Le 2 nov. 2026 =C3=A0 05:51, Kristoffer Haugsbakk <kristofferhaugsbakk=
-@fastmail.com> a =C3=A9crit :
-> >>
-> >> =EF=BB=BFOn Mon, Nov 2, 2026, at 09:51, Junio C Hamano wrote:
-> >>> Junio C Hamano <gitster@pobox.com> writes:
+Hi Andy,
 
-> >> For you all=E2=80=99s information, what was originally totally unrelat=
-ed
-> >> research has made me doubt whether this command is needed.[1]
-> >> git-diff-tree(1) cannot do what this command does right out of the box=
-,
-> >> but it looks like some modifications can make it a replacement for `gi=
-t
-> >> format-rev --stdin-mode=3Drevs`.[2]
-> >
-> > I saw these come through, and I=E2=80=99m not sure where you landed.
->
-> That git-diff-tree(1) just needs to learn to optionally NUL-terminate
-> diff and log output.[1]
->
-> I looked into it after that and the code has turned out to be too
-> difficult for me to make sense of.
->
-> [1] <238e5652-e95b-4d44-a900-e16aa6ab81f0@app.fastmail.com>;
->     https://lore.kernel.org/git/238e5652-e95b-4d44-a900-e16aa6ab81f0@app.=
-fastmail.com/
->
-> > I was mostly interested in the stdin filter mode that turns hashes
-> > into references; is that supported by your alternative?
->
-> No it=E2=80=99s not. `git format-rev --stdin-mode=3Dtext` still has its n=
-iche.
->
-> >> [1]: <ce69d94e-7329-449d-b3c3-47d4f3aa608c@app.fastmail.com>;
-> >>    https://lore.kernel.org/git/ce69d94e-7329-449d-b3c3-47d4f3aa608c@ap=
-p.fastmail.com/
-> >> [2]: <238e5652-e95b-4d44-a900-e16aa6ab81f0@app.fastmail.com>;
-> >>    https://lore.kernel.org/git/238e5652-e95b-4d44-a900-e16aa6ab81f0@ap=
-p.fastmail.com/
+Thank you for the bug report and the clear reproduction steps.
 
-Hm. In that case, what if we made diff-tree do the things you want
-from, IIUC, the "revs" mode, and made format-rev work only in "text"
-mode? That would make invoking it [say, from an editor ;)] nicer, and
-also cut down its scope a bit.
+I was able to reproduce both cases on master (fb255012ac).
 
-Or would you still want the somewhat higher-level interface of revs
-mode to be an option?
+On Sat, 7 Nov 2026 at 15:16, Andy Koppe <andy.koppe@gmail.com> wrote:
+>   $ ls .git | grep index
+>   index
+>   sharedindex.0000000000000000000000000000000000000000
+>
+> Note the unexpected null OID.
 
---=20
-D. Ben Knoble
+It seems to be caused by write_shared_index() naming the file after
+the shared index's trailing checksum. With index.skipHash, that
+checksum is written as zeros, so the file is named
+sharedindex.0000000000000000000000000000000000000000,
+which is the file you saw.
+
+The entries disappear because the split index then records a null
+base, and read_index_from() treats a null base as "no shared index"
+(read-cache.c:2381), so the entries stored in the shared index are
+lost.
+
+I'm working on a fix and would be more than happy to send it, unless
+you are already working on one.
+
+Thanks,
+Tanga
