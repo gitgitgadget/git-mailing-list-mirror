@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794040981;
-	b=NXHMRiyRvU5vjfR8OZb/RpiKs3WWrPE92aauGHm2Qchn7YvlnYR7lkv5oR0OB1G+/oW9
-	 OOxN/kTENOF2xH0OeO5rNNuuhJ9XFNq5MWzsMx/N6uI8rMT2YgdOy9gVF4QjHBv4FaBVL
-	 xo/DFS9NPhNRuNemUWFuuNONqJZRFNG2VEopFi0NJA4FFe96aFyTiJHQ+D+Qa2Xy92ye1
-	 RoF9pkfOF0z8yWyOMiZIfK0ysOEjuW8z5H4yKEa4n4vxxgS27BBNtyjybF1LGM8XGKmUD
-	 1kwyJ52M6AoNcAMZ6PLX79QSujUa8l4xZTlBcSG+FX49tAhhUmBuIZCvGWgw1iBqV4w==
+	t=1794040983;
+	b=MSebrE9YQTZdCh4lB338UtwDWxv16505W+cQ44Y74NVdqW4qmOMRFyhgj821genG3MIs
+	 xVeBVpSv7ya+GkogfB+lO3yG6Kb/Nt28BMtPEdr11I5UfGQGoOkYMaaCkALhRgoEgpt/6
+	 0GxySrrIhvsFEraOjP7SsQb/q1UQfkywHZVS6+ApVlh5aPi9wzKPfQmYiEzO27MA+zSuW
+	 wGzRrg+iHETxYDpC62Akbju0faCyyeNQXCe63g7p1Ty6a4wLmw+sijmCrr0Gqj4dWMAnD
+	 G+A+W4goG336mc87rGXyPJWw02HdRBUGFElueUVyIg0pEkNaXs679p0VTpvLN60QVrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794040981;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794040983;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=LbJB5CdXxSfUgwirvRb4pFA5dgDSTCKJGZuFQm4GrWQ=;
-	b=y9r0UMr4dgJEVpM0Wz9SZV/vlK14D5RemSpBpD7fLrFse6sxs2bB9lbVNHCzGszQ3Kck
-	 zAs/ESWuebkmqk2DPX48W+hPWKHVPpIUUDuaPTQ9GkxjiEoD/Z5AYgGw8xBp58evoL0o/
-	 qcRvNQANMprqGu7v+yRKly7RhFn+9hoidLOQbUlDus+t/DZF0r8KcNEDn+Kz5eZv0cnVd
-	 23+gsjTChCejcOOQ/0scmwrMB4Yq+qco0bRiQQipKekTP2GOhzLKDzAmM3wWUTsSrK6kh
-	 YyBPJx3gdTh3HLXGfctrWdpd80My8fALEiKuJxCKWkEfUGf8XB7TznmoIu2Fuelcecw==
+	bh=Eki/vWEecVQc51MvK47ar0SIvpM+9TWbA0WtBs1hxbQ=;
+	b=MPqDdU9/dxDPUSvBxgMvvRiXCF8QYen8FAVPcST6B9wh//JDDAFyEhtOaII/WD/H9L/Q
+	 OdHIqs0P1yxW0/gx0dO8deqtDZXlyCvNK7KCYSmJY1siawzz+WFwmyk+2V77sVUkIXdCC
+	 AjwDtM08dQqQ0xnBsxQvrFKndlnTJvr4diBkNYlk/P1kl3m8CfMNqlGFnd36aB/8CqnB+
+	 DsOvHWTya6rVLM0rVlm2/3iwQneKHtVjVtQGMe/7HeGSj++eK7McSjxMQIwQjqa5KNYme
+	 ifm5k33NKgXNpVhVV0BMMMjilum5dTwUsYlA0lFLpDaBZ3Ppwm8K2xuLUr7+3kU0bQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gOVzAwTB;
-	arc=none smtp.remote-ip=209.85.214.179
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=byQAjoIu;
+	arc=none smtp.remote-ip=209.85.214.169
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7C3606A32C
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 08:43:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B7C3606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E452606A326
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 08:43:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E452606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gOVzAwTB
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2ed0e2015aaso5553315ad.3
-        for <git@vger.kernel.org>; Sat, 07 Nov 2026 00:43:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=byQAjoIu
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2e8da6ef7ddso8030145ad.3
+        for <git@vger.kernel.org>; Sat, 07 Nov 2026 00:43:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794040980; x=1794645780; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794040983; x=1794645783; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=LbJB5CdXxSfUgwirvRb4pFA5dgDSTCKJGZuFQm4GrWQ=;
-        b=gOVzAwTBWSBYIpfVti7idUp2PEYzWr1uono0f/O/l+K5QT5BNe6itj+pIN8y5wVLmA
-         0nPL58nwxfqkvzS2a9aXZlnfvGSHgMb4In5aZB2hHZljMvz7skN31LqrgNnxJMrCxorn
-         AIl9ryK784dxiIAVkwEWdiNGnr/gyquMF0d9TgyjPGvqnUP4oW+2ZXt0J0paBquH0iL0
-         TJxu/INtbtyunzjMmZCscS8qDMmbj8qrwW5FvjX4dDjRAsYMuTQZq2lbYxXO7Dz7Z3z8
-         lUz+JCJpVBrBAXhQnK//B2IWYHztiWQJNB703EcqPh+WW6fjXcHrBcNZuPYQ+EHp4ALW
-         MCfg==
+        bh=Eki/vWEecVQc51MvK47ar0SIvpM+9TWbA0WtBs1hxbQ=;
+        b=byQAjoIu32Ka7tZ0rG5gH3nxyKx5+ZddEq3y9um2TwsFeBR0cdiEyO5qXOgrLVNf6c
+         feY6sUoYq6Eu2konuE/2CCMnOgQq4l/EAa6FFOVqd/kbmFsPdWAuT7L8qGxeGakHKoD3
+         z4pqAEGnjMf7ImIl7DyOufDyXVNYYUO62QNeEGOyNUTknAGDzVQ+YPgCEGDskBGtY1zs
+         wkmn4BkFMTCnL/KdLPSdZ8uewTTtuIndEbFmtMStJUpjCc1cZvZFTEec06M5/wFlD9y/
+         YEODsIIJrYUTI7EWrtTJwmr27y2SERxczWwmzS7wnawBXowlhnKO7JaYx4UWJG/9LLHH
+         WuaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794040980; x=1794645780;
+        d=1e100.net; s=20260707; t=1794040983; x=1794645783;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=LbJB5CdXxSfUgwirvRb4pFA5dgDSTCKJGZuFQm4GrWQ=;
-        b=0dsK8Ukd8ITozBlmTGAXkjopnuoPUeEdIU04CsA8xvCx6Ik+nGANOhufQwqqa26awM
-         zqIh634kxt9TUgMH9F2cf6965iVh1ntU+Z4XH47gjzXSIYxyw40uWZI+BKpJeUAFMMRH
-         +js8XFYNKtsoEeBPwWIzZXv7G2TY2BsVWTqDx8Mjg3LaNsHfU/UofNrd0uEzfMLfwNCK
-         YJy2YBvU8vge2Cy7CR946cgkJuMxmvKsqkCM46HoLXIRS7z+s4J50rP+RF+ZzFZrSAAU
-         HUUJmxntQY3qnSaZkU6lSMfye7g1SVb8XdKQO+hDm0DwzRnnCIlr9N8rD0ZTT0g2LBSZ
-         E6bA==
-X-Gm-Message-State: APuU4Z8HUSaQ3ovnizlDWa6FziiJoZAGk8ScozFKg+e/hL91iJUPiAbX
-	fwUP+YkxVX5jndcTMfnQG0CCCmWp16SoeIV992yFepbbhokHYXPFgRnV+Q+FhOPO
-X-Gm-Gg: AYBFou2GaxFZT5LCWlfnxZiCVwTRBkoj5ylYGfmadD1eA5iAhwzc2s2eNu3qjY87UKl
-	WAJQR4dKJlSmuakcTy24UmgL7DNXZq/s6MorV0FBcrcaQ5g7jvEa9XQZ6LCjY50jb5PMLzeFPB9
-	pKDsKJ8bt33Hu65R4v62OIUD9TxFsmmpiA6//wmXlxWVQ4/jCjUUT9wQKmBmTfMEIfkCjhf9WDc
-	IeXhsHvoltDAaAJG/KH0J1qpmD3sezWiUnfP3fBaq7ZIoZ34uc56oA44sGRaIp2bBZl5R8FxEqC
-	mRa/2VtiJAVsPhL/xvACzrMGbOGJ86u6njhMsmwgHIEYmU2lqaiVqBOYuAwyInWiZ2ZognP2rMA
-	/JP88MJbrKRy42RWCZZL1P2E8yFVckBIDW2C3PP3I+t5tz6Va2BaU50qyStyvcThx+k18PeYunj
-	mCT2f71An6N/ehy9GBppLanUIXrLly1ODNKjm6seJrTqUg9rkW6Oq1gu+4pBhSuuIV3sJp+FZJr
-	jteZdx6uvMyB1/0N0Vtxpzk2aaHc/72dtEispye8XPPJ/bO3U6qtbsQ8V4cg7jKnt4ATpM9qFa2
-	mrr4d7z9hFZ/G1us/h47cMNjgZebs1WPnA==
-X-Received: by 2002:a17:90b:2645:b0:3b0:accf:5c66 with SMTP id 98e67ed59e1d1-3b0db721fcemr4407427a91.49.1794040980401;
-        Sat, 07 Nov 2026 00:43:00 -0800 (PST)
+        bh=Eki/vWEecVQc51MvK47ar0SIvpM+9TWbA0WtBs1hxbQ=;
+        b=b8FZk+Ojmu/5nxSY5VB5Gr0d2LbArDCY4wYgE7EWPgS2lU5X3B0j45pxyAlIOSOKvS
+         /GX6NlgMxPbOGV5FXyvpqRz4gwhNkUpilJp+6R8nsE9Y/6lGT0ec/SxZMYq74NgRuIYG
+         goWgzUZQ/RiIBF06KVIqCnK6mOb/t6pPRgh3mylNT1xC9Y8P4UV00mPo40Sv0CYH1Cvx
+         quQD18uXC2CwHMap7pN+cc0XnisxQ7WZV/ayWnw68JetcpvszwsGaLVND0y2zTru/jvX
+         8GTkyis60SA51s+xcXlcdm72WzISW+QztAcrzuTij1BD9w1xfoj58+gnwRHjW3syWL58
+         F0nQ==
+X-Gm-Message-State: APuU4Z+HySUiAlWUyeQ893PuWEd0R1gwIx/+v8OR0R1maJ/vPDYapCOn
+	dSDZplM2F47Pl9L4nkdKUEmLglJpR0ujmmv1axB60Kx5LeBVtgYDOCLEUX+kdKLo
+X-Gm-Gg: AYBFou2yS6yYN8wFRaaEGyFfqgDzLkLaZ5ynWFmqTiTpWngD15r8/6Agg0/IwvSoFcT
+	9HnZSvrvV01OdlvibYssCFOpFkXCS2QjYxCUacbdeJHIwDmUNAUasiox67cWmfqFXafPc92qm4V
+	d7IAFFDS/+Ugkrm2+OLTzbMNUFMAWDGGUktoW3wLPWDZMQprnHveNkKH3QIevQC6scxtjtSEfD6
+	8ZUHbs+QPcDNtTqVDgYwQnCaAhqdO4aWf/85R4uZTKCQFhFc5jX9n29Ta/in0SPuXSDhy/WzOE8
+	Lm9lQ/Ooj4+LEOjjACo0qaJKAoLCYtUo79zPMI7P3p176ALa1xTUGXCkx4q/zXSFjxe9jbiAWFZ
+	nK+AhyXmZKXhfixdGMM5g5DL6Ao7fnVRMaTeRkjF33BwhtU8PzKb/OolYUe4JqYhBnHd4fQCqZi
+	qd5AsxLxz9gTngsqwqDidoiXmuWtFJ/gzdiM6xYMavi5aDL9K9QeAGEEtL+o+N1DioFhytASb6G
+	y+HacJMnLmxvEfazkvFSrupk131+jk9ms4GHz7Zav/jDLgbtpfUS2EYVLn+0Vz4JLwegmMv6j+4
+	8apfk9dPse1fA6TvDpW9AWmUJy02d6es1g==
+X-Received: by 2002:a17:90b:388d:b0:3a7:9adb:2a0d with SMTP id 98e67ed59e1d1-3b0db13e119mr4438443a91.0.1794040982737;
+        Sat, 07 Nov 2026 00:43:02 -0800 (PST)
 Received: from [127.0.0.1] ([52.156.141.210])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cdb70a7fbcbsm1265457a12.25.2026.11.07.00.42.58
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b10583c8b5sm2792861a91.12.2026.11.07.00.43.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Nov 2026 00:42:59 -0800 (PST)
-Message-Id: <e95249fb51b681b9d9db3bfb3368e1b3257337fd.1794040968.git.gitgitgadget@gmail.com>
+        Sat, 07 Nov 2026 00:43:02 -0800 (PST)
+Message-Id: <260b90a4a23d9a94aea0ed2a2e28930a646d7fd6.1794040968.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 07 Nov 2026 08:42:38 +0000
-Subject: [PATCH 06/15] remote: handle NULL value for remote.<name>.tagOpt
+Date: Sat, 07 Nov 2026 08:42:39 +0000
+Subject: [PATCH 07/15] blame: handle NULL values for color.blame.* config
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -113,49 +113,57 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-A remote.<name>.tagOpt without a value makes "git fetch",
-"git remote" and "git status" segfault: handle_config() passes the
-NULL value to strcmp().
+A color.blame.repeatedLines or color.blame.highlightRecent without a
+value makes "git blame" segfault: git_blame_config() passes the NULL
+value to strlen() or to parse_color_fields().
 
-Reject a missing value with config_error_nonbool(), as handle_config()
-already does for remote.<name>.url and remote.<name>.pushurl.
+Reject a missing value with config_error_nonbool(), as
+git_blame_config() already does for blame.date and blame.coloring.
 
 Assisted-by: Claude Fable 5.1
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- remote.c          | 2 ++
- t/t5505-remote.sh | 5 +++++
- 2 files changed, 7 insertions(+)
+ builtin/blame.c         | 4 ++++
+ t/t8012-blame-colors.sh | 7 +++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/remote.c b/remote.c
-index 71170f36a9..024cfc547d 100644
---- a/remote.c
-+++ b/remote.c
-@@ -556,6 +556,8 @@ static int handle_config(const char *key, const char *value,
- 		else
- 			error(_("more than one uploadpack given, using the first"));
- 	} else if (!strcmp(subkey, "tagopt")) {
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 48d5251c6d..653449c0c9 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -782,12 +782,16 @@ static int git_blame_config(const char *var, const char *value,
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "color.blame.repeatedlines")) {
 +		if (!value)
-+			return config_error_nonbool(key);
- 		if (!strcmp(value, "--no-tags"))
- 			remote->fetch_tags = -1;
- 		else if (!strcmp(value, "--tags"))
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 5fbfcb0848..bec2e51afa 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -90,6 +90,11 @@ test_expect_success 'remote information for the origin' '
- 	)
++			return config_error_nonbool(var);
+ 		if (color_parse_mem(value, strlen(value), repeated_meta_color))
+ 			warning(_("invalid value for '%s': '%s'"),
+ 				"color.blame.repeatedLines", value);
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "color.blame.highlightrecent")) {
++		if (!value)
++			return config_error_nonbool(var);
+ 		parse_color_fields(value);
+ 		return 0;
+ 	}
+diff --git a/t/t8012-blame-colors.sh b/t/t8012-blame-colors.sh
+index d2653b3c31..5eeb7338a3 100755
+--- a/t/t8012-blame-colors.sh
++++ b/t/t8012-blame-colors.sh
+@@ -69,4 +69,11 @@ test_expect_success 'blame color by age: new code is different' '
+ 	test_grep qfunc colored
  '
  
-+test_expect_success 'tagOpt needs a value' '
-+	test_must_fail git -C test -c remote.origin.tagOpt remote 2>err &&
-+	test_grep "missing value for .remote.origin.tagopt." err
++test_expect_success 'color.blame.repeatedLines and highlightRecent need a value' '
++	test_must_fail git -c color.blame.repeatedLines blame hello.c 2>err &&
++	test_grep "missing value for .color.blame.repeatedlines." err &&
++	test_must_fail git -c color.blame.highlightRecent blame hello.c 2>err &&
++	test_grep "missing value for .color.blame.highlightrecent." err
 +'
 +
- test_expect_success 'add another remote' '
- 	(
- 		cd test &&
+ test_done
 -- 
 gitgitgadget
 
