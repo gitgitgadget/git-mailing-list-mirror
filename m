@@ -1,121 +1,122 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794018039;
-	b=ar9wDcQyvykJJj2e3GTtFq24DcUc7wxL7+AKdxX7UU8A7A/ahho3r/yfasDiEHY2TrnQ
-	 /0j66NJxuwjZO0Jc2henO0JrSTHtkUCwTTiOsOcWanbrG0IYBIzojQHI/XCITOfC33vxI
-	 nFiunM55ZjjgbCC9Ih7SSwdPnV8Ekx3+kTeIT9U/9JCLKfUzcOJQo6Fmg0+4RaaLz72pE
-	 8jtzNY4W+aupyYu3LnN9MAcXMmqrIEBu8alhwN+HBTaTIcdGD0HcGAYA5W3kwiStEkX/x
-	 dxgGHXMkkHK/u0gR52XaiY94jpnTx/1OIFyESYUTj4KhJ7n23m3VoziOBHoVz3B7ivQ==
+	t=1794018240;
+	b=HqOph7tSsSYv+CEFSApFm1/ZNAEtYA8DMzRKTy03uLGqHH4/QE+IQSQDaVtihkG2dbkL
+	 3RJmoB9BnICy5gPCTAKQOQR6d3klKx0ea08cPQPaEKr2CV+X1mJJuOBzDQ7p4JcGhuE8p
+	 Kp+Te7SqOxpvaQ3UpLVkGhPYGwNHgO/H47XPA94S4Gu7czqlWF2t8R2MOiKqjvduAX918
+	 5E6Fpx1Qabwoc79svlnwlgdoA+/KZJ22lBWDz0bDqfJKICunvzV4FiZAMqeuhczoyH0uw
+	 /SC8RLIVmSjrOT2CfC4ijHyuANQsN2fAdtK+syACoc3Yn1Fe9bz/E925ysL2VuHC/kQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794018039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794018240;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=R6gdLwBDPEDDr9NySC6r5pguKB0nNDyWcf7vriK/KcU=;
-	b=no9arV0ji6qs6G6OkDywXvAFsdX6Lk+MQo3PLdjMeYdswTY3NrydyrSWQBZOzELB2rtb
-	 ZuxnCfJuD/qfISR9uuy6xjeyjUQSA93bf7ADIKYbrCv9Eg+lYs8svjtn66TZUIv7UNDl3
-	 KBYaSmTwY6B8TwufLiAw9zlDwtCamUmcVRmHnw6MEz7p35hYzKuMWttwT0ZiGZG7vYfu+
-	 nW8CsXkhgNEdYL1nS5p1zTftZw26ylE/BURv2v/nId4I7fYGKIL2KUgfBcytDSAoKgWPc
-	 j+Mcqq45PlUuS6wnRQeMHqhq9JUqatJn3Lixi0PGW+Y8Rc/lB1jXYXBpEXbdAo/ja6A==
+	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Z7Nv8IUMDlS5OECq1xZM/AE4HicvLd+eJYT1weCf4s4=;
+	b=GH6CNRB0vclXAEbmBOQZtE8xCDM5c8aKpikcDNaUM2RLbN2flT1c8rLsViBCXb1K7wbg
+	 ZAlWEvNund3RDGVy1TfNOZijiKDRCLEnjG7LKWVgUAALfbRJxvdd4/DAB1nTLMK2jVDv/
+	 anubRmNldrX1qAQrD9BdbXWqpPyKV9pUST5nYj2mjXLIf4IDmBDjwWjTywyUWpinT+Au0
+	 zBPMq4tCfqq0s92I1McWspXGOjrCm4dlk0lbe8GLWpy3t24RoBf7fRcDqg0AiTv2EoV3i
+	 JRPAkvGq0PWCf2ArA3j+KhWyp46GveGOzb+SDqPlAhmQhLVUkrATcqYIkGDcrgksqhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=G90l2aNQ;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="d565/ktg";
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=JObj6DBw;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KOc93QjG;
 	arc=none smtp.remote-ip=103.168.172.149
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63F9606A32C
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 02:20:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C63F9606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2137A606A32C
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 02:23:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2137A606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=G90l2aNQ;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=d565/ktg
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id E03EEEC01DB
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 21:20:37 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=JObj6DBw;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KOc93QjG
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 41DACEC01DB
+	for <git@vger.kernel.org>; Fri,  6 Nov 2026 21:23:59 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 06 Nov 2026 21:20:37 -0500
+  by phl-compute-07.internal (MEProxy); Fri, 06 Nov 2026 21:23:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794018037; x=1794104437; bh=R6gdLwBDPE
-	DDr9NySC6r5pguKB0nNDyWcf7vriK/KcU=; b=G90l2aNQN7uw0AUm6D1wCTMP8R
-	LttG+58FAbP8eqL91RvWmT5lagW7/dGvBzqv28trYhpLCvMilGd+ldpQRblKxRwf
-	Z4v/295gf3FXASWRq2UuIQUpkIwVQE2p0Mr0pHCP8LhIMZ6Tld1f4NYGcyCVzZI0
-	AXcsI2gXpgs5omt9+zc2XbpyTkXZfdalUaGnUEjwUMvNdrEbtD0p9ovLNOtI8QNf
-	te9grglim95BjpoLknBI7d+JJrl12lftZYb2C+18IIfBieN0slyqvuihzIUKGfsS
-	+YyfKEtMc9IhdVRauqt354SYmQDoZRFTNn1OPXNjwbn0qVLRQPLiaqlBvUIg==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1794018239;
+	 x=1794104639; bh=Z7Nv8IUMDlS5OECq1xZM/AE4HicvLd+eJYT1weCf4s4=; b=
+	JObj6DBwwwsLdbanMY2/NsNJs4tGwS2FVsdNwKD5z8P1rnR8lI+FsH4VxX0gGcos
+	btnoySVLhCjzAWnA14hS7pCehbcWyREL92ya2RnyVejqunohVeOpvKEnikCQhZSl
+	jsgnDbLW/WSSmJQK6HNDFW58hCuaf/h7Cbyx3A7eBRiNYg3fw7EilLSjtS6XiwYm
+	6d3fKfvImFqxrY0esSjDyq/05JldyWbOvtxpbyrNtqATyZ08hFE4Qe3187DxWP7T
+	GS2+ZGHT//7EEIz6LZzHVVbOiPIVjGGq0KPRTkZpAGU/wXbTa8JVF+98EcdSTH03
+	4SZ2J7GZ0ZMuDGcXgiwJ7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794018037; x=1794104437; bh=R6gdLwBDPEDDr9NySC6r5pguKB0nNDyWcf7
-	vriK/KcU=; b=d565/ktgDZHphbrwNwy3Rsd3dcBcPTuiG258WGlx9pGz9BSFLUB
-	2A/VWOqF7yDG3Cpj8K/yvW7hUoRHgza4StZ1Y3ziStSqK0Wpu6KYP/wrBaHdymvH
-	qJmWlobCuwNRhil87c7GhhQrNDZttYxNfcRmKIbidU1J7CyD8ACAnmc0AaOD8JCH
-	V7xFt67wCqYNny7caqlfH1na7eGOXk3f02c64a6UGotg4Fv53Hk5a6t/fxftF0CJ
-	kI+l1ikW2IDNqZ5n4LaFstA7cXQRiTf3FYMHPpfOpQzpV1FAg5iHS3+cdAyoMF1B
-	Js/ym9VKOSh0ca87h9EWKkRxIid69y6yrHw==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794018239; x=
+	1794104639; bh=Z7Nv8IUMDlS5OECq1xZM/AE4HicvLd+eJYT1weCf4s4=; b=K
+	Oc93QjGC3xKar/zPwgnDNYW1iNDf8eN7cmhUfDBdlK9UOddF3ElGyGGvi57YKFWv
+	2pxl9p0f6n9esoGLfT520g2WT/Steem+er+Q8hxR9jgZj6DpoDW1Q13yBDeOQN/T
+	zWVu/KYxaEyRBDDy/YZMMkJhaOcHEHUKYpTpzZ40RLcYR4ij0pvrk+U6yJEnwHag
+	/a4jAS7O/2HCsiHUVO0xsPfmrgB/KzBNj3nU7kGW4kme4Mp/wRfnzxFqYrLQva4f
+	Fwv3jF8RXl/lqNkhnlQllbDFSen3/1T0cz29vhLw1pEbormUwlAW649fDySap7Eg
+	p959ZlvZ4RpYZxVyUSKmA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794018037; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794018239; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Kg54uznMFk9tYEB1K3K/rksL9YueElOUoNsbRZ3GX2OG3qd
-	vJXCPqKyLc/UpXUn+LTV6DAOrr7ryKJb+mpa8QC93WQdXx74Ygge9zZ5S04SuNwQ
-	tW1+lqpybzkFEbq1SXMamIRsVR9RnPT1htvNHNYJh3iVgUvh3hf/W5JjhZGE/S4G
-	MMJzTfPRAkXsDFXKCUsvalJgnE+/Hl0iJDq54AeA8GKrajajzavGQOu8rLUasFpq
-	RrKABVz8EnlfxWD92fErOemWLykW4Pb8XhJfMtRTKF44jBwGnHvAzx9KbDHJgb/z
-	960ZT6NtFi3AmvyzLjTCuflF9JrEw3JotTpU6Uw==;
+	s=fm2:rsa-sha256:dXzGyGab23UkyO3q1zwUq6t8/YeQJm3Yieko75hM3MB/75A
+	mLFcZc0kxxf6kOujBxx4l2vNyjQe9IZXtqLFjDO4VHnibwwRWCz3sWB2RLcvG7ti
+	vq8NX1Y0H8zIOKzwC/wMhMc6NixFlKHKXgbpmapDUoeJitK744uxWzRU60HLebzz
+	zyAEbexlNvV9QUV5JCul7Y+f61RE7r4v/KrlkO2RHrboJogenFydJsXTvsXfWjCT
+	34EpujouraH1w1dqH5zq8DXIK0ukPqvZbCVIXDgZN1C83ybxb3DZxrQfhms3g84l
+	lG19lcvjTFRegHsVcrzeU+2BoAaJNIqIIdyUiDA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:HBO+f7YuAN1GokUNpyx3YxNVPusAKTOKCKbxuR7V9Io=:kkGpJtTJ0zr78kzK/N0ykbmwlaV7KmM0vc0D3x/1ua0=;
-X-ME-Sender: <xms:9YruahrLC5cWM-a0t7TlmSg4PUTFqXJIBL_LgH6i6tob05ge_uBdOw>
-    <xme:9Yruaqi8o8tBn8hHYQD_T-tiWPhUpvjn913tI33aLWAG2eF0yejQLcl8RTdSfB3IH
-    tqeUuXR7tbNJ68_x6Wqp7W92Q-NgtiPio5HiJerzCIrOBlMVzA7xbw>
-X-ME-Received: <xmr:9YruamjWKA5fPUy7K_0OuGNu4F-4Zpe0y3M_qggHmPF2td1i38Z_L-z-KOFhYb8f2oxyA6VOgO88xCL0lJxirpMLRADioKAa7-0U>
-X-ME-Proxy-Cause: dmFkZTEW188DnOyPaQWPMSVU1QeOTIcaa43GnO/+DGG1UX/aNQqwAk3xM3fQ0rlY+bQgQN
-    cbTIh2irNqGvK8197baouWnnaAH4QCoX7hDeqAoALQZ9nE62k/6Otx7zzcjO+NK47bfllF
-    2MRztQQGVxA0V2O9O7Ar9iFebmE9YRzxGEQRQttXd2A4HAT9aqAo9HCS2XJ1xsN5g/QUHp
-    S1IG2P5zvtM/JaA3ChkKGxDh2tsBr+XL0GG2lPVyfOYw73KW9evnfxuyecqbtJjXooDX2T
-    uWC6bG6z+ylPs2DN9GgN8Q4Ov0unK37TzJwR9SxAg49oy4oG3Cgyyb2zZ51lLXix+V8rAv
-    Gw1IrtFWfJMbwnU4uxuvG9OHZQpCEcOUPg+LOlhhJyIR4gXnq1z/85ybne8SoQ1N4g6fJA
-    5jl+NMfNUgn7+HiyADutVNZM2HvIqhYDbuSSPHpaR+C1CB5F/l7I9T56w6DjDfQBgtzndF
-    aAkmMktvHwyleRrPslUtg6cp7inOIv2qeAAbFC+irchPC7ZDqJZ5tMS6oav5jTPOaLyH7a
-    agERsGGz/1cOIStFDKXvbjqYqe32BIGqNT0jVqF9DogNcg9bR2CxzpgVIEdP5Q3UMhsKSY
-    ecGbwuVqPAXm99ob0alpQ3+RGN01IjTEjAbc4uk996rLwJwSjECysKpwTZAg
-X-ME-Proxy: <xmx:9YruaojkhRXPFnTuUZ_2_pzhXWBNImvs66OUwVfMYxiBa8qm3HMYFA>
-    <xmx:9YruauI6ykdseKlgoxcVscM98EQVNZ4be6v71VgRIk8rObnIK4uweQ>
-    <xmx:9YruavF3VorZ6g6lLa99bEg4VEp-pOroKwQXyvS0AvLoUcK6v1cckA>
-    <xmx:9YruaqTf-Hz3eYRAskChxqOKF1e88abRiDvV7lABxQgfp36OjCH8Xw>
-    <xmx:9YruaqX-9diZ2J5CBSLYJx5KSZc2ORskhjY4HlVDQdShFizM-judMXaZ>
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:derKTOJ8dPOHu45pEzZb43N5dePhZcuCQ8MvuyQRwao=:SHwYTqDoGIQ156919jR4pWO0RXHw+z/FmyXgvsMnTcc=;
+X-ME-Sender: <xms:v4vuag489viaE2XlsCpev5B72kD_i-O1I81b7rTpAGJM7TQw_v2ghg>
+    <xme:v4vuaowM4dbyScMn_iJ6eLZ0tatefnPOhtzYTDipw2VTrbKgz5khjSuqpBDWc6EAg
+    S0CFfi0ZLfXINPPqu_JscH6Sr6ldkxGlcljhpP7rVcGrZoDx6qQ>
+X-ME-Received: <xmr:v4vuanyyOks9MEbySCCzyLZ8KyNbxYumDRaoZVbwAHsaHk8gDymu5x9h0mbqKmbaCjAVO92lGUfDD4M77R67TNPdeJcFg5AGNL9B>
+X-ME-Proxy-Cause: dmFkZTEUp3TBh16+41PyieK8HqDpcIDymsUW+eGlGDLb6M9sdtbLGVCGXvl1CTmvXyo80l
+    7YWU87LbbLZe55x/RYASKC3AyStv3mmnL8PxMR2mXGjtiyD1h+AL0ZDLhYX0rjY2NddVDx
+    EBTng6pgQF1yKELbM6z+rk0vX90uMubx3BldH6lQbNtEyziN8r7zEzOnzJNBI5hYCOjsN5
+    SPDE2P7uVMYgEDrX3zR1xUupldZbkxxxyapPIZcmKR5irdfIUVBr+iOLy7tyvYfT04z/tO
+    64W41amIZ4+Krc29Ym9nDM6AQ1bn9nNh2C3mmCUZIvmLi3m26XM2rdEWePp59vlmXUSfsc
+    Zmh7jNOcwWzTq1zARfKlczB8AH5LufQpH7BtSaB0Tm91vKIoe5e48yvClsqu8Qzxq0lG9G
+    sr7S7BGsLhDGu/scnp4ODykW42sL8VigxHFfGQyBwhyXri5RHVDWEyD9JChD3bnkhuY8EU
+    q8Deq6i7k3H8RmXcIze9tx7nsKzyPzzsoZC6xytQ2fwPEATi0strts1x9bygQBxYyiIVqt
+    JfSNPS0CJK1YSDhM+lcuVD4qPduXR7TSyeXRHRcHBLqnLKLDWknLwYvUD1y6gdz/wwhXzy
+    AIy3kH68rcfI4kI3mzSGzm4TEZaIBc0YOX3pf6moB1dzOe/l59of+rxQ1XhQ
+X-ME-Proxy: <xmx:v4vuagyRSlxYnprQzVrWSUFUD3B-Q0Ac8uV7BqdrFCkcyl1bYKGHwA>
+    <xmx:v4vuahZHNp7W0QbnD-WMt7BLBIhOWmUZPdnSJ7cEigGJE9QEMAriyA>
+    <xmx:v4vuahViPsHxHYdeJM8UGVbnc_Aa5ZxM2tHCfW-i0CTNPwr2ZTFIyw>
+    <xmx:v4vuavjoQ0t-7d2NAI4QzE3MlQwpRGHUWCq6pp8rQvSw2S9JfbXUAQ>
+    <xmx:v4vuasKJ2FiGXR5CksGo4S2NjvMyU_-JswMvxYZPP-uH4e1h5cIXQYQp>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 21:20:37 -0500 (EST)
+ 6 Nov 2026 21:23:58 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Thomas Bachem <mail@thomasbachem.com>
-Subject: Re: [PATCH] sideband: skip unrecognized allowControlCharacters
- keywords
-In-Reply-To: <pull.2261.git.1792154374653.gitgitgadget@gmail.com> (Thomas
-	Bachem via GitGitGadget's message of "Fri, 16 Oct 2026 12:39:34
-	+0000")
-References: <pull.2261.git.1792154374653.gitgitgadget@gmail.com>
-Date: Fri, 06 Nov 2026 18:20:36 -0800
-Message-ID: <xmqqbj81bcwb.fsf@gitster.g>
+To: Antoni Borowski <antekborowski11@gmail.com>
+Cc: peff@peff.net,  git@vger.kernel.org,  jpoimboe@kernel.org
+Subject: Re: [Microproject v2] describe: do not translate --debug output
+In-Reply-To: <20261016185418.162998-1-antekborowski11@gmail.com> (Antoni
+	Borowski's message of "Fri, 16 Oct 2026 20:54:18 +0200")
+References: <xmqqpkx9fq8o.fsf@gitster.g>
+	<20261016185418.162998-1-antekborowski11@gmail.com>
+Date: Fri, 06 Nov 2026 18:23:57 -0800
+Message-ID: <xmqq7bipbcqq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -126,115 +127,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Antoni Borowski <antekborowski11@gmail.com> writes:
 
-> From: Thomas Bachem <mail@thomasbachem.com>
+> The --debug flag is aimed at developers debugging describe's search
+> strategy, not at end users. Translating this output makes it harder
+> to grep for known strings, compare logs across locales, or paste
+> output into upstream bug reports written in English — all things
+> developers routinely need to do.
 >
-> Since 128914438a (sideband: add options to allow more control
-> sequences to be passed through, 2026-03-05), the value of
-> sideband.allowControlCharacters is a comma-separated list of
-> keywords. When the parser meets a keyword it does not know, it warns
-> but stays on that keyword, so the warning repeats forever.
+> transport-helper.c already follows this convention: its "Debug: ..."
+> messages are plain C strings with no gettext wrapper.
 >
-> As the setting is read whenever a transport is set up, a typo like
-> "colour", a list written as "color, cursor" with a space, or a
-> keyword that only a newer version of Git knows is enough to make
-> every fetch, push, clone and ls-remote hang this way.
+> Drop the _() wrapper from describe_commit()'s and describe()'s
+> debug-only fprintf() calls accordingly, and prefix them with
+> "Debug: " to match transport-helper.c's style.
 >
-> Move on to the next keyword after the warning, and name only the
-> unrecognized keyword in it, not the rest of the list.
->
-> Assisted-by: Claude Opus 5.5
-> Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+> Signed-off-by: Antoni Borowski <antekborowski11@gmail.com>
 > ---
->     sideband: skip unrecognized allowControlCharacters keywords
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2261%2Fthomasbachem%2Fsideband-control-characters-loop-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2261/thomasbachem/sideband-control-characters-loop-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2261
->
->  sideband.c                          | 19 ++++++++++++-------
->  t/t5409-colorize-remote-messages.sh | 25 +++++++++++++++++++++++++
->  2 files changed, 37 insertions(+), 7 deletions(-)
->
-> diff --git a/sideband.c b/sideband.c
-> index 374187402e..ed6840bf89 100644
-> --- a/sideband.c
-> +++ b/sideband.c
-> @@ -62,18 +62,23 @@ int sideband_allow_control_characters_config(const char *var, const char *value)
->  
->  	allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
->  	while (*value) {
-> +		if (skip_prefix_in_csv(value, "color", &value)) {
->  			allow_control_characters |= ALLOW_ANSI_COLOR_SEQUENCES;
-> +		} else if (skip_prefix_in_csv(value, "cursor", &value)) {
->  			allow_control_characters |= ALLOW_ANSI_CURSOR_MOVEMENTS;
-> +		} else if (skip_prefix_in_csv(value, "erase", &value)) {
->  			allow_control_characters |= ALLOW_ANSI_ERASE;
-> +		} else if (skip_prefix_in_csv(value, "true", &value)) {
->  			allow_control_characters = ALLOW_ALL_CONTROL_CHARACTERS;
-> +		} else if (skip_prefix_in_csv(value, "false", &value)) {
->  			allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
-> +		} else {
-> +			const char *end = strchrnul(value, ',');
-> +
-> +			warning(_("unrecognized value for '%s': '%.*s'"),
-> +				var, (int)(end - value), value);
-> +			value = end + !!*end;
+>  builtin/describe.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 
-OK, so this assignment to "value" is the only thing that is new.
+OK, looking good.
 
-> +		}
+Let's mark the topic as ready for 'next'.
 
-Somehow the review thread seems to have been sidetracked and left
-the topic in "needs review' state.  The above looks reasonable to
-me.
+> -		fprintf(stderr, _("No exact match on refs or tags, searching to describe\n"));
+> +		fprintf(stderr, "Debug: No exact match on refs or tags, searching to describe\n");
 
-It might even make sense to allow whitespaces after the comma, but
-that would fall into "enhancement" category, and I would prefer to
-keep the change required to fix things to the minimum.
+Shame we do not have debugf() macro ;-)
 
->  	}
->  	return 0;
->  }
-> diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-> index 5da8b0ad64..6117579eb1 100755
-> --- a/t/t5409-colorize-remote-messages.sh
-> +++ b/t/t5409-colorize-remote-messages.sh
-> @@ -190,4 +190,29 @@ test_expect_success 'allow all control sequences for a specific URL' '
->  	test_grep ! "\\^\\[\\[K" decoded
->  '
->  
-> +test_expect_success 'unrecognized keywords in allowControlCharacters are skipped' '
-> +	write_script .git/eraser <<-\EOF &&
-> +	printf "error: Ohai!\\r\\033[K" >&2
-> +	exec "$@"
-> +	EOF
-> +	test_config_global uploadPack.packObjectsHook ./eraser &&
-> +	test_commit unrecognized-keyword &&
-> +
-> +	# Cap the output, so that a parser stuck on the unrecognized
-> +	# keyword fails the test instead of warning forever.
-> +	git -c sideband.allowControlCharacters=bogus,erase \
-> +		ls-remote . 2>&1 >/dev/null |
-> +	head -n 2 >warnings &&
-
-A well thought out testing method.  I like it.
-
-> +	test_line_count = 1 warnings &&
-> +	test_grep "allowcontrolcharacters.: .bogus.$" warnings &&
-> +
-> +	rm -rf throw-away &&
-> +	git -c sideband.allowControlCharacters=bogus,erase \
-> +		clone --no-local . throw-away 2>stderr &&
-> +	test_decode_color <stderr >color-decoded &&
-> +	test_decode_csi <color-decoded >decoded &&
-> +	test_grep "CSI \\[K" decoded &&
-> +	test_grep ! "\\^\\[\\[K" decoded
-> +'
-> +
->  test_done
-
-Thanks.  Let's mark the topic as ready for 'next'.
