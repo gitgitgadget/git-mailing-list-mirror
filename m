@@ -1,90 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794040973;
-	b=NojiD1bctvX+OXav7uMUjAQG4Nw3CxWYZ4rOJAWtXWhDNLl19sj3OeJ+G2+2ME0ajfxV
-	 g2gZcbAjeMIz3GQW1Ulob0l4HZ+sGXwM32lnEkPtA68XFYNmy+3NTivDcTjzcI9we3TJO
-	 983F9OU7VKg1Fy5IWmGnWpAn7o1sW+bXJ7GurldeUoMHIe+kNjLiVFF542SguoXYefIN5
-	 EOVk7OnuCV/UAEt7zLMr1Votr3rcKJgtj8aSQvvij2IW3Pc48/KjyQbkzVGX6G0vk8jLU
-	 m5QBNP4b2heY6vhF71dghZfRFxqdmyMKTrBMgBSlUHicDFtCTDzejEdaCa+UkaBm7rA==
+	t=1794040974;
+	b=vrveiBbCjqU1ddpvTP9FIPEFCgwzmyBwmYXMcxNGGpPquoD8dn5u0cxCHpRye7L3Gjdr
+	 lHwyszcaYG9bcI9NSuRoTA9fHbsLpPRe3frXionMthVzokQJvEr7X4xFq39e6O3HDhcfV
+	 /7chOukymDFS26GN4NqD8b0Ebi9aRVrVu7GzeuptgBvUysec4gYYSxhAtVxaPEVa8huQv
+	 zdeJWIjlOmK+Ey9r3aTrsl+0QiZgUa5kZdNMZIJ9X8R9Q3Kmiqiu/VGrt7O9o5Dkma7Ug
+	 lArPN9VcC+weEg7Z/q2z1iICOOm0dt2+Emctnb+frwjz36LurpDBYo9ArgV6bIdwyfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794040973;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794040974;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=dHVD7g7q0JqxphSjNJf5Nrolkt9CoWX1Z5wwJbXP+DA=;
-	b=vr3J6XlEDzM9ChilPHvkaPVUmamA3x/Fw+5UB7uXhmQcPUFEuLwfVPfw4rN1xI2OZbJC
-	 eCG0AjnsWiU5NdaVPGLziCZ0bZ0ej94dCi+H5J+OfGLmAqPI4YVQKMtdYl7w8m5WTJ8Nf
-	 Z3yOaL5WQUCl7CSliQcIAIK3oFyl58eFaOwh0fecFF1VQRcHrakdXwdnapUSnzS1UNby8
-	 0au6ltSVA6RZuVNdrrLsz3HVRaq2KMwTLPPX8QNTNTld0nwOBOZQOVh5zRCZnljt0JWUM
-	 WTQwghU0hR30jT/3/5h9kpuraLUe3P7X+QjDcc8oE1KG+tMT8nh0H3OMh+CgTPfnSGg==
+	bh=E7BOw0W0YZ3W9dE/5Blf8KNYleV2LimHU5+tu0CwZRQ=;
+	b=BI2wec/zemZEDHyzM1KvWGjeIoYWiABE2EyCGni4EeubqphaHJ7o9GDmmrCXBlqMwN7k
+	 mDz3C7UuwMiNpWmjslfYdyB4JwxbJMDTEob+MAYsb22d9FyhcDbJOpWoLmYE9lUJd+xKd
+	 /x88rQTirUVdLMcb+J42iJL6hk0Ih8OcSYovw6Fu7/pfd7JseGdJ8t+JCk+j8lgTMbjHn
+	 Dv/qgCMgrDQ5RpM8H2joRjxfwDW0fzorBYP98XfWWSfsJFqtqAMck7Rp2Eq57yBcnhsz5
+	 Yc9pufkTdhlul63HX68OLYvsTTAWVcDLsb+n7oHlIjFiv462TuW0lTCKW4XTKm+dJAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="grBRT/7f";
-	arc=none smtp.remote-ip=209.85.214.178
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=X8tAz2wN;
+	arc=none smtp.remote-ip=209.85.216.42
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEFF606A337
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 08:42:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3AEFF606A337
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAC4606A330
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 08:42:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5DAC4606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=grBRT/7f
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2ea7190aea1so5606065ad.1
-        for <git@vger.kernel.org>; Sat, 07 Nov 2026 00:42:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=X8tAz2wN
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3ae7626d14aso788190a91.2
+        for <git@vger.kernel.org>; Sat, 07 Nov 2026 00:42:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794040972; x=1794645772; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794040974; x=1794645774; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=dHVD7g7q0JqxphSjNJf5Nrolkt9CoWX1Z5wwJbXP+DA=;
-        b=grBRT/7fYOvbmrkpc/DaoVRhOgcW29GX+G0dw2xxxewEcNcqkR1M3F+QGaPOxQqymB
-         OfuL2qsNosNOJ5EMYyycmAFM5rIksd/yvgT77PyYeTr1NLYHrovbn3KERfgeO/yQQuKd
-         9wwD0Ui+efU9Ew0dUgmhc4CM7QAui0qumG/RmEdgwnJwwz8xxhoNrXDZ+X5W/9vCOLeo
-         W8MQkKB9QV37yoj2hEOVwMmykpuFMcayloV/mMo6DDkoCrbvWcaDjPNCZa4TjKupyo8w
-         +j4hu44pcNqIoyzGNh4LbG0hvgZQkbUd/B9bzCsPYbBkEdunah78SpsYUuqjhnnwjvPe
-         is+Q==
+        bh=E7BOw0W0YZ3W9dE/5Blf8KNYleV2LimHU5+tu0CwZRQ=;
+        b=X8tAz2wNXLerG9RqSOPVBGCkKw1+vyslto26EWK0iQp20BXafpxiwBoRmtYHKVnawQ
+         wWS1BtuHqV/MO4tgmB/snGPKBsLGqr9ubzZWLaJv25vo6ZmfCZTXztirTiPfK0IqKyKi
+         38LAodd/IIb3wHJEIYkViLTn4FUmMciN/VVgsY4vLL+ya49utTMvKfraHhJKy02nqNYP
+         7VnSqCIjISD8D1PnTtbse3MuoDnpl+1U+8GD3YRyZUK3r85HVHp0upavpXYn8ml14m9v
+         Ab4PICZnOtepxXHlCAayYxpl7LEBUiO7wv5stWL7G7eWVc5AYgPnxIn6WClbV6v59ZUA
+         AldQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794040972; x=1794645772;
+        d=1e100.net; s=20260707; t=1794040974; x=1794645774;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=dHVD7g7q0JqxphSjNJf5Nrolkt9CoWX1Z5wwJbXP+DA=;
-        b=I9lnzHu9Vf7iBjshVSFSD2+D5b03atGsMP6DoiEBynf1slQvhalgu/lLySqjrAEqQy
-         HJJ7hmw5agU7ZOJdSC1RZjua6pFsBw7t7rS1jiujdO7WEEyV520+QO+7pkQBlOZle5NW
-         PQ5UG7pqnc7P4r4kHsK+O51PxPdErl6POUWwxMqnspCEMlzuZXmKUvMtlRKvveEKDRdA
-         /p1tvGX3Cte+BjGxTifOQYGoNq4XGLTxwWiaGbctbJtvDvajTXSxN/j/9NjPZfDNaM9i
-         Um959axKPJYRbX97lEXF+bOcg1RBiaJec+6HLTNlK0lueumxMWuJp1wdgMPmB1a8UU/J
-         mdIQ==
-X-Gm-Message-State: APuU4Z81gH4tNpfpSSbwMSNfCdGda45f6rDZLRbXefc7P7+fM3MaoGME
-	g5e+coaS1am/zIoK0HSatyk0Zm+szWMQSLs2dOxeR1rLHL6HUgsa9wN8msffIg==
-X-Gm-Gg: AYBFou0mPhqPBSm4o0VxJpZK6AI6TZ/k/jbNsWtTbAY6ltDFmcE9t6ryGiKZaZhZzWY
-	glNtHEf3ucpYIwtw7/I0BPwvDuUDqndDtF0ZUycUTT0eS5+U5doVsKq1ucM5IjM5RYf+jjWmHDJ
-	zCbhQsRXPxrxQdZ8vdrc5Thd+5nQwkb3DZvjVdoYwnvzwfz8cDLtU8ZChFejyW9mONczc19iir9
-	OPw3dCk2hFLUgeiuAGRkjmm/Mpz7OnX7FvBi1RYil+Fdj8SBWreBn9+Mo7L6+ZFeRo6ntzh6w9H
-	ItQPXNgN79nOoa0eEp16FirkN7BiQl59B4P9IwNa4wQQ8+ZaoMw6EShH6Yqav88OsY7EZvrvrhF
-	LXfcHHGB0Nv+aBsU7/V/RBzSAPqZcPdOQdV1io6CKyKXB/wS7tVbDObamNDV95Jc96360phAcPj
-	8JaurBIVHM2la/Yq9IvCPAsh35HRcT+PDNz4L6lw7siu4lZhX9PJMfoaDrQ+u/PhT/SJxykbEwn
-	Ea+EJlITVxsz2iUr0DcLIxPuMnLu2YXJGy7nf+BPdBfynH7VyPAs7l1qo19EJcNb3J6L8rmsvVy
-	ppDvDHuZP/B3lGk7SyjG6Le8RZ987SsaVQ==
-X-Received: by 2002:a17:902:ec82:b0:2e3:1e96:7f1a with SMTP id d9443c01a7336-2ed4022bc93mr53855475ad.0.1794040972424;
-        Sat, 07 Nov 2026 00:42:52 -0800 (PST)
+        bh=E7BOw0W0YZ3W9dE/5Blf8KNYleV2LimHU5+tu0CwZRQ=;
+        b=Krm8UaJBxF0s0QZ1rKlCx4dZJx39vqKFJzKSowmXT9rxQK4dSlPjBGpcCXT1KjVjiE
+         VJ+iHkHI7BDSGFwu9AYh1y4ib1cJVEy+j3QNd3uT/7XrONp5F+OmI0hT2rUax+/iX+wR
+         WjsheikQiKN1qLvv0pi2kCb+byeHfn1ZCnPFaprutEMrHCqtDd1ip3+eYXccUtL+Qa0O
+         wRFoADuFq2zd+ZR5p38u0nvWp3oBjAA2Rgc9qD/xUJ8gLxvoo7cgeVwUYlppIFOH+lhu
+         dLWSGJ9FgEVNZeR7sDawd5fTyLlxXAXF4riczeI4fivc1LEy3tla3/2W8p/tbuQCHt1U
+         JdpA==
+X-Gm-Message-State: APuU4Z9cmHD0tCLUzMmGsy/723wqaatq0mqjtBpzw3hxqbDZVX7Wt34H
+	gy21iUI36nl+ULJ86QqMAO3LRjrgl9ePkapQFRINX1WSWNFdKnS1MxiT+q4tMWfJ
+X-Gm-Gg: AYBFou3E3aLJvwBpeK1CMyolj3/SasdY8xbhjp5efgtxhg/G64gjZneQHhN3RwYy/TW
+	9bCBmZFAGTBqBcHmIJBHmk2vvjM7xkzagF/5p2hCCmYCB5tfaEFSvd4AkyWux2IAc1z1IH6goBA
+	7PH532Z/N+j4llZB3+ddjjg3aNWWgI6WpPmBcozL8z97innM+VAwzD42JzapF3+PGebipcWyQJg
+	UoYYFiroj6oKkvhTIotO19eGAkFkUqTnJ0eml1GPYovJ5SqkmCqXiGpTqm+Cs1KZnwTxMsh0gAR
+	rrk+8rfgOM1jAJV5hGf4z/XlBZO4TekcijH+z3bklJrhAHxD5BBSn0tApzHFZWaQRmwMPG1ccMD
+	UNGGhnScYuPnZBLAWS5TtOfxB0qyTGjOltY6NAeN3dA1iTK5rYZTs3sFVBW1xUj5TtOatyyzQmk
+	LdgCGG42qxJUprNCQxjoUsnlKcg4WIYhxZE+1R+kgg3YTM5GqqYZSOlbXG3l2RNlJriMma6foV7
+	NRZW6BigMssMHJej7dxUG/mbEjQiEyYrHkT+bwquoOIWPNYVQ6O+d290JyfpHMobO/l3DXshAqY
+	C4IYAh3wR+1COwAAG9MoK0AUkX7jBYQwvA==
+X-Received: by 2002:a17:90b:5848:b0:3ac:7872:d1b7 with SMTP id 98e67ed59e1d1-3b0db6f1832mr5089865a91.32.1794040973592;
+        Sat, 07 Nov 2026 00:42:53 -0800 (PST)
 Received: from [127.0.0.1] ([52.156.141.210])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ed47d837fesm12012185ad.65.2026.11.07.00.42.50
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1054a53e4sm2541125a91.0.2026.11.07.00.42.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Nov 2026 00:42:50 -0800 (PST)
-Message-Id: <a9a3f4b705f98f0957bc9645395f4c68875b2896.1794040967.git.gitgitgadget@gmail.com>
+        Sat, 07 Nov 2026 00:42:53 -0800 (PST)
+Message-Id: <74ab5bfc62c5f686450a6361d2bc6493b764a81e.1794040967.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 07 Nov 2026 08:42:33 +0000
-Subject: [PATCH 01/15] rebase -i: handle NULL value for
- rebase.missingCommitsCheck
+Date: Sat, 07 Nov 2026 08:42:34 +0000
+Subject: [PATCH 02/15] odb: handle NULL values for core.alternateRefs* config
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -114,58 +113,64 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-A rebase.missingCommitsCheck without a value, as in
+A core.alternateRefsCommand or core.alternateRefsPrefixes without a
+value makes "git fetch", "git receive-pack" and
+"git rev-list --alternate-refs" segfault in a repository that borrows
+objects from an alternate: fill_alternate_refs_command() passes the
+NULL value to strvec_push() or strvec_split().
 
-  [rebase]
-  missingCommitsCheck
-
-or "git -c rebase.missingCommitsCheck", makes "git rebase -i"
-segfault as it writes the todo list: get_missing_commit_check_level()
-passes the NULL value to strcasecmp().
-
-The setting takes "ignore", "warn" or "error", not a bool. Read it
-with repo_config_get_string_tmp(), which rejects a missing value with
-config_error_nonbool(), as ba176db511 (config: handle NULL value when
-parsing non-bools, 2023-12-07) did for other settings.
+Both settings take a string. Read them with
+repo_config_get_string_tmp(), which rejects a missing value with
+config_error_nonbool(), as the previous commit does for
+rebase.missingCommitsCheck.
 
 Assisted-by: Claude Fable 5.1
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- rebase-interactive.c          | 2 +-
- t/t3404-rebase-interactive.sh | 7 +++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ odb.c                     | 4 ++--
+ t/t5618-alternate-refs.sh | 9 +++++++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/rebase-interactive.c b/rebase-interactive.c
-index 809f76a87b..4eb628ee8f 100644
---- a/rebase-interactive.c
-+++ b/rebase-interactive.c
-@@ -30,7 +30,7 @@ static enum missing_commit_check_level get_missing_commit_check_level(void)
+diff --git a/odb.c b/odb.c
+index 0200e26f21..ed59cfc989 100644
+--- a/odb.c
++++ b/odb.c
+@@ -379,7 +379,7 @@ static void fill_alternate_refs_command(struct repository *repo,
  {
  	const char *value;
  
--	if (repo_config_get_value(the_repository, "rebase.missingcommitscheck", &value) ||
-+	if (repo_config_get_string_tmp(the_repository, "rebase.missingcommitscheck", &value) ||
- 			!strcasecmp("ignore", value))
- 		return MISSING_COMMIT_CHECK_IGNORE;
- 	if (!strcasecmp("warn", value))
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index ff11abb2f2..813ad2a83d 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1562,6 +1562,13 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = error' '
- 	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
+-	if (!repo_config_get_value(repo, "core.alternateRefsCommand", &value)) {
++	if (!repo_config_get_string_tmp(repo, "core.alternateRefsCommand", &value)) {
+ 		cmd->use_shell = 1;
+ 
+ 		strvec_push(&cmd->args, value);
+@@ -391,7 +391,7 @@ static void fill_alternate_refs_command(struct repository *repo,
+ 		strvec_push(&cmd->args, "for-each-ref");
+ 		strvec_push(&cmd->args, "--format=%(objectname)");
+ 
+-		if (!repo_config_get_value(repo, "core.alternateRefsPrefixes", &value)) {
++		if (!repo_config_get_string_tmp(repo, "core.alternateRefsPrefixes", &value)) {
+ 			strvec_push(&cmd->args, "--");
+ 			strvec_split(&cmd->args, value);
+ 		}
+diff --git a/t/t5618-alternate-refs.sh b/t/t5618-alternate-refs.sh
+index 2fb6d549d3..13abd81e98 100755
+--- a/t/t5618-alternate-refs.sh
++++ b/t/t5618-alternate-refs.sh
+@@ -58,4 +58,13 @@ test_expect_success 'log --source shows .alternate marker' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'rebase -i rejects rebase.missingCommitsCheck without a value' '
-+	rebase_setup_and_clean missing-commit &&
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	test_must_fail git -c rebase.missingCommitsCheck rebase -i --root 2>err &&
-+	test_grep "missing value for .rebase.missingcommitscheck." err
++test_expect_success 'alternateRefsCommand and alternateRefsPrefixes need a value' '
++	test_must_fail git -c core.alternateRefsCommand \
++		rev-list --alternate-refs 2>err &&
++	test_grep "missing value for .core.alternateRefsCommand." err &&
++	test_must_fail git -c core.alternateRefsPrefixes \
++		rev-list --alternate-refs 2>err &&
++	test_grep "missing value for .core.alternateRefsPrefixes." err
 +'
 +
- test_expect_success 'rebase --edit-todo respects rebase.missingCommitsCheck = ignore' '
- 	test_config rebase.missingCommitsCheck ignore &&
- 	rebase_setup_and_clean missing-commit &&
+ test_done
 -- 
 gitgitgadget
 
