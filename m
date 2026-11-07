@@ -1,125 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794026283;
-	b=Cs9nj2HHbO68N6oXTjTBizdGpqqDiinvZ+0hQ3o9UCxIsPe3I+acH/jyTv/mfaKTjuTt
-	 UMNBzJMegQj09sd9Xd8K9aAxR1ay7rsON2zk3ABzwlUupDqAEoHN/yKvGgyMlGlByn97B
-	 m8osFSKAE7QDmyfLcBCjBjKf18hOf88/Dkwy0cCQL70l3XOGROcQE10bIrjnnWImeRlrJ
-	 7XKTGW0wmfvMQBOgZexPnj6y9dpk9h/FzhStHF14/UItpQAxE5zlWQn7LEDJWD5ydrUWD
-	 Zd9TLLMSkSoybObb2bzxm0gqcMYBfVzMXrH1QDi1rwplEpcx9aRUV0nxCQt8k1CwQaA==
+	t=1794026666;
+	b=vLH2ZhCj0S/hbYwjJDVUMEbuSZ8uLMOlJWU7GnVgYZJzFAFp2WbeH0pldUZlUrLRu6MM
+	 a71ATcirj6j5Dr2mig+VlkhQr7PHsFkaBpJKtm0guwragJq/azQpfHUj89lLkRuIQsulR
+	 PNtGZC+b2Nl+XFqjRiFp8lNN9cb9wMumkikAncpdz8JmLMrUMRut2G7FtErdbsgq/mcSy
+	 gAthGcS8SrVUr3yXKdUFbQBMxbd1mYOQ+5XtOxKgmcIzTRGlxESXAvG2n11IIapfFqTKB
+	 glulcryO/qV9AZnETgy2GFYt9lUvFAncIN9oVe0o/FWxFJKYxbuYWPtNLwL34ccRY9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794026283;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=u8K/ULughR9Q9ag1jaUnUVmdGGZGizOwypZf6pHcEr0=;
-	b=OWxhTvG+4tl2lj+h9lkjzVJbrTctjGGsPAgVO/fvLKNhdoVG4AygxOX1OG2Hw35n3JZ6
-	 /nVVUekaYpVolya/tHbO2lvXQfwXjL0o9ijtbSaAtvUWnBNa/eVEiR6T2NpUSeBrEzqL6
-	 Dx29+9e76BXavo0TfYffJbWwdo3IX16DEDlZMDr1ofQL7J31l4CHmAdavswgBJxtFR68f
-	 2xNvxn/NOud3PKvA1cH37+o0eS3+I06l4N8NnVOgrf/woDpTmtJASSEpeFbNdchFqMaXK
-	 NYri04JrZ1gOlVc127ZmK76qBHrevxtwuXb1JgfA5NczF/045fXB46IiKd71h/QfRPg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794026666;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=i2N803mCYNoqV0f/UzaUxFpsGml85Pa3jKto2s8kcZM=;
+	b=ci5PMlxlFSZmaxcT7BhZFVNgAYRIaqk/uYJkjc818rQqZoavnToJbSMjpx0Vww+Q1rvL
+	 PFr71e1slun5UdWPSRoh8Z0FvSHl3NH0Qpyq91C746e2ls1CQctpbXGUQhNjQOIuGb43b
+	 IuTMqceOHrY5l+ogPFoQ8yfDtmHmxNzkqRJtcUgZhmf+XQjSf8Gqtm+S5wh7jBAAohP2Y
+	 Mboa07lZXRZjkBnraXVKj3GzrPFtppoLf5DOzN/RItLiD5Shuj1v0eLt2IBBfAyJYTXZ9
+	 Tr8HbApanZn1W9eV7EL4Bw/MQSVGTGOP5Lk/KmM4in+bwJ6m2rMhy4iLo6oaa9GpS1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=m0aWTgst;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bCHn9fkx;
-	arc=none smtp.remote-ip=103.168.172.157
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qVn5cr2m;
+	arc=none smtp.remote-ip=74.125.82.176
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C688606A32C
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 04:38:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5C688606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68825606A326
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 04:44:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 68825606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=m0aWTgst;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bCHn9fkx
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 91B231400068
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 23:38:01 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 06 Nov 2026 23:38:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794026281; x=1794112681; bh=u8K/ULughR
-	9Q9ag1jaUnUVmdGGZGizOwypZf6pHcEr0=; b=m0aWTgstiBaL8dGRhDtuZiL65m
-	R3rBGiU8XsS103GcSi76tbotlJtQLPdc3vBaf9d0vgs7zvfk/yX9fWnkuKBump+a
-	ZzATz1hKh0BYf2Qb6BoI91YL+lHWNIbJIbH1Zvu1X7OM2TZqEWaioDszcJW4jWED
-	U9mw2lQeD3WrPpmOLQfsw52HmZSusejlWp49tLIbCQeAFo1AsunqCd9XRpqUByDJ
-	DkLYNhjVP1xMuPPTzCrYLyAGB9mx8NEbRaPDIeS0afHRW9RKKcrLLmRmIw+0rZ0v
-	aVwwhgJ+dIp0V8tenafiRWmJGNh3Sod6W4XdauqqQfSq3Uyl6DTZP9Zr9gPg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794026281; x=1794112681; bh=u8K/ULughR9Q9ag1jaUnUVmdGGZGizOwypZ
-	f6pHcEr0=; b=bCHn9fkxfhqiaz+1cjnIIYN2BdbpH1LeKGOOwgKW5F5SqGyIljP
-	Gx6PC5cqCYiY/lPTOE+EslXMcZAwece4rNIdq7s1koUzt3nnjTnR3pBhBcPiQEqK
-	jz7B5OC4StRJ5UwXGlGNhsrsC+X8w6v0z3PDxHouwmp4HY4WnMjaU1dQ9+lp8R5n
-	resTf5cd8XmoVaGiUePE1jh+ToOchDJYwlC6iYIIM9slnxqOGPJ5macH9PUbCAmy
-	mW3hC0qy2gMgSII9CaSW/zbfG8Vbkh1z7pMMbokvfuiUrzmm3olfqhGmOqHBntAp
-	SibeAF8ZcC73vqwL+ZNGm8OqE3VvSF/nJ+w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794026281; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:KEhzgqPTBiaiajzLaBUQJ+THisgqQ9vjOMA2KaGEMotT34R
-	A/BpYIVLqxaqKLP82scLDsaQo+voyG85EBjm77fvVNAKivxYJzmrnvZmprnYeM9k
-	UQfzuzyRwsnhk5XcteQ0i2yzpOCUGYBXCJuvbRvpSIDAc5RfSPy5HHXUhW5oxFXL
-	caTWpi1YfSgOJGhMfyqkmkC6aujK87w9raGRj4NPGvhr++hDt6mC/Com0UhGjDQB
-	/pbsqWv4ROaVKTwuAGX8kpDnrlvL1no3lSd8BvUyDF0k3f1Iu1Dq5XwdnGtvU7dU
-	5crEgFm7sm2/kaHXbA4n5sqhwbr7ejKHPvZXA3g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:wmeETQF8pph7MJIWHYXuXjWcyTljQupVVXKrKxGnxFU=:qsU8Cs4T4nd6zv9XXpY8nD5xj+sCwG+8+ldlQueZJkE=;
-X-ME-Sender: <xms:KavuajZuN17_cFs1FAE0L2rrbNGchdnJXSk50NIQnWAGjM_o0wKlrQ>
-    <xme:Kavuakp1NFeM9rC4Z3UxB3Yi4f8LmoYDWDcUdCforgI2wXUeT_Cy1iLZqS6QVh2ax
-    qhZYvsGGJyjbVQP__PjtI7jjDxm8y3CDCcLRhUMYUn8t3iwspiFGYw>
-X-ME-Received: <xmr:KavuaoNIMnpssQlAuGXqP0WGi-KohIJ7wU6nvN9bFARG6cqm2sBD8m71JAzCB4ra3XsN-QJcJHpOYdhHbRZ1e1YXRmw0w__831YW>
-X-ME-Proxy-Cause: dmFkZTGvzdtAq2P14XGEhf3z2VA50U/SD5i139vBBlCVpnTCh89uxfNsjLOKPHTWLmALjk
-    whbhUSiOEqKVaL4AXV8NQtaHioXOaaOaqm6Xs5rneG1hVOMD9xmhM0+YUhYiqQYIsDBZ75
-    RkBrmGkTEtV013TL9ntSX2Ud6AppwuckXNeu1tnPLhymtqy/6au/E8P2fOmKVvxQZf8HU2
-    I2DnRv0h6ZHspxKQzrji9Haba8mnVevxmeJ1MYZkHjCt9P3sr2loRWqgIWqEUfceDCa9X2
-    QrBeo1COHICFbkcpsUdHmDaLrJQhJxcy9FFqhJbvg4GcPlhW+kE9uvM0a4Eq/wXtL600Nq
-    nUlpwVMWkesVnck0m5BBpilYlXs2J0pnY3uumLwnVEbyjr0eZNbGb2o8nfmY2k9A4U/8N9
-    Lg1TifSvGOhPIWVPqCf1yO8L/DTbQXjF2AIYciCfqk5ns92FSKUkeFW9+QmLch3w/qrDqX
-    7xPX1wDzo+7xoDDctNP4D9d1NLonbcgbdumcwtXaKYlKvR9XVLLjx2dCyxkP/QZgagfIRC
-    brzrCTZ+8HOFjiGlm8vn+uuCLFUJMfZ6mK1vU32lw2hGyYeWbY8GaCW69u9HEc0/D7i2UX
-    RVZFj4ZPMmgUYOqc31vPsOaK1tdrX/0N5wyEQvH50rjTcK6h52oU5ZJN6gmQ
-X-ME-Proxy: <xmx:Kavuavr_ATb2afYwWF56j_9JX7v1ZXpHTLGmvFXJERTuN9pAgSRLWA>
-    <xmx:KavuatdtAdllm3gx1Wafw6gIEl4RdOAu0ICtFXt8Cs3zS4gTwjz2Lg>
-    <xmx:KavualROzLT207xy1dfiSIwHwmg4FKAbReW88ukw_VMhO6fnzkvJyw>
-    <xmx:KavuamYtpwqJ4MM6pC6460i7Uz50BEWDvBEwNHquwYIqbZUWfBQPCA>
-    <xmx:Kavuarp4areOfDP-Rn8lvCJsOLlhsRP6O2xJfeYm3Ph5Q_gbxz2Kz7co>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 23:38:00 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-  Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
-  Patrick Steinhardt <ps@pks.im>,
-  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Ravi Mistry <rmistry@google.com>
-Subject: Re: [PATCH v3 0/5] http: exponential backoff, configurable status
- codes, and post_rpc() retries
-In-Reply-To: <pull.2287.v3.git.1794022836.gitgitgadget@gmail.com> (Ravi Mistry
-	via GitGitGadget's message of "Sat, 07 Nov 2026 03:40:31 +0000")
-References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
-	<pull.2287.v3.git.1794022836.gitgitgadget@gmail.com>
-Date: Fri, 06 Nov 2026 20:37:59 -0800
-Message-ID: <xmqqse1d9ryw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qVn5cr2m
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-35829219da8so340500eec.0
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 20:44:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794026665; x=1794631465; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=i2N803mCYNoqV0f/UzaUxFpsGml85Pa3jKto2s8kcZM=;
+        b=qVn5cr2md6xBusWGYTyHkR7AgBtY60lIZ6v5WHTBQk/yDpVX+oufBtWX3YK6lirR3F
+         90u4isghNaEo+ic7AFhS78RDXTCT2fnsKGAshcFRPszIp53RBDrFJ006oxTDsk4kkTVl
+         AHPIdcYL2rZfwFy9O2UBJ9yyJh811Une+5GzcgQHpENPkoMc3xaUq0snaVK4J+sbjl4B
+         mLjnz1jTudpi7eDcFWCURouNLRt4lhayH7yPR0SVHw2Q1+RzR/F0BxziMvwp9xNE8ARe
+         gHBR0n9ihh2f3/tQ8p/mYKwWFoMeVcqvddeChMRDi+3iHSquDAjYSEnoCFX7vMa1sTLB
+         YrzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794026665; x=1794631465;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=i2N803mCYNoqV0f/UzaUxFpsGml85Pa3jKto2s8kcZM=;
+        b=s94vaQRRpyfgeOEqml3rIdCiDZSM28HjwwZTxAFO2qopmmyNsCl0BqeWOV5/x/b27q
+         ONO7KljHQe2EW4+V0jIt9QRfQplVRGpOFEzZ7hhLcsYn4xaBEbIQqZmmG/sBdVz+l+Gz
+         bVbXUUqwt2aF6BbWhAak+nqZjHaln+kn5eS/M0MsuaWUa9tZnMr6EDwVb5p9fBjUd4ja
+         0KTiYZPQBOuKjJFxeNkXsK5hR9SoM8IZx8WKTBa4sg/SiQ8luIAqStK7gdN/s1O9uAkN
+         XD1LqdsNzSa+0EfqUP8Tfqh5B6B9f7rcloKpHF8eqXTKEfpCISCcG4qpIVOSLP7VaFd2
+         rgag==
+X-Gm-Message-State: APuU4Z/7dvOLWZwctsLzJ9lozqag7MC91GFnuQVDjne6t+1MRLg6oCiJ
+	c7sfXFE9QFsJb0dzvnBSe5lvLTymPlxTIQMtcRAXkkS2uCyJarO2cMN3rRviWGYY/fU=
+X-Gm-Gg: AYBFou0FxVqurx8Gwx3RQLjhHS+/XMpOrfzkhXoPjE/ExtOqJaqY7XHsj1U9P8p1WHb
+	2GvdANsRwXM0+2qEntFGU9sIyIuGKVVnqGI5Sk97Kn634U7CwmaXmnvUssYKjbcUhvTt3Fkey15
+	X4pjiHrH+TVeq6okkzw10ZAKgxOM+maGISPuwABR+e8Iuu3oQyXeQJI5fysTL4kNBRMPEfE3UEp
+	vSvvJx0BO0IJH+BsU54m8cFpvBvrnLFueopW6lPkeHX3aOhuP1AEHyID98ZHDFmlZG3SPiW3nKs
+	GrL6fBtXjQAlBi8sX5KY3NwcioJHl1mjasYhaDz3lpdN3wtMy6l6Rwzxt2ASz29CfN16cDzBtOz
+	EqTSfRpj+CEnTX5aXKNGDtrlEq/w8oQcEuNoZ1YkrZ7jYdCUCCWMP0WP0WW7I1hwOANP3jcFf+Z
+	2+LOYCGCVi2GduRGEqRUCK5jeNgBuWgPxDn/haxFJBSU40iWjlJky5hjvSk1T6LH+YfXjYJ8oE9
+	BmuziW4hv4bYpOKXO79Bpc18BrGd7nlut8b15F0Oe/UgU47f9j2f65SazXO9z6odnZFDYnZ5mT3
+	3LYjhL6f1dIRySkuenOTE5zh8h+uJ1ML6EWS9FzD7jeibgiYSocikRdKocd+4YHM9fcomF1C3A=
+	=
+X-Received: by 2002:a05:7301:d810:b0:36a:37:1404 with SMTP id 5a478bee46e88-370f6018313mr1859364eec.13.1794026665286;
+        Fri, 06 Nov 2026 20:44:25 -0800 (PST)
+Received: from LAPTOP-PVRSMPQK ([223.190.82.143])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36faa4b8aacsm11317465eec.23.2026.11.06.20.44.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Nov 2026 20:44:24 -0800 (PST)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>,
+	Coy Geek <coygeek@gmail.com>
+Subject: [PATCH] merge: honor --no-overwrite-ignore for real merges
+Date: Sat,  7 Nov 2026 04:44:19 +0000
+Message-ID: <20261107044419.209119-1-aniketgupta3001@gmail.com>
+X-Mailer: git-send-email 2.56.0.344.gfa103ac04e
+In-Reply-To: <CACgTecNrMKHGexWTkm1bqpVzL7SVWD5Hwo17wVokVGe3_Rnx0A@mail.gmail.com>
+References: <CACgTecNrMKHGexWTkm1bqpVzL7SVWD5Hwo17wVokVGe3_Rnx0A@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -129,27 +98,144 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"git merge --no-overwrite-ignore" is meant to abort instead of
+overwriting an ignored file that is in the way. However, only a
+fast-forward honors it. When a real merge is needed, ort and recursive
+overwrite the ignored file whatever the option says. Two FIXME comments
+in merge-ort.c and builtin/merge.c mark where it was never passed along.
+Add a preserve_ignored bit to struct merge_options then set it from the
+option and use it where merge-ort updates the working tree. The
+trivial-merge path in builtin/merge.c gets the same treatment. Other
+callers of merge-ort leave the bit unset so nothing will change for
+them.
 
-> Changes since v2:
->
->  * Patches 1/5..4/5: Unchanged from v2.
->  * Added Patch 5/5 to default http.retryAfter to 10 seconds instead of 0
->    when Retry-After is absent (per feedback from Junio C Hamano and brian m.
->    carlson).
+Add tests for a plain merge and for a directory rename.
 
-We usually do not structure our topics this way, to first implement
-one decision (i.e., "waiting 0 is the right thing to do") and then
-change the decision in the middle of the topic (i.e., "no, hammering
-the server immediately is a mistake, so let's give it the initial
-wait of 10 seconds").
+Reported-by: Coy Geek <coygeek@gmail.com>
+Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
+---
+ builtin/merge.c  |  3 ++-
+ merge-ort.c      |  2 +-
+ merge-ort.h      |  1 +
+ t/t7600-merge.sh | 59 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 63 insertions(+), 2 deletions(-)
 
-This might make it easier to later switch it to 30 seconds if we
-wanted to, by identifying exact places that needs to be updated?
-
-I dunno.  brian, what do you think?
-
-Thanks.
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 5b4eb23a83..c7cd3ce29e 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -756,7 +756,7 @@ static int read_tree_trivial(struct object_id *common, struct object_id *head,
+ 	opts.verbose_update = 1;
+ 	opts.trivial_merges_only = 1;
+ 	opts.merge = 1;
+-	opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
++	opts.preserve_ignored = !overwrite_ignore;
+ 	trees[nr_trees] = repo_parse_tree_indirect(the_repository, common);
+ 	if (!trees[nr_trees++])
+ 		return -1;
+@@ -812,6 +812,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 		}
+ 
+ 		init_ui_merge_options(&o, the_repository);
++		o.preserve_ignored = !overwrite_ignore;
+ 		if (!strcmp(strategy, "subtree"))
+ 			o.subtree_shift = "";
+ 
+diff --git a/merge-ort.c b/merge-ort.c
+index c410a5d353..38dd1ac99d 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -4632,7 +4632,7 @@ static int checkout(struct merge_options *opt,
+ 	unpack_opts.quiet = 0; /* FIXME: sequencer might want quiet? */
+ 	unpack_opts.verbose_update = (opt->verbosity > 2);
+ 	unpack_opts.fn = twoway_merge;
+-	unpack_opts.preserve_ignored = 0; /* FIXME: !opts->overwrite_ignore */
++	unpack_opts.preserve_ignored = opt->preserve_ignored;
+ 	if (repo_parse_tree(opt->repo, prev) < 0)
+ 		return -1;
+ 	init_tree_desc(&trees[0], &prev->object.oid, prev->buffer, prev->size);
+diff --git a/merge-ort.h b/merge-ort.h
+index 6045579825..d5747f358e 100644
+--- a/merge-ort.h
++++ b/merge-ort.h
+@@ -85,6 +85,7 @@ struct merge_options {
+ 	unsigned renormalize : 1;
+ 	unsigned mergeability_only : 1; /* exit early, write fewer objects */
+ 	unsigned record_conflict_msgs_as_headers : 1;
++	unsigned preserve_ignored : 1; /* do not overwrite ignored files */
+ 	const char *msg_header_prefix;
+ 
+ 	/* internal fields used by the implementation */
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 64fe21717d..c1150e50e0 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -1179,4 +1179,63 @@ test_expect_success 'merge with no argument defaults to upstream' '
+ 	)
+ '
+ 
++test_expect_success 'merge --no-overwrite-ignore keeps an ignored file in the way' '
++	test_when_finished "rm -rf ignored" &&
++	git init ignored &&
++	(
++		cd ignored &&
++		echo secret >.gitignore &&
++		git add .gitignore &&
++		test_tick &&
++		git commit -m base &&
++		git checkout -b side &&
++		echo side >secret &&
++		git add -f secret &&
++		test_tick &&
++		git commit -m side &&
++		git checkout - &&
++		test_commit other &&
++		echo mine >secret &&
++
++		test_must_fail git merge --no-overwrite-ignore side &&
++		echo mine >expect &&
++		test_cmp expect secret &&
++		test_path_is_missing .git/MERGE_HEAD &&
++
++		git merge --overwrite-ignore side &&
++		echo side >expect &&
++		test_cmp expect secret
++	)
++'
++
++test_expect_success 'merge --no-overwrite-ignore with a directory rename' '
++	test_when_finished "rm -rf ignored" &&
++	git init ignored &&
++	(
++		cd ignored &&
++		echo new/private >.gitignore &&
++		mkdir old &&
++		echo seed >old/seed &&
++		git add .gitignore old/seed &&
++		test_tick &&
++		git commit -m base &&
++		git checkout -b incoming &&
++		git mv old new &&
++		test_tick &&
++		git commit -m "rename old to new" &&
++		git checkout - &&
++		echo committed >old/private &&
++		git add old/private &&
++		test_tick &&
++		git commit -m "add old/private" &&
++		mkdir new &&
++		echo mine >new/private &&
++
++		test_must_fail git merge --no-overwrite-ignore incoming &&
++		echo mine >expect &&
++		test_cmp expect new/private &&
++		test_path_is_missing .git/MERGE_HEAD
++	)
++'
++
+ test_done
+-- 
+2.43.0
 
