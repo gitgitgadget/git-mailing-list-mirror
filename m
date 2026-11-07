@@ -1,93 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794040996;
-	b=NlL6AIjNiUhDU36jeRVcF1kxLu0lP/YkVAdcPYduspYovba9MnQCUbp1Mty76njgFPKd
-	 4vpGtUgwXnBDvFHr1rMVr+uWgzpkva/481u9XfJZ2K28iIzopBx3MuKsp1NXPvMP68cop
-	 NX9S89fyQBqI5+U8ljKsOm1nQUYyVp/jXgkga9WyZfsVriQeHgrOyttTiiV2kjOtqF9G8
-	 Hjlhb5vCHxet8wCj9Mvs97fCbq1Xjuu83kEkjDGx46yiqyFsDRQaRuhyyCgS0sKagUEi7
-	 GHiIWe1AkFX8RFclZo2iF5W8E+swjixJ+P/z4W+f8QQLqges4TyJ2KSF9Yh6x2qWXhg==
+	t=1794041411;
+	b=A5dvSJjYaYo6LfbEyUR1DAstGoTFJPPttfq4aMZPXSxnidbdnvgw3h7lHLbBNWcg73GV
+	 soDUnxtcDyIR0cMf6R/2k1Dd/sepjxe/3l6079rIIIPF0j6DqyCBqiMc36oiIaI+pQdiS
+	 Lmsf3lqW0ZF1lASlRNB7odGbDXJ7I4ac5L50nxsQkzX06YCpMO7GsGkQ22pLuzBGlLsmx
+	 TkAkhQBnAFte/vf171969E35Z7AG8E9xX1lR1uDZm8YnfVQmtmTIUF38nur/c2YQP81Oo
+	 whO0Ddqg37mvJovi5p7xC/kC+lnZF67CYA7rTNxk9eMOkrkFKB7cLC03dIQv/u/5ANg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794040996;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794041411;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=SO8YdVtJ59WtrVckJs4Y+gfGI1+aG8xdfxxj2hgU/TQ=;
-	b=cpYDFwiU9zcVntMJFl6nWYthN2TkHGJ0UD5y0Sz4TZ78dyYufzS49rfQfwCT73JPP3gC
-	 a50cq18lX5W8tIj6J3898e5xR7yqAIkJuIvKuKuuaRkAjwTvUL1aS/jvDyV213uEarFqF
-	 7qAz98UREmBm4v5lS9HpkYw3ECvQmSaIXMD7cHPnlfwu61nRQ4oRXNb5ZF+RDKrKaiUAe
-	 cZaiZT8rpQBrWL9SUtIKXLK926IMgPsTFlNO53BLrg63rYASWh0t1PZ60o7emSNnq4BCf
-	 mM23wKbTJkn52IXi04umAFST2i9gwLpKnkfbFt2dW/FwM/rDSwGwabMAkWQ7HGJqPNA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=awNIEBCtn9PsoqbdLjkT43NcFHeP7WzO0WxwxFS6PsI=;
+	b=ROx6sY0ItsSs/UrOfwjOH78apbDjDCo734WxQtrRSJV1djjAdAnWWy+oFs8H3NdViAzI
+	 NJUsJvFfk8lkwX8MaxRXwpS5iK0AK8xWsDlk+8Xsq2L4wVdSzEFEheYAMipUb9D2jYMWX
+	 uNyBMzl+L1zzZFKIfvKvUoWvlZexDuH8yJTER5/MiJPJH5xbfmb8PYsAE+oDnajL6/AZw
+	 f42XWEnVjZeFzwcMDpHY+eKnfe1FVUx2UUIBLsX7GnetyUII/hewPk9+aMxA/wj3mJZlN
+	 Ux+hdgWxHDHRITn2XpHJfoovxGoYYH0D6IcPtRpg3zCtck/lK3ao5BFf+VKotBdkCdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=U9mLp5rY;
-	arc=none smtp.remote-ip=209.85.216.49
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ByVEcOZo;
+	arc=none smtp.remote-ip=209.85.221.49
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E41606A32F
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 08:43:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77E41606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84380606A326
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 08:50:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 84380606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=U9mLp5rY
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-3acdcfa2bd3so1183377a91.3
-        for <git@vger.kernel.org>; Sat, 07 Nov 2026 00:43:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ByVEcOZo
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-48dee593f18so1105276f8f.3
+        for <git@vger.kernel.org>; Sat, 07 Nov 2026 00:50:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794040996; x=1794645796; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=SO8YdVtJ59WtrVckJs4Y+gfGI1+aG8xdfxxj2hgU/TQ=;
-        b=U9mLp5rYBvVWdUxDxWIalgXfw6zSVduwK6atC+h6AoB6brYQnb5ca7pI+DSNBRT9zm
-         LqhQEM+KemSLwQ3FtaIrMIymkzKCv04uQ05sik7k7HHssaJMjeKYhJ7Hhv4L/qNpdl+O
-         IE/DodqheMJ+9E8zocbpxDaAvrNST/8PYqgEMlAPLwhNZYNlOE5mc91VouWZS+wkKFc6
-         p8gmYYfwUo+xp9taWNvw7ii9KtnAjHhy8plnk4uPSEY0fAF7rtw+wqw3DdBmD4YyxUoN
-         tKB3OlEcgCYSKnosSLJcOZiHwgkGYsgSgPFRMn4FURQLonlbXtPCk5yVhn04+AKCUhBu
-         LQ3w==
+        d=gmail.com; s=20260707; t=1794041410; x=1794646210; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=awNIEBCtn9PsoqbdLjkT43NcFHeP7WzO0WxwxFS6PsI=;
+        b=ByVEcOZobc8V1GEp8PGE39N2DxKuvQIThcyEUfwqRfLcZlh57wCpXi8f4JiL04K9J5
+         MrXP9GZhlMdFq5Fk7skMI4rUIxunMLgqRxpuutKLRFn/E50CPoFYTJmUfcdLwdw1Oa+Q
+         ObfdtttwFqhAxIbE0tnPqLKZnJ8fWMHnfDy2dyIDoS20LQwqE0m1kfJOHXNg+eg5xl8n
+         wKSPNp9C6XCcM4bhDH2lfch5YWkAurZHNoKTnHLS8/geRDCv90rBx0ch/DGyLx0j3KbK
+         aCNFQD5eg2NS9GibAgNSLaZXmzEfzsgEOamCg/ENqRLmsvUYFfeHd7lZH48m+wZUXEMc
+         nQ6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794040996; x=1794645796;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SO8YdVtJ59WtrVckJs4Y+gfGI1+aG8xdfxxj2hgU/TQ=;
-        b=IlzoPfBZZ17++yBx+2JffXJoqylewvncFWErQZmKbRpFXuTw3TqXCxhm2fARlFnLnY
-         ziPSJP+FptcINeDWHaetGGKV4r0Mv8H9V79AHTOpOXDy/GwX2LGsCCiZsj2TnPil/Itf
-         OvDgxIv0N1eK3ungoXqGahN6G1kd1IKNNP5Suc/P+hVEdMoU7j6d0iKyokJt4w9l/9i5
-         e69olzGQ8DATyB9idExJWU2jha+9nU3KnrE5eFZHW/ekdLKtFDw4qmPb2MCDw4U2TgmB
-         s/LjwH8EFmgsH/h02dCxL/P3LuRsRDT61dVD0l+XQsmU1WyPpfBTt+cXEfPXM24SOXof
-         8iYA==
-X-Gm-Message-State: APuU4Z8Gc+Ij7ot0ifzSK7H2pQA9mZrqygCc+TTVYYt+0bZAXSJb3fQx
-	afs6do8WGFnsEI8K6bBaiUlodQgbpfyFv39iRtKIEueoebarAtIvSgdRC0F4Ln1M
-X-Gm-Gg: AYBFou214CAQ6Bs5gawO/Aol4Jzav8+ooUKucnc/BUmvos2AREpALS7aOIYvvH2UThj
-	rqbdsHn3VR1Be3fZmE1oRiK4bLHs5PC4W+oY0R+wqEvbhDxGjRjdeRYwFlxL+zQQy9vYE9Mj4ht
-	Thi4YryUy+zfybOlA5FzoMydRhTDUHRByNGYFA2sFySYhfAPkLtasMcRxSVQQXzS6zWIYzhl6Os
-	odgVDuAtfP9rWYVYSNfl8rErA1csaS4Tc+0o0rlqEQB3Td2vFuesXv5I3dP9ouJioj8gaY/wWPP
-	rbncDtormVaZPc71BNl7WqvvctWff+CLa9NmeSNQUNAbi7wL3X3OWj6e7lKsVHR01QLCzONOsvD
-	ZvecISStM7oxvVi9pN21LPSUWi1C/U/PcJOkeFLkso6qqLNUxGnqePE8wN9aLsn2pFx+s8Cxp5A
-	5PI2i9JDcfR2wbcWoGOd4FF5NkKI1y7jWeMlFCspLGKhgCEc0DQ00Jg1t6Ryat9a3TMsOaZZKRp
-	xKxlIabSzZyg5b9TMacO3bSrKlj+YC0k8B3b6x9oAmS15881ne9XV3REAbHYccIG6aO6f8qI6W7
-	2/yDFnNCTAHoNBhoFJRTHNrXKZLsrvOgOQ==
-X-Received: by 2002:a17:90b:2650:b0:3ab:36c4:b500 with SMTP id 98e67ed59e1d1-3b0db6058fbmr5238291a91.5.1794040995870;
-        Sat, 07 Nov 2026 00:43:15 -0800 (PST)
-Received: from [127.0.0.1] ([52.156.141.210])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b10585df83sm2647698a91.16.2026.11.07.00.43.15
+        d=1e100.net; s=20260707; t=1794041410; x=1794646210;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=awNIEBCtn9PsoqbdLjkT43NcFHeP7WzO0WxwxFS6PsI=;
+        b=WmU1pxsxgaWcE+X9OjIpqS9ui861lLV/AkrfkbBr0z/QQ7Il0UZ07tFk4Ri4ENpMRL
+         8FqXMe9dGFxnZobloe69uQoi/DARP7HbRIAH9gV4Dt1jIp+z00qX2mcykETso7e1R8TW
+         8bwPCR6pMBtbHZy6XTmy4qHBcKYRk//8HluWHbxG0Lb492VE0Oc/wHNYAfVyjxXGFTkJ
+         aeakBjiIiU25fpCo/3CG7bpeVikrFbJszqkjWb+YIMuJnWJS1lnDUTflfA229/zs8BM6
+         QZmJC39vWafT3NcFdVr4k7zWoa+aAJMbO9sC2V1w6u+F/7kxWlh00mRfP30lWXoqZbY5
+         /n1Q==
+X-Gm-Message-State: APuU4Z+UTlcjp18Ni63k4yQt/f5uk2OWg+bK4ybJOvtqsZaqr3x+x1MA
+	eKacwnLKmxrRF8AvR5zT0/lE63J95a7qyFUH6KEcCfirUwI2dTZt7PE+
+X-Gm-Gg: AYBFou2Ou9Rr5iwm2V/qdlLoQ476pCmch1BrZdzTov1FDyQ5EHi2CysIM3JJY6q0yi/
+	QlV5+DpvlW5XhWPt4LGgKC/3PBJ+Xh/AdbjZVth2udLgZyaRSQJFK9orC9mhlAqhZEPxY5+XEvn
+	FjhHJLrtP5YCPjaB0/9qGTDTtzgYbJwDkmsuyoZt/Sa5lYRXI3mtnk2/IkcPioyPaQGs0vVrxe5
+	Q0aTGTetUFw9K3XXY3MT+NzdjzDQJN+/BZWGugyZFFobBEPeXPd0S3v10nAMuwfVPCcNBFRvJoP
+	Sl0sZpk4tPnxr1O6IKU3XfQVdb+x8t5NuMOwaZJDXkAq1KpeCypqXk5yEJWQwljPOfQQcTL89/r
+	HmK/YXhbAZ8FphwT+HWChjGreU28qlnvi+AhDyAG1U8krPZyYezUu6TF/9rL9hTJ1XZwCF+tkq+
+	PEJ0pJdtpNNTyGTSpkpKGhWQZBRuFPKy0Rh/GK4qmcaljbjsJNGA+bt05QESaZXZFBfLAdcr8Xs
+	k3iOLEu7PLfaJK8/1VZRbaUc9LVuNOf6Pw6qmItA1IFCuXAkseodvl2hJOqWff3PwMCn8ABVbqZ
+	VhiUxaTVGlPmRC44qNWosWSk3byn/wZCEJOCo5nrrseoXae3xq3n
+X-Received: by 2002:a05:6000:4b07:b0:48d:fd4d:7fbf with SMTP id ffacd0b85a97d-49273f500e5mr9381800f8f.4.1794041409656;
+        Sat, 07 Nov 2026 00:50:09 -0800 (PST)
+Received: from GODS-GIFT.localdomain ([197.211.58.209])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49354fc5ab4sm6016450f8f.30.2026.11.07.00.50.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Nov 2026 00:43:15 -0800 (PST)
-Message-Id: <7ac4e3a3d9caded1a857dc415f05931330a5d366.1794040968.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
-References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
-From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 07 Nov 2026 08:42:47 +0000
-Subject: [PATCH 15/15] config: handle NULL values when listing colors and
- expiry dates
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sat, 07 Nov 2026 00:50:09 -0800 (PST)
+From: Cynthia Uche <herroyalpriestess@gmail.com>
+To: christian.couder@gmail.com
+Cc: git@vger.kernel.org,
+	herroyalpriestess@gmail.com,
+	siddharthasthana31@gmail.com
+Subject: Re: [Outreachy] Proposal draft v2: Improve how command
+Date: Sat,  7 Nov 2026 09:49:51 +0100
+Message-ID: <20261107084951.617-1-herroyalpriestess@gmail.com>
+X-Mailer: git-send-email 2.56.GIT
+In-Reply-To: <CAP8UFD0uA+zF4x8WBRA6sGxSGX52Nw=GFBznzdFnX3SptHDUcw@mail.gmail.com>
+References: <CAP8UFD0uA+zF4x8WBRA6sGxSGX52Nw=GFBznzdFnX3SptHDUcw@mail.gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,82 +97,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Jeff King <peff@peff.net>,
-    Taylor Blau <me@ttaylorr.com>,
-    Derrick Stolee <stolee@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Colin Hinton <colinlewishinton@gmail.com>,
-    Matt Hunter <m@lfurio.us>,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Miklos Vajna <vmiklos@collabora.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Thomas Bachem <mail@thomasbachem.com>,
-    Thomas Bachem <mail@thomasbachem.com>
+Content-Transfer-Encoding: 8bit
 
-From: Thomas Bachem <mail@thomasbachem.com>
+Hi Christian,
 
-Since 2d4ab5a885 (config: format colors quietly, 2026-02-23) and
-9cb4a5e1ba (config: format expiry dates quietly, 2026-02-23),
-"git config list --type=color" and "--type=expiry-date" pass every
-value to color_parse_quietly() or parse_expiry_date(), which do not
-handle NULL. So both segfault when any key in the configuration has
-no value.
+Thank you for going through the candidates one by one. Here is what
+I will change in v3 and what I plan to keep.
 
-Skip such a key quietly, as both already do with a value that does
-not parse, and as "--type=int" does with a key without a value.
+> In https://lore.kernel.org/git/xmqqmrt7c1zf.fsf@gitster.g/ Junio also
+> said detection of "--" could eventually come for free as a side effect
+> of using parse_options(). So not sure an early scan will be needed at
+> all.
 
-Assisted-by: Claude Opus 5.5
-Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
----
- builtin/config.c  |  4 ++--
- t/t1300-config.sh | 10 ++++++++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
+Thanks for the link. My [3] cites your answer in that thread but not
+Junio's follow-up to it. I will add it, and I will change the sentence
+in 3.4 so that it no longer says bisect_start() would use the early
+scan. Whether it is needed at all becomes part of the question for
+bisect.
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 2554322317..f786c0b123 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -366,7 +366,7 @@ static int format_config_expiry_date(struct strbuf *buf,
- {
- 	timestamp_t t;
- 	if (quietly) {
--		if (parse_expiry_date(value_, &t))
-+		if (!value_ || parse_expiry_date(value_, &t))
- 			return -1;
- 	} else if (git_config_expiry_date(&t, key_, value_) < 0) {
- 		return -1;
-@@ -384,7 +384,7 @@ static int format_config_color(struct strbuf *buf,
- 	char v[COLOR_MAXLEN];
- 
- 	if (gently) {
--		if (color_parse_quietly(value_, v) < 0)
-+		if (!value_ || color_parse_quietly(value_, v) < 0)
- 			return -1;
- 	} else if (git_config_color(v, key_, value_) < 0) {
- 		return -1;
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 8fb920b1ba..3322b0bf4f 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -2648,6 +2648,16 @@ test_expect_success 'list --type=color shows only canonicalizable color values'
- 	test_must_be_empty err
- '
- 
-+test_expect_success 'list --type=color and --type=expiry-date skip keys without a value' '
-+	git -c section.valueless config ${mode_prefix}list --type=color >actual 2>err &&
-+	test_grep ! valueless actual &&
-+	test_must_be_empty err &&
-+
-+	git -c section.valueless config ${mode_prefix}list --type=expiry-date >actual 2>err &&
-+	test_grep ! valueless actual &&
-+	test_must_be_empty err
-+'
-+
- test_expect_success '--type rejects unknown specifiers' '
- 	test_must_fail git config --type=nonsense section.foo 2>error &&
- 	test_grep "unrecognized --type argument" error
--- 
-gitgitgadget
+> Yeah, improving the early scan can result in refactorings like the one
+> in patch 2/4, which could make it easier to implement a dry run in
+> parse_options().
+
+Noted, nothing to change there.
+
+> The "must be first" rule also looks deliberate rather than an
+> oversight. "builtin/column.c" has the comment "This one is special and
+> must be the first one" above the scan.
+
+That answers the question I planned to ask the list. I had only
+searched Documentation/ and t/ for the rule, so I missed the comment in
+column.c. In v3 I will cite it and remove the question. Since git tag,
+the only internal user, doesn't use --command, I will take column out
+of my targets and keep my four runs as a note.
+
+> It looks like bisect already uses parse_options() but only to dispatch
+> sub-commands (OPT_SUBCOMMAND() with PARSE_OPT_SUBCOMMAND_OPTIONAL).
+> The sub-command functions indeed don't call it
+
+That matches what I see in cmd_bisect(). I will describe it that way:
+the dispatcher uses parse_options(), and bisect_start(), bisect_run()
+and bisect_terms() parse their own arguments by hand. A conversion
+would give each of them its own parse_options() call, one at a time.
+
+> I haven't taken a look at this, but I saw that Hussain Sitamouwala
+> sent "check-ref-format: use parse-options API" patches.
+
+I had not seen them. I have now read v1, Junio's review and v2. The
+points that v2's commit message addresses (abbreviations such as
+--norm, "--" before <refname>, options after <refname> still rejected)
+are among the risks I listed for this command, so I will not start a
+parallel conversion. I will leave check-ref-format to Hussain and the
+reviewers, and keep my observations from master in section 4 as a
+reference. If useful, I can test his next version against the cases I
+observed on master and report the results in his thread.
+
+For v3, unless you prefer something else, my plan is: the bisect
+sub-commands as my main target, starting with tests for their current
+behaviour, then bisect_terms() and bisect_run(), and bisect_start()
+after that. If that turns out smaller than expected, I would go back
+to the inventory in section 4 and pick the next candidate with the
+mentors, after checking that nobody else is working on it. Is bisect
+the right main target, or is there a command you would rather see
+converted?
+
+Thanks,
+Cynthia
