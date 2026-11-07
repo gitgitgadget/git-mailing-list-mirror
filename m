@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.178
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794040983;
-	b=MSebrE9YQTZdCh4lB338UtwDWxv16505W+cQ44Y74NVdqW4qmOMRFyhgj821genG3MIs
-	 xVeBVpSv7ya+GkogfB+lO3yG6Kb/Nt28BMtPEdr11I5UfGQGoOkYMaaCkALhRgoEgpt/6
-	 0GxySrrIhvsFEraOjP7SsQb/q1UQfkywHZVS6+ApVlh5aPi9wzKPfQmYiEzO27MA+zSuW
-	 wGzRrg+iHETxYDpC62Akbju0faCyyeNQXCe63g7p1Ty6a4wLmw+sijmCrr0Gqj4dWMAnD
-	 G+A+W4goG336mc87rGXyPJWw02HdRBUGFElueUVyIg0pEkNaXs679p0VTpvLN60QVrw==
+	t=1794040986;
+	b=UJj2RY1vz3nIkOix2odAPwPj56llstg4sfXHVw5YuP8scmYYsxvBy0Ro6sSz8dY+F/x8
+	 lKyiwYwnHLzEwd4RVe+vOn3uUrj/uDdW6TN0JTHkpIUkMweXGfg7+Hblth0p9cFxlMmQo
+	 XnczF7rsH8Ncf3XJZ3h/qCqwk3aKcjnBjnvu3il3Vxw8jIkv1VS50HHwQ2fgvUHC6JLC3
+	 xgNI5OAbl05VuDBTf8GunjZHxHFSc74TvURBBwxHBGQQHbnsvka0zaZhX3FCvr3LdoldL
+	 dSKqCymO39lbjH3K9fjLUK3uOIJrP2NYZCS10QmuOkB6+QJSgrX1cErsEmrjeM9wSYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794040983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794040986;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=Eki/vWEecVQc51MvK47ar0SIvpM+9TWbA0WtBs1hxbQ=;
-	b=MPqDdU9/dxDPUSvBxgMvvRiXCF8QYen8FAVPcST6B9wh//JDDAFyEhtOaII/WD/H9L/Q
-	 OdHIqs0P1yxW0/gx0dO8deqtDZXlyCvNK7KCYSmJY1siawzz+WFwmyk+2V77sVUkIXdCC
-	 AjwDtM08dQqQ0xnBsxQvrFKndlnTJvr4diBkNYlk/P1kl3m8CfMNqlGFnd36aB/8CqnB+
-	 DsOvHWTya6rVLM0rVlm2/3iwQneKHtVjVtQGMe/7HeGSj++eK7McSjxMQIwQjqa5KNYme
-	 ifm5k33NKgXNpVhVV0BMMMjilum5dTwUsYlA0lFLpDaBZ3Ppwm8K2xuLUr7+3kU0bQg==
+	bh=70YQV640hVujJKSJXbMhugcN3W8fdQKTdQG2zJl56g0=;
+	b=MWPbOmfw0raaZ01Xcrl2yz0sMrD62ZS4aaWcQT8+CzfMF1WfgitZIj6GjNs58bya61jn
+	 E45dT8vp0KurUFp77gyjCkgi/kEANk2877FfNj7mSwFVfHXPculTOoDRca1xgpmgxvqt1
+	 mm/258wZQCnuDESRyL2PcLMniz/O+CqsZHhiiQaaYqnNXHeuPhi+SfsR18qLXmn0lFvO2
+	 tOvelCJAt2EKt1eehBs5hN0RH6fv51DDQgFNMRX9IUKpH/R22KrV6Z8YSy894X7U+EDhW
+	 KEY37ZDoteJUKF12JhZKVrtm41RpKGeEFw9x80tZ4UWzi+1E/5HwygMYkpf6a1d1Afg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=byQAjoIu;
-	arc=none smtp.remote-ip=209.85.214.169
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bVZ6pyQK;
+	arc=none smtp.remote-ip=209.85.214.178
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E452606A326
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 08:43:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E452606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8277F606A326
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 08:43:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8277F606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=byQAjoIu
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2e8da6ef7ddso8030145ad.3
-        for <git@vger.kernel.org>; Sat, 07 Nov 2026 00:43:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bVZ6pyQK
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2ed1414df17so5320195ad.2
+        for <git@vger.kernel.org>; Sat, 07 Nov 2026 00:43:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794040983; x=1794645783; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794040986; x=1794645786; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Eki/vWEecVQc51MvK47ar0SIvpM+9TWbA0WtBs1hxbQ=;
-        b=byQAjoIu32Ka7tZ0rG5gH3nxyKx5+ZddEq3y9um2TwsFeBR0cdiEyO5qXOgrLVNf6c
-         feY6sUoYq6Eu2konuE/2CCMnOgQq4l/EAa6FFOVqd/kbmFsPdWAuT7L8qGxeGakHKoD3
-         z4pqAEGnjMf7ImIl7DyOufDyXVNYYUO62QNeEGOyNUTknAGDzVQ+YPgCEGDskBGtY1zs
-         wkmn4BkFMTCnL/KdLPSdZ8uewTTtuIndEbFmtMStJUpjCc1cZvZFTEec06M5/wFlD9y/
-         YEODsIIJrYUTI7EWrtTJwmr27y2SERxczWwmzS7wnawBXowlhnKO7JaYx4UWJG/9LLHH
-         WuaA==
+        bh=70YQV640hVujJKSJXbMhugcN3W8fdQKTdQG2zJl56g0=;
+        b=bVZ6pyQKUgpBrsS2X1dUbf+g6rbarj688jdHOQFy7Xkg9m8Xoa1XrAWUwpFtrAZbyk
+         IBXrNf3XWYtgXOob2OISus8S2IwdcX/T693pqfxkihtzk3TMNZNh3rN/yjNnt9JyJDbp
+         L3mIFMHiLRNN7OBEJav7mWsiVnpbx61mDLC1LRTPSQYOx/r8uoGUBYdOU1DS8AEIz5Ih
+         9ML/XdEew9cBxRFmQp1dW/JPHxmE5xrr0IcrRh/ygScP9eCzX+Ml8m8c8gWn44m2jkww
+         nIpaaFzUV2rCX5k9E/4nfM93awSDegukOFfMB80/Ls8gcO/MdfKmIjxbKL4CiCCR7/GC
+         Y08w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794040983; x=1794645783;
+        d=1e100.net; s=20260707; t=1794040986; x=1794645786;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Eki/vWEecVQc51MvK47ar0SIvpM+9TWbA0WtBs1hxbQ=;
-        b=b8FZk+Ojmu/5nxSY5VB5Gr0d2LbArDCY4wYgE7EWPgS2lU5X3B0j45pxyAlIOSOKvS
-         /GX6NlgMxPbOGV5FXyvpqRz4gwhNkUpilJp+6R8nsE9Y/6lGT0ec/SxZMYq74NgRuIYG
-         goWgzUZQ/RiIBF06KVIqCnK6mOb/t6pPRgh3mylNT1xC9Y8P4UV00mPo40Sv0CYH1Cvx
-         quQD18uXC2CwHMap7pN+cc0XnisxQ7WZV/ayWnw68JetcpvszwsGaLVND0y2zTru/jvX
-         8GTkyis60SA51s+xcXlcdm72WzISW+QztAcrzuTij1BD9w1xfoj58+gnwRHjW3syWL58
-         F0nQ==
-X-Gm-Message-State: APuU4Z+HySUiAlWUyeQ893PuWEd0R1gwIx/+v8OR0R1maJ/vPDYapCOn
-	dSDZplM2F47Pl9L4nkdKUEmLglJpR0ujmmv1axB60Kx5LeBVtgYDOCLEUX+kdKLo
-X-Gm-Gg: AYBFou2yS6yYN8wFRaaEGyFfqgDzLkLaZ5ynWFmqTiTpWngD15r8/6Agg0/IwvSoFcT
-	9HnZSvrvV01OdlvibYssCFOpFkXCS2QjYxCUacbdeJHIwDmUNAUasiox67cWmfqFXafPc92qm4V
-	d7IAFFDS/+Ugkrm2+OLTzbMNUFMAWDGGUktoW3wLPWDZMQprnHveNkKH3QIevQC6scxtjtSEfD6
-	8ZUHbs+QPcDNtTqVDgYwQnCaAhqdO4aWf/85R4uZTKCQFhFc5jX9n29Ta/in0SPuXSDhy/WzOE8
-	Lm9lQ/Ooj4+LEOjjACo0qaJKAoLCYtUo79zPMI7P3p176ALa1xTUGXCkx4q/zXSFjxe9jbiAWFZ
-	nK+AhyXmZKXhfixdGMM5g5DL6Ao7fnVRMaTeRkjF33BwhtU8PzKb/OolYUe4JqYhBnHd4fQCqZi
-	qd5AsxLxz9gTngsqwqDidoiXmuWtFJ/gzdiM6xYMavi5aDL9K9QeAGEEtL+o+N1DioFhytASb6G
-	y+HacJMnLmxvEfazkvFSrupk131+jk9ms4GHz7Zav/jDLgbtpfUS2EYVLn+0Vz4JLwegmMv6j+4
-	8apfk9dPse1fA6TvDpW9AWmUJy02d6es1g==
-X-Received: by 2002:a17:90b:388d:b0:3a7:9adb:2a0d with SMTP id 98e67ed59e1d1-3b0db13e119mr4438443a91.0.1794040982737;
-        Sat, 07 Nov 2026 00:43:02 -0800 (PST)
+        bh=70YQV640hVujJKSJXbMhugcN3W8fdQKTdQG2zJl56g0=;
+        b=T4hPloM6z+nF69oVV1SAxAhnLMfliGMIAweVllsVf3sZJAF313zLvp7pcslrV1guoT
+         Vrp/Ibit6kcc90ReVsiKGZNMdoYjkBwQSDWcYByNugriMVAGTl4f9XrGsBixcA1u2XyH
+         BBlR85jkHzbOxnltV/EwP+1oL7FmE6rf3brwkXAgfcbmO9fTXbXlIRKuRRJgK2fSIH9z
+         ibhvs9Q3WTyRRKgw0SLAA4imFQSbs4RuLtY8djd4MA47CcG+63AEQNzd0WK9unQrOVWI
+         0wlQaXkkznFixp/aSH7b08JOp/DB7BjCri+2IMtjBR++1cfSI/ADpopRkPq7tueKdzPz
+         MrbQ==
+X-Gm-Message-State: APuU4Z+Qk9mdMlAW7r5GLVRp+YZh/TX/zwip1yv3KlGkEUgdukwo9fey
+	9ziu9WEyHBGN7MI4S6RhdiHTru4iSKS2eF7o7oMJGNiRT6dodquEz8wlPAhi1JEC
+X-Gm-Gg: AYBFou16pGd2NB8ZGIjKZFg+CCkwI6IWw6DZO2dvNtEv+ALS5SHVcUUHm+ILOOqmCv4
+	4FzgRReO8IyQ4l99vx5efn2DgxlxhurtRnxdIwSAmR9eaAG0QB12TzvfxHeqDKXfbIqdbl+HnZ7
+	YVC59cagHC9aT22c0IE2cQV3kEhFlVLCOaPRUb4rOf7PNwkNSGE0ymBh5cwKQSY/5Y+lfVQAUmo
+	CSlyRpeOJOaubiQFYJCPQh3gpf8L33hjAUXzoIBJ/PcHtbtrvj2W/8vQ+1tuW98K0TlcgzeeuUP
+	YAX6uK5IHLKVxWO6q3CUDBpxodAnAa9pXixC7QjFS6ZZuylIMzMHWPEXrCD0SYHznM6Ihv88WMn
+	kY8CNXLL1S9sTY15R3PeCO41RHgmum7BY132cquKP1ZZtFYRrjR+tb8NOgKqY4/loQJmDSOOMRW
+	qcldmgTqrL20Z8pvpAklDEBEOGQrnwwxOM77RcH7YSn8hRf4AzuEdur+G4XCqXNfgz7baRcW20J
+	EDHVaGt9pVh+ARa17lW9ZdsoSN7/BYIyaDK8rb9chHsrtxXkkwwLJcTH/fm+aIflcr5F+G+6B30
+	b/sJo7/PIoMs3ZRQILCC7Jk6a6wqLJhplFZgKFrrhCw6kGRdMaX91Zo=
+X-Received: by 2002:a17:903:1a30:b0:2e2:c8a1:ab63 with SMTP id d9443c01a7336-2ed40aad8acmr58911135ad.17.1794040985843;
+        Sat, 07 Nov 2026 00:43:05 -0800 (PST)
 Received: from [127.0.0.1] ([52.156.141.210])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b10583c8b5sm2792861a91.12.2026.11.07.00.43.00
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ed47d40998sm11944085ad.34.2026.11.07.00.43.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Nov 2026 00:43:02 -0800 (PST)
-Message-Id: <260b90a4a23d9a94aea0ed2a2e28930a646d7fd6.1794040968.git.gitgitgadget@gmail.com>
+        Sat, 07 Nov 2026 00:43:04 -0800 (PST)
+Message-Id: <e10f1fc0ba4084584e11834ea98b8d8d8e353244.1794040968.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 07 Nov 2026 08:42:39 +0000
-Subject: [PATCH 07/15] blame: handle NULL values for color.blame.* config
+Date: Sat, 07 Nov 2026 08:42:40 +0000
+Subject: [PATCH 08/15] merge: handle NULL value for branch.<name>.mergeOptions
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -113,57 +113,51 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-A color.blame.repeatedLines or color.blame.highlightRecent without a
-value makes "git blame" segfault: git_blame_config() passes the NULL
-value to strlen() or to parse_color_fields().
+A branch.<name>.mergeOptions without a value makes "git merge"
+segfault on that branch: git_merge_config() passes the NULL value to
+xstrdup().
 
 Reject a missing value with config_error_nonbool(), as
-git_blame_config() already does for blame.date and blame.coloring.
+git_config_string() already does for the other strings that
+git_merge_config() reads.
 
-Assisted-by: Claude Fable 5.1
+Assisted-by: Claude Opus 5.5
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- builtin/blame.c         | 4 ++++
- t/t8012-blame-colors.sh | 7 +++++++
- 2 files changed, 11 insertions(+)
+ builtin/merge.c  | 2 ++
+ t/t7600-merge.sh | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 48d5251c6d..653449c0c9 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -782,12 +782,16 @@ static int git_blame_config(const char *var, const char *value,
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 5b4eb23a83..fbabda97f8 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -668,6 +668,8 @@ static int git_merge_config(const char *k, const char *v,
+ 	    skip_prefix(k, "branch.", &str) &&
+ 	    skip_prefix(str, branch, &str) &&
+ 	    !strcmp(str, ".mergeoptions")) {
++		if (!v)
++			return config_error_nonbool(k);
+ 		free(branch_mergeoptions);
+ 		branch_mergeoptions = xstrdup(v);
  		return 0;
- 	}
- 	if (!strcmp(var, "color.blame.repeatedlines")) {
-+		if (!value)
-+			return config_error_nonbool(var);
- 		if (color_parse_mem(value, strlen(value), repeated_meta_color))
- 			warning(_("invalid value for '%s': '%s'"),
- 				"color.blame.repeatedLines", value);
- 		return 0;
- 	}
- 	if (!strcmp(var, "color.blame.highlightrecent")) {
-+		if (!value)
-+			return config_error_nonbool(var);
- 		parse_color_fields(value);
- 		return 0;
- 	}
-diff --git a/t/t8012-blame-colors.sh b/t/t8012-blame-colors.sh
-index d2653b3c31..5eeb7338a3 100755
---- a/t/t8012-blame-colors.sh
-+++ b/t/t8012-blame-colors.sh
-@@ -69,4 +69,11 @@ test_expect_success 'blame color by age: new code is different' '
- 	test_grep qfunc colored
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 64fe21717d..d4963f1fee 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -552,6 +552,12 @@ test_expect_success 'merge c1 with c2 (squash in config)' '
+ 	test_cmp squash.1-5 .git/SQUASH_MSG
  '
  
-+test_expect_success 'color.blame.repeatedLines and highlightRecent need a value' '
-+	test_must_fail git -c color.blame.repeatedLines blame hello.c 2>err &&
-+	test_grep "missing value for .color.blame.repeatedlines." err &&
-+	test_must_fail git -c color.blame.highlightRecent blame hello.c 2>err &&
-+	test_grep "missing value for .color.blame.highlightrecent." err
++test_expect_success 'merge rejects branch.main.mergeOptions without a value' '
++	git reset --hard c1 &&
++	test_must_fail git -c branch.main.mergeOptions merge c2 2>err &&
++	test_grep "missing value for .branch.main.mergeoptions." err
 +'
 +
- test_done
+ test_debug 'git log --graph --decorate --oneline --all'
+ 
+ test_expect_success 'override config option -n with --summary' '
 -- 
 gitgitgadget
 
