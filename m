@@ -1,90 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794040993;
-	b=GAl4djJiJ5pX1DsqGBWsgRpUARdJJ6sel+jXooydcDFBWeEXcxCHH8nuKdgL718h4FZA
-	 oyqo5gCxC8wn9WX77Lwu/VpRNsuYkd6IrVm5JbesDgWVJkQ0hfxf2sBYv73FtH6fA4870
-	 GbDXecOdNguX3yzqWxUek4GCAIhAwHqXkfhMrsvJpNax1nYE4jBG7aAizh+GJXEUW6Ws3
-	 ztTugI+mhNpG7UPzKIGMJPqDMVPyGRtyoRP6YOzvt0gaAFnskWkHHkxsKeGNTM+DId593
-	 1u45/17g1R8CKSxvFHD6avTFQmuIwrYUZxSEq0gyyQLYPScRsmcn0DP4O/Gfx+R88pA==
+	t=1794040995;
+	b=dZuYiMY8G1DyP9u5OJTWcSoR/LIwytVA1DvTLY9ToSOzkFpzel3WQ9JU0HeWooAl3Bos
+	 PRBpHDES6I/FW9zNUzcLR4v9BcyZQN8VbMBmDoLscRuG055A8hj7QZxhw81lIXeEVYfys
+	 rbXILu+5ayuQnXGzWjooeUiWP1Kbp75EoidgOX9uf4Sx1/YFKTgIw1x9HkNFPHtofeKZ4
+	 ywZjCJs45baOOwO5Iglogm7wAB3xAanZbNvGniat1pI6KUphmzYOuw07FSSDfkvTMmv/5
+	 zkCIv7wtzXCJQ1NX8LWW8VT2j1JCiJ/Ac7wBWtSN7CyIK7Tex+KLgkyYF8onSNxoCcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794040993;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794040995;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=dybvKjemwIujuuWlI3Vr1RL/sCvbi3EVG+N3Abzb3TI=;
-	b=HVfc6xn0iaM2UsR2VwKBWgsf5sJQAYSM2i6OHn3ocrm6rbADr9Wu5ZCbejYRdB1lt+rd
-	 QwnpenS2NcwdcWped9pdYwD3s6w6tsj4Arx9uDoWGybFrBTM8+o8LYU1u4WEXFgDHqjY2
-	 V/ZT/EcQP9pORjBfTMUh58PZAKNGJ1zhLXasMXOMWbW8TkU1kfCM5OyI26rL4Ftq2GiqR
-	 vwz5HJEFQX6Oq4/xQQcNAROXoW4SmpGbAnv4JPL/dQ/wQ6ShlW9dLlzg62qBi/u5eDOsm
-	 +RpqbcMEmxIxxXuDsw1VHCAYkVjlMWaTpPATNG+PLejKp/2xBFXwFoTUpMf42R34nLw==
+	bh=E8faZZ5ptQoCmppBy05ePLwNLRxZ37AYXhxH+RAyWsw=;
+	b=HNYfrblheNVWMFYI6ABMTeyShq4ljyAt0pNmI1hGMzU4cB5HbqeG3i6zr0UsVEwIM9w3
+	 fRM91CwxRpLPyqBLOznzdNjZDG9AKE3GW/5x5lAtidPPPPEexzolWXkKCbCBBP4tNoXTA
+	 6T4QvXtRjti6OtwNq3A8S8+cmJQmitAxjqKbrk8+VztnOv7UpFRSnCDyaA7DqqzzWXSTT
+	 mqOKITzmi19FMbiDcK7nbP3zTeUhdDoJcPDmZ2S/ScAJ/VV4TtwQRMHVVmw5wFZM4PlkI
+	 T3EVRnT4PZVAD+bfSBT8z5xWNAyZjiCPZLyLFyvRdSJWqaq+f2yrOiMeqStKdgU9MFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=y5HwHo5v;
-	arc=none smtp.remote-ip=209.85.214.177
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aHIPQvAO;
+	arc=none smtp.remote-ip=209.85.216.41
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F041606A32D
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 08:43:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F041606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9235B606A326
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 08:43:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9235B606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=y5HwHo5v
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2e987b4a710so1592505ad.1
-        for <git@vger.kernel.org>; Sat, 07 Nov 2026 00:43:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aHIPQvAO
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3ae1d0caaedso655303a91.2
+        for <git@vger.kernel.org>; Sat, 07 Nov 2026 00:43:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794040993; x=1794645793; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794040995; x=1794645795; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=dybvKjemwIujuuWlI3Vr1RL/sCvbi3EVG+N3Abzb3TI=;
-        b=y5HwHo5vzjPVjGKyLCT63kSc6yWd8xL0rnZpW1ShoERVlMo8EqVg9x5GztMTO6oeXV
-         4K/pNp3F5hHbiD/VVhfswQiENJ6w4tJciX/+3/oEWWw01zbjZb4vEzC3a+lPX16Rdgpq
-         Ppsa5h2UGMWGz9SKb/Axw/UaCe0BV1IYIfbHxcBrkVt/3XervG1buNoFt701mtckBa9S
-         RMY5f4WWib4ZlfmqCjaoYcXJ4gLnX7HJ4dObFAJigrFN6mIhXVKfokotxL2OURbmNhQP
-         C/suHnygipZH6Zt/j1xV3Gms19nO7aMZTLzzI5lB5R+seGEBizjANRiC6bQs8HaqW3DP
-         DlRQ==
+        bh=E8faZZ5ptQoCmppBy05ePLwNLRxZ37AYXhxH+RAyWsw=;
+        b=aHIPQvAOkThMIVE1Y1qcIiSwv8mkaBHVmcmCiJevvqDRZoPMqkGB+JK6POZxarCgau
+         CgFMfrZ8UyaeEDyQsrqSYHQBqSxReqSzMcT8MHG2r7cyn43iHEBpm7x9uK28jwyZt2GU
+         4krpI92pnorcN6nAvSYSGeWxpxWtOXz/Ac2OUkaPTe6oUEpqTEn7YCLfUHO5j2DYEN4o
+         jWsWzdv9m2DnA0wballuC5+/dhryAlcr3qa10tA1FnVXg8e5o9FDdHDE0CDy/fgYCLeq
+         2lfvq2OH9J9pbLsyoIjE9J8F6NyVqXm4jveXUJ70isM56kS667zaWLU9YAiXugsOOqef
+         HUDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794040993; x=1794645793;
+        d=1e100.net; s=20260707; t=1794040995; x=1794645795;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=dybvKjemwIujuuWlI3Vr1RL/sCvbi3EVG+N3Abzb3TI=;
-        b=KTA/c0U4jX4Y+sNSBbgox6LfnqbqnZvllDGLH6D7ZWKpcB5g2XN3EUEPTUKakjOp2f
-         elMyrsCRV1BhsDPf4eThv4rh1y2v9l0sQPxTiXHrQa34x++QJ72Sunvk9bMZ/k6uOguZ
-         FR2TVbKKsRipSIEJV8IiiIGFgoIgRj4SgPzoSxaTAurhAQZ4SgxGzuSlNb1DcG3miK3a
-         Dv1dM3ZkWn5WA3y7hfE9q0PePE98BmO9RqrHo2yncnJ+6NcebG2Ixvnvy1ODe114K2gc
-         IyxrTss8LTEhVbpRLxde+85RiPWwjlPiasYj9WOtW5wNzVjl+ya1Zu+jffJ5j+FjHr4D
-         sGIQ==
-X-Gm-Message-State: APuU4Z+TANnYo9tS4PuTzsp2eJosW78tPMvAu7G2FkZADi96q9aZ0UPi
-	QvEioMF+UPSBBx5jMWsnlkOlfgda/h2X897wnwrtT8SE6tWv0A9nLPO0o2MS3w==
-X-Gm-Gg: AYBFou06ftu7jKTpYzEgXTw4axkgeNcAF6LQ/OPmbU8M70w5ALCgPcSde+v+crw+rIY
-	IvlGP//IEL+KIMGMIBUZtuKJW0hEfwuFa+LU02ze/wt19qf0AwiNnGEPscM/kFJwxRf+UzQslRu
-	9tdpmm/6Vn/phQNlj3qUWQz6IOzLXgJ4mpGUGSG4RMXDU4rWxM+pPHkslZd3ejGzU23aeT27wBH
-	+nNBudSNaKuOX31kAwfFjC/3dPyOyHY96tYaHuB6YsrAIu4mFNgCxv4Xn/WPmgoyzYlmhOu3msq
-	auNbC7QCsX64dDcSIGWabKhlphgnrJicMAf2V65yXL5bHpbJBb4s3UPSUrDvAm0VWlRA2IQjvN2
-	GSExdJDNIjJ9MZrp6JhcZNidkkQp8kGReUPCVCQmifdQ7hmkbvp69epw15vJGOFxAxGNjBl3kuJ
-	EOSr7wGeuUBfCJXQSjTzKLNh+TH8WFzrCpvUfEqa1pZ4cpxTpOdNtKGKAChbhxc9ky73WVx8B+7
-	STa9ol4DSD5PK+oLWjwSOEkRDEx37GqmfMXx3DW/hIEQXlQsVHi+D7+vJGs0pJ5o6PCRH1PMkzb
-	XSSznkR8EvFf4s21QeqfG9sHU+EmEr8Jhg==
-X-Received: by 2002:a17:90b:1c84:b0:3ab:be66:ddd3 with SMTP id 98e67ed59e1d1-3b106496dd5mr1150922a91.32.1794040992694;
-        Sat, 07 Nov 2026 00:43:12 -0800 (PST)
+        bh=E8faZZ5ptQoCmppBy05ePLwNLRxZ37AYXhxH+RAyWsw=;
+        b=oXbfmhnK7lpxdu04fsgBFA5lwF90AAs31TSFDaZGzRxyLYirjFtQ6c8N/E3RhhvA0u
+         LrCjRGwjMdS2VUU33g4CQVvluJVPmWQ45YVwMUMRoY0rr5TkLFRbCuMCuFXKbbFp4dnJ
+         MpNJldoAVoxmjsRsfo+5yOnm1Da7wlRGbf9Nvym4AGoLVw7VOZANMqLutrviobQAErYq
+         0jdCGaUkmKqx+gC6uztL/GuA9npjZiPvoOJhfL35cMX8zzmvdMLJhMuX4eKc0fN03jWj
+         nL2TMpGT3gV22YDgkdNCgKbfDPPzsu2tmfRyMKDktMq6EPsv/lSVymJfhfxP0rOo6Wea
+         l3JA==
+X-Gm-Message-State: APuU4Z9XjFVBguboXVCDj9GDC63vjOxkaTxygHkfvpbQkSTyS8EM1cue
+	mCZN0tQm/1Mth0fdVYnNiG0bkqCaifWyhaNHTSLIYZ84phtvL/L3vQUhPwDzBQ==
+X-Gm-Gg: AYBFou2tMUfJn5Am90qPGcKJgOJsi4eHcAlS6Yefz465pXzmMZKOX9IF5audK0miRrV
+	MColyrFunYxpHOT3v8fa4HDM9azwD6rnGC0+omXF7RXDnbyjjtlJz8W5tjQ3ImheOMyvCXxxl0k
+	g0rAeVDx0zASkFqe/h2fjmJ25pzKirEc56PAH3/zvOFv86RMgv9hY7hee5/kUc2v4d8KWwhB+CD
+	gSWRDQqTjGFfB2oRqrwSD5Gli//bdXDT6Q1t6PSbb/5DEH3BWrw7E3XFOIbeNbc5MGX77IxkLet
+	eZL8GwJ0mG07nXQdqkk+rKZiom4ymjrWGrTVzZJKAExC3f+MCS8+YbeUJXkkZf6vbSePkB1FObt
+	t8t9neB2KwVjHS1parvn0XbaXN/ZJhZiiBFIJHzThbUCF6EMynFdrMM4s9q3zKFIReahEu8IiH2
+	6Ab90yHLnabcW90VEZyCRWNfPzu724hCmP8Re0EjBJhyANafV5R67FFrJEeKk/rjehiEZOI2GhH
+	fDBxB+INjXfzIWoJB1gPesJpZC5zO20mZslNWWNSmyHzO3OQ8+i+gbAfs2K/XQDlN60rHXk5LYy
+	TFQyJFefNIO3USIHr9rvcjLWiQwH3qcoLg==
+X-Received: by 2002:a17:90a:d60c:b0:3ac:6e91:3f22 with SMTP id 98e67ed59e1d1-3b0db72c4d0mr4267655a91.52.1794040994882;
+        Sat, 07 Nov 2026 00:43:14 -0800 (PST)
 Received: from [127.0.0.1] ([52.156.141.210])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b105831cf6sm2529253a91.11.2026.11.07.00.43.11
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1058d2fa3sm2594937a91.13.2026.11.07.00.43.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Nov 2026 00:43:12 -0800 (PST)
-Message-Id: <5c12b13d90c40fdd933bcb868db4b593f47b99a6.1794040968.git.gitgitgadget@gmail.com>
+        Sat, 07 Nov 2026 00:43:13 -0800 (PST)
+Message-Id: <ce4c190ea2ff1a1fee77582f98b023c87e7dee41.1794040968.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 07 Nov 2026 08:42:45 +0000
-Subject: [PATCH 13/15] config: handle NULL value for remote URLs in hasconfig
- includes
+Date: Sat, 07 Nov 2026 08:42:46 +0000
+Subject: [PATCH 14/15] bundle-uri: handle NULL values in bundle lists
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -114,71 +113,90 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-When the configuration has an includeIf "hasconfig:remote.*.url:..."
-section, a remote.<name>.url without a value makes nearly every git
-command segfault, "git log" too: add_remote_url() passes the NULL
-value to string_list_append(), which copies it with xstrdup().
+A bundle list that gives bundle.mode, bundle.heuristic,
+bundle.<id>.uri or bundle.<id>.creationToken without a value makes
+"git clone --bundle-uri" and "git fetch" segfault:
+bundle_list_update() passes the NULL value to strcmp(), relative_url()
+or sscanf(). Such a list can also come from a server, through a
+bundle URI that it advertises.
 
-Leave such a URL out of the list that hasconfig:remote.*.url patterns
-are matched against. It cannot match a pattern, and wherever git
-reads its remotes, handle_config() in remote.c already rejects it
-with the usual error. Commands that never look at remotes keep
-working.
+Reject a missing value with config_error_nonbool(). That makes the
+list invalid, as an unknown mode or a second uri already does, and
+the clone or fetch goes on without the bundles.
 
 Assisted-by: Claude Opus 5.5
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- config.c          |  3 ++-
- t/t1300-config.sh | 22 ++++++++++++++++++++++
- 2 files changed, 24 insertions(+), 1 deletion(-)
+ bundle-uri.c                |  9 +++++++++
+ t/t5750-bundle-uri-parse.sh | 16 ++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/config.c b/config.c
-index e0bb29b53d..f6ccfd52dd 100644
---- a/config.c
-+++ b/config.c
-@@ -327,7 +327,8 @@ static int add_remote_url(const char *var, const char *value,
- 	if (!parse_config_key(var, "remote", &remote_name, &remote_name_len,
- 			      &key) &&
- 	    remote_name &&
--	    !strcmp(key, "url"))
-+	    !strcmp(key, "url") &&
-+	    value)
- 		string_list_append(remote_urls, value);
- 	return 0;
- }
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index e3f8064889..8fb920b1ba 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -2970,6 +2970,28 @@ test_expect_success 'includeIf.hasconfig:remote.*.url forbids remote url in such
- 	test_grep "fatal: remote URLs cannot be configured in file directly or indirectly included by includeIf.hasconfig:remote.*.url" err
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 7de17634cf..8c8d17bd2c 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -165,6 +165,8 @@ static int bundle_list_update(const char *key, const char *value,
+ 		}
+ 
+ 		if (!strcmp(subkey, "mode")) {
++			if (!value)
++				return config_error_nonbool(key);
+ 			if (!strcmp(value, "all"))
+ 				list->mode = BUNDLE_MODE_ALL;
+ 			else if (!strcmp(value, "any"))
+@@ -176,6 +178,9 @@ static int bundle_list_update(const char *key, const char *value,
+ 
+ 		if (!strcmp(subkey, "heuristic")) {
+ 			int i;
++
++			if (!value)
++				return config_error_nonbool(key);
+ 			for (i = 0; i < BUNDLE_HEURISTIC__COUNT; i++) {
+ 				if (heuristics[i].heuristic &&
+ 				    heuristics[i].name &&
+@@ -210,6 +215,8 @@ static int bundle_list_update(const char *key, const char *value,
+ 	strbuf_release(&id);
+ 
+ 	if (!strcmp(subkey, "uri")) {
++		if (!value)
++			return config_error_nonbool(key);
+ 		if (bundle->uri)
+ 			return -1;
+ 		bundle->uri = relative_url(list->baseURI, value, NULL);
+@@ -217,6 +224,8 @@ static int bundle_list_update(const char *key, const char *value,
+ 	}
+ 
+ 	if (!strcmp(subkey, "creationtoken")) {
++		if (!value)
++			return config_error_nonbool(key);
+ 		if (sscanf(value, "%"PRIu64, &bundle->creationToken) != 1)
+ 			warning(_("could not parse bundle list key %s with value '%s'"),
+ 				"creationToken", value);
+diff --git a/t/t5750-bundle-uri-parse.sh b/t/t5750-bundle-uri-parse.sh
+index 70ae94c4d0..a91c1b428d 100755
+--- a/t/t5750-bundle-uri-parse.sh
++++ b/t/t5750-bundle-uri-parse.sh
+@@ -312,4 +312,20 @@ test_expect_success 'parse config format: bundle with url instead of uri' '
+ 	test_grep "bundle '\''typo'\'' has no uri" err
  '
  
-+test_expect_success 'includeIf.hasconfig:remote.*.url skips a url without a value' '
-+	git init hasremoteurlTest &&
-+	test_when_finished "rm -rf hasremoteurlTest" &&
-+
-+	cat >include-this <<-\EOF &&
-+	[user]
-+		this = this-is-included
-+	EOF
-+	cat >>hasremoteurlTest/.git/config <<-EOF &&
-+	[remote "valueless"]
-+		url
-+	[remote "foo"]
-+		url = foourl
-+	[includeIf "hasconfig:remote.*.url:foourl"]
-+		path = "$(pwd)/include-this"
-+	EOF
-+
-+	echo this-is-included >expect-this &&
-+	git -C hasremoteurlTest config --get user.this >actual-this &&
-+	test_cmp expect-this actual-this
++test_expect_success 'parse config format edge cases: keys without a value' '
++	for key in mode heuristic
++	do
++		printf "[bundle]\n\tversion = 1\n\t%s\n" "$key" >input &&
++		test_must_fail test-tool bundle-uri parse-config input 2>err &&
++		test_grep "missing value for .bundle.$key." err || return 1
++	done &&
++	for key in uri creationtoken
++	do
++		printf "[bundle]\n\tversion = 1\n\tmode = all\n[bundle \"one\"]\n\t%s\n" \
++			"$key" >input &&
++		test_must_fail test-tool bundle-uri parse-config input 2>err &&
++		test_grep "missing value for .bundle.one.$key." err || return 1
++	done
 +'
 +
- test_expect_success 'negated mode causes failure' '
- 	test_must_fail git config --no-get 2>err &&
- 	test_grep "unknown option \`no-get${SQ}" err
+ test_done
 -- 
 gitgitgadget
 
