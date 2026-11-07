@@ -1,122 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.179
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794029128;
-	b=iPWdLLH2d42STbWtMMW5TDD2XoxxpU1kwgoqe+M/hyWWN2b9SsZapGXpAmVbrKiOMAtQ
-	 /0NQqbopauCLwgGfcc2t0vthTle/ksda3DfyzRSXwyGDyqq5IkT5nkPUX2m5chqWpq7j7
-	 Vq8Kow5K0Xu6gPCFN+NDmM4xKudoaj920aCSlGkfoM2weVZ7F/aN6qeNptOuKFxdfoCfj
-	 bVG3PiiiuLCLiJ6QGSayS4aP/7WFbbd5dhqaYbTD8rKNgbUfWAgxMconnHnFVJ/a8/rND
-	 WaZFF9hkcJ48Fx22RLfz1EFmYsXnvYq/4NW76WR+HlUBIR+q+qTYDNvnFNvDhTLnQXg==
+	t=1794030428;
+	b=fQ8VrIjPBQMcyS03wEQmemMXtEasLk7XZ4YfgchLKRHAAd/o4BDerdxEwmW5f+UU7WyG
+	 E/93aJ2xL51kRgKprqrgUpx6L8rmp3MMHs8VHT5uaGZc8HTJrTKTZ2spYVJ7eINwgEJVK
+	 Hxy6KHT6HJLamU2eJErxGy7puzEr5pWZjjj83Ic6VlGNALPsJDpX7syHI3eMHevvttr6C
+	 HNNKx6FyoNgnUWzPpw43qk8zHcOTbBtikPp+8zhjj5nmHy8z6UwMlgP8RURCv4tnAybaE
+	 yzCfB8elB5WHRbp0BD5F5Flzk5YOi3e3eG1aNnJ4+NtuVVJyz8Z4aqUEah2Bl2j7Ozw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794029128;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=vAKzHzDZ0DztWFF0iXXj3DqewoZ5eJEcSCBfwcdrc24=;
-	b=MuClpoDIM/2CSnk7raFrxNWVIESC1zkwHDp0Mjw5nfFPWIeSflGe+e9jVQjGjJRzRfce
-	 xzAMzu02bwsM0ZE7PAsf02OV6yG7YdoeMYM6tw8X/ngNvkEMs7mzIdw2Uey3DkXjz4u/s
-	 ngc6WIDtq3Q8Wi7HtqwFjDFByzqh5g6kzDKMvG1aOJ8kR7M0VbZ0Mh22m2BlQIQZq9y61
-	 +prM15xMGy3s5sdORRIbVTmWlBuVIoOQ5uoaH15feAKwltGdDJeQ/zzYQLfAfR9YTKoe5
-	 AfHXXHYcT1Tj6zcwvBIPEyh8PAxedxy2ByHCr/UWLT98ATUXgbJNOJEabm4a+dvFMJg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794030428;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Akxn6ITUl7dhrZx4muWk5QNf1oo/AC75b2f255U7KLE=;
+	b=xhe3maQDuUNkRDFfqgaFJU5X/uhrnBtST5VpvL/I9y4NjN5hMjqYY8fwCf6scgk58XTF
+	 WWZ24+sbTslrYsHd+jyIAOKzaVVOnW9M8sKxJaSSyd5QqHirWmgokLZh1Uo0vuCV373z3
+	 9A+u8/8eTYJxWZB8wzzjstIct8cLI4s1MogsMCQ5+JdvRi9txq8Cio/m7orTmkJ8jG9q8
+	 g+YKRD1bGj/xPL7GZKnWuHQsPTp30swR5xyarNcwkdIQUz3QEj/u106DJrneJGstEKv4p
+	 vxDC+rBf3Xh+URUxOAI8IcBSAGHdSzmbBpbt1AD5p46G4f16CxwyD0ZU/uKAe6+GvDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=G3bCO9Vl;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=YeDuB1O+;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o9fx2XbB;
+	arc=none smtp.remote-ip=209.85.215.179
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8141F606A326
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 05:25:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8141F606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAB0606A326
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 05:47:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CCAB0606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=G3bCO9Vl;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=YeDuB1O+
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id A6235EC016D
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 00:25:26 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sat, 07 Nov 2026 00:25:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794029126; x=1794115526; bh=vAKzHzDZ0D
-	ztWFF0iXXj3DqewoZ5eJEcSCBfwcdrc24=; b=G3bCO9VlHNK8NepVF0zgnEXzny
-	zvHHFBSH7O8mwz8/TQ/o+W/qrYNpZBHK8fa4UIWcrdgjQKNiKXueI3P/Z/9f2z7F
-	knDjFa8v834sBQW4rvAKnpst3r0OcXDhLn3/kGkf5ZRWWvtUDC4kdBbL5y7S8XbX
-	90RK6tno0v+aLm1PpzGTwuFnqaPETZ01s60vqGWFk1YvEPrHLOcMG4pGGedq8kyI
-	ctzUhjrleDiW/VHV8f+ufSUZC0K4rBowD1Wbjj25MTdwcp/x2m2/mZJfA7rHzXKI
-	AZn1mKYWcYnJlmBnynQRFzfVQ7MZKNV40JRSkqxNWmzPY9FzoXUKhSwjsFEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794029126; x=1794115526; bh=vAKzHzDZ0DztWFF0iXXj3DqewoZ5eJEcSCB
-	fwcdrc24=; b=YeDuB1O+iD85zRyx9xd83YjcXpy2/KUCnOSKfaU7OKmPVqSsS9x
-	CGy+3/BgdiKdxWfb9fjvYe8aEcpuOsU0Xu7PX6kTaTEjNMaSseLUFVmTQTMTFXqD
-	/ESs72EGY92GS5XwdTvtSxyqoKebIvlT87yJn/Nl10Olo8VqNhyEAWj9ZZ+ZYBo/
-	RsmRihvFrZeF97nYHrAPlU4FfMvQ4E0JT8584bjIBcEIfJlNkUTvsHK7hJGCs9OK
-	XlafXsby4e+bcI10lKERYD7T7iYoD7M7NaYFMuuj3/JXm2kOFatzHvA5Js46AhSN
-	BshZL1L/Q5yejJyhaaHvGmVHFFbzxF6UgCQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794029126; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:A9I2mpsEaP9KhJ7hMFI8W1vvIXOw40QwG2BrJbLT7zXzaN5
-	9r5H25Nd78w6YZinMrP3ZpRmfFkhYa6lA/UPa68VSjYa3t51666yP4GdJ7s+tVFg
-	pQxh+D3crg9kxKVvoYW9b/cW7ERCv/XVuGB90TTxsva9CmvtdaiST8m0aCrlysdo
-	GMzKifYVa3tnla3LnQkzPEdv9XpTGC1qCQ01d8nMxw2sPoUlqQ/vZpvXeoJ5gW8X
-	6E/zzh4AGz6vOV2ca+/JiDQgppjXQau2p4d4u2emXE/XsLHY55Ks8s/jA1m8LRfy
-	KRZ6EVHM/AHn3Wjs/+eSy8YedIDxa3DHJS5Fnbw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Sap8ToS/nCo5sR71d2mYI8CLjx/MsQzjuSbOYHqFXfo=:zRYlRpTg5IE7+1shoAJ5bazwg0CVECz+IbLWNIsfg6s=;
-X-ME-Sender: <xms:RrbuagqTsfcIh6tniJyaRd1fgwbW8nSeTFT8FtY_p32KCsUrTGIWzA>
-    <xme:RrbuatpXHZ15rl-OC7pS8uKfxmNoouU009KtctAMGRyhylylUx_l2bWsUt4GmnjJS
-    QvzjlMCadb23oeQy956TtSdskih1Wi3clQRaabavB7Qqmvk6VbkceM>
-X-ME-Received: <xmr:RrbuaqNRTrlmQqBTT0CXaP-Pnby3PqANgb3eKQaQqxbYf6uCdedA03SXvMSmTy6FJ0lAZueGwow4p9bJw0xG29wfQgGl6pib37Gn>
-X-ME-Proxy-Cause: dmFkZTEPvzCFkqz0LJdJVzkrXCaPb9wkmB0qx41qx2Ibqh24F2WmD2Xev0vldzpur9pJja
-    9rrOo3WtJOOO6McTZnd8ou1eQ4UtmJNbgUCJkK98z+4Ul/2v2pfnk7FBzMpnBFutgk9eYe
-    bwPJYxVRETZbTlckht2t1LBLHc0peM168JlvKF2IMFfaFnrGuB2hC1P2u+KdPIcqgcfvZ4
-    RAk5wv5sGt/3iZJiF2JJZ9cfwzG6oQFSYnnMEpswyz71sSxlmly8OLyjuE3TcfZruDzbD5
-    V7TNobglIcnvHKV/1mWfAWCvWWQBJwlHgabH/w++dp6RMpEp7/8isOXRn720kcS2w3OJix
-    R+xyyb7J/fAT6IArAs0VHFvrsB7ADZiul0/3oqvW4jf/F3JjA0BKxORfCToU7MJMpVDFBe
-    F0WWtj0VM8GeGN2OppbzhFbOmsYY1Z5BSpA+WgqT0Vxubh9pzgKHzViyiApldu1FGTTVrp
-    GeM5vuENY0hoazcYZd+LbdLrElBG99VFBXyVaYiLPUw+e3Xsg1ZAjgEEJtihSrLleygo5Y
-    ZOr1g1M/no1w3bSPmvMgBKAmPsF1ImAbmL0ilXZ5S+mlm2kLfCnRLllAUIIPGSXVnA+9/F
-    TDCsXrGdgVUfg9SUX+tJs4va80wtIn2foKiJO98W0jq2iFMUjCdF4N/dWzbg
-X-ME-Proxy: <xmx:RrbuamxCFblz44f_zf_eWQY8vtru1q333EzcUGihEsvvNFNDOiY_jA>
-    <xmx:RrbuaruFi3hCka5oycbNCU5TaWyaP6ycubYTaCQnYrT-T0SNSSVxPA>
-    <xmx:Rrbuan5AiG49xMVOZgWOSnF3Q4WbQAvoOjbw9vjdbDwp5s_wzQxOLw>
-    <xmx:RrbuaiS9B7rarO21WP0Nva1Gx9gtn1txsR2Wg5FoyfFpll0vmIV3wA>
-    <xmx:RrbuajYvu0OYnphGGJ6bYiqKAF-M88yN3HgOGa_6MPqluVCX6Oln52aj>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Nov 2026 00:25:26 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aniket Gupta <aniketgupta3001@gmail.com>
-Cc: Hannes =?utf-8?Q?Brandst=C3=A4tter-M=C3=BCller?=
- <hannes.mueller@gmail.com>,  git@vger.kernel.org
-Subject: Re: [BUG] git apply: pure rename followed by edit fails with
- core.fileMode=false
-In-Reply-To: <20261107040715.436-1-aniketgupta3001@gmail.com> (Aniket Gupta's
-	message of "Sat, 7 Nov 2026 04:07:15 +0000")
-References: <xmqqwlqpg0js.fsf@gitster.g>
-	<20261107040715.436-1-aniketgupta3001@gmail.com>
-Date: Fri, 06 Nov 2026 21:25:25 -0800
-Message-ID: <xmqqfqxd9pru.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o9fx2XbB
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-cd62c570b5dso779961a12.2
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 21:47:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794030427; x=1794635227; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Akxn6ITUl7dhrZx4muWk5QNf1oo/AC75b2f255U7KLE=;
+        b=o9fx2XbBGFlBA2JAGjN2I0e8MZbqQCyctIpjh2gLgoM7jNdQcypWPbX8/CzxiSMRvw
+         CgH3VYvQxHJDXUpafqEdSE/FIUAsH14giKzsUlLk4jdT1diX/MVMPuhycp/d9G1zbIuW
+         tk3NbwUh6Jb/4M1p5REH9lSlF9ccHqwu2pSuxk7R6tM+Er+sG5ORdNkkilzU1FJ3qXXh
+         I94HALu19BGydAx9aKtraZe8o1wwhAcWHCdigmLaqbuk0gSivonrqSzrq/E0TPKieL9N
+         GAGW3HQD8oeuH0dmHTFgAt9Cc7GiXDGKTIM6cgLcXnM/PSwJ97XG8fs8+Tdo8yrutCFY
+         K4SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794030427; x=1794635227;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Akxn6ITUl7dhrZx4muWk5QNf1oo/AC75b2f255U7KLE=;
+        b=mCfNWbGglTPUSfRuzqbYeFxKjJxgcw6cwO1V4QfHRHClVbCffbHXdgIA2B99q2OkNI
+         IT6xZ/buyaCn4RMEI97nN79iIl0NdVC0zn4N64hpMiMdkv/KN8xi1xDuRCBYn+yzD07Y
+         LzXoiONVaHa9egD95jaIeGgO11YA9vjbcvFgM8OnKjjWtVENU/mx16ZQox5c7Ur6a6ft
+         C/6Y1pf5W8F/KVohcAP4L/ugomsiiO5t69axdwkFE0aBySEXxJJF98g/fMl3G3AdM+HG
+         QFu1y5k3EcYgzZg0bODttLGrbq27SZcT4T1K0hNRi7/XuQvOxZYs9IFQOu62Dgwf52oo
+         U1TQ==
+X-Forwarded-Encrypted: i=1; AL+hErF9QGyboMCAMlOm+Lfqj5LEUtRHF/sLZAh1EnpSicz+nviJGyRL/jVfh5Axk/7H/aaVdBQ=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+yCSGb/LW7ufs3RosQMKl6tPLhgRJyI1zMIR8DBK19KhzQQmmq
+	1slTUk/CVKnOZbBcfeNlpZuLhBD/YsphvqUnQUKg6M7/vO9RufNCV/IHRojIwcRtziU=
+X-Gm-Gg: AYBFou3Y38YIAHTMJ9ccP7MZjjErLM5tiniBC+DiZzRuZoNhoYp+QSqCAgybUE8UfwB
+	y2duDR3+YF05njyzJajyKH+G+ACxinu6nFuFg7epOCHExVjhghx5JCpi+dRsBbx1zGU+d2LGgGi
+	xZ0VTPezk9leAXpH4XM6taWqQSOueP/FnDst7uxKhAe+g672sHeSalkP7iWhiHeHvl4X2guwRLC
+	Y3ErdmWmBEvEMn3MgTSI69PFA+Mrf0bZVgwhMGM0PeB1R2bWi9QmmFC9lvhx788kor5Re/bQFFG
+	7jns2w2v/N20nJgk9QfXV6Q57MLBtWFmm/QwSYYqm9YIGvyFeeCmPblmDG5//pTyTFkrbMG0fu7
+	eewDJB4yMyY+XVoETScpj9Ua6mv162uGh5EfX6MGpEi9BPb8/aBtZe1wMPod7GQZvnipxXYmFW+
+	rSc14q9jNMn3GDYqjdMA2uTNtBQ1Xqq13vC1X/Am5bLEmDPXkMqtPgHiqiQVpJ7ObhJNvWwpqOf
+	HxRaBj8dlOyuQS/vGYJNLPoh74GCBFXyKqBj1GHuTg+4OFX+flFtqc3+dlHo6zjcq9XsmwX2w5P
+	UNyTjgZEXhkQgVCDVJ62mSeUzh/iirGNSR/m7nx9dNxwV5J6lkd0w9QJbHus51UE/ozTXvkfGKo
+	=
+X-Received: by 2002:a17:90b:314e:b0:3ac:adce:60af with SMTP id 98e67ed59e1d1-3b0db6a8ec8mr5106869a91.16.1794030427005;
+        Fri, 06 Nov 2026 21:47:07 -0800 (PST)
+Received: from LAPTOP-PVRSMPQK ([223.190.82.143])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b105881ea8sm1855640a91.9.2026.11.06.21.47.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Nov 2026 21:47:06 -0800 (PST)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?q?Hannes=20Brandst=C3=A4tter-M=C3=BCller?= <hannes.mueller@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [BUG] git apply: pure rename followed by edit fails with core.fileMode=false
+Date: Sat,  7 Nov 2026 05:47:01 +0000
+Message-ID: <20261107054701.298961-1-aniketgupta3001@gmail.com>
+X-Mailer: git-send-email 2.56.0.344.gfa103ac04e
+In-Reply-To: <xmqqfqxd9pru.fsf@gitster.g>
+References: <xmqqfqxd9pru.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,16 +98,14 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Aniket Gupta <aniketgupta3001@gmail.com> writes:
+Hey Junio. Yup. Two commits. Hannes feeds the whole format-patch output
+to a single git apply and separate invocations and git am work for him.
+Though applying several patches that touch the same path in one
+invocation is something git apply does on purpose. A pure rename
+followed by an edit worked that way before 0482c32c33 and still does
+with core.fileMode=true. It only breaks with =false.
 
-> The series in Hannes's report is valid input which is what format-patch
-> makes for a commit that renames a file followed by one which edits it.
-
-Do you mean these are two commits, and format-patch created two
-messages?
-
-If so, applying these two patches in one invocation of "git apply"
-is exactly what I was questioning.  I would understand two separate
-invocations of "git apply", or "git am" fed two input files, though.
+Thanks,
+Aniket
