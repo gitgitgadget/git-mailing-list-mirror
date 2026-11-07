@@ -1,121 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794018618;
-	b=2/fOSadM6pFeDPTVgk+wEE85GXq5eAeyeUj5Y8bTkedGCaZImvPLb1jOMqc9YEQQrDsI
-	 41xq/BcBWaAHmz+71cqn80iY1UVHaEePgauFG1nbBTSSW7iKMdJYaNYmTrnlQ6S2TDpxp
-	 zu2VKnrzg/dVXWA2oJgsHlwmFOBL0WwmB+2baTYjFuzAI2V2hl3xfX9tvGt+f2OdtIOBF
-	 6f8E1J+FPoEfqhPv0681F8aX04JQ2VyLrzGT8IKnEQ55lOYdPV3vHcb8usjKj627EKfxo
-	 npx2WjwL1EFoHfwmR/J99Bzq6WZLGO8IMFzD2LJvlgGRXE540M8T9KJz55ikLdYOKTg==
+	t=1794022840;
+	b=L2Yy02J3D109eUL0FLsfdlUDNdNrGCDVyG1jdpoHBJlqfqFUZ6TWAshW+mNjGBZjILcB
+	 b3K9WvwWavHneehjWIQQIYT9yE/9l0Jkvd4UN3dk1b4EaxbjuNiyjWPY1SvEplM6rX8ng
+	 r2zbuMd8CWfw4NsgyRsyhjulX4bYbEoKFbn86h1pm8UCYSTx8dENNuVOQm5RVutykWi5r
+	 1KAhviH0UrYMGmqmuzVJSrSTRSqUEu8tyVuECZ8Tmy4QNzlvVVhqMv+FLRklPnScBKJlI
+	 7YHSoFeuT7m/UqYTtqQC5V2n3lytN8jAbcA54NTuwc37Wh3Sk34dNQkDncBaXn/ISOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794018618;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=kfbQ9zlidwb3fEptM48omARg8RHgx/MLVA99GcVZevU=;
-	b=2PksI2YyCEhBViXdjUs0M2WQJ+XpwPTLfTia9cwECG6oPN1PmVevJ3KWc9JwGx9CS7Ye
-	 wTJb91xJ5NhBPx1S9AHAiNWmJiuJvKCCrAyu0m6xgQGrK0GSyax9+yGFcHBGNq0Ne9Jxn
-	 G34bgHYgOFGGBHSwzhz680rOt8LqmnFvu+oV4upezXbJIWhuUcZ4rzqfInn7jbQ/3a0v8
-	 A+rlP2BMoHuwuCXR+cn+c9x9n3gWGnX4Yg0i2RQWN1BsCoiuV6Wh7hQKGX1/QfBapUfGf
-	 3LW65YRNko98WGRimLra25m3jAYC+RD7h47dgwZPbVmGz+br6roQyhT2rC3/xSM/Qpg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794022840;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=41ZZiNPUcm17yyO3gVnYUNO1rsudfDFB1xWvjy+aIn8=;
+	b=5BUaxAVK0n3NitloUixVEjePEk8KT1c560qdzK0vpi47fOQs1kZBr4+8ewJWj2Tt2ysI
+	 bjET/lsI70BWCFc5iJg5WANUY3L6IFYocDKL/K/Y5h1CjJUwzMQcPqiklYfpbRMQxBQO0
+	 A/BsuQ+6QmSVhP9THxtrJ2ATJnNUCK9ViEMnqSFdA4X7cNdJxcf2mNNjp2X8fR/N6/zzo
+	 yktsK+hMQzjv7zO4sS9FaHfJ4RvFu+6XYUxg26YTrjFq86vC3HW2HXM8rLeLlCdOKxz3m
+	 ikMc+QTrgovaU1/fOKrQ/kcKPaMuHJtOlkyculCkx30D6wbWs6CJRrRzHyVbjUrd5nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Gcquc1uc;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dC16vDj0;
-	arc=none smtp.remote-ip=103.168.172.149
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=i+gNpr2A;
+	arc=none smtp.remote-ip=209.85.160.169
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62497606A332
-	for <git@vger.kernel.org>; Sat,  7 Nov 2026 02:30:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62497606A332
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88F0606A326
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 03:40:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A88F0606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Gcquc1uc;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dC16vDj0
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 78767EC01CC
-	for <git@vger.kernel.org>; Fri,  6 Nov 2026 21:30:17 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 06 Nov 2026 21:30:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794018617; x=1794105017; bh=kfbQ9zlidw
-	b3fEptM48omARg8RHgx/MLVA99GcVZevU=; b=Gcquc1ucCHSRHT0fesSxYCx3zv
-	krWP2r0LQ0OeoC+SnUlEs/xkVsE4KN/JJ6BIJUzxIiayptN+LZ45SNI6apTmJweC
-	FmvPRh0z4e38andn/ugIwvwSw1nl/cEUDdgu2JjdDLk20kK6YfgrVjg3/oRy7OAI
-	ACMzPg0/CpsY/uAe4BZ5KwFmRyW575mBRaq7VAilv1in2X8+wJN/vPHl8FrLbAf5
-	upmR6cXw/ezpSbIqW22rVTF5ckPZHCOphDN1DI4H63XP5sxupXs2dza5a8eh34PT
-	XhNuHmP0BbJp0+gseRV8NOCtZHzwxlSsga2qelPd6koKFJNPCNCQ5L1WqWnw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794018617; x=1794105017; bh=kfbQ9zlidwb3fEptM48omARg8RHgx/MLVA9
-	9GcVZevU=; b=dC16vDj0mE6gVZrlcAyTq+Ptje0z3vsUTR73MrSMmcOPBDMDMPk
-	jc7XP8spVpvQ2c8xHBFkTUP/VpCNBywXzsHn+XEt47nFdkHp8Eg1xg4j1iphPPQN
-	/zgx/oMZBR3sZ14t/U3llF8+a+WIv2rRWaCP8qwVmO0cc6zbCCylgc/6cYhvyQ6R
-	OTgLaQpfSjL1hZZetg2kdVt0AG3Ov0Pm5LPas2s/bs5+VnqbLcyYDCu/6aVkkwnJ
-	6q8tWmRp6PWd9Uacfi3IAG9xYxQ8ElZB4D0DQHPrzGn4e25qNTIKT+PX/fG2B9T2
-	9tU5Wx7FGUqCg5ED2fCFEbVhd+lveg1aANQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794018617; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:IscwDm06BIx2cMQi2JehkgTOzdBboCwARtLSs1vFNwHoHbX
-	672bI9CsRTb9qc7RqC5bXaN7GbZYryDtHLjdjvmhOtoKT0Pyjn/hhSC3c1J00m5r
-	alLmMly9R8EJwfho8EZYRlQR1Ncn2M1UVq0e4o9hGZY9vsiZ0oiqDh1GT+N+5TSg
-	O9x82lQ2lYiIHrerIYmEd+dJTae04xQfQpPqIzKTljMa7EMcDhdIIccj8Be4+oSK
-	IBLMs2aEYfQL2iPoacfFGZDdTVPMDH4X23HRazrk42HwEj/wO3+E8m5oPmnKTHzC
-	E5EPIJijgUlRyOE9n8q9A4OjJhtuzk50jC4JAmA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:oDEkW9AvwYxi3kO/NrWpGSrV/o15cngHA2+M7emH+k0=:p0eEP/WvfRmFc8q199PGHLGEujB8N0qh1a3zvRAIKno=;
-X-ME-Sender: <xms:OY3uavcwA3vm5llsDV4KwUGbuFlwInsvCzYVcsVT0p7VtKUx-q30_A>
-    <xme:OY3uanfH25LN_hYW5Wf5SCnlhJdH-seCSIBlFZc1sWqO9Z96P_HBST6Xp0VH_S2XZ
-    T-qk8pb0i009-ngqdxuXghb1jlWxaWOmU191kPCIqrSJPqGVVw9cU8>
-X-ME-Received: <xmr:OY3uaqyzwPvgguxSacsgwoPnMvlYxJB2TBAOn51hxh1dNkTddmghc21PEa8e7ZafhBmUEfRC_xi_ThC95K4vY1HBE34U-2reXEJq>
-X-ME-Proxy-Cause: dmFkZTEvUXWp8m5qonGFUZqW6w5cSrysjxNtdqwaGc1RwjR2G3WU3yQUKDs9ttOfcmLWBN
-    bpAZhw3S5E7xMNDeNlKWULkuZ6fugmWoVvAjuUK3gIwfabiqEQJKGShVagkf5wJ6xadX7i
-    HLY1ViejRsQCJm7QDxgbJX1UqdYzVePA7gOXQUCvFS56o5wHJwr32A1Yn2TgoxyXLH2X4p
-    9xo0T4f8PqhveaoSI/rBU2CyKaBYdAR6Tb/d39AQkEE9sKjVL6NKSwlOdIdFM/qlejouN/
-    PrJDcK1gqrabd4rTMDj+Mf9LFCRvVZuiOp7q19O047WltP4qD7gYRsdOljkgYKavUa0aNa
-    ct9BDkVdDJYMUtdOwPjBiTPiMDIZ1kKHUR/baZqD1LEM/79o3Lp0JtYoYneTrVV3f7TjGK
-    FMoOOi0IuOa/i0j1wUdO10oTOIZzi8dOEff9seFEK9xLhQaq+XTQGB52ZzFVf4bpPINS4f
-    5KJry5PvAS5xf1T11TARQ8gFizyBkOYIkY66oJkczC0e/aCr8gKlABpukk13Py98or2tuY
-    aM9zYHXT+bV1Ch13XiKZ6adojCTAXk9yy9bf4yIdNe5QBswkqnBsiF/XfhMiMbx4P0JDGy
-    apTw80gGdO2hCrsoD/NmPFiJDdPcmrelz+iurEg7hvqrNn0Fyp0tbsByGcrQ
-X-ME-Proxy: <xmx:OY3uam92uKt4xT21GY8dSMssKoXYI9pWcsWKrsWZt3Khr4dK6WeafA>
-    <xmx:OY3uaqj7-o88QAM6EmQl3WmoXCU8XHGrMsVHrEUi1DKL0wFbzyO1Wg>
-    <xmx:OY3ualF2I82BVSg6hoa-9rI_0Kl3r2HNPPoVXi1bCWBEktOrJD59bg>
-    <xmx:OY3uah-C7Pi3Z2GM_Pz3Fos06-fP1C6wxzvsF63nIp3_6RlAQrqixA>
-    <xmx:OY3uatTZEQETTyQNm8Klht3adJuz3nwrEczRPJ6Cdjeq6z8yzJGU2hFE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 21:30:17 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  usmanakinyemi202@gmail.com,  siddharthasthana31@gmail.com,
-  kaartic.sivaraam@gmail.com
-Subject: Re: [Outreachy PATCH] merge-blobs: stop using the_repository
-In-Reply-To: <20261017105244.90295-1-okhuomonajayi54@gmail.com> (Okhuomon
-	Ajayi's message of "Sat, 17 Oct 2026 11:52:43 +0100")
-References: <20261017105244.90295-1-okhuomonajayi54@gmail.com>
-Date: Fri, 06 Nov 2026 18:30:15 -0800
-Message-ID: <xmqqy0b59xvs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=i+gNpr2A
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-5364042eecfso16841251cf.2
+        for <git@vger.kernel.org>; Fri, 06 Nov 2026 19:40:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794022839; x=1794627639; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=41ZZiNPUcm17yyO3gVnYUNO1rsudfDFB1xWvjy+aIn8=;
+        b=i+gNpr2ALklSErF6K3+vIE621Diu9n7c0dHm835wH/pX16TkWMwcHYbH59Q60soxFN
+         GBx6T5AlboM2PTEEUSLnBPCkk6zCqPgo4uzlzVBJSXujI1PUxQT+iH82q/QaolM9yXLF
+         Zu00H6GsQlZY4kwk/+bgRLkVO7C/FKEuGexRrdAMWXtrnWUiFs6Ud2tJuzQ1Hn+2wAbJ
+         lY67IJFuEHLHHYHY4J7LFVk9+D0RGlvqQjtlqZkpDiUFaexam2tJc6sqVjPxzWAhEGRf
+         n/LofNYOoYtedX+HncxXH6NtoAICW9zXHuKcd1aQVWIy6UkucomCF6T3ZfkkNfS4/9La
+         N4xQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794022839; x=1794627639;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=41ZZiNPUcm17yyO3gVnYUNO1rsudfDFB1xWvjy+aIn8=;
+        b=1g4AcWkyqYdHj0ZjZm2dgX0nOVKC7mDbou3PV8U3SmkOfqavLtU86EWBnurc6LZ+GY
+         Pjx/uICTvjONgefVorh8r9fR9uzR8DNbAVCd893Zn9sWCgcbPcjXIHMoCN+Cvf3OvkxB
+         Nert2gKJXRS6hdrOW6ary4+Vy4l/UaUPuyKFS31i4uunCyGAWx3eOgVXwMWgHRzDsQa5
+         F/CsGRJS/56FqZK/eAKnOjH3Y1DHYjjb1XJXcobw+dpBEtttZ8m5G8Y+HEBO2/iMQAFB
+         c+Mqh9wD/WsYL2t/hdYk1kFbVESZorSic17tqIYS6nUoWX51TXc+uLXeXP1J4EYLrHVb
+         eSjA==
+X-Gm-Message-State: APuU4Z/BM1uia+v4OHwilACz63QxU5iu1n32BYzsMJcvhNRMi45CtoxW
+	1bAv6uMW6dzcrEYenzVvs4gBeiWOgEwQKhRj8VEWWpQuEl3Wp/lYb3eXQKcHzs9z
+X-Gm-Gg: AYBFou3FUB3Z6CiPNsPIkZVr73H3bixW458C6BsbJlBQr5Z8+Ln5TvnH2ci59RfgqCa
+	X3zyxxTY5TqN/rUc8J9nVP8Ow8DkjPtOQhfQO0cfriWomW07zugpgENn7xmFtqr2RYjUuXa8KF4
+	4lCKwfbGrcmeHzLr0rGm7EyexArb2A2cw+dS/LxPJdS3cpAsPAkyA1YNiIPWmxcBdO6nu/XrlNs
+	oWqBOTFcDVRqVKPYyEsveKSJT0eJXIEWV3jkMZbbED93w2tntVyIGa2XGHB0U31vrXtzp6+pFPD
+	93wOYovw7dms2d0NP1s1qpUSfZXMyULTFtSzGX8zQu5MMFAV9YPU/u43d/c3qH5Twjo0DLx/bpN
+	+Kq8pzZursI6bwvEEpBHIBxYcy1bGMeLWd/f7GE172Voth9K/D2Cdy+PpcxGlypgHzXQD+w9ds6
+	+MW2Bj+4Oskd1lmHwzJWvz5tUmv0rjPYRPP+OLujMmkTIlYZhWi3Da8sF4NQqFX+k2/HzdGRkTK
+	GtiNX8z9HkqJvp/WeZ8WvVQWLFTWNvkkds3UTBqav/cuFnR4TDMDksIYYJSUSB7cwtUce31OlLU
+	JNHDUKzV8emJrSHNe2/MkfB1GGZISQU=
+X-Received: by 2002:a05:622a:1212:b0:535:84e3:b165 with SMTP id d75a77b69052e-54e0fdf3bb0mr73750621cf.9.1794022838647;
+        Fri, 06 Nov 2026 19:40:38 -0800 (PST)
+Received: from [127.0.0.1] ([20.65.86.218])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-54e257862bfsm35990491cf.6.2026.11.06.19.40.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Nov 2026 19:40:37 -0800 (PST)
+Message-Id: <pull.2287.v3.git.1794022836.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
+References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
+From: "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 07 Nov 2026 03:40:31 +0000
+Subject: [PATCH v3 0/5] http: exponential backoff, configurable status codes, and post_rpc() retries
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,35 +96,118 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Ravi Mistry <rmistry@google.com>
 
-Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
+Commit 640657ffd0 (http: add support for HTTP 429 rate limit retries,
+2026-03-17) added HTTP 429 retry support using http.maxRetries,
+http.retryAfter, and http.maxRetryTime.
 
-> merge_blobs() already has the repository through istate.
-> Pass it to fill_mmfile_blob() and use it when reading objects.
->
-> Remove the USE_THE_REPOSITORY_VARIABLE definition and
-> include the headers needed for the structure definitions.
->
-> Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-> ---
->  merge-blobs.c | 17 +++++++++--------
->  1 file changed, 9 insertions(+), 8 deletions(-)
+In practice, when running Git against hosting backends and reverse proxies
+under high concurrency, four gaps remain:
 
-Even though I would have introduced a single repo variable instead
-of dereferencing istate->repo number of times inside merge_blobs()
-function, that probably falls into personal preference category, so
-insignificant a difference that once code is written in one way, it
-is not worth going in and rewrite into the other way.
+ 1. Off-by-one retry count and Retry-After Trace2 timing: Because
+    http_request_recoverable() pre-decrements the retry counter
+    (--rate_limit_retries) in its loop condition, setting http.maxRetries=1
+    performs 0 retries (and N configured retries performs N-1 retries). In
+    addition, the Retry-After header is extracted after Trace2 logging has
+    already run, so the http/429-retry-after Trace2 event always logs -1.
 
-Let's mark the topic as ready for 'next'.  Thanks.
+ 2. No exponential backoff (and 0s default) when Retry-After is absent: When
+    a server does not send a Retry-After header, Git defaults
+    http.retryAfter to 0 (retrying immediately in a tight loop) and waits
+    the same fixed delay on every retry when configured. Doubling the delay
+    on each attempt and defaulting http.retryAfter to 10 seconds (10s, 20s,
+    40s, ...) gives overloaded servers breathing room while keeping
+    interactive commands reasonably responsive.
 
-> -		return odb_read_object(the_repository->objects, &our->object.oid,
-> +		return odb_read_object(istate->repo->objects, &our->object.oid,
-> -	if (fill_mmfile_blob(&f1, our) < 0)
-> +	if (fill_mmfile_blob(istate->repo, &f1, our) < 0)
->  		goto out_no_mmfile;
-> -	if (fill_mmfile_blob(&f2, their) < 0)
-> +	if (fill_mmfile_blob(istate->repo, &f2, their) < 0)
-> -		if (fill_mmfile_blob(&common, base) < 0)
-> +		if (fill_mmfile_blob(istate->repo, &common, base) < 0)
+ 3. Transient 5xx errors cannot be retried: Reverse proxies, load balancers,
+    and Git backends frequently surface transient overload or connection
+    resets as 502 Bad Gateway, 503 Service Unavailable, or 504 Gateway
+    Timeout. Because 5xx errors are not universally transient across all
+    environments, 429 should remain the default, with an opt-in config to
+    specify additional status codes.
+
+ 4. HTTP POST requests are not retried: Git's existing 429 retry logic only
+    covers HTTP GET requests (such as the initial /info/refs handshake).
+    However, the actual data transfer during fetch and clone, as well as
+    on-demand blob downloads in partial clones (during checkout, diff, or
+    blame), are sent as HTTP POST requests (/git-upload-pack) via
+    post_rpc(), which only retries authentication and immediately aborts on
+    429 or 5xx.
+
+This 5-patch series addresses all four gaps:
+
+ * Patch 1/5 fixes the off-by-one retry count bug and extracts Retry-After
+   in finish_active_slot() before Trace2 logging runs.
+ * Patch 2/5 doubles http.retryAfter on each subsequent retry attempt
+   (capped at http.maxRetryTime) when Retry-After is absent.
+ * Patch 3/5 adds http.retryStatusCodes (and GIT_HTTP_RETRY_STATUS_CODES),
+   defaulting to "429", so environments can opt into retrying codes like
+   "429,502,503,504".
+ * Patch 4/5 extracts a shared http_retry_wait() helper and extends retry
+   support to HTTP POST requests in probe_rpc() and post_rpc() (while fixing
+   a missing Content-Encoding: gzip header on retry).
+ * Patch 5/5 changes the default of http.retryAfter from 0 to 10 seconds so
+   Git does not immediately hammer a rate-limiting server when no
+   Retry-After header is provided.
+
+Prior discussions:
+
+ * https://lore.kernel.org/git/20201012184806.166251-3-smcallis@google.com/
+ * https://lore.kernel.org/git/pull.2008.v6.git.1773752435.gitgitgadget@gmail.com/
+
+Changes since v2:
+
+ * Patches 1/5..4/5: Unchanged from v2.
+ * Added Patch 5/5 to default http.retryAfter to 10 seconds instead of 0
+   when Retry-After is absent (per feedback from Junio C Hamano and brian m.
+   carlson).
+
+Changes since v1:
+
+ * Patch 1/4: Clarified in the commit message why the http_max_retries <= 0
+   check was moved after the retry loop.
+ * Patch 2/4: Passed http_max_retries - rate_limit_retries instead of adding
+   a separate attempt counter, and clarified the http.retryAfter and
+   http.maxRetryTime docs.
+ * Patch 3/4: Restored (Too Many Requests) and clarified
+   http.retryStatusCodes in the config docs, and moved the 400..599 range
+   check to the top of is_retryable_http_code().
+ * Patch 4/4: Added the attempt counter here when replacing
+   rate_limit_retries with http_retry_wait().
+
+Ravi Mistry (5):
+  http: fix retry count and Retry-After timing
+  http: add exponential backoff without Retry-After
+  http: add http.retryStatusCodes config option
+  remote-curl: retry transient HTTP errors in post_rpc()
+  http: default http.retryAfter to 10 seconds
+
+ Documentation/config/http.adoc |  61 ++++++++---
+ http.c                         | 129 +++++++++++++++--------
+ http.h                         |  12 ++-
+ remote-curl.c                  |  75 +++++++-------
+ t/lib-httpd/http-429.sh        |  63 ++++++++++--
+ t/t5584-http-429-retry.sh      | 181 +++++++++++++++++++++++++++++++--
+ 6 files changed, 412 insertions(+), 109 deletions(-)
+
+
+base-commit: 8d1b215c01512b9658d4525c54ff9b9245f9a7e8
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2287%2Frmistry%2Fhttp-exponential-retries-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2287/rmistry/http-exponential-retries-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2287
+
+Range-diff vs v2:
+
+ 1:  d53778dd46 = 1:  d53778dd46 http: fix retry count and Retry-After timing
+ 2:  fe1e847ded = 2:  fe1e847ded http: add exponential backoff without Retry-After
+ 3:  6510dddc39 = 3:  6510dddc39 http: add http.retryStatusCodes config option
+ 4:  786964ff00 = 4:  786964ff00 remote-curl: retry transient HTTP errors in post_rpc()
+ -:  ---------- > 5:  61e3ffe9ab http: default http.retryAfter to 10 seconds
+
+-- 
+gitgitgadget
