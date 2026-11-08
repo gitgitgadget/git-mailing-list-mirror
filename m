@@ -1,93 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794165314;
-	b=RzgIA0nziKNB+7nU9Y9gkSxGeZMaQ7dVybEa7bp1jJuUR7E+ZbThoUr/lUQvv0wUrL/p
-	 4ei9PYXRHvFRYemUlJJkDWWW8pC688g++6J/aNqjFpj352ovx0QS5kCUAJyRpSpPaXirR
-	 TJtO+CdokzEhpTUd5ShayTBGw4O/c9A9CD0Dq02bW3TInQVYSUppiEaD8izS8oCKRO9PG
-	 dMjojIpJirhE+wZxyakSC/56tp/wbXTkCJIcJNVz2wDLJgcak/K4tGqSNk0HUKhajeJ95
-	 8scYtyvcfCw+RDL+aOcKf127cYqemippp+vKqrB5jq+eWesowcS7oKfdNUp69ERaD2g==
+	t=1794165393;
+	b=h0TOJYUsJjoRzZu2BA5ztkygGhG0MLsyu0xK9qn2P0aZwxOzR/IKwGKKvc0mRLVlRen1
+	 nFnUpjRhpte2sTnTXBuYsdhUAV5wsxnQxJvxGhDVaIuz1a0FdWeAQAribpK+m7QMBXnte
+	 gEJLJo9+hioceLG2Jy7aZWHgJRf0pv4kZ7bP5JCuRzLWuQ3FATcNVe9aUJfoxJTIe+4g9
+	 cKP7RrrpaJqSVcXrCUUREYt9DEYF6BgARruEW5XGo5IJ3ijldPqVQd81qL14gxb026Brq
+	 Ae21LGjU6TJ4Hu6I2SekcQbXjMBarEOao2R129yaH6/drNMSlPM/Fa33NG+GrknmV7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794165314;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=n4YW8k15AepOL06cTMKX8Vh966LN8+dPxPpxAfhdxOE=;
-	b=xKaiPxVJCAAw2FQRLnj0KOsJZ/j1+wRsXMRrnB97GIzXUA6BMZUIcFzFVTYFJmcSdeJb
-	 DbYBV4jiHvFDGhKbrnGsjgA4UwMR/Enw9ekXMWjQxWOh0UNUtLVl4hYQd9qDz+as05VYA
-	 NAYhdGvu0Hj4t76JG70khUWYCxLC9RLwJa8i5f9iMJtYnEyz29FEvmiqwlQTImKOEdJHt
-	 i1Tbejx2EczXd/m73ueEzKpQPHhedJNfBCSUC6fYVGpTMIn/C074MaSt+drI9Ywrbk1mQ
-	 tBKHFD613XxaN1kML2bUQEjOkqQrKYeXp7STqxFeE/gPPlrHQrRd224q4/k4KFtPgag==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794165393;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=XNSw0XoYp6EOtm33+keWlZDR7BDsThext1QxkKOWa84=;
+	b=4ZDw+zDiMjDiIkomRw8tkyWRTYjRSyJkPftlK0ye1dMhzd6jBHHksyfmqa+lRGeOGhOS
+	 K4LU8moTPadlsBchl/XiZnO6Y+53XRZlKB/bm+Ey8B6SRtBja83k/Av4xBXNF8BJNv6/Z
+	 sbFYAYcKrSpfGLH6o3z28f8LAOwcAyOWRcvfLn/OtAwxb6bwtEQ4m6MN528hNZxlnxdsl
+	 46nOvCuZ+BpwfOEWuweZc5i5/G5PFbn07rmI3jQvozc0O+60FDAWp+ixabzmqOLsXK0Yd
+	 6KNevMi1qukvfRiRIh/teCXeeO2A5FnKn/IS1O0v0IxvMNaiFQRXMLtbyTeH4yDyKAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iHu1G3e7;
-	arc=none smtp.remote-ip=209.85.216.52
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=mQ0s8PPt;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=v9h8vIlA;
+	arc=none smtp.remote-ip=103.168.172.157
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D022606A320
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 19:15:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D022606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0083606A322
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 19:16:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0083606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iHu1G3e7
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-3adac5b29ebso131446a91.2
-        for <git@vger.kernel.org>; Sun, 08 Nov 2026 11:15:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794165313; x=1794770113; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=n4YW8k15AepOL06cTMKX8Vh966LN8+dPxPpxAfhdxOE=;
-        b=iHu1G3e7wFmzEfeOK8RrsAPCvqCsGhAwh9YgevdXm6ek97302G9n5jsWevjn3LChvy
-         aMoxdV65a3hN/MER7wzan75ty/XQf4IPRL/q6hPEInqjmaDCaUPFrUhG2MlTlW8imJSB
-         LEsQa6u9+xealVV7Hy9aGwWv1lIoe1id8N5wqZ+LyHenC8xk5OvjVfZ3lthkjfHWJmZk
-         Nr6sMJNCv8sznYP2httlWKrdv/G+xu1rkAW9Qo4DMZZN9x1mfJdarnapchUh8N8hK3J8
-         /SytjUgnsrpq5dcswMeEo76sz1Uap2ooco10z6o5ux8xMsP5SNkzbRN+moEpPPEJumNv
-         08uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794165313; x=1794770113;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=n4YW8k15AepOL06cTMKX8Vh966LN8+dPxPpxAfhdxOE=;
-        b=pEZa1jit7X+1HKFBJ0uAyS5NwrVUh16i2RI3NjmeEk/XU/IECJj24wap3Jx0jhgjB+
-         U5M0TvoJNX0vMMj9lzu8edEV0VimSYrhUUMnEs+OwE/uX3PsEWyOUmnoYnTgAOvt8V6Y
-         NOTFfJZSMw0nbZrsY7xavcrvygcAgzICJt5V+/NJhazdReheFXmeuCTVhp/0LFqEGB9m
-         33wxO4PMhqdghRTL9Ptw09JBzqkUIMTqk0K1f+tdKyUB0orQKyxv6y0LpD4fEOUUT2RY
-         UEfx/T90YLKxuJwYxZ5qADAzxUf/KnflSA3VweqYB2JjYi9g8G6Gk3A6cU44PyInHnJb
-         pbvQ==
-X-Gm-Message-State: APuU4Z++xl2JbTKlFK7jqUM/wqKun8y5oxpoMmSvGKgUno3SayNNYAt7
-	Y2p1BHjMp0nog7kA/lORm1oJhlqVVVXDQpD3R26hUC9ohWWDkXSzSXw2YO0KeOQx
-X-Gm-Gg: AYBFou1ld9iDXWpKj8wsCbebGx8M5cD5QUfS8idhvw+AYCjg8JB9gMHe6YXvIE7LJcU
-	pFd/J21tIjPr3df4Gvv1jT5uaTy13Eaei4cwyUclVhGYye79mqO7v0iW01kzo4+RUnMbG0T9AVZ
-	XhH7yE1tZRiGFcnSzbAggFsHDN+2U51YtOztTQmM9EIqjMEc6nO8fJojZp+mJzDSSq5yLYwZ1Om
-	op/kulOuajVH0wOXo9jfWyBQCZKalKeh2HteDoa2KwWiWrCcA6OKpLOcps1LJffnUTfzdx7o/Ou
-	zT+jd89USnA/dXFF6wJKw3yOkzZhlRIi21WgE3KWv3YqoQyedy//pLV3+VtQGB6EMu3rzCgBsow
-	AOYxTpDsD+55Ui5oZ9Et94hlUGl1Rf0hqU6dpTbatQc63Yl9mC9x4g6OyKu9OMApqL6W7a5rjwS
-	4/yCWmfe3LuXRumgTKsfyHiTRlNXSXfOepvm5HXqk3iFHk2bfBrdA3V9V1aJsNa2cx8gnRMZvAj
-	5oNIozhvJJacRk2kJokG2q4QEIK6YE1Kf80OrBOtKCVBZqD7jFOiCbnJu/ZWy0S8GPqJQudr43Z
-	WXfJM3EQ6u2b9AouFjNsrYOuDs4SJg==
-X-Received: by 2002:a17:90b:2652:b0:3a4:b418:94ce with SMTP id 98e67ed59e1d1-3b12d0f968cmr1877113a91.1.1794165313200;
-        Sun, 08 Nov 2026 11:15:13 -0800 (PST)
-Received: from [127.0.0.1] ([4.242.60.88])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b127fad1d3sm3871797a91.11.2026.11.08.11.15.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Nov 2026 11:15:11 -0800 (PST)
-Message-Id: <f49af0e33fcbc298e8ab66924fcea81bc47ded97.1794165304.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2301.v2.git.1794165304.gitgitgadget@gmail.com>
-References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
-	<pull.2301.v2.git.1794165304.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 08 Nov 2026 19:15:04 +0000
-Subject: [PATCH v2 2/2] t: replace "test-tool genzeros" with "genbytes 00"
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=mQ0s8PPt;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=v9h8vIlA
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DF3551400107
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 14:16:31 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Sun, 08 Nov 2026 14:16:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794165391; x=1794251791; bh=XNSw0XoYp6
+	EOtm33+keWlZDR7BDsThext1QxkKOWa84=; b=mQ0s8PPtLQY4k1ApB8PfLdeFDz
+	1tYKkuaKSmVBYBTiJO42UON4+f4scINmcjyTJVpijgKFckSNSap5hD7S7ix1u1YV
+	0lRZXir7WEswaQNctdZR+WN99xjARxuffIqPgaEUlvh4X0sRbEB5lHdTuFOKW9sJ
+	KkTv+AyWBQL9//DswKWx/oSU9a1QDkwblDpV/p3/qPn1ISoxVWS091tOKs8O02gI
+	V0a5ehbx0MOAwW/HgzwHyFP3v9fGZs/ytPUmbjQZlEJXAtJGB0QN7A3BcwRCxtsq
+	/jO7B5QHzcTSdh6XUVQlCCZ37fefpMIfY14zmx8sfrNv2B4xN+ImNDnkwZAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794165391; x=1794251791; bh=XNSw0XoYp6EOtm33+keWlZDR7BDsThext1Q
+	xkKOWa84=; b=v9h8vIlA++yagqMgkyQZ6oBh0CzE3WpfmHMYII4mzlDTC2NwrFS
+	kbvhpf8rgxzRW0+WYE1SM5UOi9MGSHHvqipNR1JmyUgGgiznRON0FjFiWkIuDmRE
+	zfLC2tW5HDwAnK3lsi50GT4fZs9nz6aw0+S5SPeHsXCmDQKwIA4AGPxRz6FwCWkc
+	qN61yV1kbntpcf1df8OptB4Bfj9dkOazc+Oa/uyiS3ZzoPYCZNf0S3F0MQnwjoMO
+	V3rhqrS3aeYAEcixrw+gNUORJ7m6OHW8hWqjpnBQF0H/KXotTzDPpMlVzd69WjVz
+	g5jPHLP1j2s21b2qzyhxE8Hwnmr54zbqp9Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794165391; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:llAaXPJm2qUWCE0LLNkzfNW6FJZpMivniqswLgjR0p/PVBQ
+	OHtae4GxZyy4gOL5yTL92sNEZ+S4UldHlFtOJo/dt8LDDI8r+SoV5az/qvViQuwL
+	ou72ObMkBXQ/x5Je7E9Pyy4GFpdzmfOQNRto3NZZJ26ZdzkoOWRMdtAlqwOduTYY
+	rcU2qbXPnxy2is2eqVtJFVirPbS5xRJn2OgqIDl7WeCX+uQbnkKtOL4lqYrNe14y
+	zmDSfQn6aZieggC81c8ZgXIxlfJPP2ABhcahdkYyy1RhwJ3Di8q8AgVKBWF6cXOl
+	71H8tjAKI0IksBId2hXLT7EF8d14MQdi4UllzCg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:z/hauV+D1x4ur1H75eM3QrkHd3FfIunvsVFoRp1DLnw=:mpvnfHx5ul5EYE1uDuWGyqPZ9LJRqPRjP7pBiib64Nc=;
+X-ME-Sender: <xms:j8rwat_HDYU_OxJtjCkvSJNbfRJ9l-lN9AZYz1i_ZGjoYzcTkcKSeQ>
+    <xme:j8rwaos0Mw-kDjGOW99oIwSuYDtD0Bez6_sbI8CdhvkKai4XjPiLo6W8IUnjvviVd
+    dM68UNjDlGhAnYZEwUQHB9m80AHJAJpCcVoSnMu_6M233Q1L0jVUS0>
+X-ME-Received: <xmr:j8rwagBPEOICgMrnUrJ0nCoaMj2yJsmQAGtDl3kcXNs9Njvxn0vM0mQ-p0Z0ZYx-PWrAuGsSJtjztJj6FawgdSchv13Kk3zzKQVK>
+X-ME-Proxy-Cause: dmFkZTEhtFNapWzUjTjBeoXyiyoGSLmdutOyfronMiNRZ7VysrnMrBOHd8xOHcjxGXW6z0
+    U6htJzEzE4dgzjAAjAGMhDqAY4uRl1uG+rN3SSKBsCdwqUvumKbpMLPDCFv+eqORJtaxYT
+    BbJ6uWK4BAGnm9AhAvL98q1fFqGpUT+aYBJ/vK93c0/1B6K14vDHJd9ZsA6FXQ/08lXWzN
+    SdY5BUh48RxA3cEu1j0asX511jCix2lMjWoN9uN0mRmjpnYYaag+f0AenR8ybvoATGtxBV
+    HiVksL5lN3SJzfkwQETduEq4PUGhi5SstWdiIQq9GBow4cgPoO+MCtjn9HWsJIO16+hELd
+    lsEPNzOlTesZeX3x2MOJQ/5R17I2+Sk4Q16EfdKwYLTGRtU/g/7/kCfgVJO/Zln3578efR
+    kt368oHrGMODVRMnuvik3bZVPB4gNqoBKqeFdMxAYtBYh9mFGHIU8fccO9EyZuy77mjY8K
+    EOsFs8d34k48YVHGBH7KIMOvZpQE69eKXajqoP7lQu2YvxotqwoFrSLh1zH0Vjm2HkFblG
+    tLCeDGC8WWXzEY66vqX9qEfWAdx+89LTkIm0J6XEbeLaKeJhbGVctLXBlUSfsqyYnGlj5a
+    lIptEdBxayPsga7DmJWHIckzWGLES3cZ8C/j31pKPr1bOjN235IpcDBYxxFw
+X-ME-Proxy: <xmx:j8rwagWxC5UHxuGmCTHmteqN62ayI-gyAOTWUdD0h7sSdej9iL_OTQ>
+    <xmx:j8rwauAS4ioZhdxrOBI6G4VUiBfewfqf3r-e85rQIrXvDqrWoNIqXA>
+    <xmx:j8rwaj-XTVRWlA5fpWnphcGOMlAt5RBZ61J0DywPYvklbSAaGxXSPQ>
+    <xmx:j8rwalET6zLO03nd3EziXsZ_YGmhZnF90tHnwEF9YG6lHJhQDpfG3w>
+    <xmx:j8rwajg1jKeJ8LwW2hlPRqvhUIquG7kGeXy7On8qb0djHexQ4E70WWzf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 8 Nov 2026 14:16:31 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com
+Subject: Re: [PATCH v2] doc: describe promisor remote fetch order
+In-Reply-To: <xmqqse1b2ljp.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
+	08 Nov 2026 11:03:06 -0800")
+References: <20261108071933.6586-1-husainsitamuwala21@gmail.com>
+	<xmqqse1b2ljp.fsf@gitster.g>
+Date: Sun, 08 Nov 2026 11:16:30 -0800
+Message-ID: <xmqqo6bz2kxd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,188 +124,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Sixt <j6t@kdbg.org>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+Content-Type: text/plain
 
-From: Kristofer Karlsson <krka@spotify.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-Now that "genbytes" exists, "genzeros" is merely the special case of
-it that writes NUL bytes.  Convert its remaining callers to
-"genbytes 00" and remove it, so that there is a single command for
-generating repeated bytes.
+> Hussain Sitamouwala <husainsitamuwala21@gmail.com> writes:
+>
+>> Explain that promisor remotes accepted from a server are tried
+>> before other promisor remotes, and that the remaining objects are
+>> requested from the next remote when a fetch fails. The ordering
+>
+> Well written.  "next" sounded a bit strange thing to say in the
+> context, but it was understandable.
+>
+> Assuming that I understood what the author wanted to say correctly,
+> that is ;-), so let's double-check.  Would it mean the same thing if
+> we replace "next remote" with "other promisor remotes"?
 
-Only some of these callers depend on the data being NUL bytes, like
-t1007, which compares against the object ID of 5GB of zeros, and
-t5318, which zeroes out part of a commit-graph file.  The others only
-care about the size, but keep generating NUL bytes there, too, so
-that what they test does not change.
+After thinking about this a bit more, I know why I thought this was
+strange.
 
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
----
- t/helper/test-genbytes.c    | 10 ----------
- t/helper/test-tool.c        |  1 -
- t/helper/test-tool.h        |  1 -
- t/t1007-hash-object.sh      |  8 ++++----
- t/t1051-large-conversion.sh |  4 ++--
- t/t1450-fsck.sh             |  4 ++--
- t/t4141-apply-too-large.sh  |  2 +-
- t/t5318-commit-graph.sh     |  2 +-
- 8 files changed, 10 insertions(+), 22 deletions(-)
+>>  When fetching objects, promisor remotes are tried one after the other
+>> +client accepted from a server's advertisement are tried before the
+>> +other promisor remotes. If a fetch from a remote fails, the objects
+>> +that are still missing are requested from the next remote.
 
-diff --git a/t/helper/test-genbytes.c b/t/helper/test-genbytes.c
-index b760326b24..898d73c516 100644
---- a/t/helper/test-genbytes.c
-+++ b/t/helper/test-genbytes.c
-@@ -49,13 +49,3 @@ int cmd__genbytes(int argc, const char **argv)
- 
- 	return generate_bytes(hex2chr(argv[1]), parse_count(argc, argv, 2));
- }
--
--int cmd__genzeros(int argc, const char **argv)
--{
--	if (argc > 2) {
--		fprintf(stderr, "usage: %s [<count>]\n", argv[0]);
--		return 1;
--	}
--
--	return generate_bytes('\0', parse_count(argc, argv, 1));
--}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index af70e2bec7..16571fd702 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -35,7 +35,6 @@ static struct test_cmd cmds[] = {
- 	{ "fsmonitor-client", cmd__fsmonitor_client },
- 	{ "genbytes", cmd__genbytes },
- 	{ "genrandom", cmd__genrandom },
--	{ "genzeros", cmd__genzeros },
- 	{ "getcwd", cmd__getcwd },
- 	{ "hashmap", cmd__hashmap },
- 	{ "hash-speed", cmd__hash_speed },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index c35e7412af..1b45c8c37b 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -28,7 +28,6 @@ int cmd__find_pack(int argc, const char **argv);
- int cmd__fsmonitor_client(int argc, const char **argv);
- int cmd__genbytes(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
--int cmd__genzeros(int argc, const char **argv);
- int cmd__getcwd(int argc, const char **argv);
- int cmd__hashmap(int argc, const char **argv);
- int cmd__hash_speed(int argc, const char **argv);
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index 463b38f990..9e28bcc4f0 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -263,7 +263,7 @@ test_expect_success '--stdin outside of repository (uses default hash)' '
- 
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
- 		'files over 4GB hash literally' '
--	test-tool genzeros $((5*1024*1024*1024)) >big &&
-+	test-tool genbytes 00 $((5*1024*1024*1024)) >big &&
- 	test_oid large5GB >expect &&
- 	git hash-object --stdin --literally <big >actual &&
- 	test_cmp expect actual
-@@ -271,7 +271,7 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
- 
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
- 		'files over 4GB hash correctly via --stdin' '
--	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
-+	{ test -f big || test-tool genbytes 00 $((5*1024*1024*1024)) >big; } &&
- 	test_oid large5GB >expect &&
- 	git hash-object --stdin <big >actual &&
- 	test_cmp expect actual
-@@ -279,7 +279,7 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
- 
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
- 		'files over 4GB hash correctly' '
--	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
-+	{ test -f big || test-tool genbytes 00 $((5*1024*1024*1024)) >big; } &&
- 	test_oid large5GB >expect &&
- 	git hash-object -- big >actual &&
- 	test_cmp expect actual
-@@ -289,7 +289,7 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
- # We ensure that cleaning doesn't mangle large files on 64-bit Windows.
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
- 		'hash filtered files over 4GB correctly' '
--	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
-+	{ test -f big || test-tool genbytes 00 $((5*1024*1024*1024)) >big; } &&
- 	test_oid large5GB >expect &&
- 	test_config filter.null-filter.clean "cat" &&
- 	echo "big filter=null-filter" >.gitattributes &&
-diff --git a/t/t1051-large-conversion.sh b/t/t1051-large-conversion.sh
-index 361afb679b..dd5902b3b3 100755
---- a/t/t1051-large-conversion.sh
-+++ b/t/t1051-large-conversion.sh
-@@ -91,7 +91,7 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT \
- 	test_commit test small "a small file" &&
- 	small_size=$(test_file_size small) &&
- 	test_config filter.makelarge.smudge \
--		"test-tool genzeros $((5*1024*1024*1024)) && cat" &&
-+		"test-tool genbytes 00 $((5*1024*1024*1024)) && cat" &&
- 	echo "small filter=makelarge" >.gitattributes &&
- 	rm small &&
- 	git checkout -- small &&
-@@ -103,7 +103,7 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT \
- # the actual size, we ensure that cleaning doesn't mangle large files on 64-bit Windows.
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT \
- 		'files over 4GB convert on input' '
--	test-tool genzeros $((5*1024*1024*1024)) >big &&
-+	test-tool genbytes 00 $((5*1024*1024*1024)) >big &&
- 	test_config filter.checklarge.clean "wc -c >big.size" &&
- 	echo "big filter=checklarge" >.gitattributes &&
- 	git add big &&
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 3e9eb251cb..ae21cb897f 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -1111,7 +1111,7 @@ test_expect_success 'fsck error on gitattributes with excessive line lengths' '
- '
- 
- test_expect_success 'fsck error on gitattributes with excessive size' '
--	blob=$(test-tool genzeros $((100 * 1024 * 1024 + 1)) | git hash-object -w --stdin) &&
-+	blob=$(test-tool genbytes 00 $((100 * 1024 * 1024 + 1)) | git hash-object -w --stdin) &&
- 	test_when_finished "remove_object $blob" &&
- 	tree=$(printf "100644 blob %s\t%s\n" $blob .gitattributes | git mktree) &&
- 	test_when_finished "remove_object $tree" &&
-@@ -1157,7 +1157,7 @@ test_expect_success 'fsck with blob size equal to core.bigFileThreshold' '
- 	git init big-blob-fsck &&
- 	(
- 		cd big-blob-fsck &&
--		test-tool genzeros 1024 >blob &&
-+		test-tool genbytes 00 1024 >blob &&
- 		git add blob &&
- 		git commit -m "blob equal to threshold" &&
- 		git repack -ad &&
-diff --git a/t/t4141-apply-too-large.sh b/t/t4141-apply-too-large.sh
-index 6bc1c7a663..52639a62b0 100755
---- a/t/t4141-apply-too-large.sh
-+++ b/t/t4141-apply-too-large.sh
-@@ -13,7 +13,7 @@ test_expect_success EXPENSIVE 'git apply rejects patches that are too large' '
- 		+++ b/file
- 		@@ -0,0 +1 @@
- 		EOF
--		test-tool genzeros $((1024 * 1024 * 1023))
-+		test-tool genbytes 00 $((1024 * 1024 * 1023))
- 	} | test_must_fail git apply 2>err &&
- 	test_grep "patch too large" err
- '
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 6cecfbeaa1..37b903359c 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -522,7 +522,7 @@ corrupt_graph_and_verify() {
- 	zero_pos=${4:-${orig_size}} &&
- 	printf "$data" | dd of="full/$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
- 	dd of="full/$objdir/info/commit-graph" bs=1 seek="$zero_pos" if=/dev/null &&
--	test-tool genzeros $(($orig_size - $zero_pos)) >>"full/$objdir/info/commit-graph" &&
-+	test-tool genbytes 00 $(($orig_size - $zero_pos)) >>"full/$objdir/info/commit-graph" &&
- 	corrupt_graph_verify "$grepstr"
- 
- }
--- 
-gitgitgadget
+I think the entire sentence after "If a fetch from a remote fails"
+should be removed.  You already established that while fetching,
+remotes are tried one after the other.  What does it mean?  We try
+promisor A, and if the fetch from it fails to obtain certain
+objects, we try promisor B, and then C, and so on.  We already said
+that and you clarified in which order these promisors A and B and C 
+are consulted.
+
+So, there is absolutely nothing left to be said.  The last sentence,
+while it may not say anything wrong, is simply redundant without
+adding any new information.
+
