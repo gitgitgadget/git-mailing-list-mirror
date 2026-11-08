@@ -1,98 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.179
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794142455;
-	b=pYUBW/5wVhavjase4uT8zyPzxnW5rdYjs1W3XmpqbLzmoasMc6jBQlV1FsmZv6SY6j7w
-	 G77xNGzJXoY71MYM9yaVEFms4lXap+NJdt5nPzU7i6YmMnrmGLIv8ysOeAOXD+i0HKs21
-	 6OJ9bUtu0s8GiOJobxp3DisGfvdlPraztLiVy6rJWDHdePcG2bZsPRxcHMiBeCbrXjRzc
-	 J2aM7J+6MdPqFpJUcO4wcqwEbFRDyb3Pv/t+8n06ybKLZKSsnOngybmCm9fsJKYg+qi5H
-	 MGMN3yhPq7xlxDJCGMhhxGq4OmJhbQSHdE1AqNRNLNX6Q8B+rDYxY4WYLph7y1egPFg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794142455;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=xEtkzs6wht/wmnjE7Zkb6EOlW6f6sIOIOigFc7EvTpg=;
-	b=1bRGnCzhEuYQ3UA5SRIL9pSqZtCFMvtlL+0bOzm6L67+trFyFNRYnBVKxtNoNXWCnstP
-	 naCyXISpWi1NvCMFTur8u3hVRPqR8M5fjY3krNs29+CaL02ZhqPug4Aak2Ot1r4Y+F5g5
-	 Nx9FWWYZKG0Yxu/XKfokrzWNCnpByerIiRhg3ZSjbR88djRlu/a3peVaFgnjmL1SRn14/
-	 SSJDpPT6155drydJNRYRCtk/ZqduuguD+R2sVZAvqVXCvzybUGfWjzwTYzPCvS+YaCDTo
-	 WAV7k8sy1ZA0NXBRIpIWQHG5qLE94owxMQOqLENW2S6X50myBN1/byJoMdMGAiMfp/A==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SfeYNmgi;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.179
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794148721;
+	b=a7Sfj0QM/k2eelNesHx4rKO+IvBdNFlo0fLPb99ZVVmJs3dOtSXKZ8JmrMF2D71mXqK2
+	 l0ZOWRBsjn1tymN4mb5jfs9DQBhbSsZqREghloIe6xPImaxxRmQYDjklIH8JOFaavfyjK
+	 xxVb4HoP6jgEZRmQCpK1GHtyO7m87T1SqEEWq1aSohJgeUDotHejLUS76EcAUoqo1Cx5q
+	 FcG3XLKNw+Fnhb4IQ+LmLSrX0jHm1xZFJAXenKDC0N2Wqbf0BQL1e6nRfNhFrbDXB500a
+	 pm2gtyqNUQ5XWlAabLzMDLS+vrIVs8yBkNjYv1k4+FA7E1v6h8xACNxw7G+84P3ZWgw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794148721;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=EsAtUe2cguol8bynsGkz066PKf2xpm83v9yMHvOWFy4=;
+	b=3uylV+AXZsGXIXG+ULmCwV8aJMRRXfl1N5PnbLSeZKr2+VY/D4xQ3JYxt5RjMk2EBU9r
+	 eLhezXJdbdSUY+YntPwPTd2issXnkBFXFx3ZwXBWHJxtKW4KpRqLakVE36qVg17TSB3iT
+	 6Varqj7xyO/apSFAIvT5fLVKz5xPIgF7LllMefIXFmIhqwTKOft80FpaceHDb/9DOXKeK
+	 BhtNxNeHEctPRHmK3g7TY5/YtB+5lCkndlK9XGik/BXp8zpsEDRy6pyLeDWSLO5Min0vo
+	 +I8oUgfolbbmZQWagujeW8vi7pZiTLSspYcHpnBnNCCbydJUcGasR4inm4Ej6yjpCIg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=crustytoothpaste.net;
+	spf=pass smtp.mailfrom=crustytoothpaste.net;
+	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=uxOgjm4x;
+	arc=none smtp.remote-ip=172.105.7.114
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CDB606A31C
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 12:54:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29CDB606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C0A606A31C
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 14:38:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57C0A606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SfeYNmgi
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-93f2551f57fso1114985a.1
-        for <git@vger.kernel.org>; Sun, 08 Nov 2026 04:54:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794142454; cv=none;
-        d=google.com; s=arc-20260327;
-        b=oLMT1Jvaf9c2EKl99DRe/kAXe2aP0w0NyW5tKIGF/nQ6KDunosiT4SXC64yH9UyOku
-         qCUYa/T09J+daej1CVs/3USp9DEzNkwmdFDNWdPGQlrAp9ygMswsFPyfh6GG1M5Qnf5G
-         GEYAvc4nr8X1pptG9sRmxzdrihB6lIK9/i19kJ4cI5bdN2BKx60VjNmawlF5v9I75Rl9
-         hJD8S06UNFWDcI5q/gN75jAej6ZN3sdvOEVDc/lawcc/T38KNeuJMc3jeJKy6ZGYdnDP
-         hypTisx8I/bLqZGbsh3zqXuvopgRIvIk+DYyGpJioZpC/LxAQMP3lHywjyCwa26YgNpl
-         zF1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=xEtkzs6wht/wmnjE7Zkb6EOlW6f6sIOIOigFc7EvTpg=;
-        fh=o5l0Eu0aYVhYLNaknXG9Bd9QW+Oip/V1pdMxWtUugbA=;
-        b=Hv9ZhAUq1pxJ1/hTbhytRTMOzJvYI/X9HS0rAdx+e8iwtQVsrHplk62K90Nm08wlAN
-         SLd0Tv7aPI7w6+yDzFfNacpta4lU/uxfXNtFHsCq6/oTOgcvPMyEwQYjbPYVZANSvSbc
-         iXB5RgTHSF6Hjaeo+R/7Cepe3ris3wWFmJPWuGa487PM2YOZ2tvv6RA1MHiwQQsJsGVo
-         uyq0ds4Q+Lly3cP2Pr3su0JFF9Dezea1D6c3y2vrz6AgS9EImgfDQ1xZ+M7aDQgqwXW2
-         YutS5XtyTxv/DXZbY44Hxd6GEYDMt5CKZT5E7pqytL3c77DHLPRCtu9uqiMaNLj19oBW
-         43jA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794142454; x=1794747254; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xEtkzs6wht/wmnjE7Zkb6EOlW6f6sIOIOigFc7EvTpg=;
-        b=SfeYNmgiifOyPLIqXjwQe1XLO5Tazr9Dz+whV/x9V1b0AH/YWVX1WZ6hXmoPG+TwcL
-         SqdB1zoX1WGPvkyxAluXKbfKUPpNvWOBEHLW1dxG/e1YgIL4jRna3GgL9ZMcwWMWj/kH
-         7prxwCv4N6OvmuN1URnmA0o3I+diW8QjARtpx1LB1ayAFxp+hHgJH9F4mbCw+rU/6sLO
-         hNtM5GwZ+SJZsPOu4FOKMqXPydfgIWeMFPcpDb1Fv6OjUquWB6oFL4xQCQek/uIUvj8a
-         9rErfKoaZDNLW3Ydw7DeL+ZZJcfkAKoFBYaIMPp71NrDaGrmg/jkdn3U3sM4QM1uw3Hi
-         bmZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794142454; x=1794747254;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=xEtkzs6wht/wmnjE7Zkb6EOlW6f6sIOIOigFc7EvTpg=;
-        b=oERtAmCrygjRVwmzjaDEvNmuXPAXG308YaDjTenIxvNvZNPdNacioZU0Ryt5N6tStp
-         SKxVKlmR3DETfWZM0htdFmXJQH4N2DhXFp+Uboex407goyXIjgeff+c2HQzH2/YRbtnr
-         7N5+rDiFLZYGyjTuIGeRyLC+Su+QR/dak9m++jwB52uXXYqrHehwIwHlw+3uhIEJzlH9
-         1kkW3k8q1OVtCjLLFMSZkaxNsR2jssqGIYFcf/cHEAMoKsz7/TtbZ80/oS/hn2yptd0i
-         11YoPaA8PS71MUYVLmL4j5+YgRPAy5Fc5uG4dlCgN9GaHOqSiuEHQT87NGAI/thmrjfM
-         fR0A==
-X-Gm-Message-State: APuU4Z/3b6hOsNfUwYZL+Ot77QPvmYAMmquCtMfCIiTpIBLkSs9jqvzB
-	gaFzKRvWQ08wBi1822siI59GRJsDqBFcwYffOSgOqv4BFoLh9DI/PEnluyZYAf194DqML77zG7z
-	YuRBny+44fx/YVWV2tl4TOGtuDXlw196s5zwHnB4=
-X-Gm-Gg: AYBFou1bMmCPrDKxXt0A/oGxvStOfg0JxJpEq3CHmqv48pldM/UYMYJqWE14XB4zSa3
-	tkqF3F46emO8xEbAbNcAM7BOERU0g0rP9hiY1UBopso5qyNU0DPQND48EZmq0CfAJ3LcWVgFPrI
-	ngsguclcEk0BNbAbe2e0xlI07BjWx0p9xTtXxO0M7CkfB4Y4rDGqFQOFOeeJlJ2mJOx01mWQVb/
-	+87fT6bj+OuaB57wTthmtnutjAnH0/n0AAdFHNGDzmtvH4EdkRrehIcgMxgXyQ6VVVp/1dCVWmD
-	As1ti/7Xlr7qOwWmw2IILwoDt//XdA7C8Xs2GNayN/3+jpNy8DqsQr4bHwzmIZk0s9HoVapq+Ud
-	ft94gW5Y/ZCAZcFAhWVTmauO6jfMh7oaRNWbc
-X-Received: by 2002:a05:620a:a90d:b0:945:c5b3:6356 with SMTP id
- af79cd13be357-94784143254mr223253985a.2.1794142453899; Sun, 08 Nov 2026
- 04:54:13 -0800 (PST)
+	dkim=pass (3072-bit key, unprotected) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=uxOgjm4x
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1794148718;
+	bh=1FRUDU4d57D1V9UmqsYF072dgwrKGqaLs/x4jys+DHs=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=uxOgjm4xrTQwaX4scmptSP6WIYxaaFZNSIGy2N4KY2ei1lYAPfu5Voyy76R/oMuLP
+	 iYtJODQcq+7Zgzb0ve2wPuVnp+5QUwbUDSTpoFerEtxKiq6FsSOgp0fv0BG3C6JNsN
+	 eZBa1KZN1YlboHJC7q13tFFpBMn+8dK1yP7ADaeyfhenx/209CdR2KphFcxwoCLJfY
+	 FTMiXtpI7EFO8JYxJfeNbiRvlJCIjc7+mwz+julJ5tRJ4pdMs6h6CZaycUXNFYI1ZC
+	 zJp0L8E2wwQqQfU0A3aEaAkYVTgabVIaqs6Tbt13P0HHkZCe1JFjpbM53EG/I1XWFX
+	 LwoOphGkjZbIkOgBBT0ox3Tx05jj4qrUjh1e0E0kAjMOHRSr4Oad3XSe/hNEshf147
+	 7LDil16NsPV44aEgG1f0tos3bhVEcGwl7uTLD5iW2etadb5XREeck2cZvo0t6mKUnU
+	 KPKtH+G4antGp9npNp15slBD5yeQc5WWhZDRTL1QpodqzGvNt79
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ba43:21ec:77f4:1818])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id BDDB0200AA;
+	Sun,  8 Nov 2026 14:38:38 +0000 (UTC)
+Date: Sun, 8 Nov 2026 14:38:37 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH] setup: default hash algo to GIT_HASH_DEFAULT
+Message-ID: <avCJbJE7mx_Z2zLY@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Adam Dinwoodie <adam@dinwoodie.org>, Jeff King <peff@peff.net>
+References: <CA+kUOampvjU3=VK3VGhYw2L5-E+LBsk=Q0UrAxhhR7hC5SUdJg@mail.gmail.com>
+ <20261108011633.1772000-1-sandals@crustytoothpaste.net>
+ <xmqqtsls53xr.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,70 +76,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CAP8tz2JPXzq=Skokn4OtH8t6c3b+p1Wny1iX6AhXReUGvsBhuw@mail.gmail.com>
- <CALnO6CCFfd3VcZkFGmc6kYHqEwsafa7UbOg-6cN0jEfsipQm5Q@mail.gmail.com>
- <CAP8tz2+CQcQyTdj3YFpEaiVh=hVoK5Xo8WFxGZNMJoCCM-u=hQ@mail.gmail.com>
- <CALnO6CB=tmTrNKcWOanb79Bm9gPT5H_dntNGRJGp6iEYHe_aBg@mail.gmail.com> <CAP8tz2+cJ4E+Nv_dHuY-8-DoGj7_nP1=98Nn5+M3qMb5WezYVw@mail.gmail.com>
-In-Reply-To: <CAP8tz2+cJ4E+Nv_dHuY-8-DoGj7_nP1=98Nn5+M3qMb5WezYVw@mail.gmail.com>
-From: =?UTF-8?B?5LqV5LiK5Y+4?= <inoue.tsukasa.4@gmail.com>
-Date: Sun, 8 Nov 2026 21:54:03 +0900
-X-Gm-Features: AclHuK8e-3Mx1anG-ofeyA8yzJZANCncl3A4vm7EM4-kKMhMO6iGqpLnSuWbURA
-Message-ID: <CAP8tz2K2u4yuNE5ck777JVAgCk0-4yoToc1RNaFwMDKVH4zabA@mail.gmail.com>
-Subject: Re: switch/checkout stops halfway when it fails to write tracking config
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="HklZObr7OUXM4dwr"
+Content-Disposition: inline
+In-Reply-To: <xmqqtsls53xr.fsf@gitster.g>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
-Patrick Steinhardt <ps@pks.im>
-Subject: Re: switch/checkout stops halfway when it fails to write
-tracking config
-In-Reply-To: <xmqqecdjsryk.fsf@gitster.g>
+--HklZObr7OUXM4dwr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2026-11-08 at 04:42:56, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > When we have no other hash algorithm to choose, we set no hash
+> > algorithm, which ends up with us defaulting to SHA-1.  Instead, default
+> > to GIT_HASH_DEFAULT.  This means that we will choose SHA-256 in breaking
+> > changes mode and in Git 3.0, which is what we want.
+> >
+> > Reported-by: Adam Dinwoodie <adam@dinwoodie.org>
+> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > ---
+> >  setup.c         |  2 ++
+> >  t/t0001-init.sh | 16 ++++++++++++++++
+> >  2 files changed, 18 insertions(+)
+>=20
+> With Git 3.0, we promised that SHA-1/SHA-256 interop will not have
+> to be ready, and that SHA-256 would become the default.  And this
+> patch would be a good thing to have for the second promise.
+>=20
+> But didn't we also discuss "empty/initial repository whose hash
+> algorithm is undecided can take a push of either SHA-1 or SHA-256
+> payload and that first push can decide and freeze the hash algorithm
+> used in the repository" or something along that line?
 
-> > ... and to leave full atomicity as a separate topic.
->
-> Sounds like a good direction to go.
+We discussed that as a possibility, but it requires protocol changes and
+nobody has stepped up to implement that.  I think Peff was thinking
+about maybe implementing that, but I don't think anyone came to a
+decision.
 
-Thanks for merging ti/checkout-track-failure, and thanks to Ben for the
-questions in this thread.
+> I am wondering if we want to reserve 'HASH_UNKNOWN' for such a "was
+> just created, not quite finished initializing yet" state.
 
-I'd like to work on the all-or-none switch now. Today switch_branches()
-updates the worktree first, then creates the branch ref, writes the
-tracking config and updates HEAD, so a failure after the first step
-leaves the worktree switched. I looked at two ways to fix this:
+I think we concluded that we'd need to initialize a repository to _some_
+hash algorithm even if we had the limbo state because otherwise people
+could `git init` and then work locally and we need to have some existing
+hash algorithm for that case.  That would be true even with bare
+repositories.
 
-A. Put the branch ref and HEAD in one transaction, prepare it before
-   merge_working_tree(), and commit or abort it afterwards.
+So I think the limbo functionality, if we implemented it, would be a
+separate option (maybe `extensions.potentialObjectFormat`?) and this
+patch should go in either way.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+Speaking for myself only
 
-B. Prepare that transaction only as a check and abort it, then do the
-   real updates after the worktree update, as today.
+--HklZObr7OUXM4dwr
+Content-Type: application/pgp-signature; name=signature.asc
 
-I tried both with "git update-ref --stdin" on current master, files and
-reftable:
+-----BEGIN PGP SIGNATURE-----
 
- - In both, a stale branch lock or a reference-transaction hook rejecting
-   at "prepared" stops the switch before the worktree changes.
- - With A, every other ref update in a reftable repository fails while
-   the transaction is held, and with files a commit from another process
-   fails on HEAD.lock. The -m autostash steps fail too, because they
-   update HEAD.
- - A also has to put the branch and HEAD in one transaction, which runs
-   into a reftable reflog bug I reported separately:
-   https://lore.kernel.org/git/CAP8tz2L3Dfhd+ec4+SFkZgXmzQnBg+3Y0REAV+1Hf5X415qnfw@mail.gmail.com/
- - With B nothing is locked during the worktree update, so -m and other
-   processes work as before. A branch created by another process between
-   the check and the commit still leaves the switch halfway, and hooks see
-   the check as "prepared" followed by "aborted".
+wr0EABYKAG8FgmrwiWwJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ3QhWGgE8/MweIJYSRWEgjkmGv1EzF0/A89QFobSFoc/
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAN9zAP40gpRmFO710rgI/HViVC7jCr3n
++Z8qNYWMlqLyKsIIzAD/aHb1BydUWK3jiZUvmfaKrkg0GEHIWAnV5zE0bejvHgw=
+=MehV
+-----END PGP SIGNATURE-----
 
-So I'd like to go with B. The tracking config would be written before the
-worktree update and removed if a later step fails. For -C on the current
-branch HEAD does not change, so it would be left out of the check.
-
-Does B sound acceptable, given that it does not cover the race with
-another process?
-
-Thanks,
-Tsukasa
+--HklZObr7OUXM4dwr--
