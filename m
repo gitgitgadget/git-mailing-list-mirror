@@ -1,120 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794162146;
-	b=k3KuyVcVbV9E3KBxDMbvbNqAImCqP5h4vAHDrMSjlRl6XVW/F7do6EhFJiAb5d22T2Sx
-	 wYJE3sxteF1KrLPh9mm7suzHC33kMpSwrz1ojQqe+WmwJomboYa6cif0dTiI90QSFOcI7
-	 WNiEPuWbXZhBTiv7+ZuYdcC7gJ88ZZVPcQIIkqmwPaggRlTKTPk7K0lKD9NwkEiW+glkD
-	 2gCZ5mIJU+Z/1OHqvaF3Pmk2glWSgC0J2o5TbugW09F4JM4ia8vBn4z4O8qI5ZKx7pm1y
-	 VqpAj32X2bTHDPZSM2dgIQT1H5S1yNmmTyOlCNfj0lA+OVErXUnAMSXGKB8SLyLvMuQ==
+	t=1794162915;
+	b=tMvhW5y4/X3XLBidRJdjk1X4V6YY3X8glxFAUI1BNcJm54to7wDlY0bIXNqnJKxyVuyG
+	 XdW5Z6gt7RdTwtqMm06sXHQZ9tV3JtW2rynQVv0aB8y3dVmol3IDH0R0dRBM8/DNwXMsM
+	 OaPdYXE5Y/R8/4yz8Itz7D6ddM+1Xl+lt0oLHnyhATuZlgkATemeRjaH4Awo93TElkbxe
+	 4Ln4Tew52tYCMfxAAtKSH26otLNfY8ufnpGiuIdBPk4IPW+b2/BP4kSdH6j6gSSWTH5Cq
+	 oM//SHB701kbsjGwT9DNeTk4bpEY09lGYNNdMrzLvv6VaUDtg66pzv0yUTG9yfI9HvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794162146;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794162915;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=s4NlyS6DjvIwMCZUTY3xjOtOzki/ICYTgGjefZi9mvs=;
-	b=ey2wUnId+KwLvopo3K/GGUIj1pg4gIdwettDmBLmssmBuNopkHxlsEUKu2DqOxKXnz3O
-	 DgBtkDbFLIC+qgRTOVfewWjAx3AYYghd9IaXD4fs5qR+9dZfRW/JQvzpmyncgnlPIomX2
-	 6QEaFSl8iCg1F4cSKVX3kB2NcbJraTyxANWE7w0ATEthpg3U0GOkOBK1zVH+Hd/rNuSaR
-	 1xDLDN3MNVn7uh9NCmXJtOLKMGg0aDZqswybBuXeCtWSLcindJ+43hU8UA8TMc9aFy2Op
-	 EuitDePA+5Hrmm+8Qh6YEbQPdqIP9A0WG1LF9K6cBKi73ZhICP7Y6GGNYwr0jQNnHtQ==
+	bh=e1S94lRlBw64Wa/ln11NvMX8MYGiLziEBxaKxf1FABs=;
+	b=fSxnQbnxFCrrYaI1Iiv/AMa8ZK2yPIZhK8coIr0ywcvewa6bp6jjkwOTvrCFTUw1oRlx
+	 fQq548m9Byj38wiW7aqU3z4PD5+JJt52cwIqsDPjoCOiNl0UXEkOBv4efD0GpK1vLgmWF
+	 yc6Yl6xMeGbm0M4rJn1P1HwvxQydDxVvrRlJzAqBwp3YomZdTd/DhC6ECSx2jJinBExsu
+	 xaZmdC8P7fn0djaRodXnPHMq8mpDXEfBK409c5Dn/eT2uRguc1K6+YZO2/8ufT+OSNTwg
+	 ZegeAtx5VlMXbhMTygk1hm1wpHZffFp0phK2GxA26f8NS32O9NEdIUnPi1mB+g2eRSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=kzANCPf0;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=siqns3H4;
-	arc=none smtp.remote-ip=103.168.172.156
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=lTxabC39;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=g1kn4eT0;
+	arc=none smtp.remote-ip=103.168.172.157
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF2C606A31C
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 18:22:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3DF2C606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295B4606A31C
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 18:35:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 295B4606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=kzANCPf0;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=siqns3H4
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 63958140005B
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 13:22:24 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=lTxabC39;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=g1kn4eT0
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6296D14000CF
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 13:35:14 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sun, 08 Nov 2026 13:22:24 -0500
+  by phl-compute-01.internal (MEProxy); Sun, 08 Nov 2026 13:35:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794162144; x=1794248544; bh=s4NlyS6Djv
-	IwMCZUTY3xjOtOzki/ICYTgGjefZi9mvs=; b=kzANCPf02tnqSg0vFQITx3v5m7
-	/3olE2thbPzixAbuxi6mBpnpziMgiS+9jldoQ12Wn6x/voe+tTBg6AA6jWWgZrHg
-	tLaOTbXY20h9r2FBRKiHXbu5PKUVBuaxgV+X8qjDSGo3SIR8RL5eAKidoffqVmZL
-	mYH7LlnBR3KeO/FUJgukokRzQSZDPcbrsAZC03XLxEPVolHYgrPWzNpmZHFwjYOp
-	VyiGHLj91b9u4um1cO5QiLg/VAPfaIpaZCgt6hOclwr2WOJitNbqcsxAhM81QuJU
-	O709RO2yinc1Pk0bbl6GQ+2lTFw2kuW/zTakbDn4xL7Ndm4rbiVz9LoH7v7A==
+	:subject:to:to; s=fm2; t=1794162914; x=1794249314; bh=e1S94lRlBw
+	64Wa/ln11NvMX8MYGiLziEBxaKxf1FABs=; b=lTxabC398hMEbP000TQR1QzheL
+	tQxA8SjRcxmsZMFSdfLXdQ8vXN4CTLP7ycHknxCAlQT+3tfD7V2LUtaE83lKxNdU
+	JeK6H6fTo412XreUu2SE5zn74rzi/34gvlG5a6Jv0xiBqL739pY/F3sq70euUre+
+	4ywIzxr1a1af16EvY+9Xt8TsIaFmYBUPvUm0iA5sVdeis4fpco9ppIof6x0spIzX
+	6bZhIr/F9TncKmDdBorwdYfZ0g44g7yYNh9BG/BX1uZMeExMrOk++sUcfABaaqt2
+	fV79Qg969V2K1gN9zu4sz4lxBSycAXkA0veArZsD1YuXJFc8nLqvuKtJeN6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794162144; x=1794248544; bh=s4NlyS6DjvIwMCZUTY3xjOtOzki/ICYTgGj
-	efZi9mvs=; b=siqns3H4X10V6/JjMv7DXkBNGSdXBgEYKH1Y4InQJrc/I8em7D5
-	0g4FhkQby4HTKu89eVJGdgoJPpgobH56u8lJcDFFBf+xSD8dkf3xWgeyP8BCBLh+
-	4u90ErXaPEJlCQc8Jnf+0apWExtt8UrmH+919bH+ESaN6Jbxa2j8H7gtTUjxleq/
-	JTcvMz0WwgDW7SsDCZ1K1bfGJTpIM+qaw5g7imwrLg3TwkqlqGc+1LX5Daw0PCzF
-	xbBZ6PvGB+EW68mQkoR/TKpxPFd6kvXdVihvSqXSKk8KzcEG2jvYDxsUskaNUwy9
-	e/IOZn5DMqkHMkgUyHcf/GVZGNonVqxTQ9A==
+	1794162914; x=1794249314; bh=e1S94lRlBw64Wa/ln11NvMX8MYGiLziEBxa
+	Kxf1FABs=; b=g1kn4eT0lG7ted52Ed6xVM1UJLIhmKbiPvK9cHTvOO4LS444AW5
+	20nlfHeMoFTd/DObXuq9CB53zwRXLIvn1vLmLhEuImfNV214lh+lyknr77Laoxr0
+	hZnd+OjpUc4gOLSoHRhskFyZ7wUb3Mn1mQxPkauBE45KXk8f8UMhj8LpAmblvHmc
+	svVBcfdF0y2Q8gwGnlqVVPabPsp4Hjdf1nc9zhWsQbotrVVxQCu1rxHcDDHrde9c
+	p8RzRWpHtaj9pamV0PeG+pUmRjRjdJGEg4P7yVOzxegBSHXjQ/pdrYRy7Vrmkq3P
+	InlW4aFfMCUHMPqrQTrh4/vREXfPsmGXQXA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794162144; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794162914; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:aZOQchHJs5EO3c+nS/Ku71ijUzc4mEgSQES8H5+Wy25789B
-	d1eP2URiKZtV4BYYFvANpKGRUiTAdidCkNpGENLVIwAw/0HTHPpHJzShTBh1ZP3t
-	KH99srzZqejvLSv+p14Fu3m+7Y846qqJZ7ad9BI3ggOgvhE92wVELAquvHdrQRNJ
-	Q0uw1qef3mC9podst9YkKCbjo5l/RkPPhkiXd7sDaTk1ebHDyP0qKq37utNAMm6U
-	zs6ixZ7finqnaSqtqUi4I7f1RZ3TlQUsEjwB11z3MxO56EzAg6Ms8WPBPyXx8F5H
-	t7YZWxEqHDpH8nrP6dQv245dd/uDO0Uh64lOpig==;
+	s=fm2:rsa-sha256:JRqDKGsEnBJIrIw799ZNqd7/EzeZvx2gjmlRabNbA8Ap6S1
+	qLhes6n/R1KWqHx4oqgGlSnyNHPlwXimUSaJ0T2wCXGCON/PR8w2k31kRnpJD+Gv
+	2NloTRb5Wl/TcfObTl+gy9+87H74oXgzMxlYVN5pmxw0nZmxR/u5JJ3FkjtHJ2yc
+	pfWgMMDNwYwlC2nsMkt1hQrg5f0iUGDHNI/jLlu35gtH2kN2gM3rNXW4BlEz/uaT
+	J+oWPOXwYI1eA4IdzfTYxgkPmsSM7lSy7kbxBN/djOz9tHJ9ieFgX0wkU14UWFkO
+	MZ0ZFeNRxG2xoMjwF+00lFxzrkJU9pFmc/DLHfA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:1AFGh11WJlhQ45lsvena1SFXsJ+GxPDyH4ee2/GLxoQ=:bpV+MTn0agi1A7ZtGdNWMsklsvNuLSngRdJJjbt4rJk=;
-X-ME-Sender: <xms:373warltKRgxNFvxs2fC9tit3m3RI6ellMzSVP7NfrnZ9ST7p-2PSw>
-    <xme:373walvU8DHatu1CUg2wZhasiBaMHSasd6Om8WLuRa0XxCO8qMNA8hK-nxAMDpjsV
-    N9y46X8FMO_Q9ub-abog7c_DifYvPmR-ZWvgh3bTjbTHYPj14U1Txw>
-X-ME-Received: <xmr:373wap-_SvO3HjFpSCB4liO_TdIu7QGkQNYyG_4sJ7KwZm1Yn08wR_kize2ESIySnKwmR4YRRwSIRCziMCN4_uzJmdlzoPENWG2P>
-X-ME-Proxy-Cause: dmFkZTEqIbSVgN1JUvkJJJJu9p+faSXJydmxlPxI00/k0rfEJ3XVXKK4hk32YHbDlDxv6N
-    fkiPMx9LARyXel7VEtoUqYcexbZMKk7/2ug/b1LsNJAvqudcnTPSf3b41qGXA3fjUC6E1z
-    NiSdYOF6+6K8SSgzlnnk3nC5YuM+btOmlbGSYLeauJEDsT/3Ns13l6fdnYvml2Hb9Z5MzD
-    blnEx72xXERBZIAJQLDzDamH9Amppg5sMn9rYPpfm33vWsuCm45eI4q3g/rV4l+RYdILep
-    GO5Gq7Q71wDWc0EwLYQLB4Bb5fdry083IFx1e7OulPj3D+ToOnM0Hv0o6R4zwO895wToK/
-    F2IjzQCzl8U4xhdfU1/JlAFBXIhTsutw1WhJ1aHV2U3HpknrRHKXDGYF+zyJ/zg6N9jcRR
-    3jPzhnReaOwDpdVP2LO348IZj1vt6vRzNt/7Fma3gII4JznVKjlAL6X6xgrqr3obJ0TIP1
-    GpftHlFQL/qXUkpviltacuYraqIaM+UPwa8JbQozcHg5+4SfqkmlThDDXhYdgxXboKxKtS
-    NvR8oIXioHxEc01YRjYuogvO545zFB3X9NRp+1A1S/JPK7VaDE2/MAdwlSzGwthUbrHixK
-    5/d3RVTo0VHbeAKx9aaHDRuDZBkHAYWTdxIuzYRmtPW9eKP1Lua7K0NYvStw
-X-ME-Proxy: <xmx:373wavOaMc0qyDYYe-IGC6r14Ui6oNKu0Wm7Tbwk2c43ZBeSa44vmw>
-    <xmx:373wanEIb7Z00Ufwx_nY-sWCdwU_wuHAtFqT8sv6VoYUNTGnjz24vQ>
-    <xmx:373watR3BDnqxa_yKkDXKCf-xtKxSsoGXulHceglqiVln5_R6G7G6w>
-    <xmx:373wakvFOPABQF1ErXUd9i4alp000JROgEhKhwHEg3qLrumJS_pLqg>
-    <xmx:4L3waq-C7FkvFISnxdjqIhZf3dCkGIkDn1ugQBI6H3hTa7680vkDLwFu>
+Message-Instance: m=1; h=sha256:MSWlhkHWlRqTVAeWL/spwCnBg3h/G0u0iP++X3yflg0=:6AjRXuBTO09R54xKlRqhhsLZBIHWuxUinG1ky/w/ciE=;
+X-ME-Sender: <xms:4sDwagr7dH28TeIX4dW_y_F16RclnlXD3W0mm29uxhqU-_1owAQ-0w>
+    <xme:4sDwatjFvrihJz76ozIeHSCXI_zIUGiJMlQampV5_S_P0NBxcLDXx-0gfmaVj7xg4
+    7QPdiBcey5YbF3SUXMAeTMEpwQu2VQ0SXvHgUE4uwTqvpuB0wE6gg>
+X-ME-Received: <xmr:4sDwatjfLGWfEfGDbL9bFPZQbHROEu8teE-PejvP5yAqkUoENsWwhgf49sWr0X551nkFOqb6Pbh5-MuAxEjBTngGfPgsZNZ2kv4s>
+X-ME-Proxy-Cause: dmFkZTGnqgBvwszE80gaI5l2cw/QAvFLQPtLkKBq4PtaEIBKWmOHXbmgOvE5snR0NerRYg
+    PrIfk6UEusNhqxfFM6ZFoeOLy4T0G3x/QQqYy+2Lcqh3cX6Ldd9K67dbBgvFKvaOPXoEpf
+    5S7D4+nhu+xVlXcvWHQLKchkG7aamcSmdb+eeDCyoSolZ2pLMsFg/Apf2oYFDwpr1zysLf
+    y/52nWsLU0t2l3iJJaDEmooPzKM3W8+hmMW1LUtBgiGeJ7rdDwOqnBYQ7BR5eL/9MnMWAl
+    O5BrvxErzHvDz63rbpPOhG9m4K9TndGPJtVNq5gN8csfvFjLX6nxG178ETcPOwP1ZuWwKW
+    O3rLVSiVd7wnJIY9hBjqiP7Dk0jPdtsX+v8/NdEf9CV1QdPOy3xR8MwlJ19Pept+LLrw2L
+    uPJtF6CXIU8hPYtS18ZbbhRIlgSDQnOwG5SHh1U+5QLzWUC+AX0pc77S4wvxbMYEwby+hy
+    gPRJli7qxuAIhzUxbDtMh99bxuTE7pNdPgaKloQBBIR8c6y6QC2jBRrwTsCa78+Qbc1WTI
+    X/TC+Xk1QNqjhpk2Sj655tQvDHItFagKQOny8aF3H7VLNjeuzIU7iyb2DruEXrnHV6JjEH
+    Js0kFqdOeZEwfRVfIbiDKvjrXPXCBsFN3JEPISivxucsNrLsduhR22P/nvoA
+X-ME-Proxy: <xmx:4sDwajiJ-JUBdhfx_UdTKQ80pSzQmq7pzZEsXQn3KQdgoLuYatE1eQ>
+    <xmx:4sDwatJ50GqEB5GOSvYVyoeuohGGkCq6-KqfNN8RqwO2_HjD-57PFA>
+    <xmx:4sDwaiHkyjVxqfxKscqZP5Rxmzg61yb0OuIsmxa7yeJNSuFy58lBxQ>
+    <xmx:4sDwahQQ_nL16FQju9CLoYjkD7xk9M6ABgRpVr0c6YBPvZJkOZrxkA>
+    <xmx:4sDwarjeVOruwEM1D9YSJRJpABrltRl4roYFJUaQ1acRSnbGtkkgACFW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Nov 2026 13:22:23 -0500 (EST)
+ 8 Nov 2026 13:35:13 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Adam Dinwoodie <adam@dinwoodie.org>,
-    Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] setup: default hash algo to GIT_HASH_DEFAULT
-In-Reply-To: <20261108011633.1772000-1-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Sun, 8 Nov 2026 01:16:33 +0000")
-References: <CA+kUOampvjU3=VK3VGhYw2L5-E+LBsk=Q0UrAxhhR7hC5SUdJg@mail.gmail.com>
-	<20261108011633.1772000-1-sandals@crustytoothpaste.net>
-Date: Sun, 08 Nov 2026 10:22:22 -0800
-Message-ID: <xmqqik274201.fsf@gitster.g>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/3] t/helper: rename test-genzeros.c to test-genbytes.c
+In-Reply-To: <CAL71e4MiH62mpy0poRG5pSz=GPpoLWo-qPi_inaav9CgqDn5hg@mail.gmail.com>
+	(Kristofer Karlsson's message of "Sun, 8 Nov 2026 10:10:02 +0100")
+References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
+	<b4378b352769cdcc2e9cfdf40efe173123ea9ab4.1794063565.git.gitgitgadget@gmail.com>
+	<xmqqwlqo8c8y.fsf@gitster.g> <xmqqpkwg53us.fsf@gitster.g>
+	<CAL71e4MiH62mpy0poRG5pSz=GPpoLWo-qPi_inaav9CgqDn5hg@mail.gmail.com>
+Date: Sun, 08 Nov 2026 10:35:12 -0800
+Message-ID: <xmqqcxsf41en.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -127,110 +129,33 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Kristofer Karlsson <krka@spotify.com> writes:
 
-> When we have no other hash algorithm to choose, we set no hash
-> algorithm, which ends up with us defaulting to SHA-1.  Instead, default
-> to GIT_HASH_DEFAULT.  This means that we will choose SHA-256 in breaking
-> changes mode and in Git 3.0, which is what we want.
+> When using the GGG workflow I think that option is not available,
+> though I will see if I can try formatting and sending the patch
+> manually for this one instead.  (Or try to submit a patch to GGG
+> to allow for configuring this too.)
 >
-> Reported-by: Adam Dinwoodie <adam@dinwoodie.org>
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  setup.c         |  2 ++
->  t/t0001-init.sh | 16 ++++++++++++++++
->  2 files changed, 18 insertions(+)
+> I could squash it all into a single patch too, which I think
+> would make sense if we don't need the intermediate state
+> where both genzeros and genbytes exist at the same time.
 >
-> diff --git a/setup.c b/setup.c
-> index 61bcdafe82..4a0dfc8908 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -2830,6 +2830,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
->  			repo_fmt->hash_algo = env_algo;
->  	} else if (cfg.hash != GIT_HASH_UNKNOWN) {
->  		repo_fmt->hash_algo = cfg.hash;
-> +	} else {
-> +		repo_fmt->hash_algo = GIT_HASH_DEFAULT;
->  	}
+> What's your preference?
 
-Hmph, maybe I am not reading the code flow correctly, but does this
-not break running "git init" to reinitialize an already initialized
-repository?  I mimicked the new test in your patch and wrote the
-following just immediately after it, which
+I have no strong preference between keeping both genzeros() and
+genbytes() or rewriting users of genzeros() to use genbytes(), and I
+prefer to leave that out of the decision.
 
- * figures out our hash and the other hash
- * create a new repository with the "other" hash
- * run "git init" without specifying any hash
+My preference is to optimize for those who consume the resulting
+history the most over the longer term.
 
-It is debatable what should happen when you run "git init" from Git
-3.0 without any specialization in an existing SHA-1 repository.
+Your split between a "pure rename" and a "modification in place"
+is optimizing for those who review the patches on the mailing list
+(arguably due to tool limitations).  While they are an important
+audience of yours (after all, without their support, your change
+would not end up in the final history), those who will read the
+history via "git log" or "git show" to see what happened later are
+the more important readers of your work in the long run.  To them,
+a single rename-and-modify commit is much easier to understand, I
+would think.
 
-Possibilities include:
-
- 1. turn an existing SHA-1 repository into SHA-256 including format
-    conversion.
-
- 2. notice that the repository is already set up to use the SHA-1
-    format, and that the user did not explicitly say what format to
-    use, and behave as if --object-format=sha1 were given with a
-    notice or warning.
-
- 3. notice that the repository is already set up to use the SHA-1
-    format, but our default format is SHA-256.  Because the user did
-    not countermand via an explicit --object-format=sha1 on the
-    command line, we should fail loudly, "cannot convert this SHA-1
-    repository to SHA-256".
-
-I think #1 is impractical, #2 is probably the best, and #3 would
-also be reasonable.
-
-But the behaviour I am seeing with
-
-    $ make WITH_BREAKING_CHANGES=YesPlease
-    $ cd t && WITH_BREAKING_CHANGES=YesPlease sh t0001-init.sh -i -v
-
-with the additional patch is different from any of the three (well,
-technically, because the repository is empty, we _could_ argue that
-we did #1, but ...).
-
-I wonder what the "git init" command does wrt the reference storage
-format (Patrick CC'ed for this)?  I am sure we do not convert from
-reffiles to reftable on the fly at "git init" time.
-
-
-diff --git i/t/t0001-init.sh w/t/t0001-init.sh
-index bc30cf853b..1d48a712ae 100755
---- i/t/t0001-init.sh
-+++ w/t/t0001-init.sh
-@@ -532,6 +532,31 @@ test_expect_success 'git init uses default object format' '
- 	)
- '
- 
-+test_expect_success 'git (re)init does not clobber object format' '
-+	test_when_finished "rm -rf repo" &&
-+	(
-+		sane_unset GIT_DEFAULT_HASH &&
-+		if test_have_prereq WITH_BREAKING_CHANGES
-+		then
-+			ours=sha256 opposite=sha1
-+		else
-+			ours=sha1 opposite=sha256
-+		fi &&
-+
-+		# initialize to non-default format
-+		git init --object-format=$opposite repo &&
-+		git -C repo rev-parse --show-object-format >actual &&
-+		echo "$opposite" >expect &&
-+		test_cmp expect actual &&
-+
-+		# reinitialize without configuration
-+		git init repo &&
-+		git -C repo rev-parse --show-object-format >actual &&
-+		echo "$opposite" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'init honors GIT_DEFAULT_HASH' '
- 	test_when_finished "rm -rf sha1 sha256" &&
- 	GIT_DEFAULT_HASH=sha1 git init sha1 &&
