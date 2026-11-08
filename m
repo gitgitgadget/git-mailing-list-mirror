@@ -1,92 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.46
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794164892;
-	b=k3gG4wiXi+Ny7ScXB9QZ2wjzTTyisBN/UVokCFVPyu6DoA18R/UmN8syxKT9oahCXpnF
-	 h0t1p3XOdnhSN7o+g87y5nl2u7huziOqYGdwUiNyhDj9LnJc0ONJwaoc58S6k+8p3iNZ8
-	 4O7HeL7iA32ezUExjXqcOG/oKF4HCSmQj5rBTYB/wdYDLj0LIHgk18d88nVmjqCf6ogo3
-	 3je1loSbKbt7Qei7cTc9Rc+xGhob+JX8yZxl/ck8iOWMDrOH16di4jBINHHUhWB6S+dnY
-	 kukpKnXiYdI1fnHwkMlE1rvutdrQbbHCIIHZcYkz/LkUH/uUk0HQ0O+HayQm2aaRSIg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794164892;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794165075;
+	b=VulkHCDddv+EqtMhdmUrzzRPsfXg5CFeRMQ38iNAV0UqSlRUPaoNUkAWF76A66ID38py
+	 9MSPbXzoH8InRn671wSxZT8j9OQ4bZPzAczCbNgyXkqnvqODEHGAaXVm18RITbLfZUOQI
+	 vcyLmPbC6czaTTuJ16oKZQgTOvu+NjkJbdnvdkt4ylaiQ5xFT29bEz4knprvh9G/1OZaO
+	 2fMPsSlbT6UBNqTl3FoVqnR/R4xumN1Xn0DGsFMGLLDzKGHKV7JNjVZfBdsy32TzvAEc1
+	 /OD25+21M9xI0MOhJ9Y5Q2la34WEGwl+610hoBH80aZmSNa0ROQ87YrBwgWbqB7MIOg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794165075;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=Jm33vG1oz0qQTpyDP+MU6mgKo78MjVoQGHFQqY94tCE=;
-	b=yQqNBUxvTHnrkWEzYFziFB0li8XcrOrAc556rvbu8W5LNS0FQ6USyQwQdCHEgagiD0k0
-	 w21iZuzwnIvrJ2p7m6dJAaf72Ws0xWs9RkpEMBQHrJ7qWmQIS1eq5pcBHrzKOMyV+lOW0
-	 St3/+YmerjBgf8is9BFTAtnF2uwCwq5TtHdCN+Yohu6l+rlVa+hi8N2PXKlDGtY1HlJe9
-	 xIRBJzYM9auR1DFAJzhZqgHCI08r+84kfXP4xMNc2tuk9dmHkd/+Adp8GwsfI/woX4nsb
-	 kA5BvlWdeNmtfJx9GDz5j7Dmb7ERlP9cebLm8HsiYEjIm5sSciFqzqjFpSrOPkWpAaw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kFm6n61I;
-	arc=none smtp.remote-ip=74.125.82.46
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=t0pPQwiHBP6tP9rmrKmiYsDYi9KccNgIk4LSEBuPgzk=;
+	b=OC2OeftQPzCLdCai/+CbAcROKhNvQSRQqEDTHWniqkQwI+soBsVmHS7eGEk3QkwZLfYG
+	 DI0aVvn70RepdHp844N80i4Fs37dXbhsNOeNZfJj377ew/7uG2vUMNaYhMSOXzFe3lAFP
+	 nPpMGPNls/xjcO+lOsN0WMhvxPrp4HfNgg6Hp3XEgyui6iBp8Q2w2yODtTeaw2h6mpMXq
+	 J2HxSy4NPigNua9Hdct9dd/MMu43MFtZql44YyDDONj+hnECOe+cIyduvv7OS6ggJGpEA
+	 Sm6P4baLgErqAmbVO2LMKBlxjJ4XTyeqnXW6xdd61PElcdL/ut4frnd23ECtJK8iCrA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=chIEWF3I;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E562606A31C
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 19:08:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E562606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4B4606A31C
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 19:11:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5D4B4606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kFm6n61I
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-1b1ce85287aso184069c88.0
-        for <git@vger.kernel.org>; Sun, 08 Nov 2026 11:08:12 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=chIEWF3I
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c4d473cfff6so29147666b.0
+        for <git@vger.kernel.org>; Sun, 08 Nov 2026 11:11:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794165073; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WIWWvnkWFK7NsZz/DQ1eSSLgVyiRo4c9yjvIlEvksrUa+UBcufONVaTFNf2jyD6YQp
+         dafykBC5j7x276HTSurfD6WsVrL97ebodKhTX7qyt2zZaEhtWWcMfaa9sxXOOnt88SqL
+         0qntu+Vk0CdnTJJQ11ayV4EkG0XeCa9903Gt0j3V71xsR8VxIdvJAQXUUmfrVbQIhU6l
+         pFoPMxUxyILyF0Qe82s6F5Y5sXhKKHpkVB+zOa/pH1vyCGh44x/CXjdV5KuPv6DbUfZH
+         g81YoMjNSOlZd1Zf5LvTjEQXgd9irSn1RCSs8HxGMFgKYaCVAU6RmCJyDpKoUnWeIh5F
+         YVvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=t0pPQwiHBP6tP9rmrKmiYsDYi9KccNgIk4LSEBuPgzk=;
+        fh=O9ZxREKmykoirDNqiogHnCh0E5sLPC0pvvbgSwDCHxo=;
+        b=Y7s7M4sUrHJOxTp8P2AZhOHCx8KtwbIgwsb6OvnawTf1WxY+v67DOQa9OrSJ73sYmW
+         pssLTi/+5QCOt+JBbmNFpEGOYC+w5lBdxjt3zx0TD07aqXTOfPHn9ljNu7N9zbOhCRGr
+         RYIfFWpaFOaHmI6wUhztMIe4Eg70QZ6gDetW4qJ8nwLPsBIe6tx1+sYMuWKD2yL6xfdC
+         UK2K78iJlYIfb7x+IMTYmMbNJ4UMOYMh6lLuwar6WzBG63x6G6Jb8QjDUq8eeMJ+Q1Uu
+         blD86NtAShzG6vFenm9UjpFDOa3xlBq95XO4oQyD3cGkYut1JvSrNkuvylamv/3daRIC
+         AJ+Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794164891; x=1794769691; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Jm33vG1oz0qQTpyDP+MU6mgKo78MjVoQGHFQqY94tCE=;
-        b=kFm6n61IQPN29VaKp4RG3U+DUTh/hJ2qiyCNGqtW/tcRWKQQZbVDUtRTKbib5W5T/D
-         mM9+IOkFGtHS2IZ0g7RmhFbosLYo991UT6L3tUJhySyAVw8ENds1BOFMwcpR0p9K0s6I
-         533hm/EYQp1RA8rQ6Jm1xoyatd+TCMBfNddcZp4G2DlPWAF0F9mnEMAzkkmnziRGPlwl
-         7817FV34+ECzxjWLTXXLzWHpBu0CkGzV0iislmxKXkr5eBP4ftMDExy/Iy/asQZwqZrd
-         dzLHs3OJBFq0h2UHGjb1MCoEqGFhNnK8nsfoBXp11WwFE7KNH6gstTSebtKKDptyRFD6
-         L3fQ==
+        d=spotify.com; s=google; t=1794165073; x=1794769873; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=t0pPQwiHBP6tP9rmrKmiYsDYi9KccNgIk4LSEBuPgzk=;
+        b=chIEWF3IAVK2+yYRbWyB37WJYSZ0PFU1ZCtpiP2nj3W//OzJ0QtuEwXN5JdI+khtDO
+         6OIVQ6AAlD/tntOnRP8nMVox8BYapU0OjNMflGOAREFd6Tk+VTlVolcMuCQWaVyGNn4u
+         ibufe/+kfGGzIQQzEyAl80FBXrNsVvAT2Z/Os=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794164891; x=1794769691;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Jm33vG1oz0qQTpyDP+MU6mgKo78MjVoQGHFQqY94tCE=;
-        b=tpQd/GXKGFTMb759sQ4CTvhqQGHBOnv6F8A8nZ+szMaAlYrOzl58XhKkBkMPXxrEpk
-         j8hlcC6zoOVOogkRnrDdWcdbFjp3P3pCa4mRkSr4X2bxc2DtQ/lIYeQEAPInhQjbMUjh
-         juRXD0EmIrERa4K4jNdK3WoBW+7WuQVF8sN9DJhHvChWgGqOLSUjiualWN+sh1yrrYzo
-         DXlUk3hluf/Y1mBY78IaNowzhOoHa3pgZ/h8sbuQx0X5LUklJKhjNbT9WDSx3sro/pRc
-         7S9UeVQ0BaroEwgIhNydIQvSE/IMlCuP8xkYUMhGQKWiGfVE9QdAbpOINYdj2C7IzVPV
-         dIig==
-X-Gm-Message-State: APuU4Z951DyFCdiRPVOasG8+q3NBXaSBsXlxjeHCr4laSWhFz8ofQ2Mr
-	P617USP10rA9+bhZVL+YnJ3MoIi9uikuQs0kKRPPQv1gWOwK8HqVs9Hk
-X-Gm-Gg: AYBFou15oFIkIpjhknA1jKAc5AautzOa+4Q6Vyf3woyuUxsSUUEqspCkptsO5CeD7E9
-	ReW6l5rfaHpeFZbmPopOpf7UYfcfd3W79C7o3M01BcXSgr7Uqo+3mSLhDyAkpm4AMWN8UB6z4B2
-	Cd2HunLgHE+RPYf7WEN+Ze7FEhtrrWJrxCz7cKSGXOM4nSNwt9gnPPWkzAqMYovIp7e/jNv8iXf
-	uc3hCSR29lMhOMwoAyDfsQ5BsvEHxIq+IwNjLtmSnu7gbIIcgm9aIgbidiIgYCXubIqa6Hdj/sG
-	ucOIjxcDICpPCoD7WDyh/BRCHPVSWDqRzwHEG6BABGATZPzBT4raX6h5QNjUwPa5nkGLcImx3Qe
-	DTXfHK4WNaVipmoh2cnmJyEKV5bIHKoRDUzNBuM2tJxtwrAGavz3iQm/Ko1rAB5p1z+e7sUq1/I
-	27A/CiUawrg46xvOniWJHf1Q8qWbsvA4KJNzLE4sWXOoRThtZks/gLNkJQsa4tb+kKb9EGWHscl
-	YyZy/rSbxBRFaypYb50+ktMlRPL8ok0FD5qgO8G4spW/T0b/VrSyP6oVlx9+sFQfnbt2nuZTeYc
-	5s3F4fMVX3E/0anyfA6acU645h3FmFdf5lA41UQgixREXB5elwM=
-X-Received: by 2002:a05:701a:815a:10b0:1b3:ac34:bd59 with SMTP id a92af1059eb24-1b3ac34bd9amr318597c88.45.1794164891350;
-        Sun, 08 Nov 2026 11:08:11 -0800 (PST)
-Received: from Anonymous.localdomain ([223.181.58.0])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b3757214cbsm6733722c88.13.2026.11.08.11.08.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Nov 2026 11:08:10 -0800 (PST)
-From: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-	christian.couder@gmail.com
-Subject: Re: [PATCH v2] doc: describe promisor remote fetch order
-Date: Sun,  8 Nov 2026 19:07:43 +0000
-Message-ID: <20261108190743.508-1-husainsitamuwala21@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <xmqqy0b32mcl.fsf@gitster.g>
-References: <xmqqy0b32mcl.fsf@gitster.g>
+        d=1e100.net; s=20260707; t=1794165073; x=1794769873;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=t0pPQwiHBP6tP9rmrKmiYsDYi9KccNgIk4LSEBuPgzk=;
+        b=LsDbpr0powduSV+BOx3j8leEI5RKDmPy5lk/QvYpFhAoC0hLIVvAKFKJgYry2Ogrre
+         SPepmAt/9I7jDIfmisCUFHsp7nMficgmVDHflbdP9Z128joS3ghS+ZdK3tes+tj5hjcp
+         EeeSuT6Wj2nDoMJ/hDiwO/cgUjVKpdzqQcXHuX7IjXK2jjFA2W5YpX/UeobZ8vm/eP2D
+         0LEF+PU/BOuYmwQ+eKRn0Br5QfWU51tF/l70/4pdlRXuaz8Fz9EfZ+eTpytC8vKe96m0
+         KSmUZ7jMsGOndabqY2KCua+gYAfyQOJm3leVn7xvSFTJndMn7VWuWYnV7mbpD4aHBTQo
+         SORQ==
+X-Forwarded-Encrypted: i=1; AL+hErHiIswK3UkHO7CTRarkvV2kFO4LQyyVGA1RmfvdD1SHj6R2J9q/EOFit62aALj3CjRCu84=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/L700OZyMWbUtA/wB9+AMVjgGoZO0kiMef4ryq0b5sR7eHxKG+
+	smY8BWzYULbzVCe6eN+zyR8i+4r+4GLNguCYzdnCs21VrJGgHm/RjkoMDZv3UU0bcq7Glhqnp+r
+	PJGfdHNOBDZqxajzTjoe2UJo5gaMwJU23av7kbTNZ3ypb9ZOBrteQu4fS1A==
+X-Gm-Gg: AYBFou0Ae+DhkaO4goQUKzVxHnz1HLMcqGhN6YJrd25MbftECHof6fOjNOAXAL/CO+E
+	QSyD7BVb8QSlLsWh9dAl8StYQ9AoFWAXED0KCuqLmvyjhAlhq784l0dd7zHArmZOzmOo7ULdFxM
+	SsECVmT58q4r8U59wqqgNxmMNaJMAsXSzuDo+gR3XvlnqS2Iq2F4jjMx9DnFq7s+m7glw/s1jCP
+	Sod0e7Q2ndH3WNNNQ/n0sXyXKfH61TUbjHsPx5tMhpNtQsRJe43SPgSaQIrAUQ6FbSfNetFCrYp
+	AJsFqIRAVSN1Pyj92YjAWCz0LU0spha2/W4cWZGzPLy6983jsva2nrS6ITFLPvOd3Hww+SFLhEX
+	1d80vcekXGJSBXfBHXN6JdwJ6dOQdSB51l1W2/nI=
+X-Received: by 2002:a17:907:3f9a:b0:c49:cdc8:10cf with SMTP id
+ a640c23a62f3a-c4d6dd7bf0dmr141148166b.40.1794165072758; Sun, 08 Nov 2026
+ 11:11:12 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,24 +100,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
+ <b4378b352769cdcc2e9cfdf40efe173123ea9ab4.1794063565.git.gitgitgadget@gmail.com>
+ <xmqqwlqo8c8y.fsf@gitster.g> <xmqqpkwg53us.fsf@gitster.g> <CAL71e4MiH62mpy0poRG5pSz=GPpoLWo-qPi_inaav9CgqDn5hg@mail.gmail.com>
+ <xmqqcxsf41en.fsf@gitster.g>
+In-Reply-To: <xmqqcxsf41en.fsf@gitster.g>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Sun, 8 Nov 2026 20:10:59 +0100
+X-Gm-Features: AclHuK_aOj_GIyJdx_O1l18xHOUH-_30kmQ1r8UUbsJEET5YJiLEG03pefYe14s
+Message-ID: <CAL71e4NSAUQz=s8DVSK42=ZK-626qqVBs+YSJra9d+SLV9DPSg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] t/helper: rename test-genzeros.c to test-genbytes.c
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Junio,
+On Sun, 8 Nov 2026 at 19:35, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> > I could squash it all into a single patch too, which I think
+> > would make sense if we don't need the intermediate state
+> > where both genzeros and genbytes exist at the same time.
+> >
+> > What's your preference?
+>
+> I have no strong preference between keeping both genzeros() and
+> genbytes() or rewriting users of genzeros() to use genbytes(), and I
+> prefer to leave that out of the decision.
+>
+> My preference is to optimize for those who consume the resulting
+> history the most over the longer term.
+>
+> Your split between a "pure rename" and a "modification in place"
+> is optimizing for those who review the patches on the mailing list
+> (arguably due to tool limitations).  While they are an important
+> audience of yours (after all, without their support, your change
+> would not end up in the final history), those who will read the
+> history via "git log" or "git show" to see what happened later are
+> the more important readers of your work in the long run.  To them,
+> a single rename-and-modify commit is much easier to understand, I
+> would think.
 
-Thanks for the review.
-
-> Please thread your patches correctly.
-
-Sorry about that. I will send later iterations as replies to the
-previous one using --in-reply-to.
-
-> it is not considered good manners to send a new iteration before
-> first finishing the discussion on the reviews you received on your
-> previous iteration.
-
-Understood, and sorry for sending v2 early. I will reply to the
-remaining review comments on v1 first, and only send a new version
-once we have agreed on the changes.
+That's fair -- For v2 I will squash patches 1 and 2 and keep
+patch 3.  I'll also add the lowercase hex as input format.
+The similarity seems to be ~29%, so running it with -M20% would
+only mildly reduce the diff, though I think the diff is
+manageable to consume anyway.
 
 Thanks,
-Hussain
+Kristofer
