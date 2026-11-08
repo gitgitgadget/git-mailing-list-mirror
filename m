@@ -1,62 +1,125 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.15
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794100959;
-	b=bh56Nu3GuoGVFJT67o+BRPirFW8Q7e3pWgKL96NbStDX95Id0qcQJZRF+7aNVI93EsoZ
-	 qINkt6T9zc9ncvDpxEgmR23356mVMgkpNwvXaHH8Wv1PHzORUeFqKCXla8k6Sl2S5PwWJ
-	 yszzce3XygvpeIalAi6NJzFLXS1XgtVDiprmZReUH6MrfjksSBUg4cKj4SoctsLRMGmMu
-	 Vhui2/1sCh0kCMz/ZdOqcgfvhOMaTDv6BRdy6aCJwuFswbZoxU+nnD4TxinVVXRTHtZpX
-	 VjEDZtzoISiuzdpziwzuY2zR6eEBgMcbCamp+1Cemi2ufNDFjSQnW8s4AbrpP8TGo5A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794100959;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
-	 X-ZohoMailClient;
-	bh=QEA6qpoTdFIcV9uVMdtoBM7rPgIHyJWZuTg24UswJog=;
-	b=oPzYYT4U/R2c4tba2QQxNYQGQ3JnJba7tMOokkdAXhftPgaMEpc0ac+6MQ4t5syfuOva
-	 0LO/wsT1Zav4Kc4bkAfovdMQODk3T04asUc0kvZK+SsO6rk/6QbANsPBtpg/hUWCzGDqp
-	 TgQ7R0mX/Bd4o5WNl2WADAzB07nwV9KqkJayjmNJY4mcWBLWI/LCL/ozpSjnEpV7h9dph
-	 Vu9vY14+xDc8oV/TaFOcokArP6y0fOynidzLy1BEh87tykifSY4nzrmOK+Cbz11Gr9Xfu
-	 xiGm8i133kz7HTCSyHJepUEL2v2uhaSiBBqextpephbVyJIL7kN/yw5BLK1ASmSgREQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=laveeshbansal.com;
-	spf=pass smtp.mailfrom=laveeshbansal.com;
-	dkim=pass header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=Rh4OAECP;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.15
-Received: from sender5-op-o15.zoho.com (sender5-op-o15.zoho.com [165.173.182.15])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794103011;
+	b=5ajCddrjQe+mupykPMonyOdK8On7PvgZ3WRo+SnXUntILVaBnNU0u+/5NPqa+bw4dow8
+	 HwSg6Qzoh3O5pc+39hhILV5tusCPHknXGO+t0zvbo2l8TuT0U5mUxZqcdnJuvFl1KpyRJ
+	 h7PqLLhiaZCl9TIlMcZLKVAUliYqsxxF+KVq9nO9er+HNJlDofg4mLUsF5066RBp+OB8w
+	 bfPwVOz12FCsuVFGGJ6QwgpTp+fYRJFmG+tJSvdvWVR7Zl3Dl8CA1bpCsBga823DDK7FL
+	 e8/fOoOZDBAJVaDmRvaSzKhk3557FHCqjgnYPpVU3Z9RanCg6WkxzfYf9AnoKgvGiXA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794103011;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=mS7+9ymYdAh6ux+UMsV011nCgXwnv6TrvsEEom9LMXE=;
+	b=1osUT5qZ7QotNxANLDUWNc2N1qkL5781Rq6nPqlMjjs+KC7dwC/9usVAA8pT4QLjyF2X
+	 1dVCmN4QQDx90ZFsY8tBdZ6tSNBuYUhCxOBOVhBWYB0k/NCmuPZ817TjdsOIEmentwxPx
+	 GQr7t7fnEpB8aWGCatAGezV1B7N0hU93+05erjmD2VwKZLVQnBFHu0+dunHoqDYK1+MMK
+	 TilO5Rfyw4VRrWj3agDhv1Inry43NcrwukRmYu6NnrWUCkXDcDbv2jOGXSRnsBed7trUO
+	 iLz1CWBT02HvKfExrCbeDAv/3WStEMe0YyiHQOJijd7VCIYMVmkrYvbT8w8+S2qzeug==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=JWDhA+7O;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=vgRlx+91;
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E319606A330
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 01:22:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E319606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=laveeshbansal.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=laveeshbansal.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A7D606A31A
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 01:56:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C2A7D606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=Rh4OAECP
-ARC-Seal: i=1; a=rsa-sha256; t=1794100950; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=FZ0tVpfExLq/3MTv7ullM+8/kIVG1L11/aXRDDSsg4FWY3jCHGadpi/6/pXUH0t0Oocql7Lz2NxxMbR9+6Q6T9bAgyQYrfDCmYqiuYkXrPVVfmX61f50/hx8OoW3wgo+1n4qFdfMfO11QDjOyG8Fi5burS7nOpZpu8UC7CwCCvI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1794100950; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=QEA6qpoTdFIcV9uVMdtoBM7rPgIHyJWZuTg24UswJog=; 
-	b=B8772T2ll64g85XV7wPhBPJLqAPIZxp2dfSt3b/7J/QgJmiaJ+MDTvv+j3Cr/BKsS3YW8ogooGPpBds8pqe+ciXHdUghygOj4pBprwJpbMij06xb/3WD80ZXNeN6gSAhXK1ehBTMB4eOVun20eus6FrKKnbXqZl5I9IzDV399HM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=laveeshbansal.com;
-	spf=pass  smtp.mailfrom=laveeshb@laveeshbansal.com;
-	dmarc=pass header.from=<laveeshb@laveeshbansal.com>
-DKIM-Signature: a=rsa-sha256; b=Rh4OAECPzALBiP4W7cJDBv2pAe69xV51AuZjbqAi0vVPR8LivdtMQIQxOL5Fkb4TCEwrKapzi7eckufzSHBT4SMZlr6S9Y+osNsICuyQYhwkFTfI86T4znHW8boeoI9/98h8/2MLweGkaGHPsFbudrthzw8FRDH1jGfkZhnjvNQ=; c=relaxed/relaxed; s=zoho; d=laveeshbansal.com; v=1; bh=QEA6qpoTdFIcV9uVMdtoBM7rPgIHyJWZuTg24UswJog=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1794100948573711.9145598098438;
-	Sat, 7 Nov 2026 17:22:28 -0800 (PST)
-From: Laveesh Bansal <laveeshb@laveeshbansal.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: [PATCH] builtin/reflog: expire --all and named refs in one loop
-Date: Sat,  7 Nov 2026 17:22:13 -0800
-Message-ID: <20261108012213.89468-1-laveeshb@laveeshbansal.com>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=JWDhA+7O;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=vgRlx+91
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EAA397A00D9
+	for <git@vger.kernel.org>; Sat,  7 Nov 2026 20:56:49 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sat, 07 Nov 2026 20:56:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794103009; x=1794189409; bh=mS7+9ymYdA
+	h6ux+UMsV011nCgXwnv6TrvsEEom9LMXE=; b=JWDhA+7Oeyac+WGEqKYfr+yH0g
+	XK33XsPUfLoeUSonTjsnY/ZGZn7nz3lVaDdzR93JBkuwLzLXg/yFTRcqFrtRrNEd
+	YhHx0B1BmepPEANOfRHwJSLluVmBjd6Vx2kHCKkG8ERmP1TNcbEYRsXUH0N88h1f
+	3T1zR/XHEJMOJIookwFqHHzoxkiVURo3yYWrXsWFKdGVH+2BFBH39AdjrPrfA0Qa
+	/HQFFoEshBV8WbCu36S35NGLeFrvl7PclqplP6suOTIwvNsXwOX5uwHZTMQ1Jdqu
+	ss0Gs98qnzuQHjeDDEZVik05H/JiAUIdp9GTGHW549ORhYNSEHe1gMiHc3xA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794103009; x=1794189409; bh=mS7+9ymYdAh6ux+UMsV011nCgXwnv6TrvsE
+	Eom9LMXE=; b=vgRlx+91JfMrWMgZKMW3K2LdLo8KJlJOhUbKhcqPc4mhHQFnlMB
+	1YmL/Ft80WBsqkCCwC50nhUEITApSDa6mgaLNn4lgSGDIoPwCCVNsVn/db3sPW6O
+	42ahHX7o1vgGpEndPMH28G5j1NWwoESmaGZ05qTjbGwSuYWskzQALaqaNFMaJ3oI
+	9BgJMr2tsJWYgcDXmVxsduy6iwx+9yECDhXm2Zey060LIZhxotzo+uqWJcQ3YVbW
+	mWGRKuCBZCTCoIxbip6o96PZIKNb8o6zR15FHZtumZ/c0pmBVUK7rAjTOUSb9vzu
+	NgSv/yHRxobFLCa5dkc7aZK9OvWQksyH3uA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794103009; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:IA/UiD0eME77pfMnLT04HitbS5+m23HM5d8tcqkf4IlIPGk
+	8K6wj4jwawpqQb5NCT11c4CuZ1K0ZpTBqgoR6xA4iQzsjBX8J1K8fwPuOMeKgFwe
+	PJVyuCI0GYxkVPwrr3LIQvwmCDkWHEqMCRRxvmTR/+SEwSy1G9iXlBA7+jvMxL64
+	yvQlSM7o0Zctb29lsoRRXUbZs45uwWL4Jg8U6UgiMxhB2kYk3nFgc1NthcK7d4Sy
+	jL2glwfA13cjAvCA2dQ5sv4vtOJMWjaC2VwHNmYk9uXzHw8WeEwkDoeaXGdRe8JK
+	8JNplQbDcVw8E1BHEigZe7tsVmTfv1Yj2ruu0UA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:LaE0RWwC+A7GABz6clrRjLr++4akyPwE2g0jH3Fb+JQ=:uYkiEHitCSUfflVAg6svYUikxhLNAi+G/yLTHrl78SY=;
+X-ME-Sender: <xms:4dbvalExPIJK86eu3ZVEJyeosmkuJI2CY_RXH2v5dXhhYBm-_UTtrw>
+    <xme:4dbvapbABMsOOn3L9lCiwXHWL23-Qrd3YBYpwRQsHLB5CquVHUzGNbWNpl3nZKkqL
+    G5Vj3K0rPI79annwOL6-QAoe0UUaaTAfODV8mxq-CK0y2Fki1wu5Cw>
+X-ME-Received: <xmr:4dbvatWB4ecECKPtKLjswnsTl9d5K_6BKgbxGOpipJV6i-peKT5AfjRfq_Ji9VvWGZScUCDMSAgyAlZAJUr3_eqjaisf-qx1EtAm>
+X-ME-Proxy-Cause: dmFkZTE0J0xykmgV2pBBnW6ayxdwlW+pRSezdD/IO29uGRB5t/Q3r4b4+n5vn4sESCig1x
+    YPPqBJK3jahDfkW9HnA/Re9NA1PZSvJS/c/rjABDtv0ihiCaBa/ISNGPjYCCQxQnz1+iVL
+    7xV+ZfZlcg30+OTUhzrXxnKKJhtza9BH240Nwis4p6uG7kX0HZFPkHOnguH5Ab1AJgOrMi
+    68JCOCSNPYeOjPBprDpD17diDlKLLsVSAo1cpZkSwVshyZdGgVQoPMkz3PviZYzCB8eQjT
+    uce7rHsKu1ojgdQD5wyPdi5IU1OmCwdTgW5lfL+Kx/uy09nbYCjR3ZTomQMuY3gC+UENNG
+    lqeZgTsc5p9wZfKeU6z0/BdVUcZQ7j1Vcr3A5gFe8vLowmZD7VLIpCbdh/gBfCw/dcdnZo
+    yRTTRCVxAxVO2Lo9YCR4frRitzIosHaJ9BW90SRK3+yFPhljBeVGFcca6C3GiJQyEc0MCm
+    XK6rmvQGQuxCvFQQfqIakm2EJ0/2QGILI4ab/lA856k3ramMKKPP4HH5l36yZqTAzZ2vKc
+    wiFEF9dXwAH/PRSVjqHTCHYZ/YFyAHYucrj6DnZUgOXrDu4wSZYicZhhCZDo5liFe5erFJ
+    uZBQbEa7QJCyXwlQJbsMJqm+zS6F4uET6MshneJuy5RdKe9RZhfDOZLNRGyw
+X-ME-Proxy: <xmx:4dbvannD7jDL2qfo9g4gFURX7SdDCrBJYIkI5XT1OsKlo5wv6sQY2g>
+    <xmx:4dbvagB_EqMwh5vqSw10_b1ZvZZ_20WmQWYCndDFXfP78WRABwhLwg>
+    <xmx:4dbvaugQsgHlCO7fDN54LfN5aUaBGjlVuTAiJtIAwLBmSE2gon_QYw>
+    <xmx:4dbvalzzpPxl5M74cdNilgDSKFB-zC8Z3z5wqqnqxnuuJNiAgaRFwQ>
+    <xmx:4dbvanSfa9HvI8U5nzgh7Jr9r90Vvvku3qT7n95-PuE4iLNLH0pRF-5U>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 7 Nov 2026 20:56:48 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Farid Zakaria" <farid.m.zakaria@gmail.com>
+Cc: <git@vger.kernel.org>,  "Jeff King" <peff@peff.net>,  "Patrick
+ Steinhardt" <ps@pks.im>,  "M Hickford" <mirth.hickford@gmail.com>,
+  "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,  "Jeff Hostetler"
+ <jeffhostetler@github.com>
+Subject: Re: [PATCH v2 0/3] credential-cache: fix two races when daemons
+ start at once
+In-Reply-To: <DMOCMXGWSKK6.13UR9RHCJY3SI@gmail.com> (Farid Zakaria's message
+	of "Fri, 06 Nov 2026 10:45:24 -0800")
+References: <20261101-fz-credential-cache-race-v1-0-28f0bac51e11@gmail.com>
+	<20261104-fz-credential-cache-race-v2-0-ddccd0831eba@gmail.com>
+	<xmqqik2bybfk.fsf@gitster.g> <DMOCMXGWSKK6.13UR9RHCJY3SI@gmail.com>
+Date: Sat, 07 Nov 2026 17:56:47 -0800
+Message-ID: <xmqq33tc84rk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -66,128 +129,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain
 
-"git reflog expire" sets up the call to refs_reflog_expire() twice,
-once for --all and once for refs named on the command line.
-d1536ac3e2 (builtin/reflog: say "would prune" for named refs with
---dry-run, 2026-10-23) fixed the named-ref copy, which was missing
-dry_run. Junio suggested a single loop in the review of that fix [1].
+"Farid Zakaria" <farid.m.zakaria@gmail.com> writes:
 
-Collect the refs from both sources into one list and expire them in a
-single loop. The names given on the command line are still looked up
-in that loop, so the output and the exit status stay the same.
+> It was not clear to me as someone unfamiliar with the codebase
+> whether the complexity of handling it was worth it. It seemed like
+> it could only occur during upgrades (old git version).  My comment
+> was meant to say: I did not address it but I can if we think it's
+> necessary.
 
-[1] https://lore.kernel.org/git/xmqqqzhdy7pi.fsf@gitster.g/
+I am not sure if I follow your "upgrades (old git version)"
+reference.  Doesn't a reasonably serious installation of any
+software have a babysitter process to notice a dead daemon to
+automatically respawn to keep the service running?
 
-Assisted-by: Claude Sonnet 5.5
-Signed-off-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
----
-
-Notes:
-    The lookup stays in the loop. Doing it while collecting would report an
-    unknown name before any expiry output, and make "expire --expire=now
-    HEAD @{-1}" succeed.
-    
-    I ran the full test suite, and the reflog tests with reftable, sha256
-    and SANITIZE=leak. Output, exit status and the resulting reflogs match
-    the base for the cases I tried, including @{-1} and unknown names.
-
- builtin/reflog.c | 50 +++++++++++++++++++++++-------------------------
- 1 file changed, 24 insertions(+), 26 deletions(-)
-
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 49e5453dd9..42d37a3724 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -187,6 +187,10 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
- 	unsigned int flags = 0;
- 	int verbose = 0;
- 	reflog_expiry_should_prune_fn *should_prune_fn = should_expire_reflog_ent;
-+	struct worktree_reflogs collected = {
-+		.reflogs = STRING_LIST_INIT_DUP,
-+	};
-+	struct string_list_item *item;
- 	const struct option options[] = {
- 		OPT_BIT('n', "dry-run", &flags, N_("do not actually prune any entries"),
- 			EXPIRE_REFLOGS_DRY_RUN),
-@@ -244,10 +248,6 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
- 	}
- 
- 	if (do_all) {
--		struct worktree_reflogs collected = {
--			.reflogs = STRING_LIST_INIT_DUP,
--		};
--		struct string_list_item *item;
- 		struct worktree **worktrees, **p;
- 
- 		worktrees = get_worktrees(the_repository);
-@@ -259,44 +259,42 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
- 					     collect_reflog, &collected);
- 		}
- 		free_worktrees(worktrees);
--
--		for_each_string_list_item(item, &collected.reflogs) {
--			struct expire_reflog_policy_cb cb = {
--				.opts = opts,
--				.dry_run = !!(flags & EXPIRE_REFLOGS_DRY_RUN),
--			};
--
--			reflog_expire_options_set_refname(&cb.opts,  item->string);
--			status |= refs_reflog_expire(get_main_ref_store(the_repository),
--						     item->string, flags,
--						     reflog_expiry_prepare,
--						     should_prune_fn,
--						     reflog_expiry_cleanup,
--						     &cb);
--		}
--		string_list_clear(&collected.reflogs, 0);
- 	}
- 
-+	/* util marks the names that still have to be looked up */
- 	for (i = 0; i < argc; i++) {
--		char *ref;
-+		item = string_list_append(&collected.reflogs, argv[i]);
-+		item->util = (void *)1;
-+	}
-+
-+	for_each_string_list_item(item, &collected.reflogs) {
- 		struct expire_reflog_policy_cb cb = {
- 			.opts = opts,
- 			.dry_run = !!(flags & EXPIRE_REFLOGS_DRY_RUN),
- 		};
--
--		if (!repo_dwim_log(the_repository, argv[i], strlen(argv[i]), NULL, &ref)) {
--			status |= error(_("reflog could not be found: '%s'"), argv[i]);
-+		const char *refname = item->string;
-+		char *ref = NULL;
-+
-+		if (item->util &&
-+		    !repo_dwim_log(the_repository, item->string,
-+				   strlen(item->string), NULL, &ref)) {
-+			status |= error(_("reflog could not be found: '%s'"),
-+					item->string);
- 			continue;
- 		}
--		reflog_expire_options_set_refname(&cb.opts, ref);
-+		if (ref)
-+			refname = ref;
-+
-+		reflog_expire_options_set_refname(&cb.opts, refname);
- 		status |= refs_reflog_expire(get_main_ref_store(the_repository),
--					     ref, flags,
-+					     refname, flags,
- 					     reflog_expiry_prepare,
- 					     should_prune_fn,
- 					     reflog_expiry_cleanup,
- 					     &cb);
- 		free(ref);
- 	}
-+	string_list_clear(&collected.reflogs, 0);
- 
- 	reflog_clear_expire_config(&opts);
- 
--- 
-2.54.0
+If you are unfamiliar with the codebase, how would you know which of
+the careful arrangements the existing code makes can be ignored?  If
+it is not important, what would the reason be for reviewers to spend
+time and effort to write a message to point it out for you?
 
