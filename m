@@ -1,66 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794156554;
-	b=bOf+QUsQcOW1PnmHe9zloswNwJUASIZ8l8P5g01dFLb3+IWAh17DPG6Mp0fKqPu5Et3J
-	 R9Hpp5sUtEFCrRKk+0vA9Sq/XNmlnCPkz5ymZadZW9+sZmbNgCs9CCWNlsUj8g9aNe13M
-	 OdGRBBHMaoAIUVGvdotB9IlyuvyEmyH9JbwaxWaM23+fPDICRm1L/gB5QVbgec5Qowlgm
-	 SAQBUnqy9ljNGMgezMwrI0MFPVPEPRZyFOMQ/yol++ujZI+le+Ebsp3ou4mDYjXAt8pCN
-	 vhFsZNJyLdCczYCnUTWkRqwu06B3tN/vC4raIpUZ7XHQHkQSuTQ9++LNNx7RMVrAdlg==
+	t=1794160263;
+	b=M+WmnxT2utqPz+teQN1NbbQbnWAxMVJTfeGZ2gH8nAzQXluy5cIiTKHt58bF7bBQvyFm
+	 Cz+l+2VqM/2op6CxmPT1agKKHNGV/qhAA/PBD6K46+xnltT6/IzdmmlOZCG5I4zs9JOMk
+	 sETGlrfyRdL2RTrbHlgrD4JG5JbbpRFzguVTeQkmY2wGPb9AvVpNOdz/JQ1lvLMK68I0U
+	 m7t1dnrIXbZo+TrSuFvwjAnvGClagqI05qTC0QFJT8diQuCUN9vsJxJ2ZeD9yJII08HzK
+	 jKPf2RirVK6/Rn+bAxU8HX7mYmExxt4q5Ev31T0rpqpnnieFiPhkMyQ0Ql/DxP+moag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794156554;
-	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Date:From:To:
-	 Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:User-Agent:X-Provags-ID:X-Spam-Flag:
-	 UI-OutboundReport:Content-Transfer-Encoding;
-	bh=AZSS7tnXxO4YCcthoMbJ1KbS9tgmkdL6X8M2uyZMQZQ=;
-	b=146nrg2ZEENsm2fqfz51VsipkKDQHjEdDVKxHZOwo0encGJB7BdrZ/NOKIWHVWD1L5Ia
-	 7fOORJo6K6AE+jayV7VBH1gzCu9l/ANEG94FRdh+2Ls8e+OyWqhud872aVCOAmwPUpUOo
-	 s9E6+NCrj/UVty1y8uIn6zUnn+ZzqoZVFB9CkqnUjngH9D8jspdhQpr0bddmkDCW5/s/H
-	 qeVsXWeVOWBDW42TlehwWFILc7b2xuVbRIk9nQwhHga5pEcA+sN9yRUywlCJhMxmYGy8S
-	 Vx0QcjUlpfiqg4+FO2O7Rir0qwzVhU1OI69ToY49THZvWZ8Oq5fYcZUyyvT+/Cj0Rkw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794160263;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=bQEwTsGLI60P0D3e67GuxTBGA9ZdIA35oRYcZy0mrMw=;
+	b=4Ds3jg6Pi5JZvGpX3xQCas4OXjiotp0R8jFPY2HKRzoMbetHDGw1nkKr6Jn/+cX+THdH
+	 dTqEKJOO1Jpjer6OTvrc6QDbMstO0BTQAz27fi2nEJ1kb5b882lqCT6kJlbyDQwixNSua
+	 0lKWoE8HqyRHOulSfjZcyfjpq/BMku63Vr/GY7cqrLee6jHdS6eoiUoV+wpDz7XPOqAQ5
+	 L2Xzf22PXlda18RnpPRnt6h9Bg5QvenAlZF63R0dGoXEWXLzhwl+nkYHpGjilj2WHd7NP
+	 jQ7xi4mObh3mcq8Y/GpE8mMbgoQvXBFLnKb6e0pnKZffmknkfL9pyCabQnaRksQSUNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=web.de;
-	spf=pass smtp.mailfrom=web.de;
-	dkim=pass header.d=web.de header.i=tboegi@web.de header.a=rsa-sha256 header.s=s29768273 header.b=JQPTSiZb;
-	arc=none smtp.remote-ip=212.227.15.14
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aK4vFtnh;
+	arc=none smtp.remote-ip=209.85.221.46
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E951606A320
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 16:49:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E951606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE86606A31C
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 17:51:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ABE86606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=tboegi@web.de header.a=rsa-sha256 header.s=s29768273 header.b=JQPTSiZb
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1794156542; x=1794761342; i=tboegi@web.de;
-	bh=AZSS7tnXxO4YCcthoMbJ1KbS9tgmkdL6X8M2uyZMQZQ=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=JQPTSiZbz24gVt+5U+TSSYXeoCS1xTvMlWtSu1TkiTvRzDdg3RZTibmpEojGqFN5
-	 dah3nv+WKE4vyblJSziqftwuJmUGoRe/DB4JfqR0AaYdhQOFut/UUaZnG5Ab4sfll
-	 JVD+3GU+GebkUsb2UDgT3Oq9+wD/ESVc8ke/Kr+gFZWKM0WVxB2fLyl22yfbNQ9vi
-	 Avz9CThJK65M59dRfBkaJ4evW6yBjCQTt6J+o1JJFz0CQcwAj4H40vlw0M5WKkEd2
-	 H8un96a1kJ6WU3/YZqjcAnhmSNeD1j7WPqFCY3vCVW1NsySrR4NHvujZS2rNuq9lq
-	 QtlVqF/0rNMTWGaBxw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N9431-1wNvp3087b-015Bwo; Sun, 08
- Nov 2026 17:49:02 +0100
-Date: Sun, 8 Nov 2026 17:49:01 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/7] t0027: optimize how we reset repository state
-Message-ID: <20261108164901.GA29213@tb-raspi4>
-References: <20261106-pks-gitlab-ci-speedups-v1-0-1fa0374c7287@pks.im>
- <20261106-pks-gitlab-ci-speedups-v1-4-1fa0374c7287@pks.im>
- <xmqqv769kgqa.fsf@gitster.g>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aK4vFtnh
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-4922523d1afso93441f8f.0
+        for <git@vger.kernel.org>; Sun, 08 Nov 2026 09:51:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794160261; x=1794765061; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=bQEwTsGLI60P0D3e67GuxTBGA9ZdIA35oRYcZy0mrMw=;
+        b=aK4vFtnh5vB4rl6O02i4jA+fAp8NESXK+vxMnZI6k8pqheAAnUIGbvaK2AVAQOm7/v
+         IP4UsxCpWoloGnqzMFJ7ms7VltPA7o1K2NI7TdK56ZxIoIujZL7tgLa9PhiUWjiFX73s
+         iAabGxZ8/Z1FZfh3TokM2RwXG3SlQeGZrzOM3Lb7FLdyx3iYk1+hWAQ+ZlOYUfz2o2Z+
+         ncpF3Gvdjv+qiafzkpVx+1hxzRwkq6CU+v3xJ9tHLIZfRFgNesTX35XZ1ku3YfgvlX0E
+         rHUm4o2XHDQkxu9jWHfIpUWe7JwCRnrdPRtxY9VJ2o+/NM2nqFDRBEQzNdUftoTiP77L
+         hmig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794160261; x=1794765061;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bQEwTsGLI60P0D3e67GuxTBGA9ZdIA35oRYcZy0mrMw=;
+        b=fCP5YoZMecMgObcqWEIB2IXDx3IXasMRPEOvIwJavhgaDUx3eGI+mKoBXCdfYmq4v2
+         MQ8rCVYE65gBeZpAV2/vlipeuOFpmJJ+eYXKl1c04QFzx25ujtTl0VCFft3iQhiksqI/
+         ClKvKm1HjQAYw7WvCR7H2lqOaPiR5QkzL1/RY13iAZ3u+K1IM2dtVbGlA4FirFAUrgL0
+         xd5cyMgxgoHTdAhuEOTllLgSX7/5x2X/ZUfhsbafIeBsV7RGa4/n5Ngw6tcJFEeFiWlc
+         Kd9UdaeblfEQv63O0v0g+HaVEo0Kb2A7C313Rxam6fqnDIBUbVQGStTJCGThVaK0rF3E
+         bnpQ==
+X-Gm-Message-State: APuU4Z/BzjrVEgrNGT9zXa98Rpp4jx+QuFaHmTBbGMoCjAODuYLgMPvA
+	x6OENzavRdDWkjBJCKlYMEpXlUzF986Sxl1rEx3hjh/hzA3ZR702MUildnOozoX9Ldc=
+X-Gm-Gg: AYBFou31iumztjWlm1oz0k1KylaKQaXmojgEPC0bAfZjSAVbpgay1nG0aw+NqXHcD0O
+	FOJYcppKL3riq4grY2TjGNen5GdKMe5VrWhQwk4MVoYO4Bg4tfg+NYM2eyJDvDUgVzJsUuCsf6D
+	jvc6Hae/zbtZ3QyWMcCAK54V4pUVmocDJvuzQbmfxgRAqzpB/aCSwyInBAHudj1Nb8972pMh72N
+	/zChyLnA6iDBLgxkQIIIIhcdZVSLlXSzbYlybvR9fO+xYjO55wIaE886n67z+kVmpzJtlR2c71r
+	QLtFJw/u/urW/ZyPv8zxKfh3lBXKWDV215Wb8QxhgC7kOsowHjFGlRzs5NFWIrJlEU86xZPTHl4
+	5okQF6yGNd0c85Whn9A8sj9uVXopEEpmwD04H3TI+6W4dD0HoQPcfPCkhQ4pJhqrE5nOes3ifoU
+	NDhj+lCQUpzU8E/Mpk1oY3Z8ljM0k3rKvrobooFBLarXERbv9BI8cwDPykd4bOq5qziJjZLNWGK
+	FIRWYUFSeX97unUKbQvwvGwJexUOIvKhNQU/2iUpjlrH/nG7C5gLP+K6gVfY61ePCgJLpglRrZs
+	17kFZSxfPv93NMvjhEwqAr+zomi13u9/MmsDRI/FUbcTxf/HtB0XL+2pHbtLyuW4kthk072kczn
+	sUEMcOInJyOBdYwa4BJk63Tw7V8G45rUZ9Mm70N3pTH+dSiZe7OX2jg==
+X-Received: by 2002:a05:600c:c166:b0:4a2:fe11:9a8a with SMTP id 5b1f17b1804b1-4b943f77038mr38523425e9.0.1794160260746;
+        Sun, 08 Nov 2026 09:51:00 -0800 (PST)
+Received: from HP ([102.0.122.16])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b7efb0b0c2sm149137425e9.8.2026.11.08.09.50.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Nov 2026 09:51:00 -0800 (PST)
+From: Tanga Joris <tangajoris@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	usmanakinyemi202@gmail.com,
+	Tanga Joris <tangajoris@gmail.com>
+Subject: [Outreachy] Proposal draft v2: Improve how command arguments and options are scanned and parsed
+Date: Sun,  8 Nov 2026 20:50:38 +0300
+Message-ID: <20261108175038.946313-1-tangajoris@gmail.com>
+X-Mailer: git-send-email 2.56.0.388.g09a996e1ff
+In-Reply-To: <20261105195730.1518433-1-tangajoris@gmail.com>
+References: <20261105195730.1518433-1-tangajoris@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -70,151 +101,327 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv769kgqa.fsf@gitster.g>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:9fieM8qDHTHpnlRfTXXnwmo20cBq+6nR6R7GhnPy4/AKLOuGpgN
- gNqTKjkmsukiu1heHYjIDaY2JPRJ20lJvhtPUScVZi/iz/ev2hiw2DaPLD9xpOa2A5OrUdZ
- mMTgXg4XM2OR1xiJ5fkrhsY+uX9kgOvp+QpUY2bdY1OqCN4lEnlXnVvw06aVzA0akXKN/41
- Ltz0tWvjbNmoRPL3vwkhg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:N14lBYgR80E=;7wb1CL2T9ix/JP5b8Q2ttZC2Rkh
- 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
- orf0jRBMQiE6AeG
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 06, 2026 at 09:33:01AM -0800, Junio C Hamano wrote:
-> Hmph, don't we want avoid hand-expand the list of files even though
-> we may want to use one "rm -f" and another "git checkout" command
-> to work on them?  IOW,
->=20
-> 	paths=3D
-> 	for f in LF CRLF LF_mix_CR CRLF_mix_LF LF_nul
-> 	do
-> 		paths=3D${paths:+"$paths "}crlf_false_attr__$f.txt
-> 	done
-> 	test_expect_success "setup checkout ${ceol:+ with -c core.eol=3D$ceol}"=
- '
-> 		rm -f $paths &&
-> 		git ${ceol:+-c core.eol=3D$ceol} checkout -- $paths
-> 	'
+Hi everyone,
 
-"Wow, so it can go" - a well working, but slow code is speed up so much.
+This is the second draft of my proposal for "Improve how command
+arguments and options are scanned and parsed" [1].
 
-I used the following (before reading the suggestion from Junio)
-and the execution time here on an older MacOs dropped from 71 seconds to 5=
-4 seconds.
+Changes since v1:
+ - v1 was mostly about making the entry points agree. The project
+   page asks for converting hand-written parsing and improving the
+   API where needed, so I rebuilt the plan around that.
+ - Added the commands I plan to work on, with what I saw when I ran
+   them on master.
+ - Moved the completion helper work to before the internship.
+ - The plan has three items: stash show, the number fixes, and "git
+   diff". For "git diff" (3B), I ask the mentors which way to go.
+ - Added section 4 with other places I found, like git daemon and
+   the revision options.
+ - Shortened everything else.
 
-    test_expect_success "setup file checkout ${ceol:+ with -c core.eol=3D$=
-ceol}"  '
-        files=3D"\
-           crlf_false_attr__LF.txt \
-           crlf_false_attr__CRLF.txt \
-           crlf_false_attr__LF_mix_CR.txt \
-           crlf_false_attr__CRLF_mix_LF.txt \
-           crlf_false_attr__LF_nul.txt" &&
-        rm -fv $files &&
-        git ${ceol:+-c core.eol=3D$ceol} checkout -- $files
-    '
+I would be grateful for feedback on section 3, and on the questions
+in section 7. I plan to start with stash show. If someone is already
+working on one of these commands, please tell me and I will pick
+another one.
+
+
+1. About me
+-----------
+Name: Tanga Joris
+Pronouns: he/him
+Email: tangajoris@gmail.com
+GitHub: https://github.com/tmjoris
+Blog: https://tmjoris.github.io
+Location: Nairobi, Kenya (EAT, UTC+3)
+
+I meet all the Outreachy eligibility rules.
+
+I am about to graduate from the United States International
+University - Africa, where I study Applied Computer Technology. I
+learned C at ALX, where it was my introduction to programming.
+
+I had done some small parsing work before, in my own project, kiln,
+and it made me curious about how much goes on behind something as
+seemingly simple as parsing command-line arguments. I enjoy that kind
+of work: starting with something that looks straightforward,
+following the implementation, and gradually understanding the
+decisions and assumptions behind it.
+
+kiln (https://github.com/tmjoris/kiln) is a Go CLI that runs code in
+sandboxes. "kiln -addr host:7070 run" works, but "kiln run -addr
+host:7070" fails. This is because main() and each subcommand parse
+their flags separately. Git has the same question of who looks at an
+argument first, and what they do with it.
+
+Availability: 40 hours a week from 7 December 2026 to 8 March 2027.
+I have no classes, exams or other work during the internship.
+Nairobi is UTC+3, so my working day overlaps with European hours.
+
+
+2. My Git work so far
+---------------------
+- Microproject: checkout: use Q_() for messages with counts [2].
+  Merged to master in a04194e134.
+- tj/drop-no-parseopt, v5 [3]. Four builtins used parse-options but
+  were still marked NO_PARSEOPT, so completion never asked them for
+  their options. The topic removes the flag from them, and adds a
+  t0012 test that catches such builtins. Junio: "OK. Let's mark the
+  topic as ready for 'next'."
+- tj/annotate-blame-args [4]. I found it while trying to make
+  --git-completion-helper work outside a repository. cmd_annotate()
+  put "-c" in front of the user's arguments, so the helper option was
+  no longer the only argument. The diff option parser answered it
+  instead, and "git annotate --<TAB>" offered the options of
+  "git diff". The "-c" was not needed, so the fix deletes code.
+  Junio: "Nice simplification."
+  Both topics are marked "Will merge to 'next'?" in What's cooking
+  [5].
+- apply: a fix for the "git apply --check" crash reported on the
+  list [6]. While looking into it, I found two more ways to trigger
+  the same assertion.
+- Reviews:
+  - Azuama's rev-list early scan fix [7]. The tests failed without
+    the fix, but --author, --committer and --grep-reflog had the
+    same problem. Azuama's v4 skips their values too, and its
+    NEEDSWORK comment now uses my "--author --missing-only" example
+    [8]. Junio then asked for a different approach than a list of
+    options in rev-list.c.
+  - Joy's pack size limit patch [9]. 2/2 added a member to struct
+    repo_config_values, which Junio had asked people not to do for
+    now. So I asked whether 1/2 could be sent on its own, and Joy
+    sent it as a separate patch [10].
+  - Nelly's promisor.fetchOrder patch [11]. Setting the new variable
+    made "git show" in a partial clone die with a BUG() in
+    string-list.c, because an in-place split was used on a list that
+    duplicates its strings.
+  - shrimech's Rust patch for formatting object IDs [12]. "cargo
+    test" passed and the new test failed without the fix. I asked
+    whether algo 0 should be printed the way the C code does it.
+    brian explained that algo 0 coming from C is meant to panic.
+
+
+3. Plan
+-------
+Before the internship, I plan to land my two topics. If there is
+time, I would also send one small git.c patch so that
+--git-completion-helper works outside a repository, as was done for
+--help-all last year. That patch needs both of my topics first.
+
+To pick the commands, I started from the 29 builtins marked
+NO_PARSEOPT in git.c. I also read builtins that loop over argv by
+hand before or after their real parse. That is how I found stash
+show and the --no-index loop in "git diff". I ran each
+candidate on master (fb255012ac), and I was able to reproduce
+everything below. Other places I found are in section 4.
+
+A. Convert hand-written parsing to parse-options
+
+  1. stash show. git stash show has a problem when somebody uses
+     -G <word>, which keeps only the changes that mention <word>.
+     Running "git stash show -p -Gbar" shows the diff of the patch,
+     but running "git stash show -p -G bar" fails with "error: bar is
+     not a valid reference". -S has the same problem.
+
+     It fails because, after parse_options(), stash show runs a loop
+     over each argument that is left over. If that argument starts
+     with "-", it goes to the diff options. If it does not, it is
+     treated as a stash name. That is also what happens to "bar".
+     Since it is treated as a stash name, and it is not a valid one,
+     the command fails.
+
+     blame and shortlog do not have this problem. They parse their
+     own options and the diff options together with
+     parse_revision_opt(), so -G gets its value. I would do the same
+     in stash show. What is left at the end would still be the stash
+     name, so "git stash show 1" keeps working. Some options, like
+     --all, are ignored today but would start to fail, so the commit
+     message has to say so.
+
+  2. Numbers in index-pack and fetch-pack. index-pack reads
+     --max-input-size with strtoumax(). The issue is that it only
+     reads the digits at the start, and silently ignores the rest of
+     the characters:
+       git index-pack --stdin --max-input-size=1k   limit of 1 byte
+       git index-pack --stdin --max-input-size=abc  no limit
+     So "1k" means 1 byte, and "abc" means 0, which means no limit.
+     fetch-pack reads --depth with strtol() in the same way, so a bad
+     depth fetches the whole history:
+       git fetch-pack --depth=abc ../src HEAD       no depth limit
+     The receive.maxInputSize config rejects "abc" and reads "1k" as
+     1024, so --max-input-size and the config do not agree.
+
+     These are plumbing, and Junio asked on the diff-files
+     conversion whether converting is worth it for plumbing "meant
+     for use by scripts" [13]. So I would send small fixes for the
+     numbers, and convert the rest only if the list wants it.
+     unpack-objects has the same --max-input-size code, so I would
+     ask on the list whether to fix it in the same series.
+
+  For each command I will first add tests for what works today, like
+  "git stash show 1". The test for the bug must fail before the fix.
+  I will also break each new branch on purpose, to check that a test
+  catches it.
+
+B. Improve the early scan where "git diff" needs it
+
+  Before parsing anything, "git diff" runs a small loop whose job is
+  to look for --no-index. The loop's answer determines which parser
+  reads the rest of the command line: either the no-index one or the
+  normal one. An issue arises because the loop stops at the first
+  argument that doesn't start with "-". So in "git diff -G x
+  --no-index a b", it stops at "x", the value of -G, and never sees
+  --no-index. Since it never saw --no-index, the loop picks the
+  normal parser, which then gets --no-index as an option and fails
+  with "invalid option".
+
+  The opposite also happens. In "git diff -S --no-index HEAD~1 HEAD",
+  "--no-index" is the value of -S, a search for that text. But the
+  loop takes it for the option, so Git switches to no-index mode and
+  fails with "Could not access 'HEAD~1'". Inside a repository, with
+  a and b in the work tree:
+       git diff -G x --no-index a b         error: invalid option:
+                                            --no-index
+       git diff -S --no-index HEAD~1 HEAD   error: Could not access
+                                            'HEAD~1'
+  With the value stuck (-Gx, -S--no-index), both work.
+
+  Christian's v1 cover letter lists "git diff" among the commands
+  that could use the early scan, but were left out because it "has a
+  number of short options like `-S`, `-G`, `-O` taking separate
+  values" [14].
+
+  Junio asked in Azuama's rev-list thread whether a separate early
+  scan is a good direction at all [15]. For "git diff" I think one is
+  still needed, because --no-index has to be found before either
+  parser runs.
+
+  But early_scan_options() cannot be used here yet. It needs a list
+  of the options, and "git diff" does not have one in a single place.
+  It also stops at every short option, like -G, so it would first
+  have to learn to step over them. For long options, patch 2/4 of
+  Christian's series split lookup_long_opt() out of parse_long_opt(),
+  so the scan can find them. Short options have nothing like that yet.
+
+  Where the loop stops also decides when two paths outside the
+  repository are treated as --no-index. So "git diff -G x ../a ../b"
+  fails too, while "git diff ../a ../b" works. t4053, the test script
+  for --no-index, has no case with a short option before --no-index.
+  So I will add tests for these three cases first.
+
+  Either way, the loop should not keep its own list of the options
+  that take a value. In his reply to Azuama's v4 [16], Junio called
+  that approach "inherently fragile".
+
+  Question: should I work towards using the early scan here, or would
+  you rather see the loop in "git diff" fixed first?
+
+
+4. Other places I found
+-----------------------
+These are not in the timeline, but I would pick one of them with the
+mentors if there is time.
+
+git daemon. It reads all its options by hand. --port is read with
+strtoul(), and nothing checks that the number is a valid port:
+       git daemon --port=70000 ...    listens on port 4464, no error
+       git daemon --port=0x2329 ...   listens on port 9001
+A small fix would be a range check. A full conversion to
+parse-options has to keep every argument form working, because
+existing inetd and start-up scripts call it with those arguments.
+
+Revision options. handle_revision_opt() in revision.c parses the
+options of log, rev-list, show and others by hand. Christian's v1
+cover letter suggests converting them to struct option [14]. The
+diff options were moved to parse-options in 2019, but the revision
+options were not. This is core code, so I would only start it if the
+mentors want it.
+
+
+5. Timeline
+-----------
+Now to 6 Dec   Land tj/drop-no-parseopt and tj/annotate-blame-args.
+Weeks 1-2      stash show: tests first, then the fix.
+Weeks 3-4      The number fixes in index-pack and fetch-pack, and the
+               "git diff" tests from 3B. This is the holidays, so
+               small patches.
+Weeks 5-10     "git diff" --no-index, in the way the list prefers.
+               RFC first if it changes the scan.
+Weeks 11-12    Rerolls, or the git daemon range check if there is
+               time.
+Week 13        Spare week for late reviews, and the final blog post.
+
+Review on the list takes days, so the weeks overlap. While one series
+waits, I work on the next one.
+
+At minimum: stash show and the number fixes in 'next', and the "git
+diff" tests and a fix sent and discussed. If the list does not want
+the early scan there, the fix is the loop in "git diff" alone. If I
+fall behind, I drop the section 4 item first.
+
+
+6. Communication
+----------------
+A blog post every week for Christian, and a short written update
+every week for Siddharth, by email. The update says what I sent,
+what is in review, what is blocked, and what I will do next week.
+Design questions go to the list before code. I answer every review
+comment on the list before sending another version, as Kaartic
+reminded me to.
+
+
+7. Questions for mentors
+------------------------
+1. Should I start with stash show, or would you pick another command?
+2. Which item from section 4, if any, would you like to see after
+   that?
+The question about "git diff" is at the end of 3B.
+
+
+8. After the internship
+-----------------------
+I want to keep working on the early scan and the revision options,
+and keep reviewing parse-options patches. I would also like to help
+the next group of applicants the way reviewers on the list have
+helped me.
+
+
+9. References
+-------------
+[1] Proposal v1:
+     https://lore.kernel.org/git/20261105195730.1518433-1-tangajoris@gmail.com/
+[2] Microproject, checkout: use Q_():
+     https://lore.kernel.org/git/20261022004834.246892-1-tangajoris@gmail.com/
+[3] tj/drop-no-parseopt v5:
+     https://lore.kernel.org/git/20261105223458.1534785-1-tangajoris@gmail.com/
+[4] annotate: pass the arguments to blame unchanged:
+     https://lore.kernel.org/git/20261105073101.1449292-1-tangajoris@gmail.com/
+[5] What's cooking in git.git (Nov 2026, #03):
+     https://lore.kernel.org/git/xmqqmrrlfzcd.fsf@gitster.g/
+[6] apply fix for "git apply --check":
+     https://lore.kernel.org/git/20261107195429.96842-1-tangajoris@gmail.com/
+[7] My review of Azuama's rev-list v3:
+     https://lore.kernel.org/git/CAKrRMNrnd2+HxTxadKaha+K9ASWi_oN4h7gdjVYAGmyODwmi=w@mail.gmail.com/
+[8] Azuama's rev-list v4:
+     https://lore.kernel.org/git/20261105120937.10269-1-azuama69@gmail.com/
+[9] My review of Joy's pack size limit v3:
+     https://lore.kernel.org/git/CAKrRMNqzOX=vUUMrMf5P_Atar8_qCSbGdtBktfT+iL4hJfFX-Q@mail.gmail.com/
+[10] Joy's separate patch for 1/2:
+     https://lore.kernel.org/git/pull.2298.git.1793966368860.gitgitgadget@gmail.com/
+[11] My review of Nelly's promisor.fetchOrder patch:
+     https://lore.kernel.org/git/CAKrRMNpAW+f2XXMFqpB8ffZsTdyPsaFtHe8dku=JVXACp1M3Hw@mail.gmail.com/
+[12] My review of shrimech's Rust patch:
+     https://lore.kernel.org/git/CAKrRMNrLvPck5psPpKX1eWe26To5srfFSLFObZ4zTX09RE551w@mail.gmail.com/
+[13] Junio on the diff-files conversion:
+     https://lore.kernel.org/git/xmqq8q3blfh1.fsf@gitster.g/
+[14] Christian's early-scan v1 cover letter:
+     https://lore.kernel.org/git/20260902161047.476753-1-christian.couder@gmail.com/
+[15] Junio on whether rev-list needs an early scan:
+     https://lore.kernel.org/git/xmqqa4nlkelo.fsf@gitster.g/
+[16] Junio on Azuama's rev-list v4:
+     https://lore.kernel.org/git/xmqqwlqqokxr.fsf@gitster.g/
+
+Thanks,
+Tanga
