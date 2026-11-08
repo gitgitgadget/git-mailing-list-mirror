@@ -1,96 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.53
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794129019;
-	b=oXV9W2QHrRpmYDvIpYjpvxB1WYHWsbcvPIWdnBzQXYlNQ3UMzsD/xCYexkNrg7+Iiggt
-	 Kvs4lZYcfyXJ/0XS0v1sBCTXnQXS+tcg1BE/BwRO4CIImgNBOADiROvBSCxq/yjlllBmj
-	 YjaG1i4ecGdxPQJ0mQGvIPt0Oudb9zwbfJMKW7ARFnmchIZrLGuwuuWQdMv3yCtiRAfIo
-	 NmVVqJ95maeqYS10tSq2Mfss9AdF8bcdvvVwFYlatsSXJPJHb+axnidkZTxMbIsHoKLn0
-	 CKCKx1oK8OZiP/Zgj9QgKIkf9thgFxa3WN2rkEF0zoaUXVtiIAgL1Rnh5V3DopErN8Q==
+	t=1794129129;
+	b=hn8ixqeiWseFDiL/fyrRlg6TaaYtpLMKx02xRhR7A3XS+veXLKdUhN5HcqpDYx9rqZCN
+	 1ejFeQU0L8A6lTdsKbgUZN9g73gdz8v8wI2JL0XaPhk44qENh+DFCp5RDhUiKBCaNEAuM
+	 JbrfI0MDq3tfW1L3FM709c+wtQpikurRSeq5AnLvgkNexdH3HTh3oTXqOJjjNnS5kMAY1
+	 OCssdxyYjIl6foN3xTBg4XdTSlINojMUdipprKhpSstEWWwCrp2cPN5UaN4W0xUjjk4NC
+	 tdC+EhoSrSS9KFCAtCL5XGE994TKOzxYsKrme3qwK25SV8Sk1mYRhGmat/6WyhRAF9w==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794129019;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794129129;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=KqIr6pJwcQHC+6HpJxvQ3kNWSbCBnHuEQkPIqO7yuUw=;
-	b=Fb2TiNcK2TcHDYve/yohlLeRD8y16rifiqQmiQg9ykKx74s/TfwS3vxygNxWu4ZllEv0
-	 Ww+XoLOtCIdl2l51nZYaFIZfyE++qKpzovCalOL2Xwfp+Q6VGpgSoEMPlQoNiCQtlaEwf
-	 n0GcileNqvBqZlTzD0gOMLRZAmYDDtmCNx22OTtmj/iqHDtsBfMb+zMo63WHnZ8c0eCFF
-	 FHR2EYY14alxepH9PH4ti7tEpBXx35kNsyLxbMUDtjFqL0wimnnWd6pXXc/uVLm/qTzIg
-	 5Byc2jU29g/d6rgWAG+GX6QpoEsL9TdrRy4IFTDZZI/Vr8WwtBkaMizVyD7g1QwQgRg==
+	bh=ismZUmLm5VyVmSaclLKx9RFnOSFPKE/k9uHFxNVRl7g=;
+	b=YHT9HoSBB/tOQzNnpZniQ89TJaaEoId6/LIQEwfdG20bgD8jfTMYjqvn5ja3Gy1K1a3s
+	 KfcWFKAfLuPXczMVaOGLK4VXeN/qkonRCro6bLaprnMrZgqnQQWoQytFCIjbJ0wKoP+WI
+	 k2sPRdH8LMYqOM7DfaL+gEYU7ZcJ72lfcvPXCb4rSoKf0D2j9ZhTQkdp8bxhO6DFjyHWd
+	 F1Wg5L13MhWX7a2A6VZ05U08S++ybSplyWM3hjC7aorsEYszXx2K/RjlEkNEBgF8BX/GJ
+	 wZP9LNSmCmnc3c708QvneD7ueL2RwDtKgPtbeDG8Rfi8UBqYIjaRtWFgbn7jSOGxriw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=spotify.com;
 	spf=pass smtp.mailfrom=spotify.com;
-	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=h1tHZYlj;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.47
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=PytS2F31;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.53
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24774606A321
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 09:10:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 24774606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C082606A31C
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 09:12:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1C082606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=h1tHZYlj
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c4d30639709so454666b.0
-        for <git@vger.kernel.org>; Sun, 08 Nov 2026 01:10:18 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794129017; cv=none;
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=PytS2F31
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c4c9abc1824so125166b.1
+        for <git@vger.kernel.org>; Sun, 08 Nov 2026 01:12:08 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794129127; cv=none;
         d=google.com; s=arc-20260327;
-        b=pknrtsFK/NoI4Ayz3hWptFO8mAIh82eAFgfFs/5wm5fjB2VtMIWMAO14tRSBKiQKBX
-         cE/1fQDe1FA/DkiUyhQZgQzOSnWD4wW4zgshhz/UovpEgPzB5/vaGWCsr/oGWfax/aDj
-         YreV1xFAzwmRZ7CuZbvQGw6uUZCe1r0hdjj9+xHhy78SFsx4z+3boZd0YYL1fwCmc8xl
-         iWtZ3QtDEdvtJM1oKKOe5I0kz8vRRkpioLtH3e0azG7dzViB8Roa2wvxXFEQcFWLWNyr
-         nXenZrZfYnVdBuxSsy9y2RtF3HXcbhRn1zUZ/zQspcO2Njt466wnlH9L0/DLPBmiGf88
-         HUMg==
+        b=doRemBJm5P/nbrzMTaNqHzkl/Z6j3o367Q9tvC80g27oBueac6IsT5nO3rnxs2tZQb
+         RqHObRI3XEaAHTFxcSTEKdqNeVfshoRghKH9/bRxahYgyXCjbbKYj0mcrwYMyTSoXGdY
+         xRSWCjdeSTT0pPH/JaV+tmxtLo1dvD151ApiDOuIdES/3j3svOhoUd4jNdJfAbNLBYDE
+         puKu/5HI811qZYb986Fl4O5Kj/tDQyZw1vS4CrO1aaKh9+L+GftxG7lXbHc3kguUkX4f
+         fmGRNrj4ftjLYb+UXdrBQgl0qNCz1lDrJ4JDHKwTbPxASqpkSjX2ayTENTU2tndXzZqe
+         Kaig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=KqIr6pJwcQHC+6HpJxvQ3kNWSbCBnHuEQkPIqO7yuUw=;
-        fh=ANTAhhyR25w30YOxnRxm6P6a3MFhIHanTOZ4+K+z8Wk=;
-        b=nALhejSmzG6GHnc7IM3AaaaYTWHMscUx5CqzhwskcGUBUIXzfeiEV6xldRaVF6g1g5
-         gTRuiGE3RVueLWxlebiAJaIrXTMYQk+P6ZCJosr209osZ+fwMjgJelL1XKEByXFi+1Xv
-         i7Bc9gQHc7VdDXXlbFL4TLy2h9j3CCaocsL0xxfFKkiXIo2exgQP6h8OXYTUPFf5t0Dh
-         FPWcn8ivR0RmUbDB74wd38d61KnPMM1m/vCkeui/BDc8Df63XFnP78sMMVMkKsZpaTRi
-         aC1PfXVNRFewXrkP53xXaYvj0Z5PlXqHSTftPeP/1SCfp2pX8nL7KXpV1ILkM/L83nHt
-         bmXw==;
+        bh=ismZUmLm5VyVmSaclLKx9RFnOSFPKE/k9uHFxNVRl7g=;
+        fh=nlneC7k9r42m336VNi0MB6vpxqEZQ/aKjgrc+eRGtjc=;
+        b=rNq51UzNK3FIv/yHni/iHTrlSIGT8robfguDYMCOnuz8UVj/Bzmez2Vggw5TZn6dIN
+         NM7l22bIG8W6W70+OM1Wh0BA7uSbzTKQl1ORDRb4YWS3qLhPtnaMgVlN4OSUE9PKq9S+
+         RS2iS2pbkN06+zJnsqD47qZKExqJYdnxWu8ZNBTkcn3ojmPMqdE+we0thHMdaS/0l7I4
+         h8RGBGGaq0VVsKSQqZO1hA79Cvo9o7+j3pp2kiMHCi/ti9M/oGubkjAOMV/EzX2e7v0N
+         KydPdbbgAMAjdcrTsl1qJ2/qkQG3KyRz9zKg3YAVR09KLVUF9dKRVV6TVlk0L1t76AgI
+         tiAg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1794129017; x=1794733817; darn=vger.kernel.org;
+        d=spotify.com; s=google; t=1794129127; x=1794733927; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=KqIr6pJwcQHC+6HpJxvQ3kNWSbCBnHuEQkPIqO7yuUw=;
-        b=h1tHZYljgOsa0uT52qo1EPgey/nmIvqkgVD5IfOBc/13wTW71MdFTl/NRuOyHHK1pD
-         p7RrZsUKXmfTFx9BRL0u0oJPeENXa3Yr5N8a55P04GG3e06UG33nmtqfgeq6htdazCit
-         eNFVsLMC6NncHO9FRTiGIa6SHXUJXWaaS2YVE=
+        bh=ismZUmLm5VyVmSaclLKx9RFnOSFPKE/k9uHFxNVRl7g=;
+        b=PytS2F310Yb2skU85Cs9fXihWGFJRFSHZ/NoKlawIzvIyIYgnLgJouOtWXSNIolh6o
+         4qeibqf01zRPgsP3NVdAms0D/cJ7V1jw6XLso5Kd031Oi6fHcZVH9mOsHZRC1Mv5OENM
+         ItaLdAG/mCbs7fEQsUtVHQaprvCF4vTz9xu0I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794129017; x=1794733817;
+        d=1e100.net; s=20260707; t=1794129127; x=1794733927;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=KqIr6pJwcQHC+6HpJxvQ3kNWSbCBnHuEQkPIqO7yuUw=;
-        b=sQtcso39uLcnKsk3FC29B3f3+/kjtOkIaCgdlA2J23FDdyDFDh02UZUk2fhAX1sMLD
-         lqEajSvW4/rtLKXc3NsT48sjHZBfVb3Ch5i3KkRcdBBEf+jeI7ZrztPCgqvlRUQizN8U
-         efQOpwaKgQEEJ8hDtU3fY6Q+hTMXwd4n8hXJrI8q4AzCLdXjYsmxfDn6EiyLLP1SDOj9
-         zTUd+Vb7hTAwKtZYGqImD+Xavw/nZPZAsGVeHM8zCoDIi7xR5/zqE0moJiF3gywditPT
-         1GAO6U4r8kNlLiLnk9zxPQdeeO1z2o8lHcp1XDGa6D36nPqU4ld6wrdjKkxqwg9Ymfe0
-         8axg==
-X-Forwarded-Encrypted: i=1; AL+hErG7RYskd7XBfCGY8uCOatbX6T5vNvnx5ibWh1xGsMEwjVv8/HcurMLtSOuPTLe8XQlXQkA=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8sDvuLe2u98ypG1GStYpYXZxzN5DKCo/kEcIbLiQqFbTaOsa2b
-	F5ie6wlO/XZCzG5+6ECqt3CG3SkGm3hJI3hwLKdOTiGx3GvVWXaYdfe9wNR0Vqs67BGpxabmr72
-	geGsvBiEP54Kqds1DztMY6vqLlPtHpIiMbxssrMTmmw==
-X-Gm-Gg: AYBFou2gmvaIo9TRRQpzNtb5HIbx1rKpy9+Hbtu3cB8jmgXXFW+my5zTKtCfyvSWvu8
-	U+iX4u19C5pIuuQ7hygLv+D7iuiOGlcbo0/J0nmLcvfWhV7u/KfW9gta85mASXSrJOD86auJhqf
-	e6f5ISqjOQvGwUDymwoOwVnBFXcEZoJe6Eg6Ks3bavGwVFd9Yh/GzBmhtNOLpJ84OAZgPEHatU+
-	reRHTDCSYCQuAbMWtPJ+mKxmIydqJxJHj/Glm7P8aF/4VI4CMSOEOvkn3tqSGammMc6IzaWe3K2
-	9mGn1ITeshTlVGRebXqmuHnIXdk8AziaTlpyCX7GdSD8iNO8svBKX1gAACBb3nKX9g6QQnSlNzB
-	tsc1j8r3rn34KmNOnC5GNI4NoypheraeFRW2+I1hMv6F2T3Ayw9gjAnN8E2U=
-X-Received: by 2002:a17:907:c5c3:b0:c46:9ee4:8f0 with SMTP id
- a640c23a62f3a-c4d6db1df40mr68760466b.10.1794129017422; Sun, 08 Nov 2026
- 01:10:17 -0800 (PST)
+        bh=ismZUmLm5VyVmSaclLKx9RFnOSFPKE/k9uHFxNVRl7g=;
+        b=M4h1x4onpnvpyHijMh1ZM75SJw242jSR7gQKP4scGePqpQYt9NfEbs+s0dOmoltXG5
+         QLAoyIc0MriVmnswcofd+ElaGUcagsVdPywKMSLPAQ7ogNt+VG6/acTbJv/Q777wU5op
+         9GgDg++YdC8hUH1SZmKfZoCiSQ/lyXH89GiQhM8S1h19y1aYb48qX7ROgYU7GCFchj52
+         Tqy4SWDJDfdVkE3effsn1iSC/C7SQ9nW4t/YiqjxvGx0wM4pF14H7Ba4NC8nUuO2LdG+
+         A54DROiNEx+Cs7hrkXGhkUYdVn6bFawCZ1yWwhW5LlY04tDPp53q13NnLMN9d1qmcl/m
+         G4MQ==
+X-Forwarded-Encrypted: i=1; AL+hErGo2oKiicYjTRVh3i9DH6PjjUDgL/Lj3NBaL/Y+Q/hN1ir9BZQQQ954Wf0xQzMl9XjdnvY=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8BXqZ3Br4MBYy3Wf2IaDowOmD9FgrrjjmWqrgzqnmK0SV2ngk2
+	Js1HGClNFvn/aj6Odm0PdoplIoTEiSKNg8JBgkRR0qea7pkmkR3UvQL8eJfRNeAYkZuj5qOwRvx
+	HbXevgzz4z2Lkc7ctLzF/vsR2QAZfRG2DvkbPsWAu+A==
+X-Gm-Gg: AYBFou1zS9fZIvuyIsQJZGLnqsG68StG1MSkJx0zC0FD1SO+kNC384DgB3FCKvctK2R
+	he7VKp5biIGAhy5AByzx9VNV8oqGWfI+rOz6ekV0hSGqWe3H/NAtDN36Go8OhK/tBJ40N3q8mW/
+	C8cuywhkaeSFsm5t9IvSfYw4ayeyTdQQL9Xe3OUOvXI1ZMH02VUSXhpQuCc1+bBkEVwXMGbQH+R
+	N4pTNHljGYcl7SNSAeouucNlBIcwbpBiNd1Gu6dkefNrIxw6JRR7IC79cGXRfrYwE/KDPqdL4E9
+	JkCQD6f+UC+j8J6/6WTRhgTOHr6f82+wuC9CNs9La7p5Rtm8fBly5GTzexkDfEbtywGQ2d82UCH
+	VgvqgxGqLex42P/4OjLnJ1lsbjOFFBopEzNU+hA==
+X-Received: by 2002:a17:907:f815:b0:c4d:167d:dcee with SMTP id
+ a640c23a62f3a-c4d6db1eab5mr77342466b.40.1794129127440; Sun, 08 Nov 2026
+ 01:12:07 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,55 +100,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
- <b4378b352769cdcc2e9cfdf40efe173123ea9ab4.1794063565.git.gitgitgadget@gmail.com>
- <xmqqwlqo8c8y.fsf@gitster.g> <xmqqpkwg53us.fsf@gitster.g>
-In-Reply-To: <xmqqpkwg53us.fsf@gitster.g>
+References: <pull.2301.git.1794063565.gitgitgadget@gmail.com> <xmqq1p8w9rbf.fsf@gitster.g>
+In-Reply-To: <xmqq1p8w9rbf.fsf@gitster.g>
 From: Kristofer Karlsson <krka@spotify.com>
-Date: Sun, 8 Nov 2026 10:10:02 +0100
-X-Gm-Features: AclHuK9D7BlT9KXAGIxFuU8Zd6jq5Lg4SRsyqXFlqJ-M2t0tsemxPkfNs3OkTbw
-Message-ID: <CAL71e4MiH62mpy0poRG5pSz=GPpoLWo-qPi_inaav9CgqDn5hg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] t/helper: rename test-genzeros.c to test-genbytes.c
+Date: Sun, 8 Nov 2026 10:11:50 +0100
+X-Gm-Features: AclHuK9yWQuc4n73zY-vV_0XzweTTXxVB0ts2j7RqCyOjGodl_qh5F2SNaFCtYk
+Message-ID: <CAL71e4PXCY6bDEW6LyXKkskurzRTjbfK_zf6DqPiRMVAt=Yixw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] t: add "test-tool genbytes" to avoid slow tr(1) on macOS
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
 	Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 8 Nov 2026 at 05:44, Junio C Hamano <gitster@pobox.com> wrote:
+On Sun, 8 Nov 2026 at 00:04, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Junio C Hamano <gitster@pobox.com> writes:
+> Just being curious.  Would forcing C locale on it help?  I.e.,
 >
-> > Needless to say, with this patch applied, the following tests would
-> > now fail, unable to find "test-tool genzeros".
+>         genzeros | LANG=C LC_ALL=C tr ...
 >
-> Not really.  Even though the source file is renamed, the dispatcher
-> inside still recognises genzeros and calls cmd__genzeros.  In fact,
-> at this stage, "test-tool genbytes" would not even work (and it does
-> not have to work as nobody calls it).
->
-> So, sorry for the false alarm, but my point about not split the
-> rename + modification into two separate steps still stands.
->
-[...]
-> > FWIW, if you apply [1/3] and [2/3], squash them together, then give
-> > a custom rename factor to the command, e.g.,
-> >
-> >     $ git format-patch -M3 -1
-> >
-> > to format the resulting single patch, you will see a modification of
-> > genzeros while the file gets renamed just fine, and you would not
-> > have to break these tests in the middle of a series.
 
-When using the GGG workflow I think that option is not available,
-though I will see if I can try formatting and sending the patch
-manually for this one instead.  (Or try to submit a patch to GGG
-to allow for configuring this too.)
-
-I could squash it all into a single patch too, which I think
-would make sense if we don't need the intermediate state
-where both genzeros and genbytes exist at the same time.
-
-What's your preference?
+No, test-lib-functions.sh already sets those env variables,
+but the macos implementation of tr always executes the slow path
+unfortunately.
 
 Thanks,
 Kristofer
