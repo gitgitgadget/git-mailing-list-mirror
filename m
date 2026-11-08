@@ -1,93 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.42
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794173916;
-	b=RZYxzzYPFxQwLwGwdtuCtcl3CQV1yqHD0jF+sUckDxyil3Co3zfXRaV0DRB+NjZWHWwN
-	 iNfZANRnYeJhiLpO3v6ZI6+UvfdW3FaYcZy1GNiZESxx2z3BMJc0vnl9wWK3QyywtG4C8
-	 OVqur1QBflHkJajbtImiVSa2Z2xYpcl/g0ugZztl+Yvnbl1KKaSi7Lj1I9jLxOtwxah4L
-	 DMF98vhzOFJ09a1R4Wyf9xNH5TAkyzYrsWrvgNf/7OB2GzHorTN7Iw41p1TEiNEPYqTkE
-	 tO0Ivs2LKgSVlVB17FlUzBE6Ajt+vH42Wx3sZWbZGU7Wd/2Bop1PS0lJAXtwlBPx4mQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794173916;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.181
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794174328;
+	b=tFZWQtoFHim6yx0PUvf+wbs3PZiFqTuCTMQfmn1y4xxKL2Fci4pBhNdZQxrKUh8wYM83
+	 T/ZoJMzJha4uamuT9FkaiqKcmIvze4vmyFBVfY5CukPY8Yo78HbImt/tQf9OI58Mcvfd5
+	 f1EXOgFNc93nmpe2QZvmvEOYOd1x9YzFBZStfGV6o8z4DCqrlccRW5mkU9AAv4KLEX+Ol
+	 VY/DwJqFEokGmTmrPQEcqnUd60WPpbojwHVmgek9T3wRDhzxhFG6RIBlzJ44k6zkfysdt
+	 I+cjHrISF3btcwv3RyI76O6e8VS+dm2Yn7jhpBzX8EkcYozHBMXvkjEs07NYhRbFDvA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794174328;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=pGYWut4f7Iguaf0huuXB6v2/Nzu5BshnHi38p8vDaeM=;
-	b=f74SIMqZ1XaT49DJaXKdaHcLgh0wQoL2CeQPiZi5ejnlkzrxQZWkv6+DWhvezOjnkQTI
-	 u2pqXW6VmXW1KTSlCxsFJwnotoCoXoUjlrAYmmwC55b/24iJWt6O5QWGtUvt4/EsuwPA8
-	 RE/KF9jlfJOSBaeENWM/qbjRTywoJAL4WtQdYCYEP5TW5Z34uVHjHaCJ8N1YRg+/aLmHp
-	 vStz+HK19Cf6PuaJzOdeLgH/MZzl20t47bdn4Bj/qYbDJVEv2PhvfsxBbuxBTqsS6SLU0
-	 BJfMK5csXcMF2uH1hWLqGbcoxkqmfpId411Rz/sCGTLK13AfwMwWr+4UX+BAB6AxQGw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=/tB4aJkN44ffppZbx8RR2I0Gji5t0eQCpo3CtQaX/24=;
+	b=kvQI7Xf50ju5p1hJNuaPwqQMGozBbN/VSCywroS9dijit0wgjvBbma014/d1f3d1sKii
+	 5Mi7yeMBx8bkDHajg1ajucnDoFO1QtfT3Qr9cchsRcoGAj37IKU6QdIHg/s4VcSSWN+Aw
+	 xm1iXv1h2g65tyu2TsPwprLS8XR3aXJNrHjvDZQLiZsGYJ6VilQkSX4/TBmlbzHkL1rYw
+	 L1pPUWD3gPmBqjrBfHuXXZA17d0r2BgFghdd0AUj07kg1/zwPhJbB8O8f6BOEz4UP7Dni
+	 cI96oubzkAzZ9qdHkneE8PeBT3d9Z8Z57jbPM9yUxWZE+ZZEAcDQhsdg6DFC6CsKhbg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="s/qFzUYK";
-	arc=none smtp.remote-ip=74.125.82.42
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JHrCcUw6;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.181
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B56F606A31C
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 21:38:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3B56F606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F4A606D81F
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 21:45:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 42F4A606D81F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s/qFzUYK
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-1aefd1bf74aso195689c88.1
-        for <git@vger.kernel.org>; Sun, 08 Nov 2026 13:38:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JHrCcUw6
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-8b0d63f60bcso3718307b3.3
+        for <git@vger.kernel.org>; Sun, 08 Nov 2026 13:45:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794174327; cv=none;
+        d=google.com; s=arc-20260327;
+        b=NweJhoN9fwRF6qhK85rqRosGOVlvaNbmNV4uw4iVnTmM22JAwLjUJqT3Vrmv3IYl3p
+         R8xJYUkhISFna0wHWi9Up8crseC8jFD6ciY3NUQuDchUSgtqoTWp/63XxzZUImp7j+sn
+         5G6H7CyoPNdTJ/wDOen1PzpLTAezBnsygh0u0g3gCCbY3Ec3wxuUNOCdPc8SYNCg9vq7
+         xkhwimKlKlvwj74ErlNoWvkskEJvLLa5iimKHX3z5mIf4lK3A3GGlGDbIyxhQxVFtQvS
+         SWg/GPGKrT9lU1dE7vPhrEC7Tyh2mskBWOe0kk/lBdA0yqg2G48Hvaecc/6wKmNYDJmZ
+         DaWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=/tB4aJkN44ffppZbx8RR2I0Gji5t0eQCpo3CtQaX/24=;
+        fh=aYyYqfXN/U/3wmOLZBiqGoGjg4mYSlmnxuQTIc/mWR4=;
+        b=TgmOEenfGYCDaKOzRGIivzbnd2nXO1WfpcMXhCPMDFdBi899dQZsd26DXWxvq4VFfF
+         lQB1qdg9eRbv2qNGrKSlcHRjuNrSi/0KQhlF3M0pUnAdHNVSoW9gKechrvKu3NZICnJp
+         wr3ssPMsogxihKp9uZbnBjgu8WkMJDtfvQHzzwWWSDTlXAUdl/KhBNnmSOwsP6Sjtilc
+         MfoZqAtxThilQnZMapUHsUpy6JcVEqWVPEj8UVFv53GCK8BUHqk+eYbisUHPFxhPRe4F
+         bxe5xO6OrgVm/966bBL0onSTKmCWfb50MZrWp0xfxbrBLEi6Xm4cGyyBVS9H6wxV7kbp
+         m+Kg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794173915; x=1794778715; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=pGYWut4f7Iguaf0huuXB6v2/Nzu5BshnHi38p8vDaeM=;
-        b=s/qFzUYKBvEIZ7CiCPB9AXiqMkJS4NRsziwOvZs9UcpIf83gOrZhZM0rcN0z4TQg0Y
-         GdA4f9xEslFl9MCEwDUKo3xO8w83T+/lgR0B+E9jgg8PgDfbAUjiO0DRB7A0zLw5si07
-         v9eui/dcsuuZnE/lT8V/OuoCevXlxLvBWtOgsFMn2kBBTJ03UsDR5K1g5RD/sAYhFCJA
-         vInTI7VdTBkSqVb8pRfarNj2hS8buGKDQqqZ84T0WiRS8xqylshpjVLp+ECh8WcUleGc
-         kY6tw+aSe4fL0jqk29XhrtvQ4tCg3RPzLOIyVt2t/pXWYL0FoKTxBUcR71KrcBVYyLg1
-         0KBQ==
+        d=gmail.com; s=20260707; t=1794174327; x=1794779127; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=/tB4aJkN44ffppZbx8RR2I0Gji5t0eQCpo3CtQaX/24=;
+        b=JHrCcUw6ioWuh3VJKTKnzuM0Z+VKPPByOCSAh0ZsPy1xJTGYWvKQGJa1LOovL/YsHj
+         gcWOgCo6gt0pRTrnU4Vhm/sYN3wK8cwKbcjc7rIougEI2mKoacDhOzRfAU34WkGaFSFB
+         z1wlY1fGgsVhdM9HsiY8thmfOuHxxBgmoTq7/p874B/x8+ALFs+7+99fjVscwjdU414A
+         q4HUzFr0co3bUdTzZjCeTZnaCjWyGfz+XOZveTcuga72qIVFgYJYk55oxst8yaaHPAR6
+         KDyPzAXbmnY8IdN71Xnf9gc4e5eW/t9EwgG8wtbnz0JIfidO3p3E9CJejIdzThcqZkxd
+         3zlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794173915; x=1794778715;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=pGYWut4f7Iguaf0huuXB6v2/Nzu5BshnHi38p8vDaeM=;
-        b=WBGjDeKh5Fd6TlwKy5tQI0zYzw6PqjMzQlXeE8pLRnLWeKrFSLxiboD8GvntjkPxP4
-         ca0VC7jZZ1eCx+v/Uj6UnyTabgIc2CapVan9IJRk9Z+B1qDHblS+sg6kGT5+t+mpL+Yw
-         HnVnJ6PuXYsSLOoPL3gqq2rpFZLPeVkJ6yeU4b8UG/e20iq2vVQQsV35epyYgpw4LjXD
-         Ofac7Vt+Yf0ML8evQ17XFPcrVHqW8ak4qfj/Vd9vRyeQ8OL1un4SxuvHxwYQonPyMWb4
-         YJ0JTJnx2VJTa+RAmfXybJ5IWOt9EyU5OSjngek7TDteSXXjAf8IuVmnHCnD/mmPXYiV
-         dGSw==
-X-Gm-Message-State: APuU4Z+3PqHEcPnVYB38w0fayaW2R4wLo8+q1iBn8+s4vAW0CBMVh6kY
-	RAFu/yfOgJvjlnrKav1huwtKO6DohqiIggAdJTaCizdH3G6e133oXVBd
-X-Gm-Gg: AYBFou075gWDD82WngBMisdQ2OD5+BPhJT94GO0vAnYkB0pSKWlyEvdnKn8T72zqd6e
-	FYc+UAy6OsZl84DuQdIlIrEjzOOFrUHDA34n1mFcUqHU4MTX2mMCKSTi+vL7UOhhZkrqKTLF9/u
-	3oX0tgh+eDPyeGnAFPrSP5z6wHh362ybFwv/n82CQ6XsWDoZq/FM788J4X2ULaYNJkY0gmZldSV
-	cQbxQFtreJFpxQnmiynfqwcigrijAaZb4lJrkiqag4t8h8jSguNkqgamuXXgs8yuCE3k8jD0P36
-	CESdnqU1dORzhhjGr0JWRWKTiMBupd1IXNb+7dh1XjAza5VOXvC4MWStGI3tXKC+7/r5e3oQzHY
-	jluj4HAC5G6RR9dMnI7gifIPGL4APURBFn3evWMqs16x96OmEewQrkPjX5gOLVDoUB56R3b7ymL
-	+jpeZNHYnj0aV+098rpW868x3z4lVoy+ORG3hN0/6BW5RG6laICHXgmQgI1y8Jmy3KlmjdTgP+y
-	co2jIMabkLQxgZNvWsGgnVLqGyN3s7zPxi6X4avN2QZXQrMBjjcfD/NkkAXpUkk+1LCnqEBpbZ6
-	BUwTz/cvFPUu/xNpzaogrSk+vyULmoQ+5Som1inDpKNr4LY5hpk=
-X-Received: by 2002:a05:7023:e41:20b0:1b2:5ecf:9bd1 with SMTP id a92af1059eb24-1b269af173fmr7584418c88.7.1794173915092;
-        Sun, 08 Nov 2026 13:38:35 -0800 (PST)
-Received: from Anonymous.localdomain ([223.181.58.0])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b3771e8de2sm6974378c88.17.2026.11.08.13.38.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Nov 2026 13:38:34 -0800 (PST)
-From: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-	christian.couder@gmail.com,
-	Hussain Sitamouwala <husainsitamuwala21@gmail.com>
-Subject: [PATCH] environment: move assume_unchanged into repo_config_values
-Date: Sun,  8 Nov 2026 21:38:14 +0000
-Message-ID: <20261108213814.151202-1-husainsitamuwala21@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <xmqqo6bz2kxd.fsf@gitster.g>
-References: <xmqqo6bz2kxd.fsf@gitster.g>
+        d=1e100.net; s=20260707; t=1794174327; x=1794779127;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/tB4aJkN44ffppZbx8RR2I0Gji5t0eQCpo3CtQaX/24=;
+        b=eSkbTeV3czafRdWtFehuJEenNlto7rbku9SpTXjZZ1+SAKPLBPn9Oz3jS/LkbRDgG4
+         qzERMvTmq5TXnF5OE1/nxXuN34tVEX35Fp78r0D1OooBl7DziKIcdgtrSH9od6lZxgUZ
+         ZrM3fK8Yotf3qbl1yfkHgCDDksX68VXVeOVs3mkkWrAyt5WJxTpOHov/4US1uxvPZTmD
+         w+UwC0HZbmQqUbhqVsrvUnCyPViaUdxBeNcqY/OzLQR+VRgnUUjUsI03fek2wOCrJ2pJ
+         w9VgUdEikp/OdNewRl1OBQpQ3fD9Lx7zcZrpSQLP+IFbGLjdp5bdjZxdWzh89XDLWSNY
+         FLsA==
+X-Forwarded-Encrypted: i=1; AL+hErHwpTnqojL9lET8tYFz8kEZsVDUuMNDcRylDB0HEreDj+v1jRWesnYu3oQNA2wObOdpT6k=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9Typ/qjJ1bFNRvn3AV/p9Mps3G1GM9nnzUWbc0RPypuxAGLi+9
+	/PnGd1hDBFhjSO/ENf66Ts55KoJBnG/FlUt7P9aryRKUu4EPyvINOKS2gcxaZO7uhNoKfYO16lG
+	ulFqJKRfO3/c+KbENeQf1Bw0Ppi+/kiiSOOh/
+X-Gm-Gg: AYBFou2ZponxgEjMObxZqEblLVmmJHRLRgCPSzZKsRFn1fIcy+m1jojo8zc/klqWQsz
+	Qrw1zqMRRz0690lAH/D7s+4x9Dr4+jXp/HKhJDQ6YhrKO/Yj8+dmEhuUFRkvvksDtJlRVbR1aGA
+	sRrhuJruo7ggyxx6JA00hYRCbnNduKvTiGEk4cX3+/ae9JTXYMa9vp48JqPGCUQBZ3W0sZSCmHA
+	GP1Y1oAajQ4QA7C+7Xnp0tuEHoQA3SS8n5rYioGT/G+Pior3hb201DGDq2uOfkCfqeFfH0yCJed
+	bw8P7Bt/zt6k0o1kt7McERs3ndUrVb2GsUmk0B6Keu82izNOhvnHZRHP/KYWasUghE7GJu4WCBp
+	RI1BfmFvtpqXaZQnDhdVEj/AtG1KjReQpbjToK48CDCTxR0uYOoGfeyOJmyKAK0QvyOkyrg==
+X-Received: by 2002:a05:690c:e650:10b0:8ac:46ff:d376 with SMTP id
+ 00721157ae682-8b36ca0cb6fmr9572847b3.28.1794174327093; Sun, 08 Nov 2026
+ 13:45:27 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,137 +104,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261018235508.848-1-colinlewishinton@gmail.com>
+ <20261023185007.21642-1-colinlewishinton@gmail.com> <xmqqecdezfr1.fsf@gitster.g>
+ <CAHeTm9NOqLA=BfTU9ABDFt8+jOzaRDPRrMNP8thzAQN2NVZAew@mail.gmail.com>
+ <xmqqmrrxdhox.fsf@gitster.g> <DMHZCS9LOW3N.ZJ3947HUCXZ8@lfurio.us>
+ <xmqq33tnz0hb.fsf@gitster.g> <DMJFKJCI5DLL.12R7AMFO4DK2Y@lfurio.us>
+ <xmqqjymqobc3.fsf@gitster.g> <DMO0XC1PL4MP.1J5830XZ4GCS5@lfurio.us> <xmqq1p8ylywh.fsf@gitster.g>
+In-Reply-To: <xmqq1p8ylywh.fsf@gitster.g>
+From: Colin Hinton <colinlewishinton@gmail.com>
+Date: Sun, 8 Nov 2026 13:45:16 -0800
+X-Gm-Features: AclHuK8bhCAwqKXiuodFfR9MlGTf5PdkwLsaybIU-aSJtjJmxWByJ2lJKKFMfR8
+Message-ID: <CAHeTm9M5maWM=yrJPNzCibv_rewH3-yBK8J5-MDyDvPzfihe4A@mail.gmail.com>
+Subject: Re: [PATCH v2] remote.c: defer remote.<name>.followRemoteHEAD validation
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Matt Hunter <m@lfurio.us>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Move assume_unchanged from global state into repository-specific
-configuration to avoid sharing the setting across repositories.
+I prefer Matt's approach as I agree it's cleaner and simpler by
+removing the setup at the call site. I'll adopt it into my next
+version and will give credit to Matt for his contribution.
 
-Add a repository getter and update the callers to retrieve the
-value using the appropriate repository instance.
+I am still holding on to the re-roll until hn/fetch-refmap is accepted
+into 'next', so that I can rebase and resolve any conflicts myself.
+Junio, if you think there is a better branch for me to base this off
+of so that I can begin the conflict resolution now please let me know.
 
-Signed-off-by: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
----
- builtin/update-index.c |  2 +-
- environment.c          | 11 +++++++++--
- environment.h          |  3 ++-
- read-cache.c           |  6 +++---
- 4 files changed, 15 insertions(+), 7 deletions(-)
+-Colin Hinton
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 018b78d6bb..65e9858457 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -431,7 +431,7 @@ static int add_cacheinfo(unsigned int mode, const struct object_id *oid,
- 	ce->ce_flags = create_ce_flags(stage);
- 	ce->ce_namelen = len;
- 	ce->ce_mode = create_ce_mode(mode);
--	if (assume_unchanged)
-+	if (repo_assume_unchanged(the_repository))
- 		ce->ce_flags |= CE_VALID;
- 	option = allow_add ? ADD_CACHE_OK_TO_ADD : 0;
- 	option |= allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
-diff --git a/environment.c b/environment.c
-index c83cf44839..17398c36d0 100644
---- a/environment.c
-+++ b/environment.c
-@@ -42,7 +42,6 @@ static int pack_compression_seen;
- static int zlib_compression_seen;
- 
- int minimum_abbrev = 4, default_abbrev = -1;
--int assume_unchanged;
- char *git_commit_encoding;
- char *git_log_output_encoding;
- int fsync_object_files = -1;
-@@ -152,6 +151,13 @@ int repo_has_symlinks(struct repository *repo)
- 		: platform_has_symlinks();
- }
- 
-+int repo_assume_unchanged(struct repository *repo)
-+{
-+	return repo->initialized
-+		? repo_config_values(repo)->assume_unchanged
-+		: 0;
-+}
-+
- const char *repo_excludes_file(struct repository *repo)
- {
- 	struct repo_config_values *cfg = repo_config_values(repo);
-@@ -371,7 +377,7 @@ int git_default_core_config(const char *var, const char *value,
- 	}
- 
- 	if (!strcmp(var, "core.ignorestat")) {
--		assume_unchanged = git_config_bool(var, value);
-+		cfg->assume_unchanged = git_config_bool(var, value);
- 		return 0;
- 	}
- 
-@@ -775,6 +781,7 @@ void repo_config_values_init(struct repo_config_values *cfg)
- 	cfg->protect_ntfs = PROTECT_NTFS_DEFAULT;
- 	cfg->ignore_case = 0;
- 	cfg->trust_executable_bit = 1;
-+	cfg->assume_unchanged = 0;
- 	cfg->has_symlinks = platform_has_symlinks();
- 	cfg->use_nanosec = 0;
- 
-diff --git a/environment.h b/environment.h
-index 49c86e8879..bff7a7f911 100644
---- a/environment.h
-+++ b/environment.h
-@@ -147,6 +147,7 @@ struct repo_config_values {
- 	int protect_ntfs;
- 	int ignore_case;
- 	int trust_executable_bit;
-+	int assume_unchanged;
- 	int has_symlinks;
- 	int use_nanosec;
- 
-@@ -200,6 +201,7 @@ int repo_protect_ntfs(struct repository *repo);
- int repo_ignore_case(struct repository *repo);
- 
- int repo_trust_executable_bit(struct repository *repo);
-+int repo_assume_unchanged(struct repository *repo);
- 
- int repo_has_symlinks(struct repository *repo);
- 
-@@ -242,7 +244,6 @@ int have_git_dir(void);
- 
- /* Environment bits from configuration mechanism */
- extern int minimum_abbrev, default_abbrev;
--extern int assume_unchanged;
- extern unsigned long pack_size_limit_cfg;
- 
- extern int grafts_keep_true_parents;
-diff --git a/read-cache.c b/read-cache.c
-index 1d2b97c429..990bcc32c4 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -194,7 +194,7 @@ void fill_stat_cache_info(struct index_state *istate, struct cache_entry *ce, st
- {
- 	fill_stat_data(&ce->ce_stat_data, st);
- 
--	if (assume_unchanged)
-+	if (repo_assume_unchanged(istate->repo))
- 		ce->ce_flags |= CE_VALID;
- 
- 	if (S_ISREG(st->st_mode)) {
-@@ -1415,7 +1415,7 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
- 		 * is not marked VALID, this is the place to mark it
- 		 * valid again, under "assume unchanged" mode.
- 		 */
--		if (ignore_valid && assume_unchanged &&
-+		if (ignore_valid && repo_assume_unchanged(istate->repo) &&
- 		    !(ce->ce_flags & CE_VALID))
- 			; /* mark this one VALID again */
- 		else {
-@@ -1450,7 +1450,7 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
- 	 * (i.e. things to be edited) will reacquire CE_VALID bit
- 	 * automatically, which is not really what we want.
- 	 */
--	if (!ignore_valid && assume_unchanged &&
-+	if (!ignore_valid && repo_assume_unchanged(istate->repo) &&
- 	    !(ce->ce_flags & CE_VALID))
- 		updated->ce_flags &= ~CE_VALID;
- 
--- 
-2.53.0
-
+On Fri, Nov 6, 2026 at 8:15=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> "Matt Hunter" <m@lfurio.us> writes:
+>
+> > On Thu Nov 5, 2026 at 11:03 PM EST, Junio C Hamano wrote:
+> >>
+> >> Hmph, interesting.  Can you rewrite Colin's patch using this, and
+> >> then merge the result into 'seen' (after reverting Colin's topic
+> >> ch/remote-defer-follow-remote-head-validation from 'seen' first) to
+> >> see how badly it crashes with other topics in flight?
+> >
+> > I still have the commit sitting around.  I tried this and a replay of
+> > the current topic to compare -- the conflict is the same in both
+> > cases.  eg: Nothing else in flight is touching the
+> > get_follow_remote_head() function.
+>
+> Thanks for investigating.
+>
+> Your approach of passing more context into get_follow_remote_head()
+> and have _it_ do the (lazy) conversion from string to value makes it
+> much easier for callers to make calls from multiple branches to the
+> function, because the need to "set-up" to make the call disappears.
+>
+> Very cleanly done.
+>
+> Colin, what's your preference?  Can we move this topic past the
+> finish line?
+>
+> Thanks.
