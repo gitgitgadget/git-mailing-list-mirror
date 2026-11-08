@@ -1,105 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.172
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.41
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794176287;
-	b=cor7vezxFAUfJc9vVNOBDOeOp4rbSyChAjSgY0hXzG8E7V2kehCoZ0/1gF1rsFfETTWv
-	 xHP+gQagYhPy2FYdMDWDSu0q6i4u94AZv38wx0IRfD9Z3QHVurMAm94oEXtbs8/k9L5E7
-	 0KKSV5bKWU22WPFvc1I9dNtSzWbd4bQVtOLG9pRRz6EEHOsyX+6heEvNE0eEKaNX0lLd9
-	 KAuqxLFG2bkScVDtM+zHFfA7UqP3V6AsRzibEyBrR+bGckE8ilqXUiBTIJ/q/oKERJWFL
-	 Lx4wNm7n7WMf8HLS6JbjFhHlnaltMJ8fl4jynQ8kudWUFAcMT9uj7urMyt1mo//AjUg==
+	t=1794176939;
+	b=JKeWqXOfaiAWI/7nrW030wY1Gnhc+hjvtflE2gm/O6vEKBUOXTxpKi1HkEjgngLs/BJz
+	 Yp3Ktr8hBDrBX3fcUVLz/tEf8gzX/1xCtaeGYwrQ7kU8X5GNSFJWZMAR0BHDzYtTpbJGf
+	 6gT3P0PXpDuiWje+MdkTxUyq5jkyW+xHFVn6Fxkp+yPA/ymSqgkiqT/w1ly3w7qi+/yO6
+	 feSy0lfHTAwZ2YygvF2JqMYozG2KUHeWiIfKyFf4Iw0dWdJQKg1sURGAg8zRsvLDTMsAx
+	 zIx98tPOFDaozCmKEjadc+ZdoWRJT/8UzcWPW2rcfEDqzCR6vo5dFw7LOE1NrN5hskw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794176287;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794176939;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=VR8UbcT/nwrdIHDMVzUfPr2eeBc/4783RGUEZcz7HRs=;
-	b=z0MqeAY7Hyv0dfHcRktaYxtvjL4ti77ySMZ86+qjBt/ug4gq1+RydPTpkZNMokj49htD
-	 25FwYVl/N5lVEe/VJUUHlAYv/YNqycsgtkeFhN2zyAZ4F1LM4o44Diqw0i/PQG8UXeJCa
-	 f5rBbOKFfunkDrsZ6ILSRbBROI+TXdYk+lT/3UbC7gKXx8zBi3QdycvD4scRAF9S9j38a
-	 HE4V7/lymQod8kkiioLM/9+Df53wmL1thvRLf6nD+uarU1PmHSb0wElAnZcCFPsaV8CYP
-	 IDVcbe+8HZIV1LzpDCVS9smBwvkYvQfnw82FRDfZBh1BerqVGSyP5lzcna02PSN151g==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=mmMvnKhXOpCxjY+iZNCCCrHjHcIF32xCYbczsTfp9Wk=;
+	b=yyupQDOGvWt7LKVHR6Q7/aGgtkhFb/ZYMXtPT6HqLxgUdWxlNe8rgZr97h2/x1hFfSIg
+	 nCVLXf3stO1GSWjxFHXRiDVUBhrKw0/4jZkeGn8X+vFHko68LWDTJCEPB1lAVUVr+w3HW
+	 SDOH12KHB4H8QOVozfQkz2H1pUao5YdzaIgO6G/tYtH3tyxCwHCUw7tj0OAlUNCGvM/IT
+	 RNzKn+P6tif4jY0UK8bz6KzFW6OSISfU8Fq3rpE+a/JBVYaySZ8i8Ky29j2cekxOMdSsv
+	 7KHpXLTd4kR9nCWpgx74XCy9VMjhdYgxOSHVuuM+7QLBqZMr+I6wnM6Dpcrz+6ZDAmw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WYReK5K3;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.172
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QRTdxAqA;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.41
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0C6606A31C
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 22:18:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BB0C6606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83CB606A334
+	for <git@vger.kernel.org>; Sun,  8 Nov 2026 22:28:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C83CB606A334
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WYReK5K3
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5ea969fafeeso89937e0c.0
-        for <git@vger.kernel.org>; Sun, 08 Nov 2026 14:18:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794176286; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QRTdxAqA
+Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-6fe4372c5f3so182881eaf.3
+        for <git@vger.kernel.org>; Sun, 08 Nov 2026 14:28:58 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794176938; cv=none;
         d=google.com; s=arc-20260327;
-        b=Erg8j8bRIDWxu7EaL+5iUkpVzzIYdWSRJ6H7aNnGPYbqUqiBO5y+R3qq+9I0ofIiv/
-         z2w3AO6A6dmc0SxfHAdMW5npe8QSZ4t8M/at3dVmUC2rJ8gy/wsNRiON1VTLXB3cf+zS
-         9HVeE4IW6Q3AMB4uRApRRjb+r5cOiwqtQFQ5lR0PBdb+TRcptoS6PkNg8LmGhLlz4Ce2
-         UhEIJNmELrtm4ecKPtmEPnINLSK1CSjMdzwIQr9d1uR8KibSjZIeKl0os9Qbcoh9Ffw+
-         kJcWBZBlRCQh+ncdsEUqRY5hyDmAOkcHKVSbcUjPlRgZ27zWH2syZan1AwtBap0lu1BN
-         NyBw==
+        b=ejE16Mlc4hHNkQNACmui2W9Eiy1CSo6Si7ZmthvgDKUmRe5l9B505u1FjDG5x+S7b2
+         qMfb0UNUERMPQOnjvdd6dLo09i8Ez4U9EqkiMRbeEGk00yFoPNMBkw6uBpJS2X1xrSY0
+         B5rWF2kPz7hcVRHHTfowT7MRWUNBe845srm5g66VWharBAXDbITSvVi0ntx676vlQpNL
+         pw0AIhMgGznhn9HGJQIlmgm6bfB78dIONIXze7oT7kNVDgsH+L2CZPDT51n5lzeD9VpV
+         te6aphso/0cu7t4w/ktig9+qhgoM7KK3XkcW1k9Ou5ht2fk/fAFhKNi1bKra/RIwD+jh
+         rCwQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=VR8UbcT/nwrdIHDMVzUfPr2eeBc/4783RGUEZcz7HRs=;
-        fh=a3oDi4v/denlaHBfNu7h+ivs4wMJGF6t1XX+QJaiJOY=;
-        b=nClspaYDboLUw6Op8CE/pzUuYcFh/lrebcgT2xGHq/x+2D0G1sZWtJ5cLuNr0MwgMC
-         9UtBUyeh0N0YhBY0pEHKC9lIk3EnFvUtkRiuA0ik/7DlXDruNbpQldSPx6/+zuD7Kfqt
-         Q5OvJ2aYoRPnHKBbayjMPEkq8dMZqWgFWA1u8JGXxsRRICfYHLPZmNiQwo9nHwjcTsJI
-         XUBODn9K40d0zuGZFU5oZZoOq4vrcnpBXbJUg0icR5hN6J5j/IIPe7xTOoe4eAhS8mT/
-         UmJGVnV1A2sKat1sOwt2ByJrDwCsJS8CfIPWC0m84rsUc64n0zqWELwc9LG6yYkFZB7C
-         AX8g==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=mmMvnKhXOpCxjY+iZNCCCrHjHcIF32xCYbczsTfp9Wk=;
+        fh=RibIwiGwtzKC2Y0GHyBA/uOkHiJQGVNqyxcdxyQpGb0=;
+        b=hI6RrUqBSgJBGV/Lk+eWafipCoFds5MHzCHzD6qvmJqc5D3ubhqTtYXrtWQe3gIAdx
+         2sHFnyqSEhgpsJaU79OdS0Gai0T3z+uooDQTyPgefYbDP9/wN4tn3bS4HyffTdW8h5xp
+         Bshjk5SPym5KSZV1JaceNBENdAu9CLp8usDTWtTkbV5ySMTQRyxyY4MOa+sfGnEmmPry
+         VxKjoeSDxXG0JSMoPoqWfejVIetkya9bL+buraU2sOa+qqgtIq9/QBQG2sQiZ1Q/oTnC
+         T0iffaaTsA2jPzpomSVqdVvv9FGBT/n4k3Q7fXQFM0B9u15CBN00WNPbyDC/AG1qwaz4
+         EmZg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794176286; x=1794781086; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1794176938; x=1794781738; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VR8UbcT/nwrdIHDMVzUfPr2eeBc/4783RGUEZcz7HRs=;
-        b=WYReK5K3HPo9n5D/omRcGtCLH6MK+3st4m1yDReCucI873GMeJZn0FbUqSn1JPVhSN
-         a2et0lcpcz6YbqkofhhLqTkU73ct8PGqoIiZ+3AJh77o4VDl7hr6rguBiL+PcydYYcQf
-         6x2rdNdC+aCU3bncLlPevq9OlhMNzksHyWObVj9kVhgU7m3qgLb0/oe0pgzNSxbBn6Dt
-         BsVfbdzoUXTSmA0Z4rXiDom96C5FsCHsy22yCB2b4sS1XmlZ9dnIPvn+/1v9PjWawqh5
-         m95nN1rfUZbpaYQX7/T3dD4XL11rHgXVtWzcncgp00Q3u4MCDTnMpzMRtdCIDRBTsrvB
-         g6Ig==
+        bh=mmMvnKhXOpCxjY+iZNCCCrHjHcIF32xCYbczsTfp9Wk=;
+        b=QRTdxAqAMjzeNwDr145sV2fIermdhYn/gNlZLOBT8rc6X+H6FW3u5oZsYrfKn++f70
+         Og8seCPyphGRmw2DFFn73qdmZXjsHaBvwohlMKK4jErXwFRq3arSxgPcr8zsLCiXjBK9
+         JSKa/BkAGzoLzqrJY+kFSZOVuCd/oCH0Il6V6dGOdPt56odF4E3I9lKq/OCc/aqN31/7
+         nVSk0Bd/Y0lEgP9Q7v1Cexp+3VYN6p2pVDcKC7llMkcvhnguy/xJC9EqQLt7HerXGe5o
+         1nAX6Rfpy9V5EnJ7c68jRuSN+y4PuMTFuF5EX42+7y8kunw9GKu8mvsGm1uhVQt46z+J
+         fG8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794176286; x=1794781086;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=VR8UbcT/nwrdIHDMVzUfPr2eeBc/4783RGUEZcz7HRs=;
-        b=IK9GdumtcJwcsSm8HN5jj0eKUQwB9JYH8khvxyzqm0QBU1SQDFQUueqsr8QFBWNS3E
-         rf5RHt31kaiSNP2VEGPvsSI1QWhcKow4aQevskQ271OUPfq9h2iPMJ5Dj9KOILd9fKHx
-         BO6GmkTChIky7yKXNU44l4oK+GGMVpv42NHckZCm6mIAwzShWQATboEm4EZjdNpFsdnF
-         6Ij8xNBHQ4lMUrAcZpgApopQBWC5H2YIZw105ZGcJNYX3ljQcD+zwAyBytopLbSWLC+l
-         Em9O+/Uf8MVZlIGwqt3EAOhlPRI0NcBunqokuaDREKP6z+X+h2zsOC0PFkyftlUnwJD9
-         rOQw==
-X-Forwarded-Encrypted: i=1; AL+hErGQG1jyXLJtdUzi/aLDsqZLWrT42EsN6NPbDmxguRyPxtMCSSL3yKuJpC7McJohf0RfCok=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/WxdIk8fuL1NxG7a4o5mo6v2PGLo2pvPhBzgEuHrtPFOeCFDRy
-	7WoojfV/3GJyKKJTTykOY25Zer9vZlSr7xK4Zh0bOKvC35ICWx6CsXo/IomDpsoGkLSoZFRz0/I
-	J+wYynEDSLCJmP4mz8+1LAa/X2Aa4FfA=
-X-Gm-Gg: AYBFou1V0w+Q4MzOeG7h98xRzegHA/VgEtK4L2EfoL04KqGRv6YS1YC0OAZmzoVHfMW
-	PeUP1D9eX4meuxiP2O9l2rlytjm7gxekXl2C9UScXrAloJ0k02lRke9jM+HW3Ixtctxq/wAe42b
-	aqxt3Anurpahp8QgZlYWRgoOHuZrj4gHaMQtDOM/6UQh1OfYMDW8u+R3W+m9D/BMVt8gukASxct
-	7NFHj1DyGUNe0euTIqrkqrGVgCrtJwARvqnIVzBXq6ODQD4Mm1/aHE8/3mWsfR2nnUb42GCvKty
-	O9EpD2UzOL6wfpOfeLGSK02V0cUcMfbkxJeP6s8p0+sSkaLqrVFWwfSJIj65Gp+MQlrekziebHl
-	orILxlRW6zSL/3+v6C4NdLmPVmFUO6WEQR7cgZDXJTylpkX/bJUlHfEygqklJCz/mFcJ+wM9Ho3
-	5mB60GpSz0D7zYdtZIZDsQkSvKdIFH
-X-Received: by 2002:a05:6122:e266:b0:5ea:e7aa:acb9 with SMTP id
- 71dfb90a1353d-5ece720b077mr633099e0c.6.1794176285647; Sun, 08 Nov 2026
- 14:18:05 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 8 Nov 2026 17:18:04 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CAP8tz2L3Dfhd+ec4+SFkZgXmzQnBg+3Y0REAV+1Hf5X415qnfw@mail.gmail.com>
-References: <CAP8tz2L3Dfhd+ec4+SFkZgXmzQnBg+3Y0REAV+1Hf5X415qnfw@mail.gmail.com>
+        d=1e100.net; s=20260707; t=1794176938; x=1794781738;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mmMvnKhXOpCxjY+iZNCCCrHjHcIF32xCYbczsTfp9Wk=;
+        b=nTmEQ0l1EhjuQhhx6auUcBujrRtoVBB/Pd6t/18CY5Jejwkmdxw52sETmnvhOUaCnV
+         qClrjb2QCXp/p1UiWdKi3n+8fgaQNKaBVfieFKFJ82hqFKMGRDKkV+atsSYAkCR6EwfV
+         Mv31hoUyit/qYUQJs4JQT4CYMFOCxWIwq7VH3ggPLR9orL71VE+hwXHSA3bv1VocOSN0
+         9q6XMDMwh0MlMAh0QVMzpdt6dBzSB5jvX/kd8lgLR8CumcyQMjo5rU0niuRkO3VLX9zM
+         TZMBjsiveoqz3fCpbO5mhyMatBgPd5gQWWNkgeHPAhNi2gxcERw0YP93Jl/PCyKhjz59
+         LFEQ==
+X-Gm-Message-State: APuU4Z9uUGvSnoXoQZlzJpjT0pMbotp0d10dhjxMM1JX9/634EFL/1on
+	j2eQLkusvO0pePdonBapBteo4nV/repgiZ/gGWEqY9tsUnFeOUNBcwyz9g9ScTR0RzBvWQ9M1hU
+	DMk2L6JxAR2EFAL6982QW9UE6Bjv53TFWUKMS
+X-Gm-Gg: AYBFou0dCHf/sxNwC4nfCN+LzkyM86YP9tkmMMkZMTh1p7UpfMTjMApOlrTJs1WinUc
+	JX7SD/t3KpP13pCuTuWNaiXmZFfR9f5LkqLdhnr1NAKBP4q88++NlZhkJNihJrgP3q9uTz7/eDD
+	TSucpcoJF+Uy7VOZ6E5NqgFJ+8t/OObgB0hsMx0c9MFNAoCMloyFgtKTsXQTf2Z1FM2lIK8JkLi
+	KvWFo9PO39DpzfAOc7asm69vCCguUTkW84W5porPsYeCfnujFHpgCETo7mUMK/DPDwUyekVP1aM
+	6fJYQch+4Xy/DNkFdrDyXA/k/JkpGCXJa+hfvvyjusym4YRaUjLL81QNijN86pKCrmWMLMr4qCM
+	xf193wccWty2ASNtv4zneF2NI1Be3AQEmgCFyied+HBpKfJ7NXV9umNJz1lXLQCKXhS9aXn9LiX
+	FdjObU9AbISqpUCMxGwh8esBYTjM2V4KOyETPZ60xkMRit3YCJ//6zxQ==
+X-Received: by 2002:a05:6820:328a:b0:70d:ae12:71c5 with SMTP id
+ 006d021491bc7-7170f333ce8mr1020190eaf.66.1794176937654; Sun, 08 Nov 2026
+ 14:28:57 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -109,101 +103,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Sun, 8 Nov 2026 17:18:04 -0500
-X-Gm-Features: AclHuK_EG7llSyjjuu5GZysdcvgaWfucwicYUnpoCJzPdQEoa8JYr-1WDwAed8k
-Message-ID: <CAOLa=ZRSQ4_EGC8qTs6f0HBQyxj_k0Z-zt+uXt0JpO2Z3Mpqzg@mail.gmail.com>
-Subject: Re: reftable: wrong HEAD reflog when its target is updated in the
- same transaction
-To: =?UTF-8?B?5LqV5LiK5Y+4?= <inoue.tsukasa.4@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="0000000000002bc507065fcb388e"
-
---0000000000002bc507065fcb388e
+References: <20261104202228.24642-1-edsonwasswa54@gmail.com>
+In-Reply-To: <20261104202228.24642-1-edsonwasswa54@gmail.com>
+From: Tanga Joris <tangajoris@gmail.com>
+Date: Mon, 9 Nov 2026 01:28:21 +0300
+X-Gm-Features: AclHuK9JFCaiS_LY4ICUcSRfc0kZxOv2ODx-X7OU7hLNTrJVTkGs1mz8c_HdRao
+Message-ID: <CAKrRMNqsh=d+_C8u+q1EBeQVwDZaywGQGZ89oYLyyvmB=8u1jw@mail.gmail.com>
+Subject: Re: [PATCH] credential: parse subcommands with OPT_SUBCOMMAND
+To: Wasswa Edson <edsonwasswa54@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-=E4=BA=95=E4=B8=8A=E5=8F=B8 <inoue.tsukasa.4@gmail.com> writes:
+Hi Edson,
 
-> Hi,
->
-> With the reftable backend, if one transaction updates a branch and points
-> HEAD at it, the new HEAD reflog entry records the branch's old value. If
-> the branch is created in the same transaction, no HEAD reflog entry is
-> written at all. The files backend records the new value in both cases.
->
-> To reproduce on current master (fb255012ac):
->
->   git init -q --ref-format=3Dreftable repo && cd repo
->   git commit -q --allow-empty -m one
->   git commit -q --allow-empty -m two
->   git branch y HEAD~
->   printf '%s\n' start "update refs/heads/y $(git rev-parse HEAD)" \
->           'option no-deref' 'symref-update HEAD refs/heads/y' commit |
->   git update-ref -m test --stdin >/dev/null
->   git log -1 --format=3D'%h %s' HEAD
->   git reflog -1 --format=3D'%h %gs' HEAD
->
-> HEAD is at "two", but the "test" reflog entry points at "one". With
-> --ref-format=3Dfiles it points at "two".
->
-> Using "create refs/heads/z <oid>" instead of updating y leaves HEAD's
-> reflog without a new entry.
->
+Thanks for working on this, nice work adding subcommands completion for
+"git credential".
 
-With the files backend, this isn't an issue only because the files
-backend doesn't support atomicity. If it did, we'd have the same bug
-there too ;)
+On Thu, 5 Nov 2026 at 03:59, Wasswa Edson <edsonwasswa54@gmail.com> wrote:
+> Besides making the code
+> shorter and more idiomatic,
 
-> I think the cause is write_transaction_table() in
-> refs/reftable-backend.c. For a symref update it gets the new oid for the
-> log record with refs_resolve_ref_unsafe() on new_target, which reads the
-> refs as they were before the transaction. So it sees the old value of y,
-> or no y at all, in which case the update is treated as a dangling symref
-> and the reflog entry is skipped.
->
+builtin/credential.c goes from 52 lines to 140, so maybe "shorter"
+could go.
 
-I haven't looked at the code, but your inference seems to make sense to
-me.
+Overall, the patch looks good, but most of the new lines are the same
+parse_options() call and check, repeated four times. Maybe a small helper
+would work here?
 
-> I ran into this while looking at updating a new branch and HEAD in one
-> transaction for "git switch -c". Would taking the new oid from the
-> target's update in the same transaction, when there is one, be the right
-> fix? I can try to write a patch.
->
+> +     if (argc)
+> +             usage_with_options(credential_fill_usage, options);
 
-That would definitely work, but this same bug would exist with any new
-backend that is introduced and supports atomic transactions.
+One small thing: no test covers this check. When I removed it, t0300
+still passed. Maybe something like this?
 
-I wonder if we can move move reflog logic to the generic 'refs.c' layer.
-So for a given transaction, 'refs.c' can already parse all the updates
-and also set the reflog values. Then the individual backends would
-simply receive the reflog entry to create and wouldn't have to worry
-about solving inter-transaction conflict resoultion.
-
-But that might be a complex undertaking. I prefer the generic approach,
-but your approach would also definitely fix the issue and would be a
-very welcome fix.
+test_expect_success 'credential subcommands reject extra arguments' '
+        for sub in fill approve reject capability
+        do
+                test_expect_code 129 git credential $sub extra
+</dev/null || return 1
+        done
+'
 
 Thanks,
-Karthik
-
---0000000000002bc507065fcb388e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 34a11c99aff4e91a_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ydzlSb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOXJ3Qy85QlZoU3d0VWkxR2hVWDIydTRkWStINGw2TApJYzZ2bjVMYUtv
-SVgzbG9MUHNUbE1SdUJPV2FMRzR0QUNjQUZRQWdTSWFHakE3Q28vaVk0a0s2VDZGSGdleFVLCisw
-SVZ1a2cra3ppdzc0cDN3MHNxZHFlTzVLeTk5VXVPcTdSNG5yaE5qZ0d5TUpkelZiVnBZaTA1Zkky
-WmkrVG8KeWRoVFl4SUNvQ1R0MlF1cGZoa1RpYkk5YzhsSHhBSUNadG56SXZNQjI1bENqc0k5T0JJ
-TzNGR3VZeXNUU2hZago1eTlHMGszNjQ3K016dTdCeVV5TDB0VW10ZlJhRy9UYXRhdUZlYlIwUENa
-a1MxdkZJSUZaWng1VUlySmQ0cHcyCjNzdDlrdEVVcHAwN3FFMFduK2dlaWRhV0JuRlFGdFd3SFFT
-UjlUQ0ZjaEJJOXRlMWJkQVkyUGVkbzdqL0hqQXEKU2RLRmtUWFptTVpMSEtHNWtPbHJGWSticHNR
-ZGYxOVRhRmxra0tlYXlITm1yRXdqTkNZcS9lT0t3L1VRYVc2egpGdnREdGFZY2VFUEFCSzJmM09z
-ZHdzcGtDVkRVbElHaWx2WDdQWUdxYTdOM29KS1FnV1Y4aEJ4OWRyMVJPRTMvCkNhcTQ4VFQ4RXAz
-a054RTB5L1NySEt4R2d1R0YvOWt4b0tLNmZDND0KPVJhTU0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000002bc507065fcb388e--
+Tanga
