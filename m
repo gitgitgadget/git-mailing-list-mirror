@@ -1,101 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.170
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794250763;
-	b=KhphHIJvGJ+AWf0NLslUnnwI+xoiHtc5HSpR/w+7oPCuagG4yu1ahkMSxPHU38kKZPad
-	 AUFOcawAJLIrRt20PBdmomVAqWeW0AVRWcxcg4OJ7S617mUvDXAjJDg9MFaJDI4lb2HRo
-	 DO92YASLewvURbjErkMOpv2okQQV1QsclupFLVfDmnrGvT/jRAaRsL9t4bH3NkPbIVqqS
-	 krvR6Nudeq/NYxXZpkM2i1BP2vmzGj9hvJ8J9xzc/8ZlJffMc9kWBmOel3RzlyFGK916G
-	 rfOEZxUMM0x4uCggXcpGiZsFSKevRYFNZGU/q65jPZPdpoZofNwy1wxYriHVQ9rAN1A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794250763;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=/COnO9dnKjvbNK9djz5XaFLsfrCcAvuowKtvzFXEA5E=;
-	b=Eef9kNVEBRUEBnOCrwETAMgIMLa+Aqd4vygn5ctRu90xlPCgrdixj2HDuTCupXWcurf9
-	 FMqSbLpFkMIPHJO4yKcbuNjdb5/g5D9mV2rUt1OGVdrtaK6Lzv0JEjwd1ZHjZKQe1XV8Y
-	 PXMv+JPTT7DjpuYcBvNQDipMCs0Wf/Q10Un2ZWjTVKbA09r5tyEcYv0/QfqsPMgJTTEnR
-	 hzTbZguBk8qZww27gXTy8pbw0wT5HO4lQrzYkcIa98D7jYSaQ1zimEXeIoPPS6FO2q/Lo
-	 coKcZzA1qqf5TaE0srHUwERYT1o1bSO7n0Jd/Kg1xcv0EVmTBbMB0oTx8xh5kKkZQPQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZP+pxIYH;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.170
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794250782;
+	b=eXc7ZTiYnfLd7dOa7kk7gIR1Bkq3di4sVNme2BbZcQrQmCElwI4Yf3AN8JHTypV+9+Sy
+	 QXtNy+E0a2rltxUKt/hD0YHuBTEeeIFUgY7EtaD4m3SLG6/eciCI8IkSQwfxaMnrrRWAc
+	 giy/XUsSU/L+pFmuSRTlZzOhIk2AHdUQVp36UmW1N17rl6iPiZwc1eZYSJI7rjAWGEdhL
+	 vsG511UxptD7nqZa6QgNe0ePYXFAP9uh5+Jt8Mf3aa13ZdoH9+tSbX54x9aFlSl36sErJ
+	 v+VZM5R2vPLmRGnE8ktsJbeH0Z/b7lv7VAs//c+zur+E8jHxlq++gOIIavxzY31nZuQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794250782;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=/sDQfnCHWoKDCiaT7cdwyb+uI/koQR78nFgEA+z1+L4=;
+	b=mTYv7tMXqZUg3/irzJ5QcSmx6C010bm/yYKsN0SWMZW7T9WkhjGM1x2DirAj6wh3qQY0
+	 //DKS1vXN4DNiICnJwpKeLb81a8LKLNBnqH+80vgnCgMpLE3cXZcBUCupEvSE09nUC5OI
+	 CWLBqDA2u6pIYzEod3cIIbXNBY2y/EMd6JDCbXgK5Y+qZJr1lTFK9O4LCUC0ATGkk03mM
+	 n/3MxvT7mKaud6Mu2pMliDVmWgKdXi5aUdmlIr3/e3df5iKelTXsdTAKj+CxOP6Fxwg83
+	 PtMX918S6F3r8pSD90DdLPH6xIiSbWCCc1WLisOmOXkPe0z5z0L0kioOgK9l4UBTRIA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=fElnpVoF;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rxMEcj+P;
+	arc=none smtp.remote-ip=103.168.172.149
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B51606A31C
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 18:59:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 06B51606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BB5606A335
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 18:59:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 05BB5606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZP+pxIYH
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-5366463571cso14651511cf.3
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 10:59:22 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794250762; cv=none;
-        d=google.com; s=arc-20260327;
-        b=AYaULdmVQg6m1abqC8JGUQliHNnyCvX+JnjIZ5H8TMPrw1fNfhSl1TCg97BB8oa/HT
-         cGw7D+am1TmWxFlpzSLd3TJWGRVARP0+4QegP6B+3BOK1as1UNITHiIyt9ybtf5Mib94
-         vUe8188XtGvwARMqvLy8WbvRxY1qJZo1O0pU6GOdjvFhOmVh8J41IpQAlq1mDLue6xyL
-         gEzY4kNR/SE0XPI0FHqYyGfxFqD1vUtEaE2C1taejusgXssR7mEA5aINpcZe2epyTgLO
-         ruH5jNz6xTCz/6xnUZHjx3bjJDcmb74+wqZss+jOGtb7N1gGYj/6SsxV3iXIN7PTiLKH
-         db7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=/COnO9dnKjvbNK9djz5XaFLsfrCcAvuowKtvzFXEA5E=;
-        fh=TkCkMTSg7nLsSbRYBdn7vrS7QlHCcgz2mDcBjyLFqNs=;
-        b=nYXuqW6x5DpFpwKvGIQerTKCmBfYI7laxvGPQ6LK8b+Zn5Xcxy5yhby02kujDyUQJH
-         KXzqtkrneznTJ9qTZKqNXgWadNKCCgxlyoEjWeR1H9luDewnASbamMvOOftPxBGDBvtr
-         EjrW/jjXomSNdzR27fPqKGP4T/kUe1Yb3slogBDGoaF3XxihMIcLrjvjDo79FnFLng58
-         oQ9tqB/t+GnGvL6dOzNDqMfFm5DdTCY1bqPbqzbQDVVB7SnYWuKrJGwlk/r+dKuwwhF8
-         0wsBPqX1sJz7SNnddXo2oSmkZ+NbRKTCWIAkhWeE6zXUQt6JAak3ppnyxEKAq5JPa8Vx
-         mUPg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794250762; x=1794855562; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=/COnO9dnKjvbNK9djz5XaFLsfrCcAvuowKtvzFXEA5E=;
-        b=ZP+pxIYHByY/yx77qsQMGTiP71HYrRqKEXQ23Yl9R4dKa1tXrvW3ONZUdl/MP+UWgi
-         z3fZZwMVrt80rbl+BzmJPLPGMvAC6VeiRSGGQzbMDxazzpwWkUj+mI0mUrVHzGAbMr04
-         kVInu+CuBQrb15kNGLrggzmEDcHAAPs41h0cSnR5b1cEVJJPyWvhKrNRysQ2fZJAzMCX
-         DhV5zAPJBI5Uh7eZ93mJxHArV3oQhu5yXtCJLJ0I7ofTvNGh0Be7lilL9kNUfpDF3k2B
-         0LJHuLai4nzzxSmHkGd+c5g74yJcCP0+p7LyLre8QIynURX0Q1ykVIPyu2VZgnfA6d7B
-         tebw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794250762; x=1794855562;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/COnO9dnKjvbNK9djz5XaFLsfrCcAvuowKtvzFXEA5E=;
-        b=JnO+iOyFJMVFriEMX1geL2PbocrfU5xgbFPDGkDTJttnnbsvnIC0roDVDRl0MlzRBc
-         tpA+xeUev6eTeFqzqMLvOrUo8Im1lCsyQDNT1fRudnA+O3IevBcQTrFOFt2YjJd0R64B
-         Z9VrmVBN5cUCxVf30LHKk/cyoL8YWfzyLfFv8xPcTge20YezwMFhGT25TjV4Dr4ylfxN
-         REr3S6PpVK9xUZuLcxhxP6qoBoiwbIP+z4NApP5RKuu1KNXVmTr/sd2lIXm15qJG5xb7
-         VdLnLVSzrFeEYULpBYnWCNU399LadpJzzNHzdakQxRAhT9qcbsyoY0WkmCFTYoPanqsF
-         TJYA==
-X-Forwarded-Encrypted: i=1; AL+hErFIrFQ4SsMNmX7fC+D5FCAePgfE1IJ16Okk2LjxFTVvNeP3l7EL4nS4ePLO0SpmchxIiyw=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8jwq0Nkf+lAo2YSrajtOcZyqZXxKeGBPHb7WTPgTQNbERX0MmL
-	kJVhjh9BngY7issu/K4Rao6N7YsPZal+9SvJGlHJgwcPso8UZ55bDQuBPoX1AJkjO2Ug1HBl5rU
-	jUDrtnZdUAO+qZ38HWvek4kB8gpo5VHqgVAjM
-X-Gm-Gg: AYBFou2riUa7vUfJFIuA51wPO8XBuUQ98FvB797iTX4iHgL5ZDnEUCqZsWMKwq4plFA
-	g5bLdQE0TkjrjT0ld8bl8BrHi64fhg8KFbM1l63rAM+7mG3VyrfwIak7AGQiDOiKuya6pS42RY1
-	dMlx4w3vVZZ8ItCPl7wWClC/fUO8BUZoThmEU5ttfE5ut59xpCyjc5mhm92QTA+MnLt6eHWYwTS
-	Bs0vOjCPti/dL9XVDOz6bfTmpEYg+rdwgGasjjMcDxCKz7KcGMDEesP99hEVFsbKUvOfeP/WhMl
-	CekyZ6VK5ryLt+WABTlR6RpaGg2nMl9LCx5gcCHtVWLQu7EnpIEty4PX7w49vVjHxqzjv+Qwg2X
-	QToey8QwZwgG14GWzJx5OyWJfqDgZ/VGvmLPnVjEmsWVQd7Ez8HRdd6YQU5YCFvJKEkfy7Bb8LM
-	wzfTNrfEobpxb4SA==
-X-Received: by 2002:a05:620a:4593:b0:93e:9834:3863 with SMTP id
- af79cd13be357-9479f2b05f0mr65411685a.15.1794250761983; Mon, 09 Nov 2026
- 10:59:21 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=fElnpVoF;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rxMEcj+P
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 30A7DEC05C9
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 13:59:41 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Mon, 09 Nov 2026 13:59:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794250781; x=1794337181; bh=/sDQfnCHWo
+	KDCiaT7cdwyb+uI/koQR78nFgEA+z1+L4=; b=fElnpVoFDGvPR4HT55+v/HjQwT
+	J+8oDO8fY3Oy2qB86KyNbi1si4VuDW3fYYhOi5BpHlZsFHGKlZvPGpsdMAbpBwvo
+	DoqVnwBOVMPzGH5EL/nZikR2LriBUfcsjMCGD2qgfdA+ctYgHuvdEd+gRW5GAurk
+	vdR7ZkuY7DODLJj6VugCuNC5VnNyWCEAPeRR/x+ApYWsbnkKG2VJ+s+N+R0OYscR
+	VY4xfATjEaiFuhbzbSc+Xu7f/onkx+mbXP0NFpdlr5Ly0NAhvjuYy3eBBflu6eUe
+	LlOA2rLY84k0jlBN9R179Kjw671In5qc4BRfNf5iLtrDQsWc/XCAVjzTyNHw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794250781; x=1794337181; bh=/sDQfnCHWoKDCiaT7cdwyb+uI/koQR78nFg
+	EA+z1+L4=; b=rxMEcj+PDXP22X8IxPqnuzNtOHPJrGUuYRgbhEPtIzPwfft5nMm
+	I2vj8M3B/vWs/r2NZfAKwQrseVDM5jCcqzCsqxUd5V3TJKKSVlL8YNHJkIjCT/Vc
+	Vx1u0GHbc9TPKCLIAFWDNinLCK57dHqBuCpUznze+1vfn9AafwTjyU4q26QXnlAw
+	6VD8DL0AQV1497CpZXI740l9IRBiw4I1L79Q8lLJduqYaAFK2iL0IDK5sJXXqFCH
+	IE1iuK7djidKaS2CxsxYwl21VE6u/RjVKhB8Fsh2Z3NWkWLzSW2QYbHdlMwIVU6P
+	ATH0i+HI5+8qvh4T7R90YL5jMOqrr4Gwr6A==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794250781; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:iJ9+3UXheNoeULFbLVZxDt/RocXfkdSZSK3ZdPuC7VqzPbu
+	ue3LyhxyzOhfMbU9eyNSHIaCS98Tqo/Ht7PVCmQHdmN/iVsLnhiwd+OwM/8I08sD
+	/Qyg7/GkZ5WXxvRTi2rMLZXYrQkd1WZEpip0lIcucheHDCbTeTSQapbde5wXDf3q
+	HgW7vHo3W1re53aEdXhwsBgjeUFgdA3A+CPfstYdoNNNq4z3XqeTG3qjYkhxv4Pl
+	wvdZQZyPAO88xxSa7UThaHy+PXINR+/sNjdDNWQHFZIBqUuRgqWlxkr/rxukihDa
+	wgCd49w5ySwa1QNeMjV8NiLccUlQ7SMvAofRMVA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:G5M7pdIm1YSfXyxMA3ma7A66RVzaDygQvDKVvofbjXk=:F5+jfG2azFQbN5iF6yz30NdXBluo4gqOe2ktvFwv/pw=;
+X-ME-Sender: <xms:HRjyam0VDCKT-dY2jg4pzaCTqA2e_AwIxH2HRKL9oVTqdvSjT-zDqA>
+    <xme:HRjyagHODwSNxQYHlssa1xeAjtVJCPI_8v8T_liYfdPcTynM7rjnAdJIqLQLjpDrV
+    IrENGid7isc4dqPoke0jy3hmb2p50KSjGUoPFNnIlMw3LwqBWc1-5g>
+X-ME-Received: <xmr:HRjyaj6qpSIhaGdmDSUUEnscufWrj6hHOWcJUh6O1Z9aqKvYUWWtlCiJYW58rjnMSNsOBH0gPOgi_bMHOwzTsIMt9ESDd5AEUgkN>
+X-ME-Proxy-Cause: dmFkZTFr5G1e6ORaZ2tAL0PqMIaqpl8QCU9BPcB36elYMnbkuOg2SSkGgbRBTi+GsKHwgL
+    Myal+A1lnsQvfx3/WlucxrS/vK0TwfLh0bvr3P57Mnl9TLLtdbNO5C9p5tOkf8jWWH4rzK
+    3F8lxnkLPEtmTVSHuIuuhefywNuoT8Zi72h/nGuyUhY4w2IRl9HYFrPxGpm6FK0ap3sqLI
+    ZSZACqoUZoOwd740UTKiZgrslvmlfjSytvDhzMLKQQsm3sRfsgUE/yspVW4u0P1T130Uyz
+    THCqbfv8A4MxmaGixxMt3MtpHsSHGBCqIV3I8OneXWO382I9l0R+G3GZvNqw0XWoHAftfD
+    gMbYWHSkeHlcwkECmhVmaK0OQBHHrcApYBcY0gF+EaDWCb69VvG/kWwykvg8S8PlDm35T/
+    DX9vfMCFvAHIxGt1783rqxpD+iGbxqPTwx27lpysHQkqQuqmPZ0/fFfIBLZ6hXM3nYTegn
+    lD0PRJKPfS2YF8vPO9FFReThSd8tEHyqr/UDjkmjA1o2azIFvM3CZRKpEDFjXl/kl12OWL
+    RYVP3L/yn6P3RIo1/3wDuC4GD6DcCKVUNT8h/uUZN4HlAOxAdirDfcga2PGVsmdyNBe68O
+    g+iQs7marVDqoW23AwklVpsfuVFEc2eoNwjxzKf4gPEvGAj0fccHjBf75E7A
+X-ME-Proxy: <xmx:HRjyams-xSWmHdNNY3yQVKtQyBcPbZQqks9BJjIll_YfEwGAtmMlig>
+    <xmx:HRjyak7r9Ex5wfUCBzyjEflz9Ge3aPxOvI4e6fcSp6PkKu3iS9-DIQ>
+    <xmx:HRjyahWSLq45vPOgTuAULtBHdn4_CAJtGegdbJVn0SeSrki0b-f7aw>
+    <xmx:HRjyam8kWmo3v_-5HWxMgpRYhusM42z5EkaP7wZu--WTv1wkJ53YvA>
+    <xmx:HRjyavbJLlgJEpcLNCa644PL9owCwbhT2qW-QxnlGUsndQIFbV_Lp0xA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Nov 2026 13:59:40 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  herroyalpriestess@gmail.com
+Subject: Re: [PATCH v3] api-parse-options: add missing flags and macros
+In-Reply-To: <20261109-kn-parse-options-doc-v3-1-e60022942721@gmail.com>
+	(Karthik Nayak's message of "Mon, 09 Nov 2026 12:30:10 +0100")
+References: <20261105-kn-parse-options-doc-v1-1-403edda5947a@gmail.com>
+	<20261109-kn-parse-options-doc-v3-1-e60022942721@gmail.com>
+Date: Mon, 09 Nov 2026 10:59:39 -0800
+Message-ID: <xmqqse19zv8k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,124 +124,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2247.git.1791127155614.gitgitgadget@gmail.com>
- <c724ab00-dfb8-4e81-8bd7-89702bea51b4@gmail.com> <xmqqld77uofw.fsf@gitster.g>
-In-Reply-To: <xmqqld77uofw.fsf@gitster.g>
-From: Ilia K <ki.stfu@gmail.com>
-Date: Mon, 9 Nov 2026 19:59:10 +0100
-X-Gm-Features: AclHuK_AJbVafaEGmhEioMpS7EzUgarM9Wqaz3UPstqpnpBlrsAso47LY_PF-XE
-Message-ID: <CAMmqxguRpCFL2cRJ_LCXaPd9d91zFb-Yo6MVbhSsi57S14xseA@mail.gmail.com>
-Subject: Re: [PATCH] fsmonitor: check the untracked cache after a trivial response
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee <stolee@gmail.com>, Ilia via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Nov 5, 2026 at 4:01=E2=80=AFPM Derrick Stolee <stolee@gmail.com> wr=
-ote:
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+> The 'Documentation/technical/api-parse-options.adoc' contains
+> documentation around the parse-options API. The document is missing some
+> of the macros and flags provided by the API.
 >
-> > +             strbuf_setlen(path, len);
-> > +     }
-> > +
-> > +     return nr_invalidated;
-> > +}
-> > +
-> > +int untracked_cache_invalidate_stale_dirs(struct index_state *istate)
-> > +{
-> > +     struct strbuf path =3D STRBUF_INIT;
-> > +     const char *worktree;
-> > +     int nr_invalidated;
-> > +
-> > +     if (!istate->untracked || !istate->untracked->root)
-> > +             return 0;
-> > +
-> > +     /*
-> > +      * The index is also read and written by commands that do not
-> > +      * run in the top-level directory of the worktree.
-> > +      */
-> > +     worktree =3D repo_get_work_tree(istate->repo);
-> > +     if (!worktree)
-> > +             return 0;
+> Add the missing flags 'PARSE_OPT_ONE_SHOT' and 'PARSE_OPT_SHELL_EVAL' to
+> the documentation. While 'PARSE_OPT_ONE_SHOT' was introduced in
+> 202fbb3315 (parse-options: add one-shot mode, 2019-01-27) as a temporary
+> flag, it is now 7 years and still exists. So let's document it, as when
+> the time comes, it is always easy to remove the same.
 >
-> I wonder if this is the right response if we fail to get a worktree. Mayb=
-e
-> we should invalidate the entire untracked cache in this case, along with =
-a
-> warning that we couldn't evaluate the worktree? Or should we return -1 to
-> signal an error?
-
-Fixed, thank you!
-
-> > diff --git a/read-cache.c b/read-cache.c
-> > index c4cf08a3a3..00c9960c8e 100644
-> > --- a/read-cache.c
-> > +++ b/read-cache.c
-> > @@ -3034,6 +3034,22 @@ static int do_write_index(struct index_state *is=
-tate, struct tempfile *tempfile,
-> >           istate->untracked) {
-> >               strbuf_reset(&sb);
-> >
-> > +             /*
-> > +              * The monitor could not say what changed (see the trivia=
-l
-> > +              * response in refresh_fsmonitor()), so nothing kept the
-> > +              * valid bits up to date. Check them before they are save=
-d
-> > +              * next to the new token, which later commands trust even
-> > +              * when this command did not look for untracked files.
-> > +              */
-> > +             if (write_extensions & WRITE_FSMONITOR_EXTENSION &&
-> > +                 istate->fsmonitor_last_update &&
-> > +                 !istate->untracked->use_fsmonitor) {
-> > +                     int nr =3D untracked_cache_invalidate_stale_dirs(=
-istate);
-> > +
-> > +                     trace2_data_intmax("index", istate->repo,
-> > +                                        "extension/untr/invalidated", =
-nr);
-> > +             }
+> Also add the following missing macros:
+>   - OPT__SUPER_PREFIX
+>   - OPT__VERBOSITY
+>   - OPT_BITOP
+>   - OPT_STRVEC
+>   - OPT_UYN
+>   - OPT_NOOP_ARG
+>   - OPT_COLUMN
+>   - OPT_CONTAINS
+>   - OPT_NO_CONTAINS
+>   - OPT_WITH
+>   - OPT_WITHOUT
+>   - OPT_CLEANUP
+>   - OPT_PATHSPEC_FROM_FILE
+>   - OPT_PATHSPEC_FILE_NUL
+>   - OPT_AUTOSTASH
+>   - OPT_DIFF_UNIFIED
+>   - OPT_DIFF_INTERHUNK_CONTEXT
+>   - OPT_IPVERSION
+>   - OPT_ALIAS
 >
-> This surprised me, that you're computing this in do_write_index(). I supp=
-ose
-> that this avoids doing this computation unless the index is written, but =
-is
-> it possible that between refresh_fsmonitor() and do_write_index() that th=
-e
-> untracked cache is read and used to determine what this index update shou=
-ld
-> be?
-
-No, nothing between `refresh_fsmonitor()` and `do_write_index()`
-trusts the cache because use_fsmonitor stays 0 until the index is
-written.
-
-> > +# After a trivial response ("/") the monitor cannot vouch for the
-> > +# untracked cache. Even a command that does not look for untracked
-> > +# files must drop the stale entries, or the next "git status" trusts t=
-hem.
+> This brings the technical documentation in line with the code in
+> 'parse-options.h'.
 >
-> nit: Generally, we don't need these comments because the tests should be
-> self-documenting.
-
-Fixed, thank you!
-
-> > +             EOF
-> > +             git status --porcelain >../actual 2>../err &&
-> > +             test_must_be_empty ../err &&
-> > +             test_cmp ../expect ../actual
-> > +     )
-> > +'
+> While here, add the missing `flags` argument to `OPT__FORCE`.
 >
-> > +# After a restart the daemon sends a trivial response ("/"), because i=
-t
-> > +# cannot know what changed while it was down. Even a command that does
-> > +# not look for untracked files must then drop the stale untracked cach=
-e
-> > +# entries, or the next "git status" trusts them.
->
-> same nit: comments shouldn't be necessary here.
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> I was reading the docs while reviewing another series and ended
+> up finding some missing documentation. This patch tries to cover
+> that. Some of these might be options/flags we rarely use, but I
+> strongly feel its easier to make choices when there is adequate
+> documentation.
+> ---
+> Changes in v3:
+> - Fix typo and rename the variable
 
-Fixed, thank you!
+OK.  Matching the parameters of OPT_ALIAS() the documentation uses
+to what is actually used in parse-options.h header makes sense.
 
---
-- Ilia
+Have we reached the point of diminishing returns now?
+
+Thanks.
