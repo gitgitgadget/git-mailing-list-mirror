@@ -1,61 +1,126 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.134
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794238905;
-	b=1zVc2ahxelKXESBMEPHQN2XAob0jy6bPouwH4acDbHK9dXDu/ug1g0xf1ZT4lnMQTjy6
-	 gIIbhozjH5uy6CUVJ2W8Not9fhc8aT+I0HRj1LuJORQz1aANZaxN6VJdJCETrQv3qI2G2
-	 VgE9opk3e274WTf14sNLJAI2xK4XmVwvqgOoDHNVqyrbJI9tLo01klyhJkb2o4MUfLAbt
-	 LWIMhX4yBoCbx3jX3iaua5J8jGKNJyHA2hu9fp9oNyhExX90OJwv9H0Qe7h5v5GkdVI36
-	 u7swkY7e9mSfUBvLSy0UcLjA9Ag9Zl/jqnQCGDVGqovbYJTepra6H2YuEotZIw/b6eA==
+	t=1794238921;
+	b=N8+hhRIwsnz2/Rknn0KWVPOW4LPw+8lBASfXc4NVYKYjWzFTK+G0JLiI1ruqNrGhumeb
+	 U3B2vCflxktecdzOj9kWe6ol3Y14UDAlLgxW7ks/F/jbFxKo72ZvzIXlXV8T5mf4jYN3O
+	 FLSqsZTctBeTjE1ssVF4ca7+yPo+zAdd4gms30bfu2hcsLcfr/LlbivRrxa7EKNS5tM3Y
+	 5YA/C84WvUfJ2ngpgKJp6bBPOfoaQJweAXKbR9+g0fztUQfczR0yba0p8aV7ThPUNJ2AX
+	 2qmjuzjgvKdHMqazkyr3sAvS7vyFSaczKtQYi3n+Dd3t6RlwGYu9xVF8BMj59UTB9qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794238905;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=e51teFo7BcPMH+bM52PozgQQ6XGOCVHzeWvFD2Mdmc0=;
-	b=ASgvXxQB/JV86G0t2/FYaKIRE7rDPwZ1cuzE8KNkuoTFjwa2+bG/EL5WkxXLHyfnO7bI
-	 cpLu2Fen/XNd0RKz77HPCdTi4Ihnw064ZXhO7Z2tCTJ0mLCy9wG6YXHMujThBvOl480sr
-	 ap65oKFXewoza0ShEOW1w83KZM4VE9J/q0aM7gBsTYW/f1K9rwB9fa0B22k9A8Sl2bTZn
-	 OrQOmPBvI5pS8ApyOFNJSC9APTc5uLOxntc3mJBD08n+BBEJF+QDMfNL5c0zks3wFkTqO
-	 VUIgOsRjbuym1bgG0hj6nCUwcxuMYgrIPKrC/E19t0JcJZoWjar0OynDeQKXx7fRowg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794238921;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=/oaEu9w3VQCQMZWbUQ98AeS1p2JFVfn0Q3L6kDvDP2A=;
+	b=TQMgH+M7vOT0gfC5T+WqcwjkD0rLtBYBgVpiMPQNV/k2j+DUr6j8LQKKte0ED0wb+Qvn
+	 ThYQS0VmGc21prXs0vDsyYlhAro1uXV64WXuM9NPYN4dZv/z7Kz4Ep0YXO8jlE0yG14K7
+	 DQHekYg/At1C3N16eaeLL3H6qxzXMtRp/GV1YyQCGqGeDKmLgcryFTc62Ag1jPwkdyC4s
+	 9u0oW3hQd3h0c6b4bfjq94ON+sdLU+zWWFgzYpcCYSLaEAu19hKpVtrT4f2ojxWX3fxH+
+	 5gxDWDFZznMXBrhPGhJu16eMGZzh7N/7NPHKItvuUtTGMXFVi2yok4Ive3mx8Odprlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=iotcl.com;
-	spf=fail smtp.mailfrom=iotcl.com;
-	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=3czrKGm9;
-	arc=none smtp.remote-ip=91.218.175.134
-Received: from mta0.migadu.com (out-134.mta0.migadu.com [91.218.175.134])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=GPSaoZIu;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=mCnkfiLU;
+	arc=none smtp.remote-ip=103.168.172.148
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A32606EE8B
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 15:41:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 74A32606EE8B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FB9606A31C
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 15:42:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4FB9606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=3czrKGm9
-X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=e65j+P8FY0Q4cR45L92EOaRxmFq/Pd7JqTfkXegI/xI=;
- c=simple/simple; d=iotcl.com;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794238901; v=1; x=1794843701;
- b=3czrKGm9EdT7Q3iGfqFSmdpX7ZgXtQiHAP1DDOkQXEeDkKJo9fUMzaf4kF+MOPSWznH/EtMq
- HZSUE04vM6iQmC9yAt+LgcBtooBUZtNnGriSNo5zHFLJGf5o6A3aPNPJSFP09Ie+blqS55HGAIz
- XG0eb2RjEugAbWhlZN+HtRoc=
-X-Envelope-To: git@vger.kernel.org
-Received: by mta12.migadu.com with ESMTPS id 796bcc0df2f1312a;
-	Mon, 09 Nov 2026 15:41:41 +0000
-X-Mizu-Trace-ID: 796bcc0df2f1312a
-X-Migadu-Flow: FLOW_OUT
-From: Toon Claes <toon@iotcl.com>
-To: Mirko Faina <mroik@delayed.space>, git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>, pabloosabaterr@gmail.com,
- ben.knoble@gmail.com
-Subject: Re: [PATCH v2] completions: add some missing options for git log
-In-Reply-To: <5735bacbd5c2c48eddafb43f75f7ddcdf402ff17.1793656021.git.mroik@delayed.space>
-References: <63106e1dec45e82c7f132a18816b2d1fffb52752.1791921033.git.mroik@delayed.space>
- <5735bacbd5c2c48eddafb43f75f7ddcdf402ff17.1793656021.git.mroik@delayed.space>
-Date: Mon, 09 Nov 2026 16:41:38 +0100
-Message-ID: <87wlqmxb9p.fsf@dev.null.iotcl.com.invalid>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=GPSaoZIu;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=mCnkfiLU
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 40D8BEC00BB
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 10:42:00 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 09 Nov 2026 10:42:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794238920; x=1794325320; bh=/oaEu9w3VQ
+	CQMZWbUQ98AeS1p2JFVfn0Q3L6kDvDP2A=; b=GPSaoZIus6k1q7oZC3cw/PohYc
+	9wlLXnrgGjUJDcxlPmAxN2iuJV9+9q1mWLvofAoPM+XEbXQc/nja0tU2YOEZxCHF
+	cmECsfscIWJM2l1WgYFj66HrSHSpbGlR+MCAFIqYxIvh/Q9MfZhby+ulSFp38NYN
+	p3yxG0caNUrS7EPGrRrcejXqtnZb08mqf4a3mKHXRqXC/bXCkVXUe7IVmrKS3dtT
+	fshj03pBfHHK/TP19cIJf7khzPnmDpncBWGZ+Z/0MuhAeRGWstIRrjNchObQrPem
+	Lkh9N+B9mR5/2g+yxb+TMVCh7NS7p/B4eK2/VSogXpeeShnl6km1j18e/wPw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794238920; x=1794325320; bh=/oaEu9w3VQCQMZWbUQ98AeS1p2JFVfn0Q3L
+	6kDvDP2A=; b=mCnkfiLUDEXoy0jARteC/Vw5/RjnlTjtHdEAJ6b7kEV7QfEd27A
+	Ulft81FzCvHeTYyRAwJQm/y2yMctm3xpwRGDm76pxRUup4hlPf3JVcKRw+BcPfgH
+	mD/wT1bvlo7h/zaIU0jrOiL4blh2Yk4od/U9t5fzJh4czVmWTdfPEoJDGDy+oUHz
+	H3n20Pw4u6gk+bEW6HHWjOXuI6KhUtA8pMtSIp6GdHS10RfFihotU+xrByoP5Kx7
+	Tfyuuz5yOHpz0aRYooj++++8gs4Q54lHDQtIN9StoBkvmjZyaSE0TP2U0F4AHGDj
+	qELS1mD8iwOjoOdzEWCehGtnJapF356f4vA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794238920; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:cOSn5hOD1vCxKL2o/kKCIVnDF+FblU82WjLUJpEOulGkHvq
+	MMEGN0xcBREhyKiBUHwjeQP1/fP1wRNInJ8bij5LewwDFybfOnFU9/pISYdk5JGq
+	VeQk2MrTt6mK+hu6etz5+c3tS4RXk9oXn0UUPxxKEh3TiRqzUi/y63w264aeCD4T
+	1R+3TtiqxKuq9Db+NUTLxZlVY5xHwPfuytZYsCpjVHf/X6XCq8AR1l10lPqy4bb5
+	nX2H80DQlVvzot2eGu5GyrDk1nLkz5ST/kvyCpYT3B+NRx/k2nVwNjS8pLSFNJ7a
+	VAmRLkSNitOVQ1Twbx7mtQ5LZYHJiVDyp9gkijQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:utv5SDGjB/un444umHlynml655LKF+XcVILbges/K48=:yWK/ZBgJGixqh615DYkqLz86rDBgtboHZaJjBGxl7iU=;
+X-ME-Sender: <xms:yOnxarAlW9-T5NuZ5x_NZKvZm_-ftpwVoXp7YSTMMjkRVh_ty-WaJQ>
+    <xme:yOnxalNtXFOjb_QuC_fQH9SA-ZfAVofEHAb0_qqbdYAHTtBAqYQmh2jjLD7CMPePq
+    LdrCmXXLoC2-yyrHOKfI0IQnj2Cvnj_ENIF_DOz_S630d5Ogu7WBIw>
+X-ME-Received: <xmr:yOnxagZ52pPOm3Jea8Cw4A1J3YWR67tJnw7SQxqeahNn9ZfeqHkENOOJByU6_Kn8rSU-Iqt58_O5uAI3PhAs4NWh-ggcXK537xyh>
+X-ME-Proxy-Cause: dmFkZTGOXpnhcrrQauw1g5/pFIAEF9hVxhYjk3dl7BnIlWbOhhWrq270CIWu4j346oZXAM
+    7rbPSO5CbcOxmhTNC4HpXI3rCwi11mEjD8vSn8txsW0HY2R5rdPBFbTrY7LkC3ECcl+L4M
+    87IWY9BAKDgeNx2QwzWpr8kfpaY8yrZDRjAfpSMCgiS3g3ie+PaATX2MHaXR2nFsZ3dRrQ
+    N72bXP/u/m1CrRCsk2HtkvRVAIO3L018I3+hX6BJHV5fqxGbH7KktwIhWwRiFULerEbSro
+    BuZqxU2V4ou3IUHHlISH54pnZRrwPoPqJBSCb8TuXxQBNGOb4wDMriG/10xnFhDWx86kmI
+    CQT0K3l3Cyvsb0mDueB7Po/bsgYIPK8h8rMB2tqpo0U6Jnt45K865zM9abBlODaxeOi6Eb
+    vqP9z4USM7/X6BqB7w12cUeG5UwEqoEEVbltIih56hY6/waKNYBLa47AUYUhcTz3ixz/VU
+    FSRtJRICnvE/amtWmr9aAyKX4mmnqlSHe1PLZ/G1+ClWQf2P2DgHaDQ429wx9LPahO1x0E
+    C6qWhH39uM7eMV5C1wUrfQ+CAoYu183ikq5e320Jw/ChMnHoJfEXnOcxDXPf/wSCwZ4GjH
+    HXoS5ciPGT3Nfhir36PHsYUBm8FWqv8OO/zGC3a6rTbfNFguOBgv8GoTMDfQ
+X-ME-Proxy: <xmx:yOnxaktbNua3QY8pozzkQz6CNYG3f2AvoCUhuzA4sg-CIJlom25i9A>
+    <xmx:yOnxaiMQxHT10xQNEOQ5Qk-yPRGeJnEprFxs17eOmmhKF5OQFiauJA>
+    <xmx:yOnxar5vbqe8ia9JzeCfjlh2AqaXeZ2vqQCg1AC4AfnHX-3AkbW-Zg>
+    <xmx:yOnxaoS-mle8EREJzGptvUlNmOStmu-cT2U9ILuzqmchcrcJaBXTwQ>
+    <xmx:yOnxavXlBx5SYyIeFoQh8GAZf7CXzEQy6yhWcMwwiIOFBGdU9gw2VjN9>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Nov 2026 10:41:59 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes Sixt
+ <j6t@kdbg.org>
+Subject: Re: [PATCH v2 1/2] t: add "test-tool genbytes" to avoid slow tr(1)
+ on macOS
+In-Reply-To: <CAL71e4PkS0dRvqSkL81hSPO3M3K2n5ZTumFNvCx9MsBsFKbnmw@mail.gmail.com>
+	(Kristofer Karlsson's message of "Mon, 9 Nov 2026 08:10:45 +0100")
+References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
+	<pull.2301.v2.git.1794165304.gitgitgadget@gmail.com>
+	<54139a3a97127732e11fc5abbc9a3687542669f6.1794165304.git.gitgitgadget@gmail.com>
+	<xmqqeccu3hqq.fsf@gitster.g>
+	<CAL71e4PkS0dRvqSkL81hSPO3M3K2n5ZTumFNvCx9MsBsFKbnmw@mail.gmail.com>
+Date: Mon, 09 Nov 2026 07:41:58 -0800
+Message-ID: <xmqqh5hq106x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -67,43 +132,26 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Mirko Faina <mroik@delayed.space> writes:
+Kristofer Karlsson <krka@spotify.com> writes:
 
-> Some options for "git log" are missing in bash-completions,
-> --graph-lane-limit introduced in [1] and --[no-]graph-indent introduced
-> in [2].
+>   2. remove static and keep the size.  Since the stack is not
+>      complex or deep here it should be safe.  It would break
+>      on platforms with a very small stack, but since it's only
+>      use by CI and developers any breakage would be immediately
+>      obvious and easy to fix.
 >
-> Teach bash-completions to autocomplete these options.
+>   3. remove static and shrink the buffer size.  From my (limited)
+>      local experiment, it seems the buffer is larger than needed.
+>      We could shrink it without losing performance.
 >
-> [1] f756a3c78d (graph: add --graph-lane-limit option, 2026-03-28)
-> [2] e9b5720bef (graph: add --[no-]graph-indent and log.graphIndent, 2026-07-14)
+> I don't have a strong opinion here; I went with (2) because it
+> seemed like the smallest change but I'd be happy to change it.
 >
-> Signed-off-by: Mirko Faina <mroik@delayed.space>
-> ---
->  contrib/completion/git-completion.bash | 2 ++
->  1 file changed, 2 insertions(+)
+> If we go with static, I'd prefer to have a small comment
+> above the function definition:
 >
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index c3a49e2e22..eab6309a69 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -2395,6 +2395,8 @@ __git_complete_log_opts ()
->  			--cherry-mark
->  			--cherry-pick
->  			--graph
-> +			--graph-indent --no-graph-indent
-> +			--graph-lane-limit=
->  			--decorate --decorate= --no-decorate
->  			--walk-reflogs
->  			--no-walk --no-walk= --do-walk
->
-> base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
-> -- 
-> 2.56.0
+>   /* not thread-safe (due to the mutable static 'buf') */
 
-I'm fine with these changes, they do what we want them to. Looks good to
-me. 
-
--- 
-Laters,
-Toon
+I do not think such a comment is not warranted in this case, though.
+After all this is more or less throw-away code used only by CI and
+developers ;-)
