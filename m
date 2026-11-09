@@ -1,93 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794210244;
-	b=JG9r3lQ/Em7Pd3/eGbu833xQ4du4lNkrfnXeu2z9Fw6xoxI4rA8pMsfXSso3b1SRM87R
-	 uz68CVUdZY3soUf0nDI3Nq6p4p7zR1/B0FbrWt8+r+jD2PI71mWtHUVftOqnqpBx15m8p
-	 nAHDBRghPA3zOMLp1s+XtfJQClXAemkQa2/ovxt0Ti03e5uwNEz6QFlngAETF3CNer1SX
-	 D5lND4mmMmUd00hrCYHiazsrsJ51Wk1nhMBfmRaYpD/JYAalKaRGA5lhHIXUZDYZICF0d
-	 nyu/PHwCdSEiirsJp0mA2cD7UhVOK1VeNZmdgv5AwuzzzpwtycqGNAlP/gP7zl3j//Q==
+	t=1794210913;
+	b=Rf6LF6sS87cxdbtYxEVf8vnR3Zdf1fCFPI0ADwqdcfRGLQeUtFZmoaZyCzV3GBWOJuyJ
+	 myyKPdgp3SvEFTI/IGD9aC9Nhd/9/s/wGTTV0kFtiL0chGgoN/Iyc7kXhFSAd+bDMoEMh
+	 CDgqAeUAXCINZGfLi18o8uNOO22kBfPkPnOnkhjrEJCV17h95Qy4QnH6HegtfGTl+aDQt
+	 DRyGO2XXihIr/VbLQaHSSjvdvJVyoapD+MH6bbr9ae+wRA7CIl3B5WpqI76+uPFeFam8l
+	 vtBEV+MWkAx/XdUorwVFne7iSO5oRcnPAIy+mPgMHj2F+yDna9YGuKTgk3H91ATw67w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794210244;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=v/dZ4WCHOPZwVhwaqakE0J9NIPodXOg4lBCFy0ePPM8=;
-	b=h3jOttjSnatX0drpSRVIpx6Tu1IiQZn/Se3cI28DpOB8/m93hC5YYIQJozQ/BAq8Iyvv
-	 1EBQx4GmdUkZNA1Uhaf+4JbeSuq/QL0NeqLLMzKQwppyAvcd+QdbsCckfp2HVNLVyI4v4
-	 PM1CYDUHiFZXQYjlgLAGJOcvAIme8yTD51i7equR1PGindlnpY9MH8yJwhPZ0jjYhust/
-	 f8ZOlyXt333ldVoBDwUylsMjM/78KehSphwIbhn2455l49yw58FzoDiHDtTtv2MIBIxe0
-	 qotAKgnzLiFr+CyGq8Q/oOPBCmlC6rdWTQHjfWTPFEYNuQ6cLYyLvtLFbWNMjSvHHTw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794210913;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=815I/fFTle7fJvn7jrhO5rFJoCz8KLRsQqJZ6Ceoz+k=;
+	b=bt9zLHEtZAbyoxCfH4OwKUg6Vt+xosPc0RPBDnQ+TBF5/ah4n/wTdUKsXeOkxEoIw6FM
+	 raGSZjaJMm611c7Yj6c3fkiSSrGkMbt5eMOlr66x9L8NlKX6cd369Y5vmgx6AjdZTBz/V
+	 /P7H8NNI+1+yvIDf6J/dedQLcxbzb8GtuKHYqa6nr78gc2EHslho2jVeTg1D8+Lj2624y
+	 EMesmoLqwr+t1qiQtGGm8Prk2Zvo3RhZTgp67/R6CSUTdHhP/U3wdY9NAmyLgaOK/notU
+	 PcnrS8tbBPvb2JJ6jhB8wfhM6LR2KPaRGd1Z34SjZSPwcDDUA1hTBm+NF6Z2wR2sdbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=urBJM79Y;
-	arc=none smtp.remote-ip=74.125.82.170
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=TqJY9zFJ;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=p3+A4IMd;
+	arc=none smtp.remote-ip=202.12.124.149
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85084606A31C
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 07:44:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 85084606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FE2606A321
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 07:55:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3FE2606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=urBJM79Y
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-36fc0a3fe93so1197856eec.0
-        for <git@vger.kernel.org>; Sun, 08 Nov 2026 23:44:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794210244; x=1794815044; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=v/dZ4WCHOPZwVhwaqakE0J9NIPodXOg4lBCFy0ePPM8=;
-        b=urBJM79YRDDgLqCYEAsjslmN35Ldnz7br/ZPNiI/DHbZ8kP3+5J3luynnFWXYPCc30
-         CQBWpuy+fs5Jn83ajgg9RlymjbViW2mfY4D2a8kZlKbvuEiNNJ4VhWgI4ffGivfXB57J
-         qh4x71kfKeK0jYIZ/k5OawTIqDeThVwVoqIEI2osaL3uiC9IXdsXkORURfLwmTQyu3z6
-         FYsbYh6uE25wpa+M6kc7sc6LoUNwhppfCHJkFXRDkHnhczky7Umm/BhqbLb5shABZBI5
-         IXVSbmM/Jh5oT27O2q3jUUZLXUfUkC4537eSz0+ozaO/0LqqWb2QQm1NiEFZL7o3n26r
-         xccw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794210244; x=1794815044;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=v/dZ4WCHOPZwVhwaqakE0J9NIPodXOg4lBCFy0ePPM8=;
-        b=OyODcrXK7Z00qc6DAle3V/hddRlUUgYy33WwSmcqN2jExmlsVFc3d3GU4oN0qRa959
-         mSAPXpg15XzDP+1aPpylWyTlL4s/y0S9u4qQo5SQtAwEBTZn63K+0NBTlHG4kfuAHtvZ
-         uLc/4ol7uQVtc631Fr2bCp6LeXahMzrHJvv8DvK462sInkuA548IAgD8P2T1c32LRrot
-         81grRNgD/oF78dLkyinmeTSLg1yaPLQOBtthndPqx+LxU4ySWw/7rtArBjKE0qX0cGzS
-         dm+le4YQLkLMeuiDF8wcnIK3uPML97AzRy641z6/ApiEtLhIsFpIqdygrmdB0b1jlx9t
-         ETPQ==
-X-Gm-Message-State: APuU4Z8ooIqZ7WutR0ooGLLsyYmKqH5GvBnHTL7eNH01hqZlLJvg95c8
-	/KLNeAgdEVnF4uAhF0/+iyT65UCs1uxj6f4fCZxWRr0n1gwGZZyDORyN8HcTRA==
-X-Gm-Gg: AYBFou1Vw4/9elt8wxBZ7WD1hIu5zvZ74zlGu1qHdMWukOVw71dVXuB8fhA2jQ38pzo
-	80YtSSwtDSePplANbA34j0DmrgZcWguHszq5FKlIPk1PuW1YGH508hsCknE1Ka0Rv202uXCVkOQ
-	f7sS3WzBrzB8yQ2zCNPqx+THyI13gYWIqzQKO4by+Z3cD0r8otQ9VmuBA1/fp37qK5h5zTHn1c2
-	sAf/dJIKE45YSOPLxZ2VepkHgP8DeS3mEsFk8WW/oXLXJQf7HBO8k2hWzXMaxROYKMM7ECnvpC+
-	zQOvY3Q5bS2AcenwIrP2KSCrWINfNGFD+GhbR76PIpyYY31VXXkcpGQ46KFZ/pm7u+/meaGKzRg
-	idI/Z08R88/NVUU0kFkft6tLkpb9DoTP2XW870aH73pDV1hRSzYGTsDdRxsSHVBp5OgsKnUkrbT
-	ZOn3GGH3k30kNGbFxxFfe9hH5k0Mo+C3xzsNQKGicGSGXcsS3zu/3ElU6qSC1fgIHj47FsGjbw/
-	rjQzlnqTg53Cy5Nni1siOe/kQYEPaeZEhp9Crt7AnU+Qx1sQz1Bi62zjEKSgXrFtM/IwoOMMvU7
-	LJ5drRjNEwByxZGiAxRf2iRKo2swLtSvt1P56ryB3FI3fj3stesx9zjJwz6d4D6kw33l35vQGw=
-	=
-X-Received: by 2002:a05:7301:6492:b0:36c:a44c:1763 with SMTP id 5a478bee46e88-372575c63f1mr6247355eec.32.1794210243521;
-        Sun, 08 Nov 2026 23:44:03 -0800 (PST)
-Received: from Anonymous.localdomain ([152.58.29.17])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-372667d60absm11763451eec.26.2026.11.08.23.44.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Nov 2026 23:44:03 -0800 (PST)
-From: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] check-ref-format: use parse-options API
-Date: Mon,  9 Nov 2026 07:43:52 +0000
-Message-ID: <20261109074352.163019-1-husainsitamuwala21@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <CAOLa=ZS3ULcNVjV1DMO-iB+LcC2Gnw+9oU2_7VXKoLvgiVRnbg@mail.gmail.com>
-References: <CAOLa=ZS3ULcNVjV1DMO-iB+LcC2Gnw+9oU2_7VXKoLvgiVRnbg@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=TqJY9zFJ;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=p3+A4IMd
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2A6781D000D8
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 02:55:12 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 09 Nov 2026 02:55:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1794210911; x=1794297311; bh=815I/fFTle
+	7fJvn7jrhO5rFJoCz8KLRsQqJZ6Ceoz+k=; b=TqJY9zFJR4hb8VmTpMX6k6BZxJ
+	DfNpj3WdyYWHebfzlnAtS33r1NzznVjQgzYRWmWqqJakDFulm560ThXfB1aqSBpX
+	aeMVH5FgQpciOOD/dqr3k2Inin3Ie1gy1JdxoA+v6MLMlVPgKP4kksksK2cdvZZG
+	RE+BhVIDLrK9WzlVqRZ6/T+T8nLQreLmpRufXwhuSfNKOP/TA6ymtATGuWkbRfkI
+	V2PfXD7D39+s47gygYQKA6eLaKBJrZ1dLjkGG+u9prv8Wd35YIxkJpjQsb9Gad5X
+	/CMEnE9GiW5b6IBLJ/jylMJRGEVVvdUtp97C/zPyvqm2pDXTE92K3uNOFawA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794210911; x=1794297311; bh=815I/fFTle7fJvn7jrhO5rFJoCz8KLRsQqJ
+	Z6Ceoz+k=; b=p3+A4IMdM9ST7fP/Il4CVAs78vCWordWhJsCd2NI7WXj4uflowC
+	BmWniH9cPHZdcx8ie8T4WJ590aK+eaMBPbrqdGhuvv+WbHYWJDlJPk0tXxLgCfU4
+	GR2WmfdLaJiqUtY0IM7ieockZ/qNTkWGdVI1E08Er2EZkPjgYuA7qllrB/g1m6Kb
+	13DrXRGNSL5Rsc1nLtbKhwMvjQqLgzwd1okd+nkDK3eHVsRDbIV1zY6HlQwCekif
+	pbF5abg8F/5W05rHvqg8GP4Xh5hyeSK7u73Exf+Jcra3h28nkP4aiVl0m+qaCP/8
+	r5LrJtCmg3URqcV1hdUemWgHuwNmqUTGnmA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794210911; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:x1lRFnfe6FYrUAMrWU+dyTYnhVi76E2u/s4CuDaD2xnTrSE
+	zh65x1ujmLuOjuE6Fvfcnombl400i4kkfIFvgjEPRaB5XJ2uH4RhZGKwuqPUX3pS
+	SkCX6UiIC7Yuugpz1uMnLvWO7XcNZLWJHOpo+4YDsPD4u3gbD4I1GGZk66Apnx8+
+	dCKWAk6Oc7LLZglMOl9gFt/yBgSdFYMmD4bqxvV21w1Gfm7n6sxusDVR38zI7V/k
+	Pup0RkaWafxhTSp/hYo6LF9W8ZGF9ElzOwVGs1zQSDC8KjVa1NBDjgWFJiI3R0uV
+	Zvbya0SOLJhZTz/roVHmOznWxliLd0Ya8xHNnKQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:8NEcEcQVEMTlBcNUDjMQ4jQTvv7Rr9nUD/7iNHPSVpw=:39dMo+mEMfZrc0/n46X9rYOFU0piSZJhFnc4DqI2hH4=;
+X-ME-Sender: <xms:X3zxan8mFX2dL2HCZtiOEiTMbpOGT4ybPvlTv1r8CdTE2Vts0U-Fng>
+    <xme:X3zxal-CeeCxEJGHH_FXCJRXrU3hjKEtZ-OOAeEfSb-7xiO4PvezRzxlY-yxNrR20
+    qPmzLfnuVhrNDL5JdoB-IPY8qfXRVEt3HUmPJdsg9KSJOGvvAOAwQ>
+X-ME-Received: <xmr:X3zxanS4tTtQlxw8jc3ZH2V1O6XcLtoqC_imyWnJIwYTfyg9mg9rKYihH7tjNiyapeuRmMA>
+X-ME-Proxy-Cause: dmFkZTFSVZTHWwaNhma5sLmOQKqy6Po5E2cau6YcS7ABoTZpSQkg9hzCLBE7LpfONyho4v
+    syKr+7Qm+8Tn+QcpZDwNmDgYYOyJ3ConcBtObHx7jZRE8AwmXvbs18/JzNG78/4YTXWgtP
+    1B3gumB70q1dOiFm4wM65bBxuQrN113o8vA1/OAZ5lx7My/nTCbtIA715tsA61E8JRkO0q
+    Xa+54AWyiKQ+MsMIpOE66Cuo7ejs/Jq677uexo6Hby/eXWIpslBsQWFiLVcuhMPZJLRMlf
+    9QK1Nudn3ixv7f3Z7lBu3XevrRKQOLkk734tmrSyfRhQkSRUsT6NPzl7z6DoBpvrdsfCgU
+    hu7bLpcqq6FrRP1fIAWFG6N1s2bAxOYc6j6yxS8ketxzup2CMJwTPxPRLbINgYysHX8pap
+    tib9GAazcwR+5kHXFfZmNKZuWhn2tBK9lEjBYynq2q+J1KC7h9ymmeqj7H8CG385zOqI9G
+    OGnJoKRPus8GbX40i4/1AqE+Zyr44jqbjxKwYcsFdIQCJrXqFpcu88UZr9f7yQIHYwDTu3
+    T/sWR/Z45BpnVF517Rg5zsordYYboWGmzwr030DFqeb0F4IZdrFcWiGIWCMiQbuNZvTHzg
+    thv3RrGsipojQBzP38S3pOvG6XRBamA5ILNF328D6ZKBV6Sc/TresQefTPug
+X-ME-Proxy: <xmx:X3zxapcvt-F_bE1p-brEtIWRfQEA-tNprxBcVeNiwwDjwFKZvp0REg>
+    <xmx:X3zxarDBqchMrdc8RNd1nD5EIy5LTOgJHyp6LAc7iclisGFW0OtF6A>
+    <xmx:X3zxarn32HSwibdv3edcd1bAlbqBvgrniTDt8N5CLDEUgm7Ct1xoyg>
+    <xmx:X3zxamcLWO_nBwmQNR0kdcS1hwZHIxVP9egTgr-XpVh1b5Op4125wA>
+    <xmx:X3zxatzqdG3_3tGvxxLKflsjFoAyyLYnb-SuCGR5bN_WPrThHdhKUJB9>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Nov 2026 02:55:10 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d70f65c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Nov 2026 07:55:08 +0000 (UTC)
+Date: Mon, 9 Nov 2026 08:55:05 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Farid Zakaria <farid.m.zakaria@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, M Hickford <mirth.hickford@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff Hostetler <jeffhostetler@github.com>
+Subject: Re: [PATCH v2 1/3] credential-cache--daemon: do not apply
+ core.sharedRepository
+Message-ID: <avF8WVT1W4o27CzG@pks.im>
+References: <20261104-fz-credential-cache-race-v2-0-ddccd0831eba@gmail.com>
+ <20261104-fz-credential-cache-race-v2-1-ddccd0831eba@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,58 +127,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261104-fz-credential-cache-race-v2-1-ddccd0831eba@gmail.com>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Wed, Nov 04, 2026 at 11:53:14AM -0800, Farid Zakaria wrote:
+> init_socket_directory() creates the leading directories of the socket
+> path with safe_create_leading_directories_const(). That function
+> honors "core.sharedRepository", which is meant for files inside the
+> git directory. The socket lives in the user's home directory, e.g.
+> "~/.cache/git/credential", and the repository the daemon happens to be
+> started from has no say over its permissions.
+> 
+> Use safe_create_leading_directories_no_share_const() instead, which
+> ignores "core.sharedRepository".
 
-> Seems like Junio's review went unanswered. Which makes it hard for me
-> to consider dedicating time to do another review of the newer version.
+Yup, makes sense, and the patch is obviously correct.
 
-Hi Karthik, Junio,
-
-Sorry about that. I sent v2 before replying to Junio's review of v1,
-and I should have discussed it first. I have now re-read
-Documentation/SubmittingPatches and MyFirstContribution, and I will
-wait for feedback before sending any further version.
-
-> What is this change about?  More importantly, is it sensible to have
-> this and ... another variable with very similar and confusing name
-
-You are right, keeping two usage variables in sync made no sense. v2
-has a single builtin_check_ref_format_usage[] array, and
-usage_with_options() is used for the error path, so the old string
-is gone.
-
-> As can be seen in the usage string ... we still accept "--print" as
-> a deprecated synonym but we do not advertise it.
-
-In v2, --print is marked PARSE_OPT_HIDDEN and its help text says it
-is a deprecated synonym for --normalize.
-
-> Do we want to barf when the user says
->
->     $ git check-ref-format --no-print --no-normalize
->       --no-refspec-pattern ...
-
-No. v2 adds PARSE_OPT_NONEG to --normalize, --print and
---refspec-pattern. Only --no-allow-onelevel is still accepted, as
-before, so the set of accepted options is unchanged.
-
-> The call to show_usage_if_asked() is still here, which means
-> "git check-ref-format -h" is intercepted ...
-
-v2 drops that call, so "-h" now goes through parse_options() and the
-option list is generated from the table.
-
-I also used PARSE_OPT_STOP_AT_NON_OPTION so that options placed after
-<refname> are still rejected, as they were before.
-
-Two behavior differences come with parse_options(), both mentioned in
-the commit message: unambiguous abbreviations such as --norm are now
-accepted, and "--" may now precede <refname>. If either is unwanted,
-I am happy to change it. I ran t1402-check-ref-format.sh and it passes.
-
-I will wait for further comments before preparing v3.
-
-Thanks,
-Hussain Sitamouwala
+Patrick
