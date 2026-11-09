@@ -1,60 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.108
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794211591;
-	b=ZOhmJXyQgoR+h7yhkrPdjtIku4rYgB/KSs7KqkeV+3fx1KUr83DqpHj0FacbQyUH8gyf
-	 EOnF3i6YTp2tsm8KRPugAxwNcpTzKccqWgWZPmbXCiDKesJY74Nb70vYrEg1qQ+Dq6Yuk
-	 1/p3QzKwyOX8WQoVl0c3uz/22CaNElNyyhWRhjQqT/l/XThE65U5ue++SVxeClneVwWzf
-	 kYtL/Vx8QtiT8nYVSvTgffeFUVeI8yEolEoST8TqUcw9m5sv6bCkC3Pl8LYCrUfiCulqw
-	 xZNea4o2nSUH2Mkc4XXc4StlMf04mo5jrYpUjEBGdQLdg8KEQqCd+ScR5VIWxOx6fIA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794211591;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-Zoho-Virus-Status:
-	 X-Zoho-AV-Stamp:X-ZohoMailClient;
-	bh=iglFCJHNMsUrPnXdUICcfJX66XW4g5MjuJmW3CDv3bg=;
-	b=Kb6192tQuHcmp7kV9fitUWlsWQ+ErAembrGmIJz97YC44QUqNXmd/b6r6RTQCfI/102/
-	 WylxjfE/q/Msb0o9S+FNmoMvBBOSa17f9o8lozAKDlwdAWw011UrGFf3JgAIpNS08sL98
-	 RrjVQgsiy1hwxFtUWBGL/4f/mTIAv+VOezs5V5NtZxa0wx4r6BKCxjsFI6QTpF3Mpotau
-	 KVst+3iZjCEdAW8DKv/5rA3IBCnhFe09S8P1EQw7efR3rRPB+4fh89b8Pp6G+LFmwKbLW
-	 eXvFORLM3AcmZyognNmrbTtTqkSiCzFLS8w3CelsCNufiGwNwpFMozFqV1DTpR7C67w==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=collabora.com;
-	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=SeBgtrxs;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.108
-Received: from sender6-pp-e108.zoho.com (sender6-pp-e108.zoho.com [165.173.180.108])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794211997;
+	b=WQv67ju+0+B0Pa9xpiypIJjTIuSjYMGmHN0uLZva5hjVFULp2IeX0y34aixQd+mYDRb4
+	 Bi/dJWrOGw+QZf8zUb/HUs8rTJ+0vWY4cBWo9U8p34pDfAShO8UhisOEOxG9KfPWlRaI4
+	 VZyL+a7Yh88Mg4wTLl/0ccF9A/CaaSqJsIwKDgbNbIr9s8QSuNJrRh9qqGJweb00kf7Ou
+	 Zus3hWBwT7rciA+I30hc1iNB2nUCM9K6gsOyX4XWUY4nH8XN/OA1dKWcMLuYjhueTn0MI
+	 6gLhZUjsEvjuz/0rHZ5l6LzuoRq8x4670v4PA3594K73aBNh+XjkaARFPlhucuC+aIg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794211997;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=eZRefbLEKwWVgCOzhOrkKX5EHcluRJM+5Z1BmZjEZgA=;
+	b=3O7mjp8DXt3sPgq1gDOYaUN7Wc1GqM8srkloq4F0F2WoJrWY8XGdp43BAE2Ourqk8JOb
+	 AZe8vaBCzXysvCFt9to8gNlsIn7BFElqqpRmE+eqaLmC8v19wdnh5Gk+M47AB9RjEByAz
+	 14tnYN0GXoI10nt1WQZePCQFCsXMU2YfyCXyRvPZXVWSAeH2cpPBCk4OF8cNtnkh+Jygk
+	 spkVfMqopBjBGn++BH7kVsCZh+t/smCy1+geWWYWBrTwkKHrdgMb6N8K2SMdasXdnUiSB
+	 wnClbES+MV7zvLPatMsnC3OLYqMP5zOC858XdkR2MynU8ZLPN5XG31z/3b55DlUlrrQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s7AqjbAM;
+	arc=none smtp.remote-ip=209.85.221.45
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0481606A31C
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 08:06:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C0481606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F06606A31C
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 08:13:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 00F06606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=SeBgtrxs
-ARC-Seal: i=1; a=rsa-sha256; t=1794211583; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Ef3sNEq/RCwiz4+rs9iMf1lg5jJf0PtW+jWRZJgdkFVwkWfqGbSgTKeetqjb4ZcuIKUyNBQSrOjuRRmT7KJj4mFspDyUdI9HORxxA2KkTw/UhG+sXvG343lwA1AbdeNA4JF8zCznxXqKOhjBjM+EzxdRwWp/EaYEKeULP0erZBY=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1794211583; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=iglFCJHNMsUrPnXdUICcfJX66XW4g5MjuJmW3CDv3bg=; 
-	b=eZAXOmxTs4Wm98kdMbeFlCe8oyeYt0WzTvTc9QhpGxlyEmWEVVz1PzAxy+kPYB06TTbiTEvzQHEjnUapeRw4gXWgvutqUNszkek/ayul/4o4hDp0CtHKkQ/T9MsrtMsFv+4F+QPSIe1djtQbpxYQOAJBTtH0PmqgnL5UN9aWWYM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
-	dmarc=pass header.from=<vmiklos@collabora.com>
-DKIM-Signature: a=rsa-sha256; b=SeBgtrxsTBSYFOr/6r8HMvjB6QMl5qXHauqHkZlRLa4xsTYf6ybJe2ggvlqkAMAWC7jDXrV9c1S+X2GHEpWxzG4qNXCrXibYjea6c0iD46ytRoUJMki824sB2gOvijy92268DN8WCfHIwL8vz02EhXmig1nlaeit9I/ggm6uygY=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=iglFCJHNMsUrPnXdUICcfJX66XW4g5MjuJmW3CDv3bg=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1794211582485640.5767364516466;
-	Mon, 9 Nov 2026 00:06:22 -0800 (PST)
-Date: Mon, 9 Nov 2026 09:06:18 +0100
-From: Miklos Vajna <vmiklos@collabora.com>
-To: gitster@pobox.com
-Cc: szeder.dev@gmail.com, ps@pks.im, git@vger.kernel.org
-Subject: [PATCH v5 5/5] log: speed up --follow following renames for
- non-linear history
-Message-ID: <ddcac2115e901994ae24351e81f1f487567ffa82.1794078554.git.vmiklos@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s7AqjbAM
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-492fcbfaa88so371718f8f.3
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 00:13:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794211995; x=1794816795; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=eZRefbLEKwWVgCOzhOrkKX5EHcluRJM+5Z1BmZjEZgA=;
+        b=s7AqjbAMOQMD/b29+VxVInUEeXT1Ndlpad+3hZHDBB03DQ5B+VFNYTwwRqLI78Rw7K
+         4MUanYVMsvQ55tF40d+xRBUFj26TwmW5uQgWuXaQWtRpFVCt1Z8V+QFDphoecjpLZpTK
+         BaRfphnONVtc7XEZy/+a5FdCztBwtJzJnB31vadqK2WrJszH1KkgcsJbPik09DIwqwv6
+         pGkHut9GYPxUBcV2ePNuLTfT1RmXEifQoqJp26PyCz6181b6EClnoyyWs4NBK6bLQ6N2
+         ZnHpfyBZejcHP8crSaUr9pLSb5oUl+HakqGtBqkgamhZwFk4gSwXy8H5l+UmF/GT2JE4
+         y9tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794211995; x=1794816795;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=eZRefbLEKwWVgCOzhOrkKX5EHcluRJM+5Z1BmZjEZgA=;
+        b=DWsKi/EcCeepxGw8/fcM35m6NBWYEgEjVt7yNYQYnbmWxeX9yK5zGo+oZC74EAW7Jj
+         1bKtnsuaBC0Q0LCW2RkmgU8bd2yraYD35pBZYuAXZ1meibJnLBNQ7Wy1koyo4UuKMC7c
+         y+QMVICiWx2V4Tajqcxm0Ro5oyWjPw1c7Qhy7a8RX/MV+3kAyqJdKtcNVbssvs9RNAY/
+         05C7w0ULS5kZvWNTvrLxgDe9+mwwjQa2zezeBcBn8Q6cFJqaxA/FAfzujgMEL8RsGQg3
+         2XymparKuwFpDL82X5a21TgvvMno+MwaZMnnYk2SgdJhP5kX61z04X2b1hnmPYg/VHXY
+         2zSg==
+X-Gm-Message-State: APuU4Z+lC4IpR8ON2dnE5vDZr2/ZTjIQiLVFRURZ6jcNp7Ll1OyEHCKL
+	jonb7NAD52xW83KfzF72HRJ4JNncdDhuml+uwQLuSz+xsixqGkeoye78xgUCdG4=
+X-Gm-Gg: AYBFou2Mp2i56AqF/4TQ5ridFRUVphZ5bdJcYCv5PJjhABZk+aXVp8eQthqPWxD+cIF
+	3mVxIa1IpRmJhbzD5jd3zc3zuBw88W2DbGTZIy1pEy7uA3rTWlXoI9u9512AFe1ynng11/+f9WR
+	XCWfZsApmXeBI6+45dy9YU1KDgaP+nb2QGwCP6ZPuBVpx916BCsb9d+IIxOgHVLAAONyooof29n
+	r8Nrth6pYANJWDefjNihi+OaxQKB6FulLwS9RgUv+BXktdOQR/0rxa05+RFDG0W+ycsYNikPsG1
+	ZdyRWPPZpfriI9GHjpdhJK7YY75rwC8AawrwN4yDNFKzcM5/lbijzslugx765ikOKwZ7fA7PKJw
+	x6zKRfelu1BKQGb70BO3ui73Ma6gjDfZgueVbA8/XBMl4qFGPRfHmDLtyoU8LY9Q7nBN/bCngh4
+	RpWnZlaYtfRjpO1Ict9rS11dM9Idx02L5xp2BOY37RfA8v/cpC/BYYuycR1TkMmrQbK01CBSU7u
+	71G02lgKeTOI4FW5p7WwsLb9O6YrQLfVF7HGNMw/yHRMgAHedQ7XqOSbq5LbGgl21g/KwHyiCVD
+	lilNKxKl3xDZu5TEBX0HiOaF6aOWZqVh923Cvsdh+Q6jI9lTZVolLPlwmIoIbUhpo+7IVUrq7KX
+	glzRUFb0WdLgy2Vx+G8wjEPKgOvN/3gK4K3fRf1dbqIp9l+Os/MrSB7jwulo73TCceoPmymvI
+X-Received: by 2002:a05:6000:22c7:b0:492:905a:8b22 with SMTP id ffacd0b85a97d-4957f4070camr6917865f8f.2.1794211995096;
+        Mon, 09 Nov 2026 00:13:15 -0800 (PST)
+Received: from DESKTOP-453HKQ1.localdomain ([102.22.168.79])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49597d09e20sm8475821f8f.54.2026.11.09.00.13.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Nov 2026 00:13:14 -0800 (PST)
+From: bonheurngezayo4@gmail.com
+To: git@vger.kernel.org
+Cc: Ngezayo Bonheur <bonheurngezayo4@gmail.com>
+Subject: [PATCH] parse-options: convert check-ref-format
+Date: Mon,  9 Nov 2026 10:12:44 +0200
+Message-ID: <20261109081244.16734-1-bonheurngezayo4@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -64,263 +92,96 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1794078554.git.vmiklos@collabora.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/294.182.33
-X-ZohoMailClient: External
 
-Test the performance of 'git log --stat --follow --
-include/linux/rsc_table.h' on linux.git: since commit 304812ed33 (log:
-improve --follow following renames for non-linear history, 2026-06-22),
-it takes 6m43s, while it took about 28 seconds before.
+From: Ngezayo Bonheur <bonheurngezayo4@gmail.com>
 
-What happens is that log_tree_diff() diffs each merge against all of its
-parents with rename following. diff_tree_oid() only does the expensive
-rename detection when the path is added relative to a parent, but that
-is common for merges, e.g. when a branch forked before the path was
-created merges mainline, and this slows down 'git log --follow'.
-
-Fix the problem by first diffing the merge against its parents without
-rename following, to find a parent where the path is unchanged. If there
-is such a parent, then skip the diff against the other parents and just
-follow the same path there. The exception is a parent that doesn't have
-the path, but still needs renames to be followed:
-- The merge base has the path, i.e. that side renamed or removed it, or
-  there is no merge base, e.g. a subtree merge of unrelated histories.
-- The merge base doesn't have the path, but the parent changed a file
-  since then, and the merge dropped that change. A copy detection also
-  finds that file as the source of the path, i.e. the other side renamed
-  or copied the path from that file.
-If the path changed relative to all parents, then diff against them with
-rename following, as before. Given that this way a parent may be asked
-to follow a path that it doesn't have, also adjust
-remember_follow_pathspec(): if children disagree on what should be the
-path for a commit, then prefer the path that exists in that commit.
-
-Now the above use case takes 42s, somewhat close to the original cost.
-
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Miklos Vajna <vmiklos@collabora.com>
+Signed-off-by: Ngezayo Bonheur <bonheurngezayo4@gmail.com>
 ---
- log-tree.c | 159 +++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 155 insertions(+), 4 deletions(-)
+ builtin/check-ref-format.c | 45 ++++++++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/log-tree.c b/log-tree.c
-index 0aa27fb210..1dc02822f1 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -31,6 +31,7 @@
- #include "range-diff.h"
- #include "strmap.h"
- #include "tree.h"
-+#include "tree-walk.h"
- #include "wildmatch.h"
- #include "write-or-die.h"
- #include "pager.h"
-@@ -1110,6 +1111,22 @@ static void set_pathspec_to_single_path(struct pathspec *ps, const char *path)
- 		       PATHSPEC_LITERAL_PATH, "", paths);
- }
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index fd1c9c0e0c..a7ad3c8257 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -8,11 +8,18 @@
+ #include "refs.h"
+ #include "setup.h"
+ #include "strbuf.h"
++#include "parse-options.h"
  
-+static int tree_has_path(struct rev_info *opt, struct object_id *tree,
-+			 const char *path)
-+{
-+	struct object_id oid;
-+	unsigned short mode;
+ static const char builtin_check_ref_format_usage[] =
+ "git check-ref-format [--normalize] [<options>] <refname>\n"
+ "   or: git check-ref-format --branch <branchname-shorthand>";
+ 
++static const char * const builtin_check_ref_format_usage_options[] = {
++	"git check-ref-format [--normalize] [<options>] <refname>",
++	"git check-ref-format --branch <branchname-shorthand>",
++	NULL
++};
 +
-+	return !get_tree_entry(opt->diffopt.repo, tree, path, &oid, &mode);
-+}
-+
-+static int commit_has_path(struct rev_info *opt, struct commit *c,
-+			   const char *path)
-+{
-+	parse_commit_or_die(c);
-+	return tree_has_path(opt, get_commit_tree_oid(c), path);
-+}
-+
- static void remember_follow_pathspec(struct rev_info *opt,
- 				     struct commit *c, const char *path)
+ /*
+  * Return a copy of refname but with leading slashes removed and runs
+  * of adjacent slashes replaced with single slashes.
+@@ -58,12 +65,24 @@ int cmd_check_ref_format(int argc,
+ 			 const char *prefix,
+ 			 struct repository *repo UNUSED)
  {
-@@ -1122,8 +1139,12 @@ static void remember_follow_pathspec(struct rev_info *opt,
- 		init_follow_pathspec_slab(opt->follow_pathspec_slab);
- 	}
- 	slot = follow_pathspec_slab_at(opt->follow_pathspec_slab, c);
--	if (*slot && !strcmp(*slot, path))
--		return;
-+	/* If children of 'c' disagree on the path, prefer the one 'c' has. */
-+	if (*slot) {
-+		if (!strcmp(*slot, path) || commit_has_path(opt, c, *slot) ||
-+		    !commit_has_path(opt, c, path))
-+			return;
-+	}
- 	free(*slot);
- 	*slot = xstrdup(path);
- }
-@@ -1153,6 +1174,127 @@ void release_follow_pathspec_slab(struct rev_info *opt)
- 	FREE_AND_NULL(opt->follow_pathspec_slab);
- }
+-	int i;
+ 	int normalize = 0;
+ 	int flags = 0;
+ 	const char *refname;
+ 	char *to_free = NULL;
+ 	int ret = 1;
++	struct option options[] = {
++		OPT_BOOL_F(0, "normalize", &normalize,
++			   N_("normalize refname"), PARSE_OPT_NONEG),
++		OPT_BOOL_F(0, "print", &normalize,
++			   N_("synonym for --normalize"), PARSE_OPT_NONEG),
++		OPT_BIT(0, "allow-onelevel", &flags,
++			N_("allow a one-level refname"),
++			REFNAME_ALLOW_ONELEVEL),
++		OPT_BIT_F(0, "refspec-pattern", &flags,
++			  N_("allow a refspec pattern"),
++			  REFNAME_REFSPEC_PATTERN, PARSE_OPT_NONEG),
++		OPT_END()
++	};
  
-+/* Find a parent where 'path' is the same as in the merge. */
-+static struct commit *follow_same_parent(struct rev_info *opt,
-+					 struct commit_list *parents,
-+					 struct object_id *merge_tree)
-+{
-+	struct commit *same = NULL;
-+
-+	opt->diffopt.flags.follow_renames = 0;
-+	for (; parents && !same; parents = parents->next) {
-+		parse_commit_or_die(parents->item);
-+		diff_tree_oid(get_commit_tree_oid(parents->item), merge_tree,
-+			      "", &opt->diffopt);
-+		if (!diff_queued_diff.nr)
-+			same = parents->item;
-+		diff_queue_clear(&diff_queued_diff);
-+	}
-+	opt->diffopt.flags.follow_renames = 1;
-+	return same;
-+}
-+
-+/*
-+ * Did 'parent' change a file since 'base', but the merge tree dropped that
-+ * change? I.e. the merge doesn't have the file or it's the same as in 'same'.
-+ */
-+static int follow_parent_changed_dropped_file(struct rev_info *opt,
-+					      struct commit *base,
-+					      struct commit *parent,
-+					      struct commit *same,
-+					      struct object_id *merge_tree)
-+{
-+	struct diff_options diff_opts;
-+	int i, ret = 0;
-+
-+	repo_diff_setup(opt->diffopt.repo, &diff_opts);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
-+	diff_tree_oid(get_commit_tree_oid(base), get_commit_tree_oid(parent),
-+		      "", &diff_opts);
-+	for (i = 0; i < diff_queued_diff.nr && !ret; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+		struct object_id merge_oid, same_oid;
-+		unsigned short mode;
-+
-+		if (!DIFF_FILE_VALID(p->two))
-+			continue;
-+		if (get_tree_entry(opt->diffopt.repo, merge_tree, p->two->path,
-+				   &merge_oid, &mode))
-+			ret = 1;
-+		else
-+			ret = !oideq(&merge_oid, &p->two->oid) &&
-+			      !get_tree_entry(opt->diffopt.repo,
-+					      get_commit_tree_oid(same),
-+					      p->two->path, &same_oid, &mode) &&
-+			      oideq(&merge_oid, &same_oid);
-+	}
-+	diff_queue_clear(&diff_queued_diff);
-+	diff_free(&diff_opts);
-+	return ret;
-+}
-+
-+/* Is 'path' in the merge tree renamed or copied from a file of 'parent'? */
-+static int follow_has_rename_source(struct rev_info *opt,
-+				    struct commit *parent,
-+				    struct object_id *merge_tree,
-+				    const char *path)
-+{
-+	struct diff_options diff_opts;
-+	int i, ret = 0;
-+
-+	repo_diff_setup(opt->diffopt.repo, &diff_opts);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.detect_rename = DIFF_DETECT_COPY;
-+	diff_opts.rename_score = opt->diffopt.rename_score;
-+	diff_opts.single_follow = path;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
-+	diff_tree_oid(get_commit_tree_oid(parent), merge_tree, "", &diff_opts);
-+	diffcore_std(&diff_opts);
-+	for (i = 0; i < diff_queued_diff.nr && !ret; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+
-+		ret = (p->status == DIFF_STATUS_RENAMED ||
-+		       p->status == DIFF_STATUS_COPIED) &&
-+		      !strcmp(p->two->path, path);
-+	}
-+	diff_queue_clear(&diff_queued_diff);
-+	diff_free(&diff_opts);
-+	return ret;
-+}
-+
-+/*
-+ * When the path in a merge tree is the same as in 'same', does the path still
-+ * need renames to be followed in 'parent'?
-+ */
-+static int follow_needs_renames(struct rev_info *opt, struct commit *parent,
-+				struct commit *same,
-+				struct object_id *merge_tree, const char *path)
-+{
-+	struct commit_list *bases = NULL, *base;
-+	int ret = 0, changed_dropped = 0;
-+
-+	if (parent == same || commit_has_path(opt, parent, path) ||
-+	    !commit_has_path(opt, same, path))
-+		return 0;
-+	if (repo_get_merge_bases(opt->diffopt.repo, parent, same, &bases) < 0)
-+		exit(128);
-+	/* Unrelated histories, e.g. a subtree merge */
-+	ret = !bases;
-+	for (base = bases; base && !ret; base = base->next) {
-+		ret = commit_has_path(opt, base->item, path);
-+		if (!ret && !changed_dropped)
-+			changed_dropped = follow_parent_changed_dropped_file(
-+				opt, base->item, parent, same, merge_tree);
-+	}
-+	commit_list_free(bases);
-+	if (!ret && changed_dropped)
-+		ret = follow_has_rename_source(opt, parent, merge_tree, path);
-+	return ret;
-+}
-+
- /* Show the remerge or combined diff of a merge commit */
- static int log_tree_merge_diff(struct rev_info *opt, struct commit *commit,
- 			       struct commit_list *parents,
-@@ -1187,6 +1329,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 	int all_need_diff = opt->diff || opt->diffopt.flags.exit_with_status;
- 	int follow_only = 0;
- 	char *path = NULL;
-+	struct commit *same = NULL;
+ 	BUG_ON_NON_EMPTY_PREFIX(prefix);
  
- 	if (!all_need_diff && !opt->merges_need_diff)
- 		return 0;
-@@ -1234,6 +1377,8 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 	if (opt->diffopt.flags.follow_renames)
- 		path = xstrdup_or_null(
- 			pathspec_single_path(&opt->diffopt.pathspec));
-+	if (path && is_merge && (follow_only || opt->first_parent_merges))
-+		same = follow_same_parent(opt, parents, oid);
+@@ -73,22 +92,16 @@ int cmd_check_ref_format(int argc,
+ 	if (argc == 3 && !strcmp(argv[1], "--branch"))
+ 		return check_ref_format_branch(argv[2]);
  
- 	showed_log = 0;
- 	all_parents = parents;
-@@ -1241,8 +1386,14 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 		struct commit *parent = parents->item;
+-	for (i = 1; i < argc && argv[i][0] == '-'; i++) {
+-		if (!strcmp(argv[i], "--normalize") || !strcmp(argv[i], "--print"))
+-			normalize = 1;
+-		else if (!strcmp(argv[i], "--allow-onelevel"))
+-			flags |= REFNAME_ALLOW_ONELEVEL;
+-		else if (!strcmp(argv[i], "--no-allow-onelevel"))
+-			flags &= ~REFNAME_ALLOW_ONELEVEL;
+-		else if (!strcmp(argv[i], "--refspec-pattern"))
+-			flags |= REFNAME_REFSPEC_PATTERN;
+-		else
+-			usage(builtin_check_ref_format_usage);
+-	}
+-	if (! (i == argc - 1))
+-		usage(builtin_check_ref_format_usage);
++	argc = parse_options(argc, argv, prefix, options,
++			     builtin_check_ref_format_usage_options,
++			     PARSE_OPT_STOP_AT_NON_OPTION |
++			     PARSE_OPT_KEEP_DASHDASH);
++
++	if (argc != 1)
++		usage_with_options(builtin_check_ref_format_usage_options,
++				   options);
  
- 		parse_commit_or_die(parent);
--		diff_tree_oid(get_commit_tree_oid(parent),
--			      oid, "", &opt->diffopt);
-+		/*
-+		 * Same as in a parent: follow the path as-is, unless renames
-+		 * still need to be followed in this parent.
-+		 */
-+		if (!follow_only || !same ||
-+		    follow_needs_renames(opt, parent, same, oid, path))
-+			diff_tree_oid(get_commit_tree_oid(parent),
-+				      oid, "", &opt->diffopt);
- 		if (follow_only) {
- 			diff_queue_clear(&diff_queued_diff);
- 			opt->diffopt.found_follow = 0;
+-	refname = argv[i];
++	refname = argv[0];
+ 	if (normalize)
+ 		refname = to_free = collapse_slashes(refname);
+ 	if (check_refname_format(refname, flags))
 -- 
-2.51.0
+2.43.0
 
