@@ -1,61 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.216.95.84
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794250213;
-	b=IRkBv5nhyNlAXidaE/kidBXR54+f9OKBtYsiZKpU5IADenK4k2M2pia2suNLMQ9CeAlO
-	 Ziy1QZNZdYO0OuONXlL0lGJfuIi7lTzE8pQ7H53uxw6tUYTpzlfofPOZW5iC8JEchylna
-	 FHkhRXm5KfdKkyjr6z9fhLisV3HeObN6jJ6NGYcpxwWfWxL9wUOs3D7lkUxIsAfDtRCEH
-	 PE0lpq4Yna3K3tezsBSTaZrVw3pWubr0KliUn4fTFArtLJ2cyM9fZznriWp1RjPz/rmaz
-	 eDcKvDhLqdwIgojvMHaZYhxuy7jyKsXcg5feH+BXacI9JMb3T1+4kJgLNpD4TpjQrsQ==
+	t=1794250385;
+	b=UYi1ruOqywvi0qx5XDQ/MOc3e5J7ufvpbNuzzdciuwgYaoGLQxVSON3Z9v7zGK4DEnkJ
+	 WMbJCWiydHjvWcR0Zb6kUlhWi0R6PwhpUa4uDccwuO+OXsN6NsSyIFLRD8rlu563ejpWH
+	 E0j120hP7jdj1ZplldoazuRL5D4COfYTZyiTInLV60M+DDRihksVk9ejdv7LP6aPFVDu+
+	 ia+pUp3YnmZTJEKpXNe+O7wZUJArD+6GOOeRPgZDIUjUKj2RMjQSryAWvmIrLCG3IVJqc
+	 CuaSvEk/JfdDRVOWKOnuROg4qSRmEIJ+MeAhzeTxxoakFgR1Zdj5jzpd9rEY5fBKg0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794250213;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794250385;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:Date:
 	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
 	 Content-Disposition:In-Reply-To;
-	bh=rgA8AQ2jhVGqR+OLP/iEgOrxG7mXxEeb7bnAtuQHMY8=;
-	b=CstpUDvRG1oaPbhKX2zkJkbPQg25/hrGDjfztkQIvvp9alOXgLQBNWFxXcHqq51qKBMz
-	 f8iDYhc/oF/lmtU/Vut6y3CWuNdLxfjNhz190+hVV1fyo4+bQjzP6edudr9/4XorUUWMz
-	 ImWoDJDsFizrH9e7zh8R5A+OHr6nPZ7EJkr4ee8St/0Exu02t6tNxWUkbPAiNpfe3WoNM
-	 7e97KFZ5JOYI0ewqc5UcU8WuSXVtuqfC/BzKzelLylHBAa3ZjKqFpGgoW+TdovOpwxBAi
-	 tIYyVfRZcdNLKYwIHH6dENkVBrDLB3rB3k5LQHNrNlZ5wXcwIbcAVzywvNptHfCVbrQ==
+	bh=BwVrRr/Ef5Ns2fRzaYx/t1YSJIRpWPVDOdjXO0tbCgQ=;
+	b=5gyKAJ5OoKUA/jtW1bvbh+gjFQgs3Q0/rjoOeXDF/P4tNajaN54J5GtamvA0JmNHYwza
+	 iE05Q9Ly3ENrA9/1YaCFYJ73fO5A8A8YWn7kh7CI3fhoTiUfgLSGZkq3P0/1LNo/5kNwu
+	 XY/yeJDTRyrEFHKTDMxgyZNF1r0qimlFH5045IJWxIFih6HIU7YEvpPNJk8XYe2j/ixJz
+	 ZY9/UmOKDL5DjCv24CV2BFmYsXKV2jdPA27uR123DaGd1Y3AB6liBT2zyUDINlwS2CX5y
+	 wm6ZGjjY4Tg0MYlOO+gUmMCrsFJ48Xgw+Ol2DU1zaaPic2ikuSE59jJxDPogD4kxc5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=peff.net;
 	spf=pass smtp.mailfrom=peff.net;
-	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=bRWEb81V;
+	dkim=pass header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=bv32WGRU;
 	arc=none smtp.remote-ip=217.216.95.84
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AA1606A326
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 18:50:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 52AA1606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C332606A321
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 18:53:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6C332606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=bRWEb81V
-Received: (qmail 90108 invoked by uid 106); 9 Nov 2026 18:50:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=jHXv9ZlCkycOOhGPdS8ZP/LecAocvTccehxZIdGT+2g=; b=bRWEb81VmMIC1dTaO1mom2HJsnZ6uW15Hr6ewUZ1mnHd4VjI/SlUUApk4TkIMke0/9tR77Qyt1nS4w6gpj1sbLxL79qPhGNvz2r5t8F3T6eo6XA9SdERBBqrR5Fnv+tRdBpdLJeDnRvA1SLKsExWv2cJn3s/Eh5T46cht6PUdB31ji4frMGQ0x9dWjNJUz2DrkKVNLd4+4HO+4IxJQl8X94+WzYyBXTSBYdBbpwGNB0pYfxZGrVV98RtRizDvS1i2DgH+Aok8iUuygVwyptxW/qyvleqdse44l2Ew1d6/O7+88wq0/ErnOrttDoENSbLUErIfTpO1FvcuGtNOL9LSA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.a=rsa-sha256 header.s=20240930 header.b=bv32WGRU
+Received: (qmail 90152 invoked by uid 106); 9 Nov 2026 18:53:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=NSOAcTG8J6E/yDas874pWmxRozTZm6kEIaJbXV8eMZI=; b=bv32WGRUqPlfao07r1KmUliswbKSPXPz+RDqjNVL4SX7SOAvWQEapZ+Wj1NmO8ucCE0PkvAoo04ahqS2ubcfKRAFQvPlOGTDvGaLc6jNAvzkXbUep4CLav6aR3C1LTN+SbtRt62QvRmpo9NsWUk08v/jHJa40aWpGnw2qwxO2ehn2Zm3RAVvIq4q3hIiQKCEte4XQgUhx5gWSqKmiqS7qgHnMLMNZcRg7uniT3mjeMkDZ29PMruqbCSoEB1SEZE/pajNeRKSuNbiJ83uAkQ0km6PbR8rSVCZLSAwyCuJ9GJ/y39Dx2Tv5KF4MD2OB1TKEiOMg9i/iBYkD1aUHI57xQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Nov 2026 18:50:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Nov 2026 18:53:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 157466 invoked by uid 111); 9 Nov 2026 18:50:04 -0000
+Received: (qmail 157494 invoked by uid 111); 9 Nov 2026 18:53:02 -0000
 Received: from Unknown (HELO coredump.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Nov 2026 13:50:04 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Nov 2026 13:53:02 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 9 Nov 2026 13:50:03 -0500
+Date: Mon, 9 Nov 2026 13:53:01 -0500
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Patrick Ohly <patrick.ohly@intel.com>
-Subject: Re: [PATCH 2/2] odb/source-loose: fix existence checks for newly
- written objects
-Message-ID: <20261109185003.GA1322417@coredump.intra.peff.net>
-References: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
- <20261104-pks-odb-loose-stale-cache-v1-2-a00d5cdb5e7d@pks.im>
- <20261105194314.GB2898829@coredump.intra.peff.net>
- <au23Hvzp09yrym9s@pks.im>
- <xmqq5wyalzi2.fsf@gitster.g>
- <avHOTt_PEJUKq9Dy@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2] doc: git-diff: rewrite EXAMPLES section
+Message-ID: <20261109185301.GB1322417@coredump.intra.peff.net>
+References: <pull.2293.git.1793720007182.gitgitgadget@gmail.com>
+ <pull.2293.v2.git.1793893217889.gitgitgadget@gmail.com>
+ <20261108023730.GA1242909@coredump.intra.peff.net>
+ <xmqq33tc6ium.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -67,95 +65,46 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <avHOTt_PEJUKq9Dy@pks.im>
+In-Reply-To: <xmqq33tc6ium.fsf@gitster.g>
 
-On Mon, Nov 09, 2026 at 02:44:46PM +0100, Patrick Steinhardt wrote:
+On Sat, Nov 07, 2026 at 08:35:29PM -0800, Junio C Hamano wrote:
 
-> >  	/*
-> >  	 * This is meant for bulk prefetching of missing blobs in a partial
-> >  	 * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK.
-> > +	 *
-> > +	 * NEEDSWORK: rethink if QUICK is desired in this context.
-> > +	 * cf. <au23Hvzp09yrym9s@pks.im>
-> >  	 */
-> >  	OBJECT_INFO_FOR_PREFETCH = (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK),
-> >  };
+> Jeff King <peff@peff.net> writes:
 > 
-> Yeah, that'd probably be sensible. But I wonder whether that comment
-> should rather be applied to `OBJECT_INFO_QUICK` itself, as I think it's
-> way too much of a foot gun and I'm not sure whether it's ever really
-> sensible to use. But I'm fine with either variant.
+> > On Thu, Nov 05, 2026 at 03:40:17PM +0000, Julia Evans via GitGitGadget wrote:
+> >
+> >> +[[name_only]]
+> >>  `--name-only`::
+> >>  	Show only the name of each changed file in the post-image tree.
+> >>  	The file names are often encoded in UTF-8.
+> >>  	For more information see the discussion about encoding in the linkgit:git-log[1]
+> >>  	manual page.
+> >
+> > Sadly this syntax seems to work with Asciidoctor, but not Asciidoc. The
+> > latter doesn't create the anchors, and then xmlto complaints that the
+> > result doesn't validate.
+> 
+> An offtopic tangent but didn't we repeatedly float ideas to drop
+> support for AsciiDoc, make sure our documentation set renders well
+> only with AsciiDoctor, and tell folks who do not use AsciiDoctor to
+> use pre-rendered documentation pages from git-htmldocs.git and
+> git-manpages.git repositories at https://git.kernel.org/pub/scm/git/
+> during the past several months?
 
-If you are going to get rid of QUICK (which is only implied here, but
-which you said more explicitly up-thread), I think you would need to
-check all of the users to see whether original performance problems it
-was addressing still exist.
+Yeah, that's what I was hinting at near the bottom of my message. :)
 
-For instance, 5827a03545 (fetch: use "quick" has_sha1_file for tag
-following, 2016-10-13) reports a 99% speedup. We have made the pack
-re-scan much faster over the last decade or so, so the results now might
-not be so dramatic.
+But it's a big enough change that this series should probably just
+accept the ugly syntax for now, rather than waiting for us to drop
+python asciidoc support.
 
-We should be able to check at least that spot easily. The original
-results were reported on p5550, so here's what I get after un-quicking
-it (patch is below for reference):
+> Perhaps I should add an entry to the BreakingChanges document (well,
+> I know I know I do not think it belongs there, but since we hit this
+> so many times already .....).
 
-  Test            HEAD^             HEAD
-  ----------------------------------------------------------
-  5550.4: fetch   0.10(0.07+0.03)   1.42(0.98+0.44) +1320.0%
-
-Not quite as dramatic as the original, but it still makes quite a
-measurable difference. I will note that p5550 is intentionally
-pathological, though, so real world performance might not be as extreme.
-
-The other thing to note (and you will see in the patch below) is that
-odb_has_object() does not have a QUICK flag these days. Instead it is
-reversed: callers get the QUICK behavior by default, and have to pass
-the RECHECK_PACKED flag otherwise.
-
-If you are just proposing to drop QUICK from actual object retrieval,
-and not has_object(), then there are many fewer spots to consider (and
-the fetch one above would not even be in the list). But if you mean
-both, then there are a lot (and they are kind of annoying to find,
-because you are searching for the absence of the RECHECK flag).
+I'm not sure if it actually rises to the level of BreakingChanges. It is
+a build issue, not a user-facing one. And there is an easy workaround
+that can be applied anywhere for platforms that can't or don't want to
+use asciidoctor. So it may cause some slight hassle for packagers or
+those who build themselves, but it's not really breaking anybody.
 
 -Peff
-
----
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 09966e5ce8..2922c32f7f 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -391,9 +391,9 @@ static void find_non_local_tags(const struct ref *refs,
- 		 */
- 		if (ends_with(ref->name, "^{}")) {
- 			if (item &&
--			    !odb_has_object(the_repository->objects, &ref->old_oid, 0) &&
-+			    !odb_has_object(the_repository->objects, &ref->old_oid, ODB_HAS_OBJECT_RECHECK_PACKED) &&
- 			    !oidset_contains(&fetch_oids, &ref->old_oid) &&
--			    !odb_has_object(the_repository->objects, &item->oid, 0) &&
-+			    !odb_has_object(the_repository->objects, &item->oid, ODB_HAS_OBJECT_RECHECK_PACKED) &&
- 			    !oidset_contains(&fetch_oids, &item->oid))
- 				clear_item(item);
- 			item = NULL;
-@@ -407,7 +407,7 @@ static void find_non_local_tags(const struct ref *refs,
- 		 * fetch.
- 		 */
- 		if (item &&
--		    !odb_has_object(the_repository->objects, &item->oid, 0) &&
-+		    !odb_has_object(the_repository->objects, &item->oid, ODB_HAS_OBJECT_RECHECK_PACKED) &&
- 		    !oidset_contains(&fetch_oids, &item->oid))
- 			clear_item(item);
- 
-@@ -428,7 +428,7 @@ static void find_non_local_tags(const struct ref *refs,
- 	 * checked to see if it needs fetching.
- 	 */
- 	if (item &&
--	    !odb_has_object(the_repository->objects, &item->oid, 0) &&
-+	    !odb_has_object(the_repository->objects, &item->oid, ODB_HAS_OBJECT_RECHECK_PACKED) &&
- 	    !oidset_contains(&fetch_oids, &item->oid))
- 		clear_item(item);
- 
--- 
-2.56.0.800.ga66132ec4f
-
