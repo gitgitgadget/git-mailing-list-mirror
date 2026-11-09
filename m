@@ -1,120 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.157
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794209744;
-	b=nDFg7C6Zhn6W2xyxbdS5UMu6Bwo6jXxi9KnEm5bChuQ2PHL6KYfqmTQIn0/q4u/1xonR
-	 bmvTJZpLdRNTbVUNjW8/gbYQY6iBiC8nVi+iY2CqFV4/yPojSdzqTFEZBbcc78baIzUvo
-	 dXrIsuQYufn3z4+2i6zwRNdJnvAqwCPlqNAHnnZhbJrnTKelMkfiNo2RjsSC8CYkaW67f
-	 H7v+0oF9VwCo02TvIuQDGOyowtillrDafYeHLsQaFWlV3yyMeE+pPfM/+JkLGaoino/Hz
-	 ryH24AWVE+xOfdfT+UoDWcwI7yh8JSHRZZSOIAhyau7odBQMDrA4u6vU37439F4lTjg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794209744;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=kgAtb3fbUW6ctXIsCpzwVv7cjOLa+aE9tBwpohhVOqc=;
-	b=P5W7e5Ks/1yZWHcoDMEcKIWyL3f+GYyBrOCdIeIXFjUMNrQ0SRbKPzjD8JTTCKkuAEkA
-	 xVpsIKlLYWMSfCJoXNw1iJC0KECrqdgzbtGFI6el7z8qLf7i/Uda/kgHfvtfMJZhZ/KtN
-	 AXGyIo8owBGkUt90EJBC8/kSzTMIN3a3CLcpXNAEaD+Ct8Mc2jP6F0NGs7lUSUTFTShf1
-	 LyaGw1cajTIYJdJ/NuL5mZoYC3Q5YF2mSOl5h3vUceFIdegfbCZK3ooXokaV5oyofM3gJ
-	 8bdU+eSobj0XMZlON7szkuzOIG01XW2XwdVdutDUAcRFYCjiWvypFyeyY9W6EoY6OIQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=cRa6kVNb;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=g23PhYwN;
-	arc=none smtp.remote-ip=202.12.124.157
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.54
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794210217;
+	b=ulYq7iQyeiE9EU8/Pmao4b1S1P3GHzsrb6A3S2iHYgjV89xSAh0gPnEJMZkWoEyyYqko
+	 sGUuwCF6sd2YPwOwDMjrvKyXCyhRGHVEFIqC9Ov4c8ykvD5/b6u3gMa3LSArdAg8LettY
+	 LV7rGSSNjXdxzsfDnA4aus57dy5ju03bXcV/3sN0RQ8r9V7itjfAJ/vaXCf+O2c/7U5Hq
+	 jX/m+xCFHZeKh7C4m8HNjkfx6vVSX5DqTdpgBwixVqQIm6TAWS4RgY+UmFoCc/bhryU39
+	 CWXrceIkwJempLBgP5M5Eeb5zlaTclvvi7v3jQbknFveVuyXTe04bylIJY9SQTm+O3g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794210217;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=nd78pemVoYAxjiWCuE0PYD0OeN0TzUPSQpUM7Bm9e3A=;
+	b=Y7d/bosr5IEzKCU6sKoOEOzqb0XYjo/zsFLeolPGRSP237YXkFfJSOUfZskTwI6FZ9bw
+	 Op8Cb9FIk1hDBV3ZPTqnhNrciI0598aICcRGDXfyb6RafuY28YuETrt+dzg5hq5Gn0Ebu
+	 trUiGknLT9/7xzpyTtoycZMnHNX4tHRbqt/pnFeKpElVsEsP62bAUfT1AtURwsBwCffKp
+	 /aMZ8nsMroJpQFxTfm1uLwzKb8c0kaZtCXUZklIrTelAQWLSFbVEoPM84ZbijuvUBBWhj
+	 Hp4Wm0vihXQVSDEv5ObXPiLw302l0HNRqOlwUw3as+AezPdcU7XpfV6TBrYQFPsggXQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=spotify.com;
+	spf=pass smtp.mailfrom=spotify.com;
+	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=d57zHX5A;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.54
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BA6606A32A
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 07:35:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3BA6606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AED606A31C
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 07:43:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A4AED606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=cRa6kVNb;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=g23PhYwN
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 34AB97A0155
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 02:35:43 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 09 Nov 2026 02:35:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1794209742; x=1794296142; bh=kgAtb3fbUW
-	6ctXIsCpzwVv7cjOLa+aE9tBwpohhVOqc=; b=cRa6kVNbvz+UXY0bFB7CePa2Oo
-	CiefJdAGuBfZ+SZVvF8V72hX7M8jrLTkekaJVtvOX46zjaYDoGqvwbf1UyQQJT1/
-	ftYfOxzwyN8JO0/WqBDrfWm8LMoQSFekNdy2V21so2I7I6mYGENYBZTVynVX6UG4
-	16M9lDcLYTPKTGjsjMfkX/B1MWi2rVWddASOAKEQFtmU/j3ICzUdJzG0BmHg//+v
-	5SHqEim0Syo7qLc/KjVdxxzVHXJH+sT9VitLFdNkX2kZMX2KcLVYAt4i1EX5OX+9
-	F+ojIxqa4ylj4UHXlnMAW01DFUFXSVlWcyPMUO5tLHi+U8x8K3PaB8A3PB9A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794209742; x=1794296142; bh=kgAtb3fbUW6ctXIsCpzwVv7cjOLa+aE9tBw
-	pohhVOqc=; b=g23PhYwNXIAXg+HMgPtT8/QhAB9BY5bt+1LI5HzZNkcFUeCE9On
-	Vj52qoyZfcEjr76XOGnMqO7Zs/RIj0z27mJcNs+oPlILLLj/Hac+vX67DyIFsRGr
-	1xE33C4t10xbzNfkm0X4CExaYQilfU5t8PVH0LwCCkokPRayRe2BbI1PQO6KM/Ka
-	OwhdetdEPKJRxHkfHO3Lo70XuhGZZMwJH7mUnnSQCoJrIp5esbeOitN4MQQbu2RU
-	EtBDNvJjoO1qKOv/5ze8Bu/+BxPd09qUt2du9p5POXfStiLy/Al9lTfb2bg3EU6E
-	Aj4Q9d4DrGVuA1EaqZ8JH3rfgCQqC1wlW5Q==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794209742; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:mdd4PX89qbbI2F6UjwWtK2h251YW2k6DS9KKarCXVHiUsbu
-	nGHzaO2BsihKNrzcMnh3T17xsPwPQoR0tuDOuzCq/dbh7HkEQeCJpFSKdo0SID+2
-	ss+Vij3tPNZAMP0I1k50ZX7HF4JjZzmthEDtmd0Ej5/xTKxXxkK/z+sYiTvohfZe
-	q3FieBqMbVE0dkpcTESK8XTrbdkIFOfxxXITczSzVgV+fUzWNq/WolJyN+JbA6yG
-	A0ow74KN/+hq3/ZkAjdTsIBssyZy32ArM6wx6zfNfhVQE95TBAc/RGYWUkKf/a+c
-	7YbxUSK9tnp46ON0LeRDYUsexDZlF0Hj3NbvECg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:iIBkDdc88GBZb29CTCTO58x/Zax/7jwijYBSClr7cyU=:vgaqMWMz91Hz0+OE6Ma7WHreOLo+IkkIoBHiKaX6pxU=;
-X-ME-Sender: <xms:znfxauZN1se7HcH1Z_x3CkuzDba-E61Dp1mngZkmOIdyHt3GZblw5Q>
-    <xme:znfxaoS1cP-h4Cdyt8CS42PZwlUl0XMgRWJuUG_Cua3sBDulSzm7xtcCgtRT85oEB
-    cXBHgeV-q3gKFpGdx5_7jo7coETnArL0LJBdyon1xfwnItRvYw8NTg>
-X-ME-Received: <xmr:znfxahR01HZcMwhvDUAWuWakoR9BYfqOC3AtxmkgzOTj5I2A4ShTlbviOXJMNatyeBcV9c4>
-X-ME-Proxy-Cause: dmFkZTEDVLfwF5QkIsaREYLTlnc0Vfac9fEFHaCK5vYB6GNlx67skqGuYp2RpIAgFxxqJD
-    chz1z1D4M/Mek6l+mRTGPz0plSRbVw4f4ndwvlJRYFW4x6bAKakmTRZesyj9Qn96AwYZS1
-    Yp4HoKoAwxPqMK4vOYmlfyT+z3YJU+9PiNbVNAjh7yrJMlvlIeF3wD1crJ1T38mBnyvQqf
-    Py3586ZlNvso2qnuIWmI54c9XWN6+d3PLAr7S/PqArBUgBYOtG+0PInpmyOMXDl80FtBgI
-    qGX6nWxVGwshZserOqX4Xe8jE/o0/zfTFQTwAbHKGDykefudvnGcTSlkTK3lOmw659G+Np
-    anD6y0xSlcV+w0Lms88142ZWqRPSRHtVkFu8iHjSSZU/+oXrT3RAh4oStvsAllnIJoAtBi
-    z2ti1pc9HGmsP2sskcGffRjkeE2A071SkQKQ7jmTu9+DAb5aJ6vfV/eFIGhVrGX8ThNf/i
-    to0bGkJyeX3vjMnZxpze8w3pjw8DmNlo6loC1g75Svj6ETDyYvIUfDcbdhMmqIW108OK1Z
-    AXGSQF4o0UUAPjtLYLCglTf/vgGDvnfS8U1+CbfNebDRGHjRpLkq5aEs0g2lRB0oQsDycV
-    a+5jeLqboA5XfIx0LHUd10axcFHm+pwS1nLdt5tzm1qtdKcFzT+X3K0ac31Q
-X-ME-Proxy: <xmx:znfxasSO0FgGAxkl8W7Rvd_5cGdOK1mzm0clf6ATH0UJ9sVJA7-OKw>
-    <xmx:znfxam6e1vp-pAtJ7dhVDHVRTHCIfEMWDwXeqAGADyeHxo4r4uWbRw>
-    <xmx:znfxao2iHBUZLd-wjYrqqCPobjqnFjJQ3mlxltah_lVvLbGz8cJlVQ>
-    <xmx:znfxahAscS3iL_0SiSOs22aN-kyNJ4WD85iRHqJKMdW1mdtoyO_IUw>
-    <xmx:znfxaoUmIoW-IHKFYmLFGWp5kjMXXZjcfUbnSVf7LNRZdgprYiGp1ENZ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Nov 2026 02:35:41 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 608f13cf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 9 Nov 2026 07:35:40 +0000 (UTC)
-Date: Mon, 9 Nov 2026 08:35:37 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Joie Joie <soniqjjj@gmail.com>
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>, christian.couder@gmail.com,
-	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [Outreachy] fast-import: Use repo_for_each_pack() for duplicate
- checks
-Message-ID: <avF3yR-PYA3_Ih3v@pks.im>
-References: <CAH=d44co_ZFA8EJwAoFL4=88ZqWzO65_+GbHDZfjG8amR4cHBw@mail.gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=d57zHX5A
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6b7245ab5e2so845691a12.1
+        for <git@vger.kernel.org>; Sun, 08 Nov 2026 23:43:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794210215; cv=none;
+        d=google.com; s=arc-20260327;
+        b=FHY2G3jAONhtaEZvb/g0xUpE8bfWqkkwWpYDjy+EGrx24pnRvH3fCG4m0F3pWPKA8k
+         QRIYtzKgOXO9ZaqElpPs+AheLftmSI05FWdekyr5wU7yqzcyc8L4k47YZsWD+gDxJyRr
+         4AQmIweWOo+fL4S/sCmXHxrK8w9bNeqNyMyzfm8/B/0lRadUu3X8E2fNUxRq0/gXJrhY
+         PQ8UYEl1aYEoGh/Yy9OZToCn1gPL2PCEUJtpupQ9Kf2mhBV5m72FX9CylVED+usOoA0E
+         tMgqX2gHR3jRfOOjwOGtQZjlAKYB6WnNAgZrOPm+fXjukzuAV4Aze+dAgCC26pjLZeyV
+         wH1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=nd78pemVoYAxjiWCuE0PYD0OeN0TzUPSQpUM7Bm9e3A=;
+        fh=StUjxtPbUuH5JuA7/EGRz/sLkBdJYKXwbPhYJp1al90=;
+        b=TBNlmvF1HbuqghYtd8ZBp0Jk9tMhFWX5/yR3WxSfwrFWY1nKLwL+OSCmE0cTzuBb+t
+         Mvqrlb8NsqqtDVvfNy50JmMwktGM1fjBA3EhhkeMo6gxVcMm8a0YveKco+/tgenf2Tqp
+         Dp3Q4uTdBj5rvxNLjLTIGrisHr5JSk942WHChnaGro292sG0aZud2309pO4XcjkUrPvm
+         ncxhFYjkwPBz0tuBqnQBFWfgA4vxFrGU5LdYbLxSnfjfkrtJ4vPJV3ffqAPzTHARH6PK
+         DKRS6fHGvJu/+192gncJQWIqtHIqcDPtEMjOov2qRtWcC+p/X+J7B/qTha/twWWm2OmD
+         wdFA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1794210215; x=1794815015; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nd78pemVoYAxjiWCuE0PYD0OeN0TzUPSQpUM7Bm9e3A=;
+        b=d57zHX5Ak3Hsxt+y5Wismin9hN6sMQjomb9bNhQcnRFFur04yLSDY8fh7xpXsJIlbY
+         H9vASUWdzrnmGD0KxY4CECrppMba5ERsdGoIUBJTGR5Kny4nLp7WEqP6iXdmfj5JNHuu
+         LlQEiZTLjtLNJHN78vi7S9AC4qDoKlXYcp5mc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794210215; x=1794815015;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=nd78pemVoYAxjiWCuE0PYD0OeN0TzUPSQpUM7Bm9e3A=;
+        b=AE1XCAjjpwOXV6khcaIDCCQv4lNsfi0aIFiN0G+uodYmPmseyHNDdKEvaIgi9fTZUh
+         xLO+v9NmdaNeA4AYtOKLwfsjQTP2pf6p0rx6rnxtLXT0SWWQnL8vNkjXV3QFiUjv6d5q
+         PxhVtjun/X1K9dExaVgPyTl3usckFYP8mkzswSp3d7Tcb+CuXCEgxx/kFTC1YQHBQCRH
+         8VgVpVY/cDK5lgIxjdBMjJTcqFf3+2Q0TTYGQxnFQVbhCzz4NsU0GNv9UuKN8iXaW8/5
+         +vemhOWz5oUeEEN3Obq2zD/h3QAqPWJgAJeTP8I1xPXh/dB7dtGWGkrkRltOZS43PHEe
+         M+DQ==
+X-Forwarded-Encrypted: i=1; AL+hErGqz4Vl3NO+/LBk/oynFju/CqV/6wf7Z0sHz4ELHx8GmveRiJVp53zuPb0NIT/MkPxP31k=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/8zoHx3N9+eQhKMRlcpx0sP+UwcKWkgj2ZDO2Qu8nQMyLHEwg+
+	5z72CNQ1be7LvoIc2FBCFGtsVgCSMBMcrJecJlI8XiAY0SVDz6H2kyEORlbNC2QCIiIYBNaroaL
+	p5dklNl/jZh9DVwnaoCvxP768UoYJg64m6KahJxIckA==
+X-Gm-Gg: AYBFou3hZbpaqrlHoQxi1WSNTykzdziSXYSzlAYaOxczcWYMHj8ZZL2koXuGQbXsaWk
+	ET0wi3dnVmSdK9L1QgGjI6glGXXEQ4ChjM4q6ylHdOXdQ/JWIKv8pmbzcEkUt9ZdyjwGoAMmeZp
+	nrEQENmeXwz2bSqGZ5XAnIG4Jf9opqxORdFQjcKrOn/xrt/pbK6Hnhx+MkOc3Xs/UI1STSj/jVR
+	ZCyoVaC4VTkC/kt6DjKV0dHvfm1VNdH3L9xcsHpjOUi9PR7H4x4tNGnwrRBTBIYfXiCPE8dg1ce
+	qQy0h3n67PwYmmRN0t8ngPdspA2HalqSnVyQoNKJqyzDQo2q0zIaYWLNnDYy/2IpB4W+IbS7oUB
+	P1PnEYBqisB1AcZE1AP3y1lfUytoBztKdLacNzQ==
+X-Received: by 2002:a17:907:968d:b0:c49:9247:9688 with SMTP id
+ a640c23a62f3a-c4d52577c14mr355692066b.7.1794210214987; Sun, 08 Nov 2026
+ 23:43:34 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,38 +100,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH=d44co_ZFA8EJwAoFL4=88ZqWzO65_+GbHDZfjG8amR4cHBw@mail.gmail.com>
+References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
+ <pull.2301.v2.git.1794165304.gitgitgadget@gmail.com> <54139a3a97127732e11fc5abbc9a3687542669f6.1794165304.git.gitgitgadget@gmail.com>
+ <avFvYD5K4SKlveiI@pks.im>
+In-Reply-To: <avFvYD5K4SKlveiI@pks.im>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Mon, 9 Nov 2026 08:43:22 +0100
+X-Gm-Features: AclHuK9PPMPVw-XTIat4ljiqPtW7nikKuWKoJgQPL79-cjQph4xhZ4z2T1-HpTw
+Message-ID: <CAL71e4Mrw2h-D+yKLVE30q-7dnkT31CVsyVmktmS9Wx6Xu6ocQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] t: add "test-tool genbytes" to avoid slow tr(1) on macOS
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Joie,
+On Mon, 9 Nov 2026 at 07:59, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> Okay. The diff is unfortunately quite useless as we do the file rename
+> plus all the changes in a single step. It might've been helpful to split
+> this up into:
+>
+>   1. A rename of the file.
+>
+>   2. A refactoring of `cmd_genzeros()` to use the write buffer.
+>
+>   3. A change to introduce `cmd_genbytes()`.
+>
+> But maybe I'm also overdoing this.
 
-On Fri, Nov 06, 2026 at 06:44:49PM +0100, Joie Joie wrote:
-> Hi Patrick,
-> 
-> I was looking through `fast-import.c` and noticed that both
-> `store_object()` and `stream_blob()` still loop through `files->dirs`
-> to check whether an object is already in a pack.
-> 
-> I saw that Git already has `repo_for_each_pack()`, which is used in
-> places like `count-objects.c` and `pack-objects.c`.
-> 
-> Would it be worth using that iterator in these two places instead? The
-> idea would be to avoid accessing the files backend directly while
-> keeping the current packed-object lookup and duplicate-handling
-> behavior unchanged.
+v1 had the rename as a separate commit, and Junio preferred to have
+it squashed into the change.  I do not have a strong opinion either
+way, so I will wait for a consensus before sending v3.
 
-No. `repo_for_each_pack()` was introduced as a helper function to make
-the migration towards pluggable object databases a bit easier. But it is
-ultimately still flawed, as it assumes that the backend uses packfiles
-in the first place. So the goal is rather to eventually get rid of this
-macro altogether in favor of higher-level interfaces that can be
-implemented by arbitrary backends.
+>
+> > +     return 0;
+> > +}
+> > +
+> > +static intmax_t parse_count(int argc, const char **argv, int pos)
+> > +{
+> > +     return pos < argc ? strtoimax(argv[pos], NULL, 0) : -1;
+> > +}
+>
+> We can use `git_parse_signed()` instead.
 
-For git-fast-import(1) this will be done by making use of transactions,
-and Karthik has already started taking a look at it, so I've Cc'd him.
-For other subsystems we'll need to investigate how to do it properly.
+Good idea.  It would also reject invalid counts, which are currently
+silently treated as 0.
 
-Thanks!
+> I wonder about the regression in readability though. Maybe that's just
+> me, but I don't happen to know all ASCII values by heart, so if I were
+> to read this I would now wonder what's so special about 61. And the next
+> thing to wonder about is whether this is supposed to encode "=" (decimal
+> 61) or "a" (hexadecimal 61), and without reading the code of genbytes I
+> would not be able to tell.
+>
+> So can we maybe make the underpinning logic a bit more intelligent, e.g.
+> by accepting "\NNN" or "\xNN" syntax instead of two hex characters? That
+> might also make it more extensible going forward if the next developer
+> wants to make genbytes take and repeat strings of arbitrary length
+> as-is.
 
-Patrick
+That made me look at what the callers actually need:
+
+  callers                     need
+  t1007 (4x), t5318           NUL bytes
+  t1051 (2x), t1450 (2x),     any byte, only the size matters
+    t4141
+  t0613, t4205, t7006, t9850  any byte except NUL and newline
+  t5300                       three different non-NUL bytes
+
+So none of them needs a particular byte value, and the only special
+case is NUL, which "genzeros" already covers.  For everything else, a
+plain character is the most readable:
+
+Given that, I am now leaning towards keeping "genzeros" as it is and
+adding "genbytes <char> [<count>]" for the other callers, i.e. going
+back to v1 without its last patch (and without a separate rename
+patch).  That avoids inventing a syntax for NUL, keeps the call
+sites readable, and also leaves the existing "genzeros" callers
+alone, which addresses Johannes' concern about the churn.
+
+Junio, would that be acceptable, given your suggestion to use hex
+digits so that NUL does not need special treatment?
+
+The rename is perhaps less important to do if genzeros is kept
+(though it also gains the genbytes function).
+
+Thanks,
+Kristofer
