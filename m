@@ -1,122 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.27
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794238809;
-	b=ELav3c2mnQH3dVZg6DGU7gvfbW7nRycFgXkoEO4Kr8Tz4iR+PQ+DCgTqjdVbqkgOTQae
-	 5kpgLMUfgx0k3E7S82qYNmfB1CYffXpv8Tmp4sIuYeEPQHl1sfwb9MEiAUgCoVNGkhhjH
-	 k0JUmOzyaqxb2s75VyAn5D2AGB7wGePH3iB3zXEr1QIPIKy3tiEG6+ykVXb6fqb/Qs2t/
-	 uJEGOCQFW8l5RXnKnKdIyCDdatswCVkQIpkQcbS5dC4w0yT6f5MsXokryAHegV0Az7xbO
-	 PVMYCYue6ukn7TRpvIUYnmNllIRf245zFUC64aaeQ3zhzPH90EcvVtKQtdPXAZvPp4w==
+	t=1794238852;
+	b=C81rTqDy8Tatzvo1h2RXRED77kXJe/+7UUMpL7kri/5YSzQaxvg5q4HkFXoK7iSHiPEH
+	 yBOi/ycZfMB1Ytnz/btdvRR4Lwt/bnubHXpRNMAm+S2nKxHMqH1Y3yOiL17SDhDDNLxo2
+	 D0OG7GIOx8QJc/N+3LK/72vno/sEUQpViImdxXuYe3ndNx84uPGFEpmTdI1sQwXoFcaZd
+	 Hi8jOg4MeQfUq+yBb1PQ4vFOGacxt/DLR5Vu5OEcHAYNdJ5qTuoONX8RnIWPCGGbE6YS3
+	 puU5to+ky4GnOcsA8cuJKD5wWTReYj8bOCZJy9GzdQJjAf85s1vJVDVwgsgc0PhnsJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794238809;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=271TGsqRDTQp6/xi8ErmsnJqR79f1zeOyoEIKbBFO44=;
-	b=YPUFmsfSHeCTdW7NJq+TJJl4SNJH5LwCc9lnMy3rKUe0TWbtmD5Cv/72w7ahTr4vJfmq
-	 9ViD75GmYc3/APwg85p4RzyBLJ5T5XAX1Zu0cNrAeRwMOkh1iZ4ECGrbf0jVp53qd4K0J
-	 H0TvvaG2TH6TSY39cQ8Xqiun384WlUyW0VkPKYbATZVefI0vZTRpluABZlfZXKuCPa6T4
-	 qgxKiHvgOEESnYgh/6XRmQwk8NaTC+sJIQuuE/i14sEJeQ/uSBGv4GL8+yAO6rSdcqduK
-	 KBXYFrBGt4QpZjmAVPMFAo+giCuBlzjXDkkVW8oWPfH3kZ6GYtKzmswfVZ0grkyE/3Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794238852;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=KFN5Prn5eX1AkVPD8Z0Oty6/ADThDl9RGxKX0bk1mWc=;
+	b=b93L6qT1iXgunfOngzoxyq3ZIkHuK0BM8554OF2WAshQwOzK75nJvJHMxrcD48xare+f
+	 tGQYvzYkWLbyXkYwwUKtMNQWEt2nn3k5YIuA/wxDu9DFCsNLwJhevR0D7hct9snCmcQGY
+	 3eQRklgtCk+2ZUjUGpen/cKt343qpmqE0OrLXnNDSjKfjC+bkd4Djuc091fKAcwiccrIK
+	 Zz16f6WJBY9Zsn3NXfU2eoV/inA31HC2OYlJHK6fKoaz+8X/v+M3VPoOUSGHih1DV2NbK
+	 z0aJxmT7ST28GI2mZIS0V2U5irkHE47b0r0DKL5i3LBoWvTCJnsQcDPwmA4QWzoQ/6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=HVo1iUlp;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=XHGQSHof;
-	arc=none smtp.remote-ip=103.168.172.148
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=iotcl.com;
+	spf=fail smtp.mailfrom=iotcl.com;
+	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=Yuy97kYO;
+	arc=none smtp.remote-ip=95.215.58.27
+Received: from mta1.migadu.com (out-27.mta1.migadu.com [95.215.58.27])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62375606A31C
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 15:40:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62375606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D9A606A31C
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 15:40:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04D9A606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=HVo1iUlp;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=XHGQSHof
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9BDC1EC0204
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 10:40:07 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 09 Nov 2026 10:40:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794238807; x=1794325207; bh=271TGsqRDT
-	Qp6/xi8ErmsnJqR79f1zeOyoEIKbBFO44=; b=HVo1iUlp9guCFNrRq52f9u8571
-	f6k28hOJYfPg/gKcg2OWAA07+D1dnN20k6ZwspxM3czaZ+l8ocyizGAvNopu3lvF
-	zVF/+httn+Jv40FKViAA+y7mey96gTbxJb+cbjf00QVG6L5OHhEjrnMY3y/5UTco
-	ZKLEFr5vFq3c0mNGyxU+yLGmJrnTpuq53Qw9euSpvm4eH+50VZUEg+pCPKbo8O3h
-	12eIHWAyP/zs1WFi89mKHqcZ4uDfMbBGy7jz20h1HAjY4p48epsH5rhYl76A7W+o
-	Opw/YnGa6NFPeWvK5ECKaO4qU600rAKhLgrwVOqPYiFjIvIK+ud/uQbj18Dw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794238807; x=1794325207; bh=271TGsqRDTQp6/xi8ErmsnJqR79f1zeOyoE
-	IKbBFO44=; b=XHGQSHofL1wA3tcx35fExmFHsSBwiZWiVHU9AMpcRBLfuZ7VjHt
-	HnFRgMmhOS9IZrfy6EYSxL2AihS9XpDJ61dF7NuJOhoWjLYHTgcW0nnDyiMfs7C0
-	cM6AsnA++SxC3Nestb8YW+H3RwE0mFAlRsaoxz9XjcNq6IgEM0zi4P6qwb1Pdd59
-	CeEYCKzY/gWalpJDMZBaKO6TDa5ax7VfMYCB/Rq+kAJaqpLrJuzZucDPnSSE2NcT
-	pF84zBja2qFqBQVerrEBKxSkv1SYYk5RgeOqHcNejQxBvMwZpWrjcKgS/fzuEhC2
-	/2x5lECOiu3s8gu80a+KnOWIIk2eRmql/3Q==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794238807; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:R3Ev1BpwwrT/bjQJKoKLeXv3AGGE1wEvzhuaRhuB8n2Xt/T
-	IDvptA3KwYcec0RTyWadmjSkxIs7Dzk9logXGeGnIDdKRE9UMnssZ3isScJgwnbx
-	CHsj03JdRwzTQJcumt9bjWxY/UkrF5CrddaSIIsBkwAYBYRAqxdky1yF7UF9P3Qx
-	BKowp9KlXp/T40p1hObocXxL4fZNfxaPxW1wQt9u5JiK6othm6UVD4R1PtdWBImS
-	/T3VXZQoOz0RtPxM3YwkaHV/GtrBGzIFQV85MScB5SE9DV7PVHYFm1EyThbfjPPE
-	POKmaZr7M9Zax7UXdUSF7CDJ13i1n/h5X4G4pGg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:ZvxJZG5mFgE6jXuxHyMCEkZC+YQE9bwSSy/KXRMw+As=:QixSu2lB8j6I1dDOk62rD3aD2RlZ6wleAubp5kv1kog=;
-X-ME-Sender: <xms:V-nxatF6zrQ-AFSCRrBECO13omOHX_Y1VacozRdvkrjMypj5NmHkUg>
-    <xme:V-nxapP3GhCv-bxd8qXJbchbuVhrB-AKgG-eH6Y4fNRb95TwkAiNuoQE58IUFKFoJ
-    cJcjCDYTrcCIva576FefgSnorP_GyCsKwXzjHvZ3ZoSVoMiYvJykGs>
-X-ME-Received: <xmr:V-nxancOgG4T32Ob_yoc15g6E3mfDPFnmjUH7JH5ttHMXF2sxHTYtQZFFFZXXM3Pnokzv2UlHmg9_zW7JlpBg4KNxNwUSm_0APuA>
-X-ME-Proxy-Cause: dmFkZTEh4i0Gh88PpGyEnQpsEup9wlsWhgr0UIymVw8+OeZMiFKNW0O7530jO+5GndptHq
-    VlEZElatFtV1PHcMbgxwqsLW24EoYfW7ktEYbhWMlDJCxvFO+M2iYUL6cixzB6fEPZugf0
-    ahwa3U3uEADm3rYJqM2+3gVND7i3y3m+b1Ok6Xy60eA4cL6ehpA+eXwssygX51M9SZDtdW
-    scm69jhprxePrItdAVR2rmg1MBe2z1ROTyWbR0hPd+PoFzVHMsjaNLhNyzD0FjhIdihDbR
-    ibvBv41O29VDXj03DwJ2/IavB6ERtbcIxIsqcqjne37CwUjJM+klqSDAIFY8M6vgWdf0DK
-    Q8AP0S2s3Y4KhflyKrXgc/iDEY/3NxszpVeh4L0gmrdRcToT5ZQxcKOpg+bMxrtMYSwlvl
-    EzzW0wYM29uL/BwSFEFfdmehhQ527gjbUD+KEMVKM5k2CtNUq1oYQYFA/30dkISiYrwsyT
-    Bo9QLT5DA8xwYurRuGlyNqruUFhenbIkzGvWoO68ZE/FSAoIuWSpOC7N+RUhBje2nEIgy2
-    JTRtfnwQG2UoHUSIGgepz0WuKi/jtDtFKvniyYVoeg4cC3UkaKuQwgSFmdIl+q607ZPpr9
-    LnP/kzx43xHE/j3c9smx2OL5Tw8ICwBFGodhQeO6kPITcarZ6oGCk7BA37rA
-X-ME-Proxy: <xmx:V-nxaus82ia24yfQdWTASTz1lnkOp3sRblSso6BGzrPLchugYzf-0w>
-    <xmx:V-nxagnPYMVtTHaAQQa3zKtg5L77GgGdNxm4qfGYlZ4zAee6JL0KzA>
-    <xmx:V-nxaoyWgrKpOrFag7aUKepTLGxHeanZsoPTAUYIf7HWEqxBhJv8Zw>
-    <xmx:V-nxaqMpJdyO3cxjPR7vPeY_YDDxTGEjOe06PoEdmdY0vTliySoExw>
-    <xmx:V-nxat_SgtwJbocCsEwWVb6YaAQf5XwQKBRbfVBW5kdiABN4H2soRHEf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Nov 2026 10:40:07 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "Mark C. Chu-Carroll"
- <markchucarroll@fastmail.com>,  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 02/12] rerere: convert flags into an enum
-In-Reply-To: <avFxCywngxJgwylf@pks.im> (Patrick Steinhardt's message of "Mon,
-	9 Nov 2026 08:06:51 +0100")
-References: <20261106-pks-rerere-subcommands-v3-0-4ff164d8fb81@pks.im>
-	<20261106-pks-rerere-subcommands-v3-2-4ff164d8fb81@pks.im>
-	<xmqqqzgxlxrq.fsf@gitster.g> <avFxCywngxJgwylf@pks.im>
-Date: Mon, 09 Nov 2026 07:40:05 -0800
-Message-ID: <xmqqld7210a2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=Yuy97kYO
+X-Envelope-To: git@vger.kernel.org
+DKIM-Signature: a=rsa-sha256; bh=lmWsJdnENItIeSSl9KiUsXs8wgPYOOwp2y5qPzNMteA=;
+ c=simple/simple; d=iotcl.com;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794238848; v=1; x=1794843648;
+ b=Yuy97kYOrCSw15a+r7ImzM1tEGGg98QfieW5tbwXXku8l9kl64INpcdbJ5gcZwZKcFp8hTbt
+ CZQZp3wiEeBjSUQeyVAn7th4riL/qh4b48ua2KK3VM5PM0rPs624QvMOL30qOtJGRpqfhhrGxYN
+ SWaE36KiwRFDVnemTJMJ/OCc=
+X-Envelope-To: git@vger.kernel.org
+Received: by mta10.migadu.com with ESMTPS id 4178bb5b91399b13;
+	Mon, 09 Nov 2026 15:40:34 +0000
+X-Mizu-Trace-ID: 4178bb5b91399b13
+X-Migadu-Flow: FLOW_OUT
+From: Toon Claes <toon@iotcl.com>
+To: Mirko Faina <mroik@delayed.space>, Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org, Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [PATCH] bash-completions: add --[no-]graph-indent
+In-Reply-To: <aujlNwM6X3BLz22V@exploit>
+References: <63106e1dec45e82c7f132a18816b2d1fffb52752.1791921033.git.mroik@delayed.space>
+ <DMHD8RCO7V74.2BK7C9T4HNLHO@gmail.com> <aujlNwM6X3BLz22V@exploit>
+Date: Mon, 09 Nov 2026 16:40:27 +0100
+Message-ID: <87zevixbbo.fsf@dev.null.iotcl.com.invalid>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,16 +66,73 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Mirko Faina <mroik@delayed.space> writes:
 
->> What BOTH versions lack is an explanation why RERERE_NOAUTOUPDATE is
->> needed in the first place.  In other words, "How is it different
->> from the lack of RERERE_AUTOUPDATE bit?" is not answered here.  And
->> I think that is a lot more important thing to clarify.
+> On Thu, Oct 29, 2026 at 01:45:15PM +0000, Pablo Sabater wrote:
+>> I didn't know about this so I completely forgot to add it, however from
+>> what I read, this is the __git_log_common_options and I'm not sure if
+>> this is a "common" opt, as I don't even see --graph here.
+>> 
+>> I searched where --graph is, and it's here:
+>> 
+>> l 2383-2409 'git-completion.bash'
+>> 
+>> 	__gitcomp "
+>> [more opts]
+>> 		--graph
+>> [more opts]
+>> 		$merge
+>> 		$__git_diff_common_options
+>> 		"
+>> 	return
+>> 	;;
+>> 
+>> I think it would fit better here (not sure, I just quickly skimmed the
+>> file).
 >
-> Heh, in this case _I_ thought that it's implicitly clear from the
-> comment of `RERERE_AUTOUPDATE`: it overrides "rerere.autoUpdate". I
-> figured that updating these comments would cause some discussions, and
-> that's exactly why I didn't dare to update them at all in v1 :)
+> Yes, you're right. I was on automatic mode when choosing where to place
+> it and defaulted to the place where I put an option of mine that worked
+> for log. Since this is specific to "git log" I'll place it where you
+> suggested.
+>
+>> Also, I missed this for the --graph-lane-limit option so maybe it should
+>> be added too?
+>
+> Not familiar with the option but will look into it, might as well add
+> it.
+>
+>> My main doubt is, both these options proposed (yours and
+>> --graph-lane-limit) are --graph dependent, which means if someone
+>> autocompletes them but doesn't use --graph, they will get an error
+>> saying that --graph is needed. I'd say we do what other --graph
+>> dependent options do, but AFAIK these two are the only ones.
+>> 
+>> From Toon's Git Merge talk, more options for --graph option will be
+>> developed so we should maybe think about how to do it in a way that 
+>> doesn't autocomplete if it's going to error? (maybe that does exist,
+>> given the multiple options that depend on other options)
+>
+> From what I can tell the only reason we options through bash-completions
+> is because these options are not handled by the parse-options.h
+> machinery. Ideally we'd want to port these options to that? I'm assuming
+> the reason it wasn't was because of the common options.
+>
+> With the parse-options.h machinery you can't tell which option depends
+> on which other, so it just shows every option available for a command
+> when autocompleting. I'm not sure it's worth it to implement such a
+> feature with bash-completions when the parse-options.h machinery
+> doesn't.
 
-;-)
+Yes, I agree. It would be cool if parse-options.h would be smarter in
+this regard, but for now that's not the case, and I'm fine with that.
+I'm pretty sure (although I cannot think of any right now) there are
+other options (for other commands) that only work if combined.
+
+I appreciate thinking about this, but that's something for the future.
+
+> Thank you for the review, will reroll.
+> Mirko Faina
+
+-- 
+Laters,
+Toon
