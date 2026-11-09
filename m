@@ -1,100 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.47
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794220038;
-	b=gZqHqLG5kAHNmtqDpINCRz8wc760hetB+hnRRxPNl7FlE8eIA56cTfp1dn90CXrKeSkO
-	 5EvEZE+5kGQwzCJTShgLMsxmpT4z6cIk55zG/4qpTR0O++98s87gX2EeZNMtClqIHMSyf
-	 CFhIvyyqy5uqkeWPw7FnmmH2XWaO6hwwRqY4VbA0c/nK1e3wgYHY1oJhoNAFS+K0ftKTy
-	 i66E52JftZHEa9akOrAPesT50TQA5UtFe5/vynCCciFMI4n8IRdRmJH+RZ6GjF2H8W/LC
-	 kF+ba2QVB0MJvr7hcHXww3ymKQpQvqf2E3mUKqquavoAwPypzqhmDAEWe6Pz4l6m2wQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794220038;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.42
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794220763;
+	b=kZepplJ2ViwQG6VuzJIax3rEWSrbzezXQLAN7XvYxLzXZJ6AB3S+FRW4LlSyyeezY1Dt
+	 LmtIugzht0PabBd5OcSc5NXngToANIJw44RJ6aGXUpwg2Pfh0MFaX83kqaHbk99Kf2bgn
+	 IKmOsZb5HUuxF2iXsl77BVo0CGxC4p0qi7jLzxnfKPQvaZfQkLJXN5fh64/3o4noSyc9s
+	 ujY0HN7S3K8ld97yqFuhZjRl6lGdlIvAexVULibDcaK9M4sb6FtTs32bNb0S/Ndu+uGIA
+	 3wBZrhiuIFbIRpA8TT/r0xk0/V33w6ODiZ7TOHHz0CBWI17XykNOTpGUKHbEw8emyrg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794220763;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=JBONLngMhhQJQOfezGDZECXON9Dkxwfwb3j/uRdArdc=;
-	b=czhUJvlr5WqSZfVIFS7KCoE8GMLgfM/HLDd9oexhQWiH07S2fA6ad3XBNlJqMRqhjZSm
-	 ZZ3nh32ugc9PWb8y4wJ0gB7jMAgCWWoAqcqhNLFIqKtHbRuNNmPVCAT0T9JleXsXVoSnR
-	 zD/+nrbTbeisuBUxlsY7gU2I102kaK6FKBiLA1j9GNLUJruLLcLikChmHaHWiRRoTBO+7
-	 xvcSUR5FpSgBBqviOo791uoS+HcHJ6Ou8M286qByadMVeqyCGJ4BFHNz28kDFPA8yyNdM
-	 eCi7JcDXuEesSerr3oevB9FMywQn2kqUT4h24K9Eun12VHbKPi4psz5pguDpZNtUcKA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=gSDPLEGIpLI6dE0+Yxk6TV0gUb2OGOFgcULwmj6yg4Q=;
+	b=LGbXaMuJGUAJXR8Wn5bS4N6ft1JpDIDSanfFv0uNUoulwEszo5/kSIC6F0PITYFgw8Oa
+	 pMWNLbh2NKtA46WurufD+dcwaexV5WJSFU6qvtqMJ1rAl4o9PBlcqRVKfB0QOr+JK8UlE
+	 LUYEInYmXFMT6wOjwRC5IpTt2+0lSkNzSDtDBg1+irGn2yd5s/7epMeB/+9lEw5cta94a
+	 sVnty4+KtcucqOg+7NAznGaTMekvLVbiKDNVodN97pspLtcDqbDM/B0jhT5O0MlnP6T+0
+	 vUdNAj8mGeC7WKfDy/qFIv41Yz+u6c0AlQKbMAce/DSTB8tZy+xYWoxeZHjL5A9TnKQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AfvYsTr9;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.47
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Rqc8mVpI;
+	arc=none smtp.remote-ip=209.85.216.42
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FFF606A339
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 10:27:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4FFF606A339
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DD2606A31C
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 10:39:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 31DD2606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AfvYsTr9
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-67921b515a7so651887d50.2
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 02:27:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794220037; cv=none;
-        d=google.com; s=arc-20260327;
-        b=jNFoIi5gzGzz1sJZ4tFmuqgMGY4z26ZdpI5tZ8vIYcao1b7L7RUviflrQNZ1PQBKFz
-         W9Rv+DNpfZ7hurAB9uQZhlqd1xfB2s5QIoGdN4bzTL6oKi2WZ6A0KArB6HRqclIjLcrw
-         EfRVvT69mAKa1lZu4SD6pbkuaShUmYGgMOV10y+K4DLn+dWfHujvm5bUsy5LJZclYsVb
-         oe5qGyvDFHgMs+DlDfCOO4OFjqtl+eyBg95YMzy4HKlQU4F4i73l7z9DBMLBH0em6l6Z
-         /NgSgDQwn3vNlHTT+dI9zzw9ToW55mFSFWxwjx1Y9tkcgVZJK3Um3plLje6aN2L/i4Mg
-         7BfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=JBONLngMhhQJQOfezGDZECXON9Dkxwfwb3j/uRdArdc=;
-        fh=u2HXvIO3dn789rE2mqcm4j8Y11yJaHQ3Ds9eIxaXqaU=;
-        b=blo7C2jT5XNlP5dsC7XuqmP9Z1RO1DD8too2iPrWa7yG0cFry1V+wzHyU0p73maw4o
-         7WMtOE5LCsJRxn7kFENVekxUuzAmM0qrD1sygoRoquVx3xJr6W81ZQyFKWnH9/WD7/qr
-         nW4KgLSmXxIjVNfM3GyILKG6XADUXMdwd5SNacKhDZ02Itp9CMxYndy22XggGBr0udYz
-         /2L/tjD3va/Vu/a+gWGSHFGlShSLt0i60oyQYfZdLGw9Mm6PIZv7NagZZeiuG7nWXpMt
-         5yOiSPyxU/ebUNjn34piEWxxUEM+vQt58LoGN1mZepcwFdMj1ls0ZAKB6HU6ahhPWasB
-         7Nng==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Rqc8mVpI
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3b09a65c76dso470673a91.1
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 02:39:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794220037; x=1794824837; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=JBONLngMhhQJQOfezGDZECXON9Dkxwfwb3j/uRdArdc=;
-        b=AfvYsTr9iY0efqYcX8Ox8PHNE+3pbJ5vY/3HXJEG4oofjIZ8C1Qsflv8aiPSapJ/s+
-         XT/bIRfX/v6E2t1mqvqg80bIQi9MSOFdTAetPd+5e9bXlGjN2AYUTId4f3TBzWWZEENO
-         XATUWV/I/TFLaxfNyNuNdKuBXlwZ05EO8Wqhx3Tnm8htRQFRBHsWAZ+XU7ADlqwN1/qn
-         vWA8JBUT7fswIrFIGhvo3Zk+pxrlfrTRdUjvNpQDj8X3spZoQamOaULvcviE+0kW6vfs
-         xak43ji1hgUrRpcmp/6iqCtI+cUw2ytPdZQaX48MlbycRONFJzZS6jVd8eW7s9dQxIkB
-         VZ3A==
+        d=gmail.com; s=20260707; t=1794220762; x=1794825562; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=gSDPLEGIpLI6dE0+Yxk6TV0gUb2OGOFgcULwmj6yg4Q=;
+        b=Rqc8mVpI19oPoK8h/hWVD/iVCFySko6gIOfOikhZoxyURZTi4Z85u4CaVAu67mQh5G
+         w+pP6baFZCrwuU8yrI6qtG2UKbea7qHSRqBUFGtMfC3O0AWpQfIrGSWC6Dnvwi8F3wKv
+         CMIdwAR6J2aS7ZHHBfh2D0jzZ5/tPEjFjr9D7UW16ZnE53a2mM8afxXcpcao/yiXZC7z
+         rnf2ahz+LxfbhnniN5ASGtAoZAESqbXQkMcX7b3etH4WGcSNNt/CkIRbgJY+nYRsbeJa
+         U6OeDTrJ6aX6uYV8xzBOV4dqp+g61zAHvUu0n7ZRM37p44CNT6ZzjTKXU+yAcx+scPNN
+         yPKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794220037; x=1794824837;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=JBONLngMhhQJQOfezGDZECXON9Dkxwfwb3j/uRdArdc=;
-        b=aNAuq3rTCtfiEDabUFfWpqbBShPKJuI7fatoi2ECCUhjHfxmg8Mb/8AvCtLYHUkiv/
-         yX9WbrOKWk+ANVQy4QF6phvu3ibDpWMFLTvWKUoieb7aS3ZQOTtHQpk4+TRmPtwhmpDO
-         x1gxLqbZLGi0XIbGZ4FtIclTX6+3x4r+RemlSIboj8HcOZebMxOofG+puuFHNd6W81sW
-         4Z+TkLqNY8tQ8DgsH8tXX1X0Xg5Z1mauQCzzd+GnwabxcBqEAhoDcso2Nb48tb0XoGT7
-         cQ1jdLrM9jy3OluZfddFPdQLS9/b6bWLFpqJJsKh4bAl6tQYZmriQHLfVk60QoctEm45
-         KGRw==
-X-Gm-Message-State: APuU4Z/ufu3HCNWJ5S3+YtDzAeBV2VM5HR6giTw9ImL5H4mYZFiWK+tP
-	rGJkQea0Xq6QTolt22LRwpil4rTB/4dwBpnksfFHzzjFXqDKsWBJsstb82XNfnqkTvpP/J9gx/r
-	G2Sixywh9qMi/9YNd8xVmfqVA78MrmB0=
-X-Gm-Gg: AYBFou242jJDV6N5SDYttxSFfeHmmB9H0ON6pZf3vb8YuC7nXuJrYzR5twsw0u/BACm
-	Sd6F62cEVaBWgKpWtJaBJwhS8mTZ+2YqaVIRnUsU5UUoAfy8b+QAiJ/hbP2/v3pRuVuKk6bNwOH
-	frupUWCczyb8gamYbPwFVR+XCjnldjstv/vLiGTM8AhxrzqnUvIYb2oqbIUmGadR6QsjumYIEvA
-	BaJiQ6A6u20i7DPSlqDSuUcP5zHmnjeX+S1E+gqXqc+BOU0dpSTJ4UuuUso7VNIhf86eLQMNu7H
-	fKAG+DU7pA628jr9wOBeeqqft+EiusQrC1RRGA1mG1EFcl02Ee+JeXbCPZO/py9s2MdEyb8Vuuy
-	Y04TQghLk2fXyaI764dD7aBrV2uP4nbiCgPiC2hEEnefB2aGpjsGQK6o2n6aFcPTC4PIi2TtKyJ
-	RGVMCckzY1BOjQ8QhSjMm7qvgFyfYiF7rpwPsVc879FArdMqtmGplylfOB6XmpBRhd4v2OSpbO3
-	UspjaYRq8oyeE4DM+a8f88uwIgzCgpsX1mkGF8=
-X-Received: by 2002:a53:d791:0:b0:67c:1b93:c8f2 with SMTP id
- 956f58d0204a3-67c3da679e1mr1595210d50.86.1794220036947; Mon, 09 Nov 2026
- 02:27:16 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794220762; x=1794825562;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=gSDPLEGIpLI6dE0+Yxk6TV0gUb2OGOFgcULwmj6yg4Q=;
+        b=pKHJgE+FXtGC3rgHi2IyXOkTMk8tNIDFFe4Eph6FAlwxrpWhobOk7AMsRf9uqVArTv
+         vNpKn+B4xpyxD7buwW2SRZuDgxgjTgXKCdVYxpz09xoyxJpuB0yYIJuZbWzAGQB7shJs
+         ykMrcPas66iu0ouFuL1+ff8tGE3f+7Rs6CaqL+RIcK882xoDFBT4q5kUEabwKzTsvJRn
+         A8fF/J6n9dA3Y1Rj2QN3GaXlLDWnvMqxuw0DIzF6aLfF6Amti8o34v+sX5qjA1Bh34pq
+         t5jFQV0iTaFGdALl90/2J9AJlWcsGtXT1hlBmZ8VAspYIwrI6m5L0JVnDavklIr6LDkS
+         eJUA==
+X-Forwarded-Encrypted: i=1; AL+hErGC1VvMfvoWAz5cQVG1CX01shRJBIjwbBeNWCKLnP8YILFVEV6DgOW6bwopdoiiIQljnTI=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/OxGGU+TbCm7q0PzMtG+gkMJbaOmdkyp/NONcO3czrwW3ETEfs
+	uGNElPTiYjNW5Gv83QZ2IlHT6PRFgVJTNGUJlUrFFcUIKv94IoCK9Ohn
+X-Gm-Gg: AYBFou2Yv+lanK20unGM5n9SFS7JmC1WJwCjGb2Xo5hR1jVBuFmAVLmFO2/jA+BNiZr
+	CbJ1QZcbqL+Yo1IbvtBm3MLFn3n80q3OUsJEayQ6//nGU7G97NyiPfYFvRTZBvXJCls4CSZ6W42
+	qLWHt+FxdxCM99cLCEhqZAnic7EwpqN1bJMCcUlU4Nz2nqcyzZSjG3DsXyUQ0uhHWl/pgF1DLrJ
+	k/y+Eue0+e6GsR0J8W9jsVFkKLNpaSNreb8LogSSI93GecASCIuQ0cN2JfQ2HoZvbBxgOyFuAgf
+	bk7iDfcev3UL18GqWEO3xTeH674CJ1yUWEsWovml6+R/JKg4zH0MZ+Oh3nHW+gXrDJvhv7cHcr+
+	ZHiPQdh4BDaWdY9Lw2q86u0hKbXpw9swjp6gDoDdzVVEjtdd+PMVCC6rTzMwRbJJG++BoovBb0z
+	Xgo0eUcpZPE0ARho1cROmtKeebG9qG7BVlKv5tmHSyhxOuJW4HR1qtPJhnHES+IBXdSj60EEMLP
+	Oekct0Vev74U6CuEv/j3VQm67Uhv5HgJ7yvnK+3Ksp+bg4PVwdaT/8h0YSEQVJaogvGWUEvbapW
+	wt7V7bDT/TZn1v2/3MpSw9cmvbs72RTd1VAgc3+eUDCDSObaUpDZV9U5DyF0m45QobFKa27GUg=
+	=
+X-Received: by 2002:a17:90b:5548:b0:3ad:870b:b6d4 with SMTP id 98e67ed59e1d1-3b12d1003a5mr3607235a91.1.1794220762395;
+        Mon, 09 Nov 2026 02:39:22 -0800 (PST)
+Received: from LAPTOP-PVRSMPQK ([223.190.82.143])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b12797095fsm6346027a91.16.2026.11.09.02.39.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Nov 2026 02:39:21 -0800 (PST)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] remote: do not show credentials when relative_url() fails
+Date: Mon,  9 Nov 2026 10:39:16 +0000
+Message-ID: <20261109103916.397673-1-aniketgupta3001@gmail.com>
+X-Mailer: git-send-email 2.56.0.344.gfa103ac04e
+In-Reply-To: <85924f20-298f-401e-88f7-7fb3f949d0fe@gmail.com>
+References: <85924f20-298f-401e-88f7-7fb3f949d0fe@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,41 +99,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <xmqq1p8zw49g.fsf@gitster.g> <20261105203344.48513-1-okhuomonajayi54@gmail.com>
- <20261105203344.48513-2-okhuomonajayi54@gmail.com> <avGP1YMrzFKIIsU1@pks.im>
-In-Reply-To: <avGP1YMrzFKIIsU1@pks.im>
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Date: Mon, 9 Nov 2026 11:27:05 +0100
-X-Gm-Features: AclHuK_NE4ikvRx-tOzo5Kfj-myEZJXFhV1CUevzQJ5tEqT79oFMfcx1YGu1fPc
-Message-ID: <CAFpMFfBghbSSF8Zasok9CzA=1_soxJpjeRxJagSnaLygPDfcXw@mail.gmail.com>
-Subject: Re: [Outreachy PATCH 1/6] notes: store the repository in struct notes_tree
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, 
-	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com, 
-	kaartic.sivaraam@gmail.com, gitster@pobox.com, karthik.188@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+> I'm less convinced on this factor. I understand anonymizing the URL if
+> we are sending it to a location that is perhaps "less trusted" (like
+> trace logs) but the user asked us to operate on a given URL that caused
+> problems, so they should know the string that caused problems.
 
-> I think this function should continue to receive `struct notes_tree` as
-> first parameter, as this is the subsystem it belongs to. While at it,
-> and as we already have to adjust all callers anyway, we might rename the
-> function to `notes_tree_init()`.
+I answered this on the cover letter by mistake. Here it is again. Apologies for the spam.
 
-I put the repository first because most functions take it as their
-first argument, but you're right that this one belongs to the notes
-tree. I'll put the tree first and rename it to notes_tree_init().
-
-> Okay, here the arguments make sense. We could likewise rename to
-> `notes_tree_load()` though.
-
-I'll rename it to notes_tree_load() too.
-
-> Oof, this interface is cursed, it really should be refactored to not
-> have implicit global state. Arguably, this default notes tree should be
-> either dropped, or it should be stored as part of a repository.
-
-Agreed. It is the same global I mentioned in my reply to 5/6.
-
-Thanks,
-Okhuomon
+Fair point. I tried it with a password in the remote URL but the "failed
+to download bundle from URI" warning prints it as is. I think this patch
+will only cover this one message. The reason I did it is that git
+already hides the password when it shows a remote URL. For eg. in the
+"From" line of fetch. It is a separate patch so it is easy to drop if
+you and Patrick think it is not worth it.
