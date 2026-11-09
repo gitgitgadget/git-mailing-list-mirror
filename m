@@ -1,96 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.176
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794229540;
-	b=eXHEl/8k523KtRbsfMyzf2RiCL9gjBXMPu1Bq5wPtu1OW2dTvYW9rtiG6jVnpbSKzttc
-	 rx6eoyNpEeLsEUlsXYn79WAnwE+1X54luDzvrKxZuuQCuvkFUXv6dQ9qfc/WF7xJlUSF7
-	 OkiBwY3/Prz0FgH6Gi8C3UdU9w4KPLbm0DPl1FI9RZa4cmpWPbFsnZ3lu6dpU2nYPUBwo
-	 ovi9+SuO0fFOmbCs9UJuKqORbXNeYG2hvO9sGDi1ElMNWWuHenHJkKnHm2whsIYy3yKCv
-	 bjQXFG3p7OiFbLDygCUBUmH82FYvQZ9LZOvgmiha1EHvPNltWCI7LQmKGL1Jk4mxMvg==
+	t=1794230020;
+	b=hT1F4UtdgOVA+5L0ZofMAQeptW50lRABx0qxddN0UwZlXJbQN0tlX7xAkuWqWh3/cvyl
+	 f8iwrUSMgb7pkWt8MKnCj/4DPyvicb+Jdi2Z1BlAKWGeXXH7U9tlV20khoVUP8BuBvFq6
+	 AOrd5jHZb/jtP5pJZeDBd/Llf3iN2WZTjnS7NMuRUz/t4zry3Chc61GPQZRXf85QoeuK2
+	 mWjhHY3qNB4gI/vBhLIO8T2yCUTrLOQT1GY14AyLrC4y1v+c/dwzL0GPVzVSY1vXFkZhh
+	 Se1JEoqQ+tfXSPRi9WlRS+YHWBE3vhh0LUsd98jyxxu1+g+GRmBpPqaXFhufBBDgzbg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794229540;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794230020;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=jWyPq9GvpoqfIEm5KsRP28Tro/1aMFTLEDz6vfd9eJw=;
-	b=ktdacndg8Zni3nEgceT6zgkumAv4d6ppv6Ytdt1O9TAW4bwoB2yyfAClgFZIvX2xbYec
-	 awUq0Sgph+hi5gHJSpCmWbt+Zl0br601f3PTBAdm4RMzVgFtrvzyDxe2gvvCBWFVbIP10
-	 rlqPYDZMqzgTUllcT+stPStQm9fASm/zLom57AZOhBRUa8n1Jh2yWiuxQntxamjimrI1Z
-	 fCmOMWpg8LdOll3gp+RTVsvOCoUlc6eJfDPJ2bCbQOeS4oSQ+NRyZ87Uj+hxI6EKrq+hM
-	 MkDH1Fx7mlhrWzm2PiEEel5lsJZz0UUSgm6xfO9WS6jCAWJX48HDqgGybZETcuuATjQ==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=ovO8qhhwQb/PIfCCRywax16NDpwySQZEzjobbYaQSE4=;
+	b=01oKHfvVh++iBGOUQQNFwOB4oBM5cVKGXcxljwdQpEWyjfaNHcXEyz53btkbOmbmw8IP
+	 Oshx1f1LmyGY2oaCu9mZYpRbPm9hGOTVCX/l1MCjZu6VQGGi9WLRvl0OGcma17TRB9TXt
+	 tCpK3iB0kbkRFDfytdhdlNAsfeD5EJHPt0Aa4KZlJzeWrBoSE050MM/B8ZIzNhIg3om1p
+	 UjOr+RIGoQO3i+EnK86166hSk//gcHxPQrNAwHgK6iudEEXCPFaoeZVJN4PgubdF4vzmW
+	 6VWYut3hDMNu9yGvVE0/kndI8bYaYhDLeNobO1ecSYplCGMjnhEdFMkCUMwDwI9+liA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=spotify.com;
-	spf=pass smtp.mailfrom=spotify.com;
-	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b="Ju7/6E+G";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.53
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zYhO87lD;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.176
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095BD606A31C
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 13:05:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 095BD606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8C8606A31C
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 13:13:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CF8C8606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=Ju7/6E+G
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c4ceaee6770so111227966b.0
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 05:05:39 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794229538; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zYhO87lD
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-53656465d1dso372200b6e.2
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 05:13:39 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794230019; cv=none;
         d=google.com; s=arc-20260327;
-        b=aid7M4rfB4mVOEsuaZG4FUj4XKleTIKggFCraLwX6P1KqLZHZ9PTOl6aSQcgaGaJ6Q
-         4xiunbDYFQYNX2jmo+gq9u2RtwzVQFqgcLoKo8y3GO1vmN3e4uKmu4qfPNNCr0hHR62q
-         yrxzyPmbBgc47+KRV4v1ka+HRi0tzzcjjINVKUMf9+DiYVo9B4A89c8vQEemNeYQeIMf
-         kpz2fUC4QuO66w2f2Vt6x7m0dMf4nHNrVZKG3bhz67WkTcHNDsmA9sYcmoJGDxP5qY5z
-         J9kdTyp1BBwLZSI1NdqX2hNzb1cOHi/Fct/Gq2d85asGRofVe8Qs33lz2HfWlSfXIdWd
-         Xdkg==
+        b=lA8PkYBa7kPSUDA3ReN5V8hco/jx5nTh9OBug2XwXX1nHQpFwXnlomztb6qkWeOLhU
+         tiwfauGTZZroJH1fH4sIdXk8F5JtDYfvoofCSduL2Gvmd/HIkGKWumGQSNCrVbVzRc4L
+         E3qvZdAABU1Ug2vjpUT2jboOWXNJNvIiTZ58QohdeaEiiAC3NRIgWpod0N9/ycs+ViY5
+         V76BUDIdrWUddFbfjOZzC1pAl73jR/0BDW+kdnx/cXtZPrr/5Y1dg8+7vVMXW2i1epjz
+         yqBADuUEMF0Jc5ar9PLgj7xQA+oPgb4fPnsHQRya7DsgGnAnk7yky1d1ecHBy/xJMNcx
+         3ZcA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=jWyPq9GvpoqfIEm5KsRP28Tro/1aMFTLEDz6vfd9eJw=;
-        fh=yHAX/HAC4i7T0fx1pY1wHx7LgzAlPnLDcG70sJcIZTQ=;
-        b=jVmg9ZrE3YF490haYmVEKduV3D42wI3s6/4Itr+U/pcUCn7A6wu1xMftl7ZIo5TtTK
-         9kuZomii5FH2Rd61LcshCJpx973ymJ/j3SQ0rC04KGHT9j1t551tczPd2v3rkY3KrHve
-         5pTl8bY6tTFwnjcjc7TcAEDnAdz4O9YH0N13uQ4riyAgcBFGdLbhHChvyVxxLiBEC2RR
-         6XVpI0TMsEicp5ympiHKexE8N4788NKBWC9SlCW44zbCYJeFuniw3Y+qiOSgVB9iGQyV
-         HExbmNdFIyxiLFQqh8PYHVpo9N/APU6llH+ripV51qjO3Q4ojvebiy/wi6CZtixld1sx
-         VCHw==;
+        bh=ovO8qhhwQb/PIfCCRywax16NDpwySQZEzjobbYaQSE4=;
+        fh=cjbW3SH7o/dwg/y6kqpWD0l++1enyM58I2wH5n1Cris=;
+        b=BoIzk/Efcu5nD0ZYFgOOfa5PA12OtfLI3iXhXQZixme0IsFhhQe7ewUyhGOgTZnLdb
+         DCYe0ZITp5zGYMqqaPiti/u0I/2tEJeUfx1FtTYM+JCsd9SBU5mjyygrw7yTBdoINvHy
+         jv266yfiJdlOdGlR0zwo3P0EuULXDIBdB8b/wiNaIZlaKXQlZUVAu4j4DEyDAno8ESpz
+         n1I/31V5dLEBk4NnA9u20LYmWFyq5W2NTskdgAmO8nUlFHxmCOBoD94VWwdNkR2pfpTa
+         2YZaUa7nt8DKGbi4+P7JGsGMgHQEbMvVRa+gHNXLKyBnMAKKQYdKuwspF4VoYOHAjnjO
+         bhFQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1794229538; x=1794834338; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794230019; x=1794834819; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=jWyPq9GvpoqfIEm5KsRP28Tro/1aMFTLEDz6vfd9eJw=;
-        b=Ju7/6E+GZ5XvpgGSXF0ubp1Nvf36Xe2+H83+VZm0b+/vdmFiX6vJqEYg/Y+th6eb9i
-         S8q3DMi3GoEF9QGKDAI2M/6woXTNGAHH9COOZRBGRGuk+vEZuCZmyI5mXwCQo/3vnw3c
-         Bm81aVLyT8KKW+RhFcaq8eIMhSy9lsZWOrw0A=
+        bh=ovO8qhhwQb/PIfCCRywax16NDpwySQZEzjobbYaQSE4=;
+        b=zYhO87lDHqspHKB27j7lUJHZerfdTT7MiASfnI01z276bjM8a/IDkoTaBs3L0vcKmY
+         QCIXRSikjBjGApScboN7Eo5z0ZBz7u6MxInaEx9bzWUmuzt6aNrE+d9E6Plpfe4M0rqN
+         biSbuORKmfrEnFei/dGEkhemgYQMN87uBY+M+CU2MKyDDeBfQhfbPN/Ef/VMgFFtwhy9
+         HE1VOzxFHI2dWDUImQinMG88QQTKZbZ0/M/R/aTw84zv1gfl4zSEatGT6wrlfhIZywJA
+         AfeMuBSm8vXSeBbz39ZbamCpmm4uWyD3qWPCxDFNSnk1MPme6JjpOvqDJy+/we37gwhs
+         pSZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794229538; x=1794834338;
+        d=1e100.net; s=20260707; t=1794230019; x=1794834819;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=jWyPq9GvpoqfIEm5KsRP28Tro/1aMFTLEDz6vfd9eJw=;
-        b=E0jbTWGZRGeaA8L/8dbkudo8dj2jw2nYS/xCX418nKSJ2B6jc+GUBTTRAg1dthGoln
-         SEZfRvCvFFoEH9tDHjwtHbXiUDPTILI3jtUgqya7+ZM1vIJ/DoxcHh5wVMouvg1LFv5p
-         iRQrAC8v2tuPZRViOp3x64IKgcThndxBtaIrvKpIBaEhSsMv4PqR9TqXFCyK4jhe7SRx
-         BDhhZ0z4uILTYBHlW5KSvQ0RIav8LIIZ/M8hPc/TKZ1PFZ6JyejKntxWmeA1j9EzJej+
-         zG57Kxvdxv0D104X4uSo/WFo71rO8bM2c1vgVUKJcV72bVGvRCkTTw+mXmnhnZuTaege
-         NVRw==
-X-Forwarded-Encrypted: i=1; AL+hErGh78WdSKwBxZ7r3HG8Q0azdGHlhuL7zle24pRVvkJX8EplOdwyDw2+tCxENzD67T+Y3L4=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/KJ18yKAgAiYY/A1CeLBLtG2jCIQ2w9Yj/RWcXEjqtUSo9zBdT
-	PoMZRdckO5/svl6XN5b9DOQHnZWN4VtqByKTZVNghMi5QnQU1V2tpCCtRAvcSINqNo4aK/TgaSP
-	m76JDQEwlxiS1bJehTJsqW0UkFFX773YU9DwG2YS+BSTesrPlRmIaDeDRHA==
-X-Gm-Gg: AYBFou0e+Jlp+rA3rllNUuylibLfAET24m9Ip3WBfgWIVDdUQ9PuGGNGTkTr5CMKNK2
-	Ycu2LnyQbToZmHIxWSQro6UnMzIaPoW+UGiUQKRGhc5bRU2vXAxruUcQnPIEuTFAvhcIT9957tX
-	HS3MG935vV/i2Xma9qfPEkRDFpdFmJ2LqHq+zPJAti/Y6k36Yp8Zxda0LNCc+o//COlvaKxY56O
-	clNYTuJkFcxZsjzTDBUI0+8xqtH3428X77BOGrvQDThGJK8/8On45ZuLCMijURHFl8BD98k+Jlp
-	cWghQWOJWRnts3pA2LY8QUlGHz7BWcn8JZB965Y+t+g3u6bOfh7tkSpDy5n1x9I2v8Zt1HsZtj7
-	CdgzNp+/4dcFGXiW3D8pYHe5IGVXJRMnv+2rcoXM=
-X-Received: by 2002:a17:907:d408:b0:c4c:e344:ece7 with SMTP id
- a640c23a62f3a-c4d6daf7fd1mr329236866b.10.1794229538310; Mon, 09 Nov 2026
- 05:05:38 -0800 (PST)
+        bh=ovO8qhhwQb/PIfCCRywax16NDpwySQZEzjobbYaQSE4=;
+        b=nVvnkioWdFdHIXvS7jqaBgHpaMMQZ/fE+nBSFHTP5cVI2idOy1N4ClM7rmAgvkNTy8
+         wHdLOVHQp8bfmSTHjueTRLQGfLDoi1EvzaH8GmCMl5rPIXTqGrbIOVbUNu7kYlaDG3mC
+         gd+h6i4hbuo9gfp1pVmLnIEbeFeTL6HZ2mA5OroPDKv4oiBtL04Hkqfzbi5npX4VnmXF
+         RWEThv6BrAKsDfrO8hdRhGjVHw0sQv4osXCF5OGENvPidVsVLGpEgq+ZUX9mK5ZbVJiA
+         phqIghPYNi5XDCKFJoop6KR+gchad9pTCvGKuhaGR6zJgplwz2CYjNgzNe4nJ8v5tts7
+         n3xA==
+X-Gm-Message-State: APuU4Z/431oEAQiDgz/rEJoV1bYE20xOYxs/T1vv+RpWJlMYnabyGB3T
+	SGbAUpScdpxvb83BvugyJYjBN1NKeOoaA3Xf9CIkO+LF9l351TKzuWod5/UNLBMpHhu/CH+jdqi
+	nnVDvRtQrIiMACdi5OE0tc+ZlYM9zFHU=
+X-Gm-Gg: AYBFou33yXUMSolO6815d/9yHFhEDHJnY1IknP5OruzKmjhHvrrS7x+yxlw4/4dYJ1I
+	rS1APzHRQVGHnAYMjd1XmeMsvPzz6ExhatC1tPPEWDsf0O9I4NETvFuycZOD5lWyA0RKfayiClb
+	qkYjISod27Lkl9wBnclopOXM4OoHXS2vKaVDvlc6pZjl+KsuPzLxE7JiNX3MSQid+0WscMXHGeY
+	lmviFMrj5eh4xN8v4BI0QE/xPlZNqVuZ+8AuBI7noY1QfclziEgCY4b3bBiburDsMx8TG1fT2le
+	hxEzYoOcNrKVdowIH7N0vnq4grG09dVfE6uemMIvrX0MSt2w0Pk+oWz0HHfYxO93J5SGI+9+izf
+	eBXEtI3juiTp+tS6pigjl6uiAsZTu8F8UPvxYSkdHTqU8ys9+2SLNUlPFfPcrhGBaeaY+m8Vq01
+	oWNmeUPow8E4hF4QMWFLBHScivDtsAO5nZ5EGNUqmrGewOL6NleLGl4w==
+X-Received: by 2002:a05:6808:4f2b:b0:4d6:90f4:48b7 with SMTP id
+ 5614622812f47-5681440715fmr2966866b6e.57.1794230018815; Mon, 09 Nov 2026
+ 05:13:38 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,82 +103,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
- <4c02ada9b85028f26f7e7bcc62e2ac12443da9c5.1794063565.git.gitgitgadget@gmail.com>
- <50b6c35f-e9c3-47ef-8fca-aebd2620623a@kdbg.org> <CAL71e4NFyAShDZPW9JRB7Bpg3aLY5mY4wdn5m_ZYoLQjHZw_jA@mail.gmail.com>
- <6992b7e9-8721-4e1f-9c00-9fd0e0704e80@kdbg.org> <CAL71e4NKsTZNoLFOuSPfiJPf7oS57S01MpM5V+UOr+bgMGjOkQ@mail.gmail.com>
- <c8688e1a-17b6-4d0b-ba9a-fc1e0fa8938b@kdbg.org> <ddea802a-d4f4-4de9-9108-e68201841bc4@kdbg.org>
-In-Reply-To: <ddea802a-d4f4-4de9-9108-e68201841bc4@kdbg.org>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Mon, 9 Nov 2026 14:05:25 +0100
-X-Gm-Features: AclHuK91OEnapvoNb3Kcka6dOb_BuRHP7zzURULlYP4zve-Mm_6fWwsudi9DxDI
-Message-ID: <CAL71e4PSOJgKFfBLrTXJSAewnZTJpNEiAMC-_FbW_9cmpEvLmg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] t: add "test-tool genbytes" to avoid slow tr(1) on macOS
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
+References: <CALdwsC1cMKZgRPZA+pBaJe4PPs9q9W0K9CQLmM2bgUCyysTB-w@mail.gmail.com>
+ <20261107195429.96842-1-tangajoris@gmail.com> <7bd3360a-fb96-4631-8670-dde0d281532c@gmail.com>
+In-Reply-To: <7bd3360a-fb96-4631-8670-dde0d281532c@gmail.com>
+From: Tanga Joris <tangajoris@gmail.com>
+Date: Mon, 9 Nov 2026 16:13:02 +0300
+X-Gm-Features: AclHuK-jzQ4YAgDFVhgco_qyLUdoF8cHP_nZiuHXwbyW826WkBwBnP2l8PRSty0
+Message-ID: <CAKrRMNr5VJmvws0asHgmDxCNxo19ctGTpM2eoTMT3iQ5v2cagQ@mail.gmail.com>
+Subject: Re: [Outreachy PATCH 1/2] apply: do not keep names from an unused
+ "diff --git" line
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, gitster@pobox.com, jackrawlings2011@gmail.com, 
+	christian.couder@gmail.com, siddharthasthana31@gmail.com, 
+	kaartic.sivaraam@gmail.com, usmanakinyemi202@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 9 Nov 2026 at 10:33, Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 08.11.26 um 17:34 schrieb Johannes Sixt:
-> > Am 08.11.26 um 13:24 schrieb Kristofer Karlsson:
-> >> -       test-tool genzeros 2147483649 | tr "\000" "1" >expect &&
-> >> +       printf 000000000%02147483640d 0 >expect &&
-> >>
-> >> I tried this out and it works on Linux but fails on macOS[1].  What
-> >> happens is that printf only outputs the nine literal zeros
-> >> ("000000000") there, and silently ignores the very large padding.
-> >
-> > Fair enough.
-> >
-> >> [1] https://github.com/gitgitgadget/git/actions/runs/42475956442/job/128717309586
->
-> Well, this patch passed for me[2], but I have no idea whether the
-> particular tests were skipped due to the EXPENSIVE prerequisite or not.
->
-> [2] https://github.com/j6t/git/actions/runs/42583623620/job/129048078411
->
->
->
-> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> index 01b97c8888..5dedb9054e 100755
-> --- a/t/t4205-log-pretty-formats.sh
-> +++ b/t/t4205-log-pretty-formats.sh
-> @@ -1182,7 +1182,8 @@ unfold () {
->  '
->
->  test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'set up huge commit' '
-> -       test-tool genzeros 2147483649 | tr "\000" "1" >expect &&
-> +       # 3 * 715827883 == 2147483649
-> +       printf %0715827883d 0 0 0 >expect &&
->         huge_commit=$(git commit-tree -F expect HEAD^{tree})
+Hey Phillip,
 
-I tested this and it passes on all the macOS jobs.  t4205 goes
-from 800-900s to 170-280s there, so your idea works well.
+Thank you for reviewing my patch.
 
-Two caveats: the printf builtin in bash 3.2 (/bin/sh on macOS)
-silently prints nothing for a field wider than INT_MAX - 15,
-and it builds each field in memory, so this peaks at about 2.1GB
-RSS.  Both go away by writing in 1MiB chunks, at the same speed:
+On Mon, 9 Nov 2026 at 13:52, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> These sound like corrupt patches which we should be rejecting with a
+> better error message, rather than applying.
 
-    gen_ascii_zeros () {
-        _n=$1
-        while test "$_n" -gt 0
-        do
-            _chunk=$(( _n > 1048576 ? 1048576 : _n ))
-            printf "%0${_chunk}d" 0 || return 1
-            _n=$(( _n - _chunk ))
-        done
-    }
+I now see and agree that accepting invalid patches was the wrong
+call. Giving a clearer error seems to be a better direction to take.
 
-as a local helper in t4205.  That fixes the slow test without a
-new test-tool, at the cost of yet another way of generating test
-data alongside genzeros and "genzeros | tr".
+> To me this looks like a corrupt patch because we have a blank line after
+> the "diff --git" header followed by valid extended diff headers. Now
+> that we accept this do we respect the file mode?
 
-I have it ready locally as a single patch, as an alternative to
-this series, but perhaps it's best to wait for more people to
-chime in first.
+No, it does not respect the file mode. "new file mode 100755" is
+ignored and the file gets the default mode.
+
+> This looks like a corrupt patch as well where a space has been
+> accidentally introduced at the start of the line.
+
+Yes, I will treat this one the same way as the blank line.
+
+> This is the only one that I think it is reasonable to accept - we have
+> an empty patch for "f" followed by a valid patch for "g"
+
+Alright, I will keep accepting this one.
+
+For the next version, I plan to die with an error when a "diff --git"
+line has no header lines after it, and a "---" and "+++" patch follows
+before the next "diff --git" line. The error would name the line of
+the "diff --git". An empty section followed by another "diff --git"
+line would still be ignored.
+
+One thing I would like to check with you. On master, a blank line
+after "diff --git" is accepted in a patch that modifies a file. If
+that patch has "old mode" and "new mode" lines, the mode change is
+lost. The rule above would reject these patches too. What is your view
+on this?
 
 Thanks,
-Kristofer
+Tanga
