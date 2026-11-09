@@ -1,88 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.54
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794236848;
-	b=C7MTQ6cnpaGFRQp/dxH3S6AWhYTznJNh9aYamTyJYH9W/k2ZVqYqNfmCtWwWmN3Jm5JA
-	 v8XPkDyuPwbMo8OZ6+yIWdCFOoj4/fp+DGnpIAuyuPSclt5X5Yt8l8SoatuZ+otkWOckb
-	 eoAQ/XQhXB+XG1Grqc9t9yQUoeI+KJk4+USaX0+P2ULXHjZHOqx+r4Yn9WRQeHi27fahM
-	 Xn4NWuo2U2Spic88ZnaMEYsDOwlvsqDEyGSFii1i+OL4Mf7GFaFLDHq79bnQgsB69Q/hr
-	 peLdlrDMITi3WEOmyou4j/dHhPyuWadAgWom/qvg1B7StiVoMTRwTr9RhZpQl21xYPw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794236848;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.49
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794236894;
+	b=4pCzJ4Rj/5ozKrTJtnl2WiG4bpxBeWJZP1pr0rtNNneRWuLxGBFVa+VR2WjLp+dUSXKT
+	 NmHcpwE3GYtO6tAMGISkYVQIip1KwJKuJi/YirucaOBWtnA+b6eiJ1FOHVpYJOQESK0xu
+	 S93j1RWJu+yZPEp1FqoyyO0+SrKgV6VrtxQ7UncYAEdKUEf/Fr9Y3x0wkSNeoyYCZXm4E
+	 Rd+csJcwd5/klDqB/4QJ/kjitncex5E8AaIt4dBkVj2HPytVrGu7USWHd0w28bpbBzcW6
+	 zjHgfDfBnzh4WfBTZ5Siefcob/YlRKv7ITVQc2JzVtv7dXW+L4dL3Ur+LNBf10rkuLA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794236894;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
-	 References:From:Content-Language:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=EfJK+bCSoJwysn/3HJllqzGMJsA1XKVv3i4y4QFvN/w=;
-	b=SkoHLzmDhYya1v7raoJO5lnP/fBr2cQdWQszZhze+cLAN3qW077ImPiHv4rCa5QJySIG
-	 vXRCPLatMtsFJG8CRIgCvXKnYMgcLlGtH6Vf924Qwjxdx7Q2dNEtX3x39mk9AnEUrgXui
-	 V7qQ1q6cZIKt/aqAg3VzV5v+Z0/+Snw2v6yFNp4ZOK1Xt4SF1hwhJZZf9aMQo3CILof1e
-	 qF3vTwDoGyRWfT0zrUYGuOsLPI+toVkqdqHOykuxUjO7N7awbf12/iyz06dbno8uM7sSe
-	 lUxA7bRI0M4JJGsOWGms0BBy/5Ytb07GlEQKOyRTt05nLsatnJza0ISANWxSFU8IkEQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Content-Type;
+	bh=9ov/uBo7ELqsThMVC4w5jsOko+ihuwXRQ2OgolAgpZU=;
+	b=XwO1lyY56TwloCa4sZBLPyre/Tm29K7IEBLO9doJ7CL0QYjUxw4LqbmU/FYFZP8opT/v
+	 zS+jIyUcZsbdg4xtIGo4aL9dnlk2rWejMsyVv64SBHWqGnDbnhs1HkMRvRnJrYcTpOyDj
+	 Uxf7ekHsbyu002UroKu81vXVo4gG5svPfdn+JxqBUdbWw5Edakv+Lj9iCzI/Z7mcIpa7e
+	 JNZ/E/nuTtfuCc0s6rf2axfInp9dB7+9r/Sg7g6/G0vcbiwrkEW4EFF23h8Rsy9QAyHpi
+	 dzbXN6fX901G+V3DShTifG7yvFvXZ5d3TK8ko8JbGB26tpcQG2MlIdGhBuE7onFNNCQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Sl8EPurx;
-	arc=none smtp.remote-ip=209.85.221.54
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="bww/c/5Q";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.49
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9C2606A334
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 15:07:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5E9C2606A334
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFC8606A335
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 15:08:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBFC8606A335
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Sl8EPurx
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-492690dd5daso669584f8f.1
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 07:07:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bww/c/5Q
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-4922dbcee23so508992f8f.0
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 07:08:13 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794236892; cv=none;
+        d=google.com; s=arc-20260327;
+        b=SC5YZrwac1OgmOmlZq5qQ6/6QmvUS1oyyF41C3SpOmIGOnrzajwDm11g13v3UdsTsN
+         3TR6n11TfPYDuXGU+exM9w2JVTFN7R7xi0d7pRgbV4FfYUEoqrQeeIPG2Fq+1HTfcAJa
+         vnKYNYZtff1ai64dmLwazfJiZB8K2fR8IUvN7EpMg8GDGji/4EwbCDFcrK5k8m0JtSdy
+         UGYkfY6ecctSfASabpaSKitgsijRkajB0Tx3wNWOWqRLs6UDiCzFAdV6cSSIkQ2Ft4fB
+         pcQyN1EFcAs8UYeIxkrpGrWhGcVSZ05V3zaBrlvMOCAb9UxGm1cxOEgGItxCclIy/clE
+         PwKw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=9ov/uBo7ELqsThMVC4w5jsOko+ihuwXRQ2OgolAgpZU=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=ej6h7hpf2IZLtzmForOL5W1QjThgFMJY1B7q8xc2pQKWuCCqMNfjQQYEViqcJsd3Ci
+         s+TE0qp28YXeaIZevZUPq9KmL5ly1KDNEN/hcxX4mqKkDjeEDf6syACHoEYWX53YrN8g
+         9HPJDSgOIH8xiu3f3BPIgZ79xDEi1B45YX03N+/xNkg2h2hPH0g0buc6PhxKso+hdq3O
+         5hv8lAqlwxs9xdKSo/sfzkcfVGD8gYySda/CSYuf3K6sPIuosHLvMdhx/cqUGfjkH7LB
+         ESFqz0PbpWNfRNLGJBT4WwNHOFR3JMK2awBmiuAg70fB/9O2GY3gNyIrvKSNzH0cFMvR
+         Lk1A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794236847; x=1794841647; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EfJK+bCSoJwysn/3HJllqzGMJsA1XKVv3i4y4QFvN/w=;
-        b=Sl8EPurxSBGgR6ooCMl4IlkvIC+nKUEd1MGlQkHZvo4p9SWdGEUyiiQPjDouZBWHHe
-         XN3TILr/p+GX3h9vovFaoBXCrmJSm+s0tolnmWQVRlqPgQ57SJWwHpwzSkxYvG26xbxT
-         hUgCqnVdr47EcMBxb1jHsxZpaedc08Kjb3UAQaOBZkAiG2JPv0G+Le5tyx4KaVZbpGSZ
-         qaUTWjsW9y4N7pUTIe5SAcwxHg+HbzfQwI1QEvdb1g4i+uKfemaDe+eTVlWpYMpBcLk1
-         61/qmoy0lxIffHswRfr1AfBawuu/TWrHMMVXbcv9qR94w2baT/ClFVADkdpfPDO3LLE3
-         4PWA==
+        d=gmail.com; s=20260707; t=1794236892; x=1794841692; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=9ov/uBo7ELqsThMVC4w5jsOko+ihuwXRQ2OgolAgpZU=;
+        b=bww/c/5QrYJlX+YmgoUplNNsExajp7buQmS9/E2BD0AFD6iQgpu3bh9RrKhE/e7XQs
+         KJKh/SYojrWdmOhiY2IOBJBBxmmX/mLIAjSLs1Xo8UBB77Qr0KimgdySaUFlupokPUST
+         a/6oS9Ha50x0D58+hqwXt+eQK/GvPpdBLR1nOdYxm/RgrHeuD7opaZaonXH6JDA4b+Zu
+         rDopyH4PNMZk6DUqbWhoSYUZttfsOBZjdH0M9vvb7RurhSZyUOOln+/FUqkOR/sscKg0
+         8jDY7RmkImqdHsBYfO+UVq000bl5b04o9WMz3wpDhFhfbmsP3Llz4+Gnfvyly3KmpkKb
+         zCtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794236847; x=1794841647;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=EfJK+bCSoJwysn/3HJllqzGMJsA1XKVv3i4y4QFvN/w=;
-        b=mtZFKuF3ru6uS6u1cD5D+bQv5HKeYO1x+cAfgVNeWPA6sE4WCENLAgRXoEb6638Bt5
-         G0TDT3v0iQuty2gXxokqsmb09Wb7R9abQ1ltXN2IfFaheBDKgse370YD6jBfGRs6WayI
-         9SPmwNDEhLmbXZ+tw4b+lrGtIyRWV1v7UE4++KNkAaktYWCsKyu5D8WFCKSVu+wJp6O/
-         +k8Tqk0GcrmdrY36m21wiwduv2pgHMp4zNW5KMDp9OfePvcDYdcGc/hCBkGuEYc8fZq5
-         9qcCoWiPcjkhjdc0mhkb2zWPStH2Ud2QQ6FJ2h4nJ8OLnIrA1Nn/mQDaCBLj9gf0YIpP
-         wxLA==
-X-Forwarded-Encrypted: i=1; AL+hErEGqM9EI1jONt5QoWG2cuoeHldVuEPuvPArKRlhynUVGDhlU5zKuTLaegkoSrL87PYGpEM=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8zhpA1AGPoGk1WApHicTu+FyZXi8md4FVkhpMNKIW+lrtKDZpC
-	lXBJOYcaQ1yyjnYp1J84/UpJDT6z75TIVrhLFSlg9kSKIz29gKy7GSMS
-X-Gm-Gg: AYBFou2q9O/msaEALdK1W52IE+gbbNjyNFU459DRWm+t71+/7mlWuK3Kviqaa5eOgTd
-	l82DLqa+43Bvdh+5lupgDWn8ptX05pCkgJkRtvNzK6W6i/PyOm+elbb8NAnknKkMI/jw5wYizXA
-	W5wFdOLmILjBWgmQxnLp+aQlboLvLPhBMlyDlwROqJhjqw6BPc8+MGvr2s0UzX/8v9L+rf0Uk4u
-	SvYQYhjAWPZBLf7gXj+RSZ2s3X6oM0FLIygh8O7O83KIguuaY2gR6nnWvasyvIls0zxJPfBGKsx
-	Cw3l1hFL0y02I9v12vWCy+Srf8dfvjiVbxnKOyD3YbGq8RjZ9+CZ0Mme2rVgO8TV3KUZXNPvON7
-	0XflPYxKfjNSLif1W1IxAb8SCtQexEpmndcP12oM4vG8mqFfWOc8L4qo73tb+BBmYBMgHnVkGSh
-	P5+NW7OX4USsN0+AmiVz4lBRMaM+snMHGEz5PZHFy68QAIZNmuwYbw4q+/fR+peNALmUYfzRdy1
-	g7njdq6Th/E6A5BJG+kLdZAHucPHvyreAmekziKqb6zacTSRnUOVwTvRTpE46BDNakVdMGvcjxt
-	hLiVfi7ejOC9CJdmt4KpxtOtziZa6AEJk89kU4VoctbXRzE+BegyteXt1MpPXCfFEGeBHPPcuNX
-	oSrhfRWY=
-X-Received: by 2002:a05:6000:1842:b0:490:50c1:f352 with SMTP id ffacd0b85a97d-4958b90ec17mr8089887f8f.39.1794236846501;
-        Mon, 09 Nov 2026 07:07:26 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49597e00d75sm10277650f8f.58.2026.11.09.07.07.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Nov 2026 07:07:25 -0800 (PST)
-Message-ID: <226aff79-b0b8-41b1-92ce-78554f6b2f8b@gmail.com>
-Date: Mon, 9 Nov 2026 15:07:19 +0000
+        d=1e100.net; s=20260707; t=1794236892; x=1794841692;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9ov/uBo7ELqsThMVC4w5jsOko+ihuwXRQ2OgolAgpZU=;
+        b=v/4uxio7Q19/aP86YerVXRFGpW9TZEXXJzVAw+SkpFZhSwe/V4QfzKhzH3yMGHs1US
+         l6Yku+KzcRMLqT/htgqcwFhvCKGzpo/jU+uKQnI1VRKBkOAjKg7lnbzu+q3CI/kHRis2
+         hX/F420SpsKW54XWr4wrWrzcKmUpBeleRYdFmbQ0GD+HKsOUS1t6isjH+AQzGRyYCeC/
+         h3lk6tD72fjSV/QotRg1CNyswa+Q8zDeJnG6fOVYPtsDBYi1mmCiEURpjHqoSFguOm7A
+         miyKLrWUyEDEsn/W1VwzctKnqworzvWxcKXwkESRAF0oymU0QQ5RDQDngjcb1sEBtRkf
+         /w3w==
+X-Gm-Message-State: APuU4Z9o3a9JmUNVfSjjgMUDbVWQHdAtd11msvngf7oGrV/gDLu77gF9
+	daRSiHuxypU7nBbNzWfTccb2qRg13EW/NW041BdnAPbNrtL1/JR2DjC4n2TxnT9EMTLTLFA4Pfw
+	P/tvXoEoEGjH8kYIBg1Y4SxJ4MKbuWyiXlw==
+X-Gm-Gg: AYBFou32n3jLq4UbtK0miwOaAYnQNBuajcLzYnTt1S2ib8w6NO+UcI4wzHie4n8FvoT
+	hjiOsv1U+iUu8sF3H3sthW3uRdYULzBR65XwMJCFs2FDESFjg3lUu5oMT26vLcxJrx6JyU/xGhv
+	wgZLKTd5LEZzegJ1SR4mp2MXUB5wVmIW5RRNypgdKbYLoW+yXY9GT6Xdc3hzAwFQuvKg6usapry
+	gptzeYhg23uGqTVkYzev//5tg+qw1EWwchvkg6AeGEiCZkILsAUdO6v14Jj9zQgyXO+Ovy5nFBI
+	oBKZqa/W1+VMIFxjjpzCWfjuUhCJo8J/2nFSSHsxH7iEeYiw1SyOKh+KEH/v22WpOJ+XmE+eYy1
+	xaz6Bpf9HWI33Kwy9FTe2CvbEpxQUJIGVhso=
+X-Received: by 2002:a05:6000:2dc3:b0:48b:db7:86a7 with SMTP id
+ ffacd0b85a97d-495846906b2mr7214115f8f.50.1794236892070; Mon, 09 Nov 2026
+ 07:08:12 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,91 +99,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 01/15] rebase -i: handle NULL value for
- rebase.missingCommitsCheck
-To: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Jeff King <peff@peff.net>,
- Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
- Patrick Steinhardt <ps@pks.im>, Colin Hinton <colinlewishinton@gmail.com>,
- Matt Hunter <m@lfurio.us>, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Usman Akinyemi <usmanakinyemi202@gmail.com>,
- Miklos Vajna <vmiklos@collabora.com>, Junio C Hamano <gitster@pobox.com>,
- Thomas Bachem <mail@thomasbachem.com>
-References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
- <a9a3f4b705f98f0957bc9645395f4c68875b2896.1794040967.git.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <a9a3f4b705f98f0957bc9645395f4c68875b2896.1794040967.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Manoj <manojkumar148700@gmail.com>
+Date: Mon, 9 Nov 2026 20:37:57 +0530
+X-Gm-Features: AclHuK9FED4nmsEpDAD0futP1cZRLM_9kCoNfC16zdC1L2qPi7lOrfefcivoIwk
+Message-ID: <CAOVdN544jyuLG7XNE8jTBeA90iSBS_NanW-Cfn3XgOqTFgQJEg@mail.gmail.com>
+Subject: [GSoC] pack-objects: plural-aware thread message
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Thomas
+Hi,
 
-On 07/11/2026 08:42, Thomas Bachem via GitGitGadget wrote:
-> From: Thomas Bachem <mail@thomasbachem.com>
-> 
-> A rebase.missingCommitsCheck without a value, as in
-> 
->    [rebase]
->    missingCommitsCheck
-> 
-> or "git -c rebase.missingCommitsCheck", makes "git rebase -i"
-> segfault as it writes the todo list: get_missing_commit_check_level()
-> passes the NULL value to strcasecmp().
-> 
-> The setting takes "ignore", "warn" or "error", not a bool. Read it
-> with repo_config_get_string_tmp(), which rejects a missing value with
-> config_error_nonbool(), as ba176db511 (config: handle NULL value when
-> parsing non-bools, 2023-12-07) did for other settings.
+I'm Manoj, a third-year CSE student interested in contributing
+to Git for GSoC 2027. I've had a few open-source contributions
+merged, including uutils/coreutils#15558,
+kaelzhang/node-ignore#175 and bitranox/igittigitt#48.
+This is my first mail to the Git mailing list.
 
-If the user sets an invalid value for this config option then we print a 
-warning and default to "ignore". It would seem reasonable to me to do 
-the same for a missing value rather than erroring out.
+While looking for a possible microproject, I noticed that
+"Delta compression using up to %d threads" in
+builtin/pack-objects.c uses _(), whereas the path-based
+delta compression message in the same file uses Q_().
 
-Thanks for fixing these segfaults
+I tested this with --progress --threads=2 and
+--progress --threads=1. The message appears with two threads
+but not with one. I also found that ll_find_deltas() returns
+early when delta_search_threads <= 1, before reaching
+the message.
 
-Phillip
+The path-based message has the same early return, so its
+singular form cannot be reached either, but it still uses
+Q_(). This made me wonder whether the first message should
+follow the same approach.
 
-> 
-> Assisted-by: Claude Fable 5.1
-> Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
-> ---
->   rebase-interactive.c          | 2 +-
->   t/t3404-rebase-interactive.sh | 7 +++++++
->   2 files changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/rebase-interactive.c b/rebase-interactive.c
-> index 809f76a87b..4eb628ee8f 100644
-> --- a/rebase-interactive.c
-> +++ b/rebase-interactive.c
-> @@ -30,7 +30,7 @@ static enum missing_commit_check_level get_missing_commit_check_level(void)
->   {
->   	const char *value;
->   
-> -	if (repo_config_get_value(the_repository, "rebase.missingcommitscheck", &value) ||
-> +	if (repo_config_get_string_tmp(the_repository, "rebase.missingcommitscheck", &value) ||
->   			!strcasecmp("ignore", value))
->   		return MISSING_COMMIT_CHECK_IGNORE;
->   	if (!strcasecmp("warn", value))
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index ff11abb2f2..813ad2a83d 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1562,6 +1562,13 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = error' '
->   	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
->   '
->   
-> +test_expect_success 'rebase -i rejects rebase.missingCommitsCheck without a value' '
-> +	rebase_setup_and_clean missing-commit &&
-> +	test_when_finished "test_might_fail git rebase --abort" &&
-> +	test_must_fail git -c rebase.missingCommitsCheck rebase -i --root 2>err &&
-> +	test_grep "missing value for .rebase.missingcommitscheck." err
-> +'
-> +
->   test_expect_success 'rebase --edit-todo respects rebase.missingCommitsCheck = ignore' '
->   	test_config rebase.missingCommitsCheck ignore &&
->   	rebase_setup_and_clean missing-commit &&
+I understand that Q_() provides plural-aware translation
+based on the count. I'm not entirely sure how much practical
+difference this makes for existing translations, though.
 
+This wouldn't change English output or runtime behaviour.
+The original message was made translatable using _() in
+2018, while the path-based message was introduced with
+Q_() in 2025. I also understand that changing the
+translation string would cause existing translations to
+need review.
+
+I checked current master at fb255012ac. On 9 November,
+I fetched origin/master, origin/seen and origin/next and
+grepped builtin/pack-objects.c for "Delta compression".
+All three still contain the original message, and I found
+no other in-flight change touching it. I also searched
+Lore for existing discussions and patches concerning it.
+
+Would this be a reasonable microproject to work on, or is
+it already being considered? I'd appreciate any suggestions
+before I start working on the patch.
+
+Sorry if this has already been discussed or isn't worth
+the maintainers' time.
+
+Thanks,
+Manoj
