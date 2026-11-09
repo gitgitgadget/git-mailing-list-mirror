@@ -1,93 +1,126 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794251106;
-	b=ubyWgg+5Yo0gGLnblSckl3eiCpDbu150aVglJV5qDzQRO6M5bnoaLRQmeXdHHYBwsf1w
-	 xAudEYGbu1FgGiftkki4kAgRp5Di6DGNgEjm98pEE1WczvGQir8dZ3KUPw5ssdb7OhS89
-	 rmcixNKCI4Hx/OtN/oGRKxXDU07gL3ToB23MPk8DN8mm6Lg6yGL1zEW0NR7DVmrkscmOT
-	 nQV99uQAuGwVyEb0sE1RDhsGQPeXiVvcidlB+8LHoqHtWgFAV3fmbT24WsViJB+UFCAVl
-	 PM255ANOc0pdpgGRvHwLrxe6onvBF/+emeBOyjl1rRVqEfQptayxDP4crs2PUfWw2Hw==
+	t=1794251145;
+	b=HSPxugd+np/9lhhbOjg18FIkBPximlhwBPtKMmIBSIcRUq3V97xwEmoExWg5oZnt7db0
+	 CsLD4ANM8rsQVNgZsRsiTo5qpIQqFhFexSoz8hTycVmf+t1d/XVlCEbb+vbtRYRECoA2i
+	 n3ziCRjxAwsKXC+nSKOi+HOTXa8PgT/O2f9KdGEsrttSOjJCuZk+ZVgor1Unnbkw8LKNf
+	 PRMPUcsmbC7sRPNkpoxABpSw2sR8qDDV8qD5hx43iIkb1cMzcYB2i+o0G9RN51sEWhhQ9
+	 nNS7hPkZCm66VTJN524Oz3b2lGaU3RgYbzFb68OCXy8+McS6cd4Mi81F14iKnRwqIIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794251106;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=e3yqzy3x+p7n+vWx8L6XajlcBfzaIy26LsvdapSVJ/c=;
-	b=ii3VgTWcqj9QyFTXYK/26yMO7/B7QJT0h2qNtKG9q/vw0vcWUEPztF9yGHUaoMHDNq00
-	 2yJcvq1ai6n+MVD0LPFKFR2pCStXsWl7mSCjDEkucEzyPHpFIea5px1S6qldPwuZQprJi
-	 mizZp8EdhfFbZA0/yI7x2ywwv/a7IUa9NxARQZtmLA3aS7Cz5xYSTjFXwbSEYOoW+oxtL
-	 a0UZUmqSOCn8XPPCaLI1u5fIgbqFyB9W/CORggpxnfg+ba0NE9603FfXY/0JJCVPGzFIN
-	 +iuYJm2tCCDQtjEXURi9b7HBZ/cHVXZ+tM3uJnPOr70c8JQeTzn2DHnfWLqPXEzotag==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794251145;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=8VqBOhOGWFBtHoGZwzxpsa2HSrP4iRYxwfMUEOK8d0Y=;
+	b=xDZeUF1ufBjKj3gp9H1uYaUT1OSzEgkUKKziaDk2nT1JOMDZx9aJjthZ6RfPUMi3kaub
+	 5kwYBJ7lhtqA1LhrM0TDLUg+8NYQ77Vt3w/gWkvkOfKKtdGnq8UxKnQB6mn1zJu4oE8PE
+	 VgFe9SBadmZEzMap1u3uKqAoP2JmaL3hlVd7Z122kR//Z81/cVN2zRyRD/smSgACHNqy1
+	 h7gOrd/Jtu7+hQdNdQwHoCqfRWOUcvN9goSynGZOQBtnFTpJc7xGB8TEiOnFPN+Q+jeb6
+	 +mWGO0vmB7Jo/gb9JU9KbrNv8R2TwYVsFtSWj+pjzJL3zK9OtJWZrODMQFB40V3V8vQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PNk7LQ6a;
-	arc=none smtp.remote-ip=74.125.82.182
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=JE0r6Kdr;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=IsqQUX18;
+	arc=none smtp.remote-ip=103.168.172.149
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEEE60A5BC3
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 19:05:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3EEEE60A5BC3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B95F606A326
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 19:05:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7B95F606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PNk7LQ6a
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-36fb88ea38cso1537192eec.1
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 11:05:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794251105; x=1794855905; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=e3yqzy3x+p7n+vWx8L6XajlcBfzaIy26LsvdapSVJ/c=;
-        b=PNk7LQ6aADnLTkxG3PLPcTYoZg0EG3K/bNti+oedpm0xWOtuwuyucE3R/dfMP5fSeI
-         YusTTEDkjEW5v2mFKo1/FUIqz70w0DbEh6ohJSHGhtz40Kh5drC+qf+LVk9dRl/0QdU7
-         DC49weEseOM3WPAZgfJnMRfBRKvHMOEiQ3VFbQ0jc9WPbcA/+hvLoB7oQI07zxln7CX9
-         WR5lNOSGg5s2tzLxD7bbQQhhK+WgO+rP+Zv9cXMufcQBCrNnqnKidxeD/nkSh5qaQpLr
-         bKDM+0Ac77yHNAsC2NxuIPwEK9lOfBfOX78Ow2kud1ylppfz4gKOgWYWyshVMeGwc1gf
-         Ju1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794251105; x=1794855905;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=e3yqzy3x+p7n+vWx8L6XajlcBfzaIy26LsvdapSVJ/c=;
-        b=Y+uAT35ey5zkAHmur1qyDINdTAdX+BzOMJqIajuR9y9/qZl8aktsNOooLK1Jlxq4ku
-         g/shDLPSI3vlkHF0i3X34bOp3OebmdC2H0MnBKRu1gZn7DnUjMHaJGf3FsirWbi+2bl0
-         ZuwdnhKZ+I5qXkWBOt8yBlVPFXsldhPDKbIZhjktNo6AxnmT5/XYm/KMhCwOVQv5fVum
-         ULRdupE31FJPs7LGFbxcAyJ8HVXmHTBRDD1EfyTZyK8PG+Kd+wGonCJqLdP/1sQu1D4g
-         BrEIx5ciFZyhP7GsjINA2Z7wdO4M8akIVPpztD3QZQ9815m19EYsOZV6pIvnNYiymW54
-         yuAw==
-X-Gm-Message-State: APuU4Z+o++SUZtRl30GNiZBWoLLlKN16qcUZtFvTNsUeAjkMj//KwEBq
-	K/tDaKxq/e3olNdae6ir+xwxWIn9lBtDLTCXLmLGFx+2aItiPwMedH4JPsLGEw==
-X-Gm-Gg: AYBFou0idVD9xj9rHov3uEOwR5UoYbBcmG6otF3H5WgSCeYxOnzwlEMROID0Wr8ZyUw
-	XD7twtX7HYWsxbcaYUkVtNMGoZfVo63+wk3PFkqIiCyhrCTqNCfPM1nSUh/vp7DIjXdXpKIxSAq
-	aKk7Ylcp+eh0tWH7ZT69zHjlf8N9jXSgO70rwBDtjt/AtrJBH5hUZ7OufHSdW17XsbgKxhDEPwD
-	CZbT71H4052BAjeh2QLRb44RcuvTmw87ANeJuxoPKFpxGsyISd6XKRSgy5tRL+8BpvS0rZzOO6C
-	1y6dDEO6cfRUOfuI7KHZqJowQinswnHrzI/4m+zgd30KThDRISFBrc5SWay4e38V12eGiDnBLKF
-	+F00TN2gYC4xp3xwUt7G/hIwM3xSZMKfo3CCNNjwiGS6Bo93k3qVc2RMv0OnNBHbNrI9bnJeaHI
-	onm4a5yyrWmtFCqbGEke2z1csL1D4CTME+qv7JWj+g1Fyf9R8YIz1EPuEIEwdXOL9NbtNMkt6S2
-	Kyf1QhSQbeaugH5Im4KedHdvjZDl4Yn7K7LvluVh6rPw4BLOTb+7K6zvE+AM3kVecNhBhsYogyO
-	y+CH0GFBntIJRajdfUKonXmpuX3lx2Y=
-X-Received: by 2002:a05:693c:6390:10b0:371:197b:5ade with SMTP id 5a478bee46e88-375095369b6mr507236eec.11.1794251105149;
-        Mon, 09 Nov 2026 11:05:05 -0800 (PST)
-Received: from [127.0.0.1] ([40.65.61.38])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3751ff2ab59sm290031eec.6.2026.11.09.11.05.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 11:05:04 -0800 (PST)
-Message-Id: <eeed27222be51590775352e5a3b7677e21d36a93.1794251100.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
-References: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
-From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 09 Nov 2026 19:05:00 +0000
-Subject: [PATCH 2/2] archive: remove USE_THE_REPOSITORY_VARIABLE from archival
- modules
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=JE0r6Kdr;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=IsqQUX18
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id B1C4DEC0637
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 14:05:44 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 09 Nov 2026 14:05:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1794251144;
+	 x=1794337544; bh=8VqBOhOGWFBtHoGZwzxpsa2HSrP4iRYxwfMUEOK8d0Y=; b=
+	JE0r6KdraqL4lzTTx/7hTW5tLI7KTkRyUGyhCstTuv9ozYVKolyL9Ja+i+YfNNzR
+	jjZUfpoqv8cGbxnENSNjMlXeiCXUpyicuYn+hX1DZR7IPKHtVrF7P47fGH2cRupV
+	RxYGuF5OnRtZ8bAbCKs3OT1AunENn8DlHMy1SdJsR1Eg21l7ldr9dRdR9AJsw0cU
+	gLpEg543XZHFlwfvzCdMxigvVydE4U1K+Nts1q2P4fxk8qqpJgVhZhZXD+6yXH3h
+	2dk5wseyAaY6zitLbdboB3awHsuCiDencphPLT7Py/vZwqSZPgQGqpuR2JtbmAan
+	egpjDyGSm2Q6ZK94f5oyIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794251144; x=
+	1794337544; bh=8VqBOhOGWFBtHoGZwzxpsa2HSrP4iRYxwfMUEOK8d0Y=; b=I
+	sqQUX18H+VY9F3v+2o4ZxzFzjVwwsrIsMDzRt4A8iR9EJEaB61oA/f9RVxrItJ98
+	yjUq1+29HSJ1sz6OImnBLruDVgrsk7v+xO4QCuqBfV2Tw3uHvkw7ZXa5X+hJW3cb
+	nZsrCtYqMoin9hKJ8eMN7t0Rgjx+8Awctb0NXCmE+/x2hdlQWD9bFuqAM9l7uJs7
+	BTtUS5sNlSlYErU920aqDnQlcKZMMdrfbY6TDCFhmcb5Ydh8ZgQR85TnFWGmCfNz
+	UaCace+n4yEWwYYPzo7eF9Ad5ivBs41H0byQqM+D9q641bqVA3HuCeEEFtBc8XIj
+	bPZcLb8JA9Yi+lwzQtTUw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794251144; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:AVs2Wb+QZtGF92b68L0zLVmGpJ4ACfFpAyodAL8Imsp5D92
+	pmUtUDDwv75dgDQn2oMjVVXBf61OtYO4DMcAleRcPrFrHKkrL8rX5Jaz3bPNFQyJ
+	Dv+2NYIlr7DbZ7g+yHi6/LHh6il7H1yxwb5yIGeCjUt+EDKIEe5o8AFANKW2jekb
+	hM1AQma7E/UpOsWE9k0FcqnULEN+FkzWrtq0Tl2DEKIzaIhwQ3xzt0PP4zVP8xHn
+	igAQ1diMqD4Y3nos6cKFo4EjTvnfY95w+nt+0iRvdosUT1B4hNRUolvp1Vk3F7rr
+	AnGi8UFgpVcAX0Bv8jHK90qcbdVf7NiD9LGwbww==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:Gv0UeDQM0eZC5u5O9SUTsHW6xLhhSPzmeds9n2sj6iU=:x8xDYt5/EDnUx3UA4+kmwFf7VgrmmSOKBvAbCHe0000=;
+X-ME-Sender: <xms:iBnyaukBtETyRaB5XwhrcbqgtR5ZuJxa7wGeJBpcgK4YEsSIys-haQ>
+    <xme:iBnyaoEq9skpdcDYk3enxvlLBJwEoZzGlQF-3qiGPul0wYTBzsnXOMtti95pRjmoL
+    P7zMmwZMo7lACEibC8JeLw7vWN6dixgJEUH2Jd3hdXKLzUx893OnL_D>
+X-ME-Received: <xmr:iBnyau7aLyB8ZWPFkCN3M2jCVief8thV9kjkjJo4Jw1492eR7CxCTDnSL6UIVh7gmq2qJCNVCS5wKKo83jGVnpkhQi3wW_-6g-5n>
+X-ME-Proxy-Cause: dmFkZTEynL3Tp42xc/5NdYnLuqborpm4nnGSQHxS/NDtRqR7P+d9aSGfA/0DSvUEHZD8MK
+    L87D4raqHyrMyY+y0YElk6Gq2ZKTV+6J1reVx6KjRVWAE9XVBkREnESacDdsru3KeOwZJO
+    3UrMzYT9lPWNzyIL2oRyFsTXd4/zTZU9Go1C4BE4+OOgM8jjMFeBuZU2bc2c64EJerGRYy
+    X8UcKVQ2CBPAPJfs4yH8k7sof5yO399sVaYmlIBsZL3lhpC9B0F7mXmPFHyLcXKzWGlARg
+    sq3AGI1jCNrxU6OY1541WV6ib9RiOQvnA3MMgYyO8gZ+UdXSugtarDu0XdwCqNZgdGO7dt
+    sr1ViCEb92A8wdWnKovDk8q49hSAZuC7O3sNxLdc6OFNcE08+z/ooHoP/TWnog8+WmRI14
+    +8D1tZ5GTypzqExCbDOYj/00hhB8JC6FAQm6jMBvjPOSBrGJvr6afCvuJVO0+Ya6vjAdfg
+    CL8jv2OBhHCaqjo7prh7RngPZ6u2+qBy5UKthE8+ZYX82W5forcLnbfy0rqbLiTtN/B28e
+    mPSu02w7RAUvuPHEbTxBGSrPoWjwx40xdyyt3hr9h6qY5r1ZSlH1aqJ/tOXp1MVQTN95Db
+    y6LBMrdto5f0+sxhZEWtmaoVG0ICLJgR0tgcWsb/1477C3uygheXks0GVLJA
+X-ME-Proxy: <xmx:iBnyaol5KXmkAi0OSIZzOtXn7OlkTukOzzEY0iZHSF3pzAgXnLavVQ>
+    <xmx:iBnyarqp2vlWOmO_1lB1JJ2U8dpfuetzlcAMYhoHq1W6kMrbfms35Q>
+    <xmx:iBnyavu_XOx8WUlknBfCqNEM3hm9b1Y5IVJY5xt1BepFc2EQC0j99A>
+    <xmx:iBnyaoGbNxHcOGGeI0ik_EMSbltqKqQAPthewTZxG6e1aiBX-ygzvg>
+    <xmx:iBnyav4bPoFXSJKdhLWA4LBm6N05ncKwwvbG-QszjSvGbF5vIYlseyTL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Nov 2026 14:05:44 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Joie Joie <soniqjjj@gmail.com>
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
+  christian.couder@gmail.com,  git@vger.kernel.org,
+  kristofferhaugsbakk@fastmail.com,  Tanga Joris <tangajoris@gmail.com>
+Subject: Re: [PATCH] repo: zero-initialize configuration values
+In-Reply-To: <CAH=d44fX-LN10TU0ZsuJ_RcxE=6QnKsHrLS4dJorAj3T55TZzA@mail.gmail.com>
+	(Joie Joie's message of "Mon, 9 Nov 2026 15:26:22 +0100")
+References: <pull.2298.git.1793966368860.gitgitgadget@gmail.com>
+	<au3hVGPuDyGVwOw8@pks.im> <xmqq7bipiwgt.fsf@gitster.g>
+	<CAH=d44fX-LN10TU0ZsuJ_RcxE=6QnKsHrLS4dJorAj3T55TZzA@mail.gmail.com>
+Date: Mon, 09 Nov 2026 11:05:43 -0800
+Message-ID: <xmqqo6bxzuyg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,163 +130,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Srujith A Poojary <poojarysrujith@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-From: Srujith A Poojary <poojarysrujith@gmail.com>
+Joie Joie <soniqjjj@gmail.com> writes:
 
-Refactor archival modules (archive-tar.c, archive-zip.c, archive.c,
-builtin/archive.c, builtin/upload-archive.c, and diagnose.c) to accept
-and pass explicit struct repository * pointers instead of relying on
-global repository state.
+> Thanks, Junio.
+>
+> I hadn't considered using a compound literal here. I was following the
+> existing initialization approach, but your suggestion makes sense,
+> especially given the update to the CodingGuidelines.
+>
+> I'll look into changing the initialization to use a compound literal
+> while preserving the existing defaults and behavior.
 
-Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
----
- archive-tar.c            | 8 +++-----
- archive-zip.c            | 3 ++-
- archive.c                | 6 +++---
- archive.h                | 6 +++---
- builtin/archive.c        | 3 ++-
- builtin/upload-archive.c | 2 +-
- diagnose.c               | 2 +-
- 7 files changed, 15 insertions(+), 15 deletions(-)
+Sounds good, but do not top post ;-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index a1c66024d4..9697fb2153 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -2,8 +2,6 @@
-  * Copyright (c) 2005, 2006 Rene Scharfe
-  */
- 
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "config.h"
- #include "gettext.h"
-@@ -337,7 +335,7 @@ static void write_global_extended_header(struct archiver_args *args)
- 	if (oid)
- 		strbuf_append_ext_header(&ext_header, "comment",
- 					 oid_to_hex(oid),
--					 the_hash_algo->hexsz);
-+					 args->repo->hash_algo->hexsz);
- 	if (args->time > USTAR_MAX_MTIME) {
- 		strbuf_append_ext_header_uint(&ext_header, "mtime",
- 					      args->time);
-@@ -526,7 +524,7 @@ static struct archiver tar_archiver = {
- 	.flags = ARCHIVER_REMOTE,
- };
- 
--void init_tar_archiver(void)
-+void init_tar_archiver(struct repository *repo)
- {
- 	int i;
- 	register_archiver(&tar_archiver);
-@@ -535,7 +533,7 @@ void init_tar_archiver(void)
- 	tar_filter_config("tar.tgz.remote", "true", NULL);
- 	tar_filter_config("tar.tar.gz.command", internal_gzip_command, NULL);
- 	tar_filter_config("tar.tar.gz.remote", "true", NULL);
--	repo_config(the_repository, git_tar_config, NULL);
-+	repo_config(repo, git_tar_config, NULL);
- 	for (i = 0; i < nr_tar_filters; i++) {
- 		/* omit any filters that never had a command configured */
- 		if (tar_filters[i]->filter_command)
-diff --git a/archive-zip.c b/archive-zip.c
-index 785689584c..dba2247f6b 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -653,7 +653,8 @@ static struct archiver zip_archiver = {
- 	.flags = ARCHIVER_WANT_COMPRESSION_LEVELS|ARCHIVER_REMOTE,
- };
- 
--void init_zip_archiver(void)
-+void init_zip_archiver(struct repository *repo)
- {
-+	(void)repo;
- 	register_archiver(&zip_archiver);
- }
-diff --git a/archive.c b/archive.c
-index 59790be986..e9e2e241c3 100644
---- a/archive.c
-+++ b/archive.c
-@@ -43,10 +43,10 @@ void register_archiver(struct archiver *ar)
- 	archivers[nr_archivers++] = ar;
- }
- 
--void init_archivers(void)
-+void init_archivers(struct repository *repo)
- {
--	init_tar_archiver();
--	init_zip_archiver();
-+	init_tar_archiver(repo);
-+	init_zip_archiver(repo);
- }
- 
- static void format_subst(const struct commit *commit,
-diff --git a/archive.h b/archive.h
-index bbe65ba0f9..8ec59b22e9 100644
---- a/archive.h
-+++ b/archive.h
-@@ -48,9 +48,9 @@ struct archiver {
- };
- void register_archiver(struct archiver *);
- 
--void init_tar_archiver(void);
--void init_zip_archiver(void);
--void init_archivers(void);
-+void init_tar_archiver(struct repository *repo);
-+void init_zip_archiver(struct repository *repo);
-+void init_archivers(struct repository *repo);
- 
- typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
- 					const struct object_id *oid,
-diff --git a/builtin/archive.c b/builtin/archive.c
-index 3c1288a123..e35b9637ce 100644
---- a/builtin/archive.c
-+++ b/builtin/archive.c
-@@ -2,6 +2,7 @@
-  * Copyright (c) 2006 Franck Bui-Huu
-  * Copyright (c) 2006 Rene Scharfe
-  */
-+#define USE_THE_REPOSITORY_VARIABLE
- #include "builtin.h"
- #include "archive.h"
- #include "gettext.h"
-@@ -97,7 +98,7 @@ int cmd_archive(int argc,
- 	argc = parse_options(argc, argv, prefix, local_opts, NULL,
- 			     PARSE_OPT_KEEP_ALL);
- 
--	init_archivers();
-+	init_archivers(the_repository);
- 
- 	if (output)
- 		create_output_file(output);
-diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-index 718e74b3ac..3cfc7ffaf3 100644
---- a/builtin/upload-archive.c
-+++ b/builtin/upload-archive.c
-@@ -34,7 +34,7 @@ int cmd_upload_archive_writer(int argc,
- 	if (!enter_repo(the_repository, argv[1], 0))
- 		die("'%s' does not appear to be a git repository", argv[1]);
- 
--	init_archivers();
-+	init_archivers(the_repository);
- 
- 	/* put received options in sent_argv[] */
- 	strvec_push(&sent_argv, "git-upload-archive");
-diff --git a/diagnose.c b/diagnose.c
-index 2c1bcfe431..c642dde351 100644
---- a/diagnose.c
-+++ b/diagnose.c
-@@ -212,7 +212,7 @@ int create_diagnostics_archive(struct repository *r,
- 		goto diagnose_cleanup;
- 	}
- 
--	init_zip_archiver();
-+	init_zip_archiver(r);
- 	strvec_pushl(&archiver_args, "git-diagnose", "--format=zip", NULL);
- 
- 	strbuf_reset(&buf);
--- 
-gitgitgadget
+>
+> On Fri, Nov 6, 2026 at 8:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Patrick Steinhardt <ps@pks.im> writes:
+>>
+>> > In any case, the patch is obviously correct and is a good improvement in
+>> > my opinion. So this looks good to me, thanks.
+>>
+>> It however does not look good to me.  I would prefer to see
+>>
+>>         struct foo foo = {0};
+>>
+>> if everything is zero initialized, or if there are some members
+>> initialized to specific values, C99 designated initializers to be
+>> used:
+>>
+>>         struct foo foo = {
+>>                 /* Comment on this stuff */
+>>                 .object_creation_mode = OBJECT_CREATION_MODE,
+>>
+>>                 /* Comment on this other stuff */
+>>                 .branch_track = BRANCH_TRACK_REMOTE,
+>>         };
+>>
+>> Now this is overwriting the passed in structure members, so how we
+>> write the initialization is not the whole story.
+>>
+>> Since we have avoided assuming the universal availability of the
+>> more recent "compound literals" syntax, which is:
+>>
+>>         *cfg = (struct foo) {
+>>                 ... an initialization with designated initializers ...
+>>         };
+>>
+>> we seem to (ab)use struct assignment, e.g.,
+>>
+>>         static struct foo foo_template = {
+>>                 ... an initialization with designated initializers ...
+>>         };
+>>
+>>         *cfg = foo_template;
+>>
+>> in a few places as a fallback in the existing code (DI is C99,
+>> struct assignment is C89, so it has been a safer assumption than
+>> assuming compound literals).
+>>
+>> But I do recall we made this update to our CodingGuidelines document.
+>>
+>>    . since late 2024 with v2.48.0-rc0~20, we have been using compound
+>>      literals, e.g., (struct foo){ .member = value };
+>>
+>> So perhaps it is time to switch this to assign a compound literal?
