@@ -1,100 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.42
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794234433;
-	b=gVEq70tpsgUNP7JW+PdsIwOFjl0JZpu1+vuBcjG5JXO3QbfD/haKl3zkBZP5r3HUo4hm
-	 MrG8FsEzo3+rTMGu1RhemQ0EAWffhM89Rcvt3GFdoJQWxXE+wnK/lk69+k+YrVCbPtDWZ
-	 2gua9HTUnfZxYz9VqvhZ/xBuQyJ7427zoNtbVoYdNdMIvE8By8EDgTH0CpElVzsWzV5LN
-	 7z4+CxKj/pjWDCJdTYx4ZdkQOTmNQL1c4A1+xb+EoJVOC5rfBJvi6dU8EB9ZLX0V+ysRu
-	 mfZSM7NiZRTOJTSBQbgPtmKg+nG+oEI+nKxKPezo0LoMMZWxDyxxYDRybUfq9l/eGhw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794234433;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.52
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794234691;
+	b=n3kNwVBF2qHvrKEdOd5JgDFkM2rUk3bMHu0W2YoEbnUl/BYcGesGskBEqPSHjyXZ/eP5
+	 Vq/sEz93rGqkEPG492i8JyQ1xVy6LHEUfKxZUAh8gl1LPh0hvFUH9ZEaMCcNprb0/rdOo
+	 fxlWqbc+fAz4ptz5XAH4pS//YOSGuARasMjqFsBPA3O2qKVfEIvCR/WX4OJPZWVBBMgoM
+	 9PehgNFMmhU1YPmopllFCC1Vwgw8bZ+d3D07XewGQjWRV2FP3j2c3uZl5+A88b6xfhMH0
+	 ywGiGCiwC38UYJUIblHZVXFXgeuwwwuuolvQiNxYafOKPU4Y76Q26RtTuEcpBFGIrsg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794234691;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Content-Type:Content-Transfer-Encoding;
-	bh=SCbUUn0h2JspbNaOxybvrCMKuHt7k7RPy6F2uVROTLg=;
-	b=In+Rhdw0pNiY5fhPmd1WABr+2O60G/Z+79uIH9MWLCIzvjb+H7QWqatfz059L3NQHZLE
-	 vsv8GTfS3/wKoSKDsS4jAp+MV3SjOS+gbBqv+pWBCoVVEycWYWfOIIbLVUu6x2GSsuaaq
-	 6JvPsiKjH1F0gf8rgTZgST+RoeedV1F4lt9+BGDWIQyGuJsI55yl7/aexXg8dCkzOkZZ7
-	 94S6uFC0kpxZrWkbl7WOERCdA9OVcLF2KmCYVGvOeWgmqUnMgMxi3YcgsSZ/OyHrNVLY8
-	 KjMqCcD96XDDAVDBGAeJ4GeDtYDx8l0Fye6Tn5znz+KO7FlXa01e/JC/0WvlNIV6m9g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Reply-To:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=qGzM3vkyInnOauOJzYeqnBs8u1ZporcjID02LOUBHx0=;
+	b=fohpqv0rZ455FcT434ePbPwxCR4VxYeOWKJTVTcUANIX+pqJK7zVqQTHHiSHI5GeFI8h
+	 cT81o3PXekWzEMMjiz/8LceD+25UDuAInaTZaU3KfXRqRaj1QmfxsYBsNxeIgJ/J6pzdA
+	 xBDjM39u7rUe8JxvfMULBsu7It4lKM8VqLmJlS+8zpZWHzQf5rrh3YVgmpEADtKMM1fqR
+	 gETgFdYuoYCludOFGRReh59wRXc8cIzXc2yTeGEmd8vdEoxBImS3spv8PnbzgXWzsvy2T
+	 5W0zAFjCGKOaIAbQNKbizsVni+8yzG+JGVbraAbClFP497a45JWyWSOZXdWF0GK5IrA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FYDwVWJe;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.42
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PZlepn2v;
+	arc=none smtp.remote-ip=209.85.221.52
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177FF606A325
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 14:27:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 177FF606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DE3606A321
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 14:31:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B8DE3606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FYDwVWJe
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-85d363fb73cso465814a34.1
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 06:27:12 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794234432; cv=none;
-        d=google.com; s=arc-20260327;
-        b=DcvoNlToxag3YZ2WXwoRxrEr4nG03NFCJZ/PXMy7pL+AgouYfsdgXmP+HbYNAbwgpf
-         T4vgNQHZULdepkPJ0xDvLnfoBv0FJowqDxzXd/llLxbNmgOd7EAHtuj5hBy5X9yqyBJR
-         o6dnwJVpocV9d26Ys9JTtqDgdgh2u52cegSms1yXcv3U4d13waiRHw92nEJO65Ax/c5f
-         8d5DbpYxNbHGbWIFO1qcxRtsu4v43wWagxhWMDnogVoN1s8eI1VeFRCs0kut7h9alWIo
-         jpUgsdj1v6DED9MZ2oF/IsFPXto4kMfadgrp3GlrrlbMQqMy5WBOaG10jtTdMEE77Fr4
-         eX5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=SCbUUn0h2JspbNaOxybvrCMKuHt7k7RPy6F2uVROTLg=;
-        fh=YeMfK1c2NBXa6r9LO4lVCoSa5qjj9QhIzQzIDo7F2cs=;
-        b=mubbtUQJoiGT9wm4z/0rAaoio6I3wB6X21wDkGKtGgFrAF7LsuRmnya1NtwiaI4+X+
-         k1HX+NvW01E3C7Udq6QbBH8YXW4qKnxaXwccS7ewKw3b3Ge1inoVMyZJ79xOzr6Li6PQ
-         6+piaKjTKhFjYpJOEo5eS7vwejMHAq4bsoGpf3/su8D1fbnbk8vTuz4X4LWgcTGLcyu8
-         FoLzvBcCGCwsgvOKVlOJedH4Xmjs92xXvEk17qE2EViUbTQym78vdWp5qeCjb+P+6RXQ
-         vNPkL1ES2YjdI9JpTfF7tDRGkwvvXUXdUIz1nZnrVDpwpe3v5bYCkuSCi5vU4sIjMxxy
-         ZHsw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PZlepn2v
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-492f6b7f70dso600365f8f.0
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 06:31:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794234432; x=1794839232; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=SCbUUn0h2JspbNaOxybvrCMKuHt7k7RPy6F2uVROTLg=;
-        b=FYDwVWJeQq8MJoH7+6XZve/DNeqlMcKR7njCSBA/2q4+RyZ5APXcSDjKAUbeWxgjIe
-         L4mkqeKOr8kc4ZvjxChsTieipfEKbSkrBvS/u3FPpuuH+fcMtkbEOlWsoyIOmkAZcatq
-         dIcXK/w41lMvkYtknRKVpkfCARWOCuLIh+XRJRLEDOeQqz5EHba+wToVPnDTDTD/SMzE
-         QsmN+PqlNZbejPaq2I+z1VHkUQ/XHWweYKBMO2rnx4OTZAXnfbqwvLPQDc+m2PZI5tfB
-         +6zf8TYqsVTKuzGLOiHxSf+HYxqTpjZ39UA4MyJBRfyZQHNLunwPCjj585BY1ydeSQ0u
-         v3gw==
+        d=gmail.com; s=20260707; t=1794234689; x=1794839489; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=qGzM3vkyInnOauOJzYeqnBs8u1ZporcjID02LOUBHx0=;
+        b=PZlepn2vVlnRCf2DDxE+TCe/80YTsz/muoCA4ppIwwu53a+1RVy5ZeOnaKzxfRcriU
+         yCSCug1kOrWRLWTJw1/8iwXfOOyR2E8Oo4vJ9/yT8cjywVwrr48uXjE6Rg+SkyhjP4Kl
+         Ji2nKkXGAvqgNKsGSjPNLoo13O6htp9NgIQhRBSp2W/ktIiTkIoNP8E7V0V9Ams4QYve
+         Zm7NDtgxfk2TEi022PrkL4D/hzvPzheOxfcuBrAIgsicdhb2Jawq6IturDl60nvTIObB
+         XOEFRZLNPdmxodhLlWlPwpeahBJNLqKIc8O8Xs22+hqPLSbWFQHw52WxEzuNHR2BN+96
+         bHSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794234432; x=1794839232;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=SCbUUn0h2JspbNaOxybvrCMKuHt7k7RPy6F2uVROTLg=;
-        b=KAu5YXZRWRwGlUN48QFM3peEAz2Zz2xzEsIwv+r8cmHBHh/4JW75YA0MqFeNnooANJ
-         ESuKggZhM2dPNcotjD4D/IkSxSO3HhrT+q60N4ONy7r6UhDbFKMxB7RXsK7zN45QhYh4
-         4m59CtwVj5nSaqaVH7YO5oqzhw9l6gaG8X30DucL34pkS8bOV6nCNeBy9Q8aJwlP2wHR
-         pOGguc/kc6XfhzVpg/jWz8bKloMs6Pvqrwo05yfyGBWJQMqMkbUo/WgDI2LZgiRW2kTz
-         0uzqgyWn8gQ5QWDnwGnOShsoCFgv5JrDJED9cgUCQ64Ar+qq+6jrx0i9v1S3EVnZEzB/
-         JOiw==
-X-Forwarded-Encrypted: i=1; AL+hErH1UhmKXdHlRLEZ1dOge29hLZCSTfxbs6Qg9dLkfB824Yo7IH/N+3ObOobSv9fA97RDTOM=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/r7G8xjFiyJHiuoGZh57uQWcdo4Zlktoy7UvsuwGww9HlBdD30
-	oZFqwDncu/zo9ZPys4IPzWkG8MMJNVxsNbqzUwMNfy8RIIq74MRrY/Z7Mw/BY2McmJv5o4nl5My
-	UOKpTlyAwmZb5I20sbFEIvCxl/iKSnL8=
-X-Gm-Gg: AYBFou2pai81UZ4UYzMF+Pz4OMzTzFV/3r9z33yxZKEzsRzVhSbvnZUfQdcPju1uRhp
-	OLQCTQ/Q45XPbk/ojeID1UUFDROOTR9qvSd+7N7+BRnJ7CkHONrE3Sw6wTDk+4JLIA/XBa95HuL
-	VkT9TZYWVoH6fTPujAmdvX0a4TfTctEgj7HMPkjmUPj/HMRKDTltWCoetvdgNIuX/W8G8FVNIhe
-	srv09flkSw+6xxMvFD+r8uSNKtr5PMfB+FepMERhrYBQtVITYVkxajMoSe6zwLO8M3ivksWYacQ
-	lODJjcP/N0MAsZpmQkQPIoDObjjOEIwnHQIZf5GFZ8SriZ/64THRnu3skA3ItLKRBzyKFxm81JF
-	9RTANbwbGU91XrdEgrlYh+lzD3U5Uz/DW/uGIu/RohDLB1OGcCM+8zWMzq1AZYpFlNKY/yXtj+D
-	stgxf/vA==
-X-Received: by 2002:a05:6830:44a3:b0:844:d1b5:df47 with SMTP id
- 46e09a7af769-85f50805808mr3220632a34.19.1794234431852; Mon, 09 Nov 2026
- 06:27:11 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794234689; x=1794839489;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qGzM3vkyInnOauOJzYeqnBs8u1ZporcjID02LOUBHx0=;
+        b=VXtGf9jqD59hQHYPILyQs81I9cV67y3SiPyk1ITMM5DBG+DBneYHJpokoihfdhW1ap
+         /ibBtp+SyW4QgwouBlCQlk3lhsh1shL4GEiuv/vv/ANEsMufjHRRxaUdsGdSDqCKYLJ+
+         1jMS5rEcN5sFWVhFhFlYvooZpKohhiqmbVpAmemdYymbCjR3557+cwTmUH+t4CcFhV6a
+         F/5Q8v8KxNzPQz7UYQrCqavbYOTANI76vhpE1SPQihzZsDVa3l4wjBcfUYZADoh8EfP+
+         38JX8bJEICLLIiJg6im+w7LiUPJNYSN/H+3MFmMRDoEqVfAepG1ZEVCGpOUjhJa2ajLa
+         yt6A==
+X-Gm-Message-State: APuU4Z8YdGYuJ95euGBBpktb/1+PRXOHpGuuHulaYqLXjHaACoYPNQcv
+	5CljOG/bfJ308sR6aKTqWGAey2XbPc7Uf8aC0PeNdSMF0cwV8+cVildw
+X-Gm-Gg: AYBFou2LRXnYBsu0n3DdmC5X0/ycLDtCN3KLuwTC22qskUpQlH8LELwBynebopWWXXb
+	zjwedithzXdzaPhM6Qf+RMfppErYWIgPuIeuJPbgjNhI1zbwjLKEluraaUFnzLA+xMnKjYFXZxm
+	pq/zwIf0jgSP4a0FndbbxpszBrLKdUmJAOdVDDeCnSJeEiNv9Siuv1u0lkdCxHcnYzG7egHArVh
+	BhP0OtnLBAPUZnibQjrE60b417Vp9UDgGAK8v070ulTfkdubjnG3jOLsYZUHXAP9ueP2hFE6Mmq
+	y9uEXZqgxpIX7vU3RZ7gcK3ZrvevhZxTaSVoXr6iuJgGSezNoVSTZIxUFyuZJ34rhHU5cW7boJT
+	TiZNd+4AC+LbKYnjBgGiryykBTnIAqZ/pgYDMat8St5IVszWQyfcau/dLCM45QGvSKDV5sIjrKy
+	qj4LC8HzqbtvT869NeqMsJfcaU2sG5pJNUvYGrQGs93VycqugdFiCPyhQteNKoyuME/Xw+sRnVW
+	h4IBLaOslRJJ0BTRRBLKLXlwzk/YDN2xkD3j/M5tnI+ADVBlKEx1uzj41Mm42GNhzi0+sTrEqiy
+	WyQGgciFuGvPKfQk4iWK/TaYxNofuvh+NYdWB5X0nCyGW2KzKKUodu7OIlUHOVLaDJKELVdwVjB
+	XaQ/iNg==
+X-Received: by 2002:a5d:5f81:0:b0:491:f77d:47e4 with SMTP id ffacd0b85a97d-49585f85839mr8895526f8f.49.1794234688851;
+        Mon, 09 Nov 2026 06:31:28 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49596acf59esm10583463f8f.23.2026.11.09.06.31.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Nov 2026 06:31:28 -0800 (PST)
+Message-ID: <d5bb8fe0-7706-4e3d-b471-ad004411a9ed@gmail.com>
+Date: Mon, 9 Nov 2026 14:31:22 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,79 +90,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2298.git.1793966368860.gitgitgadget@gmail.com>
- <au3hVGPuDyGVwOw8@pks.im> <xmqq7bipiwgt.fsf@gitster.g>
-In-Reply-To: <xmqq7bipiwgt.fsf@gitster.g>
-From: Joie Joie <soniqjjj@gmail.com>
-Date: Mon, 9 Nov 2026 15:26:22 +0100
-X-Gm-Features: AclHuK_rpJA2gdej_QqeWbtD-xEac0dPvqhYbcAgEuQCYmb9ZUpTWPSVlp87gO0
-Message-ID: <CAH=d44fX-LN10TU0ZsuJ_RcxE=6QnKsHrLS4dJorAj3T55TZzA@mail.gmail.com>
-Subject: Re: [PATCH] repo: zero-initialize configuration values
-To: Junio C Hamano <gitster@pobox.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	christian.couder@gmail.com, git@vger.kernel.org, 
-	kristofferhaugsbakk@fastmail.com, Tanga Joris <tangajoris@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [Outreachy PATCH 1/2] apply: do not keep names from an unused
+ "diff --git" line
+To: Tanga Joris <tangajoris@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, gitster@pobox.com, jackrawlings2011@gmail.com,
+ christian.couder@gmail.com, siddharthasthana31@gmail.com,
+ kaartic.sivaraam@gmail.com, usmanakinyemi202@gmail.com
+References: <CALdwsC1cMKZgRPZA+pBaJe4PPs9q9W0K9CQLmM2bgUCyysTB-w@mail.gmail.com>
+ <20261107195429.96842-1-tangajoris@gmail.com>
+ <7bd3360a-fb96-4631-8670-dde0d281532c@gmail.com>
+ <CAKrRMNr5VJmvws0asHgmDxCNxo19ctGTpM2eoTMT3iQ5v2cagQ@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAKrRMNr5VJmvws0asHgmDxCNxo19ctGTpM2eoTMT3iQ5v2cagQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Thanks, Junio.
+Hi Tanga
 
-I hadn't considered using a compound literal here. I was following the
-existing initialization approach, but your suggestion makes sense,
-especially given the update to the CodingGuidelines.
+On 09/11/2026 13:13, Tanga Joris wrote:
+> On Mon, 9 Nov 2026 at 13:52, Phillip Wood <phillip.wood123@gmail.com> wrote:
 
-I'll look into changing the initialization to use a compound literal
-while preserving the existing defaults and behavior.
+It would have been helpful to retain a bit more context here, I've 
+restored it so anyone reading this could see the patch that I was 
+referring to.
 
-On Fri, Nov 6, 2026 at 8:36=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > In any case, the patch is obviously correct and is a good improvement i=
-n
-> > my opinion. So this looks good to me, thanks.
->
-> It however does not look good to me.  I would prefer to see
->
->         struct foo foo =3D {0};
->
-> if everything is zero initialized, or if there are some members
-> initialized to specific values, C99 designated initializers to be
-> used:
->
->         struct foo foo =3D {
->                 /* Comment on this stuff */
->                 .object_creation_mode =3D OBJECT_CREATION_MODE,
->
->                 /* Comment on this other stuff */
->                 .branch_track =3D BRANCH_TRACK_REMOTE,
->         };
->
-> Now this is overwriting the passed in structure members, so how we
-> write the initialization is not the whole story.
->
-> Since we have avoided assuming the universal availability of the
-> more recent "compound literals" syntax, which is:
->
->         *cfg =3D (struct foo) {
->                 ... an initialization with designated initializers ...
->         };
->
-> we seem to (ab)use struct assignment, e.g.,
->
->         static struct foo foo_template =3D {
->                 ... an initialization with designated initializers ...
->         };
->
->         *cfg =3D foo_template;
->
-> in a few places as a fallback in the existing code (DI is C99,
-> struct assignment is C89, so it has been a safer assumption than
-> assuming compound literals).
->
-> But I do recall we made this update to our CodingGuidelines document.
->
->    . since late 2024 with v2.48.0-rc0~20, we have been using compound
->      literals, e.g., (struct foo){ .member =3D value };
->
-> So perhaps it is time to switch this to assign a compound literal?
+>>> diff --git a/f b/f
+>>> 
+>>> new file mode 100644
+>>> index 0000000..d00491f
+>>> --- /dev/null
+>>> +++ b/f
+>>> @@ -0,0 +1 @@
+>>> +1 
+
+>> To me this looks like a corrupt patch because we have a blank line after
+>> the "diff --git" header followed by valid extended diff headers. Now
+>> that we accept this do we respect the file mode?
+> 
+> No, it does not respect the file mode. "new file mode 100755" is
+> ignored and the file gets the default mode.
+
+So that is a good reason to reject this, rather than silently applying a 
+corrupt patch.
+
+ >>> diff --git a/f b/f
+ >>> diff --git a/g b/g
+
+>> This is the only one that I think it is reasonable to accept - we have
+>> an empty patch for "f" followed by a valid patch for "g"
+> 
+> Alright, I will keep accepting this one.
+
+Do we accept that now, or only with your patch?
+
+> For the next version, I plan to die with an error when a "diff --git"
+> line has no header lines after it, and a "---" and "+++" patch follows
+> before the next "diff --git" line. The error would name the line of
+> the "diff --git". An empty section followed by another "diff --git"
+> line would still be ignored.
+> 
+> One thing I would like to check with you. On master, a blank line
+> after "diff --git" is accepted in a patch that modifies a file. If
+> that patch has "old mode" and "new mode" lines, the mode change is
+> lost. The rule above would reject these patches too. What is your view
+> on this?
+Oh, so
+
+diff --git a/f b/f
+
+index 573541a..d00491f 100644
+--- a/f
++++ b/f
+@@ -1 +1 @@
+-0
++1
+
+applies. That looks like a corrupt patch as well to me and if we're 
+ignoring the mode headers I'd say it is definitely a bug and rejecting 
+it is the right thing to do.
+
+Thanks
+
+Phillip
