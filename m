@@ -1,118 +1,128 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794252610;
-	b=FQjk5qf/mp/X9JukTJ+ZV4rNLSMaJ7RSYMjsqbZ7Sdp3FnnRD53jbpqe335nyqYM3wWE
-	 Ol4bFkxRmE+BeHI5cyXcn1f+AtPMZlnrQMPfVmxvEdtLZq4HcVALNCTzhxtGhbjU2JfVi
-	 mcmuWE6ZA9KHuD924J6XXt+TjuAGoOAU8hcP3iTzFFg7t/Eoh6g8pweXwov42/Tohi+ah
-	 c98q4lQv5SIT4ygRN6gyDUzD5OVbtk2r/VoRUXYoVQij6F/lhhguz2asoMhQjgd1R/1NR
-	 twNP5rQfKc0YMYPg5Sn+V3wzPVJWkuzT8RXHSBc4NtB+7cChA5Bo4HVUFS47h8OmbgQ==
+	t=1794253510;
+	b=ZWBFq552gjb1DBJi5DhnFChxvW5gzrRmPaAO/JfVgoZ2vULIktcAw7YhX32qhaSsyDgE
+	 epoq3C6Ekthpmki9XqD/UUmLbleuAJWxqzJKH7cInleuyv3PgrdnBDN66ihtDDIqiRlyl
+	 LtI/2ZfOfYUVLXXhaS9Hpv5YWPG2WZ8DAe53XCk5YcYmfgInxjJBAurf0yVWvucsyE6bw
+	 vLS/5ywhcG/LwPG4Y395yBZPt6ej4TRMNVKUesQ7FDlq0N0L0ZMMXcPZB8dBNjinP7oDb
+	 RV5sP7pMiwDO7ojuqeu59bxsGVgJftbYbTnBt27orE/N0n8FC6mE23xili10NL3eHWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794252610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794253510;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=Q1c3l/FuYhvLnEjdaxrnJXdm053aaSQrIFy1I79vRIU=;
-	b=We1bBNbDUC96P4Maeb+y3zmAWaaP/Q2P7AVfW71U2S+8KjE10pP27eHW/paJXcj853P9
-	 iCZboza7qahsHxNvWcCfEzYdfiM0OD6tdWmd6qFdeGsH9fNI42RGjpEPEnEto4XWgrpgu
-	 st2DJrJ35yaQ5oIO51b3htFD2BErQUnEPHV07CycCVStpNiUivGz86WHwgSfnHBs2I+YO
-	 uyWhXB+PtuKoi3UeP3+TOX7n/yq0ijbfuf5t7m5LeOw9caq+Sg//1pxvMDuB65+Y+bOFK
-	 B98GLKdM1ccY6nanlPpZ1nW7pREYC2jrq2v4hFD/vfVNRD/v6Reu2W9tsWDbpimxzzQ==
+	bh=gR8JzHaW46TTd+V9xVdbtJZMvhb7eRMb31zrv7U+8H4=;
+	b=MiQTzpV3C0yt1gaAb/ui22BO1XsDvzdC2TmsjrQhAgUMTeIwJcH4NQhZr6dgTharTFy6
+	 M/9wPoKoXRGCVdKFcBacC4/vCKhYmaJZsxN+iKbQLxGNGAKY11SU1iHCumqZoAkw+ypZK
+	 9EjjGeVhoI1TLBwiXnYlKYHfXluZJE2Zp5JWNFCDqtEIhdfgfSUhwoUhEjGwPIfvtVlaH
+	 tv8Ya3mbIREC1OYcEPUSV5xOr8jnykfeDdcECt/2mGFCSebjyiVbYt8Bg8T97VRYiE8nv
+	 /D7zp2KHhg8JAnZV6QKnQoyCDwvfakJpL0VPY6G7XfK/DUYXU8BzHhzTBg478VOsm1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=hA7wmbhR;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=B5UMqBvQ;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=NQDz1gfI;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="hZoChe/L";
 	arc=none smtp.remote-ip=103.168.172.156
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A364606A32A
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 19:30:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8A364606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D146D606A32A
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 19:45:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D146D606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=hA7wmbhR;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=B5UMqBvQ
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BA31614001A8
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 14:30:08 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=NQDz1gfI;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hZoChe/L
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 197531400159
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 14:45:09 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 09 Nov 2026 14:30:08 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 09 Nov 2026 14:45:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794252608; x=1794339008; bh=Q1c3l/FuYh
-	vLnEjdaxrnJXdm053aaSQrIFy1I79vRIU=; b=hA7wmbhRQnLPwc6DJx2DEO/qhi
-	dKej8z0JlG1IGJq8aygf9NXXNRQip1gUSfQR/BqaXsUSJgCNEl395UlEA18BNm5y
-	7to2nXZlEj3zdEyn2EnoR8t3zry+5yFb89+kary1eaBspaiJztz1rbO2JY8pPLzr
-	r6GJ+yzHE4LM5eb9uWMgIIwx6oa8Kn9izcjHTyWXiZqd7r84VkuGalNJxSGDVcP+
-	kc/76M2XRoxHmSEu7lthz3rS4h7f9e+eBfmF8afoorJXYicS4KbucMXEsFzBVmhi
-	FDZALHMnrzP3J6w5CQn0E8ylSY/Z1HxcZGW0vnCrBqYfGlObSkyQucd3BMYw==
+	:subject:to:to; s=fm2; t=1794253509; x=1794339909; bh=gR8JzHaW46
+	TTd+V9xVdbtJZMvhb7eRMb31zrv7U+8H4=; b=NQDz1gfICbFb2/lUxxxyxMDXCb
+	+inthIsm2yIQHiryV43KgVJUqFanIcdh2eSx0lxEy5KnWCch46CgEVbIfRcveoCv
+	Ni/sRkEqUDmbqUPggME9lgrwlEp07rIdW0i5YFG5TLyGDnxWMAeJH0UWxjQIgBh5
+	153VoF7JansheD8Wqj8uCVdkUCxrXHQOOcG65v/PNOU9d4ROtbOZ/Z4PcG1dzeC2
+	cUmMzMY0GEjl9uUS2dSoEOG+NUMetGKud5DqpWQpX7uo//sUkzG4qFcQBzTgjvry
+	KhDjVc2TwMXO9ieQhx5aDMBXLEc19SfLjtVtMKaqD/hjQu8VAulsJGCyo1ow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794252608; x=1794339008; bh=Q1c3l/FuYhvLnEjdaxrnJXdm053aaSQrIFy
-	1I79vRIU=; b=B5UMqBvQjX+jEnz3pQwaAvqxE3b2pYBAhKBLkkHSBMXw59KCIwI
-	pmWH5rRV8hGc3HMGMt5h8LUX9ULONP0+PSnSQFr29Woo159UGkRJ7l+Ih6QPKr3L
-	6WqeAFl48R7ZJNwhZh2UWTSDUoei+Kn/c01P6yxY2i7/6TwMpO8NezJeusbmN/WM
-	WPntQJ5zDHIgxq53RPPAAuvV8hVkBtCTd1RW4x4J0o/xmkt8u8TBNfHKp4NcOenD
-	gyv94aCWgbiwyRWZOOUcySG7HM+KqcVhCeoAU4NVTX9JlQCVgScqRfJTguGuu9iV
-	fSI8pj0DpZ4c1Pbv+Km0dqX0Pk6a6RNGhYw==
+	1794253509; x=1794339909; bh=gR8JzHaW46TTd+V9xVdbtJZMvhb7eRMb31z
+	rv7U+8H4=; b=hZoChe/LTfbBR89xbiFoU0Mkb8j4zrBVo2USHRWrjsSGTwYlZWn
+	+FAoSNh7FC2tm/LV7T4w3n21+1UGhnsk5cMW1zCPLQN2S2H3vm1baPumDKiAfg2q
+	ggJQNXyVAaLC53YM8SsJ7qxtMfwg5Xl2VqNGwXA3j8RrRpt5b4Pw5zRwKxFt7ZOt
+	+Db+fUry52+LCoSwjpR7kYL3qBntarcnpgtvaOykh6jnrPokQtNhfAyg9n5opM8X
+	F2P1tmwJAUuduE+oNCOxUi8vMHoKnylyUdY4L0cwgGuYVikwD4uPraTZX0yCzay2
+	5pgfRztytMJmbsk81ass32nR3OJ66yvQV+w==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794252608; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794253509; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:FaQYvW6eN0nYMfgUWrJDrQhDV2JPcUHSbkpOdcs4ox5Rh1l
-	obzVV00D2Wt3Hg0OzIp6m5dpun52BB4USpRpWPwsG6sd9t7hXSDyQ1KdkaDOdkHK
-	+qw21wsqpuYgvkqSvSRt4wuz7k1ZK08bWdh39nN7aVKN+c+yCwVdqXaHVRcd+ePf
-	Smb7BO651osJT6qqlYrGnaDz+JP+HOFZMF6EQE5Lnelg41y7q8ocqDB1yVJrq/Jd
-	tZWTTpFuX5i4scDTlzCkg/n+pDJqhoKWQZ8c9C4zp6V+IMfqconb+NKTp+CwEr+f
-	+KCZ0Ty1Qrad1clkND/3HJWXXpnRxlwuUaj4v2Q==;
+	s=fm2:rsa-sha256:cPyUqUuefZ/j5RyPt5woFSPaCeWeUKWQkzloDgo8L2BinVe
+	EoXqC5zvNUYN+5afJdtianUpkRI2llmcPssoHuKZfy1wJ0ODntyAk1YuJlKecnbF
+	bR4lviyuLJn8I5ucsn/n6m3UPJCS1F/QEA6AUpqq+yQplt2fRnBoE2ySos5shuBL
+	PR9DlYhGiO1/bMzi/ZCY2x2+99C7a88ba3xeuR7X0/KtIYt8Slb98RhWI1IJjZlI
+	dYurmscyrqB8BRRkTg4KsyEc1KRPz2WmlqfHnH92Ooi0/ulwUga4349+tPYgUcrA
+	pXc4MrCvphd/n69wz97jNfqgQquXPLfwp9X4k7g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:gI8+Gavg2bbpbKCg7s8plbBQV0AQxY0sR6g97/L2IJU=:QeE5wCWih+o9L9fKQchSfXCl0vW5JIFmKbzTy4VzFOw=;
-X-ME-Sender: <xms:QB_yaurUA-lcotezA3L_rGQHTDRMIj1PwO8IPOq_BG5pQ3NcHueumg>
-    <xme:QB_yakHbdY3OfU9jimIafk82Mbq590ujGVJZesFo65LLZGkSFX4xe3SYw_MbBkiq3
-    BXtv7M0JFvDJFPjdghcdf661DPYwMJTQsZt1pur70tpmD_HxDBXPw>
-X-ME-Received: <xmr:QB_yagnJlNAXvexE63F7rKTHExsPBELuU_snLfYJY87L2AmKi_pTP7mtse33PSnbTKJnhCJbEwcvdGnxGFtFGxdiiPqsOtEaRrtx>
-X-ME-Proxy-Cause: dmFkZTEAGWfd2UfhrK4W95OzLpPCfe2+AK5Q1xdrwqC/+WAE813Al7isJDYqbzzugSa3Ou
-    4HcsforlVJV94k/2SpV8XWwwjYRfDftWBle4yhRX6tPiAmgf3EdngBri75RA2ZNufcM6eW
-    36AsOiO7tSQSvw9+lK6k2kQYylaZ8SLk9dDbvNmBlYeR4rWxT0ksjhIbVB58SwaaLENSqP
-    w4oNQgUNYQwmxHUFroh+GGiXyTGgho8OP6vdhtiBrtZBofOF5eDgm7g17jcim4L8Y09gly
-    cNysLLxMyZQzW5rkdkOaTVaGxy6e0q1icAq013gLQN/0b7FfNvLuA293vOkI/I2SLeM1aA
-    n8gv2JY7M5JiZMGt9HcoQcwDs6aY/m9KRcVgncmNEPPmmlI3BHqZaIiElr6LbIFwGn2U1k
-    OOc16K9+Jj9T3pTg1tAufwAQxE8zy4oxkOXAlbm2byIQjLAk/aiLsrU8oz5ynRYT70YNgz
-    wj+EK4d8qCv3hURDugTCasLH+9pbpdpYrke1ahUZx53XBxmPKHAPbqEpasHRgAwIKNrIE5
-    xzeddRR4Bpo0DW9DgkEJ/h2QXrya3l+xxNty/PmMWKhUAVf8UG3efbU2FN4n10kfOjHzqa
-    6fRoZcG3BBgLt+3l/i7qFp/VVzkg86HYH07pdMsEnwdBpwExOt5O5psgeqww
-X-ME-Proxy: <xmx:QB_yankyDochvujpgmVTFd-8TbWhPtyS8CETDlnbkLRxRl_GCe_peQ>
-    <xmx:QB_yahuvUSI2B5AXpT5fex_iPoQ_PvO2nbJVdrHUlyBigmCHjFHbVA>
-    <xmx:QB_yaqlRj-GtnCtg8WgxtNr-IWLCxPp6rUROQ2GPWws18vdTpzjWuQ>
-    <xmx:QB_yasukAhHT59PThtZap1wUtOAy3nfxKbWN0FlMI2SnHQZAEDnp9A>
-    <xmx:QB_yasP97GYjQy4UVdfr9aNKym-MhpMpPSrlhcs5Qt6L4T9bfXh8wW1x>
+Message-Instance: m=1; h=sha256:7UDSm7yyQRPlqGl1c+DqMVSgA/WTp3GdU+2YC4yIRw8=:IfiTk6tYe+HpTmnzLLm5QBk0dEfGQeuHb98yZrwQciU=;
+X-ME-Sender: <xms:xCLyampVICBXvbmz1DNpCyveTzCRJ7areb34xFYtoT1F-FeHaTEjiQ>
+    <xme:xCLyavCubusVRj5dA-HZxtkgVzT2MKPSDPDQR1GIpsHAL7r4Nk-6SJjnbakoA48eg
+    ODTUYCa0ZO2SRcSUhh4_P78iLo8F_tYAmr9rU1S7wZnRkimusr4tA>
+X-ME-Received: <xmr:xCLyahW8UsHe0rdpiY0yBF4gyR0Sj7GI39zagFpvrFDXzNZxyXEAz3bc_fmhzxI4JN27qhaV-rYO25t4OhwQ8FRqX4h-KKMW3mi_>
+X-ME-Proxy-Cause: dmFkZTGbfp5CZuOaMnf025Si/tazxoAY+SOKGqnwkSYiU9aMWZqURTvniOEPhgPnr+nhsX
+    wlzfS+S9yM6Q53NryzbhFQkWC47uwkUM7anS4su/HhX4vZORxOIVeZFVopMySiwiQ4qKDK
+    LIfdfLCt1M74TAbrLydoFyuLMCCZO9uPk96VYKxaOljSfPj46KvFieSWhVGsl8efXSeHZU
+    MvzSbuxYJfE0ur35z+JjUWE+Fth2n7ofHtYhx/LD/flZNq1v7o7Pr7JgDPEJkeeGrFDX0I
+    hFSHyxWxdKnpFF15TMvAv3G14O/r65e4z9ZLfsrO6wsS3Dl6sgAf/sF9/TUW9E2QLF9LO3
+    v5U1LYswZa7BbC/gYXAqNRa1fsYO+4fL39wUH9HK/gEIFH8i/weajLkKV7yh6vo57Lbdav
+    RjHQh2r84jM1zHjK+0cBjDy5LQXUZws6b1DVgbm+4wpusS1ukjNuI9GG0DbjvkgDGhtPtJ
+    qN1IhkvlUZ/DJsrR4Mo+p60MpdbT+1XTFakN3d8rAyJc0odiu9LQEYbAGPu6IJFmAQInTz
+    WHby+LJrrTgXiTF9ag52jasxIrwk6+/sRkbHIGec2IYXOS/6bO9s0ihXM+SSj3W0axEuMU
+    AS23ne0B8Fn5Nuersaxrmti2fJPNXBuClLnOVkUkKbA7rJfxTJPXW6OCzcYw
+X-ME-Proxy: <xmx:xCLyahAX-Fn7kYl8i0NnYRkIgzOjD8AKsMZgB4gez8E4zQEHnRVg9w>
+    <xmx:xCLyauc2Req8lHIMUXJv6k7pp6O-_YdIDpv4wEucydo76argMgdlNQ>
+    <xmx:xCLyaopdahFuOhJkZxKjZcfpFg7aPVpbMg42mT2KK3Nk8nGlwlp2hg>
+    <xmx:xCLyavQ_b0IUJGjBFCSywgCqmB4OgXnZmXx9V399rjXXrGC2wRZJfQ>
+    <xmx:xSLyaiwSroC5VnnwqYk1ywwBnx9Jk4bC1rqMAHY2VtRnT0XPCswVxP9I>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Nov 2026 14:30:08 -0500 (EST)
+ 9 Nov 2026 14:45:07 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/2] unpack-trees: lose USE_THE_REPOSITORY
-In-Reply-To: <avHNf-aaxdsyim7g@pks.im> (Patrick Steinhardt's message of "Mon,
-	9 Nov 2026 14:41:19 +0100")
-References: <xmqqtsltbfdv.fsf@gitster.g> <avHNf-aaxdsyim7g@pks.im>
-Date: Mon, 09 Nov 2026 11:30:06 -0800
-Message-ID: <xmqqecctzttt.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>,  Jeff
+ King <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>,  Derrick Stolee
+ <stolee@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Colin Hinton
+ <colinlewishinton@gmail.com>,  Matt Hunter <m@lfurio.us>,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>,  Usman Akinyemi
+ <usmanakinyemi202@gmail.com>,  Miklos Vajna <vmiklos@collabora.com>,
+  Thomas Bachem <mail@thomasbachem.com>
+Subject: Re: [PATCH 01/15] rebase -i: handle NULL value for
+ rebase.missingCommitsCheck
+In-Reply-To: <226aff79-b0b8-41b1-92ce-78554f6b2f8b@gmail.com> (Phillip Wood's
+	message of "Mon, 9 Nov 2026 15:07:19 +0000")
+References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
+	<a9a3f4b705f98f0957bc9645395f4c68875b2896.1794040967.git.gitgitgadget@gmail.com>
+	<226aff79-b0b8-41b1-92ce-78554f6b2f8b@gmail.com>
+Date: Mon, 09 Nov 2026 11:45:06 -0800
+Message-ID: <xmqqa4nhzt4t.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -125,88 +135,37 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> In any correctly written clients of this library file, the
->> repository instance that is pointed at by these two structs MUST be
->> the same one.  For now, make sure that is the case (and otherwise
->> BUG out) by introducing a unpack_repo() helper function that takes
->> these two structures (when available) and returns the repository.
+>> A rebase.missingCommitsCheck without a value, as in
+>> 
+>>    [rebase]
+>>    missingCommitsCheck
+>> 
+>> or "git -c rebase.missingCommitsCheck", makes "git rebase -i"
+>> segfault as it writes the todo list: get_missing_commit_check_level()
+>> passes the NULL value to strcasecmp().
+>> 
+>> The setting takes "ignore", "warn" or "error", not a bool. Read it
+>> with repo_config_get_string_tmp(), which rejects a missing value with
+>> config_error_nonbool(), as ba176db511 (config: handle NULL value when
+>> parsing non-bools, 2023-12-07) did for other settings.
 >
-> Fair. It's a bit curious of an interface to have this kind of ambiguity.
-> But as an intermediate step I think the proposed solution is okayish,
-> and I do like that we at least verify that it's the same repository.
+> If the user sets an invalid value for this config option then we print a 
+> warning and default to "ignore". It would seem reasonable to me to do 
+> the same for a missing value rather than erroring out.
 
-Yeah, while I am reasonably sure that all three (when they exist)
-must always be pointing at the same repository, I may have missed a
-legitimate use case where that assumption does not hold.  And that
-is why the initial implementation is checking them with paranoia to
-easily detect cases that I missed.
+Interesting point.  I think ignoring a textual invalid value is
+mostly for future-proofing (a configuration item written for newer
+version of Git added while trying it out is seen by the version of
+Git the user regularly uses).  It may be arguable if warn-and-ignore
+is the most sensible option, but I fully agree with you that
+behaving exactly the same way on valueless true, which is not a
+valid setting for the current version of Git, would be a sensible
+thing to do.
 
-
->> +	if (istate) {
->> +		if (!istate->repo)
->> +			BUG("istate->repo == NULL");
->> +		repo = istate->repo;
->> +		camefrom = "istate->repo";
->> +	}
->> +	if (o) {
->> +		if (o->src_index) {
->> +			if (!o->src_index->repo)
->> +				BUG("o->src_index->repo == NULL");
->> +			if (repo && repo != o->src_index->repo)
->> +				BUG("%s != o->src_index->repo", camefrom);
->> +			repo = o->src_index->repo;
->> +			camefrom = "o->src_index->repo";
->> +		}
->> +
->> +		if (o->dst_index) {
->> +			if (!o->dst_index->repo)
->> +				BUG("o->dst_index->repo == NULL");
->> +			if (repo && repo != o->dst_index->repo)
->> +				BUG("%s != o->dst_index->repo", camefrom);
->> +			repo = o->dst_index->repo;
->> +		}
->> +	}
->> +	if (!repo)
->> +		BUG("no repository for unpack_trees()?");
->> +	return repo;
->> +
->> +}
->
-> So this overall surprisingly complex, but I think it's sensible to be
-> defensive.
-
-Yes, we could do
-
-	if (istate && istate->repo)
-		return itate->repo;
-	if (o && o->src_index && o->src_index->repo)
-		return o->src_index->repo;
-	if (o && o->dst_index && o->dst_index->repo)
-		return o->dst_index->repo;
-	BUG();
-
-but then you'd need to start a debugger to tell which assumption was
-violated.
-
->> @@ -345,15 +394,16 @@ static void load_gitmodules_file(struct index_state *index,
->>  				 struct checkout *state)
->>  {
->>  	int pos = index_name_pos(index, GITMODULES_FILE, strlen(GITMODULES_FILE));
->> +	struct repository *repo = unpack_repo(index, NULL);
->
-> This conversion here raises the question what we want to do in the case
-> where the caller has both structures available, but we don't end up
-> passing them to the pointer. This could in theory hide a bug where we
-> have mismatching repositories when the entry points don't verify that
-> property.
-
-Puzzled.  Here we do have an istate but have no unpack_trees_options
-available, so it is natural to pass NULL for the latter to tell the
-validator "we do not have unpack_trees_options".  Are you worried
-about a case where a programmer who writes an unpack_repo() call
-passes NULL by mistake efven when istate or unpack_trees_options are
-available?
+It seems with your and Derrick's review, this is the only thing that
+needs to be updated in v2?
 
 Thanks.
+
