@@ -1,120 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794217216;
-	b=3HLkOlbF6e2PTn9m6nRKR0HpETcTkNTMs+qYhloFosYsxGGrGS9GeX4X8PD5Qx90x0Ml
-	 lIF4wRTM7wCNeeBo1iptT8NTx+mJk7rqPoPPSVDjQT51Fc0M169Tiej8sn8ywygqtzS+M
-	 V6ej/tGLwXDCBbfefuZJsavZuJSZv2EGyG57rQoyViYvDqjFybngjx02awhCmzW3T2FNe
-	 FPJrh5PU5IbKyIvmxQ12S19Ewkrip+J1RYhIsWmVH03J0sZhS7wzWJPBDVUh1xOvbRGnD
-	 wpNeH+znPCftu+oxrnQKSgsoKDh2iwynV89xOSowyI+DbrpwwJrrDJWwHu/X22d5r3Q==
+	t=1794218091;
+	b=sogXg3vEtmgo/NG+BgcBfAY8gvIxqPwinhta/sw9Byn+NfLazwJffzYVRVcNbZ102U4r
+	 s7rFSC734r27bWcxuL4A6MwJmkhBDF7ZJrk7hYtryYo5iOVmEX3sPmuo5EhoVFb1K5TsW
+	 rII8DGTQZjG2KM6KhSwXo1WVNEDlAkI7JZHBjej87CrHhkUBJKXnCa3bay+KeimHpWLEe
+	 9uoGE4wV8te0bdplgcUGLs83nV837rARji4WEExdvjp6EBIb+xgSYBMAfBlvOakAWP0xm
+	 /uGqEtlgC2Bxun71UJTAB4koM6a6EZn5DnKoFIkl5to3Xv7Xk8dQ7W7VgYrHbzDIJEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794217216;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794218091;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=4kgkfScrd8vkSq8TF81/TfmsensuMBcAMWdal0Zwwco=;
-	b=fZP3UgDsMOQiTnz+Tz5OLV96abs6sxrKpZJUnb5ox/YooKlH1NSxNIEe6Oc0aLgLD5GT
-	 WEQy8h0r2fcvYDDLYORfgFckU5gK4AZhlQCY2jJfPuMhRM4CsuPxNIJqwnOMgk/m5BvYv
-	 5e3ApYulVbt5uIPvfrkp+hPubb1BrFo4EbCf5g9yvdmVCnnXApegpElaL9Dj3EXQwEYSZ
-	 vpCQmauyY1lgFgmZsCFxYbFV0nvH/5SPFY+OEl4nV7Zit7zefKhIyATIPOJIk61pQwrC6
-	 Uda4hZUZKdiQKMTkd2IQBDpyNQfr2XXkoLJLaLOZSJyDzkAvL/B2DlwM+NdjYh1fphg==
+	bh=Kb7pYKj16OyBBU7+1KC6FShqwYaGBfWz57VxgcWl4eg=;
+	b=Z1ARmWuyd9Y8bB2rDChBY8B36p6KbDnPr4f/V2MA35Npq3Uf8JmBADVVvT9ioBH5gqD5
+	 znX1RMp3w0yQacQ/AAU+PSKLUogJK1xsrEB19eoAgiFKtHD9jCK/NxzU9i6eC72MolWet
+	 5UoSlG5OzB0aHMonm0J43vrwvpFU/8ldWf4DK8/goMPALgKfeAM5NEpVsCe73ncsYkmnY
+	 S4Q9CvxKn98EekyssOBK4kbTchPyKJWRZpaBl0JteTWaCCjfJfOkR+NTlzwiLW5cjPm6h
+	 hAkJnoV9w/+TB5rm9aSuynVeW08UrKEcbyYxfvA862VQ6MLHKdHZDoKfWyyP8hu0Zmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=vYBS2JQB;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="JVy+d/uY";
-	arc=none smtp.remote-ip=202.12.124.144
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=dv0x8rkx;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=p1wtZyBn;
+	arc=none smtp.remote-ip=202.12.124.158
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379F9606A321
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 09:40:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 379F9606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023F0606A31C
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 09:54:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 023F0606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=vYBS2JQB;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=JVy+d/uY
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 480801D0016B
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 04:40:15 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=dv0x8rkx;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=p1wtZyBn
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 560F97A016E
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 04:54:50 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 09 Nov 2026 04:40:15 -0500
+  by phl-compute-02.internal (MEProxy); Mon, 09 Nov 2026 04:54:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1794217215; x=1794303615; bh=4kgkfScrd8
-	vkSq8TF81/TfmsensuMBcAMWdal0Zwwco=; b=vYBS2JQBtxkeLO94+w4bKVPG/8
-	oDiZ/JWfowhhedTjlK7azRUM8oIWhLeWkfabh+T8oUnduuSaU5amUZ4H/qaJbl8a
-	8P7aXNZTdPy2qFD5Zwa2AOpdugjgJonLB7RYC9HWGY41rMIz0FIl/Sw1FCJ6W0Yu
-	6eEDPsRF5ngDxSGKALKO8ukjUXMX2FFJLKIO9/yqL8NUl5LPc6QWPKq6TyW0wYsv
-	Jt3wS9nAMmp0bRUkt6FPWEPb8a5nr8ngMUSJzGHA1eWA6/aFiBloFSk8+n55lE3y
-	XRlmwV5EwvMzFkX/PnOoNousyUYVUKeDK144bpvbg8dJgDXoTlw4umLFGVTg==
+	:subject:to:to; s=fm3; t=1794218089; x=1794304489; bh=Kb7pYKj16O
+	yBBU7+1KC6FShqwYaGBfWz57VxgcWl4eg=; b=dv0x8rkx/17qub64iO3WZvt9IH
+	kG3pZ6t+Nqn0K+fiG5H+Z3NPOsyWBbHEf/4K0vTKEZILV+Rgezf5yjvaGVHgQTMP
+	M0MwXCbtYr8R/pgsRem4jBPaccFl3VDOf5lS1GPW72S6Yu+5ied9a2PGNfs2YEYq
+	Fd3yxrj30judnzk0ygfC+wrOmlxZuIFzwhbCtR9jWD48rH5BVEqC1FNIXyNnnx8i
+	ViBapd4+tZcnv+yA+1++lkjYYLJJ2zz+OkCM+0+AIV5PqPF+QbRvKiHB7l+uhKen
+	0YcVvrHIvZs5TGve9cQVXxU8y2fBAGxDfd862mpHjk/4hzo1WW9ndZKxU6NA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794217215; x=1794303615; bh=4kgkfScrd8vkSq8TF81/TfmsensuMBcAMWd
-	al0Zwwco=; b=JVy+d/uYSoLGRQhSVj62s/WqNUlr0HLEs9vm336men4VMxq5EQJ
-	q7uUO54mDoSRvJcZdSWdP7I1mtjXPGFCnusqjz+Fnn3UfcCcpiO41YUuqmClVKIc
-	08w4IKZFfXz4RPkDc3HqDHT2pwMTF23+l9EizjZfri6sZ6aa2Tg0+UMhIyG7pDxc
-	p+RU5YS3xabh0z0WcXZuZP00VL0Zi/WbW6bF5KA4rT6NuHwZKLu1sRFtK1tqM/zT
-	Uj+roq22OBnsfQkHCfIWoszAP8FR7ms/XAlBfBEkk/qt73MHOoOfWunL+jmHkqQi
-	dMKi+LsOfZze+/YG16iOCYkLAgbGzT4JKdw==
+	1794218089; x=1794304489; bh=Kb7pYKj16OyBBU7+1KC6FShqwYaGBfWz57V
+	xgcWl4eg=; b=p1wtZyBnXfDk+gZ7cMG45npEidLHXFyNVSBJUjgsMoSYF7dm4/f
+	xtrhihprDwF3FLECkYLWnkneqaEC7TjDZnWYImF0Dikfu+tSfO0r+36kL6F4itZ3
+	RV7tebvb37Q2Z8v/kvrvJSyW0aWKJ67lhEtxbwxRhXJkgTZZd/s1XW2zceeX6NO4
+	3v9L9ejHWsAPa3HQDhlr/XwCXJsPXWfQBz3q/z/aw3Txgfl1a+i6KAQGlfusWfHn
+	oK1Ata52ckB5PZm0DNpbGON0z5SmJjs8AYgq+5cua0ILUg448GCYJK8kFmqr1gCr
+	RB6KhGSsdisIenz0O0eg/bMXfaKO262wRnQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794217215; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794218089; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:l1b5iJ2RX7AD80ksuXx4QkJG8l7wfRo3cjcUGO9U+tfpGXY
-	Hgmyd80yle4hfRTJiq/Rp3nl4BRhPuIW6N/B67dnvkQuGwrlA36P5gHRe0R8Pd0v
-	SX9c/RvLexT1xd3POWQAaz9fvZFDx9YAp50ePX90XX+zeqftvYGtNaXIHu/eq9U3
-	dxf0yuQVWNvlixVJXnGKAO38bYRT045RhewkwnjPV5d8UgGBISP6p1CIj8sPafMj
-	nY0shDaEDryzUV+yl+BWK9vIF6nEB48dgtet3Eb+OzDI6HqGHpjHcYJrlTb3Oq4Q
-	OyyMi1Ri3YUhC/zED/FyU4yv2Zty4Q3dT30l5kQ==;
+	s=fm3:rsa-sha256:FvtyEDFaLgTcV+2ZWOZY3NJJkjbIoJQGSn8gy00f4PeT6ip
+	vrB45bCt6vnGDDUU4AgbuswfpQ9kfmLZrhZu2jkRtp922X2uYbzKpLZvtI3/UqzC
+	mc7OGwLibLzhfFJRzS5oU6H5cjTrueNwVeGkR4u6N5nPGYnxLjuppMuHICd0pzGs
+	67kERWAFEAT0oSWWfPHKPVLER8baMyfRPfFhWkrkxpNngvk0g10NaBFpK/Pm9VL5
+	bMQaCNEQ3Ux3lfML1xG9v+tlKIoLqfguY4zpBu6OGRLCtxr9tvudV052IgElhU9C
+	k/zJSthjPR0hdMPImQ8B6b7IuOHZ7ABY2mslkuQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:QeS+VSZJglNvI6c/jR3jhoY0nvu7BPBVtcfWjJV0JOg=:pj8QjFAKWpE3ASJhyA4P+qBoHVFCLHlMihY6L9U/hhc=;
-X-ME-Sender: <xms:_5TxarFL83uTKaSi6926bUjxqPU3p1Lazu9wZDvUTDZ4bN7EucmljQ>
-    <xme:_5TxavMm8bzElDtBT6vhPr8dlmB6QOS6_4YoU20cwqs4vkOz_LkYhDxylDDtw-sWo
-    1eNVGxTpYWXMQJIWVXJqrEhol6RUGI_618-LwX1MoP9w53QzVGPNg>
-X-ME-Received: <xmr:_5Txald6wmAf3o2YQ_yZny2ZBz7T5ryPiCmsuKFnOdNeLbNYxJ5OzDzsPHbAv2rMj58eI5o>
-X-ME-Proxy-Cause: dmFkZTFehMgRQ4phUOoatJaPTDs60ffiqP0zx6OARdOneq6ztQHDvdSKbAvxoOT+iFAgGb
-    iSksQBBZbZ7poZNLJDlKF/JWMEQ0DaExwSU/y0fs9CE64tbanl6vLs70MdSRkBx7IHsXdv
-    xqnjkyTmFHhMrF1gaERU91lr2lsU+n6imNjxtrgvOvQhh8ydy3/9lRSuURbf1qdiQwbjYL
-    PIDfhd+4pFcUmAXgorJW6RnOsjzLQNfgYG5W3Zukx57uYvympvx8OybMnMsUD6GUFY1bDY
-    9BDjEuyX91572mrms4JVVT3bQVRDcqBFWKpV7UwK5FI16AP0WAm2KFKoLSLLwWM/aYj8SQ
-    rEthB8e6syYA9aLuk84L9NelOB+tHoKMbmBQ0K0mgXuk7Q346i/u+SS6bKTsQQfLfoh+bB
-    IwM+ROaODZFovNAGLpyqMnVKw94oXAAEUMVGVaI8sZaWFvWsyjUwW56l6gO8Do7ojIBe0m
-    PWzDsPc+I+4lxBEoGG5YhGuV1leIj11pynFl7ZG+B3plL/8yW3gGx2FoINL0JZfKpgiFnL
-    pBaqWC0LMAX00MxjAMn8NfYNoKLjXwzzVVEP0KydT2gnSwGdULR5x5NW6abxviCrQgybii
-    1FgMZm7yg5qky5JDwH0p0H1SMS38nIWsLMn8cstkFeboKi6Y0wWegYAOpQUg
-X-ME-Proxy: <xmx:_5TxaktrjaxicSH6GofsVdqrtAHLXJ2CbPnHI6P3OZ4FO3ZWNk2aFg>
-    <xmx:_5TxaunN1a4sIdnJB3KYSXF_XC5OqXvzqehBPVC5LVxPUm1a_zAGyw>
-    <xmx:_5Txauxb0GyGLEJ9HiDFTW_SSyI392wfjc_yjEKSFPNqaSf66p2FPA>
-    <xmx:_5TxaoNzFkM7GFWKllQfDQ6-ENSNkMY1XzIC1jB4NePrR6ZU6ny5qQ>
-    <xmx:_5Txavm2iyX7qdngGBkXF77eDzsfsELuiGEsMsYXxU4gyTXe7FwfIe3L>
+Message-Instance: m=1; h=sha256:sd4wuc4ZImAGXKNfSz/06XEVKp978uaGGz03EgNQW7w=:ETqSM8Mnddi/d09ck4V4izqS7pQ9g8h/U3zUkSLOnfc=;
+X-ME-Sender: <xms:aZjxavTE1QD3BAV0FC-ns3HHhQYK10sJEpU4OnpkKCqmAVHmuqjc4w>
+    <xme:aZjxanzUFvY1C2so13mJOeJrC7z8yHfRcoFbtjAbs3kN_cMuTj5j9AtjHzru2iq1l
+    rDbNvmvcIxJ0f_bVKyJ5wrJnYmmbZtuzG5hmg4Lpeuh0qYK7j4XW44>
+X-ME-Received: <xmr:aZjxap3u2SJn2MNW5kmGiaiCRVRZxhzliuNNgFpCbNTpQmncI2liP68Uq0TpTRhaO6JEVEI>
+X-ME-Proxy-Cause: dmFkZTEWMPZy21FuXHwH8JhAEoCmAae1492DJtxXBbnguefykwwUZiXRpFGrD5XCQWL6W5
+    4wcwFXL+8HKZ50wDcOrlF3jcVbkPA7l5lUdiJJ25LQUFFIxLMNtL9GeJk0gikiI64uLOos
+    7D/Asbv0szbhsJeXjjWYhgFyNyX5po0NlhadOLnSgybNN41YNOsVm3SDJ54D1Zw64/v+SI
+    k/7xHb5YEiH7jD5S1SZQYuGirjUOTk95NTaWzc3cSXmRHxMUEb3b2TGw5I8L/GzIWY9YnJ
+    qaw34ktWQBhCBNTb2po+MkaFYFfGk7vx6/xTX3Sb0ElYjVBeVbohrWcmcg2bBZAf8dSrnK
+    S4t4/NozO7rbAk1a1FK27ZWsXMWMfYmTmbiX5BUl3buycNKgTiDe8Q42WseyLpiWWx/HO6
+    OS7jkYUbLcgy6Q7BEwnC/0Y4BIUTBcOWnvBOIls0qNLCQfFWDVoAODRBS/fjoU4H0u9CTn
+    rFNrYUtD/vBzM5q7FA4Zpxch7ruEbGOuheoWOMKPKB7Y321xfGDxSqf5VlPwkKt2Wkb5XY
+    Rc/N+Da51dVs3PfK42FnKKPCs5kdh7sKflTux00PRaw/JLVl/neezTS3lAx3AceT6qjTbI
+    3zSILIFXKuE68DOfgR2/x/msrfPHtkoR4iZVLL3P5X3PlvhFlJ7TdsnNHO+g
+X-ME-Proxy: <xmx:aZjxat60B5tyzCSp4tkX6cXpMrISGm5zuXuDJ_TiAaYeaYmGDQpSTA>
+    <xmx:aZjxakWssNxA_EVA2z8u119Doz7pN2xSBUVs6EfvCEqRgeW0cdv7JA>
+    <xmx:aZjxakClMaYD9RsZDGbBC6h6-uvqTGLU17tRKP_s1XtpWMPCl-wFlg>
+    <xmx:aZjxar7vhbzt6u2HLrllh22vqZoqyNbPnSkhP16Z4E_ry_Vq0oTKmw>
+    <xmx:aZjxajH2Vf-M1ElV49DxaG7omGydXHZMi8uqBoGbtWbDB-ZRzUPigQhE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Nov 2026 04:40:14 -0500 (EST)
+ 9 Nov 2026 04:54:48 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5a88e5d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 9 Nov 2026 09:40:12 +0000 (UTC)
-Date: Mon, 9 Nov 2026 10:40:09 +0100
+	by mail (OpenSMTPD) with ESMTPSA id e97b60ba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Nov 2026 09:54:47 +0000 (UTC)
+Date: Mon, 9 Nov 2026 10:54:44 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Laveesh Bansal <laveeshb@laveeshbansal.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] builtin/reflog: expire --all and named refs in one loop
-Message-ID: <avGU-Wjkd821PLc0@pks.im>
-References: <20261108012213.89468-1-laveeshb@laveeshbansal.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Re: [PATCH] setup: default hash algo to GIT_HASH_DEFAULT
+Message-ID: <avGYZIFAmeSEP6ZS@pks.im>
+References: <CA+kUOampvjU3=VK3VGhYw2L5-E+LBsk=Q0UrAxhhR7hC5SUdJg@mail.gmail.com>
+ <20261108011633.1772000-1-sandals@crustytoothpaste.net>
+ <xmqqik274201.fsf@gitster.g>
+ <xmqqzevi218o.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,101 +128,109 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261108012213.89468-1-laveeshb@laveeshbansal.com>
+In-Reply-To: <xmqqzevi218o.fsf@gitster.g>
 
-On Sat, Nov 07, 2026 at 05:22:13PM -0800, Laveesh Bansal wrote:
-> "git reflog expire" sets up the call to refs_reflog_expire() twice,
-> once for --all and once for refs named on the command line.
-> d1536ac3e2 (builtin/reflog: say "would prune" for named refs with
-> --dry-run, 2026-10-23) fixed the named-ref copy, which was missing
-> dry_run. Junio suggested a single loop in the review of that fix [1].
+On Sun, Nov 08, 2026 at 06:21:43PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > I wonder what the "git init" command does wrt the reference storage
+> > format (Patrick CC'ed for this)?  I am sure we do not convert from
+> > reffiles to reftable on the fly at "git init" time.
 
-We don't typically refer to suggestions in our commit messages like
-this. You should instead explain what the underlying issue is in your
-own words and why that issue should be fixed so that readers can read
-this message without having to hunt for context in other mailing list
-threads.
+Yeah, we don't, and I don't think that would be reasonable. I would very
+much be surprised if git-init(1) migrated a repository's hash format,
+ref storage format or object storage format. Those are long-running
+operations and in the past, git-init(1) used to be somewhat idempotent
+on an already-initialized repository. So I'd much rather have us migrate
+explicitly, like we do with `git refs migrate`.
 
-That being said, it can be useful to refer to this mail after the "---"
-line or additional context.
+> I looked at setup.c:repository_format_configure() and found why
+> your patch regresses, as well as a latent bug in the existing code.
+> 
+> First, REPOSITORY_FORMAT_INIT sets .hash_algo = GIT_HASH_DEFAULT,
+> but read_repository_format() forces it to GIT_HASH_SHA1_LEGACY
+> when version == -1 (no config yet), which is why new repositories
+> kept getting SHA-1.
+> 
+> Second, unlike the ref-storage block right below it, which checks
+> "else if (repo_fmt->version >= 0)" once between the explicit
+> overrides and all default sources, the hash-algo block guards only
+> the GIT_DEFAULT_HASH branch (repo_fmt->version < 0), leaving "else
+> if (cfg.hash != GIT_HASH_UNKNOWN)" unguarded.
+> 
+> So init.defaultObjectFormat in ~/.gitconfig already corrupts an
+> existing repository on re-init, and an unguarded "else" for
+> GIT_HASH_DEFAULT falls into the same trap even without config.
+> 
+> Instead of starting the if/else if cascade like this:
+> 
+> 	if (repo_fmt->version >= 0 &&
+> 	    hash != GIT_HASH_UNKNOWN &&
+> 	    hash != repo_fmt->hash_algo)
+> 		die(_("attempt to reinitialize repository with different hash"));
+> 
+> we should have started it like so:
+> 
+> 	if (repo_fmt->version >= 0) {
+> 		if (hash != GIT_HASH_UNKNOWN && hash != repo_fmt->hash_algo)
+> 			die(_("attempt to reinitialize repository with different hash"));
+> 		/* otherwise happy */
+> 	} else if ...
+> 
+> so that all the "set a new value from different sources like command
+> line, environment, ~/.gitconfig, or the built-in default" would
+> happen only when (repo_fmt->version < 0), probably?
 
-> Collect the refs from both sources into one list and expire them in a
-> single loop. The names given on the command line are still looked up
-> in that loop, so the output and the exit status stay the same.
+Yeah, these blocks are overall quite hard to read. That's also the
+reason why I re-did these checks for both the ref storage format and
+then also used the new style for the object storage format. So my take
+is that we should adapt the object format in a similar fashion so that
+all of them use the same style, where we first detect the desired format
+and then check whether we're trying to re-initialize with a different
+object format towards the end of this function.
 
-You say what you do, but you don't say why you do it or what it buys us.
+So something like this:
 
-> diff --git a/builtin/reflog.c b/builtin/reflog.c
-> index 49e5453dd9..42d37a3724 100644
-> --- a/builtin/reflog.c
-> +++ b/builtin/reflog.c
-> @@ -259,44 +259,42 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
->  					     collect_reflog, &collected);
->  		}
->  		free_worktrees(worktrees);
-> -
-> -		for_each_string_list_item(item, &collected.reflogs) {
-> -			struct expire_reflog_policy_cb cb = {
-> -				.opts = opts,
-> -				.dry_run = !!(flags & EXPIRE_REFLOGS_DRY_RUN),
-> -			};
-> -
-> -			reflog_expire_options_set_refname(&cb.opts,  item->string);
-> -			status |= refs_reflog_expire(get_main_ref_store(the_repository),
-> -						     item->string, flags,
-> -						     reflog_expiry_prepare,
-> -						     should_prune_fn,
-> -						     reflog_expiry_cleanup,
-> -						     &cb);
-> -		}
-> -		string_list_clear(&collected.reflogs, 0);
->  	}
->  
-> +	/* util marks the names that still have to be looked up */
->  	for (i = 0; i < argc; i++) {
-> -		char *ref;
-> +		item = string_list_append(&collected.reflogs, argv[i]);
-> +		item->util = (void *)1;
-> +	}
-
-Okay, so instead of carrying the logic around `refs_reflog_expire()`
-twice you instead now first gather all reflog names that we want to
-expire, and then we do that in a single step. That seems like a useful
-simplification to me.
-
-One thing I wonder though: now that we first gather reflog names, can't
-we also easily deduplicate them? For example if the same reflog name was
-given multiple times on the command line, or in case the reflog is
-included both via a command line argument and via "--all".
-
-So I wonder whether we should both sort and deduplicate entries here.
-
-> +	for_each_string_list_item(item, &collected.reflogs) {
->  		struct expire_reflog_policy_cb cb = {
->  			.opts = opts,
->  			.dry_run = !!(flags & EXPIRE_REFLOGS_DRY_RUN),
->  		};
-> -
-> -		if (!repo_dwim_log(the_repository, argv[i], strlen(argv[i]), NULL, &ref)) {
-> -			status |= error(_("reflog could not be found: '%s'"), argv[i]);
-> +		const char *refname = item->string;
-> +		char *ref = NULL;
-> +
-> +		if (item->util &&
-> +		    !repo_dwim_log(the_repository, item->string,
-> +				   strlen(item->string), NULL, &ref)) {
-> +			status |= error(_("reflog could not be found: '%s'"),
-> +					item->string);
->  			continue;
->  		}
-> -		reflog_expire_options_set_refname(&cb.opts, ref);
-> +		if (ref)
-> +			refname = ref;
-
-Okay, we only apply per-reflog options in the case where the reflog name
-was explicitly specified by the user, becaues only in that case do we
-call `repo_dwim_log()`. This retains the status quo, but now that one
-sees this single loop it makes you wonder whether that's a sensible
-thing to do.
+diff --git a/setup.c b/setup.c
+index 61bcdafe82a..bf75abafeeb 100644
+--- a/setup.c
++++ b/setup.c
+@@ -2816,20 +2816,19 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+ 	 * specify a different algorithm, as that could cause corruption.
+ 	 * Otherwise, if the user has specified one on the command line, use it.
+ 	 */
+-	env = getenv(GIT_DEFAULT_HASH_ENVIRONMENT);
+-	if (repo_fmt->version >= 0 && hash != GIT_HASH_UNKNOWN && hash != repo_fmt->hash_algo)
+-		die(_("attempt to reinitialize repository with different hash"));
+-	else if (hash != GIT_HASH_UNKNOWN)
+-		repo_fmt->hash_algo = hash;
+-	else if (env) {
++	if (hash != GIT_HASH_UNKNOWN) {
++		/* nothing to do */
++	} else if ((env = getenv(GIT_DEFAULT_HASH_ENVIRONMENT))) {
+ 		int env_algo = hash_algo_by_name(env);
+ 		if (env_algo == GIT_HASH_UNKNOWN)
+ 			die(_("unknown hash algorithm '%s'"), env);
+ 		if (repo_fmt->version < 0 ||
+ 		    repo_fmt->hash_algo == GIT_HASH_UNKNOWN)
+ 			repo_fmt->hash_algo = env_algo;
+-	} else if (cfg.hash != GIT_HASH_UNKNOWN) {
+-		repo_fmt->hash_algo = cfg.hash;
++	} else if (repo_fmt->version >= 0) {
++		hash = repo_fmt->hash_algo;
++	} else {
++		hash = GIT_HASH_DEFAULT;
+ 	}
+ 
+ 	/*
+@@ -2899,6 +2898,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+ 	 * current ref storage format does not change.
+ 	 */
+ 	if (repo_fmt->version >= 0) {
++		if (hash != repo_fmt->hash_algo)
++			die(_("attempt to reinitialize repository with different hash"));
+ 		if (ref_storage_format != repo_fmt->ref_storage_format)
+ 			die(_("attempt to reinitialize repository with different reference storage format"));
+ 		if ((ref_storage_payload || repo_fmt->ref_storage_payload) &&
 
 Patrick
