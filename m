@@ -1,90 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794231590;
-	b=t9e5TbcZaV4BOhwU6H6GzthoYOlDSVzLevZj9YBTpGQ0OdeZZfQRaF8YjMcLLOCjZIM1
-	 wD2HzIj0+IuGK6Diao7E4IRJQ68Y2RDXBN3o90LeN/lZkwcwckNUzJzpwp6CwmXZkUaTQ
-	 eN9M7pPUfe0OS8TL1D2xtkRhX7ln+sfAldig4UVPY047mqvbhW1suHY8cEsA1lEycTujZ
-	 T5As5GcazL9rWiELoSCsdPgHyT2LNvoNEMkxwypjjg9S2aVVForPBu7uIkJzjxH8rqgXd
-	 e9xyUbTVhgMvmNzToE0qDx/KuSY/inn5icC5ROR98SJ3OZOjhbaryTm5yLLGus2sr5Q==
+	t=1794231687;
+	b=Dcj5k3xrMQvvf0jlRjtf2UUfQqchQeUx4zelQhCpv2FH71VPHSGFXYyP541rNasumvKF
+	 JohdJ6WjvOPq9lROYL1cCBw3Xw9K8w8e3Kxz6ryJb8Wx3hM6Gmi+8tzirkAvEIb0PnT9M
+	 B+RUTZfrvtJw06wPO8VGx8BJcQv31/i+vCSalIGZatPzPGLixdQOjLpRnamdYeWz+Cz4Q
+	 QC6nKp98Yqp2DZ0NoW1PXolTU6lnz4F7pRoppXO2oMGroliDvfs2ZaYS4f6dbh0r+XXzp
+	 IPFLSL05oqEQpk4zQcSraN8Rg7Pw6MxRw5MTAm/y0GQcTv8yOj5kF7ytgZFLih37B8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794231590;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=Ws5CfHXnLxUMtF1lc+aeu2Yg3GfT33j3xpMWg/ddm1Y=;
-	b=QBTMbKK/h66UGhi3DXfrUQLtnh9T1hqCwaWguabjrjxfAURLo89nqU7Fdw8KdLm4ACFu
-	 GCwvQLY95zhWazarWN7RB/7ZJjNZxgZCii7TGXFLdysxAdXZKPgwOqZ2W/o6v0wMzOjc9
-	 SzyhtNAA5JhlPHUktEoHaapkCJOCtm40LoX8CvlCnsoZfnv1WKsFR3oE0cRckLvKbBId/
-	 LMIT21AXvQ+wH8XmLCdrkuk86fvAWjCfoARYt+7bx8YyrfF0tnttQrhJPir97gOSVRFbp
-	 ex0skBQNWuouvvfzMKhS/AYpNSdBePavMRQNgu3Sl+D0btCU3yEp6bi7mak3Y3La/uw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794231687;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=UGnqZeg4KMfimfybEXveL2Wflch3zT2Kgzzl6Lsseks=;
+	b=RN6OW6c+oGvrEbCw7bPN1qhrvr10U11i0A15siXCiB22fYQyELEhaFlBmF59+eXEAS3n
+	 yRhoqyJgJiFYABCF9RVh1U8u2J6XuJ+ab8MCjajiCoHOrCjr+HHkMkyeYz4pT9VJMLuQO
+	 s2SCNRUGOdw/X6g3iA3OQmPGAZPK8m1vP8DQ6ovEJ5w1EjqSe04TKOFKxVLUZ/qpiqDHL
+	 QEuNjDHdVAoRnZwFLyKndhoHIMTtvIriMrGGVWiRem58Llqqi7jXz3M8Qid1QXkob7PGP
+	 9JTjxJ7u8YQ9zGnjf8G9zDTSuv0aIx5VgJj9lb0lhNSvg98bVfGLZxZF9uSq0fL3h5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0j4nUxcc;
-	arc=none smtp.remote-ip=209.85.219.41
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b="ef4/yatN";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=mxn6Qkqq;
+	arc=none smtp.remote-ip=202.12.124.152
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE6A606A321
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 13:39:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9AE6A606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E6F606A321
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 13:41:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92E6F606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0j4nUxcc
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-91e8a05ec5aso8978966d6.1
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 05:39:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794231588; x=1794836388; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Ws5CfHXnLxUMtF1lc+aeu2Yg3GfT33j3xpMWg/ddm1Y=;
-        b=0j4nUxccUEMJE2Qzjmmlzs+AngrKQLIiskxcRhSpe+8yMjGcO/+4TfscL8T/ArbgTW
-         9UaNs63iHsiPAao/h6JP8sdjVuUTFbOT8OIY38Xs6fkCREZdYmpoixBXSO3noOdas/EZ
-         2H1S2wudtpvIZ078oxhHeAQIS8QGL5uzghDREXZC4MBJ1LibA1TF4yntqteMPoIoMF/Q
-         YSrjnb4uWaooedZMotDzia3MWfJzFFrfGYqgwof+tzASjNvvteM2FJyA7CzZiEufnXv6
-         hT6vAMq1efJ4iB3NJ7Tm0DNkTRiJYLnWEknnFX13XO1aNl8/3U4xjuAIgoil0B+ke9Kx
-         eL6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794231588; x=1794836388;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Ws5CfHXnLxUMtF1lc+aeu2Yg3GfT33j3xpMWg/ddm1Y=;
-        b=oHTNb2DJPap1HxgiChEvbKPXRdjin/GK723ERfajWh7XhGcnF1l/+mvKrM6+uXSgIO
-         J48Kg+WQipu0bXe7WPqhO6eOMWap4DAbU0JmNmyftqwfDxPiUQ643Af3gijMXPOlDrLm
-         Pza9yMZjq1sz2vmW1nOeHsCP5Jy83FJG6xe2l4xXw1iFZYlQU8VIjMh6i5Pxg55NLS/+
-         bErurS6ei8h3cHGI0D7Pt2iTrEE8SykmEjvRCX1NlQp7CqropX1GkM6mxK060TT2vq6T
-         lAeHMm1HnNDI6VNCLgqMql68IMJJoXM8DDmboBzh4wG18yEforjVI5XuCunmz/ngzEza
-         J1sw==
-X-Forwarded-Encrypted: i=1; AL+hErHPbkv1I4HLHBxDCXecLMQVlCLag7fVD9l3ohYcQPCZv4dVOkYMsJwiP8ZxMiXnCM59eIU=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9g4Zt2YU0VN7EejMFFdOOASfK9dSbG52+j7YtihPhKjtomRUhp
-	Peg8NSyEAx7g+92PqwOMhRKOWomUjidi/9Njzm4j43GBb8SN5l8WCn/G
-X-Gm-Gg: AYBFou2CH6+bECa2AvLvtvnj/AuGFRf0oJ6DvcvdW+R/z8F9FfycWzQvOdBf5v1eXEI
-	lsGlAb4axBzpUuVmmo/ev2Nop0Be1j10EIo5DDez32wZM6sYbDOK1b5mITYyRcVuWRsZt5i0lWk
-	TeqjSs4ZSIUUeFvBuRpifW/5P1GVon1HlX/VtKdynGK6m2ji3IEnFAivobyGnxifTrhOXthN+VI
-	tlGVjAFeE/KH1UltVJQadvj7bvv3cuIht5cp+WDsLrspO2iY2/Rk0075bGAStPvs1QmHYPrcAsa
-	mUB5jIniS8swigKEl+QsIzdv001fCnqRPayKvosEGGnZrM1UX62chbXVTJzrMnY56+98rqQA8OX
-	itVojbis2roh3pF6+ySIja78+NkQnWIvC8xHesQgHLLxBkOlRmpmnWeV6bGd6CQ+neuEFJSOjA9
-	d0RJMmfpzxB5zYmIh8qv2kbUkcASEMP8Wmxd3I8mUf7GAN3/L9/hAvyPAejxrAUwU6FpuAKy+xW
-	8PPGHza2vQN9q1TisldzlDvBAGAL2PLAgNGAEWXuRgojNPDhGDdWie+pPCzvTmcJqYOHgkfIg+T
-	ENHRduLeNueEbOuF73bk1mQYZ6cR5jDT6iils1G7U2U+UH3J7DEok3fHmY32Nh3GaGxR9jfuMck
-	c4/YXv4OwnlJpOoj6k1yU1RsMHeTDOs6zPDaDusFd2UZ03Rb8SdKNeugjUzecRkLPWU8uE/WeNg
-	XqfD1pXRyBZyqWyHrLDd4RSn7LXTi8JMCqN/ZLVMuFqn7eB1ULewMNVg==
-X-Received: by 2002:a05:620a:394c:b0:93f:633b:ee1f with SMTP id af79cd13be357-9478485d297mr603572085a.28.1794231588348;
-        Mon, 09 Nov 2026 05:39:48 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-94782d649dbsm482918985a.10.2026.11.09.05.39.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Nov 2026 05:39:47 -0800 (PST)
-Message-ID: <015c2692-0370-49d9-b055-d86301c8138e@gmail.com>
-Date: Mon, 9 Nov 2026 08:39:45 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ef4/yatN;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=mxn6Qkqq
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A694F7A00F5
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 08:41:25 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Mon, 09 Nov 2026 08:41:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1794231685; x=1794318085; bh=UGnqZeg4KM
+	fimfybEXveL2Wflch3zT2Kgzzl6Lsseks=; b=ef4/yatN8XCym4DZQysj4ubT9b
+	plA8mQy98D4hxgpTGA/b3lVMsW8kxofYeGFSdZKPbfvwA//FkJmjN4Z/Am64XKaw
+	YHtuXlUhrVfo+j6JcIHHvoVPIUka8gmTJvRTCyrgXqdwFjRpmi+3urFmCT+qdfHr
+	QYyGdUwXqj/0BDJl41WskZ+T38dOtN/zxTn+mozsHca33qtRrhS3Kn3QV7DTpJtO
+	KQ27RA+R4fWkUsc5nDFj5KDUBWvo8x7cchasEgztpVZZViWxtSm/mTC4+z1KXwuv
+	Lkb+OYhZrYx0H65dsBGrS1w75opP7TIsfAPKWJPgwZsfSZ8bw6ffrAAVo+hg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794231685; x=1794318085; bh=UGnqZeg4KMfimfybEXveL2Wflch3zT2Kgzz
+	l6Lsseks=; b=mxn6QkqqKzWNzAIEsNQzNAhSqWs72mv3bDUZieaMJnUwDCmS2Z7
+	8PXyj+eH/qgCl9RBtj6IAgOsGc7H8Y6YKMaX0L98lwfsfQQVa93cimRjVKGNEWFC
+	EA/8dteiiAMBigi+toHqS4JSujsXqKcOmVHQWm6vfABqUzzZ3L85+A/sqNvEDIZ+
+	VHo3vwl3dt0+bZMHP/q/nlyN2d6tR7LbhJjZ5S1bMUDZk7MZrfDJaReKxgyS5Ryn
+	cxke0JP5zTQ7i8qcfdqvPCJ07sykZEctdAJUb267reLNt7hu2T+SLEeRrQngLTiE
+	4Ff0aWwzrPQdFDuBDprCYF8JFAWHz6jdzMQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794231685; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:Vkv+cMjkdSD31fF+4eEgQ6MhFQzrGf4+/nJFDGY1DJ1a7tP
+	phsfhYHlkPF62ROEoFuYRYvdgUVgnmE2q6QBqGyLoddNI2SDk6cmipqfKIks0LEb
+	HfKrhmCH3y+/+88KDFV8QBsH4LfIicPBRVgiE02WFqUreauBMWJ2CD1hSfzn7ZLN
+	AxlWdgQ6TA+5Lw2M1eNXPkMQc33LbqtlbV6MFoeZCuHhBTDhuHfA0UoGE9NN8B6w
+	c7LUDCIkyAqBbcUabjbt3CX8Jym53bI/xz1sTkfZ+pGozhPhbJC4bsEFdQUYOHQZ
+	/USL7gHOdfjxeF37DRy55kzdS1X2ENvgPz7q45Q==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:Qn5TYqBUj8BH9t3kLJZIlHRdFYNmWgUjVKJPNGmiWjs=:UoNOiR6WrnYLInD/6yoYnr/9nv1wC9BtP46xVyw4meg=;
+X-ME-Sender: <xms:hc3xaiz0pd-RGE151CpmJO2AC6V1NlnrJ25YEaoMYJqNebD9D_Kv_Q>
+    <xme:hc3xaud04cexDk005YvYGdqbHA4AkP_kqV_vWA_N4FL6wlJnvCyo09BcJV3_I7bNO
+    3zqv1eOokyZlrA29u-qcmInPtE1kw8dV-qeNynWD0oh5ysgp1gRnZg>
+X-ME-Received: <xmr:hc3xamKZ1OgFI0E5pwdfd14WxX7-Ggk5sJO0kQXZqwg5Oz3A39tyz7BWLHdZLqql7mLb5MM>
+X-ME-Proxy-Cause: dmFkZTFSkcgLAGTIz4eLsFdebQc85I+7lBH0kWJDKwzn8YhBbsTyPs1O9lrnhDhJuwIgmI
+    wr4GqOyKkvBO+t8vpMvlCF04dbzsOmgPtBoCvQ/H5YGpFuewd4OEN0WPJDRyt2Sb12ySav
+    8OQ9URcqT/wAaucZYAUA5inQLzzZzxuU6kE/dn1x+vqhQfMm7ci57AAw2rYF63WZ3rsQ3T
+    fgJWKOVMO3eIcszQ9RY4C98qJzI+SBZS4TQ/MIDXaQhBxovZJel6Ugi7vfR+8KLvrIyWiz
+    Bk0GnMHTy/jjmYsBxwbu3yZIcRqNJiUD46KR1yKw/uEJp57Zh8nEp2ndokkultEtCxB9gm
+    0F6mjl5SCjAUNI4Rz4KUlDlN1T8cqgtrWXEMETJehY9XNRQKuS70LNCnFNnYi0/ih7E9+g
+    XasfZAnZVS3eMWzGt+LwimNA8mG77mATh6P3T7pZhoOfqn7M4OUPYiiCAF+ZHmpyhn83hY
+    yqD83mBrxuQK1Tv3R+noqRCQG1SX+HimXTL6+2JKjV2nCXPiAHQRCKnlqbxD5Djyczdfc/
+    uQ7ByATZMI423NdbYJpaK1R0GfNIFgXuhsNN365WAV7PAX4AJu+oEh0XuVgmvsOqj5d7CJ
+    Oqy1S6nRo1xmFvRYLEV68x9DGXPAOdeDQ3faqXy822Fk7eyor2vvyJBHtdhw
+X-ME-Proxy: <xmx:hc3xanHYcXBrKhOAk5Fk-p24jUc_6T0jJsT6NbYch2NB0aSyIHdJOg>
+    <xmx:hc3xaoqZskx6RNNkOQSl6VRmJqS4kA6S-4nPVHD4sqQMPk6DZh8e5A>
+    <xmx:hc3xaoQOyjBQ9H_Oh1uyYeaY4dlPSOw1jsU78MEIrcSPgVP298XT1g>
+    <xmx:hc3xatO9lNo7DP6gARVV7AtKadGDVQ5uknVcpc9TuqsngiWjksybZA>
+    <xmx:hc3xahZewKFiP5ejjsM6RCsygyJxK8h6vLwJAth99_Sn-5P1AVCYv3tL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Nov 2026 08:41:24 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ec9ef189 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Nov 2026 13:41:22 +0000 (UTC)
+Date: Mon, 9 Nov 2026 14:41:19 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] unpack-trees: lose USE_THE_REPOSITORY
+Message-ID: <avHNf-aaxdsyim7g@pks.im>
+References: <xmqqtsltbfdv.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -94,73 +122,120 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/15] bundle-uri: handle NULL value for
- fetch.bundleCreationToken
-To: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Jeff King <peff@peff.net>,
- Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
- Colin Hinton <colinlewishinton@gmail.com>, Matt Hunter <m@lfurio.us>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Usman Akinyemi <usmanakinyemi202@gmail.com>,
- Miklos Vajna <vmiklos@collabora.com>, Junio C Hamano <gitster@pobox.com>,
- Thomas Bachem <mail@thomasbachem.com>
-References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
- <4eb7085084b880f90705799d523ab554fd1cabd3.1794040968.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <4eb7085084b880f90705799d523ab554fd1cabd3.1794040968.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtsltbfdv.fsf@gitster.g>
 
-On 11/7/2026 3:42 AM, Thomas Bachem via GitGitGadget wrote:
-> From: Thomas Bachem <mail@thomasbachem.com>
+On Fri, Nov 06, 2026 at 05:26:52PM -0800, Junio C Hamano wrote:
+> This file defines a set of fairly low level functions to implement
+> merge and checkout behaviour, many of which depended on and can only
+> work with the_repository.
 > 
-> A fetch.bundleCreationToken without a value makes "git fetch" and
-> "git clone --bundle-uri" segfault when the bundle list uses the
-> creationToken heuristic: fetch_bundles_by_token() passes the NULL
-> value to sscanf().
-> 
-> The function already treats a token that does not parse as 0, as if
-> no bundles had been fetched before, so it downloads them and then
-> stores the new token. Treat a missing value the same way.
+> Two key data structures passed around in the code paths, "struct
+> unpack_trees_options" and "struct index_state", both have a pointer
+> to the repository instance, and we can use it to make it work on an
+> arbitrary repository, not just the_repository.
 
-I agree that this is the correct fallback.
+Okay.
 
-> -		if (sscanf(creationTokenStr, "%"PRIu64, &maxCreationToken) != 1)
-> +		if (!creationTokenStr ||
-> +		    sscanf(creationTokenStr, "%"PRIu64, &maxCreationToken) != 1)
->  			maxCreationToken = 0;
+> In any correctly written clients of this library file, the
+> repository instance that is pointed at by these two structs MUST be
+> the same one.  For now, make sure that is the case (and otherwise
+> BUG out) by introducing a unpack_repo() helper function that takes
+> these two structures (when available) and returns the repository.
 
-Good.
-> +test_expect_success 'fetch treats fetch.bundleCreationToken without a value as 0' '
-> +	test_when_finished "rm -rf token-without-value" &&
-> +	cat >bundle-list <<-EOF &&
-> +	[bundle]
-> +		version = 1
-> +		mode = all
-> +		heuristic = creationToken
+Fair. It's a bit curious of an interface to have this kind of ambiguity.
+But as an intermediate step I think the proposed solution is okayish,
+and I do like that we at least verify that it's the same repository.
+
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index d6a859420f..79341d7fa6 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -1,4 +1,3 @@
+> -#define USE_THE_REPOSITORY_VARIABLE
+>  #define DISABLE_SIGN_COMPARE_WARNINGS
+>  
+>  #include "git-compat-util.h"
+> @@ -82,6 +81,56 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
+>  	  ? ((o)->internal.msgs[(type)])      \
+>  	  : (unpack_plumbing_errors[(type)]) )
+>  
 > +
-> +	[bundle "bundle-1"]
-> +		uri = file://$(pwd)/clone-from/bundle-1.bundle
-> +		creationToken = 1
-> +	EOF
-
-I looked at your patches out-of-order, and you have some later ones that
-focus on this bundle list having bad values. However, the real test is
-in the fetch:
-
-> +	git clone --no-local clone-from token-without-value &&
-> +	git -C token-without-value \
-> +		-c fetch.bundleURI="file://$(pwd)/bundle-list" \
-> +		-c fetch.bundleCreationToken fetch origin &&
-
-Here, the local creation token is NULL and that causes the problem.
-
-> +	test_cmp_config -C token-without-value 1 fetch.bundlecreationtoken
-> +'
+> +/*
+> + * Some functions in these code paths get unpack_trees_options, which
+> + * has up to two istates, and some get an istate.  These istates can
+> + * be used to find the repository to be used for this operation.
+> + *
+> + * As these are all working on the same repository, they must match.
+> + * For now, with a super paranoid check, make sure all potential
+> + * sources of the information match before using it.
+> + *
+> + * Once this proves working well, we could just use the first one we
+> + * find in a production setting.
+> + */
+> +static struct repository *unpack_repo(struct index_state *istate,
+> +				      struct unpack_trees_options *o)
+> +{
+> +	struct repository *repo = NULL;
+> +	const char *camefrom = NULL;
 > +
-Thanks,
--Stolee
+> +	if (istate) {
+> +		if (!istate->repo)
+> +			BUG("istate->repo == NULL");
+> +		repo = istate->repo;
+> +		camefrom = "istate->repo";
+> +	}
+> +	if (o) {
+> +		if (o->src_index) {
+> +			if (!o->src_index->repo)
+> +				BUG("o->src_index->repo == NULL");
+> +			if (repo && repo != o->src_index->repo)
+> +				BUG("%s != o->src_index->repo", camefrom);
+> +			repo = o->src_index->repo;
+> +			camefrom = "o->src_index->repo";
+> +		}
+> +
+> +		if (o->dst_index) {
+> +			if (!o->dst_index->repo)
+> +				BUG("o->dst_index->repo == NULL");
+> +			if (repo && repo != o->dst_index->repo)
+> +				BUG("%s != o->dst_index->repo", camefrom);
+> +			repo = o->dst_index->repo;
+> +		}
+> +	}
+> +	if (!repo)
+> +		BUG("no repository for unpack_trees()?");
+> +	return repo;
+> +
+> +}
 
+So this overall surprisingly complex, but I think it's sensible to be
+defensive.
+
+> +
+> +
+
+Nit: two empty lines.
+
+> @@ -345,15 +394,16 @@ static void load_gitmodules_file(struct index_state *index,
+>  				 struct checkout *state)
+>  {
+>  	int pos = index_name_pos(index, GITMODULES_FILE, strlen(GITMODULES_FILE));
+> +	struct repository *repo = unpack_repo(index, NULL);
+
+This conversion here raises the question what we want to do in the case
+where the caller has both structures available, but we don't end up
+passing them to the pointer. This could in theory hide a bug where we
+have mismatching repositories when the entry points don't verify that
+property.
+
+I guess that's ultimately not much of a problem. But an alternative take
+could ensure the propert only at the borders of this subsystem, so any
+externally-visible function. And internally, we'd then only ever pass
+around a repository.
+
+But in the end I don't really think this matters much, so please only
+take this as me thinking out loud.
+
+Patrick
