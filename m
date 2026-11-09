@@ -1,87 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794223907;
-	b=NHmUYGhwOnQi+EpzqQcU+OLqBjy9dFjALnXAH/GhMGcxE2E3X+yJM4XrGidSQOE/bU4v
-	 AlJK3a78IrAWJofMsTCDrvqZobRe7TrPPteddukKL108uKCyIB7ZXGyz77HJVhdMi0sXp
-	 fPofzBvL5TU/T3Eju3OrAoghmZ7ipwEmxJ1h9AwjUOl2FOdEs6zcNq2sQswNiJfx9KBWE
-	 FSuc4EFYKrEvtG80AwG8asdOz/dLZiMV1o2Uq6QmlHxNYI91qRoslbaZ74Ce+cZiAg1yX
-	 RtAeQYA4RFDTBD0oiyO7znUNTSFE8ouV6nkPbjgvMB2tqx7BVmDRTGw9eiYikTwBpSg==
+	t=1794224133;
+	b=n4m5yBLPii3CodZj7X27+kZBV5mIB1EZ3dVPYFeRARH6hKWOZxjSsO6p71dh2ThY32Qy
+	 poEMu+zm87bAOuR+wBshSRxcOtmqjHHU5+U5cSp5IMTmXsrjFhUuYB7Nc7U3BKhHxywNy
+	 NynumNJRCyVlpHhzCwbEWjyEVfDi9AQl/Gi7ZvpbRd7iiTmp2pc68Knv4xfkEyBrbtxb3
+	 amPcd+H22i/1g0K6DZGNLbhO2qwF1BkpnGJfihMLO0EHbP1sfzSb0SbNSgjcOhC/lxCaO
+	 lbl0kb51rsW4fQeWWtZzi4sBBFmKiUDkpRGM/08qFOq60vMe5qzdDL8CsgcJ955iayA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794223907;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794224133;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 X-B4-Tracking:X-Change-ID:In-Reply-To:References:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key;
-	bh=4kVVhYmqE3m5lb19LjEfpWmpCRYfPJFDr3/UzCCJLdo=;
-	b=2SIEkp6uJZnLi6U3HJ2WsHHQICu7EgSvuZuEAo5tKC8SzbTAO4ipU0oMwgmX/gTSn0Zi
-	 lCZyc2c5TTxpUyWk8EV5wB2bvb6Qye5SFhCNkek/SIp+Bx8qaiTFac4UGbUrJrrD7d4L1
-	 D7nBBwDLURhdFg9jgSSyt8YdnCKrfn508M5vJHgD6Mgt+v8Xgtq7N4ToAH7imXKzC57tO
-	 c9srZl9Sl9szWj0yzVEi/Jg8sHdnwbjg588MafE9lJlkUB4FoudB85giVdalGpFYJ7fJg
-	 6c1NXpe8Y7c2y7Tbj5KoLPczbGbjJ8EgJpc0fT4FwgJmU+PbO7xqs2orgvVKwgJRgFA==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=GIlBuqOny1gGEKxlNw/Qwq40A5Pe8GUQM0b3PZ+rkt8=;
+	b=ppgerGYECezX6FBCl1iMRFrhuMG0MaUG6qK3udKIjKBW+s9hD7zqShv+m9NgPPe679Wz
+	 1EEWY048TBWRhEx/gaK5JNd2UIENWTahtwtDkIjO3OoXxvyuLFeNWkHJA1tvlCSAdpJMa
+	 QXSM/jdJKzKUiLRz1hNZDlpgB/XjR7eu9F7o3qqrPMlYVBmdJ0nxb51rETT1l7hmoP2Z5
+	 1Cu7NDaAdmzrQNEy0C8Niv5N30u92NHJ+CpYYYgHwW8ZuBxUB5uNGqLwlRcwfwHgWqgfS
+	 jA6PWL/Bixj+1UnOv0rOlEldribI2CHKXGve0I/zIGYQ80betFhHls+Draq6O5ptVvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hDIiijJS;
-	arc=none smtp.remote-ip=209.85.221.46
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zIPUVQ4W;
+	arc=none smtp.remote-ip=74.125.82.182
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8198C606A332
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 11:31:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8198C606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D99606A322
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 11:35:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77D99606A322
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hDIiijJS
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-492fcbfaa87so471285f8f.3
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 03:31:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zIPUVQ4W
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-37071c0f42aso1462922eec.0
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 03:35:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794223906; x=1794828706; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=4kVVhYmqE3m5lb19LjEfpWmpCRYfPJFDr3/UzCCJLdo=;
-        b=hDIiijJSRoKVVM+MDYVGMsIStKfWjS7RmUQ9sHWNtRpgyHl2JHGjvKl7KmSqoQVOpY
-         D8FDYrRdvvQpbVLmqVT+Rbk1O2DcyodFCs4oITiXrqPhRkmxB3K4Fb9Qy2g1PEmuxlu9
-         B2J4KVuy0cWFSowur1+kgqiAQ1fvISqXnFnCE+S6oZn9C2l5PgsuxEV/7rlPp9YHtTaM
-         C9UAOj6uJ64dknlCkG3i3way4bt9jy/C8Se7UCc6eU1kJv5+JRLLCDTQiDspOwPVTxHP
-         +on/3cKxR91xoL5dMUfLEIkRcf5O/jY3MmlYYQj3YIThOUyx/JWuXZfsE5hyuc5WUMnf
-         dn8A==
+        d=gmail.com; s=20260707; t=1794224131; x=1794828931; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=GIlBuqOny1gGEKxlNw/Qwq40A5Pe8GUQM0b3PZ+rkt8=;
+        b=zIPUVQ4WH/oOprlVJH4jD+WQGDywF/+L2dnZcG91OiCXTHko5ruaNbY/wNrSneinD2
+         7vgUTlWfpZFZkz0fwuQorlaIn+gOKcdbxxZXbqo0VXctieYqg0QMlDb+S4RkmHIIqUaH
+         FD16rOUkWHvuwK9xX+cGgh8mLKLz+9bZHWvzf7b+MDNZLWpRlHhgAfkqH/jWXu8g/VTd
+         LiP1PfKFn5E+okhZrFVeIDGimp200RDIjHYWLGz7b/KC4cOSZLM1sMUCM0qtrHJXhQSg
+         vtRFUvlzxAv6Ku1Mk5+pQrmWVdnb+1nYWxB3h4VHF+okQ3wKll9eNDA48R4ViENUIRrc
+         Q3lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794223906; x=1794828706;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4kVVhYmqE3m5lb19LjEfpWmpCRYfPJFDr3/UzCCJLdo=;
-        b=0FCvq2AViIS13xLX+Y/1VrOPjj/UzYEVy8hfh1vIubN6Klar3vhanv/QPJnaKM7YmP
-         GawyG219ZaoA6BuPLobqLOUiwXNTu1L0BVhQUEfLLhdp7FsB7Yz01hCkw8njKfLmVjrX
-         j/1u0voXUgA3NyaV4tItb1xUPyR2a799pWV+nW7Kp6gaLrs5ASkilkjjKIbH0Q1bJypN
-         vuH8Sepp2Kox9EMV/XnxVmRRskCQrv6ikuKQBzXs9OIj8xtmvijJW0JsVDi5liJpcu3Q
-         fElnpJDhimCekLUVSoTPfyrCZxYUWD6BP2e+Xy6Vww/R/P/xuD6LMONslBH378Twj7r5
-         Hjxw==
-X-Gm-Message-State: APuU4Z+PR9OGfZ8AD8d630NzX9z6FoWks2nz8KqCORSpY3Ng6w6kirSw
-	00u0/sRDl+4uYlP13aUQDfz3el/xpICNwsjr+5qudgSgGHXNLZUEEfftItu1wQ==
-X-Gm-Gg: AYBFou3LW21zA8+/VWzUphp404FwCPIEpF6mwEPN3RwRhXs/X/pDyKYpg2dgbllFh6H
-	cSSqINAHeHaJkLjK0d4oBIZ8dWY6BescB4lPMDy/8vFlRe750kVV+6YvuEzEn/BpHBWSM0f03LG
-	6DpxA9E+ys9pMcRhSekfsJU0JIDuRPblYvSqzeiKclLz6d+5Px++XAJpQr5C+AhpqM71u3BSMEd
-	2meBE3FmHpAY8I/kcvFFOn7VXcaHuxoM4vIWYysdoNqFaMA+FQQfd2qaF2HxWYm4wSvRkLOwq2F
-	15OuPP5gq/7pAEyX5Ks8ERkkpkXjXIYpDjRY2HlmcXagRVfBPdnVfG/Lrolb6vJj4bCWaQGHgTf
-	p1HpqirHnl1oJ6+px7+pG845l/hJFyJUvdXiDK3K9ELYEhWQETGFcAcNjJAJnVz+7oAuGbWP6UX
-	4DSfcf4hsFAF26UdShyYPe5pTln+/GqYMuhhZDhvMF5Llp3NFF1623x2mx0EPnEhOYNK10EXjdx
-	ehasHvh9zQiXK0JwTF++jVeYSkNa2YFLaXTIYcH0Pd5vxntI2FaSPs0UeTQyG95cMn32bAL/Erz
-	HG1K3KadHBHGdaBMExDjoCPBEJuHRGpIilA+N69yDbCWh9Up+hwOIGPpIfcGZV9Tgec=
-X-Received: by 2002:a5d:64ee:0:b0:48d:ca32:e90f with SMTP id ffacd0b85a97d-4958502bdb8mr5199042f8f.55.1794223905488;
-        Mon, 09 Nov 2026 03:31:45 -0800 (PST)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:62eb:8cc:cf4f:87d1])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49596f9ab09sm9102689f8f.28.2026.11.09.03.31.44
+        d=1e100.net; s=20260707; t=1794224131; x=1794828931;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=GIlBuqOny1gGEKxlNw/Qwq40A5Pe8GUQM0b3PZ+rkt8=;
+        b=EIwyCFiqbMZRQqtvMsIEsYQh75eCVmbG9v0g1ZMCKHDVZQ2KgUFbEy0wVi4Tt9Jx/Q
+         SZOW6bJQZRntneS63d0cjizKPq0xK8gla0Ki5jaq9kkT4/NsuEegFCMkQQNZpI8+Tf0S
+         VUWbbH8y+dYxjCY4VxF72dvALcDK0QHN9jksCUxbKrCabM8FIiZNrGTftC5/KRVL1vP4
+         /FI1+4n2izxG4h+WemwrV3tHuz1UX7I9sc9I+oH9DoHSBCzgck+WlWXKlm63hIVPAppM
+         kh+I3xxgsTl653kgVkoEUye+EMEJ7TB4VHsqdr8gpWvSxp0d53Vg45SmvSWRm2+61iwT
+         q4qA==
+X-Forwarded-Encrypted: i=1; AL+hErFO3yO+gFGNPum64fnNHbCRE0u+1ghC0y9RlgdBbxkZHc0hgJqo8uvr4ziOtEqkvbdBO5s=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+NG4fTGw41xgSUISUKuXRQ0VD9NDojLgIqP5UlcyLmFUMDqWYw
+	khiHVQTNNoENONZS3DqaILjZn1JEOYwVa8e6jJ3DXNgvxzf7GoJknRn1
+X-Gm-Gg: AYBFou1mR9zdFgnpUNIjYQqNXzdluuOXk7PZFNG18T+PdCHM+mBSvM/AjEXDlLZzXJ3
+	HPR8+YeC+iSNGj2BNe9lI0v+bCqZXxWiQK7vwt6CukudpFcFZYBFV92HWMGSfEgrPt1KGAri+rW
+	XbgvGdCHR1Lv6ei9ErTW/tmia/cvrE+hcBqTjfkcJWgJHSKaEuArQ3Z2L3D0WBMzIkBYwJGlVu1
+	bIKeXoQlbUS+fwO61VTmIDAVOIkKCIYgd3Gag5XnHj6soZampiLZNNFJkAE7eIAZ/+80UVftepj
+	hDG0mcvlvrc1ErklpWeVel/OKStwkJWQUTjlVUIXP7htqYDzU9YmgYXt0P9FL+fGPVjkqaraCw1
+	x/zq5OQOb7+sLOhFYnxfsvD2qT5y2vDA9cVbV8/Y/wAPjUQZuSI/GiLK71+/PZogz2tTorG3JWh
+	vNhqJBRsKPl2XUkO8HSrEBeYL6BHgGVNmupNYI/ocSUogLtn+5W4VwGTpqYQdsGvpAbcnZflP/a
+	e6a4GJwmrYuRCpThlxGmKx2pf2bcXKJJFRCEtsGRGASet6WirDc09uIhityqDMEUmiE0B6RTheo
+	/W/NTWVs7glku/fqNFaLe9wYhVz9N2HOQIZNZQrIVWmLFSQ1Z/EYYu4=
+X-Received: by 2002:a05:7301:707:b0:371:7ecc:b82a with SMTP id 5a478bee46e88-3725da6ed90mr6944066eec.21.1794224131175;
+        Mon, 09 Nov 2026 03:35:31 -0800 (PST)
+Received: from Anonymous.localdomain ([152.58.29.251])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37265c06c61sm12081864eec.14.2026.11.09.03.35.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 03:31:45 -0800 (PST)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 09 Nov 2026 12:30:10 +0100
-Subject: [PATCH v3] api-parse-options: add missing flags and macros
+        Mon, 09 Nov 2026 03:35:30 -0800 (PST)
+From: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
+To: husainsitamuwala21@gmail.com,
+	git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [Outreachy] Proposal draft v1: Implement promisor remote fetch ordering
+Date: Mon,  9 Nov 2026 11:35:15 +0000
+Message-ID: <20261109113515.198671-1-husainsitamuwala21@gmail.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,257 +95,368 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261109-kn-parse-options-doc-v3-1-e60022942721@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3WNTQ6CMBgFr0K6tqY/FMSV9zAuSvsBVaGkxUZDu
- LstxoSFLl8yb2ZGHpwBj47ZjBwE440d4uC7DKlODi1go+NGjLCCUsLxbcCjdB6wHafIeqytwnU
- uZcUJNEwQFK+jg8Y8V+358tn+UV9BTcmViM74ybrX2g00cd+E+J0IFFOcEw5aS1HlpTy1vTT3v
- bI9SonAtpLij4QlieAAJRWC54etZFmWNx/y3Y4PAQAA
-X-Change-ID: 20261103-kn-parse-options-doc-b4aa930ef250
-In-Reply-To: <20261105-kn-parse-options-doc-v1-1-403edda5947a@gmail.com>
-References: <20261105-kn-parse-options-doc-v1-1-403edda5947a@gmail.com>
-To: git@vger.kernel.org
-Cc: herroyalpriestess@gmail.com, Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8984; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=hjqnMELUuMdZBahE2NYRQbvGyz76qdOiCGPzCKulxYo=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrxryAWb0nK7vpfW3EknzegNScrHXq7hCxJE
- bxqYQCpgMIYGokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq8a8gAAoJED7VnySO
- Rox//4wL/RpzQ9lArZ+k3FDY/OZoReAsJXuN0sfYd4GAJgIJJDr0wMap4lIT8O5VUS66nNIDCru
- ODFVoqKjravt+Wlgpp9wRphH7r89j1aLx07RemEkUymXy/B/Old7vh6CgkVyKtpawzTGqmanBpg
- apCVqLevLDp1UxssVNe/jnVdi4X65dF0QE6tGbUPWlhX3/stWIF7GdRtTg90ARrkAvjSiHUS3tH
- E0xMw9SSIcNzVt3C3GeOoXbfBbblfhLhhQk8O16o12u/6A87HWWG45B828hGOKfWlVrXgCfw8nZ
- BFW4GTPQvDRabq8elUEq6DNxwmE1jpTMmJBz3vQKrtqMNlfPNo974Lt3yqexNvXeOR+xJKqz2DN
- v+JrOsjdWoABN11mSD2Ikwl7AVbWIUI0/rL8LX9DMteh52EPwkOT6QD0yYK18otME6WD8ToM48e
- 4arQFfPcH5rWWYqvNPBiLUO7/27NPKNR6XmoSRMI2zcI7KEUQ6v7v7EgDGsjEdocmbi3qyrZlE8
- HA=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Content-Transfer-Encoding: 8bit
 
-The 'Documentation/technical/api-parse-options.adoc' contains
-documentation around the parse-options API. The document is missing some
-of the macros and flags provided by the API.
+Hi team,
 
-Add the missing flags 'PARSE_OPT_ONE_SHOT' and 'PARSE_OPT_SHELL_EVAL' to
-the documentation. While 'PARSE_OPT_ONE_SHOT' was introduced in
-202fbb3315 (parse-options: add one-shot mode, 2019-01-27) as a temporary
-flag, it is now 7 years and still exists. So let's document it, as when
-the time comes, it is always easy to remove the same.
+This is the first draft of my proposal for "Implement promisor
+remote fetch ordering" for the December 2026 Outreachy round. I would
+appreciate feedback, especially on the config shape (6.1), the
+precedence rule (6.4), the protocol field (7) and the timeline (10).
 
-Also add the following missing macros:
-  - OPT__SUPER_PREFIX
-  - OPT__VERBOSITY
-  - OPT_BITOP
-  - OPT_STRVEC
-  - OPT_UYN
-  - OPT_NOOP_ARG
-  - OPT_COLUMN
-  - OPT_CONTAINS
-  - OPT_NO_CONTAINS
-  - OPT_WITH
-  - OPT_WITHOUT
-  - OPT_CLEANUP
-  - OPT_PATHSPEC_FROM_FILE
-  - OPT_PATHSPEC_FILE_NUL
-  - OPT_AUTOSTASH
-  - OPT_DIFF_UNIFIED
-  - OPT_DIFF_INTERHUNK_CONTEXT
-  - OPT_IPVERSION
-  - OPT_ALIAS
+In short
+--------
+When a partial clone has several promisor remotes, Git chooses which
+one to ask for a missing object by a fixed rule that neither the user
+nor the server can change. I will (1) lock today's order in tests,
+(2) add a local way to set it, and (3) let a server advertise a
+preferred order through the existing "promisor-remote" capability,
+with a stated precedence rule, defensive parsing of untrusted input
+and proof that nothing changes unless someone opts in. The design
+goes to the list in week 2 because it needs the longest review.
 
-This brings the technical documentation in line with the code in
-'parse-options.h'.
+Summary of deliverables
+-----------------------
+ D1. A way to observe the fetch order in tests, and tests that lock
+     in today's behaviour.
+ D2. A local setting that orders promisor remotes.
+ D3. A server-advertised priority with documented precedence.
+ D4. Documentation updated; the "order cannot be set" limitation
+     removed.
+ D5. A final report listing what remains.
 
-While here, add the missing `flags` argument to `OPT__FORCE`.
+1. About me and logistics
+-------------------------
+Name:     Hussain Sitamouwala
+Email:    husainsitamuwala21@gmail.com
+GitHub:   https://github.com/CodeWithHusain
+Blog:     https://husain-git-blog.vercel.app/
+Location: Mumbai, India (IST, UTC+5:30)
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
-I was reading the docs while reviewing another series and ended
-up finding some missing documentation. This patch tries to cover
-that. Some of these might be options/flags we rarely use, but I
-strongly feel its easier to make choices when there is adequate
-documentation.
----
-Changes in v3:
-- Fix typo and rename the variable
-- Link to v2: https://patch.msgid.link/20261106-kn-parse-options-doc-v2-1-453ee7155348@gmail.com
+I have read the Outreachy eligibility rules and I meet them.
 
-Changes in v2:
-- Add OPT_ALIAS which was previously missing.
-- Fix incorrect and missing flags in the commit message.
-- Fix typo in the commit message.
-- Link to v1: https://patch.msgid.link/20261105-kn-parse-options-doc-v1-1-403edda5947a@gmail.com
----
- Documentation/technical/api-parse-options.adoc | 106 ++++++++++++++++++++++++-
- 1 file changed, 105 insertions(+), 1 deletion(-)
+I learned C through CS50 and use it with C++ on Linux (WSL). I build
+Git from source, and I send and revise patches with git send-email,
+threading versions with --in-reply-to and answering every review
+comment before sending the next version. I also wrote a Python
+network vulnerability scanner on top of Nmap, where I learned to
+treat anything that arrives over a network as hostile until checked.
+That habit matters here, because a server-advertised fetch order is
+data the client does not control.
 
-diff --git a/Documentation/technical/api-parse-options.adoc b/Documentation/technical/api-parse-options.adoc
-index 6dfea34220..b20f74bc72 100644
---- a/Documentation/technical/api-parse-options.adoc
-+++ b/Documentation/technical/api-parse-options.adoc
-@@ -138,6 +138,16 @@ Flags are the bitwise-or of:
- 	turns it off and allows one to add custom handlers for these
- 	options, or to just leave them unknown.
- 
-+`PARSE_OPT_ONE_SHOT`::
-+	Process only the first option (and its value, if any) and return
-+	the number of arguments processed, leaving `argv[]` untouched.
-+	`argv[0]` is taken to be the first option, not the program name.
-+	An unknown option stops processing without an error.
-+
-+`PARSE_OPT_SHELL_EVAL`::
-+	Wrap the usage output in a heredoc followed by an `exit 0`,
-+	so that a shell can `eval` it.
-+
- `PARSE_OPT_SUBCOMMAND_OPTIONAL`::
- 	Don't error out when no subcommand is specified.
- 
-@@ -230,15 +240,25 @@ with `flags` set to `0`.
- `OPT__DRY_RUN(&int_var, description)`::
- 	Add `-n, --dry-run`.
- 
--`OPT__FORCE(&int_var, description)`::
-+`OPT__FORCE(&int_var, description, flags)`::
- 	Add `-f, --force`.
- 
- `OPT__QUIET(&int_var, description)`::
- 	Add `-q, --quiet`.
- 
-+`OPT__SUPER_PREFIX(&str_var)`::
-+	Add hidden `--super-prefix=<prefix>`, which stores the prefixed
-+	path to the initial superproject in `str_var`.
-+
- `OPT__VERBOSE(&int_var, description)`::
- 	Add `-v, --verbose`.
- 
-+`OPT__VERBOSITY(&int_var)`::
-+	Add `-v, --verbose` and `-q, --quiet`, sharing `int_var`.
-+	Each `-v` increments `int_var` (a `-v` after `-q` sets it to 1)
-+	and each `-q` decrements it (a `-q` after `-v` sets it to -1).
-+	`--no-verbose` and `--no-quiet` reset it to zero.
-+
- `OPT_GROUP(description)`::
- 	Start an option group. `description` is a short string that
- 	describes the group or an empty string.
-@@ -273,6 +293,11 @@ with `flags` set to `0`.
- 	Introduce a boolean option.
- 	If used, `int_var` is bitwise-ored with `mask`.
- 
-+`OPT_BITOP(short, long, &int_var, description, set, clear)`::
-+	Introduce a boolean option.
-+	If used, `int_var` is bitwise-anded with the inverted `clear` and
-+	then bitwise-ored with `set`. Cannot be used in the negated form.
-+
- `OPT_NEGBIT(short, long, &int_var, description, mask)`::
- 	Introduce a boolean option.
- 	If used, `int_var` is bitwise-anded with the inverted `mask`.
-@@ -291,6 +316,16 @@ with `flags` set to `0`.
- 	The string argument is stored as an element in `string_list`.
- 	Use of `--no-option` will clear the list of preceding values.
- 
-+`OPT_STRVEC(short, long, &struct strvec, arg_str, description)`::
-+	Introduce an option with string argument.
-+	The string argument is appended to the provided `strvec`.
-+	Use of `--no-option` will clear the list of preceding values.
-+
-+`OPT_UYN(short, long, &int_var, description)`::
-+	Introduce a ternary option.
-+	`--option` sets `int_var` to `1` and `--no-option` sets it to `2`.
-+	If neither is given, `int_var` is left unchanged.
-+
- `OPT_INTEGER(short, long, &int_var, description)`::
- 	Introduce an option with integer argument. The argument must be a
- 	integer and may include a suffix of 'k', 'm' or 'g' to
-@@ -340,6 +375,17 @@ with `flags` set to `0`.
- 	Use it to hide deprecated options that are still to be recognized
- 	and ignored silently.
- 
-+`OPT_NOOP_ARG(short, long)`::
-+	Introduce an option that takes one argument but has no effect.
-+	Use it to hide deprecated options that are still to be recognized
-+	and ignored silently.
-+
-+`OPT_COLUMN(short, long, &unsigned_int_var, description)`::
-+	Introduce an option that takes an optional argument and sets
-+	`unsigned_int_var` as per the column layout modes specified in
-+	linkgit:git-config[1]. `--option` and `--no-option` without
-+	arguments are equivalent to `always` and `never` respectively.
-+
- `OPT_PASSTHRU(short, long, &char_var, arg_str, description, flags)`::
- 	Introduce an option that will be reconstructed into a char* string,
- 	which must be initialized to NULL. This is useful when you need to
-@@ -366,6 +412,64 @@ with `flags` set to `0`.
- 	this subcommand is used. The subcommand is not listed in the
- 	usage output.
- 
-+`OPT_CONTAINS(&commit_list_var, description)`::
-+	Introduce a `--contains=<commit>` option. The argument is parsed
-+	as a commit and inserted into `commit_list_var`. If the option is
-+	the last token on the command line and has no argument, `HEAD`
-+	is used. Cannot be negated.
-+
-+`OPT_NO_CONTAINS(&commit_list_var, description)`::
-+	Like `OPT_CONTAINS()`, but introduces `--no-contains=<commit>`.
-+
-+`OPT_WITH(&commit_list_var, description)`::
-+	Like `OPT_CONTAINS()`, but introduces a hidden `--with=<commit>`.
-+
-+`OPT_WITHOUT(&commit_list_var, description)`::
-+	Like `OPT_CONTAINS()`, but introduces a hidden
-+	`--without=<commit>`.
-+
-+`OPT_CLEANUP(&str_var)`::
-+	Introduce a string option with `--cleanup` long name. Commonly
-+	used to parse cleanup mode as specified in linkgit:git-commit[1].
-+	The option does not do any parsing itself and simply stores the
-+	argument in `str_var`.
-+
-+`OPT_PATHSPEC_FROM_FILE(&str_var)`::
-+	Introduce a `--pathspec-from-file=<file>` option. Commonly used
-+	to read the pathspec from a file instead of the command-line
-+	arguments. See linkgit:git-commit[1] for more details.
-+
-+`OPT_PATHSPEC_FILE_NUL(&int_var)`::
-+	Introduce a boolean `--pathspec-file-nul` option. Commonly
-+	accompanies `OPT_PATHSPEC_FROM_FILE()` to denote that the
-+	pathspec elements are separated with `NUL` characters.
-+	See linkgit:git-commit[1] for more details.
-+
-+`OPT_AUTOSTASH(&int_var)`::
-+	Introduce a boolean `--autostash` option. Commonly used to
-+	automatically create a stash entry before the operation and
-+	restore it after. See linkgit:git-merge[1] for more details.
-+
-+`OPT_DIFF_UNIFIED(&int_var)`::
-+	Introduce an integer option with `-U` short name and `--unified`
-+	long name. Commonly used to denote lines of context for generating
-+	diffs. Cannot be negated. See linkgit:git-add[1] for more details.
-+
-+`OPT_DIFF_INTERHUNK_CONTEXT(&int_var)`::
-+	Introduce an integer option with `--inter-hunk-context` long name.
-+	Commonly used to show the context between diff hunks up to the
-+	specified number. Cannot be negated. See linkgit:git-add[1] for
-+	more details.
-+
-+`OPT_IPVERSION(&family_var)`::
-+	Introduce `-4, --ipv4` and `-6, --ipv6` for selecting the IP
-+	protocol to use. Neither takes an argument or can be negated.
-+	`family_var` (an `enum transport_family`) is set to
-+	`TRANSPORT_FAMILY_IPV4` or `TRANSPORT_FAMILY_IPV6` respectively.
-+
-+`OPT_ALIAS(short, long, source_long_name)`::
-+	Introduce an alias to another existing `source_long_name` option.
-+
- The last element of the array must be `OPT_END()`.
- 
- If not stated otherwise, interpret the arguments as follows:
+2. My Git work
+--------------
+Patch 1: doc: describe promisor remote fetch order (v1 to v3)
+  Thread: https://lore.kernel.org/git/20261108195518.943-1-husainsitamuwala21@gmail.com/t/#u
+  What it does: documents that remotes accepted from a server's
+  advertisement are tried before other promisor remotes. This is the
+  exact behaviour the project will make configurable, so I had to read
+  the fetch path before writing it.
+  Review: Junio reviewed v3 ("This iteration looks good. Will
+  queue.") and asked Christian for an Ack.
+  Status: accepted
 
----
-base-commit: 8d1b215c01512b9658d4525c54ff9b9245f9a7e8
-change-id: 20261103-kn-parse-options-doc-b4aa930ef250
+Patch 2: check-ref-format: use parse-options API (v1, v2)
+  Thread:https://lore.kernel.org/git/20261109074352.163019-1-husainsitamuwala21@gmail.com/T/#me7e8cc9786a5a023d6c028b93185b3c6aa0d1d50
+  https://github.com/git/git/pull/2470
+  What it does: replaces a hand-written option loop with
+  parse_options(). The commit message states the behaviour changes
 
+Experiments I ran:
+  - A partial clone with three local promisor remotes, reading the
+    order of the "git fetch <remote>" subprocesses from
+    GIT_TRACE2_EVENT
+  - Read t5710 and t0410 and ran them: 40 out of 40 test pass
 
-Thanks
-- Karthik
+How this relates to the project: patch 1 documents the behaviour I
+will change, and patch 2 shows I can take a change that alters
+behaviour through review: state the change openly, keep it small,
+rework after comments.
 
+3. How it works today (checked against master at 6200d284e9, 2026-11-08))
+---------------------------------------------------------------
+ - promisor_remote_get_direct() calls try_promisor_remotes() twice:
+   first with accepted_only=true, then with accepted_only=false.
+ - Within each pass, remotes come in config-file order, and the
+   extensions.partialClone remote comes last.
+ - Protocol: each advertised remote is a list of fields. "name" and
+   "url" come first and are mandatory; optional fields follow in any
+   order (today partialCloneFilter and token). Unknown fields are
+   ignored. The server sends what promisor.sendFields lists, the
+   client validates with promisor.checkFields and can save with
+   promisor.storeFields into remote.<name>.<field>.
+ - The partial-clone technical documentation lists as a limitation
+   that the order cannot be set except by position in the config
+   file.
+
+Worked example of today's behaviour (config order A, B, C; C is
+extensions.partialClone; the server advertised B):
+
+   pass 1 (accepted only):   B
+   pass 2 (the rest):        A, then C
+
+I will confirm this with the trace experiment in section 2 before
+building on it.
+
+4. Problem
+----------
+A user cannot say "try the cheap mirror first and the expensive
+origin last", and a server operator who knows which remote is
+cheapest or nearest cannot tell clients. The existing rules are only
+partly documented and not fully covered by tests, so any change risks
+altering them silently.
+
+5. Goals and acceptance criteria
+--------------------------------
+ G1 (D1) Done when: a test can observe the order in which promisor
+    remotes are tried, and tests for accepted-first, partialClone-last
+    and fallback-on-failure pass on unmodified master.
+ G2 (D2) Done when: with remote.<name>.priority set, remotes are
+    tried in the documented order; with it unset, every G1 test
+    passes unchanged.
+ G3 (D3) Done when: a server can advertise a priority, a client that
+    opts in uses it under the documented precedence, and every
+    malformed or hostile case in section 8 is tested.
+ G4 (D4) Done when: the limitation is removed, the new settings and
+    protocol field are documented, and the docs build.
+
+6. Design
+---------
+6.1 Local setting: three candidate shapes
+
+ Shape A: remote.<name>.priority (integer, lower first)
+   + fits promisor.storeFields: a server value lands in the same key
+     a user would write by hand
+   + each remote is overridable per config file scope
+   + no dangling names
+   - order is spread over several keys; harder to read at a glance
+ Shape B: promisor.fetchOrder (one list of names)
+   + reads well and is easy to explain
+   - the last config file that sets it replaces it whole
+   - needs a rule for names that do not exist
+   - a server value cannot be stored into one key per remote
+ Shape C: remote.<name>.fetchPosition or a named group
+   + explicit
+   - adds a new concept for little gain
+
+My proposal is A, with stable sorting so that equal or unset
+priorities keep today's relative order. Another contributor has a
+public patch for shape B. I do not want to duplicate
+it or compete with it. In week 2 I will send a short trade-off note
+and implement whichever shape the maintainers prefer. Section 9
+explains how the plan adapts.
+
+6.2 Semantics, with proposed defaults to settle on the list
+ - Accepted remotes stay in the first pass, as documented. Priority
+   orders remotes within each pass. I will ask whether an explicit
+   local priority should be able to override accepted-first.
+ - Remotes without a priority go after prioritized ones, in today's
+   order. The extensions.partialClone remote stays last among them.
+ - A bad local value is a clear config error. A bad advertised value
+   is ignored.
+
+Worked example with the proposal (priorities: A=20, B unset, C unset,
+D=10; the server advertised B and D):
+
+   pass 1 (accepted only):   D(10), B(unset)
+   pass 2 (the rest):        A(20), C(partialClone, unset)
+
+6.3 Algorithm sketch (the refactor patch)
+ 1. Collect the candidate remotes for the pass.
+ 2. Sort with a stable comparison: prioritized remotes by ascending
+    value, then unprioritized remotes in today's order; the
+    partialClone remote last among the unprioritized.
+ 3. Try them in that order, as today, falling back on failure.
+ With no priorities set, step 2 must produce exactly today's order.
+ That equivalence is what the G1 tests check.
+
+6.4 Precedence between local and server values
+ Recommendation: local config wins outright; the server's value
+ orders only remotes with no local setting. Operators who pay for
+ bandwidth may prefer the opposite. I will put both arguments on the
+ list. Early check: storeFields must never overwrite a priority the
+ user already set.
+
+ Draft user-facing text (for the config documentation):
+   remote.<name>.priority
+     An integer. Promisor remotes with a lower value are tried first
+     when Git fetches a missing object. Remotes without a value are
+     tried after those that have one. Remotes with the same value
+     keep their configuration order.
+ Draft error text:
+   error: invalid value '<value>' for remote.<name>.priority:
+   expected an integer
+
+7. Server advertisement (protocol)
+----------------------------------
+An optional field "priority=<n>". I prefer it to "advertisement
+order is preference order" because it survives any reordering of the
+list and, since unknown fields are already ignored, old clients are
+unaffected. I will write the protocol wording first, as an RFC.
+
+ Server: sends the field only if promisor.sendFields includes
+   priority, taking the value from remote.<name>.priority. An earlier
+   review noted that one global sendFields is inflexible for
+   per-remote values; I will check whether per-remote gating is
+   needed.
+ Client: parses defensively (malformed values ignored; the remote is
+   accepted or rejected on its other fields) and saves the value only
+   if promisor.storeFields includes priority. A client that does
+   nothing never follows a server's order.
+ Compatibility: old client with new server, new client with old
+   server, and a value outside the supported range all behave as
+   "no priority".
+
+8. Threat model
+---------------
+An advertised priority comes from a server the client may not trust.
+
+ Input                      Attack or failure       Expected result
+ -------------------------  ----------------------  -----------------
+ priority=abc               non-numeric             ignored
+ priority= (empty)          empty value             ignored
+ priority=99999999999999    integer overflow        ignored, no crash
+ priority twice             duplicate field         
+ priority for a remote the  push an unaccepted      remote not tried;
+ client rejected            remote                  no effect
+ priority for a remote with local value set        local value kept
+ server sends many remotes  resource use            existing limits
+                                                    apply 
+ client without storeFields no persistence          order unchanged
+
+Each row becomes a test. I will also avoid in-place string splitting
+on lists that own their strings; I saw such a crash reported on the
+competing patch.
+
+9. If the competing patch lands first
+-------------------------------------
+Plan A (not merged by the start): I deliver G1, then G2 in the shape
+the maintainers choose.
+Plan B (in next or master): I skip G2's implementation, keep the G1
+tests and the docs, and spend the time on G3, building on its config.
+In both plans G1 and G3 are mine, and the G1 patches do not depend on
+any design decision. I will review that patch and tell its author
+what I find, because I will need to understand it well either way.
+
+10. Testing
+-----------
+Follow t5710 and t0410.
+
+Observation mechanism: first choice is a trace2 event naming each
+promisor remote as it is tried (a small patch of its own). If the
+maintainers prefer no new event, fall back to a test helper that
+wraps the fetch and logs remote names.
+
+Test matrix:
+ Area         Cases
+ -----------  ---------------------------------------------------
+ Baseline     accepted before others; partialClone last; fallback
+              after a failing remote
+ Local        priority respected; ties keep config order; unset
+              after set; bad value errors; per-scope override
+ Server       value honoured when stored; ignored when not stored;
+              malformed values (section 8); duplicate field
+ Precedence   local beats server; storeFields does not overwrite
+ Compat       old client with new server; new client with old
+              server
+
+Every new branch must make a test fail when I break it on purpose,
+and the G1 tests must pass unchanged after the refactor.
+
+11. Series plan 
+---------------------------------------------------------
+ 1. Trace2 event or test helper to observe the order. No behaviour
+    change.
+ 2. Tests that lock today's order. No behaviour change.
+ 3. Refactor so the remote list can be sorted. No behaviour change,
+    proven by patch 2.
+ 4. remote.<name>.priority, with tests and documentation.
+ 5. Protocol wording (RFC), then the server and client changes,
+    with the section 8 tests.
+ 6. Docs: remove the limitation, document the field.
+
+12. Timeline
+------------------------------------------------------------------
+ Before:  Follow up on the docs patch; review the other patch; run
+          the experiments in section 2.
+ Wk 1:    Baseline write-up of today's order with traces.
+ Wk 2:    Trade-off note AND protocol RFC to the list, so design
+          review runs while I code.
+ Wk 2-3:  Series patches 1 and 2 sent.
+ Wk 4-5:  Patch 3 (refactor); patch 4 started.
+ Wk 6:    Patch 4 finished; first review round. Milestone: G2 sent.
+ Wk 7-9:  Patch 5: server field, defensive parsing, precedence.
+ Wk 10:   Decide storeFields persistence; section 8 tests complete.
+ Wk 11:   Final reviewable series; second review round.
+          Milestone: G3 sent.
+ Wk 12:   Patch 6, release notes, final report (D5).
+ Stretch: Remember failed remotes within a process; measure latency
+          or cost.
+ Weekly:  Blog post and written update.
+
+Ranges overlap because each series waits days for review. If I fall
+behind I cut, in this order: the stretch, persistence of server
+values (7), then the section 8 cases beyond the core ones; local
+priority, the tests and the docs are protected.
+
+13. Risks
+---------
+ Risk                         Mitigation
+ ---------------------------  ---------------------------------------
+ Surrounding code moving      Rebase often; check master before
+                              writing tests; talk to the other
+                              author
+ Design disagreement          Raise early; keep patches 1-3 and docs
+                              independent of the design
+ Slow review                  Small patches; next piece in parallel
+ Silent regressions           G1 lands before any change
+ Scope too large              Cut order in section 12
+
+14. Communication
+-----------------
+Weekly blog post, published at https://husain-git-blog.vercel.app/
+and linked on the list, and a weekly written update to the mentors.
+Design questions go to the list before code. I answer every review
+comment before sending a new version, as Junio asked me to, and
+reply within 1-2 days.
+
+15. After the internship
+------------------------
+I will keep following review of anything still open and keep
+contributing to the partial-clone and promisor-remote code, starting
+with the stretch items.
+
+16. References
+--------------
+Your patches
+[1] doc: describe promisor remote fetch order, v1 to v3:
+    v1: https://lore.kernel.org/git/xmqq5wy89rq6.fsf@gitster.g/
+    v2: https://lore.kernel.org/git/20261108071933.6586-1-husainsitamuwala21@gmail.com/
+    v3: https://lore.kernel.org/git/20261108195518.943-1-husainsitamuwala21@gmail.com/
+[2] Junio's review of v3 ("Will queue.") and the request for an Ack:
+    https://lore.kernel.org/git/xmqqse1a1th8.fsf@gitster.g/
+[3] check-ref-format: use parse-options API, v1 and v2:
+    https://github.com/git/git/pull/2470
+    https://lore.kernel.org/git/pull.2470.git.git.1793298807397.gitgitgadget@gmail.com/
+[4] Reviews of other people's patches:
+    https://lore.kernel.org/git/CAP8UFD0uA+zF4x8WBRA6sGxSGX52Nw=GFBznzdFnX3SptHDUcw@mail.gmail.com/
+
+Code and documentation (checked at master 6200d284e9, 2026-11-08)
+[5] promisor-remote.c: try_promisor_remotes() (line 282) and its
+    two calls (lines 351 and 353); the field lists for
+    promisor.sendFields, checkFields and storeFields (lines
+    465-481)
+[6] Documentation/config/promisor.adoc: promisor.sendFields (line
+    12), promisor.checkFields (line 166), promisor.storeFields
+    (line 207)
+[7] Documentation/technical/partial-clone.adoc: the limitation on
+    ordering (lines 229-234) and the future work item (lines
+    265-271)
+[8] Tests: t/t5710-promisor-remote-capability.sh and
+    t/t0410-partial-clone.sh
+
+My own material
+[9] Blog: https://husain-git-blog.vercel.app/
+
+Thanks,
+Hussain
