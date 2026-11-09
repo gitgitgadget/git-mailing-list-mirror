@@ -1,124 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794260096;
-	b=lOxbm7ct0qSMkta5rLA1Z4U2zBjb7egKmj6XvACgT8LX4vSILRaqTMlWitzCSsLS4ha6
-	 6ceGSB97qA2vA1PQo9MD9RHOKkCXRw+ZcKg9MmbpbDkq7Av1xfOTDGa96RAqfchg5YOkk
-	 atsPQLUio5mSr/w1s5ARFUtoRCwxFr4bHQ0U8FYwl+pm0MxZbryCkLEjI8nF4ZoWhNWLs
-	 Abv+9ZGS4sbhQ84C34RrJYe2EkPXhe0zJiuLDl5hqaIL/5So0EJg2QwGDxACbR/i91A1F
-	 JjRuLXytiQP3BBeditzJtfVqKUFp1HEFsuX/vDd1N5JxLRuRTM5FQhOUCLsC+7VkjPQ==
+	t=1794260938;
+	b=21lOhTJrUzKxzW0tUlKMwfIHs3bud8Urv+WTZMixTH5aPtyugb1pu+yRfBaXuOAkN6W6
+	 9hE26/Gd9GLgt3MwIlHlBXBKfTsOZtttXIC2HFniQbhslBgeBBVBMkzINzWnP6Vlxc21Y
+	 8wsiMiyfS5YUHV08C/Szh0hO3Y95umh3U5phhbrBLxZp8nnebQUPAP+/TGV3LQgwdh9cI
+	 h/AzPpYfaXMZVuARpiL2AhMjxdf3sM7nSP+eDM0Nv2LjrLROPcfITExvw6V7zB+PJO2ri
+	 PeEdKfd/EOMkB+SiSO5bZn+9TTPQ7wci29OkldRZ2byLeliK/ZT/rloSUQDwtJ+nsUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794260096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794260938;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=agOW+BZbuRt/XhH9oZvBVh7ASKjYy8kPY8orF7eNYlk=;
-	b=XVvyRkcO2MGN+VlAf+QoQg+hGwHu/jNR/fXa8DPnrWuq1t5OxzUq7nzqDGjiYS1H0jpQ
-	 7Gf/IrOnSg7IthRwYMnP/M9q78v1D/xjbjcPICFHr5UhMJKU/Zb5S6zsm3J821ufdKezp
-	 moTcKfXMMJixiB8K8OSKE7Cl7sR+8i9+2F/x7ZgXe081BLW2jY5K+/FYTePdB71n935lt
-	 3O59bSLcqOc/hN3nCtOJ5iFvodyPNJ9FgVDZltVpY/jREhW+0R0PiBMl79qrT3QcEUKvB
-	 sgdQ20+Nr8SFVgaAr8tELxzMo+beNOjUWtcexPfsovsjXt2Fm3THPUqwnvwX9dd2yMg==
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=zoHloxqrm7Ns2wi+YnzbEgr/nB4nHBo80uFlZm3otHM=;
+	b=LnYkwdIYoBBZk1lYyS7HuybA1/ICwjgEkwPE5+V7IRB6CarInPJY110UXa6aJxTSw20t
+	 6DWCxs2JTLGiCePtG/49mmaCSfJzvEId3RyS0dGOObFO4Ouzn3AX5MjpiDNDO9//LTLAa
+	 LLPtkNJSZ4VyMm/S4O63dtOC/H1I069QHJPDu5G5kY5a9Kni+UFq76YmrEi43hMSVb5vp
+	 3RxSXobETDTOmHOM0AX8mkuvHASxAQplRQCPEf44wRaWAvzB3WVyfbRyVHwEWUlNUdM6r
+	 VFtqkAZ+VyV8Vcg4w9TIt1vVxHs4EWUl5NrfVD7lSOIclUhKAcAYozDLBT61k7xOLdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=mFdSa8MA;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=QAJ0X0vX;
-	arc=none smtp.remote-ip=103.168.172.157
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=viHjYSNV;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=c22u6K9H;
+	arc=none smtp.remote-ip=103.168.172.158
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF5D606A31C
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 21:34:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ADF5D606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709AC606A31C
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 21:48:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 709AC606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=mFdSa8MA;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=QAJ0X0vX
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 077CB14001D8
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 16:34:55 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 09 Nov 2026 16:34:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794260095; x=1794346495; bh=agOW+BZbuR
-	t/XhH9oZvBVh7ASKjYy8kPY8orF7eNYlk=; b=mFdSa8MAOYGtEHWYE10yv6zv3u
-	P+yGMtfcGi1S2GJzoL9ocWReh5bgtWgQXmRr80fMxehxTJIN3r2+788//wvHmBwc
-	R6Iak1fOXtnYnVsH0zM8RsbBpfQeBkdyGCmrDbNWGIXkZwyz5r2lcExZXAT1ykg1
-	WmtLES9iUrCl+lY/EAYCqbfCvVxuAVvmmJpqYiGopnvPZWJ7UWSEEYG4HhOAo3Le
-	X+cg0eoSTA6+6v8gQyK4zk7twHgBc1Q88qEaVm89r2B19YkqUTULkrymeOCZO6MI
-	dY+kbt0L5YVR8Nq4cx4atC6JXfJqNRU/v6hdCjbKXXxGDH+FHTtBMbjWXDjw==
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=viHjYSNV;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=c22u6K9H
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8DD9014001E5
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 16:48:56 -0500 (EST)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Mon, 09 Nov 2026 16:48:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794260936;
+	 x=1794347336; bh=zoHloxqrm7Ns2wi+YnzbEgr/nB4nHBo80uFlZm3otHM=; b=
+	viHjYSNVfmI/RfpRDSWSocRAoFFNQalwIbdYwsyAzDwnCySjV3QWipBU+G8PDExH
+	7tp/jMtPShz8Vlxr7gAIOwQ1O9CD5qbb4USKw6MCguGaC3dTUSFEyW2HypI3Y4p6
+	nSyX4dApszUIzMD7zeYYliB37zYPa9dVzNHO1I2Y8yU1CZ8wTOzacp3KA9kboMqG
+	wt9RPuV/Y2128JpTTClvzK5xq0guQY2HYo0aguRyS3hVzQYk8GANcEdBnh20vyOA
+	liBbKrS6lZbqSighoO0UvJhbB1VmaMD1r9UH07vXOaAxeRM4NOfIhqIBh5gnOkYg
+	sI9ghW9kd8dd2S1fUWaOBg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794260095; x=1794346495; bh=agOW+BZbuRt/XhH9oZvBVh7ASKjYy8kPY8o
-	rF7eNYlk=; b=QAJ0X0vXdq+HgqHiMgJickNh24PPMY6YlaOxCgAVQRX10U6yYwa
-	1u+R89v4xPI/fzXoZShwxHy8pLIKoEtrMEABaZomNZPtFe7ugxrnFhSJ7/9u8Kfa
-	uHywePbXtIGiuqXeQLEkCSkThXiAjH8QEXpQb4JR6k1J3QxZVHudXOmxGxxhAx5t
-	2fZq+BZJXd18NejTVRE7QROyJdhV4/JgfxaGs/cjar4CaYJHlnjYH600mrkKUVH2
-	3nN96tDDDuZN9MQOfIRl82YGv2FdvFwFxLi8k5YZi9nHw4mfumhNOhLkTKaeMUXH
-	kl3COtqvsG8v01mlfZtEDdaE5EwEzkU3Ffw==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794260936; x=
+	1794347336; bh=zoHloxqrm7Ns2wi+YnzbEgr/nB4nHBo80uFlZm3otHM=; b=c
+	22u6K9HBcSNpIR+VxMIkmS6D8jKh/cVG0BIVD509qK0XFpk21oHqkthSmiliKBmV
+	ixz9dklTPHioX/5Jf2zMF1lNIhJvxQdlQ6qn8S1k8hKZkXuhsb4thGteNtWfRbeZ
+	s+z1Rrckd4LSmSBZvTgLNRVTgK3BaEUwDFRpO8SJ0D0+UPoVlJo44iInP6cphyk3
+	wvM+BPbZUY3N6l7YvK3gZ5E1Fe47lafQeVKiJ2vvh4NEzKoA6xXBvphrVxpcA9Ns
+	PYv1GgEMYo7Z4H90RBi2uhlon52LR/0r52L6fhOVZfuCm71K9vtgVjMfN94qIIdt
+	nm5mC56y7yebWWMMgQ8sw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794260095; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Re+vMwV7Onjnibw63zXj5rcjorB0Jpe5Vruevuz5r9lGSfD
-	aWrpkKJXg1C/PMeQdCMOhqH6mPzlU5DSFInDFLBKxI9mNynjTlZZYDbbsNnhkNGr
-	mMZ2iyXnUEPydR/cwz9AO9wcFvA7Flj06LXAH92ZEj0Z/KykKEMc9Q5HEHpB5Dix
-	zrYWjPBfzzSELHQMwvY5+HxV5AjV1M8xg6cEChCRntG/EYPaijbKgpjurBUIMeHj
-	by7e4bZjirBuAyoCAqWmE/ZI5s3WJgl5OOJonk7dCxhN09sPDsBSB2Rrm0S7oCQI
-	mTluat+tm5hicS/5QNFZN+eQYNt0XVe0ueZr5dg==;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794260936; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:Iv88PU9uKNHEDWgdKzq2gzL6jLTICn3KVmZcjncTiPjjma3
+	+e9G9byRBZAR94CyLxi49n0pRgNjHW2qsoV3trsmn7dXToj9hXmq//o4b+QJoXau
+	0Z2YnjXD878Ybal5Y7zk95KCd9+qPPHtKjuuoTH5l7IWvDF/1sYtc5DMRQ43GRtG
+	90lFydj4I2AUhTRp7j/gwACM3DtP9wd9KOzDedQVPSnjiOH8rpCqyObeE80wR+qM
+	bXfNfw3EiiX0Pg1hKa+BBP8GWglbpQd2MfwF6GF0D+rRqNU19LvY8Hg8YqKNffU8
+	r94CyCGNpTtlupTjBtYKvG35/A+Y0iLP43wZrww==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:gaTWWaJhwv0K9qfqySTLnCRxln8Cm4g4QfQ9b9FDyKc=:z/oB3Bdak0Y0ph/oj5VarD+ho/CQn/SYf8b+XMiczwo=;
-X-ME-Sender: <xms:fjzyajwz8Sdv3_M5EE7D-wRUY0Mx-XQDkAubJJ6-VCLQQjps-ZEz4w>
-    <xme:fjzyaiKfNxSOX0n4ShxcQVIvR22IvvkHsG0w-dkzq7LZK10a_OWxcQDvvfQ2PBWXC
-    xZ0axXKiBXoM1hSfpJAANpT3l4TZHlSMCx4iMzHD0bn4XFl2ty9lw>
-X-ME-Received: <xmr:fjzyalrgEWdd2RzOUQ62jDJTBRRbLEYTl8FBCoxBaHYC5VdaYQQrfcUOy6h2G_izjdx6_k8uwujfKck0F0Sdv6hMkZpQXASKzE_v>
-X-ME-Proxy-Cause: dmFkZTF3q22d7e1NsIkgaW+4NW4QR0kVhv16iDJpEuM4KeNdq9GydgZpVu45TdcsdixTTn
-    gdrr7V8m4GxVdGiQEd6rkOyuzxUzYu+Y0yBigCbwOUNTv5U1C/5217UhFvs3HL0JOhFDnZ
-    b83Tss84WgFN6m1RDO2LLztgqXJFPdC948oA8z2GPCy12hOXUaeRUcMhwAWPiyHGbUaRJe
-    0YUJzLb2t99h8kDOCWgHmswc5TWVw5n6iYHSHTOQ+fFoqVknxSDVWOlPB9aBnA+1RlwvWU
-    lhiyEIVP8U6w6JVdptgJg6Z/TR3Eai5/ePsNqvqNw4OFjYa8+R2btPqiM4OUCY3h0CyfGU
-    gaApwlvxU1/AMd9Pz7B1mKtJgUtUNuY3va4z8WA4BJcnJkDOFM6bcVXV4Ft3e0o+I/JRBr
-    QhYslILBU26K/rYrXBDsrXkWIrzC9u8yp7smyILj+3Bvn+WYc5emr2a/r4+C6mrj6Sm+I6
-    E6Cd8kwf4dNv5oVxLRZJ2BiJ3nzk6kprt1GT/aHYsLybcc5Kmi6h4LvTCgkr8d833HJPIs
-    Wy18Bh8BjEortxKltgBZfodCiFRrU7mtIwJjurxWrtca/lZLnf8/q/09cmGgmEzbtgpWPY
-    F1J7pY5E9VmCTyc6dXJy3f9rIMTBYX8x4MhatBhHN0pBMXJe/nWc025NOBhQ
-X-ME-Proxy: <xmx:fjzyapKMxlbyZAfjeiM3W-AHo4PM-pSkDgcfZe2F0_7xMe_Foz6img>
-    <xmx:fjzyaiTDgryVeReEvJe8IzgZQc8jp2e7lgl_J4hthuoOpbQxFq7hnQ>
-    <xmx:fjzyagvIK-AsewO7-YMRxKiOwiuzBvzRdpNn_UP-Yy-mTqO1V2AaGw>
-    <xmx:fjzyarZWuxJssVcNCBIsnmz8uPc9ok5DglBSOQNdej3tUcdqQpefCQ>
-    <xmx:fzzyakaZCYv7I5NfnV9s6Y37k7PxSJ4n5iEX-mFxmeUf1pNigNKF3h9y>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Nov 2026 16:34:54 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Ilia via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
-  Ilia <ki.stfu@gmail.com>
-Subject: Re: [PATCH v2] fsmonitor: check the untracked cache after a trivial
- response
-In-Reply-To: <xmqq8q31yb5s.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	09 Nov 2026 12:58:39 -0800")
-References: <pull.2247.git.1791127155614.gitgitgadget@gmail.com>
-	<pull.2247.v2.git.1794251653636.gitgitgadget@gmail.com>
-	<fefa2680-695c-41db-9975-7e972590b969@gmail.com>
-	<xmqq8q31yb5s.fsf@gitster.g>
-Date: Mon, 09 Nov 2026 13:34:53 -0800
-Message-ID: <xmqqse19wuwy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:s1qy5a6wgSV/srN69DBc/XEQqAKNnb7WvBuFq0RjRP8=:WsYQ7nbXYwsv0QbD/bY9P6koGQ5bF0FH2HcRRtnRcQ8=;
+X-ME-Sender: <xms:yD_yao2yjQ_jPeqRxtGDEmJiTHWSfeGT6dGaoxusrcbj96e2_VXYjw>
+    <xme:yD_yat6HSqmNFmHH_D0JNXeYlB7jL2wUuF43PXqBJT2gJJFhu1F1q3H9VXqtMV6Uq
+    6D4B77-UModlkaxeeg8BVUBS-_yG-PfxTKm-7j93JTSC2sLJ3FOhIE>
+X-ME-Proxy-Cause: dmFkZTF5inzkh/0DU8fSE+Xe+SRaxjt4jRQWiMo/yRMhS0evqoU7lNoxL2vbyX9Sl+Q3RV
+    P/3f/X7bB1ZHKk6vBgpP31JaS3mF64tOS4X73QU0aRTs2AYSnXuvPkFozwzBAPvyJhrYHD
+    SQGUOSkKsX8dtz0ckE4FOrLcQ7meGnSFVhfD4OKces/ZMdtQSujsSrCJKBO4dSczYpi4rr
+    6h+1cuhglnNl1chqwjOmMsTGJ31iVmsT9a+HWLScGcGiMsS1ky1LerVUGWGgux6NQD/MNX
+    j2Y2ZsSyVKJ3/9Y5imH4i3POsuoj8TdCemYKNoPKYw3+5gUIlllwQkEs6o24Hx1Ba7VyQZ
+    gUOD9hQPWbAChhMVBoDt6g5CKgYcByI27Cd8y0LdFjw61YVkuXegKj4B7rVtodTxjkboCq
+    CDh5+/azCWpn7VdrjL6GUhoudLPLYZeAo9SblTeZIhVMqGRSaWbjB7OsUzGat5G8eUJEDv
+    HWJCmsv8RvcxkJTAbBgNGJYWnzR5T2PRFFb0suHQe6cOsSB7WsXNLcQ8FxWHy6B4X/WHXk
+    IV2FJ5bsOjbBTWNnLwmoK9IvDwNtUOJGijEruJ5QZlP6ZhXNU+S58JpD9iBgJds+VLdBoW
+    V9RxE6rzQF/cMQh5ANkm5zUZZKR+sSYFgABpti1YJagY22yrsu5G+gT4+ukA
+X-ME-Proxy: <xmx:yD_yaqbIPFhX8Cj5oNitrJxb3HndQuI5HAXasonuqyKxb9tFQUwAdQ>
+    <xmx:yD_yau68z6A9NrXoWDwuL926Im_lCpEffYSN2m3is_WmzEwfqe8tIg>
+    <xmx:yD_yalACr-AI_x45RHq7EjN2aXFlkhlCuKGex99Fj6Y5zC3rv0ilXA>
+    <xmx:yD_yasc1VGwDJCmWjynyzQ3D3U-pju-Vv1TqczwLhL0nBdNTyUu0nw>
+    <xmx:yD_yaqs1zN-EBJR4JakePE05QH26bITkvIvyugjac1ny9QzpcFkCSGWw>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 52D41782738; Mon,  9 Nov 2026 16:48:56 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,27 +114,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+X-ThreadId: A1sfaQj8oK1o
+Date: Mon, 09 Nov 2026 16:48:36 -0500
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Message-Id: <f7d4600b-909f-4dd7-94da-d525649a9546@app.fastmail.com>
+In-Reply-To: <xmqq7bio6jb4.fsf@gitster.g>
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+ <pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
+ <xmqqh5ile4h4.fsf@gitster.g>
+ <CALnO6CBGcG42NxtpuPaJVrzAMC=J8iVstsHCSi6vDQhDmFJ-Kw@mail.gmail.com>
+ <xmqq7bio6jb4.fsf@gitster.g>
+Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
 
->> Thanks for these improvements. The v2 patch LGTM.
->>
->>>      * rebased against ToT
->>
->> Generally, you shouldn't do this as the maintainer will apply
->> your patch in the same spot and handle most merge conflicts
->> via rerere, but rebasing interrupts that. The main exception
->> is when you rebase onto a specific topic or with regards to a
->> large refactor that merged recently.
+
+On Sat, Nov 7, 2026, at 11:25 PM, Junio C Hamano wrote:
+> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
 >
-> Good suggestion.  Worse yet, the topic is already in 'next' so a
-> wholesale replacement is not very welcome.
+>> +`HEAD` is where Git stores your current branch or commit. `HEAD` can either be:
+>> +
+>> +1. A branch, which is your current branch.
+>> +2. A commit ID, when you don't have a current branch.
+>> +   This is called "detached HEAD state".
+>> +
+>> +It can sometimes be useful for `HEAD` to be a commit ID, because
+>> +it lets you easily check out an old version of your project. For
+>> +example, a data scientist could use this to run an old version of a
+>> +data pipeline or a programmer could use this to figure out when a bug
+>> +was introduced.
+>> ...
+>> There are some quotes which use the "it's the parent of the next
+>> commit" mental model, though, so we could include a comment on that?
+>
+> "From which your current changes started" is exactly that.  HEAD is
+> where you started from (and can come back to, if you get lost after
+> botching your working tree state).  Your next commit is built on top
+> of it, and then that new commit becomes your current commit.
+>
+> This is why it is useful for users to realize that HEAD is simply
+> where you started from, regardless of where you are going.
 
-Well, I ended up reverting the merge to 'next', and queued this
-iteration (applied on exactly the same base as v1 was applied in my
-tree---the patch cleanly applied as if there were no rebase).  I'll
-mark the topic again ready for 'next' after waiting for a few days
-to see if there are any more feedback.
+I think it's reasonable to try to explain that in both cases
+there's something in common.
 
-Thanks, all.
+Here's an idea for how to do that:
+  
+  In Git, you can always use `HEAD` to refer to the current commit.
+  But `HEAD` isn't just your current commit: it's also where Git
+  stores the name of your current branch. `HEAD` can either be:
+  
+  1. A branch, which is your current branch.
+     The current commit is the latest commit on that branch.
+  2. A commit ID, when you don't have a current branch.
+     This is called "detached HEAD state".
+  
+  It can sometimes be useful for `HEAD` to be a commit ID, because...
+
+>> The second paragraphs differ a bit, with Junio's containing some bits
+>> about clobbering extant branches and not needing temporary branches. I
+>> think we could work something in there, like
+>> ...
+>>     this to figure out when a bug was introduced. By detaching
+>>     `HEAD`, you don't need to worry about clobbering an existing
+>>     branch or creating a temporary branch.
+>>
+>> ? I suppose we could also be more explicit ("build, run, and
+>> experiment"), if we wanted, but this is a good example to start from.
+>
+> I assume you mean the last two lines?  I do appreciate that addition.
+>
+> However, we should avoid saying "useful for HEAD to be a commit ID".
+> Being a commit ID is not the notable characteristic of a detached
+> HEAD; the fact that it directly refers to a commit is what gives us
+> these useful features.  Recording a hexadecimal commit object name
+> (instead of a refname of a branch) is a mere implementation detail
+> of that direct reference.
+
+Saying "it's a commit ID" is a simple way to say that it directly refers
+to a commit in a small number of words. I'm not sure what your goal is
+here, do you think that statement is somehow misleading to users?
