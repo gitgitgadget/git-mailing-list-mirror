@@ -1,122 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794211056;
-	b=L73RenKP2Zk+SvE0LrVxjIF9MOdV+S0yRqA7FoT7YlKpwI7mgQrPOwkRb60WVkpDFfGZ
-	 VcCLwDoeJgROMnHYBSXRbisfTUmNKR27NCMtlXcBpcDoGUC3qZ8kXmvWoHiddBRItew58
-	 4DAdqPU8sUQ0+uRem68vl+Hj4IF3+puwYYF99n8T/sM2RthspoOsj+GTfRmHpPVYFeB1e
-	 IsyJFGnuK1J5Kipye4ib3S0NFMjSzvLkrjdkw3rTsPlbLLzNNUv4w423aI8txA/p4eSfm
-	 jjGubF+aYDpDCll/ovFXyZojGnce8nTPIX8e5y+0dTtUAxB8AypV+ltdMeWGq8uYoyQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794211056;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=RIoGhtrNZbeL/MVeib6M3xQI0AOL8VtytKtuuDmkOjI=;
-	b=qaL4Gx5q0ppTf9mnWtLP3Xg+z5jNxtB7pkXXBjvAt2UaSIzNjh3yLzO7SeQ3hVUUmm/p
-	 +/0dfA+GeCGKKbx8H3al9w6obetcDp5dH6zGFogB5NrK+o987/x+38CdiVfvG988wEUdL
-	 iz17FxnkiSVIFhF+7HngPXBTITDjtT4QQYjIJu5hi6KIAGCHYKaatY8va4Jj5CW5lETRE
-	 EcxynVik+vmRkBibXFLvhz3MKFWSLZHJmyzl0kwzXD+wRSnldW9/3CD+6zFEyQUj9LzdL
-	 19PGNe6oyc1V7OJHSV54+PVa5iIPs9SZwttywJBcn7a4cOb1SWEOgtzcpZ3+eZOcv+g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=kLfTClHZ;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=4gcEoSTv;
-	arc=none smtp.remote-ip=202.12.124.154
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.122
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794211306;
+	b=k6fe4GL3psAgyezCxjBayMMzXJrc8n3bmJ+fzntOT0aXDooooDw+zIvAuz74VslFDvmP
+	 u3IqKWL07du5O0B/x91TscnSv+SO3/NpODV7kYrCx07jkB4lr1yMYtY57F3gKJ6ME6TjM
+	 Ulu3gYtjosl4msiJRGbCmGQ2U4I4/FrjgE9EpEsrs4ANj3LYX+PEeuoziMi7pyTUR6xJN
+	 JkWB3Cll9PuHjZJ8KF2Og1ff6AXDB9aavqqTxOX7e86xd+Dr7HdzYYEEOWyGb0LnuYAGv
+	 2z1LWnPTIz9/sp+PtcKpAoSWHtY5vfNu3rG+lSCzT30P1L2Lj9kW9FtIDipSwoqrUvQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794211306;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
+	 X-Zoho-Virus-Status:X-Zoho-AV-Stamp:X-ZohoMailClient;
+	bh=tIEwjLZw9ENqN6IG30ZnMnjrEaBr/hdb1q2GZ3N+4h4=;
+	b=ne+cO5dgddvVP4fjnqp3iLbcxpEwyBduI3a0UhX4y0oumgWOJvKlTEgOxc8fEfxTQlh6
+	 apKCWCGMnlY3pVoZCf/3P9xphy2UM3KSfCaiSTq5tw9jjUjGgxn0CFqswZeT/YFQLzbeC
+	 v0qlrP0+5RLu5B4G5e0tQAQKdujFsrtztdDm5v9150pq4e9CA7yXRxweO3H4fPQQJu+6j
+	 4Un3dGtspa9tzL2Eq93ZCsliSjmrWn/caSK8YG6qqyaRaAtPV0Wk8wNA3hzGbaGiozGgR
+	 UaaTzGIgFxZRun1rNP15WNTpbvUKMeETbCRCVMby0cDZR1pMgkwpeb5e4iFSOX7RdOA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=collabora.com;
+	spf=pass smtp.mailfrom=collabora.com;
+	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=D7I43j+B;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.122
+Received: from sender5-pp-g122.zoho.com (sender5-pp-g122.zoho.com [165.173.182.122])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B8E606A321
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 07:57:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 83B8E606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4708D606A332
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 08:01:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4708D606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=kLfTClHZ;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=4gcEoSTv
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B3D2B7A0134
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 02:57:35 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 09 Nov 2026 02:57:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1794211055; x=1794297455; bh=RIoGhtrNZb
-	eL/MVeib6M3xQI0AOL8VtytKtuuDmkOjI=; b=kLfTClHZpHb9lrZgg3cbS1Pe4m
-	fDFw4bVYm8N4Iml1blz+NlOJzKYVgmY5slk/KqSu+l9hQ6TxyrooPC/o9jz1sdYy
-	AdGA8puTZnOP80w4b45Jf6kzPuMgQhmQVCN3vTF7H7rYJ61Gs2weIMKqK/OPlBS4
-	VKcGrKCeg5/V+BDhClvTtxJQZzu+V1qIH60Id9EuZqUCkIqmNFfCnXn/KvG0ePL5
-	O7nR002EE30dsAeCQTlMke32hRApHLM986yKR2gQWQ3y2Ds5eYyXMZFswMw7eChD
-	/0rGRCMDFBaCOY2AKeb7idRFSdRqjK3BxOlZKVizbhCiGx0dnKm7Jtq2clag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794211055; x=1794297455; bh=RIoGhtrNZbeL/MVeib6M3xQI0AOL8VtytKt
-	uuDmkOjI=; b=4gcEoSTvDgqS5FQQJXFCrRBa3WqzsbcaLZjFfdPdheCCiwhdQ9I
-	Kt4OC2vb6ccmazJXHaJkDm7emmkqqs0W/0TxLFGNzzh8dw1Tu8Vi/lmlWIMSoOeG
-	d9QiTfBEt5r/X4ez7Te8AlfkENJnqpMMwjppbAInJQoMC2WVfQIgMvgEA0HlV4jL
-	26jYPn6PaDEM7OucCoS6+XH8UB/8FVV+r/MbjutyQV33gbGLyXsQtR7BgHiDJ20p
-	lHTBV8NkpGJ9jDPIyP1kxpGN3kVhKEfc4boS6b8pq7CbvoCdVCflJtvt8G6oKut7
-	QMmVqt4KmJJDZTvzv7ks1/PAyFIJWjGDIwA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794211055; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:Qu/E7o+o59uC3FuFLDdluKMje3amVzrM/6Y1Md9Kk6A0aJd
-	qKwyZvcd/QYY8ZqXvBRIkaGO/krZPf4FwaRzLuDZ03j8wwEmaYazQzO4Gn0eZo5h
-	yBwE0GS8xazw0eRIA8i/kikmUOiFK+UcQBou8fmqqgGvfvdYc5vFvXiCZh1TD27b
-	9uHhZLg/6/hBqTQVAGerIUG4CraVAcc3u6B9RZAQYqXLPepUSFSCMPga407Q0BNs
-	6mAGSR4zYL1w/IwVgEB65S2SFlV2sh0EmxuV0ulJYUOewekr5fnMndPdAC0/Khby
-	l2zpVdaXWvitJ6+vNY/Gd8oGnSGAY9HGLoQRr+g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:XoLP/HL6hXEzNMzB2RMFPaPPFI/oi+g9sc4f/tCLF18=:RIoGhtrNZbeL/MVeib6M3xQI0AOL8VtytKtuuDmkOjI=;
-X-ME-Sender: <xms:73zxahCFl2pyHqteZ_K0wpUOCOkjVciCD7g227XC0R5aFhhO8K1L-A>
-    <xme:73zxamjI_nFH0DULnZYk79pt2xRIqo7NKDcfvkLG07CCf0Wo9N_-_0pGnQLr3EPIP
-    B0cEO9wLX2YVE6zSC9mkMsU3hrvVK52ZoqgVj84aTmFd6p3oC8YrQ>
-X-ME-Received: <xmr:73zxahnSUs-4cMuWosOMyMJTFu2UKiV9FmIkmlArcWYq8DZU7beUuT1sJHFAv1KGy8nECkE>
-X-ME-Proxy-Cause: dmFkZTEN6xpZgmw5Dg9elCTt/nFhlH8K6wzvfxKo0mu1nhN6XJh9wVU1+nkT4p/UlqcLKw
-    mtD0aVpNIMtI1tJPLVJf3CBmZdocaPyUnZo4+9s6hqSPUAGr3D/UJZz1eBj/wt4INFNVqI
-    3/JV5zvdY4GQoZDkTS+QblC1QHDXu2LQXM6Jq17nTZ9+Ji4I/1FEjGHg9iOl6x2D1wrFv9
-    EG2RjjUTQuqsCvbnUkH748BdEmt0YoVFFhe+PouYpII8yAsGYxBpW/RJ2av+U1G+7pn+ta
-    esiEbWFtsPJAzh50OIWiab3hU1vTqvQylStLkrgrGpq8h0tgtHfyQYQu+lk7WrUToMzbEU
-    js+E/l/E3OVvGxtGo9Ls6gKtKrHUeRjownUk48u7BXaRJPDhsujTZjdc86UXzqKcQL1vuA
-    v9l/GMs3FBgdX3x8zayHsm2oXn7lNmLKPKGg9J2oGTourYQg/Om+nT5uj3zogNL3BC4eVW
-    7vXNGR2295EU18O2/5h4H1OFgRW/85rHcvF+E8RO2QO46c37wO25BQLgLQ4MfJF2azywMx
-    VTHYr5SG6kiMpuCg3RHXi3iKoh1ixwrKS8JGLwxNHcixYKFBBcM7p4G5gkTLiGHB5xLQl3
-    0iaSCTUfQ3si8fD633IYnsOoihe7zOnyW4tgu1Wpqeq5/V1sC+OyWgMj86FA
-X-ME-Proxy: <xmx:73zxaqr4MeUhWCJns50wpsMfphykxUWy7nzry-BQcVTf0DDCTjsv2g>
-    <xmx:73zxaiHSqNEet5rsnVu2zKE4WeBEZvA-PkCCjyjIuEgEPFnyY8BTew>
-    <xmx:73zxauxrrZRqFK3HGhaaKGBq4QR7MaZI4DSCplZ3f1j-bmGnb_Ge1A>
-    <xmx:73zxavoOSMphfXniZjUq5V9XYYG-58Hhi1TdQf-TW6O9HryDpWHdEg>
-    <xmx:73zxapExL8uZgYXTaBD3aMbpTcz_2nFigHtt6U6rZCDWNwzAfJ-2OKCK>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Nov 2026 02:57:34 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a68e8605 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 9 Nov 2026 07:57:33 +0000 (UTC)
-Date: Mon, 9 Nov 2026 08:57:30 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Aniket Gupta <aniketgupta3001@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Hannes =?utf-8?B?QnJhbmRzdMOkdHRlci1Nw7xsbGVy?= <hannes.mueller@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [BUG] git apply: pure rename followed by edit fails with
- core.fileMode=false
-Message-ID: <avF86vESF26lpNv2@pks.im>
-References: <xmqqfqxd9pru.fsf@gitster.g>
- <20261107054701.298961-1-aniketgupta3001@gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=D7I43j+B
+ARC-Seal: i=1; a=rsa-sha256; t=1794211298; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=PcqiEJDs+RdSoZWmoohamB2GTJr9FFb1z1aNy4m13Ewg31FB9DgmqWjX4nE9h7JBI26MRDMIGA3zR9Z5+OjDFyQyQpN8XGt/ad/Tzqy0K/RxeTG9sOblWe94gmvKMVq8rzoHxSTh2+sUks1RN79BP+itWiebEvvvbJeJ0f1Is0w=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794211298; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=tIEwjLZw9ENqN6IG30ZnMnjrEaBr/hdb1q2GZ3N+4h4=; 
+	b=nythLgIKBjihpOmacRM1enYfxkpFIPWGT/TFaYLlWg3KjM1liFId/LbNCip2EKinKcf7nLjL313J1BQYSRDuE5bpjRMnvzJ9k5WqoH8PMe6+a72UT40P95k47gZ+HetuuP52DT0QWBz5lfTLKHphlQecvCbJJJveyRN2yDfkIfg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
+	dmarc=pass header.from=<vmiklos@collabora.com>
+DKIM-Signature: a=rsa-sha256; b=D7I43j+BO0cGQCf0vKY6fbxQnxrOIKspwjqTw7npUF6EIucUIo1UKZy4UyQPorNP/+Jsss0AmaOKt6vy7i8Df/4uwvWidTubhAtv34Wb+pG0Scrgm+sUwSUcZg9aDupZTd5gPlqgStcLA6EFRY+g54HnaABi0sy9zxLprNGFbcQ=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=tIEwjLZw9ENqN6IG30ZnMnjrEaBr/hdb1q2GZ3N+4h4=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794211296808169.52526686680505;
+	Mon, 9 Nov 2026 00:01:36 -0800 (PST)
+Date: Mon, 9 Nov 2026 09:01:29 +0100
+From: Miklos Vajna <vmiklos@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: gitster@pobox.com, szeder.dev@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH v4 0/6] log: speed up --follow following renames for
+ non-linear history
+Message-ID: <avF92deaqNI1G4vw@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,25 +63,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261107054701.298961-1-aniketgupta3001@gmail.com>
+In-Reply-To: <au3gn7kUFYZWUinE@pks.im>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/294.182.33
+X-ZohoMailClient: External
 
-Hi Aniket,
+Hi Patrick,
 
-On Sat, Nov 07, 2026 at 05:47:01AM +0000, Aniket Gupta wrote:
-> Hey Junio. Yup. Two commits. Hannes feeds the whole format-patch output
-> to a single git apply and separate invocations and git am work for him.
-> Though applying several patches that touch the same path in one
-> invocation is something git apply does on purpose. A pure rename
-> followed by an edit worked that way before 0482c32c33 and still does
-> with core.fileMode=true. It only breaks with =false.
+On Fri, Nov 06, 2026 at 03:14:03PM +0100, Patrick Steinhardt <ps@pks.im> wrote:
+> please note that the expectation is that you answer to the review
+> comments directly instead of only answering reviews via the cover letter
+> of the next version. We want there to be discussions, and reviewers
+> should not have to figure out by themselves whether you did or did not
+> address specific concerns.
 
-one ask from my side for mailing list etiquette: could you please keep
-the relevant parts of the mail that you're replying to? Otherwise it
-becomes very hard to follow the discussion as one has no idea what parts
-of the mail you reply to specifically.
+I see, I'll stick to that way from now on.
 
-Thanks!
+> Hmm, okay. But isn't it the case that your speedup patch introduces a
+> regression where we now don't follow history in some specific cases
+> anymore, and that regression was only introduced in the preceding
+> commit? So it's a bit curious to have this be an extra commit.
 
-Patrick
+I've squashed patch 6 into patch 5 in v5. This way 5/5 in v5 is a bit
+larger, but no patch in the series fixes a regression from the same
+series.
+
+> > Interdiff against v3:
+> 
+> Instead of an interdiff, could you please send a range-diff next time?
+> That makes it was easier to see which specific commits I need to have a
+> look at again, and it also shows diffs to commit messages.
+
+I did it that way in v5.
+
+Thanks,
+
+Miklos
