@@ -1,62 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.37
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.208
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794241330;
-	b=U1E76lg6OajzZGlmEjyUxgODFtA9ILRxrOO/cQ3H5Ll5OPQvcbe6+AIQho8XJlRmosWl
-	 Kw66ZgnVhieHv+aFLNZ14WcgqFeK1M4XM5CWMRtDbUCr/jRBJLywkcixQokH+kLa/wWwx
-	 WYAdk51M73BI5wZ34Veg4SPrO4yEq+Kr5htMMWiYJmxoqksSJI6LTfdHmtLd1dExcLxKf
-	 2OCDySiZgAal9quhvjesOYFlbVVg6W+M59z5TMM0UUGcK+KDGZC1qsX3K5tmC517YrQNn
-	 e6OgedV1HiOZZqDtFt1Z7ncpZkePtiPVimC+8w4rHS57D7hx6E0Z6mMz5/vlgURxsVg==
+	t=1794241434;
+	b=cFHCUPrcQelTiZ1zyNUwtpH8g+IlDvcvx4nZxTxf23FD8iDAXz1anY24Vpzp/4yyc/AS
+	 GTftLgkA4McjKekf0hzcZ5lgQ35RfmaDQ+34YB2JF0kw8ltlBmFq7Ens+BzmNiX2fe3O5
+	 gRD8/vXGH3tblmG41X6UN1dmfSk4TCj+7FPnAt/Rz/XrGiIDAmMgeJ6Wk9xch0w1gnWe3
+	 xkRon6AOZEwBN7D6/K3jteWNwcjRh368pqKAZCnasGqOjwu0n33qfLjuEAPRBndtGivUr
+	 QjUowEwfDtqssftTU/yF3Ou+a57kPAOfDDnPiz7N6CktLHdInZtorL2NJllnnwr8Jtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794241330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794241434;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=uWP9RxbBdbJHdQEdy0o5WMRefqtYaOR71Nq708xw7Kk=;
-	b=Y/AMBlFDD2jiRFzFrwcZW5cPnQvuwK5EAmwj5ezlwsCL2aC1gyp6/NcgDL4mN0pxzbWj
-	 CCW/1FEudYIZRjNOtys5WwY6y/y57D/AmK//wL2ltmIwH+TWv9kmaRw48vb1ndFW6jIEg
-	 b/9ykykb1JCwAeBE4ynuzV0xmQ8yYHGLhfmfb62DxjeiumxWIL0LDhFh7NHGFOG8E6Vrg
-	 SOTVPWwu4DJCr+p98d3v3Jm7GmmDJm+eznJTtjmGA4wMIVCsalOVhWEm6Q6Fga1WZKYSC
-	 kTCPcQZxWoyXnxkCYyGUTVHLGfNvNjDdHLxSEEgZsyHq2O2gacEHMcBdRn7TukY4gew==
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Subject:In-Reply-To:References:
+	 Date:Message-ID:MIME-Version:Content-Type;
+	bh=biJIULNU4m6Vn0X5YI2T6mY1hy29gjPS2wfPlbC+8e8=;
+	b=stywLrS/OZbY2Nq7w/knbD1yHIHSOHm7COtfWzcS5D3mtlk5hltQhH45OtVClDDSfgtL
+	 7h71kYM9F1Tb/c+x+/n+H6U878wh8UoEdrvu/dwFgmoGAx2NhcFWDbATfxHdSIwp4+q/L
+	 doCjkl54oPkkeI07ejCBoGVNO3zV6PrTVt47RqZws1J83Tv6LPQp8CHLMeJrCtV5Zfby1
+	 pIs+DIGEh0VkwduCp5nM4c3/2znqGEQbVUDrgfJWC+WLxUW05DqnaaSOoFv2FrRtBpAfz
+	 yI5ap/ZfC8jCYyvRKOo4Mqju/XnUye/P6WCPCMlonw4P4s9CDXu9ivp4D+1XDPGvkiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=iotcl.com;
 	spf=fail smtp.mailfrom=iotcl.com;
-	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=rOdnfB9w;
-	arc=none smtp.remote-ip=91.218.175.37
-Received: from mta0.migadu.com (out-37.mta0.migadu.com [91.218.175.37])
+	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=DAVBVzv4;
+	arc=none smtp.remote-ip=95.215.58.208
+Received: from mta1.migadu.com (out-208.mta1.migadu.com [95.215.58.208])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5506B606A31C
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 16:22:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5506B606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B22B606A330
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 16:23:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B22B606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=rOdnfB9w
+	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=DAVBVzv4
 X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=vtio5B9N+vh2Z6n+mGDj94J8hjpzVAGHorE2RLEQVGM=;
+DKIM-Signature: a=rsa-sha256; bh=JBy7Pt+BM0aYWEDI+HxHYQDFSZBYLi90O4IqfLvo6v0=;
  c=simple/simple; d=iotcl.com;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794241327; v=1; x=1794846127;
- b=rOdnfB9wPx/p/ACmWpznL26Om2LwpGRFaMnPjjU6qBDNbruDw01pRAPnlu3MgTMkmO1XrCuP
- s1sZjD+HkUrTHS5OdhiOc+3pMGGdHG88Gk7lL39yI7GLH+J3x6VzFB9YNUV8ZMTlY4AGDySdahe
- MZR6AudTLoXFGH4tNaHGKwR8=
+ t=1794241431; v=1; x=1794846231;
+ b=DAVBVzv4Q2xcZViE3/fC8eMOAUW8uHdJKp4+P2SQd+vlCiW8CVhmZYkxNO8QNiz8f4coZh45
+ 9mkgb6Xs1AbzU5MryhYvU61y2B65yMDQ2vT8KdWCjjt3JsvXh7xr/pMsftRm1Lltl6ihUyymgOW
+ 7FyRAztoJLLKi+kLqsk3R+AU=
 X-Envelope-To: git@vger.kernel.org
-Received: by mta10.migadu.com with ESMTPS id effe9407172c1073;
-	Mon, 09 Nov 2026 16:22:07 +0000
-X-Mizu-Trace-ID: effe9407172c1073
+Received: by mta11.migadu.com with ESMTPS id 04487d5488d1154f;
+	Mon, 09 Nov 2026 16:23:50 +0000
+X-Mizu-Trace-ID: 04487d5488d1154f
 X-Migadu-Flow: FLOW_OUT
 From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Root <rootminus0x1@gmail.com>
-Subject: Re: [PATCH 1/3] builtin/grep: read submodule trees via their
- repository
-In-Reply-To: <aunAR67MHppLt--N@pks.im>
-References: <20261030-pks-grep-recurse-submodule-v1-0-d4eb5c87d8fb@pks.im>
- <20261030-pks-grep-recurse-submodule-v1-1-d4eb5c87d8fb@pks.im>
- <87fqxnyx3s.fsf@dev.null.iotcl.com.invalid> <aunAR67MHppLt--N@pks.im>
-Date: Mon, 09 Nov 2026 17:22:01 +0100
-Message-ID: <87tslqx9ee.fsf@dev.null.iotcl.com.invalid>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2026, #03)
+In-Reply-To: <xmqqmrrlfzcd.fsf@gitster.g>
+References: <xmqqmrrlfzcd.fsf@gitster.g>
+Date: Mon, 09 Nov 2026 17:23:44 +0100
+Message-ID: <87pkwex9bj.fsf@dev.null.iotcl.com.invalid>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -68,17 +64,25 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> Small nit, shall we use test_when_finished here?
+> * ps/grep-recurse-submodules-fix (2026-11-03) 3 commits
+>  - builtin/grep: read ".gitmodules" via passed-in repository
+>  - builtin/grep: read sparse directory trees via passed-in repository
+>  - builtin/grep: read submodule trees via their repository
 >
-> Normally I would, but in this case it would have felt weird to have "rm
-> -rf sub super && test_when_finished "rm -rf sub super". We have to
-> delete the old repos because they exist already, so arguably the correct
-> location to add the `test_when_finished` would have been that preceding
-> test. But I'd propose that this can be done at a later time?
+>  A regression where 'git grep --recurse-submodules' failed to read
+>  nested trees in a submodule has been fixed by passing the correct
+>  repository context pointer instead of relying on the global
+>  'the_repository' variable. Additional latent bugs where grep_cache()
+>  and grep_objects() incorrectly referenced the global state have also
+>  been corrected.
+>
+>  Needs review.
+>  source: <20261103-pks-grep-recurse-submodule-v2-0-b00e3b3dc865@pks.im>
 
-Sure.
+My comment on v1 was addressed, and I've got no further comments about
+v2. Changes are fairly small, and seem not at all controversial to me.
 
 -- 
 Laters,
