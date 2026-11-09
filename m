@@ -1,73 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794264352;
-	b=0EN4HAzxsaQJ2Opxf/iHjRvqfbgBvY+hPDlBCV/NYptYFBojx9EXdOSSb7Z8397W+CQb
-	 TY92eVC5td00qYiwz6P0jf1NB6yuTB/AOH3mAD9R0g0e6Wbggojirnj0x6pkQ5iZg99Gr
-	 L5JQ7hL14eyP4AfLQzL/A4kiGt2eG83q/q70CGH4nIUzL5iDhyIXyNobeCX2KM6/Za6lG
-	 X7lI9w4lznxgaHduHrPDFJbI7dtGC/eBpR6kfLPouG9BeZFY53K603ZOI4cW6ulma8s4j
-	 wxCFW4BItTu6TucQwagmMAi6mbeixQCH7/1m/SqCRAyroRC5IHAqM73ENjZMgq0/row==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794264352;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:User-Agent;
-	bh=6YpxPQLhC5GYhJMZVQU/EX0SwaFHozdIe3HLVp7Iy2A=;
-	b=YJIvnOlVYRvUx0iQCtvp3M83ub/NBnx4pWsA7FvAZH7wGITsDJpQ6QiAUDkF7ldeiptR
-	 7ZPZ34fSh+gG4Z418fPK+uh4Na9Egg9OsuoO3I5KHQ5o/O53GtEQC5T/lDt8BlY27dUQM
-	 MMx/cZqjOpnyiUG2yWi1GiM5AKF7OlWGcE09QociroEs8AxkE1vFYrCgQHylkkVmydl16
-	 emV6Ra0DK0BihzyArIamZRY3Kkc6rZIUcX0RDywKwZlM3Bn4rJ7q/5orqqBQmyYauRqgI
-	 BNrNx8mK3ShofGIXc6MT6ryvugOhcJ3btdTTpNTHJmLGApjmtY0T3mF6iqM0ZffeUdw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=crustytoothpaste.net;
-	spf=pass smtp.mailfrom=crustytoothpaste.net;
-	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=ZBGKecxk;
-	arc=none smtp.remote-ip=172.105.7.114
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.45
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794265467;
+	b=XStcfJ7WAuY1AQ12Fh/scWanMdwsCRAm2pTMLMMJFX/pn2LnuRbzourTL1AZA6Nj2jsv
+	 FipjYkljjC+YqFhjFykYGo5sySf+cnxjS93EPzI7bXjQodLa7dpTTigEvof6Sy8Xcyryc
+	 NkDPnenAKz/RjmU+RevuBBpbnyMKgxzmIFazrfjCVfhRQaLh44kmYGidv2PnIrp3mF3gV
+	 RQ2EZV/Te/wJ+GFhG+Ww4Ec75kgB6/sz4idsF7yRcRd+RBV0/lJ1z1QRED3DxN/DKTtiv
+	 w3ZKmPFCuAUmU3tX5Mgtki90Gy0KArpKu6kgdCKYZKrbXgBKRJ/WFyRPiIt4U1njDsg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794265467;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=hPbhY1LXRock2L9aOr7a52x6zENxbDUgXC9TNwBqcqE=;
+	b=4fRfRgqPgS/HvgSrL96hFobOKq1zT7vL4RzrtSuiF1QgWhmcz9ww3BHXrYQItwHjkGD2
+	 nowkSWOe5k28J6s2fbom69PM9F26pI7MoTvV86AvOYCdTeKvwOWWG9ey74F6g+wTuN9+Y
+	 esi2aKHMZU8VRdipVeHmEYRN+wRQWbvxWzvxaSDx6IJDGNH2sGIFpyGDxpI6LJHwsIu8p
+	 jsf/jzGig9BsIy35K4FZG7zl3KDEPwfzRGgY5UIiEBGhWvUU+7+1K2LTP+NKuv6OJUru3
+	 Vg888SKx7RLLw0mMApPsR22Wl2FeXOgNvQ1pIFpNGGf+hArnvI/UYT/+g+pi9Xb7Umw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SBGNcpRM;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.45
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A831606A334
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 22:45:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2A831606A334
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2963606A321
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 23:04:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D2963606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=ZBGKecxk
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1794264351;
-	bh=Awo6HTO698LGlGLbafvjgDCnAcOv4d53ZzhLCxBTT5Y=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ZBGKecxkeeTR7RGXcZaFDf09xXRNfIYElcT0NkNiR9Z8dh90+rUY9LRzFqC2oOgJm
-	 83bVEmwoVP95TncRUt+jUUE3aWUFpuip8i6DshjdTx5AQ8CpOP8jm8Xv2K5rCHkP0h
-	 wHqbMbglNC0BPw7pAjCEOpO006qoJyiKY5x5t//fIfqQfd28MdsKXSRwPJ+Hp8TK2S
-	 Ppb0UPXwLpeqxxy87T8yPN3XZ/C2Brv/eie5LbSxwRKz6HQ/IBoQI9hk0wtdldeBAM
-	 F24SfdcJbDViXtQQNhgdrIv2mceVuHb2rOEeg8ZwfT7wWDSbcDuLp0qrWhppceWkf/
-	 5M6ExynV7ANy9TMXU/gRINVSANUDxrQxJkJQo01Tq4dwXyeL7OSpv/UR2Hl2ryJBpG
-	 j9COoSiDe3k+LttGpG9e9i/KMD08KcULQ8z7dFXByExHLfldtps6pyJuWgVqdXPcLh
-	 iZUmIxtgS4sekVj1Yyfck7GfQkuEWLKbcm4HzfUBILVnhAwiyUQ
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7f1c:2d92:cd33:5059])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 01FC720069;
-	Mon,  9 Nov 2026 22:45:50 +0000 (UTC)
-Date: Mon, 9 Nov 2026 22:45:49 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Tanga Joris <tangajoris@gmail.com>
-Cc: shrimech <eddinen77@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v1] hash: handle invalid algorithms when formatting
- object IDs
-Message-ID: <avJNHSZLiZVffCjJ@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Tanga Joris <tangajoris@gmail.com>, shrimech <eddinen77@gmail.com>,
-	git@vger.kernel.org
-References: <20261103043756.61627-1-eddinen77@gmail.com>
- <CAKrRMNrLvPck5psPpKX1eWe26To5srfFSLFObZ4zTX09RE551w@mail.gmail.com>
- <au0ZOsuyo0YYyZsa@fruit.crustytoothpaste.net>
- <CAKrRMNqBCiH06xsre-YafBJiqPTiBgPnNZ3xPrhjTQWU3czwHg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SBGNcpRM
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-8446af403b5so788946a34.2
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 15:04:26 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794265466; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qor22Nt3pdaxIvQMcKR5GFX8hMMwfFOkp7IOp4NxZp3slTtCn1Xvhppmbkq1ZbgGSY
+         MZycWIsrsO+2NlQXb1JR0M0mD0amD5clR0eFDexzzmtdMZebj5sj+QIeBfSDgffLr9On
+         WXDRXCk1TNZW5GGk2NEOr4bPVgiO5VsDGZtJHL0SEoSm3ALPMmV4FBzKefjIPiGrIIqO
+         bSIssUo8W7vY0ZswQZHVThWIFdNqxUMOjs5ZzBbrbFCG/dcUY13hZ86GCCjxVdELmAOp
+         BnUStAFw1fozpdPt4KMu1GyFkdUKCkdMBH294xTBubakpwoLAKJw6eo5g+81oZXZQoLH
+         mb5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=hPbhY1LXRock2L9aOr7a52x6zENxbDUgXC9TNwBqcqE=;
+        fh=V9vrvdaj82ynGTCWtfClt4rGmBVh3BLMFuj55aTDstY=;
+        b=QOnHcsYjd1L7wLsDAFXN2pwZ0EKnNyfa4CSmst2DbltIi9y8zyF1TDl9D3fXXI68EF
+         D3CTNYfDSiKqONdNipYg04XnCua1atq9M2e0FNKahMpL1VMkIbCTTCN4JCO+qtrfMduB
+         q2TH7O+wrpH2S6SSoyhOI9ocniwWBlmhvjD9vbmqmererQgt2bpF68yApp6v9A9ve2iN
+         Qx+uHUfTfIntLAqb0ioxvbLRS1R0vrWLLrTsrWDsZifPufwtr+vXB4K4ITfr25qqxwe6
+         Pqenk8AfzHTFlzNOSvyEGPAl4Rn06eA7oGueEX8Q3sIGePt+hBdothx4DTuyA+87pOb3
+         notg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794265466; x=1794870266; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hPbhY1LXRock2L9aOr7a52x6zENxbDUgXC9TNwBqcqE=;
+        b=SBGNcpRMZawXp9yKRzqJYYrQMDEfPMXNzVHg8+STIbYLoBYLHNVVceiqZCydHwcvBj
+         vTDUSytl1xFNf8zqFc1cEnPxBKk4BrG5zNxz8ZqTlFs3hlU55obUwIDPOsBJ3XgZUkK4
+         WA0j5wQGJiZLGM+ctSMBXZRh9CztCZu7NZ0y4qpY0k5RJ/sIVm4lFRKWsjzcRWjGMB2q
+         +IET35EkfyBv6ZmJqLxIQykypLW2NuEfOhKwT/COayc9smgimw/VyQxWS9ZrVqm0ybhZ
+         /PSepwKfwqJUTRWIg4wPTlwmLw+iFjPoPmLuig7M18tE15CAN6zVILkB0xOmWE3+tYkJ
+         HNOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794265466; x=1794870266;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=hPbhY1LXRock2L9aOr7a52x6zENxbDUgXC9TNwBqcqE=;
+        b=1CbbMe5ryipBBEiQWS3A/AwhgC6XJdXt3tGZ+lMxpc6vgV1x2L7eZVRK+Lo78G8sWm
+         Tak9HVRe6EE6KYu5sS0gY4agy8uJc8SlTHjpZYG+8V9WTrQ9vVY4XMMHQJcaiMuEiU2e
+         lubOcWd8amBkAUMzgll59PqmeXVRlLAMebYef/s9P2UUgMv2QX8n9xtgLbISoueC+p27
+         vu3o1zvXAqojXAu0hJCSemFMtEmBc+sIl3MGF3nHNcW3wfAHdqPcHy0X49CAED25praq
+         ZuTSWau9e5KVXOZ3VDbOVhK0SRWPS8fTouyipyw0rt+tMkxWLVs8sm7nHj+WaercEyGG
+         sBkw==
+X-Forwarded-Encrypted: i=1; AL+hErEFJpjnoq8L4aYkM2en/DPvP/aTlSe8rd2GLyEeH/Qx8zlmq9c3blBhttdGjQ957DgNdJA=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8YOC7hiUi2TF/ojALFDHM0oRjGO6GmhhPbk2MrKhdHhJBojmu7
+	vN9d5TxwESwhA9aoxD0um5n4snihvn4rfYrbsdpP5izbckJM4cD5Lq2vb1hB4sBZKjkWlaPRdMy
+	WB82MAzIONZrkyblc4iKxA9L05ikrlVc=
+X-Gm-Gg: AYBFou1HQLexFrZLjAgLeApm6hP88PiJf7lQodAyeMG/AxJkwJ50g60GNOH6jxl9lA/
+	PV8Xry3mj7WzrWUuZNmGvyoBhoLow8WSEc3dNGbxY6JnStVYNC2cjLXwAcrSHH8LbKIGEFjc5ZG
+	Mxl8u6yUyFiXKezN+vfl6qqRpead8HJwFvSyPDBztSlys6dLyUi/Vg8dtuK9yYtOEg+nh5ld8EM
+	Xh4kdewH5r+y4LseaPRyUULnGICIYGXtyTC/fXmge2ztUt3kBXiPOXEJwgkLLXTbvJC0hKq2qfD
+	V411KgPzzrvM5rxjGioMMJ+qYPWsOpFUGj9KVYJeFs4Ke8pguYYp92yraCw6qaaDxriAgrDcTEz
+	o/Slq9O9hMOKojJmDy1FLAvPcrA2YyBEm0Z3gq9b4Qbz2ET7tVFqhYzP0+RIgzmP+BqJ4HMOz0n
+	Kyx0zcwq80Rn9KGBqjWwxj+R29NkCHyBXD9Y7yRvyVO/UfwjDvy8pPyg==
+X-Received: by 2002:a05:6830:680f:b0:85f:49ec:c974 with SMTP id
+ 46e09a7af769-860dc72ba68mr649611a34.14.1794265465706; Mon, 09 Nov 2026
+ 15:04:25 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -77,63 +104,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Q5WZUlnk+C8FYX4l"
-Content-Disposition: inline
-In-Reply-To: <CAKrRMNqBCiH06xsre-YafBJiqPTiBgPnNZ3xPrhjTQWU3czwHg@mail.gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+References: <CALdwsC1cMKZgRPZA+pBaJe4PPs9q9W0K9CQLmM2bgUCyysTB-w@mail.gmail.com>
+ <20261107195429.96842-1-tangajoris@gmail.com> <7bd3360a-fb96-4631-8670-dde0d281532c@gmail.com>
+ <CAKrRMNr5VJmvws0asHgmDxCNxo19ctGTpM2eoTMT3iQ5v2cagQ@mail.gmail.com>
+ <d5bb8fe0-7706-4e3d-b471-ad004411a9ed@gmail.com> <CAKrRMNrwEgv6JsWcd+UorLrKcsBgHV=UUvfH316hedM2TYGWqA@mail.gmail.com>
+ <xmqq4idpyasg.fsf@gitster.g>
+In-Reply-To: <xmqq4idpyasg.fsf@gitster.g>
+From: Tanga Joris <tangajoris@gmail.com>
+Date: Tue, 10 Nov 2026 02:03:48 +0300
+X-Gm-Features: AclHuK8Ee82rsjzuPlCIkvP3IA07bjOnrsb2F49H1roe7-73PnDm2tRvB2FAcYY
+Message-ID: <CAKrRMNpZ5vUwdOtrmb_kON_c4x8eL-2PekcQn5f_TxpegwsC_A@mail.gmail.com>
+Subject: Re: [Outreachy PATCH 1/2] apply: do not keep names from an unused
+ "diff --git" line
+To: Junio C Hamano <gitster@pobox.com>
+Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
+	jackrawlings2011@gmail.com, christian.couder@gmail.com, 
+	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com, 
+	usmanakinyemi202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
---Q5WZUlnk+C8FYX4l
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hello Junio,
 
-On 2026-11-07 at 20:22:01, Tanga Joris wrote:
-> Hi brian,
+On Tue, 10 Nov 2026 at 00:06, Junio C Hamano <gitster@pobox.com> wrote:
+> A garbage in the commit log message does not count as coming from
+> "git diff".  It may take some effort to teach "git am" to avoid
+> feeding such a false "diff --git" line down to "git apply", but an
+> important thing to keep in mind is that it is NOT "git apply"'s job
+> to worry about such a garbage input.
 
-Hey,
+That makes sense. I had thought of it as something "git format-patch"
+produces, but it is only the log message passing through. I will
+leave it out, and the next version will only reject the corrupt
+headers.
 
-> > This is not a valid configuration.  I have a patch on my sha256-interop
-> > branch, 5b208e4a3d34ffba0fbeafe991643d6d47a5caa0, that should make the
-> > members not public.  It depends partially on things other in that
-> > series, but it should be fine to drop those pieces if you want to pick
-> > that up and send it in.
-> >
-> > If you pass the structure from C, it's intended that it panics if algo
-> > is zero.  That's because we don't want to rely on the behaviour of
-> > depending on a mutable global in Rust, since that's unsafe and leads to
-> > action at a distance.  We really should just drop that fallback and fix
-> > all of the relevant callers at some point.
->=20
-> That makes sense. I didn't know algo 0 coming from C is meant to
-> panic in Rust, rather than depend on the default hash.
->=20
-> Since this is shrimech's thread, I think shrimech could pick up
-> 5b208e4a3d (making the ObjectID members private), and I'd be happy
-> to review it.
->=20
-> Could you also push 5b208e4a3d somewhere public? I could not fetch
-> it from https://github.com/bk2204/git, whose sha256-interop branch
-> seems to have an older version (c38d0c8475, "rust: don't expose the
-> internals of ObjectID"). That would make it easier for shrimech to
-> pick up.
-
-Yeah, it's in the history of the temp-sha256-interop branch there.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-Speaking for myself only
-
---Q5WZUlnk+C8FYX4l
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmryTR0JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ0MR33g2aciBEV/aANhrvsKBnP+aXGsTwdEXORlfklpI
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAALC9AQDlNYSSSwBNaXk2SR/sEClopVcY
-6NLJlaNfsBG7JEO72QD/XSGlI95FZPqjpLnJog1Wr6LjoU2ZsMBfk3Tnd0JU7A8=
-=ifLQ
------END PGP SIGNATURE-----
-
---Q5WZUlnk+C8FYX4l--
+Thanks,
+Tanga
