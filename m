@@ -1,101 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.41
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794214534;
-	b=PRBnfqombxzIFpaWu9g6LzX+8iJpbWFtRkZjqKZegl+WitSfaxHTmVV70JQGZg4jEghz
-	 +RqZZFsSSCir79Twmn9jzoDsTYkvAdXau+plMgNiOCYZGyCK6pJKxXQEb7fbCLlHvasIJ
-	 dr0gMbkbfpkqLZImHGTcxgqn49+kdJb5I3irNN6tysLQpkpALLVxJKyZwfDPIQOWYgnam
-	 8se7nFADNaIYXBHfxZEaZKdit8UT7MFpQvYBZRzKYcujNfTAmQlBxgwHR5zX3VYDmFbAP
-	 Uz6tdzj7U8sJwRH9YDzyLyLGArufQS/LSJeR29OhBQdx0zRH0FXVyPU/WmTD2qVNcNA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794214534;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=aFjdLI1DksHDU4qVq4hhUvCgDMY/2+ADHwAT++xhooY=;
-	b=hAZYaRiecTB5rW8nknvSVKXEvyY+NSb3TkuIgXQSzer0y6/34cnYsCtlA5My3ObGFL0G
-	 u4sXwK2SMh1LSjr2UOztfdHvR5lnTeNYo9ibvNYhqiW9ztib15fvuOifdCPEz/lw2E8B5
-	 S2edLLfx4v6P2lP8HfDSATsoShZL5f2Su8uvSgeLsiZ+cP2TWjmdzfitUGQ3ju5DMfy7k
-	 ELrmwJXnNvShJDZPnqM1d5gODmAKQwGVpyoOJZ6sNql+wmnnBNORx4WShUKR5m1TOsLuD
-	 0baFCOrSLnK9wEPIUo/OdCZxMBk1APO1cahbCZwOiTiCsPSgipTaxSFQjdpSHj4dPEQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nkjCbSy3;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.41
-Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794215914;
+	b=BsTktxRyzoaKiMGn8wL/oDFCNCkHaQBvoxzrvzpMMnOezSWCj/6+nFrmKolWUm7etRtR
+	 54ir+7M9MWNU7kWvRRxyBA5m6GwmscxDhle9LGQGt/ocMox05SCcJXJaSV6NNulhFGb2S
+	 KTj2zaNBop+ebqyROqoJIGIqJJCWUI0jV+u6FQ9v8OV9tpUwHEryw98oylPqdHnVt5aUs
+	 9Zb/I9eyoUnFTMDnUBaNoxIbntow5tmCx4vOQjZHMr7QeJjbvRPqS0ttlcnPjCAhJ6vEL
+	 612cIRW9Fv1eUm3RdeZin/Gs83gcr7Ty30xSFLPoQNEuh2M0OLKks4vYewsoop5M4Lw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794215914;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=K4o09JNiHnAtUHcTRAvBmlyj/z0jVT6mwFkTnHD5Yqk=;
+	b=MreL0aLss2TjzLOlgLeTb8WyMKH121llbAncG9aWjwCqfuRGYTsdLNd1R6CX0uh9tKgQ
+	 ZoUVrhJx5P/Wq33UV9PQ/Db+il9Ka9SrYHsh2WAWnzZ/LkD5IgPKwx2ITJ/Oddcb5lhWR
+	 qbMCizam2xZVjGS7cybkhXQ+D5hmPMJJVZKum+ylUrduArBnzjGrcZsErT/YqzSBylNNc
+	 Xg9LpY3npb+wJG/WxVuIatM/VKj3MOGkfP29Xxt36tQjjScEHPAghVNobNGeGUcAtS/9+
+	 a1xrfiMkRJS5N0ORTW1A76q8RIpb7iTVKasRx/RYk9TuSxywyG+ObBlsP72U3BD9zjw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ZaI6CUAO;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="D6/zV2ph";
+	arc=none smtp.remote-ip=202.12.124.154
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4583F606A31C
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 08:55:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4583F606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CA5606A321
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 09:18:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 69CA5606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nkjCbSy3
-Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-1931ff67a29so1685193c88.1
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 00:55:34 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794214533; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KBnkRPaYXTt6bqNvXgbar1pkPZafOomlttEyqdFQzGPZnItliKWcAx60TxIrbjTsTj
-         P8kRpjfUMJc6dp3lJg56pxbUIEr2MgmVxqT8C5HisJCudUnD3Gzb3L22tGosGezrvlG1
-         TiRt22Z25Z2nKKDKJqvGHcRbncCX7JKK701hMH+R693wCzod0NluutaKp2jKZyffeOfh
-         TRKP4VtjiE0VZH1yebFpW/B19wswj40FSTe52dT+TjiFxNc55x5z/76/B6zsQHp7hnGI
-         JmPclKq9PX8v14E1obD2T1RMZiSVMGw/ejxkm+gZBDxHMFUpt9Tdi8TPLDmMlKmfLR9g
-         AUFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=aFjdLI1DksHDU4qVq4hhUvCgDMY/2+ADHwAT++xhooY=;
-        fh=tqPyQpPIq1RQBDzfA/60bNGiMx8BLjNhCLYgbYxFAtk=;
-        b=N7wgF5s0bIS3E3NCgKli4UEevFjFxhe7WfklJjMy57hwmQ8jyqeUKkEwB50RBQsrz0
-         sMzsHhOX4TorClagi9ZxqA9ASQ0TakQwqTux8SdQhktXxg3lkhyjdwfM1VSjep6dB0n9
-         lhZA5i3ehNs1enayHMtDhZxF56RfOJhGYBc/5eWBmzN/1+cTQG7bfn+1q12uhvqx/HaP
-         4nuv+Twiqb1u/PUqVECkSlEQ8ZLH3xvbibNhQFxSqWStf/eLWTZ2TqYyMsuAXzoOtmDY
-         lsNuA2sUzyJgrpq6sPeHGEmvz4WOflC9dAsCVyvfB3Vjhab1r7wNhJ+HUPQ7ltIOHqRi
-         fgIQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794214533; x=1794819333; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=aFjdLI1DksHDU4qVq4hhUvCgDMY/2+ADHwAT++xhooY=;
-        b=nkjCbSy3ZF+TeUw/WQSQL5E7NHYbuOJJu0FX1Z9Q8xyZoyF+o1bhS/6joSIMDqtaJa
-         gs0VDHHabiQaIn5GtomCrQsloCYd+q/l7B29WMdqfvmwOZz/iHPgZZ3rC+IDPm17nt03
-         lH9Ngx7agvF449ClDDxr0sMFGrAUTL3t2L3l/+r1sXS17TvtyUivSQZEztFwbjSfZJtF
-         UXoct580V/kz9xWCjwB2YMmcuyumr1u6ZT8ab4FW3yCVBm5Tz5dUOaKO5zv6UeGugRie
-         nGONzM81Djpmd4pZiiDA2UJk7NzEktDnmo+NpSSqwlfFtcBnjOLR0+nFjiVwrE0gLjId
-         yFTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794214533; x=1794819333;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aFjdLI1DksHDU4qVq4hhUvCgDMY/2+ADHwAT++xhooY=;
-        b=P+JHRynzrnq8/4QtkG/GKJWx6kg9T+ujh5HdANCJRgubPdIssmtKJ1kFknm4QpH2Ri
-         MAfhsGr46S3DJP1L+9JH1+9y7OM6XeOqPdblqVkQBRQnsQ4EMQWC1R9G8FwsA5LYkKpc
-         mo5stmdPrUy+WvzWL26NpXTGvX9xBW5uh/ZHMM+Fdbbwqj1tCa4yNL4obmiHyFpevj33
-         yaE4GFINH7LHy/QYsUk18qdFS4ebtMKA5FBACObm5ZY9JbpyD9+dNmdeLqDRoCZB/xh5
-         IvXtHVh6gJOk5yAJETSyuDls1mtlNE7K5v/xItS5z1lGdtt0/G6PB2HMFeabCID3YWMU
-         TlbA==
-X-Forwarded-Encrypted: i=1; AL+hErE8uh4UhauMxndo1kTKf444fhxRoY2bnH0LpGC636+cD5EkQfNXrp8p4uIloCQOA9Foso0=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9EOuI/mPugALBdqpg3QjV0B3kig5MH8S51HVjWYk1eeb0xg90i
-	hAoAKiHvFolB0g1CGfw8nT9fPgBdqQjZMLB5BpPbQR5qsvdzbW8PW2BYvL5/11h7EZQQDl6Q0hR
-	CCmqtv/m8utwM0ztOkzHkwd9y263mKoE=
-X-Gm-Gg: AYBFou0+cL7bRhabJLbToTyLMzzeOA+YpUSdQkWE4K6brHnhQeYoA9Qt78cpIOC6/9m
-	ZOZPIoG26B3po9gHeoMJax5hVw8sufsJ5PWdueP32WpSPVxqQSJAbZDW2DIwkgka5dIp/QtTVit
-	eO6pFaBI+yHhOn0S5p2VKa0dEdXmNDL+0ZLJioIezkLHMqhVMdGMsI+NxQvD5H+UOKW3P2c8Xvw
-	PyfUX+ozdmMIn4RxpyyBAE3X6lMwgwyPpZzIqLm2JD/lzIwpbDAJTJk/eTNjACg462jDYJ/xOEu
-	MEHyZM/ykljFzAHH59jjPkAU0bhk8xkoo9tOmJ4EOgUtrRmdiA7su2MwzMhDUyXZLp1taUqPeGk
-	pN3e6qNA1hfEcxVxc8tRpq7gG0q/2oOPVplZYwoZ+vz7lkN04YIPL778fbe2mmM4BFVMPTaVpEK
-	Cr3kRGndYATu5fzao1xtKo0cwBaxAIjGEsiCSy
-X-Received: by 2002:a05:7022:296:20b0:1b2:649d:dc23 with SMTP id
- a92af1059eb24-1b39feff6d9mr5812446c88.35.1794214533161; Mon, 09 Nov 2026
- 00:55:33 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ZaI6CUAO;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=D6/zV2ph
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 978177A013E
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 04:18:32 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 09 Nov 2026 04:18:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1794215911; x=1794302311; bh=K4o09JNiHn
+	AtUHcTRAvBmlyj/z0jVT6mwFkTnHD5Yqk=; b=ZaI6CUAOL6OMtBaRleeo0Tamy7
+	K6dHtuSNTaqVw2Z8ZcsQ/J/CsUmmTXoerCLB7wjd2vePyQhBj59oko117x0oMERN
+	vfszuZoyOhC6Id4oJ2KTNg8sc6FeY73i31XSW3PiSsceP8ht1cOjuov7ECD1mS0A
+	RxougGRaaYgOAYHyKJdKgCVJ978mE+CL9tZv1P9LgBXRWzvQxtSr6sTN9eQj+y/e
+	rvDv4FF42aeqtyKpdJPTGLA77R4ILat4ER3cLlWKLybrTRQC9QQJkChiL4UMCeoa
+	ivm/EufrIKwB0/X2jSlxspkulhR/u2uBRn2OKH9gzhTRRUG/SBEVjoZF6X1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794215911; x=1794302311; bh=K4o09JNiHnAtUHcTRAvBmlyj/z0jVT6mwFk
+	TnHD5Yqk=; b=D6/zV2phzx8eBZLpxhOFTn5xbuiMhOUfYj7bRFDbglF/lCurxvX
+	khfp3xiz0fBwCxOuwv9MiYnjUIII06Ma2vn2kfyjYmcJEKJ891EzuQXQ1YPsIdP2
+	ikKd/Mt6sSHPzv7eQ22BeWoKKs8ABsIpr4eSCcXOrddpaWfYwpUbAKd52YwvoZA6
+	SqNOlcdyJoc8GhTrVvmt4iEb6vSomVgUYOLTSGDIbGaqzJnNMZmHzrSE+HrbbAtB
+	7F/vTxJ5ij1PNCDU/0MQzo12wsR2f1HRAVC7Kv2s0Cg8EJV4BPfRysZ5BcWWuq4M
+	qq94fEXUt79yhznn/sui+bKDzrjDzKW50yA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794215911; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:g6ZYtnFVJicVxtB5LcTMikRN+i4F+6QPvQZs+g0hpwdcaQe
+	vGLHvNiMnc8axY81J6HMNAc+hE7FxNaba2qw/EkbBUhh9mlOw+rmb7R9dauMiNJ0
+	GQR73GIewEiOzLRdwaSF6woGpapr0E1EKT5lOHdjSodDQqXysi3EFcT90EEB7+PP
+	4qu+DqqmA81s+9uMHJvCW72XvpB/tEiZLh54VRJYczeOYr5d1vKqh49gqntd5CE4
+	FW25RyL7XkGP8BUx+XuPLj3N2AmKFP1t5IoTiZg3/i5G7ieagmOSljQrGsSxs4D9
+	hQ39P37+yPFEBjO+AQZRmwCXMTYKNCcqz3rU1nA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:F9qmX4+wv4ISMsvWQEsdZkLD6+2sWteR3ZH4Wdx+BAA=:fYNEIIoZRowGz7pWV+B8pTywvExa/rhUXUaVYgUd038=;
+X-ME-Sender: <xms:54_xahV5rJt27S2vaYW5kP-idGnn_FwJ8zSa-_a52H40Dx_B7nLByw>
+    <xme:54_xagpn_aAeQSEi8C80GqcyfNPe5y_mwLues13i4AeQqn4bDNlamJPdRiX50l7rw
+    yRb2gYN2fmzUjsvDIhhlLpKf_q0C5uuRrxA7AYefUl6Lt01MbdHDw>
+X-ME-Received: <xmr:54_xajmZPHMrdjwfeLDfK4AC9gqS6zYrPxsXG7QQwtQBX31nySjanhDYC43fbcihBOCEx9M>
+X-ME-Proxy-Cause: dmFkZTFLDmST4h0/QkIVNTmtT/2+68jmkg/AqXqEhPGZWTMIyklTeaS9MJjagks4gxJUJO
+    rNa9ZA7wFUJsvqo1TTxKww+YDT4pPH5120P/Tx0PkmfpxD6VKedYv5IlaMQDtHhllIfHjm
+    KFfgv65+kDGs34QBJ+ynjep+uf5Qys6CFodRRZGBQC4/Rbqf7B+sBSIBoLmx4M6Go9Tjis
+    xtW92jOsdYdsJ4ed25tVbaxJUvE0iy3/e1ZEEqUEO8FGDUVv7dG562Uo21mHCx1DdBQF+c
+    Q2R1IkiZXvdYWFdiBNgWimvZxl6JmrdWkCvWU8J5SLvZI4phJGLSNFI4yrD90dWJGjrcRZ
+    QNy8ht1C4NhPgYoaB25U6ovbKc10G5vX0TQy9lY0FP70bPMfgZZc7BbPhv8W+DiZWaWkdU
+    g0wlSW2us8x0G5txARBTaghAQhPiilzKXcLAMAgniLiWwMw+ghHDEaHp2fr0wUqlbt7jzc
+    hNl0fUkEzy+JdK+VVn28iGqSm9O010TdjRFDF0WvYbjVxXwo2Up6dhAwxXE9ifQnyKKRUa
+    1NGAG6cBzpScWOlg61HLxwbptgHioYGN6KIHXcv55hw6o1sxB0USNo+vXPCIWU1NIhAeVi
+    H77B+U7jznwjyGaq6NiHyjzxPomjBFEDoQLQTR92qq7GS9RlOVpWIamqBwdQ
+X-ME-Proxy: <xmx:54_xag2R66XVfDwE7ZQD0uLC-JlHUIs1KxvaSwPGZROxFTEwwcS8Rg>
+    <xmx:54_xagT_2G-JlW3ILQMQVzi9TRHYO0Dykc1CjNM79xd2O_NSKGNGZQ>
+    <xmx:54_xapwq6gR4hoMhImDoRoNzPjtk5BkIH0czDuWfLinwIlw5iRbpoA>
+    <xmx:54_xagCdj4xR4XJDBBxa8YbGmLJmqpODKuAVCo9fV37gyhvWrfxLiw>
+    <xmx:54_xan3DDeK_ch9ODJcqsXv5Mu0wk39jMWl4BRSkXRtvZKHRfMfBW255>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Nov 2026 04:18:30 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ec4b25b8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Nov 2026 09:18:28 +0000 (UTC)
+Date: Mon, 9 Nov 2026 10:18:25 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com, gitster@pobox.com,
+	karthik.188@gmail.com
+Subject: Re: [Outreachy PATCH 1/6] notes: store the repository in struct
+ notes_tree
+Message-ID: <avGP1YMrzFKIIsU1@pks.im>
+References: <xmqq1p8zw49g.fsf@gitster.g>
+ <20261105203344.48513-1-okhuomonajayi54@gmail.com>
+ <20261105203344.48513-2-okhuomonajayi54@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,155 +128,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2479.git.git.1793632435937.gitgitgadget@gmail.com>
- <xmqqmrrqg7uf.fsf@gitster.g> <e977b49f-8462-4b63-bdff-daee75994a36@delpeuch.eu>
-In-Reply-To: <e977b49f-8462-4b63-bdff-daee75994a36@delpeuch.eu>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Mon, 9 Nov 2026 16:55:21 +0800
-X-Gm-Features: AclHuK-PTfEXYz4xLNwYSbb4YRD48DJB9WsepBBy3qck50qsEp3a_yiu98hsNaM
-Message-ID: <CANYiYbEkTaRPdCLO=kovcAkAoiTt=+Z6=OPhCu9Qi5F8UShe9A@mail.gmail.com>
-Subject: Re: [PATCH] doc: document the current project governance
-To: Antonin Delpeuch <antonin@delpeuch.eu>
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261105203344.48513-2-okhuomonajayi54@gmail.com>
 
-On Fri, Nov 6, 2026 at 8:17=E2=80=AFPM Antonin Delpeuch <antonin@delpeuch.e=
-u> wrote:
->
-> Hi Junio,
->
-> Thank you so much for your feedback!
->
-> On 02/11/2026 23:57, Junio C Hamano wrote:
-> > "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> >> +This document describes the social structures in place in the Git pro=
-ject. It intends to be neither prescriptive, nor express a judgment on the =
-merit of those existing ways of working.
-> > Can you line-wrap these?  Even though once .adoc is rendered into
-> > .html or whatever presentation format, how the source document had
-> > its words in it would not be visible, but a single long line that
-> > has an entire paragraph is very hard to work with when we are
-> > discussing the document in its source form.
-> Sorry about that, will do when I re-roll this.
-> >> +The Git project develops a free and open source distributed version
-> >> +control system.  The scope of the project covers
-> >> +https://git-scm.com/install/source[the git.git repository],
-> >> +associated repositories hosted under the https://github.com/git[git
-> >> +GitHub organization] and the <git@vger.kernel.org> mailing list.
-> >> +Other spaces are considered external to the Git project for the
-> >> +purposes of this document.
-> > Do we want to also cover Discord and IRC chat channels?
-> > (cf. https://git-scm.com/community)
->
-> Happy to include those. Perhaps a dedicated section on communication
-> channels would be more fitting then, as we could also document who
-> moderates those spaces.
->
-> Do you know who moderates the IRC channel and the Discord server? Is it
-> also the PLC?
->
-> >> +[NOTE]
-> >> +=3D=3D=3D=3D
-> >> +Not knowing exactly what is considered part of the Git project or a t=
-hird-party project, I have left the following repositories and initiatives =
-out of the scope of this document for now, but I am not sure about this cho=
-ice:
-> >> +
-> >> +* https://github.com/git-for-windows/git[Git for Windows]
-> > What do they call themselves?  A friendly fork?  https://gitforwindows.=
-org/
-> > might be a more official entry into their universe.  I dunno.
->
-> Since they have their own governance
-> (https://gitforwindows.org/governance-model.html), I would treat it as a
-> separate project and keep it outside the scope of this document (despite
-> the fact that the distinction looks a bit artificial to me as an outsider=
-).
->
-> >
-> >> +=3D=3D=3D Project Leadership Committee
-> >> +
-> >> +The Project Leadership Committee (PLC) liaises between the project
-> >> +and the Software Freedom Conservancy, Git's fiscal sponsor.
-> > We are a "member project" of SFC, which acts as our "fiscal sponsor"
-> > for us, providing non-profit administrative, financial and legal
-> > infrastructure.
-> Is this a comment, or text that you would like to see part of the
-> document? I think it's a good idea to make the term "fiscal sponsor"
-> more precise as you did, as it's a confusing term for many people (who
-> might otherwise think that SFC funds the Git project).
-> >
-> >> +Those members are renewed by cooptation, after consultation with the
-> >> +community. When doing so, the over-representation of an employer in
-> >> +the PLC is
-> >> +avoided.footnote:[https://lore.kernel.org/git/20180821020849.GA2527@s=
-igill.intra.peff.net/[Re:
-> >> +Git Project Leadership Committee], Jeff King, 20 Aug 2018]
-> >> +
-> >> +NOTE: Is there any existing process for leaving the PLC? (for
-> >> +instance, if someone has become inactive in the project or is in
-> >> +conflict with the rest of the project's leadership)
-> > Nothing that I know of.
-> Great, then I'll document that as such.
-> >
-> >> +=3D=3D=3D Security team
-> >> +
-> >> +The security team triages vulnerability reports sent to the project.
-> >> +They do so on the private mailing list <git-security@googlegroups.com=
->.
-> >> +This team also includes people operating widely used git hosting site=
-s and packagers.footnote:[https://lore.kernel.org/git/xmqqbj9d3y9x.fsf@gits=
-ter.g/[A note from the maintainer], Junio C Hamano, 1 Oct 2026]
-> >> +
-> >> +Is the list of subscribers to git-security public?
-> > NTK as far as I know.
-> >
-> >> +How does one gain and lose access to this list?
-> > By asking for an invitation.
-> Thanks. I think it would be worth documenting who is able to add
-> subscribers to this list. I am assuming you are, but are you the only one=
-?
-> >> +Does Johannnes Schindelin play a particular role in the security
-> >> +team?
-> >> +https://lore.kernel.org/git/5cc325c6-579e-4fed-7071-a3ff98d51ccb@gmx.=
-de/[He
-> >> +seems to have the lead in triaging vulnerability reports], but I
-> >> +can't really tell to what extent
-> > Why don't you ask him yourself by CC'ing this patch ;-)
-> Makes sense, thanks. Johannes, I would welcome insights as to whether
-> security reports are triaged and acted on by you alone, or whether other
-> people have responsibilities in this field.
-> >
-> >> +=3D=3D=3D Localization maintainer
-> >> +
-> >> +Jiang Xin coordinates the localization of Git by maintaining https://=
-github.com/git-l10n/git-po[git-po].
-> >> +
-> >> +NOTE: How would their successor be appointed?
-> > Not limited to this, but there is in general no "appointing"
-> > process.  If there becomes an open seat that needs to be filled,
-> > it will stay vacant until somebody volunteers.
->
-> Makes sense. Here again, I should have asked my question differently:
-> who is able to give the necessary permissions to a new localization
-> maintainer? Are you an "Owner" of the https://github.com/git-l10n org?
->
-> Or would you just stop pulling localization changes from this repository
-> into your tree, and point it to another repository, where the new
-> localization maintainer would have the necessary permissions?
+On Thu, Nov 05, 2026 at 09:33:39PM +0100, Okhuomon Ajayi wrote:
+> diff --git a/notes.c b/notes.c
+> index ec9c2cb150..4ab3d45d7c 100644
+> --- a/notes.c
+> +++ b/notes.c
+> @@ -1012,8 +1012,9 @@ char *default_notes_ref(struct repository *repo)
+>  	return notes_ref;
+>  }
+>  
+> -void init_notes(struct notes_tree *t, const char *notes_ref,
+> -		combine_notes_fn combine_notes, int flags)
+> +void init_notes(struct repository *r, struct notes_tree *t,
+> +		const char *notes_ref, combine_notes_fn combine_notes,
+> +		int flags)
+>  {
+>  	struct object_id oid, object_oid;
+>  	unsigned short mode;
 
-When I created the git-l10n organization [1], I also added Junio as an
-organization maintainer. Although having multiple owners helps avoid
-the bus factor to some extent, rebuilding the l10n repository, setting
-up the related GitHub Actions, and changing the repository URL are
-quite easy.
+I think this function should continue to receive `struct notes_tree` as
+first parameter, as this is the subsystem it belongs to. While at it,
+and as we already have to adjust all callers anyway, we might rename the
+function to `notes_tree_init()`.
 
-1: https://lore.kernel.org/git/CANYiYbE5rcnD_VGJyL2CjS-R5E0pyNSd5TetvH849W6=
-wC5JiAA@mail.gmail.com/
+> @@ -1057,7 +1059,8 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+>  	free(to_free);
+>  }
+>  
+> -struct notes_tree **load_notes_trees(struct string_list *refs, int flags)
+> +struct notes_tree **load_notes_trees(struct repository *r,
+> +				     struct string_list *refs, int flags)
+>  {
+>  	struct string_list_item *item;
+>  	int counter = 0;
 
---
-Jiang Xin
+Okay, here the arguments make sense. We could likewise rename to
+`notes_tree_load()` though.
+
+> diff --git a/notes.h b/notes.h
+> index 6dc6d7b265..0f50020816 100644
+> --- a/notes.h
+> +++ b/notes.h
+> @@ -50,6 +50,7 @@ int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
+>   * simultaneously.
+>   */
+>  extern struct notes_tree {
+> +	struct repository *repo;
+>  	struct int_node *root;
+>  	struct non_note *first_non_note, *prev_non_note;
+>  	char *ref;
+
+Oof, this interface is cursed, it really should be refactored to not
+have implicit global state. Arguably, this default notes tree should be
+either dropped, or it should be stored as part of a repository.
+
+Anyway, as far as I can see we always initialize this default notes tree
+via `init_notes()`. So it's cursed, but I think it should at least be
+correct.
+
+Patrick
