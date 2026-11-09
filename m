@@ -1,100 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794181392;
-	b=Q+lVoPoCIJ2Fh71Rflw0961AYiRYmSk0P0r5wMyAlBbE8IBUJT3ySvVbOuopAKLYUfLq
-	 4+HVVkMWab1gZ8TjIZAhbW879JUsfKc/onorhwXDMvHz8hhSRpSumiesGxbixol72lCTT
-	 /J1STp0DwUATyMfaJNchxni7oTjJJhRvScUBHRHfSJh6hr4R901RsGiq5OcoJgVxQnEvJ
-	 KJKhvXoErEBHvjTaahuY5qnzmvbmZLSBybAZmzZDiZIki3apaBhlT97MSvtb4rhr1djCU
-	 5k8K9A2M3RNHk9Rwau60py6AISD8AKNGf05cwUKWReOdDXPMYiwt0MmAwxky07x2oFQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794181392;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.180
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794188369;
+	b=4Qm+oxZMEgRWKIMk5DhlruUV4kwQUupPHr6oAj/oQXRGKaP3QnZSL4y6X8QErIGcTeSj
+	 +if2eIpsVUZyUElfnI+hTpDMn6quZL/6LnH3C1tPSxLUK86CXF8BA9y58sMSwU182ZUjA
+	 IHIoX1TFKALvpLvOWqo3+dEa7iY8U76IsuCfqg5cTxw1uoDoER8+5qLLnL68z6dLNpMob
+	 vFWcp/T+O7XCSwSeYrrTmV2uYH6l+w8o8dlTxc7xyt7tz2GDAil83Xg106lFK9cDq60Gr
+	 0NzsS/8Q0nSfZ7PDQLvZacOUgHTviKOm/A4ye/KS3U4iNIMpMMtU58cs8l925/MHcrg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794188369;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=WVKkrgzV7bS6MFNnWicO/bUSGkT51sbBZfaQOqXrB/w=;
-	b=MJTp9gvt4Yxunvy/KlVp0qQskB0g73QmtQOTLo7Cke2q4vt8l6WS5EMJY+Ok56kWrKvR
-	 ZDtZmSJ3SJzZSac84/allXNVZaY2YUzsbTfFhh8qDIVxwSgXgYsA6tII1MOiygQ3IEXed
-	 QzHH5SRofHBVTyo1PYhBD1rRVAjisyuEsVotW8BD/qY7l2f+LZ8gzHg420G2MJ1Lwl1YD
-	 /CxOS3sUr4xABH3ZpF21AP6BpQs3K0Ev2HddpdJ3Ta8JLSXhl5BnEiro16H7z/WQTgPOc
-	 19jr+IbEIu0zqnFxcMrlJd3C+XOL8eJeHg4TEmNZCWdoe2C69zL+G3mKnJpDr1IQqNg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=PnI94zHiwF3yhwkWMzQxW8qMZpbYWSQhHCJvDB6WCdI=;
+	b=E0r0cg+cnhOqGeJjtJq7Fs2bTzGt8YyoPTdl2rXZwxmeTZtt+ttdmUUDmEF/tPNRq/oK
+	 dMnAuhTPKgE05NMpKIoE0jKQSQXy++7k+njqJE6H/dqahUSj/tbrAQs3wAavs1pPRn1lm
+	 5ixIoM6px2ahGtBPgoguLnnUfL5Bz/hEiYi3qON7np1JmktcVuYhogAmdwj363CCOCBOW
+	 9f03OtHEEZOAScoqN4LLujfKX8aS7X5AMk7Ng5S6dT1WDnRWsX36xOvBivlga9QflL7SR
+	 CUYAGvf2aA10368wV18DObex6WgaDmO3brjnD+mDC1PG43VWqGPqJAz+N9kJgAhLanw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UMCYHslo;
-	arc=none smtp.remote-ip=209.85.221.41
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uSiJdAcs;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.180
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7335A606A31C
-	for <git@vger.kernel.org>; Sun,  8 Nov 2026 23:43:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7335A606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A30606A320
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 01:39:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3A30606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UMCYHslo
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-49412eb1474so175413f8f.3
-        for <git@vger.kernel.org>; Sun, 08 Nov 2026 15:43:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uSiJdAcs
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-93f2a8cfd4fso7406285a.2
+        for <git@vger.kernel.org>; Sun, 08 Nov 2026 17:39:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794188368; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Mpn+yiCX7ZBcnjLntkoCRFJaEjICv0uSFfyx9Ra9X9cHOjTllcHi7OpASE3oeaNbap
+         iM9Q/b3AU+JqEUxwR6cPLkI+JFsx2x9ZatPUMP0n1Di2E+1nD0lLEPqTYf5mqzdP8udR
+         TgrmbZWHkfbJL/V7Sd3Y26KH7aExH9D3602vWV17ZD397L58aAmPfBCU1LvNw8F0OMEk
+         J9OCnp96Ht8QW2VHswh8UoeK+zuE8C/UKfXIr4OmgD36gOTKIJg0Uuw5ugLeFHWpGp+F
+         qHxAtJP+3G+l63u/EBpu/DYhSHPSWq6sX8B5TZLAbL9gkPromJix82P7cGS7HUM8OqJn
+         lb2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=PnI94zHiwF3yhwkWMzQxW8qMZpbYWSQhHCJvDB6WCdI=;
+        fh=KxAyhZk8Vz1NTWCbW/FpppHz3i4Hbd+EQXd7CyCVHdI=;
+        b=cnTwmTU3mFs8cYfd5jUlLX0t+s/TN0X1t3IKkruay6hBn4Np2c5+Nao8cFLMqTPYXk
+         RReef/ZRUFPVTiCfBYGasKyrxpbIwRDykSH1FcSNdyRuc+qPkrVootmkkOHiX8zODwCJ
+         LppkJgxQrsqdGgjoPIjfi/wxojBcuJcEzEX5bro2UzTDWoDx4KzFQcCqlwZAnuQp+vHc
+         TUi7JhMHtOAldL6c1ifrcUCtENE5TRoRBYF2F4JlG04s4aOOS1fk1ekDp7q7A3fYbDNa
+         HAEnrlXR9wItLIkC72t1/WP4xGojuujmOCbpcNpux3q0bxLQza9fF9cY4osqsREroZ2W
+         CQwg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794181391; x=1794786191; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WVKkrgzV7bS6MFNnWicO/bUSGkT51sbBZfaQOqXrB/w=;
-        b=UMCYHsloL5FfgvA0JTixnLp2K/g/MhkvmNVUV2OBG2pVtbFJTlnFvP7xIvuuSpsV6d
-         c5INk2Gyj1U6t7wAtdeyoQmgxqH/E7B2CCorKEX+ZsiHewO1sGK+JAU0vMjGPbOXXC8h
-         JMa+9fiRhXTct/5TFlVXvmmtojRmpClAQbOU32LMnKlNln3gqPNkPqirJLKeA/MB0aHi
-         YXsjR3DFPR/0ci6fH4U5U4C7rTvopnIJ1w+bSQZPWEn3I3SlFmEdXvKww34/HRB1RQet
-         1kzO89wmjBjzsDpEdUXLyzTjyY9Xn7Jlu4GsIdjg1oHFh8LShb7DWNS/EkZJHvP0T1O9
-         L6BQ==
+        d=gmail.com; s=20260707; t=1794188368; x=1794793168; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=PnI94zHiwF3yhwkWMzQxW8qMZpbYWSQhHCJvDB6WCdI=;
+        b=uSiJdAcsl/25YkuaD4bH5g/cgWcDmwKEhUQyRYYfWTKyiIR6Wa0oHoAoj3W9LvRWuj
+         BlQ99ELjCf4F9y/E9SWbmEcV0bVvHz0tV86GDnT3uqZR0a3dmB+1Bhd1hejH+BbQ/TFr
+         3YtDWxcXcenMoP4YwZUYLwi8Y4G/g3dOCgr1m53R/gl6SdaE7xqjbnSQ0E2WNUS0fiRG
+         0my9jjoFKarO9q1um/IABxns8dobULk2d7WucaqYV8/gpUGpY4aN9LVLdxWgLh93waJA
+         X8h2jsWlmp7ec6ZIcc5N27ioLCAn/W2t9H26Avm/K+Jwf1F2N5jfr+f1RZd8eyXdKoCF
+         jOgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794181391; x=1794786191;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WVKkrgzV7bS6MFNnWicO/bUSGkT51sbBZfaQOqXrB/w=;
-        b=D4ugDDcxoV6eT3GJ4bBwOdQvI9eQ8aWYXfv0lBNKXqMoYwSRgoxY2nmpNdw5kLpu2P
-         a6BsCqfyDy9eXJUj6JIP+kRZilYa6sjOBmaOi6ZxF/M0Zbuayy24+PZ3+ncmnVaV94d8
-         fPCdPMBozzd1YJCf5dVEF0VCsthYmszt+m5zQWsTH0Npy4qD/rH/PtNBDfU+zHbzXvKN
-         mEudX8PtnhmZ6lhKYIYttAQeW66qTvtV2jJgmsyyu/l//Y+HKvcFxsD/vsSMuV6IlcDM
-         7OjI1NGmESVm3odxG2Oj0+abyMNiTtEUklM/XaNDNrza4NyVJu09dPgp1C++RRi62TW0
-         aMLg==
-X-Gm-Message-State: APuU4Z+alJGwqqW7ZtiapCuVdR/FTThLfebcT7lRTBrm+R/n36+iwLMS
-	5v7sYMQNuDS9b2/EEMafeTCHP1SzulQrsKIRE/5ZLLAf0ETW/KqD/ddYZ73W0IYNbxc=
-X-Gm-Gg: AYBFou1En3686Y9OIACr3cwmbZf0eYYWVXxcHcvGZqNpOBYo/1PtejZ8v2X2+C9bXab
-	ayVsRhihi22ht9E9rt73OKBV6fGEkoEcC7CnmrFS5GPbum6WunoSS4Ysuq0K4FvC03V1zXjf8m5
-	fojfZUs8G2uEb+tdnc/XTWrABEphFCh8LdrRpvg1WtI0UkwfU96oTxewo2P+aH849HPyYlL7s+/
-	6jZVOhwCR8BW7u4AsOYbZYqJzwBYPvWlOCplNxQBSAPsYeQq2f29mt7cQ3Ud3xAmfACpnzMyXTF
-	z423KZ43mDoFgt6wxRkDhBa1HNx6b38IAB2gQJ2aWrSHLVCY2q0mz6mz0z0sDkMmwI29sdoiLZr
-	gBkKQ0hTWmODvRmqKCi8HF+onZq3iqq2b5ln9ECoMpo0JlIz1M/YmKdPPhDk73IKshzjmPnkuzU
-	XPiBdalsPFHr9671kI8PeMxRTKbeis/dTth0wv71puw5qk2e+4SP1iYx7HbTMEpsCC8oExqNKIh
-	GtozOV/hkEKHYRgQWJpYhgJN/5xjtP41dsP46B6BHqNxWX6r23eJwIgIp71dBOJBcywxeniizcY
-	Vo8gVFO9MKCiYxOj0gMdf44EeIRGCSgDNvOEICI8jFtxAEkf1CxjJ7WNCFqFw7dEnrJIgWesbFg
-	ws2XgAsgnkd1K2rABNNhWUQb3ZqC1QQQOIuWTRud0mA7REFl2kzorPD8=
-X-Received: by 2002:a5d:5f09:0:b0:490:6327:96da with SMTP id ffacd0b85a97d-4957c404abdmr4630190f8f.0.1794181390789;
-        Sun, 08 Nov 2026 15:43:10 -0800 (PST)
-Received: from HP ([102.0.122.224])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4959011c995sm6448619f8f.0.2026.11.08.15.43.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Nov 2026 15:43:09 -0800 (PST)
-From: Tanga Joris <tangajoris@gmail.com>
-To: git@vger.kernel.org
-Cc: andy.koppe@gmail.com,
-	gitster@pobox.com,
-	stolee@gmail.com,
-	github@paulisageek.com,
-	christian.couder@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	usmanakinyemi202@gmail.com,
-	Tanga Joris <tangajoris@gmail.com>
-Subject: [Outreachy PATCH] read-cache: do not skip the hash of the shared index
-Date: Mon,  9 Nov 2026 02:42:35 +0300
-Message-ID: <20261108234235.1594316-1-tangajoris@gmail.com>
-X-Mailer: git-send-email 2.56.0.388.g09a996e1ff
-In-Reply-To: <20261107121119.2995843-1-andy.koppe@gmail.com>
-References: <20261107121119.2995843-1-andy.koppe@gmail.com>
+        d=1e100.net; s=20260707; t=1794188368; x=1794793168;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PnI94zHiwF3yhwkWMzQxW8qMZpbYWSQhHCJvDB6WCdI=;
+        b=FonT/rErr+d3JTiI5MEV6xXV0K0jzMe9rLEhpkZDpDqPMvIsFmcmP24wCN18lqgSJn
+         SzsMDYrPGBjiZYl3dsddtiPzNRofnFXJ1QJyYa50PwbMeTZSeVdSZ84RATkq4w0RwiPs
+         goQQI2YlVq2HzH8HV6m5+3RwyepagH0zqhmpLad4s4pOpRNC9KhkrOZwrTkzpHr1FVQu
+         +QPJpObwCs3v5VJp3px8j20D+MCO5rFfLp4+ATD268Kuv66g2FKD6F82F14+5XrXCKzX
+         stzGoRzyUdV0p7hN8GFYvSYNFYH4J3ihxFoVFNTx9VZE2waFkP+Ur9jIEHRbmjBXVg6r
+         1i5g==
+X-Gm-Message-State: APuU4Z/16fbjJFsxGrkYdiepj0/N2mM6isokmTYSGJLCr26061A/3yr+
+	ZbxfTK8Zzeu4r5CrppFegDSvetMTU3O3VuxXJSQ3zaT7VpnYqvqrL7E9l2KeSbVoESM1JrdvO9N
+	Npj31gy6DvGg7HprpqI/CMvajnk7Dxx4=
+X-Gm-Gg: AYBFou397iCkAHy8847TZno1dEfo9HTdVhDB+XUutuF0xuS0yMCkTt8wfHM+Ndjw/tw
+	tpEBWAyjqzb2GvQLWwupbueDz2oBtyJexl3wDktwgCckmKgHlFEdBuqauxsCis14zToU1xcJemF
+	OGRhgiLl9vT8sZsmae9MT6P+TjO4GwOobGaHDMvJ8DoQXGULSXY0EU3ziahmY8dIH8+0y7WMiwY
+	BIW0IkxCBx82aVYXWwY+L9undWJHmSgOCiC3pRtNkZetN3lzZ4es/VugTawJMvBKfKwm3LMe7Bz
+	TqpsomDe0Ar55R2EBLsbsqtx6hN+S5+9JZT0xEtDGYeDe3AFd9icFU7nxDJnAZ+YCp5aTdl9fJW
+	Nj7WhahjDjixvyqzAty11voqdMBU1dbG1y0k=
+X-Received: by 2002:a05:620a:a913:b0:93f:a34:d9fa with SMTP id
+ af79cd13be357-947840f2208mr508579285a.1.1794188367843; Sun, 08 Nov 2026
+ 17:39:27 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,150 +103,118 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAP8tz2L3Dfhd+ec4+SFkZgXmzQnBg+3Y0REAV+1Hf5X415qnfw@mail.gmail.com>
+ <CAOLa=ZRSQ4_EGC8qTs6f0HBQyxj_k0Z-zt+uXt0JpO2Z3Mpqzg@mail.gmail.com>
+In-Reply-To: <CAOLa=ZRSQ4_EGC8qTs6f0HBQyxj_k0Z-zt+uXt0JpO2Z3Mpqzg@mail.gmail.com>
+From: =?UTF-8?B?5LqV5LiK5Y+4?= <inoue.tsukasa.4@gmail.com>
+Date: Mon, 9 Nov 2026 10:39:16 +0900
+X-Gm-Features: AclHuK8_TT-6vGRoUZ17IlyCqogPcxds3W3nDC-f_GzGB6V6P-sihxYtPeS4gRc
+Message-ID: <CAP8tz2KFb971L5_XY-hb8M=vfK-AsWwk_7YoMK6nCS8xhUKQ+Q@mail.gmail.com>
+Subject: Re: reftable: wrong HEAD reflog when its target is updated in the
+ same transaction
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-With core.splitIndex and index.skipHash both set, index entries are
-lost when a new shared index is written:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-  $ git init -q r && cd r
-  $ git config core.splitIndex true
-  $ git config index.skipHash true
-  $ touch foo && git add foo
-  $ git status --short
-  ?? foo
+> With the files backend, this isn't an issue only because the files
+> backend doesn't support atomicity. If it did, we'd have the same bug
+> there too ;)
 
-write_shared_index() names the file after the shared index's trailing
-checksum. With index.skipHash, that checksum is written as zeros. The
-split index then records a null base, and read_index_from() treats a
-null base as "no shared index". So the entries stored in the shared
-index are lost, and "git status" can die with a BUG().
+Thanks for looking at this so quickly. You're right, and it shows up
+with files already. files commits the updates one by one in the order
+they were queued, so the reflog is right only when the branch update
+comes before HEAD. With "symref-update HEAD" first, files also records
+the old oid, or no entry when the branch is created. I was wrong to say
+files gets it right in both cases.
 
-This has been broken since ee1f0c242e (read-cache: add index.skipHash
-config option, 2023-01-06).
+> I wonder if we can move move reflog logic to the generic 'refs.c' layer.
 
-Never skip the hash when writing the shared index. $GIT_DIR/index
-still honors index.skipHash, because it is written on every index
-update. A new shared index is written much less often, so only those
-writes pay for the hash.
+I like that direction. As a first step toward it, I'd like to add a
+helper in refs.c that returns the new oid of a ref updated in the same
+transaction, and have both backends use it before falling back to
+refs_resolve_ref_unsafe(). That fixes both backends whatever the order,
+and one test can cover both. Moving the rest of the reflog logic to
+refs.c could then come on top of that.
 
-"git reset" repairs an index that is already broken.
+Does that sound reasonable?
 
-Reported-by: Andy Koppe <andy.koppe@gmail.com>
-Signed-off-by: Tanga Joris <tangajoris@gmail.com>
----
-A new shared index is only written when more than
-splitIndex.maxPercentChange (20% by default) of the entries are not in
-it, or by "git update-index --split-index".
+Thanks,
+Tsukasa
 
-Entries that the split index stores as replacements show up with an
-empty name, so "git ls-files" prints "./" for them.
-
- read-cache.c           | 16 +++++++++++-----
- t/t1700-split-index.sh | 41 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 52 insertions(+), 5 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index e40f290bb3..c48ea7b1e0 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2818,7 +2818,8 @@ enum write_extensions {
-  * rely on it.
-  */
- static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
--			  enum write_extensions write_extensions, unsigned flags)
-+			  enum write_extensions write_extensions, unsigned flags,
-+			  int skip_hash)
- {
- 	uint64_t start = getnanotime();
- 	struct hashfile *f;
-@@ -2841,8 +2842,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 
- 	f = hashfd(the_repository->hash_algo, tempfile->fd, tempfile->filename.buf);
- 
--	prepare_repo_settings(r);
--	f->skip_hash = r->settings.index_skip_hash;
-+	f->skip_hash = skip_hash;
- 
- 	for (i = removed = extended = 0; i < entries; i++) {
- 		if (cache[i]->ce_flags & CE_REMOVE)
-@@ -3147,9 +3147,11 @@ static int do_write_locked_index(struct index_state *istate,
- 		return ret;
- 	}
- 
-+	prepare_repo_settings(istate->repo);
- 	trace2_region_enter_printf("index", "do_write_index", istate->repo,
- 				   "%s", get_lock_file_path(lock));
--	ret = do_write_index(istate, lock->tempfile, write_extensions, flags);
-+	ret = do_write_index(istate, lock->tempfile, write_extensions, flags,
-+			     istate->repo->settings.index_skip_hash);
- 	trace2_region_leave_printf("index", "do_write_index", istate->repo,
- 				   "%s", get_lock_file_path(lock));
- 
-@@ -3262,9 +3264,13 @@ static int write_shared_index(struct index_state *istate,
- 	move_cache_to_base_index(istate);
- 	convert_to_sparse(istate, 0);
- 
-+	/*
-+	 * The shared index is named after its hash, and the split index
-+	 * refers to it by that hash, so never skip it here.
-+	 */
- 	trace2_region_enter_printf("index", "shared/do_write_index",
- 				   the_repository, "%s", get_tempfile_path(*temp));
--	ret = do_write_index(si->base, *temp, WRITE_NO_EXTENSION, flags);
-+	ret = do_write_index(si->base, *temp, WRITE_NO_EXTENSION, flags, 0);
- 	trace2_region_leave_printf("index", "shared/do_write_index",
- 				   the_repository, "%s", get_tempfile_path(*temp));
- 
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index 887e72a5fa..2517ac9eff 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -544,4 +544,45 @@ test_expect_success 'GIT_TEST_SPLIT_INDEX works' '
- 	)
- '
- 
-+test_expect_success 'index.skipHash does not apply to the shared index' '
-+	git init skip-hash-rewrite &&
-+	(
-+		cd skip-hash-rewrite &&
-+		git config core.splitIndex true &&
-+		>foo &&
-+		>bar &&
-+		git add foo bar &&
-+		git commit -m initial &&
-+		git config index.skipHash true &&
-+		git update-index --split-index &&
-+		test_path_is_missing .git/sharedindex.$ZERO_OID &&
-+		test_trailing_hash .git/index >hash &&
-+		echo $ZERO_OID >expect &&
-+		test_cmp expect hash &&
-+		cat >expect <<-\EOF &&
-+		bar
-+		foo
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual &&
-+		git status --short --untracked-files=no >actual &&
-+		test_must_be_empty actual
-+	)
-+'
-+
-+test_expect_success 'index.skipHash does not lose the first entry in split mode' '
-+	git init skip-hash-first-add &&
-+	(
-+		cd skip-hash-first-add &&
-+		git config core.splitIndex true &&
-+		git config index.skipHash true &&
-+		>foo &&
-+		git add foo &&
-+		test_path_is_missing .git/sharedindex.$ZERO_OID &&
-+		echo foo >expect &&
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
--- 
-2.56.0.388.g09a996e1ff
-
+2026=E5=B9=B411=E6=9C=889=E6=97=A5(=E6=9C=88) 7:18 Karthik Nayak <karthik.1=
+88@gmail.com>:
+>
+> =E4=BA=95=E4=B8=8A=E5=8F=B8 <inoue.tsukasa.4@gmail.com> writes:
+>
+> > Hi,
+> >
+> > With the reftable backend, if one transaction updates a branch and poin=
+ts
+> > HEAD at it, the new HEAD reflog entry records the branch's old value. I=
+f
+> > the branch is created in the same transaction, no HEAD reflog entry is
+> > written at all. The files backend records the new value in both cases.
+> >
+> > To reproduce on current master (fb255012ac):
+> >
+> >   git init -q --ref-format=3Dreftable repo && cd repo
+> >   git commit -q --allow-empty -m one
+> >   git commit -q --allow-empty -m two
+> >   git branch y HEAD~
+> >   printf '%s\n' start "update refs/heads/y $(git rev-parse HEAD)" \
+> >           'option no-deref' 'symref-update HEAD refs/heads/y' commit |
+> >   git update-ref -m test --stdin >/dev/null
+> >   git log -1 --format=3D'%h %s' HEAD
+> >   git reflog -1 --format=3D'%h %gs' HEAD
+> >
+> > HEAD is at "two", but the "test" reflog entry points at "one". With
+> > --ref-format=3Dfiles it points at "two".
+> >
+> > Using "create refs/heads/z <oid>" instead of updating y leaves HEAD's
+> > reflog without a new entry.
+> >
+>
+> With the files backend, this isn't an issue only because the files
+> backend doesn't support atomicity. If it did, we'd have the same bug
+> there too ;)
+>
+> > I think the cause is write_transaction_table() in
+> > refs/reftable-backend.c. For a symref update it gets the new oid for th=
+e
+> > log record with refs_resolve_ref_unsafe() on new_target, which reads th=
+e
+> > refs as they were before the transaction. So it sees the old value of y=
+,
+> > or no y at all, in which case the update is treated as a dangling symre=
+f
+> > and the reflog entry is skipped.
+> >
+>
+> I haven't looked at the code, but your inference seems to make sense to
+> me.
+>
+> > I ran into this while looking at updating a new branch and HEAD in one
+> > transaction for "git switch -c". Would taking the new oid from the
+> > target's update in the same transaction, when there is one, be the righ=
+t
+> > fix? I can try to write a patch.
+> >
+>
+> That would definitely work, but this same bug would exist with any new
+> backend that is introduced and supports atomic transactions.
+>
+> I wonder if we can move move reflog logic to the generic 'refs.c' layer.
+> So for a given transaction, 'refs.c' can already parse all the updates
+> and also set the reflog values. Then the individual backends would
+> simply receive the reflog entry to create and wouldn't have to worry
+> about solving inter-transaction conflict resoultion.
+>
+> But that might be a complex undertaking. I prefer the generic approach,
+> but your approach would also definitely fix the issue and would be a
+> very welcome fix.
+>
+> Thanks,
+> Karthik
