@@ -1,121 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794243582;
-	b=0E7LduH1WAiqQWsj+gyyO/nRKVIFy+r6cNqBsSHWrabeBcbZvN5dsLmhL6eSfq2zz+7v
-	 Kg6DMznodQa6QmqhzbJj6/0mbbbbyYR0WDwVeTVUU7MD4o3Bjs4+ueKCvyH8Iwm0ql2C3
-	 ejT4YUbT3Nu918OA087VXI52CkPn26Of5hVsLMxJN7fYkE2MAuJP7KOXMwxK4d/GneOIt
-	 YRgIi6i9pz8b3SSap9VsEtpsRZpPtYprR/G87Zt6d8g6+Ur/oB+ZxKjcfvJHIvIPuhfdw
-	 lOoh7nQ1kBbymoBE+kJFBGomy5o3+WYMbmIf/6RNEGixuuGQ2aedK6IDEzbQ/khcbDQ==
+	t=1794245019;
+	b=Q5T0qSRRtrLvyua3Y3tyvI0qkVyq7Y0f+aNh/SkLkQ+NINQroAaz7vFXgAv2QTUrnciP
+	 i1N2p4pu/4ieOlqsfEXgsVQlK+iTBoOo8MydDNmww0Sla+mtoPgbwUSEXExAUC6Inf8K7
+	 mfOazuxqVeupHuwD/i/pGRIWRNv9gdUZHyNffi7KVH3xyOmc9IuxprxRb8n9b+ypWIaA5
+	 /N0abMPuDTpN09swyqL2uOp/O7SbIM24mUDQ3HMSUhVrMOKtTegSgqMyA5fkrkBs6Ce3r
+	 5UvRisZMYhihPVphGDNIe2bZ7NzpQXZX/ETpv/zb9305X6xRuHocPTXXS13OaT5JfWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794243582;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=lna/+y9ndpLXjUr5FkRd+aUv7BShwvh8e+OiwyosBAk=;
-	b=piqhDLOrPjgaUc5I0V9D7gvUo28c2KhoerWcC4z5BKCMMLQN/Nxxi6yxTOgNtCuzN8Wk
-	 dnCBAq2UJVwszd5NijOii2XLVIO9PsEQipLhxsBTkr0Eu1KOA5nZio4g5nOkwN7gVj5A/
-	 sVUrRAPz3Rk2xUf8W34vVFze6cMNFbAvqizE4fnJ6jdbjcaVEJVOZAnAKx5+hkUXXjMv5
-	 Kd+CVssuO3dUbOFqvV7rkQXRUAFpw2TUq4ra2KsPpNRVY3xM1dETt9Nf1y5NO7aZIT0Tu
-	 a5n/kcoLcQf+zypW7Nzv8+jFaW2NllRRDqtcjMDL98P3v1/JCrl4hvl7MvL478CA6hg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794245019;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=hzwri+YsmKt/+GmdZE8xV6rGD9pcDprjVmbj1CCJxk8=;
+	b=5OSCoGBhxJ7NC+HULRL66GzZTnoBvpqop3CCsWQwuy1tdayE/osExi9YlUik29o/65mC
+	 4gamEoVsTTkukf0CoEgHeIUIzP4elUokD0QzpG28kOtCn18+j8LFCDfpsYKgrRSNS1TiV
+	 FdXaV+PhOfrK3FfdTGXQFt4qI8Pc6CfnKLfziKpuOX6IBVoGuTBirB6mLTYswpJocQLGe
+	 YWIq1yb2LMrUhfyPDU3mqP/kpHZ9E5u1P6ylJ6tR9fnPsN39U/9qxBw8fRw6TyNlcbdyA
+	 VeoIMPRp/yfOJx5zBhDB/CYYFArqgH7bzAQ6Mm2rcW/9rzFDaulkg2+rJ5pEX+LlRDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=K5vOioqG;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=qOdMNwDe;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=z5fDZeTC;
+	arc=none smtp.remote-ip=209.85.218.45
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E66606A31C
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 16:59:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27E66606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55449606A31C
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 17:23:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55449606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=K5vOioqG;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=qOdMNwDe
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 56BAFEC0214
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 11:59:41 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Mon, 09 Nov 2026 11:59:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794243581; x=1794329981; bh=lna/+y9ndp
-	LXjUr5FkRd+aUv7BShwvh8e+OiwyosBAk=; b=K5vOioqGCzs3573HURo938EgwX
-	p1EvHt3cK4YFkk+rVxWtXZnN9ahTlG02eKEClAQCiI3KgjY6pTAXpQGIhBEL6Eox
-	n/tPWOQDOQMoKL2T8U1l61TX96eQ3alb8X6DsE+hORgUrd7kBu15zmAQ5mITtcII
-	ucXJAa4HwL9VBuTXcfxrWh4a7O/UIKGrczCYF3R1/I/o9tCZGdeEkVdkxDPNY8cg
-	H4vSvUCzMQbKcqkQQnBmYgGeAsJLbaVgC4oxUMOdfspPP0T9layqP8Nr6vkn5Hp2
-	o/o7HCJw7myeLNkoZSDnucJarlruIC9f3GHnT3lL8nAKRSN2wUhj5BKeq+3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794243581; x=1794329981; bh=lna/+y9ndpLXjUr5FkRd+aUv7BShwvh8e+O
-	iwyosBAk=; b=qOdMNwDem5BFXyaWxmpVXit2EX1rYiDmPZ490xj3HENjw74nDyA
-	ZSOXPzAus3qAPJovKpq6UvqOJ9QrZ3RKxzORtYofX2bKqt9Vwhngcbz2cwfo9L2j
-	1Q/4idd3b25qatAY7+OcdikEmwwQC5I5QD2QAyqB8m/zRSzKFpnnX0QY91Haak/a
-	zqUtivPHRvc3yt7dq2EStbPsWekcf/xD2URcWYFw17VbjqWJxINHBaFDcOHZqTru
-	vKFSIhzEl6oNOxFIKJDsXfgiMSluYc9MDzaJ8jka6poDXxOfgvALGSi319yHZTXg
-	fJdvXQzDyS0UKE5ctCW3y0qEwwWRGTUC8KQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794243581; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:jghsVaS/WrBy2ORYlwZj3wGNow9o+afPLLXOF9usWTfqiOv
-	Xv0cGYD6VsYysiTYLy2IqGx/I6uZPw3M1TQcXceLC7YFf+2hrJZ54AmAZrAZ9O35
-	BMJVuc1fHYHxMItn0O361qREXsjwa0HTW3hs3uDdrh2XxRE6J/SO7phQX2v4Txzw
-	Wo4Bw1HNAeRC6nGcpUUtsflrBjIeJR3OU5l0HAKW674Rl86FWEcgRHvhtH4tuS0v
-	I4EPxDG8fbK5qXJ+Xh1Dipfl1wGhR6YIv+HYCGCP4+Fer2y5F7PIOnp98E67ruVM
-	B4datsfGDEWq60/kyc63ZdlXj8WqcDlK/2/CtkQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:eFBHVhi49qR8QqkEUSUukkvLN9H4jRZyzuBhkqgR7Vc=:FwbuYs+xQtKcyRIOiYz/sd/a9IDpmvQtrOfQhMcKhWA=;
-X-ME-Sender: <xms:_fvxaiKhDAxIpzQS0Cs6QgjQerWrc-0VvAaSNc9tNoHbA-AXTkTV4Q>
-    <xme:_fvxahAOqpwBBmd3DxmkthtV_JC32D_rhlltB4NAMxzn1CIbo9gw8CPfeLMgJ77Vi
-    3OZ9w_zd4gQzgCe5Hzjhzzplin0Ki0uj89FkUbYFrQOhKRnbbO3WkKk>
-X-ME-Received: <xmr:_fvxarDv3PZAkRO2f9BAxw5SnDUCSjRJW4IBHlr4qMnCEdY2FJZusExTwwk7MioG7V5O3TyzOsUJcC5izvoakNhvkJc-lwHTiS5p>
-X-ME-Proxy-Cause: dmFkZTG3WU9Z6p26MUkH9ZbpBAry2FEQFBeqfm3sV8AOLG0grSuE5CV8Pk98P1SPIbI0dj
-    9Gz0rTsSsBHB3gLshd35WtK5XGrTo6Cnhn42IFfhS4HM0pwB3A48B4cgztDiBXuUFHDEff
-    6ikqeH3R8FDQrSE94PuIlUZQiBfOZIcYOnFRD+VnVpr77vpgio51Lj43fVDGkZtcgSjvAe
-    RGh5FVo44UMpMr00edk1tDv87E2XIB74B33Aa8wc0XI2wt73x59P+NammLxBVo/AIkem1S
-    58FznwzIMRMOSpesQQxLEFk6IL+0PLF4BRxEk5FEi9HEOe70FaFkCJFrRVmHqafpYIudps
-    TvvgNCO4aHUChe2WU3e7S6yB2fAeGWgxcWR9OC7qdezwuT5M+bNWqlrxkMFTGySSUGszFx
-    pXpqv2krrRS0WpnmlW234hdcfCnhfI9HXjo2ugMVB9SEfvD93rM/u/wbVdVzof2aKuurWp
-    7pXazdv7uw7jZFUTlUCdt+x4ZJONlgS1+RYkvbKlM8qLHQ7/nF26Mdrknl/xO6+bxjMXz3
-    nYzu5lf6S67MbVqRaZU/D9tXDL4pqF6KjkVXeVT7LACSyjXhscIFtxao+VtTk+KrY4qq1b
-    BLufZcQnqfQqFmhQUJ76DB0lcZrNQR04bOUM8C0T3SMefkfo/X1OGftN3BTQ
-X-ME-Proxy: <xmx:_fvxajBYS7fReCsizglnCX5sz-rFMz6iQN8YasouPEOIRYbZqOi12Q>
-    <xmx:_fvxampppd37vYD6vja0lrVc6zS_pX41zijqbtxkp1YuuwWlgvsj4g>
-    <xmx:_fvxatl31xlIZHbfDZJUKEjZ3g-xNUqsTTrqo8ji5YSxWG0w7Vl4Qw>
-    <xmx:_fvxamxFsJYBdy7pfqfHwmuINrQsSPHPv8Z3AceiHTt9vi65KsT84g>
-    <xmx:_fvxakW5Dn32nzLXtDZ4s3q6II9FIdZpObfNrHKAFq_4Zptisxy4f_d2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Nov 2026 11:59:40 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2 4/7] t0027: optimize how we reset repository state
-In-Reply-To: <20261109-pks-gitlab-ci-speedups-v2-4-508832602d0b@pks.im>
-	(Patrick Steinhardt's message of "Mon, 09 Nov 2026 10:58:25 +0100")
-References: <20261109-pks-gitlab-ci-speedups-v2-0-508832602d0b@pks.im>
-	<20261109-pks-gitlab-ci-speedups-v2-4-508832602d0b@pks.im>
-Date: Mon, 09 Nov 2026 08:59:39 -0800
-Message-ID: <xmqq1p8u0wlg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=z5fDZeTC
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c4d581da0aaso116768666b.2
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 09:23:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794245018; x=1794849818; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hzwri+YsmKt/+GmdZE8xV6rGD9pcDprjVmbj1CCJxk8=;
+        b=z5fDZeTCrnQ+bpXl2PKUasDfZAbLOrWkWKh9U/iE/kIkh48cZmAcxsJDX2rKEet2vD
+         ZxbIkDMrCKc+dAfMfdneXxyr6fSCPizi3Mw/KOfJfuw9AUFG+p1AZH2HgziQP9fOdzho
+         Vb/joJ05XG1ApUlsOgP/czX1tFCQ46XCW/RlGfLVZ05iQLPGW6DC6arHs/7YgUZK7oCg
+         34yTE1mByTwFgqfmo/1ZChweu9HRbImeD8bM8FtDu4VwOh1La3SxTzYWj4ULzrPnzzht
+         zJQB5sH4ouf6DYcp5wVo+A7zU/UMbYcDjJufQ+sNPmdRxcp0CBeqApx9UmfzoLGdkNGZ
+         mQEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794245018; x=1794849818;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=hzwri+YsmKt/+GmdZE8xV6rGD9pcDprjVmbj1CCJxk8=;
+        b=RvRb9d8UZU4/eFs8xP5cBHzwQUf+vKX3Q7kWm267qNc3Ye3Ss8XOXqh1MAy7s9Tngl
+         vfVc/KOvtQdBjGYnDbZ6myW4fKqstGY5SgOgDb5TmKsEjtiLglbYzU/hCrGMTSIoypLY
+         xbzTV9Et5slc/aqozMuTkeZqm5yUvxBaUBEFSmN6oIeb/KLCiUOgPXeFRf1/8zvUSxuK
+         x8vqF40rDTRED/0Wt2BUJr7gewI00SDi6qPSPUAxunns8fAXSmX4mfVsUjI0P07fdpeY
+         sJkqY8RCZSr5x6J6LI594Gxi6+gPHw3Drq6qUrIPMJkbKtqkLCR10TeF+MU0eJRv/+lU
+         ac3g==
+X-Forwarded-Encrypted: i=1; AL+hErGS+GapU1g1yksjKPkTC4KYCERjTOajGWlfj70mGbUdkQhAudkwRRexyzKMTD0z3/f/c4k=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+h++6s/0ORuoJY5v/QR8R+BPJZtF6/E/PCEoroU5j3gHYUwWdU
+	W8KtcPiH/HgvgIqNIksH1Ga/VgS1ydo/ezbUPWGuaLuIFFCx+SizmDou
+X-Gm-Gg: AYBFou3dX12LokZ/M6ZglUdN5H/VS3le8FdAsjzUk2MuyIF+zHLj44nI5fLrZjyBRT6
+	DWtU1KtBNmU0M19lyCOsFng/n9wH5/Cy6/wwUiAdZHkdbx8ZMAJ0K5N2W8yvZUmPmWs/Uw5s+EW
+	8A+8qrJraI681TDqoEpawtf7Fo0zorH9YzfGnZEHs29A6pNeNE+RfcqBhIU1RuiGxcWpKH6oaOS
+	yHW/sCn6om1Or0iAMxbneWI9oJxBD5CQ52afSeF15WhD3v4uwQQFwXFYLYqUbPwbO3IFJzFk7u1
+	C1/3QbNdVHgcsAIz4Qh45zOZQdpngh0qW/7gsEN+aS4rvRaoR9HfRVphwqpPkS2IGfzt2WQw+eE
+	4P/DCsCSCtMhG7+qQ82WLUhvGrzx5/QlxiryZTFGSkxxNGAzQ1gwPQOb+YTWGUJUucUDiVGV1et
+	RYkVEuSWXO7tqa4osjM89EGd4NPTXdLd2jxZmD2fMORgbOn9IDFIZ7RWvINcnMFE8QxbHXfz4yQ
+	E9mI8+G7Fls5WPiI9p0v3jaKdQQP/tnUFaAr6Guh5qABtxtq35lRb8LNqd4PWgVUR9jTBWrvwqs
+	gAdiNcG2X5RBiTR30+mUyw/UOgA112iThTKxzE8IotJujVkZKPgSlQ==
+X-Received: by 2002:a17:907:d716:b0:c43:ae92:9ad with SMTP id a640c23a62f3a-c504951d359mr4308266b.17.1794245017493;
+        Mon, 09 Nov 2026 09:23:37 -0800 (PST)
+Received: from [192.168.0.172] ([217.71.1.73])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4d6a9789a6sm199816466b.66.2026.11.09.09.23.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Nov 2026 09:23:36 -0800 (PST)
+Message-ID: <258741fc-5dbe-4268-948a-9ae298ddc83d@gmail.com>
+Date: Mon, 9 Nov 2026 18:23:35 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,39 +92,111 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6] doc: git-rebase: update incompatible options
+To: gitster@pobox.com, taahol@utu.fi, git@vger.kernel.org
+Cc: julia@jvns.ca, me@linux.beauty, phillip.wood@dunelm.org.uk
+References: <20261025110759.204336-1-omri.sarig13@gmail.com>
+ <20261101082230.141688-1-omri.sarig13@gmail.com>
+Content-Language: en-US
+From: Omri Sarig <omri.sarig13@gmail.com>
+In-Reply-To: <20261101082230.141688-1-omri.sarig13@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 01/11/2026 09.22, Omri Sarig wrote:
+> A few options in the rebase manual page link to the "INCOMPATIBLE
+> OPTIONS" section, but they are no longer incompatible with any other
+> option:
+> - Commit 1a66d8c6f6 (rebase: remove --allow-empty-message from
+>    incompatible opts, 2023-01-25) removed "--allow-empty-message" from
+>    the INCOMPATIBLE OPTIONS section, but did not remove the link to that
+>    section from the option description.
+> - Commit a74b35081c (rebase: drop support for `--preserve-merges`,
+>    2021-09-07) removed the `--preserve-merges` option which was the
+>    only one at odds with `--ignore-date`, `--reset-author-date` and
+>    `--signoff`.
+>
+> Additionally, since 414d924beb (rebase: teach rebase --keep-base,
+> 2019-08-27) the `--onto` option is incompatible with `--keep-base`, but
+> doesn't link to the INCOMPATIBLE OPTIONS section.
+>
+> Update the description of these options, to have correct references to
+> the INCOMPATIBLE OPTIONS section.
+>
+> Signed-off-by: Omri Sarig <omri.sarig13@gmail.com>
+> ---
+>
+> Thank you for the review!
+>
+> Changes in V2:
+> - Update commit message per the review comments from Phillip (Thanks for the
+>    review!).
+> - Add `--onto` to INCOMPATIBLE OPTIONS.
+>
+> Changes in V3:
+> - Downcase "Update" in commit title
+>
+> Changes in V4:
+> - Update the commit message per review comments.
+> - Rebase the patch to be compatible with the maint branch.
+>
+> Changes in V5:
+> - Update commit message, making it clear that the `--onto` option was only
+>    missing the INCOMPATIBLE OPTIONS link.
+>
+> Changes in V6:
+> - Update the commit message per the review comments, making it clearer.
+>
+>   Documentation/git-rebase.adoc | 8 ++------
+>   1 file changed, 2 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
+> index f6c22d1598..f1f675d311 100644
+> --- a/Documentation/git-rebase.adoc
+> +++ b/Documentation/git-rebase.adoc
+> @@ -217,6 +217,8 @@ OPTIONS
+>   As a special case, you may use "A\...B" as a shortcut for the
+>   merge base of A and B if there is exactly one merge base. You can
+>   leave out at most one of A and B, in which case it defaults to HEAD.
+> ++
+> +See also INCOMPATIBLE OPTIONS below.
+>   
+>   See TRANSPLANTING A TOPIC BRANCH WITH --ONTO above for examples.
+>   
+> @@ -332,8 +334,6 @@ See also INCOMPATIBLE OPTIONS below.
+>   	and this option would override that behavior, allowing commits
+>   	with empty messages to be rebased.  Now commits with an empty
+>   	message do not cause rebasing to halt.
+> -+
+> -See also INCOMPATIBLE OPTIONS below.
+>   
+>   -m::
+>   --merge::
+> @@ -487,15 +487,11 @@ applying (in terms of the author date).
+>   	Instead of using the author date of the original commit, use
+>   	the current time as the	author date of the rebased commit.  This
+>   	option implies `--force-rebase`.
+> -+
+> -See also INCOMPATIBLE OPTIONS below.
+>   
+>   --signoff::
+>   	Add a `Signed-off-by` trailer to all the rebased commits. Note
+>   	that if `--interactive` is given then only commits marked to be
+>   	picked, edited or reworded will have the trailer added.
+> -+
+> -See also INCOMPATIBLE OPTIONS below.
+>   
+>   --trailer=<trailer>::
+>   	Append the given trailer to every rebased commit message, processed
 
-> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-> index 49dbf09da77..504a7ea54bb 100755
-> --- a/t/t0027-auto-crlf.sh
-> +++ b/t/t0027-auto-crlf.sh
-> @@ -305,11 +305,12 @@ checkout_files () {
+Hi,
 
-A micronit.
+This patch has been sitting around for some time without a review.
 
->  	pfx=eol_${ceol}_crlf_${crlf}_attr_${attr}_ &&
->  	for f in LF CRLF LF_mix_CR CRLF_mix_LF LF_nul
->  	do
-> -		test_expect_success "setup $f checkout ${ceol:+ with -c core.eol=$ceol}"  '
-> -			rm -f crlf_false_attr__$f.txt &&
-> -			git ${ceol:+-c core.eol=$ceol} checkout -- crlf_false_attr__$f.txt
-> -		'
-> +		paths="${paths:+"$paths "}crlf_false_attr__$f.txt"
->  	done
+Anyone that is interested in reviewing it?
+Anything more I can do from my side to help this process?
 
-We may know that nobody has touched variable "$paths" elsewhere in
-this program, but I would prefer to have an explicit "let's start
-with an empty $paths" assignment very close to this loop to help
-future readers.  That way they do not have to wonder and look all
-over to find out after what string we are appending these filenames.
+Thanks!
+Omri
 
-
-> +	test_expect_success "setup checkout ${ceol:+ with -c core.eol=$ceol}" '
-> +		rm -f $paths &&
-> +		git ${ceol:+-c core.eol=$ceol} checkout -- $paths
-> +	'
->  
->  	test_expect_success "ls-files --eol attr=$attr $ident aeol=$aeol core.autocrlf=$crlf core.eol=$ceol" '
->  		test_when_finished "rm expect actual" &&
