@@ -1,90 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794231752;
-	b=rDheqODTvZiPfXnIb+8QCt+v8/7OqtSZtj98U2vIxEJ7KXy/RQIYLGIHxMIvb3jRb/Uu
-	 GB7V5yH9v81GMnDL8ufkpWIz5mh9EK0M2DaQcdRlV+N2YqEnDwNry+Q5cFvcO733mmktL
-	 Xh4qAsSTdcxOCXkV20fDLWbEv63MIRK5rv3hIUZEQKznh9Enw2UgSu7bCQdlBkXlhoXkr
-	 7yjgsafUu1SiE1r1Lhyras/A12nC90w+tRDUBHcicVBVckJQ8+Pj6OKJYgzJeQJ5K+E2z
-	 /ZhIsiaNBY+JMzdlqQctIfZ3EdcTNC2YnYy5/nFgkpQL5d6lqXTw1MLoFubccw0bKPg==
+	t=1794231894;
+	b=i8mmVNtq4IUIOdId6y7HXYbR405Fme/B3rUwIrJQzxlBJFeNZ+1zQDLuOwB4j7xTbCan
+	 DotNFaK4b1VGFSgySeGkR93kC6Fb+y4YWGi6HRkwAwvNXHOai0rrMSojWDv59Y+Z1g/VH
+	 wzVMjsq7z6ama7WVMMJ2+k+YYn54rfw6W/d9+HxQJfqLBqhFbR9O5K2MouwZ4qiIPSNTU
+	 DUGrT1L6wueVwJ2ZtaR2ndhgfXrHACVuh8MlSoeLbN5gWTvbcjPW9t5Xk3sgsKCTz3tHL
+	 GHqB7f7fk3c0bbybPcOyKNXl8YQUz4i9MBkaSO5N5EZ4Or/pX8/KmkUB2OGf3y6m5mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794231752;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=NBYhbx6VpsyjilowJLbCLfSX7J3D759iDb8eJPWbrv8=;
-	b=jJacTfHll3L6Nns1hVRqub/6e1y2TBR0i/drIKdmWIHFf+Ql7JfczESZvOtE2CZT32Ip
-	 V8YhPBHJJ4sbV1SJcxazUcRinhCZg8WD9KShwwpL38AHPfwZM/WdrsJ34dlvQ2lzod5Om
-	 f6EWXwpEwH/5sJGl+cc673W2CD7Bx374xcX9sp/cU/nWry6JQMGCgZHPpHz+2GhEA/2sW
-	 DWx2FMvcWAc49IuVHq+kBJYljM1/1gZUnA5jtddkhAKAYMYH3lMtbNzpE1/j2wx/gOx1u
-	 DWCDxr9K3V9cBMQRvcedCDoXoHH3vC6rP39JjPKSBvi8FwyIxdsCXwrPakX7o3C/hyA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794231894;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=SmvtyoH7G+HugPTPxXUAippzfHa6X4Ckcn6OOK5Npjk=;
+	b=NLYEZ0bHXa7FLdySpQdFgFwhia2EPRWQJ1CPkJgc+2/whST1DkAC9N8fpGfIPgB2nsfW
+	 tUGJ3iCJvy05qmvqL7OM+uD4w5hoGWV4Gb9k1cnf6L0N0LrYBFGrb2pfdAyME0xX1i32Y
+	 eYFUGjXqh43ikPNdtarvfDKm91d0K8yVwYxT4xQerr+k7rXsCTY4b40yqtLy7bB6njHca
+	 8dEb1c4MqZS7lfK3n5A+OLosjqXffpGkQ6y1oMx1eQtMrXRsD52ssP1v0XHq/0JrV3Rok
+	 ET3Bw0smZ8kBZRGlvagIiI3sbxri24wUxRpr+FUxVoqxQxS2aoEP7Wm6ON08cV6qmXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rKPGMRy+;
-	arc=none smtp.remote-ip=209.85.160.177
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=K+YnTAsa;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Ir7fP0aX;
+	arc=none smtp.remote-ip=202.12.124.151
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5797606A326
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 13:42:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5797606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C24606A322
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 13:44:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 15C24606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rKPGMRy+
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-53394bffe0fso9390481cf.1
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 05:42:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794231750; x=1794836550; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NBYhbx6VpsyjilowJLbCLfSX7J3D759iDb8eJPWbrv8=;
-        b=rKPGMRy+AYHtLGPz5zfWeTxtjar8X17Vzcq+Bw8+ZeK+jkCCPTeU1QODAshjJoluBk
-         vDGHZ91gqI88ZtCTUsXjhNXVrEisiggV5pzsqiBDTJ7/mMxZ+uAKazXZkzXJTtbTqugW
-         MLGBgiBJaQrfYDTtAivQA8N/qlH9A/HOTR6h0Nv5HRUofybR8/LX1KOaifpK2k1Hkcnc
-         WL9lf8jaNDiz/YUtj2mNW/QMRt3oRk24Fu+XBR+lpScWan/oasr0uq9vRX7HDw98FkPQ
-         KXtxOxSSAtybWDBxA2r234qMWVZcvrndmoyyCn7WYaiJT8SCnZmo9zDLFP5/L7autHFJ
-         Zqtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794231750; x=1794836550;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=NBYhbx6VpsyjilowJLbCLfSX7J3D759iDb8eJPWbrv8=;
-        b=ze9CmahPW3RXdzJ47sZwC2a135uGnfDZUD/Y8ZKtXdN9J0iWgar+GoFZ5Sa7nNKEps
-         b+EVqEGlVlpUJ87FvTsVpo+H39xK/VgFVPmYUF2fzWaXSI08+fGkODtuExVGuwW9B2fo
-         mCxDkS+I0l0V7frqZLKqw9RW/NucwaJ2J6yKiyWVknZchDxkZYnbFVSGlSOl/Gw2zSMi
-         /BFN/ygGRDKWN3j2d5L8oAq6dAzuumaF2iNCJg7UUuyr6atFI+8Tdbsf4CIGPNGpqkDP
-         WL1mpRzUYPMsIKv1T5Y8LNNw400oKam9Id51sZaFWQQVTl/xtJup88fz15nQWauj5FQs
-         KJUg==
-X-Forwarded-Encrypted: i=1; AL+hErEVc8gc38YQNes5lUwmUN9CBig7doS/Xmb3G+UsRVzVjjVVwEQS4wRJ/oR16toInH5vGxw=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9kA3STGZyea7PfLMQDZ90HP54Ap2MSt3JSEOOzh7Y9eCqPDnNf
-	uqZ8xViVkwxjDQ3a4oCSrGZIh59HW8FhLLOmKczWGLrt81DYfwAeNaMu
-X-Gm-Gg: AYBFou25xIRepTF2S9QzLl0rB8vfQYRohzQybsIsCs7vbK0zXWNZXd/lEHbHlxH93xw
-	aDhQWqs4KiLYsy69BLr494kwaGxFGoI0W2xXu48NIy4mTdPBQ0shf3szDqdVNM+VCSe7ggzNp/0
-	ynmJzkTegIkCntOUXhB1aNa5UHTtRWaFgfpwkZVTSX2Jt71XqdBeQmW24hu64aBYMo60Q2mxzmD
-	Gi05lOMLsimQSlACrK/pj53QkADOYLbs8bpDVEsRLoKLA8ecn/5LDSvHa9EP3HMogzp8LSsOvYT
-	XwrRru10mn9c1OU4XCJ8jeQtFsnR7uhPlBzEf7+Yg4sgV7E6iGCahZJavWU7mWpGhyVtabQU/kT
-	KijZUFraj0n3nVy9UT8j32BCwvIX4MeOd1Em3tGHvBreT+8P/esSQ5QZCauHt6WxLy67g5uiZWN
-	4oK5rhDf8fP+oYVlrL3LIVXdvR1qCNEZOibkhVBURtq/bT/quKmy+kRzHLt0gzZEQROsK3xqrHB
-	S0czGZ8lIMeEaBbnTpZTzwtP1NJlOuTguzeYP+zmzexInPLLI3F/aBh4gy3fEEkk7+b1rsJPL3j
-	Yy+HX2wwkf0TUklYbaAJegpdh3v9XVbj3qBn/3eER7dZOwOcJScxmKvwPKH5hyLyBfJDqGn499B
-	jOoabIdjfgxCylwq/VmJTX/sPuZJK/WN3+neUh2ylR2XFxUIB0Fv7KNvmiOQNGd0Am5yHMufcJn
-	LusI8jgzccHQ+rFpdeiPH6GrRcL6O1L4Q9VEO6Cdo5WvInoT1sESvDQqg=
-X-Received: by 2002:a05:622a:244b:b0:547:d087:543d with SMTP id d75a77b69052e-54fa25e9d8amr102101101cf.3.1794231750264;
-        Mon, 09 Nov 2026 05:42:30 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55264b242b7sm40703211cf.28.2026.11.09.05.42.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Nov 2026 05:42:29 -0800 (PST)
-Message-ID: <8c3480f5-1f34-4af5-bf68-60469dd83cfd@gmail.com>
-Date: Mon, 9 Nov 2026 08:42:28 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=K+YnTAsa;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Ir7fP0aX
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 363C41D000CB
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 08:44:53 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Mon, 09 Nov 2026 08:44:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1794231892; x=1794318292; bh=SmvtyoH7G+
+	HugPTPxXUAippzfHa6X4Ckcn6OOK5Npjk=; b=K+YnTAsaNn/28ydn3dseC4T518
+	NOy1aWD6K5zucpdxMQiaUvT61AW6XvidMpsC+5dbe9sH2UAvPOVnbyWbcGgi2X/o
+	o8dC2J93tbXjkXT+LV7qacfTFaTVjVriR24gUWk9eTWar/lOU8+cEjppOD+FCJa4
+	bWGuXUcnRHHwzQj7MBUvaqaeUfFNubW3mZ6V5wAm7t4XkgvIBzvvs4rrHXh01OQ+
+	CKq0x1+Pumq4cdvmdglY7hxgdN6P2a8UPI3cF52wddja9N4HuRQ6V75awJpv+y3F
+	ACFpgms9ivFid+PodDvPcswH5DZmPbwIVoZqVIlw/2rFpSS04ilJdMCk7VWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794231892; x=1794318292; bh=SmvtyoH7G+HugPTPxXUAippzfHa6X4Ckcn6
+	OOK5Npjk=; b=Ir7fP0aXhUkK4QVAkhA8Q//6SIvneEw4xH9MCmZaKLcPjYGXtbX
+	T9Z0CjUi1QtRI23y/Unl0sBfUt9jCbzXf3O7Mj9ne/0osejTxFwxPGyBbjeFIW3y
+	nm/sNxUBEJtd06ChTlVtUn3Tg04bJE7lyOXrueOhOg5V/ULgTTXhF9QuofZ74hhA
+	knJAdmWqDsYIpD3FY/N5AlSc3B8DqvBfROBktTak+LNIsmrybQyZKhG8pL+FA58G
+	BMN+QhIh4dDdLpxmRJyyjRddUyq94bX0IHQ10B1Wmg9oM8A2iD3ANxwYOIP8qV7E
+	PeyjUxIE5HXTLNnooLPr1wk85EsbevxUCpg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794231892; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:MYyv1FyOdT9H4VkS5L32A9cWqxg5a2WzxdEqgifSRbvLUdw
+	aZHF3UBv1i2JBervQen1SqN27wpHSiXJu+zno4WYbYO+m83uph5rky+gkhutSFxW
+	CByBSeqqTu9c3J0jHFIROQvx9Bg/L7RvvsUHnpxuSw5XinmFJiPeDhbufHLRrY7Y
+	qDKqdhWhQQOn921W7Z4/UJX+pfuFxoUofThZsMCMchA5Exsy/nDewoeqUgZQ/K7m
+	X5WBRrKt24hLCziloKGlZiDS4h0d7j8KtOYcvhNdpfRpo7chA7e2A1SH7Z0N1h+P
+	pXEDR3/FjUkRqXtO7Dee62dmssw9QDoatqhsN4A==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:Evbwnx4Q3leNbnRCRwWreuRb207XACkbXeZ91gI7sgE=:E1KLNg7fQ5RU2fM+T7fgg/viNmtzGmG7YJGLqWgwMq0=;
+X-ME-Sender: <xms:VM7xagj3HqbeTIoSgGVPq53mcuNbIYD6xqVms6zZUcl022FaBua3Xw>
+    <xme:VM7xagAfr5vwyHzpLZus3YxWucVxOF9bGCDS8erciW-zbjR5pQK9OCKhKWR49XHfT
+    Devs2Rhndy9Z7k-d74pHlthuIVhhHdkVLwqcrTyy8tGS2wwAKmP0dA>
+X-ME-Received: <xmr:VM7xatFAVKHM1It_1_Y-ks_qpGn2bFr_r1ERMQ0wg2Zz9IZut2t7nStT3OvaqdULtv3zZb0>
+X-ME-Proxy-Cause: dmFkZTGEGi5g1kwPJEd80aLcl8ROEtmBRwm5rvetvJ3Ka7sFW4HdkICIw9d4nsn0VWlW9i
+    9trlO36uyYsZmgYoVYAYhna2o1sUiy7TU4M/7V4WhF3kOk1e+/PrvVY/k8PXe+yAiWw8QZ
+    cknhvCDZSBHQdo9q/N4uil7rz7Ywjg/Mn0Qs+kP3g7ovEHI9wbrA1rP86iIeiAqzztf57D
+    P3N3Pg0rxR59O8gYty+elIFAdznLuCnEaGgVwojLAweqbgS1h4sP1o/aELTpd7A8LHAsUN
+    o3ugxVmINeDRext5Iu018zSnxCrG7owyMfG16AtGalE12EWrPvAGrWdQOlBTEkxsEdNGT8
+    9+15v1QUx4A1WeRWoulsGya5dfFRuSSGvERJk9GIgeaUKJ2njIXD/5u/ZRXtMyEaiZgxl8
+    cD69OBWlmAmAsGNF6j0HDMp7lfiMBsvyB83wAJmUIBERPdlYi4P4Tpm6YKb0Myp0c1aRRd
+    gDbv1NwGUpH/5KpDhMyII3I3aFLyFmPSyiC9hXjGIWktDLy/zQUcNDJAjPkOzhxbz4JUWJ
+    8gCZSz2I5DI5fVuwAj5N//8RoFIXJG//aytUONfgJFr8e6aqBcdJ/rSO0c0w3hkUcnHfKo
+    RArEz4rMieX+M/PCnFGB/E4nRKxq8vlZX/oHsARE5yrGDkM3ktyIHyEAmMKQ
+X-ME-Proxy: <xmx:VM7xagJt5zoUJLXauRvzxGGOnflmHCR-3mA8voh6BAiJreZGVCO-5g>
+    <xmx:VM7xaplrkucoXiM0eThY7dUbAvPKqxFnteNDUUwiOWWQjLypCMiqKg>
+    <xmx:VM7xagSUpVPkjvAhWYIP8pe9FbS5jhWmnZpoej8znGL6ZHj0WOKLIQ>
+    <xmx:VM7xajKxFtT0IjzhRokb4CrsaAAS4jsyS-v4rSFYaaWW0atBv-m2LQ>
+    <xmx:VM7xanDv0Xb9BztC3HU8PskJkRH1mKQqx1MICJOLOhXnZy9JYFknjca8>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Nov 2026 08:44:51 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d1c32a39 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Nov 2026 13:44:49 +0000 (UTC)
+Date: Mon, 9 Nov 2026 14:44:46 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Patrick Ohly <patrick.ohly@intel.com>
+Subject: Re: [PATCH 2/2] odb/source-loose: fix existence checks for newly
+ written objects
+Message-ID: <avHOTt_PEJUKq9Dy@pks.im>
+References: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
+ <20261104-pks-odb-loose-stale-cache-v1-2-a00d5cdb5e7d@pks.im>
+ <20261105194314.GB2898829@coredump.intra.peff.net>
+ <au23Hvzp09yrym9s@pks.im>
+ <xmqq5wyalzi2.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -94,40 +128,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/15] Fix segfaults on settings given without a value
-To: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Jeff King <peff@peff.net>,
- Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
- Colin Hinton <colinlewishinton@gmail.com>, Matt Hunter <m@lfurio.us>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Usman Akinyemi <usmanakinyemi202@gmail.com>,
- Miklos Vajna <vmiklos@collabora.com>, Junio C Hamano <gitster@pobox.com>,
- Thomas Bachem <mail@thomasbachem.com>
-References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5wyalzi2.fsf@gitster.g>
 
-On 11/7/2026 3:42 AM, Thomas Bachem via GitGitGadget wrote:
-> A setting given without a value, as in "git -c foo.bar" or a bare "bar"
-> under "[foo]", is passed as NULL to the code that reads it. In these places
-> git does not check for that and segfaults:
+On Fri, Nov 06, 2026 at 08:02:13AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > On Thu, Nov 05, 2026 at 02:43:14PM -0500, Jeff King wrote:
+> >> On Wed, Nov 04, 2026 at 01:16:35PM +0100, Patrick Steinhardt wrote:
+> >> ...
+> >> So I kind of wonder if prefetch_cache_entries(), along with any caller
+> >> doing an OBJECT_INFO_FOR_PREFETCH check, ought to omit the QUICK flag.
+> >> It would mean that the normal case of having missing partial objects
+> >> (about to be fetched) would cause us to re-scan the local pack list, but
+> >> that's not _that_ expensive, especially compared to the fetch we're
+> >> about to do.
+> >
+> > Yeah, that's a valid point. Honestly, by now I'm almost urged to just
+> > drop the QUICK flag altogther. It's a source of bugs, and the longer we
+> > look at it the more cases we find where the existing users thereof are
+> > buggy in specific edge cases. We just recently removed one user of
+> > QUICK, and this here is another dubious case. I wouldn't be surprised if
+> > we could find edge cases for the other, remaining users, as well.
+> > ...
+> >> > We could in theory fix this by flushing all the loose object caches
+> >> > again, like we used to do before 5946a564cdd. But that wouldn't address
+> >> > the root cause: the cache would still be stale unless somebody does a
+> >> > non-QUICK read for a missing object. Instead, fix the bug by updating
+> >> > the cache whenever we write a new loose object.
+> 
+> OK.  At least this change hides this specific failure mode.  Can we
+> include some documentation that we may want to rethink the "QUICK"
+> thing and audit its current uses (if we decide to keep it, that is)
+> and move on with this change?
+> 
+> 
+>  odb.h | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git c/odb.h w/odb.h
+> index dd85b880a7..61ff443d46 100644
+> --- c/odb.h
+> +++ w/odb.h
+> @@ -386,6 +386,9 @@ enum object_info_flags {
+>  	/*
+>  	 * This is meant for bulk prefetching of missing blobs in a partial
+>  	 * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK.
+> +	 *
+> +	 * NEEDSWORK: rethink if QUICK is desired in this context.
+> +	 * cf. <au23Hvzp09yrym9s@pks.im>
+>  	 */
+>  	OBJECT_INFO_FOR_PREFETCH = (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK),
+>  };
 
-I read each patch, but commented (positively) on the ones where I was
-involved in creating the bug in the first place. Thank you for including
-a test in each case to prevent this from happening again.
+Yeah, that'd probably be sensible. But I wonder whether that comment
+should rather be applied to `OBJECT_INFO_QUICK` itself, as I think it's
+way too much of a foot gun and I'm not sure whether it's ever really
+sensible to use. But I'm fine with either variant.
 
-The only suggestion I had for improving your patches is to include a
-more helpful error message when the bad data comes from a server-
-provided bundle list, but that isn't necessary for the bugfix. Also,
-such a custom response would look out of place with the rest of your
-patches. We can make that improvement later, if so desired.
+Will you squash that in or shall I send a new version?
 
-Thanks,
--Stolee
+Thanks!
 
-
+Patrick
