@@ -1,115 +1,115 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794257682;
-	b=DjBsN+bKXsoEDHSX3U6UalE/i3a1eg5AWUoMjo9KxclrTnp/bXcadyl9Afm2YpXWz8Wa
-	 Ha0RtrH0DlScp/XBi76XCMTF+jvBZYmew6wnU6KOkCKXUM4oZ8e110CCRW8CIxspC4CAx
-	 o35egwfz+2Og17709gLQ1b5GeFgyb6IrJpvgiOby61u+8iLIIOwTYiwGc1mFJbhukPyi4
-	 YRr61+2SXN7LfbGoR2QxdYnF177CSzKZV4SZy8uAR4gzCKB2xqBwD1bMGluW+O/oAn4wj
-	 mhu/pP/nTP0D1ZaW9+YZecPD0ERqqTleJMZ1Z7qiCvVBRdGjFO/JQvO2cU//7mpJhNw==
+	t=1794257683;
+	b=snIbG/6zjm19iE7TCi1GZgc1sYEVoiGUeAy/gRHVPH4ISNGuXDOLg60cED87bgLUxWHa
+	 UYd9Ii968nqn5LJoJIoneW2PbhAiyglOINp/+aqRj3vreQrIFondIG6JqHeBGq7suml/1
+	 xfiHk2jTBZ/rQ4h9c0QglFlvv2jy5cmPuK7CDjP5zvZItDdINSRFcDcOMLtQFy9+Nk/jj
+	 OvyBAR2Uv+nQJWJ/aKOaFbHx0TuCpZOzDu5s2DQrOkPGYwF2ySXEiXUUUlCscriTmaV7s
+	 8+kJ0RwBHwBqvDM/sVlRlPb0lkGkqMboDh3oJhjOuHCHmvyAfhGJO1r3CH2tdQBzkbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794257682;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794257683;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
 	 References:MIME-Version:Content-Transfer-Encoding;
-	bh=t01Dm99GikzaokXpAqhFMEidn7GtUVv/pS017VyAvRk=;
-	b=sGU6G919OTLE3AbjAnT4k0+EAPHnvcq3TNTcTQTGuF64+DDBdNRfnEqEk55hDoF6pJC8
-	 j6OIvCU4bF4gISMNSTCEOspL218/A9+eAekZH9znls3ni4X1MokqrmW/x9WJvMI8e8bqg
-	 6XZtbucV3cysz+OAx2q/W6LURUz1Y/1ldKV0JMGvZwqjNlu9MfClY4mRKDOP5C+sb5OX2
-	 Wqsl40yzfjVg86MPxwPGtQpaM1My5BvKXFXEppUJCThKwHDTKrYMb2CxlsPxUw8hh0exY
-	 9S6Kon9M8+zuQfXuqkpyETKCeI9Dnf5klTLK1nO5CyzAXriJwYcSQ08SioDErnhw5sA==
+	bh=Cst1EUctOev4HOwTGEmpJPGBlAZfRJ08kHAVt5EssL4=;
+	b=Y+YIlY+hoM3jRBJ/5FEeDFucNoG1IbLI3OMMnh2c7Qcw01r46QzCCt8/B8GRtpQKfGGo
+	 fy39HlqCJHtn/J63BT+CxkS3lwMfVrz6rJoQxD+ZAr7fFieNACfkjtknHOiFsE420eizR
+	 r/4G6Hbnk1eG31jCUzNRPwxQkwOeKgWBOVShQ7jWlvvTZNdrlhR1IQpJNnLaKXj6YSCDk
+	 EqCFQEEk0FlQjs18cS90a2EPk5g3QB8vba+j5VAk/9ZX9zJ3AH5+k6VLIcS+g1tGQrG8u
+	 q9Zqtalxwsu5wZvaIzA4EggKxYk4oGFZ7yHFbalRjeqJtRhzfzZLqNe9cTEgH6m2jwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="CbYsL/jM";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=0yet24xy;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=brJO8ytl;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=aBU+llKl;
 	arc=none smtp.remote-ip=103.168.172.157
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE52606A332
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 20:54:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0FE52606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A09C606A330
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 20:54:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A09C606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CbYsL/jM;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=0yet24xy
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 51B851400017
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 15:54:41 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 09 Nov 2026 15:54:41 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=brJO8ytl;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=aBU+llKl
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A7C8F1400196
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 15:54:42 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 09 Nov 2026 15:54:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1794257681; x=
-	1794344081; bh=t01Dm99GikzaokXpAqhFMEidn7GtUVv/pS017VyAvRk=; b=C
-	bYsL/jMaqr0yN0ZCFoR+opQFoKMrKM9rhRNZUaPRoKQ47bRU09KeuU/FIlWdiklX
-	A2am59qRraKwIxl7FSBIvCpBaAxXRiBu6fs0tl0Yp4xk3sR9LP5lSNdogTywdirt
-	13SBitMle9NkDG18cLddNAgij8kDRb+rAendI/7bTMfTWb3uj+pcJ4y5lvW+TrsF
-	wwGtW72Mvg9nZ0WwoWKHtP/c9noZo2HX4O+3f4/hUU6IcFegbym2VDX7DreT3PHx
-	u89OXaGwwbR/qfWmMwqOPVjMi7wnFVOPu038r1Vb9Un0s/1VHv0CSzc4ObKbPq82
-	z95NXl9FwQ1FD3k140fJA==
+	:reply-to:subject:subject:to:to; s=fm2; t=1794257682; x=
+	1794344082; bh=Cst1EUctOev4HOwTGEmpJPGBlAZfRJ08kHAVt5EssL4=; b=b
+	rJO8ytlq129r4/mjpgNypXylu/7XBqM+++qLnIsS+wX0SQIq+FgJhIEjjXJbbV+4
+	qL63L4BvC0ELM2TmYD0+SRv1i1kmZwqUcogMNciGH38O9e3KJxZ9+HPYppPFUUQu
+	eYynkp3+1PeKQk73UD57mlW4iF7PMo6BVR9EyGzQzhe6rPz1b2zQ3u1Q9bsz/0pe
+	XV2SLD6W4+Q6CrHrZ8khFH8vNVnURS13l2O99R16E9FVdcZpDfm6L5gux/dTy699
+	ckM0JUldA+VMnWnrn2SqMz8HFaHXQfGoeLSpbr4ruFoG/cLzaAFBMCgbLXFk1Hxa
+	TMwzKf7ZVlONezB1xnZTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1794257681; x=1794344081; bh=t01Dm99GikzaokXpAqhFMEidn7Gt
-	UVv/pS017VyAvRk=; b=0yet24xy/Gktqjm8zxbYRJJoLsejO7oxHali7WxOBgAQ
-	ro4DqthUIBREqkvmhgnhvS0CVFkG5UMH5ojdNdzeMP9AirG2AH1fcYUzx7j44in9
-	1BWJVzHGtqZ+T6paFkVmdkBB3EK1ybKIcLANBVOoym+rSQTmjm0GuMi6D0LQiEv4
-	1qWBDWN7CjkX4fEBgFPcGVdGT3uAqx1Z8gpHyDWnVZtoCrM0gQegpxoGfVFD1IDB
-	xynw4lbwdoccoyBqKlILJnCprhCaODlcowdovyDNkVA1gKdodbOo34MH4ZNp43tH
-	bNhdoiGRC5VqVPRTu6rHkR5/OaCF3OYCcvCjefMZMw==
+	fm3; t=1794257682; x=1794344082; bh=Cst1EUctOev4HOwTGEmpJPGBlAZf
+	RJ08kHAVt5EssL4=; b=aBU+llKldJI3+ijj4Eu8sJPdqxHysumyeja5nFu5QBhQ
+	wPpNEb/VUYYsZVCBJZRETDGXQEK34y4RA4esVSXJagvbQvqye4atC8JlBj8PRgml
+	/HofzSUXwv/hGfX89zRQREp05wewNk1dEiuyrNVxY6pTEi6mZIvGJoC7Isk2fdHa
+	ncgnpmtvajkGgrXH6ewi5Sd1YNW8nCB9MeavdhtkauZERgXhOZdvK51362CSM9+A
+	NoyTAi6CYTaGdp2lU+llvkpMoTJmHwWlDtx6r8WH+gmB5LD0T4dqIQhB3xY5Nuah
+	IC9XnRRqqZ0LHehDtWStkjTU5+VLduQ0q/SrrUr4Qg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794257681; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794257682; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:gGXka+HCoUIDYT5seB5veOEl0SKAZ2zanUQl5Ld072KkUwg
-	DZ+h3NHDmecdAGijWGuBRfVzptAv9QFxBpufAJ/J3CmnzxSsV+1V50NGb8sDfH60
-	kFdpOwqs+FjjDnJ9OwNaqPeOc2a/A8ikww8k65j6R5s3/gsccHQT3CGMf5S+B7gF
-	Jft0lsjvQtBY4AWHsDXvq9zaHK8TJlP8iMpD6oqlTL1f5oIQZ0U+9nAJOrl6KWx3
-	iFTFg543nvbnBmbH9MidNA2kDuVnRvm21+I7oHPxsUa2fJ7gdY/Hrrlc2S+1eBTi
-	cIXxnCiAbjRIZnS0SyLvN1Hd8ZT8P3qJLni1SDw==;
+	s=fm2:rsa-sha256:QjfY2HFS0tMxobOKFCFw4Z+4DHsGC0+CJLK7fbVgWT3qawr
+	CG0pk6iQeeXnmIJNTp+cUslND6i/9+o70jwqhTL/4wcCGP5ZBYLQDyXPI9XT7985
+	utSCprj/KWHugTGp37wyWl56dI3nE8+pV3mDFHL51p0Oyt5mSscS+BoPzS+Ma6+F
+	1X+aKQgzIoT2i7CPYMr5QBf9nOVjljZ0jPMN9HFZoLEE6Ye4EmuHPNEHV/j/uPmV
+	1cPTXvP32Zl6Mc55iHUCJzZu/kJgvuXEey/qppu0jwOlKtwVo9pM3M4J1v2NqsjW
+	iBOcQjvx6s/wFqj7VhYXTB55ot2eKO8lnlEUVdA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=10;
 	hn=content-transfer-encoding,date,feedback-id,from,in-reply-to,
 	message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:XUwbS4WmnUZnRNDao8GxKKn+6mMWqSJizggrBci0QtE=:IXl7JP2rnkn7BJldKO8IoyY4Y+UpC/DvnpNX519xbds=;
-X-ME-Sender: <xms:ETPyakG-I-H_7katKJ662NBJCCp8R2XqZY9my6FIE5vFE9tygYK0jA>
-    <xme:ETPyajUHppMqwp5snC3Cis75Ao86gTY9mOrlS7CaqW9K2tGchb5JYE22293dOkm2j
-    9YM9gCTMwFtZg5oIYAP6UNJ8D9JImjDCV4fdwoEztIgaEy3jMhCpg>
-X-ME-Received: <xmr:ETPyarylT9d9FlrB3k5sPfOileclrJaRuAXq8PdHINEmC-gZ5RbIvlnU0DLkAXp3fWiV-2D7qD4RgCKX-6DAPl3iPU767CPiVTV_>
+Message-Instance: m=1; h=sha256:as/NHFH7WMLqidVim2W0TXI5tkh7tJSd4VxKYf7H/s4=:IzTyURIl17SNN8ySx1fqMuvElaXfzH18ofgpQkQxOHM=;
+X-ME-Sender: <xms:EjPyajQYDQJidHBqhxxjT7Kt1nCfrT0PmzT0IhSSqszDYPlI3h6Y6w>
+    <xme:EjPyaqyl1ePB7DcVs-5MxaH2mtLpiPG3ASXy12rcIFLIpW64olMwmROKHlvN7Fs63
+    n3UDorKsK6guPbMMRzyDVcDLfdDxTO6O9r9xoDcGFNZ7d5H4No2vg>
+X-ME-Received: <xmr:EjPyamcIqQtsbNQJd1KNl2ZOc5C69HaN6f9ybpeTb3Y7jnU6sCHLu9IOV33EkpGAN618IYQ0MCvMzSnOrTlMjHYdYsGC-uDDFdso>
 X-ME-Proxy-Cause: dmFkZTGqpDG5vOQYYKwYqtAN6qPQdfFTNzfSlcGZ8WSRu+3vC+RN9gWCiiH4iY2RZMleiy
     CTc+UAzOBAbx7rKLpYPV4qaEpgLcK5DwmNeCMo5aXjhFs7mgpxOf4BUM7F3o/6Y+Piw8fS
     iq3l88m8VKmyukTAknxl+UPz+foi5fv47pT3myWnZrrF6sx3FyISE0kR6uh3JIkPraVjZO
     3rV+t49YGbnh+Nw1MkQywn8XgM1JrOaqaDvV5Ix6DLPW8AXe+gKWRV7A2yjdmohrGY1c3+
-    78INLa5J1RtsPx9OWvq+4VeVJvo1vPuoO5NMOsRmu+4BfaCiIUqmAAKcleRTZo0cWPvxsT
-    DIh1MW+Nf7T1JHKG/XfhpU+385JMrtSsUTNuScmC1DYFQWBVyFe/6AyJ83w/0HfTfjqADn
-    Gip4DqnuURaKbdfXPyHkx6l1uQIOAw1qJK8IrkPQyxE3eg7en8Tf3Q94I9TW9o96AAhkRN
-    XFuXCwnYuabzgvMXQp+rJdrQkOGaLGGfhzON89cev8IGoFqHVmtX432I3pvP2/3j6jhbSo
-    j7sbSEWroyhEmCvY/Gf8UlWfruRD67kE01VPtm5bIxsAHDTb1RmMkuJXq/izxkRUNT4Fc6
-    RUrlOah1x1Fuw4PhBPYawq/U0g6KdRfZR6Fc9/LAe2fzTWsbf9NwIc8TnRrQ
-X-ME-Proxy: <xmx:ETPyahPC-jSgTsLK6_tE7cDdbwCHv8S6AkMP4HUPGHJadnrUz2_MpQ>
-    <xmx:ETPyas4xbCb_gD55ZbAZX8rrbGQ7tooEFxrQqqESrdteA71iCZ3H2g>
-    <xmx:ETPyaiM0ULxbuJeuN438l_GbH9ifFhxXIHkmW-JzH2okq7WJ_TPzuw>
-    <xmx:ETPyaqlX1oIyeiPEio1kKCusdld_1JN0hBFv4uOJssqSC6wm4ci7Tg>
-    <xmx:ETPyavcAYlC0CK122G-0oxvL9asLCjEF5B3Kqn2uENB4i-K5UAZZPk6Q>
+    78INLa5J1RtsPx9OWvq+4VeVJvo1vPuoO5NMOsRmu+4BfaCiIUqmAAKcleRTZo0cWPvxcS
+    7Ozg3nQx5O4sXzlunCqO/BtUo7CvwAQV2cwCIA2XhwI1uHhkvgUXCOlruAbopJrRBh+B6E
+    l+sHn0/3HCnaC96863e+mciwH8xsbR2aF7m/T49b91P+WJDex/MbAeM+tnMXhbfoBG3L/e
+    nsdIvx1Z6YqF7AfWXsttnapZBccxPuUZNsMzJ3YbsFZ3BjjqKg+Ct2Mftu8QMBCXvh13kl
+    7l+Zx17cmFkKJZL1SeV2pbuOYUsc9MX2dTSSVtlE1kfEfBqvQn19AdOB1vQL9UEfM55Z02
+    ZpJ5ZVgv7e+0aqyGaZ2XaaRemtnRcF6ltJgbSaypjMnjTjtB/kLUkO44pQOQ
+X-ME-Proxy: <xmx:EjPyauJmUw0gvNKLMJVx7_kINOSqVcT-C5pbAmxBdh9oztbSqFxvSw>
+    <xmx:EjPyavFXEFk32OK7VPFL4DjVJVTW-Vp4bp_I4Xey3j8tY1uWR97ZMg>
+    <xmx:EjPyagrju0iRrV3kB5RZpjo-n9Ud0_nhCh98aPbx-3SW2CZXvPaMSg>
+    <xmx:EjPyagRax5pNB5cI6HV3LdK80-CBS3XXUFrZjOpUNuJ-OBbXMVz6MQ>
+    <xmx:EjPyampQ9iTF7WybzroQX8aa7tKxGBAHN7i1oY6w0Pj90LlmeQOnCwak>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Nov 2026 15:54:40 -0500 (EST)
+ 9 Nov 2026 15:54:42 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 1/2] unpack-trees: lose USE_THE_REPOSITORY
-Date: Mon,  9 Nov 2026 12:54:36 -0800
-Message-ID: <20261109205438.369060-2-gitster@pobox.com>
+Subject: [PATCH v2 2/2] unpack-trees: consistently use "struct index_state *istate"
+Date: Mon,  9 Nov 2026 12:54:37 -0800
+Message-ID: <20261109205438.369060-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.56.0-626-gaba6dc7e00
 In-Reply-To: <20261109205438.369060-1-gitster@pobox.com>
 References: <xmqqtsltbfdv.fsf@gitster.g>
@@ -125,284 +125,271 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This file defines a set of fairly low level functions to implement
-merge and checkout behaviour, many of which depended on and can only
-work with the_repository.
-
-Two key data structures passed around in the code paths, "struct
-unpack_trees_options" and "struct index_state", both have a pointer
-to the repository instance, and we can use it to make it work on an
-arbitrary repository, not just the_repository.
-
-In any correctly written clients of this library file, the
-repository instance that is pointed at by these two structs MUST be
-the same one.  For now, make sure that is the case (and otherwise
-BUG out) by introducing a unpack_repo() helper function that takes
-these two structures (when available) and returns the repository.
+There are some functions that call it index.  Make them consistent.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- unpack-trees.c | 92 ++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 74 insertions(+), 18 deletions(-)
+ unpack-trees.c | 94 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 47 insertions(+), 47 deletions(-)
 
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 1802809ad3..a1f7d8bd6a 100644
+index a1f7d8bd6a..0d00f6120a 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
-@@ -82,6 +81,54 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
- 	  ? ((o)->internal.msgs[(type)])      \
- 	  : (unpack_plumbing_errors[(type)]) )
- 
-+
-+/*
-+ * Some functions in these code paths get unpack_trees_options, which
-+ * has up to two istates, and some get an istate.  These istates can
-+ * be used to find the repository to be used for this operation.
-+ *
-+ * As these are all working on the same repository, they must match.
-+ * For now, with a super paranoid check, make sure all potential
-+ * sources of the information match before using it.
-+ *
-+ * Once this proves working well, we could just use the first one we
-+ * find in a production setting.
-+ */
-+static struct repository *unpack_repo(struct index_state *istate,
-+				      struct unpack_trees_options *o)
-+{
-+	struct repository *repo = NULL;
-+	const char *camefrom = NULL;
-+
-+	if (istate) {
-+		if (!istate->repo)
-+			BUG("istate->repo == NULL");
-+		repo = istate->repo;
-+		camefrom = "istate->repo";
-+	}
-+	if (o) {
-+		if (o->src_index) {
-+			if (!o->src_index->repo)
-+				BUG("o->src_index->repo == NULL");
-+			if (repo && repo != o->src_index->repo)
-+				BUG("%s != o->src_index->repo", camefrom);
-+			repo = o->src_index->repo;
-+			camefrom = "o->src_index->repo";
-+		}
-+
-+		if (o->dst_index) {
-+			if (!o->dst_index->repo)
-+				BUG("o->dst_index->repo == NULL");
-+			if (repo && repo != o->dst_index->repo)
-+				BUG("%s != o->dst_index->repo", camefrom);
-+			repo = o->dst_index->repo;
-+		}
-+	}
-+	if (!repo)
-+		BUG("no repository for unpack_trees()?");
-+	return repo;
-+}
-+
- static const char *super_prefixed(const char *path, const char *super_prefix)
- {
- 	/*
-@@ -345,15 +392,16 @@ static void load_gitmodules_file(struct index_state *index,
+@@ -388,14 +388,14 @@ static int check_submodule_move_head(const struct cache_entry *ce,
+  * (2) before checking out entries to the working tree if the gitmodules file
+  *     has been marked for update.  This situation is specified by 'state' != NULL.
+  */
+-static void load_gitmodules_file(struct index_state *index,
++static void load_gitmodules_file(struct index_state *istate,
  				 struct checkout *state)
  {
- 	int pos = index_name_pos(index, GITMODULES_FILE, strlen(GITMODULES_FILE));
-+	struct repository *repo = unpack_repo(index, NULL);
+-	int pos = index_name_pos(index, GITMODULES_FILE, strlen(GITMODULES_FILE));
+-	struct repository *repo = unpack_repo(index, NULL);
++	int pos = index_name_pos(istate, GITMODULES_FILE, strlen(GITMODULES_FILE));
++	struct repository *repo = unpack_repo(istate, NULL);
  
  	if (pos >= 0) {
- 		struct cache_entry *ce = index->cache[pos];
+-		struct cache_entry *ce = index->cache[pos];
++		struct cache_entry *ce = istate->cache[pos];
  		if (!state && ce->ce_flags & CE_WT_REMOVE) {
--			repo_read_gitmodules(the_repository, 0);
-+			repo_read_gitmodules(repo, 0);
+ 			repo_read_gitmodules(repo, 0);
  		} else if (state && (ce->ce_flags & CE_UPDATE)) {
--			submodule_free(the_repository);
-+			submodule_free(repo);
- 			checkout_entry(ce, state, NULL, NULL);
--			repo_read_gitmodules(the_repository, 0);
-+			repo_read_gitmodules(repo, 0);
- 		}
- 	}
+@@ -407,16 +407,16 @@ static void load_gitmodules_file(struct index_state *index,
  }
-@@ -362,6 +410,7 @@ static struct progress *get_progress(struct unpack_trees_options *o,
- 				     struct index_state *index)
+ 
+ static struct progress *get_progress(struct unpack_trees_options *o,
+-				     struct index_state *index)
++				     struct index_state *istate)
  {
  	unsigned cnt = 0, total = 0;
-+	struct repository *repo = unpack_repo(index, o);
+-	struct repository *repo = unpack_repo(index, o);
++	struct repository *repo = unpack_repo(istate, o);
  
  	if (!o->update || !o->verbose_update)
  		return NULL;
-@@ -372,7 +421,7 @@ static struct progress *get_progress(struct unpack_trees_options *o,
+ 
+-	for (; cnt < index->cache_nr; cnt++) {
+-		const struct cache_entry *ce = index->cache[cnt];
++	for (; cnt < istate->cache_nr; cnt++) {
++		const struct cache_entry *ce = istate->cache[cnt];
+ 		if (ce->ce_flags & (CE_UPDATE | CE_WT_REMOVE))
  			total++;
  	}
- 
--	return start_delayed_progress(the_repository,
-+	return start_delayed_progress(repo,
- 				      _("Updating files"), total);
+@@ -426,22 +426,22 @@ static struct progress *get_progress(struct unpack_trees_options *o,
  }
  
-@@ -430,6 +479,7 @@ static int check_updates(struct unpack_trees_options *o,
+ static void setup_collided_checkout_detection(struct checkout *state,
+-					      struct index_state *index)
++					      struct index_state *istate)
+ {
+ 	int i;
+ 
+ 	state->clone = 1;
+-	for (i = 0; i < index->cache_nr; i++)
+-		index->cache[i]->ce_flags &= ~CE_MATCHED;
++	for (i = 0; i < istate->cache_nr; i++)
++		istate->cache[i]->ce_flags &= ~CE_MATCHED;
+ }
+ 
+-static void report_collided_checkout(struct index_state *index)
++static void report_collided_checkout(struct index_state *istate)
+ {
+ 	struct string_list list = STRING_LIST_INIT_NODUP;
+ 	int i;
+ 
+-	for (i = 0; i < index->cache_nr; i++) {
+-		struct cache_entry *ce = index->cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
+ 
+ 		if (!(ce->ce_flags & CE_MATCHED))
+ 			continue;
+@@ -472,33 +472,33 @@ static int must_checkout(const struct cache_entry *ce,
+ }
+ 
+ static int check_updates(struct unpack_trees_options *o,
+-			 struct index_state *index)
++			 struct index_state *istate)
+ {
+ 	unsigned cnt = 0;
+ 	int errs = 0;
  	struct progress *progress;
  	struct checkout state = CHECKOUT_INIT;
  	int i, pc_workers, pc_threshold;
-+	struct repository *repo = unpack_repo(index, o);
+-	struct repository *repo = unpack_repo(index, o);
++	struct repository *repo = unpack_repo(istate, o);
  
  	trace_performance_enter();
  	state.super_prefix = o->super_prefix;
-@@ -473,7 +523,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 	state.force = 1;
+ 	state.quiet = 1;
+ 	state.refresh_cache = 1;
+-	state.istate = index;
++	state.istate = istate;
+ 	clone_checkout_metadata(&state.meta, &o->meta, NULL);
+ 
+ 	if (!o->update || o->dry_run) {
+-		remove_marked_cache_entries(index, 0);
++		remove_marked_cache_entries(istate, 0);
+ 		trace_performance_leave("check_updates");
+ 		return 0;
+ 	}
+ 
+ 	if (o->clone)
+-		setup_collided_checkout_detection(&state, index);
++		setup_collided_checkout_detection(&state, istate);
+ 
+-	progress = get_progress(o, index);
++	progress = get_progress(o, istate);
+ 
+ 	/* Start with clean cache to avoid using any possibly outdated info. */
+ 	invalidate_lstat_cache();
+@@ -506,10 +506,10 @@ static int check_updates(struct unpack_trees_options *o,
+ 	git_attr_set_direction(GIT_ATTR_CHECKOUT);
+ 
  	if (should_update_submodules())
- 		load_gitmodules_file(index, &state);
+-		load_gitmodules_file(index, NULL);
++		load_gitmodules_file(istate, NULL);
  
--	if (repo_has_promisor_remote(the_repository))
-+	if (repo_has_promisor_remote(repo))
- 		/*
- 		 * Prefetch the objects that are to be checked out in the loop
- 		 * below.
-@@ -879,6 +929,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
- 	struct traverse_info newinfo;
- 	struct name_entry *p;
- 	int nr_entries;
-+	struct repository *repo = unpack_repo(NULL, o);
+-	for (i = 0; i < index->cache_nr; i++) {
+-		const struct cache_entry *ce = index->cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		const struct cache_entry *ce = istate->cache[i];
  
- 	nr_entries = all_trees_same_as_cache_tree(n, dirmask, names, info);
- 	if (nr_entries > 0) {
-@@ -940,7 +991,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
- 			const struct object_id *oid = NULL;
- 			if (dirmask & 1)
- 				oid = &names[i].oid;
--			buf[nr_buf++] = fill_tree_descriptor(the_repository, t + i, oid);
-+			buf[nr_buf++] = fill_tree_descriptor(repo, t + i, oid);
+ 		if (ce->ce_flags & CE_WT_REMOVE) {
+ 			display_progress(progress, ++cnt);
+@@ -517,26 +517,26 @@ static int check_updates(struct unpack_trees_options *o,
  		}
  	}
  
-@@ -1773,24 +1824,25 @@ static int clear_ce_flags(struct index_state *istate,
- 	static struct strbuf prefix = STRBUF_INIT;
- 	char label[100];
- 	int rval;
-+	struct repository *repo = unpack_repo(istate, NULL);
+-	remove_marked_cache_entries(index, 0);
++	remove_marked_cache_entries(istate, 0);
+ 	remove_scheduled_dirs();
  
- 	strbuf_reset(&prefix);
- 	if (show_progress)
- 		istate->progress = start_delayed_progress(
--					the_repository,
-+					repo,
- 					_("Updating index flags"),
- 					istate->cache_nr);
+ 	if (should_update_submodules())
+-		load_gitmodules_file(index, &state);
++		load_gitmodules_file(istate, &state);
  
- 	xsnprintf(label, sizeof(label), "clear_ce_flags(0x%08lx,0x%08lx)",
- 		  (unsigned long)select_mask, (unsigned long)clear_mask);
--	trace2_region_enter("unpack_trees", label, istate->repo);
-+	trace2_region_enter("unpack_trees", label, repo);
- 	rval = clear_ce_flags_1(istate,
- 				istate->cache,
- 				istate->cache_nr,
- 				&prefix,
- 				select_mask, clear_mask,
- 				pl, 0, 0);
--	trace2_region_leave("unpack_trees", label, istate->repo);
-+	trace2_region_leave("unpack_trees", label, repo);
- 
- 	stop_progress(&istate->progress);
- 	return rval;
-@@ -1885,13 +1937,13 @@ static int verify_absent(const struct cache_entry *,
-  */
- int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options *o)
- {
--	struct repository *repo = o->src_index->repo;
-+	struct repository *repo = unpack_repo(NULL, o);
- 	int i, ret;
- 	static struct cache_entry *dfc;
- 	struct pattern_list pl;
- 	int free_pattern_list = 0;
- 	struct dir_struct dir = DIR_INIT;
--	struct repo_config_values *cfg = repo_config_values(the_repository);
-+	struct repo_config_values *cfg = repo_config_values(repo);
- 
- 	if (o->reset == UNPACK_RESET_INVALID)
- 		BUG("o->reset had a value of 1; should be UNPACK_TREES_*_UNTRACKED");
-@@ -1936,7 +1988,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		populate_from_existing_patterns(o, &pl);
- 	}
- 
--	index_state_init(&o->internal.result, o->src_index->repo);
-+	index_state_init(&o->internal.result, repo);
- 	o->internal.result.initialized = 1;
- 	o->internal.result.timestamp.sec = o->src_index->timestamp.sec;
- 	o->internal.result.timestamp.nsec = o->src_index->timestamp.nsec;
-@@ -2080,7 +2132,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		move_index_extensions(&o->internal.result, o->src_index);
- 		if (!ret) {
- 			if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0) &&
--			    cache_tree_verify(the_repository,
-+			    cache_tree_verify(repo,
- 					      &o->internal.result) < 0) {
- 				ret = -1;
- 				goto done;
-@@ -2136,10 +2188,11 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o,
- 	int i;
- 	unsigned old_show_all_errors;
- 	int free_pattern_list = 0;
-+	struct repository *repo = unpack_repo(NULL, o);
- 
- 	old_show_all_errors = o->internal.show_all_errors;
- 	o->internal.show_all_errors = 1;
--	index_state_init(&o->internal.result, o->src_index->repo);
-+	index_state_init(&o->internal.result, repo);
- 
- 	/* Sanity checks */
- 	if (!o->update || o->index_only || o->skip_sparse_checkout)
-@@ -2332,10 +2385,11 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
- 	struct dir_struct d;
- 	char *pathbuf;
- 	int cnt = 0;
-+	struct repository *repo = unpack_repo(NULL, o);
- 
- 	if (S_ISGITLINK(ce->ce_mode)) {
- 		struct object_id oid;
--		int sub_head = repo_resolve_gitlink_ref(the_repository, ce->name,
-+		int sub_head = repo_resolve_gitlink_ref(repo, ce->name,
- 							"HEAD", &oid);
+ 	if (repo_has_promisor_remote(repo))
  		/*
- 		 * If we are not going to update the submodule, then
-@@ -2423,6 +2477,7 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
+ 		 * Prefetch the objects that are to be checked out in the loop
+ 		 * below.
+ 		 */
+-		prefetch_cache_entries(index, must_checkout, NULL);
++		prefetch_cache_entries(istate, must_checkout, NULL);
+ 
+ 	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
+ 
+ 	enable_delayed_checkout(&state);
+ 	if (pc_workers > 1)
+ 		init_parallel_checkout();
+-	for (i = 0; i < index->cache_nr; i++) {
+-		struct cache_entry *ce = index->cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
+ 
+ 		if (must_checkout(ce, NULL)) {
+ 			size_t last_pc_queue_size = pc_queue_size();
+@@ -559,7 +559,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 	git_attr_set_direction(GIT_ATTR_CHECKIN);
+ 
+ 	if (o->clone)
+-		report_collided_checkout(index);
++		report_collided_checkout(istate);
+ 
+ 	trace_performance_leave("check_updates");
+ 	return errs != 0;
+@@ -676,19 +676,19 @@ static void mark_ce_used(struct cache_entry *ce, struct unpack_trees_options *o)
+ 	}
+ }
+ 
+-static void mark_all_ce_unused(struct index_state *index)
++static void mark_all_ce_unused(struct index_state *istate)
+ {
+ 	int i;
+-	for (i = 0; i < index->cache_nr; i++)
+-		index->cache[i]->ce_flags &= ~(CE_UNPACKED | CE_ADDED | CE_NEW_SKIP_WORKTREE);
++	for (i = 0; i < istate->cache_nr; i++)
++		istate->cache[i]->ce_flags &= ~(CE_UNPACKED | CE_ADDED | CE_NEW_SKIP_WORKTREE);
+ }
+ 
+ static int locate_in_src_index(const struct cache_entry *ce,
+ 			       struct unpack_trees_options *o)
+ {
+-	struct index_state *index = o->src_index;
++	struct index_state *istate = o->src_index;
+ 	int len = ce_namelen(ce);
+-	int pos = index_name_pos(index, ce->name, len);
++	int pos = index_name_pos(istate, ce->name, len);
+ 	if (pos < 0)
+ 		pos = -1 - pos;
+ 	return pos;
+@@ -702,12 +702,12 @@ static int locate_in_src_index(const struct cache_entry *ce,
+ static void mark_ce_used_same_name(struct cache_entry *ce,
+ 				   struct unpack_trees_options *o)
+ {
+-	struct index_state *index = o->src_index;
++	struct index_state *istate = o->src_index;
+ 	int len = ce_namelen(ce);
+ 	int pos;
+ 
+-	for (pos = locate_in_src_index(ce, o); pos < index->cache_nr; pos++) {
+-		struct cache_entry *next = index->cache[pos];
++	for (pos = locate_in_src_index(ce, o); pos < istate->cache_nr; pos++) {
++		struct cache_entry *next = istate->cache[pos];
+ 		if (len != ce_namelen(next) ||
+ 		    memcmp(ce->name, next->name, len))
+ 			break;
+@@ -717,11 +717,11 @@ static void mark_ce_used_same_name(struct cache_entry *ce,
+ 
+ static struct cache_entry *next_cache_entry(struct unpack_trees_options *o)
+ {
+-	const struct index_state *index = o->src_index;
++	const struct index_state *istate = o->src_index;
+ 	int pos = o->internal.cache_bottom;
+ 
+-	while (pos < index->cache_nr) {
+-		struct cache_entry *ce = index->cache[pos];
++	while (pos < istate->cache_nr) {
++		struct cache_entry *ce = istate->cache[pos];
+ 		if (!(ce->ce_flags & CE_UNPACKED)) {
+ 			o->internal.cache_bottom = pos;
+ 			return ce;
+@@ -734,14 +734,14 @@ static struct cache_entry *next_cache_entry(struct unpack_trees_options *o)
+ static void add_same_unmerged(const struct cache_entry *ce,
  			      struct unpack_trees_options *o)
  {
- 	const struct cache_entry *result;
-+	struct repository *repo = unpack_repo(NULL, o);
+-	struct index_state *index = o->src_index;
++	struct index_state *istate = o->src_index;
+ 	int len = ce_namelen(ce);
+-	int pos = index_name_pos(index, ce->name, len);
++	int pos = index_name_pos(istate, ce->name, len);
  
- 	/*
- 	 * It may be that the 'lstat()' succeeded even though
-@@ -2431,7 +2486,7 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
- 	 *
- 	 * Ignore that lstat() if it matches.
- 	 */
--	if (repo_ignore_case(the_repository) && icase_exists(o, name, len, st))
-+	if (repo_ignore_case(repo) && icase_exists(o, name, len, st))
- 		return 0;
+ 	if (0 <= pos)
+ 		die("programming error in a caller of mark_ce_used_same_name");
+-	for (pos = -pos - 1; pos < index->cache_nr; pos++) {
+-		struct cache_entry *next = index->cache[pos];
++	for (pos = -pos - 1; pos < istate->cache_nr; pos++) {
++		struct cache_entry *next = istate->cache[pos];
+ 		if (len != ce_namelen(next) ||
+ 		    memcmp(ce->name, next->name, len))
+ 			break;
+@@ -1333,11 +1333,11 @@ static int find_cache_pos(struct traverse_info *info,
+ {
+ 	int pos;
+ 	struct unpack_trees_options *o = info->data;
+-	struct index_state *index = o->src_index;
++	struct index_state *istate = o->src_index;
+ 	int pfxlen = info->pathlen;
  
- 	if (o->internal.dir &&
-@@ -2651,6 +2706,7 @@ static int merged_sparse_dir(const struct cache_entry * const *src, int n,
- 	void * tree_bufs[MAX_UNPACK_TREES + 1];
- 	struct traverse_info info;
- 	int i, ret;
-+	struct repository *repo = unpack_repo(NULL, o);
+-	for (pos = o->internal.cache_bottom; pos < index->cache_nr; pos++) {
+-		const struct cache_entry *ce = index->cache[pos];
++	for (pos = o->internal.cache_bottom; pos < istate->cache_nr; pos++) {
++		const struct cache_entry *ce = istate->cache[pos];
+ 		const char *ce_name, *ce_slash;
+ 		int cmp, ce_len;
  
- 	/*
- 	 * Create the tree traversal information for traversing into *only* the
-@@ -2664,7 +2720,7 @@ static int merged_sparse_dir(const struct cache_entry * const *src, int n,
- 
- 	/* Get the tree descriptors of the sparse directory in each of the merging trees */
- 	for (i = 0; i < n; i++)
--		tree_bufs[i] = fill_tree_descriptor(o->src_index->repo, &t[i],
-+		tree_bufs[i] = fill_tree_descriptor(repo, &t[i],
- 						    src[i] && !is_null_oid(&src[i]->oid) ? &src[i]->oid : NULL);
- 
- 	ret = traverse_trees(o->src_index, n, t, &info);
 -- 
 2.56.0-626-gaba6dc7e00
 
