@@ -1,59 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.122
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.123
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794211306;
-	b=k6fe4GL3psAgyezCxjBayMMzXJrc8n3bmJ+fzntOT0aXDooooDw+zIvAuz74VslFDvmP
-	 u3IqKWL07du5O0B/x91TscnSv+SO3/NpODV7kYrCx07jkB4lr1yMYtY57F3gKJ6ME6TjM
-	 Ulu3gYtjosl4msiJRGbCmGQ2U4I4/FrjgE9EpEsrs4ANj3LYX+PEeuoziMi7pyTUR6xJN
-	 JkWB3Cll9PuHjZJ8KF2Og1ff6AXDB9aavqqTxOX7e86xd+Dr7HdzYYEEOWyGb0LnuYAGv
-	 2z1LWnPTIz9/sp+PtcKpAoSWHtY5vfNu3rG+lSCzT30P1L2Lj9kW9FtIDipSwoqrUvQ==
+	t=1794211375;
+	b=HrZaaSkUc+iYZOzOekuVwaDS/a/42VRLTy2/T1U3Sney93nPHpmBfiGvoxV92VCB++Tm
+	 B/qAXmGrtcNvgvMNF7MYy1YzKhGvyBHo3lUtzQi4Mldt/vD2DHgmg27fAJqRKXSaIfM0G
+	 5BZ9JBEEYuZoUI+RUkaZQ7PtEy0uNuP+OfembdoolHLNJcWI2kSmcbo5IOzTjE9ZitxQA
+	 KPkhhauuJNtGBGEzSXDHowGPkV70niKOinSLEFxsDyYKrzVbdLmHo5zLuIQWaDBixXRn7
+	 y+3m+x+ejzLnPo7J7+FMt2CbwOSnr7lzvWIIVPbKMldrsGyAJeO+RBzBU7iIZwYWW8w==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794211306;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794211375;
 	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
 	 Message-ID:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
 	 X-Zoho-Virus-Status:X-Zoho-AV-Stamp:X-ZohoMailClient;
-	bh=tIEwjLZw9ENqN6IG30ZnMnjrEaBr/hdb1q2GZ3N+4h4=;
-	b=ne+cO5dgddvVP4fjnqp3iLbcxpEwyBduI3a0UhX4y0oumgWOJvKlTEgOxc8fEfxTQlh6
-	 apKCWCGMnlY3pVoZCf/3P9xphy2UM3KSfCaiSTq5tw9jjUjGgxn0CFqswZeT/YFQLzbeC
-	 v0qlrP0+5RLu5B4G5e0tQAQKdujFsrtztdDm5v9150pq4e9CA7yXRxweO3H4fPQQJu+6j
-	 4Un3dGtspa9tzL2Eq93ZCsliSjmrWn/caSK8YG6qqyaRaAtPV0Wk8wNA3hzGbaGiozGgR
-	 UaaTzGIgFxZRun1rNP15WNTpbvUKMeETbCRCVMby0cDZR1pMgkwpeb5e4iFSOX7RdOA==
+	bh=CoVh8zCoOvW4QQjWFWdMPXXpCrebYkVZEHzFBS7+HGY=;
+	b=1o/csXKRHYOUGil+60zrRLTttVaFnTWvF7MfnUoDxpFjyOUApZtBijdlsGW2pUzibsih
+	 tTfyL2CEWQOlFXHZuXSEFjtBT8WFTkPI4zCgZCMkUmyeAygnYnbpEcfHHVgIBazIPuFp2
+	 3IGAK4c6TByO6uB1Wic0icbDGndu/pZvLNNqH+WjiSxcMnTVwSnqqPR346WHJMeXriKH+
+	 G0uydIUB8g4pCCpVHJnzZk4DboUK8DPpHMK/y+lyvLvbzR05oFHQMiHKmnxjMYwOFnn/L
+	 IL4MbVLQ/7o+Ulb6Zx6BRsLotwKUBW+cHohdw8JXV2rNCijdcLbCba4S5DEosRiPL9w==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=collabora.com;
 	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=D7I43j+B;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.122
-Received: from sender5-pp-g122.zoho.com (sender5-pp-g122.zoho.com [165.173.182.122])
+	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=Fm2m8Vo2;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.123
+Received: from sender6-pp-g123.zoho.com (sender6-pp-g123.zoho.com [165.173.180.123])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4708D606A332
-	for <git@vger.kernel.org>; Mon,  9 Nov 2026 08:01:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4708D606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F98606A31C
+	for <git@vger.kernel.org>; Mon,  9 Nov 2026 08:02:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59F98606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=D7I43j+B
-ARC-Seal: i=1; a=rsa-sha256; t=1794211298; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=Fm2m8Vo2
+ARC-Seal: i=1; a=rsa-sha256; t=1794211367; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=PcqiEJDs+RdSoZWmoohamB2GTJr9FFb1z1aNy4m13Ewg31FB9DgmqWjX4nE9h7JBI26MRDMIGA3zR9Z5+OjDFyQyQpN8XGt/ad/Tzqy0K/RxeTG9sOblWe94gmvKMVq8rzoHxSTh2+sUks1RN79BP+itWiebEvvvbJeJ0f1Is0w=
+	b=lveHLaG6AWxO9lBWfpVK4795pazRGKPulD0OkTCzhXH0H226h3R3YTK7MciwixrqQ9PfVE8QH46HiyWB93RbfzLSHJ+YdaXnQsSC5mTZY2hc3M6v6oM1O5HmY2wNlLc+bqf0hfG0PmyHmiiOJg55dm1AvgY8BPaT+edByvEBmBI=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1794211298; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=tIEwjLZw9ENqN6IG30ZnMnjrEaBr/hdb1q2GZ3N+4h4=; 
-	b=nythLgIKBjihpOmacRM1enYfxkpFIPWGT/TFaYLlWg3KjM1liFId/LbNCip2EKinKcf7nLjL313J1BQYSRDuE5bpjRMnvzJ9k5WqoH8PMe6+a72UT40P95k47gZ+HetuuP52DT0QWBz5lfTLKHphlQecvCbJJJveyRN2yDfkIfg=
+	t=1794211367; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=CoVh8zCoOvW4QQjWFWdMPXXpCrebYkVZEHzFBS7+HGY=; 
+	b=YkrvckJUmCW7doL4qQnv+UxkPxgWa2dZO929XZuRiEJljSu4NEsLY/6lSgG2LHfj6141IqGNuGC5GmdE1OA8HbkEQGLi+HBSA3nwxeQfDECXabx/QjC/M+lA/azf1/iehSG4490SMMKL742P5QDUa0/S97uO9oRo0Su+x2L1ekE=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
 	dmarc=pass header.from=<vmiklos@collabora.com>
-DKIM-Signature: a=rsa-sha256; b=D7I43j+BO0cGQCf0vKY6fbxQnxrOIKspwjqTw7npUF6EIucUIo1UKZy4UyQPorNP/+Jsss0AmaOKt6vy7i8Df/4uwvWidTubhAtv34Wb+pG0Scrgm+sUwSUcZg9aDupZTd5gPlqgStcLA6EFRY+g54HnaABi0sy9zxLprNGFbcQ=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=tIEwjLZw9ENqN6IG30ZnMnjrEaBr/hdb1q2GZ3N+4h4=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1794211296808169.52526686680505;
-	Mon, 9 Nov 2026 00:01:36 -0800 (PST)
-Date: Mon, 9 Nov 2026 09:01:29 +0100
+DKIM-Signature: a=rsa-sha256; b=Fm2m8Vo275Gyx0Z4eKkljpa6aaxxZTsC4/rRFvGTBzs12DPF1MVT8MO1hlqgTKLzIKNwnfFfLlpwqum4Gy/SkfT9ny/uoZ4ZzsY/HslZV5CsaizFDuK2tSwFESKaYQWRtOZrfSCUZ81OZwuIziWrzS0TidOKb8uAhf7dGaBzfDs=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=CoVh8zCoOvW4QQjWFWdMPXXpCrebYkVZEHzFBS7+HGY=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794211365609297.20251466952186;
+	Mon, 9 Nov 2026 00:02:45 -0800 (PST)
+Date: Mon, 9 Nov 2026 09:02:39 +0100
 From: Miklos Vajna <vmiklos@collabora.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: gitster@pobox.com, szeder.dev@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH v4 0/6] log: speed up --follow following renames for
+Subject: Re: [PATCH v4 5/6] log: speed up --follow following renames for
  non-linear history
-Message-ID: <avF92deaqNI1G4vw@collabora.com>
+Message-ID: <avF-HwjximDD54P_@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -65,38 +65,29 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <au3gn7kUFYZWUinE@pks.im>
+In-Reply-To: <au3gswJZzhutGlpR@pks.im>
 X-Zoho-Virus-Status: 1
 X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/294.182.33
 X-ZohoMailClient: External
 
 Hi Patrick,
 
-On Fri, Nov 06, 2026 at 03:14:03PM +0100, Patrick Steinhardt <ps@pks.im> wrote:
-> please note that the expectation is that you answer to the review
-> comments directly instead of only answering reviews via the cover letter
-> of the next version. We want there to be discussions, and reviewers
-> should not have to figure out by themselves whether you did or did not
-> address specific concerns.
+On Fri, Nov 06, 2026 at 03:14:11PM +0100, Patrick Steinhardt <ps@pks.im> wrote:
+> With unrelated histories this would return no bases at all, and hence
+> we'd always return 0 in such a case. But 304812ed33d (log: improve
+> --follow following renames for non-linear history, 2026-06-22)
+> explicitly mentioned the use case of sub-tree merges of unrelated
+> histories, so isn't this a regression?
 
-I see, I'll stick to that way from now on.
+You're right. The existing '--follow finds the pre-merge commit through
+a subtree merge' test didn't catch this, because there no parent has the
+path unchanged, so follow_needs_renames() is not called.
 
-> Hmm, okay. But isn't it the case that your speedup patch introduces a
-> regression where we now don't follow history in some specific cases
-> anymore, and that regression was only introduced in the preceding
-> commit? So it's a bit curious to have this be an extra commit.
+When there is no merge base, follow_needs_renames() now returns 1, so
+renames are followed as before.
 
-I've squashed patch 6 into patch 5 in v5. This way 5/5 in v5 is a bit
-larger, but no patch in the series fixes a regression from the same
-series.
-
-> > Interdiff against v3:
-> 
-> Instead of an interdiff, could you please send a range-diff next time?
-> That makes it was easier to see which specific commits I need to have a
-> look at again, and it also shows diffs to commit messages.
-
-I did it that way in v5.
+I've added a new '--follow finds the history of a copied file through a
+subtree merge' test to 1/5 in v5 for such a case, and 5/5 now passes it.
 
 Thanks,
 
