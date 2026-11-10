@@ -1,91 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794335974;
-	b=Sap8lv3olIHEpW1KcLd1d64Ym1RcdBi1xaD9dR4c9q9InFZXx1fdHo57s1t47pgJcSH3
-	 occDJy7pkvvlOwYbf7+zMTyIriakrhAqSYyzVC7hmmw/6qhLv2FjFBeMhfH/Qid/nCkHg
-	 s51WuqJ4TJy0nXKIS7AxhSaa/lpb0ctSDtULCAbyzSa1FQcm27eGarA6NcLGR0qXZzNje
-	 OphkJ04YcF0yARxnauzJpgoMng4h7knpxtrZp5wX6Ioz50hXRH60PmdoPY6AQpTc9EGDf
-	 kfme9NAjwYTfXbLAAdzsQCCHnUB5jK/lAjvV9ABDSbdqH74qK1Dq12K+MxuCLPdCvqA==
+	t=1794337923;
+	b=ft2ajN+BIBwXH51bbzlK0BzJBZD8drOO8IGbdT4Pq4ZsCU41Sz9BXa29qqGBKw5B7IES
+	 gLRsxeyPe3mP2nmYltiU3l5o5Lnlpj7+s9uh2E5IdBFekxnckxDAXeH21T1niFGI7Q5Lv
+	 N6nQxavjrI+3eTtwUOJxA2W61pQY2HBMPPbudzf5/kmbLS0OT0EIaDaCG2dpsko1gWK0n
+	 IBZ0HYK6Ozr1i91z5/c+HwPl03pgMlaeK+jm1fqMTz1KC0ERqJwdYtsHdP991bPiyhSY/
+	 o8f98wc5YkEo8i3XJW7P5eq1lzq+48zM593vWZ3qy9AJXf1MoyGO+osT4QKAsYMiJPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794335974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794337923;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=rhBmTfAbxV/m8Ae6MpVKaCXe5Xz1VX8IEvBrOUQ/31A=;
-	b=ArlUUQQlRkAqQNQZrjnv8s5wDjFVvjJDD0826EaCwBCImmwpkyV0tQlMhsABlw6//0kd
-	 dER1WO2OSYtjQt8zpInZ0mholWHYuoF7yMlbRbLsmmZTrteutB3D84gaHVLc3KT3qsARG
-	 HH08P6fX4+1ENSRMPviBtgVN/70lMdFxiRH8JeMhDqQ0Pk+Fz+OYf5GPqWMMtpHZy7Vb4
-	 My9plY+czGcamyjpF7sIctgwF/ikbUEFMKqU9wu6+vexzV1EpPw5rga8oFUj0w3W6QTQX
-	 KWG8j1Q8HKmOK/xWQ1CTP7IQQcdWhZV2SvZIadfvykAjvvLwjZbdWJPkJf1YZR/JO3g==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=I1MQ3FvIaE9YB0vfzH9+neWqBDMW8tFO2hfJzkWhKBY=;
+	b=2/PUHy4jhmnhtcTfY2uS5lXPfeaikDr53r6AkXoc1tpwmilKTe+VIm0DsLZA5+pMkAXj
+	 ftPcsU0Npgnf3T7gbTkQdE+Edp7eHFwvumVo3qC4GiAaU7mxh+CHRvKOsoAMpsALwhAZd
+	 CCCUn0TwtFOhhRRXEAHSVSHzjcpXWHBXSIKwep7sivvjCEOyJcBXjzoQBNWYEwpaGM4YK
+	 tOiw5V6ZnJCk47vFatljl45xEqtH/dvVTlrE/RjBQ6Qx4MzevbodytyYlcYIZDVl0ftZY
+	 S9hVRAkXorhoJliPo7wuE3Uu+1zFwsL69QUHI7Jldf2OjWlawuekKw5GTSJroPSW4OA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ty5qtFa9;
-	arc=none smtp.remote-ip=74.125.82.180
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EWGXfnzI;
+	arc=none smtp.remote-ip=209.85.161.46
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028E660A2619
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 18:39:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 028E660A2619
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B1B606A31C
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:12:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77B1B606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ty5qtFa9
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-37000e7234bso4392507eec.1
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 10:39:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EWGXfnzI
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-717034b331dso1411039eaf.2
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:12:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794335973; x=1794940773; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794337922; x=1794942722; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=rhBmTfAbxV/m8Ae6MpVKaCXe5Xz1VX8IEvBrOUQ/31A=;
-        b=Ty5qtFa9FeQICS1uj1b7DYB5lt0Qbmh73pbMayoMWNH7knrZp1HffdspdhLkcPaD1E
-         AVk1/NmX+52vPbgnHk0dVzwHhOk6IMmSl/JAV3y+S1L2Ew1UVpEUvKY8+tljqP0MVtSY
-         met7Z/A+eX1iIO6obtVKhARsBwUmj9AQA84kkY1AX4yVltoIIdnM3BRTuauWexnr7a54
-         P+6T6RkUANtnsZgV6NDQxj5KrjXAGb8MpQEwrgTrnT7ctR9WZUJDitdIjOrZ9uqy7Nia
-         7w4go87Iifv0JjYl+JlJ0VNRbdkSr8+17T0zMz+9FRw+JEz9LP4PlZ5JpOpeKLW40KZf
-         +KUg==
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=I1MQ3FvIaE9YB0vfzH9+neWqBDMW8tFO2hfJzkWhKBY=;
+        b=EWGXfnzIaY/RoAl7YmHI63ktfdNDN1L5dclsbcFdpIP0oqD8gNBMX0jJ0Ely5WSX3Q
+         aeY3vUnw0aSl9DT3eYXVN1Gzj2i8+a/tXlZIm+jmJuwS64M9SXDy2i2kD7KgLWQWfuvF
+         ZjId5z3VG1/Iejc5ociwYWDo53zgseDtFTpryZD4LEM1WDoZ4r1b6ABu55mKeCReh30i
+         5at68Dj0mkoi9dZsWRWapnIXzSakft+HBpwq+o3YB/jYT3GGUmlL+GgGVf/qME4OTGb2
+         l+BtO271iswYTkLfMgy56S/YndD8PZnIDeNqKF3a5YAVEApcZmO4dGGERPmb98m831Xk
+         h1rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794335973; x=1794940773;
+        d=1e100.net; s=20260707; t=1794337922; x=1794942722;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rhBmTfAbxV/m8Ae6MpVKaCXe5Xz1VX8IEvBrOUQ/31A=;
-        b=cPIpQVnbFmn0AJ/3bXrhtVnJzfpxY3t4IuM0zFi2nqc7Ndu7SXt7tN5zE/jmYfPb2D
-         hhQVsB1rl7KndQdVaiozSUgB5XGTZ5MwwWqsC3An/WIcdhTMqWUwTfmDsnwycbGwq7TB
-         +RZh/voIhw4Xl3/51VzBWjUcKQlo1TdvVwVdo3yJQpvmyu8FWOHUQt+ycTwHvXsQL1rq
-         SoTHmHbx/kDZPqx7LXokBgSrxV6xEuWJ1lfLruqoWi/x4GV/5FMpoCAkCwnoQjwozcyN
-         w1X/yEo9dHdZJOfE+9GS2NG8x+4flcNq/ZfPIsulwctxkyo2xDMy2RMaJYwSNJ5oTPZO
-         lUiw==
-X-Gm-Message-State: APuU4Z/YsiueeBHR95EZXEzIHKhmZx1IV2Wr27DW9En8AE3JkRUkjVBt
-	Qfg48NJItGoy6Rv5Tu2xVsCHPNFemUrVT61epDFpPBJCJHrsMh5khnBVs6pFupCs
-X-Gm-Gg: AYBFou1cQnMb3vX6Eib6D9f0L5xy1luY9AAcT0XRBqNsGG1MI4f0K3vHLt3E8xO9SdI
-	oDqxm2J9qC8RJqKBTCOcAl3snsf2KyfRRvbcCHOA85aRtihdGR2YdLzw3of6UOpnxhdzU4iIZhE
-	25lw2CrjOtUt0lcBwPL2U6hePhwOzgAUkphl/H2B2NJnT0TSb9YXuF08jscPErkk4a3HdzboFJy
-	NfGys7elgvczqc255Hp/YN8HcD39+M86INvXSwmVoBbRS4DWR2W3GdOBtSm/QB+2c47tK3Fg/MX
-	0PR3xBtIZq+hKf/oQUm/QM6oJVwIDymjGz3YuBkSeQWHR58b81+rfHpqy0IhVQ/cd0WR+V2wh7F
-	UmvcSBvj7RDe+kZkll8Io7vapGqY1VdTahsoMXushfVfilW6SP4qLc3XShXoqquLf0yPZ7M681u
-	LmDSRZEBxVrTl0VUUvm12JTVfDfdrt1ykL9LRY97CVXI3XJXK1SsNGyeLI9dtWjBXr+jCh8wtUP
-	rdsxZqJow8J904FNkcCJ5tkAXu9XeZ5sbv0/M8RKN9kLnU0picDKU4A4tyM97TeZpzU4x50ONtj
-	njZgKVRLpBgWloiPUJPfqmDKCYFXnTs=
-X-Received: by 2002:a05:7023:a87:b0:1ac:d029:70b5 with SMTP id a92af1059eb24-1b3bf16815dmr278809c88.33.1794335972646;
-        Tue, 10 Nov 2026 10:39:32 -0800 (PST)
-Received: from [127.0.0.1] ([20.171.32.194])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b3b5b11150sm12055089c88.5.2026.11.10.10.39.31
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=I1MQ3FvIaE9YB0vfzH9+neWqBDMW8tFO2hfJzkWhKBY=;
+        b=BIv2U76u1L5qPetMA3hoMmLppy1iR3tjCqtzZ4K7pngHwSGivqM8KwSj6KfEbA0MBF
+         xdT7nmTKOO6br4A8e0t6iKUXtjPWbUrVaGRZkF5Oxn8WmOC95TwPuKVsSLggT5M8yxns
+         nmCMDf1c4+e3g+hGtvcLfvFN01hfWd+3cll24pl/SIr7MINsciUeyHK8muD5iRFmR13F
+         yiRdn1imj46y0elQxFTfP8+iBwtfOwJCm9lwPr8AjTHwexMQMRQFWVG0buzb+M7PB1g6
+         s67+VpJo5CaLpwheQXg03g/17Y3oHvB8IrGoyVc8Ujxdc0/gqAvFofwvaF5foHHECsQH
+         RLKg==
+X-Gm-Message-State: APuU4Z/ZFw0G6Y7sVqkdzmrLzItAK7qQGr3eG7ylmSU6qK95mRlFs/U8
+	suMpR/rXs1v31gfvXImoKxOKnqaEwHOTXPnrui2q/lKNdnEv9xLD7XR5Ak9LrA==
+X-Gm-Gg: AYBFou2EdDRwiqeCXrqCEoqlbE73jlJvw3c2vosX1Sq46ngnNn4IPZVNM43nlj7enZc
+	gkyrH/7EwXBVo7QSETNqstdhPTJeyE3wa2aevMV6SLucrAzmyRGgbSRaYRKVsnnZhpom9rOJljj
+	DaeM1NO82kXZjuE8igqfhvWStTP7IGwXfQRFMKTfBqBPjGXQyFmO8ytt47z7QUVFeH4FxVlYYnW
+	ZKwaITqVJNw3vZXawC373xYlNF3W/soV4KPwvG6jXUKZgb7xtSMHzbHAP2hB2MIIyj+MRDjg10M
+	hkl+3+0Vfy3K58ybYX/qMy2hFGQF5vJBmTAAwsmlL2Z+o3z3cg+mMUsKlfTF5Ul1Glq7SzGx5hr
+	+Hu+V4gkpUu1R/0E7YiOl8zBQOwpbDr8WhnZ/cQgOf3pP6ezz4PfFZm9LW89V0C7uD8mgEsFBvf
+	Z0P8tCdr9O2CN0a5rhITSUVvpLIX+xVQNLXPfkCVST8MjFw4qe7YKg/K0QpWRD5+p9OA8K27WFk
+	TgZYC8vuDESKsPH4NkIdBYLgjgxgmHzoV/8D9Y9Uwnxryi8oVioX4yU2JtkrCZiIuOgJuY8umfV
+	A+c9pHbAsdcxa3bZZhsaXrV7UnxiXm4q
+X-Received: by 2002:a05:6820:c5d1:20b0:6f8:2346:cd78 with SMTP id 006d021491bc7-718a1883addmr1388604eaf.5.1794337922277;
+        Tue, 10 Nov 2026 11:12:02 -0800 (PST)
+Received: from [127.0.0.1] ([52.154.21.60])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-718a6f2a264sm2311559eaf.1.2026.11.10.11.12.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 10:39:31 -0800 (PST)
-Message-Id: <01c3cc25738c43d61aff153805e02db872ff21de.1794335969.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2305.v3.git.1794335969.gitgitgadget@gmail.com>
-References: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
-	<pull.2305.v3.git.1794335969.gitgitgadget@gmail.com>
-From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Nov 2026 18:39:28 +0000
-Subject: [PATCH v3 1/2] submodule: use the submodule repository to abbreviate
- commits
+        Tue, 10 Nov 2026 11:12:01 -0800 (PST)
+Message-Id: <pull.2264.git.1794337920.gitgitgadget@gmail.com>
+From: "Wyatt Holden via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 10 Nov 2026 19:11:57 +0000
+Subject: [PATCH 0/3] Make orphaned commit checks configurable
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -99,87 +94,75 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Srujith A Poojary <poojarysrujith@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>
+Cc: gitster@pobox.com,
+    stolee@gmail.com,
+    wyattj.holden@gmail.com
 
-From: Srujith A Poojary <poojarysrujith@gmail.com>
+Hi there - my name's Wyatt Holden and I'm a Software Engineer at Microsoft
+:) I've been working with Derrick Stolee over the past few weeks on
+optimizing git in the Office mono-repo. We found some issues around slow
+checkouts on mono-repos in an automated environment:
 
-The commit IDs shown in a submodule diff header belong to the
-submodule's object database. However, strbuf_add_unique_abbrev()
-uses the_repository, so it checks the superproject's object
-database when abbreviating those IDs.
+When leaving a detached HEAD, git checkout and git switch
+call orphaned_commit_warning() to warn about commits that are not reachable
+from any existing ref or the destination HEAD. This requires enumerating
+refs and walking commit history, which can be expensive in large
+repositories.
 
-Use the submodule repository when it is available, and fall back
-to the repository from the diff options when it is not.
+In an internal mono-repo, Trace2 showed tree unpacking finishing
+approximately 12 seconds into checkout, but the process continuing for
+roughly another 193 seconds. A stack dump captured the main thread inside
+ orphaned_commit_warning(), enumerating loose refs and opening ref files.
+Running checkout with --quiet, which bypasses this routine, reduced the
+observed runtime to approximately 14 seconds. However, --quiet also
+suppresses unrelated output.
 
-As the expected abbreviation depends on the hash algorithm used,
-the test uses the test_oid mechanism to switch the expectation
-between SHA-1 and SHA-256 repositories.
+This three-commit series adds a targeted opt-out, advertises it when the
+check is slow, and enables it in Scalar:
 
-Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
----
- submodule.c                      |  5 +++--
- t/t4041-diff-submodule-option.sh | 23 +++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ 1. checkout: make orphaned commit checks configurable Add
+     checkout.orphanedCommitWarning , enabled by default, for both checkout
+    and switch. Setting it to  false  skips the reachability check while
+    retaining the previous HEAD description and normal checkout output. Add
+    a Trace2 region to expose the check’s duration and tests verifying that
+    disabling the setting bypasses the routine.
+ 2. checkout: advise when orphaned commit checks are slow When the check
+    takes more than two seconds, suggest the opt-out and explain that
+    disabling it also removes the warning about commits left behind. Control
+    this advice independently through advice.checkoutOrphanedCommitWarning.
+    Test advice and suppression without relying on wall-clock delays.
+ 3. scalar: disable orphaned commit checks by default Add
+    checkout.orphanedCommitWarning=false to Scalar’s recommended
+    configuration using its existing set-if-missing mechanism, preserving
+    explicit user settings during clone, register, and reconfigure. Document
+    the tradeoff and reflog recovery; rely on existing Scalar tests for
+    configuration-preservation behavior.
 
-diff --git a/submodule.c b/submodule.c
-index 6fcb606f7e..1302c11ddf 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -543,6 +543,7 @@ static void show_submodule_header(struct diff_options *o,
- 		struct commit **left, struct commit **right,
- 		struct commit_list **merge_bases)
- {
-+	struct repository *repo = sub ? sub : o->repo;
- 	const char *message = NULL;
- 	struct strbuf sb = STRBUF_INIT;
- 	int fast_forward = 0, fast_backward = 0;
-@@ -599,9 +600,9 @@ static void show_submodule_header(struct diff_options *o,
- 
- output_header:
- 	strbuf_addf(&sb, "Submodule %s ", path);
--	strbuf_add_unique_abbrev(&sb, one, DEFAULT_ABBREV);
-+	strbuf_repo_add_unique_abbrev(&sb, repo, one, DEFAULT_ABBREV);
- 	strbuf_addstr(&sb, (fast_backward || fast_forward) ? ".." : "...");
--	strbuf_add_unique_abbrev(&sb, two, DEFAULT_ABBREV);
-+	strbuf_repo_add_unique_abbrev(&sb, repo, two, DEFAULT_ABBREV);
- 	if (message)
- 		strbuf_addf(&sb, " %s\n", message);
- 	else
-diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-index 4dd4954260..4539d6bba5 100755
---- a/t/t4041-diff-submodule-option.sh
-+++ b/t/t4041-diff-submodule-option.sh
-@@ -14,6 +14,29 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
- 
-+test_expect_success 'submodule commit abbreviation uses submodule object database' '
-+	test_oid_cache <<-EOF &&
-+	submodule_commit1_abbrev sha1:0000000000e
-+	submodule_commit1_abbrev sha256:24c81a5
-+	EOF
-+	test_when_finished "rm -rf collision-super" &&
-+	git init -q collision-super &&
-+	git init -q collision-super/sm1 &&
-+	printf "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n\nb1rwzyc3\n" >collision-super/sm1/a0blgqsjc &&
-+	git -C collision-super/sm1 add a0blgqsjc &&
-+	tree=$(git -C collision-super/sm1 write-tree) &&
-+	commit1=$(GIT_AUTHOR_DATE="1112911993 -0700" GIT_COMMITTER_DATE="1112911993 -0700" git -C collision-super/sm1 commit-tree "$tree" -m a2onsxbvj) &&
-+	commit2=$(printf "child\n" | GIT_AUTHOR_DATE="1112912053 -0700" GIT_COMMITTER_DATE="1112912053 -0700" git -C collision-super/sm1 commit-tree "$tree" -p "$commit1") &&
-+	git -C collision-super/sm1 checkout -q "$commit2" &&
-+	git -C collision-super update-index --add --cacheinfo 160000,"$commit1",sm1 &&
-+	git -C collision-super commit -q -m "Add submodule" &&
-+	git -C collision-super diff --submodule=log >actual &&
-+	printf "Submodule sm1 %s..%s:\n  > child\n" \
-+		"$(test_oid submodule_commit1_abbrev)" \
-+		"$(git -C collision-super/sm1 rev-parse --short "$commit2")" >expected &&
-+	test_cmp expected actual
-+'
-+
- # Test non-UTF-8 encoding in case iconv is available.
- if test_have_prereq ICONV
- then
+Ordinary Git retains its existing default behavior. Users who disable the
+check lose the immediate warning about commits left behind; those commits
+can still be recovered through the HEAD reflog while the relevant entries
+and objects remain available.
+
+Wyatt Holden (3):
+  checkout: make orphaned commit checks configurable
+  checkout: advise when orphaned commit checks are slow
+  scalar: disable orphaned commit checks by default
+
+ Documentation/config/advice.adoc   |  6 +++
+ Documentation/config/checkout.adoc | 11 +++++
+ Documentation/scalar.adoc          |  7 +++
+ advice.c                           |  1 +
+ advice.h                           |  1 +
+ builtin/checkout.c                 | 31 +++++++++++++-
+ scalar.c                           |  1 +
+ t/README                           |  5 +++
+ t/t2020-checkout-detach.sh         | 69 ++++++++++++++++++++++++++++++
+ 9 files changed, 130 insertions(+), 2 deletions(-)
+
+
+base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2264%2Fwyatt-holden%2Fwyattholden%2Fcheckout-orphaned-commit-warning-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2264/wyatt-holden/wyattholden/checkout-orphaned-commit-warning-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2264
 -- 
 gitgitgadget
-
