@@ -1,86 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794330601;
-	b=5pOFNG19LpLxTHKZ37sk6y1f7cSze88qgju6FUh3+dk9UfSExxeGKE/MSJ+yOMMz6Q2k
-	 RxLxzV+WLJ2QpFZzVW7OzON6yhM3AvOn2+sEbxvj3spQ5Ji1F6dsYXkZ1ri51pHpBiWP9
-	 oWSn80R3zEmDk0ohca8740AiJHXtcVTw65TCeQQWIgyUpHuezdPbebio1Dnop9UBYop0k
-	 EhtIVlDkZl4jwmOWEr0gCzNPnINwNM9KcauBCQFPndGZEI1HNoY0xUyymoasRUb2iAXFI
-	 YBq5cGenpjSCxZ7KoC2cQbxy4MpHPFNL3ph6erPgv7MUd5KmLZVETsFjmT1ExdItdUQ==
+	t=1794330934;
+	b=oNCgrlYcy8jpgZQDlCbSQIGqsK1hxdhkr+bF1am2Y/iUxXyoOXpApgWvV3UREBGO9FLF
+	 5uB9zA1Pe2rD4AAlJqFxOjA0jgS+sGod0MsHNxtcLGCRxqHkQz3n8gMJ4ktZ+NLInOCxW
+	 ep/ZhsDv0A9jye4EgVmYu5ifj5weH9QAQ+v2XM487cL21LFNRO/r/zabAEX9znLXwYVlR
+	 bj4xXiB3KYM5ji8gGSMJerNaZ7aFGEWyyNbHfX0PmD2rsJNNu980M5bFAixiUD/BiCCaH
+	 jZa/ZKZRufusjqHgIa4CqYUnN/ui9BuqExvPhzw+r2tS7T9mwoe6oOwLmpsjYjo9C+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794330601;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794330934;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
 	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
-	bh=0geUzDbXrfieI4E7kJQwKOPEYLs3RMspydtzSzj5w3g=;
-	b=DWUcUXGR6Dgpjko/EP9SvjQ2Qq2jImABKqtGRrfxbnNqfC6pHDOy1U5AnOA487nr/yL6
-	 CV/4YbpOsNbhMG/GEkN/92lxQ68rv9oAsFYB6LkPSWFG2DH62S6sJNxuzuXuQOtlAxIqd
-	 vkFbIZ6sd5E0hSu5MApDDto8jyEaSkC4n14qAjYvuOtxBYjl6ZZWDqdXR771PoAogWLfX
-	 bR1TgrtjcnEEZ6iqWnqstPmxHD3Cxr99B/bX4ZlvavKBv8t6ndBIB6+rTR5P0ITFaAP9G
-	 986+MLGu1PeM2xA212ZVqSwIoB4Ba4MXr7Zt8/nnkXiZ9OJpQqM/SVl2yc9U1+2kkeg==
+	bh=7+kanJGBKg1ujDrL2xJHyGTz1TgAY/zHFthRiOHLlt4=;
+	b=C9f41LwO+Zz1rcI8lmN28WobUBwBN8XC3zTQfAp7eoqjqnTBRIGJFdWm7ZpIxsbOlNTc
+	 dHtxG9yD9TZm5cJGrFRIdLYJ7Yp1UpEPnDzu2iLBbVHdzD/iAn9m7JeCu9U3Qwz3mVRt+
+	 R8WFdOXTn81XoLSeYrigKCEuCHWlx1WnNlwI+IV2ObKcVRyJqBBodDLmAWvgglSvgLXAd
+	 mteIybMGFj7k72EZJUmH1GHMbA+Ih9uYOaJgqDbkV36yrBEaTC4hZUE78LnSfqXvhiZsZ
+	 r085OF48CJOTqVDW1/yoNWr6BD2knio4ig7yvtZGtPnmWwoJtD53nEaIogbyivEwU6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=verGdbb6;
-	arc=none smtp.remote-ip=209.85.128.170
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sD0pR0W5;
+	arc=none smtp.remote-ip=209.85.128.181
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E468F606A31C
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 17:10:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E468F606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A461E606A31C
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 17:15:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A461E606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=verGdbb6
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-8b32b2e691aso22067497b3.0
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 09:10:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sD0pR0W5
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-8b31261e8a9so17389377b3.0
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 09:15:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794330600; x=1794935400; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794330932; x=1794935732; darn=vger.kernel.org;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:content-type:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=0geUzDbXrfieI4E7kJQwKOPEYLs3RMspydtzSzj5w3g=;
-        b=verGdbb6/GOrqvuQPuXiLNs+JFxZvPnu6eQBp9jvoBtN0Lj0R1LoFrOGCCUvkxG8kK
-         BeZMDjCO+ayaLGD94WRK24ZXoZueP99dV05VciXdLDdfz90+ELiS0dyQrowcdCKUIwQa
-         mNviU34yKxtKfEAF/u+yTX0wTldHXw/SMLc8053kIXWlFypHHQvlQzHBdCzXyyGsyqOy
-         7kwzGuv4DCeFveS+DHspH3n5boK3hcT7MUU2k0joq8eqOcqC5Ym7NIUu47QadvX1F7Vl
-         EkSFnv65AGwMwwHmBbYnNwc6PWcm2pHWGQArnS9ULgTmSY5UHXvKTaQXWLJeIYaCksxT
-         4AGg==
+        bh=7+kanJGBKg1ujDrL2xJHyGTz1TgAY/zHFthRiOHLlt4=;
+        b=sD0pR0W5j0OI1RHDDZ/FZf6zOe4vCuX6OERjVc8zv1u5hQRYPPwOl6toK541FjX3aG
+         Xkv+oeaq70OM33cs3+G7ylQUGQaGKldnbsIK4CnMrLnSlN7Et2k0SeaVIuIyVyKZ4IJU
+         HghqdHBkX1bTQfxLA4yqX9W81dN2Nwv4lTl7xTdg8ackz68CRc5pAh2jPvXgq+Pe7Qc0
+         /Ro8zYP46bFEkBki9FmIYamRPP2bT3Z+TUOwXAFCwywWlYAXQT/6fLtpdpz+GWekoM7n
+         ehkShvviIibU+e3yIBXPs6Pgf5E4WHk5ikga2OXK8S2Q3CWMRlaN6M1SqmCGAZrlClFf
+         Zamg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794330600; x=1794935400;
+        d=1e100.net; s=20260707; t=1794330932; x=1794935732;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:content-type:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=0geUzDbXrfieI4E7kJQwKOPEYLs3RMspydtzSzj5w3g=;
-        b=TMGNrXhwl2GbuvzXuXRdOJeezvh6aCXuWppPc+IKWnX3wgguJ25IyWY3syrAwKfK/m
-         yykHORPE4G8yy963KPTDPwoxUE/r/3nedUA/EXXjCbtkbDtAZ3Gc0hkkidlFos+AXMPj
-         HitD1Aeoe9FK28ch3aGpY35Yq3VcRoFSEU6QEyOunnhrdl1Wv9dvIVvygK7gW8/JhVAi
-         7Cl6pZl5ZL0sHmLD6nM5eQM3Q96GQ8NC9Uk0oO4lvkOwMxB7/z7NUPHxAgCq+9TE2xR9
-         7rwEEaoqltWXgmpsqvGE0VEYiN/vXuIiD4UZSwCfWj4zZx10DbgcekzbVpKEHButp+NE
-         AUEQ==
-X-Forwarded-Encrypted: i=1; AL+hErERCjcBP9sni3FBfrq7T6sWPd2ZDzdWWsfIrVPQHv4f0HJcuj9Vdyh6IrQ95MAU4b5nW1c=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9CiKWMgI26waLKS54a2Kyl8pDU0ToE6ZrLzTugvwp0sOMSm2Rn
-	6FNYgNlfdrRLL2HBbo7tH/iW1oAWev/UfwQHMJ85gR6tuVbe2PT4Fa1Z
-X-Gm-Gg: AYBFou2IM3n6NReQ6XMHh4XWwaJWp0137nLMgHHwBqwY/uHJ7An0aot/JwplSINyykU
-	RBSIJ4C+qkfsyAfKh4c6uW2x75QeUl/zLs8FMsuwOxlriOcfPLn14NFmXzgpY4RTOGPAVIu01CF
-	PYDcn850xHG6/sXao6KFZ7qom6A7cC4Djls7yx8/Xc+sFLmQ9YhcTfY7fiCUe6pLYvVex/kFfaj
-	TpiFpsAuPMTGRp9MPnulhuy4bfrsG+GleIHeA2hj4YTUtgJ46nuYQkdoq1MD2+5dAxh11PGym9R
-	+QcNIZgCWnMsTuyGKsk/8mM0l0AkKUBn698/BDahouNZq7NCGq0bVUmvXr9g66Ksp2CspNYEc/8
-	cf297l4RLL7kCzNYkB9l/gyUJ6zRieuO8AnyDgXk2tvXkbdJgbVQb303PwZZX7WvVdhAroRZeqD
-	QNDhZyJ7wBv0HMbaT/kXCjfulFDC4fVeIPP3Mjnghx8ek0Q7436P+2sGr1zxIpVAXQjrMcOjTJ9
-	qCjeW+lavjlNMfoRiihV1eGOtYPwb2jlquKzWtEheHACxKplA20hXsEF7vlXuvh0Hmw3KIPAiaJ
-	STcV0xzZeYk0TovDcQpSIEdOIVB0wOsfFok1TAq9hu68KsXl9r3EJtxqXJ6gmLjPsV7jNMvZFf2
-	7+hTyJgeZEbLlKVjLFetLefUU5rBTCF7Ms2sfdOXSVhYDFmKuVhHlyMsBxsPIeDzYrDJ0BLIMFy
-	FIuqs=
-X-Received: by 2002:a05:690e:810:20b0:679:90f4:3223 with SMTP id 956f58d0204a3-67c56e4c082mr1243282d50.9.1794330599787;
-        Tue, 10 Nov 2026 09:09:59 -0800 (PST)
+        bh=7+kanJGBKg1ujDrL2xJHyGTz1TgAY/zHFthRiOHLlt4=;
+        b=iiXhq2Nk47z/eKTVRMYRk/RlS4YH3GXsOp4IXuCO4HLOJXMd9p6KbG2RijFAMxDq4L
+         xj8v2oh7inYBE9w+d+WrPDIVrz8+/64Pq2QFUU3x8GW4hdJLiVwOjeYvxqQ/kdqMNnVg
+         QpaaC/AVdXzuZXReTMHQ5i33dpxEsFbGhJOPrIGOM5WpBqAa9GjXXaWJbJkAkVkK4jbA
+         f2ADW9XSOCi43UU2WEt/sRPSzqy8fqjujFSNq5AE4NA7q5QV2QE2471mmyKXX0u0BmNk
+         My/iJO40i3M+fk0WAkAn3ZxxBNeBMDQ+NuikOH1t8cp77IWUhztpJbgDyS5kmrLyGLBS
+         ZGOw==
+X-Forwarded-Encrypted: i=1; AL+hErEpcbqE5oT5AZcKZDn1FHG9JI3ZJvgkeYh/yZn60cnPFlKsZzK5rM2QayQrmEfdWoHjv4g=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/ZPXGl7o1KAA+SCkNHmmdMXTGXSqfbKYctkK3/KZ42LvzCoey3
+	ndqfVTg2j/Q8sQ3hz+oX8sayEQjdHt3RThY7gzNepNtbitNKIQA5xEXX
+X-Gm-Gg: AYBFou0onDemXw2IZEXXNlQog3GHWJ6b+I2kZfqmRmHg7WbW4ML60eH3VGyXkhJhQiM
+	q2cjwQhsv4OHj3QFQza0UsYyThbgpXfV1cr3b+JMGWe1o9lMhvyvC3thVYOC0yxpagpKq16W7TM
+	hdDmWH/sFiBkHX/J5+riCnnoycjMm9uOR8By8sB/qsZ/LzvzU5NdRdAIv0A6A2EiimLbo5vATxY
+	l9dnhhNjSudmYNtWciCO9Jk2tmzgK0bkgYlDtioigGL6y3yEilCaqcJdfFEk3TSSD1ufGhoHpyQ
+	0gzkaehFCpQumGVC6DZ8y0W5nrP11r5KD5MNlnIAbNPLrPzUefdoabtn2Y3DeAHJcvW4X6AdZGy
+	Gjn7zbMA9gSqX2af6b7qkKtySG7LJMXTUSoohQomo4viLBhKiPwFQLikhLIIPLI3qDIXq+IKI5+
+	kAJ6D0vnMxS2++E5CTcb1Ng1quptOCpExGzd8yQj85vzq4LoPfCmQ8QrA6XJ7xz0TW7P9y02JRA
+	kaRGFFDxjqwAsahvdqks/CsgLP/4kDpGylHEllplx6Sh6wK9sK12Q19vf+GCOuwWV5jgDmpn3Ip
+	OMEmNZmYlxDLwajY+8VDiUlVojDqP55aVlcB6bYfxirFRLzMqMBy2iqtb9gvxuqN0FXcUwuPROr
+	F3nS492bciWo5Vv2o+LdcBSyJgjtZelUpSWHsNjqj93A0xO+3njdzoLi6XGplrF+MIEmOQlSPho
+	95Sf9mtmFk+g0svwygIy/e31M=
+X-Received: by 2002:a05:690c:4:b0:873:5bb2:6c06 with SMTP id 00721157ae682-8b392a3cc5dmr24493437b3.48.1794330932438;
+        Tue, 10 Nov 2026 09:15:32 -0800 (PST)
 Received: from smtpclient.apple ([2605:a601:9d46:600:f493:878f:a4da:aca])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67c58a0f312sm2295560d50.19.2026.11.10.09.09.58
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b393b2e455sm23080817b3.41.2026.11.10.09.15.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 09:09:58 -0800 (PST)
+        Tue, 10 Nov 2026 09:15:31 -0800 (PST)
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 From: Ben Knoble <ben.knoble@gmail.com>
@@ -93,54 +93,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v4 1/4] worktree remove: refuse a worktree in the middle of an operation
-Date: Tue, 10 Nov 2026 12:09:47 -0500
-Message-Id: <8EF87D68-6BCB-4C40-B0CE-2BB9B90293B1@gmail.com>
-References: <8667d7b4-ffb4-4285-be67-10a85730c359@gmail.com>
-Cc: Jasper Mayone <me@jaspermayone.com>, git@vger.kernel.org,
- gitster@pobox.com, sunshine@sunshineco.com, kristofferhaugsbakk@fastmail.com,
- haraldnordgren@gmail.com
-In-Reply-To: <8667d7b4-ffb4-4285-be67-10a85730c359@gmail.com>
-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH 0/2] Support --verbose in git history
+Date: Tue, 10 Nov 2026 12:15:20 -0500
+Message-Id: <53CA2747-58F6-4A7C-81EC-33EABF0000FC@gmail.com>
+References: <CAOLa=ZQowi+fepj+RNegTZhK_Jy4G8VLE_Af2UdsO8-rCdviJQ@mail.gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+ Jelle van der Waa <jelle@vdwaa.nl>, git@vger.kernel.org,
+ Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Harald Nordgren <haraldnordgren@gmail.com>,
+ =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAOLa=ZQowi+fepj+RNegTZhK_Jy4G8VLE_Af2UdsO8-rCdviJQ@mail.gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: iPhone Mail (23D8133)
 
 
->=20
-> Le 10 nov. 2026 =C3=A0 11:47, Phillip Wood <phillip.wood123@gmail.com> a =C3=
-=A9crit :
->=20
-> =EF=BB=BFHi Jasper
->=20
->> On 02/11/2026 18:29, Jasper Mayone wrote:
->> diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree=
-.adoc
->> index e6e77252ab..4a7dc47dd8 100644
->> --- a/Documentation/git-worktree.adoc
->> +++ b/Documentation/git-worktree.adoc
->> @@ -141,10 +141,16 @@ the new working tree location.
->>    `remove`::
->>  -Remove a worktree. Only clean worktrees (no untracked files and no
->> -modification in tracked files) can be removed. Unclean worktrees or ones=
 
->> -with submodules can be removed with `--force`. The main worktree cannot b=
-e
->> -removed.
->> +Remove a worktree. The main worktree cannot be removed. Without
->> +`--force`, a worktree is not removed when:
->> ++
->> +--
->> +* it has untracked files or modifications in tracked files,
->> +* it has submodules, or
+> Le 10 nov. 2026 =C3=A0 08:13, Karthik Nayak <karthik.188@gmail.com> a =C3=A9=
+crit :
 >=20
-> This is a list so each item should be a self contained sentence, we should=
- drop the comma above and ", or" here.
+> =EF=BB=BFPhillip Wood <phillip.wood123@gmail.com> writes:
 >=20
->> +* it is in the middle of a rebase, a `git am` session, a bisect, a
->> +  cherry-pick or a revert, because removing it loses the state of that
->> +  operation.
+>>> On 09/11/2026 12:43, D. Ben Knoble wrote:
+>>> On Mon, Nov 9, 2026 at 7:06=E2=80=AFAM Karthik Nayak <karthik.188@gmail.=
+com> wrote:
+>>>>=20
+>>>> My preference would be to make this (current patch) default behavior an=
+d
+>>>> not even have an option. I don't see a disadvantage of having the diff
+>>>> always being shown and it definitely is a better default to have.
+>>>=20
+>>> When the diff is extremely long, or if the user has other means of
+>>> obtaining it and wants the editor to open quickly, it may not be
+>>> desired. So I'd prefer to still have it optional, personally.
+>>=20
+>> Another case where we might not want the diff is scripted editing as it
+>> is much easier if the script does not have to worry about the diff
+>> getting in the way of its edits. Personally I'd be happy to see this on
+>> by default - the history command is marked as experimental so if having
+>> it on by default rather than following "commit.verbose" proves to be
+>> problematic we can always change it in the future. If we were staring
+>> again I'd also make "commit.verbose" on by default as well so maybe I'm
+>> biased.
+>>=20
+>> Thanks
+>>=20
+>> Phillip
+>=20
+> I'm on board with this suggestion. Plus, I see 'git history' to be more
+> user facing and it's always nicer to have better defaults for users.
+> Showing diffs and verbose information seems to be inline with that. We
+> could add an option to disable such output for scripts (but that can be
+> done later as you suggested).
+> <signature.asc>
 
-Well, each item is a clause/phrase=E2=80=A6 I actually think the =E2=80=9Cor=
-=E2=80=9D fits better than
-rewriting the list introduction and items to be complete sentences.
-
-I think that construction is ok as-is.=20=
+I can live with opt-out as long as I can turn it off via config.=
