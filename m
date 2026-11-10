@@ -1,122 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794326879;
-	b=Pr+JX90xfZxq8nX4BAPeCwNXIIk9ZnjPheMVtZLffuXkY7ull7F3duKZ70AOsz+Kqamy
-	 H3jpAA96nGEi36b5e8D/lGxbbAyuL5BY6LCDJWVGWXXe57hbZjB7HA4WCsbUpbpHBYvbi
-	 sIBQIxfyycEPZdu/fCjVJMEI7RUggM+Tg/f8N+7WtTs7xLi8AlsiIoI9MnbVinU7x+1dX
-	 LG1pgtKEjwpOX+hxtuJOfMdJcHzQ9wQGtL54mzGCyPvs/TgvaeC05gT6fJXJWbHNd5pid
-	 hVUIPOwNnmznJ+g7w7G0qZC9hVupN1O95uOuONuEr/AX1QAc2z8rjYI6E2hkUXshRRA==
+	t=1794327079;
+	b=Hv5ZqRIGM8DX+VMxMYuNQ3iR0UvGo+Mc5yhwCBd/6go1iTEOwyCiC4VfbWLiPDup+++r
+	 ieblIM3r8SXSfPiyceVjgXIexGquTHFxGWJ1FRond6LsVD4h4tRAmhC/eVWMZcI7xzCWs
+	 PFaFYGpDOXyn6Tsmu/0qTkKS8KdGK4x0mfPpBCuJiH8nhvEyRepVARkgCc84SVssdD/Io
+	 aebQpqjZllSPfRq+r3bNc+ZPXTiIlAqCwf1uzXEUt4He+4J+MtEStVHOtY6sz/IiMgmi6
+	 5gAp104u1eDDFPxNwaxV/MpT1PdCQj70ojlGVgTLkdWSMBgsVz7VHwLQYv7gXitRbEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794326879;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794327079;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=EXlawxwQ6I3vPpJWL22hGUig4q5hezIJSpVDYepwrBs=;
-	b=zDsF+XHGDSYK1FdEy6jDFlv4hGuKJEUO3zvHAO59itJnxQqk3hqZPSnCeWsu+u7xNZaB
-	 cpn25Nonyjc2P9+bhLNrFzX4zoIYqD9aWUfupa4/pidUTb2G0WIY5M/ywBGzKZ0Ht6G6R
-	 +fq7/rh3N4eGuv/BMp057PZfqPjTEZdKWfHTZcScbufiAB/qiX3A74fKAcjPbxq9boYAt
-	 5B27teYKHcDaE5d3aAyUgFIMgePcJ1mLFEdUBC4APwhKTfmQEFBVr8ywUChIvzFo/D9Ra
-	 EOQwEG1sa6lp0y/kIw5D7pS4amZCs3Obt2202WvjUtxUZtApZiIJh2xjSHcvRKJTHvw==
+	bh=T+b8i2YqQ6f+lWIBdHSN67meS5dgRLZJXCh+Zk01xhU=;
+	b=wxHh652JAYdvS5tiXkEGfqw5NHIQkiZDXKuyU7SpdEWgGhyyDvqcpDmeFwPImDWudk8B
+	 zcLaCJHb9tHc8nM71cRizqYRXNNt6LDnUh8DF2F46h/1IEM58ZpuDxeIElCOIAecLmEEH
+	 UIfJhbzoHRi1XQ2sSFf+ECIWlq1NfyT9UpiCKyxieAmvQfrEai5UPTQT0DSoLbyJPE1hk
+	 nU7uU7v2lg2Gt8WVky6yaq2QiKmAZG8YWQfGIeefHqb9fBIhyM6KtopwkWyH+OUTOWyn3
+	 YmbfZydtUbvMQCTbciVESa5g5JDtSsVDIJmiRmg97JBG7SJVOfnTDeDMHSxDFkXltqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Dmce74K2;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Hib87NFE;
-	arc=none smtp.remote-ip=202.12.124.151
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ZcRtLLtm;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=4AI+RP06;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FD7606A326
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 16:07:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 38FD7606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42616606D7BB
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 16:11:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 42616606D7BB
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Dmce74K2;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Hib87NFE
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7479C1D00253
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:07:58 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ZcRtLLtm;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=4AI+RP06
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5AC817A0278
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:11:18 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 10 Nov 2026 11:07:58 -0500
+  by phl-compute-02.internal (MEProxy); Tue, 10 Nov 2026 11:11:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794326878; x=1794413278; bh=EXlawxwQ6I
-	3vPpJWL22hGUig4q5hezIJSpVDYepwrBs=; b=Dmce74K2ceHkpzZk+uWXYRKK/g
-	ukKH5CLPjt03uZHBus8QcGXSBbsk+nW+xBCflC//gNTxI712GR8yCanHcpKoJrhC
-	H3jZTGOEqK2hAX2pixpErr1TSv+ob5AY/qkNlBmU0Y8z8PcQdSZmEys+cyUQre4h
-	wTkWg6V67um2Y+o0peYqpzcdDwkyzoqVsxnZua5S1da/lmCYNEvwnfSjc5nXsUUs
-	Uoo6ZjCpWo0B5D5UmbDwTy7JMtyr+mZVK+AjzO2aKf3GbL9+FxfbvEHQex+09BkF
-	knaGnxG7XHp/YsO2kom3AkynFzU5LFwTP0DwpGi8JTmXO1Nge4KOI3Kt5zDA==
+	:subject:to:to; s=fm2; t=1794327078; x=1794413478; bh=T+b8i2YqQ6
+	f+lWIBdHSN67meS5dgRLZJXCh+Zk01xhU=; b=ZcRtLLtmpCfv5/SmzTN3ydFN/8
+	E13RcWLW9E5DDaz1NDNyXg4ofNOFW2oKEdgZJXycKGZ5xhux9sT4zsPNy2q0u4aw
+	IYQVeMHpVIX9vfLZwMEC75V0zhHAXVVngTIlKSU96N+3+nVds4IK/e28h2Wgamtl
+	ATu1kusaknAR6H8rt/I7GGaoct9ZQy2goSVE78f6HTUvp9LVYd+Zs7nbV8fG81Q2
+	Xi8kF8dTYSH2niewvD3Qclao1Gqf6C4anXIbcpiall9EJdQfaUN3Vntxx4aQj4kA
+	mUwLYn7W5DcZ6aOx4iyWwhZOP4rJroqLzZuowbyrOkHmHH6IIyDzG5l+7f2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794326878; x=1794413278; bh=EXlawxwQ6I3vPpJWL22hGUig4q5hezIJSpV
-	DYepwrBs=; b=Hib87NFERvjjP8jiZu8HN1RtbYumJQuKL+Sp+EWwcsPPFspLK5r
-	2as9Pc5Tw4LvxtCsPptZZwH2+NcQkqO9JlggfRr+yupn2hN52QfuEZBIPD9eC3VY
-	rQQtI30ONCAkUPTTk1zp+yGdnVfmuxsSc7mdmZ8GyIFaXUMMh683PbRjPPP7OHNH
-	B0EmOC9vho0aLX+Wu/8o0q7dAl37xLd0KCon8kCcOvTFTWIW7i2DQvIT+5xmQipJ
-	BZuaHgRabR9+hFxok8uaqJADpBT/gCTwZAAHrTo05VsBJu4qDF2cFPKex4B53q9v
-	7Hmh8s9a7Jk3YpCfV9MXRJHbuwiZDiHp7aA==
+	1794327078; x=1794413478; bh=T+b8i2YqQ6f+lWIBdHSN67meS5dgRLZJXCh
+	+Zk01xhU=; b=4AI+RP06hx9qfUV10xtk6Yt10Sq4KXMAzLkfAuQaxNAiOKFuFU/
+	CjSUrTH1p+bKFj3OmLWBr+SJIlqQ9ODS1ahzIddnges4Dk8Ui+vSWycN8c9Qq9NB
+	/LgkAZ+3UvW8fOARHc4Asquop6CdaOymU6p6D7Bvk/YpHMvasH5U+wtCD6xdycb1
+	0lI6BzZmJYKM1kmXEFYwYLSvepu8Z3rkENCwFN7xlTxqhzVt9rVJKBnWumSikOd6
+	87LWWVwZ1+q1eQa3H9mb8VpCdY9tvpO8aK/x4JGfnnAcuIW1F0ZfZ+7UCrD9+bZY
+	46r+jqCUbGGO0Y1XxCdm1xu/YkAqNupOp6w==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794326878; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794327078; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:eIf8eQpd+LIX9p96RIeDRZG6ACd4Ht1558SDhLKov+dJBEj
-	gwleNZb6q3eFjLkI/C2wY8Ct2q2nPZA/oEVcwiUkr74gdBWDMUal6WK32HJWIBOD
-	npv/52Ef39lzL7VHtmdCX6sQRMgbITAQuzVOeFFogEYf9MevgdNeQoMkmXxhKy5j
-	pjfRVL5PY1zPvbkwmXY0R7pzkXX2YCY1DLXcvcVqMXL6nGQr1Oa3GDQnBdYCKnLD
-	YQSkWQgoSQZIlmaTOM5qOAxWyEvlmpkRBTtrxa2vTzbiXQlN/JwfGo9rP2OkSE8a
-	Iqzih3VxHSLC8ZlSoSLhyi5j9ZPbfROELiWErAA==;
+	s=fm2:rsa-sha256:Ry95WDkEmZ4xLqWwMJMW1HFm0d32aR+P/rl3me7npTBboKw
+	DXrr5TSrZvlaCdQ+AbCoxOeWNVEEYy/e0KxvkXuBWDcj4cJiTKngDDUjFY1uMn12
+	S6GSLany6cRtKX7xKOdX8xDWxbRgcocRB9rflPLyLQAgApRpIi5FEYe9oUOSqz6L
+	R528iiImkSXRhqhS6f/2GNjSY4FcXPVo/gFJPrZB2VKhEgyNrKoB63We1DljsexU
+	AvaZko76eUAk06a2uL/CJ2XstFXnXPbVPlMSxaZ2ncWSNLDv/eAYoRaZKcGtUitl
+	bI1HZ5oCNBUBLBS9j8bWjklsAjkZl3XsSNS4LYw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:H5Q2jjMvWo1VcQg1l3PAJa2TxFiGMyabRFRzYeac9n0=:T4wMb6oC6qO31vdySPuB4Fh2Ha55nAtSQoHDD9be5Jw=;
-X-ME-Sender: <xms:XkHzalutfUw6s_rxNH3WLaOvP9YGp4q8A9PoUFH2R8j0CayPYqqeJA>
-    <xme:XkHzaldSVZivgwffxvAKJ78hKonxyeySNxMgFta9NjQM0EbekZI-IxPUJ8YlMNa3a
-    I5ujEbJvX1mxo0zoUyIW1fxaNXgwr62YWbU-BmzG0gA_tRVaFH0_JM>
-X-ME-Received: <xmr:XkHzatxGbEwDp64MKdGu340qoFi1h00HVeOV6GkAnx2YVvT2ADvEgN0bpAWbXJyknudqUux7lA1CNVclM66W5seEYOsDE4vEHgFs>
-X-ME-Proxy-Cause: dmFkZTEtUgwsnI+Cg6429ubxC1FUQR9h96+nyyY1beWVDQMJkZTpr9L2NKMGV9TQ6E2rWO
-    t+rBP8Lg2OcNPul1RF5MT3phNDVeIlh+FtEPvKZXm7lWvRSPhdniIkrhzgC1vugrbb4aID
-    93Sk4N55HQHJB4tykg6rRCaztIN9mDGk0IvoX/OA91q11g/ET862zOrOcCFVYy1O2ni/Mg
-    mwwQwbZYNaeD+HoEunKQ/XlkU9oowXjAObbbeaSCDqNZVXctVJBroesFJMM1agl8ISGQ3V
-    nD8EhD0Lmh489UrE7xOUpe/zs6kgtsQHMzPKW7uG2SJeS3DGWfi1RrMUIDco7EDqBP9DJk
-    dxjIw3K9CxzH3xzsBuUVrhonvJ4t6IX0dAKNxp2vFtSWWUQi++5pGx8Cr5/Jc8/fZdcbda
-    w0vp22RCXuaYrqU/AeC00KP7Jgbl+xhsLLqXq4kon3GawEhAE2znw90l/OCgYxheHaFS/Y
-    mDWcX81oj98u1+uTdWyK1TVeHs8htgwYybjEg4cNlLAn14EcOHzeW+JyPDLJHxY7Mfo52c
-    2/hJLMkV4gCcr93lqAop/8W8UElEA0ZLn2FI4QJwhX+18+se8LJB3CfyHgcm2kSc9e2jW6
-    WVvTJR4OUTzgAnU1AJMVFrZUW+hTGVr902wRc9eFwVFmUDJz/9d4KKLWVVWQ
-X-ME-Proxy: <xmx:XkHzarHhs8WdP2zz17H09socbf8l5O7HHq9xdIykuGmtD0a8SK8PqQ>
-    <xmx:XkHzahxUyQQDAanzkeBCnjZ3UWvIlc0n1ZNyt2Gv2_yaxYR8P0TRYA>
-    <xmx:XkHzastFsAtWXDCQKJf-BBomy7bBHou9tygaOF1RkNUdUJnm3QfYcA>
-    <xmx:XkHzau0s0UGQNiVRQjaXvhFYEzJMeGvrtU1nj0sVO9C_6VC8S9YhzA>
-    <xmx:XkHzahQYPgbTVL5HQEVrWT6WSjLosrgDaOgzpxRywxNDissb1ee0p2az>
+Message-Instance: m=1; h=sha256:Qj1b15U6bxmFEJ0g43YN+Jn8hf5v0GWYgZTqyhjUL84=:4IToc+gH5tlmj4K+wjAzjtQ1LNaxAV/JT9Tt6+Bb7X8=;
+X-ME-Sender: <xms:JULzag5tLhiRs48-t5Vz_S40QBv_PE-tTa4gQaoZ-9Q4aZb0ZW4ALw>
+    <xme:JULzaozp08nTtY6vlcwCXqpfLX9jaWp0Wra9TmdJklnjdZsr0z3N4uofw73NR3PdF
+    a-Oyr9V1jsvpKn75olsx2Hhu5ICslhfPDqR83sv1hrn0587OiZFe8o>
+X-ME-Received: <xmr:JULzanzLMKtV99rL8APRfdhQXb9QF7lYjGqsK-_SziajZef0TqKRWbX4aaDoY3xKzHgwfssjJYKdOJFF0uh0RNawZ-vIoc0rBrVH>
+X-ME-Proxy-Cause: dmFkZTE3Du6ew5Jr6/QIJCWLKZxsgw1X/P4Q87i8wYiAxMrzHAS2dJcseJe6I9Kdb76SSc
+    w7GmibHbQLuhxhymlAX87vle8dSTdjQjYbLQEjP/g1xhpK53HnjHD4Qk1nIv/LM2P0qZnu
+    yhC3ZpMgiz3PhLwA7Ra8dQ8k0q4z8tenetGt7lD9zyrJkDOr41EwpzIcEz7idqT662jhVs
+    IhuLmproftGXxF1jxECJspXo6EWI+BdAs3GlCJUBDPE3x4KSBL5+ZCKI/m1SHLbGnaq382
+    kGiqxKYS3xPWGMMgj8SHI8GSm610WfLbzZSZgkBfBZvU9WLxF7V56kFUL3vsctOCTCEGKF
+    AK22XJxjYNiRXTQv/L+EH3c6zTr4HBJ8wVb5WxZNPdkq4VFrqywvXDQZXtZuBuQYsR9XC5
+    BKrUJ0A8x6vUshd5FFPy+/MelsIVEW1AwfD5IOPEVR9E8dhXCCTLkStwUaC92GZ8hQhagr
+    uoO6DRMuN+TZBJAAPr5NkUb7gBZxlO7/MFJn2uKni5RZhm0mzvoP5lnMGy06IHE6LcHwwx
+    EBRYK6S1dgpQqyrEd0cXZNlUbrR6zmzG5IL0UfFniGRJ8AQhmVasVcVAdAX/zfFQyDKzuZ
+    muFCQMXDw+OL6NLbrzhyvCK5rDqaiX05ou+qjV3AfvSQLHvpCRpMGuJW1PoA
+X-ME-Proxy: <xmx:JULzagw2iV73S_68xHl_mPc0h0NtWPZJOHx9dPz0yzWFLoMPpFPCjg>
+    <xmx:JULzahaIIPdO7TVxuBk9dkSJ37jiHfqXll52typ7tf8dUMzzsgF_vA>
+    <xmx:JULzahUPYv8JEpOZ2GZ7Ahr2hysiC8Z6pf4kAg3vr00Ci99GSJwuWw>
+    <xmx:JULzaviR4kntmmFFuI1-qAqxMRUt8761BJTySW1DotrG2PTzAdw5mQ>
+    <xmx:JkLzamEtNsfvN08n1ucJSNFc_JUw2JR3Mtlt5Vd8jhCESYhdIrxsOoBS>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Nov 2026 11:07:57 -0500 (EST)
+ 10 Nov 2026 11:11:17 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Srujith A Poojary <poojarysrujith@gmail.com>
-Subject: Re: [PATCH v2 2/2] archive: remove USE_THE_REPOSITORY_VARIABLE from
- archival modules
-In-Reply-To: <3d8d9a9261a1f4fcb883ab9afd236f254a494430.1794290598.git.gitgitgadget@gmail.com>
-	(Srujith A. Poojary via GitGitGadget's message of "Tue, 10 Nov 2026
-	06:03:18 +0000")
-References: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
-	<pull.2305.v2.git.1794290598.gitgitgadget@gmail.com>
-	<3d8d9a9261a1f4fcb883ab9afd236f254a494430.1794290598.git.gitgitgadget@gmail.com>
-Date: Tue, 10 Nov 2026 08:07:56 -0800
-Message-ID: <xmqq1p8svfdv.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v2 1/7] gitlab-ci: speed up installation of Git for
+ Windows SDK
+In-Reply-To: <avK_Q_QDmdkl9r5s@pks.im> (Patrick Steinhardt's message of "Tue,
+	10 Nov 2026 07:53:04 +0100")
+References: <20261109-pks-gitlab-ci-speedups-v2-0-508832602d0b@pks.im>
+	<20261109-pks-gitlab-ci-speedups-v2-1-508832602d0b@pks.im>
+	<xmqq8q320wv2.fsf@gitster.g> <avK_Q_QDmdkl9r5s@pks.im>
+Date: Tue, 10 Nov 2026 08:11:16 -0800
+Message-ID: <xmqqwlqku0nv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -129,71 +129,38 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> From: Srujith A Poojary <poojarysrujith@gmail.com>
+> On Mon, Nov 09, 2026 at 08:53:53AM -0800, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> 
+>> > +tar -xf git-sdk.zip -C $directory
+>> 
+>> Wow.  You learn new things every day.
 >
-> Refactor archival modules (archive-tar.c, archive-zip.c, archive.c,
-> builtin/archive.c, builtin/upload-archive.c, and diagnose.c) to accept
-> and pass explicit struct repository * pointers instead of relying on
-> global repository state.
+> Yeah, it's fun. Windows uses bsdtar, which is in turn based on
+> libarchive, and hence it also supports ZIP and 7zip files [1].
 >
-> Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
-> ---
->  archive-tar.c     | 5 ++---
->  builtin/archive.c | 1 +
->  2 files changed, 3 insertions(+), 3 deletions(-)
+>> This is in ci/install-sdk.ps1 file.  Right now that script is
+>> referred to only from .gitlab-ci.yml so as long as GitLab CI
+>> environment has tar that works this way we would be fine, but I
+>> thought that ci/* was designed to be portable across CI and other
+>> environments.  At least we would want a comment next to it that says
+>> we assume BSD derived tar that can grok zip archives here, probably?
+>
+> Well, bsdtar is nowadays distributed with Windows by default, so this
+> should be portable to other CI environments, too. So I don't think it
+> really warrants a comment as it should just work everwhere. That's
+> certainly something to point out in the commit message though.
 
-Is the description above really for the change in this message?  It
-does not seem to match at all to me.
+Yeah, this installer is about Windows, so any current or future CI
+that uses this script would end up running BSD tar, which means we
+can assume readers know what the script is doing and why it works.
 
->
-> diff --git a/archive-tar.c b/archive-tar.c
-> index a1c66024d4..642a3ddfc3 100644
-> --- a/archive-tar.c
-> +++ b/archive-tar.c
-> @@ -3,7 +3,6 @@
->   */
->  
->  #define USE_THE_REPOSITORY_VARIABLE
-> -
->  #include "git-compat-util.h"
->  #include "config.h"
->  #include "gettext.h"
-> @@ -337,7 +336,7 @@ static void write_global_extended_header(struct archiver_args *args)
->  	if (oid)
->  		strbuf_append_ext_header(&ext_header, "comment",
->  					 oid_to_hex(oid),
-> -					 the_hash_algo->hexsz);
-> +					 args->repo->hash_algo->hexsz);
->  	if (args->time > USTAR_MAX_MTIME) {
->  		strbuf_append_ext_header_uint(&ext_header, "mtime",
->  					      args->time);
-> @@ -529,13 +528,13 @@ static struct archiver tar_archiver = {
->  void init_tar_archiver(void)
->  {
->  	int i;
-> +	repo_config(the_repository, git_tar_config, NULL);
->  	register_archiver(&tar_archiver);
->  
->  	tar_filter_config("tar.tgz.command", internal_gzip_command, NULL);
->  	tar_filter_config("tar.tgz.remote", "true", NULL);
->  	tar_filter_config("tar.tar.gz.command", internal_gzip_command, NULL);
->  	tar_filter_config("tar.tar.gz.remote", "true", NULL);
-> -	repo_config(the_repository, git_tar_config, NULL);
->  	for (i = 0; i < nr_tar_filters; i++) {
->  		/* omit any filters that never had a command configured */
->  		if (tar_filters[i]->filter_command)
-> diff --git a/builtin/archive.c b/builtin/archive.c
-> index 3c1288a123..8b7d56f8cb 100644
-> --- a/builtin/archive.c
-> +++ b/builtin/archive.c
-> @@ -2,6 +2,7 @@
->   * Copyright (c) 2006 Franck Bui-Huu
->   * Copyright (c) 2006 Rene Scharfe
->   */
-> +#define USE_THE_REPOSITORY_VARIABLE
->  #include "builtin.h"
->  #include "archive.h"
->  #include "gettext.h"
+> But now that we have found a way to remove the slowness we could unify
+> both systems again. I intentionally left that out of this patch series
+> though, as we can still do that as a subsequent step if we want to. In
+> any case, I want Johannes' opinion on this topic before doing such a
+> change.
+
+Yes, indeed.  Thanks for these patches.
