@@ -1,121 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.175
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794331738;
-	b=bnI1EZjTCXSwCc8Z1j1TSuFkYhauA23KTOAIz46j40snvlE/AIRmP0HCo7wMd6IKLgWg
-	 oYFXp1pFGDAU6UWdK7LZUvLEEXSsb4McThxEs+/UodmovTEQlMUFFUslYGaP6MMRzEtoO
-	 yu4UcZWvynRxlKKVJAg6RCBJOOGYBT2BdK9kKLaK04DALuG0unUpffghGPGDfjr6hmjzN
-	 5xc8E4I71kbSLYDJ3kFub44oV8HJpB4e2UIZZ4iWsuzSdD54JLG1G/u79G2v63Tc8dGEo
-	 yLr2Pnbh7M/itayCDMhj4aY3LL2RSF8QrnNXrtwEmLAi7/mVzSq4TZplC9+5uOomzaQ==
+	t=1794333469;
+	b=qdlBr3tEv1DRQRKVKENJUX29zPE4i62N/4okhzYb/cn+yAOAW4xZAEMz9xllmVVSQQ9D
+	 eir09IfSpTnoIOcUai2TQjDTDRlRip5ZEH4Tn8uWJGmp1oWh7Ysprj8rUuwroprwziZMQ
+	 PXPdT5pI2BxBV/raHBV3tRvaiYjVaQ9seSm4xcyxfm1jVD9naye18BEX7x4Yd/rX3yxED
+	 aBt1cprrqdBJXkvgNdKsS5R+i3penT9Rp6nmSHH//tv/o+Ta7vkDAXNQ2PdhCvEbxdt90
+	 kYFcwh07GnU/r4J5FHoJDUJHCpP7ORi3Iv+Tj3b+qTlpV/lMeJ1iSWg+Nj0kHV92+6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794331738;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=ojL4oq94Retoh8H9zWasszRFgOuP1/Av7asPXSa4XCM=;
-	b=yGesAY/Tu5eFPcwJXSGE0HfoRPlms0o6aWQ2p9Rpp5cu+x1HMT6fAfgn/i/W8BiW9+mE
-	 nR4Jy3Ex/Lp3MU5z8oFMqWBBg9551RvV8t1lGAAUbteqyDVRTScPAk/XIQvgRQ/YhEAIp
-	 o6xD0++nqTtkXKhmpEBQ7vo3i4HFm8IIDC1HSyL3JEM+7mKAoqxIpZ2HUBkLSK73ZyrKl
-	 ZjuG7GdHa1kanUB3CNwtQ4f0lVNeDVEqoCrznpbMwsamt6DlQPL3hX1JXMiRv0ZGqbf0U
-	 VnHjgqJlymnQildIZOq+K8ggJP2xd44ntGFNdIo8kbdWMRB5ANJDyRZJiVvSIWmVpaw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794333469;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=icA5/fEwF52HBhBQrCkbUDY+LpdpqX2vVSeqAswzBqo=;
+	b=jZ4IjyKHPvoTwrHhdUBroGOnRs3bY+l+piq9TiY+3mrtYddt+AVrDAlacFONFyAz8XfJ
+	 8rLxo/NVoBtk7azfFnBOUZintC6pj2Za4u9/Qe6qlgfKLvHCD8o7xgI0OqLNlNrSmCBLT
+	 HnnFzh+iErr+CCY8eZmKg/cRt/Z5kQ+Ocq+7Yj6yAM4TEprssTukYvP3X3uqvxQtYYFy5
+	 yNcRah8ncKH34RYVyrjcrZBSbgWs6pO6qADU4vNPyOhIlk0nYG22Tjz8vv5qLiFNbo/5v
+	 4FGHUQUdaKV9ANwiI4ArrrS0P0IaeAwIQfIgVtjvmWUQmcalWhr9KOwPRZmeEgTnIpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=SAlF7Gvq;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="SYDbN/3g";
-	arc=none smtp.remote-ip=202.12.124.146
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E0UZpfpW;
+	arc=none smtp.remote-ip=74.125.82.175
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04937606A327
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 17:28:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04937606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D26606A219
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 17:57:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F2D26606A219
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=SAlF7Gvq;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=SYDbN/3g
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 677FF1D002DE
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 12:28:57 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 10 Nov 2026 12:28:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794331737; x=1794418137; bh=ojL4oq94Re
-	toh8H9zWasszRFgOuP1/Av7asPXSa4XCM=; b=SAlF7Gvqwr3FqiGqFbZxrwEiS9
-	+oXOkzlzxVKPOY7vLBOKnRJsQM6vYUgrxlGikb0uLOzkb79+9lYJZ0Fq6Ho38KCH
-	EOcJ7b/r3sIgkjuMcfuTdzAcA+Tr+mLW4pm2QTaHYbQEjt5p8fxQUnKu9aK1eoNS
-	UQhGrMR1/3RlUAXfNA+w9bDfcCvwODiKgN26FyamgW6e7npvqqLFA8SgbvsoRxqe
-	zoz11qEA8lpdQ5TwKe1POet20G2hqNrrIop0idjtUNT1UqU1zoKIZjEfZ1smGmFd
-	w6SNHCggFmYUjzCnOOImAughkbM6fhve03JjKxhqUcko7wkwSdcnPfhC8g4A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794331737; x=1794418137; bh=ojL4oq94Retoh8H9zWasszRFgOuP1/Av7as
-	PXSa4XCM=; b=SYDbN/3g254Xkfwts4HLSEm4vYO+aA1lAJd1/NHuUjGwM/YYm2Q
-	KNMOmUXFjpD0AMJS6TgRr5V0NNMsJg+vWGZsG4ca9QYQuHc2uPSfzVOtd6n8U6/0
-	ynmBu5rb6oZq9FdWLKewQ25IwxLw5J+0sFe54XWjAylUEYxYlwIca7Tlbv5yXi0x
-	Nd70C6oZb3i0VSUATIMhVC+KUYgehWJ81UtfE0B8Q0OEXe6NWZeGp1XKaD8OqAsP
-	uPabgCJAqmglViNGiexxDqiKZ0SApdfDOHEOWfawgyY2rwpifLsStH88WBcLAY77
-	BXy1e27ZzZCEGVsXhOQTZsYmPGhB8rDe0qg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794331737; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:DeGFlqCZG3JcJLrKPFV8a5tlaeh/4noWflbkHm/m3BZCQZn
-	2dAsHqGvfUY3fsfzRRKp+Lt2KJhn7Ip5zvkGs8tdHj4ZP0/3/2lFQvka9WZYckaG
-	cSh9kNhws3H4wLnZm/Rsz9jF/3sAx2jm8aqHCrZ6zNK99UmMDmyeeBTSowbQ1TQZ
-	axADO6/vDwiUtXsb4vga/WU9KPLZrDIPBPRhdvqfx7SLj4azmgtwWGbYY223vqpf
-	wEuI+wjOm+iJ3270VFsb8LH2fI7hLe6jnd3dQub/79eaF2csRsEEEtZD7BpBTRYa
-	9D0/k9VWp1COUzNMoQwwl8Q3Wq0nh6WcH11ST8Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Q7qOReSOlq3FCTXWMLqD3CCgIKWpgpaPplL8RVmW4BY=:Q8W8oH4sYlvJOlWFeBaLsAYzYVuEjzObkl6x8YXP1mo=;
-X-ME-Sender: <xms:WFTzaphXoPbzFKB-cyj-_owBQuK_0YUeQY_mgRRoREwftYfAV3dZCQ>
-    <xme:WFTzalfT6VISmqmHeRKleN_nrNjdA1WUid3j8_6qG2FPi1_5oWgb382bE4RoaIWLc
-    h8fLvUNp-9RrO39dP3ywz3cojehy8K5VIyBiqd-6i-VpSo1db7276Az>
-X-ME-Received: <xmr:WFTzamcuIdzEopDTwSVpPECYeKmysEYCHqdPsEpp6IDnQ_R6A7QZlQFmdBQzhGAV25lfqWSyfWuC7ylfXTTkwZkKYWiTpG0zcqS8>
-X-ME-Proxy-Cause: dmFkZTGBPorqV5eL3Zcp7Z2zwDbLgv8CSCzISfUW5juLdZAOf3UkC8mYH4TfuV+J5YNxxl
-    zr+CxXE9kQ03ttsZ5QABty+W2ySqGmFjGY6xJzE7V/aI7r5MeG8uDJ76JXHcTmmhqgSD9U
-    HZbNpOjIhuLdSZJfRE7sWnnwJqjPDDmnuOr6mtWthT9UhGL3PnX2k2BbB4w5yUkHLewgzK
-    RuWDdbmac53kbWse2klfVyZc673jzc76QCDCg3C6P+byHD7EIQxzhZXBemh7tW8N+1VN+m
-    eW5Xkqy/qojai6XJxGN9x6k9JkJhFTD8LXtmMYOa/VMgZEk0UQIJHlTED+xCo4I+A7ses+
-    ZFKQ01udQzn/EzLJEXRmkWkTorl1TPlRamEERcFb4pr5tkB8NdGimKmHEFVnIvsM9FJ7Ea
-    IT5tVb7F10MmWOGplvemzlt+RIU3dtCDBJwLUaBqgjQj2HsplfGkxaWxCKJXsx9Yhg4wUR
-    a+SUfzfAXmhqumlao3SqcpP0F/GSXuYg++s7PksVfKRBgFd6ckQGjqrbH/6lOFAfALMAtI
-    TY9SLWGYYvVZjQt1Nm0WYm4+CL97SIlOPicEln0/Wj3whK4IZPJPbDxQMs/MIQ2ZioSF6P
-    EUk/HxKILjqxFOeaUnurhpibg7wPFnXVsEcN+KDIVzYkf3ux/YS9PirTR55A
-X-ME-Proxy: <xmx:WFTzan_Pj4uLi4Yztm9MBf5R0P3Y_IGqPr_O63uCmQegCypHrlz3Bw>
-    <xmx:WVTzaqnuHHYEheYpt2AeoFCMZF1xn4njYZlbi2KwiMh6VxC6m71NYA>
-    <xmx:WVTzah_1GuVJqzssX0zefAu4xcbEt1IFiXg0jXt-FNOkLj_thl7kVQ>
-    <xmx:WVTzaglCGw21WAiA0z96Xd9MIfSOR0VEnxTaAxXyyqP5jwxPycFpOg>
-    <xmx:WVTzaldwqQTLQwl8NTPXZAQ1lKkGKAr2MkTHJFG8NNBPiUTz2_Rw88NU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Nov 2026 12:28:56 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] unpack-trees.c w/o the_repository
-In-Reply-To: <37267fd4-c565-4559-9c5c-01d58cd0426d@gmail.com> (Derrick
-	Stolee's message of "Tue, 10 Nov 2026 08:22:26 -0500")
-References: <xmqqtsltbfdv.fsf@gitster.g>
-	<20261109205438.369060-1-gitster@pobox.com>
-	<37267fd4-c565-4559-9c5c-01d58cd0426d@gmail.com>
-Date: Tue, 10 Nov 2026 09:28:55 -0800
-Message-ID: <xmqq4idotx2g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E0UZpfpW
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-37000e7234bso4272309eec.1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 09:57:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794333468; x=1794938268; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=icA5/fEwF52HBhBQrCkbUDY+LpdpqX2vVSeqAswzBqo=;
+        b=E0UZpfpWypDxRIqMm4cV/9jwC6p0+kaT/coSkLjR9j6HSyXPxuaGwsCbMt+dQNUtoe
+         Eq5h2s80L48t3IDr2xoocEQhuA9ObNmCWvcbtGdh9QxJ2ZJAMC2rXtsl7IJbF0p2NPsx
+         HWu1/gFyQfM6/AbPeNEka6aKUCCkmaVkj5hJorfxV/01UKmtEQgBixdnlXphgeEev1V7
+         WGFk6MeVbQvLQZSmsvuB5v0dijMrufqpBAD6zqH1V3mbvElcYTpLQPDuNFochr4BisOS
+         Nk3mpfGs7cVtBqjCzswoen4au6R5yXoQNGkmi4bVUI9gGUzsNAO4V6H3daWyo/T+Y/jz
+         PyFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794333468; x=1794938268;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=icA5/fEwF52HBhBQrCkbUDY+LpdpqX2vVSeqAswzBqo=;
+        b=w1umBqfjHwS/mT8MBmP/8NxdgnOKjLTmdDnMzh4IpvaBmQTBDHRVoVLKXcOKr0XJwj
+         mRCSny8lnRwez6/IHWjdQqugDKlLE83Fs77JjT2fx7Uqqv3tjP2tRdth8jknUc3CfrSY
+         +jrgkFVN91l/dCsRFcvrHmSQBIKi2rkyXmPMENztQbSRkwLcU+7m+PsnLH3dRX3aaVjp
+         2LGYixir6i6sfzgQgBnz+aYNMWNJSTEYzkrw1VwWy43RGlUKA1wfbV8UtY/LVhzZ2nRk
+         btG0j1GO1m8lURRoZB8YSeZQqxFjuxP68GSMUgCQZ9xWpQWa+bgmfZR0dzDKAgBQMSMw
+         t//g==
+X-Forwarded-Encrypted: i=1; AL+hErEn/pS8Rfb7p4PLNykhJGC4dbpr18K8IPKrefg+xiRc9x4e2y6KOU0lbMpMbeA+Ggt+II0=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9scTnRcF3acvzHbRWgl3egB/JUVvwlYQN1ToZf2xb1U5jtkm0y
+	Wtb0dnhBPfcrbBxMmVmvv2VqnwLfDz4z3ys+wGejxHBabrqCK/OyH9Kp
+X-Gm-Gg: AYBFou1iQG+xnUQxqEEdlR/nDy8qQ+cPd4b9Xa/Fq867nS+psCxv04XqDKAkMkG+aZ9
+	QwDWOsoBroA6Uf8ukN1XWr1YzJf4uk/3Arsshw4xLebV3n0AW8SPLJdyy0/4VbWzjorTgjJ3ASi
+	MvukNdIfbDLJG4T9dIjvz4a1zG60ELifx7x7GeIcEg4RcUbqVAeoWxaUqojyh7Ft6JPf1x3zCdS
+	vFDIoDVpQBFvQnA0wy4mHTRpzGBc/GMLi6+7iSeiLnYuZ+HnC1Q1ThCmCwqyN3iLxWpUtp7UQHM
+	DgEcFZA105RzIyEJ3m1lOH9MrwzY7Lk5LDZp7uaysxcraC/Ui0UbuThX8VytbbpUh2NIXxH+aHJ
+	/kBKz86TjzplExiOfwKbO+liEsnnbdknBL0cWtOLeJwRTpMMjAKf9NMB4MoEDzWaL7eJdg1eU+H
+	niw4s/JKmQKFNJgLZ1eJZaZWra4UVYrPFpqXahSLwNOTCuoZSCsrb2QNuHSR5KH+lhsvXzhCKz1
+	yDkYDMiQvPbPbQrvEnfOK/aBLD4udAabThICM0Mk1jMfrdHowA0pahmaCcrTFQISdw9F/Sfb9ho
+	LF7gEE54j2MFXVtP5UDz64pSmSpV+ZcOJq/1qDgDIILOa7la0gY84oMcP2ME3DeMyqQsyUd+ElS
+	viCjKQZ0mdTA0HeXmg5LjzuBQnoMqXw==
+X-Received: by 2002:a05:693c:8004:b0:36c:a321:9fbc with SMTP id 5a478bee46e88-3768395f0e5mr77377eec.1.1794333467992;
+        Tue, 10 Nov 2026 09:57:47 -0800 (PST)
+Received: from ?IPV6:2406:7400:12b:37cf:603a:4d43:6b5d:dfdc? ([2406:7400:12b:37cf:603a:4d43:6b5d:dfdc])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-375212ec002sm9772882eec.26.2026.11.10.09.57.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2026 09:57:47 -0800 (PST)
+Message-ID: <590c5765-fc4e-44da-9326-b8242caa80ae@gmail.com>
+Date: Tue, 10 Nov 2026 23:27:43 +0530
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,25 +93,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] object-file: return error on index-pack abnormal exit
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+References: <20261103212410.1389988-1-jltobler@gmail.com>
+ <20261103212410.1389988-3-jltobler@gmail.com> <xmqq8q38yz5i.fsf@gitster.g>
+ <4c7c44df-4eca-4abf-a825-1bb3b16015c2@gmail.com> <xmqqmrrgtz6i.fsf@gitster.g>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <xmqqmrrgtz6i.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Derrick Stolee <stolee@gmail.com> writes:
+On 11/10/26 22:13, Junio C Hamano wrote:
+> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+> 
+>>> Personally, I somehow find that the original "unless we positively
+>>> declare success, default to 'ret = -1', and if we may have detected
+>>> more specific error, return it back, and reset ret to 0 when we see
+>>> a success" easier to follow, but that may be subjective preference.
+>>
+>> +1. I too have a slight preference for the old flow of having ret = -1
+>> and resetting it when there's no error. It may not be worth a re-roll,
+>> though.
+> 
+> Note that my comment you quoted was made with a misunderstanding
+> of the patch and misses one important point, which is that
+> read_index_pack_report() used to overwrite "ret" even when it
+> succeeded, but the new code uses a separate variable to avoid
+> clobbering "ret" when the call succeeds.
+> 
+> In other words, the original failed to honor the "have ret = -1
+> and reset to 0 only after seeing everything go well" pattern,
+> either, and Justin's patch is a definite improvement.
 
-> On 11/9/2026 3:54 PM, Junio C Hamano wrote:
->> unpack_trees() API serves as low-level functions to implement merge
->> and checkout.  It heavily relies on the_repository, making it clear
->> it only works with that repository instance.  We however can use the
->> repository instance pointed at by key data structures passed
->> throughout the callchain.
->> 
->> This is almost the exact copy of what I have at 
->> 
->>     https://lore.kernel.org/git/xmqqtsltbfdv.fsf@gitster.g/
->> 
->> The only changes since that version are removals of two blank lines.
-> LGTM.
->
-> Thanks,
-> -Stolee
+It is an improvement indeed. No arguments about it. I was just wondering 
+if his change could also include a change like this on top:
 
-Thanks.
+diff --git a/object-file.c b/object-file.c
+index e04ce0bc11..c52004014f 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1429,7 +1429,7 @@ static int odb_transaction_files_write_pack(struct 
+odb_transaction *base,
+  	struct pack_header hdr;
+  	const char *hdr_err;
+  	int err_fd = opts->err_fd;
+-	int ret;
++	int ret = -1;
+
+  	hdr_err = parse_pack_header(&hdr, pack_fd);
+  	if (hdr_err) {
+@@ -1498,13 +1498,11 @@ static int 
+odb_transaction_files_write_pack(struct odb_transaction *base,
+
+  		if (finish_command(&child)) {
+  			strbuf_addstr(err_msg, "index-pack abnormal exit");
+-			ret = -1;
+  			goto out;
+  		}
+
+  		if (report_err) {
+  			strbuf_addstr(err_msg, "index-pack failed to report pack name");
+-			ret = -1;
+  			goto out;
+  		}
+
+
+But, I would agree that this is a digression.
+
+-- 
+Sivaraam
+
