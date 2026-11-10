@@ -1,88 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794329162;
-	b=Swf/pOzL3Y5UnOIEdCOYnJyfpXh6yIIegvWm4pNopkszuJFqCoLjoUU25cVVv8aPtFi0
-	 8KnmTXaA5rKPqfLhuQabewCaXAl5O1KF4DJbnbLZzTQ+GTfFJVmTfZ4NXMn+S3NWOJtpt
-	 e73XVEMlbdTYxuQqS4rVBXUzeAi5PAeRZPSQ7rZlQfXEy4Y5uXnMPZpn7+spwYWC2PXY8
-	 6KhQ8bDT0o1i9fv5aqFTPK/+ABMAaN/ABfd86GsvF/Ik3j1HZqVwSEsQVoLTEugiL8GRk
-	 RTwI6x8Qh2AsDkQqdX8WDX21NQ39QFdn8+arXV0YgmnDjZq82+HKhcP/nvebfW93ucQ==
+	t=1794329248;
+	b=g8Tzre0sjMJI5hCZJIjh756fG/2v/+XeekBtWE9jIJjqdvUpZ4AuywOTLMuoCWxy7kRY
+	 sZJk2uTOHwbkh6J2qLFWXkZ8u3uOKkruYcsrvEEeU5WDaDVOWasbAjov45utMMY5BC5SQ
+	 WuEabObUEA6FQhapAJ6Un//DNNxtW4Q9610U/qUKy9RNcjSA/dwYVRIQ33nOWMpakpopz
+	 k1E0CrhHCK1mKHUaEH89RXg/Ch5l6DkHXlywm2zPylAHRLiDGOAqpc00k2LP9ihN7bzvK
+	 SdgGjvXUhDpZCHf1fmxbWUGEXH2TJzvDJINaioHmGjMEOKAdEo0272Rvt73qrGrg1VQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794329162;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794329248;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:
+	 Message-ID:Date:MIME-Version:User-Agent:From:Subject:Reply-To:To:Cc:
 	 References:Content-Language:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=dA+aK2gtLOB6QdqhQuHkI/1ywL3+ePXLNpcO2AMj1ls=;
-	b=dAxa/hO41zTEuXNumhxldH9W2UQyGu7KIyvU617h4d227Eb8RL94FnGKfApEQz6nEUIj
-	 OPqHAg59b6eOekFFs5tHM8EZKW68zu2vF0gPpQYoXR+T5xwc3X9tYdyWVPWzjBd+SqiY+
-	 SJsSlFoJ6xPkj9U8zZoz+2ETTXCJ41k4jzrl7RQTHsWE884UWjM7oGqX+E7EsAOasEssp
-	 nMzpyDbOwD9AFRtpI1Sq507gd1G51Elk3/jvoFauHXvp2/8NLfDfXMuYjf472aYHjwO6n
-	 sU6w9vTELmUgTmI87e/vjtMwZOzqHU6RskGMLHFKH6nzbY6OsNwTbCxll7062cmsWrw==
+	bh=oDhZU7bfkxCi+GlWVxIz8a05XOlbeIr5q9WqfL31HyY=;
+	b=CpVPSOk411rB0d/4UWiPcb5OBEBmfH5tbvjeESJCPmVYkyikc8FPQcklQnGkyvmawR60
+	 R4kRvC3iVPEuGicpTxFYCeYqXJH6x6Kw00pEAE+1hM8Arsk3qS4gb6DcvGAq6tKzqtWY/
+	 vI2+XJqulgZfzQch2CXQLfGvBZKDrCUyVl7YJIpovmI4MDyay+lAoZ2wz1sSGY0+C/BYr
+	 M9OtU2Ms2bE6X12jjpY64vfWX1LyIOCZjOeE72H4b5YAXEsMpU8XfLO9U1AZXO41k3zpL
+	 VMBirunpVhc9T5VVTUBdzBu+dqcfDM5lfVnsSRvvQdydtNEJNxBKsms9QhIeL2s2jQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Srw93Tz6;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BVjgJL8J;
+	arc=none smtp.remote-ip=209.85.128.53
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061FC60A3812
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 16:46:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 061FC60A3812
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF87E60A2613
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 16:47:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BF87E60A2613
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Srw93Tz6
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a2167bd087so22773225e9.3
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 08:46:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BVjgJL8J
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a214c5c4c0so22458595e9.3
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 08:47:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794329160; x=1794933960; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794329246; x=1794934046; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=dA+aK2gtLOB6QdqhQuHkI/1ywL3+ePXLNpcO2AMj1ls=;
-        b=Srw93Tz6xbUS2RGTgNrxbd864Swg1AuUQRywtyenj925GskIK8d4yzWx8NhBNFB5Bm
-         51Vn5LRhtZ1AuRpJrJsVZj0Z1uHJfN2+40HTWKF70JLA4fIaEfp9/iSkBSFBnn/8yD+r
-         LaOOMdqdptTRR8c7hWLQxYzYLI873BR9MlC4Web22UYbCXVksevg2oQND63WibllrjFH
-         quuPVseobgMvtRxuKwMvH9r+WC/Q1Z0/SNssLHRKuUbBoHxAWiDpHWsv95exTZ5sz+dH
-         G0dUP0zTJ9nF0/7kfGXnQh5mJXoL5XjJya3LgZhvH+4ErqXg30G8xBJ2RiwC/t/YMXRh
-         hfHQ==
+        bh=oDhZU7bfkxCi+GlWVxIz8a05XOlbeIr5q9WqfL31HyY=;
+        b=BVjgJL8JIy1NWfcgUxeltSqelVRN5LrZEa3CTWOG1yLkCnsQG14HnFBOriiScmTqgr
+         XPF2txtdkqY/1OpVAZN+TqIOA2Y0mETHjqwoQQSmUbCGZNQeR1Yo81IucLnD3jXqL+4I
+         ybWVZmhqa62WMzBRMr4DFIndyHFDye+XL6LYAnJtTeadhmNBpNNcIEI3VaoXLZGzXdMd
+         O+e37YksRoEmHl9g5X1m6dUoqp0ixq07i2Kr2oE5NbBA6J6k1GoBpJgKdPpH9uvRUIpG
+         9o3CaUUO8lVpLdscYhpZYIIDOBXfRnAEba9bhJmwmsGNYQDs73ml8rYaJ6rqItGAwySX
+         MjPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794329160; x=1794933960;
+        d=1e100.net; s=20260707; t=1794329246; x=1794934046;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=dA+aK2gtLOB6QdqhQuHkI/1ywL3+ePXLNpcO2AMj1ls=;
-        b=b20uo2Y01Khq2BP4q86FcfYmchWrreXOoOFjuAQkKXbeMjwEaaU38ZC6dIROO5q4QD
-         kl04jzbK9JmoTJLNpcQun+UOGRTDNrSQ4kgZI2/qVB1kZzR5cDntvs0wnBCARlvWmldj
-         nNOSFWogTl/XEDLH9T6KAnlvDdyRA5yuRheqEpa8TOxGiFMyo9WBdhmaPg2QV1IP02Qc
-         UbIz2H+FbW4zDHtWdL971u3s2yS3B8WXD04AFcXZcSQ9aqopuLyzyezBDSLnY3x+smKm
-         jMuhj+zKm+zoNJL0SE2fqIjC1puOaF8ZO69xa7GGVqP+uwUpMpeDG4dsuk/NVfGNpgcB
-         n2Ng==
-X-Forwarded-Encrypted: i=1; AL+hErFz01oeCEORtnHSh+EyikVNCX2Unp5OtCL2FFRUbQEQ5s/ip7gp7ED/IoENum28NDSW0hA=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9nE28v2hxhzhvulJ9I0AKh4Gc1EcCkDaiLPl7gVlGW/ZzfTvbg
-	00LrJ3XBYCnHwLhhfP2HSIQTDdtbnxCYq5ceZmWEMYVxKZgqNgRooRDV
-X-Gm-Gg: AYBFou1WaER0P3To6sZQd4nBLibDd4edG8ihEfIlee8ZhekZkYc0hZ1jEMUe1Gcwnmj
-	tHIwbr5nteYnY67drJ3JTUvsp7WNUpaacJ3pv2E2Vdahoh6MHog9kZ80idk3IHDe5hoUubM1jI5
-	Fzz6sYpz67KeFaKDf2KoEsGWhb9D7IBctwlfDYId5FxyX9g27dWElGf/Tye2Oft8u7XFtPIIJex
-	LSU/yI40eTuFesjZR/WttfaV7Ij8Nz9jL/UmoTJi7ct7hC4uS/5vhRcTLCWNZJ/g+Qak9L13D5i
-	sAfndL5TNCGtOJG4PvfaDspM0xp2RGOpXFaRk9MZOar38JABTaw/nVcmoyWqJkG5aKqRdKX1sl8
-	ROWUgkL1yE2NKWRRWvW/xScXNl2HV00QxGWSkqqZcKBeuigsVK2WTCpe2Z4lBpkZZ6UBvPJhqJW
-	spCE+MvH7vXk36mo4BHgN8Yuj565bZS3YdEVujeOgx0MfTtV8pkf0wAYz4ZF9GeJd0YeW0RgEHb
-	zPIeUKffGdySIhKsN5cP6k/4LKDSh2gmCKGaGBgpahGM5ce0tRb6Opf+DSJ9F9ypGfFh9TR5LMj
-	doFrw/TI39/jSKg2AJYSU+gHfnhjuvqYsu+JdL3DMLUOTbMxCJ4DX/4vmQtXF89Gj4VfWUkfoga
-	XM9CQywGoQwYAmPUWiTJTsDohwubI
-X-Received: by 2002:a05:600c:4e41:b0:4b7:6942:39be with SMTP id 5b1f17b1804b1-4ba0234ed60mr54385155e9.24.1794329160157;
-        Tue, 10 Nov 2026 08:46:00 -0800 (PST)
+        bh=oDhZU7bfkxCi+GlWVxIz8a05XOlbeIr5q9WqfL31HyY=;
+        b=qIPnVYGpQuraCUQ6Crq5f5wZBUrlzlDndhherCL4Z0mpaNaiYWumi6EZAlFUOU031x
+         7MED7XfXn6rQy1+a2Xv27fxUG1Sg9qNFthvWBN0SjRP3U8f//s3l1MxjnU+ipVIKRCyT
+         G/JPLvXAHkqwIErKFPD3ZhG+zG1KZbzqQYNMdmpRSt9XRMlRxyQer/7wCUdnWOgX1iY6
+         20Ga5yT3Tw21F0XmDqR590OqdgSNNLN/82LNh+dkm3UsEsVxCdha6co0732++rzLqF+O
+         AnLRGbnRlG0KS93k1oqazufQlKyGrs6+kYGn43iaQmUWK87D8TLYH+7rcwjVjHzK8qDu
+         iA5g==
+X-Forwarded-Encrypted: i=1; AL+hErHkBaq/cVroZnjkiRnBRWE/Q5w1LDWFyYVXtTLmCbQhHDC0XRILmFkfrPPrpK7mCNpE9Fs=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8s7ayI2YfoR08KeJRUuNSHWTIoMxra4zUiUUzn8fViuyQkuXVM
+	PE3o7GyKXNVv0p4N5CMvJY9Re8LKUt2/RvkGF7ubTNjOFGRmWb9FJHgA
+X-Gm-Gg: AYBFou15ftcBcegBmam6tV2TJXwGJaeISfTm6me5n79xDJvOB0I4Rqs5hfQoVuTkSw/
+	eci7moJduklSvzJ+765WxctA4c9wBqWaQNPkxEW5VLGzDJ+Ydra02RfIC4jITv0yAzWpPsS2U7k
+	MbMBCY9Q+VLMuWhEzYE6WHQZSF/YhiPqzHKKNnojZsc4fPJniobDSWPA+wD3a/VgXRxFElCCQJg
+	+QGRJA5GObVNJoEQGfltDpyC0b7nhQINggwOSqh4+VMdNvaOjLvBaGY1SwH7+k2m/t8lwhH/bNq
+	lrdPJwHq0KWjXBqXkOLg5HYcy+hHttR9fjzw59JfbZEjChzaW+7YzyXm9mKhRXjm3hEHO7ffnJh
+	dHDGIUfnUhn+UQ4sSZs44IbrwzUj1KoYNVXLT2G37blzan9m9YwsPIvrAgxPAioK0dzT/2OI3PD
+	nBCshf/e9Kj7+ynhVFCodKURdyw7nx4ATA130NC/MFqrkNtUNQmKGsOaT2lsJua2AKfNDlV6bMY
+	rGLnH3oF+PLXgtQsx+YcHuBD4veebVS1fDUs9ZCpjHNa5Nqc6n9BVllVJ8AORkHYIlQ3uDXB1V1
+	JYhhUNNuMA1zYAAICBl3k7nUvTB5OCYyif6NHlIAKrZ4rSCyRZsjVhV/ULPDZmhQfxM//uLumAD
+	DkuoT5h8=
+X-Received: by 2002:a05:600c:4f47:b0:4a1:d8fc:8165 with SMTP id 5b1f17b1804b1-4ba0234bc10mr57789835e9.20.1794329245976;
+        Tue, 10 Nov 2026 08:47:25 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba0233f95dsm49540165e9.1.2026.11.10.08.45.59
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4983585c4fdsm5926182f8f.10.2026.11.10.08.47.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Nov 2026 08:45:59 -0800 (PST)
-Message-ID: <b0d8b454-2e7d-49a5-8d3f-030af1c3768b@gmail.com>
-Date: Tue, 10 Nov 2026 16:45:58 +0000
+        Tue, 10 Nov 2026 08:47:25 -0800 (PST)
+Message-ID: <8667d7b4-ffb4-4285-be67-10a85730c359@gmail.com>
+Date: Tue, 10 Nov 2026 16:47:24 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -94,18 +94,18 @@ Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v4 1/4] worktree remove: refuse a worktree in the middle
+ of an operation
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 4/4] branch: do not mark the branch the current
- worktree is rebasing
 To: Jasper Mayone <me@jaspermayone.com>, git@vger.kernel.org
 Cc: gitster@pobox.com, sunshine@sunshineco.com,
  kristofferhaugsbakk@fastmail.com, ben.knoble@gmail.com,
  haraldnordgren@gmail.com
 References: <20261030142137.54750-1-me@jaspermayone.com>
  <20261102182930.3511-1-me@jaspermayone.com>
- <20261102182930.3511-5-me@jaspermayone.com>
+ <20261102182930.3511-2-me@jaspermayone.com>
 Content-Language: en-US
-In-Reply-To: <20261102182930.3511-5-me@jaspermayone.com>
+In-Reply-To: <20261102182930.3511-2-me@jaspermayone.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -113,231 +113,221 @@ Hi Jasper
 
 On 02/11/2026 18:29, Jasper Mayone wrote:
 > 
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index a613148fc7..b55a400217 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -418,16 +418,28 @@ static const char *quote_literal_for_format(const char *s)
->   	return buf.buf;
->   }
+> diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
+> index e6e77252ab..4a7dc47dd8 100644
+> --- a/Documentation/git-worktree.adoc
+> +++ b/Documentation/git-worktree.adoc
+> @@ -141,10 +141,16 @@ the new working tree location.
 >   
-> -static char *build_format(struct ref_filter *filter, int maxwidth, const char *remote_prefix)
-> +/*
-> + * With "show_worktree" unset, the format does not mark a branch that is
-> + * checked out in a worktree, nor show the path of that worktree. It is
+>   `remove`::
+>   
+> -Remove a worktree. Only clean worktrees (no untracked files and no
+> -modification in tracked files) can be removed. Unclean worktrees or ones
+> -with submodules can be removed with `--force`. The main worktree cannot be
+> -removed.
+> +Remove a worktree. The main worktree cannot be removed. Without
+> +`--force`, a worktree is not removed when:
+> ++
+> +--
+> +* it has untracked files or modifications in tracked files,
+> +* it has submodules, or
 
-What is "It" here
+This is a list so each item should be a self contained sentence, we 
+should drop the comma above and ", or" here.
 
-> + * used for a branch that the current worktree is rebasing or bisecting,
-> + * because the "(no branch, ...)" line already names it.
+> +* it is in the middle of a rebase, a `git am` session, a bisect, a
+> +  cherry-pick or a revert, because removing it loses the state of that
+> +  operation.
 
-I'm not sure what is being named - do you mean "it already shows the 
-branch name"?
+Looking at the html rendering of this, it is slightly odd that "git am" 
+is in a different font to the rest of the command names. As we're 
+creating a list we could have a separate item for each command, I'm not 
+sure whether that would be clearer or not.
 
-
-In any case there are a lot of code changes here which is surprising for 
-what I had hoped would be a simple tweak. If we added a 
-'%(currentworktree)' format specifier, which should be relatively easy 
-as we can use the hash map of branches to checked out worktrees to look 
-up the worktree and check "wt->is_current" then
-
-     %(if)%(worktreepath)%(then)%(if)%(currentworktree)%(then)%(else)+ 
-%(else)  %(end)%(end)
-
-labels checked out worktrees with "+ " if they are not the current worktree.
+The rest of this patch looks good
 
 Thanks
 
 Phillip
 
-> + */
-> +static char *build_format(struct ref_filter *filter, int maxwidth,
-> +			  const char *remote_prefix, int show_worktree)
->   {
->   	struct strbuf fmt = STRBUF_INIT;
->   	struct strbuf local = STRBUF_INIT;
->   	struct strbuf remote = STRBUF_INIT;
+> +--
 >   
-> -	strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)%%(if)%%(worktreepath)%%(then)+ %s%%(else)  %s%%(end)%%(end)",
-> -			branch_get_color(BRANCH_COLOR_CURRENT),
-> -			branch_get_color(BRANCH_COLOR_WORKTREE),
-> -			branch_get_color(BRANCH_COLOR_LOCAL));
-> +	if (show_worktree)
-> +		strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)%%(if)%%(worktreepath)%%(then)+ %s%%(else)  %s%%(end)%%(end)",
-> +			    branch_get_color(BRANCH_COLOR_CURRENT),
-> +			    branch_get_color(BRANCH_COLOR_WORKTREE),
-> +			    branch_get_color(BRANCH_COLOR_LOCAL));
-> +	else
-> +		strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)  %s%%(end)",
-> +			    branch_get_color(BRANCH_COLOR_CURRENT),
-> +			    branch_get_color(BRANCH_COLOR_LOCAL));
->   	strbuf_addf(&remote, "  %s",
->   		    branch_get_color(BRANCH_COLOR_REMOTE));
+>   `repair [<path>...]`::
 >   
-> @@ -447,8 +459,9 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
+> @@ -189,7 +195,8 @@ twice. If the destination is already assigned to some other worktree but is
+>   missing (for instance, if _<new-path>_ was deleted manually), then `--force`
+>   allows the move to proceed; use `--force` twice if the destination is locked.
+>   +
+> -`remove` refuses to remove an unclean worktree unless `--force` is used.
+> +`remove` refuses to remove a worktree in the cases listed under
+> +`remove` above unless `--force` is used.
+>   To remove a locked worktree, specify `--force` twice.
 >   
->   		if (filter->verbose > 1)
->   		{
-> -			strbuf_addf(&local, "%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(worktreepath)%%(then)(%s%%(worktreepath)%s) %%(end)%%(end)",
-> -				    branch_get_color(BRANCH_COLOR_WORKTREE), branch_get_color(BRANCH_COLOR_RESET));
-> +			if (show_worktree)
-> +				strbuf_addf(&local, "%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(worktreepath)%%(then)(%s%%(worktreepath)%s) %%(end)%%(end)",
-> +					    branch_get_color(BRANCH_COLOR_WORKTREE), branch_get_color(BRANCH_COLOR_RESET));
->   			strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
->   				    "%%(then): %%(upstream:track,nobracket)%%(end)] %%(end)%%(contents:subject)",
->   				    branch_get_color(BRANCH_COLOR_UPSTREAM), branch_get_color(BRANCH_COLOR_RESET));
-> @@ -477,6 +490,32 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
->   	return strbuf_detach(&fmt, NULL);
+>   `-b <new-branch>`::
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index 77ecd0f71f..7f53215cda 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -26,6 +26,7 @@
+>   #include "submodule.h"
+>   #include "utf8.h"
+>   #include "worktree.h"
+> +#include "wt-status.h"
+>   #include "quote.h"
+>   
+>   #define BUILTIN_WORKTREE_ADD_USAGE \
+> @@ -1408,6 +1409,38 @@ static void check_clean_worktree(struct worktree *wt,
+>   			  original_path, ret);
 >   }
 >   
-> +static char *current_worktree_path(void)
-> +{
-> +	struct worktree **worktrees = get_worktrees(the_repository);
-> +	char *path = NULL;
-> +
-> +	for (size_t i = 0; worktrees[i]; i++) {
-> +		if (worktrees[i]->is_current) {
-> +			path = xstrdup(worktrees[i]->path);
-> +			break;
-> +		}
-> +	}
-> +	free_worktrees(worktrees);
-> +	return path;
-> +}
-> +
 > +/*
-> + * Is "refname" checked out in the worktree at "here", or is that
-> + * worktree rebasing or bisecting it?
+> + * A rebase, "git am", bisect, cherry-pick or revert keeps its state in
+> + * the worktree's own $GIT_DIR, and removing the worktree throws that
+> + * away even when "git status" says the files are clean.
 > + */
-> +static int checked_out_here(const char *refname, const char *here)
+> +static void check_no_operation_in_progress(struct worktree *wt,
+> +					   const char *original_path)
 > +{
-> +	const char *path = branch_checked_out_worktree(refname);
+> +	struct wt_status_state state = { 0 };
 > +
-> +	return path && !strcmp(path, here);
+> +	if (wt_status_check_rebase(wt, &state)) {
+> +		if (state.am_in_progress)
+> +			die(_("'%s' is in the middle of an am session, use --force to delete it"),
+> +			    original_path);
+> +		die(_("'%s' is in the middle of a rebase, use --force to delete it"),
+> +		    original_path);
+> +	}
+> +	if (wt_status_check_bisect(wt, &state))
+> +		die(_("'%s' is in the middle of a bisect, use --force to delete it"),
+> +		    original_path);
+> +	wt_status_state_free_buffers(&state);
+> +	if (refs_ref_exists(get_worktree_ref_store(wt), "CHERRY_PICK_HEAD"))
+> +		die(_("'%s' is in the middle of a cherry-pick, use --force to delete it"),
+> +		    original_path);
+> +	if (refs_ref_exists(get_worktree_ref_store(wt), "REVERT_HEAD"))
+> +		die(_("'%s' is in the middle of a revert, use --force to delete it"),
+> +		    original_path);
+> +	if (is_directory(worktree_git_path(wt, "sequencer")))
+> +		die(_("'%s' is in the middle of a cherry-pick or revert, use --force to delete it"),
+> +		    original_path);
 > +}
 > +
->   static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting,
->   			   struct ref_format *format, struct string_list *output)
+>   static int delete_git_work_tree(struct worktree *wt)
 >   {
-> @@ -485,6 +524,9 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
->   	int maxwidth = 0;
->   	const char *remote_prefix = "";
->   	char *to_free = NULL;
-> +	struct ref_format here_format = REF_FORMAT_INIT;
-> +	char *here_to_free = NULL, *here = NULL;
-> +	struct strbuf out = STRBUF_INIT, err = STRBUF_INIT;
+>   	struct strbuf sb = STRBUF_INIT;
+> @@ -1461,8 +1494,10 @@ static int remove_worktree(int ac, const char **av, const char *prefix,
+>   	strbuf_release(&errmsg);
 >   
->   	/*
->   	 * If we are listing more than just remote branches,
-> @@ -501,39 +543,54 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
->   	if (filter->verbose)
->   		maxwidth = calc_maxwidth(&array, strlen(remote_prefix));
+>   	if (file_exists(wt->path)) {
+> -		if (!force)
+> +		if (!force) {
+> +			check_no_operation_in_progress(wt, av[0]);
+>   			check_clean_worktree(wt, av[0]);
+> +		}
 >   
-> -	if (!format->format)
-> -		format->format = to_free = build_format(filter, maxwidth, remote_prefix);
-> +	if (!format->format) {
-> +		format->format = to_free = build_format(filter, maxwidth,
-> +							remote_prefix, 1);
-> +		here = current_worktree_path();
-> +		here_format = *format;
-> +		here_format.format = here_to_free = build_format(filter, maxwidth,
-> +								 remote_prefix, 0);
-> +	}
->   	format->use_color = branch_use_color;
-> +	here_format.use_color = branch_use_color;
->   
-> -	if (verify_ref_format(format))
-> +	if (verify_ref_format(format) ||
-> +	    (here && verify_ref_format(&here_format)))
->   		die(_("unable to parse format string"));
->   
->   	filter_ahead_behind(the_repository, &array);
->   	ref_array_sort(sorting, &array);
->   
-> -	if (column_active(colopts)) {
-> -		struct strbuf out = STRBUF_INIT, err = STRBUF_INIT;
-> -
-> +	if (column_active(colopts))
->   		assert(!filter->verbose && "--column and --verbose are incompatible");
->   
-> -		for (i = 0; i < array.nr; i++) {
-> -			strbuf_reset(&err);
-> -			strbuf_reset(&out);
-> -			if (format_ref_array_item(array.items[i], format, &out, &err))
-> -				die("%s", err.buf);
-> +	for (i = 0; i < array.nr; i++) {
-> +		struct ref_array_item *item = array.items[i];
-> +		struct ref_format *f = format;
->   
-> +		if (here && checked_out_here(item->refname, here))
-> +			f = &here_format;
-> +
-> +		strbuf_reset(&err);
-> +		strbuf_reset(&out);
-> +		if (format_ref_array_item(item, f, &out, &err))
-> +			die("%s", err.buf);
-> +
-> +		if (column_active(colopts))
->   			/* format to a string_list to let print_columns() do its job */
->   			string_list_append(output, out.buf);
-> +		else if (out.len || !format->array_opts.omit_empty) {
-> +			fwrite(out.buf, 1, out.len, stdout);
-> +			putchar('\n');
->   		}
-> -
-> -		strbuf_release(&err);
-> -		strbuf_release(&out);
-> -	} else {
-> -		print_formatted_ref_array(&array, format);
+>   		ret |= delete_git_work_tree(wt);
 >   	}
->   
-> +	strbuf_release(&err);
-> +	strbuf_release(&out);
->   	ref_array_clear(&array);
->   	free(to_free);
-> +	free(here_to_free);
-> +	free(here);
->   }
->   
->   static void print_current_branch_name(void)
-> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-> index debfac5f26..5541f1429b 100755
-> --- a/t/t3203-branch-output.sh
-> +++ b/t/t3203-branch-output.sh
-> @@ -456,6 +456,23 @@ test_expect_success 'branch being rebased in a worktree is marked' '
->   	test_cmp expect actual
+> diff --git a/t/t2403-worktree-move.sh b/t/t2403-worktree-move.sh
+> index 69768c1207..2e45cd77f9 100755
+> --- a/t/t2403-worktree-move.sh
+> +++ b/t/t2403-worktree-move.sh
+> @@ -271,4 +271,98 @@ test_expect_success 'move worktree with relative path to absolute path' '
+>   	test_cmp expect .git/worktrees/absolute/gitdir
 >   '
 >   
-> +test_expect_success 'branch being rebased is not marked in its own worktree' '
-> +	test_when_finished "git -C rebase_dir rebase --abort; rm -rf rebase_dir; git worktree prune; git branch -D rebasing" &&
-> +	git worktree add -b rebasing rebase_dir branch-two &&
+> +test_expect_success 'setup commits that conflict for am, cherry-pick and revert' '
+> +	git worktree add --detach conflict-setup init &&
 > +	(
-> +		cd rebase_dir &&
-> +		git commit --allow-empty -m rebase-me &&
-> +		test_must_fail git rebase -f -x false HEAD~1 &&
-> +		git branch --list rebasing >actual &&
-> +		echo "  rebasing" >expect &&
-> +		test_cmp expect actual &&
-> +		git branch -vv --list rebasing >actual &&
-> +		test_grep ! "$(pwd)" actual &&
-> +		git branch >actual &&
-> +		test_grep "^\* (no branch, rebasing rebasing)" actual
-> +	)
+> +		cd conflict-setup &&
+> +		test_commit base conflict.t base &&
+> +		git switch --detach init &&
+> +		test_commit side conflict.t side &&
+> +		test_commit side-two
+> +	) &&
+> +	git worktree remove conflict-setup
 > +'
 > +
->   test_expect_success 'branch being bisected in a worktree is marked' '
->   	test_when_finished "git -C bisect_dir bisect reset; rm -rf bisect_dir; git worktree prune; git branch -D bisecting" &&
->   	git worktree add -b bisecting bisect_dir branch-two &&
-> @@ -464,7 +481,10 @@ test_expect_success 'branch being bisected in a worktree is marked' '
->   		git commit --allow-empty -m bisect-one &&
->   		git commit --allow-empty -m bisect-two &&
->   		git bisect start HEAD HEAD~2 &&
-> -		test_must_fail git symbolic-ref -q HEAD
-> +		test_must_fail git symbolic-ref -q HEAD &&
-> +		git branch --list bisecting >actual &&
-> +		echo "  bisecting" >expect &&
-> +		test_cmp expect actual
->   	) &&
->   	git branch --list bisecting >actual &&
->   	echo "+ bisecting" >expect &&
+> +test_expect_success 'remove worktree in the middle of a rebase' '
+> +	test_when_finished "rm -rf mid-rebase; git worktree prune" &&
+> +	git worktree add --detach mid-rebase side &&
+> +	test_must_fail git -C mid-rebase rebase -f -x false init &&
+> +	test_must_fail git worktree remove mid-rebase 2>err &&
+> +	test_grep "in the middle of a rebase" err &&
+> +	test_path_is_dir mid-rebase &&
+> +	git worktree remove --force mid-rebase &&
+> +	test_path_is_missing mid-rebase
+> +'
+> +
+> +test_expect_success 'remove worktree in the middle of an am session' '
+> +	test_when_finished "rm -rf mid-am patch; git worktree prune" &&
+> +	git format-patch -1 --stdout side >patch &&
+> +	git worktree add --detach mid-am base &&
+> +	(
+> +		cd mid-am &&
+> +		test_must_fail git am ../patch &&
+> +		git reset --hard
+> +	) &&
+> +	test_must_fail git worktree remove mid-am 2>err &&
+> +	test_grep "in the middle of an am session" err &&
+> +	git worktree remove --force mid-am
+> +'
+> +
+> +test_expect_success 'remove worktree in the middle of a bisect' '
+> +	test_when_finished "rm -rf mid-bisect; git worktree prune" &&
+> +	git worktree add --detach mid-bisect side-two &&
+> +	git -C mid-bisect bisect start side-two init &&
+> +	test_must_fail git worktree remove mid-bisect 2>err &&
+> +	test_grep "in the middle of a bisect" err &&
+> +	git worktree remove --force mid-bisect
+> +'
+> +
+> +test_expect_success 'remove worktree in the middle of a cherry-pick' '
+> +	test_when_finished "rm -rf mid-pick; git worktree prune" &&
+> +	git worktree add --detach mid-pick base &&
+> +	(
+> +		cd mid-pick &&
+> +		test_must_fail git cherry-pick side &&
+> +		git checkout --ours conflict.t &&
+> +		git add conflict.t &&
+> +		git rev-parse --verify CHERRY_PICK_HEAD
+> +	) &&
+> +	test_path_is_missing .git/worktrees/mid-pick/sequencer &&
+> +	test_must_fail git worktree remove mid-pick 2>err &&
+> +	test_grep "in the middle of a cherry-pick," err &&
+> +	git worktree remove --force mid-pick
+> +'
+> +
+> +test_expect_success 'remove worktree in the middle of a revert' '
+> +	test_when_finished "rm -rf mid-revert; git worktree prune" &&
+> +	git worktree add --detach mid-revert base &&
+> +	(
+> +		cd mid-revert &&
+> +		test_must_fail git revert side &&
+> +		git checkout --ours conflict.t &&
+> +		git add conflict.t &&
+> +		git rev-parse --verify REVERT_HEAD
+> +	) &&
+> +	test_path_is_missing .git/worktrees/mid-revert/sequencer &&
+> +	test_must_fail git worktree remove mid-revert 2>err &&
+> +	test_grep "in the middle of a revert" err &&
+> +	git worktree remove --force mid-revert
+> +'
+> +
+> +test_expect_success 'remove worktree in the middle of a cherry-pick sequence' '
+> +	test_when_finished "rm -rf mid-pick-seq; git worktree prune" &&
+> +	git worktree add --detach mid-pick-seq base &&
+> +	(
+> +		cd mid-pick-seq &&
+> +		test_must_fail git cherry-pick side side-two &&
+> +		git checkout --theirs conflict.t &&
+> +		git add conflict.t &&
+> +		git commit --no-edit
+> +	) &&
+> +	test_path_is_dir .git/worktrees/mid-pick-seq/sequencer &&
+> +	test_must_fail git worktree remove mid-pick-seq 2>err &&
+> +	test_grep "in the middle of a cherry-pick or revert" err &&
+> +	git worktree remove --force mid-pick-seq
+> +'
+> +
+>   test_done
 
