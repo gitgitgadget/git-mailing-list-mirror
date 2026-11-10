@@ -1,88 +1,64 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.171
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794324359;
-	b=3fNGYHuW88GUHVVfDd7bwtO/A5Euig1LNauMVPOkE0CkXS7xSKQhpqjyRZthSOYE6psm
-	 a5ba07WaxY5LJKclck7clsREwR3yUVB9zVT8sJVrb9IXt8Jvu1V+/J1cEaXXeD5BK2qWZ
-	 TQ4aOQHnSzNhWVYTJkMuCQHsWDtMtotjbfKglq1U2lCb+EBVKTIJgoYFZ2vs7ZSFlK6Ly
-	 RC+98JQLaM8+kWPIuL4k89H6Uo9yt64wtvdwuGGweayatOpKsBEBEhbmA8N5ItoqKg7XV
-	 tYe8b3HGChI/hEqogA6/H7QkvitJ33xi8arCf2We89eltrh0XnhEHxYwe57aVivEV1w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794324359;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=kES3OxGMThr9n3d4LHW1dPR5HZ89knnVh6qxXznsZis=;
-	b=ngMZlQ8YK1UqWUK5p8V5q1Tgu4IPAxRNC8D57q3EjdHrodpzHM6alWVfqxrBSL7RRlzp
-	 6QdHfS/wipZdA0DnGaaLMVIF9LhUyxbZOaJ0Pkxxa9rU7DbihLwjSqXdlJL7fl7IWWn+b
-	 Kmt46Fiyqvr7c0ArFHUAtlox/Lqx26SD8al6eMIQck/fxOyAeble/7c9INruydts4CbdY
-	 8f5o8vuq+6pUFfOiz353/3h8hGMqIsjTs1cU2Ixa+M5hxuLPt2R5QvYirLq0+SoleXeiR
-	 Fmq4yU+QGnT3UbiW1zAe8Q944N93yIQO7wJ8rVpPV3f/nvGa8SCal+hDN1i1QE7TzyA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qk+EdG9a;
-	arc=none smtp.remote-ip=209.85.210.171
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794324455;
+	b=OD4XgObUKW8p3X0nyhtwk4HskVk9XAncpmr6Xl6SOw4dTFI7lC/KNRYlQuiR0vahxnQT
+	 xmoR5Z6OaO3KRAcuCxklfvBX2qgpMUu61z9f2DDxTOUotVANeRB7htjIfkYBoTTaJhrFh
+	 Viut/jZz47b7zTyG5D4cRNuIysWYP6wbpWB2Lfm8hkbnGnhxeEYCxwvv/KKvnEQ1gs+v5
+	 rByiu+DeGHypAHowYRJnEEs2GB58RE3zloiQQL4qMaq5ZEoEdH3+44wlKYxgUBSpNvwBa
+	 x4dmjt+xgFEfVTG8+HHvCikeoEuSi/P4ZE6AhEKmdXeTOwOUcyXNLH8koO6dXtJhNrg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794324455;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-ZohoMailClient;
+	bh=J0nEDXnhqslXpWfg2ke0rbIXgW1XSpzt8JGLUL/b1hA=;
+	b=Q7Lbi9GpTyiphg8di8QFL8OCjibMHQ8+zy4loV06gWbfzQ7HWKaVHpFwRzQgIbVKTGA9
+	 A1tM+0r+EjV2cg5EM33AylGYFKevpGl6NrgkBU67Yl9xnEi7pCw5/rrq+SUcT4c/oS6Ss
+	 wQVMCJGYwTv/0N+5Ekqs5akwMTnr4rv8DY+pvgjinYa8OtKBg+CuA8v3TjyLDSc5D++1m
+	 JyuMgvSeGkVRimxYTtIH7qdiO+F3XFk7i9ipJnWcKeQ6aiBgonbZlxyoac4tqRV0FnhvT
+	 oY6meV4R9pU/EdZ10GnAbbgZ+lkjhjvx2Led9dzk4Ja3zYNWxolqEB5K7q1R47/adDQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=none header.from=laveeshbansal.com;
+	spf=pass smtp.mailfrom=laveeshbansal.com;
+	dkim=pass header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=OWr96ac0;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0E0606A31C
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 15:25:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4C0E0606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202A2606A31C
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 15:27:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 202A2606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=laveeshbansal.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=laveeshbansal.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qk+EdG9a
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8b5e5e64494so1126745b3a.1
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 07:25:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794324359; x=1794929159; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=kES3OxGMThr9n3d4LHW1dPR5HZ89knnVh6qxXznsZis=;
-        b=qk+EdG9a2C+hu+xxh11rL0FB18oKYFRg4eaWB7ZRybcrqKPWGEfUn1CZqOROuMCbGE
-         TBQexRXAwpwYPGTCLYmL8txlTYD+F7FlktWEY//05BOs5o4u+akKERRDqAamdYnMr7tQ
-         Qi2kW703dzrCAzfbJZfq2TQC1gDqYUbBdmCcNVWuU0yGWm9E46DT/Qv4pZ9xfTwLnqfL
-         enqOgp94O6/JjLLGN/C0DgQsG/EUIzDipe4S1yJHwI7OThcQWqRi5yQd+asDPeehLOOO
-         bs1a4G88BRbWEXB1UaKQDuTXhaSw+Xa9fQhgOI+/4cXl+U+jYYXLiRQDnNKqlypSJjY3
-         9ymg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794324359; x=1794929159;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=kES3OxGMThr9n3d4LHW1dPR5HZ89knnVh6qxXznsZis=;
-        b=LP02135huVA+t+yJOnxAb2fV4MVetVDxxXq2T4d5VWj9EIrojBnLbhliyk1qVB0cDd
-         XLcUS0YTM0RVB2HKUJVRfiNoVT/B8GxkzaLo1D80u0s8QLrnrJo7+QiNAROjZAbKtm9E
-         ctgo4wrv7aD1oAuCkZbVhw3ZRwxDHcd8C18HJFnT4lbNqS7r3DcOo/kyRsvG0JSNLlVK
-         JSjPmGDP+euaJ+/OEW8opcTYGZ0CGeoBEr9gxSrZ4vyc+Ze+SXO5cnPmFzIashBJd8am
-         A1bP7HGKPpIaczLiu0UqtGEna/qfDDlVoNCIarBN8mvMrAlPM/Pumbrbo63Iinht0Awa
-         BCSA==
-X-Forwarded-Encrypted: i=1; AL+hErGeT9lgVDbPV4m/GwZK1ppy/29gOzvScIAQPTQXEKsfNWrO23U4AkkYiyo91UOsZXgcD20=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+gYuT4jgBBjiGW0GFrt/Q4noEZG67jWmlJrQ5ad6WITamEXMBu
-	vsxKMvljJu/7PFD6LMWFjxkzoJF+i0PhohBUNUC777CDxz1y84oozY+O
-X-Gm-Gg: AYBFou1Qieli2KFHjHmeAMkz5VmosSh2KgLff7WL1Tim8geOi3ZuVt9CM8W/RwFdRom
-	xYOhJIpQI18PX8euV1GiZDneA36shvsoWVBp9EYBRWTjcvX7K74h9KPjK40AK4SnDUHAChJSbR8
-	K7ncUEtPRjPdBMqhOgifjS0vnE+T52v+nRuSXvLx6H4ylEzT9pUzeOHJ7m4iPhjgGP6+8ooN0EZ
-	B8W/M97u8F6maeMoTPbuRK+K2ZAwl8MR9rkbR2oYmJl2GkRWApa4KjvdKbWGEFDzOVeQ0sNj9o3
-	gz85sskm6ZyCsHMacw70GKnsYptfpoJSEl6N/g2G5EaBnuV4b1AvD/bG5trQi5WAaMQdP+p87mE
-	wdXAdGsfxWUkrWGMXwu9dWdnBB72jk8GuPIFrT0Llc/yUd9JC689gExkoLX7uz4PwzRVKiEUKt3
-	LjoqcQNbDYG97kTuF+hyGtuW/KevFOuXGB8NSgY/zgxTsOT91FhZQzOmVr4XqDRe2vwddv9slXv
-	vBQcSq+ZPoX7Sq3VAqpoG41rG7/Z6wEs5dfLrwrsABL6EFVcmhvEleF120RfORsIAEcaiGYz6+W
-	QFQAM621IxjZN3ICHnmALH4SwiQLtAn0hAvXiJwGRpTipg==
-X-Received: by 2002:a05:6a00:950b:b0:8b5:c588:ca49 with SMTP id d2e1a72fcca58-8ba8764699fmr3092794b3a.46.1794324358443;
-        Tue, 10 Nov 2026 07:25:58 -0800 (PST)
-Received: from [192.168.25.219] ([115.108.41.154])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8baaa86ddb4sm1051168b3a.24.2026.11.10.07.25.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Nov 2026 07:25:58 -0800 (PST)
-Message-ID: <df9ed9b6-978e-413e-b001-b4f10c84a114@gmail.com>
-Date: Tue, 10 Nov 2026 20:55:50 +0530
+	dkim=pass (1024-bit key, unprotected) header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=OWr96ac0
+ARC-Seal: i=1; a=rsa-sha256; t=1794324434; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=StrgNHULezz8voJ4dfYLFC13EtEQq0AN/8iT4DKDC1HIsK34gXOYdXHE6WsjesURZEY15wlEbLxeE6dj1Xc8o2A4GkXVHPSR+/08J4Xj/q7iHpJUQwc5f7m0f52izw+q/+h30u/9HGGLqx7CCrvM69g6caNA+8dil9o+8NpBeq0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794324434; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=J0nEDXnhqslXpWfg2ke0rbIXgW1XSpzt8JGLUL/b1hA=; 
+	b=V/V8LUL51NghbgrBwstLR9QngWFnMg5y5/czpos6+J9DM+j2/x2IOZhLlGSfVrN281PKp9nLmm2XolDWT7gzq6KFQcwRiF/H2QZDdZZj+f+3q4b9Cy3M6ZGnS07sYW8yKVRHLe3HTLXkWZu9t3LwjNufr0bXuW9+p0qC13aPcs0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=laveeshbansal.com;
+	spf=pass  smtp.mailfrom=laveeshb@laveeshbansal.com;
+	dmarc=pass header.from=<laveeshb@laveeshbansal.com>
+DKIM-Signature: a=rsa-sha256; b=OWr96ac0MwqyZih6nzk05E+saY06rp8ZzFeWaiX4OSmg56blEO5XC7IcD5EEuV3W//HaXuWab6ojZBqt5MG6C+AFedN64FJ2eYE8m/x3GCo5uRJ3ca5F0yMhy0QGH5wU6Hv8Hb0KHvTFV9zyVZVtABySzdIOs9JjipSHgxeezHQ=; c=relaxed/relaxed; s=zoho; d=laveeshbansal.com; v=1; bh=J0nEDXnhqslXpWfg2ke0rbIXgW1XSpzt8JGLUL/b1hA=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794324417236268.68226940587806;
+	Tue, 10 Nov 2026 07:26:57 -0800 (PST)
+From: Laveesh Bansal <laveeshb@laveeshbansal.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
+Subject: [PATCH v2 0/2] builtin/reflog: expire each reflog only once
+Date: Tue, 10 Nov 2026 07:26:39 -0800
+Message-ID: <cover.1794324064.git.laveeshb@laveeshbansal.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261108012213.89468-1-laveeshb@laveeshbansal.com>
+References: <20261108012213.89468-1-laveeshb@laveeshbansal.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,50 +68,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] doc: git-diff: rewrite EXAMPLES section
-To: Julia Evans <julia@jvns.ca>
-Cc: Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org,
- "D. Ben Knoble" <ben.knoble@gmail.com>, Jeff King <peff@peff.net>,
- Junio C Hamano <gitster@pobox.com>
-References: <pull.2293.git.1793720007182.gitgitgadget@gmail.com>
- <pull.2293.v2.git.1793893217889.gitgitgadget@gmail.com>
- <20261108023730.GA1242909@coredump.intra.peff.net>
- <xmqqa4nhwstl.fsf@gitster.g> <xmqqo6bxvdbf.fsf@gitster.g>
- <10dcd7e2-657c-49f8-b8fc-0c29fa55e6fc@app.fastmail.com>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <10dcd7e2-657c-49f8-b8fc-0c29fa55e6fc@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On 11/10/26 19:16, Julia Evans wrote:
-> 
-> On Mon, Nov 9, 2026, at 5:40 PM, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>> In any case, I'll queue another SQUASH??? commit on top of the topic
->>> until v3 materiazlies to fix these issues we have accumulated so
->>> far.
-> 
-> Thanks for this, I don't know how to apply a patch from an email but
-> I'll ask in the Discord to try to learn how. Same for the other changes.
+This series makes "git reflog expire" expire each reflog only once.  1/2
+puts the --all and the named-ref paths in one loop without changing
+behavior.  2/2 skips a reflog that was already expired in this run, so
+a name given twice, or one that --all also covers, is no longer expired
+and reported twice.
 
-As mentioned in Discord, when Junio mentions something along the lines 
-of "I'll queue another SQUASH??? commit" , it means he would've already 
-queued the SQUASH commit in the topic branch in his tree. You can view 
-the same using something like:
+v1 was the refactor alone.  I had kept it free of behavior changes and
+planned to handle repeated reflogs in a later patch.  After the
+discussion on v1 [1][2], I am bringing that change into v2 as a second
+patch, which keeps the refactor separate.
 
-   $ git remote add jch https://github.com/gitster/git
-   $ git fetch jch je/doc-git-diff-examples
-   $ git log FETCH_HEAD
+Changes since v1: 1/2 only has a new commit message, and 2/2 is new.
 
-Then on your local topic branch, you can do:
+I ran the full test suite, and the reflog tests with reftable, sha256
+and SANITIZE=leak.  Against the base, the output differs only where a
+reflog is reached twice.
 
-   $ git cherry-pick --no-commit <List_of_SQUASH_commit_ID...>
+Assisted-by: Claude Sonnet 5.5
 
-Hope this helps.
+[1] https://lore.kernel.org/git/avLDE1gGsjjy2ryd@pks.im/
+[2] https://lore.kernel.org/git/xmqqwlqlydo2.fsf@gitster.g/
+
+
+Laveesh Bansal (2):
+  builtin/reflog: expire --all and named refs in one loop
+  builtin/reflog: expire each reflog only once
+
+ builtin/reflog.c  | 56 ++++++++++++++++++++++++++---------------------
+ t/t1410-reflog.sh | 14 ++++++++++++
+ 2 files changed, 45 insertions(+), 25 deletions(-)
 
 -- 
-Sivaraam
+2.54.0
 
