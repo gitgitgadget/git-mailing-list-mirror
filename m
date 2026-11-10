@@ -1,91 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794296237;
-	b=ayD6nQv+/YQP7+1qt1oX076uJvUozz0DrDja7MpyFW0R8TVlH3KGlhQCdCGoiw+xlfOP
-	 udacxlr3vKvbtTocPiumrgcpVDjymxg144aDjNtOnBbcAif1TxQ2kFXtzwYuiwp0Y0pAm
-	 xzHbXbrrVofzny+RYw5333gQIcd+LvaJvESPi40S+GuqGOqYXzOVMVlaQqIOyAZwe0EmT
-	 J+Kw+OyAYTh/+wf35XN1Ra7xAiSm8/tKEeE+xYYS+b7Ke5HhMTcOIlCT1sVwSdksKRuMx
-	 Pc4sTXaxh/oVseUpiuX3a+ddhjJXBjF0UmkM27d2ovCNOF80llzulpbGGeBI2gHk4bw==
+	t=1794296239;
+	b=z6uC/Uul2GDu1tnScmN9f9P2O7Ijtpdn5W1cp3eVbJn2z3zeRRQQnPm3lA4Et6hXWK/A
+	 J+norsk/K8WTfdfJf91u8yaTSp+r83HcI7bmuc2WjAymSVmzGf7Hop6zFp7VBawM6F/0l
+	 Yd9G6xWrD58TElAcqnp08yWh8kIFv8CFQ3Xu0+gaB+9hZHBJSnhWpKw7OJ10m80sIbHjE
+	 k+Uh7YUu/r+2GjS0ok5E/qKOLJb3LBGK30+eY7KZGS3oJVAIUyi+Aop0DzzpdOAmy6n6Q
+	 QzXuwDkv0GrsCPGrYfSZLz6PjaYjvFMsnTxz6iadRgDDrlkLlGXB1fBrjprUzHFqgCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794296237;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794296239;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=MpQibAg8X4msOndVvsdNzuZUbPprPXfZAwJh5lqCkR8=;
-	b=nKg/y0bMfTqXebpjei8gGtt1+Yl2HY9dSbEueipBv5ch679a/pjcAC2bTXLH4Di421qy
-	 OkjZA4pc39BMxM8mC9v1fWjIb0LAYGiDKr/EQqkGKmHapDeO7v/JrPMSLKEjj4ZRzqgxh
-	 aUxehAJNqa58bfa5kU+6SQ3/beasITQKYQYlLtWn9NZNTGJpiI5cKI+6Mebr3q1/SmKRl
-	 /v1oVC3nEaHSnTUZ2/lUk3f8xoUS43tcEXeRHe7c8IE+vh7Bp+mwcR7OphY1si6ehQR9V
-	 0ednZLPrSObBHibaMZuJa9yC7WMKNrlcdi4e6lI+Ap21yty3rw4fwSGZSVMUdGOaa0w==
+	bh=/gfvyYztMNMcuWo19mp9PGU0KAO9W0nIWcv6rMLkPmA=;
+	b=LnQJf8btnS6KRwP4p75uLG0WiTCW/L3ooXc4eY/jVvkcX7f7oUVHvi/NJt6mDF/9Z8UR
+	 Z0ajnzHrtsG2LwGbJeY1OYPy0CCisyyGYpF2D0ZjcwBNXHfd/M4obsIYlF8bRT/6t8j10
+	 vCH3nRCXMyB2LetHpGXaJ8FRVdIAAAGOrNnJhDfQ317CtOUh2NK/+0gGPWFkTfncdgzdQ
+	 s9jPW+ahkjOQeXm5t4Ul6xVZ/tv8BwJERxNKzGiQvoYJ2C20ZmvGH8hYIKTaoWBfipR4S
+	 u5EWVWNaUAo4JFL9zLuLXCWfPd7yUoA5Dk+/ewKIPX1iUjVqUxh/Rvt223vuMLUiUaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nbxlZibk;
-	arc=none smtp.remote-ip=209.85.160.54
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PEGIfQLY;
+	arc=none smtp.remote-ip=209.85.160.47
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BDB60A6F6E
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 07:37:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3BDB60A6F6E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCCE60A2615
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 07:37:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5BCCE60A2615
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nbxlZibk
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-4a76f63b243so1254364fac.0
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 23:37:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PEGIfQLY
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-4ad60ec5eaaso1415547fac.0
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 23:37:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794296236; x=1794901036; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794296238; x=1794901038; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=MpQibAg8X4msOndVvsdNzuZUbPprPXfZAwJh5lqCkR8=;
-        b=nbxlZibkFftKKfjP484JifXG4miF5DD006zLxJ2RX/3pC9G/2Zk0865zh0MOrGDiMV
-         XWtNcjwVIzelt8GXShv5zQFAnLsfUN4c6bi4pd/780uOxV4RrtQ/ytGRIZW+LeHcloYK
-         iLeKoMoTeR7mTmgtPGRJg/5fZEghuXWg0fFkKQ4eSBbttgfcduWKkSbiiNwl7FJknTPc
-         TcdDpIW8HsuFmuaRVqkh4KJB2n4i97ZYX+oi98EdekzhA/0NqWvLU7iV0JSLykhSmAPM
-         84gUaBQtemQjYlygJW7pusdgUcjBiLXfb6zTHPmRUV03LDkn8A/77AOgUXvPKZM1CU/9
-         eXbg==
+        bh=/gfvyYztMNMcuWo19mp9PGU0KAO9W0nIWcv6rMLkPmA=;
+        b=PEGIfQLYsiWvDnnBa8bhBdzk4JJC8VI+Yua3Psit6LZydREi8YjbQOXs5WRzvu2vzi
+         IyG1qXACfSieXv7w+aetW1A57UAT6wCVrYCcwpWxIt8PfcIyPn/vXrNZlb4xyZ59ZZQw
+         YPtOQde8Af0ooRS4dYO8pw2WpY7M3xpblSHzSiT5SgnGBsDGBLHs89m+DYG89/yoY7SE
+         6T8hNplufU1ds4F4l7mmh3khnbgnJVRjhSy6M+oXFgHe9poV75Ex//tvYjVDxWb0m5YK
+         Uctk0ML8cd5BCyIvkfg/9laOWc7yT305ZCqadFcdjh+AQ4BvBAytqXYCZg5gG+AHayvA
+         W6RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794296236; x=1794901036;
+        d=1e100.net; s=20260707; t=1794296238; x=1794901038;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=MpQibAg8X4msOndVvsdNzuZUbPprPXfZAwJh5lqCkR8=;
-        b=Yx2AIT9khnO0GSFBzDNjY4/lAMgx95EdhNjbW+580jB4hr1og6FniB1Ie2F987TQ+s
-         c4qGrsPY6cIc9r95mwFpMyAAdbhYBpkWwlF4pth5tRx5mxN7Vq4OG4JMtwnofj9LWDiL
-         w937+uJwqUG7zxyiwEt7m8YMqCIv8Hr7G1Hv8hTBPsVWgit1TIVgKzXkJB3CPjtZfTg2
-         LDZX5u5q5tUjsCtCuvZRBCizQiVYuJcaLuAL4SxOB2a1p4bWZLEzYGrKReCdvHDKXzDQ
-         DLyUrJ+LwxT4ppi7VKkFX4Qc9jbaezgEcqw4CLSzXnpq1rVQkOF93drThzPg8zQ49KRD
-         z25w==
-X-Gm-Message-State: APuU4Z/RbA/Z07M/2+zfL0V2nqcDdcank88y5MaCBb3cL7/heJj3FWRh
-	V/yBHn0uKyBRv4QUuo6tlIkee4YIAcbMkoQWsJTrtxPoHqybFIZZetYeb87BRSTq
-X-Gm-Gg: AYBFou1DXuAGpxh+lDDP99aH69k8a/UqUjPpM4Ykk6jKpA7WDC4HPoDB8xE4eC28zOS
-	lrXtUJUB/jbGvlF6XQE+1LxJ+XJADFFyp3qdUyIFsZi+JpTWv9myWkb6R20GUMp4U8gIewQ3Ns+
-	X4axGrF6x6e1sscZoDMJ7EiJMV2uDcaQo96OGD0EVXza08QDR9CA0RzcKNr2EKw5Nx4pHfvkDnH
-	EijGDQvCSKd7lXEVMH3BVSu00BUgbqdmvc7jnKMJRcXlqXMqxKhN104xapErptziagNEHmZrftp
-	YqSvfHFOlooOQpu+jPVCpy280Oy5FH7citCqbT98Azp4ENWuf/VAYmHG75hTlfnivhFwHbZLv+s
-	ZBkdOMbqkdfQqOy1uPdFkqFQH4JvyeyvaLcw+bnflMxhJfnv7ouVfqgT5g+lELhGd434YrIlNR+
-	C2Oup3eIp2U2jDIiihWnJtzejwqA0inmZyUv1WLngxHgLztnsYuv498TJ2+c8gOtvmD5jNM9NSI
-	22Kfv9KeJtn8b86BM/pIUekU6WuHMsh+Oz+4PAF6BgKnMace2EL8vjA3vb0rbcoxIaXKdiUUqxn
-	88QnTkOjVQ7bpz4qirIBKzVGZ5zCai6tM7HCKF3iMYLCqt8eQPw473qS
-X-Received: by 2002:a05:6870:3b84:b0:49e:162e:7a83 with SMTP id 586e51a60fabf-4ae20357d14mr880054fac.33.1794296235666;
-        Mon, 09 Nov 2026 23:37:15 -0800 (PST)
+        bh=/gfvyYztMNMcuWo19mp9PGU0KAO9W0nIWcv6rMLkPmA=;
+        b=T+trFk8Gye5ygChSxVTVTsQEXqYIonq9XhtASCnTetL9yIGe2k680UdKEnCbu8D1zw
+         BuSC4JuFuaYZXccwXOg4FzVYaZds+GWsnlbEP9kSPxmSgCUZo+UjAt4sUB8Xe10zQ8l1
+         g9wKNe3hCB/3aTgsrF23MnKTSzb/Yqkn+LmhaxJuKLz8TxW4fsX3Ps3v55i8kHnMAGFF
+         AFoak+3FdmAPYaPrFIkqtSAJbRLQaEaVT1ulKaYc91hEnUCrB9dmy/P0y5R6njod0F9Z
+         NlKnqe1ZgrUeb4wSlmJMctPRUkKrecxbpw2mt3q7MpkeYcT4MzyjYyMr/TiSiO/RAIkU
+         DFfw==
+X-Gm-Message-State: APuU4Z9BupLBKZIXh8OU+1sngDCAsoJAatqUUmSpn1opzMol+EfvMCQq
+	fqagmtkjeTs/Tz/J8ED6gcEl14COo4UOMmP99HuTAmDrs+mA5TBbCGU4biXdEln3
+X-Gm-Gg: AYBFou2w86+xxdLaUnBMMxkgyVIUlQWOGEQpT+PZnIiGbLZqFOZPRumsfUxMqoM5jto
+	TZFM1iLOo20HjL489on1URWnpVFHNTj6Ui1BINmYvQB50YS8VxEVa+mFDH+VynSC9Vp7Thj4Yj3
+	AUCILp0Cag9KnEOzezf3pQzH+V2pnjWFZozGeJOCz3/NRuUloAXYsruw7UyAoCSXlSmETDIiEk2
+	NVWpgxDEwW+nNSQaFtbZxkV3K4tgxnsVK8lXMidWjm+yxY5Ew9Tf821z4iKE4kJlbrkqo7WxDZy
+	FLUkIowtRdExvJ41wmSkQzEKSsOik1c6xrghm4Nl4nLI94VyfAxhsY4MKPOSjaCkDOI897Fnjts
+	zE5vC4AcyJlA8OT4uJuJio9TIPlJ7DMq2xIG3gZSxqPUGLu7C3/HYoeAiDHvgkC7sJT9kPF2l3d
+	ojElJfV44CyUHRZoxiokB6CyX74t1uJwiOVC4T5vUpxlrW95whXJnYeK3YMxTu8hVaAYaVYcDr8
+	xT5tpA5j92znng7UtGBuar1th5HLdbCcsT2qN05/4sjJ2rG9PFHyVT+h1qr5faTC3njJDd4jw+R
+	xMaCZXaqvVqEBt/dg8mSbxg3ZFhEl2oSQOWgMBA9pXbk+5FP/W0Vay4p
+X-Received: by 2002:a05:6870:f207:b0:4a6:d389:ea78 with SMTP id 586e51a60fabf-4ae2036a349mr829056fac.34.1794296238072;
+        Mon, 09 Nov 2026 23:37:18 -0800 (PST)
 Received: from [127.0.0.1] ([135.119.111.130])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4ae22fcdc93sm989524fac.10.2026.11.09.23.37.14
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4ae22fbc9c5sm1153768fac.9.2026.11.09.23.37.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 23:37:14 -0800 (PST)
-Message-Id: <1533ef9cc6c5f4eb19007f22fa85709ee5870a77.1794296205.git.gitgitgadget@gmail.com>
+        Mon, 09 Nov 2026 23:37:16 -0800 (PST)
+Message-Id: <6219e9fd7f04045fd7529bb8c1bf1533c334756c.1794296205.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2297.v2.git.1794296205.gitgitgadget@gmail.com>
 References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 	<pull.2297.v2.git.1794296205.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Nov 2026 07:36:41 +0000
-Subject: [PATCH v2 11/15] pseudo-merge: handle NULL value for
- bitmapPseudoMerge.<name>.pattern
+Date: Tue, 10 Nov 2026 07:36:42 +0000
+Subject: [PATCH v2 12/15] scalar: handle NULL value for scalar.repo
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -115,52 +114,54 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-A bitmapPseudoMerge.<name>.pattern without a value makes
-"git pack-objects" segfault while it writes a bitmap, e.g. during
-"git repack -adb": pseudo_merge_config() dereferences the NULL value
-to see whether the pattern starts with "^".
+A scalar.repo without a value makes "scalar reconfigure --all"
+segfault: get_scalar_repos() passes the NULL value to
+string_list_append(), which copies it with xstrdup().
 
-Reject a missing value with config_error_nonbool(), as the callback
-already does through git_config_expiry_date() for the threshold keys.
+Reject a missing value with config_error_nonbool(). This cannot break
+a working setup, as "scalar register" always writes scalar.repo with
+a path.
 
 Assisted-by: Claude Opus 5.5
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- pseudo-merge.c                  | 4 ++++
- t/t5333-pseudo-merge-bitmaps.sh | 5 +++++
- 2 files changed, 9 insertions(+)
+ scalar.c          | 5 ++++-
+ t/t9210-scalar.sh | 5 +++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/pseudo-merge.c b/pseudo-merge.c
-index 22b8600d68..19fae9233a 100644
---- a/pseudo-merge.c
-+++ b/pseudo-merge.c
-@@ -150,6 +150,10 @@ static int pseudo_merge_config(const char *var, const char *value,
- 	if (!strcmp(key, "pattern")) {
- 		struct strbuf re = STRBUF_INIT;
+diff --git a/scalar.c b/scalar.c
+index a80d8ee3ff..4fe4b2a647 100644
+--- a/scalar.c
++++ b/scalar.c
+@@ -652,8 +652,11 @@ static int get_scalar_repos(const char *key, const char *value,
+ {
+ 	struct string_list *list = data;
  
-+		if (!value) {
-+			ret = config_error_nonbool(var);
-+			goto done;
-+		}
- 		if (group->pattern) {
- 			regfree(group->pattern);
- 			free(group->pattern);
-diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
-index 5b2a17f90a..e7e6b2f8a8 100755
---- a/t/t5333-pseudo-merge-bitmaps.sh
-+++ b/t/t5333-pseudo-merge-bitmaps.sh
-@@ -233,6 +233,11 @@ test_expect_success 'out of order thresholds are rejected' '
- 	test_cmp expect err
+-	if (!strcmp(key, "scalar.repo"))
++	if (!strcmp(key, "scalar.repo")) {
++		if (!value)
++			return config_error_nonbool(key);
+ 		string_list_append(list, value);
++	}
+ 
+ 	return 0;
+ }
+diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
+index c8463d0ac4..137765d3b8 100755
+--- a/t/t9210-scalar.sh
++++ b/t/t9210-scalar.sh
+@@ -288,6 +288,11 @@ test_expect_success '`reconfigure -a` removes stale config entries' '
+ 	test_cmp expect scalar.repos
  '
  
-+test_expect_success 'pseudo-merge pattern without a value is rejected' '
-+	test_must_fail git -c bitmapPseudoMerge.test.pattern repack -adb 2>err &&
-+	test_grep "missing value for .bitmappseudomerge.test.pattern." err
++test_expect_success '`reconfigure -a` rejects scalar.repo without a value' '
++	test_must_fail scalar -c scalar.repo reconfigure -a 2>err &&
++	test_grep "missing value for .scalar.repo." err
 +'
 +
- test_expect_success 'pseudo-merge pattern with capture groups' '
- 	git init pseudo-merge-captures &&
- 	(
+ test_expect_success 'scalar delete without enlistment shows a usage' '
+ 	test_expect_code 129 scalar delete
+ '
 -- 
 gitgitgadget
 
