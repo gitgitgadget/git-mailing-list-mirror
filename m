@@ -1,76 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794347052;
-	b=ugqWMYDGoiXe2FFI3W4Ara558utvqAy5pa302PWVHgMpSD2sv/wT3WmAQzpGse+RUNqd
-	 a+fm49U91F5Zyyi3JYT8BZdrlowbzJFKsowmh+5v6udyChpiLaDWh7GGqcoFLaEkjcF6g
-	 V+/QFxEcbUFLqzhc1xbV3RophU5H2hwljuK4q5AltExgEp8Gnhy340RKVOAc2rkxqE97i
-	 PzjzQTUIF6EVhC2LvUgOpKBhFM6XNDVDNg3ufxBz4OpPDPW0So8Cyl0CEYZCxuOw+Lrfj
-	 7KQdbqVXZyAI9+TEprCKxAb2LVWV4GQC9TaOjaU0pVHTxIVcGjehXmG3yMW83HsVZLw==
+	t=1794348348;
+	b=PyF8q/3XXQTylfcEsSl/Ql0Skt6YbiqzMfXWNfbKkWQPFE+vbCM9Z9WJt+bY1VnQW2B0
+	 wxh3lIJLKW7RSiDy/1KUpXjQwXJWpmeOhT2xaZ8K+h8Lu4DUFvANxp/NPefdr90OAavw8
+	 nA5rM4SCqHSjgnoDoOoKCDB4dofYC9giIFvvcox1buLXlm8V9YVAnYjFvsxsez9hxHx/z
+	 O8QU5CH5zVw9DiH3qznyGlQYnrhADDI7vs8DA/odAvtTA+fbqxY61t2m89XLZC++8/1+r
+	 nkCgWOGIspZrdjRazGgsAMlxs7xz71dHUfHqDM3Lx/OnBokMSjLTZACu0OI8MsDyD9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794347052;
-	h=DMARC-Filter:DKIM2-Signature:Message-Instance:DKIM-Signature:
-	 X-UI-Sender-Class:Received:Date:From:To:Subject:MIME-Version:
-	 Content-Type:Message-ID:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
-	bh=eP2TNIrO4N5oHkLJ/cEXWpvKOtuuPYvpsE5yY502n0U=;
-	b=aK+seVy1TNTcS5dpPreqprH9ko/OH6PwEh4PPgeZL4IndItBlSAWh+yFUVCXQdU42Vhi
-	 4+lzH0CLSiFhCvj0T2JvNi+9apNZ3xbiyinPgDmYv4ljS+4mZdxlartFPY5Kw1w1iNTgc
-	 gzBD8gqoI81WiWaYoLJkLOORB3NyFsx4cec/DWAhxyhfA1BenMT+BujFzkPtlGalzb7AZ
-	 yIX5BNIyKZW5fFj9nxA6Iv8fJWMJugx6M6TS1CYyJvr9umXT9K+4/M6tN5MK5C+cE8M8T
-	 PVqJWoCaivRcFxy7mhzjkhkZYaHRp8v5NYs5qxXmkqU4aoigFtigCkK/rTc/JZsoU4Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794348348;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=+DwQIx2VMtiWG3fmtEaaFxZNpRXWJlTedkrCl7mKS2o=;
+	b=N/WDd74nycDoyXQ18haqNKUqDVeHOa+QQiV6UK65lRzIulbmU88tbaXOAtFJmb6UtqxF
+	 T/N3zW2Fl+u/aAyFJrp4kUxa/DlZ/UL1dFZ+WVMLeIyNdhW1VP6+/Hvy5kOcP5oeIpw/4
+	 bxh1L15FJAN+MkQrs7//L2zU3hJEKPOyFddMJdeeVUfaLVngjYrx0/7tO/8+ig3BESQPU
+	 sFPm4qGK3WHrtIL6kp7ZXo+e4laRs1+BAG3SqOmzmXZZB5TIrZXIUjm82TNtN4V7CL9ee
+	 rldOZ1LFibxAjMi2er1/JdrWsp/74VzMJ7GlK00dcQnZF3deSRygVH+umLgEG5hstQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmx.de;
-	spf=pass smtp.mailfrom=gmx.de;
-	dkim=pass header.d=gmx.de header.i=johannes.schindelin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=tpeGwPlb;
-	arc=none smtp.remote-ip=212.227.15.18
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=PLLg9Gb6;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cOJTAelY;
+	arc=none smtp.remote-ip=202.12.124.157
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE17606A321
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 21:44:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFE17606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAC1606A31C
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 22:05:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3FAC1606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=tpeGwPlb
-DKIM2-Signature:  i=1; m=1; t=1794347049;
- mf=PGpvaGFubmVzLnNjaGluZGVsaW5AZ214LmRlPg==;
- rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
- d=gmx.de;
- s=s31663417:rsa-sha256:t6M80FaplLtbcPW1lktWE1CQgNOm
-   1mkAd99IGLuXiwIubNXxQTKI1Ue2cAc7bsz++rtTtH02P8rUeaOGlTU/4NHZBEAdRcjx9CL8P7s
-   VwSuQG48KBabGHOrGDRo5jQxgYQ8CRK5NqOVN3IfkCJPi6TQuT8QM4CNkN9j3E69c7NvmXKIItN
-   j9htmjrzCsEYmaFxv7hLU3LLnyGmGqrFzIt7c4b70MrgcGK5ssFN+KKyEPcESOZWEeiWBiPly4d
-   1ICvqtasEUXKH+oINSPQ2L6NZxoS6F3qOqHi9nS0dl5eQMQSUIovY0rFdGqpzcdfGMhMf6mTWAK
-   Oy+gZHR9zwpdXA==;
-Message-Instance:  m=1;
- h=sha256:
-   JiTzdSkDV4xk9mF3Kyw7b2Gmp4WZuLGHjIWv/GjQPgY=:
-   Z/qpR5pLbNehb4/GYStiV5fstBiWW4EC4zBTW5rcVzc=,
-  sha512:
-   dXAYN8S2yMnkk8WBFSyGjQtv03oatYiFMrUygFxvvttYjKN0TpivkuCPfMC3jY8Vs5ypPL/w7GUWWTcZewP0KQ==:
-   chJsiuLPFbRP/hkFbY4xcuADlPeFGOIIfXd4V/yrKI8ZnIgjj7gZ7ZyCD4Sm1iScryRsdBeGNKycpjYa7MJm1g==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1794347049; x=1794951849;
-	i=johannes.schindelin@gmx.de;
-	bh=eP2TNIrO4N5oHkLJ/cEXWpvKOtuuPYvpsE5yY502n0U=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
-	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
-	 message-id:mime-version:reply-to:subject:to;
-	b=tpeGwPlbKZggC8veYfhkUsjJUVQuC0JSD05S2QBD/oCluiCUM4cogmFisV4XEuF2
-	 rZHomt2rhp6YY9b1ZRqWdWFm/UsEobP0OQPa3XA8KDxecyxtfXMAoa/NBx6O7SHg2
-	 hutCjBZPA6/yfaXw6owkW1wiom9ihtKxyu45mrgGICMS/IasgaqXvMOeEUlWVJvuF
-	 aepFFFWEjZ37Oar2kkreMn1xnviaEVXySksRZ+DdnU8s6moZUJTCauzsihx38I3JN
-	 sqGDkpSfDvgQ4XGmON7K/qPcvaV2wMTRd9SHYbDVRuC2EDyoRf7/45z5PnXSueHNf
-	 sQ2lF7s4VPw0bbV8Uw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvbBk-1waaX11Flm-00yvf9; Tue, 10
- Nov 2026 22:44:09 +0100
-Date: Tue, 10 Nov 2026 22:44:06 +0100 (CET)
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.56.1
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=PLLg9Gb6;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cOJTAelY
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 932777A026C
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 17:05:47 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 10 Nov 2026 17:05:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794348347; x=1794434747; bh=+DwQIx2VMt
+	iWG3fmtEaaFxZNpRXWJlTedkrCl7mKS2o=; b=PLLg9Gb6R1/NFKh45mfJW18wq5
+	J8hJLMusl1OenOm0byIrO8rO3MCQgzYYSVoOFF7Pq2RoVMAgpzRQmpAfgT0ditQ5
+	m7e93rVPUGRG2MjXxSqwrZZmKAg3JijzpeL+I5Od0k4Ij0FHV5KSaUvuOxlvPdTB
+	Kwy7RU8Go/UULwxcaX/XJfIphpBQTSxn3rau18Z0+yHUGHT0/R+HyLwefPAJub2V
+	V1I57JcJInuZQNwsirwbPe3MFhCyoBeVFtE8/GEmQrbw7/GXUtXrOWVfwQAmzJHO
+	KszXT6kLBtm5m3MeeV5DMIUcG5bEf6zjoyPPU71U68ha6WnF3KXnuoth0XFg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794348347; x=1794434747; bh=+DwQIx2VMtiWG3fmtEaaFxZNpRXWJlTedkr
+	Cl7mKS2o=; b=cOJTAelYM/4uzxqj52LXtHk8Hhi++uO47P87rhkj0EEnJquxcUY
+	AHnb6knQBoNwxbQsXx8/oosYr0lgn6CV/6iVpmH8ycXhLPbFvaY5xOhYA5Rsx+cK
+	U4lK4/ddaATljRKqWpC/g0CLZ0QrhHnrTU66ewfQmZYM8k3x8OZHn066sJzXWqNM
+	dHFD13dr1Auw7GanwBRpadrwwmwdHA4j6/HQQqExvEA4SP6u19oSySlVO/tmBWim
+	4aOH0eC5e2xqGKy6+MeayWG9aQ1AWJ0L+UCkMlPBUN2d2mxLGxCGc4yeBvvN9dUZ
+	KfqBczwH9b45ksEjbcPIKEse5Nvz+5pS54A==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794348347; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:CsMn3roQioEBWJTFSBA1fIGU6+xQ5M4hGDESDdCDxa5IiTB
+	6K8CBN+yrKgK8mF3njq2LZko+GlbsPRUQAqR9up0IppnMGuM6uoMT9euaGoiD7Sn
+	mWJCVHSRV/85inIL4gNQw38+rxpSCjKd2LzRcCnoyD9PWOGCK7v/YgtTMsd6B9QS
+	1bP4wknF1HEPxSFqcT4bf5KSWY/g6FtQoTJxxQYYW4IAdFfrsc79HtcHBwZNVwj0
+	F5kUOJyCcNNse+r17EFXSwHd3dPv7KHw7vFuS+Btsy7mHQAPOxv7jht5WaMPf8xp
+	5qJPdvPjcxZbEnPtX/8F+6/ewOVN3e+0iQpM9ZQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:EAM2qliRAeoNdBO0Vm4BLPo8J2IDSCyiwPn4jXuLEho=:nqJlU7z24mkGxg8YJc8jTwmat6J5i+IkaUahK9NRx04=;
+X-ME-Sender: <xms:O5Xzavqb6pcAuv8HJ09rVd1elrnzeJDSat1sVGOm3gMXwUzm-uZsxA>
+    <xme:O5XzatVG8ASyNc1rTvr3GCKIgC2-R7yow1AtBKGdvtQ3xfcDd8LORASkmkS8ab8kJ
+    1Rmj45ByBwamlIRDhkJYPRCLKY44m2Vc-6Oq1okxMU1DSrFQQIQzw>
+X-ME-Received: <xmr:O5XzamDhEEWtu6-Z0kkYGPi18SZJeA0Y-zzR3v8i8oAlqMGQ2wh8Z3jlLAjM5b7iOFzGEVL3o38dRo0kl5UGFjlUq7Baxl-ie3k8>
+X-ME-Proxy-Cause: dmFkZTFScax+U/bsytFPP9U6UVnsDNCVM29Jtpfjkbs6O1TydnbsAX69SM0qfIMKqzPVC9
+    oCELwsVMZEXaaDacl3ONMAAj9kc7woKZ6Z1jL0ZBy1Ry26N5q19pBNVtWJZs12FfEbe35i
+    KaVZq5h60FiBbKX0WrYjl8y522ixODmswnxW5qXh9BObs4+Ox3k+bwt7Y9qCqnyNgdRlJs
+    6rxxWsTKxPrxDbK/+ld62sx2tIA0abdWulC02Fygnme5tn9DSCfq2sfrYzmYINim7BSy9a
+    bNubqwGctbj4KlKJzhxTZY/KSgRv4jAvCLBSE4dLAEqid9B1Mbp9DxoUgT+FyF9BNBeLtV
+    pR3JYTsLXRllEBtLOtWx30Vs2ApkR0HunFUn9NzExW7/eajgq8+Bl7kLkxzRpH7swQ2fAM
+    t4xAJp2KPc7M5SZ+LOtFb6tqb1Xq1f31+KbUT829T0wi2vxxIFmvRbMFdCj/GHg3/mP/v4
+    EuTqr2+cl92sqI8BBWAl1zNgNU99TaLk0gj0uYOGNW5Akx2jDG8BFqZ4Ksm8ggHCpU/QA+
+    4oi+TlbrdaEOho+s7cn9O/KPdfKFcP8/wMCa5CjxEYbg0g0nOv6C0Rwso9knM6aK3XgjV9
+    2xq4aVfm3cN+rs9ibVBloslIqKJArt2s1MHhGx+iO1XeyxgAU9El7HZRmcOg
+X-ME-Proxy: <xmx:O5Xzap2lGXsYey0zWS-wlbfm-FV6urN_iD9sgn57-N2T2OXanGZsjw>
+    <xmx:O5Xzag1h6K1MIYukbdh2AbdrpuXgpqWLOYf0Caqsv4lKYpuG6tFXAQ>
+    <xmx:O5XzamAfTyBP7Jk6SV2d0W_O29Zj7LWmjTT9Km_RtWYBN14TZTXPJQ>
+    <xmx:O5Xzan4SaRIAu4kiST7NMKh8ByzDvkdQfSFlCs3EABj8fZTcSz_iDA>
+    <xmx:O5Xzaj-4Sbo4giTYY6zIaS_oSCZFVoHKUvtue0shAjzlch7DS_ttLjEB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Nov 2026 17:05:46 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Wyatt Holden via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  stolee@gmail.com,  wyattj.holden@gmail.com,  Wyatt
+ Holden <wyattholden@microsoft.com>
+Subject: Re: [PATCH 1/3] checkout: make orphaned commit checks configurable
+In-Reply-To: <6aad1a1cd34a65939be6f64a0d8950e0bc23870a.1794337920.git.gitgitgadget@gmail.com>
+	(Wyatt Holden via GitGitGadget's message of "Tue, 10 Nov 2026 19:11:58
+	+0000")
+References: <pull.2264.git.1794337920.gitgitgadget@gmail.com>
+	<6aad1a1cd34a65939be6f64a0d8950e0bc23870a.1794337920.git.gitgitgadget@gmail.com>
+Date: Tue, 10 Nov 2026 14:05:45 -0800
+Message-ID: <xmqqa4ngpcjq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -80,199 +126,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Message-ID: <1MHoN2-1xEGqd1RFm-00CTnP@mail.gmx.net>
-X-Provags-ID: V03:K1:APFmlBUC9U6MD+o4gFKLGMu1Ofosc/nRPqLQNVlkUT6DiDFJTpR
- ppZJzMlfTjWgYKh5tASyEUchqw5bWaZQA1oogh8MDp/q9BT3OAkRn6Mo43/sMzBQaoAaG0V
- +epI870mBzRjL5RooILrLygKpePez3dQfiN4c/I+uRLQ+d/Gv2+5iz9VMbAe9xZsCtypa5q
- 9oanTnlFTn1r3Z84K0DsA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:8DFfjpyl3J0=;cDx7ego5WDaFckQO0mqC81dN2b2
- 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
- SMYMK58uMepvZT1+3ZNum9Y
+Content-Type: text/plain
 
-Dear Git users,
+"Wyatt Holden via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I hereby announce that Git for Windows 2.56.1 is available from:
+> From: Wyatt Holden <wyattholden@microsoft.com>
+>
+> When leaving a detached HEAD, checkout enumerates refs and walks
+> history to warn about commits left behind. This work can dominate
+> checkout time even after the working tree has been updated.
 
-    https://gitforwindows.org/
+Interesting.
 
-Changes since Git for Windows v2.56.0(4) (October 26th 2026):
+I often am on a detached HEAD but never realized this particular
+check was expensive.  The size of changes between the HEAD and the
+next branch would affect the time it needs to update the working
+tree (the larger the difference, the more expensive to complete the
+branch switching).  What factors are involved in making this
+"orphaned commits" check more expensive?  The total number of
+branches?  The length of commit chain we are leaving behind?  I am
+trying to see if this is something we can aim to optimize or if it
+is a lost cause and a cop-out to introduce an option to disable the
+check altogether is the best we can do.
 
-This addresses the security issues CVE-2026-111760, CVE-2026-113408,
-CVE-2026-114466, CVE-2026-114467, CVE-2026-114469 and CVE-2026-105437.
+> In an automated checkout of an internal monorepo, unpack_trees ended
+> about 12 seconds into a roughly 204-second run. Stack dumps captured
+> the main thread in orphaned_commit_warning(), enumerating loose refs
+> and opening ref files. Using --quiet reduced the observed checkout
+> time to about 14 seconds, but also suppressed unrelated output.
+> These observations motivate an opt-out; they do not establish how
+> much of the delay came from enumeration versus history traversal.
 
-Security bug fixes
+So, in short, the answer to my earlier question is "we don't know".
 
-  * CVE-2026-111760:
+> Add checkout.orphanedCommitWarning, enabled by default, so checkout
+> and switch can skip the check while retaining normal checkout output.
+> Automated callers can opt out when they do not need a warning about
+> leaving detached commits behind.
 
-    Recursive clones are susceptible to Remote Code Execution: an
-    attacker-controlled repository can be crafted in a way that
-    exploits a bug in Git whereby Git can be fooled into overwriting a
-    gitfile (used for submodules) with a symbolic link that then points
-    to a directory with malicious config or hooks. The config or hooks
-    may have attacker-specified code.
+Sounds sensible.
 
-  * CVE-2026-113408:
+> Follow the configuration precedent of 06b324c1d71 (status: add
+> status.aheadbehind setting, 2019-06-18). Unlike status, introduce no
+> dedicated command-line option; callers can use git -c for a one-off
+> override.
 
-    It is possible for a server to advertise an unborn HEAD that
-    contains path-traversal characters (e.g., refs/heads/../../../
-    TARGET). With the files ref backend that can lead to ref-updating
-    actions to write to unwanted files.
+I am not sure how justifiable the design decision to leave the
+command line option out is.
 
-  * CVE-2026-114467:
+The automation can run with "-q" to omit the overhead altogether, as
+well as squelching any other output the automation would not read
+anyway, so I would not worry too much about them.
 
-    When Git strips the GPG signatures from a commit message, it only
-    accounts for two signatures. A commit message containing more than
-    two signatures therefore causes a stack memory corruption.
+But for human users, what are they losing by passing "-q" when they
+do not want to pay the cost of this check because we are not giving
+them an easy to use command line option?  What other output are they
+declining by "--quiet"?  "The following paths have local changes"
+list?  Anything else?
 
-    This can be triggered when using git merge with a tag which
-    contains more than two signatures. As such, this makes way for a
-    DoS attack which can potentially also affect forges when such a tag
-    is pushed to a remote and a merge action is initiated.
+> Add a Trace2 region around the check to make its cost visible in
+> future investigations and to verify that disabling the setting skips
+> the routine rather than merely hiding its warning. Document the
+> setting and test both checkout and switch.
 
-  * CVE-2026-114469:
+Sounds sensible.
 
-    Git rejects patches larger than ~1 GiB, because its patch
-    application code does not work well with large files. That check,
-    however, only considered the size of the patch as it appears in the
-    input, which for binary patches is much smaller than the size of
-    the file the patch describes, as binary patches are compressed and
-    encoded. A binary patch that inflates to a very large size
-    therefore slipped past the check and crashed Git with an
-    out-of-bounds read.
+> @@ -1132,6 +1134,7 @@ static void orphaned_commit_warning(struct commit *old_commit, struct commit *ne
+>  	struct rev_info revs;
+>  	struct object *object = &old_commit->object;
+>  
+> +	trace2_region_enter("checkout", "orphaned_commit_warning", the_repository);
+>  	repo_init_revisions(the_repository, &revs, NULL);
+>  	setup_revisions(0, NULL, &revs, NULL);
+>  
+> @@ -1155,6 +1158,7 @@ static void orphaned_commit_warning(struct commit *old_commit, struct commit *ne
+>  	/* Clean up objects used, as they will be reused. */
+>  	repo_clear_commit_marks(the_repository, ALL_REV_FLAGS);
+>  	release_revisions(&revs);
+> +	trace2_region_leave("checkout", "orphaned_commit_warning", the_repository);
+>  }
 
-  * CVE-2026-105437:
 
-    When merging, Git computes the size of the buffer holding the merge
-    result in a way that can overflow for very large merges, which can
-    be triggered by a large number of conflicts combined with a large
-    conflict-marker-size. The resulting buffer can then be too small,
-    and Git writes past its end (and, before and after that, before its
-    start), corrupting the heap.
+Quite straightforward.  There is no early return in the middle, so
+entering at the beginning with leaving at the end is the only change
+necessary.
 
-  * CVE-2026-114466:
+> @@ -1253,8 +1257,14 @@ static int switch_branches(const struct checkout_opts *opts,
+>  		}
+>  	}
+>  
+> -	if (!opts->quiet && !old_branch_info.path && old_branch_info.commit && new_branch_info->commit != old_branch_info.commit)
+> -		orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit);
+> +	if (!opts->quiet && !old_branch_info.path && old_branch_info.commit &&
+> +	    new_branch_info->commit != old_branch_info.commit) {
+> +		if (opts->orphaned_commit_warning)
+> +			orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit);
+> +		else
+> +			describe_detached_head(_("Previous HEAD position was"),
+> +					       old_branch_info.commit);
+> +	}
 
-    In response to CVE-2019-1348, fast-import disallows the
-    export-marks feature by default. The features rewrite-submodules-to
-    and rewrite-submodules-from as well as the option export-pack-edges
-    that were introduced in the meantime also allow reading from
-    arbitrary paths, and are therefore now also disallowed by default.
+OK.  The call into suggest_reattach() via orphaned_commit_warning()
+is the more expensive part, and it also is where "Previous HEAD
+was" comes, which we do not want to lose.  It makes sense.
 
-New Features
-
-  * Comes with Git v2.56.1.
-
-Git-2.56.1-64-bit.exe | c330c72e10b408cc39994bfefdb63542b0d93d21699325c3e0bd874af8a5a559
-Git-2.56.1-arm64.exe | 6fe770b534a459d1158011e6ec0cd8390a3bcf44e542bee9e9a650310e111234
-PortableGit-2.56.1-64-bit.7z.exe | 9dd04a608ceb5f6ab32a73709e0ecb159d211da71b697c45ff81f6dd0c6b49c7
-PortableGit-2.56.1-arm64.7z.exe | 0dca0d9f760924a7e6752235d7dd6eb1a9b508ee714b6ed15d89252e5a58c5c9
-MinGit-2.56.1-64-bit.zip | 4a92850b6e917da4fd010669b614b55dccf5b0ec333a534cc4be4700dfefdafd
-MinGit-2.56.1-arm64.zip | 96571e442e90523a90e5fd8661b4c4e43bc192910f3c6db938816e6955b4cc8c
-MinGit-2.56.1-32-bit.zip | e9b2c628c6d3bfc86405568d05979c605ee994172eb232cc4cbc4daf54425829
-MinGit-2.56.1-busybox-64-bit.zip | baa40c1b8d5897826f47c2b819156553b89833bc52cb42cdfca7d1f0faeed34a
-MinGit-2.56.1-busybox-arm64.zip | 42396e389d1b38861fea05edc716b2389e071008c44dd62a53ba05bb85f65494
-MinGit-2.56.1-busybox-32-bit.zip | 125c9cb25499e27f66bc5c8357ac74fd4bc8b104ee45054d741aeb2bd0fffe60
-Git-2.56.1-64-bit.tar.bz2 | d7d89e69855f00e73d957b513c49538a420c465c84b9d212cf1add400eecdf54
-Git-2.56.1-arm64.tar.bz2 | 4a5e1555ac8453033d504930857ec8ba4eef20275d784b4e71df84a3da071afb
-Git-2.56.1-mingw64.tar.bz2 | 94cd91e7d44a925cbc22da6e21fc8c2582985e885de2a5c3cb6346599c7cf297
-MinGit-2.56.1-mingw64.zip | f50f51c81a335b1cbf08c47094bfea1c38f9b23486d880662c480166ef12a793
-MinGit-2.56.1-busybox-mingw64.zip | 275b3129c9cea50a91466f7991c43cde345431eaa45a41b1443e8f26fc1437ab
-PortableGit-2.56.1-mingw64.7z.exe | d23741a1bc1ef914cef238d8d6f2260663ec6bb2f3f6ac0528abeb64d2c3fbc6
-Git-2.56.1-mingw64.exe | e5385040aa21c4cea02319368d0891412d0ded64b9ce1da97d21d9ff74a6ab8b
-
-Ciao,
-Johannes
+Another thing I noticed is that the loop in suggest_reattach() stops
+showing each commit after showing ORPHAN_CUTOFF but keeps counting.
+I wonder if it becomes palatable to introduce a configuration to
+stop it early, instead of disabling the orphaned_commit_warning()
+altogether?
