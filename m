@@ -1,92 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794270180;
-	b=dPPTma5efeI+RQy9eBD/W4PFuY9xGrHA0v7PW4bPBAhsaaKsxEsRRuSoQcLkSGlE42JE
-	 RnoXvEb4zUc8AaULqDM+KSg1bwUWVjtyre3t3zj3e6VBRxFfha7bzQNQn6tDD3F2Cx4UP
-	 TOe2hoTNUtsxG14s6r3gl9KpzwVQ2Cf8pC6YUMxiRVim6mEmlryb3+7uLChg8ImphMHnY
-	 t/6VVjKLSdtStwmdGmWQ8vfG8mTDIrAZeEHltBP/eS/G1c9paxV7rHZdYgKbyWDRnqk2o
-	 dAdY/XlYDJF8w9gJiFQJ7F5Aa7mCX/8ZacqMfHkD9VrsnOBVCv6TxQzwdx+7pCFhhdw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794270180;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794283113;
+	b=bsCvEeUhwqHudArYakmCt18byfTeXBONV1zxuK1F2odkYiRRDEiV2reGZLZDqI8ECDkc
+	 4HlfYS5qj9gvWo6YA0Ev5A5RZqioclFUHYYeJWYXy63xKIoPRpBCHHaOMXGqa76XMYka7
+	 1+/WU3W8dD8rbU1nmaQ2KqBHtFsCkSuNKmSJWe32+F746jLtH552mMZNap8XH1nCgcoNU
+	 QYZ803wdfaYgLRhURW1fkKGn/25z/As5eveU3iRVewtSUf88saBB5i/6hN7aMAoi5pMYc
+	 r0vWU4b9Bi4eZJBNuzWe/HnIZoGEjuFVBypUpsZ7Tjv9zwGXIafgmhM08oU17Zz+SmA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794283113;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=v6P0+/U/y5Ll+rhgyO2/zyKNsO5BzFrFHZUeCsBIlYo=;
-	b=gCIu4rKFPJTYZcSD5PCPhh8FSdegrP+DNb5gZj66NgM3gSAKsK2bsY0oe6Sb5l6crauu
-	 lgfMDxLf8w3soIvC3zNd+huwvidvOQAERpRFJivVLznn2vYjpXZetFQVn48YwGJPaSfmX
-	 8eY1+LeiaZt/HMVj7evT35jiXNb1AteIwhwYBSmbrQhFuORzi0nMk6JhQs/AvChzrstyt
-	 IgI2/hcpwhFxv9MJ0vCcK+iZidQQtnEZj6uuDvxL3wzNFeEk6RjJnNL4mdDDOAWBb9ZLh
-	 0PlVlFWXN2wuvP4MbSNcHV+bUdFyafgEUJ3mGzxvc0UCEkAqSyTEgK+wPB0YICZNXuQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=abEePDNb;
-	arc=none smtp.remote-ip=209.85.210.43
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 In-Reply-To:References:MIME-Version:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=OxV0SimhmhReHgC4eTwl93r/jvAWe8utVYyKwcYD2AM=;
+	b=VKOb0V+fRjRcdPQAlpqxS8yAirRe1hO07/UjtjH2fJ/lY1rIDgCidRp+Vsm12hnrzBgs
+	 Xky1K71WDWn2kM17QSU+bUDfxrfbY84ZyxFzGngATwW3JfJYl4uctDPRxtd99KeWAiTIJ
+	 geKiw1+EunVpsRwuqWx6DqaAhYbEVMuBvnCsmA/RRFx5WFKej8bKOEg2n7VSw//O82hGd
+	 RGBZdSKW1w+FXA8WK0HmY4NXQIMaNqXTiklepHf2/bjo0JniF7jeSnAXQ2EfV81OuVuyG
+	 mqIIgfFOYaIoPwoNuf2JsANioNqzbW/o2kzu+rwB340CEKzKftUI2mD4GZbf7E2WZtg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=G1L8prQZ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA8160A2617
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 00:22:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EBA8160A2617
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD59E606A31C
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 03:58:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD59E606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=abEePDNb
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-85d363fb73cso804651a34.1
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 16:22:59 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=G1L8prQZ
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6b579ed8da6so4234a12.1
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 19:58:32 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794283111; cv=none;
+        d=google.com; s=arc-20260327;
+        b=bWaIwa3gyUKmgJicS3j73vwsXn1kJmB/0LUU9gxiytRfpIA8BtlEaMqtzz78PJFWTr
+         NQQxwg0lvKYHkZCIEuJXQqf4VHKJ9AwDIr5ZuCQm2jgaCDAmeSt7zm69qvdrUXsrpU+n
+         I88IDIJZrWINlWUfvZInW+dGLkHDSJHCNkWT0eE0QBzncOGX+uqEHzoObDkzP4hh3Vt0
+         P0xeL97uOP6JTcGUFa4J/c0n6mYTmRORpYWfGj+4EfYCbMSyjhnWTq8+ZfkhZEAWdT6p
+         NiI6B6If1IbUYcPAddrQ7ZGVlLN29pcGmwwKIQ8c0lpenHVXYLnVFn8zCLoJQ9l6Ox1j
+         k7QA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:references
+         :in-reply-to:dkim-signature;
+        bh=OxV0SimhmhReHgC4eTwl93r/jvAWe8utVYyKwcYD2AM=;
+        fh=+rHjWezOva6hWxdz7pXoZHUTeCwBe3guXNNSn/ox1Ls=;
+        b=hCQFmVEVoBMETct7WHsZWbTku1YQC9t9rSisTHxNy612OFHslCAH0d0jkXAIxLpz+5
+         Voa/0Mxxb80ffglaidTJDEjT/7QCHvHsnU5JyABESVp2kjDOm9LrfSsWKJ0D1MoTwLCn
+         Sswhl4xENfh0alp2vCggCaHUOt4WvABcip+8K5SWLJlQE2o/9JlW+bAWsZeYwkydDWfC
+         RHwu0fLA7Rh+NdKHtjuzgHzUodSsMMgLElmSqOzL8T7nUmXQXvJM6zj4yDb4LxNjb6tP
+         yZsNZNTsZ4dDLyPEukzM+gDWJaM9sqAJjvi678cIsmwWbUofY9jJ4Na6krIiI5hnWMHj
+         4mxQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794270179; x=1794874979; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=v6P0+/U/y5Ll+rhgyO2/zyKNsO5BzFrFHZUeCsBIlYo=;
-        b=abEePDNbTz4SGAV0tP3ZBkejhdv5C+/6j9TesK0kBG488rB83PHYWMJPIXrrDZOcYz
-         fPfVAo7bxWhQj2PbxYzvg8vCZSEeQzXHN8ssw/P1zLq8mU5TF3uQYaJYRkWEoC706NSu
-         SpYW/FnALgV9vgxssQxMQMc7RHnUnSRlby8m9ovDdKBwhksre/AcIuhMJtRGo9azwLtD
-         mB5q7+jKrXHn2pwaO6f6VqSqxxw140xfgZh9l/DHt7fNyBMqeSnbJIJulB8tGNmv40aj
-         sPhNT8qi7m+V6Mdt3WvEDF/CmlefNOxs6nXeQVELJt8vYgHyAupgUH+n4mUfXalF2iQq
-         uKeg==
+        d=google.com; s=20260707; t=1794283111; x=1794887911; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OxV0SimhmhReHgC4eTwl93r/jvAWe8utVYyKwcYD2AM=;
+        b=G1L8prQZG6n8HpDgO7/QgkBXn3UmHUOtvcIJaXBCh0VKF50s+1zxcxAXcN2NcjfYwH
+         7/ai5AP/986H2N+HXhRzuvud939gl/5f0Q8mFOE9zgokSdkkdJFjMqts3+sbn3vft/3T
+         hn/YC052EnajoI54zzk5EoEI9SHKU9GErXT1kR1SNDdUjp8vm9Co0bJQ30gofEhwiEAl
+         Fg9v22ssPEOYlcR2vDUZoSO+/gtkDMpAggP6/UM25FHASXtNVDAFs3sisg75KmuBzvQJ
+         MUW3F2tU+JtGrMlkVZ6if3GN9MOmlp4j+y3QUTLUGzGww18P46yrjNyF1pd5nzAwsIGg
+         1v4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794270179; x=1794874979;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=v6P0+/U/y5Ll+rhgyO2/zyKNsO5BzFrFHZUeCsBIlYo=;
-        b=WJjukBFC7kM0NzfpPvkNGVr+6oRA0GVuPbG67N+armsP3/tODixbIFClxgMOY/ICWn
-         ruro4r7LY5oe+s9ubPSv7FKRx6eN5czHMZQuIvbQX13gajrKU2tPV5lEBTSNR6nJRXb0
-         FcRKri7Xc8fA1MG5WEPgHw+pvLnJ2S9p1JkgNA3XaSagtVsBaZqTNQjjHMeKPRT+J1n5
-         h2b8As1tu7zfogwUzyzm/tI9nar+JT+l+TDhPw+kddmy4frPsw6mEI7568NXQhXBVl3p
-         z4hwrQaGGE6ALMJzKrFgOZ8GW5o5ZKDzWgLQb/g7XYHAqtmR6bB4CSfyi/08bkQKRHSq
-         rgZA==
-X-Gm-Message-State: APuU4Z+1BF4Zvcm13X7M+8CWLFaJQBCV7ztnkxq/JSP9xX5SYxtflPfN
-	wWQX6qN5nO07C5xj4SzAVv5pkmb+pwmOI7C7wRoaU3cap8dnvg+1EYTYTyPPFg==
-X-Gm-Gg: AYBFou0ekwZB18V8Is9U2KnQ6kC4nXr0v0uKOWzP32mjGjbV9CfQi/oJ87SerZBzLBG
-	0ixQqkc0ER7lfwo5FvjXW2YeVsX4adawQ66Mr63ZR2LLk4B4B6p++oPLzwXHuK0JeKkHWLmDs/+
-	mHr74yKI81TOnbi4nHc5GriNuXYN8LihDBPhJN2HgzymtfGpA4jIJ9fLqk+W3Drm5hrFDu2BHnf
-	Axi5me7kKaBn8Nb5pfVtLHfgJhtyCW8GtfMy38vWe0fhHS1QwzB6b7FTqH1ajNPT0ct8dlXELV/
-	77/OiVu2Pe3Ca8rHplJqLz0o/MA9GU2DUgbsGVeYM/xOPZ4EufB4Mpakrmrh4fvj8wHUykS9JKY
-	ju0hSCwSqCzTAbfKxf+cm2C+Xc4LGPbF271UGNzM3xmR0preuqy9uzgQ/Uj5kMo9R9dqqRaShQd
-	mQB1WXGTD2TeSE3y7IH/LkrFn5VRCztzKHIREfyuTOMc9KdvbNv3e5BWyLvaSQSTHvp6VQWkuHu
-	53G1cc2ayZqVpkcTt95KF/opvzdzcgJagpZivyn9RBPOkAt1mv7Q/52CI3Xi/s61C5c9wcX7NrI
-	EEIk2DnLbf0QP2MfhZwPol4KrdwSkCpVfsgHtk1EZIGfiaUkycOgwjNYcln3YtLWPQEHgkTLqzn
-	5NKnsGSbjFpls0g==
-X-Received: by 2002:a05:6830:2b23:b0:826:b77:adef with SMTP id 46e09a7af769-860dc7b5766mr775684a34.14.1794270178860;
-        Mon, 09 Nov 2026 16:22:58 -0800 (PST)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-860dcbc82b5sm680518a34.17.2026.11.09.16.22.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 16:22:57 -0800 (PST)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 3/4] tmp-objdir: preserve errno when directory creation fails
-Date: Mon,  9 Nov 2026 18:22:50 -0600
-Message-ID: <20261110002251.2007617-4-jltobler@gmail.com>
-X-Mailer: git-send-email 2.56.0.173.gf57c9a7388
-In-Reply-To: <20261110002251.2007617-1-jltobler@gmail.com>
-References: <20261110002251.2007617-1-jltobler@gmail.com>
+        d=1e100.net; s=20260707; t=1794283111; x=1794887911;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :references:in-reply-to:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=OxV0SimhmhReHgC4eTwl93r/jvAWe8utVYyKwcYD2AM=;
+        b=rQhm+nle6JNwLkRrlEJXA+lFkXPmOS5M9lFfOQY3Dpq5P8SKHZuo3pgIz/aLAWUczA
+         mMI3Litw6K8gaM3M1bnfq9Ez8yip+aM+eD6q/7JJ4gBCNYblsJNUdwbPj/zUfQVtcls2
+         WRHiFeawDMrpn20d+hrAUF8A2WcWyPDHRTAosa4kTTvP7WEks5frgjkLuKc/2K64LB/6
+         31gMMdT+08ZafRloTv8fMMLBU2dcfIX2eh65tih1y1DsNhJC/00E7XzTAWwfDBxktbgx
+         U9sf8xWRiF3r2T5Ev41kHmJeAVEaC5pXagEZg7m7jeTBqlQpWnqaxCPtohbN9ZfcKa5x
+         Ru0w==
+X-Forwarded-Encrypted: i=1; AL+hErFFyaeYBVMFOLrwOaUETk9+a1F2X4PdIhvZpt85af6YytrDCZjTb8kqMPFYHn3YfM/NkwY=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8Qvt16/Ml5jO2FgBzZSAm1GqEf0P0thchsY2so1VdMUrDA6LaY
+	SbhASCSD8X25hZKhOlgS7gbVbL/Jeh3Jg87+G+yire6IoRCYIjaUbDMIFumOh600mdwtNJYzCSV
+	1IjCUHPRmoM/6lloJql5RFb+c6W5Fys0GhODNotbj
+X-Gm-Gg: AYBFou1E0JfLaGyz3Whg+4rxBo3zEIbEiVZZYrNRYJEL0Snw1Xee3MGQ/kbRWZMOJyp
+	P1LDlp2IhOAZqYBSGu9JEpTD700L3Q8AtAyBK5eu6NMTD3Et1GxKaMCC9PiAd8Tg1Po/c2BekO8
+	xB9CWYFudu0GQf2GlW9zGThED2xbPsa2KFgY+67hYxfUgDeABb/4NknGLxmBebbSnwl5crX3/zz
+	fUG4WZj4Dqt2jBBOdbdVLU2dULBMJRRV19vlNEALfjEoVZqrQ8agYJk9KBqTxoSof9/oZLLGvPj
+	s+wQFUn7Rg7Qabe5NRRe9iaUPuhu0vWwvAScpNOGCDIRoQIE3aVz5F5ou/DCXp8uNxjbJJIhYGO
+	Kfgs/9hlyhMjVmFMpUxnRH2NcCp/n2UyK7piV14G1MfLe3f+VbT55K+ISbjCp+iF9e5SGD3udyi
+	On/C5Cax8Hig==
+X-Received: by 2002:aa7:df12:0:b0:6b3:b648:314d with SMTP id
+ 4fb4d7f45d1cf-6b757845f4dmr38915a12.6.1794283110477; Mon, 09 Nov 2026
+ 19:58:30 -0800 (PST)
+Received: from 913411032810 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 9 Nov 2026 19:58:29 -0800
+In-Reply-To: <xmqqse1d9ryw.fsf@gitster.g>
+References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
+ <pull.2287.v3.git.1794022836.gitgitgadget@gmail.com> <xmqqse1d9ryw.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,86 +109,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Ravi Mistry <rmistry@google.com>
+Date: Mon, 9 Nov 2026 19:58:29 -0800
+X-Gm-Features: AclHuK87BdE2_FlzMxmfBkZt2YRxH3WG37lyy_16jpAQVksm1CROto_sA7cyXFk
+Message-ID: <CAF+mdifT3HAw-EvSqUxQ2si6a8j+Cmj0Sri6Z1t+SWPMBXe1wA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] http: exponential backoff, configurable status
+ codes, and post_rpc() retries
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 
-When `tmp_objdir_create()` fails to create the temporary object
-directory, it cleans up after itself before returning NULL. Depending on
-where the failure occurred, this cleanup may clobber `errno`, leaving
-callers without a way to reliably tell why creating the directory
-failed.
+Junio C Hamano <gitster@pobox.com> writes:
 
-In a subsequent commit, ODB transactions create their temporary object
-directory eagerly and report a more specific error regarding creation
-failure. Preserve `errno` across the cleanup so that callers can inspect
-it accordingly.
+> We usually do not structure our topics this way, to first implement
+> one decision (i.e., "waiting 0 is the right thing to do") and then
+> change the decision in the middle of the topic (i.e., "no, hammering
+> the server immediately is a mistake, so let's give it the initial
+> wait of 10 seconds").
+>
+> This might make it easier to later switch it to 30 seconds if we
+> wanted to, by identifying exact places that needs to be updated?
+>
+> I dunno.  brian, what do you think?
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- tmp-objdir.c | 8 ++++++++
- tmp-objdir.h | 3 ++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+I kept 5/5 separate to isolate changing the existing 0s default from
+640657ffd0. Happy to go either way:
 
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index 5307717354..4b91d86787 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -148,10 +148,13 @@ static int setup_tmp_objdir(const char *root)
- {
- 	char *path;
- 	int ret = 0;
-+	int saved_errno;
- 
- 	path = xstrfmt("%s/pack", root);
- 	ret = mkdir(path, 0777);
-+	saved_errno = errno;
- 	free(path);
-+	errno = saved_errno;
- 
- 	return ret;
- }
-@@ -163,6 +166,7 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 	struct odb_source_files *files = odb_source_files_downcast(r->objects->source);
- 	static int installed_handlers;
- 	struct tmp_objdir *t;
-+	int saved_errno;
- 
- 	if (the_tmp_objdir)
- 		BUG("only one tmp_objdir can be used at a time");
-@@ -185,8 +189,10 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 		chdir_notify_register(tmp_objdir_reparent, t);
- 
- 	if (!mkdtemp(t->path.buf)) {
-+		saved_errno = errno;
- 		/* free, not destroy, as we never touched the filesystem */
- 		tmp_objdir_free(t);
-+		errno = saved_errno;
- 		return NULL;
- 	}
- 
-@@ -197,7 +203,9 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 	}
- 
- 	if (setup_tmp_objdir(t->path.buf)) {
-+		saved_errno = errno;
- 		tmp_objdir_destroy(t);
-+		errno = saved_errno;
- 		return NULL;
- 	}
- 
-diff --git a/tmp-objdir.h b/tmp-objdir.h
-index a301b01d84..4ef6750a01 100644
---- a/tmp-objdir.h
-+++ b/tmp-objdir.h
-@@ -26,7 +26,8 @@ struct tmp_objdir;
- 
- /*
-  * Create a new temporary object directory with the specified prefix and
-- * install the directory as the primary write target; returns NULL on failure.
-+ * install the directory as the primary write target; returns NULL and sets
-+ * errno on failure.
-  */
- struct tmp_objdir *tmp_objdir_create(struct repository *r, const char *prefix,
- 				     int will_destroy);
--- 
-2.56.0.173.gf57c9a7388
+- Leave v3 as is (with 5/5 as a separate commit).
+- Fold 5/5 into Patch 2 in a v4.
 
+Thanks!
