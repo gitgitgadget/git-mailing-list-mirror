@@ -1,90 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794296218;
-	b=Gzl57BIh5fMJwDKXdhoLGxubx2PUVLpo1lrNBI/1Arn0fEsPSUH2IhhB/+ZAPQZVMylS
-	 /mgK1f8VaIGhI6h3Je2bpQKlR8edc8xiMlWKpwrvcKiQ9+DJgVg1p7TP04gl+Hn91fkjM
-	 5O4BH5vH7yR+/f0tj8m3XoAhO6/VFzT2vBSv/y5l674rXmPzR42JRTrhwmOWZYZjOgVmG
-	 xbk1/dPKxDiBCVecbgNxAvR4903DoR0xd9UZmblJK49oit0ERVMV5XgJ9i+iBEDyEGOkp
-	 +kUO3J2NwF1cfcvCs7E/TVDaa61exQZjufoUeSr9TTaNG6+aA66RWG7eZ46+5zLJPVA==
+	t=1794296220;
+	b=geUDUFsHWe6NItpWg8Ci7G6dBXc7HNfZMfMMKtbsB/T+aBXbe3cn0y3Phxv8+sQ8BJ7t
+	 zU4OzBc6MPAoZVsbn5MO7UOYpmdCMCCg8MzaJDGjwuG4jmgzIUWYs2Ge2H+PfJ0cZNJF6
+	 bzZqpDC6xfA15kQZWwgHoe/jjfdWckeqMviLoLrrB+lSAgfbBbwCCFePqOgoAJ5yowqYm
+	 WHH0merj6IHbHd+9UFDHVp9so+rD7H6aJRTo0f+0NbCJaZE8mNHdPiejWCn6iANIGb3tX
+	 d+2EV1FWsMmjAaDAvtrFqZMZB5xTWhfKaGBbSK565YZwe4RWwNO+cwnMRIJAuICa7DQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794296218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794296220;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=RDXTSRorkwwGKpfGvPjIEs9FY39cF/2a0R5Y5rHIouk=;
-	b=gV7WpLJzkOxnOAvxGP3+le7z2HEhz/DgQhGKB0ik1ZXDGehgfGDLreBi2ur6hkLZfzUZ
-	 nbFVM5f/lbqMmAo7NswZxbQNEcTxh1SztYFIXzNJbRQnLPAYYRt0hzn6q0YK1lRNj83TM
-	 bTCoQ4897nNbDuOTqEDcW42jXiXDkPUb9FIw15xlUiF9TpioIhjtn5rynvKMByskkF1ZM
-	 jXucb66mfPqTIf0OTZj2YXemtYRqUuZlGNIyshNyA7MhJerpYZQpjz46g7sciJExIR8qJ
-	 +wqtOakn3aNtmx1fJ5okwWW6o9L5tXqYe7Z6LkRNAxeTw2j+w3UR5dvqaa3VdgM/eSQ==
+	bh=m0Xr69B/iQVskyJ6WaerEsmZtuj077VzZadWU8Cq9gc=;
+	b=QONw3CRa9OkRhOhffltJ275T0YMTxaWS9FgS/H/qKllH0zHRaSKvMU4uoFOxJHqp/b5y
+	 Y7XPtd5kHs5g+50gAmbv434qalOd5YcQIFHLewt08WGMMIlXbIzSr6ZKogOUP7PrHgDrL
+	 6MAqPH2LPgvwkTDp4mNkATYsdu+4Y7erjndO1g7hgoH7kaVEzgk3FuMLtcVPKjBNrNqIb
+	 2Ij20aQvcVI9S2Z4Z58uiUmZ4Z/ZbPPHS+jNw6lNlI+YWmAQTkkO//Y9OmconE47yei0q
+	 HBOvlgLDOpuBmofmIXl6N9NaXGUrDJ1jBPUwdUy7Qmry7rVJsDRAguhBiE3M6DZD+Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=U2sle67i;
-	arc=none smtp.remote-ip=209.85.167.171
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RSrFUMxC;
+	arc=none smtp.remote-ip=209.85.160.46
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E634460A2637
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 07:36:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E634460A2637
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2E8606A337
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 07:37:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E2E8606A337
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=U2sle67i
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-4f48d91ba7dso930139b6e.2
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 23:36:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RSrFUMxC
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-4ad89c49e0dso536953fac.2
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 23:37:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794296217; x=1794901017; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794296219; x=1794901019; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=RDXTSRorkwwGKpfGvPjIEs9FY39cF/2a0R5Y5rHIouk=;
-        b=U2sle67ib6l4AxR+gyOqAvKaAL0sv9qaKCSc5+i3GE0YwbAKoL2FPERw05RXk/GP2o
-         PymPE1qrogz3tg4SuzswUIotZIOUFziGTYeaQGyVCFhJ62XdaU8vmn23gTCp2U5rI7hD
-         jDmr+miZS9JRjzM7VwC7GFuiUhwj2O1LEzXHOSbVdGRv4zsTmP3UPvTFzziO7qDHtjAU
-         vOYdsm5ynn+ezQmjn5j9YczegMemVZE8iA+/bpFC2/UjUGPLxmvzsjJmxh7lN/X/m+DP
-         6TpmeaZxtcKYggR/CK39l1OQlKTMs5cwk9Hk74JvXIjX8nIMIPFpKszVmwCAKADYxqUe
-         iTrQ==
+        bh=m0Xr69B/iQVskyJ6WaerEsmZtuj077VzZadWU8Cq9gc=;
+        b=RSrFUMxCFj/ubjC0EnqJQYuv+nvhKzfPx652cbaor/3TO/HYvnq9hbjMLtdWjYDLjO
+         PeLe3ZJjDqY+OoHiuc5PyOJqGBR0I1hB3fpCftjVKIYW91Vcz8+altALdxqApOQHrUpc
+         qYxB/C2e9r1BOrDmshpKmt0rUHpm0YbggiMoH7Qsl+gCMY2NqKYsxxY6UyGGKC4GWB29
+         s00ZiUnFMD5hL3tJQSNMfodUisIC92VLGY1JaZnpg683KHOIf5N20KM/eKOX1FtKf0fi
+         uX8eEHX/NMlt+6Is2WT6SEXkTJmgVUXenLA5+UjtCM7UKDlxgWAnWT/Q/ylWytkTVPql
+         eLeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794296217; x=1794901017;
+        d=1e100.net; s=20260707; t=1794296219; x=1794901019;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=RDXTSRorkwwGKpfGvPjIEs9FY39cF/2a0R5Y5rHIouk=;
-        b=1E/jA9aPGeZpvPe0A9z6GM2PvhNrHGrn7JXOrKN3QlR0am5rVafIK/OUn0TZ4x6yB0
-         5nAaAdVny+gABWiQDsbD7IFj5BeaiLKc9biLaz8xIAZCsP5q+sQUr0e4fNetLOoQ8kQj
-         zSHxlYR/uP7l1W05LIL9DeMnmOB20/kn3oit5Rtu1bNLPMbACVxsFcoag97sydTTjzQo
-         t3VF8MwsTkPqrY2526TFdS9mZdvFtBaLPqTFuZwN6oDmAUR01onWZeYXuTjwOuvuQWnx
-         gHPKxFmmpbTF/6Ic0fkTSM37SWykjxmr/uqYOpVU8ayCH55cS+vv5wKN2bbPq3COb64p
-         p6GQ==
-X-Gm-Message-State: APuU4Z+WJZk2JE8QMSQwsJOCnxq5ENe1sQ/M/oaVPZUnMuCF1EqBYtC/
-	2EAZW58tVQzAOc/lrSfOWLhumGywtxbs5ayOc0qhvK1wz2tVdCh4E1jz5WglpBrN
-X-Gm-Gg: AYBFou2AZ+45gzcE/VRfEEoBdwz4tILA8P8Js1DQI2awd9dSAKAXEGAGI8rbu0cMQLk
-	mocOGSWO4VczS5SzKftUKZeVNmXg3FCilcjtWpE6hHgMGMAQE+rShh/YGhRpLRb3Qw9isjrV5d/
-	wcFqx93mYIl+xaJEeHzW+rw7xiXJiewvKOMntDlp8h6IeHGGsVWF1EBQrRTqOsT/A2RPW1CSUHO
-	AqmAFFeUzWD10CzOEJv547rh2kYGVbniYKSy/mBW8t8efRjerLQx+Gb1cSIdZ4so3ZKkvAcS1c2
-	Bzrbry9ti7w4WAAucQlUQ/yaNsfvo5e2GaWhRcQheSschJZ4Ovd48Hdu5gdF9Xy85A8Slmwb+zX
-	qK0SVpLvt2eq4Pn5gpQ3OeYTF7OIKCEHyUwWTQXGrs6EsG0sNQvYrQWLNXP4HrMqRkXkJcCZrHO
-	LPAmZ2SeBjwGBYLe51EH+bUYO659AH7PksHKeFsoAKzaxllaIY2RwivPP3u4e8T6iw8iF1+dec4
-	ZggTrpqkLMPmW5N/loHAmPX9SU9Boq52BIBfK+vHbC+NDqvV1ajx8d37SZ1CCHOYMi8srRtry0o
-	nky1lIiltAlhGV9ummaTSU1fL1vG02MzNdE=
-X-Received: by 2002:a05:6808:308b:b0:564:3fe1:2fad with SMTP id 5614622812f47-5683ccb51b1mr1482208b6e.42.1794296216769;
-        Mon, 09 Nov 2026 23:36:56 -0800 (PST)
+        bh=m0Xr69B/iQVskyJ6WaerEsmZtuj077VzZadWU8Cq9gc=;
+        b=1KjHkuvtOVRuAw7caO9tIAMrre6J57Yf7RCB2ywZUwLrUf93FQiBUlb1nDpikurxl7
+         x5itIaICT8YIcgg/dcvX8qRsmIsCR8ozDyu7vMovRTeqCWPMwI+rK1u440K+ENmXI58a
+         E9UEZdSTBa0GTqBKxe3Lvd5DWbI6r3QXGNcYgDlOQIgtQoGRQ8si/scbWi3kHngAzx2S
+         Q+t9y++SgHmRyr4EWq78sagcl63IDFmmifKJ62+4/RzYzJC2AJjSwdGoj3uDxnSy0dHz
+         2l5zxo9I7OpN51o78Iyh8KXAUOjOkhc6D1VogEzrQ771W37rgX4E3bOvJXDBxdFHcNfj
+         Nthw==
+X-Gm-Message-State: APuU4Z/KA60djNlsSYvkFhx9b8MTEzUiXQwWVbnmLszxL2OuODiLnh0t
+	Rqr6ivmFLrQ0UsYgSMQjEpDbUzcazrlUvBE9lJbG54P13VKcjWu2GzZ8Q5bQ+bzk
+X-Gm-Gg: AYBFou3gdW350bQpG2cWCNaeRYk5F6y/QExjpjVYKPR9IIp8MphsqPLza0WyUfBPsDO
+	KHPCMNHjoIij0Lwa/3uKlytDECqcQ+Fm9cEowC4IyTXlQ3A42Ob5xNJO7zctahA5Enj//lKYwTA
+	Dzbra/xXUUo4RtP4R+K0A+eoZe3BEyGo2Ihx1e8+DPpLfTrEzReRd8jGipuKu0vr0qilxp9gJgH
+	wuUxQm/x1rEFD+3w43SNZsYSahLKUoN8d742EQ3032Aui65qTGLinhl6c5JqzWJpC3FFtp340SI
+	UcsN0pgrM2iACNt4n+LQd+59ig7ltByBosFF1Bjj2Ftu90orcZmsHVpGt2Z6Qedl8FizTmNtqof
+	9msVfsdKeiizJORUgmPDieli4FzpDYNOu74MxcPkXfXLPIuknxdBX1k7f6Z/JTWa0lwiYVBEwP8
+	0p5Q2CifWd12AnPUMp94/ViRgmVIQdUixJ967U6+E6dFoq6crk3Y1SfcPCCMjDENTDkCg6O8wfg
+	rZ9mJ6PjaDIeThigw851dqA9j6WGFy1eOne/l0af44Pf6lyW/DXAjtV7mUiz5EIU03QbE+gG4kO
+	KjQzWtJLIJhUzlmnfbWrRx8zxXRrqPysr6o=
+X-Received: by 2002:a05:6871:c91b:b0:457:4470:96e2 with SMTP id 586e51a60fabf-4ae226feea1mr992426fac.12.1794296219398;
+        Mon, 09 Nov 2026 23:36:59 -0800 (PST)
 Received: from [127.0.0.1] ([135.119.111.130])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-56905738049sm1571927b6e.10.2026.11.09.23.36.54
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4ae2302d8a0sm1014665fac.12.2026.11.09.23.36.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 23:36:55 -0800 (PST)
-Message-Id: <d3fd6290e0e07285cc8133b5cdbfee424ba0037d.1794296205.git.gitgitgadget@gmail.com>
+        Mon, 09 Nov 2026 23:36:58 -0800 (PST)
+Message-Id: <a822cbb84431c3bd5e093ec7d94dfdd6b17b1f96.1794296205.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2297.v2.git.1794296205.gitgitgadget@gmail.com>
 References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 	<pull.2297.v2.git.1794296205.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Nov 2026 07:36:33 +0000
-Subject: [PATCH v2 03/15] add-patch: handle NULL value for color slots
+Date: Tue, 10 Nov 2026 07:36:34 +0000
+Subject: [PATCH v2 04/15] bundle-uri: handle NULL value for
+ fetch.bundleCreationToken
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -114,58 +115,67 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-With color on, a color slot without a value, such as
-color.interactive.prompt or color.diff.frag, makes "git add -p",
-"git add -i" and the other interactive patch modes segfault:
-init_color() passes the NULL value to color_parse().
+A fetch.bundleCreationToken without a value makes "git fetch" and
+"git clone --bundle-uri" segfault when the bundle list uses the
+creationToken heuristic: fetch_bundles_by_token() passes the NULL
+value to sscanf().
 
-Read the slot with repo_config_get_string_tmp(), which rejects a
-missing value with config_error_nonbool(), as "git diff" already does
-for color.diff.frag and the other diff colors.
+The function already treats a token that does not parse as 0, as if
+no bundles had been fetched before, so it downloads them and then
+stores the new token. Treat a missing value the same way.
 
 Assisted-by: Claude Fable 5.1
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- add-patch.c                |  2 +-
- t/t3701-add-interactive.sh | 12 ++++++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ bundle-uri.c                |  3 ++-
+ t/t5558-clone-bundle-uri.sh | 20 ++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/add-patch.c b/add-patch.c
-index f27edcbe8d..ad581eb4ae 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -295,7 +295,7 @@ static void init_color(struct repository *r,
- 
- 	if (!want_color(use_color))
- 		dst[0] = '\0';
--	else if (repo_config_get_value(r, key, &value) ||
-+	else if (repo_config_get_string_tmp(r, key, &value) ||
- 		 color_parse(value, dst))
- 		strlcpy(dst, default_color, COLOR_MAXLEN);
- 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 6e120a4001..33050ccc53 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -815,6 +815,18 @@ test_expect_success 'colors can be overridden' '
- 	test_cmp expect actual
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 9797eaed9a..67a717e857 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -572,7 +572,8 @@ static int fetch_bundles_by_token(struct repository *r,
+ 	if (!repo_config_get_value(r,
+ 				   "fetch.bundlecreationtoken",
+ 				   &creationTokenStr)) {
+-		if (sscanf(creationTokenStr, "%"PRIu64, &maxCreationToken) != 1)
++		if (!creationTokenStr ||
++		    sscanf(creationTokenStr, "%"PRIu64, &maxCreationToken) != 1)
+ 			maxCreationToken = 0;
+ 		if (bundles.items[0]->creationToken <= maxCreationToken) {
+ 			free(bundles.items);
+diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+index f81f1f8db7..e86ed7d30c 100755
+--- a/t/t5558-clone-bundle-uri.sh
++++ b/t/t5558-clone-bundle-uri.sh
+@@ -346,6 +346,26 @@ test_expect_success 'clone bundle list (file, any mode, all failures)' '
+ 	test_grep ! "refs/bundles/heads/" refs
  '
  
-+test_expect_success 'a color without a value is rejected' '
-+	git reset --hard &&
-+	test_when_finished "git rm -f color-test" &&
-+	test_write_lines context old >color-test &&
-+	git add color-test &&
-+	test_write_lines context new >color-test &&
++test_expect_success 'fetch treats fetch.bundleCreationToken without a value as 0' '
++	test_when_finished "rm -rf token-without-value" &&
++	cat >bundle-list <<-EOF &&
++	[bundle]
++		version = 1
++		mode = all
++		heuristic = creationToken
 +
-+	test_must_fail git -c color.interactive=always \
-+		-c color.interactive.prompt add -p </dev/null 2>err &&
-+	test_grep "missing value for .color.interactive.prompt." err
++	[bundle "bundle-1"]
++		uri = file://$(pwd)/clone-from/bundle-1.bundle
++		creationToken = 1
++	EOF
++
++	git clone --no-local clone-from token-without-value &&
++	git -C token-without-value \
++		-c fetch.bundleURI="file://$(pwd)/bundle-list" \
++		-c fetch.bundleCreationToken fetch origin &&
++	test_cmp_config -C token-without-value 1 fetch.bundlecreationtoken
 +'
 +
- test_expect_success 'brackets appear without color' '
- 	git reset --hard &&
- 	test_when_finished "git rm -f bracket-test" &&
+ test_expect_success 'negotiation: bundle with part of wanted commits' '
+ 	test_when_finished "rm -f trace*.txt" &&
+ 	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
 -- 
 gitgitgadget
 
