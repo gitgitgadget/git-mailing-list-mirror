@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794270181;
-	b=tg3UBBO3hXewYdi67DQ2Wqx9ec8gyzzS62zdjYxpKejzsaJiXu9BD+yfKSUqOky5AQpH
-	 BEYbc7HsbXKjZNprwgUdwVwuE3MPSvedyefcq+DrQaeR1mgW/jv3Woe4YWC3tpiDWiIV5
-	 mIHCjKjc6J26Sm0fX2i2Mmuq9TFkwf+Ao9DieawxM2BCkbmc7O6ds2lmGf3LkzT26f1bI
-	 DVJcBfEb8oiJwJ7QYKD6z2oF4vfR0jQGwlT2O5TcG/G0abr5dlrINYYKqHASqEiSV3k1q
-	 grwrYebM6r8s2UOIHyt2ZT7LcMHP+qw1vFeJt6+M23KdEyYKMxL0j1HrJ2QHgLwkCrw==
+	t=1794270180;
+	b=dPPTma5efeI+RQy9eBD/W4PFuY9xGrHA0v7PW4bPBAhsaaKsxEsRRuSoQcLkSGlE42JE
+	 RnoXvEb4zUc8AaULqDM+KSg1bwUWVjtyre3t3zj3e6VBRxFfha7bzQNQn6tDD3F2Cx4UP
+	 TOe2hoTNUtsxG14s6r3gl9KpzwVQ2Cf8pC6YUMxiRVim6mEmlryb3+7uLChg8ImphMHnY
+	 t/6VVjKLSdtStwmdGmWQ8vfG8mTDIrAZeEHltBP/eS/G1c9paxV7rHZdYgKbyWDRnqk2o
+	 dAdY/XlYDJF8w9gJiFQJ7F5Aa7mCX/8ZacqMfHkD9VrsnOBVCv6TxQzwdx+7pCFhhdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794270181;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794270180;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=OezcFG63M82lSJr6bQ3jUWJr55KbbsDg9YtQgQ52Pb8=;
-	b=YgDwYPuUEjaMeSYoiclp7keYrkxmaqb9c0C9C1Xzg6bkdS76rTnAK+IcMjJbQye3+yDT
-	 1xUg0vi31ugnWp9DVYM4rwRnI8QOmiCJpHW6Nt9rrUhFvifmMscbpSXbkSHPLtF9xaear
-	 H2H0HRoW07aGzPuhTQZzwmb/URc3NPpoOZxuzzYcUOyQlOxonpKfNDP9eya6x5+SNj1gb
-	 9SbavSuWRNt9OypfwtmIEJb3ZTbKBugAXameeN5Uf8Q9PitJ7Dz8tejFPAMSGJ7kj7FYx
-	 uXG/Lacof4C6wIICPAbx2NrV+BOAXzHAw/ZU3wQZT+g2qRy7mN8mF27Gdmp8zZn3L6Q==
+	 Content-Transfer-Encoding;
+	bh=v6P0+/U/y5Ll+rhgyO2/zyKNsO5BzFrFHZUeCsBIlYo=;
+	b=gCIu4rKFPJTYZcSD5PCPhh8FSdegrP+DNb5gZj66NgM3gSAKsK2bsY0oe6Sb5l6crauu
+	 lgfMDxLf8w3soIvC3zNd+huwvidvOQAERpRFJivVLznn2vYjpXZetFQVn48YwGJPaSfmX
+	 8eY1+LeiaZt/HMVj7evT35jiXNb1AteIwhwYBSmbrQhFuORzi0nMk6JhQs/AvChzrstyt
+	 IgI2/hcpwhFxv9MJ0vCcK+iZidQQtnEZj6uuDvxL3wzNFeEk6RjJnNL4mdDDOAWBb9ZLh
+	 0PlVlFWXN2wuvP4MbSNcHV+bUdFyafgEUJ3mGzxvc0UCEkAqSyTEgK+wPB0YICZNXuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Rssz7sFU;
-	arc=none smtp.remote-ip=209.85.161.41
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=abEePDNb;
+	arc=none smtp.remote-ip=209.85.210.43
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E5760A261D
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 00:23:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C9E5760A261D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA8160A2617
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 00:22:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EBA8160A2617
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Rssz7sFU
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-6f5a0893610so898880eaf.1
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 16:23:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=abEePDNb
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-85d363fb73cso804651a34.1
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 16:22:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794270180; x=1794874980; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=OezcFG63M82lSJr6bQ3jUWJr55KbbsDg9YtQgQ52Pb8=;
-        b=Rssz7sFUwIq6LF9bO19hSMhqyHETUccw7iKDYyW9NUXDWqX2iz8bp/B0WhW1pXbJO/
-         PibzB4KOEdQ9aW36jI0Ch5PInao6Ndpc4K+xlc2fNi0HGg6Zbgk74pou2P5cMBlSw/x9
-         SoFLIfcXjEUy3wJMrGhtiKyrmKEJ0qvK0CmVb69TGBZs1/uOPo0sSIE8lHWgTbBbS1qK
-         Ckk0LeCYI/Z6HXzMVZG+Bxk8j1EcfRryRtfyyDCn9eBmWqG/QVE2gnDRy+vY0TPMyrPJ
-         OxzWyySIQJkma64vlZIU182qUvTMAD7YKLkQOROYzA6mxWKZywMz0DKv+GTGVqq1Ca0v
-         zgOQ==
+        d=gmail.com; s=20260707; t=1794270179; x=1794874979; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=v6P0+/U/y5Ll+rhgyO2/zyKNsO5BzFrFHZUeCsBIlYo=;
+        b=abEePDNbTz4SGAV0tP3ZBkejhdv5C+/6j9TesK0kBG488rB83PHYWMJPIXrrDZOcYz
+         fPfVAo7bxWhQj2PbxYzvg8vCZSEeQzXHN8ssw/P1zLq8mU5TF3uQYaJYRkWEoC706NSu
+         SpYW/FnALgV9vgxssQxMQMc7RHnUnSRlby8m9ovDdKBwhksre/AcIuhMJtRGo9azwLtD
+         mB5q7+jKrXHn2pwaO6f6VqSqxxw140xfgZh9l/DHt7fNyBMqeSnbJIJulB8tGNmv40aj
+         sPhNT8qi7m+V6Mdt3WvEDF/CmlefNOxs6nXeQVELJt8vYgHyAupgUH+n4mUfXalF2iQq
+         uKeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794270180; x=1794874980;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=OezcFG63M82lSJr6bQ3jUWJr55KbbsDg9YtQgQ52Pb8=;
-        b=0mCyDXnmvlrcOdLpbYmzb0zNJ0td4H1NJaH5S3iy0Rp3UFJF8CwOGz+gF5MMmdZhSL
-         RNQGgThCBCHY10rjUndmisHaNGwpS9H2DZAJaArmOz1Kn6tjhPfxBhY1bKp2u1jkLxia
-         DZf80m2cDZGIYo6DZ2WWcg32ZybrTDoQEntF6EP3HhYCJl/A/Ve4RKaX9tr+823hk8Bh
-         9KzRnQpL8YMOlWiill56oj3gSUUFNJpEtEN9Cm5kaF+IJ+GhtIsFv+dchy7I058W79AV
-         NCJtZh7x4oBQkPdQgux11lSEmNiVfFZ/fOzq+rmX6H/C41qoDyDT2s9TlI0AzoIoX/Nz
-         oHeA==
-X-Gm-Message-State: APuU4Z/tdA2xUCiERcd48deN+I7SILtmxzDc/yEQArXlqPcJHhLZ5hcs
-	Eve8uiVDdGJs5rEUPbJzxpYpHzo7gxKNUQZZlVkK4qM4OrUUAPtlcSAZEDvwkA==
-X-Gm-Gg: AYBFou2wso4uX2Cag7mz7sysTF9d3B3TfbWoG/PN4QFgaep6PdL60tjysw8b1HfHCiO
-	IEEm0fSSQ4MwAPmK0h+zLoa2SGW4Qv+8hKr4WJS0oZiEvWLWjSmF4uDofGILoAoOSTe/X4lfmtj
-	IuEdayKI4Z6o2WluRJyVox5dOOXugl66h2YVBzOXyXZRSLSdRC8rmkUCfGPTbFVpzLl6dO62Wa0
-	AEcaXqmvoKnUy9nBMypYRIPfKY5BMQSbZy82WAUXBlVkZ3tAqsVq6uXfUMNaQ+MsZ/ZpJ4snVvR
-	sAo45LIAOZ+Z4h/8moX3/03vV3htOGrLu3EkRLD2i4tQG0keERditUuiPEMkSi70GBtQCIFRRq2
-	z1Kniks66u5fEDJvT8xl4upTNaeYKX0LQCCaGlCbqDJZGsLCPwgFNpIt9U3ARnHhR5rzXklC6ev
-	ZBV0weVumn2ei1sp2TRDmH4Xbxu+bQ33AWcoQUbhW7dMT7JjcbNSrfkp2i92bDClwmim/axTOQ6
-	TcUDBwqRH/M0lKe5xeiju1hzet8gVzyZpMHocPDcVPtk5SNtsNl/rZ7PE3Eay813NAj711Yhnaz
-	R8qCxx0ZQ0VBGI+1yUEmHniQMt1SolH4jvBoZMRdiYRrMmaY2pP4UkRzSq8Cs4qBhtH4
-X-Received: by 2002:a05:6820:a649:10b0:716:d3dd:c505 with SMTP id 006d021491bc7-718a18826f0mr322965eaf.9.1794270179662;
-        Mon, 09 Nov 2026 16:22:59 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794270179; x=1794874979;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=v6P0+/U/y5Ll+rhgyO2/zyKNsO5BzFrFHZUeCsBIlYo=;
+        b=WJjukBFC7kM0NzfpPvkNGVr+6oRA0GVuPbG67N+armsP3/tODixbIFClxgMOY/ICWn
+         ruro4r7LY5oe+s9ubPSv7FKRx6eN5czHMZQuIvbQX13gajrKU2tPV5lEBTSNR6nJRXb0
+         FcRKri7Xc8fA1MG5WEPgHw+pvLnJ2S9p1JkgNA3XaSagtVsBaZqTNQjjHMeKPRT+J1n5
+         h2b8As1tu7zfogwUzyzm/tI9nar+JT+l+TDhPw+kddmy4frPsw6mEI7568NXQhXBVl3p
+         z4hwrQaGGE6ALMJzKrFgOZ8GW5o5ZKDzWgLQb/g7XYHAqtmR6bB4CSfyi/08bkQKRHSq
+         rgZA==
+X-Gm-Message-State: APuU4Z+1BF4Zvcm13X7M+8CWLFaJQBCV7ztnkxq/JSP9xX5SYxtflPfN
+	wWQX6qN5nO07C5xj4SzAVv5pkmb+pwmOI7C7wRoaU3cap8dnvg+1EYTYTyPPFg==
+X-Gm-Gg: AYBFou0ekwZB18V8Is9U2KnQ6kC4nXr0v0uKOWzP32mjGjbV9CfQi/oJ87SerZBzLBG
+	0ixQqkc0ER7lfwo5FvjXW2YeVsX4adawQ66Mr63ZR2LLk4B4B6p++oPLzwXHuK0JeKkHWLmDs/+
+	mHr74yKI81TOnbi4nHc5GriNuXYN8LihDBPhJN2HgzymtfGpA4jIJ9fLqk+W3Drm5hrFDu2BHnf
+	Axi5me7kKaBn8Nb5pfVtLHfgJhtyCW8GtfMy38vWe0fhHS1QwzB6b7FTqH1ajNPT0ct8dlXELV/
+	77/OiVu2Pe3Ca8rHplJqLz0o/MA9GU2DUgbsGVeYM/xOPZ4EufB4Mpakrmrh4fvj8wHUykS9JKY
+	ju0hSCwSqCzTAbfKxf+cm2C+Xc4LGPbF271UGNzM3xmR0preuqy9uzgQ/Uj5kMo9R9dqqRaShQd
+	mQB1WXGTD2TeSE3y7IH/LkrFn5VRCztzKHIREfyuTOMc9KdvbNv3e5BWyLvaSQSTHvp6VQWkuHu
+	53G1cc2ayZqVpkcTt95KF/opvzdzcgJagpZivyn9RBPOkAt1mv7Q/52CI3Xi/s61C5c9wcX7NrI
+	EEIk2DnLbf0QP2MfhZwPol4KrdwSkCpVfsgHtk1EZIGfiaUkycOgwjNYcln3YtLWPQEHgkTLqzn
+	5NKnsGSbjFpls0g==
+X-Received: by 2002:a05:6830:2b23:b0:826:b77:adef with SMTP id 46e09a7af769-860dc7b5766mr775684a34.14.1794270178860;
+        Mon, 09 Nov 2026 16:22:58 -0800 (PST)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-860dcbc82b5sm680518a34.17.2026.11.09.16.22.58
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-860dcbc82b5sm680518a34.17.2026.11.09.16.22.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 16:22:59 -0800 (PST)
+        Mon, 09 Nov 2026 16:22:57 -0800 (PST)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 4/4] object-file: create ODB transaction temporary directory eagerly
-Date: Mon,  9 Nov 2026 18:22:51 -0600
-Message-ID: <20261110002251.2007617-5-jltobler@gmail.com>
+Subject: [PATCH 3/4] tmp-objdir: preserve errno when directory creation fails
+Date: Mon,  9 Nov 2026 18:22:50 -0600
+Message-ID: <20261110002251.2007617-4-jltobler@gmail.com>
 X-Mailer: git-send-email 2.56.0.173.gf57c9a7388
 In-Reply-To: <20261110002251.2007617-1-jltobler@gmail.com>
 References: <20261110002251.2007617-1-jltobler@gmail.com>
@@ -96,241 +96,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-By default, ODB transactions for the "files" backend create their
-temporary object directory lazily once the first loose object is about
-to be written, and only if batched fsync is enabled. Transactions
-configured for git-receive-pack(1) are the exception as the directory is
-needed to quarantine incoming objects up front. Lazily creating the
-temporary directory in this manner is awkward for a couple of reasons:
+When `tmp_objdir_create()` fails to create the temporary object
+directory, it cleans up after itself before returning NULL. Depending on
+where the failure occurred, this cleanup may clobber `errno`, leaving
+callers without a way to reliably tell why creating the directory
+failed.
 
-  - Writing loose objects has to know about the transaction internals to
-    trigger the lazy creation of the temporary object directory.
-
-  - Whether objects are staged in a temporary object directory, and thus
-    whether they become visible at once on commit, depends on the
-    configured fsync method.
-
-Create the temporary object directory eagerly for every transaction when
-it is started instead. This also ensures that no object is written to
-the main object database before the transaction is committed.
-
-Note that committing a transaction migrates every written object into
-the primary object directory even when batched fsync is disabled. This
-adds some minor overhead to ODB transaction callers that previously only
-used a temporary directory if batched fsync was enabled. The following
-benchmark uses the default fsync configuration and adds 10000 files of 4
-KiB each to a freshly initialized repository via git-add(1):
-
-  Benchmark 1: git add . (rev = HEAD~)
-    Time (mean ± σ):     895.0 ms ±  23.8 ms    [User: 545.3 ms, System: 340.7 ms]
-    Range (min … max):   866.7 ms … 928.7 ms    20 runs
-
-  Benchmark 2: git add . (rev = HEAD)
-    Time (mean ± σ):     956.3 ms ±  26.1 ms    [User: 541.4 ms, System: 405.2 ms]
-    Range (min … max):   923.9 ms … 993.6 ms    20 runs
-
-  Summary
-    git add . (rev = HEAD~) ran
-      1.07 ± 0.04 times faster than git add . (rev = HEAD)
-
-Typically large numbers of loose objects are not expected to be written
-into an ODB transaction so the overhead here should be marginal.
+In a subsequent commit, ODB transactions create their temporary object
+directory eagerly and report a more specific error regarding creation
+failure. Preserve `errno` across the cleanup so that callers can inspect
+it accordingly.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- object-file.c         | 56 +++++++++----------------------------------
- object-file.h         |  1 -
- odb/source-loose.c    |  6 -----
- t/t0004-unwritable.sh | 19 +++++++--------
- 4 files changed, 19 insertions(+), 63 deletions(-)
+ tmp-objdir.c | 8 ++++++++
+ tmp-objdir.h | 3 ++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/object-file.c b/object-file.c
-index da189111bd..a9fb42705c 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -489,7 +489,6 @@ struct odb_transaction_files {
- 
- 	struct tmp_objdir *objdir;
- 	struct transaction_packfile packfile;
--	const char *prefix;
- 
- 	struct strvec pack_names;
- 	struct tempfile **pack_lockfiles;
-@@ -497,27 +496,6 @@ struct odb_transaction_files {
- 	size_t pack_lockfiles_alloc;
- };
- 
--int odb_transaction_files_prepare(struct odb_transaction *base)
--{
--	struct odb_transaction_files *transaction =
--		container_of_or_null(base, struct odb_transaction_files, base);
--
--	/*
--	 * We lazily create the temporary object directory
--	 * the first time an object might be added, since
--	 * callers may not know whether any objects will be
--	 * added at the time they call odb_transaction_files_begin.
--	 */
--	if (!transaction || transaction->objdir)
--		return 0;
--
--	transaction->objdir = tmp_objdir_create(base->source->odb->repo, transaction->prefix, 0);
--	if (!transaction->objdir)
--		return error(_("unable to create temporary object directory"));
--
--	return 0;
--}
--
- void odb_transaction_files_fsync(struct odb_transaction *base,
- 				 int fd, const char *filename)
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index 5307717354..4b91d86787 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -148,10 +148,13 @@ static int setup_tmp_objdir(const char *root)
  {
-@@ -1548,13 +1526,10 @@ static int odb_transaction_files_env(struct odb_transaction *base,
- {
- 	struct odb_transaction_files *transaction =
- 		container_of(base, struct odb_transaction_files, base);
--	int ret;
+ 	char *path;
+ 	int ret = 0;
++	int saved_errno;
  
--	ret = odb_transaction_files_prepare(&transaction->base);
--	if (!ret)
--		strvec_pushv(env, tmp_objdir_env(transaction->objdir));
-+	strvec_pushv(env, tmp_objdir_env(transaction->objdir));
+ 	path = xstrfmt("%s/pack", root);
+ 	ret = mkdir(path, 0777);
++	saved_errno = errno;
+ 	free(path);
++	errno = saved_errno;
  
--	return ret;
-+	return 0;
+ 	return ret;
  }
+@@ -163,6 +166,7 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
+ 	struct odb_source_files *files = odb_source_files_downcast(r->objects->source);
+ 	static int installed_handlers;
+ 	struct tmp_objdir *t;
++	int saved_errno;
  
- int odb_transaction_files_begin(struct odb_source *source,
-@@ -1562,6 +1537,8 @@ int odb_transaction_files_begin(struct odb_source *source,
- 				enum odb_transaction_flags flags)
- {
- 	struct odb_transaction_files *transaction;
-+	const char *prefix;
-+	int ret;
+ 	if (the_tmp_objdir)
+ 		BUG("only one tmp_objdir can be used at a time");
+@@ -185,8 +189,10 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
+ 		chdir_notify_register(tmp_objdir_reparent, t);
  
- 	transaction = xcalloc(1, sizeof(*transaction));
- 	transaction->base.source = source;
-@@ -1573,24 +1550,13 @@ int odb_transaction_files_begin(struct odb_source *source,
- 	transaction->flags = flags;
- 	strvec_init(&transaction->pack_names);
- 
--	transaction->prefix = "transaction";
--	if (flags & ODB_TRANSACTION_RECEIVE) {
--		/*
--		 * ODB transactions for git-receive-pack(1) eagerly create a
--		 * temporary directory and use a different temporary directory
--		 * prefix.
--		 *
--		 * NEEDSWORK: This transaction flag is only used by the "files"
--		 * backend to special case temporary directory set up and
--		 * handling. Ideally transaction users should not have to care
--		 * though. To avoid this, we could eagerly create the temporary
--		 * directory and use the same prefix name for all transactions.
--		 */
--		transaction->prefix = "incoming";
--		if (odb_transaction_files_prepare(&transaction->base)) {
--			free(transaction);
--			return -1;
--		}
-+	prefix = flags & ODB_TRANSACTION_RECEIVE ? "incoming" : "transaction";
-+	transaction->objdir = tmp_objdir_create(source->odb->repo, prefix, 0);
-+	if (!transaction->objdir) {
-+		ret = error_errno(_("unable to create temporary object directory in %s"),
-+				  source->path);
-+		free(transaction);
-+		return ret;
+ 	if (!mkdtemp(t->path.buf)) {
++		saved_errno = errno;
+ 		/* free, not destroy, as we never touched the filesystem */
+ 		tmp_objdir_free(t);
++		errno = saved_errno;
+ 		return NULL;
  	}
  
- 	*out = &transaction->base;
-diff --git a/object-file.h b/object-file.h
-index f44758c4f8..9ad79bbde0 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -177,7 +177,6 @@ int odb_transaction_files_begin(struct odb_source *source,
- 				struct odb_transaction **out,
- 				enum odb_transaction_flags flags);
+@@ -197,7 +203,9 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
+ 	}
  
--int odb_transaction_files_prepare(struct odb_transaction *base);
- void odb_transaction_files_fsync(struct odb_transaction *base,
- 				 int fd, const char *filename);
+ 	if (setup_tmp_objdir(t->path.buf)) {
++		saved_errno = errno;
+ 		tmp_objdir_destroy(t);
++		errno = saved_errno;
+ 		return NULL;
+ 	}
  
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index 50cb388c35..9330ae94b5 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -769,9 +769,6 @@ static int write_loose_object(struct odb_source_loose *loose,
- 	static struct strbuf tmp_file = STRBUF_INIT;
- 	static struct strbuf filename = STRBUF_INIT;
+diff --git a/tmp-objdir.h b/tmp-objdir.h
+index a301b01d84..4ef6750a01 100644
+--- a/tmp-objdir.h
++++ b/tmp-objdir.h
+@@ -26,7 +26,8 @@ struct tmp_objdir;
  
--	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
--		odb_transaction_files_prepare(loose->base.odb->transaction);
--
- 	odb_loose_path(loose, &filename, oid);
- 
- 	fd = start_loose_object_common(loose, &tmp_file, filename.buf, flags,
-@@ -860,9 +857,6 @@ static int odb_source_loose_write_object_stream(struct odb_source *source,
- 	char hdr[MAX_HEADER_LEN];
- 	int hdrlen;
- 
--	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
--		odb_transaction_files_prepare(loose->base.odb->transaction);
--
- 	/* Since oid is not determined, save tmp file to odb path. */
- 	strbuf_addf(&filename, "%s/", loose->base.path);
- 	hdrlen = format_object_header(hdr, sizeof(hdr), in_stream->type, in_stream->size);
-diff --git a/t/t0004-unwritable.sh b/t/t0004-unwritable.sh
-index 3bdafbae0f..7292672a66 100755
---- a/t/t0004-unwritable.sh
-+++ b/t/t0004-unwritable.sh
-@@ -24,8 +24,8 @@ test_expect_success POSIXPERM,SANITY 'write-tree should notice unwritable reposi
- test_lazy_prereq WRITE_TREE_OUT 'test -e "$TRASH_DIRECTORY"/out.write-tree'
- test_expect_success WRITE_TREE_OUT 'write-tree output on unwritable repository' '
- 	cat >expect <<-\EOF &&
--	error: insufficient permission for adding an object to repository database .git/objects
--	fatal: git-write-tree: error building trees
-+	error: unable to create temporary object directory in .git/objects: Permission denied
-+	fatal: failed to start ODB transaction
- 	EOF
- 	test_cmp expect out.write-tree
- '
-@@ -39,8 +39,8 @@ test_expect_success POSIXPERM,SANITY 'commit should notice unwritable repository
- test_lazy_prereq COMMIT_OUT 'test -e "$TRASH_DIRECTORY"/out.commit'
- test_expect_success COMMIT_OUT 'commit output on unwritable repository' '
- 	cat >expect <<-\EOF &&
--	error: insufficient permission for adding an object to repository database .git/objects
--	error: Error building trees
-+	error: unable to create temporary object directory in .git/objects: Permission denied
-+	fatal: failed to start ODB transaction
- 	EOF
- 	test_cmp expect out.commit
- '
-@@ -55,9 +55,8 @@ test_expect_success POSIXPERM,SANITY 'update-index should notice unwritable repo
- test_lazy_prereq UPDATE_INDEX_OUT 'test -e "$TRASH_DIRECTORY"/out.update-index'
- test_expect_success UPDATE_INDEX_OUT 'update-index output on unwritable repository' '
- 	cat >expect <<-\EOF &&
--	error: insufficient permission for adding an object to repository database .git/objects
--	error: file: failed to insert into database
--	fatal: Unable to process path file
-+	error: unable to create temporary object directory in .git/objects: Permission denied
-+	fatal: failed to start ODB transaction
- 	EOF
- 	test_cmp expect out.update-index
- '
-@@ -72,10 +71,8 @@ test_expect_success POSIXPERM,SANITY 'add should notice unwritable repository' '
- test_lazy_prereq ADD_OUT 'test -e "$TRASH_DIRECTORY"/out.add'
- test_expect_success ADD_OUT 'add output on unwritable repository' '
- 	cat >expect <<-\EOF &&
--	error: insufficient permission for adding an object to repository database .git/objects
--	error: file: failed to insert into database
--	error: unable to index file '\''file'\''
--	fatal: updating files failed
-+	error: unable to create temporary object directory in .git/objects: Permission denied
-+	fatal: failed to start ODB transaction
- 	EOF
- 	test_cmp expect out.add
- '
+ /*
+  * Create a new temporary object directory with the specified prefix and
+- * install the directory as the primary write target; returns NULL on failure.
++ * install the directory as the primary write target; returns NULL and sets
++ * errno on failure.
+  */
+ struct tmp_objdir *tmp_objdir_create(struct repository *r, const char *prefix,
+ 				     int will_destroy);
 -- 
 2.56.0.173.gf57c9a7388
 
