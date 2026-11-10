@@ -1,92 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.174
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794337928;
-	b=qkUfH5gNXlgSDgBPZAm5/KPnq+qmZRSDHdT7RcG0uM6+DlDZifaLGJ1JjAFie6xg3+Ef
-	 ejVj32eAGhjDQv/97GLlzbaY8ndc2PfpODmyRO3nk8hph0v3E6vDwoHM3KUfA7PHLHioL
-	 kv1Az88ueqmKDEnPf+Dm94lnn4qU/YaWuzGUhRZaKiwJn3lG2rg8ZVXZneVbmOiOKWh6v
-	 OJyORM/9KKonyuPiWCOwq+hlaMkDyc+xxZpahd+uYWWMkPzykgdgSKcRjlLvZaSm2ZHm3
-	 W3OzjgikgdaoY7PyS+R0XC8juPT1IYfSBCjXEWXF50/1VgtpIXPzwM8das9DVnaWpqQ==
+	t=1794338245;
+	b=lgZcKtX55zKuNtkb0xCXwqia/1DTQdwimDPENqYX6WVKlDydb6CJW+zA+mKDKqGgLYwg
+	 Zb6WQljMvtYP0rXJ/C2WU+vqbXcN+yUttOHab9qoFmlIzouhVn+kNkaPHStfzxvbaNH5X
+	 9DZMeJflGLf4w+62Pl0tLWuxLD6AtdMWyoHGfv1ac7UGE/vGNID/0IibCMTy0tK2tJUKM
+	 +3PnLYjZGRH06J4S+sQolvwei0s8K2PK3KELQH7+nSRIjtt9RRlps6bR/oAhgfNJd7fo/
+	 3Q15xfuwuN5gXJBaQZ1QxSBByqkG+4FDj4UOjhYIp5fnL1YsmC6JFdf/IOgE/s77lRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794337928;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=iAFuggf6ralwnUqg5nxvcbUYeiNZ0SRJtuOrGH/jSyQ=;
-	b=io8eaAE6bVqxqUg0ZW/nUShV2w7gnkbRZcPMTw1HbYAlIEreY20PcjsHC305q5pHPdOq
-	 Aq4IIdihv4XAcMMdsJlf/LI8RGp23oip7uCAgMNGdaRDvZYtFC/06yB78TuGWPME7WfF0
-	 v9Y2tWPnGs6/N8haXIIaLdX/HLkIrUK7R77KKd7eFciAwBuE/pukDHDVZFT5RYQaNAdQC
-	 BQ9HX0j80vJRNoXWwF5fDCXPCw+k5SINVlXfgYjbvrjh3UU9w/p7iBAx8fTYaeDERZtBC
-	 dUgLuX9sKY+Fcn6qINZfDfKc5P1lIOPLP8QNbQcPrUwfNBZeRAnaRtZOce6QzfWyhLQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794338245;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=dGHqrCqGW0slpDmB16le9o8ab/fwcZqVcWfrY2Z0sDM=;
+	b=A+jheJTMEUsHf6YAWHTxZ0ivl0aJFRJcxF0NdE82HKXZVn1RNXTV3chClDGiKwgkG/My
+	 I2QwgrqpaXrd91OdL8/z1pgewvtq47UVg3LcinV7xSM4Hmx/prXMPjDfdIk+MbHPo4JcZ
+	 whEbUKoTZ4408NXr11y2brRIlKyFpjDK14mUvSS0CrUZdahO3vWbqwCjpHvPYhwcGHt+0
+	 s3MtfNEdiTqHxMSgxm1cSEth4HxKmf14JXokfjjjSbtCMyl0SbG8Fyqc1mQRSB8I6zo7J
+	 hHCnXmYY2SpkCm6jh6dBvsXtrcnBayUNkEHxaKGIN7KrJwUFkCcdK0fX41lKFyxfwfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZgItQPNo;
-	arc=none smtp.remote-ip=209.85.167.174
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=k4ttXZnt;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lMeGzfpw;
+	arc=none smtp.remote-ip=202.12.124.147
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675EE606A33D
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:12:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 675EE606A33D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56AF606A320
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:17:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D56AF606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZgItQPNo
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-4f699fe49b3so1653371b6e.3
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:12:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794337927; x=1794942727; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=iAFuggf6ralwnUqg5nxvcbUYeiNZ0SRJtuOrGH/jSyQ=;
-        b=ZgItQPNoX85wV6nOAoBaXl1eOgPBMofu5RW1xfRVyHlshv0I03rDDBoj02v+94DDXF
-         epFzrPkLEajnYsgF9vEyhhXDwUzsiZeWv7yA1LugCgM8089Rur0DdJp9WUOqEKZmJHRB
-         1Y8y3mOmBR3/H9eLBWDzc5zkKaSYEkd/EtJ388wIAAGBSwx8Ab4q+5tKCo+qx/3mtSbQ
-         bLObrPN4RwG0nFvskME4rMf+ZrNlwgQL1jEPd/l4eSuobw0oFIEbkWBOFi9DpDDj17mu
-         W9YnNPmqpKPonLp8O2IjT2sAVVPgX90wpo0oN/pHcfAEFsNMyexCcoZsJEa6vQr73c7g
-         SQdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794337927; x=1794942727;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=iAFuggf6ralwnUqg5nxvcbUYeiNZ0SRJtuOrGH/jSyQ=;
-        b=QnH9ShgD8FP+a61WsYDabLfDnhJGuMmHbH3VEtsyft2BdFFYxwq7D/tdQbI84ijNLO
-         8ixwPKFdChsKnPhj+dkzE/0hpTDii63mLwf3TlSgi3ke7tdgaYL6/35qnhOw8EjqOJzF
-         XNOEAcGwx/8M+UuFZ1+Yf7q9T96kIq/P+by3lKtfX32fZGe4pabvIe+02EdldtpTU0l9
-         V4ubkoCJUk7c/dewT1JZiMVdmzrGuZNWNwSWBb0v+NkrjRBl02fhpBTOQ2AXR4VejU7f
-         VhTO1iSH2VzQ5/YxtGaulYbCJU/ftGvxB6B2PeQQwfZXh49h0X1x9JgjtVuari+1NkqB
-         049g==
-X-Gm-Message-State: APuU4Z/5A3tEPscERVvwx+igF48FD52PdbeV6iU22bNHFOFl9i9tCbtO
-	/QhSJ9srgP3x/Gqyv0SY52ocht/maCNMEzuGoTOUZ2aeMbEPSdRVT04I8yUXFw==
-X-Gm-Gg: AYBFou25AAewtWrpcwsJf/ANiPBPVaxA/HD6tHceWgtkH2tXESVPhvEPLdFFsxu1vQF
-	tcLk1yDIAGvVf/GsFqJNxxYeVKsRgBAdArqn5mMtAkSj4mMvmHN5Cfe7Fn26ZAZAcIZ6sRvKZ42
-	DbAdWFDKa20fBdeHr+eRbE4nm9Av/c7mEd92X3m+3KJdjKabhxyvq1ztNcTvDjxVbjpGvFqWEEt
-	Gsfl2UW4aywUKnwfl0BvKUgqM9C4F7bhiVKqqZL9J/LJWrtcCAvp05hGTq9xS6PnEXBSe0F7LU9
-	wEAcm5fCo1XoUXuDghkqxiiIBADfYTdNJNTBfiS2NSx/2aPiLHYT30u/N2qsAj5Hvylzol1M+hg
-	7vi3uAnoHL5QQKm7UY8csIjHous6X94P975ozzrXycC8d97CJRP9rPl38cKQXwfcVaDcYAdEYz8
-	Tjrx2KndTf+tfMQfODw86KOxgVrf1Yx0UgEoD4Ds4LjJIykK6AmVw7MxivOrObc5h2lAsx2VMKj
-	B1p1dPxLUHIrd1thqZFJznZp3rL0XiMF2OloUpJrTzYE+EV5ODi8lrFJQz/Uknjk+G9AZuVaxw9
-	fzyJbn6v0XFT6hO70olgz1zOLLlCwiHC3NPPBMAuB24Dlx7fesp1
-X-Received: by 2002:a05:6808:181f:b0:4f4:9a44:73c0 with SMTP id 5614622812f47-5683c9e2e9amr2566536b6e.6.1794337927214;
-        Tue, 10 Nov 2026 11:12:07 -0800 (PST)
-Received: from [127.0.0.1] ([52.154.21.60])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-56905f2faf5sm2856393b6e.13.2026.11.10.11.12.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 11:12:05 -0800 (PST)
-Message-Id: <f24d4019e889b12cd6237217c3cf31f47aa318d5.1794337920.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2264.git.1794337920.gitgitgadget@gmail.com>
-References: <pull.2264.git.1794337920.gitgitgadget@gmail.com>
-From: "Wyatt Holden via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Nov 2026 19:12:00 +0000
-Subject: [PATCH 3/3] scalar: disable orphaned commit checks by default
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=k4ttXZnt;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lMeGzfpw
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 42A791D00249
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 14:17:24 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 10 Nov 2026 14:17:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794338243; x=1794424643; bh=dGHqrCqGW0
+	slpDmB16le9o8ab/fwcZqVcWfrY2Z0sDM=; b=k4ttXZnt0jS3xEEhudEjbDs4q2
+	LBf7vinpxJvPuqGx6IzJ1FJUbgjLDSOEG+b2Up1lNgHfyWokViKZtzudoYdO4gVJ
+	zzVZo3diMDZ0i+Tl1kaac51vM+A4DFluS6ypIOGIS6A8HtHkUyjOH7qLbUG1VS6M
+	9Y4RX/GO9NvYJjRPBhAsvACduTbntOwksu0mWR8O+L/zExiUkHCBkcsgE9+al33W
+	Xel2gXpH9d8k+ielf8ozyReUKxUqOxp1TwIR2xJdDgQqezMbaAEo3vkhY02j3WuF
+	KwY4W9j3hyceRsqP/dmI8XAdL0OOL6RrZFL3NtWsuBVMORfZN0bzIB9rNC2Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794338243; x=1794424643; bh=dGHqrCqGW0slpDmB16le9o8ab/fwcZqVcWf
+	rY2Z0sDM=; b=lMeGzfpwt8ZpMoO75VE95gst5B6d7lfW8107I2OBaaX+3HvOeka
+	UVmu3BFxoLqTO1o90wkL/HJeD9vWVUzV0NUxoZsyGtdrKjqso3SX4dfTxN/8SqA2
+	+UM08k+o4pmYfu++1qT3KI+v1TboD2lEWaKl/x9JfrnEHVHCsFMroy797tq8H9D6
+	b2ugZEQhW2RpuqHXOj7G67NayZVqZG0e6WaVRD1QYXU2saUa3f5u4xW3GmbO+PHc
+	Q9lTukzqYgjjjOgt4yeY2B1miuLBrs5xq2P6TVOIHVgRGqhJXFqMCChvPgG3URkV
+	Ca6G30ARarPYNT6oTOQNHTDeFO4KE0Q+rhA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794338243; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:QWNNDBbJgJyUaQqWluKuJAaeI0GeedWVg/6UXappWS2uwB5
+	Mt4jj0lMDi378X29G2u0yjx9PuLRUEPETjoCt0IQBhzwtL5S9l8hq0XYO1KD/9g/
+	SV14EomGyqCBWlU5wlwr+Cj9YQJcB6L+RsfGePprrH49DOLTCykUkjaZypl9OymA
+	i5Oho6xU802DuJzp8DMtkEEBluZQcOSgbhwNBj1daVBl6O38dHUWLeyjGGBrO/TJ
+	8ISl+2dpMbj8QoqdzpgcY1lyWglA0jCRJG9VSzYj5Eftc4MzL8FgnjvL/7XonNH5
+	ho9OcO0M8Rn+U8xaSpfe5tUxxmTpIKGu9fmgqIQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:FbfZpQoSLKpKi2Y6dV84h1LOz7nUFalFhvAQ2GyYoEc=:pjOPJvgxbVDVQNehD2E7sozuWy4yp9gUZEuiL9/SFs0=;
+X-ME-Sender: <xms:w23zaq3rYpxejW1VhrXc-k4khatKqWKV8S_mC6jL_EHayjRxntqUaQ>
+    <xme:w23zakGHhiIZU_HhlkIBm15iHwMlj1F84sCokYtamnEckW4dyqjpuIozEaaID_arU
+    ocMAxsgari-MCEtpe3upKbTYdIEyy8CD1M9IxEnoA2JxX487teCdio>
+X-ME-Received: <xmr:w23zan4KogyE1iRV66EwAwjajH7Xl8bTbVH4SQAQSmQ1USZ__fZyjPB0MRjPRCbxGpwVFGvj0mCO13k1_b6faXosdlWOYtmWSlg6>
+X-ME-Proxy-Cause: dmFkZTFwlcWpuuJkw+dnTLw7tuw5NcHjJxmK3ZmUZCb3mPlxO0avFHYJ5cTngS45WgJVOn
+    yF39+fSA+osNVG5OiV/Y12v5OPFJe4zmvvm6FCpvwzl5bsKBoFAE5Xk/TiB2Nmk89jCf9h
+    mT4sWzW5005L02aOtezQD9lYTaXANI0cAOALLMVJ31A/KpbASH9WLLTaSmhPlpRoOHBh8w
+    tV33HwSzzzJXsqKlryR0ivNIHhgXghXME5DV7GFrGl0IsX4Xj5F1nbqDSdXaVGucXZb8ni
+    qW/jTAvmBzFlBeRBCD2tblV9FSTz3xgoInLBEo/UsnELdFG9nstOYw6v5PvWJ17vaQMQVL
+    s3Sn/X9OqS9AYyAvUpbjs/zWprRCSWz3f48kWYkrUt+spTB1eebOq0FfUFS+89m2YgL264
+    iex4gCjSDxtg5+AFI7r7Vr28XYToZs4xRgR7WtqY0f0/euH9PmlS51A6iRXR/OppYVdPdz
+    IqoLO4EEyL7IMLc6c0oqDVh8vipPhHLYuv0Td5+BdymEFSbaqj87lZHCuLsbD1xCYPxpQt
+    HMK7+a6xGrAbUpCutH1bzp/2YjduNxE2/Te02ATCNUXCB9rPaILgZGcPVLDBmRsqi9h0i8
+    kU7UJhAfSyoABlPEPhTkMtJM0ItL05SMWBLDgAtq7tnvdBeqVrFaeojziXwg
+X-ME-Proxy: <xmx:w23zaqu5s7_7ux2rm5UDjNbRhrSW8f3DRaxQ39p6e7z2xXGyFpWbJA>
+    <xmx:w23zao7lOjlZfT5qOxt6aDpdRI-pGWZXl9hLrCGASSrFlmUP2ELMNw>
+    <xmx:w23zalWfz1l7_Q99h5njzrvrZN6WhUGrfrTYOv5jnQh-L3KE8dOdcQ>
+    <xmx:w23zaq9I1OZXsxfTo2e1IhIpnXah7MKBey-JCRGq0mxoPT73dqa33g>
+    <xmx:w23zajWLwDfUgIz_1Vdh9ueRNTjj7Yu5uf-sSQ3tdu5YY1w6HeIt_gDb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Nov 2026 14:17:23 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Srujith A Poojary <poojarysrujith@gmail.com>
+Subject: Re: [PATCH v3 0/2] [Outreachy PATCH] archive: remove
+ USE_THE_REPOSITORY_VARIABLE from archival modules
+In-Reply-To: <pull.2305.v3.git.1794335969.gitgitgadget@gmail.com> (Srujith
+	A. Poojary via GitGitGadget's message of "Tue, 10 Nov 2026 18:39:27
+	+0000")
+References: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
+	<pull.2305.v3.git.1794335969.gitgitgadget@gmail.com>
+Date: Tue, 10 Nov 2026 11:17:22 -0800
+Message-ID: <xmqqzevgqywt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,60 +126,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    stolee@gmail.com,
-    wyattj.holden@gmail.com,
-    Wyatt Holden <wyattholden@microsoft.com>
+Content-Type: text/plain
 
-From: Wyatt Holden <wyattholden@microsoft.com>
+"Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Checking for commits left behind when leaving a detached HEAD can
-be expensive in large repositories. Add
-checkout.orphanedCommitWarning=false to Scalar's recommended settings
-to avoid this foreground work while preserving normal checkout output.
+> Refactored archive-tar.c, archive-zip.c, archive.c, and supporting files to
+> use explicit struct repository *repo pointers instead of global repository
+> variables.
 
-Use the existing set-if-missing behavior so explicit user choices
-are preserved during clone, register, and reconfigure. Document the
-loss of the immediate orphan warning and the availability of reflog
-recovery. Existing Scalar tests cover configuration preservation,
-so no additional inventory of recommended settings is needed.
+It is not considered good manners to send a new iteration before
+first finishing the discussion on the reviews you received on your
+previous iteration.  You respond to reviews, saying "I will fix this
+point", "I think this one is fine as-is because...", and so forth,
+wait for responses to your response, and eventually come to an
+agreement with those in the discussion, so both sides know what the
+next iteration should look like before you start working on it.
 
-Signed-off-by: Wyatt Holden <wyattholden@microsoft.com>
----
- Documentation/scalar.adoc | 7 +++++++
- scalar.c                  | 1 +
- 2 files changed, 8 insertions(+)
+Only after finishing all of that do you prepare and send a new
+iteration.
 
-diff --git a/Documentation/scalar.adoc b/Documentation/scalar.adoc
-index 5252fb134a..d2b8c9a6ca 100644
---- a/Documentation/scalar.adoc
-+++ b/Documentation/scalar.adoc
-@@ -214,6 +214,13 @@ am.keepCR=true::
- 	and non-Windows platforms and keeping carriage return (`\r`) characters
- 	in certain workflows.
- 
-+checkout.orphanedCommitWarning=false::
-+	This disables the reachability check that warns about commits left
-+	behind when `git checkout` or `git switch` leaves a detached `HEAD`.
-+	The check can be expensive in large repositories. Other checkout
-+	output is unchanged, and commits left behind can still be found
-+	in the `HEAD` reflog until its entries expire.
-+
- commitGraph.changedPaths=true::
- 	This setting helps the background maintenance steps that compute the
- 	serialized commit-graph to also store changed-path Bloom filters. This
-diff --git a/scalar.c b/scalar.c
-index a80d8ee3ff..7f851f5610 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -138,6 +138,7 @@ static int set_recommended_config(int reconfigure)
- 	 */
- 	struct scalar_config config[] = {
- 		{ "am.keepCR", "true" },
-+		{ "checkout.orphanedCommitWarning", "false" },
- 		{ "commitGraph.changedPaths", "true" },
- 		{ "commitGraph.generationVersion", "1" },
- 		{ "core.autoCRLF", "false" },
--- 
-gitgitgadget
+Thanks.
