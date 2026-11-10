@@ -1,105 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794283113;
-	b=bsCvEeUhwqHudArYakmCt18byfTeXBONV1zxuK1F2odkYiRRDEiV2reGZLZDqI8ECDkc
-	 4HlfYS5qj9gvWo6YA0Ev5A5RZqioclFUHYYeJWYXy63xKIoPRpBCHHaOMXGqa76XMYka7
-	 1+/WU3W8dD8rbU1nmaQ2KqBHtFsCkSuNKmSJWe32+F746jLtH552mMZNap8XH1nCgcoNU
-	 QYZ803wdfaYgLRhURW1fkKGn/25z/As5eveU3iRVewtSUf88saBB5i/6hN7aMAoi5pMYc
-	 r0vWU4b9Bi4eZJBNuzWe/HnIZoGEjuFVBypUpsZ7Tjv9zwGXIafgmhM08oU17Zz+SmA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794283113;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.169
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794290602;
+	b=mkZ3A9nEXNRYBzrDujfVPaF1CRoAeN8CUdNren60Gy0Jgb8VjMP6hYNcmHY+ATnqKnmI
+	 Xm09vEOTak3oPPvv6SxNuRpoOGOz57pbv+hJZd2D41sMcngrhVdgDIsT46M2HS9FAkIsj
+	 LIkAuzcHXAYIaD2Hc5kUpLO6LHiA49LfNVRfK8RervYJb7j8sbNEFCofAQSTh/uiXTqsa
+	 ecmbe/QxkzJv3GXRR3/EiX/x3Mssxwkyx2PmRZll9sp0AjB1FAO/rDJ2dSvOpaLnACosq
+	 VFj8mtBviXmO3KSRcncP4LdLPe7OLY/3DAjdbJBiFONavS8bPQ8nmhUauSdGxrZcE2A==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794290602;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 In-Reply-To:References:MIME-Version:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=OxV0SimhmhReHgC4eTwl93r/jvAWe8utVYyKwcYD2AM=;
-	b=VKOb0V+fRjRcdPQAlpqxS8yAirRe1hO07/UjtjH2fJ/lY1rIDgCidRp+Vsm12hnrzBgs
-	 Xky1K71WDWn2kM17QSU+bUDfxrfbY84ZyxFzGngATwW3JfJYl4uctDPRxtd99KeWAiTIJ
-	 geKiw1+EunVpsRwuqWx6DqaAhYbEVMuBvnCsmA/RRFx5WFKej8bKOEg2n7VSw//O82hGd
-	 RGBZdSKW1w+FXA8WK0HmY4NXQIMaNqXTiklepHf2/bjo0JniF7jeSnAXQ2EfV81OuVuyG
-	 mqIIgfFOYaIoPwoNuf2JsANioNqzbW/o2kzu+rwB340CEKzKftUI2mD4GZbf7E2WZtg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=G1L8prQZ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=2wTndCBE7njhbblJXXVAKjk5HQmpc9EqReaYseljJqg=;
+	b=hOjQM/SYvQgPg2PPXxoGOfu4Cid6qiW8BnJIWy0tjNbiSBQvGDfVvhafiL/dDjBkHYx5
+	 SUqsqBPnX2xh52aK8LcxfmOOGL4cHie+XDJKWi1KX1uQigqjqEHZrmzphJVFZq83B619u
+	 XqFCtDCnL4TzUtScwAGZ9M/CwiPiLRZM7005Q/UeABi8okPrb9UOCtI+a7GEAR6aUTtWb
+	 iTq8wC8kbtWh0A5K9jtiHw3cDibnFz53F700y4NlBj0ftk37j3/hVJuEAGh5H2KZ7xIFW
+	 lYCxZCn6dpb28sqeroKtymNkKgivA7AInGR6NvvREn4nrEDQDYkQyFzMLhSg40zdCmA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=maFPkMsN;
+	arc=none smtp.remote-ip=209.85.167.169
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD59E606A31C
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 03:58:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD59E606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6AD606A321
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 06:03:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B6AD606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=G1L8prQZ
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6b579ed8da6so4234a12.1
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 19:58:32 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794283111; cv=none;
-        d=google.com; s=arc-20260327;
-        b=bWaIwa3gyUKmgJicS3j73vwsXn1kJmB/0LUU9gxiytRfpIA8BtlEaMqtzz78PJFWTr
-         NQQxwg0lvKYHkZCIEuJXQqf4VHKJ9AwDIr5ZuCQm2jgaCDAmeSt7zm69qvdrUXsrpU+n
-         I88IDIJZrWINlWUfvZInW+dGLkHDSJHCNkWT0eE0QBzncOGX+uqEHzoObDkzP4hh3Vt0
-         P0xeL97uOP6JTcGUFa4J/c0n6mYTmRORpYWfGj+4EfYCbMSyjhnWTq8+ZfkhZEAWdT6p
-         NiI6B6If1IbUYcPAddrQ7ZGVlLN29pcGmwwKIQ8c0lpenHVXYLnVFn8zCLoJQ9l6Ox1j
-         k7QA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:mime-version:references
-         :in-reply-to:dkim-signature;
-        bh=OxV0SimhmhReHgC4eTwl93r/jvAWe8utVYyKwcYD2AM=;
-        fh=+rHjWezOva6hWxdz7pXoZHUTeCwBe3guXNNSn/ox1Ls=;
-        b=hCQFmVEVoBMETct7WHsZWbTku1YQC9t9rSisTHxNy612OFHslCAH0d0jkXAIxLpz+5
-         Voa/0Mxxb80ffglaidTJDEjT/7QCHvHsnU5JyABESVp2kjDOm9LrfSsWKJ0D1MoTwLCn
-         Sswhl4xENfh0alp2vCggCaHUOt4WvABcip+8K5SWLJlQE2o/9JlW+bAWsZeYwkydDWfC
-         RHwu0fLA7Rh+NdKHtjuzgHzUodSsMMgLElmSqOzL8T7nUmXQXvJM6zj4yDb4LxNjb6tP
-         yZsNZNTsZ4dDLyPEukzM+gDWJaM9sqAJjvi678cIsmwWbUofY9jJ4Na6krIiI5hnWMHj
-         4mxQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=maFPkMsN
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-55e02e89f78so487633b6e.0
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 22:03:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1794283111; x=1794887911; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=OxV0SimhmhReHgC4eTwl93r/jvAWe8utVYyKwcYD2AM=;
-        b=G1L8prQZG6n8HpDgO7/QgkBXn3UmHUOtvcIJaXBCh0VKF50s+1zxcxAXcN2NcjfYwH
-         7/ai5AP/986H2N+HXhRzuvud939gl/5f0Q8mFOE9zgokSdkkdJFjMqts3+sbn3vft/3T
-         hn/YC052EnajoI54zzk5EoEI9SHKU9GErXT1kR1SNDdUjp8vm9Co0bJQ30gofEhwiEAl
-         Fg9v22ssPEOYlcR2vDUZoSO+/gtkDMpAggP6/UM25FHASXtNVDAFs3sisg75KmuBzvQJ
-         MUW3F2tU+JtGrMlkVZ6if3GN9MOmlp4j+y3QUTLUGzGww18P46yrjNyF1pd5nzAwsIGg
-         1v4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794283111; x=1794887911;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :references:in-reply-to:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20260707; t=1794290601; x=1794895401; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=OxV0SimhmhReHgC4eTwl93r/jvAWe8utVYyKwcYD2AM=;
-        b=rQhm+nle6JNwLkRrlEJXA+lFkXPmOS5M9lFfOQY3Dpq5P8SKHZuo3pgIz/aLAWUczA
-         mMI3Litw6K8gaM3M1bnfq9Ez8yip+aM+eD6q/7JJ4gBCNYblsJNUdwbPj/zUfQVtcls2
-         WRHiFeawDMrpn20d+hrAUF8A2WcWyPDHRTAosa4kTTvP7WEks5frgjkLuKc/2K64LB/6
-         31gMMdT+08ZafRloTv8fMMLBU2dcfIX2eh65tih1y1DsNhJC/00E7XzTAWwfDBxktbgx
-         U9sf8xWRiF3r2T5Ev41kHmJeAVEaC5pXagEZg7m7jeTBqlQpWnqaxCPtohbN9ZfcKa5x
-         Ru0w==
-X-Forwarded-Encrypted: i=1; AL+hErFFyaeYBVMFOLrwOaUETk9+a1F2X4PdIhvZpt85af6YytrDCZjTb8kqMPFYHn3YfM/NkwY=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8Qvt16/Ml5jO2FgBzZSAm1GqEf0P0thchsY2so1VdMUrDA6LaY
-	SbhASCSD8X25hZKhOlgS7gbVbL/Jeh3Jg87+G+yire6IoRCYIjaUbDMIFumOh600mdwtNJYzCSV
-	1IjCUHPRmoM/6lloJql5RFb+c6W5Fys0GhODNotbj
-X-Gm-Gg: AYBFou1E0JfLaGyz3Whg+4rxBo3zEIbEiVZZYrNRYJEL0Snw1Xee3MGQ/kbRWZMOJyp
-	P1LDlp2IhOAZqYBSGu9JEpTD700L3Q8AtAyBK5eu6NMTD3Et1GxKaMCC9PiAd8Tg1Po/c2BekO8
-	xB9CWYFudu0GQf2GlW9zGThED2xbPsa2KFgY+67hYxfUgDeABb/4NknGLxmBebbSnwl5crX3/zz
-	fUG4WZj4Dqt2jBBOdbdVLU2dULBMJRRV19vlNEALfjEoVZqrQ8agYJk9KBqTxoSof9/oZLLGvPj
-	s+wQFUn7Rg7Qabe5NRRe9iaUPuhu0vWwvAScpNOGCDIRoQIE3aVz5F5ou/DCXp8uNxjbJJIhYGO
-	Kfgs/9hlyhMjVmFMpUxnRH2NcCp/n2UyK7piV14G1MfLe3f+VbT55K+ISbjCp+iF9e5SGD3udyi
-	On/C5Cax8Hig==
-X-Received: by 2002:aa7:df12:0:b0:6b3:b648:314d with SMTP id
- 4fb4d7f45d1cf-6b757845f4dmr38915a12.6.1794283110477; Mon, 09 Nov 2026
- 19:58:30 -0800 (PST)
-Received: from 913411032810 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 9 Nov 2026 19:58:29 -0800
-In-Reply-To: <xmqqse1d9ryw.fsf@gitster.g>
-References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
- <pull.2287.v3.git.1794022836.gitgitgadget@gmail.com> <xmqqse1d9ryw.fsf@gitster.g>
+        bh=2wTndCBE7njhbblJXXVAKjk5HQmpc9EqReaYseljJqg=;
+        b=maFPkMsNtKYt8PlsURCflUP3G9yQzEUHIewWXk919vConyTA6LcSC+UYUYm/kk6r7w
+         Jc7/RhJabDpkDGrTMDl3d4CHMkaeUqJI9AJio+dqENKv54rZlvWTnv1YQImBaMY7sdxD
+         fzIS1mDpjLidYBuxnWrEOhAv+kOrK1h64Bc9UuUYdODnB1J7m2VnMiA9eV0XREyegztd
+         3n3i06LmWv3+t8qPpP+EqBI/CQgywbFMAuB5oVaIbaUXmZGSW7FzyyQbhfs/3/SNXO1h
+         XswyV5Ao9BAzpRN7FqN9QWnO96wExLAQ1ldDCQoyUWzc1S0SRkmmLyCrTsWlFxWWEU5U
+         Z5yA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794290601; x=1794895401;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=2wTndCBE7njhbblJXXVAKjk5HQmpc9EqReaYseljJqg=;
+        b=jfJgyWlG+uwcumjWfBOTATvZGAF4fXeuYre/SZ8yJ89rFHZnZbmJWm+oR4X0+eGvyb
+         fKBwEqprZtKx3uSU1+7C/xWm+0rXDdFKJANTkEU3goDqP2ru1ywktT0c6Gt6Uuj3ODi2
+         LV6pbcYfD+YtA0OBNqLWcf0wH49+UOW/SifRQzY6D8ZkJuc1jGlqsCToNVm4vKzBSXJQ
+         n5yo/gdV3N3YiDIPasWqt/lQb7B3hIOiwhKR4F6jP0zlV1+jFG29z1F+UbxXXl+l+N33
+         56k+/Ah2IYF9Uli1g3HTY4iY7Cc6EtfHkDpWSq5zpW0DztbW9DpSp1Y7Cta/T0PxvN+1
+         pRnA==
+X-Gm-Message-State: APuU4Z+8roq6OYlzupKejEz4cVsiF4dpzxtyHacLV9cnO12xwxDQ6vxK
+	UAM8qLIC4gqm2klOVG9nxCoTfqA6p8ptSH1ygopOtIK37rDWagU2y7jWUo8LWUxw
+X-Gm-Gg: AYBFou3WhVnHvSghvziuPB7vU+ek0I3DM8lTIXhxvBTyodrjCPbFikNfDIC/1tIdPKR
+	mdXh7EP4y6QxxVDTFDWEG8zoVcLixwTzpeBH0yvcGkcxXUT40iTKLeVmxAN25mGLAM5SzvtkhlF
+	D6yO2Be0ymKUjfioFY1pL+w6UQo51uCkXxb3/tlVQi3/RlW7m0UpSh+ArAMj0Tnx80Fo3iUlhJf
+	ZnVLLh6mDoYTAJply/OLNb9DLeHMfFiMEqwSsN7PSVxWIbUUQUKqxHb62UkiUvTwvLLQAg6/XTG
+	lXFPpxooIGSnsaUncbWxbN8nDueTzd6pmJ1USC3AwCxoLCjuwCVQ2RKLxeIC9J9s8GsFWBSQA1Q
+	oAsz5HWQF0QHPj4J8rkdgxHMPW0z2tFlAxaGisaSBRX9Ck8OXs9ZeDaV66nfT5bA24fODUdN+Bx
+	2bVuQWy6nitGgEWl/htHMalMgbADREv8L+c2Ep73BRv6K9VT8Q/hnAZDKN4EATw2jTaIeuCYO+h
+	PiSDJBJZ/uG+So56PUoe5NhA43rRSFncFuUmeKgxCE2+KIek06H99pyc6QGDy5Znd8JuUuzxIrk
+	LSD1EKoo0BVlPkcn1TWMtYK1xwYg/Mq4Y9vAh7kcOZTk+58NdbCH
+X-Received: by 2002:a05:6808:179f:b0:4f5:4ce8:7e92 with SMTP id 5614622812f47-5683cd6f121mr1514929b6e.48.1794290601246;
+        Mon, 09 Nov 2026 22:03:21 -0800 (PST)
+Received: from [127.0.0.1] ([20.83.54.120])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-56905f39c60sm1289709b6e.14.2026.11.09.22.03.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Nov 2026 22:03:19 -0800 (PST)
+Message-Id: <pull.2305.v2.git.1794290598.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
+References: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
+From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 10 Nov 2026 06:03:16 +0000
+Subject: [PATCH v2 0/2] [Outreachy PATCH] archive: remove USE_THE_REPOSITORY_VARIABLE from archival
+ modules
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -109,34 +97,152 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-From: Ravi Mistry <rmistry@google.com>
-Date: Mon, 9 Nov 2026 19:58:29 -0800
-X-Gm-Features: AclHuK87BdE2_FlzMxmfBkZt2YRxH3WG37lyy_16jpAQVksm1CROto_sA7cyXFk
-Message-ID: <CAF+mdifT3HAw-EvSqUxQ2si6a8j+Cmj0Sri6Z1t+SWPMBXe1wA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] http: exponential backoff, configurable status
- codes, and post_rpc() retries
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Srujith A Poojary <poojarysrujith@gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Refactored archive-tar.c, archive-zip.c, archive.c, and supporting files to
+use explicit struct repository *repo pointers instead of global repository
+variables.
 
-> We usually do not structure our topics this way, to first implement
-> one decision (i.e., "waiting 0 is the right thing to do") and then
-> change the decision in the middle of the topic (i.e., "no, hammering
-> the server immediately is a mistake, so let's give it the initial
-> wait of 10 seconds").
->
-> This might make it easier to later switch it to 30 seconds if we
-> wanted to, by identifying exact places that needs to be updated?
->
-> I dunno.  brian, what do you think?
+Srujith A Poojary (2):
+  submodule: use the submodule repository to abbreviate commits
+  archive: remove USE_THE_REPOSITORY_VARIABLE from archival modules
 
-I kept 5/5 separate to isolate changing the existing 0s default from
-640657ffd0. Happy to go either way:
+ archive-tar.c                    |  5 ++---
+ builtin/archive.c                |  1 +
+ submodule.c                      |  5 +++--
+ t/t4041-diff-submodule-option.sh | 23 +++++++++++++++++++++++
+ 4 files changed, 29 insertions(+), 5 deletions(-)
 
-- Leave v3 as is (with 5/5 as a separate commit).
-- Fold 5/5 into Patch 2 in a v4.
 
-Thanks!
+base-commit: 50fe5cc63f9cd6e89b87a2c9ccf96a444f4cfdb7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2305%2Fpoojarysrujith%2Farchive-libification-refactor-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2305/poojarysrujith/archive-libification-refactor-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2305
+
+Range-diff vs v1:
+
+ 1:  01c3cc2573 = 1:  01c3cc2573 submodule: use the submodule repository to abbreviate commits
+ 2:  eeed27222b ! 2:  3d8d9a9261 archive: remove USE_THE_REPOSITORY_VARIABLE from archival modules
+     @@ Commit message
+      
+       ## archive-tar.c ##
+      @@
+     -  * Copyright (c) 2005, 2006 Rene Scharfe
+        */
+       
+     --#define USE_THE_REPOSITORY_VARIABLE
+     + #define USE_THE_REPOSITORY_VARIABLE
+      -
+       #include "git-compat-util.h"
+       #include "config.h"
+     @@ archive-tar.c: static void write_global_extended_header(struct archiver_args *ar
+       		strbuf_append_ext_header_uint(&ext_header, "mtime",
+       					      args->time);
+      @@ archive-tar.c: static struct archiver tar_archiver = {
+     - 	.flags = ARCHIVER_REMOTE,
+     - };
+     - 
+     --void init_tar_archiver(void)
+     -+void init_tar_archiver(struct repository *repo)
+     + void init_tar_archiver(void)
+       {
+       	int i;
+     ++	repo_config(the_repository, git_tar_config, NULL);
+       	register_archiver(&tar_archiver);
+     -@@ archive-tar.c: void init_tar_archiver(void)
+     + 
+     + 	tar_filter_config("tar.tgz.command", internal_gzip_command, NULL);
+       	tar_filter_config("tar.tgz.remote", "true", NULL);
+       	tar_filter_config("tar.tar.gz.command", internal_gzip_command, NULL);
+       	tar_filter_config("tar.tar.gz.remote", "true", NULL);
+      -	repo_config(the_repository, git_tar_config, NULL);
+     -+	repo_config(repo, git_tar_config, NULL);
+       	for (i = 0; i < nr_tar_filters; i++) {
+       		/* omit any filters that never had a command configured */
+       		if (tar_filters[i]->filter_command)
+      
+     - ## archive-zip.c ##
+     -@@ archive-zip.c: static struct archiver zip_archiver = {
+     - 	.flags = ARCHIVER_WANT_COMPRESSION_LEVELS|ARCHIVER_REMOTE,
+     - };
+     - 
+     --void init_zip_archiver(void)
+     -+void init_zip_archiver(struct repository *repo)
+     - {
+     -+	(void)repo;
+     - 	register_archiver(&zip_archiver);
+     - }
+     -
+     - ## archive.c ##
+     -@@ archive.c: void register_archiver(struct archiver *ar)
+     - 	archivers[nr_archivers++] = ar;
+     - }
+     - 
+     --void init_archivers(void)
+     -+void init_archivers(struct repository *repo)
+     - {
+     --	init_tar_archiver();
+     --	init_zip_archiver();
+     -+	init_tar_archiver(repo);
+     -+	init_zip_archiver(repo);
+     - }
+     - 
+     - static void format_subst(const struct commit *commit,
+     -
+     - ## archive.h ##
+     -@@ archive.h: struct archiver {
+     - };
+     - void register_archiver(struct archiver *);
+     - 
+     --void init_tar_archiver(void);
+     --void init_zip_archiver(void);
+     --void init_archivers(void);
+     -+void init_tar_archiver(struct repository *repo);
+     -+void init_zip_archiver(struct repository *repo);
+     -+void init_archivers(struct repository *repo);
+     - 
+     - typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
+     - 					const struct object_id *oid,
+     -
+       ## builtin/archive.c ##
+      @@
+        * Copyright (c) 2006 Franck Bui-Huu
+     @@ builtin/archive.c
+       #include "builtin.h"
+       #include "archive.h"
+       #include "gettext.h"
+     -@@ builtin/archive.c: int cmd_archive(int argc,
+     - 	argc = parse_options(argc, argv, prefix, local_opts, NULL,
+     - 			     PARSE_OPT_KEEP_ALL);
+     - 
+     --	init_archivers();
+     -+	init_archivers(the_repository);
+     - 
+     - 	if (output)
+     - 		create_output_file(output);
+     -
+     - ## builtin/upload-archive.c ##
+     -@@ builtin/upload-archive.c: int cmd_upload_archive_writer(int argc,
+     - 	if (!enter_repo(the_repository, argv[1], 0))
+     - 		die("'%s' does not appear to be a git repository", argv[1]);
+     - 
+     --	init_archivers();
+     -+	init_archivers(the_repository);
+     - 
+     - 	/* put received options in sent_argv[] */
+     - 	strvec_push(&sent_argv, "git-upload-archive");
+     -
+     - ## diagnose.c ##
+     -@@ diagnose.c: int create_diagnostics_archive(struct repository *r,
+     - 		goto diagnose_cleanup;
+     - 	}
+     - 
+     --	init_zip_archiver();
+     -+	init_zip_archiver(r);
+     - 	strvec_pushl(&archiver_args, "git-diagnose", "--format=zip", NULL);
+     - 
+     - 	strbuf_reset(&buf);
+
+-- 
+gitgitgadget
