@@ -1,90 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794296235;
-	b=BD/cYHKpkpWkw5XHAGcp5PWsoxEBpl16sGNOx4gUQMWTKLGxtpscyY4NKqqw+NGRws9v
-	 6RWs9299Pt4A1QHp52o0u9D/DdLSYyhU9ZddsX92M2k8RIyTFUvC9LDhYsCF8JW3CnSWB
-	 pSc1gPWx8M3yXOZK1h10ZmluZuP+2Txjvp9BDXUWnGQw4R2zYEVQO+F7bAOpcZ7romckB
-	 bLbXIDQ9dGpoiqXCT9QCnQq5RT8ragmyLbQAZt0zAnSBwWyv3iFPfkY1zp4zj1gbCnzyg
-	 iLkrlc/biN98qVJmtCbJaX2P/tc+xOAq5VIQBv9aIwXJzSaUwsqKRR8TiXNSjsuydkg==
+	t=1794296237;
+	b=ayD6nQv+/YQP7+1qt1oX076uJvUozz0DrDja7MpyFW0R8TVlH3KGlhQCdCGoiw+xlfOP
+	 udacxlr3vKvbtTocPiumrgcpVDjymxg144aDjNtOnBbcAif1TxQ2kFXtzwYuiwp0Y0pAm
+	 xzHbXbrrVofzny+RYw5333gQIcd+LvaJvESPi40S+GuqGOqYXzOVMVlaQqIOyAZwe0EmT
+	 J+Kw+OyAYTh/+wf35XN1Ra7xAiSm8/tKEeE+xYYS+b7Ke5HhMTcOIlCT1sVwSdksKRuMx
+	 Pc4sTXaxh/oVseUpiuX3a+ddhjJXBjF0UmkM27d2ovCNOF80llzulpbGGeBI2gHk4bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794296235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794296237;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=YpL/o/lHDlBUGpuOY5VMYUzhkcxIyJQod981OJk+oDs=;
-	b=cGdwW9u2QLsg0Vgm5fEXYuAhybboLuDt+zaOCH35ECd8PUMz/ycgVE+WvpoUrm+lMubt
-	 Vd5R1wJW790yMAe9ZiiSWu7GAYspg09NR2K/SxmgNc7Tycz9dqcm7tPHXrlqRfTRFkq4c
-	 uM4GiPvxvFTY3CMuPZZ0c8TIBP2WkSl8mezMuKIY1KQEc0Gc7cXFdzZOjdVak8e0tLP5n
-	 XcBOPQB2tdR4LxCWZscaapeDB0eKpkaK24Om2hb+cvUgA4l8IlSwEReuXO3cwAZKA3dyQ
-	 KY9HCMpY4na1UE6izEaR2nsn+40uDWuT78kimlv3mX9WX8LEo2SJn0a3kpBQsmYhcZg==
+	bh=MpQibAg8X4msOndVvsdNzuZUbPprPXfZAwJh5lqCkR8=;
+	b=nKg/y0bMfTqXebpjei8gGtt1+Yl2HY9dSbEueipBv5ch679a/pjcAC2bTXLH4Di421qy
+	 OkjZA4pc39BMxM8mC9v1fWjIb0LAYGiDKr/EQqkGKmHapDeO7v/JrPMSLKEjj4ZRzqgxh
+	 aUxehAJNqa58bfa5kU+6SQ3/beasITQKYQYlLtWn9NZNTGJpiI5cKI+6Mebr3q1/SmKRl
+	 /v1oVC3nEaHSnTUZ2/lUk3f8xoUS43tcEXeRHe7c8IE+vh7Bp+mwcR7OphY1si6ehQR9V
+	 0ednZLPrSObBHibaMZuJa9yC7WMKNrlcdi4e6lI+Ap21yty3rw4fwSGZSVMUdGOaa0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qoJOhs6H;
-	arc=none smtp.remote-ip=209.85.210.46
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nbxlZibk;
+	arc=none smtp.remote-ip=209.85.160.54
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F017760A6F5B
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 07:37:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F017760A6F5B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BDB60A6F6E
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 07:37:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3BDB60A6F6E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qoJOhs6H
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-8479f46ecd8so857586a34.0
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 23:37:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nbxlZibk
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-4a76f63b243so1254364fac.0
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 23:37:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794296234; x=1794901034; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794296236; x=1794901036; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=YpL/o/lHDlBUGpuOY5VMYUzhkcxIyJQod981OJk+oDs=;
-        b=qoJOhs6HK5qZzefW9fgcR8ndRsqLJzhEw8MuxnTT0ugUPMbMI05hVkM2qgSYvwqg1E
-         v6b/WEtw0HY4ASzWN57zg+ykcHl6nGr7SMZy+x1sJ5ztUBtZ4P6gNcROVfSmjGJ0e4PB
-         MxBOTmHkg5jpJT0onCWzh1EkcCrvrTkp1dI3Uqn0+spVdExJy9tEogp5ton8b0HOjGV9
-         UIwdAw8AtrapWmYapKgeLZgX+Op8b9JsP4VpFLR4/L1VPQvIQZwNtyTlz04oKQgL8g3G
-         /XrkMoolJ9Uytj4HT3Z01kppnA/7NZsiWzG8I0RRlzZ9XvqH2iIlatJBG9PEfFzPoqCN
-         /MBQ==
+        bh=MpQibAg8X4msOndVvsdNzuZUbPprPXfZAwJh5lqCkR8=;
+        b=nbxlZibkFftKKfjP484JifXG4miF5DD006zLxJ2RX/3pC9G/2Zk0865zh0MOrGDiMV
+         XWtNcjwVIzelt8GXShv5zQFAnLsfUN4c6bi4pd/780uOxV4RrtQ/ytGRIZW+LeHcloYK
+         iLeKoMoTeR7mTmgtPGRJg/5fZEghuXWg0fFkKQ4eSBbttgfcduWKkSbiiNwl7FJknTPc
+         TcdDpIW8HsuFmuaRVqkh4KJB2n4i97ZYX+oi98EdekzhA/0NqWvLU7iV0JSLykhSmAPM
+         84gUaBQtemQjYlygJW7pusdgUcjBiLXfb6zTHPmRUV03LDkn8A/77AOgUXvPKZM1CU/9
+         eXbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794296234; x=1794901034;
+        d=1e100.net; s=20260707; t=1794296236; x=1794901036;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=YpL/o/lHDlBUGpuOY5VMYUzhkcxIyJQod981OJk+oDs=;
-        b=AnRgqWXnLD3SQiHWBokjcq3BaWy3y7RnYrA6/QhePNQof7YDaK7MGNJ/pl+DuPlZFf
-         BasAgXt/k5MKWBFDxn7xszudNHyGFUDsWTUOlLYnH83pbZjhSM1E924dT568SQga+uVb
-         JUTlm/Hxk5Rc2lvsCtvsAXF+KZxKDRCY4jy1zGTz84RAo0dW11MqrG6b8VIz2ns6xl/M
-         iXc1IdQA0eSU7T+ciUNwysy6RqUe4I2r6akFZ+QzsDLSfS7DoHKqqMCxxUHBEWbHqU80
-         WZPxR7GmQX603DyQRpDfkuv03S7JjcGBf44XcBX3p7Me9mjE2SqqkPa9WcehEVr0mQwQ
-         xI8Q==
-X-Gm-Message-State: APuU4Z9SKeEStenc++YWo14Wi27jeaDyjbku/vY1EME7bUdJR1ud6AQ0
-	UQSnaB53JIei5l125c6RWW0OOjE3JTHSBpfVizoXNM9N2yiwYl6mBL2rjMf2DWRC
-X-Gm-Gg: AYBFou3+k2SN4TP6x+AK41KKcwXOTRh+d6YxnpUejE6lu9m56cc3dEsNAuLyBaUxIPU
-	yXP+DmOBSy5rOVn7qvCEo14NYjnniUpiipRAsQdchyHzhhOn7h8DUSG9CCGYQINgkaOxBtAamfX
-	xQE9Ki80cVh37v4obsHgPng2ZDLZBamHI4N9Osw9xtQsYWEyN+EO3vVzlQUWPbGfCiUOYM9rqwP
-	XmsFBR2bOVDURf0vnLr+ph5CLBQUTnoR8lk1+aLGiPa74sKRaGI1HBy4Cujs1x1X0mnmyMIzlZJ
-	F9UWiUw+7UFDkEDjAx0UF2cbvsT2Fmggi9FhlvuU0MtWCRP72zSk/Zy6x0/dfLf6oNky4bGXKAW
-	zUZqmDbjSxpuhUFdbCm7RsgSRKtSO6Dgn+52X+0FjvbkkD4YpKR9hcbbTPWD36KmzE1zjWj5nSD
-	dZbia1NEqe44FzVw0/rwQgj3Z0yOjldPwKI9bOIRkiSzzu7B5uYyqOKGy/xR+UDTe9DSB0E1xjO
-	idhx0ZDuoPL71oLbPteujlcLOV9/5OlRsDvIa4Bx5QpzQe0yyoBzCfRyBQIcUjxItE3Da5cvoW6
-	HjgEZPjiRLTf2VznIgy6fWPkeCpKItcwXsTEAMohDK2+Cfu+GvOzdXqf
-X-Received: by 2002:a05:6808:6f98:b0:567:c40e:c79e with SMTP id 5614622812f47-5683ca0028amr1501461b6e.24.1794296233888;
-        Mon, 09 Nov 2026 23:37:13 -0800 (PST)
+        bh=MpQibAg8X4msOndVvsdNzuZUbPprPXfZAwJh5lqCkR8=;
+        b=Yx2AIT9khnO0GSFBzDNjY4/lAMgx95EdhNjbW+580jB4hr1og6FniB1Ie2F987TQ+s
+         c4qGrsPY6cIc9r95mwFpMyAAdbhYBpkWwlF4pth5tRx5mxN7Vq4OG4JMtwnofj9LWDiL
+         w937+uJwqUG7zxyiwEt7m8YMqCIv8Hr7G1Hv8hTBPsVWgit1TIVgKzXkJB3CPjtZfTg2
+         LDZX5u5q5tUjsCtCuvZRBCizQiVYuJcaLuAL4SxOB2a1p4bWZLEzYGrKReCdvHDKXzDQ
+         DLyUrJ+LwxT4ppi7VKkFX4Qc9jbaezgEcqw4CLSzXnpq1rVQkOF93drThzPg8zQ49KRD
+         z25w==
+X-Gm-Message-State: APuU4Z/RbA/Z07M/2+zfL0V2nqcDdcank88y5MaCBb3cL7/heJj3FWRh
+	V/yBHn0uKyBRv4QUuo6tlIkee4YIAcbMkoQWsJTrtxPoHqybFIZZetYeb87BRSTq
+X-Gm-Gg: AYBFou1DXuAGpxh+lDDP99aH69k8a/UqUjPpM4Ykk6jKpA7WDC4HPoDB8xE4eC28zOS
+	lrXtUJUB/jbGvlF6XQE+1LxJ+XJADFFyp3qdUyIFsZi+JpTWv9myWkb6R20GUMp4U8gIewQ3Ns+
+	X4axGrF6x6e1sscZoDMJ7EiJMV2uDcaQo96OGD0EVXza08QDR9CA0RzcKNr2EKw5Nx4pHfvkDnH
+	EijGDQvCSKd7lXEVMH3BVSu00BUgbqdmvc7jnKMJRcXlqXMqxKhN104xapErptziagNEHmZrftp
+	YqSvfHFOlooOQpu+jPVCpy280Oy5FH7citCqbT98Azp4ENWuf/VAYmHG75hTlfnivhFwHbZLv+s
+	ZBkdOMbqkdfQqOy1uPdFkqFQH4JvyeyvaLcw+bnflMxhJfnv7ouVfqgT5g+lELhGd434YrIlNR+
+	C2Oup3eIp2U2jDIiihWnJtzejwqA0inmZyUv1WLngxHgLztnsYuv498TJ2+c8gOtvmD5jNM9NSI
+	22Kfv9KeJtn8b86BM/pIUekU6WuHMsh+Oz+4PAF6BgKnMace2EL8vjA3vb0rbcoxIaXKdiUUqxn
+	88QnTkOjVQ7bpz4qirIBKzVGZ5zCai6tM7HCKF3iMYLCqt8eQPw473qS
+X-Received: by 2002:a05:6870:3b84:b0:49e:162e:7a83 with SMTP id 586e51a60fabf-4ae20357d14mr880054fac.33.1794296235666;
+        Mon, 09 Nov 2026 23:37:15 -0800 (PST)
 Received: from [127.0.0.1] ([135.119.111.130])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-56905735edasm1452821b6e.7.2026.11.09.23.37.12
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4ae22fcdc93sm989524fac.10.2026.11.09.23.37.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 23:37:13 -0800 (PST)
-Message-Id: <a5b6436943d4d0c9fdf4015106dd1bb89d006979.1794296205.git.gitgitgadget@gmail.com>
+        Mon, 09 Nov 2026 23:37:14 -0800 (PST)
+Message-Id: <1533ef9cc6c5f4eb19007f22fa85709ee5870a77.1794296205.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2297.v2.git.1794296205.gitgitgadget@gmail.com>
 References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 	<pull.2297.v2.git.1794296205.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Nov 2026 07:36:40 +0000
-Subject: [PATCH v2 10/15] setup: handle NULL value for safe.bareRepository
+Date: Tue, 10 Nov 2026 07:36:41 +0000
+Subject: [PATCH v2 11/15] pseudo-merge: handle NULL value for
+ bitmapPseudoMerge.<name>.pattern
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -114,50 +115,52 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-A safe.bareRepository without a value makes git segfault in every
-bare repository it discovers, as in "git -C repo.git log":
-allowed_bare_repo_cb() passes the NULL value to strcmp().
+A bitmapPseudoMerge.<name>.pattern without a value makes
+"git pack-objects" segfault while it writes a bitmap, e.g. during
+"git repack -adb": pseudo_merge_config() dereferences the NULL value
+to see whether the pattern starts with "^".
 
-Reject a missing value with config_error_nonbool(). The callback
-already fails for any value other than "explicit" and "all".
+Reject a missing value with config_error_nonbool(), as the callback
+already does through git_config_expiry_date() for the threshold keys.
 
 Assisted-by: Claude Opus 5.5
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- setup.c                         | 2 ++
- t/t0035-safe-bare-repository.sh | 6 ++++++
- 2 files changed, 8 insertions(+)
+ pseudo-merge.c                  | 4 ++++
+ t/t5333-pseudo-merge-bitmaps.sh | 5 +++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/setup.c b/setup.c
-index 186815c780..e9a1bdbb50 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1531,6 +1531,8 @@ static int allowed_bare_repo_cb(const char *key, const char *value,
- 	if (strcasecmp(key, "safe.bareRepository"))
- 		return 0;
+diff --git a/pseudo-merge.c b/pseudo-merge.c
+index 22b8600d68..19fae9233a 100644
+--- a/pseudo-merge.c
++++ b/pseudo-merge.c
+@@ -150,6 +150,10 @@ static int pseudo_merge_config(const char *var, const char *value,
+ 	if (!strcmp(key, "pattern")) {
+ 		struct strbuf re = STRBUF_INIT;
  
-+	if (!value)
-+		return config_error_nonbool(key);
- 	if (!strcmp(value, "explicit")) {
- 		*allowed_bare_repo = ALLOWED_BARE_REPO_EXPLICIT;
- 		return 0;
-diff --git a/t/t0035-safe-bare-repository.sh b/t/t0035-safe-bare-repository.sh
-index 1d3d19f5b4..a0e0c48d7d 100755
---- a/t/t0035-safe-bare-repository.sh
-+++ b/t/t0035-safe-bare-repository.sh
-@@ -80,6 +80,12 @@ test_expect_success 'safe.bareRepository on the command line' '
- 		-c safe.bareRepository=all
++		if (!value) {
++			ret = config_error_nonbool(var);
++			goto done;
++		}
+ 		if (group->pattern) {
+ 			regfree(group->pattern);
+ 			free(group->pattern);
+diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
+index 5b2a17f90a..e7e6b2f8a8 100755
+--- a/t/t5333-pseudo-merge-bitmaps.sh
++++ b/t/t5333-pseudo-merge-bitmaps.sh
+@@ -233,6 +233,11 @@ test_expect_success 'out of order thresholds are rejected' '
+ 	test_cmp expect err
  '
  
-+test_expect_success 'safe.bareRepository without a value is rejected' '
-+	test_must_fail git -C outer-repo/bare-repo -c safe.bareRepository \
-+		rev-parse --git-dir 2>err &&
-+	test_grep "missing value for .safe.barerepository." err
++test_expect_success 'pseudo-merge pattern without a value is rejected' '
++	test_must_fail git -c bitmapPseudoMerge.test.pattern repack -adb 2>err &&
++	test_grep "missing value for .bitmappseudomerge.test.pattern." err
 +'
 +
- test_expect_success 'safe.bareRepository in included file' '
- 	cat >gitconfig-include <<-\EOF &&
- 	[safe]
+ test_expect_success 'pseudo-merge pattern with capture groups' '
+ 	git init pseudo-merge-captures &&
+ 	(
 -- 
 gitgitgadget
 
