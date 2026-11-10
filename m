@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794296223;
-	b=nJgI9oVup/PRwHtqnEEdIrm2uCkS8kgZPwQDxRUdgqapoxjiWvO5xxNdFZt3qPpOcDsf
-	 NYmig8XM5xi+R/mI4I8P311F8fJQ+qB0+VX5CCh+4ArefGnvmmZ8nPuaeaSQKwGnWcrQX
-	 g8qoznNKOdINM34nATkF9DXFxnvujuc6n+M2vBvWh9qdOI0OG9toaNBJax7Ynoo6c9CDW
-	 SXOCKS2OD008HxsQiUuN1VHWgeswPwOH6j2WCq1LVQStyeYFFBNiCKozVRpnKUD9XWwYA
-	 6TAOPiUbDoTTXKKCyXz9jnBXf/tZSwu3S8oue7cZBcNaHUnTj3ho7zG5RSKLFN1TcTw==
+	t=1794296226;
+	b=5WRBns7LIpfIdHHEwK/0QNnS48vBlKytw0U18EVLx7i0Y+lFEFWK75oEB78c/CgHGx1p
+	 T+hQkkjZBGx5yFyBsJaPrAqVVEnQgzj4bb4gfHk/CG0bOsOOW5Zt2b5HF3OLnn+J8vqkP
+	 38uw11dPZpPhQxcTjNPPpG8+N4+PoSiCWl1ffxZSbOGrRwH7qG4DBhUFq/vc9E4lK61nA
+	 LGT1Gl4ghFYpGoBZa9i+GIDZGmzjtLv2R83W1Gcwz2kZK0lwxl+Pn03LWOgKFCnCCuks+
+	 gFCeGvZ/tgQmwkBJXbPHFOWOPtYbXE4hvRUV7xIEzj8noYYn7Z7hNBWr26+A40Y0PWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794296223;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794296226;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=FI675Eq3kAqyufGgyL+ae1aSnWyYNoA134Y0rEAj5Ds=;
-	b=3ne1h/UtYhdtVMRIM9qz9siiL9yl0aRo+w6V4UQd2aNrSj8dSTFHvIXKJxljByg+khfr
-	 R/p2AjHfAkI645Y6O37AnylBck8k0nmNj6AANRysGz7G0CutDPzPk787aIG5CmXi/R4y/
-	 SQQM9dY5Jr0Uz0eYxm8MJoewpfX9u4YoFf1YD6My3wIS6i8bZ+NrP8jMFRl1LyEYW4c1G
-	 8v7EtIGoHc3E+xRzOOlclNGMl6MYx+XYzutpvFgm2kqURjKs+j1WnweUtywn2uLrOmrOr
-	 OqSWzQrHYbIX9TE6o2ppix6h8h+idKNV1g8d32sBNx2WFe9BYnvFBMvMbTdSjiKvGyA==
+	bh=P993L3pKkA3TOlW1oH6hMlXPi4gc0hyHkMrVyG+TXBo=;
+	b=u5/S7Qomd6w4Gq6/5lk19RJZmwiMcLBEk2XPAmiOFBY5X7HQxL6Nz/S/GWwpAaxR9FHY
+	 MHoqkPS4vTwTYm/iLwvzaKfDBxNgxZiwetJbcFUOHTzQ+g3UJqUvEiuYuNnNUd2TFWWaI
+	 SZt3MvzGDciC2XN133so1fN+2QMwoj9vwVEQ8F4TGsuVBSJEz5GVe40WnmBFDrgdtb62f
+	 NPa7ZSryLSsESH/fcAVQF4HljIp5KOCl2TQpKKGi+aIJsN1QVE47tQAUJlufPoFOvNGMz
+	 ZPJP2gw2Myv9PHjMI9OcrdItl1T270WSS678ejVD8hAYKDnGHtuCQzE5jLSrCNPHjTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hoTnVb4t;
-	arc=none smtp.remote-ip=209.85.210.47
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d3ALWO1J;
+	arc=none smtp.remote-ip=209.85.161.48
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5D660A2607
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 07:37:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E5D660A2607
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D151606A33E
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 07:37:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6D151606A33E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hoTnVb4t
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-8451a619da7so1069758a34.1
-        for <git@vger.kernel.org>; Mon, 09 Nov 2026 23:37:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d3ALWO1J
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-6df5e315bd1so1282247eaf.2
+        for <git@vger.kernel.org>; Mon, 09 Nov 2026 23:37:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794296222; x=1794901022; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794296225; x=1794901025; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=FI675Eq3kAqyufGgyL+ae1aSnWyYNoA134Y0rEAj5Ds=;
-        b=hoTnVb4t/d/Nj1biNPCxyxoUFxvidE1+4GJHvlAaUjKTHyvXDtVk+S5cybL10hu/Dr
-         Lajv+jXgBzJ4NiUk6HEP3ePem8r6l6M5XlDEQVun8RmtJsWCNNBTUR6GOGInswZm3Wlv
-         oobql7+L1bREt5UPQAKTVuMcpmQ0/foHZhlhe1tqJx1a/80EbtOCNK3cIZ9IxrpEumii
-         XFb7rDjXZDsMTv0y2R9WyuAXeCE//Ox1+g3UAtPoBwJtyxTfY03attj3rSHjkqfWd9BB
-         MN3xplHVLriDqyJRW+y4g23y9wzRljatDWuaeA51s2NInQPaYE1lww90TOeAmOEcSCsC
-         XHWQ==
+        bh=P993L3pKkA3TOlW1oH6hMlXPi4gc0hyHkMrVyG+TXBo=;
+        b=d3ALWO1J7cV5nmdOj8g5izgawuezILc+pqVu/FYjMTRDMhceTqdmlQtAEgm6cnG3yF
+         E93qf6JCnZ4Isi1JvFaOIy48V+13KXhpRbrXWrpGkhroX+qgB1VexLAoMupTG4iOfJ7h
+         p/vBlKsucMn+wEW4VsMuGnpkNopnBPjee2QX2BBZlWfDQXiTjZISKDVwwLJew9nrAUSM
+         olWWvidzpyKh/7K6S7rL7Za4ENWq9RV1H0IIv0h/d9sytEBp/aeZdsapd5NdPZmOeqtL
+         NqLaqCd8WfkL0AVav4fp+1bAEcqNGHncYaSeb1Y8n6jgdjmB3SLzqtJwPNCkNEvr8N9I
+         G3lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794296222; x=1794901022;
+        d=1e100.net; s=20260707; t=1794296225; x=1794901025;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=FI675Eq3kAqyufGgyL+ae1aSnWyYNoA134Y0rEAj5Ds=;
-        b=i98Dv5QHBuk2OluhttCJvRCnFyomQfB95uH0A4cfoRaCbZSVKXNzJMvzINMGdPjqJn
-         iMf+Cv+Kl11rl//XLo58zgkJPmAgRZD0wOFvnwIlPjKNlGJQDb3/eYWaAryLIazBGJax
-         GF76bYo9Y2gjWSniH7I0olopJvusy7llcRiBDT8KZcgaeaSZOwYzjAe0oPNPwGfsL0HN
-         hjNIq8XiZ3X++/izkV+9utpXKDAuocBHjmJ291A87AYw5XboOvFi3Vdn3i5UU4+9jBd5
-         lv5HNZDaXWkLsdy9WiP3ihnyU+cQ0D+YCb+VR+vmwi8M8VanAdaj3qs4vsGP8g0YvKDe
-         UKbA==
-X-Gm-Message-State: APuU4Z8g9J2k3n0ESiEEg3xQhdN9edvwWyYgr492LrXHdusawfD9MFHR
-	//afVdlBP+KHqAIKzUoHPIlw07kc0iEERu+P/z6e/pCHKVA7dtUPt1uAkW/DeV9h
-X-Gm-Gg: AYBFou0hMwbwc8U4Lb9LN4rTKluoGzljFdtjssQkmjzciOQbMd6hv/fQjmIxhItv6J9
-	xgUbDHUqX+lkfB7Q7xNjF/ur+gMfCrnjtfLpoSej+K3UqCyeVTnWhfRbNUba20Ff5NZk9DFEpkN
-	dQbMcc1WYyz/lUP4ThbRvzEVgLnYeDNRR8RmlqoSEsmVdpIaZYrYV5fgd8zS6RGtYMchIKontA2
-	XOVPpGHDGXyoHkaIFjVFWlvnNYgvSNXfuDZ6G/lUM/ygGSLUf9GkfraHdqqHTngpYD8Hvh7s/t8
-	JzhDhuzQlRqwN4LE0PEsjxzB/ZP1JWkKAzCLnGWBov6Iknal/XRc55tTiq3lUipJbrS+RLyRKNA
-	nVQ/TEnvlK1CXGmE60RvJPIQJNI3CHE4q+VhD2zOMwzjzQtyhHLFOdxwWIC0Qx6fOZDImDQMJ3+
-	0GqzMjxLh1HUmT+EbIqIzXQC6AqX0oqPNuwiF+avsxArj+1q71i15xSU05nkaIMVH6mhSq62IDq
-	Lovi2ZyNG2Pje9RD4n5yfyKU+DKdHYkW09NC7wVO5TwxFMn4tzEdK94C2Cq7B+PcN6zFZqVfPhK
-	Y/LLvAGVCZSNYi1sI27kWENG8yD5NREVtUA=
-X-Received: by 2002:a05:6830:2707:b0:85f:31f:7643 with SMTP id 46e09a7af769-860dc70cfd4mr1331426a34.7.1794296222051;
-        Mon, 09 Nov 2026 23:37:02 -0800 (PST)
+        bh=P993L3pKkA3TOlW1oH6hMlXPi4gc0hyHkMrVyG+TXBo=;
+        b=QNxEmtIDBV8CdCZGIrvsMCaNQ6y5fuhG/LJLGgUkeInPNbav9P9mNX7if0u0kQr3nN
+         bwOTMytfK71OK6oYozayxin+I+T+en+XFr2EFSDHEAst4i1eaG7LG272jgtuqlQL90Cm
+         TZQ0r0utU1EJa8/YENQrSla+UkGOm6mylB11gTxIhbmDwMe34j/c3YArOF/9Ekvxp5x5
+         2+dfQKEo7lmeOq9LjTw6ijHxNgy19VhmztumRN1BfFoXFpM0jZjO2RFOp3FFQBTwNmzO
+         2MVzhd4zyL4dpcBu+aDp3apqCv/Lrvd+UuxttPD70K2ywsIkPwzub3FbMPojAtn6ITvV
+         T9YA==
+X-Gm-Message-State: APuU4Z8ccbBd8ncL+ACW76WdnoprCmRMzOMi/voLJe6ZFL4JYW9uN9vs
+	z0/80UXmmOkCKJfAnhvgVPOO4mX2Y07R46BA87hlwN1iT7Bvk1e8cppZF25WRBK+
+X-Gm-Gg: AYBFou2FotSXMOPrPWZ2IrNVdV2Td04RFZNI8OcgiHcVJlZEZJ+XDh3Ruou3rFGz3uZ
+	dEADzFQ/qKfc7yjYBJ7u5UPFFU+uCIF4sy7KduXJpjFJqYLb5TWDZywxDncyCXTekfQ3rh8rLcX
+	Tz5SvALAuxAsFB26QWdTjM/HTExa74Ixj8YOwtvppihc+nq4OIbknKVH6918kkpIwEcXpYL9f1g
+	UGYqvyWQSvmwhpCdox0cjiry9QburyRJnFh+w7Uy1SoAj3JywQDkN7MxiC8DOYvg5yTc1LFmcqw
+	sOzoS3C4M5W7Zbh4tAXXvaPcgUV+wYuD3AlJmBk2p2k1nYJRa+did0xC3EZl2Pg9D0+IXlcxxmO
+	XwuwADzGbQO73oqP+cJHga+bJ5dR6ALsWcSkCMM+um1Kx1HqY9ZZu8bLFi2aY33Y+YBxbw++JHt
+	dxR4vJ2gF1zoqUSxrJ80J7j91ztfutPL8REDyul8HKLL/ZqIkHDLjgjBzugZGMldi464I1ABhSb
+	PCaX5s+TV1Y8NQxTI3fOdctf+k+bu0LxwOyIWcZNvBJfIM3rJFBGeoYvUxRAxDeX933ozMT/jr7
+	tDlEF5sPGdc/6Deb1sDpRLH9BzGamp+V/FI=
+X-Received: by 2002:a05:6820:f016:b0:715:2424:db12 with SMTP id 006d021491bc7-718a683fd87mr812797eaf.50.1794296224773;
+        Mon, 09 Nov 2026 23:37:04 -0800 (PST)
 Received: from [127.0.0.1] ([135.119.111.130])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-860e5978892sm226934a34.12.2026.11.09.23.36.59
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4ae22f6b225sm997085fac.3.2026.11.09.23.37.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 23:37:00 -0800 (PST)
-Message-Id: <6c2a671a9270133fe6a0ddeefea92ef55a9c62a8.1794296205.git.gitgitgadget@gmail.com>
+        Mon, 09 Nov 2026 23:37:03 -0800 (PST)
+Message-Id: <d4b49d1363b8ba7f67c19f827d023915165d60a9.1794296205.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2297.v2.git.1794296205.gitgitgadget@gmail.com>
 References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 	<pull.2297.v2.git.1794296205.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Nov 2026 07:36:35 +0000
-Subject: [PATCH v2 05/15] grep: handle NULL value for grep.patternType
+Date: Tue, 10 Nov 2026 07:36:36 +0000
+Subject: [PATCH v2 06/15] remote: handle NULL value for remote.<name>.tagOpt
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -114,49 +114,49 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-A grep.patternType without a value makes "git grep", "git log" and
-"git show" segfault: grep_config(), which all three use, passes the
-NULL value to parse_pattern_type_arg(), which hands it to strcmp().
+A remote.<name>.tagOpt without a value makes "git fetch",
+"git remote" and "git status" segfault: handle_config() passes the
+NULL value to strcmp().
 
-Reject a missing value with config_error_nonbool(), as grep_config()
-already does for the color.grep.* slots.
+Reject a missing value with config_error_nonbool(), as handle_config()
+already does for remote.<name>.url and remote.<name>.pushurl.
 
 Assisted-by: Claude Fable 5.1
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- grep.c          | 2 ++
- t/t7810-grep.sh | 5 +++++
+ remote.c          | 2 ++
+ t/t5505-remote.sh | 5 +++++
  2 files changed, 7 insertions(+)
 
-diff --git a/grep.c b/grep.c
-index 1d75d31421..ab082f963e 100644
---- a/grep.c
-+++ b/grep.c
-@@ -71,6 +71,8 @@ int grep_config(const char *var, const char *value,
- 	}
- 
- 	if (!strcmp(var, "grep.patterntype")) {
+diff --git a/remote.c b/remote.c
+index 49ee2ea318..0db29d6dda 100644
+--- a/remote.c
++++ b/remote.c
+@@ -556,6 +556,8 @@ static int handle_config(const char *key, const char *value,
+ 		else
+ 			error(_("more than one uploadpack given, using the first"));
+ 	} else if (!strcmp(subkey, "tagopt")) {
 +		if (!value)
-+			return config_error_nonbool(var);
- 		opt->pattern_type_option = parse_pattern_type_arg(var, value);
- 		return 0;
- 	}
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index ac7ea9cf8d..d323927e54 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1551,6 +1551,11 @@ test_expect_success PCRE 'grep invalidpattern properly dies with grep.patternTyp
- 	test_must_fail git -c grep.patterntype=perl grep "a["
++			return config_error_nonbool(key);
+ 		if (!strcmp(value, "--no-tags"))
+ 			remote->fetch_tags = -1;
+ 		else if (!strcmp(value, "--tags"))
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 5fbfcb0848..bec2e51afa 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -90,6 +90,11 @@ test_expect_success 'remote information for the origin' '
+ 	)
  '
  
-+test_expect_success 'grep.patternType without a value is rejected' '
-+	test_must_fail git -c grep.patternType grep "a" 2>err &&
-+	test_grep "missing value for .grep.patterntype." err
++test_expect_success 'tagOpt needs a value' '
++	test_must_fail git -C test -c remote.origin.tagOpt remote 2>err &&
++	test_grep "missing value for .remote.origin.tagopt." err
 +'
 +
- test_expect_success 'grep -G -E -F pattern' '
- 	echo "ab:a+b*c" >expected &&
- 	git grep -G -E -F "a+b*c" ab >actual &&
+ test_expect_success 'add another remote' '
+ 	(
+ 		cd test &&
 -- 
 gitgitgadget
 
