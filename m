@@ -1,122 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794338245;
-	b=lgZcKtX55zKuNtkb0xCXwqia/1DTQdwimDPENqYX6WVKlDydb6CJW+zA+mKDKqGgLYwg
-	 Zb6WQljMvtYP0rXJ/C2WU+vqbXcN+yUttOHab9qoFmlIzouhVn+kNkaPHStfzxvbaNH5X
-	 9DZMeJflGLf4w+62Pl0tLWuxLD6AtdMWyoHGfv1ac7UGE/vGNID/0IibCMTy0tK2tJUKM
-	 +3PnLYjZGRH06J4S+sQolvwei0s8K2PK3KELQH7+nSRIjtt9RRlps6bR/oAhgfNJd7fo/
-	 3Q15xfuwuN5gXJBaQZ1QxSBByqkG+4FDj4UOjhYIp5fnL1YsmC6JFdf/IOgE/s77lRA==
+	t=1794338715;
+	b=S5OpeN8jO0zdmoR4mn+jycp6su/RUKIs6RO7b/oVgmmhakkgDC3woR7/QuH58EteoKJ1
+	 6pW5ZF1C3K/3oz/reeuN4X6ec8Skl1iHXJxQecpaGL+gEHs3cGR2nJ4yq5njZaiJNd7/J
+	 IRVwmv8Uo20nkzLZ9+jaePJPvwWN1iz5nc8ZyM/GEfQEcF0X9ZpL8JhoEHmeVT3Aoqe/m
+	 QuObFZnPGSOIyZEbvPIJ7xqKpQIwRqpclsX5Z/jQ7mbq+DKLAU3U8wlwKh+C+cbIW7C1+
+	 ZNcb2Ex9VzYBvJTDea5nlySPF2HS6iay/Vc9s+yjmNyhhpmpJkJq/MqNPb4eB8YyBwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794338245;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=dGHqrCqGW0slpDmB16le9o8ab/fwcZqVcWfrY2Z0sDM=;
-	b=A+jheJTMEUsHf6YAWHTxZ0ivl0aJFRJcxF0NdE82HKXZVn1RNXTV3chClDGiKwgkG/My
-	 I2QwgrqpaXrd91OdL8/z1pgewvtq47UVg3LcinV7xSM4Hmx/prXMPjDfdIk+MbHPo4JcZ
-	 whEbUKoTZ4408NXr11y2brRIlKyFpjDK14mUvSS0CrUZdahO3vWbqwCjpHvPYhwcGHt+0
-	 s3MtfNEdiTqHxMSgxm1cSEth4HxKmf14JXokfjjjSbtCMyl0SbG8Fyqc1mQRSB8I6zo7J
-	 hHCnXmYY2SpkCm6jh6dBvsXtrcnBayUNkEHxaKGIN7KrJwUFkCcdK0fX41lKFyxfwfA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794338715;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=F3epRJn1fUpv1bDlXz69d46A+mckkjmpMEanX1otdjc=;
+	b=r7PaEnTIib55jlXfZOURjIiDsLax8z8xGaRM0vTp7tJo3tD27hgAlnF8gKZ1yiPfGhSr
+	 bjYTJCLXzkI1z23UwHcRdcC4C4L/51auRjqlZcGH97niWbf9GUzx19u6RE9BHxCCXVrC0
+	 3ylQ8oB9PMVEX1MReS1aCV6HcopUJjbC+oARzA2gXyRjQGlNptMPKrm1WLUWjAd2xcrNb
+	 Ar6SEb1koLlBv3vNo2rldlyr3kalNfzm33UEpTByY1aF0SwWhlPyNszYowWzkoV5o04N1
+	 WJbnpTlkSZd+vIzYIRlU4TIjYluLwAs6nCIwoDUeoxM7MEY7YnFJqxMG07bUTS7caSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=k4ttXZnt;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lMeGzfpw;
-	arc=none smtp.remote-ip=202.12.124.147
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ehOffebx;
+	arc=none smtp.remote-ip=209.85.210.43
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56AF606A320
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:17:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D56AF606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877EE606A320
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:25:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 877EE606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=k4ttXZnt;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lMeGzfpw
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 42A791D00249
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 14:17:24 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 10 Nov 2026 14:17:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794338243; x=1794424643; bh=dGHqrCqGW0
-	slpDmB16le9o8ab/fwcZqVcWfrY2Z0sDM=; b=k4ttXZnt0jS3xEEhudEjbDs4q2
-	LBf7vinpxJvPuqGx6IzJ1FJUbgjLDSOEG+b2Up1lNgHfyWokViKZtzudoYdO4gVJ
-	zzVZo3diMDZ0i+Tl1kaac51vM+A4DFluS6ypIOGIS6A8HtHkUyjOH7qLbUG1VS6M
-	9Y4RX/GO9NvYJjRPBhAsvACduTbntOwksu0mWR8O+L/zExiUkHCBkcsgE9+al33W
-	Xel2gXpH9d8k+ielf8ozyReUKxUqOxp1TwIR2xJdDgQqezMbaAEo3vkhY02j3WuF
-	KwY4W9j3hyceRsqP/dmI8XAdL0OOL6RrZFL3NtWsuBVMORfZN0bzIB9rNC2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794338243; x=1794424643; bh=dGHqrCqGW0slpDmB16le9o8ab/fwcZqVcWf
-	rY2Z0sDM=; b=lMeGzfpwt8ZpMoO75VE95gst5B6d7lfW8107I2OBaaX+3HvOeka
-	UVmu3BFxoLqTO1o90wkL/HJeD9vWVUzV0NUxoZsyGtdrKjqso3SX4dfTxN/8SqA2
-	+UM08k+o4pmYfu++1qT3KI+v1TboD2lEWaKl/x9JfrnEHVHCsFMroy797tq8H9D6
-	b2ugZEQhW2RpuqHXOj7G67NayZVqZG0e6WaVRD1QYXU2saUa3f5u4xW3GmbO+PHc
-	Q9lTukzqYgjjjOgt4yeY2B1miuLBrs5xq2P6TVOIHVgRGqhJXFqMCChvPgG3URkV
-	Ca6G30ARarPYNT6oTOQNHTDeFO4KE0Q+rhA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794338243; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:QWNNDBbJgJyUaQqWluKuJAaeI0GeedWVg/6UXappWS2uwB5
-	Mt4jj0lMDi378X29G2u0yjx9PuLRUEPETjoCt0IQBhzwtL5S9l8hq0XYO1KD/9g/
-	SV14EomGyqCBWlU5wlwr+Cj9YQJcB6L+RsfGePprrH49DOLTCykUkjaZypl9OymA
-	i5Oho6xU802DuJzp8DMtkEEBluZQcOSgbhwNBj1daVBl6O38dHUWLeyjGGBrO/TJ
-	8ISl+2dpMbj8QoqdzpgcY1lyWglA0jCRJG9VSzYj5Eftc4MzL8FgnjvL/7XonNH5
-	ho9OcO0M8Rn+U8xaSpfe5tUxxmTpIKGu9fmgqIQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:FbfZpQoSLKpKi2Y6dV84h1LOz7nUFalFhvAQ2GyYoEc=:pjOPJvgxbVDVQNehD2E7sozuWy4yp9gUZEuiL9/SFs0=;
-X-ME-Sender: <xms:w23zaq3rYpxejW1VhrXc-k4khatKqWKV8S_mC6jL_EHayjRxntqUaQ>
-    <xme:w23zakGHhiIZU_HhlkIBm15iHwMlj1F84sCokYtamnEckW4dyqjpuIozEaaID_arU
-    ocMAxsgari-MCEtpe3upKbTYdIEyy8CD1M9IxEnoA2JxX487teCdio>
-X-ME-Received: <xmr:w23zan4KogyE1iRV66EwAwjajH7Xl8bTbVH4SQAQSmQ1USZ__fZyjPB0MRjPRCbxGpwVFGvj0mCO13k1_b6faXosdlWOYtmWSlg6>
-X-ME-Proxy-Cause: dmFkZTFwlcWpuuJkw+dnTLw7tuw5NcHjJxmK3ZmUZCb3mPlxO0avFHYJ5cTngS45WgJVOn
-    yF39+fSA+osNVG5OiV/Y12v5OPFJe4zmvvm6FCpvwzl5bsKBoFAE5Xk/TiB2Nmk89jCf9h
-    mT4sWzW5005L02aOtezQD9lYTaXANI0cAOALLMVJ31A/KpbASH9WLLTaSmhPlpRoOHBh8w
-    tV33HwSzzzJXsqKlryR0ivNIHhgXghXME5DV7GFrGl0IsX4Xj5F1nbqDSdXaVGucXZb8ni
-    qW/jTAvmBzFlBeRBCD2tblV9FSTz3xgoInLBEo/UsnELdFG9nstOYw6v5PvWJ17vaQMQVL
-    s3Sn/X9OqS9AYyAvUpbjs/zWprRCSWz3f48kWYkrUt+spTB1eebOq0FfUFS+89m2YgL264
-    iex4gCjSDxtg5+AFI7r7Vr28XYToZs4xRgR7WtqY0f0/euH9PmlS51A6iRXR/OppYVdPdz
-    IqoLO4EEyL7IMLc6c0oqDVh8vipPhHLYuv0Td5+BdymEFSbaqj87lZHCuLsbD1xCYPxpQt
-    HMK7+a6xGrAbUpCutH1bzp/2YjduNxE2/Te02ATCNUXCB9rPaILgZGcPVLDBmRsqi9h0i8
-    kU7UJhAfSyoABlPEPhTkMtJM0ItL05SMWBLDgAtq7tnvdBeqVrFaeojziXwg
-X-ME-Proxy: <xmx:w23zaqu5s7_7ux2rm5UDjNbRhrSW8f3DRaxQ39p6e7z2xXGyFpWbJA>
-    <xmx:w23zao7lOjlZfT5qOxt6aDpdRI-pGWZXl9hLrCGASSrFlmUP2ELMNw>
-    <xmx:w23zalWfz1l7_Q99h5njzrvrZN6WhUGrfrTYOv5jnQh-L3KE8dOdcQ>
-    <xmx:w23zaq9I1OZXsxfTo2e1IhIpnXah7MKBey-JCRGq0mxoPT73dqa33g>
-    <xmx:w23zajWLwDfUgIz_1Vdh9ueRNTjj7Yu5uf-sSQ3tdu5YY1w6HeIt_gDb>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Nov 2026 14:17:23 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Srujith A Poojary <poojarysrujith@gmail.com>
-Subject: Re: [PATCH v3 0/2] [Outreachy PATCH] archive: remove
- USE_THE_REPOSITORY_VARIABLE from archival modules
-In-Reply-To: <pull.2305.v3.git.1794335969.gitgitgadget@gmail.com> (Srujith
-	A. Poojary via GitGitGadget's message of "Tue, 10 Nov 2026 18:39:27
-	+0000")
-References: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
-	<pull.2305.v3.git.1794335969.gitgitgadget@gmail.com>
-Date: Tue, 10 Nov 2026 11:17:22 -0800
-Message-ID: <xmqqzevgqywt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ehOffebx
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-85a5455bd3cso1319246a34.3
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:25:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794338714; x=1794943514; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=F3epRJn1fUpv1bDlXz69d46A+mckkjmpMEanX1otdjc=;
+        b=ehOffebxYv1/HlkWuw4KrX/bM6akcjmNKJ0IodpJa89SEOTq2FmY7NkSOZoxJB0K5m
+         72YWswAILT0TZ14k1SgtZEj+hEf6DZ9oJfaM6QeefY6DaLkcKs18uWrjqwDrDIMfQxH4
+         3geBeUyeSpKRfXvbidTncwiSFao5tcbNXN2KcT5rvDFi/X/bf+EtterYQNpn8Dt58NdA
+         haokaPXVXxJhXHv2fNtd72dvD6bxGbmFAaBSRk29NbS7uHLUFb80kCKRTx/3YSqXTETQ
+         U7lReGlKtMBG0KKvcOsTYVT667uU/p28xE/4/u1daWmeiTGBIRfJC3FXCH2LN+SQBi8N
+         vSYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794338714; x=1794943514;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=F3epRJn1fUpv1bDlXz69d46A+mckkjmpMEanX1otdjc=;
+        b=1DqYviR69sCzrWXLvEptD5g74BzqcAvMKI0hP6j+qn7ShLBJQ1418llsgedH49ZPMO
+         vyOFoUmsdvCzRyoWiIGgDmE5PphtD9FR4JeRZkE6Yt1MFkNpnXzHzEVD5w/Bv9bdtWaH
+         uAQ0UgkCm6EnMmukIFBNKjtsBRhv/gIVGwBGVjxwT0obrq9kqdmp+SFaFBg/ksw9eUKs
+         WxFEX5bu0JpCsdTFBIdQOARTGKLjs1ScX1+ZJPXPJv2NKI///EvH+lDu252H5fem1Os1
+         95SWin5+5CiK/zmK1vsODaUWyvuIpsUDxZsX9GeGxdaYET7S28k7VJChTtZ+OoWOJfV1
+         BuJg==
+X-Forwarded-Encrypted: i=1; AL+hErGqyRjCsEKvWVK5VJeomItLsrGARt8oYKXVj8cXqGi/GkiulgniEsLrFWEFZzBfLmHKcoI=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8xiJcL7RtJ3MKNUKJU7eUdx9aZRurJ+m7upuqUVrQK5ujGARfX
+	a0vXIoyW02+BownDzIlVE4G6KUrtENvkwLHqtjiSVzgvTyHA9f93dJk/n5rtuQ==
+X-Gm-Gg: AYBFou1dkw+bNtcuMvW1pYlpLIPn0VPhxP8EypY9nz5JEZTU9UDzeXiBglLf3uWx3Dc
+	X19tgElpEmwBFJhdvkSDkZBeWMu03cfEqSGfZNxTQrV94FSwEXFB8hX6xdwbHk6jPjpp3FEaTDS
+	WHX8psuVh2960td7MhO0P5+HPR4FUj2GD5H1skIBhGwqCMtDQIfHrR/ma5zXmx/pjGJsUJ9pyHJ
+	x1yEz3FBfvY7QtOv1T2Mw4ZaPrA9k1uJRqPFNJ7ae3S4tVwvdHj6LKx661NxaIC8NJnl43JtqiB
+	pGEHxONv+/y4HmsN1ceLt8O/NPgrZjeucjJLxpScpBU4GgAzzL09fcwFjsSrrh1+j4SprahFNaS
+	Tf4QAt+9VU7rV9TILMvH2yLZO5wyzJVciUC4RMgTmyH8fooY0YosEE4ZIDoV5xltsO3vfMTsPs6
+	1rECQRhETTOHtufnGqNEwACN0wOPRstZNicCJ35gOhI3WzprWszPAylcw24/mpIDMMfCuBcPa/C
+	X+JdKl79mnl6kavfMh7uUKf0e3pbIeb6KKwLdnxk1ELJYPsyyPwFu+YzIvFmeQw9MGdPm7IuGo5
+	OBcuM1KmXI21LFqHxh1VQW/MnDUdGYP/iloXNsT/we0B0MDy3gIVeg==
+X-Received: by 2002:a05:6830:440e:b0:814:8259:780c with SMTP id 46e09a7af769-860dc76e7f9mr2755205a34.19.1794338714259;
+        Tue, 10 Nov 2026 11:25:14 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-860dcb62443sm2671518a34.6.2026.11.10.11.25.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Nov 2026 11:25:13 -0800 (PST)
+Date: Tue, 10 Nov 2026 13:25:13 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] object-file: return error on index-pack abnormal exit
+Message-ID: <avNvUL5KUWuoHIZx@denethor>
+References: <20261103212410.1389988-1-jltobler@gmail.com>
+ <20261103212410.1389988-3-jltobler@gmail.com>
+ <xmqq8q38yz5i.fsf@gitster.g>
+ <4c7c44df-4eca-4abf-a825-1bb3b16015c2@gmail.com>
+ <xmqqmrrgtz6i.fsf@gitster.g>
+ <590c5765-fc4e-44da-9326-b8242caa80ae@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,24 +100,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <590c5765-fc4e-44da-9326-b8242caa80ae@gmail.com>
 
-"Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On 26/11/10 11:27PM, Kaartic Sivaraam wrote:
+> It is an improvement indeed. No arguments about it. I was just wondering if
+> his change could also include a change like this on top:
+> 
+> diff --git a/object-file.c b/object-file.c
+> index e04ce0bc11..c52004014f 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1429,7 +1429,7 @@ static int odb_transaction_files_write_pack(struct
+> odb_transaction *base,
+>  	struct pack_header hdr;
+>  	const char *hdr_err;
+>  	int err_fd = opts->err_fd;
+> -	int ret;
+> +	int ret = -1;
+> 
+>  	hdr_err = parse_pack_header(&hdr, pack_fd);
+>  	if (hdr_err) {
+> @@ -1498,13 +1498,11 @@ static int odb_transaction_files_write_pack(struct
+> odb_transaction *base,
+> 
+>  		if (finish_command(&child)) {
+>  			strbuf_addstr(err_msg, "index-pack abnormal exit");
+> -			ret = -1;
+>  			goto out;
+>  		}
+> 
+>  		if (report_err) {
+>  			strbuf_addstr(err_msg, "index-pack failed to report pack name");
+> -			ret = -1;
+>  			goto out;
+>  		}
+> 
+> 
+> But, I would agree that this is a digression.
 
-> Refactored archive-tar.c, archive-zip.c, archive.c, and supporting files to
-> use explicit struct repository *repo pointers instead of global repository
-> variables.
+I think this is mostly just a matter of style preference. I'm inclined
+to leave it as-is, but an open to change it anyone feels strongly.
 
-It is not considered good manners to send a new iteration before
-first finishing the discussion on the reviews you received on your
-previous iteration.  You respond to reviews, saying "I will fix this
-point", "I think this one is fine as-is because...", and so forth,
-wait for responses to your response, and eventually come to an
-agreement with those in the discussion, so both sides know what the
-next iteration should look like before you start working on it.
-
-Only after finishing all of that do you prepare and send a new
-iteration.
-
-Thanks.
+-Justin
