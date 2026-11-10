@@ -1,125 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794293604;
-	b=RNsZ0LtCqC+WaKvJqDP6pcF3tl+5OdsFVdNNWgZB13BB66imMqFnAEi1pgjJ0J6kR7G5
-	 3EJczm0zoQet7FWXBAmxwNTZj1i1DgoWqGUA90uV3yuns1rTLuXnYX7TgrOF9vMrCEsbh
-	 gow/jJbz9Tzws9U9q9qxP6D7cHvNuBuc3XFIsuSBz1XwmW6rMqQI2bPmx/XTQphecWXzP
-	 TQuaI4IPAu+iwYbUkP2Ka4pVwhno1zi7Kh/Udz5t73oegL0pqLCNm9UPQqlkLul4mcKxD
-	 fXHf9ab+0tEGBP4eeuMdNE1z+utW/tqbM4s7YGgqDiKnBiRZkTz058XOr5osNsojH0w==
+	t=1794294291;
+	b=mvw3SipwFoGkOZpAS2ZPB5ttRRPp+3oqYp+14GHhsCxl9YLDismdSXyIN9aCoIThPpkn
+	 Hjj8tjn4jdiKllZMyxuiCMLsi30VbhTwjt0PcXX75Zgee/yFdlBviAIhw7ShMdQtI2XYR
+	 fcUOmp/66W0LfOa/Rr/RTdGlJXr9tKoMvSlBtppsbFxblu54bdXg8B/yGyxoak6pxRUSE
+	 K7ooq0j5AAnVwOsB/OnmD2h7UyF+qMen8gnSamEsQJxAi1gTW0GhCROx1U2zXFk5Ht+jw
+	 jf6aBHgkH8Wh2kZutO3ZoE+4QkrkVdsAGtuhIlPchlYV9hfjwibiwokNuXvDiJpRQsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794293604;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794294291;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=WTZVQF0hKjzSZmTNtb2PGXMX2L6xIBX0qsw64R+6aEQ=;
-	b=j2jKx+s8X7zmVYh+HxM0V4EO2GXVzEKg9YmeTZ2prN4R3nvmkL3axn1oI4g2kzrKSeP9
-	 Kc0aRLvpcfUOplGeUryhnlOSZQXTOmm22xMiPg7oq+WENG+U6ajKfyGrMYDEl2gOB3dMN
-	 QH0TMR/iQWFWMK2XUxEZUE92yjdim6T9/jZ4BEybcEqLDHNxPuB33lq5R+68Jr1564Dyq
-	 k30C7GBylBPt+v7LFZ8AWw+5ooXpGcdE90ROaueS8v9H9mdxldBRyDtjXZSWA/tUls1Kw
-	 Z2LwVrmHQ0NwZu/iXWR7/nV4j3quy5zWAGx6ZfGa/jGvj99sthknBCracDitun+WbQg==
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=SbTwCXI6xuesmgVjjVEP3OqKtW0/ezwFcLn09WOAZQI=;
+	b=ZkTMX8TE51GSHvA9nT3/weSe3xEssXp47o5KRTgvZl3IswS5f5IgTLiedcd7twhXqL/5
+	 mNi8Oh194MZVXf/F9YqHrh91rrdH/NufeSkua3/qXUNYxXI+t63bTm+e9j14Sm5C1ygMG
+	 5Ld0Yj3sl0QuzxmsO3fWTGolef1jPQIWEx8a6ZrxwZ1PhIWe7WLsHylzygstrw9YqOcMj
+	 9XtUJZR41PBccUdS+RCrFEp/8fSH49g0OCsLyzJa9ulTtDf/nuhBinCnWQA0kDaPYhgqZ
+	 znhbA8RUAKpM6xN3Xwv71Cwi3g0DZYp1e482vNZQ40u/l+sq5Yn1eHPcbBcoOM+gZcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=J6prCEwB;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=NAza+v8+;
-	arc=none smtp.remote-ip=103.168.172.155
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=DyxmYBkE;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=NDr1Sh6r;
+	arc=none smtp.remote-ip=103.168.172.150
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F11606A31C
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 06:53:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1F11606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C264606A326
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 07:04:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9C264606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=J6prCEwB;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=NAza+v8+
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=DyxmYBkE;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=NDr1Sh6r
 Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0F52D14001E3
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 01:53:23 -0500 (EST)
+	by mailfout.phl.internal (Postfix) with ESMTP id E0267EC0584
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 02:04:49 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Tue, 10 Nov 2026 01:53:23 -0500
+  by phl-compute-12.internal (MEProxy); Tue, 10 Nov 2026 02:04:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1794293603;
-	 x=1794380003; bh=WTZVQF0hKjzSZmTNtb2PGXMX2L6xIBX0qsw64R+6aEQ=; b=
-	J6prCEwBC6AF8Jl74ujI22pjzPFUj9w/VR3wfVoAjeP9/Dx69XG8sy252IaMXwI7
-	rrz/Bl8bWQOMPHKccSnOkD/1l2PIOgVJA08lzUkJ19eLtaRiLTCUBPH41L2zcS6e
-	XXU2EkqVtm9Ye2fLkn5wuebHQ3FwrPJDKnffJy4xUDyCVSvFO0AxeTERitivlZH4
-	DZIFRqc9Y9lMEPeeceYlAgwTemgA0EE8966/coG3REIB72aiUTVZrnl/20ngtvPg
-	O7u3czzvFl2ZRyxm9t23rfpZH7iFsReZEZB29z6GGukjjlkEpytkpZ5uEH0TfpoG
-	CeO1YzehlAG9PGovb0Be4g==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1794294289; x=1794380689; bh=SbTwCXI6xu
+	esmgVjjVEP3OqKtW0/ezwFcLn09WOAZQI=; b=DyxmYBkEsgAJVoDLRHZmaakYVo
+	b+lmolYeAC1ZPx04xl7sh69ANcEXyVaY0XSCiKlGvZD3qaQrCv3ByoWTMh6MNRgj
+	7QpUayHiIYoL6Xen6JTJ9UdCNSUfPI64gEPZgHkB7/L/0ilxNBkEygvQAdHeXQ74
+	ohl4YlLGzU1J1sSE157+JX/t6xwrw1TE9QdpHfoMqzEEpeq3c31m4vUUrEvCXoxz
+	JvsMCqaThEoAw1EgfATTMGsfY7iQv7vZDwzOQ8vrtKpCCvC8H+agmg4FwCJs/HEj
+	uo1/MNFc5PuUJG0JuehOC2TDnoYlmuDhdPjPnpEjLLJ3cIlFqp+5AUYpTfkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794293603; x=
-	1794380003; bh=WTZVQF0hKjzSZmTNtb2PGXMX2L6xIBX0qsw64R+6aEQ=; b=N
-	Aza+v8+9xEGWsJsSqd9mk0XG+V0aOTaorjUIZNWWwWxQNysOvdFutQTd19WW1z8/
-	cfhbD9nrmokg+Ogk4OfnQsTB7EpjmYlbjy2YvTknF5ERDU5B7McPlkYHJ3VD+I8k
-	WunDa2nZWe+MQgFtI+goL1aYvKr/av2e3jj2kI7CDoTnojyWIbnUvwmKpKtu4Bf4
-	wH5mbUHBrHRPOa+rrOfo1dWuIvVf7fuzmzhEvzaGCUZ/F1lePWPTJZeAiSWNZDUo
-	pv0OlOtCp0tiHIynCNnd+BuoH+9tmCkJxb/Ah0k0RgO/4WJ9o0ETY9ICy2ATenBd
-	opkFMHSyu1GaiWGW7+hcQ==
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794294289; x=1794380689; bh=SbTwCXI6xuesmgVjjVEP3OqKtW0/ezwFcLn
+	09WOAZQI=; b=NDr1Sh6r2OL7jUadhSA37buri3E1GoAgVncx0nZsa6WyOyQvFVg
+	bVbZbVCvvrYyhB9g7oRQ80zh/2IIfUHTuUhYUnCFFRa2BZA8+m4wMLWKai2oI7Uz
+	fyNdnxUHd3LMPvIc8syvcqTHaUFtl42pS0ip6dUOWhgj0bjSBZ1euUDANFk6v61p
+	XUfgNwYeY3KoPmfAc8/pGTXAsvtkIHO897qzG9YPg8tSxFvI7frId8dBKm9eaj2h
+	rri9Mmoes9hFJYGS77+VOsp0vckai46gHlMe6RfU4NDxv/O7dUpuhyI/mhQ2U0M2
+	dbx5Y9fV7BvP2EzSFsGtfV3KbzFYelbaVIg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794293603; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794294289; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:QCzC2Lyg5i4jklmlelj30oUnm8HHg4kxlkbp6m2WAYtz88r
-	5ijJy+D1G+PRfWrz4CsyNb7gALuBV8dcpQTo/9TtyBp7wo94cmmzPzrAq5QzH/+L
-	ZxnF3Ue2OCFrvUabBNXmsBoYosFso1OXuVjjL/ZCgaxu5N40iQYFSldbCbgaqwNu
-	hYVKBAliXO0+Uiyrdbh1StVZ0h/wcZSzgbwhlnPvfOxqQMjmjogbIzHz6sEJTZFr
-	ePjUe1s/1YOUmggYmOU1TkUdkVHFmLEgGfQHYWuVOkTRWD1dAZtrpLCdeLAhHvot
-	x7eVcTCvITBMumw8rLBlPT/RfdUxjyKVVXf0hbg==;
+	s=fm3:rsa-sha256:LkfcccUiuhfdew4x3GGFj3m/S1vl4vY/6Pb0SF2FHrtrBPN
+	t9hSJubad0Uhjh/gEn56G8o3483k+KRRMT4fdRQe3lxDQdUf9C03aeq6tz9DciBz
+	rfGFi+hkDlhSgvVSwHs/71ctulidNvnLjTZP1pVnXv2YJCTbxjC5u6v8zK3bqtKj
+	YzolBA3KhlDHldflO7fBjtBRKJs784V66fK4dd8IIFyqZXy9gjuBQoMQr93Ng55y
+	+gqDoWEnw35E+VBmrxLp20bqb3twy5/OUwcnTtAwT8HC93m6JGFxgPGZHgby3IQ9
+	S7lZuE8dxdj4cmlAlbvOJqoc1bVfsUyuhg7gZrg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-disposition,content-transfer-encoding,
-	content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:OMqL0XZhVJbH0PN7hE7swfeTpwJLwukPt0cgRm7w7nc=:Ss20oR3vb8N6iVQ5sQpRaLD/6d+rpqn2t2oIEbqqxs4=;
-X-ME-Sender: <xms:Yr_yas79frb2_6ThDCKWdxeHDSvXqfRbvQ1vf0NM0OZkPpnZoBAUmQ>
-    <xme:Yr_yak7lL831U4rGTTozp8qCRH5ugwobRwBWcFzCcnwcPx2mx6uftIjLi4E_sxAqC
-    RQCCZsZNa8e_aM83YodjFNhlLSI4SKHkpamPIO3-Cs3E86EqgzXkQ8>
-X-ME-Received: <xmr:Yr_yagfEOtsi70BWo0UekAfoKX4Z9Ea6AnFsh84uGrkZwpqo9dGUvEWFJQEkTT6mePmayQ>
-X-ME-Proxy-Cause: dmFkZTF4iwbXH8YXFpB7GfOzztCPYQfje2S+9IEFkr9swnjiJiv5jAeoyVpbU5zo8MFQxj
-    5QQbn+RK6rEVlp9t4fblj/ORuS6rIeA9BqTWaHr6Vhane9A8CLs+gsFFiJ9+/Tpa8yEMrj
-    /1TKz8nRLaa4NdMkBLk1w40qgwrEqS+4d5wjNOFgChvt/oAXlMcMgxsKjbe3ElopS9oWgW
-    yC7XFb3qk+g/Io1kNOEz0sRp7Hr7BXMMOc9wSmOpXvJJnuyL7IKLaqVjzWxWcZanrSDWHN
-    7M9RCmMrm2i6w32xOtEOALOQQZXzXdal4jvogQ3epe146QNlAI6wQZvDt6sGDsRb74Cgfj
-    NKhsCeNP/jojcGCiHlRaNBJ0W5uIpeHqobMKV5yzK2Ltoq0ClmJHpEU38I1q5HukYihxsB
-    qUUGUSz+srVK296nNpBiDRwVyf+3bu9QETRpYXwRSczrpI7hBJv9hQKI6+ec3pV8/xJyPR
-    bNbI8k5ZUnitAP+HVo7TZkvqRq8eokkKD5RBtxcwdiR1MzdUFazntOPN+5rjz5hg2caQIs
-    gQinOPnN92QtMSsY4dDHuXDGzax4ksrHbaPMX5+FK2mha5kqTyr4uuJCtuXes7OekhnXXD
-    eFl8rjCIDmNbAY2NKXDFUwn3bAhhMx1YLSls6VniD8T1lU98NshZXf+OkpQA
-X-ME-Proxy: <xmx:Yr_yagDPt8Vj0yWtd2ENjK1Gewag6s7oMdAI3cLYaK801Hw4iopHtg>
-    <xmx:Yr_yar9YftTqe4X5hmuvrfrrYaTelTKNR_NMKwfFdOxq7kjSPmDDGQ>
-    <xmx:Yr_yajKxMb5q7jP1qiRRmZm2yL4zK3JWm2QvFGl1zXp46doUnHgR0Q>
-    <xmx:Yr_yashxXt5s2wJiCtsOX-xG1Y9aMSbveFQjOFFYMHeWWJ-j3d9-cA>
-    <xmx:Y7_yavxvce27gYCW1nAiqHcQYU_y92_ibdEiBrw5aTHn4QVc6_1pWntY>
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:9VFH9t6RTvFTE9rvUeBtmXjSS5Dk2DDNQrykncbZ6PY=:6RmKeWeuojp4hP0H86VV79LFyjJDa6cCfYRo838zzq0=;
+X-ME-Sender: <xms:EcLyalU3AqSjrV0nIzhxDOaJ_ct0IqGngK9hFSUTSILgSIxf8LZ8Zg>
+    <xme:EcLyarmMl2OgU6baRE_Szi02L8WUoyCZzk0ZLoWyE6CNep2PZ8AziPpAGUV1O7f2N
+    McTqTPfzI0M2lNK36P5jaVDbI_F-EZ9gYsme2QG4rC8zYJY-8JkgcM>
+X-ME-Received: <xmr:EcLyavAWyuwfMvsJUOF4vM8ZC99pf_UQAMuD9KfNp4h1D5xV3oPzmumn46nl4nSg6qWuwA>
+X-ME-Proxy-Cause: dmFkZTFzHRnl0Orj5/G0XtjfmvXK4mOqyyVUfEMgijuzHdpu3VYcE+/f+sem8kmKPUpvt/
+    gP/frcL0D1LJy+McNXja6YW5TnR+qQsBnOdPToE+8ltvTIQp6FL0/3M/8rI9UgF9/eYBbS
+    EhkJPfuDT0U47t2fIxq08ifcsNIjQdU/cteBhMROwbJ9M6/9khyfNOxoy7qbSBTDc3N76J
+    2EcUF+L0GtQXrCqkAqEzAHoAtQXUe/yip3QyDrErgPRMo8TIUzFpE0gGN2aNVl4wSE9oBV
+    I7atjIsD781DN77L+C7InGGUQ32nS3jlby/aFhcdvDS62hKhFXHa55xB56cUbtN/TIW3bW
+    ldJh3jzBPI8KioGom5P+VLJJhcCu+lc2HaHHeOXMtNxFXa5RSO94m6QKJdnksIixnhMIvS
+    rzFHZQkOdWl4NhkMjzqm11Jng1lXph/SXbUSCTyJndtJm9K4gG8nkzWcv/FRXKLkSJvfPR
+    FxjY8J2cxxNXLpphzvClf0IVFlDGCQ9fEiGfrIylbfHMUD01WWdNl+sILwG5GmMe5ws7PJ
+    1WKR+8jLUb9IFLP3Nj50IiS0Pn8VmFcsRa8lDvPjtlxADnOFMSI6pNqP9CF4EM1zNU2n7D
+    GSWOwaTKw16qiMjLNl3bR49m9JpC6tx3YdRKzGMSIP56EybIb6kHrWQtwaMg
+X-ME-Proxy: <xmx:EcLyajetwc9ICG7tup678jAoJA6FrhhOEOhwGhfBz3QlbCgquywcrw>
+    <xmx:EcLyaiKokMHJp8DKbYyYi3wie-m90K04yA0s___UwrzN9xbFMuOnSQ>
+    <xmx:EcLyaucNlnoKAAvSbOQwitAaCqhRt1yrjjJGVVVvSAiX0Gu2H1FQ8g>
+    <xmx:EcLyah0o6gCnfWMS7BGxK8dGivWdiL0FVWRqAW5N02soyMFjuKZHoA>
+    <xmx:EcLyaguUdsN5sH6IdSfn105Tz-_kOWNqS-Bk5gXFMTZBksdmVKOBNUDk>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Nov 2026 01:53:21 -0500 (EST)
+ 10 Nov 2026 02:04:49 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fd216b5e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Nov 2026 06:53:21 +0000 (UTC)
-Date: Tue, 10 Nov 2026 07:53:18 +0100
+	by mail (OpenSMTPD) with ESMTPSA id af797cf9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 10 Nov 2026 07:04:48 +0000 (UTC)
+Date: Tue, 10 Nov 2026 08:04:45 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 5/7] t0027: cache expected output files
-Message-ID: <avK_XnoZ7Asakg25@pks.im>
-References: <20261109-pks-gitlab-ci-speedups-v2-0-508832602d0b@pks.im>
- <20261109-pks-gitlab-ci-speedups-v2-5-508832602d0b@pks.im>
- <20261109144651.GA14738@tb-raspi4>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] unpack-trees: lose USE_THE_REPOSITORY
+Message-ID: <avLCDTHuScp4iLyj@pks.im>
+References: <xmqqtsltbfdv.fsf@gitster.g>
+ <avHNf-aaxdsyim7g@pks.im>
+ <xmqqecctzttt.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -129,55 +124,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261109144651.GA14738@tb-raspi4>
+In-Reply-To: <xmqqecctzttt.fsf@gitster.g>
 
-On Mon, Nov 09, 2026 at 03:46:51PM +0100, Torsten Bögershausen wrote:
-> On Mon, Nov 09, 2026 at 10:58:26AM +0100, Patrick Steinhardt wrote:
-> > In the preceding commit we have optimized one aspect of t0027 already.
-> > Another inefficiency is `compare_files ()` and `compare_ws_file ()`,
-> > which are both called more than a 1000 times.
-> > 
-> > These functions will repeatedly generate the same expected outcome even
-> > though there's only a small handful of input files that the expected
-> > outcome is computed from. Recomputing those every time is of course
-> > quite pointless.
-> > 
-> > Improve this by computing the expected outcome once, only, to reduce the
-> > number of spawned processes. This reduces the runtime by around 20-25%,
-> > and on Windows the runtime decreases from 480 to 380 seconds.
-> > 
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  t/t0027-auto-crlf.sh | 17 +++++++++--------
-> >  1 file changed, 9 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-> > index 504a7ea54bb..b021f0855a8 100755
-> > --- a/t/t0027-auto-crlf.sh
-> > +++ b/t/t0027-auto-crlf.sh
-> > @@ -5,22 +5,23 @@ test_description='CRLF conversion all combinations'
-> >  . ./test-lib.sh
-> >  
-> >  compare_files () {
-> > -	tr '\015\000' QN <"$1" >"$1".expect &&
-> > +	{ test -f "$1".expect || tr '\015\000' QN <"$1" >"$1".expect; } &&
-> >  	tr '\015\000' QN <"$2" | tr -d 'Z' >"$2".actual &&
-> > -	test_cmp "$1".expect "$2".actual &&
-> > -	rm "$1".expect "$2".actual
-> > +	test_cmp "$1".expect "$2".actual
-> >  }
-> >  
+On Mon, Nov 09, 2026 at 11:30:06AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> >> @@ -345,15 +394,16 @@ static void load_gitmodules_file(struct index_state *index,
+> >>  				 struct checkout *state)
+> >>  {
+> >>  	int pos = index_name_pos(index, GITMODULES_FILE, strlen(GITMODULES_FILE));
+> >> +	struct repository *repo = unpack_repo(index, NULL);
+> >
+> > This conversion here raises the question what we want to do in the case
+> > where the caller has both structures available, but we don't end up
+> > passing them to the pointer. This could in theory hide a bug where we
+> > have mismatching repositories when the entry points don't verify that
+> > property.
 > 
-> Nice.
-> If you want to save even more CPU/SSD-cycles,
-> you can prepare the expect files like this:
-> (No, I didn't do any benchmarks, nor look at ws_compare)
+> Puzzled.  Here we do have an istate but have no unpack_trees_options
+> available, so it is natural to pass NULL for the latter to tell the
+> validator "we do not have unpack_trees_options".
 
-Thanks! I benchmarked this and it doesn't seem to make much of a
-difference. So I'd propose to stick with the simple change for now, if
-that's alright with you.
+It is natural, but the calling context _does_ have options available.
+It's just that the caller of this function here decided to not pass it
+down because we previously didn't need it. In fact, every new callsite
+of `unpack_repo()` does have options available in their call stack.
+
+> Are you worried about a case where a programmer who writes an
+> unpack_repo() call passes NULL by mistake efven when istate or
+> unpack_trees_options are available?
+
+All I'm pointing out is that there are cases where we could be as
+defensive as everywhere else if we started passing down the options to
+calling contexts that don't have it yet. I wouldn't say I'm "worried"
+though. The proposed patch is very defensive overall, and I'm not overly
+concerned about us missing that defense in some cases.
 
 Patrick
