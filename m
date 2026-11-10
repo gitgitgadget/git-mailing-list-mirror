@@ -1,87 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794311416;
-	b=KDiTLaYCWlZ7+ULelU4po6COOnx3ALYCwmNyhlJXS47zHBldmOLQibRAZFEdWnRM3q0P
-	 JE9uK2LkueOBKoZleG1E+WHFiNbNzCRTWxN65JN1SefQQJoMM/65P6832RIeYfQqLq/+r
-	 EcmzN8XbLWUJLmU2JvFoYrBc0lWni4EyQfHWgQcTqvl4RBOb8AqTbnCs8ZosEbkt/7x2N
-	 EsYvHxcwDj3wbg/AkC4yrsh0ahcDTUpqE/H+JIqwSzn3maZfto33I1Q03ZMV2P3MxdmDu
-	 DdCSecPL3r0lhEyNYd5buct6eIAQPFuFT+0JisF5bfVcZHXFmcp/KtW9LGzNj5szpgQ==
+	t=1794311411;
+	b=hrskCL2peXzb0vLN1cEYuIYeEAeIZ7qHODPOKkVLm5Xg+ZxqyvGL2fjd50xfWFQA8WXK
+	 W1Puf+kBKBVkXL60/R3A6EEdCXj6NHvsPivci8QCC+q+H47bRFyFMTuRb9o8D52h7Yxb8
+	 hDR7SwJFFbOextq8sk94/ZzQzzKMkbFQnt27Z8rkyeRaTH1Y4XYp6h3WyywE6zjkGW2IU
+	 oxcQUzcX60FF66AJy1tKlQ2OTwPv8/8s5rZwS9wszbV13GHmszGoFpg+Vt7Wch7XaNwX7
+	 oOgQIheEWyf/uMDJiMJMGH9J0gMVRAS5daZPOtBPElkfvLnO+o0vOUU9jE77s55iP9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794311416;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794311411;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=tfCCjMH9BGezp+gJQWEpFaRqrESYtEZJwXDt9RXFM9w=;
-	b=pkPhy62PjESP48Z4rv4AUdNsdNyUC0sf5LClagPhqGZhOr75NZ3K83GTiiKgwlFH78jD
-	 2Fn9AUq6c/OxL/4BVyAwByIL/KHBCxLVxJH3pZF8iMKgf+DfliYJQuo8eCOY1YIghL/Qr
-	 zW/i2+qypN8lPXkiQtxQORgLkXsHddPIlaDNhaNs11eXV0howDM4oMyQcK0KfWAQrTWGG
-	 SGmWyHbEE9SrQfCJCGlH4fwX13eXl47lRShZav3EzJV56yxeRXdXpvYMh4fHaIDNX+2az
-	 tGYpEHyynuHClUc3vgZ2wbHKPrspmuQHNkwo+gYFMX/5ZRhAUOjNHbPVoK9oF8xy6Ng==
+	bh=btFugKsi5lpZ4A8iXSm0xnI2cqo5wooSJ5xEUu5v270=;
+	b=SE33RA61VBYunT+EiznrHp2eTE0fmuOH73x9prm+g7BkL7n+VZRSxFrHhXSj/1610fY1
+	 rBUlAhq+foVsj16hXrxlpWJfA6VZ6A2qMaKi414H21Wx+mUqDEHpBcoALcw6/dQ7SdgVH
+	 JgcaF5Ym1tqDQ2CMtXMUsdMAvwmpvhwtk7T7S6P5Fl8OX1ev3LAMMYrySW3s8O9lR1AZp
+	 s5ISTkamk67do/N0tvnETI64sc9nc5pPT3uTBsek7n1R2JnyQm9viv5kJMfB4SxSIn+vM
+	 2a0QlvNMaClG5FyG5qObkG6pJCrfuYm8XpVdz/sTRltRojam5KgXS3kEaAXDs2CRhEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lUW9Pj11;
-	arc=none smtp.remote-ip=209.85.128.49
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vUA56EGK;
+	arc=none smtp.remote-ip=209.85.128.54
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CFB606B5BC
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:50:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 44CFB606B5BC
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627B1606A9AD
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:50:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 627B1606A9AD
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lUW9Pj11
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a5087a5348so16181105e9.0
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 03:50:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vUA56EGK
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a59100fa83so16236815e9.0
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 03:50:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794311415; x=1794916215; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794311410; x=1794916210; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=tfCCjMH9BGezp+gJQWEpFaRqrESYtEZJwXDt9RXFM9w=;
-        b=lUW9Pj11G8o22gHxs18Cwv3IlNMqm0YbkvcI1Nv1HqYgyVJwGiuvjyp+SpFEA7CMDz
-         m4LjdJgVyVJxHG8YETiFctZKi97UunJhySG07Lflw4RWgce3z1cKeKGWib9R1ZdThas8
-         LOgJGUUNMGPMOdeKxuAoTNE9Nc+4J4vwLqdZrxkFM7rtscVJ2J+2K4pAuYPNwd5sZwOw
-         G4YWB5gbgXdXlegSj1SQbSfBW633FBXe6kge9Sc5CCTjJ2+c/M7pU30041OyY/0qxhxM
-         yihA8FwffA7RhbrKdTUzOgCxrlcnmPBvBp+VG94QIGRGT3SSHtQON2RmCFR479buUOEd
-         kHOw==
+        bh=btFugKsi5lpZ4A8iXSm0xnI2cqo5wooSJ5xEUu5v270=;
+        b=vUA56EGK7r3cHM+ZBBC+CQc2BxmNAT7IPs2uYAmC27ftszKW1pTTA7jIpWrAimPJPO
+         QdHQmyh7z34c5xd91NEgJ63iwx9E8LMngf1rmhrbIPdVSfCsv7Cx6ko2zVy6vc719kmM
+         6vjsrPjMTFgJY1Y1bAU6saFKJT+erLuS9zZndQRGrrBMXFeIbnK/noNEFegSINbMzLmj
+         EBGiH1H5+Wh4/wq28Q5xuZrbKt0o1tUjH3B8ByXQL0YsxshDH+KMwX3mP+X/ohPHwAxD
+         m+98U6xKD8crFqyEhO5fx4XShr0gP/C2LdWSV/sLxDjdRsNxgZdZcjJ3qjmL7z0ERR/i
+         +zWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794311415; x=1794916215;
+        d=1e100.net; s=20260707; t=1794311410; x=1794916210;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=tfCCjMH9BGezp+gJQWEpFaRqrESYtEZJwXDt9RXFM9w=;
-        b=P7dnv7j9j8f2+mOjxneVluyojhQtnpNrWi8XwHuGY+uuii6SuWJqgKRgg+FrOkZYMI
-         PpibzFZjfSFmHmoiBjsLD1q5xuP2+o35rT/oNTlrQo0tcUWp+ahNZaOvvS8PLgtHCNUT
-         ncfvxWhI1let1J6+HJ9TDRTnsLw7021wZm3UPvTcZd2Ssgj+I4yG6UdCkbNY3df/79s0
-         mpdfrN+4WWXrNDekONbjbG7qAFWXBKHNR1ltqBQE9qsRrYwMd9544FIEcG+PriiW8+Zi
-         jZnRKcF0z8kfOl8CFF4R0E/tN11ybclJaglY/ogR7sAV42yHmLUpYt2ejOYuK9yKlpLF
-         tj8g==
-X-Gm-Message-State: APuU4Z/71SghQPc39FNksWOTaqABqrDy14XYXZeB2sBfbm8UZou38X4q
-	FFP4GmCQGE5WaEAS8suoRLvAuT1dMug2K3puN0+qC1iSu1Md5f0sjPr5k8UQfg==
-X-Gm-Gg: AYBFou3BumKlCEvZTKsj4qbzKmpZrLZNSMcO2mJBjtw4MIitsg3anleoPh4tGcAEARZ
-	BwE19Fj0GbX6QWdSkvtM/etw+XpQA+j+R9pTXM9SpuG7ZHEC0lqQHafNOYu9n60AdRUJM3HX8TT
-	npNotsxBvcTu6GBOkmDkZz6dSoZGY6AslYm8hWFPVEGE741z2f/2CRXJ6E9bqxFw+z+KmOPsmRG
-	qPILXEfve5h6pRObdEKX8vVuXjBX1l2aO5m3QYzuyxPqc1RuTOTGCyZ6hHR7SU7nHUQLrS0W0t5
-	JERFemprgDU5uaoCxTKL78yvEbPpCgQgmpW7Pty4q0fW5TUw7qEVBhtm3qLYFXx4ovrH4J02sls
-	MlpQtbdXxNhpOdpKqZ3IdA51RybEXS2tgUgZpxOLFiaPlpUOtPz4eM2bbNNOkp6cAnebYzXVYQF
-	aHBjQj2J81+n+XWA/HxrIaLxtT7E08goAAw4yjPF8XC9X//ZLeQUTd13B/cW93+MyqGDiB4GlaE
-	m1/8s3PI4WWDrm5AXUcHcxSvZK2ZThYA5/89CI1lhY3QHGxMjjMjpOoFNntcFRjN5T04IDXTsPY
-	w30MB2q7UgEeyiNWnaxrInNlBT6P8UdYLUfvscfaUjWZQsi7ZvCO7ybJUmi0YLBC4hQ5
-X-Received: by 2002:a05:600c:4504:b0:4a2:883:4adb with SMTP id 5b1f17b1804b1-4ba02349e09mr37555525e9.22.1794311414464;
-        Tue, 10 Nov 2026 03:50:14 -0800 (PST)
+        bh=btFugKsi5lpZ4A8iXSm0xnI2cqo5wooSJ5xEUu5v270=;
+        b=CfVynpqJJLvnbai9ru/iEx/RvE13W1kIoyEwjETasBPyKw7A6UYdHr7qlL+6enDmHw
+         35qkOMtLBPgmdEf9DKiTfArx5i/nDNIve5/kZnA7JSqOlz4MkPyP6keG7YFqK8I1lNDs
+         a8Dx1K3Dqbx+f9WaVVrXaUNjYUmiMUBcn1QgWjvs5eSui98uTvR3jy2ViyVZAodzQcRv
+         1tmHYp4+V+1FBhbt9/hr7t3rkPoy6xGhuhUxUrG1BAs79l1/2FoqcVQrl2cj1f9hzngg
+         fG6P8sUxYezEHQkERqdaXgpJ9Tmag3Fz1G1rg/nR/TYMqzacRLAllofK7SbysOohQ84y
+         PVjA==
+X-Gm-Message-State: APuU4Z/Y0Z+1p+6YoNhUWTh7zX4SaE3xcb+sOix3OxCAZjxbudJSIVUZ
+	w8nWUWEwmzhYlcjOI86p4UUxBi7gbsItPHYNCjfWB56CJgdlG7tQQ30I9zQnlA==
+X-Gm-Gg: AYBFou3jSFTwXSAzTL6HggTpwEeagdFI+i3Aa+cxKHh3vt5vnqQyOjCLjk/Av2TcitD
+	FX+l69ridi1lM5t7uMeiJPswtu/bFxYpVgC41EVFi7OPkYHz/3P9NB7zkTdYnHQVH/m7RdPWE9h
+	rEoy/vzDoUkZr0m/Y/LDE55nc6HkzQ8mUk4z7kSoKWF2n6gLdueCgASm1UMa3mLfvmRuOi5eWle
+	ONBW81wa8WlXUSOAncAulmhx5XzT3WPMVWkpYn95JMgqbDbi4sls+GqVyGr/Z1xWEjkjT5x1Pkq
+	JGBV1ImGtoKT75RV4yZ/olC0upeADDSAesRi3l7S+Q55GA8Hi4ptlUAZZewu+CQ33FpDi3iIBK1
+	p/IAW7FEMet4W9vwv3oEZeoDHHD1GqU6tyqMiBHYfPzZnk3vOP7G4hRaaTkSHivJndar7oeIRCl
+	nBrznkNdakqPokmbaPUt4GT3sYznUAsKI454BcvhJtkrP8Qa0X2hk23GIgR790Gv8XaA6DYV358
+	vc2+w01/pgcYPYZFtBtqe6/heppts8MyFTO4R0QIXpNJ5J2D3shOb4tdQgC47ROyzQugV1tMn8K
+	SSwezzN1PQyWiyWVbdA+0m99Noh86YeW2UmeD6SzOLi7kef/Os3qyPE7fjNn/h91Nkg=
+X-Received: by 2002:a05:600c:64c8:b0:4a2:e0c:2b0a with SMTP id 5b1f17b1804b1-4ba02343ac3mr37686875e9.16.1794311409512;
+        Tue, 10 Nov 2026 03:50:09 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:1917:82b:d709:897d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba02005762sm60715995e9.2.2026.11.10.03.50.13
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba02005762sm60715995e9.2.2026.11.10.03.50.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 03:50:14 -0800 (PST)
+        Tue, 10 Nov 2026 03:50:09 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 10 Nov 2026 12:49:59 +0100
-Subject: [PATCH 14/20] t9300: make the series Y tests self-contained
+Date: Tue, 10 Nov 2026 12:49:52 +0100
+Subject: [PATCH 07/20] t9300: make the series P tests self-contained
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,69 +93,366 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261110-kn-fast-import-tests-1-v1-14-dbd9ee502aae@gmail.com>
+Message-Id: <20261110-kn-fast-import-tests-1-v1-7-dbd9ee502aae@gmail.com>
 References: <20261110-kn-fast-import-tests-1-v1-0-dbd9ee502aae@gmail.com>
 In-Reply-To: <20261110-kn-fast-import-tests-1-v1-0-dbd9ee502aae@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1435; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=NebtHMIgdCZYe3yGiof7KRk2uRZRGyIOIJxXS9RSQiw=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrzBOjizmTuYJkH5R9l/pgizwmmSKSRSnQyV
- KwbKmI0RP9caYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq8wToAAoJED7VnySO
- Rox/gbUMAIytc+/Npu7EbblUpsPK4ro5TRm3rFj1gLjWFg38H5fIK5zapUGlO+8Ph80LlbbRfwj
- LukmYIsxEZ48CluJ2D/FcbiE+YZY57IQyOVSQ8lc4ieTODkyzk+sbyn3V4lV2LlBNro0rw2dbve
- jZNc8mkwB0ZoMWDr54NLzRCJbI9I2iMD0RArzac5M/AOTF6HyOx2BMco1o56F9jvUiiY2AKem4V
- DhzkWX/m1QztmbcOL7GHguIDC21EUXJRzLYFFxzrLJhdfhvPEIJJczsk7YLq0HOnAPGWGkwD3Ec
- B/3Gi1aoPUfn5NQ++9M8ZqXNQHbZGbB0R66IDaeDWCkxVhwicBc/5A1aIsj5W/BIiq5reMrDbN9
- m72cz5Kbh9fHsoHHp4zKk8GB8OZ18GOkMIHKd6dpVT8KLxrb0XUoZFryseHaYbAEsWMNPi80B9J
- D6P5H8XPzODfDAf9Jq/aA7VDQ3x0Zj4sP3Di4YMkOih4U1E4K0hgFUMlK9szSaeX0CQvffIbsq6
- Uk=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7387; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=N4QOqMki0vlWavobJFf6TrpokR7q8nXlEYEwU0RZqTg=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrzBObHhm72IfLTx48swQKKyARNLDTTd0UO0
+ Ip9XI51gzFPJokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq8wTmAAoJED7VnySO
+ Rox/FukL/j0SNs953XyAVnkeLrO81wEQa9javA1xQeQzFoat3T1fUqSeYLDGvvZhUgxXzI0KnIn
+ F5O14fJse1D2uPooC4fzCGRieEdGh0WIe0F9AEWIgVXMEmEV4uwAZvKahotdK/cI2MGIuwu8iMa
+ d3TqsPRK3VXCrEuOJl9GCtgjFi4bmn2iZqE3c+6xWq+TYdC3L977NHjgkkxaIMWedrHY3WmJPif
+ sJSySZBzm+ElIDh9vJtES0caTi+I3+rhDrFacSV3RnYA0W7RS3V/4omxAGXCeZMy2+ulw1f2Eb3
+ ipfIfPM9stQry7tIPL+wZy7bl/oUfDx4xJ4cPUfB+L7zqvTmCCLm2DB6FaO5MJ46j3Kw5QEAGIO
+ OLWuJ91k5DRq4UvOJ8Ndp4sW0OI8ytG9ajcPtq6gOyVv+PhzKe8icVpXfyb/jLaxa9McH+kfqhf
+ r4iEHnz+WjWx/N88zZwufV+2KrepOcNnOuoGnZt+JgHmE6iiXMMYKRORkoITSU027xMa2kaV7j7
+ 0M=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Similar to the previous commits, modify the 'series Y' tests to make
+Similar to the previous commits, modify the tests in 'series P' to make
 them independent of state from previous tests.
 
-The 'Y: setup' test only fills the OID cache for 'Y: rewrite
-submodules', so merge it into that test. Also clean up the
-repositories created by the tests.
+Move the setup to a 'setup_gitlinks_repo()' function, so each test can
+invoke it.
+
+The 'fail on inline gitlink' and 'fail on blob mark in gitlink' tests
+create their commit on top of 'subuse2', which is only written by the
+'verbatim SHA gitlinks' test. Use 'subuse1' from the setup instead, as
+these tests only check that the invalid gitlink is rejected.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t9300-fast-import.sh | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ t/t9300-fast-import.sh | 290 +++++++++++++++++++++++++++----------------------
+ 1 file changed, 161 insertions(+), 129 deletions(-)
 
 diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 82348c65cc..04c3bfe0c1 100755
+index 9b1827bae2..480ae2c47f 100755
 --- a/t/t9300-fast-import.sh
 +++ b/t/t9300-fast-import.sh
-@@ -4498,14 +4498,12 @@ cat >Y-marks <<\Y_INPUT_END
- :4 ff729f5e62f72c0c3978207d9a80e5f3a65f14d7
- Y_INPUT_END
+@@ -1866,157 +1866,189 @@ test_expect_success 'O: progress outputs as requested by input' '
+ ### series P (gitlinks)
+ ###
  
--test_expect_success 'Y: setup' '
--	test_oid_cache <<-EOF
-+test_expect_success 'Y: rewrite submodules' '
-+	test_when_finished "rm -rf main1" &&
-+	test_oid_cache <<-EOF &&
- 	Ymain sha1:9afed2f9161ddf416c0a1863b8b0725b00070504
- 	Ymain sha256:c0a1010da1df187b2e287654793df01b464bd6f8e3f17fc1481a7dadf84caee3
- 	EOF
--'
+-test_expect_success 'P: superproject & submodule mix' '
+-	cat >input <<-INPUT_END &&
+-	blob
+-	mark :1
+-	data 10
+-	test file
 -
--test_expect_success 'Y: rewrite submodules' '
- 	git init main1 &&
+-	reset refs/heads/sub
+-	commit refs/heads/sub
+-	mark :2
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data 12
+-	sub_initial
+-	M 100644 :1 file
+-
+-	blob
+-	mark :3
+-	data <<DATAEND
+-	[submodule "sub"]
+-		path = sub
+-		url = "$(pwd)/sub"
+-	DATAEND
+-
+-	commit refs/heads/subuse1
+-	mark :4
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data 8
+-	initial
+-	from refs/heads/main
+-	M 100644 :3 .gitmodules
+-	M 160000 :2 sub
+-
+-	blob
+-	mark :5
+-	data 20
+-	test file
+-	more data
+-
+-	commit refs/heads/sub
+-	mark :6
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data 11
+-	sub_second
+-	from :2
+-	M 100644 :5 file
+-
+-	commit refs/heads/subuse1
+-	mark :7
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data 7
+-	second
+-	from :4
+-	M 160000 :6 sub
+-
+-	INPUT_END
+-
+-	git fast-import <input &&
+-	git checkout subuse1 &&
+-	rm -rf sub &&
+-	mkdir sub &&
++setup_gitlinks_repo () {
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	test_commit -C repo base &&
  	(
- 		cd main1 &&
-@@ -4525,6 +4523,7 @@ test_expect_success 'Y: reference pending tag or commit' '
- 	pending_tag sha256:85edc5eac315bc680677b2fc71622bd77476f057eb8dc8ed6a497803a24f1f46
- 	EOF
+-		cd sub &&
+-		git init &&
+-		git fetch --update-head-ok .. refs/heads/sub:refs/heads/main &&
+-		git checkout main
+-	) &&
+-	git submodule init &&
+-	git submodule update
++		cd repo &&
++
++		cat >input <<-INPUT_END &&
++		blob
++		mark :1
++		data 10
++		test file
++
++		reset refs/heads/sub
++		commit refs/heads/sub
++		mark :2
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++		data 12
++		sub_initial
++		M 100644 :1 file
++
++		blob
++		mark :3
++		data <<DATAEND
++		[submodule "sub"]
++			path = sub
++			url = "$(pwd)/sub"
++		DATAEND
++
++		commit refs/heads/subuse1
++		mark :4
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++		data 8
++		initial
++		from refs/heads/main
++		M 100644 :3 .gitmodules
++		M 160000 :2 sub
++
++		blob
++		mark :5
++		data 20
++		test file
++		more data
++
++		commit refs/heads/sub
++		mark :6
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++		data 11
++		sub_second
++		from :2
++		M 100644 :5 file
++
++		commit refs/heads/subuse1
++		mark :7
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++		data 7
++		second
++		from :4
++		M 160000 :6 sub
++
++		INPUT_END
++
++		git fast-import <input
++	)
++}
++
++test_expect_success 'P: superproject & submodule mix' '
++	setup_gitlinks_repo &&
++	(
++		cd repo &&
++
++		git checkout subuse1 &&
++		rm -rf sub &&
++		mkdir sub &&
++		(
++			cd sub &&
++			git init &&
++			git fetch --update-head-ok .. refs/heads/sub:refs/heads/main &&
++			git checkout main
++		) &&
++		git submodule init &&
++		git submodule update
++	)
+ '
  
-+	test_when_finished "rm -rf reference-pending" &&
- 	git init reference-pending &&
- 	(
- 		cd reference-pending &&
+ test_expect_success 'P: verbatim SHA gitlinks' '
+-	SUBLAST=$(git rev-parse --verify sub) &&
+-	SUBPREV=$(git rev-parse --verify sub^) &&
++	setup_gitlinks_repo &&
++	(
++		cd repo &&
+ 
+-	cat >input <<-INPUT_END &&
+-	blob
+-	mark :1
+-	data <<DATAEND
+-	[submodule "sub"]
+-		path = sub
+-		url = "$(pwd)/sub"
+-	DATAEND
++		SUBLAST=$(git rev-parse --verify sub) &&
++		SUBPREV=$(git rev-parse --verify sub^) &&
+ 
+-	commit refs/heads/subuse2
+-	mark :2
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data 8
+-	initial
+-	from refs/heads/main
+-	M 100644 :1 .gitmodules
+-	M 160000 $SUBPREV sub
++		cat >input <<-INPUT_END &&
++		blob
++		mark :1
++		data <<DATAEND
++		[submodule "sub"]
++			path = sub
++			url = "$(pwd)/sub"
++		DATAEND
+ 
+-	commit refs/heads/subuse2
+-	mark :3
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data 7
+-	second
+-	from :2
+-	M 160000 $SUBLAST sub
++		commit refs/heads/subuse2
++		mark :2
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++		data 8
++		initial
++		from refs/heads/main
++		M 100644 :1 .gitmodules
++		M 160000 $SUBPREV sub
+ 
+-	INPUT_END
++		commit refs/heads/subuse2
++		mark :3
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++		data 7
++		second
++		from :2
++		M 160000 $SUBLAST sub
+ 
+-	git branch -D sub &&
+-	git gc --prune=now &&
+-	git fast-import <input &&
+-	test $(git rev-parse --verify subuse2) = $(git rev-parse --verify subuse1)
++		INPUT_END
++
++		git branch -D sub &&
++		git gc --prune=now &&
++		git fast-import <input &&
++		test $(git rev-parse --verify subuse2) = $(git rev-parse --verify subuse1)
++	)
+ '
+ 
+ test_expect_success 'P: fail on inline gitlink' '
+-	test_tick &&
+-	cat >input <<-INPUT_END &&
+-	commit refs/heads/subuse3
+-	mark :1
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data <<COMMIT
+-	corrupt
+-	COMMIT
++	setup_gitlinks_repo &&
++	(
++		cd repo &&
+ 
+-	from refs/heads/subuse2
+-	M 160000 inline sub
+-	data <<DATA
+-	$SUBPREV
+-	DATA
++		SUBPREV=$(git rev-parse --verify sub^) &&
++		test_tick &&
++		cat >input <<-INPUT_END &&
++		commit refs/heads/subuse3
++		mark :1
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++		data <<COMMIT
++		corrupt
++		COMMIT
+ 
+-	INPUT_END
++		from refs/heads/subuse1
++		M 160000 inline sub
++		data <<DATA
++		$SUBPREV
++		DATA
+ 
+-	test_must_fail git fast-import <input
++		INPUT_END
++
++		test_must_fail git fast-import <input
++	)
+ '
+ 
+ test_expect_success 'P: fail on blob mark in gitlink' '
+-	test_tick &&
+-	cat >input <<-INPUT_END &&
+-	blob
+-	mark :1
+-	data <<DATA
+-	$SUBPREV
+-	DATA
++	setup_gitlinks_repo &&
++	(
++		cd repo &&
+ 
+-	commit refs/heads/subuse3
+-	mark :2
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data <<COMMIT
+-	corrupt
+-	COMMIT
++		SUBPREV=$(git rev-parse --verify sub^) &&
++		test_tick &&
++		cat >input <<-INPUT_END &&
++		blob
++		mark :1
++		data <<DATA
++		$SUBPREV
++		DATA
+ 
+-	from refs/heads/subuse2
+-	M 160000 :1 sub
++		commit refs/heads/subuse3
++		mark :2
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++		data <<COMMIT
++		corrupt
++		COMMIT
+ 
+-	INPUT_END
++		from refs/heads/subuse1
++		M 160000 :1 sub
+ 
+-	test_must_fail git fast-import <input
++		INPUT_END
++
++		test_must_fail git fast-import <input
++	)
+ '
+ 
+ ###
 
 -- 
 2.56.GIT
