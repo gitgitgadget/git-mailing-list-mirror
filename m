@@ -1,110 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794321119;
-	b=jtW+8mLNgSCGIFI3bO78O76b40/ONIxThA712kxFaKH/235TRvQbDS8yhyROjRq6jWsG
-	 fi7d1Dh7NWyMTy3SC90oXeq2rUdAnGpbo+S2OlCBSfDakvIUBJ4RmmzYicnHpLg8w0HIh
-	 I1f3RSZHLgeTmPzpRAL2TGh+121RECvhnDQFihmTvivBt703nyVjGDlsAbIuEecKixMiQ
-	 EZxAeHLw2oL5Ut/G5q7PR/FubKysUpppCAN0m3YJ/WZ3EI3FKnc1edOyi/TQWDGL4zJdT
-	 mEOxgXxn/sxE9UdtaApaD3VbppsLsNUKx8/2jy6cwCG8QMAp51yOFUen0OCImE4Wt/Q==
+	t=1794321631;
+	b=CqEIIFWXgeOpyoQpFxSGZN9OGP7ZQD2wE+G1liVzIF8P4dJMTlF6MTK2jYkWjXICTEd3
+	 DwScJs4UGWWPpt3B+GVJU3g9aaoK6F/RZl57x3LIqc/LoecxZ4w/mBDS7wqUnph+PTSKJ
+	 /gLY4N+2r5SIMA5EzDU2sjwt0EWTmnsgXrqpBvFn6vJVPLvfCrdAMRg1ope3TI/Ds18P3
+	 vs8lV5ldiyX3xSWvdfmsA3fiexukUVIyzETD53Dz4VbkQ0MEt4Mk5iz+P8qxW2aHwGjdp
+	 n9Jjov89X3qH6UaO2VzzA6EZCzbCy1AubOo5/0GprTo4/qlx680HgTcGZfhDoI2UUlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794321119;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=miBe7RYknd0rdKYpm0kg6kXgbCJi9waCtAtNAdd8Qn0=;
-	b=q6Dwd5kjtO9593tqkqiQbBa38ap6NRO8OF0B7b0QrTEXgp+MujkhXIbFht/arrjK7rJp
-	 jz3+DlwTJ6uhTvGT4RPmTuu/ZQW4spAAAWihwq3V7KSecENbjlHNqiFzUqPuHs5gssAZj
-	 A76bPrl8rnzL0AUuaGcdKJfnDVzK/n9pEHULuEZUSOPbv7wF+LcWAp4Iyauc0j/f1OUiy
-	 9y0oOPhtqGAxnev+QlRHp7f0avSbzdpIM9b8IGJQ33SKpsFyzYE5NPImCZOBgO5rskMay
-	 SL2oJ+1giI+8/L3fJ0aQ+YRCgm5Z7qwyu7ulejq4MNAFnd5WJEc8HAWoHjdrxwMznkw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794321631;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=1TX+7ST1jF1EHIVSuMiGOipTBv0zHK3+rMwd+XgEvl0=;
+	b=UYtzqoP6Ra+ljV5zwrXvUSO+piKuaQgIZzIzsHO7jMpLVK4WWiXxjGyM8ARU+nmugj6B
+	 oXDfE4JXsaw9aSe8Zjg9T7oC/r+fbuCfIesyxEBr86pPngMmQlJmWL0ZJxZk4Hy7HlVem
+	 fxL+NEixlgfTYeFm2PL/XA8lQfFRNX2j2FeqgnL4bnW3S3fAYslzMnWpeuObq1a80MYQi
+	 BWy+D8QVJ7MIW51ALXvvNBXe7ls02BqGnPm/ZF1A7osfEqImxXmkjSkQh9Mle8r2qGEOi
+	 uYTe+b/NrNIxeZ6pOlDAeGmKZyr0rHHtW/7NwxhFyOrWdBKr7fExkKbK2sDgcp7ma6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=jvns.ca;
-	spf=pass smtp.mailfrom=jvns.ca;
-	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=tgIgnwET;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=jcEGH8pt;
-	arc=none smtp.remote-ip=202.12.124.152
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dwB1zHq5;
+	arc=none smtp.remote-ip=209.85.218.54
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E193F606A334
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 14:31:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E193F606A334
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E7460A261D
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 14:40:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30E7460A261D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=tgIgnwET;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=jcEGH8pt
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 35A637A0280
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 09:31:58 -0500 (EST)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Tue, 10 Nov 2026 09:31:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1794321117;
-	 x=1794407517; bh=miBe7RYknd0rdKYpm0kg6kXgbCJi9waCtAtNAdd8Qn0=; b=
-	tgIgnwET4OwcKICYRl6BvE/3xqql9gQtaXujAXXHGVxIMmO1oTxPdhA9J5pNppWe
-	oDsJOvExANAR8aISrC8FaInJen+XCJYqBm08nbnuFGJ3910QTheNoTDZPUh9HwdS
-	ZLU8qAqmWIkzWCyREirTnnsSYjOe/AVdpH2YS2hg9yfwsIb3XHAnynCkJhBo15oB
-	oRHrBcfw/G+6sDQhHI3uoo3rBgE9fVrKRFvtvTLCnda4U3aU3ZHrSG78da761E4i
-	wrDEIToSZp239S/ll/iYfKmhCUEDvcSW2jAU/i+j5ASttkFN+NOy8QDwVx0/uV2t
-	9D76Dw1589GQLoUBf3TUTw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794321117; x=
-	1794407517; bh=miBe7RYknd0rdKYpm0kg6kXgbCJi9waCtAtNAdd8Qn0=; b=j
-	cEGH8ptEKPC9s6ztaeM17m/HeBK+nnDT0x9B3Bj2QdlsOYsmkpWNZ+x6/VAx/3oy
-	rPVyvY99ZPSf32ewIn8yA/sq+1zEuECKxpdMwe+1DIF9o/XOxqJlvUMfwfm4vFpr
-	yekpOmzB0DYEqlA9og+8vzRGiW1A9WmbIl6Xt3yyMdPGQ73D8WnGPSbfic25YoQr
-	upr+MC9e9e/YMDOilHtlonkBsIHZXh3xNpTK8x0j6qyz7HUG4rp1kejNg35RSjpq
-	MPSlzfNiySJnttxvFRog2Ll4k23TlHhByI3pZoBsz5TSmDOtv6j24o3sgmI8b8sw
-	Ic8w+VByqxSxzpELamxYQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794321117; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:FOUhX6QQ8ed6E5xIM+1GvAxHjx/sWC8QU3uNGU5SlCcKwF/
-	qvgZ9KGVMYrplCewOt9H70Ykt1k403n45OTNppKYjtC0ndt5gd6w9MnJg6ww5MLS
-	QK4hlLx40rVj2ajMVawdN8J9MCsHosLazNfyjcBgrlG+v9PtrfKSuaSKGzTO7QGh
-	xwGziHXD0nVv7Xu+Qit4nrQrsrbNIvIBhMDG7r4I1LC3PaU+tzZ/o7hE5ggdwZko
-	LfPE/pSnzZoZX4BzwOhKvU1ndnPSvrWtDFLI+JLc2szshyjEGyqASiIeZqWPiaf6
-	CVyyZfXAtUG0cr56V/7m7byzt08eZ3G+InH+B3Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:EvPtZWAW4ggw2XKk/20/ZK7pDrTh7mPMbJKvV2G+dwk=:2QzbfPxqRBHsqpom0NjNUjNMrKewR5DgheUSxexj440=;
-X-ME-Sender: <xms:3SrzahMnWRpoQuZXS6bI19Jzi4-n0TvZKhXBbbK11X67jGM728EbKA>
-    <xme:3SrzauyII6xAhtOohGvemhgMx9SvnmSGoT4d2Koyz4DJJpRQ7IEibuhRtT4o-1hK8
-    vX305WAUh0v2yZmjdgjN_er4_LpCdVvkQoTe6CbA6r2kxUZ48oo103C>
-X-ME-Proxy-Cause: dmFkZTGFt6sfHUB4VSTUiq6wjgGwqS0sp2LRduXeIY9QkpbphWqYhA/cEwQh018wnMsDP1
-    IseRcAu7SKDKNrKVelzZL6xmcZ0yc1IVZlbKV+ndVc6oQdSkBwqg54+Ww1cJIfMZ916ohd
-    kG3TpprSMbc0WF9TvnGlnPdYA8J71SsicnL1mOxbNa/Bfr9DtU9iYv/oRjEqr8TjV4p/st
-    4JPAKmUc0HL7z7dlPNHYH0H+GGJ47BqUF9RLQj2k76hXCyGneCbuuFB9vil79IHBmTgO8z
-    LPIhJpwVPBPYwyXOHXVyUcbCv3TtdzRdTO7kYJMoBwkJoVqnotqW1d8t3y2UWrTE3V5qCz
-    nh/qTK80pF1f2cgHTVgajgbzAxTOGL2ZtVts+fo6/fhjVukqUu7Ivz37Sx2ikh/4dAzirj
-    QjhjJeHvP9IjMrYZX4RUKpiVv20f4lUD+02X3d6crOP2e6tBakMqA3t1Cf8TkE/4nLTaMj
-    myziaJoJ9nPI24F/QQssNzlqAo2rljXw3rQndvM/NKnSL5DVfBV5iUocnIRV8sNRIUnE3P
-    pM7xlAfEE+/Uscfd5Q9iNEwvauefKNFFBBJuN4CWHvmazOUCKZN9CB2gCzH2XKImP7zYDF
-    VHT3oM3vaTne15+fh5g5bPfyhl8hFq2YAYj5OiriimQnX0WKIPWoDjjCh9Pw
-X-ME-Proxy: <xmx:3SrzapyCyVAYAbr3UarGMz4YUNyPQhpTUYTiHxKYBY609Lb07-RbXA>
-    <xmx:3SrzaqzulaboWZMAlbwMiOcG43qzXYNt8D3uiLZJ73PImcaTo0kV8A>
-    <xmx:3Srzajbk6gU1sqbgvXdDV4Vpeobe1RLBIgSO_QbVBmQ2sLwZsq8YbQ>
-    <xmx:3SrzarUI0MfbF-gAChsj9bF41k_RXp3er-UeHPBFvAVr5zdcd3owWg>
-    <xmx:3SrzaiG_EiJi1nRG5CXsMjvfmSo57APCz2dewewHso1I8nHpDh6CI1Ys>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 0B149780070; Tue, 10 Nov 2026 09:31:57 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dwB1zHq5
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c43373ae89aso138213966b.3
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 06:40:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794321629; x=1794926429; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=1TX+7ST1jF1EHIVSuMiGOipTBv0zHK3+rMwd+XgEvl0=;
+        b=dwB1zHq5RWphPG3Grf1ytm11530WBQnhZjm437UT8kC+bqy44C1triIAgmCel6nyN0
+         mqvDjoQ988yc1P9pZ4bCPLExbu4O3OSQTysUyswHWdvzbfbm/rX0TJRboAUK94dHt1CP
+         7FyDlWP27IVJ3t2gTxFKJ8oEHl9Z7zS0xPht1s4Lm2xAGL2Nghc26uxfynNHjtZaL/bh
+         HVBAgU6abIx35F3efMkWiqkNBuLbQzezsrbe1NMVSoia21wZCUyC3mbW4eS1Dio/VwWd
+         U3wuR6VZcMcKBBFk08+Rwg9k4RYjxuNyrEzr66xRqLPnK358qkt+pp5H1qR7oIQ9PSHK
+         rfig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794321629; x=1794926429;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=1TX+7ST1jF1EHIVSuMiGOipTBv0zHK3+rMwd+XgEvl0=;
+        b=RzMUb7hCIBaZOHGN6JgvpHHaT5WLIQRK6dx6eO9Rai+T92VznIs1gqO5MESOTjxyLO
+         qcp4TqtpkE+TngM1eq6aMc2beak0k920WNgPunt0QVncUVVRVb7bgxErgjOlcAuONGe1
+         +66LSRVa7kfE1MWTMkrMOLcbMAxNvL3hyUXXKpPaSPVCkUWvnUsxPPNDvSn0JEJpJv0T
+         3TzYT2o4/4E7FWVYFydAHGzIKgVQnIeltC8syX+m0u4ozu5dtYGvMv6xpOgruSDgemCu
+         SK6tP/d2DgOiytqe3dg/pNrfzmkZ282e7FCLsWlouJWrtipf/uDScJORBFv3r64A76IP
+         JfqQ==
+X-Gm-Message-State: APuU4Z+4iLOUmNS35ZBfSxE9FqaJwP9TDkCKYyuDwB5pXnzJiOtuPpJP
+	bt/LTUyWyBAVRfFzscO/64GIBKad2ius5VpYLZmJqK0B5WwPj9TKwvAA
+X-Gm-Gg: AYBFou23WRaaSVlC3onW7cnD5FQgsRcEoBsXP+ODKGvBnfeYMFiWrrNNhXAoe9mGVUx
+	hpW/NIsNn6MlLdSzsKMmIrPbisvJfqqp2MZpOfDt88j1cegyPkWVQwvRV7fvVUdLkff4Wv6ajry
+	HtWrNUeR+hpNGc+w9giiveMxMttNerDgsfK3H47cN/vcysyC3M8JuiY8Dg5qOSzYk1mJpkZEMBG
+	t0bH4twh9ifdHLf05yuP3NwDOwjD/sBRE7wb8n10iuLtmxOeWAW9gMpUeKlu4c5K7cqaTs/Xw1E
+	0KsWWbD13I3p0iuWL7TVvetoBHfVdHPQSFum9EC49m19CmzMivDCjWu8H8gfM3ppqD3XKAii57K
+	IZ8/6qaOsZSakFrli9B3TyAgrMGUGlrUanxqEvBFttA9n8AL5SgvYrmD5mXwK4u/pxGsWPpqRkx
+	jsD8q7NjMAKScSXsg26+w31jo/j+PhF2Ez+uFW7dkIFklsBpkef4aylB4Nl3vJUISIPpmVHEIhU
+	CjctwHNFgkEN0Y9sEw8KJ7hiOPvRMDG7K5i7wkVLJ/uQYj2IkwjesByoGkVYn1M1O1kOdQ/yjWp
+	7eaAHE2UBnzyn2MvAOaefzzsLHOM7BBzQD6csmP+uKkPSyncjr8qF9vvdqG1s0bPOVUPte2pt5Y
+	3X4HpnO4=
+X-Received: by 2002:a17:907:9694:b0:c46:88ef:2e46 with SMTP id a640c23a62f3a-c504922b5c9mr252731066b.1.1794321629280;
+        Tue, 10 Nov 2026 06:40:29 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c504a61f5b6sm113402366b.54.2026.11.10.06.40.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2026 06:40:26 -0800 (PST)
+Message-ID: <f7489c12-8529-4d0b-b820-225c9ee4d297@gmail.com>
+Date: Tue, 10 Nov 2026 14:40:22 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -114,57 +90,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: A6BnYcedRdqN
-Date: Tue, 10 Nov 2026 09:31:36 -0500
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
- "Patrick Steinhardt" <ps@pks.im>, "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <75ad021c-b23b-49c8-818f-c28b57436aa3@app.fastmail.com>
-In-Reply-To: <xmqqecctwt7x.fsf@gitster.g>
-References: <pull.2307.git.1794259990263.gitgitgadget@gmail.com>
- <xmqqo6bxwtxa.fsf@gitster.g>
- <4696f458-62b5-4d18-a74c-aa692708f7d0@app.fastmail.com>
- <xmqqecctwt7x.fsf@gitster.g>
-Subject: Re: [PATCH] doc: add tutorial on branches for beginners
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC Patch v8 0/7] repo: add path keys to repo info
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>,
+ phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, jltobler@gmail.com, lucasseikioshiro@gmail.com,
+ Junio C Hamano <gitster@pobox.com>
+References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+ <20261107160100.122243-1-jayatheerthkulkarni2005@gmail.com>
+ <9582c0da-7aff-466c-a510-ce5a10054df4@gmail.com>
+ <CA+rGoLef6b35hjJAcO5Nm57NiyDGK-iDbWO2MUMeoKVCkbRf5A@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CA+rGoLef6b35hjJAcO5Nm57NiyDGK-iDbWO2MUMeoKVCkbRf5A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-On Mon, Nov 9, 2026, at 5:11 PM, Junio C Hamano wrote:
-> "Julia Evans" <julia@jvns.ca> writes:
->
->>> I wonder what incentives, carrots and sticks we have on those who
->>> have in-flight topics that are so close to the finish line to
->>> concentrate on completing these topics before sending new ones.
+On 09/11/2026 16:52, K Jayatheerth wrote:
+> On Sun, Nov 8, 2026 at 1:27 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >>>
->>> Ideas?
+>>> The path keys added in this series are:
+>>>     - `path.toplevel.absolute` / `path.toplevel.relative`: The root directory
+>>>       of the working tree (or an empty string in bare repositories).
 >>
->> For sure, I can avoid submitting new topics in the future until the
->> current ones are finished. I don't have any other changes in progress
->> in any case. 
+>> In our documentation and glossary, we call this directory the "working
+>> tree" so I think "path.working-tree.*" would be a better name, rather
+>> than copying the name from the equivalent rev-parse option.
 >>
->> I'm very conscious that reviewer bandwidth is limited and I'm very
->> interested in ideas for how to make the docs review process easier.
->
-> My interest in making review process better is not limited to
-> documentation patches, though.
+>>>     - `path.superproject-root.absolute` / `path.superproject-root.relative`:
+>>>       The root of the superproject when inside a submodule.
+>>
+>> Personally, I'd prefer "path.superproject-working-tree.*" here, though I
+>> see Justin thought that was a bit of a mouthful. As this command is for
+>> use in scripts I'd rather have a descriptive name.
+>>
+> 
+> I don't have an opinion on the name itself, but, that said:
+> I think superproject-working-tree is a more suiting name.
+> It is becuase you may have a working tree in a different place and it
+> might not be the root itself.
+> I think the same logic applies for toplevel too.
+> 
+> Any more thoughts from Justin, Lucas, Junio or any other reviewer
+> would be better I reckon.
 
-When I applied for funding from the Sovereign Tech Agency to work on
-the Git project's documentation, the main risk I flagged in my application
-was that reviewer capacity in the project is very limited. I tried to deal with
-this in a several ways:
+Yes, that would be helpful
 
-1. I emailed a few people who had reviewed my patches in the past to ask
-if they would be have capacity to do review on the new patches.
-Patrick and Ben agreed to do some reviews which I really appreciate.
-2. I applied for a relatively small amount of funding, which limits how
-many hours Marie and I actually spent writing. Fewer hours spent writing
-means less work to review :)
-3. We recruited dozens of test readers to participate in a kind of side
-review process. That doesn't serve the same function as the mailing list
-review of course, but it hugely improves the final quality of the document
-without introducing extra pressure on Git project's reviewers.
+>>>     - `path.hooks.absolute` / `path.hooks.relative`: The repository's hooks
+>>>       directory (respecting `core.hooksPath`, including `/dev/null`).
+>>
+>> Given we have config based hooks now, do we really want to add this?
+>> Scripts that want to run hooks should be using "git hook run" and
+>> scripts that want to install hooks should be using the config based
+>> hooks so that they co-exist with the user's existing hooks.
+>>
+> 
+> I believe that is a fair point for new tooling, though wouldn't many
+> existing scripts
+> and third-party tools still learn about hooks directly via `git
+> rev-parse --git-path hooks`?
+> 
+> Since the main goal of `git repo info` is to provide an alternative
+> to `rev-parse`'s various path flags, `path.hooks` still seems useful for scripts
+> migrating over, unless the consensus is to deprecate querying the hooks
+> directory altogether.
 
-I don't know which of these strategies would apply to code changes but
-those are some of things I've tried so far.
+Isn't the goal to provide a better interface than rev-parse, rather than 
+just porting the various path related options across unchanged? My worry 
+is that by adding "path.hooks.*" we're encouraging people to use an 
+outdated interface that ignores the existence of config based hooks. 
+Anyone who wants to keep using "git rev-parse --git-path hooks" can do 
+so, but I'd rather we didn't encourage that pattern by supporting it in 
+new commands.
+>>>     - `path.cdup`: The relative path from the current directory up to the
+>>>       worktree root.
+>>
+>> How does this differ from path.working-tree.relative? I've never really
+>> understood "git rev-parse --cdup" - if you're in the repository root
+>> directory, 'cd "$(git rev-parse --cdup)"' dumps you in your home
+>> directory which has always seemed a bit surprising to me.
+>>
+> 
+> Well looking at the code itself
+> What I can say is I find couple of edge cases,
+> 
+> The cdup command relies on a slash counting loop on the prefix string
+> to output directory-up
+> sequences like '../', returns an empty string at the root and falls
+> back to the worktree path when outside.
+> 
+> On the contrary, relative formatting uses Git's path utility library
+> to compute true relative
+> filesystem paths, outputting '.' at the root instead of leaving it blank.
+
+Right - but what practical benefit does "path.cdup" offer over 
+"path.working-tree.relative"? "git rev-parse --cdup" was added in 
+5f94c730f3 (rev-parse: --show-cdup, 2005-12-22), four years before 
+"--show-toplevel" in 7cceca5ccc (Add 'git rev-parse --show-toplevel' 
+option., 2010-01-12) and 15 years before support for relative paths in 
+fac60b8925 (rev-parse: add option for absolute or relative path 
+formatting, 2020-12-13). So when it was added "--cdup" was the only way 
+to find the root of the repository working tree, which is not the case now.
+
+Thanks
+
+Phillip
+
