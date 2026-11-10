@@ -1,124 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794339080;
-	b=GIIFPnIMvWHkUIfXxZlntiB8kFa00cs/MrQOAr1OXMICBG/LvGTnme9xTayPCwNX8WIO
-	 NNzSQddnNnvLI4M4ckLMEFLFDZvW1EVdNKmCSD82woItPDsOpzr8fq6/d2VhJD9bi+9fN
-	 pN5j3EfnJRMnZviqrFKtWZHAcGyD5YbztDsDB652RBkN89dGj3sbpHTJHgxrcG6cfPCmk
-	 ykjTkTSBhzz2aTKHcjAja4uEZKcqeMOjdSp09SW8Yx4iR9VD99SKnRryzhgG6dRxGWqPo
-	 G/eUM7vX1T4VlpvHh9aqQMyWx4/DUgJAnSwdiYi756+UGG48lN8iO4wg23x/YncAnFg==
+	t=1794339495;
+	b=b/NHHYe84tImu+sUir48Zc4geqV/Qfl10faEp2YEqqZ6m6KljrlW/2IEuAV3vZsj1Am7
+	 PxLhkwOihXgRZnCPrixWPnVI8PzKF08tYs4v+Acwy7LPxOwZ3dJ2iDi34TOyIFUGtDrRr
+	 5rZT0EsMLo9QdqEzXGu2VcNmYin+WK31o4DnmRBzVIzmuSFeQMwzDAZXKIWnwm5Fhz4aw
+	 L+Vx8QKffrFivdvwl0MmfgnmaQ4z4mzLMu5/aHfnNAyVfnuxx3IHFU2EF+h9DiUouUG7z
+	 J23LEwVUSh3ORQ+SONl3u6q2UXMekTaKYJO5jlAPbnbUho17f/hDnS6rLaMzOvf7ycA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794339080;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=73CWF1JcajFI2adAokRErRjxAFdVfv+DlBgDtn8A5Vs=;
-	b=vW6NtpH2ffbs033fxDkXFH4/ymJpqITAN4VqOS95r1oPBgYLTnlHnMXsna7IijLI0Iai
-	 qGASjb7S5CtXsY5o8zJoYYxmBqUJIsECY7SAEnF4GNqNWfXQTfCjAr6LiRUuruuWN4zcm
-	 Z2V9Hb1ns9+CLSNLNYBcGi2NeAGIORgRAua+eOwGY5sB0RsEctvW3v69w9YEyhkEYgT3b
-	 4lcDDQN6yOPD7vExBGtxqsZA4QSrrUpf63tyZ22P/6DgeIordHORlN2SXr+HHdKh8ERN8
-	 z5wzDumvX4L8Im1vk5CczgYfsFflStWq2fhSUExEcgkbJDfnpXWSro6DB22y7xaGU7Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794339495;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=1Quyu9NETKOnbuCYOhi30NTmZ4VrrM58Yk3ixKs9Rn0=;
+	b=UVT/1bMFhYhesYOnu1fS7ZrWaGXoALds6PQZA4XLCvinOFsr6lNCJP1E3Grs6Tn9tLHD
+	 bcgqNLxAADNHYM6/IoRa/rwvgg6ZqKej3NvYWKgI01LrJYsAKC/8MXYozbmNVGYRmWLkE
+	 Dfbx8/Ok9DAXkDX0jk9g/LcH/lkdhcu+UJL+oKgFdSw6Al6XnwZMdzCLZ7x8KRyPbmjIe
+	 NABhrM9zzj+AvlVwFWWmIv3xV5EUXkHA8wQdVjoXGXf9V1CLTj2sfmLUtpZcLLygArdzQ
+	 QyTijFw1M6fTDlz+l3ogUFmLB1/mD0wWaT31RKr5tDmcmXIuWVNPhGDfEDe+cnxfSYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=B8aeqRB3;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ygRN28iq;
-	arc=none smtp.remote-ip=202.12.124.147
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KNthxq1r;
+	arc=none smtp.remote-ip=74.125.82.172
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B77606A33A
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:31:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 97B77606A33A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4274B606A31C
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:38:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4274B606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=B8aeqRB3;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ygRN28iq
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id F3ACF1D00251
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 14:31:18 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Tue, 10 Nov 2026 14:31:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794339078; x=1794425478; bh=73CWF1Jcaj
-	FI2adAokRErRjxAFdVfv+DlBgDtn8A5Vs=; b=B8aeqRB3Sm6V84DqNCtxD0B0tm
-	Wy8MKc6XBqNBM3elFQxdMNnnVtLUjiQb7Qn+tf5gSTh/V9LiTwIqv7+T9mZ/8Ah5
-	57oCGsA1QTYXl2JWHK41WsNbHxaF1U3KiFHyZ8jnq23tg+hMGybbs7TdpF2zs7eG
-	4zFxTHfiXKFcMd9DKkF4ESg4BF7prz5iFXQ3qPXgRZ0iMkz7SRUKnthfmSKltI80
-	HHHY58OylcYjFdMTaT4KopHUADZEKv1AaQKvkZNPtpVwIlzaksdhTmu0tyO/RvNm
-	YV7wWSDAQ87nVf0hXRm+lPfFrpOrsXK+E0+DoxXBI9mpr/jmVRz0v0upaJHA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794339078; x=1794425478; bh=73CWF1JcajFI2adAokRErRjxAFdVfv+DlBg
-	Dtn8A5Vs=; b=ygRN28iqKf09kI+R4F8AStjZBL/YwATN9JFLy6t+NxFABZKK478
-	pUSnhwgiToADBhP45SJz8YAWTIFs0MAv7t0hPpwqRdyAxCWT/oAsCHUibWOZzDLQ
-	V9cHD6GCTnYB3+s0Rv0II3mNxVePH3EFvITys/+hPZVIfUmoT1jOsiTjzRHz46o0
-	TbTZOW8cKtfNn5umPCFeYtpM/qDPsugWm3rUQKAzJ6sydoRlsKYIVWhYH7GqDsvI
-	pr6Mvoys/rXJkzdKq0i4xxHALOl6FWJdDnDBWmd6I5z27j0Hm3kenbRB6x1lm7dA
-	rKhWaHiJmWvV8lxn6qXQyrcKv9O2xsYiLMw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794339078; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:PEda+pO4NbUk1aVF0guD33XbXs+yfrmTD84tY4ZK3m38lv3
-	NG13Pytcm7ikqi34tBVX9z+PJNBpOLtt1kpXaAucIylJCbnyBZro+iZKVSP8vcQn
-	7YAo4mHeKVPEJ/wym+FXIx/iatB7x/zJ6f2s1yxUfvbEMcqJELky6YWoUQx6AJUY
-	7eZwk2AhlDFUhvAFvPohST6JddwT/3n1Esx3a7OBeVI/uUa88wj2/Et28dhuWmdm
-	XxVNlFrmNLXGUnLvjXh0M/9sdYoKwPiD/33lnn+yuHgltt93bM2vI4eaco/7c/Ga
-	X7h2ST4Z9TQf4V4lw8f/GbdsD/Wi7rhKTJE6MQw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:0bIDK6NpeRTCL4OrPs+UHaPJJqi+WAYGZiLvzYG5Jfw=:Ec6R1fZEHuPACVIS6wWLbVGUKrA+IdswpCweYlPyfEE=;
-X-ME-Sender: <xms:BnHzap768p8tFccWw_Q8P-rpfbyX3dUqfV1BIR6Tce2SbjPq73mnFQ>
-    <xme:BnHzapKtFHTl0xaKq1_W4TZH6UBFSYZzf-tRQcNowxKKOyaFmFa9EHPWT5Caftv2u
-    ut3TLw-AqU5Z3ZtMWPRMfI51PyPbbujFVabXuKfRm_Vunht1wnpsHc>
-X-ME-Received: <xmr:BnHzaivvmopmFgqLDBIunaLeKL_57pE43Yxeutybm1oeHbZZ6VVU-MZeE_qsXhAiy7CzFkrcGTuju89GFz97UKOK4ucFSi0EKlBh>
-X-ME-Proxy-Cause: dmFkZTGbcvHl5S1II7mMDlTcXCeLaCV8sytW3kOY/DlPi+P2VfQzWwdtOMm40g+rFPqOKk
-    19OfLvNcFv8DFco0IdmMre4jpeMXLwoj6mnhQn4685hd5XkITPXKShIJD1v1TZRwFMRQTw
-    69Y074vF4zKQQlKtaDTkiV9OqZu7maX55HB3WSInFE7EXfJobmSwq0ZjMUC3ffcxIiIibp
-    LxrrmAsMH700rAfqTyOM1jlCqfw/uTKARrmsf7bDr8BwHlm/+dgb9949Y3q1KO7R2Wx72N
-    lwfyVqYU6SFlprLrMhbduh0GfeoV/Vow+5W6ZxXD/jbYsqV3EGxVwVGv9S8oZvnkTY68XB
-    7+Tnpb/QfJ0t6PImEoQHH9Rjo4YW1g6In76uXxiMy9/ML4MapfJzVnO0dJr0XVPVxxB34m
-    CnvQz/tzDTBs7wsjIZVsvjcjfKNC90OlA2NHEizQSO0p4KEl4BIEL/D19NXukCucvMpUDG
-    YmMu7TXJd93HCWi+Tv2E6YwCKGSSVYHlwTyxEDXTGmOvrNqjnP27vRu7R4JIydud9H/2jV
-    zKtRDIVtFARx2Z73cTwZ22M7+PaLTXMt2w0uSvj8cAcgISytfX4JvjnLdyuCaykzbQS/jk
-    5a+SHOPqX41Fx3JOFkjI16eHKIT2YxNaN4y4eH9u7a30UVlU1xijmhKDPQMg
-X-ME-Proxy: <xmx:BnHzaoLlK4tSdnGYCQENJA3hSKacF5rrcS_QPsG8u6eW9Bov6_bdNQ>
-    <xmx:BnHzar9YcEnbXZNKZlfKIwi9j7NZGoYn6_3bA_htZG8pvIoHIZQnzA>
-    <xmx:BnHzahzD8vhH9UKAij55hucWuPW9dgGluj-7Jh2-I6UGq9PLlXyrSQ>
-    <xmx:BnHzao6WUrTBkauxA7eD-Hk9WH5rbvnI3JZoJG5KIz2Avldi-pWInQ>
-    <xmx:BnHzaqv1lthDx0qcSFqSWFlntxJxpUbZCQ7-Q4147UsD2ry-syI1aXEv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Nov 2026 14:31:17 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes Sixt
- <j6t@kdbg.org>,  Kristofer Karlsson <krka@spotify.com>,  Collin Funk
- <collin.funk1@gmail.com>
-Subject: Re: [PATCH v3] t: add "test-tool genbytes" to avoid slow tr(1) on
- macOS
-In-Reply-To: <pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
-	(Kristofer Karlsson via GitGitGadget's message of "Tue, 10 Nov 2026
-	18:26:08 +0000")
-References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
-	<pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
-Date: Tue, 10 Nov 2026 11:31:16 -0800
-Message-ID: <xmqqo6bwqy9n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KNthxq1r
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-3700ed8dbe3so3959627eec.0
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:38:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794339494; x=1794944294; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=1Quyu9NETKOnbuCYOhi30NTmZ4VrrM58Yk3ixKs9Rn0=;
+        b=KNthxq1rfyXfunb84hFuK9PGiBL/Qk245p5LQ2epzQXOljghuUB5ruZsaT8soDt6aV
+         5m9nCW0Y49lkByx0terJ7KKoYxp8PzQdVoaL6ADb42dR9FDhseHO1kfHleAmrlue98XO
+         V1RtUwgRtTHVatAN/o0n+p1sEzkQhAxcR4rpjzSB8rGRTX/Q656/Rt2/Ws3AS7qq9irZ
+         RFNMwqC66SczqZrx541Fh+je/6MvgmK82hHnrWIFtmtozP0LzW0kdjoGZFgi2FY2q9Jq
+         kGOnAwq4jpBozM9p07eJcpyGY4O/Jc7G8sST/TlWVKyTey1bdYGCkzSVcd76oBlyqBX5
+         Lvpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794339494; x=1794944294;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=1Quyu9NETKOnbuCYOhi30NTmZ4VrrM58Yk3ixKs9Rn0=;
+        b=JC/LISQWZI9eqkAXJIa/2/asxesPwxYzt1FAu7M+u612wgJsIZfKtoDDgU/iTE0oUH
+         CgFimpe+PXO6JA4npOeb6Q3hJdVIV5GWENl8bVczUsodiEiIfd4TpMxkrHH2rK2Nh//0
+         gFee5eFExxrUp7cnohRYh/LL3wRRhzkBhFj7a49t8dw8ZWwi7tnkMI5VwP8+FdJZZNak
+         ffeX1C741O10VE8o4LBrZoynt9Ky777uppYq2GIQ4xCL2KoGBeLNtIY4DZtMfZug5cKm
+         vobq/9oSlI7BsupOZk/Srh267vNDic+vO8vho9UHQ39t0F250qgsJ0ooztK1aPajxN7Q
+         Ti5g==
+X-Gm-Message-State: APuU4Z9mZ3Kw6Fcw2oIwLLqvM92DcByrr0rl6ys1AyzGJBWjPHJa+ehM
+	uZFK6kjzXkKC5U3+lSgphErH/QcWCDBkq+1xxwhrEtmrgJZoGPC/7ChCTE80URlg
+X-Gm-Gg: AYBFou2vdJ13oyHkdsH7Thwr7Q3cBBH+jDgasRfKIUAXLwC3KIee67+Mxjx1iRrayS+
+	lMBadPA4TAcba/N2RHAPyph9WYMuIYfnn3m2NJONq4HXEjIjZEpe9B05HJFKQFJgU/PK8BEioOa
+	tHgdMCLwsBsxrVrBvCigBzO+hyMERb+etSot2kHDGcq+GCZtL78cENQru74UXcN2MlbuL+knjXx
+	S76Gw/lpYeSjFKzOJXrk39688JVL7IGxF1+4bEqpcNByivX1WcREVtSpHuelqbXmJKVG5WgTzwY
+	wwW4VIUik9OGG+VpJVLE01iy/+wejszSMqhd8tEWz3cK/ju9B8Eh5N6LgRp1IKmnHcB1bP/o7dI
+	dO3/5cJDkyfYu7YTSMLKN+AV5K9P6a3hL+sIR8hyckYU0KGcfhC/QxHwX4f3qnKpRVbC9pSY2Yo
+	7QwSW6omdBXw/3RC2OM0dNGRTrfrQsPRdPpSOOxJYRDerkyova/uLNdejPY+9UKali5B3NwlBeP
+	3T1gndW1bazu3wOfJJN2SS6LRq8JEutmTRGXoSIeFW8031XtnYIYHpau9zkx5o1NzOnVpsh3ikn
+	WrQM17idZlZ45yrsGCrjtv28CxGquMwq
+X-Received: by 2002:a05:693c:414c:20b0:376:703c:8819 with SMTP id 5a478bee46e88-37687211c61mr398359eec.38.1794339494086;
+        Tue, 10 Nov 2026 11:38:14 -0800 (PST)
+Received: from aeron-host ([2401:4900:883f:8cde:c644:1fab:a79a:12f4])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37520bf3e18sm16494823eec.16.2026.11.10.11.38.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Nov 2026 11:38:13 -0800 (PST)
+From: aeron-gh <agab0323@gmail.com>
+To: git@vger.kernel.org
+Cc: aeron-gh <agab0323@gmail.com>,
+	=?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [GSoC PATCH] add-patch: use Q_() for split hunk translation
+Date: Wed, 11 Nov 2026 01:08:03 +0530
+Message-ID: <20261110193804.76958-1-agab0323@gmail.com>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,106 +96,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+The "Split into %d hunks." message uses _(), which provides
+the same translation for every number. The Polish translation
+shows "2 skrawków", but the correct form is "2 skrawki".
+Numbers 2 and 5 need different plural forms.
 
->      * test-genzeros.c is no longer renamed, and "genbytes" lives next to
->        "genzeros" in the same file. Since "genzeros" stays, the current file
->        name is still valid and not worth churning.
+Use Q_() with singular and plural forms, passing
+splittable_into as the count. This lets translators provide
+the correct plural forms while keeping the English output
+unchanged.
 
-Yes, it is a great realization that the file will have both genbytes
-and genzeros in it in the end, and there is no strong reason why it
-needs to be renamed.
+Signed-off-by: aeron-gh <agab0323@gmail.com>
+---
+This patch is part of my GSoC 2027 microproject. Mahmoud
+announced this issue in March, but no patch followed:
+https://lore.kernel.org/git/CAC5WPUdYxm-7Pjq4oAddLKXjSa7B0YdK8ashyeR9vhCQt+wvPA@mail.gmail.com/
 
-> diff --git a/t/helper/test-genzeros.c b/t/helper/test-genzeros.c
-> index b895436a32..e8d83d5012 100644
-> --- a/t/helper/test-genzeros.c
-> +++ b/t/helper/test-genzeros.c
-> @@ -2,30 +2,28 @@
->  
->  #include "test-tool.h"
->  #include "git-compat-util.h"
-> +#include "parse.h"
->  
-> +/*
-> + * Write "count" copies of "byte" to stdout, or an endless stream of them if
-> + * "count" is negative.
-> + */
-> +static int generate_bytes(unsigned char byte, intmax_t count)
->  {
-> +	static char buf[256 * 1024];
->  	ssize_t n;
->  
-> +	memset(buf, byte, sizeof(buf));
->  
-> +	/* Writing out individual bytes is slow... */
->  	while (count < 0)
-> +		if (xwrite(1, buf, ARRAY_SIZE(buf)) < 0)
->  			die_errno("write error");
+ add-patch.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-A curious infinite loop but that is OK.
+diff --git a/add-patch.c b/add-patch.c
+index f27edcbe8d..4e75e2ceda 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1942,7 +1942,9 @@ static size_t patch_update_file(struct add_p_state *s,
+ 			} else if (!split_hunk(s, file_diff,
+ 					     hunk - file_diff->hunk)) {
+ 				color_fprintf_ln(stdout, s->cfg.header_color,
+-						 _("Split into %d hunks."),
++						 Q_("Split into %d hunk.",
++						    "Split into %d hunks.",
++						    splittable_into),
+ 						 (int)splittable_into);
+ 				rendered_hunk_index = -1;
+ 			}
+-- 
+2.56.0
 
->  	while (count > 0) {
-> +		n = xwrite(1, buf,
-> +			   count < ARRAY_SIZE(buf)
-> +			   ? count : ARRAY_SIZE(buf));
->  
->  		if (n < 0)
->  			die_errno("write error");
-> @@ -35,3 +33,29 @@ int cmd__genzeros(int argc, const char **argv)
->  
->  	return 0;
->  }
-
-> +int cmd__genbytes(int argc, const char **argv)
-> +{
-> +	intmax_t count = -1;
-> +
-> +	if (argc < 2 || argc > 3 || strlen(argv[1]) != 1 ||
-> +	    (argc == 3 && !git_parse_signed(argv[2], &count, INTMAX_MAX))) {
-> +		fprintf(stderr, "usage: %s <char> [<count>]\n", argv[0]);
-> +		return 1;
-> +	}
-> +
-> +	return generate_bytes(argv[1][0], count);
-> +}
-> +
-> +int cmd__genzeros(int argc, const char **argv)
-> +{
-> +	intmax_t count = -1;
-> +
-> +	if (argc > 2 ||
-> +	    (argc == 2 && !git_parse_signed(argv[1], &count, INTMAX_MAX))) {
-> +		fprintf(stderr, "usage: %s [<count>]\n", argv[0]);
-> +		return 1;
-> +	}
-> +
-> +	return generate_bytes('\0', count);
-> +}
-
-The callers are so straight-forward.
-
-> diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-options.sh
-> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-
-All conversions of these consumers are so trivially correct.
-
-> diff --git a/t/t9850-shell.sh b/t/t9850-shell.sh
-> index 27cc49bbd1..d56edebda7 100755
-> --- a/t/t9850-shell.sh
-> +++ b/t/t9850-shell.sh
-> @@ -30,7 +30,7 @@ test_expect_success 'shell allows interactive command' '
->  '
->  
->  test_expect_success 'shell complains of overlong commands' '
-> -	test-tool genzeros | tr "\000" "a" |
-> +	test-tool genbytes a |
->  	test_must_fail git shell 2>err &&
->  	test_grep "too long" err
->  '
-
-OK, so that's how an infinitely long sequence of characters is used.
-
-Looking good.  Let's mark the topic as ready for 'next'.
