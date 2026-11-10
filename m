@@ -1,96 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794338715;
-	b=S5OpeN8jO0zdmoR4mn+jycp6su/RUKIs6RO7b/oVgmmhakkgDC3woR7/QuH58EteoKJ1
-	 6pW5ZF1C3K/3oz/reeuN4X6ec8Skl1iHXJxQecpaGL+gEHs3cGR2nJ4yq5njZaiJNd7/J
-	 IRVwmv8Uo20nkzLZ9+jaePJPvwWN1iz5nc8ZyM/GEfQEcF0X9ZpL8JhoEHmeVT3Aoqe/m
-	 QuObFZnPGSOIyZEbvPIJ7xqKpQIwRqpclsX5Z/jQ7mbq+DKLAU3U8wlwKh+C+cbIW7C1+
-	 ZNcb2Ex9VzYBvJTDea5nlySPF2HS6iay/Vc9s+yjmNyhhpmpJkJq/MqNPb4eB8YyBwQ==
+	t=1794339080;
+	b=GIIFPnIMvWHkUIfXxZlntiB8kFa00cs/MrQOAr1OXMICBG/LvGTnme9xTayPCwNX8WIO
+	 NNzSQddnNnvLI4M4ckLMEFLFDZvW1EVdNKmCSD82woItPDsOpzr8fq6/d2VhJD9bi+9fN
+	 pN5j3EfnJRMnZviqrFKtWZHAcGyD5YbztDsDB652RBkN89dGj3sbpHTJHgxrcG6cfPCmk
+	 ykjTkTSBhzz2aTKHcjAja4uEZKcqeMOjdSp09SW8Yx4iR9VD99SKnRryzhgG6dRxGWqPo
+	 G/eUM7vX1T4VlpvHh9aqQMyWx4/DUgJAnSwdiYi756+UGG48lN8iO4wg23x/YncAnFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794338715;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=F3epRJn1fUpv1bDlXz69d46A+mckkjmpMEanX1otdjc=;
-	b=r7PaEnTIib55jlXfZOURjIiDsLax8z8xGaRM0vTp7tJo3tD27hgAlnF8gKZ1yiPfGhSr
-	 bjYTJCLXzkI1z23UwHcRdcC4C4L/51auRjqlZcGH97niWbf9GUzx19u6RE9BHxCCXVrC0
-	 3ylQ8oB9PMVEX1MReS1aCV6HcopUJjbC+oARzA2gXyRjQGlNptMPKrm1WLUWjAd2xcrNb
-	 Ar6SEb1koLlBv3vNo2rldlyr3kalNfzm33UEpTByY1aF0SwWhlPyNszYowWzkoV5o04N1
-	 WJbnpTlkSZd+vIzYIRlU4TIjYluLwAs6nCIwoDUeoxM7MEY7YnFJqxMG07bUTS7caSQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794339080;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=73CWF1JcajFI2adAokRErRjxAFdVfv+DlBgDtn8A5Vs=;
+	b=vW6NtpH2ffbs033fxDkXFH4/ymJpqITAN4VqOS95r1oPBgYLTnlHnMXsna7IijLI0Iai
+	 qGASjb7S5CtXsY5o8zJoYYxmBqUJIsECY7SAEnF4GNqNWfXQTfCjAr6LiRUuruuWN4zcm
+	 Z2V9Hb1ns9+CLSNLNYBcGi2NeAGIORgRAua+eOwGY5sB0RsEctvW3v69w9YEyhkEYgT3b
+	 4lcDDQN6yOPD7vExBGtxqsZA4QSrrUpf63tyZ22P/6DgeIordHORlN2SXr+HHdKh8ERN8
+	 z5wzDumvX4L8Im1vk5CczgYfsFflStWq2fhSUExEcgkbJDfnpXWSro6DB22y7xaGU7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ehOffebx;
-	arc=none smtp.remote-ip=209.85.210.43
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=B8aeqRB3;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ygRN28iq;
+	arc=none smtp.remote-ip=202.12.124.147
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877EE606A320
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:25:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 877EE606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B77606A33A
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:31:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 97B77606A33A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ehOffebx
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-85a5455bd3cso1319246a34.3
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:25:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794338714; x=1794943514; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=F3epRJn1fUpv1bDlXz69d46A+mckkjmpMEanX1otdjc=;
-        b=ehOffebxYv1/HlkWuw4KrX/bM6akcjmNKJ0IodpJa89SEOTq2FmY7NkSOZoxJB0K5m
-         72YWswAILT0TZ14k1SgtZEj+hEf6DZ9oJfaM6QeefY6DaLkcKs18uWrjqwDrDIMfQxH4
-         3geBeUyeSpKRfXvbidTncwiSFao5tcbNXN2KcT5rvDFi/X/bf+EtterYQNpn8Dt58NdA
-         haokaPXVXxJhXHv2fNtd72dvD6bxGbmFAaBSRk29NbS7uHLUFb80kCKRTx/3YSqXTETQ
-         U7lReGlKtMBG0KKvcOsTYVT667uU/p28xE/4/u1daWmeiTGBIRfJC3FXCH2LN+SQBi8N
-         vSYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794338714; x=1794943514;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=F3epRJn1fUpv1bDlXz69d46A+mckkjmpMEanX1otdjc=;
-        b=1DqYviR69sCzrWXLvEptD5g74BzqcAvMKI0hP6j+qn7ShLBJQ1418llsgedH49ZPMO
-         vyOFoUmsdvCzRyoWiIGgDmE5PphtD9FR4JeRZkE6Yt1MFkNpnXzHzEVD5w/Bv9bdtWaH
-         uAQ0UgkCm6EnMmukIFBNKjtsBRhv/gIVGwBGVjxwT0obrq9kqdmp+SFaFBg/ksw9eUKs
-         WxFEX5bu0JpCsdTFBIdQOARTGKLjs1ScX1+ZJPXPJv2NKI///EvH+lDu252H5fem1Os1
-         95SWin5+5CiK/zmK1vsODaUWyvuIpsUDxZsX9GeGxdaYET7S28k7VJChTtZ+OoWOJfV1
-         BuJg==
-X-Forwarded-Encrypted: i=1; AL+hErGqyRjCsEKvWVK5VJeomItLsrGARt8oYKXVj8cXqGi/GkiulgniEsLrFWEFZzBfLmHKcoI=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8xiJcL7RtJ3MKNUKJU7eUdx9aZRurJ+m7upuqUVrQK5ujGARfX
-	a0vXIoyW02+BownDzIlVE4G6KUrtENvkwLHqtjiSVzgvTyHA9f93dJk/n5rtuQ==
-X-Gm-Gg: AYBFou1dkw+bNtcuMvW1pYlpLIPn0VPhxP8EypY9nz5JEZTU9UDzeXiBglLf3uWx3Dc
-	X19tgElpEmwBFJhdvkSDkZBeWMu03cfEqSGfZNxTQrV94FSwEXFB8hX6xdwbHk6jPjpp3FEaTDS
-	WHX8psuVh2960td7MhO0P5+HPR4FUj2GD5H1skIBhGwqCMtDQIfHrR/ma5zXmx/pjGJsUJ9pyHJ
-	x1yEz3FBfvY7QtOv1T2Mw4ZaPrA9k1uJRqPFNJ7ae3S4tVwvdHj6LKx661NxaIC8NJnl43JtqiB
-	pGEHxONv+/y4HmsN1ceLt8O/NPgrZjeucjJLxpScpBU4GgAzzL09fcwFjsSrrh1+j4SprahFNaS
-	Tf4QAt+9VU7rV9TILMvH2yLZO5wyzJVciUC4RMgTmyH8fooY0YosEE4ZIDoV5xltsO3vfMTsPs6
-	1rECQRhETTOHtufnGqNEwACN0wOPRstZNicCJ35gOhI3WzprWszPAylcw24/mpIDMMfCuBcPa/C
-	X+JdKl79mnl6kavfMh7uUKf0e3pbIeb6KKwLdnxk1ELJYPsyyPwFu+YzIvFmeQw9MGdPm7IuGo5
-	OBcuM1KmXI21LFqHxh1VQW/MnDUdGYP/iloXNsT/we0B0MDy3gIVeg==
-X-Received: by 2002:a05:6830:440e:b0:814:8259:780c with SMTP id 46e09a7af769-860dc76e7f9mr2755205a34.19.1794338714259;
-        Tue, 10 Nov 2026 11:25:14 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-860dcb62443sm2671518a34.6.2026.11.10.11.25.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 11:25:13 -0800 (PST)
-Date: Tue, 10 Nov 2026 13:25:13 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] object-file: return error on index-pack abnormal exit
-Message-ID: <avNvUL5KUWuoHIZx@denethor>
-References: <20261103212410.1389988-1-jltobler@gmail.com>
- <20261103212410.1389988-3-jltobler@gmail.com>
- <xmqq8q38yz5i.fsf@gitster.g>
- <4c7c44df-4eca-4abf-a825-1bb3b16015c2@gmail.com>
- <xmqqmrrgtz6i.fsf@gitster.g>
- <590c5765-fc4e-44da-9326-b8242caa80ae@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=B8aeqRB3;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ygRN28iq
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id F3ACF1D00251
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 14:31:18 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Tue, 10 Nov 2026 14:31:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794339078; x=1794425478; bh=73CWF1Jcaj
+	FI2adAokRErRjxAFdVfv+DlBgDtn8A5Vs=; b=B8aeqRB3Sm6V84DqNCtxD0B0tm
+	Wy8MKc6XBqNBM3elFQxdMNnnVtLUjiQb7Qn+tf5gSTh/V9LiTwIqv7+T9mZ/8Ah5
+	57oCGsA1QTYXl2JWHK41WsNbHxaF1U3KiFHyZ8jnq23tg+hMGybbs7TdpF2zs7eG
+	4zFxTHfiXKFcMd9DKkF4ESg4BF7prz5iFXQ3qPXgRZ0iMkz7SRUKnthfmSKltI80
+	HHHY58OylcYjFdMTaT4KopHUADZEKv1AaQKvkZNPtpVwIlzaksdhTmu0tyO/RvNm
+	YV7wWSDAQ87nVf0hXRm+lPfFrpOrsXK+E0+DoxXBI9mpr/jmVRz0v0upaJHA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794339078; x=1794425478; bh=73CWF1JcajFI2adAokRErRjxAFdVfv+DlBg
+	Dtn8A5Vs=; b=ygRN28iqKf09kI+R4F8AStjZBL/YwATN9JFLy6t+NxFABZKK478
+	pUSnhwgiToADBhP45SJz8YAWTIFs0MAv7t0hPpwqRdyAxCWT/oAsCHUibWOZzDLQ
+	V9cHD6GCTnYB3+s0Rv0II3mNxVePH3EFvITys/+hPZVIfUmoT1jOsiTjzRHz46o0
+	TbTZOW8cKtfNn5umPCFeYtpM/qDPsugWm3rUQKAzJ6sydoRlsKYIVWhYH7GqDsvI
+	pr6Mvoys/rXJkzdKq0i4xxHALOl6FWJdDnDBWmd6I5z27j0Hm3kenbRB6x1lm7dA
+	rKhWaHiJmWvV8lxn6qXQyrcKv9O2xsYiLMw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794339078; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:PEda+pO4NbUk1aVF0guD33XbXs+yfrmTD84tY4ZK3m38lv3
+	NG13Pytcm7ikqi34tBVX9z+PJNBpOLtt1kpXaAucIylJCbnyBZro+iZKVSP8vcQn
+	7YAo4mHeKVPEJ/wym+FXIx/iatB7x/zJ6f2s1yxUfvbEMcqJELky6YWoUQx6AJUY
+	7eZwk2AhlDFUhvAFvPohST6JddwT/3n1Esx3a7OBeVI/uUa88wj2/Et28dhuWmdm
+	XxVNlFrmNLXGUnLvjXh0M/9sdYoKwPiD/33lnn+yuHgltt93bM2vI4eaco/7c/Ga
+	X7h2ST4Z9TQf4V4lw8f/GbdsD/Wi7rhKTJE6MQw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:0bIDK6NpeRTCL4OrPs+UHaPJJqi+WAYGZiLvzYG5Jfw=:Ec6R1fZEHuPACVIS6wWLbVGUKrA+IdswpCweYlPyfEE=;
+X-ME-Sender: <xms:BnHzap768p8tFccWw_Q8P-rpfbyX3dUqfV1BIR6Tce2SbjPq73mnFQ>
+    <xme:BnHzapKtFHTl0xaKq1_W4TZH6UBFSYZzf-tRQcNowxKKOyaFmFa9EHPWT5Caftv2u
+    ut3TLw-AqU5Z3ZtMWPRMfI51PyPbbujFVabXuKfRm_Vunht1wnpsHc>
+X-ME-Received: <xmr:BnHzaivvmopmFgqLDBIunaLeKL_57pE43Yxeutybm1oeHbZZ6VVU-MZeE_qsXhAiy7CzFkrcGTuju89GFz97UKOK4ucFSi0EKlBh>
+X-ME-Proxy-Cause: dmFkZTGbcvHl5S1II7mMDlTcXCeLaCV8sytW3kOY/DlPi+P2VfQzWwdtOMm40g+rFPqOKk
+    19OfLvNcFv8DFco0IdmMre4jpeMXLwoj6mnhQn4685hd5XkITPXKShIJD1v1TZRwFMRQTw
+    69Y074vF4zKQQlKtaDTkiV9OqZu7maX55HB3WSInFE7EXfJobmSwq0ZjMUC3ffcxIiIibp
+    LxrrmAsMH700rAfqTyOM1jlCqfw/uTKARrmsf7bDr8BwHlm/+dgb9949Y3q1KO7R2Wx72N
+    lwfyVqYU6SFlprLrMhbduh0GfeoV/Vow+5W6ZxXD/jbYsqV3EGxVwVGv9S8oZvnkTY68XB
+    7+Tnpb/QfJ0t6PImEoQHH9Rjo4YW1g6In76uXxiMy9/ML4MapfJzVnO0dJr0XVPVxxB34m
+    CnvQz/tzDTBs7wsjIZVsvjcjfKNC90OlA2NHEizQSO0p4KEl4BIEL/D19NXukCucvMpUDG
+    YmMu7TXJd93HCWi+Tv2E6YwCKGSSVYHlwTyxEDXTGmOvrNqjnP27vRu7R4JIydud9H/2jV
+    zKtRDIVtFARx2Z73cTwZ22M7+PaLTXMt2w0uSvj8cAcgISytfX4JvjnLdyuCaykzbQS/jk
+    5a+SHOPqX41Fx3JOFkjI16eHKIT2YxNaN4y4eH9u7a30UVlU1xijmhKDPQMg
+X-ME-Proxy: <xmx:BnHzaoLlK4tSdnGYCQENJA3hSKacF5rrcS_QPsG8u6eW9Bov6_bdNQ>
+    <xmx:BnHzar9YcEnbXZNKZlfKIwi9j7NZGoYn6_3bA_htZG8pvIoHIZQnzA>
+    <xmx:BnHzahzD8vhH9UKAij55hucWuPW9dgGluj-7Jh2-I6UGq9PLlXyrSQ>
+    <xmx:BnHzao6WUrTBkauxA7eD-Hk9WH5rbvnI3JZoJG5KIz2Avldi-pWInQ>
+    <xmx:BnHzaqv1lthDx0qcSFqSWFlntxJxpUbZCQ7-Q4147UsD2ry-syI1aXEv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Nov 2026 14:31:17 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes Sixt
+ <j6t@kdbg.org>,  Kristofer Karlsson <krka@spotify.com>,  Collin Funk
+ <collin.funk1@gmail.com>
+Subject: Re: [PATCH v3] t: add "test-tool genbytes" to avoid slow tr(1) on
+ macOS
+In-Reply-To: <pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
+	(Kristofer Karlsson via GitGitGadget's message of "Tue, 10 Nov 2026
+	18:26:08 +0000")
+References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
+	<pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
+Date: Tue, 10 Nov 2026 11:31:16 -0800
+Message-ID: <xmqqo6bwqy9n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,47 +128,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <590c5765-fc4e-44da-9326-b8242caa80ae@gmail.com>
+Content-Type: text/plain
 
-On 26/11/10 11:27PM, Kaartic Sivaraam wrote:
-> It is an improvement indeed. No arguments about it. I was just wondering if
-> his change could also include a change like this on top:
-> 
-> diff --git a/object-file.c b/object-file.c
-> index e04ce0bc11..c52004014f 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1429,7 +1429,7 @@ static int odb_transaction_files_write_pack(struct
-> odb_transaction *base,
->  	struct pack_header hdr;
->  	const char *hdr_err;
->  	int err_fd = opts->err_fd;
-> -	int ret;
-> +	int ret = -1;
-> 
->  	hdr_err = parse_pack_header(&hdr, pack_fd);
->  	if (hdr_err) {
-> @@ -1498,13 +1498,11 @@ static int odb_transaction_files_write_pack(struct
-> odb_transaction *base,
-> 
->  		if (finish_command(&child)) {
->  			strbuf_addstr(err_msg, "index-pack abnormal exit");
-> -			ret = -1;
->  			goto out;
->  		}
-> 
->  		if (report_err) {
->  			strbuf_addstr(err_msg, "index-pack failed to report pack name");
-> -			ret = -1;
->  			goto out;
->  		}
-> 
-> 
-> But, I would agree that this is a digression.
 
-I think this is mostly just a matter of style preference. I'm inclined
-to leave it as-is, but an open to change it anyone feels strongly.
+>      * test-genzeros.c is no longer renamed, and "genbytes" lives next to
+>        "genzeros" in the same file. Since "genzeros" stays, the current file
+>        name is still valid and not worth churning.
 
--Justin
+Yes, it is a great realization that the file will have both genbytes
+and genzeros in it in the end, and there is no strong reason why it
+needs to be renamed.
+
+> diff --git a/t/helper/test-genzeros.c b/t/helper/test-genzeros.c
+> index b895436a32..e8d83d5012 100644
+> --- a/t/helper/test-genzeros.c
+> +++ b/t/helper/test-genzeros.c
+> @@ -2,30 +2,28 @@
+>  
+>  #include "test-tool.h"
+>  #include "git-compat-util.h"
+> +#include "parse.h"
+>  
+> +/*
+> + * Write "count" copies of "byte" to stdout, or an endless stream of them if
+> + * "count" is negative.
+> + */
+> +static int generate_bytes(unsigned char byte, intmax_t count)
+>  {
+> +	static char buf[256 * 1024];
+>  	ssize_t n;
+>  
+> +	memset(buf, byte, sizeof(buf));
+>  
+> +	/* Writing out individual bytes is slow... */
+>  	while (count < 0)
+> +		if (xwrite(1, buf, ARRAY_SIZE(buf)) < 0)
+>  			die_errno("write error");
+
+A curious infinite loop but that is OK.
+
+>  	while (count > 0) {
+> +		n = xwrite(1, buf,
+> +			   count < ARRAY_SIZE(buf)
+> +			   ? count : ARRAY_SIZE(buf));
+>  
+>  		if (n < 0)
+>  			die_errno("write error");
+> @@ -35,3 +33,29 @@ int cmd__genzeros(int argc, const char **argv)
+>  
+>  	return 0;
+>  }
+
+> +int cmd__genbytes(int argc, const char **argv)
+> +{
+> +	intmax_t count = -1;
+> +
+> +	if (argc < 2 || argc > 3 || strlen(argv[1]) != 1 ||
+> +	    (argc == 3 && !git_parse_signed(argv[2], &count, INTMAX_MAX))) {
+> +		fprintf(stderr, "usage: %s <char> [<count>]\n", argv[0]);
+> +		return 1;
+> +	}
+> +
+> +	return generate_bytes(argv[1][0], count);
+> +}
+> +
+> +int cmd__genzeros(int argc, const char **argv)
+> +{
+> +	intmax_t count = -1;
+> +
+> +	if (argc > 2 ||
+> +	    (argc == 2 && !git_parse_signed(argv[1], &count, INTMAX_MAX))) {
+> +		fprintf(stderr, "usage: %s [<count>]\n", argv[0]);
+> +		return 1;
+> +	}
+> +
+> +	return generate_bytes('\0', count);
+> +}
+
+The callers are so straight-forward.
+
+> diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-options.sh
+> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+
+All conversions of these consumers are so trivially correct.
+
+> diff --git a/t/t9850-shell.sh b/t/t9850-shell.sh
+> index 27cc49bbd1..d56edebda7 100755
+> --- a/t/t9850-shell.sh
+> +++ b/t/t9850-shell.sh
+> @@ -30,7 +30,7 @@ test_expect_success 'shell allows interactive command' '
+>  '
+>  
+>  test_expect_success 'shell complains of overlong commands' '
+> -	test-tool genzeros | tr "\000" "a" |
+> +	test-tool genbytes a |
+>  	test_must_fail git shell 2>err &&
+>  	test_grep "too long" err
+>  '
+
+OK, so that's how an infinitely long sequence of characters is used.
+
+Looking good.  Let's mark the topic as ready for 'next'.
