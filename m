@@ -1,126 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794293211;
-	b=0DGtszB94Kv6sqgE0VC0NP6BohIG4G2Mtc0Q2qYmMe4UTLmsOjf3YyzetGn6aR4ZiA3b
-	 sJaTc/+5AARhZ/IBdt0mbeigr1Kl3IGr9kKD5a4OBd5JYUqzpBd8Vz6/IB4qAoO14QFD3
-	 rqYph0RfnMs7NkEjuAVG/qNqNDz6mhgnVyXLXYdErY5uZ7ypgRVNfmnRr8HJPi45C0cZe
-	 DD4Mwhj2fCP4SqdJWA1trZJbX1ZFP5kTi7XOyNGQyeAVFTYVTXCQUXKRk3FX8ehkxK8ot
-	 Cke7+cOu9TXFvuDYAYeMgM36726JEQozf0QKF+bntDFxaTCzW6Og+TgTq14cGN9Au7A==
+	t=1794293592;
+	b=ehWOmfGbrla2yAXKqRrzKRn2OP88/6hvBAJ6Y/x4mIyNGjOem9f3Cjc1hl1AzqROA4Bo
+	 XBNn4CI251uUeBjVQEDFz4U2Ni/FZj/mgipBtEEtLmkUu+6sF4c/m3Xhh7P0YEE54vEO/
+	 SqsQ/1yJG6zElLtGJPmNqVfvN9g7jLJBQXtZf6gv1PADXiJJGhde3J2TkpwNFRmhmG2ja
+	 9bjX4x3w/7xzwkB8eLzVv0dgf1tRncSop8eftOGbpepHav0fszBXi9dHqmCZ7Xoe+ePdH
+	 pdM5rRyuFCsuqA9daHIr/7S6OWIPhk8LN3pOhr4NGqYsRt+TNwE6wy60T+o+9oMkIQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794293211;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794293592;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=B++Xs0mnPwPFErNOh/xuCgtCbddsSgBGpNGYg4/tkk0=;
-	b=hnAjCe5dHQ/Y71jJt2cHcYZqp1WHIIgxCR4EwK1l9ps7qwKqvUeXux9tb+vPEyFZBg7I
-	 hyvs9LLg/tuMICdwm2MXrlFL0fbbcBkSPiDTARpJopY+uOEOX8y3A4URUOOahLBYwSSBY
-	 xYeCPWGmdRUyQzC6xMO4EmtOUy/2LuQxIGeTPRm8y4w5w2JhNKbzQ0h2cLi4d39U0c06C
-	 GAhqBkpq7v+9HFGmmGSbFTrOHqtRFTr6i6pRV4s5YqdB64ONQQ3CaiWMfY8ySsKoFp5Hs
-	 VnpcXOmHBmSu+BforMF4V/XrAwyj8bBBO2v7xTAjzomj/HtAWjqvRniYQT9OM2YZevA==
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=YVAgL4XT/HmD2d+gizWutDh15glOy0e8oSBrNijtCYg=;
+	b=gbSXEB3pU4OhgwAMQ00zpMlimnjVZGGZaLaDGYG0ctZKb15gpwBw5g7uF67eY+tkDDds
+	 HWTGWex5V4WnP82f9DM2b8rYOL9r9eKTvNarJn8kUXNXpOkJHNc7BVaWhEHqG95FJJuxQ
+	 MmfGEFXa7hCqVkBBSM+1eGJjEj4MzAfOc9jsq82O/eJGTwcksl/1ilgnYFF++mCaFcqKU
+	 LqxjQu3GXafRHPeEcDBZI+JnJOxg9UU/sfTzMIheOE4kP9vGZ4ohRwuKdFPiE5tI+erlm
+	 2UUdmfjyijJx64CwMKZDNoSXGBYYF4vJX7bxK0fMxwmbEc88EPC+xyBae15zHtl36AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=hT+SPtJf;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=JJ6cpGCL;
-	arc=none smtp.remote-ip=202.12.124.147
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=rRR2bqAK;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KnSrb2Q4;
+	arc=none smtp.remote-ip=103.168.172.150
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4BA606A32A
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 06:46:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF4BA606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB356606A321
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 06:53:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB356606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=hT+SPtJf;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=JJ6cpGCL
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 607501D0010D
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 01:46:50 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 10 Nov 2026 01:46:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=rRR2bqAK;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KnSrb2Q4
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 96300EC076E
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 01:53:10 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 10 Nov 2026 01:53:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794293209; x=1794379609; bh=B++Xs0mnPw
-	PFErNOh/xuCgtCbddsSgBGpNGYg4/tkk0=; b=hT+SPtJffNYLl8ewsdq1WevPtm
-	iZzBbN0S6Kmj/6If58vIzUJsaZ/rQrWTwWAHvY0sU6JirJlXekEWcfAWmNbe9M5E
-	axyuPN0XOGh2QOw4ek0hNK1e8NAikXTJnKDElwm4JxArzCO3JPP4DLkakK8gzQFt
-	NdwIeBIiXymm37tWuQXKjH5HcapbWXuiEbyIr19d22W+AznIvajZ+a3Zcz67Aln+
-	YTwtWDSy0fB7MFt/vUViC+HOA29kUfH6EdD1gxiJc2tA0jSN3CJv3HM/P8t39qHi
-	kjoBH+S+N/FedEOOZk7qFoocOHTAXE5MazXoJcHNWLB9npHMtHaHr+1nGglQ==
+	:subject:to:to; s=fm3; t=1794293590; x=1794379990; bh=YVAgL4XT/H
+	mD2d+gizWutDh15glOy0e8oSBrNijtCYg=; b=rRR2bqAKo+PL8mJG3+j+eH9Nyr
+	OeNfFQQUV5yi8VKP4lvr8TLJcl2lRqbBDfwUJVRlLQ1Z5xnu2flXtRDnQRjI7KGz
+	kQZzMNr66pmvg9OCshrfTSn3SEwg3bjPKFFyULMhU/ZLS5rVi7cluBypNsorL6NT
+	TC3gZqLKa0ztBujC38cwr0Ae8+kULgOk/yrCbN6OFXUc5jizvzuxAWJn8jK1KWY3
+	qmI8QiZ2/etZb+5w39CDJtuCyi1GIcXospABD+C3sBG2w+2XJX95QokVem4FwvJh
+	0W/09znvB59zUdFBUXnoxSqrRyF6GqIw7hD60reYZcCr6Nm2++KCgKJ6NdCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794293209; x=1794379609; bh=B++Xs0mnPwPFErNOh/xuCgtCbddsSgBGpNG
-	Yg4/tkk0=; b=JJ6cpGCLVuwWLcskj3+cZHPoARUbT1iG6JeAAgikYvU1rO4f//N
-	caBmsKZOs2rS0zZlBR0yPq5/eDroOAocmEn5AfnQq1q0N6DJLhe9lC/SVQ3S8gH3
-	Hd9s7LSw6lNHzmO7Gsb6N1c3x7rnwzRtBsq8hgCP2OClmdxwS8iYYHZuWYvq3jJQ
-	BluGO5taKcE0N2PCufpqvnUbUAa9EyUTXcuQ8c3vrrE7eKo2Ppu0pyN2ZlT2/QmS
-	8W26yHMcgrDeAS0NPV8i2Z6aTaqMla92sqgMxToO5wXBohhpTWCgFsv7k5EISRRn
-	m4SpUyr0uHFPlVNMZgSYnQVOPgEqdxgBfBg==
+	1794293590; x=1794379990; bh=YVAgL4XT/HmD2d+gizWutDh15glOy0e8oSB
+	rNijtCYg=; b=KnSrb2Q4SKTF9DVEdhVjhFCn2hTG25Mqm77veGZ+3O60DwVu9Qh
+	QXVnM+yt7ZkeUMNNQ6CiJah48Zr3wN5wvxGtadvygVCTJlRVV1WL8bssnkkfCDRQ
+	zGahgWxL0oDqHFrGMcwx3MJCSlghYsOk9SXi6Nyx8YZb0FsfH+v+IVY0LTFjAYa4
+	NVxKqBPKQMH1b1WLhB6eBIGy0X6LRXfL8Oy78skYa/0BQmuZZGek7UIXFkGUYFjP
+	cuI2WfAeOh2gNJv/Ft2ULCen2PVCCTWf5AFDGldzU5KiIo4ZHRI18eLUwYQwlW+E
+	bTLVXhOcxU5sPUGBmEdXXTR7PM6AddoPsjQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794293209; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794293590; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:RTt9Ab/F9NPrkrFlQzNQJxponHoefIhnRmi6O3Co7sc6evs
-	yhixMlqKFYq2JcTKivkgJnbD1MaqTpxnSIUFeKIM49UjfwDfgiDEP7DxGfIRMleH
-	u4bnxAHnJF24GuN/sPwmfPjIHL/pFYM8qO7xWUIK0sqzw7F0slg11jrsoS1pGEcl
-	Huy6Mbv7b0E1oRhG5811fH+y7PqXzfJwc4WsroxshPIssXCYgjWISYhYG6GdYwBq
-	NqeFZGP0gl88u+J2X1b3dVuzb8mJcdQyq3o6lOQplSLAduwwVvuXh6VsxvMTBCNf
-	/pX1JsAnp9WwWH2WCfcHJ74oeKBZm+QOmFqboeg==;
+	s=fm3:rsa-sha256:dTPrj1WZAsHuIhtLLx4qngsjdYoAIh10IwcH/RFGWFZ2YcH
+	6vyVoyzukLMJUMhPb44vgeKf305nTPxogsvxk2S5XDAeh+7FHW6ngrNEZ/d/jn6I
+	DaL4Zd9nF0uPatkVgLzWReLgULR52DOzpi7Ybn2ok1n6R0D18ADZX2YtzfrCR6NN
+	j4KQVEupaJN4Zb3EeVwrnglkoUgjZBAQj6oWIo3fYZX0uYXJD+JHsADYUKFsSbD7
+	aDG46pme1LwHDaQgqYG5fOPRG69q4scuZJ9QWBK7ZTyDbulsGBeun2EhwHIVAadp
+	l3s9R9xquFtAQvUHQ4XrOPDPOxXBiCqOFRQEQNg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:BItSZYXPLbfR8AuioUA/qgasGfTwSOdnAoqYrShQ67M=:OFCnDxnMpShAiIV5ZuG3oYsl4dQxp6gL1b7yJrbCons=;
-X-ME-Sender: <xms:2b3yahcAfQCg9x_13EI9tgeffWtpIjjDB5ukKTmbk3aeVM4ku2IVEg>
-    <xme:2b3yai718oGUNbiM32xkYyK3hdPd8y40vUZWz8dj1OdGomkr4VKu_KLkf3CLnLmHA
-    NdtBp3F2Tn5ULpBJGw6JRh-ff-eysUDwZ8vT9pqcbaPpwr0AtE09A>
-X-ME-Received: <xmr:2b3yakUT5c8R9r1EgE8cDgg4uNpzZKVqtFDelO8SNWAACKUEcvc6tBeNUqxaXMoFufHom8MFn-gsbm1AE1lM86hRE_RxBwrg_d8J>
-X-ME-Proxy-Cause: dmFkZTGw6ax9qWVfIZLHRfUiqFSmebVx9PS/K9esHYAtsxr3ikgtSUoN0uZJ6cLRUniivG
-    HgCYQ6VvSbLkIePelxJ/+4KvACOJR2+RJmOAtGYIzNXnSUj/AkiicSXWP4vHQtnkYBKMNB
-    lwd4vcbc7TuQrDj+P1OiyZJ2mbRAHro0BAdVptbbC8VlMBpLT2xFixYs3kiVF+EMHlAx2o
-    yBF7+tc/1f/6sbxc4DIDLH1XVhWiQQf5bZOP1Hl9Ap0SlJ5ApOnB1mQjvb52OvR+h/F7pJ
-    vk3rf9+CFUFs2YbZNIj5UowyZ/ZqaJcexmEuHDyvCsJCxSYeVXSwYmXfUa4dwZgV3tIWcb
-    Pm0cHcMmbQO9k/4sRRB+zYwtQpBQGkI4VFpB5I5rm75B/aBeGMovuQ8ABTZHsx+Kq9WVZF
-    P8Rvsy+pjn+wWfXokPGFHKBDyy/ax9/C02nZBe9MJr1EODD7sVf4cnMg19g9Fue+HaC7yN
-    pmOoTRX05z+IIsMfvJgIGT8uRTeCzpUhMrIDeJOS2zseR1dng1S3yk2soxp+xZ4Y7TJm4I
-    vmCSrXvezC8bdDMpfw4edc6e+LrG0YjT8tcS+e4kGd2vMMVieWI25Z5X2qX3/C9/X8IQJ2
-    YKeNDKS73322/igZeqrHlOXrkQprJtWQ5BcIXztHFTomJLThMtA6boPwfBNw
-X-ME-Proxy: <xmx:2b3yah6iYtELceO9UylF6W7sTXM7Gd3R3J5fA6m_dKj1sU05YN18qQ>
-    <xmx:2b3yavrJw6KDbM0yex_vIhYeX2izl5PdHWz131z8T4Ptd3drwAsFxw>
-    <xmx:2b3yakm6e8KFu84cs3XMBtvqm-ZN7SjGci4MlVBi_KF5ZCJoPmKe-g>
-    <xmx:2b3yarNdYA87if6AIPtX6sk7eAssbJLSACkJHp75qK8xBLuN7qksAw>
-    <xmx:2b3yaqDqNUyu4V6w6LfuPzUbrZjhnnVEtHc8vwi9nC-N_41oGqesZgE1>
-Feedback-ID: if26b431b:Fastmail
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:Ja2k63k6fTlDHqINpxePiuhXijOAsD2YexBwc7/gsvk=:ZYoCJr+Nk6b/5cvKZdZYNYizQyW7R/4M2MsUUnZJ9rc=;
+X-ME-Sender: <xms:Vr_yanSRyHpzJKF3ISwMzn-Zx9TKB5FQwJyOqzjMrIJrZ-Dp4xkqTw>
+    <xme:Vr_yavzmMowz61SpfgUF6RGI-WkSBftkSuxzxfzYFIkrnQXS--F507f5pyaAF8blx
+    he56kquEKPw50wDgeKD-mHRqE8HN-mRZy76WyO1TmFTSUibf6z5ww>
+X-ME-Received: <xmr:Vr_yah3PbFNydbXrbFQGxKuJKQE_40qXh4qD9TGnNMK02JWGVF4ZyyaHe_MPHMijvKo0MQ>
+X-ME-Proxy-Cause: dmFkZTFxi6oFjG8Dw1oD0cEkw5axZ87QS187ebd0DHJAHviaeeqe1bZvI3X4aWEfePBMzl
+    0Dkxr7TKHH8WaElLWjWvJhl6/N+POSBlzE4quCOdV0ocNUyyUBVvpKFGnc2OFFnNn/BoLN
+    geQQScA9lEmhUlY1QdmrwjFlr0gMFGXFlhktH5ZOM/it2WLaVMMED1XaGFqFyXZJX13eHZ
+    MeCFWzlvIQI5XT6NXTBcCMFT2ByTnzGVOsM8NeM1K5zIrW1NxOaL6d/D37Vatb7RFa1Em/
+    E1Jkad+8H3yxJa82b2eSAsqUn7aVLTqR3FviQkwpjwYMAhYG8NG6EFFrs+0pu2/DzUr+qx
+    BYw/3WlCfMaeMMykidIyrydHRbwDC0uj3L8t7g39lYR2zM5Uv5UafZv/wRWhXBuAqQ82rb
+    PHXuJvofZDPCawCWvwmTRSUNkX9yk4tAX+gkS/u1blJZwFAeZn8h6R06knrEfT/nyJbRNq
+    27JKgUMo2XiMbgofn3sm6l9KYD8waXkV7BPvotz1mmHYbQxlHwN+j5FetK5wxtluYU8mtF
+    xh1TjS5HhK1IP9eBzcWqScTYtoVzkDCLNNjtxD3BrXyQlePt4TQUsbMQjPOAKJTxflXMUD
+    rhQ7iBD6LR4MOxhVDIgmb5AOWrAw7soP2KVkK3vjbsI67y7Tq9wU06VhmSrA
+X-ME-Proxy: <xmx:Vr_yal5LRDWufBPB17_6-_XtC7OvzB7MmfP-LadOLQeUyvLSmHAT9g>
+    <xmx:Vr_yasXAs7UKYM2lZSUh-gXDMNfn77ja6-F61JVrY9s0oASUktCofw>
+    <xmx:Vr_yasBf7LZ-4Dj2vzu6khCwaWq8vvOyOVTuBybSg2-IbqDCYFXeFg>
+    <xmx:Vr_yaj5Ylo0U1NTX1Bahxy_5fXX-jqj2yikauqOKRHvufm6-mqi0XA>
+    <xmx:Vr_yarI71l3z8SGqwKE_hBQ9U6mLaAotq3C6Euq6gSTghz8vaQ6l7HWs>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Nov 2026 01:46:49 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Julia Evans"
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Kristoffer Haugsbakk"
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
-In-Reply-To: <f7d4600b-909f-4dd7-94da-d525649a9546@app.fastmail.com> (Julia
-	Evans's message of "Mon, 09 Nov 2026 16:48:36 -0500")
-References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
-	<pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
-	<xmqqh5ile4h4.fsf@gitster.g>
-	<CALnO6CBGcG42NxtpuPaJVrzAMC=J8iVstsHCSi6vDQhDmFJ-Kw@mail.gmail.com>
-	<xmqq7bio6jb4.fsf@gitster.g>
-	<f7d4600b-909f-4dd7-94da-d525649a9546@app.fastmail.com>
-Date: Mon, 09 Nov 2026 22:46:48 -0800
-Message-ID: <xmqqfqx9uqsn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 10 Nov 2026 01:53:09 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 50ea5d55 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 10 Nov 2026 06:53:06 +0000 (UTC)
+Date: Tue, 10 Nov 2026 07:53:04 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v2 1/7] gitlab-ci: speed up installation of Git for
+ Windows SDK
+Message-ID: <avK_Q_QDmdkl9r5s@pks.im>
+References: <20261109-pks-gitlab-ci-speedups-v2-0-508832602d0b@pks.im>
+ <20261109-pks-gitlab-ci-speedups-v2-1-508832602d0b@pks.im>
+ <xmqq8q320wv2.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -130,56 +126,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8q320wv2.fsf@gitster.g>
 
-"Julia Evans" <julia@jvns.ca> writes:
+On Mon, Nov 09, 2026 at 08:53:53AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > +tar -xf git-sdk.zip -C $directory
+> 
+> Wow.  You learn new things every day.
 
-> On Sat, Nov 7, 2026, at 11:25 PM, Junio C Hamano wrote:
->> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
->>
->>> +`HEAD` is where Git stores your current branch or commit. `HEAD` can either be:
->>> +
->>> +1. A branch, which is your current branch.
->>> +2. A commit ID, when you don't have a current branch.
->>> +   This is called "detached HEAD state".
-> ...
-> Saying "it's a commit ID" is a simple way to say that it directly refers
-> to a commit in a small number of words. I'm not sure what your goal is
-> here, do you think that statement is somehow misleading to users?
+Yeah, it's fun. Windows uses bsdtar, which is in turn based on
+libarchive, and hence it also supports ZIP and 7zip files [1].
 
-Yes, I find it highly misleading, and otherwise I wouldn't be
-discussing this patch.
+> This is in ci/install-sdk.ps1 file.  Right now that script is
+> referred to only from .gitlab-ci.yml so as long as GitLab CI
+> environment has tar that works this way we would be fine, but I
+> thought that ci/* was designed to be portable across CI and other
+> environments.  At least we would want a comment next to it that says
+> we assume BSD derived tar that can grok zip archives here, probably?
 
-I think the part I find it problematic the most in
+Well, bsdtar is nowadays distributed with Windows by default, so this
+should be portable to other CI environments, too. So I don't think it
+really warrants a comment as it should just work everwhere. That's
+certainly something to point out in the commit message though.
 
-    HEAD is a branch vs HEAD is a commit ID
+In fact I wonder whether we should maybe adapt GitHub Workflows to use
+that script, too. That was my intent back when introducing this script,
+and for a brief time we in fact did that. But we eventually figured that
+it was too slow in contrast to the
+git-for-windows/setup-git-for-windows-sdk step, so we reverted that
+change on GitHub again in 55d62306eea (GitHub ci(windows): speed up
+initializing Git for Windows' minimal SDK again, 2024-12-17).
 
-is that HEAD *IS NOT* either of these things.  HEAD may record one
-of these kinds of things but it never is a branch or an commit
-object name.
+But now that we have found a way to remove the slowness we could unify
+both systems again. I intentionally left that out of this patch series
+though, as we can still do that as a subsequent step if we want to. In
+any case, I want Johannes' opinion on this topic before doing such a
+change.
 
-And HEAD records one of these kinds of things to either directly or
-indirectly refer to a commit that is currently checked out.
+Patrick
 
-That is why I want to see the first description of the above to
-serve as a solid base to convey these points, with later
-descriptions we build on top:
-
- * `HEAD` can record either (1) a branch, or (2) a commit object
-    name.
-
- * The purpose of HEAD doing so is to refer to a commit that is
-   currently checked out, either directly or indirectly.
-
- * The latter (i.e., the direct reference) may be unfamiliar to
-   users.  It is called "detached HEAD" state.
-
- * The commit referred to by the HEAD will become the parent of the
-   commit you create.  When your HEAD records a branch, its tip is
-   advanced.  Otherwise no branch is affected.  Either case, HEAD
-   now refers to the commit you newly created.
-
-And I find that saying "HEAD is a branch" or "HEAD is a commit" is
-misleading and does not help that goal.
-
-HTH.
+[1]: https://learn.microsoft.com/en-us/windows/tar/
