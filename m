@@ -1,107 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.178
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794316425;
-	b=yd5nOlp30LvOjC5Lq/mmwupgVKC4o8D+TbR1JWjv5siyvIHuvM+oClN5EU7D5PedK16X
-	 gRwOB9YUNKlrvd2hxeLSRxqS9/Ken7D/nr97w4l2yfgYyq4+kVDcxUd+nYE+Byvt6p1LS
-	 7uzQw30dKYrx5NXkYy3ivbMfZaQ2A8u7mZOP4Em4eIVj5b+vCkZbVycL/afBoSgN2mBVw
-	 Vl0F5N7XbKRynO6FtiFDsjVskpn4kmPxlP7LdcFqxUlacFC+idwMgtU9ch0lc/U5nygQY
-	 NsrlXY1ZkGksNDvCQpnBPry0lhiA2GaixPKVmICukNEu7jU28WXaVChn1ulJKr23rhA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794316425;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=s9fOjXI2wO/jLfxFFAeVxWwfpmimYJdRaJK4HSB/COc=;
-	b=DnWckP6gWnN0QjJ3FCeh/GmiHZR/S4eHXlS4Bh3QMcAGGjxpjiMh/leLkKnIwSQl4PjZ
-	 fI9L+q1tbVBYRtJbCxtipooLAnaT/KDZ+XEfei+RemxTQJVi3Flh8co7wqgwguJG2kd3H
-	 ZdyuNmktffZBQETDGZdDl73m1v2coL3nYVIlS+TDvcdnAWv9K4c58lyBwzci5sC+dXzVY
-	 tyXFI9amElviBrCITVu9YUR4PjKbR46zLvu2AQNvoa0rUHGBdIS5R3/223+loBuXJdkt7
-	 GD38dOeTU3ypLSf9mDJgTaluvOhqY2LWNLhTLWpnrasAvvv/pPdeRimu5TAeAtqzp+Q==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=g1FASwvl;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.178
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794316439;
+	b=sSPDF1KwC/qdAreGgoEsffgVf+DLxik2It/7FflMbsSYT3MdrerRTftX+KpTlmzwI8MH
+	 9Wj0V2uSIuoj+76S/hYatFQi0XsCjuEGQhvy+BGwdMRKirTkODvsnGyzZuPAINqBsxFTq
+	 SQHEyUESdzUC7aVtb0NWQZ9Ubw/PuHVS0KBPYp/fQprnAJtHA+40TpXYHgtdR0DIy41vM
+	 5cwVcEDYy4EUUFhZUqWrN+ZRqTfD+guEPb/DX49aBDHDF2wqVPft20aXIB4X9KhMFH4Yc
+	 oE5As/QTEH2NTHYziSG8STltTV/UB4yAWamGdExN8VvBHKBgr7hWeQiP8oHquk1xhzA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794316439;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=Gk7lrI07ErZLZfsig4dPHMhP5wwhEUuDeT5lPPcc0fs=;
+	b=XmnYNWQC+vcuQ1lOJA9Zgmh/0BvrTQByotnxJ8myZu8sx6MIoKWOzG3LfJVLW7zkCl/c
+	 FwgJZ8OuimtuVX/Obcx0JqQEJEZRjtbX17vmu+8Bqd6Aa/03m3p4HaR4x/qE6nKUW3S9w
+	 w18aXdgOiC5dSbv8qySJweJtMdJM5Ur/HDdT4GKTwO8dq67ihKot6dpA9RwO47qxRtPzs
+	 iopjjN2FRamI7Uk3IF0ehZJ6/MsCZlHWY977osJcXdgWBxQ9Gx5Sznv4WDB1F25FLmESX
+	 buQBcj1smSXfTMY2p37f2ScuXn85RjpT12FvUze+uNYleghWzj3Jv2bNWCXi9d2NvSw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=vCnwMK9I;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=sEErZqT3;
+	arc=none smtp.remote-ip=202.12.124.159
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC85606A760
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 13:13:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8AC85606A760
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F6D606A31C
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 13:13:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3F6D606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=g1FASwvl
-Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-5ec3561b07dso1345510e0c.1
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 05:13:45 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794316424; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ArS7PA69uhpToo2aO+f9AnUQ3wbEE4AptBP4rJzUd+j8o45TSwbjYZS+KfuqWFOzrW
-         qELT3HruNObie+dyR2IzgiCcBLpj2l5ViZH+8csLB25gPxesqCjrbxM0/3U1S7T+geEL
-         jn1eNJLVX6plzagd1cdOrHzK9z0sL4u57/qrm/bQrn4ub4Fv0+Mnu9JmtCp2n6OeuHq8
-         zDa0BBcr6hKmleOoCIz0trOq890mKo2ZifuYsnLPTom2VPbWDkdjh3YS6jZw5iDWNPMX
-         NEK/QoccKcyTztO6BlfjEHsBkSvPKDXVWMDblb/q+tX/oqjx8VvcR6uybXqDzt9f93j4
-         4EEQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=s9fOjXI2wO/jLfxFFAeVxWwfpmimYJdRaJK4HSB/COc=;
-        fh=gxcvO7TBd3GRkZEzrTMRQ4eVVo001NfL+KFW3jJJRnI=;
-        b=B40Fp5ZeIYjVlCToxckP5cfuX4WudgTacjPmynlVEF8/aJPCHK919ZFf3OhjDdgVX9
-         6DXq/gqHgreeNtqhk0xJfFHdnCAD2HpHU8CAbXsBOqMTvrfwNqrV/Gem0PbhWIrcur4K
-         +ezpNQLcYdDVbHcj3+M/K/j4tcrm7XQBZKd0Oe9qAO90IFmknoi8Eu2Da3D9N+2ymKMo
-         /ZBbLJ4ZtW+OEsUunYYz5Pp0ft7xagnr6voLGH3iPZlWawf56DMWqXrf7CNkBXq36vUf
-         msUDDQNGXBvWRMPBJXzdL1/ytxpW17KhGUQhYHmCycuZ30HfUEY3k18ONtp2PwFX62hP
-         nWKA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794316424; x=1794921224; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=s9fOjXI2wO/jLfxFFAeVxWwfpmimYJdRaJK4HSB/COc=;
-        b=g1FASwvlvLdYVn7Uodh5HxR//yeFrlXR3ltPKoKkmJzkW3+hrFl3IIMfq31GChNfp4
-         kZs5f+pcALmINbaVUpAkHH2BKkC+PSE2RhfO2rIiXgouNcmZJdcjDHfR/0hO/X3OS+Uc
-         UdD3jqP2yxkclWUagCtAkKrTAEPWNqcIOHpRxvCbo/KktlFP733km7MTVHXaHFLDsfw+
-         b5GPttTjaS7NFcbsn82PQzHiy0asaCpCZKrh7tH/6ofAHJ54DebvM/Bo0Tf5LusdIWnZ
-         BWPzBnucSIALD7ADmQdtV0vIme1xkoygp0r2PdrFLl+ecAOCLplCrfLoQVaGavJs3yHS
-         88zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794316424; x=1794921224;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=s9fOjXI2wO/jLfxFFAeVxWwfpmimYJdRaJK4HSB/COc=;
-        b=2Xs7grOBQvO6mSfZaLhCkD5/NInpqCzC6JcM7SoKkc+ZMo6dBPgOc4SK2u35e4xSDk
-         5etGKTaxA2GvEKz6/Kc9cmOwXy4wCXVGGhGN1buScJL3LBEF5aNtdMmSb6atocNYats7
-         aokqTKeot6Ag9eX84Ax/kKVXiocT8y/2bS+GngqQDxNpyU2mNS41T7BnlKxRZ4qVVM/9
-         pl92NV9b0xXxG5KQI3On628Y042aNNdkJsBHcgGOb5pr0dkpe7sQsBreuMwgBhSDhboG
-         irEQbxzbq9NdJfLBdLKjn00KKAvDpYBp1C6qMe+sUkd5D48ItFj8nGx5NRBALMWAf6T6
-         Ox1w==
-X-Forwarded-Encrypted: i=1; AL+hErHxcHQrZbsy+Q42jnQodLJZGyfNX8Jofe1KXT82WOvBX0pqi+8FmWODh6DWTWRQdORSWE8=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8FX42U/L08wCBrcaQwjEqnGCUTZ+DKoKx1mGwFNe0zmHBfJCUA
-	EAXvLRsXB0/Xfn4a6bl553SFlGrWpzgUxtVNHTdCwniE523ScBlE8CyLEkpXFn3mcZW/9oEUS2j
-	L5s2UBDw86TbYlka2djnhv1G6zsbPgxI=
-X-Gm-Gg: AYBFou1bX6fJiRJ4TuwSbovC1RiIwAzXvoDqOx59YV/PCVfEeTW2voGTXqg+2UHxUYQ
-	HBAim6jbmijj49Y33Lrtv2QpBGotsgFGesVaKUCEOFgsiOrmUGKVNEb6SjqJlt3vRm0TLNH13ZX
-	hDruv/uc+g0g04yKnjktQznvfn/GXrmzSrcNTMtx91pyKyn2d3ftpVMPGmumEG967LeXDcCpJrJ
-	O2PXKcAhWE98LCRdHvP4gyyoPSYlJeWG3yFmx+xWFZOtCf3pusi+haPGPZw45ckvDz6rl7FBpHT
-	8F9IRmbMB2QSn8VrGyHfuEkD7qimOKZ0KU0pR4hDqf7GTm9B4X5S14j63mkMfavVEYJxE7nzP+v
-	HatZuP0BYiU9ILfQ7sslXYkDnk5WL7nHhHEGaS5IebPPySORmouuav39xSMm0meWWU3TrazrxMB
-	RBkR7EFwvdOkd4qPFSvWF9DBhWfRCy
-X-Received: by 2002:a05:6122:3982:b0:5ea:c984:5ad4 with SMTP id
- 71dfb90a1353d-5ee0cf262f3mr557367e0c.2.1794316424413; Tue, 10 Nov 2026
- 05:13:44 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Nov 2026 05:13:43 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <4b46f8f0-4acd-4101-b133-8d4ee8b0ce27@gmail.com>
-References: <20261107193020.583215-1-jelle@vdwaa.nl> <CALnO6CBarutmydfmHDM=y5yfUCQY5SxKKcoCrd0NXCuNVkDuJQ@mail.gmail.com>
- <bf54db39-d10e-428f-8c6d-b444f37cce81@gmail.com> <CAOLa=ZT_U+gDjdLYkbtqRjUxwHA6q6+Uk4ssznyHgn09xcFqpw@mail.gmail.com>
- <CALnO6CCfKsd=w1kVvbJ83WtJPbsH8hGcfZUUTE9eGqWOZeA=AA@mail.gmail.com> <4b46f8f0-4acd-4101-b133-8d4ee8b0ce27@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=vCnwMK9I;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=sEErZqT3
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 18E697A002C
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 08:13:58 -0500 (EST)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Tue, 10 Nov 2026 08:13:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794316437;
+	 x=1794402837; bh=Gk7lrI07ErZLZfsig4dPHMhP5wwhEUuDeT5lPPcc0fs=; b=
+	vCnwMK9IUoXtTiTaSq3YaD5UAnF8thW45q8aCqdob5UvBXDYcl8fH9ze+77gMoU+
+	xJ5ylBNwItEeU3GD6F1XNEAxrbtit7VgqF7KzTNE6nABnw+2pwhX2QDzdbEe2Axg
+	avy9dVrPbYtTkgOr8ZYxhB4YcvpNl4KITzUxYzuIQys6eKFt2+ehngCyuYgSrr8s
+	Iy/4FWc38KmIaMJzBHTd98Q1Xscby1gBbLz1f6drfAhC7VifuO715VKUkzLqsWl5
+	hLQqhN25hgeaZiQ9BCt+iWRP08eB/z5koLqe0eBZudsl+knBBpnwg0UzEKr8z6kW
+	LomoE3TEEqGIsq3LjZPv9A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794316437; x=
+	1794402837; bh=Gk7lrI07ErZLZfsig4dPHMhP5wwhEUuDeT5lPPcc0fs=; b=s
+	EErZqT3CiBiS32SEGz7U1lHK7/S83rIsu6CtZOnHO3QzOUUEfaiKOzLQRFFmjt3h
+	sGRINnes0TwJPGZml4zDXWJWJOViX0Wur69znqHcjmnwnK5o11AmQqyLT/RFkRmW
+	Ts0GNk5GOOM3qHnl4yQb5mJp+g6Up0lwS3ICPWOVJvnFqF1ovar4hxx9VPwBTH8P
+	ZYTZIF1GZwUfzTOdyCrzTmDC8XpZIuuNlRTee32Smb5c6vMtVdSlr5Wv3uYhv5eu
+	1arn3BXqcUY/OMP7+qHdZAwHMxOFA9hA/g/PWs0QSciMDKIcLsd49z41CURnoOZD
+	FmroTVnAkvbez8NaF1HVA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794316437; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:scMnDFcXbvLuY4Spi0LJAOzW6qfuZv2jDIWXGm66+uJc7Eo
+	PEXdV2yHSM3m9tcTFnEuZ6N0NeXUvCxpELeAcia6seVWEgmBan90VtLlYIPFtzEd
+	U/8ZfXBRklfottf+SRv/+Zw3hmc6r0yeoxVsCHzLERkU7y61te3bgWEYFOQsQpTM
+	LmEmQwsmvlvOgDMFBYW60bgkebe3hmjCegXNrVJBiCs5poTkGefSza+nxqvdQNqm
+	OSe12utS0dQ53ObI2annKRCQsiap7WGcd8dNiLz1yxGwjmZqLejxIi4k0dUhv3KB
+	qAJabBPLUvhlyizYdsXpMMKO7rKSZNnaXSYdTug==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:eWK25NfcriKJ086c60L/xCCndoD3LXjHRwRsVpe4CX8=:RDTxCZrCDqjpCSQ2N24Uh9BrHApDlbMnnH9Bc4j74w0=;
+X-ME-Sender: <xms:lRjzasPfxPrkX_R5ENBl2ynH7WptQtqLj-pRd8oWsXrNmvmXRp1w1Q>
+    <xme:lRjzatxLL-TsyduwhLntYIe7PFE7Zzu-rn3cm04ZLSDkvgVJT-V2DWOhwioDVGi57
+    awV6UI0CXVMIP3QFo2nTEw0pyFoBwUcbn6-SkQiY8VqmGNZ_YAUlr5K>
+X-ME-Proxy-Cause: dmFkZTF7wFK9cgnXvlee39ho6deCFs09hdy8H3Fwq98221ihlwuqlgPdDzXgh1aJeH6hd8
+    e+MDriHMypTNVtt8MaMgSNfRgsL4gdL48TteeX03NEweZ6sfk/cdxJIhXDC/8XiBbkA5ZK
+    RuEty2twACizIp5EFT0edUA6pJJsI7xYpu0DBJR2acWmCsCeb/WnXZ7pPVGF+Ot7Y7+x0h
+    fk7IE/4wJD/jO4eXMAZfk3tzVqNd/+QEY2AM3lr6j8ayfzU7e116hD1/f6bzVfyn9Qshg/
+    A+8dqBUtlAOgvRZJ7SgcACQqB117iMBSVug6L8Y2nbhK+RXNVAErLPPdVm4fiu5CklMkjc
+    ZL7je7mzz96l/2ohrGPP5INP3JZLLPsMXr14pAiURqRP/HZPctFkuevlWyt/QnYYE2wCzL
+    DsR61Dj7mqtlxlyUO1pBOJj00mPR7LnXYmKREH5KARF2QMQ6GHvsbtm6zQlLGBWsKRtD+k
+    nnsVeOiy0zLpOrcXXGM8uo/6OUQgbUhbDXJ3D+3ChFA5t3kib/gBRW7p8obwxtA6+DqwwZ
+    LIE+dF3sgTqNqoi1kHqUJJAGRLch5mWgJ4FQtRPuLmn82GZ78mzKLJT3warIcwkrmXADYo
+    qHGBF1v8ccCG3efcFkn8SuSs/78+UEhPj1bxZoDiEiYhA/iN+bLFfIlC68gw
+X-ME-Proxy: <xmx:lRjzasz68mPcipKSyyq-68uZYSMFx8pg1t7Mzvb6NjRQntSHVQrrwg>
+    <xmx:lRjzahw7eX2WX0_NLkA17EXWkP62Ko9r8Aq-SJW9I20cnSmzYsQDag>
+    <xmx:lRjzauYPn1IfLxfHOt4s6JVD4iDiF5GHG0nhMw4TM1CULwjMJ8ATdg>
+    <xmx:lRjzaqXCBjZJnjQ6LlTZYKZYVzkt6mvme3xyJURKE5U7kcQKIP1XVw>
+    <xmx:lRjzalFTgkROp2thM48nxymRsqO2ewXOLG--4X6YBz8TMq3i5nmi4uZh>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 09A67780070; Tue, 10 Nov 2026 08:13:57 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -111,71 +114,120 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Tue, 10 Nov 2026 05:13:43 -0800
-X-Gm-Features: AclHuK-xW2aRF_I-dA0sWuukXLOW9I_L8CUDMmBI4u4jQxes6MZ8XXs7XxgAmCg
-Message-ID: <CAOLa=ZQowi+fepj+RNegTZhK_Jy4G8VLE_Af2UdsO8-rCdviJQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/2] Support --verbose in git history
-To: Phillip Wood <phillip.wood123@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Jelle van der Waa <jelle@vdwaa.nl>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
-	Harald Nordgren <haraldnordgren@gmail.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: multipart/mixed; boundary="00000000000017a040065febd9fe"
+X-ThreadId: A1sfaQj8oK1o
+Date: Tue, 10 Nov 2026 08:13:35 -0500
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Message-Id: <ce9fcde0-2181-4773-9133-f39ea1ebf7bf@app.fastmail.com>
+In-Reply-To: <xmqqfqx9uqsn.fsf@gitster.g>
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+ <pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
+ <xmqqh5ile4h4.fsf@gitster.g>
+ <CALnO6CBGcG42NxtpuPaJVrzAMC=J8iVstsHCSi6vDQhDmFJ-Kw@mail.gmail.com>
+ <xmqq7bio6jb4.fsf@gitster.g>
+ <f7d4600b-909f-4dd7-94da-d525649a9546@app.fastmail.com>
+ <xmqqfqx9uqsn.fsf@gitster.g>
+Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
---00000000000017a040065febd9fe
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I'm going to reply to this email a bit out of order because I want to say
+this is a great list first:
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+> That is why I want to see the first description of the above to
+> serve as a solid base to convey these points, with later
+> descriptions we build on top:
 
-> On 09/11/2026 12:43, D. Ben Knoble wrote:
->> On Mon, Nov 9, 2026 at 7:06=E2=80=AFAM Karthik Nayak <karthik.188@gmail.=
-com> wrote:
->>>
->>> My preference would be to make this (current patch) default behavior an=
-d
->>> not even have an option. I don't see a disadvantage of having the diff
->>> always being shown and it definitely is a better default to have.
->>
->> When the diff is extremely long, or if the user has other means of
->> obtaining it and wants the editor to open quickly, it may not be
->> desired. So I'd prefer to still have it optional, personally.
+>  * `HEAD` can record either (1) a branch, or (2) a commit object
+>     name.
 >
-> Another case where we might not want the diff is scripted editing as it
-> is much easier if the script does not have to worry about the diff
-> getting in the way of its edits. Personally I'd be happy to see this on
-> by default - the history command is marked as experimental so if having
-> it on by default rather than following "commit.verbose" proves to be
-> problematic we can always change it in the future. If we were staring
-> again I'd also make "commit.verbose" on by default as well so maybe I'm
-> biased.
+>  * The purpose of HEAD doing so is to refer to a commit that is
+>    currently checked out, either directly or indirectly.
 >
-> Thanks
+>  * The latter (i.e., the direct reference) may be unfamiliar to
+>    users.  It is called "detached HEAD" state.
 >
-> Phillip
+>  * The commit referred to by the HEAD will become the parent of the
+>    commit you create.  When your HEAD records a branch, its tip is
+>    advanced.  Otherwise no branch is affected.  Either case, HEAD
+>    now refers to the commit you newly created.
 
-I'm on board with this suggestion. Plus, I see 'git history' to be more
-user facing and it's always nicer to have better defaults for users.
-Showing diffs and verbose information seems to be inline with that. We
-could add an option to disable such output for scripts (but that can be
-done later as you suggested).
+I'm not sure if we need to communicate the last point here, but
+definitely the goal is to communicate the first 3 points.
 
---00000000000017a040065febd9fe
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: b5cee77f626e62f8_0.1
+> ... And HEAD records one of these kinds of things to either directly or
+> indirectly refer to a commit that is currently checked out.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yekdJVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNmhKREFDQ1VLVE9YS0h4VGJJZVNRaSs0ZFJRV0xkUQoxck1ETXVML3E2
-Mk1GRDVDZW1xZEE5S2pCb1lLNUM5eXNES1MwQTE4aGNvT29URHNveTFWRkxqMmxVVDcwMGkvCjF4
-R0I0NC9MdDZkZkp0akxUcm5CNzEvUTE1eWhLaXpvUmhnNGJJK0ZwMlVPNkVIU0RmVDFpalFrbFNQ
-YnRYNnkKMGpWWUFFc2lOMmhVRytvcC9USGdYWk1UZDZscnpibGF4NFpzbkFOY2xhWjZFTTNjVkpq
-aFphUjFBSGRsZWJTZApra2s0RklLdG84bXZkdUMvWHoxcHFzVHIyeXR1VVQrb3hNQXJmbll4Zm1P
-ZWdBZ3NlTkVjQVpROWpmZ0pvZlltClIySUpmRUd0QzQ2c2JsUkVyZ1FIeFAxampJU0sxckRHakg2
-akJzQitjTXVvNnhlVVpKdmxsdUZpVVBjL2F5Z3kKTUpLMmpqMmZ2UlY0RkZNVHJJTUFTMUVOcTZW
-QWdsM2xWdjFNWExsVnVCekNuN2R6Y282OTZOUFNkM1c1ZWEvUwpPSEVrUmZzc0I1bTQ1MGhtVnV3
-QjI1TDVqRysvU1VvZE9ZdWhtdDFwQUlENzNJRjJsZ3g1b01VOUN0Y3NtU0xuCkY0VUUvV2h1UzQ2
-d0pxMTJhV3E5RjZRSUZWbE1icUZRanNFZENoVT0KPW4xQncKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000017a040065febd9fe--
+now back to the beginning:
+
+> And I find that saying "HEAD is a branch" or "HEAD is a commit" is
+> misleading and does not help that goal.
+
+>> Saying "it's a commit ID" is a simple way to say that it directly refers
+>> to a commit in a small number of words. I'm not sure what your goal is
+>> here, do you think that statement is somehow misleading to users?
+>
+> Yes, I find it highly misleading, and otherwise I wouldn't be
+> discussing this patch.
+>
+> I think the part I find it problematic the most in
+>
+>     HEAD is a branch vs HEAD is a commit ID
+> is that HEAD *IS NOT* either of these things. 
+
+The all caps "IS NOT" doesn't help me understand why it's misleading
+but it does tell me you feel strongly about this so I assume it's important :)
+It might help to give an example of something a user might believe about
+HEAD that is not true as a result of reading this.
+I'll try a different suggestion and see if that helps though.
+
+Often I approach this issue by talking about Git's implementation directly,
+like ".git/HEAD is a file that can contain either a branch name or commit ID".
+Usually I think it's not good to talk about the implementation that way,
+but I think HEAD might be an exception because in practice I've found that
+users find the explanation of the implementation helpful.
+
+Here's a version which handles the issue by talking about `.git/HEAD`.
+
+  In Git, you can always use `HEAD` to refer to the commit you have
+  checked out. But HEAD is also where Git stores the name of your current
+  branch. Internally, `.git/HEAD` is a file that contains either:
+  
+  1. A branch name, which is your current branch.
+     The commit you have checked out is the latest commit on that branch.
+  2. A commit ID, when you don't have a current branch.
+     This is called "detached HEAD state".
+  
+  It can sometimes be useful for `HEAD` to refer to a commit directly
+  because it lets you easily check out an old version of your project.
+  ...
+
+But talking about the implementation in this way isn't a good idea (even though
+it might have been okay 10 years ago) because immediately as soon as we make the
+reftable backend the default, users will try to look at `.git/HEAD` and it won't
+be there, which will cause confusion.
+
+We could talk about `git symbolic-ref HEAD` but that introduces a whole
+other can of worms of "what is a symbolic ref" and I don't know is helpful.
+
+> HEAD may record one
+> of these kinds of things but it never is a branch or an commit
+> object name.
+
+What does the verb "record" mean to you? I've seen you and other folks in the
+Git project use a lot but I've never totally understood what it's intended to
+mean. I haven't seen it used in this way outside of the Git project.
+
+Like I said before in this thread, it's important to use verbs that
+users themselves might use to describe a concept (references, points to, etc).
+Does "records" mean the same thing as "references" or "points to" from your
+perspective? My guess is no, because "references" and "points to" can also refer
+to indirect references, and I think "records" may mean something more specific.
+Maybe it means something like "there's an abstract key-value store in Git where
+the key is 'HEAD' and the value is a branch name or commit ID"?
+
+"Records" is not a good word to use to communicate with users about
+this topic because the meaning of the verb won't be understood.
