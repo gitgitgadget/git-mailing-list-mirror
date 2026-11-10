@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794337925;
-	b=QG+9wNBCr/hxZzf3ChKMD/hfgbVVn33oMftHn2hVqCVpHUsuiQCKZDkpP7OI5ULXGYVt
-	 Ud5UmaePaolzs2nzOTAiEuxsjG1k7n9Ufh/foHIpu2Vn+ZFKRd+BvJZqsYkAYlRhfIfzz
-	 xBnZckj1b5mtxeJlrpzecrIKFATvGVGOqRw+zzsLuLujUsUnz5KXeiAloLIXt4C0P6jM9
-	 /+4gaSRbIxsLukYtt3x8YaZfnsJszVuFL3JXPKELLycfYuNu610VF2DDer9phofcoxWkb
-	 ZviV5xZMwfjgfrXFIwRpZBtn5xy+Zmnhh3xlOyhamu09uy1soBEBQTHsfUhC6jhoJ7g==
+	t=1794337926;
+	b=Jlzkm6vDMLh+pHEjxgi0HKy3IxzEV0hvAtDgHb5S71hYeuUKyUgNXDtfq3/vg9Pr+n3o
+	 fY9R/V6wXblRP0nzgT0QIKGT97Bl8jcG44v5StM2zGsf8XQR1nV1TmJmAueVFlWjZnZ+/
+	 OD+elRcf8lIbtnOJNDKTW7a30kuSyV1JHqgQH73V2gTsrbW07fbj1sdG/2m6isQVVLpXB
+	 t8LXDZCa1JworjHckSMekyp4AF0l2z0xfLHu7SMEqLm+JU2V8zvdQegYfeMnSAgV0SsEi
+	 TzEYSwBKB5AAX/ffQ/Qb+rOWCJLp7pN1K5aSw9Vn069fZnLitfOFKfRWyvO2emBqkgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794337925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794337926;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=nFE8sZKbA2lGwci815KRX/7xlhaiezAohBEGnPfG9qk=;
-	b=Pif8Ktku0F/yoQyBzK0Y8tQWl+20qC6IMaJIZuhSsdxc7tKJOUJx8sZuchbSi5YZdN9j
-	 IxZ45Y/CM5Z06hz063kdy14URyaohRXi8EqghKrDlY7QQXjsEbFi+upRnohTE2VVdW8dv
-	 3SRxvl4vNtWZWrCMQN7MUunDB/corKolYKRIK8BMtSKdSQ/HcfqcT4PgO/NAbMHOloy4Z
-	 1yF+GXEC3q/vQvM6wwVUzx3taj0yMK1z+Nhmfz+GvsfkQvEsVzGva+XdbugVYkbsG4D/H
-	 EMTDItYMSAxXnFFxr1xPea4FW5eD/cV6LpT1Oa44UN7BrZWrp8gmaj8EcR5lHXy4KWw==
+	bh=YEn9KqLvwb37dUbwTpjnRanpxFqp4f2S6dbgAxsPO/k=;
+	b=aNdmDJpRUCWmtXliF0KxsjsMApcClcG6K8rKPML8wqpBdAiv5LAqmjskS4Zrk3OXyPC1
+	 w1wYnImT25QkjOmtj6wBx+8hwNyrsaEFMvbgJQfhHdDpzwMb7HEIgtsvptFvKT0moX8Zm
+	 sBGEe9rfV75fIdd48hkJiUa0hW4C9rF4pXOiINUsmsFs9VftH2kXyd0+vGjqK8E6frxVv
+	 UHFoBRO+Kqc9pKBGuCPMCS9/Zj5gfCWxKKVupAKqxzVsbXvrrJEyL5lw5CelK4QVnhq23
+	 ekYkOHGPPCuzIWvwa0rF3BBmVyg+e5b2E7PMdPeVDmEK7Dl4XUcIXXbvLjWvRXI4uIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XEK0rQAy;
-	arc=none smtp.remote-ip=209.85.167.182
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Myu5TsED;
+	arc=none smtp.remote-ip=209.85.210.46
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EBE2606A332
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:12:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5EBE2606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8277C606A337
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 19:12:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8277C606A337
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XEK0rQAy
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-4d7034a99a9so1337597b6e.3
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:12:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Myu5TsED
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7f84a55e31aso1379764a34.2
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:12:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794337924; x=1794942724; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794337925; x=1794942725; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=nFE8sZKbA2lGwci815KRX/7xlhaiezAohBEGnPfG9qk=;
-        b=XEK0rQAyCcrZkAMaQiHdExhwHdR7lTWoyM28ButpGAaJ/sd7VuTwRNqMlIVoELydvn
-         7iecs8jXpsYGkvYBS2ddxznRYFZYZ/3aUvqvhABz6eTHf7g6Tsoljo+c2y3kw1i5DlBM
-         1dhg06eP2VxH0IeUI/tLIToFEqQi56HNy5/jM069D6GpKyguEvmXpai3oIu4rjpe+oAA
-         pn7eoqGZJNgjQD8TSTwguxY7nejUDS6kA6UsDQd6Aorz7gr5yhwoxxp8uZj/nMB2/4i/
-         iK3DwNMChAZ7ghqUBParm/YNj1NC9izI6pf7RRpV/YyfAlbZPzYwWd73UWqvtu1yfBVu
-         Ocpg==
+        bh=YEn9KqLvwb37dUbwTpjnRanpxFqp4f2S6dbgAxsPO/k=;
+        b=Myu5TsED4WY9W4YfGLBE1CadeA8aR1FWrDZ/HFg5k7pVk2wR5NLYF31wCo4oTBFEuA
+         jPc7oqKOZwipCBdHFr/c7xNQeIyTMg87NshV+Uxvi9NruHT2otokS+budDfX1OiHj2JF
+         97KY3fVsRSIrgOLHduyn+x/LodDdYYHXXx7R88viSNklL3kThzv7qriqneXVu7+osGYY
+         HQ4s7AMG/qD/2/PLmgpb25ZIwvhS+/HJG7iFNVPnjfsxVktcP9BKeJND0S0KrCytPMl+
+         7d+XH07/A3/OfQMuRgWRPL6SmwLQ8JSWF5PTfMJT+QT6gWnLEVhiNskYs2q+GfAHysbB
+         1/xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794337924; x=1794942724;
+        d=1e100.net; s=20260707; t=1794337925; x=1794942725;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=nFE8sZKbA2lGwci815KRX/7xlhaiezAohBEGnPfG9qk=;
-        b=yms94nvOeMWiDzyzNVqsBgMzxAOSm+ccenhMbYcIjN0qPBtKT/RnsxQxqLTUFkvlXv
-         /o0c3sRVEVjjj44InVhA9f6CLdgkIlAkgB4XypSjpxxgTP0LTpy84ZcN6siWaRfCRIOp
-         33ffLLn3sFsiHQ1Lm9PVzJfEbpxUfZwUev0W6VHAE5HnY1zca3PIZbpQ2YT/XNikgQvO
-         7YMqRGk3KWZGXU/qf3hjvOCLex9sWmzycCsyoOb1BVHlgXPC0oaz9M1ZphHjJAVnjYnL
-         bk9KyFuMm0ih5IVsyCKU9THTtMoReAaCAw8g1/ItzibREhUfABNkMzU/GpEvnab8WKEH
-         imXA==
-X-Gm-Message-State: APuU4Z8BBRdHTC6rycJy7UdYznEq/Ce9M97BOeC9+ufmE051kxN7mJje
-	aCiyNqhIkboQ8lXZbSOsAJ5/uxSXU3sb/ray/DLp56vOMadYwa6uswi1lIjONg==
-X-Gm-Gg: AYBFou390/LPGIvFf3+ENbc+1tAKFM5yyXUIx13RhjPV4JyI7HH/rgl/O3GE9aWoEpJ
-	JNiC3b/PvRfFCfLzCLfXw6OiZeBWBBM+NQRAijv0avrMUf4d/C2Nm+Lwt9SD4jrNMHetCSb+65Z
-	yj7cg0nKSpQoIxNoYSykBL2o9V3jm/AnkxhlLBa931PDSwMYLKveS/hJqhoOl8yQiXlWO1+z0K1
-	q8N+SiO+PZhF5195vVS+F0+ctEtzP+YDEZ4iIKnJrpJ/nXZ8mGjHbXbmpSQKtrmz1IGfKOm5gvk
-	umDkeYqK+l9wbOMuY399kyPHBIKhkHq+MXuGpnZB/DBHzdlOb7UlpUtEhL674KSW4XoMb5ZgZo6
-	ao4WTsJa5oN6Oj4SW9VSvhhRVsDSOsN9H1t6friQCLO71UX465vY3/G+Iy8SSZfiZyMuFQpr2w/
-	GllSCOWUl719HUmqwN87jA/dKslZW1Kr4r1hcEjbHYgkcw2HlpR0AMZCeebhUnxtr1hcPf5gvr+
-	hAebrH4bmjJQUzXJU0c1bWH9jbf7/TCm1xpug9+2QWELZT9yAgo0Fi9UXgC0NS4oFU+FvrCv4AD
-	0tCP9Tngs0qpi1g2v+3Qoqzfx307Bfc=
-X-Received: by 2002:a05:6808:470b:b0:55c:7ce:cb77 with SMTP id 5614622812f47-5683cd6327cmr2775847b6e.36.1794337924122;
-        Tue, 10 Nov 2026 11:12:04 -0800 (PST)
+        bh=YEn9KqLvwb37dUbwTpjnRanpxFqp4f2S6dbgAxsPO/k=;
+        b=Aadjj+uDrWGp2+Ai3qspl9Yi1CQpccQ+pQ8+KyyVSPaeI+V7DqqD8ErLhfaVzK8JU7
+         990neYy1GmwM/cM7B1ea2TxYSCffOh9p8Wy73JIEvmWZZITFHohIOhhlWF4Mz0fD+OmO
+         odWu9gUZClxU6Mg1kZQWRRuvMv11aX+aWSDvg//S9JhoQGl3lIhtMxrwxrw3VENtobUr
+         NRYj5AMwlnLjROrO8wxkGLBINO+LzjpfLvqxrU92lZ59XenM+l3J4AGYxFTSEPJhCDCv
+         DeJBJFS5mbZRSC2Et2oSXJJP3Kdox98gXxV+TYDytCsVTkCY0Y4LrJpy3mHFPaor9fYX
+         53TA==
+X-Gm-Message-State: APuU4Z/xBGauFad+YE4uVd5YTImc+uWSOovBEJbkw3za1d9pKik5loxH
+	JZgc3JmfB6cnWPtpian+2DSrJVwYwLDbOMn7Oh0R7l1lA+YZ1KZseM317WfwcA==
+X-Gm-Gg: AYBFou3v2ZA5bHf05t8Kgi43ylmjM5fzNfYkmaaNNJbKCZ4/2Jux9mpnSZQfiDCw0PS
+	ym21sZLuRz2+qjX2WQEOC+iqV7qJs1BjBn/DukAa4fHjQtSCzOvPfKRVM1N5+MBC3CuV+1lecvJ
+	CZ768gx2zz2WpPiZw3n6KacMUIsGtcaibBbCO44qaDhSFGwEKy/xtM81MX5IY48qHQpjvzw35Fm
+	rwLTs9M0mGYH1iP8O7g8UDP3lUou9D5eCPm1kQ7VPL5/O5sMXih9mWOLH7rFiBMRNIv0y/hvBJ1
+	yzjAqTd0Vh9Pc9SH+ljN0DmS3RvQhgMHF5K+cz/suAPNIo2tyomUkCqlRK9D9OTXVg3QxdqA+7g
+	oRFKo1+zfQru7WqAtisi+o2b1e3l8fgFHGbnq+542+c70kQFreRU3rRJIy+HLu5hptFxeUruN1Y
+	vBFOo5b25dqZEUUDbZwj4mBeIgR/3GFWjeiMl/Mz0T8zJWFjKelff2sSrGWplM8GGa1lMxH2mmo
+	ra0/7gv/PWrHMrIQOr2/BdEXZByKgZFZtIvi0mcavCkequZH5ztMCZrDaALUafRz9RBt1njo7fy
+	jFXT53KMlS5cU+0/LYWAsYbzI18UV90=
+X-Received: by 2002:a05:6808:508e:b0:4d6:90f4:48ab with SMTP id 5614622812f47-5683cd1b07bmr3016343b6e.45.1794337925226;
+        Tue, 10 Nov 2026 11:12:05 -0800 (PST)
 Received: from [127.0.0.1] ([52.154.21.60])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-5690504e7dasm2818864b6e.5.2026.11.10.11.12.02
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-56902ae3906sm2889515b6e.2.2026.11.10.11.12.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 11:12:02 -0800 (PST)
-Message-Id: <6aad1a1cd34a65939be6f64a0d8950e0bc23870a.1794337920.git.gitgitgadget@gmail.com>
+        Tue, 10 Nov 2026 11:12:04 -0800 (PST)
+Message-Id: <a9b81eb87684fa9bfbc83e845eb67ded8d7cb6d9.1794337920.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2264.git.1794337920.gitgitgadget@gmail.com>
 References: <pull.2264.git.1794337920.gitgitgadget@gmail.com>
 From: "Wyatt Holden via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Nov 2026 19:11:58 +0000
-Subject: [PATCH 1/3] checkout: make orphaned commit checks configurable
+Date: Tue, 10 Nov 2026 19:11:59 +0000
+Subject: [PATCH 2/3] checkout: advise when orphaned commit checks are slow
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -104,166 +104,183 @@ Cc: gitster@pobox.com,
 
 From: Wyatt Holden <wyattholden@microsoft.com>
 
-When leaving a detached HEAD, checkout enumerates refs and walks
-history to warn about commits left behind. This work can dominate
-checkout time even after the working tree has been updated.
+The orphaned-commit check can take much longer than updating the
+working tree. Users who encounter this cost need a way to discover
+the checkout.orphanedCommitWarning setting.
 
-In an automated checkout of an internal monorepo, unpack_trees ended
-about 12 seconds into a roughly 204-second run. Stack dumps captured
-the main thread in orphaned_commit_warning(), enumerating loose refs
-and opening ref files. Using --quiet reduced the observed checkout
-time to about 14 seconds, but also suppressed unrelated output.
-These observations motivate an opt-out; they do not establish how
-much of the delay came from enumeration versus history traversal.
+Measure the complete check and suggest disabling it when it takes
+more than two seconds. Explain that opting out also removes the
+warning about commits left behind, and allow the advice itself to be
+disabled with advice.checkoutOrphanedCommitWarning.
 
-Add checkout.orphanedCommitWarning, enabled by default, so checkout
-and switch can skip the check while retaining normal checkout output.
-Automated callers can opt out when they do not need a warning about
-leaving detached commits behind.
+Follow the slow-operation advice introduced by:
 
-Follow the configuration precedent of 06b324c1d71 (status: add
-status.aheadbehind setting, 2019-06-18). Unlike status, introduce no
-dedicated command-line option; callers can use git -c for a one-off
-override.
+0a53561a622 (status: warn when a/b calculation takes too long, 2019-06-18)
 
-Add a Trace2 region around the check to make its cost visible in
-future investigations and to verify that disabling the setting skips
-the routine rather than merely hiding its warning. Document the
-setting and test both checkout and switch.
+Unlike that status advice, recommend a configuration setting rather
+than a dedicated command-line option.
+
+Keep a test hook to exercise advice and suppression without relying
+on wall-clock delays. Force the advice condition without replacing
+the measured duration, and check the formatted duration rather than
+a fabricated fixed value.
 
 Signed-off-by: Wyatt Holden <wyattholden@microsoft.com>
 ---
- Documentation/config/checkout.adoc | 11 +++++++++++
- builtin/checkout.c                 | 18 ++++++++++++++++--
- t/t2020-checkout-detach.sh         | 29 +++++++++++++++++++++++++++++
- 3 files changed, 56 insertions(+), 2 deletions(-)
+ Documentation/config/advice.adoc |  6 +++++
+ advice.c                         |  1 +
+ advice.h                         |  1 +
+ builtin/checkout.c               | 13 +++++++++++
+ t/README                         |  5 ++++
+ t/t2020-checkout-detach.sh       | 40 ++++++++++++++++++++++++++++++++
+ 6 files changed, 66 insertions(+)
 
-diff --git a/Documentation/config/checkout.adoc b/Documentation/config/checkout.adoc
-index e35d212969..cacd10449a 100644
---- a/Documentation/config/checkout.adoc
-+++ b/Documentation/config/checkout.adoc
-@@ -22,6 +22,17 @@ commands or functionality in the future.
- 	option in `git checkout` and `git switch`. See
- 	linkgit:git-switch[1] and linkgit:git-checkout[1].
- 
-+`checkout.orphanedCommitWarning`::
-+	When leaving a detached `HEAD`, linkgit:git-checkout[1] and
-+	linkgit:git-switch[1] check whether any commits are being left
-+	behind that are not reachable from any ref or the new `HEAD`,
-+	and warn if so. This check can be expensive in large repositories.
-+	Set this variable to `false` to skip the check and its warning
-+	without suppressing other checkout output. Defaults to `true`.
-++
-+When disabled, commits left behind can still be found in the `HEAD`
-+reflog until its entries expire. See linkgit:git-reflog[1].
-+
- `checkout.workers`::
- 	The number of parallel workers to use when updating the working tree.
- 	The default is one, i.e. sequential execution. If set to a value less
+diff --git a/Documentation/config/advice.adoc b/Documentation/config/advice.adoc
+index 3d91c90eda..eecf72d8d1 100644
+--- a/Documentation/config/advice.adoc
++++ b/Documentation/config/advice.adoc
+@@ -38,6 +38,12 @@ all advice messages.
+ 		configuration variable for how to set a given remote
+ 		to be used by default in some situations where this
+ 		advice would be printed.
++	checkoutOrphanedCommitWarning::
++		Shown when linkgit:git-checkout[1] or linkgit:git-switch[1]
++		takes more than 2 seconds to check for commits left behind
++		when leaving a detached `HEAD`. Suggests setting
++		`checkout.orphanedCommitWarning` to `false` to skip the check.
++		Disabling this advice does not disable the check itself.
+ 	commitBeforeMerge::
+ 		Shown when linkgit:git-merge[1] refuses to
+ 		merge to avoid overwriting local changes.
+diff --git a/advice.c b/advice.c
+index 401d047391..8142d73b5e 100644
+--- a/advice.c
++++ b/advice.c
+@@ -50,6 +50,7 @@ static struct {
+ 	[ADVICE_AMBIGUOUS_FETCH_REFSPEC]		= { "ambiguousFetchRefspec" },
+ 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir" },
+ 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName" },
++	[ADVICE_CHECKOUT_ORPHANED_COMMIT_WARNING]		= { "checkoutOrphanedCommitWarning" },
+ 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge" },
+ 	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName" },
+ 	[ADVICE_DETACHED_HEAD]				= { "detachedHead" },
+diff --git a/advice.h b/advice.h
+index 3f0b4f0485..7dd1fe109c 100644
+--- a/advice.h
++++ b/advice.h
+@@ -17,6 +17,7 @@ enum advice_type {
+ 	ADVICE_AMBIGUOUS_FETCH_REFSPEC,
+ 	ADVICE_AM_WORK_DIR,
+ 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
++	ADVICE_CHECKOUT_ORPHANED_COMMIT_WARNING,
+ 	ADVICE_COMMIT_BEFORE_MERGE,
+ 	ADVICE_DEFAULT_BRANCH_NAME, /* To be retired sometime after Git 3.0 */
+ 	ADVICE_DETACHED_HEAD,
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index c0f0d2c700..7cc9e97612 100644
+index 7cc9e97612..1e94280d35 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -51,6 +51,7 @@ struct checkout_opts {
- 	int patch_interhunk_context;
- 	int auto_advance;
- 	int quiet;
-+	int orphaned_commit_warning;
- 	int merge;
- 	int force;
- 	int force_detach;
-@@ -99,6 +100,7 @@ struct checkout_opts {
- 	.patch_context = -1, \
- 	.patch_interhunk_context = -1, \
- 	.auto_advance = 1, \
-+	.orphaned_commit_warning = 1, \
- }
- 
- #define MERGE_WORKING_TREE_UNPACK_FAILED (-2)
-@@ -1132,6 +1134,7 @@ static void orphaned_commit_warning(struct commit *old_commit, struct commit *ne
+@@ -35,6 +35,7 @@
+ #include "strvec.h"
+ #include "submodule.h"
+ #include "symlinks.h"
++#include "trace.h"
+ #include "trace2.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+@@ -1133,6 +1134,8 @@ static void orphaned_commit_warning(struct commit *old_commit, struct commit *ne
+ {
  	struct rev_info revs;
  	struct object *object = &old_commit->object;
++	uint64_t t_begin = getnanotime();
++	uint64_t t_delta_in_ms;
  
-+	trace2_region_enter("checkout", "orphaned_commit_warning", the_repository);
+ 	trace2_region_enter("checkout", "orphaned_commit_warning", the_repository);
  	repo_init_revisions(the_repository, &revs, NULL);
- 	setup_revisions(0, NULL, &revs, NULL);
- 
-@@ -1155,6 +1158,7 @@ static void orphaned_commit_warning(struct commit *old_commit, struct commit *ne
- 	/* Clean up objects used, as they will be reused. */
+@@ -1159,6 +1162,16 @@ static void orphaned_commit_warning(struct commit *old_commit, struct commit *ne
  	repo_clear_commit_marks(the_repository, ALL_REV_FLAGS);
  	release_revisions(&revs);
-+	trace2_region_leave("checkout", "orphaned_commit_warning", the_repository);
+ 	trace2_region_leave("checkout", "orphaned_commit_warning", the_repository);
++
++	t_delta_in_ms = (getnanotime() - t_begin) / 1000000;
++	if (t_delta_in_ms > 2000 ||
++	    git_env_bool("GIT_TEST_CHECKOUT_DELAY_WARNING", 0))
++		advise_if_enabled(ADVICE_CHECKOUT_ORPHANED_COMMIT_WARNING,
++				  _("Checking for orphaned commits took %.2f seconds.\n"
++				    "You can use 'git config set checkout.orphanedCommitWarning false'\n"
++				    "to skip this check, but you will no longer be warned when leaving\n"
++				    "commits behind that are not connected to any of your branches."),
++				  t_delta_in_ms / 1000.0);
  }
  
  static int switch_branches(const struct checkout_opts *opts,
-@@ -1253,8 +1257,14 @@ static int switch_branches(const struct checkout_opts *opts,
- 		}
- 	}
+diff --git a/t/README b/t/README
+index fd7e8504b5..577f02732e 100644
+--- a/t/README
++++ b/t/README
+@@ -371,6 +371,11 @@ test suite. Accept any boolean values that are accepted by git-config.
+ GIT_TEST_PROTOCOL_VERSION=<n>, when set, makes 'protocol.version'
+ default to n.
  
--	if (!opts->quiet && !old_branch_info.path && old_branch_info.commit && new_branch_info->commit != old_branch_info.commit)
--		orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit);
-+	if (!opts->quiet && !old_branch_info.path && old_branch_info.commit &&
-+	    new_branch_info->commit != old_branch_info.commit) {
-+		if (opts->orphaned_commit_warning)
-+			orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit);
-+		else
-+			describe_detached_head(_("Previous HEAD position was"),
-+					       old_branch_info.commit);
-+	}
- 
- 	if (autostash_res == STASH_APPLY_CONFLICT && !opts->quiet)
- 		fputc('\n', stderr);
-@@ -1295,6 +1305,10 @@ static int git_checkout_config(const char *var, const char *value,
- 		opts->dwim_new_local_branch = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "checkout.orphanedcommitwarning")) {
-+		opts->orphaned_commit_warning = git_config_bool(var, value);
-+		return 0;
-+	}
- 
- 	if (starts_with(var, "submodule."))
- 		return git_default_submodule_config(var, value, NULL);
++GIT_TEST_CHECKOUT_DELAY_WARNING=<boolean>, when true, forces the
++slow orphaned-commit check advice to be considered regardless of the
++elapsed time. It does not change the measured duration or override
++advice settings.
++
+ GIT_TEST_FULL_IN_PACK_ARRAY=<boolean> exercises the uncommon
+ pack-objects code path where there are more than 1024 packs even if
+ the actual number of packs in repository is below this limit. Accept
 diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
-index 28bbbe6c05..d21dbd5b72 100755
+index d21dbd5b72..7dfaaab1b8 100755
 --- a/t/t2020-checkout-detach.sh
 +++ b/t/t2020-checkout-detach.sh
-@@ -164,6 +164,35 @@ test_expect_success 'checkout does not warn leaving reachable commit' '
- 	check_no_orphan_warning stderr
- '
+@@ -186,6 +186,46 @@ do
+ 		check_not_detached
+ 	'
  
-+for command in checkout switch
-+do
-+	test_expect_success "$command honors checkout.orphanedCommitWarning" '
++	test_expect_success "$command advises when the orphan check is slow" '
 +		git checkout --detach "$orphan2" &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace-enabled-$command" \
-+			git -c checkout.orphanedCommitWarning=true \
++		GIT_TEST_CHECKOUT_DELAY_WARNING=true \
++			git $command main 2>stderr &&
++		check_orphan_warning stderr "2 commits" &&
++		test_grep -E "^hint: Checking for orphaned commits took [0-9]+[.][0-9]{2} seconds[.]$" stderr &&
++		test_grep "git config set checkout.orphanedCommitWarning false" stderr &&
++		test_grep "git config set advice.checkoutOrphanedCommitWarning false" stderr
++	'
++
++	test_expect_success "$command can suppress slow orphan check advice" '
++		git checkout --detach "$orphan2" &&
++		GIT_TEST_CHECKOUT_DELAY_WARNING=true \
++			git -c advice.checkoutOrphanedCommitWarning=false \
 +			$command main 2>stderr &&
 +		check_orphan_warning stderr "2 commits" &&
-+		test_grep "\"label\":\"orphaned_commit_warning\"" \
-+			trace-enabled-$command &&
++		test_grep ! "^hint:" stderr &&
 +
 +		git checkout --detach "$orphan2" &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace-disabled-$command" \
++		GIT_TEST_CHECKOUT_DELAY_WARNING=true GIT_ADVICE=0 \
++			git $command main 2>stderr &&
++		check_orphan_warning stderr "2 commits" &&
++		test_grep ! "^hint:" stderr
++	'
++
++	test_expect_success "$command does not advise when the orphan check is skipped" '
++		git checkout --detach "$orphan2" &&
++		GIT_TEST_CHECKOUT_DELAY_WARNING=true \
 +			git -c checkout.orphanedCommitWarning=false \
 +			$command main 2>stderr &&
 +		check_no_orphan_warning stderr &&
-+		test_grep "Switched to branch" stderr &&
-+		test_grep ! "\"label\":\"orphaned_commit_warning\"" \
-+			trace-disabled-$command &&
++		test_grep ! "^hint:" stderr &&
++
++		git checkout --detach "$orphan2" &&
++		GIT_TEST_CHECKOUT_DELAY_WARNING=true \
++			git $command --quiet main 2>stderr &&
++		test_must_be_empty stderr &&
 +		check_not_detached
 +	'
 +
-+	test_expect_success "$command rejects invalid checkout.orphanedCommitWarning" '
-+		test_must_fail git -c checkout.orphanedCommitWarning=invalid \
-+			$command main 2>stderr &&
-+		test_grep "bad boolean config value.*checkout.orphanedcommitwarning" stderr
-+	'
-+done
-+
- cat >expect <<'EOF'
- Your branch is behind 'main' by 1 commit, and can be fast-forwarded.
-   (use "git pull" to update your local branch)
+ 	test_expect_success "$command rejects invalid checkout.orphanedCommitWarning" '
+ 		test_must_fail git -c checkout.orphanedCommitWarning=invalid \
+ 			$command main 2>stderr &&
 -- 
 gitgitgadget
 
