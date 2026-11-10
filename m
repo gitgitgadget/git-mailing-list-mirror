@@ -1,87 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794311417;
-	b=ePb/nSkUMbxvH175bH3YKmlrimBmBpV6KvfSAukAIw+nJ7IjQZJVgyFFxxKAr7KR//yu
-	 k8ua7FZieDT5Iy4r7Pewn16HicXww1W7QI29kZTExb7idawWnUCCnszhoFoz9t3tDDRtP
-	 OR3l8lIVGZHOg6V4OHb2uIps05mQpdTGEKDXwj91BvpiO99FNPzCtk7YMaqX50W2nVWQT
-	 BhQoffUztpdICGtD015A5YQt2uJBw7XReWNGK6Tn7ywIT2rfusVi8vG+85yG5q3KOnEVy
-	 0r6gruwc+TJAk3cm9DcniMyADzb1BNK0aMl4Y51RMnVyz2A0+0g08BmTqQy4mPjy5Kg==
+	t=1794311418;
+	b=viv/4eC3Ouy4isTFARnmQDDd5JsRkuXqNTqoMZwegFT0wrUhAk1F2JgUf6uLoKofOy9u
+	 tkatCxC5X5Th01JTlzF7ZdhJDd6aGTMtiElTCYPKQKalop5xKBLXfbMmLhi6FVfVwBi4I
+	 Om8U/Kb75Vo4jlsRW/yzUXNKl++/hwPjPiruAgXuQfSguYF/pWyGIcPIT2Csic3Sd0f/E
+	 x1OTnH/ZaL8+czFKyyTQiaLdzuYUNLk38gZHYPhfiP50MLRTAatsByUmqoDp6y8W8woQ+
+	 LTbuQh5d4Sj9CXwoYBXlFd6C1cBYvKYMVHH/2jBYH/UQbXPvcyJfKlSxB0UcetcZqnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794311417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794311418;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=JN7zBTApwxJd9+5r/y3joz9pMpS1q+sTbBOhVaZpscU=;
-	b=PDTvajE3mms/CO9RckeVsmZCFTEq7O7V0YCirQeqwkZE+OvJDW0IrfeXs4lrAWOgBjDK
-	 3B3lfLMICAddgOdNzAKB1Cg+fMLb+WDCaVqwlJepW13UfONC8hH4LxA08xjp4OJW9b+8X
-	 bSaHF6hSb69w376F0bDapX6bE/kC2IZ9SQcV/6L88xNiiQl/hPAPfYXNZbxaUPZILUyP+
-	 Rqv2XhwchZC+tyL9lRLOu3JS5hYBQBk1T/DU0/yZAce+TH5shim9ELVHSndOf2SLtxnfq
-	 Xrz428HpGlDSZFgkEU7ZuAPeU1SmTMNa9ELIuxVfdbGsCmHCp8Tf+q63ro0q4GnLBGw==
+	bh=M9eaDav3d0GBMwX5V9jWnU9Ar9LJZRQH9ui2icmDCuE=;
+	b=0vkxP4OBB4xjz6kpLoMcnvbJEKTlXdvtXAqYno47zOuVk9+KEdsHvYhsdtGt/8MQBh5A
+	 g9p/6/JSLp9oTjhV0P4H0gsPnGK87J3CrW0v0bhz0gcOOMEIo6TNQg49xAjXhMKqMMhsC
+	 LoQF27hXY1m4dBRP5efh7fZKCrHIToLSxjhcRMxecADWfSZKhFJlG1kRiTKrRBEaQHGEB
+	 P6sD0T5Z4EkjvNub9JBPlv1SJflEU+k8gUfQdvd3ePuFCx0701LTWpQ+cCN83baE62CyF
+	 A1/7diigv0Z1RpQMmORT+qKRb89TN3Uxy9hQwaQuLgfw3B5RIVwxtREJLV7Vcl9YrVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PwIiaUFH;
-	arc=none smtp.remote-ip=209.85.128.47
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XNLCX8EB;
+	arc=none smtp.remote-ip=209.85.128.46
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3551606C606
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:50:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3551606C606
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E4A606C611
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:50:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A4E4A606C611
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PwIiaUFH
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4b79502c27aso19510425e9.1
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 03:50:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XNLCX8EB
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a5036bbac7so12432885e9.3
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 03:50:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794311415; x=1794916215; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794311416; x=1794916216; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=JN7zBTApwxJd9+5r/y3joz9pMpS1q+sTbBOhVaZpscU=;
-        b=PwIiaUFH/dEa3R0onMcerOnYv7CCRSoFYGs1YtzNE18Kvi9Sq0PprwUVh8xdSSm8Nj
-         9FdTrqRYHBMD58oYZYuwQPVU4dWYst0KXmeLx0600drVMORWhmPYuGrQbohdy/Jh+30a
-         vzUsgT2tk900ZhDqgxWxF00GhvSYw/lhk+2Rfl0z0dvxVHgiP6k7i6wiXqFroxYUI5Ri
-         8Sg4h1sdlsCU9Fcu3LEpCLV9gYBVTpgjipkEZ6KqdVPoIqRe0MHr7zjeHPRM4s6MDkBp
-         Ip1e14WUcauzIMqeP82n3mJL1JFfvNx5Nt4ToKVbsFCyAv3j9xZq45Zn6hFIey/zVD/l
-         wsYg==
+        bh=M9eaDav3d0GBMwX5V9jWnU9Ar9LJZRQH9ui2icmDCuE=;
+        b=XNLCX8EBo+7C5cEd6VSxBB8sZg75cLU8JlSgshC2cX6oNCyl7wovGUNHRhCgt008f5
+         7hiOdFUIzTm/1EinYRZHFyzdQxN2r+MhUe/2VHxeRr1sOsYrTuRMW+npe9iFr2U0GVTY
+         eEQQAbnr9MwGxfgfPTkGbhFvkoL9L4qoGh12a/uLYl8/wBlJTvh5GEWdwpv6AdFlxbbO
+         AaNIp+208uvlCGDFTCIha2fcFVzTCfqa1Q4KX6a5Q7jXlaIdM816WSfhH0YHqSRmF5sN
+         8C5ouOsjh+Jk3+/WI8SCEjR3ExNvvm6+B57enGht4fU3yqikOTYY/Yw8lphi3s2QQdaA
+         dFjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794311415; x=1794916215;
+        d=1e100.net; s=20260707; t=1794311416; x=1794916216;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=JN7zBTApwxJd9+5r/y3joz9pMpS1q+sTbBOhVaZpscU=;
-        b=EQZUZ85KTCtPZEQhauKIICfAzf/tb4PTE4WRgZpToZNqB/9HM3QSCm7MYakw090biC
-         2H9PCU0yK5vr7bHO14G0baz8ocLZwihBDg57tuK1X3QYJXBBBr1O5V5xPJMJSHAsVxab
-         pvqlj7QF299nXNHutkfDivqJwyoUvzwUSafBE7Z9xto1jN3aWkP+rLSvMhvoEFQa0zPd
-         u5NpPXGpQZ16r9WcTRv1QwODx83schzfEKCT2nrRp0iFZ0A/QFtj/+ioj3qSZx/FUUdI
-         bkACxWQi9UtEFLIv+xjLahi0HtfqT9vr6ENburzUrPBdrxu2h1w6vGPV5jm2+z8Ti6U3
-         CyMw==
-X-Gm-Message-State: APuU4Z8rp1Ak7TGZOMkNuByMC4f/r5De9zhyiDmekHiSpydF3YHJeLxV
-	gpdB5FPTdQrZ7iVDJN7KWy9+OCWq/CMGZZOAphKPkjbEVafQJfY8BfB4uCZsDw==
-X-Gm-Gg: AYBFou3i10R3y9gWG7td2tTBx8tzeDiwYDyOX21VJewgP5glGBr+FTtl0v00DPyj1V/
-	hz3rtc6NIYj+q5nZD1UXfy7tl9OdY+KqAe4JdGYNkP11YyHydcs+4bkb5AOBVUT4FqIZpXMRhc3
-	t72PzfQjTv6Hjjalfe8wgjArynoVZQX1nukavNF8wVcdojUCCTpN2r1wZ3Kcqs9jhM5y0gc75O6
-	Tjv1YSDuiSsgzLkOS/Gsak8iU/Ao5+Lk2fZ5RikTCXbBP2QWp3PolqHoTqZ49mxoIMKq2Vwlnya
-	+HmrX30PnLIUmToVCj3SIcEhsMEDtEA9lOMsGsezHd3y6K2MHXngCEeGXzeTSuShnTan0AFfr7q
-	ezxG92MDHEicVnxbwSyKY4NCWck5qtSSiFbQGOIbTpHLODdU9XMTt5b8l/3zyokRJjTioO8xGX7
-	Z7LT4Hsb2TybbeosePi5RpHsHDbmq9WFIMyloVUe2MlK9FaOaUQgmzm57UNegXvdbE//aQvKVyb
-	mb99Ebu2WKDQfod9DaR006IGJsOlvNBYPxqGfyvDaa4TbSYwEKaq3X7NRPUckGJk6FJZqi3kWaQ
-	qcmRahHAewv7ROxwVBk6ZdJ4GYsLv2SD1GqvMn7lg+wD+lOtRJgtfvw9Ft4bUkmw6a8=
-X-Received: by 2002:a05:600c:350a:b0:4a6:42cc:bf66 with SMTP id 5b1f17b1804b1-4ba0233d8b3mr37018435e9.11.1794311415179;
+        bh=M9eaDav3d0GBMwX5V9jWnU9Ar9LJZRQH9ui2icmDCuE=;
+        b=JzWFyjtr8tAq8GA+QoxTxzqk2GPj+yi0geHQkgNGmitJV0az/TejnWYl3x+3PzRFmb
+         z8chm8PuBI8kt+2K19HsOagb+qh4vlInw9wQz/B/GM5fAJlVHnsZkylUYphHizV+nyR0
+         kjmAnaUihOMcuNttujiGkHOz4urSokDZoOXG9tiVwcW2aFxqmBFeJCTvRJmv7Q1Nq7hw
+         LC/fd/DIsQAz28C95YYCZ3bkEk8nt1vXB8CaSOhzghYo8YzQ6Y94HwQvyA44nAyTwK95
+         ytHxaZRtWEWZpqMKghBLNi9guDMyEK0+jHB9IxnP/98xLyMnkNKKxJbFs8hbcITeqaNo
+         cplQ==
+X-Gm-Message-State: APuU4Z/KUTjWofe6tqW1qbVdqOvx683kv6rrvfXhSqKCTlaay2pLY2Lf
+	IuK+7hOMbQ2AjkbbmuCcm/qqS3n5ZnJ1y9eIjx19b9ZYRnfJ/4IZHk4d9stbJg==
+X-Gm-Gg: AYBFou0DhKwztKwEVhdLwYnO349yLLeGacoYTgvMAyr+c2vXFLuRFcDVuJosWAdXsgx
+	W0hU7fPxLUxNNw8zxdtZqTbkl/4J6bsuQQGFhCg6b20s0ihnN3C+nPWnD/v7VBuWmuvoUtk96p2
+	9bs7DW4p359HHJ/IVGMPkaR5U0iDLD1WaMfRqifkF3Nu/ffD9nbp2KJ4Mtn6c+ol8W86msRhkzc
+	mefxuVJVhd68gyYzjuMNoCHATcDUUSGV13iG2QsVIUFWpyiHI5+fB5kiJAcTF1BX9JGWdM3aNoB
+	AHF29twqUALCaRwwj8Axqgr5lIzYPDos7Bnas4y5qSlh1w2czuqilmwzcdn94kANFRlR1UknqpK
+	SS3rQ9H4eadAZabfqF3J9+FM0fEtWUEnKAZejms5qweH+6LIh69lrEaFTKd4J6TLTL3AlW6OnzU
+	PEUaZtGaLKTcAPs5GMRMunlZl8OdlV6SJVoUZmVAC3+eCHO3j9st2slpk5moS6zPiOybFkXU423
+	Tl2dpGph9K8Qkx/bEGiSeEX4QEsYOZ5NDyE2iUE+OCyVbp8MmCvWJHxDdn65i3PLSbDG0NflPZO
+	B/iN8B4G9tLFmyv2Gyw37eowvDmem6/5/lFFJ/IJYYFr5XdXJX70ziVek/tczXPlf4w=
+X-Received: by 2002:a05:600c:3e1a:b0:4a1:de8a:603a with SMTP id 5b1f17b1804b1-4ba0233a429mr39782955e9.6.1794311415969;
         Tue, 10 Nov 2026 03:50:15 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:1917:82b:d709:897d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba02005762sm60715995e9.2.2026.11.10.03.50.14
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba02005762sm60715995e9.2.2026.11.10.03.50.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 03:50:14 -0800 (PST)
+        Tue, 10 Nov 2026 03:50:15 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 10 Nov 2026 12:50:00 +0100
-Subject: [PATCH 15/20] t9300: make the cat-blob tests self-contained
+Date: Tue, 10 Nov 2026 12:50:01 +0100
+Subject: [PATCH 16/20] t9300: make the feature and option tests
+ self-contained
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,531 +94,288 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261110-kn-fast-import-tests-1-v1-15-dbd9ee502aae@gmail.com>
+Message-Id: <20261110-kn-fast-import-tests-1-v1-16-dbd9ee502aae@gmail.com>
 References: <20261110-kn-fast-import-tests-1-v1-0-dbd9ee502aae@gmail.com>
 In-Reply-To: <20261110-kn-fast-import-tests-1-v1-0-dbd9ee502aae@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11628;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=CqgDvPHZa6iyFXERGoC5F8c1G1AjhT3TDxLw3KHPzgw=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrzBOm0DGxQ9T1gsHza1zo0OMP3HnnbpCBuk
- Lh2qRR/LbjKMokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq8wTpAAoJED7VnySO
- Rox/5boMAJOCgDyKJ2lt2C93LdJEwjGf4Mz+zAQcLeOKEUi17ElEXbpbcKnZ18cp5STx3b7GMUY
- h5Jvft78XgmWj/dQPYzLAnuc2r4HD8LkHLsRl0AoqQk1zOF25krgrN1vqXvcdwT5pRKletJTou+
- 7mIi1yRnB7UDdaxM1iejtmTZ+tG5d4YhF19tP+UZ38uHd2ERs2ZR9ljj976+u+ZD7d/NI0M3y4/
- sgy9SmI4Pm3chMdAz14uNk+rk3AyULa5oeY0ihmYkwqBX6r9eWknx59I7G7hunJpZzuF5//h/7e
- gYvWcg2TWfGaDvWeTXDJslvpv27Q6nAas9iHR6TrxDQbj6XxAP/WOPPuppvnYdhw4iGsLOxpvm9
- 058ijzJ6rVah0yyrijVcxPQxjdiQySovH1FXSfjCF1PGFvCgHWQJ8d8dWhgrm0TS9EmGLNn3TLP
- DFlTu2lCtO3b74/YGhzEY7ntQBbFVY/Qwpo9oi/h5WtiIOdwDdh2uoWWhY52HwRDdMP2NdtNe+8
- rQ=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6510; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=njUZRcKnnAGslQicNBASDZ8U/YD/XjWssnRG4YvXv7g=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrzBOnwbZKDkB1RTkkiE5gk3n+dugOpJxiXQ
+ nbjRrivgRKk94kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq8wTpAAoJED7VnySO
+ Rox/IMUL/j6b/vzUYaR/xoW37y4TRLw9I7Jc4ED0I9CtGxLcEi6b//ksparjrHOB35dvCdk47UJ
+ 3g6m5y6b4p7sFreVQmcz8bhrwL2+o2Ouia2W28EDwcaPFkgufQ5c7ypdnNtfrq+GwrYDQAjRiKz
+ bL7R+4/xYhumu6Yh00iDWfxG8Ud4THtVlRnOkE3L11q3Gi8P1q655mLT+WrZNDj+44jkh8cfzkU
+ oAv3T/S2cMaYIHnNoERog6GJdWueSD3dMz1l/+wB9ZO4E5WX9bBtpGXLAJGc9bMF9sgILVPzH42
+ tMVX2DkyS8MP31Xf5ElffeGzCmI7Qz7tkifkqcPVfgFvOgklSPp3beLU/oo957TjN548gHCrOVi
+ WAkLpm0nU67KhGZD0Q9K9LBSHYet9IMo38HyQWZa+QKa0YIzEW5SpaD+sOiDcnwtCWx0f7RiCHU
+ SmAPAZpabO4UNA6+4w6uP152DXxUAvssq498UtY1kd2pavosGSA5xcPMvvrI77aCLFjiCF8dgT9
+ W4=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The 'R: print' tests and 'R: copy using cat-file' write blobs into the
-repository of the trash directory, which all other tests share. 'R:
-print two blobs to stdout' and 'R: copy using cat-file' also read the
-'big' file written by the preceding 'setup: big file' test, so they
-can't run on their own.
-
-Run each of these tests in a new repository. Convert the setup test to a
-'setup_big_file()' function, which writes the file in the repository of
-the calling test, and invoke it from both tests.
+Similar to the previous commits, modify the tests in 'series R' which
+check the 'feature' command and the command line options to make them
+independent of state from previous tests.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t9300-fast-import.sh | 428 ++++++++++++++++++++++++++++---------------------
- 1 file changed, 242 insertions(+), 186 deletions(-)
+ t/t9300-fast-import.sh | 188 +++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 136 insertions(+), 52 deletions(-)
 
 diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 04c3bfe0c1..3f0e7b8b1f 100755
+index 3f0e7b8b1f..cf00e4faf9 100755
 --- a/t/t9300-fast-import.sh
 +++ b/t/t9300-fast-import.sh
-@@ -2983,87 +2983,117 @@ test_expect_success 'R: cat-blob-fd must be a nonnegative integer' '
+@@ -2607,54 +2607,90 @@ test_expect_success 'Q: deny note on empty branch' '
+ ###
+ 
+ test_expect_success 'R: abort on unsupported feature' '
+-	cat >input <<-EOF &&
+-	feature no-such-feature-exists
+-	EOF
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
+ 
+-	test_must_fail git fast-import <input
++		cat >input <<-EOF &&
++		feature no-such-feature-exists
++		EOF
++
++		test_must_fail git fast-import <input
++	)
+ '
+ 
+ test_expect_success 'R: supported feature is accepted' '
+-	cat >input <<-EOF &&
+-	feature date-format=now
+-	EOF
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
+ 
+-	git fast-import <input
++		cat >input <<-EOF &&
++		feature date-format=now
++		EOF
++
++		git fast-import <input
++	)
+ '
+ 
+ test_expect_success 'R: abort on receiving feature after data command' '
+-	cat >input <<-EOF &&
+-	blob
+-	data 3
+-	hi
+-	feature date-format=now
+-	EOF
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
+ 
+-	test_must_fail git fast-import <input
++		cat >input <<-EOF &&
++		blob
++		data 3
++		hi
++		feature date-format=now
++		EOF
++
++		test_must_fail git fast-import <input
++	)
+ '
+ 
+ test_expect_success 'R: import-marks features forbidden by default' '
+-	>git.marks &&
+-	echo "feature import-marks=git.marks" >input &&
+-	test_must_fail git fast-import <input &&
+-	echo "feature import-marks-if-exists=git.marks" >input &&
+-	test_must_fail git fast-import <input
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		>git.marks &&
++		echo "feature import-marks=git.marks" >input &&
++		test_must_fail git fast-import <input &&
++		echo "feature import-marks-if-exists=git.marks" >input &&
++		test_must_fail git fast-import <input
++	)
+ '
+ 
+ test_expect_success 'R: only one import-marks feature allowed per stream' '
+-	>git.marks &&
+-	>git2.marks &&
+-	cat >input <<-EOF &&
+-	feature import-marks=git.marks
+-	feature import-marks=git2.marks
+-	EOF
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
+ 
+-	test_must_fail git fast-import --allow-unsafe-features <input
++		>git.marks &&
++		>git2.marks &&
++		cat >input <<-EOF &&
++		feature import-marks=git.marks
++		feature import-marks=git2.marks
++		EOF
++
++		test_must_fail git fast-import --allow-unsafe-features <input
++	)
+ '
+ 
+ test_expect_success 'R: export-marks feature forbidden by default' '
+-	echo "feature export-marks=git.marks" >input &&
+-	test_must_fail git fast-import <input
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		echo "feature export-marks=git.marks" >input &&
++		test_must_fail git fast-import <input
++	)
+ '
+ 
+ test_expect_success 'R: export-marks feature results in a marks file being created' '
+@@ -2969,17 +3005,35 @@ test_expect_success 'R: feature no-relative-marks should be honoured' '
+ 
+ 
+ test_expect_success 'R: feature ls supported' '
+-	echo "feature ls" |
+-	git fast-import
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		echo "feature ls" |
++		git fast-import
++	)
+ '
+ 
+ test_expect_success 'R: feature cat-blob supported' '
+-	echo "feature cat-blob" |
+-	git fast-import
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		echo "feature cat-blob" |
++		git fast-import
++	)
+ '
+ 
+ test_expect_success 'R: cat-blob-fd must be a nonnegative integer' '
+-	test_must_fail git fast-import --cat-blob-fd=-1 </dev/null
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		test_must_fail git fast-import --cat-blob-fd=-1 </dev/null
++	)
  '
  
  test_expect_success !MINGW 'R: print old blob' '
--	blob=$(echo "yes it can" | git hash-object -w --stdin) &&
--	cat >expect <<-EOF &&
--	${blob} blob 11
--	yes it can
+@@ -3334,38 +3388,68 @@ test_expect_success 'R: terminating "done" within commit' '
+ '
+ 
+ test_expect_success 'R: die on unknown option' '
+-	cat >input <<-EOF &&
+-	option git non-existing-option
+-	EOF
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
  
--	EOF
--	echo "cat-blob $blob" |
--	git fast-import --cat-blob-fd=6 6>actual &&
--	test_cmp expect actual
-+		blob=$(echo "yes it can" | git hash-object -w --stdin) &&
-+		cat >expect <<-EOF &&
-+		${blob} blob 11
-+		yes it can
-+
+-	test_must_fail git fast-import <input
++		cat >input <<-EOF &&
++		option git non-existing-option
 +		EOF
-+		echo "cat-blob $blob" |
-+		git fast-import --cat-blob-fd=6 6>actual &&
-+		test_cmp expect actual
++
++		test_must_fail git fast-import <input
 +	)
  '
  
- test_expect_success !MINGW 'R: in-stream cat-blob-fd not respected' '
--	echo hello >greeting &&
--	blob=$(git hash-object -w greeting) &&
--	cat >expect <<-EOF &&
--	${blob} blob 6
--	hello
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	EOF
--	git fast-import --cat-blob-fd=3 3>actual.3 >actual.1 <<-EOF &&
--	cat-blob $blob
--	EOF
--	test_cmp expect actual.3 &&
--	test_must_be_empty actual.1 &&
--	git fast-import 3>actual.3 >actual.1 <<-EOF &&
--	option cat-blob-fd=3
--	cat-blob $blob
--	EOF
--	test_must_be_empty actual.3 &&
--	test_cmp expect actual.1
-+		echo hello >greeting &&
-+		blob=$(git hash-object -w greeting) &&
-+		cat >expect <<-EOF &&
-+		${blob} blob 6
-+		hello
-+
-+		EOF
-+		git fast-import --cat-blob-fd=3 3>actual.3 >actual.1 <<-EOF &&
-+		cat-blob $blob
-+		EOF
-+		test_cmp expect actual.3 &&
-+		test_must_be_empty actual.1 &&
-+		git fast-import 3>actual.3 >actual.1 <<-EOF &&
-+		option cat-blob-fd=3
-+		cat-blob $blob
-+		EOF
-+		test_must_be_empty actual.3 &&
-+		test_cmp expect actual.1
-+	)
- '
- 
- test_expect_success !MINGW 'R: print mark for new blob' '
--	echo "effluentish" | git hash-object --stdin >expect &&
--	git fast-import --cat-blob-fd=6 6>actual <<-\EOF &&
--	blob
--	mark :1
--	data <<BLOB_END
--	effluentish
--	BLOB_END
--	get-mark :1
--	EOF
--	test_cmp expect actual
+ test_expect_success 'R: unknown commandline options are rejected' '\
+-	test_must_fail git fast-import --non-existing-option < /dev/null
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +
-+		echo "effluentish" | git hash-object --stdin >expect &&
-+		git fast-import --cat-blob-fd=6 6>actual <<-\EOF &&
-+		blob
-+		mark :1
-+		data <<BLOB_END
-+		effluentish
-+		BLOB_END
-+		get-mark :1
-+		EOF
-+		test_cmp expect actual
++		test_must_fail git fast-import --non-existing-option < /dev/null
 +	)
  '
  
- test_expect_success !MINGW 'R: print new blob' '
--	blob=$(echo "yep yep yep" | git hash-object --stdin) &&
--	cat >expect <<-EOF &&
--	${blob} blob 12
--	yep yep yep
+ test_expect_success 'R: feature-only names are rejected on the command line' '
+-	for opt in --alias --get-mark --ls --notes
+-	do
+-		test_must_fail git fast-import "$opt" </dev/null || return 1
+-	done
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		for opt in --alias --get-mark --ls --notes
++		do
++			test_must_fail git fast-import "$opt" </dev/null || return 1
++		done
++	)
+ '
+ 
+ test_expect_success 'R: die on invalid option argument' '
+-	echo "option git active-branches=-5" |
+-	test_must_fail git fast-import &&
+-	echo "option git depth=" |
+-	test_must_fail git fast-import &&
+-	test_must_fail git fast-import --depth="5 elephants" </dev/null
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		echo "option git active-branches=-5" |
++		test_must_fail git fast-import &&
++		echo "option git depth=" |
++		test_must_fail git fast-import &&
++		test_must_fail git fast-import --depth="5 elephants" </dev/null
++	)
+ '
+ 
+ test_expect_success 'R: ignore non-git options' '
+-	cat >input <<-EOF &&
+-	option non-existing-vcs non-existing-option
+-	EOF
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
  
--	EOF
--	git fast-import --cat-blob-fd=6 6>actual <<-\EOF &&
--	blob
--	mark :1
--	data <<BLOB_END
--	yep yep yep
--	BLOB_END
--	cat-blob :1
--	EOF
--	test_cmp expect actual
-+		blob=$(echo "yep yep yep" | git hash-object --stdin) &&
-+		cat >expect <<-EOF &&
-+		${blob} blob 12
-+		yep yep yep
-+
+-	git fast-import <input
++		cat >input <<-EOF &&
++		option non-existing-vcs non-existing-option
 +		EOF
-+		git fast-import --cat-blob-fd=6 6>actual <<-\EOF &&
-+		blob
-+		mark :1
-+		data <<BLOB_END
-+		yep yep yep
-+		BLOB_END
-+		cat-blob :1
-+		EOF
-+		test_cmp expect actual
++
++		git fast-import <input
 +	)
  '
  
- test_expect_success !MINGW 'R: print new blob by sha1' '
--	blob=$(echo "a new blob named by sha1" | git hash-object --stdin) &&
--	cat >expect <<-EOF &&
--	${blob} blob 25
--	a new blob named by sha1
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	EOF
--	git fast-import --cat-blob-fd=6 6>actual <<-EOF &&
--	blob
--	data <<BLOB_END
--	a new blob named by sha1
--	BLOB_END
--	cat-blob $blob
--	EOF
--	test_cmp expect actual
-+		blob=$(echo "a new blob named by sha1" | git hash-object --stdin) &&
-+		cat >expect <<-EOF &&
-+		${blob} blob 25
-+		a new blob named by sha1
-+
-+		EOF
-+		git fast-import --cat-blob-fd=6 6>actual <<-EOF &&
-+		blob
-+		data <<BLOB_END
-+		a new blob named by sha1
-+		BLOB_END
-+		cat-blob $blob
-+		EOF
-+		test_cmp expect actual
-+	)
- '
- 
--test_expect_success 'setup: big file' '
-+setup_big_file () {
- 	(
- 		echo "the quick brown fox jumps over the lazy dog" >big &&
- 		for i in 1 2 3
-@@ -3073,153 +3103,179 @@ test_expect_success 'setup: big file' '
- 			exit
- 		done
- 	)
--'
-+}
- 
- test_expect_success 'R: print two blobs to stdout' '
--	blob1=$(git hash-object big) &&
--	blob1_len=$(wc -c <big) &&
--	blob2=$(echo hello | git hash-object --stdin) &&
--	{
--		echo ${blob1} blob $blob1_len &&
--		cat big &&
--		cat <<-EOF
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--		${blob2} blob 6
--		hello
-+		setup_big_file &&
-+		blob1=$(git hash-object big) &&
-+		blob1_len=$(wc -c <big) &&
-+		blob2=$(echo hello | git hash-object --stdin) &&
-+		{
-+			echo ${blob1} blob $blob1_len &&
-+			cat big &&
-+			cat <<-EOF
- 
--		EOF
--	} >expect &&
--	{
--		cat <<-\END_PART1 &&
--			blob
--			mark :1
--			data <<data_end
--		END_PART1
--		cat big &&
--		cat <<-\EOF
--			data_end
--			blob
--			mark :2
--			data <<data_end
-+			${blob2} blob 6
- 			hello
--			data_end
--			cat-blob :1
--			cat-blob :2
--		EOF
--	} |
--	git fast-import >actual &&
--	test_cmp expect actual
-+
-+			EOF
-+		} >expect &&
-+		{
-+			cat <<-\END_PART1 &&
-+				blob
-+				mark :1
-+				data <<data_end
-+			END_PART1
-+			cat big &&
-+			cat <<-\EOF
-+				data_end
-+				blob
-+				mark :2
-+				data <<data_end
-+				hello
-+				data_end
-+				cat-blob :1
-+				cat-blob :2
-+			EOF
-+		} |
-+		git fast-import >actual &&
-+		test_cmp expect actual
-+	)
- '
- 
- test_expect_success PIPE 'R: copy using cat-file' '
--	expect_id=$(git hash-object big) &&
--	expect_len=$(wc -c <big) &&
--	echo $expect_id blob $expect_len >expect.response &&
--
--	rm -f blobs &&
--
--	mkfifo blobs &&
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
- 	(
--		export GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL GIT_COMMITTER_DATE &&
--		cat <<-\EOF &&
--		feature cat-blob
--		blob
--		mark :1
--		data <<BLOB
--		EOF
--		cat big &&
--		cat <<-\EOF &&
--		BLOB
--		cat-blob :1
--		EOF
-+		cd repo &&
- 
--		read blob_id type size <&3 &&
--		echo "$blob_id $type $size" >response &&
--		test_copy_bytes $size >blob <&3 &&
--		read newline <&3 &&
-+		setup_big_file &&
-+		expect_id=$(git hash-object big) &&
-+		expect_len=$(wc -c <big) &&
-+		echo $expect_id blob $expect_len >expect.response &&
- 
--		cat <<-EOF &&
--		commit refs/heads/copied
--		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--		data <<COMMIT
--		copy big file as file3
--		COMMIT
--		M 644 inline file3
--		data <<BLOB
--		EOF
--		cat blob &&
--		echo BLOB
--	) 3<blobs |
--	git fast-import --cat-blob-fd=3 3>blobs &&
--	git show copied:file3 >actual &&
--	test_cmp expect.response response &&
--	test_cmp big actual
-+		rm -f blobs &&
-+
-+		mkfifo blobs &&
-+		(
-+			export GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL GIT_COMMITTER_DATE &&
-+			cat <<-\EOF &&
-+			feature cat-blob
-+			blob
-+			mark :1
-+			data <<BLOB
-+			EOF
-+			cat big &&
-+			cat <<-\EOF &&
-+			BLOB
-+			cat-blob :1
-+			EOF
-+
-+			read blob_id type size <&3 &&
-+			echo "$blob_id $type $size" >response &&
-+			test_copy_bytes $size >blob <&3 &&
-+			read newline <&3 &&
-+
-+			cat <<-EOF &&
-+			commit refs/heads/copied
-+			committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+			data <<COMMIT
-+			copy big file as file3
-+			COMMIT
-+			M 644 inline file3
-+			data <<BLOB
-+			EOF
-+			cat blob &&
-+			echo BLOB
-+		) 3<blobs |
-+		git fast-import --cat-blob-fd=3 3>blobs &&
-+		git show copied:file3 >actual &&
-+		test_cmp expect.response response &&
-+		test_cmp big actual
-+	)
- '
- 
- test_expect_success PIPE 'R: print blob mid-commit' '
--	rm -f blobs &&
--	echo "A blob from _before_ the commit." >expect &&
--	mkfifo blobs &&
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
- 	(
--		exec 3<blobs &&
--		cat <<-EOF &&
--		feature cat-blob
--		blob
--		mark :1
--		data <<BLOB
--		A blob from _before_ the commit.
--		BLOB
--		commit refs/heads/temporary
--		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--		data <<COMMIT
--		Empty commit
--		COMMIT
--		cat-blob :1
--		EOF
-+		cd repo &&
- 
--		read blob_id type size <&3 &&
--		test_copy_bytes $size >actual <&3 &&
--		read newline <&3 &&
-+		rm -f blobs &&
-+		echo "A blob from _before_ the commit." >expect &&
-+		mkfifo blobs &&
-+		(
-+			exec 3<blobs &&
-+			cat <<-EOF &&
-+			feature cat-blob
-+			blob
-+			mark :1
-+			data <<BLOB
-+			A blob from _before_ the commit.
-+			BLOB
-+			commit refs/heads/temporary
-+			committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+			data <<COMMIT
-+			Empty commit
-+			COMMIT
-+			cat-blob :1
-+			EOF
- 
--		echo
--	) |
--	git fast-import --cat-blob-fd=3 3>blobs &&
--	test_cmp expect actual
-+			read blob_id type size <&3 &&
-+			test_copy_bytes $size >actual <&3 &&
-+			read newline <&3 &&
-+
-+			echo
-+		) |
-+		git fast-import --cat-blob-fd=3 3>blobs &&
-+		test_cmp expect actual
-+	)
- '
- 
- test_expect_success PIPE 'R: print staged blob within commit' '
--	rm -f blobs &&
--	echo "A blob from _within_ the commit." >expect &&
--	mkfifo blobs &&
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
- 	(
--		exec 3<blobs &&
--		cat <<-EOF &&
--		feature cat-blob
--		commit refs/heads/within
--		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--		data <<COMMIT
--		Empty commit
--		COMMIT
--		M 644 inline within
--		data <<BLOB
--		A blob from _within_ the commit.
--		BLOB
--		EOF
-+		cd repo &&
- 
--		to_get=$(
--			echo "A blob from _within_ the commit." |
--			git hash-object --stdin
--		) &&
--		echo "cat-blob $to_get" &&
-+		rm -f blobs &&
-+		echo "A blob from _within_ the commit." >expect &&
-+		mkfifo blobs &&
-+		(
-+			exec 3<blobs &&
-+			cat <<-EOF &&
-+			feature cat-blob
-+			commit refs/heads/within
-+			committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+			data <<COMMIT
-+			Empty commit
-+			COMMIT
-+			M 644 inline within
-+			data <<BLOB
-+			A blob from _within_ the commit.
-+			BLOB
-+			EOF
- 
--		read blob_id type size <&3 &&
--		test_copy_bytes $size >actual <&3 &&
--		read newline <&3 &&
-+			to_get=$(
-+				echo "A blob from _within_ the commit." |
-+				git hash-object --stdin
-+			) &&
-+			echo "cat-blob $to_get" &&
- 
--		echo deleteall
--	) |
--	git fast-import --cat-blob-fd=3 3>blobs &&
--	test_cmp expect actual
-+			read blob_id type size <&3 &&
-+			test_copy_bytes $size >actual <&3 &&
-+			read newline <&3 &&
-+
-+			echo deleteall
-+		) |
-+		git fast-import --cat-blob-fd=3 3>blobs &&
-+		test_cmp expect actual
-+	)
- '
- 
- test_expect_success 'R: quiet option results in no stats being output' '
+ test_expect_success 'R: corrupt lines do not mess marks file' '
 
 -- 
 2.56.GIT
