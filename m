@@ -1,122 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794293592;
-	b=ehWOmfGbrla2yAXKqRrzKRn2OP88/6hvBAJ6Y/x4mIyNGjOem9f3Cjc1hl1AzqROA4Bo
-	 XBNn4CI251uUeBjVQEDFz4U2Ni/FZj/mgipBtEEtLmkUu+6sF4c/m3Xhh7P0YEE54vEO/
-	 SqsQ/1yJG6zElLtGJPmNqVfvN9g7jLJBQXtZf6gv1PADXiJJGhde3J2TkpwNFRmhmG2ja
-	 9bjX4x3w/7xzwkB8eLzVv0dgf1tRncSop8eftOGbpepHav0fszBXi9dHqmCZ7Xoe+ePdH
-	 pdM5rRyuFCsuqA9daHIr/7S6OWIPhk8LN3pOhr4NGqYsRt+TNwE6wy60T+o+9oMkIQg==
+	t=1794293597;
+	b=4KhZ02HDsrXgSSi3VF5IgmL28aO3+y5EVobNg4hxVNHOixGG4TLJ39EjU9BI+C74WIy8
+	 r5BJ8RjCTtmCu9axroAoY1ajPEOJ2aaHsCQuFT+i0VS4v66MvlEcscFL1EfzGfjHqUu6Z
+	 dk5xgt5ZbkF1HNuBVfcWk5pUyEaio8FVf+GrPu0YNVZs7MisUNhoAbUtyyO8vFwBXG7Ic
+	 ixtFh00XbAGGKIdOOg01IOyXhW2SJjHz+yEIN1LuIrMDZ9B+CVlFCegOz7JgsPreguNTJ
+	 NabgtK9XeCQd5eblFKwIzinlQjx8Yfrf16kdDpSyMA6W5TE9hiu4Hxwy4qnhduFECqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794293592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794293597;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=YVAgL4XT/HmD2d+gizWutDh15glOy0e8oSBrNijtCYg=;
-	b=gbSXEB3pU4OhgwAMQ00zpMlimnjVZGGZaLaDGYG0ctZKb15gpwBw5g7uF67eY+tkDDds
-	 HWTGWex5V4WnP82f9DM2b8rYOL9r9eKTvNarJn8kUXNXpOkJHNc7BVaWhEHqG95FJJuxQ
-	 MmfGEFXa7hCqVkBBSM+1eGJjEj4MzAfOc9jsq82O/eJGTwcksl/1ilgnYFF++mCaFcqKU
-	 LqxjQu3GXafRHPeEcDBZI+JnJOxg9UU/sfTzMIheOE4kP9vGZ4ohRwuKdFPiE5tI+erlm
-	 2UUdmfjyijJx64CwMKZDNoSXGBYYF4vJX7bxK0fMxwmbEc88EPC+xyBae15zHtl36AQ==
+	bh=kUh1qfh72x5QnVOIn3dNjPNzmSVjEEOmGimIftaPmV4=;
+	b=R47E9n3OMEoEjLqn5Tdzvak7qFTx/a+X0d9KfzTw2XdBz+zffBt4LaVWcIDPzJ2g91Mn
+	 tIevuL5uK7huuHwwCzn85bfnr4a7j1aFx46vVUwYGeKwHyYzWlMV8mx37p6fYY1ojN+qk
+	 gMN/dJeT4mUWlRkgbdDsYnjMrjlSCvcAHeHozsyOy8ZeamVHhlJR4ftd1AQnRCuBP6FkW
+	 SCr1iokAQYw26PJep9nhaGotepcKUrEYUTxlJa0U92C9reEL8hBSKM220LpdOcelRAm8Q
+	 dFfxvB5en64JWmO8Q+LosB1HiBHlay+cTktzexJooAXAM+QhXzt1v6DZDSu9exsGt9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=rRR2bqAK;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KnSrb2Q4;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=pILJpQfG;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=O2GrRlYJ;
+	arc=none smtp.remote-ip=103.168.172.155
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB356606A321
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 06:53:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB356606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97776606A31C
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 06:53:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 97776606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=rRR2bqAK;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KnSrb2Q4
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 96300EC076E
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 01:53:10 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=pILJpQfG;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=O2GrRlYJ
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C2B8814001E1
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 01:53:15 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 10 Nov 2026 01:53:10 -0500
+  by phl-compute-02.internal (MEProxy); Tue, 10 Nov 2026 01:53:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1794293590; x=1794379990; bh=YVAgL4XT/H
-	mD2d+gizWutDh15glOy0e8oSBrNijtCYg=; b=rRR2bqAKo+PL8mJG3+j+eH9Nyr
-	OeNfFQQUV5yi8VKP4lvr8TLJcl2lRqbBDfwUJVRlLQ1Z5xnu2flXtRDnQRjI7KGz
-	kQZzMNr66pmvg9OCshrfTSn3SEwg3bjPKFFyULMhU/ZLS5rVi7cluBypNsorL6NT
-	TC3gZqLKa0ztBujC38cwr0Ae8+kULgOk/yrCbN6OFXUc5jizvzuxAWJn8jK1KWY3
-	qmI8QiZ2/etZb+5w39CDJtuCyi1GIcXospABD+C3sBG2w+2XJX95QokVem4FwvJh
-	0W/09znvB59zUdFBUXnoxSqrRyF6GqIw7hD60reYZcCr6Nm2++KCgKJ6NdCw==
+	:subject:to:to; s=fm3; t=1794293595; x=1794379995; bh=kUh1qfh72x
+	5QnVOIn3dNjPNzmSVjEEOmGimIftaPmV4=; b=pILJpQfGEecL/wjwhmsoGoiEqF
+	NkQNpl0SCixCTC/CkxiD7XLiYFRrrmUtBRvtN587/KERVSUXwqeb1bEbooTgY++A
+	vq4iNNdrXmUABk0jPbJvJFOySBcj0xw1Z2HZXbPmhW4XAeE2aCKNsqp/KLXX1jqD
+	uSABK1XWFh94DSSMlRZaDtLZjVBOyd/zRBXmAYdJB8hjn83rlvfU8t42I+FQ5wEk
+	eiB2CWuPx/uzencT8wUMSduwbpdbZwLqtsMijGn4ubGrP94c8jDJhbif7hnDIO4V
+	RD+3y4858hfuKYtTholoYfg2NADKoAHnyiSgooaiHLQRNEXl25+oWqNa3ZAg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794293590; x=1794379990; bh=YVAgL4XT/HmD2d+gizWutDh15glOy0e8oSB
-	rNijtCYg=; b=KnSrb2Q4SKTF9DVEdhVjhFCn2hTG25Mqm77veGZ+3O60DwVu9Qh
-	QXVnM+yt7ZkeUMNNQ6CiJah48Zr3wN5wvxGtadvygVCTJlRVV1WL8bssnkkfCDRQ
-	zGahgWxL0oDqHFrGMcwx3MJCSlghYsOk9SXi6Nyx8YZb0FsfH+v+IVY0LTFjAYa4
-	NVxKqBPKQMH1b1WLhB6eBIGy0X6LRXfL8Oy78skYa/0BQmuZZGek7UIXFkGUYFjP
-	cuI2WfAeOh2gNJv/Ft2ULCen2PVCCTWf5AFDGldzU5KiIo4ZHRI18eLUwYQwlW+E
-	bTLVXhOcxU5sPUGBmEdXXTR7PM6AddoPsjQ==
+	1794293595; x=1794379995; bh=kUh1qfh72x5QnVOIn3dNjPNzmSVjEEOmGim
+	IftaPmV4=; b=O2GrRlYJ2wDR8cichNFUfymUi0mHOr7WSXyWsutqA00AE0vJM1F
+	LJMPzUVPXApTeZRwr6tFtZmb157sAH6mr/bw5dU+OMwqdGm8WVo0HubHhhi1SsGr
+	/yD9B5PB+rjAcsy2nwCVmJr50cbsYUvxYsOMypkJz3zPuYV32cDmcjxv/RX8Q2RW
+	AINceORiTHWh1RFKgbnvqTYnMp0R8xDxSggQWbixcrh74eXKiGGfQEmsDIZIcOBf
+	vGEgF25rObsZrwMXRk+awhqdVGrJrvLB3q+oEiizCG6ZGK0/tH1l4TkjYds5N4jv
+	70Bo21AIX4Gw0vLbdD17Go5kc/pLba/a3wg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794293590; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794293595; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:dTPrj1WZAsHuIhtLLx4qngsjdYoAIh10IwcH/RFGWFZ2YcH
-	6vyVoyzukLMJUMhPb44vgeKf305nTPxogsvxk2S5XDAeh+7FHW6ngrNEZ/d/jn6I
-	DaL4Zd9nF0uPatkVgLzWReLgULR52DOzpi7Ybn2ok1n6R0D18ADZX2YtzfrCR6NN
-	j4KQVEupaJN4Zb3EeVwrnglkoUgjZBAQj6oWIo3fYZX0uYXJD+JHsADYUKFsSbD7
-	aDG46pme1LwHDaQgqYG5fOPRG69q4scuZJ9QWBK7ZTyDbulsGBeun2EhwHIVAadp
-	l3s9R9xquFtAQvUHQ4XrOPDPOxXBiCqOFRQEQNg==;
+	s=fm3:rsa-sha256:S3jI3tS2eRpYEIlEyYg2I/UOfJMA4Psjt5HLa9jxsCQ+eoh
+	XSpRgiAIblYTPNhIKD6t41OUmHcVC/Q2QTOE6+1AUHMYVQXfX9pCEJHYzG72h2zR
+	Z9iO8Hxrv+89+Z8rw609mSGmQc1rQDhMdsQN62YH0nB3/YBGs0fhdd7U7YWhxRWh
+	F26zeA2epkm4YjCjm8oLHboCVbJjGPPcJ1ubh5HZotmkZWf/i4eCzT/jw/Gh/w46
+	AcuTfpoenkK6WOeFSdPYLjgk2BGJ2QQyg/NJHS70PWLGvKrPjDx0YCl9ic2398HS
+	/o2vg5ovhir0SverXJp3Y2YmNdKhtMlCd4+Lh5g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:Ja2k63k6fTlDHqINpxePiuhXijOAsD2YexBwc7/gsvk=:ZYoCJr+Nk6b/5cvKZdZYNYizQyW7R/4M2MsUUnZJ9rc=;
-X-ME-Sender: <xms:Vr_yanSRyHpzJKF3ISwMzn-Zx9TKB5FQwJyOqzjMrIJrZ-Dp4xkqTw>
-    <xme:Vr_yavzmMowz61SpfgUF6RGI-WkSBftkSuxzxfzYFIkrnQXS--F507f5pyaAF8blx
-    he56kquEKPw50wDgeKD-mHRqE8HN-mRZy76WyO1TmFTSUibf6z5ww>
-X-ME-Received: <xmr:Vr_yah3PbFNydbXrbFQGxKuJKQE_40qXh4qD9TGnNMK02JWGVF4ZyyaHe_MPHMijvKo0MQ>
-X-ME-Proxy-Cause: dmFkZTFxi6oFjG8Dw1oD0cEkw5axZ87QS187ebd0DHJAHviaeeqe1bZvI3X4aWEfePBMzl
-    0Dkxr7TKHH8WaElLWjWvJhl6/N+POSBlzE4quCOdV0ocNUyyUBVvpKFGnc2OFFnNn/BoLN
-    geQQScA9lEmhUlY1QdmrwjFlr0gMFGXFlhktH5ZOM/it2WLaVMMED1XaGFqFyXZJX13eHZ
-    MeCFWzlvIQI5XT6NXTBcCMFT2ByTnzGVOsM8NeM1K5zIrW1NxOaL6d/D37Vatb7RFa1Em/
-    E1Jkad+8H3yxJa82b2eSAsqUn7aVLTqR3FviQkwpjwYMAhYG8NG6EFFrs+0pu2/DzUr+qx
-    BYw/3WlCfMaeMMykidIyrydHRbwDC0uj3L8t7g39lYR2zM5Uv5UafZv/wRWhXBuAqQ82rb
-    PHXuJvofZDPCawCWvwmTRSUNkX9yk4tAX+gkS/u1blJZwFAeZn8h6R06knrEfT/nyJbRNq
-    27JKgUMo2XiMbgofn3sm6l9KYD8waXkV7BPvotz1mmHYbQxlHwN+j5FetK5wxtluYU8mtF
-    xh1TjS5HhK1IP9eBzcWqScTYtoVzkDCLNNjtxD3BrXyQlePt4TQUsbMQjPOAKJTxflXMUD
-    rhQ7iBD6LR4MOxhVDIgmb5AOWrAw7soP2KVkK3vjbsI67y7Tq9wU06VhmSrA
-X-ME-Proxy: <xmx:Vr_yal5LRDWufBPB17_6-_XtC7OvzB7MmfP-LadOLQeUyvLSmHAT9g>
-    <xmx:Vr_yasXAs7UKYM2lZSUh-gXDMNfn77ja6-F61JVrY9s0oASUktCofw>
-    <xmx:Vr_yasBf7LZ-4Dj2vzu6khCwaWq8vvOyOVTuBybSg2-IbqDCYFXeFg>
-    <xmx:Vr_yaj5Ylo0U1NTX1Bahxy_5fXX-jqj2yikauqOKRHvufm6-mqi0XA>
-    <xmx:Vr_yarI71l3z8SGqwKE_hBQ9U6mLaAotq3C6Euq6gSTghz8vaQ6l7HWs>
+Message-Instance: m=1; h=sha256:CidWfwcxOBHd9DpmxDB0m18mViIdmQlEfUIVCFkR9SI=:JOPJ+HlqcxKae6pmJQULV2+utoWUZangh6zNsQQLCxM=;
+X-ME-Sender: <xms:W7_yasbf1ZaBkSHb28IFCefIEAjNTYI0mhUyPnuemnRU7ZXBuyWWcQ>
+    <xme:W7_yaubr0sHutPcirhWQRxZwXpfaY7PlDxBfyfrIguyZ5W_95rHY1-YhFZm5neR2_
+    jhBnT-5OFwpgMgC63HWJQKOVY9s3VvySegal1DL_2YfE0x_EErczqc>
+X-ME-Received: <xmr:W7_yar8isWAPY5_zVrPDPWsJWlu9hOaPF-yRX5gFFYwhRZQpRqpuG2yV65xu-6aSuVY87w>
+X-ME-Proxy-Cause: dmFkZTGWA/i6Z7ODJncg5QP8+bN777nlGniiWGxJhzdUfkPwLM5xi0sa+xk36H6FIM2/W3
+    3XDMvXwmD2UuOTHp4DQ1ob97OPivlw2UaEZdoO7jdCcylQ1vVw99LnFXJA8Deied2y6WYY
+    n612N8EnA3D5AKEVRv0nUTDzqhp8cu5qpY4oTTsegqHsaHQ1ZvQm3kIiikYb4a9z+ja2wI
+    QQordxLG1cwvjpqH8JRQM98dwC+7wsEAiNhsf0ZuAl6K7xVBMx4i6jhMeEZj8JBeuoAgoN
+    ox8JRW6wA9IrRFKRDN5DnebBJseDItGGinL31x/Yrv09LirRmsNZHFToNnNFGloC0OP/fQ
+    KYedfaPJDI3FHTwF8G6ppZ2xTJWWHJNB71ERbDNCOowH0PmPzACuo08fzP3WvGkQVF2B+A
+    CxXyJ6Qu8WlEGp3bD/RFlHxRtnCVdL2aYz3A/D23UoyePr2Mj8OrPj48ZRfywh5qg6ALFG
+    nUFl666ySjNYzSQR/kePntYWkCN3WWDU2ca7t3NVN6uyGpTT0oZ3MgRUCg1tZhiZKKqBOS
+    +yHYzyopOGJm23XskFoPG+p1qiiBzfqkek0gMcGYaZNEGL0l2oAbRCLw5GIpt3mw7U7xGM
+    7OF1oiRtQ21Kv5wPI8psr7/A/nj+eBsSxS0/G48Y8/o+tR3wKrZ3exLifFqg
+X-ME-Proxy: <xmx:W7_yalhz19MVxb921pMApRHj9soWkFfzpvaTy-i-P91LGqovSmAiHw>
+    <xmx:W7_yajdivhbQop9UcYixLNJm1kDwAUDeBIHumOyCwCeHKwIJA5JgcQ>
+    <xmx:W7_yakqJl0ZAj6W-hk291rO35YTMSQr-l9fhWsFpnRnmY0ZPY-Mo3w>
+    <xmx:W7_yagAEAXgfZ5tE-rWA6cocpmVMo183dnZdmh-AsJFSzZLcWapC3Q>
+    <xmx:W7_yajTL0ZBOWY_XURzJRg-SooWatZhEy8vCkEu32ayMsTvfNjSS0FR6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Nov 2026 01:53:09 -0500 (EST)
+ 10 Nov 2026 01:53:14 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 50ea5d55 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Nov 2026 06:53:06 +0000 (UTC)
-Date: Tue, 10 Nov 2026 07:53:04 +0100
+	by mail (OpenSMTPD) with ESMTPSA id dd71a3c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 10 Nov 2026 06:53:14 +0000 (UTC)
+Date: Tue, 10 Nov 2026 07:53:11 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2 1/7] gitlab-ci: speed up installation of Git for
- Windows SDK
-Message-ID: <avK_Q_QDmdkl9r5s@pks.im>
+Subject: Re: [PATCH v2 4/7] t0027: optimize how we reset repository state
+Message-ID: <avK_V9z8gw20WS_M@pks.im>
 References: <20261109-pks-gitlab-ci-speedups-v2-0-508832602d0b@pks.im>
- <20261109-pks-gitlab-ci-speedups-v2-1-508832602d0b@pks.im>
- <xmqq8q320wv2.fsf@gitster.g>
+ <20261109-pks-gitlab-ci-speedups-v2-4-508832602d0b@pks.im>
+ <xmqq1p8u0wlg.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,44 +127,35 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq8q320wv2.fsf@gitster.g>
+In-Reply-To: <xmqq1p8u0wlg.fsf@gitster.g>
 
-On Mon, Nov 09, 2026 at 08:53:53AM -0800, Junio C Hamano wrote:
+On Mon, Nov 09, 2026 at 08:59:39AM -0800, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > +tar -xf git-sdk.zip -C $directory
+> > diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+> > index 49dbf09da77..504a7ea54bb 100755
+> > --- a/t/t0027-auto-crlf.sh
+> > +++ b/t/t0027-auto-crlf.sh
+> > @@ -305,11 +305,12 @@ checkout_files () {
 > 
-> Wow.  You learn new things every day.
+> A micronit.
+> 
+> >  	pfx=eol_${ceol}_crlf_${crlf}_attr_${attr}_ &&
+> >  	for f in LF CRLF LF_mix_CR CRLF_mix_LF LF_nul
+> >  	do
+> > -		test_expect_success "setup $f checkout ${ceol:+ with -c core.eol=$ceol}"  '
+> > -			rm -f crlf_false_attr__$f.txt &&
+> > -			git ${ceol:+-c core.eol=$ceol} checkout -- crlf_false_attr__$f.txt
+> > -		'
+> > +		paths="${paths:+"$paths "}crlf_false_attr__$f.txt"
+> >  	done
+> 
+> We may know that nobody has touched variable "$paths" elsewhere in
+> this program, but I would prefer to have an explicit "let's start
+> with an empty $paths" assignment very close to this loop to help
+> future readers.  That way they do not have to wonder and look all
+> over to find out after what string we are appending these filenames.
 
-Yeah, it's fun. Windows uses bsdtar, which is in turn based on
-libarchive, and hence it also supports ZIP and 7zip files [1].
-
-> This is in ci/install-sdk.ps1 file.  Right now that script is
-> referred to only from .gitlab-ci.yml so as long as GitLab CI
-> environment has tar that works this way we would be fine, but I
-> thought that ci/* was designed to be portable across CI and other
-> environments.  At least we would want a comment next to it that says
-> we assume BSD derived tar that can grok zip archives here, probably?
-
-Well, bsdtar is nowadays distributed with Windows by default, so this
-should be portable to other CI environments, too. So I don't think it
-really warrants a comment as it should just work everwhere. That's
-certainly something to point out in the commit message though.
-
-In fact I wonder whether we should maybe adapt GitHub Workflows to use
-that script, too. That was my intent back when introducing this script,
-and for a brief time we in fact did that. But we eventually figured that
-it was too slow in contrast to the
-git-for-windows/setup-git-for-windows-sdk step, so we reverted that
-change on GitHub again in 55d62306eea (GitHub ci(windows): speed up
-initializing Git for Windows' minimal SDK again, 2024-12-17).
-
-But now that we have found a way to remove the slowness we could unify
-both systems again. I intentionally left that out of this patch series
-though, as we can still do that as a subsequent step if we want to. In
-any case, I want Johannes' opinion on this topic before doing such a
-change.
+Yeah, makes sense.
 
 Patrick
-
-[1]: https://learn.microsoft.com/en-us/windows/tar/
