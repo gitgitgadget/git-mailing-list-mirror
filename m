@@ -1,96 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.174
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794298177;
-	b=zMJ9xKeJkklmDTYHgEUF9NITgrrC1IKSemwZZ+9U9r9JhF39RZDJimfpvt/Q/TR98U3x
-	 EBh8cvDETTDzzAXxDnrEQHp9UWed473z6+jQLBTXc4V6No6P78bCIPaz7uO+8VStNbCeG
-	 2x4U828pZeUXzVP1G4dS7m1SKqR2XCvZ19PWy8zVvt9Funp7Wymk3TckUaBnzni/YrWNB
-	 XKJ4exs5OH7ShxA2UpaXhqNBNLcQt5hDteS1YbVmpf7Ae6BXhWCD3yWee4cFjotI1sbj8
-	 OCDILE+M4ynXA1eWdXlcomTwIp5UCtIfkHgEb2XCrCLE+PvNnnntO70g9x4eSmqYFuA==
+	t=1794298446;
+	b=uqeoYMJYie637cXzRE1D7YBnc4ugYZL2ElMmoYEjC6zdX3+cvxYrOuqUb0plXBTxhnPy
+	 vhz08LAXjHfCtSRR6j/o34WyupViAXM2v8PkV/aO3d9d88XJBQfkmiOuAYwuJCguasZ9q
+	 u5q2r7fdWN20bHReJdOFkY/DvejQ9/IgnKaR63wj1iT78zrbzO/RtNbkbQ6ytRpR3qPj9
+	 qLUgOr+0mTKtaA6+vKVOEJGI7c4xFl0t7dLE7V9RKTyKgt8OXf1ERIgECrR41EdnTq4un
+	 BL2dlWr3Hj3Im1vUmKzwBIPI9x/iWwhElJbW2QvaAZfmrSsuE8obkKnmGxMdCBpF/xQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794298177;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794298446;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=UMMJCmidmYzIuevLomsRruUoBt3lfZrYvhvRM0z33yE=;
-	b=QfbQP76QL1HQsf7b77ugHkCrqP3uAZ+od5lECvKzGefMLPeAx1F4RoJX4NfVPkjcymyi
-	 B6qVONnxxIIq2qzdBzv2uWGUe2chFIrGi6YeYGnO7Nyqo2W+i0fmpUjOiQzuhp6yu/5Ty
-	 SeJqPlhc5C2xzJZ7iItd/INCw3/ik2GpMK2Ir+2p14SqyP/QPAJAgTtRktJORim2AaO4A
-	 Tg5qj8Msch8UN5r7+Yu14bFWNl2C/TgDOmd1jLrtwtS0THIUgzM/H4wtkcQcIlGZkKR4/
-	 LLLOJ8Z/D9FGcZRls2yHYNAzbigOMJY1IsUVGMqr/bY+Ldh+IXj2d0jCb6FmY37KuGQ==
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=8RBJcCjaETz8aRilM+DdIbAT2PW3rcqi6jEvsE91f50=;
+	b=lKLTUVau6Ek4zyFCRI/YNCeVdkqxkdd0ppYidF3KoUxxuLwNjZ/9oVD5hkc8yfv2fKqK
+	 P0TXiSPOeXLg9wVWEY0Vbgwve4NLWDUjnSs61rOAhZAddMVQ2XZVAQKnMbi/KHDflMJCF
+	 PkHDgI/czIvLWzfDTl1aiDPuznNJ4PKezR00HeuHdFX76ue8/aPoWWaqtI+SATxh1XsyG
+	 LlxZL4pZICK8oBkuzXztxrbOFJ7sjKJhGZu8otPC5mI5yfdw69BAB5Cy6RQN2UMljTls+
+	 jO+Zekx6v/qYk9p5LCcyheChn7mhoQAGaOVWaF8+qeglQKxDWGprp+FWsIXa5d3jDCw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=spotify.com;
-	spf=pass smtp.mailfrom=spotify.com;
-	dkim=pass header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=BzSx3UZn;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.42
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DN4Wfkgg;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.174
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0EA606A32E
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 08:09:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EA0EA606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4AF606A321
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 08:14:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9E4AF606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=spotify.com header.i=@spotify.com header.a=rsa-sha256 header.s=google header.b=BzSx3UZn
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c43373ae89aso70956866b.3
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 00:09:36 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794298175; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DN4Wfkgg
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-53664b4860bso16519641cf.1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 00:14:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794298444; cv=none;
         d=google.com; s=arc-20260327;
-        b=N6EE0tp/MHFt6i5kOz5dhiJSnvd2AWnaLsylEcH8BthdmqKuY//3uCnEVUtK//X6RU
-         Sivl3Ebvr9o2u6i741DE2smXm07nQ+XBKkH/4hCg/mVeEPJbi9tkgEO4uCPQdVOqvd5R
-         Ql5uHDbaST8UsxmyMlgxvOA383MrTJTtTXoAfxD02hKj2qoP2Ogoy8RgUP7bBMqkwTZC
-         cEySTX+mVfnyGE9d4q5qdRPNrL7DugkkaE8afZm9bLL4TA+WKhlrjXqKWoTGglRgLpWt
-         0j4QXizK6XOe8/jd7RcRNW5Ts8LwN5E3V/Zc/0aU+nKZDholmmceTg1G7JJVAy0ASTjI
-         vp4A==
+        b=s94JJpvbsyHyutvP1cTYrbhqpqime7+xcx0ijhD2fKhtkWRWmiJKWNR1waCL4VHk0R
+         rV0zvvCqv++P/rIX+b2LEYg0Aens+xjho7s03OeLgjtS1WnGrrvrEcOLQVIwCvvVvsQp
+         oFSMAYAunhiEClMAdYyNNvuENXo1URikun5H3BkgmRoqfC5QkVNQaVcsUcR8UZj6rNVt
+         K/TYFo4AJk0bZ5W2dDkfc587QcFrLefNsJDeRNIRzxpfHxRo7U9iegAe5UAwkXtUfDjU
+         ZiK7w7E4cijqF62aL1wf8ZXiSHgdCaIjqflKi9m1gPL8zVQjhMxtB+mVfu7Aon15eQPz
+         F9qA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=UMMJCmidmYzIuevLomsRruUoBt3lfZrYvhvRM0z33yE=;
-        fh=t6w/N63lYj8KxL8rVZ9Cb2PWxrT4KyU/byPEZA1CoX8=;
-        b=EaAGhMRPl6CNlEM+du7owMISEQ394iyFeIHwC4kAe2FDvktZmcI6RXJb7QyiKsgQKo
-         XqbCb7/LbyqtgEUBoxdfRO/J9Aho+xekXuYNGsVss7j7tkN5pi8iJq586rxbSpzG4GWV
-         qruYUD+OLGxw7ty8qmE9PrqLCNiGVyFBtoTm3gVtv3rNZVvwJ+mlLCfl+tvOiEUAPm2s
-         QdFC0a/cw2MsltDo4xhxCTiI5pneZNUyqxu7OO37llZYZRGFuY2NxcYfgBBpeXUcYuDi
-         1zgfxCZnv8t/Th1qX6Eyk2iMi09v/nTDE/W9GqhYGi2vxShjIez+wu5RwoIAQjZEkit9
-         wQuQ==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=8RBJcCjaETz8aRilM+DdIbAT2PW3rcqi6jEvsE91f50=;
+        fh=yrBMmmbm1H9PwKOa3Y3pN/WOzP189qp9ptaEQXkUkm8=;
+        b=dHA/DqkF4DT/i0V0dHKjBdimpT0ZAHyA7H2saZvzWDn1g8iEN1OcwYkKP7JoEd5EXY
+         xaryRDhAfnMfNNcNxwgBuDmMJpCDekMA/r0Dtcvm1zEHQEwL7B8OWWzhnrqH7CjILJyz
+         CA6AZVxpYzjrIJHY/Xd14DfkVK1oahAyCUeZEizcUD5pDt9JnHwuI5gLMGlSvoKAunuB
+         9cgxrwDjPGhmhsg26A5JNHC9Swut47bcxoit/Uj98HH+btgoH3htpgZPrcaQIwFRMcli
+         cN0JmoOaUg74jEA2K+IgnkMGyj+Ng7zwKk7SSlnIle5TlOqjD+p25K1aRecYChf+jfHx
+         SkCw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1794298175; x=1794902975; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=UMMJCmidmYzIuevLomsRruUoBt3lfZrYvhvRM0z33yE=;
-        b=BzSx3UZn2QKX8oGp5pLdUevF2WXW/RvTPS1SYB7JEqavCeZw88/oFbVkrE1fV9+3sz
-         VUCFe2EBOfmbIPKNzTV6XW1X/OBRkVfPQvKTLksrQrgL+QcA0Z1LusL7sGPKNmg+SH0g
-         kcG2C9lUGuFMxRzlR08CwwYGa2rcnG22iJ3h4=
+        d=gmail.com; s=20260707; t=1794298444; x=1794903244; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=8RBJcCjaETz8aRilM+DdIbAT2PW3rcqi6jEvsE91f50=;
+        b=DN4WfkggVh+qV6zijtpXltwcXvSwRxhFbsJBM8WL8je62fkYM6D0RQHHFv0F1w0j5a
+         L7KBFO4DqJwDdlSINVv7YJYBDZzfMoS0PDWZ0BXDdOWbm0+b5OU37DF2tLxkaUN1GIld
+         wJDxcICve/hgua0HLqNodGESV2xxsJwB8dmJQAJ8un9mdKOUhCqFciM4Jlvi9AsCdYRM
+         EIcDiH7r8FlmshpUp8v4L612SSto0shIgmScCwu5Ikccr4uLq1wVh/HCN72qe3kqnBOC
+         ktuLRAJVXJT+m0sAP1mwyl1R74Al8flSzKZVA2lBAKYFRpDlr7O4Nocp9PN4IsnAX9QS
+         7I5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794298175; x=1794902975;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=UMMJCmidmYzIuevLomsRruUoBt3lfZrYvhvRM0z33yE=;
-        b=2wtD8CQbEJ2EGQu3ijG0fiVJfA4xDkq9AcDmCrzfnk9XSPx4HgdTiy/HCHGuYo+FyG
-         fvox8LQ7GG/bQR5sxXIgJlIELn52EBmqIjaoKHOWuq/k7CFJ1haf27sLP/+5MVCSy7Gx
-         uekKfvyIkGr8gCuAcDMprXweHGbw2KWtC9kAuOo7czQ2xdogOH9TIRDrzSuE6QPgqYEO
-         y4sVEpeNa7W2KxCCZpAsGwkj+/fENVYaM+SnXaTMtgDz9o7D4T0nznoJXXk6Rspfi3p9
-         81KJ/Hgr3EKSfJ5MVnMwrI6smUDeRfGADrexm4rnA3CtOxjWx7STdyClpaArY3w8uwjq
-         QSNQ==
-X-Forwarded-Encrypted: i=1; AL+hErFszDoBcmCwS8WR+zrAK41KumtlDbDWWb6qnLX/ADVx10WIq14pDeFSwRuveI63VvkepY4=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8vC28UMQzDyP3B5Rg5LXDXDTCYQXPRVri4taS7lPqJnCHNQslN
-	P1p4V2PpqKCQCiacgKJbg28sEDuqMdWoBJnW4Ma/zIQXoZdWBAyExUBC9xz7LnvJQOjXhiIvbYj
-	nE/JeulE7YwqhdZP5P8hj45EtOEUfPbwJKm1lGQGotw==
-X-Gm-Gg: AYBFou1owmLc3K0xxEgaNu/se7oEm51oRoAJbLrDA1X23E2gPg5ocDJf4h7XTNcpqTJ
-	6h4uuIcJ8aMm2X8BT5oUWksXQxpsdgoEmZ3dJ9BuZB052A4GGcu0mhXCEIHilfuRWDwDH9tkk3V
-	JuzQg67MPoLh6sqjZ7fS8n7mXx8BPw2O3aYSHYNlTaEF7A3Cfz8liP03QFmW1jcZ7yyy0KY7DbE
-	K/e67ZxNcReLl58sQPv+WBHUqqH1a46ejaYKiEYP2Sd2mC8ETtMRtpzm6tQBdb0UHidHrL6BSKB
-	1o9bahGHqhymhlBh8T1001dvrS0tadGrMqaDpcLHCJAEvCbyaaBrGI3bVSDasuQZkh4TJa2MOPw
-	3QOJp9jhaBtjgdaRTdjRy+NyZtd93XVp4kr9JWnSQ6e8Wip/0kxz4KAJYviIy
-X-Received: by 2002:a17:906:830c:b0:c42:fc8b:6c7a with SMTP id
- a640c23a62f3a-c50496cf8fbmr94691066b.41.1794298175237; Tue, 10 Nov 2026
- 00:09:35 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794298444; x=1794903244;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8RBJcCjaETz8aRilM+DdIbAT2PW3rcqi6jEvsE91f50=;
+        b=qhtwM5sVt5GiEYvzMNK/Wt8IV1u09TqOkxMDG/EHGD3BS9PoVaxiBxGCgNCLAdnKhY
+         3Tkm8nEMb/qJ2Quh3TdZVGsZbIFWDaaGmO0eT4Nuo0bNbtlsaYz+fk6wEAaXyPBH49hl
+         ic8hLxcwcCzPY/kdEhjY6289mOhIptijL1lM3arj96ULX0yQ6ydFjIBvBRoZVP+RYxgq
+         1j8OdUwAO8dMA6KfNiIqFWDNM/RUB+fHjbwmQIyy06JV+fvHdKegwGgkwNznNiuLwAYJ
+         8lau5VGVxwOekS0bhQdGGwciX/csCRchlDvJndP4WTZv6wPbGxBhWshKi9ADNW1feFHp
+         U1Kw==
+X-Forwarded-Encrypted: i=1; AL+hErH3XDTzNbSVbsu4GjqjbX5T9DNEQ4zc0C3rfIK3YZ0Jm0jfluVtaigco+Aa0YVG1fb5uV4=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/eskIY0bCKhlHrhc0kcUoa+OtYGVrzr7CFSsfZ1hxPzG2Ufcqo
+	/PsYHIH1B4F3k0g6i3ZW6YFEO4l2uWDukiK3uDI5OwAN2x+GFQiEnQJHQPoOcSxJr1qZmT+yOJO
+	V0tFJNCzC8aDas0RCPHbM12naDntOElo=
+X-Gm-Gg: AYBFou13lYw2cEviGfgGfcg09OdYhaujCpiULIw6CFlC3B19v9ivYSKDa1gwMAz+2mN
+	F+MiVpNqJQDHI/Nd2wYAa3sUv6QbMZCBJPUHDiV2/xBtlMIpx8UnQnsYMv3nqzw/pFIUT8axyTS
+	uecG1UsX7cO9jovVyiWEsB24kUVUglVaiYPzIj2XoRpcYg1jzuXZwzs6tWnThVVApi5G+9VKaEy
+	Pxj+yHh9SIKWEhnquFM4F35kSUuOL8ZT7s/ReZxH67jCZTOndqrAJIeR2RC9UYOM2ja3i5djkY5
+	bD2EAQLzm87g4s+XVVVSj85rMI1jD8LGBrn5Z0rIskFYI5mpykWcj6wfk7CF8BHFJez7MoZSfDl
+	cr6F9J0Y/RKLTd2ovUQdG3NYSBcqe/cv8VvX60fufJ0F7148gsRjv2mwKpBJMRWkUmyWXEiemwt
+	f82omk0ItzEoVpYBSDdPKw3Dy7AKMmmpB/4Z7Mnv062e9961uVCb+QzXJQ
+X-Received: by 2002:a05:622a:1f12:b0:530:ea8c:1b6b with SMTP id
+ d75a77b69052e-55524e0082cmr26583851cf.3.1794298443988; Tue, 10 Nov 2026
+ 00:14:03 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,55 +105,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
- <4c02ada9b85028f26f7e7bcc62e2ac12443da9c5.1794063565.git.gitgitgadget@gmail.com>
- <50b6c35f-e9c3-47ef-8fca-aebd2620623a@kdbg.org> <CAL71e4NFyAShDZPW9JRB7Bpg3aLY5mY4wdn5m_ZYoLQjHZw_jA@mail.gmail.com>
- <8733t9z0mi.fsf@gmail.com>
-In-Reply-To: <8733t9z0mi.fsf@gmail.com>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Tue, 10 Nov 2026 09:09:21 +0100
-X-Gm-Features: AclHuK8_WaaRq09y10_HzyV__iplj0l7AayNoGl3dVrUUeUMPfOGLCkUIExUo1k
-Message-ID: <CAL71e4PR0KOAE0Q42S08zQbwukw4mM3Mffbekm6mJUAWONnDYA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] t: add "test-tool genbytes" to avoid slow tr(1) on macOS
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
+ <eeed27222be51590775352e5a3b7677e21d36a93.1794251100.git.gitgitgadget@gmail.com>
+ <xmqqcxsdybrl.fsf@gitster.g>
+In-Reply-To: <xmqqcxsdybrl.fsf@gitster.g>
+From: Srujith Poojary <poojarysrujith@gmail.com>
+Date: Tue, 10 Nov 2026 13:43:52 +0530
+X-Gm-Features: AclHuK_3v0wWC5F_lIvVhYAjc8czaFpXZk9yLy8CZST_r2S30CPr4t2uoIIdmz0
+Message-ID: <CABh_KWh0qUoAoUKJoeM1aayNBrYFw33=KXiBvYRFTcRB0hW9WQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] archive: remove USE_THE_REPOSITORY_VARIABLE from
+ archival modules
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 10 Nov 2026 at 07:08, Collin Funk <collin.funk1@gmail.com> wrote:
+On Tue, Nov 10, 2026 at 2:15=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> I'm not sure if macOS 'tr' handles multibyte characters. But it might be
-> worth checking if they do, and if they keep a fast case for single-byte
-> locales. Doing that without duplicating code is quite tricky, which is
-> part of the reason why we haven't done it in GNU 'tr' yet (but recent
-> releases have improved multi-byte character support for other utilities,
-> so hopefully it is handled soon).
-
-Thanks, this was an interesting read (even if it may not solve
-the problem at hand).
-
-To answer your question about macOS tr: it does not seem to have a
-single-byte fast path.  Apple's tr (text_cmds tr/tr.c) goes
-through getwchar()/putwchar() for every byte even with LC_ALL=C,
-which is why "genzeros | tr" takes about 2 minutes for 2GB there,
-compared to a few seconds with GNU tr.
-
-"yes" is nicely optimized, but without an option to drop the
-newlines we would still need to filter its output, and filtering
-is exactly what is slow on macOS.  I suppose the primitive I would
-ideally want is something like "repeat <string> [<count>]".
-
-In the end portability is the main problem: with tr and printf
-behaving this differently across platforms, a tiny test-tool
-helper is easier to reason about than any combination of shell
-tools.
-
-Thanks,
-Kristofer
-
+> "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> Collin
+> > diff --git a/archive-tar.c b/archive-tar.c
+> > diff --git a/archive-zip.c b/archive-zip.c
+> > diff --git a/archive.c b/archive.c
+> > diff --git a/archive.h b/archive.h
+> > index bbe65ba0f9..8ec59b22e9 100644
+> > --- a/archive.h
+> > +++ b/archive.h
+> > @@ -48,9 +48,9 @@ struct archiver {
+> >  };
+> >  void register_archiver(struct archiver *);
+> >
+> > -void init_tar_archiver(void);
+> > -void init_zip_archiver(void);
+> > -void init_archivers(void);
+> > +void init_tar_archiver(struct repository *repo);
+> > +void init_zip_archiver(struct repository *repo);
+> > +void init_archivers(struct repository *repo);
+> >
+> >  typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
+> >                                       const struct object_id *oid,
 >
-> [1] https://pubs.opengroup.org/onlinepubs/9799919799/functions/printf.html
-> [2] https://github.com/coreutils/coreutils/commit/2b1c059e6a06eebbb721d010b1221ec54200cc33
+> All of the above is straight-forward.  Pass a single "repo"
+> parameter throughout the callchain and you are done.
 >
+> > diff --git a/builtin/archive.c b/builtin/archive.c
+> > index 3c1288a123..e35b9637ce 100644
+> > --- a/builtin/archive.c
+> > +++ b/builtin/archive.c
+> > @@ -2,6 +2,7 @@
+> >   * Copyright (c) 2006 Franck Bui-Huu
+> >   * Copyright (c) 2006 Rene Scharfe
+> >   */
+> > +#define USE_THE_REPOSITORY_VARIABLE
+> >  #include "builtin.h"
+> >  #include "archive.h"
+> >  #include "gettext.h"
+> > @@ -97,7 +98,7 @@ int cmd_archive(int argc,
+> >       argc =3D parse_options(argc, argv, prefix, local_opts, NULL,
+> >                            PARSE_OPT_KEEP_ALL);
+> >
+> > -     init_archivers();
+> > +     init_archivers(the_repository);
+>
+> This looks curious.
+>
+> When would the parameter "repo" an invalid repository (due to
+> RUN_SETUP_GENTLY defined for "archive" entry in git.c:commands[]),
+> yet using the_repository is a reasonable choice?
+>
+> > diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+> > index 718e74b3ac..3cfc7ffaf3 100644
+> > --- a/builtin/upload-archive.c
+> > +++ b/builtin/upload-archive.c
+> > @@ -34,7 +34,7 @@ int cmd_upload_archive_writer(int argc,
+> >       if (!enter_repo(the_repository, argv[1], 0))
+> >               die("'%s' does not appear to be a git repository", argv[1=
+]);
+> >
+> > -     init_archivers();
+> > +     init_archivers(the_repository);
+>
+> It is correct to use the_repository here, the same repository we
+> used for the enter_repo() call that immediately comes before this
+> step.
+
+Hi Junio,
+
+Thanks for taking a look at the patch series and for the feedback.
+
+I've updated the patch series to address your comments:
+
+* Cleaned up the function signatures for `init_archivers()`,
+`init_tar_archiver()`, and `init_zip_archiver()` to use `void`
+parameters and removed the unused `struct repository *repo`
+references.
+* Updated caller sites across `builtin/archive.c`,
+`builtin/upload-archive.c`, and `diagnose.c` to use `the_repository`
+where appropriate.
+* Ensured proper header inclusion order (`git-compat-util.h` first) to
+resolve compilation issues cleanly.
+
+The revised branch is pushed and ready for your review. Let me know if
+everything looks good or if any further changes are needed.
+
+Best regards,
+Srujith
