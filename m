@@ -1,95 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794317703;
-	b=tvW8NAqGMP+HMSvAuDn41/lGvv/syk5OtIiJJfRyEybF8WelBo+kZk4gE8L9bZASh4lQ
-	 IFz188D3iptVdWyvDmmgzhNhqovcpYlHkX07ArAZ+iRV4GSZI4ElAMclnQqo4wVSwRGGJ
-	 iZEI8x5u/pGO7XXh7qv32FXXbErMrVwhqA5gezth+ehjmVw4aujFppsVpG+TfCz8QYKmE
-	 S1MX7ZS0XjslNhiYu6fXis/7yZ5Ct2jtkDvcyjPlfnx+XIhF2gYpGqmqwlHgIsEXovdpD
-	 i2GwGQq18YZhQaCfmUgjuAmV3bk9EDTxp5wIMUFUXq73vkg467iWqO3FLlRKugnKiSA==
+	t=1794318248;
+	b=axFLinw7L/NUXOdS0JaLkQdkJ1MiqmufY4r/x24hahhlFmPlM8ypuzLL/jMm6MamlNCk
+	 /JOZCthRrHnI4TlSPQmNl0iBIyXyfjFZy/K+Wft7tHUPgF2C6lROAKtgo8ao2oIP4DrUz
+	 KNrD4E2KBEbDoqEWLn+1L0AU44EpMKTeBR1WjjIz1B8kPVLaM+SWBIF1kRYc4IEfYP4/D
+	 DescVRtmQN88vNnQ4/5dQYDPzZND1bFm9/pPie5fcJ+AWB/lFmDJB1ykaoVgf0Uil4YS/
+	 dDepmLKr9fI/WC++AFmBlOJD7xLhN3cugnIL/8sTtJOiMRnmwkdo9eP6hrWWgBv4DhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794317703;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=IMj4oFYGJkaPFJoBrljRqvjf4mZGMZDcUmLZr/DuWCg=;
-	b=xwtFNNrhA6FT1XsoAc3P1YzZGuFcAJfD6YaXmsfrmk4ji5HKlvdLOCUtAuSHDSLrZuD9
-	 u6nR7s7fwmiDTPiWuQhvdyj9d2Qb5dnjBxU25BhquxW6QNpz/YEf3tbN2r5dCmDRRWyHu
-	 gWNjYHjw3Vd2js1WlMxTFlBckPO2SIyLetDgEQdqGTUFj4KXL/dOKDSo0DQlDmXNGg2ej
-	 3cpqKSHVkR3x764A2kvRlKUugWNOJ/5LVrHp2ypS9h+SQ5AZ/8lsmHRfLpdkv9gmBGrh6
-	 mvkkazcjeO5q7ylIcYUA0oCN5gQnRtVi0eiya3m8bmDApwFXCgbmLSuqIN943MHLrNw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794318248;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=sNGCJnfLi8P9jpy8b57kCeVXhZRHzfKBbDBB+m0Vovo=;
+	b=yaQaicdnFr/SlzpO9J5FE51oGjK0odmBNfZaRp2UB55GO5CPiqktOZX2fQOWcX4Usi4f
+	 7pM5+fg1MrtP02sMHUlXIXcIH5BaAC5wcBN2pmBxazWU+JoF3mUQConLwMzsPeqiT1+iK
+	 4oZO4GvUYh/q4g5VSHgZshlceSnspe5/8l0onfCDSiAhvGIZv29fe9DyUm/prStaoMFS5
+	 WxsfJdFyFodBvZtcesJ6k5Msy5yqtijvsg8sahX8aofYKe3oTFyZFUTmyAugiCZ7QWe4f
+	 4VIBhC8kbyGcWguJICKq9qvL1Z0EQyZDpM5kuJEVi2Bw3c1R31U9KtpqP3yjSK+MTqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gLKhZcJR;
-	arc=none smtp.remote-ip=209.85.215.174
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=g6Kk2A0R;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="vZGF9/oX";
+	arc=none smtp.remote-ip=202.12.124.159
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28971606A33A
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 13:35:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28971606A33A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE23606A321
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 13:44:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3DE23606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gLKhZcJR
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-cdb2fcaafb7so83664a12.0
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 05:35:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794317702; x=1794922502; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=IMj4oFYGJkaPFJoBrljRqvjf4mZGMZDcUmLZr/DuWCg=;
-        b=gLKhZcJRG47soAoe4FTWXW8vFbx8xdZ0xmI5kJUlL1hA6KmrGDGArhZcMyfkYS7/19
-         R8QRwdfMxh8HD3KfVTqUsLEEOzHlFCmB9jtvz1RJtRq+zAWRCaZTehLoyXz/INtPXLmu
-         O3kXYQNkbq88vmGW1cwpjDdGdiWYj1KTtNlNYYeuDNLg3Hbj+fN8W98+VaNAsdpXuwAv
-         /cJZZKUX5T3aEySZ+UA18kIeJbrmw21CalirOAOCJwqJ6oude5cwyNtQ3oPLyZGfWVqD
-         nefkf/g9kwx9xxXZg0AWpGJguEb9aHNaTagEVi8JcRx3vOGjaMoBjcgR087VZFnguy5w
-         2Irg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794317702; x=1794922502;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=IMj4oFYGJkaPFJoBrljRqvjf4mZGMZDcUmLZr/DuWCg=;
-        b=IUbuintV/mgnw9Hjl85OZ6pmnPeFyW2XH1EnrwZJVuNwBQbgtnAOQaJAhyaWJPy8NK
-         EYufcNp6VHVCGXYgLQ9aQAw5uwiPep49Lg37iZgaugn9bZbEfN+kzhAUtR8vo/c6GqYR
-         bagH0hgrqGVzNeoN1iyfhfz08Pdzl14M9oLhKpCgb9z9VDQZFp5U5iQLD024RgDRW4Zy
-         ujN/HwIyds1MGmbrx2zKWpNhB56ztVlZkwIuWeTdrdcqCpsVnMa+yxSeAxLpwzw7zK/i
-         xysjjx23n7t4WEaBLCReW2uVG8MA2+YRoA+PpMLFjZQER9w6qREDuqLk2yVNWEQRCxjH
-         3ovg==
-X-Gm-Message-State: APuU4Z/l5ZEMvjujxDc1ahkruRspl4h8hHXPY0EJNadnc5HPkeMeftti
-	MLKfdT/Qil41j6yVXp1TcwMX8JA2YOLu3epPnPPFjaprAMQeMtggHYCmyhwyykFk2Ig=
-X-Gm-Gg: AYBFou2pyV+3e3t3zhb8C7e2yAT1Kj7AjpiDuDKPd+1V14JMpGFCFNHuGxL+CtJqKfe
-	WwwhiyWohvpLm7z9YChRXIogTSXgl+KXHgpRSiIeRJ41NGJcD2UIhyZcpLJbwJb8F3XnVeA8hex
-	+i9Q3TXu4mHqY1wDUl2aFBuNMsvqNrgW3Fjt3fotFR57jhaIcb44hWSYzKuogAj3mOi8EDltEVF
-	/7B14isMrW6TRNtLDYKdM1yPJ8V+n+Pw7ivxitN9TW5JAnLCWfY8qK8U9DRm8kkbiZPBtUZtyl/
-	wjh50eJ+AHQVMSc7XTivHxv+TEQE32FkYiA/KYZ2yu8fstD1xRbZGQZ7YIZsfk/HnVB+8P+YxyM
-	Rp6CNkdHcQZZutAamPqPKNcbrw/VYkZXnU62Jq7O193QHLQzXxQsTTkrWxRWKbc4GLWnikUuwcA
-	cx7fJcGhpcBvX95NGBBViQO3SaMboiCZeSQPjtYiEpksi6Wesy5ai0j++xjdxVEWuFBy3wQtVCu
-	HJmsKBGLyDXqiAD31sg38YslQr3VKu7imR9NPMt74C6DF8UySUefLryiK9htbABKNfchwNolTVR
-	OcHknc8NM1SKZw1jWJ+ndu00vr2rpDNAYTJVByw4NOWIdDxwxJMG+p521IsTKyrRWQn18qF/Eor
-	NDgaMXZi7vVTS
-X-Received: by 2002:a17:90b:53c8:b0:3ac:a7ee:6785 with SMTP id 98e67ed59e1d1-3b166ad51d9mr4779947a91.1.1794317702376;
-        Tue, 10 Nov 2026 05:35:02 -0800 (PST)
-Received: from localhost.localdomain (softbank126036045011.bbtec.net. [126.36.45.11])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b168ff86e7sm1872046a91.2.2026.11.10.05.35.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 05:35:01 -0800 (PST)
-From: tsukasa inoue <inoue.tsukasa.4@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	tsukasa inoue <inoue.tsukasa.4@gmail.com>
-Subject: [PATCH] refs: fix reflog of a symref whose target is in the same transaction
-Date: Tue, 10 Nov 2026 22:34:57 +0900
-Message-ID: <20261110133457.43700-1-inoue.tsukasa.4@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <CAOLa=ZTYevwM0YF0iQFnEwKG_buV7qg0QdjoaTkw0c8OQSd-mQ@mail.gmail.com>
-References: <CAOLa=ZTYevwM0YF0iQFnEwKG_buV7qg0QdjoaTkw0c8OQSd-mQ@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=g6Kk2A0R;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=vZGF9/oX
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 525527A0220
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 08:44:07 -0500 (EST)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Tue, 10 Nov 2026 08:44:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794318246;
+	 x=1794404646; bh=sNGCJnfLi8P9jpy8b57kCeVXhZRHzfKBbDBB+m0Vovo=; b=
+	g6Kk2A0R4MrUUmFa7yLgMljoP7TYZbt/7B7lS3aiYLlztDwWyHnyw5dotrdU2+qM
+	AD970sJ8O5ciTJwIiZCTT9zJbj32jVPo0SV7aNaIpG11R9dtSiwPBjJFgHNBXdXr
+	r8z2qOg5h4e9/QlnvxPwpXo0PVIe3M9K/QSYXc9DELoJjj701MoOL2p70yr3Aqs5
+	iww0ejuielXozs89UDYIn2MPW2Dn0nOhLSyqW84dHveTHjyo3OmgdGynJYiOuUZa
+	V99Izg4AtvSFe0L+EK4/ZI7bxxgLQCPCxP1G01q1WFy4W1LsZ1ZLOJ+CSemVl3Vs
+	e4LFZThlBCbp2z5ifthikA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794318246; x=
+	1794404646; bh=sNGCJnfLi8P9jpy8b57kCeVXhZRHzfKBbDBB+m0Vovo=; b=v
+	ZGF9/oXsOw7xoPWiPIwpGqprxhwJGQFGuqx+ISnzbztEWHM6Nijs6S1B68pdESEj
+	uyQjRbX9+cQv2y1Akt3IRD7DdBSbpzCtmhdiDBlaEk6cegO0aU2V8AlF9W3kWUdy
+	yvtQ3xzky5NNghGvvoYrMsBN5YfnkfhPEwYIakdDmcjjQqjwrSIdbXVfuoQ++hwi
+	Mhq16SIUJSW19j0LocFr/qSw9Bnv97pgcsCXXxykUlH7W5OzvM7KVeYyXOgzfzJK
+	pDazb7Bz08RajHGBDBuPWOW004Wln0tKLPU0b57ARH5N62RWaBZtrlg/ub2AkVnr
+	cqvYOhcKcc92ktUgtF+vw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794318246; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:FEnsXlVDATTz93UQOnsdy2wV2idSUMiTJzJF049GklrNMb5
+	K9UbMToJVZoim5EK2FtoiNK2yGvAtqaRd+CH9ICIvkgENKB1TWH7ADbOZyvBk55F
+	5mEdrDJJ9ZFmvVMkN+mfzJw3tJXc3UC26pItfRYwZfdhGg98PVA8Hx1N/UH/q/Sw
+	yqhDawo+jAdiuCc1839Tzcs/nV16/gnWMuJ5jZHepbQpj+ev/wJ7S3VpF7GD8MzX
+	IJza0lE9LUaOYNQmb+aKNwWb1zaebqOC0x+c5m1yuVn20+SeQZDK0q/CVhNXccJe
+	nCx0NhXUnTDo9U6y3w+Jt58/xM8KPfE6ErQI36Q==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:++HcdCFbLgTspzv4vyzMiiLwdkbYHyotoCQ0Iq/+zeo=:AHqnas2KGb5LJFgdr0389HLPyHtW4UoyIuIsfXIp+mc=;
+X-ME-Sender: <xms:ph_zashGbv5CnbFNR68ijVxJUHfEyZThuKstdTz6BbM0sDfSdztrMw>
+    <xme:ph_zav2mevRCjEFgAtAKlJ9Yj0UBqNV_KcJHs7XDGH3MI-t6a7jOi_lzDyrfQCzd8
+    2cbrB8R-zFGebFEJDNAZFVbWuwo2aqDXGH5glnjmcc21oFIs1PjzPDF>
+X-ME-Proxy-Cause: dmFkZTFlpvAEmwTdDOOTtkVQHPOyYI1eyoLXDsQL2vnWc2DDkApYVNPYzdPOmB2NbpcUKT
+    PdaokilAnKiT9JZmqx4oGtLfbjoSQSaRjLU8+YcE9PsvIuyMODgW1cFD+yOaWF+TtGG1+y
+    nISI7AWACaYSrXEckEm7m9PQnY7EV3bGQuPlYUVJN0hEs1q6bws+X4nGtrSTiMMuYhkvxI
+    22LMN2Y6RevZolnvO9PiHDzh9PbBjLxCk6CaSW4zCJ8DVmQerNXCMByTARFGsCgoBYZaqE
+    QwuOY9v2l69rO5NIrn7hbZUL3TjSGEwBgzRqvBGeOccxeb/k4a4Ll/SV17QNH55Y8AJmqP
+    8zCO3L11NWRrlcqaeJu2voFbVXe/OuxvQeOa0TZB9oIk6mRamErOWnTfoP06Zcpu4Tcvgq
+    CLOUJ/LityymB/rMgB/AOGsgaGo5VyUrBWKKq1oxHx+TFCaQPMdnx8ksni3rlmfGQ854N+
+    RFF2ObfTY9o/G6LwwYeKOD1IoeAqXAFRGNqe47RdXe3K+uqbmHS/2FUP5mF2cOWKxC2jvy
+    ZSuEWP0MZHrOeYta1BiRSUPg51DICwUvvo33SgvRK46E4sdIZZcIuCiO57q5R8yYdtLdzI
+    NG4n/CGcIEYHb2eLXaB3zY6akDsBru/VSAIZV17laeQffkoWHpKjjG8GxDyQ
+X-ME-Proxy: <xmx:ph_zavKDneHeQ93jEtEalSXivWGys2a99p5kLX1-bY2S9lFqqYO7kw>
+    <xmx:ph_zag-o1Oz29ov4kLfhrj0trIuQ-nORUJmboNEXW3PI9BrLi0uJcw>
+    <xmx:ph_zaiI-noJZoW00EiaQWhvinGhGuAHXC1c38i49Wbwq62mRS2ApOw>
+    <xmx:ph_zallOIdsDDwaIrEwkgQBBSYiWXacd-TDjfqHvlwOBPIIXAz69Ew>
+    <xmx:ph_zaqs0yamkP0oL7P7HepNnFzoyXTANal0Bn8A8Zqlaam4ho17iEkvU>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 8C570780070; Tue, 10 Nov 2026 08:44:06 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,260 +114,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: AEuMsLfrft43
+Date: Tue, 10 Nov 2026 08:43:46 -0500
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
+Message-Id: <85cbf068-08e2-40cc-9460-d537bc61e122@app.fastmail.com>
+In-Reply-To: <xmqqse1fuoof.fsf@gitster.g>
+References: <pull.2293.git.1793720007182.gitgitgadget@gmail.com>
+ <pull.2293.v2.git.1793893217889.gitgitgadget@gmail.com>
+ <xmqq33tfxm2k.fsf@gitster.g> <xmqqse1fuoof.fsf@gitster.g>
+Subject: Re: [PATCH v2] doc: git-diff: rewrite EXAMPLES section
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-When a transaction updates a ref and also points a symref at it, for
-example
+>>>      + git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
+>>>      ++git diff [<options>] --staged [--merge-base] [<commit>] [--] [<path>...]
+>>
+>> or something).
+>
+> Clarification.
+>
+> The point is that there is a difference between giving wider
+> exposure to "--staged" as an accepted synonym and swapping offical
+> option with the synonym, let alone deprecating "--cached".
 
-    update refs/heads/y <new>
-    symref-update HEAD refs/heads/y
+Sorry, that's embarrassing, I didn't mean to include this change.
+I did an experimental rewrite to see what it would like to rename `--cached`
+to `--staged`, decided it would be better to keep the scope small,
+and I thought I'd undone it before submitting it.
 
-the reflog entry for HEAD should record <new>. Both backends get the
-value for that entry by resolving the target with
-refs_resolve_ref_unsafe(), which reads the refs as they are before the
-transaction is applied.
+Will take this out.
 
-The reftable backend writes all updates into one table at the end, so
-it always sees the old value of y. When y is created by the same
-transaction it sees no y at all, takes the symref as dangling, and
-writes no reflog entry. The files backend commits the updates one at a
-time in the order they were queued, so it gets it right only when the
-update of y comes before the one of HEAD.
+>>>      +@@ Documentation/git-diff.adoc: files on disk.
+>>>      + 	do not give _<commit>_, it defaults to `HEAD`.
+>>>      + 	If `HEAD` does not exist (e.g. unborn branches) and
+>>>      + 	_<commit>_ is not given, it shows all staged changes.
+>>>      +-	`--staged` is a synonym of `--cached`.
+>>>      ++	`--cached` is a synonym of `--staged`.
+>>
+>> And this is the other way around.
+>>
+>> Other than that, the rest, including the resurrection of AUTO_MERGE,
+>> looked OK.
 
-Add ref_transaction_resolve_new_oid(), which takes the new value from
-the transaction when it updates the target, following symref updates
-within it, and reads the ref store otherwise. Use it in both backends.
-
-Signed-off-by: tsukasa inoue <inoue.tsukasa.4@gmail.com>
----
-
-Notes:
-    This follows up on the report at
-    https://lore.kernel.org/git/CAP8tz2L3Dfhd+ec4+SFkZgXmzQnBg+3Y0REAV+1Hf5X415qnfw@mail.gmail.com/
-    
-    As discussed with Karthik there, this only moves the lookup of the
-    target's new value to refs.c. Moving the rest of the reflog logic out
-    of the backends, and resolving conflicting updates within a single
-    transaction, are left for later.
-
- refs.c                  | 47 +++++++++++++++++++++++++++++++++++++++++
- refs/files-backend.c    | 10 +++++----
- refs/refs-internal.h    | 12 +++++++++++
- refs/reftable-backend.c |  9 ++++++--
- t/t1400-update-ref.sh   | 36 +++++++++++++++++++++++++++++++
- 5 files changed, 108 insertions(+), 6 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 951db56113..3a5c225fc9 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1388,6 +1388,53 @@ struct ref_update *ref_transaction_add_update(
- 	return update;
- }
- 
-+static struct ref_update *find_ref_update(struct ref_transaction *transaction,
-+					  const char *refname)
-+{
-+	size_t i;
-+
-+	for (i = 0; i < transaction->nr; i++) {
-+		struct ref_update *update = transaction->updates[i];
-+
-+		if (!(update->flags & REF_LOG_ONLY) &&
-+		    !strcmp(update->refname, refname))
-+			return update;
-+	}
-+
-+	return NULL;
-+}
-+
-+int ref_transaction_resolve_new_oid(struct ref_transaction *transaction,
-+				    const char *refname,
-+				    struct object_id *oid)
-+{
-+	int depth;
-+
-+	for (depth = 0; depth < SYMREF_MAXDEPTH; depth++) {
-+		struct ref_update *update;
-+
-+		update = find_ref_update(transaction, refname);
-+		if (!update)
-+			break;
-+
-+		if (!(update->flags & REF_HAVE_NEW) || update->rejection_err)
-+			break;
-+
-+		if (update->new_target) {
-+			refname = update->new_target;
-+			continue;
-+		}
-+
-+		if (is_null_oid(&update->new_oid))
-+			return 0;
-+		oidcpy(oid, &update->new_oid);
-+		return 1;
-+	}
-+
-+	return !!refs_resolve_ref_unsafe(transaction->ref_store, refname,
-+					 RESOLVE_REF_READING, oid, NULL);
-+}
-+
- static int transaction_refname_valid(const char *refname,
- 				     const struct object_id *new_oid,
- 				     unsigned int flags, struct strbuf *err)
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 87d04557a5..d8878f4df3 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3156,6 +3156,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- }
- 
- static int parse_and_write_reflog(struct files_ref_store *refs,
-+				  struct ref_transaction *transaction,
- 				  struct ref_update *update,
- 				  struct ref_lock *lock,
- 				  struct strbuf *err)
-@@ -3179,9 +3180,9 @@ static int parse_and_write_reflog(struct files_ref_store *refs,
- 		 * We want to get the resolved OID for the target, to ensure
- 		 * that the correct value is added to the reflog.
- 		 */
--		if (!refs_resolve_ref_unsafe(&refs->base, update->new_target,
--					     RESOLVE_REF_READING,
--					     &update->new_oid, NULL)) {
-+		if (!ref_transaction_resolve_new_oid(transaction,
-+						     update->new_target,
-+						     &update->new_oid)) {
- 			/*
- 			 * TODO: currently we skip creating reflogs for dangling
- 			 * symref updates. It would be nice to capture this as
-@@ -3377,7 +3378,8 @@ static int files_transaction_finish(struct ref_store *ref_store,
- 
- 		if (update->flags & REF_NEEDS_COMMIT ||
- 		    update->flags & REF_LOG_ONLY) {
--			if (parse_and_write_reflog(refs, update, lock, err)) {
-+			if (parse_and_write_reflog(refs, transaction, update,
-+						   lock, err)) {
- 				ret = REF_TRANSACTION_ERROR_GENERIC;
- 				goto cleanup;
- 			}
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index c3ac7b556f..33ba285dc4 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -187,6 +187,18 @@ struct ref_update *ref_transaction_add_update(
- 		const char *committer_info,
- 		const char *msg);
- 
-+/*
-+ * Resolve `refname` to the object ID it will have once `transaction` is
-+ * committed: if the transaction updates `refname`, use the new value of
-+ * that update (following `new_target` of symref updates in the
-+ * transaction), otherwise read it from the ref store. Return 1 and fill
-+ * `oid` if it resolves to an object, 0 if it would be dangling (missing,
-+ * or deleted by the transaction). Meant to be used while committing.
-+ */
-+int ref_transaction_resolve_new_oid(struct ref_transaction *transaction,
-+				    const char *refname,
-+				    struct object_id *oid);
-+
- /*
-  * Transaction states.
-  *
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index d0de066355..46142a4f73 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -940,6 +940,7 @@ struct reftable_transaction_update {
- 
- struct write_transaction_table_arg {
- 	struct reftable_ref_store *refs;
-+	struct ref_transaction *transaction;
- 	struct reftable_backend *be;
- 	struct reftable_addition *addition;
- 	struct reftable_transaction_update *updates;
-@@ -950,6 +951,7 @@ struct write_transaction_table_arg {
- };
- 
- struct reftable_transaction_data {
-+	struct ref_transaction *transaction;
- 	struct write_transaction_table_arg *args;
- 	size_t args_nr, args_alloc;
- };
-@@ -1014,6 +1016,7 @@ static int prepare_transaction_update(struct write_transaction_table_arg **out,
- 			   tx_data->args_alloc);
- 		arg = &tx_data->args[tx_data->args_nr++];
- 		arg->refs = refs;
-+		arg->transaction = tx_data->transaction;
- 		arg->be = be;
- 		arg->addition = addition;
- 		arg->updates = NULL;
-@@ -1332,6 +1335,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
- 		goto done;
- 
- 	tx_data = xcalloc(1, sizeof(*tx_data));
-+	tx_data->transaction = transaction;
- 
- 	/*
- 	 * Preprocess all updates. For one we check that there are no duplicate
-@@ -1557,8 +1561,9 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
- 			int create_reflog = 1;
- 
- 			if (u->new_target) {
--				if (!refs_resolve_ref_unsafe(&arg->refs->base, u->new_target,
--							     RESOLVE_REF_READING, &u->new_oid, NULL)) {
-+				if (!ref_transaction_resolve_new_oid(arg->transaction,
-+								     u->new_target,
-+								     &u->new_oid)) {
- 					/*
- 					 * TODO: currently we skip creating reflogs for dangling
- 					 * symref updates. It would be nice to capture this as
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 1a164c96f9..19f0987d2f 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -853,6 +853,42 @@ test_expect_success 'stdin delete symref works option no-deref' '
- 	test_cmp expect actual
- '
- 
-+for action in update create
-+do
-+	for order in branch-first head-first
-+	do
-+		test_expect_success "stdin symref-update HEAD logs target's new value ($action, $order)" '
-+			test_when_finished "rm -rf repo branch-cmd head-cmd" &&
-+			git init repo &&
-+			test_commit -C repo one &&
-+			test_commit -C repo two &&
-+			new=$(git -C repo rev-parse two) &&
-+			if test "$action" = update
-+			then
-+				git -C repo branch topic one
-+			fi &&
-+			echo "$action refs/heads/topic $new" >branch-cmd &&
-+			{
-+				echo "option no-deref" &&
-+				echo "symref-update HEAD refs/heads/topic"
-+			} >head-cmd &&
-+			if test "$order" = branch-first
-+			then
-+				cat branch-cmd head-cmd >stdin
-+			else
-+				cat head-cmd branch-cmd >stdin
-+			fi &&
-+			git -C repo update-ref -m "move HEAD" --stdin <stdin &&
-+			echo "move HEAD" >expect &&
-+			git -C repo reflog -1 --format=%gs HEAD >actual &&
-+			test_cmp expect actual &&
-+			echo $new >expect &&
-+			git -C repo reflog -1 --format=%H HEAD >actual &&
-+			test_cmp expect actual
-+		'
-+	done
-+done
-+
- test_expect_success 'stdin update symref works flag --no-deref' '
- 	git symbolic-ref TESTSYMREFONE $b &&
- 	git symbolic-ref TESTSYMREFTWO $b &&
--- 
-2.56.0
-
+Good to hear.
