@@ -1,87 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794311411;
-	b=hrskCL2peXzb0vLN1cEYuIYeEAeIZ7qHODPOKkVLm5Xg+ZxqyvGL2fjd50xfWFQA8WXK
-	 W1Puf+kBKBVkXL60/R3A6EEdCXj6NHvsPivci8QCC+q+H47bRFyFMTuRb9o8D52h7Yxb8
-	 hDR7SwJFFbOextq8sk94/ZzQzzKMkbFQnt27Z8rkyeRaTH1Y4XYp6h3WyywE6zjkGW2IU
-	 oxcQUzcX60FF66AJy1tKlQ2OTwPv8/8s5rZwS9wszbV13GHmszGoFpg+Vt7Wch7XaNwX7
-	 oOgQIheEWyf/uMDJiMJMGH9J0gMVRAS5daZPOtBPElkfvLnO+o0vOUU9jE77s55iP9Q==
+	t=1794311417;
+	b=ePb/nSkUMbxvH175bH3YKmlrimBmBpV6KvfSAukAIw+nJ7IjQZJVgyFFxxKAr7KR//yu
+	 k8ua7FZieDT5Iy4r7Pewn16HicXww1W7QI29kZTExb7idawWnUCCnszhoFoz9t3tDDRtP
+	 OR3l8lIVGZHOg6V4OHb2uIps05mQpdTGEKDXwj91BvpiO99FNPzCtk7YMaqX50W2nVWQT
+	 BhQoffUztpdICGtD015A5YQt2uJBw7XReWNGK6Tn7ywIT2rfusVi8vG+85yG5q3KOnEVy
+	 0r6gruwc+TJAk3cm9DcniMyADzb1BNK0aMl4Y51RMnVyz2A0+0g08BmTqQy4mPjy5Kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794311411;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794311417;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=btFugKsi5lpZ4A8iXSm0xnI2cqo5wooSJ5xEUu5v270=;
-	b=SE33RA61VBYunT+EiznrHp2eTE0fmuOH73x9prm+g7BkL7n+VZRSxFrHhXSj/1610fY1
-	 rBUlAhq+foVsj16hXrxlpWJfA6VZ6A2qMaKi414H21Wx+mUqDEHpBcoALcw6/dQ7SdgVH
-	 JgcaF5Ym1tqDQ2CMtXMUsdMAvwmpvhwtk7T7S6P5Fl8OX1ev3LAMMYrySW3s8O9lR1AZp
-	 s5ISTkamk67do/N0tvnETI64sc9nc5pPT3uTBsek7n1R2JnyQm9viv5kJMfB4SxSIn+vM
-	 2a0QlvNMaClG5FyG5qObkG6pJCrfuYm8XpVdz/sTRltRojam5KgXS3kEaAXDs2CRhEw==
+	bh=JN7zBTApwxJd9+5r/y3joz9pMpS1q+sTbBOhVaZpscU=;
+	b=PDTvajE3mms/CO9RckeVsmZCFTEq7O7V0YCirQeqwkZE+OvJDW0IrfeXs4lrAWOgBjDK
+	 3B3lfLMICAddgOdNzAKB1Cg+fMLb+WDCaVqwlJepW13UfONC8hH4LxA08xjp4OJW9b+8X
+	 bSaHF6hSb69w376F0bDapX6bE/kC2IZ9SQcV/6L88xNiiQl/hPAPfYXNZbxaUPZILUyP+
+	 Rqv2XhwchZC+tyL9lRLOu3JS5hYBQBk1T/DU0/yZAce+TH5shim9ELVHSndOf2SLtxnfq
+	 Xrz428HpGlDSZFgkEU7ZuAPeU1SmTMNa9ELIuxVfdbGsCmHCp8Tf+q63ro0q4GnLBGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vUA56EGK;
-	arc=none smtp.remote-ip=209.85.128.54
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PwIiaUFH;
+	arc=none smtp.remote-ip=209.85.128.47
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627B1606A9AD
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:50:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 627B1606A9AD
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3551606C606
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:50:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3551606C606
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vUA56EGK
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a59100fa83so16236815e9.0
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 03:50:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PwIiaUFH
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4b79502c27aso19510425e9.1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 03:50:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794311410; x=1794916210; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794311415; x=1794916215; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=btFugKsi5lpZ4A8iXSm0xnI2cqo5wooSJ5xEUu5v270=;
-        b=vUA56EGK7r3cHM+ZBBC+CQc2BxmNAT7IPs2uYAmC27ftszKW1pTTA7jIpWrAimPJPO
-         QdHQmyh7z34c5xd91NEgJ63iwx9E8LMngf1rmhrbIPdVSfCsv7Cx6ko2zVy6vc719kmM
-         6vjsrPjMTFgJY1Y1bAU6saFKJT+erLuS9zZndQRGrrBMXFeIbnK/noNEFegSINbMzLmj
-         EBGiH1H5+Wh4/wq28Q5xuZrbKt0o1tUjH3B8ByXQL0YsxshDH+KMwX3mP+X/ohPHwAxD
-         m+98U6xKD8crFqyEhO5fx4XShr0gP/C2LdWSV/sLxDjdRsNxgZdZcjJ3qjmL7z0ERR/i
-         +zWg==
+        bh=JN7zBTApwxJd9+5r/y3joz9pMpS1q+sTbBOhVaZpscU=;
+        b=PwIiaUFH/dEa3R0onMcerOnYv7CCRSoFYGs1YtzNE18Kvi9Sq0PprwUVh8xdSSm8Nj
+         9FdTrqRYHBMD58oYZYuwQPVU4dWYst0KXmeLx0600drVMORWhmPYuGrQbohdy/Jh+30a
+         vzUsgT2tk900ZhDqgxWxF00GhvSYw/lhk+2Rfl0z0dvxVHgiP6k7i6wiXqFroxYUI5Ri
+         8Sg4h1sdlsCU9Fcu3LEpCLV9gYBVTpgjipkEZ6KqdVPoIqRe0MHr7zjeHPRM4s6MDkBp
+         Ip1e14WUcauzIMqeP82n3mJL1JFfvNx5Nt4ToKVbsFCyAv3j9xZq45Zn6hFIey/zVD/l
+         wsYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794311410; x=1794916210;
+        d=1e100.net; s=20260707; t=1794311415; x=1794916215;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=btFugKsi5lpZ4A8iXSm0xnI2cqo5wooSJ5xEUu5v270=;
-        b=CfVynpqJJLvnbai9ru/iEx/RvE13W1kIoyEwjETasBPyKw7A6UYdHr7qlL+6enDmHw
-         35qkOMtLBPgmdEf9DKiTfArx5i/nDNIve5/kZnA7JSqOlz4MkPyP6keG7YFqK8I1lNDs
-         a8Dx1K3Dqbx+f9WaVVrXaUNjYUmiMUBcn1QgWjvs5eSui98uTvR3jy2ViyVZAodzQcRv
-         1tmHYp4+V+1FBhbt9/hr7t3rkPoy6xGhuhUxUrG1BAs79l1/2FoqcVQrl2cj1f9hzngg
-         fG6P8sUxYezEHQkERqdaXgpJ9Tmag3Fz1G1rg/nR/TYMqzacRLAllofK7SbysOohQ84y
-         PVjA==
-X-Gm-Message-State: APuU4Z/Y0Z+1p+6YoNhUWTh7zX4SaE3xcb+sOix3OxCAZjxbudJSIVUZ
-	w8nWUWEwmzhYlcjOI86p4UUxBi7gbsItPHYNCjfWB56CJgdlG7tQQ30I9zQnlA==
-X-Gm-Gg: AYBFou3jSFTwXSAzTL6HggTpwEeagdFI+i3Aa+cxKHh3vt5vnqQyOjCLjk/Av2TcitD
-	FX+l69ridi1lM5t7uMeiJPswtu/bFxYpVgC41EVFi7OPkYHz/3P9NB7zkTdYnHQVH/m7RdPWE9h
-	rEoy/vzDoUkZr0m/Y/LDE55nc6HkzQ8mUk4z7kSoKWF2n6gLdueCgASm1UMa3mLfvmRuOi5eWle
-	ONBW81wa8WlXUSOAncAulmhx5XzT3WPMVWkpYn95JMgqbDbi4sls+GqVyGr/Z1xWEjkjT5x1Pkq
-	JGBV1ImGtoKT75RV4yZ/olC0upeADDSAesRi3l7S+Q55GA8Hi4ptlUAZZewu+CQ33FpDi3iIBK1
-	p/IAW7FEMet4W9vwv3oEZeoDHHD1GqU6tyqMiBHYfPzZnk3vOP7G4hRaaTkSHivJndar7oeIRCl
-	nBrznkNdakqPokmbaPUt4GT3sYznUAsKI454BcvhJtkrP8Qa0X2hk23GIgR790Gv8XaA6DYV358
-	vc2+w01/pgcYPYZFtBtqe6/heppts8MyFTO4R0QIXpNJ5J2D3shOb4tdQgC47ROyzQugV1tMn8K
-	SSwezzN1PQyWiyWVbdA+0m99Noh86YeW2UmeD6SzOLi7kef/Os3qyPE7fjNn/h91Nkg=
-X-Received: by 2002:a05:600c:64c8:b0:4a2:e0c:2b0a with SMTP id 5b1f17b1804b1-4ba02343ac3mr37686875e9.16.1794311409512;
-        Tue, 10 Nov 2026 03:50:09 -0800 (PST)
+        bh=JN7zBTApwxJd9+5r/y3joz9pMpS1q+sTbBOhVaZpscU=;
+        b=EQZUZ85KTCtPZEQhauKIICfAzf/tb4PTE4WRgZpToZNqB/9HM3QSCm7MYakw090biC
+         2H9PCU0yK5vr7bHO14G0baz8ocLZwihBDg57tuK1X3QYJXBBBr1O5V5xPJMJSHAsVxab
+         pvqlj7QF299nXNHutkfDivqJwyoUvzwUSafBE7Z9xto1jN3aWkP+rLSvMhvoEFQa0zPd
+         u5NpPXGpQZ16r9WcTRv1QwODx83schzfEKCT2nrRp0iFZ0A/QFtj/+ioj3qSZx/FUUdI
+         bkACxWQi9UtEFLIv+xjLahi0HtfqT9vr6ENburzUrPBdrxu2h1w6vGPV5jm2+z8Ti6U3
+         CyMw==
+X-Gm-Message-State: APuU4Z8rp1Ak7TGZOMkNuByMC4f/r5De9zhyiDmekHiSpydF3YHJeLxV
+	gpdB5FPTdQrZ7iVDJN7KWy9+OCWq/CMGZZOAphKPkjbEVafQJfY8BfB4uCZsDw==
+X-Gm-Gg: AYBFou3i10R3y9gWG7td2tTBx8tzeDiwYDyOX21VJewgP5glGBr+FTtl0v00DPyj1V/
+	hz3rtc6NIYj+q5nZD1UXfy7tl9OdY+KqAe4JdGYNkP11YyHydcs+4bkb5AOBVUT4FqIZpXMRhc3
+	t72PzfQjTv6Hjjalfe8wgjArynoVZQX1nukavNF8wVcdojUCCTpN2r1wZ3Kcqs9jhM5y0gc75O6
+	Tjv1YSDuiSsgzLkOS/Gsak8iU/Ao5+Lk2fZ5RikTCXbBP2QWp3PolqHoTqZ49mxoIMKq2Vwlnya
+	+HmrX30PnLIUmToVCj3SIcEhsMEDtEA9lOMsGsezHd3y6K2MHXngCEeGXzeTSuShnTan0AFfr7q
+	ezxG92MDHEicVnxbwSyKY4NCWck5qtSSiFbQGOIbTpHLODdU9XMTt5b8l/3zyokRJjTioO8xGX7
+	Z7LT4Hsb2TybbeosePi5RpHsHDbmq9WFIMyloVUe2MlK9FaOaUQgmzm57UNegXvdbE//aQvKVyb
+	mb99Ebu2WKDQfod9DaR006IGJsOlvNBYPxqGfyvDaa4TbSYwEKaq3X7NRPUckGJk6FJZqi3kWaQ
+	qcmRahHAewv7ROxwVBk6ZdJ4GYsLv2SD1GqvMn7lg+wD+lOtRJgtfvw9Ft4bUkmw6a8=
+X-Received: by 2002:a05:600c:350a:b0:4a6:42cc:bf66 with SMTP id 5b1f17b1804b1-4ba0233d8b3mr37018435e9.11.1794311415179;
+        Tue, 10 Nov 2026 03:50:15 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:1917:82b:d709:897d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba02005762sm60715995e9.2.2026.11.10.03.50.08
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba02005762sm60715995e9.2.2026.11.10.03.50.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 03:50:09 -0800 (PST)
+        Tue, 10 Nov 2026 03:50:14 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 10 Nov 2026 12:49:52 +0100
-Subject: [PATCH 07/20] t9300: make the series P tests self-contained
+Date: Tue, 10 Nov 2026 12:50:00 +0100
+Subject: [PATCH 15/20] t9300: make the cat-blob tests self-contained
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,366 +93,531 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261110-kn-fast-import-tests-1-v1-7-dbd9ee502aae@gmail.com>
+Message-Id: <20261110-kn-fast-import-tests-1-v1-15-dbd9ee502aae@gmail.com>
 References: <20261110-kn-fast-import-tests-1-v1-0-dbd9ee502aae@gmail.com>
 In-Reply-To: <20261110-kn-fast-import-tests-1-v1-0-dbd9ee502aae@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7387; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=N4QOqMki0vlWavobJFf6TrpokR7q8nXlEYEwU0RZqTg=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrzBObHhm72IfLTx48swQKKyARNLDTTd0UO0
- Ip9XI51gzFPJokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq8wTmAAoJED7VnySO
- Rox/FukL/j0SNs953XyAVnkeLrO81wEQa9javA1xQeQzFoat3T1fUqSeYLDGvvZhUgxXzI0KnIn
- F5O14fJse1D2uPooC4fzCGRieEdGh0WIe0F9AEWIgVXMEmEV4uwAZvKahotdK/cI2MGIuwu8iMa
- d3TqsPRK3VXCrEuOJl9GCtgjFi4bmn2iZqE3c+6xWq+TYdC3L977NHjgkkxaIMWedrHY3WmJPif
- sJSySZBzm+ElIDh9vJtES0caTi+I3+rhDrFacSV3RnYA0W7RS3V/4omxAGXCeZMy2+ulw1f2Eb3
- ipfIfPM9stQry7tIPL+wZy7bl/oUfDx4xJ4cPUfB+L7zqvTmCCLm2DB6FaO5MJ46j3Kw5QEAGIO
- OLWuJ91k5DRq4UvOJ8Ndp4sW0OI8ytG9ajcPtq6gOyVv+PhzKe8icVpXfyb/jLaxa9McH+kfqhf
- r4iEHnz+WjWx/N88zZwufV+2KrepOcNnOuoGnZt+JgHmE6iiXMMYKRORkoITSU027xMa2kaV7j7
- 0M=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=11628;
+ i=karthik.188@gmail.com; h=from:subject:message-id;
+ bh=CqgDvPHZa6iyFXERGoC5F8c1G1AjhT3TDxLw3KHPzgw=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrzBOm0DGxQ9T1gsHza1zo0OMP3HnnbpCBuk
+ Lh2qRR/LbjKMokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq8wTpAAoJED7VnySO
+ Rox/5boMAJOCgDyKJ2lt2C93LdJEwjGf4Mz+zAQcLeOKEUi17ElEXbpbcKnZ18cp5STx3b7GMUY
+ h5Jvft78XgmWj/dQPYzLAnuc2r4HD8LkHLsRl0AoqQk1zOF25krgrN1vqXvcdwT5pRKletJTou+
+ 7mIi1yRnB7UDdaxM1iejtmTZ+tG5d4YhF19tP+UZ38uHd2ERs2ZR9ljj976+u+ZD7d/NI0M3y4/
+ sgy9SmI4Pm3chMdAz14uNk+rk3AyULa5oeY0ihmYkwqBX6r9eWknx59I7G7hunJpZzuF5//h/7e
+ gYvWcg2TWfGaDvWeTXDJslvpv27Q6nAas9iHR6TrxDQbj6XxAP/WOPPuppvnYdhw4iGsLOxpvm9
+ 058ijzJ6rVah0yyrijVcxPQxjdiQySovH1FXSfjCF1PGFvCgHWQJ8d8dWhgrm0TS9EmGLNn3TLP
+ DFlTu2lCtO3b74/YGhzEY7ntQBbFVY/Qwpo9oi/h5WtiIOdwDdh2uoWWhY52HwRDdMP2NdtNe+8
+ rQ=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Similar to the previous commits, modify the tests in 'series P' to make
-them independent of state from previous tests.
+The 'R: print' tests and 'R: copy using cat-file' write blobs into the
+repository of the trash directory, which all other tests share. 'R:
+print two blobs to stdout' and 'R: copy using cat-file' also read the
+'big' file written by the preceding 'setup: big file' test, so they
+can't run on their own.
 
-Move the setup to a 'setup_gitlinks_repo()' function, so each test can
-invoke it.
-
-The 'fail on inline gitlink' and 'fail on blob mark in gitlink' tests
-create their commit on top of 'subuse2', which is only written by the
-'verbatim SHA gitlinks' test. Use 'subuse1' from the setup instead, as
-these tests only check that the invalid gitlink is rejected.
+Run each of these tests in a new repository. Convert the setup test to a
+'setup_big_file()' function, which writes the file in the repository of
+the calling test, and invoke it from both tests.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t9300-fast-import.sh | 290 +++++++++++++++++++++++++++----------------------
- 1 file changed, 161 insertions(+), 129 deletions(-)
+ t/t9300-fast-import.sh | 428 ++++++++++++++++++++++++++++---------------------
+ 1 file changed, 242 insertions(+), 186 deletions(-)
 
 diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 9b1827bae2..480ae2c47f 100755
+index 04c3bfe0c1..3f0e7b8b1f 100755
 --- a/t/t9300-fast-import.sh
 +++ b/t/t9300-fast-import.sh
-@@ -1866,157 +1866,189 @@ test_expect_success 'O: progress outputs as requested by input' '
- ### series P (gitlinks)
- ###
+@@ -2983,87 +2983,117 @@ test_expect_success 'R: cat-blob-fd must be a nonnegative integer' '
+ '
  
--test_expect_success 'P: superproject & submodule mix' '
--	cat >input <<-INPUT_END &&
--	blob
--	mark :1
--	data 10
--	test file
--
--	reset refs/heads/sub
--	commit refs/heads/sub
--	mark :2
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data 12
--	sub_initial
--	M 100644 :1 file
--
--	blob
--	mark :3
--	data <<DATAEND
--	[submodule "sub"]
--		path = sub
--		url = "$(pwd)/sub"
--	DATAEND
--
--	commit refs/heads/subuse1
--	mark :4
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data 8
--	initial
--	from refs/heads/main
--	M 100644 :3 .gitmodules
--	M 160000 :2 sub
--
--	blob
--	mark :5
--	data 20
--	test file
--	more data
--
--	commit refs/heads/sub
--	mark :6
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data 11
--	sub_second
--	from :2
--	M 100644 :5 file
--
--	commit refs/heads/subuse1
--	mark :7
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data 7
--	second
--	from :4
--	M 160000 :6 sub
--
--	INPUT_END
--
--	git fast-import <input &&
--	git checkout subuse1 &&
--	rm -rf sub &&
--	mkdir sub &&
-+setup_gitlinks_repo () {
+ test_expect_success !MINGW 'R: print old blob' '
+-	blob=$(echo "yes it can" | git hash-object -w --stdin) &&
+-	cat >expect <<-EOF &&
+-	${blob} blob 11
+-	yes it can
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
-+	test_commit -C repo base &&
++	(
++		cd repo &&
+ 
+-	EOF
+-	echo "cat-blob $blob" |
+-	git fast-import --cat-blob-fd=6 6>actual &&
+-	test_cmp expect actual
++		blob=$(echo "yes it can" | git hash-object -w --stdin) &&
++		cat >expect <<-EOF &&
++		${blob} blob 11
++		yes it can
++
++		EOF
++		echo "cat-blob $blob" |
++		git fast-import --cat-blob-fd=6 6>actual &&
++		test_cmp expect actual
++	)
+ '
+ 
+ test_expect_success !MINGW 'R: in-stream cat-blob-fd not respected' '
+-	echo hello >greeting &&
+-	blob=$(git hash-object -w greeting) &&
+-	cat >expect <<-EOF &&
+-	${blob} blob 6
+-	hello
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
+ 
+-	EOF
+-	git fast-import --cat-blob-fd=3 3>actual.3 >actual.1 <<-EOF &&
+-	cat-blob $blob
+-	EOF
+-	test_cmp expect actual.3 &&
+-	test_must_be_empty actual.1 &&
+-	git fast-import 3>actual.3 >actual.1 <<-EOF &&
+-	option cat-blob-fd=3
+-	cat-blob $blob
+-	EOF
+-	test_must_be_empty actual.3 &&
+-	test_cmp expect actual.1
++		echo hello >greeting &&
++		blob=$(git hash-object -w greeting) &&
++		cat >expect <<-EOF &&
++		${blob} blob 6
++		hello
++
++		EOF
++		git fast-import --cat-blob-fd=3 3>actual.3 >actual.1 <<-EOF &&
++		cat-blob $blob
++		EOF
++		test_cmp expect actual.3 &&
++		test_must_be_empty actual.1 &&
++		git fast-import 3>actual.3 >actual.1 <<-EOF &&
++		option cat-blob-fd=3
++		cat-blob $blob
++		EOF
++		test_must_be_empty actual.3 &&
++		test_cmp expect actual.1
++	)
+ '
+ 
+ test_expect_success !MINGW 'R: print mark for new blob' '
+-	echo "effluentish" | git hash-object --stdin >expect &&
+-	git fast-import --cat-blob-fd=6 6>actual <<-\EOF &&
+-	blob
+-	mark :1
+-	data <<BLOB_END
+-	effluentish
+-	BLOB_END
+-	get-mark :1
+-	EOF
+-	test_cmp expect actual
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		echo "effluentish" | git hash-object --stdin >expect &&
++		git fast-import --cat-blob-fd=6 6>actual <<-\EOF &&
++		blob
++		mark :1
++		data <<BLOB_END
++		effluentish
++		BLOB_END
++		get-mark :1
++		EOF
++		test_cmp expect actual
++	)
+ '
+ 
+ test_expect_success !MINGW 'R: print new blob' '
+-	blob=$(echo "yep yep yep" | git hash-object --stdin) &&
+-	cat >expect <<-EOF &&
+-	${blob} blob 12
+-	yep yep yep
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
+ 
+-	EOF
+-	git fast-import --cat-blob-fd=6 6>actual <<-\EOF &&
+-	blob
+-	mark :1
+-	data <<BLOB_END
+-	yep yep yep
+-	BLOB_END
+-	cat-blob :1
+-	EOF
+-	test_cmp expect actual
++		blob=$(echo "yep yep yep" | git hash-object --stdin) &&
++		cat >expect <<-EOF &&
++		${blob} blob 12
++		yep yep yep
++
++		EOF
++		git fast-import --cat-blob-fd=6 6>actual <<-\EOF &&
++		blob
++		mark :1
++		data <<BLOB_END
++		yep yep yep
++		BLOB_END
++		cat-blob :1
++		EOF
++		test_cmp expect actual
++	)
+ '
+ 
+ test_expect_success !MINGW 'R: print new blob by sha1' '
+-	blob=$(echo "a new blob named by sha1" | git hash-object --stdin) &&
+-	cat >expect <<-EOF &&
+-	${blob} blob 25
+-	a new blob named by sha1
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
+ 
+-	EOF
+-	git fast-import --cat-blob-fd=6 6>actual <<-EOF &&
+-	blob
+-	data <<BLOB_END
+-	a new blob named by sha1
+-	BLOB_END
+-	cat-blob $blob
+-	EOF
+-	test_cmp expect actual
++		blob=$(echo "a new blob named by sha1" | git hash-object --stdin) &&
++		cat >expect <<-EOF &&
++		${blob} blob 25
++		a new blob named by sha1
++
++		EOF
++		git fast-import --cat-blob-fd=6 6>actual <<-EOF &&
++		blob
++		data <<BLOB_END
++		a new blob named by sha1
++		BLOB_END
++		cat-blob $blob
++		EOF
++		test_cmp expect actual
++	)
+ '
+ 
+-test_expect_success 'setup: big file' '
++setup_big_file () {
  	(
--		cd sub &&
--		git init &&
--		git fetch --update-head-ok .. refs/heads/sub:refs/heads/main &&
--		git checkout main
--	) &&
--	git submodule init &&
--	git submodule update
-+		cd repo &&
-+
-+		cat >input <<-INPUT_END &&
-+		blob
-+		mark :1
-+		data 10
-+		test file
-+
-+		reset refs/heads/sub
-+		commit refs/heads/sub
-+		mark :2
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data 12
-+		sub_initial
-+		M 100644 :1 file
-+
-+		blob
-+		mark :3
-+		data <<DATAEND
-+		[submodule "sub"]
-+			path = sub
-+			url = "$(pwd)/sub"
-+		DATAEND
-+
-+		commit refs/heads/subuse1
-+		mark :4
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data 8
-+		initial
-+		from refs/heads/main
-+		M 100644 :3 .gitmodules
-+		M 160000 :2 sub
-+
-+		blob
-+		mark :5
-+		data 20
-+		test file
-+		more data
-+
-+		commit refs/heads/sub
-+		mark :6
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data 11
-+		sub_second
-+		from :2
-+		M 100644 :5 file
-+
-+		commit refs/heads/subuse1
-+		mark :7
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data 7
-+		second
-+		from :4
-+		M 160000 :6 sub
-+
-+		INPUT_END
-+
-+		git fast-import <input
-+	)
+ 		echo "the quick brown fox jumps over the lazy dog" >big &&
+ 		for i in 1 2 3
+@@ -3073,153 +3103,179 @@ test_expect_success 'setup: big file' '
+ 			exit
+ 		done
+ 	)
+-'
 +}
-+
-+test_expect_success 'P: superproject & submodule mix' '
-+	setup_gitlinks_repo &&
+ 
+ test_expect_success 'R: print two blobs to stdout' '
+-	blob1=$(git hash-object big) &&
+-	blob1_len=$(wc -c <big) &&
+-	blob2=$(echo hello | git hash-object --stdin) &&
+-	{
+-		echo ${blob1} blob $blob1_len &&
+-		cat big &&
+-		cat <<-EOF
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
 +	(
 +		cd repo &&
+ 
+-		${blob2} blob 6
+-		hello
++		setup_big_file &&
++		blob1=$(git hash-object big) &&
++		blob1_len=$(wc -c <big) &&
++		blob2=$(echo hello | git hash-object --stdin) &&
++		{
++			echo ${blob1} blob $blob1_len &&
++			cat big &&
++			cat <<-EOF
+ 
+-		EOF
+-	} >expect &&
+-	{
+-		cat <<-\END_PART1 &&
+-			blob
+-			mark :1
+-			data <<data_end
+-		END_PART1
+-		cat big &&
+-		cat <<-\EOF
+-			data_end
+-			blob
+-			mark :2
+-			data <<data_end
++			${blob2} blob 6
+ 			hello
+-			data_end
+-			cat-blob :1
+-			cat-blob :2
+-		EOF
+-	} |
+-	git fast-import >actual &&
+-	test_cmp expect actual
 +
-+		git checkout subuse1 &&
-+		rm -rf sub &&
-+		mkdir sub &&
++			EOF
++		} >expect &&
++		{
++			cat <<-\END_PART1 &&
++				blob
++				mark :1
++				data <<data_end
++			END_PART1
++			cat big &&
++			cat <<-\EOF
++				data_end
++				blob
++				mark :2
++				data <<data_end
++				hello
++				data_end
++				cat-blob :1
++				cat-blob :2
++			EOF
++		} |
++		git fast-import >actual &&
++		test_cmp expect actual
++	)
+ '
+ 
+ test_expect_success PIPE 'R: copy using cat-file' '
+-	expect_id=$(git hash-object big) &&
+-	expect_len=$(wc -c <big) &&
+-	echo $expect_id blob $expect_len >expect.response &&
+-
+-	rm -f blobs &&
+-
+-	mkfifo blobs &&
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
+ 	(
+-		export GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL GIT_COMMITTER_DATE &&
+-		cat <<-\EOF &&
+-		feature cat-blob
+-		blob
+-		mark :1
+-		data <<BLOB
+-		EOF
+-		cat big &&
+-		cat <<-\EOF &&
+-		BLOB
+-		cat-blob :1
+-		EOF
++		cd repo &&
+ 
+-		read blob_id type size <&3 &&
+-		echo "$blob_id $type $size" >response &&
+-		test_copy_bytes $size >blob <&3 &&
+-		read newline <&3 &&
++		setup_big_file &&
++		expect_id=$(git hash-object big) &&
++		expect_len=$(wc -c <big) &&
++		echo $expect_id blob $expect_len >expect.response &&
+ 
+-		cat <<-EOF &&
+-		commit refs/heads/copied
+-		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-		data <<COMMIT
+-		copy big file as file3
+-		COMMIT
+-		M 644 inline file3
+-		data <<BLOB
+-		EOF
+-		cat blob &&
+-		echo BLOB
+-	) 3<blobs |
+-	git fast-import --cat-blob-fd=3 3>blobs &&
+-	git show copied:file3 >actual &&
+-	test_cmp expect.response response &&
+-	test_cmp big actual
++		rm -f blobs &&
++
++		mkfifo blobs &&
 +		(
-+			cd sub &&
-+			git init &&
-+			git fetch --update-head-ok .. refs/heads/sub:refs/heads/main &&
-+			git checkout main
-+		) &&
-+		git submodule init &&
-+		git submodule update
++			export GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL GIT_COMMITTER_DATE &&
++			cat <<-\EOF &&
++			feature cat-blob
++			blob
++			mark :1
++			data <<BLOB
++			EOF
++			cat big &&
++			cat <<-\EOF &&
++			BLOB
++			cat-blob :1
++			EOF
++
++			read blob_id type size <&3 &&
++			echo "$blob_id $type $size" >response &&
++			test_copy_bytes $size >blob <&3 &&
++			read newline <&3 &&
++
++			cat <<-EOF &&
++			commit refs/heads/copied
++			committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++			data <<COMMIT
++			copy big file as file3
++			COMMIT
++			M 644 inline file3
++			data <<BLOB
++			EOF
++			cat blob &&
++			echo BLOB
++		) 3<blobs |
++		git fast-import --cat-blob-fd=3 3>blobs &&
++		git show copied:file3 >actual &&
++		test_cmp expect.response response &&
++		test_cmp big actual
 +	)
  '
  
- test_expect_success 'P: verbatim SHA gitlinks' '
--	SUBLAST=$(git rev-parse --verify sub) &&
--	SUBPREV=$(git rev-parse --verify sub^) &&
-+	setup_gitlinks_repo &&
-+	(
+ test_expect_success PIPE 'R: print blob mid-commit' '
+-	rm -f blobs &&
+-	echo "A blob from _before_ the commit." >expect &&
+-	mkfifo blobs &&
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
+ 	(
+-		exec 3<blobs &&
+-		cat <<-EOF &&
+-		feature cat-blob
+-		blob
+-		mark :1
+-		data <<BLOB
+-		A blob from _before_ the commit.
+-		BLOB
+-		commit refs/heads/temporary
+-		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-		data <<COMMIT
+-		Empty commit
+-		COMMIT
+-		cat-blob :1
+-		EOF
 +		cd repo &&
  
--	cat >input <<-INPUT_END &&
--	blob
--	mark :1
--	data <<DATAEND
--	[submodule "sub"]
--		path = sub
--		url = "$(pwd)/sub"
--	DATAEND
-+		SUBLAST=$(git rev-parse --verify sub) &&
-+		SUBPREV=$(git rev-parse --verify sub^) &&
+-		read blob_id type size <&3 &&
+-		test_copy_bytes $size >actual <&3 &&
+-		read newline <&3 &&
++		rm -f blobs &&
++		echo "A blob from _before_ the commit." >expect &&
++		mkfifo blobs &&
++		(
++			exec 3<blobs &&
++			cat <<-EOF &&
++			feature cat-blob
++			blob
++			mark :1
++			data <<BLOB
++			A blob from _before_ the commit.
++			BLOB
++			commit refs/heads/temporary
++			committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++			data <<COMMIT
++			Empty commit
++			COMMIT
++			cat-blob :1
++			EOF
  
--	commit refs/heads/subuse2
--	mark :2
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data 8
--	initial
--	from refs/heads/main
--	M 100644 :1 .gitmodules
--	M 160000 $SUBPREV sub
-+		cat >input <<-INPUT_END &&
-+		blob
-+		mark :1
-+		data <<DATAEND
-+		[submodule "sub"]
-+			path = sub
-+			url = "$(pwd)/sub"
-+		DATAEND
- 
--	commit refs/heads/subuse2
--	mark :3
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data 7
--	second
--	from :2
--	M 160000 $SUBLAST sub
-+		commit refs/heads/subuse2
-+		mark :2
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data 8
-+		initial
-+		from refs/heads/main
-+		M 100644 :1 .gitmodules
-+		M 160000 $SUBPREV sub
- 
--	INPUT_END
-+		commit refs/heads/subuse2
-+		mark :3
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data 7
-+		second
-+		from :2
-+		M 160000 $SUBLAST sub
- 
--	git branch -D sub &&
--	git gc --prune=now &&
--	git fast-import <input &&
--	test $(git rev-parse --verify subuse2) = $(git rev-parse --verify subuse1)
-+		INPUT_END
+-		echo
+-	) |
+-	git fast-import --cat-blob-fd=3 3>blobs &&
+-	test_cmp expect actual
++			read blob_id type size <&3 &&
++			test_copy_bytes $size >actual <&3 &&
++			read newline <&3 &&
 +
-+		git branch -D sub &&
-+		git gc --prune=now &&
-+		git fast-import <input &&
-+		test $(git rev-parse --verify subuse2) = $(git rev-parse --verify subuse1)
++			echo
++		) |
++		git fast-import --cat-blob-fd=3 3>blobs &&
++		test_cmp expect actual
 +	)
  '
  
- test_expect_success 'P: fail on inline gitlink' '
--	test_tick &&
--	cat >input <<-INPUT_END &&
--	commit refs/heads/subuse3
--	mark :1
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	corrupt
--	COMMIT
-+	setup_gitlinks_repo &&
-+	(
+ test_expect_success PIPE 'R: print staged blob within commit' '
+-	rm -f blobs &&
+-	echo "A blob from _within_ the commit." >expect &&
+-	mkfifo blobs &&
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
+ 	(
+-		exec 3<blobs &&
+-		cat <<-EOF &&
+-		feature cat-blob
+-		commit refs/heads/within
+-		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-		data <<COMMIT
+-		Empty commit
+-		COMMIT
+-		M 644 inline within
+-		data <<BLOB
+-		A blob from _within_ the commit.
+-		BLOB
+-		EOF
 +		cd repo &&
  
--	from refs/heads/subuse2
--	M 160000 inline sub
--	data <<DATA
--	$SUBPREV
--	DATA
-+		SUBPREV=$(git rev-parse --verify sub^) &&
-+		test_tick &&
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/subuse3
-+		mark :1
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		corrupt
-+		COMMIT
+-		to_get=$(
+-			echo "A blob from _within_ the commit." |
+-			git hash-object --stdin
+-		) &&
+-		echo "cat-blob $to_get" &&
++		rm -f blobs &&
++		echo "A blob from _within_ the commit." >expect &&
++		mkfifo blobs &&
++		(
++			exec 3<blobs &&
++			cat <<-EOF &&
++			feature cat-blob
++			commit refs/heads/within
++			committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++			data <<COMMIT
++			Empty commit
++			COMMIT
++			M 644 inline within
++			data <<BLOB
++			A blob from _within_ the commit.
++			BLOB
++			EOF
  
--	INPUT_END
-+		from refs/heads/subuse1
-+		M 160000 inline sub
-+		data <<DATA
-+		$SUBPREV
-+		DATA
+-		read blob_id type size <&3 &&
+-		test_copy_bytes $size >actual <&3 &&
+-		read newline <&3 &&
++			to_get=$(
++				echo "A blob from _within_ the commit." |
++				git hash-object --stdin
++			) &&
++			echo "cat-blob $to_get" &&
  
--	test_must_fail git fast-import <input
-+		INPUT_END
+-		echo deleteall
+-	) |
+-	git fast-import --cat-blob-fd=3 3>blobs &&
+-	test_cmp expect actual
++			read blob_id type size <&3 &&
++			test_copy_bytes $size >actual <&3 &&
++			read newline <&3 &&
 +
-+		test_must_fail git fast-import <input
++			echo deleteall
++		) |
++		git fast-import --cat-blob-fd=3 3>blobs &&
++		test_cmp expect actual
 +	)
  '
  
- test_expect_success 'P: fail on blob mark in gitlink' '
--	test_tick &&
--	cat >input <<-INPUT_END &&
--	blob
--	mark :1
--	data <<DATA
--	$SUBPREV
--	DATA
-+	setup_gitlinks_repo &&
-+	(
-+		cd repo &&
- 
--	commit refs/heads/subuse3
--	mark :2
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	corrupt
--	COMMIT
-+		SUBPREV=$(git rev-parse --verify sub^) &&
-+		test_tick &&
-+		cat >input <<-INPUT_END &&
-+		blob
-+		mark :1
-+		data <<DATA
-+		$SUBPREV
-+		DATA
- 
--	from refs/heads/subuse2
--	M 160000 :1 sub
-+		commit refs/heads/subuse3
-+		mark :2
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		corrupt
-+		COMMIT
- 
--	INPUT_END
-+		from refs/heads/subuse1
-+		M 160000 :1 sub
- 
--	test_must_fail git fast-import <input
-+		INPUT_END
-+
-+		test_must_fail git fast-import <input
-+	)
- '
- 
- ###
+ test_expect_success 'R: quiet option results in no stats being output' '
 
 -- 
 2.56.GIT
