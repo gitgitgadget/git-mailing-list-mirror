@@ -1,11 +1,11 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1794311408;
-	b=CWQ8L4yoi/tJ7ZBujQ+ZWIuQY5rLHPJiyDgz4irG/esDQ8WRll1HMbJefiVpGG+fZRTg
-	 YxWHl8EkEL/tAyKnS/FKVgM9QqjF8ytKMY3z67MNkWugRNiQSHusL/iB8bO3E0t19e8WI
-	 2Ly2XP5EuNRtWcU2J68KJaV7DqFSqZi+gDphqDYsfIm0XRTL6u9rZKmaShycRF8ZzARld
-	 v0inO8FEnny4tOOM9RMw2eZ+HInSoB3bc1ZghHKiym3YReNiIO3dPFuSRkfGOdp0vjXM3
-	 ZZFxNd+TlMoSZ1V7Vc8zHgbdiSBglfcTKgAEpirVyk4QRucUptpaK9dZjUF8tG6ZfEw==
+	b=NoYHV8QqqJ2aojXwyYN1PV7LeRdj+ZB1bR+wyh2seDnNYuutPJoy8UaZuUFjOT9t8pZs
+	 z4XvFQ43rBIBygz2HIkJTsxNUKjIq/oXq9eVosZmEAV36R+WTD7ZiHPOJ6XRU7a8is7Qi
+	 bx9mKPf83H1UGfx6vsk3QlggoZ+1I2ZiiWnoNeZ6TYuFHVhXYQC+G5yj5MWloesoDc+Z/
+	 w2YpFgpeOxwiuvRNkBF9L8fcto8azxy5bF3ETsmIpOgi4ME6hfDEnH5QkrxktAz8vvbH8
+	 lzEK/cXCwIqqdhv/E1GqvfXuuG2HvN87iz+euAVCeMq4qjVg60rk/faK1HoAZ4bEOUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794311408;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
@@ -13,75 +13,76 @@ ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=z4U3TVtqCIXXo6ALR7xqXprigSarVm7QZzmG9t42huI=;
-	b=b4oVAI/KTyqWhQ6nB5Y4afpH+m/iZgvVZeR4e1HugkeD5kW2M6oD8sc2/IUmXAXwK4Qw
-	 XD2tsUhYJrGQkkMBBVigkFFy6P+PYauITmSMkMkMvqODVCDRLlv0zmFs90kuUfwq3lQZD
-	 Hb/1N6wq+oRlECTNF+jRxx0AcHgguwMui9I95SWlEetlAnx3SEcT7UKuAvqmWy7DkDVoq
-	 VnNHA7BOEL6agjr1J+RQmiW7TbMVrNYLwBEEQXkGwXYJfxlw4DjDpfAOHREW1oBTixjW8
-	 ehoj4BBnkJJQzs9FYyj0RRbJ1QfRxO3vX+GKsgomz+8SStnytoA5+jlJlQv9RJY84lw==
+	bh=PW0N6K9uUWat772ss6x53VohDnYfp56mQMLfv38fHcY=;
+	b=nI+jx1F7L9gEZ//VTwjL/41WvKnKokF/HwwAMiEo4ZXtkRxInviam7iEuC1GDsCMadLM
+	 0VaOkDU1dmtE+NWa97C1oAaVVU7q9dOC2iWujq1kbpFDSVpFvW4erP4CpwFR+57+YRtSZ
+	 zH0j1bvzTptlDSsBLJYe/V47GB7r/hFYx3Y5yOHW8U8YQEaOTuY9K3isDK3pnFdccG7Ni
+	 8FWDlpiNU4NM/b03JAp/+AFtzKxQTBcp4gYSXdVpZL/a/IR0dWTixZgNWxXoiCCzBhoyM
+	 ygAStycjmaVUTx3DNvcAJvwkXnxttn7YLNlaghgLGBBeWTItTh37Bxq8wHc0T/gr61w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q502RAAT;
-	arc=none smtp.remote-ip=209.85.128.49
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=O0dLhPi8;
+	arc=none smtp.remote-ip=209.85.128.47
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB8F60A6F55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253E960A6F6A
 	for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:50:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8CB8F60A6F55
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 253E960A6F6A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q502RAAT
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a5b2be99a8so16106575e9.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=O0dLhPi8
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4b79502c27aso19508575e9.1
         for <git@vger.kernel.org>; Tue, 10 Nov 2026 03:50:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20260707; t=1794311406; x=1794916206; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=z4U3TVtqCIXXo6ALR7xqXprigSarVm7QZzmG9t42huI=;
-        b=Q502RAAT4i281QHfbosDGyrOU9AxZVfWFjDMFyzmd6Ad46wpMPbU5o6+ZQm1XWszEv
-         GHNfuPO49FQYuvYJFMwgZzexQt9OqBNBmDgt3+I4Aj0ON/VmoWUrrUouwdALU34N0IcK
-         TBR+thMuCwDVaP/GaGENgpvUORsr04GDnm+hcGVNQtiZ4drv/UG2xGtLw89hijG4gusD
-         wOsYSx/z7imXUuXupdJUukoVpGJN2ge/7Wb5I+mBjMN3UT3REagDO4xdcecw7yK4r2uJ
-         HV3eDg6A1dMm+05a7/RlaOINEjaJ5fVzNe4kUQBe1zxSbOeTQTmqVGvsupDr+3ua57DU
-         N/VQ==
+        bh=PW0N6K9uUWat772ss6x53VohDnYfp56mQMLfv38fHcY=;
+        b=O0dLhPi8TCy6T7JdmIkc65fJfyWfptBqKysB1YcWIDPntSfF/rnCZ++1Ygo+N4C/QZ
+         b+yDVcEYmywYicVH8q+i0YiyC8eZ/b6p4Vaxr0f/z5VRc5Q3sDO41jXh7rry45AIEL2A
+         WbMNle0UnQ/WjOyzatdceqQmifBP0QXHGZXjmCQk375U9PK/ywgQ3Jr7hlb+w3Fi/EdB
+         pwMwP9ZHAd8wHleD3T+sfTSq2WKvVmmo3kFS5ydu1okvL8rlg2V00hmqd5jshu6AF4m0
+         dkm/U54uU3PRVbnEdrnf6/Y6rywDr5VhXUD6rg2dF+sIpxKogz4zVSMEjIKhlfVgwE/+
+         OXyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20260707; t=1794311406; x=1794916206;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=z4U3TVtqCIXXo6ALR7xqXprigSarVm7QZzmG9t42huI=;
-        b=FwOgLNdFUuCElPZGMLYQGddMxSDKRkh0OBwikzVF1Ps5Qht5MgL5SgjbvtUchBVVWe
-         uQiIwsVb/XqVLjVUBHaGH9sH9BvQ4+kcAIXJzzJ0yagm1Jjk28tkEYlnMrfvO2Ni9R1l
-         BLtsV/ZNRjQ6n6Ol5tdy3yI2N1IUnt/33o1Bd2snihSFmUYtpkD8YI1A/oQ6c9lqKG4r
-         IBfxSQAes/CBxmx7FnWA4EdRBvBf767BI+RDZ5NDEnsDbeHmYpmLvmq+G8Tct+Ll5poE
-         4UO2Xf5ENNyLMXA/pi+MqvRMILQKNqhtNRNq28OG7zHa23Z82c9UDguZM1PsKgoQgJwh
-         0U4g==
-X-Gm-Message-State: APuU4Z/xJJsfwtyc4h/MDPIKjrXslv4xlT/Uvk80D8jRE/v1GEVWZOgP
-	BqA3KVDd/xgUvsKkkBSfIZ52B229FNArcj4NwY71Ja8pGwxCTKt/Wusg9bYpug==
-X-Gm-Gg: AYBFou1Qo+nS0JuFzqByCb2WPOC/MIpYsWQU0bggJq9xx8uJcUxHy+iA4ZuWR28FerN
-	qdxkmGrSHNHXgqUs3+RTQXdbWfDrltta9D0lyQGQe2M8d1/oeBG38keGr/N5P4TCSeEOTHyzPIJ
-	Tg1SP9mR1jWtyIiSKvhTANw6Oo9OzTYdCmeAx8UeTnHECNWrINuOkYX83naOyKbA1tBwaePckN1
-	QAilB1CNoOyStJgWuOdrNxr+QQ85bK5pXOAK2UcuU1B8NZ8YN5dv/10ZgoIt4vTtN50UajbO9wQ
-	mJU0ksav+bb8jKOvugi0wYaSTikY766oBi9GurqQvZ2oSWS+qwCpqrtJR7tYs0kRiVCJLISX0+O
-	ytWcmQzmmzLnbB9SAN565WE93EhDC9VMZ3CztM8TbYS3W8FD3La7NmVOhLwnlVVT6kMo2eaWb05
-	IVUiH9MmQ5pSr9XcSpJSuFaIQiRkZSJrI8zf0x8Yase+gagD5kUAnnnSL1ej8KWI1arIJB+UDp6
-	gS2N6csYEKE95kDY0ehA1NVduWYspqPZEvWQEwhpjb33SO67GlGC05ht8XNPqqR+rX/Dz9e8gne
-	rXUg+Zy76+hD5UvZP8nTJ73UCegHHAaZAOxRjM1zpoLE5qX/1rWja7yA5HOzhz01DdU=
-X-Received: by 2002:a05:600c:1384:b0:4a2:392:9de2 with SMTP id 5b1f17b1804b1-4ba0234ed82mr37044635e9.28.1794311405728;
-        Tue, 10 Nov 2026 03:50:05 -0800 (PST)
+        bh=PW0N6K9uUWat772ss6x53VohDnYfp56mQMLfv38fHcY=;
+        b=YJnuvur9WKnY/pRHlPUa6l3KQX+tLEnAe2gVc7nq+OyCZ0VKJdgStKjkKXpJ+0k/BV
+         p9kKzDRobJfY+w3lEAwpN+VHsYapCXdDfbEIfs+0iVVflMEN9YFQVDbNWIAY+IjgBPXY
+         WDXWRtQrne1adcwcoOH9gvYK8Fa+6Mp70CIU4wyK6v7fIGMrns0Gw3k69COGdF/D83aE
+         eER+fjcXAwkCWMUfysE7pbDMQbTnVLTBTnOWzt8jkipIfcuQerkgojB6kXq4oUX11SQM
+         JWJdnjboZWzn+Bi6l67mpv51nvtZSutdzkJNweVJryDl6jr2vgbEoG1Y6vQY8IB9xntY
+         PgBA==
+X-Gm-Message-State: APuU4Z/2UleKXEdqVRKBZf95Usj3V5AHTeY4QFPDFiYJrlQYZeBjwBxf
+	6Zr9EQPU/v939RNAYzMrWI9LWje5yoA73cLT60g2jqcFeAZ9WZaAtwSGIhw65w==
+X-Gm-Gg: AYBFou3fEEmU++vpGz+qO8Jybvnq30uVRG7EzA2IKAgA4cbSSDNBz+8GatSZyM0m+4n
+	nYtWWm9JQo/D7CkW9+g4tfPCBLe18ojDKk3aFTyyUVBvtHVq3nvtgVe8YAaNWRcy04k1SHo7+3G
+	oZsL7qLPB+RjhPtWlocad/fyCnRUPN4vu62q91sfc3CD8cncc7QhZ/eVnVUEhll67fMHY6d5YBt
+	LFahTz9xK+mNOnB3V6EqXECBd2ySOfrTlU5rC6LX4woiwBcryr7BMWY9yNbI20G3FdHNDYh8QnJ
+	ju1p/t8x23LD1R04fG8WmY5buhApfejXTbdvl9fVyarerr9DR05x1w6DSYSVM82l5499nLEHHaa
+	75kv8Vo4XlsBO3bHr7zC/XvZLda/V/naBSsStY2D+OVsFwLuBR1EnHVBPN3NlPQxtL6UOs8BU95
+	B3Mtp4lmLVQjgtKg2YyZEDVos2e8KLU8t8crpEkGtBQvg5OClVslloyIoiZsM5ayf+Xg02BdqSB
+	yYNxZb5x+68yizHn7OxJ80OWOndG2Qb7TR6FISYZfw8Wu4a0qCkakS7RgiiXtYXfXIuN3c5A9C3
+	ro5wx4KXx/fYQuGcpxm/M21LwdiaVvIZ/gY3lqOxM4JsUUiQicK7xlBrdb69UXAvKLWAewNtvoF
+	eICr1tOe1MgqS6A==
+X-Received: by 2002:a05:600c:c8a:b0:4ba:6d8:dfad with SMTP id 5b1f17b1804b1-4ba06d8e47cmr19841425e9.14.1794311406363;
+        Tue, 10 Nov 2026 03:50:06 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:1917:82b:d709:897d])
         by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba02005762sm60715995e9.2.2026.11.10.03.50.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 03:50:05 -0800 (PST)
+        Tue, 10 Nov 2026 03:50:06 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 10 Nov 2026 12:49:47 +0100
-Subject: [PATCH 02/20] t9300: make the series B tests self-contained
+Date: Tue, 10 Nov 2026 12:49:48 +0100
+Subject: [PATCH 03/20] t9300: make the series T tests self-contained
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,603 +94,121 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261110-kn-fast-import-tests-1-v1-2-dbd9ee502aae@gmail.com>
+Message-Id: <20261110-kn-fast-import-tests-1-v1-3-dbd9ee502aae@gmail.com>
 References: <20261110-kn-fast-import-tests-1-v1-0-dbd9ee502aae@gmail.com>
 In-Reply-To: <20261110-kn-fast-import-tests-1-v1-0-dbd9ee502aae@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=14373;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=5IDkeUba462k77/8EBDyyGt+y3DPNh5VITcLvPpfzfI=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrzBOTSJrgE8Za9caQ5ukXsQ0hqNFd88TWSO
- pSQfQAefL3qh4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq8wTkAAoJED7VnySO
- Rox/WuUL/jAej53WFV2a1qn+Rw7jMUS51W3HVk8CiwROJl4+U0BIC/Hni7f4k7fTCWWDxRhIqhS
- RVdlMRIaPl+uLzKvaRa6tFpZPzXUS5SBt4yqWeUzv8JjYwm0w/xH+gzzXAwuyDauJD+L5PlmAV7
- ENsN7FmdgRHOigtsPKhZwmyIVQ99Zea2UVcvwdmt/g4k07eXOH6M6zx9zuliC145jJKVqGvMtD1
- +BzsJ2jcEJTEiRG/VBbJSni9lXNhvXv6KckxSI2a0feFUJ9Ur3nTOyY2XVKDolRL/YLdOEE1vaR
- NCJScCkgQm44rYpD33ZNMmfW3OVMNOsbVhY/XZ3G9I3NbNlrcFYprx4KQhmI0cjSrLzFBfaI7RA
- UvXYhVer+D250cbjBjbjCDQuVckldOYA6fVJB0oR97o/rYTNabhiJX/TeTLxkxNiHa/PAcFwkXb
- u22v5/tuMCw9Fg4B9gyQMHjGrGc4Xzgzm8kp6z9PIK2+o79gAxZgbjyjNm1R81XNMTRMKK4kD07
- 2A=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2692; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=k7lwyriv3HyylO7yptODHea7EL6EghkmG1v5/R6vfaM=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrzBOWtBWT2GeBUmDcBl26+coLcKKNsu8wVC
+ /tTGQoqDueJnokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq8wTlAAoJED7VnySO
+ Rox/mhwL/0Z1xqQcN8JK2RgBxuL/OJ1x5ygLWHV8LAncLr79z47GPy4CGr2DBu0RSE1TOlGxqH5
+ 1GEWowHz4BROyDzvki57uGs5rWGdvx+SatWaOJCb/kAZvUfIkdIIfy9fhbi8xv24ZaUDheXiKGz
+ YoQGvixNKVNGGjKebTmqeI5C8Sdj1fC4UG6PXJDeyfpoLdyIFQa/NNLUGpAcjq6AxXaKm1MP259
+ ax43rUOt8XBIGJ0zECJH4B2a7R78l1JiWcXsN0uNyYPZpQEjNdmA6eUarYLrXrTUdtMoKTpDXu+
+ LWwJu4Sp/HaicMcxpPKhF9z4smRhMApKqTmSxMXaHZge1RjzzmCwJFcZGJxvw7vL1t3oMwuN8R7
+ AoBA07obnZZWpRYk03SIOJqQs61WF8nfhdUTNJYam6P3F5iHPSpgUjHh9IqCbQuDCgo0GoDhNVR
+ IuT8b0PdR3aTFIziYkAaQksOckkMglvfIKOPe8kqnIab+AwhVZc/WKxfXdkHDpoMmgrizL7ppc6
+ Tw=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The 't/t9300-fast-import.sh' test file contains numerous tests and is
-currently just shy of 4000 lines. This is because the file contains
-tests over multiple series, each series testing particular functionality
-or sections of 'git-fast-import(1)'. In upcoming commits, we want to
-split out these tests into individual files for better discoverability.
+Similar to the previous commit, modify the tests in 'series T' to make
+them independent of state from preceding tests.
 
-First, we need to remove the dependency tests have on preceding tests.
-Modify the tests in 'series B' to each run in a new repository, which is
-removed when the test completes, so that they neither depend on nor
-leave behind any state.
-
-The 'B: fail on invalid blob sha1' and 'B: accept branch name
-"TEMP_TAG"' tests import on top of 'main', which used to exist from
-earlier tests. Create it with 'test_commit', so that the first import
-can only fail because of the invalid blob ID.
-
-The 'fsck' tests require the whole repository to be free of unreachable
-objects. They only passed because of the garbage collection in the
-cleanup of other tests. A new repository makes that unnecessary.
+The 'ls root' tests list the root tree of the 'S' branch, using the
+marks left behind by series S. The expected output is derived from the
+commit itself, so any commit will do. Run them against a commit created
+in a new repository instead. Run the branch tests in a new repository
+too.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t9300-fast-import.sh | 472 ++++++++++++++++++++++++++++---------------------
- 1 file changed, 275 insertions(+), 197 deletions(-)
+ t/t9300-fast-import.sh | 62 +++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 41 insertions(+), 21 deletions(-)
 
 diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index fb23492202..1b34f6491c 100755
+index 1b34f6491c..76cc9504eb 100755
 --- a/t/t9300-fast-import.sh
 +++ b/t/t9300-fast-import.sh
-@@ -358,274 +358,352 @@ test_expect_success 'A: export marks with large values' '
+@@ -3525,38 +3525,58 @@ test_path_eol_quoted_fail 'ls (without dataref in commit)' 'ls ' path
  ###
+ ### series T (ls)
+ ###
+-# Setup is carried over from series S.
  
- test_expect_success 'B: fail on invalid blob sha1' '
--	test_tick &&
--	cat >input <<-INPUT_END &&
--	commit refs/heads/branch
--	mark :1
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	corrupt
--	COMMIT
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit base &&
- 
--	from refs/heads/main
--	M 755 $(echo $ZERO_OID | sed -e "s/0$/1/") zero1
-+		test_tick &&
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/branch
-+		mark :1
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		corrupt
-+		COMMIT
- 
--	INPUT_END
-+		from refs/heads/main
-+		M 755 $(echo $ZERO_OID | sed -e "s/0$/1/") zero1
- 
--	test_when_finished "rm -f .git/objects/pack_* .git/objects/index_*" &&
--	test_must_fail git fast-import <input
-+		INPUT_END
+ for root in '""' ''
+ do
+ 	test_expect_success "T: ls root ($root) tree" '
+-		sed -e "s/Z\$//" >expect <<-EOF &&
+-		040000 tree $(git rev-parse S^{tree})	Z
+-		EOF
+-		sha1=$(git rev-parse --verify S) &&
+-		git fast-import --import-marks=marks <<-EOF >actual &&
+-		ls $sha1 $root
+-		EOF
+-		test_cmp expect actual
++		test_when_finished "rm -rf repo" &&
++		git init repo &&
++		(
++			cd repo &&
++			test_commit one &&
 +
-+		test_must_fail git fast-import <input
-+	)
- '
++			sed -e "s/Z\$//" >expect <<-EOF &&
++			040000 tree $(git rev-parse HEAD^{tree})	Z
++			EOF
++			sha1=$(git rev-parse --verify HEAD) &&
++			git fast-import <<-EOF >actual &&
++			ls $sha1 $root
++			EOF
++			test_cmp expect actual
++		)
+ 	'
+ done
  
- test_expect_success 'B: accept branch name "TEMP_TAG"' '
--	cat >input <<-INPUT_END &&
--	commit TEMP_TAG
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	tag base
--	COMMIT
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit new &&
- 
--	from refs/heads/main
-+		cat >input <<-INPUT_END &&
-+		commit TEMP_TAG
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		tag base
-+		COMMIT
- 
--	INPUT_END
-+		from refs/heads/main
- 
--	test_when_finished "rm -f .git/TEMP_TAG && git gc --prune=now" &&
--	git fast-import <input &&
--	test $(test-tool ref-store main resolve-ref TEMP_TAG 0 | cut -f1 -d " " ) != "$ZERO_OID" &&
--	test $(git rev-parse main) = $(git rev-parse TEMP_TAG^)
-+		INPUT_END
-+
-+		git fast-import <input &&
-+		test $(test-tool ref-store main resolve-ref TEMP_TAG 0 | cut -f1 -d " " ) != "$ZERO_OID" &&
-+		test $(git rev-parse main) = $(git rev-parse TEMP_TAG^)
-+	)
- '
- 
- test_expect_success 'B: accept empty committer' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/empty-committer-1
--	committer  <> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	empty commit
--	COMMIT
--	INPUT_END
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/empty-committer-1
-+		committer  <> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		empty commit
-+		COMMIT
-+		INPUT_END
- 
--	test_when_finished "git update-ref -d refs/heads/empty-committer-1
--		git gc --prune=now" &&
--	git fast-import <input &&
--	out=$(git fsck) &&
--	echo "$out" &&
--	test -z "$out"
-+		git fast-import <input &&
-+		out=$(git fsck) &&
-+		echo "$out" &&
-+		test -z "$out"
-+	)
- '
- 
- test_expect_success 'B: reject invalid timezone' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/invalid-timezone
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1234567890 +051800
--	data <<COMMIT
--	empty commit
--	COMMIT
--	INPUT_END
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	test_when_finished "git update-ref -d refs/heads/invalid-timezone" &&
--	test_must_fail git fast-import <input
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/invalid-timezone
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1234567890 +051800
-+		data <<COMMIT
-+		empty commit
-+		COMMIT
-+		INPUT_END
-+
-+		test_must_fail git fast-import <input
-+	)
- '
- 
- test_expect_success 'B: accept invalid timezone with raw-permissive' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/invalid-timezone
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1234567890 +051800
--	data <<COMMIT
--	empty commit
--	COMMIT
--	INPUT_END
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	git init invalid-timezone &&
--	git -C invalid-timezone fast-import --date-format=raw-permissive <input &&
--	git -C invalid-timezone cat-file -p invalid-timezone >out &&
--	test_grep "1234567890 [+]051800" out
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/invalid-timezone
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1234567890 +051800
-+		data <<COMMIT
-+		empty commit
-+		COMMIT
-+		INPUT_END
-+
-+		git fast-import --date-format=raw-permissive <input &&
-+		git cat-file -p invalid-timezone >out &&
-+		test_grep "1234567890 [+]051800" out
-+	)
- '
- 
- test_expect_success 'B: accept and fixup committer with no name' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/empty-committer-2
--	committer <a@b.com> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	empty commit
--	COMMIT
--	INPUT_END
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/empty-committer-2
-+		committer <a@b.com> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		empty commit
-+		COMMIT
-+		INPUT_END
- 
--	test_when_finished "git update-ref -d refs/heads/empty-committer-2
--		git gc --prune=now" &&
--	git fast-import <input &&
--	out=$(git fsck) &&
--	echo "$out" &&
--	test -z "$out"
-+		git fast-import <input &&
-+		out=$(git fsck) &&
-+		echo "$out" &&
-+		test -z "$out"
-+	)
- '
- 
- test_expect_success 'B: fail on invalid committer (1)' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/invalid-committer
--	committer Name email> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	empty commit
--	COMMIT
--	INPUT_END
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	test_when_finished "git update-ref -d refs/heads/invalid-committer" &&
--	test_must_fail git fast-import <input
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/invalid-committer
-+		committer Name email> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		empty commit
-+		COMMIT
-+		INPUT_END
-+
-+		test_must_fail git fast-import <input
-+	)
- '
- 
- test_expect_success 'B: fail on invalid committer (2)' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/invalid-committer
--	committer Name <e<mail> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	empty commit
--	COMMIT
--	INPUT_END
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	test_when_finished "git update-ref -d refs/heads/invalid-committer" &&
--	test_must_fail git fast-import <input
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/invalid-committer
-+		committer Name <e<mail> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		empty commit
-+		COMMIT
-+		INPUT_END
-+
-+		test_must_fail git fast-import <input
-+	)
- '
- 
- test_expect_success 'B: fail on invalid committer (3)' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/invalid-committer
--	committer Name <email>> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	empty commit
--	COMMIT
--	INPUT_END
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	test_when_finished "git update-ref -d refs/heads/invalid-committer" &&
--	test_must_fail git fast-import <input
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/invalid-committer
-+		committer Name <email>> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		empty commit
-+		COMMIT
-+		INPUT_END
-+
-+		test_must_fail git fast-import <input
-+	)
- '
- 
- test_expect_success 'B: fail on invalid committer (4)' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/invalid-committer
--	committer Name <email $GIT_COMMITTER_DATE
--	data <<COMMIT
--	empty commit
--	COMMIT
--	INPUT_END
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	test_when_finished "git update-ref -d refs/heads/invalid-committer" &&
--	test_must_fail git fast-import <input
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/invalid-committer
-+		committer Name <email $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		empty commit
-+		COMMIT
-+		INPUT_END
-+
-+		test_must_fail git fast-import <input
-+	)
- '
- 
- test_expect_success 'B: fail on invalid committer (5)' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/invalid-committer
--	committer Name<email> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	empty commit
--	COMMIT
--	INPUT_END
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	test_when_finished "git update-ref -d refs/heads/invalid-committer" &&
--	test_must_fail git fast-import <input
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/invalid-committer
-+		committer Name<email> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		empty commit
-+		COMMIT
-+		INPUT_END
-+
-+		test_must_fail git fast-import <input
-+	)
- '
- 
- test_expect_success 'B: fail on invalid file path of ..' '
--	cat >input <<-INPUT_END &&
--	blob
--	mark :1
--	data <<EOF
--	File contents
+ test_expect_success 'T: delete branch' '
+-	git branch to-delete &&
+-	git fast-import <<-EOF &&
+-	reset refs/heads/to-delete
+-	from $ZERO_OID
 -	EOF
+-	test_must_fail git rev-parse --verify refs/heads/to-delete
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
- 
--	commit refs/heads/badpath
--	committer Name <email> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	Commit Message
--	COMMIT
--	M 100644 :1 ../invalid-path
--	INPUT_END
-+		cat >input <<-INPUT_END &&
-+		blob
-+		mark :1
-+		data <<EOF
-+		File contents
-+		EOF
- 
--	test_when_finished "git update-ref -d refs/heads/badpath" &&
--	test_must_fail git fast-import <input
-+		commit refs/heads/badpath
-+		committer Name <email> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		Commit Message
-+		COMMIT
-+		M 100644 :1 ../invalid-path
-+		INPUT_END
++		test_commit one &&
 +
-+		test_must_fail git fast-import <input
++		git branch to-delete &&
++		git fast-import <<-EOF &&
++		reset refs/heads/to-delete
++		from $ZERO_OID
++		EOF
++		test_must_fail git rev-parse --verify refs/heads/to-delete
 +	)
  '
  
- test_expect_success 'B: fail on invalid file path of .' '
--	cat >input <<-INPUT_END &&
--	blob
--	mark :1
--	data <<EOF
--	File contents
+ test_expect_success 'T: empty reset doesnt delete branch' '
+-	git branch not-to-delete &&
+-	git fast-import <<-EOF &&
+-	reset refs/heads/not-to-delete
 -	EOF
+-	git show-ref &&
+-	git rev-parse --verify refs/heads/not-to-delete
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
- 
--	commit refs/heads/badpath
--	committer Name <email> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	Good path
--	COMMIT
--	M 100644 :1 ok-path
-+		cat >input <<-INPUT_END &&
-+		blob
-+		mark :1
-+		data <<EOF
-+		File contents
-+		EOF
- 
--	commit refs/heads/badpath
--	committer Name <email> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	Bad path
--	COMMIT
--	R ok-path ./invalid-path
--	INPUT_END
-+		commit refs/heads/badpath
-+		committer Name <email> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		Good path
-+		COMMIT
-+		M 100644 :1 ok-path
- 
--	test_when_finished "git update-ref -d refs/heads/badpath" &&
--	test_must_fail git fast-import <input
-+		commit refs/heads/badpath
-+		committer Name <email> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		Bad path
-+		COMMIT
-+		R ok-path ./invalid-path
-+		INPUT_END
++		test_commit one &&
 +
-+		test_must_fail git fast-import <input
-+	)
- '
- 
- test_expect_success WINDOWS 'B: fail on invalid file path of C:' '
--	cat >input <<-INPUT_END &&
--	blob
--	mark :1
--	data <<EOF
--	File contents
--	EOF
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	commit refs/heads/badpath
--	committer Name <email> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	Commit Message
--	COMMIT
--	M 100644 :1 C:/invalid-path
--	INPUT_END
-+		cat >input <<-INPUT_END &&
-+		blob
-+		mark :1
-+		data <<EOF
-+		File contents
++		git branch not-to-delete &&
++		git fast-import <<-EOF &&
++		reset refs/heads/not-to-delete
 +		EOF
- 
--	test_when_finished "git update-ref -d refs/heads/badpath" &&
--	test_must_fail git fast-import <input
-+		commit refs/heads/badpath
-+		committer Name <email> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		Commit Message
-+		COMMIT
-+		M 100644 :1 C:/invalid-path
-+		INPUT_END
-+
-+		test_must_fail git fast-import <input
-+	)
- '
- 
- test_expect_success 'B: fail on invalid file path of .git' '
--	cat >input <<-INPUT_END &&
--	blob
--	mark :1
--	data <<EOF
--	File contents
--	EOF
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	commit refs/heads/badpath
--	committer Name <email> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	Commit Message
--	COMMIT
--	M 100644 :1 .git/invalid-path
--	INPUT_END
-+		cat >input <<-INPUT_END &&
-+		blob
-+		mark :1
-+		data <<EOF
-+		File contents
-+		EOF
- 
--	test_when_finished "git update-ref -d refs/heads/badpath" &&
--	test_must_fail git fast-import <input
-+		commit refs/heads/badpath
-+		committer Name <email> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		Commit Message
-+		COMMIT
-+		M 100644 :1 .git/invalid-path
-+		INPUT_END
-+
-+		test_must_fail git fast-import <input
-+	)
- '
- 
- test_expect_success 'B: fail on invalid file path of .gitmodules' '
--	cat >input <<-INPUT_END &&
--	blob
--	mark :1
--	data <<EOF
--	File contents
--	EOF
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	commit refs/heads/badpath
--	committer Name <email> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	Commit Message
--	COMMIT
--	M 120000 :1 .gitmodules
--	INPUT_END
-+		cat >input <<-INPUT_END &&
-+		blob
-+		mark :1
-+		data <<EOF
-+		File contents
-+		EOF
- 
--	test_when_finished "git update-ref -d refs/heads/badpath" &&
--	test_must_fail git fast-import <input
-+		commit refs/heads/badpath
-+		committer Name <email> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		Commit Message
-+		COMMIT
-+		M 120000 :1 .gitmodules
-+		INPUT_END
-+
-+		test_must_fail git fast-import <input
++		git show-ref &&
++		git rev-parse --verify refs/heads/not-to-delete
 +	)
  '
  
