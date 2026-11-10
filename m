@@ -1,123 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794327079;
-	b=Hv5ZqRIGM8DX+VMxMYuNQ3iR0UvGo+Mc5yhwCBd/6go1iTEOwyCiC4VfbWLiPDup+++r
-	 ieblIM3r8SXSfPiyceVjgXIexGquTHFxGWJ1FRond6LsVD4h4tRAmhC/eVWMZcI7xzCWs
-	 PFaFYGpDOXyn6Tsmu/0qTkKS8KdGK4x0mfPpBCuJiH8nhvEyRepVARkgCc84SVssdD/Io
-	 aebQpqjZllSPfRq+r3bNc+ZPXTiIlAqCwf1uzXEUt4He+4J+MtEStVHOtY6sz/IiMgmi6
-	 5gAp104u1eDDFPxNwaxV/MpT1PdCQj70ojlGVgTLkdWSMBgsVz7VHwLQYv7gXitRbEA==
+	t=1794327200;
+	b=ACUiG9TSia7wFs8RpbjdP9H/8F5Glgr1vL0IUiFdRHRZCupuLr1VJiaTe/dP6kReLF8a
+	 nLJSQ6LuCRdrBc4ABpSaTLyKBGrFe5DAyWMbXWHf2kq8hLmzrxnOWoYl2wW901aasPbEV
+	 pGPUz63vvicBP3azL8berwWYT5tx8z0G22iU2ZykShJAQBkYgYvVpY/ESukS1P/A151Dh
+	 EO8qBQWjA8/TU7i4XrsfgCAWJYHp11tU5CydsDgtaS2+7w6e87voVsxOQ1DfZw+aNYs3D
+	 EQGrIFi3gN+xQHlkun+IHXFHohK9KOmwABkQVP3x0pebNzaGzWybYjumbIjI4ejubTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794327079;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=T+b8i2YqQ6f+lWIBdHSN67meS5dgRLZJXCh+Zk01xhU=;
-	b=wxHh652JAYdvS5tiXkEGfqw5NHIQkiZDXKuyU7SpdEWgGhyyDvqcpDmeFwPImDWudk8B
-	 zcLaCJHb9tHc8nM71cRizqYRXNNt6LDnUh8DF2F46h/1IEM58ZpuDxeIElCOIAecLmEEH
-	 UIfJhbzoHRi1XQ2sSFf+ECIWlq1NfyT9UpiCKyxieAmvQfrEai5UPTQT0DSoLbyJPE1hk
-	 nU7uU7v2lg2Gt8WVky6yaq2QiKmAZG8YWQfGIeefHqb9fBIhyM6KtopwkWyH+OUTOWyn3
-	 YmbfZydtUbvMQCTbciVESa5g5JDtSsVDIJmiRmg97JBG7SJVOfnTDeDMHSxDFkXltqQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794327200;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=iO3pUuP+38mjKSp+IhUynyU6R3zPy8xjdrnva2/pdek=;
+	b=An0i6OFyYkynVq25keYnz9uruaGP/hlQpwt9GaILn8UF6Xtg2R5reTEenIxtyGOfXkkO
+	 QuzM2UkTUs20mfkT/qTKJDtfl1pT5IbwkW2lC6bF0gxFLYTRIsM2adDaLVDh/+YJWdQuH
+	 zgaJqxX86MfbYyoD3u9hMkJpl+1LodW3ENbp+U/uq2bBVALLR2+jclB926qv9CKbRQ+aC
+	 iXk43tGuqKN4srCObek+Dg1XTFy0ja6aLVRpGfwzJGsGcGRSpFWwAM4BwVZFfUVJgsyAQ
+	 54BC7Gs6iLU1OGDcMY57BWf+31AjvgTA3gnodlYK1fSOMl2wJyp12OZvJLNS/hLxNqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ZcRtLLtm;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=4AI+RP06;
-	arc=none smtp.remote-ip=202.12.124.153
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=q0XFQSKE;
+	arc=none smtp.remote-ip=209.85.167.43
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42616606D7BB
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 16:11:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 42616606D7BB
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036A6606A331
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 16:13:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 036A6606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ZcRtLLtm;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=4AI+RP06
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5AC817A0278
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 11:11:18 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 10 Nov 2026 11:11:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794327078; x=1794413478; bh=T+b8i2YqQ6
-	f+lWIBdHSN67meS5dgRLZJXCh+Zk01xhU=; b=ZcRtLLtmpCfv5/SmzTN3ydFN/8
-	E13RcWLW9E5DDaz1NDNyXg4ofNOFW2oKEdgZJXycKGZ5xhux9sT4zsPNy2q0u4aw
-	IYQVeMHpVIX9vfLZwMEC75V0zhHAXVVngTIlKSU96N+3+nVds4IK/e28h2Wgamtl
-	ATu1kusaknAR6H8rt/I7GGaoct9ZQy2goSVE78f6HTUvp9LVYd+Zs7nbV8fG81Q2
-	Xi8kF8dTYSH2niewvD3Qclao1Gqf6C4anXIbcpiall9EJdQfaUN3Vntxx4aQj4kA
-	mUwLYn7W5DcZ6aOx4iyWwhZOP4rJroqLzZuowbyrOkHmHH6IIyDzG5l+7f2w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794327078; x=1794413478; bh=T+b8i2YqQ6f+lWIBdHSN67meS5dgRLZJXCh
-	+Zk01xhU=; b=4AI+RP06hx9qfUV10xtk6Yt10Sq4KXMAzLkfAuQaxNAiOKFuFU/
-	CjSUrTH1p+bKFj3OmLWBr+SJIlqQ9ODS1ahzIddnges4Dk8Ui+vSWycN8c9Qq9NB
-	/LgkAZ+3UvW8fOARHc4Asquop6CdaOymU6p6D7Bvk/YpHMvasH5U+wtCD6xdycb1
-	0lI6BzZmJYKM1kmXEFYwYLSvepu8Z3rkENCwFN7xlTxqhzVt9rVJKBnWumSikOd6
-	87LWWVwZ1+q1eQa3H9mb8VpCdY9tvpO8aK/x4JGfnnAcuIW1F0ZfZ+7UCrD9+bZY
-	46r+jqCUbGGO0Y1XxCdm1xu/YkAqNupOp6w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794327078; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Ry95WDkEmZ4xLqWwMJMW1HFm0d32aR+P/rl3me7npTBboKw
-	DXrr5TSrZvlaCdQ+AbCoxOeWNVEEYy/e0KxvkXuBWDcj4cJiTKngDDUjFY1uMn12
-	S6GSLany6cRtKX7xKOdX8xDWxbRgcocRB9rflPLyLQAgApRpIi5FEYe9oUOSqz6L
-	R528iiImkSXRhqhS6f/2GNjSY4FcXPVo/gFJPrZB2VKhEgyNrKoB63We1DljsexU
-	AvaZko76eUAk06a2uL/CJ2XstFXnXPbVPlMSxaZ2ncWSNLDv/eAYoRaZKcGtUitl
-	bI1HZ5oCNBUBLBS9j8bWjklsAjkZl3XsSNS4LYw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Qj1b15U6bxmFEJ0g43YN+Jn8hf5v0GWYgZTqyhjUL84=:4IToc+gH5tlmj4K+wjAzjtQ1LNaxAV/JT9Tt6+Bb7X8=;
-X-ME-Sender: <xms:JULzag5tLhiRs48-t5Vz_S40QBv_PE-tTa4gQaoZ-9Q4aZb0ZW4ALw>
-    <xme:JULzaozp08nTtY6vlcwCXqpfLX9jaWp0Wra9TmdJklnjdZsr0z3N4uofw73NR3PdF
-    a-Oyr9V1jsvpKn75olsx2Hhu5ICslhfPDqR83sv1hrn0587OiZFe8o>
-X-ME-Received: <xmr:JULzanzLMKtV99rL8APRfdhQXb9QF7lYjGqsK-_SziajZef0TqKRWbX4aaDoY3xKzHgwfssjJYKdOJFF0uh0RNawZ-vIoc0rBrVH>
-X-ME-Proxy-Cause: dmFkZTE3Du6ew5Jr6/QIJCWLKZxsgw1X/P4Q87i8wYiAxMrzHAS2dJcseJe6I9Kdb76SSc
-    w7GmibHbQLuhxhymlAX87vle8dSTdjQjYbLQEjP/g1xhpK53HnjHD4Qk1nIv/LM2P0qZnu
-    yhC3ZpMgiz3PhLwA7Ra8dQ8k0q4z8tenetGt7lD9zyrJkDOr41EwpzIcEz7idqT662jhVs
-    IhuLmproftGXxF1jxECJspXo6EWI+BdAs3GlCJUBDPE3x4KSBL5+ZCKI/m1SHLbGnaq382
-    kGiqxKYS3xPWGMMgj8SHI8GSm610WfLbzZSZgkBfBZvU9WLxF7V56kFUL3vsctOCTCEGKF
-    AK22XJxjYNiRXTQv/L+EH3c6zTr4HBJ8wVb5WxZNPdkq4VFrqywvXDQZXtZuBuQYsR9XC5
-    BKrUJ0A8x6vUshd5FFPy+/MelsIVEW1AwfD5IOPEVR9E8dhXCCTLkStwUaC92GZ8hQhagr
-    uoO6DRMuN+TZBJAAPr5NkUb7gBZxlO7/MFJn2uKni5RZhm0mzvoP5lnMGy06IHE6LcHwwx
-    EBRYK6S1dgpQqyrEd0cXZNlUbrR6zmzG5IL0UfFniGRJ8AQhmVasVcVAdAX/zfFQyDKzuZ
-    muFCQMXDw+OL6NLbrzhyvCK5rDqaiX05ou+qjV3AfvSQLHvpCRpMGuJW1PoA
-X-ME-Proxy: <xmx:JULzagw2iV73S_68xHl_mPc0h0NtWPZJOHx9dPz0yzWFLoMPpFPCjg>
-    <xmx:JULzahaIIPdO7TVxuBk9dkSJ37jiHfqXll52typ7tf8dUMzzsgF_vA>
-    <xmx:JULzahUPYv8JEpOZ2GZ7Ahr2hysiC8Z6pf4kAg3vr00Ci99GSJwuWw>
-    <xmx:JULzaviR4kntmmFFuI1-qAqxMRUt8761BJTySW1DotrG2PTzAdw5mQ>
-    <xmx:JkLzamEtNsfvN08n1ucJSNFc_JUw2JR3Mtlt5Vd8jhCESYhdIrxsOoBS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Nov 2026 11:11:17 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2 1/7] gitlab-ci: speed up installation of Git for
- Windows SDK
-In-Reply-To: <avK_Q_QDmdkl9r5s@pks.im> (Patrick Steinhardt's message of "Tue,
-	10 Nov 2026 07:53:04 +0100")
-References: <20261109-pks-gitlab-ci-speedups-v2-0-508832602d0b@pks.im>
-	<20261109-pks-gitlab-ci-speedups-v2-1-508832602d0b@pks.im>
-	<xmqq8q320wv2.fsf@gitster.g> <avK_Q_QDmdkl9r5s@pks.im>
-Date: Tue, 10 Nov 2026 08:11:16 -0800
-Message-ID: <xmqqwlqku0nv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=q0XFQSKE
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5c1465bbbdaso1540429e87.3
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 08:13:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794327198; x=1794931998; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=iO3pUuP+38mjKSp+IhUynyU6R3zPy8xjdrnva2/pdek=;
+        b=q0XFQSKEU/F8DetMnkMyBQCvov2o4btUOtwjWM65UgTl2PWKLhdESX3OtUCxldRQJo
+         wR9z7Fj8QcOCfr/fx84K5R+JZLHiMkRpHx6dbLr7B76V3rvgRWSyzRMwic4D8/fdGhUY
+         hBNA6Of1dPK3Cayextg2ztkuySazw6GSm4Jz8y5mmK2sq1ONxL+YVBL4M42atslVrvIB
+         M/zWR5ciP0yyPU22L5Jo5RSzjnyYdLby7etActN/cRyAIY6m5cVLuk+S1hwul0u4gJ8q
+         Y8K6sD1XIli5p6DiOTALXFzlv2cL1/NLp9l3nun2RDzm9ouiDHZ8E6oQtz6hBRrtSfmw
+         214Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794327198; x=1794931998;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=iO3pUuP+38mjKSp+IhUynyU6R3zPy8xjdrnva2/pdek=;
+        b=sj0x9NkDOR+JubiG8cOdvLVZsDd6KCslk4bwqs/3ErxuYpIHm0Yzn3KnrSRa2HRkUv
+         f0uK04OZ51HfM9rwJquifxdPrq6LxjqUE5o+RcsQnmtF2jJiz9t7MLNNfulUSCauiR1U
+         gHFAsUifagkxv86SJOnSOuvj5oczAuv5PSnz1NnzpqM1jHLz8LcPkfu836ziEZA1ToA/
+         t7bIbRjcnBLQPN2ZXmLPf0A0XfYCxRi94kdxDFK8f+JlyeU0d5Y9xW+e2rmyl/4sF7MT
+         sdboQUqNmI82KNmagWSVV+apd8ee+UMkZ+gNQJ3smJsHKjv23aHvjFAI+3h28BxOlLbE
+         pSqg==
+X-Forwarded-Encrypted: i=1; AL+hErFciTuz27s4KSDNWqtnzXaOVMWD+Wrl/K5ki9JbPFpAq1AirRY6TQ4d7PrEKXZe/VY1KaY=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/+0DiNRCCr2k0Kd2MiKQ1okjefAWizifsgyEGg+2v3BNwgYOj8
+	GiOtMXhAF/BGSYFRrF/thMYy8V7YTGhet1nQSZNP0siclp+pdHr4py4Z6vPB3jx1
+X-Gm-Gg: AYBFou3Vf7ijCkki1E4jSx6yirHOQGvwZfdOsHXHskQa8fYxPQGk9AjlyRhyHNJYJvV
+	eqXZzmKLbhRX8l/DyP8AMiuVHEnvzPWunU7FSaRRB9V7JvwBlgsXDMCru2VXFK7mTbLtLIqlxOH
+	iw2xZRsksWg8yXP9KCoVo7o+MvPnangLyO59tWPUL+s1Dp9gitLjre3EDX79psDxp7BGvQpKeEH
+	UoF+BjksP0ypCu+sU0L4fWkPWdEIdWMV73mFCnQCGHFPbKZnnE6GGodve1jM+E+a3YFkFGJRnSm
+	mZarBh65RV1DCLCrcujtsrdfJpWd/Ua9ubmz18+eP93JdM1bweksizs3Q2trjA2iyMzEXhu7XSI
+	lb5nL0pvPETuIdFvBvKwcYgP5OMhUElIXuuu76SPjYde918lvQTaT7fm4MalCd+Yaavl1b8LNFh
+	JoOFhQKJCjTc3mv8PrXoRM8nuxSME/ejQoqcmm2y4GWErVjDK1BaC55Ndu9SBzXvOZ6BllALUB/
+	zUour2rXwHLJOa+GSv3mGGvTBz021oZfq9FQEcOgPovDKCL23HH00IaVqrKXC+aWnqAPMt21FV5
+	qUab4Hu5N84PuKCQ3HrkdG//dV1BcHIdFhlO1iSD4hYSskmoaqLSjZmvfl10wWLcFQ==
+X-Received: by 2002:a05:6512:1153:b0:5bf:f81a:4ac5 with SMTP id 2adb3069b0e04-5c156e9f597mr999395e87.29.1794327197898;
+        Tue, 10 Nov 2026 08:13:17 -0800 (PST)
+Received: from [192.168.25.219] ([115.108.41.154])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5c157baf5aasm495247e87.48.2026.11.10.08.13.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2026 08:13:14 -0800 (PST)
+Message-ID: <24939fc5-53aa-45b6-9e4c-249c5989b42b@gmail.com>
+Date: Tue, 10 Nov 2026 21:43:09 +0530
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,40 +91,107 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/6] object-file: stop including "odb/source-loose.h"
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20261102-pks-odb-loose-cleanups-v1-0-fbbc86c29693@pks.im>
+ <20261102-pks-odb-loose-cleanups-v1-5-fbbc86c29693@pks.im>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20261102-pks-odb-loose-cleanups-v1-5-fbbc86c29693@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 11/2/26 16:50, Patrick Steinhardt wrote:
+> We have now moved all functionality that relate to the loose backend
+> from "object-file.c" into the backend itself. Wrap up these refactorings
+> by not including "odb/source-loose.h" anymore and instead include the
+> file explicitly in all compilation units that require access to it.
+> 
+> Like this we can trivially identify exactly those files that still
+> depend on details of the loose backend itself and that thus require
+> further work to become truly backend-agnostic.
+> 
 
-> On Mon, Nov 09, 2026 at 08:53:53AM -0800, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> 
->> > +tar -xf git-sdk.zip -C $directory
->> 
->> Wow.  You learn new things every day.
->
-> Yeah, it's fun. Windows uses bsdtar, which is in turn based on
-> libarchive, and hence it also supports ZIP and 7zip files [1].
->
->> This is in ci/install-sdk.ps1 file.  Right now that script is
->> referred to only from .gitlab-ci.yml so as long as GitLab CI
->> environment has tar that works this way we would be fine, but I
->> thought that ci/* was designed to be portable across CI and other
->> environments.  At least we would want a comment next to it that says
->> we assume BSD derived tar that can grok zip archives here, probably?
->
-> Well, bsdtar is nowadays distributed with Windows by default, so this
-> should be portable to other CI environments, too. So I don't think it
-> really warrants a comment as it should just work everwhere. That's
-> certainly something to point out in the commit message though.
+A sensible thing to do.
 
-Yeah, this installer is about Windows, so any current or future CI
-that uses this script would end up running BSD tar, which means we
-can assume readers know what the script is doing and why it works.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>   builtin/pack-objects.c | 1 +
+>   http-walker.c          | 1 +
+>   http.c                 | 1 +
+>   loose.c                | 1 +
+>   object-file.c          | 1 +
+>   object-file.h          | 2 +-
+>   setup.c                | 1 +
+>   7 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index ca3a891dfbc..e53c69af31f 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -34,6 +34,7 @@
+>   #include "object-file.h"
 
-> But now that we have found a way to remove the slowness we could unify
-> both systems again. I intentionally left that out of this patch series
-> though, as we can still do that as a subsequent step if we want to. In
-> any case, I want Johannes' opinion on this topic before doing such a
-> change.
+I think we can lose "object-file.h" in this one. The code seems to 
+compile fine without it.
 
-Yes, indeed.  Thanks for these patches.
+>   #include "object-file-convert.h"
+>   #include "odb.h"
+> +#include "odb/source-loose.h"
+>   #include "odb/streaming.h"
+>   #include "replace-object.h"
+>   #include "dir.h"
+> diff --git a/http-walker.c b/http-walker.c
+> index 4f50dd9b8d0..13730a27847 100644
+> --- a/http-walker.c
+> +++ b/http-walker.c
+> @@ -11,6 +11,7 @@
+>   #include "packfile.h"
+>   #include "object-file.h"
+>   #include "odb.h"
+> +#include "odb/source-loose.h"
+>   
+
+Ah ha. Looks like I was a bit premature. The http-walker.c change I 
+proposed in 2/6 actually belongs here.
+
+>   struct alt_base {
+>   	char *base;
+> diff --git a/loose.c b/loose.c
+> index d6a2bb5ba3c..64cd6f1c3c1 100644
+> --- a/loose.c
+> +++ b/loose.c
+> @@ -4,6 +4,7 @@
+>   #include "object-file.h"
+
+Ditto here about losing the object-file.h
+
+>   #include "odb.h"
+>   #include "odb/source-files.h"
+> +#include "odb/source-loose.h"
+>   #include "hex.h"
+>   #include "repository.h"
+>   #include "wrapper.h"
+> diff --git a/object-file.h b/object-file.h
+> index 83d3f38a540..746356ceb51 100644
+> --- a/object-file.h
+> +++ b/object-file.h
+> @@ -4,7 +4,7 @@
+>   #include "git-zlib.h"
+>   #include "object.h"
+>   #include "odb.h"
+> -#include "odb/source-loose.h"
+> +#include "odb/streaming.h"
+
+Do we really need odb/streaming.h? Code seems to compile and tests are 
+happy even without it?
+
+>   #include "odb/transaction.h"
+>   
+>   /* The maximum size for an object header. */
+
+
+-- 
+Sivaraam
+
