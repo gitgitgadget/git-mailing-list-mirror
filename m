@@ -1,88 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794316948;
-	b=tg87VS1blwePVV7hywIH9Um9CjWvcJVCCDgU7NddTvOXKbZklVLT53K4jz/CDbCnqfHp
-	 R2etjjDVUcA3oz7TzkojXhXmJeEBhFkqOT0a9SrsO1PQLJR8iLFAYRK+gaC5dR6YJ4fQw
-	 fCukgELb5yLOdDszLn+lpGaQG/8I9Bv4/iBQkO0xBeXA0P02cMTLkCYHtp7zpiTQnhVOb
-	 6CnoJ9w9tfU9v/0xUwWI07w+wY4EqgPC7BiLPzA1VhWV7zSS2KnT6vKuPSIND0h1Y91UH
-	 8IuYa3R/hahkMcWNkf7QQgwxND1fLT1nHbbxMpFrp240wJdq0rbdI71o43pSTZdJCOg==
+	t=1794317318;
+	b=cXef0y9QHZgs4Y62+k55cTdzupW3Qyub0uiuHI4f8Z58QxUE3qZJ5o8QeF+/MM4r4iYz
+	 /lhrdmi95nRFystHQy4kCWp/oWn6+LrAeuKRrR11OYQ6AJ+h3ZyfaBV9hO+VMlkN/LbmH
+	 nb/j7AxfcqDdyuAJzeIIe1Zk0395ID6eHuNQ7ASK42dQiFUHFCAU8TtN7KgLqy0RSZnPd
+	 m7V1h9Q00cWZPocA0YgWPLPOIuJ26knOK4XlCjOKhwBNUupDfus3JLHZpX9pMmTC5rdMv
+	 fgmrqjmlyh5vRQ9POZVmbo9x/sqf5a39OZwIg+CdnjB130uI6QMnS0tnnWZBwHEgiDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794316948;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794317318;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=85dsXa+/nZx9RBcPKyZo1lyS4IWDN/bSFsLsOnIeQms=;
-	b=1hQNh+8M80ycwMtj0tFqHUTM9RoQrPHV9Di9Nc/Q/Y1rksEUlRnNvASFVT/gxWs1c/yt
-	 BwAlwdEJ7KAGJCTlC1NSqDgSt2Nx7OKuY3oGlQokJFEvcT99NO0Qm5fm8ehKGbmLlTt0N
-	 ov9odkiAW8/z5ifgrnkYaFipvgAC+cnmireNr36tJ2TwCf6p1U4Z6uz8/TCOD8rUjtkdJ
-	 1TqHmtaT9Dcx9UjRt+hZoGGqsouXQEMAeVaXQPkK1Q3lMF5n0MO0flZRYU34Jz23OthVx
-	 lkVAELmajUrpYWkBoEuvW1JDz0VPcm/bY+oqyFeBG6YFy0lzoySl5+4ZCt7C1lMAqpQ==
+	 MIME-Version:User-Agent:Subject:To:References:Content-Language:Cc:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=XrjkBZX3toMaRtSkChj4tiDxKs694wLio/mdr8+tkU0=;
+	b=u6qbV5Pfr/XTjn398kmZ4dtj/IMpjUvKpoa+GB9O0RdbBVACeHX0HYNB88ezwL0zAVRU
+	 0XViHZ8APO57lVgMfsujd0L9Gdw1LMfYLURyZ8YvyBDc+5mRUKhx08Oetif4lZTUAJbbz
+	 j2CAvBOm7Jfy7s7chThaC1JRUHYD90pQDak3ml98ixiTphLox5gTLkyXNoid/MxaZkE3w
+	 a2Li/mmybY4wPY8OrfzopkaSNS7QW2iyZhPYFMBWc5zzMlq7TYPsGfR6Xyo1rVOjAHIUn
+	 Q1PskegQ4t8oqkg3H3J4fJNqUYebEjuXKcMn/7TTfu70jXDLiTNlalFCFQHbPf25bmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Yq+vtGAX;
-	arc=none smtp.remote-ip=209.85.160.178
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="HS/fFDQK";
+	arc=none smtp.remote-ip=74.125.82.42
+Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92789606ACD8
-	for <git@vger.kernel.org>; Tue, 10 Nov 2026 13:22:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92789606ACD8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1907C606A750
+	for <git@vger.kernel.org>; Tue, 10 Nov 2026 13:28:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1907C606A750
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Yq+vtGAX
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-54f873cbe2aso20070721cf.0
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 05:22:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HS/fFDQK
+Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-1a8cc11ac42so1897136c88.0
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 05:28:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794316947; x=1794921747; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
+        d=gmail.com; s=20260707; t=1794317317; x=1794922117; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from:cc
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=85dsXa+/nZx9RBcPKyZo1lyS4IWDN/bSFsLsOnIeQms=;
-        b=Yq+vtGAXatdFs6NEDA/ZZhFg97t1tcOK7oS+5U1BA04ISuyB7Mx1I7c1rpNO1R7J9q
-         aNyAxitzBBH7bd68GSXw9k8sLnf0b8D917iJYiLfg0PYQl8/jW6kh1Z/mA//CTJLmp2G
-         oUd57cPodvA5S04tt/krfs1V9df7WiLUNWJbzVdy1DWnxwuUXaceHi+ESe5oRPSt4E9g
-         Ocmq/312KTUloEL+4T2dki48Yz6RWnAKllpHEJlVmYuAdIYWMAhy9EjWcQOaTNeGuTk6
-         oSeH5gq1/cH4KU6g/6Euru/+5TRRmNLKKqiRPr5Hy8THah3vfm8aLv+P0YVHP33OS2qf
-         mAwA==
+        bh=XrjkBZX3toMaRtSkChj4tiDxKs694wLio/mdr8+tkU0=;
+        b=HS/fFDQKdD1arIo7WyrnvrHFchy8lij/WeQt80mEIgTJmh9/IttTSB4QCSySzoErAh
+         AuiTHrpwPeayTNSZhS/V4Enlfc3MwQb3aMw9KoR9jVAIDXFGxVjxdeyN9Oo4+4JZ5cDB
+         7NHJ7YOU3Skt9UdosUp51S1fzXz+McomhqGiSezbA2XSNIqJoDbVqKSZv0s0qxoLyxaS
+         2TY939QUcTXe5tKrxG3tg1p44/nreguzrBIglMLPhv3b1Xv6H+zePh9BVdSh6y35vAgQ
+         uQAwaUpoP/GCxVFlPnMQdplfs8xkNgeMyk5/aNTFduZwPmCcJppV1XG826LqA36lxq4G
+         EcVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794316947; x=1794921747;
-        h=content-transfer-encoding:content-type:in-reply-to:from
+        d=1e100.net; s=20260707; t=1794317317; x=1794922117;
+        h=content-transfer-encoding:content-type:in-reply-to:from:cc
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=85dsXa+/nZx9RBcPKyZo1lyS4IWDN/bSFsLsOnIeQms=;
-        b=pKBSU7GzCuJnVSpSwthhtNndMN1ZZlbEhl1iTc5uv7aVh968Jzr1rBc1cka8WqnOtD
-         rUV+fnKSzYEP+Uue/Vd8hUYe6PXuRE4BT903ejPK+puSTpL0d2p7/yU2NAIFzyVMwjVb
-         PTyqJvn2qkU3ATk9V240u78DblsoLo9caFiHQI6k8TZNh3RbFOMtTe2Sd5qKoe6ycxfx
-         bs58PvYxJbM3tEs1WVuvbEx5viZitahZYhMVdfi5wYzrdVHZaVVILAFmWaR2wbRWLp+b
-         rlpKRnpmUKsA4QNliZMwx6/YTEnAOKD80lurFrblIV3WupAIhBiZIzsilrTAtKJyLlDO
-         712w==
-X-Gm-Message-State: APuU4Z9HtXvV88mUa4XhlkbP05fSVJiSMZcxVygoLqzsjTsp7TKQWT2Q
-	6pFjV68MjdZ+4ToX6304rojJTYU040eBcJvYaDLg7Z39j1J+QaTuXdM3YiUuaA==
-X-Gm-Gg: AYBFou3bxhsy9c7gK4OnUy7CAPrme2qQw452IlO7j41nFTt0p0h1LSMDSjrviMWPFNH
-	Ag8jDpPKoj/JwfyQukx4U8m5OWsxBDH/IWcMuEJxz2PojZhkr7GLLa/fwiQXdbUypOywFfBJyYv
-	NBjSY0pr1hMK3F3f373ol9x9odP1Wqjs9O7/sIDLjm1/0S6zUjtunNncVEUlYllEdJ4SOYf9f8r
-	N6RRtyw5XdYRvmTNprHSFG9Tj7saBIKSBiC2TViGN/s2ci42qTLgpAIpsxTfcXG9jMTMBv+Nnzp
-	ojjJB8kZmjnMR4fAOc0keCKPmg81uKFhABvfIQXkO/hkrXk10XPdb8lqvS/2mzuqc6J6+Nkqc9+
-	Hni1Q7CClQPLnoIbe0wtwLvUUTgFnb9Ngv1wSl5hRkQglEeXj1heTQCa0FNlWDrvBeb3GUjeKrf
-	jECPaipNMpbS/yZCzMjA1+m7y3QAuNZEp+7pZmvjrO6dHP2eBr6eF9md9sS2IFmkrnwBzHhIPPm
-	739c4OvcfPwhKokmqI/kP5ONifyrd3D4NAyGmNa3qQle7IpGWeHw5jGSUp+8QDNqCBqxa+oaMRW
-	tn9nfgvMSBe3DiL+pzB2B06WRTJ+IyB5i15h6bh/bVElGDcSJxSLLB80hDIJZAzSg8W+Dpfg7BT
-	9CzDmOBbRqGVB6avh4eT2Z6HeYeJaXmJ/iDlYVE+NDKasuDGhlYgwOx2BpLG0iYrV8MZijyy8zO
-	IMyz3hBt+kSoGYsiGonSjBjorcj8/oEPAraSNdZt3vXa8ImjJP6f/4DSY=
-X-Received: by 2002:ac8:5c95:0:b0:533:2feb:9fe0 with SMTP id d75a77b69052e-5552771636bmr34537851cf.31.1794316947514;
-        Tue, 10 Nov 2026 05:22:27 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-555091eb801sm24123891cf.2.2026.11.10.05.22.26
-        for <git@vger.kernel.org>
+        bh=XrjkBZX3toMaRtSkChj4tiDxKs694wLio/mdr8+tkU0=;
+        b=zUZsH2F91FcgAxTNjCmGydLgmVCx/Ib72xGo+mpZGmCdgrmjDkK1uRWokfVt84cmWE
+         wo4B/CEesg6hqG8bczvDJd0GpQTP5OVwY9/0DXoURZanzcBIOUj/ZmWavhKK3KpNg/9U
+         MmuuHtMLMkXp+/uxBEVK5iwDpaJeJMai6orydf8kia+aNq+tlSXfii+aTiQRQutmDLud
+         Hxfh2tQ6KnmH5dhS5eDOCSA66Tq4rIB9CrVuIzXE+RbRBYIvlzLBjiNiIdKsCL8lfGcN
+         lCpRy8MpNjsHDR31+eMPDC8TMOdMuH0Wvv2HV8RmdKd3QvOha3do/9tzJaxDNA0SFnW6
+         /X7w==
+X-Gm-Message-State: APuU4Z/X4Tws/uck/YujM5u6Veh6HMsXxdJIxRk3xY1w8cu9lliOqYap
+	eKDHTGMtTmF03+3fL9BgdHvldBzE+2trAtTNWNnoqQvPfJ7KjQtNYDtg
+X-Gm-Gg: AYBFou3P2KlxqLoH8HiIW0/x8RJBwVP9E+VbGKhzppMM0EdXKSaWDQ8ryTGutvJx9rJ
+	yJisdFxXHqDHwGbBAlfcsQTAKM7nQjfYbhVtL3Gk9CW66pbS95xs6u9saI+KMjtsP+8dO0jG5pC
+	ZPpcU4HxPrHcDfy5yOQ2R/Y8LgVQF+0DZy+6utEbn5y2+o0dDGSv0b5WgX7bghAWvz+sR+19P3H
+	ThN/fdjySmuaahUMwOJr9tAa9i8PsAsjuxDKL1QsfjMlkEIuSaCniK4x2SX2sX7ChHCEqreQ4Zp
+	bQMy7JbAW098xr7+5oADEvaNvloQa20fGM28YwEdzuyEyt3Q5HFCD6Bcq0XOWv2jvKmIYuVtmGv
+	eRJ91X9OrvFN4UR3joF927+nqLbWXsq8CHL5gupGgIjU70w4gFyTkUHTx8QVpmBwq5bhDMRoKIW
+	Z0BDPvAA5WfNseRWGmREvR4o6yKNP4PaUUFqb565nwDgkjDX2/hV0ZM6DPK3M171L5jcW8AIOK8
+	rMvoARw9mmvGUYpimv9KuDpeGNg7gpgUMObOjzp1LdKbMZM+3EWFUZx4iHA7AVq34Co71ih2TZb
+	LV1ZhN4VA942gvW1LvH/Et/6WtM8qa1sjrTyXdvscw2c
+X-Received: by 2002:a05:7023:a42:b0:1b3:a22e:b74d with SMTP id a92af1059eb24-1b3b61874edmr3371722c88.34.1794317317079;
+        Tue, 10 Nov 2026 05:28:37 -0800 (PST)
+Received: from [192.168.25.219] ([115.108.41.154])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b3b5b4eef8sm8288762c88.16.2026.11.10.05.28.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Nov 2026 05:22:26 -0800 (PST)
-Message-ID: <37267fd4-c565-4559-9c5c-01d58cd0426d@gmail.com>
-Date: Tue, 10 Nov 2026 08:22:26 -0500
+        Tue, 10 Nov 2026 05:28:36 -0800 (PST)
+Message-ID: <1161ae1f-6639-4e27-8832-3771f73f5e79@gmail.com>
+Date: Tue, 10 Nov 2026 18:58:34 +0530
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,30 +90,65 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] unpack-trees.c w/o the_repository
-To: git@vger.kernel.org
-References: <xmqqtsltbfdv.fsf@gitster.g>
- <20261109205438.369060-1-gitster@pobox.com>
+Subject: Re: [PATCH 2/6] object-file: move logic to derive loose object paths
+ into backend
+To: Patrick Steinhardt <ps@pks.im>
+References: <20261102-pks-odb-loose-cleanups-v1-0-fbbc86c29693@pks.im>
+ <20261102-pks-odb-loose-cleanups-v1-2-fbbc86c29693@pks.im>
 Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20261109205438.369060-1-gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20261102-pks-odb-loose-cleanups-v1-2-fbbc86c29693@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/9/2026 3:54 PM, Junio C Hamano wrote:
-> unpack_trees() API serves as low-level functions to implement merge
-> and checkout.  It heavily relies on the_repository, making it clear
-> it only works with that repository instance.  We however can use the
-> repository instance pointed at by key data structures passed
-> throughout the callchain.
+On 11/2/26 16:50, Patrick Steinhardt wrote:
+> The logic to derive the filesystem path of a loose object is contained
+> in "object-file.c" even though it's an implementation detail of the
+> "loose" backend. Move the logic into the "loose" backend accordingly.
+> While at it, inline the call to `fill_loose_path()`.
 > 
-> This is almost the exact copy of what I have at 
-> 
->     https://lore.kernel.org/git/xmqqtsltbfdv.fsf@gitster.g/
-> 
-> The only changes since that version are removals of two blank lines.
-LGTM.
+> Ideally, we'd be able to remove the externally-visible declaration. But
+> unfortunately, we still require access to that function for use in the
+> dumb transport so that it can derive the target path for downloaded
+> objects. This will need to get abstracted eventually, but for now we
+> simply continue to expose the function.
+>
 
-Thanks,
--Stolee
+This is well explained.
+> diff --git a/odb/source-loose.c b/odb/source-loose.c
+> index 96fc2ed213f..0f29162d752 100644
+> --- a/odb/source-loose.c
+> +++ b/odb/source-loose.c
+> @@ -18,6 +18,27 @@
+>   #include "tempfile.h"
+>   #include "write-or-die.h"
+>   
+> +const char *odb_loose_path(struct odb_source_loose *loose,
+> +			   struct strbuf *buf,
+> +			   const struct object_id *oid)
+> +{
+> +	static const char hex[] = "0123456789abcdef";
+> +
+
+The hex[] gained a const while moving but that looks obviously correct.
+
+Rest of the move looks good to me. We didn't lose anything. One thing I 
+noticed is that http-walker.c no longer needs the object-file.c include 
+now. So, we could also include the following in this patch:
+
+diff --git a/http-walker.c b/http-walker.c
+index 13730a2784..05c0262810 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -9,7 +9,6 @@
+  #include "list.h"
+  #include "transport.h"
+  #include "packfile.h"
+-#include "object-file.h"
+  #include "odb.h"
+  #include "odb/source-loose.h"
+
+-- 
+Sivaraam
 
