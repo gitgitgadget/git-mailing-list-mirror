@@ -1,91 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794437375;
-	b=Oj4uaaPlvqt2fbAZqMuKChuJEeBTl4yyN4+xq54umuhSXtMC7TNL5clgCMz83htFOild
-	 6Mo1H/fyznKpLLDOaXOhwbZzJ30LiWGNXBSPbUQcKJ/EfyC/7ytPYJy+CHbzvegEFuMiF
-	 4m2oqusl9yBv0jLFiPLvsr+Ill4AUM5s3uiV5pT5g1fviEPMTGxKcgWFPOX57BOvZYynM
-	 0LhgGDSplOdA6hOCzyGE6u3vYrA7tTSnMqOacE5Dq/JQqOdoZlbo8Cu0n5eYeWp5IuxMh
-	 dEJoCKvm9D31IpurF/N6qWtujNXSr/8TubLOer6POOZyGiZN6VgYwB5ZQ1M/Znbg3Kg==
+	t=1794437378;
+	b=Q8gInw6ojJYZmpGCojQFufjKtlQFVD2aNkt/r3OmtvivzTu+RdPSQdz1yLQmIR0NFyBG
+	 lwhThQ/iMOyqMvj6LYB+nUksREobNYHGHJk1pWQch94kuL3mLEZhe/YzeSkHaiWbD7rmb
+	 WuviAp4H8ZfCQa1JEnmS7BG+cZUIG1xo5vRz1/hVuOlV3/XqRvJNC+uKUV/gK1Yymfe20
+	 ybnnmQFYgB7OGityFGllDctBC7bIIFrJOD3FAibu+3kCmKTAWZ6S5lcGLmyuNypaArUF6
+	 RO5QRGuj9jbj3oMmw7s+hYklvYWzL8xoXdrzgX3O/K/IE18RBjdw21OISAmDTcDc3qA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794437375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794437378;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=2fY4MnsgY1Ma0iGidqE6W4+zuJKOdqsAeUD5xVMt4wo=;
-	b=dUUXrfPObopoO0CDdEuAVCRWcOwW5gMMe5nkTR1J5gx8y8pEdTKSKsZzXY9GHiVdPock
-	 jnlGljS57Msw46pa+FNpD+rGEyrn6XCvB8QD0YJBLPnAtCNefCvQzk74sU0olHIo6gWGA
-	 bzR5uCMc4zB65BgYbubkzIZLg1Qsj0rZyiSqLUNEc35Xwx68bwVa8vjG5mZvV8Y2Hz+0+
-	 1QvoSbLc+91SpV93WleTU3yuPDbJYHyVqAI+YFU1MiGJ87mYWYO4yZ15M+zC4oL7JVPr3
-	 uGrnntmaaJtKoCiEmPtCchVUdh4NsaiLYoI/3iiXlYlQZHNgllwz5MxOTGwTgca9tBg==
+	bh=/LkDmNOGDoIfkyf4Wp6QygQ+Q1w1fdicxkZ/fhyiKJ8=;
+	b=cXQzXMt6F9keZdhVHmPFX3jjkEtw3bRzBkvjt/TEssCUsX7DlWMSNqwjoM5tegbkktqM
+	 uWWjTrMHxWDRASa53Cg9L+0E5BH40Rn8o4MM4n/SR/jYqA5KiOtkzamB63W9cI5p+aUH6
+	 nCsXcn1EbMGVTnZ+ir8bXzYcXQa83rvIHQtCgckSo4xcHB1LP0x6CrN3B3dJqvVz8/73A
+	 RVFFO1Iqx4RFqU+X3mHMziS6EsXBTD+Yyfe39FlkjNOXFkectxxUqgmRJQrQRA+hLpzNQ
+	 6nn4RLfkeoTCc1maP14i3kDbL2L7dNlePVdSbF+xPVngYYruma2bvtsT8pggnQIcrOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gocJVT6Y;
-	arc=none smtp.remote-ip=209.85.160.53
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=M41mbEPo;
+	arc=none smtp.remote-ip=209.85.160.46
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07706606A335
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 22:49:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 07706606A335
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDACA606A331
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 22:49:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CDACA606A331
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gocJVT6Y
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-4ad89c49e0dso1176969fac.2
-        for <git@vger.kernel.org>; Wed, 11 Nov 2026 14:49:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=M41mbEPo
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-48e94879f02so1286754fac.0
+        for <git@vger.kernel.org>; Wed, 11 Nov 2026 14:49:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794437374; x=1795042174; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794437377; x=1795042177; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=2fY4MnsgY1Ma0iGidqE6W4+zuJKOdqsAeUD5xVMt4wo=;
-        b=gocJVT6Y4gFuzROX26uchGn62ktV5gig9gi9zJFMvo7FBNfqfzcSJ6h5HLpl4FAod8
-         +z9sOcKJ/1YRFQwtvK+7uRF1Id2Bqx8fRu/YiViY1z2bXADX9j+KbX3NA7o29DpfWV2S
-         SmDmhVUJsWMPEredNNFrsbePS6416V66XwTFWzEGilww3QpAG5lY/0QBLOtNk+W6BGiD
-         thVWNEjUXEtPtZ9BV6l5dkBdqdPybSq5WfKGqzpU2SnuKhjXCu4Pc0GoKlEmbfRGv//i
-         ePca2sCDBu9avs84gxEJBsq16tIOAocBH1uX8P6bxluh6lKVva8OR6FaSLwyCAMIi5r6
-         8rpw==
+        bh=/LkDmNOGDoIfkyf4Wp6QygQ+Q1w1fdicxkZ/fhyiKJ8=;
+        b=M41mbEPoj9aVz2sdI+Vj7ENQAqPu7ezvGivo5EHqu/nM3jQjCGZT6/Mbb02uxfZgxx
+         +ePBGHq5l1gcII9ZcbpEuPlMyG74ltoYzJZqmKy3yJw/6K6N7dydl8iR2sDeFqD/CveS
+         jryMHj1Iep55MDylUfBlADo40nO4ctXRAOQcOqGvCLPbh14Ymubn1PVGE5CQ15y+g5Qh
+         G+CXiPXJX56arwczuf7XOkLRBEwtA1ChV41BDScnyEsyRGiBPTJnr8M/S5Ur2b3gXNZu
+         E+CVePVvsyCz6BLu0hXONEyCCwBMARWithyNerYld2o8VAG0+9CrkgqBkCr0TGRdACky
+         uVOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794437374; x=1795042174;
+        d=1e100.net; s=20260707; t=1794437377; x=1795042177;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=2fY4MnsgY1Ma0iGidqE6W4+zuJKOdqsAeUD5xVMt4wo=;
-        b=S9IDNErflLdUsI7BfAd1hG+NUI7tW2k/+l3lQ3Pc32hRzy6UD0BpxvJMt9uL1fBkim
-         EbwsEgX0mUpt8hdAiPJ2v7rSJB/klteQCbDxD8KFtyk5F0qXAB7qZ1Wx6+oro0HQ9/TD
-         f8x5qMyS6EY0LLo4Pu8SephsoBSfyhFUySIXSdVU0vjI/FxRHHSWvKpTa/polEsiBsOD
-         B7YFOHTwItfmEFVqrsPzu20L6Uasl7mct6EdgGpNvW6Kny1PfPiSIzs/KwgqavplhSeW
-         lR62DXaElZSZ93yQZpDNCp2zRBNGUr7Ws3p1qLsSwLCAOGEBkhR7Fnqu04W/ekLSv4Z3
-         m/Ng==
-X-Gm-Message-State: APuU4Z98RLOKi4lqumh3NSEqMVLXBzrvrbSa8l1DRUxNYdTfjjAdLIVS
-	IpRip6r85w8YZSWj0EwPoWaIiYcxJ5zBNqPPBL5/nLFDaL4vd/ISUvLT5K/hKC3J
-X-Gm-Gg: AYBFou1jSw1v4zXHBhJyj3003wOl/OhbDikWf3tChRNLZLgTLcvsPLrIN8mcd5y9Pe3
-	9q2BKQHhThSoPI15DWXl3U6+EyJAmOOkdaJ6A/wuGoQkdPNlnPoghhJsBP7r7rXDVSKTo1XaXkh
-	Mv399x97cggd6bVtw9laQEIobkXBxTRLRyxsKm3ZD0tmai7BtrCUAnWzHXovlrh5aDVIM+oNkvV
-	7AdI9zWQS48TdT/JWCPWZXbaVvgz5TqXbD2E/DgapYfyx2SUq027iXgSS/Yw9K5q+1XAVCq4fXa
-	VI/QHjMqjavcs+GR6TB/U5cGIxBEE417UBpXmzdHMHLLuJ+A5zUH2KWMyMDvwQvjnrx6Q+C1LTz
-	SGR+a+PBvIdyRXkwRa6Ua2U6cbYcCBYYtSUXFiS7acAFyUtLFXGwqkm3O8X3I/WlYjQ3G6NztWQ
-	siFIbNetSAcWcfDcBOcl5zqfdo2V74pFYPNfKwYnzkdkGyir5w6GHSjzuYTGQh2KFu7Qnn5zyYZ
-	qnK3tLvMAwocXtK5HgZ6HxQK+lmncDNsmW7x/skD+e3wV+aa+EMNlM9R0WUht6XJNXaxmWvhsk5
-	yibfDuoQT6xIRmIdiq0u77LM0rbAfN3b234=
-X-Received: by 2002:a05:6870:46a1:b0:48f:e24e:6b6a with SMTP id 586e51a60fabf-4ae46cf7957mr3658518fac.61.1794437373939;
-        Wed, 11 Nov 2026 14:49:33 -0800 (PST)
+        bh=/LkDmNOGDoIfkyf4Wp6QygQ+Q1w1fdicxkZ/fhyiKJ8=;
+        b=Nj2G2BO6OwAptVp6v9Po5Fxc5GM7OiChyQDjfrZhwcimuUdu7y+h8LFlIeR+qBZ+Uq
+         499zHmQtqcKldwcDQRGSTzo/YoRJWUO4BTAyy75Fp5N14ii+C/aHTW6SHjpBzBUEVEDD
+         2DMKbr4OstHm3xsRhKhTv7C4KgTpFefN/VvR3RXK4cTUnHVsxehw9mgKeBCkPhHQOXd6
+         XQubZAFdMfzmSrodVk2S5lOP0FK8XF9OjD/s/4iCt5chJKHlsTIHLX3OFsCaTbADM46Q
+         l35P51jNozV3I68pKdBmBdptCEuMz5u6yYq22mL+MMq/P6JR5+Neyq/5javF1U/pARrz
+         YBHQ==
+X-Gm-Message-State: APuU4Z+ktddyz1Vecnkq9WCaqFVXMcKlwLP99xy+kRbtEftFrwMx9vQ2
+	2wdZQVqdtHWYwvVBcnDVBR3MIaJnTFs997v6CPec/VzOSJHP2kHVl72G69nvuwsk
+X-Gm-Gg: AYBFou37zq0AWDAa75EaDrT3fNROX7g6+XA6T9gruqGrvP4VaBBQjY4jp63uilza4sH
+	abUVpQdMgbQSyQZSkd2hk4pS0XGLJPOxtM9+NDst58GOaSdiNodT3bg7kCPfcmdAdXEzp8sivf6
+	v8uGI195o5yVwHBDKG83UZCfmHTRlOXtAak+FjoMIT+qiJXkQWlsitWqnK81Lj3bZOJOF3LQP54
+	znVALZzxclhb1uz2j0Porq2ZXCAGnZFfHB3M0WP/4Aja/bxR3ZXGC2a88Et1+jZ/cRV9M/A6VtK
+	adt+c7b5gFHOkb7hdpC6hWPZ6HxhKXde1aTeduCYOeQmc05VeDAeHsELuwGdvEiQq2qS862C/4p
+	dX0PJxUo6b3dDGaUWrpgvbDwIKrPbViU3lXX/cNhVFF8G5tTBnsBBqAZi87UmZbpILEIHyEwbdk
+	xvItXH1B0qEiQJ1OxJh5PNBLdl64xdMxHuANAr/vQjjA+zjdp64RbYu9KCngYHaiXCih5QYL6cv
+	z7l9pfmjVpbr7KcM0T1h6Wveu2RZD+F5C38VlGH12K1BMFJ6Ded4kZnwxMEteLTQWe4BRXATvKI
+	PAZOPyXRRqX+kWFYVzax2ZNbT8F8qrSZpnk=
+X-Received: by 2002:a05:6871:2b08:b0:494:9c66:77a0 with SMTP id 586e51a60fabf-4ae46bd7b89mr3099049fac.34.1794437376777;
+        Wed, 11 Nov 2026 14:49:36 -0800 (PST)
 Received: from [127.0.0.1] ([130.131.199.169])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4ae22f6a1c7sm4018753fac.6.2026.11.11.14.49.32
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4ae22f6a1c7sm4018805fac.6.2026.11.11.14.49.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 14:49:33 -0800 (PST)
-Message-Id: <90209dc754de398aa150459d7b324fb41f974a22.1794437355.git.gitgitgadget@gmail.com>
+        Wed, 11 Nov 2026 14:49:35 -0800 (PST)
+Message-Id: <f30ecf07b4ab5c6e17171a008d1e17f713ed5305.1794437355.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2297.v3.git.1794437355.gitgitgadget@gmail.com>
 References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 	<pull.2297.v3.git.1794437355.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 11 Nov 2026 22:49:08 +0000
-Subject: [PATCH v3 08/15] merge: handle NULL value for
- branch.<name>.mergeOptions
+Date: Wed, 11 Nov 2026 22:49:09 +0000
+Subject: [PATCH v3 09/15] remote: handle NULL value for remotes.<group>
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -115,51 +114,54 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-A branch.<name>.mergeOptions without a value makes "git merge"
-segfault on that branch: git_merge_config() passes the NULL value to
-xstrdup().
+A remotes.<group> without a value makes "git fetch <group>" and
+"git push <group>" segfault: get_remote_group() dereferences the NULL
+value as it splits the list of remotes.
 
-Reject a missing value with config_error_nonbool(), as
-git_config_string() already does for the other strings that
-git_merge_config() reads.
+Reject a missing value with config_error_nonbool(), and keep the
+whole key for its message by skipping the "remotes." prefix into a
+separate variable.
 
 Assisted-by: Claude Opus 5.5
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- builtin/merge.c  | 2 ++
- t/t7600-merge.sh | 6 ++++++
- 2 files changed, 8 insertions(+)
+ remote.c                 | 5 ++++-
+ t/t5506-remote-groups.sh | 5 +++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index d7bf209114..c6f9356ccb 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -668,6 +668,8 @@ static int git_merge_config(const char *k, const char *v,
- 	    skip_prefix(k, "branch.", &str) &&
- 	    skip_prefix(str, branch, &str) &&
- 	    !strcmp(str, ".mergeoptions")) {
-+		if (!v)
-+			return config_error_nonbool(k);
- 		free(branch_mergeoptions);
- 		branch_mergeoptions = xstrdup(v);
- 		return 0;
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 8f6109fb91..2da12d6662 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -552,6 +552,12 @@ test_expect_success 'merge c1 with c2 (squash in config)' '
- 	test_cmp squash.1-5 .git/SQUASH_MSG
+diff --git a/remote.c b/remote.c
+index d3164fee69..80be49acb4 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2200,8 +2200,11 @@ int get_remote_group(const char *key, const char *value,
+ 			    void *priv)
+ {
+ 	struct remote_group_data *g = priv;
++	const char *group;
+ 
+-	if (skip_prefix(key, "remotes.", &key) && !strcmp(key, g->name)) {
++	if (skip_prefix(key, "remotes.", &group) && !strcmp(group, g->name)) {
++		if (!value)
++			return config_error_nonbool(key);
+ 		/* split list by white space */
+ 		while (*value) {
+ 			size_t wordlen = strcspn(value, " \t\n");
+diff --git a/t/t5506-remote-groups.sh b/t/t5506-remote-groups.sh
+index 16e9a1bc2f..f11eb8511e 100755
+--- a/t/t5506-remote-groups.sh
++++ b/t/t5506-remote-groups.sh
+@@ -54,6 +54,11 @@ test_expect_success 'nonexistent group produces error' '
+ 	! repo_fetched two
  '
  
-+test_expect_success 'merge rejects branch.main.mergeOptions without a value' '
-+	git reset --hard c1 &&
-+	test_must_fail git -c branch.main.mergeOptions merge c2 2>err &&
-+	test_grep "missing value for .branch.main.mergeoptions." err
++test_expect_success 'remotes.<group> without a value is rejected' '
++	test_must_fail git -c remotes.valueless fetch valueless 2>err &&
++	test_grep "missing value for .remotes.valueless." err
 +'
 +
- test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'override config option -n with --summary' '
+ test_expect_success 'updating group updates all members (remote update)' '
+ 	mark group-all &&
+ 	update_repos &&
 -- 
 gitgitgadget
 
