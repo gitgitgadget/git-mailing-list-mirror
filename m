@@ -1,101 +1,101 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.48
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794370686;
-	b=IABj/fgEnYpFiGfjHQ55gi38c/HOUY321ez9gjApnPZiUEvkxlxj0lYjjycWnJVVxAOO
-	 m4qxsv/M2NvnmcDERq/JM7Kj9DZTkn9qWufpd2A5UFQZVI8+ZR9JXKRYsWCurjZdDVN78
-	 upsgBARfcp4N4apGSlx4lXoCe/CSEQDhzvtraPdYJJ8+lzSLiH9BVK31BsNciJRCm/UEd
-	 Z33VeJCQPUZRMSjRv4pHFj0A675wsrVb997hQ9zWEY0nnDD6zBS/ERYSYkSdV8N4KJiUo
-	 37G6t63kMzI33/ci+Gc7EVnF06RXkChhzqaSiLD5w3rjLW5P2IuNx14yGqHOBuHdKjA==
+	t=1794370766;
+	b=e8VNMEmDy0qSLiuKOuE+fWHH5MtD6Kcp/pZzOaTrNzn5o1J0tZtBfhpBV7xLhxrdxO02
+	 vytCZxQIy0+p69wSVb17vqcL7cb7ftrI9Wtlm2wIKx9Yy7U1QUzdCw3tDcEEJPv2WZAP2
+	 bKogQ7H5334C0PEzxyFwS1oopQwVl3cRc/BheJB1DVRBxHTO87XzaEh2C926Dj6HRzS39
+	 VD9h3CmRsjGxo19ymQdIzQ1xgPVhhtPuF4W/8nrS44fbJfDaiPoDmj2tKvZ5AvkHOytfE
+	 hzuxxwKrvF15z8TDVDjgI7HnIuvPewelGk9HO6mzJVlR9ZYBc6gzAOnJbcpVKKiI8uw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794370686;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794370766;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=yDs1n1mZBpdWReyMTqOE29/ep+4DRDTqmDAno+7R43I=;
-	b=aEA3PdC0V3NJ/azTxA9U5qoMa7zEmUhUtLA9AiJoRsZe2EWjLc8x41cskik/W5clGhyW
-	 xRMf8zg0jQ0//P9G1g4s3Rdi+iKLabbjkdOiF6Wtefd0Y96M1jYT8Lm5b1DmItxqMeXnV
-	 3PSdSPt+IFLtOj7fqC+EFGcjkHJpC3/PvbdkspTvuhN46LjpoNEjq7kae0QZKBiitELvu
-	 CfQ3Lbvv+a/JO9zDjMNo4WezSOtDlsSf2/+xfVZcEt7tFR+kDDZQ7WUD5VhjImhYu8nkx
-	 38s+Tmk4X7ivMBoiD6rI8cVHJHT6DhehUiav7dFzApPgEg7yFMHj1uXK6DBK+ltxa6A==
+	bh=/+KBQili/EFKsCTg2/JHY6rLA7fYyQOXJ56W3hSPG1w=;
+	b=LMmLLqAmTFVqAKje80U3RRXfkDIYFgDwqqtYAMy/mFZQOXz5TUMECBR8E51u+vYHhfbF
+	 w3wV5G1TxpOTejTAShnCxRFzhXymmM908r3ywgbn2RpjDYzFkhy26oSdqLIo8NeKSgId0
+	 ZuGBu4NZlV6jkBaQbw4DJryrZE/tNI28p8bjVfZgQwfG4Hq5AhFX3UEgf6KSCzfBoFEzc
+	 VJfAe5nZVv33+fdmwTTP8tQJAbYg0qQsWpGVsQjBczdkr+VV58Irm1LY70lOIAf+dlDRU
+	 HlKqK43HTt8g9TiWaCEtKeMcEqV+A8neMQEtyFm6i0nKp3y5VmmDmw79uRnPjci9ZBQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="HE6UZ66/";
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="GdmnYr/E";
 	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.48
 Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2A7606A32A
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 04:18:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A2A7606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A97360A2605
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 04:19:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2A97360A2605
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HE6UZ66/
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-91eb53957cbso36555436d6.3
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 20:18:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794370685; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GdmnYr/E
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-91eed03da8bso25392446d6.2
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 20:19:26 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794370765; cv=none;
         d=google.com; s=arc-20260327;
-        b=fZ292ag+ngdqAr2sXyLy6LH0OT6NzDIsURZorEuY05Bc/n0ARQE3R70FYoOkY5l4mL
-         J7Ji/JIL4OI3tiIMB26wOsALXoTSYjLNWkdRQwpBDEQwO6OR7VmRRroUotpKbM9Rkl9P
-         6DsKapaLQQboEcGOP3/zc+KxWOVGVG+WvxS859i5tW1nmahNjMYslf16qc8eY/Rm9V/v
-         W1fc0Cpu4SMcY39RmKmkGemQkOHbwTdNS/ISRV1FGjLHrzRWsqnn+0PYrnrLezX58Vej
-         F9KuNTmjaJI02bz0bFtUs52r76xVS7lXyik2J/msYvwdQnljPDYHOCnFL2aig7IIREdU
-         ZNXw==
+        b=qZ19VEFnRRniU03Gumx4s4NmUJSMO/cZlf2TS3FPPbxKYv8+SWW0nrr4R4vGsHGCne
+         kezoz3hhqESZzfPactFDcOl7FdCOrS/CODrsDRsAOBkxwrinKc5ugM8EWj/MsSr7irfb
+         mj+T8B5KU/2UWXa4jMoeebs6rwUYGoUg77CI7DbSNiNOnLXUW8h2KHuTnIGuQE/2usRP
+         zbHuP9cugammZR92eX+B1XsJ8KksH/H3hCPvXfu2CAv2lmqwY0SKYT8Pa1TraSxcQ6Ca
+         tMagMQx0pssLka52P1CulMUUEjvtbtQkZ4EpCfdeX9/kv4L1hUK2rUWmFTR9J6dd0eLx
+         9HEA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=yDs1n1mZBpdWReyMTqOE29/ep+4DRDTqmDAno+7R43I=;
-        fh=qy140r7Cgn+DWbY5OSGjaZrx9JECGENB77P+etxJVxI=;
-        b=kLp+GZLtmy3/z7QxQu0RXOSe0k85JjmWOgues03MaaQ+LBzvpv5sgV4qCkNCgONObx
-         opWRxZ7worPFjdqVXoo20rDYNiXlZNqEpDKj4TewCbNk3F7jnNK1WZUFaKB99fzJENAD
-         bYc8/XVGVXCc/xB1HjLmHzsgBcmVTIrNbwy8Fm1xw4quIHVQKSgSYgXf8s8gDSz5ydEm
-         VxRy4Qrlr3ZlLjCp4IpT11HWluHKKSlJFoSo8Vq2wOoq389Ifj/nzR9JD5358TraowJj
-         jzSZVuv/SJoItJBYFJCf/WKU4jEYw4/xtDlXK7JN3BCGmpWifKyW2zAUJrrM3DFyJuw+
-         n34w==;
+        bh=/+KBQili/EFKsCTg2/JHY6rLA7fYyQOXJ56W3hSPG1w=;
+        fh=vc8A9nqbIdemrkHFbmq41xkwsE51BD5MLr4/N3TcE5Q=;
+        b=XKGdQmfuoM/AVA/CvA1inCFYdbDFRMM9D9pjvuuFb4fomERwckUMSYnqtmPC0E8kaQ
+         tcSXx8Lm6aOpj5NSTFDMSP68zYP8FGNE/9g9fSbdDrCOdOhN6XkgoMt82u6YzHiDIs8m
+         ZADPZnZLYmv0WyI+0DBtczv/8ShOH44XZaO/tLCGr2mCs+4yuKlqRcevfHq8o9yFQqug
+         +oCH597PGFAGD49JhxP8ugKQs1yolXBf9emOJasdOrNxK/USWZhTGBKP+c2QhUvjNQ7T
+         4YEt3Kd92EraTwdxm55aFiauKRXsplSZKrF+3QpT5/ROeE4PyiJu8mlxkS2AklFKo5H9
+         /Juw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794370685; x=1794975485; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794370765; x=1794975565; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=yDs1n1mZBpdWReyMTqOE29/ep+4DRDTqmDAno+7R43I=;
-        b=HE6UZ66/jJGBntLnPLZICmYHkYO8qBI9f0OoTXUl19HEL+Kfxc7wVhHM4N6rXhuXEH
-         OqCQcA6Yr78v6FY7KMzxPlkpTE4gjH0fbyiI8w9bgAA840iLKCj17MCE8Bkbj5356C6n
-         EI4kYleCauC5lrHEUQvnW96oPzqNXxzsW9aOs1gACfosyZR3lK/XLkVFSa9ORkvr11Qx
-         DymRyaRGOtUDEqSiBoLM4IouS0jdhy4c29Wxgqh5It16XVhzz3MQD0MEwjeRe2PrHi8g
-         wIOsicvDKcoq4W5Mg9alRzqnyWKPoevSYWxXeVknj6Y8K9yt5Y2/utGQauWlmlLpWQnD
-         9rmw==
+        bh=/+KBQili/EFKsCTg2/JHY6rLA7fYyQOXJ56W3hSPG1w=;
+        b=GdmnYr/ErLJ/QpriNYmm5Av+xZEqlmoeBVzW0qyiF984cVSxkM8FXvV9NtWRlIDoGX
+         vVsgkY3qtMUkrpxDApNxGrGYzFQdeEG24WyPSx6oh9UCVMvBh3s+fKkXRORpn07tPuZu
+         /COhoVcGnuRYqaEIqjieVqISTVdaKTIuleUtivnl0Ke5AFB4L1H1RveOVQ9V1mzkpdAU
+         n0++7oElruxLFmuBjoOsBwYEGRj4xcICihgUDVx+0kwo7KNAzPkCTUYsq+3iob+tt7yG
+         IFiHw+9/zyzSnjQxKN0+zTF7jcKyqbUwdR7f4kpFcXLGqlZ27Q5rxu8QwatN2zuSfx/D
+         v6SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794370685; x=1794975485;
+        d=1e100.net; s=20260707; t=1794370765; x=1794975565;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=yDs1n1mZBpdWReyMTqOE29/ep+4DRDTqmDAno+7R43I=;
-        b=cu/St3/VDjpSwS7PSmjNGzy0chaT/0PZ7/FUqPBNsthtlTrkHVNNGUZnH7Jh2K3nPv
-         FC3jT5CpR+xxtpQFROrPkWn5NQmvMIASOfOecdwX+y6rEYIWijCPR5aEDc195kl+nb+y
-         s1YS85n/COey8voPI1BAuw/PmL1/UTJ3B9mUEGZzXUet3NDL+3qav2FLaJ/mw7ILPHIq
-         p3+wqccyGykkQljJnttoC9p1ypuaYO5wThc08WrdH5mDXm1+MTXtxTOGvoKZwjQSCh2+
-         SkaloBFoQqOmqWdbuowTg7ogbKU/QGDXlD0ir5hjyT+755rtkd1nSUgNjdVJ/6GRsZYH
-         MbLA==
-X-Forwarded-Encrypted: i=1; AL+hErGGmEvm3etMM43uqrkph+47mJSrqShGDk3xzmW7GAOlrjHu5WUcd4xH+qQNC9e+oO0z0hg=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/qFNGs/+zBn09h86Sx7Kro2d656OIziTK9YIFyN22nqdS9zxZA
-	GV7Ke0CnHaF30j7ZKJjE3Isi2u4k9ApdR/3E5clcCQ0aX3UzoWCWWmLdBEhRGAadDtE45og4Dec
-	tp6DG3RsS5Svjm+9kOEcD0L4Ng00lxX0=
-X-Gm-Gg: AYBFou33qRBBDiYQOEG133kBrMpa5eROWz0n/J5dJpSv27i8g78f2BdOXPkBAAJ2TOb
-	CGaI/F4Cw+eTvxzW/tCuhT3xu2/TlB/dA5Ne1mjGtuQQa/Zut+OfpluzbhLk+3XOTyMld0LGqa3
-	U3/UW6xchoLjmgl/AOBka35cUxePrC1mX5KNwFZSHVgCG/0y2mcNfF6BUzYNnwC8mtabYk+pboJ
-	HDcm9fWpaEqsHW60kTctVnkt8H9jfdqfQQ8HiApR8WOuTqIxI3xfA6kXfHh29GKCoW5dPUxq0OC
-	PwDajW/cWQbLXU/JT/DWEajajPVmHoYI1avepZ4ZFRBlNH763cg5uYa3Dbp4w0nlmdxt3GYWttY
-	z0noctFuilQsruyPNv/XT0QXQz4Z1487j7kk9xc3PNk9M845tjN5iBTuscSwMg2XlkH5+p/9WmG
-	jTwA6jAce9oa62G9CbBsCQfpMYuK8/puJ83HAYbmV8di3FYn6EyROoVmHc
-X-Received: by 2002:a05:620a:2903:b0:93f:34c9:9248 with SMTP id
- af79cd13be357-947afff281cmr198218385a.22.1794370684984; Tue, 10 Nov 2026
- 20:18:04 -0800 (PST)
+        bh=/+KBQili/EFKsCTg2/JHY6rLA7fYyQOXJ56W3hSPG1w=;
+        b=MyoR7CT5P3qEaKlC/NGw8zfOZemfTbQelgAhmd/bgj0U9I9DAblTT1iYUWnjl5OaOH
+         ICeuZzGxv30pw/GKGskPjHLCsF9tcigK2PgEqPlpD2Sva2vq71t0sGIwzeGEG9loRQFM
+         jUGnAvv2j8Cbt9WSjwc4UPeL2luUoxVPa+U+S2O4lSvZeLKjsw6mwOJIYMMZySwChZ7a
+         wE7CXkYS+CgFb6gBCUmjjwCixK2XB+GZJs5AQu0OqO3CKeulTbvK8jzdhXvYLf/zy8pP
+         F++RjV++gI9MMToRmoF1HLUkxVLTNDY7RWki5mDMiFm/n8rjAW6jMhmPYR2QG4/WEWMK
+         /4gg==
+X-Forwarded-Encrypted: i=1; AL+hErE+XQWgBerzDAqTKEsP/3gZI3fez21ciKpW4XFG3E0Qsm/vYhf5kG2fqcuw63N71rP59ZY=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+kxFDZEkG2oLkq1rUSBMhrAylAgYW54EOCwg4/JUrRW5Dbp1ge
+	Xa49bOf8huLE9E7c548hRQ/znIkoiFx5yWQAEKZEqlHIO8cVTIwJuWLa1rpBIxLD+UgP659SWlV
+	OBzet2n97Flum+g2htwXXY/PIsOPagnLylbHK
+X-Gm-Gg: AYBFou1g8ru1xN+DpB7hcKMWaH0/MbZbF3arhtTt/8ZqiygIxEAZfFAMlm7M+u+4SLh
+	IBYnsl4twPECXan/KTNNUm+EcSHE2Hnm5/utFnBA+DYWbRfmFIW1DPwi/b6JvwUr1wxqx47Dm28
+	W7JJ1Lb5aGTt67tFhufZCTZGW6DnueCnEhzaeyhpWkbyIo65R4mck5lx5Ckk++PgX3QjpCZ5TdH
+	qM7E5XmAIhH/QvZOWB32I3nSRG8OjMbnx4fGcfUO52N5DvTw6lBTnePRJHZP65Yk8GsjpBFJVLK
+	V427qLT+UCiRUpgNP8bXhnyDud8P99tvvr3w97FMlP4XyhUxMYl3Fhl15pxVVIN0EA7SkVUVb5J
+	34yn5rJDAYeUXjWJ2bdJYOEtMcw+rnxa7bZWbGoBC3VJ6XpXLlVNpaGUvIdioQaSHjJ3QZWoOOK
+	pbTJuJGWB+Ky+lTm/iS1C7mfiCqqU7v5nNCAUni3juFGL6/n3i3o09FWY/Sw==
+X-Received: by 2002:a05:6214:19c2:b0:917:91bb:c63d with SMTP id
+ 6a1803df08f44-91f0415d811mr21857076d6.38.1794370765130; Tue, 10 Nov 2026
+ 20:19:25 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -106,134 +106,88 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 References: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
- <pull.2305.v3.git.1794335969.gitgitgadget@gmail.com> <398b54f00a1278f22fef456384c6c4ebd1a1f576.1794335969.git.gitgitgadget@gmail.com>
- <xmqqse18pgin.fsf@gitster.g>
-In-Reply-To: <xmqqse18pgin.fsf@gitster.g>
+ <pull.2305.v3.git.1794335969.gitgitgadget@gmail.com> <01c3cc25738c43d61aff153805e02db872ff21de.1794335969.git.gitgitgadget@gmail.com>
+ <xmqq7bikqvpm.fsf@gitster.g>
+In-Reply-To: <xmqq7bikqvpm.fsf@gitster.g>
 From: Srujith Poojary <poojarysrujith@gmail.com>
-Date: Wed, 11 Nov 2026 09:47:51 +0530
-X-Gm-Features: AclHuK-b8cE5KYEicBEeMGiGzZGqoh0ua4MLD3b1s19zwClFiyijRUIp1Nr8490
-Message-ID: <CABh_KWhA0bZzVrbY-bBA6i1tOqkZ-+a+m1g7tsqKyj8zK+D77Q@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] archive: remove USE_THE_REPOSITORY_VARIABLE from
- archival modules
+Date: Wed, 11 Nov 2026 09:49:13 +0530
+X-Gm-Features: AclHuK8w4hQRkpQVrs_IDumu1kz_-sFa6wG3In3cPuKMErb-obrGUTke-e9CP68
+Message-ID: <CABh_KWjYc15OJjdZQPFPhLO0VRFhY4VJEgYxVaJoGRK284wiUQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] submodule: use the submodule repository to
+ abbreviate commits
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 11, 2026 at 2:10=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+On Wed, Nov 11, 2026 at 1:56=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
 wrote:
 >
 > "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
 > writes:
 >
-> > From: Srujith A Poojary <poojarysrujith@gmail.com>
-> >
-> > Refactor archive-tar.c, archive-zip.c, archive.c, and supporting files
-> > to clean up archiver initialization functions and header dependencies.
-> >
-> > Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
-> > ---
-> >  archive-tar.c     | 5 ++---
-> >  builtin/archive.c | 1 +
-> >  2 files changed, 3 insertions(+), 3 deletions(-)
->
-> Where is the change to archive-zip.c the proposed log message
-> advertises?
->
-> The proposed log message claims that it refactors and cleans up, but
-> the patch looks like a totally incoherent and unexplained mess.  All
-> the places I note "What is this change about?" are unexplained
-> changes whose value is dubious.
->
-> > diff --git a/archive-tar.c b/archive-tar.c
-> > index a1c66024d4..642a3ddfc3 100644
-> > --- a/archive-tar.c
-> > +++ b/archive-tar.c
-> > @@ -3,7 +3,6 @@
-> >   */
-> >
-> >  #define USE_THE_REPOSITORY_VARIABLE
-> > -
-> >  #include "git-compat-util.h"
-> >  #include "config.h"
-> >  #include "gettext.h"
->
-> What is this change about?
->
-> > @@ -337,7 +336,7 @@ static void write_global_extended_header(struct arc=
-hiver_args *args)
-> >       if (oid)
-> >               strbuf_append_ext_header(&ext_header, "comment",
-> >                                        oid_to_hex(oid),
-> > -                                      the_hash_algo->hexsz);
-> > +                                      args->repo->hash_algo->hexsz);
-> >       if (args->time > USTAR_MAX_MTIME) {
-> >               strbuf_append_ext_header_uint(&ext_header, "mtime",
-> >                                             args->time);
->
-> Here, the args->repo which was relayed by archive.c:write_archive()
-> is used.  This function, when called by builtin/archive.c, passes
-> the repo it obtained from git.c's dispatcher; when it is called by
-> builtin/upload-archive.c, it uses the_repository (which is fine).
->
-> This hunk looks like a good change.
->
-> > @@ -529,13 +528,13 @@ static struct archiver tar_archiver =3D {
-> >  void init_tar_archiver(void)
+> > diff --git a/submodule.c b/submodule.c
+> > index 6fcb606f7e..1302c11ddf 100644
+> > --- a/submodule.c
+> > +++ b/submodule.c
+> > @@ -543,6 +543,7 @@ static void show_submodule_header(struct diff_optio=
+ns *o,
+> >               struct commit **left, struct commit **right,
+> >               struct commit_list **merge_bases)
 > >  {
-> >       int i;
-> > +     repo_config(the_repository, git_tar_config, NULL);
-> >       register_archiver(&tar_archiver);
+> > +     struct repository *repo =3D sub ? sub : o->repo;
+>
+> Let's step back a bit.  Use of any repository other than 'sub' is
+> wrong as a way to correctly find suitable abbreviation of object
+> names in the 'sub' repository.  Now, the variable sub is NULL when
+> the submodule is not initialized, in which case we won't know how
+> many hexdigits we need to abbreviate "one" and "two" to, because
+> there is no repository that has any object from that submodule to
+> begin with.
+>
+> > @@ -599,9 +600,9 @@ static void show_submodule_header(struct diff_optio=
+ns *o,
 > >
-> >       tar_filter_config("tar.tgz.command", internal_gzip_command, NULL)=
-;
-> >       tar_filter_config("tar.tgz.remote", "true", NULL);
-> >       tar_filter_config("tar.tar.gz.command", internal_gzip_command, NU=
-LL);
-> >       tar_filter_config("tar.tar.gz.remote", "true", NULL);
-> > -     repo_config(the_repository, git_tar_config, NULL);
-> >       for (i =3D 0; i < nr_tar_filters; i++) {
-> >               /* omit any filters that never had a command configured *=
-/
-> >               if (tar_filters[i]->filter_command)
+> >  output_header:
+> >       strbuf_addf(&sb, "Submodule %s ", path);
+> > -     strbuf_add_unique_abbrev(&sb, one, DEFAULT_ABBREV);
+> > +     strbuf_repo_add_unique_abbrev(&sb, repo, one, DEFAULT_ABBREV);
+> >       strbuf_addstr(&sb, (fast_backward || fast_forward) ? ".." : "..."=
+);
+> > -     strbuf_add_unique_abbrev(&sb, two, DEFAULT_ABBREV);
+> > +     strbuf_repo_add_unique_abbrev(&sb, repo, two, DEFAULT_ABBREV);
 >
-> What is this change about?  Earlier, we first declared the built-in
-> default configurations and then read from the configuration files.
-> Now you read the configuration files, and then overwrite the values
-> the configuration files specified with our built-in default?
+> And that means the above patch is an utterly wrong rewrite, isn't
+> it?
 >
-> > diff --git a/builtin/archive.c b/builtin/archive.c
-> > index 3c1288a123..8b7d56f8cb 100644
-> > --- a/builtin/archive.c
-> > +++ b/builtin/archive.c
-> > @@ -2,6 +2,7 @@
-> >   * Copyright (c) 2006 Franck Bui-Huu
-> >   * Copyright (c) 2006 Rene Scharfe
-> >   */
-> > +#define USE_THE_REPOSITORY_VARIABLE
-> >  #include "builtin.h"
-> >  #include "archive.h"
-> >  #include "gettext.h"
+> Because using o->repo is just as wrong as using the_repository,
+> replacing strbuf_add_unique_abbrev(), which uses the_repository,
+> with a call to strbuf_repo_add_unique_abbrev() and using o->repo
+> does not fix anything.
 >
-> What is this change about?
+> So when (sub =3D=3D NULL), the code probably should just grab the first
+> DEFAULT_ABBREV hexdigits of one and two and be done with it.
+> Guaranteeing uniqueness of the abbreviations within o->repo does not
+> help anybody anyway, right?
+>
+> On the other hand, when (sub !=3D NULL), the rewrite in this patch is
+> absolutely the right thing to do.  Thanks for working on it.
+>
+>
+>
+>
 
 Hi Junio,
 
-Thanks for the detailed review!
-
-1.Commit message mismatch: Good catch=E2=80=94archive-zip.c was a leftover
-reference from my previous iteration's commit message. I will update
-the commit log to accurately describe only the files modified in this
-patch.
-2.Config reordering in archive-tar.c: You are completely right. Moving
-repo_config() above the default settings broke the intended behavior
-by letting built-in defaults overwrite user configuration. I will
-revert repo_config() to run after setting the default options.
-3.write_global_extended_header(): Glad to hear this hunk looks good.
-
-I will fix the config order locally and refine the commit message, and
-I'll wait to send the updated patch series until we've finished
-reviewing the rest of the feedback.
+Thanks for stepping back and explaining the root issue with submodule.c.
+You're right=E2=80=94when sub =3D=3D NULL, o->repo doesn't hold object info=
+rmation
+for the submodule anyway, so querying o->repo for unique abbreviations
+is incorrect.
+In the next iteration, I will update show_submodule_header() to handle
+sub =3D=3D NULL by using the standard DEFAULT_ABBREV digits directly
+without a repository abbreviation lookup, and keep the sub !=3D NULL
+logic using the sub repository.
 
 Thanks,
 Srujith
