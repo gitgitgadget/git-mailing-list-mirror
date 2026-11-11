@@ -1,94 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794398871;
-	b=WsFkufzAd9u0z7LaesOixxzxxTKNY0n4UtH5lVFCXH2dvLJeywV73I9rsPi/ybZjVu+c
-	 TeoDOiaNTFKXaK+PfdYRkrqJMJCNty0JxK4bKuU3jbuD9m4emjzsTXJoWUqiNuujTDUbf
-	 6UEBWTdeXDxYGUY6DR1xr9O15PmBqXHlbAL1Q3KjWxIlNDpzG9CaCmuzq0S6Vm/BIVQZG
-	 HmepvfE1Mnw3BH2Y4XSxqc65zB84qxhhfmr5kLhMZD1elaejQ9HZgpbVt6D9DIlxvDRiO
-	 l55XlEuWd92lP+1TNJCrmMCMHf4HUU6jIVXvlVqAFQ9Cej0clbclrY0GjUv+oIHmslQ==
+	t=1794399534;
+	b=k6s//vFcLosNSEzLpqG6q6qnoXlUEUE/YSnonIouIrhtkXO9q6XFuy/ibqpnnMGHNgpp
+	 VxALT26xP2Z29DrU9HwBUfHp8pZCoNOlrR0bSKB0mxLAXELw1ByeigpigWyTqSfCyygcW
+	 1NIoiSt9aId5FxjOjNg7vn4e4CG8DJi062Z2DqDiEUlvpXKUJHn/vh+TYDjenoGMb9nMN
+	 a6zd1r2Mi8fhKw2s93RiGBeCT1xCk6SD3XuAFtisiGs+ZkAk/oIaNMPgNynUDB3iPgxXj
+	 gYoo6iBxPUdUmBxKhc4DVzFL/OX51EgEVNX9b7cx/MRj+YW8FnSgkKkas2ugLjAGPYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794398871;
-	h=DMARC-Filter:DKIM2-Signature:Message-Instance:DKIM-Signature:
-	 X-UI-Sender-Class:Received:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Provags-ID:X-Spam-Flag:UI-OutboundReport:
-	 Content-Transfer-Encoding;
-	bh=G6lSglILtLyhe/Kyzl8c+UOGGDxG9XyhcesUBLhtBF0=;
-	b=Ew3ZTdzoWO2oO5KLXwVfJH5si4JYPI1356+gu8iKrCg0PYi7X6JC9GcyoZOrhvwv2lpg
-	 VpXlc+PC9IfQVmC2gOyrtHRKYJ0hb36qyUpfzMp+4nEQ2zSg3+G2DkHYgWKl3rcAOzavS
-	 p185EgdbHAtG/kXc2SEdouevVT8U+9GVfkuGelc2YMrAF6SISf8R9ZbpHZFT6lG5Imeik
-	 BoO3/IYEzo4LeUhudPaxvNZDIWh/M/b3JiwRlYW6EKSoeHsjYlF2EzXLkKUFxI2gJCHzw
-	 s3HfahaEFQJFqqvM4DBFzJVOF4XH7zogWc1G9p4J17CgY09Lcv3oRyubAXmHUK8lbwA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794399534;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:From:Subject:Date:Message-Id:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:
+	 In-Reply-To:References:To:Cc:X-Mailer;
+	bh=jKPpVa7LVp7g/lKDhNPT6yHXoKDs5iEwMb3znIK2rzM=;
+	b=ocROJUZogiq6Z4U9V2+i33Z5kRKfeB9C70GHYRe+XIyPsOfiMMEpQMgKjeYTqKs53R2T
+	 kqBgR1rkOF78A3CRnkMlQFwQAyUH3zz++KbruGoAtSGldSrXk82A5D+FEfNxfSba+dNz4
+	 kL5bTOO1Gyl1Ter1d6jaTiazZDYQuGQ3IZ5Dde7ra55vGInXuXyvmrAbHAZiOpqWJzv5U
+	 zpaKCQJb74hVHgHHAkHO/0NucQrZ2g3fFz9ln+xAcPrctpQIina9h1U3SCLRIaTO5kHPq
+	 ERnX6fNwk8MliwN9JXyoyRmPBPpXdN422Ac+Kk9S2uENtXdnU39AQ0sUYF0uSLXqnbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmx.de;
-	spf=pass smtp.mailfrom=gmx.de;
-	dkim=pass header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=nB0zuao2;
-	arc=none smtp.remote-ip=212.227.17.22
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=rMmMKMiZ;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lYEM4DBe;
+	arc=none smtp.remote-ip=202.12.124.144
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5427606A321
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 12:07:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5427606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF912606A31C
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 12:18:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF912606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=nB0zuao2
-DKIM2-Signature:  i=1; m=1; t=1794398868;
- mf=PG9zd2FsZC5idWRkZW5oYWdlbkBnbXguZGU+;
- rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
- d=gmx.de;
- s=s31663417:rsa-sha256:Wdp43bglMFvVmoYA/+epucpEPgno
-   ZvJTJ2RYCwVZ64QOMwPGixLmODnbRmFeDPKWJlKaawvNn0OuNUOZVlsGimn7NWXHC237JjvXEg5
-   6iXPOt5w2U+1s269oYsLIgEbstdd3Sx3Pl+0BWenq5MW9cgmJeN5y6aRK/FT03zq5a2i/5RSXCx
-   cTiZko41yMkg4sR/52KSXWbWqV9LyvLs39lx41oWB4OQzBbyAuxuFrMSE7SVqpXU0PeGqWNU7yg
-   4q2HB+OvibwZBRfcIWGDbsgwmSCHSmoXvAZudkO6ELNCMBK3EMq+nRlnvCRUuD5yxG/RlZIUGUc
-   RP8El+pPSEEjSA==;
-Message-Instance:  m=1;
- h=sha256:
-   uTTY0sd81xXuFaGuHaKcUBWIHGMo7IKEG7sjuPiRj4Y=:
-   G6lSglILtLyhe/Kyzl8c+UOGGDxG9XyhcesUBLhtBF0=,
-  sha512:
-   6FN6p3vL7NjPud0q+dBBpEDMIu2XV4q2+D+i5e/AZIoPu1+S117Yh6yCDv4KkmnNXspR0LdeWAOsSwLZBh6dwA==:
-   GoVMIwo05J5QilYbru0k/w4kKLm1Cp8C3HOBH9ELQe0R1jlaQVMMd+saLrvYb+TlwFYiOd3cuU6yfw9sGtAIkQ==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1794398868; x=1795003668;
-	i=oswald.buddenhagen@gmx.de;
-	bh=G6lSglILtLyhe/Kyzl8c+UOGGDxG9XyhcesUBLhtBF0=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=nB0zuao2UXFidYA2uWj3EjckSa9cOqnC47r/CusnuX/XRqYdMTGeNonTyDB6peJW
-	 AoAHtsUsn05Tsb+h+nCwlRW3Ei0uwxv4IxP47ouoQevRMeKd4k+lVqqnY6561PsTj
-	 zF2uiefMDS2cAAus9AypbRK+3CgywcQ2TS4wFW0rz/vpJ1a8QekBiPEB2rTgY/DJL
-	 Fl4u7w7s+DyL3YtZQc+MixQVsGWQFHU7G43fHjmiAGksIGJPRz8nd/Vu9Gp9cZ6P3
-	 l2txC4be9OefobYLbMila3pRPgYfqqRGllATi2zNs8caBPL9e0ga8EOGB2klrgc2S
-	 6Kx/EK1cn61ZCwNCzw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M6Udt-1xPAEv28Ov-009zLO; Wed, 11
- Nov 2026 13:07:48 +0100
-Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
-	id 1xR77D-iF9-00; Wed, 11 Nov 2026 13:07:47 +0100
-Date: Wed, 11 Nov 2026 13:07:47 +0100
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kristofer Karlsson <krka@spotify.com>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH] describe: count the distance correctly when commit dates
- are skewed
-Message-ID: <avRakxssSCm1qQ4B@ugly.lan>
-References: <20261031065525.19883-2-torvalds@kernel.org>
- <auiGP4XhObUzC9vD@pks.im>
- <CAHk-=wijLfduoJyOM+AW6FS6c02cuEFRAuQWLE+uf7SGhj8jXA@mail.gmail.com>
- <aumKXUS7_x0i7ZU1@pks.im>
- <xmqq5wyd4epv.fsf@gitster.g>
- <CAL71e4PqEQkGoont3tL5wJWd1_itsaaxfX+DOkLj64x-S7xR1A@mail.gmail.com>
- <xmqqv76c1mwb.fsf@gitster.g>
- <CAHk-=wj-5hp+FZBAqryzTwJ8DKvuNHub2e0kUG3g_+7borFfEQ@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=rMmMKMiZ;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lYEM4DBe
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 40C241D001B6
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 07:18:53 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Wed, 11 Nov 2026 07:18:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794399532;
+	 x=1794485932; bh=jKPpVa7LVp7g/lKDhNPT6yHXoKDs5iEwMb3znIK2rzM=; b=
+	rMmMKMiZkuK7+e9j5qsaEHURtOp1Ptd1Pk4XrGK2l4fVM7vU2+NL19+RFIopm6Yt
+	dmAYwRTwhwXXi2KxLFIdfsu3SK1qKRHulKR+3lSr//B1Hf7OcHqyqi+tvMujHzOj
+	t7zYyuzaIpQQdTx1eO8cFEIcClqmPLYHeURgRGPFwh7IRpwNCLW13VL4MG4TsfSJ
+	iCHFXMwQL4t+pzLM440iou50GFR59UHBQHkEnI3XnZjwVBoYLb1IOUxdyU+j1vNE
+	84KeepekDMMqUDoc0Mvt4Wvgk00VZO0rBO0bjRVWOsdRrvmzyzYIl6IcSIykGQmm
+	v0e7kRea7pxYi6wOhHCAgw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794399532; x=
+	1794485932; bh=jKPpVa7LVp7g/lKDhNPT6yHXoKDs5iEwMb3znIK2rzM=; b=l
+	YEM4DBeTMw8Lv5tazpuPE714tdxAi3qUJkvSzYn8QHsgjw+AYvzA+hf20dgBdOMa
+	wokqUBqVZs1SiBwUduZHZNJSfEc/FkWy+pfoF2zQ55P86AmwDioc1dvHnXAb1oOO
+	HBNdy7YVGjrDXPCJ7fty3D/GmpC73NOW9SQ1w7CDDUqM9h5kdcu6BE0PjadwsU4U
+	rq7nAoTgRM655ug9wrTlEQrmepxoJ8/8yZpV3lwHSIWWRPil6jFNdRtNFuOVQYZr
+	PxBl3CwRO0VmqB8UrssSje/bmMRRohqlSIBYIB0ZdLGjAhKXKO37nKATrWy99VOW
+	vvEHMpUv+Dazr/AgKRQeg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794399532; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:XjdXK2eZP1bx9ZAofCu1NY62CYy8KZ+D0WatrjM+NhKMPKi
+	tXnTY5wpmCfE2yAf8hffi+Pygn31/WaHcyDWRelBD+jS4Ei9zix0xSV/BZHmjSNx
+	+EjYSGWZ0FMo6WBydJdVMrYxu3hy5kTsxIsF21bxi3QVSyWeYBjt+zfd77aDQTRj
+	4G3QDcsw5WUurCL6/LhxTkoWqjfbEdyiO+6/LWEVQSiGMW/3N304CgV266XtPmxA
+	3EVerCmSvWoeLwbSx9V5R2jhcYTYPla5tvpLLejc/NPf/9JRSh+mM40IVojSjB6t
+	LEANpeqtVIYI5n/rrhcFFuMe6PvwHNFsiWlklbw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:us7d3/hDnGLna+DOtK8+e/ZZyv7hE50jGUpd2MbvCRA=:dgXUTbChvEG4vbnSrceXkiuo2iOhF3AaRcLlbidKG/A=;
+X-ME-Sender: <xms:LF30aoMmzuMi59P37HkpOJXbWgP3HbROmZWIWI0NwE9vJJ3hc44I7A>
+    <xme:LF30al_YUrP_GlDP5Kq2x28cAVCtbTj4rA5ki9xtH6guqnb5VZJcHSG67LmPaSRXz
+    Z2zyBlzCnLNr0cbBjc8y4RNTEO6uPQuMP6aKl9gUGaPhGL0WSktWmY>
+X-ME-Received: <xmr:LF30akSIKRCbngAGoaeZMQl2jbB6iL6voP7Sqohd19Qb2fqXc2VoNW9IPk-0QuLhIZcSNQ>
+X-ME-Proxy-Cause: dmFkZTGUbo6pLIMpgbrx2XOUAchq5v6Dy5wcqWod1AZmRN7He47Wrc2DE14iZmZDRxWMOr
+    xRptI2SpSopX7CnW443E7MxxzjYHYTwt0X7YlY+Vvr7U5dy1Kd7RwGvMWgqND42MIlNd25
+    U38J9mA/87xYsFE1pxFipQq8W6KSZvWM4pRcf4lUKpYjHd27P6RUS6owvp4NuwMgRXg48m
+    1Q0X9WPIw8wmBB6IMpsNvbHV494N47ZkQ/Jwb03xnGjMyJAEMnoX6zG7ncP5GVSlOzS/Dp
+    QxTIULSeZRrw3NSsyLjja8Qf2o7XltG8E+rr1ag4pqcKgCGq+rxQB6GuSc7WfU3CDCiOsa
+    675Ktf155IyPXb22sQfCs4NQGRbty2iTBpsEk9l5RnebKzphyPzEwC4VkQTjhFzQ+60yr4
+    yf3tekT77FO1HFYMs7JXaeCGcCG23gU1AGvqT3KtWwn2N9KaBxN5HBvF1RsBDJ/1sWzS74
+    VdLPl+OE/PEPEzunQ4m86hJcZBsko0qI8CGso5anoweOQxqlPZMJjySGpU+WlJySnRrnA5
+    w4ULT9m6blLQJHlG1Y8yjauC5SNv1LuzX2V66l22t23g6BR2u1UDyQA247sZhpWzqQZUp1
+    5xPYTG5gRgnoIaFG4Qoz6OlYsUVjUmi1qFrm8WZN0ZYsDjvwypcn0bPSySnA
+X-ME-Proxy: <xmx:LF30avkq7KHPd7X7zMUMYXxO4JjVr1cX5Bhu4SqDjWngCckTSujaTw>
+    <xmx:LF30asQ391hsgCXpYnVV3VM8VCrGLTg-qL9Nbpe5rpUUj8dKdk9rKA>
+    <xmx:LF30alMko6wzSFPVncTDWEKYe1zUFJm8MI5XcMK4moxFDcLltnTkRw>
+    <xmx:LF30atUciBJLz-JjktPk__T5r__a8j3XlQ46AVw9vWdfYBSftaQkDw>
+    <xmx:LF30anwrLPDzmiluOzXLCgpq3rc5AhSr0HWxjQ7s_nLRR7J-DifTXV74>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Nov 2026 07:18:51 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 42947d49 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Nov 2026 12:18:49 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v4 00/12] builtin/rerere: convert to use subcommands
+Date: Wed, 11 Nov 2026 13:18:36 +0100
+Message-Id: <20261111-pks-rerere-subcommands-v4-0-df0c8bf79e16@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,137 +122,138 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wj-5hp+FZBAqryzTwJ8DKvuNHub2e0kUG3g_+7borFfEQ@mail.gmail.com>
-X-Provags-ID: V03:K1:gFe5HMIxUXdpI44K4wdHgf9KEt2Oqr2zV3cQsNz21QZzU8lwoHO
- SoaVgxQ/40ikmAP+xB6jJe9XlmKCV+GwKeqWqh7RVVs3g5UCC86o1UdJs/FCWZQqc3hQh2K
- 7NM13iRxZZhUcmMZMnF97G1tBxoeM6kh79EURsP6uavBrlnWSfzSQCdZiDKqNeT/YrvUHv0
- XsYQSmGT21+Nn2o8autwQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ue43Zq3n0p0=;RPhf5XvWSVbwQEYcKrKoYLE/ZQ1
- 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
- c+uuIMxTlZ5gAErqnNoupw2r4DavbH3dXnvIQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4XNyw7CIBAF0F9pWIthgLboyv8wLlqYWjR9BGqja
+ frvQk18LBoDm5vcOXciHp1FT/bJRByO1tuuDUFuEqLroj0jtSZkwhnPgPGc9ldPHcZH/a3UXdM
+ UrfFUgDIS0lRIoUg47h1W9r7Ax9Mrh/oF9RC12KitHzr3WJZHiL2/IyNQRo0SmQ4fmU4Pobi1D
+ YkLI/82dqsGDwbLTVoWoFAp/mOIjwEsWzVEMGRVQSaNqkoFb2Oe5yeh+VZbUwEAAA==
+X-Change-ID: 20261027-pks-rerere-subcommands-318d41553438
+In-Reply-To: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
+References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
+To: git@vger.kernel.org
+Cc: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>, 
+ Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15.2
 
-On Wed, Nov 04, 2026 at 10:29:27AM -0800, Linus Torvalds wrote:
->For the kernel, people figured out what the issue is: it's not clock
->skew, it's intentional bad behavior by the gitlab Marge-bot merge
->logic.
->[...]
->Don't ask me what complete insanity caused somebody to think that
->keeping the committer name and email should mean that you should also
->lie about the commit *date*.
->
-dude! you forgot the "content warning: asbestos underwear required"=20
-disclaimer ... ;-)
+Hi,
 
-anyway, i suspect that nobody actually thought about this at all, and=20
-it's simply a result of the default view of committer/-date (and=20
-author/-date) as pseudo-atomic entities. of course, closer consideration=
-=20
-reveals this to be a not necessarily helpful view, see also [1].
+while reviewing some patch series around git-rerere(1) recently I was a
+bit appalled by our custom subcommand parsing that we do here. This
+patch series here thus cleans up and modernizes that part a bit so that
+git-rerere(1) behaves like every other Git command that happens to have
+subcommands.
 
-[1] https://lore.kernel.org/all/CAP9es6tyaGwfTguz5zgBmE5xN7MLDN3-rxRfo_JJB=
-f79RCNzgg@mail.gmail.com/T/#u
+This series is based on 37b3475fb53 (The 9th batch, 2026-10-25) with
+ps/rerere-remove-global-state at b948c10c8b3 (rerere: get rid of global
+rerere cache state, 2026-10-23) merged into it.
+
+Changes in v4:
+  - Some more polishing for `RERERE_{NO,}AUTOUPDATE` documentation.
+  - Die in case both of these flags are passed.
+  - Link to v3: https://patch.msgid.link/20261106-pks-rerere-subcommands-v3-0-4ff164d8fb81@pks.im
+
+Changes in v3:
+  - Clarify what `RERERE_NOAUTOUPDATE` does.
+  - Link to v2: https://patch.msgid.link/20261029-pks-rerere-subcommands-v2-0-07d5ba18e882@pks.im
+
+Changes in v2:
+  - Document rerere flags.
+  - Rename `rerere_record()` to just `rerere()`.
+  - Link to v1: https://patch.msgid.link/20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im
+
+Thanks!
+
+Patrick
+
+---
+Patrick Steinhardt (12):
+      rerere: rename `repo_rerere()`
+      rerere: convert flags into an enum
+      builtin/rerere: drop `the_repository`
+      builtin/rerere: stop passing flags to subcommands that ignore them
+      builtin/rerere: turn "forget" into a proper subcommand
+      builtin/rerere: turn "clear" into a proper subcommand
+      builtin/rerere: turn "status" into a proper subcommand
+      builtin/rerere: turn "remaining" into a proper subcommand
+      builtin/rerere: turn "diff" into a proper subcommand
+      builtin/rerere: turn "gc" into a proper subcommand
+      builtin/rerere: use `OPT_SUBCOMMAND()`
+      builtin/rerere: introduce proper usage strings for subcommands
+
+ Documentation/git-rerere.adoc |   8 +-
+ apply.c                       |   2 +-
+ builtin/am.c                  |   4 +-
+ builtin/commit.c              |   2 +-
+ builtin/merge.c               |   2 +-
+ builtin/rerere.c              | 319 ++++++++++++++++++++++++++++++++----------
+ builtin/stash.c               |   2 +-
+ rerere.c                      |  14 +-
+ rerere.h                      |  43 ++++--
+ sequencer.c                   |   4 +-
+ t/t4200-rerere.sh             |   5 -
+ 11 files changed, 299 insertions(+), 106 deletions(-)
+
+Range-diff versus v3:
+
+ 1:  e9237465706 =  1:  f669dc6eddf rerere: rename `repo_rerere()`
+ 2:  94d91a0620d !  2:  4fd3f6aa650 rerere: convert flags into an enum
+    @@ Commit message
+         around as enums so that it becomes trivial to see what kind of flags are
+         expected. Adapt the rerere flags accordingly and document them.
+     
+    +    While at it, detect the case where both `RERERE_AUTOUPDATE` and
+    +    `RERERE_NOAUTOUPDATE` are passed. This combination does not make a lot
+    +    of sense, and it's not obvious which of those flags takes precedence
+    +    (it's `RERERE_AUTOUPDATE`). All current callers know to only pass one of
+    +    those flags, but let's be safe rather than sorry and `BUG()` in case
+    +    both are passed.
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## rerere.c ##
+    @@ rerere.c: static int is_rerere_enabled(struct repository *r)
+      {
+      	int lock_timeout_ms = 1000;
+      	int fd;
+    +@@ rerere.c: int rerere_cache_setup(struct rerere_cache *cache,
+    + 	repo_config_get_bool(r, "rerere.autoupdate", &cache->autoupdate);
+    + 	repo_config_get_int(r, "rerere.locktimeout", &lock_timeout_ms);
+    + 
+    ++	if ((flags & RERERE_AUTOUPDATE) && (flags & RERERE_NOAUTOUPDATE))
+    ++		BUG("RERERE_AUTOUPDATE cannot be used with RERERE_NOAUTOUPDATE");
+    + 	if (flags & (RERERE_AUTOUPDATE|RERERE_NOAUTOUPDATE))
+    + 		cache->autoupdate = !!(flags & RERERE_AUTOUPDATE);
+    + 	if ((flags & RERERE_READONLY) && (flags & RERERE_NOWAIT))
+     @@ rerere.c: int rerere_cache_setup(struct rerere_cache *cache,
+      	return fd;
+      }
+    @@ rerere.h: struct rerere_id {
+     +	RERERE_AUTOUPDATE = (1 << 0),
+     +
+     +	/*
+    -+	 * Reverse of RERERE_AUTOUPDATE. That is, update the file in the
+    -+	 * working tree but don't touch the index.
+    ++	 * update the file in the working tree but don't touch the index. This
+    ++	 * can be used to explicitly override "rerere.autoUpdate".
+    ++	 *
+    ++	 * This flag is essentially the reverse of `RERERE_AUTOUPDATE`. It is
+    ++	 * invalid to pass both flags at the same time.
+     +	 */
+     +	RERERE_NOAUTOUPDATE = (1 << 1),
+     +
+ 3:  99faad47068 =  3:  48692c2c88d builtin/rerere: drop `the_repository`
+ 4:  f164c482227 =  4:  e76991dd39d builtin/rerere: stop passing flags to subcommands that ignore them
+ 5:  0573d2323e8 =  5:  2474dca4713 builtin/rerere: turn "forget" into a proper subcommand
+ 6:  2098dedf4fd =  6:  cecdbb1c63b builtin/rerere: turn "clear" into a proper subcommand
+ 7:  e8eaa2b4092 =  7:  54fc766f9d2 builtin/rerere: turn "status" into a proper subcommand
+ 8:  a5781284b8b =  8:  fa2c839b2cb builtin/rerere: turn "remaining" into a proper subcommand
+ 9:  9a4278df0ea =  9:  416b8311ca9 builtin/rerere: turn "diff" into a proper subcommand
+10:  e63b9be0d74 = 10:  adb2b68f833 builtin/rerere: turn "gc" into a proper subcommand
+11:  47889896ecb = 11:  a12e19cb2e8 builtin/rerere: use `OPT_SUBCOMMAND()`
+12:  5e16a247b49 = 12:  4b1b6170ba3 builtin/rerere: introduce proper usage strings for subcommands
+
+---
+base-commit: 710910c03a22ac663885049213b9fef5853ea8e0
+change-id: 20261027-pks-rerere-subcommands-318d41553438
+
