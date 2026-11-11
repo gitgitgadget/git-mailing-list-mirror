@@ -1,117 +1,117 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794399550;
-	b=tdUBUhl4Yi9wQ+ZLXClrWbql6s3zxJYxIVDcLdCnUcGArArbltCmSqvqlr0tStrkrpZu
-	 Pwm7QlHNsvuvkUVVcXpOR9tuAFduizYUWHPcIrqDOb5rO0cPt6b6kNpWt1tc71LS1qI4q
-	 fCR/4qOB2nC9zi2J4nMZHEzBjAtV9y4uA1BIjIWGDpOYrdAeMkmW70osb09BHFic4JP19
-	 Z5yyoiHfjD3LhC0bLkNvJ6Wy88MpjUR1p3GD+oQRdm7ppl50mIvsCisxfFSjWi2ywhIxj
-	 XFrdFFWWJhYaW6fTtKJi9FYpPKbL04qzEu/Z+/mDHlth/tzxVQzeiLj23OprVQk4a4w==
+	t=1794399555;
+	b=4Ae5Yz0MjcUePB7KqUhx90CLruiY8q63D4YZgLji37zV86XBn3TjpS33IBkcbFWOdxP4
+	 DVLUmRYgJUVqjYQ2Ls2XUVG/L5xjkU0jSxPmh56ncMLVOSSksg3A9DpVHaIE92+S3v2SS
+	 0IrD8GZ3cSKFyN2MoRWiwK6f7KDLqWI2zciDmGYC9zoTzMCKmYTaUr976fHzcAT3LLm5+
+	 2C2a2mM78b9MmpSoq6nx7nJXdyF2xp4Sa3dbmC9zxHVD9lP0AucwAklIf2jfbaUNS8ZCa
+	 1an/QHAiFiDpICU0RaKkrMqlXld4/at97o5GqNm0ejXAq5NUQ1epwGJtBsGQPZ4pdDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794399550;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794399555;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=ueUGw4xiRCsGP4mNRn4+jL7xwolnwZ81/vNmhBU1/GY=;
-	b=3BRjkv3ikFoB76eqZG7NoXCrGKV+IQzdrA/aE1rGENRHaw+vr86zJBP2lJkVcVpvOSW2
-	 Ynqc+2Ht5GSacUzy0ai947N3QzFA7b6H2hnWdmO7neRBeOWtTSJMSaQrIxTb9hLOasAo6
-	 VI1HnTTlAtWrQatays1lFvFSrX3c457bpoeD3ptJFyruVHpMKbbjallzic+w9PJQY3OnF
-	 2EFOc7dPc3xUVE/XuUwQwiF+jDkDgmA+eiCyJEJgJOHZr6NvKTtj8ucVtQcPfr96kYAdF
-	 15RXKsuEnPxVzZZ608iq99DFXRc4Sr6A7qwc2P/K87xMJQ74cW0fhIXnkbSu0ceygCw==
+	bh=noCUwrepe3OTnjZtSjV7XzVq1yTaXw2/mQjIBD87xOo=;
+	b=GzTBtLcMQpYz1nr31SBgrCb9LnwuVgxWbbBs65W1fuyWkjB3roMqZktdOnMB+rwapXpA
+	 XP1g7VMgAbGyy/l3UiKATCqXsnXgMZhEzrNefwVqZ6Res2WFdBRD+FtX5G4HD5pIrobn2
+	 /EIM9dg5hqtk6WINQgZzAu9pt++aooh5W4UdzTnWQzXpmhYzi32jEOOjUt4wXq9aX2TtQ
+	 mXpodhMqct8o8Hya42FNJE/j2+wIqH+Q6WwlG7OiFsR2pBTPl5OA5cl3wuOyQVqunda++
+	 HwMG7hH8/MzCvhlxpigUxCaNz4UT/9EsEhm3WjM5cecj1gXUZH4PkuFwZ+nF98vYZTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=tumN4iJ0;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yGmH4Fp4;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=NJHscttP;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="U/UfzMCF";
 	arc=none smtp.remote-ip=202.12.124.144
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4C8606A885
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 12:19:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AE4C8606A885
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4D6606A89C
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 12:19:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5E4D6606A89C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=tumN4iJ0;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yGmH4Fp4
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=NJHscttP;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=U/UfzMCF
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3C2891D001F1
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 07:19:09 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id B80021D0015F
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 07:19:14 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 11 Nov 2026 07:19:09 -0500
+  by phl-compute-06.internal (MEProxy); Wed, 11 Nov 2026 07:19:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1794399548;
-	 x=1794485948; bh=ueUGw4xiRCsGP4mNRn4+jL7xwolnwZ81/vNmhBU1/GY=; b=
-	tumN4iJ0DXHo2klrQxqb8/z1cn4QFzO6ynPqD3/q3FJrANFsTDYXMhGdW0lsrH1u
-	ekzn1+azE1SmpOLl/Df5w1GbLL0sQv/Pi/p8uZoMq4Oflp6jkIsuySW5gapgV+8k
-	peXlW6ToqWSb2tFBXNDubuEOick/xMUDSlgODRrIV4MmRySTWAaEIMTSyjZmp/37
-	y2oGaBcDiFkfAPBovb0e/vPuiniJtU88qNkSuGXgmccc/BzTntf4F4tjuhdz41V9
-	bQdzmSTh6mM0r2PvLKPPyjW4q0smY9cwuNd2TE1vZ9OBOC/KMPCqmEoVT+BV2MLi
-	OKDKBWFp4u5emSN7OnZ5GA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794399554;
+	 x=1794485954; bh=noCUwrepe3OTnjZtSjV7XzVq1yTaXw2/mQjIBD87xOo=; b=
+	NJHscttP3ZpZn5Q//ZY7rLpqh/ztuBqa37NWXF1yuzoIyr58OskH5SMn6gT6Lat4
+	v8sWEkqHybLJqPJpilQKTaJFpSGk5q5qPfouxrnVloyKMT3YHdyw2oYuR8kryG5B
+	Al+tX4NNl85Y4w4PocRDqOKim1fch1zMTzbFxomw0a8yLKWZTXIvkUvkG6CbSwY8
+	XZkIzQh3r86CskGGTWyoiSUIZNzo1xJqeuPHJJyK8bBPHOl0flqqTFmwVqAYJPlQ
+	mBTxk8eLjmu1lfoAIZGNAPwSbn32SL+mK7Y9ChDfD1CntOZYkW1zLp+QEnf+/YL0
+	u+RxUvzpXW3h4DVgzP5cyg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794399548; x=
-	1794485948; bh=ueUGw4xiRCsGP4mNRn4+jL7xwolnwZ81/vNmhBU1/GY=; b=y
-	GmH4Fp4JHfXyVHeo2isxVfqm/c9cM2UYs/eritPYZYwIgGZxP45On6nYJIrN1XZk
-	OyL+P03rSfMiBWtJPv/LKdoJdQR3QmysGpdGuERC6kOnyMmO2b6Sy4rnXsWWjBWh
-	d4RXrugyjJl6wuzGSk2Z7ge5jk9lScSMHpqmbPGvlkEhvjZbOSGUtvIg/P27nWib
-	l5NCAtUlvUwVa7q2JDYzbpwPCm5yFhdFzDhEN9RcF4lAdTNrevkhj9lJ4XZJt2yg
-	oS3nmyvoMRLNXlN5hazsZpBD7Em8RGe9YVRHFgm/RXBneRHnJMV0Lh71qSzMZZR7
-	e1p+ZU7jS0quAFmqidzuw==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794399554; x=
+	1794485954; bh=noCUwrepe3OTnjZtSjV7XzVq1yTaXw2/mQjIBD87xOo=; b=U
+	/UfzMCFMKjRwJ5Z7Xqf1qzZL2K4hBZBHweM0yr9JWAORQYi7JgTio1dlYJgptlNA
+	JjxGmfgnLhtofJquAArJLeVG9Em+JMamXwkBvVuJfs5ATwZnqUCkXQW72yGeO1A/
+	wFCGyggjaPBTMMD5sxoWxoIAzBGYBzxTtXxbDfvXnXFOtkwBwiaAcSZ/Pn6YamGq
+	Z8zbmepAxmUMN0E4yFwv6cRJKbUkFY9Ccrt/TpvgADiAjiSoU8LVkj2jPavGEnpF
+	zvdC3kB8xwdU1ZpF9kIiZELWOW/ksBN/MZaSiAElpffdGCkTgZBGCybLe2rv5A0s
+	7+xWTQ/xRJJcOTu8eJrVg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794399548; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794399554; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:UpaRuL5iWCAiJUnOs83y7aIN2dFajyAhDtv5RtQGBzRHA6M
-	M2FCXHFbOjJ+V6Pf2se+AkDD9dr152OjnZVc68qchUxsusbveFsPgxUldxJluoQH
-	6hZk8pSw6GHH4UIMC3Gf/2+K8oG2OB9+Ig260Cmq+mlwEkduqa1NxYiJikbQ8+NH
-	GC5lpbEit6qPFju698EWr4qM0RmDq20O9h5CQUJ4woGY/ulB/ZXydbE2kUCAKYUs
-	dRrH10kQFJF5S1QHM/gVV0e2VC57n0hgBdSR0vsA9GoS/3z/chgD2topIdItoZE+
-	TRHVdrn4bApdx41i/hQB25HAk0Ee22zFIzSVtZA==;
+	s=fm3:rsa-sha256:JOp7M9bm94gMjOH8KndlIgT3zz5Bp/YA+XxNXvlWYHVsJ1S
+	+FOUOFpuk1N5LDuJHCNk7WisF71r+M6sLIYjFYtogubedwWeccfNfC5O9IQc1/X0
+	Q2b5KWgW/1T61UwhsX2g96Jtwa/GiOxRn+yOxRzcJm7RRf+iC73j9ts+54P406/L
+	VieCa47IsRqVpG0i3MYM5timJZfRi0B2KGdUGIyPHVNZ46XoNIAiQi57hhPjVPQA
+	MyUYhMH9sJco4MhduEXCzNwNLo1w9Os3jLV870k3glvtVwslALcSmG2b4PrFQCV6
+	RNgISv+a5yxl3mZLCL80vmDptlmpjVI1udfSZPw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:lyYVn6UEUzn8eNmUCkGOQMn/47wPlrhMiE98u3g8mr8=:bfyVReRJ0iilJ112diol5We4gRHjKpAsvz9YDaBcBXs=;
-X-ME-Sender: <xms:PF30aqYzBGq4Dc_aaJ2UZU9wFi5pkzPxJZ5Zz1yC3erS3i9tN6jyyw>
-    <xme:PF30akbiZ94dxafJuGV5aYh6MR3KaPx7i2OmexbHinRePXzIzSxgPPTafb7BF_myp
-    aLDYWby8SbKkTWPZo99CB1STQKAG-5ELCQNvvSKnpik6da8TCNKNuZz>
-X-ME-Received: <xmr:PF30ap9J-ME_AWUm-qgwFtd9UA2HQLiIDdgA0kQCJzFvvGr_SJq0ulKWhqFo1rirgpUMaQ>
-X-ME-Proxy-Cause: dmFkZTEs55qCzWsYoLPbwZcukLNmniUbeLDTcdDKMeykKEfUVEL1m88jrC01ekZ+bSWJoa
-    E+sFoYwZ2KKV5gxeH/ExdGc5CSVyfPST0RqGE6Bbggl/uEHeCPByTgFXNeBnwva+Z0XW2r
-    UZoU7LISJdZGQMCtFN0csNcTpVz6UT/yk7B1tHyfQIJhGE6JSSH3Khft8I3OScvVt+9r2J
-    JCr7yS7gYfv0KH/6Eoau/bELm1wIa+G66GK1YjevJqlqSZiPrxhXg0OCkDVjeE10B5i3Eq
-    5W9VBCcRDFn/N/p0TXUPA3RQGg1OrrhL1N5yTTXXzoA84sYsO7dJi+MFVMyScSRkiTpvF0
-    kKm7mn2owJANRVAGPOKPseqdwEe1e3t1GpEtU+7fPO6HUBsq+8AwZtmt3JkT+iISMI9lbD
-    NTdBReH3baJRQJK4G/LlByaGp3KIltr6Zz9x8pl2wjNRMwoiOgsMt8b5/Ebh49M2VpxrPm
-    UoRyRjruvXIdnFzTV6e8kCN2lvw4w6tgg4gUVGM/sNciJiaSxptFckotRm7qEd/Nliu/uc
-    hZKbCWWmOtbV4QJs8hKLSEUCFgZwbAzfxf1aUUr14MY5jXlkP/q6WT9rtZgWk4vPR7rvHw
-    65LgvVb39bZjBCTUOXUuwKyiKk/ygrPrm5kfZMJCG4ApvgeL8SdjU1RyWkxw
-X-ME-Proxy: <xmx:PF30arhAkEIZVBvIlru1lwc_5ZUu7brTXug8EAxDtdwCVcSy_hFZLA>
-    <xmx:PF30ahcUctic3YAaCqxizPfwPnIamGTKPEPLQrnZnp7boS2K92HYog>
-    <xmx:PF30aqqFaWyJnEGfsp2AyCQyFzVOAj0EaFSuoPcZLtzHbDH2WshSoA>
-    <xmx:PF30auC4pyNrdRoX2FHVgbE5zrIuzOJSGH6yDW4FiFfLSD1_a5zosA>
-    <xmx:PF30apcMPf9xVmjdRIpgJfMUBUh50bgwiuRFx0R18oKRsVvgDW520D-o>
+Message-Instance: m=1; h=sha256:+Hz/vbPicvNGu3CB6LuDyIJK9XYVLbyHMDyBTlz7lh0=:dRsqXpKSPZ8ceUpgWVR1QUvbUhsK6w1wjRiGvFs8meE=;
+X-ME-Sender: <xms:Ql30aiP86cFOPzeNzygdaBfhExWdz4cy8g9FREL0D3nFkDKgwGOBEw>
+    <xme:Ql30an-NmvZV56bYpThwJK4eRdiBMn7Gmb2Y8zCgMeRYkn--MR8txAMmtxmivsxD6
+    MWSRd5IOQ1nKqz1aYy_M2bfTfRYo5lXs3ffGmO9gi-3rWc9L8vteLE>
+X-ME-Received: <xmr:Ql30auRm7NvLJnrczgKmITO_ga05CVrJ4_Y8LiXAdETvs4KbBT7qDighDnshR_P9CHetBQ>
+X-ME-Proxy-Cause: dmFkZTFuhAB5PdyJNuBE63/SoisnlKMhtgtIHRFR1CCfMdGUdfBlPK8bGmPaGwRFnP+n1y
+    UUkz2cGZc5iNli5VsfLoQNuWC6g5KKtP4Wz6cv8/p8Cv+ApjJt0mfuLW5OT+nv92V3Ohf6
+    Kd4qE5DZFnn3YPYV80AocAEW4/+9MoqmlJCjFkaU8Msgi6/FIx6/1lWqUw4QUxZ6vN/Kic
+    y5F5ts4A7RD/FO/hCgE9o/YkPGQx7mHWrfDnVH21l1FRqn711ITvWcqR1m/Vdvix6wnE+y
+    SARMYLBHC4hSahezc2fnJAlADCXHu9KhODTX8YRAN5grgoBj+nbp5tPG8y7FW3PgaBdOnR
+    /9fpMPXGm7bOTovMkG920ybUIEvVeO+t7mNRGsG1yl96BJhtAwE9NYTdnM+NhCN+uYIjI5
+    1oqlfur+kBxtfm+mg+xNclPPO3Z4hFp9xGPw5b/dtP0h7GDAxZmQqlJN7Os7Guc3fyl0CY
+    7mCLhPTtpGsTx6IopN1chIMyKWcDMPtyGmg8twKEfIxvEd0CPZnQZpr3S+cNjv7MYtdcn6
+    trWE27uDCchNuk+UqFDGytBfWwbsJOkicVkCZb9avKZ/gkxvqJjoP4nfTwPXr1a4HOptb0
+    JLXv3SYO/xR+MqGpriJB6UtyKeTmWDlObV5hQZdGx66PXVBtw+gVAERBSiGA
+X-ME-Proxy: <xmx:Ql30ahm1aHNOvLnOuJH-N7qlVIjtN6AGPeD-4I3ejs5VOlh2NA0h7A>
+    <xmx:Ql30amTHloTDb3_1KQf7tmZ7z53FTLilIjMkvGJ8uTr3cRRikQSQ7A>
+    <xmx:Ql30anMLHcLlX5xRB7W2t-Z3DxY_FrdI0enTTpDeGad_8dO1OToEVg>
+    <xmx:Ql30anVFlo4iwc3fx5_dCWqu_tCFuYFqaY6k-mJqjGJNDqoNYbxlvw>
+    <xmx:Ql30ahySG7bnLjkmnMeM2xNmkjbcni9BHLoizfvHNO5nsFvf5fLp-Gvo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Nov 2026 07:19:08 -0500 (EST)
+ 11 Nov 2026 07:19:13 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8860bf6e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Nov 2026 12:19:07 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id cd2a5b23 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Nov 2026 12:19:13 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 11 Nov 2026 13:18:43 +0100
-Subject: [PATCH v4 07/12] builtin/rerere: turn "status" into a proper
+Date: Wed, 11 Nov 2026 13:18:45 +0100
+Subject: [PATCH v4 09/12] builtin/rerere: turn "diff" into a proper
  subcommand
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -124,7 +124,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261111-pks-rerere-subcommands-v4-7-df0c8bf79e16@pks.im>
+Message-Id: <20261111-pks-rerere-subcommands-v4-9-df0c8bf79e16@pks.im>
 References: <20261111-pks-rerere-subcommands-v4-0-df0c8bf79e16@pks.im>
 In-Reply-To: <20261111-pks-rerere-subcommands-v4-0-df0c8bf79e16@pks.im>
 To: git@vger.kernel.org
@@ -134,30 +134,31 @@ X-Mailer: b4 0.15.2
 
 As explained in a preceding commit, a subsequent commit will introduce
 proper subcommands as supported by our parse-options subsystem. Refactor
-the "status" subcommand to use parse-options as a preparatory step.
+the "diff" subcommand to use parse-options as a preparatory step.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/rerere.c | 40 +++++++++++++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 11 deletions(-)
+ builtin/rerere.c | 56 +++++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 37 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/rerere.c b/builtin/rerere.c
-index 62f69b488b0..2bcd270a1f1 100644
+index 3f82bcbeb10..40bae5cb9cc 100644
 --- a/builtin/rerere.c
 +++ b/builtin/rerere.c
-@@ -94,6 +94,32 @@ static int cmd_rerere_forget(int argc,
- 	return ret;
+@@ -72,6 +72,40 @@ static int cmd_rerere_clear(int argc,
+ 	return 0;
  }
  
-+static int cmd_rerere_status(int argc,
-+			     const char **argv,
-+			     const char *prefix,
-+			     struct repository *repo)
++static int cmd_rerere_diff(int argc,
++			   const char **argv,
++			   const char *prefix,
++			   struct repository *repo)
 +{
 +	struct option options[] = {
 +		OPT_END(),
 +	};
 +	struct string_list merge_rr = STRING_LIST_INIT_DUP;
++	struct strbuf buf = STRBUF_INIT;
 +	struct rerere_cache cache;
 +
 +	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
@@ -167,38 +168,53 @@ index 62f69b488b0..2bcd270a1f1 100644
 +	if (rerere_cache_setup(&cache, repo, &merge_rr,
 +			       RERERE_READONLY) < 0)
 +		return 0;
-+	for (size_t i = 0; i < merge_rr.nr; i++)
-+		printf("%s\n", merge_rr.items[i].string);
++
++	for (size_t i = 0; i < merge_rr.nr; i++) {
++		const char *path = merge_rr.items[i].string;
++		const struct rerere_id *id = merge_rr.items[i].util;
++		if (diff_two(rerere_path(repo, &buf, id, "preimage"), path, path, path))
++			die(_("unable to generate diff for '%s'"),
++			    rerere_path(repo, &buf, id, NULL));
++	}
 +
 +	string_list_clear(&merge_rr, 1);
 +	rerere_cache_release(&cache);
++	strbuf_release(&buf);
 +	return 0;
 +}
 +
- int cmd_rerere(int argc,
- 	       const char **argv,
- 	       const char *prefix,
-@@ -132,17 +158,9 @@ int cmd_rerere(int argc,
- 	} else if (!strcmp(argv[0], "gc"))
- 		rerere_gc(repo, &merge_rr,
- 			  skip_locked ? RERERE_NOWAIT : 0);
--	else if (!strcmp(argv[0], "status")) {
+ static int cmd_rerere_forget(int argc,
+ 			     const char **argv,
+ 			     const char *prefix,
+@@ -190,25 +224,9 @@ int cmd_rerere(int argc,
+ 		return cmd_rerere_status(argc, argv, prefix, repo);
+ 	else if (!strcmp(argv[0], "remaining"))
+ 		return cmd_rerere_remaining(argc, argv, prefix, repo);
+-	else if (!strcmp(argv[0], "diff")) {
+-		struct strbuf buf = STRBUF_INIT;
 -		struct rerere_cache cache;
 -
 -		if (rerere_cache_setup(&cache, repo, &merge_rr,
 -				       RERERE_READONLY) < 0)
 -			return 0;
--		for (size_t i = 0; i < merge_rr.nr; i++)
--			printf("%s\n", merge_rr.items[i].string);
+-		for (size_t i = 0; i < merge_rr.nr; i++) {
+-			const char *path = merge_rr.items[i].string;
+-			const struct rerere_id *id = merge_rr.items[i].util;
+-			if (diff_two(rerere_path(repo, &buf, id, "preimage"),
+-				     path, path, path))
+-				die(_("unable to generate diff for '%s'"),
+-				    rerere_path(repo, &buf, id, NULL));
+-		}
 -
 -		rerere_cache_release(&cache);
--	} else if (!strcmp(argv[0], "remaining")) {
-+	else if (!strcmp(argv[0], "status"))
-+		return cmd_rerere_status(argc, argv, prefix, repo);
-+	else if (!strcmp(argv[0], "remaining")) {
- 		rerere_remaining(repo, &merge_rr);
- 		for (size_t i = 0; i < merge_rr.nr; i++) {
- 			if (merge_rr.items[i].util != RERERE_RESOLVED)
+-		strbuf_release(&buf);
+-	} else
++	else if (!strcmp(argv[0], "diff"))
++		return cmd_rerere_diff(argc, argv, prefix, repo);
++	else
+ 		usage_with_options(rerere_usage, options);
+ 
+ 	string_list_clear(&merge_rr, 1);
 
 -- 
 2.56.0.611.g1030f0b940.dirty
