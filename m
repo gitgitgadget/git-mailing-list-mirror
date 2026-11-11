@@ -1,124 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794411498;
-	b=gQTT4etpnEUa4h5dAXfL56OZ4Jly3L9zePEeT69YdS7HuTdNlAMKZtI6RE/7aPNTVSrq
-	 x9xgjq0ki14wMVzfqleQgVcOmz+TrDPyiEV0bx0LSiasV9vtUHr8QLpnAqMZQp4aTTm5R
-	 RSCZHOC4o5VWqEEslsJE4wwxdS88cOOrm+a4LTYlMM8TILvqae7LGUqk10Yv99qTM2jeA
-	 A/FfXYd/fePynrk8OR+DgbW0kt1t7q88bMnm2tsVQRbb+qMu5TDOgHPDvRd6eFraNc4TT
-	 3orFBIfVYwvAKnVhSgGRurEuehR2cS8Thcy8nWBg1dbabykbFoQYA/K14nP3xzFLPmw==
+	t=1794411604;
+	b=HZepK+jxITYCdV/mQGcVx8Lnleeb9z+hz5P8t0zJvrmTGxNEQVTDO4eNoMVeDZYtzgA4
+	 zirAJS1IHGeug5yuKcs6vewVOo8CF9nzSuTr8cIxyihfzYk2OQFcO3OQubM0fBBzPQp+A
+	 4CzaVMKhVJLNQ4gD5LyCTHx4+z09f4a7PbBBePg4darEdwU6Jqp174juQUq8aOjEkhT2u
+	 7dAKl9xD6r6BtbBF2Ub1Grk0WRgt/S6GjzD+JDWp9LxlCxC/MRTESOA8HHcLGCUGS8QRd
+	 xPWPE7rVAU3EgyiDMPXUGwl8mcZNIAAYMeBhRXcg/B2wBxiHs3KPMEXADzNVLYqz9UA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794411498;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=9TX4d6dk+iqgtZCIi8o6Iu6PMAqqn/z655+lQorXog0=;
-	b=RAPTlpXvpjIPQGa3XB2iqSqBEvkGpSWydG5wqzRO7KC3WucvmYQ8l7oZUNQNRjFpNggE
-	 ibzUpriTgB2AsXyj/kEdsiHa8LhpcoJd8rDzjKurmF4xYl0VH6QoNPrEDYnIVgR7rkWCn
-	 0kkvyeWxbnFcTfEd8e2o6YjEQXnB40gJka2jKfKOFQXWGtXVFP6nrHSaBzjX+s1+D218N
-	 U69tiovCGDfkPfj5PhpZdALfHzJd9KnlNI3mzUxyKhJQKfTjDBb7CJki6h4hXOxgFzxXb
-	 qPZK5YILzaLzSxGKfdJCG8mhB9y2KhLAAVocag2jFW7FKX3mOzgKVyKfqe1vg1Tq8uQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794411604;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
+	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
+	bh=zE0RBqUihkEn6+uEWymsSdBJFN0qKJm7NQBGIWUCiO8=;
+	b=qWpVQuSXeVIBZ43ixYTOa2DjrptzJMvf/ty1Z8x7CWusObyirMvn4wtUD8VFJbuOpDRF
+	 spTPdZ2iwxEo7Y6OjN76pqZhxvU51xWAYx1g5g2dgAV7OQ4EteC3pR6nlBf0vaPLVXj0K
+	 3VrJLpx+sHemm+6qnu8fC6NZXfG1YvWWLFiZQopmBPEFoG0Pmmo5kEaiwAxRB3bnF5LrH
+	 /4DZ0Ad284h/2CCf1jp8wzKpStW0pY7/I/4ugm+xCp3I3vkQtR/MMEvB9vEgDnr8OjMzQ
+	 KnH1BZI0rkM2tvi6C0JwBppPCwR3XYcVEw3fYRhdRbJi+UD7/RlOjE1jlYEtVObT43A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="F7nuy/VA";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=uBaJEfjQ;
-	arc=none smtp.remote-ip=103.168.172.159
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="h/OT5TWw";
+	arc=none smtp.remote-ip=74.125.224.45
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D67606A321
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 15:38:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92D67606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E815606A324
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 15:40:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0E815606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=F7nuy/VA;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=uBaJEfjQ
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D8D9B1400141
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 10:38:16 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 11 Nov 2026 10:38:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794411496; x=1794497896; bh=9TX4d6dk+i
-	qgtZCIi8o6Iu6PMAqqn/z655+lQorXog0=; b=F7nuy/VAyDluRJF0e4Y05+HO4z
-	jkWtVkf4GU9q+htjircF4kRDhVeHK9o2amcZhk82FJXB8OzvDt6gmDWlawufQ0Yd
-	+XJwW2Sdhjn2nviT8fYCxkYkA55NAPUkvrbwEwosCJvNKvSPSUK2yXB11dQm9UVQ
-	ydM7Lo7VsZrWmMFtrR3kiM95ud5TXnZq7MbM/TFwRvQvVFScdVmoRkz1afg9xVwv
-	ENtw+tGklP7cx5w3U9mVgpJ4m3HMubxsEd3YyTZ3AAXZLPDoQNxVNLlyKAl0etZU
-	vhYHYij56/jN8lCfMX+L8f/d9g35uxzVYDP6rmT16T8Yu/k/vIZmTX2LIgDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794411496; x=1794497896; bh=9TX4d6dk+iqgtZCIi8o6Iu6PMAqqn/z655+
-	lQorXog0=; b=uBaJEfjQTMWybnARF9ZTSeMMObBD4rJ99JG+fOydGDancDWVtuR
-	ysKk+eFUvWOasYO3kGjQCZylShhCe5XVDXtat71Y9urR5NJRo22id8UQ1G0UIl/z
-	WavFmDWEABTluAabl5yoAzk/QtTDQpHKCPVNIisiBqtBOQ/wnELb5Cerfo9vi1q1
-	KQARlDoCO3cBdAwht9kwv/cvBLTII9qFCr7GEG6ZvwTDp4t5bemVXbDDbGJhjxHa
-	A0muZEyttfqrFoxFtxfHO4y0h8bSsEn3m5vFpiYvsjsi9RQwJm26pl3fzHB+GiUk
-	KU8nMwO/ccJvIRzmkl672aji1cCsgHOmdzA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794411496; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:XHW9B1SwkIESF3kA60/5umvyqob5r/yVDZwzxHtBSkDrY+P
-	dAJzBFy3VKwWyP6pggLIDhrbzBymuaQEyvIXcfDGLY4QN6vvmYP3VlApGO+sMSpE
-	8nvOuHkGpuZJ7Q2ABeUXUsni1EXSo09GzWSJMkjiPpIx6zoewS0BBoWJScoj4YDS
-	/8QEdzW7K2F+ZbyWJ5sV12itQHNXxGum6r05vd42TFBPPrdyK+Qrp+mUefQerntC
-	4jdxSqiLuo0MVR6L0lQKU4uOgWHSDL/JfnWefac4tefE1QluGVRPzj62DrkunWD1
-	RLpugbssE7Y63WnSRKEN8Lcty+wC4Xr2QOEkkRw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:VA3iQBE+htyCeNMcCHJKlQqbl8O2StV4aGpya7MuTMc=:N9z3/RAMK7PBpMl7rksXVBxT5PJDMGsRdwyd8nCMfBI=;
-X-ME-Sender: <xms:6Iv0aknPcGH87UcLnfn8ocufm7Wy6WdG9O9m-TdljHr3ClVCphZJpQ>
-    <xme:6Iv0amHcXTux9GOVHg9ieffuIW942UcLJAKN55D8IU-HWwIL4gDaGtRVO4-5PyTJU
-    q7rmn34A8Ebs-eRs8hufAQMkXRU1GNCOxXvFF4p54xg5d05XLpLuw>
-X-ME-Received: <xmr:6Iv0ak7Xpc3xUE8q4e3H9Y3kRKXZ5FiP3SIBJtTvsPEJweJo0zEth6d_4qdLFmP7KjzJfJ_NqgOs_7vTtl5z8jcQn-ka_uiZM78L>
-X-ME-Proxy-Cause: dmFkZTFAheqyHMoGWso62AqH8WUDU0S4p19nmw3y1yk1IwlUSbIq75Bi7KUPat0vsIJ/Ys
-    QMg8oOpFFJr1j/jbrUEq5jaCUSXxdYn8tLB193o+GRPOmJsYk1IEaidQI1vHEvmY59IyHN
-    HBt4sDMrRGm9KsHpbJpz38B9G9nhsakHzpf+SbxQFrOZixhB26Mulss8bM309lZg0+MyeC
-    nGEKhGHlwa5c17Mx18cKLDYGmvam9KRUZXqYnclooOUnOx9GJ69NuzDslMo7C17SmugmMT
-    Q2ChnzEV2lckmCtkBsBx0/1GAdT0Ycu86WscL8y1Sp89ys2Ogk56adwSSRB1eiel+VTMnz
-    eh1QBRt897Ka7dfgzrx0Ww3njkjAwM3o560n0lDhdCclR6DjNdZU+c/1oPt9pICV90PSvr
-    xaJDBBJuXvr4YKL7nfr/9f5CtjGJOUj2u96/GuuAHTRhOtmLsmIIfnZ+A1aD68EhS5EOTK
-    TNgLXKIeW8rDDZHld5cvmcqPABqhKEl0/AW7q5k9mqIZPBMrlePfoR8NhGNUtrS/j2kcUy
-    yNMlE6AibmjtxBu+tkzhrrQnFQqhiPprUZd55Zizs/K4WnEOzqUC1UBVZjR2+GGJbSjTDX
-    9tyJsF0A3QfEgK1ndaP3PP/fm+5g02FhUGuXdbtYf2vqNow9XlekfGakEDgA
-X-ME-Proxy: <xmx:6Iv0amkupD13KMuIMKa2QdiNmqz6qt_zAGQMAtwI4N8pTa_cszB3Lw>
-    <xmx:6Iv0ahrtGt8NStzqkMKCELIIaZtiug9MOXRT9fMDHUqKsAlay1O3uw>
-    <xmx:6Iv0atuvwaGV4ckk4--QcKk1btqvBMBbR9zKrlKm5EVNfBrX9s-lig>
-    <xmx:6Iv0auH9NF8XRqoDOfTbeTozRCaFE2Vv0l6WLHsf0khs-drWz3ZPIw>
-    <xmx:6Iv0auK34FbhFqR9TPQi2gKvWlnuY-fJynhY4JVOEMnx0DjoM8RQr4rw>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Nov 2026 10:38:16 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes Sixt
- <j6t@kdbg.org>,  Kristofer Karlsson <krka@spotify.com>,  Collin Funk
- <collin.funk1@gmail.com>
-Subject: Re: [PATCH v3] t: add "test-tool genbytes" to avoid slow tr(1) on
- macOS
-In-Reply-To: <pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
-	(Kristofer Karlsson via GitGitGadget's message of "Tue, 10 Nov 2026
-	18:26:08 +0000")
-References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
-	<pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
-Date: Wed, 11 Nov 2026 07:38:14 -0800
-Message-ID: <xmqqse17nztl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=h/OT5TWw
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-6798af41644so2755233d50.2
+        for <git@vger.kernel.org>; Wed, 11 Nov 2026 07:40:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794411603; x=1795016403; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=zE0RBqUihkEn6+uEWymsSdBJFN0qKJm7NQBGIWUCiO8=;
+        b=h/OT5TWwgOM7TcJ2AYpFfYCimFEEOBkCeQlZgarIsoYK3UyeVfoQAXUraNMsCAwe0W
+         CqnOIhl+MSTseWEhqiDSLYsSADYdoaT4QP8PEEMy3bBlYbo5Gjalu1IwhRAg3DkX9ZYf
+         CwRuIL/NI5nI3/U1sHkjDfyKgKg0XhGuSq0TYswmbyKfmtH5NJYF03Y00pv5Pee7sMUq
+         N5/nYhhV87d7HZDCvZ376mZHsCSEvgTFFf2rq3vZN62Bi//8JM/sh7NrTomCANnzcO45
+         yvDPISP0ylAz3L0IuzFuWwT3kGB+r6Hipr/li8aEmN3JHd5kVNNDUDZPuXabhXF3tSyH
+         N4kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794411603; x=1795016403;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=zE0RBqUihkEn6+uEWymsSdBJFN0qKJm7NQBGIWUCiO8=;
+        b=xFAX4DhoCMjCXqy5iQ57ZgO23mRBlOeCH2FHTLxwRnj/gvMazXFimoR8nkbwPzfpnA
+         ZFAAImWtnufICLt39J1nxrGrOoChuFO1cb7yNjug50TqFaVd5G/OqL+aDpCtMjCqG3+q
+         LEi4AkkEbAmiX4PW7RXjLLa9UkZoRVm/5tpsJTAhXGZqlpV2u6Nubnuk5ixv3D0jQ9Mz
+         TQWVBNfZdUNaAdmpGQzimX1PcApMdEKHc8x9KkMf0CbKMnKNDmflr8ZW5a+ewt3dqRXY
+         maKKvqaHGuJ89tppGaO9pq7Paj3YEgzjtlg0pJCBViy4LnD5eCZyJXWmJIuq8veJ+7fc
+         2Uuw==
+X-Forwarded-Encrypted: i=1; AL+hErFUgY01XL4Ht73XF/2kNWyBRJ16ItVgQBtxVAqK7XxFhbQtuA9yJKeziqhPhslfaRpUQOA=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/OtYeRSFkB/zSVfbnsVVVAyCB7CB+nawhjhqIWQc99+yfRI294
+	f03CMyKwempbnZpvqCHJsMMIZsKfX6znugNzcPtoAyhVVBVAIhtCmdZ0
+X-Gm-Gg: AYBFou2f6MoNO9WFPvSVQFaaM/AQcYMUTtcmQf8puyyVSlwjR47GL+R5YRxpgz7b/PC
+	peln+gu7nGmavv7IXBvN3vIhUTE01vwZGighbau9+UQdHvZxXu6LfcTpR+ceI3bVUy40+js2kvN
+	LyNde4zicuhMeiIbHMr1WxQBa9z+K6xTflHhzaPEXuFu1xwmNg8PRSUQViNfvWEELdFnG97lJOk
+	omBeLA5+cR+ZzStD+iuMWMO00T+ItS+1ieOIL9A6Znr5ZqpLo2txaudRY+sG0MOAc+6a1XSx4bb
+	KLlG9l5+mkRgWmH1aTzZnDupoyC/rko7XNg2D7vaTuaaXvASQlSRxdog89XhUjwIzW0YiFoJNu5
+	+fzFiGOow0mDfE8n3DC/Jl/XsaFVZ0OSjz/cvchaE2RtELN9jdlvnSQ4gQlAHgRQ01kjVQAKoRB
+	x2t7y5mCJNHvvgq1nFep5F8feVVifBOldtx2tlpGMLrIWhwxmCXKEwqB5fEXbMa8tcdYK+JYWiw
+	IYMrqz3YcBTcGMR0gH2qz38js0yCG/MeSYQ2ex0U3uVgsyqma8kYheXyV9eILPgrSwtfnsEshKD
+	+nSb549FupbBBlxp2C15DevcsDejblbzhEuQ9mln7UmfCfGJ/ERmNBBCcRMc3U1aKY4BBpHU/1e
+	m+J4ptyiwdzXHtbbeNS2TIH244aH/8cvKTXYOpxc7DDwgQlrh9Bk5ID6yPmihk+vxXpuozlATZm
+	+Nap0=
+X-Received: by 2002:a05:690e:16a1:b0:677:cdbf:41ad with SMTP id 956f58d0204a3-67c67c7fbe2mr2167731d50.12.1794411602789;
+        Wed, 11 Nov 2026 07:40:02 -0800 (PST)
+Received: from smtpclient.apple ([2600:1004:b092:7eb8:5dfc:125f:18b7:8759])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67c58811008sm4762133d50.3.2026.11.11.07.40.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Nov 2026 07:40:02 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,24 +92,96 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [RFC PATCH 0/2] Support --verbose in git history
+Date: Wed, 11 Nov 2026 10:39:51 -0500
+Message-Id: <6F40E344-D1D1-487E-B5C4-1ADC0B06F749@gmail.com>
+References: <avR1u_y2IQ8WoJXe@pks.im>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+ Karthik Nayak <karthik.188@gmail.com>, Jelle van der Waa <jelle@vdwaa.nl>,
+ git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Harald Nordgren <haraldnordgren@gmail.com>,
+ =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <avR1u_y2IQ8WoJXe@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: iPhone Mail (23D8133)
 
-"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Kristofer Karlsson <krka@spotify.com>
->
-> Several tests create fixture data consisting of a single repeated
-> character with "test-tool genzeros <count> | tr '\000' <char>".  This
-> works well on platforms where tr(1) is implemented efficiently.
+> Le 11 nov. 2026 =C3=A0 09:03, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
 
-This looks good as-is, but once we merge this down, we will find
-that there is a new use of the pattern that pipes test-tool genzeros
-into tr in t/t1600-index.sh recently merged as part of the Git
-2.50.2 update.
+>=20
+> =EF=BB=BFOn Wed, Nov 11, 2026 at 01:57:46PM +0000, Phillip Wood wrote:
+>> Hi Patrick
+>>=20
+>>> On 11/11/2026 10:46, Patrick Steinhardt wrote:
+>>> On Tue, Nov 10, 2026 at 12:15:20PM -0500, Ben Knoble wrote:
+>>>>> Le 10 nov. 2026 =C3=A0 08:13, Karthik Nayak <karthik.188@gmail.com> a =C3=
+=A9crit :
+>>>>> =EF=BB=BFPhillip Wood <phillip.wood123@gmail.com> writes:
+>>>>>>=20
+>>>>>> Another case where we might not want the diff is scripted editing as i=
+t
+>>>>>> is much easier if the script does not have to worry about the diff
+>>>>>> getting in the way of its edits. Personally I'd be happy to see this o=
+n
+>>>>>> by default - the history command is marked as experimental so if havi=
+ng
+>>>>>> it on by default rather than following "commit.verbose" proves to be
+>>>>>> problematic we can always change it in the future. If we were staring=
 
-Perhaps we should rebase to catch that callsite?
+>>>>>> again I'd also make "commit.verbose" on by default as well so maybe I=
+'m
+>>>>>> biased.
+>>>>>>=20
+>>>>> I'm on board with this suggestion. Plus, I see 'git history' to be mor=
+e
+>>>>> user facing and it's always nicer to have better defaults for users.
+>>>>> Showing diffs and verbose information seems to be inline with that. We=
 
-Thanks.
+>>>>> could add an option to disable such output for scripts (but that can b=
+e
+>>>>> done later as you suggested).
+>>>>> <signature.asc>
+>>>>=20
+>>>> I can live with opt-out as long as I can turn it off via config.
+>>>=20
+>>> Yeah, agreed. For me there's two important parts, where being able to
+>>> disable this is the first one. The second part is that we need to make
+>>> sure that such a format can work for every subcommand of git-history(1)
+>>> so that we don't have to have multiple different formats for it.
+>>=20
+>> Can I just check what you mean by "format" please. It is not clear if tha=
+t
+>> refers to the option name, or the way the diff is presented in the messag=
+e
+>> template (or both?).
+>=20
+> Both probably, but what I meant is the output format. So it would need
+> to be able to cover:
+>=20
+>  - Changes to the commit layout (e.g. `git history split`).
+>=20
+>  - Changes to the commit order (a future `git history move`).
+>=20
+>  - Changes to the commit message.
+>=20
+>  - Updates to multiple references.
+>=20
+> I don't think we need to have everything implemented in a first
+> iteration. But the output format should be flexible enough to display
+> these kinds of changes.
+>=20
+> To me it almost feels like what we want is essentially the format used
+> by git-range-diff(1).
+>=20
+> Patrick
 
+Interesting; I certainly would appreciate range-diff-like content *somewhere=
+*
+when using git-history. The original proposal was more like commit=E2=80=99s=
+
+verbose diff in the editor, though, and I can see a desire to have that
+in all of the supported subcommands, too (maybe just as a reminder).
+
+Decisions, decisions=E2=80=A6=
