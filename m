@@ -1,101 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.48
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794370766;
-	b=e8VNMEmDy0qSLiuKOuE+fWHH5MtD6Kcp/pZzOaTrNzn5o1J0tZtBfhpBV7xLhxrdxO02
-	 vytCZxQIy0+p69wSVb17vqcL7cb7ftrI9Wtlm2wIKx9Yy7U1QUzdCw3tDcEEJPv2WZAP2
-	 bKogQ7H5334C0PEzxyFwS1oopQwVl3cRc/BheJB1DVRBxHTO87XzaEh2C926Dj6HRzS39
-	 VD9h3CmRsjGxo19ymQdIzQ1xgPVhhtPuF4W/8nrS44fbJfDaiPoDmj2tKvZ5AvkHOytfE
-	 hzuxxwKrvF15z8TDVDjgI7HnIuvPewelGk9HO6mzJVlR9ZYBc6gzAOnJbcpVKKiI8uw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794370766;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.182
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794378262;
+	b=J4c8do7RkNZBPgU1G2BpB/7mL63gZUkHjR20lCkPqLLd1h0mJxD2xgu0ip0GyDPL0aGT
+	 ugdjqX74JsDpoKAsRuH3xLL5apB9dr4ZvUNMxJk1led0paKnFkxMnFdI0yOdlldONXj3f
+	 uwD1Drtv9rz5PEpT/X1M0JIaAkCNVPN+FXe5tV5DjhmiMGbV5YTXrnuJXYW3c6rltlYvY
+	 Enclt0f6gNDGku2lCCp9eWVXbwR2772+b+WunZDOSdIWxwNOIwqRi9CTYVQqto3fxssGD
+	 Xa36duIF4W5L/vo7wxNMTQptQ/ZhRbnEsF2rgGtawUUJf5/kRBdZXEe4uGly4BFWf2Q==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794378262;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=/+KBQili/EFKsCTg2/JHY6rLA7fYyQOXJ56W3hSPG1w=;
-	b=LMmLLqAmTFVqAKje80U3RRXfkDIYFgDwqqtYAMy/mFZQOXz5TUMECBR8E51u+vYHhfbF
-	 w3wV5G1TxpOTejTAShnCxRFzhXymmM908r3ywgbn2RpjDYzFkhy26oSdqLIo8NeKSgId0
-	 ZuGBu4NZlV6jkBaQbw4DJryrZE/tNI28p8bjVfZgQwfG4Hq5AhFX3UEgf6KSCzfBoFEzc
-	 VJfAe5nZVv33+fdmwTTP8tQJAbYg0qQsWpGVsQjBczdkr+VV58Irm1LY70lOIAf+dlDRU
-	 HlKqK43HTt8g9TiWaCEtKeMcEqV+A8neMQEtyFm6i0nKp3y5VmmDmw79uRnPjci9ZBQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=6HouB1SCrTpintJ3duVt8t2ME2e1zZRdM9Bn/lj3dBI=;
+	b=W+dQqj9XbhPs0VndYTxupM7Q2mODkTsPeuTTvyODl0bONcpOf9SdlgO/6Q7CQIkoVu0f
+	 SFlNd3191i/D+qxU70JaYtjXtUGP8CSzy8U9WByO0HxlemfU7GOh6MaGyJkL4n8wmVZ9+
+	 YULMIAozedCM1qFiWBPYPyibofby52qWryvdjwsQXZmtZk1ssOTdFdhNya6Z2/mLEsphr
+	 6jZFsh5AlzFUlvwTL7gJ0ZIKqZXPxwLOcw3qEDL5f/IiYH+YTdaASKJhfWD99IwNCRXjO
+	 Rj681JTGPKHZYObrGc+cPcodbD33n1a36W4tuxZHRc/Bnft2czrps2Fz1yqvA61F58w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="GdmnYr/E";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.48
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E1TYNHDg;
+	arc=none smtp.remote-ip=74.125.82.182
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A97360A2605
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 04:19:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2A97360A2605
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A54E606A339
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 06:24:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8A54E606A339
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GdmnYr/E
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-91eed03da8bso25392446d6.2
-        for <git@vger.kernel.org>; Tue, 10 Nov 2026 20:19:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794370765; cv=none;
-        d=google.com; s=arc-20260327;
-        b=qZ19VEFnRRniU03Gumx4s4NmUJSMO/cZlf2TS3FPPbxKYv8+SWW0nrr4R4vGsHGCne
-         kezoz3hhqESZzfPactFDcOl7FdCOrS/CODrsDRsAOBkxwrinKc5ugM8EWj/MsSr7irfb
-         mj+T8B5KU/2UWXa4jMoeebs6rwUYGoUg77CI7DbSNiNOnLXUW8h2KHuTnIGuQE/2usRP
-         zbHuP9cugammZR92eX+B1XsJ8KksH/H3hCPvXfu2CAv2lmqwY0SKYT8Pa1TraSxcQ6Ca
-         tMagMQx0pssLka52P1CulMUUEjvtbtQkZ4EpCfdeX9/kv4L1hUK2rUWmFTR9J6dd0eLx
-         9HEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=/+KBQili/EFKsCTg2/JHY6rLA7fYyQOXJ56W3hSPG1w=;
-        fh=vc8A9nqbIdemrkHFbmq41xkwsE51BD5MLr4/N3TcE5Q=;
-        b=XKGdQmfuoM/AVA/CvA1inCFYdbDFRMM9D9pjvuuFb4fomERwckUMSYnqtmPC0E8kaQ
-         tcSXx8Lm6aOpj5NSTFDMSP68zYP8FGNE/9g9fSbdDrCOdOhN6XkgoMt82u6YzHiDIs8m
-         ZADPZnZLYmv0WyI+0DBtczv/8ShOH44XZaO/tLCGr2mCs+4yuKlqRcevfHq8o9yFQqug
-         +oCH597PGFAGD49JhxP8ugKQs1yolXBf9emOJasdOrNxK/USWZhTGBKP+c2QhUvjNQ7T
-         4YEt3Kd92EraTwdxm55aFiauKRXsplSZKrF+3QpT5/ROeE4PyiJu8mlxkS2AklFKo5H9
-         /Juw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E1TYNHDg
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-33bf40b0c8bso568180eec.0
+        for <git@vger.kernel.org>; Tue, 10 Nov 2026 22:24:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794370765; x=1794975565; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=/+KBQili/EFKsCTg2/JHY6rLA7fYyQOXJ56W3hSPG1w=;
-        b=GdmnYr/ErLJ/QpriNYmm5Av+xZEqlmoeBVzW0qyiF984cVSxkM8FXvV9NtWRlIDoGX
-         vVsgkY3qtMUkrpxDApNxGrGYzFQdeEG24WyPSx6oh9UCVMvBh3s+fKkXRORpn07tPuZu
-         /COhoVcGnuRYqaEIqjieVqISTVdaKTIuleUtivnl0Ke5AFB4L1H1RveOVQ9V1mzkpdAU
-         n0++7oElruxLFmuBjoOsBwYEGRj4xcICihgUDVx+0kwo7KNAzPkCTUYsq+3iob+tt7yG
-         IFiHw+9/zyzSnjQxKN0+zTF7jcKyqbUwdR7f4kpFcXLGqlZ27Q5rxu8QwatN2zuSfx/D
-         v6SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794370765; x=1794975565;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1794378262; x=1794983062; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/+KBQili/EFKsCTg2/JHY6rLA7fYyQOXJ56W3hSPG1w=;
-        b=MyoR7CT5P3qEaKlC/NGw8zfOZemfTbQelgAhmd/bgj0U9I9DAblTT1iYUWnjl5OaOH
-         ICeuZzGxv30pw/GKGskPjHLCsF9tcigK2PgEqPlpD2Sva2vq71t0sGIwzeGEG9loRQFM
-         jUGnAvv2j8Cbt9WSjwc4UPeL2luUoxVPa+U+S2O4lSvZeLKjsw6mwOJIYMMZySwChZ7a
-         wE7CXkYS+CgFb6gBCUmjjwCixK2XB+GZJs5AQu0OqO3CKeulTbvK8jzdhXvYLf/zy8pP
-         F++RjV++gI9MMToRmoF1HLUkxVLTNDY7RWki5mDMiFm/n8rjAW6jMhmPYR2QG4/WEWMK
-         /4gg==
-X-Forwarded-Encrypted: i=1; AL+hErE+XQWgBerzDAqTKEsP/3gZI3fez21ciKpW4XFG3E0Qsm/vYhf5kG2fqcuw63N71rP59ZY=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+kxFDZEkG2oLkq1rUSBMhrAylAgYW54EOCwg4/JUrRW5Dbp1ge
-	Xa49bOf8huLE9E7c548hRQ/znIkoiFx5yWQAEKZEqlHIO8cVTIwJuWLa1rpBIxLD+UgP659SWlV
-	OBzet2n97Flum+g2htwXXY/PIsOPagnLylbHK
-X-Gm-Gg: AYBFou1g8ru1xN+DpB7hcKMWaH0/MbZbF3arhtTt/8ZqiygIxEAZfFAMlm7M+u+4SLh
-	IBYnsl4twPECXan/KTNNUm+EcSHE2Hnm5/utFnBA+DYWbRfmFIW1DPwi/b6JvwUr1wxqx47Dm28
-	W7JJ1Lb5aGTt67tFhufZCTZGW6DnueCnEhzaeyhpWkbyIo65R4mck5lx5Ckk++PgX3QjpCZ5TdH
-	qM7E5XmAIhH/QvZOWB32I3nSRG8OjMbnx4fGcfUO52N5DvTw6lBTnePRJHZP65Yk8GsjpBFJVLK
-	V427qLT+UCiRUpgNP8bXhnyDud8P99tvvr3w97FMlP4XyhUxMYl3Fhl15pxVVIN0EA7SkVUVb5J
-	34yn5rJDAYeUXjWJ2bdJYOEtMcw+rnxa7bZWbGoBC3VJ6XpXLlVNpaGUvIdioQaSHjJ3QZWoOOK
-	pbTJuJGWB+Ky+lTm/iS1C7mfiCqqU7v5nNCAUni3juFGL6/n3i3o09FWY/Sw==
-X-Received: by 2002:a05:6214:19c2:b0:917:91bb:c63d with SMTP id
- 6a1803df08f44-91f0415d811mr21857076d6.38.1794370765130; Tue, 10 Nov 2026
- 20:19:25 -0800 (PST)
+        bh=6HouB1SCrTpintJ3duVt8t2ME2e1zZRdM9Bn/lj3dBI=;
+        b=E1TYNHDgNnj3eSlxxyJwCyeIZozl+zYCaMqZorAESPXknkG1v98WkLJQBscE+NJOzy
+         tnf/ITH1Tg9UJeusUMn2PJ9YoowqU/Ggw6ZCKTteao2+YJNpm1Yz1X2WDLp0DFGssq/M
+         74EIMLt4WLl7ZufCN731JM99mH05TDmmIKOngpZcB6HxpUTTcl0X1LNG3kNuyWKqq/6i
+         pwnJrOSYhRkconYLWLOdTvjmmz6rDJ1uEIJ/Ky5EYNuy0/8h/GeB1t2sTJWYQjhrbXN4
+         OHClJUCthVYOH/Z2Wfqnc+N5Ez4FKbAf0wnYL47kyr1DY702uHfKezayBoiyl4f2SdcF
+         RzpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794378262; x=1794983062;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=6HouB1SCrTpintJ3duVt8t2ME2e1zZRdM9Bn/lj3dBI=;
+        b=GfeGwMmRM0F4b3rBvuCS96wL5Fa8QSIyzLSuUxWQX0RTyUVtGQ9fTjU4cR3JuMDdsM
+         ZXa9HisozoMZ3gWm7fOGLSBzGTCKOhIkXzsZIzpKo4pLKHDI7qTCRXHDDZWX4ZLLOCgn
+         kVehNzSaSP6n9AJlLtPCHUi6fHoy3cHGYSGV+Lq7/MyiAkTNBkm7nDbp7yhSbGRpax2u
+         RTSzegLVMAX8qhRqm5TNfZXTXj/kTjZDTx/X+xkCBZZmFrKauOGqbhxVjqLbU06KeDsR
+         VVkpVgH+rhoYkpwnb9hC+311VKAJiuvInRlDJkbMLPtbdS1AeOh3XEwLEFkn3/9OQFi/
+         S8eQ==
+X-Forwarded-Encrypted: i=1; AL+hErGfcmaE0sknI38C7DFsbHOBFJHp8CerNMDuD98yzzq/7a6CcvHiWho4wIi1QnyIba4KYC4=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8oycUxG3De7HA6W+tHRHfsfUgJTE+yX8WOMr6zUT2RsbquZtXp
+	f2lRJ7TSjiJZn2HN/ffCq0t9r+ZL0nwAaPbe99nSsr4yKokrhhmseK5H
+X-Gm-Gg: AYBFou1GMJaiZXuSbeaNBjg7NDvFed3zFWCO0VAllCDXi3T3w5BxGLF5K4/LsuEH5D/
+	fUmydTm48o99ChJt5dF/Zh05ezeEEFwopKIAp3g3lE+gtR4t/pX1vCoJU5umtAmLPwz9m0LRihK
+	/B8XHQKm0UKa8vvfiURxPZ393AEYpSgHqT+lJU5uhGBaUcjFtoN76FvSLorXTwrWcvR0ZT07cFT
+	glMTuyribyjBlrtwZ0z5K5VjtuaiVpKa3Rt86AqQlTOYTzBFD+Tb+bT9r+v5j+ulRxmfrIrS4MG
+	ifaTPnLYn/fscwzzSdXrltgdqmaIMvjNLLegrys8d7Gf9hCW3NHMVyILaafcylXeKBtbaU0+9Pi
+	Es1TYkKQSyTJG2d6MDAJcnKuJxELQefqhhsDckMocn8J/ieBaWYWNosRpoCByxArWX0hiQMEoks
+	6B+uaJNnnryyACSuH8RdwcmDDkUHAa7RlB1KkJ+eOQy4iWYPzkd5pUTunTibsVnkgO9lmyL7uzC
+	Lsi+8URoORayBub0SO8dKJlS1DilU0cXGFEmeOxRTXCsoc58AKemfgBC+DxHnQyFSz0g2Bd1OQL
+	KCUnz7DDIBJ38g2xpPt8VKyKXD5Eq0/ozhwZV31AOdJX
+X-Received: by 2002:a05:693c:41ce:20b0:36a:2382:7dab with SMTP id 5a478bee46e88-37685d724f6mr2591547eec.6.1794378261543;
+        Tue, 10 Nov 2026 22:24:21 -0800 (PST)
+Received: from [192.168.25.219] ([115.108.41.154])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37520bfb58dsm23347969eec.18.2026.11.10.22.24.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2026 22:24:21 -0800 (PST)
+Message-ID: <e12a9cd6-d61a-4e80-a459-954c4b26724f@gmail.com>
+Date: Wed, 11 Nov 2026 11:54:18 +0530
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,89 +92,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2305.git.1794251100.gitgitgadget@gmail.com>
- <pull.2305.v3.git.1794335969.gitgitgadget@gmail.com> <01c3cc25738c43d61aff153805e02db872ff21de.1794335969.git.gitgitgadget@gmail.com>
- <xmqq7bikqvpm.fsf@gitster.g>
-In-Reply-To: <xmqq7bikqvpm.fsf@gitster.g>
-From: Srujith Poojary <poojarysrujith@gmail.com>
-Date: Wed, 11 Nov 2026 09:49:13 +0530
-X-Gm-Features: AclHuK8w4hQRkpQVrs_IDumu1kz_-sFa6wG3In3cPuKMErb-obrGUTke-e9CP68
-Message-ID: <CABh_KWjYc15OJjdZQPFPhLO0VRFhY4VJEgYxVaJoGRK284wiUQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] submodule: use the submodule repository to
- abbreviate commits
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [ANNOUNCE] Git 2.56.1 and friends
+To: Todd Zullinger <tmz@pobox.com>, Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+ Linux Kernel <linux-kernel@vger.kernel.org>
+References: <xmqqh5hosgw5.fsf@gitster.g>
+ <20261110221253.DBFncUIG@teonanacatl.net>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20261110221253.DBFncUIG@teonanacatl.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 11, 2026 at 1:56=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > diff --git a/submodule.c b/submodule.c
-> > index 6fcb606f7e..1302c11ddf 100644
-> > --- a/submodule.c
-> > +++ b/submodule.c
-> > @@ -543,6 +543,7 @@ static void show_submodule_header(struct diff_optio=
-ns *o,
-> >               struct commit **left, struct commit **right,
-> >               struct commit_list **merge_bases)
-> >  {
-> > +     struct repository *repo =3D sub ? sub : o->repo;
->
-> Let's step back a bit.  Use of any repository other than 'sub' is
-> wrong as a way to correctly find suitable abbreviation of object
-> names in the 'sub' repository.  Now, the variable sub is NULL when
-> the submodule is not initialized, in which case we won't know how
-> many hexdigits we need to abbreviate "one" and "two" to, because
-> there is no repository that has any object from that submodule to
-> begin with.
->
-> > @@ -599,9 +600,9 @@ static void show_submodule_header(struct diff_optio=
-ns *o,
-> >
-> >  output_header:
-> >       strbuf_addf(&sb, "Submodule %s ", path);
-> > -     strbuf_add_unique_abbrev(&sb, one, DEFAULT_ABBREV);
-> > +     strbuf_repo_add_unique_abbrev(&sb, repo, one, DEFAULT_ABBREV);
-> >       strbuf_addstr(&sb, (fast_backward || fast_forward) ? ".." : "..."=
-);
-> > -     strbuf_add_unique_abbrev(&sb, two, DEFAULT_ABBREV);
-> > +     strbuf_repo_add_unique_abbrev(&sb, repo, two, DEFAULT_ABBREV);
->
-> And that means the above patch is an utterly wrong rewrite, isn't
-> it?
->
-> Because using o->repo is just as wrong as using the_repository,
-> replacing strbuf_add_unique_abbrev(), which uses the_repository,
-> with a call to strbuf_repo_add_unique_abbrev() and using o->repo
-> does not fix anything.
->
-> So when (sub =3D=3D NULL), the code probably should just grab the first
-> DEFAULT_ABBREV hexdigits of one and two and be done with it.
-> Guaranteeing uniqueness of the abbreviations within o->repo does not
-> help anybody anyway, right?
->
-> On the other hand, when (sub !=3D NULL), the rewrite in this patch is
-> absolutely the right thing to do.  Thanks for working on it.
->
->
->
+Hi Todd,
+
+On 11/11/26 03:42, Todd Zullinger wrote:
+> Junio C Hamano wrote:
+>> Credit for organizing the set of these releases goes to Johannes
+>> Schindelin.  Credit for finding the vulnerabilities goes to Luke
+>> Martin and pwn2addr.  Credit for fixing them goes to Toon Claes,
+>> Karthik Nayak, and Kaartic Sivaraam.  The xdiff hardening is based
+>> on a patch by Jeff King, with help from Toon Claes and Christian
+>> Couder.
+> 
+> Many thanks to all for the effort, including Junio.
 >
 
-Hi Junio,
+Indeed. Thank you all for the efforts!
+>> This addresses the security issues CVE-2026-111760, CVE-2026-113408,
+>> CVE-2026-114466, CVE-2026-114467, CVE-2026-114469 and CVE-2026-105437.
+>>
+>>   * CVE-2026-113408:
+>>
+>>     It is possible for a server to advertise an unborn HEAD that contains
+>>     path-traversal characters (e.g., `refs/heads/../../../TARGET`). With
+>>     the files ref backend that can lead to ref-updating actions to write
+>>     to unwanted files.
+>>
+>>     See <https://gitlab.com/gitlab-org/git/-/work_items/809> for details.
+> 
+> FWIW, this and the other GitLab work item links appear to be
+> inaccessible to normal users.  I'm guessing that's not the
+> intent.
+> 
+> I added Patrick to the Cc as one of the folks who may be
+> able to poke the right folks at GitLab to open them up?
+> 
 
-Thanks for stepping back and explaining the root issue with submodule.c.
-You're right=E2=80=94when sub =3D=3D NULL, o->repo doesn't hold object info=
-rmation
-for the submodule anyway, so querying o->repo for unique abbreviations
-is incorrect.
-In the next iteration, I will update show_submodule_header() to handle
-sub =3D=3D NULL by using the standard DEFAULT_ABBREV digits directly
-without a repository abbreviation lookup, and keep the sub !=3D NULL
-logic using the sub repository.
+Thank you for pointing it out. It was indeed not the intention. Those 
+work items are accessible now.
 
-Thanks,
-Srujith
+-- 
+Sivaraam
+
