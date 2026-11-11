@@ -1,66 +1,125 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=203.205.221.250
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.152
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794415879;
-	b=tMrv8XNt4kIDZZIydmVEFAy6FZRcDg0juhKdTp4VqQRbdoFzJT1Xf0MdZyyUlbwwJU3g
-	 zdGpRHAYV8sziEzAnuTaaXJUYPGXNXwnSY4ac/1SnH3sxz8/Vjg7rNzeAarCTYJpZs/TY
-	 JSLwGuhRGvMYwksR6G333NtNqzrr8l4v0GF/R0lTdtmGwCPUYKsWQm/OoAXbEJHyL/cvz
-	 BF6Dl/1RVdioReuVie69Qr0itJthN0tsbHfTH1xsk/J+J13Lck1BwbZe6x5jJVko+K+/f
-	 N3sOYTvNMXAfnPexkboWzQaHeHsTpscTpoZK8Poz7zy4T6gLTUxJVj44xv/XkpuLTTQ==
+	t=1794418641;
+	b=OsHMWyMprG3aPj50W4Ym0PkSoMQVeMBUiUC5xKyUeP3qbejuCqpkzNnQY/y9SXUS6xUY
+	 wWAc3pNOY2IZ92E17kIzbJMxZiJ/7A/M6G46xzrYiUunVDW3KH4cdhmexdZp0CA394lpo
+	 5uadX5wcMviumVQzlsDHbuT3jmEPRCM+zs6AwPdlbwXRIEpVbYuWXyZRpK6TC2lu/J1yA
+	 MkBPYnAcHUD8ki0am8UjHQdgkc+4ffw0JQJGf2F9PHNPqtULbSEMGqzjUSGV5pZVN/RDK
+	 bcLrxAf7OczjF1CSe6icq/aUzpTK+7tI/REtKLxqS8nPHgnP5/QAMrw94wwWgjJh07w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794415879;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-USESPAMBG:X-QQ-XMRINFO:
-	 X-QQ-XMAILINFO:From:To:Subject:Mime-Version:Content-Type:
-	 Content-Transfer-Encoding:Date:X-Priority:Message-ID:X-QQ-MIME:
-	 X-Mailer:X-QQ-Mailer:X-QQ-mid;
-	bh=VOCRRyu+pfoSw1k5JnHmtUWtJTBOocP/YNkkmqpYYlQ=;
-	b=uRjjHxGpL4vEml9nUxy5To3wCSGfe1CIyrhp4fKL2vUcElKm+MNL4MwBgq6cS5ICPJDI
-	 aDvfyBRmi1N/dFkel5Kh/jPPezbvQ4A8i+dvAKOp1SkwkNHJQLlibPK0YH/Hfi5KmD0Fn
-	 7WN+jHLIZUE3wltbj4N5g8mhIAANjzbuRJIBzss72qLuuxJkY+Oq3820WdrKZpQwrBzKi
-	 5s8/JHGOX1XhBQfRwuntSQ1JauvUOicECfhvCq85bSR3Eso5jwv/lrAZZ9Ww+0ioKqOT5
-	 ZRdrgKBja1BHZj9owYkuMyEEu79pGvqOi56WLlMGGLFi2VFaKcmygmAWywN6W44GMNA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794418641;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=QPmvDObCx+B+mQB2V6D60foEST3qZ9c9Nw6LG01YZUQ=;
+	b=2K8EwcJ6KpCXoNG31snCl3PCXQpi/vpV5+iowe/+Q/amL2pW5PtxOauyGstLYDZ3DBbJ
+	 80vUSMntEotDGli46gxR1JKvfbQIXlvY6lSkZ9k0emtVwRd9KVi/DgmIACQo5zhfQbP7V
+	 yoAzwG3U4HTJ++skoRjy4uHE3DjKaIalLb36iSg96PLTDqitI9YvnzBOUCWriBl0l5031
+	 cO4Z6oYiWXqfa2iScG0/iGxDVmtO7xxLJ5lOmYP8TNgRi6Jk2lyhXytoB6m4ESVojeJMM
+	 tNpj5Xc7j91X0rXALcVqF7oM5L9/y8oGcuelTdZjqvVGLoKiK289MQqp/cprLOyCJmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=foxmail.com;
-	spf=pass smtp.mailfrom=foxmail.com;
-	dkim=pass header.d=foxmail.com header.i=@foxmail.com header.a=rsa-sha256 header.s=s201512 header.b=YdqeeNZF;
-	arc=none smtp.remote-ip=203.205.221.250
-Received: from out203-205-221-250.mail.qq.com (out203-205-221-250.mail.qq.com [203.205.221.250])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=A3GBd7In;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=QBOvG7K7;
+	arc=none smtp.remote-ip=103.168.172.152
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F123B606A88A
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 16:51:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F123B606A88A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938E1606A31C
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 17:37:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 938E1606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.a=rsa-sha256 header.s=s201512 header.b=YdqeeNZF
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1794415868;
-	bh=VOCRRyu+pfoSw1k5JnHmtUWtJTBOocP/YNkkmqpYYlQ=;
-	h=From:To:Subject:Date;
-	b=YdqeeNZFLpHo6W3G4HQzb6h0TLk76YKZwi4Q/6rTS7cpY3pJfYVYt3hFjSdwXvJE6
-	 W3KgMaZ8cdBJQMw7rGlWnN+3kxLmfr6/TOtQ4RP3PxZe/1nnl2QnnxnAUAaVjLks6g
-	 PU5heyMFw1aeg/+cp27wfYO002pS/wwlOWY7/r60=
-X-QQ-USESPAMBG: true
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-QQ-XMAILINFO: NnBlO8MsmACrlD7QnE8E83tmlOUTpc1Ly17B2SivjZV67pvj8pSuyNwX8kCkJs
-	 PGtbw9cbEetuuXWKewMhseTI9n2UdbMetg9Jy3X8uJr9Fm/Ag3pEceq2k7pYFa2Qf/ZzZ+Us68MpE
-	 KeBL3WFS5Ip7Wph57phHpv6rAHgyNTBooQjUEucVgMx8Oh31sZKa3u9aPCqMU1qzlUGdcH1xJjrte
-	 9X2PgWMa4pMc9lglNwKuNEuLSUVhDKkL42D5YDa6tP4lLecfKBin5ETxcD+/P9ivRmQLbNkNif25W
-	 USLeXtXtMHTp66d4FI69AA+0kw2yWNfdTTTJYL70kDDYbl6k/o8RZx3D4TwuB1Kxy4rQjj96UAQUk
-	 Hk/Wu0GfWf05BQ61gauPJ50WckG70eFLCwfs5kfP/Qs5vQUh5KopYBbEq/5I33G1Z9ha3UbLSc8op
-	 EZ5hWcJtkx8crxmWP6khEfHH/MNUgbpheCKnzEAe4JZeBcEEfegYz2X7+9DTwpSUlgUHQKU5+e0/6
-	 ShoNWQfBltcd7yHMtREmzLv/X9Xc9fSeqbDEDli7KYitYA7TBzBPx6reYyrJHHvNq3lkGDxiSDItv
-	 x+Hc1xPW/tlMQAPYm+q7foTnuxXrndxzKnt0ZtSY387Sxeylf5Hs/aKRF28JjROwGwDC+jWQzdJqJ
-	 F+Us1MMaPI8E49YEwqj3QFIl7ncat/LUvDEPFQNilj/taKFDvpsoP4hIm+ksdC8h6AKekLUKvHWFL
-	 N9SKs1E9gEbmDhu0P6OHwclzzGWq8ubYNVldBGB+IcfFpY0dDJxZRw8HvV3lKvaGD433WXGzgG1Hj
-	 CvOCvkkPmJhFxXAeZ+L8YUEymRJIorH88sTa10s8w5jMzQ1Ox+kgFk/WcSkFuxyREh52DKb7+EbHr
-	 NLspJGAKRIam69o4HAbAHQl14jf2MFx+8PB3JLfH6pVFYNQChnJ2zOF8m+BcU9kOGH5gZzoKqGrvl
-	 63YRcnaXpY4F+VSVYuRFupcwJ9GksNYQ+yjxdgMx+Ba48O53kqU2EK7im0rlwQpTTpiPFaoztf93W
-	 iVDtHrWG1yZrR3Z82pE23MCDjGjBf63fCpw6mi66ROj49zq7KwyDuyWAt1uFIwy9gK6XrgWJLz+tB
-	 Acw=
-From: "=?utf-8?B?a29uZ2ZhbmthaWthaQ==?=" <kongfankaikai@foxmail.com>
-To: "=?utf-8?B?Z2l0?=" <git@vger.kernel.org>
-Subject: [BUG] repack --drop-filtered aborts when a filtered blob is referenced by the index
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=A3GBd7In;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=QBOvG7K7
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id ABB241400177
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 12:37:19 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 11 Nov 2026 12:37:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794418639; x=1794505039; bh=QPmvDObCx+
+	B+mQB2V6D60foEST3qZ9c9Nw6LG01YZUQ=; b=A3GBd7InGqk40z5qllPyXh8MlR
+	R3TeNw12Q3sZQ1W32+h4g6awkLtYeaLD60fC8p8nZqWhdywKv6ixwJgpg8Pxs3cr
+	d8zaEJDqKclH01qeTxpgo17OcN84Qv/V0UtzbL03X2scCz2Qm7B9bx7axFzdJTVd
+	8fBOsVttGW4+DwNOUqZ7oBMCyV8QIbmnR5bBkL4QgmraVlDHc70ByG/SV5gJAXl+
+	gsgpzjEL1JEjzLHMgQo95tbpYZ2q5Xe/YuqyNceqfs/Fjxrp5Myt09uKXUyIolwy
+	DY+WsszIadV39SQ7Nal4oBuTGQbZssiABlqpoAYUlhf/J4PZ8Cfq2r5ZWSGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794418639; x=1794505039; bh=QPmvDObCx+B+mQB2V6D60foEST3qZ9c9Nw6
+	LG01YZUQ=; b=QBOvG7K760tfRZkPQNh27D9Q5tjB6r8lJFySvXHwCXqAM7o8Epc
+	CgnlKtz7DxXM116cYNZtLzQd/f5AxQwEc6lw2eCi6UEMPr9JUxSE8g3LMI55nYTc
+	Gdxc7pYZgWCmf1vGcTZSdffdznKNgtbLnOuYQY8j3aMGbVyOV0cbvAG/Y2Kh005I
+	gy0qVV0iY1Ui3jTlGy349fzjxZYlNF3ZAE0haglpvaxWA7zhDUVZbT6nMzOVCsuL
+	mpk71nVt+3iu6CK4oe0ZXQClsiiTaB5fUk3at0k7/FdDH/YBxcsO5AB5wndF+NgX
+	AYU1FJ/mFIg97zAxxF2IsUx2tV+X7nAkZCQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794418639; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Eg+N0tPGDcDtQW1qKcgQcFyetFMuzydg72f90Tcn+20x35I
+	SE0zBhefxmH/Ym5Q9PsAqtvBhjocidVUhiv8ix2ikN6QO0LGT1GBxdMoCxyy716q
+	WQaIO5wen23p1l/Zz0XqMHdiunOreQhinbPXkGyggwmImnaUOELrS9k0CrVnPNPO
+	ptBUE2Y71nx/y8nuTdzlLwbJQpGwQar4hjpGXek1I4uzbcRhv0xDcOwCeSkahMyy
+	VXM+7Z1M1tuwEiHZkv/3fAlWPLWhHVE3hxVCIZn1w46uNUtjiiCNnSQ6V4Orwvf4
+	B8b5Ynj1tcITzPQEAEzJ1HBP6c984vGgo7p2i+A==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:0qwtRImczgCguV7go8mKRw2NvJjxhz1P3tAFmSYB7RQ=:T2pocOKA+CTIYmEL45l12sJa/hYoqigDDbxy+TiIavY=;
+X-ME-Sender: <xms:z6f0apVphjblt_nnap5fcLRPKRgqBERckWeHLxB1XQnMLcuZJYxpkw>
+    <xme:z6f0atQT5Hy-kPwSq4yYQwntOn2_eXKDvmlLVwwsqCpm92RY3yteVKcA_EEZ4C6m3
+    sCSBafPMPYSAM_dkJkutKDIzvBSUH_2UUAaHpQ9NHHuebArQfnvcBI>
+X-ME-Received: <xmr:z6f0avNDIH_ZshGtcrWqNsniK_fxPs7S91kg8Ci7G_c42dUq4aQQWmQ9VgBoDnO8IZHxxMo5hcZFEZDVjza6UjtF0SaI6836SIoh>
+X-ME-Proxy-Cause: dmFkZTFZ6abt2WTXQREyNHFSJhUKKfB+Tg+wy3CcvdRw5bryjvzacp8okSsCT0OY6F1PqD
+    oNehPqT462OiAtYjpeRJRj51yQRZq8xPVCesR5u6SfkehrxlBdFrkpvRLcNnqpO/Occdxl
+    k+hLhmuF1vzXFbYWIoVpUFAYH+bHkMtjFcgGFpB9v790dohizwfMraHK+6wRsrK2+sx1qz
+    kgziE0ZGkU+XJCTUUDHFipEfgpx6RVKCziQp+ueJokheZKBkNp0zhmKZH4V6z0bA3JcwHK
+    zzc7+LFM77JnGPjJitX/gqE6wU98gsRCavu3GIdWiS9s2r1/JIH6yYEYCU5L2OS5OqmhhV
+    2qHK1SbTsu0pIaiR3aPLdSV+R34nZItsnqdyHHsfB4tYtqIldnmnDBXxl11AZ3UCGCDapd
+    47DL+ZNU+BbdAZr5XtYsjHh4L/ruCHvudtXfD2kYoK6vTTXG9xViekBrRPio+bhiGdv3N3
+    OddIQAtLl9AqGPmONHOfkmQkLFo8zkn/RL2k0+MShtApVo5EYHfxFNvzeJqm3W08TFUpXN
+    kHrzSBihaSla7vEibtGffWPzANta6ZQ1+tpn6/hfg3FmeE+J5kw+tZJyZH3H8gxLR7xxq+
+    VxZoFiUgvY25cHHWTL2jvnge2pwYxTwV5MzLXotaS+jh+ex31XvmKMQaNl2Q
+X-ME-Proxy: <xmx:z6f0ajSwul_d_wCFCLLAlE4jPBS3RD9CfFBEJjZKVPXffo35T3oH_g>
+    <xmx:z6f0aliNMWs4IZdaFQM8kGkNJlRFpKfAg6qW7Sq8qH92hjpiOpVmdQ>
+    <xmx:z6f0ak9dZlUSWwsaCFjo00QUaEiHSJdDMXsbe4AG_-97kZObOLreQw>
+    <xmx:z6f0akErR-mbda_b87TuAsJ7P2hYh10b-LCowSlMPkRXlsMz3ezOJA>
+    <xmx:z6f0an5PGORcfNyseFkPGhVu5q4k4oJ2hiJj50eFUdTxi1RqSjaziNyl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Nov 2026 12:37:19 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,  Harald Nordgren via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v13 0/6] fetch: avoid fetching every branch of a new
+ remote in a shallow repo
+In-Reply-To: <b64387b3-294e-49da-b40a-0e757956bafd@gmail.com> (Phillip Wood's
+	message of "Wed, 11 Nov 2026 14:12:50 +0000")
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+	<pull.2412.v13.git.git.1793357550.gitgitgadget@gmail.com>
+	<CAHwyqnVJ3eUQ9tkQE3rhQ8jFZjaD0tFUv41unE-NQ1WRiyfjBA@mail.gmail.com>
+	<b64387b3-294e-49da-b40a-0e757956bafd@gmail.com>
+Date: Wed, 11 Nov 2026 09:37:18 -0800
+Message-ID: <xmqqcxsbnub5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -69,38 +128,65 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Date: Thu, 12 Nov 2026 00:51:07 +0800
-X-Priority: 3
-Message-ID: <tencent_AC7FF23968DCD0078A6B863A42BCB5ED4E05@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-mid: xmsezb58-0t1794415867tnlsodndh
+MIME-Version: 1.0
+Content-Type: text/plain
 
-SGkgR2l0IGRldmVsb3BlcnMsCgpJIHJhbiBpbnRvIGFuIGlzc3VlIHVzaW5nIGBnaXQgcmVw
-YWNrIC0tZHJvcC1maWx0ZXJlZGDCoGluIGEgcGFydGlhbCBjbG9uZSByZXBvc2l0b3J5LgoK
-UHJvYmxlbQoKV2hlbiBhIGJsb2Igc2VsZWN0ZWQgYnkgdGhlIGZpbHRlciBmb3IgZHJvcHBp
-bmcgaXMgcmVmZXJlbmNlZCBieSB0aGUgY3VycmVudCBpbmRleCwgR2l0IGFib3J0cyB0aGUg
-ZW50aXJlIHJlcGFjayB3aXRoOgoKYGZhdGFsOiBjYW5ub3QgZHJvcCAncGF0aC90by9sYXJn
-ZS1maWxlLmJpbicgKG9iamVjdC1pZCk6IGl0IGlzIHJlZmVyZW5jZWQgYnkgdGhlIGN1cnJl
-bnQgaW5kZXhgCgpUaGlzIHN0b3BzIG90aGVyIGVsaWdpYmxlIGJsb2JzIGZyb20gYmVpbmcg
-ZHJvcHBlZCwgZXZlbiB0aG91Z2ggdGhvc2UgYmxvYnMgYXJlIG5vdCByZWZlcmVuY2VkIGJ5
-IHRoZSBpbmRleC4KCkV4cGVjdGVkIGJlaGF2aW9yCgpJ4oCZbSB3b25kZXJpbmcgaWYgR2l0
-IGNvdWxkIHNraXAgYmxvYnMgcmVmZXJlbmNlZCBieSB0aGUgaW5kZXggYW5kIGNvbnRpbnVl
-IGRyb3BwaW5nIHRoZSByZXN0IG9mIHRoZSBlbGlnaWJsZSBvYmplY3RzLCBpbnN0ZWFkIG9m
-IGFib3J0aW5nIHRoZSB3aG9sZSBvcGVyYXRpb24uCgpGb3IgZXhhbXBsZToKCkJsb2IgQTog
-ZWxpZ2libGUgZm9yIGRyb3BwaW5nLCBub3QgcmVmZXJlbmNlZCBieSBpbmRleCDihpIgZHJv
-cAoKQmxvYiBCOiBlbGlnaWJsZSBmb3IgZHJvcHBpbmcsIHJlZmVyZW5jZWQgYnkgaW5kZXgg
-4oaSIHNraXAKCkJsb2IgQzogZWxpZ2libGUgZm9yIGRyb3BwaW5nLCBub3QgcmVmZXJlbmNl
-ZCBieSBpbmRleCDihpIgZHJvcAoKVGhlIHJlcGFjayBjb3VsZCBjb21wbGV0ZSBzdWNjZXNz
-ZnVsbHksIG9wdGlvbmFsbHkgZW1pdHRpbmcgYSB3YXJuaW5nIGZvciBza2lwcGVkIGJsb2Jz
-LgoKUXVlc3Rpb24KCklzIHRoZXJlIGEgc3BlY2lmaWMgcmVhc29uIHRoaXMgY29uZGl0aW9u
-IGlzIHRyZWF0ZWQgYXMgZmF0YWwgcmF0aGVyIHRoYW4gc2tpcHBpbmcgdGhlIGFmZmVjdGVk
-IG9iamVjdHM/CgpUaGlzIGJlaGF2aW9yIHdvdWxkIGJlIGVzcGVjaWFsbHkgaGVscGZ1bCBm
-b3IgcGFydGlhbCBjbG9uZXMgd2l0aCBsYXJnZSB3b3JraW5nIHRyZWVzLgoKVGhhbmtzIQoK
-CgoK
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+> Hi Harald
+>
+> On 11/11/2026 08:31, Harald Nordgren wrote:
+>> Hi, could I get some (hopefully final) reviews here?
+>
+> The diffstat for this series is
+>
+> 12 files changed, 593 insertions(+), 33 deletions(-)
+>
+> which will take a considerable amount of time to review properly. Yet 
+> the cover letter which should explain the problem being solved, how it 
+> is solved (i.e. the design and any trade-offs that entails, alternatives 
+> that were discarded etc.) and anything notable in the implementation is just
+>
+> Avoid fetching every branch of a new remote in a shallow repo.
+>
+> I've no idea from that how these patches relate to the discussion on 
+> separating "which refs to fetch" from "where to store those refs" or 
+> anything else. If you want people to volunteer their time to review your 
+> patches you need to make a effort to explain what those patches do.
+
+I would say that it is a fair comment.
+
+I understand what the first three wants to do.
+
+ 1. We have had for a long time "git fetch --refmap=from:to remote refs..."
+    given on the command line to decide how refs fetched are stored
+    separately from what refs are fetched.  This allows a configuration
+    to allow you to pretend that you give it all the time.
+
+ 2. Preliminary refactoring of a helper that will gain second
+    callsite in the next step.
+
+ 3. This allows "git fetch --refmap=from:to remote" that does not
+    specify what to fetch (contrast it with 1. above) to default to
+    fetch refs that our local branches build on.  The net effect
+    with configured remote.<remote>.fetchRefmap is that "git fetch
+    remote" would only fetch and store selected refs from them, only
+    the ones that we "care about" (aka "build on").
+    
+I do not have strong opinion on the other 3 patches.  4. and 5. may
+help ergonomics by allowing to set up refmap from the command line
+option, but from my point of view it looks more like icing on the
+cake.
+
+When we are working with only a subset of their branches, the first
+thing that comes to my mind is a "matching push" that does not need
+any fancy @{push} support.  Because of that, I am not interested in
+6. very much.
+
+In any case, this topic one is keeping a topic by another author
+waiting to settle, so we have stronger incentive to see it move past
+the finish line.
+
+Thanks.
+
 
