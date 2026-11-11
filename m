@@ -1,105 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.41
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794415715;
-	b=gjywyyHvGclZqubHq9pdy2HfLvGlT26gH21y/0J2J5mSQMniY0/7AidL2aZAUwWm+ocq
-	 vpie86nXqGKL+uUiiX3oeWMWfisXY2KKW0Svzmn0PRyepERUNgEpAGC6TAPs2ZDLa/hNH
-	 kgcA3aW4vlCs0LXbrJfrSfVuaDGlWm8Cdy3KB6qUG7u3o4SM7ih9A/Niaty/UybSNq+a/
-	 Nkc09tD9kjsqOBfR9iyA3j44GcOIBqSA+Zdi/TQ6RblcMhEDhXvwyIe8CVYLygMqYYp+P
-	 Izoz0PKOsI1u1sdK66n09ODxyZXaSjhWVaSoSA4ZW1S7ilxF2gtSR8SVaWOltWdRMlA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794415715;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Content-Type;
-	bh=EJWSL2awbMKoN4FvB10Y3GzY6+n0ylfWshG9/qey43I=;
-	b=BoWbM99G3K0mf0zsJCTIMKuypK2dSSWAlyeAn+qGsuCvYRLX2HlIKudI48qG0F6/Pq3z
-	 AHN8IrcZGkwFCMyiAWex841k4tm8zbD3JpTHAC5G5OVh8+YUoxRy2oXGRdNXFAFnaLYyT
-	 43SgbE8+TcOe8cMeTX6hUWjtaO2W5OYVFI3R4ovFXmckYh/ZRTgMCBw+kznhZHS6yWtmA
-	 27ie+xFl71BxmC6KG7SWYe+3buvQOAqiYr8f2tedyPBiogtbosZPIVWrAMZ7owwgDtOoo
-	 CYJHcm35TQXGL1LcobZIvc8+YMh2fscfdwHa4uRntEjkDiLNi4YIE5c8zaTjmIO3tmw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OJZd9eZM;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.41
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794415866;
+	b=p1eOBapxE22SoVv+BV98rjkWw2ZdixAOmee/NGVeooocpPjEnfsx3qBO6+9qOAhl+eHy
+	 ZpfpautOiN/coY6WTEQ6foWbWdjkb4YonLVSUDt74TPWIPhHMrjXph9pcyi/OJtTCD5RO
+	 CndOGMzGon2FpwlWiq4/TsIoQvZj6gkUOLKfce679eNd4AuAIVEXBr5m4O3/jSJ7hFRlP
+	 0vICRBBF5iTh4ionfeLL9fqyS9pyJIpboXZ5MPFsY/q/tHC3FwmsCmxGMIQf/Iwi8tGWW
+	 sWkV6ST1lCO3nIsd1aVNqcoLwcMeTOv06VOqfW0FV+vtKqyFbmUYC7Ij25skzQSuC4A==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794415866;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=BUzWmHKPPk2OYtKW3MJf/RYePMNO23ci1y01+L5T2BQ=;
+	b=V/YLcZkNkOcFjlVSgncV1gKTrGxVUg1Jm1v1HU8svmrrNLxdo1w/vpffwtPMJY0cXUG9
+	 i/C5JbfkTX/2FjoHFL74C2NM1hRwOu2Yv9eC5f8tcelH/finDgQeqFr+GaF1XOkurYx3K
+	 fUmugKNbl51JAQXiTGEDLEexnkXSkXFqt67FrsZ5g4Cm3wwuA9B474KB3vSB0Xq0Wn8NT
+	 Wd0Baw+ivIpsOKpSJ1uVfKUDtcFRSi1iYrNkH3X8+ur0moABKeUSq4vXn+K46HrLQ1xtC
+	 D6mqnJsFcrbVo18yurKcUEmdOAQR+n0zHf75wmKexvYA/zo4e/3vkF5orI1hnSTmrOg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=TminRNrw;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=WFvAcxLh;
+	arc=none smtp.remote-ip=103.168.172.159
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A044606A331
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 16:48:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8A044606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43D3606A31C
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 16:51:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B43D3606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OJZd9eZM
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-998d151f441so891468241.2
-        for <git@vger.kernel.org>; Wed, 11 Nov 2026 08:48:35 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794415714; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MEzsqE49kCcxP2U6XAMJZoRDvUYK2Cv2GMlBeKZt9nWSAUr5EXcFIoKaEqXbhu/XPq
-         nwszIo6vDDN3XLvrmHhlG7WJZVHzfS1h5k+PQwowYt1Ae/xe7rYE9hhG8anO6z/Vd37x
-         22+Px5kdcq2+HF8Z5LCIWi4joZIX/TYz5nWY749svahGJ0oOdB/b6jiHbPlq97Tu75xp
-         5mR/Y/XRsfwtxxoM9ffT+En7t0nuFIBfcBWzVbEocG7OVg3fOU/LtOHAHqjc+FgOOaIP
-         TzSn9teF0vy6e5wHJTC3rnBdyTffcOLoLlJwpZyQRPLvCHpvVu1aswR0h+qC+foQ8UyL
-         6vFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=EJWSL2awbMKoN4FvB10Y3GzY6+n0ylfWshG9/qey43I=;
-        fh=wBc5/Fa0spMzP86/M5t5NqzujSWlhgygg/9lbvbMQck=;
-        b=Gp62VPGCtQp3Lf1PDF556MtzNULtpUYbjpADx9ZLjzyndNmjkzvLYt5ILcFW1kuHK6
-         fS2Bikcl+ng0nQiYq2hc5Jiy9Do5DTvjXWyhW00Foqgje0f0JOzEyQuLXUluwV5sk4Ll
-         GR+EB85hXZFD4Dps9JhHG5vrkFDSQopFqAepX2R/LWAU2F2q3y+jl06lCLEjkfBDThXd
-         F1JodK5w9OgmGbOoTpdsSkqBjJzCtXjDK1FIf/DBX5Wf9Bb1KTwQzaam6554liZ0jDhc
-         myO0F1RFGb2bfIHeI/mB3KnQ5V3y8Ht+HxFEMvYN8zHBxZWFSib5VJVcA44PPTuzqh9R
-         NMkg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794415714; x=1795020514; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=EJWSL2awbMKoN4FvB10Y3GzY6+n0ylfWshG9/qey43I=;
-        b=OJZd9eZMbQSRgY3iHF4NxjdTZToEBSlqtzoY1ok0ItzFPB1GmE04bzgwGQGzzbPm03
-         YYjYLtQoyDiB2nCY4/ATb2fXhI6g62+k9AdeT44ta47RoXRQbjVCEqy/MgfHnJ/JZOJp
-         5UbNp8luwbDP4y27fN0AFjfGQ29754B6myRM93Ej3bIeOemJM0HAF/hH+ZgEHjL4g35S
-         RUqaPKA/t6/g6ud6myKIZMktSQ8r4A8lZ+hLDEu6lVw4RySNgajlcvEBajRWqVbaB8Yz
-         B0UawfaXyw0BF9Xf5UnA9GuNKAOjEjYgfrJoCNf8ruYD3C44tTywEuYk2qX/rOxOomXN
-         0GZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794415714; x=1795020514;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=EJWSL2awbMKoN4FvB10Y3GzY6+n0ylfWshG9/qey43I=;
-        b=hVzb9VpXaBlcYpa1Z0piqxIAfj7O6fe3wfyyMARebCYlYkMAP7KH/RxuqUty7wFfht
-         5nh5WQygqRrPVjVXhNvRmhHGA337X+U5HXz7epx3Et+prMTPGkOb4p3+yx8+ML69QVsn
-         SyFrH6gds/yJ2/7e7DKX8edXhn1o+2rDpxmLsXIXhLlQHAenKlWTvYuTm9xnaQMnQVd2
-         qGPsp7b1tf5euSl44VmNtkeGEg3cF+vtT4Pl6zolHoLbN1xTnKItrVRhb5cmYm5R98jG
-         yWUNUOAdSfbRh2ZAOgHIip/4LgOPgQdKVPa4L4N1jTzEUfOcuCixfBMbctkhRZRv1SQE
-         DnEQ==
-X-Forwarded-Encrypted: i=1; AL+hErGWmSv/DBdoNlWqmhLGulsFOfWNTF4RpUZEDc5tRk5MUdPLGVdXr+0LOVVm8OE4+zF+eIs=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+R3gjUptXAd+USEhC1BYPXrlqlIk4Az3rYY5tuLDBRKtj9/WgX
-	Nih51Da6N+U8PZxZvo9N/oRImiFt/45thqBkpEoA1A3XKJNS6n1MyT8wGKpYNhqozozt087A3Yh
-	5yrD+439IlId0y/P7Kr7GRHYnBVT9pOZRbg==
-X-Gm-Gg: AYBFou1g8c+M3AEiStmh4p4tzpVhN+rVdxuxDTtUbBqwsDTZyLeCpcP2AHJwaGy/JAo
-	YeNvCRW1hX5SSzLiZ7UyAn0p8P6JH2tAaaeZmRTo1iVI+TnI8HqK+zgDT+rrEddBPj8ByHzAkCi
-	khXF7fAs4aqXRE9/lRjXcEIt4gy8ni29y+h5PP95v9xBHFBVZb9xS1OUc8rCOAheQIkq3UI3Kqp
-	qgl/W2OT/328pT3C40WyRXw7eJS0sMJek6qaiLnEZ90Q0/IpuYUBABHWXCi+hfjxuLLQyOlbxcF
-	DxXmnAQLn8X5bYNklr/7srBdD6MyEalo3wdZ4iqpA05ZSHgCbFk+Q08m3CxSxQvYQr7weXx+z7U
-	sO5RZAyfBP4oCo7I2acPj17kb20yMq4aLk73d/8xteLF6DMaYo2xMd6Mi+REV8ep49azuvwXq7T
-	X10c+tUupj5Uz5GU6CjJ2UP3+cRA==
-X-Received: by 2002:a05:6102:26d4:b0:7d2:9f38:c45 with SMTP id
- ada2fe7eead31-7d4fb24e284mr951400137.8.1794415714445; Wed, 11 Nov 2026
- 08:48:34 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Nov 2026 08:48:30 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20261110002251.2007617-5-jltobler@gmail.com>
-References: <20261110002251.2007617-1-jltobler@gmail.com> <20261110002251.2007617-5-jltobler@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=TminRNrw;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=WFvAcxLh
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E8D3A1400187
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 11:51:04 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 11 Nov 2026 11:51:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794415864; x=1794502264; bh=BUzWmHKPPk
+	2OYtKW3MJf/RYePMNO23ci1y01+L5T2BQ=; b=TminRNrwX/BINGFeCRTcSBlOLY
+	BqUksqrHg5XxxqC0IalTufe2oUUSQmzUQYeQGliIhiu3UpAJ04iS4XJxETNoOgB0
+	a3KRQ9/z+IWgLXJMHYcnQGYWo4GDoj1Hq/x29UXqwlhVP5yNxM+WVBBNCshVCADH
+	6IktxmyXF6kbeJhE3AOhLKZAuR2udkcOvmAqQfkW4IrK4r7LiuwyJnrCAiVTZTsn
+	1vT/PW9sQ4BMfi88XP0nwEnvykxdGqHpXc3kjZlekiQcmJAdzKS0ANPIAxXcT0+B
+	5BHBPg2RRmQbMUnChOE7YBPcNRsz1g3Ctj+N0McPUdG5IYu6XzIBW5fPGueQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794415864; x=1794502264; bh=BUzWmHKPPk2OYtKW3MJf/RYePMNO23ci1y0
+	1+L5T2BQ=; b=WFvAcxLhDVFq6a+YwC2wyoVVr/vAGqvvVBbcy4qzkM0e8e2wzDO
+	qm99IAXhft3g1P15ntxJyN6rzq/wl1S295COwHk2cK2rDFVmEpc8w8cylwdXbYuC
+	nHsVwvneESmFWmDNfSwFPX8lBEgMCdaoYGHk7qnbE77R5WEgYmVHjqhFZkzRLxXV
+	7rQgNprM7O1Zmkdh0WqFX4EPJMEw6CskcHDZxMTcy8km0101XNc4cA+DZLQcfFzS
+	2fnstmISY7mZD9keVBYCl3eVAsGK4MWap81Lz9+TvA13Mh9BR9LiQ5mFe5SZh0PO
+	ldtVsYV3YjIX0lEB6BQSpWYF5uovzTqXozQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794415864; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:cn5NEhpXeOwHfTOm3LhjjMW6FkEebMnHDg9uBevuuLRLLSO
+	Za4/1VoNAKqOb9u05WI6MV7Oab1OJ4eveDK8TQ/TlQeionF+D/wTonR7++8XrQcq
+	VCA6bVMuAIovDNXwMZKOud2+SCnnQZacVuljO+4KCeu/ynRgPCVZarrhlanXCz1L
+	0Lg10OEhS0P4H4fQqeZYBF5FDUsvYQWNTEh4K0XqDI+nhJfx3Xie0izUA3JEk13z
+	fPDj9bfEU5AF+85jBBkd7D4fZFIup1//qgB5Vxpl63yAHSvJHDd7imMLFmeAWvj1
+	hUnGENZCt+MK3rivenTiX3ETjxLBCZ7X3QXIvYg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:KUKeXC1YNhQ08cclZVAyj4iy+3PRY4YHnlJRbqXWxPc=:eu3sNbkuO1l8erKrCV93KWTkGUPaB5PxhP2RcuabTLc=;
+X-ME-Sender: <xms:-Jz0alWslgTuoRXH72nmhZVBfGou1hU4tL6bdJG-Z32cVPR7yYdN5Q>
+    <xme:-Jz0atC1KZl9bdqc91ql-FqXqp2tQWAYwXWneTAmZfAiLAmhgkzaCjLv6V105mNEK
+    z_WOWgxxPMkcbavA6QCcHj7e_qBodrJg1nRmL6zbwxrdqnoSMe3rRw>
+X-ME-Received: <xmr:-Jz0auxRWeBuMpZyoKqltuNbQaRV3GYhLzmqEXPBKzcYH6BVf8gqqiqQiwWsPXQc-zDfL75UcVh112-hJ-i49FeyZdkB-soLj4qy>
+X-ME-Proxy-Cause: dmFkZTEHGP5q2xWOKF+DYIhayGdzC+roHEuhCfE5cEAgyrBTu1LQ9fWNuJDQ0GKpLW9jkT
+    apqsFnEQd2sNzQn9MN7P3FSIYaQ8Ugte0T9Rl6l6ZgBrqQGhBt3D8xJByf/be3aDepg30b
+    uUrpsbXl0fNubiIXiZxAgitEgFFFLL/hz2ga87Lyhy5PpS3ktqjGJeZNAdlQX4V/wi7+/b
+    ca3YC6awcCcbM6MAEAZpbQZQldLH9BH4VD3qHR+Iq4VfJGxyTofccVSxZXEsaaflA7IvZU
+    CAw5NRvQ94jeMFqcvSOdVSDPkzk+KM/WH7e76LI2QGspikYr1sCVnBsFMiay6I8ZdGTeHA
+    +UR1k9wdRUxIakyNje8iGMKKaIpYA4s7OweqwY4Jn9/9lr7T2sIHDVQ6DHf2xT4RPYHlEp
+    ch85d4wOPU5ww2+1JddM6GoZN1mAzYObgLioqOzTtjf3ewydAM3CIqWHCIlhXm4ATiLfM9
+    SVIC/X6c5z79P3RQF9cuhFY5Ecesd7B8S23NF526CciQznj91jMAzRshSq7ng5Z3XxV6sR
+    3jbRfo1ff1JuofGY9KcmAcvmEN8eHwYjuHQwGvgL3kVnS4TASSigspUOVUlNqmNmvfUqF1
+    6lRP6jFArPhS+HUAwaLRUnbXyJuhtwvf2Junid44APxu5ZHlKgarbEdd287w
+X-ME-Proxy: <xmx:-Jz0aiBt_NvWz4d7sLmSOqgWBozFmKODc-h7eD9jxb3WFtQZRFhReQ>
+    <xmx:-Jz0ajayZjhuDSaO5AIomB4_RgBFI3Hi_Bp-a2pUlzidPVkWvgwApQ>
+    <xmx:-Jz0aijmL3Cf0TmpVbPuLPTno_t7az2yw1dvLGbd_bx1PSmnRWoNhw>
+    <xmx:-Jz0at743xeJeMZm5BlpcJkWJJIIs9UTZGQas1BFKxQxgozcJGh74g>
+    <xmx:-Jz0ahqgI5G8CwVc8YgrYjeRNl0XwU0D6smgkWO6IvMEzDEwD9-aYdUV>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Nov 2026 11:51:04 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Anders Kaseorg" <andersk@mit.edu>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] t2401: fix misfiring substitution when path contains w2
+In-Reply-To: <20261110-t2401-substitution-v1-1-32f3524f2b92@mit.edu> (Anders
+	Kaseorg's message of "Tue, 10 Nov 2026 23:55:58 -0800")
+References: <20261110-t2401-substitution-v1-1-32f3524f2b92@mit.edu>
+Date: Wed, 11 Nov 2026 08:51:03 -0800
+Message-ID: <xmqqjymjnwg8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -109,96 +123,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Wed, 11 Nov 2026 08:48:30 -0800
-X-Gm-Features: AclHuK_x3M_y0l288Reve6nYw8VEJ2GzEUcNsq03wwKU5ll6LyJ0JYnGEJBvaKc
-Message-ID: <CAOLa=ZShhVC=7uYs4_CP6pUSuiYziQrbN8EbJhpqYToixPV-VA@mail.gmail.com>
-Subject: Re: [PATCH 4/4] object-file: create ODB transaction temporary
- directory eagerly
-To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000003d4e21066002f70f"
+Content-Type: text/plain
 
---0000000000003d4e21066002f70f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+"Anders Kaseorg" <andersk@mit.edu> writes:
 
-Justin Tobler <jltobler@gmail.com> writes:
+> -	sed "s/w2/w1/" .git/worktrees/w2/gitdir >.git/worktrees/w2/gitdir.new &&
+> -	mv .git/worktrees/w2/gitdir.new .git/worktrees/w2/gitdir &&
 
-> By default, ODB transactions for the "files" backend create their
-> temporary object directory lazily once the first loose object is about
-> to be written, and only if batched fsync is enabled. Transactions
-> configured for git-receive-pack(1) are the exception as the directory is
-> needed to quarantine incoming objects up front. Lazily creating the
-> temporary directory in this manner is awkward for a couple of reasons:
->
->   - Writing loose objects has to know about the transaction internals to
->     trigger the lazy creation of the temporary object directory.
->
->   - Whether objects are staged in a temporary object directory, and thus
->     whether they become visible at once on commit, depends on the
->     configured fsync method.
->
-> Create the temporary object directory eagerly for every transaction when
-> it is started instead. This also ensures that no object is written to
-> the main object database before the transaction is committed.
->
-> Note that committing a transaction migrates every written object into
-> the primary object directory even when batched fsync is disabled. This
-> adds some minor overhead to ODB transaction callers that previously only
-> used a temporary directory if batched fsync was enabled. The following
-> benchmark uses the default fsync configuration and adds 10000 files of 4
-> KiB each to a freshly initialized repository via git-add(1):
->
->   Benchmark 1: git add . (rev =3D HEAD~)
->     Time (mean =C2=B1 =CF=83):     895.0 ms =C2=B1  23.8 ms    [User: 545=
-.3 ms, System: 340.7 ms]
->     Range (min =E2=80=A6 max):   866.7 ms =E2=80=A6 928.7 ms    20 runs
->
->   Benchmark 2: git add . (rev =3D HEAD)
->     Time (mean =C2=B1 =CF=83):     956.3 ms =C2=B1  26.1 ms    [User: 541=
-.4 ms, System: 405.2 ms]
->     Range (min =E2=80=A6 max):   923.9 ms =E2=80=A6 993.6 ms    20 runs
->
->   Summary
->     git add . (rev =3D HEAD~) ran
->       1.07 =C2=B1 0.04 times faster than git add . (rev =3D HEAD)
->
+So we used to fabricate a new file by replacing the first substring
+"w2" to "w1".  Of course, if that "w2" is not the one we hyave in mind
+but came from somewhere before ".../t/trash directory/", it would
+not work.  Well spotted.
 
-The explanation hre is well written and nicely explains what the cover
-letter didn't _cover_. Nice.
+> +	cp .git/worktrees/w1/gitdir .git/worktrees/w2/gitdir &&
 
-> Typically large numbers of loose objects are not expected to be written
-> into an ODB transaction so the overhead here should be marginal.
+We have created a separate worktree "w1" just next to "w2", so
+reusing what its gitdir says would give us the same.  The "correct"
+contents of w2/gitdif should point at "w2/.git" (with its full path)
+but this "clobbered" file should point at "w1/.git" (which was what
+the sed script was trying to do).
+
+Makes sense.
+
+>  	git worktree prune --verbose 2>actual &&
+>  	test_i18ngrep "duplicate entry" actual &&
+>  	test -d .git/worktrees/w1 &&
 >
-
-Question: why is that?
-
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
 > ---
->  object-file.c         | 56 +++++++++----------------------------------
->  object-file.h         |  1 -
->  odb/source-loose.c    |  6 -----
->  t/t0004-unwritable.sh | 19 +++++++--------
->  4 files changed, 19 insertions(+), 63 deletions(-)
-
-The changes itself looks good.
-
---0000000000003d4e21066002f70f
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: cd92ec83a8f48f65_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yMG5GMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL1FSREFDYWRGRzlDZW1qU1BsVEJZdU1uT05Yb1VTYQpmR0ZnYThZMWx5
-dmFSNEtMY1B4dzJUdzdweGFpeWhWY1pHQ0FkR1Z5TC9wN3VqM2FJaVpMdy9SeitnQXppUFpCCmkz
-RHNITkhzZVU5ZWp0ay9hUGY3VE1nNEdNK0k5UmRTV3B6WWhVZWpjNkU1dGxEeVAwT3Brc3ppMkUv
-bmhBUVoKK0t6V2l0QlZHcWEzUktnU0xoNGsxN28zd1MwMlMzQlpyeUU5cFhBSXpWUzBNUUQwaElI
-WHdMNGU4eWR1UWJuTgpkeVlRa2VldDRtcGUydGQrMWlUeUZaSTlpRWtQYWtUUFVEVGRMemdrZHNn
-NHF4R2tRYVRST00vMzJqVTZxWERLCm9yczBQWHFIWVVqOFRyN0dHMWs3RFpSRVhyZjhhNlZZZnRm
-TXRRUGVHTzJ5bzZuV3hTaTB1K1NYWWRBaGpHTlkKRVduTHdPcDlCMkxlbGZCSDZZbzZ5QzJCZ3kz
-cjdoZHdnRHdUNlBzbjNrbWJhRnJEMTh1VkJKTU9MeVZLUWNiSwppODBBWEZzbUNXb2VYZnQyWFJQ
-THhWK0M4V0hwY2t3eTMwdUI0VStoclowdjNRRjdCVEFCZHNpdUhiRjJJc2NUClB0VTRiaG9hb05l
-RUNCN21JbTJMVlZtV0JvTGlBSGMzL2RtQ2hWcz0KPWZlakcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000003d4e21066002f70f--
+> base-commit: da8fb6be5594b4a06ef2cc2ff7a5363a6fac2b5a
+> change-id: 20261110-t2401-substitution-3ab4819833a1
+>
+> Best regards,
+> --  
+> Anders Kaseorg <andersk@mit.edu>
