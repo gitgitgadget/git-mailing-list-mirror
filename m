@@ -1,87 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794406365;
-	b=Jz/hJuiuEbdFeO4w1P+y+PQKIsONFn5nJJu7uwtCv0+fdycf4G21irLAj61ceyQJQFu3
-	 Qumf3+TzsC4Y/63ycC9getKVz08I3Ng/VHlpG79J0m/1TbL61DkUaxUMw02ktcCVxmuVI
-	 fuMOkOuCr5zNQnzjxtfO8TSmh2bcrTf+9HnoREiUHQjUXU+/g94dymqa337l7Q0SbhApB
-	 xuAr1rheaALcclHGFFPTMxl/CVlBIbaHdY1h/sjdDlFLg36kufnQ/LCjtn8TryysqXlkf
-	 if6IMcTwCsadVEIa0FVeONKLJYqvGCVLJIN/aBlrQ0PKcPAssfhMbseaqSkbqlY/gpQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794406365;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.49
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794407609;
+	b=S2g00GoRXYsVrTMq0heUMg3tuUwVArtkttW+5k6cGz2HKdq6qln94JzUxHUrDRiv171W
+	 k7UDcLmFUMLNnNgm5MVFYvcULzHu6cJZ3/avgYfVKGXnbs1PEWn4cSpk0GuHgyWqZKl8w
+	 jrfeiU6mrpRL7Q9KpOS1GkQ12TKBie7wIFcB+zRKk768DbXF1YytnSABiFzcVqVFTHuia
+	 bxynwR9zzFth9Hl2Sxf/j68oDch0FVlRyZ9VTOeY4WqdQnI8Rd3HsC1wq3bb1kl51sc/T
+	 HbffpQL3dypryuXAIoA9qRYBrbng31fN53mX0z1UX1IM054JN5/5l/8Lqc/rlfXRThA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794407609;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=KBWShuvPMjS7769KGHsIArZuO4fJTcrLzfelrNB6fjo=;
-	b=462rEiNQ+9E+271XOUb2v12jGsk6cduoS0S6BCotQDVUvohKmMxUH9YHCm5toVBUv+yz
-	 64hIsTs1dgNMyXz2PgA+j9h66K1BtikA/19pZV9X82fu8oTyjhB2dq3MXccsZkN28V4ba
-	 kU4N2yI2rWhuHGfQXTUkIOSJJKPHhbzdiXn1OggLVsREhZgiBgH22vgGdGvsMVb9nCzBd
-	 KIVlJccF5PK8VP7QAxvbTLOTc7F9e6Jap/1msdZudcu23xpb9GtIQVKALb5cCnyrmF5zy
-	 cqMVM4ombYXnhTgMk+6nSk6MrQXY9yBr/55ubdCUl9po/E4kJ2ZY6UxiZkpYbG1JDaA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Content-Type;
+	bh=kHkmznRNy+k1+ZKSRaDXv3H6JUOjRtP+smibNO40ex4=;
+	b=EfjnLv4ICXAjBrBeaFVda3rH3+WX5BmwnJh41k/1VQnfT0nov7+pyg7y43QpfvIS55Ca
+	 Pm6bE0UMteGg/6yk6p1uIaRrgB+RdSmE9MU+SdfX9HUEkAGRXZ2/DjAW3kUetr0buiXUw
+	 ZOJb6X/gZhPNp+xtyF0aIohHQmxM3s2fhXse9WQDsUxTJTYu+ApFsFm+jRd5qExZpCKJd
+	 zP6gbn+ZD3bTsKd7fxnBS3ftPWkJDoA+EutL+S5wlMEoS6jrY7qID0Tcxg61Bu/q7iRji
+	 Wi/5B7duqG+ARRHnJ7Q0+2gYYKAGu3sPsEPQiM1W7ou+OAuRswsYGYc1Sq6Q56M0aNA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FhpHLj6c;
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zPLH3qbA;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.49
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353E6606A324
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 14:12:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 353E6606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CDC60A262B
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 14:33:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 84CDC60A262B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FhpHLj6c
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a35d5d4a20so38030185e9.2
-        for <git@vger.kernel.org>; Wed, 11 Nov 2026 06:12:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zPLH3qbA
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-7d2c8141dc6so1760580137.1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2026 06:33:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794407608; cv=none;
+        d=google.com; s=arc-20260327;
+        b=p4uoMqgeyYwD+5h6T1/2CgZTdAltgvePZYCCP+lb4gE+K4Bp/Xpuv5+z9DxaoyEVzt
+         9QL5sYUuFqwHz4eLct7nsLQUlUfDoxYaOLlElBLujw7RpvFJ22XEhaxqw22Qzy4ALb8q
+         aZHxeWjsYviS4UM/cdjIKIrX3peD3AjzlNAX2DCRoklkR+9S31j8sT/7OLSoipNLTrB4
+         54/X2OoLc5qlc/IrhoUnrbKDf1mWlCSFnTJhcZ+phSmJO/832QFd+4vMJO0tIlMRQOun
+         iGTKYbP0puxH2DHJZsZBw0GwIf4hqp5j3YNxNYwOIC31QBZ7s6oJ0oHmjlBquvfXHl9M
+         IMmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=kHkmznRNy+k1+ZKSRaDXv3H6JUOjRtP+smibNO40ex4=;
+        fh=Ww9vamoLL6pT3GAWZbQB53yyTLtjq+6uMQvyEtKBMio=;
+        b=sv8D+Ef1iKcKTF7kNwT7S22A2keycMaEqGU4snIreMj6GEZ3bWVfN4mpBIFAunkuo7
+         HMP4VSAGdtcaQ2CW4/3qi+c/PipJs5SHTtQBg7YZub5jrKAx2NYL60x2jtquOVMoYzdH
+         YqzVhSz4q1cGYkPjUPInFMo1DJAB3jYtNLog1z8lMS/ArAM2/QgppCAFm8srBQGYKp6z
+         8CP66n4fm8yY6IDMmmBdCYRm3Sqo9Kwyf2a5AKCkXRxGzzDTSboHrvdBnfaUBNHuRb1Z
+         WHHmUoGL1ZphsUc4TflPl8dvxDxOZBVCI2zQ7cWBRV5J1F7WhSUpJrBvEO9X+qheWMvK
+         /Jgg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794406363; x=1795011163; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1794407608; x=1795012408; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=KBWShuvPMjS7769KGHsIArZuO4fJTcrLzfelrNB6fjo=;
-        b=FhpHLj6cFdXB0kV9ggN/Tqr++5YLrQRskd2R0jmWYyE44USjePBjLyK0xJnet0fyOj
-         sTNMhGx0/8o/SxSh76S2ZbK5gId7jNv3290yFwXtCK4FDMeeQ9NKSEhV4gN4ItZQcHsI
-         qpIFhCLH/Gb54yrlHIx2DPmCdSuSidZIAtrqoesktO3spAdo7sp/GyueJ0u8wotLk+6X
-         cGuxS+y5SsLXN4X+8cDjpH2MgdyhcSOrJAtQazTN1T3fNAHh2OW/dy2x45cskdOtykNV
-         /wXqqgNxvl86D3W5mZTUiX5T8tIc4qduGKWWBKtemhuWhrR5v6CsuQ0IHWc7xbvwW9jK
-         s2/w==
+        bh=kHkmznRNy+k1+ZKSRaDXv3H6JUOjRtP+smibNO40ex4=;
+        b=zPLH3qbADjtm+ec9TauPV8DjuBgqc52dRVo0zEJM9wfNWl7tm9v/Fo+eqah3ek92cK
+         i4wvlD/1TXADZlytM3RGO9hqrev01dzQYDIh24+C4o76t2bDmcPDWwh2PBZvxXEXkhkD
+         1kwVcgfCmpQBouqfIZPVTOf1F/dGO0xcXefcgCYj7hZx+i299SAeVTAUMKwOerjpTTsd
+         iiTLoLVo+J14IgyduaEG9OY6emUCFSEk9DtfwNeeCzQAR1Q7wG5JBBQtS8B5YU6bO1Ru
+         LdznLGYD4hJbAJ6g/H56MY4UuBXOuLNJf2BHunpdUxcg7wmQz7xY8F9VH/jgNUcrhCVY
+         1tBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794406363; x=1795011163;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1794407608; x=1795012408;
+        h=content-type:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=KBWShuvPMjS7769KGHsIArZuO4fJTcrLzfelrNB6fjo=;
-        b=hCpa8tm1fBeJWM7hHdkjYJqhUsipuYHOIvVezWvziHr5UBqUGKWx34+tRprojXFBLz
-         UpF3jnNhqWsUFWMFB4Q4qmwBo6alOq4xrwukLOTfc9IWUjaVh2cR9UAMXBXg03IvOXYM
-         g/8Xrg+51sPLbA0uIV9fmYeU5T5x/V5cUwrjCeSNgdZ0gmHVwDnnRQWFPG3qUDSfiFvH
-         0nHYs4799h4eEVFrdiVmhmUi/GCRGiQTLOLfaHK+q7ewBKM3MUra37DjIF+oSX53FWUj
-         JZuK5ATM/MeC4ZsdaunXpmA96JLmqeGrmCNMb+3Vu81fhwpzxgPmOoy0LSdb/OHIcO6n
-         FKRA==
-X-Gm-Message-State: APuU4Z87J02tZ6Tl2EM0jbJTX2eSdZlS+9Foi5zJoY5aZoHbTii2aEhm
-	V9fNxchKLKLCN/6Cf0nMaX03y4DpjpA/yXhMy+cu3NyQp52pQEErqhU/
-X-Gm-Gg: AYBFou2VWoQ39E0adJ4+Bek/mceM6WO57UKN6XLMe1EZmMjvb2BLLpr2IZkgcQdYoR+
-	i2VLmAbPdPRiIgSz/zhs6uS0k1GaKv+JJgsPYU9xboDV/ZRfxEg7zvd4AlZELtvtnxpRMyqKLxz
-	IYD6RI/ollUWpEcB5fHEcos8qQLbzNJLYUn/CIOPLb3rfyPb8CzB+nV+b7IztS0ou+OCG9CdkN9
-	Q6lSC0x/FiWWnCKnSja/hQmG64+ZrVQZMU2/VbmFH1wOMbYyDsuF1F3hzUAHUG91GL453UrZCNu
-	z6ORhlOHodeO3PRIYPIal8wLxD0y3hogKCMmtu9kUUlpp9C/GHrDW72cQJm5jqkZ16ZfTuWydsV
-	HvhL4aKRi+YRExhTCL0wxKMKuSaZKghi80qtq6+VSqcNBNum5hCXsD+cb69VK6w7qeT4s+k16rs
-	+XExbh+3FzLfIg4CTgME+N1Oh8GGGWMQ0Zy8FDn5mo9wFPeFegYGKnihvUzsWEhmXfJxJddXMmW
-	5NEOha3fdaUMoJenJvsB2m9Rk302qWfFpjsPBc/iolYvaGYK1VKYM8SzmNaeJabjDxJSQzqwM1/
-	BD6sSIAlCL6JXJIVynKNDuRBN/TxG1G0MYcqXPq4cx+2IzD09qcJZwkmQQ2pazM9cd/jlZlWVNH
-	1kVwgyDWGnw==
-X-Received: by 2002:a05:600c:81c5:b0:4a1:dade:f049 with SMTP id 5b1f17b1804b1-4ba09376130mr41783235e9.15.1794406363433;
-        Wed, 11 Nov 2026 06:12:43 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:1921:262:1f9c:7285? ([2a0a:ef40:724:6601:1921:262:1f9c:7285])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba0203a763sm144034195e9.4.2026.11.11.06.12.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Nov 2026 06:12:42 -0800 (PST)
-Message-ID: <b64387b3-294e-49da-b40a-0e757956bafd@gmail.com>
-Date: Wed, 11 Nov 2026 14:12:50 +0000
+        bh=kHkmznRNy+k1+ZKSRaDXv3H6JUOjRtP+smibNO40ex4=;
+        b=qLjVJCYnnrkJh1qDV6CU5rvz/ywiYpb1cjiL3ch8Cq0rTK9iBWMsOPCWbQNZp4cP4Q
+         291cZ3uYcWaJkwliaeiovm+KhU8MuGgcqIssQrUKnoL6l8BWcRQOzlOQzDYfmB74ts5B
+         SajtymfP0wGP8Drq+NBTm83a20XE41G9CK389CGF6p9yDDpilRd0ui7wexMdCx/WYocd
+         YvShyKwSbOWclGlZb7Lbiub06nfj/cRySL2LWAJNrLTzqkCUYoVwxxcUm6TUxo2UYUYz
+         tXit2IuEoSDKcJYuA+Yn+vZzAwIm494i3L0pz/m+3tkd7oHbyOzwgnb4wNbe7u8fLQen
+         B63Q==
+X-Forwarded-Encrypted: i=1; AL+hErGzCK/IaN0DTM8fQenK4ydTBi76kEDVWdOw0f4i7H+Cqxy/6XyrKfJkiudpwCm8MAFARmY=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8i/5zrMLTyRVsSHuW2nhTcpkJYFAEjiycuacrhN5x0dfb2HjiF
+	S+a1gxdr/OMWWghHXU1AtiMhmHobyA2K99o58e1lAtrjiVaYyNvFTBZ09ylr1HeGmpX5zb6/8BU
+	ZTtAd0UW+AfZmzNcgkZ45zpX/fBSL+7E=
+X-Gm-Gg: AYBFou3xsUViyh5Hg6JhCleiDg7GGSeLKKtGFfdp1doORB4t37iv7+yIF/D4STdrjFd
+	ck5+Qt9i/x865uq+sYwhpFjAoFpiCGxnaS+Rt6VEP90eFF6pzhUIhM6/7/pzCB51OyoGcWcL2Yp
+	WD2iD7f+c1yUXxj2uHbITenp247x6sXJvGoFL/bv2XBNTv1iBQdbgdcZpI/hPimibu68nEr+aiU
+	0mAB2sughgDteHpEx6QsX4r1apQvqdZKQsZV1MqyXAOp6vKuK4WqQDiXTN7JOnt90/HUPxvr3C8
+	ALqVL2IgKQDhuSoTiKYA0wDiYrIPLiszLjpx2ome7AsBPv8hAL5RJveJHWkIRBTKboLIQqkUhH/
+	kx4hZGETU7bPqKSUnNgjVpyWj7H6A007yB/Aye9Cjo20PRThSFr6G9z+yf+bTrktz8M6v1AMN6w
+	+7NGIbWIhdVkUGja94n0FQe/9eSw==
+X-Received: by 2002:a05:6102:5092:b0:7d2:d873:d59e with SMTP id
+ ada2fe7eead31-7d50619787amr806137137.23.1794407608467; Wed, 11 Nov 2026
+ 06:33:28 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 11 Nov 2026 09:33:26 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20261110002251.2007617-1-jltobler@gmail.com>
+References: <20261110002251.2007617-1-jltobler@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,44 +109,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 0/6] fetch: avoid fetching every branch of a new
- remote in a shallow repo
-To: Harald Nordgren <haraldnordgren@gmail.com>,
- Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <pull.2412.v13.git.git.1793357550.gitgitgadget@gmail.com>
- <CAHwyqnVJ3eUQ9tkQE3rhQ8jFZjaD0tFUv41unE-NQ1WRiyfjBA@mail.gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAHwyqnVJ3eUQ9tkQE3rhQ8jFZjaD0tFUv41unE-NQ1WRiyfjBA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Wed, 11 Nov 2026 09:33:26 -0500
+X-Gm-Features: AclHuK9BkCM344MjWwIX2dnrUR0Xx5qsZPHgd4jPUheIT3akNab1oeTFkveD33M
+Message-ID: <CAOLa=ZTDxY6dJL0ctDtexJpkGE6YxEPo6SEa55aPrF+2VZg1VQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] object-file: eagerly create ODB transaction temporary directory
+To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000015e95c06600114f5"
 
-Hi Harald
+--00000000000015e95c06600114f5
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/11/2026 08:31, Harald Nordgren wrote:
-> Hi, could I get some (hopefully final) reviews here?
+Justin Tobler <jltobler@gmail.com> writes:
 
-The diffstat for this series is
+> Greetings,
+>
+> This series continues work for the "files" ODB transactions and makes it
+> so the underlying transaction temporary directory is created eagerly.
 
-12 files changed, 593 insertions(+), 33 deletions(-)
+Without knowing enough, my first question would be 'why'. Over the top,
+'lazily' seems to be a good way to go about this. Hopefully the
+individual commits explain this.
 
-which will take a considerable amount of time to review properly. Yet 
-the cover letter which should explain the problem being solved, how it 
-is solved (i.e. the design and any trade-offs that entails, alternatives 
-that were discarded etc.) and anything notable in the implementation is just
+> Previously, by default, it would wait for the first object write to
+> lazily create the temporary object directory. Furthermore, this series
+> also ensures that objects are written to the temporary directory for all
+> transactional object writes, not just when batched fsync is configured.
+>
+> The first three patches consist of some minor preparatory refactors. The
+> final patch swaps to creating the temporary directory eagerly and drops
+> the lazy setup.
+>
+> This series is based on 3c60ef1e38 (The 17th batch, 2026-11-08) with
+> jt/tmp-objdir-loose-idx-merge merged into it.
+>
+> Thanks,
+> -Justin
 
-Avoid fetching every branch of a new remote in a shallow repo.
+--00000000000015e95c06600114f5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: a61b432ebed4cdea_0.1
 
-I've no idea from that how these patches relate to the discussion on 
-separating "which refs to fetch" from "where to store those refs" or 
-anything else. If you want people to volunteer their time to review your 
-patches you need to make a effort to explain what those patches do.
-
-Thanks
-
-Phillip
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1yMGZMSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOFdGQy80anhRYldWdThmLzNCUG1Kb2RrNGtwQ1NmTgo4dGRFMnUreVNZ
+b0xyQ1hEQis0T29ueXBXNXUxYVptZTV1eWhZSnZVM3hWOWVQSC9XdFgveWMweFVNWWg0TDhPCllw
+ZFAvNDU2d3dOYnI2Sm1ZeVp2Z1ViWjV0SElLYXUxbHR5RE5pNHBxamx3TDJjQzlZbjhCZ0VpTDVs
+NzB6T2wKYnkvVEx5MXFYMzFiTldJTGNlb1RuODhoZ2NYb2R3YUo2WFJYeWJiVVBHbGVoL3NGalMz
+WGp0K2NYSHFTbXA4QwozR0NPZGtFaHNJbUpobnQ5V2luTTVkU3ByUThyTmdpYVhzREtZZUQ2b24w
+cFpabGhyaVIvWTE1VEh5U0ZEb2pwCklGdkprSEk0MVIrVFc4VUNidDRKM3B2aUtYb3hiL0tSdTcv
+NmtiWlZXRTZWQjNKNE9WKzJPeFJnSDJOMWN2NXQKamN4K0JSQUJKUytNZHhGeUJZZEJRYmVrM1Ur
+cVNDSktBRFlaTUdZaTdKRWtPUGg0SUw3L01xMU43RWhHcVQxMQpMSXErTXNobFZJSE4wUnp3dUow
+R1VrUlo5THBNTnkwYVo2ekFxUitaVEhHeVF5bGVNU1BPVWR1cXFqTTYvODZSCjVZRWxQVTc4TzNT
+bFZpZmRnQUxlL3Z4a3E1SloyRjYvYXVGdzVObz0KPVMxVXcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000015e95c06600114f5--
