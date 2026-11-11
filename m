@@ -1,105 +1,126 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.179
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794415445;
-	b=qzDexjrUOCThf9kUzf50sJlO0Kl7LzdXDIYf9NDVUPBl0rFcRPSx8qq12Gb0An6fayij
-	 wu3WWgFFyTjo/ylfEbQ/hs/iwrFoOO8pZGedZYKg4LAhnBPO69R8p/dXhklMK6rGZ+Q9m
-	 LC0ecQ9D3yMzWm6m9qpCCjQHTOLd3b1BDdwrlJUFJNz6Gq1qb6h0gmamSID7lD0n/uCkr
-	 gtqnu1A2S5ms+nYiUSV9Voq/4/1aVp45rKJVhguO1mbeC+fbGvfCu+PIYZXAb39HG/AIj
-	 +q9c+qfpQD22AyrqNZYaSPVlrE7UFHKXBN7O7jOV4AODLhqaXsW82/efiUxKH0XscPg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794415445;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Content-Type;
-	bh=yfdTeBD0hURkB/YL2l7CHO5Xr5HFZKhXIJ/6/Z/LoNU=;
-	b=CHDFg5H/kP1z0Gt9yHJ5UQtATOWxkxJ8LRaUgygBYbHeM9hWNUtr4bVv0yB8w11a80oL
-	 fFmL/0QIOE4OJouM2LF2bIFJW1uyX69ZYdFvqg3LiJHFJm1KXsfECmrvcPwohVk+taoJe
-	 WZ+m3ysjLq1hGi/bUJ1YJ3TecO5ByNYJfZmaGEWMXzvsvnDUzR59G38Pr8KHmrL3y9XCS
-	 h/P7es1OzZlZfqm/ffx4PO4uWnIhyafJXeTG/nA0swPFfY5KBAtNoeZGLbZB3ZS7bNpUn
-	 VS4e+eShQlfFHdQ76qImycyR367rqkRVDRpZuzXSkvRCrA0Lc4BmJEuXdpYdNshtY8Q==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BrK6lRb5;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.179
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794415485;
+	b=zLDSBYRmG8uZBNFXqtQb8OuYwX3a/3i8OQBu9rDHIfRxcAUbxq9DHXdMLcs82TbnyMsD
+	 aj+NuXmHVv6yol4Oer32lIe2xNXT1OHREw3ddRRkzcd49INPWobCGMPoAdvqyECsRYuN3
+	 c/4sW6RmLIEyJa2CBGPiroxAboh7D83E2zrlTZlch3HsruB4FtT5NOMOjS0K+zWPIUslx
+	 Mag9ky9yl/LIeEjbpgckCAqreqpWNnHjv4eoGfj17yj1u/Y0aGUrQ8X+Av6HPskMztTeZ
+	 K90xOl/mnp7yo7JM+RUs3PsstCU+imZKSYIkXDEfZL2LdzuPzIi0LplFKfcVQW+X9Tg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794415485;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=z0b4iehW+Cflo4DAdtMlHH9Dtcev3BncGBtXnOAE8LE=;
+	b=QfgiBGBEGpn7hOrN0IeskGFqWP8lf7cZrEGDwiTeJR20g4lgrMIe4ePM33C2USQhkYD0
+	 FbcLUS9JGzsjKc6zQGF0RJ1gnDH/AdBYUQObRtbVQt4/8xarsS2Nu7/RIm6yO3xQCruaL
+	 Ed7tcUgZblTb3e9hTRsS41+kB4bqU8AgUqfHy8YVE7UcZ24ivNm07ttUzIbtlxtMxaP/a
+	 eokxJCQZRB00wcvjNEp4qfsW3sIaUx0xQ+itkla99ZAIFwAqoOZsAP279DPqDLP3/K8sC
+	 8xiTmBD/mwPYbJUY8/79ebQK8VmGmIvkBkvz1jbtOYOKtqU0Gy2hvUwQkDDDoPJNliQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=RmZ8NXRU;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=xA8U+qlC;
+	arc=none smtp.remote-ip=103.168.172.146
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176F2606A326
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 16:44:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 176F2606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6A7606A31C
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 16:44:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB6A7606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BrK6lRb5
-Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-5ead5ff47caso1111811e0c.0
-        for <git@vger.kernel.org>; Wed, 11 Nov 2026 08:44:04 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794415444; cv=none;
-        d=google.com; s=arc-20260327;
-        b=LkBPFhz6s06iDBcC5hMRjVM3vkw0Q8oG0rYQ//DvweKevVphoahjVMwDbB4UgSSd8m
-         sWIQff01aYmPxqxGe5LhLXfG6aWihlK6rSow8YnJVduR/AZXPtZUpPjfLDeslY0CNMFN
-         GNT13QzBv+gnxqgcVi51hwNDcBjnir08DhO7rVwRxJnzULdBPXuiQ6Id/5e+bcRq/iEm
-         iEdgFhF4wHBjIUaHEYBti9RC1DwqlAkNN/pSkrkHGpj+etxxT/dHkEDCB3+iMbXPsI/7
-         5sdFH4rs/Dc4FSJ+DrMzv9W8nqh02dEwi2sO/jGNpgFhZwvIUnvZah0xcliGktqB5HYT
-         XLOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=yfdTeBD0hURkB/YL2l7CHO5Xr5HFZKhXIJ/6/Z/LoNU=;
-        fh=S2Mjb6qtwXGDUcEpCk4/Ldywj+EsOIKMcAAgqBFaHdo=;
-        b=iPtS2DMkHewzteieM9xlPhgITLF2rqJ9NrCgLSbhsyEvaE7XaNIWxIA2jL2E3D641d
-         q4xnsWgbu4mfG5M+U+d2fNYS4A/+P5lUUD44rOxdgMSKlKGhmZpI3ni4b1B4EkT46QAW
-         0VfvUKdEwIZbPraet5lLrfGCwOMvFNJL0njv9BoxkdIvVxQnbtqFx3SOkmi+/r9yr4Xd
-         CCyBXnnVcmpEsR1Blkc0qbPznhWEiER0JTyHjHi1jTIl+7mSXn/ml4BD0y0mLtKL+p+k
-         6AwtSlnGXGid+aRIqmiL57B2mkyeR6CQU4/k47uQLH2euRLqRillJmOanLqJVu4SVmAK
-         oIcQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794415444; x=1795020244; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=yfdTeBD0hURkB/YL2l7CHO5Xr5HFZKhXIJ/6/Z/LoNU=;
-        b=BrK6lRb5ezFa+BBJ4X7XuDydfyU68QU9BNEXMyUlStFq6ip6vUrpfGrlx2yHj2TGU6
-         iYYXbdAj+p3SU3KQdowu84NQ2frE5YD/PtMilRlLof+qrss2CHMYVlHHdW49MCnYgWWR
-         7mRz873tZ36b0ms185GPcFbFrm6oCak96G/R7na9AYt+2ylNthIakhNvAdEDR/mafV2y
-         OkAiV4dwpzP9zEU2JxMBYK1NMano84GCtVIXNlajE8ua45kQuxdSKYTU1RKTkk9dxcQH
-         BGEQ+Y9+dgabt+q6ktzMLh+zT01TluM1QSBSIaq/lvFgan4RpLiGHFjochESJQuUBThq
-         yJhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794415444; x=1795020244;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=yfdTeBD0hURkB/YL2l7CHO5Xr5HFZKhXIJ/6/Z/LoNU=;
-        b=ND0oyY9Hd8IM1LO6l6suJYmupd5p+vMLczhByl1ShN5RGn0L/vHiUdYEZwZZdVu1ZG
-         MP7MrpwAXfXgTeq1tE3Q2yGzAees/v6J1yKGoT2w6zqIZg+HKA+sGJJzpCOYSU+KN3la
-         LnR4FuuDEfEEMVxjwgdWsspPPCKWgGdXm2O4ShZrzT4Hkmilg6qsX7r1StJqZ7j99iwW
-         eubLrVfRBNXMwJBn80z5RSKl9YqlWO+XQpKgNxbo9xhUMtbKhh2K1BWpokkbkNuGmBsL
-         DfHNqc5N7mMOY9ultP2ai114wx+XyDnGliGdNv+fOyFHhMfoxhY6GshpTEbzvyzupHWK
-         uyxw==
-X-Forwarded-Encrypted: i=1; AL+hErFL3MKhsWAsrbYnprZgqTD9Y4gu1RXGvV3MuvUaAP7xHXCkhmEdLvpKilZzoXFj35EMnKA=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+qD8RgvUfMZtO9irsgl5UiMsr93FItCahIpNRfrfjVYXivQ9fR
-	IL8APiqHeKTqwv7CUNBWOeJEbfO45r3zu8SHfjeeyof8cifbGCWFObpi4HPx1FrTIRogNh8IJCG
-	xXg1cZDPwSUjkTQJWhMJy32WMrjmBq90=
-X-Gm-Gg: AYBFou3mPvzLGDdycfgezHXmD8AKH/kqVJQ1HWIrQi0SIhzz9Nn7rORAs+hl8ntyleA
-	xP1n9X4s3i1FYQz/IT/0Eo/jNzWKHfZoYL88h8MovTHq1pp4OEUpVUk5P3UUxTnPdWMvG/zNQ2n
-	CDCxA5gHtisCBEK3HqPFXCxsoN+uXoDZKhI9ugIPcFw2wDxosjqoDYfcXlvxPhQxXI9Oc3dYEEv
-	agcPab4lXhkvdnZlVEJzihiJUNBu9+33/xLSwUwvvvJXH+MLhmqa8Xi61ssWbiE4xdXjbpkqRYo
-	WYNcfthm9Q3EWZokrXnB0aUAMnBTUN7BNkroHWgvJMPMnmaOAHZMeKx8cxSho9bwYbp6aK48zw6
-	s7b8t5hJO+rTs1FHe1AXURdTmpFkfkxa9Z0X+0AZ+spXdkkgh2i+F+DIxATbl6D94O6LhR1KdZA
-	r9XD0vSDaB11RwXplIxpSItknfxw==
-X-Received: by 2002:a05:6122:e448:b0:5ea:e324:7c0c with SMTP id
- 71dfb90a1353d-5ee1c4674a0mr975921e0c.22.1794415443995; Wed, 11 Nov 2026
- 08:44:03 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Nov 2026 08:44:02 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20261110002251.2007617-4-jltobler@gmail.com>
-References: <20261110002251.2007617-1-jltobler@gmail.com> <20261110002251.2007617-4-jltobler@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=RmZ8NXRU;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=xA8U+qlC
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id EB516EC0110
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 11:44:43 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 11 Nov 2026 11:44:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1794415483;
+	 x=1794501883; bh=z0b4iehW+Cflo4DAdtMlHH9Dtcev3BncGBtXnOAE8LE=; b=
+	RmZ8NXRUWJd932WlExMm+BxBFm97ANqgsXhiATukv8y6F1pq2Mhv1hnChQ3qkIG0
+	c7Zp9hq7vSZMWm8wJ9eBDFhefSh6BNoeWuPn0gPK+igpjT+Ikp3g6McIF7CZRjNJ
+	0c3n+r07rrBAYUyzEhZbXq+5ztn8bW60i9E7PH1RXF/0j4YRrNKWQ+S2uykVpqZZ
+	Mig/mtYc29aDVGeVSw3XN8vQFRcUPVGb4vTbZmHILG2A/OLNdVvoGU86wSuYGtcn
+	+AK26eDiaPnMvB38Ra8nT9mcfzwLl96RGgok5UQCylK3g7qI4IVynRv9kZXQ6u56
+	/AgTI1ZV1+4KhtZvGwymJw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794415483; x=
+	1794501883; bh=z0b4iehW+Cflo4DAdtMlHH9Dtcev3BncGBtXnOAE8LE=; b=x
+	A8U+qlCnyee5oTBTP47LD/VwiAtUMkk2i1c/Hq2S0PgwwqnwHYy4jJPu4kjfKYvS
+	HVPtNnqJOXyvIChiKUccF7Pz6444UZWrcwuJPYRmBkbgLibNx1ZeRIrS+euvbstf
+	H010pD/sCdtyzxEizFj8cToa8a0msjdRgRyKVPzGDJQjsSzit65PuaRRS28qD0RT
+	ZkLEHXkQvMWKXRr3YqGoWd+pxJtxjMPyUIdzvNDgulsLIz40DaQ50JtNKEYhz8/2
+	25BCGLNSmF70s+oOUwZ49Qi/697e7Ef1bJqTtvcM3quFAmJwrDCzweYLmYJPXduZ
+	mVKwLmqJsKs9XKpo3F4Bg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794415483; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Nkr5UPCJYrlLQ1ZTMzjBjiIQo1cYGrJ8INuG6I9WCmG1Zrd
+	Im3Kz1tU+uwEXX117VEuKIOyukK9ecthvAC+Q+RQnptvQ8WnTY3SKnOxillf5Y0H
+	8cwsEzniUbXWsieDAcGcpRJ49b+jX0h28i5iheGFAtOTeqIPf06gnSzdYG4EK0/8
+	A6i2chWeU+j+CiaKv6L/v31mPBfxFp8vvqFd7QZ5jsyQ3ZWQ7FSN5VWN8M6DJcBQ
+	D1o9h+M0T88R17T0Hal/GWWnAla7LPmGiU7yZbNCIt31RMphSPzT+AXh9ZRlfuhU
+	3SBL/1gVJAhP2Gb8RC2RWo4Y6w4t6NMDevzgkVQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:NwIsAAj5zMNsfWum8b5WRgCzsbSO1UaxwFgKIWuY9ww=:eHJ0k7nOGIINE291bbLm0ngIlkic5f71BeJij9GnKeA=;
+X-ME-Sender: <xms:e5v0aj9dvzXMu_oyaJokepvW3aNUjsMKIfhLioItYJWYZDO0tdtWsA>
+    <xme:e5v0ajaPxl_6eol2nqx0UU7QQpmQekSDjX5ydmdHNmu-pI8Mw6X1ARe75Vjdz5pBB
+    A9ynhQmcRsCc64NczJkYXlNZoPLjZH5WywlwooDOlwDph9M5gPkSkCF>
+X-ME-Received: <xmr:e5v0aq3YwE6_8VgSh67UNlM7BSWSeGmQH3SCgA3uceSCLX1yNh619p1YXhTzsBgkqV0QEeACmpTLl2W-4GJCJHfbe8xqm4Sm1G7Z>
+X-ME-Proxy-Cause: dmFkZTFbgmzOXRSAy85dKn8SaGdyoOFjrYXJUMbXDm4qCQIAXe12onbGufv3kkMvvumH84
+    FXGECDcq6dtNNEQ9NwqOQggDR4L0RSYPskNqeXB0ivNJxkJNlwEqOkRUv4gQ+aNXIqEm/Z
+    t/LtHx1aQhFOo7Gp2ozY+q82ChxdmvT1jFolR6Y1leKFNYOko/AVN4AHRztPRGVX/NX4zN
+    gEkF6zoYMXM/IHk02iiOgQekIQWRhqabWUgnxKTWi25SXnNMStZc+gVvCT/ZYndyT4eAZF
+    utbAumNZ5vxqJOF5DwCKtKBvm45sdsnGM9u2YUztOr0J8wVD3vUcmVbqIR2eF30a5OkUW6
+    pElQiUvO1IwouYDplKAnSX/cGeCV+fBNl+Wdm3KuGw59MO1Pidtc8wQH2BLiMMfy1NBuz7
+    EOJFboCYjVTfYTTpnMiU+isLrhPD3a2TuLz51mPdXIotcq7SlZhzcyhqEzu+IeDxk5y0y4
+    0K2KxAS3T979RoYOHBSSS3zIrGjTGRdKSIUXx8WUfoDePjU+3OV5CchCGa3c7pbZDEoHcd
+    UuJnSfiED25qzM8QL5XSC10emLj86cjsR4UgrNmqjA8VQOyx8m011UNGeYQOnzGZpk7uaY
+    wujA9dN7IKA9kW/seS943V/HJxLMB1dZon0GRxaNeNJtiUCrgRJitr8KFx9A
+X-ME-Proxy: <xmx:e5v0amYfMXTy3RZ_PElcwzLzJTQJTK6lnMyf3yal99oORNZAheOy9w>
+    <xmx:e5v0aqLRnWf1PC8Bok2NIAFNNvOAtDVAER9wJyb_Mr0FOyvExSVttA>
+    <xmx:e5v0atHsETV8WUafeDC6A9KEDKLiMuqIFOUKKYe7MQAPTvVnNQqZEA>
+    <xmx:e5v0apsRGlCayI060w3pLRex6sJcLksO_Y2ZE1qpb0OP3w2CdusGHQ>
+    <xmx:e5v0ao7xlTJKHoCZRDpi1U0M7FMZM0UGdxJQ7TP9vE77b2fT_3rtGw_M>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Nov 2026 11:44:43 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Miklos Vajna <vmiklos@collabora.com>,  szeder.dev@gmail.com,  ps@pks.im,
+  git@vger.kernel.org
+Subject: Re: [PATCH v5 0/5] log: speed up --follow following renames for
+ non-linear history
+In-Reply-To: <avOzVCHdGBNIG8sT@jtobler--20250820-SHC54> (Justin Tobler's
+	message of "Tue, 10 Nov 2026 18:40:00 -0600")
+References: <cover.1793298331.git.vmiklos@collabora.com>
+	<cover.1794078554.git.vmiklos@collabora.com>
+	<avOzVCHdGBNIG8sT@jtobler--20250820-SHC54>
+Date: Wed, 11 Nov 2026 08:44:42 -0800
+Message-ID: <xmqqo6bvnwqt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -109,174 +130,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Wed, 11 Nov 2026 08:44:02 -0800
-X-Gm-Features: AclHuK8mT-nRNYPUaS1mqdF7ctCdMJszZ9hvT59pFKeSBqKJI5rcQ4RG9KtP8S0
-Message-ID: <CAOLa=ZSonhP78j2sJdTwctp2h101jWZbvU_jcg1_TR41cRK7dA@mail.gmail.com>
-Subject: Re: [PATCH 3/4] tmp-objdir: preserve errno when directory creation fails
-To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000001e97fc066002e773"
-
---0000000000001e97fc066002e773
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
 Justin Tobler <jltobler@gmail.com> writes:
 
-> When `tmp_objdir_create()` fails to create the temporary object
-> directory, it cleans up after itself before returning NULL. Depending on
-> where the failure occurred, this cleanup may clobber `errno`, leaving
-> callers without a way to reliably tell why creating the directory
-> failed.
+>    Summary
+>      git log --stat --follow -- include/linux/rsc_table.h (rev = 304812ed33 reverted) ran
+>       14.30 ± 0.44 times faster than git log --stat --follow -- include/linux/rsc_table.h (rev = 304812ed33)
+>        1.65 ± 0.05 times faster than git log --stat --follow -- include/linux/rsc_table.h (rev = v5)
+> ...
+> While the original patch and this series do improve correctness of
+> following a file through history, I wonder if the increased cost is
+> ultimately worth it in most scenarios. Maybe this could be something
+> opt-in with another flag instead of toggled on my default?
 >
-> In a subsequent commit, ODB transactions create their temporary object
-> directory eagerly and report a more specific error regarding creation
-> failure. Preserve `errno` across the cleanup so that callers can inspect
-> it accordingly.
->
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
->  tmp-objdir.c | 8 ++++++++
->  tmp-objdir.h | 3 ++-
->  2 files changed, 10 insertions(+), 1 deletion(-)
->
-> diff --git a/tmp-objdir.c b/tmp-objdir.c
-> index 5307717354..4b91d86787 100644
-> --- a/tmp-objdir.c
-> +++ b/tmp-objdir.c
-> @@ -148,10 +148,13 @@ static int setup_tmp_objdir(const char *root)
->  {
->  	char *path;
->  	int ret = 0;
-> +	int saved_errno;
->
->  	path = xstrfmt("%s/pack", root);
->  	ret = mkdir(path, 0777);
-> +	saved_errno = errno;
->  	free(path);
-> +	errno = saved_errno;
->
+> With this in mind, maybe it would be worth it to revert 304812ed33de
+> (log: improve --follow following renames for non-linear history,
+> 2026-06-22) and restart with a fresh series. IMO, it might make the
+> changes here a bit easier to validate also.
 
-This and the below pattern of save+restore seems a bit finicky to me.
-Could we instead do:
+This sounds sensible, and is far better than reverting and declaring
+"The original 'checkbox hack' should stay here forever because doing
+it right will be very expensive".  Giving it a fresh start would be
+valuable as following a single the is an important operation in some
+workflows.
 
-1. Move this function inline
-
-modified   tmp-objdir.c
-@@ -144,18 +144,6 @@ static void env_replace(struct strvec *env, const
-char *key, const char *val)
- 	strvec_pushf(env, "%s=%s", key, val);
- }
-
--static int setup_tmp_objdir(const char *root)
--{
--	char *path;
--	int ret = 0;
--
--	path = xstrfmt("%s/pack", root);
--	ret = mkdir(path, 0777);
--	free(path);
--
--	return ret;
--}
--
- struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 				     const char *prefix,
- 				     int will_destroy)
-@@ -163,6 +151,8 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 	struct odb_source_files *files =
-odb_source_files_downcast(r->objects->source);
- 	static int installed_handlers;
- 	struct tmp_objdir *t;
-+	char *path;
-+	int ret;
-
- 	if (the_tmp_objdir)
- 		BUG("only one tmp_objdir can be used at a time");
-@@ -196,7 +186,11 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 		installed_handlers++;
- 	}
-
--	if (setup_tmp_objdir(t->path.buf)) {
-+	path = xstrfmt("%s/pack", t->path.buf);
-+	ret = mkdir(path, 0777);
-+	free(path);
-+
-+	if (ret) {
- 		tmp_objdir_destroy(t);
- 		return NULL;
- 	}
-
---8<---
-
-2. Then we can only set the errno we actually care about and jump to
-exit
-
-modified   tmp-objdir.c
-@@ -151,6 +151,7 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 	struct odb_source_files *files =
-odb_source_files_downcast(r->objects->source);
- 	static int installed_handlers;
- 	struct tmp_objdir *t;
-+	int saved_errno;
- 	char *path;
- 	int ret;
-
-@@ -175,9 +176,10 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 		chdir_notify_register(tmp_objdir_reparent, t);
-
- 	if (!mkdtemp(t->path.buf)) {
-+		saved_errno = errno;
- 		/* free, not destroy, as we never touched the filesystem */
- 		tmp_objdir_free(t);
--		return NULL;
-+		goto fail;
- 	}
-
- 	the_tmp_objdir = t;
-@@ -191,8 +193,9 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 	free(path);
-
- 	if (ret) {
-+		saved_errno = errno;
- 		tmp_objdir_destroy(t);
--		return NULL;
-+		goto fail;
- 	}
-
- 	env_append(&t->env, ALTERNATE_DB_ENVIRONMENT,
-@@ -215,6 +218,10 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 	t->repo->disable_ref_updates = true;
-
- 	return t;
-+
-+fail:
-+	errno = saved_errno;
-+	return NULL;
- }
-
---8<---
-
-This avoids having to care about other syscalls which may be added in
-the future and breaking our setup as done in the patch here.
-
-[snip]
-
---0000000000001e97fc066002e773
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 965805e1d779a7cc_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yMG0xRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMmpQREFDR1VVR0YyV01pUGVORHFJdGUyeTdReUlkNgpIZjRKNVRKeWpC
-MnFhaU5wTkdUbWxZUkZrOFJobmtXQnVScE1RckE4Q2R0L3RncXVibjV3Nys1OVdJRGJPdkE1CnBp
-R0w1MTU4Y3h2d0dDSngyZFhrVmhLN081dTVQK0V3cjYvTmhlTXdKbjdHVFQzK3VYV0U1MGpkeGhy
-MjJsaTUKeldBc1hhZkxGTk1QVVZUTERMV1JDZk81L1hnUFlYUFN0THJpWjl1N3YydnNnZWtsL0Uy
-S2JPbWpqaFNiSHpoSQpEaEQzZlN6b09acEFVSHhvdWpObDFJSGgxdXJhYitVT2l4U1I5VndsTlhY
-bHJZM0xUVkI2VnBXNVdCOEdUbWZhCnFReGlSaldVYWJxMjBjODlHSmVkVXBnVmQxeVpXamZjMWdR
-QjgvTGdvRW1IWUVpTFQ3eTU4RVlHVVNwVEhnRWoKRUtzZUp4OUhyMGpvWTBsZzlKWWdXemYzUHVQ
-QWNCb2dUVTF0NVY1N2VacmtvQlducUR2YjFNK1o3NjJKYXdPaApIR05uUXhNMWhNTEM4OWZjVnVm
-NWZOZ3F0eTY1c2d3SVh3RUIreTJUeW1kSXMrUzZBajhXbklNbldUTW1zM0dXCmJmVGwwdXFkOTNw
-VHVaVFZTQkZiT2tBMHArQy9hbUo1bTU1R1JmOD0KPUQwbksKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001e97fc066002e773--
+Thanks.
