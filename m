@@ -1,102 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.178
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794422120;
-	b=w9R1T/D3r3nuQuxVBPZzKM9ZMXEo16Hpvgg1qH+iyzhjX5f4+bKxeKWfFCMwA+14f1+O
-	 ZFhFA2fuzeEiye1qR4CVzMG+zIJPIuvBmdytm/YA2B5zg536LzwggFUICQP6wkPdEOzm3
-	 M3BQPVAVdcNB7djSXrKb777TnqM1RIY2RnOJDYUYff0IvyyqG9dVY/ZpwB2RaKyzdQHGS
-	 WWjY5y+f6B2Xk28xEpKPSMplHg2UuTuOW613fqwOYkztxj9OjT/eYo+wqNWf3LpdKpWVk
-	 GNGvGWWNS/j0lFURELWLH3ZgBRXxWU1EPCIvbGXDCspICwLf4Z11zxY5SgZtxtm9iXw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794422120;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=qa+qaH6ClKIpsgydbngMJIqv5DNkTM1W2bwxY3fudAI=;
-	b=Vhccp6vO/ihQoKRC2pvXyonmL5SOE4HYAHIy8swDc3pf8y0guIRrEtU2Wz37FmA6l+La
-	 tXT7baPtae7OlmMZTVTPcQNVXVcqNrjAsZzGKY6IpxKT34Qp75oMD9p98grXqQoz6M4Sh
-	 f2rNKSoim0C9g+rInJY5zzSLHqoVGk7eT7tjXq5G0ILTyPECjZVEtYKUhAr/CdLrZQKF9
-	 v7BZjUJGe+uAqrlTb+3Nxn75bXWPbG6iBdwgzttk0J8truQCDRvwSbhQKSevBYwS/AgNl
-	 ou7QCdnKC5EV1sh0bxXJUeE884hlDdDoyj/LzvaBnNnFphZxHTqvZfAEPax/sU695OA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NW83HyQP;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.178
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794423156;
+	b=xuXV8z4ZzYbhMq48fFJYFGymlQMa4atSuz4ndL/kpY2+Ozz0KEU8/oQCFrnzEE4uq49O
+	 Q5c3y/EiF87o3gBeJZdSt1tx12362A4E9B69YfFUNnz2Jqj1CiU734nMWi+KkKjqlwC14
+	 BIaIdC1r/jQPaGspV71fvc+kIS/I8IliROlgRStWJXbBGRe6rz6URN46Go9lf5WtO9raB
+	 0fIeyZNLviWLdPV3mxCFjQavCZvS4PVBoGrh+bX8ASIM3fCvQCyGMIY4VMYpAqXVC7IgO
+	 dwc2zdR8mwZgmesbU4DPOIXs1aG+j0diZKV+7vKtAiUtKSd9sLbDPXXvyUsIpkvY9Bg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794423156;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=9oufyeCAR+SRZMOszjNFMBXVWGqH5aFY4wbUWY90HHI=;
+	b=wrllevRbym8N5sgFZb//PmSc3etzddXvdE+QdqfY60l/8sOgWqXCmx/bIvLGqUV18KIN
+	 dJwNncib4q8uLXExwoHjZ94zOdC+5Dk+8fQ0iFbtxU31C7pWzgb5Pgwrqtn0HNt7u2rpG
+	 fLoj5LqaNJGdMvicK7nR69VsCbGAzrJeL/w6R1EbCQyjEU6iqtLD9kdAY2N0kw4GkgpVj
+	 QdYFud64iBY1Fzj0yrAMFHE7b+JPRV+U6b1WMKr2nLKgwyV0Mv/F+6PUIRetH6z9eYuTy
+	 7+1qOMb+QWXejMT3OHLi1W+XHGYqTBXUE/C6TCaj12yvs3nRreRi5kGJTNIT0WtjKIw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=cvF2PWJE;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Vwtl5ObB;
+	arc=none smtp.remote-ip=202.12.124.146
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7C1606A321
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 18:35:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F7C1606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC77606A31C
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 18:52:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ABC77606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NW83HyQP
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8b5a6f2f27fso1383320b3a.3
-        for <git@vger.kernel.org>; Wed, 11 Nov 2026 10:35:19 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794422119; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KaZJaOjN9CCiywtPPokmgERure2AaqmZa6K9N7h385uwM3Py+Q7Em4pBvHkwp38KDw
-         wttwxvoBsqJ7Vy6JfeXRxUTw9oKSwINBmVJ+Ly0DpzumrlHrv374tzQ7CHg6zW8waShB
-         CO1yPvKQjtu1bRGceA+BPaY5GUsg5fktjJiCOSONdVjrrN+xAn5qGtvzhEuCaIVYgQzV
-         12IZ5cVZU/r/qDWCD6QkQUqXBJdOBSesHbWmQkEEH7HXWhu4nQq48TJpz7a9ku25LR86
-         StvDtSBGhp4T/2h5zdXACq82vs14G0WRk5cDOHNZtxr00sLZhlqpSYM6L2aFTgyKcisn
-         yUVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qa+qaH6ClKIpsgydbngMJIqv5DNkTM1W2bwxY3fudAI=;
-        fh=+vBiV35eWg1a4iHVhh3sreHlsReA7sd3jfHeaHAb0As=;
-        b=F7mdWBkkqTxXnhKa/BM24pquaW0byR5y5/86y31QuLA2sYogpWyncRAD/sjTWLt7dk
-         bx+zT2PyxgOuWdd6DMvAXPZbQbI81hhTcsxzYIdz2VJCBKsZ7CDzwbFAgWARZ4yE/ycx
-         HOno2lfPd8NsgOPg9d79VOjwgAJ9MmtSijId8LncucCahKEzmU8B8iYGWDbmcvqsZpj/
-         QDOUCOBvYL96mbziiZQlleMiLLE2gwM+ZdHXND/rpYzwOUopWwsRSFOY1aRZmH3gZPWa
-         ae8lp6iGaZLH7DSKxKAO8sdSGJLirH3nipOdi7HG9EJG0EJFQogKdvKjq6lg5v/0WNac
-         QzMA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794422119; x=1795026919; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=qa+qaH6ClKIpsgydbngMJIqv5DNkTM1W2bwxY3fudAI=;
-        b=NW83HyQPT54ASjkC88/5aKFVDnb/E6FmmCtKM2wnvT2paAIW/eEpZlM6B/yYC1XrPz
-         tQ328jezBqZ68eygwLZojkvPf+s7zXofj+WNCplZsyIZKxNGToyt1H/n1L4kz/hGXeI+
-         fFVtcH1veIzT6As91GJfa2tthyT//QlTaZ7URYuoGG3EntuoOSUuO6CMvseRNcTkgh3/
-         f6GdSVccsKfcoK1J5V7IiqiHafdwfEZp+xnFSiTSFNJ4SFe1XcS+s6gCmJxiY6fjVUwZ
-         ytcWjf99jYJAHKsI1iQVxKOamplt4gYlcBivBfX45lGvTAiEei/Q/huBTVQ3fFArXNL9
-         bYYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794422119; x=1795026919;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=qa+qaH6ClKIpsgydbngMJIqv5DNkTM1W2bwxY3fudAI=;
-        b=aioGA/pQSgEpV7c/p9LCixLMYXRZfBNrkgavtPbY5qSG+5Ky4ARWzdGtI3pvuRDW9i
-         jRnZDZnc+5knLu2w4y2xXo2NVLavVdJjLtaZ3m7J9/IN7VToSuU4C/QWvwfvA/hstEPb
-         dGfhB0iOEpj2XhKvMYCxSIgo1rJWE8KPfXjusssiuHAFNkVLSLudNs/v+qtja8aEG3fo
-         wFyD/6+Jhed2dCMwLZjuronSn88AlLWtVLdBGpnmTXzSssgqEyrjupSxQOWx0H7CpDN7
-         mYPAYOGr0x0RJznAkU3Xi3WUupzCnGqYQpyMUZDaabpA20g+zoeov3RrT9a8xLb7+313
-         okjA==
-X-Forwarded-Encrypted: i=1; AL+hErHa6dUjYSRlR5K26YKqWS8D5LO2AR+rKt9ZIh31ZDFQ+W1+B8LotlvOVh18N03JwT230AU=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8165V9D1UTAFWHJYyJxWVWGqwCtEjBGakE9kSX2qYSIZsEevU0
-	zW9J+PDi78XXggudEAKWv6cQKgnaCT5/+j85um+rzaeXTVtKtCgWatEGTxh7U33B1OFv2FBQNui
-	M8WYva/jcESEZ8sK9N/lxjIxUugWG4Mc=
-X-Gm-Gg: AYBFou0x21o8CYru1ij0cmvCFafF/57tyhYQ61Q0bSV4f8YbPujF+AjfvE02O5dsFdw
-	3C6gA/rhfC0KAwgznRigqfhsNfjr3JW3gGpeW5s9bbx28/8e2N85AcXQ5dyuSDzScWJIsK8lx3K
-	cARQhC5yVPF2HEtpetKbrbHuvnDnv8Wc5FGCLKH9c+o7ObVFIn9FT9Tvz9AvsUl7uKnMNAqGFRB
-	W9mTcVZlKg0eOuDCumyJ5t0JwWXSnllJX+czat7tPBbI1gCkXmmZd397wT7RHV2hlGLIYlkFGQ6
-	UfY4nstj7zPNeGa7bN/e9fzs5Qi6c2bmxYMCOULuVbveyBhFmc8NKEjZkFjDZo1QkZ+6svNveIu
-	Dd1BeyH59eEdDl/X876MmoPUfSIepKWl90nsZFlXqR3bUWnBrOszKyNuJ9kcFsGrf83Dd8wkPJX
-	teRPfYuSqLnhJl85Wchb3o8W2E7LT+aFm5LM5IK7ajvzY7cgw5tdJj5jQ63694Vh2tCuvmOuOHz
-	0veAoG6GZE7emgnYc0Y7hyvXJcjiogDjagmxg==
-X-Received: by 2002:a05:6a00:1490:b0:89c:6036:c63 with SMTP id
- d2e1a72fcca58-8bc1c2a767bmr2992878b3a.32.1794422119272; Wed, 11 Nov 2026
- 10:35:19 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=cvF2PWJE;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Vwtl5ObB
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id F06461D00181
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 13:52:34 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 11 Nov 2026 13:52:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794423154; x=1794509554; bh=9oufyeCAR+
+	SRZMOszjNFMBXVWGqH5aFY4wbUWY90HHI=; b=cvF2PWJE/Yzy1m8/mHRPbvLaej
+	EqcnwesWVOdCDfckWp/rK2Y0PMbmKKDdOuXwtR1C4vyedSrVATRKSD76gxnoBwDT
+	U2p3qIHEXXIkvX9E5Z4W38Q1vfNNHncBqZvb0AtFtVaJQyerQ7yvXTjg1BzKBHXT
+	3lzf3mNB1M5ss5c1IceHv8SsOskLa6+x4xZf23H1TWSIzfDozc1Hz2yjmP+MotYX
+	WCTN+b58ZUlXLCirm9SbScRiYGnJEU9UoeCiaRLmz/LsPm9v0mZHnXNkMYYqwfYG
+	/n/2PORaloFszHkVWFpbct6JhGBanFoh3b3Rg8cxywZrkk0GLDUBKlrhf2lg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794423154; x=1794509554; bh=9oufyeCAR+SRZMOszjNFMBXVWGqH5aFY4wb
+	UWY90HHI=; b=Vwtl5ObB0/CMcoXisL3fNdSXNJds7cE208YKJsUlwaMg/M1nOPb
+	eOVtjP38492h91BFucAP+yjM/nEmmk9dNIkbCm3Dyr5kL0plPtp/Zn4TI2VnsijR
+	25eqT/alfIMAW6pBeqdSBQyVBkwMLoZ8P8cRV1yoMlZgN/tA9C4djSrrBLiq8IA8
+	dv9dQIOe/Y1iH86vXq4J122N5zZQjeJ4Kr6+b1HCBRQS+0ahOsDqNIiFgpevwjIa
+	62iND0ucayxrtv7R5K3y7HDAHWy/c+L0vntXqYdqJ7i1sNZ+H5FApY+1MoFomZ/D
+	aCrBXAlujYYt2GRrFabVSI7whA7tr/u6kxA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794423154; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:aGJldmSWXjEcqO2shGWyGHYUp0TxPF98QjQZVt5h8vgH33S
+	qgyP/yO514LTdevzVdN45pxj3xb8ppdfMODrVe6+Ppq1Rx2khWMBSMtjpg7BlNih
+	reNsNZfN6PF1Di1M9XrD0TqXZdg/wQtFMxYWjCuPFT2UTtPc5YJgJTOZbJn11NfP
+	P+QA0XDChbUau6ckXZRjIVp42PCUzti9tC/Ui3ep6MM+KbH0ib0JCt+lObpll1rG
+	Jt0v+t4YIKaQ+B3ZptEkMoJqe4yS7a7mEYL88/SiOWHW6NwvohSInYNs5DV1UQZn
+	JkJcJHdPVG1EhpjLknaSe26P5Tne9rLtfB3MFyQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:KLE1yW0Z6J6ks3q4isCpJLcXksMrSF6PhowhPnp3/7Q=:uxPuA7eS+sZGtSyolc7sxC+MKss1kk9knTHXoPrWVvE=;
+X-ME-Sender: <xms:crn0apwlqSXsmEb2q4uDNr1p225lwTWs14X50kVBKK3IaH-JuzmGLw>
+    <xme:crn0as9sEOx8BMuVyQ-LuY7E1SfyDaB4lgbQu-3nLfv1A4XJur79cLk-ruWmdX5J6
+    CDZ9LuDK3If24-me63MRLMlfP_2334vHiHs6-UsTf2kbaMX11_GqHmv>
+X-ME-Received: <xmr:crn0atKoV145wCHTYUrLtLDheeKsbW-KLVPOyZCm3hbl7XpeuEmtEWOihyrpg_JlM18gLYWNG9FGV-okBjzGm6unMlffx4D03HLs>
+X-ME-Proxy-Cause: dmFkZTFF5NRp0tQnT4PxOuRu7yi0EhELrVYij8y+xIz7s9AJAxe+HG4SSXi4ReTFoyArt1
+    YG+/uKCfNlucXNnQaOPZC31BnIY9cnhCEENLV1fmgOosca6S6v9SxWz/owa+r6tfn/aQ7L
+    Yy5/8fppE/xn300fZvtVkpNEBNZaMrk1VAFniKED2pmZDgdOiHWIOwjMrzok4Twwf3WMfU
+    nwwlYHoIs9IAwQnmZO90H9504hQY1a2bRfaK5BCBnR9vqtZtomyN46FBKWcNDnw0bng+7v
+    5v9HUjyLR2zIqQow5ntPMPdVGzOy9RHiFy32jBzrbOgTpR64n8JJpDhFcXQkq51CuaBjGC
+    D5L6xs1Py/F4xvnISK2Tk8jRqIi1BWCXg85BHtRAd84j3t4sDH81fwCwNG+ZkYIdZggp7t
+    10rmA/5MKS+IQgmL3PAQQeHkWywhFf6Nnxovy7H/9G4X7wX7VbUDdrTrKJ5bVUD83X5+yU
+    AfXpEytgKDebCsuphedxMzzlgEQzoSCOzK1bo+28kt8uOfu7/VLA0X8xhrM2LTdFKnlzMV
+    x48XVM9ljL+8Nd5hArC+ycFhWWSmpwSn3E2x6nzKAJg18tt/gaaI1g8orwXB71bduAhTjk
+    vGv34AWkLrh/fewTNdTn/uBsGvQa0CbTZJofVXh8+n9PpDnmJw4It9KwkmXw
+X-ME-Proxy: <xmx:crn0aif9hI7QU4OKiPYpBmEqrfpyOUg-m40C2hZrAO69ZD9PWM8B8w>
+    <xmx:crn0as-iesLxTpABKhU_4F39OU33h6sTugmv-N1ZQTKlM75o3_9dBA>
+    <xmx:crn0avpqgSQo2WouafsUD1mt8X4G9RsvEOvSF7EZ0QgmDLFQfIuXgA>
+    <xmx:crn0ahCft0ncBHkT4zNP36iEsWeIkfpd63vgvuUkhiV54dYArHSW7g>
+    <xmx:crn0apH_8WWfZk8aJWmQ3cQwHhjQ_Czz7SOddxQjPOTgd2tKxO1VjJCR>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Nov 2026 13:52:34 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Wyatt Holden via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  stolee@gmail.com,  wyattj.holden@gmail.com,  Wyatt
+ Holden <wyattholden@microsoft.com>
+Subject: Re: [PATCH 2/3] checkout: advise when orphaned commit checks are slow
+In-Reply-To: <a9b81eb87684fa9bfbc83e845eb67ded8d7cb6d9.1794337920.git.gitgitgadget@gmail.com>
+	(Wyatt Holden via GitGitGadget's message of "Tue, 10 Nov 2026 19:11:59
+	+0000")
+References: <pull.2264.git.1794337920.gitgitgadget@gmail.com>
+	<a9b81eb87684fa9bfbc83e845eb67ded8d7cb6d9.1794337920.git.gitgitgadget@gmail.com>
+Date: Wed, 11 Nov 2026 10:52:32 -0800
+Message-ID: <xmqqtslnmc9b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -106,107 +126,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <pull.2412.v13.git.git.1793357550.gitgitgadget@gmail.com> <CAHwyqnVJ3eUQ9tkQE3rhQ8jFZjaD0tFUv41unE-NQ1WRiyfjBA@mail.gmail.com>
- <b64387b3-294e-49da-b40a-0e757956bafd@gmail.com> <xmqqcxsbnub5.fsf@gitster.g>
-In-Reply-To: <xmqqcxsbnub5.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 11 Nov 2026 13:35:07 -0500
-X-Gm-Features: AclHuK9KVzKc6sm21qq-78kB5ApHKQbLZ3z3jBIM8QslSkNYIDj98Fe8i8qDwgc
-Message-ID: <CALnO6CCj3Jgzz4OKyRA23UPvHCtigmWg+Y9WXvKTHBa7PTV=Tw@mail.gmail.com>
-Subject: Re: [PATCH v13 0/6] fetch: avoid fetching every branch of a new
- remote in a shallow repo
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, Harald Nordgren <haraldnordgren@gmail.com>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Nov 11, 2026 at 12:37=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> > Hi Harald
-> >
-> > On 11/11/2026 08:31, Harald Nordgren wrote:
-> >> Hi, could I get some (hopefully final) reviews here?
-> >
-> > The diffstat for this series is
-> >
-> > 12 files changed, 593 insertions(+), 33 deletions(-)
-> >
-> > which will take a considerable amount of time to review properly. Yet
-> > the cover letter which should explain the problem being solved, how it
-> > is solved (i.e. the design and any trade-offs that entails, alternative=
-s
-> > that were discarded etc.) and anything notable in the implementation is=
- just
-> >
-> > Avoid fetching every branch of a new remote in a shallow repo.
-> >
-> > I've no idea from that how these patches relate to the discussion on
-> > separating "which refs to fetch" from "where to store those refs" or
-> > anything else. If you want people to volunteer their time to review you=
-r
-> > patches you need to make a effort to explain what those patches do.
->
-> I would say that it is a fair comment.
+"Wyatt Holden via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Agreed. Sometimes the cover letter itself should evolve (beyond
-"Changes since=E2=80=A6") as a series does.
+> diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
+> index d21dbd5b72..7dfaaab1b8 100755
+> --- a/t/t2020-checkout-detach.sh
+> +++ b/t/t2020-checkout-detach.sh
+> @@ -186,6 +186,46 @@ do
+>  		check_not_detached
+>  	'
+>  
+> +	test_expect_success "$command advises when the orphan check is slow" '
+> +		git checkout --detach "$orphan2" &&
+> +		GIT_TEST_CHECKOUT_DELAY_WARNING=true \
+> +			git $command main 2>stderr &&
+> +		check_orphan_warning stderr "2 commits" &&
+> +		test_grep -E "^hint: Checking for orphaned commits took [0-9]+[.][0-9]{2} seconds[.]$" stderr &&
+> +		test_grep "git config set checkout.orphanedCommitWarning false" stderr &&
+> +		test_grep "git config set advice.checkoutOrphanedCommitWarning false" stderr
+> +	'
 
-> I understand what the first three wants to do.
->
->  1. We have had for a long time "git fetch --refmap=3Dfrom:to remote refs=
-..."
->     given on the command line to decide how refs fetched are stored
->     separately from what refs are fetched.  This allows a configuration
->     to allow you to pretend that you give it all the time.
->
->  2. Preliminary refactoring of a helper that will gain second
->     callsite in the next step.
->
->  3. This allows "git fetch --refmap=3Dfrom:to remote" that does not
->     specify what to fetch (contrast it with 1. above) to default to
->     fetch refs that our local branches build on.  The net effect
->     with configured remote.<remote>.fetchRefmap is that "git fetch
->     remote" would only fetch and store selected refs from them, only
->     the ones that we "care about" (aka "build on").
+This test will not pass in the modern world where the advice message
+suggests to use "git config set --global advice.FOO false".
 
-I like these 3 as well, at least in terms of direction. I suspect
-we're approaching diminishing returns there?
+It probably makes sense to grep for something looser like
 
-> I do not have strong opinion on the other 3 patches.  4. and 5. may
-> help ergonomics by allowing to set up refmap from the command line
-> option, but from my point of view it looks more like icing on the
-> cake.
+	"git config .* advice\.checkoutOrphanedCommitWarning"
 
-I think these are a reasonable idea, but I do not have time +
-motivation to review them further.
 
-> When we are working with only a subset of their branches, the first
-> thing that comes to my mind is a "matching push" that does not need
-> any fancy @{push} support.  Because of that, I am not interested in
-> 6. very much.
 
-As [6] was new to me, I've just given it a glance. It reminded me that
-I'm not sure how an overlapping fetch + fetchRefmap configuration
-behaves (I think previously we said the command line version does both
-mappings). It's probably a good idea to make @{push} line up, but I'm
-not sure how to manage the overlapping case.
 
-> In any case, this topic one is keeping a topic by another author
-> waiting to settle, so we have stronger incentive to see it move past
-> the finish line.
-
-I'm a bit out of sorts and don't recall what topic depends on this one
-(and "git branch --remotes --contains =E2=80=A6/hn/fetch-refmap" didn't sho=
-w
-any); is the dependent topic waiting on --limited-fetch or just the
-fetchRefmap parts? If the latter, after wrangling patch [6] we could
-maybe merge those parts and give --limited-fetch time for more review?
-idk.
-
---=20
-D. Ben Knoble
