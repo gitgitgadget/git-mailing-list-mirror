@@ -1,120 +1,120 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794401336;
-	b=D5rTuTDxkIFUkmivZalMTgaaxUun+5S6OazxpnQJKSXvE5kkDGpb2oD88KMQlhM47sOE
-	 J86KQUG4t99Vo4k85rbJWwPCX0oMCpSL3/JvcuFghQWHWGZCbLLo+EOpeOzqhvwnM/KNP
-	 M905quckqvt/69RJGDV2PHrgEBTVCgG815daD5vOKJe7kiiFxQWGbnrfG+UINS7YAZy2o
-	 14ijwOeyvdlL3TusuPmj9szMC37qbn2P37455SSV0Rzu2gW+JYSglyYdIrvl/NNQhnmGu
-	 /u9PUvosow8gnKOHtVWexhwaqCJW9eXwRrl/X9UYDpstGyB12SxSPY4WV5Jy+h+GTkQ==
+	t=1794402959;
+	b=aM6Ie1e00Q0cMf6aGI9TTkGY12LDg/JuZzJwaGWZM3kQwzhkqG0KSQTiylxKT3zQ3ZAd
+	 Uv+UWZIEQuPllxb+J1YumyoXnjVcfa2IYS6BbAS9dX2SzwNIM59HAIDbdhapUyYJaz62B
+	 Y5XclWfWF04MHDksBoq0Iq7HUsBWAdjUPtS2DRU0qhRL+/k5JeUaD1TVBad3Fr3bc9v/F
+	 3VqHpR5nGmB5UQWfxHI/TyAClgikS8fn1ysKSQzST84OUBFCUgkFSdlZLkfWfXI/NSHWe
+	 E4LAjqajS8UivSRNDFQeMBJ4NCMOxJjCcjVBtMv0pnSC4XhbtsS3unEQ7iusuc1wIrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794401336;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794402959;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=sCQf8F6niWrO3zug4rkejUDrMyMqv6bQqJ+JXU/LSCw=;
-	b=KBqFcMYB2vwkid9/7X5VybGM/rVohNJVAPV3jfKffF4onzuP0PaJUK/LL3EkAviLc3qM
-	 7o4pT/9KzgVW8VXtd1TtT35DE0ZnkPXSZsa+sSVdPfuWNXwlgpd0MPZH2ScOtCtm7akA1
-	 YUc/L7DZM5rqqdMXAs4NsfnxiwJ4ctp3vzkpASSrT0GedRx8xczPoYM/Gw9esB6hAJXDQ
-	 UM3qG/B1vNLg8RNbEiRIUZxTCGDJ7upU+Cs7UAO91P9H87A0j5YUd8sglESntgJ//BLL5
-	 XglI1sNFFpZ2DXpjtHBfLk8IS7+yrOBybKrwOCC76riM8gZtFj6iEW38uhIaYLfkcHg==
+	bh=LYZegmTuzOzU/+TW8EtPKOacliLZYiwZmsBNQ0ZkqRM=;
+	b=izuJuPjPZy6vShGI1+NppoQW26luxN6VWeiAsq3MLP34eaNMM3HxyF1Vcl0eptmwKfTb
+	 LtkSnAeraPHl1XhENDit6d85lzmIssSLM/GswLimk6kfJ+e5CNICH2dA5NlX8odqvzBvz
+	 C9UxlrQOHxoyNw7RjlYMaBJbOkMXMDVv9hxtzfIr7jS3WzjemAwmaIJWnVve2zigS6uPi
+	 6Hif6VlyBRH08k2q4wQg1kFbdFdEpc7UIuf0MkSCuI7y8XeIuvtDhVoFgKfaLFdOmUVFc
+	 emyi9KNdrzPBVqoIMKl8qSvev7epP+AT55Oe6S5FZ97oZ0I0GGXSmfWtFp8/I6noLpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=F46sLzjJ;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yMDy9Hhm;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b="rnP0/da2";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cBdeHmXY;
 	arc=none smtp.remote-ip=202.12.124.158
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFA3606A321
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 12:48:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8DFA3606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF0A606A32E
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 13:15:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EAF0A606A32E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=F46sLzjJ;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yMDy9Hhm
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B6BDB7A029A
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 07:48:54 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 11 Nov 2026 07:48:54 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=rnP0/da2;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cBdeHmXY
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3A6727A02C4
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 08:15:58 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 11 Nov 2026 08:15:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1794401334; x=1794487734; bh=sCQf8F6niW
-	rO3zug4rkejUDrMyMqv6bQqJ+JXU/LSCw=; b=F46sLzjJgByzIol2HA1B2uD69A
-	ssNQjvgDp+dwoaFtYqRiO4qSSnpIM5o7J5cprxAfDXvsaQi7ql0AJkDeCDW/xzqR
-	wm2h0VSazfl/Bkwq+ZCzbvFXruFtyE6P1UDhNO/kyvUtOHaUTf9/weZU8tz8+L6m
-	pLjvrHzALJhGnX6oPAmMH31I5YIDdYDEl3oViC+Zg1WzhmP9xJuD7jT/HTJfSFKE
-	Iqbq9dGZRilT67FDVx9kQFRt3zYAvtZCVQVpe1/oUg1tK1g1KMTg+rwS0Z//8DVA
-	VtrxDmIJqmhuUc63QWd0PUQgkesljteHV4lofVIhAEtQYaaiR37115K1jDvw==
+	:subject:to:to; s=fm3; t=1794402957; x=1794489357; bh=LYZegmTuzO
+	zU/+TW8EtPKOacliLZYiwZmsBNQ0ZkqRM=; b=rnP0/da2/2DO4ULM2y/NC4vNjO
+	cdxwhV7tS3FGWRpsIpN8sCa5AU1n+bt0rcUoC5ptHaWcNis9FEzRNliDshhjuMV+
+	y1hJr/CetcySF+7npi5uvz+PZDPVRoBDL4a8OG/9rIs9Inf1+KnfuiJyMK0IkOOz
+	eLqs1xO1ulAidjxvZD36hAQgxW+7UKKj4CTBD5TJf83QYjIQVCrzjLXqKr1F167s
+	fk13wkAhY4sAh3pCkqbCvzhb5z+oBid1zmNo37f013BjgFzmDXdrHlWOf3n5SX/H
+	FKeOXbLLDYKUhpX59orQSnLO9ZHy4e3JU2+DLoIpBmwz/dbGnnWJmHJQNkKA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794401334; x=1794487734; bh=sCQf8F6niWrO3zug4rkejUDrMyMqv6bQqJ+
-	JXU/LSCw=; b=yMDy9HhmhZgpVon9fTbxjyE1uOklEIIxcsaUqA7lC1L7Y3fCcwG
-	8EMaja+wBMLeN5cGYjM4zPESs/CpwBvv51el+21WnIhTJwobZrMWQXMDTK7hXEB9
-	0xQWVTnTxBR4SlQMvvxCC5y71Sdg+08P1PvjHNx1cXzSvBcbgi8BttbfDtkU/yzG
-	PGOpACb0lM6i2CQUQptmThm0u9cdY+hbb5C65YLJlCkYFYpUpNSGmEZPWjy0KL3l
-	VgakG5Jpws71uGX5Vo5sA5myTo85n1EU4Q8zmMDv6HHZTiQtqSoX0nsvScs+N0z2
-	hqWTiFQgVe194QdsGqC5/XBpdEK9n1HM6OA==
+	1794402957; x=1794489357; bh=LYZegmTuzOzU/+TW8EtPKOacliLZYiwZmsB
+	NQ0ZkqRM=; b=cBdeHmXYqvRkQYfTUu9kfMRYtugVy/E4muqN+zfW0dS2YhhSNVd
+	m9cC1AwXKqq8OZn7K9Q+hS2Y7cKAdXHN4AyViMq9BWeUyCu6HqcRuEyEIXFVaXLi
+	RqUAcW3hb/RUyi98abnogm+nRQHccclTKNSpayAUCcjXuuFmGPj7r2TPtGiGqWij
+	QMqxfQZafSwKpFh+QCuW2PWeWh5gr6MYweBhs1ANNw622sWcwYlWUl4Rn4RTaEqH
+	e9RZcdDCStvKsRRglHLPVvatvLaPO/0N0aq378ENrBtsXFjhN940tEfg4cj8AKrf
+	dirU0v1M6q2/9cZnJTYGlTJRZAWz+F7mrzA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794401334; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794402957; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:H7J/2EqJqEFpSZDX0GsC8Op8o5sgfmHKaJqUmpL4yDhrjC/
-	yVIGVdndJ5iTqtvcVgj4e+wYoTX6KRJomI3PTHQEdv9kJZWOpbSXaZ2h+pNJBZDp
-	bYo2TLacbp2DxACx70AtVGa9OgYkTpMc/VyDuz9KTeyRnoBXr0A5KdB5cXEMNzRK
-	VUSaBBX9EBOfFxIsNqxSCY/LjFJx9w5WA0w/tU01ekCU/QdA4y0FaL2Bhffy0C60
-	UrtfX3slmK+rY6G3rqkpf15DK7JmDuZoxqeXjUodaa0TeaFCtNH/gLmrXrCsUB5/
-	r2OXOlOTcMru+0lD4pUL2TrgRi5nAJMkOHu/XJA==;
+	s=fm3:rsa-sha256:cF8OOE3rwXkfOv/jQVg0YU4TXPxFBeJZlY721kSjOU2buIq
+	lqtf8tnb7NRXBlYh0RIlrErqReW2oLuJ9HCNGttCFaSlr7p9zLp4yAK3h/GIK9He
+	OKkLcfoYPRQG1WkuTWFpQYBHIZWcPYLkdj9IIxQ786tt85wJEhdNT7Ans0s1Guoc
+	Pg3LWVquy4/t8RsEnf9eSeadpuCcaASeA68of2+B29UgwnCQUjHcO2qKLFMj4TrC
+	I3bFdJR0KqK6k2fkGr2Ea/qN2sZLiBkBzomqVK7x51NnmXyUIJIrMgk1n3atmZj0
+	B77H+KA+JysaGKEYJN9Sgq2Vewj5vNBpDwM8wvQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:WB3ZZA09t2fGR2vTzC93qJg7w2BLOVFLaAa332ffYNQ=:511xHfCP49dhncGzGZH62U69d6sVzkfV2uiMmloKdV0=;
-X-ME-Sender: <xms:NmT0arZgWuzZwpKnST0hT34iIoU-LntfFAFGslBQy-ykXBBhfDGhuQ>
-    <xme:NmT0agZRuqnb4s7QQR5UgxPoKx34phE1rDs5XzIzLCe0MNZRe3kfxvwBhMPh0mYDF
-    tQx9ugfPNzlXMMcQtbdKP0WpjEpwGVMfX5H16eQn0HV8vmowD-HCVYN>
-X-ME-Received: <xmr:NmT0arnZ8MJ132JiG8LJtCbisfNAA08SIaOvYLnQI6ZANSJ4F3cmnV_NGq26uodMsjO5xg>
-X-ME-Proxy-Cause: dmFkZTETE9yuxpIoX8BLLEfMwbD/+TY9OE32N5thd+EVzO4Jo/PZ7xh4VmMZdFqmawN3MK
-    zAAamKT7TzAzbtPYmuj6QMdxWxLWLPzXmiv4Ua8ffl7AN4tV+icgZUwWUTcFUpIeIYAkvY
-    vUJ7vdRG3+oBjeooLAu+Re9NkUOr33yWGHrchx9bLQ5ya/eoevM4LA97izXh3SYGI/XOds
-    9Xt+Ijs2MQqz5Uq/seZqRwAnhUUdQTHQunALKvnU0RJoyWc2AfaK3iLVBrtbCdwZQlKZFj
-    KCj9ya8lS1vwBsgQJ4ubhDaedK0iCl7JExvoC7uiO4jgMrnRZZS4uPHWqVPhjPjEASrMUa
-    9PGa8bRDtkWKbR4mSljeH/IhRfyjsFzXHUGChkKqPaQlmu6n5/adSGGQVNmHXzVWIZM653
-    digTzNzcnVD6Q0/TvqAJkqQfFKDd0Z+VszJw7ObWUzEfh2mVelCnn9ueb/fEPVtGuVWQXn
-    JobpgWB6vlRAtrT7KleLrF8MPD4/dNXE7cVtQNhTENQnzziWAfqOPuzaLbf5j6X1icjjRe
-    7tC3hAgYRDFSd7TAyaozHJvEBlxCFf3xhl1eaPIOAAXin2R9zg/F/TL45oqVq1ueuTo/ut
-    hPPwGj3o0cD/xV/G5du8vqjsEDcw9Na/Af6IVSFzmHi8B/e1/lXUcxx1W1PA
-X-ME-Proxy: <xmx:NmT0aswyj7Bck4HM_lxKGPCrM1znva3TiF2ii6ZbZbK2EzYLP8tt5w>
-    <xmx:NmT0apNmcnp3onrsGW2ykYWXT0UCmO2aevXygFjBywFCiriNFk030w>
-    <xmx:NmT0agSq-ZGxbpoNmVfmSgV6MomEks6-ZOetEX5RIrrxVU8wEccA3g>
-    <xmx:NmT0anauUYVC3cOf4bE8-H1qtSHrGkd_RrPfhgjkZYSpXbpMc5EP-w>
-    <xmx:NmT0ahL3Ba9ZsGiSDz4C8CEqMqodScUzrQR2otVylGTDj2Oen5LouYFJ>
+Message-Instance: m=1; h=sha256:cJyyrkbjQWyBkQ5FpgwUzpAEwX/Az8YtmfxAnzDeSzg=:EMV60gjeQHYvm6t3qk58197v3uGLJFC3Yk+mCS1YYyw=;
+X-ME-Sender: <xms:jWr0anTcgoOe3bAdF2-yk0EJebRE1eQb8QOyrWtHsETEzjdACX4tyQ>
+    <xme:jWr0auy0SzxSz_lV_51_C5gHVUOtkYFJCA_z7zpWqLAH_1P7R1EWW44QEc7PBJepW
+    gEG8Ho2Ad46XxpWsuayrhC3xSIdMz1fAc8LosSbUhIQcHu69yXQZfo>
+X-ME-Received: <xmr:jWr0aqcGoVYdI6wdHqS5WklXpZxQ4QQQ1jM8rW8iSQlI_RROkLeAzYvxgaZME42LtScCIQ>
+X-ME-Proxy-Cause: dmFkZTE9VPfVqbQJk4YiCrEUuBKDs/mDudou8T7HU65Znmyra+7UVc/gUQ24I5pHodR3hd
+    lno8Zf+iA/il2/8rOFHN6B0qn0asKQ2jtw/lyd14+ZORFlmh2i0yt8ISJqXKygvN8CBYdW
+    DwbRdXeRRbq941jJyDVBIOuUYmOLnlc63BmtuJBmEir6Lw3bUgdhojwuhj+bbPOB8DnU/G
+    IxpNoZgMfYVnq1rnGyiEotajRlh1PpWULmpWumRZOOflPhP14pHwCnP6+pevUn4DemnCbg
+    OK9D8Tf9ypYuvCAkppcj7PHBGMeRW7b/4E4sNilgLw4gpycltnSY/LI4NuzVFyki4N+FCS
+    ysT5fWVeq4KAASVmNbjtgqvAQUnOlDu3rdPa+OnRRMEFh+NO0Yrww0x4wrsndWqRkN6yQq
+    N+CkxyiDpenNHofPBPum82HNkT2aFnyNhLtOaqcEDymQw5a7YpBi+RfeST9yqEDDX/6spL
+    rbE0nTZuS5WlSAfuP8XRi1LLwWSzD3htxxP3yFxgDKedSxmioWCFmutaKtxPFNO0RKNDKs
+    iQAAKY6aw5RqupGpUBPeIwYD0Zkqgv76xC3HgxhSqcUYHARmHLqb2MTpCiML7w2764ppp3
+    P1Gq/1gqGhYrxZUJ/n6PiqtPLSjybfftGxlvCvcx03fB3SavRMYmbJ+MwFxQ
+X-ME-Proxy: <xmx:jWr0aiIoWKrcTvtL6j3mJuucAdix_bpiQE3jArspcvi0yi_REgot5w>
+    <xmx:jWr0ajEgtiB9_e21wFFubZDdA2n5hPezsY9HVFML7W_LNN900uNGkw>
+    <xmx:jWr0akqmO1cpD71F85MBeMnohGCj_NiS-MPK1gqR3qdBMvrESB48jg>
+    <xmx:jWr0akT8mA_TpxojZR9af5xD9_d0KZk9czdSK8Mihvz8PauCt3WEVg>
+    <xmx:jWr0arB-L-C85YS41YhbGXwwtb8GAWXOKlziDOoc-ZR5-QB_WYsPS2mP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Nov 2026 07:48:53 -0500 (EST)
+ 11 Nov 2026 08:15:57 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7c16396c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Nov 2026 12:48:52 +0000 (UTC)
-Date: Wed, 11 Nov 2026 13:48:48 +0100
+	by mail (OpenSMTPD) with ESMTPSA id f876832b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Nov 2026 13:15:55 +0000 (UTC)
+Date: Wed, 11 Nov 2026 14:15:52 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
+To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] unpack-trees.c w/o the_repository
-Message-ID: <avRkMPUmkqoCGmQC@pks.im>
-References: <xmqqtsltbfdv.fsf@gitster.g>
- <20261109205438.369060-1-gitster@pobox.com>
- <37267fd4-c565-4559-9c5c-01d58cd0426d@gmail.com>
+Subject: Re: [PATCH 4/4] object-file: create ODB transaction temporary
+ directory eagerly
+Message-ID: <avRqiH9eIpJUGKMo@pks.im>
+References: <20261110002251.2007617-1-jltobler@gmail.com>
+ <20261110002251.2007617-5-jltobler@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,23 +126,120 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <37267fd4-c565-4559-9c5c-01d58cd0426d@gmail.com>
+In-Reply-To: <20261110002251.2007617-5-jltobler@gmail.com>
 
-On Tue, Nov 10, 2026 at 08:22:26AM -0500, Derrick Stolee wrote:
-> On 11/9/2026 3:54 PM, Junio C Hamano wrote:
-> > unpack_trees() API serves as low-level functions to implement merge
-> > and checkout.  It heavily relies on the_repository, making it clear
-> > it only works with that repository instance.  We however can use the
-> > repository instance pointed at by key data structures passed
-> > throughout the callchain.
-> > 
-> > This is almost the exact copy of what I have at 
-> > 
-> >     https://lore.kernel.org/git/xmqqtsltbfdv.fsf@gitster.g/
-> > 
-> > The only changes since that version are removals of two blank lines.
-> LGTM.
+On Mon, Nov 09, 2026 at 06:22:51PM -0600, Justin Tobler wrote:
+> By default, ODB transactions for the "files" backend create their
+> temporary object directory lazily once the first loose object is about
+> to be written, and only if batched fsync is enabled. Transactions
+> configured for git-receive-pack(1) are the exception as the directory is
+> needed to quarantine incoming objects up front. Lazily creating the
+> temporary directory in this manner is awkward for a couple of reasons:
+> 
+>   - Writing loose objects has to know about the transaction internals to
+>     trigger the lazy creation of the temporary object directory.
+> 
+>   - Whether objects are staged in a temporary object directory, and thus
+>     whether they become visible at once on commit, depends on the
+>     configured fsync method.
 
-Likewise, I'm happy with this version. Thanks!
+And three: the whole premise of creating ad-hoc transactions behind the
+caller's back for the purpose of bulk-flushing writes to disk is
+somewhat flawed in the first place. In a perfect world I'd think that
+callers would manually manage their object transactions in all cases
+where they know to write multiple objects at once.
+
+But we don't live in that world (yet), and this step here brings us a
+bit closer to it.
+
+> diff --git a/object-file.c b/object-file.c
+> index da189111bd..a9fb42705c 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1573,24 +1550,13 @@ int odb_transaction_files_begin(struct odb_source *source,
+>  	transaction->flags = flags;
+>  	strvec_init(&transaction->pack_names);
+>  
+> -	transaction->prefix = "transaction";
+> -	if (flags & ODB_TRANSACTION_RECEIVE) {
+> -		/*
+> -		 * ODB transactions for git-receive-pack(1) eagerly create a
+> -		 * temporary directory and use a different temporary directory
+> -		 * prefix.
+> -		 *
+> -		 * NEEDSWORK: This transaction flag is only used by the "files"
+> -		 * backend to special case temporary directory set up and
+> -		 * handling. Ideally transaction users should not have to care
+> -		 * though. To avoid this, we could eagerly create the temporary
+> -		 * directory and use the same prefix name for all transactions.
+> -		 */
+> -		transaction->prefix = "incoming";
+> -		if (odb_transaction_files_prepare(&transaction->base)) {
+> -			free(transaction);
+> -			return -1;
+> -		}
+> +	prefix = flags & ODB_TRANSACTION_RECEIVE ? "incoming" : "transaction";
+
+Makes me wonder whether it's important to keep the "incoming" prefix
+here or whether there is an argument to be made that it should simply be
+called "transaction", as well.
+
+That may be out of scope for this series though.
+
+> +	transaction->objdir = tmp_objdir_create(source->odb->repo, prefix, 0);
+> +	if (!transaction->objdir) {
+> +		ret = error_errno(_("unable to create temporary object directory in %s"),
+> +				  source->path);
+> +		free(transaction);
+> +		return ret;
+>  	}
+>  
+>  	*out = &transaction->base;
+
+Nice, this logic becomes quite a bit simpler.
+
+> diff --git a/odb/source-loose.c b/odb/source-loose.c
+> index 50cb388c35..9330ae94b5 100644
+> --- a/odb/source-loose.c
+> +++ b/odb/source-loose.c
+> @@ -769,9 +769,6 @@ static int write_loose_object(struct odb_source_loose *loose,
+>  	static struct strbuf tmp_file = STRBUF_INIT;
+>  	static struct strbuf filename = STRBUF_INIT;
+>  
+> -	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
+> -		odb_transaction_files_prepare(loose->base.odb->transaction);
+> -
+>  	odb_loose_path(loose, &filename, oid);
+>  
+>  	fd = start_loose_object_common(loose, &tmp_file, filename.buf, flags,
+> @@ -860,9 +857,6 @@ static int odb_source_loose_write_object_stream(struct odb_source *source,
+>  	char hdr[MAX_HEADER_LEN];
+>  	int hdrlen;
+>  
+> -	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
+> -		odb_transaction_files_prepare(loose->base.odb->transaction);
+> -
+>  	/* Since oid is not determined, save tmp file to odb path. */
+>  	strbuf_addf(&filename, "%s/", loose->base.path);
+>  	hdrlen = format_object_header(hdr, sizeof(hdr), in_stream->type, in_stream->size);
+
+Nice to see that we can get rid of all of this leaking abstraction.
+
+> diff --git a/t/t0004-unwritable.sh b/t/t0004-unwritable.sh
+> index 3bdafbae0f..7292672a66 100755
+> --- a/t/t0004-unwritable.sh
+> +++ b/t/t0004-unwritable.sh
+> @@ -24,8 +24,8 @@ test_expect_success POSIXPERM,SANITY 'write-tree should notice unwritable reposi
+>  test_lazy_prereq WRITE_TREE_OUT 'test -e "$TRASH_DIRECTORY"/out.write-tree'
+>  test_expect_success WRITE_TREE_OUT 'write-tree output on unwritable repository' '
+>  	cat >expect <<-\EOF &&
+> -	error: insufficient permission for adding an object to repository database .git/objects
+> -	fatal: git-write-tree: error building trees
+> +	error: unable to create temporary object directory in .git/objects: Permission denied
+> +	fatal: failed to start ODB transaction
+
+Not a new issue, but this second error message is awful. An average user
+won't have any idea what an "ODB" even is. s/ODB/object/ would make a
+lot more sense.
 
 Patrick
