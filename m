@@ -1,91 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794437363;
-	b=ULqQmvENI4YlqiciQebHyARPjcPxUDvNt34wMY1iMzKq18k8sjZyb89HDdpx1lzH5ipI
-	 ndF8gn0o0G9rASwLvvzOsy+DEtgsBT5Bv3m8RKqPl11Sedurcut0KtRJaQha7yX/mq4Og
-	 c/tj2TrOnL4RfsZa4ldkwPuVQYifDU7IoUZZ25F8QV4rMd7f8uDSySalQW7pgJBBVoeTH
-	 cCL5CxAlFu5KV3LEpN+JiVy1PYFNuJjGg6J7oAtsemrYPgoUVgsipLquebj3KoSTWLGoH
-	 LsWgeGXD1yX+pZIM9PIqo2s4I/EuZkdYZaP6nhgyx9RBBL0I8RtVAl/B7MaiKfqsPBw==
+	t=1794437364;
+	b=sWVC/PiukEk+oO3OaObxH9O3F5eHhTDKI1ZIuEUhXKN+FUEPFXyR+cE3Rjis8rDX8Ukt
+	 +lb0MtaaXfkMlnwMy8UahnsO+R4+XB36fQ2YN8mVvBeXR2bEMdW+qYtYotGGGmBTKv6VZ
+	 unf8ChdIcnp/N6hl3um458NQRJGar5yRl6Q0rMG5FAjPZ2RBC/mvh3oFzQ2e4YUnRGCVq
+	 AuyZj3rc7iW1WSvc3h5aWHaEPcpv0WKNRAJIa3if2RBNw6LPUFqh7UAD2EjZI5EP0cmKY
+	 jFp/kSjh5EXI77AwDunYCTp9xFBPpBRrawXVEnANLMkvc6V7zSyABAAFyrJRMr4ar9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794437363;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794437364;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=j9kiQFtR7ZzXSc2zfV3tHThfWht6wj4IYbR+PtkNKgg=;
-	b=emULhdhMOj+G8V1gct/j5CnuXlV+LPcQ+VKbaKUO0vQxbMs76BrNUBI5r/yo3/3VzHOv
-	 UeSgaLGJJqfLZ92nXBFNJJCp2RBSskpJylsUw0XCVgQl7vgY1iFchohOMMQVSvKn00TNu
-	 7NhDKMN6FtG8MKW9lDSdb0egFbLb4a9wzaFKnoUVP+bdoLGrmUVJECO1sK6RKW7ZIz8uK
-	 BgVZSY8A2FFChxx+YygClWY06F9D8iGoTjTbfJItw0A9ptu4kKPU80wMJVj/RpH+piEbv
-	 YM29qCmETUKyrf6ref6Jkq0r05SmhVlAJfoOaXs9tiAL2h57NqTpobdG5zRMG6G5diw==
+	bh=RDXTSRorkwwGKpfGvPjIEs9FY39cF/2a0R5Y5rHIouk=;
+	b=OMIH1jYdeeI5lOA9v20Uiq0qG6BGJHfn6ZWWj0ry0KalvdIMkV/mp+4ampUYji/VtaFz
+	 n8eBR7zvDnOM7pr5WKskWvseTggMHiepB1seQ+15qpoIE41TOxpQL7ouRBxxksHrL6611
+	 wVRHkYmlEXAMtFLvdqT1k1Nqi3LE8Q7dLyNR30520mbkVbxrVQMZFioaV5HhzcvinQHLr
+	 w+VeIC4G3zAR2Mo7mzY9auxQNkJtdc1jyrMIw7bgW+A5/ZAdBsaWfjvyWwNO71IJWvx+u
+	 L/KOs2E/2hXPV03jwsnPOy7NJ2EFMMks+E5C9Pv/59X9974ftEBiBOR21T4PuVWDGsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JyHVp4KJ;
-	arc=none smtp.remote-ip=209.85.161.41
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iRLOXdqy;
+	arc=none smtp.remote-ip=209.85.210.43
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F03606AEE6
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 22:49:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62F03606AEE6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5611D606AEF6
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 22:49:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5611D606AEF6
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JyHVp4KJ
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-6de1fd5f572so1533449eaf.3
-        for <git@vger.kernel.org>; Wed, 11 Nov 2026 14:49:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iRLOXdqy
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-854b6e2e41fso1897185a34.3
+        for <git@vger.kernel.org>; Wed, 11 Nov 2026 14:49:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794437362; x=1795042162; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794437363; x=1795042163; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=j9kiQFtR7ZzXSc2zfV3tHThfWht6wj4IYbR+PtkNKgg=;
-        b=JyHVp4KJo0GXEuxkIe7g2VIZeXaPlBEjfecbiDIgwbiTTGUPVCf/tpNISaXfUT/QkW
-         wgR/1BB0ocyj1jP/9Pq9X2V3JieEkyxZ9OnaTN2TMmfGK2q9bAPdcVJeZus9OoGReYmi
-         1h7U+CdT9y30+6TTpblj8bieuVhKuNIPpvAWqOKbVgs58SV6uki16SwoihdRyRi3BXc9
-         U9wx0sJdFksWPxNOAEkJvxcuDEzsZaHay5Ej1OLq/DheA2Mamn/jMeMJvOBiDesUdZM1
-         jpeTpLQ687/K68mw3bRwbplgRWlWEzVjJZHDLGTh0YSvf0JxF2xuU9Z5zyG3/b+aL16y
-         +MvQ==
+        bh=RDXTSRorkwwGKpfGvPjIEs9FY39cF/2a0R5Y5rHIouk=;
+        b=iRLOXdqy+jSJPrE45bIjIgQQTmuQbzZWmm8L+JQ2s3BNFRMmFPouI5zj5iE4tbnHJI
+         ggshnQEjQDJz490aFm1mRvYdqd123PzfH3J495bO6FKLmLulT8DXu3ftHqi0YL+KRaP5
+         pkClX6XCDPHv37g7J7WagLlfyLo5zZcvE17xuc/X3hqEnhq0oMuRqV2YsfstMCcHs5xL
+         SO0uZv0szlMhCkZ8VqXICg44UatAANqyZJAMXY8WYEbPDUewO3gGDcyfUv3X4aBFvDxf
+         C4sJCxK3aTsnDY8sevNEKHzDP0rjS00mkwnyPP2rBCGqYZTsj52AdgtkpAI0Q9o0h9zS
+         RUWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794437362; x=1795042162;
+        d=1e100.net; s=20260707; t=1794437363; x=1795042163;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=j9kiQFtR7ZzXSc2zfV3tHThfWht6wj4IYbR+PtkNKgg=;
-        b=s863Gdt6VmsxluFQmKNMiTxcOv62Tr/TZ/m8C7q44wSTQVPRkbmxSysURXpL69gigP
-         w/waZxHGXS1qwGh2duxnnh/y0t6Gl2ml811Pf+5ACPe0xYpp5zWkR7NKHJVS3KSo1kkl
-         Bl9nHu44mTqRVBMeIGIE1ArnHuDaAPHeAfHITuwjFaMR/gmBaGdPEXg5c7HYLzdYYj1o
-         x4Qcnf9By5aJECSw0pLrnMOaHy/1fjAPvr2aJZTWg2wEld2UZnfwfKfgvI3HqDPONTic
-         8E+QWllkUrHQGb1YEm2aEaD99BH4praaha5qiNHVNETsOXS9rOOl3oRoKsnJcSfOG/0S
-         TkiQ==
-X-Gm-Message-State: APuU4Z/j2Z6rK+VqtgtP0OZHTL2EPb3BEb8cxig+mzV4h1m1LSLejDgs
-	EBwjCuvrVqe4JezhIN7hlYu9HIAm8WA0BqSzYq4ejtmkW+UxSdcE6QGw+qp+F1Oc
-X-Gm-Gg: AYBFou3Xa5GBQDhvVOUhNaRZ3XYW5wPlnbl0kWswl0it9bUbwS0bywEw9Ta5u8t/Xot
-	/yfCAVPjl1SbHNFH1c5uZHnRTe8XapseTYpNP6c9lgtalPUIlpySA5A4GMrKRHY1P/oVFkyL+HX
-	+1PV2xFIv2eDg1GpVdDp7hMssUdhMLpBP/VSDoCHfkbCBEfaRcokCnczgg8l3oRIaqoDWPXmDvx
-	YOt0LMprZtgXc7+S6TDfyvZpXRYf9YcpUsn9G2wDSlUzTK4gVZN2M606v7l520ByL7qzxWYgaFf
-	2nVcCW8jaXyboPoh8DcVq6hCB3hzEO3tDl1evk5kkUPepAAQt/vm4txqMKCxTnUytI+HArZecTa
-	dINJHwhjWZGlprd1xI1qTpmyzHVdgciMslafeqYHNmsI3NjkIoyRif1KO0O8R3sb2y3WtxPd9W1
-	4xZ+7ZiCSjYlBSMUcFya2469O6VYBNjVSm4S3RVdpGtRjDZN27tAFtDvaw5oAKnki4YLxokbWgN
-	pHqCAiQKMqix6H91zI9gdZTlzH+YV7+ZkA2Ed8H5KqpbfjN3qS0GGKYEg7sAvLQJ9yyfXWDI5dY
-	8ZCYpwyDXe9/M2OnKO352XUhFTGGktUq6kg=
-X-Received: by 2002:a05:6820:1386:b0:71a:17b:11ce with SMTP id 006d021491bc7-71a017b1252mr402994eaf.78.1794437362242;
-        Wed, 11 Nov 2026 14:49:22 -0800 (PST)
+        bh=RDXTSRorkwwGKpfGvPjIEs9FY39cF/2a0R5Y5rHIouk=;
+        b=s62O3UvR++nxaYuwM+IWO+dPwG0qEF6vFMqSAkk6hpAseCAItJ5jaoczxbg91p0dEM
+         ryaMLmYyzCWXi1FHNjbsqBYuBlyE/VvLKMG2F1+CBI5A9vEFiEkFr/PwtATrVPuaRqMP
+         2ymQlGNqHYduR0+LkaywUsO2an4JVIwyDwr73hDX9ipNBrYx2BYMTArNfw3fVlxVlqfT
+         R6e5uiAoE2KlNNA/LvzwUqvbjVQ992bx/vTscypwxOIHZJGeyMFseHMYkREhF2fMd9Xs
+         CBkIQ4ehsMxQhGQldzcqQDADmaDlwLLgDwMqfDqZ9tCGELNCRX3UJMiVi5VP8qeebqVK
+         jsww==
+X-Gm-Message-State: APuU4Z+/bOALw4z+SBs+RYQ1tTA1DXLg9afo4pFUPCS6wnRBFgN6nzE3
+	Scvxe6+AmS8ueQXWRL1wxANDSfqmGUCrNy0MvJ3oJZC77heE78GLGyMXBtWPEA==
+X-Gm-Gg: AYBFou0OrETqikBscVomMT2tr65Ahho16kfztTCzmWihdp8eHQq3ES7Vfqro5CzLg8k
+	7tgIgf8xo8/fv7NTztyBxOOeJQD5eZbEdtwLH48UkYhP+IfYXfju4Q/+qwq9d0bH34rmjg7oqkd
+	bmQGdlsUCquhcDFxbAmYND2DqF49WJ0CiqOcYhcIrO6JN9Sohq5imgrzoTQxHFtqomXSOxSMk0T
+	UIir3PJh0ceTo7FYQ54iFS7MPmhm19pSuGg9WzQ1Zul47xlu5ymOOzfdtQQcpkqHnPB8VaLJrJo
+	K2vNCYJbFnyaNi+sMSDW1WQrvZmufAXL9pgfWFEu1L40AP+aZQaU8AMod7aFcri4Q63tjzeaH8J
+	AfGqkfuGXrbd35yKE+Vr9BvX1GUK/1QC3dSftDYcds2QetLfOsQKPSCwYjCGhbh8Tp91ntTF8hk
+	Gk/4iAaexhXo6JHa2ZCxsEFMw4iU5vQvQHj4NsTQLVqnTsW3eASWvjJY67qNmaBqlwa6+coDQ4J
+	isfrqQPU/ZfmK8Wgfk4Uelh24rqCLOxOO4vNnMfct5nb+KWP4WU5VfdzwL3gw9EDtaJOfQjDRx1
+	RAfcQn1VgS4TiyFE9pEO0WJqNbl6y27Yhfn3OAbhYuy37w6OW11wpedC
+X-Received: by 2002:a05:6830:7189:b0:85d:6045:52cf with SMTP id 46e09a7af769-860f28a81afmr3970602a34.12.1794437363268;
+        Wed, 11 Nov 2026 14:49:23 -0800 (PST)
 Received: from [127.0.0.1] ([130.131.199.169])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-718a6f2a264sm4943993eaf.1.2026.11.11.14.49.20
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8615518d641sm318162a34.21.2026.11.11.14.49.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 14:49:21 -0800 (PST)
-Message-Id: <ec9d7fd183a100b0a7e52ea1b4968f1979e61048.1794437355.git.gitgitgadget@gmail.com>
+        Wed, 11 Nov 2026 14:49:22 -0800 (PST)
+Message-Id: <c071e79d1122ddccfe941d241b9192d9c40774a0.1794437355.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2297.v3.git.1794437355.gitgitgadget@gmail.com>
 References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
 	<pull.2297.v3.git.1794437355.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 11 Nov 2026 22:49:02 +0000
-Subject: [PATCH v3 02/15] odb: handle NULL values for core.alternateRefs*
- config
+Date: Wed, 11 Nov 2026 22:49:03 +0000
+Subject: [PATCH v3 03/15] add-patch: handle NULL value for color slots
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -115,64 +114,58 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-A core.alternateRefsCommand or core.alternateRefsPrefixes without a
-value makes "git fetch", "git receive-pack" and
-"git rev-list --alternate-refs" segfault in a repository that borrows
-objects from an alternate: fill_alternate_refs_command() passes the
-NULL value to strvec_push() or strvec_split().
+With color on, a color slot without a value, such as
+color.interactive.prompt or color.diff.frag, makes "git add -p",
+"git add -i" and the other interactive patch modes segfault:
+init_color() passes the NULL value to color_parse().
 
-Both settings take a string. Read them with
-repo_config_get_string_tmp(), which rejects a missing value with
-config_error_nonbool(), as the previous commit does for
-rebase.missingCommitsCheck.
+Read the slot with repo_config_get_string_tmp(), which rejects a
+missing value with config_error_nonbool(), as "git diff" already does
+for color.diff.frag and the other diff colors.
 
 Assisted-by: Claude Fable 5.1
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- odb.c                     | 4 ++--
- t/t5618-alternate-refs.sh | 9 +++++++++
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ add-patch.c                |  2 +-
+ t/t3701-add-interactive.sh | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/odb.c b/odb.c
-index 865c404910..ea086be8b3 100644
---- a/odb.c
-+++ b/odb.c
-@@ -161,7 +161,7 @@ static void fill_alternate_refs_command(struct repository *repo,
- {
- 	const char *value;
+diff --git a/add-patch.c b/add-patch.c
+index f27edcbe8d..ad581eb4ae 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -295,7 +295,7 @@ static void init_color(struct repository *r,
  
--	if (!repo_config_get_value(repo, "core.alternateRefsCommand", &value)) {
-+	if (!repo_config_get_string_tmp(repo, "core.alternateRefsCommand", &value)) {
- 		cmd->use_shell = 1;
+ 	if (!want_color(use_color))
+ 		dst[0] = '\0';
+-	else if (repo_config_get_value(r, key, &value) ||
++	else if (repo_config_get_string_tmp(r, key, &value) ||
+ 		 color_parse(value, dst))
+ 		strlcpy(dst, default_color, COLOR_MAXLEN);
  
- 		strvec_push(&cmd->args, value);
-@@ -173,7 +173,7 @@ static void fill_alternate_refs_command(struct repository *repo,
- 		strvec_push(&cmd->args, "for-each-ref");
- 		strvec_push(&cmd->args, "--format=%(objectname)");
- 
--		if (!repo_config_get_value(repo, "core.alternateRefsPrefixes", &value)) {
-+		if (!repo_config_get_string_tmp(repo, "core.alternateRefsPrefixes", &value)) {
- 			strvec_push(&cmd->args, "--");
- 			strvec_split(&cmd->args, value);
- 		}
-diff --git a/t/t5618-alternate-refs.sh b/t/t5618-alternate-refs.sh
-index 68139a1b3e..422da6dde7 100755
---- a/t/t5618-alternate-refs.sh
-+++ b/t/t5618-alternate-refs.sh
-@@ -83,4 +83,13 @@ test_expect_success 'refs of a shallow alternate are ignored' '
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 6e120a4001..33050ccc53 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -815,6 +815,18 @@ test_expect_success 'colors can be overridden' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'alternateRefsCommand and alternateRefsPrefixes need a value' '
-+	test_must_fail git -c core.alternateRefsCommand \
-+		rev-list --alternate-refs 2>err &&
-+	test_grep "missing value for .core.alternateRefsCommand." err &&
-+	test_must_fail git -c core.alternateRefsPrefixes \
-+		rev-list --alternate-refs 2>err &&
-+	test_grep "missing value for .core.alternateRefsPrefixes." err
++test_expect_success 'a color without a value is rejected' '
++	git reset --hard &&
++	test_when_finished "git rm -f color-test" &&
++	test_write_lines context old >color-test &&
++	git add color-test &&
++	test_write_lines context new >color-test &&
++
++	test_must_fail git -c color.interactive=always \
++		-c color.interactive.prompt add -p </dev/null 2>err &&
++	test_grep "missing value for .color.interactive.prompt." err
 +'
 +
- test_done
+ test_expect_success 'brackets appear without color' '
+ 	git reset --hard &&
+ 	test_when_finished "git rm -f bracket-test" &&
 -- 
 gitgitgadget
 
