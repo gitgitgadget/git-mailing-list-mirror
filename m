@@ -1,104 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.217.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794410906;
-	b=NCWl/w+V43PHOuuvXTGEOuhbMFZQCZS1+pk5JBLAfvLBKNQL7kqs4I4LxXgU9omT1c65
-	 atxmEJnYJ1sINoQfAyfQK0w8ftbMIZ6PB+C1HP4CXekrkzFx9MkcvZ/ybr/dHH3WzXV/x
-	 agUzTurcg01poQzW+of0h5du5/Ru9hTtYfWsO9+zKMng6GDrBoED+pYNBDK326VBY7LeV
-	 J/LYKBiC4ciJln/qXv6kjco+SV5RpDnEaXMXthTf8+SjgC7LNgliHcqdoR84XiltX/apR
-	 qFuVmEjvTUOi0xpi3Y7DnjsNf1sA9ASyNzbqzqw5zt8xs2EwWNrGVLFeinDqVjXfQyw==
+	t=1794411498;
+	b=gQTT4etpnEUa4h5dAXfL56OZ4Jly3L9zePEeT69YdS7HuTdNlAMKZtI6RE/7aPNTVSrq
+	 x9xgjq0ki14wMVzfqleQgVcOmz+TrDPyiEV0bx0LSiasV9vtUHr8QLpnAqMZQp4aTTm5R
+	 RSCZHOC4o5VWqEEslsJE4wwxdS88cOOrm+a4LTYlMM8TILvqae7LGUqk10Yv99qTM2jeA
+	 A/FfXYd/fePynrk8OR+DgbW0kt1t7q88bMnm2tsVQRbb+qMu5TDOgHPDvRd6eFraNc4TT
+	 3orFBIfVYwvAKnVhSgGRurEuehR2cS8Thcy8nWBg1dbabykbFoQYA/K14nP3xzFLPmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794410906;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=ro3NWOlp2Xl4MApWqqkREEjlNHzbU5jUfQNPRGiIPds=;
-	b=3jxU2VvjSJUdcxekWTGmD9ylfO8mJyU435yUapG9o1ofZ3KkcJjkScmmx/nOAOTcc1iG
-	 lQAickhYhCr/XqC3NjlkcP3KKCKR6WQJOPbJtbJrmeNactbWlSXttuWfZ+VpBlQW4L42C
-	 R2TRlmgbV1h/CIxdMk3ptp8IzPkUf1Y/tGJUdXFSHVSW9kQ1lBRQ8B1e54KBxtfAjyZTp
-	 K416D5AsNj7aad2gkF3aDNF1AgYV/FTyckkwv0l5oqoacm+c20l97l2HKkDc6ImFOmzD1
-	 14WnKU3JgFaw7ENS15SZESH9yY796uYxXOsSy9+Jp3kCkU5ixhyCuQnMIJg1OUviW6w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794411498;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=9TX4d6dk+iqgtZCIi8o6Iu6PMAqqn/z655+lQorXog0=;
+	b=RAPTlpXvpjIPQGa3XB2iqSqBEvkGpSWydG5wqzRO7KC3WucvmYQ8l7oZUNQNRjFpNggE
+	 ibzUpriTgB2AsXyj/kEdsiHa8LhpcoJd8rDzjKurmF4xYl0VH6QoNPrEDYnIVgR7rkWCn
+	 0kkvyeWxbnFcTfEd8e2o6YjEQXnB40gJka2jKfKOFQXWGtXVFP6nrHSaBzjX+s1+D218N
+	 U69tiovCGDfkPfj5PhpZdALfHzJd9KnlNI3mzUxyKhJQKfTjDBb7CJki6h4hXOxgFzxXb
+	 qPZK5YILzaLzSxGKfdJCG8mhB9y2KhLAAVocag2jFW7FKX3mOzgKVyKfqe1vg1Tq8uQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=jaspermayone.com;
-	spf=pass smtp.mailfrom=singlefeather.com;
-	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=Q3h7hWhy;
-	arc=none smtp.remote-ip=209.85.217.45
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="F7nuy/VA";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=uBaJEfjQ;
+	arc=none smtp.remote-ip=103.168.172.159
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663FD606A8A6
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 15:28:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 663FD606A8A6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jaspermayone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=singlefeather.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D67606A321
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 15:38:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92D67606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=Q3h7hWhy
-Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-7d2bf046ceaso1792434137.3
-        for <git@vger.kernel.org>; Wed, 11 Nov 2026 07:28:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jaspermayone.com; s=google; t=1794410905; x=1795015705; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ro3NWOlp2Xl4MApWqqkREEjlNHzbU5jUfQNPRGiIPds=;
-        b=Q3h7hWhyQSfRuxe7hVKHM82y/nWZpn9BWs3BlloSyOHITkQiQjvBXUV0UtEnHa3LJI
-         7Kyub4XIHTp1POT9PRKmA3vzBjONRJtYFWlme87Dnj4pyD1bgxuSPIpF4WX/w9rlu7iU
-         wuupv3lvT7Jy+URjNe+J7jz20N08a//kNvvw09erJ/1sDiMYs7Cs4uNEMCkflUGmQjqH
-         XeRdLpC16M9gSYcw1MT6spbWAGSwanGQ9KUATtsycsggqzu756uzjWRqWlOHX9CuYkt7
-         Rc+Jg8iHS/ECNZ69zC806DXbsMCa0k9QSXuMM2cwopoX496jMzS1V3osx5j91F889udS
-         MEvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794410905; x=1795015705;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ro3NWOlp2Xl4MApWqqkREEjlNHzbU5jUfQNPRGiIPds=;
-        b=LBYW9xwyMgf0dq8BtJLstHJbn5kTF874eaZxmBQX73Ip7lcLcDDsK04gY2UaKfXCse
-         nr0VRU+ohZ18osbMOy/oWm2nqC7um2fxCuNCha2m3Iq6etuvKzasFnq/ekh6C6r9ePRN
-         UE7gnEFRvzugfWuLlkToaN4fGNdhzH8OfwghnR5DSeJbtzRLTmVFhQwLOQBHNrKNa7fH
-         15HU48Gckea74gaTkjYi/269yEwIhXL1Jm7aXvb4EzQBKfdxKGAjhdFnwMdCu5L41VGY
-         yWrnFPRWAS1WmW3yNakBS+HQ9hdI+1CwXRXS/nKn+WAoIkBl90NDFfD1MEJOvB1yWcN0
-         VsCA==
-X-Gm-Message-State: APuU4Z9emjd7Ed6yWfGmWQLgsnIxLJ1qusqCsnOVCpszrqJnG5Ef+zQ7
-	dyf4/8nLhYSJiL0fyHs5bpYTkadF+doTek9tCwBvvMjKVJcVZo4263XWw3+VxdTBqpdRTSNXCMr
-	r9LrXnbdLrsGuFfLGOwYmaFY3OzjFLD4Tfm2PtmLgEPAM5XtDrjpSFG6YT3GJjMQlk9crbwrEH7
-	P7NplyY7pJBMclGwUCr2TNVJNbb8K3eh+KGubBWd4RybbsvSauuiGs943Q1viFPjkMYwzXWE7x0
-	Ptg/b7uiIaZl/bJL4KZGldHZY466LoxUqXF2G1QpmA=
-X-Gm-Gg: AYBFou2edM8phk8BCWyLIAVCHoayvp0WCfSzYwTiPJI9nZZqmu+b97kJKKKPjGRdB+g
-	b477RgULFfaGKj9m8IImaNUWS8rKmfhhZEuzBA+J9baTbHInIKbpDLH43wOuiGuAvGWBFcMxmqB
-	WKoC3VcKeKX4F1OLQKhW93zEmgcSYeEK9YqaY/VkKsZF/aoIZX7h8i67PM9PoWDLrNIXguFDCXa
-	oGaH4vF0W07tERhGlIYysNq7WQzVK8JcnyvmjzOa8VJInpbROPJoG802KbN6fIio5lbmFlUMjaX
-	5dD6Y3x/v6tUEdxfw+Wn9JkrAlTra0vsy2DEqvnCOgO2xdValuVmyF6qiYw04Ut6iEBbF7kIvm+
-	l0LpEaDTJzwWVWmddwAPfUfXjQo/6mIxyCxdqfcfshfTo7p98mqeMCkQZ9cHGum8kBfhJ+kdTin
-	q/BoNBfTUVr6TkfMjeZy6hxl153LjAwC5c5vAYXWYZWI0V7r7R8tJuErekwn8Kc1mDxO9y1mFZk
-	uVycDE4y/A59259KqIK0dLhu3mD/z3BW4vPdBHIM9+NIaDbN4LUmLesIl0PcdHPBNBxEWPj7/C7
-	KDRiVRgROF26MJX96u4/1RUeN9+8+lGHC3UmH3yTbYF42lyFlrVZ7tiiyKM/0tGGbJ1Yhqva9MO
-	g8wtobkAN1lEVsQiQnEH7Y6DwPus9XFTOJlVVsemBEKznwHCrWuNSx1dhxzolWw1JjKYDqJtd9F
-	opWK8Zg2FENGx7NT80w9pVTrvVpzYeME5JRq0AD5lbE5SqaS/G9upR+P5J5FuYZwVS9YhMYbaq/
-	K61kgJxXwv3NASeqVUY7WkR/oWF940322a67vIhnuwIfRd7LHbikzM=
-X-Received: by 2002:a05:6102:149a:b0:7d2:7266:2c8a with SMTP id ada2fe7eead31-7d50621737fmr1113751137.32.1794410905192;
-        Wed, 11 Nov 2026 07:28:25 -0800 (PST)
-Received: from remus.wildebeest-stargazer.ts.net ([69.43.88.101])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f04c2b8bfsm21341136d6.22.2026.11.11.07.28.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 07:28:24 -0800 (PST)
-From: Jasper Mayone <me@jaspermayone.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	phillip.wood123@gmail.com,
-	sunshine@sunshineco.com,
-	kristofferhaugsbakk@fastmail.com,
-	ben.knoble@gmail.com,
-	haraldnordgren@gmail.com,
-	Jasper Mayone <me@jaspermayone.com>
-Subject: [PATCH v5 5/5] branch: do not mark the branch the current worktree is rebasing
-Date: Wed, 11 Nov 2026 10:28:10 -0500
-Message-ID: <20261111152811.99986-6-me@jaspermayone.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261111152811.99986-1-me@jaspermayone.com>
-References: <20261102182930.3511-1-me@jaspermayone.com>
- <20261111152811.99986-1-me@jaspermayone.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=F7nuy/VA;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=uBaJEfjQ
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D8D9B1400141
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 10:38:16 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 11 Nov 2026 10:38:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794411496; x=1794497896; bh=9TX4d6dk+i
+	qgtZCIi8o6Iu6PMAqqn/z655+lQorXog0=; b=F7nuy/VAyDluRJF0e4Y05+HO4z
+	jkWtVkf4GU9q+htjircF4kRDhVeHK9o2amcZhk82FJXB8OzvDt6gmDWlawufQ0Yd
+	+XJwW2Sdhjn2nviT8fYCxkYkA55NAPUkvrbwEwosCJvNKvSPSUK2yXB11dQm9UVQ
+	ydM7Lo7VsZrWmMFtrR3kiM95ud5TXnZq7MbM/TFwRvQvVFScdVmoRkz1afg9xVwv
+	ENtw+tGklP7cx5w3U9mVgpJ4m3HMubxsEd3YyTZ3AAXZLPDoQNxVNLlyKAl0etZU
+	vhYHYij56/jN8lCfMX+L8f/d9g35uxzVYDP6rmT16T8Yu/k/vIZmTX2LIgDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794411496; x=1794497896; bh=9TX4d6dk+iqgtZCIi8o6Iu6PMAqqn/z655+
+	lQorXog0=; b=uBaJEfjQTMWybnARF9ZTSeMMObBD4rJ99JG+fOydGDancDWVtuR
+	ysKk+eFUvWOasYO3kGjQCZylShhCe5XVDXtat71Y9urR5NJRo22id8UQ1G0UIl/z
+	WavFmDWEABTluAabl5yoAzk/QtTDQpHKCPVNIisiBqtBOQ/wnELb5Cerfo9vi1q1
+	KQARlDoCO3cBdAwht9kwv/cvBLTII9qFCr7GEG6ZvwTDp4t5bemVXbDDbGJhjxHa
+	A0muZEyttfqrFoxFtxfHO4y0h8bSsEn3m5vFpiYvsjsi9RQwJm26pl3fzHB+GiUk
+	KU8nMwO/ccJvIRzmkl672aji1cCsgHOmdzA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794411496; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:XHW9B1SwkIESF3kA60/5umvyqob5r/yVDZwzxHtBSkDrY+P
+	dAJzBFy3VKwWyP6pggLIDhrbzBymuaQEyvIXcfDGLY4QN6vvmYP3VlApGO+sMSpE
+	8nvOuHkGpuZJ7Q2ABeUXUsni1EXSo09GzWSJMkjiPpIx6zoewS0BBoWJScoj4YDS
+	/8QEdzW7K2F+ZbyWJ5sV12itQHNXxGum6r05vd42TFBPPrdyK+Qrp+mUefQerntC
+	4jdxSqiLuo0MVR6L0lQKU4uOgWHSDL/JfnWefac4tefE1QluGVRPzj62DrkunWD1
+	RLpugbssE7Y63WnSRKEN8Lcty+wC4Xr2QOEkkRw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:VA3iQBE+htyCeNMcCHJKlQqbl8O2StV4aGpya7MuTMc=:N9z3/RAMK7PBpMl7rksXVBxT5PJDMGsRdwyd8nCMfBI=;
+X-ME-Sender: <xms:6Iv0aknPcGH87UcLnfn8ocufm7Wy6WdG9O9m-TdljHr3ClVCphZJpQ>
+    <xme:6Iv0amHcXTux9GOVHg9ieffuIW942UcLJAKN55D8IU-HWwIL4gDaGtRVO4-5PyTJU
+    q7rmn34A8Ebs-eRs8hufAQMkXRU1GNCOxXvFF4p54xg5d05XLpLuw>
+X-ME-Received: <xmr:6Iv0ak7Xpc3xUE8q4e3H9Y3kRKXZ5FiP3SIBJtTvsPEJweJo0zEth6d_4qdLFmP7KjzJfJ_NqgOs_7vTtl5z8jcQn-ka_uiZM78L>
+X-ME-Proxy-Cause: dmFkZTFAheqyHMoGWso62AqH8WUDU0S4p19nmw3y1yk1IwlUSbIq75Bi7KUPat0vsIJ/Ys
+    QMg8oOpFFJr1j/jbrUEq5jaCUSXxdYn8tLB193o+GRPOmJsYk1IEaidQI1vHEvmY59IyHN
+    HBt4sDMrRGm9KsHpbJpz38B9G9nhsakHzpf+SbxQFrOZixhB26Mulss8bM309lZg0+MyeC
+    nGEKhGHlwa5c17Mx18cKLDYGmvam9KRUZXqYnclooOUnOx9GJ69NuzDslMo7C17SmugmMT
+    Q2ChnzEV2lckmCtkBsBx0/1GAdT0Ycu86WscL8y1Sp89ys2Ogk56adwSSRB1eiel+VTMnz
+    eh1QBRt897Ka7dfgzrx0Ww3njkjAwM3o560n0lDhdCclR6DjNdZU+c/1oPt9pICV90PSvr
+    xaJDBBJuXvr4YKL7nfr/9f5CtjGJOUj2u96/GuuAHTRhOtmLsmIIfnZ+A1aD68EhS5EOTK
+    TNgLXKIeW8rDDZHld5cvmcqPABqhKEl0/AW7q5k9mqIZPBMrlePfoR8NhGNUtrS/j2kcUy
+    yNMlE6AibmjtxBu+tkzhrrQnFQqhiPprUZd55Zizs/K4WnEOzqUC1UBVZjR2+GGJbSjTDX
+    9tyJsF0A3QfEgK1ndaP3PP/fm+5g02FhUGuXdbtYf2vqNow9XlekfGakEDgA
+X-ME-Proxy: <xmx:6Iv0amkupD13KMuIMKa2QdiNmqz6qt_zAGQMAtwI4N8pTa_cszB3Lw>
+    <xmx:6Iv0ahrtGt8NStzqkMKCELIIaZtiug9MOXRT9fMDHUqKsAlay1O3uw>
+    <xmx:6Iv0atuvwaGV4ckk4--QcKk1btqvBMBbR9zKrlKm5EVNfBrX9s-lig>
+    <xmx:6Iv0auH9NF8XRqoDOfTbeTozRCaFE2Vv0l6WLHsf0khs-drWz3ZPIw>
+    <xmx:6Iv0auK34FbhFqR9TPQi2gKvWlnuY-fJynhY4JVOEMnx0DjoM8RQr4rw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Nov 2026 10:38:16 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes Sixt
+ <j6t@kdbg.org>,  Kristofer Karlsson <krka@spotify.com>,  Collin Funk
+ <collin.funk1@gmail.com>
+Subject: Re: [PATCH v3] t: add "test-tool genbytes" to avoid slow tr(1) on
+ macOS
+In-Reply-To: <pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
+	(Kristofer Karlsson via GitGitGadget's message of "Tue, 10 Nov 2026
+	18:26:08 +0000")
+References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
+	<pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
+Date: Wed, 11 Nov 2026 07:38:14 -0800
+Message-ID: <xmqqse17nztl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -108,95 +128,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Since "ref-filter: name the worktree of a branch being rebased or
-bisected", "git branch" marks a branch with "+" when a worktree is
-rebasing or bisecting it. In that worktree itself, the list already
-starts with "* (no branch, rebasing topic)", so a "+ topic" line
-below it shows the same branch twice.
+"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Use %(currentworktree) in the default format, so that a branch that
-the current worktree has gets no "+" mark and no "(path)" with -vv.
-A branch that is checked out normally in the current worktree is not
-affected, as %(HEAD) already marks it with "*" before these checks.
+> From: Kristofer Karlsson <krka@spotify.com>
+>
+> Several tests create fixture data consisting of a single repeated
+> character with "test-tool genzeros <count> | tr '\000' <char>".  This
+> works well on platforms where tr(1) is implemented efficiently.
 
-Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Jasper Mayone <me@jaspermayone.com>
----
- builtin/branch.c         | 10 ++++++++--
- t/t3203-branch-output.sh | 22 +++++++++++++++++++++-
- 2 files changed, 29 insertions(+), 3 deletions(-)
+This looks good as-is, but once we merge this down, we will find
+that there is a new use of the pattern that pipes test-tool genzeros
+into tr in t/t1600-index.sh recently merged as part of the Git
+2.50.2 update.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index a613148fc7..87670d16e4 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -424,8 +424,14 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 	struct strbuf local = STRBUF_INIT;
- 	struct strbuf remote = STRBUF_INIT;
- 
--	strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)%%(if)%%(worktreepath)%%(then)+ %s%%(else)  %s%%(end)%%(end)",
-+	/*
-+	 * Mark a branch that another worktree has checked out with "+".
-+	 * A branch that the current worktree is rebasing or bisecting has
-+	 * no mark, as the "(no branch, ...)" line already shows its name.
-+	 */
-+	strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)%%(if)%%(currentworktree)%%(then)  %s%%(else)%%(if)%%(worktreepath)%%(then)+ %s%%(else)  %s%%(end)%%(end)%%(end)",
- 			branch_get_color(BRANCH_COLOR_CURRENT),
-+			branch_get_color(BRANCH_COLOR_LOCAL),
- 			branch_get_color(BRANCH_COLOR_WORKTREE),
- 			branch_get_color(BRANCH_COLOR_LOCAL));
- 	strbuf_addf(&remote, "  %s",
-@@ -447,7 +453,7 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 
- 		if (filter->verbose > 1)
- 		{
--			strbuf_addf(&local, "%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(worktreepath)%%(then)(%s%%(worktreepath)%s) %%(end)%%(end)",
-+			strbuf_addf(&local, "%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(currentworktree)%%(then)%%(else)%%(if)%%(worktreepath)%%(then)(%s%%(worktreepath)%s) %%(end)%%(end)%%(end)",
- 				    branch_get_color(BRANCH_COLOR_WORKTREE), branch_get_color(BRANCH_COLOR_RESET));
- 			strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
- 				    "%%(then): %%(upstream:track,nobracket)%%(end)] %%(end)%%(contents:subject)",
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index debfac5f26..5541f1429b 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -456,6 +456,23 @@ test_expect_success 'branch being rebased in a worktree is marked' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'branch being rebased is not marked in its own worktree' '
-+	test_when_finished "git -C rebase_dir rebase --abort; rm -rf rebase_dir; git worktree prune; git branch -D rebasing" &&
-+	git worktree add -b rebasing rebase_dir branch-two &&
-+	(
-+		cd rebase_dir &&
-+		git commit --allow-empty -m rebase-me &&
-+		test_must_fail git rebase -f -x false HEAD~1 &&
-+		git branch --list rebasing >actual &&
-+		echo "  rebasing" >expect &&
-+		test_cmp expect actual &&
-+		git branch -vv --list rebasing >actual &&
-+		test_grep ! "$(pwd)" actual &&
-+		git branch >actual &&
-+		test_grep "^\* (no branch, rebasing rebasing)" actual
-+	)
-+'
-+
- test_expect_success 'branch being bisected in a worktree is marked' '
- 	test_when_finished "git -C bisect_dir bisect reset; rm -rf bisect_dir; git worktree prune; git branch -D bisecting" &&
- 	git worktree add -b bisecting bisect_dir branch-two &&
-@@ -464,7 +481,10 @@ test_expect_success 'branch being bisected in a worktree is marked' '
- 		git commit --allow-empty -m bisect-one &&
- 		git commit --allow-empty -m bisect-two &&
- 		git bisect start HEAD HEAD~2 &&
--		test_must_fail git symbolic-ref -q HEAD
-+		test_must_fail git symbolic-ref -q HEAD &&
-+		git branch --list bisecting >actual &&
-+		echo "  bisecting" >expect &&
-+		test_cmp expect actual
- 	) &&
- 	git branch --list bisecting >actual &&
- 	echo "+ bisecting" >expect &&
--- 
-2.56.0
+Perhaps we should rebase to catch that callsite?
+
+Thanks.
 
