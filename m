@@ -1,122 +1,125 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794394446;
-	b=eaPXu3se6elgnbetlRWxJXH4jnvW3oBYf9JAAEQuNO+6QFCBCuin+1sw+2xYuLoycend
-	 xDMb6ecALP5jZYHC7xss+xxrfJquoufGdm/yZ0FcjQ8bBCVryrJy3Ziy/RgD/f5Q96PSZ
-	 Hb5TafzL9brqMtr8DzJUERvA1EX8ZqLavrrUWE+d9g/fPXccTKFtVX8ZeEDYM1rWSf6mx
-	 QbiDJ4mInl2yGxP9arFjt1/Y28Nka9MuAy6I0O+NuAAVUMMWzC0wURJtbfU+Re9YBAxXI
-	 sDxH5rRnETBjt5mw9KrSvhlwCuvY/AaBUoiFgoTiJbhVe5KNLq6XETFWGMVF3fHCdqA==
+	t=1794394937;
+	b=QTyRMKOcWmvHkbPiQgBikzFtTIRd3yiBGke9o0MUFI0HQCvmyIauAxhLNDrDq/XUUQGw
+	 h3RU40Pe/5/Qcd8ProPLs2zm6hzL5PEbJfsdE29FK8gozw3ljrCsxSFRlVkLgGiA3ymHM
+	 H0EIme4KECTkyw768Di+VOUoptHS1+o4zS756ElkCFKE7cRT5jsmWN+32dVyVXoam1ENB
+	 WUX4hysUhhiMIGG9wRsUIlEKH7bGfgM4JdnTKWwoLvcImFCYqjbSMzpwtTeLI473CFMcZ
+	 voR2uznRbkiG3VHHncqTyl8XLRZ++6BhtkGAPnoOAu92JWVRr3C+6ghxCNtQzqpBrag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794394446;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794394937;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=aXD3QZJ9U5Im2ds4/1AxDUL3BUG7P4OOuhTssXRy2ec=;
-	b=cMde4nWSyNafi9pAZlME2eqdoh2qcw3CQy5/FSRNmq7gG7a/RdtJTOR1IyqWBxjj4/lS
-	 crjSLMhxbS2VQeSmKP751ZHTmkIWgv8XepVLAyO+pKLtnZtuw3eS2VQb05HOgR44PeLrZ
-	 JrZuyUUJLUNi9OQMq44IsKNN1zE9oREhQz9S3eETDu441f7x6LtdbwAjfNiwJEnX4tTjo
-	 UfE4EjdPpC4P/SIzZepUXCa0riI7OhgjmHcV2+LhRM5hE+t/UehFdTCYeSP17Yf6oO8NW
-	 IPHSoPAkNt6MBDa4/KTcycgsQnynVTK5xDlocIEZr85ykbb/ljJbze3fRwVfgOZ/QwQ==
+	bh=5Sln4P4f3ImXVMlgB309g92MGczoRztHYHsqYQ82IcE=;
+	b=MbHTsD4kVE3CkmTHdhVlMsPnA9H4QEbb9Xhb/bM5QFMLFXZO3kWBJfzBAjqv4mO87a8/
+	 j8OxJJr67aKILkmFJVWHi41wDnsXQMOIEerzK5o7mhDgakklkliBV1RJ12Cu/NvFywg4q
+	 T7OQow2C2dAfEWNbzSk5anFahg2oqoFppTz4b6sThjKd/wJEQ5jkBahmwYgvCjP/dKk/w
+	 SV/3Zv6r0xoKj7/3tX4yvNyOAPeajxMj9mra3PUAHa0JwlNnbahIKW5uvMLH6bRsC1MfB
+	 b9xRghCxXsw1W39lESoRLMdtf70zbISDyAP2XmmklknJRhEPgQjMp4TpNQSyhm5Y/mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=NFmKEjR1;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FQDu4ZMo;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=VrXCgxXI;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="jFc3bIP/";
 	arc=none smtp.remote-ip=103.168.172.157
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE6B606A321
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 10:54:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DAE6B606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390DA606A32D
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 11:02:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 390DA606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=NFmKEjR1;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FQDu4ZMo
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 027441400088
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 05:54:05 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=VrXCgxXI;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=jFc3bIP/
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 28F1714000A7
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 06:02:16 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Wed, 11 Nov 2026 05:54:05 -0500
+  by phl-compute-01.internal (MEProxy); Wed, 11 Nov 2026 06:02:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1794394444; x=1794480844; bh=aXD3QZJ9U5
-	Im2ds4/1AxDUL3BUG7P4OOuhTssXRy2ec=; b=NFmKEjR1C7zZoA44j4gWxtxWW7
-	ACLZTMxqoRJu1q+/roJNrfTUW3cM16pKpyiozog85ce6wLIpoiXUhnMjA+yuHKsf
-	rKIcwY5rEtmmnR5lDO0o4Fvaz7YmaVUZk0UjQMBzjsOIc9/6VBTRxPckEl25eI5y
-	3CPet+jglzNu+MB4I6pmGf5q89wm9jPo24pxPkdNs4orm9CJheodWQo91Jz6FH6h
-	ocbs+1wpl6719TOpz3dAOtyvmnhADnZsIjNs2v1dlcmWLwYr7+FmO0DanaP2Pwe+
-	bfXe/uUk7Bhfwc/Lv2iooBlc1KLGSqnPPs3dJMglQLkgeIJnH+DkEuxG6Pbw==
+	:subject:to:to; s=fm3; t=1794394936; x=1794481336; bh=5Sln4P4f3I
+	mXVMlgB309g92MGczoRztHYHsqYQ82IcE=; b=VrXCgxXIpMCim6I97haAa9Hn4s
+	H/qKDaFbAu1H7zil2Z9CKQQ03jEE+39RSF9g2eU0ytBo9peThQEp3e3+UzzgoADl
+	Zd9Ihk+UEKVOm0ykDwSZQcIWjSGv8asH/D5z+M1wxu7++O62ZlO1DCV3ijxdNRu2
+	6otByjNXuID5S6vjHSJLnr2zuejj9Og4/76Lq/CUU0QbK7y1m7VpruJx9T1LAveR
+	COTKSL0PXnEJU4RNzdPHkENEQpGE5SvTFsJqLZ7sZZvEq77xETneeD5Dyu8vudaB
+	BNUFoztChhxMKXapdd7ywP/Hst2d4lGJeQj1/186VT7LOQ0sbteUZxWzQpcw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794394444; x=1794480844; bh=aXD3QZJ9U5Im2ds4/1AxDUL3BUG7P4OOuhT
-	ssXRy2ec=; b=FQDu4ZMoTwA0pFwAEKfhXrj/mBuNbqWdo6qn/DsEp4lVPiaVMve
-	iarM6UEsH1BiVJsJE1DvXpOjEfPSU+IFixTh3IBXTPq9msNrR1qUCX3syGGYU8jo
-	DqrZxGhK1g7xT6AOqn6Lf0Z8R38RSLhDbM2DXYX/k+VMw/sSDKP8Qlz9ek1h5Wsd
-	aIVDYR5gCYLfvMi+nx1DopkP8VEId02U7FwZoYn8hfLryLbneXPEG2vP6pobJubR
-	ZeMMiDS28mWNKya/k36Iy4AFYkZgpKGUgbGVhESN01dbIEF3CSNg17aDhdAdXrDa
-	QD0tQbYecivOARu2t77gaGUOMf1RC59GArQ==
+	1794394936; x=1794481336; bh=5Sln4P4f3ImXVMlgB309g92MGczoRztHYHs
+	qYQ82IcE=; b=jFc3bIP/iUhqSxw6HMLLhvhIiuZ4B7mB9paORaIfUpncwK2r6qs
+	6SMsXE4UqPjCRztHSACiDwBGGcw5jVTaCDTRsvwQdrHPR4XV1OhZRyex0XQxmLFI
+	LqWYOAQI1JWyuK3mT+JwY9yTdfG0+9G5zCq0plxryee6bKY9uK1eqLyukOYu9ESU
+	+SznVynQ0RtN/X6eWUg0O1Mwi9TNEWc958XdHklkZ7cF045qVhe0cf4kpURuHsHP
+	7DuGJO6ixeUwhfW2zrpuXRzEK6QURtw0GlYe0GnSfr/L3aN8ZYPbhOw9wVSYJ860
+	OGQuDLWt+mwvuNqX+KO6DfPF7D0Ve73bVIQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794394444; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794394936; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:xT+2I0/wZu7cJFp6qcrrtzJXWLmhbbE3HuoJq7PGpK1rL8H
-	8ODb4tAu2TgtDplg42QPKnS7+130MUuQ+8ZXQUcg24gec0S9cJvYPQtBrpKQdgNQ
-	HPtcVGQ3TY05VUq1G6qONrSCL+GIKiQz6rF2KLzc5+SQs14eaSIHYsdHrbJs1Czi
-	MF26ljqXTpJQZmrlcZWF1BRSbdHul+rPRAUwyf9BeB8cly47wFUj9Ov526bBxCyV
-	xUlHq7Iwm7ONVeZvO0cI04zVWovs5raSpzNKDbtOe1EzniXM2XYECsvzxDK17rQM
-	SojaW3GwDg5UiEHLpPxqlnKaLQfjfS0mFs2YtnA==;
+	s=fm3:rsa-sha256:pALnL983zBDyd3mqOtk/Ss43agPdVCcmzWulkaA9Y5nbbKw
+	fxS+ajuQAJh/hnctejOm6+zZOHV6R+Eg8tJpB8/KDwSwWJqZEyGKEY3+R5mqwnGU
+	DMOCaUAaUJ7UiqG5uiJ902Ag/pEMx1RiRFRgPCYVzOx8z+1azHVblqH7EyPhVtF4
+	2PVvznYmqkGMahRUMqFCjXAlpUQdC6elpqCFdVRcPIve+8MdoULEA5SRGQj2GP2b
+	Amk9JwnLEdpHwzlJudxMYyTPqqou/OV95rIDf4VhWIq7zaJTbfmL1SkIoL9u/gdz
+	FAZJS1YX2V9AcV6NLK/9DxjvAqXZwfcwfrRGQYg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:VuqnsdD4W13uYS5KCR23vYYqDV2ftZukvaj0CvcDbYk=:PBWNHV9dH56G0xGFwFlSLfOGe+e9/MCDCrmKs+qNy7s=;
-X-ME-Sender: <xms:TEn0ap0UmZlcHkDhuLlVgT2PYgsN30astjoS7bhm2vvHGKuoYSLH5A>
-    <xme:TEn0am-7mzDrd3iKmhUr9apSTXY7pW6jZC8OUGxRh2rqB60OvFDFVLZbUw2wT99KO
-    PwnM95Crn_7FSTbuaeAfzsb0YRRk4IdrleP_YXj-O83JjD6Wv6Ev_Y>
-X-ME-Received: <xmr:TEn0aiMbG0y_maLuggfX1myLMHG6a9LrpTx4-WhApaP6bW0ZfFeTWIQ4vqETc2wBoqXhCg>
-X-ME-Proxy-Cause: dmFkZTFWJkaZy/xdhmOUSCA7vJUDlhRXkrFQzUtFuqQXTwIOb2m1d/EhkCrcaPd9d87xhW
-    Tzllf+ogZfFvpavVTtv4m9LnVkVDD+W3DcLhqO7+IVd/dyx52c0dbRo5O5YGXrv/aqKISn
-    3kjhq4lvA1c5QFhaeNfAd1uwpqpgFoqpWYpnuwixb2RPkQnxYUVCfj0uIdhXiw2e95z68A
-    Bihb4k0vfDpVL72ddQP8i0g63BLs0m0ORdlNn7t3oysXR2XScwBFrUcceYGzj89iDqzy9l
-    5OSCUA7c2xSqe4hp1N1tF2B75+dENVgMB6mJelwPlA3t0W4ZG1E2r5+vO6SXVEsC/EnAil
-    sJA/at+XaqeJOv1DrX9SeYAR/28f6BlwYx+Wqwnt8z1L03tsdPr6GqepPZXmfPGsRfzlU3
-    LGyD8dDwh9O3TchZuO1NoZLltNcqcQGkR0ObcsA/rxzqDTMauKybry6ubn272bT/7qpXZg
-    alVCV+LlsrmifqPbziNcYrpEIZZuatDPJwdMNWiImRuKl+q6n28QsfKvlhML3clxxt62x/
-    X5WejbTJcXaeVxwurhBhDceAHtNGOxW+fN4NfbPsdM0v3fpoH2ugTgAE/8YLGyJKerBRX+
-    HpNv/gvu5O6VQBsDC72ITtweZ3+m3hWAaw1mKneMAmQXc3VM/KFdYekoOFsw
-X-ME-Proxy: <xmx:TEn0aicq0aWYAFiPFSERqzM7r3fdrwpUI1VyiqBYuR7gMCJgPnroYA>
-    <xmx:TEn0apW592iJhFpxHHSHAIJvH7jVHkb2UDhGV6Az5PhrOrBuCHXPUg>
-    <xmx:TEn0aig8jpHI1i3RhsV5otacHhN-g5Q3eJHAQgJsSvWCK2gpeTSQJg>
-    <xmx:TEn0ag_VtD7he7CBjvrapOtmW9WeZXK7J6O_DmrnlMM7JSKLVvJdoA>
-    <xmx:TEn0atksaMGcl49hNnBoG4G5cG18U_iwsG0hxtowJMvS7rXh6Xzeky7F>
+Message-Instance: m=1; h=sha256:WQu9k8rbj6A3IY+a4PGHGw3vmXYtWT6wXx44lVLFP08=:Ql38tcRHccIc65R0HdC9izpV4E8RJ/Wf7ZGxiQXAr5A=;
+X-ME-Sender: <xms:OEv0avZ_4ISQrcI57tLm_9YHye_WGUeGO0vPbCKEQRqdZTnNF4bAUA>
+    <xme:OEv0alZAhPStCZ08Q-2467wTWUl8k4t7QQEVM9tljDl3MH8gI9DVLXsmCAqJB3KXZ
+    uq-5damT39uHhzDirCaod7kHA_nJt7KMUm5FfgICth1rKeo0mzdOOk>
+X-ME-Received: <xmr:OEv0am-2Tj9tbYz15v5z9WkoxR3rZNyLbm6MYTAWr3rlPgeqMOtN7IOwUZs7JrTrXTH1bg>
+X-ME-Proxy-Cause: dmFkZTEG99pfFHB+545wx6op22ZZ2Glgh5KN9i2WIPtTTq/X8GC4RaeerKp+yV2MZOPyzO
+    jD8dzL9KcTzqx86KNkjvU3EUMIKBAQetyZcwjm6DmZotMho3en9223kknmWtL5wwCdz3/1
+    Sy3JlmvcknFRQfju/+C+w9ZLepRxZWakvCMRRkWVtnPslJZdcBdz5r3U5aoF4nPJDFf3/K
+    m0hdH0eD1wbK4DFmmcRRBYqvzvEUoCphMiFeeEqMjpNUgPnzHmCgUOY/oA2UTvzNB1uLzr
+    dRtNAqLrIMMXvb1lpHkBeRkG2hpl+swff9IRBEOKEylnKLziGRR7bORC5ZH1rJZ8OIazgr
+    y7gM9LXIVo5H9sMv+wU4BqpgBMVu4w3hKzudwO0/y5/h9paZLxHOyJLP2VCM3F/h6o8OAD
+    8aFgywYCqpL6C0qAP9iMyLvyV7Anc47UoL2AZeak1zNwfxIsf4vg/3JDLxA5SoEptBLSNZ
+    1FExOX8J/jDS6e1gQ1GFpuSZCjV/FNRXvbH68M6O9zW+77NRVnKUIPSITou7Gxwkka5HJ0
+    THk23UERDFEaCmRdXQLhnLKaxsmwJkznN6c9WrRcEceay/2nHoLTWrNa/8nkVHG4g4oluP
+    07kwGXFZx4RC48zYWWq7HCxJKTcL5Hdy4VqtCbsFUYflMNVJ8DJW6u3m1tFw
+X-ME-Proxy: <xmx:OEv0akh13_URPcLfiFoVUwoeyt7U69ReGwxNW-ecLlyhH_Q1LwN3EQ>
+    <xmx:OEv0amfVJK-JXAki3M51R_LMqT5WTPyqjbsbrQrWuEMEokfoiELzvw>
+    <xmx:OEv0arq08wVzxJZxiCgfNKR_-TahE5KTFKqgcKUG7bV23mYBp_Rc1A>
+    <xmx:OEv0arAihuwAK14CAe5l2SrjFn7g0fva_eF_1UaZhYjgS925rbvDQw>
+    <xmx:OEv0amedPRFNoPmMPzOl403qy_17dCKxE_YC9a1sl4oXMd7AwY-k9xvb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Nov 2026 05:54:03 -0500 (EST)
+ 11 Nov 2026 06:02:15 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fdfd3cb0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Nov 2026 10:54:02 +0000 (UTC)
-Date: Wed, 11 Nov 2026 11:54:00 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 00b20ef0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Nov 2026 11:02:13 +0000 (UTC)
+Date: Wed, 11 Nov 2026 12:02:11 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	Kristofer Karlsson <krka@spotify.com>,
-	Collin Funk <collin.funk1@gmail.com>
-Subject: Re: [PATCH v3] t: add "test-tool genbytes" to avoid slow tr(1) on
- macOS
-Message-ID: <avRJPDEJWTGWySKp@pks.im>
-References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
- <pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	"Mark C. Chu-Carroll" <markchucarroll@fastmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 02/12] rerere: convert flags into an enum
+Message-ID: <avRLM38NKe81u9fg@pks.im>
+References: <20261106-pks-rerere-subcommands-v3-0-4ff164d8fb81@pks.im>
+ <20261106-pks-rerere-subcommands-v3-2-4ff164d8fb81@pks.im>
+ <xmqqqzgxlxrq.fsf@gitster.g>
+ <avFxCywngxJgwylf@pks.im>
+ <xmqqld7210a2.fsf@gitster.g>
+ <xmqqik25zuku.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,69 +131,46 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqik25zuku.fsf@gitster.g>
 
-On Tue, Nov 10, 2026 at 06:26:08PM +0000, Kristofer Karlsson via GitGitGadget wrote:
-> diff --git a/t/helper/test-genzeros.c b/t/helper/test-genzeros.c
-> index b895436a32..e8d83d5012 100644
-> --- a/t/helper/test-genzeros.c
-> +++ b/t/helper/test-genzeros.c
-> @@ -35,3 +33,29 @@ int cmd__genzeros(int argc, const char **argv)
->  
->  	return 0;
->  }
-> +
-> +int cmd__genbytes(int argc, const char **argv)
-> +{
-> +	intmax_t count = -1;
-> +
-> +	if (argc < 2 || argc > 3 || strlen(argv[1]) != 1 ||
-> +	    (argc == 3 && !git_parse_signed(argv[2], &count, INTMAX_MAX))) {
-> +		fprintf(stderr, "usage: %s <char> [<count>]\n", argv[0]);
-> +		return 1;
-> +	}
-> +
-> +	return generate_bytes(argv[1][0], count);
-> +}
+On Mon, Nov 09, 2026 at 11:13:53AM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >
+> >>> What BOTH versions lack is an explanation why RERERE_NOAUTOUPDATE is
+> >>> needed in the first place.  In other words, "How is it different
+> >>> from the lack of RERERE_AUTOUPDATE bit?" is not answered here.  And
+> >>> I think that is a lot more important thing to clarify.
+> >>
+> >> Heh, in this case _I_ thought that it's implicitly clear from the
+> >> comment of `RERERE_AUTOUPDATE`: it overrides "rerere.autoUpdate". I
+> >> figured that updating these comments would cause some discussions, and
+> >> that's exactly why I didn't dare to update them at all in v1 :)
+> >
+> > ;-)
+> 
+> The command line can give us not two (which could be represented
+> with a single bit) but three choices, (0) the command line has no
+> preference on --[no-]autoupdate and follow the configured default,
+> (1) --autoupdate, or (2) --no-autoupdate, and that is exactly why we
+> have these two independent-looking bits.
+> 
+> But two bits can express another combination (i.e., both bits on),
+> which probably is invalid.  The underlying OPT_UYN() calls
+> parse_opt_tertiary() which only chooses between 1 and 2 so we should
+> be safe on the setting side, but I offhand do not remember if we
+> detect when both bits are on and BUG() out where we consume the
+> value.
 
-Okay, so instead of interpreting `argv[0]` we now just take it as-is and
-verify that it's a single character, only. That makes users way easier
-to reason about because you don't have to wonder about how the argument
-is encoded. It's also extensible because we can easily introduce longer
-strings or "\x00" and "\000" eventually without breaking any existing
-callers.
+We have this bit in `rerere_cache_setup()`:
 
-> +int cmd__genzeros(int argc, const char **argv)
-> +{
-> +	intmax_t count = -1;
-> +
-> +	if (argc > 2 ||
-> +	    (argc == 2 && !git_parse_signed(argv[1], &count, INTMAX_MAX))) {
-> +		fprintf(stderr, "usage: %s [<count>]\n", argv[0]);
-> +		return 1;
-> +	}
-> +
-> +	return generate_bytes('\0', count);
-> +}
+	if (flags & (RERERE_AUTOUPDATE|RERERE_NOAUTOUPDATE))
+		cache->autoupdate = !!(flags & RERERE_AUTOUPDATE);
 
-And this one here is trivially adapted.
-
-> diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-options.sh
-> index 0b27d75fe3..0b74ff6157 100755
-> --- a/t/t0613-reftable-write-options.sh
-> +++ b/t/t0613-reftable-write-options.sh
-> @@ -146,7 +146,7 @@ test_expect_success 'small block size fails with large reflog message' '
->  	(
->  		cd repo &&
->  		test_commit A &&
-> -		test-tool genzeros 500 | tr "\000" "a" >logmsg &&
-> +		test-tool genbytes a 500 >logmsg &&
->  		cat >expect <<-EOF &&
->  		fatal: update_ref failed for ref ${SQ}refs/heads/logme${SQ}: reftable: transaction failure: entry too large
->  		EOF
-
-And all of the callers are easier to understand now.
-
-Thanks, this looks great!
+So `RERERE_AUTOUPDATE` takes precedence over `RERERE_NOAUTOUPDATE`, but
+all callers know to only pass one of these flags. I agree though that we
+should detect this misuse and complain about it, it's certainly not
+obvious at all.
 
 Patrick
