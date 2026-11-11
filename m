@@ -1,92 +1,129 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794412755;
-	b=27EBDHYHiFwepaUd5n7tlDSFANNZRR5NiiaB9FdvRy/iyfJM5BExOpZsQQfEh3fiEIQS
-	 OHYWdHYRl6R7MPo2xkRv1lPFtk15kNMGyXMNNTKDD9XLu2VKnxQD+8Fhi3rwbhEXDUfQt
-	 tQ9i7E9LdcKsDuaw8GJBp5tH21TN18RDKngOKB5fBVYUmfAEGZAgOF2yhSqtPzmodzXkb
-	 QVZH3TnKCKzCqzDrybeIYPmVacfTVt4n4wKZRsLLXJAkA3pzQ7jxjOh/P5C3t/7rFQG6w
-	 77Y4fHWedvG7KWtcU67FMAcXVo19GjsQ7T5JUNz6pfhJgsdwVZsoFq4bdpwVfigF/kw==
+	t=1794413265;
+	b=Y9LvNTcd+gUGPlDpqllWoPUYa9OcIdb5Bq12wRJOJ4v7YYqDZiJ84vxfyxTLmurfd0Iu
+	 3Di8uT3dFpLokkfkiNVTsMGQTMLyFd5Qj6BRyH/+Ld4HOx33S6dznDykiDEu0naXvIMUf
+	 FcerIIX9gUmVGGqVZOGbi4imF9VimbegjCSgDvJsFmMzfTXd10DEWYgZya7hAGwz4TdiF
+	 tFEcGUcXLZSUYqf/XCReWiHT9Qda6oGV2+Rwxr/PLADpV5IA2jiyyVnTu6m6PDBVh3iLy
+	 pSUjtp/ckHO5YeQ2sk6O6AVlBTLFl+LNRgVSUlxaaX8KfyolPklBks7QeFT9Os68BrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794412755;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=2q7CB8GD/bpXVILKxjMnv7docN4fcUkUbtjStYNN+Mg=;
-	b=G/xqHXKh3TCDuWJH1b3dPGAhz5ALKLojHRE1lkiYcTnsF4BYViP4yIOkj3NIIspDNvSR
-	 qlm2NKx9ooO4kDoRFGmEfJBlU3+klkLgAWXf6ivD1ExX6QzugIMT9cfvhomK+Zhzf8CnV
-	 UiTAVJirv22bDkB/uLGg7R+Gtf70G6uacyS02vMnvJgn+4CH8EaLIPAqW/zYDPqXieAIj
-	 19HADYtiyDwVvDTAW12/6JqnH7orXbg10V4iuFUUuTTyRqbkHcuuj2reD82G4owKx4XI3
-	 SzManS2BEPDHNUyCRlXMgJzsOJNhKf5bOQ3CvE0FwC/qKlfo6olQtP2n+mcgu1N7XZQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794413265;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=wnzgMlhu5ISFh8tyOgt1y0CA1IJv8Y4QOVT5CeYlP8I=;
+	b=Tbd15MSx6iGaWNc7Z0XQNAEHjExnapkYrYHeBEFUvVoeK0GJqvHGS+GFTn8nltUuA8f7
+	 hkm0HauXrgvSfUIaWt+ZFZTG72w4P3ooBO8QwOulgJoHCZHkZoJfJaOK7D7K7UrxZ6ilH
+	 4OtJrOObkdfjvx+nqSOOfoB1CwwCj2dJ86eBvmWFJsX/gXlqtwzL5tJ1LiEAgS/z7wzAZ
+	 zJqm5ZHTQFTplP4a3nzwbwpDO/3TOi9Wo2brh4F4F/OVs4hJiMq5GXC5Wl8HyDosUz0Ik
+	 vU/qClidD231y19TBdsw8eaSoMi6ym3d6wAGFf0reEQ3Ig6WDTZco9zBOOAHkmrpBCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Fx8KhovD;
-	arc=none smtp.remote-ip=209.85.160.182
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b="t/rua9Ea";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=RBtv0DLT;
+	arc=none smtp.remote-ip=202.12.124.152
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E3C606A326
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 15:59:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28E3C606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AC3606A884
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 16:07:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 23AC3606A884
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Fx8KhovD
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-53665358476so32296081cf.2
-        for <git@vger.kernel.org>; Wed, 11 Nov 2026 07:59:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794412754; x=1795017554; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=2q7CB8GD/bpXVILKxjMnv7docN4fcUkUbtjStYNN+Mg=;
-        b=Fx8KhovDpKsqKfpL7+Yt7QVnHjSNGXyTPXzs4BASWRKu47gcKZsYsCB6vy2f3Mw7Yl
-         KSFoQ9C1VAi4RND5UJphD3azx+wPdJIkEMVp10nSt8ceg3hRfTVj19noAK86tPP9T0Fb
-         0HOMXz6Tw0MKnv4dJ8MTKaxoWXrjfktgbtJ6RFmi53FAHDN+SecxyH+1q3wAnBdmSxxs
-         SqXzi0Se1ozycBWUT2ijOUQVBSjTkQ+Y6OXnt4Dni4zgV64Gnt39/VXdeIlmfNvfwtmo
-         IGEBg71LDIvYixmmFLZglGZDY78+JicWNGQZN2TLfMuJ02Z/iHYOSNH8XKYgKJU6BHjR
-         AGOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794412754; x=1795017554;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2q7CB8GD/bpXVILKxjMnv7docN4fcUkUbtjStYNN+Mg=;
-        b=yyZJDzjd0kR7tz2inp0t7x7fuZlsqObAyHcHMA3L4PjphQiOlwCYiqCiM3dMC/Ftga
-         7vDiAkU4toSqPRMHwCYldYO26tLVNC7Kkm9TILg2H2SWOi8BAmPm25rIBRWYaAFTi49W
-         WWV6jNw0l+S+5DkBFa5Levas8x6KuJOGuXxoA3cA1dGWfDSqppRZofi1jdaCwypOVBCk
-         xPcvD1mkRakQndxz40OxUEl+FA/bkvLJzH+Uu7mH+LlgsZpLxk0lSmnVovulzUJMvJcq
-         AsQGBBlsQ1IRfJK6pBTy74xqCiZTcvm3BTibn3ykL2M1uit0tbZtrSCbNQnTf8hnrIyg
-         gM/g==
-X-Gm-Message-State: APuU4Z9iYfvKD45ulimnwU0GoCq62q9FNT09Owf3IrScgn+NkUyLGpr3
-	eFLtW4yccyxf7RG320rdOwb/Tn//IrfNpLodZTag/Rfgj0BSe01c8hSML3NhrNvf
-X-Gm-Gg: AYBFou20Lmr3fuNBD2ot3OHAmwF4BxXT0oalgF2D9XW9Fcq5sqp04h5LNO0tNuPPx5m
-	gHSFMwEHqtyJ+Itwdh6cOd1e5C46AQclN4B47+sHOLpDJklOe2xRZnEMNX+QHhUC0E0+sIrc+FX
-	HyHiKH8V/IKvKFz2EMXO1DCxlVUtV4Ot+bDYF2rJ/36tic/IQCLwB39ByT3zgOZenFyhZPtRUF8
-	16uYKIy0eUKMnStqe0202QTLOS/YDHGcYY+r6EvOAH9XZ6JEQgueOhmbWxJ27CGRlZ8+wvHtqhP
-	8Ord+Gt5eMDC9vOkGQlR2oqN0FFmfm7NOpfMu+g6j3Eb66Q7SDZ0G49bUkaLQGrHkIc684Ofo9N
-	+qYOiVivjBgMrZUFD8KcjRYquQYFWQsi9aI6efdn7SA8Mh6D0YWXm7CEC9julCHM15vv87T4lko
-	x7q+cNbWeiD6xCiP7FNUVMFOJHlaq+MLxQBrYSByUbJ6E3iyGIo/73ZcWudkgusIo79qpxVBlXt
-	KWmIqXAkwFoUu1HZ3IoGXLClDl6oZeRqouN3fnsd0dOpLhEjEW8RNalDKPbtO9Ny91HPpsDSfV9
-	9ihZYF2SZ1yZeABhPCQVb/yMT4UGMpSlaks=
-X-Received: by 2002:a05:622a:4b06:b0:536:b7a:2ce8 with SMTP id d75a77b69052e-556c0ac2483mr40064111cf.51.1794412753774;
-        Wed, 11 Nov 2026 07:59:13 -0800 (PST)
-Received: from [127.0.0.1] ([172.176.144.161])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5550af6096asm53687361cf.5.2026.11.11.07.59.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 07:59:12 -0800 (PST)
-Message-Id: <pull.2301.v4.git.1794412751763.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
-References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 11 Nov 2026 15:59:11 +0000
-Subject: [PATCH v4] t: add "test-tool genbytes" to avoid slow tr(1) on macOS
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=t/rua9Ea;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=RBtv0DLT
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7240C7A0265
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 11:07:44 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 11 Nov 2026 11:07:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794413263;
+	 x=1794499663; bh=wnzgMlhu5ISFh8tyOgt1y0CA1IJv8Y4QOVT5CeYlP8I=; b=
+	t/rua9EaqHxS68YfSunAMb5P9H3xQmtcbIFCZm+55tGzHRkWNp6LUT9k3ywC7/uu
+	rIE4bI1wNpAjm1MBJuTv420hZ/PH8kRrxcsmEmK7XcS/wiREA8JKZc8bonlH6seS
+	3LqQ2RDGG1gfoM9qYj5Q9xkXXNGPSeDh6Ug1Hpvhir9OF9Dsc/jT9pCi1DpB4so5
+	75j1+dC3uydxg9cAx17c3LytNDf8bzLPJfbgTckCU0UgGB5KsN8nCHylyxPnA1fX
+	R1ZNhfzO1cKsat7VYZIcerB+9fHyk9bqceWD5TZUH003veCoUj1S3UCLTj9G44Jd
+	FXX01in+iwqLGUr/LvLdLA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794413263; x=
+	1794499663; bh=wnzgMlhu5ISFh8tyOgt1y0CA1IJv8Y4QOVT5CeYlP8I=; b=R
+	Btv0DLT3YeZFbxWyyXe4oX+cI3DDEKp3Jj8YEcBbMXY4EbdPJrp8JnBPcvJSwSqa
+	ihdKGfu85oa0xuUJHvGPM4wUiaFe0ZIM0pNfTQNV/nnx0kADwA/SkRW36ZVyUXQ2
+	gzRH3ylZtvIa67EtmTq59eCPRRC/+NWDskz7po6RFyTwpX24kN89V8IObURJXtDj
+	S9Ajbj/Q/1RaaqqyvKEJtoX/vd2uH14e64+JWeY3HUFWlbiFJFa+XVwb6YjxFoPh
+	DSXXsbp0AqkYXoq5LfuDBFQKWNkquQXOMcTiFDyDH8PfKuHFtS4PMRpWOT6hiHUT
+	uv8UPLpdHd90uBUBPsK8w==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794413263; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:xvAIvbRqElZCTrDrx+7LlpDeK886mFIogtBsx2byLkspfVo
+	ZsUT3rWbrs5fvGFJBfA2MwvH6hzsBfvwNUmw9jqyFL5Fey0nHutCbPj9kJ1KSn0v
+	u1LTu5c+l6XFr2hCn2Tl5ywDq6lt5B5DpuHo5nhDIlOJz+gN2sKXAmoUWv2yEs4j
+	z+11Utpg3AJ2wKKwcCC14BCdeGMZn4pIyhAvz8/NRpJozSe9qYBaOK4W51BZpmpT
+	V2VkVzUgrLdg2tDj5OGzF0ZyB6heRJwHwqX42wUyLcfCeGFdkoSfui7H8/dhoC75
+	UrsOJ5mALLADz7J3PzO+4vOQkXU9x4OfAt1jAgg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-disposition,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:Cbd134pEo7synhWpidHX9Rrby6Vcu/D9GKSmAEIXRPs=:3HLLHMm67x34dUfKsNBdqLMrMW9Te6zbimwWtqOllW4=;
+X-ME-Sender: <xms:z5L0atozfd3JMEkCNGVKPrIRcAYABSKT4lxfIIejw_fRfwPmOCB4zA>
+    <xme:z5L0akmlabHrjrtidvcsPOGQF3bVYeA6fpyUWUpdTFITg-r2-hxMaD-kiXTW1ryDz
+    7crUU6AKpTbH2jKSbx2zJzJ075U6s_mz-iR1n-W8eD6beFcgTTWMNs>
+X-ME-Received: <xmr:z5L0auclR6M2wlJRld17v7u3IXw6U8-ph7eRqBJ0gMo9spmCpst0KrRCjc4GhfsS9rEwiA>
+X-ME-Proxy-Cause: dmFkZTEOt+FEzWT50mIoOX6XGFAehruZFUSf1oXDEzF6HaQuTS/WS6pkcVfIjQz1F09MuA
+    7qbCo7s3HFbmNQpL8NlizkRS+iTGN7QpRYwpZOL2LnvMtyEKIMXIj+b3gfcQFJ487j21eh
+    QOulf/5ptYWKbOYblRQZLWraBoFzsS+Bw4OjOYzfFBllSZR6c+q0fENDKvn1U1yZdiP+XO
+    C9ToLzasBY9S/QZZWACwRp6kuTo8pZNqjqLXSNfCo+O/XbyWooYFPN1JqEPaRYvG+2Ej/O
+    Xvfh2JS7quf0sA9irq6jUmzlmWqCYTISvVXqfBXulzx6di58fa8p4emquNVFYLSZhClDYK
+    CnqjRWYxIKHyqLP5RYcyHAKVw6i1pnMw19KJduBsmMYgBIHyYDldkkAKZWY7a9uj5S2FKW
+    3eMqVsvZ8Cw8xWVGynfO9oawYx1q5a3mPgERHbFissDCk11wm5lv8g43dExoRzDYA0YqC/
+    NJhWDiye+kUJBSmoiAmc/kbybf7M0+hIWNYXdVmD2lE3r65pPvhbAXV9vEBJGGBON0cxyR
+    9CORaBTvUdKRbHH4Wi9Zb5PjQEuiZoGeflPo6fU7v6VSj1uI9UnvmiaC0XBacc/iwTd+NK
+    ing32mpoQPQ21TkRaWpxW9FpVAq0BVEYvEcEtSY5F0jYuKS5gDASTLHJeT7Q
+X-ME-Proxy: <xmx:z5L0aopj7sWJiOnSWJYb496qK4BQ0Nqdopi7QGjr63zXwRINThP8AQ>
+    <xmx:z5L0agNaLawmoDtYD2gqGBv5bX0cUP3xUsaJSPtPtBbxknfV3eGPbg>
+    <xmx:z5L0ajjsvRo_OEjy0d6Skj4-bJrHYIL5kKykCqx4c915uNnRy4PdWw>
+    <xmx:z5L0arscXsz1SutYfRkcrNeKrKqYr5CR1PsbAhuX4pFtiGBTeMsMTw>
+    <xmx:z5L0aoi32Tggvfqz_GLH8n1rzfS9uL0Jo6ESPmqNWs2AspETrKp0FsdF>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Nov 2026 11:07:41 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 6abedb15 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Nov 2026 16:07:38 +0000 (UTC)
+Date: Wed, 11 Nov 2026 17:07:35 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Jelle van der Waa <jelle@vdwaa.nl>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Harald Nordgren <haraldnordgren@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [RFC PATCH 0/2] Support --verbose in git history
+Message-ID: <avSSx_RvAlMrj4Cz@pks.im>
+References: <avR1u_y2IQ8WoJXe@pks.im>
+ <6F40E344-D1D1-487E-B5C4-1ADC0B06F749@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,322 +133,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Sixt <j6t@kdbg.org>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Collin Funk <collin.funk1@gmail.com>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6F40E344-D1D1-487E-B5C4-1ADC0B06F749@gmail.com>
 
-From: Kristofer Karlsson <krka@spotify.com>
+On Wed, Nov 11, 2026 at 10:39:51AM -0500, Ben Knoble wrote:
+> 
+> > Le 11 nov. 2026 à 09:03, Patrick Steinhardt <ps@pks.im> a écrit :
+> > 
+> > ﻿On Wed, Nov 11, 2026 at 01:57:46PM +0000, Phillip Wood wrote:
+> >> Hi Patrick
+> >> 
+> >>> On 11/11/2026 10:46, Patrick Steinhardt wrote:
+> >>> On Tue, Nov 10, 2026 at 12:15:20PM -0500, Ben Knoble wrote:
+> >>>>> Le 10 nov. 2026 à 08:13, Karthik Nayak <karthik.188@gmail.com> a écrit :
+> >>>>> ﻿Phillip Wood <phillip.wood123@gmail.com> writes:
+> >>>>>> 
+> >>>>>> Another case where we might not want the diff is scripted editing as it
+> >>>>>> is much easier if the script does not have to worry about the diff
+> >>>>>> getting in the way of its edits. Personally I'd be happy to see this on
+> >>>>>> by default - the history command is marked as experimental so if having
+> >>>>>> it on by default rather than following "commit.verbose" proves to be
+> >>>>>> problematic we can always change it in the future. If we were staring
+> >>>>>> again I'd also make "commit.verbose" on by default as well so maybe I'm
+> >>>>>> biased.
+> >>>>>> 
+> >>>>> I'm on board with this suggestion. Plus, I see 'git history' to be more
+> >>>>> user facing and it's always nicer to have better defaults for users.
+> >>>>> Showing diffs and verbose information seems to be inline with that. We
+> >>>>> could add an option to disable such output for scripts (but that can be
+> >>>>> done later as you suggested).
+> >>>>> <signature.asc>
+> >>>> 
+> >>>> I can live with opt-out as long as I can turn it off via config.
+> >>> 
+> >>> Yeah, agreed. For me there's two important parts, where being able to
+> >>> disable this is the first one. The second part is that we need to make
+> >>> sure that such a format can work for every subcommand of git-history(1)
+> >>> so that we don't have to have multiple different formats for it.
+> >> 
+> >> Can I just check what you mean by "format" please. It is not clear if that
+> >> refers to the option name, or the way the diff is presented in the message
+> >> template (or both?).
+> > 
+> > Both probably, but what I meant is the output format. So it would need
+> > to be able to cover:
+> > 
+> >  - Changes to the commit layout (e.g. `git history split`).
+> > 
+> >  - Changes to the commit order (a future `git history move`).
+> > 
+> >  - Changes to the commit message.
+> > 
+> >  - Updates to multiple references.
+> > 
+> > I don't think we need to have everything implemented in a first
+> > iteration. But the output format should be flexible enough to display
+> > these kinds of changes.
+> > 
+> > To me it almost feels like what we want is essentially the format used
+> > by git-range-diff(1).
+> > 
+> > Patrick
+> 
+> Interesting; I certainly would appreciate range-diff-like content *somewhere*
+> when using git-history. The original proposal was more like commit’s
+> verbose diff in the editor, though, and I can see a desire to have that
+> in all of the supported subcommands, too (maybe just as a reminder).
 
-Several tests create fixture data consisting of a single repeated
-character with "test-tool genzeros <count> | tr '\000' <char>".  This
-works well on platforms where tr(1) is implemented efficiently.
+Oh, right. Shouldn't be posting on the mailing with a headache, I guess.
 
-The implementation of tr(1) on macOS supports multi-byte characters,
-and processes its input one character at a time through
-getwchar() and putwchar(), even in the C locale.  For small inputs
-that does not matter, but t4205 generates more than 2GB of data this
-way, which makes that test much slower on macOS than on Linux: on the
-macOS CI runners, tr(1) alone spends 95 to 123 seconds of CPU time on
-it, compared to about 6 seconds on Linux.
-
-Fix this by adding "test-tool genbytes <char> [<count>]" next to
-"genzeros", sharing the same code, which writes the requested
-character directly.  Use it in all tests that piped "genzeros"
-through tr(1), not just t4205, so that it is the obvious choice for
-new tests.  Callers that want NUL bytes keep using "genzeros".
-
-While at it, parse the count with git_parse_signed(), so that an
-invalid count is reported as a usage error instead of being silently
-treated as 0.
-
-This makes t4205 much faster on macOS in CI.  The Linux jobs, shown
-for comparison, show smaller differences, which may partly be due to
-normal run-to-run variation:
-
-  job                before    after   change
-  osx-gcc            821.1s   243.3s   -70.4%
-  osx-reftable       911.0s   194.0s   -78.7%
-  linux-asan-ubsan   226.7s   222.1s    -2.0%
-  linux-leaks        320.2s   298.8s    -6.7%
-
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
----
-    t: add "test-tool genbytes" to avoid slow tr(1) on macOS
-    
-    While looking for slow tests in CI, t4205 stood out on macOS: its
-    EXPENSIVE tests take several times longer there than on Linux. A CI
-    experiment showed that much of the time was spent in tr(1), which is
-    very slow on macOS for the 2GB of data that t4205 generates.
-    
-    This adds "test-tool genbytes []" and uses it instead of "genzeros |
-    tr", which is where the speedup comes from.
-    
-    Changes since v3:
-    
-     * Rebased on latest master to also convert a new large "genzeros | tr"
-       use in t1600.
-    
-    Changes since v2:
-    
-     * "genbytes" takes a literal character again ("genbytes a") instead of
-       two hex digits ("genbytes 61"), which Patrick found hard to read at
-       the call sites.
-    
-     * "genzeros" and its callers that want NUL bytes are kept as they are,
-       and the patch that converted them to "genbytes 00" is dropped. This
-       avoids churn in tests that do not need to change, as discussed with
-       Johannes. Keeping "genzeros" also means that "genbytes" does not need
-       special handling for NUL bytes.
-    
-     * test-genzeros.c is no longer renamed, and "genbytes" lives next to
-       "genzeros" in the same file. Since "genzeros" stays, the current file
-       name is still valid and not worth churning.
-    
-     * The buffer is static again instead of 256 KiB on the stack, as
-       suggested by Junio, to avoid using a large part of the limited stack
-       space. There is no risk of concurrent use in a run-once helper.
-    
-     * The count is parsed with git_parse_signed(), so that an invalid count
-       is a usage error instead of being silently treated as 0, as suggested
-       by Patrick. This applies to "genzeros" as well.
-    
-    Changes in v2 (subsequently reverted in v3):
-    
-     * Squashed the rename of test-genzeros.c into the patch that changes
-       it, as suggested by Junio.
-    
-     * "genbytes" took the byte as two lowercase hexadecimal digits instead
-       of a literal character, as suggested by Junio. This also worked for
-       NUL bytes, so "genbytes 00" replaced special-casing "NUL".
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2301%2Fspkrka%2Ftest-tool-genbytes-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2301/spkrka/test-tool-genbytes-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/2301
-
-Range-diff vs v3:
-
- 1:  17e5baacdb ! 1:  c94a8e0ca7 t: add "test-tool genbytes" to avoid slow tr(1) on macOS
-     @@ t/t0613-reftable-write-options.sh: test_expect_success 'small block size fails w
-       		fatal: update_ref failed for ref ${SQ}refs/heads/logme${SQ}: reftable: transaction failure: entry too large
-       		EOF
-      
-     + ## t/t1600-index.sh ##
-     +@@ t/t1600-index.sh: test_expect_success 'index.maxPathLen rejects out-of-range values' '
-     + make_large_tree () {
-     + 	{
-     + 		printf "100644 " &&
-     +-		test-tool genzeros "$1" | tr "\000" a &&
-     ++		test-tool genbytes a "$1" &&
-     + 		printf "\0" &&
-     + 		test-tool genzeros "$(test_oid rawsz)"
-     + 	} >"tree-$1" &&
-     +
-       ## t/t4205-log-pretty-formats.sh ##
-      @@ t/t4205-log-pretty-formats.sh: test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'log --pretty with huge commit mes
-       '
-
-
- t/helper/test-genzeros.c          | 54 ++++++++++++++++++++++---------
- t/helper/test-tool.c              |  1 +
- t/helper/test-tool.h              |  1 +
- t/t0613-reftable-write-options.sh |  2 +-
- t/t1600-index.sh                  |  2 +-
- t/t4205-log-pretty-formats.sh     |  2 +-
- t/t5300-pack-object.sh            |  6 ++--
- t/t7006-pager.sh                  |  3 +-
- t/t9850-shell.sh                  |  2 +-
- 9 files changed, 49 insertions(+), 24 deletions(-)
-
-diff --git a/t/helper/test-genzeros.c b/t/helper/test-genzeros.c
-index b895436a32..e8d83d5012 100644
---- a/t/helper/test-genzeros.c
-+++ b/t/helper/test-genzeros.c
-@@ -2,30 +2,28 @@
- 
- #include "test-tool.h"
- #include "git-compat-util.h"
-+#include "parse.h"
- 
--int cmd__genzeros(int argc, const char **argv)
-+/*
-+ * Write "count" copies of "byte" to stdout, or an endless stream of them if
-+ * "count" is negative.
-+ */
-+static int generate_bytes(unsigned char byte, intmax_t count)
- {
--	/* static, so that it is NUL-initialized */
--	static const char zeros[256 * 1024];
--	intmax_t count;
-+	static char buf[256 * 1024];
- 	ssize_t n;
- 
--	if (argc > 2) {
--		fprintf(stderr, "usage: %s [<count>]\n", argv[0]);
--		return 1;
--	}
--
--	count = argc > 1 ? strtoimax(argv[1], NULL, 0) : -1;
-+	memset(buf, byte, sizeof(buf));
- 
--	/* Writing out individual NUL bytes is slow... */
-+	/* Writing out individual bytes is slow... */
- 	while (count < 0)
--		if (xwrite(1, zeros, ARRAY_SIZE(zeros)) < 0)
-+		if (xwrite(1, buf, ARRAY_SIZE(buf)) < 0)
- 			die_errno("write error");
- 
- 	while (count > 0) {
--		n = xwrite(1, zeros,
--			   count < ARRAY_SIZE(zeros)
--			   ? count : ARRAY_SIZE(zeros));
-+		n = xwrite(1, buf,
-+			   count < ARRAY_SIZE(buf)
-+			   ? count : ARRAY_SIZE(buf));
- 
- 		if (n < 0)
- 			die_errno("write error");
-@@ -35,3 +33,29 @@ int cmd__genzeros(int argc, const char **argv)
- 
- 	return 0;
- }
-+
-+int cmd__genbytes(int argc, const char **argv)
-+{
-+	intmax_t count = -1;
-+
-+	if (argc < 2 || argc > 3 || strlen(argv[1]) != 1 ||
-+	    (argc == 3 && !git_parse_signed(argv[2], &count, INTMAX_MAX))) {
-+		fprintf(stderr, "usage: %s <char> [<count>]\n", argv[0]);
-+		return 1;
-+	}
-+
-+	return generate_bytes(argv[1][0], count);
-+}
-+
-+int cmd__genzeros(int argc, const char **argv)
-+{
-+	intmax_t count = -1;
-+
-+	if (argc > 2 ||
-+	    (argc == 2 && !git_parse_signed(argv[1], &count, INTMAX_MAX))) {
-+		fprintf(stderr, "usage: %s [<count>]\n", argv[0]);
-+		return 1;
-+	}
-+
-+	return generate_bytes('\0', count);
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 83e5fee730..768d1c7e35 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -35,6 +35,7 @@ static struct test_cmd cmds[] = {
- 	{ "example-tap", cmd__example_tap },
- 	{ "find-pack", cmd__find_pack },
- 	{ "fsmonitor-client", cmd__fsmonitor_client },
-+	{ "genbytes", cmd__genbytes },
- 	{ "genrandom", cmd__genrandom },
- 	{ "genzeros", cmd__genzeros },
- 	{ "getcwd", cmd__getcwd },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index b020e24fc4..8dc54150ef 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -28,6 +28,7 @@ int cmd__env_helper(int argc, const char **argv);
- int cmd__example_tap(int argc, const char **argv);
- int cmd__find_pack(int argc, const char **argv);
- int cmd__fsmonitor_client(int argc, const char **argv);
-+int cmd__genbytes(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
- int cmd__genzeros(int argc, const char **argv);
- int cmd__getcwd(int argc, const char **argv);
-diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-options.sh
-index 0b27d75fe3..0b74ff6157 100755
---- a/t/t0613-reftable-write-options.sh
-+++ b/t/t0613-reftable-write-options.sh
-@@ -146,7 +146,7 @@ test_expect_success 'small block size fails with large reflog message' '
- 	(
- 		cd repo &&
- 		test_commit A &&
--		test-tool genzeros 500 | tr "\000" "a" >logmsg &&
-+		test-tool genbytes a 500 >logmsg &&
- 		cat >expect <<-EOF &&
- 		fatal: update_ref failed for ref ${SQ}refs/heads/logme${SQ}: reftable: transaction failure: entry too large
- 		EOF
-diff --git a/t/t1600-index.sh b/t/t1600-index.sh
-index 9c51cc04e1..dc4d68c1fb 100755
---- a/t/t1600-index.sh
-+++ b/t/t1600-index.sh
-@@ -161,7 +161,7 @@ test_expect_success 'index.maxPathLen rejects out-of-range values' '
- make_large_tree () {
- 	{
- 		printf "100644 " &&
--		test-tool genzeros "$1" | tr "\000" a &&
-+		test-tool genbytes a "$1" &&
- 		printf "\0" &&
- 		test-tool genzeros "$(test_oid rawsz)"
- 	} >"tree-$1" &&
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 01b97c8888..894d88c39b 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -1182,7 +1182,7 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'log --pretty with huge commit mes
- '
- 
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'set up huge commit' '
--	test-tool genzeros 2147483649 | tr "\000" "1" >expect &&
-+	test-tool genbytes 1 2147483649 >expect &&
- 	huge_commit=$(git commit-tree -F expect HEAD^{tree})
- '
- 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index e5ce478484..4fb6a22145 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -9,9 +9,9 @@ test_description='git pack-object'
- 
- test_expect_success 'setup' '
- 	rm -f .git/index* &&
--	test-tool genzeros 4096 | tr "\000" "a" >a &&
--	test-tool genzeros 4096 | tr "\000" "b" >b &&
--	test-tool genzeros 4096 | tr "\000" "c" >c &&
-+	test-tool genbytes a 4096 >a &&
-+	test-tool genbytes b 4096 >b &&
-+	test-tool genbytes c 4096 >c &&
- 	test-tool genrandom "seed a" 2097152 >a_big &&
- 	test-tool genrandom "seed b" 2097152 >b_big &&
- 	git update-index --add a a_big b b_big c &&
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index 75ca7a25da..8f1f71bf12 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -662,8 +662,7 @@ test_expect_success 'setup trace2' '
- '
- 
- test_expect_success 'setup large log output' '
--	test-tool genzeros 50000 |
--	tr "\000" "a" |
-+	test-tool genbytes a 50000 |
- 	sed "s/a/this is a long commit message/g" >commit-msg &&
- 	git commit --allow-empty -F commit-msg
- '
-diff --git a/t/t9850-shell.sh b/t/t9850-shell.sh
-index 27cc49bbd1..d56edebda7 100755
---- a/t/t9850-shell.sh
-+++ b/t/t9850-shell.sh
-@@ -30,7 +30,7 @@ test_expect_success 'shell allows interactive command' '
- '
- 
- test_expect_success 'shell complains of overlong commands' '
--	test-tool genzeros | tr "\000" "a" |
-+	test-tool genbytes a |
- 	test_must_fail git shell 2>err &&
- 	test_grep "too long" err
- '
-
-base-commit: 1891de46f79dc444a47db1c87bd0c8c76b5463f2
--- 
-gitgitgadget
+Patrick
