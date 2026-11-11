@@ -1,40 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.33.87.15
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=18.9.28.11
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794381642;
-	b=zsKQ014i2wZt53KTPOWbs1wH4OvYicEwhB7EJJJJ2jZmGaXHk8DgB+h1vMUaf4h1ee2Z
-	 oU8B+xgzitDjcZ0LcXFDXG0wDdd3qkufBxParmzTw1eJzInDnPbUhs0Fud+0UhMtHCsRH
-	 CQqkDoSZiIwW57x3pjMupL5pNfpuvcdzGnUiG8bfOkblm0zzCrobq3AGv6ORTJLiWmQmQ
-	 BOo+TWBupB6yztkquMRnc9T/kQ61wNSBQl+Fm3ZaG0A7KvMf1nvUdOdMAUfFfVrqfaRZ4
-	 om/6MZzIzzwue+A3cYGeY9K4sSqpSn01MDNUMiHPlAMFCzP9XyuK54hwWY3FkXOFiMA==
+	t=1794383769;
+	b=RSqgdZVye9m+DYKEy2iIvx67S5SxR9L7mWfymj7e4++F0PJXoBLxHAA0iDerxX1uO/GT
+	 +AReBZiOLvC7+jB2/wzSpYfB36P6SLLhJomgs7LUv6X4+GApqnDn1F9Nwq2t3EZKKmHFe
+	 Pd/3RcuTrHqyNv59n5pK5VoX6DfAeNDeUzsbhjhzInkT+UzFMI1C89Ng9j5X8Dvc/or24
+	 iFW2Y8k/dtukfEvoG/ZHaScVxabCu82w1M/AwGXpIk4mAGuqzD7iv72FEEICIb7NyYzDo
+	 gl5u5dWAhWn56NaLuVgFHieQzk2HqkVrPQ6pysnCjQ3T3IGQ5uwzJ8qDw5SrtTkEZJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794381642;
-	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:References:Content-Language:From:Cc:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=QrbRuRak5jM7hMpw1/BfuZIMUIR6uZoxhSrJyTcAJZI=;
-	b=r+Du1/gpv0ALHpBUkF/TldWRRxwXn6nLxF43IO8ABsXQDlUg4dWhOzR1S+M9pze3ABZk
-	 5FMnt/rFYk4i36A7X7po71NS7gxGa5uwoHbc0KiEO4luq/ZWV/WXJ7EdjpCkgm6z5u3KF
-	 7Y6O5+iiT0eDYCF0ZcFIAE58ZnicE+F5eSYFnDABBzGQd2tDD+eIywF8yuUaoQi1YS7fg
-	 l8592ly/tNfzWpe8KIOPNFZR4DjzlSASQ/R2fqEvexiFx896FqCClP5orjUcPACaK8Ir0
-	 HZQhGB1QTYePjymx3pQSulnr82OBGI5PI+fxKDRTUbT8xHoep790Znpye4Om8/HSr5w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794383769;
+	h=DMARC-Filter:Received:DKIM-Signature:From:Date:Subject:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Message-Id:X-B4-Tracking:
+	 X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=Tf9LS5Lc7wb7GsZs4nSB8fMkO/Abiyy1O+dOvWrPfug=;
+	b=1aqr2nwGWlmlDmGGrpucWCNyAqMXCi5gyVz897YoM1Cm2YEUSdfiZJX4Nf/xKA13pbnZ
+	 1KRRWd1kEe5zBtvZ/9v/18GeTCxL5zwObuHtXcAG5Ny4YaRctvQShPQS07wV9xlE0oWEo
+	 3fLaLpQ3jWz6gh+QOgV5SWdHqRiJR+t+3dSKDfS7ysOR0MFIsNXTFhQk8IkAbp33HfzK6
+	 5Q2qtKn6/5OR99cROTcnrwk2tTRDWWrLevICb7EPmyFhjLb5bUf2LFE/lyD2lch29R7TV
+	 rtu9KwYVEksw1huPTmxb0OCpqFXt1KR07BnUp2jgWkCx7DUBCBaW1jstSrXf2jSz7xA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=kdbg.org;
-	spf=pass smtp.mailfrom=kdbg.org;
-	arc=none smtp.remote-ip=213.33.87.15
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=mit.edu;
+	spf=pass smtp.mailfrom=mit.edu;
+	dkim=pass header.d=mit.edu header.i=@mit.edu header.a=rsa-sha256 header.s=outgoing header.b=j5ss+Pzi;
+	arc=none smtp.remote-ip=18.9.28.11
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68C5606A320
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 07:20:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E68C5606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.102] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4jPZg23hXzzRpL8;
-	Wed, 11 Nov 2026 08:20:30 +0100 (CET)
-Message-ID: <8b881ed0-f30f-41af-9e59-f4e93006545a@kdbg.org>
-Date: Wed, 11 Nov 2026 08:20:29 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC26606A321
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 07:56:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0EC26606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=mit.edu header.i=@mit.edu header.a=rsa-sha256 header.s=outgoing header.b=j5ss+Pzi
+Received: from localhost (198-27-206-187.fiber.dynamic.sonic.net [198.27.206.187])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 6AB7u2oG022762
+	(version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Nov 2026 02:56:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1794383764; bh=Tf9LS5Lc7wb7GsZs4nSB8fMkO/Abiyy1O+dOvWrPfug=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id;
+	b=j5ss+PziPvjryCU6qWIssqFlgo33ecOKvElJ8LlnEw0+nnjtVogBxsr1xfzTYKNEq
+	 fbDXR0Dt9XNaKBk1/owerX+Us7YQEmixNoOKdSQk7qTaaz9zPMKvtNmPWTBQ2C3TGT
+	 OTygV87BWgYTyupcaLmCNSxXfcZINl0W0f18ViLV6rrCPdhagZ9EnSn6AATttAeMyh
+	 e7mnd4E/UdSQY2a3UitUxdXdQsdlFdFGPBPXo8DpEpIo6b80XC/0VRAg7K5O0D+ahe
+	 C4/UCXVXiRzsHI+6xCGPrOxGPMyP2/SyrxbleRZqP4PF19nRgn+V2kLJ0tqQuEBuNd
+	 +Q+vSXg1g4B3A==
+From: "Anders Kaseorg" <andersk@mit.edu>
+Date: Tue, 10 Nov 2026 23:55:58 -0800
+Subject: [PATCH] t2401: fix misfiring substitution when path contains w2
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -44,47 +59,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: APFS, mmap, and git diff reporting no changes when there are
- changes?
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Harold Hunt <harold@pwrdrvr.com>
-References: <CA+-E0BVhYRsktwaUDxtobAXV98dymKg2n4ghod292imymE5C_A@mail.gmail.com>
- <avJLR6EdZ4OYmTpj@fruit.crustytoothpaste.net>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-In-Reply-To: <avJLR6EdZ4OYmTpj@fruit.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20261110-t2401-substitution-v1-1-32f3524f2b92@mit.edu>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMQQqDQAwAvyI5d2GzK2L7ldLDqlHjwZZNFEH8u
+ 7EeB2ZmB6HMJPAqdsi0svB3NsBHAe2Y5oEcd8YQfKgQ0TsNpUcnSyPKuqjpLqamrPFZx5gQLPx
+ l6nn7T9+fm82fqNXrBMdxAtEogTh2AAAA
+X-Change-ID: 20261110-t2401-substitution-3ab4819833a1
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Anders Kaseorg <andersk@MIT.EDU>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1273; i=andersk@mit.edu;
+ h=from:subject:message-id; bh=/rQ60EaajW80mnZDzcIdjSrGCxaugnQCZdFZ7SXzYRA=;
+ b=owEB7QES/pANAwAKAd/zqzdPFvc6AcsmYgBq9B+S1WQYm3269remzBWhX4CYDeD/LpGyFEjXO
+ Znu4iDlvjOJAbMEAAEKAB0WIQRqPGfX8BGQDMU5JIvf86s3Txb3OgUCavQfkgAKCRDf86s3Txb3
+ Oq5+DACBKCTo3cAhLRF7BVm2BO1yMFrtcB93AQ7WYaejwD6X3gFtFod+bYCTGJf7ZqibVe+eLeN
+ GNr5u0hpKzRk66GNgHkr1lqitnwP+Rmi2Xy8TmcxJemFmsxD5XpWkOjijoxagUzby+OuQ09FxV9
+ BEQK+GlneyednapD/RXXT8788NK1fWILbf6PaOK9dNC942t359bQfJT0OeTJgtghtpgEHHhrNn2
+ nla16/d/9XP4sGlOpve+Tqmq18OJCM0YLwP1i6qkzT8aEemwCxPIRgp/MwjPp80BM8FXQigBaXo
+ WEkkDPehjal/kA/YRmCjDtb0jcbpBqaNjAchykFsKbJs2+qklOa7D+PKuq/HH494C5rfaOKWxqS
+ AwdhprUqVikVslM1w28aJ+OZmjYu5PlS5y7XdqU+zuk2yTFcJHkVyBL0Nec2Gy8zdSIz1vc5i+U
+ hugfg1C6ygWnoiXwBWva5BYYvKoUx3FNvn/8ZFPBDtofUQaRZ1JZdDPJ4GjbWg7RBH7nQ=
+X-Developer-Key: i=andersk@mit.edu; a=openpgp;
+ fpr=6A3C67D7F011900CC539248BDFF3AB374F16F73A
 
-Am 09.11.26 um 23:38 schrieb brian m. carlson:
-> On 2026-11-09 at 22:05:55, Harold Hunt wrote:
->> One could also argue that this is Apple's bug or deficiency.  But that
->> could take months / years to resolve?
-> 
-> This behaviour is allowed by POSIX:
-> 
->     The last data modification and last file status change timestamps of
->     a file that is mapped with MAP_SHARED and PROT_WRITE shall be marked
->     for update at some point in the interval between a write reference
->     to the mapped region and the next call to msync() with MS_ASYNC or
->     MS_SYNC for that portion of the file by any process.
-> 
-> However, Git relies on the operating system to reflect an accurate
-> modification time.  If you write files to disk with mmap, then you're
-> responsible for calling msync() in a timely manner.  However, as I said,
-> that's extremely improvident for things like files in the working tree,
-> which is why text editors don't use mmap.
+Fixes a test failure when running inside a trash directory that
+already contains w2 as a substring, as can be reproduced with
 
-Not to mention that our mmap emulation for Windows cannot reproduce the
-Linux behavior (timely update of timestamps) and is more like the macOS
-behavior (delayed update of timestamps). We cannot have an accurate
-(atomic) msync emulation, either, because not even FlushViewOfFile[1]
-updates the timestamp.
+  ./t2401-worktree-prune.sh --root=/tmp/foow2bar
 
-[1]
-https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-flushviewoffile
+Fixes: 4a3ce479ce7c ("worktree: prune duplicate entries referencing same worktree path")
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+ t/t2401-worktree-prune.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
--- Hannes
+diff --git a/t/t2401-worktree-prune.sh b/t/t2401-worktree-prune.sh
+index 3d28c7f06b..5a2c998513 100755
+--- a/t/t2401-worktree-prune.sh
++++ b/t/t2401-worktree-prune.sh
+@@ -99,8 +99,7 @@ test_expect_success 'prune duplicate (linked/linked)' '
+ 	test_when_finished rm -fr .git/worktrees w1 w2 &&
+ 	git worktree add --detach w1 &&
+ 	git worktree add --detach w2 &&
+-	sed "s/w2/w1/" .git/worktrees/w2/gitdir >.git/worktrees/w2/gitdir.new &&
+-	mv .git/worktrees/w2/gitdir.new .git/worktrees/w2/gitdir &&
++	cp .git/worktrees/w1/gitdir .git/worktrees/w2/gitdir &&
+ 	git worktree prune --verbose 2>actual &&
+ 	test_i18ngrep "duplicate entry" actual &&
+ 	test -d .git/worktrees/w1 &&
+
+---
+base-commit: da8fb6be5594b4a06ef2cc2ff7a5363a6fac2b5a
+change-id: 20261110-t2401-substitution-3ab4819833a1
+
+Best regards,
+--  
+Anders Kaseorg <andersk@mit.edu>
 
