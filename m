@@ -1,54 +1,40 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.33.87.15
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794379721;
-	b=rRv4DL3QIII73lTnLEF/MNJTlhUU9Te3+m95TKscx8txd6XqdkIBnEdXOawUX0ML3lWu
-	 CxnHJF+vtlMvvZl7PH3RT/+lF5uTIq0aH5Gg5XecTCajzbGK6GHEZbF+d3W3oiBKcOhMn
-	 jjUB99ncZcFDk9qcq8x59mRMdqI4psbQfi36DUoHaQbnsk+ClZJpwP/Xykkp+o/R6F58w
-	 o56iSYuwRkz9XkHi1fAuLGuPbXRPJfSm20lASqEqNFRy7tuNs9j0aQiAaSO2hJhmmecR1
-	 CPeafSlM95iKdN2t/j0LIUM/cJi7jm+TL/EZeiBNyeOmPNIzxojshiupzc9Eg3q20jw==
+	t=1794381642;
+	b=zsKQ014i2wZt53KTPOWbs1wH4OvYicEwhB7EJJJJ2jZmGaXHk8DgB+h1vMUaf4h1ee2Z
+	 oU8B+xgzitDjcZ0LcXFDXG0wDdd3qkufBxParmzTw1eJzInDnPbUhs0Fud+0UhMtHCsRH
+	 CQqkDoSZiIwW57x3pjMupL5pNfpuvcdzGnUiG8bfOkblm0zzCrobq3AGv6ORTJLiWmQmQ
+	 BOo+TWBupB6yztkquMRnc9T/kQ61wNSBQl+Fm3ZaG0A7KvMf1nvUdOdMAUfFfVrqfaRZ4
+	 om/6MZzIzzwue+A3cYGeY9K4sSqpSn01MDNUMiHPlAMFCzP9XyuK54hwWY3FkXOFiMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794379721;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	a=rsa-sha256; c=relaxed/relaxed; t=1794381642;
+	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:References:Content-Language:From:Cc:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=cyFP2F/zTbAYWpmkOrJRcqXV+LItK7iurfH6/WHjWkc=;
-	b=r19WMJrMSWKqKFVUmbYZpyxk8MUTVYBKBBezv0Vy1V9NyHWMqv4y1X2Hh16Vubm6pwH6
-	 LqFDLc/A2lkhCBYnRL6ZBWjRXss03D/dIPUn6rGI3g4UYUBz4i3b4FRUIRrfY3JsHh46i
-	 tNBdeubLQc6jqznrgBWS7JafF4hmT3taFAzdlDupp7EI4rkigb9XD7Vme/MpMQzt3brKC
-	 Q775AxcGhsRTHPZRQcCpmcC10czuNrO63JnXcRIBzGe9ry7294WCC2iJrOO3SxDRtMooR
-	 wVEWTE2sPy6NZe4JsUSJcEG8Rr1N8Q4QnMmyk4lyHNgylvPVY1+e7itExbuAOtz9Vpg==
+	bh=QrbRuRak5jM7hMpw1/BfuZIMUIR6uZoxhSrJyTcAJZI=;
+	b=r+Du1/gpv0ALHpBUkF/TldWRRxwXn6nLxF43IO8ABsXQDlUg4dWhOzR1S+M9pze3ABZk
+	 5FMnt/rFYk4i36A7X7po71NS7gxGa5uwoHbc0KiEO4luq/ZWV/WXJ7EdjpCkgm6z5u3KF
+	 7Y6O5+iiT0eDYCF0ZcFIAE58ZnicE+F5eSYFnDABBzGQd2tDD+eIywF8yuUaoQi1YS7fg
+	 l8592ly/tNfzWpe8KIOPNFZR4DjzlSASQ/R2fqEvexiFx896FqCClP5orjUcPACaK8Ir0
+	 HZQhGB1QTYePjymx3pQSulnr82OBGI5PI+fxKDRTUbT8xHoep790Znpye4Om8/HSr5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=mit.edu;
-	spf=pass smtp.mailfrom=mit.edu;
-	dkim=pass header.d=mit.edu header.i=@mit.edu header.a=rsa-sha256 header.s=outgoing header.b="n5m/tkCO";
-	arc=none smtp.remote-ip=18.9.28.11
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=none header.from=kdbg.org;
+	spf=pass smtp.mailfrom=kdbg.org;
+	arc=none smtp.remote-ip=213.33.87.15
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DE5606A327
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 06:48:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88DE5606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=mit.edu header.i=@mit.edu header.a=rsa-sha256 header.s=outgoing header.b=n5m/tkCO
-Received: from [192.168.9.110] (198-27-206-187.fiber.dynamic.sonic.net [198.27.206.187])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 6AB6mVf0031567
-	(version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NOT);
-	Wed, 11 Nov 2026 01:48:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1794379713; bh=cyFP2F/zTbAYWpmkOrJRcqXV+LItK7iurfH6/WHjWkc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:Content-Type;
-	b=n5m/tkCO7154eLUx12zDvVAD929/l72u7qqYimj4/60srqwD36GzrJed4M/uGBKHI
-	 S/Elc1LuUXuWO9hiMqW+lkv0D4dhKuiDvRQDSuTrpkFPXHbISF1MpwtNWNC4ADxvqD
-	 uGWii5bnatItsup3z1tkXbPwGIb+ZvUdxUepi+1h5S1ZZkhUiHDAqenpYjpTmTUI1b
-	 O88p66ciFYdrZmE1x8w9uHAfE5oQMnJLrfIklqCQOcnfyYnUP7iU8EspVDiqcA5g16
-	 LSSub2rLcCem3IPNN5Nwy6WgCeH4YHYjoPm7o/vNkY2P/RcYgTPN5myWriO2uISPrn
-	 aFYS0oK1oGQmg==
-Message-ID: <3e1639a1-2d27-4814-b57e-660e045da04b@mit.edu>
-Date: Tue, 10 Nov 2026 22:48:31 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68C5606A320
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 07:20:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E68C5606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.102] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4jPZg23hXzzRpL8;
+	Wed, 11 Nov 2026 08:20:30 +0100 (CET)
+Message-ID: <8b881ed0-f30f-41af-9e59-f4e93006545a@kdbg.org>
+Date: Wed, 11 Nov 2026 08:20:29 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -59,29 +45,46 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] worktree: notify post-worktree hook when pruning
-To: domen@cachix.org, git@vger.kernel.org
-Cc: gitster@pobox.com
-References: <371a01cf-2765-4cf5-b1fd-414d1b55a325@mtasv.net>
- <cover.1791152172.git.domen@cachix.org>
- <f7ead9bc-fe6e-49c1-bb7d-6efd14eb6766@mtasv.net>
+Subject: Re: APFS, mmap, and git diff reporting no changes when there are
+ changes?
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Harold Hunt <harold@pwrdrvr.com>
+References: <CA+-E0BVhYRsktwaUDxtobAXV98dymKg2n4ghod292imymE5C_A@mail.gmail.com>
+ <avJLR6EdZ4OYmTpj@fruit.crustytoothpaste.net>
 Content-Language: en-US
-From: "Anders Kaseorg" <andersk@mit.edu>
-In-Reply-To: <f7ead9bc-fe6e-49c1-bb7d-6efd14eb6766@mtasv.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <avJLR6EdZ4OYmTpj@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 10/4/26 16:09, Domen Kožar wrote:
-> +	sed "s/w2/w1/" .git/worktrees/w2/gitdir >.git/worktrees/w2/gitdir.new &&
-> +	mv .git/worktrees/w2/gitdir.new .git/worktrees/w2/gitdir &&
-This substitution misfires if we’re inside a path containing another 
-‘w2’ as a substring.  How about
+Am 09.11.26 um 23:38 schrieb brian m. carlson:
+> On 2026-11-09 at 22:05:55, Harold Hunt wrote:
+>> One could also argue that this is Apple's bug or deficiency.  But that
+>> could take months / years to resolve?
+> 
+> This behaviour is allowed by POSIX:
+> 
+>     The last data modification and last file status change timestamps of
+>     a file that is mapped with MAP_SHARED and PROT_WRITE shall be marked
+>     for update at some point in the interval between a write reference
+>     to the mapped region and the next call to msync() with MS_ASYNC or
+>     MS_SYNC for that portion of the file by any process.
+> 
+> However, Git relies on the operating system to reflect an accurate
+> modification time.  If you write files to disk with mmap, then you're
+> responsible for calling msync() in a timely manner.  However, as I said,
+> that's extremely improvident for things like files in the working tree,
+> which is why text editors don't use mmap.
 
-     cp .git/worktrees/w1/gitdir .git/worktrees/w2/gitdir &&
+Not to mention that our mmap emulation for Windows cannot reproduce the
+Linux behavior (timely update of timestamps) and is more like the macOS
+behavior (delayed update of timestamps). We cannot have an accurate
+(atomic) msync emulation, either, because not even FlushViewOfFile[1]
+updates the timestamp.
 
-(There’s already another instance of this bug in 
-t2401-worktree-prune.sh, and I observed that failing in 
-https://launchpad.net/~git-core/+archive/ubuntu/candidate/+build/33960210.)
+[1]
+https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-flushviewoffile
 
-Anders
+-- Hannes
 
