@@ -1,120 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794404453;
-	b=HOJWXEBjNsNJwquqBSW2vsugE9J3ZqIwi6A97wE3R1WH+sz8d0JLNFGSh8OWeqfFQoio
-	 Wv+D1FIbiWI5eKETYFZ27QPgJzBhOMUpafXUz0ysZ/pBJyOGMLatmbDNoNxTBCuqjVQkh
-	 O3cwd6n9NGWQsVbkA7dUbFXoSFeSPns1kgoZVASeT2KcokGDUHkNDbJ8YSbG8xD+3+Mzs
-	 z12TeHcJ4TH2DaMh28PugucSQnLXinGQT6hGQ8J7bzluE6thzCqgAq6+XFfcGqAeuyt0e
-	 Tojuxj4AXAzrKDI34Y2+8QPD6Ib/3F0aEll/HnL3fphxRhEtQDemlZLQacaTn5xUqNg==
+	t=1794405462;
+	b=kxtD5HVwXmMoyi1AqQ4E3LLavs0NmMNPE3n8WnCikj+xO7Zf8KukQglDDV+9RZV0i8jL
+	 66I8aMqGYB/WarCLR6KSzp3QTAKxdxD77E2kBgNdy0tBtypVNPDnqSHq/TbOzEdObfyAm
+	 BhdMkNZHZTMVTSyk2LlHQBcGMFqrYwxXlUa3yMomnEBk+x0+nocS3cf8NvVgV2QcjLf0M
+	 pV+WkFt5FqLkdjI6mW45jE/8aVXC5j7mJxrJXHdBkmURERlS6hZIfn6LzecxEky+BziRM
+	 /Ld7EhdmpRvpd15ixbmtfR3xbYSurY+XNHEcUSRSDwc+PeRApC4V872dnaLUPYieOdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794404453;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=/ChzQEx6jUf8d1LkYfYLIuEFALuVc+X0Qs6E6m7Gz5c=;
-	b=WRbqCRlFDgqHJaaLPTZ0T7vN0HRrdcKvmw4wdlYItc98gx49eO60v04RIcxPPhXq10Th
-	 ZYeTWgQ3qSHPtNc4vE1EqSQ3fLJF7tZcN4ooIgRPhttTwl0MRxI4O5vjYVbxEYTN44lZN
-	 wjONVKIIcObIxB4NBA7znjm0vKuVDYD5FsFQGE7XVi9uLpGGOhwV8dhCDPM9YJUVSymf9
-	 O2eKKuE0O4wHuNVeD5cONlD/mjSTfqvWVfE49po/V1iGeDLlCCxyI6g09Yv+WaF0zXsHI
-	 Q+GPrCs+8Ro7/hwTI14U9jhcvblaVWiieAc/xLpToDljASZcY933ZBv8LIkU6PHB4RQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794405462;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=qWfb7rYKzJNCABQaZ6Tu0gaLzRvAMN7cVRnyY87EJX4=;
+	b=ytRc/56HbjEmXVamCCsxCgTxIZHaMUs4+DOUJGG3gIJV7n7WgtnpE5sDxZ3ibVjuFAM5
+	 HREzqcl7sLmGfZqnog8BrLCsGnk5DefpNW/Av1BNCl6tnSwGu/UnXnN5x9YhTI399yXX+
+	 hoF/lPa3boaa42P1Xn2mu2hUoQdvuxN5RCtL06uH/C9mGOyUH/TZiCOqF1mhalGQuBg9R
+	 td2JsAnp/5xWmfo2Xbf1xQ+F67BbHOYMnarZISh9VaTT4/EqjVriUmof6puT9UYMCTcnf
+	 e+X5m6cnVpHG/O4y1pAo0yLkXs4PUDD2iCT+6XsW0QTjOIk3pvNuhM6CYgvgAmcta/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ImvQQ2Tu;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="I+R/t24Z";
-	arc=none smtp.remote-ip=202.12.124.145
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=j0Atlqfa;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB823606A321
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 13:40:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB823606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DEF606A338
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 13:57:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F3DEF606A338
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ImvQQ2Tu;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=I+R/t24Z
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1138E1D001EF
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 08:40:52 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 11 Nov 2026 08:40:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1794404451; x=1794490851; bh=/ChzQEx6jU
-	f8d1LkYfYLIuEFALuVc+X0Qs6E6m7Gz5c=; b=ImvQQ2TuN9HmrEBhoQJECTSea0
-	ZI0dgloYwRmSfzSNt4E6aAJvYSqtNTxoHF17qwTmTX0EqgMmJrmH2REPswALuYN1
-	H/hPaannJmVcX15oJngsbK5td8+nmKCIjQ2BA59E8aXZai1dvWdxS/6BiXChcL5U
-	ghcnw+6fSHgsobxsQz2aXw8jviqqosL+U7P5WJ9fdTSyR33Nr6UEbHNXNRQiLlO1
-	ABBqR++6xJl3uzWVkGmykd5hNgZe7pzHBtFIaKp0AN3ghakOl5hoZsLvepXeT4cL
-	24rKb1MXSI0zYMj36YzyLQEYKG4eiZMW/epChxedcxMrZjPiHR+9NW8i/UMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794404451; x=1794490851; bh=/ChzQEx6jUf8d1LkYfYLIuEFALuVc+X0Qs6
-	E6m7Gz5c=; b=I+R/t24ZQz1q3uFB1eZ0+kPlc9Bis338R6W0go8qogIaWYiN66A
-	jPpF0jQsE+b9JPKl/BainsJl96eiFF3XhlCE1i6xBUDiDLSK0dbAOjkpiQvA7iw8
-	qqmiJZ35dQFUz3MwAs5DF9Ifiqv8UWqVk6Mu9uWY9zW7rb0fFl47GlnkPVLP++5f
-	DoEbJwl2E+e9fPnrZZh8v78OM4Mpfc6vOJmOjhwqu7BGABUQp/wpcaWgP1gHKcJS
-	tuGtUPXE5Pqj/TZDBo2ibf/DuS6t/ATnxYtxt8g9vOuTyLpoM3JwiGyNvBZVyrLw
-	TUrVWff+Y01WrXTRolCWWNT0MPKYKlxvvew==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794404451; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:Joao2gP25otsu7sTtB1FnM9RyHdjIjM7Y2dbe/qbIonnlNM
-	UWSBqoDe7N7cDJDCkQeQ+xzHdJBmcScjgxAgTwhE8ephQLYL6b4es/zM8OoRhVYi
-	HXPz0va8iHdCEMJPo632oes4IjDqu3KPIZNZskIoYrEYdCbCPcjAb2hsJeRAIx08
-	DALLuxYah3MA36t4il0z5HY4n3+EleX0bPqVkwarv4nxTmE330hLbR1q0NZih5vh
-	WRXw/sn4aCwnBbjg0JjzmY3TXy9JVMDuGVfnMEW08WO9aiFu5gxI3xm6hlBAD0LV
-	3NfIM73S4G84fbKAJPtTm+s1dRbRpW9uiIAc4aw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:6c3GCmzSIcQ7D4k3tcVWgwWxCXlTjo8s18h2QyKYHJk=:oNaP47Q3jcp0X2OIWRbrCjmh5VwR3cX09Aibxe0VPUg=;
-X-ME-Sender: <xms:Y3D0aj3e9Kh3PpThgZy8YFJRxEWnhih-DWjmOSEvkXHXGKi7x9R5uA>
-    <xme:Y3D0aoENvY6zl_NW0nc7yqrts-ytEhDavlJApranwB4kmiiCQqjf7KL6TnvHgvx4v
-    kO8DyGBqtJzebUCV_KyR4J5IJHaW9llkNZjeCwYfJEAJNrPin9Eko8>
-X-ME-Received: <xmr:Y3D0ahic1SVGYEiwYyX8ymrK9o1NYzLh9Mx22XxKAmJSV6-Vh7q_F6hxBsKOMBInvSTDag>
-X-ME-Proxy-Cause: dmFkZTEiwoLOlpwBOK62i37tKO98qGO65RGavbuMfi9S4rZlZ+FWZk7YzNg3xiVe4FBWOe
-    JyszsbS+tey47rasezNlf07tfgECOzw3+MHyhubS/4/REAAuSYI4b6S4rZ8sOl0afK/pfO
-    ieo+BIkoeWiroSwVQDRtmIueISmqy4p7ZCGb0PJFuYYlrH9aUSSX7gwNbHcgRY/ltVO3up
-    rG2TUyu5w8HbEwz4K4BouKy4DVNsvbBYSMOG/e+tKlcpQ1zpvLhPv26gRf3km7gUxNaXlD
-    iPYBSWwkh3k8JtFvCABcODe2TJPj7cdjX80SJd3El9zAAvr3nnDKMG4ZIhImCbUkBSFBbt
-    K8XjmX/QHl2vOBwDZdltzu7sV+kEQ1+lcJQt6bpP6XaIt+2CDPReC7cR7nrq6gT1VyACYb
-    8gt0noUr4qeFETalWtkYSVcW86Mfs+aRkIgBM+cXBWH+Yun9IKNSGGDA1u7EqzgO8UrJ41
-    nz9MBeugkbVgqmLHup90OijX1jnlbv5QzeABxy0W+bqr77tAI9xC8le6YTLkwlK/pEqwla
-    ovy55wULmL7cBMdI3n4iDYGgOqRWXsh5bKXuHD+sDVpx3ECLb+cyJxx/wY4Bpih1U2DpoD
-    +nwHFtXQUT+nDrTIhyeHPd0egpYZvulwbiuq+vsaUkhxjGHfKzMaq/Ab4tAw
-X-ME-Proxy: <xmx:Y3D0aj9PK-S0eU9evokzBz1hj1fqmDRr-Lb7-17C660Q7JmaJXRZsw>
-    <xmx:Y3D0aorVfakK-tJr50f660tohgk1ILcfDWW1iQkUaH4jN4sWIQlr_g>
-    <xmx:Y3D0ai_TPV0jju5ReEudA42xdAs5V-x65RYdnZmcoqTZvvf5jP88CQ>
-    <xmx:Y3D0asXX94vJtfGjKfIRMS8ggtLoDqHOPPl6xq1kghslIX-v9x5MUg>
-    <xmx:Y3D0agm1JkDW9NMfa66jks4NeOwVQw1p2afbOwIBcFTrqwoUr1OAq6uS>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Nov 2026 08:40:51 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id eae8e0c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Nov 2026 13:40:50 +0000 (UTC)
-Date: Wed, 11 Nov 2026 14:40:48 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/6] object-file: stop including "odb/source-loose.h"
-Message-ID: <avRwYEihewG0GWdd@pks.im>
-References: <20261102-pks-odb-loose-cleanups-v1-0-fbbc86c29693@pks.im>
- <20261102-pks-odb-loose-cleanups-v1-5-fbbc86c29693@pks.im>
- <24939fc5-53aa-45b6-9e4c-249c5989b42b@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=j0Atlqfa
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a9a8d6cea8so38737495e9.1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2026 05:57:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794405460; x=1795010260; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=qWfb7rYKzJNCABQaZ6Tu0gaLzRvAMN7cVRnyY87EJX4=;
+        b=j0AtlqfaLiNEe5C4zTtRmuwV6mO7IVBp043RjwOqqC2IUin6UuVwCsUjcMDCB7+xLo
+         rY57mgx1ExzI8ObUMQHMsAhOUQTJjUP8ulFD4/SD9zhqFGp48ekcEdUi/k+RZ4hO1cJK
+         ym5vSqKCT6yyOrg+0f5k+O4lqR78IXMCAvcn36vYZPhq0eX6h4OI02upmAi2SOfWbsWY
+         QLU3O30a/9lHJnBw+nKFHKYqVMwwgzx4UviP1lllgvt4rT6eF6N0m+QGKvG2Xv6QUh1L
+         2MA5A0AjAW8r9uxJjTBkiqAhlGDY72HHIcm1prr4PEZhN5Vw7ZMEZKjbKwbV646mKNfv
+         uLQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794405460; x=1795010260;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qWfb7rYKzJNCABQaZ6Tu0gaLzRvAMN7cVRnyY87EJX4=;
+        b=geYwqteIdYa/fKKBq7YwQYhxwqSLc/R4NKtwvWwMxNlxVheRBzG+ZBVmx0u95ysI32
+         HUYCWD7gAiRw4OyrJNALhwXWNGjAWOvO7JwgVialrPw37E19OLTujquRTCj1lOYVocic
+         9ASrAla6ed5ZbJsD6qKE1TBS5bNBxuxdji07qr/zpT5PJbpOcL4m4e5OB2Zac/mTRyi2
+         OVb9pfPsK9c2wf53TvZFHdiwQIEm9Vkv3Ca32tYnPSxloIYN4c3PeiScV8k5NGWpgmV4
+         WYN6zDIodiZdqbc9OjLhmfknBOYeD8f5MbURaqe4PlQNgt4f2QnxIypi9triaChtd/bU
+         89xA==
+X-Forwarded-Encrypted: i=1; AL+hErFwJFN7BpW3plr0HV7mqG98gyQx58HnnenssZIATAosQOT9snjjO5jAR/Wri6iskXgSmdA=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/UltgpHNJV7Sn7sSEmliamJXxIFF3HPU8H9gktWvSemxQYFu24
+	an0CI1bP7kEGDOOYP7vh3v427VsCD7o8LOtC+D6JbaAZz/WiNbFXFoAv
+X-Gm-Gg: AYBFou3vPAbIrxs7GA9TLCDad0pqQveCD6Z5vkoRpm75ktHUufTEPrz9LnXZVPjzWsy
+	upXdb0vaKsAZp7e1L/6TOgLA+6whrH4I/2ibcN2ewR+ExB1wkyuNma5bHq6lPbIfbQxgt9GyjhF
+	ckfF16pxA4o7JunitomJpF2oy+B1KSw6JFP4UpJACADI0Lh8x/ugcg9h/TJ0pS2d0VP3nYCHtTD
+	otfWKH9ZJ0EL9s1M/ZJX7FkV4w/UT62Z+yifyNNalG34nZrOKI4L4uPqBzBxnI/Ua+Sn6S5UETZ
+	i4qkxObQesjC7HD42SkOZdTyehEHFd3WM0SVveuHVRnwcOOm6oZ/fTp6HxxSZ+DWPUFdVeLWfNn
+	V196Kk0ckg5N2MkYWvafP2Cvsu1jZ7cZdh6vrJNlLG65wjeTHLNVDMZD8RVMi9CEeCUaYQoXxek
+	7JsR1qe0RJ6bXwr9v7sGTXcdarXT6j2+PHjn63HqCsYPGIJRtF3twbRciD1UzXwOMXkhfXqyMS7
+	Rsn4z9lkT2H07vQYmiMQEE+F5ErAjZaqvuCPuGa3qEGOQ+9F3gE4/llf4zxHGsGj9ra4jFDuK2k
+	qa+m1Sc+SajfzL4UWPfQsBS/fwkqXSaZ0tO/06LIuIXOvJHa6E6MFrxVrPqEbl4OhkCljewMA0A
+	+EJ9xqIn2rA==
+X-Received: by 2002:a05:600c:8119:b0:4a1:c27d:e1a8 with SMTP id 5b1f17b1804b1-4ba0936c932mr44435595e9.10.1794405460208;
+        Wed, 11 Nov 2026 05:57:40 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:1921:262:1f9c:7285? ([2a0a:ef40:724:6601:1921:262:1f9c:7285])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba01fea9eesm226925645e9.11.2026.11.11.05.57.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Nov 2026 05:57:39 -0800 (PST)
+Message-ID: <e93076c4-cd5a-42ab-b383-e77ef68c1214@gmail.com>
+Date: Wed, 11 Nov 2026 13:57:46 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,55 +91,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <24939fc5-53aa-45b6-9e4c-249c5989b42b@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/2] Support --verbose in git history
+To: Patrick Steinhardt <ps@pks.im>, Ben Knoble <ben.knoble@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, Jelle van der Waa
+ <jelle@vdwaa.nl>, git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Harald Nordgren <haraldnordgren@gmail.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?=
+ <l.s.r@web.de>
+References: <CAOLa=ZQowi+fepj+RNegTZhK_Jy4G8VLE_Af2UdsO8-rCdviJQ@mail.gmail.com>
+ <53CA2747-58F6-4A7C-81EC-33EABF0000FC@gmail.com> <avRHowwvxoo3e78H@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <avRHowwvxoo3e78H@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 10, 2026 at 09:43:09PM +0530, Kaartic Sivaraam wrote:
-> On 11/2/26 16:50, Patrick Steinhardt wrote:
-> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> > index ca3a891dfbc..e53c69af31f 100644
-> > --- a/builtin/pack-objects.c
-> > +++ b/builtin/pack-objects.c
-> > @@ -34,6 +34,7 @@
-> >   #include "object-file.h"
+Hi Patrick
+
+On 11/11/2026 10:46, Patrick Steinhardt wrote:
+> On Tue, Nov 10, 2026 at 12:15:20PM -0500, Ben Knoble wrote:
+>>> Le 10 nov. 2026 à 08:13, Karthik Nayak <karthik.188@gmail.com> a écrit :
+>>> ﻿Phillip Wood <phillip.wood123@gmail.com> writes:
+>>>>
+>>>> Another case where we might not want the diff is scripted editing as it
+>>>> is much easier if the script does not have to worry about the diff
+>>>> getting in the way of its edits. Personally I'd be happy to see this on
+>>>> by default - the history command is marked as experimental so if having
+>>>> it on by default rather than following "commit.verbose" proves to be
+>>>> problematic we can always change it in the future. If we were staring
+>>>> again I'd also make "commit.verbose" on by default as well so maybe I'm
+>>>> biased.
+>>>>
+>>> I'm on board with this suggestion. Plus, I see 'git history' to be more
+>>> user facing and it's always nicer to have better defaults for users.
+>>> Showing diffs and verbose information seems to be inline with that. We
+>>> could add an option to disable such output for scripts (but that can be
+>>> done later as you suggested).
+>>> <signature.asc>
+>>
+>> I can live with opt-out as long as I can turn it off via config.
 > 
-> I think we can lose "object-file.h" in this one. The code seems to compile
-> fine without it.
+> Yeah, agreed. For me there's two important parts, where being able to
+> disable this is the first one. The second part is that we need to make
+> sure that such a format can work for every subcommand of git-history(1)
+> so that we don't have to have multiple different formats for it.
 
-Only after step 6 though, because we implicitly depend on "git-zlib.h"
-:)
+Can I just check what you mean by "format" please. It is not clear if 
+that refers to the option name, or the way the diff is presented in the 
+message template (or both?).
 
-> > diff --git a/http-walker.c b/http-walker.c
-> > index 4f50dd9b8d0..13730a27847 100644
-> > --- a/http-walker.c
-> > +++ b/http-walker.c
-> > @@ -11,6 +11,7 @@
-> >   #include "packfile.h"
-> >   #include "object-file.h"
-> >   #include "odb.h"
-> > +#include "odb/source-loose.h"
-> 
-> Ah ha. Looks like I was a bit premature. The http-walker.c change I proposed
-> in 2/6 actually belongs here.
+Thanks
 
-Yup, indeed.
+Phillip
 
-> > diff --git a/object-file.h b/object-file.h
-> > index 83d3f38a540..746356ceb51 100644
-> > --- a/object-file.h
-> > +++ b/object-file.h
-> > @@ -4,7 +4,7 @@
-> >   #include "git-zlib.h"
-> >   #include "object.h"
-> >   #include "odb.h"
-> > -#include "odb/source-loose.h"
-> > +#include "odb/streaming.h"
-> 
-> Do we really need odb/streaming.h? Code seems to compile and tests are happy
-> even without it?
-
-If it does then only by chance, as we do use `struct odb_stream` in this
-header.
-
-Patrick
