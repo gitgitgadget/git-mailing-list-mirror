@@ -1,125 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.152
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794419878;
-	b=ez9BxoRO8GAZLOrCw76a1BBFSOkpYIqEktlcXWZ89h/HdWOBPi3H+kZjSdYtOvWR568y
-	 cEd7dxe2RKGjeC1gqdzEWYyasTnLtD/0R+LEGxvi439krseKWgWA6fHtC5UJeUFAi9jIl
-	 zGulq0GXuqQNthh0ZrUL2CeWSxW/+Pyf2Hw0V4bfIBFNzr73aNDwAks/SbOo9n+KYVTwJ
-	 35SPmIq8WFd1sEcLxYhxsetcprY0Q8wfONYGkLN0EhaNI3Vw7+EeQ66Z3SCPO1p0dNGfp
-	 cqb10KgIRhArmbvRrhgzM4PlSASEJEyRHrOZ47zGwnJqLbt4UNZxHGTPFUgw31jdgSA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794419878;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=BQUEnoWxtYG3jy5JDAzNTUzicig3CYatDguRvpjv1w4=;
-	b=XSpHcNQDjlZmp4v6PCigOaL5++S00XjNRQradzRqEFAXCYmie15R4vBVlu0vbVgm7YoI
-	 FpDOAjXlhYTFiSo91CZuQn9d5qB9IXYc7uYCsMbIqDyiVKiERh5HJiZDYGsEH663hmKLy
-	 Ravf782u/XcbQ34y5HE8rTqiM+k2sNTAByZriaxX9eWogH2JeWmDg4ZZG23Ek54eDMD8b
-	 zHAey4p9CHqOjN1lsO/3vOBiXEtU7oVqqP/hEj31iTmOoAlwbkNtZl1jAlV1L3APnLTV+
-	 Alb7dYsSF394KDgKOAdKJ2BMmu9Rtd1n8zwyw4yGatWct/4vPKNYtHD7J5MNPV8jFpw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=FP3ZTgut;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=s1KdkN17;
-	arc=none smtp.remote-ip=103.168.172.152
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.173
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794421635;
+	b=5qou+2+SccjS/5u1+7UEjCUtmn9DHtgFE0nGw5pXhd4dZjA3HYgmMx6vn2uYgrdWYQla
+	 lrs/aX+95W2UFoVOQzUVIY5GD5lMm9qsTT5OTBoM1v17qDf54W63E75fk7tViBgq45Iir
+	 AXclt4eaxXJr2/7inYZLY7spWvFUDMAvE8xdGXM3ErHloSvC4aoZGZoHr92XNXl3isQsw
+	 sITVMKefn1+FnFt+rR67J5nSq51rBBuykBB/zLhLsfYjvHqI7296upt2hEu3X4HCxZOHZ
+	 /LPhC2dBtkI3xzLaxSzcZ0IbJET1rMaa2RTUh0bfYWKGbLaeqT0kbWA+xN2l2CuT2BA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794421635;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=PmZlJjAyG2FovisMQp99b7SxhJzMi9jLhMVSzkTFklw=;
+	b=NLvWiLQZV+hSyyokNNe4euXQE9DklgVm/y1dbmGH+RQacfrBRM4ezShb0RxigM19Z3Q6
+	 Aj65g75PzNodzikGf85zPXTjF7aEjegzzi4J6G23aov2L0Z0uXTbxWyD1etJVcJQ64FEh
+	 /f+8F5yUaC1IeYFC9Lzl8SuoAan/QZ+uUEWhl3g3UwXXaIPnHniMEA6RVs1EucY/iHWNm
+	 NZFH4yiRYlaK2KsFihE4s86q5qrljBbt6nlZeZIJpjTiLifSudpdgvqE3QcTs95c5+yBd
+	 I1tV7wlY740bamDjxokrAnVc6rt3qqEdBjYNcmtW4Tl3EaR6j07xMwYw7JnD9OQYSGQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QdOvKhg3;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.173
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5BE60A3835
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 17:57:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F5BE60A3835
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5716606A332
+	for <git@vger.kernel.org>; Wed, 11 Nov 2026 18:27:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E5716606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=FP3ZTgut;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=s1KdkN17
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C760C140012A
-	for <git@vger.kernel.org>; Wed, 11 Nov 2026 12:57:56 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 11 Nov 2026 12:57:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794419876; x=1794506276; bh=BQUEnoWxtY
-	G3jy5JDAzNTUzicig3CYatDguRvpjv1w4=; b=FP3ZTgutItH80Sro8N0JMs4Uxh
-	j00q56PpuQGxtKFbns5EDYM1CGdJXGOki90LgR2p5etCdiXejyNAw2PNL+tTLBj5
-	Ks5EMwn2ZWHwz0Y9KtvIdh+jw7cNyH6RZ8sNCo6jW+DGxKIM45dPJIRlH5ZVPwSn
-	y0DCN563Wqh2Pf8TMiwffy6IzjLOtgRZvte0GWpn41BZIJVThFLUScNPaw7fY3kM
-	l9PzfnfgI6ELwOgDZFJHsOkf+eAA5miBAUNYjn/rrjeF/t3Zm8FUIej6dtIVMUyx
-	bXmgvuzJBkIHhBm8dIhJbvd9qzfw+BDF+xhwyD4D5n58U5DCbWRPM6wvnr6Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794419876; x=1794506276; bh=BQUEnoWxtYG3jy5JDAzNTUzicig3CYatDgu
-	Rvpjv1w4=; b=s1KdkN17mnBgpZRWfcMN6yJ29+rUI40tUh8KSgVjIm44vCT3HqX
-	qDSAaToc1mAS1JdahvivmhAFVJfPEgzsnoGNvt+Rue+JM9r0Cpv4y5ijPzexI3Fl
-	IXeBF/DoN3PuZmkHNUPOZGmKVzsy5SdLXQC2AZPFIwmktzJWR7t6FezR5LMMxs4d
-	qTH3LS/Jq1JC3umbBtT9D2M1ude1T35589BstC4WZPm3xjMb/CkRifj82FNwJwXj
-	p+P4V/O47pAHObDa1h7ByME8dzGicWhlzNDiKIUCZACDp0exy2e3wDdBRz2s8epO
-	GlfnlGmL40I/HFELGqRrW7lhy/0lo+ezGzQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794419876; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Dg/384K+7jK+TKTGj+Zr99Q6IRpR69S7OKHpjqKLyaApwaj
-	zyg+dIw/bfkAsCz7DSlut0WIxG1SoQqlDZ80AJ+iHphDglXk3FMjo/wu010RIM97
-	9OJGGf6BcJrH8+xaTgJFtj3VF7VOwPN+Idm577Z3sOrFY2znBoqcM5sV/NMlXXAa
-	6NVGYy8H12l2fATQf3XVNu/vGeM1fY//0AcNrLBoKpGpRb3IEcU1bXvyk86NsJT2
-	mGGy7DchlDAHrjTMKeDVKUIBqfpNiQOTWfh0AGdpbgPjaSLKEmwu8e6w2BBkbMGu
-	S8zZ/gG9rQlEhTtYahcljoXfq+Es0fl8vqv3PaA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:rvNlf6kPmbZwRTIWXXONmAZqseISs+4sGi48Vazh3tg=:E5hnKGHC+psNlkNSpj4ITb3sPb0anTXubLLa6bQZ3Lg=;
-X-ME-Sender: <xms:pKz0ak67ZcvZlBNKmx5g8dzIsdPy7pctTln0PeuQP9pFE0SYNqYgKA>
-    <xme:pKz0aoLYTk8iBqQije7R3oCmh32HD8b1-ZP_5pPq9DQKDWtq2AqMrcSUkwOGJ0q2b
-    Np-t6oqVFGAMJ5jSPQosvxGZVQJgjVw8ZUjWdmMijKf0uYWc0ESRt8>
-X-ME-Received: <xmr:pKz0alvXMtqfeB1INKMF9AXc0G1dhonuPpwix7_3FSWUdl-yVeIeBRKBoRiHFebt0o64bhoviaWvmjxSUm0EeSyT89CQnGVHuyX0>
-X-ME-Proxy-Cause: dmFkZTEnb0qVVMlZu7A5pUE0e5R0sLMHEmm8oFxrDbK0YwOamSFbQV0L6TDEQmqsI4l/CS
-    8UT8NVM0wXvlXmrxtjMBQcUSB8aoI2zVlXQJPzV8iVKrKJShj9inp7zE6bukiNCZObL9QU
-    /3HbmImrM1Qaxdioanw5C0sm47yXsc4C/XMgj6Eo8ljBzuv6fRF3tOaAH4FJHThurOi8dB
-    0zWzJdL4dvhPl7917uZfZbYm4qLCz0HmSmzF6PtRC8j+7g8B7kqBTjD+CtJ+qjPvYZXlQD
-    CAZqY/um/t2I/qdrLefCLMQsMYwGtEXOWU5eAq4TG3zzqAvP/L3t+iO1Ls0fAeCyilTxFk
-    77y1KZW9VXzj2os7LgXVWTY2nPWhVD/Iy0njIKq6Q81h5scZW+T+bz2qoVH4P/aKqVET0i
-    ofGh2gJsEgrYQnoUrYq/h4x2oQg9X516LuYVOwAYNrIizwIN1i8C2BuYZgLqcz33GSWXRk
-    o3RfmSmkjnWVWWj0kgrdLPwOAwxvlTsttJeSI1Y3DRnYJ+HoSkEriDwDRothzgw5trWdSV
-    FvVCAvyN2jR2C0AQXQOF4fvRM/XJMP8Aq07U1bgCQlgxL3hhe8FaHBYeT52+yMP6JurLM1
-    eFOoOpD8lOPKWyy4LfzstGMsphUwwTTrOPgHvFUYo5rxoAeH51Jrv0uH0ELQ
-X-ME-Proxy: <xmx:pKz0avLhtJV7IOfWHdLkvRPpC2o8nZb2PqWM41RtQ1aRkzF6WYOGUg>
-    <xmx:pKz0am900K9IgaFX4ZszAHFQT8Ci95lci3fcF1eickzdOmdiaW5Dag>
-    <xmx:pKz0agyt_g6NNjOBC_FmVrvj9bzpyfWMJqsvE-UI8EDfpcWfkkFG0A>
-    <xmx:pKz0ar7R0pSCKyofz6p0muCWzVaDh4n2X1IPK0EKpwrmT_q8oXpzYw>
-    <xmx:pKz0ahsn6F2N4AL5KgWIgvfPLBqVkop9SCL8ebot3Xk5N68QAoJoVogD>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Nov 2026 12:57:56 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes Sixt
- <j6t@kdbg.org>,  Collin Funk <collin.funk1@gmail.com>
-Subject: Re: [PATCH v3] t: add "test-tool genbytes" to avoid slow tr(1) on
- macOS
-In-Reply-To: <CAL71e4N2T0XLZgnUVPEk1q8JjRiWbRo5B47DN_hfs1CreYH6Jg@mail.gmail.com>
-	(Kristofer Karlsson's message of "Wed, 11 Nov 2026 16:47:41 +0100")
-References: <pull.2301.git.1794063565.gitgitgadget@gmail.com>
-	<pull.2301.v3.git.1794335168170.gitgitgadget@gmail.com>
-	<xmqqse17nztl.fsf@gitster.g>
-	<CAL71e4N2T0XLZgnUVPEk1q8JjRiWbRo5B47DN_hfs1CreYH6Jg@mail.gmail.com>
-Date: Wed, 11 Nov 2026 09:57:54 -0800
-Message-ID: <xmqq4idnntct.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QdOvKhg3
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-8b6399ebb41so3019040b3a.0
+        for <git@vger.kernel.org>; Wed, 11 Nov 2026 10:27:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794421634; cv=none;
+        d=google.com; s=arc-20260327;
+        b=GuO6a6epXbwV77BlEEIK+5Vrt+Eg9sZCtIqBiBuREBGK7BuR8u3g7sro8UxniRqtqb
+         464wwhBBK2M2uzpzs6hwvcMqPeANEVCu/FqAEUgLIXvB462pecjbMp5jDUwYVYA8kyYO
+         OxXoPk4X7KPUmHwxysAswKJpeghw5JHGZd2FXID0zERPYLAuDLNU2jNdj7foT5/Rrmw2
+         u5iGjL6venyz1DPUxGkjXgkRiTT8XSCDSEi3/RDhUvIU0id2q8X05p/r6qpvOyvi5Hi2
+         urwdmmpGNDF9Ytnb02hSfQvq955eB32qAwBUV5kF9Zi5GQ8EwZe+KsQW5qdGc5qy8bsE
+         0TkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=PmZlJjAyG2FovisMQp99b7SxhJzMi9jLhMVSzkTFklw=;
+        fh=kV+AbbD2dx8Zvrt/D0Q7uj1KhZdY6IIWIpBTzKZxjpM=;
+        b=eiMZv1d7EYInNZCsBqOUqF7WZanvFW9dwhCABCw1PczVhGX0UqQqFJCmOxJnelvnxV
+         AiZX8vk3KmJ+MFX5lXIhYNRD946N63YgYML/HFz//07ypHO7j6CEsCkYnLDtzJIBqqUB
+         4DD5qiMABjIeG2gzFJ3gDqdHe7Ove5YZUY56jU2uyWcitVFeuO4E6CliAAeHMGSnO6kd
+         q8VKl9t6svcvzB4YjTnl+81URxeGYuIt2cARmTMt1ZiSI+sGT5/QA+vvnh2He1lPWOWs
+         3Hv/ZHDRNlLxthtx5eUKGt/O1klnSDzM7bt1sXScIBAg6jrzcMBzgPuYKoO43iG9UBIU
+         W43Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794421634; x=1795026434; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=PmZlJjAyG2FovisMQp99b7SxhJzMi9jLhMVSzkTFklw=;
+        b=QdOvKhg3wEu/wYxImvWVlsHxNt7CMPaSxsDuvGtgTCuVtg2PAzLWm5iZLeZerlhjn6
+         5xZN6sAGU2qTiLc/kNSh0N5lY6TjMQHtGUC65iRWtfalVHPTjo//MEuIcRqWgYWo+eJc
+         jZMaks1IlKQfe7nC8rBQ0dyJbAOHhy0MQtP4iGE1RoJOhVNxX2RNRM64lO8ieouaNxq5
+         pNthS8gOup68m1wtxtLCqOCb/9eGwzYOTMHzkCZiL6SjQUlMFn8kqzQyOhGuAqljs/4t
+         eZP1VOGb5ttm3+iiipdvnHYR0F4eqPWH2fgBZXS5up+VAL5RCpFe0P8cvhWTGav+L1YY
+         MikA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794421634; x=1795026434;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PmZlJjAyG2FovisMQp99b7SxhJzMi9jLhMVSzkTFklw=;
+        b=mhe9vTFU8gmeu4+h5uzAxjA6ZU28waxDsyaPfC0EJjpuR3FejMwAUUwnWGKFONgwO1
+         KEbEMqzbp58lzA5ct4QUL5U2bZ8DCvGvXy8iNLFj0eFvetvaokPjIDoAG4FQ7/moUd13
+         fql2MRl0C+fyx4KEJrNKqOre1Vtp+dqeQDjPXdi5e6E8dtXnKgj5oKww+yyBuyBPvGti
+         19pBVFq1Ga4TpEVZxjG6VZXwM99TWpEeGO5vVHPkDwS+0Fq4uYT2KvtRsHp6keDmvgFJ
+         45YMHGbwLlGjeYo+OtJ3UenuvDjIZ653R1FO0o1K1361KlfJpPn3eLITZgR6RtIqMRGQ
+         DwFw==
+X-Gm-Message-State: APuU4Z80mbxBjh7nb3F2jmHM/ZsumtnyrB9gEWE8/vNgTMJzbiaSd6tA
+	SNmKGYlzbYJMNf4LM7z+F7NdV7VQSrPDZUh2D2VxzErctEDfb3poCe6JFUOvtd7Cz5OMTWq4I+C
+	6/1mBocNZxZ5Rz5G9gDh59zhJJOzrJw8=
+X-Gm-Gg: AYBFou0w8ncjDfTIX5czUo0o80oT8yYo8Wyk2jji2bxflVf84Y4T0ClZ8z5zk8ShUqC
+	Nf85l5AdQuOyAPnw/T+24/yv1SY2+5T5G5wmX3O0Yk7D888LPx9L62mEdQ5rj4aydJtGlxJ8Vyi
+	tpvQwKFtDwmpkZqLgU98eeaYhdcgEfl/IsoG1YUuqDngMkCGwCWV1SzYIOOnxNQ4/rxJWmW42Dp
+	4oY41JlvE4yglMZga+ZOFywPsj3wDc/aJjGtE4bfs6slkdmTeK0y3+ohAPJVbfNmJFumN5fldrc
+	VPzb3SwNa6lH9m36CMdQ7StHhJPQGMfmxHrzvAK6lTBtqcG2rL9d0L0YmluGyoo+ihbAkqzIg4d
+	zeGMAd9SKJBk64B8+BQlsNc9woAC+tQfETsRc2EURF7Gfu7OtrTMH3Ap+aBV83VCsRFmaaKQ2Ut
+	mb5bW9QnZSItYEf8sYqr2P39Hx3BnriU1x/j78brkROLPR/Dpg/88k688fOysGcBaXFrE5PNvBA
+	TW28n5Po8OfM+Na3qV5xAmPgLBECi24Lm1r
+X-Received: by 2002:a05:6a20:9e96:b0:3dd:85aa:452e with SMTP id
+ adf61e73a8af0-3f2fe0a350fmr3409296637.32.1794421634025; Wed, 11 Nov 2026
+ 10:27:14 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -129,33 +105,119 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+ <pull.2412.v13.git.git.1793357550.gitgitgadget@gmail.com> <25eec8d9676d4adf82570616ca88a2b38d20afa4.1793357550.git.gitgitgadget@gmail.com>
+In-Reply-To: <25eec8d9676d4adf82570616ca88a2b38d20afa4.1793357550.git.gitgitgadget@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Wed, 11 Nov 2026 13:27:02 -0500
+X-Gm-Features: AclHuK-ZWr-Zh6-oLVACewnzYwY4k1a0u7KF-MMOKnNRTP90akct5Mmwvgsb1MM
+Message-ID: <CALnO6CB+AP=osF8mjkGGHWZz8YX322UoSjE6DCfYZkZ0rXxVcg@mail.gmail.com>
+Subject: Re: [PATCH v13 6/6] remote: resolve @{push} through remote.<name>.fetchRefmap
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>, 
+	Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Kristofer Karlsson <krka@spotify.com> writes:
+Hi Harald,
 
-> On Wed, 11 Nov 2026 at 16:38, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
->> writes:
->>
->> > From: Kristofer Karlsson <krka@spotify.com>
->> >
->> > Several tests create fixture data consisting of a single repeated
->> > character with "test-tool genzeros <count> | tr '\000' <char>".  This
->> > works well on platforms where tr(1) is implemented efficiently.
->>
->> This looks good as-is, but once we merge this down, we will find
->> that there is a new use of the pattern that pipes test-tool genzeros
->> into tr in t/t1600-index.sh recently merged as part of the Git
->> 2.50.2 update.
->>
->> Perhaps we should rebase to catch that callsite?
->>
->> Thanks.
->>
+On Fri, Oct 30, 2026 at 6:52=E2=80=AFAM Harald Nordgren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Oh that was unlucky timing, but easy to fix.  Not only is this
-> new test using tr, it's also using very large values.
-> I'll submit a v4 rebased on latest master, which should fix it.
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+>
+> A branch pushed to a remote set up with "git remote add
+> --limited-fetch" has no remote.<name>.fetch entry to map it
+> through, so @{push} cannot tell where it landed and fails with
+> "has no local tracking branch".
 
-Thanks for a prompt response.
+I don't have the rest of the series paged in right now (esp. patches 4
+& 5 which deal with --limited-fetch), so forgive me if this comes from
+ignorance.
+
+Wouldn't the same problem happen if we applied the first 3 patches,
+then setup a repository's remote with a fetchRefmap and limited (or
+none) default fetch?  If so, that almost makes this seem like a bugfix
+for an earlier patch, and perhaps it belongs together? It also would
+then be better justified in those terms, I think.
+
+Such a reorganization would maybe let the early part of the series be
+mostly about fetchRefmap (which I'm keen on) and let the end be about
+--limited-fetch, which seems nice but I don't have a strong motivation
+to review right now (personally---it's just limited time to spend!).
+
+> Give tracking_for_push_dest() the same fallback to
+> remote.<name>.fetchRefmap that get_ref_map() uses on the fetch
+> side, so a --limited-fetch remote supports @{push} resolution
+> the same way any other remote does.
+>
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>  remote.c                  |  2 ++
+>  t/t1514-rev-parse-push.sh | 19 +++++++++++++++++++
+>  2 files changed, 21 insertions(+)
+>
+> diff --git a/remote.c b/remote.c
+> index 15cd96aa8e..ecd104766c 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2018,6 +2018,8 @@ static char *tracking_for_push_dest(struct reposito=
+ry *repo,
+>
+>         remote =3D repo_remote_for_push_tracking(repo, remote);
+>         ret =3D apply_refspecs(&remote->fetch, refname);
+> +       if (!ret)
+> +               ret =3D apply_refspecs(&remote->refmap, refname);
+
+Ok, if we don't find the information in the fetch spec, we fallback to
+the refmap. That also means the former overrides the latter in case
+both are configured.
+
+Does that match what a fetch does if both are configured and overlap?
+(I'm not sure, as I can't recall what we decided the fetching behavior
+is!)
+
+>         if (!ret)
+>                 return error_buf(err,
+>                                  _("push destination '%s' on remote '%s' =
+has no local tracking branch"),
+> diff --git a/t/t1514-rev-parse-push.sh b/t/t1514-rev-parse-push.sh
+> index 5a4f16867a..bcf00107f5 100755
+> --- a/t/t1514-rev-parse-push.sh
+> +++ b/t/t1514-rev-parse-push.sh
+> @@ -80,4 +80,23 @@ test_expect_success 'resolving @{push} fails with a de=
+tached HEAD' '
+>         test_must_fail git rev-parse @{push}
+>  '
+>
+> +test_expect_success '@{push} resolves after pushing to a --limited-fetch=
+ remote' '
+> +       test_when_finished "rm -fr upstream fork downstream" &&
+> +       git init -b main upstream &&
+> +       test_commit -C upstream base &&
+> +       git init --bare fork &&
+> +       git clone --sparse upstream downstream &&
+> +       (
+> +               cd downstream &&
+> +               git remote add --limited-fetch fork ../fork &&
+> +               git config push.default current &&
+> +               git config remote.pushDefault fork &&
+> +               git checkout -b topic main &&
+> +               test_commit on-topic &&
+> +               git push &&
+> +               resolve topic@{push} refs/remotes/fork/topic &&
+> +               test_cmp_rev topic topic@{push}
+> +       )
+> +'
+> +
+
+If you take my suggestion to make this change with the early parts of
+the series, the test would probably need to be in terms of fetchRefmap
+instead of --limited-fetch, as well. That might be one reason to
+consider leaving it at the end, but=E2=80=A6 really the "problem" is the
+interaction of the earlier feature more than --limited-fetch, right?
+
+HTH,
+
+--=20
+D. Ben Knoble
