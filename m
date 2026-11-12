@@ -1,88 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794482219;
-	b=5YrnyncxBedn3UBEZibgQN2LhdU0jp/dlAwRVMjANbnBYH5VXqjp4tRJDZ3vrOekIAlu
-	 p9st38G2lOV//8lipjZGMu0JrmBtksE8Q3e4mbdn2D3WRif9Tm6xyEUovv5LPadyigYUc
-	 zCrwiJtI0DLc6uMmzJNFCETkF86sEH/4x3n2rO+GnwYfULrOprWA9MCJlr45qzPILo0U3
-	 KbOiAH7GVkvX2KwJRQ8xE+2Mkv/x6uid17vW/fVoG44Re8u8DtdnxNj1HHUcI8kXgIm84
-	 7Sv5xt6sFF67loQM1OqLsQOgddOax9unp0Zwm90UJWDXLfDilBV+fuGOKcuMBere6Dg==
+	t=1794484989;
+	b=q7R7e9OBLMjHTocAJOSuWvnI5j5YC/FxfaIBUmn4Y8EsifI2s069NF4M5PChNy7ReDdh
+	 eX4ghmNiVP0hn2iLcUgFS8FTO8j+WnOVFX5LQrNmBtjgA4paD5RV4MBaTYj58dtMdP2rW
+	 +NivkqBTlDuR28J0yqxmr+VebUhDIZCyclCHWp8IIhbaVidQsRAW5JZkB3+2a4ay3Cb56
+	 ldEhpVMo8P6zxVAoUuUyIOBh4LhuelmjIr9hP1qfuiLGEo+N/hS4ZqqsO0QnnQ5WnsHEs
+	 IV4Flz2gn+a6RNv9A/gqAOVmnNB4lFQZlcynR43Fk7/xBzb9QaNw+98uV66M+WfunpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794482219;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794484989;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:
-	 References:Content-Language:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=dDVSm+MUVKoI1j9rfsOJfxwv3WqeyTkWIzvZFCMXYUo=;
-	b=LVv9p3Sr453vrgkH5wrNaQ6dCZPuOz0IkGl/3I/XSEB4Ywqt7UXFk8i8LF3Xp2ofLNhq
-	 MJ+ST6wW+OfKnKHiL+8GgQBhZbA1F6UtLmGNQgzMcp0uGKZ8ZbuGhoH0Rj5VfdQw4+K9p
-	 ZrDMrTB16YFRiW92Y6GYFSq+Qv4B72cq63eYoJDgx/awCJc9DZyyKvObsZM7E5lOQ5BB+
-	 d8M0iNnPyTauPXkoOJboOvUR6nLTnQyEu09S6Ey/tHmSaWOA0BshLaoz/NhqVcxO4x0+S
-	 DPMBQOyzH1HHJVPy11riiZJGKFOYV8cDV3NDRGsJKyVZHsP+xLOKzg16RNXErQ2EyEw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=ZgrHe4Dm9MKwswZjPYrnbHj4WpRPYemEsbRo3yKoy5U=;
+	b=aIZaMc1JjoqaENvu+DM8g7ICfjd5ZEuiN/mPhIkxxtm5KXadpDt15OG7rq84/nDSuEXJ
+	 XzEHYnoInZ5bdV/8WRomlgzwuKJMI9/M62CgHbUwfL/PA8tn/BvKW6vowcC65RzXX5Zh1
+	 66f4QTdELAOqGQflShMP1eItmkLvXJvppMAjUoVR7cX2XHfvYFapezZ1s4WXIHvX0N7nY
+	 PLHQgv+ZXXctLCglJuoAMFfmDS+A+lFkplJPQCMDknLkbKHUXjd5gWwMHSgdvAIQuQC2B
+	 CZKg5dbufUkpK7kLjGiV14b+sANJRPaZJ9zp171neCpWFAgbVMn8aaOQUe8EP5MkZNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="I/KIy28D";
-	arc=none smtp.remote-ip=209.85.221.42
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D1DQW1Qt;
+	arc=none smtp.remote-ip=209.85.219.48
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7374D606A89F
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 11:16:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7374D606A89F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6BC606A88E
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 12:03:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F6BC606A88E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=I/KIy28D
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-498f5fa4f70so2486584f8f.0
-        for <git@vger.kernel.org>; Thu, 12 Nov 2026 03:16:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D1DQW1Qt
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-91ea16d8072so31896896d6.2
+        for <git@vger.kernel.org>; Thu, 12 Nov 2026 04:03:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794482218; x=1795087018; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=dDVSm+MUVKoI1j9rfsOJfxwv3WqeyTkWIzvZFCMXYUo=;
-        b=I/KIy28DKwrk5nGm+Rp72kQiNUuOjwLPVLT7vE9hiU4FPwaCiOz67cgcJh60gUY79h
-         u/Cbfwi2yB/0W4NOkT5H3JaINdmqfCGKfr/7Bmbhzpz0PwYfQ27nqRYw0OEQZf2HWGfe
-         vNH52GebaKVa1xInLF4h2hWUo4A+695XbmtnFuLuF+3sLAY07zvLGRWaDjPVPHdAuP82
-         0maYJ+CH9NeUK4u62P8dioQWrYfp9sQrkSeVNNMDbilfG4BiVY+KRsHGdhWCEqBup/Gh
-         GTlu2+yCgEEAU88VjjwFSHaoRqfOW5kzJV6xyzcl0LPX0HtIQx/Tyg4lrU4KCKqmYqlo
-         pAvA==
+        d=gmail.com; s=20260707; t=1794484988; x=1795089788; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ZgrHe4Dm9MKwswZjPYrnbHj4WpRPYemEsbRo3yKoy5U=;
+        b=D1DQW1QteI7h6gKMOUlMeGz+ZJ9fikQzT0NYksEvNbkwCMbTqzzDjyg8LTRIdN3C2T
+         2BZ5cfnCv9K+DAAE0RmymKVsrK+lQQK5+GzRrLe8voo4Dbj45wRaXSxDDQs+/suVD7Dg
+         /xSgoR3M8EOCfUBvTR85c+91LWnbikLbEdv6S4MdqGoB7IyDkn39lD6i6aIMgdqo83gp
+         3QZVh7ydD8W7j1wrdNuXX7baKj7KvPESqeO5Bu71kFrUuQNbuyb4+9Mux5xF3YfGY+SS
+         tPd5RFuVgB2RhYyQe9jaamwEJEgIL5t9I3lMnOCyJ4uR40PpTSTpj0r7XR+agPQKcP9/
+         DLSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794482218; x=1795087018;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=dDVSm+MUVKoI1j9rfsOJfxwv3WqeyTkWIzvZFCMXYUo=;
-        b=qjb0iiMCsnfuPUXi9OlfA9kXjXEQM11Zi4SNZHyQMjugmurJBLufn/WcGh/6enbOx6
-         7HSSICFSJC9qIs4gsbE8dhvFhoE66h3k7kSrtRnpj4yikzaHyW86MBUm7jDcoNucN/yk
-         AygPFmHcfHbf/cJY8n7fpxNfne/yPnJP0k61nNBwn+VomDb15ZYaSbhlJFQ27cCELI1n
-         p/TcNPTeZa67OFQvg/uNUnSeHf3UEoARnDXa1/kjTLW1BgNbH3STsuSXoEB1gGDgT8he
-         PMQdauO0PmRmevSWDIfY49/L82enmhRWy7lJvpUKvgV9zWsBOmnBR9ZzJgcsQC+Liu10
-         9/AA==
-X-Forwarded-Encrypted: i=1; AL+hErFyfXisVblkU6lpt9dTiu9QW0ZAlMpI2t+qh76D5uyS7+zYGzoMrafnzXpxOxMyRcexO/M=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+ix/u0m2gd/bCeh/HN1AjaYR10L8vZQr0crEAck+FBUzud8tFX
-	O43glZTccqmTZ/Gt/X76IonHsOO4BXGHalQ9YmF/aJUsSxth0Df58k9+
-X-Gm-Gg: AYBFou3ilSwhXSo/a0TJkJzeYslghuP8R3p7S5s/6kXr2vdlakZQAokl+kvkHeT1JnH
-	nQBTuDVogb2dtOvBLUqIBrR5oVIlbEJjDtJ3eTbmN8SP4mipTyvdwp14rwK5PvbVR/ksXX+DncS
-	rDWU5HbgToMn05xIQNuiZpxFW0+s6/H/SdDWbRezIn/kTn03zwGf4cmZQhzqLyNltMe1tPrj8g8
-	Q7SCmk6jKfZY4kAuzDpndPrA7vY2IMIakcHL6dpTwNpFbnevz4PYhw1RlYaxYRFuO68BwO2+nj5
-	GF6Rq5BhOonNKUmha/25tiys+MEKJJd/8ch9u5P5YY/IsdBGwf9SXc6l5WFNhs/vY0FB53nZDv4
-	1iuxCk9mj73fL5zAcws6Wzp4AZDmOnWw3JmN5Xd9prwGSfdEcqGkxOnoKoECTRfQ1sKGitLA9j9
-	iF1gydmUKuGBmIgHxx8zOD67utlSKOezxo+ySMeZyUCmtAq79PaQKHb+8gWFB9d0LtYf1qnuVGP
-	Q/jhKjyWkD4TYkUhT0xb3BXPrcKInuZu2edyIUdS6VaUH5fE+kXh2SDgSn23MhXDira2ODgQ5uN
-	l8QRSIuVcWmB+wq7+iCoF/sa8XxSUhnxq3T3peh/9yOY9oUfLwf7xooLwEXaUVm2h5b7LeAmm+A
-	Uw9mfhcNk37ENMIrBD6x3PgXO4pAu
-X-Received: by 2002:a05:6000:230a:b0:48c:6cdd:ba89 with SMTP id ffacd0b85a97d-499c7369076mr9797042f8f.36.1794482217788;
-        Thu, 12 Nov 2026 03:16:57 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-498369a4238sm16986468f8f.54.2026.11.12.03.16.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Nov 2026 03:16:57 -0800 (PST)
-Message-ID: <5566b994-1070-41d3-807b-5fac9ddaa3d8@gmail.com>
-Date: Thu, 12 Nov 2026 11:16:54 +0000
+        d=1e100.net; s=20260707; t=1794484988; x=1795089788;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ZgrHe4Dm9MKwswZjPYrnbHj4WpRPYemEsbRo3yKoy5U=;
+        b=PGoaqNb+GGbvyE0QcfPmrJWlWc2FN0qZmSetnMcS2G+9OXdrLbRlREjpBpX4215vtR
+         TVtw0yEZIyAa8DG9+9gxvXQJ5FYM40VBybcSaNyXs5ih01Mv3z2SIueZDptyKLKGUXN1
+         ECv4czztPzb5Q+CUqUXDFGx0DiY+KIivpUjr2qW7hRDKO+ynrOrd9H0h9qDym5X9lzXu
+         OcSwWUCkK9KNn/hOP4S8dQ7b168VlIsIOMAIh8/HmjF1zClzxj1jB4RlFdD6KOZ27NRN
+         AjpuzRHwq/MpdILft9zQUB3lyMIjB6tOOJK1ABUPuA2LVdcmdOqivw84u6QLCRZTGXfn
+         rEmg==
+X-Gm-Message-State: APuU4Z/xe+vhO8P+ck+9SyelR+Hi0bCOxVdz20Z2MSiGivsdWJ7TZQx+
+	UK6fbrNQHL5Kvs6QsEX7oOKJ1vxdDg1b/OoSP0yUmXqZWNPYtz7mnbDEyGvnpQC8
+X-Gm-Gg: AYBFou0cUJL1Hk25ubDeB1rH3tK9BBHsh8uv4n2gsy8uKg4ejt2d7fdpHEnAzMovMVn
+	bwCmNb/kp8A9QdP0/ER8Ce8zvVNrif9G/2RG65CSgkAp2qhqel0RX2rwUYJuTl+x6yvKUWnZfK3
+	xbtLzsVbbGdnj2fMzALK3YDBsJoB22BRLNGI/ImJQtS3R8Agjsk+XYQfc6gtrYDQ8ld20cLrXXi
+	MQxiTrOtmVALqiO7y2ytmx0cKCtEFob+AR04oRDX9zqAmoMd06Ldo/kQbM+h8cQXQEV+iQRq+nN
+	zfZ8uw7NCEDs9MhicW28b/aPCwZT42JMTJ81qfYs8Fm6UWnSPSMuWeU0e/rJ2A7FyCe4qjFh3AD
+	jCd6OwpdrAHXFnIzPD62o+DTtvlxhefZSLC/2uBPlzyYgXcBW6cRWC2SXdx9la33RdDV8gq6+x6
+	GzJoUofiZrI+zHoIOMfNNhBpKrjsXvo7Li2FnPbrcQgSqgAnUmqlrG5gOM8ZYCdM/FyxRb9VC4b
+	8+VDqKJXq6AW06YT6cVfFPVTdvtu8Lt84edosMeEtX8qY3t4HxApesQk6dwDmCaVZiZxK49r+ZC
+	z53SDOp2s7hRqXL8EhiR5rUeRLZw9SXB9jlY3RZXAN2Wuyzgr8jmUp8g
+X-Received: by 2002:a05:6214:4a05:b0:91c:8fa6:1789 with SMTP id 6a1803df08f44-91f041147f2mr92154086d6.28.1794484987713;
+        Thu, 12 Nov 2026 04:03:07 -0800 (PST)
+Received: from [127.0.0.1] ([172.206.245.227])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91efe5da1b4sm52460016d6.13.2026.11.12.04.03.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Nov 2026 04:03:06 -0800 (PST)
+Message-Id: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
+From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 12 Nov 2026 12:03:02 +0000
+Subject: [PATCH 0/3] submodule: support worktree-specific configuration
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,97 +93,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v13 0/6] fetch: avoid fetching every branch of a new
- remote in a shallow repo
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
- Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <pull.2412.v13.git.git.1793357550.gitgitgadget@gmail.com>
- <CAHwyqnVJ3eUQ9tkQE3rhQ8jFZjaD0tFUv41unE-NQ1WRiyfjBA@mail.gmail.com>
- <b64387b3-294e-49da-b40a-0e757956bafd@gmail.com> <xmqqcxsbnub5.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqcxsbnub5.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-On 11/11/2026 17:37, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->> On 11/11/2026 08:31, Harald Nordgren wrote:
->>> Hi, could I get some (hopefully final) reviews here?
->>
->> The diffstat for this series is
->>
->> 12 files changed, 593 insertions(+), 33 deletions(-)
->>
->> which will take a considerable amount of time to review properly. Yet
->> the cover letter which should explain the problem being solved, how it
->> is solved (i.e. the design and any trade-offs that entails, alternatives
->> that were discarded etc.) and anything notable in the implementation is just
->>
->> Avoid fetching every branch of a new remote in a shallow repo.
->>
->> I've no idea from that how these patches relate to the discussion on
->> separating "which refs to fetch" from "where to store those refs" or
->> anything else. If you want people to volunteer their time to review your
->> patches you need to make a effort to explain what those patches do.
-> 
-> I would say that it is a fair comment.
-> 
-> I understand what the first three wants to do.
-> 
->   1. We have had for a long time "git fetch --refmap=from:to remote refs..."
->      given on the command line to decide how refs fetched are stored
->      separately from what refs are fetched.  This allows a configuration
->      to allow you to pretend that you give it all the time.
-> 
->   2. Preliminary refactoring of a helper that will gain second
->      callsite in the next step.
-> 
->   3. This allows "git fetch --refmap=from:to remote" that does not
->      specify what to fetch (contrast it with 1. above) to default to
->      fetch refs that our local branches build on.  The net effect
->      with configured remote.<remote>.fetchRefmap is that "git fetch
->      remote" would only fetch and store selected refs from them, only
->      the ones that we "care about" (aka "build on").
+When extensions.worktreeConfig is enabled, this series stores submodule
+settings that can differ between worktrees in the worktree config.
 
-Thanks for the summary. I'm still not keen on patch 3 as I said in [1] I 
-think it is a mistake to use the same variable for both "what to fetch" 
-and "where to store it". After patch 1 we have the 
-remote.<name>.fetchRefmap for "where to store it" and can use use 
-remote.<name>.fetch for "what to fetch" (though I am concerned about the 
-doubling up that happens when "fetchRefmap" is set and "fetch" is a 
-refspec). We don't need a special case for when there are no refspecs on 
-the command line - we can use the default values of those config 
-settings instead and the user can configure the behavior that they want.
+The changes include:
 
-> I do not have strong opinion on the other 3 patches.  4. and 5. may
-> help ergonomics by allowing to set up refmap from the command line
-> option, but from my point of view it looks more like icing on the
-> cake.
+ * [1/3] Keep submodule.<name>.gitdir relative for linked worktrees.
+ * [2/3] Store submodule settings in the worktree config when
+   extensions.worktreeConfig is enabled.
+ * [3/3] Make git submodule init copy an existing gitdir setting to the
+   current worktree config only when it belongs to that worktree.
 
-I think having a way to set up fetching a limited set of branches is 
-worthwhile, but it does not need to be part of the same series.
+Yoichi NAKAYAMA (3):
+  submodule: make submodule.<name>.gitdir relative for worktrees
+  submodule: store settings in worktree config when enabled
+  submodule init: copy submodule.<name>.gitdir to config.worktree
 
-> When we are working with only a subset of their branches, the first
-> thing that comes to my mind is a "matching push" that does not need
-> any fancy @{push} support.  Because of that, I am not interested in
-> 6. very much.
+ Documentation/config/submodule.adoc        |   3 +-
+ builtin/submodule--helper.c                | 197 +++++++++++++++------
+ builtin/worktree.c                         |  23 +++
+ t/t2405-worktree-submodule.sh              | 129 ++++++++++++++
+ t/t7425-submodule-gitdir-path-extension.sh | 131 ++++++++++++++
+ 5 files changed, 431 insertions(+), 52 deletions(-)
 
-I've not looked at what that patch does
 
-> In any case, this topic one is keeping a topic by another author
-> waiting to settle, so we have stronger incentive to see it move past
-> the finish line.
-
-What topic is that? - I can't see anything marked as depending on this 
-in the latest "what's cooking" email. Would merging the first part of 
-this series unblock the other one?
-
-Thanks
-
-Phillip
+base-commit: fbd2d1e765da4d2931cadc4c62d3ca5d5b590e7e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2306%2Fyoichi%2Fsubmodule-with-worktree-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2306/yoichi/submodule-with-worktree-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2306
+-- 
+gitgitgadget
