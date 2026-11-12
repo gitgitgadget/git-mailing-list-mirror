@@ -1,127 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794506033;
-	b=LXYRZDpxDDJsOvJJKHtElQ2bKRct/YnAO4L/D3Nq5fytBUV/7u972WCUFxqzqtA0eVqe
-	 aXzZXRnSl+5mnYsEWi3m0W5pxvPhcdxpjaqA6Ob363KdVMDGtPypp8790NE/b5ZGNZfQT
-	 +pNTnXsJj2uisP4oRCDhcEQ+v4cKUc3jnOL/aDUljcH49Mfhza4PxDvR9m0/JyqgwRASe
-	 5x+fDThHfo2KNAIm5TDHuuhbUeFsM+GFV03KzUleAzpc8kVnCdXuw4oP6uwQmzInaihDT
-	 /aVUMfZ84w8veTApw8l8QR+La8ce2tMpeNU6TeCtDv8tCUlJC8CR8jvl/YUp3ckgfgA==
+	t=1794506421;
+	b=Zf1t57kgUhgXquv/3NtU1OXL0kEuCvYn+zSAjxp499vhWzd6ZhRqvD/MrUqbqYv775/y
+	 DxlCQWU2+1lkR/+/P6L2142LgTYrjaD81G5tSEoFHouATAcAVY8z2c5ZGTV3xqogqM7+0
+	 0uXkKnt1P4GsJw+s3h+ntHU5MJLx1ZndXigQKXJrTSplMFod3HtvmuyHkAF9PUxIyvyDu
+	 FF9i7xvCihxTygTSg+zhVisWVYjO19vtxUCbp89r8ERo+lOdS9iBVdlh5Cm55bATvdBu4
+	 JDt8oLhj8ADRTr8ypQyUUfBMH7jyyunJcJqCBiXM06MDmlBTxpNRAupcGS2V4u5K7Gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794506033;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=VY4PS3muNcJG8OgAlDu35HXbFCUweBdug/U+NfJE8Ew=;
-	b=IR7Lb41Xfc+MIydJ6Y+XbxGD6mKRMBRznGSeb1nc0Zv1pQyaCls7iTpUVJRxNE+K3PSI
-	 J/HTrcY6uMXPiyLoQToCt7phdWcma34exUkqkFZ7ZzsSGDOG3aU1/jrfTm5CIqd2lCPNx
-	 In4mDoY1uyTfU7pVSg6Ozm/hnA70RI8VAaY+svtktHuce9kIC7FttzLN3M0eXVAsAaPRP
-	 cN0pnAEqCosrSz/PgOVGCVnFz9ELDu9vl5VWPUFjr1qu6+n0G2tp+GnsROL+PU4h0ZC99
-	 +PgjE68LIYvM6UEr1/0MsLizTD05Kpc8u8LsB3EJW6Sc5GTiQtkp9itUFzmuSAzQQHg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794506421;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=T4aaW24yiqSmYRgiVbzTJnnFHu9ChrRc5a9sVR7bur0=;
+	b=n3AgRPdeU0kMG+6sWJUa8AFFPd5F155bTAN8KhFNtoyiAGMUxqTC5Nl6CIPQoN9QXYp+
+	 9e94gvrZ3w85QuDXZXSjLanpgAM0xXqnCmRDHsuDX6ygH9QRIHx8MZGqnFPHAIjWFks53
+	 9wD1KWmx7yGvOmrCJSYugJeEuUIYnghlZXC3wp8y42uY0ia6hTJquKtE8n6Pk3RbKnqeU
+	 6dlNhb03XBTiXZsjZvyg5Js62VK1yrOSeaiia3HVuz+0R9GiKVOfHMJ4zVf1ppFVn3QRT
+	 zsBtBZr3BfE2Kz/NJ9XEtjJ3HEx1aIUxFRZPnFKOkSMNGmgn5hVtSsOz1dG56Nf2Vmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=NSnrX2TS;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="gEXy/RYn";
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JMtKbaO1;
+	arc=none smtp.remote-ip=209.85.128.182
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA3F606A327
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 17:53:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7DA3F606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F955606A321
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 18:00:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F955606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=NSnrX2TS;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=gEXy/RYn
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id AB5EFEC0224
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 12:53:51 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 12 Nov 2026 12:53:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794506031; x=1794592431; bh=VY4PS3muNc
-	JG8OgAlDu35HXbFCUweBdug/U+NfJE8Ew=; b=NSnrX2TSZAKUSwrRH3lQYvN6Nk
-	0rY980HfsWi6n2g1rM7yRm7oaolYhV7Obwh1XL5VAt6hDgic6reQs9G1Pb53pUX9
-	390RmLkTEkiEBoQVUpW/oPuDV1ItICrehtMTt4zNyfNBJZpgzdNish9uf5tqNAby
-	rMCiPx69UqgzpLP7Vt4Bn6K9jfIcbj0jByAmHK8tv0Oo27sTgEBTWZxPnQw/76yw
-	1tpKAf2QHJqMn7r46l8Vrmhd9vWX6LAFzKd0Ry8VNjaY0PEVaaF+rrlhNGXP61j7
-	WpCfRu4EtNYST+NgHcwWiN6cgk0fs+JvvI+UoQfzpJIBxgmyyZhFNB9fg8hQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794506031; x=1794592431; bh=VY4PS3muNcJG8OgAlDu35HXbFCUweBdug/U
-	+NfJE8Ew=; b=gEXy/RYnShOcYNCojz8s5lfQ4Zkp2IUevWr6Zilc+5LQRFs2FEy
-	kaOlJ0A+MJP+WZC+3bXS5encjcAAxNmGroP3lihyS+PSCWBsGSJFklIv2KqSxvOv
-	ZrYXEaC9+9NGOMd7J1mAaHaRg6FYWw3a95iOGeRDOB3ZOmygmP4JNegTYOTBlMsN
-	prIQDC+Bj0gf2ABzILMCO413Dok8Vog1WEt3ARJTMuiNhRd31KZmYlgCmY40658B
-	HgtHkqmZpGguRfC3dUV9dGwsTLLsu1CoxZVHdZ+M/3NOXjIkNQD41XaFwCeRlXsK
-	apqbsupjZOe9KczPP1K2A/BI2iwXcwsV7yg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794506031; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:CrjqykZ4l5z54XQ5Rc5JErDf0ejcKHtYWcqGh7m76oji9sN
-	2jhI0pUiF7bxt2xwHSx1vUsQTHri+WUfVjhfEPF+PNp9bCbMg08/acQBvi/Fcqrm
-	IPvxaSYQCwdTqdV3stf/4WxoRQ1NKCVvVGu79DmTwZWMYWuZ307bRGJriILl7QhI
-	d6lRHU2xfHzi0Xt+lxq/DnF30InrV7LcehQe6W4TGbaC03IADAgJxQ42sYXklW/p
-	Yry4F8bMdEIsaZE0XwFoK/xHz3KduoIZRLXzjprVtAMoq9VlssukVf1XPHxb+qKm
-	waTbS2XeK+l/Hvp8lJop27mwxhrFehc+ozC/ABw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:xE85Km5r13cxylb+KXrfFKLs/+7Jl2gOwizoQppWCzQ=:CfEuADFsBCBEf2/jLHeIoPBQsfdOely+YM7w1aAQX88=;
-X-ME-Sender: <xms:Lf31avDCbZepxHbThwhW7_2T36F30lJRgeuHuoqXWtHUVmpXZqkL0w>
-    <xme:Lf31akAoigsxWOFuIe2G5KtBYk3v55mMMMAyC70UT5ThoVzn31C2h6lI-GPKCgcBU
-    pByEmL69lQAS7ga7EfpVR5T_LAZ7_1J5l7_VfCZ1Le62_AzSmAzn80>
-X-ME-Received: <xmr:Lf31amHiGkOYxqM3lb-t4aFeoPBy6PgmWuAa8LxAPtq_MD4CjYi67g5hsuk4_bHeu_5tAysQk0hwxAvw5zPgeI7cJErSLTART6gY>
-X-ME-Proxy-Cause: dmFkZTGtQvZHJmKbYz7Rvx/R9Ou7+SbEQQuV5REFlTnukYTRvQfph2QG/fJSjVTLy2EbOB
-    mKPAX0eNJ+y6tH1GTXQtBgmm1iNKn7dFloJ5cI6a1ivQjg7oVKnWQ2DvO0OUcGKqcyjs7L
-    UnuQJYS/Q7gNiImOG3EHyk9lJP3brY3Swvgn8gj83qYnviL47bgTmJbPCeyxBdeVCm+wY3
-    TyZ6MrCUknOHFx7J+0gNyDFVpV9xwSWp1DMDncNGhFDyviDaTNDlJKhFw7NwyGxyYpu4w7
-    OxKtQO0iWT9GCH35PBGyN801xvqTJRI8/9ty+uGUYyN+xBt/Was3BtHhLJHKB/Kj2T2QqD
-    29fKkcVabM5zDC/ujilOvnfUfJK1kFpsv/eufLt//Z7DuJ0nJ6Fsoy9bXi5UTYeWEZhgbd
-    +1PfPsH8GqJyDFIMHicwd7R5AEPG1ODbRSv6QV3vZ7XpPTzRsv1puM7dKJDMwh6qA0+Bd7
-    wXv2t4Je5ID23zHk17vXZmMDXIOBVx1w3tFVwAlo8LbA+mnA1f5ZzJmv2TIsoc9TbNSqKJ
-    mGh/QDo1g5yHa6uikBiqWK/58Y9A/nMy0T1VBy6WNvDyauKhiC6YsSitIIHrEzT8jypZzU
-    XfUwtjrdlg8bIZF80QRCWaS9uvtK6T2NHNVtO9LOUiDzwlg1LiaF0zGvHyGQ
-X-ME-Proxy: <xmx:Lf31ar4cvWuLE13ZFvMcKajCW2ZaIFbmDnF41eFshpDXFNPGocq0Qg>
-    <xmx:Lf31atRwYEtNtUya9nLrKTOYWDN3yZUsq7xDGEbZ55oH9o87bTyClA>
-    <xmx:Lf31am4TmtsTskI5hirIp0xHxfTAk0WvCkJwIZJCjuSXODLxUVyubQ>
-    <xmx:Lf31aqQurML85gQwyxrCL3Y6RzgUm9CunD8bt68goSyFG3Dli-4z0A>
-    <xmx:L_31avmaWr9sh8Q0Ht2Zcu1asgdIh9vcR5SBTgvFbkRFR6sSfw8SxyV3>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Nov 2026 12:53:48 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>,  Jeff
- King <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>,  Patrick Steinhardt
- <ps@pks.im>,  Colin Hinton <colinlewishinton@gmail.com>,  Matt Hunter
- <m@lfurio.us>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Usman
- Akinyemi <usmanakinyemi202@gmail.com>,  Miklos Vajna
- <vmiklos@collabora.com>,  Thomas Bachem <mail@thomasbachem.com>
-Subject: Re: [PATCH v3 00/15] Fix segfaults on settings given without a value
-In-Reply-To: <e8f6cbb1-8324-44e8-b703-d7a29ae7fa09@gmail.com> (Derrick
-	Stolee's message of "Thu, 12 Nov 2026 09:25:47 -0500")
-References: <pull.2297.git.1794040967.gitgitgadget@gmail.com>
-	<pull.2297.v3.git.1794437355.gitgitgadget@gmail.com>
-	<e8f6cbb1-8324-44e8-b703-d7a29ae7fa09@gmail.com>
-Date: Thu, 12 Nov 2026 09:53:47 -0800
-Message-ID: <xmqqqzgqj5qs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JMtKbaO1
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-8b315dd057bso1382817b3.1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2026 10:00:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794506420; x=1795111220; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=T4aaW24yiqSmYRgiVbzTJnnFHu9ChrRc5a9sVR7bur0=;
+        b=JMtKbaO1JT/hGIJk1//eMojRcEHKUkneTRq9W73bZemcUG7rXl/46VvkFUxNW1l/p5
+         lHd34JQdFitNOhtLqxtuR0QvbEVX9tp31bIsITa1dEg6o26I09MmDsPBeNxTl7hXm9s4
+         fOu1RR4/HY+macM5SnA9wm/X72sWYkaGGx0tzpaTcolGeR3RWUsWYL5f4XfSGKNWsch7
+         ktIHbH2pcitW5yLVnwLLeFUhZCdoqNA+DQ4Tx+BS9HRqGwMhGT/g5oDjqTjt5mrwE6rw
+         09lFqO6epLnEljZFBzetDcVgyFkmNjV8gDWLRNuk4rfpIEujSmcdviowyy+LTVKZHeCk
+         tY9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794506420; x=1795111220;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=T4aaW24yiqSmYRgiVbzTJnnFHu9ChrRc5a9sVR7bur0=;
+        b=NL6MLQTZ/MsxO5ZHR9mQx2DX4sTAiA2mhViSmmeU8wDYzoNmUknP1s0qSnvE41yN/h
+         7EumTiwSKOo23sqEh2MlarfO+AXNMYl9UdYwT8oveYhBE/RG6lD7k8c6qWQE7hVARlt+
+         qCHw2rODLIr7EBVu1Fdq8CrQGkOzdlPFAQd+ExNqXkASU65T85IA7I+JBNvRAd+0dVGz
+         U0CR2HigbXwDHwcDHNtgwU6B1Q5r3qeHj0guFIDIVw/gwSHoZc0FQtNMYFlgCxY6jVbh
+         rDzoLXMnFm43BoZIgUp1YpbjTJH3lHHVlH31VYaf0HV8BSmS6d92EstPiyFz50nYKJOU
+         emhg==
+X-Forwarded-Encrypted: i=1; AL+hErF08uTaOPGxERC+riwc0tcqiOUvJ6H0ykEvnNannHVOcJqAx3RS2MZD9wJHZuye7oUgDZM=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9L55lPP0xc/g8DqsC7VR7S79Ej2riOgsR4hrTkKZhw9Gx2YKEb
+	+41YPpP0oGMHR8+so/3GeonvpSJTGp7xuDokN1wcgG4F50qDTHlbjOql/2sjzsHB
+X-Gm-Gg: AYBFou3wvseE0lubpOLKQZdebhKCMWxT2kdEnJk1hqLiH5W/pkmkD2yBe3cdVtc5zAP
+	hODEegp2Wvbs1tJW+zOZemFdb4i7x9HKS40J6VFKtQcY2fYYMR4xu6OMNDDCU7YZnrwDhgccsUl
+	TAsrZ8UDOxlbBVX9nFJvHCeG0l4HhYe4QOE7xZItwtNUN6wgFrwciXKbjB5hsLjfTtXiLZQYwoD
+	qNM47ORh6QGGvGLShqA2KKJVy78PbGjToChgcxPuI6EmN0BUS98/XAQLI/slhGCGKxsoYeOQjcN
+	OFtZcawJDDoMYsDgK/+EhVd6Czpn0M1+8GYhJ7o2OZci9M7FbxBMFRoOygCv0CmKAcA0TMGxVDO
+	7SLEm8H9/oZzWc+0luLOU/kVAu/Fme1j0i8oLx9Btnj224eeZWJiXCzmnRqi3xkFnBlKJIqkMAi
+	Jn5NohuJDUiT+aNnvCwr0SVjLF6OLtiN2xhYnQX3AvWFHkPwBdIyTRHtZS9CPDij/8yo6u1SJfG
+	DzIOhbyP550hzATI6dsAxdlrIftxMWweaPc0KjUPZ15kNAZ057fg2edCWn7SB8tbEa/qq6QPoZ0
+	NIHIQyi8iDxNX8Cg+mEVzaEwn25n395+RLy0D+YHnDYMbA22SKwf0HC7Iu41D0Encu5VKgysrYl
+	WXkgGfJCbMFF6yODwdxuE1mS4MznzYyIQnJ9klKA+yBbv3nAr4WLpU0fd5igC78/RPDUiX2LIwr
+	Woo6QMRwp28lDBqPzIyGSrve83s3EY/lsErjxatclKIssTIVjI/N+3FFs=
+X-Received: by 2002:a05:690c:e288:20b0:8b3:3956:6f71 with SMTP id 00721157ae682-8b4aa29780fmr2126687b3.20.1794506420086;
+        Thu, 12 Nov 2026 10:00:20 -0800 (PST)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b4aa958d0asm1556257b3.22.2026.11.12.10.00.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Nov 2026 10:00:18 -0800 (PST)
+Message-ID: <60c1d61e-777d-4c5a-b5a1-10c6530aa0d5@gmail.com>
+Date: Thu, 12 Nov 2026 13:00:18 -0500
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -131,29 +94,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] commit: remove padding from struct commit
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristofer Karlsson <krka@spotify.com>
+References: <pull.2309.git.1794500044740.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.2309.git.1794500044740.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Derrick Stolee <stolee@gmail.com> writes:
+On 11/12/2026 11:14 AM, Kristofer Karlsson via GitGitGadget wrote:
+> From: Kristofer Karlsson <krka@spotify.com>
+> 
+> On 64-bit platforms, "struct commit" is 80 bytes, 8 of which are
+> padding:
+>  - 4 bytes between .object and .date
+>  - 4 bytes of tail padding after .index
 
-> On 11/11/2026 5:49 PM, Thomas Bachem via GitGitGadget wrote:
->> A setting given without a value, as in "git -c foo.bar" or a bare "bar"
->> under "[foo]", is passed as NULL to the code that reads it. In these places
->> git does not check for that and segfaults:
->
-> ...
->> Changes since v2:
->> 
->>  * Where an invalid value is ignored, a missing one now is too, with a
->>    warning: remote.*.tagOpt (patch 6) and color.blame.repeatedLines (patch
->>    7). v2 rejected them (Phillip).
->> 
->>  * The test in patch 1 rebases onto HEAD~3 and checks the result with
->>    test_commit_message (Phillip).
->
-> I reviewed the range-diff and found it reasonable.
->
-> But I was also happy with v2, so I look forward to
-> Phillip chiming in on v3.
+Good find.
 
-Thanks for writing and reviewing.  Let me mark the topic as ready
-for 'next' then.
+> Reduce memory usage by moving .index into the hole after .object.
+> On 64-bit platforms this shrinks the struct to 72 bytes and
+> eliminates the padding, resulting in 10% less memory for every commit
+> allocated, with no change in behaviour.
+> 
+> On platforms where 8-byte members only need 4-byte alignment (e.g.
+> i386) both layouts are already free of padding, so the size stays the
+> same there.
+> 
+> Measuring peak RSS of "git rev-list --all" over an internal monorepo
+> with ~4.5 million commits (three runs each):
+> 
+>              peak RSS     time
+>   before     ~849 MiB   12.8-13.7s
+>   after      ~817 MiB   12.8-13.0s
+> 
+> The ~32 MiB saved is close to the expected 8 bytes * 4.5M commits
+> (~34 MiB); running time is unchanged within noise.
+
+Thanks for measuring the memory load improvement. And of course this
+won't have any impact on 32-bit machines as the struct will use
+4-byte alignment by default.
+
+>  struct commit {
+>  	struct object object;
+> +	unsigned int index;
+>  	timestamp_t date;
+>  	struct commit_list *parents;
+>  
+> @@ -35,7 +36,6 @@ struct commit {
+>  	 * or get_commit_tree_oid().
+>  	 */
+>  	struct tree *maybe_tree;
+> -	unsigned int index;
+>  };
+This certainly looks like it should be obviously correct. I
+believe that the only order-critical part is the object
+struct needing to be first so we can "cast" a commit to an
+object.
+
+Thanks,
+-Stolee
+
