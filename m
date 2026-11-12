@@ -1,60 +1,78 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794474325;
-	b=SruXna6NueAXozfXtcJiB9n8wdDxuhweZMOJs0v45tBw/UHbyBSEai0RXtqtIeYxT7bx
-	 Z4dQuGO2K7rTZzk8g9f1wtXoup4jIdhpTNvuQ9XmIq821RNcPCYFcUJOiaHmIA4+AItod
-	 f5N5iijpbVGn4ZJWBQkgtYr7lKqQ24aYoe6T+2rSK5uWgw2ZSEXA+7XgOqBVMci2z4KhE
-	 d1G7pnt4IAZAfRJPGhPq2doybGC/TPALnWsO+oc5NF7HmCBewptSrh6cuB6wY+05iRRgZ
-	 OM+orQxbfurgmMQ6k3fOjBk/w+CxR7U4vnVyI4+hM4Bk3FDHZUafdDZeq/0D5bY/5fw==
+	t=1794476932;
+	b=YiaDK/Rz2DDKcQnFcGSdYdczlaSWF0LVKy9CmkqwrI90aGfWdqhoVpWu7FsiUiAlWZpi
+	 wrp/q1EIw2NynAe0gPxelUbWigqxH1zQ0CYhw/23o0iQfLRLmXiRT5lK9XWOejgdkP6pl
+	 D/39Q/6OhxC+Y2z/ZqZN1dcDLQa58lSaT/ZWLd984NKBpp/gO44xeXlRyBTmIbBM0mJyH
+	 XEPMSpWXkdLNXyNa+wb8mZr+4XgobBNdfSwikEx4BWB0aAx0T8Y46wpONXwGNg1BE8pBm
+	 ebnvupdm8PmfGiFnQa4xhS9UkdIvPnF4W1Xca2YsZummXbW3RUZ4o6dZd3UZcRlMkpA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794474325;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
-	 X-Zoho-Virus-Status:X-Zoho-AV-Stamp:X-ZohoMailClient;
-	bh=xH/HLPxfM2i4LMomSJS6nOc89mP/sy8PcRbiJZz4YII=;
-	b=DTyMMerI5rcXW9BWMLfWLCfPKxlYcxXQH49Xb8zIPns9M110Plq4aX33hzqSsdRbFWkx
-	 F+lKcH1uG/+OB7qiJlxyRBQuI3dWCluS+1nHApLpwLVxTkF4Y+o3sef4EwjsfFMLjxHRK
-	 opPB8PJaVBageviOoN6qJIKCr+cBFmBWDZJDbpmHnsvocrcNzCJsWw94rb09QPXVExgaD
-	 2nSRnPQ5myTLST1z0nXb4k3aawps0Dbyy2uPWg7cxwMja5JmNrztJhTOCBjBP7VeZJM5g
-	 CY4cRNh5DJQzu8yFoCIPd7ST/7CkpmkVcmqbkKi2D1e+kSa+/pH/uYtSjOHHWJBBKdA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794476932;
+	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
+	 Content-Type:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=22ikrKWD57g0oYjjW3Wofz/pXffK4bXljYi/Vx7olMI=;
+	b=LSgFpWAhXThp64UG+o0HTeH8RhPuKgmF4pmojTQL3yiwfTb/3uwphwqcvC/DKfP4Psn6
+	 B2tcSN0wQ4H27Iz3i7lGiyPO1H1fQHs1JBUhkxI5Oq0kf6H5X9TVhGPoh+u44KVUl76CV
+	 Fy5yVN8xsnzJlDy4j3TjKAWHR4Tw0egA4ZseILbeoHYTdJtF8RHO+YjBqcmwecq7oPM7d
+	 ZokG4kW/21HifbHgS4uBob8QdcFaXzwvF4bzaQ6YXipgKx4ugNbUaL656p9MuKHbHUYVW
+	 qHZWj/PyGZGMIn8f9L71h+ht9ch+uN8ml5nqjnqQZyoFqDM8cUY43Bgxl+umyEfMtqg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=collabora.com;
-	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=aY5NniLF;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
-Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=n6SJ3wMj;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B01D606A89A
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 09:05:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B01D606A89A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078B8606A321
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 09:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=aY5NniLF
-ARC-Seal: i=1; a=rsa-sha256; t=1794474317; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=fUgCuyoyCjkSbkxiGLmzzY2GpE9dlbOhf862ue06qQuHWOxmZY4dcvrX0dof8dBXmbNouVZMSnXvPPHmi57OrdrWYvQQ1BHq8sWS4f+8uTj0Pq/Jf5XrMHD7a5wMk4G/mw28tqjwCqfzHVNzI+dPbXNVvIdgzgKhpkwFSQInZv4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1794474317; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=xH/HLPxfM2i4LMomSJS6nOc89mP/sy8PcRbiJZz4YII=; 
-	b=MWQca1otrM5GXocecLOAJwJKmsItfvCTRMxdI4tBNqlXhOUabcl4pPGwjy78kUUpQvryxnPJZPTBYwqJ77cwZLZ4+Fhuy6fKGD+nLhEOUE1Vqsc4U/m75FshiMYL30eJPBI391yNGZdly0LYjm6DioYMk8tBSITdiMfoYNN1HPo=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
-	dmarc=pass header.from=<vmiklos@collabora.com>
-DKIM-Signature: a=rsa-sha256; b=aY5NniLF5uUu3bypFOeZRMYOUn1j5haI3gYX0qYyb8uvp0LUlRa2H2xB5JBx/qdjsd76i3EoJCfVpBgW1pdVlYvZbJpumMn8RpOUDRLHcJMDIbznQ/q9l4hXPYIIApzPQkBB7agkWQGGxOrjoZhVtSmZlUdJJsqviV/5bQbCJQs=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=xH/HLPxfM2i4LMomSJS6nOc89mP/sy8PcRbiJZz4YII=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1794474316222636.5706619678624;
-	Thu, 12 Nov 2026 01:05:16 -0800 (PST)
-Date: Thu, 12 Nov 2026 09:05:07 +0000
-From: Miklos Vajna <vmiklos@collabora.com>
-To: gitster@pobox.com
-Cc: ps@pks.im, jltobler@gmail.com, szeder.dev@gmail.com,
-	git@vger.kernel.org
-Subject: [PATCH] log: make --follow following renames for non-linear history
- optional
-Message-ID: <avWBQ_10mHUNQcFi@collabora.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=n6SJ3wMj
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1794476931;
+	b=lWAGD/kELp/XazolZev1xOGqhxXwSFHX1yPFPGERyfAixBSPtMrFpaOSzYY2o6O9Gtl6
+	 wxNQ5weFH+T+7J3qqFAZzCPmqXGg0Po9mfBJ4YFIINLLix3YBP/eNQfzci+nw+vnSLpK6
+	 uK4erAps2Os+kOsWUU4VcVx/cbIYpOr4QFBsrwwTWm0RiIE4VcGVDPQNFjkjOuiVyjFBw
+	 fx0YtyxgLfUal9ZFlVgMrl8AIujxPocvqoGipnXbcYRswmpzol3sryO32+2nQOHIR6WWa
+	 P+q5e3e95qKli7qa9NJt1H9infvjMyjVyOevgHe+cCZ19r8KBaZk5x76VMlG7v48FiA==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1794476931;
+	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=22ikrKWD57g0oYjjW3Wofz/pXffK4bXljYi/Vx7olMI=;
+	b=JEDF3mAOJG4fyTRJpn4NCIQfgbz0at0npNHaYBR86t55KZMOL6lrr+7VswePkuAc1ppe
+	 RcNnLXHxLxV0c5u9arUi+WjRzISpIwUdx0GDzD4Ru82mEDi+993TYCsQNyeOjvf3TpdXQ
+	 HiRD0tKzzQyQqBNKH+7OXnhr9bplQEEh+uLm8mBNciTQRZStwvvTKvlGaknRvyAiKYXN1
+	 VDGfx5Pg//TYGTReLrAt2qkxSDCBUsNaW572PvYKMpTnpudz0TMl7PQYkZd8wK+rLPaBR
+	 dD08drXmIN1+VB6bfI6C6aWZ+enCKintn5KH+2zLJIyucAc0JYgzwb84hEY7caGtuTA==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	arc=none smtp.remote-ip=100.80.115.77
+Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 33FB21F00A05;
+	Thu, 12 Nov 2026 09:48:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794476931;
+	bh=22ikrKWD57g0oYjjW3Wofz/pXffK4bXljYi/Vx7olMI=;
+	h=From:Date:Subject:To:Cc:Reply-To;
+	b=n6SJ3wMjTK78BrZMVidG05C54OHx63vAD+z0Gpnhoo91qCQLJ1+hdN5OwT7UsPYQ7
+	 jKurptDWz/kww9USpT379FE4Dx+xZye33oaZo5++CWZptKSYx+UZCimR+5GzaCp+9+
+	 mL8vakDys4mqnsm18c4l8OCu4xzKeP/JZymj+eEdp2vl73Ebm8PTU9ri/uqAW7CbcB
+	 ChzD0wFTsBOICGUdRJy8RP3C5JI1NsKKrSyGZL7feCPbYD81uPIZDlz7aOfxubUSPx
+	 IjizQSWcyJNKLeHwRH/WrYK4ler4qKtz7AbkYhA3m9SSTFS5PeALAK93L6OevL9KJh
+	 6brd0WkPnEwaw==
+Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
+	by lkml.kernel.org (Postfix) with ESMTP id 868BF49430;
+	Thu, 12 Nov 2026 09:48:50 +0000 (UTC)
+From: Mustafa Bayar via B4 Relay <devnull+mbayar.gitlab.com@kernel.org>
+Date: Thu, 12 Nov 2026 10:48:41 +0100
+Subject: [PATCH] ref-filter: fix double free when an object is missing
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -64,311 +82,107 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <avRtsm5VQpC_g9yN@pks.im>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/294.450.56
-X-ZohoMailClient: External
+Content-Type: text/plain; charset="utf-8"
+Message-Id: <20261112-mb-ref-filter-missing-object-double-free-maint-v1-1-d6d56a3c8dbe@gitlab.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAA/yWNwQ7CIBAFf6XZs5u4HDT6K8YDlEddU8AANSZN/
+ 12sxznMzEoVRVHpOqxU8NaqOXWQw0Djw6YJrL4zmaM5iYjh6LggcNC5oXDUWjVNnN0TY2OfFze
+ DQwE4Wk2NL7DeBYjgLNSjry7rZx/e7n+uyy7/LrRtX9M8mmCSAAAA
+X-Change-ID: 20261112-mb-ref-filter-missing-object-double-free-maint-9eadbfe11e71
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Mustafa Bayar <mbayar@gitlab.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794476930; l=3161;
+ i=mbayar@gitlab.com; s=20261112; h=from:subject:message-id;
+ bh=17NMEKwQrzxXBwY9i9TNeZiPlUzKGWgLZuhnC15Ryjc=;
+ b=iOM2yA0Rlz2Y/aVunYcpa7j2Vu5sBTK24l/YZ3uKX58eHG78qV83Hj3cdIXkn0PKrekuny9/h
+ alrxfQt9MgFDeysVvKsLvY8Dj9oiYORmaXLoCuBT0aX1IOBRItMoqAK
+X-Developer-Key: i=mbayar@gitlab.com; a=ed25519;
+ pk=y0gEEr1TaZuk0b9DG9SOBVMs0YNrf+G51ueJbMsIBCc=
+X-Endpoint-Received: by B4 Relay for mbayar@gitlab.com/20261112 with
+ auth_id=1496
+X-Original-From: Mustafa Bayar <mbayar@gitlab.com>
+Reply-To: mbayar@gitlab.com
+Content-Transfer-Encoding: 7bit
 
-Since commit 304812ed33 (log: improve --follow following renames for
-non-linear history, 2026-06-22), 'git log --stat --follow --
-include/linux/rsc_table.h' on linux.git takes 6m43s, while it took about
-28 seconds before.
+From: Mustafa Bayar <mbayar@gitlab.com>
 
-What happens is that log_tree_commit() diffs each merge against all of
-its parents with rename following, to find the path to follow in each
-parent. diff_tree_oid() only does the expensive rename detection when
-the path is added relative to a parent, but that is common for merges,
-e.g. when a branch forked before the path was created merges mainline.
+When a ref points to a missing object, git-for-each-ref(1) may abort
+with a double free instead of reporting the missing object:
 
-Fix the problem by making this per-parent diffing opt-in: plain --follow
-behaves as before 304812ed33 again, and 'git log --follow=merges'
-follows the path separately in each parent of a merge. Add a matching
-log.follow=merges configuration option as well.
+    free(): double free detected in tcache 2
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Miklos Vajna <vmiklos@collabora.com>
+get_object() frees `oi->content` but leaves the pointer unchanged. Since
+the expand_data structures are reused across refs, a later call can
+start with `content` pointing to a freed buffer. Then, if the object
+lookup in that call fails before it overwrites the pointer, the cleanup
+path frees the buffer a second time.
+
+a29e2e8fe (ref-filter: parse objects on demand, 2025-10-23) introduced
+this by making object lookup failures jump to the cleanup label.
+bea37f1d6 (ref-filter: fix stale parsed objects, 2025-11-04) later fixed
+a related stale-state bug by resetting `maybe_object`.
+
+Similar to `maybe_object`, reset `content` at the start of get_object().
+Add a regression test that exercises this path.
+
+Signed-off-by: Mustafa Bayar <mbayar@gitlab.com>
 ---
+This is based on maint, since the bug first appeared in v2.53.0.
 
-Hi Junio,
+We ran into this on GitLab.com, where a repository with a tag pointing
+to a missing object made `git for-each-ref` abort instead of reporting
+the missing object.
 
-On Wed, Nov 11, 2026 at 08:44:42AM -0800, Junio C Hamano <gitster@pobox.com> wrote:
-> This sounds sensible, and is far better than reverting and declaring
-> "The original 'checkbox hack' should stay here forever because doing
-> it right will be very expensive".
+A note on the test: the double free only happens when a valid annotated
+tag is processed before the broken ref, so that an earlier get_object()
+call has already freed its content buffer. The test therefore names the
+refs `annotated` and `missing`, which sort in that order.
+---
+ ref-filter.c                   |  1 +
+ t/t6301-for-each-ref-errors.sh | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-If that is fine with you, I suggest just replacing the
-mv/log-follow-speedup branch with this patch.
-
-Hi Patrick,
-
-On Wed, Nov 11, 2026 at 02:29:22PM +0100, Patrick Steinhardt <ps@pks.im> wrote:
-> I don't really have a good sense of how far this patch series is on its
-> road to getting merged. So how about we first land a single-patch series
-> that introduces the knob that we can merge without the remaining parts
-> in this series here?
-
-I like the idea, here is a patch to do that.
-
-> With regards to how to opt-in, I can see two ways:
-> 
->   - We could extend "--follow" to take an optional parameter so that the
->     user can pass "--follow=merges". Same with "log.follow", we could
->     teach it another option "merges".
-> 
->   - We could introduce "--follow-merges" and "log.followMerges".
-> 
-> I'm leaning towards the first option myself.
-
-Yes, --follow=merges also appears more natural to me, so I implemented
-it that way.
-
-Thanks,
-
-Miklos
-
- Documentation/config/log.adoc |  4 +++-
- Documentation/git-log.adoc    |  7 +++++--
- builtin/log.c                 | 15 +++++++++++++--
- diff.c                        | 15 +++++++++++----
- diff.h                        |  2 ++
- log-tree.c                    |  6 ++++--
- t/t4219-log-follow-merge.sh   | 32 +++++++++++++++++++++++++-------
- 7 files changed, 63 insertions(+), 18 deletions(-)
-
-diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
-index f7dfce69b5..72a3486a73 100644
---- a/Documentation/config/log.adoc
-+++ b/Documentation/config/log.adoc
-@@ -53,7 +53,9 @@ This is the same as the `--decorate` option of the `git log`.
- `log.follow`::
- 	If `true`, `git log` will act as if the `--follow` option was used when
- 	a single <path> is given.  This has the same limitations as `--follow`,
--	i.e. it cannot be used to follow multiple files.
-+	i.e. it cannot be used to follow multiple files and does not work well
-+	on non-linear history.  If `merges`, `git log` will act as if the
-+	`--follow=merges` option was used.
+diff --git a/ref-filter.c b/ref-filter.c
+index bdf54f6f..6c4df521 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2349,6 +2349,7 @@ static int get_object(struct ref_array_item *ref, int deref,
+ 	int ret;
  
- `log.graphColors`::
- 	A list of colors, separated by commas, that can be used to draw
-diff --git a/Documentation/git-log.adoc b/Documentation/git-log.adoc
-index fb3ac11283..742b832bbf 100644
---- a/Documentation/git-log.adoc
-+++ b/Documentation/git-log.adoc
-@@ -27,9 +27,12 @@ each commit introduces are shown.
- OPTIONS
- -------
+ 	oi->maybe_object = NULL;
++	oi->content = NULL;
  
--`--follow`::
-+`--follow[=merges]`::
- 	Continue listing the history of a file beyond renames
--	(works only for a single file).
-+	(works only for a single file). This does not work well on
-+	non-linear history, unless `merges` is given: then the path is
-+	followed separately for each parent of a merge, which is more
-+	expensive.
- 
- `--no-decorate`::
- `--decorate[=(short|full|auto|no)]`::
-diff --git a/builtin/log.c b/builtin/log.c
-index 350b35c556..db707877f6 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -108,6 +108,7 @@ static int parse_decoration_style(const char *value)
- struct log_config {
- 	int default_abbrev_commit;
- 	int default_show_root;
-+	/* 0: no, 1: yes, 2: merges */
- 	int default_follow;
- 	int default_show_signature;
- 	int default_encode_email_headers;
-@@ -205,6 +206,8 @@ static void cmd_log_init_defaults(struct rev_info *rev,
- 		get_commit_format(cfg->fmt_pretty, rev);
- 	if (cfg->default_follow)
- 		rev->diffopt.flags.default_follow_renames = 1;
-+	if (cfg->default_follow == 2)
-+		rev->diffopt.flags.default_follow_merges = 1;
- 	rev->verbose_header = 1;
- 	init_diffstat_widths(&rev->diffopt);
- 	rev->diffopt.flags.recursive = 1;
-@@ -505,7 +508,10 @@ static int git_log_config(const char *var, const char *value,
- 		return 0;
- 	}
- 	if (!strcmp(var, "log.follow")) {
--		cfg->default_follow = git_config_bool(var, value);
-+		if (value && !strcmp(value, "merges"))
-+			cfg->default_follow = 2;
-+		else
-+			cfg->default_follow = git_config_bool(var, value);
- 		return 0;
- 	}
- 	if (skip_prefix(var, "color.decorate.", &slot_name))
-@@ -814,9 +820,14 @@ int cmd_log_reflog(int argc,
- 
- static void log_setup_revisions_tweak(struct rev_info *rev)
- {
-+	/* If --follow is not used, use the log.follow option. */
- 	if (rev->diffopt.flags.default_follow_renames &&
--	    diff_check_follow_pathspec(&rev->prune_data, 0))
-+	    !rev->diffopt.flags.follow_renames &&
-+	    diff_check_follow_pathspec(&rev->prune_data, 0)) {
- 		rev->diffopt.flags.follow_renames = 1;
-+		rev->diffopt.flags.follow_merges =
-+			rev->diffopt.flags.default_follow_merges;
-+	}
- 
- 	if (rev->first_parent_only)
- 		diff_merges_default_to_first_parent(rev);
-diff --git a/diff.c b/diff.c
-index 414532d09f..b633cbea09 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5739,12 +5739,19 @@ static int diff_opt_follow(const struct option *opt,
- {
- 	struct diff_options *options = opt->value;
- 
--	BUG_ON_OPT_ARG(arg);
- 	if (unset) {
- 		options->flags.follow_renames = 0;
-+		options->flags.follow_merges = 0;
- 		options->flags.default_follow_renames = 0;
--	} else {
-+		options->flags.default_follow_merges = 0;
-+	} else if (!arg) {
- 		options->flags.follow_renames = 1;
-+		options->flags.follow_merges = 0;
-+	} else if (!strcmp(arg, "merges")) {
-+		options->flags.follow_renames = 1;
-+		options->flags.follow_merges = 1;
-+	} else {
-+		return error(_("invalid argument to --follow: '%s'"), arg);
- 	}
- 	return 0;
- }
-@@ -6161,9 +6168,9 @@ struct option *add_diff_options(const struct option *opts,
- 			      0, PARSE_OPT_NONEG),
- 		OPT_BOOL(0, "rename-empty", &options->flags.rename_empty,
- 			 N_("use empty blobs as rename source")),
--		OPT_CALLBACK_F(0, "follow", options, NULL,
-+		OPT_CALLBACK_F(0, "follow", options, N_("merges"),
- 			       N_("continue listing the history of a file beyond renames"),
--			       PARSE_OPT_NOARG, diff_opt_follow),
-+			       PARSE_OPT_OPTARG, diff_opt_follow),
- 		OPT_INTEGER('l', NULL, &options->rename_limit,
- 			    N_("limit to cheap rename/copy detection if the number of rename/copy targets exceeds this value")),
- 
-diff --git a/diff.h b/diff.h
-index bb5cddaf34..2548739e83 100644
---- a/diff.h
-+++ b/diff.h
-@@ -154,6 +154,7 @@ struct diff_flags {
- 	unsigned find_copies_harder;
- 
- 	unsigned follow_renames;
-+	unsigned follow_merges;
- 	unsigned rename_empty;
- 
- 	/* Internal; used for optimization to see if there is any change. */
-@@ -202,6 +203,7 @@ struct diff_flags {
- 	unsigned dirstat_by_line;
- 	unsigned funccontext;
- 	unsigned default_follow_renames;
-+	unsigned default_follow_merges;
- 	unsigned stat_with_summary;
- 	unsigned suppress_diff_headers;
- 	unsigned dual_color_diffed_diffs;
-diff --git a/log-tree.c b/log-tree.c
-index 83a3c4bf9b..93cc61af2d 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -1277,7 +1277,8 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 	opt->diffopt.no_free = 1;
- 
- 	/* Any recorded path for this commit? If so, restore it */
--	if (opt->diffopt.flags.follow_renames) {
-+	if (opt->diffopt.flags.follow_renames &&
-+	    opt->diffopt.flags.follow_merges) {
- 		const char *stored = recall_follow_pathspec(opt, commit);
- 		if (stored) {
- 			const char *current = pathspec_single_path(&opt->diffopt.pathspec);
-@@ -1300,7 +1301,8 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 		show_diff_of_diff(opt);
- 
- 	/* Record what path each parent of this commit should use */
--	if (opt->diffopt.flags.follow_renames) {
-+	if (opt->diffopt.flags.follow_renames &&
-+	    opt->diffopt.flags.follow_merges) {
- 		struct commit_list *parents = get_saved_parents(opt, commit);
- 		if (parents && parents->next) {
- 			struct commit_list *p;
-diff --git a/t/t4219-log-follow-merge.sh b/t/t4219-log-follow-merge.sh
-index e370f82955..c2bc2b0c13 100755
---- a/t/t4219-log-follow-merge.sh
-+++ b/t/t4219-log-follow-merge.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
- 
--test_description='Test --follow follows renames across merges'
-+test_description='Test --follow=merges follows renames across merges'
- 
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-@@ -25,12 +25,30 @@ test_expect_success 'setup subtree-merged repository' '
- 	git -C outer commit -m "Merge inner repo into inner/ subdirectory"
+ 	if (oi->info.contentp) {
+ 		/* We need to know that to use parse_object_buffer properly */
+diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
+index 72b27c8b..e955f66a 100755
+--- a/t/t6301-for-each-ref-errors.sh
++++ b/t/t6301-for-each-ref-errors.sh
+@@ -52,6 +52,21 @@ test_expect_success 'Missing objects are reported correctly' '
+ 	test_must_be_empty brief-err
  '
  
--test_expect_success '--follow finds the pre-merge commit through a subtree merge' '
--	git -C outer log --follow --pretty=tformat:%s inner/inner.txt >actual &&
-+test_expect_success '--follow=merges finds the pre-merge commit through a subtree merge' '
-+	git -C outer log --follow=merges --pretty=tformat:%s inner/inner.txt >actual &&
- 	echo "inner init" >expect &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'log.follow=merges acts as --follow=merges' '
-+	git -C outer -c log.follow=merges log --pretty=tformat:%s \
-+		inner/inner.txt >actual &&
-+	echo "inner init" >expect &&
-+	test_cmp expect actual
++test_expect_success 'missing objects after a tag are reported correctly' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit --no-tag initial &&
++		git tag -a -m annotated annotated &&
++		test-tool ref-store main update-ref msg refs/tags/missing "$MISSING" "$ZERO_OID" REF_SKIP_OID_VERIFICATION &&
++		git rev-parse HEAD >expect &&
++		test_must_fail git for-each-ref --format="%(*objectname)" refs/tags/ >actual 2>err &&
++		test_cmp expect actual &&
++		test_grep "fatal: missing object $MISSING for refs/tags/missing" err
++	)
 +'
 +
-+test_expect_success '--follow overrides log.follow=merges' '
-+	git -C outer -c log.follow=merges log --follow \
-+		--pretty=tformat:%s inner/inner.txt >actual &&
-+	test_must_be_empty actual
-+'
-+
-+test_expect_success '--follow rejects an unknown argument' '
-+	test_must_fail git -C outer log --follow=foo inner/inner.txt 2>err &&
-+	test_grep "invalid argument to --follow: ${SQ}foo${SQ}" err
-+'
-+
- test_expect_success 'setup merge of two branches that both renamed a file to README' '
- 	git init foo &&
- 	mkdir foo/foo &&
-@@ -65,8 +83,8 @@ test_expect_success 'setup merge of two branches that both renamed a file to REA
- 	git -C foo commit -m "merge bar into foo"
- '
- 
--test_expect_success '--follow follows renames across both sides of a merge' '
--	git -C foo log --follow --pretty=tformat:%s README >actual &&
-+test_expect_success '--follow=merges follows renames across both sides of a merge' '
-+	git -C foo log --follow=merges --pretty=tformat:%s README >actual &&
- 	sort actual >actual.sorted &&
- 	cat >expect <<-\EOF &&
- 	add bar README
-@@ -112,8 +130,8 @@ test_expect_success 'setup diamond with renames on both sides of a fork' '
- 	git -C diamond commit -am "Z: modify path"
- '
- 
--test_expect_success '--follow follows renames through a fork in a single history' '
--	git -C diamond log --follow --pretty=tformat:%s path >actual &&
-+test_expect_success '--follow=merges follows renames through a fork in a single history' '
-+	git -C diamond log --follow=merges --pretty=tformat:%s path >actual &&
- 	sort actual >actual.sorted &&
- 	cat >expect <<-\EOF &&
- 	A: add path0
--- 
-2.51.0
+ test_expect_success 'missing ancestors are reported by contains filters' '
+ 	test_when_finished "git update-ref -d refs/heads/missing-parent" &&
+ 	{
+
+---
+base-commit: 03b41523c576f26ad34085378717a0c1b287470f
+change-id: 20261112-mb-ref-filter-missing-object-double-free-maint-9eadbfe11e71
+
 
