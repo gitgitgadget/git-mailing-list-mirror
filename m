@@ -1,78 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794476932;
-	b=YiaDK/Rz2DDKcQnFcGSdYdczlaSWF0LVKy9CmkqwrI90aGfWdqhoVpWu7FsiUiAlWZpi
-	 wrp/q1EIw2NynAe0gPxelUbWigqxH1zQ0CYhw/23o0iQfLRLmXiRT5lK9XWOejgdkP6pl
-	 D/39Q/6OhxC+Y2z/ZqZN1dcDLQa58lSaT/ZWLd984NKBpp/gO44xeXlRyBTmIbBM0mJyH
-	 XEPMSpWXkdLNXyNa+wb8mZr+4XgobBNdfSwikEx4BWB0aAx0T8Y46wpONXwGNg1BE8pBm
-	 ebnvupdm8PmfGiFnQa4xhS9UkdIvPnF4W1Xca2YsZummXbW3RUZ4o6dZd3UZcRlMkpA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794476932;
-	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
-	 Content-Type:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=22ikrKWD57g0oYjjW3Wofz/pXffK4bXljYi/Vx7olMI=;
-	b=LSgFpWAhXThp64UG+o0HTeH8RhPuKgmF4pmojTQL3yiwfTb/3uwphwqcvC/DKfP4Psn6
-	 B2tcSN0wQ4H27Iz3i7lGiyPO1H1fQHs1JBUhkxI5Oq0kf6H5X9TVhGPoh+u44KVUl76CV
-	 Fy5yVN8xsnzJlDy4j3TjKAWHR4Tw0egA4ZseILbeoHYTdJtF8RHO+YjBqcmwecq7oPM7d
-	 ZokG4kW/21HifbHgS4uBob8QdcFaXzwvF4bzaQ6YXipgKx4ugNbUaL656p9MuKHbHUYVW
-	 qHZWj/PyGZGMIn8f9L71h+ht9ch+uN8ml5nqjnqQZyoFqDM8cUY43Bgxl+umyEfMtqg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=n6SJ3wMj;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078B8606A321
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 09:48:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=n6SJ3wMj
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1794476931;
-	b=lWAGD/kELp/XazolZev1xOGqhxXwSFHX1yPFPGERyfAixBSPtMrFpaOSzYY2o6O9Gtl6
-	 wxNQ5weFH+T+7J3qqFAZzCPmqXGg0Po9mfBJ4YFIINLLix3YBP/eNQfzci+nw+vnSLpK6
-	 uK4erAps2Os+kOsWUU4VcVx/cbIYpOr4QFBsrwwTWm0RiIE4VcGVDPQNFjkjOuiVyjFBw
-	 fx0YtyxgLfUal9ZFlVgMrl8AIujxPocvqoGipnXbcYRswmpzol3sryO32+2nQOHIR6WWa
-	 P+q5e3e95qKli7qa9NJt1H9infvjMyjVyOevgHe+cCZ19r8KBaZk5x76VMlG7v48FiA==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1794476931;
-	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=22ikrKWD57g0oYjjW3Wofz/pXffK4bXljYi/Vx7olMI=;
-	b=JEDF3mAOJG4fyTRJpn4NCIQfgbz0at0npNHaYBR86t55KZMOL6lrr+7VswePkuAc1ppe
-	 RcNnLXHxLxV0c5u9arUi+WjRzISpIwUdx0GDzD4Ru82mEDi+993TYCsQNyeOjvf3TpdXQ
-	 HiRD0tKzzQyQqBNKH+7OXnhr9bplQEEh+uLm8mBNciTQRZStwvvTKvlGaknRvyAiKYXN1
-	 VDGfx5Pg//TYGTReLrAt2qkxSDCBUsNaW572PvYKMpTnpudz0TMl7PQYkZd8wK+rLPaBR
-	 dD08drXmIN1+VB6bfI6C6aWZ+enCKintn5KH+2zLJIyucAc0JYgzwb84hEY7caGtuTA==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.52
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794481243;
+	b=4Z0vxP5NrOCx1rE4oAiDciLAJt8mPOU1CsYZRbG3HNtqPFAi7QeNEN54m7XcEgHylGi1
+	 pSrRa/c9HG8PF7TuVw/FaiRz3/OKLp5sbyfFjvrMOz9EaWotJb8r7IzSRvfKOWGfHBQEr
+	 dUnrMCTXw+g2oblLsqX2z1CJotiYSCjHP1zf0azF4Lk7pg7rpmqbFI7AHjQm9hx+aseBy
+	 RAK9auVAJTcPEbMfZJ71DirvUGrQb9Nf2ify3oZbzJz1o8mIlNv9CaXE/+GA/2VMr8fHB
+	 oEainqGlF0BrY89hnAdxLOmoggLUSNetd90SZpRaJ6dvYK3kRtaKV+EoIsTgkEJqPyg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794481243;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:
+	 References:Content-Language:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=Ol3jJERVY8UKVfJscawKsBBMBd2LdK8gfkAZPZDSy3g=;
+	b=ClINzSCpDzpTkb8eBKb4QzxPMVue8IFm+IzFwypGtX1NU/lfMWAjIwK1XPzLDj7PXzFy
+	 VTjx7MVs3EG62bHJo1KjSZ9sl7Kz04NxmGZAtxpViBhifMqJkbPrA8vR2LpHJ5/gI26hn
+	 49E3OI5EiKZofLg1XNu4vYnrb3GHPLlBBizZ2aP4sMNfSkPyQo61wAtcUurVtTR4tnRth
+	 bXH/P7oUUsSuvjpqoP14Inbd+82eHP13lcy7e+LmNFme5VavSFI0Ix1m5wxlDwxPy5/zX
+	 9bJi7JyRIbkduan/x8UeSxxOYDImkm3W4/vnRGXVh6XIgCpk8pZt5cR0exao+GgRujw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WE1SXtUt;
+	arc=none smtp.remote-ip=209.85.218.52
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 33FB21F00A05;
-	Thu, 12 Nov 2026 09:48:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794476931;
-	bh=22ikrKWD57g0oYjjW3Wofz/pXffK4bXljYi/Vx7olMI=;
-	h=From:Date:Subject:To:Cc:Reply-To;
-	b=n6SJ3wMjTK78BrZMVidG05C54OHx63vAD+z0Gpnhoo91qCQLJ1+hdN5OwT7UsPYQ7
-	 jKurptDWz/kww9USpT379FE4Dx+xZye33oaZo5++CWZptKSYx+UZCimR+5GzaCp+9+
-	 mL8vakDys4mqnsm18c4l8OCu4xzKeP/JZymj+eEdp2vl73Ebm8PTU9ri/uqAW7CbcB
-	 ChzD0wFTsBOICGUdRJy8RP3C5JI1NsKKrSyGZL7feCPbYD81uPIZDlz7aOfxubUSPx
-	 IjizQSWcyJNKLeHwRH/WrYK4ler4qKtz7AbkYhA3m9SSTFS5PeALAK93L6OevL9KJh
-	 6brd0WkPnEwaw==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 868BF49430;
-	Thu, 12 Nov 2026 09:48:50 +0000 (UTC)
-From: Mustafa Bayar via B4 Relay <devnull+mbayar.gitlab.com@kernel.org>
-Date: Thu, 12 Nov 2026 10:48:41 +0100
-Subject: [PATCH] ref-filter: fix double free when an object is missing
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D6B606A31C
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 11:00:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20D6B606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WE1SXtUt
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c4d2b741ed9so645429566b.2
+        for <git@vger.kernel.org>; Thu, 12 Nov 2026 03:00:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794481241; x=1795086041; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Ol3jJERVY8UKVfJscawKsBBMBd2LdK8gfkAZPZDSy3g=;
+        b=WE1SXtUtuKHw0qF6SGgDzPPr7gaGm8G2k4CZq4ul5LKztivs2eTfysbdT62MC3Geti
+         RO3bqAP4c3EeN/6YKB/okdakuq5YOSNYx7riSlr28VyGgt0ZQIjaqmbd1adE8RdxBomi
+         UdamibFtCl2sj+e5XbXJV2YSq1H9b9ujegver8hmTqb7Qg7vlwxo5XgP5jqd9O3GAkaL
+         4ssbEJFvrlPGI39QauyzpU9x108v5BTcCo+eCNJ4VdKlrSwr15wlJtdnSEI8WxNVCs4X
+         lWzrHVhepdagUivCFthaUhcbqI57cuXhd/0a8QTHUZwDtVxJg5c6kOShjJAS0GFiM9Hu
+         ZWew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794481241; x=1795086041;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Ol3jJERVY8UKVfJscawKsBBMBd2LdK8gfkAZPZDSy3g=;
+        b=CHbzGzFJc8t7zHSiC/8m+9aOYnVWAKY0cJNJ/jrID92axhENxsYU5zqdGgkxvQIALi
+         IoivKYxAyKuoJvMw1hHbyfjwemn8e8ThN6VFX8v5Afo83/b28p1IzeR944tox0t2y9UI
+         9OHQD8XBogvm0FJY2GP1+5P9hrGP73tXyjZvLAk/YiT8ZQlX2J5DsFhrRCxWyuApMv7l
+         OG7/uaYo2CQZKPEFctNwftEkSVaK7iVXstF42DcEuqa0poAuN5GTBpyzpWw11pDFfg0f
+         wTqtaK9DBoPlyuJzDS2v7SpLeeC1RZphL6x1+chDpnSF0F7T1zlpRhx7s1zVj/Jb/tdm
+         HaDQ==
+X-Forwarded-Encrypted: i=1; AL+hErEDe6/kQ1ZZhHb696uWnOwkOlq2FE6drSuyZ/92h4sZbJ4LjFX4688CuqsFge2y4vl9pfo=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+/+uTAClpUs3Imzc3oRbCyVEj2wFFoOxNb12z8MBtloorLWAnP
+	jWMQX3HPWM3QyZy/UxMzcdkYE4VWPkdUrPt4sMOmzXCEYqy0LH61DxV6
+X-Gm-Gg: AYBFou3QQs9LBl8im+cliJAejKQruD7e46hGgi5rK4wkef4m8soeC0zESljb3jD3mnj
+	tyevoSfoUTZe5wDJfSgsFaV0BnsnMUc/MaAvkUNCN0GibGTwnEEk3oYyCjilrHwOUY/dYD7+KK6
+	Pdzrx4mpEDepn1yOdx4rSmgYJoI7JLjYSZ5VnRUoSXVwNQa+Rtzew8RJrmwlAyiLmKAJeFSITs/
+	S9+nGOGgUXesM40ykghazFRtfBlt5P7jyhR1Hx9fwqnfpJtAT20IV2jnpCTqbJrKYMWRnxrsv3c
+	8UTDHBT3cpJG/lhz5igSAnJH4qmK01W3DZXnAPPwsrEpLgYAY1wazBp7UlmyJkL4fDIIpRNGG9R
+	OZgnJ6EOKEiVBDIiqPOrJnaYL7ra+m8tq7m5LMCknLmkwtm/nV8y+LdpTMLEzUCqjrEsxc2qQEU
+	GtXVmk07haRPG/Z3CyymGzFvN9uWeJjRbNYxbcdIHe9e5k9v1FZd6FtdLxz4z+Hml78BQHHyHLm
+	GynqSovcMdDCLfrHOi3ueNlDA/kcN/KjgVZ6SspCYzdXI7a6Itlzdo+otMyNZxHjgh22SdCJfWc
+	+GosqTXY2qdRL8laszsuhcU3ZVX6QfRYsSfYBJL7PS+eYRqT+bar+HqeTvGhEhbI71ZUS5VDxsM
+	lHaJ20bE=
+X-Received: by 2002:a17:907:f448:b0:c4d:31f7:28e6 with SMTP id a640c23a62f3a-c5066b1d853mr427091566b.29.1794481240595;
+        Thu, 12 Nov 2026 03:00:40 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c504a570875sm329280866b.19.2026.11.12.03.00.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Nov 2026 03:00:39 -0800 (PST)
+Message-ID: <01a799bc-5493-4984-8b83-7f2aef698f85@gmail.com>
+Date: Thu, 12 Nov 2026 11:00:37 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -82,107 +92,378 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261112-mb-ref-filter-missing-object-double-free-maint-v1-1-d6d56a3c8dbe@gitlab.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAA/yWNwQ7CIBAFf6XZs5u4HDT6K8YDlEddU8AANSZN/
- 12sxznMzEoVRVHpOqxU8NaqOXWQw0Djw6YJrL4zmaM5iYjh6LggcNC5oXDUWjVNnN0TY2OfFze
- DQwE4Wk2NL7DeBYjgLNSjry7rZx/e7n+uyy7/LrRtX9M8mmCSAAAA
-X-Change-ID: 20261112-mb-ref-filter-missing-object-double-free-maint-9eadbfe11e71
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Mustafa Bayar <mbayar@gitlab.com>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794476930; l=3161;
- i=mbayar@gitlab.com; s=20261112; h=from:subject:message-id;
- bh=17NMEKwQrzxXBwY9i9TNeZiPlUzKGWgLZuhnC15Ryjc=;
- b=iOM2yA0Rlz2Y/aVunYcpa7j2Vu5sBTK24l/YZ3uKX58eHG78qV83Hj3cdIXkn0PKrekuny9/h
- alrxfQt9MgFDeysVvKsLvY8Dj9oiYORmaXLoCuBT0aX1IOBRItMoqAK
-X-Developer-Key: i=mbayar@gitlab.com; a=ed25519;
- pk=y0gEEr1TaZuk0b9DG9SOBVMs0YNrf+G51ueJbMsIBCc=
-X-Endpoint-Received: by B4 Relay for mbayar@gitlab.com/20261112 with
- auth_id=1496
-X-Original-From: Mustafa Bayar <mbayar@gitlab.com>
-Reply-To: mbayar@gitlab.com
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v13 1/6] fetch: add remote.<name>.fetchRefmap
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+ <pull.2412.v13.git.git.1793357550.gitgitgadget@gmail.com>
+ <07081828d1d65373bee4b2ef5e1916e65a217db6.1793357550.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+In-Reply-To: <07081828d1d65373bee4b2ef5e1916e65a217db6.1793357550.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-From: Mustafa Bayar <mbayar@gitlab.com>
+Hi Harald
 
-When a ref points to a missing object, git-for-each-ref(1) may abort
-with a double free instead of reporting the missing object:
+On 30/10/2026 10:52, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+> Add a per-remote config variable, remote.<name>.fetchRefmap, that
+> provides the default value for --refmap the same way
+> remote.<name>.fetch already provides the default refspecs to fetch.
+> 
+> Unlike passing --refmap on the command line, which requires an
+> explicit refspec to go with it, configuring remote.<name>.fetchRefmap
+> on its own does not change what a refspec-less fetch does: it falls
+> back to the same defaults as a remote with no fetchRefmap at all.
+> 
+> When remote.<name>.fetch is also configured, it still decides what to
+> fetch, and the refmap maps what it fetches. This lets a remote name
+> only a few branches and store them all through one refmap:
+> 
+>      [remote "cabal"]
+>          fetch = master
+>          fetch = next
+>          fetch = seen
+>          fetchRefmap = +refs/heads/*:refs/remotes/cabal/*
 
-    free(): double free detected in tcache 2
+What happens if remote.cabal.fetch is a refspec and 
+remote.cabal.fetchRefmap is set?
 
-get_object() frees `oi->content` but leaves the pointer unchanged. Since
-the expand_data structures are reused across refs, a later call can
-start with `content` pointing to a freed buffer. Then, if the object
-lookup in that call fails before it overwrites the pointer, the cleanup
-path frees the buffer a second time.
+Thanks
 
-a29e2e8fe (ref-filter: parse objects on demand, 2025-10-23) introduced
-this by making object lookup failures jump to the cleanup label.
-bea37f1d6 (ref-filter: fix stale parsed objects, 2025-11-04) later fixed
-a related stale-state bug by resetting `maybe_object`.
+Phillip
 
-Similar to `maybe_object`, reset `content` at the start of get_object().
-Add a regression test that exercises this path.
-
-Signed-off-by: Mustafa Bayar <mbayar@gitlab.com>
----
-This is based on maint, since the bug first appeared in v2.53.0.
-
-We ran into this on GitLab.com, where a repository with a tag pointing
-to a missing object made `git for-each-ref` abort instead of reporting
-the missing object.
-
-A note on the test: the double free only happens when a valid annotated
-tag is processed before the broken ref, so that an earlier get_object()
-call has already freed its content buffer. The test therefore names the
-refs `annotated` and `missing`, which sort in that order.
----
- ref-filter.c                   |  1 +
- t/t6301-for-each-ref-errors.sh | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index bdf54f6f..6c4df521 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2349,6 +2349,7 @@ static int get_object(struct ref_array_item *ref, int deref,
- 	int ret;
- 
- 	oi->maybe_object = NULL;
-+	oi->content = NULL;
- 
- 	if (oi->info.contentp) {
- 		/* We need to know that to use parse_object_buffer properly */
-diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
-index 72b27c8b..e955f66a 100755
---- a/t/t6301-for-each-ref-errors.sh
-+++ b/t/t6301-for-each-ref-errors.sh
-@@ -52,6 +52,21 @@ test_expect_success 'Missing objects are reported correctly' '
- 	test_must_be_empty brief-err
- '
- 
-+test_expect_success 'missing objects after a tag are reported correctly' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit --no-tag initial &&
-+		git tag -a -m annotated annotated &&
-+		test-tool ref-store main update-ref msg refs/tags/missing "$MISSING" "$ZERO_OID" REF_SKIP_OID_VERIFICATION &&
-+		git rev-parse HEAD >expect &&
-+		test_must_fail git for-each-ref --format="%(*objectname)" refs/tags/ >actual 2>err &&
-+		test_cmp expect actual &&
-+		test_grep "fatal: missing object $MISSING for refs/tags/missing" err
-+	)
-+'
-+
- test_expect_success 'missing ancestors are reported by contains filters' '
- 	test_when_finished "git update-ref -d refs/heads/missing-parent" &&
- 	{
-
----
-base-commit: 03b41523c576f26ad34085378717a0c1b287470f
-change-id: 20261112-mb-ref-filter-missing-object-double-free-maint-9eadbfe11e71
-
+> Looking up the remote-tracking branch for a remote branch, as
+> @{upstream} and "git branch --track" do, falls back to the refmap when
+> remote.<name>.fetch has no match, so that these work for such
+> branches too. A branch excluded by a negative refspec in
+> remote.<name>.fetch stays excluded.
+> 
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>   Documentation/config/remote.adoc |   7 ++
+>   Documentation/fetch-options.adoc |   3 +
+>   builtin/fetch.c                  |  16 +++-
+>   remote.c                         |  20 +++-
+>   remote.h                         |   6 ++
+>   t/t5510-fetch.sh                 | 151 +++++++++++++++++++++++++++++++
+>   6 files changed, 200 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/config/remote.adoc b/Documentation/config/remote.adoc
+> index 3a20d0f752..236ccca93e 100644
+> --- a/Documentation/config/remote.adoc
+> +++ b/Documentation/config/remote.adoc
+> @@ -33,6 +33,13 @@ remote.<name>.fetch::
+>   	The default set of "refspec" for linkgit:git-fetch[1]. See
+>   	linkgit:git-fetch[1].
+>   
+> +remote.<name>.fetchRefmap::
+> +	The default value of the `--refmap` option, used to map refs being
+> +	fetched to remote-tracking refs to store, the same way
+> +	`remote.<name>.fetch` does for an explicit refspec.
+> +	`remote.<name>.fetch`, if also configured, still decides what is
+> +	fetched. See the `--refmap` entry in linkgit:git-fetch[1].
+> +
+>   remote.<name>.push::
+>   	The default set of "refspec" for linkgit:git-push[1]. See
+>   	linkgit:git-push[1].
+> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
+> index 47dea1de8e..c2101a7b39 100644
+> --- a/Documentation/fetch-options.adoc
+> +++ b/Documentation/fetch-options.adoc
+> @@ -244,6 +244,9 @@ endif::git-pull[]
+>   	refspecs and rely entirely on the refspecs supplied as
+>   	command-line arguments. See section on "Configured Remote-tracking
+>   	Branches" for details.
+> ++
+> +`remote.<name>.refmap` provides the default value for this option, the
+> +same way `remote.<name>.fetch` provides the default refspecs to fetch.
+>   
+>   `-t`::
+>   `--tags`::
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 1f76ae6242..305934f5f4 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -518,6 +518,12 @@ static struct ref *get_ref_map(struct remote *remote,
+>   	struct ref *rm;
+>   	struct ref *ref_map = NULL;
+>   	struct ref **tail = &ref_map;
+> +	/*
+> +	 * The --refmap command line option, if given, takes precedence
+> +	 * over remote.<name>.fetchRefmap.
+> +	 */
+> +	struct refspec *effective_refmap =
+> +		refmap.nr ? &refmap : remote ? &remote->refmap : NULL;
+>   
+>   	/* opportunistically-updated references: */
+>   	struct ref *orefs = NULL, **oref_tail = &orefs;
+> @@ -528,6 +534,8 @@ static struct ref *get_ref_map(struct remote *remote,
+>   	filter_prefetch_refspec(rs);
+>   	if (remote)
+>   		filter_prefetch_refspec(&remote->fetch);
+> +	if (effective_refmap)
+> +		filter_prefetch_refspec(effective_refmap);
+>   
+>   	if (rs->nr) {
+>   		struct refspec *fetch_refspec;
+> @@ -561,8 +569,8 @@ static struct ref *get_ref_map(struct remote *remote,
+>   		 * by ref_remove_duplicates() in favor of one of these
+>   		 * opportunistic entries with FETCH_HEAD_IGNORE.
+>   		 */
+> -		if (refmap.nr)
+> -			fetch_refspec = &refmap;
+> +		if (effective_refmap && effective_refmap->nr)
+> +			fetch_refspec = effective_refmap;
+>   		else
+>   			fetch_refspec = &remote->fetch;
+>   
+> @@ -597,6 +605,10 @@ static struct ref *get_ref_map(struct remote *remote,
+>   			if (has_merge &&
+>   			    !strcmp(branch->remote_name, remote->name))
+>   				add_merge_config(&ref_map, remote_refs, branch, &tail);
+> +
+> +			for (i = 0; i < remote->refmap.nr; i++)
+> +				get_fetch_map(ref_map, &remote->refmap.items[i],
+> +					      &oref_tail, 1);
+>   		} else if (!prefetch) {
+>   			ref_map = get_remote_ref(remote_refs, "HEAD");
+>   			if (!ref_map)
+> diff --git a/remote.c b/remote.c
+> index 49ee2ea318..9acab2e01a 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -152,6 +152,7 @@ static struct remote *make_remote(struct remote_state *remote_state,
+>   	ret->name = xstrndup(name, len);
+>   	refspec_init_push(&ret->push, the_hash_algo);
+>   	refspec_init_fetch(&ret->fetch, the_hash_algo);
+> +	refspec_init_fetch(&ret->refmap, the_hash_algo);
+>   	string_list_init_dup(&ret->server_options);
+>   	string_list_init_dup(&ret->negotiation_restrict);
+>   	string_list_init_dup(&ret->negotiation_include);
+> @@ -176,6 +177,7 @@ static void remote_clear(struct remote *remote)
+>   
+>   	refspec_clear(&remote->push);
+>   	refspec_clear(&remote->fetch);
+> +	refspec_clear(&remote->refmap);
+>   
+>   	free((char *)remote->receivepack);
+>   	free((char *)remote->uploadpack);
+> @@ -539,6 +541,12 @@ static int handle_config(const char *key, const char *value,
+>   			return -1;
+>   		refspec_append(&remote->fetch, v);
+>   		free(v);
+> +	} else if (!strcmp(subkey, "fetchrefmap")) {
+> +		char *v;
+> +		if (git_config_string(&v, key, value))
+> +			return -1;
+> +		refspec_append(&remote->refmap, v);
+> +		free(v);
+>   	} else if (!strcmp(subkey, "receivepack")) {
+>   		char *v;
+>   		if (git_config_string(&v, key, value))
+> @@ -995,7 +1003,17 @@ void ref_push_report_free(struct ref_push_report *report)
+>   
+>   int remote_find_tracking(struct remote *remote, struct refspec_item *refspec)
+>   {
+> -	return refspec_find_match(&remote->fetch, refspec);
+> +	char **result = refspec->src ? &refspec->dst : &refspec->src;
+> +
+> +	if (remote->fetch.nr && !refspec_find_match(&remote->fetch, refspec))
+> +		return 0;
+> +	if (refspec_find_match(&remote->refmap, refspec))
+> +		return -1;
+> +	if (refname_matches_negative_refspec_item(refspec->src, &remote->fetch)) {
+> +		FREE_AND_NULL(*result);
+> +		return -1;
+> +	}
+> +	return 0;
+>   }
+>   
+>   static struct ref *alloc_ref_with_prefix(const char *prefix, size_t prefixlen,
+> diff --git a/remote.h b/remote.h
+> index cca02033b9..ac485a584d 100644
+> --- a/remote.h
+> +++ b/remote.h
+> @@ -90,6 +90,12 @@ struct remote {
+>   
+>   	struct refspec fetch;
+>   
+> +	/*
+> +	 * How to map refs fetched without an explicit destination into our
+> +	 * own namespace, the same as the --refmap command line option.
+> +	 */
+> +	struct refspec refmap;
+> +
+>   	/*
+>   	 * The setting for whether to fetch tags (as a separate rule from the
+>   	 * configured refspecs);
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 17c0be499c..b5eba020ad 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -927,6 +927,157 @@ test_expect_success 'explicit --refmap option overrides remote.*.fetch' '
+>   	)
+>   '
+>   
+> +test_expect_success 'remote.*.fetchRefmap acts like --refmap on the command line' '
+> +	test_when_finished "git -C three config --unset remote.origin.fetchRefmap" &&
+> +	git branch -f side &&
+> +	git -C three config remote.origin.fetchRefmap \
+> +		"refs/heads/*:refs/remotes/other/*" &&
+> +	(
+> +		cd three &&
+> +		git update-ref refs/remotes/origin/main base-origin-main &&
+> +		o=$(git rev-parse --verify refs/remotes/origin/main) &&
+> +		git fetch origin main &&
+> +		n=$(git rev-parse --verify refs/remotes/origin/main) &&
+> +		test "$o" = "$n" &&
+> +		test_must_fail git rev-parse --verify refs/remotes/origin/side &&
+> +		git rev-parse --verify refs/remotes/other/main
+> +	)
+> +'
+> +
+> +check_fetched_refs () {
+> +	git for-each-ref --format="%(refname)" refs/remotes/ >actual &&
+> +	cat >expect &&
+> +	test_cmp expect actual
+> +}
+> +
+> +test_expect_success 'remote.<name>.fetchRefmap without tracking (baseline)' '
+> +	test_when_finished "rm -fr fetch-refmap-baseline fetch-refmap-upstream" &&
+> +	git init -b main fetch-refmap-upstream &&
+> +	test_commit -C fetch-refmap-upstream base &&
+> +	git -C fetch-refmap-upstream branch other &&
+> +	git init fetch-refmap-baseline &&
+> +	(
+> +		cd fetch-refmap-baseline &&
+> +		git remote add origin ../fetch-refmap-upstream &&
+> +
+> +		# Without fetch refspec, but with fetch refmap.
+> +		git config --unset-all remote.origin.fetch &&
+> +		git config remote.origin.fetchRefmap "+refs/heads/*:refs/remotes/origin/*" &&
+> +
+> +		# Nothing tracked, nothing fetched, no error.
+> +		git fetch origin &&
+> +		check_fetched_refs <<-\EOF &&
+> +		EOF
+> +
+> +		# Nothing tracked, explicit ref on the command line.
+> +		git fetch origin main &&
+> +		check_fetched_refs <<-\EOF &&
+> +		refs/remotes/origin/main
+> +		EOF
+> +
+> +		# With both refmap and fetch configured, remote.<name>.fetch
+> +		# wins: a refspec-less fetch follows it as usual, and
+> +		# remote.<name>.fetchRefmap plays no part in deciding what to
+> +		# fetch, only in mapping what is fetched.
+> +		git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" &&
+> +		git fetch origin &&
+> +		check_fetched_refs <<-\EOF
+> +		refs/remotes/origin/HEAD
+> +		refs/remotes/origin/main
+> +		refs/remotes/origin/other
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'remote.<name>.fetchRefmap stores branches named in remote.<name>.fetch' '
+> +	test_when_finished "rm -fr fetch-refmap-upstream downstream" &&
+> +	git init -b master fetch-refmap-upstream &&
+> +	test_commit -C fetch-refmap-upstream base &&
+> +	git -C fetch-refmap-upstream branch next &&
+> +	git -C fetch-refmap-upstream branch seen &&
+> +	git -C fetch-refmap-upstream branch other &&
+> +	git init downstream &&
+> +	(
+> +		cd downstream &&
+> +		git remote add cabal ../fetch-refmap-upstream &&
+> +		git config --unset-all remote.cabal.fetch &&
+> +		git config --add remote.cabal.fetch master &&
+> +		git config --add remote.cabal.fetch next &&
+> +		git config --add remote.cabal.fetch seen &&
+> +		git config remote.cabal.fetchRefmap "+refs/heads/*:refs/remotes/cabal/*" &&
+> +		git fetch cabal &&
+> +		check_fetched_refs <<-\EOF &&
+> +		refs/remotes/cabal/HEAD
+> +		refs/remotes/cabal/master
+> +		refs/remotes/cabal/next
+> +		refs/remotes/cabal/seen
+> +		EOF
+> +		git branch --track topic cabal/next &&
+> +		echo refs/remotes/cabal/next >expect &&
+> +		git rev-parse --symbolic-full-name topic@{upstream} >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'remote.<name>.fetchRefmap stores an explicit-dst remote.<name>.fetch entry in both places' '
+> +	test_when_finished "rm -fr fetch-refmap-upstream downstream" &&
+> +	git init -b master fetch-refmap-upstream &&
+> +	test_commit -C fetch-refmap-upstream base &&
+> +	git init downstream &&
+> +	(
+> +		cd downstream &&
+> +		git remote add cabal ../fetch-refmap-upstream &&
+> +		git config --unset-all remote.cabal.fetch &&
+> +		git config --add remote.cabal.fetch \
+> +			"+refs/heads/master:refs/remotes/custom/master" &&
+> +		git config remote.cabal.fetchRefmap "+refs/heads/*:refs/remotes/cabal/*" &&
+> +		git fetch cabal &&
+> +		check_fetched_refs <<-\EOF
+> +		refs/remotes/cabal/HEAD
+> +		refs/remotes/cabal/master
+> +		refs/remotes/custom/master
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'remote.<name>.fetchRefmap tracks a branch outside remote.<name>.fetch' '
+> +	test_when_finished "rm -fr fetch-refmap-upstream downstream" &&
+> +	git init -b main fetch-refmap-upstream &&
+> +	test_commit -C fetch-refmap-upstream base &&
+> +	git -C fetch-refmap-upstream branch other &&
+> +	git init downstream &&
+> +	(
+> +		cd downstream &&
+> +		git remote add -t main origin ../fetch-refmap-upstream &&
+> +		git config remote.origin.fetchRefmap "+refs/heads/*:refs/remotes/origin/*" &&
+> +		git fetch origin other &&
+> +		git branch --track topic origin/other &&
+> +		test_cmp_config origin branch.topic.remote &&
+> +		test_cmp_config refs/heads/other branch.topic.merge &&
+> +		echo refs/remotes/origin/other >expect &&
+> +		git rev-parse --symbolic-full-name topic@{upstream} >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'remote.<name>.fetchRefmap does not track a branch excluded by remote.<name>.fetch' '
+> +	test_when_finished "rm -fr fetch-refmap-upstream downstream" &&
+> +	git init -b main fetch-refmap-upstream &&
+> +	test_commit -C fetch-refmap-upstream base &&
+> +	git -C fetch-refmap-upstream branch secret &&
+> +	git init downstream &&
+> +	(
+> +		cd downstream &&
+> +		git remote add origin ../fetch-refmap-upstream &&
+> +		git config --add remote.origin.fetch "^refs/heads/secret" &&
+> +		git config remote.origin.fetchRefmap "+refs/heads/*:refs/remotes/origin/*" &&
+> +		git fetch origin secret &&
+> +		git rev-parse --verify refs/remotes/origin/secret &&
+> +		test_must_fail git branch --track topic origin/secret 2>err &&
+> +		test_grep "not a branch" err
+> +	)
+> +'
+> +
+>   test_expect_success 'explicitly empty --refmap option disables remote.*.fetch' '
+>   	git branch -f side &&
+>   	(
 
