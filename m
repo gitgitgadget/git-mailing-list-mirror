@@ -1,78 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794463060;
-	b=xtVfmJ367Yis3YWD/nus1a2lubajXAec5TMD2p/qFfKb5onxoWgnoISWHTMjsUBEsKrn
-	 LwyvLo9SaNNKcqQJy6ihjV0wcUsQnJzOrIokymPTk4FuaQAnT2xsxhwKuo5jiliE+QHQh
-	 c761EOc3efH2bEP3JXeJ8/7/o2v7lAm27ficNjnPzs9KmJqLm3OFRpgqHUiRd3PMh7LT5
-	 LoKaZlsl/110xzzxTLQWoSFAkkqSQAuvqRy/4PP3c+URXLmbGAfcq03rIvmF+f/UP/10m
-	 EZNtJCr3sP+NfLZDKqdR3fsVQ0iO46nXPhef5M0AhaCT9Q4xhUu8p5en9MM02rGhk9w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794463060;
-	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
-	 Content-Type:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=7S1LKfzuZZLFlJkIBHmFDackzkOkv5Y+ABD/BXruYuw=;
-	b=SFeiOvVenw7Tg1zUFd0u20ruoyIEyVgIJTrbaqW3PK0IuCy1BykXIxgQJ01rXoAKmvHx
-	 NxdfIrkhD9W4liA+cX9A/GWjoatIIkvOg52ijPP1BcZLyV9MpLLgodWiFfNTZOb00Iz8f
-	 CaV0Fa+cyYRZCfDDoYkANOMjBa+yxjw1nYEfZ2dOROdJ1yg1DiFqx306TO+Tuwd8koM+O
-	 PG9P2YOtp4lH666Pj0NBTY2QrZIs5dswBl0rcwmnHkMSEGkKN1tIaPOMghdZNlMyaCWhe
-	 twCqdU3DzM+BXNZ/Kk713vm7orLHGHO0FUnh3TS5te4o+FsRnjNx3yIBF06bkg+bAzQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kbyRQS2Q;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6BE606A323
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 05:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kbyRQS2Q
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1794463060;
-	b=W0btr3k+8cydNyBgUc8a0p2C51+81to2LkaVDfwyDbP9Mpu9bhBWd6cFp2kYJexh9JI0
-	 RqrWTRn420xYRtzkHgadNaO1WCRPeX5IHKPr5IdGuDHZozuoxY6Gz7Ejd//JzziTXN+oD
-	 AnvhsbUfpsV5GVw0eJHpkjbltUEu6AvF+fipMeW62QfFMUoBTqqKb0zRi4vK2sAyQyZS+
-	 MUhdvzILXuhQg9ehd5hDFuvzobOZbX5MpHID5vULgL82gcnqFt0bTKgV4jJxpvsTf1A4w
-	 FKr18qsYK1xvMNHsRG2P37FI10HmjXLBloHsEreIEi4QP2de2D9vmzzKQr+c3NPBWvA==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1794463060;
-	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=7S1LKfzuZZLFlJkIBHmFDackzkOkv5Y+ABD/BXruYuw=;
-	b=YdClviRZZ+UZ38D+AWZxAf8Kh3uu5xTokXlcp1pPphRffYo1WqF/0DlKa7kHNS/wOZdF
-	 2PsFI4eatBZorguxfBCfAnd6iggJHpG7g+1pS/FHl5T6I7KSRBr3ulj/u0pcPu+DiBKyG
-	 rbgU+Fbll3fo7gHlefQ3EMlFh+7YhxF+78AySXGYKfX29nW0D8RhU2FYBo8o4ulr/km5Y
-	 kwQBxnXv+3VepDv3SSenU7/nv4KQYGdCQOzz5F5LYEnVtLx1yhf8qo9dw2aXZw7QZiWmf
-	 c1FpRnUSbydgTRXzRnQ+u0amyvf5LluYStfZ+aowiaQVkJZz46a2ZmTRpTunzUprKhw==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.54
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794465192;
+	b=AWCcwmAE/kC9iiEa5MeR/gVzJuaarttX+kgI+oUkJpSTMsd88xQd+Gkh2nMFkPPpEBg0
+	 Tx/t0Zk3gGRzMdBNyfAZdCEDXmbT2Jsl3pbxMuf5/I9toASR1Tfl8G85ppowreoo+U8Ny
+	 by+EwuNt3QJCgHOhq7VkwmiM9X9wKAg7N+fl4XtSAJ2s4Yb+luleGvern/hyRQ7JApkdJ
+	 vubStbqfJZluK+qHD+l1kQtjYobnTa86Xf5AidMbp6Nt72zX1yjqAxIJ79SulQR6liIOk
+	 u5G3VBqvH+UT7nrmsEmFbKrCKiDNiZcP7cKqb2FcBwSuL9BwtwxbfDxh1OQYI9tB+Eg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794465192;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=Qtoj606j6rFnpVRO77nTGjkI7nzW/pv8LuPgpe1eaZ0=;
+	b=zDs98hioHKyB2VafHclY5SchFwRFyVe6YH5BMq2aPDRu73CIQDpCCHA4D9XXEbp6Kwpg
+	 UPKAr7Ynn+ODerpfUOaw38sd61Gm0NGGXpI9qkkgb64uFMKZplDcd9kk8j4oQIkWXCRVk
+	 sr2bhFdC1JNyBNiAYj/o+BfdWxWnsezGGn/UYuKk61O2k8N0ebeBod+2i8DTjvUr2Ji42
+	 NYUFgoGztgJpsQ240n0YxtJQyoAh2mfyB8vP8BrE18IZWOZ4yeQowsib7Tmf5xBUvhFYP
+	 x2WJd4a4ZOyo7kT63aRY3VXsY4oEHK5b27MlA8zFkpKWj7i6lVT7qV3XHCjLzqkNfPg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=k39L8EJ4;
+	arc=none smtp.remote-ip=209.85.161.54
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id C17841F00A06;
-	Thu, 12 Nov 2026 05:57:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794463060;
-	bh=7S1LKfzuZZLFlJkIBHmFDackzkOkv5Y+ABD/BXruYuw=;
-	h=From:Date:Subject:To:Cc:Reply-To;
-	b=kbyRQS2QKLWk0WBJI+kcswgp9s91MjHeE7dfn/52xlOnVqqGg8/ToPoiv3W7Om9ni
-	 kbgJKRrhb+6qUEPvWYnaD31WHCKZWeeL5HnsL/bktwOuJ79HRxuyMVRk+n8bFBL3fO
-	 N/CiTbGD3mbL8qgxXWVYchbaSplxmW+wgAEuFCDCbF9zUXKWFuSeoSkT0VVNGsVugg
-	 mwrvV8XdXM42U/MlwJ9WzjgJX01BFsFZ458s75/X/n/ualSPUlPx79zkyHHmcGMQW1
-	 rcCiBW6fZGE5cqxnhnPh8v/GE5w5HNOKWMVdYkjKoLXofizsE+TF8TIcBW2qB3IyMj
-	 MJrPbwFqCydHg==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 52327492D4;
-	Thu, 12 Nov 2026 05:57:39 +0000 (UTC)
-From: Yusuke Hayashi via B4 Relay <devnull+yusuke8h.gmail.com@kernel.org>
-Date: Thu, 12 Nov 2026 05:57:35 +0000
-Subject: [PATCH] refs: drop unused `peel_iterated_oid()` declaration
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E4D606A31C
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 06:33:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 66E4D606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=k39L8EJ4
+Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-6d68de53053so2552460eaf.0
+        for <git@vger.kernel.org>; Wed, 11 Nov 2026 22:33:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794465191; x=1795069991; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=Qtoj606j6rFnpVRO77nTGjkI7nzW/pv8LuPgpe1eaZ0=;
+        b=k39L8EJ4cWh0OgQSJSD0/ChnW3ZVibbb0u/TisMwh6xTSSJSz9P2lHWfBP5T0VjDfL
+         yR7pVWxpxbaCHAyO4sAfUYPzc8kHHNGZKyIP4qrNBhOeFzE8DelyCh4ogH5kTaPvYfiv
+         GdUerU0LiGM4aTcU4eP2A/ZtI5K7PVgORvMPORHmjAACfB0o61ZgsGOvZSTIFkHfK/2o
+         rmvQPGoEu5qfItyRithshzf3uE6gsK733iLIctCRCxYdlCwXIqGMb1CsVfPynMBFMNQs
+         tsRFSBsrmz3OCZM2TGL3PC3ZuVqyWq2as1h0yhpaTmKTocN2VcwCzcBV5+ZYeg6nhB7I
+         A9hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794465191; x=1795069991;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Qtoj606j6rFnpVRO77nTGjkI7nzW/pv8LuPgpe1eaZ0=;
+        b=k6r/J0wvL0TOp2YvdxgvQoSTPlkWZCtS/Cld3kxKfXVYAQix6aAkgi882+ARwoJbsU
+         OoELZeUros6a8ecsO77w0Q2kElxgUsVwc5M3+draWmO4GE4+1BCVb1ZsSMxnJktDBTF0
+         +s5OAsenpY8EiuDRBudvU707luD5sYMofUk3gSSEFBjScyX5oDiyB/MPp7qYcyZcS913
+         XT6UJijhqeuWM9H7SZemxW5/AhCDMHlBc26jOJHlAbkK5bzM14B099sM214UBRpatk8z
+         l/PdxCxLkiAmLXlfBNCFu2zIM1lfWSL3aYE8ApmFk7rvZQw+PcXpqeFxcecOFtRgsFCt
+         H2xA==
+X-Gm-Message-State: APuU4Z+SsG29+jQCtIhDTixXz+lJoDZ+ULGeAesDGWlos4Bf/fYmtizR
+	UOwwyFmGaTyoHJj5mdCE+69Ksl6nWHRWAFK9YVMQ0MxBWlWuG/A8m3ncwEnbfA==
+X-Gm-Gg: AYBFou1scQ4PWOukpM0E8w72B0L5OeTMQbLq2e+3IpA5wTIToH2/cXploeSCEH8x8RC
+	14olTQiSbZiA7IM0bA3hG8rkTLHVOCp+4lbDSoRxSQG8CNq4poVWVpOcW9bPDPxJ8RPRRv9mKAy
+	KRPZhccT0T3O26VqH3KAQcpdV9/QsE7AuB/Q2Jr4apUMKEYLJ63QCMuDYQh3WwfgAnXJnkyHAeO
+	vCV5GKrKpazUl/uca36ksYBm2NI8G74HxULM2cOIumhpKoC0bCHXiPDhFvWuwbjk4ByekH4DSmL
+	R/RsemEFpvs1b7kK+jX1+hUAHBWtMq5iI8h4ahUW3RMnijCe+jKFBz4Ph3dVOw4ydtGJwknRkQj
+	Vx2dmJzhbdrdIJKGsKRckrPvSeJ/itpR/B5YHVdSW+b5+F96LPuNvjhVdM6+FDtMlj85waQsRMi
+	fm8nAf/p3Amh4iCUcXhhtEvmRYjox7cth2RHMy4yx8ny4l7W9odUtagQOGBddnFbbzbJBlAhuUp
+	VfB15nk0r0AI9c6B55FuFwS26NxVADgTJNMafBfm8fdY0ClfZc4K902bWo0mX0VxHL7bnmBpdS9
+	PL/wBFjUFqUBJKybe3GH5BnSFDebnpIxBg==
+X-Received: by 2002:a05:6820:7094:10b0:716:cfac:bc32 with SMTP id 006d021491bc7-7191798d728mr1977712eaf.71.1794465191139;
+        Wed, 11 Nov 2026 22:33:11 -0800 (PST)
+Received: from [127.0.0.1] ([135.233.118.84])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-71a7b115cb5sm93135eaf.12.2026.11.11.22.33.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Nov 2026 22:33:09 -0800 (PST)
+Message-Id: <pull.2308.git.1794465188325.gitgitgadget@gmail.com>
+From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 12 Nov 2026 06:33:08 +0000
+Subject: [PATCH] archive: remove USE_THE_REPOSITORY_VARIABLE from archival
+ modules
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -82,70 +94,161 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261112-refs-drop-peel-iterated-oid-v1-1-7df1c313e293@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAE5V9WoC/yXMQQrCMBBG4auUWTvQCSjoVcRFzPzVEWlCJopQe
- ndjXX7weAs5qsHpNCxU8Ta3PHfIbqB0j/MNbNpNYQwHEQlcMTlrzYUL8GRrqLFBOZsyFOE4CiT
- tI/VD6bF9tvv58re/rg+k9lvSun4But0yAX8AAAA=
-X-Change-ID: 20261112-refs-drop-peel-iterated-oid-ede2901e1c5a
 To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, 
- Yusuke Hayashi <yusuke8h@gmail.com>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794463058; l=1405;
- i=yusuke8h@gmail.com; s=20261112; h=from:subject:message-id;
- bh=dC5up5AgSmgB4z4cviymA6G535FcTBxD4cy7cR+IDW8=;
- b=81zYynGe+1TZePPrjZgJnfxyxZNNTPrub1dBBsheufc1+o9GUrdwT1rsE22qHNqqZ3rP+FBzs
- AJweKuLgQ9ED36U7bW8GPMeC40XMAiH5ACqQB0/ADj5wbqHPGhxOU2j
-X-Developer-Key: i=yusuke8h@gmail.com; a=ed25519;
- pk=7SzYbbTWl4u1a0gmKeMxAqo7g7F1K7tnWWGWQ+LnNNs=
-X-Endpoint-Received: by B4 Relay for yusuke8h@gmail.com/20261112 with
- auth_id=1495
-X-Original-From: Yusuke Hayashi <yusuke8h@gmail.com>
-Reply-To: yusuke8h@gmail.com
-Content-Transfer-Encoding: 7bit
+Cc: Srujith A Poojary <poojarysrujith@gmail.com>,
+    Srujith A Poojary <poojarysrujith@gmail.com>
 
-From: Yusuke Hayashi <yusuke8h@gmail.com>
+From: Srujith A Poojary <poojarysrujith@gmail.com>
 
-Commit 5a5c7359f7 (refs: drop `current_ref_iter` hack, 2025-10-23)
-removed `peel_iterated_oid()` from "refs.c" after converting all of its
-callers to `reference_get_peeled_oid()`, leaving behind the declaration
-in "refs.h".
+Refactor archive-tar.c, archive-zip.c, archive.c, builtin/archive.c,
+builtin/upload-archive.c, and diagnose.c to accept and pass explicit
+struct repository pointers instead of relying on global repository state.
 
-Remove the unused declaration and its comment.
-
-Signed-off-by: Yusuke Hayashi <yusuke8h@gmail.com>
+Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
 ---
- refs.h | 13 -------------
- 1 file changed, 13 deletions(-)
+    archive: remove USE_THE_REPOSITORY_VARIABLE from archival modules
 
-diff --git a/refs.h b/refs.h
-index ee3b8a62ef..73076cba2f 100644
---- a/refs.h
-+++ b/refs.h
-@@ -178,19 +178,6 @@ void ref_store_release(struct ref_store *ref_store);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2308%2Fpoojarysrujith%2Farchive-refactor-clean-v1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2308/poojarysrujith/archive-refactor-clean-v1-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2308
+
+ archive-tar.c            | 7 +++----
+ archive-zip.c            | 3 ++-
+ archive.c                | 6 +++---
+ archive.h                | 6 +++---
+ builtin/archive.c        | 2 +-
+ builtin/upload-archive.c | 2 +-
+ diagnose.c               | 2 +-
+ 7 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/archive-tar.c b/archive-tar.c
+index a1c66024d4..5243446701 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -2,7 +2,6 @@
+  * Copyright (c) 2005, 2006 Rene Scharfe
   */
- int ref_store_remove_on_disk(struct ref_store *refs, struct strbuf *err);
  
--/*
-- * Return the peeled value of the oid currently being iterated via
-- * for_each_ref(), etc. This is equivalent to calling:
-- *
-- *   peel_object(r, oid, &peeled);
-- *
-- * with the "oid" value given to the refs_for_each_cb callback, except
-- * that some ref storage may be able to answer the query without
-- * actually loading the object in memory.
-- */
--int peel_iterated_oid(struct repository *r,
--		      const struct object_id *base, struct object_id *peeled);
--
- /**
-  * Resolve refname in the nested "gitlink" repository in the specified
-  * submodule (which must be non-NULL). If the resolution is
+-#define USE_THE_REPOSITORY_VARIABLE
+ 
+ #include "git-compat-util.h"
+ #include "config.h"
+@@ -337,7 +336,7 @@ static void write_global_extended_header(struct archiver_args *args)
+ 	if (oid)
+ 		strbuf_append_ext_header(&ext_header, "comment",
+ 					 oid_to_hex(oid),
+-					 the_hash_algo->hexsz);
++					 args->repo->hash_algo->hexsz);
+ 	if (args->time > USTAR_MAX_MTIME) {
+ 		strbuf_append_ext_header_uint(&ext_header, "mtime",
+ 					      args->time);
+@@ -526,7 +525,7 @@ static struct archiver tar_archiver = {
+ 	.flags = ARCHIVER_REMOTE,
+ };
+ 
+-void init_tar_archiver(void)
++void init_tar_archiver(struct repository *repo)
+ {
+ 	int i;
+ 	register_archiver(&tar_archiver);
+@@ -535,7 +534,7 @@ void init_tar_archiver(void)
+ 	tar_filter_config("tar.tgz.remote", "true", NULL);
+ 	tar_filter_config("tar.tar.gz.command", internal_gzip_command, NULL);
+ 	tar_filter_config("tar.tar.gz.remote", "true", NULL);
+-	repo_config(the_repository, git_tar_config, NULL);
++	repo_config(repo, git_tar_config, NULL);
+ 	for (i = 0; i < nr_tar_filters; i++) {
+ 		/* omit any filters that never had a command configured */
+ 		if (tar_filters[i]->filter_command)
+diff --git a/archive-zip.c b/archive-zip.c
+index 279c3a2d72..b02fb9be38 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -655,7 +655,8 @@ static struct archiver zip_archiver = {
+ 	.flags = ARCHIVER_WANT_COMPRESSION_LEVELS|ARCHIVER_REMOTE,
+ };
+ 
+-void init_zip_archiver(void)
++void init_zip_archiver(struct repository *repo)
+ {
++	(void)repo;
+ 	register_archiver(&zip_archiver);
+ }
+diff --git a/archive.c b/archive.c
+index 59790be986..e9e2e241c3 100644
+--- a/archive.c
++++ b/archive.c
+@@ -43,10 +43,10 @@ void register_archiver(struct archiver *ar)
+ 	archivers[nr_archivers++] = ar;
+ }
+ 
+-void init_archivers(void)
++void init_archivers(struct repository *repo)
+ {
+-	init_tar_archiver();
+-	init_zip_archiver();
++	init_tar_archiver(repo);
++	init_zip_archiver(repo);
+ }
+ 
+ static void format_subst(const struct commit *commit,
+diff --git a/archive.h b/archive.h
+index bbe65ba0f9..8ec59b22e9 100644
+--- a/archive.h
++++ b/archive.h
+@@ -48,9 +48,9 @@ struct archiver {
+ };
+ void register_archiver(struct archiver *);
+ 
+-void init_tar_archiver(void);
+-void init_zip_archiver(void);
+-void init_archivers(void);
++void init_tar_archiver(struct repository *repo);
++void init_zip_archiver(struct repository *repo);
++void init_archivers(struct repository *repo);
+ 
+ typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
+ 					const struct object_id *oid,
+diff --git a/builtin/archive.c b/builtin/archive.c
+index 3c1288a123..2c01d7b6e7 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -97,7 +97,7 @@ int cmd_archive(int argc,
+ 	argc = parse_options(argc, argv, prefix, local_opts, NULL,
+ 			     PARSE_OPT_KEEP_ALL);
+ 
+-	init_archivers();
++	init_archivers(repo);
+ 
+ 	if (output)
+ 		create_output_file(output);
+diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+index 718e74b3ac..3cfc7ffaf3 100644
+--- a/builtin/upload-archive.c
++++ b/builtin/upload-archive.c
+@@ -34,7 +34,7 @@ int cmd_upload_archive_writer(int argc,
+ 	if (!enter_repo(the_repository, argv[1], 0))
+ 		die("'%s' does not appear to be a git repository", argv[1]);
+ 
+-	init_archivers();
++	init_archivers(the_repository);
+ 
+ 	/* put received options in sent_argv[] */
+ 	strvec_push(&sent_argv, "git-upload-archive");
+diff --git a/diagnose.c b/diagnose.c
+index 2c1bcfe431..c642dde351 100644
+--- a/diagnose.c
++++ b/diagnose.c
+@@ -212,7 +212,7 @@ int create_diagnostics_archive(struct repository *r,
+ 		goto diagnose_cleanup;
+ 	}
+ 
+-	init_zip_archiver();
++	init_zip_archiver(r);
+ 	strvec_pushl(&archiver_args, "git-diagnose", "--format=zip", NULL);
+ 
+ 	strbuf_reset(&buf);
 
----
 base-commit: 1891de46f79dc444a47db1c87bd0c8c76b5463f2
-change-id: 20261112-refs-drop-peel-iterated-oid-ede2901e1c5a
-
-
+-- 
+gitgitgadget
