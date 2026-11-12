@@ -1,120 +1,126 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794511335;
-	b=crqDNWCX7eBvnfecZWAmrygzRKUA4cf88/BMseKTiT/ryxqCteq2CyoPxjR9RQzvy93L
-	 LzrhqUoRBeg4u3rMkmfy3XjDkFDajoeZeuN6heQgXrQ7SjslnSokeUUU0/m9ubF291FXK
-	 Xd5mhxw/0wcbj4ar78XSleW3v+A+Xs01RZjPFMe7C/uvwt/yNZwrfV476gWLlWV1Q/ZOp
-	 gWfzvE6EhhIXBOHmxbsf1iMEKN9Y2WfsoaXb+Hpp6RgoJ2NYXCkwMu0qm13yMG3y/YgXD
-	 nhbt/ZnRldQcEyYr4EZrDda0EhzGfLNaQo02BpCCPxlIolBkbIs0H7TlSe3xepws4jg==
+	t=1794511516;
+	b=XMqY4zw8KzPELdUk10mNr5HvIENcivVarnH7C/nYXCppJEroXtmwIuMCBrZ1R6+nIieH
+	 azzMcnqGBMJrPhAoeC1L6SPiv/3q59neQbdve8MppnYxgck0Kh3wnpvpAp8KHeYRrwvGl
+	 phUiJJh27EhcEWeC8qNGoxxqhIbJ7wZ4t0LUdzS5wr/iXm4smEA27sJmZhF5RE4NUeC2h
+	 PkUjg7h5Y4TYxrXJXtgHH/+mKa+fKao7ECjIcug+iWwsD+o0MkQafTjaqoYuLdFQzSu7d
+	 y7J4SCkqobHO4Y6w/lrgtY/TeIRp4oLashBKItVSAGI38vHgdjnawwoqF4SvjYHukSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794511335;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794511516;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=QIDMAy6IApHsw5g/OD4zVc540mO5VeHf+nNmg/V45PA=;
-	b=uegp+FcGJIZMjBfBY/EK5UKdNtQyva092eSVKO7Fblemv4NEws3WtzNtkIb/QZZ4IHfn
-	 e8EyeBBBK+rSsrYTn4DzeqOMjzlIuvF2mlQBhiFmQXXAldQRTGk8FXt3UdJ6UEBZQJP3H
-	 7b1DlQNyJOWkGqMw94xkxMSfCD28S/5kS8JMfAkkHs8rWtCxJ3K9M2KShH+UAKTHIf4jX
-	 WKvHU+3LUYzBfnKgk7kchhsZewPf7qyuZM91e7Au5gRnjrPy0MUbroo5mfpvan+Hq1MjW
-	 JMrKjT6wQA38NnXngSW6vwlmvvV1NH0Vt6t+QLQIgdwBCfqALquM/1EChwW+cj2QEUg==
+	bh=Sbukg2MtKRBS4RjbqNULoHAglxCZuR2X8RfgbqptNAo=;
+	b=PEu+z+QCtkMZS72iRJG6ZOt7tVYW3dEuaw3Wki0lmAJTW/EaJVHM31ti9M9FvpK8uxmb
+	 BMa6uH1i5Vv8aJM6hPGDZvqztsJ2cLn389/sOpAgWgdPObRmzQC/tAO80cY+BikAnbjln
+	 J+nJbKWq0VbZSrGR3aNnHPCeyhu6UmoiaVLG94YgeyiDyqu6J3B5XLmyz1Y461JVa5LW/
+	 KwVatXZ/u3WDyghKkF+5UCDvwNyiQqNtU+zw0Ehl6yQNWb08l2YzZSR8Bqm3xum3menNs
+	 jAvEjHMdCi/bGgGPJSwyCJrZcy1Y8rz/JqRgFDYDvoyo4mTmpdUfFfANXMbDbCk278w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=PpC5Lqz7;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=phRHj4DE;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=DfIFv49n;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=RuK4l20M;
 	arc=none smtp.remote-ip=202.12.124.151
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856EA606A31C
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 19:22:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 856EA606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43513606A323
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 19:25:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 43513606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=PpC5Lqz7;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=phRHj4DE
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id D8F991D00259
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 14:22:13 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=DfIFv49n;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=RuK4l20M
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 96DE61D00364
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 14:25:15 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 12 Nov 2026 14:22:13 -0500
+  by phl-compute-04.internal (MEProxy); Thu, 12 Nov 2026 14:25:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794511333; x=1794597733; bh=QIDMAy6IAp
-	Hsw5g/OD4zVc540mO5VeHf+nNmg/V45PA=; b=PpC5Lqz7kTUTUA3eRQRROJKGVN
-	0fRnHm2x3i6/joiluTFizIV9XdIGzpRSpfWNmQ5LfScRyNBy1pA//XqBIM24oz0k
-	+jX4RivYYNQMjCkmbA4hpRT9YYC3/+SfxwiWiHRoYVdDYuPj/CqVc4PUDXn9SogS
-	9yEnOWktRgEU1pYLSy/KEN6wgsn2jB30J1PV/bf/LPhdRe+AkWjd4+7y7jZJEOv5
-	bV75T1hIVr5DOl+G96Y8wlN+vdR6ykxUGduyjlXo5jLNkqgwQ3b1fx/Ya2LlfR8S
-	d6/Sla/iB94TePF4uY/cOuChqSR7hQujC6klWkrhUqvpz6Xzx64T3W4ah57A==
+	:subject:to:to; s=fm2; t=1794511515; x=1794597915; bh=Sbukg2MtKR
+	BS4RjbqNULoHAglxCZuR2X8RfgbqptNAo=; b=DfIFv49nQ0+l0Q9bn5c8C1hLH7
+	9uDl7EMDMzE2R/8yiFOqhnTqw3FpNu2/wjwsZEnY3oc368U2sFqhVUQ02igRsouQ
+	fbPViH/sZX5XrJBRO5uAVmNO3C/x6oHpq+3UkOM5/Tot27VLx/5qxxzQip3lXygg
+	okoZbrvQ+QAIUr31qr0+OcQuo7BGpqZO2vAh6mKA9rEZJQ8XrR5BccLowDBoQL1F
+	K9MCa/k9MxhWItstTzf6b0qEuUQckooT3h2wEFzQLFcwUQscY52DtjivdoyIffff
+	kkAZRgymVYmePTxMP71WFLEqcLmlv7O5FAo/GV7vgqSPJKxMIRUc0yvv8/7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794511333; x=1794597733; bh=QIDMAy6IApHsw5g/OD4zVc540mO5VeHf+nN
-	mg/V45PA=; b=phRHj4DEh6DAmag+LMWsE4p27XA2MnyfMVzQhy5xsEslK9XwJcH
-	ktoxh6EhBGsp7NqmjE4aryKWeadLS77uV4Rt5hYTpmf/QCgX8m/Ngo8cSyJbmBlP
-	J18cysCTicQEAu0vVB/FhP0ST14eYwwnaG/yooa2QHee47A9l4IBnK4eJPcgY8CN
-	CAcdoSzl3rjuuwn5WMzg1MyqAC2FFPP2s0SFEZecxobdM6LGl8g2j6bWBSq2ZNgB
-	Me6nZdUOYn0o3hnyrnVMnrS4L5Azs0FtDo1BPV5mMhM7O8JrtwpB3q2EW3nXj5hq
-	X/X57FqV+TGtVH9X4JFdkEEccGKAXdDXfBA==
+	1794511515; x=1794597915; bh=Sbukg2MtKRBS4RjbqNULoHAglxCZuR2X8Rf
+	gbqptNAo=; b=RuK4l20MjAhp68YUjbfAh4ZMLb6EzVajrAnB0XatoYgfvlgkxM+
+	MVV8LCml+yFcU8i7AtkB3ojDEWT88gHMHkIi9hL1V3PIOrHGs2MfppdSpl8dbTOm
+	vwYIjNIZ/HZ8VsT3AqSq4LUpGeaH/9x/pWCFUAeom2AL/cNm+GOZyv7qHO2hsxYo
+	o4AiVWo3WLM8XK6jjY/FNQzCaZukq0G2zxbG88lEwQ4PJ0CKkngpVzIov7ds8PIP
+	IsHT0trxm3op2jtyNR431xrwiD2xvyggX75zcs7rNZ99/KMsqy+m1gcPZllPm6yy
+	jDwZsjVRgHp6VXCYHkrma+0hSAuvCbTK8tA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794511333; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794511515; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:jGAQpDq2Yt0ok9Z/JU07hWN1bhoxVeXWCWmRYuwL6cPsroK
-	Z3T+c2N3XjgRKlFc6LNH/xZ/tFXgwAsvPNyxtMLiXp0GyJNuET/Aon5N4St6hpMJ
-	UB04+eIjjlmzdWMVEnJk+hQK2NMB98g5p5oZIQu1/m0G49hfEQlW2jXnYPoMa2Rs
-	HfcRxaVTs/9F1nLoilMkjLDhIzE79ZFIncINoHiZKcQrjdxA4MCSKc89CQMro/F9
-	SS2o6431RtpFXj4OXRkpoV6u9SZunEh4XIkIfuCJeO1MYRzIbV9aeRTMvoiyB+4b
-	u9HMcVrxwbPG8IG2tKpfjDWhBBrJX9/07o86Lzg==;
+	s=fm2:rsa-sha256:CW6j7+Uxb9Jmk3nT5J5jk0gc8HHyuurVBcOUXFqUkApUrxz
+	+Z6mz89YwU1bWT9tOvQMLJQLKsUb2zgIz8UNSJ8qymlUhJ17z1ohV0+GfjHB92MB
+	+2erfRSm8XGPumsv6WpjhqPEIcGMOYmnWKsgoYE4xHwY+bFM4OOMS5sl15zBb8hw
+	YZL8w/m/uPGHuVLV1IRTRDXZjbADMvWIDELuZJpBiYPnPVfJesYO9sx0nPI982qT
+	TSzL1DaGybtuejgZ6Sfvqcrs0mh2UYOwuSSYh+l8I4+5SGW1GwvV2gde0Dz6CG/F
+	F04lQ9+PXztjL857MHVKd/tbixOMHHZf+Peg46g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:4NywTD+8DgNQNZFUvJJvqF2QKUKgfwlI2hCD4jbslVM=:G/qqdaT+Yp5mlXzLdOMu/T1AS5lAaMh0CYCh4yX1zb8=;
-X-ME-Sender: <xms:5RH2aqlURfHc-tJtSOJsouQqGQ5qikwGG5Ub-84rtEL0VRd7M3plIQ>
-    <xme:5RH2aovIjblqMjeEc9c1KATK6IsyyIyKbe4rxtwKThatgby4ywjWFAUluGW1zvDmi
-    -aZELmhqEeMEZ7XQ_isNU_TDVfkC4bPl_zDkzLjhwfTRR8f0EZ5NQ>
-X-ME-Received: <xmr:5RH2ag_YwXCnE4yRZ6bNXy7I2zyi15WM7kukS8D0WNKw22OhrwJjpus_Jbk2UsZXaGwyDe5VtUX8Szp46ULbRHlOt7Y2ER3iQYF3>
+Message-Instance: m=1; h=sha256:UPXw/riAAiPFTZ5QCi34Z+LcgyIedLGZB4C70cg+Ubg=:LIFRh55OvPPIK/F4qjh2XKGmrCPFIqMGF+513ZqL4dY=;
+X-ME-Sender: <xms:mhL2alwn_JTb-k8BF0QBjch2Oy5kmrTJtwwrLbBHm9T7SBtt-pyAzA>
+    <xme:mhL2ao-r-gLyq0i40JleM07E4N1SEh9-SwP4I4-9LjzNF8zJZWqlMK2Ix5hrmkPwS
+    bzpqiDVVYjJe0-KokGFAwVnM3t58mYmoI_ppwzLNE278FKZtwP_-Q>
+X-ME-Received: <xmr:mhL2apLgdO3Yy5yAR4kdic5k63adWBy0Yk3YcRExTTJtSc5fL9AsmJpXWIwvMWN7yzsbPJjCSC8lhQmA-kuF6PFeogVh78q8B6ju>
 X-ME-Proxy-Cause: dmFkZTEUGLahXWUO3LJeYRa258nOvbeDUU7zFDfAQ0kNRjLp7/XL7F1znvjiUPkIG9VgsK
     i35zVCUUI1r5iosuDVsVw0RyWLV2LcNeQ2gtV8+xwpQwRiPC7/5LwEth2+xSM7yll8vXPE
     eZXyTnVyUcLRXhNmlKbQZMoEEgeXNn5EpECFUO3YsDv4XeUuXnp8BYFY4GqeEDckXkVpHg
     5ljPXmP22+M4yfkNSFZdovRwXPWd51F/ly2t8yr0G9YNUtPqXc9smjLXv40nK3ag7oSBy7
-    j2vXlklSvBG9FHs3Vqphx+Y+cgKI8wmxHzt5xTBhzYcr1lGj92lBwoWK7XM+hQfmpOe2HF
-    lYliL/babZ9rKbJ3nxfjfDMx2cWUa1d7OgVlciWLz1mIwgafIR8oeMAPWa1bf6OfwvMVzM
-    TI7zlJs0FSoZRXn0+QFJQzkFE0cM+X81WbfCqtbHLtd1bzpEDqprJbv/KOpfTAGKul1MDs
-    oscwYSt/WCEaH1smp2Z+cSvzTvg0dUWq8r+lz17GAuk3mYzpeCnRW5Vvl0Ab6na+TSyMa2
-    ixbFuUDq4lgujNQjOWjL5GHy6016HeAD3s1CqGlfxXS2PaTz96/tAxBok8yVqj1EJ8vyic
-    c3K9oDUEbXIqsm0rd7jMePnsVu0MRCRC5EGpWF947JboAKEP4KgiNoms55qw
-X-ME-Proxy: <xmx:5RH2aqOiG-ALAJsG7JVNggFCHEZ0lX_tgN1CGzPymrF3IWSrHTAh9g>
-    <xmx:5RH2amFuPL1_rK7jmPlzZxO4sS6pwqyRboVeKsKXsAzpG9sbY7a3Kw>
-    <xmx:5RH2agR_TsE4oll1bITRsG7TOCPLxo1B9QzEk81j2pdspHqvMIk9lA>
-    <xmx:5RH2arv0crppAqeai18WsZLOPKfONu73uHNbuduRQjq33QSUPOmsCw>
-    <xmx:5RH2atNpy0sFdTInWY79--O6JUrJJjm7AcrDpRxh8mjv-6PHUPlVHjT5>
+    j2vXlklSvBG9FHs3Vqphx+Y+cgKI8wmxHzt5xTBhzYcr1lGj92lBwoWK7XM+hQfmpOe2iZ
+    0jtDTVPg8tMZmlF+2FIZytktClDRDHFahUe5DdA6j5UJOia1YW6kV9Q6OY+ybbKvRphrrX
+    2lykQRRdOWRHpgqGzSwc57VCaIegOFSOOid9ZJ+yz33E9pj1RihHCPY7qlADryUkF4Q8bm
+    5mSM54FXyBnMYFtH89RV5BwH8/eai436bdM8LSW3tTRAmCM04h0bVC5wXCQCQx9RFivhYw
+    njz51lTYus2ionWil6XlX1pkWD3lvObXMrhzK8+vs8w9SfVvV4yiXu5Hi9/JlGY7HO8E5B
+    ZNea3YD0SgTvwpOb6sYkxqfm4/rKLsyVRTjALQ3OMlsYYAC5hTFU4T7nyMmA
+X-ME-Proxy: <xmx:mhL2auc5DKMFA6gYb_2HMYgfAsNq0IBsPxl6981nzbnkYaMLxrlwLw>
+    <xmx:mhL2ao8ApIGEX3WtYDpX6kq1b3ZBuqDEOKEeta-XBl7_iOnPq3zhaw>
+    <xmx:mhL2arrVWKCszVnTwswxGeS3T7Hd_wDKBUAMQZUudvREiw5aq407BQ>
+    <xmx:mhL2atCSWHdCm7_KSybHHdm1sRy0lsG_MZNn23cs1xF17y0tiwINMQ>
+    <xmx:mxL2anVNTxMOLt_J_432KnpVjj7rHV-LAc6h0fps7cjhdE1AR-bBH-OX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Nov 2026 14:22:13 -0500 (EST)
+ 12 Nov 2026 14:25:14 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Kristofer
- Karlsson <krka@spotify.com>
-Subject: Re: [PATCH] commit: remove padding from struct commit
-In-Reply-To: <pull.2309.git.1794500044740.gitgitgadget@gmail.com> (Kristofer
-	Karlsson via GitGitGadget's message of "Thu, 12 Nov 2026 16:14:04
-	+0000")
-References: <pull.2309.git.1794500044740.gitgitgadget@gmail.com>
-Date: Thu, 12 Nov 2026 11:22:11 -0800
-Message-ID: <xmqqpkw9j1ng.fsf@gitster.g>
+To: Julia Evans <julia@jvns.ca>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Julia Evans via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
+In-Reply-To: <931a94e4-feab-49a9-b5c6-479f0d7f8b75@jvns.ca> (Julia Evans's
+	message of "Thu, 12 Nov 2026 11:37:35 -0500")
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+	<pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
+	<xmqqh5ile4h4.fsf@gitster.g>
+	<CALnO6CBGcG42NxtpuPaJVrzAMC=J8iVstsHCSi6vDQhDmFJ-Kw@mail.gmail.com>
+	<ddc6d42c-6e40-46a5-bb70-f89f11525ac4@jvns.ca>
+	<xmqq5wy2kqhl.fsf@gitster.g>
+	<931a94e4-feab-49a9-b5c6-479f0d7f8b75@jvns.ca>
+Date: Thu, 12 Nov 2026 11:25:13 -0800
+Message-ID: <xmqqik21j1ie.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -127,86 +133,34 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Julia Evans <julia@jvns.ca> writes:
 
-> From: Kristofer Karlsson <krka@spotify.com>
+>> I guess it requires a developer's mindset and imagination to
+>> appreciate why detached HEAD is useful while spelunking.  We often
+>> phrase the act of visiting random commits (often older ones) as
+>> "sight-seeing", but in reality, even when you are mostly looking,
+>> you do want to futz with things you see there.
 >
-> On 64-bit platforms, "struct commit" is 80 bytes, 8 of which are
-> padding:
->  - 4 bytes between .object and .date
->  - 4 bytes of tail padding after .index
-> ...
-> Measuring peak RSS of "git rev-list --all" over an internal monorepo
-> with ~4.5 million commits (three runs each):
->
->              peak RSS     time
->   before     ~849 MiB   12.8-13.7s
->   after      ~817 MiB   12.8-13.0s
->
-> The ~32 MiB saved is close to the expected 8 bytes * 4.5M commits
-> (~34 MiB); running time is unchanged within noise.
->
-> Signed-off-by: Kristofer Karlsson <krka@spotify.com>
-> ---
->     I also prototyped a regression test that compares the size of "struct
->     commit" and "struct object" against the sum of their members' sizes,
->     plus any expected padding. I left it out of this patch because I am not
->     sure whether:
->     
->      1. such a test is worth the cost of updating it whenever members are
->         added or removed, or
->     
->      2. a unit test is the right place for it.
->     
->     I am happy to send it as a follow-up if there is interest.
+> I'm not sure what you mean by "it requires a developer's mindset", in my 
+> time working as a developer using Git I never ran into a case where I 
+> would have needed to clobber a branch in this way :)
 
-The comment before this structure says ...
+Sightseeing is not just going to look and see, but touching and
+breaking things.  That kind of curiosity was what I meant by a
+developer's mindset.
 
-> diff --git a/commit.h b/commit.h
-> index 1061ed791b..66a5d245f2 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -26,6 +26,7 @@ struct commit_list {
->   */
+And of course, I never ran into a case where I needed to clobber a
+branch, either.  That is why I do not work on other people's topic
+branches to begin with, and make use of detached HEAD instead.
 
-/*
- * The size of this struct matters in full repo walk operations like
- * 'git clone' or 'git gc'. Consider using commit-slab to attach data
- * to a commit instead of adding new fields here.
- */
+In any case, now we have a shared better understanding of where
+"where your current work started" and "will be the parent of your
+next commit" came from.  Hopefully the next iteration will become
+clearer on these points?  I think the central difference is that you
+seem to consider detached HEAD state is only about pure sightseeing
+while it was designed to allow touching and breaking.  If the user
+is not making any changes, of course it does not make sense to talk
+about "your current changes" or "next commit".  But detached HEAD is
+not limited to such a world view.
 
-but apparently it did not have much effect to prevent this from
-happening.
-
-I would think it is an effective way to force people to think struct
-size bloat of important and populous structure to always measure and
-warn.  There may be better ways to achieve the same that others may
-think of, but I very much appreciate your bringing it up, even only
-as a discussion starter.
-
->  struct commit {
->  	struct object object;
-> +	unsigned int index;
->  	timestamp_t date;
->  	struct commit_list *parents;
->  
-> @@ -35,7 +36,6 @@ struct commit {
->  	 * or get_commit_tree_oid().
->  	 */
->  	struct tree *maybe_tree;
-> -	unsigned int index;
->  };
-
-Obviously, ordering members based on size, not their logical
-relationships, has its downside.  The "object" being at offset 0 is
-an integral part of our in-core object design (fake inheritance in
-C), but the updated layout gives a false sense that somehow "index"
-may have a more important meaning than say "date" or "parents".
-
-We may want to have some comments next to "index" (which is a unique
-number given to all in-core commits while they are held in memory,
-to allow the commit slab subsystem to use it as an index into flat
-array of things) and "date" (which is the committer date taken from
-the underlying commit object, without any adjustment), which are two
-of these members whose meanings are not immediately obvious.
+Thanks.
