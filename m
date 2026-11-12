@@ -1,87 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794504874;
-	b=XOCfDh1ynK1KS7otZJ+NKXzUWUm0xQDUB+OfaHARdNb7i+i4/uSeIZWJvcF5jkyjK0yx
-	 5ySsopYTtMz0S1bV69i02QUvhv60rSXMTlPImtc2it5vVRYVxVDw2LdCMwGtm1nDInPUH
-	 kFGQwghO1EDpCngjwxxEljOxEIZjpRbFulxM/qY/LFN0jpvPwc0yjmulF2vKcTY9wodPS
-	 kTdPqdpLfdmXE/qoqBtwAhqMT8CIz+M0KiHMemwif+5Gan1pO7hsNSP1IoJ+heAe6caGQ
-	 O/habunVjkBh9dg/jeMA33sDnPYewjqDW2zUcAgV30fdZ8RqhVkkD0M3AAFWuBGTYMA==
+	t=1794504875;
+	b=DEnislE9p8tX+H2WPFNrzmT0QXJhmH7oig7TbX0+nV2gtZ0EwCcPbkDtxfK5gJ29kclP
+	 iq/x+APMSLGga7DrZzbuBMeKqdFWzAunmCbroD5no37uq5Yl05eO0MJWxoYr5CVT2QKSW
+	 KuUooc38SVRE2ztHgethv5z4v1QXd77bMj25qgAHAEUvmUkyyNEOhXkg5InGOCzkwdqSt
+	 hIpjffQ4h+hXK9vaxFKSul7rilwoZYwe9cCeeUOw91Vr1AXSDqPKdT+wSVXWnHTjgP+MO
+	 /qZOTlS4SyIAwl2INIYMbAPrs9bx7z/GH7Phv1eJyRfGAxrl8LZvbiXsCBe8BV9QTCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794504874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794504875;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=5PY5Azniuv+mPwBwtXzdWRWbLH9xMYnDu4CQ9Ev3B/M=;
-	b=nKFJsAjMwHVwmaoVB0VSxMQ+tXn5P8WXqswL4sZSn3tmaknWgrvYMPckxwsH3FEMhtOS
-	 17DT7M5tvRRfezlJ1O3w6tDKMDAML6q4zGsxKJHBNHd2SBQ+yl7kSPJ4sMYKxibUrsmzm
-	 c2XKoP983LymleR6NphQq6UWvRjvPkd5rM5AYbTeWBb+nvPxdNfxBJV5UVJaznNs2kk7P
-	 RgzE/F0hHOFG56BS6r/Vdp4Q0WVIYa5crLCktUSHxaQ253mCYIoY9alMI+kExJz6pNJaT
-	 AKSJpv2z18fbF5rgKsdWhnFI+D0sHGeRlL956q1wdx2oYFXzWHX3WNlDjN/fKDeHNMg==
+	bh=xk7DBxPemW7OJa8hYbFRB4QKhCzlxNjCNzGJUNSuibI=;
+	b=EzBro17BByL3Jnu8SQEcKSvufmNVxdAf3kedU4QAyNF+6npCrG70iRKg210/C8t9AKG8
+	 lly+IegtAf1hgsg5uz2N0qZ4+qJF5vqXhv362hMaMGq9NyDHL95KB5OaJen69ZL51Kf/k
+	 s137D0mYRgd6OXSByuASYMN4o8c6I839mMJZW51Htl7z+46YFor3EJDcBoyTz4wP0a3oT
+	 85jCFeJzCrJSUy1y7VnHUGQnrlK5l4ygg+o8NXuRMjZVjZRIzZhocolIBkP1DpiHJRt34
+	 UUF533E5Idiy2ppevNT6mOstORzK9arWSfVmn/lFEH2M8CZXQJ+Ch+E7Om6ojkhbZLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=b3sM62v+;
-	arc=none smtp.remote-ip=209.85.221.47
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=itT2H2IV;
+	arc=none smtp.remote-ip=209.85.221.43
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39077606DF06
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BCC606DF26
 	for <git@vger.kernel.org>; Thu, 12 Nov 2026 17:34:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 39077606DF06
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 11BCC606DF26
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=b3sM62v+
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-491846221ffso655f8f.3
-        for <git@vger.kernel.org>; Thu, 12 Nov 2026 09:34:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=itT2H2IV
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-492fcbfaa87so3022889f8f.3
+        for <git@vger.kernel.org>; Thu, 12 Nov 2026 09:34:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20260707; t=1794504873; x=1795109673; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=5PY5Azniuv+mPwBwtXzdWRWbLH9xMYnDu4CQ9Ev3B/M=;
-        b=b3sM62v+9cp71dNfjev8ttCIdvvMktl4CV6OaRyT+YGOhz4YOPr7Rc3cXGMwCro1Au
-         WotU/YaZgXI0OYUvTWtcXhn13Y8zgnNN3jwoOKHkIkzRAFn9EFQEbVZRvEObrr35uIdw
-         uYBMvrxcvDpYSCp+GDCjxGP/aW3udUbPKeEOHlDMeCiRPKlW0W11R421z1Pe1Bj9MWmW
-         BdzQN2/nxYL5mIUZQdG4Npiq5UU6jU8TO5mjS4s8+tE5p2fG/JIhdEBRTXKFaTGC5zYh
-         +Wt1YBTus5oqX1T85EV00DdtxiBJ5uXzgvyOobZbzunf9LhZrhAHu7zQU7y0VfXfVU/W
-         1vBw==
+        bh=xk7DBxPemW7OJa8hYbFRB4QKhCzlxNjCNzGJUNSuibI=;
+        b=itT2H2IV0U/n9SAa3d2t42xB1HIPZVjv0I473RxtGEfwD+NCTurODdHBzvoiZiI5xP
+         f96ksdBN6kt+dE/tR6k2G7Mbbtd2Foq89vjROeGqzO+YZdwVKajc+smeHESORVVZAZvN
+         MIjEXU+zPhV6gvdphB/YxgMXlmHY7VPKf4J2Dgy3MUCcpR4sy/cNoBtcaymPN75RSdSz
+         bq1Itovk0piRCliMevLDG+yhSmyycZB3LfsA1Fe8z0P0kCyk89CTbQiVBxK3bZ6l3KBq
+         spc/HmDspVs4URhwVHV9azS6NEOhkfbUTkTWVh/3Rr8YUsVRA6Dqj7kc5YGEhacitH0C
+         xV9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20260707; t=1794504873; x=1795109673;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=5PY5Azniuv+mPwBwtXzdWRWbLH9xMYnDu4CQ9Ev3B/M=;
-        b=LhMOK8MVir3wVmXcoIM3RbU3RDTM7HcGXRNa2uAIbnmCZCw/tsKx2xECHEmzZoRplI
-         KkunHdSRf4+cdWQDsLbzPk8N5Xg3YJ21Wg0A5jbyZQZE87zt/BVi0pNkjbtF4Jrw2A5Z
-         rQuWRuDT6coQJpQkq9NNkEW9O3nW1ZhWGg5OpoVIZVJbYDkyzjwJG4BQ/j6VhiyLp52V
-         46ypmXT4PwYiFZNWa0Hv7wjj3YgZ8ciL6bYqOJeKwelS45kpkf7TZOrdr4Z065AD7yFX
-         3WmUV5NBMieHnmfvJhP7UYREj2w7ufRzWWKmuGUwg+WyipefW1kCFdkLxgSZYfOg4yWH
-         FdBA==
-X-Gm-Message-State: APuU4Z/RCSWOEYlMkOlK9i/LsfKs110jhU7P6aXb+7WgE+n7RvyA6VTa
-	RxtkDBe8R4Go+Yx6UBXNep4xSmszrv4pAxMWYVHSAhFpHQXwgArInqzkkcwOZg==
-X-Gm-Gg: AYBFou1JUn34+ziOsJs+mOQDV6KVzjKNCSKRLbbpzfdkwnnPtlqMaoSrTyMlNeLim4k
-	ADrtKPkv3wLiEDBHAPDFtFgM2AWT9w9fb2PzwAXwPW/xyYfMf+Nvj8RhDKM/S35TWJ9UUL8A6Gl
-	mWPvg7HvEWHmtf3MGa9bFmNkTJ3tcV3HLIKR2ID5ppOtSxEW1Bi4zpEZS61CDHmgA7hNBYradm2
-	2IMZ/NXd1nnBa0vpqdqhpreNSuBCCwmCEMJhMXWp+p2h3VyLhIP5Nlks9qT4MxDgqmvHgcyE4ns
-	ExdzZj5EBBpQNajhfVrx6YnN2pFAtHxh/1XekqhbDvdRMBxc0V65v6x4A7IX+Q2QyWZnh2/LJvM
-	+Ea6PjtAmP3w54S9R7yRmahC9SyOdswCh91Amfqw4kB3LB8UJVx4f8OeKY75aQj4kyL/M5lZVRt
-	vmmN2obX0OOXeAnG5FG9MBM+F0cltJ/dMe70gx7t38MDk3mpg3O8sb6vgCKBCGTfKkwQTeetGS1
-	fVXNqDnXNxgW4D1y+gb4apESDoUDvQmsSnEbtgiFayhA0EjscD4er2/XsddI43IhbFzbjallGz8
-	8Je1mVJlFh7HsRTfLQKg2Z273z1MYPKjZC7I5rz7Ltn5yb0Z1MjSByI4tw9c6nDYa+nZ
-X-Received: by 2002:a05:6000:4a07:b0:48e:f47:273c with SMTP id ffacd0b85a97d-49c6d7340famr242524f8f.8.1794504872519;
-        Thu, 12 Nov 2026 09:34:32 -0800 (PST)
+        bh=xk7DBxPemW7OJa8hYbFRB4QKhCzlxNjCNzGJUNSuibI=;
+        b=fvbQWwbwI9vD+Ulgp+1vBAOzRzsqodogXpPwGjA4fELx5g7y8UFSTbDe8ji5pUIIoS
+         8jHfit5jfZO59CCbND/zskQIrJ+Y5SZNNLDV83DJtyPxGSMPUzUcwap+36olmsTwXB22
+         MNQbVwokmPavQbaIdanOTPgx8UX/R0wBPcqwpUIbjlZ5utXlp3d3VY3n87Q1EP2bikQ1
+         NmA0i6K1cgaMve6ezC2Kw4lL10CCsQ8+NHC14MekPDGRPePb1Dbgfr2ugLbtWJjy96YJ
+         m/hJXEAcpy40KvUu3ol9UcdI/HOQ5nLA8XYZHdxBuxcnrZbgyS6RLRNlNa+s8ZIEbwnY
+         k8Yw==
+X-Gm-Message-State: APuU4Z9EHnInCwBopRvCkmqhhcSnZBt8QPtEz+kjD/7wGC+8iI5gV0W9
+	4ACyFPYlCx0UiVpBMukEarpdc9/usNJ3wsJLYugQS1QOoAm8PPgdiRirWyCkVg==
+X-Gm-Gg: AYBFou2iO3RU+etjHvYcdIyojisiVlS3qGOc7jAJtbWRYaEdZqolxNNB2mbOuwr8Siw
+	uEBj8RSc5jiD9wpYdbetApMIaA3nhxgaedJMiI7l8GYB5q/lgpkjQxaJpS4nbH6qOxZtYhQisIH
+	m35QL8x7jXTw/9tbT46geEuZEYtrmFtbsRTXgRiaUpl53WyDBJEKHh+Fw6HF2RDz6yF24ic7//C
+	/GlNMATqD9SW+H0OW5Wi7FLks2HEqefSDN8K34LRUx5RgIS0Q8nrN2r9XUyn4xpiDhvYqI8pdgA
+	phTx1bfqUd/4QpQvl+EbX5ugDvM569XGJTqybu+rDrM4/bbTBCvYieZIp93jiuhA96Rab2ENPy7
+	yyvox4mdZyJGEyl8qeygfjZFObAX7BjknY4PAuRB/90bf1s3yVIzk8f33wnGM8Hgw1ZI5RBXSS7
+	uYq/Y0v0dwLeyjLlRu8DIHuk6IAkmUGbDNx+A3LkkVTJnlmjtm4fVKDfhR9uiEMBs/0tggA/JFW
+	l42rPgAJlSKR6x7m/D637vnZZOfpf24CadKvZY93INJ5yRBQjvVy+M2mVrvgZUoCaqyjQrwIyob
+	dFs65lP0qqotepE+PTbxGF34zGUfOXGG5FMhW4G6Hj4Z+MkyZqB9SBUyyTCyF8v8uXFe
+X-Received: by 2002:a05:6000:46c4:b0:491:286f:8e63 with SMTP id ffacd0b85a97d-49c731648a8mr70706f8f.14.1794504873306;
+        Thu, 12 Nov 2026 09:34:33 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:cb2b:22fd:d791:9595])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c604ee47dsm345988f8f.38.2026.11.12.09.34.31
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c604ee47dsm345988f8f.38.2026.11.12.09.34.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 12 Nov 2026 09:34:32 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 12 Nov 2026 18:34:17 +0100
-Subject: [PATCH v2 17/20] t9300: make the stream tests self-contained
+Date: Thu, 12 Nov 2026 18:34:18 +0100
+Subject: [PATCH v2 18/20] t9300: make the get-mark and encoding tests
+ self-contained
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,236 +94,169 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261112-kn-fast-import-tests-1-v2-17-b8c3a0ab27e8@gmail.com>
+Message-Id: <20261112-kn-fast-import-tests-1-v2-18-b8c3a0ab27e8@gmail.com>
 References: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
 In-Reply-To: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, gitster@pobox.com
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5522; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=iwGPl5g3tv4LtrBPB5lF0rlg3QvqefucJXARWtGSnq8=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGr1+JMiQaxKmeypdtacR//6LgAuCBZMqE/Cm
- HepVeK4LHiidYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq9fiTAAoJED7VnySO
- Rox/SCIL/30w3zcJt9zqio1IJea8jOnKnwsg9B5N8rCLMq5WAJb055MUELAiOV9piybAdSA7kZn
- NL1IrP2OGytxYzXZkCRWLLbYdnGwxivaUF7mKsN8FQQw5hqINrF2zNy6AGPn5oCpGuJqIypLCAS
- x5EZ+s8IPxn/H9x4DSNjCEf+t8srd70XrM1y3H2i737K302nfgpEW6kzDeToQhO0k2O7KGGEgaH
- hmJD/vzg7X1KmT7hOitN8XZPovmqsdmO78Z0CWUgTpE32GriyMPMBjD36gGXS9o7J2biBLrGxDM
- IapOcaJitqabn367R6r+mHkgbTD/e2iqciCg0xK9CK12F0BYLXre3NcF0xVuwZ1kNIaKnJSb9Ff
- IHpSWiENhZcj/WveCnKQAT7fSH1vzbGVUAjP5pkoBfiSMvYtotansOp8Wmd6puP8bGlTT+8Rr1k
- urgdCsoOGB4dLsVjMA+0DKa0f+uD92V0MOO0/wZUYPGErokxO7/47bKtIkE/zOUCFrT3s+ACfe6
- zQ=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4822; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=CHVl/mgPTfl6kiCv4S/Io90lioNTasuVS4miPHHdofU=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGr1+JNwID5gTAinP8toeS83w68IsPm4E1/Xe
+ 2UA88qqH96TRIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq9fiTAAoJED7VnySO
+ Rox/G4YL/iIll1Qw8eieBHOUllPdmEaFMiHz/j7hBQDzQmWN/a11KGFnUfiH3425Q6Wa9WvmFCh
+ zRztjxl/wWNBhNQPfBqZd8HwH7PaHFqvqsIwZRsVuHcFImOPMGphDjDy+sUhhc2CICfZ1Le9FlX
+ G2A0v5VYdV0m00kTPR/Dtj4UV85+0HRTW7TfOKqnCbjkhHSrDzZfa5CuF5a5B3BGeHewL2k4Tk3
+ J0EDOMEPLvZZ9BzJY/a/WS7q/Ka+8c6LDdJiURanCwiwZVkGmIH8vlX3Ya+Offl5QD8OKvzuAF8
+ JjuPG7owOPXsTrIh85xSnfTTnFaAMgfOnrTtA3pWqcI/0K8NXQGOc8Ssl3Hzl/b/VubxeClIze9
+ InhYIuQc0xTganoZjLui6SuuXW4YboxK5Dm1dxsd5GW+zhBAGBUI0RvoMtZhyAlqcK41TN8xFMe
+ NRPKcEbrU47G6mOIYqw8LiD28m5B5nqI8RQ+lydAsxllfKPU++nYju8y9l44dz87hpLwfdW4JF6
+ Hk=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Similar to the previous commits, modify the tests in 'series R' which
-check empty and truncated streams, the 'quiet' option and the 'done'
-feature to make them independent of state from previous tests.
+Similar to the previous commits, modify the tests in 'series W' and 'X:
+handling encoding' to make them independent of state from previous
+tests.
 
-'empty stream succeeds' no longer needs to configure
-'fastimport.unpackLimit', as that was moved to the first test needing it
-by an earlier commit.
+The 'W' tests read the 'W-input' file written at the top level of the
+script, which is not in the new repository. Turn it into a 'w_input()'
+function which prints the stream.
+
+'X: replace ref that becomes useless is removed' changes its working
+directory and doesn't change back, so the tests after it, run in that
+repository. Move the 'cd' into the subshell, and cleanup when the test
+completes.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t9300-fast-import.sh | 154 ++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 101 insertions(+), 53 deletions(-)
+ t/t9300-fast-import.sh | 81 +++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 57 insertions(+), 24 deletions(-)
 
 diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 5f84c66ac4..45720ed003 100755
+index 45720ed003..07bd48d2e8 100755
 --- a/t/t9300-fast-import.sh
 +++ b/t/t9300-fast-import.sh
-@@ -38,11 +38,23 @@ echo "$@"'
+@@ -4626,7 +4626,8 @@ test_expect_success PIPE 'V: checkpoint updates tags after tag' '
+ ### series W (get-mark and empty orphan commits)
  ###
  
- test_expect_success 'empty stream succeeds' '
--	git fast-import </dev/null
+-cat >>W-input <<-W_INPUT_END
++w_input () {
++	cat <<-W_INPUT_END
+ 	commit refs/heads/W-branch
+ 	mark :1
+ 	author Full Name <user@company.tld> 1000000000 +0100
+@@ -4635,28 +4636,53 @@ cat >>W-input <<-W_INPUT_END
+ 	Intentionally empty commit
+ 	LFsget-mark :1
+ 	W_INPUT_END
++}
+ 
+ test_expect_success !MINGW 'W: get-mark & empty orphan commit with no newlines' '
+-	sed -e s/LFs// W-input | tr L "\n" | git fast-import
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +
-+		git fast-import </dev/null
++		w_input | sed -e s/LFs// | tr L "\n" | git fast-import
 +	)
  '
  
- test_expect_success 'truncated stream complains' '
--	echo "tag foo" | test_must_fail git fast-import
+ test_expect_success !MINGW 'W: get-mark & empty orphan commit with one newline' '
+-	sed -e s/LFs/L/ W-input | tr L "\n" | git fast-import
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +
-+		echo "tag foo" | test_must_fail git fast-import
++		w_input | sed -e s/LFs/L/ | tr L "\n" | git fast-import
 +	)
  '
  
- test_expect_success 'A: create pack from stdin' '
-@@ -3428,58 +3440,82 @@ test_expect_success PIPE 'R: print staged blob within commit' '
- '
- 
- test_expect_success 'R: quiet option results in no stats being output' '
--	cat >input <<-EOF &&
--	option git quiet
--	blob
--	data 3
--	hi
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	EOF
-+		cat >input <<-EOF &&
-+		option git quiet
-+		blob
-+		data 3
-+		hi
- 
--	git fast-import 2>output <input &&
--	test_must_be_empty output
-+		EOF
-+
-+		git fast-import 2>output <input &&
-+		test_must_be_empty output
-+	)
- '
- 
- test_expect_success 'R: feature done means terminating "done" is mandatory' '
--	echo feature done | test_must_fail git fast-import &&
--	test_must_fail git fast-import --done </dev/null
+ test_expect_success !MINGW 'W: get-mark & empty orphan commit with ugly second newline' '
+-	# Technically, this should fail as it has too many linefeeds
+-	# according to the grammar in fast-import.txt.  But, for whatever
+-	# reason, it works.  Since using the correct number of newlines
+-	# does not work with older (pre-2.22) versions of git, allow apps
+-	# that used this second-newline workaround to keep working by
+-	# checking it with this test...
+-	sed -e s/LFs/LL/ W-input | tr L "\n" | git fast-import
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +
-+		echo feature done | test_must_fail git fast-import &&
-+		test_must_fail git fast-import --done </dev/null
++		# Technically, this should fail as it has too many linefeeds
++		# according to the grammar in fast-import.txt.  But, for whatever
++		# reason, it works.  Since using the correct number of newlines
++		# does not work with older (pre-2.22) versions of git, allow apps
++		# that used this second-newline workaround to keep working by
++		# checking it with this test...
++		w_input | sed -e s/LFs/LL/ | tr L "\n" | git fast-import
 +	)
  '
  
- test_expect_success 'R: terminating "done" with trailing gibberish is ok' '
--	git fast-import <<-\EOF &&
--	feature done
--	done
--	trailing gibberish
--	EOF
--	git fast-import <<-\EOF
--	done
--	more trailing gibberish
--	EOF
+ test_expect_success !MINGW 'W: get-mark & empty orphan commit with erroneous third newline' '
+-	# ...but do NOT allow more empty lines than that (see previous test).
+-	sed -e s/LFs/LLL/ W-input | tr L "\n" | test_must_fail git fast-import
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +
-+		git fast-import <<-\EOF &&
-+		feature done
-+		done
-+		trailing gibberish
-+		EOF
-+		git fast-import <<-\EOF
-+		done
-+		more trailing gibberish
-+		EOF
++		# ...but do NOT allow more empty lines than that (see previous test).
++		w_input | sed -e s/LFs/LLL/ | tr L "\n" | test_must_fail git fast-import
 +	)
  '
  
- test_expect_success 'R: terminating "done" within commit' '
--	cat >expect <<-\EOF &&
--	OBJID
--	:000000 100644 OBJID OBJID A	hello.c
--	:000000 100644 OBJID OBJID A	hello2.c
--	EOF
--	git fast-import <<-EOF &&
--	commit refs/heads/done-ends
+ ###
+@@ -4664,25 +4690,32 @@ test_expect_success !MINGW 'W: get-mark & empty orphan commit with erroneous thi
+ ###
+ 
+ test_expect_success ICONV 'X: handling encoding' '
+-	test_tick &&
+-	cat >input <<-INPUT_END &&
+-	commit refs/heads/encoding
 -	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<EOT
--	Commit terminated by "done" command
--	EOT
--	M 100644 inline hello.c
--	data <<EOT
--	Hello, world.
--	EOT
--	C hello.c hello2.c
--	done
--	EOF
--	git rev-list done-ends |
--	git diff-tree -r --stdin --root --always |
--	sed -e "s/$OID_REGEX/OBJID/g" >actual &&
--	test_cmp expect actual
+-	encoding iso-8859-7
+-	data <<COMMIT
+-	INPUT_END
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
-+
-+		cat >expect <<-\EOF &&
-+		OBJID
-+		:000000 100644 OBJID OBJID A	hello.c
-+		:000000 100644 OBJID OBJID A	hello2.c
-+		EOF
-+		git fast-import <<-EOF &&
-+		commit refs/heads/done-ends
+ 
+-	printf "Pi: \360\nCOMMIT\n" >>input &&
++		test_tick &&
++		cat >input <<-INPUT_END &&
++		commit refs/heads/encoding
 +		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<EOT
-+		Commit terminated by "done" command
-+		EOT
-+		M 100644 inline hello.c
-+		data <<EOT
-+		Hello, world.
-+		EOT
-+		C hello.c hello2.c
-+		done
-+		EOF
-+		git rev-list done-ends |
-+		git diff-tree -r --stdin --root --always |
-+		sed -e "s/$OID_REGEX/OBJID/g" >actual &&
-+		test_cmp expect actual
-+	)
- '
++		encoding iso-8859-7
++		data <<COMMIT
++		INPUT_END
  
- test_expect_success 'R: die on unknown option' '
-@@ -3615,19 +3651,31 @@ test_expect_success 'R: blob bigger than threshold' '
- '
- 
- test_expect_success 'R: --git-completion-helper does not read from stdin' '
--	find .git/objects/pack -name "tmp_pack_*" >before &&
--	echo garbage | git fast-import --git-completion-helper >out &&
--	test_grep -e "--date-format=" out &&
--	find .git/objects/pack -name "tmp_pack_*" >after &&
--	test_cmp before after
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
+-	git fast-import <input &&
+-	git cat-file -p encoding | grep $(printf "\360") &&
+-	git log -1 --format=%B encoding | grep $(printf "\317\200")
++		printf "Pi: \360\nCOMMIT\n" >>input &&
 +
-+		find .git/objects/pack -name "tmp_pack_*" >before &&
-+		echo garbage | git fast-import --git-completion-helper >out &&
-+		test_grep -e "--date-format=" out &&
-+		find .git/objects/pack -name "tmp_pack_*" >after &&
-+		test_cmp before after
++		git fast-import <input &&
++		git cat-file -p encoding | grep $(printf "\360") &&
++		git log -1 --format=%B encoding | grep $(printf "\317\200")
 +	)
  '
  
- test_expect_success 'R: --git-completion-helper-all does not read from stdin' '
--	find .git/objects/pack -name "tmp_pack_*" >before &&
--	echo garbage | git fast-import --git-completion-helper-all >all &&
--	test_grep -e "--allow-unsafe-features" all &&
--	find .git/objects/pack -name "tmp_pack_*" >after &&
--	test_cmp before after
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		find .git/objects/pack -name "tmp_pack_*" >before &&
-+		echo garbage | git fast-import --git-completion-helper-all >all &&
-+		test_grep -e "--allow-unsafe-features" all &&
-+		find .git/objects/pack -name "tmp_pack_*" >after &&
-+		test_cmp before after
-+	)
- '
+ test_expect_success 'X: replace ref that becomes useless is removed' '
++	test_when_finished "rm -rf testrepo" &&
+ 	git init -qb main testrepo &&
+-	cd testrepo &&
+ 	(
++		cd testrepo &&
+ 		test_commit test &&
  
- ###
+ 		test_commit msg somename content &&
 
 -- 
 2.56.GIT
