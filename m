@@ -1,121 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794515391;
-	b=kqAlUmUyB8dMi7DTOfV90IMDwdLa3YjwrLuEWiVxJZpJ67E5XdTCLf2fGeXrC8FQu5ZE
-	 KtlTyBhkLHgmzFqIeb48ep6gPBfxR3M52NulgTwWp8XX7z2QeA+zBB+dV/nBgDrd4zFf3
-	 pB5ZPSLolhiyl4LLyVIo03S9dwIm8ANi6A0BWj29rote9uahOlFGSQE/61Qp/YU0fDN3V
-	 9m9QK952IFzT5W+GobKp6sUbAzCkPA99dAIaf4sgiNcwUyIuJfVae/CyDK85yt+55ZtOZ
-	 zTbOjN+/Tg5ujp5HYGyeFIe8UTCBpUmo1Yclyxb/rh8sPdMvIfTsI4oDRiM6PyAgE6A==
+	t=1794516687;
+	b=1EjZ2PvvLHtTidH8pNIHy8KganRTwxeER0TxSVKQVUxLlA40yd3+MGyedhE+2ysSLDsa
+	 4l4WudoxpBO66gApfqcQ8RvCx0q3UdlCWF/mEtd3Ztf51ZxYyy8JF/I0iqxBDRUgammbx
+	 rWKYxVVQwoakUGT5xNEU3gVHpv729UJlDk3QGeIdbG8erxKOl8c8TPQSj7g66JEkvRm/A
+	 Iq1lDMgMqkBWvnQUPNMWQtEPuoFinTHaYRqsNOG40ebon4IUi+JxpUZaeTNPAJA6HnHPp
+	 +o1UkOKfGbE5T/GauoMbv7W/jtE63WSYYM/z5Ut/cbVyt3NYUIZ/giscIq8OfWqFqVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794515391;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794516687;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=kdKkmX3Ii1JnrWbxrQpsSkCYDYlHie64EuHYj4mgazc=;
-	b=O89++6+A97XBTgOSEkaEGDtkQ49Gcc47jFsNIfOmLV1ea6tnbTCLRi9ZYgRJzOUpDJaP
-	 sFSituYzRPixnbsXDbhBsAYSGEVG5mq2dmfYJd71NIPdj2eULt3hWx5gqSNdw7YY/kP1f
-	 ra1c7vSkxCrrd5aNRnqL0O3hZyEQ2g4kYFumTJ+27aAH5KyuwNo7QhMZGnBM7gwDYfxzW
-	 T/dXQr0xDEUxVEIv1EVHaEFK1+iPKBcjZzI4MnjRYuxxLJM8w/o6gtCvx3dXctb9g0Jw/
-	 8heGYYInSB4TU2CR08I8rQmOpsgidGj1QOxkrcytme29uuFddtih1GhaGsCY/SxcrpA==
+	bh=439eEFuXJFesnjWZpUNl3mKd4MAD90VLXHXI3eT0dYE=;
+	b=Bn2mpI7ukWejV0oMRjfewFxhY1ux0Hix2AO0Tpr21V4gK+m1QeQsF06Mk3cFno8sOw3u
+	 R3h5GrZMQO3lE36qYTYQjXaZJvwiH0M3GQH1cMs4LvuYazT7naW2LF64bvBubZwEFw7WI
+	 wrxGAx7yTYuAhmTPrrsMKB6E2x36PgkuPs2l2M2I8f54SQfuz7SXK7Mmye81Pe1gmGEFe
+	 NWrmjvlyfq4VbCg3YSEIhrfrfbB3AXOkIQaUUbqSJmzfs8tVt/sVYpj5riZVy0evSYdiy
+	 4ti6y8N+gCXg5Me/8Bs8ABIevTo6eY6Ch/tkYzf5PE3pus19gtXdQF+vNaiCs9BJaWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=KqsYrkFf;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=djqeoD2v;
-	arc=none smtp.remote-ip=202.12.124.153
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=M1p43CUa;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ddj1o8MO;
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759BE606A31C
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 20:29:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 759BE606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D217606A31C
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 20:51:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D217606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=KqsYrkFf;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=djqeoD2v
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C2E517A0634
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 15:29:50 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=M1p43CUa;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ddj1o8MO
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E0E9D7A030D
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 15:51:23 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 12 Nov 2026 15:29:50 -0500
+  by phl-compute-06.internal (MEProxy); Thu, 12 Nov 2026 15:51:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794515390; x=1794601790; bh=kdKkmX3Ii1
-	JnrWbxrQpsSkCYDYlHie64EuHYj4mgazc=; b=KqsYrkFfNXOkYXmL7gM/UzLa2L
-	Etk/MvFYflZqAKPth0IoZm+I75XUyQPyt4dgwobhGsHsmksBah9MUEQLDnVabWAH
-	uD+q85SCANQqLqm5puEZ74kWZ4uH37vNnHZ6Uulwzd80/Es2pi9VHf88UHYBOrwD
-	3+61FXvcMDsaSnxJFqbuw+z5/4pU6uv1BgkUoC+Z3GLedzv4NA94r5k758yxmXrV
-	9pTHvx3xxqZEqML9wGpvvwYnoMz9OeBjLhERV8j9v9+K8eqnf41X9UyVD1KGfw/X
-	F8rF85oamnbw04mn8RSfud0T1KQ93SOz/N/Aa3+CBOGf2vTKlCclzN2gnhhA==
+	:subject:to:to; s=fm2; t=1794516683; x=1794603083; bh=439eEFuXJF
+	esnjWZpUNl3mKd4MAD90VLXHXI3eT0dYE=; b=M1p43CUahgpVpOYYVDhvOZIb2F
+	1tWr24UeTRFZierwsu1VSZeLqomLyS4/ZNpjCO/akFZ18uSoRoje1N08AtqKZsCb
+	YCNT2jvPu12yxb0Nk95eGJFgLA9/GcQ5jedP4oZxCak1Mvdl2r0Rby9xnSeld8To
+	ZYOP1JM0Z4kkIcAFdaLNBEDjBaUmJwPJRfBQURpBtdqA8365ASdBWhs81ugoyEPw
+	czrPNMKsHXfYa0Lw7+kpIS0ZZnsHukCGWZX6xAnQtw+8lgsow0+AKu6y/KWg2MGQ
+	RXRGuj+UQc45e9r+AYsrO6PhPdtI1KJ9KwLwFv7pSv9CD0UlY0lqzOSjUm4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794515390; x=1794601790; bh=kdKkmX3Ii1JnrWbxrQpsSkCYDYlHie64EuH
-	Yj4mgazc=; b=djqeoD2vkgY5M7MGoZudSoziuWNjoLZacNc8LQhrEvixLfzuYiN
-	1CBSlT5yKdhMeKgwUX389FuP7hAEjJS9+JM+x8qjVpkZMBETRb4n4aFj8Ud++iwU
-	0n7Lin+7X5D5UULo20N1URe8kdYZ+Amk43WIaFnB9xIm1YrWIEKXkqrxz81WNc2X
-	am+hOIKkmG45qlNxSV0QOCsGwXba8FZxHoRmVkZ3ccr0bFs9sOpdURqdphpDARIT
-	gVVHQiokQvVPavq+oRqz5OonkBWqkR7EOMhskYrc+aT2mecL0gkdNvG5oSG5cBLV
-	MI/abdlY6lkDnvfZXYjMuikaif8E9v1P91g==
+	1794516683; x=1794603083; bh=439eEFuXJFesnjWZpUNl3mKd4MAD90VLXHX
+	I3eT0dYE=; b=ddj1o8MOb25CsQ/Gp9JXdwz7ODoeXFLZzPy2EQKpLPSMSSHedPw
+	5ZLwlzaJ+8V/OoL0QDYOIEsOd3ZcaxgSfhWXq2+D5VrWGxn3OW+9sevG9h3XgYpp
+	tDQXg9T0feQNGEDrkzq0VBustTdlDmwGWUVARJsOiBJ229swLPUJtuiNFTjVkVcG
+	gZDMHZM5Ay7+K75urFHhulooWpE+gxT5Lbtfp+TYE8zd1Kk9NIeuVkYYEQbjhv51
+	NtX1l4dixltemHXl/LCNL0M9vMpeiNmpZTFNNa2r0WI/RnL1m5jBUBqAXgZ9xqmR
+	2KF/fvOrYAj9USi7JYPNhKjnzFMd0c8MXYQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794515390; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794516683; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:kYasCClbH0PLUZI8LVQKc+q4pte4VHxx8rcuH+RtVePe4vD
-	M4GiD/nrmI4W6LWIbP91fwP/YcB7iVUQp3i8yH8XtZz86H+WbYQEujdW+SbKq7uY
-	IyYw1AvdaNGu1QkiBv9i21yQOw7A0Y2kYCONmj1EmO8xby/ObDsn9Jv0bvKFL8TA
-	Bejf+7R8jMyVThwCF0gSUR7ReiDysslslbI2pE3mrL0026flqFZvjR9aYyhZwqzl
-	EZXPKjR2aCfTLoEQA8IzEjsqcn222qAAL/ti0lt6UccUjSUUz5MtI1a7OIg+fX8O
-	NfymeYgcUW+aqUzH4CMiWJMXsHpeeZHES5PgUnw==;
+	s=fm2:rsa-sha256:WPwVlkrQNYY7BIp+HT4nRCeaQOfTQfviitJ+y1f5Qw6Gm8u
+	uVJZPs1Cc20SvLZ/Jn1UvTe2j0CAJz0cdcDPUKJ0r2RUhJdy8ZSJGN5+t0SOQUAL
+	OeaN16maz2oRdSlM8yu1R+GyhFH32S8CiBUQkGHTXpUV66PPC+Id/W5+At+vEysH
+	yBIR6Kf7aNmg/QhhphiFIcDX8/3aAp+8keaB6vjNPYFCA6dXFWgrBPIASsByW6Zb
+	oGEGYetdI3R0wBuyKEdg5KMY5qOarT4/spjGss+hHFvJ0nSvoV6NzCc261o6+T3C
+	9KVGdO9mWxA0jlZC+zt8Dd1OlZVvJCYnoQmkK9Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:e0ATB5D+WBKpfpnsrlZ8J0z9KySa1p3k72/0+08I5tk=:aZW7/oyXXtNjtxboOlInsS27C29AEteVQvEvZ0YLCPw=;
-X-ME-Sender: <xms:viH2anKQjpKr1EPyZ2MIjPNh5dj5rUVhLAHI5vmwALH1CuJL_xD2Rw>
-    <xme:viH2au0tA3nJBlfzUhBqnacRupEoTTmAYxWfUZcFPa8p0uM7PYjaKFiCjCluTr8vz
-    Lxyly7zzxy_botd44UxD5N0PTV5YbByy50C3AtF4_9M_Iftc8fqAw>
-X-ME-Received: <xmr:viH2apjW3IbSQoTcBBNXKlGOx5lodKlYIqlQeJBFRhL53bKgT-2yifc4HHqEtz7Ox-e7Aqv25CfrkhImv-CTCuBn2U9PZOEMs4xc>
-X-ME-Proxy-Cause: dmFkZTGoZyr3p85IrIrv8gNo02SnznDSaoyGmPwGNM20fIAuvBnKsgdPVrX/H4G1hFg2nv
-    FgRxcRCZzLdPF2xrt2riiwk2gECZNVJ6El1jU6B6D8nnzdtAqoWXxloaS+M4XVi3XUDXd2
-    0T6VuEkXWQD6aGyfV27QwcSMTw+8KCwz4SziMz7Wr9UFH+UOJ145ru2p20JunYooqS28kH
-    t/EKXTV17BZhGLDYjSX8Eonr9Zz3HsUnhus3KkDOfhWQC472GMtPAcsAEJVQ+nlZ9uqvbz
-    37JPu86DPthAk9mfezA03psXJzkjP3piNVUkEpxTKLoWCejczWouFkcsTYcMjPjFXPFtfz
-    ayXakn74BzgebRzsWdHHXxD2Kn37GNks1hMuAs18A9X1nvENsqjT3L26cnBRqljFNgX8xL
-    z1et6Yi8lXmM1UdMPS4mHh+RP3k8ORP7OGOJlmgEdtFUqUjWdYGwTEkM3GEMm79Dnbde15
-    kd1bQJdIVIdLmjScWVx24vDiwiR8c/XGIF5z0goKz+YyNab+A3w4aVNBlmM7NoHkWtnDoj
-    oCCrMxs2VGEHNZBP2Xuu3HsG3n9NOeVkcPXaQCvPFUOsCdbgM9kDjlc6ZgD+4HKrJ18zbO
-    7XqpeFqaj1UMFg51NJEfQdC3T55ZN68Gn+WMKC2rzsc4c1+2hTXMlIolys7g
-X-ME-Proxy: <xmx:viH2anVe4VxhItfO4crCr-qLiFF1u-rDnjRWMlezMRiPwtlczVvCPA>
-    <xmx:viH2agUlJPcuFyfXWn0ZShNyaK4vkAqwbqsz4bPxo3Iqk7WJwOhQpg>
-    <xmx:viH2avhfcrk83At5NzlTrW4WmctegKsxETDecrf76t9qOTOVQyGp0Q>
-    <xmx:viH2ajYjlE72PSTw2pGIVVYyCyVDbCSvL9KGjFzH_04dy-WZET-NNg>
-    <xmx:viH2aq4YacLNHyhLZ_HGm2fO28xg_4G854gOZej2HKn9H-UGzCpyqbRh>
+Message-Instance: m=1; h=sha256:wAA5X/XHQKxLlIR31vnqif6ajGthfUEYRw+Rc5BJWDo=:VUfqr2pSCpqT7Wwebk5yWWAtIrYYiqynDZSVehlVHtg=;
+X-ME-Sender: <xms:yyb2agV5LmPKweFNrx_clt9J81IQxMHRnFQdebC1iMXJGUPVcrN9Yg>
+    <xme:yyb2asD88ZN4qyQVUjmFrUC8SVxPXD20DoddjxR8YBO1WpXJ4yJoI2U1cic-1Yc2D
+    pJllxiRzkob7k4Zp82lpy5zeXNeVfH4tjg9ux03k2Yx85qasRcj1Sf_>
+X-ME-Received: <xmr:yyb2ahwmmxwnjxOFUyvs9U-K0Zq2GsmVPaRYpIhhItNUMSLA4b7etfESwjRGt3OR48L71MGTC3vVwQTGDCpJmHMmMAxdmUyf6lQJ>
+X-ME-Proxy-Cause: dmFkZTFJC9jDkFHJyPEPGvWXhVsmDGonfufGWsHgu/rBv8HhVqrzzdKPZm0SKLnE6V2HvY
+    vupzhekPE8G9FWYfg6qpd9n4XrK52T7HxQGqGU10Bclt07NjJEzZ8eY0sUY5Byk0tHDg2J
+    lTLfsx+ohVPyI/Q0npgAk+dpwVJq5oQlFnMGKldEWO35xMfeI2J8EuzxNIlPFtZ1DqVzd4
+    oPDQqh4CJw2z4nwahzM2oFrcX6T1ZeC7H+/AWLjbEeMSjn4aTbRl7KwYv35KcVeyAKABNp
+    p7iD0ZTleP/pDchE+XveWojt+KgxUS6OSgoOvwqp79lm3VmuGug0NKnGpMtu3TrWTMWNBd
+    owtN85e6+9Es66af3S4CuCihWPSbU1RVaNkoimsI//8pFRjmhz0sPxxuj4QJzt3tH5LBBv
+    Ru1cO9+kj4V+1Ie8abHDsIPNGjT0N44eadp9nKcnP5FeUYWT7ukngFXc2ihrzdVwS7ZBV8
+    q2LzsiZt9pWIkm+pNBtvuafzNptZSZHYfdXV7VbtxKeq+9I/9hFakaD5skRzNE2U8NQkqC
+    ANjxdvF7FjC0hqFvIhu/uzAu5YwOrOXfacawsjwVlFabb2IhFLgtzhSVpuiarpT85Y3Uxm
+    jCK1DuLyyXll2YvthIeQ9BCGr3fU54MHpj/D+k+3MazZTFfVfwIasjuyVi1A
+X-ME-Proxy: <xmx:yyb2apDl5uQjpL2tD8FaLyuIHT_mRjgv6f6ROHzlTZHgAsPbLmcBfw>
+    <xmx:yyb2auaZsNO4ctczKzzpBPzQwCAY1uHQvo2DtxpLZG2A4M1KTubBUw>
+    <xmx:yyb2ahisDyugADNqefNi85bFey11a2OeKYMv48LP47phJ81fLMXhVw>
+    <xmx:yyb2ag7gPE7I7fNKHvjaKTdwRcJDPHnCNJHF1xZAe8XEo10PFm3TvQ>
+    <xmx:yyb2apomugmq4AN0BhWlKKpBUOxU2J1CybPjTS6jXqPs7N_jcWaGKh12>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Nov 2026 15:29:49 -0500 (EST)
+ 12 Nov 2026 15:51:23 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Mustafa Bayar via B4 Relay <devnull+mbayar.gitlab.com@kernel.org>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Mustafa Bayar
- <mbayar@gitlab.com>
-Subject: Re: [PATCH] ref-filter: fix double free when an object is missing
-In-Reply-To: <CAOLa=ZQuT5+x-Rvxcv1CSYka3aGG2nV_hPFRDTYJEGgjbLhJwA@mail.gmail.com>
-	(Karthik Nayak's message of "Thu, 12 Nov 2026 08:44:30 -0500")
-References: <20261112-mb-ref-filter-missing-object-double-free-maint-v1-1-d6d56a3c8dbe@gitlab.com>
-	<CAOLa=ZQuT5+x-Rvxcv1CSYka3aGG2nV_hPFRDTYJEGgjbLhJwA@mail.gmail.com>
-Date: Thu, 12 Nov 2026 12:29:48 -0800
-Message-ID: <xmqqqzgphjyb.fsf@gitster.g>
+To: "Windl, Ulrich" <u.windl@ukr.de>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git context diff does not recognize shell function name
+In-Reply-To: <340dc2eef42f4f6690c58765a07621e1@ukr.de> (Ulrich Windl's message
+	of "Thu, 12 Nov 2026 13:39:58 +0000")
+References: <340dc2eef42f4f6690c58765a07621e1@ukr.de>
+Date: Thu, 12 Nov 2026 12:51:21 -0800
+Message-ID: <xmqqmrrdhiye.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -128,22 +125,70 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+"Windl, Ulrich" <u.windl@ukr.de> writes:
 
->> Similar to `maybe_object`, reset `content` at the start of get_object().
->> Add a regression test that exercises this path.
+> Hi!
 >
-> I had only reviewed this patch internally and we did some iterations
-> there [1], so mostly just rubber-stamping here that it looks good to me.
+> In git 2.51.0 I found a minor issue:
+
+That is a release from more than a year ago, but I do not think we
+had any change to userdiff (i.e., built-in patterns that define what
+line is the function header for various languages) since then (we
+added Swift and tweaked scheme).  So for practical purposes, I would
+expect that whatever you saw in Git 2.51 for shell to be reproducible
+in today's code.
+
+Or are you reporting that Git 2.50 (or something older than 2.51)
+behaved in a way you prefer, and 2.51 behaves differently?
+
+> "git diff" did not show the corresponding shell function
+> name. Admittedly I used a somewhat uncommon line-breaking:
 >
-> Thanks for working on this!
+> The context in question looks like this:
+> ---
+> ...
+> run_query()
+> {
+>     local p_l_0="$1" LOG_BASE="$2" SUFFIX="$3" URL_BASE="$4" URL="$5" \
+> _COUNT="${6:-$COUNT}" RESPONSE_CHECKER="$7"
+>     local me="${FUNCNAME[0]}" m
+> ...
+> ---
+>
+> The context diff looked like this:
+> ---
+> ...
+> @@ -193,6 +188,36 @@ get_params()
+> ... 
+> run_query()
+>  {
 
+I assume that your e-mail message is whitespace damaged and
+run_query() is actually indented by one space, being a context line
+together with the opening brace next line?  The header stating
+get_params() is expected, as the "function name" do not lookahead to
+find run_query() in the hunk it is going to show.
 
-I take the above with "only" -> "already".  Thanks for writing and
-reviewing.
+> @@ -201,10 +226,9 @@ _COUNT="${6:-$COUNT}" RESPONSE_CHECKER="$7"
 
-Will queue and mark the topic ready for 'next'.  The patch is very
-well written, together with historical reference and all.
+It is not that the line that begins run_query()'s definition does
+not look like a beginning of a function.  It is that this _COUNT=
+line does look like a beginning of a new thing, and because it comes
+after the start of run_query().
 
-Thanks.
+The name of the file would affect which set of regular expressions
+are used to sift lines into function headers and other lines.  When
+the file has no known suffix with language specific rules defined, I
+think we just pick any line that begins with a non-whitespace
+character, which explains why the line that begins with
+_COUNT=... overrides the line that begins with run_query() which
+would have been a candidate as another and later candidate.
+
+>      local me="${FUNCNAME[0]}" m
+> ...
+> ---
+> ("..." is deleted lines)
+> So this may be a combination of unfortunate context sequencing and
+> the first line of the new context being unusual.  The second chunk
+> would still be the same context, namely "run_query()".
 
