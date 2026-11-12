@@ -1,89 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794484992;
-	b=LBryG0wTNhd2lG21Mv+EA3Jl6zx6RUfnZ730eq+v4vxAjmmLpaqKbCLqpsY2tb1wluYf
-	 uv6z5WxM1kTK7b61A/0LFslc5DhHzmWuEs26phiYzuFgBud87quDTTrF9B00Q1f867fYh
-	 zQ9EEd5XYoiDW15fJhMhtfnrHy4xL0nAkC+LJZGbHkijGjC28Hjzyx7u2pVC/hRKq3ZYc
-	 bBS/jjRIUrfzUr/s33fBoUQeFKQjAgCObC5HAA3fD0WxXi1nPopOeeTVx9L+qLLcBkPyI
-	 Djn+/dBrFa3jqn7V+ip5BTRQ522RGD2vPcb01YQQeG2JtVad/GtBMCHYMeWEcRlLQ/g==
+	t=1794484993;
+	b=sSQG/k5zBh3HoLCr5tRBDM14wwx4tnI1WWY4r3RLnFPfoZIcOqjPp8rQxF0ZUuMYhMgV
+	 3wqFQ/cHyOi2c1idpI8LUFJdXaGBPEiYQesHNWCdhIQGTeWfTSDGabpCxrdHMK2w3tfdc
+	 kW9LK+Azm1y/ekniwaRZczQe10wb9GERQCC2uYx+LHarOwX+gD3oY/Un5IaSSxuqJ0fkv
+	 0PWA3F4PLeV/O63pwRWRzwQoU1+XmY7zO49tDdnst7LmpKrIAVc5BNZhkm/LFZBFWnzJg
+	 Numb8bevBUn8tIi6mUe55CpVxg+El0FkFJyvGkEI8PQHYTH7gQUCF0jUXS8eZB6PBCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794484992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794484993;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=/f1Ji/6Ni13YEUgOivQUBvEcoeGcUkH60go3nklEd5E=;
-	b=k4j6R/nAFrxWGDTE0HmYL7huGVitSGoMvQAWZZcZm5ZUQK6tZYl1hrHf+Rl2NEwC5VM6
-	 6armFWKs//4ZCDKZFKXEfROk6WYSkJLNnJywXNveTlh4G3BOE5ZcE/UCWMKlhU7ijcvl0
-	 rGgjNjGJgnM45OHrWTi9+HWBvjym2MIlx1m93tSB23OREOJT8n0i9770OfsYxvKjfOpWl
-	 N41xSVpDs3QJaOaZfJNoYXa0DXtp11Lbu9k3VROY3DpQZ7oM9TTDqlYZZ7ffIlsbbLMfy
-	 sMJXLDYDq23328lFPAs0z7sqkaSy2ZS8oekZHpA3D9fruynga1FvuynpNvl9rNas3kA==
+	bh=U67roYg+RznMcvVzVXoWc2NIl1At8qpzVg1bJLlVCsM=;
+	b=S0NseAxXXUNj1V5ZCJpDBSbeY0Es/XRdXovkg25jdWv2BXdj6jYsDIj0HbYR7mRDFPNf
+	 5LqiJzJEFfvLLrqV9gf2kriPOhRNIeWnxztBA+iEsf65JbyxeWBwT7rL9JjeJ4Ib+FzZx
+	 0pXxpxHbmf3pHQ8j0hQA8mKZsyGRnnq7gENvkJrX/J8cMqmqwZb0X4l0qjEibb49O7doj
+	 X/Bs4sMdRS3vihH+QkJEkQlzayApqZefhLTNuUn3AuykvPxSdKRjX4Lu0ENXoZNERgPF1
+	 s9oIGIqB6VIP5L98CLLuwnbgMOMudavEAVBTfVv84R88eCOYGh/GnC+DRhzpDy9hcqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="WtYhSX7/";
-	arc=none smtp.remote-ip=74.125.224.46
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FBLJQFWP;
+	arc=none smtp.remote-ip=74.125.224.44
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A261A606A8A7
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 12:03:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A261A606A8A7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6E0606A8B0
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 12:03:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A6E0606A8B0
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WtYhSX7/
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-679a2b5fe87so5015218d50.3
-        for <git@vger.kernel.org>; Thu, 12 Nov 2026 04:03:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FBLJQFWP
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-67c05273c38so5123082d50.1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2026 04:03:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794484991; x=1795089791; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794484992; x=1795089792; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=/f1Ji/6Ni13YEUgOivQUBvEcoeGcUkH60go3nklEd5E=;
-        b=WtYhSX7/9mfHFnd0IU8oyFdyslgfnADQRciGvj0kTT+ESglZ+SpQ5v0PxrHHsKLlIr
-         DMIlWA7pYjd/h7yl50z4tRWThRurE92XQLfAA1htv0le1xTYZJSo8J9u43B6oArW9W4T
-         KbOipAC9vVecmryQpappI6BNoxUkf9KctbQmHzJ7YUueDaXCRrsxtXNOa8bBnxA4To0s
-         9tw5oa4KttwSvhpr929HTsilEDqIPpP2faHFm3uA+B/1XClEtIsbPyv04rauSlV6xlN7
-         EKYDfvH9NRp8SJrXpmh/kknEskq1vdZmCKxxMNvUQAxD5BtSzGQLKzgUs5LOGvF+QMpa
-         fpbw==
+        bh=U67roYg+RznMcvVzVXoWc2NIl1At8qpzVg1bJLlVCsM=;
+        b=FBLJQFWP+Z8o9VZcQOD9auBb8ZJPySWJtgx6nygS4Y8OWRCtu/4xJckr/eNjkCbOph
+         7tMxaeGh6UwQQDKX4Q31ArU9fvhP+6JiZbLjyr4JHzLZITJchl/Cm+m+ruK1izWidNAA
+         IGQuwcGMczhYhVnhAYAO8ZsCkEfm3Fi2/W2gYub4akQuqrlYNpiMM5pUYdR+iSuG2ea7
+         u7Tk8R6NBGdGQKtDvHKQIxVgL9fgdXIxcqwFQa9oz0HhYY+w/CMrzG5qHKZDseNCJNNb
+         eFIHQ/16Yn40pjvgEgiA35F4pLRE5TCGfZcXz6MBTKSTPjVYiQHBazwWzt5FrCrM1KSe
+         eiKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794484991; x=1795089791;
+        d=1e100.net; s=20260707; t=1794484992; x=1795089792;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/f1Ji/6Ni13YEUgOivQUBvEcoeGcUkH60go3nklEd5E=;
-        b=YKaHItMPXYem1FUtCjrwnSX6GAzbjkV76X09zS5TGWWsBIwYxrurVcyTwzw6mCYMmH
-         ZzK8ab/IkGhKshfCn7nPriWKjGxOMN61xtZuNg4kZyDTO3LbEiTa8Snv9CjYym4LMgjj
-         YZyovMWB1fF7dIayJkoBygnyvfTEQfdd1r9S8ggTOLmLm96gx72oNtJxUCSqqo5dp46A
-         xzeGy/WHP4etTUmWp642AYyLetqOcu31a961+s58UV3DtSBshofcBmvVaoB2vYKBBlDc
-         iTjba/xb94veO5RtlXdngjS2qi8u7ymLHKMxNkXG1fd0FENkRcZoKXc+4wwXxxd5BdI5
-         ktJg==
-X-Gm-Message-State: APuU4Z92eWsM+pJaHTAHX3fjEmYAO4ltOtMxPIcllaG7qslBI/yDPEEl
-	1xUodS/29ODVSFMcKSkO696HRIN0oR4GY9raF5Sb0KNs4QCuDP7fQO3S2Oh0lAX4
-X-Gm-Gg: AYBFou0Om03IZU62vXgT9ltr4RJzxn9xxZZSM3dV1Jk1Cr/Xb4y/3vHzQL87q1G4Z3y
-	IaKHuzXAocx/gac217UQRv1mQHFwSTpQdkde9XR3kvZVtJ53ByL8F7QmC7//elW7xRyUqmNdOfV
-	4UwT2Ul201hXzbdW3+FgNYDxNJrbsb5sDwDtcVEjXbB5KhMCj8fBjAEsk10mcWIYzw1ygga5giu
-	pJQwGcZBW9cBYca1jBzyCbZKpMNPe3BMtjnPUNU3Nopu8zdhahuSuV15sX3ZoLRuqT2HtFJER17
-	V7osH/qEPdMbnoI0S4KajHn0YaZl7lUQkwxtcp1EsxpRLCQs6LwbbTYDMODk4oHo+Llwp3ONt3s
-	8crPfL1J5/A8ehIT0Jnd62sgdK9EYemzQW+5si9hxWD8T2AbW/Fjm5BVJpvadOkZGnEUs9qADal
-	itosgjjm5vRKgZer6Hw0f6uFFh3bhSHP0mwJ4IbDgfYx+weqTmREhBlID8OIlqPu72gfiv+mq4M
-	wdiZG3UmjKURum/z05A4IBlmMIMuoUrsjBJI6J6z/IkfU9qWhLU2YqaKJfNkqlfxSpXkUSd+3rx
-	I6uZKcXB/2HBDyS55TfRqEphlEg1x6iIvSG+
-X-Received: by 2002:a05:690e:4295:20b0:67b:fe2a:443 with SMTP id 956f58d0204a3-67c67f81895mr2215007d50.87.1794484990607;
-        Thu, 12 Nov 2026 04:03:10 -0800 (PST)
+        bh=U67roYg+RznMcvVzVXoWc2NIl1At8qpzVg1bJLlVCsM=;
+        b=xyUH8/jfQFOglDRKfCwCHTXQ5Dw5XoabZJUcNZtE6lHW4+r+Im1kvVdd3KrtzqRJzQ
+         SiMJYCzItQTfx1WMRC39BBKC+q1dkZKGKCsUdY87QF360+kpEROHZpN6Jf3/JYQEDE9U
+         Qk8lMxBsLvScxWKereMszDN3dXiHf0fl9PqBK/EheSqsAA9JTWvlsLth+zpV1LdL9pld
+         1u6ZqxduLinXoc8aYCWepskgQkhIgZzKF2tV1+QdIRGvWog+Lt1uVNbdSABQs1lNoXdL
+         5GTSawhDBu/Oo3FwJ8iU50ybxILfhoJZuDBeEtDlbf2UFpOd5WBnpT8Y9+9aEvyOhlB3
+         2ERA==
+X-Gm-Message-State: APuU4Z9NACoJHJvJ9+y/1S+2t9g2V1Bql5KDYJm8iDs55HnxtYUoykzH
+	pygP+mfxy/eKTzPg49poiCI0GLE47E7zplUVevncLYKYihk90oTChJcNfykc4I4T
+X-Gm-Gg: AYBFou1uN8PU5O6GA5D+fv8AS/LHS2ywnWSr2MUCJmdTytrtdOe0OS+5KriDt4tgkMG
+	FP7yBLBfyO3fw+a6cUimHzmZ/891UQF5RgmIUgleNSPlDCqgCS6eDp3v4dI/jeUWp3BouqKLYQd
+	FgV+x7gY5BwS16UJPQaeH1fD/czx+6e/dsXOQhIzJ2LLByOJUof4Nk64lcJ5VPTe9Bu+o5CBWT5
+	snVCE8kbiFODQGQTNI/M4rwaH0cBg+Jw2c64gK59V4KIH/i4fMg7x21HP6y8rjB/KvQEPqVbP0z
+	xFEglDJ0bZonDJ+2W4EO2b4JYfCOWuOTmIYoteNUHK+pM4HINOjvBO2+6kv7bR8tS4UApUHBMJf
+	vUfBUJC7FjDvmhwci6+k5zYP9TdjaaSCN5hv8wlRRoI2cEaG+s9fQZDNe8PDd7j9QRKpMaCMwsn
+	MLuSyfh7xf43jT9ytAhe3Xz7DNgktjxZiOFQrPprLYedSl1jR66piExa0mFT+yq0QMWWrNzoZbF
+	xqscUC+fJIogVUOFxSBSMjb8zA+FkOj4v4u/mIqxyAykLvrPwbBDNPom8OFP1qqVf55MgdKdXX/
+	8574+PA5PLR6h2CNgPX6nZyH3SJgwCUZ003ByLJyaX47wgG2H6EHR+SQ
+X-Received: by 2002:a05:690e:43c1:b0:67c:2804:fac7 with SMTP id 956f58d0204a3-67c67f7bebbmr2810455d50.74.1794484992343;
+        Thu, 12 Nov 2026 04:03:12 -0800 (PST)
 Received: from [127.0.0.1] ([172.206.245.227])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f02df714csm46264366d6.28.2026.11.12.04.03.09
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f02efa477sm45745326d6.16.2026.11.12.04.03.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 04:03:09 -0800 (PST)
-Message-Id: <14b156bc42c4d6bcfd662d43f07231a3b62f46ef.1794484985.git.gitgitgadget@gmail.com>
+        Thu, 12 Nov 2026 04:03:11 -0800 (PST)
+Message-Id: <cdf089b6355440e6515723a47aacbcc1605ab3f0.1794484985.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
 References: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
 From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 12 Nov 2026 12:03:04 +0000
-Subject: [PATCH 2/3] submodule: store settings in worktree config when enabled
+Date: Thu, 12 Nov 2026 12:03:05 +0000
+Subject: [PATCH 3/3] submodule init: copy submodule.<name>.gitdir to
+ config.worktree
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -102,416 +103,269 @@ Cc: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
 
 From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-Submodule URLs can differ between branches. For example, one branch
-may use the upstream repository while another uses a fork for the same
-submodule. When these branches are checked out in separate worktrees,
-storing `submodule.<name>.url` in the shared repository config
-prevents each worktree from using its own URL.
-
-Store submodule settings such as `submodule.<name>.active` and
-`submodule.<name>.url` in the worktree config when
-`extensions.worktreeConfig` is enabled.
-
-Settings shared between worktrees can remain in the repository
-config. When such a setting exists there, 'git submodule deinit' sets
-`submodule.<name>.active` to false in the worktree config to
-unregister the submodule.
-
-Unlike other settings, `submodule.<name>.gitdir` should not be shared
-between worktrees, so exclude it from the config copied by 'git
-worktree add'.
+If a repository already has gitdir settings in its repository config
+when extensions.worktreeConfig is enabled, those settings belong to a
+particular worktree. Make 'git submodule init' copy an existing
+setting to the worktree config if it belongs to the current worktree;
+otherwise, generate a new setting.
 
 Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 ---
- Documentation/config/submodule.adoc        |   3 +-
- builtin/submodule--helper.c                |  43 ++++---
- builtin/worktree.c                         |  23 ++++
- t/t2405-worktree-submodule.sh              | 129 +++++++++++++++++++++
- t/t7425-submodule-gitdir-path-extension.sh |  49 ++++++++
- 5 files changed, 227 insertions(+), 20 deletions(-)
+ builtin/submodule--helper.c                | 100 ++++++++++++++++++---
+ t/t7425-submodule-gitdir-path-extension.sh |  65 +++++++++++++-
+ 2 files changed, 151 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/config/submodule.adoc b/Documentation/config/submodule.adoc
-index 4c424017b4..1e294147db 100644
---- a/Documentation/config/submodule.adoc
-+++ b/Documentation/config/submodule.adoc
-@@ -58,7 +58,8 @@ submodule.<name>.gitdir::
- 	respected when `extensions.submodulePathConfig` is enabled, otherwise it
- 	has no effect. When enabled, this config becomes the single source of
- 	truth for submodule gitdir paths and Git will error if it is missing.
--	See linkgit:git-config[1] for details.
-+	When `extensions.worktreeConfig` is enabled, this setting is stored in
-+	each worktree's config. See linkgit:git-config[1] for details.
- 
- submodule.active::
- 	A repeated field which contains a pathspec used to match against a
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 56d7720e93..f249582ca6 100644
+index f249582ca6..f34a22238f 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -497,7 +497,7 @@ static int validate_and_set_submodule_gitdir(struct strbuf *gitdir_path,
- 		return 0;
+@@ -480,10 +480,41 @@ struct init_cb {
+ };
+ #define INIT_CB_INIT { 0 }
+ 
++static int validate_submodule_git_dir_with_worktree(const char *gitdir)
++{
++	struct strbuf tmp = STRBUF_INIT;
++	struct strbuf submodule = STRBUF_INIT;
++	char *super;
++	int ret = 1;
++
++	if (is_absolute_path(gitdir))
++		strbuf_addstr(&submodule, gitdir);
++	else if (!repo_worktree_path_append(the_repository, &submodule,
++					    "%s", gitdir))
++		return -1;
++
++	if (strbuf_normalize_path(&submodule)) {
++		strbuf_release(&submodule);
++		return -1;
++	}
++
++	super = absolute_pathdup(repo_get_git_dir(the_repository));
++
++	if (starts_with(relative_path(submodule.buf, super, &tmp), "modules/"))
++		ret = 0;
++
++	strbuf_release(&submodule);
++	strbuf_release(&tmp);
++	free(super);
++	return ret;
++}
++
+ static int validate_and_set_submodule_gitdir(struct strbuf *gitdir_path,
+-					     const char *submodule_name)
++					     const char *submodule_name,
++					     struct worktree *wt)
+ {
+-	const char *value;
++	const char *value = gitdir_path->buf;
++	char *value_to_free = NULL;
+ 	char *key;
+ 
+ 	if (validate_submodule_git_dir(gitdir_path->buf, submodule_name))
+@@ -491,18 +522,55 @@ static int validate_and_set_submodule_gitdir(struct strbuf *gitdir_path,
+ 
+ 	key = xstrfmt("submodule.%s.gitdir", submodule_name);
+ 
+-	/* Nothing to do if the config already exists. */
+-	if (!repo_config_get_string_tmp(the_repository, key, &value)) {
+-		free(key);
+-		return 0;
++	if (the_repository->repository_format_worktree_config) {
++		struct config_set cs = { 0 };
++		const char *filename = worktree_git_path(wt, "config.worktree");
++		char *tmp;
++
++		git_configset_init(&cs);
++		git_configset_add_file(&cs, filename);
++
++		/*
++		 * Nothing to do if the config already exists in the config set
++		 * for the current worktree.
++		 */
++		if (!git_configset_get(&cs, key)) {
++			git_configset_clear(&cs);
++			free(key);
++			return 0;
++		}
++
++		git_configset_clear(&cs);
++
++		/*
++		 * If the worktree config does not have this key, check the
++		 * effective value from lower-priority config scopes and copy
++		 * it to the worktree config if it belongs to the current
++		 * worktree.
++		 */
++		if (!repo_config_get_string(the_repository, key, &tmp)) {
++			if (validate_submodule_git_dir_with_worktree(tmp) ||
++			    validate_submodule_git_dir(tmp, submodule_name))
++				free(tmp);
++			else
++				value = value_to_free = tmp;
++		}
++	} else {
++		/* Nothing to do if the config already exists. */
++		if (!repo_config_get_string_tmp(the_repository, key, &value)) {
++			free(key);
++			return 0;
++		}
  	}
  
--	if (repo_config_set_gently(the_repository, key, gitdir_path->buf)) {
-+	if (repo_config_set_worktree_gently(the_repository, key, gitdir_path->buf)) {
+-	if (repo_config_set_worktree_gently(the_repository, key, gitdir_path->buf)) {
++	if (repo_config_set_worktree_gently(the_repository, key, value)) {
  		free(key);
++		free(value_to_free);
  		return -1;
  	}
-@@ -609,15 +609,10 @@ static void init_submodule(const char *path, const char *prefix,
- 		die(_("No url found for submodule path '%s' in .gitmodules"),
- 			displaypath);
  
--	/*
--	 * NEEDSWORK: In a multi-working-tree world, this needs to be
--	 * set in the per-worktree config.
--	 *
--	 * Set active flag for the submodule being initialized
--	 */
-+	/* Set active flag for the submodule being initialized */
- 	if (!is_submodule_active(the_repository, path)) {
- 		strbuf_addf(&sb, "submodule.%s.active", sub->name);
--		repo_config_set_gently(the_repository, sb.buf, "true");
-+		repo_config_set_worktree_gently(the_repository, sb.buf, "true");
- 		strbuf_reset(&sb);
- 	}
- 
-@@ -643,7 +638,7 @@ static void init_submodule(const char *path, const char *prefix,
- 			free(oldurl);
- 		}
- 
--		if (repo_config_set_gently(the_repository, sb.buf, url))
-+		if (repo_config_set_worktree_gently(the_repository, sb.buf, url))
- 			die(_("Failed to register url for submodule path '%s'"),
- 			    displaypath);
- 		if (!(flags & OPT_QUIET))
-@@ -665,7 +660,7 @@ static void init_submodule(const char *path, const char *prefix,
- 			upd = submodule_update_type_to_string(sub->update_strategy.type);
- 		}
- 
--		if (repo_config_set_gently(the_repository, sb.buf, upd))
-+		if (repo_config_set_worktree_gently(the_repository, sb.buf, upd))
- 			die(_("Failed to register update mode for submodule path '%s'"), displaypath);
- 	}
- 
-@@ -1491,7 +1486,7 @@ static void sync_submodule(const char *path, const char *prefix,
- 
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "submodule.%s.url", sub->name);
--	if (repo_config_set_gently(the_repository, sb.buf, super_config_url))
-+	if (repo_config_set_worktree_gently(the_repository, sb.buf, super_config_url))
- 		die(_("failed to register url for submodule path '%s'"),
- 		      displaypath);
- 
-@@ -1670,17 +1665,31 @@ static void deinit_submodule(const char *path, const char *prefix,
- 
- 	/* remove the .git/config entries (unless the user already did it) */
- 	if (!capture_command(&cp_config, &sb_config, 0) && sb_config.len) {
-+		char *file = the_repository->repository_format_worktree_config ?
-+		  repo_git_path(the_repository, "config.worktree") :
-+		  repo_git_path(the_repository, "config");
- 		char *sub_key = xstrfmt("submodule.%s", sub->name);
- 
- 		/*
- 		 * remove the whole section so we have a clean state when
- 		 * the user later decides to init this submodule again
- 		 */
--		repo_config_rename_section_in_file(the_repository, NULL, sub_key, NULL);
-+		repo_config_rename_section_in_file(the_repository, file, sub_key, NULL);
- 		if (!(flags & OPT_QUIET))
- 			printf(_("Submodule '%s' (%s) unregistered for path '%s'\n"),
- 				 sub->name, sub->url, displaypath);
-+		free(file);
- 		free(sub_key);
-+
-+		if (the_repository->repository_format_worktree_config) {
-+			char *key = xstrfmt("submodule.%s.active", sub->name);
-+
-+			repo_config_clear(the_repository);
-+			if (is_submodule_active(the_repository, sub->name))
-+				repo_config_set_worktree_gently(the_repository,
-+								key, "false");
-+			free(key);
-+		}
- 	}
- 
- cleanup:
-@@ -3580,7 +3589,7 @@ static void configure_added_submodule(struct add_data *add_data)
- 	int matched = 0;
- 
- 	key = xstrfmt("submodule.%s.url", add_data->sm_name);
--	repo_config_set_gently(the_repository, key, add_data->realrepo);
-+	repo_config_set_worktree_gently(the_repository, key, add_data->realrepo);
  	free(key);
++	free(value_to_free);
+ 	return 0;
+ }
  
- 	add_submod.git_cmd = 1;
-@@ -3610,10 +3619,6 @@ static void configure_added_submodule(struct add_data *add_data)
- 	if (run_command(&add_gitmodules))
- 		die(_("Failed to register submodule '%s'"), add_data->sm_path);
+@@ -526,7 +594,8 @@ static void create_default_gitdir_config(const char *submodule_name)
+ 	strbuf_addstr(&gitdir_path, modules_dir);
+ 	strbuf_addstr(&gitdir_path, submodule_name);
+ 	if (!validate_and_set_submodule_gitdir(&gitdir_path,
+-					       submodule_name))
++					       submodule_name,
++					       wt))
+ 		goto cleanup;
  
--	/*
--	 * NEEDSWORK: In a multi-working-tree world this needs to be
--	 * set in the per-worktree config.
--	 */
- 	/*
- 	 * NEEDSWORK: In the longer run, we need to get rid of this
- 	 * pattern of querying "submodule.active" before calling
-@@ -3627,7 +3632,7 @@ static void configure_added_submodule(struct add_data *add_data)
- 		 * current configured pathspec, set the submodule's active flag
- 		 */
- 		key = xstrfmt("submodule.%s.active", add_data->sm_name);
--		repo_config_set_gently(the_repository, key, "true");
-+		repo_config_set_worktree_gently(the_repository, key, "true");
- 		free(key);
- 	} else {
- 		for (size_t i = 0; i < values->nr; i++) {
-@@ -3639,7 +3644,7 @@ static void configure_added_submodule(struct add_data *add_data)
- 		}
- 		if (!matched) { /* no pattern matched -> force-enable */
- 			key = xstrfmt("submodule.%s.active", add_data->sm_name);
--			repo_config_set_gently(the_repository, key, "true");
-+			repo_config_set_worktree_gently(the_repository, key, "true");
- 			free(key);
- 		}
- 	}
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 77ecd0f71f..ef03ef979a 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -363,6 +363,9 @@ static void copy_filtered_worktree_config(const char *worktree_git_dir)
- 	if (file_exists(from_file)) {
- 		struct config_set cs = { { 0 } };
- 		int bare;
-+		struct string_list keys = STRING_LIST_INIT_DUP;
-+		struct string_list_item *item;
-+		int i;
+ 	/* Case 2.1: Try URI-safe (RFC3986) encoding first, this fixes nested gitdirs */
+@@ -534,7 +603,8 @@ static void create_default_gitdir_config(const char *submodule_name)
+ 	strbuf_addstr(&gitdir_path, modules_dir);
+ 	strbuf_addstr_urlencode(&gitdir_path, submodule_name, is_rfc3986_unreserved);
+ 	if (!validate_and_set_submodule_gitdir(&gitdir_path,
+-					       submodule_name))
++					       submodule_name,
++					       wt))
+ 		goto cleanup;
  
- 		if (safe_create_leading_directories(the_repository, to_file) ||
- 			copy_file(the_repository, to_file, from_file, 0666)) {
-@@ -386,6 +389,26 @@ static void copy_filtered_worktree_config(const char *worktree_git_dir)
- 			error(_("failed to unset '%s' in '%s'"),
- 				"core.worktree", to_file);
+ 	/* Case 2.2: Try extended uppercase URI (RFC3986) encoding, to fix case-folding */
+@@ -542,7 +612,8 @@ static void create_default_gitdir_config(const char *submodule_name)
+ 	strbuf_addstr(&gitdir_path, modules_dir);
+ 	strbuf_addstr_urlencode(&gitdir_path, submodule_name, is_casefolding_rfc3986_unreserved);
+ 	if (!validate_and_set_submodule_gitdir(&gitdir_path,
+-					       submodule_name))
++					       submodule_name,
++					       wt))
+ 		goto cleanup;
  
-+		/* unset "submodule.*.gitdir" */
-+		for (i = 0; i < cs.list.nr; i++) {
-+			const char *var = cs.list.items[i].e->key;
-+			const char *subsection, *key;
-+			size_t subsection_len;
-+
-+			if (!parse_config_key(var, "submodule",
-+					      &subsection, &subsection_len, &key) &&
-+			    subsection && !strcmp(key, "gitdir"))
-+				string_list_insert(&keys, var);
-+		}
-+		for_each_string_list_item(item, &keys) {
-+			if (repo_config_set_in_file_gently(the_repository,
-+							   to_file, item->string,
-+							   NULL, NULL))
-+				error(_("failed to unset '%s' in '%s'"),
-+				      item->string, to_file);
-+		}
-+		string_list_clear(&keys, 0);
-+
- 		git_configset_clear(&cs);
+ 	/* Case 2.3: Try some derived gitdir names, see if one sticks */
+@@ -552,7 +623,8 @@ static void create_default_gitdir_config(const char *submodule_name)
+ 		strbuf_addstr_urlencode(&gitdir_path, submodule_name, is_rfc3986_unreserved);
+ 		strbuf_addch(&gitdir_path, c);
+ 		if (!validate_and_set_submodule_gitdir(&gitdir_path,
+-						       submodule_name))
++						       submodule_name,
++						       wt))
+ 			goto cleanup;
+ 
+ 		strbuf_reset(&gitdir_path);
+@@ -560,7 +632,8 @@ static void create_default_gitdir_config(const char *submodule_name)
+ 		strbuf_addstr_urlencode(&gitdir_path, submodule_name, is_casefolding_rfc3986_unreserved);
+ 		strbuf_addch(&gitdir_path, c);
+ 		if (!validate_and_set_submodule_gitdir(&gitdir_path,
+-						       submodule_name))
++						       submodule_name,
++						       wt))
+ 			goto cleanup;
  	}
  
-diff --git a/t/t2405-worktree-submodule.sh b/t/t2405-worktree-submodule.sh
-index f5c94d490b..d46d565ad6 100755
---- a/t/t2405-worktree-submodule.sh
-+++ b/t/t2405-worktree-submodule.sh
-@@ -91,4 +91,133 @@ test_expect_success 'unsetting core.worktree does not prevent running commands d
- 	git -C main/.git/worktrees/checkout-recurse/modules/sub log
- '
+@@ -577,7 +650,8 @@ static void create_default_gitdir_config(const char *submodule_name)
+ 	strbuf_addstr(&gitdir_path, modules_dir);
+ 	strbuf_addstr(&gitdir_path, hex_name_hash);
+ 	if (!validate_and_set_submodule_gitdir(&gitdir_path,
+-					       submodule_name))
++					       submodule_name,
++					       wt))
+ 		goto cleanup;
  
-+test_expect_success 'submodule config in worktree config' '
-+	test_when_finished "rm -rf wt-config" &&
-+	git clone "$base_path/origin/main" wt-config &&
-+	(
-+		cd wt-config &&
-+		git config extensions.worktreeConfig true &&
-+		git worktree add wt &&
-+		cat .git/config >.git/expect-config &&
-+
-+		git submodule update --init &&
-+		test_cmp .git/expect-config .git/config &&
-+		echo "true" >expect &&
-+		git config --worktree submodule.sub.active >actual &&
-+		test_cmp expect actual &&
-+		echo "$base_path/origin/sub" >expect &&
-+		git config --worktree submodule.sub.url >actual &&
-+		test_cmp expect actual &&
-+
-+		git submodule deinit sub &&
-+		test_cmp .git/expect-config .git/config &&
-+		test_must_be_empty .git/config.worktree &&
-+
-+		git submodule add ../sub sub2 &&
-+		test_cmp .git/expect-config .git/config &&
-+		echo "true" >expect &&
-+		git config --worktree submodule.sub2.active >actual &&
-+		test_cmp expect actual &&
-+		echo "$base_path/origin/sub" >expect &&
-+		git config --worktree submodule.sub2.url >actual &&
-+		test_cmp expect actual &&
-+
-+		git config --file=.gitmodules submodule.sub2.url new_url &&
-+		git submodule sync &&
-+		test_cmp .git/expect-config .git/config &&
-+		echo "new_url" >expect &&
-+		git config --worktree submodule.sub2.url >actual &&
-+		test_cmp expect actual &&
-+
-+		cd wt &&
-+
-+		git submodule update --init &&
-+		test_cmp ../.git/expect-config ../.git/config &&
-+		echo "true" >expect &&
-+		git config --worktree submodule.sub.active >actual &&
-+		test_cmp expect actual &&
-+		echo "$base_path/origin/sub" >expect &&
-+		git config --worktree submodule.sub.url >actual &&
-+		test_cmp expect actual &&
-+
-+		git submodule deinit sub &&
-+		test_cmp ../.git/expect-config ../.git/config &&
-+		test_must_be_empty ../.git/worktrees/wt/config.worktree &&
-+
-+		git submodule add ../sub sub2 &&
-+		test_cmp ../.git/expect-config ../.git/config &&
-+		echo "true" >expect &&
-+		git config --worktree submodule.sub2.active >actual &&
-+		test_cmp expect actual &&
-+		echo "$base_path/origin/sub" >expect &&
-+		git config --worktree submodule.sub2.url >actual &&
-+		test_cmp expect actual &&
-+
-+		git config --file=.gitmodules submodule.sub2.url new_url &&
-+		git submodule sync &&
-+		test_cmp ../.git/expect-config ../.git/config &&
-+		echo "new_url" >expect &&
-+		git config --worktree submodule.sub2.url >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'deinit overwrites active config' '
-+	test_when_finished "rm -rf repo-wt-config" &&
-+	git clone "$base_path/origin/main" repo-wt-config &&
-+	(
-+		cd repo-wt-config &&
-+		git submodule update --init &&
-+		git config extensions.worktreeConfig true &&
-+		git worktree add wt &&
-+		cat .git/config >.git/expect-config &&
-+
-+		git submodule deinit sub &&
-+		test_cmp .git/expect-config .git/config &&
-+		echo "false" >expect &&
-+		git config --worktree submodule.sub.active >actual &&
-+		test_cmp expect actual &&
-+
-+		cd wt &&
-+
-+		git submodule deinit sub &&
-+		test_cmp ../.git/expect-config ../.git/config &&
-+		echo "false" >expect &&
-+		git config --worktree submodule.sub.active >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'do not copy gitdir in config.worktree' '
-+	test_when_finished "rm -rf copy-wt-config" &&
-+	git clone "$base_path/origin/main" copy-wt-config &&
-+	(
-+		cd copy-wt-config &&
-+		git config core.repositoryformatversion 1 &&
-+		git config extensions.submodulePathConfig true &&
-+		git config extensions.worktreeConfig true &&
-+
-+		git submodule update --init &&
-+		echo "true" >expect &&
-+		git config --worktree submodule.sub.active >actual &&
-+		test_cmp expect actual &&
-+		echo "$base_path/origin/sub" >expect &&
-+		git config --worktree submodule.sub.url >actual &&
-+		test_cmp expect actual &&
-+		echo ".git/modules/sub" >expect &&
-+		git config --worktree submodule.sub.gitdir >actual &&
-+		test_cmp expect actual &&
-+
-+		git worktree add wt &&
-+		cd wt &&
-+		echo "true" >expect &&
-+		git config --worktree submodule.sub.active >actual &&
-+		test_cmp expect actual &&
-+		echo "$base_path/origin/sub" >expect &&
-+		git config --worktree submodule.sub.url >actual &&
-+		test_cmp expect actual &&
-+		test_must_fail git config --worktree submodule.sub.gitdir
-+	)
-+'
-+
- test_done
+ 	/* Case 3: nothing worked, error out */
 diff --git a/t/t7425-submodule-gitdir-path-extension.sh b/t/t7425-submodule-gitdir-path-extension.sh
-index 02123b8468..3bae4c4ef1 100755
+index 3bae4c4ef1..36aac0f578 100755
 --- a/t/t7425-submodule-gitdir-path-extension.sh
 +++ b/t/t7425-submodule-gitdir-path-extension.sh
-@@ -78,6 +78,55 @@ test_expect_success 'gitdir config path is relative for both absolute and relati
+@@ -328,7 +328,47 @@ test_expect_success '`git clone --recurse-submodules` respects init.defaultSubmo
  	)
  '
  
-+test_expect_success 'gitdir for the main worktree is stored in worktree config' '
-+	test_when_finished "rm -rf relative-cfg-path-test-main" &&
-+	git init -b main relative-cfg-path-test-main &&
+-test_expect_success 'git submodule init make gitdir relative' '
++test_expect_success 'git submodule init inherits related repository config for main' '
++	test_when_finished "rm -rf repo-clone-init-main" &&
++	git clone upstream repo-clone-init-main &&
 +	(
-+		cd relative-cfg-path-test-main &&
++		cd repo-clone-init-main &&
 +		git config core.repositoryformatversion 1 &&
 +		git config extensions.submodulePathConfig true &&
-+		git config extensions.worktreeConfig true &&
-+
-+		# Test with absolute URL
-+		git submodule add "$TRASH_DIRECTORY/new-sub" sub-abs &&
-+		git config --worktree submodule.sub-abs.gitdir >actual &&
-+		echo ".git/modules/sub-abs" >expect &&
++		git submodule init &&
++		git config submodule.sub1.gitdir >actual &&
++		echo ".git/modules/sub1" >expect &&
++		test_cmp expect actual &&
++		git config submodule.sub2.gitdir >actual &&
++		echo ".git/modules/sub2" >expect &&
 +		test_cmp expect actual &&
 +
-+		# Test with relative URL
-+		git submodule add ../new-sub sub-rel &&
-+		git config --worktree submodule.sub-rel.gitdir >actual &&
-+		echo ".git/modules/sub-rel" >expect &&
-+		test_cmp expect actual
-+	)
-+'
++		# Modify values so that they can be distinguished from the default
++		git config submodule.sub1.gitdir .git/modules/sub1_custom &&
++		git config submodule.sub2.gitdir .git/modules/sub2_custom &&
 +
-+test_expect_success 'gitdir for a linked worktree is stored in worktree config' '
-+	test_when_finished "rm -rf relative-cfg-path-test-wt" &&
-+	git init -b main relative-cfg-path-test-wt &&
-+	(
-+		cd relative-cfg-path-test-wt &&
-+		git config core.repositoryformatversion 1 &&
-+		git config extensions.submodulePathConfig true &&
 +		git config extensions.worktreeConfig true &&
++		git submodule init &&
++		git config --worktree submodule.sub1.gitdir >actual &&
++		echo ".git/modules/sub1_custom" >expect &&
++		test_cmp expect actual &&
++		git config --worktree submodule.sub2.gitdir >actual &&
++		echo ".git/modules/sub2_custom" >expect &&
++		test_cmp expect actual &&
 +
 +		git worktree add wt &&
 +		cd wt &&
-+
-+		# Test with absolute URL
-+		git submodule add "$TRASH_DIRECTORY/new-sub" sub-abs &&
-+		git config --worktree submodule.sub-abs.gitdir >actual &&
-+		echo "../.git/worktrees/wt/modules/sub-abs" >expect &&
++		git submodule init &&
++		git config --worktree submodule.sub1.gitdir >actual &&
++		echo "../.git/worktrees/wt/modules/sub1" >expect &&
 +		test_cmp expect actual &&
-+
-+		# Test with relative URL
-+		git submodule add ../../new-sub sub-rel &&
-+		git config --worktree submodule.sub-rel.gitdir >actual &&
-+		echo "../.git/worktrees/wt/modules/sub-rel" >expect &&
++		git config --worktree submodule.sub2.gitdir >actual &&
++		echo "../.git/worktrees/wt/modules/sub2" >expect &&
 +		test_cmp expect actual
 +	)
 +'
 +
- test_expect_success 'clone from repo with both legacy and new-style submodules' '
- 	git clone --recurse-submodules main cloned-non-extension &&
++test_expect_success 'git submodule init inherits related repository config for worktree' '
+ 	test_when_finished "rm -rf repo-clone-init-wt" &&
+ 	git clone upstream repo-clone-init-wt &&
  	(
+@@ -343,6 +383,29 @@ test_expect_success 'git submodule init make gitdir relative' '
+ 		test_cmp expect actual &&
+ 		git config submodule.sub2.gitdir >actual &&
+ 		echo "../.git/worktrees/wt/modules/sub2" >expect &&
++		test_cmp expect actual &&
++
++		# Modify values so that they can be distinguished from the default
++		git config submodule.sub1.gitdir ../.git/worktrees/wt/modules/sub1_custom &&
++		# Use an absolute path to simulate a value written by older Git
++		git config submodule.sub2.gitdir "$(cd .. && pwd -P)/.git/worktrees/wt/modules/sub2_custom" &&
++
++		git config extensions.worktreeConfig true &&
++		git submodule init &&
++		git config --worktree submodule.sub1.gitdir >actual &&
++		echo "../.git/worktrees/wt/modules/sub1_custom" >expect &&
++		test_cmp expect actual &&
++		git config --worktree submodule.sub2.gitdir >actual &&
++		echo "$(cd .. && pwd -P)/.git/worktrees/wt/modules/sub2_custom" >expect &&
++		test_cmp expect actual &&
++
++		cd .. &&
++		git submodule init &&
++		git config --worktree submodule.sub1.gitdir >actual &&
++		echo ".git/modules/sub1" >expect &&
++		test_cmp expect actual &&
++		git config --worktree submodule.sub2.gitdir >actual &&
++		echo ".git/modules/sub2" >expect &&
+ 		test_cmp expect actual
+ 	)
+ '
 -- 
 gitgitgadget
-
