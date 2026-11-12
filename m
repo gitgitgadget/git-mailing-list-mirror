@@ -1,89 +1,114 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794500048;
-	b=ZjzfbWgnBX4Ra8KAu60AGWIptzqGZh6IOt6DHuhKulMqJYVmbmMMcl1NifUKhe/uQT38
-	 i3ctY4yGbkbRFe8lSOY9HX6xqnviFdIjOj+mJ5BZa0yFeyYI5w8O1K7rv0x1eLKNU5oSV
-	 VoGy+tkmHh1pA/6rjGigu7G4V02SQx2w73p7Hs5jQNLsnY0NqRnYbpdrUahIUqGOoazud
-	 50MDJ/Bbb3bBHBGVO/1+viNE/sZSOA4s81bck4+xBmFMYB2uFmlInGiW/h/EI0wiSxC/g
-	 5iT33B/Jtq3B9fGup5QjEiIitlOhq1Kr0sk0zJpho2Oc701+SCXIuTTUaVK93FbKXOA==
+	t=1794501457;
+	b=nmZ3cYeLm0bv9rYFWgJzFBUgmS3LW0rPz+VhSi2Sb/ldn7Q96uilhE1nIJa1kDrUM2uK
+	 NG8pBovP31fETbmMeWEo5SzTo7lIFE2T2ea18OVkORReDbzHjQnfqja1RF+fULQ7MO8Qq
+	 QLt0tu5zW9WOI/woXMdFJC1J6ONXNnpnsSCkvUiZmCNSuM2ud6Rppem80dfs0VdFmwOu+
+	 ZGiJXR8A0wUk8+cLi1ob8h1glU6H+ObCOoK0iDYxeSd3+VKjk7z/aHLf0uMYsXBjcPoHy
+	 jYV07g7BhnAt3QHz1MXP3wZnruEkqTwa91asXwxhySXDtHrROXgBRL3iWCOo7byIiWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794500048;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=xdQfxFO51Lm3kYux66foco3nTodpeyX2LHKvNq+iLKc=;
-	b=joDrvEZ2gAT387TzzUhSedjhuEMlwlyhoBl2iWpoFdITZH4nykkSJgg+JmSMylyp49UR
-	 tYwUwyckgZb48ku+WWLZJLViQ50MtPtS0KYSAs1Zcix/M82JH2OqPOqlfupeZFnOmQvbc
-	 r1ulSpWOZYSkcM53fscORWivL8cgyow7xzTLAxZ5UsQXU3zP17rDPbE1TsVyT6ZBue1E7
-	 Daw4Dhh96EBMrq4xRpDPzwQ142Dy/QPAqjiZNOPMI9Xj1cEAPdtB2lvJhyOIZb86dO1U8
-	 mrXAiklorWlVfoGGq1YLpj5VNdJITgAkFNFzNQ73YnWUXsepvKfFbDKmlZZlWj57IXQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794501457;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=PLgRu7/waUfhVTYFjG+iMU966WEN3cykhyC5tbwIWNs=;
+	b=06AGQ0XgYoDW/vjoCY/kCDwqoHuWRg1mj217toJ9fCQeJ37mGHNB5jJ/qK4t8qbipV3A
+	 xeJnZr1RBAMfvlMoo2/Fxi6lRqUwTvUO6IXOhCs0rumx4yY047j8rb1eq0EH4VmMHUSKj
+	 58Pb+IhPzjnTc8WXqHW5Vuym0mYWiLSEb9yKCFuzcExYU7augT0wAtZEBc+3odg2I1sCo
+	 0L283Nd/WT7aRYSxK0z3eKA4SFsxonEvH6y6lHOG4nxnsjWti/ps9E8ahA5kW5SXmQIwY
+	 QsB0D6to+S0RgTeabbZhxOl3Ek6weGtOPNv3eI4nHfPTd0JKNjnzDOCVUtvEGV+WoVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yGhqzSah;
-	arc=none smtp.remote-ip=74.125.82.179
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=DC5vttPS;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=j+6MIuMx;
+	arc=none smtp.remote-ip=103.168.172.151
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1A1606A331
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 16:14:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AC1A1606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E14606A880
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 16:37:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 14E14606A880
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yGhqzSah
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-37000e7234bso35836eec.1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2026 08:14:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794500047; x=1795104847; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=xdQfxFO51Lm3kYux66foco3nTodpeyX2LHKvNq+iLKc=;
-        b=yGhqzSah/u8TktLbTCa/+T+9Td+Qb9cMHI4MSO6wUXrlp9ua6YuFYHfo7D34n3vi0r
-         AC0txvSzRtc8J+Whjx8PAc3msXr77mboaL1+nI06Q+rEo0vshfsKniniodIO7U+0wvf4
-         DvH4jWn7jUwdL162+CXiAZbVA4NWSqjIvztxw9mF3zSIc6weFwFNOgChFBVPhHJWbF1X
-         MDZvAj4pjEzGrjRsdbGyWJgZsCmE4JnCdFJaINu9wcTd2S35vks/DfpPV81/RYJIp+hk
-         DBZGot3pUjjALypn7qsSrfROVWPS7F2GeEMfhWCnrAMVYBF1U4Zxl8xT7LowKYb4rdHG
-         Kxjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794500047; x=1795104847;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=xdQfxFO51Lm3kYux66foco3nTodpeyX2LHKvNq+iLKc=;
-        b=oWn/7xWZUPGgtICWruq/qsaWCyglW/ZJrrdXN9lwEjMmvTUqgkosgMEma8KPrjpP/0
-         5LtEF0H2OMCGN4ele8r3iezAwvi+MCncQYcSMtrEr+8UHyAYrSkOjdIyCkR+21cCbYcd
-         aNNOHHvP8qXHgQntW+dhBHwOPN/mEWXFguM/hYCzN9Ix8BE3j95q3S2Sdh0Ro1eGMBQG
-         QzOweRFt4vCmnwPRpVxbghlESOVE2LLQarV16l1Ul26Rr0HspWqroRh78wfIdMNoM5Mj
-         eLZqYweNRsaUZ3ahcOTuJHf5d7BFD67JMhsiRySBvYKDjcVKimx700ANWJpYLVy640OV
-         ILGA==
-X-Gm-Message-State: APuU4Z/KXgIM+bkKLypDKVpJcfWWb6v7p9B5KU6RoqZcPuFyqqEy2joU
-	CPU5OiWY89wEMSWQtARTiViSYRU5vDJgzraVCKfRX4UFuVwYeRIs14U+dkVFaA==
-X-Gm-Gg: AYBFou3E/ltI35kbt5E3UIAgh3Wtp7o3N0cnZioEFw/l/e0cCE5nInJ39AJQKLhBOzR
-	Z26Cfskxsu640QY0s/juZsHATWQrZGb5sJqHUf0U1CV54rhqlf6FuRzhmeqbl53/k/33z04yAnH
-	2HpzWJdXpgWGB1ovpT2qCNtSauHcePST7KjYAS0M+IdxLacLv8D8m59Pu1paZKnj3eOpx0SRopc
-	Ky0N4L8dUhL2kn48A/Icf54v5qMh1ZSTk39pYN3By3ANr1kYe8wGAjyg6Xiq801yQ/XcJh/Jsdy
-	LlEvEUAfpS4Mr5UPbB3kX9sM7UgKVPODlTdy+Sgxg9FH2uh2KYUJKZd3bxyA3vm91K+JgmmlPDD
-	3FIqJbIdc4yiUfqc78LVDW+dkdu0vEMj0BAv+6OtSx75M2P0FEq6MyhU2RPVLS3u8kIXz5WvrQJ
-	RqFMVqLlly0H/tvOdWyTVONjmMhNtpAWKQVzuyH5WsPRYY/pW1JoPu4PJMRhIYciE8GtwvvhuS+
-	/BlnHufWVv/ScVxY3JFTZWD+MNEDS0V+cTvwWONPKRzNH1gwzqPabldtmFHra+y5W5jSgo1KgH9
-	CuKEr19jmi0xzuomomA6Ez8PvDpQT9FHOQ==
-X-Received: by 2002:a05:693c:638e:10b0:375:dbeb:b363 with SMTP id 5a478bee46e88-37686d341eemr6318709eec.28.1794500046419;
-        Thu, 12 Nov 2026 08:14:06 -0800 (PST)
-Received: from [127.0.0.1] ([172.182.224.193])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37925581683sm840634eec.11.2026.11.12.08.14.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 08:14:05 -0800 (PST)
-Message-Id: <pull.2309.git.1794500044740.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 12 Nov 2026 16:14:04 +0000
-Subject: [PATCH] commit: remove padding from struct commit
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=DC5vttPS;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=j+6MIuMx
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3351BEC0108
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 11:37:36 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Thu, 12 Nov 2026 11:37:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794501456;
+	 x=1794587856; bh=PLgRu7/waUfhVTYFjG+iMU966WEN3cykhyC5tbwIWNs=; b=
+	DC5vttPSTVbcgXvGKS+ZRPZKWsrqtOeS+O7RVMTmanSyXs7k9/zZrgcbnx93aqhe
+	sqtLKMk2Mj8cWuVChbNAiEj7W0QdIeVkCOsutuuKaFIgggZzGaIWiqhMiqs5bsWz
+	Lor3s8nzHkfYSqktrgNr5CpMohGcPvHW51ejc67UfTWt7chCGTz1Nuu5f0/4/Pj3
+	RGKOFwrgi1bRWFsevsRKzmuusTKzOZs88t4gFymOf2/nfJYwFWQVEhlSBVanhye7
+	L/rwgqBGu5Gyg8HgGuBx3FQq/SzWMcGcxME70rJ96W2bSlHeTvKx+3wy+Snc19eL
+	DQDgesPO6PLVlDlEv5Hu1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794501456; x=
+	1794587856; bh=PLgRu7/waUfhVTYFjG+iMU966WEN3cykhyC5tbwIWNs=; b=j
+	+6MIuMxCEDvCh8rVG5EA0E782rFAQLcxF+kHmXdDYqoEjUGDwnhaHlfKI0xSWRhs
+	BYQJwKSnLKYLsaz/SL5fQNEdnR64U9z+wfSJsBssPekQ8oFkrwqxBXiOGreCxD/O
+	qV4JzMwZMeLkT+YL3QEI5vqdO0FzIKrANzzjeWBFmmjJCAoAA9ZHsPqhorcZapPd
+	T6yx0TRa/0aFp50sONhxNsgfv2dBUkCRlE1NXXN/Mgpx87NF6S7AU1BJkYt7Vp6r
+	T49eTvL+ryg10XIVXRabwkLHgCvHdYIWHuESmI2S6jagDn/D+bnrgdDfcBxrWYQW
+	m9+FhiYJ7WoxdLWJ6BgVQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794501456; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:V6qiMaRuJdNpXWEOppsDvu7Zc5W/eDAttYc8BPPv7FZPgQk
+	HUQqJqpmmQrfZO5rSNfnu5gE37OOkpo2dSR4wikMsJ07wmNkpUWYvdFJ/UAtKi1a
+	o7QVQIljtOcDOWcROeHQqY/1I0OuXotXplCWQLGQfSFln2Jvjsec1LvvbrokQ7Tb
+	D2YTzJVH5M9AR1+wGUaXFDliEOsAk8tKP/Fb0cMr0SSkf4XTjrPmcQiOjEWn1vev
+	cp75j2SFiWcHiiFahdKpNpcyMoJKYCLPlCd/opF+wZL45mGvQImEuw9sDvZfkUrU
+	hd0o3V3UUA36Q/lhQ7brECkcum02xzReywbhYIQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=14;
+	hn=cc,content-language,content-transfer-encoding,content-type,
+	date,feedback-id,from,in-reply-to,message-id,mime-version,
+	references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:STet5acxk93paVwELsFsBJiSVNt30Dxu61kTqq/ruTk=:xH+MwL4yW6uohm9dZFNLTBsfmxSqXdrUWVUMeqG07BE=;
+X-ME-Sender: <xms:UOv1asQ4K_GqdVJiR9Phs11fdLFmX_KdZ_szKpf4QEzyrGM9_kpx3Q>
+    <xme:UOv1agoqROyZ37e6-qnjxxoQBHIMCbFFe-iyKdeMf-gjlkqAmNZh71bA_BoLU4YKe
+    s7PXn7l_Om9wVd3RUHCCmKhWfwuEGaUfwAvyPJStrzBr45qIB-DOLcHlw>
+X-ME-Received: <xmr:UOv1aiJ1FecIGaEgAsjDlH1JesbXVot1e-hLAnvGXo90wOEX7_2XoiaeCx7UI2zMJwZj6ckrVJW1qUoHREKDWfI38cT4iERexE3jy-7cmrgaPcI_xQ>
+X-ME-Proxy-Cause: dmFkZTFK++ljW/Z5KIlHBUuo14VhTIAmAYwDJQOVBZ+U8K5q1boLA7jwZa4E3Ga36opTU+
+    UJ9H4krj2eN6OWmxRChsEblWX1DGsVUkSgMxrT1DrXsFzevcnATynCdf5pgWg01poKc7RG
+    PXR4GjsZ5vMqkRHKkUzeraFSfPgznW3npw4/pjLY1vxynmQkM7foZMQyTwEsMgMkCFOLlk
+    RuRKyBtvgRSJsMyOmVqm1PigwBuTZT6Mb4PYSYOUnEpX8wh+DS8PpBO6GjqYKBroF6b63b
+    yLyl2z8l0N7aepJrezbhd3Fb+VjramQQC0sNg5gx1RI/95iTfLI9ebwwv+nQ80UyBGKal2
+    D2CcsvmZNvBzZY07DiH7tzUd22YkSP9DvbYceJARxrZmDJPZcDx3nLWov5mzJiUnBYwjiD
+    sIZ3+w5wi1ePE8kCKROs1HYrDNasNCuKnU0Z4BiRguxgllwUFy+GjY7Dc17OQ2Ly1cvCFG
+    C2UuFSfn4HvHtGprzGBd+lsKuqBrRUQQB6KmXVHalOGKwYu2ZyPwVXU8S2c0dnRPhGFppr
+    zhJO2B6bqruFQnpDeCaWykbGff0ksGc3Lau8cl5IktaCdfvX14dKKsS2IjGADFT4iYpvqt
+    raJxCCt/iSQ6w3eE1wIS6MDARkitvIPZsjR6eSFvbiV7uCutCHAwCtgH+q9w
+X-ME-Proxy: <xmx:UOv1arqVWKhrE7yNGxCJhyFkC1BFcbImxdbHmp5sIVNFVsPJ3P7QWw>
+    <xmx:UOv1aiyZysx6u2OFV2hBYw3MOMTCcgJBfqwEg9izBtAr559ZQk5oNQ>
+    <xmx:UOv1anMZbZgun-kSJKS3qGrUTVth36X82GuO9j3j2tDksskaXkYgNw>
+    <xmx:UOv1av5vjnEzWuQKNfQzgEJXxchlaWJF237vmAm3eNiGg6usVbSXYg>
+    <xmx:UOv1am6k67GuPYgEfpLUyhTVK6jqZgQyQd84gMQDU3Jqjmx1S_EzJ0uD>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Nov 2026 11:37:35 -0500 (EST)
+Message-ID: <931a94e4-feab-49a9-b5c6-479f0d7f8b75@jvns.ca>
+Date: Thu, 12 Nov 2026 11:37:35 -0500
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,88 +118,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Julia Evans via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+ <pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
+ <xmqqh5ile4h4.fsf@gitster.g>
+ <CALnO6CBGcG42NxtpuPaJVrzAMC=J8iVstsHCSi6vDQhDmFJ-Kw@mail.gmail.com>
+ <ddc6d42c-6e40-46a5-bb70-f89f11525ac4@jvns.ca> <xmqq5wy2kqhl.fsf@gitster.g>
+Content-Language: en-US
+From: Julia Evans <julia@jvns.ca>
+In-Reply-To: <xmqq5wy2kqhl.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Kristofer Karlsson <krka@spotify.com>
 
-On 64-bit platforms, "struct commit" is 80 bytes, 8 of which are
-padding:
- - 4 bytes between .object and .date
- - 4 bytes of tail padding after .index
+On 2026-11-12 10:40 a.m., Junio C Hamano wrote:
+> Julia Evans <julia@jvns.ca> writes:
+>
+>> Yeah I agree the "it's the parent of the next commit" would be
+>> distracting unless there's a specific reason we need to include it.
+>>
+>> I agree "the state from which your current changes started" isn't right
+>> but I think if we reinterpret it as "the current commit you have checked
+>> out" (which I think has the same or a very similar meaning) then it'll
+>> seem familiar to folks and might even help.
+>> ...
+>> because I couldn't think of a reason why someone would clobber an
+>> existing branch to check out an old version of their code.
+> When I find something interesting in a topic, which may be an old
+> commit from the point of view of 'seen', I would detach HEAD at the
+> tip of the branch to take a look at its contents, because what I am
+> going to do next would very often involve modifying the working tree
+> files to experiment.  Even a topic that is documentation only, like
+> the je/doc-detached-head topic, can have a cascading effect that
+> ends up breaking tests, for example, and I'd be futzing with the
+> sources and tests to figure out what the best fix would be.  Even
+> though I am not going to make any permanent commits out of these
+> efforts, being able to make temporary commits to mark a resumable
+> state is handy, and when my spelunking gets longer, I do make such
+> commits.
+Thanks, this is helpful, it makes sense now why this would be useful to 
+you as the Git maintainer with what I've learned about your workflow.
+> I guess it requires a developer's mindset and imagination to
+> appreciate why detached HEAD is useful while spelunking.  We often
+> phrase the act of visiting random commits (often older ones) as
+> "sight-seeing", but in reality, even when you are mostly looking,
+> you do want to futz with things you see there.
 
-Reduce memory usage by moving .index into the hole after .object.
-On 64-bit platforms this shrinks the struct to 72 bytes and
-eliminates the padding, resulting in 10% less memory for every commit
-allocated, with no change in behaviour.
+I'm not sure what you mean by "it requires a developer's mindset", in my 
+time working as a developer using Git I never ran into a case where I 
+would have needed to clobber a branch in this way :)
 
-On platforms where 8-byte members only need 4-byte alignment (e.g.
-i386) both layouts are already free of padding, so the size stays the
-same there.
+It's important to remember that different Git users can have very 
+different workflows (especially among developers, I think!) and that one 
+person's workflow may not generalize well to other developers.
 
-Measuring peak RSS of "git rev-list --all" over an internal monorepo
-with ~4.5 million commits (three runs each):
+This is something I pay a lot of attention to in my own work: some parts 
+of my own personal workflow are a bit unusual and I keep a mental 
+catalog of those things to avoid giving them as advice.
 
-             peak RSS     time
-  before     ~849 MiB   12.8-13.7s
-  after      ~817 MiB   12.8-13.0s
-
-The ~32 MiB saved is close to the expected 8 bytes * 4.5M commits
-(~34 MiB); running time is unchanged within noise.
-
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
----
-    commit: remove padding from struct commit
-    
-    I stumbled on this while rabbit-holing on an unrelated change to the
-    commit walk, by looking at the layout with gdb's "ptype /o".
-    
-    Digging into the history showed that the size and padding of "struct
-    commit" have changed several times, sometimes undoing earlier
-    optimizations.
-    
-    I also prototyped a regression test that compares the size of "struct
-    commit" and "struct object" against the sum of their members' sizes,
-    plus any expected padding. I left it out of this patch because I am not
-    sure whether:
-    
-     1. such a test is worth the cost of updating it whenever members are
-        added or removed, or
-    
-     2. a unit test is the right place for it.
-    
-    I am happy to send it as a follow-up if there is interest.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2309%2Fspkrka%2Fcommit-index-hole-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2309/spkrka/commit-index-hole-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2309
-
- commit.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/commit.h b/commit.h
-index 1061ed791b..66a5d245f2 100644
---- a/commit.h
-+++ b/commit.h
-@@ -26,6 +26,7 @@ struct commit_list {
-  */
- struct commit {
- 	struct object object;
-+	unsigned int index;
- 	timestamp_t date;
- 	struct commit_list *parents;
- 
-@@ -35,7 +36,6 @@ struct commit {
- 	 * or get_commit_tree_oid().
- 	 */
- 	struct tree *maybe_tree;
--	unsigned int index;
- };
- 
- extern int save_commit_buffer;
-
-base-commit: 1891de46f79dc444a47db1c87bd0c8c76b5463f2
--- 
-gitgitgadget
+> It is in a developer's heart ;-).
+>
+> Hope this clarifies.
