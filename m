@@ -1,87 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794504866;
-	b=0uckvME9knvmiC03tadajrYmcNZH46roHqSRDHoLxYu+k2FUEgkH3CW+aovDMFLfdEnm
-	 G1VBF/tqKLBJKcFFGSKGdjDxE+lw8F3MK7C1mg4vicOEV9ATqVo2/3hAkM1wymr3QT3kd
-	 SFKZVDxdM0dCXRflx8CJHxbb1+s9pNlIxIR1cMapV7EnLgbZR9zFf0pOxv3yQmVjv2vLQ
-	 vOUvGrioIbFtVeL1tHabK7T76Db+e4OM1VjKCE77vMvFdoo/R0YvoOuk7BTUoLcjFkE+m
-	 CB2UunlvzXbfgFwq1BH97vbfbgnym3aCJndo4LdKQgabaI68Z/DtcPTa08WwdplG0oQ==
+	t=1794504868;
+	b=wwEcU5JiXMZpXq98lr3J/0EDZrREspgLGeckoyHrUxyzTgXrwgP0EO9uIySa383yrOVn
+	 6a6eHc2mTNL17dUZbltHqj/jD0KKhHnw9GhH+WFYmzMyD4Ce2bUuB57arBnkn70jYdOft
+	 uucU9j/xnbDqihbxGbv2hWepSH9ZCQt2s6hsqitmwKHzhJfU5mYuFhRB4gMex+NZbXECV
+	 8rTgzZTE77Xj9DImGpjhoRXofTTdJ5raqlKfAcZuMlJl0kRVponSGtxJaihVHw+4fSpk4
+	 VeMyzj+Q+ZeUqLVUaBcqfW+Lh/o0GQH4+e4ptePKxz6cbxE28R9z4kg+ynHywf422iQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794504866;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794504868;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=eJdQdd8YffKgnZtBPwWLKvXtFmolZdH+5vmLxCDPo2c=;
-	b=he68nFri3/prYf5uveHFC7LYm8MNH9PNs7HreTyxIjnslKWTV7lav1vSz2q1lNcihHwY
-	 hLgvxCyxRwy8ghrFLz8RrAe110XKF3HQYxfYk1vJa0Y1sU4JE04bfxaQ6hrGOCsrFuCre
-	 YzbQS/oqBNbWxgxy4n/Lyeqvz2NnMNxDdt5xtqd2FZaYzRRBA5bkVFohH+2vv0ncq2EjZ
-	 yzUGGcALO0MO5LJU3xd8jPKGoTsXR5UOWEMjfBLsltpHT1PeQkXpK0270e8BAcTMGZjrz
-	 6y/rvKXEai3DtKSAeLVn2unofE3x+tznjy0szDZADT4Fx4P27IQTZBxmTmiS5l+6QJA==
+	bh=f7ywIx84LlltzGpuwCfrB/hPF/iRRiH3bcsUIaHoiwk=;
+	b=fUP89GZ4SXRWp88eE+Dk9jleeTe0WvXmccNlXTM/e977jLWU+9yyQH3rMbYLyWm4VmZe
+	 H8/ii4Yggm72nbmGmTBREMJMpzFGR91rW7PyJ/QiTPkobAsS4OSeG/PmetvniLHIZq3Gt
+	 BYauoylmnwicqUYibK3TPZD2L4iCpCuBtEL5wOlV1gPrhHPL6UPEJmUL15JAntLvhDCvY
+	 RjRIQsU+xWlbhrT3Lsck8ptvcK8WFhL0Jf1bN0kvqnX853lgOxy5riwLpxTmpwSmc9Esj
+	 JvyRtlG298BzBvyZu/slkhh9Qr4+NObn6/dU3Zj5HOhnWN5VqGWbL9/LeJ3UdrmU7IA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XAlE3DXJ;
-	arc=none smtp.remote-ip=209.85.221.45
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iusAVQ5Q;
+	arc=none smtp.remote-ip=209.85.221.49
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A32606A232
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 17:34:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 32A32606A232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693DB606A232
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 17:34:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 693DB606A232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XAlE3DXJ
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-4922dbcee23so17613f8f.0
-        for <git@vger.kernel.org>; Thu, 12 Nov 2026 09:34:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iusAVQ5Q
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-49a92144733so11573f8f.0
+        for <git@vger.kernel.org>; Thu, 12 Nov 2026 09:34:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794504865; x=1795109665; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794504867; x=1795109667; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=eJdQdd8YffKgnZtBPwWLKvXtFmolZdH+5vmLxCDPo2c=;
-        b=XAlE3DXJLqXXiUxv1yxKBN9LlFnCl0xbwwRC74b/B53PLdHglvIKkV9Sr30BgGPwUr
-         ZatZPKaW+k5YjglKzbNQPPC7SSacqDG3h/z8DTx2fKLWDSFm1DSAj4rC8gCVZDkUTJMX
-         hFk7XI5BbGhswqTQCrvc9ctRXpixp68DrxIkz3a/rosYfiCdgcsabpDQm5gGFZRu4gZ2
-         MFmYLeeVF6yllSWlkkyq5eWzBMKs5EkAAN3yHVGGcpjIYTd3TQfv2Y6j7U0EMiSg3kK8
-         vfffHIcRPaJ7DEYdXac3IHsUgL44DDNj7vKPmNwDFguoyquGXqEc1CubHhCKsir2qI7B
-         4VDQ==
+        bh=f7ywIx84LlltzGpuwCfrB/hPF/iRRiH3bcsUIaHoiwk=;
+        b=iusAVQ5Qau+DjpE87t7L9+yTeNwusw/Y8t9H6hbkLlwbO4bMB6RvuGbkkEktq3424h
+         y4/IpQWAcNKNQwFKJ/TME4hwdP2uIPxac7Ox+VVILYP9GKBmcDVFd5jaqAG/zj74Mqq1
+         3iL3fOx7DdCKZR9roRG+7g1lweM9DvIXwqVCeRtuyVHKRDqPWXsIKQ0mOB8KJAoiMF7i
+         /+jODbuNQncvAhNg8kZpJg5uYUAehzY092kn/mvnwhviJXC+gJ1IY/XUK3pS+GhKucts
+         GNt7QZlBRYmXbAq/vbLFF3hjtX2UgKzxNAKl9hsUxORNW2M2C8q5RisGfqM9U9dsaBPR
+         +JEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794504865; x=1795109665;
+        d=1e100.net; s=20260707; t=1794504867; x=1795109667;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=eJdQdd8YffKgnZtBPwWLKvXtFmolZdH+5vmLxCDPo2c=;
-        b=uhUdp+5xahPHgyjDbTzo0ScQeM9JcoWc0ByHAycm5buT6XQaxsZyWWWpXLGzyklO4Q
-         NP5OK+7254fWmk+z5OOXNGlG0iBvIw4xjWjoouW1SwmrjaD4kp1pENxjNXx8bghsDFka
-         Ubw2g5mALkPKhBBXrO42mL1DHx4Zxn6hAU/EYW3ktTyr/uEE5+6a0cydD1BFCygSogaB
-         vLCLNpDgeGW6zfVSKOKkvC8qqz56z4g9ZbbRLOKXc9tfhkV1Gjj76tdjeSIkkEsslfGp
-         HepGiot7r+4NTgPJCziYZ8Wl4N8qgE/qnARtGbGvEq/kEoWQLEOdHJRLcPdQJ519V5p3
-         7iFQ==
-X-Gm-Message-State: APuU4Z+QBrRliY8JKvdIWzmMboRhraRhK0ccyRLJhuGErE0FEgw/wwwa
-	jAy/5KmprKRqW6sL4DrMkKTDfsqp6+uH7Oxr7Eb4dnjTFae/izoocfoteYJRNg==
-X-Gm-Gg: AYBFou0iFVAw9DWcPldowDRhuORYVoJ18AJVDzL8YntKZImBLkhTLMRw08SDAtvd9Nx
-	cPy7eXnHZKhUnHKlt0Cio5n9N4w2MIULprkZUwhVgWrpXj/D1J5Qe6t+nCo9CFnw/EekWIMocn9
-	K4rv8lBlplSUVdx9OjIIBttAfMzPTo8hqjTk1IrXa7a3gM8tugSoql1AKA3YOu7SRp51mjn4MUy
-	NTXO+KTNij8vImWPUCxkEpvPrs5JHj5Fsqa3yuh1JPWsUGpQViIzgW+jpg0Fmqff81lH7hvc/1c
-	PGehYfxlW1gOT09xlY4JUfdnez4tm7cpmkFfTdgGgk449uNdiLqysn6lmmujGz/+sssqv2ClHa5
-	K2FD6uFZ2e9tqWCCfosTJykGUvzU/sjUDT2eDbVefXDtSfchV9aUmjUWVnMlEw6ePQ2ucqZr6Gk
-	bLDzFjEPMgVVGxf7WmBB1bMQ9VfORgrauTOHlmyez4wwyWOmoIdJWRu3Kk2T9kDgkqNULCI7vHs
-	BsAB80ka4uIr+9sAFovrAdSvdIgwgJ1V3w+mmksZ/ar64Ffk5u/cHXWboddcy8wcLTtNpM6wBuP
-	2aJifFYgeZ9oIYm7XD3LeEDHGdSNQmtmqGntJ3B4io8lcqpKWmwHgVE8do0w6Ar8OCbK
-X-Received: by 2002:a05:6000:40c9:b0:48e:75a1:1e38 with SMTP id ffacd0b85a97d-49c73ed1330mr61170f8f.56.1794504864685;
-        Thu, 12 Nov 2026 09:34:24 -0800 (PST)
+        bh=f7ywIx84LlltzGpuwCfrB/hPF/iRRiH3bcsUIaHoiwk=;
+        b=VX/0NI07TITDH17JcT/u8ON5DNhOTAXIOsKWxw7aX3kLwhqeaIrLtVv/LoHcCWLzJL
+         zaR2nRh9rDL1Jf7e6tIODcszvzjqX/q/tIyuFchiQAALYv70ZNA37kZTHfejyhLPCqJl
+         mAfLymJS52QRKN7PWlpyy4+dTLfpVo5bGLwR9UtRuD9kEGGqVPvk1PA5uaek3zZadVHo
+         QYnxk4ZLSnfT1kgzx7XeUzbuFXkAcd2KH9TRKKO91f0aemsL3Vo3LZP5nDv50aAp4X25
+         evJAO5BwPYDXXz+iLe070qNhk0sFdx3otKkSbPwQb8zyYP2xeMqnwSBXaFxDlUeeI7Wt
+         0cFg==
+X-Gm-Message-State: APuU4Z9gkXEAgHWrPQ/YQu/Rn/zA9WOnJ5wFrXBxOmnGGhr1yJfPova5
+	5MGU/7YfJb0cOjVzl6vBGncynipJRHPlfCzulKnE0hOZDQQvC3FGm5WWXx64LQ==
+X-Gm-Gg: AYBFou3z76dErU1Ovjny+kSHXGDARFDBGK3uPh6UhyHXY6yPndu/hUfjxd4RX8W1xvI
+	5aN9cBE+IT3WGjaAKcwnSHY4nY2YVheet6BvUv0l/4+66YnaPqX8nk6kZoQH5Hx/alFBz8PdXFj
+	2nYsLRdD3XUXGH5haeE8G2PoEbpYVkoQ1UVN0v9PPKbioh9ZBBFXZj+1+Mv1bI8dg030hFyXSdw
+	jenUb23wPoz9oz7EKkku3wyPB99c63wPo7YRuA4+5Wq2/muYAST51GutNqlRS7vNT++z4aEr9ZO
+	SjwlsQXugy8HOYHEWTvcJCCFI+dlyanfVij4iFx2UWfQzEdmE+tHveSvc9NhmDwMo2fdpiU594R
+	9YAKCF50T/vvW3GI0zaDvIjk1puv6fl8tU2HMDKTtpucAjRQ/zHFgZki4pg/R/rTNN78zDtmWM8
+	A3fCL9Yyu6AxwGuNHAPEX774UENCBLfuLXx5MRqtpvewyHKLu4/6SQRfzJtSWEjE30nrTEN948N
+	APJdbqpJqP5FvxbeHV2GymFQXjcAK6EjmQO/5+MkmA1tqONdgYwFlPwVKnUVLtRMXepw728uCJm
+	WhyKNyVt37yl/SJHzm18FFbjbBKRMP3U6lt2foDR4IT404SFX3COwc5C1f/3cIHSNg6rufvQoST
+	oBQPay/9kiurwqg==
+X-Received: by 2002:a05:6000:250b:b0:48e:5e20:1371 with SMTP id ffacd0b85a97d-49c6dc01593mr219918f8f.4.1794504866753;
+        Thu, 12 Nov 2026 09:34:26 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:cb2b:22fd:d791:9595])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c604ee47dsm345988f8f.38.2026.11.12.09.34.22
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c604ee47dsm345988f8f.38.2026.11.12.09.34.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 09:34:23 -0800 (PST)
+        Thu, 12 Nov 2026 09:34:25 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 12 Nov 2026 18:34:11 +0100
-Subject: [PATCH v2 11/20] t9300: make the date format tests self-contained
+Date: Thu, 12 Nov 2026 18:34:12 +0100
+Subject: [PATCH v2 12/20] t9300: make the pack edges test self-contained
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,127 +94,149 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261112-kn-fast-import-tests-1-v2-11-b8c3a0ab27e8@gmail.com>
+Message-Id: <20261112-kn-fast-import-tests-1-v2-12-b8c3a0ab27e8@gmail.com>
 References: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
 In-Reply-To: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, gitster@pobox.com
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3174; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=jjUFwuPkb2LOJ6zFuUID5rxhB4m3rOsoFc7enBYNlfU=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGr1+JJxC7Qs9g85amiCB1xj0FktFXOKtNKfT
- XiNum85uJaVsYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq9fiSAAoJED7VnySO
- Rox//ekL/3/pFdi+nMdtjImicwsFvEuN9p4D8wzAStAnEMuuT8PHbNsbLCrCHqZKmFzMTTZkzWq
- mVFTwPZF98jHjslOD5nLyqGHfjT/RV1V9NpYmnYLHYKfI8JRe4C47o6o1k5lh0UHWZQeIfSsHTS
- 6+iQbBN2qbGXyftw2LXl4rn39eut3CXxp3Sl7VWvWXTLfofBQCgg9Hu7ult7iDiDo7WJeg5TDUY
- nWDvWWq8gc7bXbkl6jXWnCR18VGhDRfyAFpApRxmHA6DnwYQVjbNpEgk1C+xTNtVI+WbnFbh0bX
- vov9R1t2jMn2HsVVKyibf5ftzdQPC1LzzqexdBbAmi64/FFgYu8t+wYq0XKCOmqtPhxFldWMUu/
- MLK7Ske4qKZp50gy/q/XMIuah9wziZAZ+9hpGzWpnPYOBujxn1XCA4awEr0vqTNne54HkDSHbXs
- 5QT9RErynRlsiGNgG8XcH5kuM+uA3oTxUJCsHTYD1jqozFzceku5UmLa6r7H+3fzspzEZqogWS7
- NA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4095; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=yyiZ/+LqHHPQ2RkhX6Z+JpOOx9T4hEQLQTrGdnJcLw0=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGr1+JLurCVpA7f8B61guz3M7at8PqdOqMttM
+ NfnsX2AG7llE4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq9fiSAAoJED7VnySO
+ Rox/bKkL/17RypA846FkgjZkiNfw3Yg5nO9Olibmqb8UdF+hXysYboebbEMSu05lVGeM8+Iu+Tz
+ peR5Vl0pcZ1y5ccPMo2nSBFrW7VpyQ41H1sCw3b3zT9kIZxtuZBD5cXPCPHSqjgV+yZb4pknPzu
+ eETeOhC44D32xxZirt86XEKCFg6Id/uTEPRFXsDVNHg2UpV1KG5Rt4UyZyEEL36kKyR4JoOePv5
+ JJwo5U07EZpY92iKqegiSRuRFWRLPCio/aKFHG3KrQoy8bdzp/2t9ELrSvCVsMD77UH/GCi8bNp
+ vVXJGhIiOLYJWsua99CT7YTf4hsOtIdTtWXqc2bfJ9MdtCU59qfbpiubtFAOLoRgtnMNAyEdFT2
+ 6dmfE4jwqVuZUSIs3/yZd37bovlFsciQDUnz9aQFrgWIFsi48h2xFRr6EgnluYmCle+PC74qIu8
+ DZ+Wa70X1cYWgXXGt+gMLYub6ESWXHIKRn4Vb1UeiZdrerSCrNbZp2ts2tI2c3nnDwLiALUO3e7
+ uw=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Similar to the previous commits, modify the date format tests to
-make them independent of state from previous tests.
+Similar to the previous commits, modify the pack-edges tests to make
+them independent of state from previous tests.
 
-Fold the 'E: verify pack' and 'E: verify commit' tests into the test
-performing the import. As 'fastimport.unpackLimit' is no longer set by
-an earlier test, set it for the import so that a pack is written, and
-verify the pack with an inline loop in place of 'verify_packs()'.
+Pack edges are only recorded for packs which are kept, so set
+'fastimport.unpackLimit' to 0 for the import.
+
+Create the repository with 'git init -b main', as the import builds on
+'main' and t9302, where this test ends up, doesn't set
+'GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME'.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t9300-fast-import.sh | 72 ++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 49 insertions(+), 23 deletions(-)
+ t/t9300-fast-import.sh | 90 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 56 insertions(+), 34 deletions(-)
 
 diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 446cf0c51a..54394c892b 100755
+index 54394c892b..5b8550584e 100755
 --- a/t/t9300-fast-import.sh
 +++ b/t/t9300-fast-import.sh
-@@ -828,37 +828,63 @@ test_expect_success 'D: verify file6' '
+@@ -1030,50 +1030,72 @@ test_expect_success 'H: verify file' '
  ###
  
- test_expect_success 'E: rfc2822 date, --date-format=raw' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/branch
--	author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> Tue Feb 6 11:22:18 2007 -0500
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> Tue Feb 6 12:35:02 2007 -0500
--	data <<COMMIT
--	RFC 2822 type date
--	COMMIT
+ test_expect_success 'I: export-pack-edges option forbidden by default' '
+-	echo "option git export-pack-edges=edges.list" >input &&
+-	test_must_fail git fast-import <input 2>err &&
+-	test_grep "option ${SQ}export-pack-edges${SQ} forbidden in input without --allow-unsafe-features" err
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
++		echo "option git export-pack-edges=edges.list" >input &&
++		test_must_fail git fast-import <input 2>err &&
++		test_grep "option ${SQ}export-pack-edges${SQ} forbidden in input without --allow-unsafe-features" err
++	)
+ '
+ 
+ test_expect_success 'I: export-pack-edges' '
+-	test_when_finished "rm edges.list" &&
+-	cat >input <<-INPUT_END &&
+-	commit refs/heads/export-boundary
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data <<COMMIT
+-	we have a border.  its only 40 characters wide.
+-	COMMIT
++	test_when_finished "rm -rf repo" &&
++	git init -b main repo &&
++	(
++		cd repo &&
 +		test_commit one &&
  
--	from refs/heads/branch^0
+-	from refs/heads/branch
 +		cat >input <<-INPUT_END &&
-+		commit refs/heads/main
-+		author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> Tue Feb 6 11:22:18 2007 -0500
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> Tue Feb 6 12:35:02 2007 -0500
++		commit refs/heads/export-boundary
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
 +		data <<COMMIT
-+		RFC 2822 type date
++		we have a border.  its only 40 characters wide.
 +		COMMIT
  
 -	INPUT_END
-+		from refs/heads/main^0
- 
--	test_must_fail git fast-import --date-format=raw <input
-+		INPUT_END
+-	git fast-import --export-pack-edges=edges.list <input &&
+-	cat >expect <<-EOF &&
+-	.git/objects/pack/pack-.pack: $(git rev-parse --verify export-boundary)
+-	EOF
+-	sed -e s/pack-.*pack/pack-.pack/ edges.list >actual &&
+-	test_cmp expect actual
++		from refs/heads/main
 +
-+		test_must_fail git fast-import --date-format=raw <input
++		INPUT_END
++		git -c fastimport.unpackLimit=0 fast-import \
++			--export-pack-edges=edges.list <input &&
++
++		# verify edge list
++		cat >expect <<-EOF &&
++		.git/objects/pack/pack-.pack: $(git rev-parse --verify export-boundary)
++		EOF
++		sed -e s/pack-.*pack/pack-.pack/ edges.list >actual &&
++		test_cmp expect actual
 +	)
  '
-+
- test_expect_success 'E: rfc2822 date, --date-format=rfc2822' '
--	git fast-import --date-format=rfc2822 <input
--'
+ 
+ test_expect_success 'I: export-pack-edges via stdin' '
+-	test_when_finished "rm edges.list" &&
+-	cat >input <<-INPUT_END &&
+-	option git export-pack-edges=edges.list
+-	commit refs/heads/export-boundary-2
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data <<COMMIT
+-	one more similar commit
+-	COMMIT
 +	test_when_finished "rm -rf repo" &&
-+	git init repo &&
++	git init -b main repo &&
 +	(
 +		cd repo &&
 +		test_commit one &&
  
--test_expect_success 'E: verify pack' '
--	verify_packs
--'
+-	from refs/heads/branch
 +		cat >input <<-INPUT_END &&
-+		commit refs/heads/main
-+		author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> Tue Feb 6 11:22:18 2007 -0500
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> Tue Feb 6 12:35:02 2007 -0500
++		option git export-pack-edges=edges.list
++		commit refs/heads/export-boundary
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
 +		data <<COMMIT
-+		RFC 2822 type date
++		one more similar commit
 +		COMMIT
  
--test_expect_success 'E: verify commit' '
+-	INPUT_END
+-	git fast-import --allow-unsafe-features <input &&
 -	cat >expect <<-EOF &&
--	author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> 1170778938 -0500
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1170783302 -0500
-+		from refs/heads/main^0
- 
--	RFC 2822 type date
+-	.git/objects/pack/pack-.pack: $(git rev-parse --verify export-boundary-2)
 -	EOF
--	git cat-file commit branch | sed 1,2d >actual &&
+-	sed -e s/pack-.*pack/pack-.pack/ edges.list >actual &&
 -	test_cmp expect actual
++		from refs/heads/main
++
 +		INPUT_END
 +
-+		git -c fastimport.unpackLimit=0 fast-import --date-format=rfc2822 <input &&
-+
++		git -c fastimport.unpackLimit=0 fast-import \
++			--allow-unsafe-features <input &&
 +		cat >expect <<-EOF &&
-+		author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> 1170778938 -0500
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1170783302 -0500
-+
-+		RFC 2822 type date
++		.git/objects/pack/pack-.pack: $(git rev-parse --verify export-boundary)
 +		EOF
-+		git cat-file commit main | sed 1,2d >actual &&
-+		test_cmp expect actual &&
-+
-+		for p in .git/objects/pack/*.pack
-+		do
-+			git verify-pack "$p" || return 1
-+		done
++		sed -e s/pack-.*pack/pack-.pack/ edges.list >actual &&
++		test_cmp expect actual
 +	)
  '
  
