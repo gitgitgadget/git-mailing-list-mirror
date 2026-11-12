@@ -1,67 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.12
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794473603;
-	b=wekxxhdx07vTg0JL8suT4W8iiiHWQqaE3VNC54k92YyKClkQ0TwILVYqztGVNR7h1/OC
-	 1GgcDD5nErlWXdA0HFob7IwvCuSXfNP+HcRk8Qe52V89cBJTSXbA+PpG3wKauf7k6y88v
-	 jxZcxA1LsqF61PosRhK3RBFB7xD21GOtLwPRnhsmNeAwIkBxFtLf1j5orlZwXCWYPjeLe
-	 Bi3dME6njK4D7jHgHEvXERZ+wMQgFP9o9PXbOeM1QaiHjlLfOQMD0PVJYoXM0GafaqgfP
-	 00Q5wdbuU1vahXzFVguZNmNf/jKAKhX7bgNV565Sme6fKzp3SkDjAHgvENtNXjQblAQ==
+	t=1794474325;
+	b=SruXna6NueAXozfXtcJiB9n8wdDxuhweZMOJs0v45tBw/UHbyBSEai0RXtqtIeYxT7bx
+	 Z4dQuGO2K7rTZzk8g9f1wtXoup4jIdhpTNvuQ9XmIq821RNcPCYFcUJOiaHmIA4+AItod
+	 f5N5iijpbVGn4ZJWBQkgtYr7lKqQ24aYoe6T+2rSK5uWgw2ZSEXA+7XgOqBVMci2z4KhE
+	 d1G7pnt4IAZAfRJPGhPq2doybGC/TPALnWsO+oc5NF7HmCBewptSrh6cuB6wY+05iRRgZ
+	 OM+orQxbfurgmMQ6k3fOjBk/w+CxR7U4vnVyI4+hM4Bk3FDHZUafdDZeq/0D5bY/5fw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794473603;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=uBWRjhRc424X/QOj2vTTn8CI40w+hDFe612NPxAfudE=;
-	b=NDokzJhCGXk7f5nz7Ak9uUJSplcmj+GRyV1eVdkQ5i7io2/MiTrLk7PKz994hJuEtLpr
-	 9mrwF65YiAmOs1d5MUAdCfHXaL2VTpW463wgfIufYHrhrACK5EX0hhe0j4w1FAg+gQmAm
-	 jMeuReKoQSeASm8GJv6Y2XaZlZZBTtd8Spi8/PGidja9824YE2BC6tuqkjePvH8SZ9tSP
-	 Z6c+rTs3PdNRxpc7leUZqJu4CIdwd1gy1NvvPG+CiwI5zmNip+VutcFRyNth3cHJ/WrkF
-	 6/JOpMigrNDrRPmpxg4Q1oIrVL+wN0HI9YQb/U2shHIadJVKuY2SFNneisLmMXAKALQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794474325;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
+	 X-Zoho-Virus-Status:X-Zoho-AV-Stamp:X-ZohoMailClient;
+	bh=xH/HLPxfM2i4LMomSJS6nOc89mP/sy8PcRbiJZz4YII=;
+	b=DTyMMerI5rcXW9BWMLfWLCfPKxlYcxXQH49Xb8zIPns9M110Plq4aX33hzqSsdRbFWkx
+	 F+lKcH1uG/+OB7qiJlxyRBQuI3dWCluS+1nHApLpwLVxTkF4Y+o3sef4EwjsfFMLjxHRK
+	 opPB8PJaVBageviOoN6qJIKCr+cBFmBWDZJDbpmHnsvocrcNzCJsWw94rb09QPXVExgaD
+	 2nSRnPQ5myTLST1z0nXb4k3aawps0Dbyy2uPWg7cxwMja5JmNrztJhTOCBjBP7VeZJM5g
+	 CY4cRNh5DJQzu8yFoCIPd7ST/7CkpmkVcmqbkKi2D1e+kSa+/pH/uYtSjOHHWJBBKdA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=collabora.com;
 	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=lU0EeXVE;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.12
-Received: from sender6-op-o12.zoho.com (sender6-op-o12.zoho.com [165.173.180.12])
+	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=aY5NniLF;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BEC606A321
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 08:53:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19BEC606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B01D606A89A
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 09:05:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B01D606A89A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=lU0EeXVE
-ARC-Seal: i=1; a=rsa-sha256; t=1794473585; cv=none; 
+	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=aY5NniLF
+ARC-Seal: i=1; a=rsa-sha256; t=1794474317; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=ICBQlWKsjMt38A5vfyzDQ4ZS1tmKUmG+5P9BfSVfrQUxUxJoDPJaUbL/9J5fDkK4PyLC63jTQzK/I58lM3l5la02Iqqck4jc6GZ5mCnKE5sJloLHqiwF+pMGtymBaTHotsOicPinHS0Z7Yo9AN17fUDAJBzdk/amWbd1OjRvOLM=
+	b=fUgCuyoyCjkSbkxiGLmzzY2GpE9dlbOhf862ue06qQuHWOxmZY4dcvrX0dof8dBXmbNouVZMSnXvPPHmi57OrdrWYvQQ1BHq8sWS4f+8uTj0Pq/Jf5XrMHD7a5wMk4G/mw28tqjwCqfzHVNzI+dPbXNVvIdgzgKhpkwFSQInZv4=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1794473585; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=uBWRjhRc424X/QOj2vTTn8CI40w+hDFe612NPxAfudE=; 
-	b=ZcNvXyJvPzyEt/LM2RHF3ymOxSiTz4qwTRzK0xyF3hcJGZbZ4MfMPMi65yMWzR03kMUX6iHSqIlUU+uGEeVeD1UpHJkJgyS5I1gb2/jQnAAgLapn3PmJcoF1Xzd2LVoBUMIoqccjy6IEJiTz/EoQkoU2XjAzmcLchPYUvFLFySI=
+	t=1794474317; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=xH/HLPxfM2i4LMomSJS6nOc89mP/sy8PcRbiJZz4YII=; 
+	b=MWQca1otrM5GXocecLOAJwJKmsItfvCTRMxdI4tBNqlXhOUabcl4pPGwjy78kUUpQvryxnPJZPTBYwqJ77cwZLZ4+Fhuy6fKGD+nLhEOUE1Vqsc4U/m75FshiMYL30eJPBI391yNGZdly0LYjm6DioYMk8tBSITdiMfoYNN1HPo=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: a=rsa-sha256; b=lU0EeXVEsxA6r4wTCoj3aLtwLhOauQCE2dP+lnGDf5JH4CHzCFWUp0X6/EIiFIN7UgBKJXy1ekElCMLbFVWkH1uin0ufYX8bEfVicWxsNRPBURBdxdL4VDX8hJCzRBs0NhipJDjWulmSOYUqBxkmcmq7dai6vr8tqVsGZsyQxkg=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=uBWRjhRc424X/QOj2vTTn8CI40w+hDFe612NPxAfudE=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1794473583779776.3426550080281;
-	Thu, 12 Nov 2026 00:53:03 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Emily Shaffer <emilyshaffer@google.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v2] ls-remote: add --show-object-format
-Date: Thu, 12 Nov 2026 10:52:05 +0200
-Message-ID: <20261112085205.452463-1-adrian.ratiu@collabora.com>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261105104541.790881-1-adrian.ratiu@collabora.com>
-References: <20261105104541.790881-1-adrian.ratiu@collabora.com>
+	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
+	dmarc=pass header.from=<vmiklos@collabora.com>
+DKIM-Signature: a=rsa-sha256; b=aY5NniLF5uUu3bypFOeZRMYOUn1j5haI3gYX0qYyb8uvp0LUlRa2H2xB5JBx/qdjsd76i3EoJCfVpBgW1pdVlYvZbJpumMn8RpOUDRLHcJMDIbznQ/q9l4hXPYIIApzPQkBB7agkWQGGxOrjoZhVtSmZlUdJJsqviV/5bQbCJQs=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=xH/HLPxfM2i4LMomSJS6nOc89mP/sy8PcRbiJZz4YII=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794474316222636.5706619678624;
+	Thu, 12 Nov 2026 01:05:16 -0800 (PST)
+Date: Thu, 12 Nov 2026 09:05:07 +0000
+From: Miklos Vajna <vmiklos@collabora.com>
+To: gitster@pobox.com
+Cc: ps@pks.im, jltobler@gmail.com, szeder.dev@gmail.com,
+	git@vger.kernel.org
+Subject: [PATCH] log: make --follow following renames for non-linear history
+ optional
+Message-ID: <avWBQ_10mHUNQcFi@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -71,166 +64,311 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <avRtsm5VQpC_g9yN@pks.im>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/294.450.56
+X-ZohoMailClient: External
 
-While working on JJ sha256 remote support (it uses Git for networking),
-I noticed there is no way to get the object format of a repo without
-cloning it. [1]
+Since commit 304812ed33 (log: improve --follow following renames for
+non-linear history, 2026-06-22), 'git log --stat --follow --
+include/linux/rsc_table.h' on linux.git takes 6m43s, while it took about
+28 seconds before.
 
-Git clone learns the remote format during the protocol handshake, but
-it is not shown anywhere else. For example, when creating an empty repo
-and running "git fetch":
+What happens is that log_tree_commit() diffs each merge against all of
+its parents with rename following, to find the path to follow in each
+parent. diff_tree_oid() only does the expensive rename detection when
+the path is added relative to a parent, but that is common for merges,
+e.g. when a branch forked before the path was created merges mainline.
 
-1. If the remote has references, fetch can fail with a mismatch error
-and "git ls-remote" shows the format indirectly through the length
-of the object IDs. Not ideal, but then it can be figured out eventually,
-at least as long as no future hash algorithm has the same length as an
-existing one.
+Fix the problem by making this per-parent diffing opt-in: plain --follow
+behaves as before 304812ed33 again, and 'git log --follow=merges'
+follows the path separately in each parent of a merge. Add a matching
+log.follow=merges configuration option as well.
 
-2. If the remote is empty, "git ls-remote" prints nothing and fetch
-succeeds, so the new local repo can silently get the wrong format,
-which only shows up later, on the first push.
-
-To fill this gap, add a ls-remote --show-object-format option which
-prints the object format learned from the remote on a line of its own,
-before the references, as "object-format: <format>". The prefix leaves
-room for printing more remote properties in the future, without making
-parsers depend on the order of the lines.
-
-[1]: https://github.com/jj-vcs/jj/issues/3813
-
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+Suggested-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Miklos Vajna <vmiklos@collabora.com>
 ---
-Changes between v1 -> v2:
-* Print "object-format: <format>" instead of just "<format>". (Patrick)
-* Reworded the --show-object-format documentation. (Patrick)
-* Test helper now takes the expected format as an arg. (Patrick)
-* Combined the sha1/sha256 tests in a single loop. (Patrick)
-* Minor typo fix.
----
- Documentation/git-ls-remote.adoc | 11 +++++++++-
- builtin/ls-remote.c              |  9 +++++++-
- t/t5512-ls-remote.sh             | 37 ++++++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-ls-remote.adoc b/Documentation/git-ls-remote.adoc
-index d71c4ab3e2..5d80967df7 100644
---- a/Documentation/git-ls-remote.adoc
-+++ b/Documentation/git-ls-remote.adoc
-@@ -11,7 +11,8 @@ SYNOPSIS
- [verse]
- 'git ls-remote' [--branches] [--tags] [--refs] [--upload-pack=<exec>]
- 	      [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]
--	      [--symref] [<repository> [<patterns>...]]
-+	      [--symref] [--show-object-format]
-+	      [<repository> [<patterns>...]]
+Hi Junio,
+
+On Wed, Nov 11, 2026 at 08:44:42AM -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> This sounds sensible, and is far better than reverting and declaring
+> "The original 'checkbox hack' should stay here forever because doing
+> it right will be very expensive".
+
+If that is fine with you, I suggest just replacing the
+mv/log-follow-speedup branch with this patch.
+
+Hi Patrick,
+
+On Wed, Nov 11, 2026 at 02:29:22PM +0100, Patrick Steinhardt <ps@pks.im> wrote:
+> I don't really have a good sense of how far this patch series is on its
+> road to getting merged. So how about we first land a single-patch series
+> that introduces the knob that we can merge without the remaining parts
+> in this series here?
+
+I like the idea, here is a patch to do that.
+
+> With regards to how to opt-in, I can see two ways:
+> 
+>   - We could extend "--follow" to take an optional parameter so that the
+>     user can pass "--follow=merges". Same with "log.follow", we could
+>     teach it another option "merges".
+> 
+>   - We could introduce "--follow-merges" and "log.followMerges".
+> 
+> I'm leaning towards the first option myself.
+
+Yes, --follow=merges also appears more natural to me, so I implemented
+it that way.
+
+Thanks,
+
+Miklos
+
+ Documentation/config/log.adoc |  4 +++-
+ Documentation/git-log.adoc    |  7 +++++--
+ builtin/log.c                 | 15 +++++++++++++--
+ diff.c                        | 15 +++++++++++----
+ diff.h                        |  2 ++
+ log-tree.c                    |  6 ++++--
+ t/t4219-log-follow-merge.sh   | 32 +++++++++++++++++++++++++-------
+ 7 files changed, 63 insertions(+), 18 deletions(-)
+
+diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
+index f7dfce69b5..72a3486a73 100644
+--- a/Documentation/config/log.adoc
++++ b/Documentation/config/log.adoc
+@@ -53,7 +53,9 @@ This is the same as the `--decorate` option of the `git log`.
+ `log.follow`::
+ 	If `true`, `git log` will act as if the `--follow` option was used when
+ 	a single <path> is given.  This has the same limitations as `--follow`,
+-	i.e. it cannot be used to follow multiple files.
++	i.e. it cannot be used to follow multiple files and does not work well
++	on non-linear history.  If `merges`, `git log` will act as if the
++	`--follow=merges` option was used.
  
- DESCRIPTION
- -----------
-@@ -64,6 +65,14 @@ OPTIONS
- 	upload-pack only shows the symref HEAD, so it will be the only
- 	one shown by ls-remote.
+ `log.graphColors`::
+ 	A list of colors, separated by commas, that can be used to draw
+diff --git a/Documentation/git-log.adoc b/Documentation/git-log.adoc
+index fb3ac11283..742b832bbf 100644
+--- a/Documentation/git-log.adoc
++++ b/Documentation/git-log.adoc
+@@ -27,9 +27,12 @@ each commit introduces are shown.
+ OPTIONS
+ -------
  
-+--show-object-format::
-+	Before the references, print the object format (hash algorithm)
-+	of the remote on a line of its own, in the form
-+	`object-format: <format>`, e.g. `object-format: sha256`. This
-+	also works for remotes without any refs, so it can be used to
-+	find out which object format a local repository needs before
-+	fetching from or pushing to the remote.
-+
- --sort=<key>::
- 	Sort based on the key given. Prefix `-` to sort in descending order
- 	of the value. Supports "version:refname" or "v:refname" (tag names
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index fe77829557..1d7bb578b3 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -12,7 +12,8 @@
- static const char * const ls_remote_usage[] = {
- 	N_("git ls-remote [--branches] [--tags] [--refs] [--upload-pack=<exec>]\n"
- 	   "              [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]\n"
--	   "              [--symref] [<repository> [<patterns>...]]"),
-+	   "              [--symref] [--show-object-format]\n"
-+	   "              [<repository> [<patterns>...]]"),
- 	NULL
- };
+-`--follow`::
++`--follow[=merges]`::
+ 	Continue listing the history of a file beyond renames
+-	(works only for a single file).
++	(works only for a single file). This does not work well on
++	non-linear history, unless `merges` is given: then the path is
++	followed separately for each parent of a merge, which is more
++	expensive.
  
-@@ -49,6 +50,7 @@ int cmd_ls_remote(int argc,
- 	int quiet = 0;
- 	int status = 0;
- 	int show_symref_target = 0;
-+	int show_object_format = 0;
- 	const char *uploadpack = NULL;
- 	struct strvec pattern = STRVEC_INIT;
- 	struct transport_ls_refs_options transport_options =
-@@ -89,6 +91,8 @@ int cmd_ls_remote(int argc,
- 			      2, PARSE_OPT_NOCOMPLETE),
- 		OPT_BOOL(0, "symref", &show_symref_target,
- 			 N_("show underlying ref in addition to the object pointed by it")),
-+		OPT_BOOL(0, "show-object-format", &show_object_format,
-+			 N_("show the object format used by the remote repository")),
- 		OPT_STRING_LIST('o', "server-option", &server_options, N_("server-specific"), N_("option to transmit")),
- 		OPT_END()
- 	};
-@@ -150,6 +154,9 @@ int cmd_ls_remote(int argc,
+ `--no-decorate`::
+ `--decorate[=(short|full|auto|no)]`::
+diff --git a/builtin/log.c b/builtin/log.c
+index 350b35c556..db707877f6 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -108,6 +108,7 @@ static int parse_decoration_style(const char *value)
+ struct log_config {
+ 	int default_abbrev_commit;
+ 	int default_show_root;
++	/* 0: no, 1: yes, 2: merges */
+ 	int default_follow;
+ 	int default_show_signature;
+ 	int default_encode_email_headers;
+@@ -205,6 +206,8 @@ static void cmd_log_init_defaults(struct rev_info *rev,
+ 		get_commit_format(cfg->fmt_pretty, rev);
+ 	if (cfg->default_follow)
+ 		rev->diffopt.flags.default_follow_renames = 1;
++	if (cfg->default_follow == 2)
++		rev->diffopt.flags.default_follow_merges = 1;
+ 	rev->verbose_header = 1;
+ 	init_diffstat_widths(&rev->diffopt);
+ 	rev->diffopt.flags.recursive = 1;
+@@ -505,7 +508,10 @@ static int git_log_config(const char *var, const char *value,
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "log.follow")) {
+-		cfg->default_follow = git_config_bool(var, value);
++		if (value && !strcmp(value, "merges"))
++			cfg->default_follow = 2;
++		else
++			cfg->default_follow = git_config_bool(var, value);
+ 		return 0;
+ 	}
+ 	if (skip_prefix(var, "color.decorate.", &slot_name))
+@@ -814,9 +820,14 @@ int cmd_log_reflog(int argc,
  
- 	if (!dest && !quiet)
- 		fprintf(stderr, "From %s\n", remote->url.v[0]);
-+	if (show_object_format)
-+		printf("object-format: %s\n",
-+		       transport_get_hash_algo(transport)->name);
- 	for ( ; ref; ref = ref->next) {
- 		struct ref_array_item *item;
- 		if (!check_ref_type(ref, flags))
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 2e1d4f7586..1b063a586a 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -332,6 +332,43 @@ test_expect_success 'indicate no refs in v0 standards-compliant empty remote' '
- 	test_expect_code 2 git ls-remote --exit-code --upload-pack=./cat-input .
+ static void log_setup_revisions_tweak(struct rev_info *rev)
+ {
++	/* If --follow is not used, use the log.follow option. */
+ 	if (rev->diffopt.flags.default_follow_renames &&
+-	    diff_check_follow_pathspec(&rev->prune_data, 0))
++	    !rev->diffopt.flags.follow_renames &&
++	    diff_check_follow_pathspec(&rev->prune_data, 0)) {
+ 		rev->diffopt.flags.follow_renames = 1;
++		rev->diffopt.flags.follow_merges =
++			rev->diffopt.flags.default_follow_merges;
++	}
+ 
+ 	if (rev->first_parent_only)
+ 		diff_merges_default_to_first_parent(rev);
+diff --git a/diff.c b/diff.c
+index 414532d09f..b633cbea09 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5739,12 +5739,19 @@ static int diff_opt_follow(const struct option *opt,
+ {
+ 	struct diff_options *options = opt->value;
+ 
+-	BUG_ON_OPT_ARG(arg);
+ 	if (unset) {
+ 		options->flags.follow_renames = 0;
++		options->flags.follow_merges = 0;
+ 		options->flags.default_follow_renames = 0;
+-	} else {
++		options->flags.default_follow_merges = 0;
++	} else if (!arg) {
+ 		options->flags.follow_renames = 1;
++		options->flags.follow_merges = 0;
++	} else if (!strcmp(arg, "merges")) {
++		options->flags.follow_renames = 1;
++		options->flags.follow_merges = 1;
++	} else {
++		return error(_("invalid argument to --follow: '%s'"), arg);
+ 	}
+ 	return 0;
+ }
+@@ -6161,9 +6168,9 @@ struct option *add_diff_options(const struct option *opts,
+ 			      0, PARSE_OPT_NONEG),
+ 		OPT_BOOL(0, "rename-empty", &options->flags.rename_empty,
+ 			 N_("use empty blobs as rename source")),
+-		OPT_CALLBACK_F(0, "follow", options, NULL,
++		OPT_CALLBACK_F(0, "follow", options, N_("merges"),
+ 			       N_("continue listing the history of a file beyond renames"),
+-			       PARSE_OPT_NOARG, diff_opt_follow),
++			       PARSE_OPT_OPTARG, diff_opt_follow),
+ 		OPT_INTEGER('l', NULL, &options->rename_limit,
+ 			    N_("limit to cheap rename/copy detection if the number of rename/copy targets exceeds this value")),
+ 
+diff --git a/diff.h b/diff.h
+index bb5cddaf34..2548739e83 100644
+--- a/diff.h
++++ b/diff.h
+@@ -154,6 +154,7 @@ struct diff_flags {
+ 	unsigned find_copies_harder;
+ 
+ 	unsigned follow_renames;
++	unsigned follow_merges;
+ 	unsigned rename_empty;
+ 
+ 	/* Internal; used for optimization to see if there is any change. */
+@@ -202,6 +203,7 @@ struct diff_flags {
+ 	unsigned dirstat_by_line;
+ 	unsigned funccontext;
+ 	unsigned default_follow_renames;
++	unsigned default_follow_merges;
+ 	unsigned stat_with_summary;
+ 	unsigned suppress_diff_headers;
+ 	unsigned dual_color_diffed_diffs;
+diff --git a/log-tree.c b/log-tree.c
+index 83a3c4bf9b..93cc61af2d 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -1277,7 +1277,8 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
+ 	opt->diffopt.no_free = 1;
+ 
+ 	/* Any recorded path for this commit? If so, restore it */
+-	if (opt->diffopt.flags.follow_renames) {
++	if (opt->diffopt.flags.follow_renames &&
++	    opt->diffopt.flags.follow_merges) {
+ 		const char *stored = recall_follow_pathspec(opt, commit);
+ 		if (stored) {
+ 			const char *current = pathspec_single_path(&opt->diffopt.pathspec);
+@@ -1300,7 +1301,8 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
+ 		show_diff_of_diff(opt);
+ 
+ 	/* Record what path each parent of this commit should use */
+-	if (opt->diffopt.flags.follow_renames) {
++	if (opt->diffopt.flags.follow_renames &&
++	    opt->diffopt.flags.follow_merges) {
+ 		struct commit_list *parents = get_saved_parents(opt, commit);
+ 		if (parents && parents->next) {
+ 			struct commit_list *p;
+diff --git a/t/t4219-log-follow-merge.sh b/t/t4219-log-follow-merge.sh
+index e370f82955..c2bc2b0c13 100755
+--- a/t/t4219-log-follow-merge.sh
++++ b/t/t4219-log-follow-merge.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='Test --follow follows renames across merges'
++test_description='Test --follow=merges follows renames across merges'
+ 
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+@@ -25,12 +25,30 @@ test_expect_success 'setup subtree-merged repository' '
+ 	git -C outer commit -m "Merge inner repo into inner/ subdirectory"
  '
  
-+# Run "ls-remote --show-object-format" with the given arguments over
-+# protocol v0 and v2, and check that it prints the object format given
-+# as the first argument, followed by the same refs as plain "ls-remote".
-+test_show_object_format () {
-+	format=$1 &&
-+	shift &&
-+	echo "object-format: $format" >expect &&
-+	git ls-remote "$@" >>expect &&
-+	for version in 0 2
-+	do
-+		git -c protocol.version=$version \
-+			ls-remote --show-object-format "$@" >actual &&
-+		test_cmp expect actual || return 1
-+	done
-+}
-+
-+for hash in sha1 sha256
-+do
-+	test_expect_success "ls-remote --show-object-format with empty $hash remote" '
-+		git init --bare --object-format=$hash empty-$hash.git &&
-+		test_show_object_format $hash empty-$hash.git
-+	'
-+
-+	test_expect_success "ls-remote --show-object-format with $hash remote" '
-+		git init --object-format=$hash repo-$hash &&
-+		test_commit -C repo-$hash one &&
-+		test_show_object_format $hash repo-$hash HEAD
-+	'
-+done
-+
-+test_expect_success 'ls-remote --show-object-format outside repository' '
-+	nongit git init --bare --object-format=sha256 empty-nongit.git &&
-+	echo "object-format: sha256" >expect &&
-+	nongit git ls-remote --show-object-format empty-nongit.git >actual &&
+-test_expect_success '--follow finds the pre-merge commit through a subtree merge' '
+-	git -C outer log --follow --pretty=tformat:%s inner/inner.txt >actual &&
++test_expect_success '--follow=merges finds the pre-merge commit through a subtree merge' '
++	git -C outer log --follow=merges --pretty=tformat:%s inner/inner.txt >actual &&
+ 	echo "inner init" >expect &&
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'log.follow=merges acts as --follow=merges' '
++	git -C outer -c log.follow=merges log --pretty=tformat:%s \
++		inner/inner.txt >actual &&
++	echo "inner init" >expect &&
 +	test_cmp expect actual
 +'
 +
- test_expect_success 'ls-remote works outside repository' '
- 	# It is important for this repo to be inside the nongit
- 	# area, as we want a repo name that does not include
++test_expect_success '--follow overrides log.follow=merges' '
++	git -C outer -c log.follow=merges log --follow \
++		--pretty=tformat:%s inner/inner.txt >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success '--follow rejects an unknown argument' '
++	test_must_fail git -C outer log --follow=foo inner/inner.txt 2>err &&
++	test_grep "invalid argument to --follow: ${SQ}foo${SQ}" err
++'
++
+ test_expect_success 'setup merge of two branches that both renamed a file to README' '
+ 	git init foo &&
+ 	mkdir foo/foo &&
+@@ -65,8 +83,8 @@ test_expect_success 'setup merge of two branches that both renamed a file to REA
+ 	git -C foo commit -m "merge bar into foo"
+ '
+ 
+-test_expect_success '--follow follows renames across both sides of a merge' '
+-	git -C foo log --follow --pretty=tformat:%s README >actual &&
++test_expect_success '--follow=merges follows renames across both sides of a merge' '
++	git -C foo log --follow=merges --pretty=tformat:%s README >actual &&
+ 	sort actual >actual.sorted &&
+ 	cat >expect <<-\EOF &&
+ 	add bar README
+@@ -112,8 +130,8 @@ test_expect_success 'setup diamond with renames on both sides of a fork' '
+ 	git -C diamond commit -am "Z: modify path"
+ '
+ 
+-test_expect_success '--follow follows renames through a fork in a single history' '
+-	git -C diamond log --follow --pretty=tformat:%s path >actual &&
++test_expect_success '--follow=merges follows renames through a fork in a single history' '
++	git -C diamond log --follow=merges --pretty=tformat:%s path >actual &&
+ 	sort actual >actual.sorted &&
+ 	cat >expect <<-\EOF &&
+ 	A: add path0
 -- 
-2.56.0
+2.51.0
 
