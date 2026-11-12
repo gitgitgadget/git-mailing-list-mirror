@@ -1,86 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794484989;
-	b=q7R7e9OBLMjHTocAJOSuWvnI5j5YC/FxfaIBUmn4Y8EsifI2s069NF4M5PChNy7ReDdh
-	 eX4ghmNiVP0hn2iLcUgFS8FTO8j+WnOVFX5LQrNmBtjgA4paD5RV4MBaTYj58dtMdP2rW
-	 +NivkqBTlDuR28J0yqxmr+VebUhDIZCyclCHWp8IIhbaVidQsRAW5JZkB3+2a4ay3Cb56
-	 ldEhpVMo8P6zxVAoUuUyIOBh4LhuelmjIr9hP1qfuiLGEo+N/hS4ZqqsO0QnnQ5WnsHEs
-	 IV4Flz2gn+a6RNv9A/gqAOVmnNB4lFQZlcynR43Fk7/xBzb9QaNw+98uV66M+WfunpA==
+	t=1794484990;
+	b=w/Mai+YB4Wq3UtKKfxWYBfDxhI94w4OjDOEzfJ5cl2AqNz6Xoh1guE8jzkeRjfhmr+zc
+	 eB1ur6Pl0KrEGE0ebeYZq5V3WSgZY2e6g2gn2uOWkfRt9YF99gt+tANJW2sQ+HvXbxh6J
+	 tfp1cMLADsmDQWsS8Bx30C6s6A309vXA8gFP0sz/dygFMIsXn3EtoKT+VDwY5w863/LrS
+	 wifeyxwIihUAE1RWN6L5YcE7ymQrwl51ux6aelOzWE/fdsE+RZmRjCWyGpEZSHW/gkIeu
+	 C0bBZar4lEyRVJrorAqrAwvpv5r3o0Et4kpxfEiV4WC0oH4FjHvxPr/eK3JTLvQUKtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794484989;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794484990;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=ZgrHe4Dm9MKwswZjPYrnbHj4WpRPYemEsbRo3yKoy5U=;
-	b=aIZaMc1JjoqaENvu+DM8g7ICfjd5ZEuiN/mPhIkxxtm5KXadpDt15OG7rq84/nDSuEXJ
-	 XzEHYnoInZ5bdV/8WRomlgzwuKJMI9/M62CgHbUwfL/PA8tn/BvKW6vowcC65RzXX5Zh1
-	 66f4QTdELAOqGQflShMP1eItmkLvXJvppMAjUoVR7cX2XHfvYFapezZ1s4WXIHvX0N7nY
-	 PLHQgv+ZXXctLCglJuoAMFfmDS+A+lFkplJPQCMDknLkbKHUXjd5gWwMHSgdvAIQuQC2B
-	 CZKg5dbufUkpK7kLjGiV14b+sANJRPaZJ9zp171neCpWFAgbVMn8aaOQUe8EP5MkZNQ==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=an2VDnhMeFo3iUyXlEb+jFFzn/850iC+7Ipyrgv8IQI=;
+	b=oY9RNnyAkCPJagemBh2o+jhMa6zvgWYDy6NLcBOU97GPh9R4EaUPGrR96otRQqSbvUT3
+	 uubC72C4262Wfp/CNGlYxhXC0MyGWiUdEi2eWt/AnKR6JJdgce4I+sthtgLNBD4y4b11c
+	 yJuCQl7Z2d9podllczObm+vOIODHUKB8zl7aSlvf2UjeRE1LPXM44y3iyZVAY4Vs61uvk
+	 J06shvZ+Hpy5DAJ4na7kwWnBQKeBJejprGZYSasOf35EFzrgFnZhVseyGO3VyjYhNsZvu
+	 uNXRfDOUY3prDwQmJ8WICHlPTSN4s+1lEus+uVitsMmYODRZOH4Zj82nokKgZLN4KlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D1DQW1Qt;
-	arc=none smtp.remote-ip=209.85.219.48
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uuDLIZNL;
+	arc=none smtp.remote-ip=74.125.224.50
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6BC606A88E
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 12:03:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F6BC606A88E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D6E606A8A1
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 12:03:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 64D6E606A8A1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D1DQW1Qt
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-91ea16d8072so31896896d6.2
-        for <git@vger.kernel.org>; Thu, 12 Nov 2026 04:03:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uuDLIZNL
+Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-67be1e468a8so3375132d50.0
+        for <git@vger.kernel.org>; Thu, 12 Nov 2026 04:03:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794484988; x=1795089788; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794484989; x=1795089789; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ZgrHe4Dm9MKwswZjPYrnbHj4WpRPYemEsbRo3yKoy5U=;
-        b=D1DQW1QteI7h6gKMOUlMeGz+ZJ9fikQzT0NYksEvNbkwCMbTqzzDjyg8LTRIdN3C2T
-         2BZ5cfnCv9K+DAAE0RmymKVsrK+lQQK5+GzRrLe8voo4Dbj45wRaXSxDDQs+/suVD7Dg
-         /xSgoR3M8EOCfUBvTR85c+91LWnbikLbEdv6S4MdqGoB7IyDkn39lD6i6aIMgdqo83gp
-         3QZVh7ydD8W7j1wrdNuXX7baKj7KvPESqeO5Bu71kFrUuQNbuyb4+9Mux5xF3YfGY+SS
-         tPd5RFuVgB2RhYyQe9jaamwEJEgIL5t9I3lMnOCyJ4uR40PpTSTpj0r7XR+agPQKcP9/
-         DLSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794484988; x=1795089788;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=ZgrHe4Dm9MKwswZjPYrnbHj4WpRPYemEsbRo3yKoy5U=;
-        b=PGoaqNb+GGbvyE0QcfPmrJWlWc2FN0qZmSetnMcS2G+9OXdrLbRlREjpBpX4215vtR
-         TVtw0yEZIyAa8DG9+9gxvXQJ5FYM40VBybcSaNyXs5ih01Mv3z2SIueZDptyKLKGUXN1
-         ECv4czztPzb5Q+CUqUXDFGx0DiY+KIivpUjr2qW7hRDKO+ynrOrd9H0h9qDym5X9lzXu
-         OcSwWUCkK9KNn/hOP4S8dQ7b168VlIsIOMAIh8/HmjF1zClzxj1jB4RlFdD6KOZ27NRN
-         AjpuzRHwq/MpdILft9zQUB3lyMIjB6tOOJK1ABUPuA2LVdcmdOqivw84u6QLCRZTGXfn
-         rEmg==
-X-Gm-Message-State: APuU4Z/xe+vhO8P+ck+9SyelR+Hi0bCOxVdz20Z2MSiGivsdWJ7TZQx+
-	UK6fbrNQHL5Kvs6QsEX7oOKJ1vxdDg1b/OoSP0yUmXqZWNPYtz7mnbDEyGvnpQC8
-X-Gm-Gg: AYBFou0cUJL1Hk25ubDeB1rH3tK9BBHsh8uv4n2gsy8uKg4ejt2d7fdpHEnAzMovMVn
-	bwCmNb/kp8A9QdP0/ER8Ce8zvVNrif9G/2RG65CSgkAp2qhqel0RX2rwUYJuTl+x6yvKUWnZfK3
-	xbtLzsVbbGdnj2fMzALK3YDBsJoB22BRLNGI/ImJQtS3R8Agjsk+XYQfc6gtrYDQ8ld20cLrXXi
-	MQxiTrOtmVALqiO7y2ytmx0cKCtEFob+AR04oRDX9zqAmoMd06Ldo/kQbM+h8cQXQEV+iQRq+nN
-	zfZ8uw7NCEDs9MhicW28b/aPCwZT42JMTJ81qfYs8Fm6UWnSPSMuWeU0e/rJ2A7FyCe4qjFh3AD
-	jCd6OwpdrAHXFnIzPD62o+DTtvlxhefZSLC/2uBPlzyYgXcBW6cRWC2SXdx9la33RdDV8gq6+x6
-	GzJoUofiZrI+zHoIOMfNNhBpKrjsXvo7Li2FnPbrcQgSqgAnUmqlrG5gOM8ZYCdM/FyxRb9VC4b
-	8+VDqKJXq6AW06YT6cVfFPVTdvtu8Lt84edosMeEtX8qY3t4HxApesQk6dwDmCaVZiZxK49r+ZC
-	z53SDOp2s7hRqXL8EhiR5rUeRLZw9SXB9jlY3RZXAN2Wuyzgr8jmUp8g
-X-Received: by 2002:a05:6214:4a05:b0:91c:8fa6:1789 with SMTP id 6a1803df08f44-91f041147f2mr92154086d6.28.1794484987713;
-        Thu, 12 Nov 2026 04:03:07 -0800 (PST)
+        bh=an2VDnhMeFo3iUyXlEb+jFFzn/850iC+7Ipyrgv8IQI=;
+        b=uuDLIZNL4gHYj0jNNX9uTb9Hf6zI88KwBNQkSJWMWKoOz9EIORSz93ZZMKbl9+h31q
+         KNWX8+KLsXyus/wj7Nq43P1zuKuedW8EMdqvTYF6wQKIBoKbGmYw9NLY+G1HVguo8mh5
+         Q9C3iOk3Hq89d1JzMEEq1Ng28CMbOk98GLXQOfxUP9aIMzdC7TCan8l7n8m5yeCrBjuq
+         r1i4Tu7Ijs026GMD4LONMokyolgnT1Gvu80lLF7+3ZjGlrAhMVjxs0w3rQt1BfkMizAz
+         NYx1p2gNbksicITfmvzB6JROHfTV7NZlwNgLA+f56Xt6HzVp3P+OVBvYyR5Tit6m25VQ
+         kFbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794484989; x=1795089789;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=an2VDnhMeFo3iUyXlEb+jFFzn/850iC+7Ipyrgv8IQI=;
+        b=T9yS+bD3RxxE6XKdk2BmdLixufWDgT4GTEtSV3QREeON7zOkYo7j9qadO9bRbl0RNA
+         /4ffyxEDAF+D4e9ZucgY2BzREH6STZn69aAfnsBP4n1qzuj5r2J1H/Wjde8mjuOCd/Od
+         2E51RzIi44OrvBes5ZhWPOYfYxvclGgL2lyMpXA4Lhojsz3c/cBMjExrZsL+yhXbYZRa
+         gt8iu5w3JohBuE+g9QBNSTlERRZHQ3snw3RHNzoHURKd/5aXhjlttv5nEg4OKs343uy8
+         J7ON10vC6h75EVp9QGA074g9hcvNTPN1lcSxAf0KKtM0H48PAzFgk67iDxgfeeXi7Bs5
+         LeMg==
+X-Gm-Message-State: APuU4Z+a9cMHQ7hCPXywR+99igN2t9+my+6+uwTdRIsFk8UsSURWbDwe
+	LXtXv5OCw/r6QCKnfbWQxI2pqrvCVp5p7T2ZFUBs5ZtmpLj/N4C8OUOi7de2Ww3o
+X-Gm-Gg: AYBFou3EPmsd58WzIWa2BCvxhDgA1Ff18Dd8KD5+pAmEoC7sHyMm0s6e3jnbZLbTt4S
+	vW3pULmQRVW7i+e+VXqeIkSbiyDnuQt+md5UnyVqZTPxjwFGyvvUmczB5IIDwUjzYjUOGIGszVj
+	+SZoijqrhPerLke+qUzUZ2s4AWs8sKuAIXWcKs4Z4Lkq06TnCQqLjtCIA2lRb6zy8Dj8rKsxJ5t
+	ZjuA/Y+oOBedmQtYDH46pzLFA9/D6NBy6hZUzCmk8b8urWf4qCwlKJTb6EMAn7D0F1yAWQNBKKC
+	L8Z6j3sAGhaL+vnFtrucFeRw8zfWbeYgt3oIMZtUKH9dhYLkL8pmIapsDxF5T388bLHmsiFKmN0
+	DCjIQ9IYF5+wTxsjK5yyEy7RRB8Z1UwLznSkhKfL0psaGEls/+PDVUHkxQAbTXl9HoYAx2Zfdo2
+	QkPXQ8pWAHaBtdO/0X+SgasV9KEeOfnJBYzrHwEr4rPmttvsy35qeLZhELuksAgRTLG4cmUbQ/I
+	J850JKZMhE2ZnOYSkUtTlsdMjLqHZNqKuQ6KWaXWkcBfMit3HMCcmmssbLilUII+GmQ7pJ/f3M7
+	6gvU4avIw4qE4IVBYr9wpnBfAuuc8Kax+BS81h7tvCr19dIdvzx5U8Xq9g==
+X-Received: by 2002:a05:690e:1385:b0:67c:c1d:e5ff with SMTP id 956f58d0204a3-67c67a44ec8mr4372134d50.0.1794484989330;
+        Thu, 12 Nov 2026 04:03:09 -0800 (PST)
 Received: from [127.0.0.1] ([172.206.245.227])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91efe5da1b4sm52460016d6.13.2026.11.12.04.03.06
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f02fcc4b7sm44919346d6.44.2026.11.12.04.03.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 04:03:06 -0800 (PST)
-Message-Id: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
+        Thu, 12 Nov 2026 04:03:08 -0800 (PST)
+Message-Id: <f9adc6c85c4b098a0df8cf18783d1969a68fc048.1794484985.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
+References: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
 From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 12 Nov 2026 12:03:02 +0000
-Subject: [PATCH 0/3] submodule: support worktree-specific configuration
+Date: Thu, 12 Nov 2026 12:03:03 +0000
+Subject: [PATCH 1/3] submodule: make submodule.<name>.gitdir relative for
+ worktrees
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -94,35 +98,174 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+Cc: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
+    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-When extensions.worktreeConfig is enabled, this series stores submodule
-settings that can differ between worktrees in the worktree config.
+From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-The changes include:
+For a linked worktree, always keep `submodule.<name>.gitdir` relative
+to ensure it continues to work when the worktree is moved along with
+the main worktree. (This benefit also requires
+worktree.useRelativePaths to be set to true.)
 
- * [1/3] Keep submodule.<name>.gitdir relative for linked worktrees.
- * [2/3] Store submodule settings in the worktree config when
-   extensions.worktreeConfig is enabled.
- * [3/3] Make git submodule init copy an existing gitdir setting to the
-   current worktree config only when it belongs to that worktree.
+Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+---
+ builtin/submodule--helper.c                | 68 +++++++++++++---------
+ t/t7425-submodule-gitdir-path-extension.sh | 19 ++++++
+ 2 files changed, 61 insertions(+), 26 deletions(-)
 
-Yoichi NAKAYAMA (3):
-  submodule: make submodule.<name>.gitdir relative for worktrees
-  submodule: store settings in worktree config when enabled
-  submodule init: copy submodule.<name>.gitdir to config.worktree
-
- Documentation/config/submodule.adoc        |   3 +-
- builtin/submodule--helper.c                | 197 +++++++++++++++------
- builtin/worktree.c                         |  23 +++
- t/t2405-worktree-submodule.sh              | 129 ++++++++++++++
- t/t7425-submodule-gitdir-path-extension.sh | 131 ++++++++++++++
- 5 files changed, 431 insertions(+), 52 deletions(-)
-
-
-base-commit: fbd2d1e765da4d2931cadc4c62d3ca5d5b590e7e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2306%2Fyoichi%2Fsubmodule-with-worktree-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2306/yoichi/submodule-with-worktree-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2306
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 461b682d0d..56d7720e93 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -37,6 +37,7 @@
+ #include "wildmatch.h"
+ #include "strbuf.h"
+ #include "url.h"
++#include "worktree.h"
+ 
+ #define OPT_QUIET (1 << 0)
+ #define OPT_CACHED (1 << 1)
+@@ -507,50 +508,60 @@ static int validate_and_set_submodule_gitdir(struct strbuf *gitdir_path,
+ 
+ static void create_default_gitdir_config(const char *submodule_name)
+ {
++	struct worktree *wt = get_current_worktree(the_repository);
++	const char *modules_dir;
++	struct strbuf tmp = STRBUF_INIT;
+ 	struct strbuf gitdir_path = STRBUF_INIT;
+ 	struct git_hash_ctx ctx;
+ 	char hex_name_hash[GIT_MAX_HEXSZ + 1], header[128];
+ 	unsigned char raw_name_hash[GIT_MAX_RAWSZ];
+ 	int header_len;
+ 
+-	/* Case 1: try the plain module name */
+-	repo_git_path_append(the_repository, &gitdir_path, "modules/%s", submodule_name);
+-	if (!validate_and_set_submodule_gitdir(&gitdir_path, submodule_name)) {
+-		strbuf_release(&gitdir_path);
+-		return;
++	modules_dir = worktree_git_path(wt, "modules/");
++	if (is_absolute_path(modules_dir)) {
++		modules_dir = relative_path(modules_dir, wt->path, &tmp);
+ 	}
+ 
++	/* Case 1: try the plain module name */
++	strbuf_addstr(&gitdir_path, modules_dir);
++	strbuf_addstr(&gitdir_path, submodule_name);
++	if (!validate_and_set_submodule_gitdir(&gitdir_path,
++					       submodule_name))
++		goto cleanup;
++
+ 	/* Case 2.1: Try URI-safe (RFC3986) encoding first, this fixes nested gitdirs */
+ 	strbuf_reset(&gitdir_path);
+-	repo_git_path_append(the_repository, &gitdir_path, "modules/");
++	strbuf_addstr(&gitdir_path, modules_dir);
+ 	strbuf_addstr_urlencode(&gitdir_path, submodule_name, is_rfc3986_unreserved);
+-	if (!validate_and_set_submodule_gitdir(&gitdir_path, submodule_name)) {
+-		strbuf_release(&gitdir_path);
+-		return;
+-	}
++	if (!validate_and_set_submodule_gitdir(&gitdir_path,
++					       submodule_name))
++		goto cleanup;
+ 
+ 	/* Case 2.2: Try extended uppercase URI (RFC3986) encoding, to fix case-folding */
+ 	strbuf_reset(&gitdir_path);
+-	repo_git_path_append(the_repository, &gitdir_path, "modules/");
++	strbuf_addstr(&gitdir_path, modules_dir);
+ 	strbuf_addstr_urlencode(&gitdir_path, submodule_name, is_casefolding_rfc3986_unreserved);
+-	if (!validate_and_set_submodule_gitdir(&gitdir_path, submodule_name))
+-		return;
++	if (!validate_and_set_submodule_gitdir(&gitdir_path,
++					       submodule_name))
++		goto cleanup;
+ 
+ 	/* Case 2.3: Try some derived gitdir names, see if one sticks */
+ 	for (char c = '0'; c <= '9'; c++) {
+ 		strbuf_reset(&gitdir_path);
+-		repo_git_path_append(the_repository, &gitdir_path, "modules/");
++		strbuf_addstr(&gitdir_path, modules_dir);
+ 		strbuf_addstr_urlencode(&gitdir_path, submodule_name, is_rfc3986_unreserved);
+ 		strbuf_addch(&gitdir_path, c);
+-		if (!validate_and_set_submodule_gitdir(&gitdir_path, submodule_name))
+-			return;
++		if (!validate_and_set_submodule_gitdir(&gitdir_path,
++						       submodule_name))
++			goto cleanup;
+ 
+ 		strbuf_reset(&gitdir_path);
+-		repo_git_path_append(the_repository, &gitdir_path, "modules/");
++		strbuf_addstr(&gitdir_path, modules_dir);
+ 		strbuf_addstr_urlencode(&gitdir_path, submodule_name, is_casefolding_rfc3986_unreserved);
+ 		strbuf_addch(&gitdir_path, c);
+-		if (!validate_and_set_submodule_gitdir(&gitdir_path, submodule_name))
+-			return;
++		if (!validate_and_set_submodule_gitdir(&gitdir_path,
++						       submodule_name))
++			goto cleanup;
+ 	}
+ 
+ 	/* Case 2.4: If all the above failed, try a hash of the name as a last resort */
+@@ -563,17 +574,22 @@ static void create_default_gitdir_config(const char *submodule_name)
+ 	git_hash_final(raw_name_hash, &ctx);
+ 	hash_to_hex_algop_r(hex_name_hash, raw_name_hash, the_hash_algo);
+ 	strbuf_reset(&gitdir_path);
+-	repo_git_path_append(the_repository, &gitdir_path, "modules/%s", hex_name_hash);
+-	if (!validate_and_set_submodule_gitdir(&gitdir_path, submodule_name)) {
+-		strbuf_release(&gitdir_path);
+-		return;
+-	}
++	strbuf_addstr(&gitdir_path, modules_dir);
++	strbuf_addstr(&gitdir_path, hex_name_hash);
++	if (!validate_and_set_submodule_gitdir(&gitdir_path,
++					       submodule_name))
++		goto cleanup;
+ 
+ 	/* Case 3: nothing worked, error out */
+ 	die(_("failed to set a valid default config for 'submodule.%s.gitdir'. "
+ 	      "Please ensure it is set, for example by running something like: "
+-	      "'git config submodule.%s.gitdir .git/modules/%s'"),
+-	    submodule_name, submodule_name, submodule_name);
++	      "'git config submodule.%s.gitdir %s%s'"),
++	    submodule_name, submodule_name, modules_dir, submodule_name);
++
++cleanup:
++	strbuf_release(&gitdir_path);
++	strbuf_release(&tmp);
++	free_worktree(wt);
+ }
+ 
+ static void init_submodule(const char *path, const char *prefix,
+diff --git a/t/t7425-submodule-gitdir-path-extension.sh b/t/t7425-submodule-gitdir-path-extension.sh
+index ea86ecf7ee..02123b8468 100755
+--- a/t/t7425-submodule-gitdir-path-extension.sh
++++ b/t/t7425-submodule-gitdir-path-extension.sh
+@@ -279,6 +279,25 @@ test_expect_success '`git clone --recurse-submodules` respects init.defaultSubmo
+ 	)
+ '
+ 
++test_expect_success 'git submodule init make gitdir relative' '
++	test_when_finished "rm -rf repo-clone-init-wt" &&
++	git clone upstream repo-clone-init-wt &&
++	(
++		cd repo-clone-init-wt &&
++		git config core.repositoryformatversion 1 &&
++		git config extensions.submodulePathConfig true &&
++		git worktree add wt &&
++		cd wt &&
++		git submodule init &&
++		git config submodule.sub1.gitdir >actual &&
++		echo "../.git/worktrees/wt/modules/sub1" >expect &&
++		test_cmp expect actual &&
++		git config submodule.sub2.gitdir >actual &&
++		echo "../.git/worktrees/wt/modules/sub2" >expect &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'submodule--helper migrates legacy modules' '
+ 	(
+ 		cd upstream &&
 -- 
 gitgitgadget
+
