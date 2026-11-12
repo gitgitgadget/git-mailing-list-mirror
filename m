@@ -1,88 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794504873;
-	b=u2jje04ul37BnqPL5fcS7tIHkq2jYQVS1LfuVBnfwrohmE+cly29zxgrQ2lbms9zfdgh
-	 9cEgTlX1dXvP6Bf6xQhfodJeH6iw/pzub6Eh3sgspSnrNl6K/knDplcft4YN6TizlgFwr
-	 /fKqHn8aY/BmqYybJVjphGmQWS5S4/fTrDX0Rd0xx8j2jErOIWregmexybkgEn7efyFFy
-	 eJQkNo0ggUrtadTxBJEfqwhTchgpcLHOqT5TaIYltFUp7dZ5rSkvls37h2OlSM6+zIvJr
-	 qvr4WJ6DHAbbDDGEPnaHRFCDUsCijMmNo1UpnzYinEnFqP33b2K/eoyzvmcTg/nTEdA==
+	t=1794504874;
+	b=XOCfDh1ynK1KS7otZJ+NKXzUWUm0xQDUB+OfaHARdNb7i+i4/uSeIZWJvcF5jkyjK0yx
+	 5ySsopYTtMz0S1bV69i02QUvhv60rSXMTlPImtc2it5vVRYVxVDw2LdCMwGtm1nDInPUH
+	 kFGQwghO1EDpCngjwxxEljOxEIZjpRbFulxM/qY/LFN0jpvPwc0yjmulF2vKcTY9wodPS
+	 kTdPqdpLfdmXE/qoqBtwAhqMT8CIz+M0KiHMemwif+5Gan1pO7hsNSP1IoJ+heAe6caGQ
+	 O/habunVjkBh9dg/jeMA33sDnPYewjqDW2zUcAgV30fdZ8RqhVkkD0M3AAFWuBGTYMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794504873;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794504874;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=xh6bovEx0vwtZF1Y6RPbJLb3zh51XvLX3bsOCY4/sEU=;
-	b=F/2fVhr3LyrfxKXY8Nu3/FPHhnQku6/QkmJLuv+WQybNEui18xiCzyLQRgo2+vuPZJ6D
-	 YYxAPR5761NnqKFD33KQU5ruZ4v5rOBmRJDtOAZ+5Fr9Q0zySHxaeqjAXk6hUqjn8ILuG
-	 lGWs7HYBuCt7uM3Gz09qv3KboUkqsse5xGMGVxlZLFF1nqwfvWJSfjis8/087A6RMOKDj
-	 iaDRvg6XHkLVF59xgNyAqU738DO+3t5FphAOI6d/M2H87P+yxqoxB0XVtWwVy6ocRQI35
-	 SbVHMFrJMOoCexZan2uPphZgOn9OxlQd6QDY8mrF+KWJ2c196q46qNmvSsH28X5q7DQ==
+	bh=5PY5Azniuv+mPwBwtXzdWRWbLH9xMYnDu4CQ9Ev3B/M=;
+	b=nKFJsAjMwHVwmaoVB0VSxMQ+tXn5P8WXqswL4sZSn3tmaknWgrvYMPckxwsH3FEMhtOS
+	 17DT7M5tvRRfezlJ1O3w6tDKMDAML6q4zGsxKJHBNHd2SBQ+yl7kSPJ4sMYKxibUrsmzm
+	 c2XKoP983LymleR6NphQq6UWvRjvPkd5rM5AYbTeWBb+nvPxdNfxBJV5UVJaznNs2kk7P
+	 RgzE/F0hHOFG56BS6r/Vdp4Q0WVIYa5crLCktUSHxaQ253mCYIoY9alMI+kExJz6pNJaT
+	 AKSJpv2z18fbF5rgKsdWhnFI+D0sHGeRlL956q1wdx2oYFXzWHX3WNlDjN/fKDeHNMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=U0K9momm;
-	arc=none smtp.remote-ip=209.85.221.54
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=b3sM62v+;
+	arc=none smtp.remote-ip=209.85.221.47
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CA560A3824
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 17:34:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 38CA560A3824
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39077606DF06
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 17:34:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 39077606DF06
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=U0K9momm
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-48b001cd92bso2551f8f.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=b3sM62v+
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-491846221ffso655f8f.3
         for <git@vger.kernel.org>; Thu, 12 Nov 2026 09:34:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794504872; x=1795109672; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794504873; x=1795109673; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=xh6bovEx0vwtZF1Y6RPbJLb3zh51XvLX3bsOCY4/sEU=;
-        b=U0K9momm6T0UBBSR62KZpitrNRZogDuv9SQFYdtqhv5BFfIAQMdfegqr7dGYDuhS9w
-         MVagvci+SytzVPUbIWbfl1vU4jv57cAfzJucrx1mgsKYKHO6YFfVcSewm2eXhJaOS6UI
-         mpqGpl/4gUeF5Vxz5wbn7cLDleWdS2JgL6zkd8angeZmDvmNsw36RqYzskrGh6q/1Mpv
-         RC+9VKro2YE2FDDODA/CYv3/ZjCnoEFjZrQh0sSjJOBRhM4WfqnHY/FNXVBSKEmsmx3O
-         opyviwRMqo2hXJu8oYgkpkY8ehG0GnUMT4FFKdiqMhgYJiLxqaiPzul5jV778elkcyEF
-         lDjQ==
+        bh=5PY5Azniuv+mPwBwtXzdWRWbLH9xMYnDu4CQ9Ev3B/M=;
+        b=b3sM62v+9cp71dNfjev8ttCIdvvMktl4CV6OaRyT+YGOhz4YOPr7Rc3cXGMwCro1Au
+         WotU/YaZgXI0OYUvTWtcXhn13Y8zgnNN3jwoOKHkIkzRAFn9EFQEbVZRvEObrr35uIdw
+         uYBMvrxcvDpYSCp+GDCjxGP/aW3udUbPKeEOHlDMeCiRPKlW0W11R421z1Pe1Bj9MWmW
+         BdzQN2/nxYL5mIUZQdG4Npiq5UU6jU8TO5mjS4s8+tE5p2fG/JIhdEBRTXKFaTGC5zYh
+         +Wt1YBTus5oqX1T85EV00DdtxiBJ5uXzgvyOobZbzunf9LhZrhAHu7zQU7y0VfXfVU/W
+         1vBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794504872; x=1795109672;
+        d=1e100.net; s=20260707; t=1794504873; x=1795109673;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xh6bovEx0vwtZF1Y6RPbJLb3zh51XvLX3bsOCY4/sEU=;
-        b=sNxW9NJ+qvzA9dfRMBlA5BtO08lBs9ieum7lDCfkeYZkmoNXhxL9re8BJ9eQsACE3e
-         3p+0n8VC2E9HKpc4yWq9ALTCLT8BGJUgkfKe9CEyFPM8JoXmjS0nnyNLabOn5f6vPcKZ
-         rRJoMx5mSLO+dX6bH0g4qJ+Qqkop1T2oafCAMBa6CeMOqo2kGWgcQJy7aF3OH2yWWE/W
-         Ts7l/TMecYDkNSlq+cDghEHjFwb3lBtHY/Ah1NJd+wpF3ch80EXC4vsrTfs/h2V/07qC
-         La/JzsIfhG9O8AdtcT+XOvmvFyKzV1IrOMheVl01Ew1is84mniimwUcrAE3rzxnjo4YO
-         HtHg==
-X-Gm-Message-State: APuU4Z8yvUBzBmbomgzhlhIzlQgbB39bxplynW/dClmptjRXoLpJ5S9u
-	DG7F6RceZdhwHWEqJmW77EWDXi5pWX35/HvNRKyyD+R5ZCNNMYuKYPZCM0cdiA==
-X-Gm-Gg: AYBFou0eRQB/zZeDsoyDu/5VMCGZgREJUHE5SqO714OcduPa6H0BevmFtObLU8CUWIY
-	Ompas7CNl04iuYOH0Y0qyGy7ABM3pIu7g9GsYn9jCVp8t6tyBgMnPIVapM87raulGu3vrYLrpul
-	jvd6C/QcmdAF2NwIBQzXTDvOuvy1PoJcVh5E3oux5D/SWGx6lMb+uiSbEFw4+jnwqVG/lZAqvDH
-	V7aCNRdTtjAHQ0NRiYGkddEZfPpcVFSABtpvjmSg8KoPWi2msi3WPVgmNVhYc5u5JmszRCBreef
-	FMKAv2QJAWTLzqRlEXlf9GrPOEfj9sg1TIj1N9l5OcG6/mEQcyXa4ORETg//5MfaT5iNbYkV/rO
-	KptTGCPWrt20QGreVbVpuVLlYOqsOYfdr2VGeLHyvLo0x8NDyHAzhCiXg3swN+ezlThAuNpKkUx
-	AnqgRc/8B5Lomkm7xkAit1mV26akZWA4jZuHZJBkz12zwWF6lmv9uNf6UUFx8mENctXZzhPacIR
-	NBmOZCzrdy+kXhOqDXzNrMzvMRZ/sEiCgUREQLRwQ9RBO9IzAiCz44AqlHsnIiL1aD3Ydn1+xFL
-	C+1SfsIBSMQvhb8itz/M3RjlWalJxj/Q+z6NEP/AyLe/uzz+pHPdjULvGeyxvGPSYeuq
-X-Received: by 2002:a05:6000:2381:b0:48d:f3f8:f910 with SMTP id ffacd0b85a97d-49c70de3974mr172605f8f.34.1794504871679;
-        Thu, 12 Nov 2026 09:34:31 -0800 (PST)
+        bh=5PY5Azniuv+mPwBwtXzdWRWbLH9xMYnDu4CQ9Ev3B/M=;
+        b=LhMOK8MVir3wVmXcoIM3RbU3RDTM7HcGXRNa2uAIbnmCZCw/tsKx2xECHEmzZoRplI
+         KkunHdSRf4+cdWQDsLbzPk8N5Xg3YJ21Wg0A5jbyZQZE87zt/BVi0pNkjbtF4Jrw2A5Z
+         rQuWRuDT6coQJpQkq9NNkEW9O3nW1ZhWGg5OpoVIZVJbYDkyzjwJG4BQ/j6VhiyLp52V
+         46ypmXT4PwYiFZNWa0Hv7wjj3YgZ8ciL6bYqOJeKwelS45kpkf7TZOrdr4Z065AD7yFX
+         3WmUV5NBMieHnmfvJhP7UYREj2w7ufRzWWKmuGUwg+WyipefW1kCFdkLxgSZYfOg4yWH
+         FdBA==
+X-Gm-Message-State: APuU4Z/RCSWOEYlMkOlK9i/LsfKs110jhU7P6aXb+7WgE+n7RvyA6VTa
+	RxtkDBe8R4Go+Yx6UBXNep4xSmszrv4pAxMWYVHSAhFpHQXwgArInqzkkcwOZg==
+X-Gm-Gg: AYBFou1JUn34+ziOsJs+mOQDV6KVzjKNCSKRLbbpzfdkwnnPtlqMaoSrTyMlNeLim4k
+	ADrtKPkv3wLiEDBHAPDFtFgM2AWT9w9fb2PzwAXwPW/xyYfMf+Nvj8RhDKM/S35TWJ9UUL8A6Gl
+	mWPvg7HvEWHmtf3MGa9bFmNkTJ3tcV3HLIKR2ID5ppOtSxEW1Bi4zpEZS61CDHmgA7hNBYradm2
+	2IMZ/NXd1nnBa0vpqdqhpreNSuBCCwmCEMJhMXWp+p2h3VyLhIP5Nlks9qT4MxDgqmvHgcyE4ns
+	ExdzZj5EBBpQNajhfVrx6YnN2pFAtHxh/1XekqhbDvdRMBxc0V65v6x4A7IX+Q2QyWZnh2/LJvM
+	+Ea6PjtAmP3w54S9R7yRmahC9SyOdswCh91Amfqw4kB3LB8UJVx4f8OeKY75aQj4kyL/M5lZVRt
+	vmmN2obX0OOXeAnG5FG9MBM+F0cltJ/dMe70gx7t38MDk3mpg3O8sb6vgCKBCGTfKkwQTeetGS1
+	fVXNqDnXNxgW4D1y+gb4apESDoUDvQmsSnEbtgiFayhA0EjscD4er2/XsddI43IhbFzbjallGz8
+	8Je1mVJlFh7HsRTfLQKg2Z273z1MYPKjZC7I5rz7Ltn5yb0Z1MjSByI4tw9c6nDYa+nZ
+X-Received: by 2002:a05:6000:4a07:b0:48e:f47:273c with SMTP id ffacd0b85a97d-49c6d7340famr242524f8f.8.1794504872519;
+        Thu, 12 Nov 2026 09:34:32 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:cb2b:22fd:d791:9595])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c604ee47dsm345988f8f.38.2026.11.12.09.34.30
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c604ee47dsm345988f8f.38.2026.11.12.09.34.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 09:34:31 -0800 (PST)
+        Thu, 12 Nov 2026 09:34:32 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 12 Nov 2026 18:34:16 +0100
-Subject: [PATCH v2 16/20] t9300: make the feature and option tests
- self-contained
+Date: Thu, 12 Nov 2026 18:34:17 +0100
+Subject: [PATCH v2 17/20] t9300: make the stream tests self-contained
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -94,380 +93,236 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261112-kn-fast-import-tests-1-v2-16-b8c3a0ab27e8@gmail.com>
+Message-Id: <20261112-kn-fast-import-tests-1-v2-17-b8c3a0ab27e8@gmail.com>
 References: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
 In-Reply-To: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, gitster@pobox.com
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10079;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=rH63rYPmjh3Jd/E/jNb0Gx8yDxramvhB+JMUqMFazWE=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGr1+JJ03hoTDj9kj7PFHPwmZtWFsj4WHGS6M
- JdImNKroKbLeokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq9fiSAAoJED7VnySO
- Rox/JiwL+weJVAOgR4UFHvvSrTX4/cR32SfDwEz5vlN3lA72kDveHUIofFgNJXTR0mTjuGzHU2U
- k915Zg3Lwt1nbAGFWrNLUcgzaRMv+4d/UWM8SpZy6lSfFjCyeOhbyDMW9Ln9EvGlHYhFB7prfS/
- 94l4MQ3oqaxRVf6P/QjD1A8qd8p/8GbhfG7QTcREqyt+RqOa0SWXaOzMHuw6Q3Q1Q1Z4ZBlPf0e
- MlKBhM38sC0ixBtmPGx0ziJGrNXI2WwN6CoTVRGtnJXEAYDCxq3yrmWawFcNWUWEtteEjlrnZI9
- 19aVGWDr/R+20P9Zf7Orbxq9u28PzlJCBeZTr1mTf9GXCRvDNpDoOUYDmqj7Ie0xYKV50a445ij
- r1pu65/9x5VjL4AEpvhHNuhzIlL9ziDIYJuFbCO27qJaIdTRCFldXDulfgpmU7u+QmFtpskhl3x
- ofYjusElYCKkFHWwtQrkKbhbnHfz1+Upt+JiEFaVnmvRD2VQkO5p8yoy8fFE7135LGd9qP0EQi5
- 4s=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5522; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=iwGPl5g3tv4LtrBPB5lF0rlg3QvqefucJXARWtGSnq8=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGr1+JMiQaxKmeypdtacR//6LgAuCBZMqE/Cm
+ HepVeK4LHiidYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq9fiTAAoJED7VnySO
+ Rox/SCIL/30w3zcJt9zqio1IJea8jOnKnwsg9B5N8rCLMq5WAJb055MUELAiOV9piybAdSA7kZn
+ NL1IrP2OGytxYzXZkCRWLLbYdnGwxivaUF7mKsN8FQQw5hqINrF2zNy6AGPn5oCpGuJqIypLCAS
+ x5EZ+s8IPxn/H9x4DSNjCEf+t8srd70XrM1y3H2i737K302nfgpEW6kzDeToQhO0k2O7KGGEgaH
+ hmJD/vzg7X1KmT7hOitN8XZPovmqsdmO78Z0CWUgTpE32GriyMPMBjD36gGXS9o7J2biBLrGxDM
+ IapOcaJitqabn367R6r+mHkgbTD/e2iqciCg0xK9CK12F0BYLXre3NcF0xVuwZ1kNIaKnJSb9Ff
+ IHpSWiENhZcj/WveCnKQAT7fSH1vzbGVUAjP5pkoBfiSMvYtotansOp8Wmd6puP8bGlTT+8Rr1k
+ urgdCsoOGB4dLsVjMA+0DKa0f+uD92V0MOO0/wZUYPGErokxO7/47bKtIkE/zOUCFrT3s+ACfe6
+ zQ=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
 Similar to the previous commits, modify the tests in 'series R' which
-check the 'feature' command and the command line options to make them
-independent of state from previous tests.
+check empty and truncated streams, the 'quiet' option and the 'done'
+feature to make them independent of state from previous tests.
+
+'empty stream succeeds' no longer needs to configure
+'fastimport.unpackLimit', as that was moved to the first test needing it
+by an earlier commit.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t9300-fast-import.sh | 260 +++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 187 insertions(+), 73 deletions(-)
+ t/t9300-fast-import.sh | 154 ++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 101 insertions(+), 53 deletions(-)
 
 diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 0dc71648ca..5f84c66ac4 100755
+index 5f84c66ac4..45720ed003 100755
 --- a/t/t9300-fast-import.sh
 +++ b/t/t9300-fast-import.sh
-@@ -2636,54 +2636,90 @@ test_expect_success 'Q: deny note on empty branch' '
+@@ -38,11 +38,23 @@ echo "$@"'
  ###
  
- test_expect_success 'R: abort on unsupported feature' '
--	cat >input <<-EOF &&
--	feature no-such-feature-exists
--	EOF
+ test_expect_success 'empty stream succeeds' '
+-	git fast-import </dev/null
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
- 
--	test_must_fail git fast-import <input
-+		cat >input <<-EOF &&
-+		feature no-such-feature-exists
-+		EOF
 +
-+		test_must_fail git fast-import <input
++		git fast-import </dev/null
 +	)
  '
  
- test_expect_success 'R: supported feature is accepted' '
--	cat >input <<-EOF &&
--	feature date-format=now
--	EOF
+ test_expect_success 'truncated stream complains' '
+-	echo "tag foo" | test_must_fail git fast-import
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
- 
--	git fast-import <input
-+		cat >input <<-EOF &&
-+		feature date-format=now
-+		EOF
 +
-+		git fast-import <input
++		echo "tag foo" | test_must_fail git fast-import
 +	)
  '
  
- test_expect_success 'R: abort on receiving feature after data command' '
+ test_expect_success 'A: create pack from stdin' '
+@@ -3428,58 +3440,82 @@ test_expect_success PIPE 'R: print staged blob within commit' '
+ '
+ 
+ test_expect_success 'R: quiet option results in no stats being output' '
 -	cat >input <<-EOF &&
+-	option git quiet
 -	blob
 -	data 3
 -	hi
--	feature date-format=now
--	EOF
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
  
--	test_must_fail git fast-import <input
+-	EOF
 +		cat >input <<-EOF &&
++		option git quiet
 +		blob
 +		data 3
 +		hi
-+		feature date-format=now
+ 
+-	git fast-import 2>output <input &&
+-	test_must_be_empty output
 +		EOF
 +
-+		test_must_fail git fast-import <input
++		git fast-import 2>output <input &&
++		test_must_be_empty output
 +	)
  '
  
- test_expect_success 'R: import-marks features forbidden by default' '
--	>git.marks &&
--	echo "feature import-marks=git.marks" >input &&
--	test_must_fail git fast-import <input &&
--	echo "feature import-marks-if-exists=git.marks" >input &&
--	test_must_fail git fast-import <input
+ test_expect_success 'R: feature done means terminating "done" is mandatory' '
+-	echo feature done | test_must_fail git fast-import &&
+-	test_must_fail git fast-import --done </dev/null
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +
-+		>git.marks &&
-+		echo "feature import-marks=git.marks" >input &&
-+		test_must_fail git fast-import <input &&
-+		echo "feature import-marks-if-exists=git.marks" >input &&
-+		test_must_fail git fast-import <input
++		echo feature done | test_must_fail git fast-import &&
++		test_must_fail git fast-import --done </dev/null
 +	)
  '
  
- test_expect_success 'R: only one import-marks feature allowed per stream' '
--	>git.marks &&
--	>git2.marks &&
--	cat >input <<-EOF &&
--	feature import-marks=git.marks
--	feature import-marks=git2.marks
+ test_expect_success 'R: terminating "done" with trailing gibberish is ok' '
+-	git fast-import <<-\EOF &&
+-	feature done
+-	done
+-	trailing gibberish
+-	EOF
+-	git fast-import <<-\EOF
+-	done
+-	more trailing gibberish
 -	EOF
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
- 
--	test_must_fail git fast-import --allow-unsafe-features <input
-+		>git.marks &&
-+		>git2.marks &&
-+		cat >input <<-EOF &&
-+		feature import-marks=git.marks
-+		feature import-marks=git2.marks
++
++		git fast-import <<-\EOF &&
++		feature done
++		done
++		trailing gibberish
 +		EOF
-+
-+		test_must_fail git fast-import --allow-unsafe-features <input
++		git fast-import <<-\EOF
++		done
++		more trailing gibberish
++		EOF
 +	)
  '
  
- test_expect_success 'R: export-marks feature forbidden by default' '
--	echo "feature export-marks=git.marks" >input &&
--	test_must_fail git fast-import <input
+ test_expect_success 'R: terminating "done" within commit' '
+-	cat >expect <<-\EOF &&
+-	OBJID
+-	:000000 100644 OBJID OBJID A	hello.c
+-	:000000 100644 OBJID OBJID A	hello2.c
+-	EOF
+-	git fast-import <<-EOF &&
+-	commit refs/heads/done-ends
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data <<EOT
+-	Commit terminated by "done" command
+-	EOT
+-	M 100644 inline hello.c
+-	data <<EOT
+-	Hello, world.
+-	EOT
+-	C hello.c hello2.c
+-	done
+-	EOF
+-	git rev-list done-ends |
+-	git diff-tree -r --stdin --root --always |
+-	sed -e "s/$OID_REGEX/OBJID/g" >actual &&
+-	test_cmp expect actual
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +
-+		echo "feature export-marks=git.marks" >input &&
-+		test_must_fail git fast-import <input
++		cat >expect <<-\EOF &&
++		OBJID
++		:000000 100644 OBJID OBJID A	hello.c
++		:000000 100644 OBJID OBJID A	hello2.c
++		EOF
++		git fast-import <<-EOF &&
++		commit refs/heads/done-ends
++		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++		data <<EOT
++		Commit terminated by "done" command
++		EOT
++		M 100644 inline hello.c
++		data <<EOT
++		Hello, world.
++		EOT
++		C hello.c hello2.c
++		done
++		EOF
++		git rev-list done-ends |
++		git diff-tree -r --stdin --root --always |
++		sed -e "s/$OID_REGEX/OBJID/g" >actual &&
++		test_cmp expect actual
 +	)
- '
- 
- test_expect_success 'R: export-marks feature results in a marks file being created' '
-@@ -2728,39 +2764,69 @@ test_expect_success 'R: export-marks options can be overridden by commandline op
- '
- 
- test_expect_success 'R: --allow-unsafe-features found after a value' '
--	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
--	git fast-import --allow-unsafe-features <input &&
--	git fast-import --depth=5 --allow-unsafe-features <input &&
--	git fast-import --depth 5 --allow-unsafe-features <input &&
--	git fast-import --date-format raw --allow-unsafe-features <input
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		echo "feature import-marks-if-exists=nonexistent.marks" >input &&
-+		git fast-import --allow-unsafe-features <input &&
-+		git fast-import --depth=5 --allow-unsafe-features <input &&
-+		git fast-import --depth 5 --allow-unsafe-features <input &&
-+		git fast-import --date-format raw --allow-unsafe-features <input
-+	)
- '
- 
- test_expect_success 'R: --allow-unsafe-features can be abbreviated' '
--	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
--	GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
--	git fast-import --allow-unsafe <input
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		echo "feature import-marks-if-exists=nonexistent.marks" >input &&
-+		GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
-+		git fast-import --allow-unsafe <input
-+	)
- '
- 
- test_expect_success 'R: disallowed abbreviation of --allow-unsafe-features' '
--	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
--	test_must_fail env GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true \
--		git fast-import --allow-unsafe <input 2>err &&
--	test_grep "forbidden in input without --allow-unsafe-features" err
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		echo "feature import-marks-if-exists=nonexistent.marks" >input &&
-+		test_must_fail env GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true \
-+			git fast-import --allow-unsafe <input 2>err &&
-+		test_grep "forbidden in input without --allow-unsafe-features" err
-+	)
- '
- 
- test_expect_success 'R: --allow-unsafe-features as the value of an abbreviation' '
--	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
--	test_must_fail env GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
--		git fast-import --quiet --export-pack \
--		--allow-unsafe-features <input 2>err &&
--	test_grep "forbidden in input without --allow-unsafe-features" err
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		echo "feature import-marks-if-exists=nonexistent.marks" >input &&
-+		test_must_fail env GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
-+			git fast-import --quiet --export-pack \
-+			--allow-unsafe-features <input 2>err &&
-+		test_grep "forbidden in input without --allow-unsafe-features" err
-+	)
- '
- 
- test_expect_success 'R: --allow-unsafe-features after a non-option' '
--	echo "feature import-marks-if-exists=nonexistent.marks" >input &&
--	test_must_fail git fast-import --depth 5 extra \
--		--allow-unsafe-features <input 2>err &&
--	test_grep "forbidden in input without --allow-unsafe-features" err
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		echo "feature import-marks-if-exists=nonexistent.marks" >input &&
-+		test_must_fail git fast-import --depth 5 extra \
-+			--allow-unsafe-features <input 2>err &&
-+		test_grep "forbidden in input without --allow-unsafe-features" err
-+	)
- '
- 
- test_expect_success 'R: catch typo in marks file name' '
-@@ -3034,17 +3100,35 @@ test_expect_success 'R: feature no-relative-marks should be honoured' '
- 
- 
- test_expect_success 'R: feature ls supported' '
--	echo "feature ls" |
--	git fast-import
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		echo "feature ls" |
-+		git fast-import
-+	)
- '
- 
- test_expect_success 'R: feature cat-blob supported' '
--	echo "feature cat-blob" |
--	git fast-import
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		echo "feature cat-blob" |
-+		git fast-import
-+	)
- '
- 
- test_expect_success 'R: cat-blob-fd must be a nonnegative integer' '
--	test_must_fail git fast-import --cat-blob-fd=-1 </dev/null
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		test_must_fail git fast-import --cat-blob-fd=-1 </dev/null
-+	)
- '
- 
- test_expect_success !MINGW 'R: print old blob' '
-@@ -3399,38 +3483,68 @@ test_expect_success 'R: terminating "done" within commit' '
  '
  
  test_expect_success 'R: die on unknown option' '
--	cat >input <<-EOF &&
--	option git non-existing-option
--	EOF
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	test_must_fail git fast-import <input
-+		cat >input <<-EOF &&
-+		option git non-existing-option
-+		EOF
-+
-+		test_must_fail git fast-import <input
-+	)
+@@ -3615,19 +3651,31 @@ test_expect_success 'R: blob bigger than threshold' '
  '
  
- test_expect_success 'R: unknown commandline options are rejected' '\
--	test_must_fail git fast-import --non-existing-option < /dev/null
+ test_expect_success 'R: --git-completion-helper does not read from stdin' '
+-	find .git/objects/pack -name "tmp_pack_*" >before &&
+-	echo garbage | git fast-import --git-completion-helper >out &&
+-	test_grep -e "--date-format=" out &&
+-	find .git/objects/pack -name "tmp_pack_*" >after &&
+-	test_cmp before after
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +
-+		test_must_fail git fast-import --non-existing-option < /dev/null
++		find .git/objects/pack -name "tmp_pack_*" >before &&
++		echo garbage | git fast-import --git-completion-helper >out &&
++		test_grep -e "--date-format=" out &&
++		find .git/objects/pack -name "tmp_pack_*" >after &&
++		test_cmp before after
 +	)
  '
  
- test_expect_success 'R: feature-only names are rejected on the command line' '
--	for opt in --alias --get-mark --ls --notes
--	do
--		test_must_fail git fast-import "$opt" </dev/null || return 1
--	done
+ test_expect_success 'R: --git-completion-helper-all does not read from stdin' '
+-	find .git/objects/pack -name "tmp_pack_*" >before &&
+-	echo garbage | git fast-import --git-completion-helper-all >all &&
+-	test_grep -e "--allow-unsafe-features" all &&
+-	find .git/objects/pack -name "tmp_pack_*" >after &&
+-	test_cmp before after
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +
-+		for opt in --alias --get-mark --ls --notes
-+		do
-+			test_must_fail git fast-import "$opt" </dev/null || return 1
-+		done
++		find .git/objects/pack -name "tmp_pack_*" >before &&
++		echo garbage | git fast-import --git-completion-helper-all >all &&
++		test_grep -e "--allow-unsafe-features" all &&
++		find .git/objects/pack -name "tmp_pack_*" >after &&
++		test_cmp before after
 +	)
  '
  
- test_expect_success 'R: die on invalid option argument' '
--	echo "option git active-branches=-5" |
--	test_must_fail git fast-import &&
--	echo "option git depth=" |
--	test_must_fail git fast-import &&
--	test_must_fail git fast-import --depth="5 elephants" </dev/null
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		echo "option git active-branches=-5" |
-+		test_must_fail git fast-import &&
-+		echo "option git depth=" |
-+		test_must_fail git fast-import &&
-+		test_must_fail git fast-import --depth="5 elephants" </dev/null
-+	)
- '
- 
- test_expect_success 'R: ignore non-git options' '
--	cat >input <<-EOF &&
--	option non-existing-vcs non-existing-option
--	EOF
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
- 
--	git fast-import <input
-+		cat >input <<-EOF &&
-+		option non-existing-vcs non-existing-option
-+		EOF
-+
-+		git fast-import <input
-+	)
- '
- 
- test_expect_success 'R: corrupt lines do not mess marks file' '
+ ###
 
 -- 
 2.56.GIT
