@@ -1,87 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794504862;
-	b=ImvBBfrR//p9yWG1j4AArLkLJPFW8jxwkOtqyb10LY9r0qdkwaCiZuHHlLLZ0StbdZ/r
-	 tsHEJntrzjYRUaJTsBxETMPBRsVUhKuv3K8ls7QqiitD6VqnoXycX+qHprOhUySbNbXvW
-	 CTWny25959bYWnWhjj8XWmbg8bWGIfCgbU9J4hzn2/qB4ccUdWghdTKYCHkCd4tH1p5Nm
-	 eCyO9yIN7n1JHXcZbEERYYyPre1jm5X0fCZQ2DFLdO/xGlnMeq/kuiIBLNICeHZq2WPoD
-	 ApxMjZJtDMDdvf4jV0Nj5HSmMKLaWWRaDO84f6GKORaHfry2yUgQeztA3vN6uio3iKg==
+	t=1794504863;
+	b=rCZCmBFFulmctEUvI4c5egDs8OzvjRFRN6TOVng0USRjBgbsr3pqKwMeaAofEJ5vC9BF
+	 B6n9WMAeQoKV5irrtlK/JKtstm9BvIDvW+ZCyN/SPJvZuBK667mX8qQzcYU7unU+ZCmgb
+	 bC1/ztdFgQTN3yO8NaVaIBup2j3JSEkrL+E95r9vKatykbDO1k7jf13LOYddOdsnbqDiE
+	 bqhFkmxtUCX3jSCfpsb62LK3GydZ/nRzUyJES4I4pGHbAoArbTR5/Q0EGzgyyXdEdvSiP
+	 QKgOR37n5zzrIIml8XKAmo+CUYQeXc7S/w4TibUxmfxYHd4aQkcUMJLl0JYFvTAERcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794504862;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794504863;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=+pNCgSkQEaGGmT+hx0e8v+5sAAru6q5tFQrbLhquVG4=;
-	b=EfR1eNfnzAhc5m1DrLSJX8JSfUYkADSbgC9rfBxee4mRP31lIzFWLrvCfbylvwqvzKnJ
-	 aJfDcxwYDlHWGDKVghb8uabV5CKeZaXAw8tBsfifaWGdz4Twik6HMlq/5JF4yI0C0MHqM
-	 2GSGAnRSxA0wyxr4qC19Yh7T/HxnSe8+SMAb+bh+pSu+6zWo40qQfYDj0zft4bZHJfKwf
-	 ZHuaFJd1aLOObXbSNYM4rm6jVEomnbkmRtkLF4LpP/rOuGlHq8V76i8bEAsDVlaUffktn
-	 Z7J5yPTwaiXP/gPKw3oApIiPS6Beoj7and9+9SJI+dmum7S/fb7Eei108nykU38jWPg==
+	bh=Y16WniyC22xW/tYDTl/avEIyOxlWTJTnGCP95lyJHpw=;
+	b=v/qmc0eGd/QHx/G7TIodIB0loIe7fMnavBlJ3+i5mD058P0xiRc/MLlowZczZGZvtEQU
+	 Vywrt9Hafi375en1hlVHU7Igz7Vd5No3P6I8PwPcQNjHmwfFeOcPs8WQuLyW6tzcZAn5v
+	 g3B9ZqSHTO0RQexQyyTm1duQ6dAhYFxe+RQVC64y3uZ4L2IwoIZhkM1P9p4kcB/Tuoa9d
+	 jXka/S6SWkXAu7sQIowZf/oNEBcozVNFkFiouCWqMh1GDzRfB82CL1v+/lcN2GDrBnFId
+	 NPXFVSogPcIGPwBUflU7oExVP/ml0lXawfTSz9YyxSDMTIDyFZRxJFuow7ikcv6FqRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WqCJShr5;
-	arc=none smtp.remote-ip=209.85.221.52
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=j2BUqiA7;
+	arc=none smtp.remote-ip=209.85.221.53
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CD0606A23A
-	for <git@vger.kernel.org>; Thu, 12 Nov 2026 17:34:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 40CD0606A23A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2532460A381C
+	for <git@vger.kernel.org>; Thu, 12 Nov 2026 17:34:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2532460A381C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WqCJShr5
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-498f5fa5103so2406f8f.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=j2BUqiA7
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-4922523d1afso11699f8f.0
         for <git@vger.kernel.org>; Thu, 12 Nov 2026 09:34:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20260707; t=1794504861; x=1795109661; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=+pNCgSkQEaGGmT+hx0e8v+5sAAru6q5tFQrbLhquVG4=;
-        b=WqCJShr5YZmgoSLdm4EIpTaMbx0AsLMMlyuv4HV39ICghzP/byi4tvMvc/I6KKgLo4
-         OjNU6Ty2HypMzp9Z0hFQeHjGnCIgEtovYsTRGEbXRAaSUzSRd49eMn3r7aj5rTVwRNVt
-         jrkGr88ip13Xp1Pf5MjmbOJL2GjTE8eX7RYHbEyfEnXmsoukhPTOdF8VY4AczUboW/vJ
-         w3IqEzpPEH5eMwn4ywjCgB9vkXKxft5C33ltWSuGnIhJiUlwyAdAcB7qgxZYeogRvy2t
-         FSEuJhNjb8bMhI6nTbu9oZisCwrDXYkIbaSXwfC1t8GyY6+ttZBBKiE8BE3G7zVWskXg
-         sROA==
+        bh=Y16WniyC22xW/tYDTl/avEIyOxlWTJTnGCP95lyJHpw=;
+        b=j2BUqiA7vkOWoihf6BGbOuhggSHrZ2mD54T56eV5hSK6IEcWs3mgFdFnPlhqbvwyBr
+         /xGEKS4cEM8O5U2hfEJKh4U36vKPhCTc+K4nUNScasQqKszrT4gx9ciFE7aEqj9wG0PK
+         4nbd6CGg9ZY4Fd+YiEBG7GNPXbyFCTCduohy0vAexYPvtaQGz4OQ2lLrwXLcQnf1RVOo
+         ODufhB4lvGQRB2YOwaqr1+7UOKq3Oe3zkCSNL14BK2xpDgHE1EzcgakKvaBt68sCJyY4
+         bdUJn9SdgL8+DxstCq2oj+kndBPdy/gJ6hC6q8T8ZEw2N0lIVo/J52MrspVc2sNmM9Wu
+         XTFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20260707; t=1794504861; x=1795109661;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=+pNCgSkQEaGGmT+hx0e8v+5sAAru6q5tFQrbLhquVG4=;
-        b=SI77xocEF/k9GQMAvjOT/NCCxI/1vrrrjAo/aeTeiooU9K0xV00mVKidcXGa7S6MD4
-         AK/OKD1X83swF4LA1Z71Ku+O36M72q8QUK2rwMCQhru7AZJ1iqOtOffs4mlrGqCEdP6u
-         5/iIuvCKJ+loPx/JYhhluXuO7Y/mclT/C2uhIB5CdrRVPMF87WkybUr+/OEtkNkhfmb8
-         x9F+UFS6UUpu7uCYpyUn2QyUkOtbVzWBJhZ9mFDKJPb7BmcKxYqqj+4vv9DtSWDK5ZQ1
-         jvNnOqDEqhaf4wPxvWHeqWDlkBCEy8a7kubxxUq9N4yqIPv2uZulOhxt9H18fjQS8ERV
-         y6Sg==
-X-Gm-Message-State: APuU4Z9Bdu0iDhBInd6awYnzbWxBvx/PNgUqXjSRgIyTaZqoblR7PA5x
-	sAwLJAP3X41d/rbqPnuiMYK06tqfStqkMZRLZ1cFtSAh+9+go7xewXQSKcAVlQ==
-X-Gm-Gg: AYBFou0kLpyHykJRiWqHycJtJE3d2BJN6cUGIyeUMVO8lCEJZ3U936/F7uhYOOUMxB6
-	2l3c4nKFrgsNHup0rD3TRy7dGc+rW252ySKqid+hMiURMFDzJP7+gtZRCCRhyFOch/J2e1dRSpQ
-	kSvYhYdYTF4Tyh7fA+ml12MVeEvDz3/L1rPb1w95TlhCIkIJq56oZnwP/rONZ/ZGGLs3/Rm/e6W
-	hHy/GKwg+8du2rwEDXtmoooxc+tGKT4KVxV5RILvS73P0CQwMlNBVOPz727gBRuXyaRA/2O5YMI
-	K69sUsme+N+FIYaEkMOaJJzL6dKSZqeqyddNIMTrQ2f3EpkEjwvTcMqQYjHwHX7bk48a3iGj5Y/
-	jKcgo2T9bQxv4T/Q6IopeHa6m5wndAY/YlTnWNn1GkazxuNzESLT4MSNst6B30stQfYWBtkR3Fv
-	oociR5xXqsLPMVo4ZlaBotOzcxCzT6+5Vm8VvgqxAtlpNf9Efw3t/ToTAYCIoVVErcdsQH70U+Y
-	HIDDz/Va19cS+VqjYWmx6IBujcOlN9ENCJqqD9eXtD1H72MfRzXS0GRBBpC9D74mS26z7ftIneU
-	OBLxYLIbyrztrUQ5TOGyfG0KQns68INlJDsqaVZgloC2Mts4rgk35AUPcs8/mFmL7QyF
-X-Received: by 2002:a05:6000:4022:b0:491:971a:c568 with SMTP id ffacd0b85a97d-49c712ac9b2mr142951f8f.10.1794504860776;
-        Thu, 12 Nov 2026 09:34:20 -0800 (PST)
+        bh=Y16WniyC22xW/tYDTl/avEIyOxlWTJTnGCP95lyJHpw=;
+        b=PHYx3CIgvuJs/cKOdqtFdSnTSahZlAW0Ue3w+JvUka29pbdLTVobGwyVCSmEoj9gXh
+         DiTM89Yj/5ZjfdJwsiWrfWvQvW/PdmwecaROj3Ih3/d2OOAtuRE4gOV7hYuUskcH3U9Q
+         9d+b6AefaTcg1ByatIlQ7Emgo/usdzVf+ehuAZogSKjWClzg0Evt2WO0U14rW/Ry5oFL
+         FPqG6v1OFgsvwfdKmsXAtVnSqLEh4JCRirYbsD09UnsOKwtcGJ1FMZEhRHpvSXyCteGH
+         bpxqaPxhn3zh9Dzvt4494i3MusF1ZN+cB42F2LPdiKfEscZHQVeNhmK8ErBA3RvO3mVc
+         PNBg==
+X-Gm-Message-State: APuU4Z9BwRLQExzaOiML8Arr3nubjeL7fvakDZ99D+aq9jywlTso0UJ7
+	KmR6K9c7mQNAEuNggd2YTlGly1vkJNiE98beFMZ3vEe7DwPDwbBW0aKG1hgTtw==
+X-Gm-Gg: AYBFou2T0c+XJ7p5FY6hwpowd9nG7sMeVDvMLVDu4U1ojcpeq7ViCZbvMm/4Nw9uzA4
+	SgHAVL9T+0YaYaYJCMzk7xzTtsbyhMeZ+41zXxjesOxrUbH1QHzeM6tOR5PhyfxByd764ybibAx
+	gwy8EYidT6mpMBHRU07w3CkKiOCuSKETbU5kRZAPSvVBBY++Oym5NYAgs0WWJMw7BzVGLEMUIJd
+	w//V4M/LzGrT5hxwCFv/T4fdcHyzIkZcj+hqF1mWEnpkFsxzLA3pkQRHL2JY79TupSfbdGftkaD
+	byO+z7L67YSn2lfMfaOpvUhV/xcW+wQMy/yV18sxvnmOgVapz4o2AXudcYtzDQ7+8qlnbZwxXUb
+	jMXOvUDb5YjLHneGPiU+wf+61Lit2TCA22YXfK1fHgaziwoY8qIHEVESUTWl8ChUkMstXNJnNRf
+	AYxc+kBI1agSyzZz33OxnebYmbIbhyqAsP9TG4FUBeipL8BThrR370Nm9D0HE+dGJ4fpBdWPbQe
+	XS/kZHIyl54qVNkrbg4I3JwjhsWh/pQwBmA4Lm8B3tLDQrNW6rhNMXWg70bQvO+oDQ19ImrNJjr
+	iAfpdyIZ/PIOxIBKl/b6KmSEAN4rvJyrDPl3DxZWPlTG7z4DdppGREp6ELX/ud4f2oCH
+X-Received: by 2002:a5d:588a:0:b0:48e:7508:bc12 with SMTP id ffacd0b85a97d-49c73259d85mr125130f8f.10.1794504861499;
+        Thu, 12 Nov 2026 09:34:21 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:cb2b:22fd:d791:9595])
         by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c604ee47dsm345988f8f.38.2026.11.12.09.34.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 09:34:20 -0800 (PST)
+        Thu, 12 Nov 2026 09:34:21 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 12 Nov 2026 18:34:08 +0100
-Subject: [PATCH v2 08/20] t9300: make the series O tests self-contained
+Date: Thu, 12 Nov 2026 18:34:09 +0100
+Subject: [PATCH v2 09/20] t9300: make the big blob tests self-contained
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,376 +93,138 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261112-kn-fast-import-tests-1-v2-8-b8c3a0ab27e8@gmail.com>
+Message-Id: <20261112-kn-fast-import-tests-1-v2-9-b8c3a0ab27e8@gmail.com>
 References: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
 In-Reply-To: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, gitster@pobox.com
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9397; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=atIs7rIDRCjo+Ee5qQV9ysscfl8ez0JGBZUoSyDVA2Y=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGr1+JESpGllbrMAAqTh8LhlR3f4jKj7GXZhi
- z91GIp7eteu3IkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq9fiRAAoJED7VnySO
- Rox/bWoL/2IAN7EqEo4UhVJNSUK1Y5LSza4hSuotB3GPJ6Va3+LjzFsgFgKCmMBJ15zEtgkr4fK
- u9kUUmUG+uUBsrWK8A6OAflDUeLEPmwS0epoN3OUIlbzn/jyACXP1gLLDStBl+atvTtiS3ep/bD
- KDyyVnCI7guKsUHVGZnNqLiB1C/rfDzcY4tK/5ZoFfhpMPLPYrSRUihDnE+Laun7yUalhYzZerB
- cYBewSxxihfo1Uhb8chDAf494auEk1ePOuVwGcuvwGXrWbM3pY/G9pj2SOLXt0u6S98ivkNN7yo
- EW6lfDTKsUh3PkBbs1xE940k6YMGobZfeBrqpm5t0HGt96SC9EPKdbgDi6h5shlQAoTxqL1Yaw/
- 0XYcocnzPlFQkVHiIQNcAP3vT0M8rDqauLlQZRNfBszDLKKrZpFPvyNm1UY/79eNgqHgtPCssQl
- Le/gEcjkyHOGc+FKkUWsoyhtT1uw9jMnwGqsxnEte9XmbpL2edrbX2tIrV0wdd707n0tfcWXbT7
- EU=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3443; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=MKnbbGoEiLXb5Ehds8BfOyrTS5nVkML5d9tf2ADLMzU=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGr1+JHeaRA9OLPweYeEQWgyZm+sAi8QNDW6e
+ CUl8WALkvNEEokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq9fiRAAoJED7VnySO
+ Rox/IUQL/1e/MPeK0dUX8xl1jksgahgqwbwke5L5mUikQ6KfdKvm5OYFDpFkIsGXKfZ8lkwfNgM
+ hBQjdoXtHnB3TAPlX0LaxjmQfqI6ehmsriMYTn/m+kUvDmL2/3BTGxFB0OH3sN3eEtPkue/bG+x
+ s/upCEtA3YMXi4YTlrwcDVjUeCz2cBDLefa2ysFxK5R1h+Uu/kGD2FzWaDvDSxb9V1dQGcMnhYd
+ UWzTTt5dc8fdB1dCG/SLc5DW5od2gbwgZuR5noUw7kF4TH8iT3JkvuVeWh4ZDMjD6Z12Bz2pVZX
+ zkjlamUgzcydTNG8ZdKi4z35gOWhYvRSW2F4XrZG2S331Kvu5ZLEa9mPtRXXWI0mZjXB1Cmk3Kz
+ A0oVB2HWZ7fFGxWsHYcCSXfjFxG6yaG2sEStR4ta4c6ay0ssteYDSWZCkCkZwMW/zzvjYmklemT
+ H2UM320UgO2kvuj+Dfvd29GIRSWPaIAu6ZCaL3slfjhfEvcoZHQ7p2UhoQJFVKb6+RC7npRR0V7
+ zQ=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Similar to the previous commits, modify the tests in 'series O' to make
-them independent of state from previous tests.
+Similar to the previous commits, modify the big blob tests in 'series R'
+to make them independent of state from previous tests.
 
-The tests import on top of 'branch' and compare the result against the
-'N3' commit from series N. Import on top of a commit created by the new
-'setup_import_repo()' function instead, and compare the result against
-the same commit imported from a stream without comments and with blank
-lines, so that the whole commit is still checked and not just its tree.
-The function sets 'fastimport.unpackLimit' to 0, which 'O: blank lines
-not necessary after other commands' relies on.
+'R: blob bigger than threshold' imports the blobs, and the tests after
+it inspect the result. Fold them into a single test, which does the
+import and checks the pack, the blob contents and that the blob is
+stored only once.
 
-Drop the 'O: repack before next test' test, and repack in the test
-which relies on it.
+Set 'fastimport.unpackLimit' to 0 for the import so that a pack is
+written, and verify it with an inline loop in place of 'verify_packs()',
+which won't be available once the test is moved to another file.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t9300-fast-import.sh | 291 +++++++++++++++++++++++++++++++------------------
- 1 file changed, 182 insertions(+), 109 deletions(-)
+ t/t9300-fast-import.sh | 79 ++++++++++++++++++++++++--------------------------
+ 1 file changed, 38 insertions(+), 41 deletions(-)
 
 diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 920fcd52b5..e0b9663452 100755
+index e0b9663452..2231e1bdab 100755
 --- a/t/t9300-fast-import.sh
 +++ b/t/t9300-fast-import.sh
-@@ -1748,143 +1748,216 @@ done
- ### series O
- ###
- 
--test_expect_success 'O: comments are all skipped' '
+@@ -3198,51 +3198,48 @@ test_expect_success 'R: corrupt lines do not mess marks file' '
+ ## R: very large blobs
+ ##
+ test_expect_success 'R: blob bigger than threshold' '
+-	blobsize=$((2*1024*1024 + 53)) &&
+-	test-tool genrandom bar $blobsize >expect &&
 -	cat >input <<-INPUT_END &&
--	#we will
--	commit refs/heads/O1
--	# -- ignore all of this text
-+setup_import_repo () {
+-	commit refs/heads/big-file
+-	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	data <<COMMIT
+-	R - big file
+-	COMMIT
+-
+-	M 644 inline big1
+-	data $blobsize
+-	INPUT_END
+-	cat expect >>input &&
+-	cat >>input <<-INPUT_END &&
+-	M 644 inline big2
+-	data $blobsize
+-	INPUT_END
+-	cat expect >>input &&
+-	echo >>input &&
+-
+-	test_create_repo R &&
+-	git --git-dir=R/.git config fastimport.unpackLimit 0 &&
+-	git --git-dir=R/.git fast-import --big-file-threshold=1 <input
+-'
+-
+-test_expect_success 'R: verify created pack' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
-+	git -C repo config fastimport.unpackLimit 0 &&
-+	mkdir repo/file2 &&
-+	echo abcd >repo/file2/file4 &&
-+	git -C repo add file2/file4 &&
-+	test_tick &&
-+	git -C repo commit -m base
-+}
-+
-+import_reference_commit () {
-+	git fast-import <<-INPUT_END
-+	commit refs/heads/$1
- 	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
- 	data <<COMMIT
- 	dirty directory copy
- 	COMMIT
- 
--	# do not forget the import blank line!
--	#
--	# yes, we started from our usual base of branch^0.
--	# i like branch^0.
--	from refs/heads/branch^0
--	# and we need to reuse file2/file5 from N3 above.
-+	from refs/heads/main
- 	M 644 inline file2/file5
--	# otherwise the tree will be different
- 	data <<EOF
--	$file5_data
-+	an inline file.
-+	  we should see it later.
- 	EOF
- 
--	# do not forget to copy file2 to file3
- 	C file2 file3
--	#
--	# or to delete file5 from file2.
- 	D file2/file5
--	# are we done yet?
- 
- 	INPUT_END
-+}
- 
--	git fast-import <input &&
--	test $(git rev-parse N3) = $(git rev-parse O1)
-+test_expect_success 'O: comments are all skipped' '
-+	setup_import_repo &&
-+	(
+ 	(
+-		cd R &&
+-		verify_packs -v > ../verify
 +		cd repo &&
 +
++		blobsize=$((2*1024*1024 + 53)) &&
++		test-tool genrandom bar $blobsize >expect &&
 +		cat >input <<-INPUT_END &&
-+		#we will
-+		commit refs/heads/O1
-+		# -- ignore all of this text
++		commit refs/heads/big-file
 +		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
 +		data <<COMMIT
-+		dirty directory copy
++		R - big file
 +		COMMIT
 +
-+		# do not forget the import blank line!
-+		#
-+		# yes, we started from our usual base of main.
-+		# i like main.
-+		from refs/heads/main
-+		# and we need to add file2/file5 to file2.
-+		M 644 inline file2/file5
-+		# otherwise the tree will be different
-+		data <<EOF
-+		an inline file.
-+		  we should see it later.
-+		EOF
-+
-+		# do not forget to copy file2 to file3
-+		C file2 file3
-+		#
-+		# or to delete file5 from file2.
-+		D file2/file5
-+		# are we done yet?
-+
++		M 644 inline big1
++		data $blobsize
 +		INPUT_END
++		cat expect >>input &&
++		cat >>input <<-INPUT_END &&
++		M 644 inline big2
++		data $blobsize
++		INPUT_END
++		cat expect >>input &&
++		echo >>input &&
 +
-+		git fast-import <input &&
-+		blob4=$(echo abcd | git hash-object --stdin) &&
-+		blob5=$(printf "an inline file.\n  we should see it later.\n" | git hash-object --stdin) &&
-+		cat >expect <<-EOF &&
-+		100644 blob $blob4	file2/file4
-+		100644 blob $blob4	file3/file4
-+		100644 blob $blob5	file3/file5
-+		EOF
-+		git ls-tree -r O1 >actual &&
-+		test_cmp expect actual &&
++		git -c fastimport.unpackLimit=0 fast-import --big-file-threshold=1 <input &&
 +
-+		import_reference_commit O1-reference &&
-+		test_cmp_rev O1-reference O1
-+	)
++		for p in .git/objects/pack/*.pack
++		do
++			git verify-pack -v "$p" || return 1
++		done >verify &&
++
++		git cat-file blob big-file:big1 >actual &&
++		test_cmp_bin expect actual &&
++		a=$(git rev-parse big-file:big1) &&
++		b=$(git rev-parse big-file:big2) &&
++		test $a = $b &&
++		n=$(grep $a verify | wc -l) &&
++		test 1 = $n
+ 	)
  '
  
- test_expect_success 'O: blank lines not necessary after data commands' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/O2
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	dirty directory copy
--	COMMIT
--	from refs/heads/branch^0
--	M 644 inline file2/file5
--	data <<EOF
--	$file5_data
--	EOF
--	C file2 file3
--	D file2/file5
-+	setup_import_repo &&
-+	(
-+		cd repo &&
- 
--	INPUT_END
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/O2
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		dirty directory copy
-+		COMMIT
-+		from refs/heads/main
-+		M 644 inline file2/file5
-+		data <<EOF
-+		an inline file.
-+		  we should see it later.
-+		EOF
-+		C file2 file3
-+		D file2/file5
- 
--	git fast-import <input &&
--	test $(git rev-parse N3) = $(git rev-parse O2)
+-test_expect_success 'R: verify written objects' '
+-	git --git-dir=R/.git cat-file blob big-file:big1 >actual &&
+-	test_cmp_bin expect actual &&
+-	a=$(git --git-dir=R/.git rev-parse big-file:big1) &&
+-	b=$(git --git-dir=R/.git rev-parse big-file:big2) &&
+-	test $a = $b
 -'
-+		INPUT_END
- 
--test_expect_success 'O: repack before next test' '
--	git repack -a -d
-+		git fast-import <input &&
-+		blob4=$(echo abcd | git hash-object --stdin) &&
-+		blob5=$(printf "an inline file.\n  we should see it later.\n" | git hash-object --stdin) &&
-+		cat >expect <<-EOF &&
-+		100644 blob $blob4	file2/file4
-+		100644 blob $blob4	file3/file4
-+		100644 blob $blob5	file3/file5
-+		EOF
-+		git ls-tree -r O2 >actual &&
-+		test_cmp expect actual &&
-+
-+		import_reference_commit O2-reference &&
-+		test_cmp_rev O2-reference O2
-+	)
- '
- 
- test_expect_success 'O: blank lines not necessary after other commands' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/O3
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	zstring
--	COMMIT
--	commit refs/heads/O3
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	zof
--	COMMIT
--	checkpoint
--	commit refs/heads/O3
--	mark :5
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	zempty
--	COMMIT
--	checkpoint
--	commit refs/heads/O3
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	zcommits
--	COMMIT
--	reset refs/tags/O3-2nd
--	from :5
--	reset refs/tags/O3-3rd
--	from :5
--	INPUT_END
-+	setup_import_repo &&
-+	(
-+		cd repo &&
-+		git repack -a -d &&
- 
--	cat >expect <<-INPUT_END &&
--	string
--	of
--	empty
--	commits
--	INPUT_END
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/O3
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		zstring
-+		COMMIT
-+		commit refs/heads/O3
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		zof
-+		COMMIT
-+		checkpoint
-+		commit refs/heads/O3
-+		mark :5
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		zempty
-+		COMMIT
-+		checkpoint
-+		commit refs/heads/O3
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		zcommits
-+		COMMIT
-+		reset refs/tags/O3-2nd
-+		from :5
-+		reset refs/tags/O3-3rd
-+		from :5
-+		INPUT_END
- 
--	git fast-import <input &&
--	ls -la .git/objects/pack/pack-*.pack >packlist &&
--	ls -la .git/objects/pack/pack-*.pack >idxlist &&
--	test_line_count = 4 idxlist &&
--	test_line_count = 4 packlist &&
--	test $(git rev-parse refs/tags/O3-2nd) = $(git rev-parse O3^) &&
--	git log --reverse --pretty=oneline O3 | sed s/^.*z// >actual &&
--	test_cmp expect actual
-+		cat >expect <<-INPUT_END &&
-+		string
-+		of
-+		empty
-+		commits
-+		INPUT_END
-+
-+		git fast-import <input &&
-+		ls -la .git/objects/pack/pack-*.pack >packlist &&
-+		ls -la .git/objects/pack/pack-*.pack >idxlist &&
-+		test_line_count = 4 idxlist &&
-+		test_line_count = 4 packlist &&
-+		test $(git rev-parse refs/tags/O3-2nd) = $(git rev-parse O3^) &&
-+		git log --reverse --pretty=oneline O3 | sed s/^.*z// >actual &&
-+		test_cmp expect actual
-+	)
- '
- 
- test_expect_success 'O: progress outputs as requested by input' '
--	cat >input <<-INPUT_END &&
--	commit refs/heads/O4
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	zstring
--	COMMIT
--	commit refs/heads/O4
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	zof
--	COMMIT
--	progress Two commits down, 2 to go!
--	commit refs/heads/O4
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	zempty
--	COMMIT
--	progress Three commits down, 1 to go!
--	commit refs/heads/O4
--	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
--	data <<COMMIT
--	zcommits
--	COMMIT
--	progress done!
--	INPUT_END
--	git fast-import <input >actual &&
--	grep "progress " <input >expect &&
--	test_cmp expect actual
-+	setup_import_repo &&
-+	(
-+		cd repo &&
-+
-+		cat >input <<-INPUT_END &&
-+		commit refs/heads/O4
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		zstring
-+		COMMIT
-+		commit refs/heads/O4
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		zof
-+		COMMIT
-+		progress Two commits down, 2 to go!
-+		commit refs/heads/O4
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		zempty
-+		COMMIT
-+		progress Three commits down, 1 to go!
-+		commit refs/heads/O4
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		zcommits
-+		COMMIT
-+		progress done!
-+		INPUT_END
-+		git fast-import <input >actual &&
-+		grep "progress " <input >expect &&
-+		test_cmp expect actual
-+	)
- '
- 
- ###
+-
+-test_expect_success 'R: blob appears only once' '
+-	n=$(grep $a verify | wc -l) &&
+-	test 1 = $n
+-'
+-
+ test_expect_success 'R: --git-completion-helper does not read from stdin' '
+ 	find .git/objects/pack -name "tmp_pack_*" >before &&
+ 	echo garbage | git fast-import --git-completion-helper >out &&
 
 -- 
 2.56.GIT
