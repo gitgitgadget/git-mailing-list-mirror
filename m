@@ -1,120 +1,114 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591285;
-	b=O67ywnkAQb4KiYoiJMR8yTFPLiPEMUXbnJxoPo/M1HrwoLdymNPDsVIZVpYj+eU7lm2C
-	 YmOyxDjpTzmNYkjjHYQKXRMMUTslGfx0M/nzwk84X2ZrsUtRUGuQzK3FYqsKJ7RN90QKB
-	 lBGMlrEI7QftwZyXT3pXbjhj/02QUcnoi5AL6SiYfMwaJwMOdV1N6vGyZbDKUKfoNEAwH
-	 6BWEOKbAJmQGB3xApFK8+1JDSoH+m+N36kmTbNHFMT4KkZ7/oUEoNBcuqxF51//GNAwqW
-	 Sm3zG2Ocx4WOWwSI8zgI3aF75B42nNvlQKcCKIfuE0Ag7j4N+rtM0ZKluTtpEyJTApQ==
+	t=1794592679;
+	b=pUT7/EIR8d3/gW0MGNp0+wFN5B2iDgLYnmeQdQcbqYX7fr/3zTvjzIqt4p5nxdjQi50w
+	 1UO3U/oZ8ivwqVQxAAy1eYdsv1dUiBNWjQaTyF0PjCyxWAXUXnyiDUY7PE8D2jNND/IDZ
+	 XEzxQi2whrQvYZi0lwgM+bMYEyVswkCKIlnfoEOAc4c2K4RjtGSWtMcuDNgj8UoInmxZW
+	 jloBxtIFhTJVnMJUfovHijPhdu/aSRQxZW2ZX8oJ0oL5h3Z48ET7NU2LoESG7qLlktjKd
+	 nRm6x4M+7tWVMtNF/PU3+hflRiqkMEMMytTm2MQfCTMdryowmBMQStbZ5uHjNXQWoBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591285;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794592679;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=ytH4LQtt55bwfXgEsD1bI86TzRHzNHBgLI3HE79poyM=;
-	b=eOkPreevb1piq5Bd0v9NdDqi84cczBFscPKdaKthGlVgqzPnwb2BCCPRuN0jTqSsgv5l
-	 8PsFK/Eto/Oir8YGt+uL6OD+NvQ1madbljyQc+B6rc6RCRkXC7vanPgSzQkgu1hSYnhC0
-	 dqwCzJgCdxU3g36kz7JWanVFIYFD9EXDFIx5GVK3dhdARykSlOvxCAAQKFayZZkjP2et+
-	 4gH+ddGVLyS39O2GV32gBFUDw79OMRFy4JBrGDukgFR4PP2Z9kpPS+w1tmL/8z64vVy1l
-	 ZeApf/K67ftaEBkjpgEkL0cp05s/IiCyJdE/YwjIK7/gHXG9FmifY442eHJ5hNxwSig==
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=ivltg/QjsVOmtkiZrh8AG1bwWWMGSKssUOLnFeqLT08=;
+	b=usO7inTOzBoi/tQI6thpO+tPkS5gdkFJHmzxvsxyf+i7/smCUd8/GtLeQBGQFIhAgNmG
+	 t+D/IcKsiDsGLtglJYyS1exaRsjPjh29i4dm8+d76W7Vpqvn3Wd96t9aSBC5ON/vLQ11/
+	 PuN9uwHV2uHU7j6sQAenxe6htfjH6+meBnobgW4xojziVcbCX5nrhYwD4qG3juE+war4j
+	 z39ZHpm+B94R1YZxSGv1hD9GAuJwpTyQXHQ6Bc34zQ1E13EGIkCoiJfPWsNqpz1+dpCO3
+	 YTGjHrNGPf9zT5TXw5dXdLWBGt0oQWPTVeYzkCkY7ArJVeWMpx1IX2c8U1tWbL+9JNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=k46dpRvZ;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=5pCXhN+R;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=Apl7TCBE;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TEHZatq0;
+	arc=none smtp.remote-ip=202.12.124.145
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5456077D53
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 17:34:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1D5456077D53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE44D606B23A
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 17:57:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AE44D606B23A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=k46dpRvZ;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=5pCXhN+R
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2ECAFEC0074
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 12:34:44 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 13 Nov 2026 12:34:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794591284; x=1794677684; bh=ytH4LQtt55
-	bwfXgEsD1bI86TzRHzNHBgLI3HE79poyM=; b=k46dpRvZmPNQXb5mmyyDDOIbQw
-	/A5qxAs32i9N/sie0+MeNHsT6/MjIbvKTlzkEPN10vTph5ZkAMNEPwDJT4G89X42
-	pgPbi5TXSmCwSQOurimIxa1tAF1IBVbNZ2ykp/UmRTxET0XbXaOZK65yENNQ2C4s
-	rcXgdt/GpFMswCrJE9y5xqQfxfFJDtASWXSudp8TQj0JKtIn71SiWBvH3885hIXh
-	uQM/5usqdI613LLwRyA7fM23SIRLIhdzS7+yxYhcXgqANpivZshSnDhBIFnNORNL
-	dxrgCavhx1AvB+KmyeXKmpQH/lxEtZfAXREUk1jvDo5Xv2I3a7FPfsixpYWA==
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=Apl7TCBE;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TEHZatq0
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0626C1D0016B
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 12:57:57 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Fri, 13 Nov 2026 12:57:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794592677;
+	 x=1794679077; bh=ivltg/QjsVOmtkiZrh8AG1bwWWMGSKssUOLnFeqLT08=; b=
+	Apl7TCBEe+upN1v4rSLpgMKwjvqmucrRY3ZE96bwtFeGk9E6oJlPpy3A5m47OCfx
+	uYAnu3yrj25hqwsk0CDR3hu4qTUIclqfeFmHoqSnbPHNpeKdgVMEitz1SwVca9Gs
+	q3zzbgpcKUxod+yEVZceZqZRxhvcSf+82IYMUrPUg7o656eLyPGiWv0YgvLac33D
+	TCGsKWqyW79R9WseX+btZe+0lpQa8DszXQLk+1LJeH/iP4gWF6At4KP1NKHca3Sc
+	uEy/Br4ZytTRE7ZuVy/8TfoMoAQMcW4uunuHMAjy2i/Z3EsTG+RgIyNVZtP48jof
+	WlYxbmHGQzg8V0kO7FTyVg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794591284; x=1794677684; bh=ytH4LQtt55bwfXgEsD1bI86TzRHzNHBgLI3
-	HE79poyM=; b=5pCXhN+RNkxgORafyAhwNHBabDObWXGIwkH1QoA/I0DYPaoI8gp
-	O6D78GLQ3SFBN5szUzwCM/fpqXpyRpcLCKT8KmOfMR6TN85OoKWMiYoNeyBqEBau
-	KCGusd8XxtlV2bqPpFGraUczxO1yBsQa/EuOXZApsQ1PaQNrGoRhf7OOGgjGYLWH
-	UKIQ7beLhd75lCO138uhVRQcFTI1AHsdxg7I3kUsvytwxi4GOa3Lae8DIms0ILNr
-	9wCzFVCXQonCAhslSrKQzTSRvmrU6RsOfwZIqICZRN86FsMF+xWIJdNPA4kBkkut
-	3+Fz27S0zSPia4Y+yb9ZRpaKTkArC/UVH3g==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794592677; x=
+	1794679077; bh=ivltg/QjsVOmtkiZrh8AG1bwWWMGSKssUOLnFeqLT08=; b=T
+	EHZatq0Vez1XXExswJWedGgMmJTF8q7dRgPjJji4cMsCvBjLQGMUZiYwP2dD1/sj
+	v55Dm7pBjyd3VikA1s6VY8cq00lJv3j1M3llnrCWbIi7nBqytv5Ecm5yFPZ53XCA
+	GDOgIqAyZnYJXgCoZB5iTDGKsQd53IIZvUlidIsgyXqp5LlbPfUpqcxPZ+C3OEug
+	0jEtP2RDV97wFcQUcloA+kHHHXlG53c6whHceU+PMWNQFk3l+yYmmS1F9fDtD3pB
+	ti5nIAt4sqFvapOLjWdpWK+AAxpbvD3fFHHhyOm0xhWq2lRauh+5SGXUSXEhF+E7
+	63GVG53oj+3wLxIe4WKlA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794591284; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:jCjhFR2POuWk/Wy0d43gligWQanYIvHQVljoLfFCooFgXS0
-	aR1ew96u6dom/G5SdfSDDTA2vaggewpdSXoQ0U8Oyw9NWxJQ19r6lKQPaxvH51sW
-	XIkzsVIQmyajtPrCmsiI/eR+wnHA1ore03XSQ7YvXNRUDn+h/BeHkN0r6aOU8o2t
-	l+2U8SkKabz1wKR2XR0Zlw8O+sss/p/gTcFuEpnUm3UGqhqY7JZH54Agfq99dkHo
-	/2+Okw2DV2AO3IghD6RNPEZlF5YqQBTu6/lIYfja9IGtkgJfbQDDEMMXMC/VUEBg
-	5wYxZk4NR6Gct5NpYt3nSZ4rUKveHOe4zSYywPg==;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794592677; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:s2yL52gBGVkfVXajGXakd55XKlDhfd3h+qvrJ/rHBf2f2ne
+	1+JiQ3z0GOF3Q7SfY1hyrmuxE2YX7EzFLq9FAsM+xakon14bFb6BMtXvQ4QGvryN
+	RHnwIswsqQOynAjYqRkUdyRRqUPwr+kROD/Yh+0jEsOjHY0KgslzAeoO9VD7w+dL
+	yqxTE1RLg6mKxGe1RCzBcQ8M2/f3gbhS73PC/tMFv4TJvlwPmnHgSyicSfX7jhFz
+	bqANOouKvhlAObUMOHX/YAE3lleyxmg+Q/8As5jp+7rvdTEIcHUUUx3lKWXTjdAx
+	Hvu1fIZNUBElSBToWyHFlYkoULUCQkRwY8VOd5g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:egMaj4E6z9rpORF8Id+HIISK9OXZf4+gW7q9sjUAs04=:lx5YTeUA58kpta/CYSjEN1xK39UeedOljBi+U5OrdTs=;
-X-ME-Sender: <xms:M0r3auKHuWRtHrhjf030C6m8h6drCVDZ4MEuOXsXjYrPd7pImx_yow>
-    <xme:M0r3atnePYXCG9mzdR3fzCJ_61qbt3awnn3o2M153MQ6HSgGO8HvwDDOa5v26BpDS
-    VoQJR2nXHcrS50eUEq1_X9YnTrWt8vUKK1b0xQd-VDzOjicwYhNAPw>
-X-ME-Received: <xmr:M0r3asHgGCTZhSh7z9yoOnkXUxIPqtAYF2B3JxDUqv0AxmhRhOeK9DboDqWt2vrrC8K1OH31MQtLWfGdRnHGYTixzeXfLXI_Bo-3>
-X-ME-Proxy-Cause: dmFkZTFFqUgRawEmMGyRJq3NMWBy7PBk8DBckCg2lJBGCieVys6RKmr3hNPpg/tiOLSg+o
-    ieWpAfjthU69+YM44rsR6DKvSLgSR+ZVvvxn28DpWCStsS0mOHb+GFTy+Bg1R0zI8QYi15
-    0zgeaUjTQelD65r+1ZnbqqwsAtTjF9K2ReN97ujjizqVR4S4HMSu7Dn6xhVmCE2+sBR/Bl
-    VUAp9cxRlFlhhHZSnnHnZOcJtHKXVpOS4uTOTKwrQ29snDdkGQQ8C5nFTS4gdQEm6FYwwo
-    TcFXQ4Eg6pseBE1SX5w5NngAe7iZTdlViT0yxbW44cPmezz2+6luoY1tahF/DsFZ6E0Pe5
-    2/leWuTqhSQkdTS+wMKj53m8+HXRT+iRyuS9N9frxczuDE3rXMeCZ5fhtJogpaGY2REXA+
-    JilCwmdhUoM/VQWzCiDjCDlzvHDgu+UH7DSzAFVsy5PCpnhrZ5gmzw+Ummto4r8Y9cmZVc
-    cnzS9rGy7J0GZoAIIuO96PF/hw1GKD+YG2V7WMQQTAWuQHc2xXpd2q/+5SgNnnM/S9Bppx
-    bTGqRjRRXMwZZz2S06ft0qfgReG15T3us48t1DcvFE4j3wMRuP2ALH5m/HgBaMnrtT9vAS
-    PProva5ZvAGvciPYP20lmd6BvUFn0Otyg+2QVqt/48PwczGKWFCFxVXH9LPg
-X-ME-Proxy: <xmx:M0r3atGbOzExca3kogI0BfKo2z23kYF7kpz14O4SMR7Hfpd083Nfvg>
-    <xmx:M0r3apOZbNHQchUgnCihyU-62j_dsubGxrtgH-I6u7_nZNE80-Q5uw>
-    <xmx:M0r3asH2TNXdYX60i9_iNyKZ9lPObSnexv00i3Ew0oqT-okzPyR9-g>
-    <xmx:M0r3agOANT39wufKhrcOSF1Wur50XX0yDESCfFFVhhmJ4yrzjcwy1A>
-    <xmx:NEr3auPVlE1nBnmtU8K0pk9EdmTVCJqHZGKs8mr3LlJ4pXeDhWT8jLjB>
-Feedback-ID: if26b431b:Fastmail
+	action=mi-m=1; hc=14;
+	hn=cc,content-language,content-transfer-encoding,content-type,
+	date,feedback-id,from,in-reply-to,message-id,mime-version,
+	references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:kmtPE1sCBZGz5J9Y18yk7XrE1VkrWWlmm7HW+JpHHxg=:IVVxUIh+3oXFEiWyb3a3wvRPBL2unVfHKAzGpCc3wQo=;
+X-ME-Sender: <xms:pU_3ajVY_T9MPIvCVUAneMgBTqNccGkSEpupMFYNSOEiX1eQ0C0T-Q>
+    <xme:pU_3aicTJz4GC4i_ICEskLsh4GAKjiwc7aCwuzgck1qB-UlL7oG1M9TzbpB4sAVI8
+    fAt19Gsilw1_dEbGSmMyvgS6egZvzBUfajbnbChSTrBAjkKxqcIpM9d>
+X-ME-Received: <xmr:pU_3anvE3q6ovQHlxGvLxetZTb_TvTOjvjeEmZrC7NuJcgVFPoDMuU1-mBA0kgvzri6VaR4gm4pTo3O0GN_UZhimZmaRPZ1fUcTRSOoQMX9UrohhKg>
+X-ME-Proxy-Cause: dmFkZTFHPNjBOGM/FypDUB8yRntrSCOjdXC5osSR6UG46gwwfhPv4bK/7thuJzqrqJWmMQ
+    z8oR6OdJJbL4CYaiM+Z5Y6c7vjDk7Kks1Wl5Nv7fSRJi7g8tur6YsDPohU89eygtFkHAUc
+    cR4lBxVq0RM55Wx8N39mnhQlANX1jRXFB1jOZgD5kFNE8yvH1pwIu3Oc9BZ9+NBgq78rJf
+    +Gl8+uHC87ZQovmijxfckCTppzM9USGxGRSa+r1H/be3OhTqSXEQcw3leTxiMIszYlOBBM
+    4wyI5sLmyd/bPtgjOVMYleUvNJeDABiyI6YmCRVcd44dsggsXVPc8lNgfRuZyYWzWfZNHL
+    NM1n3066mXeA1pN5iLIQNWA9qwQ7dZ2GEixtT/TIfrnVbAST0c9kSK9YneSZJNsHcFHcEY
+    RPrem00TdgTyWiSe5UmBRkA3wo6bcyFT0dlIApiT4qe0GoxggYzlMa9PWTLCRb6OFaicOh
+    qmVNs4nGKSlvxWO/4Tzttlq8YKC8B07j1qa+haGXg5nzuIFdtiMBY41DsEwCzZjbn92YVj
+    nhpybSb2yjaRJnuVCuVQ+2qHQ1IRbxrCgBkGPfG6N0CF0uteVkXdO12+axItW2K8rW6xOd
+    4hI4Ntt5RJM28R0XT4Y5/A7ajLjoq0VRetTbea8EpmLSGd6rgL1EA1WqN05A
+X-ME-Proxy: <xmx:pU_3ap9UZep30zfET1DrMohon6lRRa_aF5lAY5j9jA9l0jHaE92IKA>
+    <xmx:pU_3aq2e1fDz51DHTPeNWS5X-Es9Df9323sCMHOxGBVxNRtj2mW5HA>
+    <xmx:pU_3amBX_MgZblm9qdNWmIjinRTg_FIzhJ8w9GDKU56UOaRH8Afiqw>
+    <xmx:pU_3aue7qmzvy-DdnRSCWHGdUwypMD58T8GZIQ6mnAFtu2dT8liVWg>
+    <xmx:pU_3apMTwYM5oZf1uDVPyFhpwRfFH-A55Fapm5ihw9gol28Hp4buO6_i>
+Feedback-ID: i2aa947c3:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Nov 2026 12:34:43 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2026, #05)
-In-Reply-To: <87v7613uyb.fsf@dev.null.iotcl.com.invalid> (Toon Claes's message
-	of "Fri, 13 Nov 2026 11:08:12 +0100")
-References: <xmqqpkw9fwc1.fsf@gitster.g>
-	<87v7613uyb.fsf@dev.null.iotcl.com.invalid>
-Date: Fri, 13 Nov 2026 09:34:41 -0800
-Message-ID: <xmqqv760eitq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 13 Nov 2026 12:57:56 -0500 (EST)
+Message-ID: <a70524b5-5ece-49fd-acd5-c97e21faa76d@jvns.ca>
+Date: Fri, 13 Nov 2026 12:57:56 -0500
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,20 +118,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Julia Evans via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+ <pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
+ <xmqqh5ile4h4.fsf@gitster.g>
+ <CALnO6CBGcG42NxtpuPaJVrzAMC=J8iVstsHCSi6vDQhDmFJ-Kw@mail.gmail.com>
+ <ddc6d42c-6e40-46a5-bb70-f89f11525ac4@jvns.ca> <xmqq5wy2kqhl.fsf@gitster.g>
+ <931a94e4-feab-49a9-b5c6-479f0d7f8b75@jvns.ca> <xmqqik21j1ie.fsf@gitster.g>
+ <4d6f9b6a-e658-4797-bc4a-0cfc533056d8@jvns.ca> <xmqqfqx5foxd.fsf@gitster.g>
+ <36e73720-287f-47a5-bd3f-dc53629ac968@jvns.ca> <xmqq33t4fxx7.fsf@gitster.g>
+Content-Language: en-US
+From: Julia Evans <julia@jvns.ca>
+In-Reply-To: <xmqq33t4fxx7.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Toon Claes <toon@iotcl.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+On 2026-11-13 12:23 p.m., Junio C Hamano wrote:
+> Julia Evans <julia@jvns.ca> writes:
 >
->> * ps/odb-loose-stale-cache (2026-11-04) 2 commits
->>  - odb/source-loose: fix existence checks for newly written objects
->>  - odb/source-loose: extract logic to retrieve subdirectory bitmap
+>>> The mention of "your current work" (started at the HEAD) and "next
+>>> commit" is to lay groundwork to explain what happens when they make
+>>> that commit, and how it is different when they are on detached HEAD,
+>>> in contrast to when they are on a branch.  After all, what we were
+>>> discusssing is an improved explanation on detached HEAD, and your
+>>> commits not affecting any of your branch *is* the most important
+>>> aspect of what detached HEAD gives you
+>> I read this a few times and it's hard for me to tell what the issue
+>> being raised is.
 >>
->>  The loose object cache has been updated to track newly written loose
->> ...
->>  source: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
+>> Are you saying that we're not explaining all the details from "`HEAD`
+>> can store either a branch or commit ID" to "if you create new commits
+>> while in detached HEAD state, those commits won't be on a branch"?
+> No.  I do not expect an introductory document to tell *all* the
+> things that needs to be known about a topic.  That is an
+> encyclopedia, not a technical manual.
 >
-> As various other people confirmed, the changes also look good to me. It
+> The fact that you would not clobber any branches when you make a
+> temporary commit on a detached HEAD, however, is the most important
+> consequence of HEAD *not* recording what branch we are on that has
+> real *impact* to the end-users.  They can leave their temporary work
+> behind without explicit removal by just checking out a branch, which
+> also means they have to be careful about losing *if* they care about
+> what they did during this temporary state.
+>
+> I view it as a disservice to deliberately avoid talking about it.
 
-Thanks.
+Okay. How about this?  (the added sentence is between the **)
+
+   For example, a data scientist could use this to run an old version of a
+   data pipeline or a programmer could use this to figure out when a bug
+   was introduced. **You can also use this to make experimental commits
+   without being on a branch.** By detaching `HEAD`, you don't need to
+   create a temporary branch.
+
