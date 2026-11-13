@@ -1,69 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794608288;
-	b=x3tpD8J9JXcm7lK1Ymvy5Bt52gdn102kOsm+87axXBBLRtp/6JTRSEEaK+/PfCi0MQJ9
-	 SfjsTZQuP1XvM9/gqQClEPl8NCdAo7JIj+w9A+9CeTfmZ9lxkVuEI/uTXMfxA+ourumYc
-	 odCbNn9CerBJkCjJOWQSbD0NnahiUnKfUB23xr5vXfi+QSoaCEURjS3GJSORrFYXsRZKs
-	 fdQaWTkiQYclWRO9NouzVo7drhLcAE7TFWR+iyfzILW8oCkejW0VRua8byypJOn51GnKT
-	 7mbZZOFhxu/rXFvFpl9gecTe85b/QzXkVKrciWFg1D5/1Fhct07of20WRrITDNl635g==
+	t=1794611500;
+	b=hTB/u3C01vmWs97sm9sGnybdeoWJRBHcEYgR7/1peezjqmnsGHZq1f52uzhObrYkbsyF
+	 SxZZD5+LMRIJlmFmBtkHDcox4QqyvW5guVopktwjavZmbJ2zIKUJTweUPuzIPF7R2VfZq
+	 4AiiX8axVhKNQ8h6408qfAhO58X6XeUbwHxcFGLEP7W8zZwHi/UqEG+yj5VC8GA5yrYTM
+	 Dkx54YT6MUefjF54nB90c3HJZjNWm3sR93CxxUc2MMVpXbId09rZ/hHs85Sn3x4XUcG5s
+	 3ra5yjoCgj/gJKXhGXojZqskikFiDwuhUgCFh573aktn6vX4RV7nhrgHo44kVnTaPgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794608288;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=ZVA+qqeSM57XuafhBi9Q9bZQlz5H+4XZYJ5vX7Nj0fo=;
-	b=Lt0/hO6Sxj5lO5QKsOXxnUq6bxe9YqA/jLdBhmLSlPHBeC/RxSb/LQ8fDGc1riAYrRzi
-	 Yl+RG9VL64krQtguC0n4ibivAX66G1TEacp4kKJx5ogq3OkQQXjRmToYqZpDP7x8AuMKi
-	 7SHmzyyTWDh6QQk8QzsSg1d83hsPfs9ApW+GL8tHPhrSOq47kAyRZbE5hQic0c/88iM4g
-	 H/805SSI0MzGOaoIawzeInjOtOcWA//Y1KpJUuTWcRgS3dz1A9hywF7xLiT/JFZHwZt7z
-	 Sm1CgekT1NHiXnmPplW5+NRhgz16ki6q8/jSERYyLEL/zs8UPlNXAzgsv/5VeLaqsnw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794611500;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=gAYFeRQ2k44ulQRUMzcG3pNOC8lw5UDmHAZk/I6BcQM=;
+	b=gncJ4dfyXUh6bW2Vf3TFmW2mhm7yczurqd+jwTMhYCD7YyjEGZNWPh0HxM/zduB2OrrN
+	 bC9ojBTv1Te58phVQP22ailjP3uTedYOH95IAtU1WieqczNd9VYUwSu32KejMHtvVMl9f
+	 +I2vbRimP/XpN/UXEVD3zYFt+gfZAI1u55lRWNIVmQ0inTIIVzvXY6Tio+4ZWhOGhofwH
+	 Rz69t4CK5tHKgg9pYuQSDFQnhdDEWhih5ImP3TRKgZHzZPFe0P8krUbI2JEkLFIhtriev
+	 dFOrB3TjnQQQSQI4TDbFQ5LrYliGTA1MeHvj1+jPfMfsfrK2t5gXdI3WIH6qbJzATcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=crustytoothpaste.net;
-	spf=pass smtp.mailfrom=crustytoothpaste.net;
-	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=SuQ9pAoi;
-	arc=none smtp.remote-ip=172.105.7.114
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=nW+SAbiP;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=D1y+vWAo;
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E620C606A323
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 22:18:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E620C606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515C5606A32E
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 23:11:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 515C5606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key, unprotected) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=SuQ9pAoi
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1794608281;
-	bh=pLbbE9sx2t3pGmzDBvXAYvR+h1o1Tf7RDBRgxag4K8g=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=SuQ9pAoiHZM0VW2ZqZQEQwgdqE7z1EdE4nM/WM398EjGr2Cm9aPHENbBCpVSRCLBt
-	 JlJlK77kpOrGA0APDFPR6G/s886ww6MvTW8G/d6UEHwwLTTg8kPZsBKeYVo2ca0/No
-	 KQXrXH+XHMZDPcic6yV6wuQaWHn839bZ5C5vvdnDwUzgRm9zM3QorNCVRiYjayfZLP
-	 1XYPMEzFZLyJVKQWGaVvLWftuMfXr/7IGPNteQ8UGZonSgrC3MJ9nGkVJU3HcX9qs2
-	 buOzls4bwdWAyLMYcbdblAknaSEP88xMAk30DLbmfpsPfX3FA55Uq9C1yijXee9Ose
-	 d7sbVMZ82vai5L11I/ZPu+5QrlGVo8qvPg2dsMNXXi2j1uBbQZHjLwY5pga2pmp/N3
-	 iblO6+wuaEfDoas/mMpw5miT+94G9HdMTxVA3apf5Hp28LvhHOY87fdqn0bzB/MS+W
-	 hIgFFjgIMvFf3/oSbaBAZ2TgmrwgyWpdX4yVM8C91rBE9wIG8x4
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f0c7:7240:9733:e326])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 543D3200AA;
-	Fri, 13 Nov 2026 22:18:01 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Adam Dinwoodie <adam@dinwoodie.org>
-Subject: [PATCH v2] setup: fix hash algorithm detection
-Date: Fri, 13 Nov 2026 22:17:53 +0000
-Message-ID: <20261113221753.3408862-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
-In-Reply-To: <20261108011633.1772000-1-sandals@crustytoothpaste.net>
-References: <20261108011633.1772000-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=nW+SAbiP;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=D1y+vWAo
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 67D197A00CA
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 18:11:38 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 13 Nov 2026 18:11:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794611498; x=1794697898; bh=gAYFeRQ2k4
+	4ulQRUMzcG3pNOC8lw5UDmHAZk/I6BcQM=; b=nW+SAbiPaM0aM+zxCAgxaZKTdy
+	R6IPDsI99vcVvsBH9NtHxUWTR2Ox6pXYF3zlG0bwHpni3fRp5re187UWMGYA4YRC
+	H2+004g5i5rcep0NoY+zTX/yjgk4fHmXV8rxMu9YlWUMCaVPq9c6ETcK6/Cy4bqm
+	gQU+AWtimNNsuEgpjqA6ykRnYvtqZxEybNBTQaRgBce4ooEGJQhT34OeZEIS56Dp
+	PZpzbb0VORwAmdGElVGYpgKNY4SiFipqhS4Jn/oK8QrEpUuQ+2d2q4smOV09F6sY
+	C2jGG+VcOteT66GYeZSoQ5HdSvUPdHJYVsu1eJzD1kWOIahMeXIOt1mnNZLQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794611498; x=1794697898; bh=gAYFeRQ2k44ulQRUMzcG3pNOC8lw5UDmHAZ
+	k/I6BcQM=; b=D1y+vWAoGUMX6U5TDRFCs3Sju3HMiTAyvYOE5yDhITBLRZsoOCE
+	MmiQ85x6wyZ7SZF9SnsiqF1x+gW+eKzXJCHLiYvppFGbTZGWZvjiNdS3vB3eSsVQ
+	g/bRS119xl2ct78UASSo1x7Wjvv/stiFGuRemiCKY4tha7dadkgGaEeU50S7ydrK
+	giQfhg7brwsR+upNDcOXDsRhWaWEJGgIaRhIcD3l37yMXSfHMv3+g5ZRzfDOVzHg
+	4tz7FU8KNM/wWvKFcS9sXdctcsw7tuBoB0k3JjWFfuspQi1LEbYEYCqXiL26wFTK
+	l5hdMVL5Upj/ILN3nIOz8TvxIEqhrVWxTYg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794611498; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:ly1BpslSUi1o8llzfVt4zKKGX4C4Xp5c25XMXyK287lKcwd
+	044d4krRNjRNyMS2ciA9HmC1MdFNW8N8XXW3q7TuBm2zOBf+/o0wd1bLrYl7UPN1
+	OpEg5wy3gXSvfN9QOOGeQjA064qSE2td/QULrSJACVfz7ZzZQlJtsBsYdACaO4yT
+	dXWS8qbc5yIrXPkdEmo+jcTbEhNbl9htR4PYghRv7BqBCaJKZki4AyjpNGmb8Qhc
+	ch622y99QgTVJ7uEKK/vaFr1eTetLzLGcGCfExmCldf6boXwR4HgqAoKAjDeelj2
+	tV9OC4EDFB6LSt6I9XzZcLnhQkx6XvpR4OTnN3w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:T30hOE4ZfludSzTkRqbftcCUchq9kqQSu2uRN9JfoDk=:A3DVRFgh6r64MZtGTc1L2j/74Iv840zp3SLWDgiYZOY=;
+X-ME-Sender: <xms:Kpn3apGdNdOhFKOvx595QeesmYPuP_-1CMTX069XoJOuioWqIZQOpQ>
+    <xme:Kpn3aiCegRBa2kbt7P_XIIziEP96wNbrZAwX_pPuiZp9ecrbP5xurtNhe-OKqU5x7
+    bnNwqUgdJ-Qn-mp4_j1APnZnuiQQvvE2VRUJE6MtMOukRb9O4xq1A>
+X-ME-Received: <xmr:Kpn3ak9uhEmzgynIObV-TCmua0hIBI03BY58uDvxEiwkOvGVV-R7Eqb_2IXCm-l60OxsQunEAxeRo66nNKuITwukxlnrDxXbg3t1>
+X-ME-Proxy-Cause: dmFkZTFJR/0IR7XsBtDuD+bHvLLTsbKwY3/MuwLZ4y5zny0s+6q5cR9gOb1ff+QyDhwkWW
+    X3UW0dJznW6fi5jq73u7P98wNwiDtEbz9O0RG1AmpoU1WO9wcj+DINuSeQ9hLLHZdHQ8c3
+    fFL04HitHIX/KruWah23bDINBtU5QHb8LruF94tn0i7mkvl78saptrDEhonkRqgFcZsn91
+    xFTqpcbr7vE36vrf4YezWmd7hi2nhLLr9FOqnuor1Y8BBTscQl3NdwDMOt7U15rCyzyQCk
+    2QCP2O8KhRu+2D4T1GyB6s6wLker1ZbX+ImxRHLcpN6ZQ9T5F/imaoQEKMhcKi3bBdwyEe
+    q15DVVT0HZRaDtRelcMGGPeqdAwuFJbpa1kkC0aLnPRu8w1Vg5teT4J0soYjI7N4mpimu2
+    k6m387lZGDx+KVUPP5weeXsluIDUGFKRdLTnRXtxSXS/OzZATNZbx/1QcrKr/oxmqm6hNY
+    5Y09Umi4P0Kt2TVL6ZtcMVZTiPfGa+wJYTRCo5/8JjFQapj6tqYmUmBxPw2OWhpz8lMakC
+    4g/eVBAmox6Rpm7ftDfUxAOMee9T1a7dysvA7kLcyfG/xzN4uVyv+rnWKmUWX939ZnKjmR
+    G6TBGWI+6uYRaCLs1PaVrHKRWZhtm0/PFqnN8TMRfbdNukHoNGKgoHXIJ3/Q
+X-ME-Proxy: <xmx:Kpn3amBhP18SGcOHNFXLnr2OXW5wnzy-OeBD6gApoUkv48wmHVQc7Q>
+    <xmx:Kpn3ahSFbuq3jVluWjEHPePHPZYM8-Z4eoyP24PMoLnasxXxEgC4sw>
+    <xmx:Kpn3alvAPrJFsAdk3MLzcBFCeTzrGngR_eUhWxiIECARmSmxt7E3JA>
+    <xmx:Kpn3al0fdpHL3bJgTt-p8_Fi0id8yaM5lnQAWliGKzUlgpzbcnI83A>
+    <xmx:Kpn3ar7mQFiuvOdPtjty5rRssuuy5LryKheLwv-ItZef6QmdMCrJoTY5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Nov 2026 18:11:37 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: aeron-gh <agab0323@gmail.com>
+Cc: git@vger.kernel.org,  Usman Akinyemi <usmanakinyemi202@gmail.com>,
+  Victoria Dye <vdye@github.com>,  Meet Soni <meetsoni3017@gmail.com>
+Subject: Re: [PATCH] for-each-ref: avoid segfault on --no-format
+In-Reply-To: <xmqqjymg9ycq.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	13 Nov 2026 14:10:29 -0800")
+References: <20261113161413.15688-1-agab0323@gmail.com>
+	<xmqqjymg9ycq.fsf@gitster.g>
+Date: Fri, 13 Nov 2026 15:11:36 -0800
+Message-ID: <xmqqse148gyf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -73,160 +125,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Our current hash algorithm selection code has a few different problems.
-First, we do not actually default to GIT_HASH_DEFAULT.  Second, if we
-have an algorithm chosen by init.defaultObjectFormat and we re-init a
-repository, we will change the hash algorithm, which is very much not
-desired.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Let's restructure this code slightly.  First, if an algorithm was
-selected on the command line, assume that's what the user wanted.
-Otherwise, the other options should only be chosen if our repository
-doesn't exist (that is, repo_fmt->version is -1) or it's specifically
-detected as having no hash algorithm.  In that case, first use the
-environment, then the config, and finally, the default algorithm.
+>> Marking the option with PARSE_OPT_NONEG would also stop the crash,
+>> but then "--no-format" would work for "git branch" and "git tag"
+>> and be an error here.
+>
+> Shouldn't "git branch --no-format" also error out?
 
-Then, if the algorithm does not match the repository, complain loudly
-and refuse to reinitialize the repository with a different hash
-algorithm.
+Hmph, "git branch --no-format" seems to take it as an instruction to
+revert to the default format.  Making "--no-format" mean the same
+thing in "for-each-ref" may make sense.
 
-With this change, we will choose SHA-256 in breaking changes mode and in
-Git 3.0, which is what we want.  Add several tests to cover this case
-and several others discovered along the way.
-
-Reported-by: Adam Dinwoodie <adam@dinwoodie.org>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- setup.c         | 22 +++++++++++--------
- t/t0001-init.sh | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 71 insertions(+), 9 deletions(-)
-
-diff --git a/setup.c b/setup.c
-index 61bcdafe82..14c6e1a67d 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2817,19 +2817,20 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 	 * Otherwise, if the user has specified one on the command line, use it.
- 	 */
- 	env = getenv(GIT_DEFAULT_HASH_ENVIRONMENT);
--	if (repo_fmt->version >= 0 && hash != GIT_HASH_UNKNOWN && hash != repo_fmt->hash_algo)
--		die(_("attempt to reinitialize repository with different hash"));
--	else if (hash != GIT_HASH_UNKNOWN)
--		repo_fmt->hash_algo = hash;
--	else if (env) {
-+	if (hash != GIT_HASH_UNKNOWN) {
-+		/* nothing to do */
-+	} else if (repo_fmt->version >= 0 &&
-+		   repo_fmt->hash_algo != GIT_HASH_UNKNOWN) {
-+		hash = repo_fmt->hash_algo;
-+	} else if (env) {
- 		int env_algo = hash_algo_by_name(env);
- 		if (env_algo == GIT_HASH_UNKNOWN)
- 			die(_("unknown hash algorithm '%s'"), env);
--		if (repo_fmt->version < 0 ||
--		    repo_fmt->hash_algo == GIT_HASH_UNKNOWN)
--			repo_fmt->hash_algo = env_algo;
-+		hash = env_algo;
- 	} else if (cfg.hash != GIT_HASH_UNKNOWN) {
--		repo_fmt->hash_algo = cfg.hash;
-+		hash = cfg.hash;
-+	} else {
-+		hash = GIT_HASH_DEFAULT;
- 	}
- 
- 	/*
-@@ -2899,6 +2900,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 	 * current ref storage format does not change.
- 	 */
- 	if (repo_fmt->version >= 0) {
-+		if (hash != repo_fmt->hash_algo)
-+			die(_("attempt to reinitialize repository with different hash"));
- 		if (ref_storage_format != repo_fmt->ref_storage_format)
- 			die(_("attempt to reinitialize repository with different reference storage format"));
- 		if ((ref_storage_payload || repo_fmt->ref_storage_payload) &&
-@@ -2908,6 +2911,7 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 	}
- 
- 	free(repo_fmt->ref_storage_payload);
-+	repo_fmt->hash_algo = hash;
- 	repo_fmt->ref_storage_format = ref_storage_format;
- 	repo_fmt->ref_storage_payload = ref_storage_payload;
- }
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index f1d227f271..d8244a2dec 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -516,6 +516,22 @@ test_expect_success 're-init from a linked worktree' '
- 	)
- '
- 
-+test_expect_success 'git init uses default object format' '
-+	test_when_finished "rm -rf repo" &&
-+	(
-+		sane_unset GIT_DEFAULT_HASH &&
-+		git init repo &&
-+		if test_have_prereq WITH_BREAKING_CHANGES
-+		then
-+			echo sha256
-+		else
-+			echo sha1
-+		fi >expect &&
-+		git -C repo rev-parse --show-object-format >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'init honors GIT_DEFAULT_HASH' '
- 	test_when_finished "rm -rf sha1 sha256" &&
- 	GIT_DEFAULT_HASH=sha1 git init sha1 &&
-@@ -602,6 +618,48 @@ do
- 	'
- done
- 
-+test_expect_success 'init refuses to reinitialize with different hash' '
-+	test_when_finished "rm -rf repo" &&
-+	sane_unset GIT_DEFAULT_HASH &&
-+	for algo in sha1 sha256
-+	do
-+		if test "$algo" = sha1
-+		then
-+			other=sha256
-+		else
-+			other=sha1
-+		fi &&
-+		git init --object-format="$algo" repo &&
-+		cat >expect <<-EOF &&
-+		fatal: attempt to reinitialize repository with different hash
-+		EOF
-+		test_must_fail git init --object-format="$other" repo 2>err &&
-+		test_cmp expect err &&
-+		rm -fr repo || return 1
-+	done
-+'
-+
-+test_expect_success 're-init does not modify hash from config' '
-+	test_when_finished "rm -rf repo" &&
-+	sane_unset GIT_DEFAULT_HASH &&
-+	for algo in sha1 sha256
-+	do
-+		if test "$algo" = sha1
-+		then
-+			other=sha256
-+		else
-+			other=sha1
-+		fi &&
-+		git init --object-format="$algo" repo &&
-+		test_config_global init.defaultObjectFormat "$other" &&
-+		git init repo &&
-+		echo "$algo" >expect &&
-+		git -C repo rev-parse --show-object-format >actual &&
-+		test_cmp expect actual &&
-+		rm -fr repo || return 1
-+	done
-+'
-+
- test_expect_success 'extensions.objectFormat is not allowed with repo version 0' '
- 	test_when_finished "rm -rf explicit-v0" &&
- 	git init --object-format=sha256 explicit-v0 &&
+The implementation of "git branch" side is quite clean; if
+format.format has a value, use it, or fill it with default.  Perhaps
+mimicking it would give us the right behaviour?  I didn't check.
