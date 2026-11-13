@@ -1,91 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794586749;
-	b=JBbwEgqvKKc57Rog/k15JRFf6A/VAXUO1t6X3jj9tMKsphoSA2WZDjSPUYj+OBovl2RM
-	 0o3MNau8ecpXdw94FUpCZYyRX/JjYMfMyWaAMusdnfb7yz+gj4jPzqD1igcnfA61lO4H8
-	 n2z2l2pMZnWWMY3l66GmBxamAA3lJ0y9aWmnUTi2i2aFIMTq15hu9g1QDE293/k0Yc67X
-	 s03j30bGR1GLZBUbTQ4xKOfrwMKlG7isWefU+NFxHI6ZryLH993s2cI5sA71ccUZmJXTN
-	 pLa8T/0OhULE3oA6AyM7LbmP5K3G34q7cPoSwXCXl/qoXhTOOxYuK9BY7hDsSVi8V8g==
+	t=1794588771;
+	b=evYZ2Rvzd6sktZ/oBJ3yXBoY51tZKHRa8Hssh9nvukBBkgpsWoI77S+wPVnOogJNCN1i
+	 JHnuXgcgUlqrn7DcAAUOdaaPwQL5S1BTVoHNA+14qcEe4L2MJ4r9rRf/ttVMGr8XFYy0s
+	 jQfFMHUfXJ78oyAvGBudsKvNjobf16ktMEo9y2McFMtyN+s04MLnMd7JE1LtdH4wwSCwY
+	 C+Ia18Hc+j5oMq9uu0OsZMemvwdoC1w1idBpH9pWcbALRo41yVGkFenOZcO+bxr5k8YXz
+	 GeVnd+xHqQsXoIn2s/OdJPROFO5DMTjvg5PiNP2OhV3fePI/RkKVaEzfSceZjlC5e9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794586749;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=EZY+9WsrKcd2iFF6RoyEx9weEs1VrBOmMp5k6S7lWNc=;
-	b=1cXUQxnJuJxXrfk+G86QVHajb8WKz010WV712s14G/bEADq0Y5caFoU1bNG/3bPd7wia
-	 Exiz5GXCgnaPnCEG/VJn+PO9PDYrme8kTnXmXKB70v3BndZJe1QUVSzUDWOiTKkTI51zH
-	 k4svWdNSE8i+7fEatwOPxtVB2F+CdaWjUK5sNGUVcVOyAYpNLcF2bLGfaq88u7/+Pft9n
-	 wZa1BsV3Jis2ocaEXZSCVXDRjy8MGqD2l/VU+I+H4mewDBzDgvfE6eEDwStioFh2eMRUG
-	 v9D+JWYlkcfumw+9c/cqNnz3yyfw+5G6dcX2TBExdGd4/EebSAxppwcdsIrMdrvUIIw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794588771;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=MEVkg6zjuZs9F3iaObStu5Ma9BUzjWJo0cbJRqE8Tr8=;
+	b=rw2uTHAJL6VluYFjzgF3aI6CW1d+WncqAZtEfRVGau+iCxAoofO0391u1Jpv+2lM5iU6
+	 yw+YENS1s7mRAZSZURsgXmHqBRIaG4NTDGLVf2mTTX5uQ33Qc7YtgaRaDThxzdfYFpcnf
+	 HhnR/HPZaJ3aVkKUAl43R+ScbRzQWVNs4Umj1YqCHZjY+5BvTg/x2CLv/GSH653vs7R+O
+	 h+LQUqx/GqCQZeu0KRdKHHhAdtygI1O9lCez3HDLTvkRSwGZKPpY1wDbJKZOxJnS+iRng
+	 U+pgmCnNOk9HwvkvcrNCD3GUrRNSt/++EtqPAlU7cdVauRQIeRBKXubhJ4IyMbxx5Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rxf7DyHY;
-	arc=none smtp.remote-ip=209.85.210.180
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=D0gwVF71;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="c/TRtm1F";
+	arc=none smtp.remote-ip=103.168.172.154
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CAE607CD0F
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 16:19:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88CAE607CD0F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACCF606A882
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 16:52:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1ACCF606A882
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rxf7DyHY
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8b5c3288e6cso523515b3a.3
-        for <git@vger.kernel.org>; Fri, 13 Nov 2026 08:19:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794586749; x=1795191549; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EZY+9WsrKcd2iFF6RoyEx9weEs1VrBOmMp5k6S7lWNc=;
-        b=rxf7DyHYPca3vdi2ZAMaNveN3PhXx7jVY9GYxBddHPve7e6daLPmV7/R2cPrnD6jT6
-         E3gYD3xyzt8Jpx/qjCqx8032hX4/wW4MX+3FqMqmdhhv/mMD4yADc4eEi1YbpToHFBUw
-         DxsBcgoLD1FsOinVAh8xmQX4exCh8coYhL8gghFca9+yJxamQYGoJmCOx3Ipf0/GtWQK
-         nuj6sIQ3vq7tPlznRwgO2B2BCt3z4OjvsfENe6VGuBSBKPviYs0N14Hy9oJISlq9Tso/
-         aBS2+zwseUPrsU9De3DbZ6xvnTMbl5ZyAKEc1nHX0a95jJyev7yyRw9daS/73dJwoOvP
-         RwxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794586749; x=1795191549;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=EZY+9WsrKcd2iFF6RoyEx9weEs1VrBOmMp5k6S7lWNc=;
-        b=zt3Wo/ct/tcxazpr+3JPw76Jk5MD8DGZssqQ4BRP0FfTleXB9BoU7zxoGvKjEkPykK
-         yJjBfg7oY48mrEcwKvgB3C3xG9vcKz0oPp4iYTzC3z2ygjHWWV72v1pz0cbTkLeUmR8V
-         +xjQ7JuE4rodKottkPeTuiU1lVdyS6PRROlNB3FvD/X/1ntPlu7Ei/X0GXJ3l/14koPj
-         Z9E0Zhoy/gJ/ICdiuXCuJJjtY+7aZjfo9IvtQWEYVAOSVU5LYvlXHRCFVAdPGo2SwFRs
-         rQRkpvyb0jsDjI68sj4e1ZsQEU0et/Eyqx+dI28OFmEIaGoj4uF7bGCZN4GL9S4tokGf
-         b6SQ==
-X-Gm-Message-State: APuU4Z/gOGFcyNIjulfWGvM3CxxGr0q7J81lGMBcOMAx/4ilpjO1zfdJ
-	GFDODe1r7cEx/DqnEnTm64LF4F4OBefR+v4hrFh8LgsqV86s/pr8X0IDZDuMqwz7
-X-Gm-Gg: AYBFou030MZUVTRKzCzL7lLTqUv0Avhv4/BlHEQbNXSBMqaxj/IFOJstDGfLlzeB7Xl
-	y5R7xjM+TNhAfaFZE1i/8o7ScAftLjWwaEX3pdf/fs5/6V/DDto2sQ+qSgwi4GdaLakr6ZP47Ru
-	bbYpCqzqMfrnzkq4d5FS8rlXvvufJ6EfrdcfUBU27c97gqsLoYmuxM7hbM8fkgBy0vMOLUG59hX
-	RPU5nFRzyS4L/MnsJ4jATYnyUBh7rqlO4XGuZ/B2I5r9EwhSEf8sokVHbG0HkORDCQtcEPdx26B
-	Dn7ZAiUQYdMn9jlC8OdppEN/3DTtkdH6QI97uHZ0S7sYjAmZl/4kTgs4FHb9fgMNlx2uMKZOeR0
-	7PaFux1U+iJPhGmGgL9pOHdaZaw6TWZPWAWq7OgP13Zwz8zIr8YXt73mn0WICwiI6FPsL3YlV37
-	JZEDbCh3TUGe0Ve2rp693q6ys75uukmPBxASKnoJOLa6e4MLZLfQISk2uYx3roePHcYGQZaD3Up
-	TUAN+O5fq9XnbJ0bMaSChKy+z/q/04DgH7nIo6Gl4Qyk3VLaq3bcviajvr+o4jC+hmWQo6T0dm4
-	mYcYGqZyzGk+JEXY6QEUo3eEOvbprjU=
-X-Received: by 2002:a05:6a00:1746:b0:8a3:23c1:c0e3 with SMTP id d2e1a72fcca58-8beb84e28dfmr2871187b3a.59.1794586748757;
-        Fri, 13 Nov 2026 08:19:08 -0800 (PST)
-Received: from aeron-host ([2401:4900:883d:dce5:aeb5:d73b:40b4:bbdc])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8becbad7de3sm1335932b3a.0.2026.11.13.08.19.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2026 08:19:08 -0800 (PST)
-From: aeron-gh <agab0323@gmail.com>
-To: git@vger.kernel.org
-Cc: aeron-gh <agab0323@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Usman Akinyemi <usmanakinyemi202@gmail.com>,
-	Victoria Dye <vdye@github.com>,
-	Meet Soni <meetsoni3017@gmail.com>
-Subject: [PATCH] for-each-ref: avoid segfault on --no-format
-Date: Fri, 13 Nov 2026 21:44:10 +0530
-Message-ID: <20261113161413.15688-1-agab0323@gmail.com>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=D0gwVF71;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=c/TRtm1F
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2478E140003D
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 11:52:50 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Fri, 13 Nov 2026 11:52:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794588769; x=1794675169; bh=MEVkg6zjuZ
+	s9F3iaObStu5Ma9BUzjWJo0cbJRqE8Tr8=; b=D0gwVF71vsbeF7aGkDtCze1gzR
+	yVLwDS0GeJf9zU2FOauNZIFcLxYE499QtUg1dL5Wibthwniv9rQagtVGN6HnUYQo
+	JS3YcbFX6f+3Z+l6BFj0/naXmZ6Rl1Q3ofxsSiOZjRKJ1QMIjK3/4U4cX4LteVED
+	TWP2I176YSHz3WCzgdUpKty27H4nTwouGQJWEpSj3/k21CZVEcCDBBqtSw62PIgV
+	BwyFLTw7dWRmFCgz/fXla2msQfo5q4ohhEoSRA4+AR2bMqbeIydnoca9lsvQO32L
+	XuSQnulAoXudAyufdTOFlcEcjw0bTeVeQ5RNjC2Wg1jG1tx0u+7IzbsxciuA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794588769; x=1794675169; bh=MEVkg6zjuZs9F3iaObStu5Ma9BUzjWJo0cb
+	JRqE8Tr8=; b=c/TRtm1F6in1ugNmJdZXF9MCFoTOOq46V6GzDQrXhgfyInDyf9H
+	C6AcKWK2FyhNYnLNcJ9WZgCt9kfzSJpXoSkV/izXgDizAuw9rw9ApRsNEiAShvUW
+	Wv0c53ujIF8/+FfukrxOmC4uTc2rSTqhCw7Bcnh+Lt4FTWpBeShmPZFZuaHLf6dn
+	cTBz8J2Mu5N7CKMpE6fZZ0cZ+d+pV11UMIzDoDAF+dvCqvSNjeJ9WdkbthB6l+My
+	9xC+mD0MO6ZCQ4amxTIVroprUle5ORIDqHfEiM46O5PZjSJ58kf2Qq2ZGQk02czX
+	a9UpL154dmhWZe1thtvBgstinC4KIiC3n3g==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794588769; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:OIGkUsjlXjynVq7AMbfxRyfnLoCCks0AsIq5zkQIiH6Q1ul
+	L/KLEnRImPKyAm15NeA4+UkejyzcujYujCW9By0jrIyHCEWoHtdqp3NWn3JwOeRY
+	FH3idDkqFevcg2RJh+3H5AIH7WXgSFjF/vDItXhWHwITmUkn4UCB7R5f27WDHGmk
+	SaILRqcw00E/cz7fq8U2Or6XCEjTwDsnmWNkzO+lp/qkUk0pS5wh5y28T3VQksuM
+	ZSSzLPqxwqshICZoqTKE/JBGB1U3FN6pEHjCtUUrljLm4Bg9cra6RFpzFvBA0SRV
+	YgE5E7+HtCVM+ZaXoRl0KdrLK7RLx+VNqgXFBEQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:54V/K664vraOy3GNW+hidfF5Zj0rJPAdYgHCa849qVw=:MvjsI3gSJJwDG9xG7ELzcGBnMML5A9CjG5/k5sjNFXM=;
+X-ME-Sender: <xms:YUD3auG3ejFe5XQDTJLPJ-j5yZUet3xCXXRuzWPu1US8q5HVLcfvog>
+    <xme:YUD3amNXDQ_Lmb7OiI4FMqUzOdNaEjOMNmi82ezu_YpZPCxuIWxBU4Gn_QlU8F1LH
+    9qztn9DRYtP6WVtc0mfApctCU8-i6zX9YwordcXLDtuvsvt-yJ3>
+X-ME-Received: <xmr:YUD3age6h3F3wGfM0XDyff65-ED4j0MkJZUEjWiLeyonhVb2-gnw_reQM_6cUmtijpJUYVPYVongjtMnL-zyJ8rL_P7XPPyGyRrE>
+X-ME-Proxy-Cause: dmFkZTEbvleFrDYjUi/x9TTiED5CWsU4v0Yhtet9EqddaJ4z5r7RvD1CAJnpAOkMyuKQPS
+    ebVeKmMfs6IxLesUcNMCn4VhzgFBpk7a1FthSkBCe9c3xCskJkda+/Eh9Lk7dgA8GjoNoB
+    3Qa2OpzQMGynzFg68WZxQF4eiHJZAyu4IRlHwea1osAWWMgYfxNC0kKw/32yURlRKx3vFf
+    9NSpuddnU4VEDcYQmP1oA6MSQ0MWgi42QDlcGoPEgx2gum6AU82i+VmTB4yrkvfMseNys7
+    RaOBXWoPiNK7K+ZOZXoMbFnR6kyL8oTIh93G2O/lV//AocBgpEwSsYzuAZd3trIqzAPViM
+    1PtS7ZR0xqc1OHKwQPFh5jrZkJOZE4P26zf61SJZ12HIbYO3x/nqXowcNAfU9KxSllievK
+    GqBvXbp4EhArF7oaHLGtA6Xzap9NO6h+iVQhMbsNkselHOgRPqvJx4V14r8S3Xsd6EVLNW
+    +8texvW5ujtjZqc5mfRDtIWz4g7iQ/0yTDXyOjrYBl1nfwMNdX3n/dsF6YwrhzbQcq+dPr
+    xWZGca4TFc8pSk1UeATLbdpII8lmvreA3HvFXfWD9NJX0CS/K7yyfohQjs5R7TC3meEKi0
+    iT850SA98FhsvR/FY339hyJ2ip97ehERu8Z3GeawC46wor14U2PAEkv7VY0g
+X-ME-Proxy: <xmx:YUD3ajupAV5SiYfQuG7CQP57hJ14xXsnyL0EGJ3AMV-IUW7T98KzAA>
+    <xmx:YUD3ahnNOeb0YpDoWfWMmRVkEXPRGNBgIjIH09z-ToYEj_5nvB6Qsg>
+    <xmx:YUD3alwj6bncDkRIDZZoWWqA7zjTVAO5ZjhfPH3JmgzeHwGgtlvkYw>
+    <xmx:YUD3ajP-EVVrt1yK13A3_um8ZgfgV8b4tVXQw-HGpSZIAuveqdnEqA>
+    <xmx:YUD3auvxH6mlTjxJZA_VTPnN4SZoHQwbNbhfhbZ9SD-wA0KCia_DF5sV>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Nov 2026 11:52:49 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Derrick Stolee <stolee@gmail.com>,  Kristofer Karlsson via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2] commit: remove padding from struct commit
+In-Reply-To: <CAL71e4MZTKK3wmf4TM6DcZdc0-Bt91XaPTHy54rbYUmhNpWcbQ@mail.gmail.com>
+	(Kristofer Karlsson's message of "Fri, 13 Nov 2026 16:41:41 +0100")
+References: <pull.2309.git.1794500044740.gitgitgadget@gmail.com>
+	<pull.2309.v2.git.1794576606249.gitgitgadget@gmail.com>
+	<29490124-5020-42a1-978f-0f5283ba9e11@gmail.com>
+	<CAL71e4MZTKK3wmf4TM6DcZdc0-Bt91XaPTHy54rbYUmhNpWcbQ@mail.gmail.com>
+Date: Fri, 13 Nov 2026 08:52:48 -0800
+Message-ID: <xmqqbj7sfzbz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,75 +127,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The "--format" option is declared with OPT_STRING(), so the
-parse-options machinery also accepts "--no-format" and sets the
-format string to NULL. The default format is assigned before the
-command line is parsed, so nothing puts it back, and the NULL is
-dereferenced in verify_ref_format():
+Kristofer Karlsson <krka@spotify.com> writes:
 
-    $ git for-each-ref --no-format
-    Segmentation fault
+> On Fri, 13 Nov 2026 at 15:57, Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 11/13/2026 8:30 AM, Kristofer Karlsson via GitGitGadget wrote:
+>> > From: Kristofer Karlsson <krka@spotify.com>
+>>
+>> >  struct commit {
+>> > +     /*
+>> > +      * Must be the first member, so that a "struct object *" can be
+>> > +      * cast to a "struct commit *".
+>> > +      */
+>> >       struct object object;
+>>
+>> I think your comment is backwards: We cast a commit into an object
+>> and it works. We can't cast an arbitrary object to a commit.
 
-"git refs list" shares the code and crashes the same way. The
-problem dates back to c3428da87f (Make builtin-for-each-ref.c use
-parse-opts., 2007-10-13).
+I had the exact reaction.  In our "cheap C inheritance" pattern
+downcasting commit to object can be done unconditionally, but
+upcasting needs to be done with out of band knowledge (because these
+struct types do not have "type" signature).  So
 
-"git branch" and "git tag" have the same option and fall back to
-their default format when it is NULL. Do the same here, and assign
-the default after parsing the command line when no format is left.
-"--no-format" then cancels an earlier "--format" and gives the
-default output.
-
-Marking the option with PARSE_OPT_NONEG would also stop the crash,
-but then "--no-format" would work for "git branch" and "git tag"
-and be an error here.
-
-Signed-off-by: aeron-gh <agab0323@gmail.com>
----
- builtin/for-each-ref.c  | 4 ++--
- t/for-each-ref-tests.sh | 6 ++++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 4a2fc421db..4390f3f5e9 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -52,14 +52,14 @@ int for_each_ref_core(int argc, const char **argv, const char *prefix, struct re
- 		OPT_END(),
- 	};
- 
--	format.format = "%(objectname) %(objecttype)\t%(refname)";
--
- 	repo_config(repo, git_default_config, NULL);
- 
- 	/* Set default (refname) sorting */
- 	string_list_append(&sorting_options, "refname");
- 
- 	parse_options(argc, argv, prefix, opts, usage, 0);
-+	if (!format.format)
-+		format.format = "%(objectname) %(objecttype)\t%(refname)";
- 	if (format.array_opts.max_count < 0) {
- 		error("invalid --count argument: `%d'", format.array_opts.max_count);
- 		usage_with_options(usage, opts);
-diff --git a/t/for-each-ref-tests.sh b/t/for-each-ref-tests.sh
-index 4991a82b91..3e0108a7db 100644
---- a/t/for-each-ref-tests.sh
-+++ b/t/for-each-ref-tests.sh
-@@ -285,6 +285,12 @@ test_expect_success 'Check invalid atoms names are errors' '
- 	test_must_fail ${git_for_each_ref} --format="%(INVALID)" refs/heads
- '
- 
-+test_expect_success '--no-format restores the default format' '
-+	${git_for_each_ref} refs/heads >expect &&
-+	${git_for_each_ref} --format="%(refname)" --no-format refs/heads >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'Check format specifiers are ignored in naming date atoms' '
- 	${git_for_each_ref} --format="%(authordate)" refs/heads &&
- 	${git_for_each_ref} --format="%(authordate:default) %(authordate)" refs/heads &&
--- 
-2.56.0
-
+    ... so that a "struct commit *" can be cast to a "struct object
+    *".  The code casts in other direction only when the object is
+    known to be a commit.
