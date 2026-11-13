@@ -1,121 +1,130 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590018;
-	b=bmJC9XxjqRefKDJlK88++EE1+OOVjVMydTmsf6zF0qWmOKc69AfP4ld7+kR3ZM6AqNtR
-	 xCPPsJK+dUBM8IQGGl4A2kOXagrZov60QiNpkx4pbLzjc2TLlNtnBCfHxlFSWHvwLZ4XW
-	 FpT2l8mzWnrZ3XSMNco7sasySVzK+mmv7NQycUfcjQc07L+JXbpKIjoKQ5b4quK8aZr2C
-	 pGe3tr82ZG14n3n71iXWvrj3qWXMoJNAerPFooiQOlfOsWlHXeBP4664ICc3uRPqR7KZ5
-	 dNDX77o7d8hjnmBVf+oZ15YrOn1xl/9MwrcG8Evjiqa0Mkb2OO3J3RqsLDTpoL9VyKA==
+	t=1794590599;
+	b=ema6Rd8zUcpnF4GPgPLCjDloUCM4fjsmX8pxBnxlH8bFrbr7wmWp5ppScXdtOG5o2ma5
+	 b+GR6Zvp/2tohzyJriLXR5M93kgUj6I1tc2TBnA79ty+FspMe6IDrWhIzgqhhoJtzpr9D
+	 mIdSI8XBxXUEYtTzF1hHo88mLjpSHJnFcZZXQX+mrhYnY08UMJotxzWyGlrKtn2Y3Cznl
+	 jc3qiuNH2e9NvseL4z/CZFB3ISisCi+GejmqB9+I1s20QimjhpOmjvMCYP4tSmU50/ucF
+	 LSV2HkqERZl/XFqXR4kDQQ6GI1cjAFu+ZZUR3mtYhuu4xf1va947s5bI2TL6ySiYvfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590018;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590599;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=tJjgOtZoFPUmEGXrt3rr4hUONUdsopsVhdIQ5xCR+Hc=;
-	b=auwdiCRC6O36frge5JXDeiU9rRp3xI62oXvCSbv8I08kF/NkA3S2/84axLp+NwpTCqZg
-	 WO9F64pbWj2khljZHemrQB6NlisVVoH+GhmnQsrQhxJN89+t4QjyGSOZY91FWZAG7pAut
-	 1sWH8NhzjGjTB07QYvV0XLFQEjtNuqg11DyQDoA4aTcrIilbo22jx4b6psNKcxQzJy8fV
-	 RFeuID+JBNEnRh1Fs6Swamh+H91/rbz+3jmr6b+UJXQ5Pid40gokHJB+wKcjScKwF13N6
-	 qrDUfOt2GmkbdpDBxxWzlj4MpdyTsvKJwFaxvD21cavrbnXfFvSrH3QgGU8ndbG33yg==
+	bh=K/3qt3n39Ltm2mplLlqWGyI3BNnKghltrBA0Coyqa78=;
+	b=ioIMjQOJ7OT7akT5FW2yI03AW5Oo54h3pecxlSeUQ2cbXSpHlg/U+F05ks8fuEECbNQe
+	 H0YLZfykZBztc/y4KE80f1xgp9VBKRq8EREsqBVAyu56I/dbT1hegr8RCQerkjgsJlLXy
+	 tg79SiFxakcwm7EHjF+XgxosdpbO3g2ZoDDHfiN8HNc91GigJNGMkWi5pkGnlsVrqzlHx
+	 kl2GXhzgzR7gUvFytfyuqPmeQD2H0GniHgMSaNYlehnPEkQVCp9IVXI3inOTweruDSaVv
+	 xtHId5EcfhOSGJZ3AOH3IpdXzZcwTsJoYNscILgm6Wj1pxpeATX5FxF1CSG0YtOxptg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=fpRap97Q;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="Rf63Gu/2";
-	arc=none smtp.remote-ip=103.168.172.154
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=PWnp1YMV;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hqOriSKg;
+	arc=none smtp.remote-ip=103.168.172.145
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E902606A886
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 17:13:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E902606A886
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322D7606A330
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 17:23:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 322D7606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=fpRap97Q;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Rf63Gu/2
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A7D7140008E
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 12:13:37 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=PWnp1YMV;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hqOriSKg
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 569D1EC05A2
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 12:23:18 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 13 Nov 2026 12:13:37 -0500
+  by phl-compute-01.internal (MEProxy); Fri, 13 Nov 2026 12:23:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794590017; x=1794676417; bh=tJjgOtZoFP
-	UmEGXrt3rr4hUONUdsopsVhdIQ5xCR+Hc=; b=fpRap97Qe0DYqNMbt+gojiXmYe
-	GhuMCnBpwayp33dR3E2mCkypcuKccdzkoQm3/d+rFydoYyWKfuq5HssS5XPeIWHn
-	Ae/I3/RjlyEmzPhPYx8h9ukmpHTjG7huvJ0mQj/WAimquq61buicCv4xrCmB2VZh
-	WYgYOWSgG5bjcs+DIfztOhxRMppARlDuwSUNlrWTlO04WfGJqWBhVh/o4A8L9Mv+
-	yEIWgP7NG7mSHs7JfzHY1ux546pHf5+jbAmXjuSOsaoeSUnn+mxrqrOvGt9BDUb0
-	T9KZ3frL5qcrA6domlvbT82d+TGQ6ZmbT3SRgIpqn1vt9UYjHJrgNDZ2LmcQ==
+	:subject:to:to; s=fm2; t=1794590598; x=1794676998; bh=K/3qt3n39L
+	tm2mplLlqWGyI3BNnKghltrBA0Coyqa78=; b=PWnp1YMVD1B3/EtDiE66rcn4Jj
+	gQT/jDo6j9QlS4nke1HpLgGhB2RAKXrPOd+RmxyM/JkMyZ0RcaAodeOP7gMqnIya
+	oPk01X2YAP3fSP3qZerp/DEhQuEwE3zFtpOM6/MLwRdO6oYwIJTZUHZV09ZOXFnl
+	Lg6bjTQRWXTUsFq3jz8a61uE3O5oHA+q7cJ1huVONMKk9ujHOARFEB9Ezbs9YmT4
+	TlcZAe3C0Xh84AN3UHD89MlquGKbrE+L7ob/94wSTH6mipKntfDF0wVdjIGSAuAW
+	JekwwLws0re7od+xzuxlfS0w2bVa1Z+wKh1qt6hw/30gAK3T21+WwBcoceTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794590017; x=1794676417; bh=tJjgOtZoFPUmEGXrt3rr4hUONUdsopsVhdI
-	Q5xCR+Hc=; b=Rf63Gu/2qNUuxoGJwosunUEkPzBblYobU3rwT3ke1Wlnko+6OGE
-	A8DQqx4RMCLlaaYrLJe3jqtjYumcfyJ/YIl6bgdq5tWSAgo0v6S0w5NF7lZFyJf9
-	CWMCilUdUxf7StoZVzAeikion18iIIwwCHf4doe1NRBuQm4Vx6yH5WeTKEmYT/rK
-	ZaqLj0gGcEpS4Y1iylzfsI2hJa/LvFyRqtNLwIGVV4bsOCFbrzTHggVX3lSlMnZ7
-	wCGsmF14OMaPwcEhc+g/LDUcTtzNX7V8g2tXeGXLC7Y+Wbmha2QuI45+HnyB736W
-	wxaKEOsK0oaMiniZmhEk1ssbiq6V3P1GjgA==
+	1794590598; x=1794676998; bh=K/3qt3n39Ltm2mplLlqWGyI3BNnKghltrBA
+	0Coyqa78=; b=hqOriSKgRLOFmcyci8PtyR5Q7cysubGM+xSnkvbakO92Z15fFli
+	u+qU2/H9Ldfxsr3jIE4qFK0Zq6RMT+Px/ZT6PfT18xB976TvziMxrn0oG58vw5mg
+	dMPex8fAQkjGkhsmeWi6kVGRsyC0nYu79PcqwyYeDFYoexDaCifzw4gwum+Jvig3
+	UO63bzuUGn7GMajkmChaOnGW7CrvUKujPcJtk5FMu0+eXKvk7r2Nt/69hFItIX5N
+	Jq1y+U0AZexWOjDZ4QLUMxQocB22DU35JYQi6Tab25gc1PGph4kD9+djess67gV2
+	aPUWLTYtC2ymkl5rNUXyfChvrTb3H1zm8YQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794590017; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794590598; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:MMdEdWRw6aX+AX6IM9yK3a6Z6UjroXW16tMzd9brbemJwA8
-	EdgzqdQLJjwUytfZXR/QZv6DmjHRZ8u9UiFXAKUAbUfEhWeVCJJKDYYC6eP4B+qX
-	k/PR9sno32caCsly56p8Q3EDO7E9ri0MCVdozjA09rp63HfzAyo+E5j+LLQnMA6a
-	0xzZ6X/w4dWMf6WukCpRN/ogoIP/b+l8IrNum8dVNlV5R6WV5J/7xnYCnP1xmOH0
-	jFcf+QGMdF0wneBiDfgSZiC/wvWT7BDrLep2dhrLrpkHnCx5C/Tuncfz73T1o1XG
-	oCDR6Y4sTZOdtBxGy0q8FezYwAOkD8s46ks1EYw==;
+	s=fm2:rsa-sha256:C9K4CNZFEiYp5kSA/rCP2kWhCv30XJAFH26+0h+uWQPfQoi
+	K4P2dCX+BpQSnMh16oBng6WgTlJRssAuW1nEibXuqL9dJgpjdb6r3KmAI+Jld93o
+	JgY4/WzEIt+L1SUjsQ4GUtUULv7D8vkrc6IOAZcbq/8VCxaVHDUCZrccP3wvtrWp
+	LqIyFkUxDRlEdF9UYkFVWDzrGhHdHD9FlqvUEPxGJjhMn2m6mZQzXIjYjRWjBg6c
+	fRBvE+VR3I7uHYlTyFtFX24E9d0700XHsc0pOyl1kyBXVmA872CEczlXr/xoDjGS
+	m8Rwdof2jlaHxscP1UDX/zpN5AIF0eT/3qqR2fQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:PbtCP/x8/9x7dRF2NpYmNMYbm2IEr4uopa+rPpgNX28=:/MY2eMfP9bf8kCqOG2ZSvkRz4MGGVeh61wCjv4+Fn+4=;
-X-ME-Sender: <xms:QUX3arSniVyq66_eCSuSat0pLFAFwMAqjUMDZKFDhRS9jKmzfuZ4GQ>
-    <xme:QUX3ajoGZeBzyepXEtNFW-qKE-R36fVWDHZZ6ym_UvzWaxSGDNLzNK7nw7fNDXYQ8
-    Dw9EFNcTACuHuuUQHbTb63ppDbdQ7zH40K4YcMjcgKG8BEjNPkSrQ>
-X-ME-Received: <xmr:QUX3apJVJvtQAivQr7fC70ngMN0u8J93eDp4TKZmQDJDEVZPRSie5Fxr1I7UMwVAQSJY9SVLW9uw1UdCHhGoZ6LMMJmWIOP67dC3>
-X-ME-Proxy-Cause: dmFkZTEiKMjwL/goO8FPloTvZAmjL1Pz/oS78wQZ/JMbCfIp1RR2UxS2K+la7+vC9xtsP7
-    UdkcWYIMPFj4ZfCS6IGp0hvlF+QMyUjwyhuehbMqMXETKcQned0zohZXPaaIT2eeHumR8c
-    dQV73l4f9VgXJYYf7it0t2N6utD0eOBmKXP3bqWmiXDLVNn2WAqszzIduDmVKNdRBqNujm
-    LRqF3NUA9MCZJtpuCciP2VytPF/h8oGnQ6jtUuZ94/leHQOWkKqjtr+7EeyclvTdOqdydj
-    O1uzJQACyMsEDFOwMHpJ9MoBkP18Bd86/0yIK1sMbcNtWSCX2YjUPiDWwc1TKOWTdNcVNR
-    5d4kEfE2a/yDaif6ongMWdpQbBbvh0Bv49H+kdWc17trlEBYNx6dTBdogUGFAIcpvWNTqm
-    Ut+maid/AHp7aExa8oxJZDwzemaHZZ+M0BIX+buRvyX5peIc7Xxyq4TOPuOpemEvvfuy6y
-    l9CnskDbP4k1GJ/QC/faeQrnAwQGk5sJMOTl6nzSzd6Ods/qqOCJf3qWxJAlUmTh47U43r
-    jn20plcPyxelkiUbLrCgjtUrjGQyExa0bnICm/EugVFl9Py+uQzOxUimc3dE15cfMpjYDV
-    /tdkRrc/nazLU05zLGPekyrmWtLuJVbm+RBS8j6NpbKgCxdsdwd+4Vie+xpA
-X-ME-Proxy: <xmx:QUX3amrFbGRixJyVDwt1DOJfF05XYUsWix5LW_2KqnMO6r9XsDue9A>
-    <xmx:QUX3ahwHe5pDpZB7NogeSjnzFG6z3v6FFRsh_GBVA2cbbOIMqTKTUw>
-    <xmx:QUX3aqOIkShb7qPkMLjOEGcBV242BedntbaYdkpYZ4NHn2TjAXSzRA>
-    <xmx:QUX3am7nNq2gfQ8iaoWT8m-W6hqMM1wIcSRuyhnv793Lzau2OqsmjQ>
-    <xmx:QUX3agqwEmZ_hDE4MUwSRdfkvFaAsH2QDiOcLUedBlXNQ-r0CVIxo7LC>
+Message-Instance: m=1; h=sha256:11B1cF2Hwg+LuY7oz7g4w9FWOuBHq4fUflZUUYwNhaI=:jo+vbQhrKJPcqubar7YpD2NaTPEtkyIY/VRc1VU9Zig=;
+X-ME-Sender: <xms:hkf3auy8P0pxcJ-s_JTEysHVhK5NPxm1yKDqRA1IAtrpdlzB2k3PQw>
+    <xme:hkf3at-54KnXIG3SbGk9K0rIYRBCsZi8_YAGxNzj0ZEoPxjIp42AlG2kfj-pXpoaG
+    qFPV315ahUj1UEwGBsdebT5d329IBag69chc2Vhx9s5jOAkgWGj8Wc>
+X-ME-Received: <xmr:hkf3aqLYBECliXZlDJX4ZmiwYTyIPFqs56y3Iu90WvJVYWrfOavj85N438dKV9v5TtZDqHXSwf9KAxGaNGB2GPGkG7nkWAQxHyre>
+X-ME-Proxy-Cause: dmFkZTFXKgj/DvcdGJJmbbxBWOTrQCBH/7JpDB5EB5zYWnQmMb9riZ+oQp1UYKzuBE/sCY
+    e892dTB/8jaC0X2rA1fNObikogJE5bkT+SqvbMEz16VEark1PKYPcuYOvrAcWecqTjnugB
+    1+2D9mTmBi0w7jnZAgnMSv3fPo3IyMI+6Ju96M0qTvXILLkY/ydimGpAFlyxarQATjSvAo
+    NjdUEONXeFoabtXS3KJdnWzzF4hSEy5mf6UCWQUCT9cWLL5il32so0CaLhhbnxGDcRtG7H
+    yNatyviO8luNlZvem8iSiAp6lb9LoL+vapqlh2XbgDm9fmi8VoJYrIUeILCdNpWBBuzRUn
+    HVyIhCibjoEOvucL7mvGaHB+YpqrN/0MZKTu3W1VGn3sTPmxS0HSGITPkP3N3wc9zutmbq
+    Hn3eDJsRsIyrcQ7WIJ07KtsFa2aObXeLaJE2sUGN3sgEOkHKw903QZ1hpEjR8EN+Zf0Y4m
+    mTxgzzoRixqc5HRAd5di5sOYq1RJDaNKym4UNGcoZDa87gxznE1szJgQH8GA86uVTNvFCu
+    GhQaas5rO8C1a8t+RMYPQrsE2MrxR1u7H5FVTE/rsnx5ARSwWr3fO/djiLqKoZ4kyZ79Sn
+    a5QhpzNYVVvhaXa2R3VKjeNYVAvpa3+N2TurXE7mtE9RFWlxZVeUjB8uEn6A
+X-ME-Proxy: <xmx:hkf3arc497FG_60ajQlBV2pDaA3XYlIlpXLZV666LeZ6u5tztIRtAA>
+    <xmx:hkf3ah9fYURus2Lfqby_MX6KPRc2KbzbpfWo6FTvzeG8XMRfZ7jZbQ>
+    <xmx:hkf3agp5r7qziUFxE86REXc-t4QUpvZeUe-E1fjpRvCPiCV31-1B6g>
+    <xmx:hkf3auD7tXLJMGOhxBFL_K2P7RBdTp_56HUvNpWTA_sa0uK3tGahDw>
+    <xmx:hkf3agWAbgwKdai_HaZ9pYIdN_6NdzHHtBzl_-r2FsfCIk9VpPCW8MQZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Nov 2026 12:13:36 -0500 (EST)
+ 13 Nov 2026 12:23:17 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Kristofer
- Karlsson <krka@spotify.com>
-Subject: Re: [PATCH v2] commit: remove padding from struct commit
-In-Reply-To: <pull.2309.v2.git.1794576606249.gitgitgadget@gmail.com>
-	(Kristofer Karlsson via GitGitGadget's message of "Fri, 13 Nov 2026
-	13:30:06 +0000")
-References: <pull.2309.git.1794500044740.gitgitgadget@gmail.com>
-	<pull.2309.v2.git.1794576606249.gitgitgadget@gmail.com>
-Date: Fri, 13 Nov 2026 09:13:35 -0800
-Message-ID: <xmqq7bigfydc.fsf@gitster.g>
+To: Julia Evans <julia@jvns.ca>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Julia Evans via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
+In-Reply-To: <36e73720-287f-47a5-bd3f-dc53629ac968@jvns.ca> (Julia Evans's
+	message of "Fri, 13 Nov 2026 07:45:22 -0500")
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+	<pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
+	<xmqqh5ile4h4.fsf@gitster.g>
+	<CALnO6CBGcG42NxtpuPaJVrzAMC=J8iVstsHCSi6vDQhDmFJ-Kw@mail.gmail.com>
+	<ddc6d42c-6e40-46a5-bb70-f89f11525ac4@jvns.ca>
+	<xmqq5wy2kqhl.fsf@gitster.g>
+	<931a94e4-feab-49a9-b5c6-479f0d7f8b75@jvns.ca>
+	<xmqqik21j1ie.fsf@gitster.g>
+	<4d6f9b6a-e658-4797-bc4a-0cfc533056d8@jvns.ca>
+	<xmqqfqx5foxd.fsf@gitster.g>
+	<36e73720-287f-47a5-bd3f-dc53629ac968@jvns.ca>
+Date: Fri, 13 Nov 2026 09:23:16 -0800
+Message-ID: <xmqq33t4fxx7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -128,47 +137,34 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Julia Evans <julia@jvns.ca> writes:
 
-> Since the order of the members no longer reflects their importance,
+>> The mention of "your current work" (started at the HEAD) and "next
+>> commit" is to lay groundwork to explain what happens when they make
+>> that commit, and how it is different when they are on detached HEAD,
+>> in contrast to when they are on a branch.  After all, what we were
+>> discusssing is an improved explanation on detached HEAD, and your
+>> commits not affecting any of your branch *is* the most important
+>> aspect of what detached HEAD gives you
+>
+> I read this a few times and it's hard for me to tell what the issue 
+> being raised is.
+>
+> Are you saying that we're not explaining all the details from "`HEAD` 
+> can store either a branch or commit ID" to "if you create new commits 
+> while in detached HEAD state, those commits won't be on a branch"?
 
-Micronit: "no longer reflects logical grouping or impotance" or
-something, just like you already have in the comment in the header
-file.
+No.  I do not expect an introductory document to tell *all* the
+things that needs to be known about a topic.  That is an
+encyclopedia, not a technical manual.
 
-> diff --git a/commit.h b/commit.h
-> index 1061ed791b..d43cb1e46d 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -23,10 +23,30 @@ struct commit_list {
->   * The size of this struct matters in full repo walk operations like
->   * 'git clone' or 'git gc'. Consider using commit-slab to attach data
->   * to a commit instead of adding new fields here.
-> + *
-> + * The order of the members is partly chosen to keep the memory layout
-> + * compact (avoiding alignment padding), and does not necessarily
-> + * reflect their importance or grouping.
->   */
->  struct commit {
-> +	/*
-> +	 * Must be the first member, so that a "struct object *" can be
-> +	 * cast to a "struct commit *".
-> +	 */
+The fact that you would not clobber any branches when you make a
+temporary commit on a detached HEAD, however, is the most important
+consequence of HEAD *not* recording what branch we are on that has
+real *impact* to the end-users.  They can leave their temporary work
+behind without explicit removal by just checking out a branch, which
+also means they have to be careful about losing *if* they care about
+what they did during this temporary state.
 
-Either append "... when we know it is a commit", swap the order, or
-do both.  My preference is the second one which would leave the
-shortest result.
+I view it as a disservice to deliberately avoid talking about it.
 
->  	struct object object;
-> +
-> +	/*
-> +	 * Index into the commit-slab arrays: unique per in-core commit,
-> +	 * and only meaningful within the current process.
-> +	 */
-> +	unsigned int index;
-
-Nice.  It is on a rather longer side and "and only meaningful..."
-may be redundant after saying "in-core", but nothing is wrong.
-
-Thanks.  Will queue.
