@@ -1,88 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794563318;
-	b=s/hZJVAKOft4LmJZjqXrdT3vZcdL48dT5gbIlFFeam3Esr0VTkiD91qo0Ja+kvWwsbQA
-	 L72Hv9qaY4TC3yNdaOusDlSaRl+FBOWZkxJmKFc06Ql778MWgYf2kEVDozLpyroW8CyDJ
-	 GlsNAqBHXpBN+vZF1cYkzll38e59K/BdW11COiGAlqbtLCGqLToOtQ8r2VUG3I6/rvIla
-	 XJYKZoDQMQz542DH/X3VX0IPAeMmLS29fSIMEYotD79rpciDgUkgj4RWbCztPvWHTZajk
-	 nAiMqN07fuuxgc2uWeVy85p0gMm7dfrEEAptghW0dcUsnstZpISr00JPpjjEeWsgprA==
+	t=1794563474;
+	b=rgl7g66ZmOR9DC/FjIibS69u1+ecwwJzrjMHQmUndtJianJ+EESFwwaZ5QPEU5aAA4Ks
+	 CVEHI/MOXJujBVOZ3DDK/FU0nAqWXcdpyMLSGQqmFUm/V9XOD8VMwK0MkmfTkh97J3Xnx
+	 IhkJZj3W9+XJ/XGQnAauzsMmvjEPDL6Z5HTMbrJphE9gtVQiyz1Fv0VHOEbhaGsZg6fl5
+	 5h89vsGslxyG3jze43k0E/3nw+QmcZ20ecGFqzS0b0+eC/GiTizI3WIlwRFhLxbkXDtdB
+	 QMbludl9uHyGlY9WR2QmzNYA6qhMRz9P6l4ide5M+XJCSSkVYYFkYtxViYgT0xy/aEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794563318;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794563474;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:
-	 References:Content-Language:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=ojs2D4KKFZr7/uPmQEMQt9ixXOWW/qKGA55rZE7bqmY=;
-	b=kq4P1YWzhzMFMD2S2HmpBGc7du5FoVgSKkiRJUv4rCXyS8POeR0HZ4ceLQfmGQdl3PrC
-	 qxHBzG/cuarUP3KZSuxR8ca2hsXE4WxqACxkjTKCuU8h1KaxCJUe9kFXii7jSsOPTQgNv
-	 2seaej4nJmD9vMYuOcO8iroK89Zvyvmn9kLYhXtQ016MGZlJ+VPMdm9FErSsMhBM0Nww7
-	 PNFFFu2roEV3WcMOewdSLHXc3YllHEHz5CAxEAXdAsGHm7V5lt45054/mJmRWa6bVYZJ7
-	 DqBjil93ewjdmBzqgmxoOhwFJB+tU7HsZOrcPcbFztrxpCUdwfvXhVET0SrnnFu4ocA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=GmROSvo2dV+e8Xp4NG3wXnZYYTpuwt4iYSAaT72/unc=;
+	b=fCP5lVdaNt3eoEdYWx7Rkhv5SF2qK0ei65eSkitNCp3AUlvKhnHSwuLKu7VYvxY2tn17
+	 qAQ8McVUSYu+C9xcs0EaRyDFOhHpM1p/6j5vxiFwmLPe6pEsW50f4Cz7Ry8sQ586mVFQB
+	 2pdm125jOx6leX66Ix9Byf/aX9Q8e5pHMaZQveLLNB1ScorF4aHRI4PFXx+MqFYcrnvki
+	 CC0tG1cjzdcEPM4CXOUYLY6Onl4jzr2oyuMNciUzmcG/GFl/RdSGDnXDh0SrkcQOPO+gj
+	 mZ7h0CFLpEeodN98nPrpYlileZgevUjMoRiB6HPx/CnnmeTnMBWOuBKybIH8iooh60A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MkwIOKXE;
-	arc=none smtp.remote-ip=209.85.128.48
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tELzqeAN;
+	arc=none smtp.remote-ip=209.85.215.180
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B939F606A339
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 09:48:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B939F606A339
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4301F606A32E
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 09:51:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4301F606A32E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MkwIOKXE
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a35db1f202so4919345e9.3
-        for <git@vger.kernel.org>; Fri, 13 Nov 2026 01:48:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tELzqeAN
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-cdb1199bfd8so319261a12.1
+        for <git@vger.kernel.org>; Fri, 13 Nov 2026 01:51:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794563316; x=1795168116; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ojs2D4KKFZr7/uPmQEMQt9ixXOWW/qKGA55rZE7bqmY=;
-        b=MkwIOKXEIjki31rkPWwCWbMvgM2B3C9MzcILN/X81wqKniYH38IhJu8nJqQQf8KXgK
-         w+E3X6qqgooSKUhAw71bpUf0cLQb7wM5DQW35enaeo1QG7jG0foXLfYrZ7dlcRN4oYNu
-         yql39WK3SeeUrCYhT9RdiOarxMnM6Ol6zf9TU5lGDM9FzzvnF8w76RP0a0wrvOo/yoEz
-         RDxrM8/gfytYkT7l4eFwWfy0oi7adfcsSqJf6thQSj/tgK19usWHW3pzjHrEEeahfIZQ
-         WVr9E+LAF1Uu+VkSJ6iIHdQnUhuISbkYMgbZ7nWILdDICxrMYW4VR/03JKXwEGrvabpL
-         trjA==
+        d=gmail.com; s=20260707; t=1794563473; x=1795168273; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=GmROSvo2dV+e8Xp4NG3wXnZYYTpuwt4iYSAaT72/unc=;
+        b=tELzqeAN4LyHKocNg7cLWa9gMghJneeBM9lxOpkVBrNEuMHZYINz4PnucnKpcBFFC5
+         BEd6wSQlG3iUXZd/l+YnqfeBvs4g+muHZsfYnoV73VTHy+aza+115kvAxLK6/I2WLVl0
+         smHWu3V9y2BpTNf7Wnmuibcw+qM1YsYVfuYaFu8LHY2fBqIRbHRpz+ltgKmS7n5ZjMuQ
+         G77R7Pak6wYfplgBk/wPMKzft8zL03dYkOj2SFgUaTz8tqpP3WCh25pxBezv2sGn1As+
+         Bdc3GafCORy8iaSdga1INK0vmPN8F9PklOOP8I6QhlUdkSbfBC3qkO1lorPBn/521J7m
+         06mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794563316; x=1795168116;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1794563473; x=1795168273;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ojs2D4KKFZr7/uPmQEMQt9ixXOWW/qKGA55rZE7bqmY=;
-        b=OTMs5iEX4J6J6zoojFb0QZLPek9BRWf/YUiOOoqLvYFsukCCYCnWbvSJrvn+CL3EXZ
-         PJ2TckNsDWQQRgPJlzgqtNZENszGxahc+KQJVOSqH+wlKN/qu2GISBEArr+9NGthWrp8
-         mOSZ0gfyvocZOnaPdes6rb9w/o9UczxPg/VHkoWcxEmPzV28iGteP7UipsO1UrDj2hT8
-         lvcjEfldzenEAkijuNpH4UHp6wOw5BIzzsybaAbd1V3LPZJtudmWGIwePMFnISH2xwQt
-         tozY1YqIqNxKuzC8j1F/4WFqOKpVXOJMQTb6sgXvPHzEg7i6zDcy1dJDZ1lPDJ/pXVUc
-         oBow==
-X-Forwarded-Encrypted: i=1; AL+hErGTu7Z8HrbaniyYUbMkV/zr89nJ0TJz8etWp8bP81uqavvh47iFeP0x6NWW/cBABB4W22A=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9X0CK9PElfV8HN58jR511TJR2tT6Wc96p9x/I4PQGcMhIx1eqW
-	8c8KGNZfc1Wy6TQW0JnA81Wzs/WNcbVUQUJtVMlvaTzOLlTfprfc5srT
-X-Gm-Gg: AYBFou1I0hZDXQgxlWPf0icXkoSOQej+GY6HuPRpcpiz/xqBvsZcAhMgvietsPKCA31
-	Pr+qr/38ZHygZ5/UxZc4vzN1Mg/qPtxjRjWcuETdNqqiC7Pnh+3eLoUSx6mLatTti8W56OZ9i7G
-	ZgIOe3V4Xe3HZRjDeYODlpLHKwuQf5vtRSXgh7j+/DFRdmv2aPwZI6mmR5cIb4i4NmFpF7tdVO9
-	n6jV267G9SQAEyvgxEWHMZaWYpaK5QpwT7PqvDPi/bDpqsbXg4QK2Lu+JobgrlCJz9Fbe5ShzCz
-	F8b4iTP0THzptSTmNqD+2Blnw9IP2l1eYK7DKuzF1Rlsn5rOoVyoYzKUj+4GruvTK1Hawo1Z3Df
-	0LuG/1/78xFS+CEWE6M7aEEHWjaDX8IDQ+IMVg83tjxTciyr1/LduKqo//xtFIgRdRFDrQJoCoC
-	W6n6wOk5zzWUdbwr5apcOEllc/2twMmHHLnYxqutnYlp59Jgcry8Jy/M0lg0lSy1B0eFzRXMk6n
-	pfGPOnB514mL/Ul+t/y9zJEyhzK9dDD5NXlHwAo8KOf2eY0QefyKEFFQsQNPpqoDLeUTnPzYXQx
-	I0828z6e9eIcIvp/WCB7k+KYpCbTBeBSoMrnsMsMT+4FVtx0pZH0w+2Gbn6AuE3iq62Ccet9+YS
-	756Fa/6Ee
-X-Received: by 2002:a05:600c:1c18:b0:4a7:9044:a87 with SMTP id 5b1f17b1804b1-4bb55ac0e34mr38745355e9.27.1794563315813;
-        Fri, 13 Nov 2026 01:48:35 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55afb6absm51977275e9.15.2026.11.13.01.48.34
+        bh=GmROSvo2dV+e8Xp4NG3wXnZYYTpuwt4iYSAaT72/unc=;
+        b=vfb+nfTwzlApoQvGNQ9Q+oazatS8aEzcMsxOGT4E2n/W8/UtbOUBNo+b+W7R+rF3Tr
+         0sAyVZU/pS2PTmVKXKUlZ2xHTtoiDuj5JX2JxZorc/EQ2VTGkohXz0JyO6UyFN7Da/nR
+         /LRbOTanvHBM/C7HseGZGlTF5Moz+0E/gPZqr9/4dHUyb9eyWMqc6d4UxbWa7x1EtaQr
+         K6ATtgrjQYb7DoaqX+ZoXv/jcMS5K7Jzt6HTWDSESYV4xXls5apnaYh0Y9RYyKC5q+kE
+         EMMlK9nmRNwZwG7fJii7fz3BekwdVSjfyq/l/7xyH3bqvenHp/DRi32g3H6gGR4WXY9V
+         8Jyw==
+X-Gm-Message-State: APuU4Z8DqvlDJCGgAuoJ0VHKz/Jo3UxPyYaOUIa7ryi23AbQ5/Xm/gQX
+	CEB9uk+1RGwsXJPZRz1Pel6q1HblSTRWqxDsE/D2OpGWMGs8E7sOSiyvwl3cug==
+X-Gm-Gg: AYBFou1ei/md+ZU2qnayrY3XQsPtzTqSkrJ066z1ZEeQMRWQ7KTvQIpPEnNqeFRDf2D
+	aGbSGfjagRF2+8De7v5vRKz3AMd4NaqFpydXCK32S0w/UhdN4PgGDx5IxP9xzks7Sy6zodH5yjH
+	2YcKjVhYSEShxTrcKwKoGDcU3mZUtwn9snENdbrEw5QuxotsliHj9vpdc6/H0x4MvFH9tZGsVuk
+	rBckFIpubITL2XdDbBCoieGdOa65nobC1ZyoZxEX29K15L+lJq8KqQ219ixCt1TKH3e/r9+HkOL
+	aIbg2twzDwCrR5y4cLkXIKOUiKo/SbqNZcbrH1hEWmUUESX6E6/aOYsexQ0ld3NbOntkvFMnK2f
+	2E3uNqh9Cqtl+u6Jnxndj7DaHFyjlCiuif+UqIA1bwA6xkUDB5FxbrUZ/Tpn0QG2o7Y9355zYUl
+	LLfEJENCCVaWHcY6q4SJ5hjz6W2f2xovejP3tevVCjSd9zI0FMEEzkjgwZZgQEVcp8mOIIc/tcp
+	x9mR6pc4Na7rKSXIGzHDmUR4IEb8QpSQgBYNBCvb4zjJMqO1Y4OYDiblk9tvjIsuEJ9/LtPwRTl
+	Q2Edhxl16nE2a5OgWDO9F1Sr1XJL+ktxZR/J49G5MCYF
+X-Received: by 2002:a17:90b:39ab:b0:3ac:80dc:f40a with SMTP id 98e67ed59e1d1-3b1b0a1f081mr1535667a91.16.1794563473199;
+        Fri, 13 Nov 2026 01:51:13 -0800 (PST)
+Received: from [192.168.25.219] ([115.108.41.154])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1aec63b9bsm3872236a91.12.2026.11.13.01.51.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Nov 2026 01:48:35 -0800 (PST)
-Message-ID: <5125fcec-7764-416c-ab78-58cc22cd415d@gmail.com>
-Date: Fri, 13 Nov 2026 09:48:34 +0000
+        Fri, 13 Nov 2026 01:51:12 -0800 (PST)
+Message-ID: <a3ae6756-0985-4873-9d23-96d4bb49eda5@gmail.com>
+Date: Fri, 13 Nov 2026 15:21:09 +0530
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,76 +91,57 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v13 1/6] fetch: add remote.<name>.fetchRefmap
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
- Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <pull.2412.v13.git.git.1793357550.gitgitgadget@gmail.com>
- <07081828d1d65373bee4b2ef5e1916e65a217db6.1793357550.git.gitgitgadget@gmail.com>
- <01a799bc-5493-4984-8b83-7f2aef698f85@gmail.com> <xmqqv761hltu.fsf@gitster.g>
+Subject: Re: [Outreachy][PATCH] promisor-remote: honor promisor.fetchOrder
+ when trying remotes
+To: Tatchou Yopa Nelly <yopatatchou@gmail.com>
+Cc: git@vger.kernel.org
+References: <20261104172434.691381-1-yopatatchou@gmail.com>
+ <894327d9-57b5-4adc-b300-25d946211606@gmail.com>
+ <CAG7jffxRscX3ntX3p8L1GwGbs7WJmj6WoKPRGUuz3wcCS0NZag@mail.gmail.com>
 Content-Language: en-US
-In-Reply-To: <xmqqv761hltu.fsf@gitster.g>
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <CAG7jffxRscX3ntX3p8L1GwGbs7WJmj6WoKPRGUuz3wcCS0NZag@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 12/11/2026 19:49, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+On 11/6/26 04:25, Tatchou Yopa Nelly wrote:
+> Hi Tanga,
+>
+
+Next time try to make sure the person you are writing to is in the To/Cc 
+fields as appropriate. Otherwise, there is a chance that they will not 
+even receive your message since not everyone reads the list by 
+subscribing to it.> Kaartic, I've also re-read 
+SubmittingPatches#describe-changes and
+> rewritten the commit message to describe the change rather than
+> address the reviewers directly.
+
+That is good!
+
+> On the RFC point: I treated the
+> Phase 2 config work as the micro-patch and skipped the RFC step
+> you pointed out. Should I step back and send the design RFC first,
+> or keep the current patch as a prototype while we discuss the
+> config shape on the list?
 > 
->>> When remote.<name>.fetch is also configured, it still decides what to
->>> fetch, and the refmap maps what it fetches. This lets a remote name
->>> only a few branches and store them all through one refmap:
->>>
->>>       [remote "cabal"]
->>>           fetch = master
->>>           fetch = next
->>>           fetch = seen
->>>           fetchRefmap = +refs/heads/*:refs/remotes/cabal/*
->>
-> 
->      If .fetch is a refspec with a right hand side that stores the
->      result somewhere, and that somewhere is different from what the
->      .fetchRefmap suggests should happen, what happens?
-> 
-> I think we tried earlier and saw that we store them twice [*], even
-> without this series (i.e., specifying both refspec and refmap from
-> the commmand line).  As it is a long-standing behavior since the
-> --refmap feature was introduced, and I do not see huge problem with
-> that behavior, I am not sure if it is worth tweaking.
 
-If we want to be able to use "remote.<name>.fetchRefmap" to specify how 
-to map the names of fetched refs without specifying the default set of 
-refs to fetch then I don't think we want
+I think treating the current patch as a RFC patch and discussing the 
+shape is a good idea. The only concern I have is that this patch is 
+submitted in the context of Outreachy and the candidate that we may 
+potentially pick will work[note 1] on this during their Outreachy 
+internship period. So, discussing this now sounds a little premature to me
 
-     git -c 'remote.cabal.fetchRefmap=refs/heads/*:refs/remotes/cabal/*' 
-master feature:wip/feature
+Of course, I don't mean to suggest that no two people should work on 
+related areas. I'm just thinking it might be ideal to avoid premature 
+work among Outreachy contributors before even the Outreachy selections 
+are out.
 
-to update "refs/remotes/cabal/feature" when we gave a destination for 
-"feature" on the command line. The existing behavior is long-standing 
-but I wonder how often people specify a destination in the commandline 
-refspec when they pass --refmap, so would anyone really notice if we 
-changed it?
 
->  But if it is
-> wroth tweaking, we probably should do so as a preliminary clean-up
-> before all of this, since .fetchRefmap is merely a way to allow you
-> to avoid having to specify --refmap from the command line all the
-> time, and this series does not change its semantics until step
-> [3/6].
+[note 1]: During the candidate discussion, it may also happen that we 
+may not pick a candidate for the project. It is totally fine to work on 
+this in that case as there will be no conflicts. But none of this is 
+clear now, TBH.
 
-I agree with having a separate patch to handle the cleanup, though as I 
-said elsewhere I think we should drop patch 3 and use the combination of 
-".fetchRefmap" and ".fetch" to set the default behavior when there are 
-no refspecs on the commandline.
-
-Thanks
-
-Phillip
-
-> [Reference]
-> 
->   * https://lore.kernel.org/git/xmqqld7hafhy.fsf@gitster.g/
+-- 
+Sivaraam
 
