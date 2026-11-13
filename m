@@ -1,123 +1,132 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794606274;
-	b=iRp6FAix/fB8J7XpBN9QbzHH8nFECNPzZzIhaXHvkGjWT8asIm43brJkVZfpF6I2L2cS
-	 AH/nL35PS8e3FhwW06HJm/wXyiTcGSIC+IaYP7gV4LNFk8ug7+03c43Cdc4hsTVy1id/V
-	 PzVPLr0oKgGkAjz/hTL8UCHJ+EShaQnCBTvVyx5low435JfdKNwWwOfgCiXPaiJpCH8td
-	 yNGzdQOrTnDvFZ9ITqSDM6hIVFFvMlkKUzSOzKRpj+k2OE2mgG8MpvrIDvMhNq0IVhuby
-	 UiOvdOqaoJzrVn5qCUlmYHGIgZ/DE+Mlcpt1/yGXTnLpJFzGQnog1LvmVOvkrO7KmUA==
+	t=1794607013;
+	b=cCImKMJy1Spt8tBn3OLv56P1MBK98fHjPSaHRnQX9uMbww3LOEik1lHL0Ln44Zu4VHVk
+	 VSV9HbVz271JG4WlKY2Wdo7D3GqzPOiBEa2u9LemFBhY8nBExIKz9ZEpojMnIj3qdn2Sb
+	 YFcx9uiMuIMYzl9iuk4bUwfLp5KzaMOhGk81QyJD9z3pomygTjmMks7wRqA0kZONI6vR3
+	 zGPVW/eZK9j+x0rWVT/2kS1o/t6DHu2fiNeIgVMjp5exg4mQWmLzHRqfXhT8MOpKUa+BC
+	 OnE0jaC9b3aQo+qtj4t+G7loI8kr0REAeymNpzYZ2rXU18yj6ulfTKIOSejQmOvcczg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794606274;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794607013;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=FFTeSAnKH5XTzO5CFqVcx4SCa9sRwvEQTJY0E4PWnn0=;
-	b=4P2tB1GBBTUsG+UwfWD/ayvDnOyZ8fIQM5Y7gZcJ0PuLi93YyrzFVG0fciGvNG1PfEae
-	 vUIc6sW4CSGhEzGeGzBDm0XJbO4t9w3HR3wjyMLKgOZKxOVC3ZQVErEbLAbUbAqoQE1MP
-	 Pdf+Nvxg1huVzzJbiDkN517+iH9N8dY/3KPTChcuF5NoppjhDCmKpBlVzlgZNlNb187u8
-	 gj8w4tMkHgxMEWr35WRYIzUSuDxQtTYfsTwU3yMun8s0r/Q276MWe9FIqX6kFbvs4PzMp
-	 R3j3jq9bNSBDqbQEXuvCGuBUhUaerPUeeZE2TVrPOPtRbDruYtq6dWknI/hUS4LOLZg==
+	bh=TPsy2Exgu0UfFuYl9cXNPG8tX6At0i2W10yvkP3yFRI=;
+	b=rQagXEdfn/nOqTEhV04X4+h1xMPcl4MVM/U9pj28yq2IXh/KGEcB2XJLMZ+h07givhYO
+	 MyylhCpMThDepnBDGfB9RQ0OTw60tSM5eQHMHD+nMvsrHiI9VREsOSfHHvj0NKxiLin78
+	 6UXnCA7CkrG8IfdK2T8O2EsJyPwDATSMVByrJmz04VAcN2mgJLdSd962fd27apqPs1Pm9
+	 uU+6pQPrqIB8H2R1OS/RlS/tqQrQ3Of9KSJFmeehdYkfVjB6jjdeXsOTdPVZ2rTXCmt9L
+	 0nCAr3G012/y7wdDqaDZbs3AN3NQB7B7HZazbNMEWmkRiTwn1soO3eS/YMLKTpd95hQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=IQdNiZq+;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=fc8moxvH;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=MzJmv8FR;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Leqqk+52;
 	arc=none smtp.remote-ip=202.12.124.146
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C13606A323
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 21:44:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95C13606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0878606A33A
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 21:56:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E0878606A33A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=IQdNiZq+;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=fc8moxvH
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8D5331D0014F
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 16:44:32 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=MzJmv8FR;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Leqqk+52
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 217F61D000DA
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 16:56:52 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 13 Nov 2026 16:44:32 -0500
+  by phl-compute-04.internal (MEProxy); Fri, 13 Nov 2026 16:56:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794606271; x=1794692671; bh=FFTeSAnKH5
-	XTzO5CFqVcx4SCa9sRwvEQTJY0E4PWnn0=; b=IQdNiZq+ePDoc9m382aRQU3/rU
-	ZKJ3AscWOpBv2mgBe6l8AWrh0CvBV0fxNNTg0Kg6bqz+2dmkIxCD5lyJ2VFuxzxo
-	6F/kz3U1Mf1RbaZyk5ggDFZBHgZwp2bU1dt+aZ8EA6dk3u2YNFgxKEV/V+4uufdf
-	IxcLcZQnA4vf6aXDujObPIOqfEZYxW0OZYK1oPfpoe9E9FcmOqgV+pleg5mnt0S1
-	4AWgDL3HclxKfvu3+X6tEIxzvQ6IkKP8WsUJc6MQ1gCOFUQttMAF4QFrJ4oXg3q0
-	NnddQB0vQYGb2v2wHFkUHwShe9eOmWIMTPrpT1ULjjmpMZewG1hd4vamvXdA==
+	:subject:to:to; s=fm2; t=1794607011; x=1794693411; bh=TPsy2Exgu0
+	UfFuYl9cXNPG8tX6At0i2W10yvkP3yFRI=; b=MzJmv8FRNDjAjsxDvQcC/xfUd7
+	LKF3HhabkAeO/0O021/Dbqv+b/GpKD76bEQCTvdrvWY5uVUYflpv355W3eQ95gM6
+	H8jQPx9Qpmj1+EdoniaWnQnqSlMHPiGLXIj2irRR5Rrh4YPsRDWDNyi0wSqs27Qa
+	eTzeQL4x+vqoOeiU5BCYB80qJKJDpBgrzQPfXk+0lTP4FYS/iUY77YlAeTvcbX1f
+	DY4hRpm90lNuiZwzg7AN3yYYYzIRLtC1UVBgXLVAUhDxrO905LEtLrMMgSntbMiA
+	1oo+rcwb6UWP8YKrzXzTLdLabXldfG206nDLQtjMQi9N8Kux+AhodmnQrWEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794606271; x=1794692671; bh=FFTeSAnKH5XTzO5CFqVcx4SCa9sRwvEQTJY
-	0E4PWnn0=; b=fc8moxvH8gdNXcIF8ExQXlZ5bY+ObX9w3W/2X5GMGK4nZi32XvZ
-	CNn76E+NFUGr28km+WEXbYLIVWxp4rmThBq65wLt9bVYrSnehfWcQ9S6yRohupdJ
-	zkUbeIT6MgxJmjTz338JOWcpySJ4NdccTrFxspqO1KoF9NoEixPLln6WCl3DWuz8
-	x7MIF2N/FayU8ccTvcrjn7Ys2RGEZw0pr8sSkaMqM2qC+TuXBYBGl+Br3dZsl5Kt
-	tC6tPKJfAbOEk+nEwm4sf6raayrrFBJKd13IMXYtb/B87+KNev/Gbj939/51yJvB
-	MQmr+uDIiyp/bkXsSPVyJOMY2sV5rmbRvtA==
+	1794607011; x=1794693411; bh=TPsy2Exgu0UfFuYl9cXNPG8tX6At0i2W10y
+	vkP3yFRI=; b=Leqqk+521Cz+6JAi/Xl22SY4eBDMBWRTGBjAq8VZl6nm+T30UkW
+	NJ2MbSNJuL9MCYdA2640+imEobT2+MQbpOfQU9VDoKBZfrlsX4FBpyMODPwdOUr9
+	i14QoSZX1y9aWhasbFzlUbzJc8htaqhCPTypefYIo7epsIV7bdX1QH+Ktn0TyjlT
+	M46bJowiGtz17+MnkW8RGXvgupjdBVXW+PEP6UaDx5ijKn4cxIoaCcfzTKTOG0GE
+	0Mcx2H3Lr355/mWuop2z3Yqzf5o8K6wx/6pg905G2dsHV1Y7n4SgCdrcwnLI2GsI
+	pUIY+ScmJiwRS+EiYkAaBbqb4Tb4QV0fTsg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794606271; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794607011; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:RQbMHk9RP0nrUta1YWRcSEpE0elRhulwS7Bwx/1dTGpfYiU
-	5A8bFBrimXIGFs3BPBhoDmlL4RwUjsdUqAZ3H6Afz8zRkfWccx8mv5SHGmWAoOsY
-	ENkoeLkqajur6aA/0MYeTaULLlSguXen5ZVrHuUlwehm2UNEDFRZ0dJ5nKJvYmb1
-	FYpMwLvRw8igl1/it0VjbM1HTo7y+G1JQRjsSfLNOuY4ygXQCMQOqIVZQjzsabmh
-	FNmQUnDqRgoCum9srkmnV/jAUM2qTgxhhzllGM8I0qSIAoZYlQc8cHg6R6Mz+TN+
-	04TDnI3SFDJskk5zcpx+76+FjnDrfA+sqZr7YTw==;
+	s=fm2:rsa-sha256:It25IXms2k+kSqwdw52FoHUJEsaacU7AavqPEL5C5Bnk6H1
+	shNSfS5wR7nt3SDMzaZM01Efh7OSGl24HhbxTszvn054fH9PYR8/+NFwK1PAVrAi
+	dujTaSLik533rozj3H9LkBq69xzCPH8kXZ3WUKXnOJJrCM6HndWZtXdv3klPwO1u
+	PhgfqUOgqlwE+YkWCI+9DFUW2x3clFDmtQ2UNg0iQXSk4jkb8QyPEsk3VVGjfA8Z
+	X1Bj0d82Y9KL9KOo42waNc5M1ia/MEc24OtHr4EfhA4uAUrucqtpGpCEesfbwWAJ
+	Q8rNOhK2YBrXkZ2rcInwbwWMUG1bHoz+nbXYoZA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:DI1zLOr2nJopOALTitS5v8jBsQsFKDShTGoRh5L4Nrc=:IESqjPzldkR4wd0zjsxg95RUU024+JXc+FC9rJro5Hw=;
-X-ME-Sender: <xms:v4T3akQn3g2UXN6_ogKeuyOlWv11s8UVrNYRqZ3NoaaunU0lnIGuQg>
-    <xme:v4T3alcR_6DuyfqT50alzZOeSvL-gUwBgxq131ZC8Tf1yqoxCh1mX1lMTGd-Wbi1H
-    a4MVQQB-78GQwoTjYmZrk_gDLBgB33-d9k25LiV_Y7jQYRwzD_iWNdv>
-X-ME-Received: <xmr:v4T3arrmJW34BShW8zRiKD0idzd6eQyVrxwe3udMZPr355YGxfx86hDGBy6ZHxd-t15rDyiAZEb3pP3vKIEkJ5F1XbRxsdo4p0S->
-X-ME-Proxy-Cause: dmFkZTECskmhw7PQPqi5yZBBzEOxnBKnTobK42voeRFCTmfj8mqWNOhKmlN0nCpW6cYv+H
-    e5O0EZJ/XqTVg5pYm6sG4V0XjDH9Hxx+Tg7usS/dXP1l4BhOl6DnzOlB2AygqDtICmKIcH
-    eoov3vQ5KCNqxJ9QSlMy+Y2DdyKVkJCS4wmd+HWYrXTqnv8u3cpC1magfxHqS9Hvno/MUh
-    oia1klNqYAdj3KQxuG/san0SLdZPB7Unr5znaBnHO1hiDfyUivrxBWant/LbrXlCPPha60
-    bnc4V4tnxfyeAqdDoI4y6I/d+SfDb3nPWimKvnTSwk0RdIfQbIMxtnf0bz2u07IAkxaXX+
-    dH4NKrvnw7n8QMyj1UdMwl3Sc3Nh8XPXYCEqqgPQ0ekdSUlQgfUHqasCzI2cvPn9OLJTC6
-    7Iwj9RYPy0KksPRKM7urJOR3yR9nEaYc+eTJnDIABIJrTd+CWDIS7jbaRPwPrw0cVpzi5F
-    cM6Te5N+UXjLCrjcRk3ZCm5dp/yj21JD5HVuK6R8dIGSrKkkLhYrKKmov1IQGii1YhSIzx
-    Lk0NwPwMpuurLrZJmxzFPl58JixzJ+NbDgtTFkGiCqMs0q6H4X9cyYXizS6wkzATHFXUKr
-    c1c/1XAlQcf6T4wclIp8CgH0L3wSwfnscxDQMTQ0ICNK0VxAQpXphPOoF4+A
-X-ME-Proxy: <xmx:v4T3au_I02kA2VwYMpI89sv2ExMI048Wn1r6fGWvEBqNNKgDL1slOg>
-    <xmx:v4T3avcWfToqJmpfi3guFuV3KHkbhOIpzyVREfqUpb9xoRwW9WPISA>
-    <xmx:v4T3agLQyDYMUdL51lk7Q2GeLgJjt4r6NNYkuCXW9EOeUZjs6P1rvg>
-    <xmx:v4T3anjTQkrk5O6kgVyXWIFwbry-uN_4r2kMhdYcliiMqK_LiQhr-A>
-    <xmx:v4T3at11lQb-42z4pCfClFpdUpEaliD9wurcnPmS-xiqLB6draGmxUfH>
+Message-Instance: m=1; h=sha256:Dt5sshz+Du+F2IzmKeJACX05pqx43vjoaFkaQqNZYy4=:d8mbDlUYlylvT/xC6IcWf8hs/KmZ7H0695/BTI2doyk=;
+X-ME-Sender: <xms:o4f3agmFhj4UU2I02u7cBJQFeTLfRnOSuvUc0ml1VQvw6Dm-puP4yQ>
+    <xme:o4f3ajj8ieRpPRZML-t9_rN5S4OQ2kIvDYtugUGmRewoYVlZCbMrvKwUGO6eNGaOo
+    2zu6jAwOsqR7cdcJFCOL7clapSS3cdMhGzfANIKadOEH3sO9prq9JA>
+X-ME-Received: <xmr:o4f3aocOvqMSnDS_i0mq3JKt6YwHISFs7jQ0Nkt6l2_Y5ug1P6w8Wt3ZIFKKhQBgYpF5XL0pXzWwRQjJfImJlmmp2UKuebUtLAoC>
+X-ME-Proxy-Cause: dmFkZTFwOj9ja2UciwBixCa8Hm79F/p9WMOYrP7BYt2pxQaLke0PzhOxiWd4+NFiBrWCPe
+    CFNikSGUdXIwqXmHuU877YJ6c9VUiqPIhTTxK0dfWfnbx6Exi/oqUtH3C5YuNfD0AbTKZk
+    x7t3vCeEqucw//17qiR8WX8fxnll7FLfGfC4fiFWAlWRimYMs5nPTxW95SODFUvvPFc8gB
+    oX8bsKsqski03JpWmjcsUSNdbn0MptQBSW8/GkD4FxZYReAyhrs0h7KfQl4wRMW0NM4TUK
+    Lp9abR/uMU3iBGo9/HWGZlurhOSBhemW/7ItCJaKSrRvvBIY+452WZY5Zv9HbkVFPeU2o8
+    Uhy1bsES0jb5NHJIXYd3CbKM/NUh8c0NQjuMr2UEQNZ5Mdu7pguczjAH6/J9ZmSX/xXJU4
+    SS6ND3rmyWrtUkvG1BBJAnwfHuy2SEYF+hyHpCLkG5Qdxq1EDKOc8eMDlFfWHoBdjNTsrj
+    /+Ad62KkJNQs8fXf7q86KMu9FT9Vk4Ur3I8zaGVy3v2v6aPR9mYnxU9hrMGWLiJ8RWn9xt
+    hoWsDa01yCwCh5TMBJ5uOzAlA/JnsEOYUeBYweI/kR2Lu4YS69+pNdhYg2RGExHI38/T9L
+    4/5zD8fQDXXimq/hJjVqV+LsvjEa1JdocesGPQmKVqNNOMPmyBMIy6G8mj1w
+X-ME-Proxy: <xmx:o4f3ajjpWtMpgpxvfB3uknVsyTT4AB2G89Li0xGBq3pueKNTgOAfoA>
+    <xmx:o4f3agxsU6HNqiRL-sp4J_LGsjeRm8g17x8FZoLesMBnt-vY4YywCA>
+    <xmx:o4f3avPn1zWL-g8S9qIu80adyLyTqvFezIwvdMNFzhrtxvC9DME_BQ>
+    <xmx:o4f3ahWLXoMQvl69zF4xT41rWgPSg-9M01LP8CP9_4sjeSGbzHsYaA>
+    <xmx:o4f3ajIXjGwdtndDnSMwfBqrjFhY7qIcxWplGLj_lpFcFkOy71l2uApe>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Nov 2026 16:44:31 -0500 (EST)
+ 13 Nov 2026 16:56:51 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Karthik Nayak <karthik.188@gmail.com>,
-  git@vger.kernel.org,  "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-Subject: Re: [PATCH v4 00/12] builtin/rerere: convert to use subcommands
-In-Reply-To: <1ebac86a-6674-4c6c-bcff-a71c05b26d3f@gmail.com> (Phillip Wood's
-	message of "Fri, 13 Nov 2026 19:44:31 +0000")
-References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
-	<20261111-pks-rerere-subcommands-v4-0-df0c8bf79e16@pks.im>
-	<CAOLa=ZTAYtq0K4YfcSBocf-fxadTiaJp+AV5-_6_pbNMBwYQXA@mail.gmail.com>
-	<ava6Q1u65ASVeth5@pks.im> <xmqq33t4eh84.fsf@gitster.g>
-	<1ebac86a-6674-4c6c-bcff-a71c05b26d3f@gmail.com>
-Date: Fri, 13 Nov 2026 13:44:29 -0800
-Message-ID: <xmqqtslk9zk2.fsf@gitster.g>
+To: Julia Evans <julia@jvns.ca>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Julia Evans via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
+In-Reply-To: <c12bf331-0d11-497b-b5ae-874534a42385@jvns.ca> (Julia Evans's
+	message of "Fri, 13 Nov 2026 14:49:10 -0500")
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+	<pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
+	<xmqqh5ile4h4.fsf@gitster.g>
+	<CALnO6CBGcG42NxtpuPaJVrzAMC=J8iVstsHCSi6vDQhDmFJ-Kw@mail.gmail.com>
+	<ddc6d42c-6e40-46a5-bb70-f89f11525ac4@jvns.ca>
+	<xmqq5wy2kqhl.fsf@gitster.g>
+	<931a94e4-feab-49a9-b5c6-479f0d7f8b75@jvns.ca>
+	<xmqqik21j1ie.fsf@gitster.g>
+	<4d6f9b6a-e658-4797-bc4a-0cfc533056d8@jvns.ca>
+	<xmqqfqx5foxd.fsf@gitster.g>
+	<36e73720-287f-47a5-bd3f-dc53629ac968@jvns.ca>
+	<xmqq33t4fxx7.fsf@gitster.g>
+	<c12bf331-0d11-497b-b5ae-874534a42385@jvns.ca>
+Date: Fri, 13 Nov 2026 13:56:49 -0800
+Message-ID: <xmqqpkw89yzi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -130,42 +139,26 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Julia Evans <julia@jvns.ca> writes:
 
-> On 13/11/2026 18:09, Junio C Hamano wrote:
->> 
->>      $ git checkout ps/rerere-subcommands
->>      $ edit rerere.h
->>      $ git log --oneline --first-parent master..
->>      $ git commit -a --fixup HEAD~10
->>      $ git rebase --autosquash HEAD~11
->> 
->> By the way, I wonder if we can simplify the last three steps in any
->> way?
->> 
->>   * We can use 'HEAD^{/^rerere: convert flags}' instead of counting.
->> 
->>   * The last "rebase" does not have to be on HEAD~11; as long as it
->>     covers HEAD~10 it is OK, but we cannot use 'master' as I am *not*
->>     interested in taking any new development from there, and I do not
->>     want to worry about what the command would do on the merges the
->>     topic has as synthetic base.
->
-> So long as you've set an upstream branch, you can use "--keep-base" and 
-> omit the upstream commit.
+> Of course these are both important audiences, but it's always hard to 
+> write a document for two very different audience at the same time. For 
+> example, one thing that came up in this thread is that creating commits 
+> while not on a branch is a problem for the first person and a good thing 
+> for the second person.
 
-I do not think I want to set upstream for ~600 topic branches (among
-~100 are still in flight) I keep around.  I was hoping that after
-making fixup changes in my editor and adding them to the index
+This is a manual page, which means it has to cater to both audiences.
+Unlike a tutorial or guide, we cannot say we target this audience
+primarily and expect the other audience to figure things out
+themselves.
 
-    $ edit rerere.h
-    $ git add -u
+To cover the "oops, I got myself into a problem?  I do not even know
+if I am in trouble, or if Git is behaving as expected, and I am
+totally lost.  I do not even know which commands I typed in the last
+5 minutes got me into this state" situation, manual pages that are
+organized along commands to help quick look-up are a bad match.
 
-A single command that names the target of the added change
-
-    $ git fixup HEAD~10
-
-would automatically do the two "commit && rebase" commands.
-
-
-
+Perhaps a FAQ or "survival guide" that targets these inexperienced
+users would help?  Unlike manual pages, guides have more freedom in
+choosing the material covered and the order in which they are
+presented.  I dunno.
