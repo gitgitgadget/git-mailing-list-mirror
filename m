@@ -1,101 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794570067;
-	b=FlOdcStjUs2lnfRedYLpQh6Yga+qwY7HvAuV25dz++VjiQq3aSuZe0HH3wA7OxZAC8wP
-	 4IpUrvde3kmZeoUaxKGqBHygouNKhQPzp1BJ13c5DbAjWf/f6GJnJOF+RhqcKwOT8Fcj7
-	 GUQGxthi3ecHW/RRSeM+tjcFl8l4KWu/CzG0d4cEnRlcZxsoGeb9dnK+GpOG6B/Qd1Ns5
-	 AJd5Y8POOoQZaiSqftBR5gvtXC+DTY0s/LKkfglmShl+zkQR3PSWGI8T39wiv60JHd9H/
-	 W3wL33BZKOhBwaj8hrjvFIL1d+ciHi6j4UY5cdct1vDDel3BMKYN1nF3x/wzKMLgLzg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794570067;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=X937XcxarNU2hTAJnDSl7S3O9tRbqHYXCQpz/Rnj4OE=;
-	b=gwRDB+np8M3jH+tsiJHTLR09M4ULyy2TN2pSrwPGTMVx0s+frUeiBqlXEA/ONbRh9WWX
-	 A8rHl5FGRWZWSCgbw0Ho1BA+E66VLquaLkUnDrl/B6yVsWdrY+Dv0RvpnA4X/ylJ9ZP4U
-	 HLVXc6mLi2zSYuHy6nIhFG0hFkPRkgB9uo7akhQHqRXCReE90uAX28+6wClYp4t+HiBtx
-	 Eo+tyFqHs5OP7giYM6760vThZz+Dh9n09N810N9lhqg43C3zqlZREtrQ95sOWGF4+QSw4
-	 WwyPPljjw7ytQgeoxUdEvGo3go3AM8tawbDKay8B6OpFPGNDToKrHwkCtpGjeVhMjmA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pjQyVfyt;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.46
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794570404;
+	b=M70z4OMg/rQjg7FgS6yMiBA5lYPf7pAgSkF2hXkXwG/qSdZAnCnfLhcvoBVAx44gNbYt
+	 zxeyoWuZWn+R8wJLCe1r3XpM4p9xYUKfxO13I3+v6Vczlxij05lg5ACvDIlh8UFRfC1ag
+	 f/lau/LG74ExQ1qjAUebfjagcqHWjgdM21rjbPpnUgCU6DzpmRjkFYj6YcTJNS7CbMB8c
+	 WApr/0uHykfCJoplJ3iktUBrK+6ipa+Ma3zFFRkouS2aeNHrurNmhGba0gPBgB0Cm4DTm
+	 kKu9sT1KRf7MZPljQFurhliFxLBr3X5A+Pxoy1atY8etYHNpZ2MqfwkGKhVKDQ0fxow==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794570404;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+	 X-Mailer;
+	bh=/YKZEkboeFNmWEdcMYFqIbLKPhr9u9jd5IdDI7XeUlo=;
+	b=uowrrxJsu6iDwgVz2+TkTZ358ZnhWANlBVoIk3AOuBEetmWvr0LGbNC/TBCpcZvRgIS7
+	 9cnDxWkNjpJB58OC2VxNIXOBIiwBcSn/GuKJdYNdrngSCz74GgFEYvqEVs+gYsLLxua6k
+	 vCQYnXt4/B8zj3V+R34TPMz9qVG4wrNibLEnson42Yhl58rjwynV+maiHX/TCQo5q2xOt
+	 kWmJiBiZd4MAjUwmkRfSKNHu8Cz9v++7LaATgirAlhRksNpUbkXYY38MK5qQZ5mvIN83D
+	 N9TM7apxM6qMS5Jtzr7eRaNM5Zl7McKaZT4JHuh1NIxWR2bTrWuo2XdFQPYlErac2lg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=VIqMv4gP;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rPqK8x1H;
+	arc=none smtp.remote-ip=202.12.124.147
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE23606A321
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 11:41:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DFE23606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB52E606A32E
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 11:46:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BB52E606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pjQyVfyt
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-67be1e468a8so596200d50.0
-        for <git@vger.kernel.org>; Fri, 13 Nov 2026 03:41:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794570065; cv=none;
-        d=google.com; s=arc-20260327;
-        b=W6+Fe2J7lFclj2kFnAl3vVCoqyP5MVSem5xR5KFI+c2pp9aO8eVO8RiKBtfKb6sdfF
-         7os8XaYxKY2skyYdtUDe7dPq4wWdvbZPEd4ZoAZvjFpZCKYWZGO827aG3/BVkjnV6LnR
-         lsx45+eT6gqyuJmyckkzNnpU4N9T40G39KZqpEw4rdxpxX5bF9pwPSOOrlUgwy0voEsB
-         maCu4sGG0p2ir5ITHQvLGgTJb22rPLbFplzpZbGZDy7Fg7lUZjUd1g2DC9HSmfIibgqm
-         Ts6YY322/e7r68tMAECLfEEXOBGbMK6HdgimfnHedORIPOXM/QviLEFyK88cg3dN5uaa
-         atlQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=X937XcxarNU2hTAJnDSl7S3O9tRbqHYXCQpz/Rnj4OE=;
-        fh=u2HXvIO3dn789rE2mqcm4j8Y11yJaHQ3Ds9eIxaXqaU=;
-        b=L7U0u2aZERRg2TZH6Kv1DN4O0VH1DRb2NFQ+pdXPbTJf9TClBNpNRtP41HBdeoe9PR
-         /pxfh1BOSjJUkHUJf7imM/C1wM8fGidwMeB0dTEKXad9koxUQmHRDI9xEYH5irMSzGPE
-         5ELnodC2dlImSNv1TuznqOA84nfKioBHXW+uBcIynKAZilTPvcOMrRcGASTRGjXhkRz5
-         lhIdc4cqNaU7B6aUYCeQu9c4+H/y0FyYKv+mbYVXrdsf0MviNme+fIUn8O6GwfXfBmWq
-         qdvvdve0th4zRkoh8LgQ7MwlhrLTn3coYS4OqqKHTs/qYOvk5NNZ0xGq8g+rrnZjoGi7
-         7K7A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794570065; x=1795174865; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=X937XcxarNU2hTAJnDSl7S3O9tRbqHYXCQpz/Rnj4OE=;
-        b=pjQyVfytU2M3lCNpghhcR0AZ4LGRp/ubD9Ouc6q6M6z7iNXu8PjUeHXlCPRZL14W8a
-         ly7OPa6aou8qSxFa3ZTv1sg/LqMaPKiBdnk+QC3gnPX6vLd4m5EHy+7+9bFs07rdqj56
-         JBDF+ZXHSqtnxg9ju+RXbvyV2AVcw4bQlmsfdFjX13i8adG83FzEg7IT2u+ybRsTZI+l
-         qlS0DPyZOHR3BtnQWARomO+mjVEfmlYVgpbjZffZG6NRGMzkeAyK4+gTKOH+5yC0kcKv
-         YIu+h7m36joLexaNX1GnFHmP+HfUIQ3KlWyc1gbfnkQQOAPBaiE8sGBYD3CpZlggCmOT
-         4gJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794570065; x=1795174865;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=X937XcxarNU2hTAJnDSl7S3O9tRbqHYXCQpz/Rnj4OE=;
-        b=Dzl230Nm/LJsocqM8IO3iBqPn985GtldHt6jkTBOFFs5FToKulINXZdmT9aS3pXTfJ
-         dcI+y5eWN0CNPOVkEFMNRqElLmSBnKW0nI28yTHUD7+4NDrb057yrxAsgTsTIi8CAhff
-         vt9R82uilxsY4hPfIFWTdY+Pcv7gXDMR+KCUFB6U6CAcArlbal27C+GXYVHU3JgeEM9d
-         Qbw8Ro4DklgW8h5jzBjmLZTVCtItWbfJIrZuEJ1BFOEfMso4KV1gPCOw0QTmqv/3S73o
-         LNqlYaAAVK/MALYfHuiytgwrzZfgdu0k1Iq+ATzVqOB2o4cO4WJeva4Fl/y4yXJjKQVb
-         7OYA==
-X-Gm-Message-State: APuU4Z96ef9LLxhCIXJGJo0SKblNZoVqDASUyFIFtT7+Pv+6xnPii3Zx
-	XJKQ+Xka0mjsco+KNOzk6OypYCIozFklHSBmlryfb5/8ZzpVB4HGdXKBFZPYibA3La3+UHuitdL
-	RJ45TqSzsXjHSRo7zaxQrryTEIWnbr8o=
-X-Gm-Gg: AYBFou2UfYOmMOjzy5Wetz4iC/dDarpfJyaftbBCuOHuJjgzSB+OlwChyDEO2EfuYxq
-	oIDGkg/ygK1BZeZdw9+fVSK7hIaHmCau8Z8e5bzGWuZuFFNBLp83VtHdg4ZWf77hRzocQt3+5y8
-	0LtQeu0eHiU1mVZrzEMfFjtKWrB24Uc8DzPKT+YDPS8p43Aev2IUnP2WUGiUPSORaBue/3xxnrr
-	jUl6HFhVP7UsuFI2LwG0x5iNhkCYJ4fsoLxZTjRrPu39zn4KTug6N+RTRBIZoHvItf9uDFMxPjV
-	04dOeHV4fAiq5wtmg09MbmSrNYA7EhzNXWoktjGKaUP7PnLPnqIDp6nqZDQQsDeil0FolFnR4FN
-	qmC/QCryGZnN5inlT0KNj/VngLQoWefaQTpXFPySAmP7Rt2Bz98A0OzUMFO8YDvp6v9LxZNze9f
-	U6SCxCDTQmgED4Vz9FZG5cPfg+iDosXmJx1MGAiRETvLWlAE9GX+wK6ZZdtvBoVCFv6Wla6NyWu
-	FCCNC0cvJBNSz4ECVliJM2rGaz1O0X9RzG1zAuV
-X-Received: by 2002:a05:690e:1348:b0:675:617e:6c2d with SMTP id
- 956f58d0204a3-67d895c1e21mr1719696d50.25.1794570065460; Fri, 13 Nov 2026
- 03:41:05 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=VIqMv4gP;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rPqK8x1H
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id E29C91D00468
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 06:46:42 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 13 Nov 2026 06:46:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794570402;
+	 x=1794656802; bh=/YKZEkboeFNmWEdcMYFqIbLKPhr9u9jd5IdDI7XeUlo=; b=
+	VIqMv4gPpCN+dYl+GVw1Oej0bZXJZ2bHJB4lBA8wgYSuWAy3R33OMOPbQcSZpdLv
+	tPosPhlWD9vJzukn4vusLYEklApNsfHfNzOOeVG1KQd9zu9j1olSyaLUDPzQj1M9
+	/RKoNyZiafaPqU7DgBLBvN67IRsgzE5GXiq9s4HjVciwAFFNJH6rsC/QoT2S5FNV
+	P8Uw4JB4djfKfU/2AikfBiljsxPh18TL9dyzn42gmwJFONWq0A7wxVCqIrZwqZWO
+	OQE/Oq1Jy2mC9uYRlrGTBZ9S+EtRFhaqcj5iHiQOo/LehAdBWn0o4y/RjbpZbymk
+	fAG82HldaPFOu4l28LUFnA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794570402; x=
+	1794656802; bh=/YKZEkboeFNmWEdcMYFqIbLKPhr9u9jd5IdDI7XeUlo=; b=r
+	PqK8x1HVYZAMOI6d7Vnk/CzckApgc4+zTYQtZHsNqaZdf4K04pcY+mLhY7WivXxg
+	qM7HYMb5Dtwmgv/ceYr+pV2C7gstsPsfh/t8rxBLH3kEkhxPxFYowfczrUqchQPD
+	M54zEAv9jni4gIHzXVkJJzTMttOiMjNctp+Oh1MPhral02tUqe1Y2n+/7vpDlaJj
+	Z2eyWGusrkQ/zwY37+4zIHBTHB5WiSQ9Sq99/2Qh6IW3m8KEOrdcbJvk8iSPckwU
+	ii2Dpr5zxfFc8XjK4FRfsZTrqN3g7wCusHLOVPkyTxCIwhnqTSfd7prNWIQz1+QP
+	PKf1I+2kx60gECaxcO+Bw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794570402; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:knoaaBFQ4M7CT3OWtffVq/pBLZ/B0Nl+0ETMPPWcQ1H0o9T
+	rrREmcjucs//G+nfhx2E7yphF8djE/hcMQG94tjnmdURsxs5ZWv7UCDzWpIZwCSf
+	TFxkw78XgKW+98UeGJzZ3XIihCle4CrqTzIsRPxfVUtIaoipjyK+VCnOJcJxfQdv
+	3SBLASeoWzTsBIrHXHMQZYqPq6FcVJ1HYMA5eWWK2/6uaOEGbX/nu5b3dVbmRWzi
+	FERKjbsUfWM7ss3uY+bfZ/xCSyepqAlVVXH9e3DEO6ggSC1qHEt6Mtmv2ZbiOezp
+	sMe4t/u1F8LM3CcQT0osRR/WjVzdJjRqYv/x5Kw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:/Ws3KpKMZpNl4VHM0hHCoPJQCwvduHFsLdb/5tuMoSk=:EMVzZEn0L5jhc6PCeQWSGk6TFLS4j5fp6qCyWWPD5Zk=;
+X-ME-Sender: <xms:ovj2apj6CvaJIOHr4MNZoc1tn6N-VwGzs4dNTMi-ANdmifwXioHVlA>
+    <xme:ovj2ak9XkRrlIQdN4Kw5xqCQNnUKWFM9rFLK381b6R9qd_Gepxh4sOSYhOfVXixOR
+    2kHO7G0Xjo2TsgX9myvMAi6jRnmCiLU6A0pslTIDMLtzbo3FwhXSZYw>
+X-ME-Received: <xmr:ovj2auuRSV8k8UXSoSuM6rSxF23pbVkkiAU5tp5vHpkwjZGtNr4Cuw>
+X-ME-Proxy-Cause: dmFkZTGmxDoWqEMuc57Due7UI063KNsVC/6gq6Zxi7CJJS66EK1Q2YGgMpmzbcUcbOnR9D
+    sGaSePoyoVvf0+yrEK5x9MSAkjYOsAL/uqSqETSm4OSKAbNHtjBVwOkwpvkvk5VuwfN6M6
+    UHcV1eJ6QAmlRs9qFh2WzgkmZFfs/u7b+dZ9S3/TZxJf9VVJOAuV+89kCWduMOHUb1GTQy
+    z0l3doot34i8E1R7jHHBcfOPT4LAiaHvIk54p5ohk+0Sxws7Vy64eaLW4HT7m3nHlW2lL6
+    DaxcWK/cQqa9IwAXtFx+3W7Xe436zoWGpQsiqR++sNj+y0IyLZZ3m6FtKq/uSSKTZ7zGZk
+    SrmQEz/bwE/3cN+HfNZtL1RmSw3mo+2tzw1t5hTMNyu4vXy4u3uLd5lDglziU/caYpfBUt
+    CSS0/cxpuQRNXBWJ2em+d/A0In4Cw1byNf1Jde9TQa5BS/7ZGJzOpdzo6kswiBZa+uEHZj
+    xwLF4QpK6XK2iRORhLyZk3U1PMf2QA0Bm7Pc/Dl4cmagwEzQtqRdN9esqvJHqZqwLXWwdU
+    8isWJLEHsYGnrU5p+qbMD2qS3R53W17dobSK5i8x+NzJAYW2B25QdwyF9X6soF/R2BAeeU
+    ryjCRshKUhV5RaRr8SRFB3qLAnOJIyOCP0bmlgBmaDWRZP2x1C8elDvW8TXw
+X-ME-Proxy: <xmx:ovj2ajbEhWLd778yNg2aBVBuaU_YtL8xfWO-il8oiLgJ9PpAZrQG3Q>
+    <xmx:ovj2amoEKngoIqdgPYr2xoLbK97VnhQFnH2ogP3ffqcBGxKu5vxTBQ>
+    <xmx:ovj2ag8KPqmCKKXaPeHjfNFM51RXjQfbHHjq7GF5xz5UnoykZshU3w>
+    <xmx:ovj2at_LRiN1031FlFruckAfJI5URIw1briZ-aRzO02msnXXaoaXDA>
+    <xmx:ovj2aiiN65nJKQWR5j0iXWv8cmC_AHXzlIWlxpYRTyGpmyczXhJO2adB>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 13 Nov 2026 06:46:42 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 548488a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Fri, 13 Nov 2026 11:46:41 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Fri, 13 Nov 2026 12:46:17 +0100
+Subject: [PATCH 1/2] builtin/repo: only parse objects as needed
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,39 +122,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <xmqq1p8zw49g.fsf@gitster.g> <20261105203344.48513-1-okhuomonajayi54@gmail.com>
- <20261105203344.48513-6-okhuomonajayi54@gmail.com> <avGP6txIm0tK377H@pks.im>
-In-Reply-To: <avGP6txIm0tK377H@pks.im>
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Date: Fri, 13 Nov 2026 12:40:53 +0100
-X-Gm-Features: AclHuK-ylCx9RA_5aE4t8cBqRXdmczqCUnD21Ylc0nIu4VKgiR4LZJhCQR3L0yc
-Message-ID: <CAFpMFfD_+Dq7-jaeWCXH7CUQyW67fNgGN01n9oU1izppFbE89w@mail.gmail.com>
-Subject: Re: [Outreachy PATCH 5/6] notes: pass the repository to the
- combine_notes callbacks
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, 
-	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com, 
-	kaartic.sivaraam@gmail.com, gitster@pobox.com, karthik.188@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261113-pks-repo-count-objects-speedup-v1-1-7ba4f29e74fb@pks.im>
+References: <20261113-pks-repo-count-objects-speedup-v1-0-7ba4f29e74fb@pks.im>
+In-Reply-To: <20261113-pks-repo-count-objects-speedup-v1-0-7ba4f29e74fb@pks.im>
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.2
 
-Patrick, a quick ping on this series.
+To count objects we walk the repository's object graph. We then read the
+individual objects that we encounter so that we can learn about their
+metrics like their size.
 
-I replied to your 1/6 and 5/6 comments  on. The v2 I have
-already renames init_notes() to notes_tree_init(), with the tree first,
-and load_notes_trees() to notes_tree_load(). I left
-USE_THE_REPOSITORY_VARIABLE in notes.c, for the reasons in the 5/6
-reply.
-Let me know if that scope is what you had in mind before I send it.
+As part of this, we also unconditionally read the object's content and
+parse it. But this is quite unnecessary, as we only really need parsed
+commits and trees because we need their number of parents and tree
+entries, respectively. So the time we spend reading and parsing blobs
+and tags is ultimately pointless.
 
-Thanks,
-Okhuomon
+Improve the status quo so that we only parse as needed. This allows us
+to do another small optimization: as we reach commits via the rev walk
+we know that they have already been parsed anyway. Consequently, we
+don't even need to read their data at all, and we can instead just look
+up the already-parsed commit.
 
-On Mon, Nov 9, 2026 at 10:18=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+This speeds up `git repo structure` a bit. The following benchmark was
+executed in "git.git":
 
-> Hmm. I was hoping that at the end of this series we'd also get rid of
-> `USE_THE_REPOSITORY_VARIABLE` in "notes.c". Any reason why you decided
-> to not go all the way?
->
-> Patrick
+  Benchmark 1: ./git repo structure (commit = HEAD~) (10 runs)
+                  mean     ±       σ          min     …     max
+    Wall Time   10.891 s   ±   0.113 s     10.779 s   …  11.181 s
+    Memory         3.5 GiB ±     0.0 GiB      3.5 GiB …     3.5 GiB
+
+  Benchmark 2: ./git repo structure (commit = HEAD) (10 runs)
+                  mean     ±       σ          min     …     max
+    Wall Time    9.577 s   ±   0.064 s      9.485 s   …   9.673 s            -12.1%
+    Memory         3.4 GiB ±     0.0 GiB      3.4 GiB …     3.4 GiB           -4.1%
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/repo.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
+
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 0399c558719..98be90891ce 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -847,13 +847,14 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 		size_t inflated_st = 0;
+ 		struct commit *commit;
+ 		struct object *obj;
+-		void *content;
++		void *content = NULL;
+ 		off_t disk;
+-		int eaten;
++		int eaten = 0;
+ 
+ 		oi.sizep = &inflated_st;
+ 		oi.disk_sizep = &disk;
+-		oi.contentp = &content;
++		if (type == OBJ_TREE)
++			oi.contentp = &content;
+ 
+ 		if (odb_read_object_info_extended(data->odb, &oids->oid[i], &oi,
+ 						  OBJECT_INFO_SKIP_FETCH_OBJECT |
+@@ -861,9 +862,6 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 			continue;
+ 		inflated = cast_size_t_to_ulong(inflated_st);
+ 
+-		obj = parse_object_buffer(the_repository, &oids->oid[i], type,
+-					  inflated, content, &eaten);
+-
+ 		switch (type) {
+ 		case OBJ_TAG:
+ 			stats->type_counts.tags++;
+@@ -873,7 +871,15 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 				      inflated);
+ 			break;
+ 		case OBJ_COMMIT:
+-			commit = object_as_type(obj, OBJ_COMMIT, 0);
++			/*
++			 * Commits have already been parsed by the revision
++			 * walk, so there is no need to read their contents
++			 * again.
++			 */
++			commit = lookup_commit(data->odb->repo, &oids->oid[i]);
++			if (!commit || repo_parse_commit(data->odb->repo, commit))
++				continue;
++
+ 			stats->type_counts.commits++;
+ 			stats->inflated_sizes.commits += inflated;
+ 			stats->disk_sizes.commits += disk;
+@@ -883,6 +889,9 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 				      commit_list_count(commit->parents));
+ 			break;
+ 		case OBJ_TREE:
++			obj = parse_object_buffer(the_repository, &oids->oid[i], type,
++						  inflated, content, &eaten);
++
+ 			stats->type_counts.trees++;
+ 			stats->inflated_sizes.trees += inflated;
+ 			stats->disk_sizes.trees += disk;
+
+-- 
+2.56.0.611.g1030f0b940.dirty
+
