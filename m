@@ -1,61 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.234
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794562793;
-	b=IW31qNOfHJGj1+lSq3wwdeyqLXoem30zwiPsJOhMP6JPYszF72GUKDePfb1yTc/4seNM
-	 EOFZJ/+xoq3FbA1+4GJFCCe4de4jfpyuoEaMXUeLGw9x+095aO8cnmBASj5YA3kTxGhh0
-	 AnBco6PIp8pzT0HkEv0PKru/HKRBwwnTItu9KdAOdtLqs5Kdn4vJmjrUaxZvu084MpRJs
-	 l1kaGTsVpn/ijavnW7d9KRb9R2WsCQVP06KWPNl//4w10G3eQyjMZC6zjJs2Des7psCfC
-	 XqXgsIjAjj2kYKXZYpkJZJMddhfiEWAatrhPX1+ruFSTwEEqAE+W69zmt8vGf3+AWNg==
+	t=1794563318;
+	b=s/hZJVAKOft4LmJZjqXrdT3vZcdL48dT5gbIlFFeam3Esr0VTkiD91qo0Ja+kvWwsbQA
+	 L72Hv9qaY4TC3yNdaOusDlSaRl+FBOWZkxJmKFc06Ql778MWgYf2kEVDozLpyroW8CyDJ
+	 GlsNAqBHXpBN+vZF1cYkzll38e59K/BdW11COiGAlqbtLCGqLToOtQ8r2VUG3I6/rvIla
+	 XJYKZoDQMQz542DH/X3VX0IPAeMmLS29fSIMEYotD79rpciDgUkgj4RWbCztPvWHTZajk
+	 nAiMqN07fuuxgc2uWeVy85p0gMm7dfrEEAptghW0dcUsnstZpISr00JPpjjEeWsgprA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794562793;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=C+UDjAiUtzq6+PxduiGMoZBMbpEntloW//zOfedNEt8=;
-	b=dP5T4oStbWlLPv5PYAg2Epr/wvahyDXpTDZOwotgyHa1uSNE4b3oAj95Lf5qLkjlLiRd
-	 U91NdJ/qNJKgR/hXOx/HthLbmFpPZCburXYoxxBx3jsQZ4SUx/iMeH3TTQgVUnSpWYnW4
-	 tET+PWDV/tTN8IEneVlMPnqAI3Xn4kn0f/HcuySBn0UZDSvsiI9MA5cTCbHmiYrfYNHFy
-	 8JO+ZAzd74eUt1dwcdgvNz/ljy1RVcVnL9fmwH8c8T/mf+H3T04StZ7otWghfMdlVFEYn
-	 XHuajrADsW5XP5wvUT3WNLRwiJowm1hxUbVOG4w89KMW93wm2uMrBv7bg4eh7/mFWfw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794563318;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:
+	 References:Content-Language:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=ojs2D4KKFZr7/uPmQEMQt9ixXOWW/qKGA55rZE7bqmY=;
+	b=kq4P1YWzhzMFMD2S2HmpBGc7du5FoVgSKkiRJUv4rCXyS8POeR0HZ4ceLQfmGQdl3PrC
+	 qxHBzG/cuarUP3KZSuxR8ca2hsXE4WxqACxkjTKCuU8h1KaxCJUe9kFXii7jSsOPTQgNv
+	 2seaej4nJmD9vMYuOcO8iroK89Zvyvmn9kLYhXtQ016MGZlJ+VPMdm9FErSsMhBM0Nww7
+	 PNFFFu2roEV3WcMOewdSLHXc3YllHEHz5CAxEAXdAsGHm7V5lt45054/mJmRWa6bVYZJ7
+	 DqBjil93ewjdmBzqgmxoOhwFJB+tU7HsZOrcPcbFztrxpCUdwfvXhVET0SrnnFu4ocA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=iotcl.com;
-	spf=fail smtp.mailfrom=iotcl.com;
-	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=ZtZD97+D;
-	arc=none smtp.remote-ip=91.218.175.234
-Received: from mta0.migadu.com (out-234.mta0.migadu.com [91.218.175.234])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MkwIOKXE;
+	arc=none smtp.remote-ip=209.85.128.48
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323E4606A31C
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 09:39:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 323E4606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B939F606A339
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 09:48:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B939F606A339
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=ZtZD97+D
-X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=6XKhEn9n0nnNYcp4D8qA+1hRO7CFoSSnW0yiTbh2sqc=;
- c=simple/simple; d=iotcl.com;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794562789; v=1; x=1795167589;
- b=ZtZD97+D2SGmppSQDpCnnI1tb0koF9+elkCTk7R94q1S/TZJZ4F6veuwWrER6xQ/BiwfUO0L
- JkD3j4GHU3YIb/ArRpPhddmU+HNcpmHMAOa71eTVtv6Vy8HU7SaPVuoat+am+xnLo9A2oY7u13w
- fpAJbrURDEsoPFg7iHnaGnTA=
-X-Envelope-To: git@vger.kernel.org
-Received: by mta12.migadu.com with ESMTPS id 407710e1825c6715;
-	Fri, 13 Nov 2026 09:39:49 +0000
-X-Mizu-Trace-ID: 407710e1825c6715
-X-Migadu-Flow: FLOW_OUT
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Patrick Ohly <patrick.ohly@intel.com>
-Subject: Re: [PATCH 1/2] odb/source-loose: extract logic to retrieve
- subdirectory bitmap
-In-Reply-To: <20261104-pks-odb-loose-stale-cache-v1-1-a00d5cdb5e7d@pks.im>
-References: <20261104-pks-odb-loose-stale-cache-v1-0-a00d5cdb5e7d@pks.im>
- <20261104-pks-odb-loose-stale-cache-v1-1-a00d5cdb5e7d@pks.im>
-Date: Fri, 13 Nov 2026 10:39:46 +0100
-Message-ID: <871p8p5au5.fsf@dev.null.iotcl.com.invalid>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MkwIOKXE
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a35db1f202so4919345e9.3
+        for <git@vger.kernel.org>; Fri, 13 Nov 2026 01:48:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794563316; x=1795168116; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ojs2D4KKFZr7/uPmQEMQt9ixXOWW/qKGA55rZE7bqmY=;
+        b=MkwIOKXEIjki31rkPWwCWbMvgM2B3C9MzcILN/X81wqKniYH38IhJu8nJqQQf8KXgK
+         w+E3X6qqgooSKUhAw71bpUf0cLQb7wM5DQW35enaeo1QG7jG0foXLfYrZ7dlcRN4oYNu
+         yql39WK3SeeUrCYhT9RdiOarxMnM6Ol6zf9TU5lGDM9FzzvnF8w76RP0a0wrvOo/yoEz
+         RDxrM8/gfytYkT7l4eFwWfy0oi7adfcsSqJf6thQSj/tgK19usWHW3pzjHrEEeahfIZQ
+         WVr9E+LAF1Uu+VkSJ6iIHdQnUhuISbkYMgbZ7nWILdDICxrMYW4VR/03JKXwEGrvabpL
+         trjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794563316; x=1795168116;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ojs2D4KKFZr7/uPmQEMQt9ixXOWW/qKGA55rZE7bqmY=;
+        b=OTMs5iEX4J6J6zoojFb0QZLPek9BRWf/YUiOOoqLvYFsukCCYCnWbvSJrvn+CL3EXZ
+         PJ2TckNsDWQQRgPJlzgqtNZENszGxahc+KQJVOSqH+wlKN/qu2GISBEArr+9NGthWrp8
+         mOSZ0gfyvocZOnaPdes6rb9w/o9UczxPg/VHkoWcxEmPzV28iGteP7UipsO1UrDj2hT8
+         lvcjEfldzenEAkijuNpH4UHp6wOw5BIzzsybaAbd1V3LPZJtudmWGIwePMFnISH2xwQt
+         tozY1YqIqNxKuzC8j1F/4WFqOKpVXOJMQTb6sgXvPHzEg7i6zDcy1dJDZ1lPDJ/pXVUc
+         oBow==
+X-Forwarded-Encrypted: i=1; AL+hErGTu7Z8HrbaniyYUbMkV/zr89nJ0TJz8etWp8bP81uqavvh47iFeP0x6NWW/cBABB4W22A=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9X0CK9PElfV8HN58jR511TJR2tT6Wc96p9x/I4PQGcMhIx1eqW
+	8c8KGNZfc1Wy6TQW0JnA81Wzs/WNcbVUQUJtVMlvaTzOLlTfprfc5srT
+X-Gm-Gg: AYBFou1I0hZDXQgxlWPf0icXkoSOQej+GY6HuPRpcpiz/xqBvsZcAhMgvietsPKCA31
+	Pr+qr/38ZHygZ5/UxZc4vzN1Mg/qPtxjRjWcuETdNqqiC7Pnh+3eLoUSx6mLatTti8W56OZ9i7G
+	ZgIOe3V4Xe3HZRjDeYODlpLHKwuQf5vtRSXgh7j+/DFRdmv2aPwZI6mmR5cIb4i4NmFpF7tdVO9
+	n6jV267G9SQAEyvgxEWHMZaWYpaK5QpwT7PqvDPi/bDpqsbXg4QK2Lu+JobgrlCJz9Fbe5ShzCz
+	F8b4iTP0THzptSTmNqD+2Blnw9IP2l1eYK7DKuzF1Rlsn5rOoVyoYzKUj+4GruvTK1Hawo1Z3Df
+	0LuG/1/78xFS+CEWE6M7aEEHWjaDX8IDQ+IMVg83tjxTciyr1/LduKqo//xtFIgRdRFDrQJoCoC
+	W6n6wOk5zzWUdbwr5apcOEllc/2twMmHHLnYxqutnYlp59Jgcry8Jy/M0lg0lSy1B0eFzRXMk6n
+	pfGPOnB514mL/Ul+t/y9zJEyhzK9dDD5NXlHwAo8KOf2eY0QefyKEFFQsQNPpqoDLeUTnPzYXQx
+	I0828z6e9eIcIvp/WCB7k+KYpCbTBeBSoMrnsMsMT+4FVtx0pZH0w+2Gbn6AuE3iq62Ccet9+YS
+	756Fa/6Ee
+X-Received: by 2002:a05:600c:1c18:b0:4a7:9044:a87 with SMTP id 5b1f17b1804b1-4bb55ac0e34mr38745355e9.27.1794563315813;
+        Fri, 13 Nov 2026 01:48:35 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55afb6absm51977275e9.15.2026.11.13.01.48.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Nov 2026 01:48:35 -0800 (PST)
+Message-ID: <5125fcec-7764-416c-ab78-58cc22cd415d@gmail.com>
+Date: Fri, 13 Nov 2026 09:48:34 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -65,83 +92,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v13 1/6] fetch: add remote.<name>.fetchRefmap
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+ <pull.2412.v13.git.git.1793357550.gitgitgadget@gmail.com>
+ <07081828d1d65373bee4b2ef5e1916e65a217db6.1793357550.git.gitgitgadget@gmail.com>
+ <01a799bc-5493-4984-8b83-7f2aef698f85@gmail.com> <xmqqv761hltu.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqv761hltu.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 12/11/2026 19:49, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>> When remote.<name>.fetch is also configured, it still decides what to
+>>> fetch, and the refmap maps what it fetches. This lets a remote name
+>>> only a few branches and store them all through one refmap:
+>>>
+>>>       [remote "cabal"]
+>>>           fetch = master
+>>>           fetch = next
+>>>           fetch = seen
+>>>           fetchRefmap = +refs/heads/*:refs/remotes/cabal/*
+>>
+> 
+>      If .fetch is a refspec with a right hand side that stores the
+>      result somewhere, and that somewhere is different from what the
+>      .fetchRefmap suggests should happen, what happens?
+> 
+> I think we tried earlier and saw that we store them twice [*], even
+> without this series (i.e., specifying both refspec and refmap from
+> the commmand line).  As it is a long-standing behavior since the
+> --refmap feature was introduced, and I do not see huge problem with
+> that behavior, I am not sure if it is worth tweaking.
 
-> The loose object cache tracks which sharding directories have already
-> been scanned via a bitmap. The logic to retrieve the bitmap and mask for
-> a given object ID is inlined into the function that populates the cache,
-> but we're about to add a second function that will need to perform the
-> same logic.
->
-> Extract the logic into a separate function to prepare for this.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb/source-loose.c | 24 +++++++++++++++++-------
->  1 file changed, 17 insertions(+), 7 deletions(-)
->
-> diff --git a/odb/source-loose.c b/odb/source-loose.c
-> index 50cb388c352..da8f9767257 100644
-> --- a/odb/source-loose.c
-> +++ b/odb/source-loose.c
-> @@ -26,29 +26,39 @@ static int append_loose_object(const struct object_id *oid,
->  	return 0;
->  }
->  
-> -static struct oidtree *odb_source_loose_cache(struct odb_source_loose *loose,
-> -					      const struct object_id *oid)
-> +static uint32_t *subdir_seen_bitmap(struct odb_source_loose *loose,
-> +				    const struct object_id *oid,
-> +				    uint32_t *mask)
->  {
->  	int subdir_nr = oid->hash[0];
-> -	struct strbuf buf = STRBUF_INIT;
->  	size_t word_bits = bitsizeof(loose->subdir_seen[0]);
->  	size_t word_index = subdir_nr / word_bits;
-> -	size_t mask = (size_t)1u << (subdir_nr % word_bits);
-> -	uint32_t *bitmap;
->  
->  	if (subdir_nr < 0 ||
->  	    (size_t) subdir_nr >= bitsizeof(loose->subdir_seen))
->  		BUG("subdir_nr out of range");
->  
-> -	bitmap = &loose->subdir_seen[word_index];
-> +	*mask = (size_t)1u << (subdir_nr % word_bits);
+If we want to be able to use "remote.<name>.fetchRefmap" to specify how 
+to map the names of fetched refs without specifying the default set of 
+refs to fetch then I don't think we want
 
-So `mask`'s type is changed from `size_t` to `uint32_t`, which is fine
-by me, but shall we use `uint32_t` here too?
+     git -c 'remote.cabal.fetchRefmap=refs/heads/*:refs/remotes/cabal/*' 
+master feature:wip/feature
 
-> +
-> +	return &loose->subdir_seen[word_index];
-> +}
-> +
-> +static struct oidtree *odb_source_loose_cache(struct odb_source_loose *loose,
-> +					      const struct object_id *oid)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +	uint32_t *bitmap, mask;
-> +
-> +	bitmap = subdir_seen_bitmap(loose, oid, &mask);
->  	if (*bitmap & mask)
->  		return loose->cache;
-> +
->  	if (!loose->cache) {
->  		ALLOC_ARRAY(loose->cache, 1);
->  		oidtree_init(loose->cache);
->  	}
->  	strbuf_addstr(&buf, loose->base.path);
-> -	for_each_file_in_obj_subdir(subdir_nr, &buf,
-> +	for_each_file_in_obj_subdir(oid->hash[0], &buf,
->  				    loose->base.odb->repo->hash_algo,
->  				    append_loose_object,
->  				    NULL, NULL,
->
-> -- 
-> 2.56.0.500.g5d06dc02cd.dirty
->
+to update "refs/remotes/cabal/feature" when we gave a destination for 
+"feature" on the command line. The existing behavior is long-standing 
+but I wonder how often people specify a destination in the commandline 
+refspec when they pass --refmap, so would anyone really notice if we 
+changed it?
 
--- 
-Laters,
-Toon
+>  But if it is
+> wroth tweaking, we probably should do so as a preliminary clean-up
+> before all of this, since .fetchRefmap is merely a way to allow you
+> to avoid having to specify --refmap from the command line all the
+> time, and this series does not change its semantics until step
+> [3/6].
+
+I agree with having a separate patch to handle the cleanup, though as I 
+said elsewhere I think we should drop patch 3 and use the combination of 
+".fetchRefmap" and ".fetch" to set the default behavior when there are 
+no refspecs on the commandline.
+
+Thanks
+
+Phillip
+
+> [Reference]
+> 
+>   * https://lore.kernel.org/git/xmqqld7hafhy.fsf@gitster.g/
+
