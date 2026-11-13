@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794580116;
-	b=IRYV2LEPQhggl1NKA/sq7QSrlQVzGZ6ws6i9tyY9i/IZDvh1f0WyHyT8QiGWCTn1Pf4S
-	 d/lz9Roobaxj2umZwE6RoUSMrj4CPNHT4kmailhAJrVM7iANTNz+rICTUmuuDIyhLYGNu
-	 US/JSqRfEH8GcL0E4iMZmu/pClOFfBD+19x7Z2I0ejszzVHPB7Gf66x5/Qn1W0123dG3l
-	 1/IGTAwZUIF1FstDWwwOvri7ftkVEsW3QQ6S9g2DbaJ1l6zU6VBUGNB+31/nj3P6ujcVA
-	 gPk+Tsr+db3RMMyjaZH8B+zFrGIi1P1pk321HfMXcJX2LqBXkdNqkIpHYZFqdsABnnA==
+	t=1794580129;
+	b=Ra83/NbAs4fgoIdtO3TaMyZvLCkOm0q5kzsVxZLRkg6Og5M4j0efuXkEhS/yQ/1jLh/P
+	 OZ6eT0DIHQ2RnSdtDBkYcvP0E/xSGMy1qtwAoi4A6bsnxVp8AdRdPXd4CWV5FwJb7Ac6m
+	 aMP2t11MSbhqZSXVlZRA3ZI1091u7n2YsMnzvZueGCWATi92YRurJ5w3mXg4d8arIc7wC
+	 vGpOGl7Y1YpebL2YHAsw2ooLK7pEuIugjS6Jxqp8OzffawWI3KLue4MBk+UgaEfXQWx6E
+	 bCZOV3prQOXsJpttIpSzkyjBll3+hqVq8cBkANnlIY0UDei6IHLmcl0I23pi2vkuKvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794580116;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794580129;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=SNXC2lhkCoxQLHHKj2cPy9hCrSbktv/QxF49fwHbnss=;
-	b=bcN9Mj7yMaXCsXDqWOwyyZgsmWPjm3Kbc0bNxOeGxVtfyivtyZ2L9eqXu+gorSOsQGXM
-	 uBVhuR00hCina8Go7aM5wPiMkjumB8KnDp8wye+UFqNTPJp9K2JzQ20HEpEUUd3wzDWN5
-	 UHXQh9TvUBpa915CHbQO7ooOGLG1d3WHV1Q+MUEENsgLyx5rnlAOnxx/uKwKR4D//7gYo
-	 n5QyTL7hnQOzBmKONjRSO9ToJXUw6Bk3k7rFasF15UEKNIA+Q8CjJ9HHmQzFTKUJTyX2Q
-	 SSSb7O6fBwAjxEKrqOw8I1mXPgEYTMEJccaCvvu92icHpKzlZjJv+nCSN+YgY1cGwBw==
+	bh=TF7HE61UWN3qwbvSbDt1QTXd3Thn2U/deOOhW78yQYg=;
+	b=HvZ/h3GdSJbvoRCLTdaLAaE8Yf3gULlY1UBg1ILdUy6HZ/6e0CIp17wiC8/IM+oRErk8
+	 1Tic8VCGj9XhTLX8BA7SjEfYB57Cwc99wBClNkQA9zuBeCv5yyLrO+Bms2gcfxr9P0TYh
+	 1MhhrQysqBnCdaClY5VXB/59MpMt5jMlxiMU8Cd8dlFWYKokijDqnMikqhKJxFA7mnFCl
+	 PagkzDtpNmKTcYiMEJl/hVHwOFLlhoeiuHquNea0APkBhYPI3F7/kSsZU4flDILE/3kdi
+	 aBrMFpUlsqVWQYatCZbVQSr9vI/c4+635Rjd/McZTyyeYhQyCWKMGrgxQBAD1XJiJQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tXgqUh+m;
-	arc=none smtp.remote-ip=209.85.128.45
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QDEz2DKb;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC321606A327
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 14:28:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AC321606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11194606A880
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 14:28:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 11194606A880
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tXgqUh+m
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a2d6d01ecbso9711475e9.0
-        for <git@vger.kernel.org>; Fri, 13 Nov 2026 06:28:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QDEz2DKb
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4bb55cda775so4648365e9.0
+        for <git@vger.kernel.org>; Fri, 13 Nov 2026 06:28:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794580114; x=1795184914; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794580127; x=1795184927; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=SNXC2lhkCoxQLHHKj2cPy9hCrSbktv/QxF49fwHbnss=;
-        b=tXgqUh+mkYX571h28UrSodom34SEvSBir93b9Ubl+THl+WbhJqdjLdbYdoZEGyxkOU
-         7Wd7Fjdx3LFm5MNHylhft0mgNl9nKk/jQC7Jc1fTBZhT8HOxZZFuib/KylTSdD/BKpxi
-         cZD/HSps1nJ4ufBAGS0L1pbP0akNTxo1rlJs9BIo+XHoL5QU15l6nwR7dv0GZTua5DAt
-         WjXITJ0gX+7ZyP828TRlfUvzIj3FHcYICQs4wzfeyRZUAcLwbKgYyMEHW6VqCns95B0A
-         eskOLy/DM1nFwpdKfNm5SG5TfAbhR2iKnXjL/okXJexnUGHKmbrpZo3P6GuNAEnPNp/p
-         +5Pg==
+        bh=TF7HE61UWN3qwbvSbDt1QTXd3Thn2U/deOOhW78yQYg=;
+        b=QDEz2DKbjPHUnfuX35Pj9+bcCbSIfjKQbnaD43uGvpHN1d/jBn/395nHWEC1lNWafb
+         i1N43hVWkqfw38FkpbI8AHUQC1/wJ9U0cT7XYWjbonz4pwp9scdI4kxRAtK3h2xQgmQW
+         nr85/FYuhonLFCOSmN4XK5Xz6riERlA12Jt1H3fNx2frAvMlorl7wzGPcv3zeYhOovza
+         cDHsEauMWLjX06tEJFecxieeeIyhlHKhogmYI5hDqnyz4BY4E2srNlKSMexiFnNr8i8b
+         TzbWGM13w4g2vkSTmSTP3wWgfPUW3ez28SEIj2R36dF/ZxlSlBt9Tn1EDXKZsxvsZS8D
+         LtKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794580114; x=1795184914;
+        d=1e100.net; s=20260707; t=1794580127; x=1795184927;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=SNXC2lhkCoxQLHHKj2cPy9hCrSbktv/QxF49fwHbnss=;
-        b=WRbGGACRD2I4kkweWoG/FDjMWicTgppMqckoSc7cnkCYvMT9Z93+cJzkfLGp0M4dFO
-         3xSV/jy6o7FY/7TRvuf7dtJHguVP/g9hXSplqsrdjgfEYBKMYmndgwb5G4oU6nCr0VR2
-         dtTf0uisBkvmzsCkamB3/LAfi50NmcoVRX90WxqV8DJgDbCIICdgAZ2V0al3IcFDPJVy
-         DkOEtuuOcOxB5d7Al7aM7jguI/rrXmNRvQOcAC4JashZRbuhAjwm5vL5d4hQxxR1Kc5S
-         CSaOCqZtplQC26K9FQKW6eziThkSAKhj+7SvBtiudhgc/KnyEEUAr4ylM9mNx7jMi84x
-         XrlA==
-X-Gm-Message-State: APuU4Z+qnWT7LInmQ/jdSuCW4yHJuSWITuLTrU3tVTsC2nUhYQp2IU8l
-	4pILJcrdp1FkiyTw5iYuBrrBSpYLBWX4Tn4LyUWEvNUPFVs/arJ2kkYE8uayNZWQXY4=
-X-Gm-Gg: AYBFou2EdFpoNphAlSt4ch2xMwEZcw1I5KhP1iA4vuBfZHJcNZxNBoqeYoOWHVclb4p
-	E8S9YECQIIwFNmM5fu8mtMQNt+Iaz0lX/sVT7GoBjWxkwq/2lB0LPnIX+zcx4RMT/yrBZsoSgbz
-	58x/MqD3t7I0TtkHjRl+hs6q0OJDQkwhafobnoFco+enfFLBSg6KQhFfbVkg+W5EyOlBKC4C11Y
-	05/FML2U6DmWq5Vj3OqsnXVJZ13QPlG+IensNn1xms/Eg94DRk+/WC4r0TJ64V8s4QV+RXSBEG+
-	lYbfAPqaE3MmrxmUVwFvwRPeBXRw5WlOm7EvRSodWynC8fgW8yeY/3r/8bTjOsRHylQXngHUPX8
-	x3BS9ZBC6WH3bIfod+fSPmPO4BGTmNdy9dgJvrsuV6iPmN6Kvyag7MgIQjXK/z9yUXOIoGsASkv
-	rCDBTbj4fbYzaE6xw32PoADYVXO1abMpY6381+PSHR6gOMzhNEHEj4ToA40oD9NIhVZQr6Isl4j
-	ehCtwnbqhZtd+50qcB791kkccTeorLEiWl0XjDz8dRi5vS8ssn93teG9X4YF5gEq8W3eNO87ApN
-	+hcIKAhKHq+Jh1FAauDHIRFXNfawJvHJtyW6PG4j7UVOoerWyeirepplAUcfI91mScl0ByQOsi0
-	fPmoqAw+IDa4nAGYL9QIh4rflMoNTFq4=
-X-Received: by 2002:a05:600c:1f96:b0:4a3:5a91:5f61 with SMTP id 5b1f17b1804b1-4bb55a4d2b5mr58576015e9.14.1794580113688;
-        Fri, 13 Nov 2026 06:28:33 -0800 (PST)
+        bh=TF7HE61UWN3qwbvSbDt1QTXd3Thn2U/deOOhW78yQYg=;
+        b=keJEHKPzIj0zheizGx5WtGuvinW//FfaZe6NLCXsn6vT+CviXWNu30Qh3x8ctwFAIj
+         e9TKy8ngnpNL8WhLxNJajt2YLV3Uu41fNkMDFCXhHP+2RJk4j2Sx88/DHL44yGHtEd/K
+         8Y2uJPw1Q8KpjsIwLtXyuyKaRw1PSb2nkdYfWxBOh5vWRwGFMDmgDqAEbVLfoLme09/j
+         nCVY87HjmTfbhYVe2NMbzfvSQVdKT44GktYz7FROqAW3ouyNyIhqPt4d94PU8b1J1fOc
+         A+/uYqfikqP9hlpQW5tqZxTeJHPZnWYoIFEsOBkGt2u2UWtngs3en8gsIUAyOFwxkeFw
+         EC9w==
+X-Gm-Message-State: APuU4Z+vYSYXKpa+rOnsTcjPi7NyFxId9lNukmzjhv1nkaYYBYl4efM6
+	BcqnSE/+ljqkcETjqkMpGQ7jE3R36UmZ4SqC4VDFGijgNB1hOsysyk0eCABiVPa5
+X-Gm-Gg: AYBFou0HyNH3V9JSuRgAZC7GsfKkSzfSF+A4uOhpu+aBPbj2yAbaG+agIZfD7guYlBc
+	ZYC15XuesHCEQoXoh7HqPWSQJaWw+oGzv0pZ0LF5Tiql47cGnH4wI3AJWavlTuYOcisVqi4g1eq
+	BLWdLuZoiqRUHKuQMyxdAmFI4xfRo3IPteXxKVktOyJ6GSKkChYGuLzoJUdhz1rZenSU8yx7hXV
+	xZyBbiq96tSHAeDPX4tTLEgBDSLt4PMM/83RBtQ8chI+tAEeOnHg/3L4YF7pt6kWN7CmstyNMZz
+	Qvf1hY9WJaa+kCDSZT5EsrW9+Z2BBQhoaH2uXEcn58m0FWFXhObev9xKqFL/YlQpJK1KvjnDGkI
+	QTADbw5Qp2oa0IiYRY5VNFBEUwA+fQdX03R8FfqFkC9dZ2cdaHV5jA+gAzpylnB1ksHDZL+rEfW
+	qWg03axHh3zQ+ezPhGcUefHNMUa/fIkfbs17eH77CVIaYwuWF4qDC1qNeZyDz5So0OJpEKv5cg8
+	mP6I0kcpc1MEp/d5YwVFOjf3YXyWi/87AJNKcp2wjgsvCSu72bbkmECxppQBERv0uj2XZpoef09
+	KyRXVtZbDvAfpf/utvcVbNLA5XaIjDPRuB/kXkapZwYkDSsHDmuWJDyTTEVWNtjnA9GAo9zpkUD
+	z7MC2DnN24P7XbghhT6vnpCEkIvAeVQ==
+X-Received: by 2002:a05:600c:4691:b0:4bb:5e8c:13bc with SMTP id 5b1f17b1804b1-4bb5e8c13e4mr9747645e9.7.1794580127193;
+        Fri, 13 Nov 2026 06:28:47 -0800 (PST)
 Received: from KURSA (ipservice-092-208-105-158.092.208.pools.vodafone-ip.de. [92.208.105.158])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55ac1159sm60033285e9.4.2026.11.13.06.28.32
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55ac1159sm60033285e9.4.2026.11.13.06.28.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2026 06:28:32 -0800 (PST)
+        Fri, 13 Nov 2026 06:28:46 -0800 (PST)
 From: Caspar Duregger <caspar.duregger@gmail.com>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
@@ -85,9 +85,9 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Jeff King <peff@peff.net>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Caspar Duregger <caspar.duregger@gmail.com>
-Subject: [PATCH 0/4] cat-file: do not die on reflog entries out of range
-Date: Fri, 13 Nov 2026 15:28:00 +0100
-Message-ID: <20261113142804.7465-1-caspar.duregger@gmail.com>
+Subject: [PATCH 1/4] object-name: do not read a peel suffix as a reflog selector
+Date: Fri, 13 Nov 2026 15:28:01 +0100
+Message-ID: <20261113142804.7465-2-caspar.duregger@gmail.com>
 X-Mailer: git-send-email 2.56.1.windows.1
 In-Reply-To: <20260212040708.GA1894049@coredump.intra.peff.net>
 References: <20260212040708.GA1894049@coredump.intra.peff.net>
@@ -102,53 +102,61 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi,
+To find a "@{...}" reflog selector, get_oid_basic() checks that the
+name ends in '}' and then takes the last "@{" in it.
 
-I necropost with a patch as I stumbled on this the other day.
+For "HEAD@{1}^{blob}" the final '}' closes "^{blob}", nevertheless we
+take "1}^{blob" as the selector. That is not a number, so it goes to
+approxidate_careful(), which accepts it without complaint as "now".
+The name then resolves to the current value of HEAD.
 
-I have one "git cat-file --batch-check" process per worktree, but it
-dies on "ref@{N}" past the end of the reflog. I work around by using
-the old "git rev-parse" for these but it's sad.
+We only parse the whole string like this after peel_onion() has
+failed, so a peel that should fail succeeds with the wrong object:
 
-Passing GET_OID_GENTLY from cat-file is the obvious fix, but on its
-own it would change answers, not only failures:
+    $ git rev-parse --verify 'HEAD@{1}^{/no-such-subject}'
+    <object name of HEAD>
 
- - "ref@{N}" for a reflog with N entries and "ref@{<old date>}"
-   resolve today, but fail with GET_OID_GENTLY (patch 2, which picks
-   up a review question from the series that added the flag [1]);
+Only accept a selector whose "@{" is closed by the final '}'. Reflog
+selectors never contain a '}', so no valid selector is rejected.
 
- - "ref@{999999}^{tree}" would resolve to the current value of the
-   ref instead of dying, because after the peel fails get_oid_basic()
-   reads "999999}^{tree}" as an approxidate. The same bug already
-   makes "git rev-parse --verify 'HEAD@{1}^{blob}'" print a commit
-   (patch 1);
+Signed-off-by: Caspar Duregger <caspar.duregger@gmail.com>
+---
+ object-name.c              | 6 ++++++
+ t/t1508-at-combinations.sh | 4 ++++
+ 2 files changed, 10 insertions(+)
 
- - an emptied reflog still dies inside read_ref_at() (patch 3).
-
-Patch 4 then flips the flag in cat-file. As Peff noted, this does not
-make batch lookups die-free: "HEAD@{999999}~1" and "@{upstream}" on a
-detached HEAD still die. The former needs get_parent() and
-get_nth_ancestor() to pass flags down, which I left for a separate
-series.
-
-
-[1] https://lore.kernel.org/git/xmqqa5745ttw.fsf@gitster.g/
-
-Caspar Duregger (4):
-  object-name: do not read a peel suffix as a reflog selector
-  object-name: let GET_OID_GENTLY affect only failing lookups
-  refs: let read_ref_at() fail gently on an empty reflog
-  cat-file: report out-of-range reflog entries as missing
-
- builtin/cat-file.c         |  1 +
- object-name.c              | 28 +++++++++++++++++++---------
- refs.c                     |  2 ++
- refs.h                     |  4 ++++
- t/t1006-cat-file.sh        | 35 +++++++++++++++++++++++++++++++++++
- t/t1508-at-combinations.sh |  4 ++++
- t/t3903-stash.sh           | 17 +++++++++++++++++
- 7 files changed, 82 insertions(+), 9 deletions(-)
-
+diff --git a/object-name.c b/object-name.c
+index 6546685760..13e4dc0f21 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -712,6 +712,12 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 					nth_prior = 1;
+ 					continue;
+ 				}
++				/*
++				 * The final '}' must close this "@{", not a
++				 * later suffix as in "ref@{1}^{tree}".
++				 */
++				if (memchr(str + at + 2, '}', len - at - 3))
++					break;
+ 				if (!upstream_mark(str + at, len - at) &&
+ 				    !push_mark(str + at, len - at)) {
+ 					reflog_len = (len-1) - (at+2);
+diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
+index 87a4286414..10a8c3ad9d 100755
+--- a/t/t1508-at-combinations.sh
++++ b/t/t1508-at-combinations.sh
+@@ -84,6 +84,10 @@ nonsense "@{-1}@{-1}"
+ check "HEAD@{3}" commit old-two
+ nonsense "@{3}"
+ 
++# a failed peel must not be retried as a reflog date
++nonsense "HEAD@{1}^{blob}"
++nonsense "@{1}^{/no-such-subject}"
++
+ test_expect_success 'switch to old-branch' '
+ 	git checkout old-branch
+ '
 -- 
 2.56.1.windows.1
 
