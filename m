@@ -1,92 +1,78 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794528392;
-	b=r2HJ9K+Ed7/pcJ1PI90CwhlPAqHoB+7aijkC4IPZ/n4X4Q0ZlzDRvhW8pXhNNPHjTMN5
-	 yfY15t3oLEDrF0Vr8ZTbN2qVGsd9nK8Lc2ejLNa5VZdmNcAnmxhVI3vmoJhUIDaRcSaBy
-	 UFCPjMzMbEz3FOKvJY4riLYy3ehZOKWEyY2ilQXSozPpMSzAh3f4qfo/A5sqY3xe55txD
-	 b4Vv7YRGP/rOqYzz3C2kraQoe4nJ4bQSlgFplk0Cq45FM8fOmShtcD79BfcVqnzDS2kBr
-	 GP3wk/3LzDbfS6LjTksZg3f08sbse1cxNYbyrX3SogyeMI7MCkSsISexV2tnkgCdvOA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794528392;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=qqCI7GOll3Mi9ctjOxK2M/IvTPN8fKS8/Mi83lev5k0=;
-	b=ejsDZNtfmVzzZLB2dsWpBaANyHAOPcbM9q8+xpWIQL7AKar55kVVJrRd8W5C5r2qlKJY
-	 B9xgvt4uUMib4PpYtahyH+mTRA+vgG0XRxa0e7VH820T7ZqzS1qPz6HY7CXbwQgXl/qNC
-	 AMK9Tlz72RnBqVegpTCSSHY+GF5bgmxWjWBHytaWsctHglvrBvTCstdSxW12lo2Sx4ym0
-	 /w1GbpqHZipXzxhMuzd88TExNi5naJntxVFVvhJbsGEZ06ZNoJTMbHGJO9l+c8ZNW4e0s
-	 +RwR79ydqZDAEy0AQeqL5EYpRB+dNkbygHHPnrh0wi8lucagjMgCSZ5JTiF2Gm8dDkw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=S74VMdJ0;
-	arc=none smtp.remote-ip=74.125.82.170
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794536281;
+	b=mGZMP7XtcYud10Od/EzezNvPzfma3BpSTqvYFWYX1DTprWuAPZv+XweywezMZsqsmCwy
+	 4cU8iffftdvI//r8fAhehS018WfxyynYDy3pqzjpE1TOKRd6ksYMmtMPRKzS6ZgvIg3EV
+	 G5WLzfA6KiC42wRCo7I1DJ41vIoyQH012mMppsoBsZtyQXqoNFBkSamyuEoJjH+ihEqqw
+	 fZ46PInosxrIPmEVI15HiHV2GGWSks7R5QYP0NqGjdicBLn+NHwVHG3uuZP76cBJ28W0I
+	 cm39fHn3M7ypzEU7olUqiqyLrzCSaOpCZinSAtT+uFeQFFLYt0K2mQvhWSsF9BOXK5g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794536281;
+	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
+	 Content-Type:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=GZ5uyzH31QfG87X1cIQRDyBOu5vBx+9wHflUOQvg46I=;
+	b=M9SBGYywNNAUXKXwaorFPZtgwspDyoBSqiKapX2IhXDoFb88+A2czDOJMqYAcrusLMxq
+	 PcbTv9wU7xaxpR+U4vjH0bUR/S/JqhOcasSN9vQ8AEffSTrz13XDIbnNxoUAccBBAgGGb
+	 dGkrAIS9Ih/Xfk7zya8rqYsyomJBMvY1WogOYRDvGnQtEU7EppoRhB+yVWOk1P/6prJ33
+	 uoFS8wswApnfOCVj8yjkMC33aFfG8fPhr0MN0wAHK4e0ODEb66xAtAKu1reXvXd2ObATX
+	 CvkyHnlzwfbJ8VBiyDtNMPkilWaWNUdONLsfU0Q7ieKMIeGQlnIANRrQdAc10pnwpbA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gJi6uki8;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E62606A323
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 02:18:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gJi6uki8
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1794536280;
+	b=XoMbuFVXqdzrnfISPp6OkbvRcz5pMXnxtGE/wInmFILhbcoRSqJ74MtV1rF2AvXymIvv
+	 zFypBRCQuOIAHvYBmri0x8E5O1p0bSbcgP1vAjK2n1AHDuDCF898lrDkm6JD3mB7tBeI6
+	 6P6s/CJEDbmUbDGvmqWbrC3k6pIaduOPCfXqEr54ZO/ldiMtiEMjLK54tvfFI9OkpD7un
+	 xRRbVZ15HjDzNNl0Smgl+F9WVdflSnbDfaaAAlT3dhgrZgUnqf/tYhtKMju5FElMyzBnZ
+	 Bvuy+s7tzmlpiXlC4++k9u0aaeYnqrXNFWSX//srMjU8Y2ArDvgIV6MXwIWdQcrlt0g==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1794536280;
+	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=GZ5uyzH31QfG87X1cIQRDyBOu5vBx+9wHflUOQvg46I=;
+	b=cxvegH4uMQMf4nJdNvLqWH9AMMnLrtfZJS5x8h1xeMia5hrctd5jyXt2uMvzBsLhhQ8A
+	 lDPe3Sh8ukfs5cwHCUBu3MMokj/svNNHUOvB/xCIclOQzhNU1UOPqN8PbsnsEEJf1YwMW
+	 hscmB2TGxWU9UnR10DSOwErR5ZbQ9ViuQzn9dXYa3HrwB89G7FCeu7Y6e+LFEB5XC88WX
+	 IY7h9Wrdj44tURQioSiXC6mZwycgRlZ1fihCyZUbwQnnfyrca2EUB/MbuqUh3LlsKGm1h
+	 6Xn7FbrOcM3YdWjk0KZC3z81Jp56VQgUFXRG597QZ4ShWKmH0lCW1XvfBLMNcx5IyGA==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	arc=none smtp.remote-ip=100.80.115.77
+Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB92606A321
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 00:06:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CFB92606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=S74VMdJ0
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-3282db206d3so36398eec.0
-        for <git@vger.kernel.org>; Thu, 12 Nov 2026 16:06:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794528391; x=1795133191; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=qqCI7GOll3Mi9ctjOxK2M/IvTPN8fKS8/Mi83lev5k0=;
-        b=S74VMdJ0lydmxG4gpuyMkKRLLxvmfQF78bU2DBUJU2BwksFc3eg1c45DfydF4bsvat
-         YoUxWC/NbtwnpyOOxHx8bzvogRoySPhl7pV7DMZnTvKFl5KHbgskd5pOCbi3aWIQQPI+
-         RuS5C8OVhM6EdWXgofMo9JO7w0T4S0VJ7Pxb80YrKuE27LnCSf/oSuZGqqBxSoNix11z
-         GEXQjO8oRm9jAcnpthccyuEWiB4QIrGxdW7lMk0+Ar4pYGpl2t08d/Chv1QuFBYQ0/XA
-         /UJ/IyPV9/LjsKmFm1oLCrsvWkP6iuIGg/8Zd+8kIBzx8Ow2+xY3gtcTf27rTdzapcEg
-         T46A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794528391; x=1795133191;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=qqCI7GOll3Mi9ctjOxK2M/IvTPN8fKS8/Mi83lev5k0=;
-        b=Syygu1B0rYxL6kIE1/FBclIy0F6a3kIOMsbmtfkJESYkT4K22hQONyHlBAnAEacE9+
-         q0mpk10Ib1Kqg2mmv+EMsUFsACDqfHrSrOT9Q2cBtX+2zQIZKtc/Zy3UF5XSsVzZQJhB
-         p2p5MxkD3u7mVcoWgng3TBTSImqdRQux2pMbI3sOOWdc2LyM/sinw7klZYmuA0GoA08s
-         ORJGCeIRCF31eWS5QAWqL4cmNwEb1QHs6tegSzTwXm3RzNBnOSD4SjLPepSZdIirqhMz
-         8oVuv+Nwa6qD6o+pS/6FArOzTbVUpn+xp7762xy448UatZzQ1vupvlKfPT1yCd6wEa3a
-         CmWw==
-X-Gm-Message-State: APuU4Z+SP3eGynK1h/Q/mtFOG42dQZ4pTAK04sf7PybXwejl5/lXuetd
-	0y6nEKW/KOFBh5xTiIqT51nKBUjrzr8tda0UDDDV0CcnfWUckppeYel6IKuHVhka
-X-Gm-Gg: AYBFou25yBpJsAQOaLl6jYsig2fKV9WSFzL60avKLQJDz1L2inWKewt+0qtuDYf2Aev
-	nxYW+teSKFm9yzdN4eTwFcJCH36WEIyLkmwuTdzpHh9oDNdrswB/w5BNVjc76PFnuqB5fzgoIo0
-	4tXydUpHh9AGlIfpDhg9RAsENlZw8ynkqTSr33Oy5bS4Mpq3nENuuUDi9d7VthUuyh/p6167ebH
-	waeQ53P6M85AJ+Bc9IV/QuNvssHJhHnlZeiHu/8zfUpZt1axxN1zEHvWcFyNrAJlcIfxrEFg/6Y
-	eQ6g9Iw9l6Zsmqo9GkLgOVVmvOSoX596NHnKxdHDHR9nLx2aDJOhn3GT505tG1fEo75NLZ7ygBI
-	BTaHvRR1ZLF2AmeyLEWAim1q2JYgg67FJlk8lorVXk37ZlYQYLa++90XXgGgQtkL8t9PsjlPJNO
-	JNHncOChshAPr/wX2zC0w/VgmJAizElDWqnWuPzjFAbVDzmLchuGLV1jJ4/XUhSSKD8uUT3v/GZ
-	c33Wy0uTAh2nRGf1zAMyfpWMY0KWrPy8CdNvTmIZdiFhd/juHaWwTjZrVb4eU3J8TM5qhDE/gLI
-	1GyYWFhY9C8fMe3z6PvrWmrDHXGc57RJmaIs3ufk7mSeodSv+uDRSly6eQC6YZFAoccDG11jNI6
-	Fyj4tOy+95+QccYdDzbbFRiBu2RsoJe3z81PW5J222mR4VahgqTb6w8jH3diy0fYPTUjkjGcx+l
-	vF08BoFoaIc1+kwMOMqS2k/xi6st+ZTd1q2ieBxXjN9KLmmwKdOJ1VnwV9ghA+ZRQ/BKqzicTjS
-	B/+WI4=
-X-Received: by 2002:a05:7301:11b:b0:36d:2b50:4eb9 with SMTP id 5a478bee46e88-37967316395mr749003eec.25.1794528390639;
-        Thu, 12 Nov 2026 16:06:30 -0800 (PST)
-Received: from christian--20230123--2G7D3.nvidia.com ([216.228.127.247])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3795378d73dsm1846569eec.2.2026.11.12.16.06.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 16:06:29 -0800 (PST)
-From: Christian Couder <christian.couder@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH] promisor-remote: fix crash without a repository
-Date: Fri, 13 Nov 2026 01:06:01 +0100
-Message-ID: <20261113000600.202744-2-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.56.1.471.g1891de46f7.dirty
+	by smtp.kernel.org (Postfix) with ESMTPS id 4D6C41F000C8;
+	Fri, 13 Nov 2026 02:18:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794536280;
+	bh=GZ5uyzH31QfG87X1cIQRDyBOu5vBx+9wHflUOQvg46I=;
+	h=From:Date:Subject:To:Cc:Reply-To;
+	b=gJi6uki8l2A97ZlKmAd55walJPy6026Ahymxpa73Ex1qhI3M3Bvzu8DDEgifaW2Vl
+	 3JqXzMbeTr0Gl6C7y2M7FcSdbnMY5Lmvbq/JmvYKi52qpZL+6ObLely4jojwcHuYFR
+	 Z7+q0PzwZdA+BKE50M2icam0HViPYZQL8HvdpqhElmopeUyhynULPwnfBQjCBWkcYk
+	 qbel4AxyA3Q8FcaeslbiLLOQtTVQkCBeNaRuuyCFXlRJyf4WZhZ7TzsJ3wjcYBpXyt
+	 9E/GG1NlVQXq8wJHHFxXTkXWmTA4gJ474eBJj1pFzlalyWPwnyApinDouVuY4QBrZ/
+	 YhV22e39YHw6w==
+Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
+	by lkml.kernel.org (Postfix) with ESMTP id CEAD147591;
+	Fri, 13 Nov 2026 02:17:59 +0000 (UTC)
+From: Yusuke Hayashi via B4 Relay <devnull+yusuke8h.gmail.com@kernel.org>
+Date: Fri, 13 Nov 2026 02:17:58 +0000
+Subject: [PATCH] http-backend: drop strbuf pre-sizing from get_info_packs()
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,113 +82,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Message-Id: <20261113-http-backend-drop-strbuf-presizing-v1-1-7d66aae03b22@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAFVz9moC/x2NQQqDMBAAvyJ7dsGkNVC/Ih5istGlEMNuWkrFv
+ zf0OAzMnKAkTApTd4LQm5WP3MD0HYTd542QY2Owg3XGmBvutRZcfXhSjhjlKKhV1lfCIqT85by
+ hS/eHG0cbh+ChhZpJ/PlP5uW6fvQRAf90AAAA
+X-Change-ID: 20261113-http-backend-drop-strbuf-presizing-6f496552d0ca
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, 
+ Yusuke Hayashi <yusuke8h@gmail.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794536279; l=1829;
+ i=yusuke8h@gmail.com; s=20261112; h=from:subject:message-id;
+ bh=5KrviimACYCG/AtywYjQYyiJqUKbPCUrIZKRQmnamtg=;
+ b=D3J0G++wLzAy04umBnll0qIcK2NDo5/yHuVWk+w9P6DUazpps6P4rjVsX5eaUVq2uZ7a0ZEHA
+ eYlER5VJU+8BV9bGOrGbqmA9/CJBhg9/8of9feIhCauFAnrAEYTyRjd
+X-Developer-Key: i=yusuke8h@gmail.com; a=ed25519;
+ pk=7SzYbbTWl4u1a0gmKeMxAqo7g7F1K7tnWWGWQ+LnNNs=
+X-Endpoint-Received: by B4 Relay for yusuke8h@gmail.com/20261112 with
+ auth_id=1495
+X-Original-From: Yusuke Hayashi <yusuke8h@gmail.com>
+Reply-To: yusuke8h@gmail.com
+Content-Transfer-Encoding: 7bit
 
-When `git ls-remote` is run outside a repo with some promisor remote
-related config options that make it write to its config, namely:
+From: Yusuke Hayashi <yusuke8h@gmail.com>
 
-  - "promisor.acceptFromServerUrl", which makes it auto-create a
-    remote, or
-  - "promisor.acceptFromServer" with "promisor.storeFields", which
-    makes it store fields,
+get_info_packs() iterates over all packs in the repository to count
+local packs, calls `strbuf_grow(&buf, cnt * 53 + 2)`, and then iterates
+over the packs a second time to format each entry with `strbuf_addf()`.
 
-it crashes in configure_auto_promisor_remote() or store_one_field(), as
-the `repo` argument passed to these functions has its `gitdir` member
-set to NULL.
+This pre-sizing dates back to 2f4038ab33 (Git-aware CGI to provide dumb
+HTTP transport, 2009-10-30) and is no longer worth keeping: `53` assumes
+the length of a SHA-1 "P pack-<hex>.pack\n" line (under-counting the
+77-byte lines in SHA-256 repositories), `cnt * 53 + 2` uses unchecked
+arithmetic, and `strbuf_addf()` / `strbuf_addch()` already grow the
+buffer automatically without needing an extra pass over the pack list.
+Similar pre-sizing was recently removed in a9ce8526dc (pretty: drop
+strbuf pre-sizing from add_rfc2047(), 2026-05-12).
 
-This has been happening since 3e20258d11 (promisor-remote: allow a
-client to store fields, 2026-02-16) for the `storeFields` case, and
-since 7a56394fc6 (promisor-remote: auto-configure unknown remotes,
-2026-05-27) for the auto-creation case.
+Drop `cnt`, the counting loop, and the `strbuf_grow()` call.
 
-Let's fix that by checking if `repo->gitdir` is NULL at the beginning
-of filter_promisor_remote() and returning from it right away in that
-case. It doesn't make sense to further process the promisor remote
-advertisement as `git ls-remote` currently has no use for promisor
-remotes anyway.
-
-Note that `git ls-remote` seems to be the only command that can run
-outside a repo and still process the "promisor-remote" capability
-advertised by the server, as sending the `ls-refs` protocol v2
-command makes it call send_capabilities(), which processes that
-advertisement.
-
-Let's also add tests in t5710 for both cases where a crash happened.
-
-Signed-off-by: Christian Couder <christian.couder@gmail.com>
+Signed-off-by: Yusuke Hayashi <yusuke8h@gmail.com>
 ---
+Inspired by https://lore.kernel.org/git/20260513185408.GA147423@coredump.intra.peff.net/
+---
+ http-backend.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-This is a fix for another bug found during the NVIDIA hackathon
-following the Gerrit User Summit 2026.
-
- promisor-remote.c                     |  7 +++++-
- t/t5710-promisor-remote-capability.sh | 31 +++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 1 deletion(-)
-
-diff --git a/promisor-remote.c b/promisor-remote.c
-index 316d9950aa..9c405847bb 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -1310,9 +1310,14 @@ static void filter_promisor_remote(struct repository *repo,
- 	struct store_info *store_info = NULL;
- 	struct string_list_item *item;
- 	bool reload_config = false;
--	enum accept_promisor accept = accept_from_server(repo);
-+	enum accept_promisor accept;
- 	struct string_list accept_urls = STRING_LIST_INIT_DUP;
+diff --git a/http-backend.c b/http-backend.c
+index c7566b1d12..da9516a4c1 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -612,15 +612,8 @@ static void get_info_packs(struct strbuf *hdr, char *arg UNUSED)
+ 	size_t objdirlen = strlen(repo_get_object_directory(the_repository));
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct packed_git *p;
+-	size_t cnt = 0;
  
-+	if (!repo->gitdir)
-+		return;
-+
-+	accept = accept_from_server(repo);
-+
- 	/* Load and validate the acceptFromServerUrl config */
- 	load_accept_from_server_url(repo, &accept_urls);
- 
-diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
-index 463e9e00b0..50a73ec8b0 100755
---- a/t/t5710-promisor-remote-capability.sh
-+++ b/t/t5710-promisor-remote-capability.sh
-@@ -813,6 +813,37 @@ test_expect_success "clone with invalid promisor.acceptFromServerUrl" '
- 	initialize_server 1 "$oid"
- '
- 
-+test_expect_success "ls-remote without a repo doesn't auto-configure" '
-+	git -C server config promisor.advertise true &&
-+
-+	nongit git -c promisor.acceptFromServerUrl="$ENCODED_TRASH_DIRECTORY_URL/*" \
-+		ls-remote "$TRASH_DIRECTORY_URL/server" >out 2>&1 &&
-+
-+	# Refs are properly listed
-+	test_grep "refs/heads/" out &&
-+
-+	# No remote is configured
-+	test_grep ! "Auto-creating" out
-+'
-+
-+test_expect_success "ls-remote without a repo doesn't store fields" '
-+	git -C server config promisor.advertise true &&
-+	test_config -C server promisor.sendFields token &&
-+	test_config -C server remote.lop.token "fooBar" &&
-+
-+	nongit git -c promisor.acceptFromServer=All \
-+		-c promisor.storeFields=token \
-+		-c remote.lop.promisor=true \
-+		-c remote.lop.url="$TRASH_DIRECTORY_URL/lop" \
-+		ls-remote "$TRASH_DIRECTORY_URL/server" >out 2>&1 &&
-+
-+	# Refs are properly listed
-+	test_grep "refs/heads/" out &&
-+
-+	# No field is stored
-+	test_grep ! "Storing new token" out
-+'
-+
- test_expect_success "clone with promisor.sendFields" '
- 	git -C server config promisor.advertise true &&
- 	test_when_finished "rm -rf client" &&
+ 	select_getanyfile(hdr);
+-	repo_for_each_pack(the_repository, p) {
+-		if (p->pack_local)
+-			cnt++;
+-	}
+-
+-	strbuf_grow(&buf, cnt * 53 + 2);
+ 	repo_for_each_pack(the_repository, p) {
+ 		if (p->pack_local)
+ 			strbuf_addf(&buf, "P %s\n", p->pack_name + objdirlen + 6);
 
-base-commit: 1891de46f79dc444a47db1c87bd0c8c76b5463f2
--- 
-2.56.0
+---
+base-commit: 9354c5f04055932909b660a237905b360cba195a
+change-id: 20261113-http-backend-drop-strbuf-presizing-6f496552d0ca
+
 
