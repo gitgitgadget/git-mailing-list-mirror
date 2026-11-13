@@ -1,114 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.217.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794573925;
-	b=cyrnV1sgOem9Ljpo06OWWmj1Pl6fUQSGiFXbULR1X91Zi5CTighXl8GzNBBxtIj8MbD2
-	 lgp74bWcFx/LUbX0Ms74lt8VQt4vh43wFu0hWb6OZEiQmpCqOLXNj1pzwQ+L1ofU8zeOe
-	 tR0F9Xn6IZd0ZZT5mjgTUqdKDu+BK0wQQPpN3QG1Ka6nriJNk0iJSHw7yVjLl75QG8eM+
-	 CTD4g+ZdCyZGJxWbhh2yzWoYq0oToxNvHyMK9/gGg0ufbKni7Z78z5gxZZNbX5b7yyDcj
-	 6Z+OBJYTf6mY/oaMStYB+jCfPaGvsoAljgDy3v56wXeN9GnfSUyGH4BrI8h4FHWmOGA==
+	t=1794575028;
+	b=AzGLd0uMRd94Xcg+EF/w4ffON2z8mTltV8nzVuGgOo7qymtCBRklqagK3/28eow1zHA/
+	 yhafpU7vot29tsI90xxoGhs07MfC8UavYbz1CivBj8HJWNJ7r/7QWFywJxKHgbhFK5Gbn
+	 SOw/aZQcgSKgAAxw7PG14lWNMxpDmKEF74zu3z4XvzrC9PPlyxO8NJvnO4qXJAJ+MO+V0
+	 j4ndRJV+OnJ7AtGE2oThDoSArj92O9mAKLiehn4zfx0C35DopfNQY3FurPXBOufJupMb2
+	 ajEgcDMNFx2bhzqxPY1m/R0Xfn2v0TUVG9L2rJ9u6oRT07X3qUEGSrOu9E8onXVeYlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794573925;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=iFi2dlJnqe0bOTu1o95BfzNS8+xp1CQ/x6dFAkWOJvQ=;
-	b=qhDs0s4rcnCnEZcQaX4p9KtFWgSCfoJ+TvU6txYjYG7rd1ch11xswYXkB/VZDaq7sHxj
-	 VyOjEh/KPtGo3JkJt124MgifUgXGLYGf/JQ0X06xWknUAUDyINDHmpxKBt4GVHaqyeJSf
-	 DeUl1rI/TeVDMqh7CdkLN1PN3oSgA09es9K31sabcfu5VIbs5z5MCEfIjo1hrpFB+zNTr
-	 bJqvvwEQFr95qgV4v+2hMBJnOlp9rwgjYVgw0MhlHGJ51K9K5LH83iiAXDyPMoqU/TAq+
-	 oFOVZL5V0d4ZJnJ8JN7LyDM3sGVdvgc4d1OZOeWb7bFQQgn4X6qYl6aEMfz9rWsrmkA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794575028;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:
+	 Content-Transfer-Encoding:Mime-Version:Subject:From:In-Reply-To:Cc:
+	 Date:Message-Id:References:To:X-Mailer;
+	bh=IW8bUyh5kynkixJR5Jc86gk1A1wz3NKp4wAhJZTqrPU=;
+	b=oYqzxvhQ+spdFtTZkL+JbkW+1BWVtm/ggvWtATs2RrRJGb9GN6NshEcs/owbropDaXQv
+	 94McAD0I5xav6pxs6LrRkPjHatmgKZGJM/1EdRl1Q84UjryxYVmVsah7PegHMtwdPbrGg
+	 GrwsQ25hVyM/2IkB08cYavlc4hLSiP6ApfiFcg4Z0o876u5Q5/DlfNTbuVyRyh621WZMo
+	 zG8RXeUcIZRvpl1dycbEKSB8eXgO0pcRasTQ8a6YGLFPbE2/9/wVLJ2llSbnEbdylse/a
+	 wAxqsZmHdOHkkDxJpF08+GUtwhHZanNdjTAilIHoQ93G4l5ZpWPkStYKRiPDxoPXj0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=jvns.ca;
-	spf=pass smtp.mailfrom=jvns.ca;
-	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=AWXGM5z5;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rvQbmmGD;
-	arc=none smtp.remote-ip=202.12.124.148
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mQLGwyp+;
+	arc=none smtp.remote-ip=209.85.217.52
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EFF606A88A
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 12:45:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E1EFF606A88A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54ABC606A327
+	for <git@vger.kernel.org>; Fri, 13 Nov 2026 13:03:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 54ABC606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=AWXGM5z5;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rvQbmmGD
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1FAE41D00247
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 07:45:24 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Fri, 13 Nov 2026 07:45:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1794573923;
-	 x=1794660323; bh=iFi2dlJnqe0bOTu1o95BfzNS8+xp1CQ/x6dFAkWOJvQ=; b=
-	AWXGM5z5ZbXQ+PqE0HQSa8sSsbO9HQa5zXdLp8LfYFuGNWuriN3FrsDlzWWf/Mlz
-	dyvTerIPZN4p+ILJJycNLgjApqzDBb74i+szLATVpv4a+v6YLLYKr8aVYUBYg09e
-	UGFpQ3kahsRbofX4Jw25cjfkdsr+LTOMDGgwYgpM2DhBh6AFocEgMXKE8DKloe1n
-	RdyGrM1tLJbCsZpGM119FZJn3ogZnIKp9Z3QvY6CClrh3JEMJi/94pOW61VUFIaC
-	Kx/NR7nvfFZFBwBJUy1UWgJW5GPQ+yZ3vtdRF9XVbHBCMDBMYcEWc5+keH257OAD
-	JG7RKHB5P5q60qa0bpNYLA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794573923; x=
-	1794660323; bh=iFi2dlJnqe0bOTu1o95BfzNS8+xp1CQ/x6dFAkWOJvQ=; b=r
-	vQbmmGDX73BQSRkW+r7ib5rZN/NKdqQoGSR7Mt851y4WxAZVsSAfEJnIQA9l7y7v
-	63HNb6Z9IqAAPtW+TDFIJ8Jax+AI4shxzT0u4DJhxqrQfIaYmUU2TyasoI3x7znC
-	LK8a3Hqh74A2N/AuSLmdlJKZvluxOk0h2JY+d37HplMApgx5MDayeJ57ed60uYUo
-	Pj8cgjlDWL6SzISC1OZZI5SrhY9wbspqKo7yDBQd1jchpD5CTr1mRtL/sVKy/w/F
-	A4ePEOcBY39I6NUR2fuTvyHysS/yRhJ1u1QeG2//ab7M4aTzfUw27Xjnv7+hViwy
-	PFAjBFTPUMgHigM7OOGcg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794573923; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:m3+xbEs2FoKyDiL8hJOR06mcfpablmZIqh12CisY/+vc+6q
-	WG/w5bYPY6XDN4gQoznIRbve7A2SVgUcD55ldDRswwA6tq91fUUQDw3odEa5rSac
-	6Opd+H26isUnMERon7GkTJMVJzi4zjsB7DKGWlxh9Qfu/7j4kxybhkeWnQcuyje0
-	cTuhs6vFGyypmcD4DwOITLtIT5ueOcFTc5KOJWbGIxf95PMhvN99YVlk4YfOjteU
-	yt3KJoUtWku7cWs+iXMyCOeViGeMcDgxD/Bu5nksNQuCXAl0pUjSWwu12vv8g8pV
-	SBSl8nRtA8SDXdlDoB2qxNZsdvgIYh4HN8tHE+w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=14;
-	hn=cc,content-language,content-transfer-encoding,content-type,
-	date,feedback-id,from,in-reply-to,message-id,mime-version,
-	references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:O9PuHteHDLwUBx4mPlRXju7971oTzVIChahVnjYZJnA=:N06xeg79euO2NpIAoA3hzAZxPRsEak7phDnEgujiu6s=;
-X-ME-Sender: <xms:Ywb3arPIQaE2U75oKe2OLKOUwRZJKV1-wZEWYJ7nK4gj9HsbLHLzFA>
-    <xme:Ywb3as0shB2LR7hyuRp37vsUoNB2EgDs2Lbq4hTt4AiKMeRmZH0SSC4h7Rbn3Ix0j
-    MsZF0VEO5fpx9et_H27qqR8OMPtQnVFvrAnovh4cWlSLsvA_szF35l3>
-X-ME-Received: <xmr:Ywb3ainUlQcfHBuG8EaQWXct3DK3bY6a8jOkR-6dvPUKAxLYKOYtN_wdsbwlXDOo2UVyEq8crQ8aVeCI_PQc4Y5u_2-waEbKm7qswcokbaRN__2hdg>
-X-ME-Proxy-Cause: dmFkZTE/Qqsw9Xjzo1n312l8Me02F9ugssg5yg3F1aWIjxrHoSFIDxVFCAJjFVG0Hpd3f1
-    Sdrtp0sXYS8jRWBXTl5piMshMnDkaS2N/ZzoZX8pmuj8ng4OnUeshGE3QMFF9vySxIOANw
-    y8fNCWPVFSPxNu72T44rs+ym/wwEXVGlNZr06udMO4V/IINQ7zbsOZaZtXsNxNpq8aVq9j
-    SwMeW/eDor5c1dYXYqKLAu7Qrun6EVTqZ23NXvS4bMnw42CYBpXzLJCUgNXAQr+w4J9XEX
-    XHQYPCFCONVEfIjM5uZuS1UnTPyZ9IWbCbnFI2dotKLcDvXi7EAEAGrno6xHF+k9mDWIs7
-    b7y1hWcWursUTZK0OnnceS5Z1/qruIQfO7Db5gJeAHS9L+9vg0NNJRBPXj1YEiLE6/tEIK
-    69UPMCwfRPWNXT5gid/odSUGxF/qedMOEIQsb2OYk40obGPmjqhaYZdZF/ebj550rVuQcT
-    pvyNZlIsx58wTfLUBkV4+wezfyIu/WPiQBfFhTodS8oLeqJMseh2HXvYoaA3uLIgG++kHo
-    GY6ida6W/LZtmMEKm475qj+vjNqG0V0kqM2Zl64/rAnzgtVTAt77XpY+hNDrkCc/kogQoY
-    nUJOkUJig4gZ1jgCLYBy0hI+dFIFPZYAMEDRqtIMDHlQPiaAo7r3/hG5fFKg
-X-ME-Proxy: <xmx:Ywb3arVV1YCB-4wcrOgOd1BsZrJQrN3MjmOL1vTuUE5gJSuOW8Nb6w>
-    <xmx:Ywb3agvZx7MalANYzb7YqSEwEODtiU0d70x5TxM4bDMckFNJqGTeuA>
-    <xmx:Ywb3amalN73v4d_kPxYrU9pAOCDJRTpiGXJ3O1JLsbEPMbtD84RPWw>
-    <xmx:Ywb3anVYjNPZzQ8t4WjAYWdE_w5b106tYZMZrBNBcB8MH_2t9m9BkA>
-    <xmx:Ywb3aikM_2odU_BlEGQDcjRSV6r4wTgq2wATA7EMMhTkMUBEw_Hwh0mH>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Nov 2026 07:45:22 -0500 (EST)
-Message-ID: <36e73720-287f-47a5-bd3f-dc53629ac968@jvns.ca>
-Date: Fri, 13 Nov 2026 07:45:22 -0500
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mQLGwyp+
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-7cc1cf48a39so216359137.1
+        for <git@vger.kernel.org>; Fri, 13 Nov 2026 05:03:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794575027; x=1795179827; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:content-type:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=IW8bUyh5kynkixJR5Jc86gk1A1wz3NKp4wAhJZTqrPU=;
+        b=mQLGwyp+5sPpaZ/Jd4HHCEuYzqkrVNNFf32bZhPEnLZEbCqDtp9rLqHHX0BOg30g+R
+         wUQx2owF7BvRCdwxh1ensFNmJp9CMRSr8lAWXw0UGsy3FtefrGgQBAjtMTR4e/LHD9FC
+         AC5uka4TTMHfLnlwLWXYTFrYMdRVEgMmuw5aKHBpDjNF3nTnL7iHndm0LdKQYL6/+Zd8
+         YPxNIyP0+1Z+nBuRt7yeE+9xJKOTuRLDbdSKxGS9iEaBai5tJviu2tJduneo5epqy4sB
+         K1BfYxBW1Z0ZrdyjK0BE1HKlVntH3DrXiyl4kBbNIXFDKyCj4b5oDt0d6fe2LFyzLEj6
+         Hg1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794575027; x=1795179827;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=IW8bUyh5kynkixJR5Jc86gk1A1wz3NKp4wAhJZTqrPU=;
+        b=V1q54IQ6UGKw093dHc0EmfrZHPqMKRVGWw5H6/rynOfPOgOn3bzyofC7Y0+7TTPZt0
+         /ii5P4FRIGEspQ8FHBS+BhS0b9JHbqfQmyVN/JLCAXOZ9cPjh16o0Jt8ZJNxCx/P5CXy
+         2dCG1dIHjGem+jA84HjZ3YTZBRcVsRK2uXJQbs1uEtmt4VJR8Zrhb/0IRGryZJkAKG/X
+         33CdXO6FnWs/sEdQ4FIPDCSxmdcNGh5Gp51OnK0LRngnIYVvdgsr7MXYPn/lqcQpQFad
+         g/ua6waQgzgT6mMTi++y+FRdcuy7nYg5LVfh9erXdWk+r22N8fW2vOxiOwuZZZm1ioyG
+         +UOQ==
+X-Gm-Message-State: APuU4Z80IUXpmaSw5JLQsDni8knqyTyARm12OP5EPU+yBC39pOKyfYuj
+	KVVciRwMXbE4AYfmfNJ7WweC46th3RLPEjnGsr//3HP50SHyzeWLDiWR
+X-Gm-Gg: AYBFou0htvVRnbJr7o9+OlDOzok2wFDTJdl5SEhdpHrPCNu0QrC32DGiREQRbgYZG2c
+	lw+0nMDF8hC/VggqP0MR2v5B2SzVkcds/dhHVU/SWziiJOrVUARS9Q5Jx9d/TybgMfmIdWymsU+
+	UmDZtvxllSYUEHnKk53KCUe0UeW8BNuM7K9/lwuEywpu86FPjzoZOV00UwNzO7r6wWO8sjRtnCt
+	Eq++JGxR6udjmyXvWkXbD+76xTRpcSK+uReQOGY/q0S3rGu6wZdHpfZCsgoKaWXDRwdKoU0FbKW
+	X1fYj5E7tI2w/sLTa2IJFFCLh2XeQKIQWqIsfyfquU8DW5RJxR5P9KTbTDr1j6f9TfD3AYa99Hy
+	1rbg57jKT/SXLBghVdqsQVY4iZuqZ5vPrAEY5dRCIizXYDVWWZUydqMLU1J8BQ1KQZntV+d8DC1
+	kON79Gp69aMgdiVwISgSYYmSnw01g75Dpwum2ip34bj7AqVJZJtq1qOdkPvhF4FYg71iDfZKrwD
+	/IlK4REOPhqrbpD+GfXSPsShVIVpqwC7jDiMrsgGVbPozOacUULNGRyMjxl8i2dqnd8UIjd3moZ
+	wOjhsCMJZdhco+3mpLnqdnE3DX309OuP3gVLMQEK/OjjG5MbefSDNyTl
+X-Received: by 2002:a05:6102:6f08:b0:7d2:cdd6:6c8 with SMTP id ada2fe7eead31-7d64d7ed89cmr455276137.21.1794575026978;
+        Fri, 13 Nov 2026 05:03:46 -0800 (PST)
+Received: from smtpclient.apple ([204.48.95.220])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-99c7794a699sm1276507241.1.2026.11.13.05.03.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Nov 2026 05:03:46 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -117,72 +88,113 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
- Julia Evans via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
- <pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
- <xmqqh5ile4h4.fsf@gitster.g>
- <CALnO6CBGcG42NxtpuPaJVrzAMC=J8iVstsHCSi6vDQhDmFJ-Kw@mail.gmail.com>
- <ddc6d42c-6e40-46a5-bb70-f89f11525ac4@jvns.ca> <xmqq5wy2kqhl.fsf@gitster.g>
- <931a94e4-feab-49a9-b5c6-479f0d7f8b75@jvns.ca> <xmqqik21j1ie.fsf@gitster.g>
- <4d6f9b6a-e658-4797-bc4a-0cfc533056d8@jvns.ca> <xmqqfqx5foxd.fsf@gitster.g>
-Content-Language: en-US
-From: Julia Evans <julia@jvns.ca>
-In-Reply-To: <xmqqfqx5foxd.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH/RFC 1/5] replay: support replaying 2-parent merges
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <0107772D-4F64-4F24-9E68-C6709AF264EA@gmail.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ phillip.wood123@gmail.com
+Date: Fri, 13 Nov 2026 08:03:35 -0500
+Message-Id: <DF02C354-A49F-4FC2-9A52-FBFBB46C143A@gmail.com>
+References: <0107772D-4F64-4F24-9E68-C6709AF264EA@gmail.com>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: iPhone Mail (22C152)
 
 
-On 2026-11-12 9:25 p.m., Junio C Hamano wrote:
-> Julia Evans <julia@jvns.ca> writes:
->
->>> I think the central difference is that you
->>> seem to consider detached HEAD state is only about pure sightseeing
->>> while it was designed to allow touching and breaking.  If the user
->>> is not making any changes, of course it does not make sense to talk
->>> about "your current changes" or "next commit".  But detached HEAD is
->>> not limited to such a world view.
->> We say very clearly that you can make commits while in detached HEAD
->> state so I don't think there's any danger of readers not realizing
->> that's possible.
->>
->>     But it's important to know that if you create new commits while in
->>     detached HEAD state, those commits won't be on a branch.
-> Yeah, but that isn't the purpose of mentioning "next commit" etc. to
-> make readers realize that.  So I am not sure what you want to say
-> with that.
->
-> The mention of "your current work" (started at the HEAD) and "next
-> commit" is to lay groundwork to explain what happens when they make
-> that commit, and how it is different when they are on detached HEAD,
-> in contrast to when they are on a branch.  After all, what we were
-> discusssing is an improved explanation on detached HEAD, and your
-> commits not affecting any of your branch *is* the most important
-> aspect of what detached HEAD gives you
 
-I read this a few times and it's hard for me to tell what the issue 
-being raised is.
+> Le 5 nov. 2026 =C3=A0 07:38, Philippe Blain <levraiphilippeblain@gmail.com=
+> a =C3=A9crit :
+> =EF=BB=BFHi Dscho,
+>=20
+>> Le 4 nov. 2026 =C3=A0 21:19, Johannes Schindelin via GitGitGadget <gitgit=
+gadget@gmail.com> a =C3=A9crit :
+>> =EF=BB=BFFrom: Johannes Schindelin <johannes.schindelin@gmx.de>
+>=20
+>> @@ -407,17 +550,63 @@ int replay_revisions(struct rev_info *revs,
+>>   merge_opt.show_rename_progress =3D 0;
+>>   last_commit =3D onto;
+>>   replayed_commits =3D kh_init_oid_map();
+>> +
+>> +    /*
+>> +     * Seed the rewritten-commit map with each negative-side ("BOTTOM")
+>> +     * cmdline entry pointing at `onto`. This matters for merge replay:
+>> +     * a 2-parent merge whose first parent is the boundary (e.g. the
+>> +     * commit being reworded) must replay onto the rewritten boundary,
+>> +     * yet pick_merge_commit uses a self fallback so the second parent
+>> +     * (a side branch outside the rewrite range) is preserved as-is.
+>> +     * Pre-seeding the boundary disambiguates the two: in the map ->
+>> +     * rewritten, missing -> kept as-is.
+>> +     *
+>> +     * Only do this for the pick path; revert mode chains reverts
+>> +     * through last_commit and a pre-seeded boundary would short-circuit=
 
-Are you saying that we're not explaining all the details from "`HEAD` 
-can store either a branch or commit ID" to "if you create new commits 
-while in detached HEAD state, those commits won't be on a branch"?
+>> +     * that chain.
+>> +     */
+>> +    if (mode =3D=3D REPLAY_MODE_PICK) {
+>> +        for (size_t i =3D 0; i < revs->cmdline.nr; i++) {
+>> +            struct rev_cmdline_entry *e =3D &revs->cmdline.rev[i];
+>> +            struct commit *boundary;
+>> +            khint_t pos;
+>> +            int hr;
+>> +
+>> +            if (!(e->flags & BOTTOM))
+>> +                continue;
+>> +            boundary =3D lookup_commit_reference_gently(revs->repo,
+>> +                                  &e->item->oid, 1);
+>> +            if (!boundary)
+>> +                continue;
+>> +            pos =3D kh_put_oid_map(replayed_commits,
+>> +                         boundary->object.oid, &hr);
+>> +            if (hr !=3D 0)
+>> +                kh_value(replayed_commits, pos) =3D onto;
+>> +        }
+>> +    }
+>> +
+>=20
+> I understand the intent here, we seed the replayed commit map with onto fo=
+r the negative revisions, so that a merge with its first parent at the bound=
+ary gets its first parent rewritten to onto, but keeps its second parent.  B=
+ut I think a further tweak is necessary.
+>=20
+> I tried the following:
+> - amend the first parent of a merge M (manually, in detached HEAD), changi=
+ng only the commit message
+> - try to replay the merge. Since none of the trees have changed, and the m=
+erge-base hasn=E2=80=99t changed, I expect replay to succeed and keep manual=
+ly resolutions from M. I ran this:
+>=20
+> git replay --onto HEAD M^!
+>=20
+> and because with this syntax M^2 is a negative revision, it gets mapped to=
+ onto, whereas from what I understand it should _not_ be mapped and should b=
+e left untouched by replay: the new merge should have M^2 as second parent.
 
-That's intentional, and I can explain the reasons for it if you'd 
-like. I don't think this is the appropriate document for that information.
+After reading Elijah=E2=80=99s tip commit message on his replay-upstream bra=
+nch, which does the same pre-seeding as is done in yours, I understand that I=
+ can achieve what I want via=20
 
-Here's an idea to resolve this:
+git replay --onto HEAD ^M^1 M --ancestry-path
 
-1. Add something to the commit message explaining why we're not giving a 
-full detailed explanation anymore
+which covers this use case, and also covers rewriting only the second parent=
+ too. I think it might be useful to mention the fact that negative revisions=
+ are mapped to onto in the documentation of 'git replay' ? At least, I think=
+ it might not be obvious to some users that to replay a merge with only one o=
+f its parent changed, you can=E2=80=99t use M^! and must use --ancestry-path=
+.=20
 
-2. Add some extra info to gitdatamodel.adoc to make sure the information 
-is incldued there, since I think that's the appropriate document.
+> Since the second parent gets mapped to onto, the merge-base of the replaye=
+d merge is changed, so the fast past is skipped,  the new merge conflicts an=
+d the replay fails.
+>=20
+> Also, I think this pre-seeding should be mentionned in the commit message.=
 
-3. Add a "see also gitdatamodel..." to the end of the section for folks 
-who want more information about how HEAD and branches work together.
 
+Reading Elijah=E2=80=99s branch, this pre-seeding logic might even deserves i=
+ts own commit ? I like how Elijah explains how we extend the ruleset on how t=
+o choose a replayed commit=E2=80=99s parent(s).=20
+
+Cheers,
+
+Philippe.
