@@ -1,95 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.72.192.78
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794682104;
-	b=jPF0Txstr1iBDqyazv64huoFLkX5Y24yCFjf9UIPleXqhxW72Cxiba6Z3CDkNA1GUDMD
-	 W5YnHQgUSbjoJNK4KSc9q4+lA7QPe+QCk5+G5IQFagMCS0LfXSNEqtRAS0D+Rs1Qmg9xD
-	 ds4+RNfnvxMaHsu7yyRI7RxmZvoSjjK9PWFjT/kT5GAICOjkjZCPf5Od8PO4oE88NbO1p
-	 2wp2wSpZsCeZ6bksUrSHV1ShLgKPYt/obzLtznkSHfsdfILim7viJa2241Ql9NCjvKY/y
-	 8FuGFxS6WPuAP/us9AMdkoRTt9ajKPl2E50j+1q8pjDQFNzK3xhCM2ktXPnxQ/7uDUQ==
+	t=1794684409;
+	b=cEbjZycQ1rvQlfFtdCBGTr0DEyNr5bDf+2LtHk8TkB/3vv/zthqwszshYhtclG2GQzNA
+	 IKu4aeibsXmjaRMraPgTNT0diQe/nUAjhKwdCyZcnp6YnEKOylnSI4SZXG2IBlB9bqtqw
+	 YDYSqzLGiYllYs1PUoSwgYbkhugb29tlsxYnW9Ywsmf7LmDISQQY8HWxwG1+dpUCbf8ZT
+	 GIpXQU3kLHuJQdtN+deZppUNYBJyfOe7eHMClaBhrrXaONJYorcDs0mY1Oe+w+MtTnyAS
+	 R38RDeCfseGcTykZbhhqdU/HE6Kzdv50uRQZfMT+DbIEu3Sfx/LT00CUDVPwDa33XnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794682104;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=k6RlHuQHqNtXePwNLc13DW5K0bbGcNkMzrg33ecfzso=;
-	b=c9aIR9PMLHBlspC5Hs90trxp7lK/9etXQEQW5Bjr05GvgshiN/eh+1tAzmQBRsYOr2kF
-	 Jjfdzz5nu7hi1evhvp4Xo9O32PzeVx0CjyI68TrC6jAxupusXkyBruJyO548CkDSXQ7C4
-	 RnhyqCBQBDfybnwvdmE52D/t4r8533TUm+b/gu+MX1/SZePlZgVwE2uUm1vxgIfAVx5vn
-	 HQoIJZi70CC8d3lVnG1P0nqUS2qdPC81UOZan/pRl6HT6rez6LUIqne0JUEG2SS6yp1sF
-	 6tPrKDcM8WOCtx24A35cIAWABb4fTiB2FNPKKnkEyaqHc0D7zpj+GAXYkZHHE3oyolw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794684409;
+	h=DMARC-Filter:DKIM2-Signature:Message-Instance:DKIM-Signature:
+	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
+	 UI-OutboundReport;
+	bh=CvHijOxuIsLak3aYbraXL2cHokqrtQh6ERGuOkwV1Ko=;
+	b=VMvPSMVS7b9Li3ZuJw1n3swXiuDPa18uRJ0LxNrdFSKCF7AoYvjzpbbRctpVDv98NSYG
+	 oft7ywj20NsCOlzDtoXfRtMIOtB3syizgbkVVT49N7Unrm9Fcu7+rRDHwfRK4UEzsL3+3
+	 EbMDvzJsuXDr8zkoUIqePpC8jr2gHKY8Edjg6iFvdyWMIjmlmz4udFXdbDiGUifgZixY7
+	 Ns7icC/iex//bWUVNY7PQtMxObTURaIFD11daWfr9aVunOD85IAFXwydPD8xJoEVMdzlh
+	 yuDP3c2E4cT2rbu3Nd+2RhV5uPH+6fQKEaK9H2DFtiqjz/1vDW6EwS0Ek3lG16zeyIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L+y6j1E5;
-	arc=none smtp.remote-ip=209.85.128.43
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=web.de;
+	spf=pass smtp.mailfrom=web.de;
+	dkim=pass header.d=web.de header.i=l.s.r@web.de header.a=rsa-sha256 header.s=s29768273 header.b=fMDgLR6b;
+	arc=none smtp.remote-ip=217.72.192.78
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69CC606A336
-	for <git@vger.kernel.org>; Sat, 14 Nov 2026 18:48:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C69CC606A336
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38955606A32D
+	for <git@vger.kernel.org>; Sat, 14 Nov 2026 19:26:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 38955606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L+y6j1E5
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4bb606491faso3888325e9.3
-        for <git@vger.kernel.org>; Sat, 14 Nov 2026 10:48:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794682102; x=1795286902; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=k6RlHuQHqNtXePwNLc13DW5K0bbGcNkMzrg33ecfzso=;
-        b=L+y6j1E5yaUgx2mtK9EwpCXDQMTNj/8Gwo6oJlN8l/94izefcB+iaUfzVam9POM+K0
-         keBxEu8/LcO8CKSQkF7EWW9vZSGSIgJhf+TMZPBXiE5JwJoLhqsKabYBopAK+mlvZ23u
-         NV6RkR6iOQFXwH/gXrUI5KU/+DUh//z8HcJEbRw1pGdSGGEyOjPqzR7BEQ4zZRiZuW6o
-         QM09Mn1H1kEcIv6ZrI7n6bJ56AGGaEMFFo7zn2TfRI5RMiYuVR90AX7OzUu3I15OEoeU
-         iSxUDpNEIaVf6Y+oZTqBGK0wAScAeM2F9wsZXHrfh+20oOCCY6PsoiL0KXb9JoHQ+C8q
-         iirA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794682102; x=1795286902;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=k6RlHuQHqNtXePwNLc13DW5K0bbGcNkMzrg33ecfzso=;
-        b=a08kFN5Q3oYfLpoWHToZJu5Z0gITB/pOUbh3vz9rEWW9lybODud/uPchgwBn8HzU7P
-         QsPWfappKeSpI09IUEgTGrPIVVNWKScBhaYTK9OODfg6P4aiGhASJ9SDi3oZWSRJuxTm
-         rbp0wO96Mkcu/CLD6hKPfbasPrAENX+q7lH+Ix7g1UDVVgc8f92x7ofkgvGeupHWYcaX
-         xE8/JNJF1BuI6ARVtueL4JPO7uyACMshS7LZ5Su9emXR48SwPTAOyiQShANrJmEnVSdL
-         f7mD9J3CMcDkkv/ZFas7N0R51wsyHBE6/pFMks8r4Wj6gtwjC0oluvxBP+gfDorByUXh
-         iYgg==
-X-Gm-Message-State: APuU4Z9ymJb+2T1kqIGXbJJ8aFhfrvMAPfIF1ARwsZn/xkFl931g7Hb0
-	fe1sPnoaeroRXOBxrRaxM6/cVoDcFmCyccpjr5sKuTugisulBikcBNYF8I4C7aUKM4M=
-X-Gm-Gg: AYBFou3mXYy7hI3bWiIySXqCmtbO0PWTm9iQBYqAfZ+Wc1RcFHhg6P0ZH8oKfinWYgU
-	1g96PImDS/A3Z1WNpDM8RpAbhNQrpg9G3nOOPxocR2Hdem8vGM+Qy0RYSF3HYRTIc/iniaPaqwd
-	ZMgkuqGgUtFO9th0ppBsr/yS3vVxUIClZ66H8r32YEqoCPq89kBQm3cgc+GfP5dX9MUwagT1J7N
-	ys5WI67H6c03pmf4AGQlw4DH2L5qb9WMrygfA10e3Ebq9Ywcfd4IRWTpKd/3GsSABHxWPSV10TQ
-	ByFbOXLM5801+/FXC5zBNl29nuX77Y9AdoxS8aAgdy478LKMy7YN+8wt1VkXnsLqb04/Uwy+XCc
-	bMkzZlz+aiVUQ7icOjXOFgNuHtKXRXlxxvciG2sps77LqIE7EDvZhSMz6eHkHMOTW3i7EbE1VZS
-	GJyu50hh6NV7qwTY9yCS8Az7l7hg91/gpQYNK5UeNSBOVB4DsI92yS+guSY0tzO63AwPVIBB4vs
-	9KIvZIOJff8Gk0EBxvXF1+AXnTqMQx64Dcx6zCpWl7/3VTuAEZ/RNoqU2Qkmp1VTN6F/5QmQdnt
-	IoScVY7wnraYLsSb4EYKmFJTA/DfbTPOBMQ0TBBQx/Vf7ejkUbwomI3osS9Jt7uwuTm2t2g1ObJ
-	x79yY70G76JeucdasXzJjXiodB27uHLBNC4HwW4LJWOyPpePvBgDoaInPQx5ZkraB90Bkt93229
-	9vIkPvrYcJlZ5TGDdRBQb5ZpbOY82+SI1C
-X-Received: by 2002:a05:600c:37ca:b0:4a1:e0db:8cf8 with SMTP id 5b1f17b1804b1-4bb559f2787mr131216555e9.3.1794682102101;
-        Sat, 14 Nov 2026 10:48:22 -0800 (PST)
-Received: from localhost.localdomain ([212.88.111.67])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55ac0e3fsm128620355e9.5.2026.11.14.10.48.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Nov 2026 10:48:20 -0800 (PST)
-From: Wasswa Edson <edsonwasswa54@gmail.com>
-To: git@vger.kernel.org
-Cc: tangajoris@gmail.com,
-	Wasswa Edson <edsonwasswa54@gmail.com>
-Subject: [PATCH v2 3/3] credential: parse subcommands with OPT_SUBCOMMAND
-Date: Sat, 14 Nov 2026 21:47:52 +0300
-Message-ID: <20261114184752.1417-4-edsonwasswa54@gmail.com>
-X-Mailer: git-send-email 2.46.0.windows.1
-In-Reply-To: <20261114184752.1417-1-edsonwasswa54@gmail.com>
-References: <20261104202228.24642-1-edsonwasswa54@gmail.com>
- <20261114184752.1417-1-edsonwasswa54@gmail.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.a=rsa-sha256 header.s=s29768273 header.b=fMDgLR6b
+DKIM2-Signature:  i=1; m=1; t=1794684406;
+ mf=PGwucy5yQHdlYi5kZT4=;
+ rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+ d=web.de;
+ s=s29768273:rsa-sha256:TCfmdH3l9NwLiYHfkI22T6Cmv5AJ
+   4yDdBucxGp90vBQt/7CanIni47WJ4/mzqCyDYRykoe+ENEV6ZRVJ8TDoSRaGySNjA5UOa37r/AB
+   vEPFaLDz5YPHbo7Mcu6COnqv5lJ2l5arr7U1lCCZpDZbnfqqpc1QDvhvNTErV1dOQlCaPPwyFB1
+   wk0Qb4jwL8Ij0OpxA/aGvUhsc/NcuJ01rZqRcqhqFeRouhoCvqc3ao0UngEv7vH7+qn4oOaL1BR
+   YInr7ggkkCuVY+bFB1Q5z0GLmVhZXbcA/mCfWEHnW15kCWadr8aF97AXKBjw12pBIdlB0mLDffX
+   d0OmtyOnKMWAbw==;
+Message-Instance:  m=1;
+ h=sha256:
+   wmHp0pTBC+PrPH7j3H9TeZvQXK37sguSv6F/phTe79Y=:
+   CoLG1LJUTGOe+jLTCJESBsNHC+QSkfwgF8It7uaA1F4=,
+  sha512:
+   0mJtOx9cGwgTFpCS5rlCy0kODUiptT75pijJuXimCtA6RC5YKDOcZFI4rGqiUtz0YVfomBznxyzgZVmU1rE44Q==:
+   /Nzay90+SfGIIHAKbjp7C84UAYtWdne8S+uU4PAyoB4EJpc5U+hnQDzdg+L26dK3gadzddo6FVUMV5Y4Ip+fYQ==;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1794684404; x=1795289204; i=l.s.r@web.de;
+	bh=CvHijOxuIsLak3aYbraXL2cHokqrtQh6ERGuOkwV1Ko=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=fMDgLR6bCY22IFFGPBHPMsRzJi6l3utUONoM3PsfWSLKDszVlR6OPEAb+1f2Hg0I
+	 1pSbyzhV4PHZ7LCck1TpUuFvkG+xXd6HgPPrP+pE8rO6ZRla+FYysurViQBrlXGdZ
+	 ZKlkBp4RnOuJUGuigL+bMCKJ+Chb8J5+exFBw7Q58+skuQ9WGeRrtRMoUHKwaGjrS
+	 YqRqppR51S6EtPu42rZCxIPqcOcftw0mXHCFUrottKsTrQSoBDdo9IPZQcvxXrFcZ
+	 Ue03VQQi7t+Dr7BzVGF/7qKD3mvAxqMQPR2VaPfXjN0PcL1Ec6ai+d2U88BJDX1wR
+	 qCbzLmZ0PhZDF2mKfA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MhWor-1wpNwN2zdz-00lMKx; Sat, 14
+ Nov 2026 20:26:44 +0100
+Message-ID: <71280528-f044-49ab-b746-4f680f220627@web.de>
+Date: Sat, 14 Nov 2026 20:26:44 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,238 +81,293 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] archive: remove USE_THE_REPOSITORY_VARIABLE from archival
+ modules
+To: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Srujith A Poojary <poojarysrujith@gmail.com>
+References: <pull.2308.git.1794465188325.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <pull.2308.git.1794465188325.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:mkPLQ61jdGVIlMpbkaeaVILN1DUDJVGDlRG3tmPZQQ5dxCptSBn
+ oY0Bg/yTCnod2v2maTNS5n+9asHt+IHzbfKRimtyU/RFuEDH30eCuJ6w5QUv41KpvIntZzk
+ HR9WyfSzM0IlZg4jQMHyhHjDTE2M1XesXh5oSfslpoMU++9IwYy96x+boMgvn8Mbe0jzBt7
+ gaMFlL/O8XR5eb1XBPOeg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:NzmUQBrqO0k=;FbO9alGCug6eMtzqG710T9wPJuI
+ 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
 
-Now that each subcommand of "git credential" lives in its own
-function, switch the dispatch to OPT_SUBCOMMAND(). This gives each
-subcommand its own usage string, so that "git credential <subcommand>
--h" shows help for that subcommand, and makes the subcommand names
-available to the completion via --git-completion-helper.
+On 11/12/26 7:33 AM, Srujith A Poojary via GitGitGadget wrote:
+> From: Srujith A Poojary <poojarysrujith@gmail.com>
+>=20
+> Refactor archive-tar.c, archive-zip.c, archive.c, builtin/archive.c,
+> builtin/upload-archive.c, and diagnose.c to accept and pass explicit
+> struct repository pointers instead of relying on global repository state=
+.
+>=20
+> Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
+> ---
+>     archive: remove USE_THE_REPOSITORY_VARIABLE from archival modules
+>=20
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2308%2=
+Fpoojarysrujith%2Farchive-refactor-clean-v1-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2308/pooj=
+arysrujith/archive-refactor-clean-v1-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2308
+>=20
+>  archive-tar.c            | 7 +++----
+>  archive-zip.c            | 3 ++-
+>  archive.c                | 6 +++---
+>  archive.h                | 6 +++---
+>  builtin/archive.c        | 2 +-
+>  builtin/upload-archive.c | 2 +-
+>  diagnose.c               | 2 +-
+>  7 files changed, 14 insertions(+), 14 deletions(-)
+>=20
+> diff --git a/archive-tar.c b/archive-tar.c
+> index a1c66024d4..5243446701 100644
+> --- a/archive-tar.c
+> +++ b/archive-tar.c
+> @@ -2,7 +2,6 @@
+>   * Copyright (c) 2005, 2006 Rene Scharfe
+>   */
+> =20
+> -#define USE_THE_REPOSITORY_VARIABLE
+> =20
+>  #include "git-compat-util.h"
+>  #include "config.h"
+> @@ -337,7 +336,7 @@ static void write_global_extended_header(struct arch=
+iver_args *args)
+>  	if (oid)
+>  		strbuf_append_ext_header(&ext_header, "comment",
+>  					 oid_to_hex(oid),
+> -					 the_hash_algo->hexsz);
+> +					 args->repo->hash_algo->hexsz);
+>  	if (args->time > USTAR_MAX_MTIME) {
+>  		strbuf_append_ext_header_uint(&ext_header, "mtime",
+>  					      args->time);
+> @@ -526,7 +525,7 @@ static struct archiver tar_archiver =3D {
+>  	.flags =3D ARCHIVER_REMOTE,
+>  };
+> =20
+> -void init_tar_archiver(void)
+> +void init_tar_archiver(struct repository *repo)
+>  {
+>  	int i;
+>  	register_archiver(&tar_archiver);
+> @@ -535,7 +534,7 @@ void init_tar_archiver(void)
+>  	tar_filter_config("tar.tgz.remote", "true", NULL);
+>  	tar_filter_config("tar.tar.gz.command", internal_gzip_command, NULL);
+>  	tar_filter_config("tar.tar.gz.remote", "true", NULL);
+> -	repo_config(the_repository, git_tar_config, NULL);
+> +	repo_config(repo, git_tar_config, NULL);
+>  	for (i =3D 0; i < nr_tar_filters; i++) {
+>  		/* omit any filters that never had a command configured */
+>  		if (tar_filters[i]->filter_command)
+> diff --git a/archive-zip.c b/archive-zip.c
+> index 279c3a2d72..b02fb9be38 100644
+> --- a/archive-zip.c
+> +++ b/archive-zip.c
+> @@ -655,7 +655,8 @@ static struct archiver zip_archiver =3D {
+>  	.flags =3D ARCHIVER_WANT_COMPRESSION_LEVELS|ARCHIVER_REMOTE,
+>  };
+> =20
+> -void init_zip_archiver(void)
+> +void init_zip_archiver(struct repository *repo)
+>  {
+> +	(void)repo;
+>  	register_archiver(&zip_archiver);
+>  }
 
-Each subcommand takes neither options nor arguments; reject any
-with a common helper. Drop NO_PARSEOPT from the git.c entry, as the
-command now uses parse-options.
+So repo is not actually used here.  Why pass it in?  It's not like the
+init functions all need have the same signature.
 
-This changes the behavior only on error paths:
+Not shown here: archive-zip.c still sets USE_THE_REPOSITORY_VARIABLE.
+Perhaps dealing with that is better left to a separate patch, but the
+commit message should reflect that only the tar format handler is
+treated here.
 
- - A missing or unknown subcommand is reported as such ("need a
-   subcommand" / "unknown subcommand") before the usage text.
-
- - Extra arguments are reported as "too many arguments" before the
-   usage text of the subcommand.
-
- - "git credential <subcommand> -h" shows the usage of that
-   subcommand and exits with 0, instead of failing with the usage of
-   the whole command.
-
-Failures still exit with 129.
-
-Helped-by: Tanga Joris <tangajoris@gmail.com>
-Signed-off-by: Wasswa Edson <edsonwasswa54@gmail.com>
----
- builtin/credential.c   | 91 +++++++++++++++++++++++++++++-------------
- git.c                  |  2 +-
- t/t0300-credentials.sh | 27 +++++++++++++
- 3 files changed, 91 insertions(+), 29 deletions(-)
-
-diff --git a/builtin/credential.c b/builtin/credential.c
-index d6ba21a2cb..b9945d019b 100644
---- a/builtin/credential.c
-+++ b/builtin/credential.c
-@@ -5,16 +5,52 @@
- #include "builtin.h"
- #include "environment.h"
- #include "config.h"
-+#include "gettext.h"
-+#include "parse-options.h"
-+
-+static const char * const credential_usage[] = {
-+	N_("git credential (fill|approve|reject|capability)"),
-+	NULL,
-+};
-+
-+static const char * const credential_fill_usage[] = {
-+	N_("git credential fill"),
-+	NULL,
-+};
-+
-+static const char * const credential_approve_usage[] = {
-+	N_("git credential approve"),
-+	NULL,
-+};
-+
-+static const char * const credential_reject_usage[] = {
-+	N_("git credential reject"),
-+	NULL,
-+};
-+
-+static const char * const credential_capability_usage[] = {
-+	N_("git credential capability"),
-+	NULL,
-+};
-+
-+static void parse_no_args(int argc, const char **argv, const char *prefix,
-+			  const char * const *usagestr)
-+{
-+	struct option options[] = {
-+		OPT_END()
-+	};
- 
--static const char usage_msg[] =
--	"git credential (fill|approve|reject|capability)";
-+	if (parse_options(argc, argv, prefix, options, usagestr, 0))
-+		usage_msg_opt(_("too many arguments"), usagestr, options);
-+}
- 
--static int cmd_credential_fill(int argc UNUSED, const char **argv UNUSED,
--			       const char *prefix UNUSED,
-+static int cmd_credential_fill(int argc, const char **argv, const char *prefix,
- 			       struct repository *repo UNUSED)
- {
- 	struct credential c = CREDENTIAL_INIT;
- 
-+	parse_no_args(argc, argv, prefix, credential_fill_usage);
-+
- 	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
- 		die("unable to read credential from stdin");
- 
-@@ -26,12 +62,14 @@ static int cmd_credential_fill(int argc UNUSED, const char **argv UNUSED,
- 	return 0;
- }
- 
--static int cmd_credential_approve(int argc UNUSED, const char **argv UNUSED,
--				  const char *prefix UNUSED,
-+static int cmd_credential_approve(int argc, const char **argv,
-+				  const char *prefix,
- 				  struct repository *repo UNUSED)
- {
- 	struct credential c = CREDENTIAL_INIT;
- 
-+	parse_no_args(argc, argv, prefix, credential_approve_usage);
-+
- 	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
- 		die("unable to read credential from stdin");
- 
-@@ -42,12 +80,14 @@ static int cmd_credential_approve(int argc UNUSED, const char **argv UNUSED,
- 	return 0;
- }
- 
--static int cmd_credential_reject(int argc UNUSED, const char **argv UNUSED,
--				 const char *prefix UNUSED,
-+static int cmd_credential_reject(int argc, const char **argv,
-+				 const char *prefix,
- 				 struct repository *repo UNUSED)
- {
- 	struct credential c = CREDENTIAL_INIT;
- 
-+	parse_no_args(argc, argv, prefix, credential_reject_usage);
-+
- 	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
- 		die("unable to read credential from stdin");
- 
-@@ -58,13 +98,14 @@ static int cmd_credential_reject(int argc UNUSED, const char **argv UNUSED,
- 	return 0;
- }
- 
--static int cmd_credential_capability(int argc UNUSED,
--				     const char **argv UNUSED,
--				     const char *prefix UNUSED,
-+static int cmd_credential_capability(int argc, const char **argv,
-+				     const char *prefix,
- 				     struct repository *repo UNUSED)
- {
- 	struct credential c = CREDENTIAL_INIT;
- 
-+	parse_no_args(argc, argv, prefix, credential_capability_usage);
-+
- 	credential_set_all_capabilities(&c, CREDENTIAL_OP_INITIAL);
- 	credential_announce_capabilities(&c, stdout);
- 
-@@ -77,24 +118,18 @@ int cmd_credential(int argc,
- 		   const char *prefix,
- 		   struct repository *repo)
- {
--	const char *op;
-+	parse_opt_subcommand_fn *fn = NULL;
-+	struct option options[] = {
-+		OPT_SUBCOMMAND("fill", &fn, cmd_credential_fill),
-+		OPT_SUBCOMMAND("approve", &fn, cmd_credential_approve),
-+		OPT_SUBCOMMAND("reject", &fn, cmd_credential_reject),
-+		OPT_SUBCOMMAND("capability", &fn, cmd_credential_capability),
-+		OPT_END()
-+	};
- 
- 	repo_config(the_repository, git_default_config, NULL);
- 
--	show_usage_if_asked(argc, argv, usage_msg);
--	if (argc != 2)
--		usage(usage_msg);
--	op = argv[1];
--
--	if (!strcmp(op, "fill"))
--		return cmd_credential_fill(argc - 1, argv + 1, prefix, repo);
--	if (!strcmp(op, "approve"))
--		return cmd_credential_approve(argc - 1, argv + 1, prefix, repo);
--	if (!strcmp(op, "reject"))
--		return cmd_credential_reject(argc - 1, argv + 1, prefix, repo);
--	if (!strcmp(op, "capability"))
--		return cmd_credential_capability(argc - 1, argv + 1, prefix,
--						 repo);
--
--	usage(usage_msg);
-+	argc = parse_options(argc, argv, prefix, options, credential_usage, 0);
-+
-+	return fn(argc, argv, prefix, repo);
- }
-diff --git a/git.c b/git.c
-index d7b5f88e52..da370902ab 100644
---- a/git.c
-+++ b/git.c
-@@ -562,7 +562,7 @@ static struct cmd_struct commands[] = {
- 	{ "commit-tree", cmd_commit_tree, RUN_SETUP },
- 	{ "config", cmd_config, RUN_SETUP_GENTLY | DELAY_PAGER_CONFIG },
- 	{ "count-objects", cmd_count_objects, RUN_SETUP },
--	{ "credential", cmd_credential, RUN_SETUP_GENTLY | NO_PARSEOPT },
-+	{ "credential", cmd_credential, RUN_SETUP_GENTLY },
- 	{ "credential-cache", cmd_credential_cache },
- 	{ "credential-cache--daemon", cmd_credential_cache_daemon },
- 	{ "credential-store", cmd_credential_store },
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index ea11cdb4dc..858996ac4a 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -1056,4 +1056,31 @@ test_expect_success 'interactive prompt is sanitized' '
- 	EOF
- '
- 
-+test_expect_success 'credential subcommands -h show subcommand usage' '
-+	for sub in fill approve reject capability
-+	do
-+		git credential $sub -h >out &&
-+		test_grep "^usage: git credential $sub" out || return 1
-+	done
-+'
-+
-+test_expect_success 'credential requires a subcommand' '
-+	test_expect_code 129 git credential 2>err &&
-+	test_grep "need a subcommand" err
-+'
-+
-+test_expect_success 'credential rejects unknown subcommand' '
-+	test_expect_code 129 git credential foo 2>err &&
-+	test_grep "unknown subcommand" err
-+'
-+
-+test_expect_success 'credential subcommands reject extra arguments' '
-+	for sub in fill approve reject capability
-+	do
-+		test_expect_code 129 git credential $sub extra \
-+			</dev/null 2>err &&
-+		test_grep "too many arguments" err || return 1
-+	done
-+'
-+
- test_done
--- 
-2.53.0
+> diff --git a/archive.c b/archive.c
+> index 59790be986..e9e2e241c3 100644
+> --- a/archive.c
+> +++ b/archive.c
+> @@ -43,10 +43,10 @@ void register_archiver(struct archiver *ar)
+>  	archivers[nr_archivers++] =3D ar;
+>  }
+> =20
+> -void init_archivers(void)
+> +void init_archivers(struct repository *repo)
+>  {
+> -	init_tar_archiver();
+> -	init_zip_archiver();
+> +	init_tar_archiver(repo);
+> +	init_zip_archiver(repo);
+>  }
+> =20
+>  static void format_subst(const struct commit *commit,
+> diff --git a/archive.h b/archive.h
+> index bbe65ba0f9..8ec59b22e9 100644
+> --- a/archive.h
+> +++ b/archive.h
+> @@ -48,9 +48,9 @@ struct archiver {
+>  };
+>  void register_archiver(struct archiver *);
+> =20
+> -void init_tar_archiver(void);
+> -void init_zip_archiver(void);
+> -void init_archivers(void);
+> +void init_tar_archiver(struct repository *repo);
+> +void init_zip_archiver(struct repository *repo);
+> +void init_archivers(struct repository *repo);
+> =20
+>  typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
+>  					const struct object_id *oid,
+> diff --git a/builtin/archive.c b/builtin/archive.c
+> index 3c1288a123..2c01d7b6e7 100644
+> --- a/builtin/archive.c
+> +++ b/builtin/archive.c
+> @@ -97,7 +97,7 @@ int cmd_archive(int argc,
+>  	argc =3D parse_options(argc, argv, prefix, local_opts, NULL,
+>  			     PARSE_OPT_KEEP_ALL);
+> =20
+> -	init_archivers();
+> +	init_archivers(repo);
+> =20
+>  	if (output)
+>  		create_output_file(output);
+> diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+> index 718e74b3ac..3cfc7ffaf3 100644
+> --- a/builtin/upload-archive.c
+> +++ b/builtin/upload-archive.c
+> @@ -34,7 +34,7 @@ int cmd_upload_archive_writer(int argc,
+>  	if (!enter_repo(the_repository, argv[1], 0))
+>  		die("'%s' does not appear to be a git repository", argv[1]);
+> =20
+> -	init_archivers();
+> +	init_archivers(the_repository);
+> =20
+>  	/* put received options in sent_argv[] */
+>  	strvec_push(&sent_argv, "git-upload-archive");
+> diff --git a/diagnose.c b/diagnose.c
+> index 2c1bcfe431..c642dde351 100644
+> --- a/diagnose.c
+> +++ b/diagnose.c
+> @@ -212,7 +212,7 @@ int create_diagnostics_archive(struct repository *r,
+>  		goto diagnose_cleanup;
+>  	}
+> =20
+> -	init_zip_archiver();
+> +	init_zip_archiver(r);
+>  	strvec_pushl(&archiver_args, "git-diagnose", "--format=3Dzip", NULL);
+> =20
+>  	strbuf_reset(&buf);
+>=20
+> base-commit: 1891de46f79dc444a47db1c87bd0c8c76b5463f2
 
