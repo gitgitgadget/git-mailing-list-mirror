@@ -1,121 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794660326;
-	b=A21Z7Mfn7YmUS3bj8Bzv14Z+EqxiQppDlAfZgac3G9EhXYv1M/kB/0TP+h2B7/O2IRdt
-	 Xc0ZpXjX1g2eBYKVVd+8QPFmzqXVYcq975IeVAToc+PJCPhWyIqEVOOqxzbeSGtoLtJK3
-	 BQbHZWyOdiUjp5rV2aQ4895E21dVCG256zmKAQ+CWHgjjm9zv2S3K7uWCDh3H0Ixat/mj
-	 QuhmeNCs3LtUrF2X9sv/hR5H+1xQZDoroKx2FSo7TslZrGki7aHCyRqZ6LFVENYW9c+lD
-	 tkIZAwAUY3+2IdcdmPSkcr5IQrw5KQVqIdwZUWRyH9ePQxkigEzWHVic+npyIpY4XNA==
+	t=1794662674;
+	b=rA+HS7il6FZetSrj8gA05o1/ydjBoDtXLxDEQGs+u6ktcrCf/4zPVDlObiKQdlciIdcw
+	 iXqlZEic7z2Pqu9S8Gon/cs5WZHZZHDz7RZE1xv/Lo/vqNTlQ4+LLtvRXXhTzKMgvnusS
+	 +vjycKIrsarAYDN32fN7+ly3bwd+asE7NqDpqPiP71kh1yIHhQk7BEz0nPe+zILXgsPPf
+	 fIKpRrhwqLpLYvbK8xNbhCudcYJvgA3RLq+P8DiU8RkHtJ1P692ixL5/SLixSw01LU4Lh
+	 xSws7+3zqp+m1ZbBM5khuMjkrq0XYb8SFVyeUNFCNwiIFW02DVPhayJpe6vAj8FIEPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794660326;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=XlXxkenldlsEPh+QRUUjgc33n4MTNe4PCqq9WK1EXJQ=;
-	b=5XrdQjr9AR+HlnuHSdPHRv8Svo+9IGPGvB4zvCRAR6IsDm4x/kCJCKHbuTeCKfe59xmt
-	 /83+K9qa5uDIaKlLJwyuqOlLSmw+EIEHdII1C8zz/x+LkJkSpD+nM9maZWsr3qpuWrpdN
-	 07PFMxoi40MuKoHVk/ydZ8/ir9lme/Lm5X5JPyMJMSMGARAb3BRzM+X87pGLQMO0/+IMW
-	 D1he7Sf0zp48FziXP2ZgIYUFtPY6QI7+s3A5hYmxQeYlxeeZNfUHdPIZneo8ONcBQWVPq
-	 j2V8uLwDEWVc7FEn+fRw1W2D+EqPR8shVO1P7u0AXolk7caFcX5/OUh/LI/oWdq/V5A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794662674;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=H97GS7SY4KKMHKogUYLM72fe5AjsImPMQbCSrOSb3dE=;
+	b=BNkhw7ebOGbF1g7aQHQNCl0EmYYd8CH31bE+iW3QyF1uOl2+2WjJxL9q7LaJQ7Xz6DoR
+	 M9/B4XSKLyD8dE2BJNAUt+xKBJ5Lkk6KnemT+DpMZgfdLF/+loYN/xOnQ0qj1yJu/Z8uA
+	 OTSt71N6dWD9hHbVgO1aaDBf3nPUJ6J3o32J04CkjXH9tw1BM88SIqhTDaTh2sl6feuJy
+	 oYamSGTC+hyKA83me5xTnG9lFF+R9E/Aen0umseAU96KZLDjTuuQNsqW8DbdmMLByeb0C
+	 Z/wCnCGn9s4T6d/xaNR5awfkRbHRR1j7Qc6MJrc7Yw2P7N+LmMeHcKUrBn52IWFTugA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=aRcWI1My;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=0WyQyS1v;
-	arc=none smtp.remote-ip=103.168.172.155
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q75+b8Cx;
+	arc=none smtp.remote-ip=209.85.210.45
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747A7606A329
-	for <git@vger.kernel.org>; Sat, 14 Nov 2026 12:45:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 747A7606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ED1606A327
+	for <git@vger.kernel.org>; Sat, 14 Nov 2026 13:24:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 64ED1606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=aRcWI1My;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=0WyQyS1v
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8B7B1140007E
-	for <git@vger.kernel.org>; Sat, 14 Nov 2026 07:45:24 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sat, 14 Nov 2026 07:45:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794660324; x=1794746724; bh=XlXxkenldl
-	sEPh+QRUUjgc33n4MTNe4PCqq9WK1EXJQ=; b=aRcWI1MyS6ifSlF0nFJAneCguJ
-	9qmDp7udu3m5zUWqJOA+qO6AHuv0e7SIqmXrhNX//4Wy0RCu/LzQm2Wnamtq6KvG
-	EgQfPf02PyZWX/rdb/uhgfDNTKpxCS9ifMGfOLiM1fWb02s7MtY25zKm9gj+mIzX
-	OYWSZjkWKnF0tOSEfkqRGaZlp5IcuhclwfrsVv8TVeN4yRMhPeNd/yI1hPn1gqiX
-	iGVbkC38wQhPgyBPbquFWR2YBIGMa+A9obooT3JiF/xyc6z6RNrT1Fz+uGau2tQ4
-	+qatw3zbW2dk3nJsF12BF2QElbc7LlIexnNwrn0I1by27QrW3JKiv/TPRXNA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794660324; x=1794746724; bh=XlXxkenldlsEPh+QRUUjgc33n4MTNe4PCqq
-	9WK1EXJQ=; b=0WyQyS1vtDTD9bBx5bRsjaseLJsd5VsPLO+yNsNbIPHM91rfHLZ
-	t5u5bcjjgPDqYuFSoLRsnTJNbAaH1zbPfgME0U7EmU9Xo0AX2GKEiWgmNzLoRL+F
-	fQPEx3kq4V2xrp5865m6NCmz1tIbqk/QYAOwGOHOOms7QKpenUVCtV1Znc/AZzXx
-	jynDXs2rO0VTFUnZySnm2cZBDgEueP+zBTGuKkiR6ZR3ojk17XYCrbXy3wEqcblC
-	i4jBYM7f/wRrXFg4xr6KytgcE4OLMjVR1aaFQChoOUj1R8QILLGtPazSheI+MipX
-	JhkT5UiFSMt4jX9IWtDcjD+OisN9XGn4/jA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794660324; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:ju0tOiVO8MeGKuFGOruCx8hDPJUE96+yKoYiTqhcnapO5vX
-	qdX45Ze+XqDB5rqZuYAMv9KXN4YdOXpCfkfYxPY9VUXGECy8QDUfjJGe91nWTygF
-	0AoD8sJrL8XHzIUUbd+iXxN0spR2dB3tdhusjrbx62Z0kXzw9uJCF7uYnRke+3Pf
-	XpT+AbT1aVmKTy0KOqoewfHAJdTu3R6I+bSgVQLsG264XBquyeVUHE7m8eyVJqCn
-	BFS/+NoTUigCbe1ymP9InFvKUAIOOAQwWwd+xPFIdgcvwlLYenCG7Qf4LOss+sRy
-	sjn7MmMvLhcU+4pCGUz6ByrQoKF0Msv+DJqh4vg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Syb8TDS42Bwn9yjU2Vs+XAc8jmWU7YZAWj3qJRzVkbg=:MO0+LmrNJXbC2xF/58ySKZKWult1NFPucDNrIVngnQw=;
-X-ME-Sender: <xms:5Ff4au5PkRguNfW7R_bzU1Cph8bwBvYZi3oPGuLqlAlpGEjZpytUPg>
-    <xme:5Ff4auzCQzLG90cQ3yCikzUX2uCku8j9zz8HEKBOutyyg3SJXGR1sEM3AznTj1z76
-    XrzPJ65he4dT8kBZs5exGSNa7Ofuk5otZ6b7k92oJQIqi5A9HlNNg>
-X-ME-Received: <xmr:5Ff4alyZnETRCMiwLeCtmGTbe-lfoP3wavBqpToDVVg8ricj_9z5aZAe0DKnag2sLMISIeGI6R3BHmSceEfzvWtywmq9l9uRT8OG>
-X-ME-Proxy-Cause: dmFkZTEER7nSnIoqdqeAJ/hcepPU1On5a+YcFuEv0vG3RpXlw9WYFjPjOgV6hqxVxFqSer
-    rw6nQi7aG4o1cUfoRA0s0rWyLWcixPBzfj/6GG2AORhkckOml0/l+xH1BRH3TgTbBELE5w
-    +qzCuzfJ6fDVyMmi+axerTIxeNqfsbD28WsOOgEHjxFuF/HfkeYuQIcOKz1IxEeJqhCHtd
-    Dd/n7FJbwnWcbxRChomVKaWtaguA2/pqXLfZE9cnWedlnwkhz7QsB65lNJSdXKg8wnmvaz
-    BwFtsHtPpqm0JDzzE6kNevAFJe7kpXjYamTsPbsnxN8mKNOWhZnHuhMuPZMIxgBlQPMUbE
-    H3SVW04yiCXQVWd7mq/yvQ/LSmisecBXZxoVewBBsw6jxFSz8PRfax7ycFdzuN0K+7irZQ
-    6uUw5fcfiZGzDH6xB4aA0j/JE9vCjvkwzCvvgj33lx6c2Aj8o/ucDtCqPGq5kwSWJmErzd
-    zFoRTl8jR+fqO0gD6kLBzTQZpLzJCCol24oNwZyZlEg+wyiX0M08JMG8IXAoC5jvHbfc66
-    CMYfkFcKTyI9hLGaTKRibxie/El8CND8hkNzykCFnV7GKkcMUI2/9EU5+LbShGou8vYGQa
-    RuFJobETL0v1+OZxm5KYJwgzTPCJmr6i8qJPlYuX/eal3yUjpBsUG1hUPL+g
-X-ME-Proxy: <xmx:5Ff4amwe55ZebB-EB7j0FubhMkAURIZNR_YuMdI8_X8Ow689wYX2PQ>
-    <xmx:5Ff4ava4Ys50ktxXV7z1m0KOZ6UEk97quQ_L4V7QfFNDow1w-TvG8A>
-    <xmx:5Ff4anUe-mxKLrDwt226r9p472JCC5gqisyflVBR8_PffA4uA6Ex1A>
-    <xmx:5Ff4athd8f3e7uWz0Z8pIehzJdVhbTNpvGGAbN-Y13entx-yc2Yf2w>
-    <xmx:5Ff4aqA_x9TdsCXT7500f7eTDhVHeSZHM2UetHQ6VLerh2-rMh0__Nry>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 14 Nov 2026 07:45:23 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "Mark C. Chu-Carroll"
- <markchucarroll@fastmail.com>,  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 00/12] builtin/rerere: convert to use subcommands
-In-Reply-To: <20261111-pks-rerere-subcommands-v4-0-df0c8bf79e16@pks.im>
-	(Patrick Steinhardt's message of "Wed, 11 Nov 2026 13:18:36 +0100")
-References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
-	<20261111-pks-rerere-subcommands-v4-0-df0c8bf79e16@pks.im>
-Date: Sat, 14 Nov 2026 04:45:22 -0800
-Message-ID: <xmqq7bifponx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q75+b8Cx
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-8479f46ecd8so666203a34.0
+        for <git@vger.kernel.org>; Sat, 14 Nov 2026 05:24:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794662673; x=1795267473; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=H97GS7SY4KKMHKogUYLM72fe5AjsImPMQbCSrOSb3dE=;
+        b=Q75+b8CxLsNZkvh4VitmJSWhy4UwfzJWaSxqhY5pE+Kmvv6sh2/GbdSt48EloQxaCo
+         LO1Ig1cPxavWUUHanWzkOM12/3Bt+3bdjol7qMxjKTIXAPwXhNPPLGNzTGcroUW76DD5
+         BKuxM0iwf5DHML0rVNlRTkmkbYUE6bNxRdp6c2c1n4Qm2E495otTyqIi+R6fmcnd5Kjk
+         knGdT1r9oYi8MmzTJNZxF0u8rSwLuiVAQDhMk5sUKpkZFqQPYZtjN37awrZFfnWiXHFV
+         RVlikbOD+Hp36mwTgB9/sM+rfcL+1ElFAD4KVGu4DkReqzNVX3HeoH/2YN3nGngztJPy
+         y7Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794662673; x=1795267473;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=H97GS7SY4KKMHKogUYLM72fe5AjsImPMQbCSrOSb3dE=;
+        b=OlhyKXuytQSr1yFxyQzG8YImaFA22edPTMaJi767n2UKFTHeh2sO0AGR8KAk2t4GhJ
+         Bhuhq8WN76uRkTq/d4a3bFNVgHoqdePVeUfcgsiGGbMW95dPCY1nBNUwpC5GPU54jdiW
+         YOAx1YzPh+DB3N0pv9hPCyP3c0bOPR9T99XtqGXXKaaDpKHcXsLmdzgSBmd5vTOIgExQ
+         63BdwCaViERpHzWnzol+IyIGr+t43paJTeg07lXg6ETFIOEWwvcLnyetnBqk7gTFSMwW
+         gwLV4OmhO9Vy1TMhUMxHyO/cJKzxIiZhT40Mw241LJZIZNPDdTjHst+ZvxRHR/i5adN1
+         CvAw==
+X-Gm-Message-State: APuU4Z+9+yNRfIblutpnAIkZ4rMqJBjRrKuOl0AJRKT/9EW/AedBpgIW
+	xD+qZ24aXejxgOEILJNZ7GOP7iYwJtZzo+CiYcetuvJuV4xFGIPO5NMwQNbFOw==
+X-Gm-Gg: AYBFou09zw2wHOweUj5qxshKBkULS190stFPUrX3fAGxHNy/EJZN6sVKW3EJRxw3Ys2
+	EzDCqAs+WmOnUPw0dPS8eX8jIfjF7E9701SxVRJd7GEo+XC7GHhbN0s0nSWVI0KDCMFwJ5/v7Co
+	O7mg75+9WUUK3brwjQPpxkibrQaD+QbPdKIgYcfvXIzKsSSc31U8SHLAqm93E3mw2SLk+dX5t7s
+	FEVD8AP0/ZJfcymoS2whPvw+IECnW9XgmkAnVL55PDM/IOApau8l6tzzpeLdrKVhvvEm6Afflor
+	cnAdXFkI6faxCa8m5snh9fIp2jaEKN+NFumsgt2he+qOlptD/BCtXVDDWuW0jTnjd+yhCwt+s7k
+	Z0iayXWMJyIFe8sYwTN7sI691fiKkRWup1Ww3qqHiBGfIgtLb2na1V3SWCWDzrjCOjmZMHTOo0I
+	bJW5Uexa4HV1lgecRNyC1IjRWTUTy52gPmq9cJGWDXz5dYGkIOMUFVTp8qzDhrJ3Nu2KV+iB5hg
+	Jb2YxnwRzg7L/+qznvQSrIVbbGr8FfXEtS1PzH1jFjjlyWtqE17H7V/ob03ff2+M7kggfjTt0iW
+	L/IlikbXo6a0kaPFYnKxNgenyTkR/1cypHsIJysSN0TcISa5tt4a6Q==
+X-Received: by 2002:a05:6808:152b:b0:53b:1d13:dffd with SMTP id 5614622812f47-56e6059f865mr4512325b6e.7.1794662673142;
+        Sat, 14 Nov 2026 05:24:33 -0800 (PST)
+Received: from [127.0.0.1] ([20.64.107.197])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-56e7024673csm4866790b6e.8.2026.11.14.05.24.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Nov 2026 05:24:31 -0800 (PST)
+Message-Id: <pull.2425.v7.git.git.1794662670.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 14 Nov 2026 13:24:26 +0000
+Subject: [PATCH v7 0/4] branch: let --delete-merged find squash merged branches
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,32 +96,203 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Jasper Mayone <me@jaspermayone.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Does the new syntax introduce a subtle UI regression that does not
-allow certain options before subcommands?  We used to take "git
-rerere --skip-locked gc", but now it has to be spelled as "git
-rerere gc --skip-locked", it seems.
+Branches merged on GitHub with "Squash and merge" or "Rebase and merge" are
+never deleted by git branch --delete-merged, because their tips are not
+reachable from the upstream. This treats such a branch as merged when some
+upstream commit contains all of its changes, and names that commit in the
+output:
 
-I do not particularly care about the '--skip-locked' option itself,
-and I personally prefer to see options after non-options as a
-general CLI principle, but it seems that it is now required to give
-the option after the "gc" subcommand.
+Deleted branch topic (was 1a2b3c4, landed as 9f8e7d6).
 
-I do not know how often people run "git rerere" with these
-subcommands themselves.  This subtle change in the CLI may go
-unnoticed in a smaller project, but because we probably have more
-than a few thousand users, I am afraid that somebody will notice.
 
-In the transcript below, "rungit TRACK" is my short-hand to run
-version of "git" from that integration branch.
+Changes in v7:
 
-$ rungit master rerere --skip-locked gc
-$ rungit next rerere --skip-locked gc
-$ rungit seen rerere --skip-locked gc
-error: unknown option `skip-locked'
-usage: git rerere [--[no-]rerere-autoupdate]
+ * Added a test that --delete-integrated keeps a branch whose changes did
+   not land.
+ * Read the index once before the walk in find_landed_commits(), instead of
+   for every file merge at every candidate commit.
+ * The commit message now says the merge uses this repository's attributes
+   from the working tree and the index.
 
-    --[no-]rerere-autoupdate
-                          register clean resolutions in index
-$ rungit seen rerere gc --skip-locked
+Changes in v6:
+
+ * Read the index before the file merge, so .gitattributes that are only in
+   the index are honored too.
+ * Renamed the diff_options variables from opt to diffopt.
+
+Changes in v5:
+
+ * git branch -h lists --delete-integrated in the usage lines
+ * Giving both --delete-merged and --delete-integrated dies with a short
+   "cannot be used together" message instead of the full usage text
+
+Changes in v4:
+
+ * --delete-merged works as it does on master again: it only deletes
+   branches whose tip is reachable from their upstream
+ * New --delete-integrated <pattern> also deletes branches that were rebase
+   or squash merged, including those squashed after upstream changed the
+   same files. It replaces --squashed
+ * New prep commit lets delete_branches() take a map of where each branch
+   landed, so "landed as" is printed there
+ * Added Junio's test that --delete-merged keeps a branch when an unrelated
+   upstream commit adds an identical file
+ * --dry-run works with either option, and the two options can't be combined
+
+Changes in v3:
+
+ * Split into multiple commits, one for rebase merges and one for squash
+   merges.
+ * By default a branch counts as merged when an upstream commit has its
+   exact version of every file it changed. This never reads file contents,
+   so it stays cheap in a partial clone. It finds rebase merges, and squash
+   merges where upstream left those files alone.
+ * Replace --no-squashed with an opt-in --squashed, which also finds
+   branches merged after upstream changed the same files by merging those
+   files.
+ * Add a test for a rebase merge, and check that a squash onto changed files
+   is kept without --squashed and deleted with it.
+
+Changes in v2:
+
+ * Diff each upstream commit once and share the result between all branches,
+   faster than v1.
+ * Fix a branch merged with a merge commit being reported as "landed as" the
+   merge when another branch was searched first, and add a test for it. Show
+   the topic commit itself in "landed as" for work that arrived through a
+   merge.
+ * Use git merge --squash as the example in the commit message and mention
+   GitHub's squash and rebase buttons.
+ * Add --no-squashed to skip the squash search.
+
+Harald Nordgren (4):
+  branch: move the deleteMerged opt-out check into a helper
+  branch: let delete_branches() name where a branch landed
+  branch: add --delete-integrated to delete rebase and squash merged
+    branches
+  branch: let --delete-integrated find branches merged onto changed
+    files
+
+ Documentation/config/branch.adoc |   8 +-
+ Documentation/git-branch.adoc    |  22 +-
+ builtin/branch.c                 | 361 +++++++++++++++++++++++++++++--
+ t/t3200-branch.sh                | 271 +++++++++++++++++++++++
+ 4 files changed, 632 insertions(+), 30 deletions(-)
+
+
+base-commit: 7fb6055e678f800320d8ab8cd8f201d9493d1ba0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2425%2FHaraldNordgren%2Fbranch-delete-squashed-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2425/HaraldNordgren/branch-delete-squashed-v7
+Pull-Request: https://github.com/git/git/pull/2425
+
+Range-diff vs v6:
+
+ 1:  e728b4ed0d = 1:  25d2441ce7 branch: move the deleteMerged opt-out check into a helper
+ 2:  9858c8c81e = 2:  18c3edb6e3 branch: let delete_branches() name where a branch landed
+ 3:  92bd9afda4 = 3:  7bc634c794 branch: add --delete-integrated to delete rebase and squash merged branches
+ 4:  006a57d7d1 ! 4:  4b5485584e branch: let --delete-integrated find branches merged onto changed files
+     @@ Commit message
+          unchanged. This has to read the files, so in a partial clone it may
+          download blobs.
+      
+     +    The merge uses the attributes of this repository, from the working tree
+     +    and the index, the same as a merge run here would. A merge driver that
+     +    only the upstream repository has is not seen. In a bare repository only
+     +    info/attributes and the global file apply.
+     +
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+       ## Documentation/git-branch.adoc ##
+     @@ builtin/branch.c: static void collect_branch_changes(struct landing_search *sear
+      +	mmfile_t result = { 0 };
+      +	int ret;
+      +
+     -+	repo_read_index(the_repository);
+      +	read_mmblob(&base, the_repository->objects, &change->base_oid);
+      +	read_mmblob(&upstream, the_repository->objects, &change->upstream_oid);
+      +	read_mmblob(&branch, the_repository->objects, &change->branch_oid);
+     @@ builtin/branch.c: static void collect_branch_changes(struct landing_search *sear
+       	return 1;
+       }
+       
+     +@@ builtin/branch.c: static void find_landed_commits(struct landing_search *searches,
+     + 	diffopt.no_free = 1;
+     + 	diff_setup_done(&diffopt);
+     + 	init_changed_paths(&cache);
+     ++	repo_read_index(the_repository);
+     + 
+     + 	for (size_t i = 0; i < searches_nr; i++) {
+     + 		struct commit *landed;
+      
+       ## t/t3200-branch.sh ##
+      @@ t/t3200-branch.sh: test_expect_success '--delete-integrated deletes a squash merged branch that was
+     @@ t/t3200-branch.sh: test_expect_success '--delete-integrated deletes a squash mer
+      +		EOF
+      +	)
+      +'
+     ++
+     ++test_expect_success '--delete-integrated keeps branches whose changes did not land' '
+     ++	(
+     ++		cd upstream &&
+     ++		git checkout next &&
+     ++		test_write_lines 1 2 3 4 5 6 7 8 9 10 >doc &&
+     ++		git add doc &&
+     ++		git commit -m "add doc" &&
+     ++		git checkout main
+     ++	) &&
+     ++	setup_repo_for_delete_merged &&
+     ++	(
+     ++		cd repo &&
+     ++		git checkout -b unmerged --track origin/next &&
+     ++		test_write_lines 1 2 3 4 5 6 7 eight 9 10 >doc &&
+     ++		git commit -a -m "edit line 8" &&
+     ++		git push origin unmerged &&
+     ++		git checkout -b half-landed --track origin/next &&
+     ++		test_write_lines one 2 3 4 5 6 7 8 9 ten >doc &&
+     ++		git commit -a -m "edit lines 1 and 10" &&
+     ++		git push origin half-landed &&
+     ++		git checkout -b conflicting --track origin/next &&
+     ++		test_write_lines 1 2 three 4 5 6 7 8 9 10 >doc &&
+     ++		git commit -a -m "edit line 3" &&
+     ++		git push origin conflicting &&
+     ++		git checkout --detach
+     ++	) &&
+     ++	(
+     ++		cd upstream &&
+     ++		git checkout next &&
+     ++		test_write_lines 1 2 3 4 five 6 7 8 9 10 >doc &&
+     ++		git commit -a -m "edit line 5" &&
+     ++		test_write_lines one 2 3 4 five 6 7 8 9 10 >doc &&
+     ++		git commit -a -m "take line 1 from half-landed" &&
+     ++		test_write_lines one 2 THREE 4 five 6 7 8 9 10 >doc &&
+     ++		git commit -a -m "edit line 3 differently" &&
+     ++		git checkout main
+     ++	) &&
+     ++	(
+     ++		cd repo &&
+     ++		git fetch origin &&
+     ++
+     ++		git branch --delete-integrated origin/next >actual 2>&1 &&
+     ++		test_must_be_empty actual &&
+     ++
+     ++		check_branches <<-\EOF
+     ++		conflicting
+     ++		half-landed
+     ++		main
+     ++		unmerged
+     ++		EOF
+     ++	)
+     ++'
+      +
+       test_expect_success '--delete-integrated reports a merge plainly next to an unmerged branch' '
+       	setup_repo_for_delete_merged &&
+
+-- 
+gitgitgadget
