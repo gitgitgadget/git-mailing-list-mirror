@@ -1,94 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794682093;
-	b=SzwJyJOays4PWjlLwzGtPk8lKbv1lffbv/jXa0kGouoDnnqrNwGdj8TlEXdWZQV2Xv9N
-	 CTNABriaqlH4ZaprOddu6h/snGz75vnBa3wFsshOL72ZpCPCIxD7o8X8PkR2TInmfZWYG
-	 m+rZKtwdgC1XbWWcrZWecRxERnnbAQ4GHgOoYWlFxpcFrJTfEqP2R9UgOhAKvb0ffPwzx
-	 oGeIznwtk/KKUkltP4M7MJZdYyfVsX0/0tYuMvr9GcB9ZLqM/5d7S+XxIxshM0NSUHrD9
-	 tevnyJJIvIjIqf/JAJOLHDGNIuucnEb21FEOPVoJjwR7bjotLPWJIH9MySyYNQECFoA==
+	t=1794682098;
+	b=SmI5Y543Ejdh8VxS4x9+K80KtMdqlqJCK5aELUNj2xniAKXIzj3WCVEw8HzqWAsBpq4l
+	 9Il/BaFoaz1j1lG6ZOGvGdZjnG0Scp5zWI4hBAxD5KQZBt5cyMKDc1nAV6MSacngZXfRa
+	 K7iU/s5AjcLtE5k1HWIw68XIlnO6vihWJNZHS2pIV6hRVcNLfAJYNnP/R78Ma7TC0UG4w
+	 tqTaR/41ZYo12xyGLlyqLvoL89Gs9nlrMyJXhIPQ+mHX/83Fo7cK/3oOSK4+oli3S+nZ9
+	 KFYL0h5AX8VV/od31XhLRIz128nRUIYvQ6PXuaAK8zYbzKt0F9EX1rgDjKSxy4Cs9qQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794682093;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794682098;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=YK2ps72YuSCPGSfyQtjWxgXODZREkj2sr3qLPLs4Ssw=;
-	b=Obcg8ISUlPaZXS8eiXfw78Emiu5tdzkPV1fZL+hhAGxnAyqwPPQXyMejM39F0jszL8lP
-	 O+gYJMOsKdzxzJcGQpizQCFsrYYUTURBbI0/0KfRv+IZsuxlXoKTqsHAKrybmCN4pw/oF
-	 NlPNFj/tKKr/jEbqKmTURmtfuGeGvC3y4Qd4k0NVMZyZ/VJAti846e6ba3/6/QwWTH2kg
-	 FJXtFtrKKbrxiDAY9ZiDOt4mybyglqtTtljxp6bcsB9waUYhSt4SDdh0BSAz6bi8IDV8m
-	 rN1N/lN7XJVv/cWfmiKJXxwgcVe8tInPWQdB/m8cvNCb66OuBcvgMnAs1O/57wsSJGA==
+	bh=wJeD6WjT2Jh3rxkcUj1K4xIZFxeuj17LydVuBLNyvzg=;
+	b=f5ZV9ubwN3dmxG40K3BzrLM5WNrxN5Krwdo359JsZUlmaBxsVyhavAK4f3T724sDYUpe
+	 TO6KRL/GFAetXh/jFNUUn9Cgnn5pr3aDWwiNrwSrY5SoTBaSnW13CDgGC9ZqOKtS/MKtv
+	 D0BCBHTwMvCTbUFexXtO0DrXwSiuBvQOQ14ZT1a3lc3CYnCwB4hMfqpMevFT7zvvfKgFS
+	 UcnnjCXCcojrzWr9m/Fx1JPqmMUNzExLGt/QMY0wEOa2oyzYbBzjTTIO30QcR9XqPpYgh
+	 +dgFza0//y9gg/Lwc1rQaeDG7yYdGZyri7QRE6thMK+UcPVoLa9qLKhQsMKhPs6ymrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OGLyIV6N;
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pwNnJz8k;
+	arc=none smtp.remote-ip=209.85.128.53
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EF5606A323
-	for <git@vger.kernel.org>; Sat, 14 Nov 2026 18:48:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 64EF5606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F9E606A32E
+	for <git@vger.kernel.org>; Sat, 14 Nov 2026 18:48:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5F9E606A32E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OGLyIV6N
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a5b2be99a8so13354465e9.2
-        for <git@vger.kernel.org>; Sat, 14 Nov 2026 10:48:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pwNnJz8k
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4bb61185057so5163335e9.1
+        for <git@vger.kernel.org>; Sat, 14 Nov 2026 10:48:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794682092; x=1795286892; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794682096; x=1795286896; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=YK2ps72YuSCPGSfyQtjWxgXODZREkj2sr3qLPLs4Ssw=;
-        b=OGLyIV6N6NOCpwxwmhad9DVC53TPuMyWCYS3eqqFbAG8j2PbPUK7Yk9rYzkBLr8CMb
-         Q65/e2YYhwAuW145jSxcQtIcTmCzGP1TdQOLg5C7ymVe1Y5OTI99nIugmD5yGl0OcUjf
-         hYrrBLs962lvY56lWOjZiwc3F68Zj23XTRUzoXIY6yGvXBfD1e9HQroxg90BB6vNIIRO
-         NWvpvHs/7klUehKXHwKiIvPBP2HwduqZPJtmuAzTZ5d9Br2w7qgCdw3bABi97WrQU9VA
-         sYH9cwRA62xDLS/TA+HpBSZ0xa+oMQlD78xnl54nrOfXjXJXzsKAXk4BjcIiQ53aoIPS
-         o4uQ==
+        bh=wJeD6WjT2Jh3rxkcUj1K4xIZFxeuj17LydVuBLNyvzg=;
+        b=pwNnJz8kRZ/CIs/G2OXlbuUw/rWJEWeY5Yv/THw+rkr1gsn3xmOSLwY9JvUMueeZTk
+         PWHbbg6NC2O30i/nwf3SejQlhdcE3QqTACIowTxufNIQ/ENxXjNDWJhzkOg04sdj/qJz
+         VPr6zYoT5RbAa6q/pU4jGQv/u4nj8vi8dvtXEQ1MhUHzSIQi+QCUo0/70qTjxPjG1vla
+         Eilw/I0PJA1+kK4FTPA4EvutjdaPQcdV/bGoahsvsxSfqBSiH3p9GocVarLJcodYDh7L
+         z62sXGyHhuhEKSI5IISAaDgd83lqpGcZAyvhoGes3vKBRPA3HwFF6ZyQH3V/K8+QnUqC
+         vJPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794682092; x=1795286892;
+        d=1e100.net; s=20260707; t=1794682096; x=1795286896;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=YK2ps72YuSCPGSfyQtjWxgXODZREkj2sr3qLPLs4Ssw=;
-        b=pj5lwZIn+G1IfN3pW7cO6mGcYze+W0I/pv4/03x400UGt2KGay5N7dftViCGdYolFT
-         S8O6In0WeMlV6EWZA1IdPrFfKEE5oVtnUIRytUOSwJD8yqrxOO+2geZqTCuOxhfDW43P
-         iPiK2StQiBbpQTzo5105ROxyilC4+RRnVV5NrmdEL8ZgErtfP/QpQ7DDTXJfYRiTeCfI
-         N2nmQf6RCsjYr3rGtEKx87CXQHBi/q5w9nWHYfhu1Q1iyLbpo14sxGRf0oSYaWrlj9QX
-         1kNv/n4taUV0lJTjj+JIYsPQfZ9pTlhfErqH9QYLHDHEkESQokuxrjewPxa29IMJ/nOU
-         wNYA==
-X-Gm-Message-State: APuU4Z82VIFkVWZM8d/dlZIg3EnlCsa6a9nWhzxIcJrpbLzhEBuzpk5g
-	y5pef3HED6ShhmmRa9bjTfpi01d2vCNwRN4vVCZmexRDy3QqbvNynIlDx2c3KhpP88c=
-X-Gm-Gg: AYBFou1QUHSQ+rMhR+A+f6N2QCvheuit/3AEiIjY6nHoEkyt8iVObKT/cP6wRkZmyI1
-	dZPkLqq7ICCrqCKaD+FANPGcu5r0LUa6QqvteSpCxRraMIRalM1XwqkuA6bX0r7743MnW+EY0rK
-	11MhKgc+WmCE4mXklsEZqNYmgNJN80xdP9JGafkP/x+MrWg6RYeKjH+PJ1U/xM31X8O+AkVisNY
-	y+V7xXMfjeNnfIVKS8PhLcRyXSoivNgz2TYx44xG4CdEcnmJKZpic+SCRWfQ737jXnqvEDZLLtf
-	vkQyMANaCQSf/2qed3r6jtQBt9cqjXyCwWDA7z8N5u14Cp9MxmPZfmMZF+4Uvq60gzdV24y8Jas
-	/jXNzntDgMzt1YYbmkvn3Y8weBmnFq+PiDz1Fa200WU9lXiY1k7wJSgFs77ExEv+m3IJi4inJMT
-	/EZfr2RwvNhVfuTfZPMyBruiQP6zl/fe+1f1sT1+hkEevvqmw9AUqCTLmjQpZjkismtw3uJjzKx
-	91pzEmgjRKNwKk34e6bGbsmxjEuovA8KC5+uKeh+6iAWPj3Nsfwm57+E8VaOwuIjOg4E+EPm3H4
-	adB6jd/N4VAfasnWFz1ttZkYxl8oFRckGMvTS8jDzeXTg8hSiW6BlM2tf0XxcC16uvvW55623x+
-	3ByKYYWAuTMLCpi2n2WjVJODLZ1qGpvUv3bQi8Xr5SFF3A+vAeIeJcyIGsiScwlrIzIvU1+nRqY
-	9l+frpk9LZ1NbL2pol1jwHtLAhpUgr421A
-X-Received: by 2002:a05:600c:3509:b0:4a1:dbdf:17a8 with SMTP id 5b1f17b1804b1-4bb559f2cc3mr128711325e9.2.1794682091403;
-        Sat, 14 Nov 2026 10:48:11 -0800 (PST)
+        bh=wJeD6WjT2Jh3rxkcUj1K4xIZFxeuj17LydVuBLNyvzg=;
+        b=pTq7BIW6pgbo5grB1HT2rqT/ECk2cSInuuGaCbUpCqlglPfZ0fJ52dKU5d6RDu+4/F
+         QtUXQf+Hk8DuSSqqNrd/YNzGedE7y23U1QWO7vw1szv2+ybU98C54TaoU/vh8SJQZHOA
+         FLC/VR8QTpd2ccvTLh5T3xSq5UVPFO4VEhgiTirn90gRbI8rZmEo4XzwiOgjgBUPgogw
+         LPj5afsDiHiR8wli7HNBGCxQ3m/ehJ2OMOJ6RVHzwl3AmhGD+EdC+T62S/PjVeM8+1tr
+         uXYGKCBB8pmAZyHRLve9SK6RYDmVu3qIfsnUB8VTCvj9P7ZbEOWMd8N2sbxxZvK1E2PY
+         HSAg==
+X-Gm-Message-State: APuU4Z8PyJ3ySmrHQHd6wHLiedYbz9d7rJBsJulkk79cYMT2DZNpkWbj
+	BTh3Ux4nmcAWrXaU+SKvPQ/U8UX+FwL0G6tVKiuw4C6k59MR+xPN8KMuO+QpnNK+1XI=
+X-Gm-Gg: AYBFou2ok7Ia+t5VZ5nyZ/7wHgGsYUAGi0S2X/iRQ6xeNb7SwMReF0PHR0nVQLKA3/+
+	Sjo7Fiw1g+y4iB1yUO03x3Fw0y0HKTKOt5s81YXSnrNkISg1izQ7+aFiflY3Em+XUchBkzcb9ig
+	9LWKMuCLbul903sQ7tH3koDAmIHefSmBS+I1RrIdNC9kXy5iQV20EAnBrKbxoLjjlZL6QPji4Sa
+	I0fpsdZ5bmAzNmiHz6F0HUvUa4q2V0d/jNJRPkIV8dPRpiDJQdo3Df8G/Lv5ry6yT59n7yGt5tX
+	ZbT41yiUsSnEeXi7IPFD4X+5uKe1myWRDzyew91g8ToJHcD0x44Cr7NShTUkSm1XlHAoQrppzM4
+	bGtqaLgJ8AVgIF4JAEp1BkkkS2spDaHG/wOdFwgoyCOsdSMaSNtkaTcfmgjjn/dJ/qLvoDyEbwf
+	ECnLMYEA5+QSs80ukL6fTGCHMlRT/gKIaOy9F/f9shxpNAt1Rhxhteu/EAnUojr1vPTnUdv4i3m
+	34rQDS8MSWlt087FspQRATm69fxWqzPPXZtyM7L+mRb/ar5aQQUL7QB9Du0LatT5qAAFFPDvWyy
+	MLaHwMNkGbVjq1d3i2qe0DbbXylIa+/BuOGFTYZ7XTTrU6tBpWqesz2p25jaRwAVvG2ThEX7HSE
+	d3AOETNrV7IbMEMj9li2qw8woz64ZP91J9FJmuXgTao/270Dgm85lriD4H/JRSRn8pKAyOjRH5I
+	dIHfy8eKfneA9WRnFLsu4wwlV866qajd3z
+X-Received: by 2002:a05:600c:630f:b0:4a2:1a:a129 with SMTP id 5b1f17b1804b1-4bb55aa6babmr121443215e9.35.1794682095978;
+        Sat, 14 Nov 2026 10:48:15 -0800 (PST)
 Received: from localhost.localdomain ([212.88.111.67])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55ac0e3fsm128620355e9.5.2026.11.14.10.48.08
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55ac0e3fsm128620355e9.5.2026.11.14.10.48.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Nov 2026 10:48:10 -0800 (PST)
+        Sat, 14 Nov 2026 10:48:15 -0800 (PST)
 From: Wasswa Edson <edsonwasswa54@gmail.com>
 To: git@vger.kernel.org
 Cc: tangajoris@gmail.com,
 	Wasswa Edson <edsonwasswa54@gmail.com>
-Subject: [PATCH v2 0/3] credential: parse subcommands with OPT_SUBCOMMAND
-Date: Sat, 14 Nov 2026 21:47:49 +0300
-Message-ID: <20261114184752.1417-1-edsonwasswa54@gmail.com>
+Subject: [PATCH v2 1/3] credential: make -h output and SYNOPSIS agree
+Date: Sat, 14 Nov 2026 21:47:50 +0300
+Message-ID: <20261114184752.1417-2-edsonwasswa54@gmail.com>
 X-Mailer: git-send-email 2.46.0.windows.1
-In-Reply-To: <20261104202228.24642-1-edsonwasswa54@gmail.com>
+In-Reply-To: <20261114184752.1417-1-edsonwasswa54@gmail.com>
 References: <20261104202228.24642-1-edsonwasswa54@gmail.com>
+ <20261114184752.1417-1-edsonwasswa54@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,378 +101,63 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-"git credential" dispatches its subcommands by hand with strcmp().
-This series converts it to OPT_SUBCOMMAND(), so that each subcommand
-gets its own "-h" usage and the subcommand names become available
-to completion.
+The usage string of "git credential" does not mention the
+"capability" subcommand, even though it is documented and
+implemented. The SYNOPSIS in its documentation does list it, but
+is written as a plain literal block instead of using [verse], so
+t0450 cannot extract it, and "credential" has been listed as a
+known mismatch between the "-h" output and the documentation.
 
-Changes since v1:
+Add "capability" to the usage string, mark the SYNOPSIS as
+[verse], and drop "credential" from the list of known mismatches.
 
- - Split into three patches. The pre-existing mismatch between the
-   "-h" output and the SYNOPSIS (1/3) and a refactor moving each
-   subcommand into its own function (2/3) are now separate from the
-   switch to OPT_SUBCOMMAND() (3/3).
+Signed-off-by: Wasswa Edson <edsonwasswa54@gmail.com>
+---
+ Documentation/git-credential.adoc | 3 +--
+ builtin/credential.c              | 2 +-
+ t/t0450/adoc-help-mismatches      | 1 -
+ 3 files changed, 2 insertions(+), 4 deletions(-)
 
- - Factor the repeated parse_options() call and argument check into
-   a helper, which rejects leftover arguments with "too many
-   arguments" (Tanga).
-
- - Add a test for the rejection of extra arguments (Tanga).
-
- - Drop the claim that the code gets shorter (Tanga).
-
-v1: https://lore.kernel.org/git/20261104202228.24642-1-edsonwasswa54@gmail.com/
-
-Wasswa Edson (3):
-  credential: make -h output and SYNOPSIS agree
-  credential: move each subcommand into its own function
-  credential: parse subcommands with OPT_SUBCOMMAND
-
- Documentation/git-credential.adoc |   3 +-
- builtin/credential.c              | 143 +++++++++++++++++++++++-------
- git.c                             |   2 +-
- t/t0300-credentials.sh            |  27 ++++++
- t/t0450/adoc-help-mismatches      |   1 -
- 5 files changed, 142 insertions(+), 34 deletions(-)
-
-Range-diff against v1:
--:  ---------- > 1:  d1bffb83df credential: make -h output and SYNOPSIS agree
--:  ---------- > 2:  c7708ac31b credential: move each subcommand into its own function
-1:  85e3f2ce94 ! 3:  7c9842bb9e credential: parse subcommands with OPT_SUBCOMMAND
-    @@ Metadata
-      ## Commit message ##
-         credential: parse subcommands with OPT_SUBCOMMAND
-     
-    -    "git credential" dispatches its four subcommands (fill, approve,
-    -    reject, capability) with a strcmp() chain after an argc check,
-    -    instead of using the parse-options API used by other builtins.
-    +    Now that each subcommand of "git credential" lives in its own
-    +    function, switch the dispatch to OPT_SUBCOMMAND(). This gives each
-    +    subcommand its own usage string, so that "git credential <subcommand>
-    +    -h" shows help for that subcommand, and makes the subcommand names
-    +    available to the completion via --git-completion-helper.
-     
-    -    Convert the dispatch to OPT_SUBCOMMAND(). Besides making the code
-    -    shorter and more idiomatic, each subcommand gets its own usage
-    -    string, so "git credential <subcommand> -h" shows a targeted help
-    -    text, and the subcommand names are reported via
-    -    --git-completion-helper.
-    +    Each subcommand takes neither options nor arguments; reject any
-    +    with a common helper. Drop NO_PARSEOPT from the git.c entry, as the
-    +    command now uses parse-options.
-     
-    -    Since the builtin now uses parse-options, drop NO_PARSEOPT from its
-    -    git.c entry so "git --list-cmds=parseopt" includes it.
-    +    This changes the behavior only on error paths:
-     
-    -    Two pre-existing inconsistencies are fixed while at it:
-    +     - A missing or unknown subcommand is reported as such ("need a
-    +       subcommand" / "unknown subcommand") before the usage text.
-     
-    -    - The usage string did not mention "capability" even though it is a
-    -      documented subcommand; it now lists all four.
-    -    - Documentation/git-credential.adoc marked its SYNOPSIS as a plain
-    -      literal block, which t0450 cannot extract; mark it [verse] and drop
-    -      "credential" from t0450/adoc-help-mismatches.
-    +     - Extra arguments are reported as "too many arguments" before the
-    +       usage text of the subcommand.
-     
-    -    Behavior changes are limited to error paths: a missing or unknown
-    -    subcommand is reported as such ("need a subcommand" / "unknown
-    -    subcommand") before the usage text, instead of only showing the
-    -    usage text, and "git credential <subcommand> -h" exits 0 after
-    -    showing the subcommand's usage. Exit codes for failures are
-    -    unchanged (129).
-    +     - "git credential <subcommand> -h" shows the usage of that
-    +       subcommand and exits with 0, instead of failing with the usage of
-    +       the whole command.
-     
-    -    Signed-off-by: Wasswa Edson <edsonwasswa54@gmail.com>
-    +    Failures still exit with 129.
-     
-    - ## Documentation/git-credential.adoc ##
-    -@@ Documentation/git-credential.adoc: git-credential - Retrieve and store user credentials
-    - 
-    - SYNOPSIS
-    - --------
-    --------------------
-    -+[verse]
-    - 'git credential' (fill|approve|reject|capability)
-    --------------------
-    - 
-    - DESCRIPTION
-    - -----------
-    +    Helped-by: Tanga Joris <tangajoris@gmail.com>
-    +    Signed-off-by: Wasswa Edson <edsonwasswa54@gmail.com>
-     
-      ## builtin/credential.c ##
-     @@
-    @@ builtin/credential.c
-      #include "config.h"
-     +#include "gettext.h"
-     +#include "parse-options.h"
-    - 
-    --static const char usage_msg[] =
-    --	"git credential (fill|approve|reject)";
-    ++
-     +static const char * const credential_usage[] = {
-     +	N_("git credential (fill|approve|reject|capability)"),
-     +	NULL,
-     +};
-    - 
-    --int cmd_credential(int argc,
-    --		   const char **argv,
-    --		   const char *prefix UNUSED,
-    --		   struct repository *repo UNUSED)
-    ++
-     +static const char * const credential_fill_usage[] = {
-     +	N_("git credential fill"),
-     +	NULL,
-    @@ builtin/credential.c
-     +	NULL,
-     +};
-     +
-    ++static void parse_no_args(int argc, const char **argv, const char *prefix,
-    ++			  const char * const *usagestr)
-    ++{
-    ++	struct option options[] = {
-    ++		OPT_END()
-    ++	};
-    + 
-    +-static const char usage_msg[] =
-    +-	"git credential (fill|approve|reject|capability)";
-    ++	if (parse_options(argc, argv, prefix, options, usagestr, 0))
-    ++		usage_msg_opt(_("too many arguments"), usagestr, options);
-    ++}
-    + 
-    +-static int cmd_credential_fill(int argc UNUSED, const char **argv UNUSED,
-    +-			       const char *prefix UNUSED,
-     +static int cmd_credential_fill(int argc, const char **argv, const char *prefix,
-    -+			       struct repository *repo UNUSED)
-    + 			       struct repository *repo UNUSED)
-      {
-    --	const char *op;
-    -+	struct option options[] = { OPT_END() };
-      	struct credential c = CREDENTIAL_INIT;
-      
-    --	repo_config(the_repository, git_default_config, NULL);
-    -+	argc = parse_options(argc, argv, prefix, options,
-    -+			     credential_fill_usage, 0);
-    -+	if (argc)
-    -+		usage_with_options(credential_fill_usage, options);
-    -+
-    -+	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
-    -+		die("unable to read credential from stdin");
-    ++	parse_no_args(argc, argv, prefix, credential_fill_usage);
-     +
-    -+	credential_fill(the_repository, &c, 0);
-    -+	credential_next_state(&c);
-    -+	credential_write(&c, stdout, CREDENTIAL_OP_RESPONSE);
-    -+
-    -+	credential_clear(&c);
-    -+	return 0;
-    -+}
-    + 	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
-    + 		die("unable to read credential from stdin");
-      
-    --	show_usage_if_asked(argc, argv, usage_msg);
-    --	if (argc != 2)
-    --		usage(usage_msg);
-    --	op = argv[1];
-    -+static int cmd_credential_approve(int argc, const char **argv,
-    -+				const char *prefix,
-    -+				struct repository *repo UNUSED)
-    -+{
-    -+	struct option options[] = { OPT_END() };
-    -+	struct credential c = CREDENTIAL_INIT;
-    +@@ builtin/credential.c: static int cmd_credential_fill(int argc UNUSED, const char **argv UNUSED,
-    + 	return 0;
-    + }
-      
-    --	if (!strcmp(op, "capability")) {
-    --		credential_set_all_capabilities(&c, CREDENTIAL_OP_INITIAL);
-    --		credential_announce_capabilities(&c, stdout);
-    --		return 0;
-    --	}
-    -+	argc = parse_options(argc, argv, prefix, options,
-    -+			     credential_approve_usage, 0);
-    -+	if (argc)
-    -+		usage_with_options(credential_approve_usage, options);
-    +-static int cmd_credential_approve(int argc UNUSED, const char **argv UNUSED,
-    +-				  const char *prefix UNUSED,
-    ++static int cmd_credential_approve(int argc, const char **argv,
-    ++				  const char *prefix,
-    + 				  struct repository *repo UNUSED)
-    + {
-    + 	struct credential c = CREDENTIAL_INIT;
-      
-    ++	parse_no_args(argc, argv, prefix, credential_approve_usage);
-    ++
-      	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
-      		die("unable to read credential from stdin");
-      
-    --	if (!strcmp(op, "fill")) {
-    --		credential_fill(the_repository, &c, 0);
-    --		credential_next_state(&c);
-    --		credential_write(&c, stdout, CREDENTIAL_OP_RESPONSE);
-    --	} else if (!strcmp(op, "approve")) {
-    --		credential_set_all_capabilities(&c, CREDENTIAL_OP_HELPER);
-    --		credential_approve(the_repository, &c);
-    --	} else if (!strcmp(op, "reject")) {
-    --		credential_set_all_capabilities(&c, CREDENTIAL_OP_HELPER);
-    --		credential_reject(the_repository, &c);
-    --	} else {
-    --		usage(usage_msg);
-    --	}
-    -+	credential_set_all_capabilities(&c, CREDENTIAL_OP_HELPER);
-    -+	credential_approve(the_repository, &c);
-    - 
-    - 	credential_clear(&c);
-    +@@ builtin/credential.c: static int cmd_credential_approve(int argc UNUSED, const char **argv UNUSED,
-      	return 0;
-      }
-    -+
-    + 
-    +-static int cmd_credential_reject(int argc UNUSED, const char **argv UNUSED,
-    +-				 const char *prefix UNUSED,
-     +static int cmd_credential_reject(int argc, const char **argv,
-     +				 const char *prefix,
-    -+				 struct repository *repo UNUSED)
-    -+{
-    -+	struct option options[] = { OPT_END() };
-    -+	struct credential c = CREDENTIAL_INIT;
-    -+
-    -+	argc = parse_options(argc, argv, prefix, options,
-    -+			     credential_reject_usage, 0);
-    -+	if (argc)
-    -+		usage_with_options(credential_reject_usage, options);
-    -+
-    -+	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
-    -+		die("unable to read credential from stdin");
-    -+
-    -+	credential_set_all_capabilities(&c, CREDENTIAL_OP_HELPER);
-    -+	credential_reject(the_repository, &c);
-    -+
-    -+	credential_clear(&c);
-    -+	return 0;
-    -+}
-    + 				 struct repository *repo UNUSED)
-    + {
-    + 	struct credential c = CREDENTIAL_INIT;
-    + 
-    ++	parse_no_args(argc, argv, prefix, credential_reject_usage);
-     +
-    + 	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
-    + 		die("unable to read credential from stdin");
-    + 
-    +@@ builtin/credential.c: static int cmd_credential_reject(int argc UNUSED, const char **argv UNUSED,
-    + 	return 0;
-    + }
-    + 
-    +-static int cmd_credential_capability(int argc UNUSED,
-    +-				     const char **argv UNUSED,
-    +-				     const char *prefix UNUSED,
-     +static int cmd_credential_capability(int argc, const char **argv,
-     +				     const char *prefix,
-    -+				     struct repository *repo UNUSED)
-    -+{
-    -+	struct option options[] = { OPT_END() };
-    -+	struct credential c = CREDENTIAL_INIT;
-    -+
-    -+	argc = parse_options(argc, argv, prefix, options,
-    -+			     credential_capability_usage, 0);
-    -+	if (argc)
-    -+		usage_with_options(credential_capability_usage, options);
-    -+
-    -+	credential_set_all_capabilities(&c, CREDENTIAL_OP_INITIAL);
-    -+	credential_announce_capabilities(&c, stdout);
-    -+
-    -+	credential_clear(&c);
-    -+	return 0;
-    -+}
-    + 				     struct repository *repo UNUSED)
-    + {
-    + 	struct credential c = CREDENTIAL_INIT;
-    + 
-    ++	parse_no_args(argc, argv, prefix, credential_capability_usage);
-     +
-    -+int cmd_credential(int argc,
-    -+		   const char **argv,
-    -+		   const char *prefix,
-    -+		   struct repository *repo)
-    -+{
-    + 	credential_set_all_capabilities(&c, CREDENTIAL_OP_INITIAL);
-    + 	credential_announce_capabilities(&c, stdout);
-    + 
-    +@@ builtin/credential.c: int cmd_credential(int argc,
-    + 		   const char *prefix,
-    + 		   struct repository *repo)
-    + {
-    +-	const char *op;
-     +	parse_opt_subcommand_fn *fn = NULL;
-     +	struct option options[] = {
-     +		OPT_SUBCOMMAND("fill", &fn, cmd_credential_fill),
-    @@ builtin/credential.c
-     +		OPT_SUBCOMMAND("capability", &fn, cmd_credential_capability),
-     +		OPT_END()
-     +	};
-    -+
-    -+	repo_config(the_repository, git_default_config, NULL);
-    -+
-    + 
-    + 	repo_config(the_repository, git_default_config, NULL);
-    + 
-    +-	show_usage_if_asked(argc, argv, usage_msg);
-    +-	if (argc != 2)
-    +-		usage(usage_msg);
-    +-	op = argv[1];
-    +-
-    +-	if (!strcmp(op, "fill"))
-    +-		return cmd_credential_fill(argc - 1, argv + 1, prefix, repo);
-    +-	if (!strcmp(op, "approve"))
-    +-		return cmd_credential_approve(argc - 1, argv + 1, prefix, repo);
-    +-	if (!strcmp(op, "reject"))
-    +-		return cmd_credential_reject(argc - 1, argv + 1, prefix, repo);
-    +-	if (!strcmp(op, "capability"))
-    +-		return cmd_credential_capability(argc - 1, argv + 1, prefix,
-    +-						 repo);
-    +-
-    +-	usage(usage_msg);
-     +	argc = parse_options(argc, argv, prefix, options, credential_usage, 0);
-     +
-     +	return fn(argc, argv, prefix, repo);
-    -+}
-    + }
-     
-      ## git.c ##
-     @@ git.c: static struct cmd_struct commands[] = {
-    @@ t/t0300-credentials.sh: test_expect_success 'interactive prompt is sanitized' '
-     +	test_expect_code 129 git credential foo 2>err &&
-     +	test_grep "unknown subcommand" err
-     +'
-    ++
-    ++test_expect_success 'credential subcommands reject extra arguments' '
-    ++	for sub in fill approve reject capability
-    ++	do
-    ++		test_expect_code 129 git credential $sub extra \
-    ++			</dev/null 2>err &&
-    ++		test_grep "too many arguments" err || return 1
-    ++	done
-    ++'
-     +
-      test_done
-    -
-    - ## t/t0450/adoc-help-mismatches ##
-    -@@ t/t0450/adoc-help-mismatches: checkout
-    - checkout-index
-    - clone
-    - column
-    --credential
-    - credential-cache
-    - credential-store
-    - fetch-pack
-
-base-commit: 37b3475fb530c14109211faca33716a173db61ed
+diff --git a/Documentation/git-credential.adoc b/Documentation/git-credential.adoc
+index e41493292f..e12d429f43 100644
+--- a/Documentation/git-credential.adoc
++++ b/Documentation/git-credential.adoc
+@@ -7,9 +7,8 @@ git-credential - Retrieve and store user credentials
+ 
+ SYNOPSIS
+ --------
+-------------------
++[verse]
+ 'git credential' (fill|approve|reject|capability)
+-------------------
+ 
+ DESCRIPTION
+ -----------
+diff --git a/builtin/credential.c b/builtin/credential.c
+index a295c80b36..72e7b2af4e 100644
+--- a/builtin/credential.c
++++ b/builtin/credential.c
+@@ -7,7 +7,7 @@
+ #include "config.h"
+ 
+ static const char usage_msg[] =
+-	"git credential (fill|approve|reject)";
++	"git credential (fill|approve|reject|capability)";
+ 
+ int cmd_credential(int argc,
+ 		   const char **argv,
+diff --git a/t/t0450/adoc-help-mismatches b/t/t0450/adoc-help-mismatches
+index baf3b1d809..939e47bf3a 100644
+--- a/t/t0450/adoc-help-mismatches
++++ b/t/t0450/adoc-help-mismatches
+@@ -9,7 +9,6 @@ checkout
+ checkout-index
+ clone
+ column
+-credential
+ credential-cache
+ credential-store
+ fetch-pack
 -- 
 2.53.0
 
