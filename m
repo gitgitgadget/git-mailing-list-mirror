@@ -1,97 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=130.232.247.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794674294;
-	b=hOFkNcv1Bb62ehrzuus8OmPiV8/JgINoFFILWeIHSz4f3+KBO32aVsnB++rC7fj8SB09
-	 57UxtDdvz7lslSvpwmU77qyz7urTWp+F4zJkeoV+WdA9+M+g8KRoUmrDvcwJJDhtt6wRL
-	 32C06FisSWOSzkJIi/y1hMeuZJH7S57S7EhC34ZD50g5s78Pvk11+8sMpJhLlPq8z2KbL
-	 4NdUjiMp7CsqjhPgX8RvKw81i2mMHa90RhrdhqsH2l1Bh3VesUbXpGjvHLox7IVM/aRoF
-	 PQMSeQVskwqJnjS1u1mJ0meNyCXKC2fNGB/Q7+EQQ/HAphRWChA6onY4pSLY37xEkDw==
+	t=1794676486;
+	b=E1ifVKfsy5QffhTHR0JxS7ZgWF+/mImg/hoDtNn5YHSU0sU3dFO9f/tRGQmwimiN6K9v
+	 UtiXHyrpFlKwY9qN89SV9VgVUD/AIeD9/cecfO9sOBd1oomAnXmiI24+TRDB2y4z6CjnX
+	 NveBnBWhYwUERv8MkCDDKXGYt1vesV7KzZ8Bbdbi1DWwA1/PKAiXVt1Oy6wQbwEEhhR2s
+	 8jsUcEwWqRPSR82TZDSupp/lZnXJb5bPFQezwUyjJIO5uL72zQtWCD29j9jL6/WoTOIDT
+	 Gp8PvQbAbkWr2ti8vKszPzQlOt+HQZtg248V+aQBYrzwNIEPZj1odlWSMGweosw+0tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794674294;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=fEMbYxerSEurGLTd07nUesnyH9LDtbvpW3haxy5h8+g=;
-	b=4Fg+zpHD3OZC24OFMISEXf2HIfYnH8oOoB+x15qZBMSR3vV9n2pR3XsKkCZdQsMc2RPx
-	 usNIEidWT8nd4o4wBWfheJmvF2pGEJGyhxiJ5JCSclBv5Cott5SV7dYBT0Th4Hm2ijvh3
-	 j2cSZ1VU5KCQZJqgfv5LHLBRpBgAeWNbdtIdKQXMLWzkbriSpJPSxq6E27vktT3snqUAh
-	 8Nrh/0pcitzYX+pvJDM1rlfAn40sgd0v8htPixIWuqIa17qLTTMmZHxyLPQyuMEPmlwwB
-	 Grf/SSUBikTu2WClIzbbYEdvmaY9S1ggBuSTdGbMp09iPqwsDOhWxHINRfqxG9VpPBQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794676486;
+	h=DMARC-Filter:Received:Received:Received:Received:Date:From:To:CC:
+	 Subject:Message-ID:In-Reply-To:References:User-Agent:MIME-Version:
+	 Content-Type:X-Originating-IP:X-ClientProxiedBy:X-FEAS-BEC-Info:
+	 X-FEAS-Client-IP:X-FE-Last-Public-Client-IP:X-FE-Policy-ID:
+	 X-FE-Hostname:DKIM-Signature;
+	bh=w/+ZmgtRkLBcS6QGuKaYQte2GwIED+OU7WdfcIAWgn4=;
+	b=qtp45bWn8SF1nQFzpO5TtDsHZxukIYWZgWHeNqXEaAbIj/2V/FNP0D3aSCdoYjyY2MaZ
+	 Ry0i1yCCGbTy5daw0c9EzyjLISpWiAFyQYsSF7MgU6wdpkXoe7z8OF2UgxdMDNP6bcYn8
+	 vCs1B7HjRaV9ps3m1P7aHO11C1FbKKixwlLQnEML5lHAFxLCD2Rp6pZZBEiNbTZaM5bbY
+	 SbuLiHofS2oKwV/1AF6YNJ8opiogsFAwLI6pyd58g+3of8y/Ute3Yl40vLyIVNqv04jO3
+	 GUUTZf/drZgoeI7ZBeozNJiE/5w8qvExl+LI9HwZojnSvVROsdCmENZ5qd8qtJcJXyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Xm4UbrQM;
-	arc=none smtp.remote-ip=74.125.82.51
-Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=utu.fi;
+	spf=pass smtp.mailfrom=utu.fi;
+	dkim=pass header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=e7k1Vdex;
+	arc=none smtp.remote-ip=130.232.247.4
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C13C606A32E
-	for <git@vger.kernel.org>; Sat, 14 Nov 2026 16:38:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6C13C606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F2D606A32E
+	for <git@vger.kernel.org>; Sat, 14 Nov 2026 17:14:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A2F2D606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Xm4UbrQM
-Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1b3acec6677so2702135c88.1
-        for <git@vger.kernel.org>; Sat, 14 Nov 2026 08:38:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794674294; x=1795279094; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=fEMbYxerSEurGLTd07nUesnyH9LDtbvpW3haxy5h8+g=;
-        b=Xm4UbrQM0BKAOKHYjzG7dFOEKx923uTWYJU++VeyKW9qkUN7aHfreVW2Zt3X/NGpdA
-         +1bP+EWVIs/TiF8gzv/CQdz99blZTaDn3E5I8WFs1Gns+PFgGK9nCr31ElPN9FrACDpE
-         QbxUfhhWRyisqoPSjYlRayDEi2snhVkyY9PMeuNpPl2J3C/r8DfBJCcrEhnN6EvPAYvk
-         InofSNsfrJDFdxHQ8izVXhP8IyoKmReRUH20FnNPfeLRXXgL3UFA1vaNejzd7NHdMBxW
-         is+ABVadqm+XSFkpcUxQR3lblnFpgrX7i186viCHv7fK/vf79Ehbg2u3iWQB8pVU5PGy
-         8EcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794674294; x=1795279094;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=fEMbYxerSEurGLTd07nUesnyH9LDtbvpW3haxy5h8+g=;
-        b=xRZDbvsyPAnE1mYcw7ID1zUcYMCCjSNZKhqFqJKtz0kg/XfjlsKqvngnfEiZjqGu8m
-         CbZ6FxMRUw7wBajZ4ywVX45Er3uLq1sTEcVTLwBIoc5dHyDupuZz2u9iJgvTUhwPQGN3
-         JAs5GakC8rbb3rToYe1zTJhOXo9zvD5rHrTZW+GYNLY7j/tP21yiVgcci4URXAupVpdG
-         kkN8JA5Evh+A7noXaIZlOXDY7zF2RAvT+V8fR1DRH1qZpoecb3/BO5Bny7y1A+LLDVnh
-         x9F7QSn2t4H9ykVtLx0ScX7F4j0eYkeAQZ9MD3d31IFem6Prs2/l8e196zSZVoVKGjIP
-         y0jg==
-X-Gm-Message-State: APuU4Z/LWExpLny3pnhXIEwOJvP5aPxgRXbqVBoKOAVIP0VEx8I0qg/w
-	ZDKBBtN7Doj8qur4j3zDffAJmigom6lRbfdtOl7anMCCNE2wJVd84wPg
-X-Gm-Gg: AYBFou0nmLq6v8GMD/aYUDKsVRR4e43fv3Q8KzZ0qNYZCP+n/f8OJX+iZ3mrsXaRv2H
-	JiSrHQgFC9xRJPUcXRgCanLrVrJ/xjN9cn+uO1oY3ZZ4aU44JDWJShI+xiVBtnE4VuSX0mPrUNB
-	zUMK/7p6fWZh7/J7Gv9z0C5KTIVE92WxfiGQNMAJhn6GNdA7m4JF3kt/0uCtOi7ytrtGmkdM8Vh
-	ASWDsUpp98YMJVoo2XRKJQFm4UOtEsG32hzIZe/AvPwGGlhZTiHaW3ifVfrAxN1RcD0uYHYe31Y
-	GiMlUCw4YeJ3dDnkk9dlpw0DqDiqTGd2BhD0gj+3pfpMfd/SZmw1BYqGY+eKsycgQvDifjRVD/k
-	XQBRGHymyITyk8Ng1AyOklKO0UTp9R5I2+V2egfG9gnuzdEnav8RhlRBAzwdGOhU1vcrvfpnmGU
-	nAskNoDeNL0qqzpq3PHxTYMPXySZ1fEmt2ioz1oUkQBwI9Pc/r/pTvM9TlPRxUNJMYVRrCNQcI1
-	erAfkhWEa7sb64r3g/kUXT8izlOgtB80P/LgNk6fh8kbIh7sd+g71ODwq95zzpN6aNYr4K8bQPd
-	J8vGALF6xAOp6BFNPqC4eIqxCo/10mg8OyKd8pjjAPrctGHc33LziXK1x59/FoS9XXFxaEbxCTr
-	Y3vxPKNwEj+QK7ThkZFKDvLYlGlNoHmuQua0=
-X-Received: by 2002:a05:7022:371a:b0:144:fd7c:84fe with SMTP id a92af1059eb24-1b50313d82fmr5942003c88.35.1794674293541;
-        Sat, 14 Nov 2026 08:38:13 -0800 (PST)
-Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b5031b98e5sm18093657c88.14.2026.11.14.08.38.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Nov 2026 08:38:13 -0800 (PST)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: jayatheerthkulkarni2005@gmail.com
-Cc: git@vger.kernel.org,
-	jltobler@gmail.com,
-	lucasseikioshiro@gmail.com,
-	gitster@pobox.com,
-	phillip.wood@dunelm.org.uk
-Subject: [GSoC Patch v9 5/5] repo: add path.prefix
-Date: Sat, 14 Nov 2026 22:07:15 +0530
-Message-ID: <20261114163715.257705-6-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.56.0-rc2
-In-Reply-To: <20261114163715.257705-1-jayatheerthkulkarni2005@gmail.com>
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20261114163715.257705-1-jayatheerthkulkarni2005@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=e7k1Vdex
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 6AEHEc1c012038-6AEHEc1e012038
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Sat, 14 Nov 2026 19:14:38 +0200
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1xSHKo-00GdOc-HK;
+	Sat, 14 Nov 2026 19:14:38 +0200
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Sat, 14 Nov
+ 2026 19:14:38 +0200
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id fa49ef05;
+	Sat, 14 Nov 2026 17:14:37 +0000 (UTC)
+Date: Sat, 14 Nov 2026 19:14:37 +0200
+From: Tuomas Ahola <taahol@utu.fi>
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+CC: <git@vger.kernel.org>, Kristoffer Haugsbakk
+	<kristofferhaugsbakk@fastmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>, Jasper Mayone
+	<me@jaspermayone.com>, Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v7 4/4] branch: let --delete-integrated find branches
+ merged onto changed files
+Message-ID: <20261114171437.DqB_k%taahol@utu.fi>
+In-Reply-To: <4b5485584e218e6136835c02a4e9b01ef9a5c574.1794662670.git.gitgitgadget@gmail.com>
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+ <pull.2425.v7.git.git.1794662670.gitgitgadget@gmail.com>
+ <4b5485584e218e6136835c02a4e9b01ef9a5c574.1794662670.git.gitgitgadget@gmail.com>
+User-Agent: s-nail v14.9.22
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -101,105 +76,97 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-06.utu.fi (130.232.247.46) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhaXEgACRoJBAwGBxoMDxoNBigP
+ BQkBBEYLBwVIWEhaSFlcSFlbWEZaW1pGWlhfRltYSFBIWEhYSFxIWEhYSFhIWlhICg0GRgMGBwoEDSgPBQkBBEYLBwVIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhI
+ W1pIAxoBGxwHDg4NGgAJHQ8bCgkDAygOCRscBQkBBEYLBwVIWEhZUUgFDSgCCRsYDRoFCREHBg1GCwcFSFg=
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
+ bh=w/+ZmgtRkLBcS6QGuKaYQte2GwIED+OU7WdfcIAWgn4=;
+ b=e7k1VdexH8hLQKVmp0ol2Am+KqDfLaf2pU/4lgYeN9JmVLYHltQRe4UYCxMbrJhRLaaKq8cUjBdG
+	lEpOQ05TLzIjl8o0y4VG5sRHlSI/lAp92hBqsoJ24Q5mNJNVcG2xG4HE5KsAVzPUka2mJelpR8mc
+	ypd+A0HnBKhbdsDn728MIUXt4+1Ey46ScZP2Oy1++2EpS7GHyyeaDXbyrPnkPvN+9jgwRy2Ka0Bn
+	vLTvPYpyDZQXowQabg+ehRjgXr2JShXx60to1uZkiOGq8sa/B6W9TgfjJ74qSS7A9CREOIVcrloP
+	kqJJgzup4lpSeKo8bQM0tuOAbu8kyVIIpn2sSA==
 
-Scripts sometimes need the path from the repository's working tree root
-to the current working directory. While this information can be derived
-through existing Git commands, `git repo info` does not currently expose
-it as a scriptable key.
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> wrote:
 
-Introduce the `path.prefix` key to `git repo info`. The key returns
-the path from the working tree root to the current working directory,
-returning the empty string when invoked from the working tree root.
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+> A branch that upstream integrated with
+> 
+>     git merge --squash topic
+>     git commit
+> 
+> after upstream had also changed the files the branch touches is still
+> kept by "git branch --delete-integrated". The squash commit has neither
+> the branch's version of those files nor the fork point's, so the
+> previous check cannot see that the work landed. This happens all the
+> time on hosting services, where the "Squash and merge" button on GitHub
 
-Mentored-by: Justin Tobler <jltobler@gmail.com>
-Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
- Documentation/git-repo.adoc |  5 +++++
- builtin/repo.c              | 11 +++++++++++
- t/t1900-repo-info.sh        | 23 +++++++++++++++++++++++
- 3 files changed, 39 insertions(+)
+Nit: that sentence scans a bit awkwardly.  Perhaps something along these
+lines would make the idea more clear?
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index c515e9372f..17992c7a67 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -131,6 +131,11 @@ values that they return:
- 	Returns the configured index path even if the repository is bare or the
- 	file does not exist.
- 
-+`path.prefix`::
-+	The path from the root of the working tree to the current working
-+	directory. Returns the empty string when the current working directory
-+	is the root of the working tree.
-+
- `path.superprojectworkingtree.absolute`::
- 	The canonical absolute path to the working tree root of the superproject
- 	if the current repository is an initialized submodule. Outputs an empty
-diff --git a/builtin/repo.c b/builtin/repo.c
-index eeaee98c75..87c5743246 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -100,6 +100,16 @@ static int get_path_commondir_relative(struct repository *repo, struct strbuf *b
- 	return 0;
- }
- 
-+static int get_path_prefix(struct repository *repo, struct strbuf *buf)
-+{
-+	/*
-+	 * repo->prefix is NULL when the current working directory is
-+	 * the worktree root.
-+	 */
-+	strbuf_addstr(buf, repo->prefix ? repo->prefix : "");
-+	return 0;
-+}
-+
- static int get_path_gitdir_absolute(struct repository *repo, struct strbuf *buf)
- {
- 	const char *git_dir = repo_get_git_dir(repo);
-@@ -200,6 +210,7 @@ static const struct repo_info_field repo_info_field[] = {
- 	{ "path.gitdir.relative", get_path_gitdir_relative },
- 	{ "path.index.absolute", get_path_index_absolute },
- 	{ "path.index.relative", get_path_index_relative },
-+	{ "path.prefix", get_path_prefix },
- 	{ "path.superprojectworkingtree.absolute", get_path_superprojectworkingtree_absolute },
- 	{ "path.superprojectworkingtree.relative", get_path_superprojectworkingtree_relative },
- 	{ "path.workingtree.absolute", get_path_workingtree_absolute },
-diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index 46c92d4e43..d0631a8f3b 100755
---- a/t/t1900-repo-info.sh
-+++ b/t/t1900-repo-info.sh
-@@ -207,6 +207,29 @@ test_repo_info_path 'commondir with only GIT_DIR' 'commondir' \
- 	'.git' \
- 	'GIT_DIR="../.git" && export GIT_DIR'
- 
-+test_expect_success 'path.prefix at repository root' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		echo "path.prefix=" >expect &&
-+		git repo info path.prefix >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'path.prefix in subdirectory' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	mkdir -p repo/sub/dir &&
-+	(
-+		cd repo/sub/dir &&
-+		echo "path.prefix=sub/dir/" >expect &&
-+		git repo info path.prefix >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_repo_info_path 'gitdir standard' 'gitdir' '.git'
- 
- test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
--- 
-2.56.0-rc2
+	This happens all the time on hosting services such as GitHub,
+	where the "Squash and merge" button lands...
 
+> lands pull requests this way while the main branch keeps moving. A
+
+Hmm, I'm not sure if I understood that.  What is "while the main branch
+keeps moving" trying to say?
+
+> rebase merge onto such changes looks the same.
+> 
+> For each such file, merge the branch's version into the upstream one
+> and treat the change as landed when that leaves the upstream version
+> unchanged. This has to read the files, so in a partial clone it may
+> download blobs.
+> 
+> The merge uses the attributes of this repository, from the working tree
+> and the index, the same as a merge run here would. A merge driver that
+> only the upstream repository has is not seen. In a bare repository only
+> info/attributes and the global file apply.
+> 
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>  Documentation/git-branch.adoc | 13 +++--
+>  builtin/branch.c              | 72 ++++++++++++++++++++++----
+>  t/t3200-branch.sh             | 95 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 165 insertions(+), 15 deletions(-)
+> 
+> diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
+> index 6be28c8a4e..489a9d5fd0 100644
+> --- a/Documentation/git-branch.adoc
+> +++ b/Documentation/git-branch.adoc
+> @@ -240,11 +240,14 @@ remove it anyway.
+>  	Like `--delete-merged`, but also delete a branch whose changes
+>  	the upstream already has even though its commits are not there,
+>  	as happens after a squash or rebase merge. Such a branch is
+> -	deleted when some upstream commit since the fork point has its
+> -	version of every file it changed, even if those changes were
+> -	later reverted, and the message names the first such commit.
+> -	It does not matter who made that commit. The same rules for
+> -	which branches are kept apply as for `--delete-merged`.
+> +	deleted when some upstream commit since the fork point has all
+> +	of its changes, even if they were later reverted, and the
+> +	message names the first such commit. It does not matter who made
+> +	that commit. A file counts when the commit has the branch's
+> +	version of it, or when merging the branch's version into the
+> +	commit's leaves it unchanged, which reads the file and may
+
+Err, what exactly is the antedecent of that "which"?  (Okay, I think the answer
+is "merging", but I had to read the sentence again and again before I saw that.
+Can we make the passage a little easier to grasp?)
+
+> +	download blobs in a partial clone. The same rules for which
+> +	branches are kept apply as for `--delete-merged`.
+>  
+>  `--dry-run`::
+>  	With `--delete-merged` or `--delete-integrated`, print which
+> diff --git a/builtin/branch.c b/builtin/branch.c
