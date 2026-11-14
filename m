@@ -1,91 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794682098;
-	b=SmI5Y543Ejdh8VxS4x9+K80KtMdqlqJCK5aELUNj2xniAKXIzj3WCVEw8HzqWAsBpq4l
-	 9Il/BaFoaz1j1lG6ZOGvGdZjnG0Scp5zWI4hBAxD5KQZBt5cyMKDc1nAV6MSacngZXfRa
-	 K7iU/s5AjcLtE5k1HWIw68XIlnO6vihWJNZHS2pIV6hRVcNLfAJYNnP/R78Ma7TC0UG4w
-	 tqTaR/41ZYo12xyGLlyqLvoL89Gs9nlrMyJXhIPQ+mHX/83Fo7cK/3oOSK4+oli3S+nZ9
-	 KFYL0h5AX8VV/od31XhLRIz128nRUIYvQ6PXuaAK8zYbzKt0F9EX1rgDjKSxy4Cs9qQ==
+	t=1794682100;
+	b=fVslSYCffEO+w5gV2DJaxleQPQ52BKCCaV9wkoJ7zbcAIEMtgpDFHt8HGxpPF8YJrhJg
+	 J+1cuIRal89nto2sc/g2TPxDRboFpzOT5e7nyRrTWNZG1ZHIyowCUreprNuLDSvnxOI48
+	 Y1yKsg2r8m1ODNEIeZ3Zw/ncwQX+KVTsd1rnXbZeyyfk+Er5wY5wzSdI5v7QZBrAHja6h
+	 1wZaYgQzfWgfPvqaBiBiJNFnp3V/S++PlrKMJO5QgFYSdaGlTVpmcMpVIZwPVZ5doE5pp
+	 HERyBSSg58ZdeKzRpmJwTl46npo2dZ0gepYqb1sP//7GL5DPlOLh9VeFsj3CyqGCG7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794682098;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794682100;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=wJeD6WjT2Jh3rxkcUj1K4xIZFxeuj17LydVuBLNyvzg=;
-	b=f5ZV9ubwN3dmxG40K3BzrLM5WNrxN5Krwdo359JsZUlmaBxsVyhavAK4f3T724sDYUpe
-	 TO6KRL/GFAetXh/jFNUUn9Cgnn5pr3aDWwiNrwSrY5SoTBaSnW13CDgGC9ZqOKtS/MKtv
-	 D0BCBHTwMvCTbUFexXtO0DrXwSiuBvQOQ14ZT1a3lc3CYnCwB4hMfqpMevFT7zvvfKgFS
-	 UcnnjCXCcojrzWr9m/Fx1JPqmMUNzExLGt/QMY0wEOa2oyzYbBzjTTIO30QcR9XqPpYgh
-	 +dgFza0//y9gg/Lwc1rQaeDG7yYdGZyri7QRE6thMK+UcPVoLa9qLKhQsMKhPs6ymrA==
+	bh=vLokX4QUu4qzYIv3Nn0aOH3CaSWj15rPdZZMle35yt4=;
+	b=qzPZ+srT+c2YeuokPSQPi42M7QbXrPieBEjqBS+5+Zd/7pby1iOS6oIQ4H+uowhmLLdV
+	 k5ekALfX0q23hDO4/wTUNnIrkvN5iLeM0yCf/c6fxMq7i+hPXVzb3UYzoPYj0vPl0sBUG
+	 DK+rwjkOHo0gMLPQT+N3Ndh8PWUa6yPjxRIo4qTUGjvamk8I/51KFCU6zFDvP+F66raH3
+	 ICqF0LAuyqWWY8rxHE/L9xQoJKU+9wTdG2jRFYV3jSnuWp7pLZUQEUQ3CCEmaqyCLvViB
+	 SKuNm7XYcVveX/VkYVxFBXY95tBsd6+DToKL2FjwAjn6g0jCEArgo2v3XQvGXCDUjKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pwNnJz8k;
-	arc=none smtp.remote-ip=209.85.128.53
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FZ4iHHTv;
+	arc=none smtp.remote-ip=209.85.128.48
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F9E606A32E
-	for <git@vger.kernel.org>; Sat, 14 Nov 2026 18:48:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5F9E606A32E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BBD606A331
+	for <git@vger.kernel.org>; Sat, 14 Nov 2026 18:48:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 69BBD606A331
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pwNnJz8k
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4bb61185057so5163335e9.1
-        for <git@vger.kernel.org>; Sat, 14 Nov 2026 10:48:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FZ4iHHTv
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4bb68c197c7so2335335e9.1
+        for <git@vger.kernel.org>; Sat, 14 Nov 2026 10:48:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794682096; x=1795286896; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794682099; x=1795286899; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=wJeD6WjT2Jh3rxkcUj1K4xIZFxeuj17LydVuBLNyvzg=;
-        b=pwNnJz8kRZ/CIs/G2OXlbuUw/rWJEWeY5Yv/THw+rkr1gsn3xmOSLwY9JvUMueeZTk
-         PWHbbg6NC2O30i/nwf3SejQlhdcE3QqTACIowTxufNIQ/ENxXjNDWJhzkOg04sdj/qJz
-         VPr6zYoT5RbAa6q/pU4jGQv/u4nj8vi8dvtXEQ1MhUHzSIQi+QCUo0/70qTjxPjG1vla
-         Eilw/I0PJA1+kK4FTPA4EvutjdaPQcdV/bGoahsvsxSfqBSiH3p9GocVarLJcodYDh7L
-         z62sXGyHhuhEKSI5IISAaDgd83lqpGcZAyvhoGes3vKBRPA3HwFF6ZyQH3V/K8+QnUqC
-         vJPw==
+        bh=vLokX4QUu4qzYIv3Nn0aOH3CaSWj15rPdZZMle35yt4=;
+        b=FZ4iHHTvnbPdoZPpLFEpTXpt+1lqrgk4vZPl4KvGWijXhblBSf1j3DAXeK0L29FO2T
+         bcpVPFg23oRXwJuEG5tGBweu5UuyaSM7PaNfwZpi1sK/Eo72n+kzp4ekmhPyMbhSRGS2
+         AMCWwGP389bpjVL7Z9QsHAOVV4/WkWzzr109Ko0nlO7S1DeB7V4oz81M5WIAdKZCI+XN
+         MI0vE9Ix3H3hv822ZvlVmYNAjZCluAyF0hQlu4A1KblPTn7ADkK6eJ3CvYRl1TqIGQIw
+         EYO6Fr6xH0iTgPzjrkr6gEA3hMDzW6g6sYYMUhLeK9dV2uKxcQWMArS5b4+7j70j9iHu
+         dh+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794682096; x=1795286896;
+        d=1e100.net; s=20260707; t=1794682099; x=1795286899;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=wJeD6WjT2Jh3rxkcUj1K4xIZFxeuj17LydVuBLNyvzg=;
-        b=pTq7BIW6pgbo5grB1HT2rqT/ECk2cSInuuGaCbUpCqlglPfZ0fJ52dKU5d6RDu+4/F
-         QtUXQf+Hk8DuSSqqNrd/YNzGedE7y23U1QWO7vw1szv2+ybU98C54TaoU/vh8SJQZHOA
-         FLC/VR8QTpd2ccvTLh5T3xSq5UVPFO4VEhgiTirn90gRbI8rZmEo4XzwiOgjgBUPgogw
-         LPj5afsDiHiR8wli7HNBGCxQ3m/ehJ2OMOJ6RVHzwl3AmhGD+EdC+T62S/PjVeM8+1tr
-         uXYGKCBB8pmAZyHRLve9SK6RYDmVu3qIfsnUB8VTCvj9P7ZbEOWMd8N2sbxxZvK1E2PY
-         HSAg==
-X-Gm-Message-State: APuU4Z8PyJ3ySmrHQHd6wHLiedYbz9d7rJBsJulkk79cYMT2DZNpkWbj
-	BTh3Ux4nmcAWrXaU+SKvPQ/U8UX+FwL0G6tVKiuw4C6k59MR+xPN8KMuO+QpnNK+1XI=
-X-Gm-Gg: AYBFou2ok7Ia+t5VZ5nyZ/7wHgGsYUAGi0S2X/iRQ6xeNb7SwMReF0PHR0nVQLKA3/+
-	Sjo7Fiw1g+y4iB1yUO03x3Fw0y0HKTKOt5s81YXSnrNkISg1izQ7+aFiflY3Em+XUchBkzcb9ig
-	9LWKMuCLbul903sQ7tH3koDAmIHefSmBS+I1RrIdNC9kXy5iQV20EAnBrKbxoLjjlZL6QPji4Sa
-	I0fpsdZ5bmAzNmiHz6F0HUvUa4q2V0d/jNJRPkIV8dPRpiDJQdo3Df8G/Lv5ry6yT59n7yGt5tX
-	ZbT41yiUsSnEeXi7IPFD4X+5uKe1myWRDzyew91g8ToJHcD0x44Cr7NShTUkSm1XlHAoQrppzM4
-	bGtqaLgJ8AVgIF4JAEp1BkkkS2spDaHG/wOdFwgoyCOsdSMaSNtkaTcfmgjjn/dJ/qLvoDyEbwf
-	ECnLMYEA5+QSs80ukL6fTGCHMlRT/gKIaOy9F/f9shxpNAt1Rhxhteu/EAnUojr1vPTnUdv4i3m
-	34rQDS8MSWlt087FspQRATm69fxWqzPPXZtyM7L+mRb/ar5aQQUL7QB9Du0LatT5qAAFFPDvWyy
-	MLaHwMNkGbVjq1d3i2qe0DbbXylIa+/BuOGFTYZ7XTTrU6tBpWqesz2p25jaRwAVvG2ThEX7HSE
-	d3AOETNrV7IbMEMj9li2qw8woz64ZP91J9FJmuXgTao/270Dgm85lriD4H/JRSRn8pKAyOjRH5I
-	dIHfy8eKfneA9WRnFLsu4wwlV866qajd3z
-X-Received: by 2002:a05:600c:630f:b0:4a2:1a:a129 with SMTP id 5b1f17b1804b1-4bb55aa6babmr121443215e9.35.1794682095978;
-        Sat, 14 Nov 2026 10:48:15 -0800 (PST)
+        bh=vLokX4QUu4qzYIv3Nn0aOH3CaSWj15rPdZZMle35yt4=;
+        b=xlA9pxJI3poryzGY3VhvoNAuqMnJ/Mm38T8y93ObdOaj7Na5rWXNjbop9KdLqrS2bG
+         yjvdghC/AR8PQee6E0mdqA6UAzvxrz1NubeMcehCkyQtFoq4N7oma4csodMiaHMjNNlT
+         ffvQJs86ZaOtu0IbkysZVPaojvgOhEAbJl/rN3ykdr4OvizpRMw4w+JUcAkPAPhXGiDm
+         9gI2AM3Z4YuasBwHhLS7yQ1yg7xkDR4w99Z9pXNPEIAZyBIopxzlrQAmmLK7p/4BdUhi
+         Gm6ERZTcT+C2EU/hvKDBDd502+Ikcs8wKs9X8Ldia3RZWYB2+fNN3ploxKPHJW2DVuLI
+         Nvgg==
+X-Gm-Message-State: APuU4Z/+x+3eP0el6h0rLPzMAaQCWTrNWi2Y7imZiepQVjZbs4PMwMmR
+	At93nQou3itTovCqtGZQ/AU8MFsprE0ZLLlkNpqP0sVpyoALeT8yeNsk1oLv+w9BCLo=
+X-Gm-Gg: AYBFou1JiTVOVCi1Tndnku6sn8cpkgpozR3V2Do097ccaH+y+pFa13jhwKVxI+8w/mn
+	pQWv/R98StZ0lFIZIrEvt90x+FwyZzCx6aX6skGC6ubpMxZRubcT84/H/mHmzAu/1KF+yh7ReGA
+	XibbLAP9v5pVBFbDNqihEd62fBk/FsGVYVBthCXvmTwalC8V7LsnlsIeaasLiltpw28zWxZbW2H
+	viZrr7yPcdVzl3m1yPGuHQlpZI48KB/x9Jzoh3gMBS1yYpl9QQruM8fwB9CnnOS4PqWL29WShLz
+	QRE+W6ZYH0WROGbDU59RhONMDQ0MaZEVGxOX0XYEBXAEf3YW4ciCt9c3qj46/ptork2L1qAJDc4
+	jnUD3ioFM2c3BhwoCUT4a9LSPoj7Md/rF164E0JP10lp1NFkXXITmp+zOzj7IbSML7bmwcTXoaz
+	KpgIldUHfJlIyq4OM2l1qgAsvnRj0Cjp6Tfq2nioAuHhlACuq+5SDKZ9RGFUZeuqI37t3ybl6qi
+	CEzYLWTzRpPyzboIPh4AD6K4hWaQKpb94oUM8jOnUl74yPaEMz8zrNQT8YvHdBzSr2tf6jm6+rZ
+	DyF+6EPEU7dyZ0txzcQia96sd2E1CaaGvGqAOJ/LRqUyLifsz1i/1Ip0R5QRJ+3TNmYnii+N0fw
+	L70cicQZrwTjUbPMZE4KazdvYsUgZcOpUk/6OIgjIrO1C7JwGATjN5Sqo/Sv2ZnDOPZj8N71fPj
+	ID8EWhdVfl9kPhpFBFIy/w8B8vu654H5tKxBVIIVD297kizESi2OxoIg==
+X-Received: by 2002:a05:600c:3486:b0:4a2:c2b:a91b with SMTP id 5b1f17b1804b1-4bb55a6a828mr141888255e9.10.1794682098724;
+        Sat, 14 Nov 2026 10:48:18 -0800 (PST)
 Received: from localhost.localdomain ([212.88.111.67])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55ac0e3fsm128620355e9.5.2026.11.14.10.48.12
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55ac0e3fsm128620355e9.5.2026.11.14.10.48.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Nov 2026 10:48:15 -0800 (PST)
+        Sat, 14 Nov 2026 10:48:18 -0800 (PST)
 From: Wasswa Edson <edsonwasswa54@gmail.com>
 To: git@vger.kernel.org
 Cc: tangajoris@gmail.com,
 	Wasswa Edson <edsonwasswa54@gmail.com>
-Subject: [PATCH v2 1/3] credential: make -h output and SYNOPSIS agree
-Date: Sat, 14 Nov 2026 21:47:50 +0300
-Message-ID: <20261114184752.1417-2-edsonwasswa54@gmail.com>
+Subject: [PATCH v2 2/3] credential: move each subcommand into its own function
+Date: Sat, 14 Nov 2026 21:47:51 +0300
+Message-ID: <20261114184752.1417-3-edsonwasswa54@gmail.com>
 X-Mailer: git-send-email 2.46.0.windows.1
 In-Reply-To: <20261114184752.1417-1-edsonwasswa54@gmail.com>
 References: <20261104202228.24642-1-edsonwasswa54@gmail.com>
@@ -101,63 +101,145 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The usage string of "git credential" does not mention the
-"capability" subcommand, even though it is documented and
-implemented. The SYNOPSIS in its documentation does list it, but
-is written as a plain literal block instead of using [verse], so
-t0450 cannot extract it, and "credential" has been listed as a
-known mismatch between the "-h" output and the documentation.
+cmd_credential() handles all of its subcommands inline, sharing a
+single "struct credential" and dispatching with a chain of
+strcmp() calls.
 
-Add "capability" to the usage string, mark the SYNOPSIS as
-[verse], and drop "credential" from the list of known mismatches.
+Move each subcommand into its own function with the signature
+expected by parse-options' subcommand callbacks, in preparation for
+switching the dispatch to OPT_SUBCOMMAND() in the next commit.
+
+The only change in behavior is that an unknown subcommand is now
+rejected before reading a credential from the standard input.
 
 Signed-off-by: Wasswa Edson <edsonwasswa54@gmail.com>
 ---
- Documentation/git-credential.adoc | 3 +--
- builtin/credential.c              | 2 +-
- t/t0450/adoc-help-mismatches      | 1 -
- 3 files changed, 2 insertions(+), 4 deletions(-)
+ builtin/credential.c | 102 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 75 insertions(+), 27 deletions(-)
 
-diff --git a/Documentation/git-credential.adoc b/Documentation/git-credential.adoc
-index e41493292f..e12d429f43 100644
---- a/Documentation/git-credential.adoc
-+++ b/Documentation/git-credential.adoc
-@@ -7,9 +7,8 @@ git-credential - Retrieve and store user credentials
- 
- SYNOPSIS
- --------
--------------------
-+[verse]
- 'git credential' (fill|approve|reject|capability)
--------------------
- 
- DESCRIPTION
- -----------
 diff --git a/builtin/credential.c b/builtin/credential.c
-index a295c80b36..72e7b2af4e 100644
+index 72e7b2af4e..d6ba21a2cb 100644
 --- a/builtin/credential.c
 +++ b/builtin/credential.c
-@@ -7,7 +7,7 @@
- #include "config.h"
- 
+@@ -9,13 +9,75 @@
  static const char usage_msg[] =
--	"git credential (fill|approve|reject)";
-+	"git credential (fill|approve|reject|capability)";
+ 	"git credential (fill|approve|reject|capability)";
  
++static int cmd_credential_fill(int argc UNUSED, const char **argv UNUSED,
++			       const char *prefix UNUSED,
++			       struct repository *repo UNUSED)
++{
++	struct credential c = CREDENTIAL_INIT;
++
++	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
++		die("unable to read credential from stdin");
++
++	credential_fill(the_repository, &c, 0);
++	credential_next_state(&c);
++	credential_write(&c, stdout, CREDENTIAL_OP_RESPONSE);
++
++	credential_clear(&c);
++	return 0;
++}
++
++static int cmd_credential_approve(int argc UNUSED, const char **argv UNUSED,
++				  const char *prefix UNUSED,
++				  struct repository *repo UNUSED)
++{
++	struct credential c = CREDENTIAL_INIT;
++
++	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
++		die("unable to read credential from stdin");
++
++	credential_set_all_capabilities(&c, CREDENTIAL_OP_HELPER);
++	credential_approve(the_repository, &c);
++
++	credential_clear(&c);
++	return 0;
++}
++
++static int cmd_credential_reject(int argc UNUSED, const char **argv UNUSED,
++				 const char *prefix UNUSED,
++				 struct repository *repo UNUSED)
++{
++	struct credential c = CREDENTIAL_INIT;
++
++	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
++		die("unable to read credential from stdin");
++
++	credential_set_all_capabilities(&c, CREDENTIAL_OP_HELPER);
++	credential_reject(the_repository, &c);
++
++	credential_clear(&c);
++	return 0;
++}
++
++static int cmd_credential_capability(int argc UNUSED,
++				     const char **argv UNUSED,
++				     const char *prefix UNUSED,
++				     struct repository *repo UNUSED)
++{
++	struct credential c = CREDENTIAL_INIT;
++
++	credential_set_all_capabilities(&c, CREDENTIAL_OP_INITIAL);
++	credential_announce_capabilities(&c, stdout);
++
++	credential_clear(&c);
++	return 0;
++}
++
  int cmd_credential(int argc,
  		   const char **argv,
-diff --git a/t/t0450/adoc-help-mismatches b/t/t0450/adoc-help-mismatches
-index baf3b1d809..939e47bf3a 100644
---- a/t/t0450/adoc-help-mismatches
-+++ b/t/t0450/adoc-help-mismatches
-@@ -9,7 +9,6 @@ checkout
- checkout-index
- clone
- column
--credential
- credential-cache
- credential-store
- fetch-pack
+-		   const char *prefix UNUSED,
+-		   struct repository *repo UNUSED)
++		   const char *prefix,
++		   struct repository *repo)
+ {
+ 	const char *op;
+-	struct credential c = CREDENTIAL_INIT;
+ 
+ 	repo_config(the_repository, git_default_config, NULL);
+ 
+@@ -24,29 +86,15 @@ int cmd_credential(int argc,
+ 		usage(usage_msg);
+ 	op = argv[1];
+ 
+-	if (!strcmp(op, "capability")) {
+-		credential_set_all_capabilities(&c, CREDENTIAL_OP_INITIAL);
+-		credential_announce_capabilities(&c, stdout);
+-		return 0;
+-	}
+-
+-	if (credential_read(&c, stdin, CREDENTIAL_OP_INITIAL) < 0)
+-		die("unable to read credential from stdin");
+-
+-	if (!strcmp(op, "fill")) {
+-		credential_fill(the_repository, &c, 0);
+-		credential_next_state(&c);
+-		credential_write(&c, stdout, CREDENTIAL_OP_RESPONSE);
+-	} else if (!strcmp(op, "approve")) {
+-		credential_set_all_capabilities(&c, CREDENTIAL_OP_HELPER);
+-		credential_approve(the_repository, &c);
+-	} else if (!strcmp(op, "reject")) {
+-		credential_set_all_capabilities(&c, CREDENTIAL_OP_HELPER);
+-		credential_reject(the_repository, &c);
+-	} else {
+-		usage(usage_msg);
+-	}
++	if (!strcmp(op, "fill"))
++		return cmd_credential_fill(argc - 1, argv + 1, prefix, repo);
++	if (!strcmp(op, "approve"))
++		return cmd_credential_approve(argc - 1, argv + 1, prefix, repo);
++	if (!strcmp(op, "reject"))
++		return cmd_credential_reject(argc - 1, argv + 1, prefix, repo);
++	if (!strcmp(op, "capability"))
++		return cmd_credential_capability(argc - 1, argv + 1, prefix,
++						 repo);
+ 
+-	credential_clear(&c);
+-	return 0;
++	usage(usage_msg);
+ }
 -- 
 2.53.0
 
