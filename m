@@ -1,55 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794687412;
-	b=YtrQ5VOTx7+rS43/3nedFqiGCCNalO9O3nmY0m8GUyIVgs8csMvwMjL8sIjxF7msqsMO
-	 TwweFBpYeBMWEomrAHVOYXLpa8oWjHD82l7N7hQWBINd63SC6XAzlHfASoNySFOXjg5ai
-	 bSjyRQ/VVne13PpAEzG9YcXY/wH9ENrCcdZ8qnnTlWni0g6a+lw8d0+VoGaUQ0ZH/Cc2t
-	 QBXln27so1o/jhl20Tq6FhYFyt5RZDrM09mGMfnlkRIeQAcITNRl1vJIH8vSV4V37pnYx
-	 HjbcLogZOQWJEuPpIbF82UAIt/aMjPrivNKD0fm5LBiVDrrpqxSyA9o65prfdC88T0w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794687412;
-	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=UZ4jlrXFs+UGEQAQKGeZTbi0CykQKtJn2fZsP6tKG4U=;
-	b=JQFbGKcanz2kc7pULWvHR24bLqYwwOc9m0T19YKgkQonJgTcGOa8yCHe2CzPdyIE8uA0
-	 KG60aL3jb6jcgE7SPTt/cvd/AC6Umzy+udG4i3eA+nlD3kxddr+CUk5fSw+D5tcNFL2/k
-	 8JqOZci9XZbx/4zwl0Iqv64zHEHjdnOXVgqMMWublB6y1UyR6loXsF9qu2Ueh/uuIMB15
-	 HTGMRzQRQjY9wzh6rIitDjF/t52kyXof/Brw0mtoOtKBYAGTKfHSAx2BuRkAZE85tMecc
-	 oFHwBAhhXCmkqBJu1MN1qZNI4TXP1ji+qOn2o7xb5+2ixc6ChqU43tygvnIOUfz3UTw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gouders.net;
-	spf=pass smtp.mailfrom=gouders.net;
-	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=NmVMG2Hr;
-	arc=none smtp.remote-ip=202.61.206.94
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794688689;
+	b=eJke9XB75Fjqtm/4o2LO57FwTiU/X7Horj/ncGUd0abg3YL3SEuU6dTbkGgSqjK/wGZr
+	 jaIXDj0Pp9uAxepRzX3fm+H5PBmAmqy0WKbA/MojSzLnwf84dMEHSj7FUwbwu/44MlIQQ
+	 3kAn9MRVwicDx+rVOXbMuAldBaqluB4/kF4xSV9zhpxFEpuRsobm/4L03o4bhMkZpmDRx
+	 X0DJv+LG5UC7ufC6V8fo/4cybe0QhrWX5nEMezyk71oGnMd3RIKCcAvUsZXJKRhMRfWn+
+	 ahlwaEkXBc1SEkvbU+XFlcXygOGX+nlIXsz90OySfmcu8npcYe8vUQXbTcZNRonHCrw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794688689;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-ZohoMailClient;
+	bh=1KN34S2PZK6vDcNvZW6BabXSdwGTk5Qh/mpeBthr6pA=;
+	b=HPcwkDwl5UoRi2wi3h9i0cDtEOtwS64K04DrmG65NLBtoTcrldR5zGQiDoZZEFs2Lfix
+	 JWdn3D8ValONGGJGM0/kqPecTs/x6zHEn5HPQfGWvnnvXCeTgfHkP6lF0iHXoKix9jfo7
+	 OoR8Dj+zYROc9C/x4ITRfCB2ORaDaH9viFLqCixu+OohrQNOvVpcnb++1ALr3UaW5kXwD
+	 rs7Qn003IaXNSyhn1JhkRz+FB1B2lzJ4u8HsIqbws8FmRJfRWekfp8jRBcUVKUz+Ed2tJ
+	 J5Wj44rSsH9Rvq6R0iJFDAgQYacRoJnskVSnKnWChajnwD01SLLpX2CAe2ABOOGOX8A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=none header.from=laveeshbansal.com;
+	spf=pass smtp.mailfrom=laveeshbansal.com;
+	dkim=pass header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=AFjkC4kr;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA41A606A327
-	for <git@vger.kernel.org>; Sat, 14 Nov 2026 20:16:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CA41A606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CFF606A323
+	for <git@vger.kernel.org>; Sat, 14 Nov 2026 20:38:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 52CFF606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=laveeshbansal.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=laveeshbansal.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=NmVMG2Hr
-Received: from localhost (ip-109-41-49-131.web.vodafone.de [109.41.49.131])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AEKGf7l1608829
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Sat, 14 Nov 2026 21:16:42 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
-	t=1794687402; bh=+ZeB4Sttx+Ykqc87sXRT6hQVB5tuTXGDZ7xPRPC5gMk=;
-	h=From:To:Cc:Subject:Date;
-	b=NmVMG2HrRgVUYgNj/PLr+l+0AoNq1ZbhRqRReIX1Ke/Ehv14oQjCpsm5nSA3QasTV
-	 rQFKhr8O3jWg3XkjaIIDujWvJg5vWSiO5JQ7DaPfmp9TqFhM7OPN9jGTSs1mV9hePK
-	 k3O0IXzpbci05AuBKTrSuqnt9TMAuC+QMp/HffmE=
-From: Dirk Gouders <dirk@gouders.net>
-To: git@vger.kernel.org
-Cc: Dirk Gouders <dirk@gouders.net>
-Subject: [PATCH 1/1] doc/gitcli: minor fixes
-Date: Sat, 14 Nov 2026 21:15:44 +0100
-Message-ID: <20261114201632.103400-1-dirk@gouders.net>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (1024-bit key, unprotected) header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=AFjkC4kr
+ARC-Seal: i=1; a=rsa-sha256; t=1794688683; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=TTSupaVRkwn8S3gT83UBTbWzk3Ei4t7TlA5/sCQeckVHLS8BlokJifHQceF6FbSgW0amQE6D2rLHy51zVJiRCuuuN+hHmCG1OM4k4lcJV1XEiOx04yPGFXYXTseUYrTeZUKMwDViMVBxUI/vA9wOZ3Nu37TqKW+6qbL9yLSd9zU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794688683; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=1KN34S2PZK6vDcNvZW6BabXSdwGTk5Qh/mpeBthr6pA=; 
+	b=T5mDSa3EX7xnrUP0e5RMlC+B7O2ptUjFkN2VYAdoms+hdodsjzkyHbI47jgFLwdS6u/s7cnngMvOc/Dle8EJUUqv150kfgoAWcheTHFi9xsTG2ui6+Jig+fyMp8usSmceLbOFVV4eC9B3Eim6Ngp6mOIZAS/Okx7394jr0W0858=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=laveeshbansal.com;
+	spf=pass  smtp.mailfrom=laveeshb@laveeshbansal.com;
+	dmarc=pass header.from=<laveeshb@laveeshbansal.com>
+DKIM-Signature: a=rsa-sha256; b=AFjkC4krsgRrUguwU0+D9tFK2/3xIhnbAn+nU1rGuCDOk7bgCBSwtTD+ON6mKdI3QdpXV4xA8IedLQZEyo9x9aIRN3CCXkYR4VQMAi7j48qOudbN5soUIDEgkDbA5S3MSf7UycMqcTjWBHNI9X+86swdwCpai4PLjro1ql9YSjM=; c=relaxed/relaxed; s=zoho; d=laveeshbansal.com; v=1; bh=1KN34S2PZK6vDcNvZW6BabXSdwGTk5Qh/mpeBthr6pA=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794688681386111.186623609467;
+	Sat, 14 Nov 2026 12:38:01 -0800 (PST)
+From: Laveesh Bansal <laveeshb@laveeshbansal.com>
+To: Dorine Tipo <dorine.a.tipo@gmail.com>
+Cc: git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	kaartic.sivaraam@gmail.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	usmanakinyemi202@gmail.com
+Subject: Re: [Outreachy PATCH v2 1/2] t0410: use rev-parse to get the subtree OID
+Date: Sat, 14 Nov 2026 12:37:18 -0800
+Message-ID: <20261114203718.38000-1-laveeshb@laveeshbansal.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261020160127.29096-2-dorine.a.tipo@gmail.com>
+References: <20261020160127.29096-2-dorine.a.tipo@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -60,50 +71,8 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Fix three details in the gitcli documentation:
+Looks good to me. t0410 passes for me, also with sha256.
 
-Use plural where appropriate and imperative form when rules are
-listed.
-
-Signed-off-by: Dirk Gouders <dirk@gouders.net>
----
- Documentation/gitcli.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/gitcli.adoc b/Documentation/gitcli.adoc
-index 9c4598e29c..6b0a58938a 100644
---- a/Documentation/gitcli.adoc
-+++ b/Documentation/gitcli.adoc
-@@ -8,7 +8,7 @@ gitcli - Git command-line interface and conventions
- DESCRIPTION
- -----------
- 
--This manual describes the convention used throughout Git CLI.
-+This manual describes the conventions used throughout Git CLI.
- 
- Many commands take revisions (most often "commits", but sometimes
- "tree-ish", depending on the context and command) and paths as their
-@@ -28,7 +28,7 @@ arguments.  Here are the rules:
-    `v1.0` and `v2.0` are revisions and `arch/x86` and `include/asm-x86`
-    are paths.
- 
-- * When an argument can be misunderstood as either a revision or a path,
-+ * When arguments can be misunderstood as either a revision or a path,
-    they can be disambiguated by placing `--` between them.
-    E.g. `git diff -- HEAD` is, "I have a file called HEAD in my work
-    tree.  Please show changes between the version I staged in the index
-@@ -76,8 +76,8 @@ you will.
- Here are the rules regarding the "flags" that you should follow when you are
- scripting Git:
- 
-- * Splitting short options to separate words (prefer `git foo -a -b`
--   to `git foo -ab`, the latter may not even work).
-+ * Split short options to separate words: prefer `git foo -a -b`
-+   to `git foo -ab` (the latter may not even work).
- 
-  * When a command-line option takes an argument, use the 'stuck' form.  In
-    other words, write `git foo -oArg` instead of `git foo -o Arg` for short
--- 
-2.55.0
-
+Reviewed-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
