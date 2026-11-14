@@ -1,120 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794616475;
-	b=ZsX8RpEA3CcN/0I9lJzCq3i9Ne5XI8vNlcVPJRpLb+peiaRpLDvUdPyAO0jLK9lOupAR
-	 mV0EYxHMZTYm9ltv1JTQeFx2eshDMl8UrNIXSvxWbtNsyR93PnYAxLgQQGQGKRaNDKhY1
-	 3RFxqKA36Lmt9SeH79gGmK67i13/Vq/7G5eYvifXOR0uJ3eZ27X4CLg7l8XW6uEaZPuzD
-	 JNxqW7jTNNJNdY1YvlpD9lwT+wtRhhQyKerQ+GbHRZiYEbbbCeKtHQZPiI1ywEh2DrPDt
-	 4+WI5AynpWpMsPOX3oiqr2hzfVRNZrLb0EvyLMfJCvkUTqTtrNI9BNvhewlBUjJMd9Q==
+	t=1794619282;
+	b=byLnWXTr8dqtEaJcPDSfkZ96Llhufs/mroMUDNE5OR8fm3PEEsnrEGcrJ1YYB/KRoTyC
+	 1k3YbVCNbDzgzF6SHswtIInaFiH4t8IPkrI7ai+Ou96zszJhCBb1bHPd9fYg2JivQJ7eQ
+	 Qj9LQ3R23qtCucYk3/wPphEJFX2LYNi2k9HZXpovZA0jMMLUZYBO0kTthNAM++xyM2ZuB
+	 ivErP4AWRtj4Dr22xQfOwHkyG7ss1Yv8lbPlbguhhy3Rv0WEtVjMyecKR8VRlX1uk47ze
+	 A9j9Vi3xDW4bzi9l97LhmqsV9EhcTOEqsReDxhajIwn12yZqVOoB2Om3Y20X31DZ+3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794616475;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=1+aIxRExnWo8tsS5ZRj7UWvFCgViSArxi1WC2gycE1g=;
-	b=nk3NchVzFCK/DrrpSh6K7j3YEvx9b2jg/jT9RQ+L/M2GH2r5/nY35Gn8Seb+gmZ3AOnq
-	 QJh8LwCc5a6R8AnlplMnRbNgD80mEMnfXm9ntqtDTxEoJ1W+HExCa5w2La5taaiMztH8q
-	 DpIb05wUZxEZ1nmJ0UkQv3Zjm8lJcYV/waiQrFa6MBNGrTEbuR/50tK9iLfUxhnTVgGqj
-	 Z9vv695kEN7MO6WPf8OrgOoUS+vh//+lalN41cvG0f0Vtj5kt6rbc/G4RvgY6rCIYMYDA
-	 aHC8RYiR+zFAJbioaGtI7S6o7lMtdP/juuV9Miw/fDqbKuwh9sbh0MKHLPQeL/NiGiw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794619282;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=pVev7byy9Fn3LZTD7U0urQYSqdLZ5nFTvCQj9bZzQWQ=;
+	b=IxrwKf2vhMZDluukucBRjaDNjJ/XN0aXPJgiQl+aU3rawTau01KbJWRF0fE1gvTqcQK3
+	 DUypMy4lh337XOgf0NhMRtzbWiPJu0mjmnVcYoRm7mCvrLCb8tcOf3r7Mv4FDE3+z6dV1
+	 no67FWl1j01FVEQmfOFmz6PZhqAOAdR8zX/fUKejfGEmVfzBBfZBzgfhvgNwRmZYssdBT
+	 /OEZEPUNO9Zi4P3GzWcHjeHJAbK2rKnRcEQ/Y8ZVzPTJNb9RzvR/ourt2n4j0nVM0bpfj
+	 C4okM/lMpga2onio9JiXGbDHHgWRLy+2X4ivP+mFrtHHwzqkm4sD4c36RW0kODlkaKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="Mwz/SCBL";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=n1PyxVh0;
-	arc=none smtp.remote-ip=202.12.124.156
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pQp5ZlNd;
+	arc=none smtp.remote-ip=209.85.128.51
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833ED606A331
-	for <git@vger.kernel.org>; Sat, 14 Nov 2026 00:34:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 833ED606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47730606A32E
+	for <git@vger.kernel.org>; Sat, 14 Nov 2026 01:21:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 47730606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Mwz/SCBL;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=n1PyxVh0
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D75897A012D
-	for <git@vger.kernel.org>; Fri, 13 Nov 2026 19:34:34 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 13 Nov 2026 19:34:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794616474; x=1794702874; bh=1+aIxRExnW
-	o8tsS5ZRj7UWvFCgViSArxi1WC2gycE1g=; b=Mwz/SCBLcAbV84KYUPVoCPdspc
-	KTgk7Nx3+5v72uupD1F0gSR4tJDj4NpN9tX6ukO3QslytwaOwphbpf2S8/E/n13q
-	LQP6RJuCsOv/MEUUr6NazdO7LzN+Twb6WfY9C19h5H1hJD3mxER0p25qZ+5++UDM
-	NdJNtjLXRV9u6KDnByq1sKPh3eM17zDBfvA83OUtdNE7ovDou9UNOqOVOYzriirq
-	pHfs+TdihvVuqFWjdusoc3fjprbV5mLRR1/vmMSRxYG+KZOvCrxWD5fOE9pScrgG
-	pztyG+MFlcD8xDw7d/qVOHfR+V4/mp2jl8IMproM/na2SQJ/VuPLElJgi6Bw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794616474; x=1794702874; bh=1+aIxRExnWo8tsS5ZRj7UWvFCgViSArxi1W
-	C2gycE1g=; b=n1PyxVh07lskOt2HHFTf8B2WbePHRySsANPgIgj7J69R6HFQrzF
-	mzI2Y2BLc8A8CKSEd3yh1tHQB8kjpJU5CIXPoZbN7/zVzu+X5BRWpPS+w+Fqlkfx
-	cF2+kIqinDy55JxUlstGXi+7XqCJI9kn5cxoKUUSvGGXjNELurkgpFyPwLdXTDXT
-	1AJzyJrEcO9LXRVhY6GBr4VaRL3eXNyv84OOYUcqH4PTcG4OS2r+4ttDqAtt3vSR
-	11/F/XCSu48LJC2yqw4Xvg9hwHw/diL/084iaIGzdNQ26IpWSNmVxcvwuWHIKmlX
-	+il1H8L1okhXmByvzQS6GDoI8ZZgiz0ZMQQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794616474; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:DFsfPvr5oIiKkcjQ/GwbSX9mQX/kLo0P5lA7uNFJlTJt8Z8
-	X0Erm9b2zlZNTrvoWr2WgcsrETixyjvTH2kUkhn6zFtAxsakYvw/Zn5PgoAVuEeT
-	buMALRFUCg60T5RO2FhtIo4etl9R+N7mD9htUewieIGwBwDr17ml3Kx2XeNiBifR
-	gLAK7CRcta1qiSSXCHBwHUJz0gx04RuY0aZIozLYvbvk+Rgv8oqI52LPwfbYPlHO
-	0OW5xsUBNQOr+ouSp1rW/KsZRHsZmjnBzmW+6ksMWTkk8CTalcRjfYQe7DQBgztb
-	4KS/1HIKZlaTodPsHJOj0eM2hHGqqkNS0Xm5l4g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:DDBCWwOIxSl9tACeSHm/8MvZyxcx/hIdLRArz0w1lzw=:TojcwtMMh5z2teGC9L64gQKsJjoAIVaR6mheNQ0kOXE=;
-X-ME-Sender: <xms:mqz3ap1021XYX2ttkUxqjOmT0bV8qLG3_gwwVEm5K5oufbFhJJQX9w>
-    <xme:mqz3aniswxGt0itYbw09RRi1mFOHsJL9nO2QEGKEiomu-DY8b_fL-Uq_tuoMNsAx3
-    hEPfU0F2axZNJTjATqv0G05SvitcFrtAX-AobVUry4Ej7NOGXeySCE>
-X-ME-Received: <xmr:mqz3anRHYqC8ahPv8uNQTmjZwtEoYXOrsBaRle6kC-JQlxnh29wxjZVUuvJlITZw0pRBrJEOzOedWXNvR0Ncbxd6zakc3A3abYhE>
-X-ME-Proxy-Cause: dmFkZTFBSBHtL11WlFuchpMYT5jzmKDx0sIa8DKKW4WIpWc/C8aiHwx3vPQC+uxfl8rLSQ
-    Av8EV56lW0/fr+Rzbz/82Z0QTW+rF1nyrx45JWdQzK8jm5Nipw8by/vj5FdmRghEHOGd5/
-    4kGLZScwgjduAzvLgaQDrwEj1LRQnXYhNydzPB14XWHGEIBCVyNsN71johOJPTBTFN//N0
-    j7f+7DkDvkc2h9nM0VacjpXkiGVlOwyLmsRilNGT4QzcnWEy25aMTl7sHoUYuw36ulEKxy
-    Yuezk8jetxZqOb7ai820HdQ9EPVRPtlX1Cqn2uu0CMYpEZyUD0kMCMykWaqYa78S16fpDf
-    BIZVqMCOU7wLXceMJ/MHxSvgiYkik2Gf3OkerliUI/BGtxkQuR2wgvPNzdbIuSnGvlzT74
-    QfSgbkjp7255Nfsi63v3N9luQyYRVtxp3E8h+dmhv9fjxL8L95oSwQVKefmYuRkq7lsFXu
-    PqI6J/6KmEIvJOvSA3otu00NDSwUZQIkgTzaIrhMhC5z3Hq0PRqi5s2y4xFNd8bU8rc17j
-    iYaNZRmmTaqNAJHtiOyoG9J9PIqneXq7FKOQbXPUryx5AbwL/rYxBh2fQjMHeFjW/PoEU4
-    HMVmtksczTT1koRPgsgy1JIdMyQrfPzUqA4Y3PsLJDfnEAcdlzWf0xU5RpGA
-X-ME-Proxy: <xmx:mqz3aggoxfVA5-ZteUygagNFFx5_skZF15fNpSykFMkqKuKYFqyHEg>
-    <xmx:mqz3av62qgg2bP0Qt1Cpm7TiEeU5nf02tqWj5ne0m_myGSxEO3eBRw>
-    <xmx:mqz3alCf0REUfZSeUe27qc6rxAQbiCLXwu2IRMtalS8YVquIcNNYGw>
-    <xmx:mqz3aua-9ZYjep-vwrA8bWvNXmKI4L5ybY7OhOOiSMI82erHASQhAQ>
-    <xmx:mqz3anMUTDAEMycXvkNpAEjPgc4SMqHcPylMjOyLhzi09SOQcHdFjAf9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Nov 2026 19:34:34 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2026, #05)
-In-Reply-To: <avehwsI-uOJ6DldC@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Fri, 13 Nov 2026 23:48:19 +0000")
-References: <xmqqpkw9fwc1.fsf@gitster.g>
-	<avehwsI-uOJ6DldC@fruit.crustytoothpaste.net>
-Date: Fri, 13 Nov 2026 16:34:32 -0800
-Message-ID: <xmqqcxs88d47.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pQp5ZlNd
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a214af2076so9867775e9.0
+        for <git@vger.kernel.org>; Fri, 13 Nov 2026 17:21:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794619280; x=1795224080; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=pVev7byy9Fn3LZTD7U0urQYSqdLZ5nFTvCQj9bZzQWQ=;
+        b=pQp5ZlNdN+Ml+fJjSJlTSjgCVK3Mv/4H5hiLhwWiMREkwaEIIdJJhAva6PrM9SwYWD
+         Ii69RVb1Di4gXHClyxfwYHcST6I9ZNRlpirz5mdGmJ7JpwhvE5uSaETTWHvd1SqEQKrg
+         uweyBtGwhblmWbNS9n2NslzKWBqUWaAO/YuJ0JnvTpiPciT6YuL1a/riHf70VcfvA77U
+         2jHQbc6E57M+HVikQ/0Q98bjV55ZUdh8BWqQ+C5OFDCBrQkEEKcai7rnm+cf7OV1f5rO
+         OcJOVpQxMYGZUkrKuFD9F4EEJ1Lb41Kn6VjF2hUFcQzmaNYInAacSNWWv9iIc7bA/wf6
+         /9Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794619280; x=1795224080;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=pVev7byy9Fn3LZTD7U0urQYSqdLZ5nFTvCQj9bZzQWQ=;
+        b=YoRg2vP8aNZpX6EOKELqXbdL8D3O6Q9stCjDuK9ciBFUWVL7NrW+YMaDoXBounO2dm
+         B91xLx4wkXqTmu4OB66tK6B7uOV4Hrp/WZFhXJ9wxnCD2YiiCjfpYnPQvts8OJ+QwbiX
+         2wKocZAbK9JEQIL0vPHSTtM6biYzRjYHN0FAP82SZbrxE5BVm7A/TfYdPT7u7oCO6Xqv
+         pQ+3I4uAvZUYIGSqK5wa44ouv+B/4ZRHEazxXFX33t4YZA8KJPYaI+b66e28Jm0ozvoN
+         Nc8SAMlU+4mK46JJOTCG1RYb0F5jmRs6y3Yb0t3EooEKhonkZVFGPIJU9RGvAA/h9wvF
+         Nrfg==
+X-Gm-Message-State: APuU4Z/Gs9wuJy/hVHaB+/tOiSrwtLeewWvvjvGzJYfGtULT/eHJ3EvU
+	Z15Lpq56HezLtuh9CMJjj/YnXpFgMV4dj61r4SGlBKAg+HGs7ky4mVS8VMVJGL8k6h0=
+X-Gm-Gg: AYBFou2KlFTCVbqihlBs3YFzS/o4s8MVGFJX3yidpzl1q890wkFRbZt9fOcZSJGEM5d
+	7zSa58PwEgwvAaacsWt6gA+inhGe9XyknuJ/ge/BppFERemUuH/euH649YNBPPbZdjOGSKfSNHU
+	I6XnR3vyjPcRYjukFX7QlckvM2L9n8bpKMLQpKv9IOl7nnAp690ZRsDtObzofRhXuIW2n0sYHb0
+	QaEkznffqjSb1qNKU55x0fqjfz8EJfO3pV6nPVKVeqv0qHncJAGr0+qyy2jgk8NuvsXeded5nN8
+	tGLcA8YcY+CQDvfZQjc2rEGrRtnEuuL2ZukjICjppUpkQuIQ1pjnJZ2rhMlrGC8a4oNwMrIFk4I
+	kXvV76rfQWCKtBmWuh1D2GUuODAGzEWZhqAZg4E/2wevHQgKSumzqUVwbszG3+fKFEsg3Q2v18l
+	qhspvyhw2eyHQdNbNu4PQr1/O1ONy6EOrQz4zPpB/XO8Ch3X4Avx6a/YYOaGuvwDX2Xx+v9GQ/B
+	i6wvBnm727Ym/x3zvcxAMHgnKcD3HeKTIJDmeFbLtcZhPdwkM9XwZmEwdBHeCaIe+Cn5yH9uBia
+	e+MIq1IXAzdCJJV80JeFPE/uEUU+lb1jnEWry2N6wuV9HaHGTDcRyFxuebv/iAL4+MhqmtRsMRi
+	6IOeGo+3sVA+NkOdTEmwV4wcQ8KWCrBmtKw==
+X-Received: by 2002:a05:600c:3509:b0:4a1:fc98:1cb1 with SMTP id 5b1f17b1804b1-4bb55c5f579mr87305055e9.2.1794619280421;
+        Fri, 13 Nov 2026 17:21:20 -0800 (PST)
+Received: from HP ([102.0.122.129])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55af2901sm97277455e9.13.2026.11.13.17.21.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Nov 2026 17:21:19 -0800 (PST)
+From: Tanga Joris <tangajoris@gmail.com>
+To: git@vger.kernel.org
+Cc: phillip.wood@dunelm.org.uk,
+	gitster@pobox.com,
+	jackrawlings2011@gmail.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	usmanakinyemi202@gmail.com,
+	Tanga Joris <tangajoris@gmail.com>
+Subject: [Outreachy PATCH v2 1/2] apply: reject a patch after an empty "diff --git" line
+Date: Sat, 14 Nov 2026 04:20:54 +0300
+Message-ID: <20261114012055.127905-1-tangajoris@gmail.com>
+X-Mailer: git-send-email 2.56.0.388.g09a996e1ff
+In-Reply-To: <20261107195429.96842-1-tangajoris@gmail.com>
+References: <20261107195429.96842-1-tangajoris@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,30 +103,209 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+When a "diff --git" line is followed by a line that is not a git
+header line, such as a blank line or an indented "new file mode"
+line, parse_git_diff_header() stops right after the "diff --git"
+line. find_header() then treats it as an empty git header and keeps
+looking, as it has done since 206de27efa (git-apply: ignore empty git
+headers, 2005-06-12). It finds the "--- /dev/null" and "+++ b/<path>"
+lines and reads the rest as a traditional patch.
 
->> * bc/restrict-hex-to-lowercase (2026-09-07) 7 commits
->>  - hex: allow only lowercase object IDs in breaking changes mode
->>  - t5324: adjust tests for corrupt commit-graph
->>  - object-name: use hexval
->>  - hex: label usages of hex parsing for object IDs
->>  - hex: make hex_to_bytes accept kind of hex to use
->>  - hex: allow specifying hex type with hex2chr
->>  - hex: add functionality for lowercase-only hex
->> 
->>  The parser for hex object names has been updated to reject uppercase
->>  hexadecimal characters when running in the breaking changes mode, in
->>  preparation for Git 3.0.
->> 
->>  Needs review.
->>  source: <20260907195941.1024289-1-sandals@crustytoothpaste.net>
->
-> I would love a review if someone can provide one.
+But parse_git_diff_header() has already set old_name and new_name
+from the "diff --git" line. These names stay in the patch.
+parse_traditional_patch() sets is_new for "--- /dev/null", but it
+does not clear old_name. So "git apply --check" dies on the assertion
+that 5c47f4c6e7 (builtin-apply: accept patch to an empty file,
+2008-05-17) added to check_preimage():
 
-Yeah, I have been saving my bandwidth and looking at other patches
-after I saw somebody else volunteered (IIRC it was Patrick but I may
-be misremembering).
+  check_preimage: Assertion `patch->is_new <= 0' failed.
 
+The stale new_name causes the same crash when a deletion with such a
+header is applied with "git apply -R". When such a patch modifies a
+file, it applies. But its "old mode" and "new mode" lines are
+ignored.
+
+These are corrupt patches. "git diff" does not produce them. So
+report the empty header as an error, instead of reading the patch
+that follows it. This also rejects a "diff --git" line that is
+followed by other text and then a non-git patch, which used to apply.
+A "diff --git" line followed by another "diff --git" line is handled
+as before, because 206de27efa ignores empty headers on purpose. Only
+a patch that is read under an empty header is a problem.
+
+Reported-by: Gingrspacecadet <jackrawlings2011@gmail.com>
+Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Tanga Joris <tangajoris@gmail.com>
+---
+Changes since v1:
+ - 1/2 no longer reads the patch that follows an empty "diff --git"
+   line. It reports the empty header as an error instead, as Phillip
+   and Junio suggested:
+
+     error: corrupt patch: empty "diff --git" header at <file>:<line>
+
+ - A blank line after "diff --git" in a patch that modifies a file is
+   now rejected too, as Phillip suggested. v1 and master apply it
+   without its "old mode" and "new mode" lines.
+ - One case that works on master is now rejected: a "diff --git" line
+   followed by other text and then a non-git patch.
+ - Dropped the test for an empty "diff --git" section followed by
+   another section. That case behaves as on master, but the test fails
+   under SANITIZE=leak, because of a leak in git_header_name() that is
+   already on master. Also dropped the subdirectory test, which only
+   made sense while the patch was applied.
+ - 2/2: the code is unchanged. Its commit message now says why patches
+   made by Git are not affected.
+
+ apply.c                    | 13 +++++-
+ t/t4133-apply-filenames.sh | 86 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 98 insertions(+), 1 deletion(-)
+
+diff --git a/apply.c b/apply.c
+index f00b7ba4d3..c5d4fe7887 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1604,6 +1604,7 @@ static int find_header(struct apply_state *state,
+ 		       struct patch *patch)
+ {
+ 	unsigned long offset, len;
++	int empty_git_hdr_linenr = 0;
+ 
+ 	patch->is_toplevel_relative = 0;
+ 	patch->is_rename = patch->is_copy = 0;
+@@ -1644,6 +1645,7 @@ static int find_header(struct apply_state *state,
+ 		 * or mode change, so we handle that specially
+ 		 */
+ 		if (!memcmp("diff --git ", line, 11)) {
++			int linenr = state->linenr;
+ 			int git_hdr_len = parse_git_diff_header(&state->root,
+ 								state->patch_input_file,
+ 								&state->linenr,
+@@ -1651,8 +1653,10 @@ static int find_header(struct apply_state *state,
+ 								size, patch);
+ 			if (git_hdr_len < 0)
+ 				return -128;
+-			if (git_hdr_len <= len)
++			if (git_hdr_len <= len) {
++				empty_git_hdr_linenr = linenr;
+ 				continue;
++			}
+ 			*hdrsize = git_hdr_len;
+ 			return offset;
+ 		}
+@@ -1670,6 +1674,13 @@ static int find_header(struct apply_state *state,
+ 		if (size < nextlen + 14 || memcmp("@@ -", line + len + nextlen, 4))
+ 			continue;
+ 
++		/* Git does not write a patch under an empty git header */
++		if (empty_git_hdr_linenr) {
++			error(_("corrupt patch: empty \"diff --git\" header at %s:%d"),
++			      state->patch_input_file, empty_git_hdr_linenr);
++			return -128;
++		}
++
+ 		/* Ok, we'll consider it a patch */
+ 		if (parse_traditional_patch(state, line, line+len, patch))
+ 			return -128;
+diff --git a/t/t4133-apply-filenames.sh b/t/t4133-apply-filenames.sh
+index 3cab1038cf..751a01f92f 100755
+--- a/t/t4133-apply-filenames.sh
++++ b/t/t4133-apply-filenames.sh
+@@ -60,4 +60,90 @@ test_expect_success 'apply diff with old filename missing from headers' '
+ 	test_grep "lacks filename information" err
+ '
+ 
++reject_empty_git_header () {
++	file=$1 &&
++	line=$2 &&
++	shift 2 &&
++	test_must_fail git apply --check "$@" "$file" 2>err &&
++	test_grep "corrupt patch: empty \"diff --git\" header at $file:$line" err
++}
++
++test_expect_success 'reject a new file with a blank line after "diff --git"' '
++	cat >blank_line.diff <<-\EOF &&
++	diff --git a/f b/f
++
++	new file mode 100644
++	index 0000000..d00491f
++	--- /dev/null
++	+++ b/f
++	@@ -0,0 +1 @@
++	+1
++	EOF
++	reject_empty_git_header blank_line.diff 1 &&
++	test_must_fail git apply blank_line.diff &&
++	test_path_is_missing f
++'
++
++test_expect_success 'reject an indented "new file mode" line' '
++	cat >indented_mode.diff <<-\EOF &&
++	diff --git a/f b/f
++	 new file mode 100644
++	index 0000000..d00491f
++	--- /dev/null
++	+++ b/f
++	@@ -0,0 +1 @@
++	+1
++	EOF
++	reject_empty_git_header indented_mode.diff 1
++'
++
++test_expect_success 'reject a deletion with a blank line after "diff --git"' '
++	cat >blank_line_delete.diff <<-\EOF &&
++	diff --git a/f b/f
++
++	deleted file mode 100644
++	index d00491f..0000000
++	--- a/f
++	+++ /dev/null
++	@@ -1 +0,0 @@
++	-1
++	EOF
++	reject_empty_git_header blank_line_delete.diff 1 &&
++	reject_empty_git_header blank_line_delete.diff 1 -R
++'
++
++test_expect_success 'reject a modification with a blank line after "diff --git"' '
++	test_when_finished "rm -f g" &&
++	echo 1 >g &&
++	cat >blank_line_modify.diff <<-\EOF &&
++	diff --git a/g b/g
++
++	old mode 100644
++	new mode 100755
++	index d00491f..0cfbf08
++	--- a/g
++	+++ b/g
++	@@ -1 +1 @@
++	-1
++	+2
++	EOF
++	reject_empty_git_header blank_line_modify.diff 1 &&
++	echo 1 >expect &&
++	test_cmp expect g
++'
++
++test_expect_success 'name the empty "diff --git" line in the error' '
++	cat >later_line.diff <<-\EOF &&
++	some text before the patch
++
++	diff --git a/f b/f
++	some text after it
++	--- /dev/null
++	+++ b/f
++	@@ -0,0 +1 @@
++	+1
++	EOF
++	reject_empty_git_header later_line.diff 3
++'
++
+ test_done
+
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+-- 
+2.43.0
 
