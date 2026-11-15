@@ -1,86 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794759436;
-	b=cWGbVVjzssoqk2CyirqnsFeI2lwmcjNY9akULKM39qXdyZRoHPgvB8oLW1o85htXkrDS
-	 XEiFaeTvzznyk8dTo0XUiKkU9dz3lgbEljLneevsYn7ICOOsz+JzNe6fwQYbOvctH9gLd
-	 /844mh2JBptWpHYAo1EoHmE9D8HM0f4Hpbk4OIc2oLPEDel+5S2ToWdQ2ktlZYeG5cCa9
-	 +0hIaZkgYn2pEieALn5rJg0ryCOAOaOBgVi5nEU9wtVVuhoFCVFcMhvr0b4Qkf8KgUcFO
-	 VoCuc8BP6J4dAiFxmscxkQprCk76KSwP14/eY5HDfae19RgUVWmuYpxOroS/+su/z3Q==
+	t=1794759873;
+	b=BIgIom82Uahix+Lr/u2Loy1oOVUt+jx5Qdx8x77bv6n8eHOUwQZWQjKgAjgtUCEWe8uV
+	 tCZPqAf3u2wgUSekegmNiGzM58P0q3jSISeCyhMamawsyXSAr5bTCuuA2vQMKFS0nqLLJ
+	 jLTuUtIZ3Atl9xnvB2coySN3YAHjb6nTXMAwuD0Hsw2+zc/VoaCtKnpTJH8ybokJTIcM8
+	 gdKZ4hTPJDphQNCN+Cq/XKAxspR2xWAy2CpQvE/qR2uVMt3ex0WCdRsXCaKZTTZD4shUq
+	 e7FVnECVRuzzPqneBQwiy9rK6qsBnvT1QXSrpBeE0985ngCvTPY6uGNxMf0Oej5Dt4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794759436;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=3UQP7TXmGMhJ1k6SqQklAUXwve0ajo0QxZ+biGnBWcA=;
-	b=JvggNTGLjM8TNSa/GUksvPKf3Pnt8EZlh0S3F34Xkhh2Q1j/i/SnoNdR/lELXjg9sQCj
-	 yog/NxjPeHYvc76g5pZetn40U7gwYnA9ZF7/NSQ5KE6QcsKJ/u4niZQGd4LpnQVNNA81a
-	 4yys5IJqIejvQmivxrp57+RjbJVdHHQC0CvLjM3JywKi0k8vtwPjVFFcmibsmkXmt2q2/
-	 syJH/iLLTt7bCbPoGEW077YrspNnus2LdrV9dFq6J7VpDZ3zvdU7B98K8mahJZI6l9tV/
-	 +mC92r2yZj+9gySJNEIxKIbDEgMmZfITP/eJvTqZ9hct91UaDYy5moRuMCtk0ovwcJQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794759873;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=dINMq3iTJ++IWlBTja7D2FcDd14bvTrcBY7n7yu1QnU=;
+	b=DadW6kbQ7jwIrLE0I5S5wkafTooIrJSZYRKtG3PbWnV0AS5zwwASee8UECpvJca5eZjb
+	 +j1c9YYKcY5NMr4jqVnepo2Q3LZOGN6gt54RAWltk8+atEFrFs48BMuZck7GV2Ftx9zCH
+	 UKWL+0jCmbaqwo7SNZ8esByig3Za2Hi58Xyo1gL9Q8nC41G4IDdzWdp8xmh0Bz68bjh/j
+	 aCTtcro9x9ytsJ+9hBfzsMAGqQzaFQlm4Pe5Yh9pm1QGYpD+HeUL1s1OYJbe7z1YSOVvV
+	 1Nm1FON5TOzXPboJ/ACghs+SffoZLf1tyCle2N/jcR5JmTBxlnixvEIn0rJ2h62Muug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YVqsPXrf;
-	arc=none smtp.remote-ip=209.85.221.44
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=crustytoothpaste.net;
+	spf=pass smtp.mailfrom=crustytoothpaste.net;
+	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=rKpDLP8j;
+	arc=none smtp.remote-ip=172.105.7.114
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E034B606A31D
-	for <git@vger.kernel.org>; Sun, 15 Nov 2026 16:17:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E034B606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79EC606A327
+	for <git@vger.kernel.org>; Sun, 15 Nov 2026 16:24:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E79EC606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YVqsPXrf
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-49d64a88222so939379f8f.1
-        for <git@vger.kernel.org>; Sun, 15 Nov 2026 08:17:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794759434; x=1795364234; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=3UQP7TXmGMhJ1k6SqQklAUXwve0ajo0QxZ+biGnBWcA=;
-        b=YVqsPXrfLY4HS3+cNDwVYYQX9kuB/tylAE29egtjMZZ8IGhUbI14YUopjELwXqFpmF
-         aaMUInimI0380Qa35Fb34bipjzfEZp7Nn0JJuzdvh8TTx8Gh58QCo1dBckenRM5Wx0x4
-         qKyP+jVcCGvo8ngksIUTHWVz3iyKch5IlXqaLMSauSOUvTIT1SaKujimHjFLgsoQ8Ykv
-         7W8LKJVOYTuSXYg0kMrCHbuuGT2zmzLfpgVfQogI+HtnvkuZtBNVIL6L3kd2gSziEuW0
-         NI2/GReyNGCGXzj416s/DRUk6YW32HgDzUlzXdFQYuw3YOui0z5MCjxZpXz83zz4GqqK
-         GObw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794759434; x=1795364234;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3UQP7TXmGMhJ1k6SqQklAUXwve0ajo0QxZ+biGnBWcA=;
-        b=vCL/dcoLNaZKCLcC6g8KhboqvxE/rdVWDtt8fbvDFuyqbIuW4H8coYL5yHJCkxWwi9
-         fKRA1EqYWHGcQJEgT4jQ4mE04hFSX0bIkcKtnuctl1kWmt8kJ6LSEgXaG4arCygjiIlC
-         yCOmNOavHCTEYdnsYqF6Ys52H+ifGIXugrM3WZnJEfhfc2VHorel3WZl1OHqG/LEnl9w
-         6Dc1rh5aB2Vb4X8OY6Lzpsnd3EQRJmPUSwO/i+ALginNve9TNCGbyyHXFyA5d7ag1qg1
-         LukK9tSbw5xgvJZrDb+6DGXmAZDzXLCJruw90aJU6YdLjg66pRjbI9xw6WlbRUcvBRg6
-         0TNQ==
-X-Gm-Message-State: APuU4Z9lWB3xHXsyJc6vniAaO05lCMQDEB/2PXYzE66jiBoQHfqJk0k3
-	7AfdSjwvnXpWD0vF06EqzP2uBfXS61LLJW/Xe+eYPuI9C8Xk4/JWbbid
-X-Gm-Gg: AYBFou1k2/X114HPsDwtMMNBPGjVeTgjkcZkJh5o+y6lvtEAF6MCuyAquUKjHu+H6Xf
-	uK9qkhASOgA01cRJthKuR0V0gwMQA19+0YMoUOInTkXFiz5fvX2esELsuQM5w0aog5CVZaKCKzE
-	YDFlqnp92W6vaztL5dQOBUGANtCI3vjMDyq3yPHvm0SB900YBB6wO4QwmlPTvpn7fzGGL27FW+i
-	ixp0JvUzmc2yIOB1O0Kffj2rI7JUYvt6xcM0h49IADAYscuxzut/Wv/cKsVQdevNrHcdAFb/0R+
-	vx3ye/IWdbTPzWGG+1DTaHMins5GXuMuN9L0inzdMqotvcqcIa/nYoF536jAYOuL6PImA3UXoUz
-	A+G2Ltoe6LG3mA3tbKN2PL3qgKr+DinAQcgwuvJqXBrWUaKdoIGuJP5uC/ZCSRBrkzFAZLrkb3g
-	qioA0USAJiDbVKVadZdsaBrU4UvTZHrFfGxhNIyBd2FZ9iBmveOdB0OFU8AgVfwgg/GIkf1HexC
-	n0ZvajZHJunHt7pR39qku5Jo9idemesIU+nW+s4o/+ILsaCnfCx/Yxx/00sjTMGqfPUiZwV8PMF
-	edbpJ7fbq6rCu7Z22vRxNQ6utux7ThiLuBOwqK9c8rDniKjqn4/mSzlvUHFxtWxDjfDUheEWtMo
-	kbR67ygWowzGP50sOmhvc/IzHYkF8
-X-Received: by 2002:a05:6000:490e:b0:492:bd2f:bdeb with SMTP id ffacd0b85a97d-49b022b3bb0mr24872162f8f.17.1794759434018;
-        Sun, 15 Nov 2026 08:17:14 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c604ee47dsm16607116f8f.38.2026.11.15.08.17.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Nov 2026 08:17:13 -0800 (PST)
-Message-ID: <7e5188f8-ab49-495a-bddd-7ba8921c11e0@gmail.com>
-Date: Sun, 15 Nov 2026 16:17:11 +0000
+	dkim=pass (3072-bit key, unprotected) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=rKpDLP8j
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1794759866;
+	bh=1J5Hf66MQmJ+0rfRIA8L+52u4U2QSFsx3IwO4tYE7GE=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=rKpDLP8jm3sSnMiAAFLqckj/xCPgtVojiYm5I6xF1RS5IZzDqFrwnEwb6CUpk0rIz
+	 wIYl7M14zL0gTSL9leIRkYz+3D3Y3AWZcKlLuzIx9JcN7j5rhDngwyKSCaZXStNAN5
+	 gcJYj7oQ23bcKjgPR+IbmoDvd8gaIr4FH8zGlYB9eAs/sB/mQz/i5loEZDucQADc/8
+	 1gg47ZaKS3V263JflOfFNdxsdXF+P0OlHb6NUYwwlxffezOWex2/iiVoqXThg7a+Pq
+	 2JazdW2SmidtAEkRt/kNumMi0wVDMGmBs7OAc3QlNMzOr9ElLSCZeiNHie3PS9sXRs
+	 Ut0X+rkuAJPGHcQzp027eaHMSB08SB2JNHsoCApZ1xI/KqAP/ZumPhgl2olPfGew7J
+	 +M2egoNt6jWU0r7C/0Vvo4cVDs0H044KKE88F/eY7fybsh2xY2Ra872laCXfWqWVOD
+	 edk/z3mZMjHZn9PhzukX6q36p0EwW60itST2QCYLp9bJRj/vCl8
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ebc9:13c:f282:e7b2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E7F9E200AA;
+	Sun, 15 Nov 2026 16:24:25 +0000 (UTC)
+Date: Sun, 15 Nov 2026 16:24:24 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ewout ter Hoeven <ewoutterhoeven@live.nl>
+Cc: Matt Stark <msta@google.com>, git@vger.kernel.org, ps@pks.im,
+	gitster@pobox.com, phillip.wood@dunelm.org.uk,
+	Martin von Zweigbergk <martinvonz@google.com>, remo@buenzli.dev,
+	Edwin Kempin <ekempin@google.com>, schacon@gmail.com,
+	philipmetzger@bluewin.ch, konstantin@linuxfoundation.org,
+	newren@gmail.com, tytso@mit.edu, nico@cryptonector.com,
+	rikingcoding@gmail.com
+Subject: Re: [PATCH] headers: Preserve 'change-id' header in rebase /
+ cherry-pick.
+Message-ID: <avnct0KGKN3a76lB@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ewout ter Hoeven <ewoutterhoeven@live.nl>,
+	Matt Stark <msta@google.com>, git@vger.kernel.org, ps@pks.im,
+	gitster@pobox.com, phillip.wood@dunelm.org.uk,
+	Martin von Zweigbergk <martinvonz@google.com>, remo@buenzli.dev,
+	Edwin Kempin <ekempin@google.com>, schacon@gmail.com,
+	philipmetzger@bluewin.ch, konstantin@linuxfoundation.org,
+	newren@gmail.com, tytso@mit.edu, nico@cryptonector.com,
+	rikingcoding@gmail.com
+References: <CAH7WC73-4p0RrqKNSh2G-xfpfO7QHZiXHbU_UFRkM3Q=bMWTDw@mail.gmail.com>
+ <adWTKt20ISC3qz2g@fruit.crustytoothpaste.net>
+ <GV4P192MB328727D81CAED2956E2C682BC07D2@GV4P192MB3287.EURP192.PROD.OUTLOOK.COM>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,64 +88,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC Patch v9 0/5] repo: add path keys to repo info
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>,
- phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, jltobler@gmail.com, lucasseikioshiro@gmail.com,
- gitster@pobox.com
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20261114163715.257705-1-jayatheerthkulkarni2005@gmail.com>
- <89511e61-4646-45df-b5ac-b52c9424072e@gmail.com>
- <CA+rGoLfJyuT7+W_eVPap_KSqy4EFG4Avp2=rL=hsLu0uXxem4w@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CA+rGoLfJyuT7+W_eVPap_KSqy4EFG4Avp2=rL=hsLu0uXxem4w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="YUXQPdstHNQkas1A"
+Content-Disposition: inline
+In-Reply-To: <GV4P192MB328727D81CAED2956E2C682BC07D2@GV4P192MB3287.EURP192.PROD.OUTLOOK.COM>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-On 15/11/2026 11:03, K Jayatheerth wrote:
-> On Sun, Nov 15, 2026 at 4:03 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
->> On 14/11/2026 16:37, K Jayatheerth wrote:
->>>
->>> Changes since v8:
->>>     - Dropped `path.hooks` and `path.cdup`.
->>>     - Renamed `path.toplevel.*` to `path.workingtree.*` to align with the
->>>       standard "working tree" glossary term while avoiding hyphens in
->>>       configuration variable names.
->>>     - Renamed `path.superproject-root.*` to `path.superprojectworkingtree.*`
->>>       to provide a descriptive name for scripts while avoiding hyphens.
->>>     - Renamed `path.git-prefix` to `path.prefix` to shorten it and avoid
->>>       hyphens.
->>
->> The range-diff looks good. It is a shame we're still creating a new
->> repository for each test when the majority of the tests could happily
->> run in the repository that the test framework creates for us. No one
->> else seems to mind that, even though it makes our test suite slower than
->> it needs to be, so I'd be happy if this is merged as-is.
->>
-> Whoops, apologies for missing that, I made a checklist for this
-> reroll, read your
-> note about the tests, and completely forgot to add it to the list :)
+--YUXQPdstHNQkas1A
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Not to worry, it is easily done
+On 2026-11-15 at 11:03:05, Ewout ter Hoeven wrote:
+> On 2026-04-07 at 23:28, brian m. carlson wrote:
+> > Absent some well-defined documentation describing what it means, I don't
+> > see how it could provide good value.
+>=20
+> A concrete use case could be stacked pull/merge requests.
+>=20
+> GitHub's stacked PRs (CLI in github/gh-stack) and GitLab's experimental
+> "glab stack" both have to answer "is this rewritten commit the same
+> change as before?" after every rebase. Without an identity that
+> survives rewrites they guess from branch names, recorded bases and
+> patch IDs, and the guesses fail in practice:
 
-> Also there are some newly arised questions about this in my mind:
-> 
-> - I am currently writing a follow-up series to consolidate the overlapping logic
-> between `repo` and `rev-parse`, and I plan to combine and clean up the tests
-> there as well.
-> - Three `path.*` keys were already merged in an earlier round, so updating those
-> tests would require a separate commit anyway.
-> 
-> That said, I'm open to feedback and happy to switch the tests in this
-> series to run in
-> a single repository if you think it's worth doing now.
-If you're planning some test cleanups anyway then I'm happy for the 
-tests here to be cleaned up by a future series. I'd do whatever you 
-think is easiest for you.
+I don't think that's going to be helpful there.  Users can modify
+change-id headers in commits, so they can't be trusted as a source of
+unmodified data.  Only if the server does the rebase can it have
+confidence that things haven't changed.
 
-Thanks
+Otherwise, a malicious user could get a review on v1 of a series and
+send out a completely different v2 with the same change-ids such that
+the server would honour the existing review and accept the malicious
+code.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+Speaking for myself only
 
-Phillip
+--YUXQPdstHNQkas1A
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8Fgmr53LcJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZypubcrOgtSsYcKx9MtXLAt6phqzEOgjT8w0vdD9qgBr
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAADmcAP95gi1sWfwPy7cZg2jS4ubdCN9I
++bRluE72wLj/IfT/zwEAo3YO1wqBVTdnRXE2KQp25xD0cPLmrTSGqdJeBA8WVwA=
+=llEe
+-----END PGP SIGNATURE-----
+
+--YUXQPdstHNQkas1A--
