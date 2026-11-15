@@ -1,86 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794738829;
-	b=wQL9aT4Pd4zI1eFEvSKPmRTepZRjZYzSg07lZabkpPzpzjEp1rFMDJ9Yj/8FxlhPEKvU
-	 JlJ0Z0tG2vVxUOX78mFLoJ+EwKsGkljnjxvSV8ZiyD1krAvyhQsLbLUyclKO9lXgoZbR2
-	 eUhXjo6Bihu0wyoYB3aVpd4QIsqt/pRdaukZaKLFZEddLKOwkJdhfFQNGIGHZ3zduZlkR
-	 S3tMw+3QhS5yyQtNPLWeBkIKROn3QLLiK6/HmNhVAN9Vg7UmrPUXvuc7xwaIAP6U6MYjC
-	 STfdPnQigjTmchfsQIn5ZXxHdY1b2e+5TvHwV8nNOdz/HNPBAvZFgP4fxzDDedQfxrA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794738829;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Reply-To:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=aEMW0Ed3CibDuRClgboU1KLuB5cd1y1I6iH0uh4XykI=;
-	b=Q1KwmL8gLrL1jsXHqtIgkMQKk4eLwmx2SGAS+wO6rxAz/DI3LLdyc2s29XhT5OvPO2Nt
-	 xzr+10xZnKBDJPHXRFOc7Z6lbzk/aUsbZZgdMh0Ar8WXgGoY1SZu5w19iv/jaZ8hEUIpc
-	 v90KvYVNqk37Yf2jerwD4ZFHx99ZzJL8d3reQVBpKNQRgsVbKUkxQJ1nDFQ38Dy8k8YST
-	 J9Kwm3vfS0ai5TSQ2r08WBW5Mo4rbTLdgZoPmOvly5vwMcjwxQ2FNDUrztX+fByZLe12+
-	 ms4ba9OoVUy/LhvNG8RZk26rzKbmfKLiVwaBBFtm+6d8cOt/Qnx5Azf/JZ2SWJtG6/g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="cP6L0p/P";
-	arc=none smtp.remote-ip=209.85.221.46
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.103.33.6
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794740592;
+	b=M6uLKf2xdZjZkFdRn1N86EG73DoToUVt5krUZi/Jz8Yml1i0Qzh0mhJzbWyUiq80CHUa
+	 ECiWvUi4s6/f66D2BJ9+nu2z8S48pu56oi/H6IbYMZTakfD9wz5j5Gpps3zzX8adl74dN
+	 grbNG6tWZZ9BIMbT9VI/PdVK8zPnr66BCynrdXU6ABp6hX38cYib0gN6CNOZJ8uaaN25S
+	 Lpd0qePpdaaV76q8HnK2q9X4zIOyfMLmvzJUWdge0JDGzKu/9ImJ8yRrihVGCmTyqnEEH
+	 5JDSJHLiTw119zDSZNKKJQ0BIZ5OO8y+qpB0b02f+29y1qSGIlRyhCrf8KmOwN/yXbA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794740592;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:References:Content-Language:Cc:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:
+	 X-Microsoft-Original-Message-ID:MIME-Version:
+	 X-MS-Exchange-MessageSentRepresentingType:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=Sx2dCJTI7mWB9Co+hnIZ9rmIgxiZ0h6Jd28d7/0/WdU=;
+	b=a4V11mARpIu9uwO847VLJtkSnePi/9UK7goE+ZUIQUPztx94mW8mdwxYmQUoNvgfQPEe
+	 Gbnu/CCeJlvTeD1o9Vzj7NMpaU9wuNYvfVq63sewC6/F3P+HBDsY9nsUfjvQW7IYJ9fIk
+	 7JW+iAcmwTDY0H1T61yEbfglnyTfFnSQadx7OzZAdlSo5jYwiCw/2PNqjWmyHrzs19ett
+	 0EJbWvs4gM72R5PGj0iISMz/6N7rou6Sgx8eLqEyX4sh/Kd8DwXFcvkxCEiVDXAJ4aB7u
+	 EJoHfIqJh/UeoqPL1YKyYiR6aFtJV6lkD1eg2q5Rf57XBnHVYLoxtDMy+Woaja1kYKQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=live.nl;
+	spf=pass smtp.mailfrom=live.nl;
+	dkim=pass header.d=LIVE.NL header.i=@LIVE.NL header.a=rsa-sha256 header.s=selector1 header.b=YG4XthL8;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.103.33.6
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazolkn19010006.outbound.protection.outlook.com [52.103.33.6])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1A4606A31F
-	for <git@vger.kernel.org>; Sun, 15 Nov 2026 10:33:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE1A4606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA47606A327
+	for <git@vger.kernel.org>; Sun, 15 Nov 2026 11:03:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7AA47606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cP6L0p/P
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-4922dbcee23so1108386f8f.0
-        for <git@vger.kernel.org>; Sun, 15 Nov 2026 02:33:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794738827; x=1795343627; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=aEMW0Ed3CibDuRClgboU1KLuB5cd1y1I6iH0uh4XykI=;
-        b=cP6L0p/P6OgWCwS65xdcquBL6aVoKlcZE+bdu/ll3EoZ4sOEZEZ0YTev1kxN0I4som
-         KMeSrJa4HjglUnt745nCLrI7QZDjw/MbHVbQZEx0UO8bVzYdLqQemJwhCjZJ3UqbM4W5
-         1cHXxVFY06NzT0USKl1y8+x+Jy3kQGG0yiHBJ7CyPRM8n4dwJl9SCZz5pe9oYfKRmpyT
-         CfFWbovq3QJB6f3qnbGcRd30pynU7Cb2zx9p29h+hCJKmR4DTqfc+E1v+Q1vxEehNoQd
-         5/x9CrqTKfyxawmcBLAwQULJMEVThA6FPbET6qXeE8CAcDWJpyHt2v8TTGVY37FnQJg9
-         LpUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794738827; x=1795343627;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=aEMW0Ed3CibDuRClgboU1KLuB5cd1y1I6iH0uh4XykI=;
-        b=mjrK+4DTqSd5G+8eYDUUlfCB35bxaHKz1pGSCDHAhPS/C4B+aesQ4LycJFbOUFDCfU
-         fH+sSwVgueWTk8odXuECHwzMDrmFk27i8A3kr6PPRF/0YJvAH2QmVaDj8HMo6V4VAfEf
-         BG5P5Xs6XPw3gzPRzsoZLO0Tb5/L3UEgkNhH7y+9Y01KEUXYmvwGGq2X+WRj4O3Jfic9
-         iBh+4hQB3G+UtAW66WnTUCKfwAe3QhuOmCAxRcO7+Ki52m0/EOKHvVPcOAtg8o6C6WK1
-         JqPfHpJtYCZ/B1+S1EEHsT4RvEMxU51A3MsUJB2aPN+TDAxLTBBzpEGfFKRsJdD3Ag5y
-         T6jg==
-X-Gm-Message-State: APuU4Z93ZGRtz2N0HJImYn0ZqmXKZlB8tGdIpuIp2Cr+B7Grx+Xw/s8F
-	l9GmWhpYhs1kTj6QuOezk3+Buxg5pvOj+vgYMk8JE/OciqAW8lK5uGkR0Ujfbw==
-X-Gm-Gg: AYBFou2F3SBB1Tnfe9HvwfDETC35GBcwBa116Auu6KnuGZN2Kxr8d4FZ+zcFj9RuLQK
-	UuRR1wHamUTu87/a3/no6mNpeisLLGZ/QlOSmPnAwFsPEYJ2t/Ow4aI1LzKsvMYTpptjnlLmUnS
-	Xtme49iTja8mCyW8YmFFDadgUhHw/h0MfSQeeMsjP3CceFvUyXf0/ut5dN+d+3yo5c69Aqg2G15
-	46xwys9nawHzeDHA2hh6JIWcuBD08FKOgS2Hag1YKnGvDBK1dzkKlltGPq5DCnTMm/WbwCxOv69
-	89WtouLc7yxXKxNXPJepgllQ448ArL7KylY0VE9N2MWb7pPjyGLz9ghXVuYoeGAvOqjZcBOXzAL
-	zQxBsfS7675nFzhtKRgAqS+QCRFfEvqBkMk02o4kYDBXKFvJYnrk2jkLt7Emlu1STWMiruxUjcv
-	TehyOvq3IYl17mXmVsl/3ixHq9vvd8xhMfNj0kckalcewiqJqW86apBxMVx+KNMIvtlyXrcSy24
-	lEtomm8zHHrZeWGko4fhuh5i6+PT4GhBs9su4HObwSUVFnk4nUPBGNxxOrKDript7ybM3s4+YBh
-	OvMAegJM57kvfq2nxQYeEwzioJXf8aE1ryO7I/rBjT+oDBCLxjsYn/IpIkHrINPWs1KvrIZVANR
-	pJbA8eF4W6eaE1fTb+EtgSTvchyE+
-X-Received: by 2002:a05:6000:4a06:b0:490:6327:96ba with SMTP id ffacd0b85a97d-49c7363113dmr13057448f8f.47.1794738826881;
-        Sun, 15 Nov 2026 02:33:46 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c888b90d4sm15256567f8f.9.2026.11.15.02.33.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Nov 2026 02:33:46 -0800 (PST)
-Message-ID: <89511e61-4646-45df-b5ac-b52c9424072e@gmail.com>
-Date: Sun, 15 Nov 2026 10:33:45 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=LIVE.NL header.i=@LIVE.NL header.a=rsa-sha256 header.s=selector1 header.b=YG4XthL8
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=o1dOj2u+svzYe9+oo5+TJ7LrmeobOJoQnkHBQHU/yi7XnKTXZZySnK5z8iWqmHojQ8aSTLIWJyItyIxGtf8qZXfPFLwWx7SCgMBmwJSxvznySFNgHRjeaW90TpV+9bKfAdMUJw2ydlzGE6gxMRoehgk7ApNS1VIDfBWH10/bNTMG5lj6oZNj4l126euUBK85ZJBgAgPDfU4eC16CGlJJoijlx2tLtBt3Euw4+jZMk0zpDO3gOBHQsCDey8eXmlMP2/YY0XFe7moIzXGE4qQ5sup4b3b/4mJtL5Q99pITMa73YYNe1HVopFlb4ydGdZyo3/QZMf2ttRI5zzkmlvOB0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Sx2dCJTI7mWB9Co+hnIZ9rmIgxiZ0h6Jd28d7/0/WdU=;
+ b=fiHgsK9GwWcLW04gmmloh+jMeONC9rfnimCf7F6sqKFr2071ElZMrpBRXu6qVcRSjohj6hF3X1Mt8ZZwAvpTvmN/nb6/Rb0V+j9tDTV3Tox2tQSP7z63o4R0qjZfpBfze/ZzY5WNLOoArfbQ2aTXD7UPMYyHWiajCFS7tgyFtnbvTTnvQ0ph0S59hRNh69BzZ3vWKmG37cUHOZuO+fwidI7vo3Ngf+HDN+r1Q89/Qb2G3/Rs8QpWWSXESbs9i5CtKMcO6+YifEhOhz79ZFNkmB3saR/WXmFBu8xmlVll4/0WqO/fScpFDuYXuzieG7Y9Iw7VzdrXwSyNMGs58O/sgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=LIVE.NL; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Sx2dCJTI7mWB9Co+hnIZ9rmIgxiZ0h6Jd28d7/0/WdU=;
+ b=YG4XthL8z8+FJqC9jkju6LzifOv8SvTyFMelZs1vnYmsx7Bh4RgiExNZzJwXd5ygfeWaZxK4p2JHwhG79oUurmzTR7CIMo3NIIl4ReqoN+8LzIwNOC/QYka9oiIzR498ThyiSPG1Ls1lGD1hSM6kW19cUI/cIm4AOSKDa6Q+knnGgOizeLR+cM3QxVmXAdlFCOcol/aaF2xAMD3gv4S5aEOAd9jkjoenCzLJiJACHQDKWgzmbuBZZHDL4c/WDaPBf5nvqH4MuT4AsmnbvytgA3VqqAF8WDb95nakfYgcTCpNi3AyTiZA0c7JUK2sCukXChHeCa/HRyRo64cMx2WvnA==
+Received: from GV4P192MB3287.EURP192.PROD.OUTLOOK.COM (2603:10a6:150:2b8::11)
+ by VI0P192MB509988.EURP192.PROD.OUTLOOK.COM (2603:10a6:800:362::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Sun, 15 Nov
+ 2026 11:03:08 +0000
+Received: from GV4P192MB3287.EURP192.PROD.OUTLOOK.COM
+ ([fe80::7bad:f918:6386:5df3]) by GV4P192MB3287.EURP192.PROD.OUTLOOK.COM
+ ([fe80::7bad:f918:6386:5df3%4]) with mapi id 15.21.0615.012; Sun, 15 Nov 2026
+ 11:03:08 +0000
+Message-ID:
+ <GV4P192MB328727D81CAED2956E2C682BC07D2@GV4P192MB3287.EURP192.PROD.OUTLOOK.COM>
+Date: Sun, 15 Nov 2026 12:03:05 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] headers: Preserve 'change-id' header in rebase /
+ cherry-pick.
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <CAH7WC73-4p0RrqKNSh2G-xfpfO7QHZiXHbU_UFRkM3Q=bMWTDw@mail.gmail.com>
+ <adWTKt20ISC3qz2g@fruit.crustytoothpaste.net>
+Content-Language: en-US
+Cc: Matt Stark <msta@google.com>, git@vger.kernel.org, ps@pks.im,
+ gitster@pobox.com, phillip.wood@dunelm.org.uk,
+ Martin von Zweigbergk <martinvonz@google.com>, remo@buenzli.dev,
+ Edwin Kempin <ekempin@google.com>, schacon@gmail.com,
+ philipmetzger@bluewin.ch, konstantin@linuxfoundation.org, newren@gmail.com,
+ tytso@mit.edu, nico@cryptonector.com, rikingcoding@gmail.com
+From: Ewout ter Hoeven <ewoutterhoeven@live.nl>
+In-Reply-To: <adWTKt20ISC3qz2g@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: AM7PR03CA0004.eurprd03.prod.outlook.com
+ (2603:10a6:20b:130::14) To GV4P192MB3287.EURP192.PROD.OUTLOOK.COM
+ (2603:10a6:150:2b8::11)
+X-Microsoft-Original-Message-ID:
+ <43a18d99-5a55-4319-87d2-39f470ba5398@live.nl>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,516 +102,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC Patch v9 0/5] repo: add path keys to repo info
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, lucasseikioshiro@gmail.com,
- gitster@pobox.com, phillip.wood@dunelm.org.uk
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20261114163715.257705-1-jayatheerthkulkarni2005@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20261114163715.257705-1-jayatheerthkulkarni2005@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV4P192MB3287:EE_|VI0P192MB509988:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1ae82c0d-0ad8-4467-d75a-08df430807b1
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|4140399003|25010399006|24021099003|20031999006|39105399006|24071999003|37011999003|5072599009|6090799003|25031999004|15080799012|19110799012|23021999003|8060799015|1602099012|10035399007|40105399003|41105399003|3412199025|4302099013|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?MlJjamliYU85THZTckpaaVRycXlYblAxZ2xJWFdNMy85eitaVDk0WktQQVRL?=
+ =?utf-8?B?S0ZzNUpiM1Zvek9zbHhPa2hSOVVpTGNIaFlua2xMN3VoR08ybVI5a3VKVjd2?=
+ =?utf-8?B?OW03M2s4eWFaTjJ5Q0dUeW5yaDdQd2pJOHRJVDdabHBGMjVjSmlIQU1DeVIy?=
+ =?utf-8?B?YUQ0VENkWlg5UVdqam1HYVlyK1MxOG5xemxLbCswek5SckwyWlRqWGpIWHM5?=
+ =?utf-8?B?SjJwWGZ1OXFVQWhmQUdqcFpYT2ZSTXYxMkdPL3FrZ3haYTU3WkRSMmw2WTZw?=
+ =?utf-8?B?S1dVRWk0VmsyVVhhVU1zRi9IWXVMZzdUM2NRUEhuKzVNcmxsSExyaG84WDlx?=
+ =?utf-8?B?SGJYY211NkloMlNpNTUxaG9aTk5OSUwvdnhTSUhqYUFCZXR6azV0eE4vVE9N?=
+ =?utf-8?B?OFZEU2NuUWtEUlN6TTV2YmhUcHFDVnZHSGhaSVF1K0QvTnlqT2NxOW9rNzFQ?=
+ =?utf-8?B?SnFWQmxqQlNGc0drNUZla29uejNWdGlGekdUY3c0d0ZOczlIUTBrbzJVZEZ3?=
+ =?utf-8?B?ZGlocEhpUmNPajY5eGZ3M2lTZ0laUVlTbTRZSmxuNnVmaVNpL0FBRFBZKzNI?=
+ =?utf-8?B?anBMaTUzaTdLZHBJTnY4WWdSZHdXcXlGY3E1UkZyUHJ5MGFvVFAxcGJYVE90?=
+ =?utf-8?B?YWRxTVFmS25TTTBWZ0VLMXB5Q3hYU3dxaWZyVElYY2VLNlR5M3pGbTE0OW1J?=
+ =?utf-8?B?YWlKblkwUVdUNjdFUjVpbXYxVVp5NDNhZm9wYXFCaTFEUHdVdXYyT1hBQzht?=
+ =?utf-8?B?U3NxUXBzeGxRcVE1MExITWxMVlJjcG1obUNrdldwSE1UQTZwL0tTME1OeWFR?=
+ =?utf-8?B?YlR3cmNyblBaeGZHWGU1QXJZeXZwRFN4OG1Dbzcyb0ZXV0FiMVN2dFVFbjd3?=
+ =?utf-8?B?TUVKa0UzY2xmTGI2RDJuRDI3azZKdGdGZnM2YjFndWNTaE9sMTFnZ2RKRlVM?=
+ =?utf-8?B?REZ4c09qWGdUV0dsQXI5Umk5SVUrOVFzQitFcDFsSEJhL25XNjlnMVdmekkr?=
+ =?utf-8?B?RDFZR3hHL1M0RHM2U0lvZEZsdHg2QVMySCtBUEF3Ym4xSE1wL0VEcTl6NkRr?=
+ =?utf-8?B?RUJyK1B5YmFhZnN1S0tjalhaeFZib3o4SjRwQmkrUDZOWVAyTzloRlB0ZC9z?=
+ =?utf-8?B?cmxIY2pjYXJLdUJrSVNXU3RBamlVczFReDdYaEVzOEc0YmYxcUx2U0xLR2s2?=
+ =?utf-8?B?UTNqTVdEUlllcUxpSS9KcHY1cFlVVExIQ0M2WDNNc29rdDNFNXFsV2xaVVQx?=
+ =?utf-8?B?c25teHVyTHF0YnIyRHNmQjRqaVpaSXFBSGhMbUQzbmZPU2w3ZVE1c0NYRUJk?=
+ =?utf-8?B?aVBvTGU0WW1KMmx3c0x1RzhvdlJUVWVMaUpMRlNTUTc3NnNTUXZZb3RIMEh5?=
+ =?utf-8?B?dTBFUFh1ZXQxeithY0daWEVIVFpEZFhGaUNxcTFDQjRmZ3Q1YnNPRVRtYnMy?=
+ =?utf-8?B?UWNZVlgyREV4LzlIbG1BNmFndUtWRFZEend0Z0hsQkQrRC9UT1oxTmZZUVJ4?=
+ =?utf-8?B?MGtPSkxSK0J3THhuM0NrT3FaNWVWZXFlWGlubmJGR0NyWW9Sb3pHd1NTQ3dE?=
+ =?utf-8?Q?gI7NtMoLSLG2+6w7bodRhQNxk=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?TTNsZ2UxbFJ4UFB4Q0RwNE5mVjVwdi9MZEdjZWlGZm5SOXRJU2dqQ0h1aVov?=
+ =?utf-8?B?SnhpcEF3YWZjNExBNFhmemRMeU5hbnZVZ3dsKzJBQnR6RzNtek1BQzZsWDhj?=
+ =?utf-8?B?R3AwaXUwNmxWcTByVU55cjhIS2JRTDlTNGV2bTczdktGc0JONjV6YkJWbVBL?=
+ =?utf-8?B?eWFFYVMxcDV0L21EclB1Z1RkVTdFOUdZdHhxM3pmcjcwSFhGYy90dGY0SWNr?=
+ =?utf-8?B?end2VlZQdlY0b0tjV0J0NVFKVGNTUXQ2TmRMcEFDcHo4MlhQYlVrL0FPQ1JG?=
+ =?utf-8?B?WW1iOXptb1hGRDM2T0VWSmlYTzA3TTNxbXo1MnpZYUxvSVlyanJSa2plUUlY?=
+ =?utf-8?B?dFdzS2hYek00dW5Za1N6WnR4WlVhT2R0RzNBLzdQUGtQNGdLMUJoQ3hxTWFq?=
+ =?utf-8?B?Q2k1UGZ6cjBCS1BHbGV3NkxHSGVvUHNMRSt3N3NJd0Ftc3BDWTdNT0NRcEZ1?=
+ =?utf-8?B?amRlNXNyWTAwQ25sNGs3b0k1MVVwMkdiYkVuTFJPWHhJeUFEYUlRNEhUNExv?=
+ =?utf-8?B?OGR4TkF5WnZlN2t1c2tiYkxpMHhoUVRWOGZNUXNMQmZpSFlzYVBxanNqUnVh?=
+ =?utf-8?B?WkJvWVRWbFRHYjlJTzI5Qm1GdkJYTFE5SHFXU2Y3UXR1YTl2am5zVkxqQ0Fn?=
+ =?utf-8?B?WnhTWmhRejZmNm1BbDNuY0xKMFVZVktoZU5aRnRzWUU3cjNzZFF3YVlwNWJW?=
+ =?utf-8?B?eC9PNmE0K1I3bm14cXM4bE1BeUh1WU9pTU5pM2Jjc1huWXc2STZFdEZBTG1X?=
+ =?utf-8?B?MDNva3UySU1TNTRWNnl2Ly9kWTlab3Z0MjdyQTlhZWlMdHNScjJlWGEwMWlx?=
+ =?utf-8?B?ZzIvbkNLUUkyUjcrOVgyckVWbzFvSEdQS0g0ckxqakYvblMyYUlzWDVzVUhP?=
+ =?utf-8?B?UHVnTDlkRnN0NTVXN0EyM2xQQ2s5UVAvN1V5MEp2SFliTm5jMG5CdVROYm12?=
+ =?utf-8?B?MXYrU0RSSlc4dzRNSTkzMW1Rd0tKQ3pJRHFEZnFna1o0L0llRVZ1WW5MK3Rv?=
+ =?utf-8?B?T1ExVkhWMkprSG9kejREU1hTNUxjUFNGU0VYZ1NkN0hRU3JJa2R4Vm1wNlR1?=
+ =?utf-8?B?dlFHTkx1L3dyNEtRc1hxT0puQ3pRVzJKdW9PZmh3SS9IbmsxT09lajB2TjRG?=
+ =?utf-8?B?NDVTVnR5cGk0R3JsODc4dTlwU3pzUmVDRGFCZExYcXB4OEM0TUQ4Ym5tZEhH?=
+ =?utf-8?B?N1RROFFnQURFMTdoSGs1dFhwWExtdTlwbllvRHltcjU4TGJYSGF5THlXckFV?=
+ =?utf-8?B?SVEySDd5NXlWS2w2UENpVnN4Uk1iUGIyNDNxenZpQWo2QldoWk90eUxsd0ww?=
+ =?utf-8?B?ZzFpZmZoMWdveHEzeUpFOHc3bDdzOGc1RE9PbG5DN1RIN1FMak1FWFlnVldP?=
+ =?utf-8?B?Vk13V0QzOEhBTW5DVmJ2RGtyL3VQSjdNZ2FoM1UrSkpMeFl4bFkza1J2Szdo?=
+ =?utf-8?B?MmVxTUlGTmJpeE5rSU5NYzZCUXJ6MDVHNTJzcGFFQkVPT3lORzIwSm9WRWRB?=
+ =?utf-8?B?VS9GWVlMYnZXckdseC8xMHc4TzhCSXZxM3kyVjZ2QW1zQlVKc2hrVngxSUVD?=
+ =?utf-8?B?MjVBT244eXBnZGUrNWEyNDlsdlRpSG5qMTZIVnhnUU9WRC85Nzh5MzFnUXpz?=
+ =?utf-8?B?dGlvOW8rQ2ZNQXlPN0M1bnh6aU8xRE0xMUdocXFnRXdMSlBVUElSWUZheitQ?=
+ =?utf-8?B?YTFmbTZQckpLSGZjYUV4OGhWeUtBUnBicjdMbjQwb3kxL2hJMUNhR3h0T0to?=
+ =?utf-8?B?S1h2bzVuQWkrbDJVVHdsT0xqdGl5MkJCUGtnaXRQVDJRVStGTmdJdE5Ddmht?=
+ =?utf-8?B?RTVrMzBoRVFGTEdlS2RjeUpjU1NzeHY3MU1nM3hrcTNmRTdHcjNuWG9UTVhw?=
+ =?utf-8?B?WUQvQ0F6TjB2aDAwZW12bGVXR2U5MnluSndiQzhZWmVSMDNtaG1iMG1CbzhG?=
+ =?utf-8?Q?xKhT+x3BJfeirUPQbHfG91CLfpRHEWwQ?=
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-4fb8a.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ae82c0d-0ad8-4467-d75a-08df430807b1
+X-MS-Exchange-CrossTenant-AuthSource: GV4P192MB3287.EURP192.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Nov 2026 11:03:08.3208
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0P192MB509988
 
-Hi K Jayatheerth
+On 2026-04-07 at 23:28, brian m. carlson wrote:
+ > Absent some well-defined documentation describing what it means, I don't
+ > see how it could provide good value.
 
-On 14/11/2026 16:37, K Jayatheerth wrote:
-> 
-> Changes since v8:
->    - Dropped `path.hooks` and `path.cdup`.
->    - Renamed `path.toplevel.*` to `path.workingtree.*` to align with the
->      standard "working tree" glossary term while avoiding hyphens in
->      configuration variable names.
->    - Renamed `path.superproject-root.*` to `path.superprojectworkingtree.*`
->      to provide a descriptive name for scripts while avoiding hyphens.
->    - Renamed `path.git-prefix` to `path.prefix` to shorten it and avoid
->      hyphens.
+A concrete use case could be stacked pull/merge requests.
 
-The range-diff looks good. It is a shame we're still creating a new 
-repository for each test when the majority of the tests could happily 
-run in the repository that the test framework creates for us. No one 
-else seems to mind that, even though it makes our test suite slower than 
-it needs to be, so I'd be happy if this is merged as-is.
+GitHub's stacked PRs (CLI in github/gh-stack) and GitLab's experimental
+"glab stack" both have to answer "is this rewritten commit the same
+change as before?" after every rebase. Without an identity that
+survives rewrites they guess from branch names, recorded bases and
+patch IDs, and the guesses fail in practice:
 
-Thanks
+  - Renaming a branch with plain "git branch -m" strands the stack,
+    because the tool tracks layers by branch name
+    (https://github.com/github/gh-stack/issues/423).
 
-Phillip
-> Range-diff against v8:
-> 1:  27b9811163 ! 1:  6cb242828b repo: add path.toplevel with absolute and relative suffix formatting
->      @@ Metadata
->       Author: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
->       
->        ## Commit message ##
->      -    repo: add path.toplevel with absolute and relative suffix formatting
->      +    repo: add path.workingtree with absolute and relative suffix formatting
->       
->           Scripts frequently need to find the root directory of a repository's
->           working tree. Currently, this requires using `git rev-parse --show-toplevel`
->           or inferring it from other repository information.
->       
->      -    Introduce `path.toplevel.absolute` and `path.toplevel.relative` keys
->      +    Introduce `path.workingtree.absolute` and `path.workingtree.relative` keys
->           to `git repo info`. This allows scripts to retrieve the top-level
->           working tree path in a predictable, strictly formatted manner without
->           relying on `rev-parse`.
->      @@ Documentation/git-repo.adoc: values that they return:
->        `path.gitdir.relative`::
->        	The path to the Git repository directory relative to the current working directory.
->        
->      -+`path.toplevel.absolute`::
->      ++`path.workingtree.absolute`::
->       +	The canonical absolute path to the top-level directory of the
->       +	repository's working tree. Outputs an empty string if the repository
->       +	is bare.
->       +
->      -+`path.toplevel.relative`::
->      ++`path.workingtree.relative`::
->       +	The path to the top-level directory of the repository's working
->       +	tree relative to the current working directory. Outputs an empty
->       +	string if the repository is bare.
->      @@ builtin/repo.c: static int get_path_gitdir_relative(struct repository *repo, str
->        	return 0;
->        }
->        
->      -+static int get_path_toplevel_absolute(struct repository *repo, struct strbuf *buf)
->      ++static int get_path_workingtree_absolute(struct repository *repo, struct strbuf *buf)
->       +{
->       +	const char *work_tree = repo_get_work_tree(repo);
->       +
->      @@ builtin/repo.c: static int get_path_gitdir_relative(struct repository *repo, str
->       +	return 0;
->       +}
->       +
->      -+static int get_path_toplevel_relative(struct repository *repo, struct strbuf *buf)
->      ++static int get_path_workingtree_relative(struct repository *repo, struct strbuf *buf)
->       +{
->       +	const char *work_tree = repo_get_work_tree(repo);
->       +
->      @@ builtin/repo.c: static const struct repo_info_field repo_info_field[] = {
->        	{ "path.commondir.relative", get_path_commondir_relative },
->        	{ "path.gitdir.absolute", get_path_gitdir_absolute },
->        	{ "path.gitdir.relative", get_path_gitdir_relative },
->      -+	{ "path.toplevel.absolute", get_path_toplevel_absolute },
->      -+	{ "path.toplevel.relative", get_path_toplevel_relative },
->      ++	{ "path.workingtree.absolute", get_path_workingtree_absolute },
->      ++	{ "path.workingtree.relative", get_path_workingtree_relative },
->        	{ "references.format", get_references_format },
->        };
->        
->      @@ t/t1900-repo-info.sh: test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir
->        	'.git' \
->        	'GIT_DIR="../.git" && export GIT_DIR'
->        
->      -+test_expect_success 'path.toplevel absolute and relative' '
->      ++test_expect_success 'path.workingtree absolute and relative' '
->       +	test_when_finished "rm -rf repo" &&
->       +	git init repo &&
->       +	(
->      @@ t/t1900-repo-info.sh: test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir
->       +
->       +		ROOT="$(test-tool path-utils real_path ..)" &&
->       +
->      -+		echo "path.toplevel.absolute=$ROOT" >expect.abs &&
->      -+		git repo info path.toplevel.absolute >actual.abs &&
->      ++		echo "path.workingtree.absolute=$ROOT" >expect.abs &&
->      ++		git repo info path.workingtree.absolute >actual.abs &&
->       +		test_cmp expect.abs actual.abs &&
->       +
->      -+		echo "path.toplevel.relative=../" >expect.rel &&
->      -+		git repo info path.toplevel.relative >actual.rel &&
->      ++		echo "path.workingtree.relative=../" >expect.rel &&
->      ++		git repo info path.workingtree.relative >actual.rel &&
->       +		test_cmp expect.rel actual.rel
->       +	)
->       +'
->       +
->      -+test_expect_success 'path.toplevel absolute and relative in a bare repository' '
->      ++test_expect_success 'path.workingtree absolute and relative in a bare repository' '
->       +	test_when_finished "rm -rf bare.git" &&
->       +	git init --bare bare.git &&
->       +	(
->       +		cd bare.git &&
->       +
->      -+		echo "path.toplevel.absolute=" >expect.abs &&
->      -+		git repo info path.toplevel.absolute >actual.abs &&
->      ++		echo "path.workingtree.absolute=" >expect.abs &&
->      ++		git repo info path.workingtree.absolute >actual.abs &&
->       +		test_cmp expect.abs actual.abs &&
->       +
->      -+		echo "path.toplevel.relative=" >expect.rel &&
->      -+		git repo info path.toplevel.relative >actual.rel &&
->      ++		echo "path.workingtree.relative=" >expect.rel &&
->      ++		git repo info path.workingtree.relative >actual.rel &&
->       +		test_cmp expect.rel actual.rel
->       +	)
->       +'
-> 2:  2274dd8be2 = 2:  9da5ce8a69 submodule: use repository to find superproject
-> 3:  34c54cdafd ! 3:  deaf3ae42e repo: add path.superproject-root with absolute and relative suffixes
->      @@ Metadata
->       Author: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
->       
->        ## Commit message ##
->      -    repo: add path.superproject-root with absolute and relative suffixes
->      +    repo: add path.superprojectworkingtree with absolute and relative suffixes
->       
->           Scripts working in multi-repository setups often need to identify the
->           top-level working tree of a superproject from within a submodule.
->           Currently, this is only exposed via `git rev-parse
->           --show-superproject-working-tree`.
->       
->      -    Introduce `path.superproject-root.absolute` and
->      -    `path.superproject-root.relative` keys to `git repo info`.
->      +    Introduce `path.superprojectworkingtree.absolute` and
->      +    `path.superprojectworkingtree.relative` keys to `git repo info`.
->           This exposes the core submodule context via a scriptable config-like key
->           using standard format rules.
->       
->      @@ Documentation/git-repo.adoc: values that they return:
->        `path.gitdir.relative`::
->        	The path to the Git repository directory relative to the current working directory.
->        
->      -+`path.superproject-root.absolute`::
->      ++`path.superprojectworkingtree.absolute`::
->       +	The canonical absolute path to the working tree root of the superproject
->       +	if the current repository is an initialized submodule. Outputs an empty
->       +	string if not in a submodule.
->       +
->      -+`path.superproject-root.relative`::
->      ++`path.superprojectworkingtree.relative`::
->       +	The path to the working tree root of the superproject relative to the
->       +	current working directory if the current repository is an initialized
->       +	submodule. Outputs an empty string if not in a submodule.
->       +
->      - `path.toplevel.absolute`::
->      + `path.workingtree.absolute`::
->        	The canonical absolute path to the top-level directory of the
->        	repository's working tree. Outputs an empty string if the repository
->       
->      @@ builtin/repo.c: static int get_path_gitdir_relative(struct repository *repo, str
->        	return 0;
->        }
->        
->      -+static int get_path_superproject_absolute(struct repository *repo, struct strbuf *buf)
->      ++static int get_path_superprojectworkingtree_absolute(struct repository *repo, struct strbuf *buf)
->       +{
->       +	struct strbuf superproject = STRBUF_INIT;
->       +
->      @@ builtin/repo.c: static int get_path_gitdir_relative(struct repository *repo, str
->       +	return 0;
->       +}
->       +
->      -+static int get_path_superproject_relative(struct repository *repo, struct strbuf *buf)
->      ++static int get_path_superprojectworkingtree_relative(struct repository *repo, struct strbuf *buf)
->       +{
->       +	struct strbuf superproject = STRBUF_INIT;
->       +
->      @@ builtin/repo.c: static int get_path_gitdir_relative(struct repository *repo, str
->       +	return 0;
->       +}
->       +
->      - static int get_path_toplevel_absolute(struct repository *repo, struct strbuf *buf)
->      + static int get_path_workingtree_absolute(struct repository *repo, struct strbuf *buf)
->        {
->        	const char *work_tree = repo_get_work_tree(repo);
->       @@ builtin/repo.c: static const struct repo_info_field repo_info_field[] = {
->        	{ "path.commondir.relative", get_path_commondir_relative },
->        	{ "path.gitdir.absolute", get_path_gitdir_absolute },
->        	{ "path.gitdir.relative", get_path_gitdir_relative },
->      -+	{ "path.superproject-root.absolute", get_path_superproject_absolute },
->      -+	{ "path.superproject-root.relative", get_path_superproject_relative },
->      - 	{ "path.toplevel.absolute", get_path_toplevel_absolute },
->      - 	{ "path.toplevel.relative", get_path_toplevel_relative },
->      ++	{ "path.superprojectworkingtree.absolute", get_path_superprojectworkingtree_absolute },
->      ++	{ "path.superprojectworkingtree.relative", get_path_superprojectworkingtree_relative },
->      + 	{ "path.workingtree.absolute", get_path_workingtree_absolute },
->      + 	{ "path.workingtree.relative", get_path_workingtree_relative },
->        	{ "references.format", get_references_format },
->       
->        ## t/t1900-repo-info.sh ##
->      @@ t/t1900-repo-info.sh: test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir
->        	'.git' \
->        	'GIT_DIR="../.git" && export GIT_DIR'
->        
->      -+test_expect_success 'path.superproject-root absolute and relative' '
->      ++test_expect_success 'path.superprojectworkingtree absolute and relative' '
->       +	test_when_finished "rm -rf sub super" &&
->       +	git init sub &&
->       +	test_commit -C sub initial &&
->      @@ t/t1900-repo-info.sh: test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir
->       +		cd sub &&
->       +		ROOT="$(test-tool path-utils real_path ..)" &&
->       +
->      -+		echo "path.superproject-root.absolute=$ROOT" >expect.abs &&
->      -+		git repo info path.superproject-root.absolute >actual.abs &&
->      ++		echo "path.superprojectworkingtree.absolute=$ROOT" >expect.abs &&
->      ++		git repo info path.superprojectworkingtree.absolute >actual.abs &&
->       +		test_cmp expect.abs actual.abs &&
->       +
->      -+		echo "path.superproject-root.relative=../" >expect.rel &&
->      -+		git repo info path.superproject-root.relative >actual.rel &&
->      ++		echo "path.superprojectworkingtree.relative=../" >expect.rel &&
->      ++		git repo info path.superprojectworkingtree.relative >actual.rel &&
->       +		test_cmp expect.rel actual.rel
->       +	)
->       +'
->       +
->      -+test_expect_success 'path.superproject-root returns empty when not in a submodule' '
->      ++test_expect_success 'path.superprojectworkingtree returns empty when not in a submodule' '
->       +	test_when_finished "rm -rf repo" &&
->       +	git init repo &&
->       +	(
->       +		cd repo &&
->       +
->      -+		echo "path.superproject-root.absolute=" >expect.abs &&
->      -+		git repo info path.superproject-root.absolute >actual.abs &&
->      ++		echo "path.superprojectworkingtree.absolute=" >expect.abs &&
->      ++		git repo info path.superprojectworkingtree.absolute >actual.abs &&
->       +		test_cmp expect.abs actual.abs &&
->       +
->      -+		echo "path.superproject-root.relative=" >expect.rel &&
->      -+		git repo info path.superproject-root.relative >actual.rel &&
->      ++		echo "path.superprojectworkingtree.relative=" >expect.rel &&
->      ++		git repo info path.superprojectworkingtree.relative >actual.rel &&
->       +		test_cmp expect.rel actual.rel
->       +	)
->       +'
->       +
->      - test_expect_success 'path.toplevel absolute and relative' '
->      + test_expect_success 'path.workingtree absolute and relative' '
->        	test_when_finished "rm -rf repo" &&
->        	git init repo &&
-> 4:  985403c7b3 < -:  ---------- repo: add path.hooks with absolute and relative suffixes
-> 5:  486836ae52 ! 4:  de9e189714 repo: add path.index with absolute and relative suffixes
->      @@ Commit message
->       
->        ## Documentation/git-repo.adoc ##
->       @@ Documentation/git-repo.adoc: values that they return:
->      - 	working directory. Respects the `core.hooksPath` configuration. If
->      - 	`core.hooksPath` is set to `/dev/null`, that value is returned unchanged.
->      + `path.gitdir.relative`::
->      + 	The path to the Git repository directory relative to the current working directory.
->        
->       +`path.index.absolute`::
->       +	The canonical absolute path to the repository's current index file.
->      @@ Documentation/git-repo.adoc: values that they return:
->       +	Returns the configured index path even if the repository is bare or the
->       +	file does not exist.
->       +
->      - `path.superproject-root.absolute`::
->      + `path.superprojectworkingtree.absolute`::
->        	The canonical absolute path to the working tree root of the superproject
->        	if the current repository is an initialized submodule. Outputs an empty
->       
->        ## builtin/repo.c ##
->      -@@ builtin/repo.c: static int get_path_hooks_relative(struct repository *repo, struct strbuf *buf)
->      +@@ builtin/repo.c: static int get_path_gitdir_relative(struct repository *repo, struct strbuf *buf)
->        	return 0;
->        }
->        
->      @@ builtin/repo.c: static int get_path_hooks_relative(struct repository *repo, stru
->       +	return 0;
->       +}
->       +
->      - static int get_path_superproject_absolute(struct repository *repo, struct strbuf *buf)
->      + static int get_path_superprojectworkingtree_absolute(struct repository *repo, struct strbuf *buf)
->        {
->        	struct strbuf superproject = STRBUF_INIT;
->       @@ builtin/repo.c: static const struct repo_info_field repo_info_field[] = {
->      + 	{ "path.commondir.relative", get_path_commondir_relative },
->      + 	{ "path.gitdir.absolute", get_path_gitdir_absolute },
->        	{ "path.gitdir.relative", get_path_gitdir_relative },
->      - 	{ "path.hooks.absolute", get_path_hooks_absolute },
->      - 	{ "path.hooks.relative", get_path_hooks_relative },
->       +	{ "path.index.absolute", get_path_index_absolute },
->       +	{ "path.index.relative", get_path_index_relative },
->      - 	{ "path.superproject-root.absolute", get_path_superproject_absolute },
->      - 	{ "path.superproject-root.relative", get_path_superproject_relative },
->      - 	{ "path.toplevel.absolute", get_path_toplevel_absolute },
->      + 	{ "path.superprojectworkingtree.absolute", get_path_superprojectworkingtree_absolute },
->      + 	{ "path.superprojectworkingtree.relative", get_path_superprojectworkingtree_relative },
->      + 	{ "path.workingtree.absolute", get_path_workingtree_absolute },
->       
->        ## t/t1900-repo-info.sh ##
->      -@@ t/t1900-repo-info.sh: test_expect_success 'hooks with core.hooksPath=/dev/null' '
->      - 	)
->      - '
->      +@@ t/t1900-repo-info.sh: test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
->      + 	'.git' \
->      + 	'GIT_DIR="../.git" && export GIT_DIR'
->        
->       +test_repo_info_path 'index standard' 'index' '.git/index'
->       +
->      @@ t/t1900-repo-info.sh: test_expect_success 'hooks with core.hooksPath=/dev/null'
->       +	)
->       +'
->       +
->      - test_expect_success 'path.superproject-root absolute and relative' '
->      + test_expect_success 'path.superprojectworkingtree absolute and relative' '
->        	test_when_finished "rm -rf sub super" &&
->        	git init sub &&
-> 6:  91a8dc3ab1 < -:  ---------- repo: add path.git-prefix
-> 7:  84a9fb4060 ! 5:  97035f59f4 repo: add path.cdup
->      @@ Metadata
->       Author: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
->       
->        ## Commit message ##
->      -    repo: add path.cdup
->      +    repo: add path.prefix
->       
->      -    Scripts sometimes need the relative path from the current working
->      -    directory to the repository's working tree root (cdup). While this
->      -    information can be retrieved through `git rev-parse --show-cdup`,
->      -    `git repo info` does not currently expose it as a scriptable key.
->      +    Scripts sometimes need the path from the repository's working tree root
->      +    to the current working directory. While this information can be derived
->      +    through existing Git commands, `git repo info` does not currently expose
->      +    it as a scriptable key.
->       
->      -    Introduce the `path.cdup` key to `git repo info`. The key returns the
->      -    path from the current working directory to the root of the working tree,
->      +    Introduce the `path.prefix` key to `git repo info`. The key returns
->      +    the path from the working tree root to the current working directory,
->           returning the empty string when invoked from the working tree root.
->       
->           Mentored-by: Justin Tobler <jltobler@gmail.com>
->      @@ Commit message
->       
->        ## Documentation/git-repo.adoc ##
->       @@ Documentation/git-repo.adoc: values that they return:
->      - `object.format`::
->      - 	The object format (hash algorithm) used in the repository.
->      + 	Returns the configured index path even if the repository is bare or the
->      + 	file does not exist.
->        
->      -+`path.cdup`::
->      -+	When the command is invoked from a subdirectory, show the
->      -+	path of the top-level directory relative to the current
->      -+	directory (typically a sequence of "../", or an empty string).
->      ++`path.prefix`::
->      ++	The path from the root of the working tree to the current working
->      ++	directory. Returns the empty string when the current working directory
->      ++	is the root of the working tree.
->       +
->      - `path.commondir.absolute`::
->      - 	The canonical absolute path to the Git repository's common
->      - 	directory (the shared `.git` directory containing objects,
->      + `path.superprojectworkingtree.absolute`::
->      + 	The canonical absolute path to the working tree root of the superproject
->      + 	if the current repository is an initialized submodule. Outputs an empty
->       
->        ## builtin/repo.c ##
->      -@@ builtin/repo.c: static int get_object_format(struct repository *repo, struct strbuf *buf)
->      +@@ builtin/repo.c: static int get_path_commondir_relative(struct repository *repo, struct strbuf *b
->        	return 0;
->        }
->        
->      -+static int get_path_cdup(struct repository *repo, struct strbuf *buf)
->      ++static int get_path_prefix(struct repository *repo, struct strbuf *buf)
->       +{
->      -+	const char *pfx = repo->prefix;
->      -+
->      -+	if (!is_inside_work_tree(repo)) {
->      -+		const char *worktree = repo_get_work_tree(repo);
->      -+
->      -+		if (worktree)
->      -+			strbuf_addstr(buf, worktree);
->      -+		return 0;
->      -+	}
->      -+
->      -+	while (pfx) {
->      -+		pfx = strchr(pfx, '/');
->      -+		if (pfx) {
->      -+			pfx++;
->      -+			strbuf_addstr(buf, "../");
->      -+		}
->      -+	}
->      ++	/*
->      ++	 * repo->prefix is NULL when the current working directory is
->      ++	 * the worktree root.
->      ++	 */
->      ++	strbuf_addstr(buf, repo->prefix ? repo->prefix : "");
->       +	return 0;
->       +}
->       +
->      - static int get_path_commondir_absolute(struct repository *repo, struct strbuf *buf)
->      + static int get_path_gitdir_absolute(struct repository *repo, struct strbuf *buf)
->        {
->      - 	const char *common_dir = repo_get_common_dir(repo);
->      + 	const char *git_dir = repo_get_git_dir(repo);
->       @@ builtin/repo.c: static const struct repo_info_field repo_info_field[] = {
->      - 	{ "layout.bare", get_layout_bare },
->      - 	{ "layout.shallow", get_layout_shallow },
->      - 	{ "object.format", get_object_format },
->      -+	{ "path.cdup", get_path_cdup },
->      - 	{ "path.commondir.absolute", get_path_commondir_absolute },
->      - 	{ "path.commondir.relative", get_path_commondir_relative },
->      - 	{ "path.git-prefix", get_path_git_prefix },
->      + 	{ "path.gitdir.relative", get_path_gitdir_relative },
->      + 	{ "path.index.absolute", get_path_index_absolute },
->      + 	{ "path.index.relative", get_path_index_relative },
->      ++	{ "path.prefix", get_path_prefix },
->      + 	{ "path.superprojectworkingtree.absolute", get_path_superprojectworkingtree_absolute },
->      + 	{ "path.superprojectworkingtree.relative", get_path_superprojectworkingtree_relative },
->      + 	{ "path.workingtree.absolute", get_path_workingtree_absolute },
->       
->        ## t/t1900-repo-info.sh ##
->       @@ t/t1900-repo-info.sh: test_repo_info_path 'commondir with only GIT_DIR' 'commondir' \
->        	'.git' \
->        	'GIT_DIR="../.git" && export GIT_DIR'
->        
->      -+test_expect_success 'path.cdup at repository root' '
->      ++test_expect_success 'path.prefix at repository root' '
->       +	test_when_finished "rm -rf repo" &&
->       +	git init repo &&
->       +	(
->       +		cd repo &&
->      -+		echo "path.cdup=" >expect &&
->      -+		git repo info path.cdup >actual &&
->      ++		echo "path.prefix=" >expect &&
->      ++		git repo info path.prefix >actual &&
->       +		test_cmp expect actual
->       +	)
->       +'
->       +
->      -+test_expect_success 'path.cdup in subdirectory' '
->      ++test_expect_success 'path.prefix in subdirectory' '
->       +	test_when_finished "rm -rf repo" &&
->       +	git init repo &&
->       +	mkdir -p repo/sub/dir &&
->       +	(
->       +		cd repo/sub/dir &&
->      -+		echo "path.cdup=../../" >expect &&
->      -+		git repo info path.cdup >actual &&
->      ++		echo "path.prefix=sub/dir/" >expect &&
->      ++		git repo info path.prefix >actual &&
->       +		test_cmp expect actual
->       +	)
->       +'
->       +
->      -+test_expect_success 'path.cdup cwd outside the working tree' '
->      -+	test_when_finished "rm -rf repo" &&
->      -+	mkdir -p repo/tmp/x &&
->      -+	(
->      -+		cd repo &&
->      -+		git init test &&
->      -+		echo "path.cdup=$(pwd)/tmp/x" >test/expect &&
->      -+		cd test &&
->      -+		GIT_WORK_TREE=../tmp/x &&
->      -+		export GIT_WORK_TREE &&
->      -+		GIT_DIR=$(pwd)/.git &&
->      -+		export GIT_DIR &&
->      -+		git repo info path.cdup >actual &&
->      -+		test_cmp expect actual
->      -+	)
->      -+'
->      -+
->      - test_expect_success 'path.git-prefix at repository root' '
->      - 	test_when_finished "rm -rf repo" &&
->      - 	git init repo &&
->      + test_repo_info_path 'gitdir standard' 'gitdir' '.git'
->      +
->      + test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
+  - When a lower layer is rewritten, its old commits are replayed onto
+    the new copies because patch IDs no longer match; one user reports
+    61 commits replayed, 53 of them already in the parent
+    (https://github.com/github/gh-stack/discussions/600).
 
+  - In a review of glab's stacked diffs, GitLab's Git (Gitaly) engineers
+    discussed moving towards change IDs for the same reason
+    (https://gitlab.com/gitlab-org/cli/-/issues/8040).
+
+Each tool works around this with its own metadata, which plain git
+commands then invalidate. A header that git preserves would let them
+use git as the source of truth.
