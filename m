@@ -1,112 +1,112 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794814624;
-	b=JGxy94PP7a1YByjiTCykB2IqSs35m4IijED/GEpuRF6+GeEQoW+rv8ZorfbHlogs6RqK
-	 UkCkkicaLw1UOzvjm35plYp1dfV33AAdiu8M56lU1KM8pB1LG/aeJTf+fzEBZg90DRcfc
-	 lF0jBmQgq3bZFYb9teheM8W9YSctqG+Xdy3D7QxaWHcDuMUwH+uCt4JvUdDwlG9XAr7Ch
-	 Dj3bNu47XGy9G+jqJwNJBTdoN9tdloA6CchhuiSAeIGlY33Of0R48Mvzz4yp5/p84b41h
-	 QQCGlgtUctZIbPXmheqiDkKJZYOhwWiqxOe6i+agBVG9HRoywZrBonV8UfmGw5rfBPQ==
+	t=1794814630;
+	b=PuVWzjtBWldDPP187+Qf91dAOUpVsZMdu0BO6C7mpERyaNY4NJxyqJnFnFKDe1+Qbrkm
+	 Lhzd5JPsbE9+pdGKNnMP4RLpdjKZMJpo1UAlZTPYStofhsZ2dkFLSFf80Lpx/z3ZdIApR
+	 6FEG5gJyewFi9vJq9UnK4Hg48OukN2c+0eCLYX0BRFZaI0kl5FpozNXdS2IVM+uXlbJ1R
+	 VybarrgYHO7TG/bqe+AxpdLB5vA0N753FiLX6my4csRUfSKCzV8vjDqtmO4G51KkW0oKX
+	 D7N+Qt4C7DmxSHRKE/HyqTJuAUMbY746PqRbFlFLQVbikcg6UVo1kYMFVt/NPuKTuIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794814624;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794814630;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=P0RwNanujnXecl+TK4iy0FjPJ6FkLydiAmr+5OK1gKI=;
-	b=Ukm3ZSvcw9BGlCQ1I3mPC74Kap5XDBnpqYfxgTvxObBtQp9PZ+wXcN308dknIsdWZwSD
-	 X4++fJcPYVFC30rfOqfVhaAwgtgD+Kra64TNEOPyuVwasKZ4xxXsz/yHRjXc4TyyfZgyE
-	 oWCjazO6vnMSYJpK5rOEvYPNdux/b76S0ox3FJ1EA0WqDTcWn6JUdSWSZzTKUJ0494p/0
-	 ytjj/HWQJglelc7CjaZs2O/0P8K5Z0o+kKjL2Wuth/FNxMi9Ex6K8054FagY8dBftZdIx
-	 IpHsE51idPeBSoSwZBSy1mhYXgFPsrK9aDU9J3eTMtOgJax8OrxtLCu6D8GDdZ8yNjA==
+	bh=MjRVth5Ywm8eTJaZrItYzwMWfBHuLv718YbMFHVFOWc=;
+	b=zi4wZBPNLq6OOeJ9heAwDbVSY+oAsK3iVuBCsJ8MQRDs3uqnZ8jJTMuGwIao4vcz54nd
+	 NZcQXB5GXGlVuBZaQtmUoSNWRm0+MRy5vLR+yFMFqizXPcxQzkk6P2+ne2gk1IRTDhe3g
+	 uLqQQjwaV2EP/Qigkloz1GPEg/x13aiyPcO3VhEv9dK3D7PVwD0ukYoPgFotiFjo83zkg
+	 D/RLMLtlZhW6jLySACqD4kWyBPyP7ffDVfxSY22vwt/OKV728+kwui9+SswY31k4Na0OZ
+	 /5KG95EEKcT6azEbv5yxPUknyav2TE5IkPM8/ttw7F5Zbf7EzulTld/AnAXg5oqh03w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=Dgj1NPH5;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=uIp6MNvp;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=b08aLHD+;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=d69dau6v;
 	arc=none smtp.remote-ip=202.12.124.158
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1D7606A31C
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 07:37:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AE1D7606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2276606A31C
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 07:37:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C2276606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=Dgj1NPH5;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=uIp6MNvp
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=b08aLHD+;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=d69dau6v
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2BD4B7A0184
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 02:37:02 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 143A47A017E
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 02:37:09 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 16 Nov 2026 02:37:02 -0500
+  by phl-compute-04.internal (MEProxy); Mon, 16 Nov 2026 02:37:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1794814621; x=1794901021; bh=P0RwNanujn
-	Xecl+TK4iy0FjPJ6FkLydiAmr+5OK1gKI=; b=Dgj1NPH5kCGKYCShIe3quUZWw+
-	bwCeAIucwTFcbFaI4R+s7rShTIYV92Zy21DzKDUnOxf0s91lv05g2wgYJBojMxnc
-	fvesJgKpdarogxJ0yPUqtcxHV9nHwh6AE74rotr7yN1rk4RUTtPx5NK76yGtYm8u
-	VOdAR0oHzDFk4Nx9ETv8+8s+/FTQWTTAdYpv3wV3GMuzO+aXy11pm4gwmQCnSxCh
-	uYbOtl2EFDpXAT/fHbi4rUVBL6UOpDg4KJr+IOxusDucb83Ntgamo6omVFpl4nTs
-	hJKQwyuHjOVY4M5lLGu+rinJikmdSZYRQmVGW91wqzMuiaOPXK0Nxd/U0nBw==
+	:subject:to:to; s=fm3; t=1794814628; x=1794901028; bh=MjRVth5Ywm
+	8eTJaZrItYzwMWfBHuLv718YbMFHVFOWc=; b=b08aLHD+wjLMtMMGUedvvTnFob
+	cD/oWk4wLz9WpBkz4kVKAj1fr1DJ+80CXMWIKDOMoOQXZ5rbaCVTt27jKiDzB++t
+	A2zB42HNJQBvhnMUgUXpE4zTo/yKbDgfE+2F0Ru3cTwzD4XlA6mGAUFKKOSZTa8a
+	fAEMP3Xv822/pSGQ+onmMxCHkPzWqEeNVbRDo6a34jHY96/5v1iuHUc1DBl0fzoE
+	/Dwtd++YmDTHBPaVG4hM+TKJt5sJWV/MtJ58lS4mf2L1zkwavacnozh/fQbASIT2
+	YjfAaXyaGzDtyOEFfjAZ4lfLyvOEI6SIBwcI2qYpEbHmL1Jsr4v4kYTVTamA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794814621; x=1794901021; bh=P0RwNanujnXecl+TK4iy0FjPJ6FkLydiAmr
-	+5OK1gKI=; b=uIp6MNvpSFPJiZduzcCXiC7O6G29BxqHs1rVVqpDRJqVpQoCgpr
-	7K94DiGGe0EeA7viZXaMWvoOk0773EgrZvUficDf7Htau3H15SrSEKwfWc5l1WDN
-	cyTvBWUvNjcmHykH1tKQiskD3RqLAwOQbyXP0X3wpXXgPnvtssA/q8NZyMSGLJVh
-	drczx0mgAttzX1HgStIHWd9aGkaBJ6xpsSVw3sUQnA/vOLFs3fav5QfjLSLLK2+z
-	IPnEb5AqL+OMBxFjlAJyCB1pexp0CxkAq5512gpvUOT9DHctjPT+IQVohjodaZAS
-	7IJ5GnWzztPDZg+BoGFwGNEwAlZcUnjEiDw==
+	1794814628; x=1794901028; bh=MjRVth5Ywm8eTJaZrItYzwMWfBHuLv718Yb
+	MFHVFOWc=; b=d69dau6vghAuOvV3xTv1A9TzsF4n+jDKJYBH5WUgxaXJOjKRjwI
+	r5nDABDarmWIafifNbYeJ1R8DH2iWSlw5Gh/du2aydbN7N5klpHzgCLH11HsXLO7
+	kTB1yQC7GtqURvZ8Y/l2jSSzVuZ1R/df5Z7f2brfkRstqG6m0rPl3XZT8vqFBKxA
+	awmoYBLZlyshrewCB1l6ei/XIuAuiGHA4qrwEy28+ep888omOO+CA5Sm1rtodO+u
+	YyyLhIuSo5VFbcT1XwsF9LMLDdNibMsOaqjh2vArRFdaIp8hgLmEZT6eNLuzIM3n
+	GEHIKnjL5A+IXuJLzkn71FsdDXonqfpAchQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794814621; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794814628; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:WuPJ5qpe0idTLWbSzjNNf5D+K2J6VvXb4p8iOTZi9KKqPtp
-	kZtyJ++uLXzP2jsIReP2VI2IEb2xf8n9A9astm+0trZpwtASTDr8WDdKsUVzLNER
-	aVpHgWN/P0ydlE3ezA8EvAgCVdqy/pSUsmcWWwYp8qdInDa0WFAZsY8HsKh7zbfV
-	kSNSVvJ8E/HNJp3ojQxDStXe7D9PGzZZwfUnSrJ9hLwaV7M3/hEi4fXR8r5Ku5zg
-	VpK9aiecPp3KOjgX6yz3eZ232/DLDrHturkwJQZC72YL3ExFDyHlAyS0SM+B8ygH
-	2FNC5CUCjbMyE2v90SO0+SoULadCOOClk38PP+w==;
+	s=fm3:rsa-sha256:HeKfmwRoJYTfyRADEfqtq6+vi65HNa2RG/ZeTRMBXNJ7X+K
+	k3HwPKISfp9/zGe9v/EAIy3odb5LltU7IvCaje/B5tZxu79Ji8tR+1O4hx0L6xd5
+	4u2U5Ua2TJ3ceiIdeVlUMvIjs17kVR9rGQooJayhvvmelX6XktauvJ104WB5DNqu
+	M64bTB17EWYrea3kG/T2SbtCeG2rxBlQRTwqLkyrwV7zfwJcqB1AHOU4VX7/MQ97
+	m//t0RIByC0UTXqqvZ0jd+P2hHV0zJHWar1fA4k6CgoriRFmZf+pmzxJBgDbRru+
+	ejvXvwsDnOiGcoLfdjN6tU3mOZGZCyYctPboOBQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:FiS+8OZHquOuORGR2HzFutfp34sbfWrG52DwaD4YUgU=:m8VXpSJkwx69gm/ep84RbTbFFvXEkrEcFLR1RdRgEKk=;
-X-ME-Sender: <xms:nbL6anBhn7JPcVtl4wjj5m8nYUDq2aWYdOYttMTum_SY-c4oolxPEw>
-    <xme:nbL6askXEMHU_a5PYzGYpAvRx6J0UxuVxU65iMB5TnONqRMa8SuIaI6JGvgkqJe8z
-    iIdGfKaLoW1Hxdbavcy_GwTuMlg7W11kGoejy3NOVCNyQ356x7mDP8>
-X-ME-Received: <xmr:nbL6aox0EXh59RBkvtXrK8cvnY-DVmSUZhoe3P0zJTODuJxeNooI_OrhKCMk3hZumZdjzqI>
-X-ME-Proxy-Cause: dmFkZTFv5gE/QIX3ilY3AsNejXRoS+hvuisGOKjiZDL1YnPuzMtCCnWXlMLuvBlnozX2tS
-    88r6GI21NvJ5PA1iC9R3pgT3Fm7F5+hWkaWcYmVRBFzMMrkTkxRYhVAX46s0F9VqY4oPSF
-    aiJ+PIVZdEZujCH+UEFLtRl8cdSGe+0Xfm5E32IvBGPiz93vmX6tFqrWViU8bdrwDqxl9q
-    hbPWUFp4dfqHcHTixl2q6QUQNBRJyvW5Sc5az6qQGnof5I4jz6Q3t0/1XnbNCr1J0PFEMj
-    AWpOs24XOVHadln76SWDYQN2sGVuroM0wsDz0kiojkJv0Zq5IbHxoTmaORXHv7VWxqSuKI
-    WA+McVeK6rAGjw+zxfhD+NKX29L0oXcHVD0eVOshNwySKrqZrz49SjnHmPejAUdB3hhUTE
-    bKkIRNMs2jNIf6mOn5IHOxfvNyPKyn6THWii1Y4B2uuBuvWc1QWYsVOzFLDbs0xiWuGncv
-    yPmWWZZzjoWxrQiYDJy01KobT7VZfLOy7JIy1wngSNrvI+TM+bntEXGg8kWUtbTHeiTTr1
-    6kOqh4mThQeOvbGNYYgt1IXH+OQ+yb9EV4qWj+Gcilnw2YYNV4GczHyQIDxPvBxFfZjjCq
-    Di5g6lmzDC56rRiRccQWGLIo2BSX+Uko1EpdDZc0QcnykDJzYjlp4Es/t1wA
-X-ME-Proxy: <xmx:nbL6amSFHRySqBchtbl2QNxLVma-iHb0ebDl6J_hkdrZRm7tJcUCjQ>
-    <xmx:nbL6ag8y2FZxIh6xrXpn5ExU13FWuzxFVigz05gvV2wyd_n9_mAvZg>
-    <xmx:nbL6akvIkj9QLTcVv-xsm4VcRQX9DBohoA39RbJ1veuJJNQErqqumQ>
-    <xmx:nbL6aoP6WSNxM5qq_fA4r4x3O7R4fdzO-NKXz0SbUdpsRaAScQW2UQ>
-    <xmx:nbL6asdSzSzQ_SO_XTILnExMhvEPY7I655QCshdz9JbS7AhBkxt_-II6>
+Message-Instance: m=1; h=sha256:OddN5lfcVsptiMkTnQAOsc20gKyuHzUsB1PPGiTTVnw=:0ctx5/AnrOK8SGMlUgVHbQh2EJiSSzmyLqZFBXGG6uY=;
+X-ME-Sender: <xms:pLL6agnaNNdZ8CM2iUWlzDg0gM2-Ly388hoDMu55Vtg5Lji1K_7OkQ>
+    <xme:pLL6au7mGXoShp41gq08SF8K8-GGdM5Mq_vlhIdq6BXGbuG147i8e1PlAs-bvxBAi
+    T-eK-V_uwzaRG1yYYAHx1nOEuY85R5jkzblK9POhk8cCaA5HZ1DR9Y>
+X-ME-Received: <xmr:pLL6ak3ldR0QIItfvhnDjo4cBhfuZ_6JqqiWq2OCQRKSaZ8vClBWYHdeQaJQtSQoYKQD4T0>
+X-ME-Proxy-Cause: dmFkZTE51ZiAmoZcYrKfNP72wiyodKbQixST937ZEUHt1P8zOhZSMRbN694DlGKjiBXpry
+    Ghc5JnZiHCh8uEbnDIYROmabaSkdd4VGDU15ZPiy/k4gXy6lxJvJK34tlUky7E5FZlE4Cy
+    BjmKCDsYxLShvgXKoDMOcfv7junXHuBB8zYQMC0fpeQk3AazS7kwKbBNFd/0ZL4NXuapD6
+    5mVNbuvYpeCsM/MRCM3uyjy9ThxTDVz2apYQ5AFhYLLNdi7i/dlmvdsLcj86dGVTcQFpwN
+    tEPyIgoehkIuVC89fRMHGOiXcRGSzzg3eQhcuvl66wfLdnJSlZ+mCwyr3mBW3RTQ4gPMA/
+    uiss8MI//dVAFmfY8ZN0sNIaXc7/D6tkZXAE9kmaIbWarDyEDZSUDOzi6mZEhe/0WVx3pQ
+    GdTuWs6fELAlRj1161/4DnArZnTJtN8uW2kByEMMowz1cUnuhNojtiWM7vkwotK7AtXuUj
+    DWM5HsRzNGy1QoN4tLjt7/qCHrN82gdX2tjOr9o7aPosNxEkKCqSPhfKDIct7dKdf+iRxb
+    wv7QanczVwWUvYF5esPEbsQAJdSp/mX/9VZd4r7PLIlGvM8tBVMfrBimfNct+HuyafqzxD
+    ZfywgRhH5xjqV7Y0RK+5R7nOzaZcixO7n67bH+AsnDjtwL2MFi6K1mEF17fA
+X-ME-Proxy: <xmx:pLL6apHtGhXj-8uz1ejtXivORzClD_OWiOkjbympHgACkuhCvsDU4g>
+    <xmx:pLL6ajj70RUsvsFtdwcJtTGeSU1tfutZz3uJaPYe2SemL31cgG6wVg>
+    <xmx:pLL6asBEdPrwjAGaWn1lr65nG5JeCAe-RhQ8rdDLWiF79xg39IQkJQ>
+    <xmx:pLL6alQWCX3HFT6k9JrggcWZBa4ISspYpyGZ4hneC9Bo4cmaKxO99A>
+    <xmx:pLL6aqgDBtrUiRBWlCnDd1loQn55-DbrW85sZuqUYUv11H6zVb3lT3_j>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Nov 2026 02:36:59 -0500 (EST)
+ 16 Nov 2026 02:37:07 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0b0bf209 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Nov 2026 07:36:56 +0000 (UTC)
-Date: Mon, 16 Nov 2026 08:36:53 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 4a2e953d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Nov 2026 07:37:06 +0000 (UTC)
+Date: Mon, 16 Nov 2026 08:37:02 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -115,10 +115,11 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Axel Rasmussen <axelrasmussen@google.com>,
 	Emily Shaffer <emilyshaffer@google.com>,
 	Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH 1/3] setup: reject compatObjectFormat == objectFormat
-Message-ID: <avqyiXdZIFoJbw34@pks.im>
+Subject: Re: [PATCH 2/3] rev-parse: die when --output-object-format cannot
+ map an object
+Message-ID: <avqynlDKnJpJn6RZ@pks.im>
 References: <20261112195740.2834341-1-adrian.ratiu@collabora.com>
- <20261112195740.2834341-2-adrian.ratiu@collabora.com>
+ <20261112195740.2834341-3-adrian.ratiu@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -130,52 +131,85 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261112195740.2834341-2-adrian.ratiu@collabora.com>
+In-Reply-To: <20261112195740.2834341-3-adrian.ratiu@collabora.com>
 
-On Thu, Nov 12, 2026 at 09:57:38PM +0200, Adrian Ratiu wrote:
-> diff --git a/setup.c b/setup.c
-> index 186815c780..52a9462edd 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -918,6 +918,13 @@ int verify_repository_format(const struct repository_format *format,
->  		return -1;
->  	}
+On Thu, Nov 12, 2026 at 09:57:39PM +0200, Adrian Ratiu wrote:
+> "git rev-parse --output-object-format=<compat-format>" should print
+> an object compat id when extensions.compatObjectFormat is enabled.
+> 
+> Git however doesn't record a compat id for every object, e.g. for
+> objects received by a fetch that goes through index-pack.
+> For such objects, rev-parse silently prints the wrong id: it prints
+> the storage id where the compat id is expected and exits with 0.
+
+Yeah, that's just plain wrong and extremely confusing.
+
+> This happens because rev-parse ignores the repo_oid_to_algop() return
+> value. When no mapping is found, that function fails and leaves the
+> id unchanged, so the storage id is what gets printed.
+> 
+> Fix it to die with the same message as pack-objects. The other callers
+> of repo_oid_to_algop() already check its result.
+> 
+> This only covers a single revision argument, the one case where
+> rev-parse converts its output. Other forms, such as "A..B" or "A^@",
+> print storage ids whatever --output-object-format says. That is left
+> for a separate change.
+
+This paragraph is a bit hard to parse.
+
+  Note that this only covers the case where the user asks for a single
+  revision, as it is the only case where we pass the desired output hash
+  explicitly. All the other cases, like for example when the user passes
+  a range, do not use the desired output hash at all. Fixing that would
+  be a bigger change though, so this is left for a future patch series.
+
+> The test copies a loose object into the repository by hand, so it
+> doesn't depend on whether fetch writes compat mappings.
+
+Do we have to do that? I'm mostly asking in the context of the new
+object storage format extension, which may change where and how exactly
+objects are stored. So all tests that manually modify the object
+database will break, and we'll want and need to fix those.
+
+> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> index d2154eac8d..ab2898ba52 100644
+> --- a/builtin/rev-parse.c
+> +++ b/builtin/rev-parse.c
+> @@ -1171,9 +1171,11 @@ int cmd_rev_parse(int argc,
+>  		}
+>  		if (!repo_get_oid_with_flags(the_repository, name, &oid,
+>  					     flags)) {
+> -			if (output_algo)
+> -				repo_oid_to_algop(the_repository, &oid,
+> -						  output_algo, &oid);
+> +			if (output_algo &&
+> +			    repo_oid_to_algop(the_repository, &oid,
+> +					      output_algo, &oid))
+> +				die(_("cannot map object %s to %s"),
+> +				    oid_to_hex(&oid), output_algo->name);
+
+Makes sense. I would have checked for `< 0`, but that ultimately doesn't
+matter much.
+
+> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+> index 30bf8a4d0a..c15d9953a8 100755
+> --- a/t/t1500-rev-parse.sh
+> +++ b/t/t1500-rev-parse.sh
+> @@ -241,6 +241,24 @@ test_expect_success RUST 'rev-parse --show-object-format in repo with compat mod
+>  	)
+>  '
 >  
-> +	if (format->compat_hash_algo == format->hash_algo) {
-> +		strbuf_addf(err, _("'%s' is '%s', the same as the object format"),
-> +			    "extensions.compatobjectformat",
+> +test_expect_success RUST 'rev-parse --output-object-format with unmapped object' '
+> +	test_when_finished "rm -rf plain compat" &&
+> +	git init --object-format=sha256 plain &&
+> +	git init --object-format=sha256 compat &&
+> +	git -C compat config extensions.compatobjectformat sha1 &&
+> +	oid=$(echo unmapped | git -C plain hash-object -w --stdin) &&
+> +	# copy the object by hand, so that no compat mapping is written for it
 
-We should rather say "extensions.compatObjectFormat" here with proper
-casing, as this is user-facing.
-
-> +			    hash_algos[format->hash_algo].name);
-> +		return -1;
-> +	}
-> +
->  	return 0;
->  }
->  
-> diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
-> index 69723b88ff..858aea62a5 100755
-> --- a/t/t1302-repo-version.sh
-> +++ b/t/t1302-repo-version.sh
-> @@ -98,6 +98,20 @@ abort 0 noop-v1
->  allow 1 noop-v1
->  EOF
->  
-> +for hash in sha1 sha256
-> +do
-> +	test_expect_success "compatObjectFormat equal to objectFormat $hash" "
-> +		test_when_finished 'rm -rf same' &&
-> +		git init --object-format=$hash same &&
-> +		git -C same config core.repositoryformatversion 1 &&
-> +		git -C same config extensions.compatObjectFormat $hash &&
-> +		test_must_fail git -C same rev-parse --git-dir 2>err &&
-> +		test_grep \"'extensions.compatobjectformat' is '$hash', the same as the object format\" err &&
-> +		git config --file=same/.git/config --unset extensions.compatObjectFormat &&
-
-Nit: do we maybe want to use the modern alternate `git config unset`? If
-so, we should probably be consistent and also use `gi tconfig set`
-further up.
+Instead of copying by hand, wouldn't it be possible to write the object
+with the compat object format unset and then set it afterwards? That
+should also ensure that we don't have the compat hash.
 
 Patrick
