@@ -1,119 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794834505;
-	b=Oly5lGbwfM4UuaB2tXZHND5nTw7Tcsj234SWHzC2NXBoHw4Zc6u/ivFT08KrlAHWQYw6
-	 NIq/tnonVkVwQpl3SWAIviAPSLhW3H6amUt1rJpq1YfiAIb969tpub1C0mD577U58e0Zt
-	 OLfI72o/jr9Vuo8xHjCf03ucaUdwaW/Za95EsFL/cgVF7BjFmLcniI1tPYNcXCI2rx7VF
-	 YCM3FZD1679fh5rfB6VipaLUoGIQ4x+9THdbWvrzXXMhLaWfJjZ1orTlftr0NIqqlR0H1
-	 W8dhphmloIxvpmV/xf9pMS9BmF4rO3jplmVVq4ZdD3hzCNOrBnxNb6r6aDeoejz4nuA==
+	t=1794834508;
+	b=vWH4PzzXOMS+vENttENHheFMfEH1kuGE6QbIx99qfkhZUAWZZIIF5aPiGqTIF/H507WB
+	 iLF7SoH2VlJoY4L2Yq+NrODktqCCiRkfQbPrgukk1oEYGVmoiFoAHiDCA/lnp6KNAyLqk
+	 hq1DS+8k6OGJuSCw8LrOtpdselMjquGiCbbX3IwkIFeGN7XzyrSULN+jhdiS5oWpLdlLB
+	 cko9IDUXAGuRn+l+q/MswhP+antqHr7HtOZZFzaYyQlj66Wfyy73u6lFPCxibvMAdomuv
+	 9bDiXa2+9rze5SipiacMzSXawn3tYE53ZuYpms2qzmQMcBhGQw/t/Vdu9Fxdp1XTAYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794834505;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794834508;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=z5yu6L/mpwhC1WHdTTW+L1eLGezOyvomJ4A+LufJBpM=;
-	b=drSUXMjf8k/3RAlFFDrrycsW49yurGwuz/w757OQCcNajyhaHK6/9lV8/xGNh82k/XcF
-	 LqQFTOTqP2fEZPeOLZbh9UIWgdJ3/b52G3GJBecLfYZuAm5M/S8zOVne40EuMYUByzUOa
-	 9qsrOIVNufVm+Yg20+FSSFASuPzlaLicva5JKUK4GwbJJqVluE2P84BpZtVJdQQY8+2ax
-	 ODxQFduPw7n36zwKCnDNqcQ6A3Ug3L2D4N/8aR8nS120ZiPUzMO+Eie2w1qJZMrbavart
-	 v2KYwVBGlbZFlDaJGx6RkplO1Rlosb0tBrgcr9+AA7btcyOtUQQ0qV1EokfTu3oYsYA==
+	bh=yny9wCRNM/3MabbrwIOHYwtDfCw96VrOlUTsh5jAdo0=;
+	b=KeNZfsFKMx60eegJbsjMj+dD5Yce+KZdrTQks6/bPFHZXNl3aZYsNq5Uw7F0nC8CZ3FP
+	 tnqD8GtoP1igqxY4eFM84OOmMD23CNRxEjbFMs5ZgK10NxrR+YZh5SWoG7qw1vPfKHc9R
+	 HiuLxddN0xITiYH7q1+WVLjWzv9SmxEhuHmufNZfsRN3ru50+volW5wuYZbDmn0+UzJsO
+	 3dXQ7zdaqndBZQLvIyIYf49Yd8OQBur0aQL3FqRPcRPdohfCF3bluObj4DNaKyOrnWzJs
+	 DCAeJtGNwJNwDgPJ9DdqBl6lptJCPUspC44OgSBWC5e1lwyBrbauwZjzvEDQIxiCEYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=CDVudABt;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="52Qf/jKw";
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=KLp17ULw;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KTK7LG1B;
+	arc=none smtp.remote-ip=103.168.172.159
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA65606A897
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 13:08:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CDA65606A897
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7400E606A337
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 13:08:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7400E606A337
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=CDVudABt;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=52Qf/jKw
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=KLp17ULw;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KTK7LG1B
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id F341DEC01D0
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:23 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B0D9B1400033
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:26 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 16 Nov 2026 08:08:23 -0500
+  by phl-compute-01.internal (MEProxy); Mon, 16 Nov 2026 08:08:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1794834503;
-	 x=1794920903; bh=z5yu6L/mpwhC1WHdTTW+L1eLGezOyvomJ4A+LufJBpM=; b=
-	CDVudABtaQQsKZdLQBHYkznHEN6o6GRGQKIZ4toGd13jQLh+akeVINuYJCz2ePYZ
-	QOZerQQPtxHdKR3P4LZRg6V/mw98XWHXe5iqs66iX3rSPqH9goiw6Iw2UOsC5I8b
-	WnDx7dKyg0vCERwD0FlaN7iY/IpIcQNFlUOrndosLxgI/ic8D4Fr6eK4Tju0zMye
-	tUp2AIK5kuEoscnJnFhJsXdTXv447W4aLs8k4cLppJqQ9F7DQtoTOcv6uA3RU4aT
-	YwJdJRvyLHc4ID4ZV58td5vGDeXuksyMr81XjKmOVTUVtHPQ+i7bWXrKCMxVcBv3
-	DFu+8lxHzyfMkz9JoHobAw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794834506;
+	 x=1794920906; bh=yny9wCRNM/3MabbrwIOHYwtDfCw96VrOlUTsh5jAdo0=; b=
+	KLp17ULw6vLoJWdA4x6OS0KV94WaQRkEftvmAfjDhRMUJsK4NtHBjRWItxs0+zyZ
+	Z33fxhPeDmfcVDDBH0pGmenWRrzlTWz8oIY2GO7rgwhXT78wWAL25KQn99kA3dAE
+	RbCAh617f7RSZu6CetfKJGnCYIDR/DcL4Ulrv0eggJ7oB5358UIRdaNaWj5AraXC
+	5VsWuMo/0b2RWak8tSdLsYaWISMFag/WRYO0NWcWBYshITeqy0u9aAHtnfWXfmkF
+	YK2rqpJ4KjhyUu8S/RrRFjSLirP97sDBG2SC/UgKwgtwn8xsptiHoIrJ1qiKf0O4
+	ZMuk5q5Yrsr1BmSmZDvimQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794834503; x=
-	1794920903; bh=z5yu6L/mpwhC1WHdTTW+L1eLGezOyvomJ4A+LufJBpM=; b=5
-	2Qf/jKwoFQJsVFOh/FTee3hhxC/KoYNpVycsCNJZtfAGXmgERmzK0Cj5jhV/xID/
-	+jpI8g9nlvz8GFjAQu66CpALEBqXeWZn/Cs7S4Trd5wj7H8YBlbsK5D6YjkIberx
-	UlrCbxcvd+qTxliKsegcMrv0Qr7x/HUIJIPpEKQ3xfS2Qztn+T9mqaO0KGAKGIzX
-	VtAzsg3XD8/OIX6oE0jcuOfo/eWbjYBfMlCgFv+FlxygJBRhwKHR+WVKvupXHqRb
-	icr23lDauEY3pIGKQXWyMz7n4QcYXcxDs34XgxnM13oFPITZkwEThYqRJL/A9tDE
-	DRnLW1vcArJVaRXJSSkbA==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794834506; x=
+	1794920906; bh=yny9wCRNM/3MabbrwIOHYwtDfCw96VrOlUTsh5jAdo0=; b=K
+	TK7LG1BKKayPlXXnxiN1syF2XZJrpK5FzytUbtt0EFgSMM2SelE6D9ON3gQpgUmh
+	BircN2vxwlHyyiMazMT4tciYBpoUA7qwdUIYuCPj6EjhkkTy8Eq7CzRHFZWoowPU
+	F5ojpWgs63RQ/05jMYim/VpfA3/kDrIm9lMmqDTpBb/fRC3sNFynSC17VqUVJEvh
+	bCLs9ZJfFl6+qnFZh85hR25H1FHKHkuQvrTrI+aR9NU9mH5lYUOymECSVPULek/r
+	kUdr23wLNl0TLYCuXhobYsvI5oLLaA9ss2pBCsl2q66heq3CKMLP1TtPN0446ktQ
+	o4IgtVzWvP5j/BahXx3Xg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794834503; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794834506; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:xlIvvHjcZW6i2XtjvscjlgaRTrobr8GdGNsw9eisJ4l6+wB
-	lG9OczQw8yLfBNN+7OTVpHTA+e6J3MDJB4Oeont3YxO8t5SfbufZQAWrIFl3eO4M
-	/WzoKe4GtQMhI3znAG+1x6djqWAna/pyvD7A/YAEOPgxyncwNU0FqEwqpp2ewJbl
-	rXJ0+hjBCEy9rB8S8my5k+c3mSbSGqdx4KLYw9lUgmGMLzys2XL4YuBI00DLnLsn
-	5vg/KWizjKp/W10s5QtlqPFt2vMpRls/vzWbI6LBMBVCaPzPPsDydEFJOwutGGgG
-	D9Hp5J+hCp3S8/Zm18zkh5bMDE6R+4XxQqfHV3w==;
+	s=fm3:rsa-sha256:tKS3SmTU1BMVxa7nZhsGZ8OaC4toGHHmpTREcRpcRtCAgun
+	zTmUkMK7cn38t359kMcAwKwKTPix5PM8rcRMJcf560qig0O7I83E9BnubNYO1c0O
+	4ahckqhnGQuGOwkWU5e3g22wsN4XiW5YGscMDP7bf7Np0KqPKEaLuZz/tzC79UXr
+	K3GFPt5AN5+kNXOoDlhme6uD0gNppWFvSJWQctBp5Bh2dwuKT5GSGJ+VGL6pj/fi
+	KU0Cok0zp4i4r033I9DgHJdUG3NnJrMloe22O/ayXFo0L3XSxnGIa9B5iQwEzjK8
+	uuL9FCzyKA0En07vpeSHSZYrWnQzcPP8pP5QvfA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:fhr8AvTEjOTjqOLJZ6X22A/yXwpUGWU4yac4YBYKJhM=:Mi05fY7OCZdUSgLSlt0GyuJubGUWqpfAuD1ZrLgFyF8=;
-X-ME-Sender: <xms:RwD7amhalaVeo1gy-1uwGukyPJs__-j6h2DF8uIclyxYe0oA30bhHw>
-    <xme:RwD7at8CUd4TBvbT8rYAyvZr5ekV544swGT6d5B4SFsOjfIL9YkcPh-htXyxSTHxl
-    pCH8jtM2fO7JoVxxOFU1XVrlVXL1Yy_-BDLVWinsznuMZb110s80Is>
-X-ME-Received: <xmr:RwD7ajv-yPRDCr0Dcv6UEdjvjfTbFYO1fWOKR3lv99dKWQZDRSqj48PsdaWrmaQk_a6OJJI>
-X-ME-Proxy-Cause: dmFkZTGQuWxQKzpljbCNLfDiP2FT3Kjhltbnabz27ajjc5yOwEpHZp3ywk5NULox4giTJd
-    6RAO2IwfZoot3urzZUc270PeFFSAZJTRD01wWA/7NIfSYCO/+3OEZUSF1C4MOZLJ+6P6oN
-    cutBtXa+w8Fb0ULotdjxXfQKh3V+usQPY9IHaqJWrx0diSSBCaM8mj9CDXWG97EOTPZ11T
-    3mDIeCKD9hiuZrmnAjEBnoPVjmA7fS1IealA/NQwgJc+ltnKys/2EV/F12XivZ8FxNrarn
-    612Cd6o5wsYVTIQ1rX3ly4oLcCMQ77JmIAZfP1Woym9ZxrAwfYDJeEWX1slpARwibMZ5NY
-    yx+WbChe4V9MIpCdIUf125+9kVc/txZG0javxq0azO3ofZIQdhTa9Y+Je7WCBbj3FFfHhI
-    aLvgM0lB1jDen64WY0AqSJfpURCdsNSTplnstC0UvgDz8yMREadrKpsPDzQnjQe7ZUXTHu
-    5rpDoeokaCcKPElPBgo/vW0GPk8lwTaYlGZrt8x9Vu0AP5zTbyhdaey9LNdGXiTWiJq+hF
-    c3DALvLzAMYjTiX7ywZg8F32W22MIXAJZy4jYZtPa07OX71TF6rrVhoMmhBnWQ4fvg1J7l
-    E+P3hBWfA/SUgshcvEcXugCLZ5N7KDKFJwaacji+skTYKgISUb949YaH/wMg
-X-ME-Proxy: <xmx:RwD7akbC1r4RomYiQiEQxrUt8N1-uJ2a2SIyxOXzurY_U_ZG9xDYRw>
-    <xmx:RwD7ajqRqKFgyhumFrVd53JiAbxOvSPIRr8DJ1vq-YGHNakvYoqlvg>
-    <xmx:RwD7ap_eYjYLgDVL_fCW-dL-FwskmqEqXs4owOKq63j4NOMR_KXYmQ>
-    <xmx:RwD7ai-trieBmiu90OsUJDFpbf39yCQMA8JVtrt_Us1gN3br3RGexw>
-    <xmx:RwD7ajgvuMtrke5oLGKTekSKn-MP17jok_Mfz4s2wcxCa7nJxJouUedg>
+Message-Instance: m=1; h=sha256:IUDOcaX2pZWI/PHmtIKQS2tEn6Fl5HvL9rvEp5SOmWo=:uBLyaQ/2RM4gG9cCti92zWTbBsk8OTN1xSt8lhKmbRQ=;
+X-ME-Sender: <xms:SgD7alSQuZsVlFFkBTa8GETDQfHvbQ2-S2fCrhqOQy2l9QCuDpeoug>
+    <xme:SgD7alsAvpGNZKkwq2x48eZ7BBjQvPWuXUjpxSRWu2Ox_dKBSt1L6BuZyYdKFACyo
+    jjzIVUvhwqjabTqOPWsk1WFMIehJk9EL7_3Yj-KxG9nKIrGY6gXX7M>
+X-ME-Received: <xmr:SgD7agdUPnwBbaWTq3LKob03Ii-F5YLQzR1_ljIVOShuD_RecsFqZzzz1F7bLVhIo7MwV8A>
+X-ME-Proxy-Cause: dmFkZTGDOts0vqr0aKWRUcnFWX2Osp5gN2qQrQiKgx0G0z61tex3Qx3J3ESCLCinpI8hSw
+    2vG99o74wMnSZAo8wtYDZxyA6R847A8ASdn/5QNWTHI5e2QOa//69E5yGYEz5FUfZlQN/T
+    B8T5MGqMJ5GFcrN7pcqdJEIpt/p3h0CIJYP5pL1qBGNcUr/aJvm0pYpP+SfCAZpZsoHW/H
+    KZa5v/u5xJwPsub/sAKsamEJY1eYIEiu4PU1c5BTotBJm2q3EHg6U00bQhjV0POO0UoRG5
+    48JtVfk4AQ7VQz9bbR1I6l9T+zTjGPZj+oHdBcbJmt/Yhab4GreLMl630Z7MgXho2swEeQ
+    wRDOJl4UwqYuNbdimczJ5ZPIS0g22DRDPh4tXtbW2rkOmwgvxEFOAlx26NDfuPBChH7Fel
+    wzJpYRSmUOVA/5fviGEje2xHuCE+QY+RG74xKa0ZtIh2EWNMnhErRhdUTm6HQYfTOEo2CO
+    yDGoi7YuNQQpLa4EZVIXTfknnJfzL30Qp9dGZxrJC2MevR4DCutQONCpEEum08hnHiRTK5
+    yBIUAb7APDI6whWEgXGaQ222aUIN/8/waBPlPxTec1plRVe6YW7CiU5StskYbQaURO9gCb
+    rB2OK/Koeav4ibTmvdauD9aP3fONzk/JjyuLq6YsQPyqK3jFvXNOd6ZowHXw
+X-ME-Proxy: <xmx:SgD7aiKS8daRhr4mXOy8FiaMUksKJ3EREI5Org45_HUGdO5_GhqgBg>
+    <xmx:SgD7aua5omLsvlTswgSTaW-n3etEs9-iLCXxzaFDXaVeCg6k1pYcVw>
+    <xmx:SgD7atu3AMgOiaEVHUaRyR77jYyN51M4DVc52Sz6tdurO5pQwOuXCw>
+    <xmx:SgD7arsTYETqh0dkfowODR6zUt6fJj5YLkBzGV2J0aC4NLYyCoT0Gg>
+    <xmx:SgD7ahSu1s9WGZ5haB1ym4FklBjryJoPhTJdjql-RZUzYhop1SmtlWJt>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:23 -0500 (EST)
+ <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:26 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dad05e09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id a198dd8f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 16 Nov 2026 13:08:22 +0000 (UTC)
+	Mon, 16 Nov 2026 13:08:25 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Nov 2026 14:07:47 +0100
-Subject: [PATCH 11/12] odb/source-files: move logic to derive commit graph
- paths
+Date: Mon, 16 Nov 2026 14:07:48 +0100
+Subject: [PATCH 12/12] odb/source-files: internalize logic to derive commit
+ graph paths
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,200 +125,282 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261116-pks-odb-pluggable-commit-graphs-v1-11-a83fc1ff0808@pks.im>
+Message-Id: <20261116-pks-odb-pluggable-commit-graphs-v1-12-a83fc1ff0808@pks.im>
 References: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
 In-Reply-To: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Move the logic that derives commit graph paths from the generic
-commit-graph subsystem into the "files" backend.
+In the preceding commit we have moved the logic to derive commit graph
+paths into the "files" backend. We couldn't yet make the logic private
+to the backend though because we still use it when we verify commit
+graphs.
 
-This is mostly an exact move, and we still carry declarations in
-"commit-graph.h", so that it becomes trivial to see that nothing else
-has changed. The only exception are three sites where we now generate
-warnings because of -Wsign-compare.
+Refactor the code and expose two new functions that are specific to the
+"files" backend to read and write a commit graph into a specific object
+directory. These functions are only for use for existing callers in
+git-commit-graph(1), so adapt that one caller to use those functions.
 
-The next commit will refactor moved code so that we can drop those
-declarations.
+This converts the last caller outside of the "files" backend to stop
+caring about exact commit graph paths anymore. Drop the declarations for
+functions that derive such paths and make them private.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- commit-graph.c     | 437 -----------------------------------------------------
- commit-graph.h     |   2 -
- odb/source-files.c | 428 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 428 insertions(+), 439 deletions(-)
+ builtin/commit-graph.c |  57 +++++++-----------
+ commit-graph.h         |  21 -------
+ odb/source-files.c     | 157 ++++++++++++++++++++++++++++---------------------
+ odb/source-files.h     |  12 ++++
+ 4 files changed, 123 insertions(+), 124 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 7fea94689a1..8daadf56e88 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1,13 +1,11 @@
- #define DISABLE_SIGN_COMPARE_WARNINGS
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 6ee644d8487..d9d3cdd335a 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -59,13 +59,7 @@ static int cmd_commit_graph_verify(int argc,
+ {
+ 	struct opts_commit_graph opts = { 0 };
+ 	struct commit_graph *graph = NULL;
+-	struct odb_files_dir *dir = NULL;
+-	char *graph_name;
+-	char *chain_name;
+-	enum { OPENED_NONE, OPENED_GRAPH, OPENED_CHAIN } opened = OPENED_NONE;
+ 	enum commit_graph_verify_flags flags = isatty(2) ? COMMIT_GRAPH_VERIFY_PROGRESS : 0;
+-	int fd;
+-	struct stat st;
+ 	int ret;
+ 	struct option options[] = {
+ 		OPT_BIT(0, "shallow", &flags,
+@@ -85,37 +79,27 @@ static int cmd_commit_graph_verify(int argc,
+ 	if (argc)
+ 		usage_with_options(builtin_commit_graph_verify_usage, options);
  
- #include "git-compat-util.h"
--#include "abspath.h"
- #include "config.h"
- #include "csum-file.h"
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
--#include "lockfile.h"
- #include "packfile.h"
- #include "commit.h"
- #include "object.h"
-@@ -25,7 +23,6 @@
- #include "bloom.h"
- #include "commit-slab.h"
- #include "shallow.h"
--#include "string-list.h"
- #include "json-writer.h"
- #include "trace2.h"
- #include "tree.h"
-@@ -201,23 +198,6 @@ static int commit_gen_cmp(const void *va, const void *vb)
+-	if (!opts.obj_dir)
+-		opts.obj_dir = repo_get_object_directory(repo);
+-
+-	dir = odb_source_files_find_dir(repo->objects, opts.obj_dir);
+-	if (!dir)
+-		die(_("could not find object directory matching %s"), opts.obj_dir);
+-
+-	graph_name = get_commit_graph_filename(dir->abspath);
+-	chain_name = get_commit_graph_chain_filename(dir->abspath);
+-	if (open_commit_graph(graph_name, &fd, &st))
+-		opened = OPENED_GRAPH;
+-	else if (errno != ENOENT)
+-		die_errno(_("Could not open commit-graph '%s'"), graph_name);
+-	else if (open_commit_graph_chain(chain_name, &fd, &st,
+-					 repo->hash_algo))
+-		opened = OPENED_CHAIN;
+-	else if (errno != ENOENT)
+-		die_errno(_("could not open commit-graph chain '%s'"), chain_name);
+-
+-	FREE_AND_NULL(graph_name);
+-	FREE_AND_NULL(chain_name);
+-
+-	if (opened == OPENED_NONE)
+-		return 0;
+-	else if (opened == OPENED_GRAPH)
+-		graph = commit_graph_read(repo, fd, &st);
+-	else
+-		graph = load_commit_graph_chain_fd_st(repo->objects, fd, &st);
++	if (repo->objects->source->type == ODB_SOURCE_FILES) {
++		struct odb_source_files *files = odb_source_files_downcast(repo->objects->source);
++		struct odb_files_dir *dir = files->dirs;
++
++		if (opts.obj_dir) {
++			dir = odb_source_files_find_dir(repo->objects, opts.obj_dir);
++			if (!dir)
++				die(_("could not find object directory matching %s"), opts.obj_dir);
++		}
+ 
+-	if (!graph)
++		ret = odb_source_files_read_commit_graph_dir(files, dir, &graph);
++	} else {
++		if (opts.obj_dir)
++			die(_("--object-dir= is not supported with %s backend"),
++			    odb_source_type_to_name(repo->objects->source->type));
++		ret = odb_source_read_commit_graph(repo->objects->source, &graph);
++	}
++	if (ret < 0)
+ 		return 1;
++	if (ret > 0)
++		return 0;
+ 
+ 	ret = commit_graph_verify(graph, flags);
+ 
+@@ -328,7 +312,8 @@ static int cmd_commit_graph_write(int argc,
+ 	}
+ 
+ 	if (dir) {
+-		if (commit_graph_write(repo, dir->abspath, &write_opts))
++		struct odb_source_files *files = odb_source_files_downcast(repo->objects->source);
++		if (odb_source_files_write_commit_graph_dir(files, dir, &write_opts))
+ 			result = 1;
+ 	} else {
+ 		if (odb_write_commit_graph(repo->objects, &write_opts))
+diff --git a/commit-graph.h b/commit-graph.h
+index 3295498fd34..a84227c7a6d 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -29,12 +29,7 @@ struct repository;
+ struct object_database;
+ struct string_list;
+ 
+-char *get_commit_graph_filename(const char *dir);
+-char *get_commit_graph_chain_filename(const char *dir);
+ struct commit_graph *prepare_commit_graph(struct repository *r);
+-int open_commit_graph(const char *graph_file, int *fd, struct stat *st);
+-int open_commit_graph_chain(const char *chain_file, int *fd, struct stat *st,
+-			    const struct git_hash_algo *hash_algo);
+ 
+ /*
+  * Given a commit struct, try to fill the commit struct info, including:
+@@ -124,8 +119,6 @@ struct commit_graph {
+  */
+ struct commit_graph *commit_graph_read(struct repository *repo,
+ 				       int fd, struct stat *st);
+-struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
+-						   int fd, struct stat *st);
+ 
+ /*
+  * Link the commit graph layer `g` on top of the chain `base`. `base` may be
+@@ -226,20 +219,6 @@ int commit_graph_write_layer(struct repository *r,
+ 			     struct commit_graph **base,
+ 			     unsigned char *hash);
+ 
+-/*
+- * The commit_graph_write* methods return zero on success
+- * and a negative value on failure. Note that if the repository
+- * is not compatible with the commit-graph feature, then the
+- * methods will return 0 without writing a commit-graph.
+- *
+- * The object directory `dir` may be given as a relative path; it is
+- * canonicalized internally so that it compares equal to the directory of
+- * graphs that have already been loaded.
+- */
+-int commit_graph_write(struct repository *r,
+-		       const char *dir,
+-		       const struct commit_graph_write_options *opts);
+-
+ enum commit_graph_verify_flags {
+ 	COMMIT_GRAPH_VERIFY_SHALLOW = (1 << 0),
+ 	COMMIT_GRAPH_VERIFY_PROGRESS = (1 << 1),
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 90cda52b48b..16d331e4f28 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -1231,7 +1231,7 @@ static int odb_source_files_generate_pack(struct odb_source *source UNUSED,
  	return 0;
  }
  
 -char *get_commit_graph_filename(const char *dir)
--{
--	return xstrfmt("%s/info/commit-graph", dir);
--}
--
--static char *get_split_graph_filename(const char *dir,
--				      const char *oid_hex)
--{
--	return xstrfmt("%s/info/commit-graphs/graph-%s.graph", dir,
--		       oid_hex);
--}
--
--char *get_commit_graph_chain_filename(const char *dir)
--{
--	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", dir);
--}
--
- static struct commit_graph *alloc_commit_graph(void)
++static char *get_commit_graph_filename(const char *dir)
  {
- 	struct commit_graph *g = xcalloc(1, sizeof(*g));
-@@ -246,18 +226,6 @@ static int commit_graph_compatible(struct repository *r)
- 	return 1;
+ 	return xstrfmt("%s/info/commit-graph", dir);
+ }
+@@ -1243,12 +1243,12 @@ static char *get_split_graph_filename(const char *dir,
+ 		       oid_hex);
+ }
+ 
+-char *get_commit_graph_chain_filename(const char *dir)
++static char *get_commit_graph_chain_filename(const char *dir)
+ {
+ 	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", dir);
  }
  
 -int open_commit_graph(const char *graph_file, int *fd, struct stat *st)
--{
--	*fd = git_open(graph_file);
--	if (*fd < 0)
--		return 0;
--	if (fstat(*fd, st)) {
--		close(*fd);
--		return 0;
--	}
--	return 1;
--}
--
- struct commit_graph *commit_graph_read(struct repository *repo,
- 				       int fd, struct stat *st)
++static int open_commit_graph(const char *graph_file, int *fd, struct stat *st)
  {
-@@ -494,37 +462,6 @@ struct commit_graph *commit_graph_parse(struct repository *r,
- 	return NULL;
+ 	*fd = git_open(graph_file);
+ 	if (*fd < 0)
+@@ -1260,40 +1260,45 @@ int open_commit_graph(const char *graph_file, int *fd, struct stat *st)
+ 	return 1;
  }
  
 -static struct commit_graph *load_commit_graph_one(struct repository *repo,
 -						  const char *dir,
 -						  const char *graph_file)
--{
--	struct stat st;
--	int fd;
--	struct commit_graph *g;
++static int load_commit_graph_one(struct repository *repo,
++				 const char *dir,
++				 const char *graph_file,
++				 struct commit_graph **out)
+ {
+ 	struct stat st;
+ 	int fd;
+ 	struct commit_graph *g;
 -	int open_ok = open_commit_graph(graph_file, &fd, &st);
--
+ 
 -	if (!open_ok)
 -		return NULL;
--
--	g = commit_graph_read(repo, fd, &st);
++	if (!open_commit_graph(graph_file, &fd, &st)) {
++		if (errno == ENOENT)
++			return 1;
++		return error_errno(_("Could not open commit-graph '%s'"),
++				   graph_file);
++	}
+ 
+ 	g = commit_graph_read(repo, fd, &st);
 -	if (g) {
 -		g->dir = absolute_pathdup(dir);
 -		g->filename = absolute_pathdup(graph_file);
 -	}
--
++	if (!g)
++		return -1;
+ 
 -	return g;
--}
--
++	g->dir = absolute_pathdup(dir);
++	g->filename = absolute_pathdup(graph_file);
++	*out = g;
++	return 0;
+ }
+ 
 -static struct commit_graph *load_commit_graph_v1(struct repository *repo,
 -						 const char *dir)
--{
--	char *graph_name = get_commit_graph_filename(dir);
++static int load_commit_graph_v1(struct repository *repo,
++				const char *dir,
++				struct commit_graph **out)
+ {
+ 	char *graph_name = get_commit_graph_filename(dir);
 -	struct commit_graph *g = load_commit_graph_one(repo, dir, graph_name);
--	free(graph_name);
++	int ret = load_commit_graph_one(repo, dir, graph_name, out);
+ 	free(graph_name);
 -
 -	return g;
--}
--
- /*
-  * returns 1 if and only if all graphs in the chain have
-  * corrected commit dates stored in the generation_data chunk.
-@@ -625,120 +562,6 @@ int commit_graph_link_base(struct commit_graph *g,
- 	return 0;
++	return ret;
  }
  
 -int open_commit_graph_chain(const char *chain_file,
 -			    int *fd, struct stat *st,
 -			    const struct git_hash_algo *hash_algo)
--{
--	*fd = git_open(chain_file);
--	if (*fd < 0)
--		return 0;
--	if (fstat(*fd, st)) {
--		close(*fd);
--		return 0;
--	}
--	if (st->st_size < hash_algo->hexsz) {
--		close(*fd);
--		if (!st->st_size) {
--			/* treat empty files the same as missing */
--			errno = ENOENT;
--		} else {
--			warning(_("commit-graph chain file too small"));
--			errno = EINVAL;
--		}
--		return 0;
--	}
--	return 1;
--}
--
++static int open_commit_graph_chain(const char *chain_file,
++				   int *fd, struct stat *st,
++				   const struct git_hash_algo *hash_algo)
+ {
+ 	*fd = git_open(chain_file);
+ 	if (*fd < 0)
+@@ -1316,8 +1321,8 @@ int open_commit_graph_chain(const char *chain_file,
+ 	return 1;
+ }
+ 
 -struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
 -						   int fd, struct stat *st)
--{
--	struct commit_graph *graph_chain = NULL;
--	struct strbuf line = STRBUF_INIT;
--	int i = 0, valid = 1, count;
--	FILE *fp = xfdopen(fd, "r");
--
--	count = st->st_size / (odb->repo->hash_algo->hexsz + 1);
--
--	for (i = 0; i < count; i++) {
--		struct odb_source_files *files;
--		struct object_id oid;
--
--		if (strbuf_getline_lf(&line, fp) == EOF)
--			break;
--
--		if (get_oid_hex_algop(line.buf, &oid, odb->repo->hash_algo)) {
--			warning(_("invalid commit-graph chain: line '%s' not a hash"),
--				line.buf);
--			valid = 0;
--			break;
--		}
--
--		valid = 0;
--
--		files = odb_source_files_downcast(odb->source);
--		for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
--			char *graph_name = get_split_graph_filename(dir->abspath, line.buf);
++static struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
++							  int fd, struct stat *st)
+ {
+ 	struct commit_graph *graph_chain = NULL;
+ 	struct strbuf line = STRBUF_INIT;
+@@ -1345,20 +1350,25 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
+ 		files = odb_source_files_downcast(odb->source);
+ 		for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+ 			char *graph_name = get_split_graph_filename(dir->abspath, line.buf);
 -			struct commit_graph *g = load_commit_graph_one(odb->repo, dir->abspath, graph_name);
--
--			free(graph_name);
--
++			struct commit_graph *g = NULL;
++			int ret;
+ 
++			ret = load_commit_graph_one(odb->repo, dir->abspath, graph_name, &g);
+ 			free(graph_name);
+ 
 -			if (g) {
 -				if (!commit_graph_link_base(g, graph_chain)) {
 -					graph_chain = g;
@@ -327,797 +409,238 @@ index 7fea94689a1..8daadf56e88 100644
 -					commit_graph_free(g);
 -				}
 -
--				break;
--			}
--		}
--
--		if (!valid) {
--			warning(_("unable to find all commit-graph files"));
--			break;
--		}
--	}
--
--	commit_graph_validate_chain(graph_chain);
--	if (graph_chain)
--		graph_chain->incomplete = !valid;
--
--	fclose(fp);
--	strbuf_release(&line);
--
--	return graph_chain;
--}
--
++			if (ret > 0)
++				continue;
++			if (ret < 0)
+ 				break;
++
++			if (!commit_graph_link_base(g, graph_chain)) {
++				graph_chain = g;
++				valid = 1;
++			} else {
++				commit_graph_free(g);
+ 			}
++
++			break;
+ 		}
+ 
+ 		if (!valid) {
+@@ -1377,49 +1387,64 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
+ 	return graph_chain;
+ }
+ 
 -static struct commit_graph *load_commit_graph_chain(struct repository *repo,
 -						    const char *dir)
--{
--	char *chain_file = get_commit_graph_chain_filename(dir);
--	struct stat st;
--	int fd;
++static int load_commit_graph_chain(struct repository *repo,
++				   const char *dir,
++				   struct commit_graph **out)
+ {
+ 	char *chain_file = get_commit_graph_chain_filename(dir);
+ 	struct stat st;
+ 	int fd;
 -	struct commit_graph *g = NULL;
--
++	int ret;
+ 
 -	if (open_commit_graph_chain(chain_file, &fd, &st, repo->hash_algo)) {
 -		/* ownership of fd is taken over by load function */
 -		g = load_commit_graph_chain_fd_st(repo->objects, fd, &st);
--	}
--
--	free(chain_file);
++	if (!open_commit_graph_chain(chain_file, &fd, &st, repo->hash_algo)) {
++		if (errno == ENOENT)
++			ret = 1;
++		else
++			ret = error_errno(_("could not open commit-graph chain '%s'"),
++					  chain_file);
++		goto out;
+ 	}
+ 
++	/* ownership of fd is taken over by load function */
++	*out = load_commit_graph_chain_fd_st(repo->objects, fd, &st);
++	ret = *out ? 0 : -1;
++
++out:
+ 	free(chain_file);
 -	return g;
--}
--
--struct commit_graph *read_commit_graph_one(struct repository *repo,
--					   const char *dir)
--{
--	struct commit_graph *g = load_commit_graph_v1(repo, dir);
--
--	if (!g)
--		g = load_commit_graph_chain(repo, dir);
--
--	return g;
--}
--
- /*
-  * Return 1 if commit_graph is non-NULL, and 0 otherwise.
-  *
-@@ -2078,12 +1901,6 @@ static int write_graph_chunk_base(struct hashfile *f,
- 	return 0;
++	return ret;
  }
  
--static void mark_commit_graphs(struct commit_graph *tip,
--			       struct commit_graph *base);
--static void expire_commit_graphs(const char *dirpath,
--				 struct string_list *kept,
--				 timestamp_t expire_time);
--
- static int write_commit_graph_file(struct write_commit_graph_context *ctx,
- 				   int fd, const char *path,
- 				   unsigned char *file_hash)
-@@ -2160,200 +1977,6 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx,
- 	return 0;
+-static struct commit_graph *read_commit_graph_one(struct repository *repo,
+-						  const char *dir)
++int odb_source_files_read_commit_graph_dir(struct odb_source_files *files,
++					   struct odb_files_dir *dir,
++					   struct commit_graph **out)
+ {
+-	struct commit_graph *g = load_commit_graph_v1(repo, dir);
++	struct repository *repo = files->base.odb->repo;
++	int ret;
+ 
+-	if (!g)
+-		g = load_commit_graph_chain(repo, dir);
++	ret = load_commit_graph_v1(repo, dir->abspath, out);
++	if (ret > 0)
++		ret = load_commit_graph_chain(repo, dir->abspath, out);
+ 
+-	return g;
++	return ret;
+ }
+ 
+ static int odb_source_files_read_commit_graph(struct odb_source *source,
+ 					      struct commit_graph **out)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
++	bool error = false;
+ 
+ 	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+-		struct commit_graph *g = read_commit_graph_one(files->base.odb->repo,
+-							       dir->abspath);
+-		if (!g)
++		int ret = odb_source_files_read_commit_graph_dir(files, dir, out);
++		if (ret) {
++			if (ret < 0)
++				error = true;
+ 			continue;
+-		*out = g;
++		}
+ 		return 0;
+ 	}
+ 
+-	return 1;
++	return error ? -1 : 1;
+ }
+ 
+ static void mark_commit_graphs(struct commit_graph *tip,
+@@ -1482,17 +1507,18 @@ static void expire_commit_graphs(const char *dirpath,
+ 	strbuf_release(&path);
  }
  
 -int commit_graph_write(struct repository *r,
 -		       const char *dir,
 -		       const struct commit_graph_write_options *opts)
--{
--	struct string_list chain_hashes = STRING_LIST_INIT_DUP;
--	struct string_list kept = STRING_LIST_INIT_DUP;
--	struct tempfile *graph_layer = NULL;
--	struct lock_file lk = LOCK_INIT;
--	struct commit_graph *g, *chain, *base = NULL;
--	char *base_rename_from = NULL, *base_rename_to = NULL;
++int odb_source_files_write_commit_graph_dir(struct odb_source_files *files,
++					    struct odb_files_dir *dir,
++					    const struct commit_graph_write_options *opts)
+ {
++	struct repository *r = files->base.odb->repo;
+ 	struct string_list chain_hashes = STRING_LIST_INIT_DUP;
+ 	struct string_list kept = STRING_LIST_INIT_DUP;
+ 	struct tempfile *graph_layer = NULL;
+ 	struct lock_file lk = LOCK_INIT;
+ 	struct commit_graph *g, *chain, *base = NULL;
+ 	char *base_rename_from = NULL, *base_rename_to = NULL;
 -	char *graph_name = NULL, *abs_dir = NULL, *new_path = NULL;
--	size_t mergeable_layers = 0, chainable_layers = 0;
--	unsigned char hash[GIT_MAX_RAWSZ];
--	bool mergeable = true;
--	const char *out_path;
--	int out_fd;
--	int ret;
--
--	if (!commit_graph_write_allowed(r))
--		return 0;
--
++	char *graph_name = NULL, *new_path = NULL;
+ 	size_t mergeable_layers = 0, chainable_layers = 0;
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+ 	bool mergeable = true;
+@@ -1503,8 +1529,6 @@ int commit_graph_write(struct repository *r,
+ 	if (!commit_graph_write_allowed(r))
+ 		return 0;
+ 
 -	abs_dir = absolute_pathdup(dir);
 -
--	g = prepare_commit_graph(r);
--
--	/*
--	 * We only consider merging layers that belong to our own object
--	 * directory. Furthermore, we can only chain on top of either:
--	 *
--	 *   - A split commit graph layer, regardless of whether or not it is
--	 *     local.
--	 *
--	 *   - A local non-split commit graph, in which case we'll convert that
--	 *     layer into a split commit graph layer.
--	 */
--	for (struct commit_graph *layer = g; layer; layer = layer->base_graph) {
--		char *path = get_commit_graph_filename(layer->dir);
--		bool is_split = !!strcmp(layer->filename, path);
+ 	g = prepare_commit_graph(r);
+ 
+ 	/*
+@@ -1520,7 +1544,7 @@ int commit_graph_write(struct repository *r,
+ 	for (struct commit_graph *layer = g; layer; layer = layer->base_graph) {
+ 		char *path = get_commit_graph_filename(layer->dir);
+ 		bool is_split = !!strcmp(layer->filename, path);
 -		bool is_local = !strcmp(layer->dir, abs_dir);
--
--		free(path);
--
--		if (!is_local && !is_split)
--			break;
--		if (!is_local)
--			mergeable = false;
--
--		if (mergeable)
--			mergeable_layers++;
--		chainable_layers++;
--	}
--
--	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
++		bool is_local = !strcmp(layer->dir, dir->abspath);
+ 
+ 		free(path);
+ 
+@@ -1535,9 +1559,9 @@ int commit_graph_write(struct repository *r,
+ 	}
+ 
+ 	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
 -		graph_name = xstrfmt("%s/info/commit-graphs/tmp_graph_XXXXXX", abs_dir);
--	} else {
++		graph_name = xstrfmt("%s/info/commit-graphs/tmp_graph_XXXXXX", dir->abspath);
+ 	} else {
 -		graph_name = get_commit_graph_filename(abs_dir);
--	}
--
--	if (safe_create_leading_directories(r, graph_name)) {
--		ret = error(_("unable to create leading directories of %s"),
--			    graph_name);
--		goto out;
--	}
--
--	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
++		graph_name = get_commit_graph_filename(dir->abspath);
+ 	}
+ 
+ 	if (safe_create_leading_directories(r, graph_name)) {
+@@ -1547,7 +1571,7 @@ int commit_graph_write(struct repository *r,
+ 	}
+ 
+ 	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
 -		char *chain_name = get_commit_graph_chain_filename(abs_dir);
--
--		repo_hold_lock_file_for_update_mode(r, &lk, chain_name,
--						    LOCK_DIE_ON_ERROR, 0444);
--		free(chain_name);
--
--		graph_layer = mks_tempfile_m(graph_name, 0444);
--		if (!graph_layer) {
--			ret = error(_("unable to create temporary graph layer"));
--			goto out;
--		}
--
--		if (adjust_shared_perm(r, get_tempfile_path(graph_layer))) {
--			ret = error(_("unable to adjust shared permissions for '%s'"),
--				    get_tempfile_path(graph_layer));
--			goto out;
--		}
--
--		out_fd = get_tempfile_fd(graph_layer);
--		out_path = get_tempfile_path(graph_layer);
--	} else {
--		repo_hold_lock_file_for_update_mode(r, &lk, graph_name,
--						    LOCK_DIE_ON_ERROR, 0444);
--		out_fd = get_lock_file_fd(&lk);
--		out_path = get_lock_file_path(&lk);
--	}
--
--	ret = commit_graph_write_layer(r, opts, mergeable_layers, chainable_layers,
--				       out_fd, out_path, &base, hash);
--	if (ret <= 0)
--		goto out;
--
--	/*
--	 * Snapshot everything we need from the current chain before closing
--	 * it, as we must not have any layers mapped when replacing them.
--	 */
--	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
--		const char *new_hash = hash_to_hex_algop(hash, r->hash_algo);
--
++		char *chain_name = get_commit_graph_chain_filename(dir->abspath);
+ 
+ 		repo_hold_lock_file_for_update_mode(r, &lk, chain_name,
+ 						    LOCK_DIE_ON_ERROR, 0444);
+@@ -1586,7 +1610,7 @@ int commit_graph_write(struct repository *r,
+ 	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
+ 		const char *new_hash = hash_to_hex_algop(hash, r->hash_algo);
+ 
 -		new_path = get_split_graph_filename(abs_dir, new_hash);
--
--		string_list_append(&chain_hashes, new_hash);
--		for (chain = base; chain; chain = chain->base_graph)
--			string_list_append(&chain_hashes, oid_to_hex(&chain->oid));
--
--		/*
--		 * In case we have a non-split commit graph we need to convert
--		 * it into the base layer of the new split commit graph by
--		 * renaming it.
--		 */
--		if (base) {
--			base_rename_to = get_split_graph_filename(base->dir, oid_to_hex(&base->oid));
--			if (strcmp(base->filename, base_rename_to))
--				base_rename_from = xstrdup(base->filename);
--			else
--				FREE_AND_NULL(base_rename_to);
--		}
--
--		for (chain = base; chain; chain = chain->base_graph) {
--			if (chain == base && base_rename_to)
--				string_list_append(&kept, base_rename_to);
--			else
--				string_list_append(&kept, chain->filename);
--		}
--		string_list_append(&kept, new_path);
--
--		mark_commit_graphs(g, base);
--	}
--
--	commit_graph_close(r->objects);
--
--	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
--		FILE *chainf = fdopen_lock_file(&lk, "w");
--
--		if (!chainf) {
--			ret = error(_("unable to open commit-graph chain file"));
--			goto out;
--		}
--
--		if (base_rename_from) {
--			if (rename(base_rename_from, base_rename_to)) {
--				ret = error(_("failed to rename base commit-graph file"));
--				goto out;
--			}
--		} else if (!base) {
++		new_path = get_split_graph_filename(dir->abspath, new_hash);
+ 
+ 		string_list_append(&chain_hashes, new_hash);
+ 		for (chain = base; chain; chain = chain->base_graph)
+@@ -1632,7 +1656,7 @@ int commit_graph_write(struct repository *r,
+ 				goto out;
+ 			}
+ 		} else if (!base) {
 -			char *graph_name = get_commit_graph_filename(abs_dir);
--			unlink(graph_name);
--			free(graph_name);
--		}
--
--		if (rename_tempfile(&graph_layer, new_path)) {
--			ret = error(_("failed to rename temporary commit-graph file"));
--			goto out;
--		}
--
--		/*
--		 * Chain hashes are ordered newest-first, but the chain file is
--		 * oldest-first so we iterate in reverse.
--		 */
--		for (size_t i = chain_hashes.nr; i; i--)
--			fprintf(chainf, "%s\n", chain_hashes.items[i - 1].string);
--	}
--
--	commit_lock_file(&lk);
--
--	if (!(opts->flags & COMMIT_GRAPH_WRITE_SPLIT)) {
++			char *graph_name = get_commit_graph_filename(dir->abspath);
+ 			unlink(graph_name);
+ 			free(graph_name);
+ 		}
+@@ -1653,12 +1677,12 @@ int commit_graph_write(struct repository *r,
+ 	commit_lock_file(&lk);
+ 
+ 	if (!(opts->flags & COMMIT_GRAPH_WRITE_SPLIT)) {
 -		char *chain_name = get_commit_graph_chain_filename(abs_dir);
--		unlink(chain_name);
--		free(chain_name);
--	}
--
++		char *chain_name = get_commit_graph_chain_filename(dir->abspath);
+ 		unlink(chain_name);
+ 		free(chain_name);
+ 	}
+ 
 -	expire_commit_graphs(abs_dir, &kept,
--			     opts->expire_time ? opts->expire_time : time(NULL));
--
--	ret = 0;
--
--out:
--	rollback_lock_file(&lk);
--	delete_tempfile(&graph_layer);
--	string_list_clear(&chain_hashes, 0);
--	string_list_clear(&kept, 0);
--	free(base_rename_from);
--	free(base_rename_to);
--	free(graph_name);
--	free(new_path);
++	expire_commit_graphs(dir->abspath, &kept,
+ 			     opts->expire_time ? opts->expire_time : (timestamp_t) time(NULL));
+ 
+ 	ret = 0;
+@@ -1672,7 +1696,6 @@ int commit_graph_write(struct repository *r,
+ 	free(base_rename_to);
+ 	free(graph_name);
+ 	free(new_path);
 -	free(abs_dir);
--	return ret;
--}
--
- static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
- 				       struct commit_graph *graph_to_merge)
- {
-@@ -2521,66 +2144,6 @@ static void merge_commit_graphs(struct write_commit_graph_context *ctx,
- 	sort_and_scan_merged_commits(ctx);
+ 	return ret;
  }
  
--static void mark_commit_graphs(struct commit_graph *tip,
--			       struct commit_graph *base)
--{
--	time_t now = time(NULL);
--
--	for (struct commit_graph *g = tip; g && g != base; g = g->base_graph) {
--		struct stat st;
--		struct utimbuf updated_time;
--
--		if (stat(g->filename, &st) < 0)
--			continue;
--
--		updated_time.actime = st.st_atime;
--		updated_time.modtime = now;
--		utime(g->filename, &updated_time);
--	}
--}
--
--static void expire_commit_graphs(const char *dirpath,
--				 struct string_list *kept,
--				 timestamp_t expire_time)
--{
--	struct strbuf path = STRBUF_INIT;
--	DIR *dir;
--	struct dirent *de;
--	size_t dirnamelen;
--
--	strbuf_addstr(&path, dirpath);
--	strbuf_addstr(&path, "/info/commit-graphs");
--	dir = opendir(path.buf);
--
--	if (!dir)
--		goto out;
--
--	strbuf_addch(&path, '/');
--	dirnamelen = path.len;
--	while ((de = readdir(dir)) != NULL) {
--		struct stat st;
--
--		strbuf_setlen(&path, dirnamelen);
--		strbuf_addstr(&path, de->d_name);
--
--		if (stat(path.buf, &st) < 0)
--			continue;
--
--		if (st.st_mtime > expire_time)
--			continue;
--		if (path.len < 6 || strcmp(path.buf + path.len - 6, ".graph"))
--			continue;
--
--		if (!unsorted_string_list_has_string(kept, path.buf))
--			unlink(path.buf);
--	}
--
--out:
--	if (dir)
--		closedir(dir);
--	strbuf_release(&path);
--}
--
- bool commit_graph_write_allowed(struct repository *r)
- {
- 	prepare_repo_settings(r);
-diff --git a/commit-graph.h b/commit-graph.h
-index 3b5e0eb2d73..3295498fd34 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -141,8 +141,6 @@ int commit_graph_link_base(struct commit_graph *g,
-  * filters in case they aren't.
-  */
- void commit_graph_validate_chain(struct commit_graph *g);
--struct commit_graph *read_commit_graph_one(struct repository *repo,
--					   const char *dir);
- 
- struct repo_settings;
- 
-diff --git a/odb/source-files.c b/odb/source-files.c
-index 5ad27fd4bc7..90cda52b48b 100644
---- a/odb/source-files.c
-+++ b/odb/source-files.c
-@@ -1231,6 +1231,180 @@ static int odb_source_files_generate_pack(struct odb_source *source UNUSED,
- 	return 0;
- }
- 
-+char *get_commit_graph_filename(const char *dir)
-+{
-+	return xstrfmt("%s/info/commit-graph", dir);
-+}
-+
-+static char *get_split_graph_filename(const char *dir,
-+				      const char *oid_hex)
-+{
-+	return xstrfmt("%s/info/commit-graphs/graph-%s.graph", dir,
-+		       oid_hex);
-+}
-+
-+char *get_commit_graph_chain_filename(const char *dir)
-+{
-+	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", dir);
-+}
-+
-+int open_commit_graph(const char *graph_file, int *fd, struct stat *st)
-+{
-+	*fd = git_open(graph_file);
-+	if (*fd < 0)
-+		return 0;
-+	if (fstat(*fd, st)) {
-+		close(*fd);
-+		return 0;
-+	}
-+	return 1;
-+}
-+
-+static struct commit_graph *load_commit_graph_one(struct repository *repo,
-+						  const char *dir,
-+						  const char *graph_file)
-+{
-+	struct stat st;
-+	int fd;
-+	struct commit_graph *g;
-+	int open_ok = open_commit_graph(graph_file, &fd, &st);
-+
-+	if (!open_ok)
-+		return NULL;
-+
-+	g = commit_graph_read(repo, fd, &st);
-+	if (g) {
-+		g->dir = absolute_pathdup(dir);
-+		g->filename = absolute_pathdup(graph_file);
-+	}
-+
-+	return g;
-+}
-+
-+static struct commit_graph *load_commit_graph_v1(struct repository *repo,
-+						 const char *dir)
-+{
-+	char *graph_name = get_commit_graph_filename(dir);
-+	struct commit_graph *g = load_commit_graph_one(repo, dir, graph_name);
-+	free(graph_name);
-+
-+	return g;
-+}
-+
-+int open_commit_graph_chain(const char *chain_file,
-+			    int *fd, struct stat *st,
-+			    const struct git_hash_algo *hash_algo)
-+{
-+	*fd = git_open(chain_file);
-+	if (*fd < 0)
-+		return 0;
-+	if (fstat(*fd, st)) {
-+		close(*fd);
-+		return 0;
-+	}
-+	if (st->st_size < (ssize_t) hash_algo->hexsz) {
-+		close(*fd);
-+		if (!st->st_size) {
-+			/* treat empty files the same as missing */
-+			errno = ENOENT;
-+		} else {
-+			warning(_("commit-graph chain file too small"));
-+			errno = EINVAL;
-+		}
-+		return 0;
-+	}
-+	return 1;
-+}
-+
-+struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
-+						   int fd, struct stat *st)
-+{
-+	struct commit_graph *graph_chain = NULL;
-+	struct strbuf line = STRBUF_INIT;
-+	int i = 0, valid = 1, count;
-+	FILE *fp = xfdopen(fd, "r");
-+
-+	count = st->st_size / (odb->repo->hash_algo->hexsz + 1);
-+
-+	for (i = 0; i < count; i++) {
-+		struct odb_source_files *files;
-+		struct object_id oid;
-+
-+		if (strbuf_getline_lf(&line, fp) == EOF)
-+			break;
-+
-+		if (get_oid_hex_algop(line.buf, &oid, odb->repo->hash_algo)) {
-+			warning(_("invalid commit-graph chain: line '%s' not a hash"),
-+				line.buf);
-+			valid = 0;
-+			break;
-+		}
-+
-+		valid = 0;
-+
-+		files = odb_source_files_downcast(odb->source);
-+		for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
-+			char *graph_name = get_split_graph_filename(dir->abspath, line.buf);
-+			struct commit_graph *g = load_commit_graph_one(odb->repo, dir->abspath, graph_name);
-+
-+			free(graph_name);
-+
-+			if (g) {
-+				if (!commit_graph_link_base(g, graph_chain)) {
-+					graph_chain = g;
-+					valid = 1;
-+				} else {
-+					commit_graph_free(g);
-+				}
-+
-+				break;
-+			}
-+		}
-+
-+		if (!valid) {
-+			warning(_("unable to find all commit-graph files"));
-+			break;
-+		}
-+	}
-+
-+	commit_graph_validate_chain(graph_chain);
-+	if (graph_chain)
-+		graph_chain->incomplete = !valid;
-+
-+	fclose(fp);
-+	strbuf_release(&line);
-+
-+	return graph_chain;
-+}
-+
-+static struct commit_graph *load_commit_graph_chain(struct repository *repo,
-+						    const char *dir)
-+{
-+	char *chain_file = get_commit_graph_chain_filename(dir);
-+	struct stat st;
-+	int fd;
-+	struct commit_graph *g = NULL;
-+
-+	if (open_commit_graph_chain(chain_file, &fd, &st, repo->hash_algo)) {
-+		/* ownership of fd is taken over by load function */
-+		g = load_commit_graph_chain_fd_st(repo->objects, fd, &st);
-+	}
-+
-+	free(chain_file);
-+	return g;
-+}
-+
-+static struct commit_graph *read_commit_graph_one(struct repository *repo,
-+						  const char *dir)
-+{
-+	struct commit_graph *g = load_commit_graph_v1(repo, dir);
-+
-+	if (!g)
-+		g = load_commit_graph_chain(repo, dir);
-+
-+	return g;
-+}
-+
- static int odb_source_files_read_commit_graph(struct odb_source *source,
- 					      struct commit_graph **out)
- {
-@@ -1248,6 +1422,260 @@ static int odb_source_files_read_commit_graph(struct odb_source *source,
- 	return 1;
- }
- 
-+static void mark_commit_graphs(struct commit_graph *tip,
-+			       struct commit_graph *base)
-+{
-+	time_t now = time(NULL);
-+
-+	for (struct commit_graph *g = tip; g && g != base; g = g->base_graph) {
-+		struct stat st;
-+		struct utimbuf updated_time;
-+
-+		if (stat(g->filename, &st) < 0)
-+			continue;
-+
-+		updated_time.actime = st.st_atime;
-+		updated_time.modtime = now;
-+		utime(g->filename, &updated_time);
-+	}
-+}
-+
-+static void expire_commit_graphs(const char *dirpath,
-+				 struct string_list *kept,
-+				 timestamp_t expire_time)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	DIR *dir;
-+	struct dirent *de;
-+	size_t dirnamelen;
-+
-+	strbuf_addstr(&path, dirpath);
-+	strbuf_addstr(&path, "/info/commit-graphs");
-+	dir = opendir(path.buf);
-+
-+	if (!dir)
-+		goto out;
-+
-+	strbuf_addch(&path, '/');
-+	dirnamelen = path.len;
-+	while ((de = readdir(dir)) != NULL) {
-+		struct stat st;
-+
-+		strbuf_setlen(&path, dirnamelen);
-+		strbuf_addstr(&path, de->d_name);
-+
-+		if (stat(path.buf, &st) < 0)
-+			continue;
-+
-+		if ((timestamp_t) st.st_mtime > expire_time)
-+			continue;
-+		if (path.len < 6 || strcmp(path.buf + path.len - 6, ".graph"))
-+			continue;
-+
-+		if (!unsorted_string_list_has_string(kept, path.buf))
-+			unlink(path.buf);
-+	}
-+
-+out:
-+	if (dir)
-+		closedir(dir);
-+	strbuf_release(&path);
-+}
-+
-+int commit_graph_write(struct repository *r,
-+		       const char *dir,
-+		       const struct commit_graph_write_options *opts)
-+{
-+	struct string_list chain_hashes = STRING_LIST_INIT_DUP;
-+	struct string_list kept = STRING_LIST_INIT_DUP;
-+	struct tempfile *graph_layer = NULL;
-+	struct lock_file lk = LOCK_INIT;
-+	struct commit_graph *g, *chain, *base = NULL;
-+	char *base_rename_from = NULL, *base_rename_to = NULL;
-+	char *graph_name = NULL, *abs_dir = NULL, *new_path = NULL;
-+	size_t mergeable_layers = 0, chainable_layers = 0;
-+	unsigned char hash[GIT_MAX_RAWSZ];
-+	bool mergeable = true;
-+	const char *out_path;
-+	int out_fd;
-+	int ret;
-+
-+	if (!commit_graph_write_allowed(r))
-+		return 0;
-+
-+	abs_dir = absolute_pathdup(dir);
-+
-+	g = prepare_commit_graph(r);
-+
-+	/*
-+	 * We only consider merging layers that belong to our own object
-+	 * directory. Furthermore, we can only chain on top of either:
-+	 *
-+	 *   - A split commit graph layer, regardless of whether or not it is
-+	 *     local.
-+	 *
-+	 *   - A local non-split commit graph, in which case we'll convert that
-+	 *     layer into a split commit graph layer.
-+	 */
-+	for (struct commit_graph *layer = g; layer; layer = layer->base_graph) {
-+		char *path = get_commit_graph_filename(layer->dir);
-+		bool is_split = !!strcmp(layer->filename, path);
-+		bool is_local = !strcmp(layer->dir, abs_dir);
-+
-+		free(path);
-+
-+		if (!is_local && !is_split)
-+			break;
-+		if (!is_local)
-+			mergeable = false;
-+
-+		if (mergeable)
-+			mergeable_layers++;
-+		chainable_layers++;
-+	}
-+
-+	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
-+		graph_name = xstrfmt("%s/info/commit-graphs/tmp_graph_XXXXXX", abs_dir);
-+	} else {
-+		graph_name = get_commit_graph_filename(abs_dir);
-+	}
-+
-+	if (safe_create_leading_directories(r, graph_name)) {
-+		ret = error(_("unable to create leading directories of %s"),
-+			    graph_name);
-+		goto out;
-+	}
-+
-+	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
-+		char *chain_name = get_commit_graph_chain_filename(abs_dir);
-+
-+		repo_hold_lock_file_for_update_mode(r, &lk, chain_name,
-+						    LOCK_DIE_ON_ERROR, 0444);
-+		free(chain_name);
-+
-+		graph_layer = mks_tempfile_m(graph_name, 0444);
-+		if (!graph_layer) {
-+			ret = error(_("unable to create temporary graph layer"));
-+			goto out;
-+		}
-+
-+		if (adjust_shared_perm(r, get_tempfile_path(graph_layer))) {
-+			ret = error(_("unable to adjust shared permissions for '%s'"),
-+				    get_tempfile_path(graph_layer));
-+			goto out;
-+		}
-+
-+		out_fd = get_tempfile_fd(graph_layer);
-+		out_path = get_tempfile_path(graph_layer);
-+	} else {
-+		repo_hold_lock_file_for_update_mode(r, &lk, graph_name,
-+						    LOCK_DIE_ON_ERROR, 0444);
-+		out_fd = get_lock_file_fd(&lk);
-+		out_path = get_lock_file_path(&lk);
-+	}
-+
-+	ret = commit_graph_write_layer(r, opts, mergeable_layers, chainable_layers,
-+				       out_fd, out_path, &base, hash);
-+	if (ret <= 0)
-+		goto out;
-+
-+	/*
-+	 * Snapshot everything we need from the current chain before closing
-+	 * it, as we must not have any layers mapped when replacing them.
-+	 */
-+	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
-+		const char *new_hash = hash_to_hex_algop(hash, r->hash_algo);
-+
-+		new_path = get_split_graph_filename(abs_dir, new_hash);
-+
-+		string_list_append(&chain_hashes, new_hash);
-+		for (chain = base; chain; chain = chain->base_graph)
-+			string_list_append(&chain_hashes, oid_to_hex(&chain->oid));
-+
-+		/*
-+		 * In case we have a non-split commit graph we need to convert
-+		 * it into the base layer of the new split commit graph by
-+		 * renaming it.
-+		 */
-+		if (base) {
-+			base_rename_to = get_split_graph_filename(base->dir, oid_to_hex(&base->oid));
-+			if (strcmp(base->filename, base_rename_to))
-+				base_rename_from = xstrdup(base->filename);
-+			else
-+				FREE_AND_NULL(base_rename_to);
-+		}
-+
-+		for (chain = base; chain; chain = chain->base_graph) {
-+			if (chain == base && base_rename_to)
-+				string_list_append(&kept, base_rename_to);
-+			else
-+				string_list_append(&kept, chain->filename);
-+		}
-+		string_list_append(&kept, new_path);
-+
-+		mark_commit_graphs(g, base);
-+	}
-+
-+	commit_graph_close(r->objects);
-+
-+	if (opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
-+		FILE *chainf = fdopen_lock_file(&lk, "w");
-+
-+		if (!chainf) {
-+			ret = error(_("unable to open commit-graph chain file"));
-+			goto out;
-+		}
-+
-+		if (base_rename_from) {
-+			if (rename(base_rename_from, base_rename_to)) {
-+				ret = error(_("failed to rename base commit-graph file"));
-+				goto out;
-+			}
-+		} else if (!base) {
-+			char *graph_name = get_commit_graph_filename(abs_dir);
-+			unlink(graph_name);
-+			free(graph_name);
-+		}
-+
-+		if (rename_tempfile(&graph_layer, new_path)) {
-+			ret = error(_("failed to rename temporary commit-graph file"));
-+			goto out;
-+		}
-+
-+		/*
-+		 * Chain hashes are ordered newest-first, but the chain file is
-+		 * oldest-first so we iterate in reverse.
-+		 */
-+		for (size_t i = chain_hashes.nr; i; i--)
-+			fprintf(chainf, "%s\n", chain_hashes.items[i - 1].string);
-+	}
-+
-+	commit_lock_file(&lk);
-+
-+	if (!(opts->flags & COMMIT_GRAPH_WRITE_SPLIT)) {
-+		char *chain_name = get_commit_graph_chain_filename(abs_dir);
-+		unlink(chain_name);
-+		free(chain_name);
-+	}
-+
-+	expire_commit_graphs(abs_dir, &kept,
-+			     opts->expire_time ? opts->expire_time : (timestamp_t) time(NULL));
-+
-+	ret = 0;
-+
-+out:
-+	rollback_lock_file(&lk);
-+	delete_tempfile(&graph_layer);
-+	string_list_clear(&chain_hashes, 0);
-+	string_list_clear(&kept, 0);
-+	free(base_rename_from);
-+	free(base_rename_to);
-+	free(graph_name);
-+	free(new_path);
-+	free(abs_dir);
-+	return ret;
-+}
-+
- static int odb_source_files_write_commit_graph(struct odb_source *source,
+@@ -1680,7 +1703,7 @@ static int odb_source_files_write_commit_graph(struct odb_source *source,
  					       const struct commit_graph_write_options *opts)
  {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+-	return commit_graph_write(source->odb->repo, files->dirs->abspath, opts);
++	return odb_source_files_write_commit_graph_dir(files, files->dirs, opts);
+ }
+ 
+ static int fsck_commit_graph(struct odb_source_files *files,
+diff --git a/odb/source-files.h b/odb/source-files.h
+index f779e67a1db..71ccacd8d90 100644
+--- a/odb/source-files.h
++++ b/odb/source-files.h
+@@ -106,4 +106,16 @@ static inline struct odb_source_files *odb_source_files_downcast(struct odb_sour
+  */
+ struct odb_files_dir *odb_source_files_find_dir(struct object_database *odb, const char *obj_dir);
+ 
++/*
++ * Read and write a commit graph via a specific object directory. These
++ * functions should not be used, but we have to provide this ability to support
++ * the "--object-dir=" option for git-commit-graph(1).
++ */
++int odb_source_files_read_commit_graph_dir(struct odb_source_files *files,
++					   struct odb_files_dir *dir,
++					   struct commit_graph **out);
++int odb_source_files_write_commit_graph_dir(struct odb_source_files *files,
++					    struct odb_files_dir *dir,
++					    const struct commit_graph_write_options *opts);
++
+ #endif
 
 -- 
 2.56.1.763.g16177fe143.dirty
