@@ -1,89 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794825272;
-	b=m7B2EO3DVkvNVCPma5s9LI9ZO0AhP4Htba36VDZPnQteTaYktHO6g4CrVBewYsfPzh/x
-	 pAFxLljQ6JotpryfQ9fOhfNzLeEGJaDBcqm+RrBJ6TjaiOFZGj80LAjrehbG+Bjypw0GD
-	 YQYNtC1GHaxgZDrGFd1PSf5jU9xdKnMqA2a/VL9DEmvETL5Q4n57NZNttuAYPnEutW1OK
-	 +vtjF24WWne1RwriyXPStmP43bAojJsh0bgYIDKxMXLkXiC6eutLMmLzMosZ29Den4aAc
-	 988EYjNd4/14pbObIQJkka1UkmujHg8qmRcFcoMvcW4/8/cq10/c79EzZVSDJy0iN0Q==
+	t=1794829565;
+	b=Peg8cM4noLfRX7H4kFqUZfaHs5FMI29bcXya2ElVIKy2nhaZpdiwNwz2qo07bTXxFVAY
+	 D4Lkjx/NJHm7OK/YQ1ccaXsNunDRiWAGh/h4CJ+ArFnpzex2C6YSVH73DV6t38WoRfrb7
+	 QnVkoc3JCf0b9MWp0pVEuRn7wbSTh1CuIC9hAWRN6mocJguJJRi2heLE64Ej1yWQO/J6L
+	 vzN834h8Ks1kcKZe2lKxO+qiTIm1w1P8RHgqdaMOaQEu0gYDfPKAGFyinktFP73mUZV/1
+	 L0oez1ypQwAbwvjNsdlR5RlvWhpxp6F3bg3x8UscQauW2/GbjHLwmCSWGJwDWVbo1BA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794825272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794829565;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=A3ukvFWFhNWmFFopbbfaSq/xOdXatkDIf/xF9wLwe2c=;
-	b=di+fBJCcIIGXIl+ozeJe9PHVsojTpf1p4oAk0jxvetEMjHEpzl3X+O9CT0itNE9y5tiR
-	 06oWROYW+RJXIJ3x8xQf/G2n6o1DGTmX2vd5Wo2pIHVBS1GBnBRTt6piV37VVFS0UTaV1
-	 ptIK6ve426xTuM4ExA6xcFrTYaOeSh661P+4TxmXcJb+XJp7+EZgMQYNt3qTdSV5pEJN9
-	 0ldjyPt92O8mBGhq2AfJBsPZ1bLa814zPC626BsUwm0p/wleVlDSDOiS91wVG1Iqzn3kh
-	 5UY3YApjJoYtA1cClt2rL0iHPukG/GPQ18IHYUET2Tl0AB3R2rR7/rA5RABiEp77rpA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Content-Type:
+	 Content-Transfer-Encoding:Mime-Version:Subject:Message-Id:Date:Cc:To:
+	 X-Mailer;
+	bh=H5mGfJyOSEvYnR54J5EI1phONYnENVSjAXsfhrfIoSE=;
+	b=siw7swBD9dgFfCTWHGUDAcKU2HKeS1lkekW1Ed7QeKOjWoleSYIkpYKAIcNPmcks3RSI
+	 5HqoX0X6gENhpEF8J+dGXBjomYJ7NwudlsWqBUu1k0P2O3nyFb8/e4qoiVEHp099UFSY0
+	 GWMz/0VvDDFRUl9RtZjS7anKUKkXAE/86oGNxJY/92NXru7qZ/4nvKeKpERkQ2tGmdmJC
+	 IlbhT9xmnRQOx4laZYo6FJGjbN/qeIrSEXgtZtGaFeYQRnatj0NV9bNMVpSjgC5DWM+s2
+	 ++zLSw4Q9qFhBmhEUIQ+mcHBu6cLY5RJuy54np24vOfQLVd0fvVonblT3lgf6mgoeJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o0i+pd4t;
-	arc=none smtp.remote-ip=209.85.222.171
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	dmarc=pass header.from=mergify.com;
+	spf=pass smtp.mailfrom=mergify.com;
+	dkim=pass header.d=mergify.com header.i=@mergify.com header.a=rsa-sha256 header.s=google header.b=tos43I7R;
+	arc=none smtp.remote-ip=209.85.221.52
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10AC606A31C
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 10:34:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C10AC606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475F3606A323
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 11:46:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 475F3606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mergify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mergify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o0i+pd4t
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-93f2b8cf037so372420485a.1
-        for <git@vger.kernel.org>; Mon, 16 Nov 2026 02:34:31 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=mergify.com header.i=@mergify.com header.a=rsa-sha256 header.s=google header.b=tos43I7R
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-48e46e449e8so2540965f8f.3
+        for <git@vger.kernel.org>; Mon, 16 Nov 2026 03:46:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794825271; x=1795430071; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=A3ukvFWFhNWmFFopbbfaSq/xOdXatkDIf/xF9wLwe2c=;
-        b=o0i+pd4tMmSZCKsbF/bJQh4gEu6tkAx6LifdDkev2QbtMlPzspN7j/qMg/X+mhAAC9
-         OqeXGC1GZQ0/dF9uBeacj0PxpWSMJLqMAo/WV62xzPAie01GmKQSKxTW69VmUXrfym8P
-         UmB72SqZlIEzRjnlfu9un1czup+EpF9sjRAT3M3OHl2zetvsr85bWtKmatOlL/IH/iYQ
-         KndOiSoGXdvMzaZZDO8NkArlrVyxWWtTBbOXQwQSQo8ZyrIQF7RuP6HzvY5fOvAMoHwR
-         0JVoj3yg8n21bOOFxvfCndhnMH4UvRZKADe43GfZP4St3qu0B7DSOYVpcaJFfHneA+vu
-         Az6A==
+        d=mergify.com; s=google; t=1794829563; x=1795434363; darn=vger.kernel.org;
+        h=to:cc:date:message-id:subject:mime-version
+         :content-transfer-encoding:content-type:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=H5mGfJyOSEvYnR54J5EI1phONYnENVSjAXsfhrfIoSE=;
+        b=tos43I7RMM7fZFQVeWvinu7YPgQIoNHPfLL6GzQyRPGGqgquKHOICQ/tPK2HDYfNKG
+         XuR0o2O9bQ2kV7gXrMq97dxTt7uOf45579FcZOoMyg0X9ottspjOgTHeITm60RpWa8QO
+         kcSi0UvZDRt0es/u+5Y8oC/YpILhOlzWjY7o51XyL/ijCCkv7IA0YfmW1l2ARyhdz3YF
+         f8cYe+S2e+DYGlxmTthDfFB5V6BnRVT7lvRaTSkEug71ufl8Qg59M8/kk28e7pnJc8V5
+         q2orNQnlr2ZYgt0xAPvqIj7Y70qEZcW8F4qmMqBqR7AZkIjygEvT0BS51JQPeNf3iLMz
+         6uxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794825271; x=1795430071;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=A3ukvFWFhNWmFFopbbfaSq/xOdXatkDIf/xF9wLwe2c=;
-        b=IS7y5Mbfwl7WWvGGlRmpTya5kz6Owe9GMqIvgn0BUNEOXYdWQDjDv0TLZ6uQbD2r4c
-         3Zg9wpmhVuvtloRWvVfiy1XzF5FUr1zshC+HesxITMzaTlxalalaKyADbsZYogObLJXy
-         xF/lVkGfvrFEuEKSHVs4AYwTj8Owwnx4tfvzdKDtKE4DIJ55e/tCJEP1MxhrccMmvuuN
-         UiQNYJIXGCRRDT7RFq5BESRlCcyUH3vHRiL227+bJPI7MwOfnAAQHdr664GTYLdr0hE+
-         sMavWj14hhS5YFn1wSjaQ1iHMv6E2Op2lIiD+idCSEnKwlpe+9A1/wR0KQQTlSV6hvow
-         VpVA==
-X-Gm-Message-State: APuU4Z8ZcM3jYaPcDfedeGpwPnXO3L0KaCxhVK1xLqiokq5j/V2VGtSf
-	Iqiz7nxaPQ2vqr9lZVBVSODxbYYUJkvt+bPMNfeIg22e31v9AIn6bE6druWxgQ==
-X-Gm-Gg: AYBFou2Z0v8l6Yy0Eze0zAjDYbyYHyJv8RoCbMX0yPDsXX2jKpaA6ow+Jbs1FecmtLt
-	MZo47clTwb4RdwtMEtOWA5FOt0zk1gcrbvMx3WJVpZll3oVjfj9dOlij4R56etY1pTcR8MBpN5q
-	JjwR+SA6WQkCZxQ8SXsqJJMCzK18EajY6yRjt8LskQkMeyS0vK1RYcNYuj6uJMEojsEJt5GwdT7
-	wToCph7FOuQb5OJUt2fkHko9dyKIwzW6FmewJJXoPncLSo1F3dSmTfQtpwLynX/LrS7w+tGrvwe
-	ft1WfZpcMWavQvgF/8cP63sTC3w/9RMj7QqJKqeoZdJVO8JfsmXRacrtEvJBEGY4cPxCvC3TqBY
-	c6rue3Xd39n78e4+nE8mw5ze3A/u5TNlT1RmYXjbtr2Ey6ae/kj7T3yDwrsLGANMBX24Pv1urvV
-	tRHkaKLmwZa/aALJ8mhEhUhu2lx/YDCUm93asMr/3jdRSTlqZFVnNaPsF7Mt5gg31v1WszTHIlQ
-	a77vX47vhLfv3Q/da6bMnTCX43ErKjvzAOM8sENbzxOXDaGOg54JH5qRVma0EfgmFAokuF42rST
-	dPgscH0U3y9e8Imq8LjYa37hJlojRT8G
-X-Received: by 2002:a05:620a:4503:b0:944:a46:5c1f with SMTP id af79cd13be357-9494bb5316dmr1647384385a.40.1794825270657;
-        Mon, 16 Nov 2026 02:34:30 -0800 (PST)
-Received: from [127.0.0.1] ([20.102.95.159])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9494c86c946sm822042585a.25.2026.11.16.02.34.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2026 02:34:30 -0800 (PST)
-Message-Id: <pull.2315.git.1794825269464.gitgitgadget@gmail.com>
-From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 16 Nov 2026 10:34:29 +0000
-Subject: [PATCH] read-cache: use istate->repo in overlay_tree_on_index()
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1794829563; x=1795434363;
+        h=to:cc:date:message-id:subject:mime-version
+         :content-transfer-encoding:content-type:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=H5mGfJyOSEvYnR54J5EI1phONYnENVSjAXsfhrfIoSE=;
+        b=XOB4cIuG4njgWo1v3V5FMuTi6ngBtWedKRZwWje0HENpQ81waShQtL2Ba6q3JIpaGg
+         KWwL51relSi9i6ZDxJno90a8+MAbKZb+iwsRxC7ydqi/0ksH5AudHLjG4fpzzzlYEdCE
+         Brrv0K/kOvBpDELjDd3cmw6kG10h7AgPGLFds1VVw+1NPLapK0LY0CzioR6Z6apzkB0Q
+         ke738Ay2ZEtL7jUJrJQXU+M/Wy5OxsNAzY8lP19qRJjA6SsFqfF5v4kgaFwy6L5ODu5C
+         xTNh6Q1vVWbNYmsd7S/GCWtqkHRLv+ROwwzYDgBg9o2z/lhf8laLDXzhIzRF8EsuBl0d
+         GxAA==
+X-Gm-Message-State: APuU4Z8ByBup5C3s8fMiK5Rp2OfF1Dc9DBDBMnjGetkTDjJa3/YVOB+4
+	ZPanwTU0W8YUafiYQ2SFm5XSBCawTAikCRuk5M2NjvmhsC0b/ya7TWbcC5Vr44GXknMvwj6V9+L
+	eRKvlf54MwyC+f5I=
+X-Gm-Gg: AZFdTZehm2adPChewLs4JDoeeK2GHWA2aQPvC3J1Fp2bYy2Rb3L2egYw3ir+AiIU+w+
+	XxMSNGFelXAJTq8AHsNhn2wxXuOVwvbb1JbZccx1PTT9t6OBc7J4gJsMCBjN9yOedNOsHAp8wT9
+	cA6A6oRbCA/zqu8UHmsIe47pf2ySEY9+nsX+S8T6SKRgbv90237GCJ9UvB2YzHo7xBvLtfKPwb+
+	4dmnL4EdPVk7skPkjRPF5XWWMnwEHXnNdhMW0zpXzyOTMh9QvRMXXM1F8bZO9rYPSx4doWVdIjH
+	BetRaD5EXufwZBWh7Hho/mC7Aqd3qvedmTafhud0Spjo482IUpBRLT1iMoygtSJxrH9TyecPZj4
+	dvkSMOOuaRm1td5fUasAh4Zae11zigx7AXJkz0vZTGLVPSdo4ykGDaawwt35acqdxrw0y+76uqX
+	NipB7cESsgWdqpz5r9J6oYZo2G6riNz3XU9cpVhlRNSIf5FMUncTwEMoUqm8Q1v2XbeA1vIkAWX
+	f+EP/jfINARu0ZskXfz3m/xts9zy8PL9ORjzBbZH5YIE8jwYXBJDE/tDw/lMTVaAZ2g8KBxDwLW
+	3CRi2h9I6jykuP6yaBRrsaMBziPAHsLA9SGdi2dwnKxJlJhLqk6i
+X-Received: by 2002:a05:6000:2007:b0:492:a2cc:f2f4 with SMTP id ffacd0b85a97d-49c72c9be17mr20388690f8f.53.1794829563373;
+        Mon, 16 Nov 2026 03:46:03 -0800 (PST)
+Received: from smtpclient.apple ([81.56.107.185])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c608d10b2sm36537252f8f.44.2026.11.16.03.46.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Nov 2026 03:46:03 -0800 (PST)
+From: =?utf-8?Q?Google_=E2=80=94_Mergify?= <remy.duthu@mergify.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,65 +91,96 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: [BUG] partial clone lazy-fetches a blob it just wrote (bisected to
+ 5946a564cd)
+Message-Id: <69EF6B53-E153-46CC-B7EC-536BEBE8CF52@mergify.com>
+Date: Mon, 16 Nov 2026 12:45:52 +0100
+Cc: Patrick Steinhardt <ps@pks.im>,
+ Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: Srujith A Poojary <poojarysrujith@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
-From: Srujith A Poojary <poojarysrujith@gmail.com>
+Since Git 2.54.0, a cherry-pick in a blob:none partial clone can try to
+lazy-fetch a blob that the cherry-pick has just written to the local
+object store. The server never had that blob, so the fetch fails and the
+command dies:
 
-Use the repository associated with the index state when
-resolving the tree name, parsing the tree, and reading
-its entries.
+  Auto-merging dev-tools/go.mod
+  Auto-merging go.mod
+  Auto-merging testing/go.mod
+  [bp fatal: remote error: upload-pack: not our ref =
+201d4490be49318c26485d10869070ae44d3e7ef
+  fatal: could not fetch 929ed29a43110d65cb7d581c4028e3f183088c3c from =
+promisor remote
 
-This avoids relying on the global repository when the
-function already has access to its associated repository.
+The commit itself has been written. The failure happens while the commit
+summary is printed. 201d4490 is the result of the content merge of
+dev-tools/go.mod. It is stored as a loose object in the clone, and
+"git cat-file -t" with GIT_NO_LAZY_FETCH=3D1 reports it as a blob after
+the failure.
 
-Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
----
-    read-cache: use istate->repo in overlay_tree_on_index()
+Reproduction (needs network access to github.com, takes a few seconds):
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2315%2Fpoojarysrujith%2Flibification-overlay-tree-repo-clean-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2315/poojarysrujith/libification-overlay-tree-repo-clean-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2315
+  git init -q repro && cd repro
+  git config core.repositoryformatversion 1
+  git config user.name t && git config user.email t@example.com
+  git remote add origin https://github.com/elastic/fleet-server
+  git config remote.origin.promisor true
+  git config remote.origin.partialclonefilter blob:none
+  git sparse-checkout set --no-cone --stdin </dev/null
+  git fetch --quiet --no-tags --depth=3D2 origin \
+    +refs/heads/9.4:refs/remotes/origin/9.4 \
+    8e9bf0673fe59a12c889b0c087319077c4138103
+  git checkout --quiet -b bp origin/9.4
+  git cherry-pick -x 8e9bf0673fe59a12c889b0c087319077c4138103
 
- read-cache.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+The 9.4 branch moves over time, so the exact object ids may change, but
+the shape of the failure should not.
 
-diff --git a/read-cache.c b/read-cache.c
-index 5bbfbfeceb..063ad523d2 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3874,6 +3874,7 @@ static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base
- void overlay_tree_on_index(struct index_state *istate,
- 			   const char *tree_name, const char *prefix)
- {
-+	struct repository *repo = istate->repo;
- 	struct tree *tree;
- 	struct object_id oid;
- 	struct pathspec pathspec;
-@@ -3882,9 +3883,9 @@ void overlay_tree_on_index(struct index_state *istate,
- 	read_tree_fn_t fn = NULL;
- 	int err;
- 
--	if (repo_get_oid(the_repository, tree_name, &oid))
-+	if (repo_get_oid(repo, tree_name, &oid))
- 		die("tree-ish %s not found.", tree_name);
--	tree = repo_parse_tree_indirect(the_repository, &oid);
-+	tree = repo_parse_tree_indirect(repo, &oid);
- 	if (!tree)
- 		die("bad tree-ish %s", tree_name);
- 
-@@ -3919,7 +3920,7 @@ void overlay_tree_on_index(struct index_state *istate,
- 
- 	if (!fn)
- 		fn = read_one_entry_quick;
--	err = read_tree(the_repository, tree, &pathspec, fn, istate);
-+	err = read_tree(repo, tree, &pathspec, fn, istate);
- 	clear_pathspec(&pathspec);
- 	if (err)
- 		die("unable to read tree entries %s", tree_name);
+Results:
 
-base-commit: 1891de46f79dc444a47db1c87bd0c8c76b5463f2
--- 
-gitgitgadget
+  - Fails on 2.54.0, 2.55.0, 2.56.0, 2.56.1 and master (7fb6055e67).
+  - Succeeds on 2.47.3, 2.48.1, 2.50.1, 2.52.0 and 2.53.0.
+  - "git bisect" between v2.53.0 and v2.54.0 names:
+      5946a564cd odb/source: make `read_object_info()` function =
+pluggable
+
+My reading of that commit: before it, a lookup miss without
+OBJECT_INFO_QUICK called odb_reprepare(), which also dropped the loose
+object cache. Since then, the second read flushes only the packfile
+store. The loose object cache is filled per fan-out directory and is
+not updated when an object is written. So once a directory has been
+scanned, a loose object written into it afterwards stays invisible to
+OBJECT_INFO_QUICK lookups such as the OBJECT_INFO_FOR_PREFETCH check
+in the diff prefetch. git then puts that object in the promisor fetch.
+In the case above, the base blob of dev-tools/go.mod (2070e6a...) and =
+the
+merged blob (201d449...) share the "20/" directory, which fits.
+
+To check this, I applied the change below on master. With it, the
+reproduction succeeds:
+
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ static enum odb_read_status odb_source_files_read_object_info(
+ 	for (struct odb_files_dir *dir =3D files->dirs; dir; dir =3D =
+dir->next) {
+-		if (retry)
++		if (retry) {
+ 			odb_source_prepare(&dir->packed->base, =
+ODB_PREPARE_FLUSH_CACHES);
++			odb_source_prepare(&dir->loose->base, =
+ODB_PREPARE_FLUSH_CACHES);
++		}
+
+This is a check, not a proposed fix. Updating the loose cache when an
+object is written may be the better fix. I'm happy to test patches
+against this reproduction.
+
+We run git this way in production (blob:none partial clones,
+cherry-pick, merge-tree). This hit cherry-picks in several unrelated
+public and private repositories, and on each repository it fails the
+same way on every attempt. We have gone back to 2.53 until this is
+fixed.
+
