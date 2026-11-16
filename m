@@ -1,117 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794834476;
-	b=qtWnJb+SjqgGeE4QA3GxSYc18zkXTltZAi18zf5fKNK9eHSdhpPsO70pwkDHD83BVi4h
-	 IK1lf5tPx6XxOZu2lrlgvXuDJ/Zvjwg9PEPqGIn0o5/8gaePgsfNGO3LWRAXRoA6iuQXA
-	 OiPWp7rENVp7IJbg0S6qgZ6blZGRIYki3grewoA8qidL9hzKEsK84N7Ft9y31j53+3FRt
-	 GKMJHHnIFpL4aVCsT915k/CraJF34AWohgPmqDz+ljdcNdvuLvLMGh17147q69TIh/ObS
-	 FDKM9wx4EH9Zb6C4B+XmMJDbAW1V8P++QCDemNur4eWXENNl64FvrKQDAb6bh0UCKuA==
+	t=1794834478;
+	b=fwB5E5AVkRuo/ZF82ecigdkKTA03e6vSvb7fvyOOLQ5Jg04DtptCzNdNMYnQexxAcI78
+	 SsqQn7hGv2hpMy+eOisdn0b/hCA4/ixtS21ddeioZ03ZTcQo+s3VbxzQI+jxywca5Y6Sg
+	 +FuAnuyVzSs23pW88SuvXvT5xWVs9KeRli5QYsxwBjrLrnDg2URWLJxkfUdenLlFkk2zi
+	 NmJiuF6tWA1BHltZeu44VAohXj+vDNU05lE9IIO2FA3sueqrHOL9Z5Y90xXbO9jBDDZ8d
+	 RDwW4mWlwRzjyx/kgKBp/tNOMInDJdgdla2XQQOHgK4bKINS4HgMbS6raY/qzxa7rWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794834476;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794834478;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
-	 Cc:X-Mailer;
-	bh=FsoiWjaADmfzAKQZmYU2gs3LcIdo5ieMXuKd6odq/+0=;
-	b=OCvTN9jB5Jh87+kHOSehSbzx4tjkXkZO9m1CpdaRwKL56fvtGjtvU+PzeRXi5oqE7nxN
-	 jzHnjo1y0KkWeq0Mjf4wqsKJB/u8lyXx2/eagzJiOyHr7zBBb+PuelPXKoEO8TXmLISSy
-	 Q2FqFKtdFYMv8q8+tyHhBBiDtNfAi4OBhvmbnYtipmO1Xdla+P6XRsRzl5TD6zW9K/gmi
-	 kGt5d94BhWN/M5cARsFkhL1CSMylItqjabUGkXwGrSO6x9Ntqz2mN/SHCUFr56Na6aGhP
-	 axrb8HFdMhxyiaUbpJQPtuMHHANl70AW92+qojomG9R7xFTs2b4JbUROOz1egfkUz7w==
+	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+	 X-Mailer;
+	bh=rDmaC9lIbs4ERVWVfSI9wQS1jPnQ1BMq5x0VSrPrSLA=;
+	b=wKoWcUYEBmVXp/QKflqyLD+Iq1eA3W3U45e4mQOlZcukDkpco3/Sn7vGFUyPcRqpo6mX
+	 7WJhx5c/C8bqkYeOq4jHj7tJwRa57sg/EGZ4unVX/AEIBjQ2bwEeaG5CROpr925E3GJS5
+	 DmagmPPwHH80G0dQ5tzS/u8si+Ytzfj/pqxILJ9z8xh3TSWmDpxdsQfYp0a8CABXgPAko
+	 bxDvJ8W1BPRALGmn7vlkMLmWHu1VKgFT20S1X4a41ZWI8fDfTZer7Bqi5GASqYIXI1XxF
+	 k8EtwagxLW+8sg5laeZRIOft5tEToyxis6ERX/0rgM2lwGgZYWN5SgLk2ulrwCbt30g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=V1qfZVpD;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=s2gmsMS+;
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=MpHGkuLG;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hND98Z6S;
+	arc=none smtp.remote-ip=103.168.172.159
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E578606A890
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 13:07:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1E578606A890
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C89606A89B
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 13:07:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02C89606A89B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=V1qfZVpD;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=s2gmsMS+
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 54B76EC004E
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:07:55 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=MpHGkuLG;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hND98Z6S
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1D51C1400024
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:07:57 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 16 Nov 2026 08:07:55 -0500
+  by phl-compute-10.internal (MEProxy); Mon, 16 Nov 2026 08:07:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1794834475; x=1794920875; bh=FsoiWjaADm
-	fzAKQZmYU2gs3LcIdo5ieMXuKd6odq/+0=; b=V1qfZVpDRFGI5m0aiD3qd9mxyb
-	mUq5Nw9NSzzIwH/GYOKMoeTKZ5UP/Iydjin5w2aEigytGOq4QZ8S4XzGfe8bWVO3
-	eQ4WQCACyvLi4E2oXZsXH6SsVUBgogYklUQo1nGeW2QG0ZuxWKbn23ZPwDYqDxrd
-	iXxUiwJU1cBu9mogi/mCJxfkT6kQhJsYQwjRRGO1wm5uesHsb6il3YhrRH+MWxZU
-	dcu7zo2WhEdQxq+lk/NhHjjBeyakflneat3FjpSjJ/skqf2kOXKCZgJyXITUzylu
-	MmbAYgvEEetmvLba4Vurmvu/2laKQVV/YJx3k9ZgM+oD/4fke4pl5Q1+WFUg==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794834477;
+	 x=1794920877; bh=rDmaC9lIbs4ERVWVfSI9wQS1jPnQ1BMq5x0VSrPrSLA=; b=
+	MpHGkuLGRjKpu/z/qdeFtS7jEVWAT7mnB17WKYNgpTlvEVYrzBPBOTEOGKTYCxWT
+	DrkPmMSx40ljTx2e/HqKyDEqh7Xf3nuc4IHI4UynHSvBfBAa0mb+F6lizcI7+d4j
+	DgeHp/sJkZNc3b8aOjbf8HVoDosY9UqbOquqAT+0uL7UJfAFEcEwSb422/Uj4Okb
+	RECh1D0uJSSYz9sOiVcvViiqjmPt2F7SRWl7OebqNKx/7b1+4FMFJoso4ubxeUfd
+	7NrbHFXqHbBprovTiqkjdic3C2VXelfZDlP8iTGP/1cZmoBT6C5V7R6uoUyZTpSf
+	A+qkBTyWQtUP79PnI8/GfQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1794834475; x=1794920875; bh=FsoiWjaADmfzAKQZmYU2gs3LcIdo
-	5ieMXuKd6odq/+0=; b=s2gmsMS+G2w3GTGTdpf7p2k2BWfwkp11wzT8i76PXtCo
-	gkleIDvF0v3BTU4s1EiWv99mBzFHdq3ATSrbrCy+O7NKfIYNP1plePGnEjnZl2aB
-	dLpdFX73GIsmYXlI7iTtGlg4MGxIBn9L3wMy0ovAFemHYcndcG2qUDjc9PLneaO6
-	9KCpZyOJR4UMi2FxX91F/L14t3oZskdkoEYx5b7DsexZbQxbJMJrnAW9SlhVAyuO
-	+TNK0aS9sdhWzJzQr7VHXoHgWGL0fiCvUkIGSHM4DrW7Bdfdvge1LMnziC2dG713
-	tpvOYD4RZkEDiI2WrpdVkXwwtTTV2Jht4mhZhA0g1Q==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794834477; x=
+	1794920877; bh=rDmaC9lIbs4ERVWVfSI9wQS1jPnQ1BMq5x0VSrPrSLA=; b=h
+	ND98Z6SqhEm55Z4CuMJARwO4s5lxbN0BpDD6db+c+gDspVIu/I8kkeFmChaOvrmr
+	N65MNDz6bxPShAZJ1k+vlFYNUrxXd7pUAsgxTGPSb59CR+Yz++fLBsNvOKcQJykq
+	W6GnCCO6hKMir4UguMpG4K5HcFmcj4lrbqhcCGXpAyVaj9aUVEE/ai5YDW5l9XTf
+	E+Xq+9NroI2gbiG+P7Ja5lmcLtRtWS/cD2Iu7qbwVXFWcPs/T86iLH32a0XbEAmC
+	xcao2i8XlpxtMFYWF6apFbONVxzFb1udZt2gfoEOs4uixp95Fk/ZrTBLMoMzlXak
+	7epKNWhR36Lk9j6Lvt2Rg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794834475; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794834477; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:TXYQRmaorb2SVyFzl8LYH/ngagf6ktWh4NMjkQQEAHb4/ho
-	ubSdAT2laKZAZNUHQoEXoq9I1CQBb/4hzbr8tXNVcRKIhbnTR8YghQMHt9Bc+0wa
-	3i73YQdiygGCZPZqTpoeVIl9X2X4UZGfcb3/30cNw1depyUJvmqN367MGDFuizLH
-	uKxxeJ9gfkNzesxV0ks9oFMaRLs7J6Lov3h7przJ3nbNnq7/F6Y7sDxLSw86Ej0p
-	KKiix5+NxnLn1IU7ohUpUcZUhY8NaAOpFZfNYSc4D2W4C4wzNVJGxu/dtp7CHnv3
-	+e2OuK7TrYqDVbATKqGVBMoN26P6IQgul4o3oZw==;
+	s=fm3:rsa-sha256:jZB368e9Fo6zQRRhgeNzgTgpSecBwWcxaFR7KyuK57325v8
+	nwVLt9JxsL5O1AgiXnrtznVQRA1p2tD7EKs5CAyAwex0T90lQgqt95zQ6uyv3mAW
+	S/s9jOR3TzldpePf1VJGwzG6JoL23M0MIjMfkK1KireqWJsAgJhznFJHjRB5NgY4
+	I+KSyZgV6XG9JlboArMWUdHPUhFuX+Wwn5QSuJUqZ0ukClSIVjkk7jP/jbPcHpmp
+	xIzLVF77Z3mCSkSj6sIfqf6kH9fywrrT/c3jsMwa81+N6sZrXW9mZ3K5zSImsZvX
+	1O0qkcAzIpBOG6ErOI+JAK6KcGV14ch05qgDE2A==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=10;
+	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,message-id,mime-version,subject,to;
-Message-Instance: m=1; h=sha256:AlfF/0VbkdcKTM8UKxDiR8jJA5y5plnZXYzaFHocFKc=:NKKj37ja+ijSwYh0yThHhAV+nz8eGdGt+FbPAFlYHAQ=;
-X-ME-Sender: <xms:KwD7ajhx023K6eZyaTt7WZVTuHJXM6eq1tJydSu9cBc6ZMHvcPrGUw>
-    <xme:KwD7am-Z_1D0Y3ENKkQ9CWVA8sLdNzoNQ74AomNf8AQ4n9Mfq18lDyEsPkr_mP9jP
-    S4MDRlqmIQYGJZgj4wCgBD3ylWl9iJx1Wbpa6QJSHaiTDRB1YvpjC4>
-X-ME-Received: <xmr:KwD7aot5JFEaO1TG-VFx3t4y_s8hEF_TQSPus9PBuR4qQBTFQcCN3Xg4sxHDYsEoh1pPJpM>
-X-ME-Proxy-Cause: dmFkZTGOMkV3rGjcK4M1quuJE+4/nblb/KBRgZEvuIJQDAPJuNAG5zClA3YO/x/iE7nr5a
-    SBuvq89tuXKr/HYM87QE/X2f/xp7D5iihS4DfbXpG1NDbSFEFfH4UtATf16/JP4a8pmTDp
-    9OuzGd+yG1d3BSRwZrA1WuOWIyLWku5gj4c3/nu+XVHcroapFJcY6lo31IMydeZPlzTcue
-    C8xKhIeHDdgNdvRzdFicSmZaPRr36gLoACXAEkR6CHhSymTEr2MdOTR4QHJVzb7soGh0VG
-    +kVh8quJJI8koZ6I/OEhdkLRUIrhynTKpdatV2mc1b1qmVF8H6Ukz/qqnBnj3l3Ees3WJP
-    nwvswc3YyyR8bjhJN3eXokpv5OfDU2lcs+dDrm4EOE8SFUFa1yEPjqMFJyFa5VLXPVEQFR
-    1tSs9dtN/vH4sVBrkuUPkSBkQoB7wB2WnOP5JV9oH83rleJR0NzTdTUNB1RIqfG29pSoW1
-    Casd7WCq/DsNDyuFXcK0PSkHvgPPqNc2y8Q7dyBBFhHgfxdPXNEJUCx5TDl0ZWNhnNJkax
-    LvmYw7eufm/vezpqQvpY8EEOKqsKZq9K2fY5tgsnHUyqxuPZ3P5JkY/xeALVIHY1K0leHf
-    QVoBi5rfqb5Q3F/e2bdzYB3Pfld3wJyImVE0whK/HI3T38Nc4eYsk2REaMLA
-X-ME-Proxy: <xmx:KwD7alYjVFCktJRnsrTxaczG_66a9r8GnNYpWGsDeLCoVDL0wA_q9w>
-    <xmx:KwD7agpF_5NVeiK4SHYupnCch31Kuj-hELU4SS6WMS3meAr-fjjaog>
-    <xmx:KwD7ai9Omm7s6dbAt9c9umJ8-r1RrWOCoEWAv_sXngVX5sRAtpz-lQ>
-    <xmx:KwD7an-NRJ5qBvGkmtD3tZIHNLInCtLVkvN7qdB_26tM5Zo5-pb19A>
-    <xmx:KwD7akj0j7K_jPOHTzolsM9S8XEW_zcPh4q6oUWxFYh3xqfW1TXrPulT>
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:cHf4UJ5JBEsS3gA/Sp8cyvKgFwFydrbhisOE0Btxtls=:46Ass7uz4yOzjxgxc5ONDsDZr6IsHJNbv77Oh4hy3Kk=;
+X-ME-Sender: <xms:LAD7aqy0MmrYLjpOezs7ePdTP7kOM0htc9CDOGd5s31eyy0LbCBu1Q>
+    <xme:LAD7atOJGSPTGMGf5z4avqBfV56yLBl0x4Qct1vuXhPWtmNVk1aDg0iR2CFZYTERh
+    yReoKlpv1-2PE3mga4NNtfZCMPIKO-3rKAjp6S5K8gZ0Zh5RDwm0DQ>
+X-ME-Received: <xmr:LAD7ah-sWWjaNrh2RDTTgXozjOLgVWb0OD_5wEpaFwrn6rWDb6L17i2DNy6wZdWCoSvE_Ng>
+X-ME-Proxy-Cause: dmFkZTFZEY3dRZaxYHKztVo3PV5exS7LC5so/OemZvN+WRzyMAuPxUkF0s8DXR9rm3sIft
+    TNy3msB44N8fedNp8OEKsFykHBMtYYTrfbK0L+IwZ5LKw3S98nfrCPUmkqNy5t4VRzNB1H
+    O1k+n5la66tVUCb3ERJIwzKtcyG8zt2k7Nq63bv8Bsb1mnjRJ95cbEfwctWmirTzT7W0Vv
+    +wbH8aDjSJMImH6U0aTopBPlpGclwtUfOlL0sb99rKBTgdFJT1iNWAATNvrbto6s5wHgrA
+    pyryLSwJgJXsiTvNzA0Sp3b/jhixtqv/ivz+VDrfFpK2d437jTBw6zWR21v5KA2lf8++nz
+    a4F28Aj/Wo64v66d792PtJlb+UyOav+2dcT8+U1KWL9as7fnDdTomSLztKIQkoNTVTHrzt
+    j5F5RJ/D8zCm4qi3NlaHi04kbzp8HtUqYIf9IINVWPOWAczi/WCK8+R2emC2N1eboEgWiI
+    bfcaXtIOME1wQNIbFJIjdeE2IwxjBpXjWAArj0YqxHPSjqhx6MYKjI2SXCv4rKvjll31r+
+    wHYpT/jhsyZobgWiU5mD1DNaPOZrOcuAxnCpHJ+arqTNHLhg9iiKX2O8XYvHkQPVyEMkpy
+    PTvWSIf+xAAhMfhiKEkNBcxe7KDV4wQBnU7BKgyAbJ4cTVc80OTl6y+pUdOw
+X-ME-Proxy: <xmx:LQD7alqk2_UfY7Q83wsEGBYVNjdstzEHc8OKXmT176msm7FQKnn8NA>
+    <xmx:LQD7ar7LSjRv7Uw_2qhtFx902E27GSHKVV-oxKWiBssEBiylZHRxew>
+    <xmx:LQD7atNguM-ptgis0L8P-FBfgX0artXLfzzdA6Bi4sMmi0ZyMtcXcA>
+    <xmx:LQD7alPVAWSbvxp_n3KjfVFAVs9OAKGA8D9Cp6guAtFyuMHlqOYRpw>
+    <xmx:LQD7aky-yb4P7OMLzSoCBKRfiW7LeYXLiQRoIdNlabH4_ahncH0VRp2o>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 16 Nov 2026 08:07:54 -0500 (EST)
+ <git@vger.kernel.org>; Mon, 16 Nov 2026 08:07:56 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 444468fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 698af524 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 16 Nov 2026 13:07:53 +0000 (UTC)
+	Mon, 16 Nov 2026 13:07:55 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 00/12] Introduce pluggable commit graphs
-Date: Mon, 16 Nov 2026 14:07:36 +0100
-Message-Id: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
+Date: Mon, 16 Nov 2026 14:07:37 +0100
+Subject: [PATCH 01/12] commit-graph: simplify linking commit graph chains
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,68 +124,172 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNywqDMBBA0V+RWXcgkaLYXyld5DHG8ZWQ0VIQ/
- 71pXZ7NvQcIZSaBR3VApjcLx7VA3ypwg1kDIftiqFXdaK0Vpkkweotp3kMwdiZ0cVl4w5BNGgS
- p865r2nuvDEGppEw9f/6H5+uy7HYkt/2ycJ5fP4DxmoMAAAA=
-X-Change-ID: 20261110-pks-odb-pluggable-commit-graphs-e9dc9674f0ae
+Message-Id: <20261116-pks-odb-pluggable-commit-graphs-v1-1-a83fc1ff0808@pks.im>
+References: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
+In-Reply-To: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Hi,
+When we load a commit graph chain we verify for every layer that the
+hash of the base commit graph matches what the current tip has in its
+base graphs chunk. To do so we pass both the chain itself as well as the
+array of object IDs that we have read from the commit-graph chain file
+to `add_graph_to_chain()`.
 
-this patch series introduces pluggable commit graphs such that an object
-database backend is in full control over where exactly the commit graph
-is being read from or written to.
+But the array of object IDs is redundant information: we have already
+loaded and linked the base layers, and as part of that we have stored
+their respective hashes in the structure itself. Consequently, we can
+already derive the hashes by walking the chain of base layers.
 
-An alternative form of this would have been to abstract the overall
-functionality of a commit graph and instead expose its functionality.
-But that would have been a much larger undertaking, so for now I decided
-to go the easier step and retain the data structure itself. But that
-does not preclude a subsequent step eventually to abstract the data
-structure even further if we ever wanted to.
+Refactor the function to only take the new tip and base layers as input
+and derive all the other information ad-hoc and make the function
+public. This prepares for a subsequent commit, where we are about to
+move the logic that creates commit graph chains into the object database
+backend.
 
-Meanwhile, with this change all logic to derive storage paths for commit
-graphs moves into the "files" backend.
-
-This series is built on fbd2d1e765d (The 18th batch, 2026-11-09) with
-ps/commit-graph-write-refactor at a9993c1000d (commit-graph: modernize
-function names, 2026-11-04) merged into it.
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (12):
-      commit-graph: simplify linking commit graph chains
-      commit-graph: simplify reading a single commit graph
-      commit-graph: expose function to validate a commit graph chain
-      commit-graph: decide mergeable and chainable layers by depth
-      commit-graph: introduce common exit for `write_commit_graph_file()`
-      commit-graph: derive layer infos from the passed-in chain
-      commit-graph: split out check whether writing commit graphs is allowed
-      commit-graph: split out logic to write a new commit graph layer
-      commit-graph: mark incomplete commit graph chains
-      odb/source: make commit graphs pluggable
-      odb/source-files: move logic to derive commit graph paths
-      odb/source-files: internalize logic to derive commit graph paths
+ commit-graph.c | 52 ++++++++++++++++++++++++----------------------------
+ commit-graph.h |  8 ++++++++
+ 2 files changed, 32 insertions(+), 28 deletions(-)
 
- builtin/commit-graph.c     |  87 ++++---
- builtin/fetch.c            |   4 +-
- builtin/gc.c               |   3 +-
- commit-graph.c             | 585 +++++++--------------------------------------
- commit-graph.h             |  74 +++---
- odb.c                      |   6 +
- odb.h                      |  10 +
- odb/source-files.c         | 478 ++++++++++++++++++++++++++++++++++++
- odb/source-files.h         |  12 +
- odb/source.h               |  52 ++++
- t/helper/test-read-graph.c |   3 +-
- 11 files changed, 740 insertions(+), 574 deletions(-)
+diff --git a/commit-graph.c b/commit-graph.c
+index da65cd3deb9..94c761907a0 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -575,50 +575,48 @@ static void validate_mixed_bloom_settings(struct commit_graph *g)
+ 	}
+ }
+ 
+-static int add_graph_to_chain(struct commit_graph *g,
+-			      struct commit_graph *chain,
+-			      struct object_id *oids,
+-			      int n)
++int commit_graph_link_base(struct commit_graph *g,
++			   struct commit_graph *base)
+ {
+-	struct commit_graph *cur_g = chain;
++	struct commit_graph *layer;
++	size_t n = 0;
++
++	for (layer = base; layer; layer = layer->base_graph)
++		n++;
+ 
+ 	if (n && !g->chunk_base_graphs) {
+ 		warning(_("commit-graph has no base graphs chunk"));
+-		return 0;
++		return -1;
+ 	}
+ 
+ 	if (g->chunk_base_graphs_size / g->hash_algo->rawsz < n) {
+ 		warning(_("commit-graph base graphs chunk is too small"));
+-		return 0;
++		return -1;
+ 	}
+ 
+-	while (n) {
++	for (layer = base; layer; layer = layer->base_graph) {
+ 		n--;
+-
+-		if (!cur_g ||
+-		    !oideq(&oids[n], &cur_g->oid) ||
+-		    !hasheq(oids[n].hash, g->chunk_base_graphs + st_mult(g->hash_algo->rawsz, n),
++		if (!hasheq(layer->oid.hash,
++			    g->chunk_base_graphs + st_mult(g->hash_algo->rawsz, n),
+ 			    g->hash_algo)) {
+ 			warning(_("commit-graph chain does not match"));
+-			return 0;
++			return -1;
+ 		}
+-
+-		cur_g = cur_g->base_graph;
+ 	}
+ 
+-	if (chain) {
+-		if (unsigned_add_overflows(chain->num_commits,
+-					   chain->num_commits_in_base)) {
++	if (base) {
++		if (unsigned_add_overflows(base->num_commits,
++					   base->num_commits_in_base)) {
+ 			warning(_("commit count in base graph too high: %"PRIuMAX),
+-				(uintmax_t)chain->num_commits_in_base);
+-			return 0;
++				(uintmax_t)base->num_commits_in_base);
++			return -1;
+ 		}
+-		g->num_commits_in_base = chain->num_commits + chain->num_commits_in_base;
++		g->num_commits_in_base = base->num_commits + base->num_commits_in_base;
+ 	}
+ 
+-	g->base_graph = chain;
++	g->base_graph = base;
+ 
+-	return 1;
++	return 0;
+ }
+ 
+ int open_commit_graph_chain(const char *chain_file,
+@@ -652,20 +650,19 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
+ {
+ 	struct commit_graph *graph_chain = NULL;
+ 	struct strbuf line = STRBUF_INIT;
+-	struct object_id *oids;
+ 	int i = 0, valid = 1, count;
+ 	FILE *fp = xfdopen(fd, "r");
+ 
+ 	count = st->st_size / (odb->repo->hash_algo->hexsz + 1);
+-	CALLOC_ARRAY(oids, count);
+ 
+ 	for (i = 0; i < count; i++) {
+ 		struct odb_source_files *files;
++		struct object_id oid;
+ 
+ 		if (strbuf_getline_lf(&line, fp) == EOF)
+ 			break;
+ 
+-		if (get_oid_hex_algop(line.buf, &oids[i], odb->repo->hash_algo)) {
++		if (get_oid_hex_algop(line.buf, &oid, odb->repo->hash_algo)) {
+ 			warning(_("invalid commit-graph chain: line '%s' not a hash"),
+ 				line.buf);
+ 			valid = 0;
+@@ -682,7 +679,7 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
+ 			free(graph_name);
+ 
+ 			if (g) {
+-				if (add_graph_to_chain(g, graph_chain, oids, i)) {
++				if (!commit_graph_link_base(g, graph_chain)) {
+ 					graph_chain = g;
+ 					valid = 1;
+ 				} else {
+@@ -702,7 +699,6 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
+ 	validate_mixed_generation_chain(graph_chain);
+ 	validate_mixed_bloom_settings(graph_chain);
+ 
+-	free(oids);
+ 	fclose(fp);
+ 	strbuf_release(&line);
+ 
+diff --git a/commit-graph.h b/commit-graph.h
+index 2156499a688..f0e7cc93461 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -128,6 +128,14 @@ struct commit_graph *load_commit_graph_one_fd_st(struct repository *repo,
+ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
+ 						   int fd, struct stat *st,
+ 						   int *incomplete_chain);
++
++/*
++ * Link the commit graph layer `g` on top of the chain `base`. `base` may be
++ * NULL if `g` is the root of a new chain. Returns 0 on success, a negative
++ * error code otherwise.
++ */
++int commit_graph_link_base(struct commit_graph *g,
++			   struct commit_graph *base);
+ struct commit_graph *read_commit_graph_one(struct repository *repo,
+ 					   const char *dir);
+ 
 
-
----
-base-commit: 0c2ef2cc2023eab2fe8bc54d542fe4f93314f186
-change-id: 20261110-pks-odb-pluggable-commit-graphs-e9dc9674f0ae
+-- 
+2.56.1.763.g16177fe143.dirty
 
