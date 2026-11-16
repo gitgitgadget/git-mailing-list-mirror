@@ -1,88 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794845748;
-	b=rMrxo3k5WbRagtkZnAUir+LGPUpvqOCg1FdJE4eMb+qgfW44QuO4IHUQ9z1jxO8Yf+fZ
-	 VrWJ8f79O0wIt4AK93AmRaDLDDVOlcsqqOkw8GoO8o47/zzeR7FxzZbrUTVHhGiBgaj1a
-	 xnfzcI+tAyRN6IXDWrQG1eMJ1zVARJ4kpOTmvU+4gXJMay1tbIJH4heKc6F/ywcMq+b5l
-	 V4rB6UTrZ15h13YHcbh8Z4+ArO21NG7cfxtvcezswM8EU2wjs4CNqJNdhRTcHvH8/ws5B
-	 Y2D7W4+9Qw9tbx3xiZ6fHjAVsbC7jcR2DE35pKT24/zx+baf/HnIYh/IceQRmSFdr4w==
+	t=1794845761;
+	b=ROCt74Sman1TOPho+zwt17/SF2TP3UpxrhI3+SYszQCt5jynaAUHhiiI/tea5RLtaZ28
+	 rSgA1c0XF6BjCIMD6AtjwF5XZbuOGJ3nJrSjAvpwCDP0tRZqHmNxqTJzjhL/KJFEz+Ynb
+	 XC0M5qV7iPK9SQthru23XnvwY+MkuUIQMM4pIjQZKOhTr10njHYOT6wu++J2dtAUeDBok
+	 3a24pSTh1PSMVKbsRL7JHJR5IEiW9ef/q8jVPXqZBL3rqm8Z5XwfcsoZytW5nZ0WeGZz/
+	 jHgltJqNqvWZMqhTzlxoDKRr7NNWP77luDxz2MzwYB+nl2nozfT5z8DsRLEgjIGftJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794845748;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794845761;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Eafmhd/gPrkzXJwFjbNjGHpfwpq4Z5QrRuy7AE391aM=;
-	b=uQKJaILBGsROdo4Iw2WC3S+kOxj8mxQUtEAUFB3JQa7BItZgf9t0aTT+wXBRstocbmdi
-	 VAdafwAY7W7J6sOVmwS7wuSmoVHFSs6T6ILL/Vvhdo5f425Av//zHmO9ekQxyvOaGFwBP
-	 UDIS9eA9Lff7oAMtRnw4ndlIV0LUtXcTEgDsFHj3TDMh1dj4xQydNapPe537D8PM5mL33
-	 Wrg/Edvg+e7v+AhoSLthzBhczSaBF//dkCUXJ6gM1vsBMaw5dMnz9ZlA1uqGjY14nTp6t
-	 p7G1Gvi3FM3hatbAYLoyHhzWd8xDgJRKt7Tw6dEI9NHykCmCeRCOakEAsdEe6k3YJcQ==
+	bh=Yc1H39fSAeXAXK0T2+12s5KBmAgIiQzTXOatzWYOPuk=;
+	b=HjPSkcSVWx4wiTBYts97xFQ2A/OlpGuLzBhxe5jk80aot6gj42WJ2glOttmrmZ6/iBhO
+	 UEAuMgcHEu3du7e3sm5OE1zHZBiiK0KYej1FoP3qtxUjDRcnjSmT7TBcXvtzGVarrAjD1
+	 G0HB2lLbr6GgV/MMbtCR9uyZzbxH8n3FWmUurQtqBUpckvbAcaApa3zmqIkIOvfljoobA
+	 NnEbjgnCgMssUg/SRLX5Sr/FDFsNvRQI8webA/KJ/NJM3qm4LHXzjza1cBbGaFlCwtTn9
+	 6m5SpLLtewfYi7Hs2YPNyBEf0PpCVRiJzCrf3MMip4m8yPmsK8dKGm/REWUfFF0r5Lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=jaspermayone.com;
 	spf=pass smtp.mailfrom=singlefeather.com;
-	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b="k/wgMyBi";
-	arc=none smtp.remote-ip=209.85.210.45
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=DvIbk8QY;
+	arc=none smtp.remote-ip=209.85.210.43
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576F4606A31C
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 16:15:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 576F4606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8975D606A323
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 16:16:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8975D606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jaspermayone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=singlefeather.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=k/wgMyBi
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-862a5b64755so1206273a34.2
-        for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:15:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=DvIbk8QY
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-833e671ee9fso4743741a34.0
+        for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:16:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jaspermayone.com; s=google; t=1794845747; x=1795450547; darn=vger.kernel.org;
+        d=jaspermayone.com; s=google; t=1794845760; x=1795450560; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Eafmhd/gPrkzXJwFjbNjGHpfwpq4Z5QrRuy7AE391aM=;
-        b=k/wgMyBi28Qr0q8qUr0R118NVJ4/e673FhCjSgr8yUpLicc1GURjZuUkBqlSGzmSqa
-         fHH+mSnmhXo0KF4n+GZcvo9eiEQx+2qyC5hhWMN6WZFPI1C+yQngYiVcoVUCni1OYXDe
-         yei4BIKZQ9JPcK8bciWiDh7kf4mSlAYmkZhScb44A8EYB0CWHN1kD2IOXoZzNQTpQ/dm
-         Ec+G2KpsLvN84b3bfcAgM9ZHikeK+EO2cFb9eIXMB/2yUSMoovU26uUdXNBidHmgTH6c
-         Hjfze1XiUnKHFBeQ4K1YCXNp/bFCvTX7N0ed7o9Tu7DCZGJsS+4GAjghIB8d+LTLJ+Y2
-         xF3Q==
+        bh=Yc1H39fSAeXAXK0T2+12s5KBmAgIiQzTXOatzWYOPuk=;
+        b=DvIbk8QYP0Us/lXReorYsYGC5oA8x9Rq6hSrNhXGxorCeWgvQq5IEBGxV+2i4P8CcE
+         T2TIjE8boChnG0keRrbqzPjKLYZuM3ARgpkJtCTK6QixfAJHD5/zNF3q1FdE5SlbvlaF
+         xjDk5PZGmjAiphuZq0CzXmYG7TJQHTbJUlCGF6WLC/I2aIydNGuDsA0sTIxG7/pGRzBS
+         4wyXg/PG9Byc+PTpEKTu+vyKfFyv2Amp6suwni638F76Z/WdnfJgGF8kPiYPtkjd00pk
+         rtSm5+LVVieiqG5aL7Fkmj5wXjvH3nKEk5w0fDqky7rxwHq5zqVlcPs2UX1X4RlR8F8a
+         1PIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794845747; x=1795450547;
+        d=1e100.net; s=20260707; t=1794845760; x=1795450560;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Eafmhd/gPrkzXJwFjbNjGHpfwpq4Z5QrRuy7AE391aM=;
-        b=mobGNlglbDnoZRQ4hODGH6waSWLVAwpsOmWBSDUQI3UI3IGhYjsMICtYotsoBcbonw
-         iTIv5kHRUsR2O7cCbNBF1xJ+nuOFUpUmuB7qjtFJqUYhQocnrTqap/sXuBYg7pa9wJ9k
-         w3ixWySrebu+AX1rE+WJ8iyAoStyWm7cUboTKGaHFYiCBT/JT4hb6Hu5qJz2GlwSdGlU
-         XWMADb+D4LfmgbDZOeCTlDqesZby+cO/zn3Jw5LAIHX/5dIQMCH0W7Z85pNtsRDmTf6N
-         vAY1Cp+I8P2wuVwV+dfXJZpqEpDCa5mrfcZLIREyRQ0A0xIiG4aBIZf+TB0tAwI1l/t/
-         Q9aQ==
-X-Forwarded-Encrypted: i=1; AL+hErGCOHj0duTzZPK7PoPEIAPVydVaPl9O9ecN9OXVqBuiLSMYNOqeuq6BhFFayqzu/CJijOY=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/BSWFwrHseB2PqOppRFu9detmuBtsRzFea4lECDUCSWLS4OVAj
-	A2aroyhNjNWMpyQacmgbV+zH+4gLrUvZ6IU5G0O3xnzHoOfyoRmQ0KVE4ltnkjODp+qlwtCu+xi
-	22/0U0CwJ8035snObTFPxQt3StvhqFBQJdyYQUI+Sj1SENZgHWTtfsLW9GLGlHq79zbAT9luY4m
-	YFBLJpTKlCJqLIzNOg6HUwdkzfI9q1QwQ=
-X-Gm-Gg: AYBFou13TPTKTebr5YwmIWElisVgGXltfcy6AsvGwT4cGUpqxWRTcma/Nr76UoG/LWP
-	YZmjrKk04GLtLUyI1IG3Kt/H8FODuXjQucPRmKISihxd/y4kuWoyg+NZj79xTVtBdyavhphQXA6
-	8CHvf0GsUyYKVPdENFSpf4Xb7owHqLNb6OSHn7SwMv/sZ4cOFoCjTEf7kkaWL2T7/z9HchlK09I
-	Sl5XjQlQWuRqTS6BmACGoccuHwoz/dOM/fvy567cBOA/3gHcqiS8YTsHxJ84qGnc5PYRU4WRxnf
-	RmbU7H77l8T0i/0IjW4kJ7AOXfyB425a/qvg1fFdfHAhF7H5Bg3zxf7wk6rsTF7dXNrP1fGkkVe
-	ugSXlaeW2ZymypHW00pWjx+wuJktYiRNmjrX8VPNlhs/xUzoaEl0e5PKZu0ChKEsqZfmp1+IFkR
-	5Mznpj3rUpEyK3bTQuckcRsF90T30x45md+F/jUzzKt7ybDg6FktKGDB/L9Qsr8U6URgwI7YtV1
-	2Lxt5TTuzP7PAvgQWK8+UrwVdtk18dK7h3EcDJcV3iq5E5THHArBddnwQAX70dyRn3C/ssjzOCs
-	LP/8JjICgo1f5f118Py2zz1fu1hCZ1fMN18YgP38mNIJAUP1glxjANRZKWkrk+VM2FZ81IW+ZxD
-	UUOcU9Q7vD4QQwi1mmNjQicocqUq+pImwOdQxZymiw31blDOg8rzipYcqqcIrfVlrsANye7dKQU
-	aCMm9rp1M17yVuBXysAno36bhAVwjggcASU+yvXN+8M8TgX6RFP1xi2f9QJPd1ZQLdUnYbEXJGd
-	P/30gvxrudTiWBWZlTaBZY83Q0ZbVUG4ATKa8mX77P3WmfKhzuQ
-X-Received: by 2002:a05:6830:2e13:b0:81d:c548:292f with SMTP id 46e09a7af769-8628982704bmr12884839a34.12.1794845747122;
-        Mon, 16 Nov 2026 08:15:47 -0800 (PST)
+        bh=Yc1H39fSAeXAXK0T2+12s5KBmAgIiQzTXOatzWYOPuk=;
+        b=j005IJT1pDto/QiDBMpWYL2Dbs5PgMI+X9zDTQQDSgcj3NZ4pIHgW2zgHq6KVAd3tJ
+         yI/n8Nj6AMtbddjb0lqdX+Nx1un6+woIIOHWQdChJfd3uGscI+vUH6oEYtRIB6Lfz74y
+         M1yclg1PAP6S5v33CXrNOuGD9/9ByvuCIpgmThatrrGiqg56mD7BmYZbEePME5Tew8cd
+         mcHVVsALVVMWKxVMd/0jPZlmpymYjMi1Hn2Q/qduruPazynuGVPVMF7nmGxImWFtDbCZ
+         rdELpGmoQ1bsfkvlSMFlU039Qrjx2f1ZGN680xg4f4fLEu4hHfJx/evvvBQSLhHPPt9M
+         bWFA==
+X-Forwarded-Encrypted: i=1; AL+hErGijs6QjxdN74qsPiJUcdAub0lLLxQwQ/fGuXH6ytbemjRQLsLT8HFFdukPyUJdYO+aHH4=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/CcMBtSdTPqHjslXaFLny+l6GuOEm2xv0qZcIxPaCBdYxMT4E5
+	m32NhopB1eZcORckdJRfEGJRYp3fF8SQI4qTL/4mNGRtqmFi/6Chz6KDsVP5wcc6isVKErZHyUZ
+	7WUMFGOCxc/eVz0rfyP8y0XdUP5gkYtdEjKew3jujLoRI/O3kg/ljboFo820b3E2R1mmcLj+ro2
+	mpfA7Rv74R1Gsm0VO2JWQkYTqfh3mNxo0=
+X-Gm-Gg: AYBFou0aBBEnW4NujBfERm/5p/LwhJYlvxEb4xHvn83DY2ypuRC2Xw70D0Vh2LOz4jb
+	8B4ysQ7AZhdjAzKE1tfS6HoRH0EW9ayUtcijF7QiZhihXmMFY+EKhcne5B4iyn3t3R0YqAq5QYF
+	7IFFTB9nDNXXsppsHMjoYKHQ8Q4A5J27K9Vloay53raPc+VuQu0KhpRYTi37odlBeMJax+YJAta
+	OGeeQgPTGYOIn1KMZYrDHeeDRrDifc5RCkim1QL/Yd4s2B1SQkZ6jg1Rjz9ev2IZCTVf5Gl8/nP
+	hIid5gsr6W8K4SxeiPgDGzLYTa+2+eWG47HLlFFjFNbHG0asgJhzkReBy7I+xTvZi2/6SqKKneZ
+	KBCRehTjVDpAyD9Mlax8+FdXGQjJssiP7Z8y02pK3WE/Aj1wvOlj6UvrNYrtoqIMQvIBqm5t/Xa
+	xdzhOAT7t/wpM8OdHHYz+pEgsWP3hsjp6uGl3vaSeKPTufM9bdcD2OGN8nrX1hW7mMICe0dvgRF
+	f3IbUHWne/I6TGgfxcL9w1ZwArm7HS7f8VLrsoyEW9Uvzo5oAsaagmeaZ+MLpUpkEpzouQgZwB3
+	kTo4CtlerQ85hlZUIOO7pdGPtBhqUcgnZ7qX831kxe1J/RxJEkRfD0WDI/aDh//k5WqMhqKPP+M
+	WlwzzJV3FyN9FqAkwvK0Bs0TtdP+zAadbjnewN+I7vAgEuOYo3MokJjLfiUFEXHVXkPfonJR0A1
+	kuh2izXN5ZL46LN5iPnfQvKrJDyPr/kQ64b8Fk+BzqORmXGc2AsNvBEiuFJAEg84RKU2On4v2pW
+	t/5dKS483aJjNhRSezpZbBNf3SlJ9VIEx3+EuKmnnSviWj2UyWY
+X-Received: by 2002:a05:6830:91e:b0:862:cc8d:abae with SMTP id 46e09a7af769-862cc8db12cmr2927535a34.13.1794845760365;
+        Mon, 16 Nov 2026 08:16:00 -0800 (PST)
 Received: from remus.wildebeest-stargazer.ts.net ([69.43.66.31])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8629dede41esm8967960a34.16.2026.11.16.08.15.45
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-862d68aac75sm1048634a34.23.2026.11.16.08.15.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2026 08:15:45 -0800 (PST)
+        Mon, 16 Nov 2026 08:15:58 -0800 (PST)
 From: Jasper Mayone <me@jaspermayone.com>
 To: gitster@pobox.com,
 	git@vger.kernel.org
@@ -92,12 +92,12 @@ Cc: phillip.wood123@gmail.com,
 	--cc=ben.knoble@gmail.com,
 	--cc=haraldnordgren@gmail.com,
 	Jasper Mayone <me@jaspermayone.com>
-Subject: Re: [PATCH v5 1/5] worktree remove: refuse a worktree in the middle of an operation
-Date: Mon, 16 Nov 2026 11:15:40 -0500
-Message-ID: <20261116161540.55855-1-me@jaspermayone.com>
+Subject: Re: [PATCH v5 5/5] branch: do not mark the branch the current worktree is rebasing
+Date: Mon, 16 Nov 2026 11:15:53 -0500
+Message-ID: <20261116161553.56756-1-me@jaspermayone.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <xmqqld6wblrm.fsf@gitster.g>
-References: <xmqqld6wblrm.fsf@gitster.g>
+In-Reply-To: <xmqq8q2wd0cq.fsf@gitster.g>
+References: <xmqq8q2wd0cq.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -111,51 +111,24 @@ Content-Transfer-Encoding: 8bit
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Having a central place like this is a very good design to keep it
-> extensible.  In addition to "git worktree remove", we have
-> protection against checking out the same branch in multiple
-> worktrees.  How should this check interact with the checks done in
-> that other code path, if any?
-
-The two checks answer different questions, and I think they should
-stay separate.
-
-die_if_checked_out() asks "does another worktree hold this branch?".
-It goes through is_shared_symref(), which uses
-is_worktree_being_rebased() and is_worktree_being_bisected(), so it
-only cares about a rebase or bisect that names a branch.
-
-check_no_operation_in_progress() asks "would removing this worktree
-lose state?". That is also true for a rebase of a detached HEAD, for
-"git am", and for a cherry-pick or revert, which hold no branch.
-
-They agree where they meet: while a worktree is rebasing "topic",
-"git worktree remove" refuses it and "git checkout topic" elsewhere
-refuses too. After "git worktree remove --force", the worktree is
-gone, so the branch is free again.
-
-You asked the same thing on [3/5], so I answer it here too. The
-detection overlaps, but the result does not. There are now three
-places that read the rebase and bisect state of a worktree:
-prepare_checked_out_branches() in branch.c, the two
-is_worktree_being_*() helpers in worktree.c, and this function.
-prepare_checked_out_branches() records only branch names, so 1/5
-cannot use it as it is: it would miss a detached rebase and "git am".
-
-A helper in worktree.c that reports which operation a worktree is in,
-and on which branch if any, could serve all three. That fits well
-with the libification you describe below:
-
-> In the longer term, I think it would make sense to create a single
-> helper function that checks if the worktree is in discardable state
-> (without dying.  Just return an error code instead), call it from
-> here, and have call(s) to die() here.  Then move everything below
-> the callchain to worktree.c one level up to libify.
+> that I would appreciate the branch currently being bisected marked
+> as such in the list, together with any other branches being bisected
+> in other worktrees.
 >
-> Not in a scope for this change, of course.  #leftoverbits.
+> So, unless I am missing a use case this change is trying to cater
+> to, I am a bit negative on this change.  If the [4/5] were solely to
+> support this step, then stopping the series at [3/5] might be
+> sufficient.
 
-so I would prefer to do it as a separate series on top of this one,
-if that is OK with you.
+You are not missing a use case. The only reason for this step was
+that the branch shows up twice in the worktree that rebases it, and
+with a long list your point wins: the "+" line is the one you see
+next to the other branches.
+
+[4/5] exists only to support this step, so please drop both and stop
+the series at [3/5]. Your comments on [1/5] and [2/5] do not ask for
+a change in this series, so I do not plan to send a v6 unless you
+want one.
 
 Thanks
 Jasper
