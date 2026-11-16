@@ -1,128 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794815225;
-	b=gA09lvXbQyyFHhCFye3UDFiYk5pzT0LDS0xWac1HLD3YPnpsZnkoC49xrK/YrZHFoAZa
-	 80G4+12TpJN7Yw+wtLkekLhXuLk3tWoFtbExj3imPjJP50oRhRGW1QRyakvQHD8pk3/it
-	 I55to47RcAIXhjawyALTJp33Muu1+NIFXayjEzm2BlvoPeP+ZwkW5YcR9Eo23Pugtwz4E
-	 O/1pWuJAFem/p8wVrpSRUG1ut72aroW9TZTgRhuEab3mngamaMH3FHNUz5rtF+XQ2wWdn
-	 B+IefQRJsz6ovSrDJha4C9MOlADften5quLquxlAMZAeKReNUWDnYuzFaI2Rwgzg1lA==
+	t=1794815848;
+	b=VYys+ctQwe5vZjGnE3oDG2lfXqDnwVzKiREOYtf/ZXlOv0KH38DWStYIApnna6lAdaYs
+	 nHvmF4qEFu5O7rnIH2nNTg7qNszWeg5//YRxweAbBYxiI14/wHneER68S0DnNVfAIgQN3
+	 k0k/1cxgchNsFUTlYraGaseoKr2xxcuBzBZTauIAQSdcg+z/Udt2+iReKte2GNf+DvJl2
+	 7GZZf8rBXbLNQRvv422fWNSlIMZHq0/DAVmaDlGWq0EKcKo+Nb5Q6EvXsSNhd8MG4HDK8
+	 lRP8nN3LYMxTL89xp3RrDVl7lFAltHr4BcnTB+5S2O/am2Edi4HfPXoPm3oXpItQd8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794815225;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794815848;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=WF4QKfEmgxbaImD0viSQlB8CdU2SrxiaoLhOvvAqwyM=;
-	b=wGCIzKYHXJ4GttYvdShRv1RDf3a3RyYh0q9e2RedWur2x9mISl5ELelxkyVwCRaSB/G2
-	 IEZ32dDMVlajgM+/05/bO8z6xkYCjOVnVl2enXtpEhE+1w1ZxudlK62VexjGwjy2yvfvj
-	 Uc+aXi3a//TGv6RAPecQ9Pdi0ffAGjOLb8YoqWif2wKxNs3TT1FlExffq6AuWpwZXpz6W
-	 oYbzx3CEsVCGjJjqrvmFQyNY5BSuLdS/JJq+MYFjrpNx5SvwPA8Ux7ziNxbz0daiHCk0S
-	 LnBwWFRdKk+zi0MPmoWjHhUCeT6T53796aiBz9hIp+BT62309xwEmKGbQi25r2UgYBQ==
+	bh=uxC4znurNDtN5MB2cF/69AsEcjVDwDmmiwMp6uatgGE=;
+	b=gFtAGIuhYk2BCUnDgQ7593EcEZin8XjMwxII2Ct1OnEz/LbaQRfsKaSNO1h+FKbLK2DN
+	 kLku2OYcgkTB5l+YgPJlvPLPOzrn8M3RT0VB8dly+qsgJ0n0LObeJh5vcoHA2EznUuUA9
+	 /b1E/+nrxzPvkkY6cnEkcVt1QH0f4eXcelnJFF8i9njsFwOhyzmIjRp6nStObiKIcEgiJ
+	 M3foKt5+pS3DkViZxpMuYuHe85HtqTF0V37hDq9EcA2x5ZrOI5LGL1NpT0evHZD18xEkx
+	 rX+ltx89tGkLoc+hzu2ORvtVIwYYTOGP1mpzDujMh9FQnRK+RS2iwotVlPdwtEhR/iA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=BMrZ2fVh;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Ndn1jYxU;
-	arc=none smtp.remote-ip=202.12.124.144
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=QiaB2c2l;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="DGj4yQh/";
+	arc=none smtp.remote-ip=202.12.124.158
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F356C606A323
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 07:47:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F356C606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A92606A323
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 07:57:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2A92606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=BMrZ2fVh;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Ndn1jYxU
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 54A8F1D0013B
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 02:47:04 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=QiaB2c2l;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DGj4yQh/
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B8747A013E
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 02:57:27 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 16 Nov 2026 02:47:04 -0500
+  by phl-compute-05.internal (MEProxy); Mon, 16 Nov 2026 02:57:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1794815223; x=1794901623; bh=WF4QKfEmgx
-	baImD0viSQlB8CdU2SrxiaoLhOvvAqwyM=; b=BMrZ2fVhviCYJd/oj9XMaAxyPU
-	6iA82r7NrPknqJk9aHofdndRn/ODYyDoTHL4oRWJj9uB8vNEjPZbUoxziib7c6gL
-	u3SX6E9q0jkENJWjljsJRLz/0ZYMhOuR/Hk0ahLrRLlnNlyvsJdspCLNphZfzFji
-	uc8+RPcI1NBFk3S4C0Gb2xQ4hL2OgQxysNm+T225SBCU1IQcw6yvGq26vr7iLDBs
-	Q+H7NOgimscE//5dAOLUb93ZpU/hNN3DiOzegc68uSQqGEoO65Ld9twKylxgEDHt
-	L+yUlEeOYXxcBbqOrdT6olDAm8UKGDL7tfNckQzo6twmx5ZRiM1022uqa4lw==
+	:subject:to:to; s=fm3; t=1794815846; x=1794902246; bh=uxC4znurND
+	tN5MB2cF/69AsEcjVDwDmmiwMp6uatgGE=; b=QiaB2c2lisxKj7cuEt+xWhKAjy
+	ANcd+IsaTovjiQDCmC82h4ZchtVpvptYrmeIvFy1zIfAaxk0Gk7E/QjxmUrdtIi5
+	hwEOOsN3l604jiTbevvQngQIECpuhgAsIC3FrT58b/b8NahUJ4uVr5E0R0On2gcV
+	bkIMb/tWvH4vUA99IN4999kiRGx93RZ7JYrrBvFGYtCJXrNwbbEIwfQWDLAHxsOG
+	KjaxqrI40Xgi0NyoQtduNwXvHK28Rr8y6WNGbxLQJW28XlQLhpC+GFmuNuwiuDGT
+	iFAGEaSV1ZH00PGJhhptjbOBXEsgtRfAs+dRu2vD8/EbylIF8AXPSjPxbKuQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794815223; x=1794901623; bh=WF4QKfEmgxbaImD0viSQlB8CdU2SrxiaoLh
-	OvvAqwyM=; b=Ndn1jYxUVnQIgH3tnVXCD4m2drcs5R3tbtEl8yfUBFcahWhxJmQ
-	ULZIMDqIzbVeSIRLN++NXjCp1fpKDS+Ad1ocAcz4f4tEwBHQHeikCmERDzcStyf6
-	zoMNRxxs0EFo8od2xb56zSgekeqq26rCfMcABrPns0yVmG2sUnK5k9ypEw2B4TDK
-	aMO1k4WOrfZKebtW6SDz+X9FLwaww0OSU56AL6dha8XJzTpXGzVzpnqvtU3Ctvjp
-	hqQOP/zZORphKlm8osSZFBTtoPCe1I+RFDS6vXer/xkNNouOu7zQmwNdenBbllha
-	NQGz25EuDKwn5zsyvlTXUKW5I/55YrCmn+g==
+	1794815846; x=1794902246; bh=uxC4znurNDtN5MB2cF/69AsEcjVDwDmmiwM
+	p6uatgGE=; b=DGj4yQh/QxF9vwwspkwC9ubqv/N9iHMZNA3k5NoE5jxBbk34FEy
+	ZHJso/yehzz27P5jcDUCBtyb8nLOcorGo9hthBabR2m5D91BEod8eOp5BX8Nt/5P
+	xa9TMfWetOupQlLT1A0uj4kwd1obNWPgiLpJF9ya6gnLlPoaqcbKlAgpkagyiDYB
+	QKL91h0nAVQGuTuUztP/zzQFZcS3MaisbHg4Fny+xvTU5X1qQHj1uC9WYRWtRIc9
+	v/QZSM1DHzzTENgQk2sQti2TKMtFHJiLe135vPdXhjqGBG+lphIhuKKbdOuJ1fbC
+	EKDi+qEhp3wZ5kKDrjdE5p7JdEbnXfzdM3w==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794815223; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794815846; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:u+MORfEmGCyJPSZ1eP4Ib+UlFmgvYx12QmoiZr8GfAqzr1b
-	ANHuWsQAj6ES4iXVpzcCB0kEwuikDJYJJJG6vH96+mqnynWoDOb+zPs2CkUDa9N0
-	DQuLMEJdfaJQGG0iWxMkXCtNj8MSoPyoO8L1uGiEgu7ubYNcTpS46O/rf5NPykp0
-	tWjVrg/gfqtXGE8199f5PoNLh987q1x5B+Hocch4F+NuoBQG7fw8a1oBSLP6yY0R
-	+EJzLdj9UwTPNyrl3QSgTUje7gz5XWG9jkGRoo7bvCQpQEgT+0+nbVXLvpM80QUQ
-	850NEXYpVaI4KD2mc3bzV/zdpuuvuf5Th3TnxAw==;
+	s=fm3:rsa-sha256:Jk1dMu6UzGl5igsR2SMXJ6ZOO8NHc0w2tkuHpijz7a+UJe0
+	1NnpgpO56Ib2369tFUs9Fmkzad95OK5mi/ILVzt6+YWjSfNQz9NVw/y9+wTsO5Bp
+	M/cQvjmjkNdy2E0MEqnMmKuJ1E43tN5LIAaOoosCftFSmWdS5+lQkGRkIxwqTjPc
+	70ZBzVmjqVa3mFpxzVroXrG6AZJyixixXw4nKQmDqVjzpUbf1Bt1lHQMJ4Utlj6B
+	gl8IXCSkw1EZoFFcuTNA5bkMD7EolF/VQoMGEUur0noN6jOzgSBgY69wntrjxMNc
+	oMSmsaTx8dZ77lA7vJu0lNq7Ad9mOcdKqdB6y9A==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:kz/W67dt1fmpPXvYG1zh0FpLi2cz23N0CdTzEKhxsSs=:rSaxrqWfu+yDlpo00arE3Wa6AYJrYof27vgqtbd/NUI=;
-X-ME-Sender: <xms:97T6avadV78LnJOp8DgfkDUYZNmMdmg334F2W2EEd9SHqSXvAP5a4A>
-    <xme:97T6aiGHchpwgA7gKYI721QHKdr2E7c0sEoD3MlcfKhG4q-UdGtbG3faH9OX97wkp
-    -1zVHD3AKVdu4LkjLjoqB4BnIfuGsoJs24kzwfe85lfgJAoo8Cu0iY>
-X-ME-Received: <xmr:97T6aryJWqEFZP8y98gAGuwhZKJ8SeBKVdKEpqTj4phZegDF0-U12vuTi7aPxRr9tK-ZBLo>
-X-ME-Proxy-Cause: dmFkZTEBqW15UE0A8N0Npr6FWHRk72PtyRsBdT4qdpNkpOhHtezYDOJaCOuOcZEr4DFsTQ
-    0ype4bpMgVM4aScxr/pOjD6pBTdDVmN9UsNAwf1VqqVC5i1GjY0VZ6iUwTsr83PLsf7W1u
-    ikAFxpRsEM1UxcmN9/kdXT8d19mr9SCdF5WbiarFfHkNa7h+TmZiwZlyUn1sEA8T2Ag5cu
-    0O3F7AIeb1ftvdhzER07l9PWcUxpgA8WPPkRTPLXMpgisDoK/8D6I1l5U9O+iK/J57s89z
-    ASSyhBEXd4MJPNUbv4i6bxGjRf4DfILQZSeon1NY1pTD1XoC1VWIGW8PjBF15DIakELqLv
-    w0VjIFNsQb20/1/YWQSuYeuP9nlMcuZmLePMvrRkxiyeLLRHLt7GeBxJxy8aWhawPKC2sf
-    rN9KK8hpMJj7z74f8yELsIfLZDUspaCz+0AYarQdVyQR+3ybKJg/defVXSsLPEZzlAV0QD
-    rEvr8BQf8rmNkUYXbRiCAyhcKD9Tu9gBmWOcOL+YuydUEHUAH2kCQMd+xEt0dnXiSexJm3
-    j9TWc5KuYu2j3LYctLnwstrZBf6hNW2zedBlufVjRjsLy5DgdFeIlDgVnMRa8ULwRAK+yN
-    c3jGHIxhtWRTEjALgGl7o+/Y17dAZCIyOXeS6L5zNitaSGRqyyBF83ZfKgLg
-X-ME-Proxy: <xmx:97T6asn8iPDpvjYV2KCOQQ38qz08JWKI0UYLIv3gKVmP0yjWtqWOQA>
-    <xmx:97T6askGMjvzeWrcIYZS6JreuQibFF3D-YipDTHJ1uuzHyD4JV4PYQ>
-    <xmx:97T6amyY4UTcJdhIL6s27Sy14-qd99ArOxuqVSxhLo2Vekv5ieIm5A>
-    <xmx:97T6appklzw5zXkc2EzcHH5Ov_a20puQhUy46XzUDQZkbl87Birr5Q>
-    <xmx:97T6ankKW6FwXrvY_xVTzl8Wmpfgjzd8vafnjrw9D2cBKQ5QiKKnUZqO>
+Message-Instance: m=1; h=sha256:whfFtbPdmtS1MV0pi+8R7KROpSYpzEIHTptoOIFMc2E=:R7afolGdh1A40iKfjl81UANDtG3w+iHWVwzzRoNQ1xc=;
+X-ME-Sender: <xms:Zrf6akx9iZoIL_-Y5j-3SV2MqmwjYrv92dStnw-0QiYtMFsRNJL-yg>
+    <xme:Zrf6avRhWyAKS4RHQM1-jo8Yt-XuWGt6kOc70772mHL7veW4lzP1gGl7T1gFnwL11
+    LaLzcCWQAIeTUhC20D6t8lDtcBzSu-U8OX22dyiK5oOQkKA6Shr1jQ>
+X-ME-Received: <xmr:Zrf6arX6wzMNVWRbFPzHCsAAfsRtg7b6pI0YZytnb6RwIPQC11AaKB0PefI-g1FYJY7Eklg>
+X-ME-Proxy-Cause: dmFkZTFZ9JhNd9GiBhX8PZKSCOqEvR2QYF/dFvxpKvr2l0haYiCYqEvrE/QjqCJTGUuiN0
+    MZ7gY6ltp33TKIGTLI6O5r2+rjPVMyY1k2R/Ng/4CVwzh7y05gix56zMnu9YQQJLEINsLJ
+    HJ2orev954lJ9XS51O5qsyI/gRLp341XUPGyUB12/q9fI0HJK/biiRf09itw8gd/ceO3O4
+    X9glPwoNapQLaV/zsExSD3IV72QVWttz2iItit/JkoAhx2NL4Mq+GQcL7gtu0WbItlqFeT
+    Z1Rqq8cjM9lhn8x6+LqFa8VWBYWYo0Ao0FyJ7Y6JFfIm5phH7OGF8s+2Dj08PrCvQXejC1
+    SCcBWFRglG/lbJ5XQnbfgz+bR3rI+huSAiekzLBkLDNABUtfGDrrsO5OX1/Jqg09Y0Nnnq
+    vHCowWdJ3/kO++gHtBiX41mEAW3VZ3tUOZsRuikYYhBZWCz3LxaIOlSZcK/7fhJD80tAY+
+    hCH0anbj9y/m1FM6nndzHa5Gzs0+JtCgNznIJnC+Dfs+/9BZcBcQRD19CA+xM+nsaoSiAf
+    9Ssz96dqh6+1tNCvwmXf44mYdXOM0mXTbPx1gJyXn2bxTfhbl3uV6yXDJczXR/9PqG+zeh
+    FmUsSLDz8jPqAUP/AJI7ZolcctjKlIH8Gjnmy4TaEtx22t2pS+bVjuf77vaA
+X-ME-Proxy: <xmx:Zrf6ahZrrAtHXY8KnM4u9M9SJIFmXAzwS621qyweshbA4MWhO_qt3A>
+    <xmx:Zrf6ah2SKFpfMSoQa6rueibPu5WwQvw1feM_-i_p-LnkRFrL6PBPOg>
+    <xmx:Zrf6ajiS3v1SFbY16GzZ7JWjr4cxfmUvZRNMAaoqium47-RlVbmgtQ>
+    <xmx:Zrf6alalrfLFJdUj9JYJ3rxS7kCmgDR_cFgKE6aG0fPw5PJnIQ7y7g>
+    <xmx:Zrf6ai21Unfomm6Y10wNm0jY_TkOFcemh3gp0DdC6BbBuIlgIbDZ3VYL>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Nov 2026 02:47:02 -0500 (EST)
+ 16 Nov 2026 02:57:25 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fab52b82 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Nov 2026 07:47:00 +0000 (UTC)
-Date: Mon, 16 Nov 2026 08:46:56 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 8aba6729 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Nov 2026 07:57:24 +0000 (UTC)
+Date: Mon, 16 Nov 2026 08:57:20 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	"Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	"Mark C. Chu-Carroll" <markchucarroll@fastmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
 Subject: Re: [PATCH v4 00/12] builtin/rerere: convert to use subcommands
-Message-ID: <avq08CLwtg0GQWnN@pks.im>
+Message-ID: <avq3YHb_J8Ww6Kq7@pks.im>
 References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
  <20261111-pks-rerere-subcommands-v4-0-df0c8bf79e16@pks.im>
- <CAOLa=ZTAYtq0K4YfcSBocf-fxadTiaJp+AV5-_6_pbNMBwYQXA@mail.gmail.com>
- <ava6Q1u65ASVeth5@pks.im>
- <xmqq33t4eh84.fsf@gitster.g>
- <1ebac86a-6674-4c6c-bcff-a71c05b26d3f@gmail.com>
- <xmqqtslk9zk2.fsf@gitster.g>
- <20261114072240.DBIRJ%taahol@utu.fi>
+ <xmqq7bifponx.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -134,53 +128,59 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261114072240.DBIRJ%taahol@utu.fi>
+In-Reply-To: <xmqq7bifponx.fsf@gitster.g>
 
-On Sat, Nov 14, 2026 at 09:22:40AM +0200, Tuomas Ahola wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
+On Sat, Nov 14, 2026 at 04:45:22AM -0800, Junio C Hamano wrote:
+> Does the new syntax introduce a subtle UI regression that does not
+> allow certain options before subcommands?  We used to take "git
+> rerere --skip-locked gc", but now it has to be spelled as "git
+> rerere gc --skip-locked", it seems.
 > 
-> > Phillip Wood <phillip.wood123@gmail.com> writes:
-> > 
-> > > On 13/11/2026 18:09, Junio C Hamano wrote:
-> > >> 
-> > >>      $ git checkout ps/rerere-subcommands
-> > >>      $ edit rerere.h
-> > >>      $ git log --oneline --first-parent master..
-> > >>      $ git commit -a --fixup HEAD~10
-> > >>      $ git rebase --autosquash HEAD~11
-> > >> 
-> > >> By the way, I wonder if we can simplify the last three steps in any
-> > >> way?
-> > >> 
-> > >>   * We can use 'HEAD^{/^rerere: convert flags}' instead of counting.
-> > >> 
-> > >>   * The last "rebase" does not have to be on HEAD~11; as long as it
-> > >>     covers HEAD~10 it is OK, but we cannot use 'master' as I am *not*
-> > >>     interested in taking any new development from there, and I do not
-> > >>     want to worry about what the command would do on the merges the
-> > >>     topic has as synthetic base.
-> > >
-> > > So long as you've set an upstream branch, you can use "--keep-base" and 
-> > > omit the upstream commit.
-> > 
-> > I do not think I want to set upstream for ~600 topic branches (among
-> > ~100 are still in flight) I keep around.  I was hoping that after
-> > making fixup changes in my editor and adding them to the index
-> > 
-> >     $ edit rerere.h
-> >     $ git add -u
-> > 
-> > A single command that names the target of the added change
-> > 
-> >     $ git fixup HEAD~10
-> > 
-> > would automatically do the two "commit && rebase" commands.
-> > 
+> I do not particularly care about the '--skip-locked' option itself,
+> and I personally prefer to see options after non-options as a
+> general CLI principle, but it seems that it is now required to give
+> the option after the "gc" subcommand.
 > 
-> Which is exactly what 'git history fixup HEAD~10' strives to do, isn't it?
+> I do not know how often people run "git rerere" with these
+> subcommands themselves.  This subtle change in the CLI may go
+> unnoticed in a smaller project, but because we probably have more
+> than a few thousand users, I am afraid that somebody will notice.
+> 
+> In the transcript below, "rungit TRACK" is my short-hand to run
+> version of "git" from that integration branch.
+> 
+> $ rungit master rerere --skip-locked gc
+> $ rungit next rerere --skip-locked gc
+> $ rungit seen rerere --skip-locked gc
+> error: unknown option `skip-locked'
+> usage: git rerere [--[no-]rerere-autoupdate]
+> 
+>     --[no-]rerere-autoupdate
+>                           register clean resolutions in index
+> $ rungit seen rerere gc --skip-locked
 
-Yup. The only part still missing there to help Junio's case is to replay
-merge commits. Once it supports that you can say `git history fixup
-"HEAD^{/^rerere: convert flags}"`.
+Yes, as documented in "builtin/rerere: use `OPT_SUBCOMMAND()`.
+
+  Unfortunately this means that we have a backwards-incompatible change
+  because we no longer accept the "--[no-]rerere-autoupdate" flag for all
+  subcommands. But this was arguably broken and misleading as we ignore
+  this flag for any other subcommand aynway. So we cheat a bit and simply
+  call it a bug that those flags were accepted in the first place.
+
+But yes, the same is true for "--skip-locked". I was expecting more
+review feedback on that specific part, and was a bit surprised to get
+none.
+
+As documented in the commit message, I would argue that the current
+status quo is just plain broken as we accept options in cases where they
+aren't even being used at all. For "--skip-locked" that shouldn't be
+much of an issue, as the flag has only just been introduced, so it's
+very unlikely that there's any users of it out there just yet. So now is
+the right moment to fix that design wart.
+
+BUt that isn't true for the "--rerere-autoupdate" flag, which has
+existed for a long time already. So if this backwards-incompatible
+change is deemed to be too risky, then I'd adapt the code to only allow
+that one flag in all locations.
 
 Patrick
