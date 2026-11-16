@@ -1,91 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794869515;
-	b=idOZx6+rvIGz00VHwZ5N83d8Ws43BkndGoy3QBqIWgYQO19kDSlW8Cq9f5Mt6cql7U1G
-	 UvZjAiaCYZKkN3EKvAFCQ8OjpKQemq8fGW9jhiCrpHdMHP3tVGtxsZGwMV++oON4/6WVA
-	 eKopuNvEQj2YNUBtbupwab+yqWoT2nopEU3alEkPdyFsK81mkzBypXZhtL5+bT5lVLCgG
-	 etPvyQCW/yh5ytBLiOMfTzTh9zSl/wV1FgumaEft3corehoooJEWAu3lyp/Gbps1WB31w
-	 XybemanebfwfOXxZ15N2CFQZ5Y8KjG8dRTPXSeB4Swu4cG20aze3Y8cciGtqtWe8Eng==
+	t=1794872351;
+	b=CLlwL1wXwW1uMxyKKwwshDlcyPpLW5DdyPiPIgQlX78iQUHoRiVsP9OnCKiig+EsWgPV
+	 e+p6gGR/jav4f/PWeo3NqQLNd8q3mMbRsS0+DVG5xOJm3GKs2jCCZVbLIN6U75DLWAN5p
+	 bHdb8xEMAPljq/uIRFob3lhwBBoSw0ykoTaEBTvGlEdipLHU6XTrnMgx4Rgu7AqLsgrnO
+	 B3hixS1A7djvV0Nje6alzLgf1cJhjxRai0Latj2ljr9ZgEoo+7rOi10RDHIXvmNMB09XW
+	 81tbqBPaSz53huoxO6r/kha9oL3leco+EuBzjF3G1EZIahY2O25WmeSxou77bXhzdMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794869515;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:MIME-Version:Content-Type:Content-Disposition;
-	bh=OrCUrqzcXluMYBJljg0abPs3hdDJ/Tg5YqS4BbtIrJU=;
-	b=egRfXMhECAJduYHuspbKpbM9bwdrAjXiiczMaHlo69oE9jDSDZAZcJqlRNyMtEHV4AAP
-	 PUrr+WML1MrUxwZCQsUw387wBLGf6dtpf1g5IJPDi2ztUx6GQ1RlhIwVnRl1ppBodik79
-	 jGOLhjPtj461lYiXirDjHysAJaJCbSj0kL70dlNuY8gKF1Qupr48YdghizY2ezxrxdeZ0
-	 j1egKNswb6AyThs1whQncD+MVwStG14FbXq1SaDRBjsEdrF+MrKT1/T26uoHrbLh2FmXz
-	 pOmwSbA2o/RP8Nyk8mS/G2xUZJgHD7GPAJW/RXm8lwGR5ahAPFvek4MNVwoeuvjVooQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794872351;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=R4L16va28wh85A4HuMnQNjf0Rg1hZ9bb17ahP7vlH7E=;
+	b=3yu7tn+NhSPtHNDx+n0UbnHUQdLF1q6974ddfGwcYUEnIbflqF6YQOa5k754tLE87I/q
+	 tlunDBsQF+XCQ9+iZ8DankpmRkj9wdlrOePGiwUmorIuVIPbQGeukvVPoJRNPN3Gqtm2q
+	 F6RjfiMWWp93/I8tQoqqi5ANdrrgA0Y1mwP96auQgzL5mhK0cD6NDKbE1R2UlSVW3ghBI
+	 7zbJIYXnhhQd4xO/IQ0ttXGL9LVYxddcyuxRDn0RaXvL5M/Ani/3qP5zwgidFv75GTcWT
+	 aYfvyeF5IcSpkA+Gzr4cCjq5v5tcGhtBSPOsxIxyF5lDZZ/2KeqNz9Z9k9fMHIzwRzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DhyAecL2;
-	arc=none smtp.remote-ip=209.85.208.54
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=RBN+7AuG;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=jSgEhaMF;
+	arc=none smtp.remote-ip=103.168.172.151
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDF9606A31C
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 22:51:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7CDF9606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A71A606A323
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 23:39:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0A71A606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DhyAecL2
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6b71b012e3cso4694707a12.1
-        for <git@vger.kernel.org>; Mon, 16 Nov 2026 14:51:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794869514; x=1795474314; darn=vger.kernel.org;
-        h=content-disposition:content-type:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=OrCUrqzcXluMYBJljg0abPs3hdDJ/Tg5YqS4BbtIrJU=;
-        b=DhyAecL2F/eJR3wbCED2JmZUNR9LzfPPxJwnhB4AG+7D323UorcZ2UJfv93DXoFvWu
-         R8Qyky3xfV870tmVJ7vr/luucj5BVa2G/+Y669EqS2FC2a/SmDCqv9f9bpaYf1Bm01+d
-         ThuBf5yjsFgYMJ5lvbwByqL3YN+GmzHxfo/EGHrY07kCfQYinYaAEgsQ7SI/uZW9gmdi
-         5fhOUW6X9obC67pynk9CeEq4305vsH0WTYKcJqLF1uDX4CXk3XD1Tr9WMtWiMiDMBWdK
-         stqLMawP3a49yWGLtPQIXPVDH6xj0wFQJRKE75JJCI3B04QIQtp9hcBWU5cBQxHnp+DU
-         g00w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794869514; x=1795474314;
-        h=content-disposition:content-type:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=OrCUrqzcXluMYBJljg0abPs3hdDJ/Tg5YqS4BbtIrJU=;
-        b=O/pETHuvrys2oDAgCbEo5NYyduWYBE6iys8LdfgH5kmlLxQagrFOUwRbmz+NDXEGeU
-         k3+baaBbFj2XVvQWOuAXurYFBXf22fnBSONa+ql8je7C8CLX8375S99qpbr6rK+/m6LP
-         VvHQemgPqHf5loF3CX6Jmt3P62XW8EKPSAsP3SyP5ms4KioRCeXQTSvv94tJ79m0Hyyc
-         UoxctoTQahTG2uPhtKq4eeYspQ7uR/kYW8YFpkUXeqZ3b0iZkzWUTPX7v2zpkpH6Jfrs
-         1CeCBtProcwLE1bQYCBMBdE5XM5QvHtl2QXrh0ivmjW1Y52HL1dYmJHJFXBgpbMWj0qs
-         vGSg==
-X-Gm-Message-State: APuU4Z9NaJRK9UB2m/JCcijpMaQC7lTAJwpLUXQHjBPgyWEEBkYImkzR
-	iNW4rUXlr3IjRO0NP9pwQ3z9lRULLO8ozfbTjrdi5eLdX3fONneqdAXhUZujp2KD
-X-Gm-Gg: AYBFou2jeDuZC4Qyo8CIFpMu7tL5/w5zlJi61Mh+O6alfruwlVGpSC+wtVNmRgcgEQb
-	YUTZPov0ODwqLAes3/7PGf219hm9GthXQJbSOGUwdZbZljK67P6MKDXD5u1zW91RKANZrHcWHP6
-	BzHNhsDc5gOHFYM6BAUT6VThMlYzt6533x0BOOds6WsnqDvcBFnCSlm/G/0yFkaPOkVrSWt1+NB
-	g9cHjxGPRyQhFsRZ2MQ2GG0wDqfdueufcwTM+BAw64crOze3nA70lhr20Z8XjKJAWs63QWKi+QA
-	ZeOdoCyyIttAgz8EG+QXO+nDfD5sLftRsGUwHR4+rHlR5H8SHtdc6d2gzszWQZPJC5xuCf8hbY3
-	L4pqz8syW04YWoJH+q95Ekz3ESr7fO1JoFFeaTGzUeZ7KE3efbdCd5GSOMdfA6sM5kEVSiEHO5/
-	khriOzo5L5FI6YZEvOtI0rSv+T453bnjl2DoItepgxIAOzo4SYel672/RnN3MwhrHRTNsP70Qsx
-	OHbwUF5/XSQi6KwwsZrkMxTjjaOxjXJ8tsezh+xu4To0Fywi+zJre1elktKnvQL7ZSBaBp55J2v
-	KzWPs3879z5COcnBCvMrigeJUXs+qZ3Ow1jIlMogM+aJkCJj5QU3OAg/pKsAZ7DAs5q6kqTuLw8
-	ZgnK6L4i7I2Kg0dUkc8mhULd98lDI17ZOugHXBOz2Ar90okXJUCGJSytJqAEVV5UhBxp9yO1EPd
-	8je2t5RUVlKLSxm1QbokmhXzQ=
-X-Received: by 2002:a17:907:3d10:b0:c49:cfcd:69e5 with SMTP id a640c23a62f3a-c509643dcabmr968543966b.32.1794869513741;
-        Mon, 16 Nov 2026 14:51:53 -0800 (PST)
-Received: from pampelmuse ([2a02:810d:a1:6000:5181:7d70:73a5:ff41])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c5095b427ddsm472940666b.43.2026.11.16.14.51.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2026 14:51:52 -0800 (PST)
-Date: Mon, 16 Nov 2026 23:51:48 +0100
-From: Andreas Wendleder <gonsolo@gmail.com>
-To: git@vger.kernel.org
-Cc: Adrian Ratiu <adrian.ratiu@collabora.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: submodule: linked-worktree submodule hits BUG() in
- validate_submodule_legacy_git_dir()
-Message-ID: <avuJBGlB3pRU3JU0@pampelmuse>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=RBN+7AuG;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=jSgEhaMF
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0CC9AEC088A
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 18:39:10 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 16 Nov 2026 18:39:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794872350; x=1794958750; bh=R4L16va28w
+	h85A4HuMnQNjf0Rg1hZ9bb17ahP7vlH7E=; b=RBN+7AuGa1fsXK6BEiLWuiGsAl
+	29siqX/kZAVpEJO5YryiXfbQgtAaqYYbXj1Zo4k4xfpzi4pXsStYVdw0pCP/lE7o
+	4iyO6mFpyQmBAFfE3zl5oELao0Uy80LlCLeXu+Ht/yvRd9fdUoTxmKIykVyN7YO1
+	zZ5ag+bj7gBztyEHiGAlwv76UlVwyLqrEqU81MZjUV6Z2m4LUhA8axtC5gv3Ay6S
+	KmAd6JxfhcLB7I6vJ0ldEYTchilNXCKc2f/pmXcDIfMtFxKFpa9+294WsfBfxNwc
+	agyfELefb2GcPsGfNURUPneaymfjWIrG+VTCc2adloO7zkO9rkmkGJtl3Jeg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794872350; x=1794958750; bh=R4L16va28wh85A4HuMnQNjf0Rg1hZ9bb17a
+	hP7vlH7E=; b=jSgEhaMFmIajCy21B1PBq5UXinbCU4Kaepxp5wzao98MEArLRae
+	QOAPTjr3YalZZ4fD9NLctZaS+XObtBga8ARVIoNJKC86ngPa7EgCngYQtQ4RHJz1
+	VlLdSQd1t/N7JO7kiGnwAAHOhz0V/Q8rj/94OuFpLN+Hor7r7aic78YqD97LnVXc
+	41CglgjI84ELqSP7dvXSGqeHRoB2WN9B8R6QKdbTNxTIKUykCMv5GesczpP3KeFA
+	Qj6GJ2I96QEaVJ6BRiire3q3XpzTOhcvBXj/tzI2RD4YbMXmH0wxY/JK6DfR1Eek
+	e9PL+q4WUyRk2dPKqCGrskmpRRtDWsVoAjg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794872350; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:hLxabBuq3qf3EvV0gS6DAyJtJX41nawVevuU3hh8k0qrHoH
+	s7v6Gc1ji3aV52XlFs5x7HE/RRVRH4unn+MAYtDoadM7MAiHaAa9KNHl4ZB4ZItE
+	PzKEAvD+xR51/bt7XBgGYf5Gvqk1c1msnn0IqDiQ7oXp1Bf6YHkt9Bmf5A5ciX81
+	VCAdIy6sDVlo+B2t8p4kue4Oi64Jv3lrdXPhmbpieHxmq6WvZcX4BrOe3B3ZIijn
+	1WxzIIdt911p5XvxJp9c5NfPv2qdfbIsXTRufYdcL/cuuAmj3arPXrnnTb+nxWK6
+	qty+qsGb/ry3TtIfelAsvvADCTI2/NoZPRMa9pw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:8xK7ybcfyySSisj99yp3pStfs/ZAGP18OExC0DDtmoo=:TpjyheN4ZgFlcGzcPbYyO8To8JTFpCXilD61uFfeNP4=;
+X-ME-Sender: <xms:HZT7ak8oQtdK_QPmUEcHgsqA4TeMRvJ8lmccxJuiZZt21sU_CZwHYw>
+    <xme:HZT7au8nBMG5pZhyHQulTpEiaoHyuBbICsWYxGBgyimef5vW7lobwl0GTNeDj7dy0
+    jRqAKBVth5MN_bUEWx9KdvwGqVs980btR_2mguR72ci5lwTGaaz>
+X-ME-Received: <xmr:HZT7asSWPegkNeXhkSbSz_1IzvJtKSlBPLnGovgp9z896T45QDhh0BLKnbleKSayRYFDQ01t1dvnuM7DPFWyapZK84H87NHgiURh>
+X-ME-Proxy-Cause: dmFkZTEOqZupTZXP6FmI9ge/Vv0v5vpoQWZtTZlxN5C+qXfm5qdlv9Ijsq8gdbFdZg+Lyv
+    Wac1xeRTZZK+RtbQcUp3wcOOB+6DGQ1Ju7PvXdyK4zcsXhU3754XIx8jFmu2xRlWbIVFNO
+    EH8pX+d6SMf5WhFywPnlPTcfk0Fe6JhYp1t/9wEoln6F726iCyhJoIlFXu+ko1AlC91clM
+    HqhcY5RFfKGPh0O6gMXaR9vLpZr2/sNnqdC8+9CZb6vRpp2Cu/KSLKiBw/fLYTFwON6qZC
+    /3sBFwv9/orurP0VMVUu62zqBFEViFRawKInL/sRJGJt0DbnNH2lngXKjdOREbpPdmRyYH
+    3ZZ4mrLm7GqqdYTIHuTPvQ3mX6Rj6s3O2RQ7AVWlfFhekszb52YxdaU23hJZ+O2WB4B5bs
+    ADcYAu2+1nk/OMPImRrLeRtC2bpWukTJS8Z0t9bPSAlu88bPN85+3D6HJD1/9WNVIrcoNp
+    djEo9kTv2HILWQt19aZdq5+e8ccfSlfP5tFytwFoOx+yKIEtOT+l8OTXaeWRzyE7GIra80
+    aWowgQqkHzEspQuXIf9P0j8cLkORI7tFJFwa5EW4fdfikRRwm6ObYkZx+6WqiqvUKLfMEW
+    4hKo7KPPfq0H7/w8a9iiBC71eqWk43qgChaUdjYJ/llmSjHpR/Sn6JUng/GQ
+X-ME-Proxy: <xmx:HZT7aqe3DLv5u4o5L0BrRtvEBFo-Kwjnsvr1pakMDZkXyak4UH_zlQ>
+    <xmx:HZT7aoAQE3mMKTlCOq3Yf7x-Nnk_a5bpZ7wS30zKwUOEGWuuvx_lBA>
+    <xmx:HZT7aklmPjY594w6NXezO4O0iV-V97ReRRy9rmWzknJYVSh_bRNYDQ>
+    <xmx:HZT7ard-nTV6_MtDDMWb8-uokvGHrFlZLhpIldDnN_0Z3ehEtCcyhw>
+    <xmx:HpT7asxvQ-Q1fEaM7ux54qg2z2XstZLPsYWlmWVXP5ReOdwbKSDwQiTv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Nov 2026 18:39:09 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  usmanakinyemi202@gmail.com,  siddharthasthana31@gmail.com,
+  kaartic.sivaraam@gmail.com
+Subject: Re: [Outreachy PATCH v3] credential-store: add lockTimeout config
+ option
+In-Reply-To: <20261116191321.28837-1-okhuomonajayi54@gmail.com> (Okhuomon
+	Ajayi's message of "Mon, 16 Nov 2026 20:13:21 +0100")
+References: <20261016212216.58000-1-okhuomonajayi54@gmail.com>
+	<20261116191321.28837-1-okhuomonajayi54@gmail.com>
+Date: Mon, 16 Nov 2026 15:39:08 -0800
+Message-ID: <xmqq33t0jqhv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,47 +127,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain
 
-With submodule.recurse=true, switching branches in a superproject worktree
-whose submodule is itself a linked worktree of the submodule repository
-aborts:
+Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
 
-  BUG: submodule.c:2414: submodule name 'sub' not a suffix of git dir
-  '.../.git/modules/sub/worktrees/sub1'
+> The other settings that retry taking a file lock are measured in
+> milliseconds and do not put the unit in the name:
+> rerere.lockTimeout, reftable.lockTimeout, core.filesRefLockTimeout,
+> core.packedRefsTimeout, and core.configLockTimeout.
+> credentialStore.lockTimeoutMS spells the unit out.
+>
+> Add credentialStore.lockTimeout as the matching name. Keep
+> lockTimeoutMS as a deprecated synonym so existing configuration
+> still works. The value is still milliseconds, which the
+> documentation states.
+>
+> Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+> ---
+> Changes since v2:
+> - Reword the message to say why the new name drops the unit. The
+>   other file-lock retries are milliseconds and do not put the unit
+>   in the name.
 
-Reproduction (git 2.56.0; the code is the same on master, next and seen):
+Looks good.  Let me mark the topic as ready for 'next'.
 
-  #!/bin/sh
-  set -e
-  export GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1
-  g() { git -c user.name=t -c user.email=t@t -c protocol.file.allow=always "$@"; }
-  rm -rf w && mkdir w && cd w
-  g init -q -b main sub && g -C sub commit -q --allow-empty -m s1
-  g init -q -b main super && cd super
-  g submodule add -q ../sub sub && g commit -q -m add
-  g -C sub commit -q --allow-empty -m s2 && g add sub && g commit -q -m bump
-  g branch other HEAD~1
-  g worktree add -q --detach ../wt main
-  g -C sub worktree add -q --detach ../../other/sub HEAD  # takes the name 'sub'
-  g -C sub worktree add -q --detach ../../wt/sub HEAD     # so this one is 'sub1'
-  cd ../wt
-  g -c submodule.recurse=true switch other
+Thanks.
 
-submodule_move_head() expects validate_submodule_git_dir() to return < 0
-and then dies with "refusing to create/use ... Enabling
-extensions.submodulePathConfig should fix this", but without the extension
-validate_submodule_legacy_git_dir() calls BUG() instead. A linked
-worktree's git dir (modules/<name>/worktrees/<id>) never ends in the
-submodule name, so this setup always hits it.
-
-With extensions.submodulePathConfig enabled (repositoryformatversion 1),
-the same commands no longer crash but die with the "refusing to create/use
-..." message, which recommends enabling the extension that is already
-enabled.
-
-I would expect a linked worktree of a submodule's repository to be
-accepted as the submodule's git dir. If it is meant to be rejected, the
-legacy path should return an error instead of calling BUG(), and the hint
-should not suggest the extension when it is already on.
