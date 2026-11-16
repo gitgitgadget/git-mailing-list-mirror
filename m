@@ -1,119 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794834486;
-	b=PztNfchwOLRCRaquRLyo8Khj396iLAbLHYTgy1LBvnL/sLy0NVE4dQO65WQ2NvQeBNkA
-	 6dqSErTqp0aaZNn+bwykBBxlQ13u2A+A9jv74Sg9MB8sVEYG/atTjDAdsDD9nQZZ4O6Q+
-	 G/SDqhBjabLVfidZTVJmeLD6p9ZkKwk0A7kXqs02szFgJq+1XzWcu4+MWC1xGUUXHkgQW
-	 psbg0ZPoZDhTpgBBtsjnuoLUyOmYN6Gs4f8dNx9qqQ5xd9I9ZBFZGcb7AV9hP+H9ZbQQA
-	 /LBKairCbRkRg7Z5YvJplxBpeADzrOk1JzbO3BFW4xttfeFroI+GvNzhhOhULpdUpJQ==
+	t=1794834488;
+	b=Jv56C6pe5I7Whx8N8f3Pr+rQECQ2m6ZK4EYF5Jnp/XKi7O1ySTBk80jfNZ7ELcL4cQjz
+	 EbuKSXpaV7NzMV+R47igg1OgUi6l7sIM2+f295H/qwIAMc6II1TpatGs17TUJzWivA0nS
+	 mpiy35jWJ3x23MH2WvTqS3OWqgHCM9Fa6m0CMUaPnYY1w699+dKLp8k3Bobn9rQ2POSa3
+	 nSQ0GENjvO9YowV0KfsgZoDrYEZa9aVzaa5t3e+QuSRXFhN6ksln9vWV+sAK9HHDRZ+PO
+	 CStUzlgvd4QCxNYDkkzBdkE4II6BURWFbYjYVqEgIRVNHohTqgoILySWgsW7eASa7Sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794834486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794834488;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=tPmLQaRvlggzYWklxeoQ8IgHVB8pVtQePUoa747pR+M=;
-	b=Y8Iaks7dYNbuiry6Pvf8a7ZbYjq/QGK++b5huYRmbTXUWoHBIFWhjD4QsBuDkiuAO4wh
-	 DtUgDbubPA0Z3u60a+H72OLri4DHaXsKpnYeo9LE0hnSyziITkRUASVfAwF29QIshbMI7
-	 j6H3ZtsvFtibDJSLiRlOEERg3SFKGhmM2rZFM1OJU8MjfDEWQhuPC6R1rStRG/YkJBltc
-	 9Nuy4spustghvA43cVWvpCI3+BRUM3dSa2GdbvJjt3Hv8Xk82r2hT9oP61gIm8RVCSGni
-	 ecD0Oni4sSotLGrJ/Man9USPenLMMqZ1AcTLx3zvS1TaaVLvbMK+mrUAXpBDcVNjRaQ==
+	bh=Tq174/jVsp9gUc8NbvDbcJBHJSHuiZrk4erR7h7AM6o=;
+	b=DNbzmd1sx1mzbKi4KKZkut4XYl3LbWspeEOcOmq0p88kz8I+r16zDpOBOBY/VlKue9QY
+	 rKa9Zdqjx1UOydpqN/ZY4UqPa2L0zsGFshz4miFeGYbm5DEga3bNQvoNWXBdgYAwxQm18
+	 RDhCYVy9a7ZkolV9vFCHK28uXnW2zEemRmk9ion2ab1v3Zc65lnb1KprzL+H2MjE5g+g9
+	 8E7s041edC3gobiNPVdOPyObi7bpqcDJYNrqiNeWgwOt3lhU/WTzilBHPrpkZjpXO614J
+	 5qPyQs5v44RHnSbb9roVJHKbu02HNbu6K9pqonNghjTGuXjaanp8i/lF6OVNZDBvoJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=i4eknsKr;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cj5rBRyX;
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=nuvRJtcS;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=aipuOFm9;
+	arc=none smtp.remote-ip=103.168.172.159
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A008606A323
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 13:08:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A008606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F504606A338
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 13:08:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F504606A338
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=i4eknsKr;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cj5rBRyX
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=nuvRJtcS;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=aipuOFm9
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6BC1BEC0102
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:05 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2DD5F1400044
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:07 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 16 Nov 2026 08:08:05 -0500
+  by phl-compute-01.internal (MEProxy); Mon, 16 Nov 2026 08:08:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1794834485;
-	 x=1794920885; bh=tPmLQaRvlggzYWklxeoQ8IgHVB8pVtQePUoa747pR+M=; b=
-	i4eknsKr+4munjWO5FXNeaLAN4uMlNjG+8yamZ1cyIr8ixUVPTTerVfqBA0G0eCk
-	YR50JRzfLgeVwi+KAh1Lp2W1Y+8zVaRdY5g2M2vKtQALxeOklUHNfSPzqNHvJn7N
-	LlcVkq43W730qQ3NOrpSUKTJXR9r1rCs/5Shp2IeveG3unYb38S7t+lEGVFFOm3n
-	cy+jI/0bED3ystds/p/be2E7LPrSyV7U10Sr6rBJdWO7kuOp4e9yJXv7Hot26CBn
-	5yG0pweVoj59LTgyYeh1hSJrKrkKT4O5J64T3+qOpxl2GH7pRf/hcNTUh+w1Mrb9
-	CnL9EWuKoVNUegkdHZmeNA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794834487;
+	 x=1794920887; bh=Tq174/jVsp9gUc8NbvDbcJBHJSHuiZrk4erR7h7AM6o=; b=
+	nuvRJtcSxO+FeEwzyfSM1ZuEQTh5HxzopFu1D98KktG23/8iplUIcXnkCwaDrZ6i
+	Ie04JgB7z0Y5rPFWx5ewBFi51sxtLBikTiHS9v7j2QlQWnFxE5x+dz/5QPPMVk1U
+	geDp6TmXQnpDO9g3SXP3LOYDbWUhH9gAf2gO151VQhs0hkj3WUQkkQl5vlaKqN0C
+	fiJhKgr7/d0TqNbZsh+rIhzb8F5qM0k0dH53ceCYWNp2S/+jQIOAULjbC6U2EhPu
+	0f7cvAuRFZ944udbxupHsbg8IEJ+fydnmSK4mCjeVhXeb/d3BgFhit/XLT1ZcETK
+	HTU/18N+JxAs2uINkGeMJA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794834485; x=
-	1794920885; bh=tPmLQaRvlggzYWklxeoQ8IgHVB8pVtQePUoa747pR+M=; b=c
-	j5rBRyX6RtlCJpIa/n/UB+TJlYxh72LIYCjhg3AdAGbh+bpYlXHqudoVa+TStmaB
-	MvpnyCuhY47gP8LmytIKTDCZObIUTSdR8Xag58qGR8aR1GpDwI6+KFAY7fNDeJLN
-	3kAdq01DTqs8eHs1mR9qMcWBKLymm4zJ7iF2dYFDvElV/UbQHoO8d4MEPzlAK2VD
-	AW7BnmkL5WqBPKZurJVEaH92T1ml1ienTfKouQIgJA+LP3JaxBoVTBjcDtXs1duT
-	8RX2Pr+e/Q1wtiiaHgA4nH6pi4OavewplRTBpPxQ9d0lPP5y146GDAkFU04weKWl
-	YrGxN0A+HaVjFhmsCSO5Q==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794834487; x=
+	1794920887; bh=Tq174/jVsp9gUc8NbvDbcJBHJSHuiZrk4erR7h7AM6o=; b=a
+	ipuOFm9d36HqmUjeFmZKBqHS+8xPFu0vXeaY13pIbB2aghaLx/34Ov8aUUJWr8N/
+	esv6a7zID0UflvjwvEbVk9SanCJuBnKuypA9m0VkSuoNRPVz0DQ4Xv0yrUTNBLAt
+	e1rQNl9AvJgBMojDleufjB1vpS8n1RkeaQs10ZsMsS9qZjrUkEIAiY3musNdvWeJ
+	OYOMEheNmUVs8HU1BceEWhh+4nOtEJlvdNilT9qwnHrQu3DO7V7UvtKXLe/VF3K3
+	Ibw2z8KKp6Sf79lQQS70PE8ZH6USgSlQOYklzt+VyOHqcRFPBvELIA5zdp0aZxjM
+	7W+RDZEHGVHeCM6CtvS+w==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794834485; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794834487; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:ubN01fENi1AN3lTj0FY4NCIgWDj0VEgL5NH3Q3LwHmtNTqi
-	Q1o7UYCWiVEnmQSQ63+uXvccOXx5hfiR3FqVRSPL9uEN49xDk/Xw6Ehap4hB2Nb8
-	7LJAcnNEjRr6w3GJ+xNLXWKsFgcv5NbYptOtQgFN+p39tUnJDhx2/qxCps6oGURV
-	/DtdKTSf7O0108ve/tqOwNm76HjqCysq7DblLFlAUmynMBEc3YSsi6H7UxWmIrcd
-	qoHjOLcocetjw1Adq/eIuxj+uPCDifZNCPIAcZewoC9e5az/yAsyjVPENpoAi+KU
-	XvCM8eSapjmSgdPQpC0y39FgMmnqQ08smaDxzug==;
+	s=fm3:rsa-sha256:UPKd5XFrPH9V+b9gzrXKfOTu7Co1yMG/JH29WSUz8Cri1CN
+	zmsxub7xn4V3PwhS+yHbEtDnYPjYpTycbPpb2a/cWk4KDzfSHphlRmDMUXH7Tb6I
+	qfcTkg7srCA/6eZHL7hNkyetnCG36fhTR0OFbblW0edwEtRpTxNbtwe5lpRdgiA5
+	Sz/3Z2vno2ZqMAW79JpkAta/PSOTsBNQR5Te/ZlDRdzTAUP/qUV2sOdmu2oRW8Nk
+	C0mbWpa7lvKlO6iZu6LRHACaJmh3PitSNlMWdB70MxkItIyNLe6FzOhQsS/G/KVE
+	BWIqqSbIFrFycu6DaNzkIvHDYvNwwrfoyHkZ10Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:Qcpqd/2YSIN667om+Ku0LX6pgI78WZDREI/WTOAqk6I=:tLIapzW/g2hy9GvF8WTmxdGww09p7tQHDnN9nrq4yeA=;
-X-ME-Sender: <xms:NQD7ajllmhajsJdTAvYLi0SKMBaKsrIBOVw0TrxZvsXoILfysx6vdA>
-    <xme:NQD7atxj2ruTPRsA1ImwGWad8UJYWToYg5Blh7RxzqwY72pmar02fVcMZFwg2-lUB
-    yTMB1vxYWlb8YdSPe2yXKDlG3YVnsuoUM6GOCPVfPeP_1n1qLxaKa-g>
-X-ME-Received: <xmr:NQD7avSXpoSflOw1wWpfPfbLvJkwPRKp56YhNG3E8lKDoNnCfZHWMN3AuMveXyMfsTTl3O0>
-X-ME-Proxy-Cause: dmFkZTGziUKUgJYsbiHWfb5HWuWorQnHHq6YP0ByYpkZ6e9sVItzSNrjxVNiJjpykGt6EH
-    +Wo+jZCDwFt+/bcnf++syQUvL1OVsCKhGqPwr3BK64IVWifW0xci0pdI+2+/Q2cKlJ86Bw
-    MPjq5Gxm3EfNjPHHZxB/qKmy2lYBxm28RGRVDzQY/DL8x0mrFRQC08IpgtrlSdKQSvTTzK
-    jI4Dzrh8Ro4PE+97yI0qzoNNhqp2HeoBh5o/zQx/r+4v+GKIjmbaBlrMKGm2iApi+hz2OH
-    ZU0TLEDo5HjB+hj+++nQGClhpGKhIpSL+UXhvZrJuTSG26O5MqYj9dLI/adyQM7bNfpGh2
-    zrrG27/9lzhNYhEjm0OTmEHxgPbXdljiegYZcBff6dLZJsQdna2UId6n38hU3KWzE14O71
-    gK907p2nRxN7jPBxaruAz3JH2xgRMLHyqS+V/CENY8l25ekGDCp/oY0zSFCjJpANExTVpD
-    lfaPeYuuPqAWRfLghJTK9NA4EKYvT98Om1TZZvQxSQBT1XjwzKGoelXmdX1RYfjMkeFl1h
-    /rQMsbrEeGjjOKDKSUosVgcSc0jjT5FdlKVBDacHCrYBgoLXzrxOy0YgCrvuVnod0t563D
-    1Q1lCSLENvPtKmaXi31tPi2XLcuyAdtrfXHda+JUqlhn9/hTn553GPf8jkwg
-X-ME-Proxy: <xmx:NQD7agts2TzxDlvnqu5HNUJaE1MR_Wz66nRUFEvcwme6zmAl1veRMg>
-    <xmx:NQD7ahvY7QSio2rHOhTbyM0td4yJVwJxmduv7A8K66e_64cnwzR1DA>
-    <xmx:NQD7amwy_C3obR4oFtLOHrrWUNL95RfUi3Eq44DDyyJiVLhbTOBs-g>
-    <xmx:NQD7aniJPVw87iYDKRFiin1jusfB60eR4AEhrUP5kc9ZPnIFNQ1p8w>
-    <xmx:NQD7aj3U_JzpHodnamC3zJrZ99RxqcuGJtWk4A4LIMbxVsslERIivMvr>
+Message-Instance: m=1; h=sha256:Zx3HI2WrrrH6n4X9ouMJGNKufY9s0CoLzRR+cpFqKFE=:OHJ1uKUhhNZ5VopLA1TjCzSM81wYe1ksoX18f12CIHw=;
+X-ME-Sender: <xms:NwD7avEFeWJGqD7g9XS00thOdIUSGkER4tWfi4GA4yFH_v8ZHCLF2A>
+    <xme:NwD7ajQiqsesrjrBTxd-0At712m0RY4dztEHl6uaBH7zL4FJln5hD4qJLwYvKVlPH
+    y2f0kgZx1Em11oEHfzu1qAIyVn9IRwUnhu_UsNe6xx4RyBwAvEbkt8>
+X-ME-Received: <xmr:NwD7amyzPfqOeRRaLm7I-s4g2v07xsey8b-1xKaaZApKmscBYAuvZQgaZMHxtEtVX4L841s>
+X-ME-Proxy-Cause: dmFkZTGUadbCh8PYVzO+W98xO36esdaT9Eix5aVF7MyFuNyzrqEzalcNM9Mjew9UpwZvRj
+    x3nTyTLMef4ef7P6EpH7QXWf/LZHZKuTx0r7fxS9GfAU74pOZ7Yh4nSofSUiFZw95M7nY9
+    gjNAICkC6pEdvu+SjyFNNhBesAXtfqwDyzh5yr1FUIS3Y1rR8+FVIvi145XZlDJNogJw1V
+    v2zHSU2YrL4odH2LqdNvkQSBsQEVYpYQKWTa2S2G7fxZtJF0uLduCFDwENnCD81HRQNXc1
+    fb7KtPPll2p/GH5sgSZCt6oMY2lgXrxJrqwSVSbcUnQdR1SDk8ocUvWFnJtPLD1mupA6nk
+    LhBtkNL8UN25YqA/UoAhfzEU3KF5CdzEA1qS0gi8gQla9mQ9MVajkSlV2DPP2weGJq9gJA
+    AW3gZoXvrLJcvT7ewt2X/yHr6pzhX1YxirPbSUElJVd0h7Y5Fvdq4qPG50RCzp+cU7/RXE
+    TUNHZE53d8fd0ZesowCElgYeD/4HUo4ThrUaM6yxiK6BQC4zotOXqD6pz6IFlljASbPHSk
+    8Iv2QSAYT7p0+no3qsL6QyOSSZ7R4CqElm0SkWrr4pNRiHNY8UWDF1bJaKKXkS6DS9wXHD
+    m0ZuQ5YeMcrE08Xqv5Iz6OFdlPfe9bBveMhcII3F0ZuHeEMzhcu3aJyHD0LQ
+X-ME-Proxy: <xmx:NwD7aiPufXMmHt9fbiH5MTtzI3lHCOAMNK7rY6xpC7JJlOtXLC9HTg>
+    <xmx:NwD7alPM-tNSQUV73f8pTdbl3GzS6ePB_RW6niht1hWh-DWcsAawQQ>
+    <xmx:NwD7akR-iq01HrSUndJJAsN8gENrYd1oQsmttkPl-oFUlugIzoKKZA>
+    <xmx:NwD7anDkF7_B0us-x_cM5CTA0eYFRHuvTuYIUwPaAsto0VgC7tjP9Q>
+    <xmx:NwD7alUMprj3DFnAUe0ZzjqAF4FCuuaiYIWO1v9S8xj2KDH4wOWe71ts>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:04 -0500 (EST)
+ <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:06 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b772ac56 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 5f6b47aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 16 Nov 2026 13:08:03 +0000 (UTC)
+	Mon, 16 Nov 2026 13:08:06 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Nov 2026 14:07:40 +0100
-Subject: [PATCH 04/12] commit-graph: decide mergeable and chainable layers
- by depth
+Date: Mon, 16 Nov 2026 14:07:41 +0100
+Subject: [PATCH 05/12] commit-graph: introduce common exit for
+ `write_commit_graph_file()`
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,145 +125,113 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261116-pks-odb-pluggable-commit-graphs-v1-4-a83fc1ff0808@pks.im>
+Message-Id: <20261116-pks-odb-pluggable-commit-graphs-v1-5-a83fc1ff0808@pks.im>
 References: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
 In-Reply-To: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-When writing a split commit graph, `split_graph_merge_strategy()`
-decides which layers of the existing chain get merged into the new
-layer and which layer the new one builds upon. This is decided on two
-simple rules:
+In the next commit we're going to refactor `write_commit_graph_file()`.
+As part of that refactoring we'll perform a couple more allocations in
+this function that need to be cleaned up on exit.
 
-  - A layer may be merged in case it is part of the same local object
-    directory.
-
-  - A layer may be added to the chain in case it is either a split
-    commit graph layer, regardless of whether it is local or not. Or in
-    case it is local, we may also add it to our chain in case it is a
-    non-split commit graph, in which case we convert it to a split one.
-
-These checks require us to know about where exactly these commit graphs
-are stored on disk as we compare directories of the respective files
-with one another to figure out whether or not a layer is local. So as a
-consequence, this policy becomes backend-specific once the backend
-controls where exactly commit graphs are stored.
-
-Refactor the code so that we instead tell the merge strategy how many of
-the topmost layers are mergeable and chainable, respectively, which will
-let the backends decide on that property.
+Prepare for this by introducing a common exit path now already, as that
+will make the diff a tiny bit easier to read.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- commit-graph.c | 51 ++++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 40 insertions(+), 11 deletions(-)
+ commit-graph.c | 34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 9464522feb5..7f7146e752a 100644
+index 7f7146e752a..c146f20f68f 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1151,6 +1151,8 @@ struct write_commit_graph_context {
- 	uint64_t progress_cnt;
+@@ -2099,6 +2099,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	struct strbuf progress_title = STRBUF_INIT;
+ 	struct chunkfile *cf;
+ 	unsigned char file_hash[GIT_MAX_RAWSZ];
++	int ret;
  
- 	char *base_graph_name;
-+	size_t mergeable_layers;
-+	size_t chainable_layers;
- 	int num_commit_graphs_before;
- 	int num_commit_graphs_after;
- 	char **commit_graph_filenames_before;
-@@ -2283,6 +2285,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
- 	enum commit_graph_split_flags flags = ctx->opts->split_flags;
- 	int max_commits = ctx->opts->max_commits;
- 	int size_mult = 2;
-+	size_t depth = 0;
- 	uint32_t i;
- 
- 	if (ctx->opts->size_multiple)
-@@ -2299,7 +2302,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
- 	    flags != COMMIT_GRAPH_SPLIT_REPLACE) {
- 		while (g && (g->num_commits <= st_mult(size_mult, num_commits) ||
- 			    (max_commits && num_commits > max_commits))) {
--			if (strcmp(g->dir, ctx->dir))
-+			if (depth >= ctx->mergeable_layers)
- 				break;
- 
- 			if (unsigned_add_overflows(num_commits, g->num_commits))
-@@ -2309,6 +2312,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
- 				    (uintmax_t)g->num_commits);
- 			num_commits += g->num_commits;
- 			g = g->base_graph;
-+			depth++;
- 
- 			ctx->num_commit_graphs_after--;
- 		}
-@@ -2320,16 +2324,13 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
- 		BUG("split_graph_merge_strategy: num_commit_graphs_after "
- 		    "should be 1 with --split=replace");
- 
--	if (ctx->num_commit_graphs_after == 2) {
--		char *old_graph_name = get_commit_graph_filename(g->dir);
--
--		if (!strcmp(g->filename, old_graph_name) &&
--		    strcmp(g->dir, ctx->dir)) {
--			ctx->num_commit_graphs_after = 1;
--			ctx->new_base_graph = NULL;
--		}
--
--		free(old_graph_name);
-+	/*
-+	 * If we cannot add the new base to our chain we instead merge it and
-+	 * all of its base layers.
-+	 */
-+	if (ctx->new_base_graph && depth >= ctx->chainable_layers) {
-+		ctx->num_commit_graphs_after = 1;
-+		ctx->new_base_graph = NULL;
+ 	if (ctx->opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
+ 		struct strbuf tmp_file = STRBUF_INIT;
+@@ -2112,9 +2113,9 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
  	}
  
- 	CALLOC_ARRAY(ctx->commit_graph_filenames_after, ctx->num_commit_graphs_after);
-@@ -2560,6 +2561,7 @@ int commit_graph_write(struct repository *r,
- 	struct oidset reachable_commits = OIDSET_INIT;
- 	struct topo_level_slab topo_levels;
- 	struct commit_graph *g;
-+	bool mergeable = true;
+ 	if (safe_create_leading_directories(ctx->r, ctx->graph_name)) {
+-		error(_("unable to create leading directories of %s"),
+-			ctx->graph_name);
+-		return -1;
++		ret = error(_("unable to create leading directories of %s"),
++			    ctx->graph_name);
++		goto out;
+ 	}
  
- 	if (!!opts->pack_indexes + !!opts->commits + !!(opts->flags & COMMIT_GRAPH_WRITE_REACHABLE) > 1)
- 		BUG("attempting to write commit-graph with mutually incompatible options");
-@@ -2597,6 +2599,33 @@ int commit_graph_write(struct repository *r,
- 	for (struct commit_graph *chain = g; chain; chain = chain->base_graph)
- 		chain->topo_levels = &topo_levels;
+ 	if (ctx->opts->flags & COMMIT_GRAPH_WRITE_SPLIT) {
+@@ -2126,14 +2127,14 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
  
-+	/*
-+	 * We only consider merging layers that belong to our own object
-+	 * directory. Furthermore, we can only chain on top of either:
-+	 *
-+	 *   - A split commit graph layer, regardless of whether or not it is
-+	 *     local.
-+	 *
-+	 *   - A local non-split commit graph, in which case we'll convert that
-+	 *     layer into a split commit graph layer.
-+	 */
-+	for (struct commit_graph *layer = g; layer; layer = layer->base_graph) {
-+		char *path = get_commit_graph_filename(layer->dir);
-+		bool is_split = !!strcmp(layer->filename, path);
-+		bool is_local = !strcmp(layer->dir, ctx.dir);
-+
-+		free(path);
-+
-+		if (!is_local && !is_split)
-+			break;
-+		if (!is_local)
-+			mergeable = false;
-+
-+		if (mergeable)
-+			ctx.mergeable_layers++;
-+		ctx.chainable_layers++;
-+	}
-+
- 	if (opts->flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
- 		ctx.changed_paths = 1;
- 	if (!(opts->flags & COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS)) {
+ 		graph_layer = mks_tempfile_m(ctx->graph_name, 0444);
+ 		if (!graph_layer) {
+-			error(_("unable to create temporary graph layer"));
+-			return -1;
++			ret = error(_("unable to create temporary graph layer"));
++			goto out;
+ 		}
+ 
+ 		if (adjust_shared_perm(ctx->r, get_tempfile_path(graph_layer))) {
+-			error(_("unable to adjust shared permissions for '%s'"),
+-			      get_tempfile_path(graph_layer));
+-			return -1;
++			ret = error(_("unable to adjust shared permissions for '%s'"),
++				    get_tempfile_path(graph_layer));
++			goto out;
+ 		}
+ 
+ 		f = hashfd(ctx->r->hash_algo,
+@@ -2227,8 +2228,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 		int result;
+ 
+ 		if (!chainf) {
+-			error(_("unable to open commit-graph chain file"));
+-			return -1;
++			ret = error(_("unable to open commit-graph chain file"));
++			goto out;
+ 		}
+ 
+ 		if (ctx->base_graph_name) {
+@@ -2243,8 +2244,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 				result = rename(ctx->base_graph_name, dest);
+ 
+ 				if (result) {
+-					error(_("failed to rename base commit-graph file"));
+-					return -1;
++					ret = error(_("failed to rename base commit-graph file"));
++					goto out;
+ 				}
+ 			}
+ 		} else {
+@@ -2267,14 +2268,17 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 			fprintf(get_lock_file_fp(&lk), "%s\n", ctx->commit_graph_hash_after[i]);
+ 
+ 		if (result) {
+-			error(_("failed to rename temporary commit-graph file"));
+-			return -1;
++			ret = error(_("failed to rename temporary commit-graph file"));
++			goto out;
+ 		}
+ 	}
+ 
+ 	commit_lock_file(&lk);
++	ret = 0;
+ 
+-	return 0;
++out:
++	rollback_lock_file(&lk);
++	return ret;
+ }
+ 
+ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
 
 -- 
 2.56.1.763.g16177fe143.dirty
