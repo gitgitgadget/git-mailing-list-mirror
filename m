@@ -1,119 +1,121 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794847899;
-	b=ap3j3xeO71M9niCREFmy4S1fbeSbINzws/ADQaBIolSXsp0jvRpTvHRHO9rWtQDuM2dT
-	 zryCSlPpRWgbMBVXdpV6OPa0YC+u+rQQaHDu843U4/vMrzQ3IuVfGlZioF6Wqry0p/3yI
-	 kTaQuC+5bhmAY7VO6/L8XAtr4BtFs/W6h2cdQx9NqHB9uvZWH7Bwizpa4G1oi6K2UC0NQ
-	 U/pNLtfsPXsEbPzRO161GUVkc+QZ8DRUMzteGT5vfHpJ+u1UJYRafXmeaZ0BueTJLVyAe
-	 ffkDD+cLLIkjNIg9Y1wgBEvL+xTKaqkAF5U5ClhCMG19lenW3DfglKGw7Q2Iov00GlA==
+	t=1794850323;
+	b=Ga2HG+wc122i+tF1V1ImS8CkgJ5hz0jzRTdd/SmwWAiyiSxFABB1uIaYBfVdeL+NOj4o
+	 F7NLxGEs7GXNhcFTuhZM1+FXrgfsewJLZlnuErBoCdtC4bdy0nlrmKpoqZv0p0XNWBwIR
+	 fiZR2AzILLPzHXxI0CPJ0UJx5juRcHPLuRYQoaXOAsyP+2GNEVrhGyF7RYu8HM08LLuJE
+	 sw52akIGtQxZgw3vZahnbKHprjrmzmBOanjeYuSw+QgM488+yJpa54kYoJ1N9EcPcTfd6
+	 UMLiMewQW+2QHAtWMfvM5m68O+pI5uh96u/Nm7AuF5qhRO1uMUjUgrR63lklRrVEksQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794847899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794850323;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=a7QmH3K/cgC+sY664dUwhLTryj+5IFwrzIiM26BD2t8=;
-	b=QFE5Qdsevbtl+nfejJ++l7v0tGwsI47laoUnwd1NQO9sr08LlbFom+ewq7G/4LH3YayL
-	 gVOqSHVELYraJUj9WSWZ2nHXVXaDh6/9SeWbDpw29fbGLNKWxXpLCqgEuWpQU9x6Po1VR
-	 Ui8TY3RmloZ8/S3TXX4W2yiQMEpwnIWQfYuKDqljWrnWG2SU+NHT3DYKedclvQj1fQRsE
-	 Dm76lpvubes1MGBS1uKrNUExDxdL1ykrDvgCKEN2EkQJq2cddDETEOAtGFcs9Ud+TMzY0
-	 ZYMqHsyhziQ+3adtO5FgQGrjr+4GZBjwQwqrIgORmN6BwtdoyyqzPDlpPZamisVSDZA==
+	bh=x9SD0ksq8Xe1YCPTTP/rcmQ1pdzxP+8kfVQUYux6eG4=;
+	b=orNVdKg6zudKdsgwE7ysdWdmu8ysKwb3hZXBloqO86sL3oyk5LICeJ5NXNX+CdfxOHvR
+	 Ohd00UBUwMgtlEVrRdg36swf/Kzx1cnjQ4uHXc+aT3Xq+5wK8TA8lg/ivTPMfKH0DQRWf
+	 ZumvtZtSLGIXRX+guiWco3I15q5Urvh8fhYPmMW7LE3TfOveihlcBO5nfUFvcSHYzFxlt
+	 /1YvWZk4grrJTdc1qYDu9igdVFVDPN6cmdYKEwRk1X2rhtv8tX4SdPAK7dQKXFFkwubvz
+	 OTf+qG8THYULq52MJaZvagMZ6PFaJkjDPAH3QidW5EUZgDfUeBPqwEe0kxLohjIppQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=D2gWZqpr;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=sD5PqnWW;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=hht1hSz7;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Nl23dYWT;
 	arc=none smtp.remote-ip=103.168.172.150
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B4B606A31C
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 16:51:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 83B4B606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2751E606A333
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 17:32:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2751E606A333
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=D2gWZqpr;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=sD5PqnWW
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 99708EC0594
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 11:51:37 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Mon, 16 Nov 2026 11:51:37 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=hht1hSz7;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Nl23dYWT
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 41BC7EC0224
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 12:32:02 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 16 Nov 2026 12:32:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794847897; x=1794934297; bh=a7QmH3K/cg
-	C+sY664dUwhLTryj+5IFwrzIiM26BD2t8=; b=D2gWZqprgBcwleEGt5gwJ7pyT6
-	+KM2VUAJm3csyJqQ++W0PPjwUB7lN7LN8Oh+M0IgdfQ9L0RvyY23NP1xOTMRrYQK
-	vGNdqKKQlfI1dfw8O1oXozwRq18TSDAiWkM8tKuN4M7MlnZmwu0jfeEV7WtOREvJ
-	gZ1JvK5Fhlq4n9LV+M98TNqMaegvdXN+ul+9FVeFmk82RFdjB4vLQyqurJck0Kz2
-	i2VSDmmxd8PoF754brezlyH5x1E858W6iFpHbs5TRYkJaFo6ZnXfalc9dJaCjdAq
-	2jsmIFhvfjzbokE4q8uCRfB6t1qNTDySEc+lEEBWAF4NLlvmjn69MQ4eiEBQ==
+	:subject:to:to; s=fm2; t=1794850322; x=1794936722; bh=x9SD0ksq8X
+	e1YCPTTP/rcmQ1pdzxP+8kfVQUYux6eG4=; b=hht1hSz7cf4kuLrng3eRBpq5Yc
+	mwPU8TIzEHf6m/nctKYMdEnlfTCAcNx+P4DcQx2qzsKQDGOG82qP+T0w6iyvTQdz
+	FtgxkH4kn2hUtsOsLBjxABoGfDXLZDza7PErZ77zmGQ/fJ+n8kBWu2ZOXog5pPxm
+	EjCOTo8R32Ydq00DGtXrixkQGZB1yysp5XuU9I9PiQg6DPpKKBWt4wLJCaVDkB+L
+	DRM8uVPNARt9ukPXRHWvv4nbXGlAlOuLc+WjO5pdKPDtjtzi6fEPT8fRIF0QTAs3
+	vBA9lcjigi35ryJGNxpKYzQp38aOoDQJSrawqU3n7ZgCc4EzS+FRCHHoh/Mw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794847897; x=1794934297; bh=a7QmH3K/cgC+sY664dUwhLTryj+5IFwrzIi
-	M26BD2t8=; b=sD5PqnWWsLXdwk4/tsdqEV/RPgiqCQ3BLB2TYI4UVoJep3epR9t
-	51LY1YaO0DQnoo0WHxyZ7Gwy5gzKzq+CrXQOPwtMqjaC2MOLJ+Ey1vbrzCjEb2U8
-	33z1lfqebglhw5WiK0n+6FpBYVamm6S+6Rq2DSniBZn9uyMikdRtzEuMToFbGGuI
-	pdneFgCU2T7cVYYLSKmP/eH5AMC+vgw/iUU2h7JpP2LCCwE7MIKo+wixYmCM3w4X
-	3RsDMRIdDSvsj0lmTx1qYVO/ID9+f9PaTo0gz3YNL9XuwMJGl0KcGJksxqmpL8WN
-	ECrr9j3nN1fJD+YQRNeo+1TwSPkNyYkG6Mg==
+	1794850322; x=1794936722; bh=x9SD0ksq8Xe1YCPTTP/rcmQ1pdzxP+8kfVQ
+	UYux6eG4=; b=Nl23dYWTsqPDlbL2WtKzhQ3m/dxg5qHquyMESm6WN/wpnKyYxvG
+	WTn/T54hgCF18IVPyBcHovxjrHk3c/IF3snRAmhu4oZujdNxlzK3TxqFgMAAnq9c
+	xJbxiqNzQ5NeRPwbm2kOgsmoHulfcvlHdca3iLBlIY7Bo6t23+3ZbQRBC1oUSaBa
+	Cb0RCNmiIPjl/um4HoMjo9CI1Il0JxtBvcXgNTzaJjuA1cf6b51INJGgWeGKcfKD
+	yU4aqrVN7TXJxs+5Eyu7gSNB4DM32CQIPRNBcXWgPe59H4y0ilDDnRrcnnI8fvNG
+	dotAN/61c/QLJxBlDQCiky2+91lME+pBdOA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794847897; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794850322; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Zj6iyvqoW2mkPVUl7MyMWSTmarWNxQNavVShxj3nshJ8HV8
-	XMzkY40/5U1cok6rguHddS2QQkvzGN6ds6Gglj1WDPXpGeQlHKjgHsiMCXHAMmDf
-	NW+qPu+SXX46nvH1o/GOtliiiYoYKKAdzwq7PTxiWOYbyxNYy4VMfVJg+CbF/jfY
-	lfgaAxXKoUg7PZ6Qj9pnBWg7Ab7JsBX4AN331aSw8bVJ7D0nueg4Ey6cymbobzYp
-	/X6Q15kK6Y4pyboailQXMsuu2Fao1IKzS6dT3Cyd26AZnVvTPiLmYDeON58QfUVf
-	k0bz6iQHol3Pj2qI3OKpOt+cFg8CzyoP9oqfiKw==;
+	s=fm2:rsa-sha256:lsB4MV1OXFUBVdm3JNzV1jA50dGFn7yNnt157kMUjr50CL2
+	SJdBJAtCeYKD89NufWSvNdfbu2FPBmxkpWVV/OmvMSRdnGbO/54El6fTCBk4VHBD
+	Gjh6+5nJgkPwP68STCnWy2BKcu7c06pt0guDS0tk8ac3iUIekzPZif9JPjCjchMs
+	G7+fvT/7/P5BoRSwxK90gjpuEktQQcbUYDzxLPIIY+2FXkckyo9MQjwYV8OOGai9
+	Kd0QQWBQyuqO2uoDhiCarMkGnOBtwMJ3sg45QG8G89V+7Xr+uMw3MRapVy7Ce342
+	gIaopnl1IzuCVlL7A4lYBAlZbwShWIEvRGPXjaw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:0u9nuUezEYbImS5eCE4Hrn7TrRxghtQuq1qvwia/sw8=:Vm1bGgc1X77xDiYacGekVLolfVHjqx4p8YuZxyNT1C0=;
-X-ME-Sender: <xms:mTT7aoKtCXISkda44OQ9w0chMaiOKgQZYK9kaoLS1qraOoa2Sypn7g>
-    <xme:mTT7avmjq6Hg0yFIeyg6arEsvduBogvjN1kGv6X5rSW9PfcdMJGgsn06y6dqK3Qao
-    5YA9b2-JygIwkpTqNZ3qrH5dXm1MraVAUE84zmCENuoaXzMfPdydTQ>
-X-ME-Received: <xmr:mTT7amGPcFfK-TGqy9W-EFdVJ5BMjHdMKtYZm6UKl0UX7e_9Mzii5YHJ_wYP1ZJ8N0BN3B-_PsMcDq-aC5o8R2XRK50uK_JnB60a>
-X-ME-Proxy-Cause: dmFkZTE32gaIfkmtyQR68NXyXisVum0GrAxB/eUPyWAily7p2YMfSg6M4Ozrh9GL4fViQa
-    KcO1Rh2EP4S7H3hgQq2G+sbbDJ5WmnJtL4uHMNvLRfqgXBoYmQ60XVNELQhhG8ptF48qep
-    3tv0LmquckPJZ7wmSJIwA7SjDp5WIGdofDj69F3uwmHP2YvqJzuYgDqiH6sbu9ZA6+wDaW
-    OBcFSoZFdRoqItPtqtSr+Q/jgZiKsxhrCCWJ3pFS0Qg2mLJh4NqrpFU7ntkFNqov+JcEWE
-    E8uitE54hfk3V5FLoci03xl9+iMZMtolNoN/9P4/jqcV5ZH0exu5CV3BcoFuHE7aqzjwcH
-    MTJHCwQvV+36r/UnKbOOkNBLQExqbWbofANViWVbkwvtIqqaJcWvMnELVQnMoJa16M4Oo5
-    Tdw8G9VwYeCoWOcf3MmnZNk+yfqYWpj1jSe7JCEbG62DcK4ZVrt0Iz5eholH93+bU3Z25X
-    mM58F/DrutJXTOcXw+DE+XIVIUqCjmMZy//wiO0o48R5nuRp7qf/DFYUDOf+8jv/vPMbph
-    zW9ne91m3vhndkOpxFeHBP31n0oPmOhkovPaHo0kOeajxmKOGdAdI4hLK6FLVNjFRq6pzc
-    BZPN5NGfDwkV5tW8tRUG7XYfiIiVTwprhbIp4NK28ssWTlvk4LCcTn5HFfyg
-X-ME-Proxy: <xmx:mTT7avG19I-6E8Ww2OAd0GbEUS5cNOylwE7ogvM0nIIN7_uduy6DuA>
-    <xmx:mTT7ajN5NUmoJfQHxdROxXU6s7NQFcywBkijb8KTzNbIKdgHoN_tcQ>
-    <xmx:mTT7auHtPTbG1d6CVvyUslQlGSVoJS7MZUmkxC6WUpsBYlP5flqNHQ>
-    <xmx:mTT7aqN4VZNVFr8sGEdBmkBXuO6bA_nsIQ_NuJwHgFc4yyM3bDtICA>
-    <xmx:mTT7anmft29exWWgMF1HNWkLK6NcDqJM8iZMoimkatqBKxUFCZtlNb1q>
+Message-Instance: m=1; h=sha256:jN5xfd6FcmD1evG4k+X2j0gvXy44aV+x60swCyYLgR4=:mhLXtPGTQx7xBRzY6s+aNMwPZyb/wMzfPv0SnU3QzSY=;
+X-ME-Sender: <xms:ET77alfjShXuiqLRA6dDvm0pbaq4ixoGoT0qNUPiSy5IiqMuMy0kgg>
+    <xme:ET77aqHcg3pPVojraUg-DrxXZWOGizHHHzUg2-pNjHBy5UOHBiJuuePxb9BzAxy0M
+    Lwr2BXOBv1nrXlocLBOK_TEQyQt581ljvwYWCCqqjXKVF8LNygmEQ>
+X-ME-Received: <xmr:ET77am0p3EcOi9_XDXv8PZJE3LtoGXmwaRf1gic208HY5dZspEecDZfk4YkHmNgBUHtkPe13ZGdAJ00dS4w2n3hYmH-9h5_O0sJv>
+X-ME-Proxy-Cause: dmFkZTFa/nLbA7k2GqKH3A9lxSP1WPTeLkG3qDM2Gztl7/gj7M2mjgVl1Qfp0BWPVo/GnS
+    6tpvrMAHf/LL7HdEOZCQ7djctYr1du7DXICUgch3Ni8LQI9qaftkgmJHYZf2KKDeCt+1/l
+    /98DbL/YjKlizsnIMJSJRIqKxQF6y7+7bmax5Yp/q4+1cFb3UeCPlBIC2cIBbm/2FB677D
+    OzbQd/s3bzvcTyQte18aDqmA/tEFoVqJHoA39eDH4ePk5ihR06UXuDZEstNWLO+bIMrHcy
+    9DFuoHTNN+UrVCuBsZu3bCpwvSSv5a8r1FEM/WwVRnC6K4ZcZldjBuun07idCE50A/LCeG
+    mxBadcNWK6jxfw7wAyr5g8DAtf05r3Fg38OtHFl0mXL5a85BQMiFBXQs9dUKUWslj1xsCF
+    vhvnEyjqgymxaTByOW4lqLwT38YCrS3gjCkZO3nrcd+b3yyF29UVG1Ag+4XdrQtZfl5vKD
+    p6+hg0VYMp6LcrzMVd0gsuTjvjBoh2fxCMRIQTZjzFLkzzjvathewqmZ6m+bwHiN/bWHwQ
+    sk38RwAAdJCnD06umSWB8NaEOLjpFFS408EyUu2uYZ1gEOQbmAeX0lLet6Fwlo0seM+dHp
+    m209uESLxSFI+vqgiXSiaTHivtldP/CV86hQGw+WOyZenuVH7Ih5UnUi8Y1w
+X-ME-Proxy: <xmx:ET77aqm7EqJi1DdSWrrO19X2fxak9wnhRVHQGZA7tqgiSWplMqKytg>
+    <xmx:ET77au95dZny7LUHJvf369NO80M9ryCnub8MukF5Jt8lseA_9S-CRA>
+    <xmx:ET77anr-4ZBcbYJvxnrRAcNzZB4O4Z2In3U-hzZUm9ZAqN9ql2N5hA>
+    <xmx:ET77avk9jHXcYViOx_gsoLIO_AewxIo_Rhck3p7YdhYpwnm_VBLTOQ>
+    <xmx:Ej77ajn5PL9PHEcgCwPww6zVu5qsR1ahGsiEQl8GRomMSjOp0YxZBkbx>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Nov 2026 11:51:37 -0500 (EST)
+ 16 Nov 2026 12:32:01 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] read-cache: use istate->repo in overlay_tree_on_index()
-In-Reply-To: <b7abaeba-1dd9-45f3-ad63-e43c49ee48d4@gmail.com> (Derrick
-	Stolee's message of "Mon, 16 Nov 2026 08:11:33 -0500")
-References: <pull.2315.git.1794825269464.gitgitgadget@gmail.com>
-	<b7abaeba-1dd9-45f3-ad63-e43c49ee48d4@gmail.com>
-Date: Mon, 16 Nov 2026 08:51:35 -0800
-Message-ID: <xmqqtslglnxk.fsf@gitster.g>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Kristofer
+ Karlsson <krka@spotify.com>
+Subject: Re: [PATCH v2 0/2] builtin/repo: improve counting of objects
+In-Reply-To: <aacc4357-7f8c-4e5f-8cb2-1d2bdec767e4@gmail.com> (Derrick
+	Stolee's message of "Mon, 16 Nov 2026 11:02:30 -0500")
+References: <20261113-pks-repo-count-objects-speedup-v1-0-7ba4f29e74fb@pks.im>
+	<20261116-pks-repo-count-objects-speedup-v2-0-9c8be218eaff@pks.im>
+	<aacc4357-7f8c-4e5f-8cb2-1d2bdec767e4@gmail.com>
+Date: Mon, 16 Nov 2026 09:32:00 -0800
+Message-ID: <xmqqpkw4lm27.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -128,61 +130,22 @@ Content-Type: text/plain
 
 Derrick Stolee <stolee@gmail.com> writes:
 
-> On 11/16/2026 5:34 AM, Srujith A Poojary via GitGitGadget wrote:
->> From: Srujith A Poojary <poojarysrujith@gmail.com>
+> On 11/16/2026 3:01 AM, Patrick Steinhardt wrote:
+>> I was recently using `git repo structure` in a very large repository and
+>> was eventually greeted with an OOM. So I had a bit of a look and found a
+>> way to improve the memory footprint and speed it up a bit.
 >> 
->> Use the repository associated with the index state when
->> resolving the tree name, parsing the tree, and reading
->> its entries.
+>> The repository still doesn't produce results. As it turns out, walking
+>> 33 billion tree entries takes a while, and everything rev-list based
+>> that walks trees is kinda broken in there. Oh, well, a problem for
+>> another day.
 >> 
->> This avoids relying on the global repository when the
->> function already has access to its associated repository.
->
-> Cleanups are good.
+>> Changes in v2:
+>>   - Reword a comment to point out that parsing the commit should in
+>>     theory not be required.
+>>   - Link to v1: https://patch.msgid.link/20261113-pks-repo-count-objects-speedup-
+> Thanks for these changes. I found your v2 patches in my inbox somehow
+> disconnected from this cover letter. But I'm happy with v2.
 
-At least this one is not making things any worse.
-
-But there are other functions in this file, like add_to_index() and
-refresh_index(), that take istate but still mention the_repository.
-Cleaning these functions that share the same issue together in a
-single patch would help us reduce the review load and patch churn.
-
-On the other hand, I do not think it is a good idea to try losing
-USE_THE_REPOSITORY from this file all at once.  There are many
-lower-level functions that do not take istate (or repo), and it
-needs a design based on deeper thinking (which has not been made
-here for the obvious reason of not needing one yet) to decide what
-to do with them [*].  We do not want to see such changes in the same
-series of patches as a mechanical replacement patch like this one.
-
-Thanks.
-
-
-[Footnote]
-
- * Passing an extra parameter, either repo or istate, to these
-   functions may be an easy way, but the overhead may make it a
-   less-than-optimal solution, for example.  Teaching ce which
-   istate it belongs to is an absolute no-no, as these things are
-   born without their own istate, and are transfered between
-   different istates; besides they are so numerous.  Those are
-   merely one or two examples that need to be considered before we
-   know what the right approach is.
-
-
->> +	struct repository *repo = istate->repo;
->
->> -	if (repo_get_oid(the_repository, tree_name, &oid))
->> +	if (repo_get_oid(repo, tree_name, &oid))
->
->> -	tree = repo_parse_tree_indirect(the_repository, &oid);
->> +	tree = repo_parse_tree_indirect(repo, &oid);
->
->> -	err = read_tree(the_repository, tree, &pathspec, fn, istate);
->> +	err = read_tree(repo, tree, &pathspec, fn, istate);
-> The only other way to do this would be to replace the_repository
-> with 'istate->repo' directly, but having a 'repo' variable is
-> just as good.
->
-> LGTM.
-> -Stolee
+Thanks for writing and reviewing.  Let me mark the topic as ready
+for 'next'.
