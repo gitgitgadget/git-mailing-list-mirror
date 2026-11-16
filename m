@@ -1,118 +1,118 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794834499;
-	b=NSbZqOfyV+LJkDELuD/UUfTNct1FfqbrruulEEBsIOZeN0Stpa3T4sQC8hIgLOcPfPMr
-	 EJ0mYodqTqmdpSDLVRh8+v//aGx1BIwoadIyToWfOnnAJt3rlQqoVVbSxqz4pvvD3kJIC
-	 7YRKdaB9bQb6KR+vbGxlHWLAknj3k8izrAmIb6DAXJb/IFpGYEPEnO/xn1Cac7xA6jgoE
-	 4eqPMOl5PvX1pLUfyuzXUDgLGZi8pYLFT4Eq0ju/9kBiwLvYoaYnChmuudriXC31D6xGp
-	 Yo4DmQEoHrt71/VKJtaip4R2UYzaksF6ApJm61ZiBIx9QRnLSXBAso2VrTPC3b+J/9Q==
+	t=1794834503;
+	b=efFFtMnusFfh14dJyTJEPslmLFlpGR/8t+13y7WE3yUMLMcNWCZItIJNpUWBDGXuHifg
+	 oTZuDqfvtjGTMNBOC7b7xkYU2IHEgGql4tMnvSzjBfbkIMaT7oHSyYMJBWDaIRcBt/5un
+	 nJNW9F2DeIKO6Ahzu2RZzE3Wy/tYVXpDC8acFW3i2WzI5vp18RWYG6CuQRsi9BpzAnzKJ
+	 fSAW7k0bO0v+1awJhbEd5PZIZbdc1Zbi2IovPImndjQOColulSmBkX+lRzuqJNakzvqGI
+	 mFACDYyGToDuCHN8wHzCZe27k85+1J8yGCWlGar0Fk9JnJCYAu2qewLklQXwYjE15Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794834499;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794834503;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=2dBECUjAn+ExjpfW+GmrWnf6g9n0+QdoTevjWyMuFtk=;
-	b=S16D+izAAVoEDjBXbzLQYPn9vyK5mmW+agGkffv8jZIHZKfYNC4ny10RNrmWtg2MvfF1
-	 XgUeCl0kVb63+aCGP+H53V/umhCYph4jWyFJMnc7NRuTQv+2bbLG044bFhjh+acGBSHRc
-	 Wb9hZgJizTRhEJmrIp3wDurKzTDbJ1cvRcjYRnETvQI7xK+cA/idcGU+m4Jevb8vuePQm
-	 MXQBJNrQ1A8ZxKHQp17VLXivpDKxUOFOWlCj++I3AbMpzoam2cqY0zEMzv4fA57PxZ+oN
-	 xDkOWf3ABDkyQKPfyH2dTCzUG6RNKHGHLc2UvvOq8z30XvfS0IEDB2rZfrVUOrrF2OA==
+	bh=0ilDgdb+IAMjNYkY/YeYnD+0bnTAh3GiUxIgnE1M8/k=;
+	b=sgU5TVi9FG4FzfDj42BirHdVyxkt2g6vUyb7ZzPKf+21TUtVrl+UfJnSuk0VSiej1KFr
+	 udl88SP+7G3P21cgfM8DNXrP71iadwT27c44cptnwgOEkiPZQr8AglKpJxIkch+YcqA+2
+	 nQBoJDWKmW8gKzWQwZrzUmxC9vw0Tzb0Ssqima+6B+a/cIDRhU0ecaumQIFA20NOM/Rjg
+	 m1tbzIuEcpfHfUimcBDWyezyGfkXV7qzDqKsJpPR+RM38D/rrq1aPuUFhoQfnpw1JRv5T
+	 krqUuYHdh91hy4U3yEkaU4gPZAN7jwnSY4yQUvZIWptHGwC1FP7oig2vnH3rDzwPMRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=IYs6wFRC;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KVECQ3zI;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=V7dN69ba;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ir4x5LfZ;
 	arc=none smtp.remote-ip=103.168.172.159
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0818A606A32F
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 13:08:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0818A606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031E4606A89B
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 13:08:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 031E4606A89B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=IYs6wFRC;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KVECQ3zI
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3F8B61400043
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:18 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=V7dN69ba;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ir4x5LfZ
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 16E961400043
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:21 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 16 Nov 2026 08:08:18 -0500
+  by phl-compute-03.internal (MEProxy); Mon, 16 Nov 2026 08:08:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1794834498;
-	 x=1794920898; bh=2dBECUjAn+ExjpfW+GmrWnf6g9n0+QdoTevjWyMuFtk=; b=
-	IYs6wFRCZM2qtv/p7/lHl4aM0d+8n4Hz91FeX/50WM5RXp6js6ql/Iga+QHBoAkq
-	cldcXzlUA+gdYfcfYk4XZV6xNWaWJrl4TaQd7jNQ/PhPYKRxO87E/18hr45JDQJJ
-	6Ly4gWJ/LAkIpyGAmVpKSLj3ef7KosOjccVBU1aGEJxoR/JQr7WnYis+hg9J/ue3
-	5CKiJIqkW0XW/AbL5WLZHuXWNvv8pCTxXOeDhR33Nh+uyX4oOFmY71q8rJxXPbev
-	qr2DLG0QnvHSDHNZY7H+pY9j4u3y/OoNK+7+dWVVi4MUjUNDZfhNnU6CGQhoeY+v
-	RKbMuzEfLcu765yvfyHtkA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794834501;
+	 x=1794920901; bh=0ilDgdb+IAMjNYkY/YeYnD+0bnTAh3GiUxIgnE1M8/k=; b=
+	V7dN69ba19WNntFz1r/7XbnPQ1DhzRc782ASnZL/+Y7X2Vqir1b5dbRbwRl7E1V/
+	eNTaErHc6x/JjzVmWdGgxFKRnIM3fYshjBx2Xk71CTgQUAezMvuvpptbKbWpS9zk
+	KB08JVDxKzKQaNJBgp4rN74Vv4ssJXZv7np6U4PBYjYnriWG8lqpkNqTQKfSfrbY
+	CF9FJvIKtNnNPfhYJI/JgdEFq/vChjCb72Ol8GgvFxSVqS3AfUx4f2VxWUoE6H5p
+	DoEhHaU0AGIyE+M+rEyQKo+fmtTQNrVZXaFHCjRnfXqAKjIyAWIcPUN48DGKmpNO
+	/4cCH83mzHKIGj/QttaLBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794834498; x=
-	1794920898; bh=2dBECUjAn+ExjpfW+GmrWnf6g9n0+QdoTevjWyMuFtk=; b=K
-	VECQ3zIf3IidaAljT3c0rOoQWllcmuisSU1RLtUE/kGv9AgWaru9tmYHM5hkUQQB
-	6TjrvDQagdbY18fJWEigTGuR9NTuNEupheJkqNRs1dckZiJ4M49GQI8YOzmVzied
-	i3pFD8hDimfsdX9TpHrW28Sm1KzQRLo8TRDQItYBo8awvixCc2PTSRu0ePB/3pDF
-	QuSPJt7z3oAdcVk0dAyEVHCa5SrLpVn3IkBBQmBCIl/SmQGc7sUJSG/SG7Y8PvrR
-	XmZ1KiIERsxahol5KKO6f3RQI4qhsVU9FcyvAerE4p83UTNhwiNf9VbCQJSlTd7l
-	gSiZRIH2KDWQ4ZIwlg2/Q==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794834501; x=
+	1794920901; bh=0ilDgdb+IAMjNYkY/YeYnD+0bnTAh3GiUxIgnE1M8/k=; b=i
+	r4x5LfZUAfOjW4kJtfFH+PPeT/nobM5Iw63rn8A1f6XPTr6h49BpXODXqX6eJgXB
+	c9FMvuqgXalSF7e3Q27wVzGUgsmgQwR+3LhbIH4a4M6MKPzblJXdPGpSUgwtSq0T
+	qa+KKMitukxLhdY9h6kxIeh+ACR1GvT2e1ENeZXMLv4b67uoH5pm/mRGaredBL62
+	o3srFlsAjK768gcfYdrpUKeO/EqES60Yz1x1T5lJpkzhaHnXnFwFRB06jy0Y0gdD
+	hP4COxfKel/5eEsNWvpeGqxFmEPL3KRoHaYyJMjzDUy0ygzqQk/hNwnSnXRadI2a
+	56eQ+c+C49/plXG39S9EA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794834498; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794834501; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:nLodhQ08a6N4PocPYHYYRDvrBuVRzGnSkbzQD5gaN8FtV9x
-	vE201QfYyI3YeS9Zs+tepFySbJjzUyFxm3xoeYdFT3vxShceUnHNyYeEHaTOvQm8
-	5qQeMLP02WeI6mmn6IdRomSmaQK5Q1tf1eI0Vi/4wfNd6OrYxQmNcPDymau/Mj6c
-	EQWCosMnwJwqNr/0FROvQoBPLQbB98wK3Cpg7pQbQYfk50W4XxnGoUeILlJNg3lX
-	bVPvr7Zoh9AEPAGrWqdU6yktnXRo/VZvZsgd/llPqQSP5zP+/0MNUTSSgGi1oG3J
-	dyo+pqWZeeFnwfTlopERozuV1Qzdsu5hjBfjLYw==;
+	s=fm3:rsa-sha256:KIVkDHldxDji4mhGkCiYE3Bm3jVrDnFGpcteAhLHabb8uYw
+	LUezG8XPa2w+WV5Dibm87q4/0Sb+DOWmTwxFaMA5CVHI4QFxupwG6fxjtlk87RBi
+	/Hz0MI8pklJM8gJChhKNJ3eGCVO7lRb1TZMnXevZlOJ7b+C2IV3j9J+Yy5u9Dc78
+	JU1wRAxkgazxF8rAOBcQPszRo5/YyXSTH5cQB66FzosqXzakrpFIDPPNucw6VkuJ
+	R2KFALTiikPKT+uLCF5Ez8O1Avj3FlAW/r+q9mTSSYT5Jgxu+4aNPLDTy+MySIzS
+	1G6TuRRZcBQ/7E7Uju0fuFCyGXpbmvIk05N9gzA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:aS+ampVWRiUkSOeqfe1WYZ9EmyvYHC37BjTCAqZN3Z4=:Lr1KJkGQvXXQbr3snuHXkPoi6S5MgmygPOmM9R+fPWE=;
-X-ME-Sender: <xms:QgD7ajZ5Ae_N5yJZDISNgYhF_aYKL2qXETY4GvbcOQWEF5FatJ0EHg>
-    <xme:QgD7apU0707oxuulX0Z629W_0V2cmX_y3ySoBYYR_pRiAgO2oKVZ6wxplbtsAvTsN
-    CPvK7D_Im4l0FwSV1UDPyaQBZ_kkTMcZgWlRlnnOq5dRWbL0yWKMik>
-X-ME-Received: <xmr:QgD7armslbDGlBWTKSop4dH0C_vLj4Ku2mUIahZopk9cgMu3VlxW-TdE_ADA_m0uu-BY4lk>
+Message-Instance: m=1; h=sha256:J+Ofgxti8CBsK2Soq1vWw5Y0ChStLg4jxRakYZ8WVr4=:Wr16v8z9CK3H6elhSGntwyxm+4xr0PtHit+W5/FLyfk=;
+X-ME-Sender: <xms:RQD7aj8jVMQoMSNyTjQPLPVuK9pMOwDtF6f_79KB-ojbi-Ie2xgBJQ>
+    <xme:RQD7amqwMfbtgn9rBBwazJrZ01z7VCUOCkmgTwk-mGZbShy9UsDSkRe-idtI_rPJr
+    RLKf7aqXQXqRf1KJhMyAaybbwwx5NiPmCcfD1KvPre4cjeUVo10Nyc>
+X-ME-Received: <xmr:RQD7amrEgYHGWIdK_CymMnWdA5iasxtWbYRg3ZC_9ZsRs-TXJ54ygUgzgsGWbEEVboFxmzA>
 X-ME-Proxy-Cause: dmFkZTGziUKUgJYsbiHWfb5HWuWorQnHHq6YP0ByYpkZ6e9sVItzSNrjxVNiJjpykGt6EH
     +Wo+jZCDwFt+/bcnf++syQUvL1OVsCKhGqPwr3BK64IVWifW0xci0pdI+2+/Q2cKlJ86Bw
     MPjq5Gxm3EfNjPHHZxB/qKmy2lYBxm28RGRVDzQY/DL8x0mrFRQC08IpgtrlSdKQSvTTzK
     jI4Dzrh8Ro4PE+97yI0qzoNNhqp2HeoBh5o/zQx/r+4v+GKIjmbaBlrMKGm2iApi+hz2OH
-    ZU0TLEDo5HjB+hj+++nQGClhpGKhIpSL+UXhvZrJuTSG26O5MqYj9dLI/adyQM7bNfpGaW
-    Q+esMKV2CPbrwKWZuTX+zIg0I3TMVv5YL0isaSuak9xnvSHlAP5wd6H7NhyMW70l07BPdr
-    IBcbfYQ4ms9KopYFthgo/tFumV+7DWO+FdA3vzwrDfxApGdWPcDop8XhMB18mmjoTPZThI
-    7ni0xHcUIWkPb2Dfbclz24ZQ865CkGotXMQob0TrHNpXZMTtlmRRxmFtRKnH0VBBlKbo4/
-    +vXH7yG36LCdCeMTRkHsOoZVjDIWmNy1mNS9ab2sb+9ORjrMKEStxCv8zXyDyCOMPAY1lp
-    xlCF/u83S+FSe3oiECjOYf8/dHl10t859PgvBkJcS2muykabiGovKEuVWgcg
-X-ME-Proxy: <xmx:QgD7auxB6rn7HGB0Zz9W747TeYPd8KYmgmvgbrsPEPtiEQ_k0lgcQQ>
-    <xmx:QgD7augOra7twJrUYb4CaHxQoBzGRpYC7knZKDQIJE1MAlnR0Npb0g>
-    <xmx:QgD7arW1norXdUUZFhgENmpUNNVDKcR-DajnBtJZhPeRwUek1UyFzg>
-    <xmx:QgD7ao0FryQAbDk-j29kpYX02XR3M5_tmuJLKUn9T9zf0f0iLlN0eA>
-    <xmx:QgD7al7k4skAtdrsYrGRmlfAeShfRU_HUVcgpFxcxUcxGOwG3_6tVG8T>
+    ZU0TLEDo5HjB+hj+++nQGClhpGKhIpSL+UXhvZrJuTSG26O5MqYj9dLI/adyQM7bNfpGsG
+    44uvTLU7WLaJk9CCcaus6ubeYullY0dn1sxHhZNnWazkCA2VSqmCChc6MWkW41kONyLXiV
+    sMnEp3xij6rag4GD3SBVNZ4PVPyQOXvQADYoXhHC1tjlCyoseaaqNKotvRhIdlomwrXC4S
+    M64gkOEG9OCjIxWrpV/dVKbk2RFbnAFSTSxjZJeepWwT27ouv3NDuctYNRhYB5YQrqGsjh
+    kycuVgtuzZC45mWgL7xKlqm88yZ4PuYrd+/oJte3LHAkMFqyJR+7lg5UZ20pKI4U1DUXwf
+    EgfUdXOhwsaQqZ4CXMXXNcIZx4A54yInUnDUsaNbmQtjADO60G2WGP40YMfw
+X-ME-Proxy: <xmx:RQD7akle5SA66wznzAza_iwSpiO3-necaCyRC1qHqCk_UrWuDGYpUg>
+    <xmx:RQD7aoGwz-4eQJnvyQiPGvSVzkcw6aCC9bq98OxQKIrmfcdj5DX-XQ>
+    <xmx:RQD7atr5mJ1jsRumBdHkx_z43UsrptY8RuC_NnBw17LpEwW0MespmA>
+    <xmx:RQD7ak5Hk_oGYAig6to2S7r2lvsl260SLoujVKBiRHESvmSRm0dFNg>
+    <xmx:RQD7avvRAaCDEfeiU6S-dHFRW1Tl4XjmgSfegm9Uy4RRSbaFPXtQ8jJe>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:17 -0500 (EST)
+ <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:20 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6cae73b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 9e9a46cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 16 Nov 2026 13:08:17 +0000 (UTC)
+	Mon, 16 Nov 2026 13:08:19 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Nov 2026 14:07:45 +0100
-Subject: [PATCH 09/12] commit-graph: mark incomplete commit graph chains
+Date: Mon, 16 Nov 2026 14:07:46 +0100
+Subject: [PATCH 10/12] odb/source: make commit graphs pluggable
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,132 +124,347 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261116-pks-odb-pluggable-commit-graphs-v1-9-a83fc1ff0808@pks.im>
+Message-Id: <20261116-pks-odb-pluggable-commit-graphs-v1-10-a83fc1ff0808@pks.im>
 References: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
 In-Reply-To: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-When loading a commit graph chain it may happen that we only find a
-subset of its layers. Such a commit graph is still usable though in the
-case where we have the base and layers building on top of it, so we
-still return such an incomplete commit graph to the caller.
+The location where commit graphs are read from and written to is
+hardcoded to ".git/objects/info". This indeed makes sense for the
+"files" backend, which also stores all of its other information in these
+directories. But other backends may want to store commit graphs
+differently, if they even want to support them at all.
 
-While valid and usable, we of course want to warn about such commit
-graphs in `git commit-graph verify`, which is why there is an
-`incomplete` out-parameter in `load_commit_graph_chain_fd_st()`. In a
-subsequent commit though we want to hide this function in favor of a
-pluggable interface, but carrying such a flag there feels wrong.
+Give backends control over how commit graphs are stored by making the
+ability to both read and write commit graphs pluggable. Adapt callers to
+use the new, backend-generic functions where possible. The one exception
+is "builtin/commit-graph.c", whose "--object-dir=" option allows the
+user to specify the target object directory. This is highly specific to
+the "files" backend though, and consequently we only support that option
+there.
 
-Instead, have the function set a new `incomplete` field in the commit
-graph structure itself.
+Note that the logic that locates commit graphs is still hosted by
+"commit-graph.c" right now. This will be fixed in a subsequent commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/commit-graph.c | 9 ++++-----
- commit-graph.c         | 9 ++++-----
- commit-graph.h         | 4 ++--
- 3 files changed, 10 insertions(+), 12 deletions(-)
+ builtin/commit-graph.c     | 25 +++++++++++++++-------
+ builtin/fetch.c            |  4 +---
+ builtin/gc.c               |  3 +--
+ commit-graph.c             | 13 ++++--------
+ odb.c                      |  6 ++++++
+ odb.h                      | 10 +++++++++
+ odb/source-files.c         | 27 ++++++++++++++++++++++++
+ odb/source.h               | 52 ++++++++++++++++++++++++++++++++++++++++++++++
+ t/helper/test-read-graph.c |  3 +--
+ 9 files changed, 119 insertions(+), 24 deletions(-)
 
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 2a5a75dc22f..5ecce4b6caa 100644
+index 5ecce4b6caa..6ee644d8487 100644
 --- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
-@@ -66,7 +66,6 @@ static int cmd_commit_graph_verify(int argc,
- 	enum commit_graph_verify_flags flags = isatty(2) ? COMMIT_GRAPH_VERIFY_PROGRESS : 0;
- 	int fd;
- 	struct stat st;
--	int incomplete_chain = 0;
- 	int ret;
- 	struct option options[] = {
- 		OPT_BIT(0, "shallow", &flags,
-@@ -113,20 +112,20 @@ static int cmd_commit_graph_verify(int argc,
- 	else if (opened == OPENED_GRAPH)
- 		graph = commit_graph_read(repo, fd, &st);
- 	else
--		graph = load_commit_graph_chain_fd_st(repo->objects, fd, &st,
--						      &incomplete_chain);
-+		graph = load_commit_graph_chain_fd_st(repo->objects, fd, &st);
+@@ -277,23 +277,27 @@ static int cmd_commit_graph_write(int argc,
  
- 	if (!graph)
- 		return 1;
+ 	if (!!(write_opts.flags & COMMIT_GRAPH_WRITE_REACHABLE) + opts.stdin_packs + opts.stdin_commits > 1)
+ 		die(_("use at most one of --reachable, --stdin-commits, or --stdin-packs"));
+-	if (!opts.obj_dir)
+-		opts.obj_dir = repo_get_object_directory(repo);
+ 	if (!opts.enable_changed_paths)
+ 		write_opts.flags |= COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS;
+ 	if (opts.enable_changed_paths == 1 ||
+ 	    git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
+ 		write_opts.flags |= COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
  
- 	ret = commit_graph_verify(graph, flags);
--	commit_graph_free(graph);
+-	dir = odb_source_files_find_dir(repo->objects, opts.obj_dir);
+-	if (!dir)
+-		die(_("could not find object directory matching %s"), opts.obj_dir);
++	if (opts.obj_dir) {
++		dir = odb_source_files_find_dir(repo->objects, opts.obj_dir);
++		if (!dir)
++			die(_("could not find object directory matching %s"), opts.obj_dir);
++	}
  
--	if (incomplete_chain) {
-+	if (graph->incomplete) {
- 		error("one or more commit-graph chain files could not be loaded");
- 		ret |= 1;
+ 	if (opts.stdin_packs) {
+ 		struct strbuf packname = STRBUF_INIT;
+ 		size_t dirlen;
+ 
+-		strbuf_addf(&packname, "%s/pack/", dir->abspath);
++		if (dir)
++			strbuf_addf(&packname, "%s/pack/", dir->abspath);
++		else
++			strbuf_addf(&packname, "%s/pack/",
++				    repo_get_object_directory(repo));
+ 		dirlen = packname.len;
+ 
+ 		while (strbuf_getline(&buf, stdin) != EOF) {
+@@ -323,8 +327,13 @@ static int cmd_commit_graph_write(int argc,
+ 		stop_progress(&progress);
  	}
  
-+	commit_graph_free(graph);
-+
- 	return ret;
- }
+-	if (commit_graph_write(repo, dir->abspath, &write_opts))
+-		result = 1;
++	if (dir) {
++		if (commit_graph_write(repo, dir->abspath, &write_opts))
++			result = 1;
++	} else {
++		if (odb_write_commit_graph(repo->objects, &write_opts))
++			result = 1;
++	}
  
+ cleanup:
+ 	string_list_clear(&pack_indexes, 0);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index c646bc6698d..b7606016817 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2978,9 +2978,7 @@ int cmd_fetch(int argc,
+ 		if (graph_write_mode != GRAPH_WRITE_SKIP) {
+ 			trace2_region_enter("fetch", "write-commit-graph",
+ 					    the_repository);
+-			commit_graph_write(the_repository,
+-					   the_repository->objects->source->path,
+-					   &write_opts);
++			odb_write_commit_graph(the_repository->objects, &write_opts);
+ 			trace2_region_leave("fetch", "write-commit-graph",
+ 					    the_repository);
+ 		}
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 68cb04a672d..f9a15912d0e 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -741,8 +741,7 @@ int cmd_gc(int argc,
+ 		if (!opts.quiet && !daemonized)
+ 			write_opts.flags |= COMMIT_GRAPH_WRITE_PROGRESS;
+ 
+-		commit_graph_write(the_repository, the_repository->objects->source->path,
+-				   &write_opts);
++		odb_write_commit_graph(the_repository->objects, &write_opts);
+ 	}
+ 
+ 	if (!daemonized) {
 diff --git a/commit-graph.c b/commit-graph.c
-index 7bb6b112b2e..0ae9f586f21 100644
+index 0ae9f586f21..7fea94689a1 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -651,8 +651,7 @@ int open_commit_graph_chain(const char *chain_file,
+@@ -42,7 +42,7 @@ void git_test_write_commit_graph_or_die(struct repository *repo)
+ 	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
+ 		opts.flags |= COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
+ 
+-	if (commit_graph_write(repo, repo->objects->source->path, &opts))
++	if (odb_write_commit_graph(repo->objects, &opts))
+ 		die("failed to write commit-graph under GIT_TEST_COMMIT_GRAPH");
  }
  
- struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
--						   int fd, struct stat *st,
--						   int *incomplete_chain)
-+						   int fd, struct stat *st)
+@@ -747,8 +747,6 @@ struct commit_graph *read_commit_graph_one(struct repository *repo,
+  */
+ struct commit_graph *prepare_commit_graph(struct repository *r)
  {
- 	struct commit_graph *graph_chain = NULL;
- 	struct strbuf line = STRBUF_INIT;
-@@ -703,11 +702,12 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
- 	}
+-	struct odb_source_files *files;
+-
+ 	/*
+ 	 * Early return if there is no object database or if the commit graph is
+ 	 * disabled.
+@@ -778,12 +776,9 @@ struct commit_graph *prepare_commit_graph(struct repository *r)
+ 	if (!commit_graph_compatible(r))
+ 		return NULL;
  
- 	commit_graph_validate_chain(graph_chain);
-+	if (graph_chain)
-+		graph_chain->incomplete = !valid;
+-	files = odb_source_files_downcast(r->objects->source);
+-	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+-		r->objects->commit_graph = read_commit_graph_one(r, dir->abspath);
+-		if (r->objects->commit_graph)
+-			break;
+-	}
++	if (odb_source_read_commit_graph(r->objects->source,
++					 &r->objects->commit_graph))
++		return NULL;
  
- 	fclose(fp);
- 	strbuf_release(&line);
+ 	return r->objects->commit_graph;
+ }
+diff --git a/odb.c b/odb.c
+index 5dd277761b1..ec5064c3cd0 100644
+--- a/odb.c
++++ b/odb.c
+@@ -839,3 +839,9 @@ int odb_fsck(struct object_database *odb, struct odb_fsck_options *options)
+ {
+ 	return odb_source_fsck(odb->source, options);
+ }
++
++int odb_write_commit_graph(struct object_database *odb,
++			   const struct commit_graph_write_options *opts)
++{
++	return odb_source_write_commit_graph(odb->source, opts);
++}
+diff --git a/odb.h b/odb.h
+index 857637f9805..099ba998faa 100644
+--- a/odb.h
++++ b/odb.h
+@@ -221,6 +221,16 @@ struct odb_fsck_options {
+  */
+ int odb_fsck(struct object_database *odb, struct odb_fsck_options *opts);
  
--	*incomplete_chain = !valid;
- 	return graph_chain;
++struct commit_graph_write_options;
++
++/*
++ * Write a new commit graph layer into the primary object source. The source
++ * is in control of where and how the layer is stored. Returns 0 on success, a
++ * negative error code otherwise.
++ */
++int odb_write_commit_graph(struct object_database *odb,
++			   const struct commit_graph_write_options *opts);
++
+ /*
+  * Iterate through all alternates of the database and execute the provided
+  * callback function for each of them. Stop iterating once the callback
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 0bf15031c87..5ad27fd4bc7 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -2,6 +2,7 @@
+ #include "abspath.h"
+ #include "blob.h"
+ #include "chdir-notify.h"
++#include "commit-graph.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "hex.h"
+@@ -1230,6 +1231,30 @@ static int odb_source_files_generate_pack(struct odb_source *source UNUSED,
+ 	return 0;
  }
  
-@@ -720,9 +720,8 @@ static struct commit_graph *load_commit_graph_chain(struct repository *repo,
- 	struct commit_graph *g = NULL;
++static int odb_source_files_read_commit_graph(struct odb_source *source,
++					      struct commit_graph **out)
++{
++	struct odb_source_files *files = odb_source_files_downcast(source);
++
++	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
++		struct commit_graph *g = read_commit_graph_one(files->base.odb->repo,
++							       dir->abspath);
++		if (!g)
++			continue;
++		*out = g;
++		return 0;
++	}
++
++	return 1;
++}
++
++static int odb_source_files_write_commit_graph(struct odb_source *source,
++					       const struct commit_graph_write_options *opts)
++{
++	struct odb_source_files *files = odb_source_files_downcast(source);
++	return commit_graph_write(source->odb->repo, files->dirs->abspath, opts);
++}
++
+ static int fsck_commit_graph(struct odb_source_files *files,
+ 			     struct odb_files_dir *dir,
+ 			     struct odb_fsck_options *opts)
+@@ -1335,6 +1360,8 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+ 	files->base.optimize = odb_source_files_optimize;
+ 	files->base.optimize_required = odb_source_files_optimize_required;
+ 	files->base.generate_pack = odb_source_files_generate_pack;
++	files->base.read_commit_graph = odb_source_files_read_commit_graph;
++	files->base.write_commit_graph = odb_source_files_write_commit_graph;
  
- 	if (open_commit_graph_chain(chain_file, &fd, &st, repo->hash_algo)) {
--		int incomplete;
- 		/* ownership of fd is taken over by load function */
--		g = load_commit_graph_chain_fd_st(repo->objects, fd, &st, &incomplete);
-+		g = load_commit_graph_chain_fd_st(repo->objects, fd, &st);
- 	}
+ 	/*
+ 	 * Ideally, we would only ever store absolute paths in the source. This
+diff --git a/odb/source.h b/odb/source.h
+index 7b56f51b827..bc9604f7df9 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -1,6 +1,7 @@
+ #ifndef ODB_SOURCE_H
+ #define ODB_SOURCE_H
  
- 	free(chain_file);
-diff --git a/commit-graph.h b/commit-graph.h
-index 1cc0d097321..3b5e0eb2d73 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -93,6 +93,7 @@ struct commit_graph {
- 	struct object_id oid;
- 	char *dir;
- 	char *filename;
-+	bool incomplete;
++#include "gettext.h"
+ #include "hashmap.h"
+ #include "object.h"
+ #include "odb.h"
+@@ -32,6 +33,8 @@ enum odb_source_type {
+  */
+ const char *odb_source_type_to_name(enum odb_source_type type);
  
- 	uint32_t num_commits_in_base;
- 	unsigned int read_generation_data;
-@@ -124,8 +125,7 @@ struct commit_graph {
- struct commit_graph *commit_graph_read(struct repository *repo,
- 				       int fd, struct stat *st);
- struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
--						   int fd, struct stat *st,
--						   int *incomplete_chain);
-+						   int fd, struct stat *st);
++struct commit_graph;
++struct commit_graph_write_options;
+ struct object_id;
+ struct odb_stream;
+ struct strbuf;
+@@ -285,6 +288,29 @@ struct odb_source {
+ 	 */
+ 	int (*fsck)(struct odb_source *source,
+ 		    struct odb_fsck_options *options);
++
++	/*
++	 * This callback is expected to read the commit graph of the source,
++	 * if any. This callback is optional. Sources that do not support
++	 * commit graphs shall leave it unset.
++	 *
++	 * The callback is expected to return 0 on success, 1 in case no commit
++	 * graph exists and a negative error code otherwise. On success, `out`
++	 * must be set to the commit graph.
++	 */
++	int (*read_commit_graph)(struct odb_source *source,
++				 struct commit_graph **out);
++
++	/*
++	 * This callback is expected to write a new commit graph layer with
++	 * the given options. This callback is optional. Sources that do not
++	 * support commit graphs shall leave it unset.
++	 *
++	 * The callback is expected to return 0 on success, a negative error
++	 * code otherwise.
++	 */
++	int (*write_commit_graph)(struct odb_source *source,
++				  const struct commit_graph_write_options *opts);
+ };
  
  /*
-  * Link the commit graph layer `g` on top of the chain `base`. `base` may be
+@@ -540,4 +566,30 @@ static inline int odb_source_fsck(struct odb_source *source,
+ 	return source->fsck(source, opts);
+ }
+ 
++/*
++ * Read the commit graph of the given source. Returns 0 on success, 1 in case
++ * no commit graph exists, and a negative error code otherwise.
++ */
++static inline int odb_source_read_commit_graph(struct odb_source *source,
++					       struct commit_graph **out)
++{
++	if (!source->read_commit_graph)
++		return 1;
++	return source->read_commit_graph(source, out);
++}
++
++/*
++ * Write a new commit graph layer into the given source. Returns 0 on success,
++ * a negative error code otherwise. Sources that do not support commit graphs
++ * cause an error.
++ */
++static inline int odb_source_write_commit_graph(struct odb_source *source,
++						const struct commit_graph_write_options *opts)
++{
++	if (!source->write_commit_graph)
++		return error(_("object source '%s' does not support commit graphs"),
++			     odb_source_type_to_name(source->type));
++	return source->write_commit_graph(source, opts);
++}
++
+ #endif
+diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
+index 9642e55b8c0..d6174bb55f4 100644
+--- a/t/helper/test-read-graph.c
++++ b/t/helper/test-read-graph.c
+@@ -85,8 +85,7 @@ int cmd__read_graph(int argc, const char **argv)
+ 
+ 	prepare_repo_settings(the_repository);
+ 
+-	graph = read_commit_graph_one(the_repository, source->path);
+-	if (!graph) {
++	if (odb_source_read_commit_graph(source, &graph)) {
+ 		ret = 1;
+ 		goto done;
+ 	}
 
 -- 
 2.56.1.763.g16177fe143.dirty
