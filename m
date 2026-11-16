@@ -1,100 +1,52 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.47
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794852419;
-	b=lQUoxHk28ucysQfcpjE3Jv8lC7LS0C8dfjaEsdteyfp6dSnVPvvmDXlSV2HEw1C9bq6U
-	 h3Q2ym4Ll4nyIJpka8CEkbb2XuD1JaHiqF/WVepJrs5/rr1Qzv/qyjNnCgDtZKN1rvwFa
-	 MYtI1CZipGUSIvagdNJvbSw1Hl/HKQUJEy8wPj3T0NZsqnteSF3HGTqqpbrnJV8JMZxS7
-	 CYGpnCfBdqIq2QCfS3M1Ur4+XKxN6hNNrN61cHZOUEnSvpCDzp5s9IbMWg6ZXcAHgx1UU
-	 4NGdPZXp3g1nxTbQXZ4eqtbg14yVf/XJ7gkWyCRYv7099UqjThqYnrraaPWLzVCTycA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794852419;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=gT69NTGdw2JkR5SJ5RJv1dLjAv00uHVwp8TieWMtIus=;
-	b=prADIa27uv1BTT6Pu/hipSiZ0NZeQJQqUT1QEH+jXnzyxsBu640HA9b1rwX2RFK9VPP0
-	 nn8pzf0Lm3fcSyCcamypqUzRjxBtdpgDjonhusA2aBZuqdRVnu+sdQevwlkqz6vxWlZIZ
-	 diRDQ4GRVYj+7y9zRCFIhwvOhp/VE2L7ytR9oal3tUYJfe7xKV+qW4+psiyjKu3/B5BZ+
-	 6lqKWkNtTnlgX7rfDgBuTkDxPnJjwkvGPo4YViHgP+XEoY2KNVxdtmX8GViBRZKvNiRbV
-	 A3aKPGSW9jMX/Jzkl4qzSf5CKj1PLp5ANhy25TFgW9iLugTO1uUs/wYH4aBA/jYbBXA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BqUW2sZ4;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.47
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794855441;
+	b=2Nke7FL62XAU4B9xfXGXdeMnyYTRrAtrB6IrUej/LWhJC5zANiMfz2+5airtkcTG/M6+
+	 6gq4Nhx9xmDXaVImn8VkYU/9MBnar0E/9YVrLmfo7swplwL3c327UcmhWNdb+IkbRhTjp
+	 HUo0h5KkPXDlyF2C4kKzaaTUDL5foOUbOqk1oUmQbfh6Q52/azCVy83T6JWeyMOQKi0ln
+	 eV+ASSP/hzDDALCStxpoa5jv86khZWZIc/bqoMGCANg5HmPYBeAeSguG5LxNwNiTN5uTy
+	 3I39gvsUFvQf8HxDO78+iAngkT88PtdstIFaj+fiZQ9iqT5hobCA8nyR0/WFo21rgOA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794855441;
+	h=DMARC-Filter:Received:DKIM-Signature:From:Date:Subject:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
+	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=jQ7edrPUjOd9uswF5674I4MMMbffnlhWtKI900KrC7U=;
+	b=EZyY9d7QahcmA/2gjNCSJx+kHem8ENJAnLU1OZHq1o5QRj2g2iyFU8vhZgFDWm35oc9K
+	 3IJB8aDXDOlZqUNddRjqXtHGQ7O/212aD4KlnWkTj3J8SKAwYGMiIMaz1A5Ynf6t2sg0e
+	 Ql01sgtzg0HRUCoy1xE3fTeb21hwn5Hbz/Zgu2xi8ElJmflOfGtVQV+G/TGl0qWqlHUAf
+	 LyzbcKL5+/RgRbjq+HdSb1znYL0ozTyHseox6fo3WzdPRvEsnHiH+fIcO0laZY7hn3obY
+	 xNVh6guBXt3k1AfyGvE2ZoOXYiAbNJC8V41JdePumf23KHwvuAvEAk/spncHKXq5hbA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gouders.net;
+	spf=pass smtp.mailfrom=gouders.net;
+	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=t3XRig16;
+	arc=none smtp.remote-ip=202.61.206.94
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7755606A322
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 18:06:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7755606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D69606A333
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 18:57:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E5D69606A333
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BqUW2sZ4
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-847ac7ccd85so2965979a34.3
-        for <git@vger.kernel.org>; Mon, 16 Nov 2026 10:06:58 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794852418; cv=none;
-        d=google.com; s=arc-20260327;
-        b=gFTfk1Iik9JqDV9P3Uv65gI9sn5b0oJm4qS+s1Ax7w/Jq1L4PeJXnvCVQyoHjEAWxd
-         c8zrJhAjk/rc36rRg2PC36vQPiWL6xifLhAHtdVryLzLfY8d/Oj83j2ImXQJofL0cgCe
-         TJ0YpSdr9AXUTOuLwsGH7e9XSppfn/qe+DxCSu0HHraZmIokkr+nLrYpYJpYJn/JAZi8
-         NDLns4/ngGemTjZI0ZvV2wIY6Bc7byW8EkIQrr5tG8J0QrVglIAmKTsDhv30f3s0geHq
-         PrBvhfzTKYQNww9uLe+AaIvA5gBLK0ZeF3XjKfak2hxzt+nyN+SukDPUwgRfT3hnFpy9
-         YwVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=gT69NTGdw2JkR5SJ5RJv1dLjAv00uHVwp8TieWMtIus=;
-        fh=QjMtnAHJBqEoCfmF4l0Tu1fFI58znc4t+52Pz5WleO8=;
-        b=SzhQvcUiC7A7bouma+uC2M/LjVhjgKitqkUveV9j/v6zRPE2cyUnDRlMJFnJbQdfuu
-         g0kppzF0nv4oSI5bFxnc/wTtVZgIePujacJzSilYvojS+ujWOu52wDyXWg2WFMNoq2fu
-         WQmW4wvXp/Zn3JMpP7Tfhfcw1y8X+Sc0FJo66mjWSo8ebObve6YsTEPSlcwE0F4XMjPu
-         PbOJF/B+fix78yi7H6WWI2wTKAqxAZeghN8jT6JUq2nW94MYmPv3jo6EOAkJXqYnLnwa
-         K9QBZpD1JWFO9X6DnnPoBndBP+USBVL3BbfY9RCBvdQmjR3WfpbitROaYKmLgyGcJgqj
-         exuw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794852418; x=1795457218; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gT69NTGdw2JkR5SJ5RJv1dLjAv00uHVwp8TieWMtIus=;
-        b=BqUW2sZ4kQCnOa5Xhb9wuDXKGTvN1QOCnZB4AKLMTXbD6lSadQ8Qdcm4b8ared5Pr2
-         dgWxuN/vENnQOu2tfR7DWv8Uwts3RqEU3IlZbUKyVO6/mYmlFYRwjq4OweJn+lF+JaF4
-         6kWX0i6hUFby/SkyGNzax9QmUPyfQWi9NNdhCA4Y9+tM5iQNx0221G5qWs4c+wBWi4EU
-         Wprku7k2v+FwFlchUKNLoeqvdgQyyKZ71KviUTo5aGycMfCqKz0cYFmPzgoFZwZ7aPaQ
-         JhQzJTcuEenMM3+QjTSqofobn1ir8ax3A/c/UUaKrSsiUbfVKXbDD2voL2gF8xkF47jc
-         FAeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794852418; x=1795457218;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=gT69NTGdw2JkR5SJ5RJv1dLjAv00uHVwp8TieWMtIus=;
-        b=nxdEzW8JHdfrDlLSm+JqXTR5iLESH6oiPfChEJR8EEWHs8U3ppML3enRqKa6ZNt9Lj
-         TmfRq++Eil+NyxgKbjqcF3TedVnTL6bEc3wTTam2DjzEzRVxmL6da19rO/9HAKVlca/Q
-         eBFO4UZ66JbbSrU53iGSkNLqiZj9USDzt2ZK0wDZorguFoa7jOIa6Yhlw6jH8B6XF+lw
-         DgffinhP1gVR9TdBLi8k0cc5ncrq3VMxklUjGMA+iaZ1DCnAMsZ7EJxSzlfXOU4li1JX
-         8R8yg0X5cC0BsdiB7RSnAOGDnrGjcNjbWvJDofWjQbbxm5av4R1YdPBSr0SLSJjvBh2c
-         LWUw==
-X-Forwarded-Encrypted: i=1; AL+hErGeBY4oBdN0Rc/Ly7I5T62fl/dhb/gHgV1pda8EBU4kjemS2NdlKQkDwoqQyW8LsJoH4VE=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+Js58nZ6N7LfCpzySpvKQcE9Jul//iPSslHIikAi7G8zlAmwNG
-	ZtgBw5XjGnyNVrBYjCry9AqjofkqfRs/VTe98VgPpGRFkvxLxgY5NsTk6cF2qcKcLqGluIymYWt
-	wArDivZVFK/pMOW82so4lHRYpsi7lTvs=
-X-Gm-Gg: AYBFou3+fw7pABnHnfqqmQva5Za3Atrq8Ty4S74hFES+FlJbIz3n7SWg6YTHA+AYggQ
-	1gr6uGBzpageqf1whQm0+N1LobsFYqhlm710Vo6QmtgONhTQzz/JhnnZDwRp0bQpDM0K2QSkXOA
-	It8T+NmfEq15ZLbJDjMv0vC3f/8uxFDv41gxQCbkNhqqDY0V8sOhO6CqGaKzumjB/dilAS3wsU5
-	jznfAPPQISrKFTARU0JCjdpyE+IYyf6d4PvkYRbHmAjsc8w8DXY4+3PcsXetulxh/vxHAOwWk1J
-	46F8G6YrpT55lwxBUFj/VZZJVXftm5DqeVJ93MdVhjIABzpyVrsEcfnJfSJyw4D4O2FOCKY0qbh
-	70rMmQ3c9nc8fQdu8tdZbTJP53MvoGH+xo2VJnPms/CIDq1lWJCYubzoiXmoLPMSsD0iUgbXOeH
-	nGVNV3ZuFL4t1BFni/v+zhk96ljXADoronNEAe21Nu4eOciLRu5KLEdw==
-X-Received: by 2002:a05:6830:2701:b0:862:b4c2:d180 with SMTP id
- 46e09a7af769-862b4c2dd0cmr6098077a34.22.1794852417760; Mon, 16 Nov 2026
- 10:06:57 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=t3XRig16
+Received: from lena.gouders.net (ip-109-41-49-131.web.vodafone.de [109.41.49.131])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AGIv93M1753958
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Mon, 16 Nov 2026 19:57:11 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
+	t=1794855431; bh=jQ7edrPUjOd9uswF5674I4MMMbffnlhWtKI900KrC7U=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=t3XRig16QxdrksCLdxbzW/hkItMncsnPTgNr/72brtqKsIKu6ib1Yoea68WldBgfg
+	 fwclcMf8/bpeVyhM2NA3wSE/vLrgA/xEZOFswmCHTIdTDodWkHmpkxjB1537fEXYOF
+	 wYg4hFkZNN4lEvS1KCaMPPEex7njWMwoW8bEyrKg=
+From: Dirk Gouders <dirk@gouders.net>
+Date: Mon, 16 Nov 2026 19:57:00 +0100
+Subject: [PATCH 1/2] utf8: respect bounds in utf8_strnwidth()
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,34 +56,107 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261107195429.96842-1-tangajoris@gmail.com> <20261114012055.127905-1-tangajoris@gmail.com>
- <20261114012055.127905-2-tangajoris@gmail.com> <afddef38-8a8e-46bf-b31b-ddebaf39115b@gmail.com>
-In-Reply-To: <afddef38-8a8e-46bf-b31b-ddebaf39115b@gmail.com>
-From: Tanga Joris <tangajoris@gmail.com>
-Date: Mon, 16 Nov 2026 21:06:21 +0300
-X-Gm-Features: AclHuK-6z_nqvnm3TsOr4PPESOSwzX6EepqJRabK_lL__eoPpu1JwsXLSAhznF8
-Message-ID: <CAKrRMNonCJmc6YzHY-77vsOm-ELXo0GO+p0oKJfOBmmFL_WojA@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v2 2/2] apply: reject new and deleted files that
- have both names
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk, gitster@pobox.com, jackrawlings2011@gmail.com, 
-	christian.couder@gmail.com, kaartic.sivaraam@gmail.com, 
-	usmanakinyemi202@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261116-master-v1-1-dc2a50ce0aa0@gouders.net>
+References: <20261116-master-v1-0-dc2a50ce0aa0@gouders.net>
+In-Reply-To: <20261116-master-v1-0-dc2a50ce0aa0@gouders.net>
+To: git@vger.kernel.org
+Cc: Dirk Gouders <dirk@gouders.net>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2576; i=dirk@gouders.net;
+ h=from:subject:message-id; bh=caIg5ax6I2fuTZ7QxQWKk9UUgc4zJCLJN5M+XueKshM=;
+ b=owGbwMvMwMW4JPzVNXNTrzmMp9WSGLJ+B7GdP+i58LZdvOe/k6Yeu0wsIoxe+0a1xNR8k5Tq/
+ 8deLjCtk3ECCwMjF0OVmCLL0klFdmkqK16UfVPNhBnEygQyRVqkgQEIWBj4chPzSo10jPRMtQ31
+ DIEMHSMHiBw/g0Z6QbpDen5pSmpRsV5eaomjqaWRuZGxq5mZkYmjhauFuZmbmZGpmaWjiam5q6O
+ LmbG5samJo6UzAxenAMw6bW72/4VvzDurPZsCXtaYXPLRaC5p0XilpHCtx2v6t03mW3oCN5Yr1B
+ 881744+GErn+vnqL1p9o73bBhM5BbMKVfaXf0vzbSiYs3N6uc6QbJuPtOnBnFNn6vEyOz1aYWBx
+ P6Lk8+21LjkrTCIW2C/bMFqwX9BrC+n/pp2dPLZLF+RqBKTX5umvtSL6PDs7WTcsnKSnWC1znuN
+ zh1rbFXseNSevq64EaHzvtXi+zTxT7NE7XRfGcju8OA7zlip2W/9m3/15AcMu/fIlN5rVz59d/f
+ yaQ8V6m0vrOxbaTXv0Edu6zmH3xzv32d59veB73YWzo4Xlvcwxb14kpmVbhof+VYwbqGxnfDbJr
+ s1hU9K2tmUAA==
+X-Developer-Key: i=dirk@gouders.net; a=openpgp;
+ fpr=943B4FA3CAB8EBC55754E5EA0DA2395F431875F6
 
-Hi Siddharth,
+utf8_strnwidth() takes a len argument, but because
+display_mode_esc_sequence_len() works without an explicit boundary,
+there are cases when utf8_strnwidth() operates beyond the given len
+boundary.
 
-On Sun, 15 Nov 2026 at 15:47, Siddharth Asthana
-<siddharthasthana31@gmail.com> wrote:
-> Nit: for "--- /dev/null" this prints "names an old file dev/null", but
-> the users never write "dev/null", that's what's left after one leading
-> component is stripped. And "--- a/f" gives "names an old file f". The
-> only way to reach here is a "---" before "new file mode", so can't we
-> name that instead of printing the old name? Same for the deleted case
-> with "+++" before "deleted file mode".
+Fix this by adding a boundary-check after looping with
+display_mode_esc_sequence_len() to ensure we operate strictly within
+the given len.
 
-Alright, in v3 the error will name the "---" line before "new file
-mode", and the "+++" line before "deleted file mode".
+Further, add three corner case tests of which two will fail without
+the fix:
+------------------------------------------------------------------------
+not ok 257 - utf8_width::strnwidth_ansi
+    ---
+    reason: |
+      Expected comparison to hold: 0 == utf8_strnwidth("\033[31mhello", 4, 1)
+      0 != 1
+    at:
+      file: 't/unit-tests/u-utf8-width.c'
+      line: 11
+      function: 'test_utf8_width__strnwidth_ansi'
+    ...
+------------------------------------------------------------------------
 
-Thanks,
-Tanga
+With the fix:
+------------------------------------------------------------------------
+ok 257 - utf8_width::strnwidth_ansi
+------------------------------------------------------------------------
+
+Signed-off-by: Dirk Gouders <dirk@gouders.net>
+---
+ t/unit-tests/u-utf8-width.c | 11 +++++++++++
+ utf8.c                      | 10 +++++++---
+ 2 files changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/t/unit-tests/u-utf8-width.c b/t/unit-tests/u-utf8-width.c
+index 86e09c3574..60538fc26f 100644
+--- a/t/unit-tests/u-utf8-width.c
++++ b/t/unit-tests/u-utf8-width.c
+@@ -2,6 +2,17 @@
+ #include "utf8.h"
+ #include "strbuf.h"
+ 
++/*
++ * Test utf8_strnwidth for strings with SGR sequences and corner case length
++ * arguments.
++ */
++void test_utf8_width__strnwidth_ansi(void)
++{
++	cl_assert_equal_i(0, utf8_strnwidth("\033[31mhello", 4, 1));
++	cl_assert_equal_i(0, utf8_strnwidth("\033[31mhello", 5, 1));
++	cl_assert_equal_i(1, utf8_strnwidth("\033[31mhello", 6, 1));
++}
++
+ /*
+  * Test utf8_strnwidth with various Chinese strings
+  * Chinese characters typically have a width of 2 columns when displayed
+diff --git a/utf8.c b/utf8.c
+index 96460cc414..7e050bb2c4 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -217,9 +217,13 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+ 		int glyph_width;
+ 		size_t skip;
+ 
+-		while (skip_ansi &&
+-		       (skip = display_mode_esc_sequence_len(string)) != 0)
+-			string += skip;
++		if (skip_ansi) {
++			while ((skip = display_mode_esc_sequence_len(string)) != 0)
++				string += skip;
++
++			if (string >= orig + len)
++				break;
++		}
+ 
+ 		glyph_width = utf8_width(&string, NULL);
+ 		if (glyph_width > 0)
+
+-- 
+2.55.0
+
