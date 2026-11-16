@@ -1,119 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794834483;
-	b=HHRAVd7EMvRWBNyVF1eYhtmIwQ4jrnAOO3PzyjoDI67YL/ecvi63yh8cSZjLHHNm/e9t
-	 eMGKyZmF3Xs7cJQJ0shxDNfrXpFVKYR0E142HQQFhQKMHPTyTWh2Xpyl/AAdzkeQUUFYE
-	 EOutTe29YcKzioSbzYxm1laN15ZtYTkQLWXxG4iSWgr9Hh2W3dkYV4xi+WEZPxvS0EsqJ
-	 H2NgqgOB81ps0r93hBtAf16cKwSSYoW+LZY7Eobg5VJdYMuB5PAn1fTC2QV6bqHn0+xhJ
-	 laOS1acVPRoegPWElg7TVoxDDHjNUyBdX/7Ctq1gNlAt/ZvBClk1JZXRLoB+qCmgM7w==
+	t=1794834486;
+	b=PztNfchwOLRCRaquRLyo8Khj396iLAbLHYTgy1LBvnL/sLy0NVE4dQO65WQ2NvQeBNkA
+	 6dqSErTqp0aaZNn+bwykBBxlQ13u2A+A9jv74Sg9MB8sVEYG/atTjDAdsDD9nQZZ4O6Q+
+	 G/SDqhBjabLVfidZTVJmeLD6p9ZkKwk0A7kXqs02szFgJq+1XzWcu4+MWC1xGUUXHkgQW
+	 psbg0ZPoZDhTpgBBtsjnuoLUyOmYN6Gs4f8dNx9qqQ5xd9I9ZBFZGcb7AV9hP+H9ZbQQA
+	 /LBKairCbRkRg7Z5YvJplxBpeADzrOk1JzbO3BFW4xttfeFroI+GvNzhhOhULpdUpJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794834483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794834486;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer;
-	bh=W4Z+kgmNyVjXuhW+e7XuoTvCmZRRtK120PJiG2ji0eE=;
-	b=SRS/k9e0dqXwT9QK/Hv5e6I/YVCZpaPPLGlLXCjaYard0G3KP7NwBCp8LY0o1Lg7ypPC
-	 u65hcLZQkyXicJkrUUQzVEyDNVeJM+EfbdyftSDcswCytOFFBU//unUMJFPONXaTFBLYh
-	 TEe94hvTgNue64jMuhJY5p0o6j4Jq+joS3q4OiLeRFrYbsosedvgqgH0VpRaDttwTLOs/
-	 S4huAeVZAFNRGS+AxDW99Om7QhKVBskIZqaLnJtp9CVheV0w4hqrTATl4xSy/yZaLWNCX
-	 vlg5ALK0mK56ql8uYt68uZqDRrqfhT2xuQeEJI6JV88gnONtbDbQPO4TBSLgGZpaKFg==
+	bh=tPmLQaRvlggzYWklxeoQ8IgHVB8pVtQePUoa747pR+M=;
+	b=Y8Iaks7dYNbuiry6Pvf8a7ZbYjq/QGK++b5huYRmbTXUWoHBIFWhjD4QsBuDkiuAO4wh
+	 DtUgDbubPA0Z3u60a+H72OLri4DHaXsKpnYeo9LE0hnSyziITkRUASVfAwF29QIshbMI7
+	 j6H3ZtsvFtibDJSLiRlOEERg3SFKGhmM2rZFM1OJU8MjfDEWQhuPC6R1rStRG/YkJBltc
+	 9Nuy4spustghvA43cVWvpCI3+BRUM3dSa2GdbvJjt3Hv8Xk82r2hT9oP61gIm8RVCSGni
+	 ecD0Oni4sSotLGrJ/Man9USPenLMMqZ1AcTLx3zvS1TaaVLvbMK+mrUAXpBDcVNjRaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b="t/NOwL8H";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=k+Y9TrtE;
-	arc=none smtp.remote-ip=103.168.172.159
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=i4eknsKr;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cj5rBRyX;
+	arc=none smtp.remote-ip=103.168.172.146
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794DF606A88B
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 13:08:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 794DF606A88B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A008606A323
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 13:08:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A008606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=t/NOwL8H;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=k+Y9TrtE
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A4B96140002C
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:02 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=i4eknsKr;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cj5rBRyX
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6BC1BEC0102
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:05 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 16 Nov 2026 08:08:02 -0500
+  by phl-compute-01.internal (MEProxy); Mon, 16 Nov 2026 08:08:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1794834482;
-	 x=1794920882; bh=W4Z+kgmNyVjXuhW+e7XuoTvCmZRRtK120PJiG2ji0eE=; b=
-	t/NOwL8H3v09GmenqGw3qyZE3g3Gt40cnWcjs0sQ9eKU/M4mmybRqF+NG0aB9l7G
-	/sgNb7t+VinIrTnPAdLVBuWHx25J5XLcOpDPb8a7lxqD+2/v2161CpbpcSvhBaHi
-	zT+gseNgl071ourlwLc7h8Jr/GUmxAUHA4MH5xVglvftBZWg08qkL2HIwCg2DIFW
-	zlja8RodVRH1Qm4VctMrSgS7KsWdVPs/9Lum2JqMhTUZpg5riRvp2reFcrtts9G1
-	hVEUHjf2pEuS0uSrWttCvcJKFbYnfwOGI9AVqoByrIINFmgabxCru+NXm+onQnPU
-	UFsRPLlf7LiFyQvzvZ1iyA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794834485;
+	 x=1794920885; bh=tPmLQaRvlggzYWklxeoQ8IgHVB8pVtQePUoa747pR+M=; b=
+	i4eknsKr+4munjWO5FXNeaLAN4uMlNjG+8yamZ1cyIr8ixUVPTTerVfqBA0G0eCk
+	YR50JRzfLgeVwi+KAh1Lp2W1Y+8zVaRdY5g2M2vKtQALxeOklUHNfSPzqNHvJn7N
+	LlcVkq43W730qQ3NOrpSUKTJXR9r1rCs/5Shp2IeveG3unYb38S7t+lEGVFFOm3n
+	cy+jI/0bED3ystds/p/be2E7LPrSyV7U10Sr6rBJdWO7kuOp4e9yJXv7Hot26CBn
+	5yG0pweVoj59LTgyYeh1hSJrKrkKT4O5J64T3+qOpxl2GH7pRf/hcNTUh+w1Mrb9
+	CnL9EWuKoVNUegkdHZmeNA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794834482; x=
-	1794920882; bh=W4Z+kgmNyVjXuhW+e7XuoTvCmZRRtK120PJiG2ji0eE=; b=k
-	+Y9TrtESw0aqADPYgrMfD95KczjK2SYvkog5cH1je16D4abxzDc5UbgHbkXgMARc
-	zn5/PIGBtRQcPt9BtKwTO6hSKE1bogj01T32xtf7SrhQgskzsu8ePOOTgsKl7Z8A
-	Zco40ml+Otbrv80u9NTcMhJ6eWiw6fogpZj0uSokD4h8vCeAGsS9ejE/AHiBjuwt
-	sFIeqeH494d8YrrMfpPYm3LrcKzOG9E+uCQcQLGF2hD+CRp/5tKRq9HbB2fcC7Jr
-	J1th6mLypOexYfzrC1Cy4WZ2b+D8KVvWWVjswtkyWTjNUg8+fUtWDDbIQ0y+hbnn
-	cfCtvVC7JTos39TMAHxJQ==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794834485; x=
+	1794920885; bh=tPmLQaRvlggzYWklxeoQ8IgHVB8pVtQePUoa747pR+M=; b=c
+	j5rBRyX6RtlCJpIa/n/UB+TJlYxh72LIYCjhg3AdAGbh+bpYlXHqudoVa+TStmaB
+	MvpnyCuhY47gP8LmytIKTDCZObIUTSdR8Xag58qGR8aR1GpDwI6+KFAY7fNDeJLN
+	3kAdq01DTqs8eHs1mR9qMcWBKLymm4zJ7iF2dYFDvElV/UbQHoO8d4MEPzlAK2VD
+	AW7BnmkL5WqBPKZurJVEaH92T1ml1ienTfKouQIgJA+LP3JaxBoVTBjcDtXs1duT
+	8RX2Pr+e/Q1wtiiaHgA4nH6pi4OavewplRTBpPxQ9d0lPP5y146GDAkFU04weKWl
+	YrGxN0A+HaVjFhmsCSO5Q==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794834482; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794834485; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:CNKGk3X1qearUcJKx+TMP7A5v+7PbG+qRb3NNK+H5RLdN8M
-	z5tpwXQxSUPPcmPCepw9aw4hZm8FtCXnWRo+mEcY87vDj3GWxLzZSsj5UCIKltwa
-	drh1Fu81m5SCPEdeeoBJRa2WBz0Y9QYBITGGvvARH+JSG8tSfsO3DeutsiqqhaJh
-	hqApOZ6lR5TdSvw+x0kq9pgPnsMXs7q2VRK3inConZViSWaNmdgtzUcbk94GtfQh
-	ZZP49YJwoIciuwVUJNhF+VhGfbczr4Ez66xMUyGCiEokb5cOqwOJFz7+BSqbXWiA
-	CDfHncb7PKZ6d8u6Zph+qIa6FQGoSi4Cciqy3ug==;
+	s=fm3:rsa-sha256:ubN01fENi1AN3lTj0FY4NCIgWDj0VEgL5NH3Q3LwHmtNTqi
+	Q1o7UYCWiVEnmQSQ63+uXvccOXx5hfiR3FqVRSPL9uEN49xDk/Xw6Ehap4hB2Nb8
+	7LJAcnNEjRr6w3GJ+xNLXWKsFgcv5NbYptOtQgFN+p39tUnJDhx2/qxCps6oGURV
+	/DtdKTSf7O0108ve/tqOwNm76HjqCysq7DblLFlAUmynMBEc3YSsi6H7UxWmIrcd
+	qoHjOLcocetjw1Adq/eIuxj+uPCDifZNCPIAcZewoC9e5az/yAsyjVPENpoAi+KU
+	XvCM8eSapjmSgdPQpC0y39FgMmnqQ08smaDxzug==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:UJ/G3Bqfs1K1X+byQeMa1Tx6wK0tsyeGaFbs5WT2gGA=:y8t5xEPiKMCY22oYUAyrCLtKx20RyW1JNL5XlzwPpe4=;
-X-ME-Sender: <xms:MgD7ar0uh5VvHp2ksEefX9c3YPXDXaammItmvIgCM-DZXi1hrduBCw>
-    <xme:MgD7ahDJaMHL7aHvcaDPPwqId5cLxJH93PaoILzV-y1j6EUuh4pyOkv1EsAetBN07
-    Bcybuc2PqzjnHgmmYD5WiuCVmoMrIkwIR50-5O6Q0OEsRnxkoA57Q>
-X-ME-Received: <xmr:MgD7ahhnJDWUSpRC_-Jz8pUjQNgpbWtGqoEDRbhvUBF5XAo1RPlZpVCrmHAI9s2obA9o4K4>
-X-ME-Proxy-Cause: dmFkZTFZEY3dRZaxYHKztVo3PV5exS7LC5so/OemZvN+WRzyMAuPxUkF0s8DXR9rm3sIft
-    TNy3msB44N8fedNp8OEKsFykHBMtYYTrfbK0L+IwZ5LKw3S98nfrCPUmkqNy5t4VRzNB1H
-    O1k+n5la66tVUCb3ERJIwzKtcyG8zt2k7Nq63bv8Bsb1mnjRJ95cbEfwctWmirTzT7W0Vv
-    +wbH8aDjSJMImH6U0aTopBPlpGclwtUfOlL0sb99rKBTgdFJT1iNWAATNvrbto6s5wHgrA
-    pyryLSwJgJXsiTvNzA0Sp3b/jhixtqv/ivz+VDrfFpK2d437jTBw6zWR21v5KA2lf8++c1
-    fmUTOxDB41GhrmpX/e/onRN9xlfr/75l8ofFonmb+kjQOTi6J0OmLLe5AzDSA3/6ozgSN7
-    5riDgN63JsRTBBP8tMGLLdNkhbcaOj7NkzQk6WVRmdhcJ1wwF2HquAq08MeiLLnVOZv1OK
-    zKBjUYpc8fLdz4lxbfx25T4myngr1GPUflqd+HEr7QI3BhgoTEnMdBi6MTUTJOoaKaJlJM
-    23hXH9UYmjkpJFfcQpt/5IeJyQO35tQubeguj9uha/+zPtmHHyzi0nsPGagupRPCnbkCbf
-    v5nHoux4nMz+Uoy9QTwGusv3xDl1RcA3xp6fH81gX+N7lwLmLYwcfPS0kEdA
-X-ME-Proxy: <xmx:MgD7al_2tJf9Y4NmmvP-tVuqQs-x-vPh4QvsfWJrMQhjM5sM1XYzDg>
-    <xmx:MgD7at81H1ATSp55p6FoQzlz-gQ276LQqP7_rzs1CUeoNX1va-qG8Q>
-    <xmx:MgD7auA27_Tm__iIIp49e80py-rcw9gwyO0d3ICVxJx3aKjEd7ZYyA>
-    <xmx:MgD7atymphozWLbfwqBVvUEdhRn9ECedlNEfAqW5kqN_qnIuhY7dhg>
-    <xmx:MgD7apGb35PqaoDBTixLtdTvEtMLShJJ5h3Y7zzhkPz3gZCzkkRzkwfg>
+Message-Instance: m=1; h=sha256:Qcpqd/2YSIN667om+Ku0LX6pgI78WZDREI/WTOAqk6I=:tLIapzW/g2hy9GvF8WTmxdGww09p7tQHDnN9nrq4yeA=;
+X-ME-Sender: <xms:NQD7ajllmhajsJdTAvYLi0SKMBaKsrIBOVw0TrxZvsXoILfysx6vdA>
+    <xme:NQD7atxj2ruTPRsA1ImwGWad8UJYWToYg5Blh7RxzqwY72pmar02fVcMZFwg2-lUB
+    yTMB1vxYWlb8YdSPe2yXKDlG3YVnsuoUM6GOCPVfPeP_1n1qLxaKa-g>
+X-ME-Received: <xmr:NQD7avSXpoSflOw1wWpfPfbLvJkwPRKp56YhNG3E8lKDoNnCfZHWMN3AuMveXyMfsTTl3O0>
+X-ME-Proxy-Cause: dmFkZTGziUKUgJYsbiHWfb5HWuWorQnHHq6YP0ByYpkZ6e9sVItzSNrjxVNiJjpykGt6EH
+    +Wo+jZCDwFt+/bcnf++syQUvL1OVsCKhGqPwr3BK64IVWifW0xci0pdI+2+/Q2cKlJ86Bw
+    MPjq5Gxm3EfNjPHHZxB/qKmy2lYBxm28RGRVDzQY/DL8x0mrFRQC08IpgtrlSdKQSvTTzK
+    jI4Dzrh8Ro4PE+97yI0qzoNNhqp2HeoBh5o/zQx/r+4v+GKIjmbaBlrMKGm2iApi+hz2OH
+    ZU0TLEDo5HjB+hj+++nQGClhpGKhIpSL+UXhvZrJuTSG26O5MqYj9dLI/adyQM7bNfpGh2
+    zrrG27/9lzhNYhEjm0OTmEHxgPbXdljiegYZcBff6dLZJsQdna2UId6n38hU3KWzE14O71
+    gK907p2nRxN7jPBxaruAz3JH2xgRMLHyqS+V/CENY8l25ekGDCp/oY0zSFCjJpANExTVpD
+    lfaPeYuuPqAWRfLghJTK9NA4EKYvT98Om1TZZvQxSQBT1XjwzKGoelXmdX1RYfjMkeFl1h
+    /rQMsbrEeGjjOKDKSUosVgcSc0jjT5FdlKVBDacHCrYBgoLXzrxOy0YgCrvuVnod0t563D
+    1Q1lCSLENvPtKmaXi31tPi2XLcuyAdtrfXHda+JUqlhn9/hTn553GPf8jkwg
+X-ME-Proxy: <xmx:NQD7agts2TzxDlvnqu5HNUJaE1MR_Wz66nRUFEvcwme6zmAl1veRMg>
+    <xmx:NQD7ahvY7QSio2rHOhTbyM0td4yJVwJxmduv7A8K66e_64cnwzR1DA>
+    <xmx:NQD7amwy_C3obR4oFtLOHrrWUNL95RfUi3Eq44DDyyJiVLhbTOBs-g>
+    <xmx:NQD7aniJPVw87iYDKRFiin1jusfB60eR4AEhrUP5kc9ZPnIFNQ1p8w>
+    <xmx:NQD7aj3U_JzpHodnamC3zJrZ99RxqcuGJtWk4A4LIMbxVsslERIivMvr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:02 -0500 (EST)
+ <git@vger.kernel.org>; Mon, 16 Nov 2026 08:08:04 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fb046f11 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id b772ac56 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 16 Nov 2026 13:08:01 +0000 (UTC)
+	Mon, 16 Nov 2026 13:08:03 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Nov 2026 14:07:39 +0100
-Subject: [PATCH 03/12] commit-graph: expose function to validate a commit
- graph chain
+Date: Mon, 16 Nov 2026 14:07:40 +0100
+Subject: [PATCH 04/12] commit-graph: decide mergeable and chainable layers
+ by depth
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,73 +125,145 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261116-pks-odb-pluggable-commit-graphs-v1-3-a83fc1ff0808@pks.im>
+Message-Id: <20261116-pks-odb-pluggable-commit-graphs-v1-4-a83fc1ff0808@pks.im>
 References: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
 In-Reply-To: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-When we have loaded a commit graph chain we need to validate whether all
-of its layers have been written with compatible settings. If that's not
-the case, then some functionality of the chain needs to be restricted as
-it would otherwise yield inconsistent results.
+When writing a split commit graph, `split_graph_merge_strategy()`
+decides which layers of the existing chain get merged into the new
+layer and which layer the new one builds upon. This is decided on two
+simple rules:
 
-In a subsequent commit we'll move loading of commit graphs into the
-object database backend, and consequently the backend will have to
-perform this validation. Expose this functionality to prepare for this.
+  - A layer may be merged in case it is part of the same local object
+    directory.
+
+  - A layer may be added to the chain in case it is either a split
+    commit graph layer, regardless of whether it is local or not. Or in
+    case it is local, we may also add it to our chain in case it is a
+    non-split commit graph, in which case we convert it to a split one.
+
+These checks require us to know about where exactly these commit graphs
+are stored on disk as we compare directories of the respective files
+with one another to figure out whether or not a layer is local. So as a
+consequence, this policy becomes backend-specific once the backend
+controls where exactly commit graphs are stored.
+
+Refactor the code so that we instead tell the merge strategy how many of
+the topmost layers are mergeable and chainable, respectively, which will
+let the backends decide on that property.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- commit-graph.c | 9 +++++++--
- commit-graph.h | 7 +++++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ commit-graph.c | 51 ++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 40 insertions(+), 11 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index c427a6f90f7..9464522feb5 100644
+index 9464522feb5..7f7146e752a 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -574,6 +574,12 @@ static void validate_mixed_bloom_settings(struct commit_graph *g)
- 	}
- }
+@@ -1151,6 +1151,8 @@ struct write_commit_graph_context {
+ 	uint64_t progress_cnt;
  
-+void commit_graph_validate_chain(struct commit_graph *g)
-+{
-+	validate_mixed_generation_chain(g);
-+	validate_mixed_bloom_settings(g);
-+}
-+
- int commit_graph_link_base(struct commit_graph *g,
- 			   struct commit_graph *base)
- {
-@@ -695,8 +701,7 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
+ 	char *base_graph_name;
++	size_t mergeable_layers;
++	size_t chainable_layers;
+ 	int num_commit_graphs_before;
+ 	int num_commit_graphs_after;
+ 	char **commit_graph_filenames_before;
+@@ -2283,6 +2285,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
+ 	enum commit_graph_split_flags flags = ctx->opts->split_flags;
+ 	int max_commits = ctx->opts->max_commits;
+ 	int size_mult = 2;
++	size_t depth = 0;
+ 	uint32_t i;
+ 
+ 	if (ctx->opts->size_multiple)
+@@ -2299,7 +2302,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
+ 	    flags != COMMIT_GRAPH_SPLIT_REPLACE) {
+ 		while (g && (g->num_commits <= st_mult(size_mult, num_commits) ||
+ 			    (max_commits && num_commits > max_commits))) {
+-			if (strcmp(g->dir, ctx->dir))
++			if (depth >= ctx->mergeable_layers)
+ 				break;
+ 
+ 			if (unsigned_add_overflows(num_commits, g->num_commits))
+@@ -2309,6 +2312,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
+ 				    (uintmax_t)g->num_commits);
+ 			num_commits += g->num_commits;
+ 			g = g->base_graph;
++			depth++;
+ 
+ 			ctx->num_commit_graphs_after--;
  		}
+@@ -2320,16 +2324,13 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
+ 		BUG("split_graph_merge_strategy: num_commit_graphs_after "
+ 		    "should be 1 with --split=replace");
+ 
+-	if (ctx->num_commit_graphs_after == 2) {
+-		char *old_graph_name = get_commit_graph_filename(g->dir);
+-
+-		if (!strcmp(g->filename, old_graph_name) &&
+-		    strcmp(g->dir, ctx->dir)) {
+-			ctx->num_commit_graphs_after = 1;
+-			ctx->new_base_graph = NULL;
+-		}
+-
+-		free(old_graph_name);
++	/*
++	 * If we cannot add the new base to our chain we instead merge it and
++	 * all of its base layers.
++	 */
++	if (ctx->new_base_graph && depth >= ctx->chainable_layers) {
++		ctx->num_commit_graphs_after = 1;
++		ctx->new_base_graph = NULL;
  	}
  
--	validate_mixed_generation_chain(graph_chain);
--	validate_mixed_bloom_settings(graph_chain);
-+	commit_graph_validate_chain(graph_chain);
+ 	CALLOC_ARRAY(ctx->commit_graph_filenames_after, ctx->num_commit_graphs_after);
+@@ -2560,6 +2561,7 @@ int commit_graph_write(struct repository *r,
+ 	struct oidset reachable_commits = OIDSET_INIT;
+ 	struct topo_level_slab topo_levels;
+ 	struct commit_graph *g;
++	bool mergeable = true;
  
- 	fclose(fp);
- 	strbuf_release(&line);
-diff --git a/commit-graph.h b/commit-graph.h
-index 8660c7fe698..dc4f6194c72 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -134,6 +134,13 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
-  */
- int commit_graph_link_base(struct commit_graph *g,
- 			   struct commit_graph *base);
+ 	if (!!opts->pack_indexes + !!opts->commits + !!(opts->flags & COMMIT_GRAPH_WRITE_REACHABLE) > 1)
+ 		BUG("attempting to write commit-graph with mutually incompatible options");
+@@ -2597,6 +2599,33 @@ int commit_graph_write(struct repository *r,
+ 	for (struct commit_graph *chain = g; chain; chain = chain->base_graph)
+ 		chain->topo_levels = &topo_levels;
+ 
++	/*
++	 * We only consider merging layers that belong to our own object
++	 * directory. Furthermore, we can only chain on top of either:
++	 *
++	 *   - A split commit graph layer, regardless of whether or not it is
++	 *     local.
++	 *
++	 *   - A local non-split commit graph, in which case we'll convert that
++	 *     layer into a split commit graph layer.
++	 */
++	for (struct commit_graph *layer = g; layer; layer = layer->base_graph) {
++		char *path = get_commit_graph_filename(layer->dir);
++		bool is_split = !!strcmp(layer->filename, path);
++		bool is_local = !strcmp(layer->dir, ctx.dir);
 +
-+/*
-+ * Validate the chain of commit graph layers to ensure that all layers are
-+ * compatible with one another. This may disable generation data and Bloom
-+ * filters in case they aren't.
-+ */
-+void commit_graph_validate_chain(struct commit_graph *g);
- struct commit_graph *read_commit_graph_one(struct repository *repo,
- 					   const char *dir);
- 
++		free(path);
++
++		if (!is_local && !is_split)
++			break;
++		if (!is_local)
++			mergeable = false;
++
++		if (mergeable)
++			ctx.mergeable_layers++;
++		ctx.chainable_layers++;
++	}
++
+ 	if (opts->flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
+ 		ctx.changed_paths = 1;
+ 	if (!(opts->flags & COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS)) {
 
 -- 
 2.56.1.763.g16177fe143.dirty
