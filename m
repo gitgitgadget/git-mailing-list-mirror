@@ -1,118 +1,117 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794816101;
-	b=4+V/ufYgYjOwHlLK9MEl60URambaxEy8NkV5brxdW4mgf/g6Q9L+AVKYN6QfSNcrjspl
-	 hWtqnV3Srsxez0R+Nf7JZjRk2OljXjR/XNd0fKpBLM2rDs6XzAXEI+rk58Wh3I7pZ1wjX
-	 6rfqWVSd/a3gDuKXRE5NPF1Yf5eHNJVnQ8DhtJEwoPfmuCaNB/3hUR6VsJH6gwjOWCk7e
-	 iV5Abx1y5mZa38pE5NSDohMKdHqGK8BT452fucrYLX/1Y/gCBotC4wQy6+Q/3Abpn6J8B
-	 5x2/o4Kjt/cQ+Avw8Mp1z32Iw6/j2cLOA4eZFrmRz/CMReRptqYTTM5ew1WRKXF9YNg==
+	t=1794816103;
+	b=I/QmKHtYHP/mtPwQyZNihpvUudcCNTMteWTjAFqOx7W/Edt6jJS00QYGOsnRebfwfgae
+	 zGuU58Q79iS6lXsjOwxznRGrslyBtLKtnIsS8dKS4EpDvJ1v5oiLDIObKOCQFoQiYBmRj
+	 WpUm+bJo/OVFgFQHDEv7QtYzK7QLE8DmQZcX+Ip+KNtlOgrhDc9NgWMBE+spSzRifixnc
+	 i5sFeQ2eor4JMcvDg9VLIYPLxpUF/KAvQTe3n1ehSi9U3//6aqzjMuolDvoG84MeABTh9
+	 LeYww6wO+1/lyGoEjTmSRv9f2GSZqrpEewtkBf1jE3KuuieCob+VwVB+7aRM5h5p60w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794816101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794816103;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:
-	 In-Reply-To:References:To:Cc:X-Mailer;
-	bh=rXW7m6XU2FdqoCMQlyvXpWywaKc2EbRweS3xhKR9nA8=;
-	b=Hgxd8CFZGNQX6FWCboagmVX6CEH1/bOgwEPAxgP2JWBPVxkvhfZ1i7uFUYza6JvBwxv7
-	 AX8Slv1iC/pBIUo3M/zSNF2nfLoEvZWhK581ex56zIymIik2p5r487KCuZw9Y1PQRDjUx
-	 xwNX+I5Vbbb9jYtZbaSt5hd9RC9G83SL7Wc3KiBrSht+YNDT43k1D0OC5b4Xq8RlLn7Td
-	 fjGPfzn8q8WSEeHhweOAwPDFZrw40QS4rmz0nhZrOjKOWqg7CvGfpQSbssyEjJYmv5SCN
-	 khwo5zgh2KnVfLxcrkMdhdAmv0wegoECb7cdJayey1GYptCVsjl3sKGeBF1M35nXPkw==
+	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+	 X-Mailer;
+	bh=XXzKYrpXBCNFCnyLqYmrvw7JB9KVy2xFMLw7+PGxCEQ=;
+	b=e4NmAw63XVgcSkPMelgjSpbWkrqz/LYkKOwrPNScNGi/l8ZCDVmwyOyFkObpgvsb+y/3
+	 tomgJMOHxnVz9At9KMspIjMPXoWKYLBKqCffp//wuLzLpqnMZqLh1+lL9NFmPCFB4D2+p
+	 Gzx+YjNDNpaFbWOac0FHx1YYlR6D7663fBLrEiWcl1teSfTfHGJPxCVIRRjzhANYCAaE6
+	 J9gX1lG3RC4/Tr22xMR4XPP+UwDjDdYpJOF3qNiMwSMCyVUc5BDCZBwQSlJs1DhbcUgfm
+	 8Z8qrP4ZbykB/yof4Hw+Fb9P+MWENirw8IJ9970dyARvI6iP5C98X4yqGLVU+E/VJqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=wt79fyKR;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1qc2UMLr;
-	arc=none smtp.remote-ip=202.12.124.144
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ONpdAupG;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TwesrERw;
+	arc=none smtp.remote-ip=202.12.124.158
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49951606A31C
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:01:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 49951606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D3F606A337
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 08:01:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 40D3F606A337
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=wt79fyKR;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1qc2UMLr
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 46BEE1D000AB
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 03:01:40 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ONpdAupG;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TwesrERw
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C5EA87A0170
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 03:01:42 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 16 Nov 2026 03:01:40 -0500
+  by phl-compute-10.internal (MEProxy); Mon, 16 Nov 2026 03:01:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1794816100;
-	 x=1794902500; bh=rXW7m6XU2FdqoCMQlyvXpWywaKc2EbRweS3xhKR9nA8=; b=
-	wt79fyKR3oyKsBtuouDYd1BtxJsaTxnvaLlwCe5X57g+kWeJhypDQMoy1Oyf5uHr
-	zSCQfK9p3X6hKuQprw+bh+a/zKIhL++M53RkX1c68hj2UgcJcWh0k6UOwbmuAt/h
-	FVMbtc6paUaE+osbUaheGcFRS9RMV3clhdztrRWCj5FYSv/hVj95LrK546Pww6Dd
-	lXi1B9ghkoU4k537jUc+Qg8LA+hE93B6qi2JtyMuYVbSDcilsPkOEoE2UMtX9L29
-	pNJcqQirFzs/RugQVJS+nd9Urru3/Qkzys0LmPbJx/RvTtTUZdgpJ0DAnCvmWBgH
-	xC56sWB3UWpn3kIgyWoI8w==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794816102;
+	 x=1794902502; bh=XXzKYrpXBCNFCnyLqYmrvw7JB9KVy2xFMLw7+PGxCEQ=; b=
+	ONpdAupGLZkAQsNWCa+MkOEAh5AwOMaZsgEnUQ8v4po9IKVsR4UbYqNahx+KPRoK
+	cHnwmJvXtSgpShvPgl0Ak9qlt3kRSHcUYDOKULaRnfVCIWnqdSJcJjxaCSOovhmf
+	FFAru3pd5juTueZMsavnWxc53FxgkAoH/CtwcvTabWqPa7JJeQfND2Mm0kI6dFBO
+	R5oWMVK5GGX4fCZdngxTrys+eorzoCKhGo3qA9FseFobcNYYdoBbU1xVEHPGCkwm
+	UQyHYIvY56Nmf7nZ0P9Hb0h3BWbauR9JhvrhMiphWpnM8L/VhqfuOHD/EXGvJ7oG
+	uFELij7gZbvwgiPoXPynJA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794816100; x=
-	1794902500; bh=rXW7m6XU2FdqoCMQlyvXpWywaKc2EbRweS3xhKR9nA8=; b=1
-	qc2UMLrI3oDbKfxrc6AxkQLrE+bFfy/aafRNSjsN/LK2BF7izVN2lOMwOBmjD4M5
-	hJ4ic73gtdn+T60d4mfXszWoPCtyxr8mTRZnTR+xvITeApkR49xX5TzFwVsmgStW
-	OcyScKhoTuxUSxpll1kWeCyf3XA9duA0/jIb9kNwyIp/QQgMVecrxu49TnFatyZO
-	u/z7SUd3VJ7X+rk0cIPHJJkrKPyzLR9nZhxAn/slVSvZ7ceB9RomFyc9Jq224n53
-	gNovxznrSPkHcFWbrrZRxLGjcYKHHxW55pehgJH4vp3Yq62l/O5gaFk/KnRej0kI
-	dJ3yeaomWvPX2PABHq2YA==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794816102; x=
+	1794902502; bh=XXzKYrpXBCNFCnyLqYmrvw7JB9KVy2xFMLw7+PGxCEQ=; b=T
+	wesrERwOI903gkinfkwPR6fbT2uEws/5s7QB81vf4tcpzdedfW3buM+de6donT9G
+	JCelaCgxwAbKsEzH/W1WKsYxnw6APCAlLKEE/nU6Gcd9tKQ/K5FX22ML0jcI5dFE
+	VV2KOg+BfSQfLzT+KJjujj7C73dsyRH5ieC1C0C8O6RvFnSwGvN6DVwGB1LLEmxy
+	3FsV+PEbK4lpFjXEUC6RFQtyjECTASewDSwV/rvyW6UGxF6tb+Hnq5WGxLCQs9Kw
+	tVxsE6A8ogdcyl/Ht0mL/wW3RdBOFPZ7otPA7Dj6513+Uz64gmev/Tn/IDr/wMTk
+	erqrag+xnDxuc1XqK2JrQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794816100; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794816102; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:OUeK7kEuCwmhD+nnvJZ+43iNu9btNXvVO3PBXtgGZj7dKN3
-	2V72ZnbYTGIvMxPru60hwtSrmpoUBko+F9ZozQ39EL3+qGlrGc6388YPn7/zAI60
-	Gk+Fj9AKMuoKgXm/JaX+KUh+cvrfuX3+v/2IQ2wLZCS3IhJP9qbgGX/BNQmbnDCG
-	A+lTzzI3g4viz5ZN0dSeG5zNz03saDHHzY8GhnP32oRsLQ1SOjpQGeHlnJhvIJBZ
-	PiexbVrL1c/r9VQ4F6GHT4VjhyX7HRm0arJH7FBPs4UEiRlx9kEm9aV/Xj8aS0oe
-	pMk5oc/jmo5GfcLRdAetespOmrRluAB3rGtAJgw==;
+	s=fm3:rsa-sha256:iOidi642upyglVi/z5aN0KNy2Vr23IvkdMKMXi+2JmQwTxi
+	83ffMWwMmSdhHVUCOTUfnqh9KO3p9tXm3a6vsYyO5+1vhABgivSoOOx/PP9inrSS
+	mi7Kb0h+0ffk6wRKcyE+wlhArHCpd24AO3g9H0BSN4JTXOg4E/V9P0wCYmK8ZYkL
+	BqBPG6f11VWyBDlMX20ppQhKBuLTnS/VIHSbbiIeI2Ctv95oRcOK593pwhqLoPDi
+	zX/XhBzDwwA5DSOvA2V185ZnzO9RkflVNNKISWzI2oiOA1k6ZKCKGRh/IhSixHxr
+	XwN6uyHO3zQhTVnMVNfeF7Qvf2TrxHSRB/YWaHw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:+0BCneSskl12FFpw0dlw6QYZYDv9nPY9aoOqTpjPCgg=:QwfkPDA4lqfo7i14Z9G7oqzuGdvjVcpGsel0tEZlA2A=;
-X-ME-Sender: <xms:ZLj6arD-8KuqDs_sNmrXWDS6sSLiSMyVxl2IKVI353nCUR7ZThj6_w>
-    <xme:ZLj6angwQv0YXgDavOWTnY1vk2x-k8VaSbs2tIfx1KNOFqnYKV6u2swXxHgSsGUJU
-    CVR2Jawc_nnz9qWAbG2w7JHqfmTrb7iG1SHpLwMumP1rYOGZI9liJc>
-X-ME-Received: <xmr:ZLj6akNpoz_7SOjZp1ZSdhsOaa_EctJ1vGKFpQqwFBvrJDp5FVAwfJx3sEyjfSAV2TzyTT0>
-X-ME-Proxy-Cause: dmFkZTFDL2QkCTiXF8kpsrvRJI3W8vBGP4IFGwbZaCfDnkcvul3i/uwM8kN5ffxkGmzyfs
-    x+H0KM/YoxSHjqH1rnFQ9IKDvog+M06nrXusFcCYN1hwvk4qoyYjNSYlzTLm95u0yi4FYW
-    IezFfKxpM9XQjEcgRvT0e+qTcEg6ZEwzAns8RwyggOjLs7wu3GtBbDxChfhe9+KmnwuLd3
-    j56uajiPlJE1ux7CSXIVL8aefkzeJ35WV8lB9R47osSySIA736s/7tllhF+kKyuxWPdiAK
-    95kMzzWEDU8HlC/P2XVnTd9mbI2XGdJjLgKpOGSlFHJJBT4Z4n/S/mmD1Rb4yNe082kXPG
-    +YcR6OcmhMdzRRIPZy2toq9tSE5FrCy0vVx9iLBTfPFSbeOOtAHxoTTiOHRotupdiyUwNS
-    icAf7DkgG3mNfbl6FwaYHdvCovxmR3s6iHO89o5ebvmfv7/btEFey3CxbqrKhgtsgzck8N
-    WF+rmRljDllGVP07Up+qTLefYcKj0TIU2M9aETexUIRpBo0aCM5wqujab89iHKbu/Np4Jf
-    7C3DdrKuVbrDQM4L96AR353Zv+Up+o1iK4tZeS6q6NtZDT82nJ9oy9pKVgmUODuTf3ZSlv
-    aemEaNUPzBGuhtnyWwOxnHcYJof4jRYyvlnU97tLzZa+tngzmK4qq7OKy4cw
-X-ME-Proxy: <xmx:ZLj6ao5MxDRIDWViM1cihfj8QNGJufafTTCgMpWg9NAYAz3XhyrDow>
-    <xmx:ZLj6ai2qCnXicsMsPp5Q6jInvbD5bjlQW-DyVCsIDBMJEX-MIDSVpw>
-    <xmx:ZLj6apbOgu9qCKoCqvfsBtjjM3C7GIzg5ojP4QNatXBXcnF11ZaJzQ>
-    <xmx:ZLj6aqBsKeJV_6euWD39d5r-hkw4bTU_C-txsnGELH4Jrgx76nGCHA>
-    <xmx:ZLj6aiRmHYaML2i-ZTQsV_eis9Xiw4Z8VNwxiQ5sxjE_FoyDtzW4d69R>
+Message-Instance: m=1; h=sha256:VN0cmB+GoX4D9N4ygGzqPVFBX2WWzgUzemWjkqQf79k=:29lqWWTKLYRyH1+phLz/2loszA7XGE/HWs74dllESIg=;
+X-ME-Sender: <xms:Zrj6an1dRKvveyHqHPMTKiQUtXorPfdkMLqvKAsJldkTG1Btp9EsSg>
+    <xme:Zrj6asG76cWl_v3T80tsidnfdZR_k9j4ywQtrYP8cp3F_c1PzDUXejj7CBF59ksUD
+    Kp07pgfFpd73_WVjK2PAYbdYKpBGw9o8cyyVUMgx9xAP96aT2Cf_mY>
+X-ME-Received: <xmr:Zrj6alhNaesVLGY4TTO81NK4zrQBW-clbjUzlzTJRTVxsOqpsTvV4MN7YFvNLJeZt5WSO64>
+X-ME-Proxy-Cause: dmFkZTFeV2TARsV2pw2wFbtyRUeI+jv0KgMuM97dvfnBjOGCAi6eQeSr/G+HIOsX1Dc3BV
+    QzbolohuxA2/aQw3jKIhT8rlyXM7ckj0UCTaW84zfw0roJAAriX+XROvkwnrAux7MDrk2I
+    CjlxALDGeAuCDzXqP8+thN9XowiDQRV9T5V9Yi39o4k70mRYUQ4Tmkb21KHlsYZCitlC4W
+    sY5xxL/NqvJH+HHw6yQ0gLbbiR9asIB+GonydFPs/v/FwRM8Y2dGNB5QwR7daU5NiLyr2d
+    ikR1l3goAZMjO9SsX14fR/jJ4fTihR3mDf7EfzHOhwx+ZmMKQo3ME+KDDymO4qnZRXWSie
+    zOyCA4LLhtznVoP98JrfEKXW1m5ZK+09Hoc7YBQrybtrptPkRuSDrjTD4PNEL+uJvEd/bZ
+    i+Ph5F63tyZMEmFLTVYdNoUnHWhdIg8MZVDyeimOTHryqg1U6BiTxzd93e1ma8ctcKHcZG
+    JDondqKJzYCsTT2/lmCkrkm4l/bZTr2i9qmsUBe3JQLTbSFVCnRQnpYOmn4o+Fbm45y05F
+    V5kBeZcWpKnnEQI2rgZq++wVYi04PafgQTcALwEZpBLVcnUQHgUFaaWklhF9yXLusaAthM
+    i2T5Xi4RYmGxL730AwsRXyW6dG/PtxEyjfvjw8QewYzhm+yQTET27dKLCxpw
+X-ME-Proxy: <xmx:Zrj6an9HTZywyoRZQi1AXbSIRSaR2y1dhxLx6FPdFaaHFnjZY5pulg>
+    <xmx:Zrj6asoI_u9ih0FMqaWeudWTsMld8ASh3_SS_4MoE1YmHqwEM665RQ>
+    <xmx:Zrj6am8l306IM-Yb7R3CpChEwwfX5I8SqLwLTueyKyoLNG4PCAemeA>
+    <xmx:Zrj6agVdjbDZHHAicfDgjrDqdWfJlnb1wmpax2rSBzK7Dvn5V8QvUw>
+    <xmx:Zrj6apGmNFwjxR3jDNL3I_uvw8q15Ccl2_XEZoKDiyS0aM3jMs0jKLYg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Nov 2026 03:01:39 -0500 (EST)
+ 16 Nov 2026 03:01:41 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c1d740c8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Nov 2026 08:01:38 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 0989381a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Nov 2026 08:01:41 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/2] builtin/repo: improve counting of objects
-Date: Mon, 16 Nov 2026 09:01:33 +0100
-Message-Id: <20261116-pks-repo-count-objects-speedup-v2-0-9c8be218eaff@pks.im>
+Date: Mon, 16 Nov 2026 09:01:34 +0100
+Subject: [PATCH v2 1/2] builtin/repo: only parse objects as needed
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,65 +122,108 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WOQQ6CMBBFr2Jm7Rg6oKgr72FYtDCVaqRNB4iGc
- HcLxrWze8n//80EwtGxwHkzQeTRifNdAtpuoG51d2N0TWKgjA4qHYaHYOTgsfZD16M3d657QQn
- MzRBwT0dtrCLWlEMaCZGte62Ca/VlGdbOsrokWie9j+/1g1EtuZ8s/ycbFWZYGl1YOnFZWHNJh
- Z17QjXP8wckKA7P2wAAAA==
-X-Change-ID: 20261111-pks-repo-count-objects-speedup-528abf12ea23
-In-Reply-To: <20261113-pks-repo-count-objects-speedup-v1-0-7ba4f29e74fb@pks.im>
-References: <20261113-pks-repo-count-objects-speedup-v1-0-7ba4f29e74fb@pks.im>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261116-pks-repo-count-objects-speedup-v2-1-9c8be218eaff@pks.im>
+References: <20261116-pks-repo-count-objects-speedup-v2-0-9c8be218eaff@pks.im>
+In-Reply-To: <20261116-pks-repo-count-objects-speedup-v2-0-9c8be218eaff@pks.im>
 To: git@vger.kernel.org
 Cc: Kristofer Karlsson <krka@spotify.com>
 X-Mailer: b4 0.15.2
 
-Hi,
+To count objects we walk the repository's object graph. We then read the
+individual objects that we encounter so that we can learn about their
+metrics like their size.
 
-I was recently using `git repo structure` in a very large repository and
-was eventually greeted with an OOM. So I had a bit of a look and found a
-way to improve the memory footprint and speed it up a bit.
+As part of this, we also unconditionally read the object's content and
+parse it. But this is quite unnecessary, as we only really need parsed
+commits and trees because we need their number of parents and tree
+entries, respectively. So the time we spend reading and parsing blobs
+and tags is ultimately pointless.
 
-The repository still doesn't produce results. As it turns out, walking
-33 billion tree entries takes a while, and everything rev-list based
-that walks trees is kinda broken in there. Oh, well, a problem for
-another day.
+Improve the status quo so that we only parse as needed. This allows us
+to do another small optimization: as we reach commits via the rev walk
+we know that they have already been parsed anyway. Consequently, we
+don't even need to read their data at all, and we can instead just look
+up the already-parsed commit.
 
-Changes in v2:
-  - Reword a comment to point out that parsing the commit should in
-    theory not be required.
-  - Link to v1: https://patch.msgid.link/20261113-pks-repo-count-objects-speedup-v1-0-7ba4f29e74fb@pks.im
+This speeds up `git repo structure` a bit. The following benchmark was
+executed in "git.git":
 
-Thanks!
+  Benchmark 1: ./git repo structure (commit = HEAD~) (10 runs)
+                  mean     ±       σ          min     …     max
+    Wall Time   10.891 s   ±   0.113 s     10.779 s   …  11.181 s
+    Memory         3.5 GiB ±     0.0 GiB      3.5 GiB …     3.5 GiB
 
-Patrick
+  Benchmark 2: ./git repo structure (commit = HEAD) (10 runs)
+                  mean     ±       σ          min     …     max
+    Wall Time    9.577 s   ±   0.064 s      9.485 s   …   9.673 s            -12.1%
+    Memory         3.4 GiB ±     0.0 GiB      3.4 GiB …     3.4 GiB           -4.1%
 
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (2):
-      builtin/repo: only parse objects as needed
-      builtin/repo: don't fully parse trees
+ builtin/repo.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
- builtin/repo.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 0399c558719..45ac005c2f7 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -847,13 +847,14 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 		size_t inflated_st = 0;
+ 		struct commit *commit;
+ 		struct object *obj;
+-		void *content;
++		void *content = NULL;
+ 		off_t disk;
+-		int eaten;
++		int eaten = 0;
+ 
+ 		oi.sizep = &inflated_st;
+ 		oi.disk_sizep = &disk;
+-		oi.contentp = &content;
++		if (type == OBJ_TREE)
++			oi.contentp = &content;
+ 
+ 		if (odb_read_object_info_extended(data->odb, &oids->oid[i], &oi,
+ 						  OBJECT_INFO_SKIP_FETCH_OBJECT |
+@@ -861,9 +862,6 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 			continue;
+ 		inflated = cast_size_t_to_ulong(inflated_st);
+ 
+-		obj = parse_object_buffer(the_repository, &oids->oid[i], type,
+-					  inflated, content, &eaten);
+-
+ 		switch (type) {
+ 		case OBJ_TAG:
+ 			stats->type_counts.tags++;
+@@ -873,7 +871,15 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 				      inflated);
+ 			break;
+ 		case OBJ_COMMIT:
+-			commit = object_as_type(obj, OBJ_COMMIT, 0);
++			/*
++			 * Commits should already have been parsed by the
++			 * revision walk, so in theory we do not need to read
++			 * their contents again.
++			 */
++			commit = lookup_commit(data->odb->repo, &oids->oid[i]);
++			if (!commit || repo_parse_commit(data->odb->repo, commit))
++				continue;
++
+ 			stats->type_counts.commits++;
+ 			stats->inflated_sizes.commits += inflated;
+ 			stats->disk_sizes.commits += disk;
+@@ -883,6 +889,9 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 				      commit_list_count(commit->parents));
+ 			break;
+ 		case OBJ_TREE:
++			obj = parse_object_buffer(the_repository, &oids->oid[i], type,
++						  inflated, content, &eaten);
++
+ 			stats->type_counts.trees++;
+ 			stats->inflated_sizes.trees += inflated;
+ 			stats->disk_sizes.trees += disk;
 
-Range-diff versus v1:
-
-1:  a7a1c1a8041 ! 1:  2780e491ead builtin/repo: only parse objects as needed
-    @@ builtin/repo.c: static int count_objects(const char *path UNUSED, struct oid_arr
-      		case OBJ_COMMIT:
-     -			commit = object_as_type(obj, OBJ_COMMIT, 0);
-     +			/*
-    -+			 * Commits have already been parsed by the revision
-    -+			 * walk, so there is no need to read their contents
-    -+			 * again.
-    ++			 * Commits should already have been parsed by the
-    ++			 * revision walk, so in theory we do not need to read
-    ++			 * their contents again.
-     +			 */
-     +			commit = lookup_commit(data->odb->repo, &oids->oid[i]);
-     +			if (!commit || repo_parse_commit(data->odb->repo, commit))
-2:  d9fd2366b84 = 2:  aa32dcb2961 builtin/repo: don't fully parse trees
-
----
-base-commit: 1891de46f79dc444a47db1c87bd0c8c76b5463f2
-change-id: 20261111-pks-repo-count-objects-speedup-528abf12ea23
+-- 
+2.56.1.763.g16177fe143.dirty
 
