@@ -1,96 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.179
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794877658;
-	b=DDYoETo89hY902pG/LnbCVb5bLk4eTAp0/NP7eAnFyrrdiqocPBrWdfAx8AJCBMo7qSO
-	 m+V0YtYBuOqyVRX3J9NoWjGktUYYqk9Vko+er2H/xyvN1hynB99f8jetWy7kb/yvqmWC8
-	 sp/7dFEtuOkA988CgJ4MdmDoMVwt1BSmD0ndxPyTAXe0iLpS+Jh/CMWZFX4aska3VNSna
-	 vGS1eY36k8Ry9iPxksDp9xnXzxIrfYXkth+mQfQI+qwefU0WldBfyqrjyvvFct+SW4eq8
-	 y2qrOO71MzHDyPqCT4VXFBYXmyZOLtcTWI0aJOGkGRPVuO77bfGKLhBdZ3sORyYbkJg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794877658;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
-	 X-Gm-Features:Message-ID:Subject:To:Content-Type;
-	bh=vL/8+kX6Z6hSF3fZFGloUmchhj1ZGP/B1vuR0u9ACko=;
-	b=WcQZ2TPHzSEsW/mxG1OW7MHeI9CmNDXqSMTVMmGsvmsbnu278z9OsLObo+9nVrkSRq+n
-	 EvaBlX9hG9Px7xGtpdBiW0FBe3UMSszJHRIw5W/WS9OwY9F+IRIN9JRKVNq0PIkN06HQq
-	 ezAW/PR/9HoJ0FZINFLG8g7UkkIiQM94+NcCHo0Ko8porhuAzScc5SJrkByREjzNpWrLz
-	 j3+d2SWAgGleRvLNJGeosbWeJbmoULp1V7Kw7dzRiFxu1OEAEgGu6iw1ZOAYIePYoZpBV
-	 HxOqffML0Likf+zni2ZklrwZ1mYZkktdTzHM9qyXm9zzxB3ytzv6CUX37s1TkzMDfZg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="KvI9/gbA";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.179
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794878176;
+	b=jwbjY6RxJyeRYIGBHHl8hJ7hbRrHCf83OPg6OkmThZEF6AZbJtuHzPjQNB19/U34Urxs
+	 1sTaU6dU6nCjINzgdF1CT/ZDIoK+L3O680i8mnaJGzScQWZZfxqWaHSD8nUvMA2tN2Hjj
+	 eeDZoMXBTGLKZ2pd7/w6aH3QmEq4uyNu5vr2L2+SWtJ6FxfkIxpTP9F48F7Ke/dFz3qRi
+	 8zuBtGHTVajwWT9xTZGTfDISITWU9eX6lrb+PvDiiWOZkk+F2rIax3PihTpD/nLbqbR53
+	 mQLjyCxFDd56LCmyX4W6GlXufJE2GlejJB7HPvEmB49bHj2u34Yx2iGhq3hiKRKjpjg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794878176;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=KGZgr4LFXjB8kfPpz6SAo8S1eXuwOU8t2LhiVlY1zcg=;
+	b=1h3IVxvHhF3m1/dRvwc0XzhrwAwXKrWRoWZzOaHOEbde9v1mbSrEJvw2qAHBAFdq+y4x
+	 ubdauLnbyAJ43J3dT92HpREIvnU9x0oOpEuaDkAnNqWLBPwR67kwOCSr+9UuCB793pVs6
+	 DCIefeuCw9zP8NNdd/L8m2JYig9YH/21f5WTtVugAyV1rLnsMCd60//YR3RXaIyGgLsQf
+	 lR24nkgZegnBETQ1qYzxITj8x1b0VvsMc8uzcjmdXpNEaJmLzfwxfUAs2JCLJzmeYB80z
+	 Zls/WX5kjHHsjPUfnGETej5gabFK90fpzq2Q6Of6pqasqvMjiHSVT04UO6HDJgrg/Hg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=XnRTHOKp;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=vk6It5P4;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E226606A31C
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 01:07:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E226606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3B0606A31C
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 01:16:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E3B0606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KvI9/gbA
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-8b4cc793704so17475357b3.2
-        for <git@vger.kernel.org>; Mon, 16 Nov 2026 17:07:38 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794877657; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Q4WE2vmr7e65yfPPyDTQz5J5nDorjqOJbiI1pYbOpHFV9pLdRuDrtbrBdtpHSiowfg
-         tFCQENdlr2GPAGM4A+MKB4WuHV9ErubpMc7FDBSzLhKWgIW5n7ncnZr9R4CUMixqdMet
-         8hTuQkrundNrvfqMqPpurKAEKWpkwGCGd4DjtP/m3QhxDUWil8sRYH/Uv1Vd7mZA8yaw
-         f46TYJNNsKBLxUJelvUOkHbYklD8KdnCP3afmHNDPduKzIJIszKoZNIVsQ9jpurhl5EM
-         wisjCueWZuXIuuwHQc3QhBzdh+api+GeFvE7Neu/rjI632Npz43klWndbo4BNN+FlsUl
-         MmRg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=vL/8+kX6Z6hSF3fZFGloUmchhj1ZGP/B1vuR0u9ACko=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=LkG5sOPN+fg9Dp5HavhWX8uXq44Fv2qJ4DeniQMhk9nk7AyIzSc1sUcGzQtbC8GU/g
-         +PeyZBmIrD/P65pg+4o0IkWDz1gBhpNSn6ebAphlTayIzfhh9nPLFn4QEh8pT5tG5Lp3
-         XcONKBUz9c9WNX/1GgXX9FywW6tZWX2Y+9CqYW57DtoaMsr73iXNlhRPDxAFgmbMrKn6
-         w3Rg84P5tJ0Vx+mjCOfznUSOjPi7estqQoGExPSXZEZ62i2Zr9Ut35dnv6I3UDZ2/MKS
-         V6lRvihCLvBUALJiFZ23hHN2NmzafANgAI05Fxq6YlXg8PoW62yheAI+FsZ+S6M7X0mN
-         fNwA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794877657; x=1795482457; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=vL/8+kX6Z6hSF3fZFGloUmchhj1ZGP/B1vuR0u9ACko=;
-        b=KvI9/gbAsFQStUAg+/LhxVcZMabiqUVKVvomm6KxunCsrPxSJxewyhMjA0DUGDJVN1
-         1cS16ugjXt72ACClEYOEbz4EMsw/OnRanaCZ/czmU+7woZrWZe+Dj5F5ZzSrpgbGJim5
-         bgzgmVxGTTSN4D//gWAYMxahBiq/x+/4ZrTQ2XsanenWgxMWJdD+WlSqIUF68DYofyNz
-         NzuTRzW1f83WG/qNa0Bm2jarD2/OsDbZVSxVy1kxISNGKeJ7HHrIEhMWXLI1jcxS41DQ
-         Y9HPsDg1yTVOs3AlNSge/Zs+Hlo4S8JYWQ2ATomKrsprqgzC+rjv5Ae6wTnQ6WZALRmz
-         sdAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794877657; x=1795482457;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vL/8+kX6Z6hSF3fZFGloUmchhj1ZGP/B1vuR0u9ACko=;
-        b=OZZvkPtQBY8A8dg5Z8pLGhzm6mSaaKXpUecf1fXIUvOdk4Vesi8kfS5sjJbISWZl2f
-         5EM6Kr0O1j23ekrHn8FEWq+/c0iSgpWVkK9L6fFgn0huVbaKy8X2utb3FlvEgT2qet9o
-         ijwmhCngtWe0Vu6uGU7mwYaWnqEZyf/tpqrvqESeSHLNScA4VfAzeTqVvWtqQ8E/Rr62
-         Ztq0Urj+lseiWESerc+dGZVbRc58cNn5UNbHWrNxD4gFyWBZyDeTCu8uhhwi8+wdK0Bd
-         hwr0WK63hZdnToUwPX67/U8UZIHYyB5OdrOvMLeVgb09vsU/qvomWE95Ez9fiLUeMYHg
-         t8rg==
-X-Gm-Message-State: APuU4Z9saSGWsP1PuRRRLDNH03gUfqnr+b0ajcmRKQiaKkxDuDXlOEw9
-	dx4OAUv+XzTPgNza8iyjZFN7jzlker5gCVVt2ul6j60w7FPA3nv32/ThtWVVw4ZXOXVJh3NK0Eu
-	fJ00qvQnbKHLh1udkLQji2FX7zCmGciFlzKsq
-X-Gm-Gg: AZFdTZfcD0gulYq6lomqtQmTNkshAn1PjZ+8ov8swICo0H3jZYgOddIZM9qNfrS/i6z
-	8oUPTP06q12KHOAtValI7lw8sROdKA/+7T3bcAvenNi8wXEljb9/SzJrWPh+CN0JjvYJ6y+FyzH
-	GNia6PVdTQ4StMeoOgT0oBaPGkECNE5JYMjW2j4y8cmU/cWgkk3TCCqDo6oIhTagbIvStm++x1L
-	V0heAvxdVNUG2QlZgH1Wx41XJ3LAskio26bYBaC9gm59CxU8UdhQDSNsBzXEwXs3k7wvLhB4X4W
-	d4Ag8RzHgp2f5B5/8SB6Exym5kRZRlH7YP1A7nMg0wQYLPqya7uFnW0Cy+Uemj+aRiNbYDZNtnZ
-	CEmdb3dzGgYZMmxb6AshuW/NsF6r16g/Rs+1b0AodX3++T5EvCkq7N1LEYrQFBO55QOXrOxsxIJ
-	F8qVZOM8f4jsL29W5bnIelnV0hqdUGYAwwXhBpSe4FIfh6agQvdg==
-X-Received: by 2002:a53:de4e:0:b0:67b:ff8e:33c7 with SMTP id
- 956f58d0204a3-67d897663b9mr4101781d50.143.1794877657222; Mon, 16 Nov 2026
- 17:07:37 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=XnRTHOKp;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=vk6It5P4
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AE8AF7A00A1
+	for <git@vger.kernel.org>; Mon, 16 Nov 2026 20:16:14 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Mon, 16 Nov 2026 20:16:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794878174; x=1794964574; bh=KGZgr4LFXj
+	B8kfPpz6SAo8S1eXuwOU8t2LhiVlY1zcg=; b=XnRTHOKpU16aZHnYeiZioBS0oj
+	t3qH3/rdLk6UqR7JaZxCPLZcuvIEHGfR4lBgKQYG1ZV5iHJIQvC6BEQSU7P1ZuL/
+	AIuyolXWS6IIF53rlktKebGFLdu/dBZbE+MPzS6iscjLJVT2cc/fk9WtqzghIbHl
+	zvkov2p8rgoFDTJhIWNlRiAj+hw5HOCgaZj9nbF3ik4pTbGdgPaTGnhSl6tiT/bG
+	PNCr+sdN5PtIuEgLlO+J6sEDYj0hdYee2EPA3FnqM80xMFTov5uWSgblS76ep6GQ
+	TPKsfF/nzdlKsfCrh3fgG7Airm7e7J9K6hR9NW16lP9Wo7d0iIvIjeyAe5Nw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794878174; x=1794964574; bh=KGZgr4LFXjB8kfPpz6SAo8S1eXuwOU8t2Lh
+	iVlY1zcg=; b=vk6It5P4In5EC1dZWs0y256kRCqusZ5o/BhrJ4Y1VAzTpwszU9S
+	aZPIdMm+5HxgdiTelzpQEL4rTmkQfFgohykGWjrq9NtYXH1PP9GD4k+MJ7dfbRa/
+	IoXMKWcCE3iNd9SiDmQghRsWUhjMfm3RAT22lFusZt9iWtrvcAxGA6muMAqerGhl
+	zdLFWlBcduNxGkNIzO+ks1BzZmKl07Z9xHIgplCW/MpqEAvRc+n76hvlE1U/558X
+	M9UjL96wxT8tTMM5ga3V3VeKr+k7oSJWt88gb0cDzCCfhXuRRqsZjqWd9B2hhj6q
+	hRzJz56RBfjg/Vy/U3OxJvdsJDtCDkU5pIA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794878174; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Xv5MMgWFSteNB8Rt61my/erXnc6Gnk41FSY9Rr+NTRJwhBt
+	cxNjxZRAU2ZJunwCcopGIZb7SZ8pFYER8+qTz4zhCBzbGbJmcJwcetmvAzPqbKjr
+	61RlaGs+levv4Q+B5b+F7joTR7W75VHRiaWiwW9ctID1RF7j61E+jxOXjmTTDrhS
+	DNDWfUZHAn4Hz/PPugxIXFyVh79gITiJw4Lhec+c4LCZDmXd0Nn8WQY0Gp3zDwAz
+	ytoSrUKbUX2H3h4y6p2KRksRJXqTMwsvA0uuKrDSKVsTqi6NIxEamgLGGmM7pquH
+	eWvyCZV7ceKsoTteoJLrpkc/Wdzfc6RZ7GECAug==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:HXi8gY9bHOR3DtyyuAlSnUmc173KaZmhlaYZY1YkHyE=:rVRE7ndzivBEZVZQvmcfMlLOkRMfUWXW8YFoZdGU0pc=;
+X-ME-Sender: <xms:3qr7auU1F4INwvNXtuNViSTaVTJc8cR5KZLwKCbEFOInDGPdSCniMw>
+    <xme:3qr7aheXlp7juIsBGGkG23Cdopz0dqOffMNsS8FvFgUuNit7PeyTuyBIseTfMKB2K
+    LxlBbFUasPmTm3S1c8X4JmEfpOTnll51v_H4Yhz18r9pl3CagyNqB8>
+X-ME-Received: <xmr:3qr7aquRI7BgnD1WVFW7CPBlho8ETqGjaAohKAvzIvnMOqdn3d-ZUI2kraHKbz0KVKLfta4Q8WHjOJ6-sBOnWiOodQ5h0pEM_yk1>
+X-ME-Proxy-Cause: dmFkZTEZKfpDVTQ08yj19ylOsgWKd9J2Af7z/eY6YyPQF3Kxw2fybO3PMaRDsfLh2GAfgc
+    umd2GYNqkznxtRK8/ABysqJIo28toRz37DlkmrYnIdqNmL6My9aJFX+l9QYFMCQyKx6c2W
+    NKj6MwkaLufQtQQGkUugPSO6N3EjSlBEzacAAxpmLQ63ODayqHzkktQGZod/fXTofb+lwd
+    p/LeWJEBUjsekVT5BkqR4CYhyoGXHNeSXDNU1huUOE57Tnf9QG0zaqj60r7Tyl0rzNErfh
+    9O0Q8+/TEvf43m/l8ufPRDuF0xaNyqSG0zy3weooiF6utIC2LI0aNm8VhZ15689ZNbOBJh
+    EVREAw9zfynTP7C+EbEE6X5tGgsSglXplElvAxX9rwTa6dHpmybrBNfpCShZQLOHLhYcg6
+    aV2N/187+eMRKBYZi7PZ76YLkahpMAJAbbXzzMbZVbOPNT103LChwBIomq6cCfbGnATz8c
+    LzosmgBxDtzFTPulYPa465ziqZVjER6YkvVk29KHSQgAjfKglBQBWeGpFwr5WWQKZHzBJl
+    3ySw6H8kWTqsRHRsXoyV1Qf6TfKaviOMIxXtYtDkzAVtT/41vYebQdthTXKLkXvMQ1n+Sb
+    KUY/cRhmDH4ARgrCSu3YNzvdJ75B/L2hWZVSX/xAuooLZ9GBpU5c4SVPkJkw
+X-ME-Proxy: <xmx:3qr7ag_SSQ0e2PnDeV_ZJGEY0EWdDuqOUnBTTGX82KXMAUEXecpFzQ>
+    <xmx:3qr7al2nEdjVlSND_oS9mA847TI9kOXDi8Ees5vXYNZu2VMZ5USGsg>
+    <xmx:3qr7alAqms-8mekWEcX0cmmB8qFt6oaXapP7dzGDs6JSon-xAvRdcw>
+    <xmx:3qr7ahcsoZ4nRT16YXEgsIvP7Z3023ihu9Q3vtu3tQ4ljPbmCFE6hg>
+    <xmx:3qr7agO9rr6DJEaNDCPi7DkpSWDYkh59yLyvg93lyWqmriWzSnt9MEip>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Nov 2026 20:16:13 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "Mark C. Chu-Carroll"
+ <markchucarroll@fastmail.com>,  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 00/12] builtin/rerere: convert to use subcommands
+In-Reply-To: <xmqqik1wn5mu.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	16 Nov 2026 07:43:53 -0800")
+References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
+	<20261111-pks-rerere-subcommands-v4-0-df0c8bf79e16@pks.im>
+	<xmqq7bifponx.fsf@gitster.g> <avq3YHb_J8Ww6Kq7@pks.im>
+	<xmqqik1wn5mu.fsf@gitster.g>
+Date: Mon, 16 Nov 2026 17:16:12 -0800
+Message-ID: <xmqqbj7oi7fn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,101 +127,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-From: wheakerd <wheakerd@gmail.com>
-Date: Mon, 16 Nov 2026 17:07:25 -0800
-X-Gm-Features: AclHuK99o8Ro87Nxlj6-QpAjT3VJD-n5S1EBJKzF4SKQhz9qENLRNT818hhkfEI
-Message-ID: <CAFJdCSutexXts8ZUkwdzgyTn61qM97v=eD_ivm+zjt4=L8FkxQ@mail.gmail.com>
-Subject: [BUG] push: a remote group that lists a remote of its own name makes
- "git push <name>" recurse
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Junio C Hamano <gitster@pobox.com> writes:
 
-  git init -q -b main client
-  git init -q --bare -b main a.git
-  git init -q --bare -b main b.git
-  git -C client commit -q --allow-empty -m base
-  git -C client remote add origin ../a.git
-  git -C client remote add member ../b.git
-  git -C client config remotes.origin "origin member"
-  timeout -s KILL 12 git -C client push origin refs/heads/main:refs/heads/main
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+>>> $ rungit seen rerere --skip-locked gc
+>>> error: unknown option `skip-locked'
+>>> usage: git rerere [--[no-]rerere-autoupdate]
+>>> 
+>>>     --[no-]rerere-autoupdate
+>>>                           register clean resolutions in index
+>>> $ rungit seen rerere gc --skip-locked
+>>
+>> Yes, as documented in "builtin/rerere: use `OPT_SUBCOMMAND()`.
+>>
+>>   Unfortunately this means that we have a backwards-incompatible change
+>>   because we no longer accept the "--[no-]rerere-autoupdate" flag for all
+>>   subcommands. But this was arguably broken and misleading as we ignore
+>>   this flag for any other subcommand aynway. So we cheat a bit and simply
+>>   call it a bug that those flags were accepted in the first place.
+>
+> Ah, I missed that part.
+>
+>> But yes, the same is true for "--skip-locked". I was expecting more
+>> review feedback on that specific part, and was a bit surprised to get
+>> none.
+>
+> OK.  Let's break it and have the users fix their scripts.
 
-  Caution: the last command starts several thousand nested "git push"
-  processes. Please keep the time limit.
+Having said that
 
-What did you expect to happen? (Expected behavior)
+    $ rungit seen rerere unknown
+    usage: too many arguments
+    $ rungit master rerere unknown
+    usage: git rerere [clear | forget <pathspec>... | diff | status | remaining | gc]
 
-  Either one push to the remote "origin" and one to "member", or an error
-  that says a group must not contain its own name.
-
-What happened instead? (Actual behavior)
-
-  The command prints "Pushing to origin" again and again and starts one
-  nested "git push origin" per line. In a 12-second run it printed that
-  line 5,945 times, and I sampled up to 5,898 "git" processes alive at the
-  same time. Once the nesting stops growing, each level reports "error:
-  could not push to origin", then prints "Pushing to member" and pushes to
-  member. When the 12 seconds were over, b.git had received main, and
-  a.git, the repository that the remote "origin" names, had no ref.
-
-  An earlier run without a time limit ended by itself with exit status 1.
-  I did not measure how long it took. There, too, the other member had
-  received the push and the repository of the remote "origin" had not.
-
-What's different between what you expected and what actually happened?
-
-  The remote that has the same name as the group is never pushed to, the
-  other member is pushed to once per nesting level, and the number of
-  processes is limited only by whatever makes the deepest child fail.
-
-Anything else you want to add:
-
-  Reading v2.56.0: push_multiple() in builtin/push.c runs
-  "git push <member>" as a child process for every member of the group,
-  and add_remote_or_group() in remote.c resolves a name as a group first
-  when remotes.<name> exists. The child for the member "origin" therefore
-  expands the same group again. On 2026-11-15 the two functions read
-  the same way on master, and push_multiple() on next and seen still
-  runs one child per member without a guard. I did not run the
-  reproduction on anything newer than 2.56.0.
-
-  "git push <group>" is new in 2.55.0. t/t5566-push-group.sh has no case
-  for a group that contains its own name, and git-push(1) does not
-  mention one.
-
-  The fetch side has an older report of the same cycle:
-
-    Fwd: Runaway "git remote" if group definition contains a remote by
-    the same name
-    https://mail-archive.com/git@vger.kernel.org/msg41422.html
-
-  Alex Riesen first sent it on 2010-11-17 and re-posted it on
-  2013-12-28, with
-
-    git -c remotes.origin='origin other' remote update origin
-
-  as the reproduction. Jeff King's reply names the reference cycle and
-  sketches a fix: expand groups in one process, tell the child
-  processes not to expand again, and detect cycles. I found no patch in
-  that thread, and fetch_multiple() in builtin/fetch.c on master passes
-  no such option to its children.
-
-  A group named like one of its members is easy to write by accident, for
-  example remotes.origin = "origin backup" to mean "origin and its
-  backup".
-
-[System Info]
-git version:
-git version 2.56.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: disabled
-feature: fsmonitor--daemon
-uname: Linux 7.2.11-200.fc44.x86_64 x86_64
-
-[Enabled Hooks]
-none in the reproduction repository
+the above might be a regression that is more easily spotted by
+folks.
