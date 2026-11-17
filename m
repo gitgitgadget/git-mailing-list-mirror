@@ -1,64 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.105
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794912183;
-	b=rK0ppCLgB+ehe9NV0ZpolXBfkL/u7sLvJ74MKCpPXLE5VlNQnrRhuZq05K7bdGwFGLJD
-	 Kydk9LoFU4ZwhiulZzAoRZpDCjDaNRmCKTrdKyc59C/wkHS4hoTur+v0ShtPkrESDwc8K
-	 w3H2Crip3Mbsnjdoe1+IbPAEBywoQMPHfz4UzTjp9zlibw8d60B2JhqxjgrY0LpIN4nCA
-	 R0hdQnYwSEQwZ51c7IKO2NTe+7hf6YxsvmSfxQg3qnr0OWCqRJL8W7l203N0v/MjZi/eR
-	 1PEO12f/aFp5wglKFqPgwFU72O1Kztn/wNTK+WG1bR5ETMyMIE6U8ILvfWhsxVlASYA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794912183;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=IGudq6IUWrw6/bQx0p5Ae3TDbfg5TXEreK1O60rIg0g=;
-	b=1KNp0tjUL8mAS1OY8K4yuqjF1aVIhOWkUYzR2amLDZNQUUfwhr128f1vSnt7O7RunYu6
-	 nMjDMmx/XqWep+9ZuE6/epHocG6S14fSXhA0I8YKaq2RsoGPzl/QwDe3wZYTjpL46iA6L
-	 jkLbFs3BryHvM75awaIdQIH6f2NEszjCMSqcpqj2dOnyk0uEbcRZfBvkEVXgYhvnS8dxf
-	 VZfrEQXQQL43zH0iXOxeFaYe9D2P6vxbF79sDAC94PQzc+ClXPR3xpPkU+NCNbBr3itSr
-	 lxraUHeIynW3jHvWaaDNd2fJ+9ymM5XShyNqZ3luVjIx8wZUrZ/SxyGABMpwocHruFw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=collabora.com;
-	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=MwjbLA1J;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.105
-Received: from sender5-pp-e105.zoho.com (sender5-pp-e105.zoho.com [165.173.182.105])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794913720;
+	b=QpM/1Hp+fDO5LUBm+JloJKLJdlVxJZ3WZS2bm+6VQSA3jAsv574HIP0LyqBaatQ2n0mU
+	 50vneyJj+xfkY7XyiWvhK0+7UeqDxc0R1W6wVwD0+4z+tRKhV2+xkXLxUhe7DI9e7drTE
+	 raZX0Czqwt1J9wM+7G1XHVJebKPq7GVRj+GedjLqYQff7c0RpiL5c19zIRQSfqvuwTqgC
+	 soLxuiVWXYsARxDm7pCD/R6R/ZFghTN0GWVXCBoIVHVQkYZFG1zC5m8FsmFmt8KTewkGl
+	 zpS4b4hN3lPDp0WqM/eLTAkaL6WpQ/SZAsqVEZsXq6xRZVIqJPvbwjve3MG2aO2BTZQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794913720;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
+	 References:From:Content-Language:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=3Msk6iECijqZAzgSJYhlYPtSzKLlYLLpZnnroyoU6jQ=;
+	b=OrfCeO4kAQ9r9lH5JpI7Rkti40zApxPuSjbJkg1YjhYD8C46LSwn2R7UnfB9gWkN/oa8
+	 6TIGV2Ekkq0pRdhPMQi49NJhP7VLLIt4ih15Rhon0ORur2kkEYqCfoToZl1qtHL0wfU7r
+	 0fULlyjjtXHTOWiWUqRXDSJy7EYBxZBTcIa9pKg3UUlrlbZ5CNOLqU5bXDrHPFEJgMOYA
+	 MPvFdt/Eg6qzEjm2Cw5i677PkfjSeTHGbtFKFNELCHfn64tvEYJde7zj6zuaB3UlgYZmE
+	 hn9hZ9k4r6cyBbzkmjXWsWbFaJkqyvrDf4dmyEEB/ivxJf1vzBTFAiJC7cWhHur1R9g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IcJmLd8M;
+	arc=none smtp.remote-ip=209.85.128.48
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBB0606A31C
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 10:43:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1BBB0606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B84E606A331
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 11:08:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B84E606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=MwjbLA1J
-ARC-Seal: i=1; a=rsa-sha256; t=1794912149; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=kfePPz5/XaVCfJJNBpYqz43rnaP0h8CNRRoNGlTpPdTOhv1DEi17oT7hvQytMZu39DDQshBjYaEsmJ6+poWmalG0yH3AwCp+Foa6KKjJ5mRSafcUBGgJjN/muvIfABCTVQsVEZpJighS8B6SjmKEVIov3zyLWJrA897Z5rT688U=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1794912149; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=IGudq6IUWrw6/bQx0p5Ae3TDbfg5TXEreK1O60rIg0g=; 
-	b=kx7X2u6iZZurJcBVppm3NLx1hnqgHjNnfbij0/HGxjMSIguOLZmPEtcovp0rYMz/jnU/y6/w9vJf/PVPCGVvZgGpXuCL8tXoPuxwZkUq8BZ/jVsI4ftiOlsFqUcXHkevMaYuolm6mUokSn+RjNHD4INkCSeZd7QcGMfzgpiqby4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: a=rsa-sha256; b=MwjbLA1JFRgVGOV6jPNy/ZGtXLxnT63M5ndgC0ovKU9q+VXPOrx/aPAPHUH1rXBdMbqWgx5tzkAtNmJCv4J8hJX6Iru28vuKAzwP6XRSy1nh4gxbM6rAK9fLf2pf3pS8iY/wBBWqz9Xx0Li7qiBnl3IKFoaF8tayMtcSZIKB+9k=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=IGudq6IUWrw6/bQx0p5Ae3TDbfg5TXEreK1O60rIg0g=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1794912146709185.7163319889828;
-	Tue, 17 Nov 2026 02:42:26 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, "brian m .
- carlson" <sandals@crustytoothpaste.net>, "Eric W . Biederman"
- <ebiederm@xmission.com>, Axel Rasmussen <axelrasmussen@google.com>, Emily
- Shaffer <emilyshaffer@google.com>, Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH 1/3] setup: reject compatObjectFormat == objectFormat
-In-Reply-To: <avqyiXdZIFoJbw34@pks.im>
-References: <20261112195740.2834341-1-adrian.ratiu@collabora.com>
- <20261112195740.2834341-2-adrian.ratiu@collabora.com>
- <avqyiXdZIFoJbw34@pks.im>
-Date: Tue, 17 Nov 2026 12:42:21 +0200
-Message-ID: <87ik1vkacy.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IcJmLd8M
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a9a8d6cea8so10053275e9.1
+        for <git@vger.kernel.org>; Tue, 17 Nov 2026 03:08:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794913719; x=1795518519; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=3Msk6iECijqZAzgSJYhlYPtSzKLlYLLpZnnroyoU6jQ=;
+        b=IcJmLd8MdjWkPni80k6NY/Tc8U54ByafWRJvYgZ+n0vQQDLHWr3NIY9tV6zPlkuOfO
+         x//yqGz6QNhrm8YDdlLNmzFVs8Nls5Ox/BRtmO3BdbkT/I0omLPZm1cEuzN0L24w2bYP
+         EgqtFTrP0jeK49B3q4dleHJ5eda8fIC+EbKMz4rjN/eLqLNuptWcRgLz4RMkj/0YrWqX
+         VXJL72tUw+hrh4svklPdxHIzBrWLDmNlMz4dJ0TsMTDHEcKNFvxR/ZyM90fExk2gg21B
+         YlQgJHqL/n7xkCTvGfazWz47doaP60b7RdIsr1ZbLhUqYZ6KjDZBQ5HUCKsxrtg94REC
+         b4ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794913719; x=1795518519;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3Msk6iECijqZAzgSJYhlYPtSzKLlYLLpZnnroyoU6jQ=;
+        b=NiqHQuj/xk9zz//VkNK7P23gknV+R2DjGVU8ygYcKvnQTbziR6FRTwQqlvpoRf+hj5
+         K4jK3u6Cg+XPMeYvbPacTU9l3oTV3c3ZK80LNTEbzI5ZGikOLrXQ/RGtt21mFzpIjYZz
+         9qzDmnCQanSTUHmNWk+he/wUNUY7+BtDu+2A4ESk75NnU5vNgn8sOOLQGVR/2hz7aTlX
+         kYKkIjB+DyhkvBNYq/cgwWH26R+v/xGAPQSl3GuwKWYWGYQWDrtinpi/TmY/am1NgIY9
+         2yROevveK/PN0b1q9pcsbWkF/xnnl+GmmdzouLX8tkFu0ghsqPSu6/1JRWxh9V36jlEE
+         +iNw==
+X-Forwarded-Encrypted: i=1; AL+hErEPdyAXnczeWPFckEyjlAl76JMp4dcTak+Y9a/5hbcWAfdO/jqH0hRo82mJ8/hKyhlUbXA=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8hOdowsJh2j66cjAUl8n20k80GDdYDmyGlUY4fAyJHxgVoh8gR
+	sCcvKjtuBJCc2MtJmyqT2on6FpXjKO+N7HqCyOt17/kYkH4h0Dj2LzuI
+X-Gm-Gg: AYBFou2tEtH3XJJT4lfI0IsWMtJxflswWu6qFKCq7ixBjcvsQaOolxgEIxCkKEd6iu0
+	wragbP+/QIDmlTWZmPs+uH3rq7jTK9i8GuL+OSyew0Y/GQyIY1WHWSopALzCz5khtNNwGcDwP/L
+	45buVwyAHSJMBQjNKLU/Zheg8S8e0jP9P0DxlztvCZz9b95tbbutCoKuYAuAj+8/K+YlQASvr9p
+	HiqtjCKjaDzB3S6t6HirCKRDfblli4snu9e/tyvQrZg8MraRUUeS4Jb6m/EU+ixc4yKrHBjPc0x
+	tcaPJeoBoEnrBfsC2jnNlT2ku7YvcVlKgIVVokhlOfRgKRTnYwSsreH70v9N46y/YYvp1GXxlNI
+	PmGCaVw/k/zq28zQTMbSaYbacqGMMAPUFD62QBd1Jzxuzt6Gh24t8ix9LI7vB4Eer1Jv/fxE+rX
+	O/ojN1IUIalodcR3USeFBwWFkCywaluwWqj6GyM38cwlgUGl1em/qnPLmn3nyCGQVCCqjPdCz68
+	T6+cgliRKPOXEEPqGKRwrDGwJQKWPBd4feeloe++pQeffnG8sVXJRBBmBFjGhJEm30vGX2qb7kb
+	4iZIBDUpcEdwX/j5H5o7yXBCPWOJ3jYgH4Zc38LyYPeXzSCzYJiBQbAsFz0+FU/YVO8p2tIlczC
+	aqm4psKw=
+X-Received: by 2002:a05:600c:384e:b0:4a1:c6f5:2450 with SMTP id 5b1f17b1804b1-4bb78399c0bmr49223615e9.17.1794913718734;
+        Tue, 17 Nov 2026 03:08:38 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb783e9288sm62632725e9.15.2026.11.17.03.08.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Nov 2026 03:08:38 -0800 (PST)
+Message-ID: <1276fcfe-9f2c-4a2c-ade9-b88f33ae5d84@gmail.com>
+Date: Tue, 17 Nov 2026 11:08:36 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -68,55 +92,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v13 0/6] fetch: avoid fetching every branch of a new
+ remote in a shallow repo
+To: Matt Hunter <m@lfurio.us>, phillip.wood@dunelm.org.uk,
+ Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Colin Hinton <colinlewishinton@gmail.com>
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+ <pull.2412.v13.git.git.1793357550.gitgitgadget@gmail.com>
+ <CAHwyqnVJ3eUQ9tkQE3rhQ8jFZjaD0tFUv41unE-NQ1WRiyfjBA@mail.gmail.com>
+ <b64387b3-294e-49da-b40a-0e757956bafd@gmail.com> <xmqqcxsbnub5.fsf@gitster.g>
+ <5566b994-1070-41d3-807b-5fac9ddaa3d8@gmail.com>
+ <DMTC5DR3ROPP.5V7HNV9ERYFT@lfurio.us>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <DMTC5DR3ROPP.5V7HNV9ERYFT@lfurio.us>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, 16 Nov 2026, Patrick Steinhardt <ps@pks.im> wrote:
-> On Thu, Nov 12, 2026 at 09:57:38PM +0200, Adrian Ratiu wrote:
->> diff --git a/setup.c b/setup.c
->> index 186815c780..52a9462edd 100644
->> --- a/setup.c
->> +++ b/setup.c
->> @@ -918,6 +918,13 @@ int verify_repository_format(const struct repository_format *format,
->>  		return -1;
->>  	}
->>  
->> +	if (format->compat_hash_algo == format->hash_algo) {
->> +		strbuf_addf(err, _("'%s' is '%s', the same as the object format"),
->> +			    "extensions.compatobjectformat",
->
-> We should rather say "extensions.compatObjectFormat" here with proper
-> casing, as this is user-facing.
+Hi Matt
 
-Ack, will do in v2.
+On 12/11/2026 15:25, Matt Hunter wrote:
+> On Thu Nov 12, 2026 at 6:16 AM EST, Phillip Wood wrote:
+>> On 11/11/2026 17:37, Junio C Hamano wrote:
+>>
+>>> In any case, this topic one is keeping a topic by another author
+>>> waiting to settle, so we have stronger incentive to see it move past
+>>> the finish line.
+>>
+>> What topic is that? - I can't see anything marked as depending on this
+>> in the latest "what's cooking" email. Would merging the first part of
+>> this series unblock the other one?
+> 
+> I believe that is ch/remote-defer-follow-remote-head-validation, which
+> doesn't strictly depend on the changes from this topic, but the two have
+> textual conflicts that the other author is deferring to resolve when
+> this one lands.
+> 
+> <CAHeTm9M5maWM=yrJPNzCibv_rewH3-yBK8J5-MDyDvPzfihe4A@mail.gmail.com>
+> 
+> It looks like if this topic were merged up to patch 3/6 (fetch: infer
+> branches to fetch from a refmap-only remote), the situation could
+> resolve.
 
->> +			    hash_algos[format->hash_algo].name);
->> +		return -1;
->> +	}
->> +
->>  	return 0;
->>  }
->>  
->> diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
->> index 69723b88ff..858aea62a5 100755
->> --- a/t/t1302-repo-version.sh
->> +++ b/t/t1302-repo-version.sh
->> @@ -98,6 +98,20 @@ abort 0 noop-v1
->>  allow 1 noop-v1
->>  EOF
->>  
->> +for hash in sha1 sha256
->> +do
->> +	test_expect_success "compatObjectFormat equal to objectFormat $hash" "
->> +		test_when_finished 'rm -rf same' &&
->> +		git init --object-format=$hash same &&
->> +		git -C same config core.repositoryformatversion 1 &&
->> +		git -C same config extensions.compatObjectFormat $hash &&
->> +		test_must_fail git -C same rev-parse --git-dir 2>err &&
->> +		test_grep \"'extensions.compatobjectformat' is '$hash', the same as the object format\" err &&
->> +		git config --file=same/.git/config --unset extensions.compatObjectFormat &&
->
-> Nit: do we maybe want to use the modern alternate `git config unset`? If
-> so, we should probably be consistent and also use `gi tconfig set`
-> further up.
+Thanks for the link. For this topic we're still waiting for a response 
+to this part of [1] from three weeks ago
 
-Ack, will do in v2.
+ > For now, as this "what is tracked by the local branches" is the only
+ > kind of smart that was designed to decide what to fetch, it may be OK
+ > to use "you gave me nothing to specify what to fetch, so I'll guess
+ > using the smart".  But when we introduce more kinds of smart later,
+ > this becomes a problem.  So I do agree with you that we should have
+ > something to specifically say "when I do not explicitly give you
+ > what to fetch, decide based on what local branches track".
+
+so perhaps we should give that other topic priority while we wait.
+
+Thanks
+
+Phillip
+
+[1] https://lore.kernel.org/git/xmqqh5i8tqjx.fsf@gitster.g/
