@@ -1,92 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794915551;
-	b=I22o0XGOou6EYKyrNpVDkHibTia95y0dNKHCZGbQiIowBABlotXGls7iTQ2ZgRtZSJOz
-	 u1kya2OKHFpPRDjJnxfKNIkvYh2eIhjtls6pVZRVQoPBuYKsvlSmbtTp0Og0PW67L4HG/
-	 +Btt1P22y/CoIvbRMxI0Vvsy2W7NqB5m2UYEPFvmW+3JxJ2uwrihLosE/EMNDPEnQwlKs
-	 LO8PK6qjPo1N8PWEJxJPOt3NbXKkeThbiHqVzkYfNVSisJtQn5pvVWBd+1bUwepESu5ZU
-	 VxsxEGGWOCdNSf7lJc87V3AburfpnfQi+X5JNcLOGZ5sjJd5a4A0mfRkGNKY3Z3Oi0w==
+	t=1794915553;
+	b=Isup3GavseOgMkYHszbi4qvvd7Z5GeNy/X4rRoLWWOsoqJ0aF0e7hIuovz+Y11wL02qT
+	 vWayO0OcOMTy+CVRlevyevaks2xJoOCi7dcTT3jG12x1fAK1Tdice7w8Gscnb6ROHV/jX
+	 lxw12NxUZmwhdePU+QXRHzpY3eYMYP4r0LUT/wpkbqiygdTPYWjSpMKnZOKNI+xOhzfYr
+	 YtA+K1clktYY194wbSL80hcggx7mIxvsAUJqHasDN11h0PX6j3cpkP9k/+AXK2wCbQAZm
+	 1lpDyLerxHuOSQ3QcQvy/xairnPU7J3i5EQk/CgFGBDu8LzO2Io3gSRcKcrGtNs+/eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794915551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794915553;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=wmob4ynlkdHJ2SuDD5rMprDSiranZR8ZgIZfiGX/OtE=;
-	b=peqXui/mGtWV3ILKbL1AkBYuDBTycf2auUIQ1F8FHdRxidLpCgFw0gX3zWClShvj/6jl
-	 Ut5FCGnkQSHhSB/LXJ+8XK9gNaWmO7JccvYqE7bLI2ns7iyci52Bg9aZzu+M7lkM1KIHY
-	 tabuF2Nt7LlSnlrW7E/e/lW21NDhvtQxvRljjvPauKP4Q526A6R+OtyTfTRGsJGFAU7em
-	 pIRpxibZAAw3vB7CyO4ivFyyw9lwyWiAiyvU06lV2oWkG2ZnA8JwDxc6d7JsFLZErB55e
-	 R2yDf82iOyoC0cKbVY5IbhmLRzcjC4765PtDRJWO7o0FDpUSYtVl1oo6C0pKeehGpZg==
+	bh=q4/URGTcQCi1wQZsRz9pmKPR9e8gs0mhQhg7Jmwwt4E=;
+	b=qqBWIYjzfwqDmSBe5sG30C1Mq4lLPGTukXfdA1MKiVd9Wakf+ZV84MZfVWdSEDJlCBu8
+	 4y6pI24RktHKvS6F55gVYBkJNLgIHBFFDUpelGb59aF+shnDsvBN55/XS56SFLsx1YcKC
+	 2hrUXuTvbFaTif+knToSdanSNB1vhGAC2vttXzAjI0hIAGrpFUemQQscxe3UFK0/6sAlI
+	 /L03zcZjRozM+clbQPUzEigOBgOr/sQq1/xXj1ZoQ1EkEK3qeQcALo6pDRylNd/JAv0ZN
+	 gP2Cad6okMJVH8I6zihXQoKXa6R9kdx9mnz2eWiwIsuw0JSk7499hGxYDT2oYyPQ/wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HxfyLVO3;
-	arc=none smtp.remote-ip=209.85.128.44
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BSkh5z3T;
+	arc=none smtp.remote-ip=209.85.128.50
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885C3606A332
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 11:39:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 885C3606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20217606A333
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 11:39:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20217606A333
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HxfyLVO3
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4bb55cda775so5865795e9.0
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 03:39:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BSkh5z3T
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a35ac4475dso29972835e9.2
+        for <git@vger.kernel.org>; Tue, 17 Nov 2026 03:39:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794915550; x=1795520350; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794915551; x=1795520351; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=wmob4ynlkdHJ2SuDD5rMprDSiranZR8ZgIZfiGX/OtE=;
-        b=HxfyLVO3PK+e6GQ+SDj5okY35sQH9bRyRPa2mcaiZtsMxtXRgAqiRmrxIGUtvuzfZI
-         I+WNAOxDRuYBzvjIadJlRRlFQfmCO+fIyy030SLJqqEgvAkdomBUF8g+L+KjUoTjnaxB
-         Beiv4xgUAZs8TfmN3dSGQiZpQF+NnjucLHXlofKEP1TZD9FDm481HZqzo6YSe+ItxcwL
-         6qeS3SBVzbpuaw44bh9rcr63pJ55CupS03jkDTIvPSCbC3aGwfVvM8yP/ow6j+uArgID
-         ArTnthOhl9K+0kyulppYAQ8eEgLaDimSlWSGwp1PoXisiw8k/Gg6z8ZXw5/3li1gEbyf
-         LsBg==
+        bh=q4/URGTcQCi1wQZsRz9pmKPR9e8gs0mhQhg7Jmwwt4E=;
+        b=BSkh5z3TwE73XrmZIxHBgmsb/5dwaZS1Ba5veAQg9EXl3OSjS4KmT2lL69AH8jbzIZ
+         ebXvGfHh9HOXV7+wrXofa+eAgfboVkoyeKa3tkFcsIOkHvfayE0jJbfJIj0MnWDuMz/B
+         Sheu7o7ONf4avzQ1ViFvRcSnt0+RvPqi8h5YfoI9q7Ffy5Ulj2Ime9Z1sMDktpv6U1eR
+         WbgWAemjW5Tc+Ja+tAt9ofIweo2bP59Fkcz6xKJ4UO+OvqdgF7VF79HrUNPrSMVwVV6t
+         cq6xnZrK//DpXtHn7Z6NGVn/KYBcrv8WjEvRH3onlEKqdOWcOtupW85FK9hLzjehXYmL
+         UwlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794915550; x=1795520350;
+        d=1e100.net; s=20260707; t=1794915551; x=1795520351;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=wmob4ynlkdHJ2SuDD5rMprDSiranZR8ZgIZfiGX/OtE=;
-        b=QsbDS3JYD858v0WSRiD/BadFIqKoV1EDH9Wng7U140SRhnx8JotKhX0r49hKHH89aO
-         Xqjmi/xPRJUdBDtVTZxJoSlggWuB7GHGeJtjq4DpXTsz4sJNrPlTye54OMQ1bxKF80wS
-         EUuHX/qYNeYfRQRgsZb7NgNT0e9lkHAUXFqpJO57TUnErpApFmaYjIVH2/OThp3hT6zk
-         2EuylHcQ1rjJjISiWrxaYFfoSJaf9kgoQwrndBxgb2kaVIkeE3tNT3WVXg7V7jKZP/qo
-         witmZD4gLKkN3XK/6okHJZx66CFvU4Oj5QxoAC6aWX/qQZ4ndNxULUCbPF00ivQ5dCSf
-         CoZQ==
-X-Gm-Message-State: APuU4Z9MlvJLYAGxBI0p9GhcUKaPJm2HASqhG/NvZWLPS7zz/hS21TZY
-	mFDx+hWipLTvr1mVYiurO7M3961ik0UZr3EWZSQJ5S4BOurfIymgZYW8ElVO3w==
-X-Gm-Gg: AYBFou0f/JkWR7OuitGeVISKlFJBTrqk8sn3SfdPW2Rp7KIRN04rwaJTrI5Had0gZuM
-	bn7z5LwrecawFFObGg3PMSszSO7cnGyz0VpxVPFg10CtTG6oOD/DXkJYUlzG23Pc+F9oAAHNi9D
-	Xxc+jx5kiCBxOk6ykXO7z+SeLr42GK4H37rpVEdV2dfxhP0XwaV2gsOtLi9207xl8OTVpfG9dsp
-	Ai6+sBMuikxjX9+TK7D3Gj2f0Gv6rQfRfsyNj94yYfgyKumHRSAbsiHXVIZwmPqyoQ+SfQmCpUY
-	kUn08Do+iK+ulbNXtuoqszr1j5ysCLa/6l1b/xEygg60zG8ipv5Fun/Vd8b4vs1ICBrTtOlkF7+
-	I3M7kHj50qHLF1e13VcZWBY16fAd3LZn7TMQAsSno9tylAM3wg/2MpLoBO9n9N3rZEP65TK8gT9
-	8BB1JCC80IOUsUG/HlV7wRHR9m9NWGt4jsLn2m9RlxcZXc8zJBO+5UDE2UyS1hjVz+v6D/VbrAr
-	jlSIj5QB3en19lx15rDYo/T0gkF6cCGYJRaAwEB3ns0T+FKfpM8FujDx7eKLZm+aKEJQ6dvmVh8
-	Sc7vxNTLSiD2rPrpuAx0hhVxUo0s1ULo2km+UQeUVU4NPyd6vEnb2ZzZE7NQcDQ=
-X-Received: by 2002:a05:600c:384e:b0:4a1:c6f5:2450 with SMTP id 5b1f17b1804b1-4bb78399c0bmr51027425e9.17.1794915549655;
-        Tue, 17 Nov 2026 03:39:09 -0800 (PST)
+        bh=q4/URGTcQCi1wQZsRz9pmKPR9e8gs0mhQhg7Jmwwt4E=;
+        b=mvSK/K8kg8eo8P/VN8eMiUkLfVhk4KqgaX8y/ZTdmv/ycwPJwXUtZcH+8ytINXQcOm
+         rAPAxZK49K3XPNdbceVe77QmUgKgTOn/r5Nr1UVOFzt2sUTjfl5L9DwucblBZLCErBQU
+         o1XuKxbdxdp6u6qjkCRXUPbWMd/mwRbpqnKLjDkqz4eQa4QoU0PjH3k50qtL4Pl7v6Ya
+         N/ag2SiYZFPTWO0FohF5vvDDWHriVlUgQCpZ/lC8QLawKykTFiAPJx0Wt740HzyC5VOB
+         KzgmXtssP81PpbmVBCBT9zCnh728ZD54bEqimFL2dG+9UlDZUQiBeMvzfr4vkFkfq8yx
+         oy9g==
+X-Gm-Message-State: APuU4Z80nqWlFRF5NfzztX9qeGahbPWpdToldk8ZtiXzruDCso7F39nv
+	r3S26RVONt/pgOCXn+nTgvtg+QhyvuM13xr7TkdZlnGomPPd2DJUUVTwMlgZIA==
+X-Gm-Gg: AYBFou0/B7RqDx/lRisHmCfLzjWaiT/2g+Q9KfD+7GsAWvbUwhasyaW5w3/dAWdUZuK
+	c/AZ+6PqNKneVFZ0o2q4JKuYcl51oNOxwW2W3h16o/T666ifvjx1xZCCshNSV9Ea1HjP+TIYqm0
+	g6fUFbzSYtEdQs5MQFkMRLJcD41i509n3OVMgu6RCnCtSHXeCX0Ze0L3dXZaBGyhauoWTOb/OdC
+	zCwKxFzXfrGtlWu1lonDEzL/B4GdB3mIWq/baBthM/YAu/d1a77gH+RlcBqnVaYHUsxO7trSaV5
+	S+dCRe1ZRxH8Y+eCzlwzB2aro4TxqtpU/oGvwZAOIM/NXTxs2SI/piK6klzTb61k1n4wuh6hOAc
+	ynh3ZTmXob9fZXQXsLaPdFRpe24paDMcQD8coolWG4o8mS27kk3kt3pGrsvo+AMx+oTiAVBxkJe
+	Q9Cy+nr2WqePkSDjRKm1jDvkhbnE0PX3q5IJiIu4Wpu8AiS7+gp1NZzfODdiyHC5ZOTABHxxYQ7
+	kCYnZRxZoC3Pq9NUhH+JSVG8nW/yrOy1DXddep2PXNpqDGfmW/EAK+LtwS4vxonXce8ifiCRXa1
+	L9za6N3pc6RaV9uG3twlCxwb710qPCEryx6NVhUEwaolchPXiIYgYGFMEQlZT+c=
+X-Received: by 2002:a05:600c:3f0a:b0:4a4:3a2d:15da with SMTP id 5b1f17b1804b1-4bb55a702femr265562755e9.15.1794915551335;
+        Tue, 17 Nov 2026 03:39:11 -0800 (PST)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb78420edasm93555925e9.9.2026.11.17.03.39.07
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb78420edasm93555925e9.9.2026.11.17.03.39.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 03:39:08 -0800 (PST)
+        Tue, 17 Nov 2026 03:39:10 -0800 (PST)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Jonathan Tan <jonathantanmy@fastmail.com>
-Subject: [PATCH v2 2/5] object-file: use size_t for loose object sizes
-Date: Tue, 17 Nov 2026 12:38:55 +0100
-Message-ID: <eca5d3ddb88e03ae647a66d861a4c89a4c490fd7.1794914210.git.gitter.spiros@gmail.com>
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 3/5] odb/source-loose: check object size when streaming loose objects
+Date: Tue, 17 Nov 2026 12:38:56 +0100
+Message-ID: <a8572aa836bcc17a7442ff92abd934155e7f6c74.1794914210.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1794914210.git.gitter.spiros@gmail.com>
 References: <cover.1793355390.git.gitter.spiros@gmail.com> <cover.1794914210.git.gitter.spiros@gmail.com>
@@ -101,160 +100,100 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Since c6a4629e32 (odb: use size_t for object_info.sizep and the size
-APIs, 2026-06-15), parse_loose_header() reports the object size as a
-size_t, but unpack_loose_rest() still takes it as an "unsigned long".
-On 64-bit Windows, where "long" has 32 bits while size_t has 64, the
-size is truncated on the way. A header claiming 4GiB + 5 bytes thus
-makes us allocate a 6-byte buffer, the size check added by the
-previous commit is happy because the stream really has 5 bytes, and
-the caller gets that buffer back together with *oi->sizep set to
-4GiB + 5. Any user of the object then reads far beyond the end of the
-buffer; read_loose_object() already does so when it hashes the
-contents.
+read_istream_loose() inflates a loose object until zlib reports the end
+of the stream, but never compares the number of bytes it produced with
+the size given in the object header. A corrupt object whose stream is
+shorter than its header claims is thus streamed out without any error,
+e.g. "git cat-file blob" exits with 0 after writing fewer bytes than
+"git cat-file -s" reports. The same happens if the stream is longer than
+the header claims.
 
-Use size_t for the size in unpack_loose_rest() and check_stream_oid(),
-and while at it for the size of the mapped file in map_fd(),
-odb_source_loose_map_object() and unpack_loose_header(), so that the
-whole loose object reading path agrees on the type.
+Keep track of how many bytes we handed out and report the object as
+corrupt if that does not match the size from the header once the stream
+ends.
 
-There is no test, as the reader allocates a buffer of the size claimed
-in the header before it can notice that the stream is short, so a test
-would need 4GiB of memory. The problem can be reproduced on Windows
-with the loose_obj() helper from the previous commit:
-
-	printf short |
-	loose_obj .git/objects commit $((4 * 1024 * 1024 * 1024 + 5))
-
-followed by "git cat-file commit" on the resulting object ID.
+The tests create such objects with the loose_obj() helper, which can
+already write a bogus size into the header.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- object-file.c      | 14 +++++++-------
- object-file.h      |  6 +++---
- odb/source-loose.c |  8 ++++----
- 3 files changed, 14 insertions(+), 14 deletions(-)
+ odb/source-loose.c  | 14 ++++++++++++++
+ t/t1006-cat-file.sh | 18 ++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/object-file.c b/object-file.c
-index 5d03ae94c7..779167f789 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -155,7 +155,7 @@ int stream_object_signature(struct repository *r,
-  * Map and close the given loose object fd. The path argument is used for
-  * error reporting.
-  */
--static void *map_fd(int fd, const char *path, unsigned long *size)
-+static void *map_fd(int fd, const char *path, size_t *size)
- {
- 	void *map = NULL;
- 	struct stat st;
-@@ -176,9 +176,9 @@ static void *map_fd(int fd, const char *path, unsigned long *size)
- 
- enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
- 						    unsigned char *map,
--						    unsigned long mapsize,
-+						    size_t mapsize,
- 						    void *buffer,
--						    unsigned long bufsiz)
-+						    size_t bufsiz)
- {
- 	int status;
- 
-@@ -209,7 +209,7 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
- }
- 
- void *unpack_loose_rest(git_zstream *stream,
--			void *buffer, unsigned long size,
-+			void *buffer, size_t size,
- 			const struct object_id *oid)
- {
- 	size_t hdrlen = strlen(buffer) + 1, bytes, n;
-@@ -1136,7 +1136,7 @@ int for_each_loose_file_in_source(struct odb_source *source,
- 
- static int check_stream_oid(git_zstream *stream,
- 			    const char *hdr,
--			    unsigned long size,
-+			    size_t size,
- 			    const char *path,
- 			    const struct object_id *expected_oid,
- 			    const struct git_hash_algo *algop)
-@@ -1144,7 +1144,7 @@ static int check_stream_oid(git_zstream *stream,
- 	struct git_hash_ctx c;
- 	struct object_id real_oid;
- 	unsigned char buf[4096];
--	unsigned long total_read;
-+	size_t total_read;
- 	int status = Z_OK;
- 
- 	git_hash_init(&c, algop);
-@@ -1204,7 +1204,7 @@ int read_loose_object(struct repository *repo,
- 	int ret = -1;
- 	int fd;
- 	void *map = NULL;
--	unsigned long mapsize;
-+	size_t mapsize;
- 	git_zstream stream;
- 	char hdr[MAX_HEADER_LEN];
- 	size_t *size = oi->sizep;
-diff --git a/object-file.h b/object-file.h
-index f44758c4f8..a8da9dcd22 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -157,11 +157,11 @@ enum unpack_loose_header_result {
-  */
- enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
- 						    unsigned char *map,
--						    unsigned long mapsize,
-+						    size_t mapsize,
- 						    void *buffer,
--						    unsigned long bufsiz);
-+						    size_t bufsiz);
- void *unpack_loose_rest(git_zstream *stream,
--			void *buffer, unsigned long size,
-+			void *buffer, size_t size,
- 			const struct object_id *oid);
- 
- int parse_loose_header(const char *hdr, struct object_info *oi);
 diff --git a/odb/source-loose.c b/odb/source-loose.c
-index 50cb388c35..d77e93e7c4 100644
+index d77e93e7c4..2233714ac4 100644
 --- a/odb/source-loose.c
 +++ b/odb/source-loose.c
-@@ -73,7 +73,7 @@ static int read_object_info_from_path(struct odb_source_loose *loose,
- {
- 	int ret;
- 	int fd;
--	unsigned long mapsize;
-+	size_t mapsize;
- 	void *map = NULL;
- 	git_zstream stream, *stream_to_end = NULL;
- 	char hdr[MAX_HEADER_LEN];
-@@ -250,7 +250,7 @@ static int open_loose_object(struct odb_source_loose *loose,
- 
- static void *odb_source_loose_map_object(struct odb_source_loose *loose,
- 					 const struct object_id *oid,
--					 unsigned long *size)
-+					 size_t *size)
- {
- 	const char *p;
- 	int fd = open_loose_object(loose, oid, &p);
-@@ -285,7 +285,7 @@ struct odb_loose_read_stream {
- 		ODB_LOOSE_READ_STREAM_ERROR,
- 	} z_state;
- 	void *mapped;
--	unsigned long mapsize;
-+	size_t mapsize;
+@@ -289,6 +289,8 @@ struct odb_loose_read_stream {
  	char hdr[32];
  	int hdr_avail;
  	int hdr_used;
-@@ -356,7 +356,7 @@ static int odb_source_loose_read_object_stream(struct odb_stream **out,
- 	struct odb_source_loose *loose = odb_source_loose_downcast(source);
- 	struct object_info oi = OBJECT_INFO_INIT;
- 	struct odb_loose_read_stream *st;
--	unsigned long mapsize;
-+	size_t mapsize;
- 	void *mapped;
++	size_t total_read;
++	struct object_id oid;
+ };
  
- 	mapped = odb_source_loose_map_object(loose, oid, &mapsize);
+ static ssize_t read_istream_loose(struct odb_stream *_st, char *buf, size_t sz)
+@@ -326,6 +328,16 @@ static ssize_t read_istream_loose(struct odb_stream *_st, char *buf, size_t sz)
+ 
+ 		if (status == Z_STREAM_END) {
+ 			git_inflate_end(&st->z);
++			/*
++			 * The object must be exactly as large as its
++			 * header claims.
++			 */
++			if (st->total_read + total_read != st->base.size) {
++				error(_("corrupt loose object '%s'"),
++				      oid_to_hex(&st->oid));
++				st->z_state = ODB_LOOSE_READ_STREAM_ERROR;
++				return -1;
++			}
+ 			st->z_state = ODB_LOOSE_READ_STREAM_DONE;
+ 			break;
+ 		}
+@@ -335,6 +347,7 @@ static ssize_t read_istream_loose(struct odb_stream *_st, char *buf, size_t sz)
+ 			return -1;
+ 		}
+ 	}
++	st->total_read += total_read;
+ 	return total_read;
+ }
+ 
+@@ -388,6 +401,7 @@ static int odb_source_loose_read_object_stream(struct odb_stream **out,
+ 
+ 	st->mapped = mapped;
+ 	st->mapsize = mapsize;
++	oidcpy(&st->oid, oid);
+ 	st->hdr_used = strlen(st->hdr) + 1;
+ 	st->hdr_avail = st->z.total_out;
+ 	st->z_state = ODB_LOOSE_READ_STREAM_INUSE;
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index f2b24dd278..622d734ad3 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -1513,4 +1513,22 @@ test_expect_success PIPE 'concurrently written alternates are loaded' '
+ 	)
+ '
+ 
++test_expect_success 'setup blobs with bogus size in header' '
++	git init bogus-size &&
++	echo_without_newline short |
++	loose_obj bogus-size/.git/objects blob 100 >oid-too-big &&
++	echo_without_newline "much longer" |
++	loose_obj bogus-size/.git/objects blob 3 >oid-too-small
++'
++
++test_expect_success 'streaming blob shorter than its header fails' '
++	test_must_fail git -C bogus-size cat-file blob $(cat oid-too-big) >out 2>err &&
++	test_grep "corrupt loose object" err
++'
++
++test_expect_success 'streaming blob longer than its header fails' '
++	test_must_fail git -C bogus-size cat-file blob $(cat oid-too-small) >out 2>err &&
++	test_grep "corrupt loose object" err
++'
++
+ test_done
 -- 
 2.53.0
 
