@@ -1,95 +1,175 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794906633;
-	b=PI2nuo0bZxFRR3qbVLJC+sp6nGvP1C8RxU921FkckhORpNSJQdYxy49VigcD884kVwoQ
-	 A+Pdv/elVPsB9OlGh+3ziwsZWYDE5e7svdj770P4/q9QL8pqY29SksE2s+8yrixo2Y/BD
-	 4wuxwxvTWn87oqWXPGOuMVHYmYGOmE1qYFkLY33XZ9BCYWK6a1ZobH0CSDC1XwoTZ9fiT
-	 1lKSWqooZTX83e3517cq3Kgg7dPpjYDwdVzSFk50/sTa9BFDfVRlR35EaGjQNyRE96xJU
-	 6Au7WrTrood1uhkpzkFBCQKKo6qrtZVKrsB37go6CPi/0qDz3g7Zrsa+o5YPkheKIIg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794906633;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=F18inK6yLIcOi5eWW3RvHHYIxArGg7EvI5xpHMpK/7g=;
-	b=BANtBH3JfP3a1x3fRJDNX7y9xBtAKu2Lyd1LRQhpoOVOU/gV0u6pvkb68jJt+ZjQNzQM
-	 Vipol/st61EArweFOc3q5kLWLlLSU+DRKP+S5Ui5cF84hfCG0pTuBG58FLwZdDnsMT0j/
-	 eSJYO3xRo9Am3aR2EuGz93qcc+y447yXnbATb3MtWdQXxBz+dUElHJL95+OAJ0KNQWq7x
-	 oojGhfMuTYVBEa6wgUuq7zpU2m08Vm7FQ+zsZJqNt/aDXSqYLz61TXpwnY69Ft2l49DyK
-	 A3HHIWDR8PgfYQF6KuGyuRwj5fZh5Oyv0TJCPA2eMFamj+nsgrSZHfG5I2qhAoRbo7w==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pknIPIIx;
-	arc=none smtp.remote-ip=209.85.128.48
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=193.56.114.176
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794908519;
+	b=5S9AnJ3MkbKbYafy1NIebGGkrdbfJ6wiH24vth6sBYINpCDwmUAEbKsYReiGy0akZUW5
+	 vG07/+XM9+Fe9C8mCcjiYPhwbvm60Ip3Di7pMuwQWX1rJSnFwribp9TbvpJFQ06/mw3o2
+	 oLfYPnps9obHvGFI4w4WycxMOSa04g+AdY894x+WNxmLmdW1thbODytizhJgZXrzJeH9u
+	 94AlZg2jQOQ6bzRbJB3dVsifcUycOcEKdCIUChE8Mw/JOmNaUwTqG7ot/vNQjifCkWnZ1
+	 O8CzY5Ut+juqn0BOri/ixpgUijhuNy8PsP1BicustpjqEYLGWUpBLPgg8bHOWjkpb7g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794908519;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-MGA-submission:Received:DKIM-Signature:Received:
+	 Received:From:To:Subject:Thread-Topic:Thread-Index:Date:Message-ID:
+	 References:In-Reply-To:Accept-Language:Content-Language:
+	 X-MS-Has-Attach:X-MS-TNEF-Correlator:msip_labels:
+	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
+	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
+	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
+	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
+	 x-ms-exchange-antispam-messagedata-chunkcount:
+	 x-ms-exchange-antispam-messagedata-0:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:
+	 X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-originalarrivaltime:
+	 X-MS-Exchange-CrossTenant-fromentityheader:
+	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+	 X-MS-Exchange-CrossTenant-userprincipalname:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=d2m4knx8mHjXrU7P19oYDuYnEAv6j1plKeXztQvHW1o=;
+	b=2LefkLrub534ZR934kKlcKCGxf+MHZiojeK6mgQpbQTX9byFf1mU/6XpRHpTUUeU99QS
+	 OR/u752Yx9oep3vZb1SZGx5MB3wOUREyUCdfWt5bLySAEj4CpKgefDQ5P1dhNLjcODAM5
+	 0J/prHG/Am/qpI3/QFKWCM8cMRaleSjx08JDq5IL9EUl+IfudCuKByg7tZlR0WpO2NQnJ
+	 5YBlv0CY2n+xn+G9MyL16nxICfk/zB/4URlvWWu1aIqZyX5t7uIMPGewQhSpnB7whm/2r
+	 yl58TWmXEp2gukCqOtOX/pdDyk1a1LuCW7KOJ9MiUaFLp/VIbdghf7AiiI2zUcuG5Cw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=atos.ai;
+	spf=pass smtp.mailfrom=atos.ai;
+	dkim=pass header.d=atos.ai header.i=@atos.ai header.a=rsa-sha256 header.s=mail header.b="hebhtcN/";
+	dkim=pass header.d=Atos.ai header.i=@Atos.ai header.a=rsa-sha256 header.s=selector1 header.b=NxXTC1OQ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=193.56.114.176
+Received: from smarthost3.atos.net (smtppost.atos.net [193.56.114.176])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4601606A32A
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 09:10:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A4601606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284BB606A323
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 09:41:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 284BB606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atos.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atos.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pknIPIIx
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a214c5c4c0so43298995e9.3
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 01:10:32 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=atos.ai header.i=@atos.ai header.a=rsa-sha256 header.s=mail header.b=hebhtcN/;
+	dkim=pass (2048-bit key, unprotected) header.d=Atos.ai header.i=@Atos.ai header.a=rsa-sha256 header.s=selector1 header.b=NxXTC1OQ
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794906631; x=1795511431; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=F18inK6yLIcOi5eWW3RvHHYIxArGg7EvI5xpHMpK/7g=;
-        b=pknIPIIxqbpMQENzQb28+e9HvK88s5OZE5oYsanYRDp6yoVnXKe06m0RUptlqdedbS
-         3TAXmdNby0/LBmGxwK8dnOnskfVINbhKtKkdINYj64t5z/bsiwpSE1HZxcUHB9ebFG33
-         TanyA+7BpS5IZMVTSp9RdPdg9vQY1ljEpGS6mcHBUWEXFdJnus5bO3fTOMroKki2GYdn
-         Rwu4EJr+tDyv6FgdU4WjddQrCyEsYbw4ms57/97VawRbgivVVuSyk1X1CiWcZkY30I0N
-         XFhceB8G/5y2VnzRMCDDkZJpIEqHsUJfNUXzyr9i6BAkgh9cBnV51DoVwqIJquUpm7mH
-         tCZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794906631; x=1795511431;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=F18inK6yLIcOi5eWW3RvHHYIxArGg7EvI5xpHMpK/7g=;
-        b=qiC5J0sPloFtj4Ck/mtkmvKluofLMARVCoj4v+eiXHosPhZ3DBCj2hp9T5RbsLKo8V
-         oXUdbzhQq+klVInhjHEOxrP4UehDx7OERQApfmEDd2lwTUJm9Wjn+SBBRQRVzyaYn/SY
-         IC1dE+nef1UT1kmCziY9yy71Aq2Hsf5sLfsVUSQ5kNpTq/mEmyDM95C7KWSxZ53D4AY1
-         QaMaPR7NaYS9sOT3+AQV+R64/Dujb4aCVy2Kpla39ugyV1+RmxnYFlbpR2LZ1z1EEbEv
-         z/lQHcUxxPMJHQ8dLEvrRJ4vk1fOcjghrlw9Do5EI0bwIRGBV2yduRhqOMnrWW3zuqKQ
-         oCnQ==
-X-Gm-Message-State: APuU4Z+pEOgJCRK9meNRNBWmgN7bCau81YHSS08g3Xq7q2qZCCWr6bFS
-	TzQzQevX2UUQBYtvYpI4ToebFhogGiQTq7OHpPIxnBP6OCh40LoxRM8V8LjU6bonsYU=
-X-Gm-Gg: AYBFou1YhyRrqi42L6C8wvQkuCvXA8pplXlkwffrCKx+3nQ0K/Di3NX0tejZOwTctD0
-	haj9SY3nb3tQluWC4uEPP5A5HsF0xQYw2wYGs4chkUFFKuI3xuRbRiiB0qiCQrsrIO7FR6sy2my
-	NwcrucCMS8YD7qFzsLXkPFiDnVLGRnwQvaM3rEL9npSoXqUxRXfeQLMwN3ZeRr1NbmFxsG0/T2C
-	BHtd0nHXm3iBpQov4pq7ySROo2BXWNafUPxAmLiJpxZDrxoY4eM+htdLDLJ6igPOmS4IlCTtOsh
-	TcjxF6LwRVf6osLbTMC/CyAvPeKm7D69cUyNPV1SENTxK36IhvMPMAIWDU2vq44ZLmmwzzqEPv6
-	2qTok8SPvs8JoPmzw0r8mtD26anOGIwPlBqJBZ/hE69hUt6jrHo0wLvnrpmp1j6TlB7bnupwp+/
-	8HXRXfsiNCUCTfOn6slC0ElryOlDNY44K7mxmNAx7bbZCr0u+hu3jcbLgaQvtKrUD0gUU1Hda7f
-	pfcuc3G30EwlGHqIKqFlf7avn+n0x+nxZfkRcTgZO41gRdrk137qSickxQFwbmDceSghk0tB2cL
-	RSbiC3KV4PFCIX+nj8Ol0XXucHECl9fME3mlGMXxMSFVTc1Yq/QrGBuENJ/h83vsKxNfwRDex36
-	vWcRtHXlx8YkAJ9NXD2SQZdzdRIGIRDJfopWHVeZKTCE=
-X-Received: by 2002:a05:600c:3d91:b0:4bb:6861:657d with SMTP id 5b1f17b1804b1-4bb686166e8mr179888075e9.21.1794906630677;
-        Tue, 17 Nov 2026 01:10:30 -0800 (PST)
-Received: from u.ad.analog.com (sgyl-40-b2-v4wan-169439-cust3365.vm6.cable.virginm.net. [92.234.157.38])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb7839cabbsm50386575e9.11.2026.11.17.01.10.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 01:10:29 -0800 (PST)
-From: Andy Koppe <andy.koppe@gmail.com>
-To: git@vger.kernel.org
-Cc: Andy Koppe <andy.koppe@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
-Subject: [PATCH v3] pretty: fix lost and leaked colors at line breaks
-Date: Tue, 17 Nov 2026 09:10:17 +0000
-Message-ID: <e9f88b533dfbd10528c9151e2e87207419d0253d.1794905511.git.andy.koppe@gmail.com>
-X-Mailer: git-send-email 2.56.GIT
-In-Reply-To: <2f9f835e3f99d7de5bbf51be2e8ef4dc0485a46e.1794778250.git.andy.koppe@gmail.com>
-References: <2f9f835e3f99d7de5bbf51be2e8ef4dc0485a46e.1794778250.git.andy.koppe@gmail.com>
+  d=atos.ai; i=@atos.ai; q=dns/txt; s=mail;
+  t=1794908517; x=1826444517;
+  h=from:to:subject:date:message-id:references:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=d2m4knx8mHjXrU7P19oYDuYnEAv6j1plKeXztQvHW1o=;
+  b=hebhtcN/glGcGtNLACUdojT8jbYkeYhbE07udDzmOHEaeIIyZDNSBoTi
+   pCCQ/WvUHWAobU7AXZoE67dOWUfKluVNzK/ftzXhGQzulwVbtXeNJUF9A
+   m8i2dEQtSgfdQnQHtyshcjurzoD/FqnLnUYo/XXyPLjHNyet3QYhHOdyU
+   pL1ljnPcvQ/Sw18P9So+6qpMdpd91VgvBCKMrWTfoise48NyMbFO7DJ2i
+   Q/xInwWOQ3+mV8TBQaAmyU8jM52MApBROn2++WJkYkpwW1KCE/HZ9gBAy
+   K3M9J0GqvlHaXvA24WGQVQs5U11LWJpFV2IaFE5lbZzAcv0S39PjbfIo9
+   w==;
+X-CSE-ConnectionGUID: KCJNbWNnR06OYPCNevsEvA==
+X-CSE-MsgGUID: vGHOFgMdRqeECti9AYW8kg==
+X-IronPort-AV: E=Sophos;i="6.27,218,1787004000"; 
+   d="scan'208";a="881759433"
+X-MGA-submission: =?us-ascii?q?MDEqieP3gLoZ1KFj+AYDNZGzsiGd4HhwSEjKFx?=
+ =?us-ascii?q?06Lqwtc+KZQhonealPJZNdc/yMnX9i0xQ7frhKjyNj4OveDUYrM/Vn92?=
+ =?us-ascii?q?SO7zQ0Eh2seMt1yHvdGv29j26RhpyrZxL2C8eRkHhQmcBw5PyZxNnmum?=
+ =?us-ascii?q?5I?=
+Received: from mail-duzpr08cu00107.outbound.protection.outlook.com (HELO DUZPR08CU001.outbound.protection.outlook.com) ([40.93.64.71])
+  by smarthost3.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384; 17 Nov 2026 10:41:48 +0100
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=D8f8qLoZay1hSaKlQ3z8jF7hzeLNaTzETdimosLn8C0RKP+5v5fzSuJS3qI+SQ3VWKg5bTEeYKT0QN238SPEWkG2JJL/fcMwFjAI4xF/P4LAfz06/fquQlq/L4Xrfv5o7nGSnct86rC+PDkse5k25cInCJZPedG2YAE0jty95IIYkghP1RXvRC472NjjGViGLZ71i2GkhGttd1pV0H3KmstOn8yqxrbShdjZ62cs33kxKzJkGhBwlJzBIV8til6wKw/NTNhOsrwi+O1DdUTMjquGjA/ijbYpg+EVZCBZctK2yrv7/mO59bSAlZl6rlZJWXBhOV6H9RpSiWVOHaoe6g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=d2m4knx8mHjXrU7P19oYDuYnEAv6j1plKeXztQvHW1o=;
+ b=tPO3cgYTcAcE8DjXWM2mZFCGsBskFB23qcv4tgEe02PL8LcK22Y7E4yhoPraYLZbjR39WYe0KTa1T+kTMKbA3n0D7pKd9gH9yPzNEbT8xzYUlatj/0MBaHNgqoUL3Sw5hkKNpYmjNLs1MJEZDTiEA6xvjr02WD7kp5G34G8bnQCB/TJa3+JF8u8WbqNYsIDII+Spyc6VzA2uXT7l1idzw6DKZLP7/YkEx6YJWbP2EfNnvKADOfF1xqy7sQJkx0tZIRDPePxptYNBnvA7fZmWb6Wxam0SphCmycr3siNpZ9LgTGFYZvF8Lpo609xSxKN3ZC+XkhTXoMTqWTzkn68E5Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=atos.ai; dmarc=pass action=none header.from=atos.ai; dkim=pass
+ header.d=atos.ai; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Atos.ai; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d2m4knx8mHjXrU7P19oYDuYnEAv6j1plKeXztQvHW1o=;
+ b=NxXTC1OQPweGAUBlHHofwF9nSErJox7aUTM3JRi6HBkEvdkZY+4HxwSJUerENia7jQRUA5/TR1JORb7h0shauuU1J1iFaC0nkU4AFAKBht5YtXTAtH5d+uYA7BmD2duSpTMCdv+RZskAsSXcRusxI18xGhOojhbM6EDRmWS24bBsUbpWIdfbj39e/m37/YKZIbxEVqMBuUX+HWNvFUbzhhDFOQBDTbdByxUC+eyleJpguArD4N1ENvB6wS8iIagF+A2GPWFbxwODsDiY0cNIsV+OAKKNvp6iOAj3dp1JOdIqx/hP2XsCItHCSkVEX6EtHV0FlG22DKvfk/edRG+9DA==
+Received: from AS4PR02MB8336.eurprd02.prod.outlook.com (2603:10a6:20b:517::6)
+ by BR0PR02MB958055.eurprd02.prod.outlook.com (2603:10a6:2c8:5d::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
+ 2026 09:41:46 +0000
+Received: from AS4PR02MB8336.eurprd02.prod.outlook.com
+ ([fe80::b6b2:4b44:41b3:f6ef]) by AS4PR02MB8336.eurprd02.prod.outlook.com
+ ([fe80::b6b2:4b44:41b3:f6ef%5]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
+ 09:41:46 +0000
+From: Richard Kerry <richard.kerry@atos.ai>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Email formatting (was RE: [Outreachy] Draft internship proposal:
+ Improve how command arguments and options are scanned and parsed)
+Thread-Topic: Email formatting (was RE: [Outreachy] Draft internship proposal:
+ Improve how command arguments and options are scanned and parsed)
+Thread-Index: AQHddnfcjU6SX07T20OsqlzXeQJ5bg==
+Date: Tue, 17 Nov 2026 09:41:46 +0000
+Message-ID:
+ <AS4PR02MB83363999DA64DD82F6E25FB0EB7B2@AS4PR02MB8336.eurprd02.prod.outlook.com>
+References:
+ <CACWAS-UqbkgfzsJ2283=OgoUHRs-FeRNYc0zkBR2y0XD4jTWsw@mail.gmail.com>
+In-Reply-To:
+ <CACWAS-UqbkgfzsJ2283=OgoUHRs-FeRNYc0zkBR2y0XD4jTWsw@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ActionId=e5097b32-8d91-4f1f-929b-669147322779;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ContentBits=0;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Enabled=true;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Method=Standard;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Name=All
+ Employees_2;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SetDate=2026-11-10T16:25:14Z;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Tag=10,
+ 3, 0, 1;
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=atos.ai;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS4PR02MB8336:EE_|BR0PR02MB958055:EE_
+x-ms-office365-filtering-correlation-id: a41304c2-5c44-42a6-e416-08df448eff37
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|376014|366016|19092799006|23010399003|3613699012|38070700021|10067099003|11063799006|5023799004|56012099006|261021121427099003|261022115727099003|261021135927099003|261022113327099003|261022105027099003|261021123027099003|261022075727099003|261028144727099003|261026140227099003|261026121527099003|261102123227099003|18002099003|22082099003|6133799003;
+x-microsoft-antispam-message-info:
+ aexiZA/Z15GZdKZxqgxmnXS3p2UqFAUscmG2xBKDNoX5NBLkauVoO1iRZ0O35+JatWhWxsw1GwgcQRp9rV3qzlQxxckslFsMR7sKcnwlFLg3her/1Cp46ANppv6TGJoD5AxwypP1sR73l5wjYta/1PnqoccY3ci64oHl/6AVWOWkeolEAvb/wrEOvqtWx9qvbLJDZ8gfZM/tAU9QhKCeBDZuis/9wWaswLHQ+bMHzcgvIwgIX/u01MMCdVclecNX+D+DwZYQFJ5MjMeOqxBwxMxBqvArAx7vDodrs2dRSGPw+8ui1aiSyP/iH+t1anKsK+NvhwTzJjhNIGufbn+Nm0T5w1oY7fKQX0vktKcAgwehIiOEAiPzsv0kZTm76A+MAPp32bo8on0Q6yRSvh6ubhWFve3IHGR1srpPnr9TE4fIXefsbtB+RabR0eSGuGKKvI6o/aiusc3/9dxuewltyLtJ9DQLoGFO/mWHyMy5qLQQS/Aeg/Q83klyvR+koMLpt3nhvNuAOm2ttQISFQ85HpltQDK3HxugRhw/XwSmpvA5dwplRnXrZYrD98EBHgfWkmjfSaWrhP/qBW1TavBWwGFZVZb1MZSUwxnRwy4Ed7LGYeBpE+Hu8VqPEEXNcaXmAllhdncyexQtSOFqQasTpijrKkulVTzgaGgCBCQDIs62bmwAajpbPV2nbadkCqjV5uTTuwBusOAvfd4fACZXGEX1MVlHnWU7tGJTesTfmfnbh1Ee45fKTUppmYmJ53R7
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS4PR02MB8336.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(19092799006)(23010399003)(3613699012)(38070700021)(10067099003)(11063799006)(5023799004)(56012099006)(261021121427099003)(261022115727099003)(261021135927099003)(261022113327099003)(261022105027099003)(261021123027099003)(261022075727099003)(261028144727099003)(261026140227099003)(261026121527099003)(261102123227099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?zYBEhauaND20Ukg6n5Q2lZZl+9wFkXv7GvHY5wYaVg6/xR5k7AF+u0mCNd?=
+ =?iso-8859-1?Q?Z4FpHExnTRZJc6Gu3pwkBXoTTu6jUJuJecUgDb3bKl7er/hIWuMw0WJln0?=
+ =?iso-8859-1?Q?shPo6ZCXSZArXo5NDfWKF/LlN270+ftUAq/L01CHaVT+LpMqsyIuCL6+Za?=
+ =?iso-8859-1?Q?yEFL6F0zntYdJFSjyx1aoTm2Nl7hVwfhH7k7Q5cMTFxP0ebzMXMq0jVgaw?=
+ =?iso-8859-1?Q?kLiKfXUgg2M2uaEyNvLgBuda3UmlJuxmODGMe3jJJByxKMQlMvjyeWsMLK?=
+ =?iso-8859-1?Q?7+crZYzCBxhg9JT/CvZ38GereRSor5xQzFpCbp3rJ2rwTo7DjUzp4xUFbY?=
+ =?iso-8859-1?Q?dcq3RCEuuaR73I0bdnAA806K8RL5U3x/zehckfhq9qfMzmXbKh1w9NBibi?=
+ =?iso-8859-1?Q?H06X7Q6bUYdqhinER+yANRT2fjmUGCKDAuUjfw/METeOIMsKDmKmpaEaHt?=
+ =?iso-8859-1?Q?vE8B4Ll8spMpygKD6GUbzhF+WrtAeHJsDTT6fcW3B0idR7qXetJGkTs9lw?=
+ =?iso-8859-1?Q?tqab66tJ49AukwfW0nxzaj/fzfCzwWOg7DQZ37tDvNDiSgzyBONz9N9Z0s?=
+ =?iso-8859-1?Q?IAYTS1DYUgM6hvUkArt45i3p0NgqcB5TJ+T1jP82/rm9h9huAwkBdRjCe6?=
+ =?iso-8859-1?Q?4X9t75CMsjvC5xEHYt/R4OIZ5/RaATW1KlIcYlNM3kRU++WPL9XiXpOkS2?=
+ =?iso-8859-1?Q?klEATSwICyt1ZUigfRlRIF3M3DPryNfn6vSI85IxBdWXk1awvW8KpmhpvS?=
+ =?iso-8859-1?Q?ZYzOKhDKYWT0wU5Osugk0IXVvBV4i3MDkBYB82CJ8i8Hbj/zRSE3pMjpIl?=
+ =?iso-8859-1?Q?sRiA00JqsnH+HDpGq/YTq0ak90BKIBYu1b9FmrZ3oBza7j/Sg02a/YqB87?=
+ =?iso-8859-1?Q?tELlswQ7KmmyR/JBabo2PqZmKJ2jIJvrYZmG/pt0XmqRcRpftVgKUR/+kA?=
+ =?iso-8859-1?Q?DbZ9fYd9PKWK7OKx89VUxYjOpd/XuP+2RAtvKsH2BoBOu6NEkB2y9ias54?=
+ =?iso-8859-1?Q?h0BitmvXBjvCmYBGEGxB5Vsh/aV9B8g3dfO1C6Cnkwmv5pg3Wpnle3lh5J?=
+ =?iso-8859-1?Q?1j01zavyOCMFhGPqJfqshWr3TuUSGgoC6ZegaQbEhG9jc291uErCAM9LXC?=
+ =?iso-8859-1?Q?dbPm8+yThTexDoOiysLXQdf6vN+nHESKeV3dKYcxC/tpoxg8+LpgutEa3e?=
+ =?iso-8859-1?Q?bj3rRjAMVVkpKkR1BOyPU3RtCAqAwULWuLdIsPZCQiW73Uut21ItdYtZg/?=
+ =?iso-8859-1?Q?E5Af+Ju5JRpLYaUJnul6JFyjvBV/12n7aq7Vy/6ifUU9i4b0XUc+43nvPx?=
+ =?iso-8859-1?Q?sefu8+Sl1AUaULZ2s6iZyGzadV90yQ4XesUleYqi1n8sMlCVWxjiA/g19G?=
+ =?iso-8859-1?Q?BcbBoQrIJ174PbcDbEA+siRRuGUI2bj6oOzA39AzIMTUNcTfN+iIBlmGWX?=
+ =?iso-8859-1?Q?0b4Fwmdy7L5pGHn4resIDAfV2j+zhsN7X15r1gCmWRmnl4mlFn7XSUqm2M?=
+ =?iso-8859-1?Q?lS841wg8r/dXT1yhw8grHg1/nau6uYPaV6x+JRVjx3wU811enRMK2I0iHq?=
+ =?iso-8859-1?Q?F5Vvjl6Bnz73+AnrmR07vF/aXAQYT4Qx8WNhoGsOMEO2ByXPSPzOQaZ5Gt?=
+ =?iso-8859-1?Q?1aeGBY0dh6gWr0qeewjRMzwnTZyxRC31k2W3w97ZCmWN3CCRpfe5Wz0KQU?=
+ =?iso-8859-1?Q?FlYC6PJ1NLbNkfcD3TvBrudjWtlH4GGXMx2RVMo/KwOjF5X1X4SV7LZwoR?=
+ =?iso-8859-1?Q?58vERSwFkYSyG6VxEES2e6DSK+qvYMbO3zeSridcbMY7ObPj1pP6dTwTrl?=
+ =?iso-8859-1?Q?sqZzvfz4bQ=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,329 +179,108 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Exchange-RoutingPolicyChecked:
+	xQ6+IRyDXKwukU7ndTXOErD84ZbTQF5FZVnDms92KFgi3x10Fh0qWX+wwDzegzakUE6okpzUjfAG0oiUj3iwH4n9XT9n4qNWGgXu0Mxe1Q+gucD4rnQ0m1zkOL8eHy799K/ZAbCwuiN5OVq9aq039p+UnIPmsze/wcO0m1MEV4+xAPmDgeh8Q8t4JMBIxMQ2F0rdCZUh2clXETc99ApCkLTLC9wWUY54CxkDGmsDftP+sAuSz7MeEhNAqgIk5F1l+DR23uZpG7vhdUPP03YorDCgcP+j1YnltwzhrzZ8l2QZGze1xsjhUmPpdhZL/hPy+xTkGVoBtjWEo/MWU4MchA==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	3u5e3w0tsVwD3dr0KFUE7bk4lprzrmvyaD6oF9m2UwPGeSPNP3aXGXKwqgK4gtTkg1M7fl+QlU+rA1QfHkTIjt6rNRGaq1q5wqQUqbD7tlcFZ/xVJkzHTyw/zycSDqQuP6XyX72WsV8hgzVev71YQmk7CpOfwq3hVqlvwYacVUJhaNlZfH14ZLcUq225YZBvn6nhbRcjQHn9lrKolN292Nn9Ij2On3QdImqMUedOI33nmtT0Uwd3qnmST5ur4GqVESoTy1xLC8do6NxkOwuaeFR+3IhMtcV2fux7JHXqj2+2OSonQ7XHx609hXKV+2asKQ2s4Ll9haEgwIqS46LXvJVd9pqpt045AIbGmCczsY83DSH2r+GWB0+NK6OXZdOFaBrztW6fiFtHPv4S80Ej9WO/+ewsulb3yKM97qbi+Wh92Te8Ag3uvlrSvCeW0jZdtbU/55DpG1qOPJXpcMNdTad20WmS5WJa0T4EKLILclmxzwYQzylXsxoSYMjFzn+s2I5IAFohNWrkjN4i9IMmG5mc4b1Hw+HXxD4fko6Mz5fJ659bIukXIFxng9M325UiKDmWfWRUoahODrHZeGvrsXeeAup2aX4jEqvxluQ54Ir6Hvc8oXwas14FwNtPr84WSQBGJayFnSOcXTis0c8UKlg7hiQbDrIBWz6RefIUOCtzJguqhBXjdrUBh6+ALqt6
+X-OriginatorOrg: Atos.ai
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS4PR02MB8336.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a41304c2-5c44-42a6-e416-08df448eff37
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Nov 2026 09:41:46.7409
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 3TdP0wuflwaVsnUzVDqE3PPoHfTp2B5c8e9urzr65YLRVPJsypphgArgoMqOxSI2qw9D2faM2QGiehM558gzCA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BR0PR02MB958055
 
-Colors in custom log formats remain in effect until reset, including
-across line breaks. Lines therefore don't necessarily set their own
-colors, nor reset them at their end, which leads to two problems.
 
-Firstly, lines that continue colors from preceding lines lose them when
---graph edges or color-aware pagers such as less reset colors at line
-breaks. For example, "%C(bold)%w(72)%s" then only makes the first line
-of a wrapped subject bold, and "%C(cyan)%b" only colors the first line
-of the message body.
+I don't know whether it's because of my mail reader, which is Outlook (I kn=
+ow it isn't a favourite in these parts but this is a corporate machine), bu=
+t this email has come through to me with no indentation and no blank lines =
+between any lines.
 
-Secondly, colors that are still active at the end of a line can leak
-into what follows. For example, with --graph, "%C(red)%s" also colors a
-'*' commit marker at the start of the next line, because unlike the '|',
-'/' and '\' edges, it isn't colored. Attributes such as bold still leak
-into the edges, though, as the graph only resets colors after each one.
+I don't know whether the guidelines explicitly mention this but for myself =
+I find both these properties make it difficult to read.
 
-The default log formats as well as git grep and diff avoid both problems
-by ensuring that the coloring of each line is self-contained: they do
-not rely on colors carrying across line breaks and always reset colors
-at the end of each line. Custom formats can do the same at %n line
-breaks, but not within placeholders that expand to multiple lines.
+There are a small number of fairly frequent contributors to the list who ar=
+e also in the habit of not putting blank lines around additions (or even pu=
+tting just one after the addition) within long blocks of text with reply ma=
+rks (ie '>' characters).  That also doesn't help me be able to easily read =
+contributions.  If there is a mass of text with all but a handful of lines =
+starting with '>' they are very difficult to spot.
 
-Fix both problems by automating this for custom formats. When color
-output is enabled, scan their output for color escape sequences,
-collecting those since the last reset. If any are active at a newline,
-insert a reset before it, and replay them at the start of the next
-non-empty line, unless that begins with a reset. Also append a reset at
-the end if any colors are still active there.
+Would it be reasonable for me to ask that the guidelines should request at =
+least a little bit of breaking of large slabs of text, whether plain text, =
+as here, or long replies, as elsewhere?
 
-Doing this in repo_format_commit_message() covers all color sequences
-and line breaks, whether they come from placeholders, auto colors,
-manual %x1b sequences, or message content.
+Regards,
+Richard.
 
-Resets are only recognized as the first code of a sequence, which is
-where git puts them. A reset later in a sequence would cancel the codes
-before it, so it is unlikely to be used deliberately, and missing one
-merely adds to the replayed sequences.
 
-To keep overhead to a minimum, avoid buffer inserts and use memchr() and
-strcspn() to skip to escapes and newlines. If there are no escapes, the
-only cost is an unsuccessful memchr() call. The buffer is only copied if
-colors are active at a line break.
+Kind regards,
 
-Formats that have come to rely on --graph or a pager resetting colors at
-line breaks will need explicit resets, which they already require when
-neither is used.
+Richard Kerry
+BNCS Engineer - Media Competency Centre
+MidCity Place, 71 High Holborn - London WC1V 6EA - UK
+atos.ai
 
-Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
----
-Sorry, this code keeps on bouncing around my head, so here's one more
-tweak to try to make it clearer. (The algorithm has been annoyingly
-difficult to pin down considering it's a pretty simple idea.)
 
-- Combine the reset and replay conditionals.
-- Rename the reset variables, for consistency with 'replay'.
+> -----Original Message-----
+> Sent: 09 November 2026 05:22
+> Subject: [Outreachy] Draft internship proposal: Improve how command
+> arguments and options are scanned and parsed
+>
+>
+> Community: Git
+> Project: Improve how command arguments and options are scanned and parsed
+> Mentors: Christian Couder and Siddharth Asthana Internship period: Decemb=
+er 7,
+> 2026 - March 8, 2027 1. About Me Hello everyone, I'm Fien Dora, a Compute=
+r
+> Engineer with an interest in C programming, systems programming, and
+> understanding how things work in the background.
+> I've always enjoyed mathematics and solving problems. I've always been cu=
+rious
+> about compilers, and what happens when a command is sent. That curiosity
+> pushed me to start learning programming. In 2023, I joined the ALX learni=
+ng
+> program, where I was introduced to C, shell scripting, and systems progra=
+mming.
+> Of everything I was learning, C caught my attention the most.
+> I liked that C helped me understand what was happening closer to the comp=
+uter
+> itself like compilers, interpreters, memory, and how software communicate=
+s with
+> hardware.
+> I am still growing as a C programmer, especially when it comes to underst=
+anding
+> large codebases, but I enjoy taking time to understand a problem and work=
+ing
+> through it until things become clearer.
+> That is one of the reasons I was drawn to Git's Outreachy project.
+> Availability: 30 hours per week from 7 December 2026 to 8 March 2027.
+> 2. Why Git and Outreachy?
+> To me, Git is the reason behind successful software development. I usuall=
+y use Git
+> mainly as a tool for tracking changes or versions, working with branches,=
+ and
+> collaborating with other developers.
 
- pretty.c                      | 102 ++++++++++++++++++++++++++++++++++
- t/t4205-log-pretty-formats.sh |  80 ++++++++++++++++++++++++++
- 2 files changed, 182 insertions(+)
 
-diff --git a/pretty.c b/pretty.c
-index d8a9f370f6..78be2ae034 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1997,6 +1997,104 @@ void userformat_find_requirements(const char *fmt, struct userformat_want *w)
- 	}
- }
- 
-+/*
-+ * Make the coloring of each line in 'sb' from offset 'start' onwards
-+ * self-contained, so that it survives --graph and color-aware pagers such as
-+ * 'less -R' resetting colors at line breaks, and doesn't leak into what
-+ * follows, for example the graph.
-+ *
-+ * Color escape sequences since the last reset are collected, and if any are
-+ * active at a newline, a reset is inserted before it. They are replayed at the
-+ * start of the next non-empty line, unless that begins with a reset. A reset is
-+ * also appended at the end if colors are still active there.
-+ *
-+ * Resets, which have a zero or empty code, are only recognized at the start of
-+ * a sequence. They make little sense elsewhere, and missing one merely adds to
-+ * the replayed sequences.
-+ */
-+static void make_line_colors_self_contained(struct strbuf *sb, size_t start)
-+{
-+	struct strbuf colors = STRBUF_INIT; /* colors since last reset */
-+	struct strbuf tmp = STRBUF_INIT;
-+
-+	const char *copied = sb->buf;
-+	const char *sb_end = sb->buf + sb->len;
-+	const char *p = sb->buf + start;
-+
-+	while (p < sb_end) {
-+		size_t esc_len;
-+		bool replay = false, reset, reset_only;
-+		char *reset_end;
-+
-+		if (!colors.len) {
-+			/* look for colors to collect */
-+			p = memchr(p, '\033', sb_end - p);
-+			if (!p)
-+				break;
-+		} else {
-+			/* look for more colors, the line end, or a NUL */
-+			p += strcspn(p, "\033\n");
-+
-+			if (*p == '\n') {
-+				if (!tmp.len) {
-+					/* make room for resets and replays */
-+					strbuf_grow(&tmp, sb->len * 3 / 2);
-+				}
-+
-+				/* reset active colors at line end */
-+				strbuf_add(&tmp, copied, p - copied);
-+				copied = p;
-+				strbuf_addstr(&tmp, GIT_COLOR_RESET);
-+
-+				while (*++p == '\n')
-+					; /* skip empty lines */
-+
-+				if (p == sb_end) {
-+					/* no line left to replay colors on */
-+					strbuf_reset(&colors);
-+					break;
-+				}
-+
-+				replay = true;
-+			}
-+		}
-+
-+		esc_len = display_mode_esc_sequence_len(p);
-+		reset = esc_len && !strtoul(p + 2, &reset_end, 10);
-+		reset_only = reset && *reset_end == 'm';
-+
-+		if (reset) {
-+			strbuf_reset(&colors);
-+		} else if (replay) {
-+			strbuf_add(&tmp, copied, p - copied);
-+			copied = p;
-+			strbuf_addbuf(&tmp, &colors);
-+		}
-+
-+		if (esc_len) {
-+			/* collect the sequence if it's more than a reset */
-+			if (!reset_only)
-+				strbuf_add(&colors, p, esc_len);
-+			p += esc_len;
-+		} else {
-+			/* skip anything else, including NULs */
-+			p++;
-+		}
-+	}
-+
-+	if (tmp.len) {
-+		strbuf_add(&tmp, copied, sb_end - copied);
-+		strbuf_swap(sb, &tmp);
-+	}
-+
-+	/* reset active colors at buffer end */
-+	if (colors.len)
-+		strbuf_addstr(sb, GIT_COLOR_RESET);
-+
-+	strbuf_release(&tmp);
-+	strbuf_release(&colors);
-+}
-+
- void repo_format_commit_message(struct repository *r,
- 				const struct commit *commit,
- 				const char *format, struct strbuf *sb,
-@@ -2010,6 +2108,7 @@ void repo_format_commit_message(struct repository *r,
- 	};
- 	const char *output_enc = pretty_ctx->output_encoding;
- 	const char *utf8 = "UTF-8";
-+	size_t orig_len = sb->len;
- 
- 	while (strbuf_expand_step(sb, &format)) {
- 		size_t len;
-@@ -2023,6 +2122,9 @@ void repo_format_commit_message(struct repository *r,
- 	}
- 	rewrap_message_tail(sb, &context, 0, 0, 0);
- 
-+	if (want_color(pretty_ctx->color))
-+		make_line_colors_self_contained(sb, orig_len);
-+
- 	/*
- 	 * Convert output to an actual output encoding; note that
- 	 * format_commit_item() will always use UTF-8, so we don't
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 01b97c8888..7a3a3a4639 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -538,6 +538,86 @@ test_expect_success 'strbuf_utf8_replace() not producing NUL' '
- 	test_grep ! Q actual
- '
- 
-+test_expect_success 'colors carry across lines' '
-+	git log -1 --color=always \
-+		--format="%C(bold)%C(red)a%n%C(green)b" >raw &&
-+	test_decode_color <raw >actual &&
-+	cat >expect <<-\EOF &&
-+	<BOLD><RED>a<RESET>
-+	<BOLD><RED><GREEN>b<RESET>
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'colors carry across wrapped lines' '
-+	commit=$(echo "one two three" | git commit-tree HEAD^{tree}) &&
-+	git log -1 --color=always --format="%C(bold)%w(7)%s" $commit >raw &&
-+	test_decode_color <raw >actual &&
-+	cat >expect <<-\EOF &&
-+	<BOLD>one two<RESET>
-+	<BOLD>three<RESET>
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'colors are reset at the end of each commit' '
-+	git log -2 --color=always --format="%C(red)a" >raw &&
-+	test_decode_color <raw >actual &&
-+	cat >expect <<-\EOF &&
-+	<RED>a<RESET>
-+	<RED>a<RESET>
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'colors are not replayed on empty lines or before resets' '
-+	git log -1 --color=always \
-+		--format="%C(red)a%n%n%C(reset)b%C(green)%nc%n" >raw &&
-+	test_decode_color <raw >actual &&
-+	cat >expect <<-\EOF &&
-+	<RED>a<RESET>
-+
-+	<RESET>b<GREEN><RESET>
-+	<GREEN>c<RESET>
-+
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'resets followed by colors carry across lines' '
-+	git log -1 --color=always \
-+		--format="%C(red)%C(blue reset)a%nb%x1b[0;31m%nc%x1b[0m%nd" \
-+		>raw &&
-+	test_decode_color <raw >actual &&
-+	cat >expect <<-\EOF &&
-+	<RED><;BLUE>a<RESET>
-+	<;BLUE>b<RESET;RED><RESET>
-+	<RESET;RED>c<RESET>
-+	d
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'colors carry across lines with NULs' '
-+	git log -1 --color=always --format="%C(red)a%x00%x00b%nc%x00" >raw &&
-+	nul_to_q <raw | test_decode_color >actual &&
-+	cat >expect <<-\EOF &&
-+	<RED>aQQb<RESET>
-+	<RED>cQ<RESET>
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'colors carry across lines with --graph' '
-+	git log -1 --graph --color=always --format="%C(red)a%nb" >raw &&
-+	test_decode_color <raw >actual &&
-+	cat >expect <<-\EOF &&
-+	* <RED>a<RESET>
-+	<RED>|<RESET> <RED>b<RESET>
-+	EOF
-+	test_cmp expect actual
-+'
-+
- # --date=[XXX] and corresponding %a[X] %c[X] format equivalency
- test_expect_success '--date=iso-strict %ad%cd is the same as %aI%cI' '
- 	git log --format=%ad%n%cd --date=iso-strict >expected &&
-
-Range-diff against v2:
-1:  845c622dc7 ! 1:  e9f88b533d pretty: fix lost and leaked colors at line breaks
-    @@ pretty.c: void userformat_find_requirements(const char *fmt, struct userformat_w
-     +
-     +	while (p < sb_end) {
-     +		size_t esc_len;
-    -+		char *end;
-    -+		bool replay = false, is_reset, is_reset_only;
-    ++		bool replay = false, reset, reset_only;
-    ++		char *reset_end;
-     +
-     +		if (!colors.len) {
-     +			/* look for colors to collect */
-    @@ pretty.c: void userformat_find_requirements(const char *fmt, struct userformat_w
-     +		}
-     +
-     +		esc_len = display_mode_esc_sequence_len(p);
-    -+		is_reset = esc_len && !strtoul(p + 2, &end, 10);
-    -+		is_reset_only = is_reset && *end == 'm';
-    ++		reset = esc_len && !strtoul(p + 2, &reset_end, 10);
-    ++		reset_only = reset && *reset_end == 'm';
-     +
-    -+		if (replay && !is_reset) {
-    ++		if (reset) {
-    ++			strbuf_reset(&colors);
-    ++		} else if (replay) {
-     +			strbuf_add(&tmp, copied, p - copied);
-     +			copied = p;
-     +			strbuf_addbuf(&tmp, &colors);
-     +		}
-     +
-     +		if (esc_len) {
-    -+			if (is_reset)
-    -+				strbuf_reset(&colors);
-    -+			if (!is_reset_only)
-    ++			/* collect the sequence if it's more than a reset */
-    ++			if (!reset_only)
-     +				strbuf_add(&colors, p, esc_len);
-     +			p += esc_len;
-     +		} else {
-
-base-commit: 03b41523c576f26ad34085378717a0c1b287470f
--- 
-2.56.GIT
-
+Atos is a trading name used by the Atos group. The trading entity is regist=
+ered in England and Wales: Atos IT Services UK Limited (registered number 0=
+1245534). The registered office is located at: Second Floor, MidCity Place,=
+ 71 High Holborn, London, WC1V 6EA. The VAT No. is: GB232327983. This e-mai=
+l and the documents attached are confidential and intended solely for the a=
+ddressee and may contain confidential or privileged information. If you rec=
+eive this e-mail in error, you are not authorised to copy, disclose, use, o=
+r retain it. Please notify the sender immediately and delete this email fro=
+m your systems. As emails may be intercepted, amended, or lost, they are no=
+t secure. Atos therefore can accept no liability for any errors or their co=
+ntent. Although Atos endeavours to maintain a virus-free network, we do not=
+ warrant that this transmission is virus-free and can accept no liability f=
+or any damages resulting from any virus transmitted. The risks are deemed t=
+o be accepted by everyone who communicates with Atos by email.
