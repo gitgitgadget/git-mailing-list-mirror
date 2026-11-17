@@ -1,95 +1,65 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794915556;
-	b=4iO8kqtc4W7lbxOxSre8LCA8QKpVrxCzSIXsFD+2zAGS0hbigRIu93Zi3aq8D6mFMPsk
-	 es0PX7429reErVCf7TC0Cwag8D582gSX9zguaGJ7UYuJzEK0Yy8/V8OzK/iGDjjU/0t4Z
-	 LkAZ5a1VhU1aS9w4mSY2iwtjofeToBpD18AHCP8pQBLp4WeaCcCQo5uBwpsNpBUu5DmIy
-	 6qb5jF8fonutBq+5HBNm1a6cX13Fy/vMPI+4QZi57d1ICS74qofIiwRhcOZn2ZGUlm4K5
-	 1pbffGQSNhtlNq0dEjLKpY4RqabuSS48q0dQl+/l6IENuXceCz7B5Wom36cWL50cQHw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794915556;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=SzfWBWzcm785zFUWezBCar5oYoXQUPvBWIPl0sKz3kU=;
-	b=TdONtc1tku8IIqkiPbYI1aD1J27yU60B+qBCRMf7EQiPsLOZKxTtIetmmf2QAuhA+YrB
-	 lUo6Q1Z5KliM/LAIU5OF+s3B0qPwgTG1PZT3CiRzNP2wJPvxB3LECDGLYgU3aQwfgFDje
-	 srrgbD9vOfG3xnnA+6Q44SZHofVCn1j7xaUEx6+NTMgd+/4UqHUP7/4QafPeAzZnW5rnA
-	 dGZpzM/4ZF2GbPDCtFEYPp+6NFA6BCM9ycbhgik3fKtQqygFUBloMBPsQDkguh13735zE
-	 E9BxZclVVV2tE1gyfu2pecrs33IbwL71qDsPN5ZuZ7a+rWPBwjl4KRkadSWrvn8WmeA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=grCjhthZ;
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794916579;
+	b=cnbTZYCF0AtsG1cJCzXZ38ef6BdF21mvYuFAeuu9dZ1JyJamU8PPAEDihB6z6C5446YY
+	 gW7SkjHx3pdUb78hDM2YmQKa7vKIK7VxLDEW28HWQsDjeVS7Jbczc5ZgPJwFDBFc/R7YO
+	 DKFeWuerLcRBCvFRxyucnbAHczit7DDn9jwF15w2yTMyYVVvl6xj7HgdcJH4hJIs3FcJW
+	 uU3Uj8IpImwTs6I/56AK4OGdHY6ckl4/eUVXyqf/PwTOVF4Cv0MpFbtwcQfGyI7440i0m
+	 Z6XLp+9VgwnQPwfdGDdSEuq++lqmI+m4k7t+uubAXgO6vAmPQuwI6xEpBSDvYZtoV9g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794916579;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=ekGjFzOcuR9z+yNs84AGw0IoXQAziJJC63WSR8k6ujs=;
+	b=LZzqOEtI32cEvIwGy/cwcpM4Fu5O9itAo/7N8u69iq54OUXVFQV8ena0YZb5mjArhGGZ
+	 G/gn8jipACFigwVtYmKU7+CCILAzZ0bg0qSOf+2/A36rt1qyRssGN+41uFlWbqSUS7EfR
+	 GDuzwN3p4G3dd9WbC7Z3YhZgLpgBSyU+MKzswatpcelwSpem9cQb2TukdklCeqsePOQsN
+	 Ozd4opvhUWE7esqD2TdkHK2nohsQipo3XcniPaBaRYOu5I/wpIIszjzMwDiErzeAKgJ50
+	 5pdIodvdaNP0cvOA/6+TIg+5auIsr2FUitHbAa8O0aX6vHRBTw87z4Fu0imptQ30K0A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=collabora.com;
+	spf=pass smtp.mailfrom=collabora.com;
+	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=gqL5uCUi;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A01E606A32C
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 11:39:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A01E606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C42606A329
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 11:56:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 34C42606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=grCjhthZ
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a1fbd52ab6so35137295e9.0
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 03:39:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794915554; x=1795520354; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=SzfWBWzcm785zFUWezBCar5oYoXQUPvBWIPl0sKz3kU=;
-        b=grCjhthZ5Az2fG4j128xSt8vCRlvbND7++UCpcqN5rdz/gEhVHmzKV/YilGi1JPX9z
-         Ke+byyvwYsM6sjmd1WAEOWJBAJVx9aJ3xEGZfc+MIrFqf+lfCbJII5SIaODtbemKCMFk
-         4ynWiFKdqel9NUwyR82GnUl5cERmFuFxNftfMzmB96ISYk9W+12y3xXgBSm1TVT3Xii+
-         LtZY1BBMv9Lu2TN1XxQjOOMk2CQyI4S+5DgFS5OxfG+7GBwkI8cgQU5ppDvQUlDGxdeb
-         nuBGAeWYrVAQ5RHDngM6ucsQ8hY64KUNl1iS+GIJGK0hLoWVFwMfYbh2L1KPXaAltbCl
-         nZYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794915554; x=1795520354;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=SzfWBWzcm785zFUWezBCar5oYoXQUPvBWIPl0sKz3kU=;
-        b=cDGU2yrQGAjkTg2JXmpDt4LSLQhoIZ6KjTpWyKaVjSHXRMzqYiUbzvONujAu9CwNwW
-         udt2BZ51/7puBpPrlUPUDC4E949zSIVS2N+ngtFIo2GOSkkbRvm4fgtSLYZ6jZMU4sRw
-         Bm8fkRQmzHp0mVSe/WTSBqho8T1csgEXpqQgii3uT2JZpnxFIgMDQOsqXvNTmF38Nrcc
-         j9/8NDD7kb42SXcRRg3NGjMQps77mESBqfsZuu3wvneGQqwwpjYfoJ2CUMglisq2sUZi
-         DyCnqGgXe9BSoPqMsyGSzGi2/Rbnbj528IxkqSJntmO2qVz2Ow8ZDBPT0evvpjWFcZV8
-         hvSQ==
-X-Gm-Message-State: APuU4Z/Sxvoc5nxJ7AP66yjpnQqeKFByUPNt+gm7+/zPc5j6S5HsU7v+
-	CR6V/qJ6zmqMsxK8+BYDXE2RpLKRaRRGN33G4Is97vFtP5ew9nmC6fc+9n24SA==
-X-Gm-Gg: AYBFou302gsBl+/2yL/uEqJLKBrmM2ZVbn2gAXPzZ6VXRWPIlXgCGv1892tGszAAkb4
-	IBRGxZ9L59n7IfUGz8eQ5XadzxyJuJjxbRaraiRjQNf+gJzKJJHiO2CyELsrbKrM0y1WXp+2TWF
-	mDiAcrioyhgNqNsiLWhWe3pMQW7gByKKlxa9eW0oAYRS4h0OjZ84fnh3qf2nGkePL4W1ymBcZIl
-	71UrqzM4XOQYMNHFI2AfHX488MG9p6/BTiDorlJW1XkwxG1Doxc02t9r8N146bEb7DxBoHq8aFG
-	0JtXWilHcBkk39vk0vsYI0i5/Rmlds0Y6SDah8K25ZQ8+F5ck/cuYtmI+FyUmjxbQ6GFyFgr35M
-	M7KQDEBuJSSaUqyhqTJO7dRakIdnsGEu9Nn7//diYoI4OG9R0gzKauBiHazEeOo6kRtCFF6GoFB
-	0/eR8pkXn+0EGlv4F88pTviSxwprFKvXZbwFxt8EfZ36hzM3FAm9i/0UxMDK7Om/ApXgxefs/ZA
-	JzCiLQD/9TEh8wQFhuSJbzpHSvchuRX4stRt7Nh9efYyFxK0cc29fEC0VkiVQUnc1JauJFQTrdc
-	HPOxZCzfABzsgtFT1IteuaRjTBRgTbqTM4A9c8bsiqAM9z22SEdsL6yigwqUDe7JZokQvs7vDLU
-	TCZ3ewjSf6A==
-X-Received: by 2002:a05:600c:5250:b0:4bb:60da:56af with SMTP id 5b1f17b1804b1-4bb60da5884mr209846525e9.25.1794915553634;
-        Tue, 17 Nov 2026 03:39:13 -0800 (PST)
-Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb78420edasm93555925e9.9.2026.11.17.03.39.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 03:39:13 -0800 (PST)
-From: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Elia Pinto <gitter.spiros@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 5/5] notes: avoid truncating the size of concatenated notes
-Date: Tue, 17 Nov 2026 12:38:58 +0100
-Message-ID: <04f320d1de82902c174ff300426815125e1054c9.1794914210.git.gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1794914210.git.gitter.spiros@gmail.com>
-References: <cover.1793355390.git.gitter.spiros@gmail.com> <cover.1794914210.git.gitter.spiros@gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=gqL5uCUi
+ARC-Seal: i=1; a=rsa-sha256; t=1794916544; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=M8c7hvNh/6oLZlgske/q1VDGMObxM+jxbwnVfMn9i+wZdNi6hCA9OYfrMGiKeidAeKafXrEDzKL4RJXa7KPUx2n42UwzhBwam1rShJbZ4VnaEowUNXqTYTzfo2xBpUQ32qKhvilCnKfS71nyDo3yC8BdPrjqHhWvGG/HgeMgEcs=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794916544; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=ekGjFzOcuR9z+yNs84AGw0IoXQAziJJC63WSR8k6ujs=; 
+	b=cV8Et/uySRjinxxCdHJRTmliQpobmgc+U9ESR0PC1VBjxsMIvAfPp3epL/LXvh02oaRBDdAEKJuxPlRtnGrKiWYDS3zC3+yTJC6MkYZaQR6PsKasT6gJyMnxDDlKpouV+YOGE8XpuP3eWCwg4LYxZZZqF0LbOWdNDoWhZFWIIZo=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: a=rsa-sha256; b=gqL5uCUi1R8H7t9OtHr/12Sfi9hSCKqfPdlbVIGBT27ebprfA4c8YcQSGEVcofXddT9ktoelA18Gv/4HKNc/JazxZZUh2oj++zIQkPbmLDpDIAZxpvD+tHChrJ6MM4Hz66LazxfKfUVjfQTI549edNRP05rOCJanvw/s5oEpnEg=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=ekGjFzOcuR9z+yNs84AGw0IoXQAziJJC63WSR8k6ujs=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794916541728348.29145203067446;
+	Tue, 17 Nov 2026 03:55:41 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, "brian m .
+ carlson" <sandals@crustytoothpaste.net>, "Eric W . Biederman"
+ <ebiederm@xmission.com>, Axel Rasmussen <axelrasmussen@google.com>, Emily
+ Shaffer <emilyshaffer@google.com>, Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH 2/3] rev-parse: die when --output-object-format cannot
+ map an object
+In-Reply-To: <avqynlDKnJpJn6RZ@pks.im>
+References: <20261112195740.2834341-1-adrian.ratiu@collabora.com>
+ <20261112195740.2834341-3-adrian.ratiu@collabora.com>
+ <avqynlDKnJpJn6RZ@pks.im>
+Date: Tue, 17 Nov 2026 13:55:36 +0200
+Message-ID: <87fqwzk6yv.fsf@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,68 +69,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-combine_notes_concatenate() reads both notes with odb_read_object(),
-which returns their sizes as size_t, but computes the size of the
-combined buffer in an "unsigned long". On 64-bit Windows, where "long"
-has 32 bits while size_t has 64, two notes adding up to 4GiB or more
-give a small buf_len: we allocate that many bytes and then memcpy()
-the full contents of both notes into the buffer, writing far past its
-end.
+On Mon, 16 Nov 2026, Patrick Steinhardt <ps@pks.im> wrote:
+> On Thu, Nov 12, 2026 at 09:57:39PM +0200, Adrian Ratiu wrote:
+>> This happens because rev-parse ignores the repo_oid_to_algop() return
+>> value. When no mapping is found, that function fails and leaves the
+>> id unchanged, so the storage id is what gets printed.
+>> 
+>> Fix it to die with the same message as pack-objects. The other callers
+>> of repo_oid_to_algop() already check its result.
+>> 
+>> This only covers a single revision argument, the one case where
+>> rev-parse converts its output. Other forms, such as "A..B" or "A^@",
+>> print storage ids whatever --output-object-format says. That is left
+>> for a separate change.
+>
+> This paragraph is a bit hard to parse.
+>
+>   Note that this only covers the case where the user asks for a single
+>   revision, as it is the only case where we pass the desired output hash
+>   explicitly. All the other cases, like for example when the user passes
+>   a range, do not use the desired output hash at all. Fixing that would
+>   be a bigger change though, so this is left for a future patch series.
 
-The notes can come from a fetched notes ref. Besides notes merges with
-the "union" strategy and notes.rewriteMode=concatenate (the default),
-the function is also used when loading a notes tree that contains more
-than one note for the same object, e.g. at different fanout levels, so
-merely displaying such notes is enough to trigger it.
+Ack, I'll reword it.
 
-Compute the size as a size_t with st_add3(), and go through
-cast_size_t_to_ulong() when passing it to odb_write_object(), whose
-length parameter is still an "unsigned long". That makes us die on such
-platforms instead of writing a truncated blob, until the write API
-learns about size_t, too.
+>> The test copies a loose object into the repository by hand, so it
+>> doesn't depend on whether fetch writes compat mappings.
+>
+> Do we have to do that? I'm mostly asking in the context of the new
+> object storage format extension, which may change where and how exactly
+> objects are stored. So all tests that manually modify the object
+> database will break, and we'll want and need to fix those.
 
-No test, as triggering this needs a platform with a 32-bit "long" and
-notes larger than 4GiB.
+We can do it any other way, no problem.
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- notes.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+How I reproduced this in the real world (non-test) is by creating a
+commit with JJ, but I tried to avoid adding JJ as a test dependency. :)
 
-diff --git a/notes.c b/notes.c
-index ec9c2cb150..05da28b8d4 100644
---- a/notes.c
-+++ b/notes.c
-@@ -811,8 +811,7 @@ int combine_notes_concatenate(struct object_id *cur_oid,
- 			      const struct object_id *new_oid)
- {
- 	char *cur_msg = NULL, *new_msg = NULL, *buf;
--	unsigned long buf_len;
--	size_t cur_len, new_len;
-+	size_t cur_len, new_len, buf_len;
- 	enum object_type cur_type, new_type;
- 	int ret;
- 
-@@ -839,7 +838,7 @@ int combine_notes_concatenate(struct object_id *cur_oid,
- 		cur_len--;
- 
- 	/* concatenate cur_msg and new_msg into buf */
--	buf_len = cur_len + 2 + new_len;
-+	buf_len = st_add3(cur_len, 2, new_len);
- 	buf = (char *) xmalloc(buf_len);
- 	memcpy(buf, cur_msg, cur_len);
- 	buf[cur_len] = '\n';
-@@ -850,7 +849,7 @@ int combine_notes_concatenate(struct object_id *cur_oid,
- 
- 	/* create a new blob object from buf */
- 	ret = odb_write_object(the_repository->objects, buf,
--			       buf_len, OBJ_BLOB, cur_oid);
-+			       cast_size_t_to_ulong(buf_len), OBJ_BLOB, cur_oid);
- 	free(buf);
- 	return ret;
- }
--- 
-2.53.0
+Besides, I'll fix this in newer JJ as well, to simply reject repos with
+extensions.compatObjectFormat, which is not supported either in Gitoxide
+or JJ.
 
+>> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+>> index 30bf8a4d0a..c15d9953a8 100755
+>> --- a/t/t1500-rev-parse.sh
+>> +++ b/t/t1500-rev-parse.sh
+>> @@ -241,6 +241,24 @@ test_expect_success RUST 'rev-parse --show-object-format in repo with compat mod
+>>  	)
+>>  '
+>>  
+>> +test_expect_success RUST 'rev-parse --output-object-format with unmapped object' '
+>> +	test_when_finished "rm -rf plain compat" &&
+>> +	git init --object-format=sha256 plain &&
+>> +	git init --object-format=sha256 compat &&
+>> +	git -C compat config extensions.compatobjectformat sha1 &&
+>> +	oid=$(echo unmapped | git -C plain hash-object -w --stdin) &&
+>> +	# copy the object by hand, so that no compat mapping is written for it
+>
+> Instead of copying by hand, wouldn't it be possible to write the object
+> with the compat object format unset and then set it afterwards? That
+> should also ensure that we don't have the compat hash.
+
+Yes, I just verified that it works. Will it this way in v2, thanks!
