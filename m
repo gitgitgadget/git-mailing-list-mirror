@@ -1,93 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794911890;
-	b=5rqyVAEY0fd8GLgJaVpuV3jUpY55DaKHxZ6MVSv19Rb20o7tnMRrVab4B2/4mZSlxG8j
-	 CvO689FhCoYsH8Fw1M6ywTn8bdxv+vOYYNIYAdlGxZdOnHk1yw2iginieDk7gL0Th+LDz
-	 EJ/eDiLNHrW1Y75IsVrdHx7YOp2H/Gz4pFDSViYfsWk6K/J8zQwhimY2B1ISlSOuBJ9ja
-	 3sE06jDWJlkCudeclpVWJVs2+FxUyp3nhiDPBo0NG00T9UUNZ8pUr/D5dOj6UjRTyIX9C
-	 sq6XqfT1uV1WQOJvPI7rm9Gql553LMj54TbqmvUyBEOpT2iD1Ma4CtE1Rzfgx9TiSrA==
+	t=1794911886;
+	b=19EnX57TEnuY72VCQRkW2ZZa8Egd0Dn55KGGaPSB+IpKj+rfCVavXxKmC8/Vyi/+ZH83
+	 bRsUoJ7W39FrKRB8WWgLd9eS+mp4k+U78GVoCrg+WXiQWbj6Usp1rRB4mDg/yhFyf3RyN
+	 qcq8jm0l9SRvP13ddRqRQPmFTO8xcX+8SNl3/gQgHNvujyOvICE2lGvKZHZsOVLsIX20W
+	 vZ8/AYA0ceMbtKBz9cdriOuqtBBBnkrY1XkNaexjvsdf3rnnjXfYvp+6Jlyh8YbPKefo3
+	 Av91KeR3pD0knuMVUkxv5OYCvRS7Mm2okdfRte0HZGjlpDBHEr6XzI8dAXtBfsWk9bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794911890;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794911886;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=WgBAFchSM0ukp7/Xjkswu8plhhaucOrtBSThrOjqYFY=;
-	b=Sl2UwZPXQu9AlVPWhPYnmSNXsP8T2WxR7il9SFB2XBHOAzV6aLAccnV2H7DrOYDbtsFF
-	 6IauEE8qltRSz4gJMh62c7QYCm3oWijaF+TQ0pAIhHGRaVel3zXck4l0WHBU6CuKor7Se
-	 WMCVoLylPMChAVpDRCbByW7Cho5gAmIVw81cu5Fo2k4jw31rPhPPcLK7AA1RWpojWPbke
-	 JqmVR8AlWa7HuRe6XjkpV1wEndRbc/nEsdF8G4CVsiz13c6Ia/XRFn2y3I/Ant37qCYOD
-	 MLvWyhkryjCEXZA0ptSs9he/dhI887nkog7oTTc7chIOV7nt9jaZ2GC22IyXOu5MKjg==
+	bh=dJCn/EW1JvkN0klvZ2sUkhRIKlLoJkzvoChdRK6V2Vs=;
+	b=f4NWJ5mB5jqho54cxTZ8I3iZYPyKkHyaFzZFRpk3HCow/vuGvkt6HvXsyuvM0vutMASQ
+	 7IxSIzzp/YxNxhmtx5UuGUMulvSXKkGDqHU14gwCfIp1lgmscrzPHawx3DWocxja7eoMI
+	 /F7PSoGSfarqiaihOaSinxlg87GGZxycIp9A8VjNnYHRfIa64csxIfrKxMLukbOPgxxf2
+	 HL7Xaz4uym3bgBc/SsUCIV0SBEN1L8MsArWQJ0hxm3NwOQq6sOX94D6cBmZ8zwhQMLNvC
+	 d2OTx/LJRy7X9ges0B2+hhXn9np9wPe/OOwibzds4H4JxOpFAo1XLHaCsQj1vyxn2Aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HpS1GDSR;
-	arc=none smtp.remote-ip=209.85.221.48
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vDHCvO2M;
+	arc=none smtp.remote-ip=209.85.221.51
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0831606A895
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 10:38:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0831606A895
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F7F606A339
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 10:38:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A1F7F606A339
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HpS1GDSR
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-4a42b34e930so378045f8f.2
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 02:38:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vDHCvO2M
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-491971ac844so3842101f8f.2
+        for <git@vger.kernel.org>; Tue, 17 Nov 2026 02:38:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794911888; x=1795516688; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794911883; x=1795516683; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=WgBAFchSM0ukp7/Xjkswu8plhhaucOrtBSThrOjqYFY=;
-        b=HpS1GDSR9jD50zhUPfRXbMoHEmXo8bWMyqxLJGA5ex/e3QZyDqPoFUv7jyEwZiIgR/
-         xMUtWQUGOOZL/ZExDp8HUKLIIeAtIdP7xYGpNzFQaHSpP1JlkFVmh967aorDCRtAS16x
-         zBEnaBh42+WGT6hM63xkBo9MBxzWGd8wiXSVkOHcEpM9cnj8LYs0BOD12yJ7uicKe+wi
-         gafy0awr5aQaQVqVWyeKfaycAZB6BWrbCTMuE+NGqJCb/gIG+q4xaIhRAaaT0qAG/hMH
-         HVo39PnQejxzEOHhDJEPW4fpZhEfcCSNzBRvafyJBKnvsN3xvRDcoVqwh3No3pOV+M+G
-         raRw==
+        bh=dJCn/EW1JvkN0klvZ2sUkhRIKlLoJkzvoChdRK6V2Vs=;
+        b=vDHCvO2MDhsxDDdMfSDgODpkD9swQiP858Yv85u1lUVwW+6RgOV3lmDhi0ohhGhHZN
+         tvh2RAIV1uVveUtrnybAG+ijn28jSQYMpsmQQJk6QZVK16F+VvtdEujK2B2y7j5b4eIQ
+         G7bHzmsY0UgFM3FxJBxGyb0/t31uCouS9HTXbfgsDy3W4r/q30RxvDhg+9c9B/4lSRa/
+         6m7VglQPy4umQ67IkOYHX53oRHoE25cW9wj3/pgTM8fIl1njhfFgA7Ak0t7L+HDzo1k3
+         Ko2boKwLLMOg2+aBK+TyG2RDx04rh6VVVJcFZMa60nn7Y9iT9fiRJHZevW+/dOuP5qgh
+         xgMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794911888; x=1795516688;
+        d=1e100.net; s=20260707; t=1794911883; x=1795516683;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WgBAFchSM0ukp7/Xjkswu8plhhaucOrtBSThrOjqYFY=;
-        b=VOJ/R23lAZhodTJ/7qr/wW6VNetZlAf9RcBohEbgF2YJpRVtZqhy1u7BUwpHoVhHOh
-         ERRu9AR4qCtmdijjW9Esu0+gbfc30ZXucL/9jtyl7oalKEARA4zBHApLqTYs8rYoIILs
-         U2o1qPYjpi9rzsCaABB70HojKPzeA1BYZcS9umhjs7H/BA/39mwP4x7z/KMhrRKOk5bG
-         /xkRaWBhbq4efuZEll7/UdzhmBqiRB4CeXHcf8fW/uf373/742u4/8MyrS8Ky8gB93zP
-         vCIHr9Oh/nLw7sVd7MlekI/EkoGAzD0Jr7N8B4F3bowHi6NhCViRrfkzLXhgqxXjjU4D
-         6Cxw==
-X-Gm-Message-State: APuU4Z8eM6dqJEkxMh1w8Z3FNHXDhgKx98yk4SBdoax38HQLCyFS8eqW
-	d0ZYbMMZrQpl+x3Lar4NsshJtQuTGaKwLVGIYmLQHo12MIokxpWaaITqYE+93Q==
-X-Gm-Gg: AZFdTZc6fhlCnKdNiVyxU5IOEVCzo+ll6gd6YUOrrN0+ipKBBTkD+IP2scAmOQfelWn
-	NVlku7IMd+DMdlKZBqyr19hdr2RLxgT5i6slUTGMyQPl4g5vhaZhgJxzei8LWObwKWLKcyZC/jN
-	p3rR3xgOOnBtMQ4Ff/pM02eKFPVOvQclIJqq5KdJMBjkv+goTEp/8tOUmEURJj+M2QM5gKZkmbZ
-	WPgjZb5ZhKgxSi9Pn00qkw3HmmiUNgxZt9KI3lRC0e5Uu5+H0RA/hfifVqJpyUabq5NCzDD5E1g
-	LjS+GexvwRujeTFOM64FzYr1B1F5UPua+mpRhzWiNX5Jr38rQcrdTPjCTtGh73Mvssp0v95SDu1
-	zDrqBjtASpK/ltk8JNHhINO/x7HaqasDF0T+PZ5KJgJNP0CwxQ/d02MQidKM/evSE6kisn8LTgH
-	6ycB4I9N/K4RpKKFLoGUQipnyfB+YPu7HyL+oE+QsfgZIY1AjD3xAaoMmK42F7KzL/oMPpaykRY
-	yB6NVtBT3S8G77dPxYNY9SpwE/GqhvjG62WUGyv/dwM8yghe1T4CL4m+IlFO0siGU8QmExiahZa
-	NbITK1zXmTrOtdhwRA6ZLxV/THQxeKjLWDqCK8yLgKQ/B7E74N6+srauX7POu89Y
-X-Received: by 2002:a05:6000:2010:b0:4a3:1e75:16c9 with SMTP id ffacd0b85a97d-4a31e751912mr5733653f8f.40.1794911888270;
-        Tue, 17 Nov 2026 02:38:08 -0800 (PST)
+        bh=dJCn/EW1JvkN0klvZ2sUkhRIKlLoJkzvoChdRK6V2Vs=;
+        b=swWyx9NiKm8Wt/b8LzsDY97U9MmG8ZvaqB5gIm8KjjHOvvU8vl00mpy+p9AO3Io2mz
+         tT6rDsIbDCmjVqE7ZHSB1CtcWdy//uEoMM8BnFyWG94gX5eoPuZezLEz2tU8MAeTnqbM
+         VYyWYk1UOkKak+37OE5YQrYjWtDrcYR5W5JtCzm2fthGs7hlZAHatAfkcK6jS7hrhy3+
+         76D6YENx2XilGJt1efhjWdUuaepWsS/lYTUscIsI1RPQJcwch6cOIiK+s23Mhp1yn9af
+         FCqL3xCuyZu3mXFmDuUrloSKQZNpMZuKUpbMeEmswR38uZgc6aaJ56O/TdljVJhM2uvv
+         pXFw==
+X-Gm-Message-State: APuU4Z8f2dA5qPa/YuIDWkOGnkTGeS4NdWKQFCo9onQh4RZOrcvtfIzH
+	g0mPL6dxe7K2d6IyxocSV+E51virEuJkTIjPmJPKcYgU0sHPmvjaZtbdTXNL0w==
+X-Gm-Gg: AZFdTZdsU2FT8qBlOQuwczRtJc7k6ZKLdgoTcr8DC3GWaIY25FgB3ga+ICOFAqVodJI
+	iDJBHqdyxtrlHI7YV/dlnjBxGQXt/bLUW1dlYxpC69ACM+09UWHZkA3M4ewNyKtEJp8ej06ms1/
+	9S3IA/7urZUt2Y6DkxISwdaAE22s2SOuroDtNHk8akokw7TZJ3SCvIrM3QQEpEuC7S11uqyeDEl
+	XskB2flj48pbDDfCyxby1h6Fxzo/I4tmF8s1Qd/n6ntwA8isVSrA5YusOlEUEXr9t8+S2/imsIs
+	EcnRMuSayVQcgIFZC7bILm+gDDtJb4pAT2gVlblEg7TpDBo/zMn9uDY7eJesQkbVXBMPtSfxCeT
+	nUGT80Si7OWQdm6zv3CFKI2ZC4FaRLuaYfRkGW96USwg2D3odQbKGmiSemibmN8wPXZfijCPRaR
+	S2nDkR3nF7FxXFqZD75LhVDAXIqO/SEwroRXivYHonOkqr+zrlY/v4EujXQWssv+PeyrpSxr92/
+	Spk2y3d0iHZ7Ul0rOWflwO+rEeCUZwo9iaBhNUPx5Q0ZQj7pNYVKTn97OAFk5VgvYv1DvRhlG2z
+	tyw8e0ZbsMc//q+qsqX//HDUEq3r8Chp84YeYPXGZzW0lkIGSoiD7RTTj9X847M=
+X-Received: by 2002:a5d:5d88:0:b0:48b:1296:52ec with SMTP id ffacd0b85a97d-49c70ed8eaamr31322890f8f.18.1794911882802;
+        Tue, 17 Nov 2026 02:38:02 -0800 (PST)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c608d10b2sm44715932f8f.44.2026.11.17.02.38.06
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c608d10b2sm44715932f8f.44.2026.11.17.02.38.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 02:38:06 -0800 (PST)
+        Tue, 17 Nov 2026 02:38:01 -0800 (PST)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/4] diffcore-delta: use size_t for the size of the buffer to hash
-Date: Tue, 17 Nov 2026 11:37:55 +0100
-Message-ID: <3427c3d2c8c689371bcc111f0915853a0f679f5d.1794909894.git.gitter.spiros@gmail.com>
+	Patrick Steinhardt <ps@pks.im>,
+	Neeraj Singh <neerajsi@microsoft.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Michael Montalbo <mmontalbo@gmail.com>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Alexander Meshcheryakov <alexander.s.m@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 0/4] widen a few sizes and counts that are 32 bits everywhere
+Date: Tue, 17 Nov 2026 11:37:52 +0100
+Message-ID: <cover.1794909894.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1794909894.git.gitter.spiros@gmail.com>
-References: <cover.1793546752.git.gitter.spiros@gmail.com> <cover.1794909894.git.gitter.spiros@gmail.com>
+In-Reply-To: <cover.1793546752.git.gitter.spiros@gmail.com>
+References: <cover.1793546752.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,39 +108,61 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-hash_chars() in diffcore-delta.c takes the buffer size as an "unsigned
-int". With a file of 4GiB or more, it hashes only a prefix; because the
-similarity score is calculated against the full size, similarity is
-undervalued, so true renames are missed, which also affects
-"git log --follow" and merges.
+This is v2 of the series that widens a few sizes and line counts held
+in 32-bit types even on 64-bit platforms.
 
-This was verified using a 16-bit simulation, where
-"git diff --cached -M" reported a delete and add instead of a rename
-(e.g., "D a" and "A b" instead of "R099 a b").
+Changes since v1:
 
-Make the size variable "size_t".
+ - 2/4 is rewritten after Phillip's review [1]. v1 only made the size
+   parameter of count_lines() a size_t; as Phillip pointed out, that
+   removes the bound that kept the "int" line counter from overflowing.
+   The patch now uses size_t for the sizes and line counts along the
+   whole complete-rewrite path of "git diff -B". This includes
+   emit_rewrite_lines(), which with v1 still truncated the size, so
+   that "git diff -B -p" printed a correct hunk header above an empty
+   body. It also adds two EXPENSIVE tests to t4022.
 
-Triggering this requires processing a file of 4GiB or more, so no test
-is added.
+ - 4/4 is new. It was found by looking at the totals of "--stat" after
+   2/4: they are added up in "int" and overflow past INT_MAX lines,
+   which 2/4 makes possible with a single file. The same code also
+   showed that scale_linear() overflows for a small file when the graph
+   is wide enough; a cheap test in t4052 covers that case.
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- diffcore-delta.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ - 1/4 and 3/4 are unchanged. As in v1, they need objects of 4GiB or
+   more and were verified by simulating the truncation at 16 bits.
+   2/4 and 4/4 come with tests instead.
 
-diff --git a/diffcore-delta.c b/diffcore-delta.c
-index 2b7db39983..7f10f79ffe 100644
---- a/diffcore-delta.c
-+++ b/diffcore-delta.c
-@@ -127,7 +127,7 @@ static struct spanhash_top *hash_chars(struct repository *r,
- 	unsigned int accum1, accum2, hashval;
- 	struct spanhash_top *hash;
- 	unsigned char *buf = one->data;
--	unsigned int sz = one->size;
-+	size_t sz = one->size;
- 	int is_text = !diff_filespec_is_binary(r, one);
- 
- 	i = INITIAL_HASH_SIZE;
+2/4 now also changes count_trailing_blank(), whose size is also
+changed by patch 6/6 of my series "loose object size checks and a few
+size truncations" [2]. That patch will be dropped from v2 of that
+series, so the two series will not conflict.
+
+The series is based on master at 50fe5cc63f (The 12th batch).
+
+[1] https://lore.kernel.org/git/0cb42395-3e62-42e0-bfd3-a4265ed7cc33@gmail.com/
+[2] https://lore.kernel.org/git/cover.1793355390.git.gitter.spiros@gmail.com/
+
+Elia Pinto (4):
+  csum-file: use size_t for the count passed to hashwrite()
+  diff: use size_t for sizes and line counts of complete rewrites
+  diffcore-delta: use size_t for the size of the buffer to hash
+  diff: use uintmax_t for diffstat totals and graph scaling
+
+ csum-file.c             |  2 +-
+ csum-file.h             |  2 +-
+ diff.c                  | 90 +++++++++++++++++++++++------------------
+ diff.h                  |  2 +-
+ diffcore-delta.c        |  2 +-
+ t/t4022-diff-rewrite.sh | 51 ++++++++++++++++++++++-
+ t/t4052-stat-output.sh  | 10 +++++
+ 7 files changed, 114 insertions(+), 45 deletions(-)
+
+Range-diff against v1:
+1:  07baad46b1 = 1:  07baad46b1 csum-file: use size_t for the count passed to hashwrite()
+2:  2011b90d80 < -:  ---------- diff: use size_t for the size passed to count_lines()
+-:  ---------- > 2:  e63ed0c49c diff: use size_t for sizes and line counts of complete rewrites
+3:  0c5442280c = 3:  3427c3d2c8 diffcore-delta: use size_t for the size of the buffer to hash
+-:  ---------- > 4:  692c503e97 diff: use uintmax_t for diffstat totals and graph scaling
 -- 
 2.53.0
 
