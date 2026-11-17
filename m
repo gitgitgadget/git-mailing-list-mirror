@@ -1,124 +1,121 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794957229;
-	b=sm/Z3lMaxpLI49Lv5XjUB4rb5JxNHMI0eeVKlbsr/ZCawht3YVd1dCI4NmIYFvoPOtBF
-	 T3y8RzsuPytOWwt1Y1OjP4jZt69Bgngp1mzgJ/Ce1PRoKngBW4SAaTGjA8E9xjI5AT7l+
-	 bzHmuztqhUiKkpgFeVLESIwxjlrc/OBJMGhTZJyBXBnU5ToYsCKlXzkJRK44WOGErpnB2
-	 jtJRXL6gVWaVEYjZT+8VLVVCCnqlzsQ3AGtbpKs7eMjOLTWYb8AXjPVQ7XNjDivC2ShPe
-	 KUVXhSWn9jFHMW6iTQ0cI4h1ovDFuH/fz3bBmYGrDnb2HKzUH77G0g0HdN5/1yqfpiA==
+	t=1794957712;
+	b=3RBpzrE2Y/ZESE8IQESSon+b4GYk9JPi2KQuSrnxe7AOLC+dItyO7HodvamRMjznkBLt
+	 K1f39FtcYn5jxiPgV/QdNDDniZK4u6+IU2HVusIflsu9WV5XtbFOncPfYhkhUgqTSaWAH
+	 ql44YQSlDzyvNPHmrqtR4QPMXl2/cBBrmE5aFfe89yL82UPsBbRoXk6gG1846uXjhcguu
+	 MOTHwaWfKsasFU2t6M1HFr7UlWF/rWYaV2EyYYd0S28ThMPwsFRS2XRl4xZark1e1m4zo
+	 nCyvU5LtsLXrD2g9FFPHk6csTuyO4CRqjgFc5pUkKIRVMSenOZzumqj9vM9aMxgFpcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794957229;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794957712;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=2evbet59QQq+n7XeBAmYOX/G28mKL5oOoSx4y1dDRmI=;
-	b=mA+IGtg0k2Ql2yglc8n7ix73uRxyAzXRSVCkARW6WQCKe9B0BUACBk+U6lYho+Zbe+kM
-	 jtkiPcpPeBmtALmy9GPnjtaU1RLBYNzJ8TX8De+gHMx6P1vDb4Dwj1HosD0xSeTbcRetu
-	 gNlI6Eng2x9lWw4T4GJVK5TKk0QNg5DP/w3H9tkzjX6r/rsV8KOWBzcIf46OB6TwNO8fb
-	 34tE21fzO8Y5Cl3Mf9Phs7iDMFSDFpPCE9/v6WiW/6ydjpKiYRYAoeiFv5OovNgzV1oGO
-	 aWqlaaROjD3Fli7XsAis6vdhRrQvSKM3rnNHHsvgZzeclm/5JHdWa3AFR3c8DWPx5Ow==
+	bh=BuZxjaIVEqZYiYLX1LjAYeeLs8vOl+mol5YzscoJ+1s=;
+	b=06mN0gU1njmMFss34uWuN7JxvVRmjzBEZ5wjYotIzc4ZGID+4MAFjPzgLr+mKpsgiiKn
+	 h0Cku1O5ZWMukGDGBSjzrk++CKWXLUd1et2lGBghboEJr0GK9iamg+DWiyUCYA2ey8Kn+
+	 /cewGvmmuf2reIkaaDO1fBRTyZv9eFmfNW0/HDxUTGEX4EXdEAyf78iH6aWFYtTDLVSKZ
+	 /19dkKgZpWBulWVPCshY88cid6amerTk29gnmYC/X1B7pVatWwR1DZ3+10FLFN/LSw7iG
+	 1aAFM2EMng+Bs3bmllSa9qhVNJwqQCFllkfZH/sYftY61s/VsnTqopjSgOZsUao0emA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=FbGYr9aq;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=fqoucDY+;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="WFHe/Z5r";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=du97N9P0;
 	arc=none smtp.remote-ip=202.12.124.159
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271E8606A31C
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 23:13:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 271E8606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1159C606A31C
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 23:21:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1159C606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=FbGYr9aq;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=fqoucDY+
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2E4E97A0257
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 18:13:48 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=WFHe/Z5r;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=du97N9P0
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 586FF7A0267
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 18:21:51 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 17 Nov 2026 18:13:48 -0500
+  by phl-compute-02.internal (MEProxy); Tue, 17 Nov 2026 18:21:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794957227; x=1795043627; bh=2evbet59QQ
-	q+n7XeBAmYOX/G28mKL5oOoSx4y1dDRmI=; b=FbGYr9aq6M7Xb98e8tV/qrpaP6
-	gtihpmfvN3kdUNy9BdQuDr4yz6gQoQfNEVkqP322uq2eEZKJDOx2tdYy9xb0otpJ
-	isNT6/Nt6DnXZeziJC7sFD1bW84MJeeldu8imsVDOiRFVPmBqz1JWRLRy/rqexYI
-	mnHJIPI0VvV8KnS8I7a8yEF/3kqliBykBMA6ZoMtGXYZRByZ96l2le7cJ6f5Zqo9
-	KCUNTADdZlXSuzLQ6CZKA4eJmlU6K2fkXGCfEUyIRsS1+Ooyd5LP8PLq3Ca9Oy+l
-	o32uxFXdbqNy+7mdPSGmXgiBX91Bq6FcN8hZDXMjud2trr7ruCiF2dl0YR4A==
+	:subject:to:to; s=fm2; t=1794957711; x=1795044111; bh=BuZxjaIVEq
+	ZYiYLX1LjAYeeLs8vOl+mol5YzscoJ+1s=; b=WFHe/Z5rOuiUv2Fr7MzZYPVj+y
+	DYJmnG1VYXLhjV4XmhWcnFyqowdZyjCvIxZm3/lm+axxqRLwSvFPXcM2YActfVBD
+	UpxbCio4ZXqyv43VS3/e3aAV3FKW+XPH6QWICUPoJI1OF8yjpVfmcZuSJdcI71dU
+	vWLDHxXmQREvk8K3Ne7n4ffmTmJecCa36xe4b1MPKd9emGVjdQ4yLlCjDNY/0ig/
+	lEFc8m1Dh6Q7HKOTDaUKZhxUXYz7nAoF3nbHRVTOm/4gCIEiG9Yic+XjA2P9D7rp
+	OGbsVvCXgkJrpBmC3e8L2J8y9xunpWJ7RdfBkCLRBALlxB9vEmnXRiEvDAIA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794957227; x=1795043627; bh=2evbet59QQq+n7XeBAmYOX/G28mKL5oOoSx
-	4y1dDRmI=; b=fqoucDY+4nCVLj+pUFaVZ8VNbwuNSHjmQ3i2Pv06Rjan8WfGkCL
-	i8VTiG+qv5hlmenHnQDJNCtWefxlsQTp7/+KSmGBEhyip6Dp65+Ep7eEM4HQUzPP
-	tOINwcQqlk9RGCO6BKUiSq4bAXNTymE/gTIsNPaCRY0e5mr+VYq5Ir1zMp9bynW5
-	z9OQdEzvguTu8DsDsypFlvjmQeybK9gWZ+W3ClshQh082aAzRkBScS0kSecJ7NDI
-	T0/97xb/3Q0w5Rn2pt1m/PyVUgfRhEPQtYZWhpBhqnW3tBU0Nc1T9fNRnqO2VifM
-	LomEASatQFuZKc2aBHZIAn5DJWSSFAko/3A==
+	1794957711; x=1795044111; bh=BuZxjaIVEqZYiYLX1LjAYeeLs8vOl+mol5Y
+	zscoJ+1s=; b=du97N9P0IPg9A2iv4OKIGTY6C+iH3CLra1NNugzhYMBHZqvJYJc
+	mATkoThu//9U3LMbn7iEXwudWPGEsOT1q66s8W2iNGEqs2+ejMNtgSc/ouWdGNvN
+	/MkUOjjLU5KJfTMDKWPXgSBbT6ZROT3KKPVrQQqouNtY5LBj2cFFrnjwVQCtq4Hw
+	a6ESKcP4tAiuYBo6YbmzM8zy5MeMdWlSg1oQ3WPP/DOmYo1ZwSVWKGIyNp2cM/Lf
+	c0So7jfABCf8ReovpoDjLuVrOxtvpCZYq6PpRuHN2nG86NNWv/YWYIOSoHSh7Y6H
+	nTgNT9ux9pmIuxAkRQhblUb27vRhnNK7zug==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794957227; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794957711; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:b0yH8IgbB7ErNVSRCBART2CPUqpSadmOWaIVzSJCfkCQILe
-	7LVmhEeRhGzQw+uL2zx/AYYchKusVCTH1XMdMYgZlJp/N3BrRFJdvN11PZbFp2cc
-	O1YkzkHnVWN1YKnlsTtU/syZgFoTb+H6VpkVag+5vW9IigjTj6qQ/dbQNk6gIot0
-	tx+9mm/2xT5Yd1UXwRQR8OLp/PzlqlybVcfZXNJxufGnwoNz9afe1LkT71Io1DKn
-	JUqeYejZ/wZsf/udDWZrjVrZQakCuG8g4bl2aen5swQtEMz5qmSIINdFQF+KXEj+
-	cT+vY9azNnljTwb+xR4PaLOWXeujKCiVU65ZN2g==;
+	s=fm2:rsa-sha256:ShFlCSAM8Pq7NNDIu3gCbbI7LQbefkOH+aaRFlYD2bcDFoc
+	XwL3NyVwwVT92TKbUmngsCq+lMt/g3DUlR/vOhi7beZYCPf4iYVO5F9rzkt1aW6n
+	s1P0Ftwmz6Bx+XME2IuQEoBGA74wrQftw/cHCLZNUA98opWrP3gxqQtwstK4BJ5a
+	XUksAvPsWftbzJrakQhKQQWZWgr8BYSD5dglEcHFHuTZW6ZYwCPEOOVcgxQEX/Bd
+	AtKDgfFR0m0ATNzVw5VzGOwWraQcSetVm+lQwOGKJRbsbGK4w4al9MSzmQfcCP/P
+	3JSeS+HK3BIMNV2CpQ2Ij1Nz57vokcsEuLY6avQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:mk4XNFWKhDr5rzdZ41FMUjZaPmawwpfD13tYD2yHZOw=:bSuGzNfrBGtRoSUiqCGHSaxroDUfDyRt7GVP492YPLk=;
-X-ME-Sender: <xms:q9_8ah696FpdJWvWVnpSIn81B-I6bw-sHkfpqvqblHngtXrwi-ugGw>
-    <xme:q9_8ahJ-dyl80Me7jMNms-QfCtahARwP2YLhiSY4Bqtc_VIXunDMrbFJxWPb-xr3-
-    LqMVskFxCs8dscBxjUwOtB11SMRHIBsFT_tTCM7eyIMybo0OIAV>
-X-ME-Received: <xmr:q9_8aqu1AMO8XAKl0SCKrSmRSEKtn2pdTzSsF_ZmtZA2WkJYLaEhXln8Bh492l2R0KsUQ5-Udufa5DmZenmOEBfpQBHj6WUC5dDu>
-X-ME-Proxy-Cause: dmFkZTGIMZAu0c/BFNjI+Res8Sp5U/lorDUapQQYWj7rsIVaY+A0KSpDzr2mgY8bF0Babp
-    w9mQN5yeP9NFh/PTxbzymhe36OS8TxvGt/fLR2Ad07NmHaRLomvNAE16hQAUwzF8pYT86B
-    yoeV+OtuFYIl4U9S+wPYsU9BFM68mqGa0QNo3NFq2DA9zRAilRrtD3VPKnHVfGtjy8QFwM
-    9LLWenH1KsMZyIM3jEsb7aQcFuKT+AOcKzDVP+f2IcbMzpbHrTqPD78TjQkJL4qRc1FmKt
-    LHPltJuNPmi545sb1a120CxHE3c3tj7BXguyaM2+oKrSzD3887W37MVNN38MAj3k4amahf
-    LTrw7j8yMiScDU0jPXq9F8Yi+kxRafgXJKe/v3KXVN/qC69O9f3DBKCiTWS3tskUK32kcA
-    L+WcNl6ICYUsIMUp5/k12t7aAtcdISxVDSFS+GmgjY09YcuwMi7gRC+Cgrr30B75CKvjg4
-    TzG9+aQNvLGgTByq70ToZ/+BS2QKk0jjy84DzEcK69bweUmzYRFITk4CljpJe8U3av779s
-    pnCwGzglu8Tow9dlJPbfLIH0NZbMYgZVXKF2c+8WZTQYmve+ZnXz2/8swEpXF6c7g50BuQ
-    vt54zkiQm2hnb5+2XwygSCaJSpLBD8N5cHFlBiWn0gw6o9HpjmUIMH242Wpg
-X-ME-Proxy: <xmx:q9_8agJq2Pxd6TxjothpnWp60tNbhmdHhIfTLv92GbwVqfXlzdriQQ>
-    <xmx:q9_8aj_D79RA_Kb50VzAQFHNFXT5VPDXcjCaVWNn6y9ObZUendzwUw>
-    <xmx:q9_8apwb4gWWKnWnJXxqFND7QeV-85iXwkLr7rcob5zDVtCbaTaffA>
-    <xmx:q9_8ag5FvtUtGOYFZu_UcNRiMT_xPNWZtyW8Nd30g_eSwgJWY3LXFQ>
-    <xmx:q9_8avrZCQ2pi8w8y6t6ZGgDEz-MFFquwOnXuaF9mTe31FaCf2hLdYkk>
+Message-Instance: m=1; h=sha256:0JC5b9SRkim2uGuqh8xKZp1CNKqvrU1dreAbN9TiJgg=:22673png8fGO+9Mh013dW4tGkNBednil4o0/kmkpaWc=;
+X-ME-Sender: <xms:juH8agrG3pYmquYOtL0QgTbcdpN8soGulh76IVDCpPHdxjlarY8YAw>
+    <xme:juH8ahNc6Q3mHD1qpXza6378jorNjCCypXi9MqY-LQmMRxFSwcp4oVwRXt61udUar
+    EIYcp0nr8B0MkXuOWtREkDWZJO3EwT538XfkiLMIP73MRZj-oCv_8g>
+X-ME-Received: <xmr:juH8ahxUuckyWBK0PDAnt6hhDR5XSK7hRIb8tdokQamMS-nyTN0BDuuoG6weu5OguMGIxnnmN5Sci8i757qff5OIVKhnUdT0NOFr>
+X-ME-Proxy-Cause: dmFkZTGYfvPjABwIyaVxhO+IOHeQRELzZozgG/JMcarO80xbjsxoXECxg6SnJso39y5hdy
+    Vw50WsPZW0IjLkqQg5Bb7LNaNStWXmsNgsu/vXq/MPAFmg3AvyV1vhQoKGUxdoAprFXVVL
+    9E00bvcEXvgaXuQNBj35ASxvNKlDuHxdrRygYSYOmDtubkCPXF2a7wE8Bm5D27KvJDaGg4
+    nNwO3GIzNIBWLQwv2ywunCMunOF1rTboUyi4NUaQHaRBCGDowuIt3XGGmY6PTgchGIfD1k
+    g8e3n7iSggWL/eqeuzqXAzcif19FpPgDn/6kwrW5hawEzSpEL/l0zqI9oKzOROh1DWaZG8
+    cQL4GeV/6uqwMDwZhguFBkCW9DXhEDX56OYH3amyNTuv/3WRq9+6WpVKvevZGw70dC5TQE
+    C4yWRtJbFN4NuWj+0L93gPrb9I/Uu5KO4bHsmlG5mkE0i8SKUO2/jqmwreE2wnDWbH0Uod
+    dxo1gDDkIHCoZUeMz3157KGK4MVyc6G93704Wf8Pq7c3ol0vGaCZwNCFxJ5facBPR9HPM5
+    sV/alwx2gqzar4yhncuEqrGP4SgPTSIHnevmN2k6NK1MadMFHTgLcvtGHznPyLTZZBM7Tn
+    jlO9yrd+q47qf0LxPr4pT6xtnA8UkUe2vi3iERZLmZAFONXdVBEhAM1qz8/A
+X-ME-Proxy: <xmx:juH8aqsti-Qi9dBPoyiJCaacVdKnF3q2FI1mV0DTynCmwjryikpOFQ>
+    <xmx:juH8aq5hhAxtbkAFfdYwGrplwlP5WE39H8CSevXgqZqRSaDH8XcLaA>
+    <xmx:juH8apT-crwpfVuCEU9ToVwQaORTsAhS8eGOQJNfuc_yjhRQyfyCMg>
+    <xmx:juH8appDTLHShaXGCHo91gjLbiHJOBsuAjof0_lK1a0y4sLK-iXl3w>
+    <xmx:j-H8atHJBl-A8ijbl1ChmrY-XDcIQ7qcL0WwzE7O-pNdtDmGAYEHKLeX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Nov 2026 18:13:47 -0500 (EST)
+ 17 Nov 2026 18:21:50 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Elia Pinto <gitter.spiros@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Alexander Meshcheryakov <alexander.s.m@gmail.com>,  Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen?=
- <tboegi@web.de>,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 4/4] diff: use uintmax_t for diffstat totals and
- graph scaling
-In-Reply-To: <692c503e97d9841def6e0429ef52a963ab93eec0.1794909894.git.gitter.spiros@gmail.com>
-	(Elia Pinto's message of "Tue, 17 Nov 2026 11:37:56 +0100")
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 3/4] diffcore-delta: use size_t for the size of the
+ buffer to hash
+In-Reply-To: <3427c3d2c8c689371bcc111f0915853a0f679f5d.1794909894.git.gitter.spiros@gmail.com>
+	(Elia Pinto's message of "Tue, 17 Nov 2026 11:37:55 +0100")
 References: <cover.1793546752.git.gitter.spiros@gmail.com>
 	<cover.1794909894.git.gitter.spiros@gmail.com>
-	<692c503e97d9841def6e0429ef52a963ab93eec0.1794909894.git.gitter.spiros@gmail.com>
-Date: Tue, 17 Nov 2026 15:13:46 -0800
-Message-ID: <xmqqcxs3aw5x.fsf@gitster.g>
+	<3427c3d2c8c689371bcc111f0915853a0f679f5d.1794909894.git.gitter.spiros@gmail.com>
+Date: Tue, 17 Nov 2026 15:21:49 -0800
+Message-ID: <xmqq7bibavsi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -133,45 +130,42 @@ Content-Type: text/plain
 
 Elia Pinto <gitter.spiros@gmail.com> writes:
 
-> struct diffstat_file stores the number of added and deleted lines of
-> each file in uintmax_t, but show_stats() and show_shortstats() add them
-> up in "int" variables. When the total goes over INT_MAX, the summary
-> line overflows. With the previous patch, a single file is enough: for
-> a complete rewrite into a file of 2^31 lines, "git diff -B --stat"
-> ends with
+> hash_chars() in diffcore-delta.c takes the buffer size as an "unsigned
+> int". With a file of 4GiB or more, it hashes only a prefix; because the
+> similarity score is calculated against the full size, similarity is
+> undervalued, so true renames are missed, which also affects
+> "git log --follow" and merges.
 >
-> 	1 file changed, -2147483648 insertions(+), 1000 deletions(-)
+> This was verified using a 16-bit simulation, where
+> "git diff --cached -M" reported a delete and add instead of a rename
+> (e.g., "D a" and "A b" instead of "R099 a b").
 >
-> Several files whose changes add up to more than INT_MAX lines lead to
-> the same overflow even without -B.
+> Make the size variable "size_t".
 >
-> Use uintmax_t for these totals and for the parameters of
-> print_stat_summary() and print_stat_summary_inserts_deletes(), which
-> printed them with "%d". print_stat_summary() is also called by
-> "git apply --stat", hence the change of its prototype in diff.h.
-> apply.c still adds up its own totals in "int"; it is left alone here.
+> Triggering this requires processing a file of 4GiB or more, so no test
+> is added.
+>
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+>  diffcore-delta.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/diffcore-delta.c b/diffcore-delta.c
+> index 2b7db39983..7f10f79ffe 100644
+> --- a/diffcore-delta.c
+> +++ b/diffcore-delta.c
+> @@ -127,7 +127,7 @@ static struct spanhash_top *hash_chars(struct repository *r,
+>  	unsigned int accum1, accum2, hashval;
+>  	struct spanhash_top *hash;
+>  	unsigned char *buf = one->data;
+> -	unsigned int sz = one->size;
+> +	size_t sz = one->size;
 
-The above is super detailed write up but still leaves readers
-confused because a crucial question is left unanswered.
+The cnt member of spanhash is still uint, and can wrap down to 0
+after 4 billion collisions and makes it appear the hash bucket is
+empty.  Should it be widened at the same time, or are there reasons
+why it does not need to (like hashval member that can stay uint)?
 
-  So we use a wider type to accumulate changes to avoid overflowing
-  the accumulator of a narrower type.  But then what else is done to
-  deal with the accumulator of the winder type that overflows after
-  enough numbers are added to it?
-
-The remainder of the proposed log message shares exactly the same
-issue.  It points out different areas that use narrow accumulator
-causing trouble by overflowing, talks about replacing them with
-accumulator of wider type, but stops there without answering the
-same crucial question.
-
-> -	graph_width = max_change + 4 > bin_width ? max_change : bin_width - 4;
-> +	if (max_change + 4 > bin_width)
-> +		/* anything wider than "width" is cut down below anyway */
-> +		graph_width = max_change < width ? max_change : width;
-> +	else
-> +		graph_width = bin_width - 4;
-
-This change looks more interesting than a mere type widening, but I
-do not think we saw it described in the proposed log message that
-was a wall of text.
+>  	int is_text = !diff_filespec_is_binary(r, one);
+>  
+>  	i = INITIAL_HASH_SIZE;
