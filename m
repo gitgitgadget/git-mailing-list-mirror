@@ -1,120 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794873762;
-	b=oTHK/Zq+2aBer4WgGvxFpyhazaC1RYQt30kTD6HmlwU6EnNCFFewE/lQJAw3/lmKB6pq
-	 WxOjkOdACB91U3BJSJ4wemht06mSjMu2MKZMEaFNdaALNzfurCueTw2T8ut520ACLFNjU
-	 gkVBT1oibgG6SHRfJwFmSC0Uy89B6c/UTJ6nCguFhwbmgtQh6umRQvdsANjxgzLpPVcUj
-	 aSjSI4HO6VDq0oYAkkUvDMODZNjCM180jPpgel2TD3Hvg1S8tXyjfR2HiXkwQLEXHFJlg
-	 N7HYRCaEMmiHP9R28OkLNnMDmZjbbI0SlCrW2YBh5qTc8QC24xYFXB3U+MHpNN5R49w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794873762;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=UikmxkMG8oGxqWrUMMtTN3cHdoXLcq3NmFKG7tmJE9E=;
-	b=S3WMSjGIhEF+N5Kk0p1ePQUOfk9lRMiZdMfKCosv1ah4rLqORuueimc9DvHuCAmiH5D7
-	 PImTEPzLWJH5mOWmu6r0iWFMlRhwmaV1Z+ZBNaVIRrntcgG/+REP/PFR2N7zo6V083VWD
-	 TLpYKTjQ88IlRw2Ft2Mpw7gzM30kk1pF183jcV16ie0SdZVrHSPabzbz0hNKuxTAviWw5
-	 NvtByeKMKhQkAIcZEOhlpbVtnrFrVszA1f8gPJAaudTR6jZTMVuDju09GUiy13xFS0Wni
-	 xSSDUeFOOQtPqqS0MYmjQ9awK45AqvOUHV7NTyCEh1LG420sFSrt8uNLAdIiYKvPZVw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=M1IR64we;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nHlTsMCj;
-	arc=none smtp.remote-ip=202.12.124.152
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.54
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794874355;
+	b=oUH4x0N+9GYKm19NQfGi/DKT28+2x0JuXzddsRR6p5hO4a6MMJseN9seCw+tRzo0iMNv
+	 z4ucWCLQ+iuidQat7pVv7dzxi3dA2q7ozx3P4LnOW75NJwHppPzTuRUSwldU4EsIq8vO1
+	 86uzNDx+QEH+ykkedkWHx8c0VOUMi0PFvMFg0yZ76XvjpsQmCipqwaTlHgN1I1+p6ITVV
+	 nhO+/edWmGc3yY0D/5cusol+Wckaibz4+yU+HIlFxuZGeXgd9t8oVoCEeRXDpUt/diRfv
+	 rG+6QuERY01OjvEH50eLWZ1El6fftxeNRCbs/8UGR5bJc27xbcwWEQaC5IN4Etd/Zgg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794874355;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=8mzkev2RcLJInaVMDY1JQGEQa899TWWLYOesQRWaI54=;
+	b=1HB97lOyacj615BmxDJFd22C20pXFClZYbcuR0st5SnAFOsNAM7SNj4MIhaS5zfOj7/q
+	 uD6GXE+ATs+XCRyH8h597PJqxBazxXmvR/zCDVSo7SMqsf96z2iKXWIkufxxhKksN2NHo
+	 scVS3MTW/PvwM+PEwobBIcMLEjK6sFsoBX7afYbvQpdhG+tOkKuFcyX309HRqb6rU5kL5
+	 UHkqDNwK5CkBx9aLFI9W4jS87UAYUrfuvXEED+A19TrK3iKikNuGoIEX7Tv2W3jB6vVRC
+	 uUMy+Ilk0bp/f/GKdPc9lrfLCec0quaKpF7VQQFDN0kdMtmU1amYUSjiLHPepYb2law==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=y6CN00q5;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.54
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA295606A31C
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 00:02:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DA295606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0582606A31C
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 00:12:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0582606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=M1IR64we;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nHlTsMCj
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3929D7A0147
-	for <git@vger.kernel.org>; Mon, 16 Nov 2026 19:02:41 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 16 Nov 2026 19:02:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794873760; x=1794960160; bh=UikmxkMG8o
-	GxqWrUMMtTN3cHdoXLcq3NmFKG7tmJE9E=; b=M1IR64wemk2mryUkbp05tlFRdF
-	f0FuEhXM7627+66S2ZZa8BVE6WgS3Q0vXQOPENGsU24az8ABXNHbVoeTpO9wUUMF
-	wRu5fcbOnZnKUqaxbDGZcE4TyXFK64nVf2J+5r5Ee93BDN7rT2gRY0ze3hzxjVVn
-	FyASwuf/dU5tsWDhMCMhERO/5CaHe36OTpzaJgI1DigfN83RczpFfZXEBOavHeV5
-	IhMRgEhHhPsbbMZF0UZLI0qvay9nrEHS4ZoM+Bu3dbCRBMfMmrZNu6Ns9xCbmBje
-	vUzn7FZhapFZCnQ/rFEmG8qolp/7A0pDGiXBNjgi0b4Z3Ym4MD9ERfoD+tBw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794873760; x=1794960160; bh=UikmxkMG8oGxqWrUMMtTN3cHdoXLcq3NmFK
-	G7tmJE9E=; b=nHlTsMCjWXzz2vMHcKivyMdybjDBIid+PfXNlOkzPNO4jGAITZk
-	0h7Hbdw5Zq+YIHtbcC+H1f2kqmwdh7hE4kDocOCzcMCkJHNvyJr+H3sS4FGtye47
-	xyGyAhAxOPWokXFEctoc4KQ1vadj2ToM/JkCU6OngOAStoCOOY9pxJ2KSZ1pr3ZL
-	MbQC96tlJBKxJTRlq4j1zQlB2ES9LBzyWwKQycER8gZeSt8EJ4lclC/zOfnO/rIK
-	aGi3BMhLLGk0oC7Yk80Chg9MaqW/BuvFbWpKimVFqsctb0mm2+xK2QjFZTxq3UZb
-	iumYUKMhFgR0d7IL9/uCfFgg6qAr1DMEG6Q==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794873760; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:SU8D1iRmKhZzK6kgjvyxszuSD/s7Tc4IZBBW+y7gl/JqEgD
-	2X2d5TWEBp4PJx81T3/2e4t9S+5+KU6Pt81WkSeqdajBZOOW5AlDbZidAObSP8lq
-	MbwS8CUbHnvyfnY0F5tgbjBPVRI7ujkkNigcM70t3n4J2RxsMvJVSh+odujvyAYd
-	3wCZ1S9U3imFwEI0GpxXVW606pCRZNYQRpRCHQBfxFWXtvwXeKz3eIWewyjam5C5
-	oZPEr1NftlU7MFLY0tGMrYm6AktrpSC6xiytpSq+xsyLr97NRAHa4GMQQCn5mvDj
-	+M1EqSdcWJ8ftRLKQrZgL/K5utufspi1ZlmtZMg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:cA6SMh6a/48s1WoA7XIFsvUBTEC62s5rHccY3EjrKBw=:0xp4PS9yYe7tGSejbMqXYITk7BO5jKcduyjM7gJ65ss=;
-X-ME-Sender: <xms:n5n7aifMOhFzwjbR9mcgwIjRZcD_yW9fYlKaa8qU0Egx8cVgsuK_0Q>
-    <xme:n5n7ajruOeFdQKaHtD7bJ9T6XqF8R_aiq7uJCoBtbRbeOQDIFcO8u6UxP7G-o2JOI
-    nlUIMp156TYkCa58At398QY-Ixz_jMU8WyJHt8nviEcV_YN7Uao5A>
-X-ME-Received: <xmr:n5n7ag6TqA9vsoVc26zHnxjh0VKxu8fTnAZ6Ujn-oolXnKpKqR8syTgXBYdiJriE_8NoYEWGPuRaakBGZSOxnC0LAka_WwuuZNRi>
-X-ME-Proxy-Cause: dmFkZTEFzgKy9McRvyGMetdtBLTPeq0wOfRn3TirNrkZvwniVkPKNlKpsk7h9w0/6KhmLI
-    gGC46wEi7sTMFX1uOJmcp5ARy1tEwZX7/Ho6gpUm9jZAddlFDow/LIME2KDD2s+AUI03Pe
-    VwU5eDWgeuLLla9VresBvtDhTezaRTzUSk62KxSeJwn3vzdZX1MKVR4W8RQFkxLwpoXLjw
-    EJ4F9HtaVjtBso1FD/BmerLiwOPLaud7WyVxN702RMBI29nykDfH+yOH/QLtGUJawc8l6G
-    rvCLmMOURGtB+1yLjJBrTd5CPqE1eTqP8bGh4sirCpVdCz8qF1NawrAKUUbsgKvbw0YVDk
-    0MIBCt0PCFsZ7DjIov/bqFUb9mX0Jzd4jSUq8dYPyALG0Kt0adnzqyMJmUdRejl3bR4ACc
-    bOnBDIvASxW4CPlaZSVA8ezKaMd4Erwx77XJnbrqdoSgjoZKGpfa1AO0bkNQ7RpGQjLQDW
-    JR/Eq45QBG5ra1KPLfybKw1JniFXac3grIYigBox7ew7EWr0I51qFhtWxrt80INwIVB81k
-    wGVtO84LJngv4CvTkN9G1K/OpwqErif9Av/ksck/euK0Gv74r+eLhvbN4um+ITSKwTxrdj
-    dLEvVeYNlnubF4DEouBpIuMRJ5FRr+qe6HJE9wdtx85v5TXb66u8zOUS2LZw
-X-ME-Proxy: <xmx:n5n7apq0l7zSw_mK1-85hv2GKia0uzxuDIleTLtJL4aEvkJkhU9ueA>
-    <xmx:n5n7aii9Mw3GzzfiPneiljMqUWnokUKbLtCz12q5ASHsF9NZye149A>
-    <xmx:n5n7ajL7ajZZ-WZbw6voYA4xpga9jvfS4hJXpXI3J6fSCcVVWsNMpQ>
-    <xmx:n5n7aiDqJqXv3u-El38_dH1WkZe3O3p7mAxhVm5WFqpTbcaeztVIYg>
-    <xmx:oJn7avSzx5Upife0eueOLsODX8i4U7cBTjvX8gZR4KO6JOoRRXCnaSzH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Nov 2026 19:02:39 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dirk Gouders <dirk@gouders.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/2] utf8: respect bounds in utf8_strnwidth()
-In-Reply-To: <20261116-master-v1-1-dc2a50ce0aa0@gouders.net> (Dirk Gouders's
-	message of "Mon, 16 Nov 2026 19:57:00 +0100")
-References: <20261116-master-v1-0-dc2a50ce0aa0@gouders.net>
-	<20261116-master-v1-1-dc2a50ce0aa0@gouders.net>
-Date: Mon, 16 Nov 2026 16:02:38 -0800
-Message-ID: <xmqqld6siau9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=y6CN00q5
+Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-6ddef424972so4367446eaf.3
+        for <git@vger.kernel.org>; Mon, 16 Nov 2026 16:12:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794874348; cv=none;
+        d=google.com; s=arc-20260327;
+        b=H+VsfPVh9IqgrjJhwLwP0mYIw4bbSQo6ohaEIm7z1TVua9LDUmw3leEIFOFVS9IGU9
+         Ni35K/fKiLSHIfKJUfN3Zs6MQEM4fa9JICo0k3V1qkGiey+9Z6kJ3mGHLGexlwz3++0F
+         z1AnaSdWaMaR7sxazpaEr2hDvAKq2/e0de6LmyFPg5+Cq6ozBNp8ZHTGAQ4DFZRW51vM
+         n4dneKFuduSuIgbNBlcwS8L5cL5rxqX1r0NS8FGLJUUsawkij6fyfYalbJRyGa+gktPj
+         +WnqMCpEc7Jnuj6uyfVQShw+JGtMa3GhciSNPSNmiAmqYFIc2IPUXhfZ2YYbu1Ip2UBO
+         5X5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=8mzkev2RcLJInaVMDY1JQGEQa899TWWLYOesQRWaI54=;
+        fh=ItU38k1UieHHhvz7YfJQvDt4bmIQorPThZuCJqMVwv4=;
+        b=g3lrRJvHI1FIKRoM4bRwbZ2aOBKiDmib864zszQygV2pitOMxf5pzodUAh63S8w8hC
+         pOUjbVyVeLQsBEn2kcC1cuNeZdEJvOGQjDfQH9L5TxO2dq+AOlIY0rqnjcLFp7PMAV1x
+         PxfTV9fjAvb95bYfrubqbuXzW49b9gFkQU23iNYmkMIb+py+OFXArViq4EwtpmQC+d29
+         C9q63cBcEefqjIl1xLWstJPhfCO8O8xAhVR3ly+/W0sWPG7YpF2Qd1TTZvr/YdW4R+aS
+         sZjyVHXAUUIOD38v8zx8x9QwDGJFUuAqOGLFksRBkwy9VtRhIc7ylWSaWqJustsHMaZi
+         JtSw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794874348; x=1795479148; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8mzkev2RcLJInaVMDY1JQGEQa899TWWLYOesQRWaI54=;
+        b=y6CN00q57GpFmEUZOur++D1W7SkryogDFY8i6U+ULGjrc/V014h+d1G3MFrg7+9akf
+         SuUwVLjD3gDgUjaDmRTIuZsnI0V43O2Kv22seZdzQgrOy5smMTQSWRjxVI5hGSWMdiBa
+         1/WHnBg0p4BSrJA41Bcqxk01ncCdN3QmP3NqOK82nZBmpoo9rHxJ46TdGbttrI0vRWN1
+         +GzyzQiRz/NwWjzlQgtHVgM//xCzdRLAYKxT+O+FdAkyCNUzQ6Ht6KbLyd1JJIa2tciF
+         ZwGin/LDC5uyTZ1raMEaYW5eJc5ZExMXaokaEjXYT+N2McDNHDwvTEvfFfWKeJOJPHZl
+         TuWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794874348; x=1795479148;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=8mzkev2RcLJInaVMDY1JQGEQa899TWWLYOesQRWaI54=;
+        b=YigK30xg65OSLQ51Vc27IBMmlVZacSTSYAtMsxX1Wbm8zbAmHTG9r1MaE/p/7OQoHG
+         tgNhatSpHdGO9/ZJYkBTEC+OGP/1YzhCC+ONz8O0ZKG6i5QwsWdPUivXkt9quuNWQcHq
+         Yvl2EL/fsSvMHjp0No12KEOxMZAS8rxMopmUKfCdBMBvvL8ZKPSaMhv9hIJUMSEuFbku
+         W5T6bq3EiyNOjW30d7m+URkPUjrDAAWMYM4qe2D2P3F2M/jQZAWHDLsM8t3hOXGPCeHu
+         KgTPw3STFqEiUh8jqQ5lCBIPssQAZqLNmeAPOVIc2+RbutcMZTac5UyMXronEBJGJL8J
+         pGdA==
+X-Gm-Message-State: APuU4Z/yJEdFNkMYiQrDf6MZKfZx1eCJQccMF8m1LwFhB916oTNqSEqW
+	T091GG8P+/Mgjk/KGMCwkC4Nr++A0XeXOqBJkvFMhjL3v3K6f4B5rJ5djJjqkCDokq6PM6hXmoT
+	7McdmRaL/elHvImMIfJnQxEhIi5wUqEA=
+X-Gm-Gg: AYBFou0x9SlCAg3FESZlf7ZnsRSc+PSZyaP8dMJBqT+qZq9Q9AV0SwrJq2kUCFFHdoB
+	k1rfy75hPvcEeNRJpyXa8GT1J0CNE/iyR4qZU5VTklYM8k7y39adbbhgw+mCLgrT96ElKCTh0kG
+	YngkeBjmdqcD62Rumx98jYVzomjVcV9K37Ev3yJZg9TT9aoOF2M1YtOOs27wR907ITRwGWIWvtn
+	cHUEaSZ6T0utg2sMDBMVcAv9iXbVFJrcMw+1OONiI0TWweeGOK7RcCf1gsgQxsEBm15//5zvyYD
+	e5IyFTSfYjcvRZLlk8NTpaLWDwqFEIF8oEGen0xlRUd90Pflz8BsVN1QZtEtW0XTiUmwqzZtoqq
+	9PlrsqW/46zGZ8taEWd95tCKv2JXUIYLVaTQ=
+X-Received: by 2002:a05:6820:f00a:b0:708:d449:478d with SMTP id
+ 006d021491bc7-71ab51a788emr8311995eaf.74.1794874348527; Mon, 16 Nov 2026
+ 16:12:28 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,80 +102,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <2f9f835e3f99d7de5bbf51be2e8ef4dc0485a46e.1794778250.git.andy.koppe@gmail.com>
+ <xmqq4idgn3py.fsf@gitster.g>
+In-Reply-To: <xmqq4idgn3py.fsf@gitster.g>
+From: Andy Koppe <andy.koppe@gmail.com>
+Date: Tue, 17 Nov 2026 00:12:16 +0000
+X-Gm-Features: Aa3M54qJ8pmYe-kgkFCwVUCfaUUiu1x5usxi7onT3PbTW7ysPmysve0l5ayRneA
+Message-ID: <CAHWeT-Z=pKMtGN7GU-UP_yrygTsihn-cwYoLPzjo9=3J_SjJ8Q@mail.gmail.com>
+Subject: Re: [PATCH] pretty: fix lost and leaked colors at line breaks
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
 
-Dirk Gouders <dirk@gouders.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> utf8_strnwidth() takes a len argument, but because
-> display_mode_esc_sequence_len() works without an explicit boundary,
-> there are cases when utf8_strnwidth() operates beyond the given len
-> boundary.
+> And custom format writers have no way to control what happens at the
+> (artificial) line boundary that wrapping at 72 columns %w(72)
+> introduces, %b may include many lines but there is nothing for them
+> to say "at the end of each and every line, do this".  And that is
+> why you decided that runtime detection is the only way to do this to
+> help custom formats?
 
-The problem is well spotted, but isn't the blame slightly misplaced?
-The preimage with missing context looks like this:
+Yes, exactly. I've tried to make that clearer in the commit message of v2.
 
-    int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
-    {
-            const char *orig = string;
-            size_t width = 0;
+> > The same can happen to
+> > lines picked out by grepping colored output.
+>
+> I am not sure if that is a problem.
 
-            while (string && string < orig + len) {
-                    int glyph_width;
-                    size_t skip;
+Fair enough. It's a minor point, so I've dropped it.
 
-                    while (skip_ansi &&
-                           (skip = display_mode_esc_sequence_len(string)) != 0)
-                            string += skip;
+> > Secondly, colors that are still active at the end of a line can leak
+> > into what follows.
+>
+> That somehow feels contradictory with the previous point, though.
 
-                    glyph_width = utf8_width(&string, NULL);
-                    if (glyph_width > 0)
-                            width += glyph_width;
-            }
+You're right, I didn't put that well. The graph doesn't reset colors
+at the start of a line, but after each of its colored edges. So a
+color carried across a line break is lost once an edge has been drawn,
+but it leaks into anything drawn before that, notably the uncolored
+'*' commit marker. Attributes such as bold even leak into the edges
+themselves, as their colors only replace the foreground color. v2
+rewords this.
 
-Even if display_mode_esc_sequence_len() were updated to take the
-remaining number of bytes in string (which I think *is* a good
-change, by the way), the loop it is in may cause the entirety of the
-string up to the "len" bytes to be skipped.  Because the original
-lacks a guard before the call to utf8_width(), however, we end up
-calling it even if string points beyond the given region of bytes
-orig[0,len).
-
-If you blame the lack of such a guard before utf8_width() (or after
-the loop that has display_mode_esc_sequence_len()), it would match
-the proposed fix.  But I doubt it is entirely fair to blame the lack
-of an explicit boundary in display_mode_esc_sequence_len() for the
-breakage you are addressing.
-
-> Fix this by adding a boundary-check after looping with
-> display_mode_esc_sequence_len() to ensure we operate strictly within
-> the given len.
-
-If the incoming "string" is at the end of an mmapped region (beyond
-the end of which nothing is mapped), reading string[len] would give
-you SIGBUS, so display_mode_esc_sequence_len() would already have
-taken you into trouble.  In other words, even though such a check
-before utf8_width() is better than nothing, in a sense it is too
-late, no?
-
-
-> diff --git a/utf8.c b/utf8.c
-> index 96460cc414..7e050bb2c4 100644
-> --- a/utf8.c
-> +++ b/utf8.c
-> @@ -217,9 +217,13 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
->  		int glyph_width;
->  		size_t skip;
->  
-> -		while (skip_ansi &&
-> -		       (skip = display_mode_esc_sequence_len(string)) != 0)
-> -			string += skip;
-> +		if (skip_ansi) {
-> +			while ((skip = display_mode_esc_sequence_len(string)) != 0)
-> +				string += skip;
-> +
-> +			if (string >= orig + len)
-> +				break;
-> +		}
->  
->  		glyph_width = utf8_width(&string, NULL);
->  		if (glyph_width > 0)
+Thanks,
+Andy
