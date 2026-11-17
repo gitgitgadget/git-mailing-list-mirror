@@ -1,87 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794931417;
-	b=dTBTe1thlZjJNVqigRcKTuBLsqIYTKzszy0wAd0oUlBeVO+Fyo+i1UPFnDaMFuREZ3k5
-	 HOvyyBFljNrIuFDCeP1Gbytv6tCeZIPmKPClZhhVEJJsrPR0X8xfMx/7Lpynf0zqEijhd
-	 QMi0qVhPL317m9oT4wptgtojwp5+o4PMu1nX+8r3NHdYqnE9TPP47jfZZbnwpU1+KoLaY
-	 emIJ2CglZPNsutqBnKzUKx6cAR6roy2SO0ZIUFe9n0pcWlPcu0LEBkiy0ZjWPea54PPGz
-	 O0WYapEOtwLzHvu0ZTSs3MrQ8UaOv90btkrl1FkmGtmxDLbcD8JwuMlUx5SyCwW+Bqg==
+	t=1794932340;
+	b=ttj/3QQeXaEGsuA7RE1uh1RyFbA8qO7tSAsxRQE+6vVvyEpPX7kNf6TJLYlpzTMicpR9
+	 GKICQf0hXyPszSxDCQXx1/PNQZNCxtV+kSVmxZUcdcIsPy6vkrE0lfB7OMUrLl7wnhAHh
+	 N6PTspPJnQAyPQe+fNIRnXALlPl+DnxTiGCThVnidjlp4PhF0iaPe+hMUxp85CqG82BTV
+	 gE30z3MKPxB9TylCoPf1L28yJWjtg2+jRDlVzfYF3erNtwwpObZOfej1LoELFBnvakxVC
+	 DdgyFuHpL4oUWJYwzlI9RIqa8954Wl7ziJjSi/Ssnt3NYPtVptp9Dw9RpQ7y499nRMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794931417;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=0AsenNdiqH/MwQfhN4ts+uUEZWwRktO9XXC7+si+Ei0=;
-	b=rQoujDprMKrcwbbYOZZgVo3UTiT1mW0apnjo9eXbzkMwJvDJrM1kijqjqQjFnRBCK6Zb
-	 24iGq97BnW892CJbp9BiUuMeOGE6lsWhkLzQreTfTlyEkDKRo8fSbLrVGt2Vv+yH088ab
-	 y/B3drhJCgtX7oKr+cgBMJ/wsOw1oQVkP69ft33fTcmZXn7N0e+CGqXUEN8+pkmZaUm/M
-	 8E66sXFZa1ZhznzCAKgfeyqRsqDWsHr75d5kEPQDM0544vr26MdTctdqjGk1U6zPcx6jL
-	 AoT6QzWIDncHvFjk0HiYaQwbXBmwU2/T9eif6UsVbLdC5iMzno0tSE7zPAjewZNoVpQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794932340;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=dHeaV32INEi1uUIpx8j0I/XwD+EWmArPFoiqZgEhr38=;
+	b=2IKrNAL3vaKqEKcuGZP2YHkbNoWyIweBgQLU4nWtM/PFATNZr7dBNzYqkCz7hnEGS7uE
+	 obJyLAF1Qhw/O0H9YSvG6SW75j/mPHzP/LiA/Ic/7InHiG1Iz5U4ZC147GyonHxVTKJsJ
+	 Ngf2Db3uUCFL2WNK5u369VAOkgBV4OeDHoEVfDMlb9mk7x3CxAqdHVpVYUAZ345Q0mlje
+	 5zx4bAv0vM6oLSyaFMEzL8t9TLgP0XC/+y5JOY7HggTCvQItGNwWou7UcmQoynC2iXhQP
+	 bEBcpditBXwRw/P+GYa48WTHu6hurKVnT9iL48ObzHdoJjUQ0NsbxlE5XZ2MT6D1qfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=POn5BFFy;
-	arc=none smtp.remote-ip=74.125.82.52
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=QkqGnAEU;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=vanWIhwr;
+	arc=none smtp.remote-ip=202.12.124.146
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD9E606A32C
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 16:03:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2BD9E606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96977606A31C
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 16:18:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 96977606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=POn5BFFy
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-15dd124bbe7so1485403c88.1
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 08:03:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794931416; x=1795536216; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=0AsenNdiqH/MwQfhN4ts+uUEZWwRktO9XXC7+si+Ei0=;
-        b=POn5BFFyVOrt8qma9v7/IPbDafuMRtlmv8SILR3PZlpOVrH2ePZt5eRq83kjizP1Wg
-         gGOGuICdjKTmtyV77mVz6Q6pFFQcf79GFMHv7TFbpPziTD8wvkLHGg0A6qu9w35i97sN
-         W0ps3qgx3VbJ9Bwexam6F2MYOPw8kAa8I01MbH1wNETdJydmSqu53zxGRlResvWzCYQk
-         My+AWQoJUdZ1QxOsv4HbIKL30F8iPTulPbnVCkjGDHLCMQJJul+U9VHugh/Gy4F2gjmD
-         pcMaYAPIILYHzmmBbqKSemgpWbGa/yIy9Bb59tqOHqDj2idcyd+hjdN4qnBGilM9QoxZ
-         NCWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794931416; x=1795536216;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=0AsenNdiqH/MwQfhN4ts+uUEZWwRktO9XXC7+si+Ei0=;
-        b=wBm3lC4AmiWzzQ5U5GiNGJDJ/HcMFpGqvIJuiK6UCTjjMcn8ZhwyUvTbYvf2yJ4KyY
-         4m1AHTE6ACYwpGgncYrm9QUB6Z2ShJyo7xCXkKT09+ycjM8bYkpk3e6xI7SCkSdKcyxt
-         88KzLcXSXHH5YDsxIuKXulXTfvJtUgJWy92P7+ogo6YEDXZz9jHDSLAfNkoP3hcrN/Sl
-         bYxrS9yVkWKGNKtZDvIYArU7g2NnXpgz4IbEhPY6kH5PrYLx9D5jeqPhsSWe25UOJDra
-         gN83ghR3BOWTWtsvdzaBXp+a+m1+LdlbMWNJERXgcww9uVDyPPK+rpU2OXz7ot9AkFG6
-         xz6Q==
-X-Gm-Message-State: APuU4Z9KvP0LLSFRXHxGh6J5dPfwxqwCuH/kTzQQfM3qC0h0OY2wbCJ9
-	GC+fjC/Cmvf/gtLZJLDTL8HBSzE4Z45/f8YCCEmgg1QZ40S1nPeWetUwWf1rE2vj
-X-Gm-Gg: AYBFou22f+5SwydD1RXJwAu1dhCu0TKP4zbS9+fSmfa04zpO6ZZy+chJ3uuUMThLSb4
-	Juf8WpkAjjwj2sPksKY+K6XaSHTZ80cLBAwfrFIgEVxM192logmh6yQdjLJ+ou9ijLgfYKgC14+
-	IKuf8vJTWPkPniRFSeGyfumKiNbLA2Yjr7txiasrdTqUzeFyjvhwjneDcuxO63Y+Oe5UgXQRjXh
-	dk+rpN9PwVeU3nzGqVAJ1opnDXHFyJZwfnqM6wpUlPjjlvC+zNBzjiVYHmwZYNTBd8VA4tpsE83
-	QHjVdApUPwS/cZS3aas66tbJFjehD5YmgR3e/yYF3jcjJdBlveolq7qbGUiN4txsUevmP5+amrb
-	LYSujEB/xNvXdxu/AzbxxcE7yv0UJp3nisWaNRpTDeP8MM3vVUz1KHD3lY4IM7byIx/1h09j28Q
-	6gjfCJ9DGWXC4bev+fVx7fnCRSDsMzv4n45wSa2VoYvm2aAQuryP0YfOKCyI758R9/UFYSvI6yL
-	Vg6wsmC8zhH5KqwgYM05bz05BeOf0MSrfuUKZLoBOTfSgmIICDOOSuraWiua5hd19ClzifHhqVq
-	+JDncb+Bh3KBNq/lRS2Mc9arEy1CznD120oklg==
-X-Received: by 2002:a05:701b:465f:10b0:1b2:4e2c:6838 with SMTP id a92af1059eb24-1b543be9aefmr52571c88.15.1794931400912;
-        Tue, 17 Nov 2026 08:03:20 -0800 (PST)
-Received: from [127.0.1.1] ([115.108.41.154])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b50316d9c2sm38039687c88.7.2026.11.17.08.03.19
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 08:03:20 -0800 (PST)
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Date: Tue, 17 Nov 2026 21:33:05 +0530
-Subject: [PATCH] fast-import: do not show the path when "feature
- export-marks" is forbidden
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=QkqGnAEU;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=vanWIhwr
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 005401D0023C
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 11:18:58 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 17 Nov 2026 11:18:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794932338; x=1795018738; bh=dHeaV32INE
+	i1uUIpx8j0I/XwD+EWmArPFoiqZgEhr38=; b=QkqGnAEU8KJu+NtoO6MGGghpWx
+	AfG84A8Dip3GCPRqJkljR7sWvpm7sBSB2JdeGBBov34uIQYcjtNF8ImZl6XLGR25
+	bWNPzvv1C+nwl5wBoa3zVkDvoJt6L/OXQo0seid/wejfte1SftrWQnedvkq/HVUt
+	AwQThbl09QQk1jJ2KCIc+wppjNKc/ZAFrEj7XpYBRCgwa7o5hnOjlqO+FxL7pv0F
+	l/NJPlrmNpXQialC71m//IYlgsTDBX2la+WymldanUvkJ/q77+NPqq4p5rpHr4yN
+	D/LeVe2LxvSdFmo2l5ns+t1w7NmXQh+0Co6xWmPl29YJkAqwNrCBsmQZtiTQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794932338; x=1795018738; bh=dHeaV32INEi1uUIpx8j0I/XwD+EWmArPFoi
+	qZgEhr38=; b=vanWIhwrGhpawumxhr4vGxhrvTsdkJHMgc0PWd4P8NMSQyTxKy6
+	7Tppl47pu99lCd4nsObvKk+EPuPlbBGo2vJ+cCxG7cawcoFShCaZfobiYTo8BxWx
+	9OMUP/PFX/ly6b4RtUikYOOYjx+GgSeNTe2RAoRYO+beJA97I51tj1m2bGg2JLZv
+	09DhMpKe4B7eeFkrAF0KgCUqPBLOS2tc4MwnAQx+v7JTUD3tojbzcNfrP52wHWpg
+	XjbpyU+FipPSDyx3KDQu5HhUe++Jorx0C5NUv+Cdl5lnTLW+zZ0cE8I/cuNImNAN
+	87Rt8MPXi1I09aTuUHXXgL15gyFyk0HnNjg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794932338; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:WDxZqURn5hm+5EjZZkLkua7dbsL4mGS5UPS9Z5029eoJc9J
+	z/SBuYRzLu0zeK0HnyN4QxDxqU2mgPYZ49UVt0dvgeK7nhGQd2qFMt+kTIhcGib3
+	gWGmSJAKjD8LiQHmevJxRTz0nztxH/fCkvqpNsDf84nJ7O9+EoYZbi3T2olEMe7v
+	YI/lQnWNq2mdVvo9iiVZimUC5wOEbPzj1swN657CIeC6MzsP5koeVUulN8COvJl3
+	7zO55kI618kDeyzGLKoSNM18M9vCLLHU2Zk82Z6kwOZknSjZntTx0whMW0wpULnJ
+	Dl/J8DWqftiEEfR7dXMJFUlby7zw9BsJD8DV5fQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:hx3OmD4eF3OXhHBtfdCxE56OZtrGgvIeSCj/ofMtyC0=:vhHGEVy+XVazUkyxQdlJxIrj7Ave/WorVkNpSLswINM=;
+X-ME-Sender: <xms:cn78ant4zTy3hXf1zWQYv_8tsDn8HmwxSlzDyyx8m0UxBErIzDzzjQ>
+    <xme:cn78av7F8Oo2My2rQCjG0fC1IsSsBBIErnTrL91OTbydq1FFG142lWsG46ooo-ajn
+    I3KxKBO2TrZsw4rW9qPVAV8VBQKFrFL3Y1tF2EGqbvsUJenSTYJe7g>
+X-ME-Received: <xmr:cn78aoKJDFlgrtrSs6WC7XLKiojgFsGEoX5jWwzxCvNE7elYCZsOpkE-R5Tjc7bQmyvoSELQxvJFLYAKodJ7jf8-mtbn5xQsn49L>
+X-ME-Proxy-Cause: dmFkZTE1ucg4P2OlWOwAy1VP6jQBMfsImeamTXqMnyWD9Nlq4Jjee5NurqNVsJaYuYOwg2
+    C8ZaOE29PJ3AxXZdR1cBx0uWFlkI5z4kYKyRiduPVnPuezuKVxaeFbSKC9k7BYYX9Kugz3
+    SpaDCkn5OcYKznur4SKe2T8XrMpk5T4bKcbEYgQgzp3LmqaM6cR1AFvx29ds3YgGe6qPIf
+    jZ5Fe4piIpBZiyRIO0FKxqvkuP8i2gfHiPVRB4RPM6c2tN6VekqUd5DhcBXUvI/gExVgHx
+    T2UoMz1iyGF4licv4JclaXdBGxxLQN2MnvV7DM1lSEzlOelwf+dj9cQKH0RLrvcu8DbDW+
+    LkLYMXYtbs/hH6vTSSnNFK/xDEUR+oStNpMPRS7SxPCucMrrfGhkjVrh/4Y4k3YAFShKRf
+    On9LnZYq4hfBZGOb/t9J4fbn5KyiOpbitQYH1v2CO0hWxG4YL/D1/blmeFS7Vp11hFHY6G
+    5aVqYNOxPIYWqQi4J04NeWQmt3+J5NVYAUNt765r0qxg04N7e/qW1FOGlJ8yO0GrFsV8Dk
+    ZeQ9mfCEy4GisSrDeGde4keopprNqV3HbtbaMnDB8xlmRlRb+rHhSv98BJ7BqoG1I7Qx+p
+    Q4DdPvSymWrlOII5ds7J9CXPWLUIwvwohJxK6IkSZ3CF32mfIDTpm74+Y+eA
+X-ME-Proxy: <xmx:cn78av7bg5YTVbKMfH7Y_BirDxCoxC0vJwr3KXnSqB9ax2CLeqq2Gw>
+    <xmx:cn78arxaVAprWVJ2AH-Hzus5TYgBijWO6MnEOS6vAZa0syb2IYcEiQ>
+    <xmx:cn78ajYLUecH1i_RKJr67hi67M8H2bqkpDL_p2pamR6s8pJ1cvzMKg>
+    <xmx:cn78atRTL-VOslRqpn-3GaPb8DhH_UuQDzKsD9vUesSWGgaWG-AtKw>
+    <xmx:cn78anjSagzBF59RUUHYIsoF-wCgJDDVsYuCpaa8KYQs8RQSciTjyU1f>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Nov 2026 11:18:58 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dirk Gouders <dirk@gouders.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] utf8: respect bounds in utf8_strnwidth()
+In-Reply-To: <xmqqld6siau9.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	16 Nov 2026 16:02:38 -0800")
+References: <20261116-master-v1-0-dc2a50ce0aa0@gouders.net>
+	<20261116-master-v1-1-dc2a50ce0aa0@gouders.net>
+	<xmqqld6siau9.fsf@gitster.g>
+Date: Tue, 17 Nov 2026 08:18:56 -0800
+Message-ID: <xmqqse0zfn2n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,68 +125,125 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261117-ks-fast-import-consistent-check-unsafe-v1-1-fc1ed53c79b2@gmail.com>
-X-B4-Tracking: v=1; b=H4sIALl6/GoC/yXNSw7CMAxF0a1UHmMpqcp3K6gDk9rUVCRVnCKkq
- nsnwOydyX0rGGdlg0uzQuaXmqZY4XcNhJHinVGHamhde/DedTgZCllBfc4pFwwpmlrhWOfIYcI
- lGgmjo3MnMtBx709QY3Nm0ffv6Nr/bcvtwaF867BtH/yi5daKAAAA
-X-Change-ID: 20261104-ks-fast-import-consistent-check-unsafe-0a94ffda7518
-To: Git mailing list <git@vger.kernel.org>
-Cc: 
-X-Mailer: b4 0.16.0
+Content-Type: text/plain
 
-Since 68061e3470 (fast-import: disallow "feature export-marks" by
-default, 2019-08-29), a stream that uses "feature export-marks=<path>"
-without --allow-unsafe-features dies with
+Junio C Hamano <gitster@pobox.com> writes:
 
-    feature 'export-marks=<path>' forbidden in input without --allow-unsafe-features
+> The problem is well spotted, but isn't the blame slightly misplaced?
+> ...
+> Even if display_mode_esc_sequence_len() were updated to take the
+> remaining number of bytes in string (which I think *is* a good
+> change, by the way), ...
 
-because the whole feature string, including the "=<path>" argument,
-is passed to check_unsafe_feature(). The import-marks variants pass
-just the feature name, so their messages do not include the path.
+An update to display_mode_esc_sequence_len() to take the length
+limit, including its fallout, is shown below, and it does not look
+too bad.  Not even compile-tested, but it should be sufficient as an
+illustration of the idea.
 
-Pass "export-marks" to match, and make the existing test check the
-message, not just that the command fails.
+This does not make your "after display_mode_esc_sequence_len()
+skips, make sure if we still have remaining string to grab one UTF-8
+character" change unnecessary, as I said.
 
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
----
-While backporting patches for a security release, I noticed this.
-Was waiting for the security fix to go out before sending it.
----
- builtin/fast-import.c  | 2 +-
- t/t9300-fast-import.sh | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index ab5d2a2344..998167794c 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -3918,7 +3918,7 @@ static int parse_one_feature(struct fast_import_state *state,
- 		check_unsafe_feature(state, "import-marks-if-exists");
- 		option_import_marks(state, arg, 1, 1);
- 	} else if (skip_prefix(feature, "export-marks=", &arg)) {
--		check_unsafe_feature(state, feature);
-+		check_unsafe_feature(state, "export-marks");
- 		option_export_marks(state, arg);
- 	} else if (!strcmp(feature, "alias")) {
- 		; /* Don't die - this feature is supported */
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 15f511fb6b..33c04e0315 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -2337,7 +2337,8 @@ test_expect_success 'R: only one import-marks feature allowed per stream' '
+ pretty.c |  3 ++-
+ utf8.c   | 27 ++++++++++++++++++---------
+ utf8.h   |  2 +-
+ 3 files changed, 21 insertions(+), 11 deletions(-)
+
+diff --git c/pretty.c w/pretty.c
+index 0bc8ad8a9a..a20fd61909 100644
+--- c/pretty.c
++++ w/pretty.c
+@@ -1834,7 +1834,8 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+ 			while (p > sb->buf && ch - p < 10 && *p != '\033')
+ 				p--;
+ 			if (*p != '\033' ||
+-			    ch + 1 - p != display_mode_esc_sequence_len(p))
++			    ch + 1 - p != display_mode_esc_sequence_len(p,
++								ch + 1 - p))
+ 				break;
+ 			/*
+ 			 * got a good ansi sequence, put it back to
+diff --git c/utf8.c w/utf8.c
+index 96460cc414..544c5329f3 100644
+--- c/utf8.c
++++ w/utf8.c
+@@ -16,16 +16,23 @@ struct interval {
+ 	ucs_char_t last;
+ };
  
- test_expect_success 'R: export-marks feature forbidden by default' '
- 	echo "feature export-marks=git.marks" >input &&
--	test_must_fail git fast-import <input
-+	test_must_fail git fast-import <input 2>err &&
-+	test_grep "feature .export-marks. forbidden" err
- '
+-size_t display_mode_esc_sequence_len(const char *s)
++/*
++ * Return the length of the ANSI display mode escape sequence (e.g.,
++ * "\033[1;31m") that appears at the beginning of the "len" bytes
++ * of string "s", or 0 if the bytes do not begin with a complete
++ * such sequence.  Never looks at s[len] or beyond.
++ */
++size_t display_mode_esc_sequence_len(const char *s, size_t len)
+ {
+-	const char *p = s;
+-	if (*p++ != '\033')
++	const char *p = s, *end = s + len;
++
++	if (end <= p || *p++ != '\033')
+ 		return 0;
+-	if (*p++ != '[')
++	if (end <= p || *p++ != '[')
+ 		return 0;
+-	while (isdigit(*p) || *p == ';')
++	while (p < end && (isdigit(*p) || *p == ';'))
+ 		p++;
+-	if (*p++ != 'm')
++	if (end <= p || *p++ != 'm')
+ 		return 0;
+ 	return p - s;
+ }
+@@ -218,7 +225,8 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+ 		size_t skip;
  
- test_expect_success 'R: export-marks feature results in a marks file being created' '
-
----
-base-commit: e1ec09b23c8e0deb21a0b95ac5996422277395d4
-change-id: 20261104-ks-fast-import-consistent-check-unsafe-0a94ffda7518
-
+ 		while (skip_ansi &&
+-		       (skip = display_mode_esc_sequence_len(string)) != 0)
++		       (skip = display_mode_esc_sequence_len(string,
++							     orig + len - string)) != 0)
+ 			string += skip;
+ 
+ 		glyph_width = utf8_width(&string, NULL);
+@@ -279,6 +287,7 @@ void strbuf_add_wrapped_text(struct strbuf *buf,
+ {
+ 	int indent, w, assume_utf8 = 1;
+ 	const char *bol, *space, *start = text;
++	const char *end = text + strlen(text);
+ 	size_t orig_len = buf->len;
+ 
+ 	if (width <= 0) {
+@@ -299,7 +308,7 @@ void strbuf_add_wrapped_text(struct strbuf *buf,
+ 		char c;
+ 		size_t skip;
+ 
+-		while ((skip = display_mode_esc_sequence_len(text)))
++		while ((skip = display_mode_esc_sequence_len(text, end - text)))
+ 			text += skip;
+ 
+ 		c = *text;
+@@ -378,7 +387,7 @@ void strbuf_utf8_replace(struct strbuf *sb_src, int pos, int width,
+ 		int glyph_width;
+ 		size_t n;
+ 
+-		while ((n = display_mode_esc_sequence_len(src))) {
++		while ((n = display_mode_esc_sequence_len(src, end - src))) {
+ 			strbuf_add(&dst, src, n);
+ 			src += n;
+ 		}
+diff --git c/utf8.h w/utf8.h
+index cf8ecb0f21..fb2227a9e2 100644
+--- c/utf8.h
++++ w/utf8.h
+@@ -5,7 +5,7 @@ struct strbuf;
+ 
+ typedef unsigned int ucs_char_t;  /* assuming 32bit int */
+ 
+-size_t display_mode_esc_sequence_len(const char *s);
++size_t display_mode_esc_sequence_len(const char *s, size_t len);
+ int utf8_width(const char **start, size_t *remainder_p);
+ int utf8_strnwidth(const char *string, size_t len, int skip_ansi);
+ int utf8_strwidth(const char *string);
