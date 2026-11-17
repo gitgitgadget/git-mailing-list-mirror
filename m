@@ -1,92 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794921881;
-	b=3aTtQQTX5Sdc/lqpQGMzmSDL/P04DreiSfwlNJqd6DUK9Cp6LODLX0vVmxuWIFabAoF/
-	 1XVdgAn0PBAmnMjCPHQfpYYkZkLgvh2pycNti8jyIkDqDm6F8yxvUsDSV5NLw8yEa9NpE
-	 hde/bJNp9M6113JqkV295x4NNbdvgKjXi/ebCx/eTPniJ2zXZm3/XPGWhRevRSt4FGZ7Y
-	 JXXsWc1cx9WZ6lu0meOEaOGbHzPo1TfXvB6Y0zKGbGzepaWdFgHA7ag/5oeKpKXOtXeqw
-	 xb8MrWlgybiHk1Pro3HNILQVoqSesRZ2D58yClgFkvtzcHcIeQNeivW/i3APzKGrvJg==
+	t=1794921883;
+	b=nhqOW/K0UMsAvClsN9lMgaw57rL0+8Zqh4NWtYqrvkT9bWPu6bzrmatnxWXIjHGwW7Mp
+	 8qLYo2vzwANlzjj3YojjyAvzR/Fxjf+bptCcqrDjZTp56YwliqWUoZ4TBPeioAmjMFUHx
+	 LaCv4huFlOEqk9mYriGI1b+viq59xvMaZSnu8z7p/vL7RlKOH8jfnkWCyHlREyQsHcOAK
+	 eBSAaIJm//fM09mdTdHxvg5CH11ieGJ/JfE1+r1ryyNpuqKdzs67jvdGvKf9oRO2G4b36
+	 yzn6nERaDyF2x2wdpn/TKg8D6lM4RTSWReCD6/wX3DZDizchd+Jz5t/t2u8mKy0F2Hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794921881;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794921883;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=t+sWMCsL8awzinjVBKiIODQDcX4FxHb7TINpwMWSWbo=;
-	b=nxbmilgLkyUAWIZ4RxBuK1Rl7QslNkv0Vz62VOQVNNLr4trzGozByIhweGyF15Y9+oCc
-	 lyoc7TnFYvQtD87TCxjEKdg6tl0Qu/tjthm5nFy1xaOKdlInSBxQ8mG3t8roaiELbgDms
-	 6YzdK3dSwN9MNp2zmcX+3DFm/hHrxhb3OcZTUGe83ySR4erJXpP43NwsaEZ43tUdti2Ju
-	 20rx0Hvtsd+uAQAKWkSMGOmY6zvb+RdILnPF3Rg0VaVo/N+A/zts5yRs7T9t/TCiR/6Kv
-	 eMIeP1rluplc4KMZvQj964bObbi43zarNEI7JSafsvN2VuRNmL9lUv6U2P7PdRgqmQg==
+	bh=S2bERXMK3QM4AL6CpU2NcC/Zp7XlFZu6dtozdtJ9w3w=;
+	b=FXxdCmh/q9ox4zFchGxReQuJBz1aadDOuxG8ryR/DeTg+qGfra7nwbVbIJkpNDAVkzSt
+	 tzyGvIL7G4ak6e+gNaDSgcvy4PfkdQDOiWCS6EEduGvuY/45wKnhinCxH8N2K2xi2BWc6
+	 sk5FM9sRPHXqHhPfxA2F8xGZ7EIGSa0OJmZGF+tZkzUNemWIDw+wkhK5RTdUnof40Do0T
+	 6MM5ITFFO7tXbPzrF08ZgCaz6I+W3cbsmBkkzuO/TozkaWgCoLLQcKOXM+BykyEhsOwW8
+	 Iy6Bs3ZRm5209rSBgjJAT+I6PyKKsUYX0t4fWVi9h6cSec5wVj8A7PbBmeDs+cvp5Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AokpOkLo;
-	arc=none smtp.remote-ip=209.85.210.178
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fSSeRg+G;
+	arc=none smtp.remote-ip=209.85.216.46
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A258F606A32C
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 13:24:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A258F606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE90C606A32C
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 13:24:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE90C606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AokpOkLo
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8b3577deeb0so2335684b3a.3
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 05:24:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fSSeRg+G
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3b0bbdeae06so2965705a91.1
+        for <git@vger.kernel.org>; Tue, 17 Nov 2026 05:24:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794921880; x=1795526680; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794921882; x=1795526682; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=t+sWMCsL8awzinjVBKiIODQDcX4FxHb7TINpwMWSWbo=;
-        b=AokpOkLoiuXYgyGrEJ75NoGsED0XeWT0UN9YvXLFRbeZrFkCBGZxzP0ZKne5KNjXdU
-         Y6qRpCTcQg11128HB2BIvCLc+1PM0d+xcsSbin4dMDCI+rylg+4fuffqRg+YlYauLwSj
-         OqDTpv+S8ze4pdBZmdXGA6Um0QLohyoQMhzhPMu664ZMwR4tKjcVjtncKHK7aEUqf3YD
-         P8i70MpeTdHlbVAsh0YepT1EpNrjS6Zq29zNZMIwqCw4/YNzrnwOoI0teg+WmCWts6QW
-         9P8gFXZtyZii72OT00P+hHDxRYudXTlG86UxSj3IEqIDDXfYRZJHv3RI0gytDRnP8Gjo
-         MrRA==
+        bh=S2bERXMK3QM4AL6CpU2NcC/Zp7XlFZu6dtozdtJ9w3w=;
+        b=fSSeRg+GK7uW6T2Skad/R4Y6ObYdtHObV1Lnial2WB585XmwU9NHxoiQ+0LRY87yLI
+         lOtEmYp5cxrQ7ZH9BY2Skhb4g4URe/cOrIZbVXanM/GN6t5EZ7qh1/E3jgq4GTv/V8fk
+         7yQBSlGNj8xHJu2Q/8RsRRORItDm6n/u3Fn4MTHUhkCCw0fEV8FPZsTFlzC3mCJ9TsMo
+         7pZYoCOk00nHhFIlyAYHP7YJhqFU1ExrG4jwkVZEf6hwrirKP//AVGqeczjzqYAeiMx7
+         VwxIFiMk1lslQAJ77Z0ETYWz/OXjXjWnaINE89CikvkYlUn48khT/kHRqr0kkHP+2HyL
+         x5sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794921880; x=1795526680;
+        d=1e100.net; s=20260707; t=1794921882; x=1795526682;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=t+sWMCsL8awzinjVBKiIODQDcX4FxHb7TINpwMWSWbo=;
-        b=glweaVUDEK4nskRF2LsNov1SD5+tSqswcifTIgYpZcVwTvm3BiA5aGeRs8hG2UbAA8
-         oEdu3WUXaum9Ukz99TSPGZTVxif7AzE8sypo0WEg5odSsxyVQ4w3xWBLcYvgq8MLzoHR
-         eSLLFQivT+9eSD3+8MgUx00vYh7wrO3SPFRKLIYOKEXdqOCOgdLzq7uXDFOtrS+sCWgV
-         d8+jSPzNQtoJ/kGDAFBn5QW9BqsComcGzvE4T+NnuRSu21mASLkymm4mnVUnu+I5raaj
-         d/YG7cfgUVghEcEMUG5HVpSGSEw/eVaarzvKD24DZi+ucV6jmBHke+HuWok021ttKnxH
-         qRew==
-X-Gm-Message-State: APuU4Z+TrobjPWMjVP3nSpp5pcLKHJ9LXh/1SJsjSXgvSqcwfavGm1wf
-	2fPCnOq2eguCU85wpDise/F48Yw2p3IzRTNfDqolT8tq23t11ToH/jJWT9gyOA==
-X-Gm-Gg: AYBFou1jyMQJDpvZbzSDBv8qHLkYDLyRgRGsq9w2mlPhJmsNz3/ncHgM2coMfVw+heq
-	sUeBFdvRBPBVxEnO/UfBnrWGRZcmDINlmjW47ngowtDzdMBs99rB6xxZHLM0beFoWhON0om79oC
-	0I08z/c1LUXmq9ZvLXxcbv8ShA/zJpNXcNFz/ZZCBVcPoNLUGhZ0jQAayHY7WT2AVrQ5OHrJ1ta
-	Uy4x78ZjIB+fjPs99RW5M71hltRcPZES/Q+9floVvNsh2bfvXQEYxTJuxdyrIgCo85v3cDGdX7b
-	FJYwUYciLapYCewWzbYuA6cMVLAz/HuNXMdxdFPdqsY97z5mjlTklfuktbI1zWBSkV4hwWz2lEX
-	8MAQMyUfnMJYuMAD0/rC/yXPVq8okhrz/b+B7R6fOEAPYyQozeKXCZkbfx7NTRQ0xKEROeN4VTQ
-	mHWKOk/D4bhuUEu45IT3+oDnURVmC12n8UuKAxEl1dyb9v76IjbWNDj/fyCjYr0rfRl8DdkzO7J
-	kCC/h1AL5k27qrGo4z33xE5/O8eb3HgKWzEMTBatdk7KwFxCapuSvzEr8tqtaYGg7bARn+dEueC
-	OZ77ztqvb6Hjp1KBePyA/1xNqcB/Oa6T0jxjCKZz+ajbVNuc2vJ5p7XXJnGvIKqKFEQUy26QIED
-	v4iACLd3C
-X-Received: by 2002:a05:6a20:a11c:b0:3e0:dbf5:59f1 with SMTP id adf61e73a8af0-3f7a8bd98c2mr12497262637.91.1794921879914;
-        Tue, 17 Nov 2026 05:24:39 -0800 (PST)
+        bh=S2bERXMK3QM4AL6CpU2NcC/Zp7XlFZu6dtozdtJ9w3w=;
+        b=lQttfJFeZpTwGimcBcn28BPpG59fhGtikShqoinQ2Fu9RqWgpZ+ZHRe/tiUSQClTXV
+         6J9oNZiI8VL7sqpD43gTJAParafngjOEQnyGc3l6Eb5JzKjAkBbNDSmRdq3SlbAADLOm
+         oSoNQP6GHHcrIKeAD0oUQfLqOpJinZE2yJDBmwZ2H9vT15eedqlFkEOTsPHg4BCzwkRX
+         eAVVdCJC2kPGow3fM5GSKNOEklsPEFTG5BQpgPQm5YJCJ7jgqZnWn/DR8da8YZTvAyt/
+         ScoqRrb+cw+Ho5JYac5/ijv0jYuHbOURV9IRtM8igbl7vBqMo25NaRIIL6cX105fbVoD
+         ZHKQ==
+X-Gm-Message-State: APuU4Z8TYDqb7Lw9z/MnOCDWAtmsqdkWb9glAgC0HpBCIhNtQF6xrX09
+	Vp4zjQOgDPwC1a9Bw3WhDdQ71rvN/Ua53IpqlEak8nkcuJvFRKyiygOUB0Y4qQ==
+X-Gm-Gg: AZFdTZegU5TJ04sKsminfMG05vjbLWtCjY2wLDlkQ+rYC0O0Yh67GX9XW4jZpPZmWTC
+	scdelRpb8gcAHM8BqRa/UZ0xbAqSxeYerzu9tFTlESNbgJpt8BhOCrZ49qWzCJjRyL+7YTbiOmG
+	rAMfJwHqp45lKqkw4ExYQf6oiox6NpIboW8/tBjdHsAOS0oWiKo41xd/BFQweYHpN0dahO1n1o5
+	mCkGWyxyNp3Zvmdzg/kWmCrUTSxh3s2h7+58UgdAZulItvU1XeSsQTpAe7fM3CPkEKPZE5tdEk6
+	Tmg2ccp6LvM6z/8LbaYmWxtsvktzPm50NkRqds/z6rFTVcRnxP/zCQ2VP6iQDeKhLqng4xamljv
+	EKOv16o+9tn05oDgk1ekWWOC3v2Nz7xo2KUiaxilsTnXwFXy0M3gLOQNxJR6oVWFVGNvRZNpDEu
+	W5vlYufvDp31OIC7ixwN8spNI8IicivZ0nsGIPPf+YZLnomA3CoIxCZmABL1P47aIoPNaUBqy64
+	vt0q//5Munk3Qeyqd/6vDy3v5wygZBh29OhpTOegmSNvWZSm2o6OBPBpkYOI0xxJX0LiL/ocOWG
+	gezvkqVEeb46lHI3KtPwhjyTBNOxHyMUhFJsTxdxozpt/siuSs7cBesI8V9bSntZtQQO4dikt18
+	fICSveq42
+X-Received: by 2002:a17:90a:d2cf:b0:3a4:e934:e85c with SMTP id 98e67ed59e1d1-3b1b0a50370mr12414366a91.41.1794921882097;
+        Tue, 17 Nov 2026 05:24:42 -0800 (PST)
 Received: from [127.0.0.1] (ec2-3-42-157-125.us-west-2.compute.amazonaws.com. [3.42.157.125])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8bed1e5ac38sm5090633b3a.31.2026.11.17.05.24.38
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1b3f09b92sm10565854a91.4.2026.11.17.05.24.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 05:24:38 -0800 (PST)
-Message-Id: <25d2441ce75e0794e8df4d2b6d6c4b6d50902174.1794921876.git.gitgitgadget@gmail.com>
+        Tue, 17 Nov 2026 05:24:40 -0800 (PST)
+Message-Id: <18c3edb6e3a12a1e82891728b0c7e3b189b3457a.1794921876.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2425.v8.git.git.1794921876.gitgitgadget@gmail.com>
 References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
 	<pull.2425.v8.git.git.1794921876.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 17 Nov 2026 13:24:33 +0000
-Subject: [PATCH v8 1/4] branch: move the deleteMerged opt-out check into a
- helper
+Date: Tue, 17 Nov 2026 13:24:34 +0000
+Subject: [PATCH v8 2/4] branch: let delete_branches() name where a branch
+ landed
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -110,75 +110,101 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-A later commit adds "git branch --delete-integrated", which deletes
-branches whose tips are not reachable from their upstream. Those must
-honor branch.<name>.deleteMerged=false as well. Move the check into a
-helper so it can be used in both places.
+A later commit lets "git branch" delete branches whose commits are not
+in their upstream but whose changes are, such as after a squash merge.
+Their tips are not reachable from the upstream, so the merge check in
+delete_branches() would refuse to delete them, and the output should
+say where their changes went.
 
-No change in behavior.
+Let delete_branches() take a map from branch names to the upstream
+commit where each branch landed. A branch in the map skips the merge
+check and is reported as
+
+    Deleted branch topic (was 1a2b3c4, landed as 9f8e7d6).
+
+No caller passes a map yet, so there is no change in behavior.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- builtin/branch.c | 32 +++++++++++++++++++-------------
- 1 file changed, 19 insertions(+), 13 deletions(-)
+ builtin/branch.c | 30 +++++++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index b536b619bb..2c1a8b8395 100644
+index 2c1a8b8395..6e6b04b11d 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -824,6 +824,23 @@ static int branch_pushes_to_upstream(struct branch *branch,
- 	return ret;
+@@ -236,7 +236,7 @@ static void delete_branch_config(const char *branchname)
  }
  
-+static bool branch_opted_out(struct strbuf *key, const char *branch_name,
-+			     unsigned int flags)
-+{
-+	int opt_out;
-+
-+	strbuf_reset(key);
-+	strbuf_addf(key, "branch.%s.deletemerged", branch_name);
-+	if (repo_config_get_bool(the_repository, key->buf, &opt_out) ||
-+	    opt_out)
-+		return false;
-+	if (!(flags & DELETE_BRANCH_QUIET))
-+		fprintf(stderr,
-+			_("Skipping '%s' (branch.%s.deleteMerged is false)\n"),
-+			branch_name, branch_name);
-+	return true;
-+}
-+
- static int delete_merged_branches(const struct strvec *upstreams,
- 				 const char **argv, unsigned int flags)
+ static int delete_branches(int argc, const char **argv, int kinds,
+-			   unsigned int flags)
++			   unsigned int flags, struct strmap *landed_commits)
  {
-@@ -852,7 +869,6 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 		const char *branch_name;
- 		struct branch *branch;
- 		const char *upstream_refname;
--		int opt_out;
+ 	struct commit *head_rev = NULL;
+ 	struct object_id oid;
+@@ -334,6 +334,8 @@ static int delete_branches(int argc, const char **argv, int kinds,
+ 		}
  
- 		if (!skip_prefix(branch_refname, "refs/heads/", &branch_name))
- 			BUG("filter returned non-branch ref '%s'", branch_refname);
-@@ -870,18 +886,8 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 					FILTER_REFS_BRANCHES, DELETE_BRANCH_SKIP_UNMERGED))
- 			continue;
- 
--		strbuf_reset(&key);
--		strbuf_addf(&key, "branch.%s.deletemerged", branch_name);
--		if (!repo_config_get_bool(the_repository, key.buf, &opt_out) &&
--		    !opt_out) {
+ 		if (!(ref_flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
++		    !(landed_commits &&
++		      strmap_contains(landed_commits, bname.buf)) &&
+ 		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
+ 					flags)) {
+ 			if (!(flags & DELETE_BRANCH_SKIP_UNMERGED))
+@@ -357,15 +359,33 @@ static int delete_branches(int argc, const char **argv, int kinds,
+ 	for_each_string_list_item(item, &refs_to_delete) {
+ 		char *describe_ref = item->util;
+ 		char *name = item->string;
++		struct commit *landed = landed_commits ?
++			strmap_get(landed_commits, name + branch_name_pos) : NULL;
++		const char *landed_abbrev = landed ?
++			repo_find_unique_abbrev(the_repository,
++						&landed->object.oid,
++						DEFAULT_ABBREV) : NULL;
++
+ 		if (flags & DELETE_BRANCH_DRY_RUN) {
 -			if (!(flags & DELETE_BRANCH_QUIET))
--				fprintf(stderr,
--					_("Skipping '%s' (branch.%s.deleteMerged is false)\n"),
--					branch_name, branch_name);
--			continue;
--		}
--
--		strset_add(&deletable_branch_names, branch_name);
-+		if (!branch_opted_out(&key, branch_name, flags))
-+			strset_add(&deletable_branch_names, branch_name);
- 	}
++			if (flags & DELETE_BRANCH_QUIET)
++				;
++			else if (landed)
++				printf(_("Would delete branch %s (was %s, landed as %s).\n"),
++				       name + branch_name_pos, describe_ref,
++				       landed_abbrev);
++			else
+ 				printf(remote_branch
+ 					? _("Would delete remote-tracking branch %s (was %s).\n")
+ 					: _("Would delete branch %s (was %s).\n"),
+ 					name + branch_name_pos, describe_ref);
+ 		} else if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+ 			char *refname = name + branch_name_pos;
+-			if (!(flags & DELETE_BRANCH_QUIET))
++			if (flags & DELETE_BRANCH_QUIET)
++				;
++			else if (landed)
++				printf(_("Deleted branch %s (was %s, landed as %s).\n"),
++				       refname, describe_ref, landed_abbrev);
++			else
+ 				printf(remote_branch
+ 					? _("Deleted remote-tracking branch %s (was %s).\n")
+ 					: _("Deleted branch %s (was %s).\n"),
+@@ -901,7 +921,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
+ 				      FILTER_REFS_BRANCHES,
+ 				      DELETE_BRANCH_SKIP_UNMERGED |
+ 				      DELETE_BRANCH_NO_HEAD_FALLBACK |
+-				      flags);
++				      flags, NULL);
  
- 	protect_stacked_branch_bases(refs, &deletable_branch_names,
+ 	if (!ret && !(flags & DELETE_BRANCH_DRY_RUN))
+ 		clear_deleted_upstreams(&protected_branch_names,
+@@ -1141,7 +1161,7 @@ int cmd_branch(int argc,
+ 			die(_("branch name required"));
+ 		ret = delete_branches(argc, argv, filter.kind,
+ 				      (delete > 1 ? DELETE_BRANCH_FORCE : 0) |
+-				      (quiet ? DELETE_BRANCH_QUIET : 0));
++				      (quiet ? DELETE_BRANCH_QUIET : 0), NULL);
+ 		goto out;
+ 	} else if (delete_merged.nr) {
+ 		ret = delete_merged_branches(&delete_merged, argv,
 -- 
 gitgitgadget
 
