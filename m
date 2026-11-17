@@ -1,124 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794937980;
-	b=Dg4agJYcwmVAEUfYKpZDd9bJazUrOQbKnLM4EmtNjR7eGcYU+kLWwLEDMVTkYoacOhfI
-	 tYssNLXBOBgd4eUuLMl65L+MDuQO9kZ7xIwlf2kbFitXzNzOlIxpSerJzbBzbkD1i/26/
-	 0P8WnsuZ0JBH4aoqKURCR35uxJBTTAFK7M8JUuZtwPRC1XQs1tr+ClD4GDzwNs5ZrmZuk
-	 xB+M8pXVUaMydrprd9KBJBwXAt3yAw5oDUJvRPqkRGGY7kB3m+WMBN+fPUG/bTmmsiSL+
-	 Tsqw1daaQNvrgXtXa+NEp6zW/fhCr0vXfhno3YQCh+Ljok9frYN7fHCaUT+3G6P7Drg==
+	t=1794938236;
+	b=kK1QmGfjC/RlDII5s8DATEfl4unrJu71UJ2RM4UwZyuhweemkGwG5IPtcJLdU4ocQxH3
+	 G8GIkhOoWeTbQxMLlG5bZk8K2RuiNfWvvcoegMaJHY2GcOwYGJKnWVb6XCCOOAGxTyhLr
+	 cGXpFOiN4lRgL7lQqZWqVRomJOSq8Cnk96XHGxm2eKpx6WvgMgI6RH7fq1syVU4UVODLJ
+	 xtsVswlw1jOsfebmgH23F1E/Liuvi2r3vCx6VTSR9yRFcLTxtvam8nzAVUvwNKD0BBv1Q
+	 o3UCLbXsqIxglobOWdwZVBWPeF9Qqu6GPr5chApwx5KGzxem/bIRTjSrW7q7+uavFIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794937980;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=FMBmThXl9fCCEkbh/nBF1nVcZ52Ao2G8gAWyE36dqo4=;
-	b=1+ZwI6RRGjBHJY7hJNohwGikFNxziI1vJBf4/I+BcIoD1z1n5eiDxkXy0BfENnlfCpVn
-	 2Y/mPabQqWxZ0nlojuTy38yCCtSXiFy06uxo4cbnji4QTDvj5v76sIEjPSUxeGP+v5ys/
-	 alcZ4Vevqsbpdh2dR8rL8S4UgvgtjhaNa3Nx28j0ydou7rMwqS74ug4nGIc+46/Uxxu+e
-	 5w8ddZkP9BhNjWHUcnFZlly0d26yTJaY+Fczo2XShdugWve/9IRmx7u2mlpSHs+1g2XCA
-	 r07k9nN0Q13M0qjJnP+rzxrLTLAScYQLkc2Jlw5EuISUosKDRBSaQU0wZJq4M1hGfhg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794938236;
+	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:
+	 References:User-Agent:Date:Message-ID:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=wNYWx0BU8MgrGIiDqQxMGqpNWiVy+30qY6kvBHob1AA=;
+	b=qFwoZ3yyT5/16veeMsADZV/CELF7mkdc69vMV2mioaAheHs5qsbPIt7VxFHFfQT/PfE8
+	 RPOJXQ3Q4ltjf1Za7vN82bk8kFuZ5g1sTONT+llbjfgRNrESE/FDXEWHMTyiVMeYunrzw
+	 7MgUINahHM7rY/KUalAI/rlSDQqXIVwJa105eFxSZFPgJNOxOHEsjF4ycfcgmTKOr6lHz
+	 ku1hrwljNTaPUshMG8xr6mxikaJllnb6rxm1jKGIEe2FrlG/QxH80Vj+gNxERWkWWVD6F
+	 BagNc9Z35ZAFxcBTzWKI2kzuMR1I8oRkLNZ4/HyDjHIOBAU4LtuWqh/PN7mZyTG/8Bw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="a41ya/KL";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=SRrSThQG;
-	arc=none smtp.remote-ip=202.12.124.147
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	dmarc=pass header.from=gouders.net;
+	spf=pass smtp.mailfrom=gouders.net;
+	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=XljsLOi+;
+	arc=none smtp.remote-ip=202.61.206.94
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD727606A32A
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 17:52:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD727606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4A3606A331
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 17:57:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7F4A3606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=a41ya/KL;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=SRrSThQG
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 139BA1D001A1
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 12:52:59 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 17 Nov 2026 12:52:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794937978; x=1795024378; bh=FMBmThXl9f
-	CCEkbh/nBF1nVcZ52Ao2G8gAWyE36dqo4=; b=a41ya/KL8phQ9vBug4B0AK0Iq8
-	Ajz4Mq2U5Sn98PGcm/Cm/OK3lK6rqBv+XGD1M4383KKnL1QLq3JxjJX3/YJpL3/O
-	b9aJPiXUQSrzFnP5ZaYH4uuPegmYUocah10UCkJvn73ZYljfWdkAC2ZAU2hlKuFQ
-	KXcILWTFmyeTgwSp7eb4XOgC05UyNCgjMn7jrCWl+zeQKyVDltesAzsxCWwGmUVG
-	z3hjRXV3/4aRNzKGZ+zNH69ezfLv+BJwQLLiycoPjFlS+/l+N3csJzEPuP30XgsP
-	rPm+sGeCL4L0RvbP6CAvkZuT83BWvtF07dfGjMH5L6mDeN3Bs0rkUvjTk0Bg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794937978; x=1795024378; bh=FMBmThXl9fCCEkbh/nBF1nVcZ52Ao2G8gAW
-	yE36dqo4=; b=SRrSThQGlEG4OqSKXL06JaVUqqkgtV4+hZMNzd2oZ8ZDoN3ZsUb
-	NVNFex8h7fH83KOAi7XhQfgX8vN1f2hZsU13lDfQQHeREEfRHPGg1iPCZcyRy02Z
-	P6XIYoHQoZ8PKvzbzMr2cQkhv33jNaABwgBRSx4x7EDhmI8DRMd3xLSrVKCTHQ/a
-	wV+7G1fctem4dtRQaY2v2bJHxF0sx9rgDno/W+oWUf/V5wbjQDyoHtbQR1D57uDy
-	weUrtlwmZjia684KpDjvoOLY3rxYmMibYpIdW06b94yZ4fLePxZyd1IOKipCOtPx
-	Vwc6AfqNK2vBHFn5h8nIdoIY7JoG7csSEvw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794937978; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:KVrfPyQvbQGKZKhoRr78E1Ho30Lx9JO6V28kdxf19lRKKU/
-	yt3Mhj1c/R8Y6hkfOhejYE7eji3BIm6ESYScADIThTI7DepbDCbftSHbkXm0gwQZ
-	aF9L1dqp8kM8a0ndCgafwR9bpJ1uIGUa2AvOg1eS0YVwRtflaQS+67C/8VJWSMgQ
-	v2+08aO7YDFXecaKek7JU3zWNl5lXE8hfBur7uTdN8bHR2BNGYn9V5JUxJYSmMjo
-	0LbiZ09SBcrlKt7cU5NUcVLjUKXe8uZoYJo5x/hisviyMMSaiU2guoawY34/Bo/6
-	PFtMZDf1BG2fz1wO4WOCkbCBLkVqJKY0MgWdE1Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:YKkxOFi/SOxagtuxgkTBN0gmej/nRYQpY868af8P0PM=:3UgIxSXdd1lY+VmZB/3wdaL5FecHr4d6Xle6MLoVDtE=;
-X-ME-Sender: <xms:epT8auz8b9EOMywxVDQhnJzmHwSaRYjAJxD2xc2XzJ6oYjm-Qq1j3w>
-    <xme:epT8asi8SJqd711yyGPne49jXNdQ40AM7bAGFj7j3V6edS5IlqEbL0mDK490u8eWb
-    QmMrDOcdq1uAgGoalMa8wruuMdSBwxQAcFrbioKGP0r_fjuuxtjPg0>
-X-ME-Received: <xmr:epT8aintN24PrS3LXCifH4TPK-4uc9NeRoF_oOtx-MBe9-0FVJu-k2gnd6MZlF0hEbBjYLwWYdLVE98OalGR4PAD0NyJrNp8x_fj>
-X-ME-Proxy-Cause: dmFkZTEbGjlDAlwqZJ9BUNBh/a9ENpUV2Uq748My/Ce2BEcVkdXhBgnfXCwjQialLXppjL
-    MQeLyWvsToz3zFS4CFeoRO9bliLg9yzYp7jzHJIh+qe+cKCnxeroqUy/zddV32vWuSEp40
-    DM6siQnnc5jAkO+ZzfVyCEPZKzEfK5PuZ8At3jyp+0JdVoGtgFxbkXD6Z64KUxMP+A8GV2
-    THKy23qxjpNsmoTOvReZMoHBxo/XS6YRM5CiYHHGJCLwLi08gdis62eUOMq6Msr9A6pK6W
-    0VMcN0Wb/aZ+JfC1mRDytcIcbyw+CUC/hw4OJZqusQHUXhSeL3JhGCgt2/1A66wa2csBfi
-    4603HXSYit/PKLfR746ByCF0+HYqVYor5JP0bHw97PYar3JC/VIrUkfUacqsxNyx/SALcZ
-    4pGZ9hsrkbRKdPQ2TCPt+gbDe2CiSaIVkeB/3+pMeuwFRnw1Y4BNGi7PoaN5ZcSdg6DJ0g
-    +RigpYmcYJSscn5y072cqn+Ax85JVeKaVADTo1UMuy7KrnkFuoFME63UdhsknzQD8htM8M
-    NmZ5kFunYa1bB2b7Oy8+DkP+5/3BhIKW+WQMFedpv2aFtagdWJA25/7b5S4ngsHj0ss3za
-    qpN87qA0Z+q7gEUidkujwD1oimHyiWd5EeO4pxcVGTnyW1HLjTxG6YhhfPsA
-X-ME-Proxy: <xmx:epT8aqg-XutBndksNDjxABsNCmH_WYIxDcE-N8szFV8TN6YLM8aE8g>
-    <xmx:epT8au1xAJ4pgh360X9FCE2nDT2zv7mkXIA-zoSz3DbyxB8uRRs1UA>
-    <xmx:epT8arLPVItpnTjTjvFbTFu8tPbWm-Z2L9ME6H1UXDJ0e7gvxmzrzQ>
-    <xmx:epT8amy2qM2yuuV1SRBLNfdAey19t3ZUhTADFKVlEIsyPgzD_x9tiA>
-    <xmx:epT8atanQblhVSoAec4ZW9cWyMDO2ZsnMe5pApJ2E4rQElHtwOGjaEPY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Nov 2026 12:52:58 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elia Pinto <gitter.spiros@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  "brian m. carlson" <sandals@crustytoothpaste.net>,  Neeraj Singh
- <neerajsi@microsoft.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 1/4] csum-file: use size_t for the count passed to
- hashwrite()
-In-Reply-To: <07baad46b153b255b6e70f2597f1bf41b9c48dfd.1794909894.git.gitter.spiros@gmail.com>
-	(Elia Pinto's message of "Tue, 17 Nov 2026 11:37:53 +0100")
-References: <cover.1793546752.git.gitter.spiros@gmail.com>
-	<cover.1794909894.git.gitter.spiros@gmail.com>
-	<07baad46b153b255b6e70f2597f1bf41b9c48dfd.1794909894.git.gitter.spiros@gmail.com>
-Date: Tue, 17 Nov 2026 09:52:57 -0800
-Message-ID: <xmqqeccjfipy.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=XljsLOi+
+Received: from localhost (ip-109-41-49-131.web.vodafone.de [109.41.49.131])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AHHv8BA1834880
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Tue, 17 Nov 2026 18:57:09 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
+	t=1794938229; bh=wNYWx0BU8MgrGIiDqQxMGqpNWiVy+30qY6kvBHob1AA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=XljsLOi+mdE3EL9O1JdIjAmu0NuWfW0n4W1TJi8qIYMw+9CawPO6qUtTfFpyuQPye
+	 PctiS97JhSPvXgkJuq5R5TspgvV0UE6e6fZGQCac6Td+t8JeIMUz6vG2Fd+IFoVhRR
+	 wvn+hLnM17BxsGGEEqTDXwghmleg2hdsn2t4TQHQ=
+From: Dirk Gouders <dirk@gouders.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] utf8: respect bounds in utf8_strnwidth()
+In-Reply-To: <xmqqse0zfn2n.fsf@gitster.g>
+References: <20261116-master-v1-0-dc2a50ce0aa0@gouders.net>
+	<20261116-master-v1-1-dc2a50ce0aa0@gouders.net>
+	<xmqqld6siau9.fsf@gitster.g> <xmqqse0zfn2n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Tue, 17 Nov 2026 18:57:08 +0100
+Message-ID: <ghbj7nmjd7.fsf@gouders.net>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,49 +64,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+On Tue, Nov 17 2026, Junio C Hamano wrote:
 
-> hashwrite() takes the byte count as "uint32_t" on all platforms. When
-> pack-objects writes the entire compressed buffer of an object in a
-> single call, which can exceed 4GiB if the object is in memory, poorly
-> compressible and core.bigFileThreshold is raised accordingly, it writes
-> only "count mod 2^32" bytes, corrupting the pack.
-> ...
-> diff --git a/csum-file.h b/csum-file.h
-> index 6ed74d1637..f1c8a9df13 100644
-> --- a/csum-file.h
-> +++ b/csum-file.h
-> @@ -75,7 +75,7 @@ void free_hashfile(struct hashfile *f);
->   * Finalize the hashfile by flushing data to disk and free'ing it.
->   */
->  int finalize_hashfile(struct hashfile *, unsigned char *, enum fsync_component, unsigned int);
-> -void hashwrite(struct hashfile *, const void *, uint32_t);
-> +void hashwrite(struct hashfile *, const void *, size_t);
->  void hashflush(struct hashfile *f);
->  void crc32_begin(struct hashfile *);
->  uint32_t crc32_end(struct hashfile *);
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The problem is well spotted, but isn't the blame slightly misplaced?
+>> ...
+>> Even if display_mode_esc_sequence_len() were updated to take the
+>> remaining number of bytes in string (which I think *is* a good
+>> change, by the way), ...
+>
+> An update to display_mode_esc_sequence_len() to take the length
+> limit, including its fallout, is shown below, and it does not look
+> too bad.  Not even compile-tested, but it should be sufficient as an
+> illustration of the idea.
+>
+> This does not make your "after display_mode_esc_sequence_len()
+> skips, make sure if we still have remaining string to grab one UTF-8
+> character" change unnecessary, as I said.
 
-src/csum_file.rs still thinks that hashwrite() takes u32, though.
+My v2 would have introduced two new functions (see attached) to replace
+display_mode_esc_sequence_len():
 
-If a caller of hashwrite() has a contiguous region of memory that
-exceeds 4GiB in length, shouldn't it be looping to call hashwrite()
-in 4GiB (or less) chunks, without changing the API contract, I would
-have to wonder.
+=E2=80=A2 size_t ansi_sgr_nlen(const char *str, size_t len);
+=E2=80=A2 size_t ansi_sgr_nlen_multi(const char *s, size_t len);
 
-pub mod c {
-    use std::os::raw::{c_char, c_int, c_void};
+The latter one to help (most of all) users who want to eat *all* leading
+SGR sequences so that they don't need loops.
 
-    extern "C" {
-        pub fn hashfd(algop: *const c_void, fd: i32, name: *const c_char) -> *mut c_void;
-        pub fn hashwrite(f: *mut c_void, data: *const c_void, len: u32);
-        pub fn hashflush(f: *mut c_void);
-        pub fn finalize_hashfile(
-            f: *mut c_void,
-            data: *mut u8,
-            component: u32,
-            flags: u32,
-        ) -> c_int;
-    }
-}
+But I saw you already posted a patch and that is also fine, of course.
+
+Dirk
+
+diff --git a/utf8.c b/utf8.c
+index 96460cc414..1e3887480f 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -30,6 +30,44 @@ size_t display_mode_esc_sequence_len(const char *s)
+ 	return p - s;
+ }
+=20
++size_t ansi_sgr_nlen(const char *str, size_t len)
++{
++	const char *p =3D str;
++	const char *p_max =3D str + len;
++
++	if (len < 3)
++		return 0;
++
++	if (*p++ !=3D '\033')
++		return 0;
++	if (*p++ !=3D '[')
++		return 0;
++
++	while (p < p_max && (isdigit(*p) || *p =3D=3D ';'))
++		p++;
++
++	if (p =3D=3D p_max || *p !=3D 'm')
++		return 0;
++
++	return p - str;
++}
++
++size_t ansi_sgr_nlen_multi(const char *s, size_t len)
++{
++	size_t sgr_len =3D 0;
++
++	while (sgr_len < len) {
++		size_t count =3D ansi_sgr_nlen(s + sgr_len, len - sgr_len);
++
++		if (!count)
++			break;
++
++		sgr_len +=3D count;
++	}
++
++	return sgr_len;
++}
++
+ /* auxiliary function for binary search in interval table */
+ static int bisearch(ucs_char_t ucs, const struct interval *table, int max)
+ {
