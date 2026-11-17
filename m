@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794937470;
-	b=smIpxCyeY1Z3H+ZqQI6DaA7mJb9JVMK5oySzkL8Mrx4fJT+KnVYD0F/8Ie+5sIHs8hAP
-	 BrIFBb9bqj203k+fIwbBrdpkjCIaVNk7Irati5ptGrKNvTUQepPcSAQ4lpt5UpjLd3q5d
-	 +Pt1/74h1LTpHFjNcCAsSa3UQ8Y6cs+lnY3Mys3oLWTg0x6p9KVCqA+9/EF1IHSq9PxiR
-	 cJcgIh6aEvgqdbjXrjX8UA2zvTFKnjVWqNVUwKZj7/WfHBTa0S3NPLdisGMIWxaz77uwO
-	 NHyS0TMfzNRhoIaTFl+w7EyBSlPisD9S7W17H+8A1dJnQoSHtLHMskZmC71xPXe44mg==
+	t=1794937472;
+	b=umRuMMBvI23NASIYxkvOCraG+YgSYcb/YHuMwa1WnvbnRLjaP0R9KXxUb8P1k7B9HrtX
+	 05aOGwAO1YhL/3vWwmX6dVZr029tT8C7g6B1dSTWZK1WiR8WnrLfa7Ngabc8CBQib99lx
+	 0c+hTjl6gt6TjQPnA9E1qGJmQjsXRVV+2NyEG+ojS6ddG2TAcw+djRdAhYB3axg/TUVwx
+	 KbSdLYDgipvmMvLnR7EQ1x32wgNdkBYWM7YaWLA8/smMU77VIAH7wocNmoTReOywS+kvA
+	 lB2jYjbuCFeLZFIrDznFwtw/AQrC0KC/ziaJbJZZMnAG5J62DZTMGqeB3aPYBd3+Nww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794937470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794937472;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=3kHozEu/3Lj+vitlFPds1A4uvE5DfsvBjiE3QwHMQHc=;
-	b=c9GvX8KjXcA1dG47u3dZB+AdPDUkQyYUeiYhnLjkuxkDZrnUwBNa0EEfq0iJzbi92JPo
-	 ot2k+QJExk61JgQwQG8aITkVSYj2h3cF8Z8jedXNLMIyuFaEeOsfEVSBSR+4/UFNmIqOk
-	 55TcwAYIqC3/lm+ye0ExRUNmmX6LS1xHWcUU6ultCK2aqqXGFq5J2OybAJ8RyMZxf798W
-	 lGbu/zBcK3yJ3Sz3n+rjp37uf4+CCTosEVFiYcIjf/ktAs9ekWNgTm5AngsBru5Xr3fia
-	 xGMDILWT2msH3y0jaAi0Aj8r+jt6kTOhU8TMn3tow1kfLzer3wShYQzXzuB6J9SFVYQ==
+	bh=+5AtRx+66w99T+/ncYQO7jrZFEnICvhWHI1O+838cSM=;
+	b=DYj/yG72Za/N6G86IYOxA08OJM/Io8FoWuezOKGPBR/p2EONImM22s9x5WTN3UdN675t
+	 5HGaVTtDwy9gGeSUr0enfwZIi6bQDUa7YU5kpO5/0zXAzSPVzNNDrcOZNXzGM9Ahnh0e5
+	 B4Tg20a3xXwg4Qw03dLuXYrgNyfqTlUzhiBNyRiFLop23Q/hydBf37dJutyHPEUwGP9TY
+	 JWpmtAppxBTHyUX9XU732oAoHuk5nNzjMpkSou6xZSDpSfu8AhF9MtlfJqqyzG/ZHVmWM
+	 pNz5qIQuIMtNVeu45hYibe/uYp8tys3GA+RA75ua9yw4o5aulIj8cHwHKX5aCLpOoxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ysh6LgC5;
-	arc=none smtp.remote-ip=209.85.218.49
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZIqbJsdl;
+	arc=none smtp.remote-ip=209.85.218.41
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A65606A32A
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 17:44:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 64A65606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1B8606A31C
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 17:44:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CD1B8606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ysh6LgC5
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c50a2efbe1dso794784566b.3
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 09:44:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZIqbJsdl
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c510a28688dso64194266b.3
+        for <git@vger.kernel.org>; Tue, 17 Nov 2026 09:44:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794937469; x=1795542269; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794937470; x=1795542270; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=3kHozEu/3Lj+vitlFPds1A4uvE5DfsvBjiE3QwHMQHc=;
-        b=Ysh6LgC5sCs6YJwgCAAgoFWVdeP/jdyYo6XYj1gdYGoN5kVR+/IOrw2yu5MgV/ccqc
-         GQSVQWwTS8UxMsm+cR26Dx/tphPFAkBbUC1qGSfPfktKTBFvsb3WT89Sfy32hh6mppJq
-         +BdNpKMmIO3EDRkA4fal7v1M/ZaMFmWG14nMBOAQ/DgurEnX0jwy1dBCnYE/D6BEWTzX
-         qC5/bqSA1+xAGhsb98YeMT1vly4UVD49DQ9CptGzH7zvQK38F0dHf1hsldktmc2rw9XO
-         O2kjFmxJi2DL7Z/A/RrjTJaaGra7+chP/RUG9sA7z3sS0womvDUQwiwgazE5+FpiXAbF
-         UE5g==
+        bh=+5AtRx+66w99T+/ncYQO7jrZFEnICvhWHI1O+838cSM=;
+        b=ZIqbJsdle1XNidDqOjw0wqqEAr75O78m2fI8nYAcNjQ97+yPU+moyJFhlJKdS+kvz+
+         EslH3sXFrsIPHbkgysAdRqQ/eVqyUEQVygA6V/R99JXcZili8f+tMuHMStHDkdtsIZoM
+         GoYboUqKY8TgASYDv0vMK00okAQ2RIy29G01A6+JUN10MVppgPX4+H645q1WUzrYPAku
+         JlSAFlbe4uFTb/pcpikTsvReeBBHJxy3iC4usOXwk5q6K1G4QZ9o7lyuZ66y8P6kQlI6
+         qDz4tD9CM4bIIKf8Pee66bZhktPFLiO7Cu1c3pGikdS+qLubrhOWNOuzz9BZeMLaTFzG
+         RsNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794937469; x=1795542269;
+        d=1e100.net; s=20260707; t=1794937470; x=1795542270;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=3kHozEu/3Lj+vitlFPds1A4uvE5DfsvBjiE3QwHMQHc=;
-        b=yryleoZxdp0NsRnYHYBWqtZ7SBxPVfL1ciBYVDZ8YIrCupcpSOy6xcdMLEmb3vGcau
-         RgBqZkUsxctVwJa+uUnYJi3UTSd7bpEN78tw7tU2I9aj6jWlj+cZV474hwVRBScuMgX9
-         onYT+umjKnmEhHFv0NTs5/7TDr2//2KA0pp4+pgK+1Gj7YTCB8Hb5QMm6Y7XhDVebA6S
-         krhHsUhn9kF/bkhme7+PhKFtajFEdikbafwRKyNIc7GuMOqS2vlzNJ6W4JL5kuVl1NNq
-         qCUu9X2fQPtNHRQ0mC/uQfUKsW9W46uCO+pNx9+F5Ud9zDX6YgJ3pkgFvcypNO82V4BK
-         2ylA==
-X-Gm-Message-State: APuU4Z/AfJFe1wrVHqmxR0FgYjon2HqE6sXnzQgSFCEFvd0eYKTDODW/
-	9zGswqxxP9yhanYU2k8ks3FxDvNdDY0mXdHv6Xj0EWLa9Z6bncDoeVhOTUS6QQ==
-X-Gm-Gg: AYBFou0ZnkzZSa+hD2E0uFVv6YYPFI2BrKZFk1av0aNoFtDE4hd+zp7lZWdafXgs+zq
-	Yeu0cZjJEqYZ3EU4+OzsDYeRc+9mM4SJ2acwaEOUTmT70Bqv5RW+Dh0gsq14X1MtrXAwAuAZhJW
-	FS3EWCTYjXEtkwmlzyJnR19deD9iF2C+LtkjMwl4NPjryMTdjrG/FBLe5lfcF1JxbVjALBWPUMI
-	D4FcpKy1ttj21v4lgroX9w/MqbnKAILfqy03kJRoIo3wTH1fWWRF59ZlukJL2qV9NVkyWLUffzw
-	d/ukFFbg5oBhitXWIC+n6bsfY5hxYLbHDTJuE6PcJPLUUyjGKAFR23gifB6ixEyOTcKiY9k1Fc5
-	5mTlbernbmdiP3s9rDO64khcDwII+1Zk6j/u9ffDom/9uYHK3HZ9/8Q3ly0SA/BLo0bnqdPDkTi
-	RY4Q/07aUsOJf4bPiyvhBklPPzVN9PMjeOW35UJMMjifhiFIZJBi6AnP/OrkgBYIWw+IAqsbfpG
-	+shcfAIcq/pQD/BeDAK87p9W8i4glncDkrwzCGilCyL347HVJQd1XiBrceJlX7TuWzC3Q3eNNCX
-	2IvoaeURCKCSSuhuMGW8mz6KLRQNdvjS0fMgj+jnF//NjkxVxizJcorevAIwKM9oyZc/3lIAqUG
-	AETTwXlC7Vm5CmSXSgGGt4XzfzoOjZSod6zUzs1je60nHN13AkLltemS8nKJskp55LmqdpJ2j5J
-	LnTIu2lCIjXiShudXYj2E7zeaMKIaUfvj0T9kYfgg=
-X-Received: by 2002:a17:907:608f:b0:c33:923b:ad51 with SMTP id a640c23a62f3a-c509638bf57mr1233844966b.45.1794937468689;
-        Tue, 17 Nov 2026 09:44:28 -0800 (PST)
+        bh=+5AtRx+66w99T+/ncYQO7jrZFEnICvhWHI1O+838cSM=;
+        b=UnfhYB5LGZNAtAV6UzjyMO3O/n7N1zUSMOsc37yCZuPROT2DEI5hRZhT8hCJUjrSs4
+         9IdSg5Si79gAOQRNfEC3aUW3sMhyQJZ8JIDedRVnI5GTxUz4zboCH2tPm9aXdiPBQiK9
+         nEgQ26DJbpTaCMx3eWbXNxeYHaEl0t67VYcsgpf6IEpD+ixgcXJgliOfD+V/Rl5FQpHE
+         yFq7gp5CCBXW3KOASdsm0eYkq4LQgqE1JMuotosi/hR1y3gaBDMA6YiIw7Z0wdtDKsla
+         gboTWnTpdQewuLHcDgf6tRckghNEGk7fAYUgjsiKXn6m0Eq9cf2zJYloSUuOS1YWSicG
+         fp6w==
+X-Gm-Message-State: APuU4Z8Z4QiGm5ZtWvzDADC3o4KiNwwMuLkJD2+Rb4tqEUvvJnbPPy/F
+	zs61VVOvTfC5A9S/qH91mUYvcAT85kQ/HDGukdTPKrSjoSdlCSROnUPEOGoHIw==
+X-Gm-Gg: AYBFou3ZQKh8MO8KjFknfYUU2l4Ado5FZVpl2VUb546KTlhOmLu52IYxbI9In3MHlG1
+	EDdfOZA8+tF86BpZ8xpDtGzeVva0AzZcJNbWkBR0X/EIkm/Jgp75gK6bpcT0RNxr7P+T7H9GMuG
+	qdgJwNc/i03igpf3ngzwB5H62pWQzSphsBypPOBHJJpgJDkczIkYQ4mz/K9FkPLAq/tRVvFHpc0
+	VfZnjOf4x3z1lHXVpy+glddK13MOLS0MSsmscK/ubfJq0oz9bwwXhrfSMKqioNKDPXd1p9X+QXP
+	OAKQmYC9W3Gb8hr64k35QNn98gAmV2AHZQisYgkwLMNGXAxJ/nKuL2/AHVQg/uGIdCddkURBx/Q
+	zYQmZ0uVrI8qctlDTfkKlNPxwuXS7OZmr8nM6t7gPEdaIqT/cCuqlhyC/iiuOFwFC4IgCVIxTWJ
+	N0Q6Q+0ueOXP+Z9x5INO/jPC+FVLiexwzL/yDTBVX0vSwU4yYKFI9kcHg1CLBE5q4gx1oD6ygZh
+	CFjZTv34Aqo06FR4iI1lEC8Ij4t1k1CmCDul6eacC35w3953+EbEwH1AUkOFiiD0b2isvzCGGNH
+	K7krXbzAmamihynEA46XBWxlNjwySs7KrHI0ApXWelxZ8EnYCEpv/461zizNBuddl6gos25OgUU
+	MBOq7/YuBnHlYnUHHsdAzY046nogTHjky1KmABga/FfktCYQ//puO+5Alf1G6S5z0uwTs2lc3Dn
+	BjUkUKDyNl/ruklBkKVweOImCC7/vZ2oVr9auRZXmGwXYzs0Wvs9JG97ajwECA
+X-Received: by 2002:a17:906:4fc8:b0:c46:ba0d:3728 with SMTP id a640c23a62f3a-c510e2d705dmr924266b.18.1794937470120;
+        Tue, 17 Nov 2026 09:44:30 -0800 (PST)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c510c83fe47sm7947366b.5.2026.11.17.09.44.27
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c510c83fe47sm7947366b.5.2026.11.17.09.44.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 09:44:28 -0800 (PST)
+        Tue, 17 Nov 2026 09:44:29 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -87,9 +87,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 2/3] odb: widen odb_write_object() length to size_t
-Date: Tue, 17 Nov 2026 18:43:56 +0100
-Message-ID: <20261117174353.1158905-7-christian.couder@gmail.com>
+Subject: [PATCH 3/3] xdiff: drop LONG_MAX check on merge result size
+Date: Tue, 17 Nov 2026 18:43:57 +0100
+Message-ID: <20261117174353.1158905-8-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.56.1.495.ge87f5c5eed.dirty
 In-Reply-To: <20261117174353.1158905-5-christian.couder@gmail.com>
 References: <20261117174353.1158905-5-christian.couder@gmail.com>
@@ -104,118 +104,89 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-odb_write_object() and odb_write_object_ext() use an `unsigned long`
-for their object length argument, while almost everything they pass it
-to already uses `size_t`: hash_object_file(), format_object_header(),
-convert_object_file(), the `write_object` callback of `struct
-odb_source`, and `git_zstream`.
+Since 288266c11d (xdiff: use size_t for merge buffer size computations,
+2026-10-16), a `size > LONG_MAX` check in xdl_do_merge() makes sure the
+size isn't truncated on LLP64 platforms like 64-bit Windows.
 
-Many callers also pass a `size_t`, often a `strbuf.len`. On LLP64
-platforms like 64-bit Windows, where `unsigned long` is 32 bits, such
-lengths may silently be truncated.
+This check was useful because that `size` was assigned to mmbuffer_t's
+size which was a `long`. Since 81db32ddce (Merge branch
+'jk/xdiff-size_t', 2026-10-15) though, `mmbuffer_t` has been replaced
+with `mmfile_t`, which uses `size_t` for its `size` member.
 
-Since 81db32ddce (Merge branch 'jk/xdiff-size_t', 2026-10-15), the size
-of an ll_merge() result is also passed as a `size_t` to
-odb_write_object(). It cannot be truncated as since 1c93cc03ea (Merge
-branch 'kn/safer-mem-arithmetic-in-xdiff', 2026-10-16), that size
-argument cannot be greater than LONG_MAX because xdl_do_merge() errors
-out if `size > LONG_MAX`.
+That size was still passed to odb_write_object() and
+write_buf_to_worktree() that accepted `unsigned long` arguments, but
+previous commits have changed the types of those arguments to `size_t`.
+So the `size > LONG_MAX` check in xdl_do_merge() is not preventing any
+truncation anymore.
 
-But we want to get rid of that `size > LONG_MAX` check in a following
-commit.
+Let's then get rid of this `size > LONG_MAX` check and allow sizes as
+big as `size_t` allows, so that merges with results over 2 GiB no
+longer fail on 64-bit Windows.
 
-To fix the possible truncation issues with many callers and to prepare
-for getting rid of the check, let's use `size_t` for:
+This also allows us to clean up related tests in "t4300-merge-tree.sh".
 
-- the length argument of odb_write_object(), odb_write_object_ext(),
-  the odb_source_write_object() wrapper, and write_loose_object(),
-
-- the size stored in `struct inmemory_object`, which is later
-  copied back into `size_t` fields (`object_info.sizep` and
-  `odb_stream.size`).
+Note that overflows in the size computation itself, for example when
+`size_t` is 32 bits, are still caught by the st_add*() calls added by
+b1313872ce (xdiff: check for overflow when computing merge buffer size,
+2026-10-16).
 
 Signed-off-by: Christian Couder <christian.couder@gmail.com>
 ---
- odb.c                 | 2 +-
- odb.h                 | 4 ++--
- odb/source-inmemory.c | 2 +-
- odb/source-loose.c    | 2 +-
- odb/source.h          | 2 +-
- 5 files changed, 6 insertions(+), 6 deletions(-)
+ t/t4300-merge-tree.sh | 13 ++-----------
+ xdiff/xmerge.c        |  4 ----
+ 2 files changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/odb.c b/odb.c
-index de5be285d3..56a7910b03 100644
---- a/odb.c
-+++ b/odb.c
-@@ -702,7 +702,7 @@ void odb_assert_oid_type(struct object_database *odb,
- }
+diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
+index 41386d6025..54bf6c0327 100755
+--- a/t/t4300-merge-tree.sh
++++ b/t/t4300-merge-tree.sh
+@@ -430,15 +430,13 @@ test_expect_success EXPENSIVE 'setup: base commit with attributes' '
+ 	git commit -a -m side2
+ '
  
- int odb_write_object_ext(struct object_database *odb,
--			 const void *buf, unsigned long len,
-+			 const void *buf, size_t len,
- 			 enum object_type type,
- 			 struct object_id *oid,
- 			 const struct object_id *compat_oid_in,
-diff --git a/odb.h b/odb.h
-index 857637f980..a09748bdc2 100644
---- a/odb.h
-+++ b/odb.h
-@@ -634,14 +634,14 @@ enum odb_write_object_flags {
-  * Returns 0 on success, a negative error code otherwise.
-  */
- int odb_write_object_ext(struct object_database *odb,
--			 const void *buf, unsigned long len,
-+			 const void *buf, size_t len,
- 			 enum object_type type,
- 			 struct object_id *oid,
- 			 const struct object_id *compat_oid,
- 			 enum odb_write_object_flags flags);
+-# We have LONG_IS_64BIT as a prerequisite since we guard against downcasts
+-# from 64-bit size_t to 32-bit long (for example on Windows)
+-test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,LONG_IS_64BIT 'no buffer overflow in merge-tree --write-tree' '
++test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'no buffer overflow in merge-tree --write-tree' '
+ 	test_expect_code 1 git merge-tree --write-tree side1 side2 >out &&
+ 	tree=$(head -n 1 out) &&
+ 	git cat-file -e "$tree^{tree}"
+ '
  
- static inline int odb_write_object(struct object_database *odb,
--				   const void *buf, unsigned long len,
-+				   const void *buf, size_t len,
- 				   enum object_type type,
- 				   struct object_id *oid)
- {
-diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-index 75cf29fa9d..c13cffc805 100644
---- a/odb/source-inmemory.c
-+++ b/odb/source-inmemory.c
-@@ -10,7 +10,7 @@
- struct inmemory_object {
- 	enum object_type type;
- 	const void *buf;
--	unsigned long size;
-+	size_t size;
- };
+-test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,LONG_IS_64BIT 'conflicted paths are listed without buffer overflow' '
++test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'conflicted paths are listed without buffer overflow' '
+ 	test_expect_code 1 git merge-tree --write-tree --name-only \
+ 		side1 side2 >out &&
+ 	sed -n "2,\$p" out | sed "/^\$/,\$d" | sort -u >actual &&
+@@ -449,13 +447,6 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,LONG_IS_64BIT 'conflicted paths ar
+ 	test_cmp expect actual
+ '
  
- static const struct inmemory_object *find_cached_object(struct odb_source_inmemory *source,
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index 50cb388c35..60801e70e8 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -758,7 +758,7 @@ static int end_loose_object_common(struct odb_source_loose *loose,
- 
- static int write_loose_object(struct odb_source_loose *loose,
- 			      const struct object_id *oid, char *hdr,
--			      int hdrlen, const void *buf, unsigned long len,
-+			      int hdrlen, const void *buf, size_t len,
- 			      const time_t *mtime, unsigned flags)
- {
- 	int fd, ret;
-diff --git a/odb/source.h b/odb/source.h
-index 7b56f51b82..8daf5df31c 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -454,7 +454,7 @@ static inline int odb_source_freshen_object(struct odb_source *source,
-  * object ID and the compatibility object ID, if non-NULL.
-  */
- static inline int odb_source_write_object(struct odb_source *source,
--					  const void *buf, unsigned long len,
-+					  const void *buf, size_t len,
- 					  enum object_type type,
- 					  const struct object_id *oid,
- 					  const struct object_id *compat_oid,
+-# Ensure we properly identify a downcast from 64-bit size_t to
+-# 32-bit long on Windows
+-test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT 'merge-tree dies when merge buffer size does not fit long' '
+-	test_must_fail git merge-tree --write-tree side1 side2 2>err &&
+-	test_grep "failure to merge" err
+-'
+-
+ test_expect_success EXPENSIVE,!SIZE_T_IS_64BIT 'merge-tree dies when merge buffer size overflows size_t' '
+ 	test_must_fail git merge-tree --write-tree side1 side2 2>err &&
+ 	test_grep "size_t overflow" err
+diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+index 5a78b88fad..2ef9c049e5 100644
+--- a/xdiff/xmerge.c
++++ b/xdiff/xmerge.c
+@@ -669,10 +669,6 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
+ 						    ancestor_name,
+ 						    favor, changes, NULL, style,
+ 						    marker_size);
+-		if (size > LONG_MAX) {
+-			xdl_cleanup_merge(changes);
+-			return -1;
+-		}
+ 		result->ptr = xdl_malloc(size);
+ 		if (!result->ptr) {
+ 			xdl_cleanup_merge(changes);
 -- 
 2.56.0
 
