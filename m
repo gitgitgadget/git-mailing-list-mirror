@@ -1,84 +1,84 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1794937470;
-	b=mjKY6sPUaE9F+YvSin8WtnhVDfKgwp57u/nV3Z9XFCoufigeZzviH4SlojGuecajN5jY
-	 cPbCwKnU6Sa+D3Wdc8IrYbPJvp4C+GOGOC9XvSjLB/wEDutOROQXwLHaaw5YRbrnEd3ZS
-	 JRg89NAmbGnM/t2BVCzei6MpWCttUnwbq8FWudnuNsEWxrKmeNVx6aDuf5VUmfv1l8PxC
-	 r6NznK0YLdH3ATPrB9LR8WI/C5hmfKqIrr5cIzsZTOd73MEFHlZ4/zVhpHx1oo/NOiqek
-	 PjbqudNENzVlxt5tsvb2SZNkWVAWoK/tzGkdylo5W9fWZhM0NZUS8RiW8er0hjg0wrQ==
+	b=smIpxCyeY1Z3H+ZqQI6DaA7mJb9JVMK5oySzkL8Mrx4fJT+KnVYD0F/8Ie+5sIHs8hAP
+	 BrIFBb9bqj203k+fIwbBrdpkjCIaVNk7Irati5ptGrKNvTUQepPcSAQ4lpt5UpjLd3q5d
+	 +Pt1/74h1LTpHFjNcCAsSa3UQ8Y6cs+lnY3Mys3oLWTg0x6p9KVCqA+9/EF1IHSq9PxiR
+	 cJcgIh6aEvgqdbjXrjX8UA2zvTFKnjVWqNVUwKZj7/WfHBTa0S3NPLdisGMIWxaz77uwO
+	 NHyS0TMfzNRhoIaTFl+w7EyBSlPisD9S7W17H+8A1dJnQoSHtLHMskZmC71xPXe44mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794937470;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=sY1VlcpKHnlcsEhyr0KqfRV1c1ZeBHTD5VE9cH1Ii9g=;
-	b=2P4SZ5wRZlbgxNlGaOyccgngvxn6MSAE2M3baMjqzXEG2jCTBybFEz6OnFHmqQCpH7Pi
-	 Qte9Jdqf1GdqYeNgyLc/fZS/AacnEAyjRLP5ZJzDTZ1ExLP+mi3kPcIqznok8DUUn6DT9
-	 KMXho8YlSrLb1uQN/0ybCkJs/HDpkErlySP0aNqEc3Oo4v4klNUiRIui9ulePSxpOQSx2
-	 /3/F29H/h1jtOZnicDfG0jes0kv+QkiBNVbbYyJx3OtQMTN2UTx0BKSUUBrfB6I8e/ooU
-	 MK89nAFXBaZ/KT2b9RA+NaShYxFf1QBYS661s5M4b44BYyJ9/6ohuWRSY3EUTpnit+g==
+	bh=3kHozEu/3Lj+vitlFPds1A4uvE5DfsvBjiE3QwHMQHc=;
+	b=c9GvX8KjXcA1dG47u3dZB+AdPDUkQyYUeiYhnLjkuxkDZrnUwBNa0EEfq0iJzbi92JPo
+	 ot2k+QJExk61JgQwQG8aITkVSYj2h3cF8Z8jedXNLMIyuFaEeOsfEVSBSR+4/UFNmIqOk
+	 55TcwAYIqC3/lm+ye0ExRUNmmX6LS1xHWcUU6ultCK2aqqXGFq5J2OybAJ8RyMZxf798W
+	 lGbu/zBcK3yJ3Sz3n+rjp37uf4+CCTosEVFiYcIjf/ktAs9ekWNgTm5AngsBru5Xr3fia
+	 xGMDILWT2msH3y0jaAi0Aj8r+jt6kTOhU8TMn3tow1kfLzer3wShYQzXzuB6J9SFVYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C6BLMW2O;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ysh6LgC5;
 	arc=none smtp.remote-ip=209.85.218.49
 Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E48A606A33F
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 17:44:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E48A606A33F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A65606A32A
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 17:44:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 64A65606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C6BLMW2O
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c50933bdf4bso288409666b.1
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 09:44:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ysh6LgC5
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c50a2efbe1dso794784566b.3
+        for <git@vger.kernel.org>; Tue, 17 Nov 2026 09:44:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794937467; x=1795542267; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794937469; x=1795542269; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=sY1VlcpKHnlcsEhyr0KqfRV1c1ZeBHTD5VE9cH1Ii9g=;
-        b=C6BLMW2O9+pyfGVFsiO3k7l2ODV8KJcnUYg5CS2/BMEqdYW1+bQEz5wOe0YOxVPrjR
-         VPOIgDVssRV1ie6FPpGRZjfPDDtEISVSbJNPXQAvDpT7jS97fP7PHSnXejF6IuXFKPvm
-         FlKmGJIULZd1agyffBC3gzHycULfb8lwGMow/gpTC5WLBz3ECZAs0eAE75wqItqjqQoK
-         K63eITCqjaBVfN8dmK6C9DPv/uqFFB+u8DpOFaH3AwJBRC3coSt+VVfLNZ5Ob1hZngYa
-         j/C65fl67ClKmw3DHg2mO1amiOGNOBfTBoujsH/kwDNyZa61LvPwsAJ72cyj9el3Zlsc
-         PjKw==
+        bh=3kHozEu/3Lj+vitlFPds1A4uvE5DfsvBjiE3QwHMQHc=;
+        b=Ysh6LgC5sCs6YJwgCAAgoFWVdeP/jdyYo6XYj1gdYGoN5kVR+/IOrw2yu5MgV/ccqc
+         GQSVQWwTS8UxMsm+cR26Dx/tphPFAkBbUC1qGSfPfktKTBFvsb3WT89Sfy32hh6mppJq
+         +BdNpKMmIO3EDRkA4fal7v1M/ZaMFmWG14nMBOAQ/DgurEnX0jwy1dBCnYE/D6BEWTzX
+         qC5/bqSA1+xAGhsb98YeMT1vly4UVD49DQ9CptGzH7zvQK38F0dHf1hsldktmc2rw9XO
+         O2kjFmxJi2DL7Z/A/RrjTJaaGra7+chP/RUG9sA7z3sS0womvDUQwiwgazE5+FpiXAbF
+         UE5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794937467; x=1795542267;
+        d=1e100.net; s=20260707; t=1794937469; x=1795542269;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=sY1VlcpKHnlcsEhyr0KqfRV1c1ZeBHTD5VE9cH1Ii9g=;
-        b=W0aY8iWj2r/Ftw8IUxcd7UWb7hWnyQkJV0SahYkLGwihzcPy/5WKO104syNHpaRsNN
-         dxL45jJIuer7INcOaUEYE/4RkzOp6ZiOauhGL/ZvjdO9DiYtWPGUACR8YH5O8cm+V+gG
-         ax8CKg/u/sZmdsmE3jmiDznsx1An68bVu6MhZLDJpEzwOItxpkEXriumC5+D/2WLWjXC
-         9USWYO8abH5VXhN6YSN0e9lAoV1nNR7ywCfxceH7VVvhDhIGoYWV3mtwJaS/uyOKn4gw
-         v2cuhvg6EoiNOTASMnXFBmjuyJHXzkbp+kOiN9ySGFqkWm26NKYxNf95Q0rUf6+uI80H
-         uqOg==
-X-Gm-Message-State: APuU4Z//iYRy9rISwlJn4aXOqwsXgd5zbrTGT2LrDQ/g8fuZ7TmjaoeG
-	WicdOnLAAx3WUnp9I4NJlwAra94RrXfPkGwY0SlWMdQSXTeLE//5Jff0Wn3Y6g==
-X-Gm-Gg: AYBFou1Enb9xWe481pBbkXMzpi6wjrvzTdFfiMikM/ldQafWcO1ZQzU1tSgnuCkK7dN
-	Ega7rG3FJyvovo2d5FP/peCXyarQM3K3exo1w8kT2Rz9Sftzes5lVvwipCxocI4El0RzeJvUAJ7
-	1CfXjTx1MyiqduCRDRzmu4j3W+j5du68hZPFRT0DKRxAl1OqOVjP2DXktCrqeR1SvEY6yOv5BOL
-	iJfE/5tn6x8+9oYvs0DqnRjyoz+5irk9V/+JYITsf/dhgRFtJFkZ07XBYsLRmzCo54jRYj1rnaF
-	4cqQ9v6OKW8ZYMuzmgqy8MShW9wHqxvxRMjRmGHLJ+0j/FGsu65DjhN1I8ZhVvGEPW5HjQiGAUR
-	DsN1OtsJBMgCRMcIJz3XE8y+3Wx3nwPY0lnh4zkPcHwp7edTX/01z0d4PYbZb0eVKi+3FavNTKM
-	MEIyiYl1A56IrwmC25HEipphUfOIJDr22XXdm46lFUBXcYsJq47OTY49k7yfW/QV6ZGQSd3w5VI
-	eO1NMslKCI1wQgCtTd5MrfoxBk1dX1aymJvY7+iBHVTsSXXYR9p49P1HoUlqadnRVaMrpCPZu4v
-	BSbgIazfyDuTowaXFcTEkmPL6T5xYt3EXhd6Ypv0WzaAcGDYMUG9Yfc3NkK5opaaQgny0Oi0Ri0
-	JMvADUdqGDCnVsCpYSaaORIJ8gc/FiSP7RWzYdyPt4JVm34trfvLpNwJBgAexxpD8FZU+f2MbQH
-	rmwpGxG6jiwJz/NUee/uWpFSLiq6Mrmi34gnveM4Q=
-X-Received: by 2002:a17:907:1611:b0:c25:4d9e:bb28 with SMTP id a640c23a62f3a-c50f320ca48mr331252466b.3.1794937467528;
-        Tue, 17 Nov 2026 09:44:27 -0800 (PST)
+        bh=3kHozEu/3Lj+vitlFPds1A4uvE5DfsvBjiE3QwHMQHc=;
+        b=yryleoZxdp0NsRnYHYBWqtZ7SBxPVfL1ciBYVDZ8YIrCupcpSOy6xcdMLEmb3vGcau
+         RgBqZkUsxctVwJa+uUnYJi3UTSd7bpEN78tw7tU2I9aj6jWlj+cZV474hwVRBScuMgX9
+         onYT+umjKnmEhHFv0NTs5/7TDr2//2KA0pp4+pgK+1Gj7YTCB8Hb5QMm6Y7XhDVebA6S
+         krhHsUhn9kF/bkhme7+PhKFtajFEdikbafwRKyNIc7GuMOqS2vlzNJ6W4JL5kuVl1NNq
+         qCUu9X2fQPtNHRQ0mC/uQfUKsW9W46uCO+pNx9+F5Ud9zDX6YgJ3pkgFvcypNO82V4BK
+         2ylA==
+X-Gm-Message-State: APuU4Z/AfJFe1wrVHqmxR0FgYjon2HqE6sXnzQgSFCEFvd0eYKTDODW/
+	9zGswqxxP9yhanYU2k8ks3FxDvNdDY0mXdHv6Xj0EWLa9Z6bncDoeVhOTUS6QQ==
+X-Gm-Gg: AYBFou0ZnkzZSa+hD2E0uFVv6YYPFI2BrKZFk1av0aNoFtDE4hd+zp7lZWdafXgs+zq
+	Yeu0cZjJEqYZ3EU4+OzsDYeRc+9mM4SJ2acwaEOUTmT70Bqv5RW+Dh0gsq14X1MtrXAwAuAZhJW
+	FS3EWCTYjXEtkwmlzyJnR19deD9iF2C+LtkjMwl4NPjryMTdjrG/FBLe5lfcF1JxbVjALBWPUMI
+	D4FcpKy1ttj21v4lgroX9w/MqbnKAILfqy03kJRoIo3wTH1fWWRF59ZlukJL2qV9NVkyWLUffzw
+	d/ukFFbg5oBhitXWIC+n6bsfY5hxYLbHDTJuE6PcJPLUUyjGKAFR23gifB6ixEyOTcKiY9k1Fc5
+	5mTlbernbmdiP3s9rDO64khcDwII+1Zk6j/u9ffDom/9uYHK3HZ9/8Q3ly0SA/BLo0bnqdPDkTi
+	RY4Q/07aUsOJf4bPiyvhBklPPzVN9PMjeOW35UJMMjifhiFIZJBi6AnP/OrkgBYIWw+IAqsbfpG
+	+shcfAIcq/pQD/BeDAK87p9W8i4glncDkrwzCGilCyL347HVJQd1XiBrceJlX7TuWzC3Q3eNNCX
+	2IvoaeURCKCSSuhuMGW8mz6KLRQNdvjS0fMgj+jnF//NjkxVxizJcorevAIwKM9oyZc/3lIAqUG
+	AETTwXlC7Vm5CmSXSgGGt4XzfzoOjZSod6zUzs1je60nHN13AkLltemS8nKJskp55LmqdpJ2j5J
+	LnTIu2lCIjXiShudXYj2E7zeaMKIaUfvj0T9kYfgg=
+X-Received: by 2002:a17:907:608f:b0:c33:923b:ad51 with SMTP id a640c23a62f3a-c509638bf57mr1233844966b.45.1794937468689;
+        Tue, 17 Nov 2026 09:44:28 -0800 (PST)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c510c83fe47sm7947366b.5.2026.11.17.09.44.26
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c510c83fe47sm7947366b.5.2026.11.17.09.44.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 09:44:26 -0800 (PST)
+        Tue, 17 Nov 2026 09:44:28 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -87,9 +87,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 1/3] notes-merge: use size_t in write_buf_to_worktree()
-Date: Tue, 17 Nov 2026 18:43:55 +0100
-Message-ID: <20261117174353.1158905-6-christian.couder@gmail.com>
+Subject: [PATCH 2/3] odb: widen odb_write_object() length to size_t
+Date: Tue, 17 Nov 2026 18:43:56 +0100
+Message-ID: <20261117174353.1158905-7-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.56.1.495.ge87f5c5eed.dirty
 In-Reply-To: <20261117174353.1158905-5-christian.couder@gmail.com>
 References: <20261117174353.1158905-5-christian.couder@gmail.com>
@@ -104,53 +104,118 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The write_buf_to_worktree() function in "notes-merge.c" has an
-`unsigned long` size argument, while its two callers from that same
-file:
+odb_write_object() and odb_write_object_ext() use an `unsigned long`
+for their object length argument, while almost everything they pass it
+to already uses `size_t`: hash_object_file(), format_object_header(),
+convert_object_file(), the `write_object` callback of `struct
+odb_source`, and `git_zstream`.
 
-1. write_note_to_worktree(), and
-2. ll_merge_in_worktree(),
+Many callers also pass a `size_t`, often a `strbuf.len`. On LLP64
+platforms like 64-bit Windows, where `unsigned long` is 32 bits, such
+lengths may silently be truncated.
 
-both pass a `size_t` to that size argument.
-
-Since c6a4629e32 (odb: use size_t for object_info.sizep and the size
-APIs, 2026-06-15), the first caller reads the note into a `size_t` size
-before passing it on to write_buf_to_worktree(). On LLP64 platforms
-like 64-bit Windows, where `unsigned long` is 32 bits, a delete/modify
-conflict on a note of 4 GiB or more therefore silently writes a
-truncated note into NOTES_MERGE_WORKTREE.
-
-The second caller passes the size of the ll_merge() result, which is a
-`size_t` since 81db32ddce (Merge branch 'jk/xdiff-size_t', 2026-10-15).
-That size cannot be truncated as since 1c93cc03ea (Merge branch
-'kn/safer-mem-arithmetic-in-xdiff', 2026-10-16), xdl_do_merge() errors
-out if it is greater than LONG_MAX.
+Since 81db32ddce (Merge branch 'jk/xdiff-size_t', 2026-10-15), the size
+of an ll_merge() result is also passed as a `size_t` to
+odb_write_object(). It cannot be truncated as since 1c93cc03ea (Merge
+branch 'kn/safer-mem-arithmetic-in-xdiff', 2026-10-16), that size
+argument cannot be greater than LONG_MAX because xdl_do_merge() errors
+out if `size > LONG_MAX`.
 
 But we want to get rid of that `size > LONG_MAX` check in a following
 commit.
 
-To fix the truncation issue with the first caller and to prepare for
-getting rid of the check, let's convert the size argument in
-write_buf_to_worktree() to a `size_t`.
+To fix the possible truncation issues with many callers and to prepare
+for getting rid of the check, let's use `size_t` for:
+
+- the length argument of odb_write_object(), odb_write_object_ext(),
+  the odb_source_write_object() wrapper, and write_loose_object(),
+
+- the size stored in `struct inmemory_object`, which is later
+  copied back into `size_t` fields (`object_info.sizep` and
+  `odb_stream.size`).
 
 Signed-off-by: Christian Couder <christian.couder@gmail.com>
 ---
- notes-merge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ odb.c                 | 2 +-
+ odb.h                 | 4 ++--
+ odb/source-inmemory.c | 2 +-
+ odb/source-loose.c    | 2 +-
+ odb/source.h          | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/notes-merge.c b/notes-merge.c
-index d361e70a48..4b010bcfc0 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -310,7 +310,7 @@ static void check_notes_merge_worktree(struct notes_merge_options *o)
+diff --git a/odb.c b/odb.c
+index de5be285d3..56a7910b03 100644
+--- a/odb.c
++++ b/odb.c
+@@ -702,7 +702,7 @@ void odb_assert_oid_type(struct object_database *odb,
  }
  
- static void write_buf_to_worktree(const struct object_id *obj,
--				  const char *buf, unsigned long size)
-+				  const char *buf, size_t size)
+ int odb_write_object_ext(struct object_database *odb,
+-			 const void *buf, unsigned long len,
++			 const void *buf, size_t len,
+ 			 enum object_type type,
+ 			 struct object_id *oid,
+ 			 const struct object_id *compat_oid_in,
+diff --git a/odb.h b/odb.h
+index 857637f980..a09748bdc2 100644
+--- a/odb.h
++++ b/odb.h
+@@ -634,14 +634,14 @@ enum odb_write_object_flags {
+  * Returns 0 on success, a negative error code otherwise.
+  */
+ int odb_write_object_ext(struct object_database *odb,
+-			 const void *buf, unsigned long len,
++			 const void *buf, size_t len,
+ 			 enum object_type type,
+ 			 struct object_id *oid,
+ 			 const struct object_id *compat_oid,
+ 			 enum odb_write_object_flags flags);
+ 
+ static inline int odb_write_object(struct object_database *odb,
+-				   const void *buf, unsigned long len,
++				   const void *buf, size_t len,
+ 				   enum object_type type,
+ 				   struct object_id *oid)
  {
- 	int fd;
- 	char *path = repo_git_path(the_repository, NOTES_MERGE_WORKTREE "/%s", oid_to_hex(obj));
+diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
+index 75cf29fa9d..c13cffc805 100644
+--- a/odb/source-inmemory.c
++++ b/odb/source-inmemory.c
+@@ -10,7 +10,7 @@
+ struct inmemory_object {
+ 	enum object_type type;
+ 	const void *buf;
+-	unsigned long size;
++	size_t size;
+ };
+ 
+ static const struct inmemory_object *find_cached_object(struct odb_source_inmemory *source,
+diff --git a/odb/source-loose.c b/odb/source-loose.c
+index 50cb388c35..60801e70e8 100644
+--- a/odb/source-loose.c
++++ b/odb/source-loose.c
+@@ -758,7 +758,7 @@ static int end_loose_object_common(struct odb_source_loose *loose,
+ 
+ static int write_loose_object(struct odb_source_loose *loose,
+ 			      const struct object_id *oid, char *hdr,
+-			      int hdrlen, const void *buf, unsigned long len,
++			      int hdrlen, const void *buf, size_t len,
+ 			      const time_t *mtime, unsigned flags)
+ {
+ 	int fd, ret;
+diff --git a/odb/source.h b/odb/source.h
+index 7b56f51b82..8daf5df31c 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -454,7 +454,7 @@ static inline int odb_source_freshen_object(struct odb_source *source,
+  * object ID and the compatibility object ID, if non-NULL.
+  */
+ static inline int odb_source_write_object(struct odb_source *source,
+-					  const void *buf, unsigned long len,
++					  const void *buf, size_t len,
+ 					  enum object_type type,
+ 					  const struct object_id *oid,
+ 					  const struct object_id *compat_oid,
 -- 
 2.56.0
 
