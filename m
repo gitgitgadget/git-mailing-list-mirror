@@ -1,91 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794915554;
-	b=jiRnE7Ck6ZD/xIPsmIoiC4x9AitrgmvIIrqam0BOF2ujljOvSAT54rKu170UPkWYTRTR
-	 FwDml5ARo9I3+YUTF4AHlMACp0nP181UkBDIeiahT02y8M6hvPbDoYxl5XGmGe6euuOA/
-	 qva4wpJ6urZzsQKn6pGGX0kZNJ5p1hMMUx2A66gb8uuYRgi5bUQ1CxaAJ5aIbeWU7bua7
-	 MaO5m+ezLBsNTfBCaRAeZkbWBtiuoRiYcXbYo5o/1ux5FAfz6mWnNpBUDTlPox8QeYEL0
-	 GwzjQxFyfbhcPd3U76ysvhFY43LWvmNNuRyVoGwyyGaQTyCvbmwJV13aY76FY1spQ3g==
+	t=1794915556;
+	b=4iO8kqtc4W7lbxOxSre8LCA8QKpVrxCzSIXsFD+2zAGS0hbigRIu93Zi3aq8D6mFMPsk
+	 es0PX7429reErVCf7TC0Cwag8D582gSX9zguaGJ7UYuJzEK0Yy8/V8OzK/iGDjjU/0t4Z
+	 LkAZ5a1VhU1aS9w4mSY2iwtjofeToBpD18AHCP8pQBLp4WeaCcCQo5uBwpsNpBUu5DmIy
+	 6qb5jF8fonutBq+5HBNm1a6cX13Fy/vMPI+4QZi57d1ICS74qofIiwRhcOZn2ZGUlm4K5
+	 1pbffGQSNhtlNq0dEjLKpY4RqabuSS48q0dQl+/l6IENuXceCz7B5Wom36cWL50cQHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794915554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794915556;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=aeZlgdld8Mlenh+df9G4lQ3t/qfooZFG5zrAZBl7IVQ=;
-	b=tHUPQVJkx7ZL1k+4lEJ+CcO7Kf7ctwYHRtgK8BgsnWqVZMcZY+k8FaOCbgIdSY7QKRCQ
-	 NLttawKX/YKlq0gdRY1MM+Auyyq1lNtshQ1exgvaaIpqxPyZxwD0Pn8ttbwRv8hwfXAQB
-	 5wbKvzS3JkvcmpZ2x9dws6l0y+UyzcIeNebujOo6SI1mE6yhsbZre4MSNMsWDvsen6Q7t
-	 UdZz9v1/90jlLZe5zpinARFuUSaoYEmIOAq4JiNpj+cabIW1ZHoMKBhnUadBgQOrXrIC6
-	 FDtBBNPUz8y9c+nFjUAfKUojUS0qvHAwWJqkt3BwmTjoW4x2wf142Kcj7n4YfMcywHw==
+	bh=SzfWBWzcm785zFUWezBCar5oYoXQUPvBWIPl0sKz3kU=;
+	b=TdONtc1tku8IIqkiPbYI1aD1J27yU60B+qBCRMf7EQiPsLOZKxTtIetmmf2QAuhA+YrB
+	 lUo6Q1Z5KliM/LAIU5OF+s3B0qPwgTG1PZT3CiRzNP2wJPvxB3LECDGLYgU3aQwfgFDje
+	 srrgbD9vOfG3xnnA+6Q44SZHofVCn1j7xaUEx6+NTMgd+/4UqHUP7/4QafPeAzZnW5rnA
+	 dGZpzM/4ZF2GbPDCtFEYPp+6NFA6BCM9ycbhgik3fKtQqygFUBloMBPsQDkguh13735zE
+	 E9BxZclVVV2tE1gyfu2pecrs33IbwL71qDsPN5ZuZ7a+rWPBwjl4KRkadSWrvn8WmeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wvSg1Aiy;
-	arc=none smtp.remote-ip=209.85.128.44
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=grCjhthZ;
+	arc=none smtp.remote-ip=209.85.128.52
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DE2606A331
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 11:39:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 46DE2606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A01E606A32C
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 11:39:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A01E606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wvSg1Aiy
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4bb5b8ef642so29765555e9.1
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 03:39:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=grCjhthZ
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a1fbd52ab6so35137295e9.0
+        for <git@vger.kernel.org>; Tue, 17 Nov 2026 03:39:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794915552; x=1795520352; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794915554; x=1795520354; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=aeZlgdld8Mlenh+df9G4lQ3t/qfooZFG5zrAZBl7IVQ=;
-        b=wvSg1Aiy5kBt5JXy6Me8/DxgifHBIG9zvwMYCE7sR9eehlWeABV2AHyW/ss44fkj3m
-         19kyY0ictu2hlwAUHc57cKwM7L+qSeonC17i63MebMCEn8l0tKnFtbyfxIEgHcOskhUD
-         hfeBudA+bPGhDpnuqAODWcwii3wr3Hx8/oG7KMH9BtCiAeXLzZNAPB1LZEe1Ty0dtGXn
-         4n/EgweY3GiNwRbyljV3NRb14BZHfmnL5mOjTbxo8yyay3I6SVZc/NIxkep6CSpwH2B6
-         fAKnI373WvpJSlLj3DrpkcZFwWMkVKEDFgDenRrvtkm22IawAf9Pmr8aEU6Y8IlD5iZa
-         41fw==
+        bh=SzfWBWzcm785zFUWezBCar5oYoXQUPvBWIPl0sKz3kU=;
+        b=grCjhthZ5Az2fG4j128xSt8vCRlvbND7++UCpcqN5rdz/gEhVHmzKV/YilGi1JPX9z
+         Ke+byyvwYsM6sjmd1WAEOWJBAJVx9aJ3xEGZfc+MIrFqf+lfCbJII5SIaODtbemKCMFk
+         4ynWiFKdqel9NUwyR82GnUl5cERmFuFxNftfMzmB96ISYk9W+12y3xXgBSm1TVT3Xii+
+         LtZY1BBMv9Lu2TN1XxQjOOMk2CQyI4S+5DgFS5OxfG+7GBwkI8cgQU5ppDvQUlDGxdeb
+         nuBGAeWYrVAQ5RHDngM6ucsQ8hY64KUNl1iS+GIJGK0hLoWVFwMfYbh2L1KPXaAltbCl
+         nZYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794915552; x=1795520352;
+        d=1e100.net; s=20260707; t=1794915554; x=1795520354;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=aeZlgdld8Mlenh+df9G4lQ3t/qfooZFG5zrAZBl7IVQ=;
-        b=EkWTQ9DAeVIoXcrs4tcXs4cmdwIuC96AG8d8YHEffnaMHa7HQyOjW0KlgSKku6LqwX
-         jHIY9An/Wqk/KU+4zfLWO5GDyDH/zJ/bl9UT0rsb0t7EJKj5MggZ3Mc6hzLeB4IgNwFd
-         cFZ/xQcG4ORhq/TATt14xCDOqxg3B/KfW9bajRh2uGOp6F382oq4nmDuaIlsyyC1cwE6
-         zPsp0CFi8rRLqRMlpk61hwuwlJuDRmphmT/9CuP8Atd9Y+vPC8oCwrZ+yfLsWkr/bwLZ
-         +q13uA2dz9N5dTEwbk0iXeAErhG82HlWzqbGv3NDgPNMeBWDVDAMJldJRdvfadktev7M
-         lzrA==
-X-Gm-Message-State: APuU4Z+tNFy1VcySZOrpl7x3YZWKlYzU4NU3b622v+p89hshXhExQY/u
-	k93Q7mRS9NM7CfRjfmqOk+iEJBqrHlTSkAlya8/hpj0yL6l1n3RaGR+1PEfywA==
-X-Gm-Gg: AYBFou3gCX6jI7QZ97LCHNaOCXSyg3kNoU+LmPORiN//6tbP3FJipS7OMmPY3RGtZpD
-	3ZzWk1hEmIkYeFLZlH0ldZ/MX4FzvDWriD1OlzCaNlYHd7Gr1DULWIcDbjaeqjv8rjFLNIJKDgE
-	gv/8Xp8jEIHXz0E+5M3p29avT1l8+7dlL77frFoVW5/YoVP1mtUf+cHwDOw6LSpbl8YZkADuBZk
-	+YkvpzCSh3M7ZBnu/krl0+sHLzoM6467EPKXqnk/KqNrzuk73BOUdjO8nvdRBy/ug1Vnx5/pEQW
-	EVHqlCjxpbNenOObmnxARtq2eZiSlIZGlyhot5/K3kUC2jiP8Tg/kaQs5oYzkDAdguxZBXi9rGi
-	q1jgpI1Cd0imxii07FuUisZ/PpmjZuzX033tZtgCt4OPqTnCHb7cck2NzEC3ArZ6HbJF4m5QUBk
-	iCDBuGbUYYG2/4S3R2/WDyKubShegsh6PQ56WWjZg+4cez0MQzl67IkgwyLirdcYpLyfCD8lPRB
-	TYpuxIRj7sYgP78tA1uluaLdmLuG412sTqtZHG5fKPnKjW+Yjquuhs4jaZ5xIy409istSidFOr/
-	CHu1OTKdxODaWQqnbyhBVpl02vNInUGvq7WHy8TvAdoW248JPF6o79qIW/Vo0rQ=
-X-Received: by 2002:a05:600c:3b91:b0:4a3:59c9:a744 with SMTP id 5b1f17b1804b1-4bb55a3e29cmr318256885e9.7.1794915552516;
-        Tue, 17 Nov 2026 03:39:12 -0800 (PST)
+        bh=SzfWBWzcm785zFUWezBCar5oYoXQUPvBWIPl0sKz3kU=;
+        b=cDGU2yrQGAjkTg2JXmpDt4LSLQhoIZ6KjTpWyKaVjSHXRMzqYiUbzvONujAu9CwNwW
+         udt2BZ51/7puBpPrlUPUDC4E949zSIVS2N+ngtFIo2GOSkkbRvm4fgtSLYZ6jZMU4sRw
+         Bm8fkRQmzHp0mVSe/WTSBqho8T1csgEXpqQgii3uT2JZpnxFIgMDQOsqXvNTmF38Nrcc
+         j9/8NDD7kb42SXcRRg3NGjMQps77mESBqfsZuu3wvneGQqwwpjYfoJ2CUMglisq2sUZi
+         DyCnqGgXe9BSoPqMsyGSzGi2/Rbnbj528IxkqSJntmO2qVz2Ow8ZDBPT0evvpjWFcZV8
+         hvSQ==
+X-Gm-Message-State: APuU4Z/Sxvoc5nxJ7AP66yjpnQqeKFByUPNt+gm7+/zPc5j6S5HsU7v+
+	CR6V/qJ6zmqMsxK8+BYDXE2RpLKRaRRGN33G4Is97vFtP5ew9nmC6fc+9n24SA==
+X-Gm-Gg: AYBFou302gsBl+/2yL/uEqJLKBrmM2ZVbn2gAXPzZ6VXRWPIlXgCGv1892tGszAAkb4
+	IBRGxZ9L59n7IfUGz8eQ5XadzxyJuJjxbRaraiRjQNf+gJzKJJHiO2CyELsrbKrM0y1WXp+2TWF
+	mDiAcrioyhgNqNsiLWhWe3pMQW7gByKKlxa9eW0oAYRS4h0OjZ84fnh3qf2nGkePL4W1ymBcZIl
+	71UrqzM4XOQYMNHFI2AfHX488MG9p6/BTiDorlJW1XkwxG1Doxc02t9r8N146bEb7DxBoHq8aFG
+	0JtXWilHcBkk39vk0vsYI0i5/Rmlds0Y6SDah8K25ZQ8+F5ck/cuYtmI+FyUmjxbQ6GFyFgr35M
+	M7KQDEBuJSSaUqyhqTJO7dRakIdnsGEu9Nn7//diYoI4OG9R0gzKauBiHazEeOo6kRtCFF6GoFB
+	0/eR8pkXn+0EGlv4F88pTviSxwprFKvXZbwFxt8EfZ36hzM3FAm9i/0UxMDK7Om/ApXgxefs/ZA
+	JzCiLQD/9TEh8wQFhuSJbzpHSvchuRX4stRt7Nh9efYyFxK0cc29fEC0VkiVQUnc1JauJFQTrdc
+	HPOxZCzfABzsgtFT1IteuaRjTBRgTbqTM4A9c8bsiqAM9z22SEdsL6yigwqUDe7JZokQvs7vDLU
+	TCZ3ewjSf6A==
+X-Received: by 2002:a05:600c:5250:b0:4bb:60da:56af with SMTP id 5b1f17b1804b1-4bb60da5884mr209846525e9.25.1794915553634;
+        Tue, 17 Nov 2026 03:39:13 -0800 (PST)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb78420edasm93555925e9.9.2026.11.17.03.39.11
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb78420edasm93555925e9.9.2026.11.17.03.39.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 03:39:11 -0800 (PST)
+        Tue, 17 Nov 2026 03:39:13 -0800 (PST)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
-Subject: [PATCH v2 4/5] cat-file: use size_t for the length passed to batch_write()
-Date: Tue, 17 Nov 2026 12:38:57 +0100
-Message-ID: <5b61a1b08997d4d642e795ccb366e45f911bd982.1794914210.git.gitter.spiros@gmail.com>
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 5/5] notes: avoid truncating the size of concatenated notes
+Date: Tue, 17 Nov 2026 12:38:58 +0100
+Message-ID: <04f320d1de82902c174ff300426815125e1054c9.1794914210.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1794914210.git.gitter.spiros@gmail.com>
 References: <cover.1793355390.git.gitter.spiros@gmail.com> <cover.1794914210.git.gitter.spiros@gmail.com>
@@ -100,51 +101,66 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-batch_write() takes the length of the data as an "int", but its callers
-pass the size of whole objects as returned by odb_read_object() or
-filter_object(), which is a size_t. For an object between 2GiB and
-4GiB the length wraps to a negative value, which fwrite() and
-write_or_die() then see as an enormous size_t. We happily write the
-object and then keep going past the end of the buffer, sending whatever
-memory follows to stdout, until we hit an unmapped page and die with
-"write error: Bad address". Objects of 4GiB and more are truncated
-instead, which desynchronizes the --batch output.
+combine_notes_concatenate() reads both notes with odb_read_object(),
+which returns their sizes as size_t, but computes the size of the
+combined buffer in an "unsigned long". On 64-bit Windows, where "long"
+has 32 bits while size_t has 64, two notes adding up to 4GiB or more
+give a small buf_len: we allocate that many bytes and then memcpy()
+the full contents of both notes into the buffer, writing far past its
+end.
 
-This affects all platforms, not only those with a 32-bit "long". It can
-be triggered with "--batch" on any non-blob object, or on blobs with
---filters or --textconv, as blobs are otherwise streamed. For example:
+The notes can come from a fetched notes ref. Besides notes merges with
+the "union" strategy and notes.rewriteMode=concatenate (the default),
+the function is also used when loading a notes tree that contains more
+than one note for the same object, e.g. at different fanout levels, so
+merely displaying such notes is enough to trigger it.
 
-	blob=$(test-tool genzeros $((3 * 1024 * 1024 * 1024)) |
-	       git hash-object -w --stdin) &&
-	echo "$blob big" |
-	git cat-file --batch="%(objectname) %(rest)" --filters >out
+Compute the size as a size_t with st_add3(), and go through
+cast_size_t_to_ulong() when passing it to odb_write_object(), whose
+length parameter is still an "unsigned long". That makes us die on such
+platforms instead of writing a truncated blob, until the write API
+learns about size_t, too.
 
-fails with "write error: Bad address"; with stdout going to /dev/null,
-strace shows write() being called on addresses far beyond the end of the
-3GiB buffer. There is no test, as it would need several GiB of memory
-and disk.
-
-Both fwrite() and write_or_die() take a size_t already, so just change
-the parameter type.
+No test, as triggering this needs a platform with a 32-bit "long" and
+notes larger than 4GiB.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- builtin/cat-file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ notes.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 8870a210ec..c846fe3116 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -425,7 +425,7 @@ static void expand_format(struct strbuf *sb, const char *start,
- 	}
- }
- 
--static void batch_write(struct batch_options *opt, const void *data, int len)
-+static void batch_write(struct batch_options *opt, const void *data, size_t len)
+diff --git a/notes.c b/notes.c
+index ec9c2cb150..05da28b8d4 100644
+--- a/notes.c
++++ b/notes.c
+@@ -811,8 +811,7 @@ int combine_notes_concatenate(struct object_id *cur_oid,
+ 			      const struct object_id *new_oid)
  {
- 	if (opt->buffer_output) {
- 		if (fwrite(data, 1, len, stdout) != len)
+ 	char *cur_msg = NULL, *new_msg = NULL, *buf;
+-	unsigned long buf_len;
+-	size_t cur_len, new_len;
++	size_t cur_len, new_len, buf_len;
+ 	enum object_type cur_type, new_type;
+ 	int ret;
+ 
+@@ -839,7 +838,7 @@ int combine_notes_concatenate(struct object_id *cur_oid,
+ 		cur_len--;
+ 
+ 	/* concatenate cur_msg and new_msg into buf */
+-	buf_len = cur_len + 2 + new_len;
++	buf_len = st_add3(cur_len, 2, new_len);
+ 	buf = (char *) xmalloc(buf_len);
+ 	memcpy(buf, cur_msg, cur_len);
+ 	buf[cur_len] = '\n';
+@@ -850,7 +849,7 @@ int combine_notes_concatenate(struct object_id *cur_oid,
+ 
+ 	/* create a new blob object from buf */
+ 	ret = odb_write_object(the_repository->objects, buf,
+-			       buf_len, OBJ_BLOB, cur_oid);
++			       cast_size_t_to_ulong(buf_len), OBJ_BLOB, cur_oid);
+ 	free(buf);
+ 	return ret;
+ }
 -- 
 2.53.0
 
