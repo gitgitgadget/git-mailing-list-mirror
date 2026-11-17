@@ -1,88 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794927796;
-	b=XfGsGfc+DSpo0/niwjitTq0QibPV54MRE1017fEiewKGx0VxilBMrCDGqhmAHYnUDe1G
-	 IUIwOQvmSiEt1gIkCqOZnnt7mebcbqPYg3BMC3YVFA50cdgKUHv3kBgQ6NCM17vv+Ov38
-	 Kpmcowa8Dcr9HLbH56TNHScHj2jmkJu7cb4r5UPLyeJbtvbjapy9yW2GwKS6N+YAWY5cz
-	 XWd6DK9Tv1ZazCJgZnIEXQm91XQQSiUUlBwmZp+VUmd9tEfk2zEni8QfaLpTKzRBP9xN/
-	 cOSq4+fKEl4iBGjHQ0XJbrpXp7TF+HyO1gGrkwcfvtV+TaoAbzc2yuyYF22QDxrjyqA==
+	t=1794928512;
+	b=ehktM1/a+mxRvcXOndwOlJ9coYUi/lPVXq7UIBF/ZYzqqv1hVkW8kdkuQLjV1TGjWDQV
+	 fXCriLB54bBF7LeozagClCdj6lrkGfG75muUjQrt+l7Kc7niRpSIoXIilCw2IYvOE2rRc
+	 fEe+xw/SrPuiBcoRtdMF/N+z855xD+ye7PalTVReJzPuInJvkU4QkNbt/84XCjys7v8Ic
+	 HqeezGgVlF+ZficVIqM9n9iIbvr4c3cSunJ/Y6suJ2CTdvCjwV+fS6iO5advD4RcCsi6Z
+	 lscy6TUaC09IECEKwaNtkHzKcOgdtMpkHBgwV+tHBso3KsL3bUCgx3AgCkAeWBK2afA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794927796;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
-	 References:From:Content-Language:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=k+lkveR7Zm36eh/Ot3kb9tHGq1twjrKFozVaGUG7B/8=;
-	b=CURYjTqQMGsbZeGZs7IqBIVk2HyfFxmr4ivSnuWA05ECeGjczVOL/QPcpI7xlzzzD88a
-	 yqO18yVA3rBTI6nxSvDT8tFKCBLrN77VTt6hyzBTNljFqpo/8U29e9Ew8gGg/PzioSwg0
-	 OCXkjHEzFV3toZtuPghbr6Xotu7v0qCKYW/6nbHiswzW/GX4RuTG91jtklP+Rzl1DHTxp
-	 cXp+TX7RYtIiHiafi6hsERtjVF80+Ga6vlzIAVK4VdKhaS0B5MrbLEcFpUus2LjYlwP/6
-	 Fr8+wqk+2iGsoB/z6M09HGcnJ+8pw4Hv5jrPlbMcg+TfSiUCFTwoMoeRP8+lCl/yLjA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794928512;
+	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:
+	 References:User-Agent:Date:Message-ID:MIME-Version:Content-Type;
+	bh=lRWbKJ50Su9dCUv6nLS/pkUEPjofTR6zjMoZFFL+1HE=;
+	b=F0yxcvPnSD6yexx/H48GqueDqXLu0ZDEIle3quTYNZxISomnuUEFIRKeD2Abp3PYcm3u
+	 jlIQNypGb3LXB+4K+1rG+3cjgxA48f+IG9H+3HD6MCpae5CYogzPyPz3yLWgYWua2z5Fx
+	 7h5Lgtc8aGFKYuvoH8XTlR2unJrdOAPm4MJnLVvOaVmc5VncRW5A0XSzyk++I+3i5AfTU
+	 DbWWUQTwsaAiR8oq0Kcc9YB+AlCpWo3m3YOnmThuK5/TN+aeZg9XANN37UNLzLhry+QGA
+	 A0m0dNmL7zJDgG24lTfBi5/iVPMQbaSjcWOjzFw5KAgH8uw6HShW/smGoxmb/Q2RkNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="yq1W/NIB";
-	arc=none smtp.remote-ip=209.85.218.53
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=gouders.net;
+	spf=pass smtp.mailfrom=gouders.net;
+	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=Srv3gzDz;
+	arc=none smtp.remote-ip=202.61.206.94
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3087F606A33A
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 15:03:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3087F606A33A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB23606A32A
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 15:15:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8AB23606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yq1W/NIB
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c5075fa7ed0so782805966b.2
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 07:03:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794927794; x=1795532594; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=k+lkveR7Zm36eh/Ot3kb9tHGq1twjrKFozVaGUG7B/8=;
-        b=yq1W/NIBe3VbeLytR5Rsypn75QCUZ8Pg8IfnPJJ4b+E+iNFpP2n5V1A/WunJB6jCUs
-         5NGgn5z3Oyz4GqmpfSMkMBRjBABkr4Nfd66x/FOR0TOjRueri05aCRfnsNV+G9BHcCnb
-         d5UZtc10J+17yKhSRlPKAL5kxdegb2nfSkZN4vi7BNU9ncyctMC/63eR57GRRQgVPgpD
-         FkWFfRufu8xjAEkx4dEEdpqqZZlGSNqMZkbwX8f7GZRKZDKix55CnVsl9gaDDcNTSDM+
-         84PDEGlAL52zRfm/u+yWWQ1eH76zJSQuEdK7bldfmnzZOz87Xh90aX6TZBY4ttT57NOi
-         cxMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794927794; x=1795532594;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=k+lkveR7Zm36eh/Ot3kb9tHGq1twjrKFozVaGUG7B/8=;
-        b=sl3kwWt2WKsjCvKHLj/ytFRwQMF+cOgINQtT16JEeZgsNm/BM+tcgNB3QcvpBzHPQ/
-         FkQsUDPseNpuGysSZ6qQyppXGZggueE/tmRf/r7/qDh2gSC8GKDUBBWrOZLlddz8tOGh
-         wU/CWephrkyo2InO1DnFMZIR5GPPPgXdZASSvQZHiIEjJEswysZQwHfdoYD1nSmO7oN8
-         eRw9ILf+5rsESG9wK370pJOGafv7GPOYTAKPTQH5hV65pk2XOWkp+Q+k5zFUInAK2cIe
-         OXnVvPGAwgrpI9ZTF4kDPTZjrhgEXkp/MGTy3NhCqh2CtmVpu3Xwkh0WUWD6YVWSZguu
-         8mFw==
-X-Forwarded-Encrypted: i=1; AL+hErHcTXCiHzcp9VcXuhcXcpkjDkBPL8XhtTb1sBgf7D67jcbfGhIJzZZR61kUO6rShY5cJ90=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8+sRw3L60Sgd9dTpnrdgsmquoodabo/W5n3Hf+Li+rYfNF6SKS
-	h8CIoSysHllXnv1C7yl/a/TUp1wJW2u36gDRdqcEUjiY5HNFerdevxYi
-X-Gm-Gg: AYBFou0WPoKwNcPPAfeu0rJYEFaHOK6s1LDzymptBXq0clUCyJB6Mi6HGXrwlP/NkkS
-	nmxvVtYFMaq96c9oxq2kN8T6p/htBveffggz7DcK6yK4EMTz+G6GGDc7zzCPZHpMhKcXlmJI8YS
-	FXUoBqtp3Pd8gszx99biyCU//fAB9NuZjLxAuzjczI6O0oudyZRBHNjHN6zUIfXWb3WYZL88pgB
-	koy4bzaTAEzh6ciFC72RNOmAdwEscZJ/RTaqOtyu0bJDFIIW7IWeMHfHVJBVtst4sfjar494WON
-	UBEJxtjUaAOvQ2fwpIrRwimkKLxY8bdjXkYQ8ND/X9Y+B6HJCVIm93g6k1TyG48deW8hFgB1RAc
-	+AQE1psRxQ5TzsDotYDgqw5JxDWAq632KYIPvUIbmTE3qG1wEDXftj3yvZISvogRnkwIW2wWtYW
-	cyHqHjdEWbk/NDxD+HGtye0PTEqpaM/Vu4cGlX1/y8gIe62DYS6+dYADeyT1veT4F2LDiWbEotz
-	JLXO4jzYU3dmrLx3IT/mMJEbndFB9F2hQ41xlhofOVsQftrwWOJS9+HPL3BY5s+C7P4hP8GkO5K
-	pXgPiJMuokzynelQ7AheN9caa4e5NBq6V8D8RUo7uwKDmXeO6O/vIiTvnItrqyhIu/OJ+wOfi5P
-	4ECKl/N0=
-X-Received: by 2002:a17:907:8e08:b0:c24:6985:d7a1 with SMTP id a640c23a62f3a-c50961104demr1077191366b.7.1794927794119;
-        Tue, 17 Nov 2026 07:03:14 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c60f8d615sm28968612f8f.56.2026.11.17.07.03.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Nov 2026 07:03:13 -0800 (PST)
-Message-ID: <5a1a9f6b-48c8-4daa-9059-bf9459587a17@gmail.com>
-Date: Tue, 17 Nov 2026 15:03:11 +0000
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=Srv3gzDz
+Received: from localhost ([193.175.198.193])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AHFF5ko1826251
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Tue, 17 Nov 2026 16:15:05 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
+	t=1794928505; bh=lRWbKJ50Su9dCUv6nLS/pkUEPjofTR6zjMoZFFL+1HE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=Srv3gzDzs8ioSLFuxNlY+53kCqc8dDLtnLmT6DTgwU4CACTEMLz3VmWt7B3HRdBCN
+	 DoUQI/uiQofYLP9vyYuvIvMUhTw17McBXWOennBOaeWeT9rUT8jukZZskFdQ8Qg60L
+	 DnTFPecRELnb+LTUbZfZ/96efaJ59B/oVt//IPNI=
+From: Dirk Gouders <dirk@gouders.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] utf8: respect bounds in utf8_strnwidth()
+In-Reply-To: <xmqqld6siau9.fsf@gitster.g>
+References: <20261116-master-v1-0-dc2a50ce0aa0@gouders.net>
+	<20261116-master-v1-1-dc2a50ce0aa0@gouders.net>
+	<xmqqld6siau9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Tue, 17 Nov 2026 16:15:00 +0100
+Message-ID: <ghcxs3v6a3.fsf@gouders.net>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,64 +63,97 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v14 1/5] fetch: add remote.<name>.fetchRefmap
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Matt Hunter <m@lfurio.us>,
- Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <pull.2412.v14.git.git.1794681496.gitgitgadget@gmail.com>
- <c63699b40228b1d47368778d7397b1ddc6ba2a36.1794681496.git.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <c63699b40228b1d47368778d7397b1ddc6ba2a36.1794681496.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Harald
+On Mon, Nov 16 2026, Junio C Hamano wrote:
 
-On 14/11/2026 18:38, Harald Nordgren via GitGitGadget wrote:
-> 
-> +test_expect_success 'remote.<name>.fetchRefmap stores an explicit-dst remote.<name>.fetch entry in both places' '
-> +	test_when_finished "rm -fr fetch-refmap-upstream downstream" &&
-> +	git init -b master fetch-refmap-upstream &&
-> +	test_commit -C fetch-refmap-upstream base &&
-> +	git init downstream &&
-> +	(
-> +		cd downstream &&
-> +		git remote add cabal ../fetch-refmap-upstream &&
-> +		git config --unset-all remote.cabal.fetch &&
-> +		git config --add remote.cabal.fetch \
-> +			"+refs/heads/master:refs/remotes/custom/master" &&
-> +		git config remote.cabal.fetchRefmap "+refs/heads/*:refs/remotes/cabal/*" &&
-> +		git fetch cabal &&
-> +		check_fetched_refs <<-\EOF
-> +		refs/remotes/cabal/HEAD
-> +		refs/remotes/cabal/master
-> +		refs/remotes/custom/master
-> +		EOF
-> +	)
-> +'
+> Dirk Gouders <dirk@gouders.net> writes:
+>
+>> utf8_strnwidth() takes a len argument, but because
+>> display_mode_esc_sequence_len() works without an explicit boundary,
+>> there are cases when utf8_strnwidth() operates beyond the given len
+>> boundary.
+>
+> The problem is well spotted, but isn't the blame slightly misplaced?
+> The preimage with missing context looks like this:
+>
+>     int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+>     {
+>             const char *orig = string;
+>             size_t width = 0;
+>
+>             while (string && string < orig + len) {
+>                     int glyph_width;
+>                     size_t skip;
+>
+>                     while (skip_ansi &&
+>                            (skip = display_mode_esc_sequence_len(string)) != 0)
+>                             string += skip;
+>
+>                     glyph_width = utf8_width(&string, NULL);
+>                     if (glyph_width > 0)
+>                             width += glyph_width;
+>             }
+>
+> Even if display_mode_esc_sequence_len() were updated to take the
+> remaining number of bytes in string (which I think *is* a good
+> change, by the way), the loop it is in may cause the entirety of the
+> string up to the "len" bytes to be skipped.  Because the original
+> lacks a guard before the call to utf8_width(), however, we end up
+> calling it even if string points beyond the given region of bytes
+> orig[0,len).
+>
+> If you blame the lack of such a guard before utf8_width() (or after
+> the loop that has display_mode_esc_sequence_len()), it would match
+> the proposed fix.  But I doubt it is entirely fair to blame the lack
+> of an explicit boundary in display_mode_esc_sequence_len() for the
+> breakage you are addressing.
 
-This behavior arguably isn't too bad when "--refmap" is given on the 
-command line because the user can simply adjust the refmap argument or 
-the commandline refspec if they don't want to ref to be stored in two 
-places. The same is true for when the refmap comes from the 
-".fetchRefmap" config and the refspec comes form the ".fetch" config. 
-Both those cases could probably be filed under "if it hurts don't do 
-it". However, I think it becomes confusing if we store the ref in two 
-places when the user configures ".fetchRefmap" and then passes "src:dst" 
-on the commandline because users are used to a commandline "src:dst" 
-overriding the ".fetch" config, not adding to it. It is going to be very 
-awkward for users if they cannot override ".fetchRefmap" by passing 
-"src:dst" on the commandline. I think we should change the behavior so 
-that "--refmap" and the ".fetchRefmap" config are ignored when the user 
-includes an explicit destination on the commandline or the in ".fetch" 
-config.
+Yes, I'm not sure if that term is correct but the main problem seems to
+be a "contract mismatch": a function that accepts a boundary argument
+calls one function display_mode_esc_sequence_len() that doesn't have an
+explicit boundary and for a second one utf8_width() it doesn't use the
+optional boundary argument.
 
-Thanks
+>> Fix this by adding a boundary-check after looping with
+>> display_mode_esc_sequence_len() to ensure we operate strictly within
+>> the given len.
+>
+> If the incoming "string" is at the end of an mmapped region (beyond
+> the end of which nothing is mapped), reading string[len] would give
+> you SIGBUS, so display_mode_esc_sequence_len() would already have
+> taken you into trouble.  In other words, even though such a check
+> before utf8_width() is better than nothing, in a sense it is too
+> late, no?
 
-Phillip
+Correct.
 
+I am currently preparing a v2 that adresses all the above.
+I will try to give that v2 sufficient time to hopefully reduce errors in
+my workflow and not steal other people's time.
+
+Regards,
+
+Dirk
+
+>> diff --git a/utf8.c b/utf8.c
+>> index 96460cc414..7e050bb2c4 100644
+>> --- a/utf8.c
+>> +++ b/utf8.c
+>> @@ -217,9 +217,13 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+>>  		int glyph_width;
+>>  		size_t skip;
+>>  
+>> -		while (skip_ansi &&
+>> -		       (skip = display_mode_esc_sequence_len(string)) != 0)
+>> -			string += skip;
+>> +		if (skip_ansi) {
+>> +			while ((skip = display_mode_esc_sequence_len(string)) != 0)
+>> +				string += skip;
+>> +
+>> +			if (string >= orig + len)
+>> +				break;
+>> +		}
+>>  
+>>  		glyph_width = utf8_width(&string, NULL);
+>>  		if (glyph_width > 0)
