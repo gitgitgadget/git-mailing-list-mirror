@@ -1,65 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.106
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794929305;
-	b=W/BXAwYgOwvGEbrhwxJbBKYrJxJXcCu4kCnALhBkGe5vrU9sy5fz7j2bv/wRdeKOcvCj
-	 Z3aB3qT0I+bVvcxlywhVmPVf3N3LycvpIw3ZzL20lEOIavZDJQUcP/suMNAHkwrboA5IV
-	 8a6c4rCoGKcuxlsLybudPkC33EDAV84k/J17Q7XZJyTZPH/kiaLYtnX5ZNpVmHjAwhV/z
-	 shMMNu+hMuVE9yntIOYywYqt0sQ+ItWFHooO3OvcypxzGgGcd4pS5tCJPOn1Qlr1U/e6k
-	 1bSRPDjpFFD5+KD039iYfbDQ4DuriQDxWXmFw2Sz3nK/LmqCu3FlK39lvuUQRjtXRvA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794929305;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=9AHG8MyQHsX/BmJJ2jZ1iG8BrcRWvqtfJ62RaOXFAgQ=;
-	b=4UBre0ZuXfcnLjgFzQdwAHxcxmr0rTzuF8uVluAYpjot4+9htQ1JBTA1iApXdYD44O+s
-	 pnDtWIGt5qm9wkdOM5V68q/pz0z31Dpewr6LwgmdEIzB+wscj7kgML9l3kqG/en9YzkEe
-	 y/m0clw00n9/K/tKx0sRhpc1AQwuE2sNwj3FH0pQtyUcrGHmVZQOwObxera1q5Zp32sAm
-	 OtQ6StwfIQW9vmbqPHPxmZRhqC4ikwjz2X2c+cP/JREXkD2xJL6jxpoPNdJZO48QhbaIv
-	 FyjZgOBt1S/70uPw8UTfOYpI8desKcrJ31JO+1zS5IWpGiY1h17YtbihWY5KbGb5n6A==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=collabora.com;
-	spf=pass smtp.mailfrom=collabora.com;
-	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=VGJ9dLSa;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.106
-Received: from sender5-pp-e106.zoho.com (sender5-pp-e106.zoho.com [165.173.182.106])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794930034;
+	b=j0q7lq8ZkZF2Nqbq0PjdyfjvSy3JDX5Pkb5XP2CNaa4f1IQBeeiBaag2+RpBEbZYY/l3
+	 bBWPzkn5OFn2uxPEjsOJCIJs7AulZZVm5T9FPmoCm3dTXzOMjyqY1g8FwQtWlenNNegWM
+	 qspvSiMA8FlNKMDMguzr9+4wVfBW10giC90r0qmkCJwbbnomz/JG2cwULYolDj5UuFh/f
+	 kuohgRjYqvcmneSAkhnoQv554X+8QlEMQ/fSfJG2SUvhZSDTbiiv4pmprx5MUcohPSF1Y
+	 pRaaLcuQmnDXa4CboLSldlwi0tlcssZ4qU5sFaflP+5j+zR8XUoHxxEx5damYq5T5Aw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794930034;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:User-Agent:Date:
+	 Message-ID:MIME-Version:Content-Type;
+	bh=Q3x7omd/PLvxyepkCeVqaZxKtTK3D0820qN2T9L10tQ=;
+	b=sN+9Wv29NSvMNIGIty5PyT60SByvZvL1rhEvwDrOW5t4jxak7oecs6t0BkwAOOhSKHdy
+	 sG6Vnm3S2wUEZjItHVvlcw55YdsAqIRJ+BGPWFWTWYpxl5vr/mhW4elfsJPpXS31nlAzP
+	 yB+9Wu0BifHgrsVxvKsllm/zg/g+WrBsaSSXX38q9ma3yAkd1Ptnqkf0/tb+a6GM1G9Ap
+	 rI5+JxkxdxMPoF8DurQVdZbWWATaqgcdHERDd4sDk0pNu/dAsOY1JZesfI+JBSlE2SbFJ
+	 ua5AKPxEWVL4eKplfM8EsEB8kdUxaF9mCG8fxfubRyDmwJU7xTnv/9JDSJxfcvGTANA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=l8Seun7L;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=HYhNkREu;
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F674606A31C
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 15:28:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6F674606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF1D606A31C
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 15:40:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8FF1D606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=VGJ9dLSa
-ARC-Seal: i=1; a=rsa-sha256; t=1794929270; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=OguAYc3i4upUDXB0kF2YaZtMH7yE04s7YGNHDLHh+saMOsrHRTUGnvTzMtSA669VFaLA8NeQAu/O1xgFkNoVd4sKsUj3tyBnwY3BZDFwevH0PN8+t2hRxf6UmyFWcKpqW7+ElZIk/AAnNiHH3H3p4U+91Jf4BPovZaBX+eXPxoc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1794929270; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=9AHG8MyQHsX/BmJJ2jZ1iG8BrcRWvqtfJ62RaOXFAgQ=; 
-	b=fbr78HsJLSEqXinXMLsinNS0hWqHB0jUV3NfB03wS2+EYWlS6KaCnLt/9LHVT7yXWJZB5xY2785oVpfvoU+nS061KsVTLJXub8H/n4vBSk+Zwj30rJeW/D26aH7Tpf0K/meg2/HAfLKHOMbh1uBuPy9OPgD67OcU6LTONOXdxuc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: a=rsa-sha256; b=VGJ9dLSaRcqvHDD7Bsb3qEm0MzXoPNPIbe1Trq4CmZebUGq95FKe2hZtDnygNP8SA25v9akS+xtHx90ZskcsH8+Ggqj+6bz8DdJFUri7oWZLC+YyOXWS8w1nnZAskM8u5vw0zPmrhXyoNeBMTMeQI+BcR2cPzz0MwWdLWssydNg=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=9AHG8MyQHsX/BmJJ2jZ1iG8BrcRWvqtfJ62RaOXFAgQ=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1794929268411249.93374720290637;
-	Tue, 17 Nov 2026 07:27:48 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, "brian m .
- carlson" <sandals@crustytoothpaste.net>, "Eric W . Biederman"
- <ebiederm@xmission.com>, Axel Rasmussen <axelrasmussen@google.com>, Emily
- Shaffer <emilyshaffer@google.com>, Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH 3/3] object-file-convert: copy unknown commit headers
- unchanged
-In-Reply-To: <avqypRLPLZZFNqRs@pks.im>
-References: <20261112195740.2834341-1-adrian.ratiu@collabora.com>
- <20261112195740.2834341-4-adrian.ratiu@collabora.com>
- <avqypRLPLZZFNqRs@pks.im>
-Date: Tue, 17 Nov 2026 17:27:42 +0200
-Message-ID: <87cxs3jx5d.fsf@collabora.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=l8Seun7L;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=HYhNkREu
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EBBB07A0038
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 10:40:32 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 17 Nov 2026 10:40:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1794930032; x=1795016432; bh=Q3x7omd/PL
+	vxyepkCeVqaZxKtTK3D0820qN2T9L10tQ=; b=l8Seun7LNLWxIfVSUVgLQBmCZ6
+	Ays73oHeDriFt1ykQMDD//5LDWVE9eFHKsyhyJP42e7zKxzxsmvhHahEeK+AYI76
+	IbVu6BCK4jMQqVJneuc9P+NOhRHupJb/YANBeBHnifX+bGzWekWKruuuCjgtPb68
+	fTPnWIq+8+7IfzmIWmz/R7oSWEynjLirP8KMr+gh4/1ZdJKLvOWfOI05ckMsfriX
+	VewuHY2VLT83VHdnNAgJ1p6upubZHzoEDV1FR7TiKMjCQOJP3ubwWQOhK6x/9CGN
+	3fVBoD20OjcofznYFfnEDjI5p14PjWyS68TcC1RSdvv0Ph0U67T6EaxnZx0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794930032; x=1795016432; bh=Q3x7omd/PLvxyepkCeVqaZxKtTK3D0820qN
+	2T9L10tQ=; b=HYhNkREuCNJREL2PqqSLeEMcpFCi5fAP29bZ+GTVRH+2pBnTulj
+	WHoqpKSAyqLcjspS5Y98Qv0bE8vXn2gVfCswqLYUAjJZLULfiyooY7EX3Mv+IN8e
+	MloveoWzGN7ZsrHPcJdqCOiVo+4jK6cj7KpLyLVs4am6lsZrA3R0Vb+j+KpHQCTc
+	o1Ny0+nwAdGduvG3ZkGXjpvt5pdtLai/4CwiGqNCX89vzB7uejDgUgG4Jr1hNwFH
+	SZXLy885hVL1owFwqhAvDUqduEhI8SUpaXSUkA7sq5h3tv/s4u+b4v0LP90AJdVv
+	viKltWUXFBVDjMRbCL7ZVR6EUXtWiWGSS2g==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794930032; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:R+gGbmuH1miDgLiQqs9qAeRsJ0CzsnzoDjOZOB/tJ2e7NC9
+	q5EooyE8HPUxZRyILCzYldz465H0W30eV+qFHJMkyA9bJLv5OgKudc5yOjLHD0Hx
+	n8q0cqqwi2HMLBCijojI8c4tz2kZIYSNwnb6BOjP5x5iWD5iNymJUGHmm2ZXtt1c
+	U9G0oDCLDO9Sh+vrNn6voefGJtk78j0u0iAGZaMO8NM2LLAtgaKBcck/f5DzkMw9
+	sretTg7yb6OLZaAg3kAohCZJA4aWVkmhmNijB5cxX5SYapyxTUYoSZO9Ou9vTnQk
+	zxiZADqmgTTc7501FmAkmnoX/yFtWo7JyBLfH1A==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:UgA9/evfaxvoYqcfq6lbjAg5CDKaZLG204Ipcahr/ds=:n4ezZoejdXQ2Mmv0tOhTiKqtxRVmvV1cD3+HbSH/B9U=;
+X-ME-Sender: <xms:cHX8aoKkbr7FH0-hgOi8Ox0msnjEFMgVFwKc-n_kref4QqPNtwGwIA>
+    <xme:cHX8aqbbjt-PWhhguEzwi98-lVU2NWL2WIaKVFJviPD4oSEUL_RMZH5EK1VEma5W9
+    1XAycMSVM9e4KwFUlmMzOhj3huXKgdkwmcm4o5N5qsQ8Io0Zv3eLQ>
+X-ME-Received: <xmr:cHX8aq-FduX03iUwnv1wKYfatYVv-PgiZZIzYepcd1d2fa4G2PyEmL7BnNbtqXoSEaMUJDTF8LWVc5PFGeQZibRv7pfGm11G4wUq>
+X-ME-Proxy-Cause: dmFkZTFd+D3/TsHaqaMXXxLUaRsllWGErJPeK94ogxJ4pF6QZruDOX5HqeTLgWTTPOjz8k
+    6IHQaEf2asb6ZS1lto1Xyn5DOqEWJzIK1YEiO5iDRh4Xn0QlzjJxBEEreIUesFd+dRTQNB
+    NbSWiZw55nGBts8mkA7OfSZ9ifu++shMyu0XKDMKAYu7vVp6vtQygFer7hyqK9Eg9svM9x
+    /AxkrF0Gqa7TstMw3vxrO6TrPBLuIzCyeCh/y4mor7nv62FZ2p6dydGkeJcH9PTe9td0Xh
+    8gxtBAP/WV3Bla7JzhvNF8s1cscbGxtA8R0QY7mc4DFT0KxnTe86g/3rNY5wCYVrkAGHm1
+    cw8b5uXnGc+/t8f0KtOjJEZ2GFmkNj8bPSZyD5UHiJPUUvFnDq/rOLeIwC6JxH/rumaXUU
+    hPVYOHvBUcsS0AkPonRRInlHcvC24yGkh8bW8mfvDnnd03+DY6w8W+kXqIwUBSlhaOh7vl
+    Pq+eN5m2G+Zawh10F68uIOV0/KNKj8mwj61JABuQDVYaf/DACnSaYAvIWUt/AsjHlevBXi
+    U/T/IXANOxeN372zoKnAUkxDBoDnqdAbSnfojgidrKn6GaSEGnGSiLH4EgxatKzWi4TH0u
+    carK4vLBxKgjxdFEAnGp0f8P3FcmGd6KNqIhcSJO2oHgtHWWmI2J5IfKHSIA
+X-ME-Proxy: <xmx:cHX8araTlb1rZUloMNFRW986mNqVmanM1RuuxMpBaIJ8eLiEsqSibg>
+    <xmx:cHX8auM84mKQMBnYBb4A6tqGzoYgxgYJLh9UKRxDnmknL8kwq-AbGw>
+    <xmx:cHX8anA-margDR6UjB2fzwjx0fy49jupidMyVlLZeyMP40I8C1dJVA>
+    <xmx:cHX8alKRcnR7YDJOqiuMjGbOtGkM6xp8fjeQaUG81uOic8IuvANWxQ>
+    <xmx:cHX8arE7oAFPl1BNtosJb_nLlKvIH8n2SqQqki63SRXPAaYDVbnB6amJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Nov 2026 10:40:31 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Matt
+ Hunter <m@lfurio.us>,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v14 1/5] fetch: add remote.<name>.fetchRefmap
+In-Reply-To: <5a1a9f6b-48c8-4daa-9059-bf9459587a17@gmail.com> (Phillip Wood's
+	message of "Tue, 17 Nov 2026 15:03:11 +0000")
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+	<pull.2412.v14.git.git.1794681496.gitgitgadget@gmail.com>
+	<c63699b40228b1d47368778d7397b1ddc6ba2a36.1794681496.git.gitgitgadget@gmail.com>
+	<5a1a9f6b-48c8-4daa-9059-bf9459587a17@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Tue, 17 Nov 2026 07:40:30 -0800
+Message-ID: <xmqq7bibh3f5.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -71,149 +130,24 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-On Mon, 16 Nov 2026, Patrick Steinhardt <ps@pks.im> wrote:
-> On Thu, Nov 12, 2026 at 09:57:40PM +0200, Adrian Ratiu wrote:
->> In a repo with extensions.compatObjectFormat, Git converts commits
->> to the compat format in two places which disagree about headers they
->> don't know:
->> 
->> 1. When a commit is created with commit_tree_extended(), as
->>    "git commit" does, convert_commit_extra_headers() copies unknown
->>    headers unchanged.
->> 
->> 2. When an existing commit object is converted (git hash-object -w)
->>    or when it's read by its compat id, convert_commit_object() fails
->>    on them instead.
->> 
->> So git hash-object refuses such a commit, while git commit --amend
->
-> s/git hash-object/git-hash-object(1)/
->
->> records a compat id for it that can't be read back:
->
-> s/compat id/compat ID/
->
->>    "Failed to convert object from sha256 to sha1".
->> 
->> The rejection was added in 08a45903cb (object-file-convert: convert
->> commits that embed signed tags, 2023-10-01). Git can't know what an
->> unknown header holds. It might hold an object id that needs
->
-> s/object id/object ID/
->
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Ack on these and all the other ID / spacing fixes, will do them in v2.
+> However, I think it becomes confusing if we store the ref in two 
+> places when the user configures ".fetchRefmap" and then passes "src:dst" 
+> on the commandline because users are used to a commandline "src:dst" 
+> overriding the ".fetch" config, not adding to it.
 
->> converting, so convert_commit_object() rejects all of them.
->> 
->> Some tools rely on such headers though. Jujutsu, for example, writes
->> a "change-id" header in every commit, so none of its commits can be
->> converted.
->> 
->> Make convert_commit_object() copy unknown headers and their
->> continuation lines unchanged, just like convert_commit_extra_headers()
->> so both give the same compat object.
->> 
->> The author, committer, encoding and gpgsig headers were already copied
->> the same, so their separate cases are no longer needed.
->> 
->> A "tree", "parent" or "mergetag" line with nothing after the keyword
->> used to be rejected as unknown and is now copied as well. Such a
->> commit is malformed in both formats anyway.
->
-> Hmm. I guess this here might raise some eyebrows. I guess it makes the
-> code simpler, but I wonder what the benefit is of converting an object
-> that is so obviously corrupt...
->
-> ... yeah, after reading the code we'd have to introduce a bunch of extra
-> logic to make this work as expected. As far as I can see though we _do_
-> reject "tree " without trailing data, but we wouldn't reject "tree"
-> without the trailing space.
+True, but the src:dst on the command line in your example is still
+overriding the .fetch configuration.  Wouldn't it make it confusing
+if it overrode .fetchRefmap configuration, since src:dst on the
+command line is what .fetch configuration gives the defaults for
+(and .fetchRefmap configuration gives the defaults for --refmap, not
+the refspec like src:dst).  It may be just as confusing as if, say, a
+command line --refmap suddenly started overriding .fetch
+configuration, I am afraid.
 
-I looked closer and v1 actually copies "tree " too, because of the
-(bufptr + 5) < eol check, "tree \n" never reaches the tree branch. :)
+I can buy it if the suggestion was to allow passing --no-refmap from
+the command line (or would --refmap="" work?) to ignore .fetchRefmap
+configuration, though.
 
-I also found I made mergetag worse: a "mergetag " line with an empty
-first line and the tag in continuation lines is also copied, so its
-embedded object ID ends up unconverted in the compat object.
-
-Git still treats that header as a mergetag ("git show" reports
-"malformed mergetag") and "git commit --amend" refuses to convert it, so
-v1 makes the two paths disagree again, just in the other direction.
-
-I can fix this in v2 by changing the three checks to <=, so the
-converter classifies headers same as read_commit_extra_header_lines(),
-by the key before the first space.
-
-So:
-
-"tree ", "parent " and "mergetag " with an empty or bad value are
-rejected, as before this series.
-
-"tree", "parent" and "mergetag" without a space are not those headers as
-far as Git is concerned, so they are copied like any unknown
-header. That is also what --amend does with them.
-
-I'll also add a test for the empty mergetag case.
-
->
-> We could fix that by introducing a generic format check:
->
->   - The line must have at least a single space separating key and value
->     of the header.
->
->   - The key must only contain characters of a specific set.
->
-> Otherwise we might be too lenient and also accept data that doesn't even
-> look close to an object header.
->
-> But whether that's all worth it is a different question, as said. It's a
-> corrupt commit anyway, and we cannot address the root cause of that
-> corruption here anyway.
-
-With the above I don't think we need it. A check only in the converter
-would reject headers that read_commit_extra_header_lines() accepts and
-"git commit --amend" keeps (e.g. bare "x-foo" line), so amend would
-again record compat IDs that can't be read back.
-
-If we need such rules, I think fsck is the better place (today it
-doesn't look at any header after "committer"). It's a separate topic
-though.
-
->> Alternatives considered:
->> 
->>  - Reject unknown headers in convert_commit_extra_headers() too.
->>    Both paths would then agree, but commits from tools that add
->>    their own headers could not be used in a compat repo.
->
-> Yeah, that's certainly a direction we shouldn't go. There's way too many
-> tools nowadays with widespread usage that write such unknown headers.
->
->>  - Copy only headers known to hold no object ids. Every tool would
->>    first need to get its headers added to that list.
->
-> Agreed, that doesn't seem sensible, either. We don't want to be the
-> gatekeeper of who is or who isn't allowed to have their own custom
-> header.
->
-> A third alternative could have been to try and recognize commit IDs
-> automatically. E.g. if you see a 40-character hex string then we treat
-> it as a commit ID. But I don't think that's sensible, either, as we
-> shouldn't interpret what we don't know.
-
-Agreed, unknown unknowns are such a pain.
-
->
-> A bit of a side note, but I have been wondering multiple times already
-> whether we should fix this gap by introducing a well-known object header
-> prefix that tells us that the value of that header is indeed an object
-> ID, for example something like "x-obj-foobar <oid>". That would make our
-> commit graph extensible by third-party-tools without us having to
-> understand what that tool even intends to do with that, and we would
-> know to treat such object IDs as reachable.
->
-> But that's of course a topic that is well outside the scope of this
-> patch series.
-
-Yes, I'm trying to keep this series small and just address the immediate
-bugs / breakages, to avoid it balooning into 10+ patch series again. :)
+Thanks.
