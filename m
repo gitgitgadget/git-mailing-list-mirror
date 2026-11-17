@@ -1,102 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794911886;
-	b=19EnX57TEnuY72VCQRkW2ZZa8Egd0Dn55KGGaPSB+IpKj+rfCVavXxKmC8/Vyi/+ZH83
-	 bRsUoJ7W39FrKRB8WWgLd9eS+mp4k+U78GVoCrg+WXiQWbj6Usp1rRB4mDg/yhFyf3RyN
-	 qcq8jm0l9SRvP13ddRqRQPmFTO8xcX+8SNl3/gQgHNvujyOvICE2lGvKZHZsOVLsIX20W
-	 vZ8/AYA0ceMbtKBz9cdriOuqtBBBnkrY1XkNaexjvsdf3rnnjXfYvp+6Jlyh8YbPKefo3
-	 Av91KeR3pD0knuMVUkxv5OYCvRS7Mm2okdfRte0HZGjlpDBHEr6XzI8dAXtBfsWk9bw==
+	t=1794911893;
+	b=au5fhUqg6oIq0ID1haSDicaR5AY91n05YLspQGJBqmHFWfYm7OsLCA9H7dwzu5Obrhk8
+	 /2wl1k0sqJfrC6u+snWxskbFEQzz17P3w+Dc/y/ywzGUpsKA20Cjgn7m1wpbzYJoWUL9j
+	 oPp72sCZ+4sWmzCS90lEE4Jjhkyw0ZHH50d8Xpf2XXlyDRJeEsHvxyJJZgMNqQWm5Qb8P
+	 1ScS1EYwjIL2cbxLKktZekQ9pJNJ8D16ZNoDe4oxbf7DX+TSemjloxrqKfBguoRx0y0Gu
+	 RDkJBms5PfUv/Fhl+heRZ+0LmJaKoXz42jPTIudvy6txYvGbYnyCirGhI4i7tamejZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794911886;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794911893;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=dJCn/EW1JvkN0klvZ2sUkhRIKlLoJkzvoChdRK6V2Vs=;
-	b=f4NWJ5mB5jqho54cxTZ8I3iZYPyKkHyaFzZFRpk3HCow/vuGvkt6HvXsyuvM0vutMASQ
-	 7IxSIzzp/YxNxhmtx5UuGUMulvSXKkGDqHU14gwCfIp1lgmscrzPHawx3DWocxja7eoMI
-	 /F7PSoGSfarqiaihOaSinxlg87GGZxycIp9A8VjNnYHRfIa64csxIfrKxMLukbOPgxxf2
-	 HL7Xaz4uym3bgBc/SsUCIV0SBEN1L8MsArWQJ0hxm3NwOQq6sOX94D6cBmZ8zwhQMLNvC
-	 d2OTx/LJRy7X9ges0B2+hhXn9np9wPe/OOwibzds4H4JxOpFAo1XLHaCsQj1vyxn2Aw==
+	bh=9/1GCIwOY9qNSGYwMgZd4kylvp9x78s/ohbUn5D7XOY=;
+	b=GnaLsXiArbqWjX5e21S4xyQjugEAtiDonhMs5wv9ceP4jDf3Rd9eHbss231Nja2yInbW
+	 lsB33ZU3YmjAzS4yhLZZ54+JeHQVWLL4nBmkhOy5fvAxW4bOjdnak7nOrV4j1NR6ln6vb
+	 bCKPytpVxXb52njCsLWImzA2sZlp4lgb/oEiIXGoX12leImwDtJUJgBYK3T6y6tKjxw+d
+	 iKO/H+TBnB/EnzXq+iHZVKPrGmWJVxTyZO/nQvzGPfZ6grg9n+mkiG5Uzf8amuPV8ztym
+	 6VYNnPg5HNyT/EeLDmd5flzYWUzo/QglHMpc2fjxTviMYm4hVhcVNiXY9cOf69O1/6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vDHCvO2M;
-	arc=none smtp.remote-ip=209.85.221.51
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kWvIPodR;
+	arc=none smtp.remote-ip=209.85.221.46
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F7F606A339
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 10:38:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A1F7F606A339
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBB7606A32A
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 10:38:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3DBB7606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vDHCvO2M
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-491971ac844so3842101f8f.2
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 02:38:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kWvIPodR
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-490d59c3edaso516012f8f.1
+        for <git@vger.kernel.org>; Tue, 17 Nov 2026 02:38:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794911883; x=1795516683; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794911890; x=1795516690; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=dJCn/EW1JvkN0klvZ2sUkhRIKlLoJkzvoChdRK6V2Vs=;
-        b=vDHCvO2MDhsxDDdMfSDgODpkD9swQiP858Yv85u1lUVwW+6RgOV3lmDhi0ohhGhHZN
-         tvh2RAIV1uVveUtrnybAG+ijn28jSQYMpsmQQJk6QZVK16F+VvtdEujK2B2y7j5b4eIQ
-         G7bHzmsY0UgFM3FxJBxGyb0/t31uCouS9HTXbfgsDy3W4r/q30RxvDhg+9c9B/4lSRa/
-         6m7VglQPy4umQ67IkOYHX53oRHoE25cW9wj3/pgTM8fIl1njhfFgA7Ak0t7L+HDzo1k3
-         Ko2boKwLLMOg2+aBK+TyG2RDx04rh6VVVJcFZMa60nn7Y9iT9fiRJHZevW+/dOuP5qgh
-         xgMg==
+        bh=9/1GCIwOY9qNSGYwMgZd4kylvp9x78s/ohbUn5D7XOY=;
+        b=kWvIPodRuJBxVlkcf+tK3CIVocCkyU8acqyfl/1fT03lpwuulQf7fE5pWLfT8u/wB6
+         OM4f65UWhzukBol5jXaQm01mOjHMBp0lpjQga5BA0nKdzRTidF17Vod1Jr0Fx9X/UdiH
+         NSSGdyFa8xoX3Vp+4Qruq4onGj+lm9Avm5cZYyS0ODUabNFSZ5p3FsgblcWdfCoUD0aL
+         WLFI/3UveFHJxB3zlZkPWBZwp5zqEZ7HPbk/woHzIyPG1QSPwDVwOWeukyxYvvhZQEOR
+         7Vwxc2gy5HY8H5a4UcSDnfzea7sScKn6K8Hs7Tsx7RDw9MW4lPDrLgm59DX1VjkdrdNH
+         YO+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794911883; x=1795516683;
+        d=1e100.net; s=20260707; t=1794911890; x=1795516690;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=dJCn/EW1JvkN0klvZ2sUkhRIKlLoJkzvoChdRK6V2Vs=;
-        b=swWyx9NiKm8Wt/b8LzsDY97U9MmG8ZvaqB5gIm8KjjHOvvU8vl00mpy+p9AO3Io2mz
-         tT6rDsIbDCmjVqE7ZHSB1CtcWdy//uEoMM8BnFyWG94gX5eoPuZezLEz2tU8MAeTnqbM
-         VYyWYk1UOkKak+37OE5YQrYjWtDrcYR5W5JtCzm2fthGs7hlZAHatAfkcK6jS7hrhy3+
-         76D6YENx2XilGJt1efhjWdUuaepWsS/lYTUscIsI1RPQJcwch6cOIiK+s23Mhp1yn9af
-         FCqL3xCuyZu3mXFmDuUrloSKQZNpMZuKUpbMeEmswR38uZgc6aaJ56O/TdljVJhM2uvv
-         pXFw==
-X-Gm-Message-State: APuU4Z8f2dA5qPa/YuIDWkOGnkTGeS4NdWKQFCo9onQh4RZOrcvtfIzH
-	g0mPL6dxe7K2d6IyxocSV+E51virEuJkTIjPmJPKcYgU0sHPmvjaZtbdTXNL0w==
-X-Gm-Gg: AZFdTZdsU2FT8qBlOQuwczRtJc7k6ZKLdgoTcr8DC3GWaIY25FgB3ga+ICOFAqVodJI
-	iDJBHqdyxtrlHI7YV/dlnjBxGQXt/bLUW1dlYxpC69ACM+09UWHZkA3M4ewNyKtEJp8ej06ms1/
-	9S3IA/7urZUt2Y6DkxISwdaAE22s2SOuroDtNHk8akokw7TZJ3SCvIrM3QQEpEuC7S11uqyeDEl
-	XskB2flj48pbDDfCyxby1h6Fxzo/I4tmF8s1Qd/n6ntwA8isVSrA5YusOlEUEXr9t8+S2/imsIs
-	EcnRMuSayVQcgIFZC7bILm+gDDtJb4pAT2gVlblEg7TpDBo/zMn9uDY7eJesQkbVXBMPtSfxCeT
-	nUGT80Si7OWQdm6zv3CFKI2ZC4FaRLuaYfRkGW96USwg2D3odQbKGmiSemibmN8wPXZfijCPRaR
-	S2nDkR3nF7FxXFqZD75LhVDAXIqO/SEwroRXivYHonOkqr+zrlY/v4EujXQWssv+PeyrpSxr92/
-	Spk2y3d0iHZ7Ul0rOWflwO+rEeCUZwo9iaBhNUPx5Q0ZQj7pNYVKTn97OAFk5VgvYv1DvRhlG2z
-	tyw8e0ZbsMc//q+qsqX//HDUEq3r8Chp84YeYPXGZzW0lkIGSoiD7RTTj9X847M=
-X-Received: by 2002:a5d:5d88:0:b0:48b:1296:52ec with SMTP id ffacd0b85a97d-49c70ed8eaamr31322890f8f.18.1794911882802;
-        Tue, 17 Nov 2026 02:38:02 -0800 (PST)
+        bh=9/1GCIwOY9qNSGYwMgZd4kylvp9x78s/ohbUn5D7XOY=;
+        b=ERT+4GdAuPm4M4MunUQ3nu4Fd9lvcoWr0knfB/acgwjEr7ltxCaun0XST5GIjrBFjU
+         rAZL+AC7qqPGencuuPMS7q9tI+ffb6hcUQ4nZERmv/mSgThvLhIsw+I9uOzFZ7KW7SFF
+         dXVSyUySUYYBP9JcE4M5QQA6Sn+Vb6CmMbu/FxxaXoGdgCuZQoXKwKNWCZzPAxFp0I+P
+         Agph2d77/ljbNenXPz4nUcUzbh/yjUizbsU7jwZ17HZru3BeU/ytEeekA++sJya9i7nM
+         Jmw+bdtj8HmxFJ4Gy1q1lWqNIKeU3XfqMlqjK4xjrHVuLqOcZen8ae6wHrUvRGAZtz/6
+         EjVQ==
+X-Gm-Message-State: APuU4Z97MtuW3s+qhqzDXANK4J47sDHs2CSwH0qqsqU8RbigtWBmJexc
+	xqRlE2JxMZe/tQX9+ETjnaoijcREeAj8sKv4eeMcFA3bp6Fy24SZ1mcNR4aSwA==
+X-Gm-Gg: AZFdTZe+532mU7SGcaeVKGwweu1dkWgO3qgW1V3zXGOsT18+niJV3VCW4R5dKjbRZrp
+	llG7ndumSY2x4vhKJpmRjF9DSWynOtoEBD40GNMfGCT5JptGOvQ7w3ICz3kSSeeMT6huXahFro8
+	Ek2gP+Lp3BTpwgXW17n+ZzdUN6RdfXpPXWqyZAwFntEZjdZR6S3ddNEUzyhhJ2yG2E1SDt9twRZ
+	7MtxwYtYqGtBZLqQi9SlZD3eR4vPXzAOBLmcfhrT3O/q2XwFB91p3aUsGEHA977U0sAhCUpD40y
+	wLRnheJYYvlcSfDIj2UCX/+2tfAG15M9bNGOqskto12WMlVzNIJqb4M1vvqlShZqMme8cGYyarV
+	+Q4nDcgYTy/KC/WUTCo3nXilRTj7gtDS13NdDyYxzOeHeu+fyw/qnl+U6KA/Me6WilCT3Yh2NX0
+	A6nokOnCxWz40faBMA5Gli2gIqt1Il0pvru/y7+Lsqzqvc8NjYrw754pA9Pe4X+eQkF++j41hh5
+	7r0omF0QOcWckKmhmxyW6EI3xZ05CKVE+VCycp0fkjCyDx8fQqd4VJX80MR1o62PupYfN2Q/5MZ
+	sSFKJy8Plx1sOpehUZSn9dBguNSWgCk13xoV1i+aGwPAdANNAedJVrjvm4r1+Ws=
+X-Received: by 2002:a05:6000:2082:b0:4a3:2ac:26a4 with SMTP id ffacd0b85a97d-4a3774cbc51mr4711967f8f.23.1794911890442;
+        Tue, 17 Nov 2026 02:38:10 -0800 (PST)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c608d10b2sm44715932f8f.44.2026.11.17.02.38.00
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c608d10b2sm44715932f8f.44.2026.11.17.02.38.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 02:38:01 -0800 (PST)
+        Tue, 17 Nov 2026 02:38:09 -0800 (PST)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Neeraj Singh <neerajsi@microsoft.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Michael Montalbo <mmontalbo@gmail.com>,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
 	Alexander Meshcheryakov <alexander.s.m@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 0/4] widen a few sizes and counts that are 32 bits everywhere
-Date: Tue, 17 Nov 2026 11:37:52 +0100
-Message-ID: <cover.1794909894.git.gitter.spiros@gmail.com>
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Elijah Newren <newren@gmail.com>
+Subject: [PATCH v2 4/4] diff: use uintmax_t for diffstat totals and graph scaling
+Date: Tue, 17 Nov 2026 11:37:56 +0100
+Message-ID: <692c503e97d9841def6e0429ef52a963ab93eec0.1794909894.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1793546752.git.gitter.spiros@gmail.com>
-References: <cover.1793546752.git.gitter.spiros@gmail.com>
+In-Reply-To: <cover.1794909894.git.gitter.spiros@gmail.com>
+References: <cover.1793546752.git.gitter.spiros@gmail.com> <cover.1794909894.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -108,61 +102,211 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This is v2 of the series that widens a few sizes and line counts held
-in 32-bit types even on 64-bit platforms.
+struct diffstat_file stores the number of added and deleted lines of
+each file in uintmax_t, but show_stats() and show_shortstats() add them
+up in "int" variables. When the total goes over INT_MAX, the summary
+line overflows. With the previous patch, a single file is enough: for
+a complete rewrite into a file of 2^31 lines, "git diff -B --stat"
+ends with
 
-Changes since v1:
+	1 file changed, -2147483648 insertions(+), 1000 deletions(-)
 
- - 2/4 is rewritten after Phillip's review [1]. v1 only made the size
-   parameter of count_lines() a size_t; as Phillip pointed out, that
-   removes the bound that kept the "int" line counter from overflowing.
-   The patch now uses size_t for the sizes and line counts along the
-   whole complete-rewrite path of "git diff -B". This includes
-   emit_rewrite_lines(), which with v1 still truncated the size, so
-   that "git diff -B -p" printed a correct hunk header above an empty
-   body. It also adds two EXPENSIVE tests to t4022.
+Several files whose changes add up to more than INT_MAX lines lead to
+the same overflow even without -B.
 
- - 4/4 is new. It was found by looking at the totals of "--stat" after
-   2/4: they are added up in "int" and overflow past INT_MAX lines,
-   which 2/4 makes possible with a single file. The same code also
-   showed that scale_linear() overflows for a small file when the graph
-   is wide enough; a cheap test in t4052 covers that case.
+Use uintmax_t for these totals and for the parameters of
+print_stat_summary() and print_stat_summary_inserts_deletes(), which
+printed them with "%d". print_stat_summary() is also called by
+"git apply --stat", hence the change of its prototype in diff.h.
+apply.c still adds up its own totals in "int"; it is left alone here.
 
- - 1/4 and 3/4 are unchanged. As in v1, they need objects of 4GiB or
-   more and were verified by simulating the truncation at 16 bits.
-   2/4 and 4/4 come with tests instead.
+The graph has a similar problem. scale_linear() takes the number of
+changed lines and max_change as "int", although show_stats() holds
+them in uintmax_t, and computes "it * (width - 1)" in "int". The
+product overflows even for a small file when the graph is wide enough.
+For a new file of 50000 lines,
 
-2/4 now also changes count_trailing_blank(), whose size is also
-changed by patch 6/6 of my series "loose object size checks and a few
-size truncations" [2]. That patch will be dropped from v2 of that
-series, so the two series will not conflict.
+	git diff --stat=46100 --stat-graph-width=46000
 
-The series is based on master at 50fe5cc63f (The 12th batch).
+prints no "+" at all, because 50000 * 45999 is larger than INT_MAX.
+Make scale_linear() take uintmax_t, so that the product is computed in
+uintmax_t. Its result is at most "width", so it still fits in an
+"int".
 
-[1] https://lore.kernel.org/git/0cb42395-3e62-42e0-bfd3-a4265ed7cc33@gmail.com/
-[2] https://lore.kernel.org/git/cover.1793355390.git.gitter.spiros@gmail.com/
+show_stats() also assigned max_change to the "int" graph_width. Cap it
+at "width" instead: a wider graph is cut down to fit "width" right
+after, so the output does not change when max_change fits in an "int".
 
-Elia Pinto (4):
-  csum-file: use size_t for the count passed to hashwrite()
-  diff: use size_t for sizes and line counts of complete rewrites
-  diffcore-delta: use size_t for the size of the buffer to hash
-  diff: use uintmax_t for diffstat totals and graph scaling
+When the graph is not scaled, the numbers of added and deleted lines
+are copied as they are into "add" and "del", which stay "int": in that
+case both are smaller than graph_width.
 
- csum-file.c             |  2 +-
- csum-file.h             |  2 +-
- diff.c                  | 90 +++++++++++++++++++++++------------------
- diff.h                  |  2 +-
- diffcore-delta.c        |  2 +-
- t/t4022-diff-rewrite.sh | 51 ++++++++++++++++++++++-
- t/t4052-stat-output.sh  | 10 +++++
- 7 files changed, 114 insertions(+), 45 deletions(-)
+Add the graph case to t4052. The test fails without this patch and is
+cheap enough to run by default. The totals are not tested, because
+going over INT_MAX lines needs a file of 2GiB or more.
 
-Range-diff against v1:
-1:  07baad46b1 = 1:  07baad46b1 csum-file: use size_t for the count passed to hashwrite()
-2:  2011b90d80 < -:  ---------- diff: use size_t for the size passed to count_lines()
--:  ---------- > 2:  e63ed0c49c diff: use size_t for sizes and line counts of complete rewrites
-3:  0c5442280c = 3:  3427c3d2c8 diffcore-delta: use size_t for the size of the buffer to hash
--:  ---------- > 4:  692c503e97 diff: use uintmax_t for diffstat totals and graph scaling
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ diff.c                 | 46 +++++++++++++++++++++++++-----------------
+ diff.h                 |  2 +-
+ t/t4052-stat-output.sh | 10 +++++++++
+ 3 files changed, 38 insertions(+), 20 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index ee92a8ac4d..0d2ea21280 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2838,7 +2838,7 @@ static int diffstat_consume(void *priv, char *line, unsigned long len)
+ 
+ const char mime_boundary_leader[] = "------------";
+ 
+-static int scale_linear(int it, int width, int max_change)
++static int scale_linear(uintmax_t it, int width, uintmax_t max_change)
+ {
+ 	if (!it)
+ 		return 0;
+@@ -2880,7 +2880,7 @@ static void fill_print_name(struct diffstat_file *file)
+ }
+ 
+ static void print_stat_summary_inserts_deletes(struct diff_options *options,
+-		int files, int insertions, int deletions)
++		int files, uintmax_t insertions, uintmax_t deletions)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+@@ -2905,13 +2905,15 @@ static void print_stat_summary_inserts_deletes(struct diff_options *options,
+ 	 */
+ 	if (insertions || deletions == 0) {
+ 		strbuf_addf(&sb,
+-			    (insertions == 1) ? ", %d insertion(+)" : ", %d insertions(+)",
++			    (insertions == 1) ? ", %"PRIuMAX" insertion(+)" :
++						", %"PRIuMAX" insertions(+)",
+ 			    insertions);
+ 	}
+ 
+ 	if (deletions || insertions == 0) {
+ 		strbuf_addf(&sb,
+-			    (deletions == 1) ? ", %d deletion(-)" : ", %d deletions(-)",
++			    (deletions == 1) ? ", %"PRIuMAX" deletion(-)" :
++					       ", %"PRIuMAX" deletions(-)",
+ 			    deletions);
+ 	}
+ 	strbuf_addch(&sb, '\n');
+@@ -2921,7 +2923,7 @@ static void print_stat_summary_inserts_deletes(struct diff_options *options,
+ }
+ 
+ void print_stat_summary(FILE *fp, int files,
+-			int insertions, int deletions)
++			uintmax_t insertions, uintmax_t deletions)
+ {
+ 	struct diff_options o;
+ 	memset(&o, 0, sizeof(o));
+@@ -2954,8 +2956,8 @@ static int utf8_ish_width(const char **start)
+ 
+ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ {
+-	int i, len, add, del, adds = 0, dels = 0;
+-	uintmax_t max_change = 0, max_len = 0;
++	int i, len, add, del;
++	uintmax_t adds = 0, dels = 0, max_change = 0, max_len = 0;
+ 	int total_files = data->nr, count;
+ 	int width, name_width, graph_width, number_width = 0, bin_width = 0;
+ 	const char *reset, *add_c, *del_c;
+@@ -3062,7 +3064,11 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 	 * strlen("Bin XXX -> YYY bytes") == bin_width, and the part
+ 	 * starting from "XXX" should fit in graph_width.
+ 	 */
+-	graph_width = max_change + 4 > bin_width ? max_change : bin_width - 4;
++	if (max_change + 4 > bin_width)
++		/* anything wider than "width" is cut down below anyway */
++		graph_width = max_change < width ? max_change : width;
++	else
++		graph_width = bin_width - 4;
+ 	if (options->stat_graph_width &&
+ 	    options->stat_graph_width < graph_width)
+ 		graph_width = options->stat_graph_width;
+@@ -3164,21 +3170,22 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 		/*
+ 		 * scale the add/delete
+ 		 */
+-		add = added;
+-		del = deleted;
+-
+ 		if (graph_width <= max_change) {
+-			int total = scale_linear(add + del, graph_width, max_change);
+-			if (total < 2 && add && del)
++			int total = scale_linear(added + deleted, graph_width, max_change);
++			if (total < 2 && added && deleted)
+ 				/* width >= 2 due to the sanity check */
+ 				total = 2;
+-			if (add < del) {
+-				add = scale_linear(add, graph_width, max_change);
++			if (added < deleted) {
++				add = scale_linear(added, graph_width, max_change);
+ 				del = total - add;
+ 			} else {
+-				del = scale_linear(del, graph_width, max_change);
++				del = scale_linear(deleted, graph_width, max_change);
+ 				add = total - del;
+ 			}
++		} else {
++			/* both fit in the graph, hence in an int */
++			add = added;
++			del = deleted;
+ 		}
+ 		strbuf_addf(&out, " %s%s%*s | %*"PRIuMAX"%s",
+ 			    prefix, name, padding, "",
+@@ -3222,14 +3229,15 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 
+ static void show_shortstats(struct diffstat_t *data, struct diff_options *options)
+ {
+-	int i, adds = 0, dels = 0, total_files = data->nr;
++	int i, total_files = data->nr;
++	uintmax_t adds = 0, dels = 0;
+ 
+ 	if (data->nr == 0)
+ 		return;
+ 
+ 	for (i = 0; i < data->nr; i++) {
+-		int added = data->files[i]->added;
+-		int deleted = data->files[i]->deleted;
++		uintmax_t added = data->files[i]->added;
++		uintmax_t deleted = data->files[i]->deleted;
+ 
+ 		if (data->files[i]->is_unmerged ||
+ 		    (!data->files[i]->is_interesting && (added + deleted == 0))) {
+diff --git a/diff.h b/diff.h
+index bb5cddaf34..d51507d192 100644
+--- a/diff.h
++++ b/diff.h
+@@ -764,7 +764,7 @@ int parse_rename_score(const char **cp_p);
+ long parse_algorithm_value(const char *value);
+ 
+ void print_stat_summary(FILE *fp, int files,
+-			int insertions, int deletions);
++			uintmax_t insertions, uintmax_t deletions);
+ void setup_diff_pager(struct diff_options *);
+ 
+ extern int diff_auto_refresh_index;
+diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+index 62d3d2604c..d1cca6ab8e 100755
+--- a/t/t4052-stat-output.sh
++++ b/t/t4052-stat-output.sh
+@@ -470,4 +470,14 @@ test_expect_success FUNNYNAMES 'diffstat truncation with control chars does not
+ 	git commit -m "remove test file"
+ '
+ 
++test_expect_success 'diffstat graph of a large change with a wide graph' '
++	test_when_finished "git rm -f --cached big && rm -f big" &&
++	test_seq 50000 >big &&
++	git add -N big &&
++	git diff --stat=46100 --stat-graph-width=46000 -- big >output &&
++	grep " | " output >line &&
++	tr -cd + <line >plus &&
++	test $(wc -c <plus) -eq 46000
++'
++
+ test_done
 -- 
 2.53.0
 
